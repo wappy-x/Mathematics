@@ -1,34 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Greeks, one each
-topic: Sensitivity to volatility
-item: Vega
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/01-delta|delta]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-next:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/06-vanna|vanna]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/07-volga|volga]]"
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/03-digital-greeks-and-pin-risk|digital-greeks-and-pin-risk]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/01-implied-volatility|implied-volatility]]"
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/04-barrier-greeks-at-the-wall|barrier-greeks-at-the-wall]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/03-asian-greeks-and-implied-volatility|asian-greeks-and-implied-volatility]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/03-garman-kohlhagen-greeks|garman-kohlhagen-greeks]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/02-futures-option-greeks|futures-option-greeks]]"
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/02-structural-model-sensitivities|structural-model-sensitivities]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - vega
----
-
 # Vega: what one point of volatility is worth
 
-Financial mathematics → The Greeks, one each → Sensitivity to volatility → Vega
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Greeks, one each](../../../SYLLABUS.md#w12-s09) → Vega
 
 ---
 
@@ -64,7 +36,7 @@ Upper curve: one year to expiry. Lower curve: three months. Both are humps. An o
 
 ## The formula
 
-Notation first, in words. Vega is written with a script capital V, $\mathcal{V}$, because there is no Greek letter vega; the name was coined on trading floors to sound like the other Greeks. The partial derivative $\partial C/\partial\sigma$ means the slope of the call price $C$ against volatility $\sigma$ with every other input frozen ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)).
+Notation first, in words. Vega is written with a script capital V, $\mathcal{V}$, because there is no Greek letter vega; the name was coined on trading floors to sound like the other Greeks. The partial derivative $\partial C/\partial\sigma$ means the slope of the call price $C$ against volatility $\sigma$ with every other input frozen ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)).
 
 $$\mathcal{V} \;=\; \frac{\partial C}{\partial \sigma} \;=\; \frac{\partial P}{\partial \sigma} \;=\; S\,e^{-qT}\,\varphi(d_1)\,\sqrt{T}$$
 
@@ -91,7 +63,7 @@ For small moves, vega turns a change in volatility into a change in price: $C(\s
 | $e^{-rT}$, $e^{-qT}$ | discount factor, and dividend drag | 0.951 and 0.980 | — |
 | $\Gamma$ | gamma, the slope of delta against the share price | 0.018951 | — |
 
-The helpers are the pilot's ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)):
+The helpers are the pilot's ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)):
 
 $$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \varphi(x) = \frac{e^{-x^2/2}}{\sqrt{2\pi}}$$
 
@@ -100,7 +72,7 @@ In words: $d_1$ and $d_2$ are how far Acme sits from the strike, measured in uni
 ### When it holds
 
 - **One volatility for every strike and date.** Real markets quote a different implied volatility for each strike, called the smile. Vega here is the price change when every one of them rises together; a move in one strike's volatility alone needs a separate, bucketed vega.
-- **Small moves.** Vega is a first slope. From 20 to 21 percent the full reprice is 0.379118 against vega's 0.379012; for moves of several points add the curvature, [volga](07-volga.md).
+- **Small moves.** Vega is a first slope. From 20 to 21 percent the full reprice is 0.379118 against vega's 0.379012; for moves of several points add the curvature, [Volga](07-volga.md).
 - **European exercise and a continuous dividend yield.** An American put or a stock with lumpy dividends has a different price, so a different slope.
 - **Positive time and positive volatility.** At expiry the price is the payoff, which has no volatility in it, and vega is zero.
 
@@ -189,11 +161,11 @@ So "vega grows with the square root of time" is a statement about short and midd
 
 ### The other road: vega is gamma, scaled
 
-The sibling [gamma](02-gamma.md) finds $\Gamma = e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})$. Multiply by $\sigma T S^2$ and vega appears:
+The sibling [Gamma](02-gamma.md) finds $\Gamma = e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})$. Multiply by $\sigma T S^2$ and vega appears:
 
 $$\mathcal{V} = \sigma\,T\,S^2\,\Gamma.$$
 
-For Acme, $0.2 \times 1 \times 10{,}000 \times 0.018951 = 37.90$. The meaning: a hedged option earns about half of gamma times each squared share move, and over the life those squares add up to about $S^2\sigma^2 T$. So the expected hedging profit is about $\tfrac12\Gamma S^2\sigma^2 T$. Its slope in $\sigma$ is $\Gamma S^2\sigma T$: vega is how fast that profit grows as volatility rises, not the profit itself. The accounting is [theta-pays-for-gamma-hedged-pnl](10-theta-pays-for-gamma-hedged-pnl.md).
+For Acme, $0.2 \times 1 \times 10{,}000 \times 0.018951 = 37.90$. The meaning: a hedged option earns about half of gamma times each squared share move, and over the life those squares add up to about $S^2\sigma^2 T$. So the expected hedging profit is about $\tfrac12\Gamma S^2\sigma^2 T$. Its slope in $\sigma$ is $\Gamma S^2\sigma T$: vega is how fast that profit grows as volatility rises, not the profit itself. The accounting is [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md).
 
 ---
 
@@ -231,7 +203,7 @@ $$\sigma_{\text{new}} = \sigma_{\text{old}} - \frac{C(\sigma_{\text{old}}) - 12.
 | 4 | two more steps change nothing at six decimals | **0.273094** |
 | bisection | halve a bracket from 1% to 200%, sixty times | 0.273094 |
 
-Two roads, one answer: 27.31 percent. Because vega is always positive (Step 5), the price climbs steadily with volatility, so at most one volatility fits a quote. Existence, the bounds on a quote, and a guaranteed starting point are [implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md).
+Two roads, one answer: 27.31 percent. Because vega is always positive (Step 5), the price climbs steadily with volatility, so at most one volatility fits a quote. Existence, the bounds on a quote, and a guaranteed starting point are [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md).
 
 The hazard is Step 6. Far from the strike, vega is tiny, and dividing by it throws Newton off the map. A $150-strike Acme call quoted at $4.368927 (its price at 40 percent) has vega 0.040926 at a 10 percent start. The first Newton step lands at a volatility of 106.85: over ten thousand percent.
 
@@ -684,11 +656,11 @@ The two outputs agree line for line. Five of the seven roads land on 37.901158 a
 ## Where you meet it in real life
 
 - **A volatility desk's risk report.** Positions are summed as vega per point: a book's vega per point is the dollars it gains if every implied volatility rises one point. Quoting convention, dated 2026-09-19: vega is shown per one point, a 0.01 move in volatility, as in Hull's textbook below.
-- **Implied volatility solvers.** Many solvers behind a quoted "20 vol" use Newton's method steered by vega, with a guard for strikes where vega is tiny: [implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md).
-- **Hedging volatility.** Shares carry no vega, so volatility risk is hedged with other options. Matching vega at one strike leaves the change of vega with the share price and with volatility itself, which are [vanna](06-vanna.md) and [volga](07-volga.md).
-- **Currencies and futures.** The same formula, with the foreign interest rate in place of $q$, or the discounted futures price $F e^{-rT}$ in place of $S e^{-qT}$: [garman-kohlhagen-greeks](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md), [futures-option-greeks](../26-Options%20on%20commodity%20futures%20and%20spreads/02-futures-option-greeks.md).
-- **Contracts where vega can turn negative.** Step 5 holds for plain calls and puts. A digital, which pays a fixed sum, or a knock-out barrier can lose value when volatility rises: [digital-greeks-and-pin-risk](../10-Digitals%20and%20the%20implied%20density/03-digital-greeks-and-pin-risk.md), [barrier-greeks-at-the-wall](../16-Barriers%2C%20touches%20and%20lookbacks/04-barrier-greeks-at-the-wall.md).
-- **The whole Greek set.** Vega is one term in the price-change expansion that [greeks-together-taylor-pnl](09-greeks-together-taylor-pnl.md) assembles with [delta](01-delta.md), [theta](04-theta.md) and [rho-and-dividend-rho](05-rho-and-dividend-rho.md).
+- **Implied volatility solvers.** Many solvers behind a quoted "20 vol" use Newton's method steered by vega, with a guard for strikes where vega is tiny: [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md).
+- **Hedging volatility.** Shares carry no vega, so volatility risk is hedged with other options. Matching vega at one strike leaves the change of vega with the share price and with volatility itself, which are [Vanna](06-vanna.md) and [Volga](07-volga.md).
+- **Currencies and futures.** The same formula, with the foreign interest rate in place of $q$, or the discounted futures price $F e^{-rT}$ in place of $S e^{-qT}$: [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md), [Greeks of a futures option](../26-Options%20on%20commodity%20futures%20and%20spreads/02-futures-option-greeks.md).
+- **Contracts where vega can turn negative.** Step 5 holds for plain calls and puts. A digital, which pays a fixed sum, or a knock-out barrier can lose value when volatility rises: [Digital Greeks and pin risk](../10-Digitals%20and%20the%20implied%20density/03-digital-greeks-and-pin-risk.md), [Barrier Greeks](../16-Barriers%2C%20touches%20and%20lookbacks/04-barrier-greeks-at-the-wall.md).
+- **The whole Greek set.** Vega is one term in the price-change expansion that [The Greeks together](09-greeks-together-taylor-pnl.md) assembles with [Delta](01-delta.md), [Theta](04-theta.md) and [Rho and dividend rho](05-rho-and-dividend-rho.md).
 
 > **Say it back**
 > Vega is the slope of an option's price against volatility, with everything else frozen. In Black–Scholes it is the share value at stake, times the bell curve's height at the strike's distance, times the square root of time: 37.90 per unit for the Acme call, 38 cents per volatility point. The call and the put share it, because parity holds no volatility, and it is always positive for both. It is a hump around the strike, peaking a little off it, and it grows with the square root of time until the dividend drag and the drift take over. Implied-volatility solvers divide by it, which is why they need care where it is small.
@@ -697,22 +669,22 @@ The two outputs agree line for line. Five of the seven roads land on 37.901158 a
 
 ## What this builds on
 
-- [delta](01-delta.md): the first Greek, and the same move (differentiate the price, watch the bell-curve heights cancel) done in the share price.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): a slope in one input with the others frozen, which is what vega is.
+- [Delta](01-delta.md): the first Greek, and the same move (differentiate the price, watch the bell-curve heights cancel) done in the share price.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): a slope in one input with the others frozen, which is what vega is.
 
 ## Where this goes next
 
-- [vanna](06-vanna.md): how vega changes when the share price moves.
-- [volga](07-volga.md): how vega changes when volatility moves; the 2.368822 used above.
-- [digital-greeks-and-pin-risk](../10-Digitals%20and%20the%20implied%20density/03-digital-greeks-and-pin-risk.md): a vega that changes sign at the strike.
-- [implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the inverse that vega steers, with existence and bounds.
-- [barrier-greeks-at-the-wall](../16-Barriers%2C%20touches%20and%20lookbacks/04-barrier-greeks-at-the-wall.md): vega of a contract that can die.
-- [asian-greeks-and-implied-volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/03-asian-greeks-and-implied-volatility.md): vega when the payoff averages away some of the volatility.
-- [garman-kohlhagen-greeks](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the same formula for currencies, in desk units.
-- [futures-option-greeks](../26-Options%20on%20commodity%20futures%20and%20spreads/02-futures-option-greeks.md): the same formula on a futures price.
-- [structural-model-sensitivities](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/02-structural-model-sensitivities.md): shares as a call on a firm's assets, and what the asset volatility's vega says about its debt.
+- [Vanna](06-vanna.md): how vega changes when the share price moves.
+- [Volga](07-volga.md): how vega changes when volatility moves; the 2.368822 used above.
+- [Digital Greeks and pin risk](../10-Digitals%20and%20the%20implied%20density/03-digital-greeks-and-pin-risk.md): a vega that changes sign at the strike.
+- [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the inverse that vega steers, with existence and bounds.
+- [Barrier Greeks](../16-Barriers%2C%20touches%20and%20lookbacks/04-barrier-greeks-at-the-wall.md): vega of a contract that can die.
+- [Asian Greeks and implied volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/03-asian-greeks-and-implied-volatility.md): vega when the payoff averages away some of the volatility.
+- [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the same formula for currencies, in desk units.
+- [Greeks of a futures option](../26-Options%20on%20commodity%20futures%20and%20spreads/02-futures-option-greeks.md): the same formula on a futures price.
+- [How the balance-sheet claims move](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/02-structural-model-sensitivities.md): shares as a call on a firm's assets, and what the asset volatility's vega says about its debt.
 
-Vega answers what one point of volatility is worth, but only for a small move and a fixed share price; how vega itself shifts when volatility or the share price moves is the question [volga](07-volga.md) and [vanna](06-vanna.md) answer.
+Vega answers what one point of volatility is worth, but only for a small move and a fixed share price; how vega itself shifts when volatility or the share price moves is the question [Volga](07-volga.md) and [Vanna](06-vanna.md) answer.
 
 ---
 

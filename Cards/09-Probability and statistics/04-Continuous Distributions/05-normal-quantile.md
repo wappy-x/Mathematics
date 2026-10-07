@@ -1,29 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Continuous Distributions
-topic: Inverting the bell curve
-item: Normal quantiles
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/04-normal-distribution|normal-distribution]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/06-newtons-method|newtons-method]]"
-next:
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/06-digital-inverses-vol-and-strike|digital-inverses-vol-and-strike]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/03-strike-from-delta|strike-from-delta]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/06-fx-strike-from-delta|fx-strike-from-delta]]"
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/01-profit-and-loss-distribution-and-var|profit-and-loss-distribution-and-var]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/03-vasicek-loss-distribution-and-basel-capital|vasicek-loss-distribution-and-basel-capital]]"
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/02-expected-exposure-profiles|expected-exposure-profiles]]"
-  - "[[Cards/14-Applied and computational/05-Operations Research/06-inventory-models-eoq-and-newsvendor|inventory-models-eoq-and-newsvendor]]"
-tags: [mathematics, probability and statistics, normal-quantile]
----
-
 # Normal quantiles: the value with a given probability below it, and how a computer finds it
 
-Probability and statistics → Continuous Distributions → Inverting the bell curve → Normal quantiles
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Continuous Distributions](../../../SYLLABUS.md#w09-s04) → Normal quantiles
 
 ---
 
@@ -97,7 +74,7 @@ Its error is below 0.00045 for every $p$ in that range.
 
 ### When it holds
 
-- **The return is normal.** Real daily returns have fatter tails than the bell curve. The normal level then understates the worst days; see [heavy-tails-pareto-and-cauchy](08-heavy-tails-pareto-and-cauchy.md).
+- **The return is normal.** Real daily returns have fatter tails than the bell curve. The normal level then understates the worst days; see [Heavy tails](08-heavy-tails-pareto-and-cauchy.md).
 - **The centre and spread are known.** In practice both are estimates. An error in $\sigma$ moves the loss level in proportion: a spread of 2.4 percent gives $55,432.35.
 - **The tail chance is strictly between 0 and 1.** No finite $z$ has left area 0 or 1: the cutoff runs off to minus infinity as $p \to 0$ and plus infinity as $p \to 1$. The bracket used below, −6 to 6, covers $p$ down to about 1 in a billion, $\Phi(-6)$.
 - **The rational formula is for the lower half.** For $p > 1/2$ use symmetry, $z_{1-p} = -z_p$.
@@ -113,7 +90,7 @@ The cumulative curve $\Phi$ takes a cutoff and returns a probability. A quantile
 
 ### Step 1: there is exactly one answer
 
-$\Phi$ is continuous, climbs strictly (its slope $\phi$ is positive everywhere), tends to 0 far to the left and to 1 far to the right. A continuous curve that goes from below 0.01 to above 0.01 must cross 0.01 somewhere (the intermediate value theorem). A curve that only climbs crosses it once. So for every $p$ strictly between 0 and 1 there is one cutoff, $z_p$, and $\Phi^{-1}$ is a genuine function. Densities and cumulative curves in general are on [densities-and-cdfs](01-densities-and-cdfs.md).
+$\Phi$ is continuous, climbs strictly (its slope $\phi$ is positive everywhere), tends to 0 far to the left and to 1 far to the right. A continuous curve that goes from below 0.01 to above 0.01 must cross 0.01 somewhere (the intermediate value theorem). A curve that only climbs crosses it once. So for every $p$ strictly between 0 and 1 there is one cutoff, $z_p$, and $\Phi^{-1}$ is a genuine function. Densities and cumulative curves in general are on [Densities](01-densities-and-cdfs.md).
 
 ### Step 2: every normal is a stretched standard one
 
@@ -142,7 +119,7 @@ The code computes $\Phi(z) = \tfrac12 + \phi(z)\,\bigl(z + z^3/3 + z^5/(3\cdot 5
 
 ### Step 5: Newton's method, the fast polish
 
-Newton's method ([newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) replaces a curve by its tangent line and jumps to where the tangent hits the target. The slope of $\Phi$ is the bell curve's height $\phi$, so the tangent at $z$ reaches $p$ after a step of $(\Phi(z) - p)/\phi(z)$, the helper formula above.
+Newton's method ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) replaces a curve by its tangent line and jumps to where the tangent hits the target. The slope of $\Phi$ is the bell curve's height $\phi$, so the tangent at $z$ reaches $p$ after a step of $(\Phi(z) - p)/\phi(z)$, the helper formula above.
 
 Near the answer, each step roughly squares the error. From the rational guess, off by 0.0004374585, one step leaves 0.0000002227 and a second step lands on the bisection answer to ten decimals.
 
@@ -180,7 +157,7 @@ xychart-beta
 
 One line: $\Phi^{-1}(p)$ at fifteen tail chances. The chances are unevenly spaced, which squeezes the ends; on an even scale the curve is flat through the middle and near-vertical at both ends. The mirror image about $p = 0.5$ is Step 3.
 
-A fourth road needs no area at all: simulate many standard normal values, sort them, and read off the value 1 percent of the way up. That is inverse sampling run backwards, and the uniform card's inverse-transform idea ([uniform-distribution](02-uniform-distribution.md)) is the same move forwards.
+A fourth road needs no area at all: simulate many standard normal values, sort them, and read off the value 1 percent of the way up. That is inverse sampling run backwards, and the uniform card's inverse-transform idea ([Uniform](02-uniform-distribution.md)) is the same move forwards.
 
 ---
 
@@ -654,7 +631,7 @@ The two outputs are identical line for line. The simulated 1 percent point, −2
 ## The usual mistake
 
 > [!warning]
-> **Reading the 99 percent loss level as the worst case.** It is a threshold, not a ceiling. It says how often losses exceed $27,516.17, about 1 day in 100, and nothing about how large they are on those days. Two funds with the same loss level can have very different bad days. The average loss beyond the level, expected shortfall, answers that; see [profit-and-loss-distribution-and-var](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md).
+> **Reading the 99 percent loss level as the worst case.** It is a threshold, not a ceiling. It says how often losses exceed $27,516.17, about 1 day in 100, and nothing about how large they are on those days. Two funds with the same loss level can have very different bad days. The average loss beyond the level, expected shortfall, answers that; see [Value at risk](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md).
 >
 > Smaller traps:
 > - **One tail or two.** A loss level has one tail: 2.326348. The familiar 2.575829 leaves 0.5 percent in each of two tails and gives $30,509.95.
@@ -666,11 +643,11 @@ The two outputs are identical line for line. The simulated 1 percent point, −2
 
 ## Where you meet it in real life
 
-- **Bank risk reports.** Daily and ten-day value at risk at 99 percent is a normal quantile times a spread, whenever the desk assumes a bell curve: [profit-and-loss-distribution-and-var](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md).
-- **Option desks.** Traders quote strikes by delta, a normal area; turning a delta back into a strike is a normal quantile: [strike-from-delta](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md).
-- **Bank capital for loans.** The Basel formula feeds a default probability through $\Phi^{-1}$, mixes it with a stress quantile, and feeds the result back through $\Phi$: [vasicek-loss-distribution-and-basel-capital](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md).
-- **Stocking a shop.** A newspaper seller facing normal demand orders up to the demand quantile at the critical ratio: the cost of one unit short divided by the cost of one unit short plus one unit left over: inventory-models-eoq-and-newsvendor.
-- **Simulation engines.** Feeding a uniform random number through $\Phi^{-1}$ gives a normal draw, the forward version of this card's fourth road: [uniform-distribution](02-uniform-distribution.md).
+- **Bank risk reports.** Daily and ten-day value at risk at 99 percent is a normal quantile times a spread, whenever the desk assumes a bell curve: [Value at risk](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md).
+- **Option desks.** Traders quote strikes by delta, a normal area; turning a delta back into a strike is a normal quantile: [Strike from delta](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md).
+- **Bank capital for loans.** The Basel formula feeds a default probability through $\Phi^{-1}$, mixes it with a stress quantile, and feeds the result back through $\Phi$: [Vasicek's large-pool loss curve](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md).
+- **Stocking a shop.** A newspaper seller facing normal demand orders up to the demand quantile at the critical ratio: the cost of one unit short divided by the cost of one unit short plus one unit left over: Stock.
+- **Simulation engines.** Feeding a uniform random number through $\Phi^{-1}$ gives a normal draw, the forward version of this card's fourth road: [Uniform](02-uniform-distribution.md).
 - **Growth charts and exam scores.** A child "at the 3rd percentile" or a score "at the 90th" is a quantile, often read off a normal fit.
 
 > **Say it back**
@@ -680,18 +657,18 @@ The two outputs are identical line for line. The simulated 1 percent point, −2
 
 ## What this builds on
 
-- [normal-distribution](04-normal-distribution.md): the bell curve, its height $\phi$, its cumulative area $\Phi$, and the stretch-and-shift $X = \mu + \sigma Z$. This card runs $\Phi$ backwards.
-- [newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the tangent-line step and its error-squaring, used here to polish the rational guess.
+- [Normal](04-normal-distribution.md): the bell curve, its height $\phi$, its cumulative area $\Phi$, and the stretch-and-shift $X = \mu + \sigma Z$. This card runs $\Phi$ backwards.
+- [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the tangent-line step and its error-squaring, used here to polish the rational guess.
 
 ## Where this goes next
 
-- [profit-and-loss-distribution-and-var](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md): the loss level of this card as value at risk, and expected shortfall, the average beyond it.
-- [digital-inverses-vol-and-strike](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/06-digital-inverses-vol-and-strike.md): a digital option's price is a normal area; inverting it for the strike or the volatility is a quantile.
-- [strike-from-delta](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md): the strike with a quoted delta, in one line of $\Phi^{-1}$.
-- [fx-strike-from-delta](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md): the same inversion under currency-desk conventions, where some deltas need a search like Step 4.
-- [vasicek-loss-distribution-and-basel-capital](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md): quantiles of a loan book's loss, built from $\Phi^{-1}$ of default probabilities.
-- [expected-exposure-profiles](../../12-Financial%20mathematics/46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md): potential future exposure, a high quantile of what a counterparty could owe.
-- inventory-models-eoq-and-newsvendor: the order quantity as a quantile of demand.
+- [Value at risk](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md): the loss level of this card as value at risk, and expected shortfall, the average beyond it.
+- [Digital inverses](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/06-digital-inverses-vol-and-strike.md): a digital option's price is a normal area; inverting it for the strike or the volatility is a quantile.
+- [Strike from delta](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md): the strike with a quoted delta, in one line of $\Phi^{-1}$.
+- [Strike from delta](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md): the same inversion under currency-desk conventions, where some deltas need a search like Step 4.
+- [Vasicek's large-pool loss curve](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md): quantiles of a loan book's loss, built from $\Phi^{-1}$ of default probabilities.
+- [Expected exposure over time](../../12-Financial%20mathematics/46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md): potential future exposure, a high quantile of what a counterparty could owe.
+- Stock: the order quantity as a quantile of demand.
 
 This card sets a cutoff when the bell curve is taken as given; the value-at-risk card asks what happens beyond the cutoff, where the bell curve is least trustworthy.
 

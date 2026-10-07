@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Portfolio Credit - Correlation, Copulas, Indices and Tranches
-topic: Layered pool losses
-item: Tranches
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/03-vasicek-loss-distribution-and-basel-capital|vasicek-loss-distribution-and-basel-capital]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/04-credit-indices|credit-indices]]"
-next:
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/06-implied-and-base-correlation|implied-and-base-correlation]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/07-tail-dependence-and-the-t-copula|tail-dependence-and-the-t-copula]]"
-tags: [mathematics, financial mathematics, cdo-tranches-in-outline]
----
-
 # Tranches: slicing a pool's losses into layers, and pricing a layer as its expected loss over time
 
-Financial mathematics → Portfolio Credit - Correlation, Copulas, Indices and Tranches → Layered pool losses → Tranches
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Credit - Correlation, Copulas, Indices and Tranches](../../../SYLLABUS.md#w12-s45) → Tranches
 
 ---
 
@@ -102,10 +84,10 @@ A basis point (bp) is one hundredth of a percent: 2006.1 bp is 20.061% a year.
 
 ### When it holds
 
-- **One shared economy with a bell-curve shape.** If bad years are worse than a bell curve allows, joint defaults cluster harder in the tail. The model then underprices the senior tranche; [tail-dependence-and-the-t-copula](07-tail-dependence-and-the-t-copula.md) measures by how much.
+- **One shared economy with a bell-curve shape.** If bad years are worse than a bell curve allows, joint defaults cluster harder in the tail. The model then underprices the senior tranche; [Tail dependence](07-tail-dependence-and-the-t-copula.md) measures by how much.
 - **A large pool of identical loans.** The exact 100-loan pool gives the equity tranche 59.60%, not 62.77%: lumpiness moves loss out of equity and into the tranches above.
 - **One default chance, one recovery, for every loan.** Real pools mix borrowers; the recursion in Why it works handles that, the one-line formula does not. Recovery that falls in bad years hurts the senior tranches more than a fixed 40% shows.
-- **One correlation for every tranche.** Market prices of the four tranches cannot all be matched by one number. That mismatch is the correlation smile, taken up in [implied-and-base-correlation](06-implied-and-base-correlation.md).
+- **One correlation for every tranche.** Market prices of the four tranches cannot all be matched by one number. That mismatch is the correlation smile, taken up in [Implied correlation](06-implied-and-base-correlation.md).
 - **No write-down from the top.** In real index tranches, recovered money also shrinks the most senior tranche; this card ignores that.
 - **Quarterly settlement.** Real contracts pay losses when they happen; the quarter-end version is off by a fraction of a quarter's interest.
 
@@ -115,7 +97,7 @@ A basis point (bp) is one hundredth of a percent: 2006.1 bp is 20.061% a year.
 
 ### Step 0: once the pool's loss distribution is known, every tranche is an average of a kinked payoff
 
-A tranche is a rule applied to one number, the pool's loss. So pricing it splits into two jobs: find the chances of every pool loss, then average the tranche's rule over them. The first job is the hard one, done by earlier cards: [one-factor-gaussian-copula](02-one-factor-gaussian-copula.md) builds the model and [vasicek-loss-distribution-and-basel-capital](03-vasicek-loss-distribution-and-basel-capital.md) turns it into a loss curve. This card does the second job, then turns the average into a price.
+A tranche is a rule applied to one number, the pool's loss. So pricing it splits into two jobs: find the chances of every pool loss, then average the tranche's rule over them. The first job is the hard one, done by earlier cards: [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md) builds the model and [Vasicek's large-pool loss curve](03-vasicek-loss-distribution-and-basel-capital.md) turns it into a loss curve. This card does the second job, then turns the average into a price.
 
 ### Step 1: a tranche is a call spread on the pool's loss
 
@@ -190,11 +172,11 @@ A tranche trades like a credit default swap on its own slice. The **protection b
 
 Loss arrives over time, so Step 3 is run at every quarter. A flat hazard rate λ spreads the default chance over time: by time t it is $1 - e^{-\lambda t}$, which reaches 5% at five years when λ = −ln(0.95)/5 = 0.010259. Each quarter's chance, fed to the large-pool formula, gives $E_i$.
 
-The **protection leg** is each quarter's new expected loss, discounted from its payment date. The premium leg per unit of spread, the **risky annuity**, is a quarter's premium, discounted, on the average surviving size through the quarter. The par spread is their ratio. This is the credit default swap's par spread from [cds-legs-risky-annuity-and-par-spread](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md), with the tranche's expected loss standing where the single name's default chance stood.
+The **protection leg** is each quarter's new expected loss, discounted from its payment date. The premium leg per unit of spread, the **risky annuity**, is a quarter's premium, discounted, on the average surviving size through the quarter. The par spread is their ratio. This is the credit default swap's par spread from [Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md), with the tranche's expected loss standing where the single name's default chance stood.
 
 The equity tranche's annuity is small, 2.8156, because its size melts early; the senior tranche's, 4.3947, is almost the full five-year annuity.
 
-Step 5's adding back holds for the legs too. Weighted by width, the tranche protection legs sum to 0.026406 and the annuities to 4.332622. The pool's own legs, computed from the 5% default chance with no copula at all, give the same two numbers. The index of [credit-indices](04-credit-indices.md) is the whole stack of tranches.
+Step 5's adding back holds for the legs too. Weighted by width, the tranche protection legs sum to 0.026406 and the annuities to 4.332622. The pool's own legs, computed from the 5% default chance with no copula at all, give the same two numbers. The index of [Credit indices (CDX and iTraxx in outline)](04-credit-indices.md) is the whole stack of tranches.
 
 ---
 
@@ -272,7 +254,7 @@ correlation   senior tranche's expected loss, % of its size
 
 It only ever rises. From 20% to 50% correlation the senior tranche's expected loss more than quintuples, from 0.16% to 0.86%, while the equity tranche's falls from 62.77% to 39.85%. A seller of equity protection gains when correlation rises, and so does a buyer of senior protection. Holding both is a bet on correlation, called being **long correlation**, not a bet on how many loans default.
 
-Time moves the price too: as quiet years pass, each tranche's remaining expected loss shrinks, equity's fastest. The single-name version is in [hazard-rate-and-survival-probability](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md).
+Time moves the price too: as quiet years pass, each tranche's remaining expected loss shrinks, equity's fastest. The single-name version is in [The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md).
 
 ---
 
@@ -724,8 +706,8 @@ The two outputs are identical line for line, Monte Carlo included: both programs
 ## Where you meet it in real life
 
 - **Synthetic CDOs before 2008.** Dealers sold tranches of pools of credit default swaps. Highly rated mezzanine tranches hid more correlation risk than their ratings showed.
-- **Index tranches on CDX and iTraxx.** The standard slices of the credit indices in [credit-indices](04-credit-indices.md) trade as tranches. Because its spread would be enormous, the equity tranche is quoted as an upfront payment plus a fixed 500 bp running. On the house pool that upfront is 42.40% of the tranche's size. **Conventions checked 2026-09-28:** this card's 0-3-7-10 slices are the pre-2009 CDX investment-grade standard (iTraxx used 0-3-6-9), and the upfront-plus-500 bp equity quote was the market's standard then; used here for illustration; attachment points and running coupons have changed since, so current term sheets govern.
-- **Correlation trading desks.** Quoting a tranche by the single correlation that reproduces its price is the market's language for these products; [implied-and-base-correlation](06-implied-and-base-correlation.md) builds it.
+- **Index tranches on CDX and iTraxx.** The standard slices of the credit indices in [Credit indices (CDX and iTraxx in outline)](04-credit-indices.md) trade as tranches. Because its spread would be enormous, the equity tranche is quoted as an upfront payment plus a fixed 500 bp running. On the house pool that upfront is 42.40% of the tranche's size. **Conventions checked 2026-09-28:** this card's 0-3-7-10 slices are the pre-2009 CDX investment-grade standard (iTraxx used 0-3-6-9), and the upfront-plus-500 bp equity quote was the market's standard then; used here for illustration; attachment points and running coupons have changed since, so current term sheets govern.
+- **Correlation trading desks.** Quoting a tranche by the single correlation that reproduces its price is the market's language for these products; [Implied correlation](06-implied-and-base-correlation.md) builds it.
 - **Securitisation.** Mortgage-backed securities and collateralised loan obligations slice a pool's losses the same way; the pools and default models differ.
 
 > **Say it back**
@@ -735,15 +717,15 @@ The two outputs are identical line for line, Monte Carlo included: both programs
 
 ## What this builds on
 
-- [vasicek-loss-distribution-and-basel-capital](03-vasicek-loss-distribution-and-basel-capital.md): the large-pool loss curve whose area between two floors is the tranche's expected loss.
-- [credit-indices](04-credit-indices.md): the index whose losses the standard tranches slice, and the protection and premium legs this card reuses.
+- [Vasicek's large-pool loss curve](03-vasicek-loss-distribution-and-basel-capital.md): the large-pool loss curve whose area between two floors is the tranche's expected loss.
+- [Credit indices (CDX and iTraxx in outline)](04-credit-indices.md): the index whose losses the standard tranches slice, and the protection and premium legs this card reuses.
 
 ---
 
 ## Where this goes next
 
-- [implied-and-base-correlation](06-implied-and-base-correlation.md): running this card backwards, from a tranche's market price to the correlation that produces it, and why each tranche needs its own.
-- [tail-dependence-and-the-t-copula](07-tail-dependence-and-the-t-copula.md): replacing the bell-curve economy with a fatter-tailed one, which moves loss into the senior tranches.
+- [Implied correlation](06-implied-and-base-correlation.md): running this card backwards, from a tranche's market price to the correlation that produces it, and why each tranche needs its own.
+- [Tail dependence](07-tail-dependence-and-the-t-copula.md): replacing the bell-curve economy with a fatter-tailed one, which moves loss into the senior tranches.
 
 ---
 

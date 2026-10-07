@@ -1,42 +1,16 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Black-Scholes from the Ground Up
-topic: Quoting off the forward
-item: Black-76
-kind: model
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/04-black-scholes-by-risk-neutral-expectation|black-scholes-by-risk-neutral-expectation]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/03-forward-price-by-cash-and-carry|forward-price-by-cash-and-carry]]"
-next:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/07-bachelier-model|bachelier-model]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/04-sabr-model-and-hagan-formula|sabr-model-and-hagan-formula]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/01-garman-kohlhagen|garman-kohlhagen]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/01-options-on-commodity-futures|options-on-commodity-futures]]"
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/01-caplets-and-floorlets|caplets-and-floorlets]]"
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/05-bond-options-and-jamshidians-trick|bond-options-and-jamshidians-trick]]"
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/05-cds-option-and-implied-spread-volatility|cds-option-and-implied-spread-volatility]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - black-76-and-forward-level-pricing
----
-
 # Black-76: Black-Scholes for anything quoted as a forward
 
-Financial mathematics → Black-Scholes from the Ground Up → Quoting off the forward → Black-76
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Black-Scholes from the Ground Up](../../../SYLLABUS.md#w12-s05) → Black-76
 
 ---
 
 ## General Overview
 
-Acme shares trade at 100.00 dollars this morning. Two firms have already signed a forward contract on them: in a year, one hands over a share and the other hands over 103.05 in cash. Nothing changed hands at signing, and 103.05 is not a forecast. It is what carrying the share for a year costs — a year of borrowing at 5 percent, less a year of the share's 2 percent dividends ([forward-price-by-cash-and-carry](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md)).
+Acme shares trade at 100.00 dollars this morning. Two firms have already signed a forward contract on them: in a year, one hands over a share and the other hands over 103.05 in cash. Nothing changed hands at signing, and 103.05 is not a forecast. It is what carrying the share for a year costs — a year of borrowing at 5 percent, less a year of the share's 2 percent dividends ([Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md)).
 
 Now a third contract, settling on that same day. It pays its holder, in cash, whatever the delivery figure exceeds 100.00 by, and nothing if the figure falls short. That is a **call option** struck at 100.00. What should it cost this morning?
 
-Two answers, differing only in which figure they start from. One starts from Acme's own price and carries interest and dividends through the formula from inside ([black-scholes-by-risk-neutral-expectation](04-black-scholes-by-risk-neutral-expectation.md)). The other ignores that price and works off the figure the market already quotes, 103.05. Fischer Black published the second in 1976: nothing about interest goes inside, and the whole thing is shrunk once at the end. The premium is **9.23** either way, agreeing to twelve digits, because it is the same contract.
+Two answers, differing only in which figure they start from. One starts from Acme's own price and carries interest and dividends through the formula from inside ([Black-Scholes by expectation](04-black-scholes-by-risk-neutral-expectation.md)). The other ignores that price and works off the figure the market already quotes, 103.05. Fischer Black published the second in 1976: nothing about interest goes inside, and the whole thing is shrunk once at the end. The premium is **9.23** either way, agreeing to twelve digits, because it is the same contract.
 
 Why bother: most option markets quote nothing but forwards. An option on December crude is written on the December futures figure, and a caplet, one period of cover against a rising interest rate, on a forward interest rate. There is no price today to carry, so the first route does not exist at all.
 
@@ -101,10 +75,10 @@ The premium also has a floor and a ceiling: above $D\,(F-K)$, 2.896925, and belo
 ### When it holds
 
 - **The quote wanders lognormally, with one constant volatility — the forward's own, not the asset's.** That is the model, not a fact. If volatility moves, the premium is off by roughly vega, the premium's slope against volatility, times the move; vega here is 37.901158 per whole unit. In most markets that use this formula the forward is the calmer of the two: twelve-month gas moves far less than gas for next month.
-- **The forward and the strike are both above zero.** A logarithm of a negative number is no answer at all. Euro and Swiss rates traded below zero from 2014 and this formula stopped returning anything, which is why the shelf carries [bachelier-model](07-bachelier-model.md) and [shifted-lognormal-and-volatility-conversion](08-shifted-lognormal-and-volatility-conversion.md).
+- **The forward and the strike are both above zero.** A logarithm of a negative number is no answer at all. Euro and Swiss rates traded below zero from 2014 and this formula stopped returning anything, which is why the shelf carries [Bachelier](07-bachelier-model.md) and [Shifted lognormal and volatility conversion](08-shifted-lognormal-and-volatility-conversion.md).
 - **Exercise on expiry day only.** The average runs over the quote on that one day, so nothing earlier can count. Most options on exchange-traded futures may in fact be exercised early; that extra right is worth more than this formula prices, and valuing it needs a tree rather than a formula.
 - **Volatility runs to expiry, the discount to the day the cash arrives.** Here they are the same day, so $D$ is $e^{-rT}$. A caplet fixes its rate on one date and pays months later; using one date for both is the standard way to get a caplet wrong.
-- **The bank rate is known in advance.** Then a daily-settled exchange contract and a private forward carry the same quote. Once the rate moves unpredictably they part company, and the honest discount is the market's own zero-coupon bond price — the change of yardstick in [change-of-numeraire-in-pricing](05-change-of-numeraire-in-pricing.md).
+- **The bank rate is known in advance.** Then a daily-settled exchange contract and a private forward carry the same quote. Once the rate moves unpredictably they part company, and the honest discount is the market's own zero-coupon bond price — the change of yardstick in [Changing the unit of account](05-change-of-numeraire-in-pricing.md).
 
 **Conventions verified 19 Sep 2026:** $r$ is continuously compounded and $T$ counts calendar years. Real quotes carry day-count and compounding conventions that differ by market and do get changed; convert before substituting.
 
@@ -114,7 +88,7 @@ The premium also has a floor and a ceiling: above $D\,(F-K)$, 2.896925, and belo
 
 ### Step 0: a contract that costs nothing to sign cannot drift
 
-Signing a forward takes no money. Whatever pricing rule the market obeys must give a position that cost nothing an average gain of nothing, or anyone would sign a billion of them and stand back ([risk-neutral-measure-and-the-fundamental-theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)). The gain on a forward held to delivery is the final quote minus today's. Set its average to zero:
+Signing a forward takes no money. Whatever pricing rule the market obeys must give a position that cost nothing an average gain of nothing, or anyone would sign a billion of them and stand back ([The fundamental theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)). The gain on a forward held to delivery is the final quote minus today's. Set its average to zero:
 
 $$\text{average of } F_T \;=\; F$$
 
@@ -132,7 +106,7 @@ That is why this card and the spot cards agree to the last digit: one contract, 
 
 ### Step 2: a forward that drifts nowhere, written out
 
-Step 0 fixed the average; the model fixes the shape. Take the quote's logarithm to wander as a bell curve, the engine the shelf opens with ([geometric-brownian-motion-for-prices](01-geometric-brownian-motion-for-prices.md)), with the drift set to nothing:
+Step 0 fixed the average; the model fixes the shape. Take the quote's logarithm to wander as a bell curve, the engine the shelf opens with ([Prices as geometric Brownian motion](01-geometric-brownian-motion-for-prices.md)), with the drift set to nothing:
 
 $$F_T = F\,\exp\!\left(-\tfrac12\sigma^2 T + \sigma\sqrt{T}\,Z\right), \qquad Z \ \text{a standard bell-curve draw}$$
 
@@ -204,7 +178,7 @@ $$-T\,C \;+\; D\,N(d_1)\cdot T\,F \;=\; T\,K\,D\,N(d_2) \;=\; 49.458109 .$$
 
 One option, one afternoon, two rate sensitivities of opposite sign, and neither is wrong.
 
-A third road belongs to another card: write the hedge rather than the average. A futures position ties up no cash, so the equation the premium must obey loses its carry term, leaving $\partial V/\partial t + \tfrac12\sigma^2 F^2\,\partial^2 V/\partial F^2 = r\,V$ — the premium's slide with the clock, plus its bend against the quote, must earn the bank rate. It returns the same formula, and the hedging route is done properly on [black-scholes-by-delta-hedging](03-black-scholes-by-delta-hedging.md).
+A third road belongs to another card: write the hedge rather than the average. A futures position ties up no cash, so the equation the premium must obey loses its carry term, leaving $\partial V/\partial t + \tfrac12\sigma^2 F^2\,\partial^2 V/\partial F^2 = r\,V$ — the premium's slide with the clock, plus its bend against the quote, must earn the bank rate. It returns the same formula, and the hedging route is done properly on [Black-Scholes by hedging](03-black-scholes-by-delta-hedging.md).
 
 ---
 
@@ -230,7 +204,7 @@ Acme's forward at 103.045453, strike 100.00, bank rate 5 percent, the forward's 
 | the premium financed to expiry | $9.227006\,/\,0.951229$ | 9.700084 |
 | break-even quote at expiry | $100.00 + 9.700084$ | 109.700084 |
 
-The ticket costs 9.23 this morning. A buyer who borrows that premium needs the quote above 109.70 on expiry day to come out ahead; a buyer who sells the ticket earlier needs no such thing. Starting from 100.00 instead, [black-scholes-by-risk-neutral-expectation](04-black-scholes-by-risk-neutral-expectation.md) reaches the same 9.227006.
+The ticket costs 9.23 this morning. A buyer who borrows that premium needs the quote above 109.70 on expiry day to come out ahead; a buyer who sells the ticket earlier needs no such thing. Starting from 100.00 instead, [Black-Scholes by expectation](04-black-scholes-by-risk-neutral-expectation.md) reaches the same 9.227006.
 
 ### The Greeks at these numbers
 
@@ -716,12 +690,12 @@ The two outputs match line for line, though the bell-curve area behind them was 
 
 ## Where you meet it in real life
 
-- **Commodity futures options.** Black's 1976 paper was about commodity contracts, and options on crude, gas, gold and grain futures are still quoted through this formula: [options-on-commodity-futures](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md).
-- **Caps and floors.** A caplet is this call with a forward interest rate where $F$ sits, times the loan's face amount and the length of the interest period, because a rate is not a payment: four percent of a million for a year is. See [caplets-and-floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md).
-- **Options on bonds and swaps.** The same skeleton with a forward swap rate or forward bond price, and a different multiplier in front: [bond-options-and-jamshidians-trick](../30-Short-Rate%20Models/05-bond-options-and-jamshidians-trick.md).
-- **Currencies.** An option on an exchange rate is this formula on the currency forward, both countries' rates already folded into the quote: [garman-kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md).
-- **Credit.** An option on a credit spread is written on a forward spread and quoted in the volatility this formula implies: [cds-option-and-implied-spread-volatility](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/05-cds-option-and-implied-spread-volatility.md).
-- **As a language, not a model.** Desks pricing with something richer still *quote* in Black volatility, because the band from 2.896925 to 98.019867 maps one premium to one volatility. Behind the quote often sits [sabr-model-and-hagan-formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md).
+- **Commodity futures options.** Black's 1976 paper was about commodity contracts, and options on crude, gas, gold and grain futures are still quoted through this formula: [Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md).
+- **Caps and floors.** A caplet is this call with a forward interest rate where $F$ sits, times the loan's face amount and the length of the interest period, because a rate is not a payment: four percent of a million for a year is. See [Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md).
+- **Options on bonds and swaps.** The same skeleton with a forward swap rate or forward bond price, and a different multiplier in front: [Bond options](../30-Short-Rate%20Models/05-bond-options-and-jamshidians-trick.md).
+- **Currencies.** An option on an exchange rate is this formula on the currency forward, both countries' rates already folded into the quote: [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md).
+- **Credit.** An option on a credit spread is written on a forward spread and quoted in the volatility this formula implies: [Options on a CDS](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/05-cds-option-and-implied-spread-volatility.md).
+- **As a language, not a model.** Desks pricing with something richer still *quote* in Black volatility, because the band from 2.896925 to 98.019867 maps one premium to one volatility. Behind the quote often sits [SABR and Hagan's formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md).
 
 > **Say it back**
 > A forward costs nothing to sign, so its quote drifts nowhere under the pricing rule and every carrying cost already sits inside it. Put the quoted forward where the asset's price used to be, delete the carry from the two distances, and discount once to the day the cash arrives. For Acme's forward of 103.045453 struck at 100.00 that is 9.23, the number the price-today route also gives. The formula needs the forward positive, so rates below zero broke it; and its slopes must name what is held still, since holding the quote still and holding the price still give rate sensitivities of opposite sign.
@@ -730,19 +704,19 @@ The two outputs match line for line, though the bell-curve area behind them was 
 
 ## What this builds on
 
-- [black-scholes-by-risk-neutral-expectation](04-black-scholes-by-risk-neutral-expectation.md): the average-the-payoff machinery, and why the forward half gets its own probability. This card reuses both and changes only the coordinates.
-- [forward-price-by-cash-and-carry](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md): where 103.045453 comes from, and why it is a bill rather than a forecast.
+- [Black-Scholes by expectation](04-black-scholes-by-risk-neutral-expectation.md): the average-the-payoff machinery, and why the forward half gets its own probability. This card reuses both and changes only the coordinates.
+- [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md): where 103.045453 comes from, and why it is a bill rather than a forecast.
 
 ## Where this goes next
 
-- [bachelier-model](07-bachelier-model.md): the same forward moved by absolute amounts rather than proportional ones, which survives a quote at or below zero.
-- [shifted-lognormal-and-volatility-conversion](08-shifted-lognormal-and-volatility-conversion.md): this formula with the zero boundary pushed down, and how to translate one market's volatility into another's.
-- [sabr-model-and-hagan-formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md): what fills the gap when one volatility will not fit every strike.
-- [garman-kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): this formula on a currency forward, with the desk conventions that come with it.
-- [options-on-commodity-futures](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md): the case Black wrote the paper for, options included that expire well before delivery.
-- [caplets-and-floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md): the interest-rate version, where the discount and the volatility finally run to different dates.
-- [bond-options-and-jamshidians-trick](../30-Short-Rate%20Models/05-bond-options-and-jamshidians-trick.md): forward bond prices, and a trick turning one awkward option into a bundle of these.
-- [cds-option-and-implied-spread-volatility](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/05-cds-option-and-implied-spread-volatility.md): the same engine pointed at a forward credit spread.
+- [Bachelier](07-bachelier-model.md): the same forward moved by absolute amounts rather than proportional ones, which survives a quote at or below zero.
+- [Shifted lognormal and volatility conversion](08-shifted-lognormal-and-volatility-conversion.md): this formula with the zero boundary pushed down, and how to translate one market's volatility into another's.
+- [SABR and Hagan's formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md): what fills the gap when one volatility will not fit every strike.
+- [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): this formula on a currency forward, with the desk conventions that come with it.
+- [Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md): the case Black wrote the paper for, options included that expire well before delivery.
+- [Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md): the interest-rate version, where the discount and the volatility finally run to different dates.
+- [Bond options](../30-Short-Rate%20Models/05-bond-options-and-jamshidians-trick.md): forward bond prices, and a trick turning one awkward option into a bundle of these.
+- [Options on a CDS](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/05-cds-option-and-implied-spread-volatility.md): the same engine pointed at a forward credit spread.
 
 This card held the bank rate fixed and known, so one discount factor sufficed; what to do when the rate itself is the random thing the option is written on is the caplet and swaption cards' question.
 

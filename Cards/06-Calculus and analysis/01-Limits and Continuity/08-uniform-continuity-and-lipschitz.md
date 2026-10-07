@@ -1,27 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Limits and Continuity
-topic: One tolerance everywhere
-item: Uniform continuity
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/07-extreme-value-theorem|extreme-value-theorem]]"
-next:
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/07-fixed-point-iteration-and-the-contraction-principle|fixed-point-iteration-and-the-contraction-principle]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/07-uniform-convergence|uniform-convergence]]"
-  - "[[Cards/16-Numerical analysis/02-Root Finding and Fixed Points/06-fixed-point-iteration-and-contraction|fixed-point-iteration-and-contraction]]"
-  - "[[Cards/17-Topology/01-Metric Spaces/07-uniform-continuity-and-heine-cantor|uniform-continuity-and-heine-cantor]]"
-  - "[[Cards/18-Functional analysis/03-Bounded Operators/01-bounded-operators-and-the-operator-norm|bounded-operators-and-the-operator-norm]]"
-  - "[[Cards/20-Harmonic analysis/03-Convolution and Approximate Identities/03-approximate-identities|approximate-identities]]"
-tags: [mathematics, calculus and analysis, uniform-continuity-and-lipschitz]
----
-
 # Uniform continuity: one tolerance for the whole interval, and the Lipschitz shortcut
 
-Calculus and analysis → Limits and Continuity → One tolerance everywhere → Uniform continuity
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Limits and Continuity](../../../SYLLABUS.md#w06-s01) → Uniform continuity
 
 ---
 
@@ -31,7 +10,7 @@ A workshop cuts square tiles with sides up to 2 m, and charges by area, side tim
 
 It depends on the tile. Side 0.5 m forgives a side error of 9.90 mm. Side 2 m forgives only 2.50 mm, because there each millimetre of side adds about four times as much area. One saw setting good for every tile exists: 2.50 mm.
 
-A function whose output tolerance can be met by one input tolerance across the whole interval is **uniformly continuous**. Plain continuity ([continuity](05-continuity.md)) promises a tolerance at each input separately. Uniform continuity fixes the tolerance first, then tests every point.
+A function whose output tolerance can be met by one input tolerance across the whole interval is **uniformly continuous**. Plain continuity ([Continuity](05-continuity.md)) promises a tolerance at each input separately. Uniform continuity fixes the tolerance first, then tests every point.
 
 With no size limit, no setting works: side 100 m forgives 0.00005 m, and bigger sides forgive less.
 
@@ -120,7 +99,7 @@ a hundred times the permitted 0.01 m^2. With $h$ = 0.0025 m the sides are 400 m 
 
 Suppose some output tolerance on $[a, b]$ had no single input tolerance. Then for each input tolerance tried, 1, 1/2, 1/3 and on, some pair of inputs closer than that has outputs at least the fixed tolerance apart.
 
-Bounded: the first members of those pairs have a subsequence settling on one point (Bolzano–Weierstrass, from [extreme-value-theorem](07-extreme-value-theorem.md)). Closed: that point is in the interval. The second members, ever closer to the first, settle there too. Continuity at that point pulls both outputs to one value, so their gap shrinks: a contradiction.
+Bounded: the first members of those pairs have a subsequence settling on one point (Bolzano–Weierstrass, from [Extreme value theorem](07-extreme-value-theorem.md)). Closed: that point is in the interval. The second members, ever closer to the first, settle there too. Continuity at that point pulls both outputs to one value, so their gap shrinks: a contradiction.
 
 On the whole line the bad pairs run off, never settling; with 0 left out, the $1/x$ pairs settle on 0, outside the domain.
 
@@ -147,7 +126,7 @@ No K fits. Propose K = 4: inputs 0 and 0.04 give a chord of steepness 5. Inputs 
 
 So Lipschitz gives uniform, uniform gives plain continuity, and neither arrow reverses: the square root blocks the first, squaring on the whole line the second.
 
-A second road to K uses derivatives: a rate never above 4 in size allows no chord steeper than 4. [fixed-point-iteration-and-the-contraction-principle](../03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md) takes it.
+A second road to K uses derivatives: a rate never above 4 in size allows no chord steeper than 4. [Fixed points](../03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md) takes it.
 
 ---
 
@@ -389,7 +368,7 @@ The two outputs agree line for line.
 
 - **Manufacturing tolerances.** A cost computed from a measured length inherits the length's error times K; one tolerance for a whole product range is a uniform one.
 - **Stable neural networks.** Capping a network's K bounds how far a small input change can move its output.
-- **Solving equations by repetition.** A map with K below 1 pulls points together, so repeating it homes in on one answer: fixed-point-iteration-and-contraction.
+- **Solving equations by repetition.** A map with K below 1 pulls points together, so repeating it homes in on one answer: Fixed points.
 
 > **Say it back**
 > Continuity gives each input its own tolerance. Uniform continuity asks for one tolerance for the whole interval. Heine–Cantor: continuous on a closed, bounded interval guarantees one. A Lipschitz constant K caps every chord's steepness, so the tolerance is the output tolerance divided by K, 0.0025 m for the tiles. The square root is uniform with no K.
@@ -398,16 +377,16 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [extreme-value-theorem](07-extreme-value-theorem.md): the settling subsequence in a closed, bounded interval, and the habit of watching which hypothesis each step spends.
+- [Extreme value theorem](07-extreme-value-theorem.md): the settling subsequence in a closed, bounded interval, and the habit of watching which hypothesis each step spends.
 
 ## Where this goes next
 
-- [fixed-point-iteration-and-the-contraction-principle](../03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md): K from a bounded derivative; K below 1 forces one fixed point.
-- [uniform-convergence](../06-Series/07-uniform-convergence.md): "one tolerance first" for a sequence of functions.
-- fixed-point-iteration-and-contraction: iteration error bounded by powers of K.
-- uniform-continuity-and-heine-cantor: Heine–Cantor for any distance, compactness replacing closed and bounded.
-- bounded-operators-and-the-operator-norm: for linear maps, K is the operator norm.
-- approximate-identities: uniform continuity making smoothing converge everywhere at once.
+- [Fixed points](../03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md): K from a bounded derivative; K below 1 forces one fixed point.
+- [Uniform convergence](../06-Series/07-uniform-convergence.md): "one tolerance first" for a sequence of functions.
+- Fixed points: iteration error bounded by powers of K.
+- Uniform continuity: Heine–Cantor for any distance, compactness replacing closed and bounded.
+- Bounded operators: for linear maps, K is the operator norm.
+- Approximate identities: uniform continuity making smoothing converge everywhere at once.
 
 ---
 

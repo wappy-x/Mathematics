@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Portfolio Credit - Correlation, Copulas, Indices and Tranches
-topic: Failing together at the extremes
-item: Tail dependence
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/02-one-factor-gaussian-copula|one-factor-gaussian-copula]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/05-cdo-tranches-in-outline|cdo-tranches-in-outline]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/03-chi-square-t-and-f-distributions|chi-square-t-and-f-distributions]]"
-next: []
-tags: [mathematics, financial-mathematics, tail-dependence-and-the-t-copula]
----
-
 # Tail dependence: the Gaussian copula's calm at the extremes, and the Student-t copula that fails together
 
-Financial mathematics → Portfolio Credit - Correlation, Copulas, Indices and Tranches → Failing together at the extremes → Tail dependence
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Credit - Correlation, Copulas, Indices and Tranches](../../../SYLLABUS.md#w12-s45) → Tail dependence
 
 ---
 
@@ -54,7 +37,7 @@ Orange: the Gaussian copula, falling to zero. Green: the t copula with four degr
 
 ## The formula
 
-Notation first, in words. A **copula** is the part of a model that says how two uncertain quantities move together, stripped of how each one behaves alone ([one-factor-gaussian-copula](02-one-factor-gaussian-copula.md)). Each firm gets a hidden credit score; it defaults when its score falls below a cutoff set so that the default chance is $p$. The joint chance that both default is written $J$. The arrow under "lim" means "let the default chance shrink towards zero and see where the ratio settles".
+Notation first, in words. A **copula** is the part of a model that says how two uncertain quantities move together, stripped of how each one behaves alone ([The one-factor Gaussian copula](02-one-factor-gaussian-copula.md)). Each firm gets a hidden credit score; it defaults when its score falls below a cutoff set so that the default chance is $p$. The joint chance that both default is written $J$. The arrow under "lim" means "let the default chance shrink towards zero and see where the ratio settles".
 
 $$\lambda \;=\; \lim_{p \to 0}\; P(\text{name 2 in its worst } p \mid \text{name 1 in its worst } p) \;=\; \lim_{p\to 0} \frac{J(p)}{p}$$
 
@@ -152,7 +135,7 @@ Road two conditions on the economy instead, as the one-factor card does: given t
 
 ### Step 4: from a pair to a pool
 
-A senior tranche of a loan pool loses money only when a large share of the pool defaults ([cdo-tranches-in-outline](05-cdo-tranches-in-outline.md)). In a large pool, once the economy and the mood are known, the fraction that defaults is just the conditional default chance. In the Gaussian model that gives Vasicek's curve ([vasicek-loss-distribution-and-basel-capital](03-vasicek-loss-distribution-and-basel-capital.md)):
+A senior tranche of a loan pool loses money only when a large share of the pool defaults ([Tranches](05-cdo-tranches-in-outline.md)). In a large pool, once the economy and the mood are known, the fraction that defaults is just the conditional default chance. In the Gaussian model that gives Vasicek's curve ([Vasicek's large-pool loss curve](03-vasicek-loss-distribution-and-basel-capital.md)):
 
 $$P(\text{default fraction} > x) = \Phi\!\left(\frac{a - \sqrt{1-\rho}\,\Phi^{-1}(x)}{\sqrt{\rho}}\right).$$
 
@@ -181,7 +164,7 @@ Two names, each with a 5% five-year default chance, score correlation 20%, t cop
 | both given one | $J/p$: $0.525/5$ and $0.98/5$ | 10.5% and 19.6% |
 | default correlation | $(J - p^2)/(p(1-p))$ | 0.058 and 0.154 |
 
-The Gaussian row reproduces the shelf's house pool: joint default 0.525% and default correlation 0.058 at a 5% default chance and 20% asset correlation ([default-correlation-and-joint-default](01-default-correlation-and-joint-default.md)). The t copula nearly doubles the joint default at the same correlation number, and nearly triples the default correlation.
+The Gaussian row reproduces the shelf's house pool: joint default 0.525% and default correlation 0.058 at a 5% default chance and 20% asset correlation ([Default correlation](01-default-correlation-and-joint-default.md)). The t copula nearly doubles the joint default at the same correlation number, and nearly triples the default correlation.
 
 ```
 joint default chance, two names at 5% each, correlation 20% (per cent)
@@ -648,8 +631,8 @@ The two outputs match line for line, including the simulation counts, since both
 ## Where you meet it in real life
 
 - **Senior CDO tranches in 2008.** A senior tranche is hit only when many loans default together. The Financial Crisis Inquiry Commission found that rating agencies had little data to estimate default correlation among mortgage securities, made choices that lowered it, and that the securities turned out far more correlated than estimated. A copula with no tail dependence understates exactly that event.
-- **Tranche pricing and the correlation smile.** A single Gaussian correlation cannot fit every tranche's market price; the implied numbers vary by tranche ([implied-and-base-correlation](06-implied-and-base-correlation.md)). Fatter-tailed copulas were one response.
-- **Bank capital.** The Basel formula uses the Gaussian one-factor model at a 99.9% level ([vasicek-loss-distribution-and-basel-capital](03-vasicek-loss-distribution-and-basel-capital.md)); that model has no tail dependence, so joint disasters enter the capital number only through the correlation and the 99.9% level the regulator chose.
+- **Tranche pricing and the correlation smile.** A single Gaussian correlation cannot fit every tranche's market price; the implied numbers vary by tranche ([Implied correlation](06-implied-and-base-correlation.md)). Fatter-tailed copulas were one response.
+- **Bank capital.** The Basel formula uses the Gaussian one-factor model at a 99.9% level ([Vasicek's large-pool loss curve](03-vasicek-loss-distribution-and-basel-capital.md)); that model has no tail dependence, so joint disasters enter the capital number only through the correlation and the 99.9% level the regulator chose.
 - **Market risk and insurance.** Stock returns and insurance claims show the same pattern: crashes arrive together more often than a Gaussian model allows. The t copula is a standard tool in risk management for this.
 
 > **Say it back**
@@ -659,14 +642,14 @@ The two outputs match line for line, including the simulation counts, since both
 
 ## What this builds on
 
-- [one-factor-gaussian-copula](02-one-factor-gaussian-copula.md): the hidden-score model, the cutoffs and the economy factor that road two conditions on.
-- [cdo-tranches-in-outline](05-cdo-tranches-in-outline.md): why a senior slice cares only about many defaults at once.
-- [chi-square-t-and-f-distributions](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md): the t law as a bell-curve draw divided by the root of a chi-square over its degrees of freedom.
+- [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md): the hidden-score model, the cutoffs and the economy factor that road two conditions on.
+- [Tranches](05-cdo-tranches-in-outline.md): why a senior slice cares only about many defaults at once.
+- [The reference distributions](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md): the t law as a bell-curve draw divided by the root of a chi-square over its degrees of freedom.
 
 ## Where this goes next
 
-- [implied-and-base-correlation](06-implied-and-base-correlation.md): how the market quotes tranches in Gaussian correlation, and why the quotes vary by tranche.
-- [vasicek-loss-distribution-and-basel-capital](03-vasicek-loss-distribution-and-basel-capital.md): the Gaussian large-pool curve that Step 4 fattens.
+- [Implied correlation](06-implied-and-base-correlation.md): how the market quotes tranches in Gaussian correlation, and why the quotes vary by tranche.
+- [Vasicek's large-pool loss curve](03-vasicek-loss-distribution-and-basel-capital.md): the Gaussian large-pool curve that Step 4 fattens.
 
 Tail dependence names what a correlation number cannot see; which copula, and which degrees of freedom, a real loan book has is an estimation question that pooled default data answers only weakly, which is why tranche markets quote the Gaussian correlation that fits each price instead.
 

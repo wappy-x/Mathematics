@@ -1,28 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Generators, Densities and Simulation
-topic: Sampling the transition law
-item: Exact simulation
-kind: method
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/05-ornstein-uhlenbeck-and-cir-processes|ornstein-uhlenbeck-and-cir-processes]]"
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/04-euler-maruyama-scheme|euler-maruyama-scheme]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/07-geometric-brownian-motion|geometric-brownian-motion]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-  - "[[Cards/09-Probability and statistics/11-Simulation/03-rejection-sampling-and-box-muller|rejection-sampling-and-box-muller]]"
-  - "[[Cards/09-Probability and statistics/11-Simulation/04-monte-carlo-estimates-and-error|monte-carlo-estimates-and-error]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/07-optimal-stopping-and-snell-envelope|optimal-stopping-and-snell-envelope]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-tags: [mathematics, stochastic processes and calculus, exact-simulation-of-gbm-and-ou]
----
-
 # Exact simulation: when you can skip the time steps
 
-Stochastic processes and calculus → Generators, Densities and Simulation → Sampling the transition law → Exact simulation
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Generators, Densities and Simulation](../../../SYLLABUS.md#w11-s08) → Exact simulation
 
 ---
 
@@ -30,7 +8,7 @@ Stochastic processes and calculus → Generators, Densities and Simulation → S
 
 A share trades at $100. A risk desk wants its price at each of the next twelve month-ends: twelve numbers per scenario, tens of thousands of scenarios. Beside it sits a short-term interest rate at 6 percent, pulled toward 4 percent. The desk wants the rate on the same twelve dates.
 
-The general tool is the Euler-Maruyama scheme of [euler-maruyama-scheme](04-euler-maruyama-scheme.md): cut time into small steps and push the price forward by its drift and one random shove per step. Each step adds a small error, so a sound answer needs many steps: a thousand a year is common, though the desk wants only twelve dates. And even then a small error remains.
+The general tool is the Euler-Maruyama scheme of [Euler-Maruyama](04-euler-maruyama-scheme.md): cut time into small steps and push the price forward by its drift and one random shove per step. Each step adds a small error, so a sound answer needs many steps: a thousand a year is common, though the desk wants only twelve dates. And even then a small error remains.
 
 For two models no steps are needed. Geometric Brownian motion (the share model, called GBM) and the Ornstein-Uhlenbeck process (the mean-reverting rate, called OU) have a known **transition law**: the exact probability law of the value on the next date, given the value today. Draw from that law once per date and the simulated prices have exactly the model's law at those dates. Twelve draws per path, not a thousand, and no discretisation error (the error from replacing continuous time by a grid). In the code below a monthly Euler path ends 70 cents away from the true path on average; a 1,000-step Euler path is still 8 cents away. The exact path is exactly right at every date.
 
@@ -93,7 +71,7 @@ $$S \to S\,(1 + \mu h + \sigma\sqrt{h}\,Z), \qquad r \to r + \kappa(\theta - r)h
 
 - **A transition law known in closed form.** GBM and OU are linear equations, so Ito calculus solves them and the law from one date to the next is lognormal or normal. Give the rate a pull such as $\kappa(\theta - r_t)^3$ and no closed-form law exists; this card's method then does not apply, and a scheme such as Euler takes over.
 - **Coefficients fixed over each gap.** If the volatility changes inside a month on a known schedule, the step needs the month's total variance, the integral of $\sigma^2$ over the month, in place of $\sigma^2 h_k$. A step that uses the volatility at the start of the month is an Euler step again.
-- **Exact at the dates, and only there.** The chain says nothing about the path between month-ends. A question about the path in between, such as whether the share touched $90 mid-month, needs a bridge between the dates, as in [brownian-bridge](../05-Brownian%20Motion/05-brownian-bridge.md).
+- **Exact at the dates, and only there.** The chain says nothing about the path between month-ends. A question about the path in between, such as whether the share touched $90 mid-month, needs a bridge between the dates, as in [Brownian bridge](../05-Brownian%20Motion/05-brownian-bridge.md).
 - **Independent standard normal draws.** The method is exact up to the random number generator and floating-point rounding. A generator with correlated outputs breaks it.
 
 ---
@@ -106,7 +84,7 @@ GBM and OU are Markov processes: given today's value, the future does not depend
 
 ### Step 1: the share's log is Brownian motion with drift
 
-Ito's lemma ([itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md)) applied to $\ln S_t$ gives
+Ito's lemma ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)) applied to $\ln S_t$ gives
 
 $$d\ln S_t = \big(\mu - \tfrac12\sigma^2\big)\,dt + \sigma\,dW_t .$$
 
@@ -114,11 +92,11 @@ The $-\tfrac12\sigma^2$ is Ito's extra term: the second derivative of the log, $
 
 $$\ln S_{t_{k+1}} - \ln S_{t_k} = \big(\mu - \tfrac12\sigma^2\big)h_k + \sigma\,(W_{t_{k+1}} - W_{t_k}).$$
 
-The Brownian increment is normal with mean 0 and variance $h_k$, and independent of everything up to $t_k$. Write it as $\sqrt{h_k}\,Z_k$ and exponentiate: that is the GBM step. This is the same solution as [geometric-brownian-motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md), restarted at each date.
+The Brownian increment is normal with mean 0 and variance $h_k$, and independent of everything up to $t_k$. Write it as $\sqrt{h_k}\,Z_k$ and exponentiate: that is the GBM step. This is the same solution as [Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md), restarted at each date.
 
 ### Step 2: the rate is today's gap, faded, plus faded shocks
 
-The OU solution from [ornstein-uhlenbeck-and-cir-processes](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md), restarted at time $t_k$, reads
+The OU solution from [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md), restarted at time $t_k$, reads
 
 $$r_{t_{k+1}} = \theta + (r_{t_k} - \theta)\,e^{-\kappa h_k} + \sigma_r\int_{t_k}^{t_{k+1}} e^{-\kappa(t_{k+1} - u)}\,dW_u .$$
 
@@ -153,9 +131,9 @@ Two exact months in a row must give one exact two-month step, or the method woul
 
 ### Step 5: what Euler does instead
 
-Euler keeps only the first-order terms of each exact factor. Over a month, $e^{-\kappa h} = 0.959189$ becomes $1 - \kappa h = 0.958333$, and the share's lognormal factor becomes $1 + \mu h + \sigma\sqrt{h}\,Z$. Each step misses by a term of order $h^2$ in the mean, so over a year of $n$ steps the law is off by order $1/n$; along a single path the error is larger, of order $1/\sqrt{n}$ for GBM. Those two error rates are the subject of [milstein-and-strong-weak-convergence](05-milstein-and-strong-weak-convergence.md); this card only shows both errors shrink with the step and never reach zero.
+Euler keeps only the first-order terms of each exact factor. Over a month, $e^{-\kappa h} = 0.959189$ becomes $1 - \kappa h = 0.958333$, and the share's lognormal factor becomes $1 + \mu h + \sigma\sqrt{h}\,Z$. Each step misses by a term of order $h^2$ in the mean, so over a year of $n$ steps the law is off by order $1/n$; along a single path the error is larger, of order $1/\sqrt{n}$ for GBM. Those two error rates are the subject of [Milstein and the two kinds of error](05-milstein-and-strong-weak-convergence.md); this card only shows both errors shrink with the step and never reach zero.
 
-The other road to the same law at a date is the density itself: the lognormal or normal density solves the forward equation of [fokker-planck-forward-equation](03-fokker-planck-forward-equation.md). Exact simulation is sampling from that solution.
+The other road to the same law at a date is the density itself: the lognormal or normal density solves the forward equation of [Fokker-Planck](03-fokker-planck-forward-equation.md). Exact simulation is sampling from that solution.
 
 ---
 
@@ -623,11 +601,11 @@ Each bar is the average over 2000 sample paths of the gap at one year, with stan
 
 ## Where you meet it in real life
 
-- **Pricing by simulation.** Monte Carlo pricing of options whose payoff depends on monthly closes, such as an average-price option, uses exact GBM steps at the fixing dates: [monte-carlo-pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md).
-- **Risk scenarios.** Value-at-risk engines step market factors to a horizon in one exact move when the model allows: [historical-and-monte-carlo-var](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md).
-- **Rates and spreads.** An OU rate observed monthly is exactly an autoregression with coefficient $a$ = 0.959189, which is why fitting OU to data is a linear regression: [ar-models](../../09-Probability%20and%20statistics/12-Time%20Series/02-ar-models.md).
+- **Pricing by simulation.** Monte Carlo pricing of options whose payoff depends on monthly closes, such as an average-price option, uses exact GBM steps at the fixing dates: [Monte Carlo pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md).
+- **Risk scenarios.** Value-at-risk engines step market factors to a horizon in one exact move when the model allows: [Historical and Monte Carlo VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md).
+- **Rates and spreads.** An OU rate observed monthly is exactly an autoregression with coefficient $a$ = 0.959189, which is why fitting OU to data is a linear regression: [Autoregression](../../09-Probability%20and%20statistics/12-Time%20Series/02-ar-models.md).
 - **Physics.** A particle's velocity under friction and molecular kicks is OU; Gillespie's exact update simulates it with any time step.
-- **Paths between the dates.** When a payoff watches the path between fixings, the exact endpoints are filled in with a Brownian bridge: [quasi-monte-carlo-and-brownian-bridge](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md).
+- **Paths between the dates.** When a payoff watches the path between fixings, the exact endpoints are filled in with a Brownian bridge: [Quasi-Monte Carlo](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md).
 
 > **Say it back**
 > GBM and OU are Markov processes with a known law from one date to the next: lognormal for the share, normal for the rate. Drawing from that law once per date gives values with the process's exact joint law at those dates, whatever their spacing. The share's step comes from Ito's lemma on the log, which brings the $-\tfrac12\sigma^2$; the rate's step comes from the OU solution, whose shock is drained by the pull as it builds. Euler replaces each exact factor by its first-order version and leaves an error that shrinks with the step but never vanishes.
@@ -636,15 +614,15 @@ Each bar is the average over 2000 sample paths of the gap at one year, with stan
 
 ## What this builds on
 
-- [ornstein-uhlenbeck-and-cir-processes](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): the OU solution and its normal law; Step 2 restarts it at each date.
-- [euler-maruyama-scheme](04-euler-maruyama-scheme.md): the general scheme this card compares against, with its step and its error.
-- [geometric-brownian-motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md) and [itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md): the share model and the lemma that turns its log into Brownian motion with drift.
-- [rejection-sampling-and-box-muller](../../09-Probability%20and%20statistics/11-Simulation/03-rejection-sampling-and-box-muller.md) and [monte-carlo-estimates-and-error](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md): the normal draws and the standard errors in the code.
+- [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): the OU solution and its normal law; Step 2 restarts it at each date.
+- [Euler-Maruyama](04-euler-maruyama-scheme.md): the general scheme this card compares against, with its step and its error.
+- [Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md) and [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md): the share model and the lemma that turns its log into Brownian motion with drift.
+- [Rejection sampling and Box-Muller](../../09-Probability%20and%20statistics/11-Simulation/03-rejection-sampling-and-box-muller.md) and [Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md): the normal draws and the standard errors in the code.
 
 ## Where this goes next
 
-- [optimal-stopping-and-snell-envelope](07-optimal-stopping-and-snell-envelope.md): a process watched only on chosen dates, there three monthly house offers, and the rule for which date to stop on.
-- [monte-carlo-pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): exact GBM paths turned into option prices.
+- [Optimal stopping](07-optimal-stopping-and-snell-envelope.md): a process watched only on chosen dates, there three monthly house offers, and the rule for which date to stop on.
+- [Monte Carlo pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): exact GBM paths turned into option prices.
 
 Exact steps hand over a value on each chosen date and leave open what to do with it: on which date to act, which the optimal-stopping card answers, and what a whole path is worth, which the pricing card answers.
 

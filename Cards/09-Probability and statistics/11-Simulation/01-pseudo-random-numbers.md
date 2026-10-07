@@ -1,28 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Simulation
-topic: Deterministic randomness
-item: Random numbers from a computer
-kind: method
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/02-uniform-distribution|uniform-distribution]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/01-congruence-mod-n|congruence-mod-n]]"
-next:
-  - "[[Cards/09-Probability and statistics/11-Simulation/02-inverse-transform-sampling|inverse-transform-sampling]]"
-  - "[[Cards/09-Probability and statistics/11-Simulation/04-monte-carlo-estimates-and-error|monte-carlo-estimates-and-error]]"
-  - "[[Cards/14-Applied and computational/02-Randomised and Approximate Algorithms/01-randomised-algorithms-and-expectation|randomised-algorithms-and-expectation]]"
-  - "[[Cards/14-Applied and computational/02-Randomised and Approximate Algorithms/03-shuffling-and-reservoir-sampling|shuffling-and-reservoir-sampling]]"
-  - "[[Cards/14-Applied and computational/08-Scientific Computing Practice/03-reproducible-simulation-and-seeds|reproducible-simulation-and-seeds]]"
-  - "[[Cards/24-Computability and complexity/04-Beyond Worst Case/04-derandomisation-and-pseudorandomness|derandomisation-and-pseudorandomness]]"
-tags: [mathematics, probability and statistics, pseudo-random-numbers]
----
-
 # Random numbers from a computer: linear congruential and Mersenne generators, seeds and tests
 
-Probability and statistics → Simulation → Deterministic randomness → Random numbers from a computer
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Simulation](../../../SYLLABUS.md#w09-s11) → Random numbers from a computer
 
 ---
 
@@ -32,7 +10,7 @@ A simulation throws 100,000 darts at a square one unit on a side. A dart counts 
 
 The darts were never random. A computer follows fixed rules, so every "random" number it hands out is computed from the one before. Think of a shuffled deck dealt from the top: the deal looks random, but the same shuffle gives the same deal every time. The rule is a **pseudo-random number generator**, from here on a **generator**. The dart program uses **MT19937**, the Mersenne Twister, built into Python and R; Step 5 opens it up. The number it starts from, 20260929 on Monday, is the **seed**. Same seed, same stream of numbers, same answer: that is what lets a bug be chased, a result be checked by someone else, and two designs be compared on identical luck.
 
-Two questions decide whether a generator can be trusted. How long does its stream run before it repeats? And does the stream pass for uniform draws between 0 and 1 ([uniform-distribution](../04-Continuous%20Distributions/02-uniform-distribution.md)) under tests designed to catch it out?
+Two questions decide whether a generator can be trusted. How long does its stream run before it repeats? And does the stream pass for uniform draws between 0 and 1 ([Uniform](../04-Continuous%20Distributions/02-uniform-distribution.md)) under tests designed to catch it out?
 
 **A generator is a fixed rule applied over and over to a hidden number; the seed picks the starting number, so the same seed replays the same stream exactly, and a generator earns trust only through the length of its loop and the tests its output passes.**
 
@@ -55,7 +33,7 @@ The line: the seed 7 at step 0, then the generator's 16 outputs, printed by both
 
 ## The formula
 
-Notation first. The **mod** operation gives the remainder after division: 38 mod 16 is 6, since 38 = 2 × 16 + 6. The three-bar sign ≡ reads "leaves the same remainder as" ([congruence-mod-n](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md)). A subscript counts steps: $x_n$ is the generator's state after $n$ steps, and $x_0$ is the seed.
+Notation first. The **mod** operation gives the remainder after division: 38 mod 16 is 6, since 38 = 2 × 16 + 6. The three-bar sign ≡ reads "leaves the same remainder as" ([Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md)). A subscript counts steps: $x_n$ is the generator's state after $n$ steps, and $x_0$ is the seed.
 
 The simplest family, the **linear congruential generator** (LCG: multiply, add, keep the remainder), is one line:
 
@@ -71,7 +49,7 @@ $$\text{loop length} = m \iff c \text{ is odd and } a \equiv 1 \pmod 4$$
 
 **Read it aloud:** the generator visits all $m$ states before repeating exactly when the added number is odd and the multiplier leaves remainder 1 on division by 4. For other $m$ the rule reads: $c$ shares no factor with $m$, $a - 1$ is divisible by every prime that divides $m$, and by 4 if 4 divides $m$.
 
-Uniformity is tested by sorting $N$ draws into $k$ equal bins and adding up the squared surprises ([chi-square-tests](../08-Confidence%20Intervals%20and%20Tests/06-chi-square-tests.md)):
+Uniformity is tested by sorting $N$ draws into $k$ equal bins and adding up the squared surprises ([Chi-square tests](../08-Confidence%20Intervals%20and%20Tests/06-chi-square-tests.md)):
 
 $$\chi^2 = \sum_{j=1}^{k} \frac{(O_j - E_j)^2}{E_j}$$
 
@@ -109,7 +87,7 @@ Only $m$ states are possible, so within $m + 1$ steps some state comes back, and
 
 ### Step 1: the same seed replays the same stream, and any stretch can be reached directly
 
-The rule's only input is the current state, so the same seed gives the same stream: 3.13856 twice. A different seed starts somewhere else on the loop: 3.14304. The two differ by 0.00448, less than one standard error, which is the size of luck at 100,000 darts ([monte-carlo-estimates-and-error](04-monte-carlo-estimates-and-error.md)).
+The rule's only input is the current state, so the same seed gives the same stream: 3.13856 twice. A different seed starts somewhere else on the loop: 3.14304. The two differ by 0.00448, less than one standard error, which is the size of luck at 100,000 darts ([Monte Carlo](04-monte-carlo-estimates-and-error.md)).
 
 Determinism also allows jumping ahead. The generator Park and Miller called the minimal standard, **minstd**, has $c = 0$, $a = 16807$ and $m = 2^{31} - 1$. With no increment, $n$ steps multiply the seed by $a$ exactly $n$ times, so $x_n = a^n x_0 \bmod m$. Repeated squaring computes $a^{10000}$ with a handful of squarings instead of 10,000 steps. From seed 1, stepping and jumping both land on 1043618065: the value Park and Miller published as the test that an implementation is correct. Jumping is how parallel workers get separate stretches of one stream.
 
@@ -157,7 +135,7 @@ The notorious bad one is **RANDU**, IBM's generator of the 1960s: $a = 65539$, $
 
 ### Step 4: testing uniformity with chi-square
 
-A test asks one question: would honest uniform draws look this lumpy? Sort 10,000 draws into 10 equal bins, about 1000 expected in each. The chi-square total follows, for honest draws and to a close approximation when each bin expects many draws, the chi-square law with 9 **degrees of freedom** (the bin count less one, since the counts must add to 10,000) ([chi-square-t-and-f-distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)). Its p-value, the chance honest draws would score at least as high ([hypothesis-tests-and-p-values](../08-Confidence%20Intervals%20and%20Tests/03-hypothesis-tests-and-p-values.md)), comes from the area under that law's density. The checks compute it with their own Simpson's-rule integrator. At 16.919, the 5% point that printed tables give for 9 degrees of freedom, the integrator returns 0.0500.
+A test asks one question: would honest uniform draws look this lumpy? Sort 10,000 draws into 10 equal bins, about 1000 expected in each. The chi-square total follows, for honest draws and to a close approximation when each bin expects many draws, the chi-square law with 9 **degrees of freedom** (the bin count less one, since the counts must add to 10,000) ([The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)). Its p-value, the chance honest draws would score at least as high ([Hypothesis tests](../08-Confidence%20Intervals%20and%20Tests/03-hypothesis-tests-and-p-values.md)), comes from the area under that law's density. The checks compute it with their own Simpson's-rule integrator. At 16.919, the 5% point that printed tables give for 9 degrees of freedom, the integrator returns 0.0500.
 
 | Generator | Chi-square | p-value |
 | --- | --- | --- |
@@ -189,7 +167,7 @@ Modern generators keep a much larger state and stir it with bit operations: shif
 
 **SplitMix64**, written out in many checks on this wing, is a counter with a scrambler. Its state steps by a fixed odd number: an LCG with $a = 1$ and odd $c$, so by Step 2 its loop covers all $2^{64}$ states. On its own that is the counter of Step 3. A mixing function then shifts, XORs and multiplies the state so that neighbouring counts give unrelated outputs. Because the state after $n$ steps is the seed plus $n$ times the step, the 10,000th output can be computed directly; the check gets the same number both ways.
 
-Physical noise and cryptographic generators are the other routes; simulation rarely needs them, security always needs the second. How far fixed rules can stand in for true randomness is the subject of derandomisation-and-pseudorandomness.
+Physical noise and cryptographic generators are the other routes; simulation rarely needs them, security always needs the second. How far fixed rules can stand in for true randomness is the subject of Pseudorandomness.
 
 ---
 
@@ -609,17 +587,17 @@ The two outputs match line for line, and that match is the replay test: each pro
 > - **Treating one failed test as proof of a bad generator.** MT19937 scores p = 0.0319 from seed 20260929; across seeds 1 to 100 it falls below 0.05 in 5 runs, exactly the one in twenty a 5% test allows.
 > - **Seeding streams with neighbouring numbers.** With minstd, seed 2 gives exactly twice seed 1's stream, mod $m$: the "independent" runs are tied together in 1000 of 1000 outputs. Take separate stretches by jumping ahead, or use a generator built for splitting.
 > - **Taking low bits from a power-of-2 LCG.** The toy generator's last bit runs 0, 1, 0, 1. Dice made by `x mod 6` from such a generator inherit the pattern; use the high bits, as $u_n = x_n / m$ does.
-> - **Re-running with new seeds until the answer looks right.** Each seed gives a legitimate run; choosing among them afterwards is running many tests and reporting one ([multiple-testing](../08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md)).
+> - **Re-running with new seeds until the answer looks right.** Each seed gives a legitimate run; choosing among them afterwards is running many tests and reporting one ([Many tests](../08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md)).
 > - **Using a simulation generator for secrets.** MT19937's state can be rebuilt from 624 consecutive outputs, after which every later output is known. Passwords and keys need a cryptographic generator.
 
 ---
 
 ## Where you meet it in real life
 
-- **Published research.** A simulation study that states its generator and seed can be re-run by a referee to the last digit; more on seeds and parallel streams: reproducible-simulation-and-seeds.
-- **Monte Carlo estimates.** Every estimate on [monte-carlo-estimates-and-error](04-monte-carlo-estimates-and-error.md), and every simulated option price in the finance wing, is only as good as the uniform draws underneath it.
+- **Published research.** A simulation study that states its generator and seed can be re-run by a referee to the last digit; more on seeds and parallel streams: Seeds.
+- **Monte Carlo estimates.** Every estimate on [Monte Carlo](04-monte-carlo-estimates-and-error.md), and every simulated option price in the finance wing, is only as good as the uniform draws underneath it.
 - **Games.** A video game that builds its world from a seed builds the same world for every player who types that seed, because the terrain is a generator's stream.
-- **Shuffling and sampling.** Dealing a card game or picking a random sample of records draws from a generator; shuffling-and-reservoir-sampling shows how to do it fairly.
+- **Shuffling and sampling.** Dealing a card game or picking a random sample of records draws from a generator; Fair choices from a list you cannot hold shows how to do it fairly.
 - **Software testing.** Random-input tests print their seed on failure, so the failing case replays exactly.
 
 > **Say it back**
@@ -629,19 +607,19 @@ The two outputs match line for line, and that match is the replay test: each pro
 
 ## What this builds on
 
-- [uniform-distribution](../04-Continuous%20Distributions/02-uniform-distribution.md): the flat law on 0 to 1 that every generator imitates, and the bin shares it predicts.
-- [congruence-mod-n](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md): remainders and the ≡ sign that the generator's rule and the full-cycle proof are written in.
+- [Uniform](../04-Continuous%20Distributions/02-uniform-distribution.md): the flat law on 0 to 1 that every generator imitates, and the bin shares it predicts.
+- [Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md): remainders and the ≡ sign that the generator's rule and the full-cycle proof are written in.
 
 ## Where this goes next
 
-- [inverse-transform-sampling](02-inverse-transform-sampling.md): turning uniform draws into draws from any other law.
-- [monte-carlo-estimates-and-error](04-monte-carlo-estimates-and-error.md): why the dart estimate's error shrinks like one over the square root of the number of darts.
-- randomised-algorithms-and-expectation: algorithms that flip coins to run faster, and what their average cost means.
-- shuffling-and-reservoir-sampling: fair shuffles and samples built from a generator's draws.
-- reproducible-simulation-and-seeds: seeds, parallel streams and version pinning in practice.
-- derandomisation-and-pseudorandomness: when a fixed rule can provably replace true randomness.
+- [Inverse transform](02-inverse-transform-sampling.md): turning uniform draws into draws from any other law.
+- [Monte Carlo](04-monte-carlo-estimates-and-error.md): why the dart estimate's error shrinks like one over the square root of the number of darts.
+- Randomised algorithms: algorithms that flip coins to run faster, and what their average cost means.
+- Fair choices from a list you cannot hold: fair shuffles and samples built from a generator's draws.
+- Seeds: seeds, parallel streams and version pinning in practice.
+- Pseudorandomness: when a fixed rule can provably replace true randomness.
 
-A generator hands out flat draws between 0 and 1, but a simulation needs waiting times, heights and prices with other shapes; [inverse-transform-sampling](02-inverse-transform-sampling.md) turns one into the other.
+A generator hands out flat draws between 0 and 1, but a simulation needs waiting times, heights and prices with other shapes; [Inverse transform](02-inverse-transform-sampling.md) turns one into the other.
 
 ---
 

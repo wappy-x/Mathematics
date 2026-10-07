@@ -1,23 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Nonlinear Dynamics in the Plane
-topic: Outbreaks in a closed town
-item: The SIR model
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/01-phase-portraits-and-nullclines|phase-portraits-and-nullclines]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/05-logarithms|logarithms]]"
-next:
-  - "[[Cards/14-Applied and computational/07-Network Science and Spectral Graphs/05-epidemics-on-networks|epidemics-on-networks]]"
-tags: [mathematics, differential equations and dynamics, the-sir-epidemic-model]
----
-
 # The SIR model: an outbreak grows while each case infects more than one, and burns out before everyone is ill
 
-Differential equations and dynamics → Nonlinear Dynamics in the Plane → Outbreaks in a closed town → The SIR model
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → The SIR model
 
 ---
 
@@ -52,7 +35,7 @@ Orange: susceptible. Green: ill at once. Dark blue: removed. The three add to 10
 
 ## The formula
 
-Notation from [what-a-differential-equation-says](../01-Rate%20Equations/01-what-a-differential-equation-says.md): $S'$ is the rate of $S$. Each box is measured as a share of the town, so $S + I + R = 1$. The SIR model is three rate laws:
+Notation from [A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md): $S'$ is the rate of $S$. Each box is measured as a share of the town, so $S + I + R = 1$. The SIR model is three rate laws:
 
 $$S' = -bSI, \qquad I' = bSI - gI, \qquad R' = gI .$$
 
@@ -100,15 +83,15 @@ Factor the ill share's law:
 
 $$I' = I\,(bS - g) .$$
 
-The ill share grows exactly while $bS > g$, that is, $S > 1/R_0$. On day 0 $S$ is almost 1, so the early growth rate is $b - g$ = 0.375 per day, and cases double every ln 2 ÷ 0.375 = 1.85 days ([logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
+The ill share grows exactly while $bS > g$, that is, $S > 1/R_0$. On day 0 $S$ is almost 1, so the early growth rate is $b - g$ = 0.375 per day, and cases double every ln 2 ÷ 0.375 = 1.85 days ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
 
 Why $b/g$ counts cases per case: infections come at $b$ per day for an illness of $1/g$ days, and 0.625 × 4 = 2.5. Below 1, $I'$ is negative from day 0 and nothing happens.
 
-Every point with $I = 0$ is an equilibrium; by [linearisation-and-the-jacobian](02-linearisation-and-the-jacobian.md), the Jacobian there has eigenvalues 0 and $bS - g$: +0.375 per day at the untouched town, so one case pushes the state away, and −0.1829 per day at the end state, so leftover illness decays.
+Every point with $I = 0$ is an equilibrium; by [Linearisation](02-linearisation-and-the-jacobian.md), the Jacobian there has eigenvalues 0 and $bS - g$: +0.375 per day at the untouched town, so one case pushes the state away, and −0.1829 per day at the end state, so leftover illness decays.
 
 ### Step 2: the phase curve, a quantity the outbreak never changes
 
-The path in the $S$-$I$ plane ([phase-portraits-and-nullclines](01-phase-portraits-and-nullclines.md)) needs no clock: while anyone is ill, $S$ falls steadily and can serve as one. Divide the two laws:
+The path in the $S$-$I$ plane ([Phase portraits and nullclines](01-phase-portraits-and-nullclines.md)) needs no clock: while anyone is ill, $S$ falls steadily and can serve as one. Divide the two laws:
 
 $$\frac{dI}{dS} = \frac{bSI - gI}{-bSI} = -1 + \frac{1}{R_0 S} .$$
 
@@ -116,7 +99,7 @@ Integrating in $S$:
 
 $$I + S - \frac{\ln S}{R_0} = \text{constant} = I_0 + S_0 - \frac{\ln S_0}{R_0} .$$
 
-The same trick gives the closed orbits of [predator-prey](06-predator-prey.md); here the curve is open and runs down to $I = 0$.
+The same trick gives the closed orbits of [Predator and prey](06-predator-prey.md); here the curve is open and runs down to $I = 0$.
 
 ### The picture: the outbreak in the S-I plane
 
@@ -184,7 +167,7 @@ On day 25.65, 2,335 residents are ill at once; 1,073 never catch it.
 
 ## Code, from first principles, and it actually runs
 
-Road one steps the laws with Runge-Kutta 4 (four slope samples per step, averaged; [runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) to the peak and the end state; its error falls about sixteenfold as the step halves, the mark of a fourth-order rule. Road two never touches time: the peak from the phase curve at $S = 1/R_0$, the end by bisection (halving an interval that brackets a root) where the curve meets $I = 0$. The checks also build the Jacobian by differences and read its eigenvalues at both rests.
+Road one steps the laws with Runge-Kutta 4 (four slope samples per step, averaged; [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) to the peak and the end state; its error falls about sixteenfold as the step halves, the mark of a fourth-order rule. Road two never touches time: the peak from the phase curve at $S = 1/R_0$, the end by bisection (halving an interval that brackets a root) where the curve meets $I = 0$. The checks also build the Jacobian by differences and read its eigenvalues at both rests.
 
 ### Python
 
@@ -411,7 +394,7 @@ The two outputs match line for line.
 
 - **Hospital planning.** Beds are sized by the peak formula; distancing lowers $b$ and the peak.
 - **Vaccination targets.** Vaccinating a share $1 - 1/R_0$ beforehand puts $S$ at the threshold on day 0, so cases cannot grow: 60% for a flu with $R_0$ = 2.5.
-- **Computer worms and rumours.** Anything passed on by contact and dropped after a while fits the same boxes; with nobody recovering it reduces to [logistic-growth](../01-Rate%20Equations/07-logistic-growth.md).
+- **Computer worms and rumours.** Anything passed on by contact and dropped after a while fits the same boxes; with nobody recovering it reduces to [Logistic growth](../01-Rate%20Equations/07-logistic-growth.md).
 
 > **Say it back**
 > The SIR model splits a town into susceptible, infected and removed; infection needs a meeting, recovery only time. Each case infects $R_0 = b/g$ others in a fresh town, and cases grow while $S$ is above $1/R_0$. Dividing the laws drops time and gives a curve on which $I + S - \ln(S)/R_0$ never changes. The peak is on that curve at $S = 1/R_0$, and the end is where it meets $I = 0$. For the flu that is 2,335 ill at the peak and 89.3% ill in all.
@@ -420,12 +403,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [phase-portraits-and-nullclines](01-phase-portraits-and-nullclines.md): the $S$-$I$ plane, the nullcline $S = 1/R_0$, and a line of rests.
-- [logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): the $\ln S$ that integrates $1/S$ and sets the final size.
+- [Phase portraits and nullclines](01-phase-portraits-and-nullclines.md): the $S$-$I$ plane, the nullcline $S = 1/R_0$, and a line of rests.
+- [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): the $\ln S$ that integrates $1/S$ and sets the final size.
 
 ## Where this goes next
 
-- epidemics-on-networks: the same boxes when people meet only their neighbours.
+- Epidemics on a network: the same boxes when people meet only their neighbours.
 
 ---
 

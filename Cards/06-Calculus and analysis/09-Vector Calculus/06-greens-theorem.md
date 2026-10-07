@@ -1,35 +1,14 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Vector Calculus
-topic: Loop and inside
-item: Green's theorem
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/02-line-integrals|line-integrals]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/01-double-integrals|double-integrals]]"
-  - "[[Cards/05-Geometry and trig/07-Points, Convexity and Fractals/01-polygon-area-and-orientation|polygon-area-and-orientation]]"
-next:
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/08-stokes-theorem|stokes-theorem]]"
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/03-cauchys-theorem|cauchys-theorem]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/09-poincare-bendixson-and-bendixsons-criterion|poincare-bendixson-and-bendixsons-criterion]]"
-  - "[[Cards/23-Differential geometry and Lie groups/04-Differential Forms/07-classical-vector-calculus-as-stokes|classical-vector-calculus-as-stokes]]"
-tags: [mathematics, calculus and analysis, greens-theorem]
----
-
 # Green's theorem: circulation round a loop equals curl summed inside
 
-Calculus and analysis → Vector Calculus → Loop and inside → Green's theorem
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Vector Calculus](../../../SYLLABUS.md#w06-s09) → Green's theorem
 
 ---
 
 ## General Overview
 
-A field is fenced at five posts, in metres east and north of the south-west one: (0, 0), (6, 0), (6, 4), (3, 6), (0, 4). It is a house shape, a 6 m by 4 m rectangle under a roof 2 m high. The shoelace formula turns the five posts into 30 square metres, with no grid laid over the grass ([polygon-area-and-orientation](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md)).
+A field is fenced at five posts, in metres east and north of the south-west one: (0, 0), (6, 0), (6, 4), (3, 6), (0, 4). It is a house shape, a 6 m by 4 m rectangle under a roof 2 m high. The shoelace formula turns the five posts into 30 square metres, with no grid laid over the grass ([Shoelace formula](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md)).
 
-Green's theorem explains why corners suffice. For a smooth field of arrows, such as wind, two totals agree: the work the wind does on one walk round the fence, and the wind's swirl added over every square metre inside, its **curl** ([divergence-and-curl](03-divergence-and-curl.md)). For a field with curl 1 everywhere, the walk measures area; on straight fences it is the shoelace sum.
+Green's theorem explains why corners suffice. For a smooth field of arrows, such as wind, two totals agree: the work the wind does on one walk round the fence, and the wind's swirl added over every square metre inside, its **curl** ([Divergence and curl](03-divergence-and-curl.md)). For a field with curl 1 everywhere, the walk measures area; on straight fences it is the shoelace sum.
 
 **Once round a closed fence, ground on the left, the work a smooth field does equals its curl added over the region inside; with curl 1, the walk measures area.**
 
@@ -45,13 +24,13 @@ To scale, 30 units per metre, north up. Chevrons show the anticlockwise walk; th
 
 ## The formula
 
-Notation first, in words. A field $F$ has east part $P$ and north part $Q$ at the point $x$ metres east, $y$ north. $P_y$, short for $\partial P/\partial y$, is how fast $P$ changes per metre north, a partial derivative ([partial-derivatives](../07-Several%20Variables/01-partial-derivatives.md)); $Q_x$ is how fast $Q$ changes per metre east. The region is $R$, its fence $C$. A circle on the integral sign marks a loop.
+Notation first, in words. A field $F$ has east part $P$ and north part $Q$ at the point $x$ metres east, $y$ north. $P_y$, short for $\partial P/\partial y$, is how fast $P$ changes per metre north, a partial derivative ([Partial derivatives](../07-Several%20Variables/01-partial-derivatives.md)); $Q_x$ is how fast $Q$ changes per metre east. The region is $R$, its fence $C$. A circle on the integral sign marks a loop.
 
 $$\oint_C P\,dx + Q\,dy \;=\; \iint_R \left(Q_x - P_y\right) dA$$
 
 **Read it aloud:** the work round the fence, walked with the region on the left, equals the curl added over every small patch inside.
 
-A line integral ([line-integrals](02-line-integrals.md)) equals a double integral ([double-integrals](../08-Multiple%20Integrals/01-double-integrals.md)). The flux form counts flow across the fence, with $n$ the outward direction, length 1, and $ds$ a small length of fence:
+A line integral ([Line integrals of a field](02-line-integrals.md)) equals a double integral ([Double integrals](../08-Multiple%20Integrals/01-double-integrals.md)). The flux form counts flow across the fence, with $n$ the outward direction, length 1, and $ds$ a small length of fence:
 
 $$\oint_C F\cdot n\,ds \;=\; \oint_C P\,dy - Q\,dx \;=\; \iint_R \left(P_x + Q_y\right) dA$$
 
@@ -89,7 +68,7 @@ Curl is newtons per metre; times square metres, it gives joules, like the work o
 
 ### Step 0: the fundamental theorem, twice
 
-Adding a rate over an interval gives the change between its ends ([fundamental-theorem-of-calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)). On a rectangle, adding $P_y$ northward compares P on the top and bottom fences; adding $Q_x$ eastward compares Q on the right and left. Those four fences are the loop.
+Adding a rate over an interval gives the change between its ends ([Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)). On a rectangle, adding $P_y$ northward compares P on the top and bottom fences; adding $Q_x$ eastward compares Q on the right and left. Those four fences are the loop.
 
 ### Step 1: the proof on a rectangle
 
@@ -385,7 +364,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Planimeters and mapping software.** A planimeter, a wheeled arm traced round a map outline, reads area by this theorem; mapping software runs the shoelace sum.
-- **Testing for a potential.** Zero curl on a region without holes makes every loop integral zero, as on [conservative-fields-and-potentials](04-conservative-fields-and-potentials.md); the vortex shows why holes matter.
+- **Testing for a potential.** Zero curl on a region without holes makes every loop integral zero, as on [Conservative fields](04-conservative-fields-and-potentials.md); the vortex shows why holes matter.
 
 > **Say it back**
 > Walk once round a closed fence, ground on the left, adding the field's push along each step. The total equals the curl added inside. On a rectangle this is the fundamental theorem twice; other shapes glue from pieces whose shared fences cancel. Turned a quarter, outflow equals divergence inside. With curl 1 the walk measures area: the shoelace formula.
@@ -394,16 +373,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [line-integrals](02-line-integrals.md): the work of a field along a directed route, and its sign flip on reversal.
-- [double-integrals](../08-Multiple%20Integrals/01-double-integrals.md): adding over a region one slice at a time.
-- [polygon-area-and-orientation](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md): the shoelace formula and its sign, which this card derives.
+- [Line integrals of a field](02-line-integrals.md): the work of a field along a directed route, and its sign flip on reversal.
+- [Double integrals](../08-Multiple%20Integrals/01-double-integrals.md): adding over a region one slice at a time.
+- [Shoelace formula](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md): the shoelace formula and its sign, which this card derives.
 
 ## Where this goes next
 
-- [stokes-theorem](08-stokes-theorem.md): the same statement for a curved surface and its edge.
-- [cauchys-theorem](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md): loop integrals of complex-differentiable functions vanish; Green's theorem gives one proof.
-- [poincare-bendixson-and-bendixsons-criterion](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/09-poincare-bendixson-and-bendixsons-criterion.md): the flux form rules out closed orbits where the divergence keeps one sign.
-- classical-vector-calculus-as-stokes: Green, Stokes and divergence as one theorem about boundaries.
+- [Stokes' theorem](08-stokes-theorem.md): the same statement for a curved surface and its edge.
+- [Cauchy's theorem](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md): loop integrals of complex-differentiable functions vanish; Green's theorem gives one proof.
+- [Poincare-Bendixson](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/09-poincare-bendixson-and-bendixsons-criterion.md): the flux form rules out closed orbits where the divergence keeps one sign.
+- Green, divergence and curl theorems: Green, Stokes and divergence as one theorem about boundaries.
 
 ---
 

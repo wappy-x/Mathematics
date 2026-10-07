@@ -1,29 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Sets You Can Measure
-topic: Additive size
-item: Measures
-kind: definition
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/02-sigma-algebras|sigma-algebras]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/02-countable-sets|countable-sets]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/03-sequences-and-limits|sequences-and-limits]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/01-series-convergence|series-convergence]]"
-next:
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/05-continuity-of-measure|continuity-of-measure]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/06-pi-systems-and-uniqueness|pi-systems-and-uniqueness]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/07-null-sets-and-almost-everywhere|null-sets-and-almost-everywhere]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/01-integral-of-a-simple-function|integral-of-a-simple-function]]"
-  - "[[Cards/18-Functional analysis/03-Bounded Operators/10-spectral-theorem-for-bounded-self-adjoint-operators|spectral-theorem-for-bounded-self-adjoint-operators]]"
-tags: [mathematics, measure and integration, measures]
----
-
 # Measures: a non-negative size that adds over countably many disjoint pieces, from counting to length to probability
 
-Measure and integration → Sets You Can Measure → Additive size → Measures
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sets You Can Measure](../../../SYLLABUS.md#w10-s01) → Measures
 
 ---
 
@@ -33,7 +10,7 @@ A city has three districts. North has 40,000 residents, Centre 25,000, South 10,
 
 Ask "how big is North and South together?" and there are several honest answers. Two districts. 50,000 residents. Two thirds of the city's people. 20 square km. No town hall. Each answer is a different notion of size, and each obeys the same bookkeeping: cut a region into pieces that do not overlap, size each piece, add. North and South hold 40,000 + 10,000 residents because no resident lives in both.
 
-That bookkeeping is the whole idea of a **measure**: a rule that gives each allowed set a size of zero or more, possibly infinite, so that sizes of non-overlapping pieces add. "Allowed" means the set belongs to a sigma-algebra, the collection of sets the rule agrees to size ([sigma-algebras](02-sigma-algebras.md)). The one demand beyond everyday arithmetic is that the adding must work for a countable list of pieces, not only for two or three. That demand lets length on the whole line, which is infinite, be built from unit stretches, and it is what lets limits pass through sizes later in the wing.
+That bookkeeping is the whole idea of a **measure**: a rule that gives each allowed set a size of zero or more, possibly infinite, so that sizes of non-overlapping pieces add. "Allowed" means the set belongs to a sigma-algebra, the collection of sets the rule agrees to size ([Sigma-algebras](02-sigma-algebras.md)). The one demand beyond everyday arithmetic is that the adding must work for a countable list of pieces, not only for two or three. That demand lets length on the whole line, which is infinite, be built from unit stretches, and it is what lets limits pass through sizes later in the wing.
 
 **A measure assigns each set in a sigma-algebra a size in [0, ∞], gives the empty set size 0, and adds sizes over any countable list of pieces that do not overlap.**
 
@@ -57,7 +34,7 @@ $$\mu:\mathcal F\to[0,\infty],\qquad \mu(\varnothing)=0,\qquad \mu\Big(\bigcup_{
 
 **Read it aloud:** a measure takes each allowed set to a size of zero or more, maybe infinite; the empty set has size zero; and when a countable list of allowed sets never overlap, the size of their union is the sum of their sizes.
 
-The sum on the right has only non-negative terms, so its partial sums rise. Rising totals either settle at a finite limit or pass every number ([sequences-and-limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md)). In the second case this card takes the sum to be $\infty$. That is a convention of measure theory: [series-convergence](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md) calls such a series divergent, with no sum. The second rule is called **countable additivity**.
+The sum on the right has only non-negative terms, so its partial sums rise. Rising totals either settle at a finite limit or pass every number ([Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md)). In the second case this card takes the sum to be $\infty$. That is a convention of measure theory: [Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md) calls such a series divergent, with no sum. The second rule is called **countable additivity**.
 
 The workhorse example gives each point $\omega$ (small omega) a weight $w(\omega)$ of zero or more and adds the weights of the points in a set $A$:
 
@@ -102,7 +79,7 @@ A definition does not hold or fail: a rule is a measure or is not. The theorems 
 
 ### Step 0: size is bookkeeping, and the bookkeeping must survive a countable list
 
-Every rule on this card cuts into non-overlapping pieces, sizes the pieces and adds. What separates a measure from other additive rules is how far the adding reaches. The whole line is the union of the unit intervals [n, n+1), one for each whole number n, positive or negative: a countable list ([countable-sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)). Every limit in the later shelves comes as a countable list too. A measure promises the adding still works there. It does not promise anything for uncountable lists: every single point on the line has length 0, yet [0, 1] has length 1.
+Every rule on this card cuts into non-overlapping pieces, sizes the pieces and adds. What separates a measure from other additive rules is how far the adding reaches. The whole line is the union of the unit intervals [n, n+1), one for each whole number n, positive or negative: a countable list ([Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)). Every limit in the later shelves comes as a countable list too. A measure promises the adding still works there. It does not promise anything for uncountable lists: every single point on the line has length 0, yet [0, 1] has length 1.
 
 ### Step 1: finite adding and an empty set of size zero follow
 
@@ -110,7 +87,7 @@ Two disjoint sets A and B form a countable list A, B, ∅, ∅, … with empty s
 
 The rule μ(∅) = 0 is nearly forced. Take the list ∅, ∅, ∅, …: its union is ∅, so μ(∅) equals an infinite sum of copies of μ(∅). A sum of infinitely many copies of a positive number is infinite, so μ(∅) is 0 or ∞. It can be ∞ only if every set has size ∞, because A = A ∪ ∅ ∪ ∅ ∪ … gives μ(A) = μ(A) + μ(∅) + …. So the empty-set rule only rules out the rule "everything is infinite".
 
-One more consequence: if A sits inside B, then B is A plus the part of B outside A, two disjoint pieces, so μ(B) = μ(A) + μ(B minus A), at least μ(A). Subadditivity and limits follow in [continuity-of-measure](05-continuity-of-measure.md).
+One more consequence: if A sits inside B, then B is A plus the part of B outside A, two disjoint pieces, so μ(B) = μ(A) + μ(B minus A), at least μ(A). Subadditivity and limits follow in [Continuity and subadditivity](05-continuity-of-measure.md).
 
 ### Step 2: every weighted count is a measure
 
@@ -123,7 +100,7 @@ The idea of the proof: in a disjoint union each point lies in exactly one piece.
 
 Let the space be any set, the sigma-algebra all its subsets, and each weight at least 0. First, μ(∅) is an empty sum, 0. Every μ(A) is a sum of non-negative terms, so it lies in [0, ∞].
 
-Now take pairwise disjoint sets A_1, A_2, … with union A. Every sum in this proof is the least upper bound of the sums over finite sets of its terms. For an uncountable set of points that is the definition. For a non-negative series it follows: the partial sums rise, so they settle at their least upper bound or pass every number ([sequences-and-limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md)); each partial sum is a finite-set sum, and each finite set of terms lies inside some long enough partial sum. No order was used, so the value is the same in any order. For a finite value this is the reordering rule for absolutely convergent series ([alternating-and-conditional-convergence](../../06-Calculus%20and%20analysis/06-Series/03-alternating-and-conditional-convergence.md)); a sum of ∞ stays ∞ in any order, since its finite-set sums pass every number.
+Now take pairwise disjoint sets A_1, A_2, … with union A. Every sum in this proof is the least upper bound of the sums over finite sets of its terms. For an uncountable set of points that is the definition. For a non-negative series it follows: the partial sums rise, so they settle at their least upper bound or pass every number ([Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md)); each partial sum is a finite-set sum, and each finite set of terms lies inside some long enough partial sum. No order was used, so the value is the same in any order. For a finite value this is the reordering rule for absolutely convergent series ([Alternating series](../../06-Calculus%20and%20analysis/06-Series/03-alternating-and-conditional-convergence.md)); a sum of ∞ stays ∞ in any order, since its finite-set sums pass every number.
 
 *The sum of the pieces is at most the whole.* Take the first k pieces and a finite set of points in each. Those points are distinct, since the pieces are disjoint, and all lie in A. So their total weight is at most μ(A). Take the least upper bound over the finite sets, piece by piece: μ(A_1) + … + μ(A_k) ≤ μ(A). Let k grow: the sum of all μ(A_i) is at most μ(A).
 
@@ -157,14 +134,14 @@ It fails for a countable list. The singletons {0}, {1}, {2}, … are disjoint, e
 
 Head count, share and area are **finite**: their totals are 75,000, 1 and 25.
 
-Length on the real line is not finite. The interval [−k, k) is the union of the 2k unit intervals [n, n+1) from n = −k to k − 1, so its length is 2k. The whole line contains it, so by Step 1 the line's length is at least 2k for every k: it is ∞. Yet the unit intervals are countably many, each of length 1, and they cover the line. Length is **sigma-finite**: infinite, but cut into countably many finite pieces. That length extends from intervals to a measure on the Borel sets, the sets built from intervals by countable steps ([generated-and-borel-sigma-algebras](03-generated-and-borel-sigma-algebras.md)), is a theorem proved on shelf 02 ([lebesgue-measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)); this card uses only the lengths of intervals.
+Length on the real line is not finite. The interval [−k, k) is the union of the 2k unit intervals [n, n+1) from n = −k to k − 1, so its length is 2k. The whole line contains it, so by Step 1 the line's length is at least 2k for every k: it is ∞. Yet the unit intervals are countably many, each of length 1, and they cover the line. Length is **sigma-finite**: infinite, but cut into countably many finite pieces. That length extends from intervals to a measure on the Borel sets, the sets built from intervals by countable steps ([Generated sigma-algebras and Borel sets](03-generated-and-borel-sigma-algebras.md)), is a theorem proved on shelf 02 ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)); this card uses only the lengths of intervals.
 
 Counting measure on the whole numbers is sigma-finite too: the singletons {0}, {1}, … have size 1 each and cover.
 
 Two measures are too big to cut up.
 
 - **The never-finite rule on the city**: 0 for the empty set, ∞ for every other set. It is a measure: a disjoint list with a non-empty member has a non-empty union, and ∞ = ∞. Its only set of finite size is ∅, and unions of ∅ never cover the city.
-- **Counting measure on the real line**, every subset allowed: size = the number of points, a measure by Step 2 with every weight 1. A set of finite size is a finite set, a countable union of finite sets is countable ([countable-sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)), and the line is uncountable, so no countable list of finite-size sets covers it.
+- **Counting measure on the real line**, every subset allowed: size = the number of points, a measure by Step 2 with every weight 1. A set of finite size is a finite set, a countable union of finite sets is countable ([Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)), and the line is uncountable, so no countable list of finite-size sets covers it.
 
 Sigma-finiteness matters later: swapping the order of a double integral, and writing one measure as a density against another, both need it.
 
@@ -602,7 +579,7 @@ ALL CHECKS PASS
 
 - **Censuses and maps.** Head count and land area are measures on the same regions; population density is their ratio, and not a measure.
 - **Probability.** Every probability model is a measure space with total 1. Wing 09 used it without the name.
-- **Counting and sums.** Summing a sequence is integrating against counting measure on the whole numbers, which is how series and integrals become one theory from [integral-of-a-simple-function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md) on.
+- **Counting and sums.** Summing a sequence is integrating against counting measure on the whole numbers, which is how series and integrals become one theory from [The integral of a simple function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md) on.
 - **Physics.** A mass distribution is a measure: a point mass for a particle, density times length for a rod.
 - **Pricing.** Risk-neutral pricing weights the same future scenarios with a second probability measure, built in the finance wing.
 
@@ -613,20 +590,20 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [sigma-algebras](02-sigma-algebras.md): the collection of sets a measure is defined on, and why it is closed under countable unions.
-- [countable-sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md): what "countably many" means, and why a countable union of finite sets cannot cover the line.
-- [sequences-and-limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md): rising totals settle at their least upper bound or pass every number, which is why a non-negative sum has one value in any order.
-- [series-convergence](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md): an infinite sum as the limit of its partial sums; this card adds the convention that a non-negative series with no finite limit sums to ∞.
+- [Sigma-algebras](02-sigma-algebras.md): the collection of sets a measure is defined on, and why it is closed under countable unions.
+- [Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md): what "countably many" means, and why a countable union of finite sets cannot cover the line.
+- [Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md): rising totals settle at their least upper bound or pass every number, which is why a non-negative sum has one value in any order.
+- [Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md): an infinite sum as the limit of its partial sums; this card adds the convention that a non-negative series with no finite limit sums to ∞.
 
 ## Where this goes next
 
-- [continuity-of-measure](05-continuity-of-measure.md): bigger sets are bigger, a countable pile weighs at most the sum, and rising or shrinking sets have limiting sizes.
-- [pi-systems-and-uniqueness](06-pi-systems-and-uniqueness.md): when agreeing on a few sets forces two measures to agree on all of them.
-- [null-sets-and-almost-everywhere](07-null-sets-and-almost-everywhere.md): sets of size zero, and what may be ignored on them.
-- [integral-of-a-simple-function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md): a function taking a few values, integrated by weighting each value by the measure of the set where it is taken.
-- spectral-theorem-for-bounded-self-adjoint-operators: a measure whose sizes are projections instead of numbers.
+- [Continuity and subadditivity](05-continuity-of-measure.md): bigger sets are bigger, a countable pile weighs at most the sum, and rising or shrinking sets have limiting sizes.
+- [Pi-systems and Dynkin's theorem](06-pi-systems-and-uniqueness.md): when agreeing on a few sets forces two measures to agree on all of them.
+- [Null sets and almost everywhere](07-null-sets-and-almost-everywhere.md): sets of size zero, and what may be ignored on them.
+- [The integral of a simple function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md): a function taking a few values, integrated by weighting each value by the measure of the set where it is taken.
+- Bounded and symmetric: a measure whose sizes are projections instead of numbers.
 
-The definition says what sizes of pieces must do, but not what happens to sizes along a rising or shrinking sequence of sets; [continuity-of-measure](05-continuity-of-measure.md) draws that out of countable additivity, and finds the one place it needs a finite size.
+The definition says what sizes of pieces must do, but not what happens to sizes along a rising or shrinking sequence of sets; [Continuity and subadditivity](05-continuity-of-measure.md) draws that out of countable additivity, and finds the one place it needs a finite size.
 
 ---
 

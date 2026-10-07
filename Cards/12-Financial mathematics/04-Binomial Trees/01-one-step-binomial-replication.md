@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Binomial Trees
-topic: Copying a payoff
-item: One step
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/06-replication-and-self-financing|replication-and-self-financing]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period|state-prices-and-risk-neutral-pricing-in-one-period]]"
-  - "[[Cards/03-Algebra/01-Letters and Equations/04-two-equations-two-unknowns|two-equations-two-unknowns]]"
-next:
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/02-risk-neutral-probability|risk-neutral-probability]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - one-step-binomial-replication
----
-
 # One step: two states, two instruments, one hedge
 
-Financial mathematics → Binomial Trees → Copying a payoff → One step
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Binomial Trees](../../../SYLLABUS.md#w12-s04) → One step
 
 ---
 
@@ -51,7 +30,7 @@ flowchart LR
     A -->|"down factor 0.818731"| D["81.873075<br/>the call pays 0.000000"]
 ```
 
-The two factors, 1.221403 up and 0.818731 down, are $e^{\sigma\sqrt{T}}$ and its reciprocal, where sigma ($\sigma$) is Acme's volatility, how jumpy the share is, 20 percent a year here, and $T$ is the years to delivery. Why that pair and not another is the business of [crr-tree-and-convergence](04-crr-tree-and-convergence.md); here they are handed over, along with the rest of the house market: a riskless rate of 5 percent, a dividend yield of 2 percent, both continuously compounded, and one year to delivery.
+The two factors, 1.221403 up and 0.818731 down, are $e^{\sigma\sqrt{T}}$ and its reciprocal, where sigma ($\sigma$) is Acme's volatility, how jumpy the share is, 20 percent a year here, and $T$ is the years to delivery. Why that pair and not another is the business of [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md); here they are handed over, along with the rest of the house market: a riskless rate of 5 percent, a dividend yield of 2 percent, both continuously compounded, and one year to delivery.
 
 ---
 
@@ -90,7 +69,7 @@ $\Delta$ counts shares held **at delivery**, which is not the number to buy now.
 
 ### When it holds
 
-- **Exactly two delivery prices, both possible.** Two instruments pin down two numbers and no more: let a third price into the model and the copy is short in the state it never saw. What three states need is [trinomial-trees-and-the-grid-connection](06-trinomial-trees-and-the-grid-connection.md).
+- **Exactly two delivery prices, both possible.** Two instruments pin down two numbers and no more: let a third price into the model and the copy is short in the state it never saw. What three states need is [Trinomial trees](06-trinomial-trees-and-the-grid-connection.md).
 - **The two states differ, $u > d$.** With one price in both futures the two equations have identical left-hand sides: unequal payments then have no copy at all, and the division by $S(u-d)$ is a division by zero.
 - **The forward growth factor lands strictly between the two: $d < e^{(r-q)T} < u$.** Acme's is 1.030455, inside 0.818731 and 1.221403. Break it and the market itself is broken: the folded proof below builds a trade that costs nothing, never loses and sometimes wins. A copy's cost is a price only where such trades are absent.
 - **Trading is frictionless.** Fractional shares, borrowing and lending at the same 5 percent, no fees, no spread, no default, holdings untouched until delivery. Every friction widens the price from a point to a band: a bid-ask spread of 20 cents on Acme moves the copy's cost by 0.107789.
@@ -102,7 +81,7 @@ $\Delta$ counts shares held **at delivery**, which is not the number to buy now.
 
 ### Step 0: two unknowns are enough, because there are only two futures
 
-The idea underneath everything else: in a model with two states, a contract's payoff is just two numbers, and two numbers can be hit with two dials. Shares are one dial and cash the other, and they respond differently — what the shares pay depends on the state, what the bank pays does not. Setting the dials is the whole of pricing here ([two-equations-two-unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)). No probability enters the algebra below: how likely the up state is never comes up.
+The idea underneath everything else: in a model with two states, a contract's payoff is just two numbers, and two numbers can be hit with two dials. Shares are one dial and cash the other, and they respond differently — what the shares pay depends on the state, what the bank pays does not. Setting the dials is the whole of pricing here ([Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)). No probability enters the algebra below: how likely the up state is never comes up.
 
 ### Step 1: write down what the copy must pay in each state
 
@@ -142,11 +121,11 @@ xychart-beta
     line [0.00, 0.00, 0.00, 0.00, 10.00, 20.00, 30.00]
 ```
 
-The sloping straight line is the copy: 0.549834 of every dollar of delivery price, less the fixed debt of 45.016600. The bent line is the call's payment. They meet at 81.87 and at 122.14 and nowhere else, and the model allows nowhere else. At $130 the copy pays 26.46 against the call's 30.00; the model's whole content is that $130 cannot happen. Many short steps soften that: [multi-step-trees-and-backward-induction](03-multi-step-trees-and-backward-induction.md).
+The sloping straight line is the copy: 0.549834 of every dollar of delivery price, less the fixed debt of 45.016600. The bent line is the call's payment. They meet at 81.87 and at 122.14 and nowhere else, and the model allows nowhere else. At $130 the copy pays 26.46 against the call's 30.00; the model's whole content is that $130 cannot happen. Many short steps soften that: [Many steps](03-multi-step-trees-and-backward-induction.md).
 
 ### Step 5: why the price has to be the copy's cost
 
-Suppose the call traded at $11.50 instead. Sell one call, build the copy for 11.073541, bank the difference of 0.426459. The position cost nothing to open. At delivery the copy pays exactly what the call owes, in both states, and the banked difference has grown to 0.448324 — a certain gain, in either future, out of nothing. Below 11.073541 the trade runs backwards: buy the call, sell the copy, bank the difference. Such trades are taken the moment they appear, which is why the quoted price sits on the copy's cost ([replication-and-self-financing](../03-Contracts%20and%20No-Arbitrage/06-replication-and-self-financing.md)).
+Suppose the call traded at $11.50 instead. Sell one call, build the copy for 11.073541, bank the difference of 0.426459. The position cost nothing to open. At delivery the copy pays exactly what the call owes, in both states, and the banked difference has grown to 0.448324 — a certain gain, in either future, out of nothing. Below 11.073541 the trade runs backwards: buy the call, sell the copy, bank the difference. Such trades are taken the moment they appear, which is why the quoted price sits on the copy's cost ([Replication](../03-Contracts%20and%20No-Arbitrage/06-replication-and-self-financing.md)).
 
 ### Step 6: the same number, regrouped
 
@@ -154,7 +133,7 @@ Collecting the cost around the two payments instead of the two holdings gives on
 
 $$V = e^{-rT}\left[\frac{e^{(r-q)T} - d}{u - d}\,H_u \;+\; \frac{u - e^{(r-q)T}}{u - d}\,H_d\right].$$
 
-For Acme the two brackets are 0.525797 and 0.474203. They add to exactly 1, and both are positive exactly when the forward factor sits between $d$ and $u$ — the band from When it holds. The cost then reads a second way: weigh the two payments, add, discount once. Those weights are the one-period state prices ([state-prices-and-risk-neutral-pricing-in-one-period](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)) in the tree's clothes. Why 0.525797 looks so much like a chance of an up move, and what follows from treating it as one, is the next card: [risk-neutral-probability](02-risk-neutral-probability.md). None of the algebra above needed it.
+For Acme the two brackets are 0.525797 and 0.474203. They add to exactly 1, and both are positive exactly when the forward factor sits between $d$ and $u$ — the band from When it holds. The cost then reads a second way: weigh the two payments, add, discount once. Those weights are the one-period state prices ([State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)) in the tree's clothes. Why 0.525797 looks so much like a chance of an up move, and what follows from treating it as one, is the next card: [The risk-neutral probability](02-risk-neutral-probability.md). None of the algebra above needed it.
 
 <details>
 <summary>Detailed proof: a copy exists, only one exists, and the band is exactly right</summary>
@@ -657,14 +636,14 @@ The two outputs match line for line.
 > - **Thinking the copy needs the odds.** Weighing the two payments 50-50 prices this call at 10.530241. The copy pays the right amount in both states, however likely either is.
 > - **Holding the delivery share count from today.** Buying 0.549834 shares today instead of 0.538947 prices the call at 12.162285, a dollar too dear, and over-hedges the copy.
 > - **Borrowing the debt's face value.** The 45.016600 owed at delivery raises only 42.821115 today; borrowing the face amount prices the call at 8.878055.
-> - **Believing the model instead of using it.** Acme will not finish at exactly one of two prices. The two-state year earns its place by being refinable — many short steps ([multi-step-trees-and-backward-induction](03-multi-step-trees-and-backward-induction.md)), and in the limit a smooth formula ([crr-tree-and-convergence](04-crr-tree-and-convergence.md)). One step alone prices nothing traded.
+> - **Believing the model instead of using it.** Acme will not finish at exactly one of two prices. The two-state year earns its place by being refinable — many short steps ([Many steps](03-multi-step-trees-and-backward-induction.md)), and in the limit a smooth formula ([Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md)). One step alone prices nothing traded.
 
 ---
 
 ## Where you meet it in real life
 
-- **An options desk, every day.** A market maker who sells that call buys 0.5389 shares against it, so Acme's move leaves the book flat. In a one-step world the hedge is set once; in the real one it is reset as the price and the clock move — the same solve at every node of [multi-step-trees-and-backward-induction](03-multi-step-trees-and-backward-induction.md).
-- **Listed American options.** Exchange-traded options on shares are priced on trees, because the holder may exercise early and a formula has nowhere to ask whether they should. That question is asked node by node in [american-exercise-on-a-tree](05-american-exercise-on-a-tree.md).
+- **An options desk, every day.** A market maker who sells that call buys 0.5389 shares against it, so Acme's move leaves the book flat. In a one-step world the hedge is set once; in the real one it is reset as the price and the clock move — the same solve at every node of [Many steps](03-multi-step-trees-and-backward-induction.md).
+- **Listed American options.** Exchange-traded options on shares are priced on trees, because the holder may exercise early and a formula has nowhere to ask whether they should. That question is asked node by node in [Early exercise](05-american-exercise-on-a-tree.md).
 - **Convertible bonds and structured notes.** A bond that converts into shares is a loan plus a call, and the call leg is priced and hedged exactly as above: shares plus borrowing, solved state by state.
 
 > **Say it back**
@@ -674,13 +653,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [replication-and-self-financing](../03-Contracts%20and%20No-Arbitrage/06-replication-and-self-financing.md): what it means for shares and cash to copy a contract, and why a copy left untouched between two dates needs no cash injected. This card builds the smallest copy there is.
-- [state-prices-and-risk-neutral-pricing-in-one-period](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): the price of a dollar paid in one named state. The brackets of Step 6 are those prices, read off a tree.
-- [two-equations-two-unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): eliminate one unknown by subtraction, substitute back for the other, and know when the solution is the only one. The derivation is that method applied to money.
+- [Replication](../03-Contracts%20and%20No-Arbitrage/06-replication-and-self-financing.md): what it means for shares and cash to copy a contract, and why a copy left untouched between two dates needs no cash injected. This card builds the smallest copy there is.
+- [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): the price of a dollar paid in one named state. The brackets of Step 6 are those prices, read off a tree.
+- [Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): eliminate one unknown by subtraction, substitute back for the other, and know when the solution is the only one. The derivation is that method applied to money.
 
 ## Where this goes next
 
-- [risk-neutral-probability](02-risk-neutral-probability.md): the two weights of Step 6, taken seriously as odds in a world nobody lives in, which turns the copy's cost into an average and makes every later tree tractable.
+- [The risk-neutral probability](02-risk-neutral-probability.md): the two weights of Step 6, taken seriously as odds in a world nobody lives in, which turns the copy's cost into an average and makes every later tree tractable.
 
 Step 6 produced two positive weights adding to exactly 1 that were never asked to mean anything; whether they may be read as probabilities is the next card.
 

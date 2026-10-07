@@ -1,23 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Oscillators - Second-Order Linear Equations
-topic: Driven oscillation
-item: Resonance
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/05-undetermined-coefficients|undetermined-coefficients]]"
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/03-trig-identities|trig-identities]]"
-next:
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/03-rlc-circuits-and-resonance|rlc-circuits-and-resonance]]"
-tags: [mathematics, differential equations and dynamics, resonance-and-beats]
----
-
 # Resonance: push at the natural frequency and the swing grows, push nearby and it beats
 
-Differential equations and dynamics → Oscillators - Second-Order Linear Equations → Driven oscillation → Resonance
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Oscillators - Second-Order Linear Equations](../../../SYLLABUS.md#w08-s03) → Resonance
 
 ---
 
@@ -51,7 +34,7 @@ Orange: pushed at 1 Hz, the envelope (the curve traced by the swing's peaks) cli
 
 ## The formula
 
-Let y be the deck's sideways displacement in metres. Reminder: y' is its rate, the velocity, and y'' the rate of that rate, the acceleration ([the-characteristic-equation](02-the-characteristic-equation.md)). A frequency f in hertz becomes an **angular frequency** ω = 2πf in radians per second, since one cycle is 2π radians of angle. The deck's own 1 Hz is ω0 = 6.2832 rad/s; the push at 0.9 Hz is ω = 5.6549 rad/s. The deck starts at rest:
+Let y be the deck's sideways displacement in metres. Reminder: y' is its rate, the velocity, and y'' the rate of that rate, the acceleration ([The characteristic equation](02-the-characteristic-equation.md)). A frequency f in hertz becomes an **angular frequency** ω = 2πf in radians per second, since one cycle is 2π radians of angle. The deck's own 1 Hz is ω0 = 6.2832 rad/s; the push at 0.9 Hz is ω = 5.6549 rad/s. The deck starts at rest:
 
 $$y'' + \omega_0^2\,y = F\cos(\omega t),\qquad y(0) = 0,\quad y'(0) = 0$$
 
@@ -99,17 +82,17 @@ $$y'' + b\,y' + \omega_0^2\,y = F\cos(\omega t),\qquad A(\omega) = \frac{F}{\sqr
 
 ### Step 0: the answer is one response to the push plus free ringing
 
-Every solution of this linear equation is one response to the push plus a mix of the free swings cos ω0 t and sin ω0 t ([superposition-and-the-shape-of-linear-solutions](01-superposition-and-the-shape-of-linear-solutions.md)). The push decides the particular part; the start at rest decides the mix.
+Every solution of this linear equation is one response to the push plus a mix of the free swings cos ω0 t and sin ω0 t ([Superposition](01-superposition-and-the-shape-of-linear-solutions.md)). The push decides the particular part; the start at rest decides the mix.
 
 ### Step 1: off resonance, a cosine answers a cosine
 
-Guess y = C cos ωt, as in [undetermined-coefficients](05-undetermined-coefficients.md). Then y'' = −ω^2 C cos ωt, and the equation reads (ω0^2 − ω^2)C = F. At 0.9 Hz, ω0^2 − ω^2 = 7.5009 per s^2, so C = 13.33 mm.
+Guess y = C cos ωt, as in [Undetermined coefficients](05-undetermined-coefficients.md). Then y'' = −ω^2 C cos ωt, and the equation reads (ω0^2 − ω^2)C = F. At 0.9 Hz, ω0^2 − ω^2 = 7.5009 per s^2, so C = 13.33 mm.
 
 That guess starts at 13.33 mm, not 0. Subtracting the free swing 13.33 mm × cos ω0 t fixes the start, adds no velocity at t = 0, and leaves the push matched. That is the formula's first form.
 
 ### Step 2: two cosines make a slow wave times a fast one
 
-The sum-to-product identity ([trig-identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)) rewrites cos ωt − cos ω0 t as 2 sin((ω0 − ω)t/2) sin((ω0 + ω)t/2). The second factor runs at the average frequency; the first is slow, one cycle every 20 s.
+The sum-to-product identity ([Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)) rewrites cos ωt − cos ω0 t as 2 sin((ω0 − ω)t/2) sin((ω0 + ω)t/2). The second factor runs at the average frequency; the first is slow, one cycle every 20 s.
 
 Its size peaks twice per cycle, once positive and once negative, so big swings come every 10 s: the **beat frequency** is f0 − f. At 5 s the swing reaches 2 × 13.33 = 26.66 mm; at 10 s it is zero.
 
@@ -126,7 +109,7 @@ Let y = k t sin ω0 t with k = F / (2ω0). The product rule gives y' = k(sin ω0
 
 So y'' + ω0^2 y = 2kω0 cos ω0 t = F cos ω0 t, the push exactly, and y(0) = y'(0) = 0.
 
-Two solutions with the same start differ by a push-free solution starting at 0 with velocity 0, which is zero ([wronskian-and-reduction-of-order](04-wronskian-and-reduction-of-order.md)). So this is the only answer.
+Two solutions with the same start differ by a push-free solution starting at 0 with velocity 0, which is zero ([The Wronskian](04-wronskian-and-reduction-of-order.md)). So this is the only answer.
 
 </details>
 
@@ -163,7 +146,7 @@ xychart-beta
 
 Orange: A(ω) from the formula. At 0.98 Hz or 1.02 Hz the swing is 57.33 mm or 55.97 mm: the peak is a narrow spike.
 
-A second route to Step 3 needs no guess: [variation-of-parameters](07-variation-of-parameters.md) builds the response from integrals, and the factor t falls out.
+A second route to Step 3 needs no guess: [Variation of parameters](07-variation-of-parameters.md) builds the response from integrals, and the factor t falls out.
 
 ---
 
@@ -198,7 +181,7 @@ The code prints every row.
 
 ## Code, from first principles, and it actually runs
 
-Road one is the closed forms. Road two steps displacement and velocity by Euler's rule, new value = old value + step h × rate ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)). It never uses the sine formulas; its error halves when h halves. A third check puts the forcing frequency within a millionth of ω0 in the beat formula and lands on t sin t.
+Road one is the closed forms. Road two steps displacement and velocity by Euler's rule, new value = old value + step h × rate ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)). It never uses the sine formulas; its error halves when h halves. A third check puts the forcing frequency within a millionth of ω0 in the beat formula and lands on t sin t.
 
 ### Python
 
@@ -397,7 +380,7 @@ The two outputs match line for line.
 
 - **London's Millennium Bridge, June 2000.** On opening day walkers fell into step with the swaying deck and amplified it. Dampers were fitted before it reopened.
 - **Tuning.** Two strings slightly apart throb at their difference frequency.
-- **Radios.** A tuned circuit is the damped equation with charge in place of displacement; its sharp peak picks one station ([the-rlc-circuit-and-the-spring](08-the-rlc-circuit-and-the-spring.md)).
+- **Radios.** A tuned circuit is the damped equation with charge in place of displacement; its sharp peak picks one station ([The RLC circuit](08-the-rlc-circuit-and-the-spring.md)).
 
 > **Say it back**
 > Pushed near its own frequency, a spring mixes the push's frequency with its own. The sum-to-product identity turns the mix into a fast swing inside a slow envelope returning at the difference frequency: beats. Pushed at its own frequency, the answer carries a factor t, so without damping the swing grows in a straight line. Damping caps it at F / (bω0), here 126.65 mm.
@@ -406,12 +389,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [undetermined-coefficients](05-undetermined-coefficients.md): the guess C cos ωt, and multiplying a failing guess by t.
-- [trig-identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md): the sum-to-product identity behind beats.
+- [Undetermined coefficients](05-undetermined-coefficients.md): the guess C cos ωt, and multiplying a failing guess by t.
+- [Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md): the sum-to-product identity behind beats.
 
 ## Where this goes next
 
-- rlc-circuits-and-resonance: the same amplitude curve in a circuit.
+- RLC resonance: the same amplitude curve in a circuit.
 
 How damping sets the peak's width, and so how sharply a circuit picks one frequency, is left to that card.
 

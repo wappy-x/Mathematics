@@ -1,25 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Taylor Series, Zeros and Rigidity
-topic: Passing to the limit
-item: Limits of holomorphic functions
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/01-taylor-series-in-the-plane|taylor-series-in-the-plane]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/07-uniform-convergence|uniform-convergence]]"
-next:
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/01-infinite-products|infinite-products]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/02-gamma-function|gamma-function]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/05-zeta-function-and-euler-product|zeta-function-and-euler-product]]"
-tags: [mathematics, complex analysis, uniform-limits-of-holomorphic-functions]
----
-
 # Limits of holomorphic functions: if the approximations converge evenly, the limit is holomorphic and its derivatives follow
 
-Complex analysis → Taylor Series, Zeros and Rigidity → Passing to the limit → Limits of holomorphic functions
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Taylor Series, Zeros and Rigidity](../../../SYLLABUS.md#w07-s04) → Limits of holomorphic functions
 
 ---
 
@@ -33,7 +14,7 @@ On the real line an even limit of smooth curves can have a corner. In the plane 
 
 **When holomorphic functions converge uniformly on every closed disc inside an open region, the limit is holomorphic there, and its derivatives are the limits of their derivatives.**
 
-**What kind of fact this is:** a theorem (Weierstrass's convergence theorem), proved on this card in Why it works; the M-test is proved on [uniform-convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md).
+**What kind of fact this is:** a theorem (Weierstrass's convergence theorem), proved on this card in Why it works; the M-test is proved on [Uniform convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md).
 
 ### The picture: the disc, and the circle that reads the slope
 
@@ -81,7 +62,7 @@ The two are linked by the **Cauchy estimate**: the error in the slope at $z_0$ i
 
 ### Step 0: Cauchy's formula turns values into slopes
 
-A holomorphic function's value at a point is an average of its values round a circle about it, and so is its derivative, with a squared distance underneath ([cauchys-integral-formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md), [derivatives-from-the-boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md)). Close values on the circle give close averages. On the real line nothing ties a slope to an average of values, so corners survive.
+A holomorphic function's value at a point is an average of its values round a circle about it, and so is its derivative, with a squared distance underneath ([Cauchy's integral formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md), [Derivatives from the boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md)). Close values on the circle give close averages. On the real line nothing ties a slope to an average of values, so corners survive.
 
 ### Step 1: the ceilings make the tower converge evenly
 
@@ -89,7 +70,7 @@ On the closed disc $|z| \le 1$, so $|z^n/n^2| \le 1/n^2$. Each 1/n^2 is below 1/
 
 ### Step 2: the limit keeps Cauchy's formula
 
-Cauchy's formula holds for each polynomial $S_N$ on the circle of radius 0.4 round 1/2: at a point z inside, $S_N(z)$ is the loop integral of $S_N(\zeta)/(\zeta - z)$, divided by $2\pi i$. Swap in $f$: the integrand moves by at most the worst gap divided by z's distance to the circle, along a circle of length $2\pi\rho$, so the integrals differ by at most the worst gap times $\rho$ over that distance (length times maximum, [contour-integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md)). The gap goes to 0, so $f$ inside the circle is Cauchy's integral of its own values.
+Cauchy's formula holds for each polynomial $S_N$ on the circle of radius 0.4 round 1/2: at a point z inside, $S_N(z)$ is the loop integral of $S_N(\zeta)/(\zeta - z)$, divided by $2\pi i$. Swap in $f$: the integrand moves by at most the worst gap divided by z's distance to the circle, along a circle of length $2\pi\rho$, so the integrals differ by at most the worst gap times $\rho$ over that distance (length times maximum, [Contour integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md)). The gap goes to 0, so $f$ inside the circle is Cauchy's integral of its own values.
 
 ### Step 3: a Cauchy integral is holomorphic
 
@@ -99,7 +80,7 @@ Differentiating under the integral sign works for any continuous values on the c
 
 The derivative formula applied to $f - S_N$ gives the Cauchy estimate. With $\rho$ = 0.4 and a gap below 1/10, the slope of 10 floors at 1/2 is within 0.25 of the truth; the actual error is 0.000165. The bound shrinks with N, so $S_N'$, the stack of floor slopes $z^{n-1}/n$, tends to $f'$.
 
-Multiplied by z, the stack is z + z^2/2 + z^3/3 + …, which is −log(1 − z) ([complex-logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)). So $f'(z) = -\log(1 - z)/z$: at 1/2 that is 2 ln 2 = 1.386294, and at i/2 it is 0.927295 + 0.223144i.
+Multiplied by z, the stack is z + z^2/2 + z^3/3 + …, which is −log(1 − z) ([The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)). So $f'(z) = -\log(1 - z)/z$: at 1/2 that is 2 ln 2 = 1.386294, and at i/2 it is 0.927295 + 0.223144i.
 
 ### Step 5: the rim is left out
 
@@ -114,7 +95,7 @@ The zeta function, zeta(s), is the sum of $n^{-s}$ over n = 1, 2, 3, …. Each f
 
 **Setting.** Each $S_N$ is holomorphic on the open region $U$, and $\max_K |f - S_N| \to 0$ for every closed bounded $K$ inside $U$.
 
-**Continuity.** A uniform limit of continuous functions is continuous ([uniform-convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md)).
+**Continuity.** A uniform limit of continuous functions is continuous ([Uniform convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md)).
 
 **Cauchy's formula in the limit.** Fix a closed disc $|\zeta - c| \le R$ in $U$ and $|z - c| \le r < R$. For each $N$, $S_N(z) = \frac{1}{2\pi i}\oint \frac{S_N(\zeta)}{\zeta - z}d\zeta$. The same integral with $f$ differs by at most $R\,E_N/(R - r)$, where $E_N = \max_{|\zeta - c| = R}|f - S_N|$. Letting $N \to \infty$ gives the formula for $f$.
 
@@ -361,8 +342,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Special functions.** Zeta, gamma and infinite products are defined as limits; this theorem shows each is holomorphic ([zeta-function-and-euler-product](../09-Special%20Functions%20and%20the%20Zeta%20Function/05-zeta-function-and-euler-product.md)).
-- **Power series.** Term-by-term differentiation inside the disc ([complex-power-series](../02-Holomorphic%20Functions/02-complex-power-series.md)) is the case whose floors are powers of z.
+- **Special functions.** Zeta, gamma and infinite products are defined as limits; this theorem shows each is holomorphic ([The zeta function](../09-Special%20Functions%20and%20the%20Zeta%20Function/05-zeta-function-and-euler-product.md)).
+- **Power series.** Term-by-term differentiation inside the disc ([Power series in the plane](../02-Holomorphic%20Functions/02-complex-power-series.md)) is the case whose floors are powers of z.
 - **Numerical software.** The Cauchy estimate bounds a truncated series' derivative error from its value error.
 
 > **Say it back**
@@ -372,16 +353,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [taylor-series-in-the-plane](01-taylor-series-in-the-plane.md): holomorphic functions as power series, via Cauchy's formula.
-- [uniform-convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md): one cutoff for every input, and the M-test's proof.
+- [Taylor series in the plane](01-taylor-series-in-the-plane.md): holomorphic functions as power series, via Cauchy's formula.
+- [Uniform convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md): one cutoff for every input, and the M-test's proof.
 
 ## Where this goes next
 
-- [infinite-products](../09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md): products of holomorphic factors, shown holomorphic by taking logs and this theorem.
-- [gamma-function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): an integral as a uniform limit of holomorphic pieces.
-- [zeta-function-and-euler-product](../09-Special%20Functions%20and%20the%20Zeta%20Function/05-zeta-function-and-euler-product.md): the sum of n^(−s), holomorphic on Re s > 1 by Step 6.
+- [Infinite products](../09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md): products of holomorphic factors, shown holomorphic by taking logs and this theorem.
+- [The gamma function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): an integral as a uniform limit of holomorphic pieces.
+- [The zeta function](../09-Special%20Functions%20and%20the%20Zeta%20Function/05-zeta-function-and-euler-product.md): the sum of n^(−s), holomorphic on Re s > 1 by Step 6.
 
-The tower is known on the disc and the zeta sum on Re s > 1; whether a function known on a small set is fixed everywhere is [zeros-and-the-identity-theorem](03-zeros-and-the-identity-theorem.md).
+The tower is known on the disc and the zeta sum on Re s > 1; whether a function known on a small set is fixed everywhere is [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md).
 
 ---
 

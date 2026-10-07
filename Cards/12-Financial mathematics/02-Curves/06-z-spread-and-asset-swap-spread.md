@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Curves
-topic: Pricing risky bonds
-item: Spreads over the curve
-kind: definition
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/12-Financial mathematics/02-Curves/04-bootstrapping-the-discount-curve|bootstrapping-the-discount-curve]]"
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/07-yield-from-price|yield-from-price]]"
-next:
-  - "[[Cards/12-Financial mathematics/35-Mortgages, Callables and Prepayment/04-option-adjusted-spread|option-adjusted-spread]]"
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis|implied-hazard-from-a-bond-price-and-the-cds-bond-basis]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - z-spread-and-asset-swap-spread
----
-
 # Spreads over the curve: the z-spread and asset-swap spread of a risky bond
 
-Financial mathematics → Curves → Pricing risky bonds → Spreads over the curve
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves](../../../SYLLABUS.md#w12-s02) → Spreads over the curve
 
 ---
 
@@ -29,7 +8,7 @@ Financial mathematics → Curves → Pricing risky bonds → Spreads over the cu
 
 Northwind Capital has a bond outstanding. On every $100 of face — the amount repaid at the end — it pays $4.00 a year for five years, then hands back the $100. Nothing in the contract is uncertain except whether Northwind is still there to pay.
 
-This morning's curve prices that stream at **$100.24**. The curve is built from deposits, futures and swaps quoted for 1 week to 30 years, the way [bootstrapping-the-discount-curve](04-bootstrapping-the-discount-curve.md) builds one, and it is as close to risk-free as a market gets.
+This morning's curve prices that stream at **$100.24**. The curve is built from deposits, futures and swaps quoted for 1 week to 30 years, the way [Bootstrapping](04-bootstrapping-the-discount-curve.md) builds one, and it is as close to risk-free as a market gets.
 
 The dealer's screen shows the bond at **$94.83**.
 
@@ -41,7 +20,7 @@ The first adds a constant rate to every discount rate on the curve until the bon
 
 **What kind of fact this is:** a definition — two of them, one dug out of a price by search, the other divided out of it. The uniqueness that makes the search legitimate is proved on this card in Why it works.
 
-**Conventions verified 14 Sep 2026:** spreads are quoted in basis points a year. This card uses annual coupons on whole-year dates and continuously compounded zero rates, so the discount factor for $T$ years is $e^{-r_T T}$ ([compounding-and-discount-factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)). Real markets vary the coupon frequency and the day count ([day-counts-and-dates](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md)); those choices move a quoted spread by a basis point or two on a bond like this one.
+**Conventions verified 14 Sep 2026:** spreads are quoted in basis points a year. This card uses annual coupons on whole-year dates and continuously compounded zero rates, so the discount factor for $T$ years is $e^{-r_T T}$ ([Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)). Real markets vary the coupon frequency and the day count ([Day counts](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md)); those choices move a quoted spread by a basis point or two on a bond like this one.
 
 ### The picture: the price falls as the spread rises, and crosses the quote
 
@@ -100,10 +79,10 @@ The sum on the bottom is the **annuity**: the discount factors for the payment d
 
 ### When it holds
 
-- **The bond's payments are fixed and known.** A floating-rate note or a callable bond has payments that move, and a single spread then absorbs that movement as if it were credit risk. Stripping the option value out first is [option-adjusted-spread](../35-Mortgages%2C%20Callables%20and%20Prepayment/04-option-adjusted-spread.md).
+- **The bond's payments are fixed and known.** A floating-rate note or a callable bond has payments that move, and a single spread then absorbs that movement as if it were credit risk. Stripping the option value out first is [Option-adjusted spread](../35-Mortgages%2C%20Callables%20and%20Prepayment/04-option-adjusted-spread.md).
 - **One agreed curve.** A spread is measured against a chosen curve; quote the same bond over government bonds instead of swaps and the number changes by the gap between those two curves. A spread without its curve named is meaningless.
 - **The spread is the same at every date.** A real issuer's credit deteriorates or improves with time, so the true compensation has a term structure. One constant $z$ is the flat line that happens to fit this bond's total price, not the truth at each date.
-- **A price, not a probability.** $z$ is fitted to a price. It bundles default odds, recovery, illiquidity and risk appetite into one rate, and nothing in the arithmetic separates them. Prising them apart is [implied-hazard-from-a-bond-price-and-the-cds-bond-basis](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis.md).
+- **A price, not a probability.** $z$ is fitted to a price. It bundles default odds, recovery, illiquidity and risk appetite into one rate, and nothing in the arithmetic separates them. Prising them apart is [Implied hazard from a bond price, and why the CDS disagrees](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis.md).
 - **A positive price.** Any price above zero has a spread. A price *above* the curve's price gives a negative spread, which is ordinary for the safest government bonds against a swap curve.
 
 ---
@@ -190,7 +169,7 @@ xychart-beta
 
 The sloping line is the asset-swap spread. The flat line is the z-spread, held at 119.99 basis points for every bond on the chart. At Northwind's 4% coupon the two agree to within half a basis point. At an 8% coupon they are 14 apart: bigger coupons open a bigger dollar gap at the very same z-spread, and that gap is still paid out on $100 of notional.
 
-An older measure sits alongside both. Subtract the curve's five-year par rate — the coupon that would price a five-year bond on the curve at exactly $100 — from the bond's own yield ([yield-from-price](../01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md)), 5.2001% a year against a 3.9466% par rate, and you have the **I-spread**, a single-point comparison that ignores the curve's shape entirely. It is quick, it is quoted, and on this bond it reads 125.35 basis points, five wider than the z-spread.
+An older measure sits alongside both. Subtract the curve's five-year par rate — the coupon that would price a five-year bond on the curve at exactly $100 — from the bond's own yield ([Yield from price](../01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md)), 5.2001% a year against a 3.9466% par rate, and you have the **I-spread**, a single-point comparison that ignores the curve's shape entirely. It is quick, it is quoted, and on this bond it reads 125.35 basis points, five wider than the z-spread.
 
 ---
 
@@ -251,7 +230,7 @@ price given up against the curve, per $100 of face; each block is 25 cents
     300 bp   ████████████████████████████████████████████████████  $12.95
 ```
 
-Two things show in those bars. The steps are nearly equal, which is why a desk can multiply a spread move by a single number and get close. And they shrink: the first 60 basis points cost $2.74 of price, while the last 60 carry the total only from $10.51 to $12.95. Each extra basis point is charged on a price the earlier basis points have already cut down. So widening the real spread by a full 100 basis points, from 119.99 to 219.99, costs $4.272234 — less than a hundred steps of $0.043764 each. The same curvature runs through [duration-and-convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md) for yields.
+Two things show in those bars. The steps are nearly equal, which is why a desk can multiply a spread move by a single number and get close. And they shrink: the first 60 basis points cost $2.74 of price, while the last 60 carry the total only from $10.51 to $12.95. Each extra basis point is charged on a price the earlier basis points have already cut down. So widening the real spread by a full 100 basis points, from 119.99 to 219.99, costs $4.272234 — less than a hundred steps of $0.043764 each. The same curvature runs through [Duration and convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md) for yields.
 
 ---
 
@@ -706,7 +685,7 @@ The two outputs match line for line. They were produced by different code, diffe
 
 - **Corporate bond screens.** Most investment-grade bonds are quoted on spread, not price. A dealer says "Northwind 4s of 31, 120 over" and the price follows from the curve, which is why two desks holding different curves can agree on the quote and disagree on the cash.
 - **Bond index rules.** Index providers rank and weight bonds by spread, so the definition used decides which bonds look cheap. Most publish whether they use a z-spread or an asset-swap spread.
-- **Bank funding desks.** A bank that issues a bond and swaps it to floating cares about exactly one number: the asset-swap spread it ends up paying over the floating benchmark, quoted as "SOFR plus 120" ([money-market-instruments-and-sofr](03-money-market-instruments-and-sofr.md)).
+- **Bank funding desks.** A bank that issues a bond and swaps it to floating cares about exactly one number: the asset-swap spread it ends up paying over the floating benchmark, quoted as "SOFR plus 120" ([Money markets](03-money-market-instruments-and-sofr.md)).
 - **Mark-to-market and risk limits.** The spread DV01, the $0.043764 per basis point above, is how a credit book states its risk. Limits are set in it.
 - **The basis trade.** A bond's spread and the cost of insuring the same bond with a credit default swap should match. When they do not, the difference is the basis, and desks trade it.
 
@@ -717,15 +696,15 @@ The two outputs match line for line. They were produced by different code, diffe
 
 ## What this builds on
 
-- [bootstrapping-the-discount-curve](04-bootstrapping-the-discount-curve.md): the zero rates and discount factors a spread is measured against. Without a curve there is no "over".
-- [yield-from-price](../01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md): solving one rate out of a price by search, which is the same machinery pointed at a different unknown.
+- [Bootstrapping](04-bootstrapping-the-discount-curve.md): the zero rates and discount factors a spread is measured against. Without a curve there is no "over".
+- [Yield from price](../01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md): solving one rate out of a price by search, which is the same machinery pointed at a different unknown.
 
-Two more cards on this shelf feed straight in. [spot-forward-and-par-rates](01-spot-forward-and-par-rates.md) supplies the forward rates the second road chains together and the par rate the I-spread subtracts. [curve-interpolation-and-shape](05-curve-interpolation-and-shape.md) decides the rates between the pillars, and a spread inherits every choice made there.
+Two more cards on this shelf feed straight in. [Spot, forward and par rates](01-spot-forward-and-par-rates.md) supplies the forward rates the second road chains together and the par rate the I-spread subtracts. [Between the pillars](05-curve-interpolation-and-shape.md) decides the rates between the pillars, and a spread inherits every choice made there.
 
 ## Where this goes next
 
-- [option-adjusted-spread](../35-Mortgages%2C%20Callables%20and%20Prepayment/04-option-adjusted-spread.md): the same idea for a bond whose payments are not fixed, with the embedded option priced and removed first.
-- [implied-hazard-from-a-bond-price-and-the-cds-bond-basis](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis.md): the spread split into a default rate and a recovery, and checked against what the insurance costs.
+- [Option-adjusted spread](../35-Mortgages%2C%20Callables%20and%20Prepayment/04-option-adjusted-spread.md): the same idea for a bond whose payments are not fixed, with the embedded option priced and removed first.
+- [Implied hazard from a bond price, and why the CDS disagrees](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis.md): the spread split into a default rate and a recovery, and checked against what the insurance costs.
 
 This card turns a price into a rate but says nothing about what that rate is made of; how much of Northwind's 120 basis points is the chance of default and how much is the price of bearing it is the next question.
 

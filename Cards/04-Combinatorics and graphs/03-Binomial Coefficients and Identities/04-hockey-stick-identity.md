@@ -1,24 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Binomial Coefficients and Identities
-topic: Summing a diagonal
-item: The hockey stick
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/01-pascals-rule-and-the-triangle|pascals-rule-and-the-triangle]]"
-next: []
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - hockey-stick-identity
----
-
 # The hockey stick: adding down a diagonal of the triangle lands one step below and right
 
-Combinatorics and graphs → Binomial Coefficients and Identities → Summing a diagonal → The hockey stick
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Binomial Coefficients and Identities](../../../SYLLABUS.md#w04-s03) → The hockey stick
 
 ---
 
@@ -28,7 +10,7 @@ A grocer stacks tins in a pyramid with a triangular base. The top is one tin; un
 
 Thirty-five answers a second question, with no stacking in it. Stand seven tins in a row, labelled 1 to 7, and choose three to sell: 35 choices, written C(7,3) and read "7 choose 3".
 
-The two thirty-fives are one fact. The layer counts 1, 3, 6, 10, 15 are the entries C(2,2), C(3,2), C(4,2), C(5,2), C(6,2) — a straight run down one diagonal of Pascal's triangle ([pascals-rule-and-the-triangle](01-pascals-rule-and-the-triangle.md)). In C(i,k) the first number is the row and the second the column, so that run is column 2 all the way down. Their total sits one row lower and one column right: C(7,3). Shaded in, run and total draw a long shaft with a blade off the end. Hence the name, and the two words used from here on: the **shaft** is the run of entries added, the **blade** is the entry they add to.
+The two thirty-fives are one fact. The layer counts 1, 3, 6, 10, 15 are the entries C(2,2), C(3,2), C(4,2), C(5,2), C(6,2) — a straight run down one diagonal of Pascal's triangle ([Pascal's rule](01-pascals-rule-and-the-triangle.md)). In C(i,k) the first number is the row and the second the column, so that run is column 2 all the way down. Their total sits one row lower and one column right: C(7,3). Shaded in, run and total draw a long shaft with a blade off the end. Hence the name, and the two words used from here on: the **shaft** is the run of entries added, the **blade** is the entry they add to.
 
 **Adding the entries straight down any diagonal of Pascal's triangle, from its top, gives the entry one row below and one column right of where the run stopped.**
 
@@ -56,7 +38,7 @@ $$C(k,k) + C(k+1,k) + C(k+2,k) + \cdots + C(n,k) = C(n+1,k+1)$$
 
 **Read it aloud:** add one column of the triangle from its top entry down to any row; the total is the entry one row further down and one column right.
 
-Capital sigma is shorthand for that instruction: add the terms as the row counter runs from the number below the sign up to the one above ([binomial-theorem](02-binomial-theorem.md)).
+Capital sigma is shorthand for that instruction: add the terms as the row counter runs from the number below the sign up to the one above ([The binomial theorem](02-binomial-theorem.md)).
 
 $$\sum_{i=k}^{n} C(i,k) = C(n+1,k+1)$$
 
@@ -82,7 +64,7 @@ $$\sum_{i=k}^{n} C(i,k) = C(n+1,k+1)$$
 
 ### Step 0: Pascal's rule turns every entry into a difference
 
-Pascal's rule says each entry is the sum of the two above it: C(i+1, k+1) = C(i, k) + C(i, k+1) ([pascals-rule-and-the-triangle](01-pascals-rule-and-the-triangle.md)). Move one term across:
+Pascal's rule says each entry is the sum of the two above it: C(i+1, k+1) = C(i, k) + C(i, k+1) ([Pascal's rule](01-pascals-rule-and-the-triangle.md)). Move one term across:
 
 $$C(i,k) = C(i+1,k+1) - C(i,k+1)$$
 
@@ -385,7 +367,7 @@ The two outputs match line for line.
 > **Looking for the total at the end of the shaft.** The blade is not the next entry down the same column, nor the entry beside the last one. It steps one row down and one column right, together. For the tins the candidates are C(7,3) = 35, right; C(6,3) = 20, level with the shaft's last entry; and C(7,2) = 21, the column to the left.
 >
 > - **Starting below the top of the column.** The shaft begins at C(k,k) = 1. Drop it and the pile reads 34, not 35.
-> - **Adding a row instead of a diagonal.** Row 6 adds to 64 — the doubling fact on [pascals-rule-and-the-triangle](01-pascals-rule-and-the-triangle.md), a different question about the same array.
+> - **Adding a row instead of a diagonal.** Row 6 adds to 64 — the doubling fact on [Pascal's rule](01-pascals-rule-and-the-triangle.md), a different question about the same array.
 > - **Calling it Pascal's rule.** Pascal joins two entries into one. This adds a whole column: the same step applied all the way down.
 > - **Taking the check for the proof.** The code audits three shafts; the theorem covers every column and row, and Step 1 carries it there.
 
@@ -396,7 +378,7 @@ The two outputs match line for line.
 - **Stacked goods.** Tins, oranges and cannonballs pile into triangular pyramids, and the count is the blade: five layers, 35 units.
 - **Adding 1 to n.** One column left of the tins sits 1 + 2 + 3 + 4 + 5 + 6 = 21 = C(7,2): the schoolroom formula for adding whole numbers is this identity one column over.
 - **Running totals in code.** A program listing every trio from a growing list gains C(i,2) new trios when item i+1 arrives; the running total is the blade.
-- **Sorting by the largest.** Splitting a count by where its biggest element sits, as in Step 2, is standard for binomial identities; singling out a member of the chosen group gives [committee-chair-identity](05-committee-chair-identity.md).
+- **Sorting by the largest.** Splitting a count by where its biggest element sits, as in Step 2, is standard for binomial identities; singling out a member of the chosen group gives [Committee and chair](05-committee-chair-identity.md).
 
 > **Say it back**
 > Five triangular layers hold 1, 3, 6, 10 and 15 tins, 35 in all. Those counts are one straight diagonal of Pascal's triangle, and 35 is the entry one row below and one column right of where the diagonal stopped. Pascal's rule makes each entry a gap between two entries of the next column, and adding the gaps cancels the middle. Second route: 35 also counts three tins chosen from seven, split by which is largest. Start one row late and 35 reads 34; look in the wrong place, 20 or 21.
@@ -405,16 +387,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [pascals-rule-and-the-triangle](01-pascals-rule-and-the-triangle.md): the rule that rewrites each entry as a gap between two entries of the next column, the array the shaft runs down, and the convention that counts of the impossible are none.
+- [Pascal's rule](01-pascals-rule-and-the-triangle.md): the rule that rewrites each entry as a gap between two entries of the next column, the array the shaft runs down, and the convention that counts of the impossible are none.
 
 ## Where this goes next
 
 Two neighbours work the same triangle from other directions:
 
-- [vandermonde-identity](03-vandermonde-identity.md): splitting one pick across two separate pools rather than down one column.
-- [committee-chair-identity](05-committee-chair-identity.md): singling out a member of the chosen group, which turns a sum of entries into a product.
+- [Vandermonde's identity](03-vandermonde-identity.md): splitting one pick across two separate pools rather than down one column.
+- [Committee and chair](05-committee-chair-identity.md): singling out a member of the chosen group, which turns a sum of entries into a product.
 
-Every term added here is positive; what a row adds to once the signs alternate, and how that inverts a sum, is [alternating-sums-and-binomial-inversion](06-alternating-sums-and-binomial-inversion.md).
+Every term added here is positive; what a row adds to once the signs alternate, and how that inverts a sum, is [Alternating sums](06-alternating-sums-and-binomial-inversion.md).
 
 ---
 

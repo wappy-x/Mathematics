@@ -1,43 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Greeks by Numbers and Calibration
-topic: Finite differences
-item: Bump and revalue
-kind: method
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/08-numerical-derivatives-and-sensitivity|numerical-derivatives-and-sensitivity]]"
-next:
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/02-pathwise-and-likelihood-ratio-greeks|pathwise-and-likelihood-ratio-greeks]]"
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/05-merton-greeks-hedge-error-and-calibration|merton-greeks-hedge-error-and-calibration]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/03-heston-greeks-and-calibration|heston-greeks-and-calibration]]"
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/07-american-greeks-and-implied-volatility|american-greeks-and-implied-volatility]]"
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/04-barrier-greeks-at-the-wall|barrier-greeks-at-the-wall]]"
-  - "[[Cards/12-Financial mathematics/18-Many underlyings - exchange, spread, basket and rainbow/05-correlation-greeks-and-implied-correlation|correlation-greeks-and-implied-correlation]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/06-barrier-and-touch-greeks|barrier-and-touch-greeks]]"
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/03-quanto-greeks-and-hedging|quanto-greeks-and-hedging]]"
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/04-asian-greeks-and-the-running-average|asian-greeks-and-the-running-average]]"
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/08-cds-risk-numbers|cds-risk-numbers]]"
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/06-cva-risk-numbers-and-hedging|cva-risk-numbers-and-hedging]]"
-  - "[[Cards/16-Numerical analysis/08-Derivatives by Machine/08-bumped-sensitivities-and-monte-carlo-noise|bumped-sensitivities-and-monte-carlo-noise]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - bump-and-revalue-and-common-random-numbers
----
-
 # Bump and revalue: shift an input, reprice, divide, and use the same random numbers both times
 
-Financial mathematics → Greeks by Numbers and Calibration → Finite differences → Bump and revalue
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Greeks by Numbers and Calibration](../../../SYLLABUS.md#w12-s07) → Bump and revalue
 
 ---
 
 ## General Overview
 
-Acme shares trade at 100 dollars today. A one-year option to buy one share for 100 dollars costs 9.23 dollars in the house market: bank rate 5 percent, dividend yield 2 percent, volatility 20 percent ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
+Acme shares trade at 100 dollars today. A one-year option to buy one share for 100 dollars costs 9.23 dollars in the house market: bank rate 5 percent, dividend yield 2 percent, volatility 20 percent ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
 
 A desk that has sold that option needs one number above all: how much its price moves when Acme moves a dollar. That is **delta**, dollars of option per dollar of share, and also the number of Acme shares that cancels the option's risk. Here delta is 0.5869.
 
@@ -49,7 +18,7 @@ The shift is called the **bump**, and choosing its size is the whole difficulty.
 
 **Nudge one input, reprice, and divide by the distance between the two prices asked for: the answer is a slope, and the size of the nudge trades a bending curve against a computer's last digits.**
 
-**What kind of fact this is:** a method, with its error stated. Both halves of that error are derived in Why it works, on top of the Taylor expansion the calculus wing proves ([numerical-derivatives-and-sensitivity](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md)).
+**What kind of fact this is:** a method, with its error stated. Both halves of that error are derived in Why it works, on top of the Taylor expansion the calculus wing proves ([Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md)).
 
 ### The picture: how good the answer is, bump size by bump size
 
@@ -109,7 +78,7 @@ Closed forms, used here only as a score to beat: delta is $e^{-qT}N(d_1)$, or 0.
 - **Nothing else changes between the two calls.** Same model, grid, dates, draws. Refit to market prices in between and the answer belongs to a refitted model: legitimate, but a different question.
 - **Each price is right to about $\varepsilon|V|$.** For this nine-dollar option that scrap is 0.000000000000002 dollars. A simulation's error is its sampling wobble instead, more than ten million million times larger.
 - **A simulated pricer reuses its draws.** Fresh numbers on the second leg bury the bump, and no affordable number of extra paths digs it out.
-- **The payoff moves continuously with the input.** A payoff that jumps, such as a fixed sum paid above the strike, breaks shared draws and needs its own treatment ([pathwise-and-likelihood-ratio-greeks](02-pathwise-and-likelihood-ratio-greeks.md)).
+- **The payoff moves continuously with the input.** A payoff that jumps, such as a fixed sum paid above the strike, breaks shared draws and needs its own treatment ([Greeks inside the simulation](02-pathwise-and-likelihood-ratio-greeks.md)).
 
 ---
 
@@ -188,7 +157,7 @@ Reprice with **fresh** random numbers and the difference carries the noise of bo
 
 That trick is **common random numbers**, the phrase used from here on, and one line about spread explains it: the spread of a difference is the spread of one leg, plus the spread of the other, minus twice the amount the two move together. Independent draws make that last quantity zero; shared draws make it large and positive, so the subtraction cancels most of the wobble before the division can magnify it.
 
-Push that to its limit — draws held fixed, bump shrunk to nothing — and each path's paired difference becomes a slope taken path by path. The run reports 0.586549 that way against 0.586548 from shared draws at a one-cent bump. Those being all but identical is the point, and the method that takes the limit properly is [pathwise-and-likelihood-ratio-greeks](02-pathwise-and-likelihood-ratio-greeks.md).
+Push that to its limit — draws held fixed, bump shrunk to nothing — and each path's paired difference becomes a slope taken path by path. The run reports 0.586549 that way against 0.586548 from shared draws at a one-cent bump. Those being all but identical is the point, and the method that takes the limit properly is [Greeks inside the simulation](02-pathwise-and-likelihood-ratio-greeks.md).
 
 ---
 
@@ -723,17 +692,17 @@ Four roads, one delta: the tree lands 0.000006 from the closed form having never
 > - **Reusing the delta bump for gamma.** It needs one part in ten thousand, not one in a million: at a millionth of a dollar gamma comes out 0.035527 instead of 0.018951.
 > - **Re-seeding a simulation between the calls.** The answer becomes two independent random numbers subtracted and divided by something tiny: −2.866855 instead of 0.586851.
 > - **Expecting common random numbers to rescue everything.** A payoff that jumps — a fixed sum paid only above the strike — gives paired differences almost all exactly zero and a rare few enormous, so its noise *grows* as the bump shrinks.
-> - **Bumping without deciding about calibration.** Moving an input with fitted parameters held fixed, and moving it with a refit, are different numbers and honest answers to different questions ([calibration-as-least-squares](06-calibration-as-least-squares.md)).
+> - **Bumping without deciding about calibration.** Moving an input with fitted parameters held fixed, and moving it with a refit, are different numbers and honest answers to different questions ([Calibration](06-calibration-as-least-squares.md)).
 
 ---
 
 ## Where you meet it in real life
 
 - **A bank's overnight risk run.** Millions of bump-and-revalue calls, which is why bump size, seed policy and bump convention live in a document people argue over.
-- **Anything exotic.** Barriers, Asians, autocallables and most structured notes have no closed-form Greek, so bumping is not a shortcut but the method. Where there are a thousand inputs and speed matters, [adjoint-differentiation-in-outline](03-adjoint-differentiation-in-outline.md) is the alternative.
+- **Anything exotic.** Barriers, Asians, autocallables and most structured notes have no closed-form Greek, so bumping is not a shortcut but the method. Where there are a thousand inputs and speed matters, [Adjoint differentiation](03-adjoint-differentiation-in-outline.md) is the alternative.
 - **Testing a formula that already exists.** A wrong hand-derived Greek and a right one look identical until one is bump-tested, which the run's third block does.
-- **Trees and grids.** A lattice hands over delta and gamma free, off its own early nodes. Volatility and rates are baked into its geometry, so those still need a bump ([greeks-from-a-tree-or-grid](04-greeks-from-a-tree-or-grid.md)).
-- **Solving a price backwards for its volatility.** Newton's method needs vega, and a bumped vega lets the bump size decide how many steps the solver takes, or whether it converges ([root-finding-for-inverses](05-root-finding-for-inverses.md)).
+- **Trees and grids.** A lattice hands over delta and gamma free, off its own early nodes. Volatility and rates are baked into its geometry, so those still need a bump ([Greeks from a tree or grid](04-greeks-from-a-tree-or-grid.md)).
+- **Solving a price backwards for its volatility.** Newton's method needs vega, and a bumped vega lets the bump size decide how many steps the solver takes, or whether it converges ([Solving backwards](05-root-finding-for-inverses.md)).
 - **Well outside finance.** The same cube-root rule governs numerical gradients in optimisation, sensitivity studies in engineering, and gradient checks on hand-written machine-learning code.
 
 > **Say it back**
@@ -743,23 +712,23 @@ Four roads, one delta: the tree lands 0.000006 from the closed form having never
 
 ## What this builds on
 
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): a price built by averaging a payoff over simulated paths, and the standard error that comes with it. This card bumps that pricer and fights its noise.
-- [numerical-derivatives-and-sensitivity](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md): the Taylor expansion behind both error terms, and why dividing a small difference by a small number magnifies the rounding inside it.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): a price built by averaging a payoff over simulated paths, and the standard error that comes with it. This card bumps that pricer and fights its noise.
+- [Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md): the Taylor expansion behind both error terms, and why dividing a small difference by a small number magnifies the rounding inside it.
 
 ## Where this goes next
 
-- [pathwise-and-likelihood-ratio-greeks](02-pathwise-and-likelihood-ratio-greeks.md): the bump taken to zero properly, inside the simulation.
-- bumped-sensitivities-and-monte-carlo-noise: the same bump-against-noise problem as numerical analysis.
-- [merton-greeks-hedge-error-and-calibration](../13-Local%20volatility%20and%20jumps/05-merton-greeks-hedge-error-and-calibration.md): bumping a price that can jump, where smoothness needs care.
-- [heston-greeks-and-calibration](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/03-heston-greeks-and-calibration.md): bumping a model with a volatility of its own to bump.
-- [american-greeks-and-implied-volatility](../15-American%20and%20Bermudan%20exercise/07-american-greeks-and-implied-volatility.md): bumping a price that also depends on an exercise decision.
-- [barrier-greeks-at-the-wall](../16-Barriers%2C%20touches%20and%20lookbacks/04-barrier-greeks-at-the-wall.md): a bump that straddles a wall the price jumps across.
-- [barrier-and-touch-greeks](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/06-barrier-and-touch-greeks.md): the same wall, in the currency market's conventions.
-- [correlation-greeks-and-implied-correlation](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/05-correlation-greeks-and-implied-correlation.md): bumping a correlation, which cannot move freely.
-- [quanto-greeks-and-hedging](../24-Quantos%20and%20composites/03-quanto-greeks-and-hedging.md): sensitivities when the payoff settles in another currency.
-- [asian-greeks-and-the-running-average](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/04-asian-greeks-and-the-running-average.md): bumping a price that depends on an average.
-- [cds-risk-numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md): bumping a credit spread instead of a share price.
-- [cva-risk-numbers-and-hedging](../46-Counterparty%20Risk%20and%20CVA/06-cva-risk-numbers-and-hedging.md): bumping a portfolio, where a second pricing run is what binds.
+- [Greeks inside the simulation](02-pathwise-and-likelihood-ratio-greeks.md): the bump taken to zero properly, inside the simulation.
+- Bumping a simulated price: the same bump-against-noise problem as numerical analysis.
+- [Greeks under jumps](../13-Local%20volatility%20and%20jumps/05-merton-greeks-hedge-error-and-calibration.md): bumping a price that can jump, where smoothness needs care.
+- [Heston Greeks and calibration](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/03-heston-greeks-and-calibration.md): bumping a model with a volatility of its own to bump.
+- [American Greeks and implied volatility](../15-American%20and%20Bermudan%20exercise/07-american-greeks-and-implied-volatility.md): bumping a price that also depends on an exercise decision.
+- [Barrier Greeks](../16-Barriers%2C%20touches%20and%20lookbacks/04-barrier-greeks-at-the-wall.md): a bump that straddles a wall the price jumps across.
+- [Greeks at the wall](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/06-barrier-and-touch-greeks.md): the same wall, in the currency market's conventions.
+- [Correlation Greeks and implied correlation](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/05-correlation-greeks-and-implied-correlation.md): bumping a correlation, which cannot move freely.
+- [Hedging a quanto](../24-Quantos%20and%20composites/03-quanto-greeks-and-hedging.md): sensitivities when the payoff settles in another currency.
+- [Asian Greeks and the average already banked](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/04-asian-greeks-and-the-running-average.md): bumping a price that depends on an average.
+- [CDS risk numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md): bumping a credit spread instead of a share price.
+- [CVA risk numbers](../46-Counterparty%20Risk%20and%20CVA/06-cva-risk-numbers-and-hedging.md): bumping a portfolio, where a second pricing run is what binds.
 
 Every answer here came from calling the pricer again: two runs per input, ten digits at best. The next card asks what happens when the slope is taken *inside* the simulation, where no bump has to be chosen and nothing nearly equal is ever subtracted.
 

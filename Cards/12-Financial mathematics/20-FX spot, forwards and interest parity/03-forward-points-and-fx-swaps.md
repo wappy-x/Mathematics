@@ -1,30 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX spot, forwards and interest parity
-topic: Quoting and trading the carry
-item: Forward points and the FX swap
-kind: convention
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/02-covered-interest-parity|covered-interest-parity]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/10-percentages|percentages]]"
-next:
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/04-fx-forward-value-after-inception|fx-forward-value-after-inception]]"
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/05-implied-yield-and-cross-currency-basis|implied-yield-and-cross-currency-basis]]"
-tags: [mathematics, financial mathematics, forward-points-and-fx-swaps]
----
-
 # Forward points and the FX swap: the forward quoted as pips over spot, and the trade that carries them
 
-Financial mathematics → FX spot, forwards and interest parity → Quoting and trading the carry → Forward points and the FX swap
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX spot, forwards and interest parity](../../../SYLLABUS.md#w12-s20) → Forward points and the FX swap
 
 ---
 
 ## General Overview
 
-A euro costs 1.1000 dollars today. Dollar deposits pay 5 percent a year, euro deposits 3 percent. The fair price for euros delivered in one year is 1.122221 dollars, and for euros delivered in three months, 1.105514 ([covered-interest-parity](02-covered-interest-parity.md)).
+A euro costs 1.1000 dollars today. Dollar deposits pay 5 percent a year, euro deposits 3 percent. The fair price for euros delivered in one year is 1.122221 dollars, and for euros delivered in three months, 1.105514 ([Covered interest parity](02-covered-interest-parity.md)).
 
 A dealer does not quote those numbers. The dealer quotes the gap. One year is "plus 222.21", three months "plus 55.14". The unit is the **pip**, one ten-thousandth of a dollar per euro, 0.0001. The gap in pips is the **forward points**. Add the points to today's rate and the result is the **outright**: the full forward rate. The reason for quoting the gap is practical. Today's rate, the **spot rate**, changes several times a second. The gap is set by two interest rates, which change a few times a year.
 
@@ -32,7 +14,7 @@ The points are also the price of a trade. A European bank holds 10 million euros
 
 **Forward points are the forward rate minus the spot rate, counted in pips; they are the interest-rate gap turned into exchange-rate units, and an FX swap is a loan that pays exactly that gap.**
 
-**What kind of fact this is:** a convention for quoting the forward, and a definition of the swap. The number inside both is covered interest parity, a theorem proved on [covered-interest-parity](02-covered-interest-parity.md); the claim that the swap is a secured loan paying the rate gap is proved on this card in Why it works.
+**What kind of fact this is:** a convention for quoting the forward, and a definition of the swap. The number inside both is covered interest parity, a theorem proved on [Covered interest parity](02-covered-interest-parity.md); the claim that the swap is a secured loan paying the rate gap is proved on this card in Why it works.
 
 ### The picture: one ticket, two dates
 
@@ -93,9 +75,9 @@ In words: spot times the gap in the two deposits' interest, shrunk by the euro d
 
 ### When it holds
 
-- **The forward is fair.** Points computed from rates assume covered interest parity. Since 2008 dollar points against the euro and yen have sat away from the rate-based number, by tens of basis points (hundredths of a percent) a year, and the swap price then carries that extra gap, the cross-currency basis ([implied-yield-and-cross-currency-basis](05-implied-yield-and-cross-currency-basis.md)).
+- **The forward is fair.** Points computed from rates assume covered interest parity. Since 2008 dollar points against the euro and yen have sat away from the rate-based number, by tens of basis points (hundredths of a percent) a year, and the swap price then carries that extra gap, the cross-currency basis ([The interest rate a forward implies](05-implied-yield-and-cross-currency-basis.md)).
 - **Rates for the forward's own term.** Three-month points need three-month rates. Filling in a date between two quoted dates by a straight line misprices it slightly, because the points curve bends upward (Step 3).
-- **One pip size.** The formula counts in 0.0001. A pair against the yen counts in 0.01; a points quote read with the wrong pip size is off by a factor of 100 ([currency-quotes-and-cross-rates](01-currency-quotes-and-cross-rates.md)).
+- **One pip size.** The formula counts in 0.0001. A pair against the yen counts in 0.01; a points quote read with the wrong pip size is off by a factor of 100 ([Reading a currency quote](01-currency-quotes-and-cross-rates.md)).
 - **The swap is a loan only if both legs settle.** Each side holds the other's currency as security. If one side fails between the legs, the other keeps collateral worth roughly the loan, which is why swap lenders lose far less on a default than unsecured lenders do.
 
 ---
@@ -189,7 +171,7 @@ An outright forward to buy 10 million euros at 1.105514 is a bet on the euro. If
 
 The swap on the same amount gains 7,471.95. The dollar lender already holds the euros from the near leg and owes the same euros back on the far leg, so the two cancel. What is left is exposure on the euro interest only, the 3 percent on 10 million for a quarter. That is why the swap is a funding and hedging tool, not a currency bet: it swaps which currency a firm holds for a period, and its price is an interest rate.
 
-The same carry in a different wrapper is the cross-currency swap, which exchanges interest payments over years as well as principal at both ends ([cross-currency-swaps-and-basis](../28-Swaps/06-cross-currency-swaps-and-basis.md)).
+The same carry in a different wrapper is the cross-currency swap, which exchanges interest payments over years as well as principal at both ends ([Cross-currency swaps](../28-Swaps/06-cross-currency-swaps-and-basis.md)).
 
 ---
 
@@ -622,8 +604,8 @@ The two outputs agree line for line.
 - **Corporate hedging.** An importer who owes euros in three months buys them forward at spot plus points. When the payment date slips, one swap rolls the hedge: its near leg settles the old forward, its far leg sets the new one.
 - **Central banks.** During the 2008 and 2020 dollar shortages, the Federal Reserve lent dollars to other central banks through swap lines built on the same two legs.
 - **Non-deliverable forwards.** Where a currency cannot be freely delivered abroad, such as the Indian rupee or Korean won, the forward is cash-settled. On the maturity date an official **fixing** rate is published, and only the difference between the agreed forward and the fixing is paid, in dollars. On the house numbers, a forward to buy 10 million euros at 1.105514 against a 1.1200 fixing pays the buyer 144,862.27 dollars and moves no euros at all.
-- **Valuing yesterday's forward.** A forward agreed last month at an old outright has a value today that the points and discount factors give: [fx-forward-value-after-inception](04-fx-forward-value-after-inception.md).
-- **Reading dollar funding stress.** Run the swap backwards: from spot, points and the euro rate, solve for the dollar rate the swap implies. When it sits above the dollar deposit rate, dollars are scarce ([implied-yield-and-cross-currency-basis](05-implied-yield-and-cross-currency-basis.md)).
+- **Valuing yesterday's forward.** A forward agreed last month at an old outright has a value today that the points and discount factors give: [Valuing an old currency forward](04-fx-forward-value-after-inception.md).
+- **Reading dollar funding stress.** Run the swap backwards: from spot, points and the euro rate, solve for the dollar rate the swap implies. When it sits above the dollar deposit rate, dollars are scarce ([The interest rate a forward implies](05-implied-yield-and-cross-currency-basis.md)).
 
 > **Say it back**
 > The forward rate is quoted as spot plus forward points, the gap counted in pips. The points are spot times the carry factor minus one, roughly spot times the rate gap times the years. They are positive when the pricing currency pays more interest, and they are compensation, not a forecast. An FX swap sells a currency at spot and buys it back at the outright, which makes it a loan secured by the other currency; the points leg pays exactly the dollar interest minus the euro interest. Because the euros go out and come back, the swap carries interest-rate risk, and almost no currency risk.
@@ -632,13 +614,13 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [covered-interest-parity](02-covered-interest-parity.md): the forward rate itself, $F = S e^{(r_d - r_f)T}$, and why no other rate survives arbitrage. Every point on this card is that forward minus spot.
-- [percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): rates as fractions of an amount, and the difference between percent and percentage points, which is the rate gap the points carry.
+- [Covered interest parity](02-covered-interest-parity.md): the forward rate itself, $F = S e^{(r_d - r_f)T}$, and why no other rate survives arbitrage. Every point on this card is that forward minus spot.
+- [Percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): rates as fractions of an amount, and the difference between percent and percentage points, which is the rate gap the points carry.
 
 ## Where this goes next
 
-- [fx-forward-value-after-inception](04-fx-forward-value-after-inception.md): a forward or a swap agreed earlier, marked to today's spot and points.
-- [implied-yield-and-cross-currency-basis](05-implied-yield-and-cross-currency-basis.md): the swap run backwards, points in and an interest rate out, and the gap when that rate disagrees with the deposit market.
+- [Valuing an old currency forward](04-fx-forward-value-after-inception.md): a forward or a swap agreed earlier, marked to today's spot and points.
+- [The interest rate a forward implies](05-implied-yield-and-cross-currency-basis.md): the swap run backwards, points in and an interest rate out, and the gap when that rate disagrees with the deposit market.
 
 The points price a swap on the day it is struck; what a swap or forward struck last month is worth now, after spot and rates have moved, is the question the card on valuing an old forward answers.
 

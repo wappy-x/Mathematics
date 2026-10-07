@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Insurance and Actuarial Mathematics
-topic: Surviving the claims forever
-item: Ruin
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/04-collective-risk-and-compound-poisson|collective-risk-and-compound-poisson]]"
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/01-martingales|martingales]]"
-next: []
-tags: [mathematics, financial mathematics, ruin-theory-and-lundberg]
----
-
 # Ruin: the chance an insurer's surplus ever goes below zero
 
-Financial mathematics → Insurance and Actuarial Mathematics → Surviving the claims forever → Ruin
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Insurance and Actuarial Mathematics](../../../SYLLABUS.md#w12-s51) → Ruin
 
 ---
 
@@ -106,7 +90,7 @@ In words: the adjustment coefficient is the loading's share of the premium, per 
 
 ### Step 0: find a score that is fair, then a fair score rarely climbs high
 
-The surplus drifts upward, so it is not a fair game. The trick is to find a transformation of it that *is* fair: a quantity whose expected future value always equals its value today. That kind of quantity is a **martingale** ([martingales](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/01-martingales.md)). Take $Z_t = e^{-r U_t}$ for some rate $r$. When the surplus is high, $Z_t$ is tiny. When the surplus goes below zero, $Z_t$ exceeds 1. A fair, never-negative score that starts at $e^{-ru}$ can reach 1 with chance at most $e^{-ru}$: on average it cannot gain, and reaching 1 would be a gain. So the whole job is to find the $r$ that makes $Z_t$ fair.
+The surplus drifts upward, so it is not a fair game. The trick is to find a transformation of it that *is* fair: a quantity whose expected future value always equals its value today. That kind of quantity is a **martingale** ([Martingales](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/01-martingales.md)). Take $Z_t = e^{-r U_t}$ for some rate $r$. When the surplus is high, $Z_t$ is tiny. When the surplus goes below zero, $Z_t$ exceeds 1. A fair, never-negative score that starts at $e^{-ru}$ can reach 1 with chance at most $e^{-ru}$: on average it cannot gain, and reaching 1 would be a gain. So the whole job is to find the $r$ that makes $Z_t$ fair.
 
 ### Step 1: how an exponential of the claims grows
 
@@ -114,7 +98,7 @@ Write the claims paid by time $t$ as a sum. For a fixed rate $r$, the average of
 
 $$E\!\left[e^{\,r\left(\sum_{i \le N_t} X_i \,-\, c\,t\right)}\right] = e^{\,t\,\kappa(r)}, \qquad \kappa(r) = \lambda\bigl(M_X(r)-1\bigr) - c\,r .$$
 
-Each claim multiplies the exponential by $e^{rX}$, whose average is $M_X(r)$. The number of claims is Poisson with mean $\lambda t$, and averaging a Poisson number of such factors gives $e^{\lambda t (M_X(r)-1)}$. The premiums contribute $e^{-crt}$ and are not random. Aggregate claims as a random sum are built on [collective-risk-and-compound-poisson](04-collective-risk-and-compound-poisson.md).
+Each claim multiplies the exponential by $e^{rX}$, whose average is $M_X(r)$. The number of claims is Poisson with mean $\lambda t$, and averaging a Poisson number of such factors gives $e^{\lambda t (M_X(r)-1)}$. The premiums contribute $e^{-crt}$ and are not random. Aggregate claims as a random sum are built on [Aggregate claims](04-collective-risk-and-compound-poisson.md).
 
 <details>
 <summary>The algebra behind this</summary>
@@ -158,7 +142,7 @@ Set $Z_t = e^{-R U_t}$. Over any stretch from time $s$ to time $t$, the new clai
 
 ### Step 5: stop the game at ruin, and read off the bound
 
-A fair game stays fair if it is stopped by a rule that looks only at the past and acts before a fixed deadline. That is the **optional stopping theorem** for bounded stopping times, from [martingales](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/01-martingales.md). Stop at ruin or at year $t$, whichever comes first. Then
+A fair game stays fair if it is stopped by a rule that looks only at the past and acts before a fixed deadline. That is the **optional stopping theorem** for bounded stopping times, from [Martingales](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/01-martingales.md). Stop at ruin or at year $t$, whichever comes first. Then
 
 $$e^{-Ru} = E\bigl[Z_{\min(\tau, t)}\bigr] \ge E\bigl[Z_\tau \text{ on ruin by } t\bigr] \ge \Pr(\tau \le t).$$
 
@@ -633,10 +617,10 @@ The simulation reads 0.3641 against the exact 0.3663, within one standard error 
 ## Where you meet it in real life
 
 - **Setting capital.** A surplus of ln(1/target)/R caps the model's ruin chance at the target: \$506,568.72 for a 1% target here. Regulators work with one-year horizons instead, but the exponential logic of capital against tail risk is the same.
-- **Choosing reinsurance.** Passing the largest claims to a reinsurer thins the tail, which raises $R$, but costs premium, which lowers it. The retention that maximises $R$ is a classic answer: [credibility-and-reinsurance](08-credibility-and-reinsurance.md).
+- **Choosing reinsurance.** Passing the largest claims to a reinsurer thins the tail, which raises $R$, but costs premium, which lowers it. The retention that maximises $R$ is a classic answer: [Credibility and reinsurance](08-credibility-and-reinsurance.md).
 - **Pricing the loading.** Inverting the equation gives the premium needed for a target $R$: $c = \lambda(M_X(R)-1)/R$. The premium principle that falls out is called the exponential principle.
 - **Queues.** The Pollaczek–Khinchine formula first described waiting times at a single server. The ruin chance equals the chance a customer in the matching queue waits longer than $u$.
-- **Next door on this shelf.** The distribution of one year's claim total is the job of [panjer-recursion-and-aggregate-claims](05-panjer-recursion-and-aggregate-claims.md). Ruin asks whether the path of surplus ever crosses zero, a question about all years at once.
+- **Next door on this shelf.** The distribution of one year's claim total is the job of [Panjer's recursion](05-panjer-recursion-and-aggregate-claims.md). Ruin asks whether the path of surplus ever crosses zero, a question about all years at once.
 
 > **Say it back**
 > An insurer's surplus climbs with premiums and drops with each claim. Ruin is the surplus ever going below zero. The adjustment coefficient $R$ is the rate at which the exponential score $e^{-RU_t}$ is a fair game, found where claim growth $\lambda(M_X(R)-1)$ equals premium $c\,R$. A fair, nonnegative score starting at $e^{-Ru}$ reaches 1 with chance at most $e^{-Ru}$, and ruin forces it past 1: that is Lundberg's inequality. For a million dollars of surplus, 10 claims a year averaging ten thousand dollars and a 10% loading, the bound is 0.0113% and the truth 0.0102%.
@@ -645,13 +629,13 @@ The simulation reads 0.3641 against the exact 0.3663, within one standard error 
 
 ## What this builds on
 
-- [collective-risk-and-compound-poisson](04-collective-risk-and-compound-poisson.md): the claim total as a Poisson number of independent claims, and its moment generating function, which Step 1 turns into the growth rate $\kappa$.
-- [martingales](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/01-martingales.md): fair games and optional stopping, which turn the fair score into the bound in Step 5.
+- [Aggregate claims](04-collective-risk-and-compound-poisson.md): the claim total as a Poisson number of independent claims, and its moment generating function, which Step 1 turns into the growth rate $\kappa$.
+- [Martingales](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/01-martingales.md): fair games and optional stopping, which turn the fair score into the bound in Step 5.
 
 ## Where this goes next
 
-- [credibility-and-reinsurance](08-credibility-and-reinsurance.md): reinsurance reshapes the claim distribution, and with it $R$; this card's equation is how the trade-off is scored.
-- [reserving-chain-ladder-and-bornhuetter-ferguson](07-reserving-chain-ladder-and-bornhuetter-ferguson.md): the surplus here assumes each claim is paid the moment it happens; reserving handles claims that are reported and settled years later.
+- [Credibility and reinsurance](08-credibility-and-reinsurance.md): reinsurance reshapes the claim distribution, and with it $R$; this card's equation is how the trade-off is scored.
+- [Reserving](07-reserving-chain-ladder-and-bornhuetter-ferguson.md): the surplus here assumes each claim is paid the moment it happens; reserving handles claims that are reported and settled years later.
 
 Lundberg's inequality says how much surplus keeps a given claim stream survivable; what it leaves open is how an insurer changes the claim stream itself, by passing the tail to a reinsurer, and that is the credibility-and-reinsurance card's question.
 

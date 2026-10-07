@@ -1,26 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Densities and Changing Measure
-topic: Differences of measures
-item: Signed measures
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/01-absolutely-continuous-and-singular-measures|absolutely-continuous-and-singular-measures]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/05-continuity-of-measure|continuity-of-measure]]"
-next:
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/03-radon-nikodym-theorem|radon-nikodym-theorem]]"
-tags:
-  - mathematics
-  - measure and integration
-  - signed-measures-and-hahn-jordan
----
-
 # Signed measures: sizes that may go negative, the split of the space into a positive and a negative part, and total variation as a distance
 
-Measure and integration → Densities and Changing Measure → Differences of measures → Signed measures
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Densities and Changing Measure](../../../SYLLABUS.md#w10-s08) → Signed measures
 
 ---
 
@@ -68,7 +48,7 @@ $$\Omega = \Omega^+ \cup \Omega^-, \qquad \Omega^+ \cap \Omega^- = \emptyset, \q
 
 $$\nu = \nu^+ - \nu^-, \qquad \nu^+(\Omega^-) = 0 = \nu^-(\Omega^+).$$
 
-**Read it aloud:** the signed measure is the gains minus the losses, two ordinary measures living on disjoint parts of the space: mutually singular, in the word of [absolutely-continuous-and-singular-measures](01-absolutely-continuous-and-singular-measures.md).
+**Read it aloud:** the signed measure is the gains minus the losses, two ordinary measures living on disjoint parts of the space: mutually singular, in the word of [Absolutely continuous and singular measures](01-absolutely-continuous-and-singular-measures.md).
 
 **Total variation**, written $\lvert\nu\rvert$ and read "the variation of nu":
 
@@ -128,7 +108,7 @@ The general lemma removes infinitely many pieces. From a set $E$ of finite posit
 
 ### Step 3: take the positive set of largest size
 
-Let $m$ be the supremum of $\nu$ over positive sets. On the die $m = 0.267$, at $\{5, 6\}$. In general choose positive sets $G_1, G_2, \dots$ with sizes approaching $m$. Their union is positive (Step 1). The unions $H_j = G_1 \cup \cdots \cup G_j$ rise, each at least as large as $G_j$. Continuity from below ([continuity-of-measure](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md), whose layer proof works unchanged for signed measures) sends their sizes to the union's. So the union, called $\Omega^+$, has size exactly $m$, finite because $\nu$ never takes plus infinity (if it avoids minus infinity instead, use $-\nu$).
+Let $m$ be the supremum of $\nu$ over positive sets. On the die $m = 0.267$, at $\{5, 6\}$. In general choose positive sets $G_1, G_2, \dots$ with sizes approaching $m$. Their union is positive (Step 1). The unions $H_j = G_1 \cup \cdots \cup G_j$ rise, each at least as large as $G_j$. Continuity from below ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md), whose layer proof works unchanged for signed measures) sends their sizes to the union's. So the union, called $\Omega^+$, has size exactly $m$, finite because $\nu$ never takes plus infinity (if it avoids minus infinity instead, use $-\nu$).
 
 ### Step 4: what is left over loses everywhere
 
@@ -155,7 +135,7 @@ The same number is one minus the overlap of the two dice, $1 - \sum \min(p_i, q_
 <details>
 <summary>The bus: the same split with densities</summary>
 
-Buses at rate 1 per minute give waits the density $f_P(t) = e^{-t}$; at rate 2, $f_Q(t) = 2e^{-2t}$. A density's integral over a set against length $\lambda$ is the set's probability. So $\nu = Q - P$ has density $f_Q - f_P$, and $\Omega^+$ is the waits under the crossing, where $2e^{-2t} = e^{-t}$: $t = \ln 2 = 0.693$ minutes. Integrating $f_Q - f_P$ up to it gives $\nu^+(\Omega) = e^{-\ln 2} - e^{-2\ln 2} = 0.25$; integrating $\lvert f_Q - f_P\rvert$ over all waits gives 0.5, so the distance is 0.25. The event "the bus comes within t minutes" peaks at t = 0.693, gap 0.25. The sibling card [densities-and-likelihood-ratios](06-densities-and-likelihood-ratios.md) reads $\Omega^+$ as the waits where the ratio $f_Q / f_P$ exceeds 1.
+Buses at rate 1 per minute give waits the density $f_P(t) = e^{-t}$; at rate 2, $f_Q(t) = 2e^{-2t}$. A density's integral over a set against length $\lambda$ is the set's probability. So $\nu = Q - P$ has density $f_Q - f_P$, and $\Omega^+$ is the waits under the crossing, where $2e^{-2t} = e^{-t}$: $t = \ln 2 = 0.693$ minutes. Integrating $f_Q - f_P$ up to it gives $\nu^+(\Omega) = e^{-\ln 2} - e^{-2\ln 2} = 0.25$; integrating $\lvert f_Q - f_P\rvert$ over all waits gives 0.5, so the distance is 0.25. The event "the bus comes within t minutes" peaks at t = 0.693, gap 0.25. The sibling card [Densities and likelihood ratios](06-densities-and-likelihood-ratios.md) reads $\Omega^+$ as the waits where the ratio $f_Q / f_P$ exceeds 1.
 
 </details>
 
@@ -168,7 +148,7 @@ Throughout, $\nu$ is a signed measure on $(\Omega, \mathcal{F})$ that never take
 
 **Fact 2: a countable union of positive sets is positive.** Let $G_1, G_2, \dots$ be positive and $B$ a piece of their union. Put $B_j = (B \cap G_j) \setminus (G_1 \cup \cdots \cup G_{j-1})$. These are disjoint, their union is $B$, and each lies in $G_j$, so $\nu(B_j) \ge 0$. Countable additivity gives $\nu(B) = \sum_j \nu(B_j) \ge 0$.
 
-**Fact 3: continuity from below.** If $H_1 \subseteq H_2 \subseteq \cdots$, then $\nu(\bigcup H_j) = \lim \nu(H_j)$: the layer proof of [continuity-of-measure](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md) uses only countable additivity.
+**Fact 3: continuity from below.** If $H_1 \subseteq H_2 \subseteq \cdots$, then $\nu(\bigcup H_j) = \lim \nu(H_j)$: the layer proof of [Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md) uses only countable additivity.
 
 **Lemma.** If $0 < \nu(E) < \infty$, then $E$ contains a positive set $A$ with $\nu(A) \ge \nu(E)$. If $E$ is positive, take $A = E$. Otherwise let $n_1$ be the smallest whole number for which some piece $B_1 \subseteq E$ has $\nu(B_1) < -1/n_1$. Having chosen $B_1, \dots, B_{j-1}$, if $E \setminus (B_1 \cup \cdots \cup B_{j-1})$ is positive, stop and take it as $A$; its size is $\nu(E)$ minus negative numbers, so at least $\nu(E)$. Otherwise let $n_j$ be the smallest whole number for which some piece $B_j$ of that remainder has $\nu(B_j) < -1/n_j$. If the process never stops, put $A = E \setminus \bigcup_j B_j$. Then $E$ is the disjoint union of $A$ and the $B_j$, so $\nu(E) = \nu(A) + \sum_j \nu(B_j)$. By Fact 1 every term is finite, so the series converges; its terms are below $-1/n_j$, so $\sum_j 1/n_j$ is finite and $n_j \to \infty$. Also $\nu(A) = \nu(E) - \sum_j \nu(B_j) \ge \nu(E)$. Suppose a piece $B$ of $A$ had $\nu(B) < 0$. Choose a whole number $n$ with $\nu(B) < -1/n$, then $j$ with $n_j > n$. Since $B$ lies in $E \setminus (B_1 \cup \cdots \cup B_{j-1})$, the threshold $1/n$ would have found a piece at stage $j$, so $n_j \le n$, a contradiction. So $A$ is positive.
 
@@ -184,7 +164,7 @@ Throughout, $\nu$ is a signed measure on $(\Omega, \mathcal{F})$ that never take
 
 </details>
 
-A second route: when $\nu$ has a density, $\Omega^+$ is where it is positive, as on the die and for the bus. That needs the density first, and one standard proof of [radon-nikodym-theorem](03-radon-nikodym-theorem.md) uses Hahn to build it, so on this shelf Hahn comes first.
+A second route: when $\nu$ has a density, $\Omega^+$ is where it is positive, as on the die and for the bus. That needs the density first, and one standard proof of [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md) uses Hahn to build it, so on this shelf Hahn comes first.
 
 ---
 
@@ -610,8 +590,8 @@ The two outputs match line for line.
 - **Telling two distributions apart.** One roll must decide between the fair die and the loaded one. Any rule's two error probabilities add to at least 1 − 0.267 = 0.733, and "say loaded on 5 or 6" achieves it.
 - **Card shuffling.** How many riffle shuffles make a deck close to random is measured in total variation distance from the uniform order; Levin, Peres and Wilmer build mixing times on it.
 - **Electric charge.** Charge in a region is a signed measure; the Hahn split separates where positive and negative charge sit.
-- **Likelihood ratios.** For the bus, $\Omega^+$ is the waits where $f_Q / f_P > 1$, and saying "rate 2" exactly there is the best one-wait test: see [densities-and-likelihood-ratios](06-densities-and-likelihood-ratios.md).
-- **Splitting a measure in two.** A part with a density and a part with none, the unsigned cousin of Jordan's split: [lebesgue-decomposition](05-lebesgue-decomposition.md).
+- **Likelihood ratios.** For the bus, $\Omega^+$ is the waits where $f_Q / f_P > 1$, and saying "rate 2" exactly there is the best one-wait test: see [Densities and likelihood ratios](06-densities-and-likelihood-ratios.md).
+- **Splitting a measure in two.** A part with a density and a part with none, the unsigned cousin of Jordan's split: [Lebesgue decomposition](05-lebesgue-decomposition.md).
 
 > **Say it back**
 > A signed measure gives sets sizes that may be negative, adds them over disjoint pieces, and takes at most one infinity. Its space splits into a positive part, where every piece gains, and a negative part, where every piece loses; the positive part is the largest positive set. Gains and losses are two ordinary measures on separate parts, and their sum is the total variation. For two probability measures, the gains equal the losses, so half the total variation is the largest gap on any event. For the dice that is 0.267, on the event "5 or 6".
@@ -620,12 +600,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [absolutely-continuous-and-singular-measures](01-absolutely-continuous-and-singular-measures.md): mutually singular measures, the relation between the Jordan parts.
-- [continuity-of-measure](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md): continuity from below, which turns a list of positive sets into the largest one.
+- [Absolutely continuous and singular measures](01-absolutely-continuous-and-singular-measures.md): mutually singular measures, the relation between the Jordan parts.
+- [Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md): continuity from below, which turns a list of positive sets into the largest one.
 
 ## Where this goes next
 
-- [radon-nikodym-theorem](03-radon-nikodym-theorem.md): one standard proof applies the Hahn split to $\nu - c\mu$, for measures $\nu$ and $\mu$ and each number c, to build a density.
+- [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md): one standard proof applies the Hahn split to $\nu - c\mu$, for measures $\nu$ and $\mu$ and each number c, to build a density.
 
 On the die the density of $Q$ against $P$ was in hand: $q_i / p_i$, face by face. Whether every measure that is zero wherever another is zero has such a density is what the Radon-Nikodym theorem answers.
 

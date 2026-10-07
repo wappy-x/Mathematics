@@ -1,27 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Trigonometry
-topic: Sine against its arc
-item: Small angles
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/02-radians-and-the-unit-circle|radians-and-the-unit-circle]]"
-  - "[[Cards/05-Geometry and trig/01-Angles, Triangles and Congruence/06-area-of-triangles-and-polygons|area-of-triangles-and-polygons]]"
-next:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/04-limit-laws-and-the-squeeze|limit-laws-and-the-squeeze]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/04-derivatives-of-trig-functions|derivatives-of-trig-functions]]"
-tags:
-  - mathematics
-  - geometry and trig
-  - small-angles-and-the-sine-bound
----
-
 # Small angles: why sin x is nearly x, and the sandwich that proves it
 
-Geometry and trig → Trigonometry → Sine against its arc → Small angles
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Trigonometry](../../../SYLLABUS.md#w05-s03) → Small angles
 
 ---
 
@@ -29,7 +8,7 @@ Geometry and trig → Trigonometry → Sine against its arc → Small angles
 
 A clock pendulum is 1 m long. Its bob is pulled 5° out from straight down. It sits 87.16 mm to the side of the vertical. Along its curved path it has swung 87.27 mm. The string's line, carried on, would cross the level line through the lowest point 87.49 mm out.
 
-The pull that swings the bob back is its weight times the sine of the angle. Physics swaps that sine for the angle itself, in radians: the length of arc the angle cuts from a circle of radius 1 ([radians-and-the-unit-circle](02-radians-and-the-unit-circle.md)). 5° is 0.0873 radians; its sine is 0.0872. The swap overstates the pull by 0.127% and makes the swing easy to predict.
+The pull that swings the bob back is its weight times the sine of the angle. Physics swaps that sine for the angle itself, in radians: the length of arc the angle cuts from a circle of radius 1 ([The unit circle](02-radians-and-the-unit-circle.md)). 5° is 0.0873 radians; its sine is 0.0872. The swap overstates the pull by 0.127% and makes the swing easy to predict.
 
 Up to a right angle the three distances always come in that order, smallest first: the angle is sandwiched between its sine and its tangent. Three nested areas prove it.
 
@@ -47,7 +26,7 @@ Drawn at 40°, not 5°, so the shapes separate; radius 1 = 200 units. Pivot O (1
 
 ## The formula
 
-Notation first. The angle is x, in radians, so 180° is π radians. Sine, cosine and tangent are the right-triangle ratios of [right-triangle-trigonometry](01-right-triangle-trigonometry.md). The sign ≈ reads "is approximately".
+Notation first. The angle is x, in radians, so 180° is π radians. Sine, cosine and tangent are the right-triangle ratios of [Sine, cosine and tangent](01-right-triangle-trigonometry.md). The sign ≈ reads "is approximately".
 
 $$\sin x < x < \tan x \qquad \text{for } 0 < x < \tfrac{\pi}{2}$$
 
@@ -89,12 +68,12 @@ Comparing the curved arc with the straight stretch AT needs a theory of measurin
 
 Centre a circle of radius 1 on the pivot O. A is the lowest point, B the bob, turned x from OA. Drop a line from B square onto OA, at C. Triangle OCB has hypotenuse 1, so CB is $\sin x$ and OC is $\cos x$.
 
-The level line through A touches the circle, so it meets the radius OA square on ([angles-in-a-circle](../02-Circles%20and%20Solids/03-angles-in-a-circle.md)). Carry OB on to meet it at T. Triangle OAT is right-angled at A with OA = 1, so AT = $\tan x$.
+The level line through A touches the circle, so it meets the radius OA square on ([Angles at a circle](../02-Circles%20and%20Solids/03-angles-in-a-circle.md)). Carry OB on to meet it at T. Triangle OAT is right-angled at A with OA = 1, so AT = $\tan x$.
 
 ### Step 2: three areas
 
-- **Triangle OAB:** base OA = 1, height CB, area $\tfrac12 \sin x$ ([area-of-triangles-and-polygons](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)).
-- **Sector OAB:** half the radius squared times the angle, $\tfrac12 x$ ([radians-arcs-and-sectors](../02-Circles%20and%20Solids/02-radians-arcs-and-sectors.md)).
+- **Triangle OAB:** base OA = 1, height CB, area $\tfrac12 \sin x$ ([Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)).
+- **Sector OAB:** half the radius squared times the angle, $\tfrac12 x$ ([Radians](../02-Circles%20and%20Solids/02-radians-arcs-and-sectors.md)).
 - **Triangle OAT:** legs 1 and $\tan x$, area $\tfrac12 \tan x$.
 
 At 5°: 0.043578, 0.043633 and 0.043744.
@@ -120,7 +99,7 @@ Divide $\sin x < x$ by the positive x: $\sin x / x < 1$. Multiply $x < \sin x / 
 
 ### Step 5: how far the cosine sits below 1
 
-The half-angle rule of [trig-identities](03-trig-identities.md) gives $1 - \cos x = 2\sin^2(x/2)$, twice the squared sine of half the angle. Step 3 at half the angle gives $\sin(x/2) < x/2$, so $1 - \cos x < x^2/2$: the floor, 0.996192 against 0.996195 at 5°. Halve the angle and the cosine's distance below 1 roughly quarters. The bob's rise, $L(1 - \cos x)$, is 3.805 mm; the rule gives 3.808 mm.
+The half-angle rule of [Trig identities](03-trig-identities.md) gives $1 - \cos x = 2\sin^2(x/2)$, twice the squared sine of half the angle. Step 3 at half the angle gives $\sin(x/2) < x/2$, so $1 - \cos x < x^2/2$: the floor, 0.996192 against 0.996195 at 5°. Halve the angle and the cosine's distance below 1 roughly quarters. The bob's rise, $L(1 - \cos x)$, is 3.805 mm; the rule gives 3.808 mm.
 
 <details>
 <summary>Detailed proof: the cosine's ceiling, $x^4/8$ above the rule</summary>
@@ -146,7 +125,7 @@ xychart-beta
 
 Top: tan x ÷ x. Middle: sin x ÷ x. Bottom: cos x, its floor. All read 1.00 at 5°; by 40° they read 1.20, 0.92 and 0.77.
 
-Calculus reaches the same rules through sine's rate of change ([derivatives-of-trig-functions](../../06-Calculus%20and%20analysis/02-Derivatives/04-derivatives-of-trig-functions.md)), but computes that rate from this chain. The bounds are cautious: the true shortfall, 0.001269, is a third of 0.003808.
+Calculus reaches the same rules through sine's rate of change ([Derivatives of sine and cosine](../../06-Calculus%20and%20analysis/02-Derivatives/04-derivatives-of-trig-functions.md)), but computes that rate from this chain. The bounds are cautious: the true shortfall, 0.001269, is a third of 0.003808.
 
 ---
 
@@ -413,15 +392,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [radians-and-the-unit-circle](02-radians-and-the-unit-circle.md): the radian as a length of arc; sine, cosine and tangent on a circle of radius 1.
-- [area-of-triangles-and-polygons](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md): half base times height, for the two triangles.
+- [The unit circle](02-radians-and-the-unit-circle.md): the radian as a length of arc; sine, cosine and tangent on a circle of radius 1.
+- [Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md): half base times height, for the two triangles.
 
 ## Where this goes next
 
-- [limit-laws-and-the-squeeze](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/04-limit-laws-and-the-squeeze.md): the sandwich's squeeze on sin x ÷ x, made exact.
-- [derivatives-of-trig-functions](../../06-Calculus%20and%20analysis/02-Derivatives/04-derivatives-of-trig-functions.md): the chain turned into the rates of change of sine and cosine.
+- [Limit laws and the squeeze](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/04-limit-laws-and-the-squeeze.md): the sandwich's squeeze on sin x ÷ x, made exact.
+- [Derivatives of sine and cosine](../../06-Calculus%20and%20analysis/02-Derivatives/04-derivatives-of-trig-functions.md): the chain turned into the rates of change of sine and cosine.
 
-The chain pins sin x ÷ x ever closer to 1 as the angle shrinks, yet no angle makes it equal 1; what the ratio closes in on, and what "closes in" means, is [limit-laws-and-the-squeeze](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/04-limit-laws-and-the-squeeze.md).
+The chain pins sin x ÷ x ever closer to 1 as the angle shrinks, yet no angle makes it equal 1; what the ratio closes in on, and what "closes in" means, is [Limit laws and the squeeze](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/04-limit-laws-and-the-squeeze.md).
 
 ---
 

@@ -1,25 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Recurrences
-topic: Undetermined coefficients
-item: Recurrences with a driving term
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/04-characteristic-equation-and-binet|characteristic-equation-and-binet]]"
-  - "[[Cards/03-Algebra/01-Letters and Equations/02-linear-equations|linear-equations]]"
-next: []
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - nonhomogeneous-recurrences
----
-
 # Recurrences with a driving term: guess a particular solution of the same shape, add the homogeneous part, fit the seeds
 
-Combinatorics and graphs → Recurrences → Undetermined coefficients → Recurrences with a driving term
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Recurrences](../../../SYLLABUS.md#w04-s05) → Recurrences with a driving term
 
 ---
 
@@ -94,7 +75,7 @@ One rule covers that last column: when the guess already solves the stripped rul
 
 ### Step 0: subtracting two solutions deletes the driving term
 
-Take two sequences that obey the rule and subtract them term by term. Both took in the same f(n) at every step, so the difference never sees it. What is left obeys the stripped rule, solved on [characteristic-equation-and-binet](04-characteristic-equation-and-binet.md).
+Take two sequences that obey the rule and subtract them term by term. Both took in the same f(n) at every step, so the difference never sees it. What is left obeys the stripped rule, solved on [The characteristic equation](04-characteristic-equation-and-binet.md).
 
 ### Step 1: so the family is one solution plus the homogeneous ones
 
@@ -123,7 +104,7 @@ The account has c = 1.01 and f(n) = 10n. Guess a straight line back, p(n) = Bn +
 
 $$Bn + C = 1.01\big(B(n-1) + C\big) + 10n.$$
 
-Two straight lines agree at every n only if their n parts and constant parts agree separately ([linear-equations](../../03-Algebra/01-Letters%20and%20Equations/02-linear-equations.md)). The n parts give B = 1.01B + 10, so B = −1000; the constant parts give C = −1.01B + 1.01C, so C = −101000. An empty account, s(0) = 0, fixes A = 101000:
+Two straight lines agree at every n only if their n parts and constant parts agree separately ([Linear equations](../../03-Algebra/01-Letters%20and%20Equations/02-linear-equations.md)). The n parts give B = 1.01B + 10, so B = −1000; the constant parts give C = −1.01B + 1.01C, so C = −101000. An empty account, s(0) = 0, fixes A = 101000:
 
 $$s(n) = 101000 \times 1.01^n - 1000n - 101000.$$
 
@@ -131,7 +112,7 @@ $$s(n) = 101000 \times 1.01^n - 1000n - 101000.$$
 
 Try t(n) = 2 t(n-1) + 2^n with the guess B 2^n. It gives B 2^n = 2B 2^(n-1) + 2^n, whose first two terms are equal, leaving 0 = 2^n. No B saves it: B 2^n already solves the stripped rule, and the homogeneous part never produces the driving term. A factor of n breaks the tie: B n 2^n gives Bn = B(n-1) + 1, so B = 1, and t(0) = 0 leaves t(n) = n 2^n, matching the forward run 2, 8, 24, 64, 160.
 
-One road avoids guessing: multiply each amount handed in by c once per remaining step and add them up — exact, and slow. That sum telescopes on [finite-differences-and-telescoping-sums](02-finite-differences-and-telescoping-sums.md); another road makes the step a matrix ([recurrences-as-matrix-powers](06-recurrences-as-matrix-powers.md)).
+One road avoids guessing: multiply each amount handed in by c once per remaining step and add them up — exact, and slow. That sum telescopes on [Finite differences](02-finite-differences-and-telescoping-sums.md); another road makes the step a matrix ([A recurrence is a matrix](06-recurrences-as-matrix-powers.md)).
 
 ---
 
@@ -385,9 +366,9 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **A loan with a fixed payment.** The balance grows by the monthly rate and drops by the payment: a constant driving term, negative this time, worked through on [first-order-recurrences-and-loans](03-first-order-recurrences-and-loans.md).
+- **A loan with a fixed payment.** The balance grows by the monthly rate and drops by the payment: a constant driving term, negative this time, worked through on [First-order recurrences](03-first-order-recurrences-and-loans.md).
 - **Backup rotation.** The puzzle's move order schedules the reuse of backup media, so older copies survive longer.
-- **Recursive routines.** One that calls itself twice and then tidies up has this shape, the tidying being the driving term; halving the problem changes the method: [divide-and-conquer-recurrences](07-divide-and-conquer-recurrences.md).
+- **Recursive routines.** One that calls itself twice and then tidies up has this shape, the tidying being the driving term; halving the problem changes the method: [Divide-and-conquer recurrences](07-divide-and-conquer-recurrences.md).
 
 > **Say it back**
 > A recurrence with a driving term takes something from outside at every step: a disc moved, or a deposit paid in. Its solutions are one particular sequence obeying the whole rule, plus the general solution with the added term deleted. The particular one comes from guessing a shape matching the added term and letting the rule fix its coefficients. The starting value is used last, on both parts. Six discs come to 63 moves; a year of rising deposits to $809.33.
@@ -396,14 +377,14 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [characteristic-equation-and-binet](04-characteristic-equation-and-binet.md): solving the stripped rule, which supplies the A c^n half of every answer.
-- [linear-equations](../../03-Algebra/01-Letters%20and%20Equations/02-linear-equations.md): matching like terms and solving for an unknown letter, which is what the guess needs.
-- [recurrences-and-fibonacci](01-recurrences-and-fibonacci.md): where the notation a(n) = c a(n-1) and the idea of a seed come from.
+- [The characteristic equation](04-characteristic-equation-and-binet.md): solving the stripped rule, which supplies the A c^n half of every answer.
+- [Linear equations](../../03-Algebra/01-Letters%20and%20Equations/02-linear-equations.md): matching like terms and solving for an unknown letter, which is what the guess needs.
+- [Recurrences](01-recurrences-and-fibonacci.md): where the notation a(n) = c a(n-1) and the idea of a seed come from.
 
 ## Where this goes next
 
-- [recurrences-as-matrix-powers](06-recurrences-as-matrix-powers.md): the same step as a matrix, carrying the driving term along without a guess.
-- [divide-and-conquer-recurrences](07-divide-and-conquer-recurrences.md): rules that halve the problem rather than shorten it, the work at each level again a driving term.
+- [A recurrence is a matrix](06-recurrences-as-matrix-powers.md): the same step as a matrix, carrying the driving term along without a guess.
+- [Divide-and-conquer recurrences](07-divide-and-conquer-recurrences.md): rules that halve the problem rather than shorten it, the work at each level again a driving term.
 
 The table leaves out driving terms of other shapes; the machinery that produces the right guess rather than recognising it is the generating function.
 

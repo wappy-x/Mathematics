@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Short-Rate Models
-topic: Mean-reverting rates
-item: Vasicek
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/01-the-term-structure-equation|the-term-structure-equation]]"
-next:
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/03-cox-ingersoll-ross-model|cox-ingersoll-ross-model]]"
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/04-hull-white-model|hull-white-model]]"
-tags: [mathematics, financial mathematics, vasicek-model]
----
-
 # Vasicek: a mean-reverting normal rate with closed-form bonds
 
-Financial mathematics → Short-Rate Models → Mean-reverting rates → Vasicek
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Short-Rate Models](../../../SYLLABUS.md#w12-s30) → Vasicek
 
 ---
 
@@ -52,7 +35,7 @@ Bottom line: today's rate 2 percent, a steeply rising curve. Middle line: the ho
 
 ## The formula
 
-Notation first. The model is written in the shorthand of Itô calculus ([itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)): $dr_t$ is the change in the rate over a short step of time $dt$, and $dW_t$ is a random shock over that step, with average zero and variance $dt$. The model is an Ornstein-Uhlenbeck process, a random walk with a pull toward a level ([ornstein-uhlenbeck-and-cir-processes](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)):
+Notation first. The model is written in the shorthand of Itô calculus ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)): $dr_t$ is the change in the rate over a short step of time $dt$, and $dW_t$ is a random shock over that step, with average zero and variance $dt$. The model is an Ornstein-Uhlenbeck process, a random walk with a pull toward a level ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)):
 
 $$dr_t = a\,(\theta - r_t)\,dt + \sigma\,dW_t$$
 
@@ -81,10 +64,10 @@ $$P(0,T) = e^{\,A(T) - B(T)\,r_0}, \qquad B(T) = \frac{1 - e^{-aT}}{a}, \qquad A
 
 ### When it holds
 
-- **Normal shocks of one size.** Real rate volatility changes with the rate's level. Near zero, normal shocks of fixed size put too much weight on deeply negative rates; [cox-ingersoll-ross-model](03-cox-ingersoll-ross-model.md) scales the shocks with the rate.
-- **One source of randomness.** Every yield moves with the same shock, so the 2-year and 30-year yields are perfectly correlated. Real curves also twist; [two-factor-and-lognormal-short-rate-models](07-two-factor-and-lognormal-short-rate-models.md) adds a second shock.
-- **A constant level.** Four numbers cannot reproduce the curve the market shows today, which has its own bends. Bonds priced off Vasicek disagree with quoted prices by basis points (hundredths of a percent) or more; [hull-white-model](04-hull-white-model.md) lets the level move with time to fit it exactly.
-- **The level is the pricing-world level.** $\theta$ is the level under the pricing weights set up on [the-term-structure-equation](01-the-term-structure-equation.md), with the market price of risk (the extra return investors demand for carrying rate risk) folded in. It is not a forecast of where rates will settle.
+- **Normal shocks of one size.** Real rate volatility changes with the rate's level. Near zero, normal shocks of fixed size put too much weight on deeply negative rates; [Cox-Ingersoll-Ross](03-cox-ingersoll-ross-model.md) scales the shocks with the rate.
+- **One source of randomness.** Every yield moves with the same shock, so the 2-year and 30-year yields are perfectly correlated. Real curves also twist; [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md) adds a second shock.
+- **A constant level.** Four numbers cannot reproduce the curve the market shows today, which has its own bends. Bonds priced off Vasicek disagree with quoted prices by basis points (hundredths of a percent) or more; [Hull-White](04-hull-white-model.md) lets the level move with time to fit it exactly.
+- **The level is the pricing-world level.** $\theta$ is the level under the pricing weights set up on [A short-rate model](01-the-term-structure-equation.md), with the market price of risk (the extra return investors demand for carrying rate risk) folded in. It is not a forecast of where rates will settle.
 
 ---
 
@@ -92,9 +75,9 @@ $$P(0,T) = e^{\,A(T) - B(T)\,r_0}, \qquad B(T) = \frac{1 - e^{-aT}}{a}, \qquad A
 
 ### Step 0: a bond is an average of discount factors
 
-From [the-term-structure-equation](01-the-term-structure-equation.md): in the pricing world, a zero is worth the average, over all paths the rate might take, of $e^{-I_T}$, where $I_T$ is the area under the path from now to $T$. A path that stays at 4 percent for five years has area 0.2 and discounts $1 to $e^{-0.2}$.
+From [A short-rate model](01-the-term-structure-equation.md): in the pricing world, a zero is worth the average, over all paths the rate might take, of $e^{-I_T}$, where $I_T$ is the area under the path from now to $T$. A path that stays at 4 percent for five years has area 0.2 and discounts $1 to $e^{-0.2}$.
 
-The rest is one fact about normal variables. Vasicek's rate at every date is built from the same normal shocks, added with fixed weights. Any such weighted sum of shared normal shocks is normal, and an area is a sum. So $I_T$ is normal, and the average of $e^{-I}$ for a normal $I$ with mean $m$ and variance $v$ is $e^{-m + v/2}$, the mean of a lognormal variable ([geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md) uses the same fact). Only $m$ and $v$ are needed.
+The rest is one fact about normal variables. Vasicek's rate at every date is built from the same normal shocks, added with fixed weights. Any such weighted sum of shared normal shocks is normal, and an area is a sum. So $I_T$ is normal, and the average of $e^{-I}$ for a normal $I$ with mean $m$ and variance $v$ is $e^{-m + v/2}$, the mean of a lognormal variable ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md) uses the same fact). Only $m$ and $v$ are needed.
 
 ### Step 1: solve the rate
 
@@ -139,7 +122,7 @@ The $+v/2$ is **convexity**: $e^{-I}$ bends upward, so spreading $I$ out raises 
 
 ### Step 4: the same answer from the bond equation
 
-[the-term-structure-equation](01-the-term-structure-equation.md) says every bond price $P$, as a function of the rate $r$ and the time left $\tau$, satisfies
+[A short-rate model](01-the-term-structure-equation.md) says every bond price $P$, as a function of the rate $r$ and the time left $\tau$, satisfies
 
 $$\frac{\partial P}{\partial \tau} = a(\theta - r)\frac{\partial P}{\partial r} + \tfrac12\sigma^2 \frac{\partial^2 P}{\partial r^2} - rP, \qquad P = 1 \text{ at } \tau = 0.$$
 
@@ -149,7 +132,7 @@ $$B' = 1 - aB, \qquad A' = -a\theta B + \tfrac12\sigma^2 B^2, \qquad A(0) = B(0)
 
 The first is solved by $B = (1 - e^{-a\tau})/a$; integrating the second gives the same $A$ as Step 3. The code solves both by stepping them forward numerically, without the closed form, and lands on the same price.
 
-A model whose log bond prices are straight lines in the rate is called **affine**. Duffie and Kan (1996) showed which rate models have this property: the drift and the variance of the shocks must both be straight lines in the rate. Vasicek has a straight-line drift and a constant variance; [cox-ingersoll-ross-model](03-cox-ingersoll-ross-model.md) has a variance proportional to the rate. Both are affine.
+A model whose log bond prices are straight lines in the rate is called **affine**. Duffie and Kan (1996) showed which rate models have this property: the drift and the variance of the shocks must both be straight lines in the rate. Vasicek has a straight-line drift and a constant variance; [Cox-Ingersoll-Ross](03-cox-ingersoll-ross-model.md) has a variance proportional to the rate. Both are affine.
 
 ---
 
@@ -224,7 +207,7 @@ xychart-beta
     line [4.50, 4.56, 4.58, 4.60, 4.60, 4.60, 4.60, 4.59, 4.58, 4.55, 4.54]
 ```
 
-The one line: the yield climbs from 4.50 toward the level, peaks at 4.60 around four years, then sinks toward the long yield as convexity takes over. So Vasicek draws rising, falling and humped curves. It cannot draw a dip followed by a rise, or match an arbitrary market curve; that needs [hull-white-model](04-hull-white-model.md).
+The one line: the yield climbs from 4.50 toward the level, peaks at 4.60 around four years, then sinks toward the long yield as convexity takes over. So Vasicek draws rising, falling and humped curves. It cannot draw a dip followed by a rise, or match an arbitrary market curve; that needs [Hull-White](04-hull-white-model.md).
 
 ---
 
@@ -671,7 +654,7 @@ The two outputs match line for line, simulations included, since both use the sa
 
 - **Bank and insurance balance sheets.** Asset-liability models project thousands of short-rate paths to value deposits and pension promises; Vasicek and its time-varying cousin are the usual first choice because every bond price along every path is closed-form.
 - **Negative-rate markets.** Euro-area, Swiss and Japanese short rates sat below zero for years after 2014. A normal model prices those bonds without special handling; a model with rates kept positive cannot.
-- **Bond options.** Because the log bond price is normal, a bond option has a Black-Scholes-style formula: [bond-options-and-jamshidians-trick](05-bond-options-and-jamshidians-trick.md).
+- **Bond options.** Because the log bond price is normal, a bond option has a Black-Scholes-style formula: [Bond options](05-bond-options-and-jamshidians-trick.md).
 - **Credit portfolios.** The Basel capital formula carries Vasicek's name from a different paper, on loan defaults driven by one common factor. Same author, a different model.
 
 > **Say it back**
@@ -681,14 +664,14 @@ The two outputs match line for line, simulations included, since both use the sa
 
 ## What this builds on
 
-- [the-term-structure-equation](01-the-term-structure-equation.md): a bond as the pricing-world average of the path's discount factor, and the equation every bond price satisfies.
+- [A short-rate model](01-the-term-structure-equation.md): a bond as the pricing-world average of the path's discount factor, and the equation every bond price satisfies.
 
 ## Where this goes next
 
-- [cox-ingersoll-ross-model](03-cox-ingersoll-ross-model.md): shocks that shrink as the rate nears zero, keeping it positive, still with closed-form bonds.
-- [hull-white-model](04-hull-white-model.md): Vasicek with a level that moves over time, chosen to reproduce today's market curve exactly.
+- [Cox-Ingersoll-Ross](03-cox-ingersoll-ross-model.md): shocks that shrink as the rate nears zero, keeping it positive, still with closed-form bonds.
+- [Hull-White](04-hull-white-model.md): Vasicek with a level that moves over time, chosen to reproduce today's market curve exactly.
 
-Vasicek's four numbers cannot reproduce the curve the market quotes today, so its bonds disagree with real prices; how to keep its closed forms and match that curve is [hull-white-model](04-hull-white-model.md).
+Vasicek's four numbers cannot reproduce the curve the market quotes today, so its bonds disagree with real prices; how to keep its closed forms and match that curve is [Hull-White](04-hull-white-model.md).
 
 ---
 

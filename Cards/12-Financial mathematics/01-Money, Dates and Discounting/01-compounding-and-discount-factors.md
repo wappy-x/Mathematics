@@ -1,31 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Money, Dates and Discounting
-topic: Rate conventions
-item: Discount factors
-kind: definition
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/03-compound-interest|compound-interest]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/06-discounting-and-present-value|discounting-and-present-value]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/04-compounding-frequency-and-e|compounding-frequency-and-e]]"
-next:
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/02-day-counts-and-dates|day-counts-and-dates]]"
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/03-annuities-and-loans|annuities-and-loans]]"
-  - "[[Cards/12-Financial mathematics/02-Curves/01-spot-forward-and-par-rates|spot-forward-and-par-rates]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/03-forward-price-by-cash-and-carry|forward-price-by-cash-and-carry]]"
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/02-cds-legs-risky-annuity-and-par-spread|cds-legs-risky-annuity-and-par-spread]]"
-tags:
-  - mathematics
-  - financial-mathematics
-  - compounding-and-discount-factors
----
-
 # Discount factors: the price today of one unit later, under any compounding convention
 
-Financial mathematics → Money, Dates and Discounting → Rate conventions → Discount factors
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Money, Dates and Discounting](../../../SYLLABUS.md#w12-s01) → Discount factors
 
 ---
 
@@ -92,13 +67,13 @@ In words: to put a quote onto the continuous label, work out the growth it actua
 | daily | 4.879343 percent |
 | continuously | 4.879016 percent |
 
-**Conventions verified 14 Sep 2026.** Quoting is a market habit, and habits are dated. The United States Treasury publishes its yield curve on a bond-equivalent, semi-annual basis: the printed rate is halved and applied twice a year, so it is not the effective annual growth and must be converted before it is used as $r_1$. Derivative desks convert everything to $r_c$ first, because only the continuous label lets exponents be added. Day-count rules decide what counts as a year in the first place, and those live on [day-counts-and-dates](02-day-counts-and-dates.md).
+**Conventions verified 14 Sep 2026.** Quoting is a market habit, and habits are dated. The United States Treasury publishes its yield curve on a bond-equivalent, semi-annual basis: the printed rate is halved and applied twice a year, so it is not the effective annual growth and must be converted before it is used as $r_1$. Derivative desks convert everything to $r_c$ first, because only the continuous label lets exponents be added. Day-count rules decide what counts as a year in the first place, and those live on [Day counts](02-day-counts-and-dates.md).
 
 ### When it holds
 
-- **One certain payment on one known date.** The factor prices a promise that will be kept. A promise that can fail needs a survival term as well, which is what [cds-legs-risky-annuity-and-par-spread](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md) adds.
+- **One certain payment on one known date.** The factor prices a promise that will be kept. A promise that can fail needs a survival term as well, which is what [Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md) adds.
 - **The same terms for putting money in and taking it out, with no fees or spreads.** If borrowing costs more than lending pays, there is no single factor, only a band, and the price of the promise sits anywhere inside it.
-- **A schedule known in advance.** Today's factor for a future date is fixed arithmetic only while the rate for that stretch is known now. Rates that move are a later model, and the curve that records them is [spot-forward-and-par-rates](../02-Curves/01-spot-forward-and-par-rates.md).
+- **A schedule known in advance.** Today's factor for a future date is fixed arithmetic only while the rate for that stretch is known now. Rates that move are a later model, and the curve that records them is [Spot, forward and par rates](../02-Curves/01-spot-forward-and-par-rates.md).
 - **Time in years, matched to the quote.** Feed the same 5 percent sixty times because there are sixty months, and the deposit collapses from 783.53 to 53.54.
 
 ---
@@ -111,7 +86,7 @@ The council is not guessing at the value of its bill. There is one machine in th
 
 ### Step 1: one multiply per period makes the growth a power
 
-Interest added once a year and left in multiplies the balance by 1.05 each year ([compound-interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)). Five years is five multiplies. Funding the bill runs the same five multiplies backwards, which is five divisions, so the five-year factor is one divided by five 1.05s: 0.7835261665.
+Interest added once a year and left in multiplies the balance by 1.05 each year ([Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)). Five years is five multiplies. Funding the bill runs the same five multiplies backwards, which is five divisions, so the five-year factor is one divided by five 1.05s: 0.7835261665.
 
 That road need not leave whole numbers at all. One divided by 1.05 is 20 over 21, so the five-year factor is 20 to the fifth over 21 to the fifth, an exact fraction. The check works it out that way, in whole numbers until the last step, and lands on the same 0.7835261665. It then grows the 783.53 deposit forward again, a year at a time, and lands on 1000.00.
 
@@ -121,7 +96,7 @@ Now let the bank add the interest twice a year instead, into the same account, e
 
 ### Step 3: adding it more often runs into a floor
 
-The drops shrink fast. Going from once a year to twice moves the quote most; twice to monthly moves it less; monthly to daily less again. The quotes are crowding down onto a floor, and the floor is 4.879016 percent. That floor is the continuous quote $r_c$, and it is exactly the natural logarithm of one year's growth ([compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)). Written forward, growth over $T$ years is $e$ raised to $r_c T$; written backwards, the factor is $e$ raised to minus $r_c T$.
+The drops shrink fast. Going from once a year to twice moves the quote most; twice to monthly moves it less; monthly to daily less again. The quotes are crowding down onto a floor, and the floor is 4.879016 percent. That floor is the continuous quote $r_c$, and it is exactly the natural logarithm of one year's growth ([Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)). Written forward, growth over $T$ years is $e$ raised to $r_c T$; written backwards, the factor is $e$ raised to minus $r_c T$.
 
 <details>
 <summary>The algebra behind the floor</summary>
@@ -136,7 +111,7 @@ Every term after the first carries an $m$ underneath, so as $m$ grows the whole 
 
 The one-year factor multiplied in five times is the five-year factor. On the continuous label that is the exponent law, since $e$ raised to one exponent times $e$ raised to another is $e$ raised to their sum — which is why desks convert to $r_c$ before touching anything with more than one date.
 
-So a contract paying on several dates needs no new idea. A cash amount $C$ due at $T$ is worth $C$ times $D(T)$ today, and the price $P$ of a whole stream is those products added up, one per date. That is the whole of the shelf's bond, and the whole of [net-present-value-and-irr](04-net-present-value-and-irr.md).
+So a contract paying on several dates needs no new idea. A cash amount $C$ due at $T$ is worth $C$ times $D(T)$ today, and the price $P$ of a whole stream is those products added up, one per date. That is the whole of the shelf's bond, and the whole of [NPV and IRR](04-net-present-value-and-irr.md).
 
 <details>
 <summary>Detailed proof: why a certain payment must trade at this price</summary>
@@ -153,7 +128,7 @@ Both are ruled out by assumption, and the only remaining case is $z = D$. Conver
 
 </details>
 
-A second road skips rates entirely. A traded price for a payment on that date *is* the factor, once divided by the size of the payment; rates are then read out of prices rather than fed into them — the inverse direction, done properly on [yield-from-price](07-yield-from-price.md).
+A second road skips rates entirely. A traded price for a payment on that date *is* the factor, once divided by the size of the payment; rates are then read out of prices rather than fed into them — the inverse direction, done properly on [Yield from price](07-yield-from-price.md).
 
 That reading back always works, and works only one way. Over a wait $T$ longer than zero, $e^{-r_c T}$ falls strictly as $r_c$ rises, and on the way down it passes through every positive number exactly once. So a positive factor names one continuous rate and no other: $r_c$ is minus the natural logarithm of $D(T)$, divided by $T$. The boundaries follow from the same sweep. A factor of exactly 1 means a rate of 0. A factor above 1 means a rate below 0, the shrinking account of a negative-rate market. A factor of zero or less names no rate at all, because a positive deposit never grows to nothing. And at $T$ = 0 the factor is 1 whatever the rate, so a payment due today fixes no rate. The check does the small version: 0.7835261665 goes in, 4.879016 percent comes back.
 
@@ -656,11 +631,11 @@ The two outputs match line for line, from series written out twice in two langua
 
 ## Where you meet it in real life
 
-- **Every bond screen.** A price and a set of dated payments are all a desk needs; the factors are what turns one into the other, and back. The full treatment is [bonds-price-and-yield](05-bonds-price-and-yield.md).
-- **Mortgages and car loans.** A loan is a stream of equal dated payments whose factors add to the sum borrowed, which is [annuities-and-loans](03-annuities-and-loans.md).
-- **Capital budgeting.** A project is a list of dated cash amounts; discount each and add, and the sign of the total decides it. That is [net-present-value-and-irr](04-net-present-value-and-irr.md).
+- **Every bond screen.** A price and a set of dated payments are all a desk needs; the factors are what turns one into the other, and back. The full treatment is [Bond price and yield](05-bonds-price-and-yield.md).
+- **Mortgages and car loans.** A loan is a stream of equal dated payments whose factors add to the sum borrowed, which is [Annuities](03-annuities-and-loans.md).
+- **Capital budgeting.** A project is a list of dated cash amounts; discount each and add, and the sign of the total decides it. That is [NPV and IRR](04-net-present-value-and-irr.md).
 - **Pension and insurance reserves.** A regulator sets the discount curve, and the reserve a fund must hold is its promised payments run through that curve. Move the curve and every balance sheet in the industry moves.
-- **The bracket in every option formula.** The cash half of the Black-Scholes call is a strike multiplied by a discount factor and a probability; the factor is this card, unchanged. See [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+- **The bracket in every option formula.** The cash half of the Black-Scholes call is a strike multiplied by a discount factor and a probability; the factor is this card, unchanged. See [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
 
 > **Say it back**
 > A discount factor is the deposit that funds one unit of money on a stated later date. At 5 percent a year the five-year factor is 0.7835261665, so a 1,000 dollar bill five years out costs 783.53 today. A rate is only a label: the same account is quoted at 5.000000 percent once a year, 4.939015 percent twice, 4.888949 percent monthly and 4.879016 percent continuously, and a logarithm moves between them. Factors multiply across stretches of time, so a contract with several payment dates is priced one date at a time and added — which is how the shelf's bond comes to 1043.29.
@@ -669,19 +644,19 @@ The two outputs match line for line, from series written out twice in two langua
 
 ## What this builds on
 
-- [compound-interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md): why interest left in makes growth a multiply per period rather than a fixed step.
-- [discounting-and-present-value](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): running that growth backwards to value one future amount today.
-- [compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): the ceiling that paying more often runs into, and the number $e$ that names it.
+- [Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md): why interest left in makes growth a multiply per period rather than a fixed step.
+- [Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): running that growth backwards to value one future amount today.
+- [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): the ceiling that paying more often runs into, and the number $e$ that names it.
 
 ## Where this goes next
 
-- [day-counts-and-dates](02-day-counts-and-dates.md): what a market counts as a year, so that $T$ can be filled in from two calendar dates.
-- [annuities-and-loans](03-annuities-and-loans.md): a run of equal payments, with the factors collapsed into one block as in the last row of the worked table.
-- [spot-forward-and-par-rates](../02-Curves/01-spot-forward-and-par-rates.md): a different rate for every maturity, and the rate for a stretch that starts later.
-- [forward-price-by-cash-and-carry](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md): the two trades in the folded proof run on a physical asset instead of a promise.
-- [cds-legs-risky-annuity-and-par-spread](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md): the same factors once the payment might not arrive at all.
+- [Day counts](02-day-counts-and-dates.md): what a market counts as a year, so that $T$ can be filled in from two calendar dates.
+- [Annuities](03-annuities-and-loans.md): a run of equal payments, with the factors collapsed into one block as in the last row of the worked table.
+- [Spot, forward and par rates](../02-Curves/01-spot-forward-and-par-rates.md): a different rate for every maturity, and the rate for a stretch that starts later.
+- [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md): the two trades in the folded proof run on a physical asset instead of a promise.
+- [Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md): the same factors once the payment might not arrive at all.
 
-This card assumed one rate for every date, which no market has. What replaces it is a whole curve of factors, one per maturity, read out of traded prices: [bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md).
+This card assumed one rate for every date, which no market has. What replaces it is a whole curve of factors, one per maturity, read out of traded prices: [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md).
 
 ---
 

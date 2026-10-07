@@ -1,29 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Collateral, Funding and the Rest of the XVAs
-topic: The cost of locked-up margin
-item: MVA
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/47-Collateral, Funding and the Rest of the XVAs/02-fva|fva]]"
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/01-profit-and-loss-distribution-and-var|profit-and-loss-distribution-and-var]]"
-next:
-  - "[[Cards/12-Financial mathematics/47-Collateral, Funding and the Rest of the XVAs/04-kva|kva]]"
-tags: [mathematics, financial mathematics, mva]
----
-
 # MVA: initial margin sits idle for the life of the trade, and its funding cost is priced
 
-Financial mathematics → Collateral, Funding and the Rest of the XVAs → The cost of locked-up margin → MVA
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Collateral, Funding and the Rest of the XVAs](../../../SYLLABUS.md#w12-s47) → MVA
 
 ---
 
 ## General Overview
 
-A bank buys a one-year call option on Acme shares from Northwind. Acme trades at \$100, the strike is \$100, and in the house market the call is worth **\$9.23** ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). Northwind defaults at a rate of 2% a year and recovers 40 cents on the dollar, which costs the bank 10.96 cents of CVA ([cva](../46-Counterparty%20Risk%20and%20CVA/03-cva.md)).
+A bank buys a one-year call option on Acme shares from Northwind. Acme trades at \$100, the strike is \$100, and in the house market the call is worth **\$9.23** ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). Northwind defaults at a rate of 2% a year and recovers 40 cents on the dollar, which costs the bank 10.96 cents of CVA ([CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md)).
 
 Now the trade sits under modern margin rules. Each side hands the other a deposit on day one, sized to cover a bad ten-day move in the option's value: about **\$5.44**. The deposit goes to a third-party custodian, a bank that holds it on the receiver's behalf. The receiver may seize it only if the poster defaults; until then nobody may spend it. The bank received \$5.44 from Northwind that it cannot touch, and posted \$5.44 of its own that it had to borrow. That deposit is **initial margin**, IM for short, the term used from here on.
 
@@ -51,7 +34,7 @@ Orange, rising: the average margin at each date, in that date's dollars. Green, 
 
 ## The formula
 
-Notation first, in words. $\mathrm{IM}(t)$ is the initial margin posted at date $t$, in years from today. $\mathbb{E}[\,\cdot\,]$ is an average over the pricing world, where every asset grows at the riskless rate ([risk-neutral-measure-and-the-fundamental-theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)). $D(t) = e^{-rt}$ is the discount factor that shrinks a date-$t$ dollar to today. $Q(t) = e^{-\lambda t}$ is the chance Northwind is still alive at $t$ when it fails at the yearly rate $\lambda$ (Greek "lambda"), its **hazard**. $s_I$ is the **margin funding spread**: what the bank pays to borrow, minus what the posted margin earns.
+Notation first, in words. $\mathrm{IM}(t)$ is the initial margin posted at date $t$, in years from today. $\mathbb{E}[\,\cdot\,]$ is an average over the pricing world, where every asset grows at the riskless rate ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)). $D(t) = e^{-rt}$ is the discount factor that shrinks a date-$t$ dollar to today. $Q(t) = e^{-\lambda t}$ is the chance Northwind is still alive at $t$ when it fails at the yearly rate $\lambda$ (Greek "lambda"), its **hazard**. $s_I$ is the **margin funding spread**: what the bank pays to borrow, minus what the posted margin earns.
 
 $$\mathrm{MVA} = s_I \int_0^T D(t)\,\mathbb{E}\bigl[\mathrm{IM}(t)\bigr]\,Q(t)\,dt$$
 
@@ -104,7 +87,7 @@ The whole idea is a cash flow. Posting \$5.44 means borrowing \$5.44 at the fund
 
 If Northwind stops paying, the bank needs time to notice, dispute, close out and re-hedge. The rules assume ten business days: the **margin period of risk**. Initial margin covers the option's move over that window with 99% confidence.
 
-Over ten days a call moves by about its dollar delta times Acme's percentage move. Acme's ten-day log move is normal with standard deviation $\sigma\sqrt{h}$. So the option's ten-day change is normal with standard deviation $\Delta S \sigma\sqrt{h}$, here \$2.338071. Its 99th percentile is 2.326348 of those: **\$5.439166**. This is delta-normal VaR on one position ([parametric-var-and-delta-normal](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/02-parametric-var-and-delta-normal.md)).
+Over ten days a call moves by about its dollar delta times Acme's percentage move. Acme's ten-day log move is normal with standard deviation $\sigma\sqrt{h}$. So the option's ten-day change is normal with standard deviation $\Delta S \sigma\sqrt{h}$, here \$2.338071. Its 99th percentile is 2.326348 of those: **\$5.439166**. This is delta-normal VaR on one position ([Parametric VaR](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/02-parametric-var-and-delta-normal.md)).
 
 The two margin engines in use are richer versions of this line.
 
@@ -125,11 +108,11 @@ Average over the pricing world and integrate over the life. If Northwind's defau
 
 $$\mathrm{MVA} = s_I \int_0^T D(t)\,\mathbb{E}\bigl[\mathrm{IM}(t)\bigr]\,Q(t)\,dt.$$
 
-It has the same skeleton as CVA and FVA. CVA puts expected exposure and the default rate (times the loss fraction $1-R$) where MVA puts expected margin and the spread. FVA puts expected unsecured balance and the unsecured funding spread ([fva](02-fva.md)).
+It has the same skeleton as CVA and FVA. CVA puts expected exposure and the default rate (times the loss fraction $1-R$) where MVA puts expected margin and the spread. FVA puts expected unsecured balance and the unsecured funding spread ([FVA](02-fva.md)).
 
 ### Step 4: the discounted margin is flat, so the integral closes
 
-The margin is $z_{0.99}\sigma\sqrt{h}$ times the dollar delta $\Delta(t)S(t)$. The dollar delta of a call is the price of its share half: $S e^{-q(T-t)}N(d_1)$ is exactly what a contract paying one Acme share at expiry, if Acme finishes above \$100, is worth at date $t$ ([asset-or-nothing-digital](../10-Digitals%20and%20the%20implied%20density/02-asset-or-nothing-digital.md)). The discounted price of a traded claim, averaged in the pricing world, never changes: that is what pricing world means. So $D(t)\,\mathbb{E}[\mathrm{IM}(t)] = \mathrm{IM}_0$ at every date, the green line in the picture.
+The margin is $z_{0.99}\sigma\sqrt{h}$ times the dollar delta $\Delta(t)S(t)$. The dollar delta of a call is the price of its share half: $S e^{-q(T-t)}N(d_1)$ is exactly what a contract paying one Acme share at expiry, if Acme finishes above \$100, is worth at date $t$ ([Asset-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/02-asset-or-nothing-digital.md)). The discounted price of a traded claim, averaged in the pricing world, never changes: that is what pricing world means. So $D(t)\,\mathbb{E}[\mathrm{IM}(t)] = \mathrm{IM}_0$ at every date, the green line in the picture.
 
 The orange line is the same thing in date-$t$ dollars, $\mathrm{IM}_0 e^{rt}$: 5.44 rising to 5.72. The average margin grows at the riskless rate. Shrinking by $D(t)$ undoes it exactly.
 
@@ -181,7 +164,7 @@ All three share the survival factor, so the comparison reduces to one product ea
 - **Against CVA:** MVA wins when Northwind's hazard is below $s_I\,\mathrm{IM}_0/((1-R)C_0)$ = 0.004912, about 0.49% a year: a very safe counterparty. The checks find the same point by bisection on the two costs.
 - **Against FVA:** MVA wins when the unsecured funding spread is below $s_I\,\mathrm{IM}_0/C_0$ = 0.002947, about 29 bp.
 
-The decisive case is collateral. With daily variation margin (the daily cash that settles each change in the trade's value) and Northwind's \$5.44 of initial margin in hand, the bank loses only when a ten-day move overshoots the margin. That average overshoot, held at its day-one size, is $\sigma_{10}\bigl(\varphi(z_{0.99}) - z_{0.99}(1-N(z_{0.99}))\bigr)$ = \$0.007923, where $\sigma_{10}$ is the \$2.338071 ten-day standard deviation and $\varphi$ the bell curve's height, found again by integration. CVA falls to 0.60 × 0.007923 × (1 − e^{−0.02}) = \$0.000094. Variation margin also funds the hedge, so FVA falls toward zero ([collateral-and-the-residual-exposure](01-collateral-and-the-residual-exposure.md)). MVA does not fall at all: the margin that killed the CVA is the margin being funded.
+The decisive case is collateral. With daily variation margin (the daily cash that settles each change in the trade's value) and Northwind's \$5.44 of initial margin in hand, the bank loses only when a ten-day move overshoots the margin. That average overshoot, held at its day-one size, is $\sigma_{10}\bigl(\varphi(z_{0.99}) - z_{0.99}(1-N(z_{0.99}))\bigr)$ = \$0.007923, where $\sigma_{10}$ is the \$2.338071 ten-day standard deviation and $\varphi$ the bell curve's height, found again by integration. CVA falls to 0.60 × 0.007923 × (1 − e^{−0.02}) = \$0.000094. Variation margin also funds the hedge, so FVA falls toward zero ([Collateral](01-collateral-and-the-residual-exposure.md)). MVA does not fall at all: the margin that killed the CVA is the margin being funded.
 
 ```
 cents per call, one block = 0.25 cents
@@ -658,7 +641,7 @@ The two outputs agree line for line.
 - **The clearing house.** A cleared trade also carries initial margin, set by the clearing house's own VaR model. The same formula prices its funding; the difference is who sets the margin.
 - **Choosing where to trade.** A desk compares the MVA of clearing a swap against the MVA of keeping it bilateral, because the two margin models charge different amounts for the same risk.
 - **Portfolio margin.** SIMM margins the netting set, not the trade. A new trade that offsets existing risk can lower margin and carry a negative incremental MVA: the desk may pay the client for it.
-- **The rest of the XVA stack.** Capital held against the same trade has its own rent ([kva](04-kva.md)), and the desk adds them without double counting in [the-xva-desk-view](05-the-xva-desk-view.md).
+- **The rest of the XVA stack.** Capital held against the same trade has its own rent ([KVA](04-kva.md)), and the desk adds them without double counting in [Putting the adjustments together](05-the-xva-desk-view.md).
 
 > **Say it back**
 > Under two-way margin rules each side posts a deposit sized to a 99% ten-day move, and neither may spend what it receives. The poster borrows that deposit at its funding rate and earns less on it, so it pays a spread for the life of the trade. MVA is that spread times the discounted expected margin times the chance the trade is still alive, added over the life. For the Acme call the discounted expected margin stays at its day-one \$5.44, so MVA is 50 bp times \$5.44 times 0.990066 years: 2.7 cents, a quarter of the uncollateralised CVA. Once margin has removed the credit risk, MVA is the adjustment that remains.
@@ -667,12 +650,12 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [fva](02-fva.md): the funding-cost integral, spread times discounted expected balance times survival, which MVA applies to posted margin instead of to an unsecured balance.
-- [profit-and-loss-distribution-and-var](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md): what a 99% ten-day loss is, the quantity the margin is sized to.
+- [FVA](02-fva.md): the funding-cost integral, spread times discounted expected balance times survival, which MVA applies to posted margin instead of to an unsecured balance.
+- [Value at risk](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md): what a 99% ten-day loss is, the quantity the margin is sized to.
 
 ## Where this goes next
 
-- [kva](04-kva.md): regulatory capital is another balance the bank must hold for the life of the trade; KVA prices its rent at the return shareholders demand.
+- [KVA](04-kva.md): regulatory capital is another balance the bank must hold for the life of the trade; KVA prices its rent at the return shareholders demand.
 
 MVA prices the cash locked up against a default the margin was built to survive; what it leaves open is the cost of the capital held against the losses no margin can cover.
 

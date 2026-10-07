@@ -1,26 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Averages - commodity swaps and Asian options
-topic: Averaging a futures strip
-item: Kemna-Vorst
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/01-options-on-commodity-futures|options-on-commodity-futures]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/06-lognormal-distribution|lognormal-distribution]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/04-normal-distribution|normal-distribution]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/01-brownian-motion|brownian-motion]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/01-geometric-asian-kemna-vorst|geometric-asian-kemna-vorst]]"
-next:
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/03-arithmetic-asian-option|arithmetic-asian-option]]"
-tags: [mathematics, financial mathematics, kemna-vorst-geometric-asian]
----
-
 # Kemna-Vorst: the Asian option with an exact price, because a geometric average of lognormals is lognormal
 
-Financial mathematics → Averages - commodity swaps and Asian options → Averaging a futures strip → Kemna-Vorst
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages - commodity swaps and Asian options](../../../SYLLABUS.md#w12-s27) → Kemna-Vorst
 
 ---
 
@@ -32,7 +12,7 @@ The contract reads the price once a week, 52 times. Each reading is called a **f
 
 An ordinary one-year call on the last week's price costs $10.45. A call on the average costs about half that, because an average of 52 readings moves less than one reading. If the average is the ordinary one (add the prices, divide by 52), no formula prices it exactly. If it is the **geometric average** (multiply the 52 prices and take the 52nd root), one formula does: Kemna and Vorst's, from 1990. The answer for this contract is **$5.64**. With fixings spread continuously over the year it would be $5.55. With a single fixing at the end, it is the plain call again, $10.45.
 
-The equity version of this result, for a share with a dividend yield, is on [geometric-asian-kemna-vorst](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/01-geometric-asian-kemna-vorst.md): there it is Black-Scholes with the volatility divided by √3 and a stand-in yield. A commodity desk has no spot-and-yield pair to feed it. It has a futures curve, and each fixing belongs to a different point on that curve. This card rewrites the result in the desk's inputs: the futures price for each fixing date, fed to Black-76, the call formula for an option on a futures price.
+The equity version of this result, for a share with a dividend yield, is on [The geometric Asian call](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/01-geometric-asian-kemna-vorst.md): there it is Black-Scholes with the volatility divided by √3 and a stand-in yield. A commodity desk has no spot-and-yield pair to feed it. It has a futures curve, and each fixing belongs to a different point on that curve. This card rewrites the result in the desk's inputs: the futures price for each fixing date, fed to Black-76, the call formula for an option on a futures price.
 
 **Each fixing is lognormal around its own futures price, all driven by one random path, so the log of their geometric average is normal and the average is lognormal; its call is Black-76 fed two doctored inputs: the forward of the average, the curve's geometric mean shaved by a small haircut, and the volatility of the average, the futures volatility σ times the square root of (n+1)(2n+1)/6n^2, where n is the number of fixings.**
 
@@ -96,7 +76,7 @@ When the curve rises at a steady rate c, as $F(0,t) = S_0 e^{ct}$, the geometric
 - **One volatility for every futures contract that fixes.** Near-dated energy futures move more than far-dated ones. If each fixing has its own volatility, the variance sum in Step 3 takes each pair's product of volatilities, and the single σ misprices the average by roughly vega (price change per point of volatility) times the error.
 - **One random factor moves the whole curve.** The formula assumes every point of the curve rises and falls together. When the fixings read different delivery months that are imperfectly correlated, the true variance of the average is smaller and this price is too high.
 - **Lognormal futures prices, centred on today's curve.** Entering a futures contract costs nothing, so in the pricing world its price has no drift. Jumps or a skewed smile break the lognormal law and the formula with it.
-- **The averaging starts today and pays at T.** A contract already part-way through has fixings banked; that changes both inputs, and it is the subject of [asian-greeks-and-the-running-average](04-asian-greeks-and-the-running-average.md). A payment a few days after the last fixing discounts over those extra days.
+- **The averaging starts today and pays at T.** A contract already part-way through has fixings banked; that changes both inputs, and it is the subject of [Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md). A payment a few days after the last fixing discounts over those extra days.
 - **The average is geometric.** Traded contracts average arithmetically. That average is not lognormal, and this price is only a floor under it.
 
 ---
@@ -109,13 +89,13 @@ The log of a geometric average is the ordinary average of the logs: the product 
 
 ### Step 1: each fixing is lognormal around its own futures price
 
-A futures contract costs nothing to enter. In the pricing world (the risk-neutral world of [options-on-commodity-futures](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md)) a price that costs nothing to hold has no expected gain, so today's futures price is the expected price at delivery. The fixing at $t_i$ is the price for delivery that week, read that week: it is the futures contract for date $t_i$, at its own expiry.
+A futures contract costs nothing to enter. In the pricing world (the risk-neutral world of [Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md)) a price that costs nothing to hold has no expected gain, so today's futures price is the expected price at delivery. The fixing at $t_i$ is the price for delivery that week, read that week: it is the futures contract for date $t_i$, at its own expiry.
 
-With one Brownian path $W$ (the random walk of [brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md), with $W_t$ normal with mean 0 and variance t) moving the whole curve, the fixing is
+With one Brownian path $W$ (the random walk of [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md), with $W_t$ normal with mean 0 and variance t) moving the whole curve, the fixing is
 
 $$X_i = F(0,t_i)\,e^{\sigma W_{t_i} - \frac12\sigma^2 t_i}.$$
 
-The −σ^2 t_i/2 is the lognormal correction: a lognormal's mean is the exponential of its log's mean plus half its log's variance ([lognormal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)), so subtracting half the variance keeps the expected fixing at $F(0,t_i)$.
+The −σ^2 t_i/2 is the lognormal correction: a lognormal's mean is the exponential of its log's mean plus half its log's variance ([Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)), so subtracting half the variance keeps the expected fixing at $F(0,t_i)$.
 
 ### Step 2: the centre of ln G sits at the centre of the dates
 
@@ -163,7 +143,7 @@ xychart-beta
 
 First line: the n-fixing price, from the plain call's $10.45 at one fixing, through $5.94 monthly and $5.64 weekly, to $5.57 on 252 daily fixings. Second line: the continuous price, $5.55, the floor they approach.
 
-On a curve that rises at the rate r, $F(0,t) = S_0 e^{rt}$, these inputs are exactly the equity card's formula with no dividend, and its continuous price with the yield set to zero is this card's $5.55. Pricing by simulation, as on [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md), is the other route, and the code takes it.
+On a curve that rises at the rate r, $F(0,t) = S_0 e^{rt}$, these inputs are exactly the equity card's formula with no dividend, and its continuous price with the yield set to zero is this card's $5.55. Pricing by simulation, as on [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md), is the other route, and the code takes it.
 
 ---
 
@@ -202,7 +182,7 @@ Same contract, right answer $5.64. Every wrong number is printed by both checks.
 
 ### The Greeks
 
-Sensitivities by bumping the formula. Delta here moves the whole curve with today's price $S_0$; rho moves the bank rate with the futures prices held still. How these change once fixings are banked is on [asian-greeks-and-the-running-average](04-asian-greeks-and-the-running-average.md).
+Sensitivities by bumping the formula. Delta here moves the whole curve with today's price $S_0$; rho moves the bank rate with the futures prices held still. How these change once fixings are banked is on [Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md).
 
 | Greek | Plain meaning | Value |
 | --- | --- | --- |
@@ -679,9 +659,9 @@ The two outputs agree line for line, simulation included: both languages run the
 ## Where you meet it in real life
 
 - **Airline and shipping fuel hedges.** Fuel buyers hedge with options on the monthly or yearly average price. The contract is arithmetic, and the geometric price is the first sanity check on a quote: an arithmetic quote below it is wrong.
-- **Average-price options on exchange-traded futures.** Exchanges list options on crude oil and other energy futures that settle on a calendar month's average of daily settlement prices. The monthly average is what the underlying swap pays: [commodity-swap-and-average-price-forward](01-commodity-swap-and-average-price-forward.md).
-- **Control variates.** Simulate the arithmetic and the geometric call on the same paths. The geometric one's true price is known from this formula, so its simulation error is known, and subtracting it removes most of the arithmetic one's error. That is how [arithmetic-asian-option](03-arithmetic-asian-option.md) reaches the traded price.
-- **Quoting in volatility.** Desks quote average-price options in a volatility, and the reduced volatility of this card is the first step in turning a price back into one: [asian-implied-volatility](05-asian-implied-volatility.md).
+- **Average-price options on exchange-traded futures.** Exchanges list options on crude oil and other energy futures that settle on a calendar month's average of daily settlement prices. The monthly average is what the underlying swap pays: [Commodity swap](01-commodity-swap-and-average-price-forward.md).
+- **Control variates.** Simulate the arithmetic and the geometric call on the same paths. The geometric one's true price is known from this formula, so its simulation error is known, and subtracting it removes most of the arithmetic one's error. That is how [The Asian option desks trade](03-arithmetic-asian-option.md) reaches the traded price.
+- **Quoting in volatility.** Desks quote average-price options in a volatility, and the reduced volatility of this card is the first step in turning a price back into one: [Implied vol from an Asian quote](05-asian-implied-volatility.md).
 
 > **Say it back**
 > An Asian option pays on the average price over its life. On a commodity each fixing is a futures price read at its own delivery date, lognormal around today's quote, and all the fixings move with one random path. The log of their geometric average is an average of normals, so the average is lognormal, and Black-76 prices it once two inputs are doctored. The volatility is cut to σ√((n+1)(2n+1)/6n^2), a third of the variance in the limit; the forward is the curve's geometric mean at the fixing dates, shaved by a small haircut. For 52 weekly jet fuel fixings that gives $5.64, between the plain call's $10.45 and the continuous $5.55.
@@ -690,15 +670,15 @@ The two outputs agree line for line, simulation included: both languages run the
 
 ## What this builds on
 
-- [options-on-commodity-futures](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md): Black-76, the call on a futures price, and why a futures price has no drift in the pricing world.
-- [lognormal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md): a quantity whose log is normal, with mean the exponential of the log's mean plus half its variance.
-- [normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, its area N, and why a weighted sum of jointly normal quantities is normal.
-- [brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): the random path that moves the curve, whose readings at s and u share variance min(s, u).
-- [geometric-asian-kemna-vorst](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/01-geometric-asian-kemna-vorst.md): the same result for a share with a dividend yield, with the continuous proof and its own four roads.
+- [Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md): Black-76, the call on a futures price, and why a futures price has no drift in the pricing world.
+- [Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md): a quantity whose log is normal, with mean the exponential of the log's mean plus half its variance.
+- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, its area N, and why a weighted sum of jointly normal quantities is normal.
+- [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): the random path that moves the curve, whose readings at s and u share variance min(s, u).
+- [The geometric Asian call](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/01-geometric-asian-kemna-vorst.md): the same result for a share with a dividend yield, with the continuous proof and its own four roads.
 
 ## Where this goes next
 
-- [arithmetic-asian-option](03-arithmetic-asian-option.md): the contract fuel buyers actually trade, the arithmetic average, priced by simulation with this card's exact price as the control.
+- [The Asian option desks trade](03-arithmetic-asian-option.md): the contract fuel buyers actually trade, the arithmetic average, priced by simulation with this card's exact price as the control.
 
 This card prices the average that stays lognormal; the average in a real fuel contract is a sum of lognormals, which is not lognormal, and pricing it anyway is the question the arithmetic card answers.
 

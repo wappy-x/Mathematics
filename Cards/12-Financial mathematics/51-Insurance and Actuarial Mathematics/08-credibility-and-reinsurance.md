@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Insurance and Actuarial Mathematics
-topic: Experience rating and treaties
-item: Credibility and reinsurance
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/07-reserving-chain-ladder-and-bornhuetter-ferguson|reserving-chain-ladder-and-bornhuetter-ferguson]]"
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/03-normal-normal|normal-normal]]"
-next: []
-tags: [mathematics, financial mathematics, credibility-and-reinsurance]
----
-
 # Credibility and reinsurance: weighting a policy's own history, and laying off the tail
 
-Financial mathematics → Insurance and Actuarial Mathematics → Experience rating and treaties → Credibility and reinsurance
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Insurance and Actuarial Mathematics](../../../SYLLABUS.md#w12-s51) → Credibility and reinsurance
 
 ---
 
@@ -128,11 +112,11 @@ Credibility is the best *straight-line* forecast. The fully informed forecast is
 
 For two fleet types, it does. The record 1, 1, 2 points strongly at the low type, and the posterior mean comes to 1.33, not 1.6. Its expected squared error across all records is 0.296, below credibility's 0.4. The price of the straight line is that gap.
 
-When the risk levels follow a bell curve and each year is a bell-curve draw around the fleet's level, the Bayes answer is itself a straight line with exactly the weight $Z$ ([normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md)). The code integrates that posterior numerically for a prior with mean 2 and variance 1 and years with variance 2. It lands on 1.6. The same exactness holds for Poisson counts with a gamma-distributed rate. Credibility is Bayes for those families, and the best available line for all others.
+When the risk levels follow a bell curve and each year is a bell-curve draw around the fleet's level, the Bayes answer is itself a straight line with exactly the weight $Z$ ([Normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md)). The code integrates that posterior numerically for a prior with mean 2 and variance 1 and years with variance 2. It lands on 1.6. The same exactness holds for Poisson counts with a gamma-distributed rate. Credibility is Bayes for those families, and the best available line for all others.
 
 ### Step 4: the reinsurer holds a call option on the loss
 
-An excess-of-loss reinsurer pays $(Y - d)_+$ on a claim of size $Y$: nothing up to the retention $d$, then every dollar above it. The insurer keeps $\min(Y, d)$. The payoff has the shape of a call with strike $d$ ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
+An excess-of-loss reinsurer pays $(Y - d)_+$ on a claim of size $Y$: nothing up to the retention $d$, then every dollar above it. The insurer keeps $\min(Y, d)$. The payoff has the shape of a call with strike $d$ ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
 
 Its expected value is a tail integral. Write the payoff as a stack of one-dollar slices: $(y - d)_+ = \int_d^\infty \mathbf{1}\{y > t\}\,dt$, where $\mathbf{1}\{y > t\}$ is 1 when the claim passes the level $t$ and 0 otherwise. Take expectations inside the integral: each slice is worth the chance of reaching it. So $E[(Y-d)_+] = \int_d^\infty P(Y > t)\,dt$.
 
@@ -155,7 +139,7 @@ For excess of loss, condition on $N = j$: independence of the count from the siz
 
 </details>
 
-The full law of $S$ for any claim-size table comes from [panjer-recursion-and-aggregate-claims](05-panjer-recursion-and-aggregate-claims.md); the code here builds it by counting how many claims are large.
+The full law of $S$ for any claim-size table comes from [Panjer's recursion](05-panjer-recursion-and-aggregate-claims.md); the code here builds it by counting how many claims are large.
 
 ---
 
@@ -644,7 +628,7 @@ The two outputs are identical line for line, simulations included, because both 
 - **Group health insurance.** An employer group's own claims are blended with a pooled rate; small groups get little credibility.
 - **Employer stop-loss.** Self-funded employer health plans buy stop-loss cover on each person's yearly claims and on the plan's annual total: close cousins of the two contracts here.
 - **Property catastrophe treaties.** Insurers buy excess-of-loss layers above a retention per event; the layer's pure premium is the tail integral here, with the loss law coming from catastrophe models.
-- **Solvency.** Reinsurance lowers the chance that a bad year exhausts capital ([ruin-theory-and-lundberg](06-ruin-theory-and-lundberg.md)).
+- **Solvency.** Reinsurance lowers the chance that a bad year exhausts capital ([Ruin](06-ruin-theory-and-lundberg.md)).
 
 > **Say it back**
 > A short claims record is noisy and a class average ignores the fleet, so credibility blends them. The weight, $Z = n/(n + s/a)$, grows with years and with how much fleets truly differ, and shrinks with year-to-year noise. It is the best straight-line forecast, and the exact Bayes answer when risks and years follow bell curves. A reinsurance layer pays like a call on the loss, and its fair price adds up the chance of reaching each dollar above the retention. Per claim, that price multiplies by the expected count; on the year's total, it needs the whole law of the total.
@@ -653,16 +637,16 @@ The two outputs are identical line for line, simulations included, because both 
 
 ## What this builds on
 
-- [reserving-chain-ladder-and-bornhuetter-ferguson](07-reserving-chain-ladder-and-bornhuetter-ferguson.md): Bornhuetter-Ferguson already blends a claims-based estimate with a prior one; credibility supplies the optimal weight.
-- [normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md): the posterior mean as a precision-weighted blend of prior and data, which Step 3 shows is exactly the credibility formula.
+- [Reserving](07-reserving-chain-ladder-and-bornhuetter-ferguson.md): Bornhuetter-Ferguson already blends a claims-based estimate with a prior one; credibility supplies the optimal weight.
+- [Normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md): the posterior mean as a precision-weighted blend of prior and data, which Step 3 shows is exactly the credibility formula.
 
-The claim-count model and the compound total come from [collective-risk-and-compound-poisson](04-collective-risk-and-compound-poisson.md).
+The claim-count model and the compound total come from [Aggregate claims](04-collective-risk-and-compound-poisson.md).
 
 ## Where this goes next
 
-- [ruin-theory-and-lundberg](06-ruin-theory-and-lundberg.md): with a retention in place, the insurer's surplus faces only the retained claims; the ruin probability shows how much the treaty buys.
-- [panjer-recursion-and-aggregate-claims](05-panjer-recursion-and-aggregate-claims.md): the full law of the yearly total for any claim-size table, which every stop-loss price needs.
-- [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the same $(x - K)_+$ payoff priced in a market, where hedging replaces expectation under real-world odds.
+- [Ruin](06-ruin-theory-and-lundberg.md): with a retention in place, the insurer's surplus faces only the retained claims; the ruin probability shows how much the treaty buys.
+- [Panjer's recursion](05-panjer-recursion-and-aggregate-claims.md): the full law of the yearly total for any claim-size table, which every stop-loss price needs.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the same $(x - K)_+$ payoff priced in a market, where hedging replaces expectation under real-world odds.
 
 The open question is how much retention to keep: a fair premium says what each layer costs, not which layer the insurer should buy, and that choice is a trade between premium paid and ruin risk avoided.
 

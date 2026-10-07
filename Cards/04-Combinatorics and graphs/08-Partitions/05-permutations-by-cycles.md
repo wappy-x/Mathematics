@@ -1,27 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Partitions
-topic: Cycle shape
-item: Counting shuffles by their loops
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/04-Inclusion-Exclusion and Pigeonhole/02-derangements|derangements]]"
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/03-factorial|factorial]]"
-  - "[[Cards/03-Algebra/08-Groups/03-permutations-and-the-symmetric-group|permutations-and-the-symmetric-group]]"
-  - "[[Cards/02-Number theory/05-Check Digits, Calendars and Cycles/05-perfect-shuffles|perfect-shuffles]]"
-next: []
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - permutations-by-cycles
----
-
 # Counting shuffles by their loops: Stirling numbers of the first kind, and derangements are the no-short-loop case
 
-Combinatorics and graphs → Partitions → Cycle shape → Counting shuffles by their loops
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Partitions](../../../SYLLABUS.md#w04-s08) → Counting shuffles by their loops
 
 ---
 
@@ -54,7 +33,7 @@ Each arrow runs from a hook to where its key went. Three loops, of lengths 2, 2 
 
 ## The formula
 
-Notation first, in words. A rehang is a **destination list**: under each hook in order, the hook its key went to, so the rehang above is `3 5 1 4 2`. Its loops go in brackets, hooks in trace order: (1 3)(2 5)(4) — cycle notation, met on [permutations-and-the-symmetric-group](../../03-Algebra/08-Groups/03-permutations-and-the-symmetric-group.md), where a loop is a cycle.
+Notation first, in words. A rehang is a **destination list**: under each hook in order, the hook its key went to, so the rehang above is `3 5 1 4 2`. Its loops go in brackets, hooks in trace order: (1 3)(2 5)(4) — cycle notation, met on [Permutations](../../03-Algebra/08-Groups/03-permutations-and-the-symmetric-group.md), where a loop is a cycle.
 
 Write $c(n,k)$, said "c of n, k", for the rehangs of $n$ keys whose trace makes exactly $k$ loops, so $c(5,3) = 35$. These are the **unsigned Stirling numbers of the first kind**.
 
@@ -71,7 +50,7 @@ $$c(n,k) = (n-1)\,c(n-1,k) + c(n-1,k-1), \qquad c(1,1) = 1$$
 | $j$ | a loop's length | 2, 2 and 1 | fewer loops fit |
 | $a_j$ | loops that long | two of 2, one of 1 | more repeats to divide out |
 
-A rehang makes one number of loops, so a row holds all of them ([factorial](../01-Counting%20Principles/03-factorial.md)):
+A rehang makes one number of loops, so a row holds all of them ([Factorials](../01-Counting%20Principles/03-factorial.md)):
 
 $$c(n,1) + c(n,2) + \cdots + c(n,n) = n!$$
 
@@ -92,7 +71,7 @@ $$\frac{5!}{2^2 \times 2! \times 1^1 \times 1!} = 15$$
 
 ### Step 0: a rehang is its loops, and nothing else
 
-Follow the keys from any hook. The trail cannot run for ever, nor rejoin itself part way along, since each hook receives one key: the first hook reached twice is the one it began at, so the trail closes. Start again at an untouched hook and that loop cannot meet the first, by the same rule. The loops carve the hooks into groups with nothing in common, their lengths adding to 5 — which is why this sits on the Partitions shelf ([integer-partitions](01-integer-partitions.md)).
+Follow the keys from any hook. The trail cannot run for ever, nor rejoin itself part way along, since each hook receives one key: the first hook reached twice is the one it began at, so the trail closes. Start again at an untouched hook and that loop cannot meet the first, by the same rule. The loops carve the hooks into groups with nothing in common, their lengths adding to 5 — which is why this sits on the Partitions shelf ([Integer partitions](01-integer-partitions.md)).
 
 ### Step 1: ask what the last key does
 
@@ -119,7 +98,7 @@ Every rehang makes one number of loops, so a row counts each once: 24 + 50 + 35 
 
 - **One loop, c(5,1) = 24.** Write the loop from hook 1 and the other four follow in any order: 4! = 24. Always starting at hook 1 stops one loop being counted five times over.
 - **Five loops, c(5,5) = 1.** Every loop one hook long.
-- **Four loops, c(5,4) = 10.** One loop of two, three of one: a single trade, and choosing its two hooks gives C(5,2) = 10 ([n-choose-k](../01-Counting%20Principles/05-n-choose-k.md)).
+- **Four loops, c(5,4) = 10.** One loop of two, three of one: a single trade, and choosing its two hooks gives C(5,2) = 10 ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
 
 ### Step 4: a second road, counting each cycle type
 
@@ -129,7 +108,7 @@ By number of parts: 24; 30 + 20 = 50; 20 + 15 = 35; 10; 1 — the recurrence's r
 
 ### Step 5: derangements are the types with no part equal to 1
 
-A rehang leaving no key on its own hook is one with no loop of length 1. Of the seven types only 5 and 3 + 2 qualify, holding 24 + 20 = 44 rehangs — the 44 the sieve reaches on [derangements](../04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md) by quite different arithmetic. They fill no column of the row, though: 24 make a single loop, 20 make two. A loop of length one bars a rehang; it never sets the loop count.
+A rehang leaving no key on its own hook is one with no loop of length 1. Of the seven types only 5 and 3 + 2 qualify, holding 24 + 20 = 44 rehangs — the 44 the sieve reaches on [Derangements](../04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md) by quite different arithmetic. They fill no column of the row, though: 24 make a single loop, 20 make two. A loop of length one bars a rehang; it never sets the loop count.
 
 ---
 
@@ -367,15 +346,15 @@ The two outputs match line for line.
 > **Multiplying by the number of loops.** The last key goes in after some hook already on the board, and there are n − 1 of those, not k: read as the loop count the recurrence gives 3 × 6 + 11 = 29 where the answer is 35.
 >
 > - **Dropping loops of length one.** They are loops. The traced rehang has three; calling it two moves it from the 35 into the 50.
-> - **Reading this triangle as the second-kind one.** Three loops on five hooks number 35; three blocks number 25 ([stirling-numbers-second-kind](04-stirling-numbers-second-kind.md)). A loop of three runs two ways round; a block has no direction.
+> - **Reading this triangle as the second-kind one.** Three loops on five hooks number 35; three blocks number 25 ([Stirling numbers of the second kind](04-stirling-numbers-second-kind.md)). A loop of three runs two ways round; a block has no direction.
 
 ---
 
 ## Where you meet it in real life
 
-- **Rotas and gift draws.** A rearrangement leaving nobody their own item is the no-loop-of-one case: 44 of the 120 ways five items come back ([derangements](../04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md)).
-- **Sorting work.** The fewest swaps a rearrangement needs is places minus loops ([permutations-and-the-symmetric-group](../../03-Algebra/08-Groups/03-permutations-and-the-symmetric-group.md)): 5 − 3 = 2 here, 5 − 1 = 4 for one long loop. A routine reordering a list in place walks one loop at a time.
-- **Shuffles that come back.** How many rounds of a shuffle return a deck to its first order is set by its loop lengths ([perfect-shuffles](../../02-Number%20theory/05-Check%20Digits%2C%20Calendars%20and%20Cycles/05-perfect-shuffles.md)): there the lengths do the work, here only how many there are.
+- **Rotas and gift draws.** A rearrangement leaving nobody their own item is the no-loop-of-one case: 44 of the 120 ways five items come back ([Derangements](../04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md)).
+- **Sorting work.** The fewest swaps a rearrangement needs is places minus loops ([Permutations](../../03-Algebra/08-Groups/03-permutations-and-the-symmetric-group.md)): 5 − 3 = 2 here, 5 − 1 = 4 for one long loop. A routine reordering a list in place walks one loop at a time.
+- **Shuffles that come back.** How many rounds of a shuffle return a deck to its first order is set by its loop lengths ([Perfect shuffles](../../02-Number%20theory/05-Check%20Digits%2C%20Calendars%20and%20Cycles/05-perfect-shuffles.md)): there the lengths do the work, here only how many there are.
 
 > **Say it back**
 > Trace each key from its hook to where it went and a rehang closes into loops sharing no hook. The 120 rehangs of five keys hold 24 with one loop, 50 with two, 35 with three, 10 with four, 1 with five. The last key slips into a rehang of the others, in any of n − 1 places, or hangs on its own and adds a loop: that recurrence builds every row. Cycle types give the same row, making the derangements the types with no loop of length one, 44 of them.
@@ -384,16 +363,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [derangements](../04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md): the 44, by the sieve rather than cycle types.
-- [factorial](../01-Counting%20Principles/03-factorial.md): the 120 a row adds to, and 4! = 24.
-- [permutations-and-the-symmetric-group](../../03-Algebra/08-Groups/03-permutations-and-the-symmetric-group.md): rehangs as permutations, loops as cycles, swaps against loop count.
-- [perfect-shuffles](../../02-Number%20theory/05-Check%20Digits%2C%20Calendars%20and%20Cycles/05-perfect-shuffles.md): loop lengths deciding when a repeated shuffle comes home.
+- [Derangements](../04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md): the 44, by the sieve rather than cycle types.
+- [Factorials](../01-Counting%20Principles/03-factorial.md): the 120 a row adds to, and 4! = 24.
+- [Permutations](../../03-Algebra/08-Groups/03-permutations-and-the-symmetric-group.md): rehangs as permutations, loops as cycles, swaps against loop count.
+- [Perfect shuffles](../../02-Number%20theory/05-Check%20Digits%2C%20Calendars%20and%20Cycles/05-perfect-shuffles.md): loop lengths deciding when a repeated shuffle comes home.
 
 ## Where this goes next
 
-- [twelvefold-way](06-twelvefold-way.md): the table sorting this family of questions — labelled or unlabelled things into labelled or unlabelled boxes — and placing loops and blocks in it.
+- [The twelvefold way](06-twelvefold-way.md): the table sorting this family of questions — labelled or unlabelled things into labelled or unlabelled boxes — and placing loops and blocks in it.
 
-Beside it, [stirling-numbers-second-kind](04-stirling-numbers-second-kind.md) counts the same keys into blocks, and [set-partitions-and-bell-numbers](03-set-partitions-and-bell-numbers.md) adds those counts along a row.
+Beside it, [Stirling numbers of the second kind](04-stirling-numbers-second-kind.md) counts the same keys into blocks, and [Set partitions and Bell numbers](03-set-partitions-and-bell-numbers.md) adds those counts along a row.
 
 Loops and blocks are now counted apart; which standard question each answers, and what the other ten are, is the twelvefold way.
 

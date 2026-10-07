@@ -1,29 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Eigenvalues and Symmetric Matrices
-topic: Coordinates
-item: Change of basis
-kind: method
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/03-Vectors/05-basis-and-dimension|basis-and-dimension]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/03-inverse-matrix|inverse-matrix]]"
-  - "[[Cards/03-Algebra/04-Matrices/04-linear-maps-as-matrices|linear-maps-as-matrices]]"
-next:
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/03-diagonalisation-and-matrix-powers|diagonalisation-and-matrix-powers]]"
-  - "[[Cards/13-Engineering mathematics/05-Signals/02-discrete-fourier-transform-and-the-fft|discrete-fourier-transform-and-the-fft]]"
-  - "[[Cards/23-Differential geometry and Lie groups/06-Lie Groups/05-representations-in-outline|representations-in-outline]]"
-tags:
-  - mathematics
-  - algebra
-  - change-of-basis
----
-
 # Change of basis: the same point with a new address book, and the same map as a new matrix P^-1 A P
 
-Algebra → Eigenvalues and Symmetric Matrices → Coordinates → Change of basis
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Eigenvalues and Symmetric Matrices](../../../SYLLABUS.md#w03-s07) → Change of basis
 
 ---
 
@@ -33,9 +10,9 @@ A game map hides treasure five steps east and three steps north of the corner, s
 
 On the new grid its address is (4, −1): four steps northeast, then one back along northwest. Four copies of (1, 1) make (4, 4), and taking away one copy of (−1, 1) lands on (5, 3). The treasure never moved; only the list describing it did.
 
-A set of directions that gives every point exactly one such list is a **basis**, and the list is that point's **coordinates** in it ([basis-and-dimension](../03-Vectors/05-basis-and-dimension.md)); the old grid's basis is the axis arrows (1, 0) and (0, 1). This card translates between two such address books, then rewrites a movement rule for the new one.
+A set of directions that gives every point exactly one such list is a **basis**, and the list is that point's **coordinates** in it ([Basis and dimension](../03-Vectors/05-basis-and-dimension.md)); the old grid's basis is the axis arrows (1, 0) and (0, 1). This card translates between two such address books, then rewrites a movement rule for the new one.
 
-The rule here is a **shear**: every point slides east by its own height, so the treasure goes from (5, 3) to (8, 3). Its matrix is `[[1, 1], [0, 1]]`, row by row, 2 × 2 ([linear-maps-as-matrices](../04-Matrices/04-linear-maps-as-matrices.md)). On the diagonal grid the same slide reads `[[1.5, 0.5], [−0.5, 0.5]]` — different entries, one move, and every area still multiplied by 1.
+The rule here is a **shear**: every point slides east by its own height, so the treasure goes from (5, 3) to (8, 3). Its matrix is `[[1, 1], [0, 1]]`, row by row, 2 × 2 ([Linear maps](../04-Matrices/04-linear-maps-as-matrices.md)). On the diagonal grid the same slide reads `[[1.5, 0.5], [−0.5, 0.5]]` — different entries, one move, and every area still multiplied by 1.
 
 **Put the new directions down the columns of a matrix P: P turns a new address into the old one, its inverse turns an old address into the new one, and a map that was A becomes P^-1 A P.**
 
@@ -73,7 +50,7 @@ $$A_B = P^{-1} A P$$
 | --- | --- | --- | --- |
 | $b_1$, $b_2$ | the new directions, in old coordinates | (1, 1) and (−1, 1) | every address changes |
 | $P$ | those directions as columns | `[[1, −1], [1, 1]]` | — |
-| $P^{-1}$ | what undoes $P$ ([inverse-matrix](../05-Solving%20Systems/03-inverse-matrix.md)) | `[[0.5, 0.5], [−0.5, 0.5]]` | — |
+| $P^{-1}$ | what undoes $P$ ([The inverse matrix](../05-Solving%20Systems/03-inverse-matrix.md)) | `[[0.5, 0.5], [−0.5, 0.5]]` | — |
 | $v$ | a point's old address | (5, 3) | a different point |
 | $c$ | that point's new address | (4, −1) | a different point |
 | $A$ | the map's matrix, old book | the shear `[[1, 1], [0, 1]]` | the move changes |
@@ -117,13 +94,13 @@ Why the area factor survives has the shape of the whole card: going in multiplie
 <details>
 <summary>Detailed proof: area factor and trace survive similarity</summary>
 
-The determinant of a product is the product of the determinants ([determinants](../05-Solving%20Systems/04-determinants.md)), and the determinant of an inverse is one over the determinant. So the determinant of $P^{-1} A P$ is (1 / det P) × det A × det P: the outer two cancel. Here, (1 / 2) × 1 × 2 = 1.
+The determinant of a product is the product of the determinants ([Determinants](../05-Solving%20Systems/04-determinants.md)), and the determinant of an inverse is one over the determinant. So the determinant of $P^{-1} A P$ is (1 / det P) × det A × det P: the outer two cancel. Here, (1 / 2) × 1 × 2 = 1.
 
 The trace needs one fact: for two 2 × 2 matrices the trace of the product ignores the order. Call them M, entries m1, m2, m3, m4, and N, entries n1, n2, n3, n4, each read row by row. The trace of M N — top-left plus bottom-right — is m1 n1 + m2 n3 + m3 n2 + m4 n4, and the trace of N M is n1 m1 + n2 m3 + n3 m2 + n4 m4: the same four products, reordered. So with M = $P^{-1}$ and N = $A P$, the trace of $P^{-1} A P$ equals the trace of $A P P^{-1}$, which is the trace of $A$.
 
 </details>
 
-For a single point there is a shortcut: instead of building $P^{-1}$, solve $P c = v$ for $c$ by elimination ([gaussian-elimination](../05-Solving%20Systems/02-gaussian-elimination.md)) — the second method the code takes.
+For a single point there is a shortcut: instead of building $P^{-1}$, solve $P c = v$ for $c$ by elimination ([Gaussian elimination](../05-Solving%20Systems/02-gaussian-elimination.md)) — the second method the code takes.
 
 ---
 
@@ -374,8 +351,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Graphics and games.** A model carries its own axes and the world carries others; every frame converts between them.
-- **Repeated moves.** Pick a basis of directions the map only stretches and $A_B$ comes out diagonal: [eigenvalues-and-eigenvectors](02-eigenvalues-and-eigenvectors.md) finds them.
-- **Right-angled address books.** Perpendicular new directions of unit length make $P^{-1}$ simply $P$ with rows and columns exchanged: [spectral-theorem](04-spectral-theorem.md).
+- **Repeated moves.** Pick a basis of directions the map only stretches and $A_B$ comes out diagonal: [Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md) finds them.
+- **Right-angled address books.** Perpendicular new directions of unit length make $P^{-1}$ simply $P$ with rows and columns exchanged: [The spectral theorem](04-spectral-theorem.md).
 
 > **Say it back**
 > A basis gives every point exactly one address. Put the new directions down the columns of $P$: $P$ turns a new address into an old one and $P^{-1}$ goes back, so the treasure at (5, 3) is (4, −1) on the diagonal grid. To rewrite a movement rule: translate in, move, translate out, $P^{-1} A P$. The shear `[[1, 1], [0, 1]]` becomes `[[1.5, 0.5], [−0.5, 0.5]]`, and both send the treasure to the same place, because the move never changed.
@@ -384,15 +361,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [basis-and-dimension](../03-Vectors/05-basis-and-dimension.md): why independent directions give each point one address.
-- [inverse-matrix](../05-Solving%20Systems/03-inverse-matrix.md): the undo, and the 2 × 2 formula behind `[[0.5, 0.5], [−0.5, 0.5]]`.
-- [linear-maps-as-matrices](../04-Matrices/04-linear-maps-as-matrices.md): why a movement rule is four numbers, one column per basis direction.
+- [Basis and dimension](../03-Vectors/05-basis-and-dimension.md): why independent directions give each point one address.
+- [The inverse matrix](../05-Solving%20Systems/03-inverse-matrix.md): the undo, and the 2 × 2 formula behind `[[0.5, 0.5], [−0.5, 0.5]]`.
+- [Linear maps](../04-Matrices/04-linear-maps-as-matrices.md): why a movement rule is four numbers, one column per basis direction.
 
 ## Where this goes next
 
-- [diagonalisation-and-matrix-powers](03-diagonalisation-and-matrix-powers.md): the payoff — the book that makes $A_B$ diagonal turns many moves into small multiplies.
-- discrete-fourier-transform-and-the-fft: the same translation on a whole signal, samples in time becoming pure tones.
-- representations-in-outline: conjugation again, for matrices forming a group.
+- [Diagonalisation](03-diagonalisation-and-matrix-powers.md): the payoff — the book that makes $A_B$ diagonal turns many moves into small multiplies.
+- The DFT and the FFT: the same translation on a whole signal, samples in time becoming pure tones.
+- Representation: conjugation again, for matrices forming a group.
 
 Any invertible $P$ gives a new address book, and nothing here says which book is worth having; that is what a later card asks.
 

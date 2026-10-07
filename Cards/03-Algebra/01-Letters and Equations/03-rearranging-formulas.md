@@ -1,28 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Letters and Equations
-topic: Formulas
-item: Rearranging a formula
-kind: method
-status: verified
-updated: 2026-09-07
-needs_first:
-  - "[[Cards/03-Algebra/01-Letters and Equations/01-letters-for-numbers|letters-for-numbers]]"
-  - "[[Cards/03-Algebra/01-Letters and Equations/02-linear-equations|linear-equations]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/08-decimals|decimals]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/09-ratios-and-rates|ratios-and-rates]]"
-next:
-  - "[[Cards/03-Algebra/01-Letters and Equations/04-two-equations-two-unknowns|two-equations-two-unknowns]]"
-tags:
-  - mathematics
-  - algebra
-  - rearranging-formulas
----
-
 # Rearranging a formula: making a different letter the subject, so one formula answers many questions
 
-Algebra → Letters and Equations → Formulas → Rearranging a formula
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Letters and Equations](../../../SYLLABUS.md#w03-s01) → Rearranging a formula
 
 ---
 
@@ -54,7 +32,7 @@ The top row builds. The bottom row undoes: the same two steps, in reverse order,
 
 ## The formula
 
-Write $F$ for the Fahrenheit number and $C$ for the Celsius one — letters standing for numbers nobody has told you yet, as on [letters-for-numbers](01-letters-for-numbers.md). The rule is:
+Write $F$ for the Fahrenheit number and $C$ for the Celsius one — letters standing for numbers nobody has told you yet, as on [Letters for numbers](01-letters-for-numbers.md). The rule is:
 
 $$F = 1.8C + 32$$
 
@@ -66,7 +44,7 @@ The last two rows of the table are this shelf's taxi: $3 to start plus $2 a mile
 | --- | --- | --- | --- |
 | $F$ | the temperature in degrees Fahrenheit | 77 | the Celsius answer rises with it |
 | $C$ | the same temperature in degrees Celsius | 25 | the Fahrenheit answer rises 1.8 times as fast |
-| $1.8$ | Fahrenheit degrees per Celsius degree, a rate ([ratios-and-rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md)) | 1.8, always | the two scales pull apart faster |
+| $1.8$ | Fahrenheit degrees per Celsius degree, a rate ([Ratios and rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md)) | 1.8, always | the two scales pull apart faster |
 | $32$ | how far apart the scales start: 0 degrees C is 32 degrees F | 32, always | every Fahrenheit reading shifts up by the same amount |
 | $m$ | miles travelled in the taxi | 5 | the fare rises $2 a mile |
 | fare | what the taxi charges for the trip | $13.00 | the mileage it stands for rises |
@@ -85,7 +63,7 @@ The taxi behaves the same way. Make $m$ the subject and the meter reads backward
 
 ### Step 0: an equals sign is a promise, and both sides must keep it
 
-$F = 1.8C + 32$ says the left side and the right side are the same number. Do the identical thing to both sides — take 32 off both, halve both, divide both by 1.8 — and they are still the same number. The promise holds. That is the entire permission slip, and [linear-equations](02-linear-equations.md) is where it gets earned. Nothing about it changes when the other side has letters in it instead of numbers.
+$F = 1.8C + 32$ says the left side and the right side are the same number. Do the identical thing to both sides — take 32 off both, halve both, divide both by 1.8 — and they are still the same number. The promise holds. That is the entire permission slip, and [Linear equations](02-linear-equations.md) is where it gets earned. Nothing about it changes when the other side has letters in it instead of numbers.
 
 ### Step 1: read the steps that built the formula, in order
 
@@ -121,14 +99,14 @@ $(F - 32) / 1.8 = C$ — done. Flip the sides to read it forwards.
 <details>
 <summary>When the letter you want is squared, or raised to a power</summary>
 
-A square is undone by a square root ([roots-and-fractional-exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)). The area of a circle is 3.14159… × radius × radius. Make the radius the subject: radius = the square root of (area / 3.14159…). A round rug of area 12.00 square feet has a radius of 1.9544 feet, so it is a little under four feet across.
+A square is undone by a square root ([Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)). The area of a circle is 3.14159… × radius × radius. Make the radius the subject: radius = the square root of (area / 3.14159…). A round rug of area 12.00 square feet has a radius of 1.9544 feet, so it is a little under four feet across.
 Compound interest is the same move with a bigger power. A = P × (1 + r)^n, where P is the money put in, r the yearly rate, n the years and A the balance at the end. Solve it for the rate: r = (A / P)^(1/n) − 1, the n-th root undoing the n-th power. $100.00 that reached $162.89 in 10 years grew at 5.00% a year.
 
 </details>
 
 ### The other route: put the number in first
 
-You can skip rearranging. Write 77 = 1.8C + 32 and solve that single equation, exactly as [linear-equations](02-linear-equations.md) does: take off 32, divide by 1.8, C = 25. Same two undo steps, same answer.
+You can skip rearranging. Write 77 = 1.8C + 32 and solve that single equation, exactly as [Linear equations](02-linear-equations.md) does: take off 32, divide by 1.8, C = 25. Same two undo steps, same answer.
 
 The difference is how far the work goes. Solving with the number already in answers one question. Rearranging answers every question of that shape, once and for all. For one temperature, either way works. For a column of them, rearrange first.
 
@@ -371,8 +349,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Any bill with a standing charge.** Electricity, phone, a tradesman's call-out: total = fixed charge + rate × usage. Rearranged, it tells you the usage a bill implies, which is how you check the bill.
-- **Money that grows.** The compound interest formula is normally run forwards for the balance ([compound-interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)). Rearranged, it answers "what rate did this account actually pay?" and "how many years to get there?" — the same two questions every savings comparison asks.
-- **Cooking.** A recipe scaled by a ratio ([ratios-and-rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md)) runs forwards; how many portions the flour left in the bag allows is the same formula run backwards.
+- **Money that grows.** The compound interest formula is normally run forwards for the balance ([Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)). Rearranged, it answers "what rate did this account actually pay?" and "how many years to get there?" — the same two questions every savings comparison asks.
+- **Cooking.** A recipe scaled by a ratio ([Ratios and rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md)) runs forwards; how many portions the flour left in the bag allows is the same formula run backwards.
 - **Spreadsheets.** The "goal seek" button is the hunting road in the code above: it tries values until the answer lands. Rearranging is the exact version, and it is instant.
 
 > **Say it back**
@@ -382,14 +360,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [letters-for-numbers](01-letters-for-numbers.md): a letter standing for a number nobody has told you yet. This card lets that letter change places.
-- [linear-equations](02-linear-equations.md): doing the same thing to both sides, and undoing a story step by step. This card runs that move on letters instead of numbers.
-- [decimals](../../01-Foundations/01-Everyday%20Arithmetic/08-decimals.md): dividing by 1.8 and reading an answer of 10.78.
-- [ratios-and-rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md): 1.8 is a rate — Fahrenheit degrees per Celsius degree — and $2 a mile is another.
+- [Letters for numbers](01-letters-for-numbers.md): a letter standing for a number nobody has told you yet. This card lets that letter change places.
+- [Linear equations](02-linear-equations.md): doing the same thing to both sides, and undoing a story step by step. This card runs that move on letters instead of numbers.
+- [Decimals](../../01-Foundations/01-Everyday%20Arithmetic/08-decimals.md): dividing by 1.8 and reading an answer of 10.78.
+- [Ratios and rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md): 1.8 is a rate — Fahrenheit degrees per Celsius degree — and $2 a mile is another.
 
 ## Where this goes next
 
-- [two-equations-two-unknowns](04-two-equations-two-unknowns.md): what to do when one formula is not enough to pin the letters down, and two of them are needed at once. Rearranging one of them to make a letter the subject is the first move.
+- [Two equations, two unknowns](04-two-equations-two-unknowns.md): what to do when one formula is not enough to pin the letters down, and two of them are needed at once. Rearranging one of them to make a letter the subject is the first move.
 
 ---
 

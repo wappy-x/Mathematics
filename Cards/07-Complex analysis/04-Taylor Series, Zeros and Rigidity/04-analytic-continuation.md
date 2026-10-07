@@ -1,31 +1,12 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Taylor Series, Zeros and Rigidity
-topic: Formulas past the edge of their series
-item: Analytic continuation
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/03-zeros-and-the-identity-theorem|zeros-and-the-identity-theorem]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/06-discounting-and-present-value|discounting-and-present-value]]"
-next:
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/02-gamma-function|gamma-function]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/08-continuing-zeta-and-the-functional-equation|continuing-zeta-and-the-functional-equation]]"
-  - "[[Cards/21-Algebraic and analytic number theory/02-The Zeta Function and the Prime Number Theorem/01-zeta-and-the-euler-product-revisited|zeta-and-the-euler-product-revisited]]"
-tags: [mathematics, complex analysis, analytic-continuation]
----
-
 # Analytic continuation: push a function past the edge of its formula, and the extension is the only one possible
 
-Complex analysis → Taylor Series, Zeros and Rigidity → Formulas past the edge of their series → Analytic continuation
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Taylor Series, Zeros and Rigidity](../../../SYLLABUS.md#w07-s04) → Analytic continuation
 
 ---
 
 ## General Overview
 
-A perpetuity pays $1 at the end of every year, for ever. At annual rate r a dollar due in a year is worth z = 1/(1 + r) today, the **discount factor**. At 5%, z = 1/1.05 and the payments z + z^2 + … add to $20, which is 1 divided by the rate ([discounting-and-present-value](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md)).
+A perpetuity pays $1 at the end of every year, for ever. At annual rate r a dollar due in a year is worth z = 1/(1 + r) today, the **discount factor**. At 5%, z = 1/1.05 and the payments z + z^2 + … add to $20, which is 1 divided by the rate ([Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md)).
 
 From 18 September 2019 until 27 July 2022 the European Central Bank paid −0.5% on deposits. Then z is above 1, and the payments never settle: 100 add to about $130, 1,000 to about $29,857. Yet 1 divided by the rate still gives −200.
 
@@ -85,7 +66,7 @@ $$f,\ g \text{ holomorphic on a connected open } U,\ \ f = g \text{ on a set pil
 
 ### Step 0: a holomorphic function is rigid
 
-A holomorphic function equals its Taylor series on any disc inside its region ([taylor-series-in-the-plane](01-taylor-series-in-the-plane.md)). Values on a small patch fix the derivatives, the derivatives fix the disc, and overlapping discs cross a connected region.
+A holomorphic function equals its Taylor series on any disc inside its region ([Taylor series in the plane](01-taylor-series-in-the-plane.md)). Values on a small patch fix the derivatives, the derivatives fix the disc, and overlapping discs cross a connected region.
 
 ### Step 1: the sum and the formula agree on the unit disc
 
@@ -97,7 +78,7 @@ The function 1/(1 − z) has derivative 1/(1 − z)^2 everywhere except 1. The p
 
 ### Step 3: it is the only one
 
-Let $g$ be any holomorphic function on $U$ that agrees with the sum on the unit disc. Then $f - g$ is holomorphic on $U$ and zero on the disc. A holomorphic function whose zeros pile up inside a connected region is zero on all of it ([zeros-and-the-identity-theorem](03-zeros-and-the-identity-theorem.md)), so $g = f$. Positive rates alone suffice: their z fill the segment from 0 to 1.
+Let $g$ be any holomorphic function on $U$ that agrees with the sum on the unit disc. Then $f - g$ is holomorphic on $U$ and zero on the disc. A holomorphic function whose zeros pile up inside a connected region is zero on all of it ([Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md)), so $g = f$. Positive rates alone suffice: their z fill the segment from 0 to 1.
 
 <details>
 <summary>Detailed proof</summary>
@@ -345,8 +326,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Annuities at negative rates.** N years of payments are worth (1 − z^N)/r, a finite sum valid at any rate but 0.
-- **Special functions.** The factorial, as an integral, continues uniquely: [gamma-function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md).
-- **Prime numbers.** Zeros of the continued zeta function, beyond the edge of its sum, govern how evenly primes are spread: zeta-and-the-euler-product-revisited.
+- **Special functions.** The factorial, as an integral, continues uniquely: [The gamma function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md).
+- **Prime numbers.** Zeros of the continued zeta function, beyond the edge of its sum, govern how evenly primes are spread: Zeta of a complex variable.
 
 > **Say it back**
 > A series may describe a function only on a disc. A holomorphic function is fixed on a connected region by any patch, so it extends in at most one way. The perpetuity sum settles for positive rates; 1/r, or a chain of discs, continues it to −200 at −0.5%. That is a value, not a sum, and so is −1/12.
@@ -355,17 +336,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [zeros-and-the-identity-theorem](03-zeros-and-the-identity-theorem.md): the engine of Step 3.
-- [discounting-and-present-value](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): the discount factor.
+- [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md): the engine of Step 3.
+- [Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): the discount factor.
 
 ## Where this goes next
 
-- [gamma-function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): the factorial continued.
-- [continuing-zeta-and-the-functional-equation](../09-Special%20Functions%20and%20the%20Zeta%20Function/08-continuing-zeta-and-the-functional-equation.md): zeta continued, and −1/12 computed.
-- zeta-and-the-euler-product-revisited: continued zeta at work on primes.
-- [maximum-modulus-principle](05-maximum-modulus-principle.md): size peaks on the rim, from the same rigidity.
+- [The gamma function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): the factorial continued.
+- [Continuing zeta](../09-Special%20Functions%20and%20the%20Zeta%20Function/08-continuing-zeta-and-the-functional-equation.md): zeta continued, and −1/12 computed.
+- Zeta of a complex variable: continued zeta at work on primes.
+- [The maximum modulus principle](05-maximum-modulus-principle.md): size peaks on the rim, from the same rigidity.
 
-Uniqueness forces a continuation once it exists; which formula carries zeta past s = 1 is the question [continuing-zeta-and-the-functional-equation](../09-Special%20Functions%20and%20the%20Zeta%20Function/08-continuing-zeta-and-the-functional-equation.md) answers.
+Uniqueness forces a continuation once it exists; which formula carries zeta past s = 1 is the question [Continuing zeta](../09-Special%20Functions%20and%20the%20Zeta%20Function/08-continuing-zeta-and-the-functional-equation.md) answers.
 
 ---
 

@@ -1,21 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Portfolio Theory
-topic: Splitting risk by asset
-item: Risk parity
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/07-estimation-error-and-shrinkage|estimation-error-and-shrinkage]]"
-next: []
-tags: [mathematics, financial mathematics, risk-parity-and-alternative-weightings]
----
-
 # Risk parity: equalising risk contributions instead of weights
 
-Financial mathematics → Portfolio Theory → Splitting risk by asset → Risk parity
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Theory](../../../SYLLABUS.md#w12-s37) → Risk parity
 
 ---
 
@@ -66,7 +51,7 @@ The steep line is bonds' share of risk. The falling line is shares' share. The f
 
 ## The formula
 
-Notation first, in words. The fund's weights are $w_i$: the fraction of the money in asset number $i$, with $i$ running over shares, bonds, gold. The list of all of them is $w$. The covariance table $\Sigma$ holds, in row $i$ and column $j$, the number $\Sigma_{ij} = \rho_{ij}\sigma_i\sigma_j$: correlation times the two volatilities ([two-asset-portfolio-risk-and-return](01-two-asset-portfolio-risk-and-return.md) builds it for two assets). Here it reads, row by row, `0.0400 0.0024 0.0030 | 0.0024 0.0036 0.0000 | 0.0030 0.0000 0.0225`.
+Notation first, in words. The fund's weights are $w_i$: the fraction of the money in asset number $i$, with $i$ running over shares, bonds, gold. The list of all of them is $w$. The covariance table $\Sigma$ holds, in row $i$ and column $j$, the number $\Sigma_{ij} = \rho_{ij}\sigma_i\sigma_j$: correlation times the two volatilities ([Two assets](01-two-asset-portfolio-risk-and-return.md) builds it for two assets). Here it reads, row by row, `0.0400 0.0024 0.0030 | 0.0024 0.0036 0.0000 | 0.0030 0.0000 0.0225`.
 
 The fund's volatility is
 
@@ -105,7 +90,7 @@ Two helper readings. $(\Sigma w)_i = \sum_j \Sigma_{ij} w_j$ is the covariance b
 
 ### When it holds
 
-- **The covariance table is right and stable.** It is estimated from past returns ([estimation-error-and-shrinkage](07-estimation-error-and-shrinkage.md)). If correlations jump in a crash, the thirds become unequal. Risk parity uses no expected returns, the hardest numbers to estimate, which is its main defence.
+- **The covariance table is right and stable.** It is estimated from past returns ([Estimation error](07-estimation-error-and-shrinkage.md)). If correlations jump in a crash, the thirds become unequal. Risk parity uses no expected returns, the hardest numbers to estimate, which is its main defence.
 - **Volatility is the risk that matters.** It treats gains and losses alike. The Euler split works for any risk measure that doubles when positions double, such as value at risk (the loss exceeded only in the worst few percent of outcomes), so the method carries over; the weights change.
 - **No mix of the assets is riskless, and weights stay positive.** Then exactly one answer exists. A riskless asset, or a riskless mix, would soak up all the money. Allow short positions and several answers appear.
 - **The weights are kept there.** Prices move the weights every day. Without rebalancing (trading back to target) the thirds drift apart.
@@ -171,7 +156,7 @@ The contributions give a common ruler for other weighting rules.
 
 - **Equal money** gives $w_i = 1/n$. Contributions follow volatility and correlation, so shares dominate: 59.04 percent.
 - **Inverse volatility** gives $w_i \propto 1/\sigma_i$: 17.65, 58.82, 23.53 percent. Then $w_i\sigma_i$ is one common number, and $\mathrm{RC}_i$ is proportional to $\sum_j \rho_{ij}$, the row sum of the correlation table. Those sums are 1.30, 1.20, 1.10 out of 3.60, so the risk shares are 36.11, 33.33, 30.56 percent. Close to parity, not equal: shares correlate most with the rest, so they carry extra.
-- **Minimum variance** makes the *marginal* risks equal, 0.055618 each; that is the first-order condition for the lowest volatility ([efficient-frontier-and-minimum-variance](02-efficient-frontier-and-minimum-variance.md)). Equal marginals make each risk share equal the weight: bonds hold 84.84 percent of the money and 84.84 percent of the risk.
+- **Minimum variance** makes the *marginal* risks equal, 0.055618 each; that is the first-order condition for the lowest volatility ([The efficient frontier](02-efficient-frontier-and-minimum-variance.md)). Equal marginals make each risk share equal the weight: bonds hold 84.84 percent of the money and 84.84 percent of the risk.
 - **Equal risk** sits between them. Its volatility, 6.66 percent, lies above minimum variance's 5.56 and below equal money's 9.24. Maillard, Roncalli and Teiletche prove that order holds for every covariance table.
 
 Another route to the same weights solves the $n$ curved equations directly with any root finder; the valley in Step 3 is the reason that route has one answer to find.
@@ -631,11 +616,11 @@ The two outputs match line for line, the simulated shares included, since both p
 
 ## Where you meet it in real life
 
-- **Risk-parity funds.** They hold roughly this kind of mix, heavy in bonds, and borrow to lift volatility to a target. The borrowing cost decides whether that beats a 60/40 fund; the riskless-asset card, [tangency-portfolio-and-the-capital-market-line](03-tangency-portfolio-and-the-capital-market-line.md), is the frame for that trade.
+- **Risk-parity funds.** They hold roughly this kind of mix, heavy in bonds, and borrow to lift volatility to a target. The borrowing cost decides whether that beats a 60/40 fund; the riskless-asset card, [Adding a riskless asset](03-tangency-portfolio-and-the-capital-market-line.md), is the frame for that trade.
 - **Risk budgets at pension funds.** Unequal targets, say half the risk to shares, use the same contributions and the same solver with a different right-hand side.
 - **Risk reports and bank capital.** Euler's split allocates a bank's value at risk or capital to desks and business lines so the pieces add to the total (Tasche's paper below).
-- **Factor risk parity.** Equalising risk across factors, such as growth and inflation, rather than across assets: [factor-models-and-apt](05-factor-models-and-apt.md).
-- **A contrast with views-based weights.** [black-litterman](06-black-litterman.md) starts from expected returns; risk parity refuses to use them at all.
+- **Factor risk parity.** Equalising risk across factors, such as growth and inflation, rather than across assets: [Factor models](05-factor-models-and-apt.md).
+- **A contrast with views-based weights.** [Black-Litterman](06-black-litterman.md) starts from expected returns; risk parity refuses to use them at all.
 
 > **Say it back**
 > Volatility doubles when every position doubles, so Euler's theorem splits it into one contribution per asset: weight times marginal risk, adding exactly to the whole. Marginal risk is the asset's covariance with the fund divided by the fund's volatility. Risk parity chooses the weights that make the contributions equal; one such long-only portfolio always exists, found by minimising half the variance minus the sum of log weights. For shares, bonds and gold it puts 58.74 percent in bonds, because bonds add the least risk per dollar. It uses no expected returns, sits between minimum variance and equal money in volatility, and needs leverage to reach a share-like return.
@@ -644,12 +629,12 @@ The two outputs match line for line, the simulated shares included, since both p
 
 ## What this builds on
 
-- [estimation-error-and-shrinkage](07-estimation-error-and-shrinkage.md): why expected returns are too noisy to optimise on, the problem risk parity sidesteps, and how the covariance table it does use is estimated.
+- [Estimation error](07-estimation-error-and-shrinkage.md): why expected returns are too noisy to optimise on, the problem risk parity sidesteps, and how the covariance table it does use is estimated.
 
 ## Where this goes next
 
-- [tangency-portfolio-and-the-capital-market-line](03-tangency-portfolio-and-the-capital-market-line.md): borrowing at the riskless rate, which sets the price of levering a risk-parity mix.
-- [factor-models-and-apt](05-factor-models-and-apt.md): the factors across which risk can be budgeted instead of assets.
+- [Adding a riskless asset](03-tangency-portfolio-and-the-capital-market-line.md): borrowing at the riskless rate, which sets the price of levering a risk-parity mix.
+- [Factor models](05-factor-models-and-apt.md): the factors across which risk can be budgeted instead of assets.
 
 Risk parity says how to share risk, not how much to take; how much risk a portfolio should carry, and at what borrowing cost, is the question the capital market line answers.
 

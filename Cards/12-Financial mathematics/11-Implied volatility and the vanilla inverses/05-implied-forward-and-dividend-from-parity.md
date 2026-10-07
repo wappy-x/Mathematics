@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Implied volatility and the vanilla inverses
-topic: Reading carry from option prices
-item: Implied forward and dividend from parity
-kind: method
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/03-put-call-parity|put-call-parity]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/01-implied-volatility|implied-volatility]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/03-forward-price-by-cash-and-carry|forward-price-by-cash-and-carry]]"
-next:
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/06-vix-index|vix-index]]"
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/01-volatility-smile-and-skew|volatility-smile-and-skew]]"
-tags: [mathematics, financial mathematics, implied-forward-and-dividend-from-parity]
----
-
 # Implied forward and dividend from parity: a call-put pair tells you the forward, and the forward tells you the yield
 
-Financial mathematics → Implied volatility and the vanilla inverses → Reading carry from option prices → Implied forward and dividend from parity
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Implied volatility and the vanilla inverses](../../../SYLLABUS.md#w12-s11) → Implied forward and dividend from parity
 
 ---
 
@@ -27,9 +8,9 @@ Financial mathematics → Implied volatility and the vanilla inverses → Readin
 
 Acme shares trade at $100.00. On the options screen, a one-year call struck at $100.00 is quoted at $9.23 and the put at the same strike at $6.33. The bank rate for a year is 5.00%. Nobody has said what dividend Acme will pay.
 
-The two quotes say it anyway. A call bought and a put sold at one strike make a forward: a promise to buy one share at the strike on expiry day ([put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)). The gap between the two prices is what that promise is worth today. Carry the gap a year forward at the bank rate, add it to the strike, and out comes the **forward price**, the price at which the market will agree today to sell Acme in a year: $103.05.
+The two quotes say it anyway. A call bought and a put sold at one strike make a forward: a promise to buy one share at the strike on expiry day ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)). The gap between the two prices is what that promise is worth today. Carry the gap a year forward at the bank rate, add it to the strike, and out comes the **forward price**, the price at which the market will agree today to sell Acme in a year: $103.05.
 
-The forward is the share price grown at the bank rate, less the dividends a holder of the share would collect ([forward-price-by-cash-and-carry](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md)). Acme at $100.00 grown at 5.00% for a year would be $105.13. The forward is lower, and the shortfall is the dividend. Solved exactly, it is a **dividend yield**, dividends paid as a steady fraction of the share price each year, of 2.00%. That is the job of this card: run parity backwards, from prices to the forward, and from the forward to the yield.
+The forward is the share price grown at the bank rate, less the dividends a holder of the share would collect ([Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md)). Acme at $100.00 grown at 5.00% for a year would be $105.13. The forward is lower, and the shortfall is the dividend. Solved exactly, it is a **dividend yield**, dividends paid as a steady fraction of the share price each year, of 2.00%. That is the job of this card: run parity backwards, from prices to the forward, and from the forward to the yield.
 
 **Put-call parity has the forward in it, added and subtracted and nothing else, so a call and a put at one strike fix the forward exactly, the forward and the share price fix the dividend yield, and two strikes fix the interest rate as well.**
 
@@ -100,10 +81,10 @@ Every inverse card on this shelf answers three questions before it solves. Does 
 
 ### When it holds
 
-- **Both tickets European**, usable on expiry day only. American options, usable any day, carry an early-exercise value that parity does not count; the implied yield then absorbs it and comes out wrong ([american-options-and-early-exercise](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md)).
+- **Both tickets European**, usable on expiry day only. American options, usable any day, carry an early-exercise value that parity does not count; the implied yield then absorbs it and comes out wrong ([American options](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md)).
 - **Both quotes live and tradable at the same moment.** A call quoted before Acme moved $1.00 turns a 2.00% yield into 2.59%.
 - **One rate for borrowing and lending, and the share can be borrowed freely.** A fee to borrow Acme shows up inside the implied yield, added to the dividend, because shorting the share (selling a borrowed one) becomes dearer in exactly the way a dividend makes it dearer.
-- **Dividends treated as a steady yield.** A single known cash dividend gives the same forward; the yield is then just the equivalent steady rate ([known-cash-dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md)).
+- **Dividends treated as a steady yield.** A single known cash dividend gives the same forward; the yield is then just the equivalent steady rate ([Known cash dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md)).
 
 ---
 
@@ -162,7 +143,7 @@ Nudge the put up by a small amount. The forward falls by that amount times $e^{r
 
 </details>
 
-The alternative road is to skip the formulas and hunt: guess a yield, compute $S\,e^{-qT} - K\,e^{-rT}$, compare with $C - P$, and adjust. That is a root finder, and the code runs one as its second road. It lands on the same 2.00%, as it must, since the equation has one root. It is the method a desk falls back on when dividends come as a list of cash amounts on dates and no clean logarithm exists; the root-finding machinery itself is on [implied-volatility-by-newton-and-bisection](02-implied-volatility-by-newton-and-bisection.md).
+The alternative road is to skip the formulas and hunt: guess a yield, compute $S\,e^{-qT} - K\,e^{-rT}$, compare with $C - P$, and adjust. That is a root finder, and the code runs one as its second road. It lands on the same 2.00%, as it must, since the equation has one root. It is the method a desk falls back on when dividends come as a list of cash amounts on dates and no clean logarithm exists; the root-finding machinery itself is on [Solving for implied volatility](02-implied-volatility-by-newton-and-bisection.md).
 
 ---
 
@@ -642,11 +623,11 @@ The two outputs are identical line for line.
 ## Where you meet it in real life
 
 - **Index option desks.** Before any implied volatility is computed, the forward is read off the call-put pair at the strike where the two prices are closest. Cboe's methodology for its volatility index writes the rule exactly as this card does. **Conventions verified 24 Sep 2026:** SPX options on the S&P 500 are European-exercise and cash-settled, so the equality holds as written.
-- **Implied volatility, call and put agreeing.** For a European pair at one strike, the call and the put must give the same implied volatility once the forward is right. When they disagree, the forward or the dividend fed in is wrong, not the volatility: [implied-volatility](01-implied-volatility.md).
-- **The other inverses on this shelf.** [strike-from-delta](03-strike-from-delta.md) and [strike-or-spot-from-a-target-premium](04-strike-or-spot-from-a-target-premium.md) take the forward as given; this card is where it comes from.
+- **Implied volatility, call and put agreeing.** For a European pair at one strike, the call and the put must give the same implied volatility once the forward is right. When they disagree, the forward or the dividend fed in is wrong, not the volatility: [Implied volatility](01-implied-volatility.md).
+- **The other inverses on this shelf.** [Strike from delta](03-strike-from-delta.md) and [Strike or spot from a target premium](04-strike-or-spot-from-a-target-premium.md) take the forward as given; this card is where it comes from.
 - **Dividend trading.** The yield implied by index options is the market's price for the coming years' dividends. Researchers have recovered the value of those near-term dividends from S&P 500 option prices this way, and compared it with what was then paid.
 - **Hard-to-borrow shares.** When a share is expensive to borrow, its implied yield rises above its dividend by about the borrowing fee. Desks watch the gap as a live reading of that fee.
-- **Currencies.** For a currency option the dividend slot holds the foreign interest rate, so the same algebra reads that rate off option prices: [garman-kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md).
+- **Currencies.** For a currency option the dividend slot holds the foreign interest rate, so the same algebra reads that rate off option prices: [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md).
 
 > **Say it back**
 > A call bought and a put sold at one strike make a forward, so the call's price minus the put's is the forward's value today, $D(F - K)$. Carry the gap forward and add the strike: $F = K + (C - P)e^{rT}$, $103.05 on the house quotes. The forward over the share, logged and divided by the time, is the rate minus the yield, so the yield is 5.00% − 3.00% = 2.00%. Two strikes give the rate as well, because the forward cancels between them and leaves a certain payment. Each step is a straight line or a steady climb, so the answer is unique, and its weak points are short expiries, close strikes, stale legs and crossed quotes.
@@ -655,14 +636,14 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): the equation this card runs backwards, and the proof that no model of the share enters it.
-- [implied-volatility](01-implied-volatility.md): the shelf's first inverse, and the reason a desk wants the forward before it wants anything else.
-- [forward-price-by-cash-and-carry](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md): $F = S\,e^{(r-q)T}$, the link from the forward to the yield in Step 3.
+- [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): the equation this card runs backwards, and the proof that no model of the share enters it.
+- [Implied volatility](01-implied-volatility.md): the shelf's first inverse, and the reason a desk wants the forward before it wants anything else.
+- [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md): $F = S\,e^{(r-q)T}$, the link from the forward to the yield in Step 3.
 
 ## Where this goes next
 
-- [vix-index](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/06-vix-index.md): the volatility index, which reads its forward off the call-put pair by exactly this rule before anything else.
-- [volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): implied volatility read at every strike, each priced off the forward this card recovers.
+- [The VIX](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/06-vix-index.md): the volatility index, which reads its forward off the call-put pair by exactly this rule before anything else.
+- [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): implied volatility read at every strike, each priced off the forward this card recovers.
 
 The carry is now read from the market, but it arrives as one number for rate less dividend less borrowing fee, and telling those three apart is a question that parity alone cannot answer.
 

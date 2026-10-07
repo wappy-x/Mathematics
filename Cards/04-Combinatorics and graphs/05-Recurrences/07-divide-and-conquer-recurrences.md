@@ -1,30 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Recurrences
-topic: Splitting the job
-item: Divide-and-conquer recurrences
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/01-recurrences-and-fibonacci|recurrences-and-fibonacci]]"
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/02-finite-differences-and-telescoping-sums|finite-differences-and-telescoping-sums]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/05-logarithms|logarithms]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/06-log-laws-and-log-scales|log-laws-and-log-scales]]"
-next:
-  - "[[Cards/14-Applied and computational/01-Algorithms and Growth/04-recurrences-and-the-master-theorem|recurrences-and-the-master-theorem]]"
-  - "[[Cards/16-Numerical analysis/07-PDE Solvers/09-the-fast-fourier-transform|the-fast-fourier-transform]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - recurrences
-  - divide-and-conquer-recurrences
----
-
 # Divide-and-conquer recurrences: split the job in half, and the master theorem reads off the total work
 
-Combinatorics and graphs → Recurrences → Splitting the job → Divide-and-conquer recurrences
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Recurrences](../../../SYLLABUS.md#w04-s05) → Divide-and-conquer recurrences
 
 ---
 
@@ -69,7 +45,7 @@ $$T(n) = a\,T(n/b) + f(n)$$
 
 **Read it aloud:** the cost on n items is the cost of a smaller copies of size n divided by b, plus the splitting and joining here.
 
-Splitting stops after $k$ levels, $k$ being the number of divisions by b needed to reach 1 — the logarithm of n to base b ([logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)). By then the job is in $a^k$ pieces, which a log law rewrites as a power of n ([log-laws-and-log-scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md)):
+Splitting stops after $k$ levels, $k$ being the number of divisions by b needed to reach 1 — the logarithm of n to base b ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)). By then the job is in $a^k$ pieces, which a log law rewrites as a power of n ([Log laws and log scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md)):
 
 $$a^{\log_b n} = n^{\log_b a}$$
 
@@ -139,7 +115,7 @@ The bottom level alone does a third of the tree's work.
 
 ### Step 3: add the levels, which is a geometric sum
 
-Level costs that are each a fixed multiple of the one before make a geometric sum, which collapses by telescoping ([finite-differences-and-telescoping-sums](02-finite-differences-and-telescoping-sums.md)). Multiplier 1: flat levels, total one level times the level count. Above 1: the last term swamps the rest, so the bottom is the answer. Below 1: the sum never passes a fixed multiple of its first term, so the top is. Three cases, and nothing else.
+Level costs that are each a fixed multiple of the one before make a geometric sum, which collapses by telescoping ([Finite differences](02-finite-differences-and-telescoping-sums.md)). Multiplier 1: flat levels, total one level times the level count. Above 1: the last term swamps the rest, so the bottom is the answer. Below 1: the sum never passes a fixed multiple of its first term, so the top is. Three cases, and nothing else.
 
 <details>
 <summary>Detailed proof: the exact-power case</summary>
@@ -166,7 +142,7 @@ Multiply the bracket by $r - 1$ and all cancels but two terms, so the bracket is
 | T(n) = 3 T(n/2) + n | 1,024 | 39,366 | **116,050** |
 | T(n) = 2 T(n/2) + n^2 | 1,048,576 | 2,048 | **2,095,104** |
 
-Flat, growing, shrinking: one deck, totals two hundred times apart. A second route reaches the same place — substituting $n = b^m$ turns a halving rule into one stepping down by one, which first-order methods solve outright ([first-order-recurrences-and-loans](03-first-order-recurrences-and-loans.md)), driving terms and all ([nonhomogeneous-recurrences](05-nonhomogeneous-recurrences.md)).
+Flat, growing, shrinking: one deck, totals two hundred times apart. A second route reaches the same place — substituting $n = b^m$ turns a halving rule into one stepping down by one, which first-order methods solve outright ([First-order recurrences](03-first-order-recurrences-and-loans.md)), driving terms and all ([Recurrences with a driving term](05-nonhomogeneous-recurrences.md)).
 
 ---
 
@@ -418,7 +394,7 @@ The two outputs match line for line.
 
 - **Sorting.** Every library sort that merges runs on the flat case: double the rows and the work roughly doubles, where comparing every pair would quadruple it.
 - **Multiplying long numbers.** Karatsuba's method uses three half-length multiplications where the schoolbook method uses four: T(n) = 3 T(n/2) + n. The bottom wins, at a watershed of 1.584963.
-- **Signal processing.** The fast Fourier transform splits a sequence in two and combines in one pass: the flat case (the-fast-fourier-transform).
+- **Signal processing.** The fast Fourier transform splits a sequence in two and combines in one pass: the flat case (The fast Fourier transform).
 
 > **Say it back**
 > A procedure calling itself on smaller copies obeys T(n) = a T(n/b) + f(n): a pieces, each b times smaller, plus cutting up and joining. Add the tree up level by level: each level costs a fixed multiple of the one above, so the levels are flat, growing downwards, or shrinking downwards. Flat means one level times the level count, growing means the bottom is the answer, shrinking means the top. On 1,024 cards: 10,240, 116,050, 2,095,104.
@@ -427,15 +403,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [recurrences-and-fibonacci](01-recurrences-and-fibonacci.md): rules that define a quantity from smaller ones.
-- [finite-differences-and-telescoping-sums](02-finite-differences-and-telescoping-sums.md): the collapse turning ten level costs into a closed form.
-- [logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): why ten halvings take 1,024 to 1.
-- [log-laws-and-log-scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md): the law that rewrites the piece count as a power of n.
+- [Recurrences](01-recurrences-and-fibonacci.md): rules that define a quantity from smaller ones.
+- [Finite differences](02-finite-differences-and-telescoping-sums.md): the collapse turning ten level costs into a closed form.
+- [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): why ten halvings take 1,024 to 1.
+- [Log laws and log scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md): the law that rewrites the piece count as a power of n.
 
 ## Where this goes next
 
-- recurrences-and-the-master-theorem: the working statement, rounding and shrinking-join condition included.
-- the-fast-fourier-transform: the flat case carrying a workhorse of engineering.
+- Recurrences: the working statement, rounding and shrinking-join condition included.
+- The fast Fourier transform: the flat case carrying a workhorse of engineering.
 
 The three cases cover the powers and nothing between them, so a joining cost of n times a logarithm has no answer here; supplying one is a later card's first job.
 

@@ -1,28 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Several Variables
-topic: Curvature of a design surface
-item: Hessian
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/04-multivariable-chain-rule-and-jacobians|multivariable-chain-rule-and-jacobians]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/05-quadratic-forms-and-positive-definite|quadratic-forms-and-positive-definite]]"
-next:
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/06-multivariable-extrema|multivariable-extrema]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/09-convex-functions|convex-functions]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/08-exact-equations|exact-equations]]"
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/02-linearisation-about-an-equilibrium|linearisation-about-an-equilibrium]]"
-  - "[[Cards/15-Optimization/02-Unconstrained Methods/01-optimality-conditions|optimality-conditions]]"
-  - "[[Cards/23-Differential geometry and Lie groups/07-Geometric Analysis and Physics/06-riemannian-hessian-and-trust-regions|riemannian-hessian-and-trust-regions]]"
-tags: [mathematics, calculus and analysis, hessian-and-second-order-approximation]
----
-
 # Hessian: the matrix of second derivatives and the quadratic model it gives
 
-Calculus and analysis → Several Variables → Curvature of a design surface → Hessian
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Several Variables](../../../SYLLABUS.md#w06-s07) → Hessian
 
 ---
 
@@ -61,7 +39,7 @@ Notation first, in words. Heat loss Q, in watts, depends on insulation t in cm a
 
 $$Q(t,A)=20\left(\frac{100-A}{0.5+t/4}+2.8\,A\right)$$
 
-A partial derivative is the rate of change in one input with the other held fixed ([partial-derivatives](01-partial-derivatives.md)). Here it is a subscript: $Q_t$ is the rate of Q per cm of insulation. Two subscripts mean differentiate twice, left letter first: $Q_{tA}$ is the rate at which $Q_t$ changes per square metre of glass. The gradient $\nabla Q=(Q_t,Q_A)$ lists the two slopes ([gradient-and-directional-derivatives](03-gradient-and-directional-derivatives.md)).
+A partial derivative is the rate of change in one input with the other held fixed ([Partial derivatives](01-partial-derivatives.md)). Here it is a subscript: $Q_t$ is the rate of Q per cm of insulation. Two subscripts mean differentiate twice, left letter first: $Q_{tA}$ is the rate at which $Q_t$ changes per square metre of glass. The gradient $\nabla Q=(Q_t,Q_A)$ lists the two slopes ([Gradient](03-gradient-and-directional-derivatives.md)).
 
 The **Hessian** at the design p is the table of second partial derivatives:
 
@@ -86,7 +64,7 @@ $$\tfrac12\,h^{\mathsf T} H h=\tfrac12 Q_{tt}\,h_t^2+Q_{tA}\,h_t h_A+\tfrac12 Q_
 | $T_1$, $T_2$, $R_2$ | tangent plane; quadratic model; what it misses | 1707.556; 1712.370; −0.370 W | — |
 | $\varphi$, $s$, $\theta$, $\xi$ | Q along the path p + s h; how far along; points in (0, 1) where a derivative is read | s = 1: new design | — |
 
-The transpose $h^{\mathsf T}$ lays the step on its side so it can multiply the table from the left; $h^{\mathsf T} H h$ is the table's quadratic form ([quadratic-forms-and-positive-definite](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)). Each term comes out in watts.
+The transpose $h^{\mathsf T}$ lays the step on its side so it can multiply the table from the left; $h^{\mathsf T} H h$ is the table's quadratic form ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)). Each term comes out in watts.
 
 ### When it holds
 
@@ -101,11 +79,11 @@ The transpose $h^{\mathsf T}$ lays the step on its side so it can multiply the t
 
 ### Step 0: a straight path turns two inputs into one
 
-Walk in a straight line from the current design to the new one: at fraction s of the way the design is p + s h. Heat loss along the walk, $\varphi(s)=Q(p+s h)$, is a function of one number, so one-variable Taylor ([taylors-theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)) applies. The Hessian is what its second derivative turns out to be.
+Walk in a straight line from the current design to the new one: at fraction s of the way the design is p + s h. Heat loss along the walk, $\varphi(s)=Q(p+s h)$, is a function of one number, so one-variable Taylor ([Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)) applies. The Hessian is what its second derivative turns out to be.
 
 ### Step 1: the path's slope is the gradient, its bend the Hessian
 
-By the chain rule in several variables ([multivariable-chain-rule-and-jacobians](04-multivariable-chain-rule-and-jacobians.md)), $\varphi'(s)=Q_t h_t+Q_A h_A$. Apply it again to each slope:
+By the chain rule in several variables ([Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md)), $\varphi'(s)=Q_t h_t+Q_A h_A$. Apply it again to each slope:
 
 $$\varphi''(s)=Q_{tt}h_t^2+Q_{tA}h_t h_A+Q_{At}h_A h_t+Q_{AA}h_A^2=h^{\mathsf T} H\,h$$
 
@@ -117,7 +95,7 @@ Take the rectangle from the design to 1 cm more insulation and 2 square metres m
 
 Divided by the area, 1 × 2, it is 0.5128. Shrink the rectangle tenfold: 0.5510. Again: 0.5551. The target is 0.5556; to land within 0.001 of it, 0.01 cm by 0.02 square metres is small enough.
 
-The mean value theorem ([mean-value-theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)) turns one reading into $Q_{tA}$ at some point of the rectangle and the other into $Q_{At}$ at another point, equal in value. As the rectangle shrinks both points close on p, so continuity there makes the values at p agree. So H is symmetric, and Step 1's two cross terms merge into $2Q_{tA}h_t h_A$.
+The mean value theorem ([Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)) turns one reading into $Q_{tA}$ at some point of the rectangle and the other into $Q_{At}$ at another point, equal in value. As the rectangle shrinks both points close on p, so continuity there makes the values at p agree. So H is symmetric, and Step 1's two cross terms merge into $2Q_{tA}h_t h_A$.
 
 <details>
 <summary>Detailed proof: mixed partials agree</summary>
@@ -158,7 +136,7 @@ Along the path $t=10+s$ and $A=20+2s$, so $u=3+s/4$ and $100-A=104-8u$. Then $\v
 
 Scaling the step by s scales that remainder by about $s^3$. At s = 1, 0.5, 0.25 the quadratic misses by 0.3704, 0.0481, 0.0061 W and the plane by 4.4444, 1.1556, 0.2948 W: ratios 7.69, 7.84 and 3.85, 3.92, closing on 8 and 4.
 
-A second route builds H from second differences of Q alone; the code takes it, and [numerical-derivatives-and-sensitivity](../03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md) sizes the step.
+A second route builds H from second differences of Q alone; the code takes it, and [Numerical derivatives](../03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md) sizes the step.
 
 ---
 
@@ -398,15 +376,15 @@ ALL CHECKS PASS
 > **Expecting the cube law from continuity alone.** Continuous second derivatives promise only an error shrinking faster than the step squared. Dividing by 8 per halving needs bounded third derivatives; here they give the window −0.4012 to −0.2913.
 >
 > - **Keeping only the diagonal.** The mixed term appears twice in $h^{\mathsf T} H h$; dropping it gives 1711.259 W.
-> - **Calling every Hessian a bowl.** Here $Q_{AA}=0$ and the quadratic form takes both signs; the shapes are sorted in [multivariable-extrema](06-multivariable-extrema.md).
+> - **Calling every Hessian a bowl.** Here $Q_{AA}=0$ and the quadratic form takes both signs; the shapes are sorted in [Extrema in several variables](06-multivariable-extrema.md).
 
 ---
 
 ## Where you meet it in real life
 
 - **Building design.** The mixed entry is why the best window area depends on the wall.
-- **Numerical optimisation.** Newton's method jumps to the quadratic model's lowest point, then rebuilds it (optimality-conditions).
-- **Bonds.** Price against two interest rates uses this model; one rate is [duration-and-convexity](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md).
+- **Numerical optimisation.** Newton's method jumps to the quadratic model's lowest point, then rebuilds it (Optimality conditions).
+- **Bonds.** Price against two interest rates uses this model; one rate is [Duration and convexity](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md).
 
 > **Say it back**
 > The Hessian is the table of second partial derivatives: how each slope changes as each input moves. Continuous mixed partials make the order irrelevant, so the table is symmetric. Along a straight line the bend is step, table, step. One-variable Taylor along that line gives the model: value, plus gradient times step, plus half the quadratic form. Its error shrinks faster than the step squared, and like its cube when third derivatives are bounded.
@@ -415,17 +393,17 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [multivariable-chain-rule-and-jacobians](04-multivariable-chain-rule-and-jacobians.md): the rate along a path, used twice in Step 1.
-- [quadratic-forms-and-positive-definite](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md): what $h^{\mathsf T} H h$ is.
+- [Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md): the rate along a path, used twice in Step 1.
+- [Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md): what $h^{\mathsf T} H h$ is.
 
 ## Where this goes next
 
-- [multivariable-extrema](06-multivariable-extrema.md): at a flat point the Hessian sorts peak, pit and saddle.
-- [convex-functions](09-convex-functions.md): a Hessian form never negative means a bowl.
-- [exact-equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/08-exact-equations.md): equal mixed partials test exactness.
-- linearisation-about-an-equilibrium: the expansion cut after one term, for moving systems.
-- optimality-conditions: tests for a best design.
-- riemannian-hessian-and-trust-regions: the Hessian on curved spaces.
+- [Extrema in several variables](06-multivariable-extrema.md): at a flat point the Hessian sorts peak, pit and saddle.
+- [Convex functions](09-convex-functions.md): a Hessian form never negative means a bowl.
+- [Exact equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/08-exact-equations.md): equal mixed partials test exactness.
+- Linearisation: the expansion cut after one term, for moving systems.
+- Optimality conditions: tests for a best design.
+- Riemannian Hessian: the Hessian on curved spaces.
 
 ---
 

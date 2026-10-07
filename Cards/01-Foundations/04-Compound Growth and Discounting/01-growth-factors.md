@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Compound Growth and Discounting
-topic: Percent changes
-item: Growth factors
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/10-percentages|percentages]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/05-arithmetic-laws|arithmetic-laws]]"
-next:
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/02-simple-interest|simple-interest]]"
-tags:
-  - mathematics
-  - foundations
-  - growth-factors
----
-
 # Growth factors: a 25% rise is a multiply by 1.25, and percent changes do not add
 
-Foundations → Compound Growth and Discounting → Percent changes → Growth factors
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Compound Growth and Discounting](../../../SYLLABUS.md#w01-s04) → Growth factors
 
 ---
 
@@ -51,7 +31,7 @@ Up 25 then down 25 lands below the start. The second jacket starts at $80.00 too
 
 ## The formula
 
-Write the percent as a decimal — 25% is 0.25 ([percentages](../01-Everyday%20Arithmetic/10-percentages.md)) — then build the multiplier around 1:
+Write the percent as a decimal — 25% is 0.25 ([Percentages](../01-Everyday%20Arithmetic/10-percentages.md)) — then build the multiplier around 1:
 
 **a 25% rise: 1 + 0.25 = 1.25, and $80.00 × 1.25 = $100.00**
 
@@ -82,7 +62,7 @@ Whatever the price is, all of it is 1 — one whole price, 100%. A 25% rise want
 
 ### Step 1: one multiply, not two moves
 
-The long way up: 25% of $80.00 is $20.00, add it on, $100.00. The factor way: 80.00 × 1.25. Both amounts are shares of the same $80.00, so they gather into one multiply: 80.00 + 20.00 = (80.00 × 1) + (80.00 × 0.25) = 80.00 × 1.25 ([arithmetic-laws](../01-Everyday%20Arithmetic/05-arithmetic-laws.md)).
+The long way up: 25% of $80.00 is $20.00, add it on, $100.00. The factor way: 80.00 × 1.25. Both amounts are shares of the same $80.00, so they gather into one multiply: 80.00 + 20.00 = (80.00 × 1) + (80.00 × 0.25) = 80.00 × 1.25 ([The three rearranging laws](../01-Everyday%20Arithmetic/05-arithmetic-laws.md)).
 
 ### Step 2: the second factor works on what the first left
 
@@ -100,7 +80,7 @@ To undo a multiply, divide. 1 ÷ 1.25 = 0.80, a 20% cut: 100.00 × 0.80 = $80.00
 
 The second jacket, also $80.00: halved to $40.00, then up 50%, 40.00 × 1.50 = $60.00. As factors, 0.50 × 1.50 = 0.75, a 25% cut. Half off then half on loses a quarter, whatever the price.
 
-The same factor over and over — 1.05 a year on a savings account — is compound interest: [compound-interest](03-compound-interest.md). [simple-interest](02-simple-interest.md) is the flat version that does add.
+The same factor over and over — 1.05 a year on a savings account — is compound interest: [Compound interest](03-compound-interest.md). [Simple interest](02-simple-interest.md) is the flat version that does add.
 
 ---
 
@@ -272,8 +252,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Stacked sale tags.** "Extra 30% off marked-down prices" multiplies the factors; percents never add ([percentages](../01-Everyday%20Arithmetic/10-percentages.md)).
-- **A savings account.** 5% a year is a multiply by 1.05, for as long as the money sits: [simple-interest](02-simple-interest.md), then [compound-interest](03-compound-interest.md).
+- **Stacked sale tags.** "Extra 30% off marked-down prices" multiplies the factors; percents never add ([Percentages](../01-Everyday%20Arithmetic/10-percentages.md)).
+- **A savings account.** 5% a year is a multiply by 1.05, for as long as the money sits: [Simple interest](02-simple-interest.md), then [Compound interest](03-compound-interest.md).
 - **A fund that drops and recovers.** Down 50% needs a 100% rise to get level, which is why a bad year hurts longer than it looks.
 
 > **Say it back**
@@ -283,14 +263,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [percentages](../01-Everyday%20Arithmetic/10-percentages.md): reading a percent as hundredths, and taking a percent of an amount. This card packs that into one multiplier.
-- [arithmetic-laws](../01-Everyday%20Arithmetic/05-arithmetic-laws.md): gathering a sum into one multiply, the move behind Step 1.
+- [Percentages](../01-Everyday%20Arithmetic/10-percentages.md): reading a percent as hundredths, and taking a percent of an amount. This card packs that into one multiplier.
+- [The three rearranging laws](../01-Everyday%20Arithmetic/05-arithmetic-laws.md): gathering a sum into one multiply, the move behind Step 1.
 
 ## Where this goes next
 
-- [simple-interest](02-simple-interest.md): the same rate on the starting amount every year, adding in a straight line instead of multiplying.
-- [compound-interest](03-compound-interest.md): one growth factor applied over and over, where this chaining bends upward.
-- Then [compounding-frequency-and-e](04-compounding-frequency-and-e.md) splits a year's factor into pieces, [natural-log-and-doubling-time](05-natural-log-and-doubling-time.md) counts how many double the money, and [discounting-and-present-value](06-discounting-and-present-value.md) runs one backwards.
+- [Simple interest](02-simple-interest.md): the same rate on the starting amount every year, adding in a straight line instead of multiplying.
+- [Compound interest](03-compound-interest.md): one growth factor applied over and over, where this chaining bends upward.
+- Then [Compounding more often, and the number e](04-compounding-frequency-and-e.md) splits a year's factor into pieces, [Natural log and doubling time](05-natural-log-and-doubling-time.md) counts how many double the money, and [Discounting](06-discounting-and-present-value.md) runs one backwards.
 
 ---
 

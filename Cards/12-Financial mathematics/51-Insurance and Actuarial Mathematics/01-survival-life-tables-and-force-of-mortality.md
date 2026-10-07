@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Insurance and Actuarial Mathematics
-topic: Mortality by age
-item: Life tables
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/02-hazard-rate-and-survival-probability|hazard-rate-and-survival-probability]]"
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/01-survival-functions-and-hazards|survival-functions-and-hazards]]"
-next:
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/02-life-annuities-and-insurance-values|life-annuities-and-insurance-values]]"
-tags: [mathematics, financial mathematics, survival-life-tables-and-force-of-mortality]
----
-
 # Life tables: survival by age, and the force of mortality that is a hazard rate by another name
 
-Financial mathematics → Insurance and Actuarial Mathematics → Mortality by age → Life tables
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Insurance and Actuarial Mathematics](../../../SYLLABUS.md#w12-s51) → Life tables
 
 ---
 
@@ -27,7 +10,7 @@ A life office sells pensions that start at 65. Today it holds 10,000 policies on
 
 On the mortality basis used on this card, the expected answer is 9,520.98 of them, a chance of 0.9521 for each person. The number comes from a **life table**: a column of ages, and next to each age the number still alive out of a starting group. Divide the count at 65 by the count at 40 and the chance falls out.
 
-Behind every life table sits a rate. At age 40 the death rate among those alive, measured at an instant, runs at about 0.05% a year. By 65 it is 11 times that; by 90 it is 10% a year. Credit markets call that rate a **hazard rate** ([hazard-rate-and-survival-probability](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)). Actuaries met it first, in the 1820s, and call it the **force of mortality**. Benjamin Gompertz noticed that it climbs by a roughly fixed percentage for each year of age. That observation turns a table of a hundred numbers into a formula with two or three.
+Behind every life table sits a rate. At age 40 the death rate among those alive, measured at an instant, runs at about 0.05% a year. By 65 it is 11 times that; by 90 it is 10% a year. Credit markets call that rate a **hazard rate** ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)). Actuaries met it first, in the 1820s, and call it the **force of mortality**. Benjamin Gompertz noticed that it climbs by a roughly fixed percentage for each year of age. That observation turns a table of a hundred numbers into a formula with two or three.
 
 The card reads a life table, turns it into survival chances and life expectancy, links it to the force of mortality, and fits Gompertz's law to it.
 
@@ -113,7 +96,7 @@ The mortality basis is the Standard Ultimate Survival Model from Dickson, Hardy 
 
 ### Step 0: reaching 65 is 25 birthdays in a row
 
-Nobody reaches 65 without first reaching 41, then 42, and so on. Each birthday is a hurdle cleared by the people who cleared the one before. So the chance of clearing all 25 is the product of 25 conditional chances: each one counted only among those still in the race ([survival-functions-and-hazards](../../09-Probability%20and%20statistics/13-Survival%2C%20Design%20and%20Causality/01-survival-functions-and-hazards.md)). No independence between years is assumed; the chaining comes from the conditioning.
+Nobody reaches 65 without first reaching 41, then 42, and so on. Each birthday is a hurdle cleared by the people who cleared the one before. So the chance of clearing all 25 is the product of 25 conditional chances: each one counted only among those still in the race ([Survival](../../09-Probability%20and%20statistics/13-Survival%2C%20Design%20and%20Causality/01-survival-functions-and-hazards.md)). No independence between years is assumed; the chaining comes from the conditioning.
 
 ### Step 1: the table is that product, written as counts
 
@@ -628,7 +611,7 @@ all checks passed
 ## The usual mistake
 
 > [!warning]
-> **Reading life expectancy as the age people die.** A complete expectation of 46.28 at 40 means the average age at death for this group is 86.28. Most deaths do not happen there: the busiest band is 90 to 94, and deaths spread from the 40s to past 105. A pension paid from 65 lasts well beyond the average for some and not at all for others; pricing it by the average lifetime misprices it (see [life-annuities-and-insurance-values](02-life-annuities-and-insurance-values.md)).
+> **Reading life expectancy as the age people die.** A complete expectation of 46.28 at 40 means the average age at death for this group is 86.28. Most deaths do not happen there: the busiest band is 90 to 94, and deaths spread from the 40s to past 105. A pension paid from 65 lasts well beyond the average for some and not at all for others; pricing it by the average lifetime misprices it (see [Life annuities and insurance](02-life-annuities-and-insurance-values.md)).
 >
 > Smaller traps:
 > - **Adding the q's.** One minus the sum of the yearly death chances from 40 to 89 gives 0.156461; the right survival is 0.421198. Multiply survival chances, never add death chances.
@@ -640,8 +623,8 @@ all checks passed
 
 ## Where you meet it in real life
 
-- **Pensions and annuities.** Every payment a pension makes at age 65 + k is weighted by ${}_{25+k}p_{40}$ before it is discounted. [life-annuities-and-insurance-values](02-life-annuities-and-insurance-values.md) builds those values.
-- **Life insurance premiums and reserves.** Term insurance pays on death, so it uses the deaths column; the premium and the money held back for later years come from the same table: [premiums-and-reserves](03-premiums-and-reserves.md).
+- **Pensions and annuities.** Every payment a pension makes at age 65 + k is weighted by ${}_{25+k}p_{40}$ before it is discounted. [Life annuities and insurance](02-life-annuities-and-insurance-values.md) builds those values.
+- **Life insurance premiums and reserves.** Term insurance pays on death, so it uses the deaths column; the premium and the money held back for later years come from the same table: [Premiums and reserves](03-premiums-and-reserves.md).
 - **National statistics.** Official offices, such as the US National Center for Health Statistics, publish annual period life tables with exactly these columns: q_x, l_x, d_x and life expectancy.
 - **Longevity risk.** Pension funds and insurers watch the force of mortality fall year by year. A few percent less mortality at every age adds months of pension to every member.
 - **Credit.** The same mathematics, with default in place of death: a bond's survival curve is built from a hazard rate exactly as the table is built from the force of mortality.
@@ -654,12 +637,12 @@ all checks passed
 
 ## What this builds on
 
-- [hazard-rate-and-survival-probability](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): the hazard rate and the proof that survival is e to the minus its area. The force of mortality is that hazard with death in place of default.
-- [survival-functions-and-hazards](../../09-Probability%20and%20statistics/13-Survival%2C%20Design%20and%20Causality/01-survival-functions-and-hazards.md): survival functions, conditional survival and the density-hazard link in general, from which the life table is one discrete case.
+- [The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): the hazard rate and the proof that survival is e to the minus its area. The force of mortality is that hazard with death in place of default.
+- [Survival](../../09-Probability%20and%20statistics/13-Survival%2C%20Design%20and%20Causality/01-survival-functions-and-hazards.md): survival functions, conditional survival and the density-hazard link in general, from which the life table is one discrete case.
 
 ## Where this goes next
 
-- [life-annuities-and-insurance-values](02-life-annuities-and-insurance-values.md): combines the survival chances ${}_tp_x$ with discounting to value a pension or a life policy today.
+- [Life annuities and insurance](02-life-annuities-and-insurance-values.md): combines the survival chances ${}_tp_x$ with discounting to value a pension or a life policy today.
 
 The table says who will be alive to be paid; it does not say what a promise to pay them is worth today, and that is the question the annuity and insurance values answer.
 

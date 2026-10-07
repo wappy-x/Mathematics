@@ -1,34 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: American and Bermudan exercise
-topic: Where to stop waiting
-item: The exercise boundary and smooth pasting
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/03-bermudan-options|bermudan-options]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/07-black-scholes-equation|black-scholes-equation]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/07-finite-differences-for-the-black-scholes-equation|finite-differences-for-the-black-scholes-equation]]"
-next:
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/05-perpetual-american-put|perpetual-american-put]]"
-  - "[[Cards/19-Partial differential equations/06-Weak Solutions and Free Boundaries/09-american-options-as-a-free-boundary-problem|american-options-as-a-free-boundary-problem]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - exercise-boundary-and-smooth-pasting
----
-
 # The exercise boundary and smooth pasting: where to stop waiting, pinned by matching height and slope
 
-Financial mathematics → American and Bermudan exercise → Where to stop waiting → The exercise boundary and smooth pasting
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [American and Bermudan exercise](../../../SYLLABUS.md#w12-s15) → The exercise boundary and smooth pasting
 
 ---
 
 ## General Overview
 
-Acme trades at $100. A put on Acme gives the right to sell one share for $100, the **strike**, at any moment in the next year. Cash earns 5 percent a year, Acme pays a 2 percent dividend yield, and its volatility (the yearly spread of its log-returns) is 20 percent. Because the holder may exercise on any day, this is an **American** put, and it is worth $6.66 against $6.33 for the European twin that may only be used on the last day ([american-options-and-early-exercise](01-american-options-and-early-exercise.md)).
+Acme trades at $100. A put on Acme gives the right to sell one share for $100, the **strike**, at any moment in the next year. Cash earns 5 percent a year, Acme pays a 2 percent dividend yield, and its volatility (the yearly spread of its log-returns) is 20 percent. Because the holder may exercise on any day, this is an **American** put, and it is worth $6.66 against $6.33 for the European twin that may only be used on the last day ([American options](01-american-options-and-early-exercise.md)).
 
 Every morning the holder faces one question: take the $100 now, or wait? The answer is a price line. Today it sits at $77.85. If Acme is at or below it, exercise; above it, wait. With nine months left the line is at $79.42; with three months left, $85.05; on the last day it reaches the strike, $100. That moving line is the **exercise boundary**.
 
@@ -88,7 +66,7 @@ The first line is the Black–Scholes equation written in years left, so $\parti
 ### When it holds
 
 - **Acme moves without jumps.** Smooth pasting needs a path that, started just above the line, crosses it at once. If the price can gap down past the line, the value can meet the payoff at a genuine corner, and only value matching survives.
-- **Exercise is allowed at every instant.** A Bermudan put, exercisable on listed dates only, has a boundary on each date but no slope condition: the value there is the larger of two curves and carries a kink ([bermudan-options](03-bermudan-options.md)).
+- **Exercise is allowed at every instant.** A Bermudan put, exercisable on listed dates only, has a boundary on each date but no slope condition: the value there is the larger of two curves and carries a kink ([Bermudan options](03-bermudan-options.md)).
 - **The rate exceeds the dividend yield.** Then the line starts at the strike, $B(0) = K$. If the dividend yield were higher, exercising just before expiry would cost more in dividends than it earns in interest, and the line would start lower, at $rK/q$.
 - **The payoff has a slope at the line.** A put's payoff is a straight line there. A payoff with its own kink at the boundary, such as a digital, breaks the slope condition.
 
@@ -148,7 +126,7 @@ Write $L$ for the pricing operator: $\partial V/\partial \tau$ minus the right-h
 
 $$LV \ge 0, \qquad V - (K - S) \ge 0, \qquad LV \times \big(V - (K - S)\big) = 0.$$
 
-This is the **linear complementarity problem**: two inequalities, at each point at least one an equality. On a grid, $L$ becomes the tridiagonal matrix of the implicit finite-difference scheme ([finite-differences-for-the-black-scholes-equation](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md)), and each date asks for a vector meeting the three conditions node by node. Projected successive over-relaxation, PSOR, solves it: [american-options-by-psor-and-lcp](../06-Numerical%20Methods%20for%20Pricing/08-american-options-by-psor-and-lcp.md) teaches the solver. The boundary is read off afterwards as the highest node where the value sits on the payoff: $77.88 on this grid, within one node spacing of $77.85. The grid never hears of smooth pasting, and its delta table below shows the tangent anyway.
+This is the **linear complementarity problem**: two inequalities, at each point at least one an equality. On a grid, $L$ becomes the tridiagonal matrix of the implicit finite-difference scheme ([Pricing on a grid](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md)), and each date asks for a vector meeting the three conditions node by node. Projected successive over-relaxation, PSOR, solves it: [American options on a grid](../06-Numerical%20Methods%20for%20Pricing/08-american-options-by-psor-and-lcp.md) teaches the solver. The boundary is read off afterwards as the highest node where the value sits on the payoff: $77.88 on this grid, within one node spacing of $77.85. The grid never hears of smooth pasting, and its delta table below shows the tangent anyway.
 
 ### The other door: an equation for the line alone
 
@@ -581,17 +559,17 @@ The two outputs agree line for line.
 > Three smaller traps:
 > - **Reading the tree's line as exact.** A tree exercises only at its nodes, 0.9% apart here: $85.13 at three months left against $85.05 from the integral equation. The price converges long before the line does.
 > - **Hedging with the European delta near the line.** It is −0.83 there, against −1: a sixth of a share short.
-> - **Pasting where it does not hold.** On a Bermudan exercise date, or in a model where the price can jump, the value can meet the payoff at a corner. And for a call on a share paying no dividend there is no finite line to paste on at all ([mertons-no-early-exercise-theorem](02-mertons-no-early-exercise-theorem.md)).
+> - **Pasting where it does not hold.** On a Bermudan exercise date, or in a model where the price can jump, the value can meet the payoff at a corner. And for a call on a share paying no dividend there is no finite line to paste on at all ([Merton's theorem](02-mertons-no-early-exercise-theorem.md)).
 
 ---
 
 ## Where you meet it in real life
 
 - **Exercise decisions.** Holders of deep in-the-money American puts compare the price with a boundary table like the one above: late costs carry, early throws away time value.
-- **Hedging near the line.** Delta reaches −1 on the boundary and gamma jumps there: [american-greeks-and-implied-volatility](07-american-greeks-and-implied-volatility.md).
-- **Fast approximations.** Barone-Adesi and Whaley impose value matching and smooth pasting on an approximate solution to find their line in microseconds: [barone-adesi-whaley-approximation](06-barone-adesi-whaley-approximation.md).
-- **The put that never expires.** With no clock, the two conditions solve in closed form and the line is a single number, $64.92 for the house market: [perpetual-american-put](05-perpetual-american-put.md).
-- **Grid pricers.** Every finite-difference engine for American contracts solves the complementarity form of Step 6 and reads the boundary off the answer: [american-options-by-psor-and-lcp](../06-Numerical%20Methods%20for%20Pricing/08-american-options-by-psor-and-lcp.md).
+- **Hedging near the line.** Delta reaches −1 on the boundary and gamma jumps there: [American Greeks and implied volatility](07-american-greeks-and-implied-volatility.md).
+- **Fast approximations.** Barone-Adesi and Whaley impose value matching and smooth pasting on an approximate solution to find their line in microseconds: [Barone-Adesi-Whaley](06-barone-adesi-whaley-approximation.md).
+- **The put that never expires.** With no clock, the two conditions solve in closed form and the line is a single number, $64.92 for the house market: [The perpetual American put](05-perpetual-american-put.md).
+- **Grid pricers.** Every finite-difference engine for American contracts solves the complementarity form of Step 6 and reads the boundary off the answer: [American options on a grid](../06-Numerical%20Methods%20for%20Pricing/08-american-options-by-psor-and-lcp.md).
 - **Real options and prepayment.** Building a plant, abandoning a mine, refinancing a mortgage: stop-or-wait problems whose trigger comes from the same two conditions.
 
 > **Say it back**
@@ -601,14 +579,14 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [bermudan-options](03-bermudan-options.md): a boundary on each listed date; this card lets the dates fill in until the line is continuous.
-- [black-scholes-equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md): the equation the put obeys wherever the holder waits.
-- [finite-differences-for-the-black-scholes-equation](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): the implicit grid that road 3 turns into a complementarity problem.
+- [Bermudan options](03-bermudan-options.md): a boundary on each listed date; this card lets the dates fill in until the line is continuous.
+- [The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md): the equation the put obeys wherever the holder waits.
+- [Pricing on a grid](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): the implicit grid that road 3 turns into a complementarity problem.
 
 ## Where this goes next
 
-- [perpetual-american-put](05-perpetual-american-put.md): take the clock away and the free-boundary problem solves exactly; smooth pasting becomes one line of algebra.
-- american-options-as-a-free-boundary-problem: the same problem as a variational inequality, with existence, uniqueness and the regularity that makes the tangent possible.
+- [The perpetual American put](05-perpetual-american-put.md): take the clock away and the free-boundary problem solves exactly; smooth pasting becomes one line of algebra.
+- An American option: the same problem as a variational inequality, with existence, uniqueness and the regularity that makes the tangent possible.
 
 This card finds the line numerically and proves it is tangent; what it leaves open is whether any American put has a line that can be written down exactly, and the perpetual put is the one case where it can.
 

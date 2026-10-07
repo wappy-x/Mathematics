@@ -1,24 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: The Lebesgue Integral
-topic: Tails from averages
-item: Markov and Chebyshev
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/06-expectation-as-an-integral|expectation-as-an-integral]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/08-markov-and-chebyshev-inequalities|markov-and-chebyshev-inequalities]]"
-next:
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/03-weak-law-of-large-numbers|weak-law-of-large-numbers]]"
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/02-lebesgue-differentiation-theorem|lebesgue-differentiation-theorem]]"
-tags: [mathematics, measure and integration, markov-and-chebyshev]
----
-
 # Markov and Chebyshev: an average caps how often a quantity is large, a variance caps how far it strays
 
-Measure and integration → The Lebesgue Integral → Tails from averages → Markov and Chebyshev
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Lebesgue Integral](../../../SYLLABUS.md#w10-s04) → Markov and Chebyshev
 
 ---
 
@@ -28,7 +10,7 @@ A river runs for 1 km between two bridges. Its depth at a point x km from the up
 
 How likely is the mooring to be deeper than 0.9 m? How likely is its depth to miss the average by more than half a metre, here meaning shallower than 1/6 m, where a keel drawing 1/6 m touches bottom? With the profile in hand the answers are 0.316 and 0.087. With only the average, the first has a guaranteed ceiling: 0.741. With the variance too (the average squared distance from the average), the second has one: 0.356.
 
-The probability wing proves both ceilings for a variable with a list of values or a density ([markov-and-chebyshev-inequalities](../../09-Probability%20and%20statistics/02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)). This card proves them for any measurable function against any measure: a profile with no formula, no density and no Riemann integral, or a river with no end. The proof uses only two properties of the integral.
+The probability wing proves both ceilings for a variable with a list of values or a density ([Markov and Chebyshev](../../09-Probability%20and%20statistics/02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)). This card proves them for any measurable function against any measure: a profile with no formula, no density and no Riemann integral, or a river with no end. The proof uses only two properties of the integral.
 
 **If a non-negative function has integral I, the set where it reaches at least a has measure at most I/a (Markov); applied to the squared distance from the mean, the same bound caps how far a quantity strays (Chebyshev); applied to an exponential, it gives the Chernoff bound.**
 
@@ -44,7 +26,7 @@ Drawn to scale, 300 units to the kilometre and 150 units to the metre. The curve
 
 ## The formula
 
-Notation, as a reminder. A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the sets we allow ourselves to measure (a sigma-algebra), and a measure giving each a size. The integral $\int f \, d\mu$, read "the integral of f against mu", is the area under $f$ measured by $\mu$ ([integral-of-a-nonnegative-function](02-integral-of-a-nonnegative-function.md)). The indicator $\mathbf{1}_A$ is one on the set $A$ and zero off it. On the river, $\Omega$ is the stretch `[0, 1]` in km, $\mathcal{F}$ is its Borel sets, and $\mu$ is Lebesgue measure $\lambda$, length in km. The stretch is 1 km long, so length is also the probability $P$ of a uniform mooring, and the average depth is $\int d \, d\lambda$, also written E[d] ([expectation-as-an-integral](06-expectation-as-an-integral.md)).
+Notation, as a reminder. A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the sets we allow ourselves to measure (a sigma-algebra), and a measure giving each a size. The integral $\int f \, d\mu$, read "the integral of f against mu", is the area under $f$ measured by $\mu$ ([The integral of a non-negative function](02-integral-of-a-nonnegative-function.md)). The indicator $\mathbf{1}_A$ is one on the set $A$ and zero off it. On the river, $\Omega$ is the stretch `[0, 1]` in km, $\mathcal{F}$ is its Borel sets, and $\mu$ is Lebesgue measure $\lambda$, length in km. The stretch is 1 km long, so length is also the probability $P$ of a uniform mooring, and the average depth is $\int d \, d\lambda$, also written E[d] ([Expectation as an integral](06-expectation-as-an-integral.md)).
 
 **Markov's inequality.** For a measure space $(\Omega, \mathcal{F}, \mu)$, a function $f$ from $\Omega$ to `[0, ∞]` measurable with respect to $\mathcal{F}$, and a number $a > 0$:
 
@@ -104,7 +86,7 @@ On the set $A$ where $f \ge a$, the function is at least $a$. Off $A$, it is at 
 
 ### Step 1: Markov, from two properties of the integral
 
-The integral of the simple function $a\mathbf{1}_A$ is $a\,\mu(A)$: value times size of piece ([integral-of-a-simple-function](01-integral-of-a-simple-function.md)). The integral of non-negative functions is monotone: if $g \le f$ at every point, then $\int g \, d\mu \le \int f \, d\mu$ ([integral-of-a-nonnegative-function](02-integral-of-a-nonnegative-function.md)). Together:
+The integral of the simple function $a\mathbf{1}_A$ is $a\,\mu(A)$: value times size of piece ([The integral of a simple function](01-integral-of-a-simple-function.md)). The integral of non-negative functions is monotone: if $g \le f$ at every point, then $\int g \, d\mu \le \int f \, d\mu$ ([The integral of a non-negative function](02-integral-of-a-nonnegative-function.md)). Together:
 
 $$a\,\mu(A) \;=\; \int a\mathbf{1}_A \, d\mu \;\le\; \int f \, d\mu.$$
 
@@ -118,7 +100,7 @@ Put $f = (X - m)^2$. It is non-negative, and measurable because squaring and sub
 
 $$P\big(\lvert X - m \rvert \ge \varepsilon\big) \;\le\; \frac{1}{\varepsilon^2} \int (X - m)^2 \, dP \;=\; \frac{\sigma^2}{\varepsilon^2}.$$
 
-A finite $\int X^2 \, dP$ makes $m$ and $\sigma^2$ finite, and linearity ([integrable-functions-and-l1](04-integrable-functions-and-l1.md)) gives $\sigma^2 = \int X^2 \, dP - m^2$.
+A finite $\int X^2 \, dP$ makes $m$ and $\sigma^2$ finite, and linearity ([Integrable functions](04-integrable-functions-and-l1.md)) gives $\sigma^2 = \int X^2 \, dP - m^2$.
 
 On the river: $\int d^2 \, d\lambda = \int 16x^2(1 - x)^2 \, dx = 8/15$, so $\sigma^2 = 8/15 - 4/9 = 4/45$ = 0.088889. At $\varepsilon = 0.5$ the bound is 0.088889 / 0.25 = 0.355556. The true value is $1 - \sqrt{5/6}$ = 0.087129: the depth never exceeds 1 m, so the whole event is the shallow side, below 1/6 m.
 
@@ -160,7 +142,7 @@ Chebyshev is tight when $X - m$ takes only the values $-\varepsilon$, 0 and $\va
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal{F}, \mu)$ is a measure space. For non-negative measurable functions the integral is monotone ($0 \le g \le f$ implies $\int g \, d\mu \le \int f \, d\mu$) and gives a simple function its value times the size of its piece: $\int a\mathbf{1}_A \, d\mu = a\,\mu(A)$ ([integral-of-a-simple-function](01-integral-of-a-simple-function.md), [integral-of-a-nonnegative-function](02-integral-of-a-nonnegative-function.md)).
+**Setting.** $(\Omega, \mathcal{F}, \mu)$ is a measure space. For non-negative measurable functions the integral is monotone ($0 \le g \le f$ implies $\int g \, d\mu \le \int f \, d\mu$) and gives a simple function its value times the size of its piece: $\int a\mathbf{1}_A \, d\mu = a\,\mu(A)$ ([The integral of a simple function](01-integral-of-a-simple-function.md), [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md)).
 
 **Theorem 1 (Markov).** Let $f : \Omega \to [0, \infty]$ be measurable with respect to $\mathcal{F}$ and $a > 0$. Then $\mu(\{f \ge a\}) \le a^{-1} \int f \, d\mu$. *Proof.* $A = \{f \ge a\} = f^{-1}([a, \infty])$ is in $\mathcal{F}$ by measurability. At $\omega \in A$, $a\mathbf{1}_A(\omega) = a \le f(\omega)$; at $\omega \notin A$, $a\mathbf{1}_A(\omega) = 0 \le f(\omega)$. By monotonicity and the simple-function integral, $a\,\mu(A) \le \int f \, d\mu$. Divide by $a > 0$ (if $\int f \, d\mu = \infty$ the statement holds trivially).
 
@@ -170,7 +152,7 @@ Chebyshev is tight when $X - m$ takes only the values $-\varepsilon$, 0 and $\va
 
 **Theorem 3 (Chernoff).** Let $t \ge 0$ with $M(t) = \int e^{tX} \, dP < \infty$. If $t > 0$, $e^{tX} \ge 0$ is measurable and $\{X \ge a\} \subseteq \{e^{tX} \ge e^{ta}\}$, so Theorem 1 gives $P(X \ge a) \le e^{-ta} M(t)$. If $t = 0$ the right side is 1, which bounds any probability. Taking the infimum over all such $t$ keeps the bound.
 
-**Corollary 2 (moments beat Chernoff for $X \ge 0$).** Let $X \ge 0$, $a > 0$, $t > 0$, and $b = \inf_{k \ge 0} a^{-k}\int X^k \, dP$ over whole numbers $k$ (the term $k = 0$ is 1). By monotone convergence ([monotone-convergence-theorem](03-monotone-convergence-theorem.md)) the integral of the series $e^{tX} = \sum_k t^k X^k / k!$ is the sum of the integrals, so $M(t) = \sum_k \frac{(ta)^k}{k!} \cdot a^{-k}\int X^k \, dP \ge b \sum_k \frac{(ta)^k}{k!} = b\,e^{ta}$. Hence $e^{-ta}M(t) \ge b$ for every $t$: the best moment bound is at least as good as the best Chernoff bound.
+**Corollary 2 (moments beat Chernoff for $X \ge 0$).** Let $X \ge 0$, $a > 0$, $t > 0$, and $b = \inf_{k \ge 0} a^{-k}\int X^k \, dP$ over whole numbers $k$ (the term $k = 0$ is 1). By monotone convergence ([The monotone convergence theorem](03-monotone-convergence-theorem.md)) the integral of the series $e^{tX} = \sum_k t^k X^k / k!$ is the sum of the integrals, so $M(t) = \sum_k \frac{(ta)^k}{k!} \cdot a^{-k}\int X^k \, dP \ge b \sum_k \frac{(ta)^k}{k!} = b\,e^{ta}$. Hence $e^{-ta}M(t) \ge b$ for every $t$: the best moment bound is at least as good as the best Chernoff bound.
 
 **Lemma (zero integral).** If $g \ge 0$ is measurable and $\int g \, d\mu = 0$, then $\mu(\{g > 0\}) = 0$. *Proof.* $\{g > 0\} = \bigcup_{n \ge 1} \{g \ge 1/n\}$, and Theorem 1 gives each set measure at most $n \cdot 0 = 0$. Countable subadditivity of $\mu$ finishes it. With $g = (X - m)^2$: variance 0 implies $X = m$ almost surely.
 
@@ -178,7 +160,7 @@ Chebyshev is tight when $X - m$ takes only the values $-\varepsilon$, 0 and $\va
 
 </details>
 
-A second road to Markov goes through the layer-cake formula $\int f \, d\mu = \int_0^\infty \mu(\{f \ge s\}) \, ds$: the integrand never increases in $s$, so the part from 0 to $a$ alone is at least $a\,\mu(\{f \ge a\})$. That formula needs Fubini's theorem and is proved on [layer-cake-and-tail-integrals](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md).
+A second road to Markov goes through the layer-cake formula $\int f \, d\mu = \int_0^\infty \mu(\{f \ge s\}) \, ds$: the integrand never increases in $s$, so the part from 0 to $a$ alone is at least $a\,\mu(\{f \ge a\})$. That formula needs Fubini's theorem and is proved on [The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md).
 
 ---
 
@@ -539,10 +521,10 @@ The two outputs are identical line for line.
 
 ## Where you meet it in real life
 
-- **The weak law of large numbers.** Chebyshev applied to an average of $n$ independent readings, whose variance is $\sigma^2/n$, shows the average settles near the mean ([weak-law-of-large-numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md)).
+- **The weak law of large numbers.** Chebyshev applied to an average of $n$ independent readings, whose variance is $\sigma^2/n$, shows the average settles near the mean ([The weak law of large numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md)).
 - **Convergence of functions.** If $\int \lvert f_n - f \rvert^p \, d\mu$ shrinks to 0, the moment form makes the measure of the set where $\lvert f_n - f \rvert \ge a$ shrink to 0, for each $a > 0$: a small integral of the gap forces the gap to be small except on a set of small measure.
-- **Differentiating integrals.** A Markov-type bound on the Hardy–Littlewood maximal function (at each point, the largest average of the function over intervals around it) is the key estimate behind [lebesgue-differentiation-theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/02-lebesgue-differentiation-theorem.md).
-- **Algorithms and risk.** Randomised algorithms bound their chance of failure with Chernoff; the probability wing does this for sums of coin flips ([concentration-inequalities-hoeffding-and-chernoff](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md)).
+- **Differentiating integrals.** A Markov-type bound on the Hardy–Littlewood maximal function (at each point, the largest average of the function over intervals around it) is the key estimate behind [The Lebesgue differentiation theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/02-lebesgue-differentiation-theorem.md).
+- **Algorithms and risk.** Randomised algorithms bound their chance of failure with Chernoff; the probability wing does this for sums of coin flips ([Concentration](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md)).
 
 > **Say it back**
 > A non-negative function sits above a rectangle of height a on the set where it reaches a. The integral respects that order, so a times the size of the set is at most the integral: Markov. Applied to the squared distance from the mean it gives Chebyshev, and applied to an exponential it gives Chernoff. Each bound is exact for some step-shaped law, so no better constant exists from the same information. On the river the ceilings are 0.741 and 0.356 against true values of 0.316 and 0.087.
@@ -551,15 +533,15 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [expectation-as-an-integral](06-expectation-as-an-integral.md): the mean and variance of a random variable as integrals against a probability measure, which is what the inequalities bound.
-- [markov-and-chebyshev-inequalities](../../09-Probability%20and%20statistics/02-Random%20Variables/08-markov-and-chebyshev-inequalities.md): the same two inequalities for variables with a list of values or a density, checked on a table of scratch-card prizes.
+- [Expectation as an integral](06-expectation-as-an-integral.md): the mean and variance of a random variable as integrals against a probability measure, which is what the inequalities bound.
+- [Markov and Chebyshev](../../09-Probability%20and%20statistics/02-Random%20Variables/08-markov-and-chebyshev-inequalities.md): the same two inequalities for variables with a list of values or a density, checked on a table of scratch-card prizes.
 
 ## Where this goes next
 
-- [weak-law-of-large-numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md): Chebyshev on an average of independent readings proves the average converges in probability to the mean: the chance of missing it by any fixed amount shrinks to 0.
-- [lebesgue-differentiation-theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/02-lebesgue-differentiation-theorem.md): a Markov-type bound on the maximal function shows that averages over shrinking intervals recover an integrable function almost everywhere.
+- [The weak law of large numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md): Chebyshev on an average of independent readings proves the average converges in probability to the mean: the chance of missing it by any fixed amount shrinks to 0.
+- [The Lebesgue differentiation theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/02-lebesgue-differentiation-theorem.md): a Markov-type bound on the maximal function shows that averages over shrinking intervals recover an integrable function almost everywhere.
 
-Markov and Chebyshev bound one quantity at a time; whether the average of many independent readings must settle at the mean, and how fast, is answered on [weak-law-of-large-numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md).
+Markov and Chebyshev bound one quantity at a time; whether the average of many independent readings must settle at the mean, and how fast, is answered on [The weak law of large numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md).
 
 ---
 

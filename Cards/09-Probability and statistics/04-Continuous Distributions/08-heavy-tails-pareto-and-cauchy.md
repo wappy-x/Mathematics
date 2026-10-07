@@ -1,26 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Continuous Distributions
-topic: Laws with missing averages
-item: Heavy tails
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/01-densities-and-cdfs|densities-and-cdfs]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/07-improper-integrals|improper-integrals]]"
-next:
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/07-extreme-value-theory-and-tails|extreme-value-theory-and-tails]]"
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/04-collective-risk-and-compound-poisson|collective-risk-and-compound-poisson]]"
-  - "[[Cards/14-Applied and computational/07-Network Science and Spectral Graphs/04-small-world-and-scale-free-models|small-world-and-scale-free-models]]"
-  - "[[Cards/20-Harmonic analysis/04-Characteristic Functions and Probability/08-stable-laws-and-heavy-tails|stable-laws-and-heavy-tails]]"
-tags: [mathematics, probability and statistics, heavy-tails-pareto-and-cauchy]
----
-
 # Heavy tails: distributions where the mean or the variance does not exist
 
-Probability and statistics → Continuous Distributions → Laws with missing averages → Heavy tails
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Continuous Distributions](../../../SYLLABUS.md#w09-s04) → Heavy tails
 
 ---
 
@@ -55,7 +35,7 @@ Orange: the Pareto law with shape 1.5. Green: the bell curve with the same mean 
 
 ## The formula
 
-Notation first. $X$ is one household's fortune in millions of dollars, a random variable (a quantity settled by chance); $x$ is a particular level. $E[X]$ reads "the average value of X in the long run" ([expectation](../02-Random%20Variables/02-expectation.md)). $E[X^k]$, the average of the fortune to the power $k$, is the $k$-th **moment**. The variance is $E[X^2] - (E[X])^2$ ([variance-and-standard-deviation](../02-Random%20Variables/03-variance-and-standard-deviation.md)), so it needs the second moment.
+Notation first. $X$ is one household's fortune in millions of dollars, a random variable (a quantity settled by chance); $x$ is a particular level. $E[X]$ reads "the average value of X in the long run" ([Expectation](../02-Random%20Variables/02-expectation.md)). $E[X^k]$, the average of the fortune to the power $k$, is the $k$-th **moment**. The variance is $E[X^2] - (E[X])^2$ ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)), so it needs the second moment.
 
 The Pareto law with lower cutoff $b$ and shape $a$ (both above zero):
 
@@ -92,7 +72,7 @@ So $E[|Z|]$ is infinite, the mean $E[Z]$ is undefined, and the variance does not
 
 ### When it holds
 
-- **A power-law tail above a cutoff.** Wealth follows a power law only above some level; below it looks more like the [lognormal-distribution](06-lognormal-distribution.md). Fit Pareto to everyone and the median comes out wrong.
+- **A power-law tail above a cutoff.** Wealth follows a power law only above some level; below it looks more like the [Lognormal](06-lognormal-distribution.md). Fit Pareto to everyone and the median comes out wrong.
 - **A shape that is really 1.5.** The shape is estimated from the few largest fortunes and carries a wide error. At 2.5 the variance exists; at 0.9 the mean does not.
 - **Independent households.** Families that share wealth make the largest values move together, and sums of them swing harder.
 - **A Cauchy denominator centred at zero.** A denominator that stays away from zero gives a ratio with ordinary moments.
@@ -104,7 +84,7 @@ So $E[|Z|]$ is infinite, the mean $E[Z]$ is undefined, and the variance does not
 
 ### Step 0: the idea: area and weighted area are different questions
 
-A density is a valid law when it is never negative and its area is 1 ([densities-and-cdfs](01-densities-and-cdfs.md)). A moment is a second, separate area: the density multiplied by $x$ or $x^2$. Far out, that multiplier is huge. If the density thins like a power, the product can thin too slowly for its area to be finite. The test is the power test for improper integrals ([improper-integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)): $\int_1^\infty x^{-s}\,dx$ is finite exactly when $s > 1$.
+A density is a valid law when it is never negative and its area is 1 ([Densities](01-densities-and-cdfs.md)). A moment is a second, separate area: the density multiplied by $x$ or $x^2$. Far out, that multiplier is huge. If the density thins like a power, the product can thin too slowly for its area to be finite. The test is the power test for improper integrals ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)): $\int_1^\infty x^{-s}\,dx$ is finite exactly when $s > 1$.
 
 ### Step 1: the Pareto density has area 1
 
@@ -134,7 +114,7 @@ $$\int_q^\infty x\,\frac{a\,b^a}{x^{a+1}}\,dx = \frac{a\,b^a\,q^{1-a}}{a-1}.$$
 
 Divide by the mean $ab/(a-1)$ to get the share, $(q/b)^{1-a}$. The top fraction $p$ starts at $q = Q(1-p) = b\,p^{-1/a}$, so the share is $p^{1 - 1/a}$: at $p = 0.01$, $0.01^{1/3} = 0.2154$. The bell curve's share comes from the thin tail of $e^{-x^2/2}$ and is 0.0186.
 
-Above any level $x$, fortunes are Pareto again with cutoff $x$ and the same shape, since the chance of passing a higher level $y$, given $x$, is $(x/y)^a$. So the mean fortune above $x$ is $ax/(a-1)$, three times $x$: households above 10 million dollars average 30 million. For the memoryless [exponential-distribution](03-exponential-distribution.md) the expected excess is constant; for Pareto it grows with the level. The further out, the further the rest of the tail reaches.
+Above any level $x$, fortunes are Pareto again with cutoff $x$ and the same shape, since the chance of passing a higher level $y$, given $x$, is $(x/y)^a$. So the mean fortune above $x$ is $ax/(a-1)$, three times $x$: households above 10 million dollars average 30 million. For the memoryless [Exponential](03-exponential-distribution.md) the expected excess is constant; for Pareto it grows with the level. The further out, the further the rest of the tail reaches.
 
 ### Step 4: the Cauchy law, and why its mean is undefined
 
@@ -161,7 +141,7 @@ As $c$ runs over all positive numbers, $\ln c / \pi$ takes every real value. At 
 
 ### Step 5: averages that never settle
 
-The law of large numbers says an average of independent draws settles on the mean, provided the mean exists. Cauchy breaks the proviso exactly: the average of any number of independent standard Cauchy draws is again standard Cauchy, so half of all averages of 100 ratios still land outside −1 to 1. This is stated here, proved with characteristic functions on stable-laws-and-heavy-tails, and checked below by simulation.
+The law of large numbers says an average of independent draws settles on the mean, provided the mean exists. Cauchy breaks the proviso exactly: the average of any number of independent standard Cauchy draws is again standard Cauchy, so half of all averages of 100 ratios still land outside −1 to 1. This is stated here, proved with characteristic functions on Stable laws, and checked below by simulation.
 
 Pareto with shape 1.5 sits between. The mean exists, so the average does settle on 3. The variance does not, so the usual error bar, standard deviation over the square root of the sample size, has nothing to stand on: the average settles more slowly and is jolted by single huge draws. The sample standard deviation never settles; it jumps whenever a new largest fortune arrives.
 
@@ -608,9 +588,9 @@ Orange: the running average of ratios of returns, a Cauchy sample, swinging from
 ## Where you meet it in real life
 
 - **Wealth and income.** Above a threshold, fortunes and top incomes follow a power law approximately; the fitted shape decides whether a variance exists and how much the top 1 percent hold.
-- **Insurance.** A few storms or lawsuits make most of the losses; actuaries model large claims with Pareto tails ([collective-risk-and-compound-poisson](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/04-collective-risk-and-compound-poisson.md)).
-- **Market risk.** Daily returns have fatter tails than the bell curve; tail risk is estimated with the power-law methods of [extreme-value-theory-and-tails](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md).
-- **Networks, cities and words.** Links per web page, city populations and word frequencies all show power-law tails; growth where the rich get richer produces them (small-world-and-scale-free-models).
+- **Insurance.** A few storms or lawsuits make most of the losses; actuaries model large claims with Pareto tails ([Aggregate claims](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/04-collective-risk-and-compound-poisson.md)).
+- **Market risk.** Daily returns have fatter tails than the bell curve; tail risk is estimated with the power-law methods of [Extreme value theory](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md).
+- **Networks, cities and words.** Links per web page, city populations and word frequencies all show power-law tails; growth where the rich get richer produces them (Small worlds and hubs).
 - **Physics.** A spectral line near a resonance has a Cauchy shape, called Lorentzian; its width is quoted as the width at half the peak height, since no standard deviation exists.
 
 > **Say it back**
@@ -620,15 +600,15 @@ Orange: the running average of ratios of returns, a Cauchy sample, swinging from
 
 ## What this builds on
 
-- [densities-and-cdfs](01-densities-and-cdfs.md): a density, its area, and the cumulative area $F$; here the Cauchy $F$ is the arctangent.
-- [improper-integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md): the power test that decides every moment on this card.
+- [Densities](01-densities-and-cdfs.md): a density, its area, and the cumulative area $F$; here the Cauchy $F$ is the arctangent.
+- [Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md): the power test that decides every moment on this card.
 
 ## Where this goes next
 
-- [extreme-value-theory-and-tails](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md): estimating the shape from the largest losses, and why tails of many laws look Pareto far out.
-- [collective-risk-and-compound-poisson](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/04-collective-risk-and-compound-poisson.md): yearly totals of heavy-tailed claims, where one claim can dominate the sum.
-- small-world-and-scale-free-models: networks whose link counts follow a power law, grown by preferential attachment.
-- stable-laws-and-heavy-tails: the proof that Cauchy averages stay Cauchy, and the laws that replace the bell curve as limits of heavy-tailed sums.
+- [Extreme value theory](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md): estimating the shape from the largest losses, and why tails of many laws look Pareto far out.
+- [Aggregate claims](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/04-collective-risk-and-compound-poisson.md): yearly totals of heavy-tailed claims, where one claim can dominate the sum.
+- Small worlds and hubs: networks whose link counts follow a power law, grown by preferential attachment.
+- Stable laws: the proof that Cauchy averages stay Cauchy, and the laws that replace the bell curve as limits of heavy-tailed sums.
 
 The average of Pareto fortunes settles without a finite variance, and the question this card leaves open is what law its error follows instead of the bell curve; the stable-laws card answers it.
 

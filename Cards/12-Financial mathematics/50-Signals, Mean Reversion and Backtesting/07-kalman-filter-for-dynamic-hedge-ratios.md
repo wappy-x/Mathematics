@@ -1,28 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Signals, Mean Reversion and Backtesting
-topic: Tracking a drifting ratio
-item: A moving hedge ratio
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/02-pairs-trading-and-cointegration|pairs-trading-and-cointegration]]"
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/03-normal-normal|normal-normal]]"
-next: []
-tags: [mathematics, financial-mathematics, kalman-filter-for-dynamic-hedge-ratios]
----
-
 # A moving hedge ratio: the Kalman filter as a regression that updates
 
-Financial mathematics → Signals, Mean Reversion and Backtesting → Tracking a drifting ratio → A moving hedge ratio
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Signals, Mean Reversion and Backtesting](../../../SYLLABUS.md#w12-s50) → A moving hedge ratio
 
 ---
 
 ## General Overview
 
-Two petrol retailers, A and B, trade on the same exchange. Last year one A share tracked 1.3 B shares, so a pairs trader held 1.3 B shares short against each A share owned ([pairs-trading-and-cointegration](02-pairs-trading-and-cointegration.md)). That 1.3 is the **hedge ratio**.
+Two petrol retailers, A and B, trade on the same exchange. Last year one A share tracked 1.3 B shares, so a pairs trader held 1.3 B shares short against each A share owned ([Pairs trading](02-pairs-trading-and-cointegration.md)). That 1.3 is the **hedge ratio**.
 
 This year the tie loosens. A opens more forecourts that sell coffee; B sells more fuel. Over 250 trading days the true ratio slides from 1.30 to 1.10. A trader who fixes one ratio for the whole year, the best single number being 1.20, watches the spread (A's price minus the ratio times B's price) start at $10.47 and end at −$9.60. It looks like a huge trading signal. It is only the wrong ratio.
 
@@ -89,7 +73,7 @@ $P_{t-1}+Q$ is the **prediction variance**: yesterday's uncertainty plus the roo
 ### When it holds
 
 - **The ratio moves in small random steps.** Here it moves in a straight line instead. A random-walk model has no notion of trend, so the filter lags: on this path by about 0.006957, and the surprise averages −0.8169 dollars instead of zero.
-- **Price noise is fresh each day, with one variance $R$.** A spread that wanders for weeks before returning, as in [ornstein-uhlenbeck-mean-reversion-trading](01-ornstein-uhlenbeck-mean-reversion-trading.md), looks to the filter like the ratio moving. The filter then bends the ratio toward the spread and erases part of the very signal a pairs trade lives on.
+- **Price noise is fresh each day, with one variance $R$.** A spread that wanders for weeks before returning, as in [Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md), looks to the filter like the ratio moving. The filter then bends the ratio toward the spread and erases part of the very signal a pairs trade lives on.
 - **$Q$ and $R$ are known.** They never are. Set $Q$ to zero and the error over days 60 to 250 is 0.064414; the right-sized $Q$ gives 0.007755. The table in Worked numbers has the rest.
 - **The spread's level is zero.** The model has no constant term. A pair whose spread sits at $5 needs a second hidden number for the level; the filter then carries two numbers and a two-by-two table of uncertainties, with the same four steps.
 - **B's price is not zero.** A reading with $B_t = 0$ carries no information about the ratio, and the formulas give it zero weight.
@@ -100,7 +84,7 @@ $P_{t-1}+Q$ is the **prediction variance**: yesterday's uncertainty plus the roo
 
 ### Step 0: yesterday's belief plus one noisy reading
 
-The filter's belief about the ratio is a bell curve: centre $m_{t-1}$, variance $P_{t-1}$. Each day brings one new reading of the ratio: today's price pair. When a bell-curve belief meets a bell-curve reading, the combined belief is again a bell curve, and its centre is a weighted average of the two, each weighted by its **precision** (one over its variance) ([normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md)). The Kalman filter is that one step, repeated every day, with one extra move: before each reading, the belief is widened because the ratio may have drifted.
+The filter's belief about the ratio is a bell curve: centre $m_{t-1}$, variance $P_{t-1}$. Each day brings one new reading of the ratio: today's price pair. When a bell-curve belief meets a bell-curve reading, the combined belief is again a bell curve, and its centre is a weighted average of the two, each weighted by its **precision** (one over its variance) ([Normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md)). The Kalman filter is that one step, repeated every day, with one extra move: before each reading, the belief is widened because the ratio may have drifted.
 
 ### Step 1: predict, by widening the belief
 
@@ -217,7 +201,7 @@ Kalman, Q = 0.0001       █              0.006783
 Kalman, Q = 0.00001      █              0.004862
 ```
 
-Too small a $Q$ and the filter is a slow regression. Too large and it chases every day's noise. In between is a best $Q$, 0.00001 on this path. It is best only because the path is known; in real trading $Q$ is fitted on past data and judged on later data, or the choice itself becomes a source of false confidence ([deflated-sharpe-and-multiple-testing](06-deflated-sharpe-and-multiple-testing.md)).
+Too small a $Q$ and the filter is a slow regression. Too large and it chases every day's noise. In between is a best $Q$, 0.00001 on this path. It is best only because the path is known; in real trading $Q$ is fitted on past data and judged on later data, or the choice itself becomes a source of false confidence ([Trying many strategies](06-deflated-sharpe-and-multiple-testing.md)).
 
 ---
 
@@ -621,7 +605,7 @@ The two outputs match line for line. On day 50 the filter's variance is 0.000008
 > [!warning]
 > **Believing the filter finds the true ratio.** It finds the ratio implied by its $Q$ and $R$. On one path, $Q$ = 0 gives an error of 0.064414 and $Q$ = 0.00001 gives 0.004862, from the same prices. The filter is exact arithmetic on assumptions; the assumptions carry the risk.
 >
-> - **Hedging today with a ratio that saw today's price.** The filtered $m_t$ has already used $A_t$. The spread $A_t - m_tB_t$ equals the surprise times $1 - K_tB_t$, 0.896866 of it on day 250: mechanically smaller, and a backtest built on it trades on information not yet available ([backtesting-pitfalls](05-backtesting-pitfalls.md)). Hedge day $t$ with $m_{t-1}$.
+> - **Hedging today with a ratio that saw today's price.** The filtered $m_t$ has already used $A_t$. The spread $A_t - m_tB_t$ equals the surprise times $1 - K_tB_t$, 0.896866 of it on day 250: mechanically smaller, and a backtest built on it trades on information not yet available ([Backtesting](05-backtesting-pitfalls.md)). Hedge day $t$ with $m_{t-1}$.
 > - **Reading a filtered spread as proof of a tie.** A ratio that may move can fit almost any pair. The cointegration test belongs to a fixed ratio; a moving one needs its surprises checked on later data.
 > - **Letting the ratio swallow the spread.** If the spread wanders for weeks, a large $Q$ lets the ratio follow it and the trade signal vanishes into the hedge.
 > - **Reading the moving spread as profit.** When the ratio moves from $m_{t-1}$ to $m_t$, the hedge buys or sells $(m_t - m_{t-1})$ B shares at $B_t$. That cash belongs in the ledger. The day-to-day change in $A_t - m_tB_t$ is not what a held position earned.
@@ -634,7 +618,7 @@ The two outputs match line for line. On day 50 the filter's variance is 0.000008
 - **Pairs and basket trading desks.** A filtered hedge ratio for two shares, or a few, rebalanced daily, is a standard replacement for a fixed ratio in statistical arbitrage.
 - **Hedging a fund against an index.** A fund's beta to the market, its sensitivity to index moves, drifts as holdings change; the same one-number filter tracks it.
 - **Where it began.** Navigation: the Apollo guidance computer ran a Kalman filter to estimate position from noisy measurements. The ratio here is a position that drifts; prices are the noisy radar.
-- **Signals on this shelf.** A filtered spread feeds the mean-reversion rules of [ornstein-uhlenbeck-mean-reversion-trading](01-ornstein-uhlenbeck-mean-reversion-trading.md), and its predictive power is scored as in [information-coefficient-and-the-fundamental-law](04-information-coefficient-and-the-fundamental-law.md).
+- **Signals on this shelf.** A filtered spread feeds the mean-reversion rules of [Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md), and its predictive power is scored as in [The fundamental law](04-information-coefficient-and-the-fundamental-law.md).
 
 > **Say it back**
 > A pair's hedge ratio can drift, and a fixed ratio then shows the drift as a fake spread. The Kalman filter treats the ratio as a hidden number that takes small random steps. Each day it widens its uncertainty by $Q$, then moves toward the ratio today's prices imply, by a weight set by its uncertainty against the price noise $R$. That is a least-squares regression in which the coefficient may change at a price, updated one day at a time. Its answer is only as good as $Q$ and $R$.
@@ -643,14 +627,14 @@ The two outputs match line for line. On day 50 the filter's variance is 0.000008
 
 ## What this builds on
 
-- [pairs-trading-and-cointegration](02-pairs-trading-and-cointegration.md): the hedge ratio, the spread, and the fixed-ratio regression this card lets move.
-- [normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md): a bell-curve belief updated by a bell-curve reading, by precision weighting. Step 3 is that card, once a day.
+- [Pairs trading](02-pairs-trading-and-cointegration.md): the hedge ratio, the spread, and the fixed-ratio regression this card lets move.
+- [Normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md): a bell-curve belief updated by a bell-curve reading, by precision weighting. Step 3 is that card, once a day.
 
 ## Where this goes next
 
-- [backtesting-pitfalls](05-backtesting-pitfalls.md): why hedging day $t$ with $m_t$ is look-ahead, and how to test a filtered pair honestly.
-- [deflated-sharpe-and-multiple-testing](06-deflated-sharpe-and-multiple-testing.md): what trying five values of $Q$ does to the apparent quality of the best one.
-- [ornstein-uhlenbeck-mean-reversion-trading](01-ornstein-uhlenbeck-mean-reversion-trading.md): the entry and exit rules the filtered spread feeds.
+- [Backtesting](05-backtesting-pitfalls.md): why hedging day $t$ with $m_t$ is look-ahead, and how to test a filtered pair honestly.
+- [Trying many strategies](06-deflated-sharpe-and-multiple-testing.md): what trying five values of $Q$ does to the apparent quality of the best one.
+- [Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md): the entry and exit rules the filtered spread feeds.
 
 The filter says where the ratio is and how sure it is; whether a strategy built on it earns anything after the choice of $Q$ is tested on data it never saw is the question the backtesting cards answer.
 

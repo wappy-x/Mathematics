@@ -1,22 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Swapping Limits and Integrals
-topic: Light that leaks away
-item: Fatou's lemma
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/03-monotone-convergence-theorem|monotone-convergence-theorem]]"
-next:
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/02-dominated-convergence-theorem|dominated-convergence-theorem]]"
-tags: [mathematics, measure and integration, fatous-lemma]
----
-
 # Fatou's lemma: mass can leak away in a limit but never appear from nowhere
 
-Measure and integration → Swapping Limits and Integrals → Light that leaks away → Fatou's lemma
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Swapping Limits and Integrals](../../../SYLLABUS.md#w10-s05) → Fatou's lemma
 
 ---
 
@@ -44,9 +28,9 @@ Caption: frame 1 covers the stage at height 1, frame 2 the right half at height 
 
 ## The formula
 
-Notation first, in words. A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). On the stage, $\Omega$ is [0, 1] in metres and the measure is length, $\lambda$. The integral $\int f\,d\mu$ is read "the integral of f against mu"; on the stage it is total light in watts ([integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). The indicator $\mathbf 1_A$ is one on A, zero off it, so frame n is $f_n = n\,\mathbf 1_{[1-1/n,\,1)}$.
+Notation first, in words. A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). On the stage, $\Omega$ is [0, 1] in metres and the measure is length, $\lambda$. The integral $\int f\,d\mu$ is read "the integral of f against mu"; on the stage it is total light in watts ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). The indicator $\mathbf 1_A$ is one on A, zero off it, so frame n is $f_n = n\,\mathbf 1_{[1-1/n,\,1)}$.
 
-A reminder from [limits-of-measurable-functions](../03-Measurable%20Functions/02-limits-of-measurable-functions.md): the **lower limit** of a sequence of numbers, written lim inf, is its eventual floor: take the smallest value from position k onward, then let k grow. The **upper limit**, lim sup, is the eventual ceiling. A sequence converges exactly when the two agree. For functions, both are taken seat by seat, and both are measurable.
+A reminder from [Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md): the **lower limit** of a sequence of numbers, written lim inf, is its eventual floor: take the smallest value from position k onward, then let k grow. The **upper limit**, lim sup, is the eventual ceiling. A sequence converges exactly when the two agree. For functions, both are taken seat by seat, and both are measurable.
 
 **Fatou's lemma.** If every $f_n$ is measurable with values in $[0,\infty]$, then
 
@@ -89,7 +73,7 @@ $$\limsup_{n\to\infty} \int f_n\,d\mu \;\le\; \int \limsup_{n\to\infty} f_n\,d\m
 
 - **Values of zero or more.** A shadow of depth n on the same strip, $-f_n$, has total −1 W in every frame and limit 0; Fatou would read 0 ≤ −1, which is false. Functions bounded below by one integrable function, $f_n \ge -G$, are fine: apply the lemma to $f_n + G$.
 - **Measurable functions.** Nothing else is asked: no finite total, no convergence, no bound above.
-- **Any measure space.** Infinite totals are allowed on either side, and $\mu(\Omega)$ may be infinite. A hypothesis that holds only almost everywhere, except on a set of size zero, is enough ([null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)).
+- **Any measure space.** Infinite totals are allowed on either side, and $\mu(\Omega)$ may be infinite. A hypothesis that holds only almost everywhere, except on a set of size zero, is enough ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)).
 - **The reverse form needs a roof.** Without one the spotlight gives lim sup of totals 1 W against a total of 0 W for the lim sup, and 1 ≤ 0 is false.
 - **An inequality, not an equality.** Equality is guaranteed by rising frames (monotone convergence) or by one roof and a genuine limit (dominated convergence).
 
@@ -99,7 +83,7 @@ $$\limsup_{n\to\infty} \int f_n\,d\mu \;\le\; \int \limsup_{n\to\infty} f_n\,d\m
 
 ### Step 0: a floor that only rises
 
-At one seat, look at all frames from k onward and keep the dimmest reading. That floor sits under every one of those frames. Drop one more early frame and the floor can only rise, since the minimum is taken over fewer readings. Monotone convergence handles rising functions ([monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)). Fatou is monotone convergence applied to the floors.
+At one seat, look at all frames from k onward and keep the dimmest reading. That floor sits under every one of those frames. Drop one more early frame and the floor can only rise, since the minimum is taken over fewer readings. Monotone convergence handles rising functions ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)). Fatou is monotone convergence applied to the floors.
 
 ### Step 1: the floors rise to the lower limit
 
@@ -122,19 +106,19 @@ The left side rises to $\int \liminf_n f_n\,d\mu$, by monotone convergence on th
 
 **Setting.** $(\Omega,\mathcal F,\mu)$ is a measure space and each $f_n:\Omega\to[0,\infty]$ is measurable.
 
-**1. The floors are measurable and rise.** Put $g_k=\inf_{n\ge k}f_n$. For a number a, $\{g_k<a\}=\bigcup_{n\ge k}\{f_n<a\}$: an infimum is below a exactly when some term is below a. A countable union of sets in $\mathcal F$ is in $\mathcal F$, so $g_k$ is measurable ([limits-of-measurable-functions](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)). The set $\{n\ge k+1\}$ is inside $\{n\ge k\}$, and an infimum over fewer numbers is at least as large, so $g_k\le g_{k+1}$. Each $g_k\ge0$.
+**1. The floors are measurable and rise.** Put $g_k=\inf_{n\ge k}f_n$. For a number a, $\{g_k<a\}=\bigcup_{n\ge k}\{f_n<a\}$: an infimum is below a exactly when some term is below a. A countable union of sets in $\mathcal F$ is in $\mathcal F$, so $g_k$ is measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)). The set $\{n\ge k+1\}$ is inside $\{n\ge k\}$, and an infimum over fewer numbers is at least as large, so $g_k\le g_{k+1}$. Each $g_k\ge0$.
 
 **2. Their limit is the lower limit.** By definition, $\liminf_n f_n(x)=\sup_k \inf_{n\ge k}f_n(x)=\lim_k g_k(x)$, the limit of a rising sequence in $[0,\infty]$.
 
-**3. Monotone convergence.** The $g_k$ are measurable, at least 0 and rising to $\liminf_n f_n$. By [monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md), $\int \liminf_n f_n\,d\mu=\lim_k\int g_k\,d\mu$.
+**3. Monotone convergence.** The $g_k$ are measurable, at least 0 and rising to $\liminf_n f_n$. By [The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md), $\int \liminf_n f_n\,d\mu=\lim_k\int g_k\,d\mu$.
 
-**4. Comparison.** For $n\ge k$, $g_k\le f_n$ everywhere, so $\int g_k\,d\mu\le\int f_n\,d\mu$ by monotonicity of the integral ([integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). Taking the infimum over $n\ge k$ on the right: $\int g_k\,d\mu\le b_k$, where $b_k=\inf_{n\ge k}\int f_n\,d\mu$.
+**4. Comparison.** For $n\ge k$, $g_k\le f_n$ everywhere, so $\int g_k\,d\mu\le\int f_n\,d\mu$ by monotonicity of the integral ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). Taking the infimum over $n\ge k$ on the right: $\int g_k\,d\mu\le b_k$, where $b_k=\inf_{n\ge k}\int f_n\,d\mu$.
 
 **5. Pass to the limit.** The numbers $b_k$ rise with k, and $\lim_k b_k=\liminf_n\int f_n\,d\mu$ by definition. If $a_k\le b_k$ for every k and both sequences rise, then $\lim a_k\le\lim b_k$ in $[0,\infty]$: each $a_k\le b_k\le\lim b$, so the supremum of the $a_k$ is at most $\lim b$. With $a_k=\int g_k\,d\mu$ and step 3, $\int\liminf_n f_n\,d\mu\le\liminf_n\int f_n\,d\mu$. No subtraction was used, so infinite values cause no trouble. ∎
 
-**Almost everywhere.** If each $f_n\ge0$ only outside a null set $Z_n$, let Z be the union of the $Z_n$, still of measure zero as a countable union of null sets. Set every $f_n$ to 0 on Z. Integrals do not change when a function changes on a null set ([integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), and the lower limit changes only on Z. Apply the lemma to the modified functions.
+**Almost everywhere.** If each $f_n\ge0$ only outside a null set $Z_n$, let Z be the union of the $Z_n$, still of measure zero as a countable union of null sets. Set every $f_n$ to 0 on Z. Integrals do not change when a function changes on a null set ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), and the lower limit changes only on Z. Apply the lemma to the modified functions.
 
-**Reverse Fatou.** Suppose $0\le f_n\le G$ with $\int G\,d\mu<\infty$. Then G is finite outside a null set, which the almost-everywhere paragraph lets us ignore, so $G-f_n$ is measurable and at least 0. Apply the lemma to $G-f_n$. Seat by seat, $\liminf_n(G-f_n)=G-\limsup_n f_n$, since subtracting from a fixed finite number turns floors into ceilings. Every $f_n$ and $\limsup_n f_n$ lies between 0 and G, so all of them are integrable and the integral subtracts ([integrable-functions-and-l1](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)): $\int(G-f_n)\,d\mu=\int G\,d\mu-\int f_n\,d\mu$, and likewise for the lim sup. The lemma becomes
+**Reverse Fatou.** Suppose $0\le f_n\le G$ with $\int G\,d\mu<\infty$. Then G is finite outside a null set, which the almost-everywhere paragraph lets us ignore, so $G-f_n$ is measurable and at least 0. Apply the lemma to $G-f_n$. Seat by seat, $\liminf_n(G-f_n)=G-\limsup_n f_n$, since subtracting from a fixed finite number turns floors into ceilings. Every $f_n$ and $\limsup_n f_n$ lies between 0 and G, so all of them are integrable and the integral subtracts ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)): $\int(G-f_n)\,d\mu=\int G\,d\mu-\int f_n\,d\mu$, and likewise for the lim sup. The lemma becomes
 $$\int G\,d\mu-\int\limsup_n f_n\,d\mu\le\liminf_n\Big(\int G\,d\mu-\int f_n\,d\mu\Big)=\int G\,d\mu-\limsup_n\int f_n\,d\mu .$$
 Subtract the finite number $\int G\,d\mu$ from both sides and change signs: $\limsup_n\int f_n\,d\mu\le\int\limsup_n f_n\,d\mu$. ∎ The finite roof is used twice: to make $G-f_n$ a function of zero or more, and to make the subtraction legal.
 
@@ -172,7 +156,7 @@ The flicker has a roof: $G = 2$ W/m everywhere, total 2 W, above every frame. Ea
 
 The spotlight has no roof. The smallest function above every frame is, on the strip where frame j is the last lit one, the brightness j of that frame. Its total over strips 1 to J is $1/2 + 1/3 + \cdots + 1/(J+1)$, a harmonic sum: 2.0199 W up to 0.909091 m, 4.1973 W up to 0.990099 m, 6.4865 W up to 0.999001 m, 13.3927 W up to 0.999999 m, growing without bound. With no finite roof, reverse Fatou has nothing to stand on, and indeed it fails: 1 W against 0 W.
 
-Another route to the same inequality is to prove dominated convergence first and read Fatou off it, but that runs backwards: [dominated-convergence-theorem](02-dominated-convergence-theorem.md) proves dominated convergence by applying Fatou to roof plus and minus each frame.
+Another route to the same inequality is to prove dominated convergence first and read Fatou off it, but that runs backwards: [Dominated convergence](02-dominated-convergence-theorem.md) proves dominated convergence by applying Fatou to roof plus and minus each frame.
 
 ---
 
@@ -551,10 +535,10 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Probability.** For random quantities of zero or more, the average of the eventual floor is at most the eventual floor of the averages ([expectation-as-an-integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)). A lottery paying n dollars with probability 1/n averages 1 dollar forever while the chance of any prize shrinks to 0: the same kind of leak, which [uniform-integrability](05-uniform-integrability.md) rules out.
-- **Limits keep their size bounds.** If functions converge almost everywhere, the limit's total size is at most the eventual floor of theirs. That is how the proof that $L^p$ spaces are complete shows a limit stays in the space ([completeness-of-lp](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)).
-- **Martingales.** A fair game whose value is zero or more keeps a constant average in time. Once the game's value is known to settle to a limit, Fatou bounds the average of that limit by the constant ([filtrations-and-martingales](../09-Conditional%20Expectation/06-filtrations-and-martingales.md)).
-- **Which convergence loses mass.** The spotlight converges at every seat yet not in total; sorting out which kinds of convergence carry totals with them is [modes-of-convergence](04-modes-of-convergence.md). The Riemann version of the same trap, tents of area 1 on [0, 1], is [swapping-limits-with-integrals-and-derivatives](../../06-Calculus%20and%20analysis/06-Series/08-swapping-limits-with-integrals-and-derivatives.md).
+- **Probability.** For random quantities of zero or more, the average of the eventual floor is at most the eventual floor of the averages ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)). A lottery paying n dollars with probability 1/n averages 1 dollar forever while the chance of any prize shrinks to 0: the same kind of leak, which [Uniform integrability](05-uniform-integrability.md) rules out.
+- **Limits keep their size bounds.** If functions converge almost everywhere, the limit's total size is at most the eventual floor of theirs. That is how the proof that $L^p$ spaces are complete shows a limit stays in the space ([Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)).
+- **Martingales.** A fair game whose value is zero or more keeps a constant average in time. Once the game's value is known to settle to a limit, Fatou bounds the average of that limit by the constant ([Filtrations and martingales](../09-Conditional%20Expectation/06-filtrations-and-martingales.md)).
+- **Which convergence loses mass.** The spotlight converges at every seat yet not in total; sorting out which kinds of convergence carry totals with them is [Modes of convergence](04-modes-of-convergence.md). The Riemann version of the same trap, tents of area 1 on [0, 1], is [Swapping limits](../../06-Calculus%20and%20analysis/06-Series/08-swapping-limits-with-integrals-and-derivatives.md).
 
 > **Say it back**
 > A spotlight with 1 W in every frame slides its strip against the edge; every seat goes dark for good, so the limit has 0 W. Fatou's lemma says this is the only direction a gap can go: for functions of zero or more, the total of the eventual floor is at most the eventual floor of the totals. The proof takes the floor from frame k on, which only rises, and applies monotone convergence to it. Under one roof of finite total the reverse holds for ceilings; the spotlight has no such roof, and its light leaks away.
@@ -563,11 +547,11 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md): rising functions of zero or more carry their integrals with them; Fatou applies it to the running floors.
+- [The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md): rising functions of zero or more carry their integrals with them; Fatou applies it to the running floors.
 
 ## Where this goes next
 
-- [dominated-convergence-theorem](02-dominated-convergence-theorem.md): Fatou tells which way the total can go, not whether it goes; applied to roof plus and minus each frame, it shows one integrable roof closes the leak and turns the inequality into equality.
+- [Dominated convergence](02-dominated-convergence-theorem.md): Fatou tells which way the total can go, not whether it goes; applied to roof plus and minus each frame, it shows one integrable roof closes the leak and turns the inequality into equality.
 
 ---
 

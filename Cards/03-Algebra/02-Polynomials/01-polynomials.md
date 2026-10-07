@@ -1,29 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Polynomials
-topic: Expressions
-item: Polynomials
-kind: definition
-status: verified
-updated: 2026-09-07
-needs_first:
-  - "[[Cards/03-Algebra/01-Letters and Equations/01-letters-for-numbers|letters-for-numbers]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/01-exponents-and-powers|exponents-and-powers]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/05-arithmetic-laws|arithmetic-laws]]"
-next:
-  - "[[Cards/03-Algebra/02-Polynomials/02-factoring-quadratics|factoring-quadratics]]"
-  - "[[Cards/03-Algebra/02-Polynomials/04-polynomial-division|polynomial-division]]"
-  - "[[Cards/03-Algebra/09-Rings and Fields/01-rings|rings]]"
-tags:
-  - mathematics
-  - algebra
-  - polynomials
----
-
 # Polynomials: sums of powers of one letter, their degree, and where they cross zero
 
-Algebra → Polynomials → Expressions → Polynomials
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Polynomials](../../../SYLLABUS.md#w03-s02) → Polynomials
 
 ---
 
@@ -112,7 +89,7 @@ Look far out and the top power wins. At 10 seconds 20t is 200 but 5t^2 is 500, s
 | 1 | a number times the letter, plus a plain number | a straight line, no bends |
 | 2 | a squared term as well | one bend, up then down or down then up |
 
-Degree 3 adds a cubed term and a second bend, and so on up: a polynomial of degree $n$ bends at most $n$ − 1 times and crosses zero at most $n$ times — the job of [roots-and-the-factor-theorem](05-roots-and-the-factor-theorem.md).
+Degree 3 adds a cubed term and a second bend, and so on up: a polynomial of degree $n$ bends at most $n$ − 1 times and crosses zero at most $n$ times — the job of [Roots and factors](05-roots-and-the-factor-theorem.md).
 
 ### Step 3: adding is collecting like terms, and the degree can fall
 
@@ -128,7 +105,7 @@ Adding never pushes the degree above the bigger of the two, and can pull it down
 
 Multiply 5t by (4 − t): 5t × 4 = 20t, and 5t × (−t) = −5t^2. That is the ball's height again. Degree 1 times degree 1 came out degree 2, and it always does — the top term of one times the top term of the other is the only product reaching that power, so the degrees add.
 
-Add two polynomials, or multiply them, and another polynomial comes back. The family is closed under both, which earns polynomials a name of their own in [rings](../09-Rings%20and%20Fields/01-rings.md).
+Add two polynomials, or multiply them, and another polynomial comes back. The family is closed under both, which earns polynomials a name of their own in [Rings](../09-Rings%20and%20Fields/01-rings.md).
 
 Now put the squaring pattern to work. Why is the flight symmetric, 15, 20, 15? Write the time as 2 + $s$, meaning $s$ seconds either side of the top, and expand the square with $a$ = 2 and $b$ = $s$:
 
@@ -142,7 +119,7 @@ The roots drop out of the second pattern. The ball is down when 20 − 5$s$^2 = 
 
 Put 4 in: 80 − 80 = 0. So $r$ = 4 is a root. The 4 is a time and the 0 is a height, and it is the time that gets the name. On the chart the roots are where the line meets the axis.
 
-The other route: leave 5t(4 − t) in brackets. A product is zero only when a piece of it is, so 5t = 0 or 4 − t = 0 — both roots by inspection. That is [factoring-quadratics](02-factoring-quadratics.md).
+The other route: leave 5t(4 − t) in brackets. A product is zero only when a piece of it is, so 5t = 0 or 4 − t = 0 — both roots by inspection. That is [Factoring](02-factoring-quadratics.md).
 
 ---
 
@@ -394,7 +371,7 @@ The two outputs match line for line.
 
 - **Anything thrown, dropped or fired.** Height against time is degree 2 whenever gravity is all that acts: same shape, different numbers.
 - **Spreadsheet trend lines.** The "polynomial fit" option is this: powers of one column, each with a number chosen to fit your data.
-- **Areas and volumes.** Write a shape's edges in one letter: its area is degree 2, its volume degree 3 — the box in [polynomial-division](04-polynomial-division.md).
+- **Areas and volumes.** Write a shape's edges in one letter: its area is degree 2, its volume degree 3 — the box in [Polynomial long division](04-polynomial-division.md).
 
 > **Say it back**
 > A polynomial is whole-number powers of one letter, each multiplied by a plain number, added up. The football's height 20t − 5t^2 is one: coefficients 20 and −5, degree 2. Put a number in and a number comes out: 15, 20, 15, 0 metres at 1, 2, 3 and 4 seconds. Add or multiply two of them and another polynomial comes back. A root is an input that makes the answer zero — here 0 and 4 seconds, the kick and the landing.
@@ -403,15 +380,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [letters-for-numbers](../01-Letters%20and%20Equations/01-letters-for-numbers.md): a letter standing for a number nobody has told you yet, and collecting like terms.
-- [exponents-and-powers](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): what t^2 means, and why these powers must be whole numbers.
-- [arithmetic-laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): the law that lets a bracket be multiplied out a term at a time.
+- [Letters for numbers](../01-Letters%20and%20Equations/01-letters-for-numbers.md): a letter standing for a number nobody has told you yet, and collecting like terms.
+- [Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): what t^2 means, and why these powers must be whole numbers.
+- [The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): the law that lets a bracket be multiplied out a term at a time.
 
 ## Where this goes next
 
-- [factoring-quadratics](02-factoring-quadratics.md): running the multiplying backwards into brackets, so the roots read straight off.
-- [polynomial-division](04-polynomial-division.md): dividing one polynomial by another, quotient and remainder, as with whole numbers.
-- [rings](../09-Rings%20and%20Fields/01-rings.md): the name for a family closed under adding and multiplying, which is Step 4's last fact.
+- [Factoring](02-factoring-quadratics.md): running the multiplying backwards into brackets, so the roots read straight off.
+- [Polynomial long division](04-polynomial-division.md): dividing one polynomial by another, quotient and remainder, as with whole numbers.
+- [Rings](../09-Rings%20and%20Fields/01-rings.md): the name for a family closed under adding and multiplying, which is Step 4's last fact.
 
 ---
 

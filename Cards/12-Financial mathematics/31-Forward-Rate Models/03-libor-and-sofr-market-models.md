@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Forward-Rate Models
-topic: Simulating the forward strip
-item: Market models
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/31-Forward-Rate Models/02-forward-measures-for-rates|forward-measures-for-rates]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/05-discretisation-schemes-for-sdes|discretisation-schemes-for-sdes]]"
-next:
-  - "[[Cards/12-Financial mathematics/31-Forward-Rate Models/04-calibrating-a-market-model|calibrating-a-market-model]]"
-  - "[[Cards/12-Financial mathematics/31-Forward-Rate Models/06-bermudan-swaptions-by-regression|bermudan-swaptions-by-regression]]"
-tags: [mathematics, financial mathematics, libor-and-sofr-market-models]
----
-
 # Market models: lognormal forward rates, the drift under one terminal measure, and simulation
 
-Financial mathematics → Forward-Rate Models → Simulating the forward strip → Market models
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Forward-Rate Models](../../../SYLLABUS.md#w12-s31) → Market models
 
 ---
 
@@ -56,7 +38,7 @@ Orange: drift in the unit of the terminal bond, paying at year 6. The last rate 
 
 ## The formula
 
-Notation first, in words. The ten rates are numbered 0 to 9; $L_i$ is rate number $i$. Two random shocks drive the whole curve, so each rate's volatility is a list of two numbers, one per shock, written $\sigma_i$. A raised dot between two such lists, $\sigma_i\cdot\sigma_j$, means multiply matching entries and add: it is the covariance per year of the two rates' logarithms. $Q^{T}$ names the **pricing rule** that uses the bond paying at date $T$ as its unit (the sibling card [forward-measures-for-rates](02-forward-measures-for-rates.md) builds it).
+Notation first, in words. The ten rates are numbered 0 to 9; $L_i$ is rate number $i$. Two random shocks drive the whole curve, so each rate's volatility is a list of two numbers, one per shock, written $\sigma_i$. A raised dot between two such lists, $\sigma_i\cdot\sigma_j$, means multiply matching entries and add: it is the covariance per year of the two rates' logarithms. $Q^{T}$ names the **pricing rule** that uses the bond paying at date $T$ as its unit (the sibling card [Forward measures](02-forward-measures-for-rates.md) builds it).
 
 The bond identity that defines a forward rate:
 
@@ -109,7 +91,7 @@ Conventions verified 28 Sep 2026: the UK regulator's announcement of 5 March 202
 
 ### Step 0: a forward rate is a price measured in another bond's unit
 
-$1 + \delta L_i$ is the $T_i$ bond's price divided by the $T_{i+1}$ bond's price. So it is the price of a traded thing, counted in units of another traded thing. The sibling card [forward-measures-for-rates](02-forward-measures-for-rates.md) proves that any traded price, counted in units of the $T_{i+1}$ bond, is a **fair bet** under $Q^{T_{i+1}}$: its expected future value equals its value today. A fair bet has no drift. That is the whole reason a market model exists: each rate has a unit in which it is driftless, and in that unit a lognormal law gives the market's Black-76 caplet formula.
+$1 + \delta L_i$ is the $T_i$ bond's price divided by the $T_{i+1}$ bond's price. So it is the price of a traded thing, counted in units of another traded thing. The sibling card [Forward measures](02-forward-measures-for-rates.md) proves that any traded price, counted in units of the $T_{i+1}$ bond, is a **fair bet** under $Q^{T_{i+1}}$: its expected future value equals its value today. A fair bet has no drift. That is the whole reason a market model exists: each rate has a unit in which it is driftless, and in that unit a lognormal law gives the market's Black-76 caplet formula.
 
 ### Step 1: the model is a choice; the caplet is its reward
 
@@ -154,11 +136,11 @@ Work on $[0, T_0]$, before any rate resets, with the natural history of the two-
 
 ### Step 5: the step, and why it is taken in logarithms
 
-By Itô's lemma, $\ln L_i$ moves by $(\mu_i - \frac12\sigma_i\cdot\sigma_i)\,dt + \sigma_i\cdot dW$. Over a step of length $h$ with fixed volatilities, the shock part is exactly $\sigma_i\cdot\Delta W$ and the half-variance part is exactly $\frac12\sigma_i\cdot\sigma_i\,h$. Only the drift part is unknown, because $\mu_i$ depends on where the whole curve wanders during the step. Plain Euler, in log form, uses the drift at the start. The trapezoid rule would average the drift at both ends, but the end is not known yet. The predictor supplies a trial end; the corrector averages. Because every update multiplies $L_i$ by an exponential, no step can make a rate negative. [discretisation-schemes-for-sdes](../06-Numerical%20Methods%20for%20Pricing/05-discretisation-schemes-for-sdes.md) explains why any time step is an approximation and how its error is measured.
+By Itô's lemma, $\ln L_i$ moves by $(\mu_i - \frac12\sigma_i\cdot\sigma_i)\,dt + \sigma_i\cdot dW$. Over a step of length $h$ with fixed volatilities, the shock part is exactly $\sigma_i\cdot\Delta W$ and the half-variance part is exactly $\frac12\sigma_i\cdot\sigma_i\,h$. Only the drift part is unknown, because $\mu_i$ depends on where the whole curve wanders during the step. Plain Euler, in log form, uses the drift at the start. The trapezoid rule would average the drift at both ends, but the end is not known yet. The predictor supplies a trial end; the corrector averages. Because every update multiplies $L_i$ by an exponential, no step can make a rate negative. [Stepping an SDE](../06-Numerical%20Methods%20for%20Pricing/05-discretisation-schemes-for-sdes.md) explains why any time step is an approximation and how its error is measured.
 
 ### The other door: the first bond's unit
 
-Count everything in the bond paying at $T_0$ instead. The exchange rate becomes $\prod_{j=0}^{i}(1+\delta L_j)^{-1}$, which involves the earlier rates and the rate itself, and the drift flips sign: $\mu_i = +\,\sigma_i\cdot\sum_{j=0}^{i} a_j\sigma_j$ (the green line in the chart). Different paths, different weights, same prices: the code prices the caplet and the swaption both ways and they agree within the noise. Modelling the swap rate itself as the lognormal quantity, instead of the forward rates, is [swap-market-model-in-outline](05-swap-market-model-in-outline.md); the continuous-maturity parent of this whole construction is [hjm-framework-and-the-drift-condition](01-hjm-framework-and-the-drift-condition.md).
+Count everything in the bond paying at $T_0$ instead. The exchange rate becomes $\prod_{j=0}^{i}(1+\delta L_j)^{-1}$, which involves the earlier rates and the rate itself, and the drift flips sign: $\mu_i = +\,\sigma_i\cdot\sum_{j=0}^{i} a_j\sigma_j$ (the green line in the chart). Different paths, different weights, same prices: the code prices the caplet and the swaption both ways and they agree within the noise. Modelling the swap rate itself as the lognormal quantity, instead of the forward rates, is [Swap market model](05-swap-market-model-in-outline.md); the continuous-maturity parent of this whole construction is [Heath-Jarrow-Morton](01-hjm-framework-and-the-drift-condition.md).
 
 ---
 
@@ -667,9 +649,9 @@ Euler's bias roughly halves each time the step halves. The corrector's is alread
 
 ## Where you meet it in real life
 
-- **Swaption and callable-swap desks.** Any payoff that depends on several rates at once is priced by simulating the strip in one unit, with these drifts. [bermudan-swaptions-by-regression](06-bermudan-swaptions-by-regression.md) adds the right to exercise on several dates.
-- **Calibration.** Setting the volatilities and correlations from quoted caplets and swaptions is [calibrating-a-market-model](04-calibrating-a-market-model.md).
-- **Correlated shocks.** Two shocks here; production models use three to ten, built from a correlation matrix by [correlated-paths-and-cholesky](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md).
+- **Swaption and callable-swap desks.** Any payoff that depends on several rates at once is priced by simulating the strip in one unit, with these drifts. [Bermudan swaptions](06-bermudan-swaptions-by-regression.md) adds the right to exercise on several dates.
+- **Calibration.** Setting the volatilities and correlations from quoted caplets and swaptions is [Calibrating a market model](04-calibrating-a-market-model.md).
+- **Correlated shocks.** Two shocks here; production models use three to ten, built from a correlation matrix by [Correlated paths](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md).
 - **The end of LIBOR.** The model was built for LIBOR, a rate banks submitted for unsecured loans. After the manipulation scandals regulators ended it; dollar markets moved to SOFR, an overnight rate on loans backed by US Treasury bonds, compounded through each period. The drift algebra survived; the timing of when a rate is known did not, and the forward market model of Lyashenko and Mercurio fills that gap.
 
 > **Say it back**
@@ -679,13 +661,13 @@ Euler's bias roughly halves each time the step halves. The corrector's is alread
 
 ## What this builds on
 
-- [forward-measures-for-rates](02-forward-measures-for-rates.md): the pricing rule that counts in one bond's units, and the proof that a forward rate is a fair bet in its own payment bond's unit. Step 0 rests on it.
-- [discretisation-schemes-for-sdes](../06-Numerical%20Methods%20for%20Pricing/05-discretisation-schemes-for-sdes.md): Euler stepping, log stepping, and the difference between the average error and the error on one path, which the error table measures.
+- [Forward measures](02-forward-measures-for-rates.md): the pricing rule that counts in one bond's units, and the proof that a forward rate is a fair bet in its own payment bond's unit. Step 0 rests on it.
+- [Stepping an SDE](../06-Numerical%20Methods%20for%20Pricing/05-discretisation-schemes-for-sdes.md): Euler stepping, log stepping, and the difference between the average error and the error on one path, which the error table measures.
 
 ## Where this goes next
 
-- [calibrating-a-market-model](04-calibrating-a-market-model.md): choosing the volatility lists and correlations so the simulated strip reprices quoted caplets and swaptions.
-- [bermudan-swaptions-by-regression](06-bermudan-swaptions-by-regression.md): the simulated strip, run past several reset dates, with an exercise decision at each one.
+- [Calibrating a market model](04-calibrating-a-market-model.md): choosing the volatility lists and correlations so the simulated strip reprices quoted caplets and swaptions.
+- [Bermudan swaptions](06-bermudan-swaptions-by-regression.md): the simulated strip, run past several reset dates, with an exercise decision at each one.
 
 ---
 

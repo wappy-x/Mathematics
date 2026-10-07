@@ -1,32 +1,12 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Changing Measure
-topic: When weights leak
-item: Novikov
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/02-girsanov-theorem|girsanov-theorem]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/06-brownian-martingales-and-exponential-martingale|brownian-martingales-and-exponential-martingale]]"
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/06-uniform-integrability-and-unbounded-stopping|uniform-integrability-and-unbounded-stopping]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/04-martingale-representation-theorem|martingale-representation-theorem]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/05-change-of-numeraire|change-of-numeraire]]"
-tags: [mathematics, stochastic processes and calculus, novikov-condition]
----
-
 # Novikov: when the exponential martingale is a true martingale
 
-Stochastic processes and calculus → Changing Measure → When weights leak → Novikov
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Changing Measure](../../../SYLLABUS.md#w11-s07) → Novikov
 
 ---
 
 ## General Overview
 
-A share drifts up 8 percent a year with volatility 20 percent. A trader prices it as if it drifted 5 percent. Girsanov's theorem ([girsanov-theorem](02-girsanov-theorem.md)) builds the trader's world by giving every possible path of the share a weight, a positive number, and averaging with the weights. Paths that rose a lot get light weights; paths that fell get heavy ones. The real-world drift of 8 percent becomes 5 percent under the weighted average, and the volatility stays 20 percent.
+A share drifts up 8 percent a year with volatility 20 percent. A trader prices it as if it drifted 5 percent. Girsanov's theorem ([Girsanov](02-girsanov-theorem.md)) builds the trader's world by giving every possible path of the share a weight, a positive number, and averaging with the weights. Paths that rose a lot get light weights; paths that fell get heavy ones. The real-world drift of 8 percent becomes 5 percent under the weighted average, and the volatility stays 20 percent.
 
 That only works if the weights average exactly 1. Weights are chances in disguise: a weighted world whose chances add up to 0.68 is not a world. For the share, the weights do average 1, and the check is one line. Now let the tilt that sets the weights grow as the path goes. Grow it slowly and nothing goes wrong. Grow it fast enough, so that the extra drift it adds feeds on itself, and the weights average 0.682689 after one year. About 32 percent of the probability has leaked away. The leak rides on ever rarer paths whose weights climb ever higher, and vanishes with them.
 
@@ -54,7 +34,7 @@ The falling line is tilt C below, the tilt that feeds on the weight: its weights
 
 ## The formula
 
-Notation first, with one-line reminders. Time $t$ is in years and runs to a horizon $T$. $W_t$ is Brownian motion under the real-world measure $P$, and $E$ averages under $P$. A second measure $Q$, with averages $E^Q$, is the reweighted world of [change-of-measure-and-density-processes](01-change-of-measure-and-density-processes.md). The filtration $\mathcal{F}_t$ is what is known by time t. The tilt $\theta_t$ is any amount chosen using only what is known by time t. Its weight process is
+Notation first, with one-line reminders. Time $t$ is in years and runs to a horizon $T$. $W_t$ is Brownian motion under the real-world measure $P$, and $E$ averages under $P$. A second measure $Q$, with averages $E^Q$, is the reweighted world of [Changing the measure](01-change-of-measure-and-density-processes.md). The filtration $\mathcal{F}_t$ is what is known by time t. The tilt $\theta_t$ is any amount chosen using only what is known by time t. Its weight process is
 
 $$Z_t = \exp\!\Big(-\int_0^t \theta_s\,dW_s - \tfrac12\int_0^t \theta_s^2\,ds\Big), \qquad dZ_t = -\theta_t Z_t\,dW_t, \qquad Z_0 = 1.$$
 
@@ -104,7 +84,7 @@ The weight has no dt term: over each short step its average change is zero. A fa
 
 ### Step 1: the weight is fair up to any cap
 
-For each n let $\tau_n$ be the first time the running total $\int_0^t \theta_s^2 Z_s^2\,ds$ reaches n (or T if it never does). Stopped there, the Ito integral $Z_{t \wedge \tau_n} - 1 = -\int_0^{t\wedge\tau_n}\theta_s Z_s\,dW_s$ has a finite second moment, so it is a true martingale ([ito-integral](../06-Ito%20Calculus/01-ito-integral.md)). Here $t \wedge \tau_n$ means whichever comes first. So $E[Z_{t\wedge\tau_n}] = 1$ for every n. A process that is a martingale once stopped at such a sequence of times, rising to the end, is called a **local martingale**.
+For each n let $\tau_n$ be the first time the running total $\int_0^t \theta_s^2 Z_s^2\,ds$ reaches n (or T if it never does). Stopped there, the Ito integral $Z_{t \wedge \tau_n} - 1 = -\int_0^{t\wedge\tau_n}\theta_s Z_s\,dW_s$ has a finite second moment, so it is a true martingale ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)). Here $t \wedge \tau_n$ means whichever comes first. So $E[Z_{t\wedge\tau_n}] = 1$ for every n. A process that is a martingale once stopped at such a sequence of times, rising to the end, is called a **local martingale**.
 
 ### Step 2: the weights average at most 1
 
@@ -143,7 +123,7 @@ Tilt A passes at once. A constant tilt gives $\int_0^T\theta^2dt = \theta^2T$, a
 
 Take $\theta_t = -Z_t$, so $dZ_t = Z_t^2\,dW_t$. Under the would-be Q, W gains the drift $+Z_t$, and the weight's own equation becomes $dZ_t = Z_t^3\,dt + Z_t^2\,d\widetilde W_t$. Drop the noise and $dy = y^3dt$ from 1 gives $y = 1/\sqrt{1 - 2t}$, which blows up at 0.50 years. The drift grows too fast. The noise does not save it.
 
-The reciprocal makes it exact. Ito's lemma ([itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md)) with $f(z) = 1/z$, $f'(z) = -1/z^2$, $f''(z) = 2/z^3$:
+The reciprocal makes it exact. Ito's lemma ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)) with $f(z) = 1/z$, $f'(z) = -1/z^2$, $f''(z) = 2/z^3$:
 
 $$dR_t = -\frac{dZ_t}{Z_t^2} + \frac{(dZ_t)^2}{Z_t^3} = -dW_t + Z_t\,dt = -\big(dW_t - Z_t\,dt\big) = -d\widetilde W_t.$$
 
@@ -151,7 +131,7 @@ Under Q, $R_t = 1/Z_t$ is a Brownian motion started at 1. Brownian motion from 1
 
 1. **Cap the weight.** Let $\tau_n$ be the first time $Z_t = n$. The stopped weight lies between 0 and n, so its tilt is bounded and Novikov holds: $Q_n(A) = E[Z_{T\wedge\tau_n}1_A]$ is a probability.
 2. **Under the capped measure, R is Brownian.** By Girsanov under $Q_n$, $\widetilde W$ is Brownian until $\tau_n$, so R is a Brownian motion from 1 until it reaches $1/n$.
-3. **Reflection.** By [reflection-principle-and-running-maximum](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md), a Brownian motion from 1 stays above $1/n$ through T with chance $2\Phi((1 - 1/n)/\sqrt{T}) - 1$.
+3. **Reflection.** By [Reflection principle](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md), a Brownian motion from 1 stays above $1/n$ through T with chance $2\Phi((1 - 1/n)/\sqrt{T}) - 1$.
 4. **Split the average of 1.** $1 = E[Z_{T\wedge\tau_n}] = E[Z_T\,1_{\{\tau_n > T\}}] + n\,P(\tau_n \le T)$. The first term is $Q_n(\tau_n > T)$, the chance in point 3.
 5. **Let the cap rise.** The second term tends to $2 - 2\Phi(1/\sqrt{T})$, which stays positive, so $P(\tau_n \le T)$ falls like $1/n$: under P the weight never blows up. Monotone convergence (wing 10) gives $E[Z_T] = 2\Phi(1/\sqrt{T}) - 1$.
 
@@ -612,7 +592,7 @@ The two outputs agree line for line.
 
 ## Where you meet it in real life
 
-- **Black-Scholes pricing.** The share's constant tilt passes in one line, which is why [black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) can switch from 8 percent to 5 percent without a second thought.
+- **Black-Scholes pricing.** The share's constant tilt passes in one line, which is why [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) can switch from 8 percent to 5 percent without a second thought.
 - **Stochastic volatility and short-rate models.** The market price of risk depends on the state, Novikov's average is often infinite, and modellers prove the weights are a martingale by the direct route of Step 6 instead.
 - **Price bubbles.** The process $dZ_t = Z_t^2\,dW_t$ is the standard example of a strict local martingale. Used as a price under a risk-neutral measure, it is a price that is fair over each instant yet expected to fall: the textbook model of a bubble.
 - **Importance sampling.** Simulating under a tilted measure and multiplying by the weight is unbiased only if the weights average 1; a leaking tilt biases every estimate low.
@@ -624,17 +604,17 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [girsanov-theorem](02-girsanov-theorem.md): the weight process and the shifted Brownian motion this card certifies.
-- [brownian-martingales-and-exponential-martingale](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md): the constant-tilt case, a true martingale by a direct Gaussian average.
-- [uniform-integrability-and-unbounded-stopping](../02-Martingales/06-uniform-integrability-and-unbounded-stopping.md): why a fair game can lose its average at the limit.
-- [itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md): the reciprocal $1/Z$ and the integral of W against itself.
+- [Girsanov](02-girsanov-theorem.md): the weight process and the shifted Brownian motion this card certifies.
+- [Brownian martingales](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md): the constant-tilt case, a true martingale by a direct Gaussian average.
+- [Stopping without a bound](../02-Martingales/06-uniform-integrability-and-unbounded-stopping.md): why a fair game can lose its average at the limit.
+- [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md): the reciprocal $1/Z$ and the integral of W against itself.
 
 ---
 
 ## Where this goes next
 
-- [martingale-representation-theorem](04-martingale-representation-theorem.md): every Q-martingale is an Ito integral, which turns a certified change of measure into a hedge.
-- [change-of-numeraire](05-change-of-numeraire.md): weights built from a traded asset's price, where the martingale property is the asset's own fairness.
+- [Martingale representation](04-martingale-representation-theorem.md): every Q-martingale is an Ito integral, which turns a certified change of measure into a hedge.
+- [Change of numeraire](05-change-of-numeraire.md): weights built from a traded asset's price, where the martingale property is the asset's own fairness.
 
 With the weights certified, the open question is what the reweighted world buys: which payoffs can be built from the share and cash, and at what cost.
 

@@ -1,29 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Returns and Utility
-topic: Measuring growth
-item: Returns
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/10-percentages|percentages]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/05-natural-log-and-doubling-time|natural-log-and-doubling-time]]"
-next:
-  - "[[Cards/12-Financial mathematics/36-Returns and Utility/02-expected-utility-and-risk-aversion|expected-utility-and-risk-aversion]]"
-  - "[[Cards/12-Financial mathematics/36-Returns and Utility/05-kelly-criterion-and-growth|kelly-criterion-and-growth]]"
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/01-two-asset-portfolio-risk-and-return|two-asset-portfolio-risk-and-return]]"
-  - "[[Cards/12-Financial mathematics/38-Performance and Multi-Period/01-sharpe-information-and-drawdown|sharpe-information-and-drawdown]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - returns-simple-log-and-annualised
----
-
 # Returns: simple, log, and annualised, and when they differ
 
-Financial mathematics → Returns and Utility → Measuring growth → Returns
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Returns and Utility](../../../SYLLABUS.md#w12-s36) → Returns
 
 ---
 
@@ -61,7 +38,7 @@ The zigzag is the price. The flat line at $100 is what an average return of zero
 
 ## The formula
 
-Notation first, in words. $P_0$ is the price at the start of a period and $P_1$ the price at its end. $\ln$ is the natural logarithm ([natural-log-and-doubling-time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)), and $e$ is its base, so that $\ln e^{x} = x$.
+Notation first, in words. $P_0$ is the price at the start of a period and $P_1$ the price at its end. $\ln$ is the natural logarithm ([Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)), and $e$ is its base, so that $\ln e^{x} = x$.
 
 $$R = \frac{P_1 - P_0}{P_0}, \qquad r = \ln\frac{P_1}{P_0} = \ln(1 + R), \qquad R = e^{r} - 1$$
 
@@ -125,7 +102,7 @@ Averages and spreads are built for sums. The logarithm turns a product into a su
 
 ### Step 1: the conversion, and where the two kinds part
 
-From the definitions, $r = \ln(1 + R)$. The series for the log near 1 ([natural-log-and-doubling-time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)) gives
+From the definitions, $r = \ln(1 + R)$. The series for the log near 1 ([Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)) gives
 
 $$r = R - \tfrac12 R^2 + \tfrac13 R^3 - \cdots$$
 
@@ -188,7 +165,7 @@ Compounded, the growth rate is $e^{g} - 1 = \sqrt{0.99} - 1 = -0.5013\%$ a month
 <details>
 <summary>The same drag in continuous time</summary>
 
-A price that wiggles continuously, with average simple growth $\mu$ a year and spread $\sigma$, is modelled as geometric Brownian motion ([geometric-brownian-motion-for-prices](../05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md)). Its log grows at $\mu - \tfrac12\sigma^2$, exactly, with no approximation left. That is the drag of Step 4 with the months shrunk to nothing, and it is the $-\tfrac12\sigma^2$ inside the Black–Scholes formula ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
+A price that wiggles continuously, with average simple growth $\mu$ a year and spread $\sigma$, is modelled as geometric Brownian motion ([Prices as geometric Brownian motion](../05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md)). Its log grows at $\mu - \tfrac12\sigma^2$, exactly, with no approximation left. That is the drag of Step 4 with the months shrunk to nothing, and it is the $-\tfrac12\sigma^2$ inside the Black–Scholes formula ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
 
 </details>
 
@@ -275,7 +252,7 @@ Each year of the median path costs 6.03% in logs, the same slice every year. So 
 
 The drift grows as $n$. The spread grows as $\sqrt{n}$. Whatever their sizes, the one that grows as $n$ wins in the end. The drift catches the spread when $n |g| = \sigma\sqrt{n}$, that is at $n = (\sigma/g)^2$ = 398.7 months, about 33.2 years. Before that, luck can easily outweigh the drag. After it, a typical piece of luck no longer covers it, and the chance of ending below $100 keeps climbing toward certainty.
 
-The average holds at $100 throughout because a thinning set of lucky paths ends enormously rich. Few holders ever live on one of them. That split between the average and the typical is what the growth-optimal staking rule in [kelly-criterion-and-growth](05-kelly-criterion-and-growth.md) is built on.
+The average holds at $100 throughout because a thinning set of lucky paths ends enormously rich. Few holders ever live on one of them. That split between the average and the typical is what the growth-optimal staking rule in [Kelly](05-kelly-criterion-and-growth.md) is built on.
 
 ---
 
@@ -748,9 +725,9 @@ The two outputs match line for line.
 
 - **Fund reports.** A fund's annualised return over several years is the compound rate $(1 + R_{\text{total}})^{1/T} - 1$. It sits below the average of the yearly returns, and the gap is the drag.
 - **Risk reports.** Desks measure spread on daily returns and multiply by √252 to quote it per year. A house fund with a 15% annual spread moves about 4.33% in a typical month and 0.945% on a typical day. Conventions verified 28 Sep 2026: 252 is the usual count of trading days; NYSE's published 2026 calendar gives 261 weekdays less 10 holidays, 251 trading days.
-- **Choosing between a deposit and a fund.** A saver weighs a 4% deposit against a fund with an 8% average return and a 15% spread. The fund's growth rate is about 8% − ½ × 0.15^2 = 6.875% a year, not 8%. How to weigh that against the risk is the work of [expected-utility-and-risk-aversion](02-expected-utility-and-risk-aversion.md) and [certainty-equivalent-and-risk-premium](03-certainty-equivalent-and-risk-premium.md).
+- **Choosing between a deposit and a fund.** A saver weighs a 4% deposit against a fund with an 8% average return and a 15% spread. The fund's growth rate is about 8% − ½ × 0.15^2 = 6.875% a year, not 8%. How to weigh that against the risk is the work of [Expected utility](02-expected-utility-and-risk-aversion.md) and [Risk premium](03-certainty-equivalent-and-risk-premium.md).
 - **Leveraged funds that reset daily.** A fund that doubles each day's move turns a 10% bounce into a 20% one, and the drag grows with the square of the move: in the try-changing run, up 20 then down 20 left $96.00.
-- **Option pricing.** The log of a share's price is what the Black–Scholes model treats as a bell curve, and its drift carries the $-\tfrac12\sigma^2$ of Step 4 ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
+- **Option pricing.** The log of a share's price is what the Black–Scholes model treats as a bell curve, and its drift carries the $-\tfrac12\sigma^2$ of Step 4 ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
 
 > **Say it back**
 > A simple return is the change over the start; a log return is the log of end over start, and one converts to the other through the growth factor. Growth factors multiply over time, so log returns add over time, while simple returns add across the holdings of a portfolio. With independent months, the average scales with the number of months and the spread with its square root. Bouncing costs growth: up and down by the same fraction loses its square, and in general the growth rate is about the average return less half the squared spread. So a share that goes up 10 and down 10 ends at $99.
@@ -759,17 +736,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): a simple return is a percentage change, and a percentage of a bigger base is a bigger amount.
-- [natural-log-and-doubling-time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md): the natural log, which turns growth factors into amounts that add.
+- [Percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): a simple return is a percentage change, and a percentage of a bigger base is a bigger amount.
+- [Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md): the natural log, which turns growth factors into amounts that add.
 
 ## Where this goes next
 
-- [expected-utility-and-risk-aversion](02-expected-utility-and-risk-aversion.md): how to rank uncertain outcomes when the average and the typical disagree.
-- [kelly-criterion-and-growth](05-kelly-criterion-and-growth.md): the drag turned into a rule for how much to stake.
-- [two-asset-portfolio-risk-and-return](../37-Portfolio%20Theory/01-two-asset-portfolio-risk-and-return.md): simple returns combined across holdings, and how two spreads combine.
-- [sharpe-information-and-drawdown](../38-Performance%20and%20Multi-Period/01-sharpe-information-and-drawdown.md): return per unit of spread, annualised with the square root of time.
+- [Expected utility](02-expected-utility-and-risk-aversion.md): how to rank uncertain outcomes when the average and the typical disagree.
+- [Kelly](05-kelly-criterion-and-growth.md): the drag turned into a rule for how much to stake.
+- [Two assets](../37-Portfolio%20Theory/01-two-asset-portfolio-risk-and-return.md): simple returns combined across holdings, and how two spreads combine.
+- [Performance measures](../38-Performance%20and%20Multi-Period/01-sharpe-information-and-drawdown.md): return per unit of spread, annualised with the square root of time.
 
-This card measures growth and spread but does not say which a person should prefer when they pull against each other, a 4% deposit or a fund growing at 6.875% with a 15% spread; [expected-utility-and-risk-aversion](02-expected-utility-and-risk-aversion.md) answers that.
+This card measures growth and spread but does not say which a person should prefer when they pull against each other, a 4% deposit or a fund growing at 6.875% with a 15% spread; [Expected utility](02-expected-utility-and-risk-aversion.md) answers that.
 
 ---
 

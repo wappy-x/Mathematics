@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Everyday Arithmetic
-topic: Fractions, decimals and percentages
-item: Ratios and rates
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/07-fractions|fractions]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/08-decimals|decimals]]"
-next:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/10-percentages|percentages]]"
-tags:
-  - mathematics
-  - foundations
-  - ratios-and-rates
----
-
 # Ratios and rates: comparing two quantities and scaling them together
 
-Foundations → Everyday Arithmetic → Fractions, decimals and percentages → Ratios and rates
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Everyday Arithmetic](../../../SYLLABUS.md#w01-s01) → Ratios and rates
 
 ---
 
@@ -74,7 +54,7 @@ Making a rate:
 
 ### Step 0: a ratio only cares about relative size
 
-9 litres of blue with 6 of white is the same colour as 3 with 2: both sides were multiplied by 3, so nothing shifted between them. **Both sides, same number** — the whole engine, and the cancelling move from [fractions](07-fractions.md).
+9 litres of blue with 6 of white is the same colour as 3 with 2: both sides were multiplied by 3, so nothing shifted between them. **Both sides, same number** — the whole engine, and the cancelling move from [Fractions](07-fractions.md).
 
 ### Step 1: find what one part is worth
 
@@ -88,7 +68,7 @@ Making a rate:
 
 Blue paint sells at 3 litres for $2.25. Per litre, 2.25 ÷ 3 = $0.75, so twelve litres cost 12 × 0.75 = **$9.00**. Second road, no unit price: twelve litres is four lots of three, and 4 × $2.25 = **$9.00**.
 
-School calls two equal fractions a proportion; same move. A ratio with its bottom amount pinned at 100 is a percentage: [percentages](10-percentages.md).
+School calls two equal fractions a proportion; same move. A ratio with its bottom amount pinned at 100 is a percentage: [Percentages](10-percentages.md).
 
 ---
 
@@ -264,12 +244,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [fractions](07-fractions.md): reducing 9 : 6 to 3 : 2 is the cancelling move, done to a ratio.
-- [decimals](08-decimals.md): the numbers rarely land whole — 1.5 hours in, $0.75 a litre out.
+- [Fractions](07-fractions.md): reducing 9 : 6 to 3 : 2 is the cancelling move, done to a ratio.
+- [Decimals](08-decimals.md): the numbers rarely land whole — 1.5 hours in, $0.75 a litre out.
 
 ## Where this goes next
 
-- [percentages](10-percentages.md): a ratio with its bottom amount pinned at 100, which is what makes percentages comparable across everything.
+- [Percentages](10-percentages.md): a ratio with its bottom amount pinned at 100, which is what makes percentages comparable across everything.
 
 ---
 

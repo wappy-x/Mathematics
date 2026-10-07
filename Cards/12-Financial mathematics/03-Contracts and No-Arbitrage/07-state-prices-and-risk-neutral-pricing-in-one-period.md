@@ -1,31 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Contracts and No-Arbitrage
-topic: Pricing state by state
-item: State prices
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/06-replication-and-self-financing|replication-and-self-financing]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/02-expectation|expectation]]"
-next:
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/01-one-step-binomial-replication|one-step-binomial-replication]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/02-risk-neutral-measure-and-the-fundamental-theorems|risk-neutral-measure-and-the-fundamental-theorems]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/01-garman-kohlhagen|garman-kohlhagen]]"
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/01-quanto-forward-and-adjustment|quanto-forward-and-adjustment]]"
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/09-market-implied-versus-historical-default-probability|market-implied-versus-historical-default-probability]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - state-prices-and-risk-neutral-pricing-in-one-period
----
-
 # State prices: the price of one unit in each future state, and the fake probabilities they become
 
-Financial mathematics → Contracts and No-Arbitrage → Pricing state by state → State prices
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Contracts and No-Arbitrage](../../../SYLLABUS.md#w12-s03) → State prices
 
 ---
 
@@ -84,7 +59,7 @@ $$q_u = \frac{\psi_u}{D}, \qquad q_d = \frac{\psi_d}{D}, \qquad V_0 = D\,\bigl(q
 
 **Read it aloud:** scale the state prices so they add to one, and the price is the average payment, discounted back to today.
 
-That last line is the sentence quoted everywhere in finance: a price is a discounted expected payoff, where "expected" means averaged with $q_u$ and $q_d$, not with anything a forecaster would recognise ([expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md)).
+That last line is the sentence quoted everywhere in finance: a price is a discounted expected payoff, where "expected" means averaged with $q_u$ and $q_d$, not with anything a forecaster would recognise ([Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -115,7 +90,7 @@ That last line is the sentence quoted everywhere in finance: a price is a discou
 
 A contract paying $H_u$ up and $H_d$ down is $H_u$ up tickets and $H_d$ down tickets, with nothing left over: the call is twenty up tickets, a put struck at 100.00 is ten down tickets, Acme itself is 120.00 up tickets plus 90.00 down tickets, and a sure dollar is one of each.
 
-Price the two tickets and the market is priced. The step is legal because two contracts paying the same in every state cost the same today ([no-arbitrage-and-the-law-of-one-price](02-no-arbitrage-and-the-law-of-one-price.md)).
+Price the two tickets and the market is priced. The step is legal because two contracts paying the same in every state cost the same today ([No arbitrage](02-no-arbitrage-and-the-law-of-one-price.md)).
 
 ### Step 1: the two prices already quoted fix the two ticket prices
 
@@ -129,7 +104,7 @@ Here the bank turns 20 into 21, so a sure dollar costs 20/21 exactly and working
 
 A ticket never pays less than nothing and sometimes pays 1.00. If its price were zero or below, buying it would be free or would pay the buyer, and could only return money: free money, which no market allows for long.
 
-The reverse holds too, and matters more. If both state prices are positive then every price is a positive mix of payments, so a contract that never pays less than zero cannot cost less than zero: no free money anywhere in the market. That two-way link — **no arbitrage exactly when every state price is positive** — is the theorem this card exists for, and in the literature it is the first fundamental theorem of asset pricing ([risk-neutral-measure-and-the-fundamental-theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)).
+The reverse holds too, and matters more. If both state prices are positive then every price is a positive mix of payments, so a contract that never pays less than zero cannot cost less than zero: no free money anywhere in the market. That two-way link — **no arbitrage exactly when every state price is positive** — is the theorem this card exists for, and in the literature it is the first fundamental theorem of asset pricing ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)).
 
 <details>
 <summary>Detailed proof: positive state prices and free money are exact opposites</summary>
@@ -171,7 +146,7 @@ Acme's payments average, under the new weights, to 0.500000 × 120.00 + 0.500000
 
 A world where every asset is expected to earn the bank rate is one where nobody charges for taking risk: a **risk-neutral** world, which is where the name comes from. The real Acme is not expected to earn 5.00 percent: under a 0.70 chance of the up state it averages 111.000000 in a year, an 11.00 percent return. No forecast entered any equation above, which is why a bull and a bear quote the same price.
 
-The other route to the same number is [replication-and-self-financing](06-replication-and-self-financing.md): copy the contract with shares and cash, and the copy's cost is the price. The two roads must agree, since each ticket is itself a copy: 0.033333 shares and −2.857143 of cash pay 1.00 in the up state and nothing in the down state, at a cost of 0.476190. The call is twenty of those.
+The other route to the same number is [Replication](06-replication-and-self-financing.md): copy the contract with shares and cash, and the copy's cost is the price. The two roads must agree, since each ticket is itself a copy: 0.033333 shares and −2.857143 of cash pay 1.00 in the up state and nothing in the down state, at a cost of 0.476190. The call is twenty of those.
 
 ---
 
@@ -641,10 +616,10 @@ The two outputs match line for line, flips included: the generator is written ou
 ## Where you meet it in real life
 
 - **Prediction markets.** A contract paying $1.00 if a named event happens is an up ticket, and its quoted price is a state price. Dividing by the discount factor is the step the press skips when it reports that price as "the market's probability".
-- **Digital options.** A cash-or-nothing digital pays a fixed amount above a strike and nothing below: a ticket sold on a desk. A strip of them across every level is how option prices imply a distribution, which is where [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) ends up.
-- **Credit.** A credit default swap quote is the market's price for a dollar paid in the state where a company fails. The gap between that and the odds counted from company histories is a standing feature, not a mistake: [market-implied-versus-historical-default-probability](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md).
-- **Two currencies at once.** State prices are quoted in a currency, so a contract settling in another needs that currency's tickets: [garman-kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md) — and [quanto-forward-and-adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md) when the payoff is in one currency but the asset in another.
-- **Forwards on this shelf.** The contract paying 15.00 up and −15.00 down prices at 0.000000, so the forward price here is 105.00: Acme carried at this card's bank, with no dividend. [forward-price-by-cash-and-carry](03-forward-price-by-cash-and-carry.md) runs the same carry argument with the wing's continuous rate and a 2 percent dividend, and [forward-value-after-inception](04-forward-value-after-inception.md) revalues it later.
+- **Digital options.** A cash-or-nothing digital pays a fixed amount above a strike and nothing below: a ticket sold on a desk. A strip of them across every level is how option prices imply a distribution, which is where [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) ends up.
+- **Credit.** A credit default swap quote is the market's price for a dollar paid in the state where a company fails. The gap between that and the odds counted from company histories is a standing feature, not a mistake: [Two default probabilities](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md).
+- **Two currencies at once.** State prices are quoted in a currency, so a contract settling in another needs that currency's tickets: [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md) — and [The quanto adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md) when the payoff is in one currency but the asset in another.
+- **Forwards on this shelf.** The contract paying 15.00 up and −15.00 down prices at 0.000000, so the forward price here is 105.00: Acme carried at this card's bank, with no dividend. [Forward price](03-forward-price-by-cash-and-carry.md) runs the same carry argument with the wing's continuous rate and a 2 percent dividend, and [An old forward](04-forward-value-after-inception.md) revalues it later.
 
 > **Say it back**
 > A state price is what one dollar costs today if it is paid in one future state and nowhere else. Two endings, two traded prices, two state prices: here 0.476190 and 0.476190. Every contract is a pile of the two tickets, so its price is its payments weighted by those numbers. The state prices add to the price of a sure dollar, 0.952381; divide by that and they become weights adding to one, so the price reads as a discounted average. Those weights make Acme average the bank's return, which is why they are called risk-neutral — and no forecast enters any price here.
@@ -653,19 +628,19 @@ The two outputs match line for line, flips included: the generator is written ou
 
 ## What this builds on
 
-- [replication-and-self-financing](06-replication-and-self-financing.md): the share-and-cash copy of a payoff, and why its cost is the payoff's price. Each ticket here is one of those copies, and the code's second road.
-- [expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md): weighting outcomes and adding them up, the operation the rescaled state prices are borrowed for.
-- [no-arbitrage-and-the-law-of-one-price](02-no-arbitrage-and-the-law-of-one-price.md): two contracts paying the same in every state cost the same — used in Step 0 and Step 2.
-- [payoffs-and-positions](01-payoffs-and-positions.md): reading a contract as what it pays in each ending, the column of numbers this card weights.
+- [Replication](06-replication-and-self-financing.md): the share-and-cash copy of a payoff, and why its cost is the payoff's price. Each ticket here is one of those copies, and the code's second road.
+- [Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md): weighting outcomes and adding them up, the operation the rescaled state prices are borrowed for.
+- [No arbitrage](02-no-arbitrage-and-the-law-of-one-price.md): two contracts paying the same in every state cost the same — used in Step 0 and Step 2.
+- [Payoffs](01-payoffs-and-positions.md): reading a contract as what it pays in each ending, the column of numbers this card weights.
 
 ## Where this goes next
 
-- [one-step-binomial-replication](../04-Binomial%20Trees/01-one-step-binomial-replication.md): the same step written as the building block of a tree, ready to be stacked.
-- [risk-neutral-measure-and-the-fundamental-theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md): Step 2 in general — positive state prices in any finite market, and what changes when the market is incomplete.
-- [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the same average taken over a continuum of endings instead of two.
-- [garman-kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): two bank accounts, one in each currency, and the state prices that serve both.
-- [quanto-forward-and-adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): what happens to the weights when the payoff is paid in the wrong currency.
-- [market-implied-versus-historical-default-probability](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md): the gap between a market-implied weight and a counted frequency, in the market where it is largest.
+- [One step](../04-Binomial%20Trees/01-one-step-binomial-replication.md): the same step written as the building block of a tree, ready to be stacked.
+- [The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md): Step 2 in general — positive state prices in any finite market, and what changes when the market is incomplete.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the same average taken over a continuum of endings instead of two.
+- [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): two bank accounts, one in each currency, and the state prices that serve both.
+- [The quanto adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): what happens to the weights when the payoff is paid in the wrong currency.
+- [Two default probabilities](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md): the gap between a market-implied weight and a counted frequency, in the market where it is largest.
 
 Two endings can be priced by two assets; real markets have thousands of endings and nothing like thousands of independent contracts, which is the question the next shelf opens by stacking this single step into a tree.
 

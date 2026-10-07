@@ -1,24 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Derivatives
-topic: Rates of a turning crank
-item: Derivatives of sine and cosine
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/03-chain-rule|chain-rule]]"
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/03-trig-identities|trig-identities]]"
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/08-small-angles-and-the-sine-bound|small-angles-and-the-sine-bound]]"
-next:
-  - "[[Cards/06-Calculus and analysis/04-Integrals/06-trig-substitution|trig-substitution]]"
-tags: [mathematics, calculus and analysis, derivatives-of-trig-functions]
----
-
 # Derivatives of sine and cosine: why the derivative of sine is cosine
 
-Calculus and analysis → Derivatives → Rates of a turning crank → Derivatives of sine and cosine
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Derivatives](../../../SYLLABUS.md#w06-s02) → Derivatives of sine and cosine
 
 ---
 
@@ -55,7 +37,7 @@ The line starting at 0 is the height, 4 sin x cm. The line starting at 4 is its 
 
 ## The formula
 
-A reminder of notation: the derivative of f at x, written f'(x) or dy/dx and read "the rate of y per unit of x", is the limit of the rise over the run, (f(x + h) − f(x))/h, as the step h heads for 0 ([the-derivative](01-the-derivative.md)). d/dx in front of a function means its derivative, with x as the input.
+A reminder of notation: the derivative of f at x, written f'(x) or dy/dx and read "the rate of y per unit of x", is the limit of the rise over the run, (f(x + h) − f(x))/h, as the step h heads for 0 ([The derivative](01-the-derivative.md)). d/dx in front of a function means its derivative, with x as the input.
 
 $$\frac{d}{dx}\sin x = \cos x, \qquad \frac{d}{dx}\cos x = -\sin x$$
 
@@ -81,7 +63,7 @@ For the piston, with arm length r, $y = r\sin x$, so dy/dx = r cos x cm per radi
 ### When it holds
 
 - **The angle is in radians.** The sandwich uses a slice of a radius-1 circle having area h/2, true only in radians. In degrees, sine's rate at 0 is 0.017453, not 1.
-- **The addition formula holds for every pair of angles** ([trig-identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)), so sine and cosine have a rate at every angle.
+- **The addition formula holds for every pair of angles** ([Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)), so sine and cosine have a rate at every angle.
 - **Tangent and secant need cos x not zero.** At 90° neither has a value, so neither has a rate: rise over run from 0.01 below 90° to 0.01 above reads −9999.67, though tangent climbs wherever it is defined.
 - **For speeds, the angle must change smoothly in time.** The chain rule needs x to have its own rate; a jerking crank has no speed at the jerk.
 
@@ -101,7 +83,7 @@ At 30° with h = 0.1: 0.500000 × (−0.049958) + 0.866025 × 0.998334 = 0.83960
 
 ### Step 1: the sandwich sends (sin h)/h to 1
 
-For h between 0 and a right angle, in radians, [small-angles-and-the-sine-bound](../../05-Geometry%20and%20trig/03-Trigonometry/08-small-angles-and-the-sine-bound.md) nests a triangle inside a slice of circle inside a larger triangle and reads off
+For h between 0 and a right angle, in radians, [Small angles](../../05-Geometry%20and%20trig/03-Trigonometry/08-small-angles-and-the-sine-bound.md) nests a triangle inside a slice of circle inside a larger triangle and reads off
 
 $$\sin h < h < \tan h$$
 
@@ -117,7 +99,7 @@ The half-angle identity gives $1 - \cos h = 2\sin^2(h/2)$. The sandwich says sin
 
 $$0 < \frac{1 - \cos h}{h} < \frac{h}{2}$$
 
-For negative h the quotient flips sign but keeps its size. It is squeezed to 0 ([limit-laws-and-the-squeeze](../01-Limits%20and%20Continuity/04-limit-laws-and-the-squeeze.md)). At h = 0.01, (cos h − 1)/h is −0.005000, a hair inside the bound.
+For negative h the quotient flips sign but keeps its size. It is squeezed to 0 ([Limit laws and the squeeze](../01-Limits%20and%20Continuity/04-limit-laws-and-the-squeeze.md)). At h = 0.01, (cos h − 1)/h is −0.005000, a hair inside the bound.
 
 ### Step 3: sine's rate is cosine
 
@@ -137,13 +119,13 @@ The pin's sideways reach, 4 cos x, changes at −2.000000 cm per radian: it move
 
 ### Step 5: tangent and secant by the quotient rule
 
-Tangent is sin x over cos x. The quotient rule ([product-and-quotient-rules](02-product-and-quotient-rules.md)) gives a top of cos x · cos x + sin x · sin x, which is 1, over $\cos^2 x$: the rate is $\sec^2 x$, 1.333333 at 30°.
+Tangent is sin x over cos x. The quotient rule ([Product and quotient rules](02-product-and-quotient-rules.md)) gives a top of cos x · cos x + sin x · sin x, which is 1, over $\cos^2 x$: the rate is $\sec^2 x$, 1.333333 at 30°.
 
 Secant is 1 over cos x, so its rate is sin x over $\cos^2 x$, which is sec x tan x: 0.666667 at 30°.
 
 ### Step 6: from per radian to per second, and a real engine
 
-The crank turns at 50 radians a second, so x = 50t with t in seconds. The chain rule ([chain-rule](03-chain-rule.md)) multiplies the rates: 3.464102 cm per radian × 50 radians per second = 173.205 cm/s.
+The crank turns at 50 radians a second, so x = 50t with t in seconds. The chain rule ([Chain rule](03-chain-rule.md)) multiplies the rates: 3.464102 cm per radian × 50 radians per second = 173.205 cm/s.
 
 Most engines use a connecting rod of length L from the pin to a piston above the centre. The piston sits $r\sin x$ up plus the rod's upright part, $\sqrt{L^2 - (r\cos x)^2}$ by Pythagoras. The rate of cosine and the chain rule give:
 
@@ -392,7 +374,7 @@ ALL CHECKS PASS
 
 - **Engines and pumps.** A piston's speed at each crank angle is r cos x times the turning rate, plus Step 6's rod term.
 - **Anything that vibrates.** A spring's bounce and alternating current follow sines in time; their rates are cosines, a quarter turn ahead.
-- **Second rates.** Applying the rule twice returns minus sine: the piston's acceleration points against its height ([higher-derivatives-and-concavity](08-higher-derivatives-and-concavity.md)).
+- **Second rates.** Applying the rule twice returns minus sine: the piston's acceleration points against its height ([Second derivatives](08-higher-derivatives-and-concavity.md)).
 
 > **Say it back**
 > The addition formula splits sine's rise-over-run into cos x times (sin h)/h plus sin x times (cos h − 1)/h. The sandwich sends the first quotient to 1 and the second to 0. So sine's rate is cosine, and the same split gives minus sine for cosine. The quotient rule gives tangent and secant. All of it holds in radians only.
@@ -401,13 +383,13 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [chain-rule](03-chain-rule.md): turns cm per radian into cm per second, and handles the rod engine.
-- [trig-identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md): the addition formulas that do Step 0, and the half-angle identity of Step 2.
-- [small-angles-and-the-sine-bound](../../05-Geometry%20and%20trig/03-Trigonometry/08-small-angles-and-the-sine-bound.md): the sandwich sin h < h < tan h.
+- [Chain rule](03-chain-rule.md): turns cm per radian into cm per second, and handles the rod engine.
+- [Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md): the addition formulas that do Step 0, and the half-angle identity of Step 2.
+- [Small angles](../../05-Geometry%20and%20trig/03-Trigonometry/08-small-angles-and-the-sine-bound.md): the sandwich sin h < h < tan h.
 
 ## Where this goes next
 
-- [trig-substitution](../04-Integrals/06-trig-substitution.md): runs these rules backwards, swapping a square root for a sine to find areas.
+- [Trig substitution](../04-Integrals/06-trig-substitution.md): runs these rules backwards, swapping a square root for a sine to find areas.
 
 ---
 

@@ -1,28 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Generators, Densities and Simulation
-topic: Following the cloud of positions
-item: Fokker-Planck
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/02-kolmogorov-backward-equation|kolmogorov-backward-equation]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/10-the-heat-kernel|the-heat-kernel]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/03-the-heat-equation|the-heat-equation]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/05-ornstein-uhlenbeck-and-cir-processes|ornstein-uhlenbeck-and-cir-processes]]"
-next:
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/01-dupire-local-volatility|dupire-local-volatility]]"
-  - "[[Cards/19-Partial differential equations/03-The Heat Equation in Depth/09-fokker-planck-and-densities|fokker-planck-and-densities]]"
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/04-euler-maruyama-scheme|euler-maruyama-scheme]]"
-tags: [mathematics, stochastic processes and calculus, fokker-planck-forward-equation]
----
-
 # Fokker-Planck: how the density of a diffusion evolves
 
-Stochastic processes and calculus → Generators, Densities and Simulation → Following the cloud of positions → Fokker-Planck
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Generators, Densities and Simulation](../../../SYLLABUS.md#w11-s08) → Fokker-Planck
 
 ---
 
@@ -30,11 +8,11 @@ Stochastic processes and calculus → Generators, Densities and Simulation → F
 
 A drop of water on a microscope slide holds a speck about a micrometre across, the kind Robert Brown watched jiggling in 1827. It starts at the crosshair. Its position along one axis, in micrometres (µm), wanders as Brownian motion: after t seconds its displacement is bell-shaped with variance t square micrometres. Release ten thousand such specks from the same crosshair and photograph them. After 1 second the cloud is a bell curve 0.3989 per µm tall at the centre. After 4 seconds it is half as tall, 0.1995 per µm, and twice as wide.
 
-That is exactly how a pinch of heat spreads along a long cold bar ([the-heat-kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md)). Einstein explained why in 1905: the probability of finding the speck near a point obeys the heat equation. The cloud of probability is the thing that moves predictably, even though each speck does not.
+That is exactly how a pinch of heat spreads along a long cold bar ([The heat kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md)). Einstein explained why in 1905: the probability of finding the speck near a point obeys the heat equation. The cloud of probability is the thing that moves predictably, even though each speck does not.
 
-The shelf's house example behaves differently. A short-term interest rate starts at 6 percentage points and is pulled toward 4 ([ornstein-uhlenbeck-and-cir-processes](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)). Its cloud of possible values is also a bell, but the bell slides toward 4 while it widens, and it stops widening at a standard deviation of 2 points.
+The shelf's house example behaves differently. A short-term interest rate starts at 6 percentage points and is pulled toward 4 ([Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)). Its cloud of possible values is also a bell, but the bell slides toward 4 while it widens, and it stops widening at a standard deviation of 2 points.
 
-This card finds the equation that moves the cloud for any diffusion. The backward equation ([kolmogorov-backward-equation](02-kolmogorov-backward-equation.md)) fixes a payoff and varies the start. The forward equation fixes the start and follows the cloud. They are one operator seen from the two sides of an integral.
+This card finds the equation that moves the cloud for any diffusion. The backward equation ([Kolmogorov backward equation](02-kolmogorov-backward-equation.md)) fixes a payoff and varies the start. The forward equation fixes the start and follows the cloud. They are one operator seen from the two sides of an integral.
 
 **The density of a diffusion obeys the generator turned inside out: the drift carries the density, the noise spreads it, and both act on the coefficient times the density, which is what integrating the backward equation by parts leaves behind.**
 
@@ -59,13 +37,13 @@ Orange: after 0.5 seconds, peak 0.5642 per µm. Teal: after 1 second, peak 0.398
 
 ## The formula
 
-Notation first, in words. As on [stochastic-differential-equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md), the process solves $dX_t = \mu(X_t)\,dt + \sigma(X_t)\,dW_t$, with drift $\mu$, the average velocity at a point, and noise size $\sigma$; $dW_t$ is shorthand for an Ito integral against Brownian motion, never a derivative, because the path has none. The **transition density** $p(t, y)$ is the probability per unit length of finding $X_t$ near the point $y$, given that it started at $x$; the start is held fixed and left out of the notation. The curly symbol in $\partial/\partial y$ means a rate of change along $y$ with $t$ held still; the wing-08 cards write it as a subscript, so $p_t$ is the rate of change of the density in time and $p_{yy}$ its bend along $y$, the rate of change of the slope.
+Notation first, in words. As on [Stochastic differential equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md), the process solves $dX_t = \mu(X_t)\,dt + \sigma(X_t)\,dW_t$, with drift $\mu$, the average velocity at a point, and noise size $\sigma$; $dW_t$ is shorthand for an Ito integral against Brownian motion, never a derivative, because the path has none. The **transition density** $p(t, y)$ is the probability per unit length of finding $X_t$ near the point $y$, given that it started at $x$; the start is held fixed and left out of the notation. The curly symbol in $\partial/\partial y$ means a rate of change along $y$ with $t$ held still; the wing-08 cards write it as a subscript, so $p_t$ is the rate of change of the density in time and $p_{yy}$ its bend along $y$, the rate of change of the slope.
 
 $$\frac{\partial p}{\partial t}(t, y) \;=\; -\frac{\partial}{\partial y}\Big[\mu(y)\,p(t, y)\Big] \;+\; \frac12\,\frac{\partial^2}{\partial y^2}\Big[\sigma(y)^2\,p(t, y)\Big]$$
 
 **Read it aloud:** the density at a point loses whatever the drift carries away from it, and gains half the bend of the noise-weighted density there.
 
-The right side has a name. The generator ([infinitesimal-generator](01-infinitesimal-generator.md)) acts on a payoff $f$:
+The right side has a name. The generator ([The generator](01-infinitesimal-generator.md)) acts on a payoff $f$:
 
 $$L f(y) = \mu(y)\, f'(y) + \tfrac12\,\sigma(y)^2 f''(y).$$
 
@@ -93,7 +71,7 @@ So the forward equation is $\partial p / \partial t = L^* p$, and the backward e
 
 Two cases to keep in view:
 
-- **The speck.** $\mu = 0$ and $\sigma = 1$ give $p_t = \tfrac12 p_{yy}$: the heat equation ([the-heat-equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md)) with diffusivity one half.
+- **The speck.** $\mu = 0$ and $\sigma = 1$ give $p_t = \tfrac12 p_{yy}$: the heat equation ([The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md)) with diffusivity one half.
 - **The rate.** $\mu(y) = \kappa(\theta - y)$, with pull speed $\kappa$ = 0.5 a year and long-run level $\theta$ = 4 points, and constant $\sigma$, so $p_t = \partial[\kappa(y - \theta)p]/\partial y + \tfrac12\sigma^2 p_{yy}$. The first term is new: it moves the bell toward $\theta$.
 
 The **probability current** turns the equation into bookkeeping. Write $J = \mu p - \tfrac12(\sigma^2 p)'$. Then the forward equation reads $p_t = -J'$: the density at a point rises exactly when more probability flows in from the left than leaves to the right. Nothing is created or lost.
@@ -119,7 +97,7 @@ The backward equation already knows how the left side changes in time. The forwa
 
 ### Step 1: how an average changes
 
-By Ito's lemma ([itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md)), $df(X_t) = (Lf)(X_t)\,dt + f'(X_t)\,\sigma(X_t)\,dW_t$. The last piece is an Ito integral, a fair game with average zero. Averaging and differentiating in time,
+By Ito's lemma ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)), $df(X_t) = (Lf)(X_t)\,dt + f'(X_t)\,\sigma(X_t)\,dW_t$. The last piece is an Ito integral, a fair game with average zero. Averaging and differentiating in time,
 
 $$\frac{d}{dt}E[f(X_t)] = E[(Lf)(X_t)] = \int (Lf)(y)\,p(t, y)\,dy.$$
 
@@ -179,11 +157,11 @@ Here the generator alone fails. Put the same bell into $p_t = Lp$ and the leftov
 
 ### Step 6: where the cloud settles
 
-A **stationary density** ([stationary-distributions](../03-Markov%20Chains/04-stationary-distributions.md) for chains) is one with $p_t = 0$. Then $J' = 0$, so the current is the same everywhere; it is zero far out, so it is zero everywhere: $\mu p = \tfrac12(\sigma^2 p)'$. With constant noise, $(\ln p)' = 2\mu/\sigma^2 = -2\kappa(y - \theta)/\sigma^2$, so $\ln p$ is a downward parabola centred at $\theta$. That is a bell with variance $\sigma^2/(2\kappa) = 4$, standard deviation 2 points. The code integrates the zero-current equation numerically, without assuming a bell, and finds standard deviation 2.0000 and a 0.0228 chance, 2.28 percent, of a negative rate in the long run.
+A **stationary density** ([Stationary distributions](../03-Markov%20Chains/04-stationary-distributions.md) for chains) is one with $p_t = 0$. Then $J' = 0$, so the current is the same everywhere; it is zero far out, so it is zero everywhere: $\mu p = \tfrac12(\sigma^2 p)'$. With constant noise, $(\ln p)' = 2\mu/\sigma^2 = -2\kappa(y - \theta)/\sigma^2$, so $\ln p$ is a downward parabola centred at $\theta$. That is a bell with variance $\sigma^2/(2\kappa) = 4$, standard deviation 2 points. The code integrates the zero-current equation numerically, without assuming a bell, and finds standard deviation 2.0000 and a 0.0228 chance, 2.28 percent, of a negative rate in the long run.
 
 Stationary does not mean standing still. Each path keeps moving forever; only the cloud stops changing, because as much probability crosses each point leftward as rightward.
 
-A second road to the same equation starts from the Chapman-Kolmogorov rule, that the law at time $t + h$ is the law at $t$ moved by one more short step, and expands the short step in its moments: the mean of a step gives the drift term, its variance the noise term, and higher moments vanish for a diffusion. That route, and the boundary conditions it needs, are on fokker-planck-and-densities.
+A second road to the same equation starts from the Chapman-Kolmogorov rule, that the law at time $t + h$ is the law at $t$ moved by one more short step, and expands the short step in its moments: the mean of a step gives the drift term, its variance the noise term, and higher moments vanish for a diffusion. That route, and the boundary conditions it needs, are on Fokker-Planck.
 
 ---
 
@@ -215,13 +193,13 @@ Entries are rounded to five places, so sums of them can miss the last digit by o
 | Drop the one half on the speck | peak 0.2821 per µm after 1 s, not 0.3989 | the cloud spreads at twice the rate: variance 2t, not t |
 | Ignore an absorbing wall 1 µm left of the start, one that holds any speck touching it (a hypothesis dropped) | free bell keeps 1.0000 of the probability; truth 0.6827 by images, 0.6826 on a grid | boundary terms in Step 2 no longer vanish: probability leaves through the wall |
 
-The wall row reads back in the slide: one speck in three sticks to the glass within a second, and the free heat-kernel answer does not see it. The exact value comes from the reflection principle ([reflection-principle-and-running-maximum](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)): survival is 1 minus twice the chance the free speck is beyond the wall.
+The wall row reads back in the slide: one speck in three sticks to the glass within a second, and the free heat-kernel answer does not see it. The exact value comes from the reflection principle ([Reflection principle](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)): survival is 1 minus twice the chance the free speck is beyond the wall.
 
 ---
 
 ## Code, from first principles, and it actually runs
 
-The scripts take four independent roads. First, the known densities are put into the forward equation by finite differences, with the leftover printed at three step sizes. Second, the adjoint identity of Steps 1 to 3 is checked by numerical integration. Third, the equation is solved on a grid with explicit time steps, from the rate's bell at 0.1 years to one year, at three spacings; the same solver produces every "what breaks" row. Fourth, the house example is simulated: 10,000 rate paths over one year with 1,000 steps each, drawn from a SplitMix64 generator with seed 20260930 and Box-Muller normals, both written out, and stepped by the plain drift-plus-noise rule ([euler-maruyama-scheme](04-euler-maruyama-scheme.md)). Every simulated number carries its standard error.
+The scripts take four independent roads. First, the known densities are put into the forward equation by finite differences, with the leftover printed at three step sizes. Second, the adjoint identity of Steps 1 to 3 is checked by numerical integration. Third, the equation is solved on a grid with explicit time steps, from the rate's bell at 0.1 years to one year, at three spacings; the same solver produces every "what breaks" row. Fourth, the house example is simulated: 10,000 rate paths over one year with 1,000 steps each, drawn from a SplitMix64 generator with seed 20260930 and Box-Muller normals, both written out, and stepped by the plain drift-plus-noise rule ([Euler-Maruyama](04-euler-maruyama-scheme.md)). Every simulated number carries its standard error.
 
 ### Python
 
@@ -654,9 +632,9 @@ Bars: the percent of the 10,000 simulated paths ending in each 1-point bin, one 
 
 - **Counting molecules.** Einstein's 1905 paper tied the rate at which a suspended particle's cloud widens to Avogadro's number, so watching specks spread became a way to count atoms.
 - **The velocity of a particle.** Ornstein and Uhlenbeck's 1930 model is this card's rate equation with velocity in place of rate: friction is the pull, molecular kicks are the noise, and the stationary bell is the temperature's velocity law.
-- **Local volatility.** Option prices quote the market's density for a share at each future date. Dupire ran the forward equation backwards, from the density's evolution to the noise size that produces it: [dupire-local-volatility](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md).
-- **Sampling by diffusion.** Choose a drift so that the zero-current density of Step 6 is a target law, and running the diffusion samples from it: the continuous cousin of [markov-chain-monte-carlo](../03-Markov%20Chains/07-markov-chain-monte-carlo.md).
-- **Checking a simulator.** A scheme's histogram must match the forward equation's density, as in the bar chart above; [milstein-and-strong-weak-convergence](05-milstein-and-strong-weak-convergence.md) calls this weak error and [exact-simulation-of-gbm-and-ou](06-exact-simulation-of-gbm-and-ou.md) removes the grid altogether.
+- **Local volatility.** Option prices quote the market's density for a share at each future date. Dupire ran the forward equation backwards, from the density's evolution to the noise size that produces it: [Dupire local volatility](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md).
+- **Sampling by diffusion.** Choose a drift so that the zero-current density of Step 6 is a target law, and running the diffusion samples from it: the continuous cousin of [MCMC](../03-Markov%20Chains/07-markov-chain-monte-carlo.md).
+- **Checking a simulator.** A scheme's histogram must match the forward equation's density, as in the bar chart above; [Milstein and the two kinds of error](05-milstein-and-strong-weak-convergence.md) calls this weak error and [Exact simulation](06-exact-simulation-of-gbm-and-ou.md) removes the grid altogether.
 
 > **Say it back**
 > A diffusion's paths are random, but the cloud of probability they make moves by a fixed equation. The average of any payoff changes at the rate of the generator; moving the generator's derivatives off the payoff and onto the density, by integrating by parts, gives the forward operator. With no drift and constant noise it is the heat equation, which is why the speck's cloud spreads like heat. With a pull toward a level it also slides the bell and caps its width, and where the current is zero the cloud stops changing while every path keeps moving.
@@ -665,17 +643,17 @@ Bars: the percent of the 10,000 simulated paths ending in each 1-point bin, one 
 
 ## What this builds on
 
-- [kolmogorov-backward-equation](02-kolmogorov-backward-equation.md): the generator moving expected payoffs in the start variable; this card is its adjoint.
-- [the-heat-kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md): the bell grown from a point, which is the speck's density.
-- [the-heat-equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md): the equation the speck's density obeys, and the explicit grid used in the code.
-- [itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md): why averages change at the rate of the generator.
-- [ornstein-uhlenbeck-and-cir-processes](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): the house example's mean, variance and stationary law, recovered here from the density's equation.
+- [Kolmogorov backward equation](02-kolmogorov-backward-equation.md): the generator moving expected payoffs in the start variable; this card is its adjoint.
+- [The heat kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md): the bell grown from a point, which is the speck's density.
+- [The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md): the equation the speck's density obeys, and the explicit grid used in the code.
+- [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md): why averages change at the rate of the generator.
+- [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): the house example's mean, variance and stationary law, recovered here from the density's equation.
 
 ## Where this goes next
 
-- [dupire-local-volatility](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): the forward equation for a share price, solved backwards to read the noise size out of option prices.
-- fokker-planck-and-densities: the equation as a parabolic PDE in its own right, with boundary conditions, several dimensions and the existence of the density.
-- [euler-maruyama-scheme](04-euler-maruyama-scheme.md): the stepping rule the simulation used, and how far its histogram can drift from the density.
+- [Dupire local volatility](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): the forward equation for a share price, solved backwards to read the noise size out of option prices.
+- Fokker-Planck: the equation as a parabolic PDE in its own right, with boundary conditions, several dimensions and the existence of the density.
+- [Euler-Maruyama](04-euler-maruyama-scheme.md): the stepping rule the simulation used, and how far its histogram can drift from the density.
 
 The forward equation says where the cloud goes when the equation is known; the open question is the reverse, how to recover the equation's noise from a cloud that is observed, and that is what Dupire's construction answers.
 

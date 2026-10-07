@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The smile and the surface
-topic: Reading a strike strip
-item: The volatility smile and skew
-kind: definition
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/01-implied-volatility|implied-volatility]]"
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/05-butterfly-and-the-implied-density|butterfly-and-the-implied-density]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/01-densities-and-cdfs|densities-and-cdfs]]"
-next:
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/02-term-structure-and-forward-volatility|term-structure-and-forward-volatility]]"
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/04-merton-jump-diffusion|merton-jump-diffusion]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/01-heston-model|heston-model]]"
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/01-risk-reversal-and-butterfly|risk-reversal-and-butterfly]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/03-commodity-implied-vol-and-the-call-skew|commodity-implied-vol-and-the-call-skew]]"
-tags: [mathematics, financial mathematics, volatility-smile-and-skew]
----
-
 # The volatility smile and skew: one price per strike means one volatility per strike, and why that is not a mistake
 
-Financial mathematics → The smile and the surface → Reading a strike strip → The volatility smile and skew
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The smile and the surface](../../../SYLLABUS.md#w12-s12) → The volatility smile and skew
 
 ---
 
@@ -114,7 +92,7 @@ The smile and the skew are definitions, so they hold whenever the inversion has 
 
 ### Step 0: each strike probes a different part of the distribution
 
-A put struck at $80 pays only if Acme ends below $80; a call struck there pays only if it ends above. Each price is a statement about one region of outcomes. Nine strikes are nine probes into nine regions of the market's **risk-neutral distribution** (the pricing distribution under which every asset grows at the riskless rate; see [butterfly-and-the-implied-density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)).
+A put struck at $80 pays only if Acme ends below $80; a call struck there pays only if it ends above. Each price is a statement about one region of outcomes. Nine strikes are nine probes into nine regions of the market's **risk-neutral distribution** (the pricing distribution under which every asset grows at the riskless rate; see [The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)).
 
 Black-Scholes has exactly one dial for that distribution's width. Turning it widens every region at once. It cannot fatten the left side while thinning the right. So when the market's distribution is lopsided, the model can only report "wider here, narrower there" by giving each strike its own dial setting. That is the smile.
 
@@ -126,13 +104,13 @@ The legs are not free to sit anywhere. Put-call parity, a cash-flow identity, sa
 
 ### Step 2: every strike has exactly one implied volatility
 
-Before solving, the inverse must exist and be unique ([implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md) proves this in full). As volatility falls to zero, the Black-Scholes call falls to $e^{-rT}\max(F - K, 0)$. As volatility grows without limit, the call rises to $e^{-rT}F$. In between it climbs strictly.
+Before solving, the inverse must exist and be unique ([Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md) proves this in full). As volatility falls to zero, the Black-Scholes call falls to $e^{-rT}\max(F - K, 0)$. As volatility grows without limit, the call rises to $e^{-rT}F$. In between it climbs strictly.
 
 Each leg's price sits strictly inside its own bounds. Their weighted average therefore sits below $e^{-rT}F$, and above $e^{-rT}\max(F-K, 0)$, since averaging the two legs' "forward minus strike" never falls below the forward's own. So every crash-market price lies strictly inside the range, and exactly one volatility reaches it. Bisection (halving a bracket that holds the answer) finds it; so does Newton's method (following the slope to the root; here the slope is vega, the price's rate of change with volatility). The check runs both, on the call and the put separately, and they agree at every strike.
 
 ### Step 3: the curve is flat only when the distribution is one lognormal
 
-Suppose the implied volatility were the same number at every strike. Then every market call equals a Black-Scholes call at that one volatility. Two sets of call prices that agree at every strike have the same second derivative in strike, and that second derivative, grown at the riskless rate, is the risk-neutral density (the Breeden-Litzenberger result, on [butterfly-and-the-implied-density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)). So the market's density would have to be exactly one lognormal.
+Suppose the implied volatility were the same number at every strike. Then every market call equals a Black-Scholes call at that one volatility. Two sets of call prices that agree at every strike have the same second derivative in strike, and that second derivative, grown at the riskless rate, is the risk-neutral density (the Breeden-Litzenberger result, on [The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)). So the market's density would have to be exactly one lognormal.
 
 The crash market's is not. The picture shows it:
 
@@ -189,7 +167,7 @@ Write prices per unit of forward and let $f(x)$ be the density of $x = \ln(S_T/F
 
 A strike alone is not a distance. $90 is close to the money on a $100 share and far from it on a $300 one. The ratio $K/F$ fixes that. The log fixes a second problem: a 20% fall and a 20% rise do not cancel in prices, but they sit at equal and opposite distances in logs. So skew per unit of $k$ means the same thing on any underlying, at any price level. For the Acme strip it is −0.1898 between $90 and $110, and −0.1572 in a narrow band around the forward, where the implied volatility is 19.49%.
 
-A market with infinitely many legs, one for each possible number of jumps, is Merton's jump model ([merton-jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md)); a market where volatility itself wanders, and rises when the price falls, produces the same skew without jumps ([heston-model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md)).
+A market with infinitely many legs, one for each possible number of jumps, is Merton's jump model ([Merton jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md)); a market where volatility itself wanders, and rises when the price falls, produces the same skew without jumps ([The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md)).
 
 ---
 
@@ -658,10 +636,10 @@ The two outputs are identical line for line.
 ## Where you meet it in real life
 
 - **Equity index options.** Index smiles slope down from low strikes to high, as the Acme strip does. Mark Rubinstein dated the modern index skew to the crash of October 1987; before it, implied volatility across strikes was close to flat. Two causes are usually cited: buyers pay extra for crash insurance, and a falling share raises a firm's leverage, so volatility tends to rise as prices fall.
-- **Currency options.** A currency pair can fall from either side, so its smile is closer to even. Desks quote its tilt and its curvature as the risk reversal and the butterfly: [risk-reversal-and-butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md).
-- **Commodity options.** Where the fear is a supply shock, the high strikes are dear and the skew slopes up: [commodity-implied-vol-and-the-call-skew](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md).
-- **Fitting the curve.** Nine quotes are nine points; pricing needs a smooth curve through them. The SVI formula is the standard fit: [svi-smile-fit](04-svi-smile-fit.md).
-- **Hedging on a skew.** When the share moves, the whole curve can move with it, which changes the hedge ratio: [smile-adjusted-delta](05-smile-adjusted-delta.md). Stacking the smiles of every expiry gives [volatility-surface-and-its-arbitrage-rules](03-volatility-surface-and-its-arbitrage-rules.md).
+- **Currency options.** A currency pair can fall from either side, so its smile is closer to even. Desks quote its tilt and its curvature as the risk reversal and the butterfly: [Risk reversal and butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md).
+- **Commodity options.** Where the fear is a supply shock, the high strikes are dear and the skew slopes up: [Implied vol on a futures option and the commodity smile](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md).
+- **Fitting the curve.** Nine quotes are nine points; pricing needs a smooth curve through them. The SVI formula is the standard fit: [The SVI smile](04-svi-smile-fit.md).
+- **Hedging on a skew.** When the share moves, the whole curve can move with it, which changes the hedge ratio: [Smile-adjusted delta](05-smile-adjusted-delta.md). Stacking the smiles of every expiry gives [The volatility surface](03-volatility-surface-and-its-arbitrage-rules.md).
 
 > **Say it back**
 > Each strike has its own price, so each strike has its own implied volatility. Plotted against log-moneyness, those volatilities form the smile, and its slope is the skew. The curve is flat only when the market's distribution is one lognormal. A market with a small chance of a crash has a fat left tail and a thin right one, so its low-strike puts are dear and its high-strike calls cheap, and the curve slopes down from 26.12% to 17.90%. The smile is the market's belief read through a one-dial model, not an error.
@@ -670,17 +648,17 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): running Black-Scholes backwards, with the existence and uniqueness this card relies on at every strike.
-- [butterfly-and-the-implied-density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md): call prices across strikes determine the market's density, the fact behind Step 3.
-- [densities-and-cdfs](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md): what a density is and how a weighted mixture of two is still one.
+- [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): running Black-Scholes backwards, with the existence and uniqueness this card relies on at every strike.
+- [The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md): call prices across strikes determine the market's density, the fact behind Step 3.
+- [Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md): what a density is and how a weighted mixture of two is still one.
 
 ## Where this goes next
 
-- [term-structure-and-forward-volatility](02-term-structure-and-forward-volatility.md): the same inversion along the time axis, one expiry after another.
-- [merton-jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): this card's crash market with a leg for every possible number of jumps.
-- [heston-model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): a skew from volatility that moves against the price, with no jumps at all.
-- [risk-reversal-and-butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md): how currency desks quote the smile's tilt and curvature as two numbers.
-- [commodity-implied-vol-and-the-call-skew](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md): a skew that slopes the other way.
+- [Term structure and forward volatility](02-term-structure-and-forward-volatility.md): the same inversion along the time axis, one expiry after another.
+- [Merton jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): this card's crash market with a leg for every possible number of jumps.
+- [The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): a skew from volatility that moves against the price, with no jumps at all.
+- [Risk reversal and butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md): how currency desks quote the smile's tilt and curvature as two numbers.
+- [Implied vol on a futures option and the commodity smile](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md): a skew that slopes the other way.
 
 This card reads one expiry; the next asks how implied volatility changes as the expiry lengthens, and what that says about volatility expected between two future dates.
 

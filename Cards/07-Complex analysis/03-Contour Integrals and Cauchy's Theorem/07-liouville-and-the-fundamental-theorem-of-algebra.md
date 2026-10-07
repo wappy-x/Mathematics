@@ -1,32 +1,12 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Contour Integrals and Cauchy's Theorem
-topic: Bounded means flat
-item: Liouville's theorem
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/06-derivatives-from-the-boundary|derivatives-from-the-boundary]]"
-  - "[[Cards/03-Algebra/10-For the Curious/01-fundamental-theorem-of-algebra|fundamental-theorem-of-algebra]]"
-  - "[[Cards/01-Foundations/06-Proof/03-proof-by-contradiction|proof-by-contradiction]]"
-next: []
-tags:
-  - mathematics
-  - complex-analysis
-  - liouville-and-the-fundamental-theorem-of-algebra
----
-
 # Liouville's theorem: a bounded function holomorphic everywhere is constant, and so every polynomial has a root
 
-Complex analysis → Contour Integrals and Cauchy's Theorem → Bounded means flat → Liouville's theorem
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Contour Integrals and Cauchy's Theorem](../../../SYLLABUS.md#w07-s03) → Liouville's theorem
 
 ---
 
 ## General Overview
 
-A football kicked straight up at 20 metres a second never reaches 25 metres. Asking when it does gives 5t^2 - 20t + 25 = 0, with roots 2 + i and 2 - i ([fundamental-theorem-of-algebra](../../03-Algebra/10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md)). That card stated that every polynomial of degree 1 or more has a complex root, and left the proof for here.
+A football kicked straight up at 20 metres a second never reaches 25 metres. Asking when it does gives 5t^2 - 20t + 25 = 0, with roots 2 + i and 2 - i ([The fundamental theorem of algebra](../../03-Algebra/10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md)). That card stated that every polynomial of degree 1 or more has a complex root, and left the proof for here.
 
 A sharper case: on the real line z^4 + 1 never drops below 1, so it has no real root. In the plane it has four, at (±1 ± i)/√2: the points at distance 1 from 0, half-way between the axes.
 
@@ -46,7 +26,7 @@ To scale, 50 units per 1. Four dots at distance 1 are the roots of z^4 + 1; two 
 
 ## The formula
 
-$f'(a)$ is the complex derivative of $f$ at the point $a$; the loop sign ∮ is the contour integral once round a circle, anticlockwise ([contour-integrals](01-contour-integrals.md)); $M(r)$ is the largest $|f(z)|$ on the circle of radius $r$ round $a$. Cauchy's estimate, from [derivatives-from-the-boundary](06-derivatives-from-the-boundary.md):
+$f'(a)$ is the complex derivative of $f$ at the point $a$; the loop sign ∮ is the contour integral once round a circle, anticlockwise ([Contour integrals](01-contour-integrals.md)); $M(r)$ is the largest $|f(z)|$ on the circle of radius $r$ round $a$. Cauchy's estimate, from [Derivatives from the boundary](06-derivatives-from-the-boundary.md):
 
 $$|f'(a)| \le \frac{M(r)}{r}$$
 
@@ -92,7 +72,7 @@ Picture a path that must stay under a fence of fixed height. The wider the field
 
 ### Step 1: the slope at a point is controlled by a circle round it
 
-From [derivatives-from-the-boundary](06-derivatives-from-the-boundary.md), the slope is a loop integral:
+From [Derivatives from the boundary](06-derivatives-from-the-boundary.md), the slope is a loop integral:
 
 $$f'(a) = \frac{1}{2\pi i}\oint \frac{f(z)}{(z - a)^2}\,dz$$
 
@@ -102,13 +82,13 @@ Take p(z) = z^4 + 1, f = 1/p, a = 1. Here p(1) = 2 and p'(1) = 4, and the recipr
 
 ### Step 2: a bounded entire function has no slope, so it is constant
 
-If $f$ is entire, the circle round $a$ may have any radius; if $|f(z)| \le M$ everywhere, then $|f'(a)| \le M/r$ for every $r$. That tends to 0, so $f'(a) = 0$ at every $a$. Between two points, $f$ changes by the integral of its slope along the segment joining them ([antiderivatives-and-path-independence](02-antiderivatives-and-path-independence.md)), which is 0.
+If $f$ is entire, the circle round $a$ may have any radius; if $|f(z)| \le M$ everywhere, then $|f'(a)| \le M/r$ for every $r$. That tends to 0, so $f'(a) = 0$ at every $a$. Between two points, $f$ changes by the integral of its slope along the segment joining them ([Antiderivatives](02-antiderivatives-and-path-independence.md)), which is 0.
 
 1/(z^4 + 1) escapes. Round 1 its M(r)/r falls from 3.038576 at r = 0.25 to 2.306999 at r = 0.5, then jumps to 21.883435 at r = 0.75: the root 0.765367 away, where 1/p blows up, stops the circle growing.
 
 ### Step 3: with no root, 1/p would be bounded
 
-Suppose, for contradiction ([proof-by-contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)), that p(z) = z^4 + 1 had no root. Then 1/p would be entire, since division fails only at zero, and bounded:
+Suppose, for contradiction ([Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)), that p(z) = z^4 + 1 had no root. Then 1/p would be entire, since division fails only at zero, and bounded:
 
 - **Far out.** The triangle inequality gives |z^4 + 1| ≥ |z|^4 - 1, which is 15 on |z| = 2 and more beyond; sampling finds 15.000000. So 1/p is at most 1/15 there.
 - **Inside.** On the closed disc of radius 2, 1/p would be continuous, and a continuous function on a closed, bounded region reaches a largest size.
@@ -145,9 +125,9 @@ Bounded and entire, 1/p would be constant by Step 2, slope 0 everywhere. Step 1 
 
 ### Step 5: peel one bracket at a time
 
-One root gives one bracket and leaves a polynomial one degree lower ([fundamental-theorem-of-algebra](../../03-Algebra/10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md)); Step 4 applies again until n brackets are off. The roots of z^4 + 1 come in mirror pairs across the real axis, and a pair z_1 and its conjugate z̄_1 ("z-one-bar") multiply to z^2 - 2 Re(z_1) z + |z_1|^2. So z^4 + 1 = (z^2 - 1.414214z + 1)(z^2 + 1.414214z + 1), and each quadratic splits into two brackets.
+One root gives one bracket and leaves a polynomial one degree lower ([The fundamental theorem of algebra](../../03-Algebra/10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md)); Step 4 applies again until n brackets are off. The roots of z^4 + 1 come in mirror pairs across the real axis, and a pair z_1 and its conjugate z̄_1 ("z-one-bar") multiply to z^2 - 2 Re(z_1) z + |z_1|^2. So z^4 + 1 = (z^2 - 1.414214z + 1)(z^2 + 1.414214z + 1), and each quadratic splits into two brackets.
 
-A second route: as z runs round a large circle, p(z) winds n times round 0; round a tiny one, not at all when p(0) ≠ 0; and the winding number ([deforming-contours-and-winding-numbers](04-deforming-contours-and-winding-numbers.md)) changes only by passing through 0.
+A second route: as z runs round a large circle, p(z) winds n times round 0; round a tiny one, not at all when p(0) ≠ 0; and the winding number ([Deforming a loop](04-deforming-contours-and-winding-numbers.md)) changes only by passing through 0.
 
 ---
 
@@ -396,7 +376,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Eigenvalues.** Every square complex matrix has an eigenvalue, a root of its characteristic polynomial ([eigenvalues-and-eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)).
+- **Eigenvalues.** Every square complex matrix has an eigenvalue, a root of its characteristic polynomial ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)).
 - **Partial fractions.** Integrating 1/(x^4 + 1) splits it over x^2 ∓ 1.414214x + 1, the mirror pairs of Step 5.
 - **Root-finding software.** Solvers peel roots one at a time, as the code does; the theorem guarantees each hunt has a quarry.
 
@@ -407,16 +387,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [derivatives-from-the-boundary](06-derivatives-from-the-boundary.md): the slope as a loop integral, and Cauchy's estimate.
-- [fundamental-theorem-of-algebra](../../03-Algebra/10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md): the statement, the football, and the peeling.
-- [proof-by-contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): assume no root, reach an impossibility.
+- [Derivatives from the boundary](06-derivatives-from-the-boundary.md): the slope as a loop integral, and Cauchy's estimate.
+- [The fundamental theorem of algebra](../../03-Algebra/10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md): the statement, the football, and the peeling.
+- [Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): assume no root, reach an impossibility.
 
 ## Where this goes next
 
-- homology-of-spheres-and-degree: the winding-count proof, with no derivatives.
-- [the-argument-principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): counts the roots inside a loop without finding them.
-- [rouches-theorem](../06-Real%20Integrals%20and%20Counting%20Zeros/07-rouches-theorem.md): the fundamental theorem again, in two lines.
-- splitting-fields-and-algebraic-closure: a number system where every polynomial splits is **algebraically closed**.
+- Homology of spheres, and degree: the winding-count proof, with no derivatives.
+- [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): counts the roots inside a loop without finding them.
+- [Rouche's theorem](../06-Real%20Integrals%20and%20Counting%20Zeros/07-rouches-theorem.md): the fundamental theorem again, in two lines.
+- Splitting fields: a number system where every polynomial splits is **algebraically closed**.
 
 ---
 

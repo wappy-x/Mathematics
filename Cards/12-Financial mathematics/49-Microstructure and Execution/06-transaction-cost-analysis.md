@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Microstructure and Execution
-topic: Execution benchmarks
-item: Measuring execution
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/49-Microstructure and Execution/04-optimal-execution-almgren-chriss|optimal-execution-almgren-chriss]]"
-next:
-  - "[[Cards/12-Financial mathematics/49-Microstructure and Execution/07-liquidity-measures|liquidity-measures]]"
-tags: [mathematics, financial mathematics, transaction-cost-analysis]
----
-
 # Measuring execution: implementation shortfall, VWAP and arrival-price benchmarks
 
-Financial mathematics → Microstructure and Execution → Execution benchmarks → Measuring execution
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Microstructure and Execution](../../../SYLLABUS.md#w12-s49) → Measuring execution
 
 ---
 
@@ -150,7 +134,7 @@ For any two references $B_1$ and $B_2$, the fills and the fee cancel in the diff
 
 The 8 bp is a measurement, not a cause. Acme would have wandered on Tuesday with or without the fund. How big is that wander? A 20% yearly volatility, spread over 252 trading days, is $100 × 0.20 / √252 = $1.26 of random movement in one day. The fund's fills are spread across the day, so their average carries part of that wander.
 
-Over one day, a random walk in dollars ([brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md)) is close enough to the geometric one, and it says exactly how much. The price moves at times $t_j$ and $t_k$ share all their wander up to the earlier time, so their covariance is $\sigma^2 \min(t_j, t_k)$. The average fill weights the moves by $w_k$, the share of the order sold at time $t_k$. Its spread, in basis points, is
+Over one day, a random walk in dollars ([Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md)) is close enough to the geometric one, and it says exactly how much. The price moves at times $t_j$ and $t_k$ share all their wander up to the earlier time, so their covariance is $\sigma^2 \min(t_j, t_k)$. The average fill weights the moves by $w_k$, the share of the order sold at time $t_k$. Its spread, in basis points, is
 
 $$\text{spread of one order's cost} = \frac{10{,}000}{p_D}\;\sigma\,\sqrt{\sum_j \sum_k w_j\,w_k\,\min(t_j, t_k)} = 75.36 \text{ bp}.$$
 
@@ -174,7 +158,7 @@ The simulated spread is 74.58 bp against 75.36 exact; the simulated mean is 8.51
 
 Suppose the desk stops after 14:30 and 15,000 shares go unsold; Acme closes at $99.80. Counting only the 85,000 sold shares gives 11.65 bp on their own value. But the paper portfolio sold all 100,000. The unsold shares are still held, and they are now worth $99.80, not $100.00: $3,000 lost in all. Perold called this the **opportunity cost**. Added in, over the full $10,000,000 decision value, the shortfall is 12.90 bp. Leaving out the missed shares makes the order that stopped early look cheaper than the one that finished.
 
-A different route to the same identities is the market-maker's view: every trade crosses some spread, and the cost is the spread paid plus the price move during the trade. That route measures cost from quotes rather than benchmarks, and belongs to [liquidity-measures](07-liquidity-measures.md).
+A different route to the same identities is the market-maker's view: every trade crosses some spread, and the cost is the spread paid plus the price move during the trade. That route measures cost from quotes rather than benchmarks, and belongs to [Liquidity](07-liquidity-measures.md).
 
 ---
 
@@ -661,7 +645,7 @@ The two outputs are identical.
 > **Reading one order's cost as the desk's skill.** Tuesday's 8 bp of impact sits inside 75 bp of random wander. In the simulation, 45.55% of orders that truly cost 8 bp report a gain. One order's number is a draw, not a verdict; only the average over hundreds of comparable orders says anything about the trading.
 >
 > Smaller traps:
-> - **Calling the 8 bp caused by the order.** It is the gap from the arrival price, and it includes the market's own 3 bp drift that day. Separating what the order did from what the market did needs a model of impact, such as [kyle-model-and-price-impact](03-kyle-model-and-price-impact.md), or many orders.
+> - **Calling the 8 bp caused by the order.** It is the gap from the arrival price, and it includes the market's own 3 bp drift that day. Separating what the order did from what the market did needs a model of impact, such as [Kyle's model](03-kyle-model-and-price-impact.md), or many orders.
 > - **Grading a large order by VWAP alone.** VWAP cost was 5 bp; the shortfall was 12. A desk that waits for a falling market to come to it can match VWAP perfectly and still cost the fund a lot. And an order that is most of the day's volume makes VWAP its own average: 0 bp by construction.
 > - **Dropping unfilled shares.** An order cut short on a falling day reports 11.65 bp on what sold; the paper portfolio says 12.90.
 > - **Mixing denominators.** Quoting timing over the decision price and impact over the arrival price makes the parts fail to add to the whole, by a small amount that looks like an arithmetic error.
@@ -671,10 +655,10 @@ The two outputs are identical.
 ## Where you meet it in real life
 
 - **Broker scorecards.** Fund managers send brokers quarterly tables of shortfall, arrival cost and VWAP cost, averaged over thousands of orders and sorted by size, urgency and stock. The averaging in Step 4 is why the tables are over thousands.
-- **Execution algorithms.** Brokers sell "VWAP" and "arrival price" algorithms by name. Each is built to score well on its own benchmark: the VWAP algorithm follows the market's volume curve; the arrival algorithm trades faster, accepting more impact for less timing risk, which is the balance [optimal-execution-almgren-chriss](04-optimal-execution-almgren-chriss.md) chooses.
+- **Execution algorithms.** Brokers sell "VWAP" and "arrival price" algorithms by name. Each is built to score well on its own benchmark: the VWAP algorithm follows the market's volume curve; the arrival algorithm trades faster, accepting more impact for less timing risk, which is the balance [Almgren-Chriss](04-optimal-execution-almgren-chriss.md) chooses.
 - **Best-execution rules.** Regulators require firms to show that client orders were executed well. Transaction cost reports are the evidence.
 - **Fund performance.** A strategy that trades often and pays 12 bp each time can lose several percent a year to execution. Perold's paper portfolio was built to show that gap between a strategy on paper and in reality.
-- **Pre-trade estimates.** Before trading, desks forecast the shortfall from the order's share of daily volume, 10% here, the spread ([bid-ask-spread-and-adverse-selection](02-bid-ask-spread-and-adverse-selection.md)) and volatility; afterwards, the measured cost is compared with the forecast.
+- **Pre-trade estimates.** Before trading, desks forecast the shortfall from the order's share of daily volume, 10% here, the spread ([The spread](02-bid-ask-spread-and-adverse-selection.md)) and volatility; afterwards, the measured cost is compared with the forecast.
 
 > **Say it back**
 > Implementation shortfall compares a real trade with a paper trade done at the decision price for free; for the 100,000-share Acme sale it is 12 bp, $12,000. Adding and subtracting the arrival price splits it exactly into 4 bp of timing before the order arrived and 8 bp during the trading. The VWAP benchmark compares the fills with other traders' average price the same day and gives a narrower 5 bp. Every cost is a share-weighted average price minus a reference, signed for the side, over one denominator. One order's number sits inside 75 bp of noise, so conclusions need hundreds of orders.
@@ -683,12 +667,12 @@ The two outputs are identical.
 
 ## What this builds on
 
-- [optimal-execution-almgren-chriss](04-optimal-execution-almgren-chriss.md): the plan before the trade. It picks a schedule balancing expected impact against the variance of price wander; this card is the bill after the trade, and Step 4's 75 bp is that variance, measured.
-- The random walk, [brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): where the covariance $\sigma^2 \min(t_j, t_k)$ in Step 4 comes from.
+- [Almgren-Chriss](04-optimal-execution-almgren-chriss.md): the plan before the trade. It picks a schedule balancing expected impact against the variance of price wander; this card is the bill after the trade, and Step 4's 75 bp is that variance, measured.
+- The random walk, [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): where the covariance $\sigma^2 \min(t_j, t_k)$ in Step 4 comes from.
 
 ## Where this goes next
 
-- [liquidity-measures](07-liquidity-measures.md): spread, depth and the price response per share traded, the quantities that predict what an order like this one will cost before it is sent.
+- [Liquidity](07-liquidity-measures.md): spread, depth and the price response per share traded, the quantities that predict what an order like this one will cost before it is sent.
 
 This card measures what an execution cost after the fact; what it cannot say is how much of the cost the market's liquidity made unavoidable, and that is the question liquidity measures answer.
 

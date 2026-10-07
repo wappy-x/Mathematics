@@ -1,24 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Systems and the Matrix Exponential
-topic: Turning states
-item: Complex eigenvalues
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/02-the-eigenvalue-method|the-eigenvalue-method]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/03-complex-roots-and-damped-oscillation|complex-roots-and-damped-oscillation]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/01-complex-numbers|complex-numbers]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/05-classifying-equilibria-by-trace-and-determinant|classifying-equilibria-by-trace-and-determinant]]"
-tags: [mathematics, differential equations and dynamics, complex-eigenvalues-and-spirals]
----
-
 # Complex eigenvalues: rotation plus growth or decay, so the state spirals
 
-Differential equations and dynamics → Systems and the Matrix Exponential → Turning states → Complex eigenvalues
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Systems and the Matrix Exponential](../../../SYLLABUS.md#w08-s04) → Complex eigenvalues
 
 ---
 
@@ -28,7 +10,7 @@ A car wheel rides on a spring and a shock absorber. Push it 10 cm from rest and 
 
 The wheel's state is two numbers, position in cm and velocity in cm/s, plotted as a point: position across, velocity up. It starts at (10, 0) and does not slide straight home. It swings clockwise round the origin, one turn every 3.14 s, and each turn shrinks the state to 0.0432 of its size. The path is a spiral.
 
-The eigenvalue method ([the-eigenvalue-method](02-the-eigenvalue-method.md)) looks for directions the matrix only stretches. This matrix has none: its eigenvalues are complex, −1 ± 2i. The real part sets the shrinking, the imaginary part the turning.
+The eigenvalue method ([The eigenvalue method](02-the-eigenvalue-method.md)) looks for directions the matrix only stretches. This matrix has none: its eigenvalues are complex, −1 ± 2i. The real part sets the shrinking, the imaginary part the turning.
 
 **When a real 2-by-2 system has eigenvalues α ± iβ, the real and imaginary parts of one complex solution are two real solutions; every solution turns once each 2π/β seconds while scaling by e^(αt), spiralling in when α is negative, out when α is positive, and closing into a loop when α is 0.**
 
@@ -44,7 +26,7 @@ To scale: 22 px per cm across, 12 px per cm/s up, axes crossing at rest. One tur
 
 ## The formula
 
-Reminder: x' = Ax reads "the rate of the state is the matrix A times the state" ([from-one-equation-to-a-system](01-from-one-equation-to-a-system.md)). Here y' = v and v' = −5y − 2v, so $A$ is `[[0, 1], [-5, -2]]`.
+Reminder: x' = Ax reads "the rate of the state is the matrix A times the state" ([From one equation to a system](01-from-one-equation-to-a-system.md)). Here y' = v and v' = −5y − 2v, so $A$ is `[[0, 1], [-5, -2]]`.
 
 Let $A$ be a real 2-by-2 matrix with eigenvalue $\lambda = \alpha + i\beta$, $\beta \neq 0$, and eigenvector $\mathbf{w} = \mathbf{p} + i\mathbf{q}$, where p and q are real vectors. Then
 
@@ -73,7 +55,7 @@ $$T = \frac{2\pi}{\beta},\qquad \mathbf{x}(t+T) = e^{\alpha T}\,\mathbf{x}(t).$$
 
 - **A has real entries.** Otherwise the real part is no solution: for x' = ix, the real part of e^(it) is cos t, whose rate at t = 1 is −0.8415, while the law asks for 0.5403i.
 - **The eigenvalues are not real:** trace^2 < 4 × determinant, the trace being the sum of the diagonal entries. A strong enough absorber breaks this; the eigenvalues turn real and nothing turns.
-- **A is constant.** A spring that stiffens with time or stretch loses the fixed turn time; near a resting point a nonlinear system is judged by its linear part, as in [classifying-equilibria-by-trace-and-determinant](05-classifying-equilibria-by-trace-and-determinant.md).
+- **A is constant.** A spring that stiffens with time or stretch loses the fixed turn time; near a resting point a nonlinear system is judged by its linear part, as in [Trace and determinant](05-classifying-equilibria-by-trace-and-determinant.md).
 
 ---
 
@@ -81,11 +63,11 @@ $$T = \frac{2\pi}{\beta},\qquad \mathbf{x}(t+T) = e^{\alpha T}\,\mathbf{x}(t).$$
 
 ### Step 0: a real rule cannot tell a number from its mirror image
 
-The conjugate of a + ib is a − ib, its mirror image across the real axis ([complex-numbers](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/01-complex-numbers.md)). Conjugating both sides of z' = Az leaves a real A unchanged, so the conjugate of a solution z is a solution too. Half their sum is the real part of z; half their difference, divided by i, is the imaginary part. Both are real solutions. The complex solution is a device for finding them.
+The conjugate of a + ib is a − ib, its mirror image across the real axis ([Complex numbers](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/01-complex-numbers.md)). Conjugating both sides of z' = Az leaves a real A unchanged, so the conjugate of a solution z is a solution too. Half their sum is the real part of z; half their difference, divided by i, is the imaginary part. Both are real solutions. The complex solution is a device for finding them.
 
 ### Step 1: one complex solution
 
-The eigenvalues solve λ^2 − (trace)λ + det = 0, det being the determinant. Here λ^2 + 2λ + 5 = 0, with discriminant −16, so λ = −1 ± 2i. It is the characteristic equation of y'' + 2y' + 5y = 0, the same wheel as one second-order equation ([complex-roots-and-damped-oscillation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md)).
+The eigenvalues solve λ^2 − (trace)λ + det = 0, det being the determinant. Here λ^2 + 2λ + 5 = 0, with discriminant −16, so λ = −1 ± 2i. It is the characteristic equation of y'' + 2y' + 5y = 0, the same wheel as one second-order equation ([Complex roots](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md)).
 
 The first row of A w = λ w reads w₂ = λ w₁; take w₁ = 1, so w = (1, −1 + 2i). Then w e^(λt) solves the system, since its rate is λ w e^(λt) = A w e^(λt).
 
@@ -120,7 +102,7 @@ Every term is e^(αt) times a cosine or sine of βt. After T = 2π/β the cosine
 
 At (10, 0) the rate is A times the state, (0, −50): a point on the right heading straight down, so the turn is clockwise. With complex eigenvalues the off-diagonal entries of A have opposite signs, so a negative lower-left entry always means clockwise.
 
-The same answer comes from the matrix exponential, e^(At) times the start ([the-matrix-exponential](04-the-matrix-exponential.md)), which needs no eigenvector at all.
+The same answer comes from the matrix exponential, e^(At) times the start ([The matrix exponential](04-the-matrix-exponential.md)), which needs no eigenvector at all.
 
 ---
 
@@ -157,7 +139,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Two roads. Road one builds the real solution from the eigenpair. Road two steps along the slope with Euler's rule, new state = old state + step length × rate ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)), never calling exp, cos or sin. It lands within 0.001 cm of 0.4321 cm after one turn, its error halves with the step, and its crossings of rest time the turn. A finite difference, change over a tiny interval divided by its length, confirms the closed form obeys the law. The figure's pixels are printed too.
+Two roads. Road one builds the real solution from the eigenpair. Road two steps along the slope with Euler's rule, new state = old state + step length × rate ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)), never calling exp, cos or sin. It lands within 0.001 cm of 0.4321 cm after one turn, its error halves with the step, and its crossings of rest time the turn. A finite difference, change over a tiny interval divided by its length, confirms the closed form obeys the law. The figure's pixels are printed too.
 
 ### Python
 
@@ -378,8 +360,8 @@ The two outputs match line for line.
 
 - **Car suspension.** The absorber is tuned so the ride settles within about one turn.
 - **Electrical circuits.** A coil, a capacitor and a resistor in a loop spiral the same way; a radio tunes to the turning rate.
-- **Populations near balance.** Predators and prey near a steady mix often circle it; the linear part's eigenvalues say whether the swings die out, as sorted in [classifying-equilibria-by-trace-and-determinant](05-classifying-equilibria-by-trace-and-determinant.md).
-- **Buildings in wind.** Each complex pair of a swaying tower is one decaying sway, a mode of [coupled-oscillators-and-normal-modes](07-coupled-oscillators-and-normal-modes.md).
+- **Populations near balance.** Predators and prey near a steady mix often circle it; the linear part's eigenvalues say whether the swings die out, as sorted in [Trace and determinant](05-classifying-equilibria-by-trace-and-determinant.md).
+- **Buildings in wind.** Each complex pair of a swaying tower is one decaying sway, a mode of [Normal modes](07-coupled-oscillators-and-normal-modes.md).
 
 > **Say it back**
 > A real 2-by-2 system with a negative discriminant has eigenvalues α ± iβ. Euler's formula splits the complex solution w e^(λt) into real and imaginary parts, each a real solution because the matrix is real, and their mix fits any start. Each turn takes 2π/β and multiplies the state by e^(αT). The shock absorber turns clockwise every 3.14 s and keeps 0.0432 of its state per turn.
@@ -388,13 +370,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [the-eigenvalue-method](02-the-eigenvalue-method.md): why w e^(λt) solves x' = Ax, used here with a complex λ.
-- [complex-roots-and-damped-oscillation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md): the same wheel as one second-order equation, with the same quadratic.
-- [complex-numbers](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/01-complex-numbers.md): real and imaginary parts, the conjugate, and Euler's formula.
+- [The eigenvalue method](02-the-eigenvalue-method.md): why w e^(λt) solves x' = Ax, used here with a complex λ.
+- [Complex roots](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md): the same wheel as one second-order equation, with the same quadratic.
+- [Complex numbers](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/01-complex-numbers.md): real and imaginary parts, the conjugate, and Euler's formula.
 
 ## Where this goes next
 
-- [classifying-equilibria-by-trace-and-determinant](05-classifying-equilibria-by-trace-and-determinant.md): spirals, centres, nodes and saddles sorted from the trace and determinant alone.
+- [Trace and determinant](05-classifying-equilibria-by-trace-and-determinant.md): spirals, centres, nodes and saddles sorted from the trace and determinant alone.
 
 ---
 

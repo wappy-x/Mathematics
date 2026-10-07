@@ -1,25 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Curves and Solids
-topic: Measuring along a curve
-item: Arc length
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/05-Curves and Solids/01-parametric-motion|parametric-motion]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/01-riemann-integral|riemann-integral]]"
-next:
-  - "[[Cards/06-Calculus and analysis/05-Curves and Solids/04-surface-area-of-revolution|surface-area-of-revolution]]"
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/01-scalar-line-integrals|scalar-line-integrals]]"
-  - "[[Cards/23-Differential geometry and Lie groups/01-Curves/01-regular-curves-and-arc-length|regular-curves-and-arc-length]]"
-tags: [mathematics, calculus and analysis, arc-length]
----
-
 # Arc length: the length of a curve as the integral of speed
 
-Calculus and analysis → Curves and Solids → Measuring along a curve → Arc length
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Curves and Solids](../../../SYLLABUS.md#w06-s05) → Arc length
 
 ---
 
@@ -51,7 +32,7 @@ $$L = \int_a^b \sqrt{1 + f'(x)^2}\, dx$$
 
 **Read it aloud:** the length adds each tiny width, stretched by the square root of one plus the slope squared.
 
-For a point moving along a curve, its position at clock time $t$ is $(x(t), y(t))$, as on [parametric-motion](01-parametric-motion.md). Its speed is $\sqrt{x'(t)^2 + y'(t)^2}$, and
+For a point moving along a curve, its position at clock time $t$ is $(x(t), y(t))$, as on [Parametric motion](01-parametric-motion.md). Its speed is $\sqrt{x'(t)^2 + y'(t)^2}$, and
 
 $$L = \int_{t_0}^{t_1} \sqrt{x'(t)^2 + y'(t)^2}\, dt$$
 
@@ -99,7 +80,7 @@ Rise over width is the chord's slope. The **mean value theorem** (on a smooth st
 
 ### Step 2: the chord total is a Riemann sum
 
-Add the chords: widths times values of the stretch factor, one value from each strip. That is a Riemann sum ([riemann-integral](../04-Integrals/01-riemann-integral.md)). The stretch factor is continuous because the slope is, so these sums close in on its integral as the strips narrow, wherever in each strip the value is taken.
+Add the chords: widths times values of the stretch factor, one value from each strip. That is a Riemann sum ([The integral](../04-Integrals/01-riemann-integral.md)). The stretch factor is continuous because the slope is, so these sums close in on its integral as the strips narrow, wherever in each strip the value is taken.
 
 ### Step 3: closing in from below means the least upper bound
 
@@ -395,7 +376,7 @@ The outputs match line for line.
 
 - **Suspension bridges.** Main cables are spun to a computed length. A cable under its own weight hangs as a catenary (a cosh curve); the same integral measures it.
 - **GPS tracks.** A GPS log is a chord chain between fixes; a sparse log reads short on a winding road.
-- **Wires and surfaces.** Where a bent wire balances uses its length: [centre-of-mass-and-pappus](05-centre-of-mass-and-pappus.md). Spinning a curve's length round an axis gives [surface-area-of-revolution](04-surface-area-of-revolution.md).
+- **Wires and surfaces.** Where a bent wire balances uses its length: [Centre of mass](05-centre-of-mass-and-pappus.md). Spinning a curve's length round an axis gives [Surface area](04-surface-area-of-revolution.md).
 
 > **Say it back**
 > Length is defined by chords: join points, add the straight pieces, refine; the length is the least upper bound of the totals. Each chord is its width times the square root of one plus the slope squared somewhere in its strip, so the total is a Riemann sum and the length an integral. For a moving point it is the integral of speed, whatever the clock. The 400 m cable with a 40 m sag is 410.424 m long.
@@ -404,14 +385,14 @@ The outputs match line for line.
 
 ## What this builds on
 
-- [parametric-motion](01-parametric-motion.md): position as functions of a clock, and speed.
-- [riemann-integral](../04-Integrals/01-riemann-integral.md): strip sums closing in on the integral, as in Step 2.
+- [Parametric motion](01-parametric-motion.md): position as functions of a clock, and speed.
+- [The integral](../04-Integrals/01-riemann-integral.md): strip sums closing in on the integral, as in Step 2.
 
 ## Where this goes next
 
-- [surface-area-of-revolution](04-surface-area-of-revolution.md): spins each small length round an axis.
-- [scalar-line-integrals](../09-Vector%20Calculus/01-scalar-line-integrals.md): weights each small length by a density.
-- regular-curves-and-arc-length: length itself as the clock.
+- [Surface area](04-surface-area-of-revolution.md): spins each small length round an axis.
+- [Line integrals of a function](../09-Vector%20Calculus/01-scalar-line-integrals.md): weights each small length by a density.
+- Regular curve and arc length: length itself as the clock.
 
 Arc length adds plain metres of curve; how to add something that varies along it, such as the cable's weight per metre, is what a line integral answers.
 

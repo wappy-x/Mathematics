@@ -1,25 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Trigonometry
-topic: Getting angles back
-item: Inverse trig
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/04-trig-graphs-amplitude-period-and-phase|trig-graphs-amplitude-period-and-phase]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/05-inverse-functions|inverse-functions]]"
-next: []
-tags:
-  - mathematics
-  - geometry and trig
-  - inverse-trig-and-solving-equations
----
-
 # Inverse trig: getting the angle back, and why there is more than one answer
 
-Geometry and trig → Trigonometry → Getting angles back → Inverse trig
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Trigonometry](../../../SYLLABUS.md#w05-s03) → Inverse trig
 
 ---
 
@@ -45,7 +26,7 @@ Drawn to scale: 1 hour = 12 units across, 1 m = 50 units up. Rings mark the four
 
 ## The formula
 
-For a number u from −1 to 1, $\arcsin u$, "arc-sine of u", is the angle between −90° and 90° whose sine is u. Calculators write $\sin^{-1}$: the −1 marks an undo, as on [inverse-functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md), not one over the sine. $\arccos u$ and $\arctan u$ undo cosine and tangent. Each answers from a window, its **principal branch**.
+For a number u from −1 to 1, $\arcsin u$, "arc-sine of u", is the angle between −90° and 90° whose sine is u. Calculators write $\sin^{-1}$: the −1 marks an undo, as on [Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md), not one over the sine. $\arccos u$ and $\arctan u$ undo cosine and tangent. Each answers from a window, its **principal branch**.
 
 | Undo | Accepts (its domain) | Returns (its range) |
 | --- | --- | --- |
@@ -61,7 +42,7 @@ $$\sin\theta = u \quad\text{exactly when}\quad \theta = \alpha + 2\pi k \quad\te
 
 For cosine the mirror is the horizontal axis: $\theta = \pm\beta + 2\pi k$, with $\beta = \arccos u$. For tangent the matching points are half a turn apart: $\theta = \arctan u + \pi k$.
 
-The tide is the one on [trig-graphs-amplitude-period-and-phase](04-trig-graphs-amplitude-period-and-phase.md), with the gauge's zero moved up to low water: midline 1.5 m, amplitude 1.5 m, period 12.4 hours, rising through the midline at $t = 1$, for $t$ in hours after midnight:
+The tide is the one on [Trig graphs](04-trig-graphs-amplitude-period-and-phase.md), with the gauge's zero moved up to low water: midline 1.5 m, amplitude 1.5 m, period 12.4 hours, rising through the midline at $t = 1$, for $t$ in hours after midnight:
 
 $$h(t) = 1.5 + 1.5\sin\theta, \qquad \theta = \frac{2\pi\,(t - 1)}{12.4}$$
 
@@ -92,13 +73,13 @@ Above 2 m means $\sin\theta$ above $u = (2 - 1.5)/1.5$, which is 1/3.
 
 ### Step 0: a repeating function has no undo until it is cut down
 
-The sine equals 1/3 at 19.47°, at 160.53°, and at either plus any number of full turns. An undo exists only when no two inputs share an output ([inverse-functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md)).
+The sine equals 1/3 at 19.47°, at 160.53°, and at either plus any number of full turns. An undo exists only when no two inputs share an output ([Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md)).
 
 So cut the sine down to the angles from −90° to 90°. There it climbs steadily from −1 to 1, meeting each value once, so it has an undo: arcsin. The cut chooses which answer comes back; it does not remove the others.
 
 ### Step 1: why these three windows
 
-On the unit circle ([radians-and-the-unit-circle](02-radians-and-the-unit-circle.md)) the point at angle $\theta$, measured anticlockwise from the rightward axis, is (cos θ, sin θ).
+On the unit circle ([The unit circle](02-radians-and-the-unit-circle.md)) the point at angle $\theta$, measured anticlockwise from the rightward axis, is (cos θ, sin θ).
 
 - **Arcsin:** the right half, bottom to top, passes every height, every sine, once.
 - **Arccos:** the top half, 0° to 180°, passes every left-right position, every cosine, once.
@@ -119,7 +100,7 @@ Let $\sin\theta = u$, with u strictly between −1 and 1. The point (cos θ, sin
 
 α = arcsin u has sine u and lies between −90° and 90°, where cosine is not negative, so the point at α is (+√(1 − u^2), u). If x is positive, θ names that point, and angles naming one point differ by whole turns: $\theta = \alpha + 2\pi k$.
 
-As cos(π − α) = −cos α and sin(π − α) = sin α ([trig-identities](03-trig-identities.md)), the point at π − α is (−√(1 − u^2), u). If x is negative, $\theta = \pi - \alpha + 2\pi k$.
+As cos(π − α) = −cos α and sin(π − α) = sin α ([Trig identities](03-trig-identities.md)), the point at π − α is (−√(1 − u^2), u). If x is negative, $\theta = \pi - \alpha + 2\pi k$.
 
 So every solution lies in one family, and every member of either has sine u: the two families are exactly the solutions. At u = ±1 they merge; beyond, nothing solves.
 
@@ -131,11 +112,11 @@ Sine after arcsin always returns the value. Arcsin after sine need not return th
 
 ### Step 4: from angles to times, and which side is above
 
-The angle shifts the time back an hour and stretches one tide to one turn; undoing both in reverse order ([inverse-functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md)) gives $t = 1 + 12.4\,\theta / 2\pi$. Rising crossings land at 1.670675 hours plus 12.4 times $k$, falling ones at 6.529325 plus the same. The day runs from $t = 0$ up to, not including, $t = 24$: only $k = 0$ and $k = 1$ count.
+The angle shifts the time back an hour and stretches one tide to one turn; undoing both in reverse order ([Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md)) gives $t = 1 + 12.4\,\theta / 2\pi$. Rising crossings land at 1.670675 hours plus 12.4 times $k$, falling ones at 6.529325 plus the same. The day runs from $t = 0$ up to, not including, $t = 24$: only $k = 0$ and $k = 1$ count.
 
 From α to 180° − α the arc lies above the line, so the water is above 2 m from each rising crossing to the next falling one.
 
-A second road counts from high water, 04:06. As a cosine from there, the tide needs cosine above 1/3, answered by ±β, with β = 70.53° = 90° − α: high water plus or minus 2.429325 hours, the same four times. Why the two forms agree is on [trig-identities](03-trig-identities.md).
+A second road counts from high water, 04:06. As a cosine from there, the tide needs cosine above 1/3, answered by ±β, with β = 70.53° = 90° − α: high water plus or minus 2.429325 hours, the same four times. Why the two forms agree is on [Trig identities](03-trig-identities.md).
 
 ---
 
@@ -384,7 +365,7 @@ The two outputs match line for line. The count, 584 minutes, is within one of th
 
 - **Harbours and tidal gates.** Marinas behind a sill publish daily access windows: this calculation, on a full tide prediction.
 - **Sunrise.** The sunrise equation gives the Earth's turn from sunrise to noon as an arccos, 0° to 180°: 0 to 12 hours. Near the poles its value can leave −1 to 1: then the sun never rises, or never sets.
-- **Angles from lengths.** A crane boom's angle is the arctan of height over reach ([right-triangle-trigonometry](01-right-triangle-trigonometry.md)); for a map direction, programs use atan2, which takes east and north separately and so keeps the quadrant.
+- **Angles from lengths.** A crane boom's angle is the arctan of height over reach ([Sine, cosine and tangent](01-right-triangle-trigonometry.md)); for a map direction, programs use atan2, which takes east and north separately and so keeps the quadrant.
 
 > **Say it back**
 > Sine repeats, so it has no undo until it is cut to a window where it takes each value once. Arcsin answers from −90° to 90°. Every other angle with the same sine is its mirror, 180° minus it, or whole turns from one of the two. For the tide, arcsin of 1/3 gives 01:40; the mirror and a second tide give 06:32, 14:04 and 18:56.
@@ -393,13 +374,13 @@ The two outputs match line for line. The count, 584 minutes, is within one of th
 
 ## What this builds on
 
-- [trig-graphs-amplitude-period-and-phase](04-trig-graphs-amplitude-period-and-phase.md): the tide's midline, amplitude, period and phase, read off the wave.
-- [inverse-functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md): an undo exists only when no two inputs share an output, so the sine must be cut down first.
+- [Trig graphs](04-trig-graphs-amplitude-period-and-phase.md): the tide's midline, amplitude, period and phase, read off the wave.
+- [Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md): an undo exists only when no two inputs share an output, so the sine must be cut down first.
 
 ## Where this goes next
 
-- [law-of-cosines](06-law-of-cosines.md): arccos returns a triangle's angle from three sides, no mirror needed.
-- [law-of-sines-and-the-ambiguous-case](07-law-of-sines-and-the-ambiguous-case.md): arcsin's mirror angle becomes a second possible triangle.
+- [Law of cosines](06-law-of-cosines.md): arccos returns a triangle's angle from three sides, no mirror needed.
+- [Law of sines](07-law-of-sines-and-the-ambiguous-case.md): arcsin's mirror angle becomes a second possible triangle.
 
 On the tide the mirror answer was always a second time; in a triangle it is a second shape, sometimes impossible, and the law of sines settles which.
 

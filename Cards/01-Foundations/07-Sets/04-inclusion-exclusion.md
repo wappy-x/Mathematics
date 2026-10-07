@@ -1,25 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Sets
-topic: Counting with sets
-item: Inclusion-exclusion
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/07-Sets/03-set-operations|set-operations]]"
-next:
-  - "[[Cards/01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product|ordered-pairs-and-cartesian-product]]"
-tags:
-  - mathematics
-  - foundations
-  - inclusion-exclusion
----
-
 # Inclusion-exclusion: count the overlap once, not twice
 
-Foundations → Sets → Counting with sets → Inclusion-exclusion
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sets](../../../SYLLABUS.md#w01-s07) → Inclusion-exclusion
 
 ---
 
@@ -91,7 +72,7 @@ In symbols, two groups: \|F ∪ C\| = \|F\| + \|C\| − \|F ∩ C\|.
 
 Three groups: \|F ∪ C ∪ H\| = \|F\| + \|C\| + \|H\| − \|F ∩ C\| − \|F ∩ H\| − \|C ∩ H\| + \|F ∩ C ∩ H\|. Singles in, pairs out, triple in.
 
-The ∪ and ∩ come from [set-operations](03-set-operations.md). The minus is this card.
+The ∪ and ∩ come from [Set operations](03-set-operations.md). The minus is this card.
 
 ---
 
@@ -148,7 +129,7 @@ Every student sits in exactly one row.
 | all three | 2 |
 | none of the three | 2 |
 
-The formula reaches 28 without listing any of this; the last row is what is left of the class, the complement from [set-operations](03-set-operations.md).
+The formula reaches 28 without listing any of this; the last row is what is left of the class, the complement from [Set operations](03-set-operations.md).
 
 ### What breaks if you drop a piece
 
@@ -306,7 +287,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Surveys.** 70% used the app, 60% used the website, so 130% used something — until you ask how many used both.
-- **Mailing lists.** Two queries return two row counts. The distinct customers are not the sum until you know how many sit in both: [set-operations](03-set-operations.md).
+- **Mailing lists.** Two queries return two row counts. The distinct customers are not the sum until you know how many sit in both: [Set operations](03-set-operations.md).
 - **Chance.** The probability of one thing or the other is the two added, minus the chance of both — same shape, fractions instead of counts.
 
 > **Say it back**
@@ -316,11 +297,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [set-operations](03-set-operations.md): union, intersection and the complement, which this card turns into a count.
+- [Set operations](03-set-operations.md): union, intersection and the complement, which this card turns into a count.
 
 ## Where this goes next
 
-- [ordered-pairs-and-cartesian-product](05-ordered-pairs-and-cartesian-product.md): the next card on this shelf, where sets are multiplied instead of counted.
+- [Ordered pairs and the Cartesian product](05-ordered-pairs-and-cartesian-product.md): the next card on this shelf, where sets are multiplied instead of counted.
 - Four groups and more keep alternating in the same way; that general version sits with the counting cards further along.
 
 ---

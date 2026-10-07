@@ -1,29 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: For the Curious
-topic: Integer solutions
-item: Pell's equation
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/09-Rings and Fields/01-rings|rings]]"
-  - "[[Cards/03-Algebra/09-Rings and Fields/03-polynomials-behave-like-integers|polynomials-behave-like-integers]]"
-  - "[[Cards/01-Foundations/02-The Number Line/03-irrational-numbers|irrational-numbers]]"
-  - "[[Cards/02-Number theory/07-For the Curious/05-continued-fractions-and-leap-years|continued-fractions-and-leap-years]]"
-next:
-  - "[[Cards/21-Algebraic and analytic number theory/06-Algebraic Numbers/07-dirichlets-unit-theorem|dirichlets-unit-theorem]]"
-  - "[[Cards/21-Algebraic and analytic number theory/07-Diophantine and Modular/01-pell-and-continued-fractions-revisited|pell-and-continued-fractions-revisited]]"
-tags:
-  - mathematics
-  - algebra
-  - pell-equation-and-root-two
----
-
 # Pell's equation: the whole-number solutions of x^2 - 2y^2 = 1 never run out, and each one is a better fraction for root 2
 
-Algebra → For the Curious → Integer solutions → Pell's equation
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [For the Curious](../../../SYLLABUS.md#w03-s10) → Pell's equation
 
 ---
 
@@ -31,7 +8,7 @@ Algebra → For the Curious → Integer solutions → Pell's equation
 
 Lay 289 counters out as a square, 17 rows of 17. Rebuild them as two equal squares: two squares of 12 by 12 take 288, and one counter is left over. Nine counters do the same against two squares of 2 by 2, and 9801 against two of 70 by 70.
 
-Exactness is impossible: the big side over a small side would be root 2, the number that gives 2 when multiplied by itself, and root 2 is no fraction ([irrational-numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md)). With x the big square's side and y a small one's, these near misses are the whole-number solutions of x^2 - 2y^2 = 1, known as a **Pell equation** after Euler misattributed it.
+Exactness is impossible: the big side over a small side would be root 2, the number that gives 2 when multiplied by itself, and root 2 is no fraction ([Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md)). With x the big square's side and y a small one's, these near misses are the whole-number solutions of x^2 - 2y^2 = 1, known as a **Pell equation** after Euler misattributed it.
 
 And the near miss pays: 3/2 = 1.5000000, 17/12 = 1.4166667, 99/70 = 1.4142857, against root 2 = 1.4142136.
 
@@ -89,7 +66,7 @@ $$x + y\sqrt{2} = (3 + 2\sqrt{2})^n$$
 
 ### Step 0: the left side is a number times its mirror
 
-Work inside the numbers a + b root 2, a and b whole. Add, subtract or multiply two of them and the answer is again one of them, since two root 2s meeting turn into a plain 2. A set closed like that is a **ring** ([rings](../09-Rings%20and%20Fields/01-rings.md)).
+Work inside the numbers a + b root 2, a and b whole. Add, subtract or multiply two of them and the answer is again one of them, since two root 2s meeting turn into a plain 2. A set closed like that is a **ring** ([Rings](../09-Rings%20and%20Fields/01-rings.md)).
 
 Flip the sign before the root for the mirror image, properly the **conjugate**: 3 + 2 root 2 has conjugate 3 - 2 root 2. A number times its own conjugate loses the root:
 
@@ -150,7 +127,7 @@ $$x/y - \sqrt{2} = \frac{1}{y^2 \, (x/y + \sqrt{2})}$$
 
 That bracket exceeds 2 root 2, so the overshoot is under 1 over (2 root 2 × y^2) — at (99, 70), a bound of 0.0000721538 against the true 0.0000721519. Each step divides it by roughly 34, from 0.0857864376 to 0.0024531043 to 0.0000721519.
 
-**The other door.** These fractions are the stops of the continued fraction of root 2 ([continued-fractions-and-leap-years](../../02-Number%20theory/07-For%20the%20Curious/05-continued-fractions-and-leap-years.md)): 1/1, 3/2, 7/5, 17/12, 41/29, 99/70, every second one a solution here. That route also proves no bottom number under 70 beats 99/70.
+**The other door.** These fractions are the stops of the continued fraction of root 2 ([Continued fractions](../../02-Number%20theory/07-For%20the%20Curious/05-continued-fractions-and-leap-years.md)): 1/1, 3/2, 7/5, 17/12, 41/29, 99/70, every second one a solution here. That route also proves no bottom number under 70 beats 99/70.
 
 ---
 
@@ -404,7 +381,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **A4 paper.** Its long side over its short side is 297 over 210, exactly 99/70 — step three of the list. Fold it in half and the shape returns almost, not quite, unchanged.
-- **How many units a family has.** Among whole numbers built with the square root of -1, four hold their reciprocal inside the family ([gaussian-integers-and-sums-of-two-squares](03-gaussian-integers-and-sums-of-two-squares.md)). With root 2 there are endlessly many.
+- **How many units a family has.** Among whole numbers built with the square root of -1, four hold their reciprocal inside the family ([Gaussian integers](03-gaussian-integers-and-sums-of-two-squares.md)). With root 2 there are endlessly many.
 
 > **Say it back**
 > A 17 by 17 square of counters is one more than two 12 by 12 squares, and pairs like that never run out. The left side of x^2 - 2y^2 = 1 is x + y root 2 times its conjugate, so a solution is a number whose reciprocal is still whole. Norms multiply, so multiplying by 3 + 2 root 2 turns any solution into the next, for ever. Backwards it shrinks the bottom number, and shrinking whole numbers must stop, so nothing is missed. Each fraction sits just above root 2: 99/70 is right to four places.
@@ -413,15 +390,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [rings](../09-Rings%20and%20Fields/01-rings.md): adding and multiplying without leaving the set; the unit hunted here.
-- [polynomials-behave-like-integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): a new arithmetic as a system in its own right.
-- [irrational-numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md): why no fraction equals root 2.
-- [continued-fractions-and-leap-years](../../02-Number%20theory/07-For%20the%20Curious/05-continued-fractions-and-leap-years.md): the stops of root 2, the best fractions of their size.
+- [Rings](../09-Rings%20and%20Fields/01-rings.md): adding and multiplying without leaving the set; the unit hunted here.
+- [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): a new arithmetic as a system in its own right.
+- [Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md): why no fraction equals root 2.
+- [Continued fractions](../../02-Number%20theory/07-For%20the%20Curious/05-continued-fractions-and-leap-years.md): the stops of root 2, the best fractions of their size.
 
 ## Where this goes next
 
-- dirichlets-unit-theorem: how many units a number family has, in general.
-- pell-and-continued-fractions-revisited: any whole number under the root, the continued fraction supplying the first solution.
+- The unit theorem: how many units a number family has, in general.
+- Pell's equation: any whole number under the root, the continued fraction supplying the first solution.
 
 This card starts from (3, 2) and never says where that pair came from: finding the first solution is a later card's job.
 

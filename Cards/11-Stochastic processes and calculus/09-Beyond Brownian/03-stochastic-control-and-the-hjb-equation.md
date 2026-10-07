@@ -1,27 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Beyond Brownian
-topic: Controlled diffusions
-item: Stochastic control
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/01-infinitesimal-generator|infinitesimal-generator]]"
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/08-the-hjb-equation-and-the-linear-quadratic-regulator|the-hjb-equation-and-the-linear-quadratic-regulator]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/07-geometric-brownian-motion|geometric-brownian-motion]]"
-next:
-  - "[[Cards/12-Financial mathematics/38-Performance and Multi-Period/03-mertons-portfolio-problem|mertons-portfolio-problem]]"
-  - "[[Cards/12-Financial mathematics/49-Microstructure and Execution/05-market-making-avellaneda-stoikov|market-making-avellaneda-stoikov]]"
-  - "[[Cards/19-Partial differential equations/02-First-Order Equations and Characteristics/06-hamilton-jacobi-bellman-and-verification|hamilton-jacobi-bellman-and-verification]]"
-tags: [mathematics, stochastic processes and calculus, stochastic-control-and-the-hjb-equation]
----
-
 # Stochastic control: choosing a policy as the noise unfolds
 
-Stochastic processes and calculus → Beyond Brownian → Controlled diffusions → Stochastic control
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Beyond Brownian](../../../SYLLABUS.md#w11-s09) → Stochastic control
 
 ---
 
@@ -31,7 +10,7 @@ A fortune of \$200,000 has five years to grow. Two places can hold it. A bank ac
 
 The question is not one decision but a rule. The shares will rise and fall in ways nobody can foresee. After each move, the holder looks at the fortune and decides again. A rule that maps "what the fortune is now, and how much time is left" to "how much to keep in shares" is a **policy**. Choosing the best policy for a quantity driven by noise is **stochastic control**, the term used from here on.
 
-The tool is the one that solved the noiseless case: write down the best achievable score as a function of the state, and demand that it balance over every instant. Without noise that balance is the Hamilton-Jacobi-Bellman (HJB) equation of [the-hjb-equation-and-the-linear-quadratic-regulator](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/08-the-hjb-equation-and-the-linear-quadratic-regulator.md). Noise adds exactly one term, a second derivative, and that term is where caution lives. For the fortune, the answer is short: keep 40 percent in shares, always. Today that is \$80,000. The dollars move every day; the fraction never does.
+The tool is the one that solved the noiseless case: write down the best achievable score as a function of the state, and demand that it balance over every instant. Without noise that balance is the Hamilton-Jacobi-Bellman (HJB) equation of [The HJB equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/08-the-hjb-equation-and-the-linear-quadratic-regulator.md). Noise adds exactly one term, a second derivative, and that term is where caution lives. For the fortune, the answer is short: keep 40 percent in shares, always. Today that is \$80,000. The dollars move every day; the fraction never does.
 
 **The best score from each state, as a function of time and state, satisfies the HJB equation: its rate in time plus the best available expected rate of change, drift times slope plus half the squared noise times curvature, is zero; the control that achieves the best is the optimal policy.**
 
@@ -56,7 +35,7 @@ The one line is the certainty-equivalent growth rate for each fraction held cons
 
 ## The formula
 
-Notation first, in words. The fortune at time $t$ (in years) is $X_t$, and $x$ is a particular value of it. The control is $u$; for the fortune it is $\pi$, the fraction in shares (here $\pi$ is a fraction, not 3.14159). $W_t$ is Brownian motion, the shares' accumulated surprise, and $dW_t$ is shorthand for an Ito integral, never a derivative, since the path has none ([ito-integral](../06-Ito%20Calculus/01-ito-integral.md)). Subscripts on $V$ are partial derivatives, as on the noiseless card.
+Notation first, in words. The fortune at time $t$ (in years) is $X_t$, and $x$ is a particular value of it. The control is $u$; for the fortune it is $\pi$, the fraction in shares (here $\pi$ is a fraction, not 3.14159). $W_t$ is Brownian motion, the shares' accumulated surprise, and $dW_t$ is shorthand for an Ito integral, never a derivative, since the path has none ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)). Subscripts on $V$ are partial derivatives, as on the noiseless card.
 
 A **controlled diffusion** is an SDE whose drift and noise depend on the control:
 
@@ -72,7 +51,7 @@ $$V_t + \max_u \Big( b(x,u)\,V_x + \tfrac12\, s(x,u)^2\, V_{xx} \Big) = 0, \qqua
 
 **Read it aloud:** the best score changes in time at minus the best expected rate any control can produce now, and that rate is drift times slope plus half the squared noise times curvature.
 
-The bracket is the generator of the controlled process applied to $V$, written $L^u V$ ([infinitesimal-generator](../08-Generators%2C%20Densities%20and%20Simulation/01-infinitesimal-generator.md)). So HJB reads $V_t + \max_u L^u V = 0$. A reward earned along the way, at rate $f(x,u)$, joins the bracket as $+f$.
+The bracket is the generator of the controlled process applied to $V$, written $L^u V$ ([The generator](../08-Generators%2C%20Densities%20and%20Simulation/01-infinitesimal-generator.md)). So HJB reads $V_t + \max_u L^u V = 0$. A reward earned along the way, at rate $f(x,u)$, joins the bracket as $+f$.
 
 For the fortune, a fraction $\pi$ in shares and the rest in the bank give drift $b = x\,(r + \pi(\mu - r))$ and noise size $s = x\,\pi\,\sigma$. The taste for risk is power utility, $U(x) = x^{1-\gamma}/(1-\gamma)$, which for $\gamma = 2$ is $-1/x$. Merton's answer is
 
@@ -100,8 +79,8 @@ The helper $g(\pi) = r + \pi(\mu - r) - \tfrac12\gamma\sigma^2\pi^2$ is the cert
 ### When it holds
 
 - **A smooth value function.** The derivation uses $V_x$ and $V_{xx}$. With a cap on the control or a kink in the payoff, the value can have a corner; HJB then holds only in a weaker sense, viscosity solutions (wing 19).
-- **The fortune moves continuously.** If the shares can jump, the generator gains a jump term and HJB gains an average over jumps ([jump-diffusions](02-jump-diffusions.md)).
-- **The state is seen.** HJB chooses from the current fortune. If the state is only glimpsed through noise, the state must first become the best estimate of it ([filtering-and-the-kalman-bucy-filter](04-filtering-and-the-kalman-bucy-filter.md)).
+- **The fortune moves continuously.** If the shares can jump, the generator gains a jump term and HJB gains an average over jumps ([Jump diffusions](02-jump-diffusions.md)).
+- **The state is seen.** HJB chooses from the current fortune. If the state is only glimpsed through noise, the state must first become the best estimate of it ([Filtering](04-filtering-and-the-kalman-bucy-filter.md)).
 - **Admissible policies.** The verification proof needs the noise part of the score to average to zero. Policies that borrow without limit can break that, the way doubling up breaks optional stopping.
 - **Power utility, for the constant fraction.** With exponential utility, $U(x) = -e^{-Ax}$, the best holding is a dollar sum that ignores the fortune, $(\mu - r)\,e^{-r(T-t)}/(A\sigma^2)$: \$68,856.64 today for $A$ = 0.00001 per dollar, rising to \$80,000.00 at the horizon.
 
@@ -111,7 +90,7 @@ The helper $g(\pi) = r + \pi(\mu - r) - \tfrac12\gamma\sigma^2\pi^2$ is the cert
 
 ### Step 0: the best score from here is the best average of the best score from where the next step lands
 
-Hold some control for a short stretch, see where the fortune lands, and act optimally from there. The best score now is the best, over that first choice, of the average best score at the landing point. This is Bellman's principle ([dynamic-programming-and-the-bellman-equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md)) with an average where the noiseless card had a single landing point. It works because the fortune is Markov: where it goes next depends only on where it is now and what is done now, so the best policy needs nothing but the current time and fortune.
+Hold some control for a short stretch, see where the fortune lands, and act optimally from there. The best score now is the best, over that first choice, of the average best score at the landing point. This is Bellman's principle ([Dynamic programming](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md)) with an average where the noiseless card had a single landing point. It works because the fortune is Markov: where it goes next depends only on where it is now and what is done now, so the best policy needs nothing but the current time and fortune.
 
 ### Step 1: Bellman's rule over a short step
 
@@ -127,7 +106,7 @@ Over the step the fortune moves by about $b\,h + s\,\Delta W$, where $\Delta W$ 
 
 $$E\big[V(t+h, X_{t+h})\big] - V(t,x) = \Big(V_t + b\,V_x + \tfrac12 s^2 V_{xx}\Big)\,h + o(h),$$
 
-where $o(h)$ is smaller than $h$ as $h$ shrinks. This is Ito's lemma averaged ([itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md)), and the bracket is the generator $L^u V$. Put it into Step 1, subtract $V(t,x)$ from both sides, divide by $h$ and let $h$ shrink:
+where $o(h)$ is smaller than $h$ as $h$ shrinks. This is Ito's lemma averaged ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)), and the bracket is the generator $L^u V$. Put it into Step 1, subtract $V(t,x)$ from both sides, divide by $h$ and let $h$ shrink:
 
 $$0 = V_t + \max_u \Big( b\,V_x + \tfrac12 s^2 V_{xx} \Big).$$
 
@@ -164,7 +143,7 @@ $$\pi^* = -\frac{(\mu - r)\, V_x}{\sigma^2\, x\, V_{xx}} .$$
 
 The ratio $-x V_{xx}/V_x$ is the holder's relative risk aversion. For power utility it is the constant $\gamma$, so guess $V = U(x)\,\varphi(t)$. Then $V_x = x^{-\gamma}\varphi$ and $V_{xx} = -\gamma x^{-\gamma-1}\varphi$, and the bracket becomes $x^{1-\gamma}\varphi\; g(\pi)$. Since $x^{1-\gamma}\varphi > 0$, maximising the bracket means maximising $g(\pi)$, whose top is $\pi^* = (\mu - r)/(\gamma\sigma^2)$ with height $g^*$. HJB is left as $U\varphi' + (1-\gamma)U\varphi\, g^* = 0$, so $\varphi(t) = e^{(1-\gamma) g^* (T - t)}$, which is 1 at the horizon as required. The verification theorem of Step 3 then certifies the guess.
 
-For the fortune: excess return 0.05, variance 0.0625, risk aversion 2, so $\pi^*$ = 0.05 / 0.125 = 0.4. Nothing in the answer mentions the fortune or the date. The same problem in finance terms, with the rule followed quarter by quarter and the fraction's sensitivity to each input, is [mertons-portfolio-problem](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/03-mertons-portfolio-problem.md). Consumption along the way is in Merton (1971), and the hedging demand that appears when the odds move is in Merton (1973), both in Sources.
+For the fortune: excess return 0.05, variance 0.0625, risk aversion 2, so $\pi^*$ = 0.05 / 0.125 = 0.4. Nothing in the answer mentions the fortune or the date. The same problem in finance terms, with the rule followed quarter by quarter and the fraction's sensitivity to each input, is [Merton's problem](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/03-mertons-portfolio-problem.md). Consumption along the way is in Merton (1971), and the hedging demand that appears when the odds move is in Merton (1973), both in Sources.
 
 ### Step 5: an independent road, Bellman on steps that shrink
 
@@ -181,7 +160,7 @@ xychart-beta
 
 The one line is the best fraction found at each step size. The gap to 0.4 is −0.003925 at yearly decisions and −0.000016 at daily ones (1/252 of a year): it shrinks in proportion to the step, and the certainty-equivalent growth climbs to 0.040000.
 
-Two more checks test the formula rather than search for the fraction afresh. A simulation needs no HJB: it draws the fortune from its exact lognormal law ([geometric-brownian-motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md)). Both checks draw 100,000 five-year outcomes from a SplitMix64 generator with seed 2026, normals by Box-Muller, and score each fixed fraction. At 0.4 the simulated CE fortune is \$244,394.43 with a standard error of \$174.75, against \$244,280.55 from the formula: 0.65 standard errors apart. Finite differences put the formula's $V$ into HJB at two points and scan the fraction from 0 to 2 in steps of 0.001; the top is at 0.4000 both times and the equation balances to six decimals. In the code the formula is road 1, finite differences road 2, Bellman road 3 and the simulation road 4.
+Two more checks test the formula rather than search for the fraction afresh. A simulation needs no HJB: it draws the fortune from its exact lognormal law ([Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md)). Both checks draw 100,000 five-year outcomes from a SplitMix64 generator with seed 2026, normals by Box-Muller, and score each fixed fraction. At 0.4 the simulated CE fortune is \$244,394.43 with a standard error of \$174.75, against \$244,280.55 from the formula: 0.65 standard errors apart. Finite differences put the formula's $V$ into HJB at two points and scan the fraction from 0 to 2 in steps of 0.001; the top is at 0.4000 both times and the equation balances to six decimals. In the code the formula is road 1, finite differences road 2, Bellman road 3 and the simulation road 4.
 
 ---
 
@@ -658,8 +637,8 @@ all checks passed
 
 - **Rebalancing funds and robo-advisers.** A target mix, such as 60 percent shares, rebalanced as markets move, is a constant-fraction policy of exactly this kind; the target comes from a version of $\pi^*$ with estimated inputs.
 - **The Kelly rule.** With risk aversion 1 (logarithmic utility), the best fraction is $(\mu - r)/\sigma^2$, 0.8 here: the fraction that maximises the long-run growth of the fortune. Gamblers and some funds use it, often at half strength, because at full strength the swings are large.
-- **Market making.** A dealer quoting buy and sell prices chooses the quotes as a policy of the inventory held; the HJB equation for that problem gives the Avellaneda-Stoikov quotes ([market-making-avellaneda-stoikov](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/05-market-making-avellaneda-stoikov.md)).
-- **Engineering under noise.** A controller steering a system hit by random disturbances of fixed size, with squared costs, solves HJB with a quadratic guess: a time-varying multiple of the squared state, plus a term in time alone. The multiple obeys the same Riccati equation as without noise ([the-hjb-equation-and-the-linear-quadratic-regulator](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/08-the-hjb-equation-and-the-linear-quadratic-regulator.md)), so the feedback gain is unchanged; the noise adds only the extra term, its cost. Combined with an estimate of the hidden state it becomes the linear-quadratic-Gaussian controller ([filtering-and-the-kalman-bucy-filter](04-filtering-and-the-kalman-bucy-filter.md)).
+- **Market making.** A dealer quoting buy and sell prices chooses the quotes as a policy of the inventory held; the HJB equation for that problem gives the Avellaneda-Stoikov quotes ([Market making](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/05-market-making-avellaneda-stoikov.md)).
+- **Engineering under noise.** A controller steering a system hit by random disturbances of fixed size, with squared costs, solves HJB with a quadratic guess: a time-varying multiple of the squared state, plus a term in time alone. The multiple obeys the same Riccati equation as without noise ([The HJB equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/08-the-hjb-equation-and-the-linear-quadratic-regulator.md)), so the feedback gain is unchanged; the noise adds only the extra term, its cost. Combined with an estimate of the hidden state it becomes the linear-quadratic-Gaussian controller ([Filtering](04-filtering-and-the-kalman-bucy-filter.md)).
 - **Insurance and pensions.** How much risk to reinsure, how fast to pay dividends, how a pension's mix should glide toward retirement: each is a controlled diffusion with a value function.
 
 > **Say it back**
@@ -669,18 +648,18 @@ all checks passed
 
 ## What this builds on
 
-- [infinitesimal-generator](../08-Generators%2C%20Densities%20and%20Simulation/01-infinitesimal-generator.md): the expected rate of change of a function of a diffusion, drift times slope plus half squared noise times curvature. HJB maximises it over the control.
-- [the-hjb-equation-and-the-linear-quadratic-regulator](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/08-the-hjb-equation-and-the-linear-quadratic-regulator.md): the noiseless HJB equation and the verification idea, here given one more term.
-- [itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md): the chain rule for diffusions, the source of the second-derivative term and of the verification proof.
-- [geometric-brownian-motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md): the model of the shares, and the reason a fixed fraction gives a lognormal fortune that the checks can simulate exactly.
+- [The generator](../08-Generators%2C%20Densities%20and%20Simulation/01-infinitesimal-generator.md): the expected rate of change of a function of a diffusion, drift times slope plus half squared noise times curvature. HJB maximises it over the control.
+- [The HJB equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/08-the-hjb-equation-and-the-linear-quadratic-regulator.md): the noiseless HJB equation and the verification idea, here given one more term.
+- [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md): the chain rule for diffusions, the source of the second-derivative term and of the verification proof.
+- [Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md): the model of the shares, and the reason a fixed fraction gives a lognormal fortune that the checks can simulate exactly.
 
 ---
 
 ## Where this goes next
 
-- [mertons-portfolio-problem](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/03-mertons-portfolio-problem.md): the same problem in finance terms, with the rule followed quarter by quarter and the fraction's sensitivity to each input.
-- [market-making-avellaneda-stoikov](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/05-market-making-avellaneda-stoikov.md): an HJB equation whose state is an inventory and whose controls are prices, solved for a dealer's quotes.
-- hamilton-jacobi-bellman-and-verification: the half this card states without proof: when the value function is smooth, and what HJB means when it is not.
+- [Merton's problem](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/03-mertons-portfolio-problem.md): the same problem in finance terms, with the rule followed quarter by quarter and the fraction's sensitivity to each input.
+- [Market making](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/05-market-making-avellaneda-stoikov.md): an HJB equation whose state is an inventory and whose controls are prices, solved for a dealer's quotes.
+- The HJB equation: the half this card states without proof: when the value function is smooth, and what HJB means when it is not.
 
 This card assumed the value function is smooth enough to differentiate twice; what happens to HJB at a corner, where a cap on the control or a kinked payoff makes that false, is the open question the partial-differential-equations card answers.
 

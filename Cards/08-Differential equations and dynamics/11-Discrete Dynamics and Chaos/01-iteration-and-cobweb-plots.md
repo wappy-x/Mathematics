@@ -1,25 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Discrete Dynamics and Chaos
-topic: Following a rule step by step
-item: Iteration
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/02-slope-fields-and-the-phase-line|slope-fields-and-the-phase-line]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/03-composition|composition]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/11-Discrete Dynamics and Chaos/02-fixed-points-of-a-map|fixed-points-of-a-map]]"
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/07-dynamic-programming-and-the-bellman-equation|dynamic-programming-and-the-bellman-equation]]"
-  - "[[Cards/25-Frontier/05-Analysis and Dynamics/02-collatz-conjecture|collatz-conjecture]]"
-tags: [mathematics, differential equations and dynamics, iteration-and-cobweb-plots]
----
-
 # Iteration: apply one rule over and over, and the cobweb staircase shows where it goes
 
-Differential equations and dynamics → Discrete Dynamics and Chaos → Following a rule step by step → Iteration
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Discrete Dynamics and Chaos](../../../SYLLABUS.md#w08-s11) → Iteration
 
 ---
 
@@ -57,7 +38,7 @@ The orbit:
 
 $$x_0,\quad x_1 = g(x_0),\quad x_2 = g(g(x_0)),\quad \dots,\quad x_n = g^n(x_0)$$
 
-Here $g^n$ means $g$ applied n times in a row, its n-fold [composition](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md), not a power.
+Here $g^n$ means $g$ applied n times in a row, its n-fold [Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md), not a power.
 
 The card's two rules:
 
@@ -82,7 +63,7 @@ A value the rule leaves unchanged, $g(x^*) = x^*$, is a **fixed point**: a resti
 
 - **The rule sees only the current value.** A rule that changes each step has no single curve to draw.
 - **The orbit stays where the rule is defined.** The square-root rule breaks at 0; the logistic map with $r$ above 4 throws the stock below zero.
-- **One number describes the state.** Two or more numbers need orbits drawn in space, as in [the-lorenz-system-and-strange-attractors](06-the-lorenz-system-and-strange-attractors.md).
+- **One number describes the state.** Two or more numbers need orbits drawn in space, as in [The Lorenz system](06-the-lorenz-system-and-strange-attractors.md).
 - **A continuous rule, for the limit theorem.** A rule with a jump can have an orbit that settles on a value the rule moves.
 
 ---
@@ -115,9 +96,9 @@ Scale: 180 units per unit of capacity on both axes. The path rises from 0.2 to 0
 - **A closed box**: a swing that never settles. At $r$ = 3.2 the stock alternates 0.513045 and 0.799455: boom year, bust year.
 - **A tangle**: wandering. At $r$ = 3.9 the stock in years 50 to 53 is 0.368628, 0.907692, 0.326771, 0.857968, with no repeat in sight; 1000 later years land on 911 different values to four decimals.
 
-Why the spiral alternates: near the crossing the curve is almost a straight line of slope s, so the distance from $x^*$ is multiplied by s each step, and a negative s flips the side. At the fish stock's resting level s = 2 − r = −0.8, and the check measures the distance multiplied by −0.800000 each year. Which slopes attract an orbit is [fixed-points-of-a-map](02-fixed-points-of-a-map.md).
+Why the spiral alternates: near the crossing the curve is almost a straight line of slope s, so the distance from $x^*$ is multiplied by s each step, and a negative s flips the side. At the fish stock's resting level s = 2 − r = −0.8, and the check measures the distance multiplied by −0.800000 each year. Which slopes attract an orbit is [Fixed points of a map](02-fixed-points-of-a-map.md).
 
-On a phase line ([slope-fields-and-the-phase-line](../01-Rate%20Equations/02-slope-fields-and-the-phase-line.md)) a solution never passes a resting level. A map jumps, so it can leap over one: hence the spiral, the box and the tangle.
+On a phase line ([Slope fields and the phase line](../01-Rate%20Equations/02-slope-fields-and-the-phase-line.md)) a solution never passes a resting level. A map jumps, so it can leap over one: hence the spiral, the box and the tangle.
 
 ### Step 3: a settling orbit settles on a fixed point
 
@@ -399,9 +380,9 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Square roots in software.** Libraries refine roots with Newton rules like this one; each step squares the error.
-- **Yearly generations.** Species breeding once a year are modelled by maps. Robert May's 1976 paper showed the logistic map settling, swinging and wandering as $r$ grows; [the-logistic-map-and-period-doubling](03-the-logistic-map-and-period-doubling.md) follows it.
-- **Stepping a differential equation.** Euler's rule, next value = current value + step × rate, is a map ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)).
-- **Forecasting limits.** A wandering orbit forgets its start; [chaos-and-the-lyapunov-exponent](04-chaos-and-the-lyapunov-exponent.md) measures how fast.
+- **Yearly generations.** Species breeding once a year are modelled by maps. Robert May's 1976 paper showed the logistic map settling, swinging and wandering as $r$ grows; [The logistic map](03-the-logistic-map-and-period-doubling.md) follows it.
+- **Stepping a differential equation.** Euler's rule, next value = current value + step × rate, is a map ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)).
+- **Forecasting limits.** A wandering orbit forgets its start; [The Lyapunov exponent](04-chaos-and-the-lyapunov-exponent.md) measures how fast.
 
 > **Say it back**
 > Iteration feeds a rule its own output; the values form the orbit. The cobweb draws each step as a move to the curve, then to the diagonal, which makes the output the next input. A staircase settles from one side, a spiral by overshooting, a box swings for ever, a tangle wanders. A continuous rule's settling orbit settles where curve meets diagonal. The square-root rule from 1 reaches 1.4142135624 in four steps; the fish stock at r = 2.8 spirals into 0.642857.
@@ -410,14 +391,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [slope-fields-and-the-phase-line](../01-Rate%20Equations/02-slope-fields-and-the-phase-line.md): resting levels for continuous change, the picture a map breaks by jumping.
-- [composition](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md): one function applied to another's output, all that $g^n$ means.
+- [Slope fields and the phase line](../01-Rate%20Equations/02-slope-fields-and-the-phase-line.md): resting levels for continuous change, the picture a map breaks by jumping.
+- [Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md): one function applied to another's output, all that $g^n$ means.
 
 ## Where this goes next
 
-- [fixed-points-of-a-map](02-fixed-points-of-a-map.md): the slope test that says which resting levels attract an orbit and which repel it.
-- [dynamic-programming-and-the-bellman-equation](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md): a value table iterated until it stops changing.
-- collatz-conjecture: a one-line whole-number rule whose orbits no one can yet predict.
+- [Fixed points of a map](02-fixed-points-of-a-map.md): the slope test that says which resting levels attract an orbit and which repel it.
+- [Dynamic programming](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/07-dynamic-programming-and-the-bellman-equation.md): a value table iterated until it stops changing.
+- Collatz: a one-line whole-number rule whose orbits no one can yet predict.
 
 ---
 

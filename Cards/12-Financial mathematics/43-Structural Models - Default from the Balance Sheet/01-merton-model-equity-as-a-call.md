@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Structural Models - Default from the Balance Sheet
-topic: The balance sheet as an option
-item: Merton's model
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/01-default-probability-recovery-and-expected-loss|default-probability-recovery-and-expected-loss]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/02-black-scholes-put|black-scholes-put]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/03-put-call-parity|put-call-parity]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/04-normal-distribution|normal-distribution]]"
-next:
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/02-structural-model-sensitivities|structural-model-sensitivities]]"
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/03-distance-to-default-and-expected-default-frequency|distance-to-default-and-expected-default-frequency]]"
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/05-black-cox-first-passage-default|black-cox-first-passage-default]]"
-tags: [mathematics, financial-mathematics, merton-model-equity-as-a-call]
----
-
 # Merton's model: equity is a call on the firm's assets, so risky debt is a safe bond minus a put
 
-Financial mathematics → Structural Models - Default from the Balance Sheet → The balance sheet as an option → Merton's model
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Structural Models - Default from the Balance Sheet](../../../SYLLABUS.md#w12-s43) → Merton's model
 
 ---
 
@@ -92,9 +70,9 @@ PD is the probability of default. The yield $y$ is the rate at which the promise
 ### When it holds
 
 - **One bond, one payment date, no payouts before it.** Coupons, dividends or share buybacks drain the assets the lenders rely on. With them the single call no longer describes the shares, and the card's numbers are off by the value paid out.
-- **Default is checked only on the payment date.** A firm deep underwater in month six survives if it recovers by month twelve. Real bonds often let lenders act the moment assets fall below a line, which raises the default chance: [black-cox-first-passage-default](05-black-cox-first-passage-default.md).
+- **Default is checked only on the payment date.** A firm deep underwater in month six survives if it recovers by month twelve. Real bonds often let lenders act the moment assets fall below a line, which raises the default chance: [Black-Cox](05-black-cox-first-passage-default.md).
 - **Assets wander like a Black-Scholes share, with constant $\sigma$.** If assets can jump, short-dated bonds carry spreads this model cannot produce: at one day to maturity it gives almost none.
-- **The assets could be traded, or copied by trading.** The call price is the cost of a copy. The assets of a real firm are not quoted, so $V$ and $\sigma$ must be estimated: [asset-value-and-volatility-from-the-share-price](04-asset-value-and-volatility-from-the-share-price.md).
+- **The assets could be traded, or copied by trading.** The call price is the cost of a copy. The assets of a real firm are not quoted, so $V$ and $\sigma$ must be estimated: [Backing out the unobservable](04-asset-value-and-volatility-from-the-share-price.md).
 - **No bankruptcy costs.** In default the lenders get all the assets. Lawyers' fees and fire-sale discounts lower what they recover, so the true bond is worth less than $75.41m.
 
 ---
@@ -125,7 +103,7 @@ Payoffs that agree on the payment date must have the same price today, or a trad
 - the bond, by the first face, is $B = V - E$;
 - the bond, by the second face, is $F e^{-rT} - P$, with $P$ the Black-Scholes put.
 
-The two bond prices agree because the call and the put obey put-call parity, $E - P = V - F e^{-rT}$: [put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md). Using the symmetry of the bell curve, $1 - N(x) = N(-x)$, the bond splits into two legs:
+The two bond prices agree because the call and the put obey put-call parity, $E - P = V - F e^{-rT}$: [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md). Using the symmetry of the bell curve, $1 - N(x) = N(-x)$, the bond splits into two legs:
 
 $$B = V\,N(-d_1) + F e^{-rT} N(d_2).$$
 
@@ -135,7 +113,7 @@ The second leg is the promised $80m, discounted, in the states where it is paid:
 
 In the risk-neutral world (the pricing world where every asset is taken to grow at the riskless rate), the log of the assets in a year is bell-curve distributed. Its centre is $\ln V + (r - \tfrac12\sigma^2)T$ and its spread is $\sigma\sqrt{T}$. So $V_T = V e^{(r - \frac12\sigma^2)T + \sigma\sqrt{T} Z}$, with $Z$ a standard bell-curve draw. Default means $V_T < F$. Take logs and divide by the spread: that happens exactly when $Z < -d_2$. The chance is $N(-d_2) = 10.28\%$.
 
-This is a pricing probability, not a forecast. The real-world assets grow faster than the riskless rate. At an 8% real drift the same calculation gives 7.84%. Turning the model into a forecast is [distance-to-default-and-expected-default-frequency](03-distance-to-default-and-expected-default-frequency.md).
+This is a pricing probability, not a forecast. The real-world assets grow faster than the riskless rate. At an 8% real drift the same calculation gives 7.84%. Turning the model into a forecast is [Distance to default](03-distance-to-default-and-expected-default-frequency.md).
 
 ### Step 5: the put is default chance times loss given default
 
@@ -143,7 +121,7 @@ The put pays $F - V_T$ in default and nothing otherwise. Its price is the discou
 
 $$P = e^{-rT} \times \text{PD} \times \big(F - \text{mean of } V_T \text{ given default}\big).$$
 
-In the example the assets left in an average default are $72.97m, so the lenders recover 91.2% of the $80m and lose 8.8%, the **loss given default**. That gives $0.9512 \times 0.1028 \times 7.027 = 0.687$: the put again, by a third road. This is the expected-loss rule of [default-probability-recovery-and-expected-loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md), with recovery no longer a fixed guess: it comes out of the model.
+In the example the assets left in an average default are $72.97m, so the lenders recover 91.2% of the $80m and lose 8.8%, the **loss given default**. That gives $0.9512 \times 0.1028 \times 7.027 = 0.687$: the put again, by a third road. This is the expected-loss rule of [Default probability, recovery and expected loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md), with recovery no longer a fixed guess: it comes out of the model.
 
 ### Step 6: the price becomes a yield and a spread
 
@@ -678,7 +656,7 @@ The two outputs match line for line.
 > [!warning]
 > **Reading the 10.28% as the chance the firm will default.** It is the chance in the pricing world, where the assets are assumed to grow at the riskless 5%. Real assets are expected to grow faster, so real defaults are rarer: 7.84% at an 8% real drift. The gap is the price lenders charge for bearing default risk, and it is why bond spreads look high next to historical default rates.
 >
-> - **Using the share price's volatility for $\sigma$.** The shares are a leveraged call on the assets, so they swing more than the assets do. Feeding the share volatility into $\sigma$ overstates default risk. The two are linked on [asset-value-and-volatility-from-the-share-price](04-asset-value-and-volatility-from-the-share-price.md).
+> - **Using the share price's volatility for $\sigma$.** The shares are a leveraged call on the assets, so they swing more than the assets do. Feeding the share volatility into $\sigma$ overstates default risk. The two are linked on [Backing out the unobservable](04-asset-value-and-volatility-from-the-share-price.md).
 > - **Pricing the bond as riskless bond times survival chance.** That gives $68.27m and ignores the $7.14m the lenders recover when the firm fails.
 > - **Confusing the spread with the default chance.** The spread is a yearly rate, 90.7 bp; the default chance is a one-off probability, 10.28%. The spread is close to default chance times loss given default, and here loss given default is only 8.8%.
 > - **Mixing compounding conventions.** A simple-interest yield against a continuous riskless rate reports 108.5 bp instead of 90.7 bp.
@@ -687,11 +665,11 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Credit scoring from share prices.** Moody's KMV and similar services turn a firm's share price and debt into a default score with this model, recast in the real world: [distance-to-default-and-expected-default-frequency](03-distance-to-default-and-expected-default-frequency.md).
+- **Credit scoring from share prices.** Moody's KMV and similar services turn a firm's share price and debt into a default score with this model, recast in the real world: [Distance to default](03-distance-to-default-and-expected-default-frequency.md).
 - **Shareholders who gamble.** Equity is a call, and a call gains from volatility. Near distress, owners gain from risky projects even when those projects lose value on average. Corporate finance calls this asset substitution; bond covenants exist partly to stop it.
-- **Bond covenants and early default.** A clause letting lenders seize the firm when assets drop below a line changes the default rule from one date to any date: [black-cox-first-passage-default](05-black-cox-first-passage-default.md).
-- **Credit spreads across a whole firm.** Leverage and asset volatility move the spread in the directions the Try-changing box shows; how fast they move it is [structural-model-sensitivities](02-structural-model-sensitivities.md).
-- **Where the model fails.** Real short-dated bonds pay spreads the model says should be near zero, and real firms have many bonds and dates: [where-structural-models-fail](06-where-structural-models-fail.md).
+- **Bond covenants and early default.** A clause letting lenders seize the firm when assets drop below a line changes the default rule from one date to any date: [Black-Cox](05-black-cox-first-passage-default.md).
+- **Credit spreads across a whole firm.** Leverage and asset volatility move the spread in the directions the Try-changing box shows; how fast they move it is [How the balance-sheet claims move](02-structural-model-sensitivities.md).
+- **Where the model fails.** Real short-dated bonds pay spreads the model says should be near zero, and real firms have many bonds and dates: [Where structural models break](06-where-structural-models-fail.md).
 
 > **Say it back**
 > On the payment date the lenders take up to the promised amount and the shareholders take the rest, never less than zero. That makes the shares a call on the assets struck at the debt, and the bond the assets minus that call, which is the same payoff as a riskless bond minus a put. Pricing the call with Black-Scholes gives $24.59m of shares and a $75.41m bond, $0.687m below the riskless $76.10m. The chance of default in the pricing world is N(−d2), 10.28%, and the put equals the discounted default chance times the loss given default. The bond's yield over the riskless rate is the credit spread, 90.7 bp.
@@ -700,17 +678,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [default-probability-recovery-and-expected-loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md): default chance, recovery and loss given default, which Step 5 rebuilds from the balance sheet.
-- [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the formula that prices the shares, and the share-counted chance behind $N(d_1)$.
-- [black-scholes-put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the formula that prices the lenders' short put.
-- [put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): why the two faces of the bond have one price.
-- [normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, $N(x)$, and the symmetry $1 - N(x) = N(-x)$.
+- [Default probability, recovery and expected loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md): default chance, recovery and loss given default, which Step 5 rebuilds from the balance sheet.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the formula that prices the shares, and the share-counted chance behind $N(d_1)$.
+- [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the formula that prices the lenders' short put.
+- [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): why the two faces of the bond have one price.
+- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, $N(x)$, and the symmetry $1 - N(x) = N(-x)$.
 
 ## Where this goes next
 
-- [structural-model-sensitivities](02-structural-model-sensitivities.md): how the shares, the bond and the spread move with assets, volatility, debt and time.
-- [distance-to-default-and-expected-default-frequency](03-distance-to-default-and-expected-default-frequency.md): the same model with the real drift, turned into a default forecast.
-- [black-cox-first-passage-default](05-black-cox-first-passage-default.md): default the first moment assets touch a line, not only on the payment date.
+- [How the balance-sheet claims move](02-structural-model-sensitivities.md): how the shares, the bond and the spread move with assets, volatility, debt and time.
+- [Distance to default](03-distance-to-default-and-expected-default-frequency.md): the same model with the real drift, turned into a default forecast.
+- [Black-Cox](05-black-cox-first-passage-default.md): default the first moment assets touch a line, not only on the payment date.
 
 ---
 

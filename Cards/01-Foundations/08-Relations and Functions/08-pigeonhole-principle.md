@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Relations and Functions
-topic: Counting arguments
-item: Pigeonhole
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/08-Relations and Functions/04-injective-surjective-bijective|injective-surjective-bijective]]"
-  - "[[Cards/01-Foundations/06-Proof/03-proof-by-contradiction|proof-by-contradiction]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/02-functions|functions]]"
-next: []
-tags:
-  - mathematics
-  - foundations
-  - pigeonhole-principle
----
-
 # Pigeonhole: more pigeons than holes means some hole holds two
 
-Foundations → Relations and Functions → Counting arguments → Pigeonhole
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Relations and Functions](../../../SYLLABUS.md#w01-s08) → Pigeonhole
 
 ---
 
@@ -81,7 +61,7 @@ Deal the guests out one to a month, refusing to double up. January to December: 
 
 ### The version that is a proof
 
-Turn it round and it is proof by contradiction — [proof-by-contradiction](../06-Proof/03-proof-by-contradiction.md).
+Turn it round and it is proof by contradiction — [Proof by contradiction](../06-Proof/03-proof-by-contradiction.md).
 
 Suppose no month holds two. Then every month holds one guest or none, so twelve months hold at most 12 guests. But 13 sat down. The supposition fits 13 people into 12 places, which is false — so the supposition is false, and some month holds two.
 
@@ -89,9 +69,9 @@ That is the form to write down: it takes any numbers, and never asks which month
 
 ### Said as a function
 
-Sending each guest to their birth month is a function — one output for every input, [functions](02-functions.md). Thirteen inputs, twelve outputs.
+Sending each guest to their birth month is a function — one output for every input, [Functions](02-functions.md). Thirteen inputs, twelve outputs.
 
-One-to-one means no output takes two inputs — [injective-surjective-bijective](04-injective-surjective-bijective.md). Here it is unavailable: **from a bigger finite set into a smaller one, no function is one-to-one.** Two inputs must share an output.
+One-to-one means no output takes two inputs — [One-to-one and onto](04-injective-surjective-bijective.md). Here it is unavailable: **from a bigger finite set into a smaller one, no function is one-to-one.** Two inputs must share an output.
 
 ---
 
@@ -273,14 +253,14 @@ The two outputs match line for line: whole counts, nothing to round.
 
 ## What this builds on
 
-- [injective-surjective-bijective](04-injective-surjective-bijective.md): one-to-one means no output takes two inputs. Here it becomes impossible, on sizes alone.
-- [proof-by-contradiction](../06-Proof/03-proof-by-contradiction.md): suppose the opposite and count. Denying the shared month is what fits 13 people into 12 places.
+- [One-to-one and onto](04-injective-surjective-bijective.md): one-to-one means no output takes two inputs. Here it becomes impossible, on sizes alone.
+- [Proof by contradiction](../06-Proof/03-proof-by-contradiction.md): suppose the opposite and count. Denying the shared month is what fits 13 people into 12 places.
 
 ## Where this goes next
 
 Nothing on this shelf follows it: pigeonhole closes Relations and Functions.
 
-Finiteness is the whole condition. Double every whole number and you land in the even numbers — half of them, seemingly, and still nothing doubles up. That is what infinite means: [same-size-by-pairing](../09-Sizes%20of%20Infinity/01-same-size-by-pairing.md). Push the counting further and you get Ramsey theory, where enough pigeons force a whole pattern, not just a shared hole.
+Finiteness is the whole condition. Double every whole number and you land in the even numbers — half of them, seemingly, and still nothing doubles up. That is what infinite means: [Same size means pairable](../09-Sizes%20of%20Infinity/01-same-size-by-pairing.md). Push the counting further and you get Ramsey theory, where enough pigeons force a whole pattern, not just a shared hole.
 
 ---
 

@@ -1,26 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Trees and Cheapest Routes
-topic: Parents and children
-item: Rooted trees
-kind: definition
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/10-Trees and Cheapest Routes/01-trees|trees]]"
-next:
-  - "[[Cards/14-Applied and computational/01-Algorithms and Growth/06-data-structures-heaps-hashes-and-trees|data-structures-heaps-hashes-and-trees]]"
-  - "[[Cards/14-Applied and computational/03-Information Theory/05-source-coding-and-huffman|source-coding-and-huffman]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - rooted-and-binary-trees
----
-
 # Rooted trees: hang a tree from one vertex and you get parents, children, depth and the shape behind every file system
 
-Combinatorics and graphs → Trees and Cheapest Routes → Parents and children → Rooted trees
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Trees and Cheapest Routes](../../../SYLLABUS.md#w04-s10) → Rooted trees
 
 ---
 
@@ -28,7 +8,7 @@ Combinatorics and graphs → Trees and Cheapest Routes → Parents and children 
 
 Sixteen teams enter a knockout cup. Lose once and you are out. Eight matches settle the first round, four the quarter-finals, two the semi-finals, then the final: fifteen matches, one champion.
 
-Draw it as a graph: a dot per team, a dot per match, a line from each match down to the two feeding it. That is 31 dots and 30 lines, one piece, no way round in a circle — a tree ([trees](01-trees.md)).
+Draw it as a graph: a dot per team, a dot per match, a line from each match down to the two feeding it. That is 31 dots and 30 lines, one piece, no way round in a circle — a tree ([Trees](01-trees.md)).
 
 A tree on paper has no top until one is named. Name the final and hold it up; everything else dangles. Every dot but the final now has one above it, the one it feeds, and below it the dots feeding it. Family words fit: **parent** above, **children** below, **leaf** where nothing hangs — the sixteen teams. Steps down give each dot a **depth**, the final 0 and the teams 4; the largest depth is the **height**, 4 here. Every match has two feeders, so each level holds twice the one above.
 
@@ -58,7 +38,7 @@ One branch is drawn to the bottom; the other three quarter-finals carry the same
 
 ## The formula
 
-Notation first, in words. A graph's dots are vertices, its lines edges, and $n$ counts the vertices ([graphs-vertices-and-edges](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). Write $T$ for a tree, $r$ for the vertex named its **root**. The **depth** $d(v)$ of a vertex $v$ counts the edges from $r$ down to it. The **height** $h$ is the largest depth, and $k$ stands for whichever depth is being counted.
+Notation first, in words. A graph's dots are vertices, its lines edges, and $n$ counts the vertices ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). Write $T$ for a tree, $r$ for the vertex named its **root**. The **depth** $d(v)$ of a vertex $v$ counts the edges from $r$ down to it. The **height** $h$ is the largest depth, and $k$ stands for whichever depth is being counted.
 
 Three words about children. **Binary**: at most two children, told apart as left and right. **Full**: two or none at every vertex. **Perfect**: full, with every leaf at the same depth — the cup's shape, all sixteen teams entering in one round.
 
@@ -104,7 +84,7 @@ $$\text{post}(v) = \text{post}(\text{left}) + \text{post}(\text{right}) + [\,v\,
 
 ### Step 0: one path from the root, so every vertex has one parent
 
-A tree holds exactly one path between any two vertices ([trees](01-trees.md)). Fix the root: from any other vertex that path leaves along one edge, and the vertex at its far end is the parent. Every edge is now a parent-child link pointing one way, and since only the root lacks a parent the links number $n - 1$: 30 here, exactly a tree's edge count.
+A tree holds exactly one path between any two vertices ([Trees](01-trees.md)). Fix the root: from any other vertex that path leaves along one edge, and the vertex at its far end is the parent. Every edge is now a parent-child link pointing one way, and since only the root lacks a parent the links number $n - 1$: 30 here, exactly a tree's edge count.
 
 ### Step 1: depth splits the tree into levels, and each level doubles
 
@@ -151,7 +131,7 @@ By induction on the height. A tree of height 0 is one leaf, and all three rules 
 
 </details>
 
-Two more routes, both in the code. Mirroring a tree — left and right swapped everywhere — turns pre-order into post-order read backwards. And addresses count the vertices with no levels: the root takes the empty word, a step left adds an L, a step right an R, so a vertex's word is as long as its depth. A perfect tree of height 4 is the words of length 0 to 4 over two letters, 31 of them ([strings-and-powers](../01-Counting%20Principles/02-strings-and-powers.md)), alphabetical order being pre-order. How many shapes are possible is counted on [catalan-bijections](../06-Lattice%20Paths%20and%20Catalan%20Numbers/04-catalan-bijections.md).
+Two more routes, both in the code. Mirroring a tree — left and right swapped everywhere — turns pre-order into post-order read backwards. And addresses count the vertices with no levels: the root takes the empty word, a step left adds an L, a step right an R, so a vertex's word is as long as its depth. A perfect tree of height 4 is the words of length 0 to 4 over two letters, 31 of them ([Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md)), alphabetical order being pre-order. How many shapes are possible is counted on [Catalan everywhere](../06-Lattice%20Paths%20and%20Catalan%20Numbers/04-catalan-bijections.md).
 
 ---
 
@@ -405,7 +385,7 @@ The two outputs match line for line.
 
 - **File systems.** Every folder but the top has one parent, which is what lets a path be one line of text. A listing prints pre-order; a size total finishes in post-order.
 - **Arithmetic expressions.** Operators inside, numbers at the leaves: in-order with brackets is how one is written, post-order how a machine evaluates it, which is reverse Polish notation.
-- **Sorted lookup.** With smaller keys left, a search follows one root-to-leaf path, so height is what matters (data-structures-heaps-hashes-and-trees).
+- **Sorted lookup.** With smaller keys left, a search follows one root-to-leaf path, so height is what matters (Data structures).
 
 > **Say it back**
 > Naming one vertex the root gives every other vertex one parent, since a tree holds only one path between two vertices. Depth counts edges below the root, height is the largest depth, a leaf has no children. With two children everywhere and every leaf at one depth the levels double: 1, 2, 4, 8, 16, so 31 vertices. The 15 matches follow with no mention of depth, each sending one team home. Reading a tree out names the root and both subtrees; root first, middle or last gives pre-, in- and post-order.
@@ -414,12 +394,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [trees](01-trees.md): the single path between two vertices, which gives each vertex one parent, and the $n - 1$ edges the parent links match.
+- [Trees](01-trees.md): the single path between two vertices, which gives each vertex one parent, and the $n - 1$ edges the parent links match.
 
 ## Where this goes next
 
-- data-structures-heaps-hashes-and-trees: keys held in a rooted tree, so a lookup costs a root-to-leaf path, not a scan.
-- source-coding-and-huffman: a binary tree whose leaves are letters, lopsided on purpose so common letters sit shallow.
+- Data structures: keys held in a rooted tree, so a lookup costs a root-to-leaf path, not a scan.
+- Huffman coding: a binary tree whose leaves are letters, lopsided on purpose so common letters sit shallow.
 
 The cup draw is level only because sixteen teams fit a doubling shape exactly; data arriving in the wrong order grows the ladder instead, 15 deep for the same 31 vertices, and keeping a tree short as it grows is where a later card starts.
 

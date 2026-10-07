@@ -1,27 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Vectors
-topic: Vectors as lists
-item: Vector spaces and subspaces
-kind: definition
-status: verified
-updated: 2026-09-07
-needs_first:
-  - "[[Cards/03-Algebra/03-Vectors/01-vectors|vectors]]"
-  - "[[Cards/01-Foundations/07-Sets/01-sets-and-membership|sets-and-membership]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/05-arithmetic-laws|arithmetic-laws]]"
-next:
-  - "[[Cards/03-Algebra/03-Vectors/03-linear-combinations-and-span|linear-combinations-and-span]]"
-tags:
-  - mathematics
-  - algebra
-  - vector-spaces-and-subspaces
----
-
 # Vector spaces and subspaces: any collection you can add and scale by the usual rules, and the flat pieces inside it that close up
 
-Algebra → Vectors → Vectors as lists → Vector spaces and subspaces
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Vectors](../../../SYLLABUS.md#w03-s03) → Vector spaces and subspaces
 
 ---
 
@@ -52,7 +31,7 @@ flowchart LR
 
 ## The formula
 
-A vector is a list in round brackets, and single letters stand for whole lists: $u$, $v$, $w$ are recipes, $a$ and $b$ are numbers ([vectors](01-vectors.md)). A number you scale by is a **scalar**, and in this wing scalars are always real numbers.
+A vector is a list in round brackets, and single letters stand for whole lists: $u$, $v$, $w$ are recipes, $a$ and $b$ are numbers ([Vectors](01-vectors.md)). A number you scale by is a **scalar**, and in this wing scalars are always real numbers.
 
 The two operations:
 
@@ -60,7 +39,7 @@ The two operations:
 
 **$a u$: multiply every slot by $a$. 2 × (300, 100, 200) = (600, 200, 400).**
 
-A collection $V$ carrying those two operations is a **vector space** when every result lands back in $V$ and the rearranging laws you use on numbers still hold: order and grouping do not matter, there is a zero, everything has an opposite, scaling spreads across a sum ([arithmetic-laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)). Written out, that is a list of eight.
+A collection $V$ carrying those two operations is a **vector space** when every result lands back in $V$ and the rearranging laws you use on numbers still hold: order and grouping do not matter, there is a zero, everything has an opposite, scaling spreads across a sum ([The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)). Written out, that is a list of eight.
 
 <details>
 <summary>The eight rules in full, if you want them</summary>
@@ -125,7 +104,7 @@ Exactly 200 grams of flour fails all three. Add (200, 100, 50) and (200, 50, 150
 
 One line of arithmetic says why, and it is the second road the code takes. Any one slot of a mix $a u + b v$ is $a$ times that slot of $u$ plus $b$ times that slot of $v$. For sugar-free that is $a$ × 0 + $b$ × 0 = 0, whatever the weights. For the 200-gram set it is $a$ × 200 + $b$ × 200, back to 200 only when the weights add to 1; at $a$ = 2 and $b$ = −3 it is −200. Pinned at zero, a set closes up. Pinned anywhere else, it slides off the zero vector.
 
-Mixes with any weights, which is what a subspace is closed under, are the next card: [linear-combinations-and-span](03-linear-combinations-and-span.md).
+Mixes with any weights, which is what a subspace is closed under, are the next card: [Linear combinations and span](03-linear-combinations-and-span.md).
 
 ### The picture: the three questions
 
@@ -394,13 +373,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [vectors](01-vectors.md): a vector as a list in round brackets, and the two things you do to it.
-- [sets-and-membership](../../01-Foundations/07-Sets/01-sets-and-membership.md): what it means to be in a set, and how a rule such as "the sugar slot is zero" carves one out.
-- [arithmetic-laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): order, grouping and distributing — the eight rules, one slot at a time.
+- [Vectors](01-vectors.md): a vector as a list in round brackets, and the two things you do to it.
+- [Sets](../../01-Foundations/07-Sets/01-sets-and-membership.md): what it means to be in a set, and how a rule such as "the sugar slot is zero" carves one out.
+- [The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): order, grouping and distributing — the eight rules, one slot at a time.
 
 ## Where this goes next
 
-- [linear-combinations-and-span](03-linear-combinations-and-span.md): what you can reach by mixing a few vectors with any weights. Every such collection is a subspace, and the usual way to build one on purpose.
+- [Linear combinations and span](03-linear-combinations-and-span.md): what you can reach by mixing a few vectors with any weights. Every such collection is a subspace, and the usual way to build one on purpose.
 
 ---
 

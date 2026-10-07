@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Performance and Multi-Period
-topic: Continuous-time allocation
-item: Merton's problem
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/04-capm-and-beta|capm-and-beta]]"
-  - "[[Cards/11-Stochastic processes and calculus/09-Beyond Brownian/03-stochastic-control-and-the-hjb-equation|stochastic-control-and-the-hjb-equation]]"
-next:
-  - "[[Cards/12-Financial mathematics/38-Performance and Multi-Period/04-rebalancing-and-transaction-costs|rebalancing-and-transaction-costs]]"
-tags: [mathematics, financial mathematics, mertons-portfolio-problem]
----
-
 # Merton's problem: the constant share of wealth to keep in risky assets
 
-Financial mathematics → Performance and Multi-Period → Continuous-time allocation → Merton's problem
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Performance and Multi-Period](../../../SYLLABUS.md#w12-s38) → Merton's problem
 
 ---
 
@@ -37,7 +20,7 @@ That fraction is the **Merton fraction**, the name used from here on. It is the 
 
 ### The picture: a hill with its top at one half
 
-Each fixed fraction gives a random account value after three years. Its **certainty equivalent** is the sure sum the saver would accept in exchange for that random amount ([certainty-equivalent-and-risk-premium](../36-Returns%20and%20Utility/03-certainty-equivalent-and-risk-premium.md)). Higher is better.
+Each fixed fraction gives a random account value after three years. Its **certainty equivalent** is the sure sum the saver would accept in exchange for that random amount ([Risk premium](../36-Returns%20and%20Utility/03-certainty-equivalent-and-risk-premium.md)). Higher is better.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -54,7 +37,7 @@ The one line is the certainty-equivalent wealth for each fraction, held constant
 
 ## The formula
 
-Notation first. The Greek letter $\pi$ ("pi") stands here for a fraction of wealth, not for 3.14159. Wealth at time $t$ is $W_t$. The fund is modelled by geometric Brownian motion ([geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)): over a short time $dt$ its price changes by a steady drift $\mu\,dt$ plus a random kick $\sigma\,dZ_t$, where $Z_t$ is Brownian motion, a random walk in continuous time.
+Notation first. The Greek letter $\pi$ ("pi") stands here for a fraction of wealth, not for 3.14159. Wealth at time $t$ is $W_t$. The fund is modelled by geometric Brownian motion ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)): over a short time $dt$ its price changes by a steady drift $\mu\,dt$ plus a random kick $\sigma\,dZ_t$, where $Z_t$ is Brownian motion, a random walk in continuous time.
 
 $$\pi^* = \frac{\mu - r}{\gamma\,\sigma^2}$$
 
@@ -64,7 +47,7 @@ The saver's tastes are power utility: an amount of money $x$ is worth
 
 $$U(x) = \frac{x^{1-\gamma}}{1-\gamma},$$
 
-which for $\gamma = 2$ is $-1/x$. The utility is negative, but only comparisons matter: more money always gives a higher (less negative) number. Its key property is that the saver's dislike of a 10 percent swing is the same at $50,000 as at $5 million ([expected-utility-and-risk-aversion](../36-Returns%20and%20Utility/02-expected-utility-and-risk-aversion.md)).
+which for $\gamma = 2$ is $-1/x$. The utility is negative, but only comparisons matter: more money always gives a higher (less negative) number. Its key property is that the saver's dislike of a 10 percent swing is the same at $50,000 as at $5 million ([Expected utility](../36-Returns%20and%20Utility/02-expected-utility-and-risk-aversion.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -138,7 +121,7 @@ The $dZ$ term has mean zero. Divide by $1-\gamma$ to get $d\,U(W)$: its expected
 
 ### Step 3: the HJB equation says the same at every date
 
-Step 2 looks one instant ahead. The full problem looks three years ahead. The tool for that is the Hamilton-Jacobi-Bellman (HJB) equation ([stochastic-control-and-the-hjb-equation](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md)): the value function $V(t,w)$, the best expected utility reachable from wealth $w$ at time $t$, must satisfy
+Step 2 looks one instant ahead. The full problem looks three years ahead. The tool for that is the Hamilton-Jacobi-Bellman (HJB) equation ([Stochastic control](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md)): the value function $V(t,w)$, the best expected utility reachable from wealth $w$ at time $t$, must satisfy
 
 $$0 = V_t + \max_{\pi}\Big[(r + \pi(\mu - r))\,w\,V_w + \tfrac12\pi^2\sigma^2 w^2\,V_{ww}\Big], \qquad V(T,w) = U(w).$$
 
@@ -202,7 +185,7 @@ The saver would trade the uncertain account, run by the Merton rule, for a sure 
 | --- | --- | --- |
 | Volatility where variance belongs, $0.04/(2 \times 0.20)$ | 10% in the fund | Risk grows with the square of the swing. 20 percent squared is 0.04, not 0.20. |
 | Total return where excess return belongs, $0.06/0.08$ | 75% in the fund | The bank's 2 percent is free. Only the return above it pays for the risk. |
-| Risk aversion dropped, $0.04/0.04$ | 100% in the fund | That is the log saver's answer ([kelly-criterion-and-growth](../36-Returns%20and%20Utility/05-kelly-criterion-and-growth.md)), right only when risk aversion is 1. |
+| Risk aversion dropped, $0.04/0.04$ | 100% in the fund | That is the log saver's answer ([Kelly](../36-Returns%20and%20Utility/05-kelly-criterion-and-growth.md)), right only when risk aversion is 1. |
 | 50/50 at the start, then never traded | certainty equivalent $109,370.92, short by $46.51 | The mix drifts toward the fund in good years and away from it in bad years, so it is rarely at the top of the hill. |
 
 ---
@@ -672,15 +655,15 @@ The two outputs match line for line, simulations included, because both run the 
 > **Reading the constant fraction as "buy once and hold".** Holding a constant *fraction* means trading constantly: selling the fund after it rises and buying after it falls. A saver who buys $50,000 of fund and walks away holds 50 percent only on day one. In this example the cost of walking away is small, $46.51 of certainty equivalent over three years, but it grows with the horizon and with volatility, and in a long bull market the untended account ends up mostly fund.
 >
 > - **Treating the output as precise.** The expected return is barely measurable, and the fraction is proportional to it: a 2-point error in the excess return swings the answer between 25 and 75 percent.
-> - **Assuming age changes the answer.** In this model the horizon does not appear in the fraction. A saver with 3 years and one with 30 hold the same share. Where age does matter, it is through things this model leaves out, such as future wages: [life-cycle-and-glide-paths](05-life-cycle-and-glide-paths.md).
+> - **Assuming age changes the answer.** In this model the horizon does not appear in the fraction. A saver with 3 years and one with 30 hold the same share. Where age does matter, it is through things this model leaves out, such as future wages: [Investing over a lifetime](05-life-cycle-and-glide-paths.md).
 
 ---
 
 ## Where you meet it in real life
 
 - **Balanced funds.** A 60/40 fund that trades back to 60 percent shares every quarter is running a Merton rule with a fraction chosen by the manager. The quarterly trades are the story table above.
-- **Robo-advisers.** Automated platforms ask a questionnaire, map the answers to a risk aversion, and rebalance to a target mix. The target plays the role of this card's fraction, often with the expected return set by an equilibrium model such as [capm-and-beta](../37-Portfolio%20Theory/04-capm-and-beta.md) rather than by a forecast.
-- **Judging a manager's risk.** A fund's risk-adjusted return, measured with [sharpe-information-and-drawdown](01-sharpe-information-and-drawdown.md), connects to this card: the Merton fraction equals the Sharpe ratio, excess return over volatility, divided by risk aversion times volatility. A higher Sharpe ratio justifies more exposure.
+- **Robo-advisers.** Automated platforms ask a questionnaire, map the answers to a risk aversion, and rebalance to a target mix. The target plays the role of this card's fraction, often with the expected return set by an equilibrium model such as [CAPM](../37-Portfolio%20Theory/04-capm-and-beta.md) rather than by a forecast.
+- **Judging a manager's risk.** A fund's risk-adjusted return, measured with [Performance measures](01-sharpe-information-and-drawdown.md), connects to this card: the Merton fraction equals the Sharpe ratio, excess return over volatility, divided by risk aversion times volatility. A higher Sharpe ratio justifies more exposure.
 - **Kelly betting.** Set risk aversion to 1 and the fraction becomes the growth-maximising Kelly bet. Professional gamblers and some investors bet a fraction of Kelly, which is the Merton rule with risk aversion above 1.
 
 > **Say it back**
@@ -690,12 +673,12 @@ The two outputs match line for line, simulations included, because both run the 
 
 ## What this builds on
 
-- [capm-and-beta](../37-Portfolio%20Theory/04-capm-and-beta.md): one-period portfolio choice, excess return over a riskless rate, and an equilibrium source for the expected return this card's formula needs.
-- [stochastic-control-and-the-hjb-equation](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md): the HJB equation, and why the value of acting best over the next instant, then continuing, pins down the whole plan.
+- [CAPM](../37-Portfolio%20Theory/04-capm-and-beta.md): one-period portfolio choice, excess return over a riskless rate, and an equilibrium source for the expected return this card's formula needs.
+- [Stochastic control](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md): the HJB equation, and why the value of acting best over the next instant, then continuing, pins down the whole plan.
 
 ## Where this goes next
 
-- [rebalancing-and-transaction-costs](04-rebalancing-and-transaction-costs.md): the Merton rule trades every instant; with a cost on each trade the saver lets the fraction drift inside a band around 50 percent.
+- [Rebalancing](04-rebalancing-and-transaction-costs.md): the Merton rule trades every instant; with a cost on each trade the saver lets the fraction drift inside a band around 50 percent.
 
 ---
 

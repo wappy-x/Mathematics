@@ -1,23 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Sampling and Estimation
-topic: Resampling the data
-item: Bootstrap
-kind: method
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/02-sample-mean-and-standard-error|sample-mean-and-standard-error]]"
-next:
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/03-historical-and-monte-carlo-var|historical-and-monte-carlo-var]]"
-  - "[[Cards/17-Topology/06-Topological Data Analysis/05-comparing-diagrams-and-vectorising-them|comparing-diagrams-and-vectorising-them]]"
-tags: [mathematics, probability and statistics, bootstrap]
----
-
 # Bootstrap: resampling your own data to see how your estimate wobbles
 
-Probability and statistics → Sampling and Estimation → Resampling the data → Bootstrap
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Sampling and Estimation](../../../SYLLABUS.md#w09-s07) → Bootstrap
 
 ---
 
@@ -25,7 +8,7 @@ Probability and statistics → Sampling and Estimation → Resampling the data �
 
 An insurer closes the year with a book of 200 home-contents claims. The smallest is $87.91 and the largest $17,253.10. The middle claim, the **median**, is $1,513.40: half the claims were smaller, half larger. The average is $2,484.93, pulled up by a few large losses. The pricing team quotes the median as the typical claim.
 
-How firm is $1,513.40? Next year's 200 claims will give a different median. For an average there is a formula for that wobble, the standard error $s/\sqrt{n}$ of [sample-mean-and-standard-error](02-sample-mean-and-standard-error.md). For a median the usual formula needs the height of the unknown claim law at its middle, a number 200 claims cannot pin down well.
+How firm is $1,513.40? Next year's 200 claims will give a different median. For an average there is a formula for that wobble, the standard error $s/\sqrt{n}$ of [Standard error](02-sample-mean-and-standard-error.md). For a median the usual formula needs the height of the unknown claim law at its middle, a number 200 claims cannot pin down well.
 
 The **bootstrap** gets the wobble without a formula. Treat the 200 claims as if they were the whole population. Draw 200 claims from them at random, putting each one back after it is drawn, so some claims come up twice and some not at all. That new list is a **resample**. Take its median. Do it 2,000 times. The 2,000 medians scatter, and their scatter stands in for the scatter of next year's median. Here it is $133.65: the typical claim is $1,513.40 give or take about that much. The same recipe gives the average a standard error of $202.30. The name comes from "pulling oneself up by one's bootstraps": the data are used to judge themselves.
 
@@ -51,7 +34,7 @@ Bars: the 2,000 simulated resamples. Line: the same law computed exactly by coun
 
 ## The formula
 
-Notation first, in words. A reminder from [populations-samples-and-estimators](01-populations-samples-and-estimators.md): a hat marks a guess, so $\hat\theta$ (theta-hat) is the book's estimate of a population number θ, here the median. A star marks anything computed from a resample: $x^*_1, \dots, x^*_n$ is one resample, and $\hat\theta^*_b$ is the estimate on resample number b. Brackets round a subscript mean rank: $x_{(k)}$ is the k-th smallest claim.
+Notation first, in words. A reminder from [Samples and estimators](01-populations-samples-and-estimators.md): a hat marks a guess, so $\hat\theta$ (theta-hat) is the book's estimate of a population number θ, here the median. A star marks anything computed from a resample: $x^*_1, \dots, x^*_n$ is one resample, and $\hat\theta^*_b$ is the estimate on resample number b. Brackets round a subscript mean rank: $x_{(k)}$ is the k-th smallest claim.
 
 The bootstrap standard error is the ordinary spread of the resampled estimates:
 
@@ -93,7 +76,7 @@ The last row belongs to the large-sample formula the bootstrap sidesteps: the me
 - **Independent claims from one law.** If each of 100 claims was logged twice, the resamples treat 200 claims as independent and report a standard error for the mean of $209.45, where the 100 real claims give $296.21: 29 percent too small.
 - **A smooth statistic.** A resample changes only how often each claim appears, so dropping or repeating a few claims should move the estimate only a little: the estimate should change gently with the share of the book at each claim amount. The mean and the median qualify; drop or repeat any one claim and the median moves only to a neighbouring claim, $1,509.52 or $1,517.29. The largest claim does not, because one claim decides it: 63.30 percent of resamples repeat the book's own largest claim exactly, and the bootstrap standard error of the maximum is $1,125.65 against a true $12,976.31.
 - **A book large enough to look like the population.** A resample can only recombine the claims already seen; a claim larger than any in the book never appears. With a handful of claims the percentile interval's 95 percent is a label, not a rate.
-- **A finite spread, for the mean.** Bickel and Freedman showed the bootstrap of the mean works when the population's variance is finite. For a heavy-tailed law with infinite variance ([heavy-tails-pareto-and-cauchy](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) it fails.
+- **A finite spread, for the mean.** Bickel and Freedman showed the bootstrap of the mean works when the population's variance is finite. For a heavy-tailed law with infinite variance ([Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) it fails.
 - **Little skew, for an interval on the mean.** With these skewed claims, "mean ± 1.96 standard errors" caught the true mean in 93.25 percent of books, not 95.
 
 ---
@@ -112,13 +95,13 @@ Without replacement, 200 draws from 200 claims are just the same 200 claims in a
 
 ### Step 2: for the mean, the exact answer is a formula
 
-One resampled claim has average $\bar x$ (each claim, weight 1/200) and variance $\hat\sigma^2$, the average squared distance from $\bar x$ with divisor n. The 200 draws are independent, so the variance of their average is $\hat\sigma^2/n$ ([sample-mean-and-standard-error](02-sample-mean-and-standard-error.md) makes the same step for a real sample). For the book: $2,870.49/√200 = $202.97. The 2,000 simulated resamples give $202.30, within simulation noise.
+One resampled claim has average $\bar x$ (each claim, weight 1/200) and variance $\hat\sigma^2$, the average squared distance from $\bar x$ with divisor n. The 200 draws are independent, so the variance of their average is $\hat\sigma^2/n$ ([Standard error](02-sample-mean-and-standard-error.md) makes the same step for a real sample). For the book: $2,870.49/√200 = $202.97. The 2,000 simulated resamples give $202.30, within simulation noise.
 
 The textbook standard error uses s, the spread with divisor n − 1, and gives $203.48. The two differ by the factor √(199/200), just under 1: the bootstrap is the plug-in version of the familiar formula, and for large books they agree. On the shelf's poll, 520 of 1,000 voters for one side, the same step gives the share's standard error 0.0158: a share is the mean of answers coded 1 and 0, and $\hat\sigma^2$ becomes 0.52 × 0.48.
 
 ### Step 3: for the median, the exact answer is a count of ranks
 
-A median has no short formula, but its bootstrap law can still be computed exactly, because it depends only on ranks. With 200 draws, the resampled median is the average of the 100th and 101st smallest draws. Which claims those are is decided by counting how many draws land below each rank, and every such count is binomial, as in [order-statistics-and-extremes](../05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md). The chance that the middle pair is the i-th and j-th smallest claims is the same for every book of 200. Only the dollar amounts attached to those ranks change.
+A median has no short formula, but its bootstrap law can still be computed exactly, because it depends only on ranks. With 200 draws, the resampled median is the average of the 100th and 101st smallest draws. Which claims those are is decided by counting how many draws land below each rank, and every such count is binomial, as in [Order statistics](../05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md). The chance that the middle pair is the i-th and j-th smallest claims is the same for every book of 200. Only the dollar amounts attached to those ranks change.
 
 The count gives 1,699 rank pairs with a chance above 10^−13; together they hold probability 0.999999999992. Weighting each pair's midpoint by its chance gives the exact bootstrap standard error of the median, $133.90, and the exact percentile interval, $1,228.47 to $1,755.64. The simulation, road 1, gave $133.65 and $1,215.34 to $1,755.73. Simulation adds noise of about 1 part in √(2 × 1,999) = 63.2 to a standard error; the exact law has none.
 
@@ -140,19 +123,19 @@ $$P^*\bigl(\text{middle pair} = x_{(i)}, x_{(j)}\bigr) = \binom{200}{100}\Bigl[\
 
 ### Step 4: why the swap is good enough
 
-As the book grows, the empirical distribution closes in on the true law of claims at every dollar amount at once; that is the Glivenko–Cantelli theorem, stated here and not proved, since its proof rests on the strong law of large numbers ([strong-law-of-large-numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md)). Closeness here means the share of the book below each dollar amount is near the true chance of a claim below it. For the median that is nearly enough. The true claim density at the middle, $f(m)$, is above zero, so the chance of a claim below a dollar amount climbs steadily through one half there. Move the law a little and the place where it crosses one half moves in proportion, by about that amount divided by $f(m)$. A resample's shares stray from the book's by about as much as a fresh book's stray from the truth, both of size about 1/√n, so the two medians stray by matching amounts. For the standard error itself the median also needs a very mild tail condition, that some small power of a claim has a finite average; lognormal claims meet it. It is not enough for the mean. Move a chance of 1 in 1,000 out to $10,000,000: the share below any dollar amount changes by at most 0.001, yet the mean rises by about 0.001 × $10,000,000 = $10,000. The mean also needs its tails kept in check, and a finite variance does that. Under those conditions the resampled wobble of the mean and of the median closes in on their true wobble. Bickel and Freedman (1981) proved this for the mean whenever the population variance is finite, and for many smooth statistics besides.
+As the book grows, the empirical distribution closes in on the true law of claims at every dollar amount at once; that is the Glivenko–Cantelli theorem, stated here and not proved, since its proof rests on the strong law of large numbers ([The strong law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md)). Closeness here means the share of the book below each dollar amount is near the true chance of a claim below it. For the median that is nearly enough. The true claim density at the middle, $f(m)$, is above zero, so the chance of a claim below a dollar amount climbs steadily through one half there. Move the law a little and the place where it crosses one half moves in proportion, by about that amount divided by $f(m)$. A resample's shares stray from the book's by about as much as a fresh book's stray from the truth, both of size about 1/√n, so the two medians stray by matching amounts. For the standard error itself the median also needs a very mild tail condition, that some small power of a claim has a finite average; lognormal claims meet it. It is not enough for the mean. Move a chance of 1 in 1,000 out to $10,000,000: the share below any dollar amount changes by at most 0.001, yet the mean rises by about 0.001 × $10,000,000 = $10,000. The mean also needs its tails kept in check, and a finite variance does that. Under those conditions the resampled wobble of the mean and of the median closes in on their true wobble. Bickel and Freedman (1981) proved this for the mean whenever the population variance is finite, and for many smooth statistics besides.
 
-The check tests it directly. The 200 claims were drawn from a known law, the lognormal of [lognormal-distribution](../04-Continuous%20Distributions/06-lognormal-distribution.md): the logarithm of a claim is normal, centred on the logarithm of $1,500 with spread 1. So the truth can be found by brute force: 2,000 fresh books drawn from that law. Their medians spread by $132.33, and the large-sample formula gives $132.93. One book's bootstrap said $133.90.
+The check tests it directly. The 200 claims were drawn from a known law, the lognormal of [Lognormal](../04-Continuous%20Distributions/06-lognormal-distribution.md): the logarithm of a claim is normal, centred on the logarithm of $1,500 with spread 1. So the truth can be found by brute force: 2,000 fresh books drawn from that law. Their medians spread by $132.33, and the large-sample formula gives $132.93. One book's bootstrap said $133.90.
 
 That close match was partly luck. Across the 2,000 fresh books, the bootstrap standard error of the median averaged $135.83, near the truth, but itself spread by $28.47. One book's bootstrap standard error is an estimate too, with a spread about a fifth of its size.
 
 ### Step 5: the interval is a statement about the method
 
-Across the 2,000 fresh books, each with its own exact percentile interval, the interval caught the true median of $1,500 in 0.9525 of them, with standard error 0.0048. That is what "95 percent" means: a property of the recipe over many books. Any one interval, such as $1,228.47 to $1,755.64, either contains $1,500 or does not. The full account of intervals is shelf 08's, from [confidence-intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md).
+Across the 2,000 fresh books, each with its own exact percentile interval, the interval caught the true median of $1,500 in 0.9525 of them, with standard error 0.0048. That is what "95 percent" means: a property of the recipe over many books. Any one interval, such as $1,228.47 to $1,755.64, either contains $1,500 or does not. The full account of intervals is shelf 08's, from [Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md).
 
 The same percentile recipe for the mean gives $2,100.83 to $2,906.37. It is lopsided: it reaches further above $2,484.93 than below, because large claims pull resampled means up more than small ones pull them down. The percentile interval copies that skew; "mean ± 1.96 standard errors" does not, and it caught the true mean, $2,473.08, only 93.25 percent of the time. Copying the skew is not a cure: for the mean of skewed data the percentile interval also falls short of 95. Corrected intervals are in Efron and Tibshirani and in Davison and Hinkley: the bootstrap-t, which resamples the estimate's distance from the book's value measured in units of its own standard error, and BCa (bias-corrected and accelerated), which shifts the percentile points to allow for bias and skew.
 
-Two other routes reach a standard error without a formula. The jackknife recomputes the estimate leaving out one claim at a time; Efron's 1979 paper introduced the bootstrap as its generalisation. The parametric bootstrap resamples from a fitted law instead of from the claims, using the fit of [maximum-likelihood](04-maximum-likelihood.md). And the bootstrap can estimate an estimator's bias as well as its spread, the other half of [bias-variance-and-mean-squared-error](06-bias-variance-and-mean-squared-error.md).
+Two other routes reach a standard error without a formula. The jackknife recomputes the estimate leaving out one claim at a time; Efron's 1979 paper introduced the bootstrap as its generalisation. The parametric bootstrap resamples from a fitted law instead of from the claims, using the fit of [Maximum likelihood](04-maximum-likelihood.md). And the bootstrap can estimate an estimator's bias as well as its spread, the other half of [Bias and variance](06-bias-variance-and-mean-squared-error.md).
 
 ---
 
@@ -616,10 +599,10 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Insurance reserving.** Actuaries resample their past claims to put a range on the reserve they hold, not just a single figure.
-- **Historical value at risk.** A bank resamples its past daily returns to estimate a bad day's loss and the uncertainty in that estimate; how that works, and where resampling independent days misleads, is [historical-and-monte-carlo-var](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md).
+- **Historical value at risk.** A bank resamples its past daily returns to estimate a bad day's loss and the uncertainty in that estimate; how that works, and where resampling independent days misleads, is [Historical and Monte Carlo VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md).
 - **Medical and economic studies.** Error bars on a median survival time, a ratio of two means, or a correlation, where no short formula exists.
 - **Machine learning.** Bagging trains many models on resamples of the data and averages them; bootstrap error bars go on a model's measured accuracy.
-- **Shape of data.** Topological data analysis resamples a point cloud to decide which features of its shape are real: comparing-diagrams-and-vectorising-them.
+- **Shape of data.** Topological data analysis resamples a point cloud to decide which features of its shape are real: Comparing diagrams.
 
 > **Say it back**
 > The wobble of an estimate depends on a population that is unknown, so the bootstrap puts the sample in its place. Drawing n values from the sample with replacement is drawing a fresh sample from that stand-in, and the spread of the estimate across many such resamples is its standard error. For the mean it is the claims' spread over √n; for the median of 200 claims it is $133.90, against a true $132.33. The middle 95 percent of the resampled estimates is an interval whose 95 percent describes the method across many books. It fails when the draws are not independent, when the statistic sits at an extreme, and when the sample is too small to look like the population.
@@ -628,14 +611,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [sample-mean-and-standard-error](02-sample-mean-and-standard-error.md): the standard error of a mean, $s/\sqrt{n}$, which the bootstrap reproduces for the mean and replaces for everything else.
+- [Standard error](02-sample-mean-and-standard-error.md): the standard error of a mean, $s/\sqrt{n}$, which the bootstrap reproduces for the mean and replaces for everything else.
 
 ## Where this goes next
 
-- [historical-and-monte-carlo-var](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md): resampling past market days to estimate a loss quantile.
-- comparing-diagrams-and-vectorising-them: bootstrap bands that separate real features of a data set's shape from noise.
+- [Historical and Monte Carlo VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md): resampling past market days to estimate a loss quantile.
+- Comparing diagrams: bootstrap bands that separate real features of a data set's shape from noise.
 
-This card resampled claims as independent draws; whether resampling past days is safe when bad days cluster together is the question [historical-and-monte-carlo-var](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md) takes up.
+This card resampled claims as independent draws; whether resampling past days is safe when bad days cluster together is the question [Historical and Monte Carlo VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md) takes up.
 
 ---
 

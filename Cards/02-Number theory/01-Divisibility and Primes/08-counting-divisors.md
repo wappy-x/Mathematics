@@ -1,26 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Divisibility and Primes
-topic: Primes
-item: Counting divisors
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/03-multiplying-and-dividing|multiplying-and-dividing]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/07-prime-factorisation|prime-factorisation]]"
-next:
-  - "[[Cards/02-Number theory/07-For the Curious/02-perfect-numbers-and-mersenne|perfect-numbers-and-mersenne]]"
-tags:
-  - mathematics
-  - number theory
-  - counting-divisors
----
-
 # Counting divisors: read how many divisors a number has straight off its prime factorisation
 
-Number theory → Divisibility and Primes → Primes → Counting divisors
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Divisibility and Primes](../../../SYLLABUS.md#w02-s01) → Counting divisors
 
 ---
 
@@ -30,7 +10,7 @@ A box holds 96 floor tiles. Lay all 96 in one rectangle — every tile used, no 
 
 You start listing. 1 by 96. 2 by 48. 3 by 32. 4 by 24. 6 by 16. 8 by 12. Six, and you are fairly sure that is all.
 
-Each side of each shape divides 96 with nothing left over — it is a **divisor** ([divides](01-divides.md)). So the question is how many divisors 96 has, and the factorisation answers it without listing. 96 is 2 × 2 × 2 × 2 × 2 × 3: five 2s and one 3. Add one to each count and multiply: (5 + 1) × (1 + 1) = 12 divisors, which pair off into six rectangles.
+Each side of each shape divides 96 with nothing left over — it is a **divisor** ([Divides](01-divides.md)). So the question is how many divisors 96 has, and the factorisation answers it without listing. 96 is 2 × 2 × 2 × 2 × 2 × 3: five 2s and one 3. Add one to each count and multiply: (5 + 1) × (1 + 1) = 12 divisors, which pair off into six rectangles.
 
 **Add one to how many times each prime appears in the factorisation, multiply those numbers together, and that is how many divisors there are.**
 
@@ -55,10 +35,10 @@ On the box, and on a second number:
 
 | Piece | Plain meaning | In our box of 96 |
 | --- | --- | --- |
-| a prime | no divisor but 1 and itself ([primes-and-composites](05-primes-and-composites.md)) | 2 and 3 |
+| a prime | no divisor but 1 and itself ([Primes and composites](05-primes-and-composites.md)) | 2 and 3 |
 | how often it appears | count it in the factorisation | five 2s, one 3 |
 | one more than that count | the choices for that prime, counting the choice of taking none | 6 and 2 |
-| a divisor | goes in with nothing left over ([divides](01-divides.md)) | any cell of the grid |
+| a divisor | goes in with nothing left over ([Divides](01-divides.md)) | any cell of the grid |
 
 ---
 
@@ -66,13 +46,13 @@ On the box, and on a second number:
 
 ### Step 0: a divisor is built from the same primes
 
-Break any divisor of 96 into primes. They come from 96's own pile: a number has one prime factorisation and no other ([prime-factorisation](07-prime-factorisation.md)). So a divisor of 96 is built from 2s and 3s — never more than five 2s, never more than one 3.
+Break any divisor of 96 into primes. They come from 96's own pile: a number has one prime factorisation and no other ([Prime factorisation](07-prime-factorisation.md)). So a divisor of 96 is built from 2s and 3s — never more than five 2s, never more than one 3.
 
 ### Step 1: one decision per prime, and decisions multiply
 
 How many 2s: nought up to five. Six answers. How many 3s: nought or one. Two answers. Each pair of answers builds exactly one divisor — three 2s and one 3 builds 24, none of either builds 1, all of them build 96.
 
-Six ways to answer the first, two for each: 6 × 2 = 12 ([multiplying-and-dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md)). The added one is the choice of taking none of a prime — miss it and you lose the no-2s column and the no-3 row: seven divisors, 1 among them.
+Six ways to answer the first, two for each: 6 × 2 = 12 ([Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md)). The added one is the choice of taking none of a prime — miss it and you lose the no-2s column and the no-3 row: seven divisors, 1 among them.
 
 ### Step 2: divisors pair off, so shapes are half of them
 
@@ -81,7 +61,7 @@ Divisors pair off, each pair multiplying to 96: 1 with 96, 2 with 48, 3 with 32,
 <details>
 <summary>Adding the divisors up, not just counting them</summary>
 
-The grid adds up as easily as it counts. The no-3 row is 1 + 2 + 4 + 8 + 16 + 32 = 63. The one-3 row is that 63 with a 3 in every term: 63 × 3. Together, 63 × 4 = 252, the sum of all 12 divisors of 96 — where [perfect-numbers-and-mersenne](../07-For%20the%20Curious/02-perfect-numbers-and-mersenne.md) starts.
+The grid adds up as easily as it counts. The no-3 row is 1 + 2 + 4 + 8 + 16 + 32 = 63. The one-3 row is that 63 with a 3 in every term: 63 × 3. Together, 63 × 4 = 252, the sum of all 12 divisors of 96 — where [Perfect numbers and Mersenne primes](../07-For%20the%20Curious/02-perfect-numbers-and-mersenne.md) starts.
 
 </details>
 
@@ -248,7 +228,7 @@ The two outputs match line for line.
 > [!warning]
 > **Multiplying the counts instead of one more than each count.** Five 2s and one 3 is not 5 × 1 = 5 divisors. The added one is the choice of taking *none* of that prime.
 >
-> - **A half-finished factorisation.** Call 96 "4 × 24", count two primes, and the answer is nonsense. Break it to primes first ([prime-factorisation](07-prime-factorisation.md)).
+> - **A half-finished factorisation.** Call 96 "4 × 24", count two primes, and the answer is nonsense. Break it to primes first ([Prime factorisation](07-prime-factorisation.md)).
 
 ---
 
@@ -256,7 +236,7 @@ The two outputs match line for line.
 
 - **Laying anything out in a rectangle.** Tiles, chairs, a photo grid, pallets in a lorry. The layouts are half the divisors, unless the count is a square.
 - **Package sizes.** 96 splits evenly ten ways besides 1 by 96; 97 is prime, so it splits no way at all. That is why cases run on 12, 24 and 36.
-- **Adding divisors rather than counting.** The grid gives 252 for 96: [perfect-numbers-and-mersenne](../07-For%20the%20Curious/02-perfect-numbers-and-mersenne.md).
+- **Adding divisors rather than counting.** The grid gives 252 for 96: [Perfect numbers and Mersenne primes](../07-For%20the%20Curious/02-perfect-numbers-and-mersenne.md).
 
 > **Say it back**
 > Every divisor is built from the number's own primes, never using more of a prime than the number has. Building one is a decision per prime: how many to take, from none up to all. Those decisions multiply, so add one to each count and multiply. 96 is five 2s and one 3: (5 + 1) × (1 + 1) = 12 divisors, pairing off into 6 rectangles.
@@ -265,12 +245,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [multiplying-and-dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): why separate choices multiply rather than add — six ways, then two for each, is 6 × 2.
-- [prime-factorisation](07-prime-factorisation.md): the factorisation this card reads, and its uniqueness, which stops a divisor smuggling in a prime 96 never had.
+- [Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): why separate choices multiply rather than add — six ways, then two for each, is 6 × 2.
+- [Prime factorisation](07-prime-factorisation.md): the factorisation this card reads, and its uniqueness, which stops a divisor smuggling in a prime 96 never had.
 
 ## Where this goes next
 
-- [perfect-numbers-and-mersenne](../07-For%20the%20Curious/02-perfect-numbers-and-mersenne.md): stop counting divisors and start adding them. When they add to twice the number, it is called perfect.
+- [Perfect numbers and Mersenne primes](../07-For%20the%20Curious/02-perfect-numbers-and-mersenne.md): stop counting divisors and start adding them. When they add to twice the number, it is called perfect.
 
 ---
 

@@ -1,27 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Systems and the Matrix Exponential
-topic: Modes that fade on their own
-item: The eigenvalue method
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/01-from-one-equation-to-a-system|from-one-equation-to-a-system]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/02-eigenvalues-and-eigenvectors|eigenvalues-and-eigenvectors]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/03-diagonalisation-and-matrix-powers|diagonalisation-and-matrix-powers]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/03-complex-eigenvalues-and-spirals|complex-eigenvalues-and-spirals]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/04-the-matrix-exponential|the-matrix-exponential]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/07-coupled-oscillators-and-normal-modes|coupled-oscillators-and-normal-modes]]"
-  - "[[Cards/16-Numerical analysis/06-ODE Solvers/05-stiffness-a-stability-and-the-dahlquist-barriers|stiffness-a-stability-and-the-dahlquist-barriers]]"
-tags: [mathematics, differential equations and dynamics, the-eigenvalue-method]
----
-
 # The eigenvalue method: along an eigenvector the system only stretches, so each mode is a plain exponential
 
-Differential equations and dynamics → Systems and the Matrix Exponential → Modes that fade on their own → The eigenvalue method
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Systems and the Matrix Exponential](../../../SYLLABUS.md#w08-s04) → The eigenvalue method
 
 ---
 
@@ -55,11 +34,11 @@ Orange: the lounge. Teal: the bedroom, which warms for the first 0.2027 h, fed t
 
 ## The formula
 
-Reminder: $x' = Ax$ says "the rate of the state x is the matrix A times x" ([from-one-equation-to-a-system](01-from-one-equation-to-a-system.md)). Each room loses, per hour, its excess over outside plus its gap to the other room. For the lounge that is $-T_1 - (T_1 - T_2) = -2T_1 + T_2$:
+Reminder: $x' = Ax$ says "the rate of the state x is the matrix A times x" ([From one equation to a system](01-from-one-equation-to-a-system.md)). Each room loses, per hour, its excess over outside plus its gap to the other room. For the lounge that is $-T_1 - (T_1 - T_2) = -2T_1 + T_2$:
 
 $$\begin{pmatrix} T_1 \\ T_2 \end{pmatrix}' = \begin{pmatrix} -2 & 1 \\ 1 & -2 \end{pmatrix} \begin{pmatrix} T_1 \\ T_2 \end{pmatrix}, \qquad \begin{pmatrix} T_1 \\ T_2 \end{pmatrix}(0) = \begin{pmatrix} 30 \\ 10 \end{pmatrix}$$
 
-An **eigenvector** of A is a direction A only stretches: $Av = \lambda v$, with the stretch $\lambda$ its **eigenvalue** ([eigenvalues-and-eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). With two of them:
+An **eigenvector** of A is a direction A only stretches: $Av = \lambda v$, with the stretch $\lambda$ its **eigenvalue** ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). With two of them:
 
 $$x(t) = c_1\, e^{\lambda_1 t}\, v_1 + c_2\, e^{\lambda_2 t}\, v_2, \qquad c_1 v_1 + c_2 v_2 = x(0)$$
 
@@ -86,8 +65,8 @@ The eigenvalues solve $\det(A - \lambda I) = 0$, the **characteristic equation**
 
 - **Constant rates.** If the wall's insulation changed hour by hour, the eigenvectors would drift and the modes would feed each other.
 - **Two independent eigenvectors.** Distinct eigenvalues guarantee them. A repeated eigenvalue may leave one direction, and a t e^(−t) term no mode supplies (What breaks, last row).
-- **Real eigenvalues.** Complex ones give spirals: [complex-eigenvalues-and-spirals](03-complex-eigenvalues-and-spirals.md).
-- **No input.** A heater adds a term that is not A times x: [forced-systems-and-variation-of-constants](06-forced-systems-and-variation-of-constants.md).
+- **Real eigenvalues.** Complex ones give spirals: [Complex eigenvalues](03-complex-eigenvalues-and-spirals.md).
+- **No input.** A heater adds a term that is not A times x: [Forced systems](06-forced-systems-and-variation-of-constants.md).
 
 ---
 
@@ -142,7 +121,7 @@ Drawn to scale, 9 px per °C on both axes, origin at both rooms equal to outside
 
 Take a second pair of rooms, the bedroom half the lounge's size with half its outside wall: T_1' = −3T_1 + T_2 and T_2' = 2T_1 − 4T_2. Then λ^2 + 7λ + 10 = 0: eigenvalues −2 and −5, eigenvectors (1, 1) and (1, −2), not at right angles. The weights still come from solving c_1 (1, 1) + c_2 (1, −2) = (30, 10): c_2 = 6.667 and c_1 = 23.333. At 1 h the rooms read 3.2027 °C and 3.0680 °C. Shortcuts that assume right angles fail (What breaks, third row).
 
-The same method, packed into one matrix, is the matrix exponential: e^(At) = P e^(Dt) P^(−1). Defined another way, e^(At) also covers the case with one eigenvector missing ([the-matrix-exponential](04-the-matrix-exponential.md)).
+The same method, packed into one matrix, is the matrix exponential: e^(At) = P e^(Dt) P^(−1). Defined another way, e^(At) also covers the case with one eigenvector missing ([The matrix exponential](04-the-matrix-exponential.md)).
 
 ---
 
@@ -176,7 +155,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Two roads. Road one: eigenvalues from the characteristic equation, eigenvectors from the first row, weights by Cramer's rule, modes added. Road two never mentions an eigenvalue: it steps the coupled rates with Euler's rule, new state = old state + step length h × rate ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)). Halving h halves the error: Euler's error is proportional to h.
+Two roads. Road one: eigenvalues from the characteristic equation, eigenvectors from the first row, weights by Cramer's rule, modes added. Road two never mentions an eigenvalue: it steps the coupled rates with Euler's rule, new state = old state + step length h × rate ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)). Halving h halves the error: Euler's error is proportional to h.
 
 ### Python
 
@@ -394,7 +373,7 @@ The two outputs match line for line.
 
 - **Buildings and battery packs.** Thermal models split into an overall mode and balancing modes; the slow one sets warm-up time.
 - **Drugs in the body.** Blood and tissue are two linked compartments; a dose falls on two exponentials, fast spreading then slow clearing.
-- **Vibrations.** Two masses on springs split into modes that move together and apart: [coupled-oscillators-and-normal-modes](07-coupled-oscillators-and-normal-modes.md).
+- **Vibrations.** Two masses on springs split into modes that move together and apart: [Normal modes](07-coupled-oscillators-and-normal-modes.md).
 
 > **Say it back**
 > A matrix mixes the variables, but along an eigenvector it only stretches. A state shaped like an eigenvector keeps its shape and fades at that eigenvalue. Any start is a mix of eigenvectors; solve for the weights. Each weight decays at its own rate, and the solution is the sum. In the two rooms the difference dies three times faster than the average, so the rooms agree long before the house is cold.
@@ -403,16 +382,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [from-one-equation-to-a-system](01-from-one-equation-to-a-system.md): the notation x' = Ax.
-- [eigenvalues-and-eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the characteristic equation and its directions.
-- [diagonalisation-and-matrix-powers](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md): AP = PD, the coordinates behind the proof.
+- [From one equation to a system](01-from-one-equation-to-a-system.md): the notation x' = Ax.
+- [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the characteristic equation and its directions.
+- [Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md): AP = PD, the coordinates behind the proof.
 
 ## Where this goes next
 
-- [complex-eigenvalues-and-spirals](03-complex-eigenvalues-and-spirals.md): modes that turn as they fade.
-- [the-matrix-exponential](04-the-matrix-exponential.md): the method as one matrix e^(At), missing eigenvectors included.
-- [coupled-oscillators-and-normal-modes](07-coupled-oscillators-and-normal-modes.md): the same splitting where modes oscillate.
-- stiffness-a-stability-and-the-dahlquist-barriers: a mode far faster than the rest forces tiny steps or blows up.
+- [Complex eigenvalues](03-complex-eigenvalues-and-spirals.md): modes that turn as they fade.
+- [The matrix exponential](04-the-matrix-exponential.md): the method as one matrix e^(At), missing eigenvectors included.
+- [Normal modes](07-coupled-oscillators-and-normal-modes.md): the same splitting where modes oscillate.
+- Stiffness: a mode far faster than the rest forces tiny steps or blows up.
 
 ---
 

@@ -1,24 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Units and Modelling
-topic: Small-parameter expansions
-item: Regular perturbation
-kind: method
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/03-scaling-and-nondimensionalisation|scaling-and-nondimensionalisation]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/05-taylor-series|taylor-series]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/03-the-nonlinear-pendulum|the-nonlinear-pendulum]]"
-next:
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/06-boundary-layers-and-singular-perturbation|boundary-layers-and-singular-perturbation]]"
-tags: [mathematics, engineering mathematics, regular-perturbation]
----
-
 # Regular perturbation: solve the easy problem, then correct in powers of a small number
 
-Engineering mathematics → Units and Modelling → Small-parameter expansions → Regular perturbation
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Units and Modelling](../../../SYLLABUS.md#w13-s01) → Regular perturbation
 
 ---
 
@@ -55,7 +37,7 @@ Orange: the exact period. Green: the easy answer plus two corrections. Dark blue
 
 Two pieces of notation first, in words. The Greek letter $\varepsilon$ (epsilon) names the small number an expansion is built on. $O(\varepsilon^3)$, read "order epsilon cubed", stands for a remainder no bigger than some fixed multiple of $\varepsilon^3$ once $\varepsilon$ is small enough.
 
-The pendulum's law, from [the-nonlinear-pendulum](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md), is $\theta'' = -(g/l)\sin\theta$, with $g$ the acceleration of gravity and $l$ the rod length: the angle's acceleration is minus $g/l$ times its sine. The swing starts at rest at angle $a$. Count time $t$ in units of $\sqrt{l/g}$, 0.318310 s here, and measure the angle in units of the release angle, $u = \theta/a$. Then
+The pendulum's law, from [The pendulum](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md), is $\theta'' = -(g/l)\sin\theta$, with $g$ the acceleration of gravity and $l$ the rod length: the angle's acceleration is minus $g/l$ times its sine. The swing starts at rest at angle $a$. Count time $t$ in units of $\sqrt{l/g}$, 0.318310 s here, and measure the angle in units of the release angle, $u = \theta/a$. Then
 
 $$u'' + u = \frac{\varepsilon}{6}\,u^3 - \frac{\varepsilon^2}{120}\,u^5 + O(\varepsilon^3), \qquad \varepsilon = a^2, \qquad u(0) = 1,\; u'(0) = 0.$$
 
@@ -92,7 +74,7 @@ The ratio $T/T_0$ depends on the angle alone. Local gravity differs from the sta
 ### When it holds
 
 - **$\varepsilon$ small.** At 10 degrees two corrections are good to 6.6 parts per billion. At 90 degrees ($\varepsilon$ = 2.467) they are 0.37% short; at 170 degrees, 25.07% short. Near 180 degrees the true period grows without bound and no finite sum follows it.
-- **Setting $\varepsilon$ to zero leaves the same kind of problem.** Here it leaves a second-order equation with both its starting conditions. When the small number multiplies the highest derivative, setting it to zero drops a condition, and the method fails: that is [boundary-layers-and-singular-perturbation](06-boundary-layers-and-singular-perturbation.md).
+- **Setting $\varepsilon$ to zero leaves the same kind of problem.** Here it leaves a second-order equation with both its starting conditions. When the small number multiplies the highest derivative, setting it to zero drops a condition, and the method fails: that is [Boundary layers](06-boundary-layers-and-singular-perturbation.md).
 - **The frequency is expanded too.** A plain expansion of the motion in powers of $\varepsilon$ holds only while $\varepsilon t$ is small. After 100 swings it reports 14.80 degrees for a swing that stays at 10.00. Why it works shows the cause and the fix.
 - **The model.** A rigid rod, a point bob, no friction, no drive. A real clock loses energy to air and gets it back from the escapement (the mechanism that releases the gear train one tick at a time); both shift the period by amounts this card does not model.
 
@@ -102,11 +84,11 @@ The ratio $T/T_0$ depends on the angle alone. Local gravity differs from the sta
 
 ### Step 0: a smooth answer has a series, and the series is found one rung at a time
 
-If the answer depends smoothly on $\varepsilon$, it has a Taylor series in $\varepsilon$ ([taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). Put the series into the equation and collect the terms with no $\varepsilon$, then those with one power, then two. Each collection must vanish on its own, since the equation holds for every small $\varepsilon$. The rung with no $\varepsilon$ is the easy problem. Every later rung has the same linear left side, with a right side built from rungs already solved. One hard nonlinear problem becomes a ladder of easy linear ones.
+If the answer depends smoothly on $\varepsilon$, it has a Taylor series in $\varepsilon$ ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). Put the series into the equation and collect the terms with no $\varepsilon$, then those with one power, then two. Each collection must vanish on its own, since the equation holds for every small $\varepsilon$. The rung with no $\varepsilon$ is the easy problem. Every later rung has the same linear left side, with a right side built from rungs already solved. One hard nonlinear problem becomes a ladder of easy linear ones.
 
 ### Step 1: scaling exposes the small number
 
-Scaling ([scaling-and-nondimensionalisation](03-scaling-and-nondimensionalisation.md)) strips the units. Time in units of $\sqrt{l/g}$ removes $g$ and $l$. The angle in units of $a$ makes the starting angle 1. The law becomes $u'' + \sin(a u)/a = 0$. The sine's Taylor series, $\sin x = x - x^3/6 + x^5/120 - \dots$, gives
+Scaling ([Nondimensionalisation](03-scaling-and-nondimensionalisation.md)) strips the units. Time in units of $\sqrt{l/g}$ removes $g$ and $l$. The angle in units of $a$ makes the starting angle 1. The law becomes $u'' + \sin(a u)/a = 0$. The sine's Taylor series, $\sin x = x - x^3/6 + x^5/120 - \dots$, gives
 
 $$\frac{\sin(a u)}{a} = u - \frac{a^2}{6}u^3 + \frac{a^4}{120}u^5 - \dots$$
 
@@ -183,7 +165,7 @@ The exact period is a smooth function of $\varepsilon$, so its Taylor series exi
 <details>
 <summary>Detailed proof: the series is the Taylor series of the exact period, with remainder of order epsilon cubed</summary>
 
-The exact period, from [the-nonlinear-pendulum](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md), is $T/T_0 = \tfrac{2}{\pi}\int_0^{\pi/2} (1 - k^2\sin^2\varphi)^{-1/2}\,d\varphi$ with $k = \sin(a/2)$ and $\varphi$ the integral's variable.
+The exact period, from [The pendulum](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md), is $T/T_0 = \tfrac{2}{\pi}\int_0^{\pi/2} (1 - k^2\sin^2\varphi)^{-1/2}\,d\varphi$ with $k = \sin(a/2)$ and $\varphi$ the integral's variable.
 
 For $k^2 < 1$ the binomial series $(1 - x)^{-1/2} = 1 + \tfrac12 x + \tfrac38 x^2 + \dots$ converges uniformly in $\varphi$ (after enough terms the error is below any chosen bound for every $\varphi$ at once), so it may be integrated term by term. With $\tfrac{2}{\pi}\int_0^{\pi/2}\sin^2\varphi\,d\varphi = \tfrac12$ and $\tfrac{2}{\pi}\int_0^{\pi/2}\sin^4\varphi\,d\varphi = \tfrac38$, this gives $T/T_0 = 1 + \tfrac14 k^2 + \tfrac{9}{64}k^4 + \dots$, a convergent series.
 
@@ -680,8 +662,8 @@ The two outputs match line for line.
 - **Clockmaking.** Horologists call the amplitude dependence of the period "circular error". It is the first correction, $\varepsilon/16$, and it is why precision regulators swing only a few degrees and work to keep the swing constant.
 - **Vibrating structures.** A cable, a beam or a spring whose stiffness changes as it stretches has a frequency that shifts with amplitude. The same strained-time expansion gives the shift.
 - **Planetary orbits.** Lindstedt built the method in the 1880s for the slow drift of orbits under small pulls from other planets, where a plain expansion grows the same secular terms.
-- **Tolerance and sensitivity.** The 32.89 s/day per degree is a sensitivity: how the output moves with an input. How such sensitivities combine with measurement errors is [error-propagation-and-sensitivity](07-error-propagation-and-sensitivity.md).
-- **Model testing.** A scaled model in a wind tunnel and its full-size original share dimensionless groups ([similarity-and-model-testing](04-similarity-and-model-testing.md)); when one group is small but not zero, such as the Mach number (air speed over the speed of sound) of a model run fast to match the Reynolds number, the drag coefficient can be expanded in powers of its square the same way, and the first correction sizes what the mismatch costs.
+- **Tolerance and sensitivity.** The 32.89 s/day per degree is a sensitivity: how the output moves with an input. How such sensitivities combine with measurement errors is [Error propagation](07-error-propagation-and-sensitivity.md).
+- **Model testing.** A scaled model in a wind tunnel and its full-size original share dimensionless groups ([Similarity](04-similarity-and-model-testing.md)); when one group is small but not zero, such as the Mach number (air speed over the speed of sound) of a model run fast to match the Reynolds number, the drag coefficient can be expanded in powers of its square the same way, and the first correction sizes what the mismatch costs.
 
 > **Say it back**
 > Scale the problem until a small number appears; here it is the swing angle squared, in radians. Write the answer as the easy answer plus corrections in powers of that number, and match powers: each rung is a linear problem with the same left side. Where a rung pushes at resonance, the frequency needs its own series, or a growing term spoils the answer after many swings. Two corrections put the 10-degree period at 2.003814363 s against the exact 2.003814376 s, and the clock's loss at 164.47 s a day. The error shrinks like the cube of the small number, and past 90 degrees the number is no longer small.
@@ -690,13 +672,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [scaling-and-nondimensionalisation](03-scaling-and-nondimensionalisation.md): choosing the time and angle units that make the small number appear.
-- [taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the sine's series, and why a smooth answer has one in $\varepsilon$.
-- [the-nonlinear-pendulum](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md): the law, its conserved energy and the exact period integral.
+- [Nondimensionalisation](03-scaling-and-nondimensionalisation.md): choosing the time and angle units that make the small number appear.
+- [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the sine's series, and why a smooth answer has one in $\varepsilon$.
+- [The pendulum](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md): the law, its conserved energy and the exact period integral.
 
 ## Where this goes next
 
-- [boundary-layers-and-singular-perturbation](06-boundary-layers-and-singular-perturbation.md): what to do when setting the small number to zero throws away a condition, and the answer changes sharply in a thin layer.
+- [Boundary layers](06-boundary-layers-and-singular-perturbation.md): what to do when setting the small number to zero throws away a condition, and the answer changes sharply in a thin layer.
 
 Regular perturbation needs the easy problem to keep every condition of the hard one; when a small number multiplies the highest derivative, it does not, and the next card shows how to stitch an inner answer to an outer one.
 

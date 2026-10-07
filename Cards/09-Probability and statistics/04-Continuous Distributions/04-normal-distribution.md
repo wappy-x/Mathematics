@@ -1,42 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Continuous Distributions
-topic: Standardising the bell
-item: Normal
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/01-densities-and-cdfs|densities-and-cdfs]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/04-gaussian-integral|gaussian-integral]]"
-next:
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/05-normal-quantile|normal-quantile]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/06-lognormal-distribution|lognormal-distribution]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/05-bivariate-normal-and-conditioning|bivariate-normal-and-conditioning]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/02-central-limit-theorem|central-limit-theorem]]"
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/03-normal-normal|normal-normal]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/07-central-limit-theorem|central-limit-theorem]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/01-brownian-motion|brownian-motion]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/02-black-scholes-put|black-scholes-put]]"
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/01-cash-or-nothing-digital|cash-or-nothing-digital]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/01-garman-kohlhagen|garman-kohlhagen]]"
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/02-kemna-vorst-geometric-asian|kemna-vorst-geometric-asian]]"
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/01-merton-model-equity-as-a-call|merton-model-equity-as-a-call]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/02-one-factor-gaussian-copula|one-factor-gaussian-copula]]"
-  - "[[Cards/14-Applied and computational/03-Information Theory/07-channel-capacity-and-the-noisy-channel-theorem|channel-capacity-and-the-noisy-channel-theorem]]"
-  - "[[Cards/14-Applied and computational/03-Information Theory/10-lossy-compression-and-rate-distortion-in-outline|lossy-compression-and-rate-distortion-in-outline]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/08-em-algorithm|em-algorithm]]"
-  - "[[Cards/16-Numerical analysis/05-Quadrature/04-gauss-hermite-and-weighted-rules|gauss-hermite-and-weighted-rules]]"
-  - "[[Cards/19-Partial differential equations/03-The Heat Equation in Depth/01-heat-kernel-and-fundamental-solution|heat-kernel-and-fundamental-solution]]"
-  - "[[Cards/21-Algebraic and analytic number theory/08-Additive Combinatorics and Probabilistic Number Theory/02-erdos-kac-theorem|erdos-kac-theorem]]"
-tags: [mathematics, probability and statistics, normal-distribution]
----
-
 # Normal: the bell curve, its two parameters and the 68-95-99.7 rule
 
-Probability and statistics → Continuous Distributions → Standardising the bell → Normal
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Continuous Distributions](../../../SYLLABUS.md#w09-s04) → Normal
 
 ---
 
@@ -69,7 +33,7 @@ The one line is the bell's height, to two decimals, at every half spread from �
 
 ## The formula
 
-Notation first, in words. The capital letter $X$ is the day's return, a random variable, and a lower-case $x$ is one value it could take. The Greek letter $\mu$ (mu) is the centre and $\sigma$ (sigma) is the spread; $\sigma^2$, the spread squared, is the variance. Writing X ~ N(μ, σ^2) means "X follows the normal law with centre μ and variance σ^2"; the second slot holds the variance, not the spread. A reminder from [densities-and-cdfs](01-densities-and-cdfs.md): a density $f$ gives chance per unit as a height, and the cumulative distribution $F$ gives the total chance at or below a value.
+Notation first, in words. The capital letter $X$ is the day's return, a random variable, and a lower-case $x$ is one value it could take. The Greek letter $\mu$ (mu) is the centre and $\sigma$ (sigma) is the spread; $\sigma^2$, the spread squared, is the variance. Writing X ~ N(μ, σ^2) means "X follows the normal law with centre μ and variance σ^2"; the second slot holds the variance, not the spread. A reminder from [Densities](01-densities-and-cdfs.md): a density $f$ gives chance per unit as a height, and the cumulative distribution $F$ gives the total chance at or below a value.
 
 $$f(x) = \frac{1}{\sigma\sqrt{2\pi}}\; e^{-(x-\mu)^2/(2\sigma^2)}$$
 
@@ -121,7 +85,7 @@ Every normal is the standard bell moved to a new centre and stretched to a new w
 
 ### Step 1: the constant makes the area exactly 1
 
-The bell e^(−z^2/2) has area √(2π) over the whole line. That is the Gaussian integral ([gaussian-integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)), rescaled by z = √2·u. Dividing by √(2π) leaves area 1, so $\varphi$ is a density.
+The bell e^(−z^2/2) has area √(2π) over the whole line. That is the Gaussian integral ([The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)), rescaled by z = √2·u. Dividing by √(2π) leaves area 1, so $\varphi$ is a density.
 
 For the return's density, put x = μ + σz. Then dx = σ dz, and the σ in front of f cancels it:
 
@@ -169,7 +133,7 @@ $$\Phi(z) = \frac12 + \frac{1}{\sqrt{2\pi}} \sum_{n=0}^{\infty} \frac{(-1)^n\, z
 
 The terms shrink fast once n passes z^2/2, so a few dozen terms give Φ to ten or more decimal places for |z| up to about 5. At k = 1, 2, 3 the series gives 0.682689, 0.954500 and 0.997300. Those are the 68, 95 and 99.7 of the rule, rounded.
 
-A second road never touches the series: Simpson's rule slices the area under φ into thin strips and adds them. A third simulates: a seeded generator draws 200,000 standard normal days and counts. All three agree, the first two to ten decimal places, the third within its standard error. Why so many things in nature and markets follow this bell at all is the central limit theorem: [central-limit-theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md).
+A second road never touches the series: Simpson's rule slices the area under φ into thin strips and adds them. A third simulates: a seeded generator draws 200,000 standard normal days and counts. All three agree, the first two to ten decimal places, the third within its standard error. Why so many things in nature and markets follow this bell at all is the central limit theorem: [Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md).
 
 ---
 
@@ -582,7 +546,7 @@ The two outputs match line for line, simulated counts included: both languages d
 ## The usual mistake
 
 > [!warning]
-> **Treating the bell as the truth about markets.** The normal law is exact about itself and approximate about share returns. Near the centre it fits well. In the tails it fails badly: it gives a five-spread day once in about 6,922 years, and real markets deliver such days every few years. Mandelbrot documented this in 1963 for cotton prices; it holds for shares. For crash risk, see [heavy-tails-pareto-and-cauchy](08-heavy-tails-pareto-and-cauchy.md).
+> **Treating the bell as the truth about markets.** The normal law is exact about itself and approximate about share returns. Near the centre it fits well. In the tails it fails badly: it gives a five-spread day once in about 6,922 years, and real markets deliver such days every few years. Mandelbrot documented this in 1963 for cotton prices; it holds for shares. For crash risk, see [Heavy tails](08-heavy-tails-pareto-and-cauchy.md).
 >
 > - **Variance in the spread's place.** N(0.05, 1.44) has spread 1.2, not 1.44. Dividing by 1.44 gives 0.0773 for a 2% loss instead of 0.0438.
 > - **Forgetting to subtract the centre.** Measuring from zero gives 0.0478; the average day is not zero.
@@ -593,11 +557,11 @@ The two outputs match line for line, simulated counts included: both languages d
 
 ## Where you meet it in real life
 
-- **Option pricing.** Black-Scholes weights each half of an option by Φ, written N there: [black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+- **Option pricing.** Black-Scholes weights each half of an option by Φ, written N there: [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
 - **Risk limits.** A daily loss limit two spreads below the centre is breached on 0.0228 of days if returns were normal, half the two-sided 0.0455; in practice more often.
 - **Measurement error.** An instrument's small, many-sourced errors are modelled as normal, and a reading more than three spreads out is flagged as suspect.
 - **Test scores.** Exam scales are built to a centre and spread, so a percentile is Φ of the score in spreads.
-- **Quantiles.** The reverse question, which return has 5% of days below it, runs Φ backwards: [normal-quantile](05-normal-quantile.md).
+- **Quantiles.** The reverse question, which return has 5% of days below it, runs Φ backwards: [Normal quantiles](05-normal-quantile.md).
 
 > **Say it back**
 > The normal law is a bell fixed by two numbers, its centre μ and its spread σ. Every normal is the standard bell shifted by μ and stretched by σ, so subtracting the centre and dividing by the spread turns any question into an area under the standard bell, Φ. The mirror symmetry gives Φ(−z) = 1 − Φ(z). The areas within one, two and three spreads are 0.682689, 0.954500 and 0.997300. For a share with spread 1.2%, a day beyond two spreads comes about 11.5 times a year, if the model's thin tails were true.
@@ -606,30 +570,30 @@ The two outputs match line for line, simulated counts included: both languages d
 
 ## What this builds on
 
-- [densities-and-cdfs](01-densities-and-cdfs.md): a density as chance per unit, and the cumulative chance as its area.
-- [gaussian-integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md): the area √(2π) that fixes the constant in front.
+- [Densities](01-densities-and-cdfs.md): a density as chance per unit, and the cumulative chance as its area.
+- [The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md): the area √(2π) that fixes the constant in front.
 
 ## Where this goes next
 
-- [normal-quantile](05-normal-quantile.md): Φ run backwards, from a chance to a threshold.
-- [lognormal-distribution](06-lognormal-distribution.md): the price whose logarithm is normal.
-- [bivariate-normal-and-conditioning](../05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): two correlated bells at once.
-- [central-limit-theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md): why sums of many small effects become this bell.
-- [normal-normal](../10-Bayesian%20Inference/03-normal-normal.md): a normal belief updated by normal data stays normal.
-- [central-limit-theorem](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md): the same theorem, proved in full.
-- [brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): a path whose every step is normal.
-- [black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) and [black-scholes-put](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): option prices written in Φ.
-- [cash-or-nothing-digital](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md): a payment worth one discounted Φ.
-- [garman-kohlhagen](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): the same formula for currencies.
-- [kemna-vorst-geometric-asian](../../12-Financial%20mathematics/27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/02-kemna-vorst-geometric-asian.md): an average of normal logs is still normal.
-- [merton-model-equity-as-a-call](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md): default chance as a normal tail.
-- [one-factor-gaussian-copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md): many defaults tied by one shared normal factor.
-- channel-capacity-and-the-noisy-channel-theorem: normal noise sets a channel's limit.
-- lossy-compression-and-rate-distortion-in-outline: the normal source as the hardest to compress.
-- em-algorithm: fitting a mixture of bells.
-- gauss-hermite-and-weighted-rules: averages under the bell by a few weighted points.
-- heat-kernel-and-fundamental-solution: heat spreading as a widening bell.
-- erdos-kac-theorem: the count of a number's prime factors follows the bell.
+- [Normal quantiles](05-normal-quantile.md): Φ run backwards, from a chance to a threshold.
+- [Lognormal](06-lognormal-distribution.md): the price whose logarithm is normal.
+- [Bivariate normal](../05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): two correlated bells at once.
+- [Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md): why sums of many small effects become this bell.
+- [Normal-normal](../10-Bayesian%20Inference/03-normal-normal.md): a normal belief updated by normal data stays normal.
+- [The central limit theorem, proved](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md): the same theorem, proved in full.
+- [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): a path whose every step is normal.
+- [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) and [Black-Scholes put](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): option prices written in Φ.
+- [Cash-or-nothing digital](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md): a payment worth one discounted Φ.
+- [Garman-Kohlhagen](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): the same formula for currencies.
+- [Kemna-Vorst](../../12-Financial%20mathematics/27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/02-kemna-vorst-geometric-asian.md): an average of normal logs is still normal.
+- [Merton's model](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md): default chance as a normal tail.
+- [The one-factor Gaussian copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md): many defaults tied by one shared normal factor.
+- Channel capacity: normal noise sets a channel's limit.
+- Rate and distortion: the normal source as the hardest to compress.
+- EM: fitting a mixture of bells.
+- Weighted Gauss rules: averages under the bell by a few weighted points.
+- The heat kernel: heat spreading as a widening bell.
+- Erdos-Kac: the count of a number's prime factors follows the bell.
 
 ---
 

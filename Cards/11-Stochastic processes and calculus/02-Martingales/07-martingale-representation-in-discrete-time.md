@@ -1,22 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Martingales
-topic: Payoffs as strategies
-item: Representing a martingale
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/02-predictable-bets-and-the-martingale-transform|predictable-bets-and-the-martingale-transform]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/04-martingale-representation-theorem|martingale-representation-theorem]]"
-tags: [mathematics, stochastic processes and calculus, martingale-representation-in-discrete-time]
----
-
 # Representing a martingale: on a binary tree every martingale is a bet on the coin
 
-Stochastic processes and calculus → Martingales → Payoffs as strategies → Representing a martingale
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Martingales](../../../SYLLABUS.md#w11-s02) → Representing a martingale
 
 ---
 
@@ -28,7 +12,7 @@ A dealer sells a ticket that pays, on day 3, whatever the share stands above $10
 
 There is, and it costs $7.50. Hold half a share on day 1. After a head, hold three quarters of a share on day 2; after a tail, a quarter. On day 3 hold one share after HH, half after HT or TH, none after TT. Borrow whatever the purchases need. Start with $7.50, follow the rule, and the account ends at the ticket's payment on every sequence.
 
-The ticket was not special: every payment that depends on the three tosses has such a rule and such a price. Underneath is a fact about fair games. [predictable-bets-and-the-martingale-transform](02-predictable-bets-and-the-martingale-transform.md) showed that betting on a fair game gives a fair game. This card proves the reverse on a coin-toss tree: every fair game there is some betting rule applied to the coin. The fact is called **martingale representation**.
+The ticket was not special: every payment that depends on the three tosses has such a rule and such a price. Underneath is a fact about fair games. [Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md) showed that betting on a fair game gives a fair game. This card proves the reverse on a coin-toss tree: every fair game there is some betting rule applied to the coin. The fact is called **martingale representation**.
 
 **On a tree where each day has exactly two outcomes, every martingale equals its starting value plus the gain of one predictable betting strategy on the share, so every payoff is a trading strategy, and the strategy's cost is the payoff's fair price.**
 
@@ -44,7 +28,7 @@ Drawn to scale: 95 units a day across, 2.7 units a dollar up, $70 at the bottom 
 
 ## The formula
 
-Notation first, in words. Toss $k$ is written $\varepsilon_k$: +1 for heads, −1 for tails. The share price after day $n$ is $S_n$, so $S_n = 100 + 10(\varepsilon_1 + \dots + \varepsilon_n)$. What is known after day $n$ is written $\mathcal F_n$, read "what is known by time $n$": here, the first $n$ tosses. A process $M_n$ is a **martingale** when its best forecast of tomorrow, given $\mathcal F_n$, is its value today ([martingales](01-martingales.md)). A stake $H_k$ is **predictable** when it is fixed by $\mathcal F_{k-1}$: it may use every toss already seen, never toss $k$ itself ([predictable-bets-and-the-martingale-transform](02-predictable-bets-and-the-martingale-transform.md)).
+Notation first, in words. Toss $k$ is written $\varepsilon_k$: +1 for heads, −1 for tails. The share price after day $n$ is $S_n$, so $S_n = 100 + 10(\varepsilon_1 + \dots + \varepsilon_n)$. What is known after day $n$ is written $\mathcal F_n$, read "what is known by time $n$": here, the first $n$ tosses. A process $M_n$ is a **martingale** when its best forecast of tomorrow, given $\mathcal F_n$, is its value today ([Martingales](01-martingales.md)). A stake $H_k$ is **predictable** when it is fixed by $\mathcal F_{k-1}$: it may use every toss already seen, never toss $k$ itself ([Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md)).
 
 Standing just before toss $k$, with the earlier tosses known, $M_k$ can take only two values. Write $M_k^{+}$ for the value if toss $k$ is heads and $M_k^{-}$ for the value if tails. Likewise $S_k^{+}$ and $S_k^{-}$ for the share. The theorem:
 
@@ -115,7 +99,7 @@ Suppose two predictable stakes $H_k$ and $H_k'$ both work. On day $k$, $(H_k - H
 
 ### Step 5: every payoff is a strategy
 
-Given any payoff $V$, the fair values $M_n = E[V \mid \mathcal F_n]$ form a martingale by the tower rule, averaging in stages ([martingales](01-martingales.md)). Steps 1 to 3 give $V = M_3 = M_0 + \sum H_k (S_k - S_{k-1})$. Read it as a trading account. Start with $M_0$, hold $H_1$ shares, and keep the rest, $M_0 - H_1 S_0$, as cash (negative means borrowed). After day 1 the account is worth $M_1$. Rebalancing to $H_2$ shares is paid from cash, so no money comes in or goes out. After day 3 the account holds exactly $V$: the dealer who charges $M_0$ and trades this way carries no risk.
+Given any payoff $V$, the fair values $M_n = E[V \mid \mathcal F_n]$ form a martingale by the tower rule, averaging in stages ([Martingales](01-martingales.md)). Steps 1 to 3 give $V = M_3 = M_0 + \sum H_k (S_k - S_{k-1})$. Read it as a trading account. Start with $M_0$, hold $H_1$ shares, and keep the rest, $M_0 - H_1 S_0$, as cash (negative means borrowed). After day 1 the account is worth $M_1$. Rebalancing to $H_2$ shares is paid from cash, so no money comes in or goes out. After day 3 the account holds exactly $V$: the dealer who charges $M_0$ and trades this way carries no risk.
 
 <details>
 <summary>Detailed proof</summary>
@@ -136,7 +120,7 @@ Given any payoff $V$, the fair values $M_n = E[V \mid \mathcal F_n]$ form a mart
 
 A payoff is eight numbers, one per sequence. A strategy is also eight: a starting value, one stake on day 1, two on day 2, four on day 3. Eight equations, eight unknowns, and Steps 1 to 4 show they always have exactly one solution. With three outcomes a day, a payoff is 27 numbers and a strategy only 1 + 1 + 3 + 9 = 14, so most payoffs, the call among them, are out of reach.
 
-A second road reaches the same stakes without working backwards. Any payoff on three coin signs can be written as a sum of products of signs, $c_\emptyset + c_1 \varepsilon_1 + c_2 \varepsilon_2 + c_{12}\varepsilon_1\varepsilon_2 + \dots$, with each coefficient an average of the payoff times a product of signs (the Walsh expansion). Group the terms by the last toss they contain. Terms ending in $\varepsilon_k$ are $\varepsilon_k$ times something fixed by the earlier tosses, and $\varepsilon_k = (S_k - S_{k-1})/10$. That something, divided by 10, is $H_k$. The code takes this road too, and the two stakes agree at every node. The continuous-time version, with the coin replaced by Brownian motion, is [martingale-representation-theorem](../07-Changing%20Measure/04-martingale-representation-theorem.md).
+A second road reaches the same stakes without working backwards. Any payoff on three coin signs can be written as a sum of products of signs, $c_\emptyset + c_1 \varepsilon_1 + c_2 \varepsilon_2 + c_{12}\varepsilon_1\varepsilon_2 + \dots$, with each coefficient an average of the payoff times a product of signs (the Walsh expansion). Group the terms by the last toss they contain. Terms ending in $\varepsilon_k$ are $\varepsilon_k$ times something fixed by the earlier tosses, and $\varepsilon_k = (S_k - S_{k-1})/10$. That something, divided by 10, is $H_k$. The code takes this road too, and the two stakes agree at every node. The continuous-time version, with the coin replaced by Brownian motion, is [Martingale representation](../07-Changing%20Measure/04-martingale-representation-theorem.md).
 
 ---
 
@@ -591,7 +575,7 @@ The two outputs match line for line.
 > [!warning]
 > **Pricing with the real chance of an up day.** If the share really rises 60% of the time, the ticket's real average payment is $10.80. Its price is still $7.50, because $7.50 and the hedge produce the payment on every sequence, whatever the chances. A dealer who charged $10.80 and hedged would pocket the difference on all eight. The real chances decide how often each sequence happens, never what the copy costs.
 >
-> - **Representing a process that is not fair.** The running count of heads, started from 0, leaves 1.50, its drift, after any betting gain. Split off the drift first (the Doob decomposition, [martingales](01-martingales.md)); the fair part is then representable. The final count as a payoff is no exception to the theorem: it is copied from its average, 1.50.
+> - **Representing a process that is not fair.** The running count of heads, started from 0, leaves 1.50, its drift, after any betting gain. Split off the drift first (the Doob decomposition, [Martingales](01-martingales.md)); the fair part is then representable. The final count as a payoff is no exception to the theorem: it is copied from its average, 1.50.
 > - **Stakes keyed to the price, not the history.** On the lookback ticket, HT and TH both stand at $100 but need stakes of 0 and 0.50. One stake of 0.25 for both misses by ±$2.50 on four of the eight sequences.
 > - **Expecting one price with three outcomes a day.** With a flat third move, 14 numbers cannot match 27 payments: the best hedge still leaves a spread of $1.76. No strategy copies the call, so no single price is forced.
 
@@ -599,7 +583,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Option desks.** The binomial tree of Cox, Ross and Rubinstein prices an option by this backward recursion; its stakes are the "delta" a desk holds. The trading account itself is set up in [replication-and-self-financing](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/06-replication-and-self-financing.md).
+- **Option desks.** The binomial tree of Cox, Ross and Rubinstein prices an option by this backward recursion; its stakes are the "delta" a desk holds. The trading account itself is set up in [Replication](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/06-replication-and-self-financing.md).
 - **Complete markets.** A market where every payoff can be copied by trading is called complete. Harrison and Pliska showed that completeness is the statement that every martingale is a trading gain: this card's theorem, read as a property of the market.
 - **More than two moves.** Real prices have many possible moves. The leftover spread in the three-outcome tree is risk no trading removes, so such models give a range of prices instead of one.
 - **Functions of bits.** The Walsh expansion, the second road here, is the standard way to split any function of coin flips or bits into parts, in computer science as in probability.
@@ -611,11 +595,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [predictable-bets-and-the-martingale-transform](02-predictable-bets-and-the-martingale-transform.md): the predictable stake and the martingale transform, the betting gain $\sum H_k (S_k - S_{k-1})$, shown there to be a fair game. This card runs the implication the other way.
+- [Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md): the predictable stake and the martingale transform, the betting gain $\sum H_k (S_k - S_{k-1})$, shown there to be a fair game. This card runs the implication the other way.
 
 ## Where this goes next
 
-- [martingale-representation-theorem](../07-Changing%20Measure/04-martingale-representation-theorem.md): the same statement with the coin replaced by Brownian motion and the sum by an Ito integral, where the stakes can no longer be read off a two-way fork.
+- [Martingale representation](../07-Changing%20Measure/04-martingale-representation-theorem.md): the same statement with the coin replaced by Brownian motion and the sum by an Ito integral, where the stakes can no longer be read off a two-way fork.
 
 On the tree, the stake is a ratio of two spreads; when the tosses shrink to nothing and the path has no slopes to take a ratio of, whether a stake still exists, and how to find it, is what the continuous theorem answers.
 

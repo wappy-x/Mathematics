@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Value at Risk and Expected Shortfall
-topic: Curved positions in a risk number
-item: Options in the book
-kind: approximation
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/03-historical-and-monte-carlo-var|historical-and-monte-carlo-var]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/02-gamma|gamma]]"
-next: []
-tags: [mathematics, financial mathematics, delta-gamma-var-and-cornish-fisher]
----
-
 # Options in the book: the delta-gamma approximation and the Cornish-Fisher quantile
 
-Financial mathematics → Value at Risk and Expected Shortfall → Curved positions in a risk number → Options in the book
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Value at Risk and Expected Shortfall](../../../SYLLABUS.md#w12-s39) → Options in the book
 
 ---
 
@@ -24,9 +8,9 @@ Financial mathematics → Value at Risk and Expected Shortfall → Curved positi
 
 A trading book holds three things on a Monday morning. There are $10 million of shares in a basket of other companies, $5 million of bonds, and 1,000 Acme call contracts. Each contract covers 100 shares, so the book owns 100,000 one-year calls struck at $100 on Acme, which trades at $100. Each call is worth $9.23, so the calls are worth $922,700.55 in all.
 
-The risk desk reports one number for this book: the one-day 99% value at risk, the loss that tomorrow exceeds only one day in a hundred ([profit-and-loss-distribution-and-var](01-profit-and-loss-distribution-and-var.md)). Without the calls, the basket and the bonds give $445,815.91. The question is what the calls add.
+The risk desk reports one number for this book: the one-day 99% value at risk, the loss that tomorrow exceeds only one day in a hundred ([Value at risk](01-profit-and-loss-distribution-and-var.md)). Without the calls, the basket and the bonds give $445,815.91. The question is what the calls add.
 
-The quick answer treats each call as a fixed slice of a share: 0.586851 of one, its delta. That turns the calls into 58,685 Acme shares and the book into a straight line in three prices, which is the delta-normal method ([parametric-var-and-delta-normal](02-parametric-var-and-delta-normal.md)). It says the calls add $32,029.63.
+The quick answer treats each call as a fixed slice of a share: 0.586851 of one, its delta. That turns the calls into 58,685 Acme shares and the book into a straight line in three prices, which is the delta-normal method ([Parametric VaR](02-parametric-var-and-delta-normal.md)). It says the calls add $32,029.63.
 
 A call is not a straight line. Its value bends upward as Acme rises (that bend is gamma), so the calls gain a little extra on a big move either way. The book's loss is then no longer bell-shaped: it is lopsided, a shape measured by its skew, and its tails differ from the bell curve's, which kurtosis measures. Two tools handle this. The **delta-gamma approximation** replaces each call's curve by a parabola. The **Cornish-Fisher expansion** turns the parabola's mean, spread, skew and kurtosis into a corrected quantile, with no simulation. Together they say the calls add $29,704.62. Repricing every call at 20,000 simulated moves of Acme says $29,602.49. The calls add about $30,000 of VaR, not $32,000.
 
@@ -92,7 +76,7 @@ A central moment is the average of a power of the distance from the mean. The fo
 ### When it holds
 
 - **Small moves, so the parabola fits.** The first term the parabola drops is the cube of the move, weighted by how fast gamma itself changes. Over one day that is worth tens of dollars on this book. A $10 move, rare in a day but ordinary over a month, is where the parabola drifts: $681.60 thousand against $673.43 thousand on a rise, −$492.10 thousand against −$486.71 thousand on a fall.
-- **Acme's move is normal and unrelated to the rest of the book.** Here the basket and Acme move independently, which keeps one variable in the bend. A correlated basket folds into Acme's delta by regression and the method survives. A move with fatter tails than the bell curve breaks it: then the tail itself must be modelled ([extreme-value-theory-and-tails](07-extreme-value-theory-and-tails.md)).
+- **Acme's move is normal and unrelated to the rest of the book.** Here the basket and Acme move independently, which keeps one variable in the bend. A correlated basket folds into Acme's delta by regression and the method survives. A move with fatter tails than the bell curve breaks it: then the tail itself must be modelled ([Extreme value theory](07-extreme-value-theory-and-tails.md)).
 - **Only Acme's price moves the calls.** Volatility and time are held still. If implied volatility jumps with the fall, the loss grows by roughly vega times the jump, which this model cannot see. One day of time decay (theta) costs these calls $2,021.34 for certain, which moves every estimate up by that fixed amount.
 - **Skew and kurtosis are small.** Cornish-Fisher is a series in them. With a strongly lopsided loss, such as a book of short out-of-the-money options, the corrected point can stop rising with the confidence level, and the exact integral or a simulation must replace it. Here the skew is −0.005694, far inside the safe zone.
 
@@ -110,7 +94,7 @@ Taylor's rule, cut after the square, gives the calls' change in value for a move
 
 $$V(S+X) - V(S) \;\approx\; \Delta X + \tfrac12\Gamma X^2.$$
 
-The half is there because delta rises steadily from its old value to its new one during the move, so the calls earn the average delta, halfway between ([gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md)). Add the rest of the book and flip the sign, and that is the formula.
+The half is there because delta rises steadily from its old value to its new one during the move, so the calls earn the average delta, halfway between ([Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md)). Add the rest of the book and flip the sign, and that is the formula.
 
 ### Step 2: the mean
 
@@ -163,7 +147,7 @@ $$P(L > x) = \int_{-\infty}^{\infty} \varphi(u)\,N\!\left(\frac{-x - \Delta s u 
 
 Solve $P(L > x)$ = 0.01 for $x$ by halving an interval. That is the exact delta-gamma VaR, $475,520.58. Cornish-Fisher gives $475,520.53. Replacing the parabola by a full Black-Scholes reprice at each of 20,000 random moves, and averaging the same bell-curve area, gives $475,418.40. The parabola on those same draws gives $475,453.28. On identical draws the parabola and the full reprice differ by tens of dollars, the same size as the simulation's own sampling noise.
 
-The other door is pure simulation: draw every price, reprice everything, sort the losses ([historical-and-monte-carlo-var](03-historical-and-monte-carlo-var.md)). It needs no parabola, and costs thousands of repricings per book per day. Delta-gamma with Cornish-Fisher costs two Greeks per option and one line of arithmetic.
+The other door is pure simulation: draw every price, reprice everything, sort the losses ([Historical and Monte Carlo VaR](03-historical-and-monte-carlo-var.md)). It needs no parabola, and costs thousands of repricings per book per day. Delta-gamma with Cornish-Fisher costs two Greeks per option and one line of arithmetic.
 
 ---
 
@@ -712,15 +696,15 @@ The two outputs agree line for line at the printed precision.
 
 ## What this builds on
 
-- [historical-and-monte-carlo-var](03-historical-and-monte-carlo-var.md): VaR by simulation and full revaluation, the benchmark this card's shortcut must match.
-- [gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md): the bend itself, its formula, and why the parabola carries a half.
+- [Historical and Monte Carlo VaR](03-historical-and-monte-carlo-var.md): VaR by simulation and full revaluation, the benchmark this card's shortcut must match.
+- [Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md): the bend itself, its formula, and why the parabola carries a half.
 
 ## Where this goes next
 
-- [expected-shortfall-and-coherence](05-expected-shortfall-and-coherence.md): the average loss beyond VaR, which feels the skew even more than VaR does.
-- [var-decomposition-euler-and-component-var](06-var-decomposition-euler-and-component-var.md): how much of the $475,520.53 each position carries.
-- [extreme-value-theory-and-tails](07-extreme-value-theory-and-tails.md): what to do when the moves themselves are not bell-shaped, which no parabola can fix.
-- [backtesting-var](08-backtesting-var.md): counting the days the loss beat the VaR, to learn whether any of these numbers was right.
+- [Expected shortfall](05-expected-shortfall-and-coherence.md): the average loss beyond VaR, which feels the skew even more than VaR does.
+- [Whose risk is it](06-var-decomposition-euler-and-component-var.md): how much of the $475,520.53 each position carries.
+- [Extreme value theory](07-extreme-value-theory-and-tails.md): what to do when the moves themselves are not bell-shaped, which no parabola can fix.
+- [Backtesting VaR](08-backtesting-var.md): counting the days the loss beat the VaR, to learn whether any of these numbers was right.
 
 ---
 

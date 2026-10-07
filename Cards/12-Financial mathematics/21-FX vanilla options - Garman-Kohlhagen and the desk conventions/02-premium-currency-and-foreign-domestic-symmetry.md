@@ -1,30 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX vanilla options - Garman-Kohlhagen and the desk conventions
-topic: Seeing a currency option from both sides
-item: One option, two currencies
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/01-garman-kohlhagen|garman-kohlhagen]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/07-fractions|fractions]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/09-ratios-and-rates|ratios-and-rates]]"
-next:
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/03-garman-kohlhagen-greeks|garman-kohlhagen-greeks]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/07-fx-implied-volatility|fx-implied-volatility]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/01-fx-digitals|fx-digitals]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/03-the-eight-barrier-types|the-eight-barrier-types]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - premium-currency-and-foreign-domestic-symmetry
----
-
 # One option, two currencies: the same contract seen from the other side, and the four ways its premium is quoted
 
-Financial mathematics → FX vanilla options - Garman-Kohlhagen and the desk conventions → Seeing a currency option from both sides → One option, two currencies
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../../../SYLLABUS.md#w12-s21) → One option, two currencies
 
 ---
 
@@ -60,7 +36,7 @@ The top-left box is the Chicago price. The bottom-right box is the Frankfurt pri
 
 ## The formula
 
-A reminder of the pricing formula from [garman-kohlhagen](01-garman-kohlhagen.md): $C(S, K, r_d, r_f)$ is the price of the right to buy one unit of the **foreign** currency (the one with the price tag, here the euro) for $K$ units of the **domestic** currency (the one the price is counted in, here the dollar). $P$ is the matching right to sell. The symmetry says:
+A reminder of the pricing formula from [Garman-Kohlhagen](01-garman-kohlhagen.md): $C(S, K, r_d, r_f)$ is the price of the right to buy one unit of the **foreign** currency (the one with the price tag, here the euro) for $K$ units of the **domestic** currency (the one the price is counted in, here the dollar). $P$ is the matching right to sell. The symmetry says:
 
 $$C(S, K, r_d, r_f) \;=\; S \cdot K \cdot P\!\left(\tfrac{1}{S},\ \tfrac{1}{K},\ r_f,\ r_d\right)$$
 
@@ -169,7 +145,7 @@ So % EUR is $C/S$ and % USD is $C/K$. EUR pips are $C/(SK)$, which Step 2 showed
 
 When $K = S$ the two percentages coincide, since dividing by $S$ and by $K$ is the same division. When $K$ is above $S$, as at 1.20, % EUR is the larger. Below, % USD is.
 
-A second road to the whole result prices both readings by averaging, with no formula at all: roads 4 and 5 in the code. The averaging method itself is set out on [garman-kohlhagen](01-garman-kohlhagen.md).
+A second road to the whole result prices both readings by averaging, with no formula at all: roads 4 and 5 in the code. The averaging method itself is set out on [Garman-Kohlhagen](01-garman-kohlhagen.md).
 
 ---
 
@@ -658,9 +634,9 @@ The two outputs agree line for line, from different bell-curve areas and differe
 
 - **The premium line on a trade ticket.** Every FX option confirmation states the premium amount and currency. The four quotes are how that amount is negotiated before it is written down.
 - **Pricing code.** A routine that prices calls only can get every put from the mirror line: a EUR put is a USD call with the inputs inverted and the rates swapped.
-- **Hedge ratios.** When the premium is paid in the foreign currency, it changes how much currency a hedge must hold. That adjustment is on [fx-delta-conventions](04-fx-delta-conventions.md).
-- **Strike and delta quoting.** The at-the-money strike and the strike behind a delta quote both depend on which premium convention is in force: [at-the-money-conventions](05-at-the-money-conventions.md) and [fx-strike-from-delta](06-fx-strike-from-delta.md).
-- **Backing out volatility.** Solving for the vol behind a quoted premium needs the premium in the formula's own units first: [fx-implied-volatility](07-fx-implied-volatility.md).
+- **Hedge ratios.** When the premium is paid in the foreign currency, it changes how much currency a hedge must hold. That adjustment is on [Four deltas for one option](04-fx-delta-conventions.md).
+- **Strike and delta quoting.** The at-the-money strike and the strike behind a delta quote both depend on which premium convention is in force: [Three meanings of at-the-money](05-at-the-money-conventions.md) and [Strike from delta](06-fx-strike-from-delta.md).
+- **Backing out volatility.** Solving for the vol behind a quoted premium needs the premium in the formula's own units first: [Implied vol for a currency option](07-fx-implied-volatility.md).
 
 > **Say it back**
 > A currency option exchanges one currency for another, so it is a call on one and a put on the other. Priced from either side, with the spot and strike inverted and the two interest rates swapped, it has the same value once converted at today's rate. That is $C(S, K, r_d, r_f) = S K P(1/S, 1/K, r_f, r_d)$. The premium can be quoted in either currency, per unit of either notional: premium currency converts at spot, notional converts at strike. Four numbers, one price, and the two percentages agree only when the strike equals spot.
@@ -669,16 +645,16 @@ The two outputs agree line for line, from different bell-curve areas and differe
 
 ## What this builds on
 
-- [garman-kohlhagen](01-garman-kohlhagen.md): the call and put formulas, domestic and foreign, and the house EURUSD market that this card reads from both sides.
-- [fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): turning a rate upside down, and why $K(1/K - 1/S_T)$ clears to $1 - K/S_T$.
-- [ratios-and-rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md): a rate carries two units, and converting means multiplying or dividing by the right one.
+- [Garman-Kohlhagen](01-garman-kohlhagen.md): the call and put formulas, domestic and foreign, and the house EURUSD market that this card reads from both sides.
+- [Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): turning a rate upside down, and why $K(1/K - 1/S_T)$ clears to $1 - K/S_T$.
+- [Ratios and rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md): a rate carries two units, and converting means multiplying or dividing by the right one.
 
 ## Where this goes next
 
-- [garman-kohlhagen-greeks](03-garman-kohlhagen-greeks.md): how the price moves with spot, vol and time; the mirror line halves the work.
-- [fx-implied-volatility](07-fx-implied-volatility.md): running the formula backwards from a quoted premium, which starts by putting the quote into USD pips.
-- [fx-digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md): a bet that pays a fixed amount of one currency; paying in euros instead of dollars is the Frankfurt reading of the same bet.
-- [the-eight-barrier-types](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/03-the-eight-barrier-types.md): options that switch on or off at a level; the symmetry turns an up-barrier in EURUSD into a down-barrier in USDEUR.
+- [The Greeks of a currency option](03-garman-kohlhagen-greeks.md): how the price moves with spot, vol and time; the mirror line halves the work.
+- [Implied vol for a currency option](07-fx-implied-volatility.md): running the formula backwards from a quoted premium, which starts by putting the quote into USD pips.
+- [Currency digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md): a bet that pays a fixed amount of one currency; paying in euros instead of dollars is the Frankfurt reading of the same bet.
+- [The eight single barriers in one table](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/03-the-eight-barrier-types.md): options that switch on or off at a level; the symmetry turns an up-barrier in EURUSD into a down-barrier in USDEUR.
 
 The price is now fixed in any unit; what is still open is how fast it moves when spot, vol and time move, and the Greeks card answers that.
 

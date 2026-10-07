@@ -1,25 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Feedback Control
-topic: Three-term feedback from a bump test
-item: PID control
-kind: method
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/03-steady-state-error-and-system-type|steady-state-error-and-system-type]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/07-step-response-specifications|step-response-specifications]]"
-next:
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/08-pid-on-real-hardware|pid-on-real-hardware]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/09-lead-lag-compensation-and-loop-shaping|lead-lag-compensation-and-loop-shaping]]"
-  - "[[Cards/13-Engineering mathematics/10-Robustness and Adaptation/04-gain-scheduling-and-adaptive-control|gain-scheduling-and-adaptive-control]]"
-tags: [mathematics, engineering mathematics, pid-control-and-tuning]
----
-
 # PID control: answer the error, its history and its trend
 
-Engineering mathematics → Feedback Control → Three-term feedback from a bump test → PID control
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Feedback Control](../../../SYLLABUS.md#w13-s03) → PID control
 
 ---
 
@@ -89,7 +70,7 @@ The lambda rule asks the engineer to choose one number, $\lambda$, the time cons
 | $t$, $f$, $t_f$, $t_{28}$, $t_{63}$, $d$ | time in min; a fraction of the bump's rise; the time the model's rise passes the fraction $f$; times the record passes 28.3% and 63.2% of it; door heat loss in kW | 2.005 and 3.979 min; $d$ = −0.5 kW | — |
 | $T(s)$ | complementary sensitivity: the closed loop from setpoint to temperature, here the one lambda tuning asks for | $e^{-s}/(s + 1)$ with $\lambda$ = 1 min | — |
 
-Two numbers judge a loop, both from the loop gain $L(j\omega)$, which is the controller and room in series, read at frequency $\omega$ ([nyquist-criterion-and-stability-margins](06-nyquist-criterion-and-stability-margins.md)). The **gain margin** (GM) is how many times the loop gain could grow before the loop oscillates. The **phase margin** (PM) is how much extra lag, in degrees, it could take at $\omega_c$.
+Two numbers judge a loop, both from the loop gain $L(j\omega)$, which is the controller and room in series, read at frequency $\omega$ ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)). The **gain margin** (GM) is how many times the loop gain could grow before the loop oscillates. The **phase margin** (PM) is how much extra lag, in degrees, it could take at $\omega_c$.
 
 ### The picture: the loop
 
@@ -99,11 +80,11 @@ Schematic, not to scale. The circle subtracts the measured temperature $y$ from 
 
 ### When it holds
 
-- **Small changes about 20 °C and 1.5 kW.** The fit is a straight-line model of the room near its operating point. Far from it the slope drifts: a radiator's output is not a straight line in the room temperature ([pid-on-real-hardware](08-pid-on-real-hardware.md) shows the curve), so $K$ = 2 °C/kW is the slope at 20 °C, not a constant. A drifting $K$ is a model error the loop must survive, as the third bullet shows.
+- **Small changes about 20 °C and 1.5 kW.** The fit is a straight-line model of the room near its operating point. Far from it the slope drifts: a radiator's output is not a straight line in the room temperature ([PID in practice](08-pid-on-real-hardware.md) shows the curve), so $K$ = 2 °C/kW is the slope at 20 °C, not a constant. A drifting $K$ is a model error the loop must survive, as the third bullet shows.
 - **One lag behind one delay.** Heavy walls add a second lag, which the fit folds into a longer apparent delay.
 - **The room stays the room.** Hotter boiler water raises $K$. Lower flow lengthens $\theta$. The Ziegler–Nichols gains lose stability at a 50% gain rise or a doubled delay, and both are shown below.
 - **The radiator can deliver what is asked.** Between 0 and 3 kW. A 4 °C setpoint asks for 2.0 kW extra, but the radiator gives at most 1.5 kW more, so the room tops out at 23.0 °C. Past the limit the integral keeps growing while the radiator cannot respond: integral windup, shown in What breaks.
-- **A quiet thermometer for the derivative.** The derivative term multiplies the rate of change of the reading, so it multiplies reading noise too: [pid-on-real-hardware](08-pid-on-real-hardware.md).
+- **A quiet thermometer for the derivative.** The derivative term multiplies the rate of change of the reading, so it multiplies reading noise too: [PID in practice](08-pid-on-real-hardware.md).
 
 ---
 
@@ -119,7 +100,7 @@ At rest, the room sits at $y = K u$. A proportional controller sets $u = K_p e$.
 
 $$e_{\text{rest}} = \frac{r}{1 + K K_p}.$$
 
-A warmer room needs more heat, and a proportional controller gives more heat only while an error remains. With $K_p$ = 1.8 kW/°C, a 1 °C step leaves $1/(1 + 2 \times 1.8)$ = 0.2174 °C of error for ever. The simulation agrees: 0.2174 °C after 80 minutes. This is the type-0 offset of [steady-state-error-and-system-type](03-steady-state-error-and-system-type.md).
+A warmer room needs more heat, and a proportional controller gives more heat only while an error remains. With $K_p$ = 1.8 kW/°C, a 1 °C step leaves $1/(1 + 2 \times 1.8)$ = 0.2174 °C of error for ever. The simulation agrees: 0.2174 °C after 80 minutes. This is the type-0 offset of [Steady-state error](03-steady-state-error-and-system-type.md).
 
 ### Step 2: the integral term drives the error to zero, and pays a known debt
 
@@ -153,7 +134,7 @@ For the room, $\omega_u$ = 1.7582 rad/min, $K_u$ = 2.6842 kW/°C and $P_u$ = 3.5
 
 ### Step 5: lambda tuning picks the closed loop and solves for the controller
 
-Ask for a closed loop that copies the setpoint after the unavoidable delay, smoothed by a chosen time constant $\lambda$: $T(s) = e^{-\theta s}/(\lambda s + 1)$, the complementary sensitivity of [sensitivity-and-the-gang-of-four](02-sensitivity-and-the-gang-of-four.md). The controller that delivers it satisfies $T = CG/(1 + CG)$, so $C = T/\big(G(1 - T)\big)$. Replace the delay in $1 - T$ by its first-order approximation $e^{-\theta s} \approx 1 - \theta s$, and the controller comes out as a PI controller whose integral time cancels the room's lag:
+Ask for a closed loop that copies the setpoint after the unavoidable delay, smoothed by a chosen time constant $\lambda$: $T(s) = e^{-\theta s}/(\lambda s + 1)$, the complementary sensitivity of [Sensitivity functions](02-sensitivity-and-the-gang-of-four.md). The controller that delivers it satisfies $T = CG/(1 + CG)$, so $C = T/\big(G(1 - T)\big)$. Replace the delay in $1 - T$ by its first-order approximation $e^{-\theta s} \approx 1 - \theta s$, and the controller comes out as a PI controller whose integral time cancels the room's lag:
 
 $$C(s) = \frac{\tau}{K(\lambda + \theta)}\Big(1 + \frac{1}{\tau s}\Big).$$
 
@@ -176,7 +157,7 @@ In words: the integral time equals the lag, so the controller's zero cancels the
 
 Ziegler and Nichols, in 1942, tuned many real loops by hand. They aimed for swings that shrink to a quarter each cycle, and wrote the gains that gave it in terms of the bump's delay and slope; the slope is $K/\tau$ per kW, hence $\tau/(K\theta)$ in the rule. Their second recipe uses the ultimate gain and period: $K_p = 0.6\,K_u$, $T_i = P_u/2$, $T_d = P_u/8$. Both are rules of thumb fitted to experience. Quarter decay is aggressive: quick recovery from the door, at the price of a gain margin of 1.452.
 
-Another road to the same gains places the closed-loop poles by hand, on a plot of how they move as one gain rises ([root-locus](05-root-locus.md)); a third shapes $L(j\omega)$ directly ([lead-lag-compensation-and-loop-shaping](09-lead-lag-compensation-and-loop-shaping.md)).
+Another road to the same gains places the closed-loop poles by hand, on a plot of how they move as one gain rises ([Root locus](05-root-locus.md)); a third shapes $L(j\omega)$ directly ([Loop shaping](09-lead-lag-compensation-and-loop-shaping.md)).
 
 ---
 
@@ -662,7 +643,7 @@ The two outputs agree line for line.
 > - **Leaving out the integral.** Proportional control on this room leaves 0.2174 °C of a 1 °C step unreached, however long it waits.
 > - **Mixing minutes and seconds.** The gains here are per minute. Typed into a controller that counts seconds, $K_i$, $K_d$, $T_i$ and $T_d$ are off by a factor of 60.
 > - **Reading the 63.2% time as the lag.** The 63.2% point is at $\theta + \tau$, 3.979 min, not at $\tau$. Forgetting to subtract the delay makes the lag look like 3.979 min instead of 2.962 min.
-> - **Ignoring the radiator's limits.** Without anti-windup, a 2.5 °C step overshoots by 0.365 °C instead of 0.000 °C: [pid-on-real-hardware](08-pid-on-real-hardware.md).
+> - **Ignoring the radiator's limits.** Without anti-windup, a 2.5 °C step overshoots by 0.365 °C instead of 0.000 °C: [PID in practice](08-pid-on-real-hardware.md).
 
 ---
 
@@ -671,8 +652,8 @@ The two outputs agree line for line.
 - **Heating and cooling.** Thermostats, boilers and chillers run PI or PID loops; a building's delays come from its pipes and ducts.
 - **Process plants.** Flow, level and temperature loops in refineries and paper mills are mostly PI, often lambda-tuned so that loops in series stay calm.
 - **Vehicles and drones.** Cruise control and a quadcopter's attitude loops are PID; the derivative earns its place where the plant has little damping of its own.
-- **Long delays.** When the delay is much longer than the lag, PID can only be slow. A controller that carries a model of the delay does better: [smith-predictor-and-time-delays](10-smith-predictor-and-time-delays.md).
-- **Judging a loop beyond its margins.** How a loop amplifies disturbances and noise at each frequency is read from its sensitivity functions: [sensitivity-and-the-gang-of-four](02-sensitivity-and-the-gang-of-four.md).
+- **Long delays.** When the delay is much longer than the lag, PID can only be slow. A controller that carries a model of the delay does better: [Time delays](10-smith-predictor-and-time-delays.md).
+- **Judging a loop beyond its margins.** How a loop amplifies disturbances and noise at each frequency is read from its sensitivity functions: [Sensitivity functions](02-sensitivity-and-the-gang-of-four.md).
 
 > **Say it back**
 > A bump test fits the room as a gain, a lag and a delay: 2 °C per kW, 3 minutes, 1 minute. A PID controller adds three responses to the error: to its size, to its history and to its trend. The integral term makes every settled error zero, and the error it accumulates after a disturbance is the disturbance divided by the integral gain. The delay caps the proportional gain at 2.6842 kW/°C. Lambda tuning cancels the lag and sets the loop's speed with one number, giving a gain margin of π; Ziegler–Nichols recovers faster from the door, with too little margin to survive a doubled delay.
@@ -681,14 +662,14 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [steady-state-error-and-system-type](03-steady-state-error-and-system-type.md): why proportional control leaves an offset and an integrator removes it.
-- [step-response-specifications](../02-Linear%20Systems%20and%20Transforms/07-step-response-specifications.md): overshoot and settling time, the numbers this card reads off each loop test.
+- [Steady-state error](03-steady-state-error-and-system-type.md): why proportional control leaves an offset and an integrator removes it.
+- [Step response specs](../02-Linear%20Systems%20and%20Transforms/07-step-response-specifications.md): overshoot and settling time, the numbers this card reads off each loop test.
 
 ## Where this goes next
 
-- [pid-on-real-hardware](08-pid-on-real-hardware.md): anti-windup, a filtered derivative, a fast inner loop (cascade) and feedforward.
-- [lead-lag-compensation-and-loop-shaping](09-lead-lag-compensation-and-loop-shaping.md): shaping $L(j\omega)$ directly when three terms are not enough.
-- gain-scheduling-and-adaptive-control: changing the gains as the room's gain and delay change, instead of tuning once for the worst case.
+- [PID in practice](08-pid-on-real-hardware.md): anti-windup, a filtered derivative, a fast inner loop (cascade) and feedforward.
+- [Loop shaping](09-lead-lag-compensation-and-loop-shaping.md): shaping $L(j\omega)$ directly when three terms are not enough.
+- Adapting as you go: changing the gains as the room's gain and delay change, instead of tuning once for the worst case.
 
 This card tunes a loop for a radiator that can deliver anything asked of it, read by a quiet thermometer; what changes with a valve that has limits, a noisy thermometer and disturbances that can be measured is the question pid-on-real-hardware answers.
 

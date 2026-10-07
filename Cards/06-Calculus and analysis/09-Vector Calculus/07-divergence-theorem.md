@@ -1,27 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Vector Calculus
-topic: Outflow and supply
-item: Divergence theorem
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/05-surface-integrals-and-flux|surface-integrals-and-flux]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/02-triple-integrals|triple-integrals]]"
-next:
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/07-maxwells-equations|maxwells-equations]]"
-  - "[[Cards/13-Engineering mathematics/08-Fluids and Heat/03-navier-stokes-and-the-reynolds-number|navier-stokes-and-the-reynolds-number]]"
-  - "[[Cards/19-Partial differential equations/01-Classification and Well-Posedness/07-energy-methods-and-uniqueness|energy-methods-and-uniqueness]]"
-  - "[[Cards/19-Partial differential equations/04-Laplace, Poisson and Potentials/02-fundamental-solution-of-the-laplacian|fundamental-solution-of-the-laplacian]]"
-  - "[[Cards/23-Differential geometry and Lie groups/04-Differential Forms/07-classical-vector-calculus-as-stokes|classical-vector-calculus-as-stokes]]"
-tags: [mathematics, calculus and analysis, divergence-theorem]
----
-
 # Divergence theorem: flux out of a closed surface equals divergence summed inside
 
-Calculus and analysis → Vector Calculus → Outflow and supply → Divergence theorem
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Vector Calculus](../../../SYLLABUS.md#w06-s09) → Divergence theorem
 
 ---
 
@@ -31,7 +10,7 @@ A tank 2 m long, 1 m wide and 1 m tall has walls, floor and lid of fine mesh. It
 
 Count the leaving water two ways. Meter each of the six faces and add the readings. Or ignore the walls and add what the pipes deliver: 30 litres a second in each of 2 cubic metres. Both give 60 litres a second.
 
-This holds for any smooth flow and any solid with a closed skin. The flow out is the **flux** through the surface ([surface-integrals-and-flux](05-surface-integrals-and-flux.md)). The supply per cubic metre is the **divergence** of the flow ([divergence-and-curl](03-divergence-and-curl.md)). That the two always match is the divergence theorem, also called Gauss's theorem.
+This holds for any smooth flow and any solid with a closed skin. The flow out is the **flux** through the surface ([Surface integrals](05-surface-integrals-and-flux.md)). The supply per cubic metre is the **divergence** of the flow ([Divergence and curl](03-divergence-and-curl.md)). That the two always match is the divergence theorem, also called Gauss's theorem.
 
 **The flux of a smooth field out through a solid's whole closed boundary equals the triple integral of its divergence inside: what leaves through the skin is what is made inside.**
 
@@ -47,7 +26,7 @@ To scale: 100 px per metre of tank, 40 px of arrow per 0.01 m/s of water speed. 
 
 ## The formula
 
-Notation first, in words. Put the tank's centre at the origin: length runs from −1 to 1 m along x, width and height from −0.5 to 0.5 m along y and z. A solid is named $V$. Its whole skin, nothing left open, is written $\partial V$, read "the boundary of V". On the skin, $\mathbf n$ is the arrow of length one pointing straight out. The flow $\mathbf F$ has components $F_1$, $F_2$, $F_3$: velocities along x, y and z. The dot product $\mathbf F\cdot\mathbf n$ is the part of the flow crossing the skin. $dS$ is a small patch of skin, $dV$ a small piece of volume; a triple integral adds through a volume ([triple-integrals](../08-Multiple%20Integrals/02-triple-integrals.md)).
+Notation first, in words. Put the tank's centre at the origin: length runs from −1 to 1 m along x, width and height from −0.5 to 0.5 m along y and z. A solid is named $V$. Its whole skin, nothing left open, is written $\partial V$, read "the boundary of V". On the skin, $\mathbf n$ is the arrow of length one pointing straight out. The flow $\mathbf F$ has components $F_1$, $F_2$, $F_3$: velocities along x, y and z. The dot product $\mathbf F\cdot\mathbf n$ is the part of the flow crossing the skin. $dS$ is a small patch of skin, $dV$ a small piece of volume; a triple integral adds through a volume ([Triple integrals](../08-Multiple%20Integrals/02-triple-integrals.md)).
 
 $$\iint_{\partial V} \mathbf F\cdot\mathbf n\,dS \;=\; \iiint_V \operatorname{div}\mathbf F\,dV, \qquad \operatorname{div}\mathbf F = \frac{\partial F_1}{\partial x} + \frac{\partial F_2}{\partial y} + \frac{\partial F_3}{\partial z}$$
 
@@ -122,7 +101,7 @@ A spherical tank of radius $R$ = 1 m, pipes spread evenly. Inside: 30 L/s per m^
 
 Divergence is supply per unit volume; flux is loss through the skin; the books balance for every solid. With zero divergence, as in water with no pipes, whatever enters a closed surface leaves it. Where fluid can build up, the amount inside grows at supply minus outflow; written for every small cell, that is the continuity equation.
 
-The flat version, flow across a closed curve against divergence over the region inside, is one form of [greens-theorem](06-greens-theorem.md).
+The flat version, flow across a closed curve against divergence over the region inside, is one form of [Green's theorem](06-greens-theorem.md).
 
 ---
 
@@ -362,9 +341,9 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Water budgets.** Hydrologists balance an aquifer by metering its boundary or counting sources inside; the theorem says either count will do.
-- **Electricity.** Gauss's law (maxwells-equations) counts the charge inside a closed surface by the electric flux through it. The hose field has the shape of a point charge's field.
+- **Electricity.** Gauss's law (Maxwell's equations) counts the charge inside a closed surface by the electric flux through it. The hose field has the shape of a point charge's field.
 - **Heat.** Heat leaving an engine block's surface equals heat made inside minus heat stored; engineers measure whichever side is easier.
-- **Fluids.** The continuity equation (navier-stokes-and-the-reynolds-number) is Step 5 for every small cell.
+- **Fluids.** The continuity equation (Navier-Stokes) is Step 5 for every small cell.
 
 > **Say it back**
 > Flow out through a solid's whole closed skin equals divergence added through the inside: the tank's faces pass 60 L/s and its pipes supply 60 L/s. On a box, each pair of opposite faces is the fundamental theorem of calculus. Shared walls cancel, so gluing keeps it, and graphs carry it to the ball. It needs a closed skin, outward normals and a field smooth throughout; a hose at the centre breaks it.
@@ -373,18 +352,18 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [surface-integrals-and-flux](05-surface-integrals-and-flux.md): flux through a surface, and the cross product that gives its normal.
-- [triple-integrals](../08-Multiple%20Integrals/02-triple-integrals.md): adding a quantity through a volume, one direction at a time.
+- [Surface integrals](05-surface-integrals-and-flux.md): flux through a surface, and the cross product that gives its normal.
+- [Triple integrals](../08-Multiple%20Integrals/02-triple-integrals.md): adding a quantity through a volume, one direction at a time.
 
 ## Where this goes next
 
-- maxwells-equations: Gauss's law for electric and magnetic flux.
-- navier-stokes-and-the-reynolds-number: conservation of mass and momentum, cell by cell.
-- energy-methods-and-uniqueness: the theorem moves derivatives onto the boundary to prove a solution is unique.
-- fundamental-solution-of-the-laplacian: the hose field, made into the building block for every source.
-- classical-vector-calculus-as-stokes: this theorem, Green's and Stokes' as one statement.
+- Maxwell's equations: Gauss's law for electric and magnetic flux.
+- Navier-Stokes: conservation of mass and momentum, cell by cell.
+- Energy methods: the theorem moves derivatives onto the boundary to prove a solution is unique.
+- The fundamental solution: the hose field, made into the building block for every source.
+- Green, divergence and curl theorems: this theorem, Green's and Stokes' as one statement.
 
-The theorem trades a closed skin for the solid inside it; the same trade for a surface with an edge, with curl in place of divergence, is [stokes-theorem](08-stokes-theorem.md).
+The theorem trades a closed skin for the solid inside it; the same trade for a surface with an edge, with curl in place of divergence, is [Stokes' theorem](08-stokes-theorem.md).
 
 ---
 

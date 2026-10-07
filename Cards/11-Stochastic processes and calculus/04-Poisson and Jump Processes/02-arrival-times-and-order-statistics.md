@@ -1,22 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Poisson and Jump Processes
-topic: When the calls came
-item: Given n arrivals, when did they happen
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/01-poisson-process|poisson-process]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/08-order-statistics-and-extremes|order-statistics-and-extremes]]"
-next: []
-tags: [mathematics, stochastic processes and calculus, arrival-times-and-order-statistics]
----
-
 # Given n arrivals, when did they happen: uniform order statistics
 
-Stochastic processes and calculus → Poisson and Jump Processes → When the calls came → Given n arrivals, when did they happen
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Poisson and Jump Processes](../../../SYLLABUS.md#w11-s04) → Given n arrivals, when did they happen
 
 ---
 
@@ -42,13 +26,13 @@ Each row is one simulated hour with exactly 4 calls: the first five such hours f
 
 ## The formula
 
-Notation first, in words. The wing writes $N(t)$ for the number of calls by time $t$, and $\lambda$ for the rate, the average number of calls per unit of time ([poisson-process](01-poisson-process.md)). Time here is in hours, measured from the start of the hour, so the window is $t$ = 1 hour. Write $T_1 < T_2 < \cdots < T_n$ for the times of the first, second, up to the n-th call. Given the event $N(t) = n$, exactly n calls in the window, their joint density at times $s_1 < \cdots < s_n$ is
+Notation first, in words. The wing writes $N(t)$ for the number of calls by time $t$, and $\lambda$ for the rate, the average number of calls per unit of time ([Poisson process](01-poisson-process.md)). Time here is in hours, measured from the start of the hour, so the window is $t$ = 1 hour. Write $T_1 < T_2 < \cdots < T_n$ for the times of the first, second, up to the n-th call. Given the event $N(t) = n$, exactly n calls in the window, their joint density at times $s_1 < \cdots < s_n$ is
 
 $$f(s_1, \ldots, s_n \mid N(t) = n) = \frac{n!}{t^n} \quad \text{for } 0 < s_1 < s_2 < \cdots < s_n < t, \text{ and } 0 \text{ otherwise.}$$
 
 **Read it aloud:** every ordered set of n call times inside the window is equally likely, and n! over t to the n is the height that makes the total chance 1. For n = 0 there are no times to place.
 
-Now sort independent uniform draws. Take $U_1, \ldots, U_n$, each uniform on the window, and write $U_{(k)}$ for the k-th smallest, as on [order-statistics-and-extremes](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md). The theorem says the two lists have the same joint law:
+Now sort independent uniform draws. Take $U_1, \ldots, U_n$, each uniform on the window, and write $U_{(k)}$ for the k-th smallest, as on [Order statistics](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md). The theorem says the two lists have the same joint law:
 
 $$\bigl(T_1, \ldots, T_n\bigr) \text{ given } N(t) = n \;\;\overset{d}{=}\;\; \bigl(U_{(1)}, \ldots, U_{(n)}\bigr)$$
 
@@ -84,9 +68,9 @@ $$P\bigl(j \text{ of the } n \text{ calls fall before } a \mid N(t) = n\bigr) = 
 ### When it holds
 
 - **A constant rate.** If calls come at 2 an hour for the first half-hour and 6 an hour for the second, the 4 calls are no longer uniform: 2 of them fall in the first half-hour with chance 0.2109, not 0.375, and the first call averages 20.20 minutes, not 12.
-- **Independent exponential gaps, the Poisson process itself.** If calls are spaced more evenly than that, as when a line is busy for a while after each call, the times are not uniform given the count. That wider family is [renewal-processes-in-outline](06-renewal-processes-in-outline.md).
+- **Independent exponential gaps, the Poisson process itself.** If calls are spaced more evenly than that, as when a line is busy for a while after each call, the times are not uniform given the count. That wider family is [Renewal processes](06-renewal-processes-in-outline.md).
 - **A window fixed in advance.** If the log is closed at the moment of the 4th call, that call sits at the end by construction. The other 3 are then sorted uniforms before it, but the 4th is not uniform.
-- **One call at a time.** If one event can bring several calls at once, the theorem applies to the events, not the calls: given their number, the event times are sorted uniforms, and the calls each brings follow a separate law: [compound-poisson](04-compound-poisson.md).
+- **One call at a time.** If one event can bring several calls at once, the theorem applies to the events, not the calls: given their number, the event times are sorted uniforms, and the calls each brings follow a separate law: [Compound Poisson](04-compound-poisson.md).
 
 ---
 
@@ -100,7 +84,7 @@ The code counts this exactly for m = 60, 600 and 6000 slots. The mean first-call
 
 ### Step 1: write down the chance of one precise history
 
-The Poisson process of [poisson-process](01-poisson-process.md) is built from waiting times $E_1, E_2, \ldots$ between calls, independent, each exponential with rate $\lambda$: density $\lambda e^{-\lambda x}$ at a wait of x hours. The k-th call comes at $T_k = E_1 + \cdots + E_k$.
+The Poisson process of [Poisson process](01-poisson-process.md) is built from waiting times $E_1, E_2, \ldots$ between calls, independent, each exponential with rate $\lambda$: density $\lambda e^{-\lambda x}$ at a wait of x hours. The k-th call comes at $T_k = E_1 + \cdots + E_k$.
 
 "Calls near $s_1 < s_2 < \cdots < s_n$, and nothing more before t" means: the first wait is near $s_1$, the second near $s_2 - s_1$, and so on, and the wait after the n-th call is longer than $t - s_n$. Multiply the pieces:
 
@@ -145,7 +129,7 @@ For a Borel set D not inside S, intersect with S: under the conditioning the tim
 
 Everything the switchboard asks now reduces to uniform draws.
 
-- **The k-th call.** The k-th smallest of n uniforms averages $k\,t/(n+1)$ ([order-statistics-and-extremes](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md)). With n = 4 and 60 minutes: 12, 24, 36 and 48 minutes. The last call averages 48 minutes, not 60: the hour does not end on a call.
+- **The k-th call.** The k-th smallest of n uniforms averages $k\,t/(n+1)$ ([Order statistics](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md)). With n = 4 and 60 minutes: 12, 24, 36 and 48 minutes. The last call averages 48 minutes, not 60: the hour does not end on a call.
 - **The first call.** It comes after s only if all four draws do: $(1 - s/t)^4$. After 15 minutes that is $(3/4)^4$ = 0.316406.
 - **Windows.** Each draw lands in the first half-hour with chance 0.5, so the count there is binomial: 0.062500, 0.250000, 0.375000, 0.250000, 0.062500 for 0 to 4 calls. The two halves' counts are no longer independent: they must add to 4.
 - **Gaps.** The 4 calls cut the hour into 5 gaps, counting the one before the first call and the one after the last. All five have the same law, because swapping two gaps moves the ordered times without changing volume, and the density is flat. So the gap from the 2nd call to the 3rd exceeds 20 minutes with chance $(2/3)^4$ = 0.197531, as the first call's wait does.
@@ -176,7 +160,7 @@ Recipe B produces a Poisson process, not only the right conditional law. Split t
 
 $$P(K_1 = k_1, K_2 = k_2) = e^{-\lambda t}\frac{(\lambda t)^{k_1 + k_2}}{(k_1 + k_2)!}\binom{k_1 + k_2}{k_1} p^{k_1}(1-p)^{k_2} = e^{-\lambda t p}\frac{(\lambda t p)^{k_1}}{k_1!}\cdot e^{-\lambda t (1-p)}\frac{(\lambda t (1-p))^{k_2}}{k_2!}$$
 
-The right side factors: the two counts are independent Poisson, with means proportional to the lengths. With more split points the binomial becomes a multinomial, the chance of a given share-out of the calls among several windows, and the same algebra factorises into one independent Poisson count per window. That is the defining property, and the same algebra drives [splitting-and-superposition](03-splitting-and-superposition.md).
+The right side factors: the two counts are independent Poisson, with means proportional to the lengths. With more split points the binomial becomes a multinomial, the chance of a given share-out of the calls among several windows, and the same algebra factorises into one independent Poisson count per window. That is the defining property, and the same algebra drives [Splitting and merging](03-splitting-and-superposition.md).
 
 The code runs both recipes for 200000 hours each from one SplitMix64 stream, seed 20260929:
 
@@ -626,8 +610,8 @@ The two outputs agree line for line, the simulations included: both languages ru
 
 - **Checking the Poisson assumption.** Given the count in each hour, the call times should look like sorted uniforms. A test for uniformity on one hour's log, with the count known, is a test of the Poisson model that needs no estimate of the rate.
 - **Simulating traffic in a fixed window.** Draw the count, scatter the times, sort: Recipe B. It needs one Poisson draw and n uniform draws.
-- **Insurance claims over a year.** Given the number of claims n, their dates are sorted uniforms, so for claims of one fixed size the expected discounted total is n times that size times the discount factor averaged over the year. That is not the discount factor at the average date. The amounts attached to each claim are [compound-poisson](04-compound-poisson.md).
-- **Queues.** Who was waiting when, given how many arrived, is a first step in the queue models of [continuous-time-markov-chains-and-queues](05-continuous-time-markov-chains-and-queues.md).
+- **Insurance claims over a year.** Given the number of claims n, their dates are sorted uniforms, so for claims of one fixed size the expected discounted total is n times that size times the discount factor averaged over the year. That is not the discount factor at the average date. The amounts attached to each claim are [Compound Poisson](04-compound-poisson.md).
+- **Queues.** Who was waiting when, given how many arrived, is a first step in the queue models of [Continuous-time chains](05-continuous-time-markov-chains-and-queues.md).
 
 > **Say it back**
 > Given exactly n calls in a window, a Poisson process places them like n uniform draws, sorted. The reason is one line of algebra: the chance of any precise history of n calls in the window is the same, λ^n e^(−λt), so conditioning leaves a flat density, n!/t^n, and the rate cancels. For 4 calls in an hour, the calls average 12, 24, 36 and 48 minutes in, and 2 of them fall in the first half-hour with chance 0.375. The same fact gives a second simulation: draw the count, scatter the times, sort.
@@ -636,14 +620,14 @@ The two outputs agree line for line, the simulations included: both languages ru
 
 ## What this builds on
 
-- [poisson-process](01-poisson-process.md): the process built from exponential waits, the rate λ and the count N(t), and independent Poisson counts in disjoint stretches, which is Road 2 of the code.
-- [order-statistics-and-extremes](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md): the law of the k-th smallest of n independent draws, here uniform, and the counting argument behind it.
+- [Poisson process](01-poisson-process.md): the process built from exponential waits, the rate λ and the count N(t), and independent Poisson counts in disjoint stretches, which is Road 2 of the code.
+- [Order statistics](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md): the law of the k-th smallest of n independent draws, here uniform, and the counting argument behind it.
 
 ## Where this goes next
 
-- [splitting-and-superposition](03-splitting-and-superposition.md): sorting each scattered call into one of two types, and merging two independent streams; the factorisation in Step 5 in its general form.
-- [compound-poisson](04-compound-poisson.md): attaching a random size to each arrival and adding them up.
-- [renewal-processes-in-outline](06-renewal-processes-in-outline.md): waits that are not exponential, where the conditional uniformity fails.
+- [Splitting and merging](03-splitting-and-superposition.md): sorting each scattered call into one of two types, and merging two independent streams; the factorisation in Step 5 in its general form.
+- [Compound Poisson](04-compound-poisson.md): attaching a random size to each arrival and adding them up.
+- [Renewal processes](06-renewal-processes-in-outline.md): waits that are not exponential, where the conditional uniformity fails.
 
 This card fixes the count and asks where the calls sit; the question it leaves open is what happens when each call is sent one of two ways at random, and whether the two streams are still Poisson.
 

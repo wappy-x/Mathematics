@@ -1,35 +1,16 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX exotics as desks use them - digitals, touches and barriers
-topic: Smile risk on a knock-out
-item: Barriers on a smile
-kind: approximation
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/04-vanna-volga-pricing|vanna-volga-pricing]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/06-barrier-and-touch-greeks|barrier-and-touch-greeks]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/04-fx-one-touch-and-no-touch|fx-one-touch-and-no-touch]]"
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/01-dupire-local-volatility|dupire-local-volatility]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/01-heston-model|heston-model]]"
-next: []
-tags: [mathematics, financial mathematics, barriers-with-the-smile]
----
-
 # Barriers on a smile: vanna-volga weighted by the chance of survival, and where it stops being enough
 
-Financial mathematics → FX exotics as desks use them - digitals, touches and barriers → Smile risk on a knock-out → Barriers on a smile
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX exotics as desks use them - digitals, touches and barriers](../../../SYLLABUS.md#w12-s23) → Barriers on a smile
 
 ---
 
 ## General Overview
 
-EURUSD trades at 1.10: one euro costs 1.10 dollars. A US company that owes a bill in euros a year from now buys the right to buy those euros at 1.10, and to make the premium cheaper it accepts a condition. The contract is a one-year euro call struck at 1.10 that dies the moment EURUSD trades at 1.20. At expiry it pays EURUSD minus 1.10, per euro, but only if 1.20 never traded in the year. The wall sits where the option is already worth 10 cents, so the payoff climbs toward the wall and then drops to nothing. That shape is a **reverse knock-out**: the barrier sits where the option is in the money ([the-eight-barrier-types](03-the-eight-barrier-types.md)).
+EURUSD trades at 1.10: one euro costs 1.10 dollars. A US company that owes a bill in euros a year from now buys the right to buy those euros at 1.10, and to make the premium cheaper it accepts a condition. The contract is a one-year euro call struck at 1.10 that dies the moment EURUSD trades at 1.20. At expiry it pays EURUSD minus 1.10, per euro, but only if 1.20 never traded in the year. The wall sits where the option is already worth 10 cents, so the payoff climbs toward the wall and then drops to nothing. That shape is a **reverse knock-out**: the barrier sits where the option is in the money ([The eight single barriers in one table](03-the-eight-barrier-types.md)).
 
-With one volatility for everything, 10%, the reflection formula prices it at 54.40 pips ([barrier-options-by-reflection](02-barrier-options-by-reflection.md)). A **pip** is 0.0001 dollars per euro, the last quoted digit of EURUSD. The market does not quote one volatility. It quotes a **smile**: three volatilities for three standard strikes, here 10.75% for the 25-delta euro put, 10% at the money and 9.75% for the 25-delta euro call. A "25-delta" option is one whose hedge is a quarter of a euro per euro of contract, so it sits well out of the money on one side.
+With one volatility for everything, 10%, the reflection formula prices it at 54.40 pips ([Knock-out and knock-in](02-barrier-options-by-reflection.md)). A **pip** is 0.0001 dollars per euro, the last quoted digit of EURUSD. The market does not quote one volatility. It quotes a **smile**: three volatilities for three standard strikes, here 10.75% for the 25-delta euro put, 10% at the money and 9.75% for the 25-delta euro call. A "25-delta" option is one whose hedge is a quarter of a euro per euro of contract, so it sits well out of the money on one side.
 
-Desks price the smile into a barrier with a recipe. Take the vanna-volga overlay ([vanna-volga-pricing](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md)): the extra cost, at market prices, of hedging the barrier's volatility risks with those three options. Then multiply it by the chance that the barrier survives, because a dead option needs no hedge. On the house contract the flat price is 54.40 pips, the full overlay adds 17.22, the weighted overlay adds 9.72, and the recipe says 64.12. A model that reproduces the same three quotes exactly, and lets volatility depend on where EURUSD is, says 66.03. Close. A week before expiry, with EURUSD at 1.19, one cent from the wall, the recipe adds 0.31 pips and the model takes away 4.18. Wrong sign.
+Desks price the smile into a barrier with a recipe. Take the vanna-volga overlay ([Vanna-volga pricing](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md)): the extra cost, at market prices, of hedging the barrier's volatility risks with those three options. Then multiply it by the chance that the barrier survives, because a dead option needs no hedge. On the house contract the flat price is 54.40 pips, the full overlay adds 17.22, the weighted overlay adds 9.72, and the recipe says 64.12. A model that reproduces the same three quotes exactly, and lets volatility depend on where EURUSD is, says 66.03. Close. A week before expiry, with EURUSD at 1.19, one cent from the wall, the recipe adds 0.31 pips and the model takes away 4.18. Wrong sign.
 
 **The survival-weighted overlay charges a knock-out for smile risk only in proportion to the chance it lives to need the hedge; it lands within two pips of a smile-consistent model on a young reverse knock-out and gets the sign wrong near the wall with days left, where only a model of how volatility moves with spot will do.**
 
@@ -75,9 +56,9 @@ The sum with $x_i$ inside is the overlay of the vanna-volga card, unchanged. The
 | $\mu$ | drift of log EURUSD in the pricing world, $r_d - r_f - \tfrac12\sigma^2$ | 5% − 3% − half of 10% squared | |
 | $N$ | the bell-curve area to the left of a point | | |
 
-The three greeks are the pilot's. **Vega** is the price change per unit of volatility. **Vanna** is how vega changes as spot moves. **Volga** is how vega changes as volatility moves ([barrier-and-touch-greeks](06-barrier-and-touch-greeks.md)).
+The three greeks are the pilot's. **Vega** is the price change per unit of volatility. **Vanna** is how vega changes as spot moves. **Volga** is how vega changes as volatility moves ([Greeks at the wall](06-barrier-and-touch-greeks.md)).
 
-The survival chance comes from the reflection argument of the touch card ([fx-one-touch-and-no-touch](04-fx-one-touch-and-no-touch.md)):
+The survival chance comes from the reflection argument of the touch card ([One-touch and no-touch](04-fx-one-touch-and-no-touch.md)):
 
 $$p_{\text{surv}} = N\!\left(\frac{\ln(H/S) - \mu T}{\sigma\sqrt{T}}\right) - \left(\frac{H}{S}\right)^{2\mu/\sigma^2} N\!\left(\frac{-\ln(H/S) - \mu T}{\sigma\sqrt{T}}\right)$$
 
@@ -112,7 +93,7 @@ The simplest fix scales the charge by the chance the option is still alive at th
 
 ### Step 2: a model to judge the recipe by
 
-A judge must reproduce the same three quotes and then price the barrier with its own dynamics. The card uses **local volatility**: volatility becomes a function of where EURUSD is, $\sigma(S)$, chosen so that the three pillar options price exactly at their quotes ([dupire-local-volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md)). The full Dupire construction reads a whole surface across strikes and dates. Here only one date is quoted, so the card fits the smallest version: with the letter y for the log of EURUSD over today's spot, $\sigma(y) = a + b\,y + c\,y^2$, three numbers for three quotes, found by Newton's method. On the house contract a = 0.099672, b = −0.196188, c = 1.573968. The negative b makes volatility higher when the euro is lower, which is how the market's expensive euro puts show up in a model.
+A judge must reproduce the same three quotes and then price the barrier with its own dynamics. The card uses **local volatility**: volatility becomes a function of where EURUSD is, $\sigma(S)$, chosen so that the three pillar options price exactly at their quotes ([Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md)). The full Dupire construction reads a whole surface across strikes and dates. Here only one date is quoted, so the card fits the smallest version: with the letter y for the log of EURUSD over today's spot, $\sigma(y) = a + b\,y + c\,y^2$, three numbers for three quotes, found by Newton's method. On the house contract a = 0.099672, b = −0.196188, c = 1.573968. The negative b makes volatility higher when the euro is lower, which is how the market's expensive euro puts show up in a model.
 
 In that model the barrier is priced two ways that share nothing but the inputs. A finite-difference grid (a lattice in log spot and time on which the pricing equation is stepped back from expiry) puts the wall on the grid's top edge with value zero. A Monte Carlo simulation (many random paths averaged) steps EURUSD forward and, between steps, multiplies each path's weight by the chance it did not cross the wall unseen.
 
@@ -140,7 +121,7 @@ With seven days left and EURUSD at 1.19, the three pillars crowd into a band abo
 
 The model disagrees in sign: 4.18 pips cheaper than flat by the grid, 3.99 by simulation, standard error 0.60. What the model sees and the recipe cannot is the volatility inside the last cent below the wall. That volatility decides how often paths touch 1.20 before expiry; a hedge priced from three options at today's spot has no view on it. The recipe's error, 4.49 pips, is larger than the whole smile effect it was meant to price.
 
-The other road is to skip the recipe and use a model with dynamics for volatility itself, stochastic volatility ([heston-model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md)). A Heston model fitted to the same three quotes gives a different barrier price again, because local and stochastic volatility agree on today's vanillas and disagree on tomorrow's smile. Desks blend the two for exactly this product.
+The other road is to skip the recipe and use a model with dynamics for volatility itself, stochastic volatility ([The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md)). A Heston model fitted to the same three quotes gives a different barrier price again, because local and stochastic volatility agree on today's vanillas and disagree on tomorrow's smile. Desks blend the two for exactly this product.
 
 ---
 
@@ -170,7 +151,7 @@ The greeks behind the overlay, per 1.00 of volatility (vanna also per 1.00 of sp
 | house, 1 year, spot 1.10 | −0.124128 | 0.001461 | 3.409950 | 1.080824, −2.120324, 1.194190 |
 | 1 week left, spot 1.19 | −0.389870 | 25.906973 | 6.378283 | 6.886905, −27.090903, 19.674034 |
 
-**Conventions verified 2026-09-27:** EURUSD pillars use spot delta with the premium in dollars (no premium adjustment) up to one year, at the money is the delta-neutral straddle, and a pip is 0.0001; the same house conventions as [vanna-volga-pricing](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md), whose pillar strikes this card reproduces.
+**Conventions verified 2026-09-27:** EURUSD pillars use spot delta with the premium in dollars (no premium adjustment) up to one year, at the money is the delta-neutral straddle, and a pip is 0.0001; the same house conventions as [Vanna-volga pricing](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md), whose pillar strikes this card reproduces.
 
 ### What breaks if you drop a piece
 
@@ -690,17 +671,17 @@ The two outputs agree line for line, down to the Monte Carlo rows, because both 
 > - **Forgetting the weight.** The unweighted overlay gives 71.62 pips, 5.59 above the model, and is worst on exactly the options most likely to knock out.
 > - **Weighting by the touch chance.** 61.90 pips: the weight inverted.
 > - **Picking one smile volatility for the whole contract.** At the call wing's 9.75% the flat price is 57.62 pips, at the put wing's 10.75% it is 45.99. A barrier cares about volatility at the strike and at the wall at once, so no single number from the smile fits.
-> - **Treating the local-volatility answer as the truth.** It is one model that fits the same three quotes. It is known to predict a future smile flatter than the market's ([pricing-under-local-volatility-and-the-forward-smile](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md)), and a stochastic-volatility model fitted to the same quotes prices the barrier differently. The honest statement is a range between models, and the recipe's job is to land inside it.
+> - **Treating the local-volatility answer as the truth.** It is one model that fits the same three quotes. It is known to predict a future smile flatter than the market's ([Pricing with local volatility](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md)), and a stochastic-volatility model fitted to the same quotes prices the barrier differently. The honest statement is a range between models, and the recipe's job is to land inside it.
 
 ---
 
 ## Where you meet it in real life
 
 - **Corporate hedging desks.** Reverse knock-outs are sold to companies with foreign-currency bills as cheaper versions of a vanilla hedge. The quote on the screen is often a survival-weighted overlay on a flat price, refreshed faster than any model can run.
-- **Pricing checks for the rest of the shelf.** The same weighting is applied to one-touches ([fx-one-touch-and-no-touch](04-fx-one-touch-and-no-touch.md)) and to double no-touches ([double-barriers-and-double-no-touch](05-double-barriers-and-double-no-touch.md)), with the same failure near a wall. Digitals take the smile through a slope term instead ([fx-digitals](01-fx-digitals.md)).
+- **Pricing checks for the rest of the shelf.** The same weighting is applied to one-touches ([One-touch and no-touch](04-fx-one-touch-and-no-touch.md)) and to double no-touches ([Two walls](05-double-barriers-and-double-no-touch.md)), with the same failure near a wall. Digitals take the smile through a slope term instead ([Currency digitals](01-fx-digitals.md)).
 - **Model validation.** Risk teams compare recipe prices with local and stochastic-volatility models across spots and dates, as in the chart above, and hold a reserve (money set aside against model error) where they part.
-- **Hedging near the wall.** The week case's vanna of 25.906973 is the blow-up at the wall that [barrier-and-touch-greeks](06-barrier-and-touch-greeks.md) measures; desks shift the barrier and hold reserves against it.
-- **Structuring to a budget.** A client who wants the knock-out at a set premium gets a barrier level solved from the price, and the price used is often this recipe ([barrier-level-from-a-target-premium](08-barrier-level-from-a-target-premium.md)).
+- **Hedging near the wall.** The week case's vanna of 25.906973 is the blow-up at the wall that [Greeks at the wall](06-barrier-and-touch-greeks.md) measures; desks shift the barrier and hold reserves against it.
+- **Structuring to a budget.** A client who wants the knock-out at a set premium gets a barrier level solved from the price, and the price used is often this recipe ([Solving for the barrier](08-barrier-level-from-a-target-premium.md)).
 
 > **Say it back**
 > A flat price ignores the smile, and the vanna-volga overlay adds the market's charge for hedging a barrier's vega, vanna and volga with three quoted options. A knock-out stops needing that hedge when it dies, so desks scale the overlay by the chance of survival. On the house reverse knock-out that lands at 64.12 pips against a local-volatility model's 66.03. A week from expiry and a cent from the wall the recipe gets the sign of the smile effect wrong. There the price has to come from a model of how volatility behaves at the wall.
@@ -709,15 +690,15 @@ The two outputs agree line for line, down to the Monte Carlo rows, because both 
 
 ## What this builds on
 
-- [vanna-volga-pricing](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): the three-pillar overlay this card weights.
-- [barrier-and-touch-greeks](06-barrier-and-touch-greeks.md): the knock-out's vega, vanna and volga, and why they blow up at the wall.
-- [fx-one-touch-and-no-touch](04-fx-one-touch-and-no-touch.md): the survival chance, derived by reflection.
-- [dupire-local-volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): volatility as a function of spot, the model used as the judge.
-- [heston-model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): the other family of smile-consistent models, and why it prices barriers differently.
+- [Vanna-volga pricing](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): the three-pillar overlay this card weights.
+- [Greeks at the wall](06-barrier-and-touch-greeks.md): the knock-out's vega, vanna and volga, and why they blow up at the wall.
+- [One-touch and no-touch](04-fx-one-touch-and-no-touch.md): the survival chance, derived by reflection.
+- [Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): volatility as a function of spot, the model used as the judge.
+- [The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): the other family of smile-consistent models, and why it prices barriers differently.
 
 ## Where this goes next
 
-- [barrier-level-from-a-target-premium](08-barrier-level-from-a-target-premium.md): runs the price backwards to find the wall that meets a premium budget.
+- [Solving for the barrier](08-barrier-level-from-a-target-premium.md): runs the price backwards to find the wall that meets a premium budget.
 
 Every price on this card started from a barrier level someone chose; which level a given premium buys, and whether that question has exactly one answer, is where the shelf goes next.
 

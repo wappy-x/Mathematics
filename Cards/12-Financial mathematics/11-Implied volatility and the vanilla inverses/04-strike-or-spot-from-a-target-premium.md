@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Implied volatility and the vanilla inverses
-topic: Solving for a contract term
-item: Strike or spot from a target premium
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/03-strike-from-delta|strike-from-delta]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/06-newtons-method|newtons-method]]"
-next: []
-tags: [mathematics, financial mathematics, strike-or-spot-from-a-target-premium]
----
-
 # Strike or spot from a target premium: which strike makes the option cost what you can pay
 
-Financial mathematics → Implied volatility and the vanilla inverses → Solving for a contract term → Strike or spot from a target premium
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Implied volatility and the vanilla inverses](../../../SYLLABUS.md#w12-s11) → Strike or spot from a target premium
 
 ---
 
@@ -82,7 +66,7 @@ $$\frac{\partial C}{\partial K} = -\,e^{-rT}\,N(d_2) \;<\; 0, \qquad \frac{\part
 | $d_1$, $d_2$ | how far the spot sits from the strike in units of $\sigma\sqrt{T}$ | $-0.2538$ and $-0.4538$ at $110.60$ | — |
 | $e^{-rT}$, $e^{-qT}$ | today's value of a dollar due at expiry; the dividend drag on one share | 0.951229 and 0.980199 | — |
 
-The two helpers, as on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
+The two helpers, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
 
 $$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}.$$
 
@@ -116,9 +100,9 @@ If a quantity rises steadily as a dial turns, each reading comes from exactly on
 
 ### Step 1: the call gets cheaper as the strike rises
 
-This needs no formula. Take two strikes, $100 and $110. At expiry the $100 call pays Acme's price minus $100 if positive; the $110 call pays Acme's price minus $110 if positive. The $100 call pays at least as much in every outcome. It pays strictly more whenever Acme ends above $100, and the model gives that a positive chance. The premium is the discounted average payoff over those outcomes ([strike-and-calendar-shape](../08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md) states this for any model free of arbitrage), so the lower strike costs strictly more.
+This needs no formula. Take two strikes, $100 and $110. At expiry the $100 call pays Acme's price minus $100 if positive; the $110 call pays Acme's price minus $110 if positive. The $100 call pays at least as much in every outcome. It pays strictly more whenever Acme ends above $100, and the model gives that a positive chance. The premium is the discounted average payoff over those outcomes ([Shape across strikes and expiries](../08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md) states this for any model free of arbitrage), so the lower strike costs strictly more.
 
-The formula gives the slope's size. Differentiate $C$ in $K$: the terms from $d_1$ and $d_2$ cancel, and what is left is $-e^{-rT}N(d_2)$. At the $110.60$ answer that is $-0.3091$: a dollar more strike takes 31 cents off the premium. The slope is minus the value of a bet that pays $1 if Acme ends above $K$ ([cash-or-nothing-digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md)), which is always positive, so the call never flattens.
+The formula gives the slope's size. Differentiate $C$ in $K$: the terms from $d_1$ and $d_2$ cancel, and what is left is $-e^{-rT}N(d_2)$. At the $110.60$ answer that is $-0.3091$: a dollar more strike takes 31 cents off the premium. The slope is minus the value of a bet that pays $1 if Acme ends above $K$ ([Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md)), which is always positive, so the call never flattens.
 
 ### Step 2: the strike range is 0 to $98.02
 
@@ -128,13 +112,13 @@ Lower end. As the strike rises without limit, $d_1$ runs off to $-\infty$ and $C
 
 ### Step 3: the call gets dearer as the spot rises, without limit
 
-At expiry Acme's price is today's spot times a random growth factor, and that factor does not depend on where the spot started. A higher spot multiplies every outcome up, so the payoff is at least as large everywhere and strictly larger whenever the call pays. The premium rises. Differentiating gives the slope $e^{-qT}N(d_1)$, the call's **delta** ([delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)).
+At expiry Acme's price is today's spot times a random growth factor, and that factor does not depend on where the spot started. A higher spot multiplies every outcome up, so the payoff is at least as large everywhere and strictly larger whenever the call pays. The premium rises. Differentiating gives the slope $e^{-qT}N(d_1)$, the call's **delta** ([Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)).
 
-Ends: $C \le S e^{-qT}$, so the call tends to 0 as the spot falls to 0. And the call is worth at least a forward contract, $S e^{-qT} - K e^{-rT}$ ([option-price-bounds](../08-The%20Black-Scholes%20call%20and%20put/04-option-price-bounds.md)), which grows without limit with the spot. Every positive call premium has exactly one spot.
+Ends: $C \le S e^{-qT}$, so the call tends to 0 as the spot falls to 0. And the call is worth at least a forward contract, $S e^{-qT} - K e^{-rT}$ ([Option price bounds](../08-The%20Black-Scholes%20call%20and%20put/04-option-price-bounds.md)), which grows without limit with the spot. Every positive call premium has exactly one spot.
 
 ### Step 4: the put follows from parity
 
-Put–call parity says $C - P = S e^{-qT} - K e^{-rT}$ at every matching strike and spot ([put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)). Subtract the right side's slope from the call's. In strike, the put's slope is $-e^{-rT}N(d_2) + e^{-rT} = e^{-rT}N(-d_2) > 0$. In spot, it is $e^{-qT}N(d_1) - e^{-qT} = -e^{-qT}N(-d_1) < 0$. The ends come from the call's ends: the put runs from 0 to unlimited in strike, and from $K e^{-rT}$ down to 0 in spot. That fills the range table.
+Put–call parity says $C - P = S e^{-qT} - K e^{-rT}$ at every matching strike and spot ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)). Subtract the right side's slope from the call's. In strike, the put's slope is $-e^{-rT}N(d_2) + e^{-rT} = e^{-rT}N(-d_2) > 0$. In spot, it is $e^{-qT}N(d_1) - e^{-qT} = -e^{-qT}N(-d_1) < 0$. The ends come from the call's ends: the put runs from 0 to unlimited in strike, and from $K e^{-rT}$ down to 0 in spot. That fills the range table.
 
 Parity holds only between a call and a put that share one strike. A $5.00 call at $110.60 says nothing about a put at $96.88; each strike carries its own premium.
 
@@ -144,7 +128,7 @@ A solver needs two strikes whose premiums sit on opposite sides of the target. S
 
 **Bisection** then halves the bracket repeatedly, keeping the half whose ends still straddle the target. Eighty halvings shrink a $100-wide bracket far below a cent. It cannot fail once the bracket is right.
 
-**Newton's method** ([newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) is faster. From a guess $K_n$, follow the tangent line down to the target:
+**Newton's method** ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) is faster. From a guess $K_n$, follow the tangent line down to the target:
 
 $$K_{n+1} = K_n + \frac{C(K_n) - v}{e^{-rT}\,N(d_2)}.$$
 
@@ -171,7 +155,7 @@ With $\sigma = 0$ the share grows like a bank balance and the call pays for cert
 
 A quote identifies one unknown. Treat spot and volatility as unknown together and the $9.227 quote draws a curve of answers rather than a point: spot $105.27 at 10% volatility, $100 at 20%, $92.99 at 30%. A second, independent quote (another strike, or the share's own price) is needed to pin both.
 
-The other inverses on this shelf take the same shape with a different target: [implied-volatility](01-implied-volatility.md) solves for $\sigma$, [strike-from-delta](03-strike-from-delta.md) solves for the strike that gives a chosen delta, and [root-finding-for-inverses](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md) covers the solvers in general.
+The other inverses on this shelf take the same shape with a different target: [Implied volatility](01-implied-volatility.md) solves for $\sigma$, [Strike from delta](03-strike-from-delta.md) solves for the strike that gives a chosen delta, and [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md) covers the solvers in general.
 
 ---
 
@@ -638,7 +622,7 @@ The two outputs match line for line.
 - **Budgeted hedges.** A fund protecting a holding often has a fixed premium budget and asks which put strike it buys. That is the put column of the range table, solved.
 - **Structured notes.** A bank sells a note that repays capital and adds a share of any rise. The money left after buying the bond is the premium budget, and the strike of the embedded call is solved from it.
 - **Covered-call programmes.** An investor selling calls against shares may target an income of so much per share per quarter and solve for the strike that brings it in.
-- **Market checks.** A price feed can be tested by solving for the spot that a quoted option implies. If it disagrees with the share's own price, one of the inputs is stale; [implied-forward-and-dividend-from-parity](05-implied-forward-and-dividend-from-parity.md) runs the same check with two quotes.
+- **Market checks.** A price feed can be tested by solving for the spot that a quoted option implies. If it disagrees with the share's own price, one of the inputs is stale; [Implied forward and dividend from parity](05-implied-forward-and-dividend-from-parity.md) runs the same check with two quotes.
 
 > **Say it back**
 > A call's premium falls strictly as its strike rises, from $S e^{-qT}$ down to zero, and rises strictly as the spot rises, from zero without limit; the put runs the other way in each. So a premium inside the range fixes one strike or one spot, and a premium outside it fixes none. Bracket by doubling and halving, then solve by bisection or by Newton, which never overshoots on the call's strike because the price curve is convex. With zero volatility or zero time the answer comes from a straight line. One quote fixes one unknown, never two.
@@ -647,12 +631,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [strike-from-delta](03-strike-from-delta.md): the first strike inverse on this shelf, with a delta as the target instead of a premium.
-- [newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): following the tangent line to a root, and when it converges.
+- [Strike from delta](03-strike-from-delta.md): the first strike inverse on this shelf, with a delta as the target instead of a premium.
+- [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): following the tangent line to a root, and when it converges.
 
 ## Where this goes next
 
-- [implied-forward-and-dividend-from-parity](05-implied-forward-and-dividend-from-parity.md): two quotes at one strike, a call and a put, recover the forward and the dividend yield.
+- [Implied forward and dividend from parity](05-implied-forward-and-dividend-from-parity.md): two quotes at one strike, a call and a put, recover the forward and the dividend yield.
 
 This card fixed every input but one; the next asks what can be recovered when two quotes arrive together and the dividend itself is the unknown.
 

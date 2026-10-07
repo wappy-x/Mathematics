@@ -1,23 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Multiple Integrals
-topic: A parameter inside the integral
-item: Differentiating under the integral
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/06-Series/08-swapping-limits-with-integrals-and-derivatives|swapping-limits-with-integrals-and-derivatives]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-next:
-  - "[[Cards/20-Harmonic analysis/02-The Fourier Transform/02-shift-scale-and-derivative-rules|shift-scale-and-derivative-rules]]"
-tags: [mathematics, calculus and analysis, differentiating-under-the-integral]
----
-
 # Differentiating under the integral: when the derivative can go inside
 
-Calculus and analysis → Multiple Integrals → A parameter inside the integral → Differentiating under the integral
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Multiple Integrals](../../../SYLLABUS.md#w06-s08) → Differentiating under the integral
 
 ---
 
@@ -52,7 +35,7 @@ Orange: n = 1, area 1. Teal: n = 2, area 2. Dark blue: n = 3, area 6. Each extra
 
 ## The formula
 
-Reminder: the curly d marks a partial derivative, the rate in one input with the others held still ([partial-derivatives](../07-Several%20Variables/01-partial-derivatives.md)).
+Reminder: the curly d marks a partial derivative, the rate in one input with the others held still ([Partial derivatives](../07-Several%20Variables/01-partial-derivatives.md)).
 
 The integrand has two inputs: the dial $t$, called the **parameter** from here on, and the position $x$ along the base. The total over x depends on the parameter alone: $F(t)$.
 
@@ -99,7 +82,7 @@ The total's difference quotient over a step h is a total of quotients, one per x
 
 $$\frac{F(t+h)-F(t)}{h}=\int_a^b \frac{f(t+h,x)-f(t,x)}{h}\,dx$$
 
-Each quotient inside heads for the t-rate at its x. The limit passes through the integral when the quotients close in **uniformly**: one worst gap for every x, shrinking to 0 ([swapping-limits-with-integrals-and-derivatives](../06-Series/08-swapping-limits-with-integrals-and-derivatives.md)).
+Each quotient inside heads for the t-rate at its x. The limit passes through the integral when the quotients close in **uniformly**: one worst gap for every x, shrinking to 0 ([Swapping limits](../06-Series/08-swapping-limits-with-integrals-and-derivatives.md)).
 
 ### Step 1: one step size works for every x
 
@@ -128,7 +111,7 @@ $$\left|\frac{F(t+h)-F(t)}{h}-\int_a^b f_t(t,x)\,dx\right|\le (b-a)\,\varepsilon
 
 Freeze the ends and the total changes at the integral of rates. Let the right end move from b to b + b'h: it sweeps a strip b'h wide and about f(t, b) tall, so adds area at rate f(t, b) b'. The left end does the same with the opposite sign.
 
-As algebra: let G(t, u, v) be the integral of f(t, x) from u to v. Its partial rates are the integral of the t-rate (Step 2), f(t, v) and -f(t, u) (the fundamental theorem of calculus). All are continuous, so the chain rule for G(t, a(t), b(t)) gives the Leibniz rule term by term ([multivariable-chain-rule-and-jacobians](../07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)).
+As algebra: let G(t, u, v) be the integral of f(t, x) from u to v. Its partial rates are the integral of the t-rate (Step 2), f(t, v) and -f(t, u) (the fundamental theorem of calculus). All are continuous, so the chain rule for G(t, a(t), b(t)) gives the Leibniz rule term by term ([Chain rule in several variables](../07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)).
 
 **The example.** Cut the curve x e^(-tx) at one decay length, b(t) = 1/t, where e^(-tx) has fallen to 1/e. Call the total $J$. At t = 1:
 
@@ -375,7 +358,7 @@ The two outputs match line for line.
 
 - **Discounting.** Payments at time x, discounted at continuous rate t, are weighted by e^(-tx). Differentiating in t brings down -x inside: a bond's rate-risk is a time-weighted average.
 - **Transform tables.** The Laplace transform entry taking x^n to n!/s^(n+1) is this result, with s for t.
-- **Factorials between the integers.** The area under x^n e^(-x) makes sense for fractional n; [stirlings-approximation](../06-Series/09-stirlings-approximation.md) estimates n! for large n.
+- **Factorials between the integers.** The area under x^n e^(-x) makes sense for fractional n; [Stirling's approximation](../06-Series/09-stirlings-approximation.md) estimates n! for large n.
 - **Moving boundaries.** A region whose edge moves gains material at edge speed times density: the moving-end terms in three dimensions.
 
 > **Say it back**
@@ -385,12 +368,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [swapping-limits-with-integrals-and-derivatives](../06-Series/08-swapping-limits-with-integrals-and-derivatives.md): uniform closeness lets a limit pass through an integral, and through a derivative when the slopes settle uniformly.
-- [partial-derivatives](../07-Several%20Variables/01-partial-derivatives.md): the rate in t with x held still.
+- [Swapping limits](../06-Series/08-swapping-limits-with-integrals-and-derivatives.md): uniform closeness lets a limit pass through an integral, and through a derivative when the slopes settle uniformly.
+- [Partial derivatives](../07-Several%20Variables/01-partial-derivatives.md): the rate in t with x held still.
 
 ## Where this goes next
 
-- shift-scale-and-derivative-rules: differentiating a transform in its frequency brings down a factor of x inside the integral, the same move on an infinite range.
+- The transform rulebook: differentiating a transform in its frequency brings down a factor of x inside the integral, the same move on an infinite range.
 
 ---
 

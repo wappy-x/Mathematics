@@ -1,25 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Contour Integrals and Cauchy's Theorem
-topic: Integrals read off at the ends
-item: Antiderivatives
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/01-contour-integrals|contour-integrals]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/04-complex-logarithm|complex-logarithm]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/02-fundamental-theorem-of-calculus|fundamental-theorem-of-calculus]]"
-next:
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/03-cauchys-theorem|cauchys-theorem]]"
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/04-harmonic-functions-and-conjugates|harmonic-functions-and-conjugates]]"
-tags: [mathematics, complex analysis, antiderivatives-and-path-independence]
----
-
 # Antiderivatives: when f = F' the path does not matter, and the one function that has none
 
-Complex analysis → Contour Integrals and Cauchy's Theorem → Integrals read off at the ends → Antiderivatives
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Contour Integrals and Cauchy's Theorem](../../../SYLLABUS.md#w07-s03) → Antiderivatives
 
 ---
 
@@ -27,13 +8,13 @@ Complex analysis → Contour Integrals and Cauchy's Theorem → Integrals read o
 
 A hiker climbs from a car park to a summit. The ridge path and the valley path differ in every step, yet both gain the same height. An altimeter needs only the two ends.
 
-A complex integral along a path ([contour-integrals](01-contour-integrals.md)) adds up f(z) times each small step dz. Sometimes a second function F, whose complex derivative is f, plays the altimeter: the whole sum is F at the finish minus F at the start. Integrate z^2 from 0 to 1 + i straight across, or along the real axis to 1 and then up: both give (−2 + 2i)/3, because z^3/3 has derivative z^2.
+A complex integral along a path ([Contour integrals](01-contour-integrals.md)) adds up f(z) times each small step dz. Sometimes a second function F, whose complex derivative is f, plays the altimeter: the whole sum is F at the finish minus F at the start. Integrate z^2 from 0 to 1 + i straight across, or along the real axis to 1 and then up: both give (−2 + 2i)/3, because z^3/3 has derivative z^2.
 
 Now climb a spiral ramp round a pillar: one lap ends one floor above the start. The complex logarithm, log z, the natural altimeter for 1/z, is such a ramp: one lap round 0 raises it by 2πi. So a loop of 1/z round 0 gives 2πi, not 0. From here on, the altimeter is called an **antiderivative**.
 
 **If F′ = f on an open set holding the path, the integral of f along it is F(end) − F(start), whatever route inside that set joins them; 1/z has no antiderivative on any region that circles 0, and among the powers of z it is the only one without.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works; which regions guarantee an antiderivative is proved on [cauchys-theorem](03-cauchys-theorem.md).
+**What kind of fact this is:** a theorem, proved on this card in Why it works; which regions guarantee an antiderivative is proved on [Cauchy's theorem](03-cauchys-theorem.md).
 
 ### The picture: two routes from 0 to 1 + i
 
@@ -98,7 +79,7 @@ The first term tends to $F'(w)\gamma'(t)$. For the second: given ε > 0, pick δ
 
 ### Step 2: apply the real fundamental theorem twice
 
-A complex-valued function of t is two real ones, its real and imaginary parts. The fundamental theorem of calculus ([fundamental-theorem-of-calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md)) turns each integral of a rate into a change:
+A complex-valued function of t is two real ones, its real and imaginary parts. The fundamental theorem of calculus ([Fundamental theorem of calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md)) turns each integral of a rate into a change:
 
 $$\int_0^1 f(\gamma(t))\,\gamma'(t)\,dt = F(\gamma(1)) - F(\gamma(0)) = F(b) - F(a).$$
 
@@ -130,7 +111,7 @@ So, for a continuous f on a connected open region, three statements are equivale
 
 For every integer n except −1, positive, negative or zero, z^n has antiderivative z^(n+1)/(n+1), so its loops give 0. At n = −1 that recipe divides by zero. Direct computation on γ(t) = e^(2πit), velocity 2πi e^(2πit), gives f(γ)γ′ = 2πi at every instant, so the loop integral is 2πi. By Step 3, no antiderivative of 1/z exists on any region containing that circle.
 
-A local one exists: log z = ln|z| + i times the angle of z ([complex-logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)) has derivative 1/z. Carried once round 0, the angle grows by 2π: the ramp does not close up, and that climb is the 2πi. Cut the plane along the negative real axis and no lap is possible; there the principal Log works.
+A local one exists: log z = ln|z| + i times the angle of z ([The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)) has derivative 1/z. Carried once round 0, the angle grows by 2π: the ramp does not close up, and that climb is the 2πi. Cut the plane along the negative real axis and no lap is possible; there the principal Log works.
 
 ### The picture: two halves of the unit circle
 
@@ -386,9 +367,9 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Evaluating contour integrals.** A known antiderivative replaces the sum along the path by one subtraction.
-- **Potentials in physics.** A field with a potential does work that depends only on the ends; complex potentials for flow and electrostatics are antiderivatives ([harmonic-functions-and-conjugates](../07-Conformal%20Maps%20and%20Harmonic%20Functions/04-harmonic-functions-and-conjugates.md)).
+- **Potentials in physics.** A field with a potential does work that depends only on the ends; complex potentials for flow and electrostatics are antiderivatives ([Harmonic functions](../07-Conformal%20Maps%20and%20Harmonic%20Functions/04-harmonic-functions-and-conjugates.md)).
 - **Phase unwrapping.** Signal processing tracks a complex signal's angle step by step, like the carried logarithm.
-- **Counting laps.** The 2πi left by 1/z becomes a counter of how many times a loop winds round a point, on [deforming-contours-and-winding-numbers](04-deforming-contours-and-winding-numbers.md).
+- **Counting laps.** The 2πi left by 1/z becomes a counter of how many times a loop winds round a point, on [Deforming a loop](04-deforming-contours-and-winding-numbers.md).
 
 > **Say it back**
 > An antiderivative of f is a function F with F′ = f. Where one exists, the integral of f is the change in F: only the ends matter, and loops give 0. If every loop gives 0, integrating from a fixed point builds one. z^2 from 0 to 1 + i gives (−2 + 2i)/3 by any route. 1/z is the one power with none round 0: log z climbs 2πi per lap.
@@ -397,14 +378,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [contour-integrals](01-contour-integrals.md): the integral along a parametrised path.
-- [complex-logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md): log z, its principal branch Log, and the cut along the negative real axis.
-- [fundamental-theorem-of-calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md): an integral of a rate is the change, used once for each of the real and imaginary parts.
+- [Contour integrals](01-contour-integrals.md): the integral along a parametrised path.
+- [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md): log z, its principal branch Log, and the cut along the negative real axis.
+- [Fundamental theorem of calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md): an integral of a rate is the change, used once for each of the real and imaginary parts.
 
 ## Where this goes next
 
-- [cauchys-theorem](03-cauchys-theorem.md): on a region without holes, every holomorphic function has an antiderivative.
-- [harmonic-functions-and-conjugates](../07-Conformal%20Maps%20and%20Harmonic%20Functions/04-harmonic-functions-and-conjugates.md): the real part of an antiderivative is a potential, and building its partner is the same path integral.
+- [Cauchy's theorem](03-cauchys-theorem.md): on a region without holes, every holomorphic function has an antiderivative.
+- [Harmonic functions](../07-Conformal%20Maps%20and%20Harmonic%20Functions/04-harmonic-functions-and-conjugates.md): the real part of an antiderivative is a potential, and building its partner is the same path integral.
 
 ---
 

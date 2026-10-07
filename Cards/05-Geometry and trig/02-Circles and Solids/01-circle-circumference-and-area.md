@@ -1,23 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Circles and Solids
-topic: Rim and disc
-item: Circles
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/01-Foundations/02-The Number Line/03-irrational-numbers|irrational-numbers]]"
-next:
-  - "[[Cards/05-Geometry and trig/02-Circles and Solids/02-radians-arcs-and-sectors|radians-arcs-and-sectors]]"
-  - "[[Cards/05-Geometry and trig/02-Circles and Solids/04-prisms-and-cylinders|prisms-and-cylinders]]"
-tags: [mathematics, geometry and trig, circle-circumference-and-area]
----
-
 # Circles: where pi comes from and why area is pi r squared
 
-Geometry and trig → Circles and Solids → Rim and disc → Circles
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Circles and Solids](../../../SYLLABUS.md#w05-s02) → Circles
 
 ---
 
@@ -90,7 +73,7 @@ A regular hexagon, six equal sides and six equal angles, fits inside the circle 
 
 Doubling the sides, with Pythagoras giving each new side from the old, shrinks the gap between the two bounds about fourfold each time: 0.464102, 0.109562, 0.027031, 0.006736, 0.001683. Archimedes stopped at 96 sides, between 3.141032 and 3.142715, and rounded outward to 3 10/71 and 3 1/7, which are 3.140845 and 3.142857; 3 1/7 is the familiar 22/7. At 6,291,456 sides both bounds read 3.1415926536.
 
-No fraction is exact: $\pi$ is irrational, like root 2 on [irrational-numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md), as Johann Heinrich Lambert proved in the 1760s by a route beyond this card.
+No fraction is exact: $\pi$ is irrational, like root 2 on [Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md), as Johann Heinrich Lambert proved in the 1760s by a route beyond this card.
 
 <details>
 <summary>The algebra behind the doubling</summary>
@@ -105,7 +88,7 @@ Turn the definition round: $C = \pi d$, or $2\pi r$, since the diameter is two r
 
 ### Step 4: unroll the disc into a triangle
 
-Cut the disc into rings, like the growth rings of a sawn log, and straighten each into a strip as long as its circumference: $2\pi$ times its distance from the centre, by Step 3. Stack the strips, outermost at the bottom. Their lengths fall steadily from 219.91 cm to nothing 35 cm up: a right-angled triangle with base $C$ and height $r$. A triangle is half base times height ([area-of-triangles-and-polygons](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)), so
+Cut the disc into rings, like the growth rings of a sawn log, and straighten each into a strip as long as its circumference: $2\pi$ times its distance from the centre, by Step 3. Stack the strips, outermost at the bottom. Their lengths fall steadily from 219.91 cm to nothing 35 cm up: a right-angled triangle with base $C$ and height $r$. A triangle is half base times height ([Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)), so
 
 $$A = \tfrac12 \times 2\pi r \times r = \pi r^2$$
 
@@ -136,7 +119,7 @@ A straightened ring's inner edge is shorter than its outer, so the stack is only
 
 </details>
 
-Another road lays wedges of the disc side by side, points alternately up and down: nearly a rectangle half the circumference long and one radius tall. Wedges have their own card, [radians-arcs-and-sectors](02-radians-arcs-and-sectors.md).
+Another road lays wedges of the disc side by side, points alternately up and down: nearly a rectangle half the circumference long and one radius tall. Wedges have their own card, [Radians](02-radians-arcs-and-sectors.md).
 
 ---
 
@@ -387,8 +370,8 @@ The two outputs match line for line.
 
 - **Cycle computers.** The sensor counts turns and multiplies by the circumference entered at setup, found by rolling the loaded bike one turn.
 - **Measuring wheels.** A surveyor's wheel that clicks once a metre is 31.830989 cm across: 100 ÷ pi.
-- **Pipes and tanks.** At a given flow speed a pipe carries water in proportion to pi r squared. The tank 2 m across on [prisms-and-cylinders](04-prisms-and-cylinders.md) stands on pi square metres.
-- **Spheres and cones.** Pi returns in their surfaces and volumes, on [pyramids-cones-and-spheres](05-pyramids-cones-and-spheres.md).
+- **Pipes and tanks.** At a given flow speed a pipe carries water in proportion to pi r squared. The tank 2 m across on [Prisms and cylinders](04-prisms-and-cylinders.md) stands on pi square metres.
+- **Spheres and cones.** Pi returns in their surfaces and volumes, on [Pyramids, cones and spheres](05-pyramids-cones-and-spheres.md).
 
 > **Say it back**
 > Every circle is an enlarged copy of every other, so circumference over diameter is one number, pi: trapped by polygons, and irrational. The 70 cm wheel rolls 219.91 cm per turn. Its disc, cut into rings and straightened, stacks into a triangle with the circumference as base and the radius as height, so its area is pi r squared, 3848.45 square centimetres. Double the wheel: twice the circumference, four times the disc.
@@ -397,12 +380,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [irrational-numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md): why a decimal that never stops or repeats belongs to no fraction; pi is one.
+- [Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md): why a decimal that never stops or repeats belongs to no fraction; pi is one.
 
 ## Where this goes next
 
-- [radians-arcs-and-sectors](02-radians-arcs-and-sectors.md): part of a turn, its arc and its wedge.
-- [prisms-and-cylinders](04-prisms-and-cylinders.md): the disc as a tank's floor, stacked into a volume.
+- [Radians](02-radians-arcs-and-sectors.md): part of a turn, its arc and its wedge.
+- [Prisms and cylinders](04-prisms-and-cylinders.md): the disc as a tank's floor, stacked into a volume.
 
 ---
 

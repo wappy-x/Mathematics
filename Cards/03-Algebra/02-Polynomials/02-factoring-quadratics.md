@@ -1,27 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Polynomials
-topic: Quadratics
-item: Factoring
-kind: method
-status: verified
-updated: 2026-09-07
-needs_first:
-  - "[[Cards/03-Algebra/02-Polynomials/01-polynomials|polynomials]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/07-prime-factorisation|prime-factorisation]]"
-next:
-  - "[[Cards/03-Algebra/02-Polynomials/03-quadratic-formula|quadratic-formula]]"
-  - "[[Cards/03-Algebra/02-Polynomials/04-polynomial-division|polynomial-division]]"
-tags:
-  - mathematics
-  - algebra
-  - factoring-quadratics
----
-
 # Factoring: un-multiplying a polynomial, because a product is zero only when one factor is
 
-Algebra → Polynomials → Quadratics → Factoring
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Polynomials](../../../SYLLABUS.md#w03-s02) → Factoring
 
 ---
 
@@ -64,11 +43,11 @@ Three rewrites get a polynomial into that shape. First, the common factor: what 
 
 $$20t - 5t^2 = 5t(4 - t)$$
 
-Second, reverse-multiplying a quadratic — a polynomial whose highest power is 2 ([polynomials](01-polynomials.md)). Here x is the unknown, $b$ the number stuck to it, $c$ the one on its own, $p$ and $q$ the two you are hunting:
+Second, reverse-multiplying a quadratic — a polynomial whose highest power is 2 ([Polynomials](01-polynomials.md)). Here x is the unknown, $b$ the number stuck to it, $c$ the one on its own, $p$ and $q$ the two you are hunting:
 
 $$x^2 + bx + c = (x + p)(x + q) \quad\text{whenever}\quad p + q = b \;\text{ and }\; p \times q = c$$
 
-That x^2 is bare, no number in front. With a number there the hunt changes; [quadratic-formula](03-quadratic-formula.md) still works.
+That x^2 is bare, no number in front. With a number there the hunt changes; [The quadratic formula](03-quadratic-formula.md) still works.
 
 Third, a square minus a square, with $k$ the number being squared:
 
@@ -102,7 +81,7 @@ Both terms are 5t times something, so the 5t comes out front and the somethings 
 
 20t - 5t^2 = 5t(4 - t)
 
-Multiply back to check: 5t × 4 = 20t, 5t × (−t) = −5t^2. Same polynomial, new costume. Do this first every time; it costs nothing and shrinks what is left. Same instinct as pulling primes out of a whole number ([prime-factorisation](../../02-Number%20theory/01-Divisibility%20and%20Primes/07-prime-factorisation.md)).
+Multiply back to check: 5t × 4 = 20t, 5t × (−t) = −5t^2. Same polynomial, new costume. Do this first every time; it costs nothing and shrinks what is left. Same instinct as pulling primes out of a whole number ([Prime factorisation](../../02-Number%20theory/01-Divisibility%20and%20Primes/07-prime-factorisation.md)).
 
 ### Step 2: reverse-multiply the middle
 
@@ -155,7 +134,7 @@ flowchart TD
     G --> I
 ```
 
-The bottom exit is not a failure. Most quadratics have no whole-number pair, and [quadratic-formula](03-quadratic-formula.md) finds their zeros anyway; [polynomial-division](04-polynomial-division.md) divides out a bracket you already know.
+The bottom exit is not a failure. Most quadratics have no whole-number pair, and [The quadratic formula](03-quadratic-formula.md) finds their zeros anyway; [Polynomial long division](04-polynomial-division.md) divides out a bracket you already know.
 
 ---
 
@@ -366,7 +345,7 @@ The two outputs match line for line.
 > - Setting the brackets equal to anything but zero. From (x − 5)(x − 6) = 30, "x − 5 = 30" gives x = 35, where the polynomial reads 870. The true solutions are x = 0 and x = 11.
 > - A pair that multiplies right but adds wrong. −3 and −10 multiply to 30, but their quadratic reads 8 at x = 11, not 30.
 > - Leaving the letter behind. 20t − 5t^2 is 5t(4 − t), not 5(4 − t); at t = 2 that gives 10 against the true 20.
-> - Expecting every quadratic to factor. Most do not, in whole numbers. That is why [quadratic-formula](03-quadratic-formula.md) exists.
+> - Expecting every quadratic to factor. Most do not, in whole numbers. That is why [The quadratic formula](03-quadratic-formula.md) exists.
 
 ---
 
@@ -375,7 +354,7 @@ The two outputs match line for line.
 - **Anything thrown, launched or dropped.** Height against time is a quadratic, and its zeros are when the thing is at ground level — usually the question being asked.
 - **Areas with a bit trimmed off.** Slabs, borders, margins, offcuts: an area in one unknown is nearly always a quadratic, and the zeros are where the shape runs out.
 - **Break-even points.** Profit that rises then falls with price is a quadratic; its zeros are where the money is level.
-- **Reading a graph.** Where a curve crosses the bottom it has a bracket: [roots-and-the-factor-theorem](05-roots-and-the-factor-theorem.md).
+- **Reading a graph.** Where a curve crosses the bottom it has a bracket: [Roots and factors](05-roots-and-the-factor-theorem.md).
 
 > **Say it back**
 > Factoring turns a sum of terms into a product of brackets. A product is zero only when one factor is zero, so a factored polynomial gives up its zeros with no searching. Three moves cover most of it: pull out what every term shares, spot a square minus a square, or find two numbers that add to the middle number and multiply to the last. The ball's 20t − 5t^2 is 5t(4 − t), so it lands at t = 4. The patio's x^2 − 11x + 30 is (x − 5)(x − 6), zero at x = 5 and x = 6. A sum of squares never factors, and a quadratic with no whole-number pair is a job for the formula, not a mistake.
@@ -384,13 +363,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [polynomials](01-polynomials.md): what a polynomial and its degree are, and what crossing zero means.
-- [prime-factorisation](../../02-Number%20theory/01-Divisibility%20and%20Primes/07-prime-factorisation.md): splitting a whole number into the pieces it is built from — the same instinct, earlier.
+- [Polynomials](01-polynomials.md): what a polynomial and its degree are, and what crossing zero means.
+- [Prime factorisation](../../02-Number%20theory/01-Divisibility%20and%20Primes/07-prime-factorisation.md): splitting a whole number into the pieces it is built from — the same instinct, earlier.
 
 ## Where this goes next
 
-- [quadratic-formula](03-quadratic-formula.md): the zeros of every quadratic, including the ones no whole-number pair will factor.
-- [polynomial-division](04-polynomial-division.md): dividing a known bracket out to get at what is left.
+- [The quadratic formula](03-quadratic-formula.md): the zeros of every quadratic, including the ones no whole-number pair will factor.
+- [Polynomial long division](04-polynomial-division.md): dividing a known bracket out to get at what is left.
 
 ---
 

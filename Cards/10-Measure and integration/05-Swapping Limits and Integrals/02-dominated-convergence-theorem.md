@@ -1,33 +1,12 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Swapping Limits and Integrals
-topic: One roof for the whole sequence
-item: Dominated convergence
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/01-fatous-lemma|fatous-lemma]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/04-integrable-functions-and-l1|integrable-functions-and-l1]]"
-next:
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/03-differentiating-under-the-integral|differentiating-under-the-integral]]"
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/04-modes-of-convergence|modes-of-convergence]]"
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/04-rules-of-conditional-expectation|rules-of-conditional-expectation]]"
-  - "[[Cards/20-Harmonic analysis/02-The Fourier Transform/01-fourier-transform-on-l1-and-riemann-lebesgue|fourier-transform-on-l1-and-riemann-lebesgue]]"
-  - "[[Cards/20-Harmonic analysis/03-Convolution and Approximate Identities/03-approximate-identities|approximate-identities]]"
-tags: [mathematics, measure and integration, dominated-convergence-theorem]
----
-
 # Dominated convergence: one integrable roof over the whole sequence lets you swap limit and integral
 
-Measure and integration → Swapping Limits and Integrals → One roof for the whole sequence → Dominated convergence
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Swapping Limits and Integrals](../../../SYLLABUS.md#w10-s05) → Dominated convergence
 
 ---
 
 ## General Overview
 
-A mail server logs spam at an average of 2 messages an hour. A standard model cuts the hour into n equal slots and lets each slot hold one spam with chance 2/n, independently of the others. With 10 slots the chance of a spam-free hour is 0.8^10 = 0.1074. With 100 slots it is 0.1326, with 1,000 it is 0.1351, closing in on e^(−2) = 0.1353. Every other count behaves the same way: the chance of exactly k spams settles on the Poisson value e^(−2) 2^k/k! ([poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md) proves this one count at a time).
+A mail server logs spam at an average of 2 messages an hour. A standard model cuts the hour into n equal slots and lets each slot hold one spam with chance 2/n, independently of the others. With 10 slots the chance of a spam-free hour is 0.8^10 = 0.1074. With 100 slots it is 0.1326, with 1,000 it is 0.1351, closing in on e^(−2) = 0.1353. Every other count behaves the same way: the chance of exactly k spams settles on the Poisson value e^(−2) 2^k/k! ([Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md) proves this one count at a time).
 
 One count at a time is not enough. The mean, the spread and the chance of a burst of 5 or more are all sums over every count at once, and a limit of sums need not equal the sum of the limits. Put all of an hour's chance on the count n: at any fixed count the chance is 0 once n has passed it, so the limit is 0 everywhere, yet the total is 1 for every n. The mass slid away and took its total with it.
 
@@ -56,9 +35,9 @@ Caption: orange is the binomial with 10 slots, green with 100 slots, dark blue t
 
 ## The formula
 
-Notation first, in words. A measure space $(\Omega,\mathcal F,\mu)$ is a set $\Omega$ (omega), the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ (mu) giving each such set a size ([measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). The integral $\int f\,d\mu$ is read "the integral of f against mu". "Almost everywhere", written a.e., means "except on a set of size zero" ([null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). A function is **integrable**, in $L^1$, when $\int |f|\,d\mu$ is finite ([integrable-functions-and-l1](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)).
+Notation first, in words. A measure space $(\Omega,\mathcal F,\mu)$ is a set $\Omega$ (omega), the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ (mu) giving each such set a size ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). The integral $\int f\,d\mu$ is read "the integral of f against mu". "Almost everywhere", written a.e., means "except on a set of size zero" ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). A function is **integrable**, in $L^1$, when $\int |f|\,d\mu$ is finite ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)).
 
-One new measure carries the spam example. **Counting measure** on the counts 0, 1, 2, … gives a set of counts its number of members. Integrating against it is adding up: a non-negative function's integral is its series, because the partial sums rise to it ([monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)).
+One new measure carries the spam example. **Counting measure** on the counts 0, 1, 2, … gives a set of counts its number of members. Integrating against it is adding up: a non-negative function's integral is its series, because the partial sums rise to it ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)).
 
 The theorem. Let $f_n$ and $f$ be measurable functions on $\Omega$, and $g$ a non-negative one.
 
@@ -103,7 +82,7 @@ On the spam example, $\Omega$ is the counts and $\mu$ is counting measure. With 
 - **One dominating function for the whole sequence.** A separate bound for each n does not count. The tall spike (n+1)x^n on [0, 1] is bounded by n + 1 at stage n, a different constant each time, and keeps integral 1 while its limit has integral 0.
 - **The dominating function is integrable.** The constant 1 dominates the sliding mass too, but on infinitely many counts its total is infinite, and the theorem says nothing.
 - **It bounds the size, both signs.** A bound on one side only lets mass escape on the other: the negated spike −(n+1)x^n lies below 0 everywhere on [0, 1], and its integrals do not follow its limit.
-- **Convergence almost everywhere.** A null set of bad points is harmless. Convergence only in a weaker sense, such as in probability, needs another route: a dominated family is uniformly integrable, and Vitali's theorem on [uniform-integrability](05-uniform-integrability.md) then gives the same conclusion.
+- **Convergence almost everywhere.** A null set of bad points is harmless. Convergence only in a weaker sense, such as in probability, needs another route: a dominated family is uniformly integrable, and Vitali's theorem on [Uniform integrability](05-uniform-integrability.md) then gives the same conclusion.
 - **Measurable functions.** Without measurability the integrals are not defined.
 
 ---
@@ -112,7 +91,7 @@ On the spam example, $\Omega$ is the counts and $\mu$ is counting measure. With 
 
 ### Step 0: Fatou blocks leaks one way; a dominating function turns that into two ways
 
-Fatou's lemma ([fatous-lemma](01-fatous-lemma.md)) says that for non-negative functions, mass can vanish in a limit but never appear: $\int \liminf u_n\,d\mu \le \liminf \int u_n\,d\mu$, where liminf is the eventual lowest value. Signed functions could leak mass upward or downward. The trick is to add and subtract the dominating function: $g+f_n$ and $g-f_n$ are both non-negative. Fatou on the first stops a downward leak, Fatou on the second an upward one. Because $\int g\,d\mu$ is finite, it can be subtracted from both sides without meeting ∞ − ∞. Nothing leaks either way, so the integrals converge.
+Fatou's lemma ([Fatou's lemma](01-fatous-lemma.md)) says that for non-negative functions, mass can vanish in a limit but never appear: $\int \liminf u_n\,d\mu \le \liminf \int u_n\,d\mu$, where liminf is the eventual lowest value. Signed functions could leak mass upward or downward. The trick is to add and subtract the dominating function: $g+f_n$ and $g-f_n$ are both non-negative. Fatou on the first stops a downward leak, Fatou on the second an upward one. Because $\int g\,d\mu$ is finite, it can be subtracted from both sides without meeting ∞ − ∞. Nothing leaks either way, so the integrals converge.
 
 ### Step 1: g + f_n gives the lower bound
 
@@ -131,9 +110,9 @@ Apply Steps 1 and 2 to the errors $|f_n-f|$. They converge to 0 a.e., and $|f_n-
 
 **Setting.** $(\Omega,\mathcal F,\mu)$ is a measure space; $f_n$, $f$ are measurable and real-valued; $g$ is measurable with values in [0, ∞]; $f_n\to f$ a.e.; for each n, $|f_n|\le g$ a.e.; $\int g\,d\mu<\infty$.
 
-**1. Clearing the null sets.** Let $N_0$ be the set where $f_n(x)$ does not converge to $f(x)$, and $N_n$ the set where $|f_n|>g$. Each is measurable and has measure 0 by hypothesis. The set $\{g=\infty\}$ has measure 0 too: for every whole number m, $m\,\mathbf 1_{\{g=\infty\}}\le g$, so $m\,\mu(g=\infty)\le\int g\,d\mu<\infty$ for every m. Let $N$ be the union of all these sets; it is a countable union of null sets, so $\mu(N)=0$ by countable subadditivity ([measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). Replace $f_n$, $f$ and $g$ by 0 on $N$. The new functions are measurable, and no integral changes, since functions equal a.e. have equal integrals ([integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). From here on convergence and domination hold at every point, and $g$ is finite.
+**1. Clearing the null sets.** Let $N_0$ be the set where $f_n(x)$ does not converge to $f(x)$, and $N_n$ the set where $|f_n|>g$. Each is measurable and has measure 0 by hypothesis. The set $\{g=\infty\}$ has measure 0 too: for every whole number m, $m\,\mathbf 1_{\{g=\infty\}}\le g$, so $m\,\mu(g=\infty)\le\int g\,d\mu<\infty$ for every m. Let $N$ be the union of all these sets; it is a countable union of null sets, so $\mu(N)=0$ by countable subadditivity ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). Replace $f_n$, $f$ and $g$ by 0 on $N$. The new functions are measurable, and no integral changes, since functions equal a.e. have equal integrals ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). From here on convergence and domination hold at every point, and $g$ is finite.
 
-**2. Everything is integrable.** Letting n → ∞ in $|f_n(x)|\le g(x)$ gives $|f(x)|\le g(x)$. Monotonicity of the integral gives $\int|f_n|\,d\mu\le\int g\,d\mu<\infty$ and $\int|f|\,d\mu\le\int g\,d\mu$, so every $f_n$ and $f$ is in $L^1$, and linearity of the integral holds for them ([integrable-functions-and-l1](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)).
+**2. Everything is integrable.** Letting n → ∞ in $|f_n(x)|\le g(x)$ gives $|f(x)|\le g(x)$. Monotonicity of the integral gives $\int|f_n|\,d\mu\le\int g\,d\mu<\infty$ and $\int|f|\,d\mu\le\int g\,d\mu$, so every $f_n$ and $f$ is in $L^1$, and linearity of the integral holds for them ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)).
 
 **3. Lower bound.** $g+f_n\ge0$ and $g+f_n\to g+f$ at every point, so $\liminf(g+f_n)=g+f$. Fatou's lemma: $\int(g+f)\,d\mu\le\liminf_n\int(g+f_n)\,d\mu$. By linearity on integrable functions, the left side is $\int g\,d\mu+\int f\,d\mu$ and the right side is $\int g\,d\mu+\liminf_n\int f_n\,d\mu$, since adding a fixed number commutes with liminf. Subtract the finite number $\int g\,d\mu$: $\int f\,d\mu\le\liminf_n\int f_n\,d\mu$.
 
@@ -161,13 +140,13 @@ and $p_n(k)=0$ for $k>n$. For fixed k, the first factor tends to 1 and the last 
 
 Now any quantity $h(k)$ with $\sum_k |h(k)|\,2^k/k!<\infty$ passes to the limit: $|h(k)|\,2^k/k!$ dominates $h(k)\,p_n(k)$, so $\sum_k h(k)\,p_n(k)\to\sum_k h(k)\,q(k)$. For $h(k)=k^2$ the dominating total is $6e^2$ = 44.3343, finite. So the average of the squared count converges: 5.6000 at 10 slots, 5.9600 at 100, 5.9960 at 1,000, toward the Poisson value 6. The variance, average square minus squared mean, goes 1.6000, 1.9600, 1.9960, toward 2.
 
-On counting measure this special case has its own name, Tannery's theorem: a series whose terms converge one by one, with every term bounded by the matching term of one convergent series, converges to the series of the limits. The Weierstrass M-test on [uniform-convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md) uses the same bound.
+On counting measure this special case has its own name, Tannery's theorem: a series whose terms converge one by one, with every term bounded by the matching term of one convergent series, converges to the series of the limits. The Weierstrass M-test on [Uniform convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md) uses the same bound.
 
 ### Step 5: bounded convergence, and a limit that is not uniform
 
 On [0, 1] with length $\lambda$, the functions x^n converge to 0 at every x below 1 and equal 1 at x = 1. That single point is a null set, so x^n → 0 a.e. The constant 1 dominates every one of them, and $\lambda([0,1])=1$, so bounded convergence gives $\int_0^1 x^n\,dx\to0$. The exact values 1/(n+1) agree: 0.500000, 0.090909, 0.009901, 0.000999 at n = 1, 10, 100, 1000.
 
-The convergence is not uniform. At x = 0.999 the function x^1000 is still 0.3677, and just below 1 there are always points where x^n is close to 1. The Riemann-era theorem that swaps a limit and an integral needs uniform convergence ([swapping-limits-with-integrals-and-derivatives](../../06-Calculus%20and%20analysis/06-Series/08-swapping-limits-with-integrals-and-derivatives.md)), so it cannot say this. The dominating function can.
+The convergence is not uniform. At x = 0.999 the function x^1000 is still 0.3677, and just below 1 there are always points where x^n is close to 1. The Riemann-era theorem that swaps a limit and an integral needs uniform convergence ([Swapping limits](../../06-Calculus%20and%20analysis/06-Series/08-swapping-limits-with-integrals-and-derivatives.md)), so it cannot say this. The dominating function can.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -192,7 +171,7 @@ The total errors are 0.1044, 0.0091 and 0.0009 at 10, 100 and 1,000 slots. Half 
 
 Any dominating function must lie above $\sup_n|f_n|$, the pointwise highest value over the whole sequence. So a dominating function exists exactly when that supremum has a finite integral. For the sliding mass, all of the chance at count n, the supremum is 1 at every count from 1 on. Its total over counts 1 to R is R: 10, 100, 1000, without end. No integrable roof exists.
 
-The theorem also works backwards. If the integrals of a sequence fail to follow its a.e. limit, no integrable dominating function can exist, since one would force them to follow. The tall spike (n+1)x^n on [0, 1] tends to 0 below x = 1 but has integral 1.0000 for every n, so no roof over it has a finite integral. The sharp condition, weaker than a roof and exactly enough, is [uniform-integrability](05-uniform-integrability.md).
+The theorem also works backwards. If the integrals of a sequence fail to follow its a.e. limit, no integrable dominating function can exist, since one would force them to follow. The tall spike (n+1)x^n on [0, 1] tends to 0 below x = 1 but has integral 1.0000 for every n, so no roof over it has a finite integral. The sharp condition, weaker than a roof and exactly enough, is [Uniform integrability](05-uniform-integrability.md).
 
 ---
 
@@ -638,9 +617,9 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Counting rare events.** Call-centre arrivals, insurance claims, defects on a line and server spam are modelled by Poisson counts. Scheffé's lemma is why swapping the exact binomial for the Poisson law is safe for every probability at once, with an error that shrinks as the slots do.
-- **Statistics.** Proving that a sample average's expected value, or a likelihood's score, behaves in the limit means moving a limit inside an expectation. The standard justification is a dominating function, often a moment bound. Moving a derivative inside, as in [differentiating-under-the-integral](03-differentiating-under-the-integral.md), is this theorem applied to difference quotients.
-- **Signals and the Fourier transform.** The Fourier transform of an integrable function is continuous because $|e^{-i\xi x}f(x)|\le|f(x)|$, one dominating function for every frequency (fourier-transform-on-l1-and-riemann-lebesgue).
-- **Conditional expectation.** Filtering and pricing move limits inside conditional averages; the conditional form of this theorem, proved from it, is what allows that ([rules-of-conditional-expectation](../09-Conditional%20Expectation/04-rules-of-conditional-expectation.md)).
+- **Statistics.** Proving that a sample average's expected value, or a likelihood's score, behaves in the limit means moving a limit inside an expectation. The standard justification is a dominating function, often a moment bound. Moving a derivative inside, as in [Differentiating under the integral sign](03-differentiating-under-the-integral.md), is this theorem applied to difference quotients.
+- **Signals and the Fourier transform.** The Fourier transform of an integrable function is continuous because $|e^{-i\xi x}f(x)|\le|f(x)|$, one dominating function for every frequency (The Fourier transform of an absolutely integrable signal, and why it fades at infinity).
+- **Conditional expectation.** Filtering and pricing move limits inside conditional averages; the conditional form of this theorem, proved from it, is what allows that ([The rules of conditional expectation](../09-Conditional%20Expectation/04-rules-of-conditional-expectation.md)).
 
 > **Say it back**
 > A limit of integrals is not always the integral of the limit: mass can slide or pile up and escape. One integrable function lying above every member of the sequence blocks that. The proof applies Fatou's lemma to the roof plus the functions and to the roof minus them, and the finite roof cancels. With a finite measure a constant bound is enough, and densities with equal totals dominate their own shortfalls, which is Scheffé's lemma. The binomial spam chances sit under 2^k/k!, so their averages and their probabilities all converge to the Poisson ones.
@@ -649,16 +628,16 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [fatous-lemma](01-fatous-lemma.md): the one-sided inequality, used twice, that is the whole engine of the proof.
-- [integrable-functions-and-l1](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md): signed integrals, linearity on integrable functions, and the finite subtraction the proof relies on.
+- [Fatou's lemma](01-fatous-lemma.md): the one-sided inequality, used twice, that is the whole engine of the proof.
+- [Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md): signed integrals, linearity on integrable functions, and the finite subtraction the proof relies on.
 
 ## Where this goes next
 
-- [differentiating-under-the-integral](03-differentiating-under-the-integral.md): difference quotients under one dominating function give the derivative of an integral.
-- [modes-of-convergence](04-modes-of-convergence.md): where total-error convergence sits among the other modes, with this theorem as the arrow from almost everywhere to in mean; the version for convergence in probability runs through [uniform-integrability](05-uniform-integrability.md).
-- [rules-of-conditional-expectation](../09-Conditional%20Expectation/04-rules-of-conditional-expectation.md): the conditional version of dominated convergence.
-- fourier-transform-on-l1-and-riemann-lebesgue: continuity of the transform, one dominating function for all frequencies.
-- approximate-identities: smoothing kernels that shrink to a point, whose limits are justified by domination.
+- [Differentiating under the integral sign](03-differentiating-under-the-integral.md): difference quotients under one dominating function give the derivative of an integral.
+- [Modes of convergence](04-modes-of-convergence.md): where total-error convergence sits among the other modes, with this theorem as the arrow from almost everywhere to in mean; the version for convergence in probability runs through [Uniform integrability](05-uniform-integrability.md).
+- [The rules of conditional expectation](../09-Conditional%20Expectation/04-rules-of-conditional-expectation.md): the conditional version of dominated convergence.
+- The Fourier transform of an absolutely integrable signal, and why it fades at infinity: continuity of the transform, one dominating function for all frequencies.
+- Approximate identities: smoothing kernels that shrink to a point, whose limits are justified by domination.
 
 ---
 

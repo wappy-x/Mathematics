@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The smile and the surface
-topic: Volatility through time
-item: Term structure and forward volatility
-kind: definition
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/01-volatility-smile-and-skew|volatility-smile-and-skew]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/05-strike-and-calendar-shape|strike-and-calendar-shape]]"
-next:
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/03-volatility-surface-and-its-arbitrage-rules|volatility-surface-and-its-arbitrage-rules]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/06-forward-start-options-and-forward-volatility|forward-start-options-and-forward-volatility]]"
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/04-variance-swap-after-inception-and-forward-variance|variance-swap-after-inception-and-forward-variance]]"
-tags: [mathematics, financial mathematics, term-structure-and-forward-volatility]
----
-
 # Term structure and forward volatility: total variance adds, so two expiries imply the vol in between
 
-Financial mathematics → The smile and the surface → Volatility through time → Term structure and forward volatility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The smile and the surface](../../../SYLLABUS.md#w12-s12) → Term structure and forward volatility
 
 ---
 
@@ -81,8 +62,8 @@ Existence first, since this is an inverse (from quotes back to the volatility th
 
 ### When it holds
 
-- **Volatility that changes with the calendar, not at random.** The theorem behind the formula assumes the volatility path $\sigma(t)$ is fixed in advance. If volatility itself moves at random, total variances still add as averages, but the option prices pick up a smile and the forward volatility becomes a forward-start option's price rather than a sure number ([forward-start-options-and-forward-volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/06-forward-start-options-and-forward-volatility.md)).
-- **Both quotes at the same moneyness.** With a smile, each expiry has many volatilities, one per strike ([volatility-smile-and-skew](01-volatility-smile-and-skew.md)). The subtraction is done at matched moneyness, a strike measured against its own expiry's forward; mixing a 90-strike quote at one date with a 110-strike quote at another subtracts two different things.
+- **Volatility that changes with the calendar, not at random.** The theorem behind the formula assumes the volatility path $\sigma(t)$ is fixed in advance. If volatility itself moves at random, total variances still add as averages, but the option prices pick up a smile and the forward volatility becomes a forward-start option's price rather than a sure number ([Forward-start options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/06-forward-start-options-and-forward-volatility.md)).
+- **Both quotes at the same moneyness.** With a smile, each expiry has many volatilities, one per strike ([The volatility smile and skew](01-volatility-smile-and-skew.md)). The subtraction is done at matched moneyness, a strike measured against its own expiry's forward; mixing a 90-strike quote at one date with a 110-strike quote at another subtracts two different things.
 - **The same underlying and the same clock.** Both years must be counted the same way. Counting one expiry in calendar days and the other in trading days shifts $w$ by the ratio of the two counts.
 - **Tradeable quotes.** The no-arbitrage reading of $w_2 < w_1$ needs both options to trade at the quoted prices, both ways, at once. A stale quote breaks the rule with no trade behind it.
 
@@ -96,11 +77,11 @@ Two independent moves in Acme's log price, one in each half-year, add up to the 
 
 ### Step 1: an implied volatility quotes a total variance
 
-In Black-Scholes, a call's price depends on volatility and time to expiry through the spread of the log price at expiry, $\sigma\sqrt{T}$, and on the forward and the discount factor. Hold the moneyness fixed and the price is a function of total variance alone: the prerequisite card shows the normalized call rising strictly in $w$ ([strike-and-calendar-shape](../08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md)). So a quote of 18 percent at half a year is a quote of total variance $0.18^2 \times 0.5 = 0.016200$, and 20 percent at one year is $0.040000$. Implied volatility is total variance restated as a per-year rate: $\sigma = \sqrt{w/T}$.
+In Black-Scholes, a call's price depends on volatility and time to expiry through the spread of the log price at expiry, $\sigma\sqrt{T}$, and on the forward and the discount factor. Hold the moneyness fixed and the price is a function of total variance alone: the prerequisite card shows the normalized call rising strictly in $w$ ([Shape across strikes and expiries](../08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md)). So a quote of 18 percent at half a year is a quote of total variance $0.18^2 \times 0.5 = 0.016200$, and 20 percent at one year is $0.040000$. Implied volatility is total variance restated as a per-year rate: $\sigma = \sqrt{w/T}$.
 
 ### Step 2: with a calendar-dependent volatility, total variances add
 
-Suppose Acme's volatility is 18 percent for the first half-year and some $\sigma_f$ for the second, fixed in advance. Over the first half the log price moves by a drift plus $0.18\sqrt{0.5}\,Z_1$; over the second by a drift plus $\sigma_f\sqrt{0.5}\,Z_2$. The draws $Z_1$ and $Z_2$ are independent, because Brownian motion's moves over separate periods are independent ([geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)).
+Suppose Acme's volatility is 18 percent for the first half-year and some $\sigma_f$ for the second, fixed in advance. Over the first half the log price moves by a drift plus $0.18\sqrt{0.5}\,Z_1$; over the second by a drift plus $\sigma_f\sqrt{0.5}\,Z_2$. The draws $Z_1$ and $Z_2$ are independent, because Brownian motion's moves over separate periods are independent ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)).
 
 The sum of two independent bell-curve moves is again a bell-curve move, with variance equal to the sum of the two variances. So Acme's log price at one year is bell-shaped with variance
 
@@ -129,7 +110,7 @@ Solving for $\sigma_f$ asks for a non-negative number whose square is $(w_2 - w_
 
 ### Step 4: total variance cannot fall, and when it does there is free money
 
-Inside the model, $w(T)$ is a running total of squares, each at least zero, so it never falls. The model-free version, holding in any market, is the calendar rule proved in [strike-and-calendar-shape](../08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md): at matched moneyness a longer call, per unit of forward, is never the cheaper one, and in volatility units that says $w_2 \ge w_1$.
+Inside the model, $w(T)$ is a running total of squares, each at least zero, so it never falls. The model-free version, holding in any market, is the calendar rule proved in [Shape across strikes and expiries](../08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md): at matched moneyness a longer call, per unit of forward, is never the cheaper one, and in volatility units that says $w_2 \ge w_1$.
 
 The broken sheet, 21 percent at half a year and 14 percent at one, gives these totals:
 
@@ -145,7 +126,7 @@ The broken sheet's total falls from 0.022050 to 0.019600, a rate of −0.004900 
 
 The trade is the calendar at matched moneyness from the prerequisite. Sell 0.990050 half-year 100-strike calls at 6.58 dollars, buy one one-year call struck at 101.51 (the same distance from its forward) for 6.19, and 0.33 dollars is collected today. At the half-year the long call is worth at least $e^{-0.02 \times 0.5} = 0.990050$ times what each short call owes, whatever Acme does, so nothing is ever paid back. The checks confirm that floor at every Acme price from 50 to 300.
 
-The other road to forward variance runs through variance swaps, contracts that pay realized variance directly; the difference between two expiries' variance-swap strikes, each weighted by its years, is forward variance bought and sold outright ([variance-swap-after-inception-and-forward-variance](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/04-variance-swap-after-inception-and-forward-variance.md)).
+The other road to forward variance runs through variance swaps, contracts that pay realized variance directly; the difference between two expiries' variance-swap strikes, each weighted by its years, is forward variance bought and sold outright ([Marking a variance swap](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/04-variance-swap-after-inception-and-forward-variance.md)).
 
 ---
 
@@ -568,10 +549,10 @@ The two outputs agree line for line, including the simulation, which runs the sa
 
 ## Where you meet it in real life
 
-- **Forward-start options.** An option whose strike is set at a future date, at whatever the price is then, is priced by the forward volatility between its start and its expiry ([forward-start-options-and-forward-volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/06-forward-start-options-and-forward-volatility.md)).
+- **Forward-start options.** An option whose strike is set at a future date, at whatever the price is then, is priced by the forward volatility between its start and its expiry ([Forward-start options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/06-forward-start-options-and-forward-volatility.md)).
 - **Earnings and event days.** A known announcement adds a lump of variance to every expiry after it. Subtracting the total variance of the expiry just before from the one just after isolates the market's price for the event.
-- **Variance swaps and VIX.** Forward variance between two dates is traded directly as the difference of two variance swaps ([variance-swap-after-inception-and-forward-variance](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/04-variance-swap-after-inception-and-forward-variance.md)); VIX itself is a 30-day implied volatility read off this term structure, interpolated in total variance.
-- **Surface cleaning.** Before a desk interpolates between quoted expiries, it checks that total variance never falls at any moneyness ([volatility-surface-and-its-arbitrage-rules](03-volatility-surface-and-its-arbitrage-rules.md)); interpolation is done in total variance, not in volatility, so the check survives it.
+- **Variance swaps and VIX.** Forward variance between two dates is traded directly as the difference of two variance swaps ([Marking a variance swap](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/04-variance-swap-after-inception-and-forward-variance.md)); VIX itself is a 30-day implied volatility read off this term structure, interpolated in total variance.
+- **Surface cleaning.** Before a desk interpolates between quoted expiries, it checks that total variance never falls at any moneyness ([The volatility surface](03-volatility-surface-and-its-arbitrage-rules.md)); interpolation is done in total variance, not in volatility, so the check survives it.
 - **Reading the slope.** A rising term structure, as here, is usual in calm markets. In a sell-off short-dated volatility jumps above long-dated, and the structure inverts.
 - **Roll-down.** If the forward volatility does not change, in six months the half-year option will be quoted at 21.82 percent. Traders compare that with their own view of the coming half-year.
 
@@ -582,14 +563,14 @@ The two outputs agree line for line, including the simulation, which runs the sa
 
 ## What this builds on
 
-- [volatility-smile-and-skew](01-volatility-smile-and-skew.md): implied volatility across strikes, and why the subtraction here is done at matched moneyness.
-- [strike-and-calendar-shape](../08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md): the model-free calendar rule, the matched-strike trade, and the normalized call rising in total variance.
+- [The volatility smile and skew](01-volatility-smile-and-skew.md): implied volatility across strikes, and why the subtraction here is done at matched moneyness.
+- [Shape across strikes and expiries](../08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md): the model-free calendar rule, the matched-strike trade, and the normalized call rising in total variance.
 
 ## Where this goes next
 
-- [volatility-surface-and-its-arbitrage-rules](03-volatility-surface-and-its-arbitrage-rules.md): strikes and expiries together, with the calendar rule and the smile rules applied across the whole grid.
-- [forward-start-options-and-forward-volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/06-forward-start-options-and-forward-volatility.md): the contract that pays on this card's number, and what changes when volatility itself is random.
-- [variance-swap-after-inception-and-forward-variance](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/04-variance-swap-after-inception-and-forward-variance.md): forward variance traded outright, with no option model in between.
+- [The volatility surface](03-volatility-surface-and-its-arbitrage-rules.md): strikes and expiries together, with the calendar rule and the smile rules applied across the whole grid.
+- [Forward-start options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/06-forward-start-options-and-forward-volatility.md): the contract that pays on this card's number, and what changes when volatility itself is random.
+- [Marking a variance swap](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/04-variance-swap-after-inception-and-forward-variance.md): forward variance traded outright, with no option model in between.
 
 This card subtracts two expiries at one moneyness; what remains open is how a whole grid of strikes and expiries must fit together at once, which the surface card answers.
 

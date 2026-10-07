@@ -1,33 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Series
-topic: Summing forever
-item: Infinite series
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/03-sequences-and-limits|sequences-and-limits]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/06-discounting-and-present-value|discounting-and-present-value]]"
-next:
-  - "[[Cards/06-Calculus and analysis/06-Series/02-comparison-ratio-and-root-tests|comparison-ratio-and-root-tests]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/06-complex-limits-series-and-regions|complex-limits-series-and-regions]]"
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/01-laurent-series|laurent-series]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/04-measures|measures]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/01-lebesgue-outer-measure|lebesgue-outer-measure]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/03-monotone-convergence-theorem|monotone-convergence-theorem]]"
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/03-annuities-and-loans|annuities-and-loans]]"
-  - "[[Cards/18-Functional analysis/01-Normed and Banach Spaces/02-sequence-spaces-lp-and-c0|sequence-spaces-lp-and-c0]]"
-  - "[[Cards/18-Functional analysis/06-Banach Algebras and Fixed Points/02-wieners-lemma-and-invertible-filters|wieners-lemma-and-invertible-filters]]"
-  - "[[Cards/21-Algebraic and analytic number theory/01-Arithmetic Functions Again/01-asymptotic-notation-and-error-terms|asymptotic-notation-and-error-terms]]"
-  - "[[Cards/21-Algebraic and analytic number theory/01-Arithmetic Functions Again/09-mertens-theorems|mertens-theorems]]"
-tags: [mathematics, calculus and analysis, series-convergence]
----
-
 # Infinite series: a sum defined by its partial sums, and the geometric series done exactly
 
-Calculus and analysis → Series → Summing forever → Infinite series
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Series](../../../SYLLABUS.md#w06-s06) → Infinite series
 
 ---
 
@@ -35,7 +8,7 @@ Calculus and analysis → Series → Summing forever → Infinite series
 
 A perpetuity is a contract that pays 100 at the end of every year, forever. Money is worth 5% a year. What is the contract worth today?
 
-A later payment is worth less today. The first, one year out, is worth 100 ÷ 1.05 = 95.24. The second, 100 ÷ 1.05 ÷ 1.05 = 90.70. The third, 86.38 ([discounting-and-present-value](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md)). The price is the total of infinitely many such numbers, and nobody can add infinitely many numbers.
+A later payment is worth less today. The first, one year out, is worth 100 ÷ 1.05 = 95.24. The second, 100 ÷ 1.05 ÷ 1.05 = 90.70. The third, 86.38 ([Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md)). The price is the total of infinitely many such numbers, and nobody can add infinitely many numbers.
 
 Anyone can add the first 100 and watch. After 100 years the running total is 1,984.79; after 200, 1,999.88. The totals close in on 2,000 without passing it. The contract is worth exactly 2,000, and this card says what "exactly" means for a sum that never ends.
 
@@ -63,7 +36,7 @@ The rising line is the running total after n payments; the flat line is 2,000. T
 
 ## The formula
 
-Notation first, in words. The terms form a sequence ([sequences-and-limits](../01-Limits%20and%20Continuity/03-sequences-and-limits.md)), written $a_k$ with $k$ counting them. The running total of the first $n$ is $S_n$, the $n$th **partial sum**. The sigma sign with infinity on top means "the limit of the partial sums":
+Notation first, in words. The terms form a sequence ([Sequences](../01-Limits%20and%20Continuity/03-sequences-and-limits.md)), written $a_k$ with $k$ counting them. The running total of the first $n$ is $S_n$, the $n$th **partial sum**. The sigma sign with infinity on top means "the limit of the partial sums":
 
 $$\sum_{k=1}^{\infty} a_k \;=\; \lim_{n\to\infty} S_n, \qquad S_n = a_1 + a_2 + \dots + a_n$$
 
@@ -406,9 +379,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Perpetual bonds and endowments.** A payment forever is priced at payment ÷ rate. Loans are the finite partial sums ([annuities-and-loans](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md)).
+- **Perpetual bonds and endowments.** A payment forever is priced at payment ÷ rate. Loans are the finite partial sums ([Annuities](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md)).
 - **Valuing a company.** A steadily growing dividend is a geometric series with ratio (1 + growth) ÷ (1 + rate). Once growth reaches the rate, the term test says the model has no answer.
-- **Numerical computing.** The exponential and its relatives are computed from series ([taylor-series](05-taylor-series.md)); a tail bound says when to stop.
+- **Numerical computing.** The exponential and its relatives are computed from series ([Taylor series](05-taylor-series.md)); a tail bound says when to stop.
 
 > **Say it back**
 > An infinite sum is the limit of its running totals, if there is one. A geometric series with ratio between −1 and 1 sums to first term ÷ (1 − ratio), which prices 100 a year at 5% at 2,000. Terms that do not shrink to 0 rule a series out. Terms that shrink prove nothing alone, as the harmonic series shows.
@@ -417,24 +390,24 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [sequences-and-limits](../01-Limits%20and%20Continuity/03-sequences-and-limits.md): the limit of a sequence, applied here to the sequence of partial sums.
-- [discounting-and-present-value](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): why a payment k years out is worth 100 ÷ 1.05^k today.
+- [Sequences](../01-Limits%20and%20Continuity/03-sequences-and-limits.md): the limit of a sequence, applied here to the sequence of partial sums.
+- [Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): why a payment k years out is worth 100 ÷ 1.05^k today.
 
 ## Where this goes next
 
-- [comparison-ratio-and-root-tests](02-comparison-ratio-and-root-tests.md): convergence decided by comparison with a geometric series.
-- [complex-limits-series-and-regions](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md): the same definition, complex terms.
-- [laurent-series](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md): series running both ways.
-- [measures](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/04-measures.md): size that adds over infinitely many pieces.
-- [lebesgue-outer-measure](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/01-lebesgue-outer-measure.md): interval lengths summed as a series.
-- [monotone-convergence-theorem](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md): rising totals passed inside an integral.
-- [annuities-and-loans](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md): the finite geometric sum pricing a loan.
-- sequence-spaces-lp-and-c0: sequences whose sizes sum.
-- wieners-lemma-and-invertible-filters: the geometric series inverting 1 − r for operators.
-- asymptotic-notation-and-error-terms: how fast harmonic totals grow.
-- mertens-theorems: the harmonic series over primes.
+- [Convergence tests](02-comparison-ratio-and-root-tests.md): convergence decided by comparison with a geometric series.
+- [Limits and regions in the plane](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md): the same definition, complex terms.
+- [Laurent series](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md): series running both ways.
+- [Measures](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/04-measures.md): size that adds over infinitely many pieces.
+- [Outer measure](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/01-lebesgue-outer-measure.md): interval lengths summed as a series.
+- [The monotone convergence theorem](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md): rising totals passed inside an integral.
+- [Annuities](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md): the finite geometric sum pricing a loan.
+- Sequence spaces: sequences whose sizes sum.
+- Wiener's lemma: the geometric series inverting 1 − r for operators.
+- Big O and twiddle: how fast harmonic totals grow.
+- Mertens' theorems: the harmonic series over primes.
 
-The geometric series came with a formula for its partial sums; most series do not, and deciding their fate anyway is [comparison-ratio-and-root-tests](02-comparison-ratio-and-root-tests.md).
+The geometric series came with a formula for its partial sums; most series do not, and deciding their fate anyway is [Convergence tests](02-comparison-ratio-and-root-tests.md).
 
 ---
 

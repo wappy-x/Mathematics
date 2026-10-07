@@ -1,34 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Greeks by Numbers and Calibration
-topic: Inverse problems
-item: Solving backwards
-kind: method
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/07-yield-from-price|yield-from-price]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/06-newtons-method|newtons-method]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/06-intermediate-value-theorem|intermediate-value-theorem]]"
-next:
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/06-calibration-as-least-squares|calibration-as-least-squares]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/02-implied-volatility-by-newton-and-bisection|implied-volatility-by-newton-and-bisection]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/07-fx-implied-volatility|fx-implied-volatility]]"
-  - "[[Cards/12-Financial mathematics/28-Swaps/07-swap-inverses-rate-and-curve-from-price|swap-inverses-rate-and-curve-from-price]]"
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/03-caplet-stripping|caplet-stripping]]"
-  - "[[Cards/12-Financial mathematics/34-Inflation and Real Rates/03-breakeven-inflation|breakeven-inflation]]"
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/04-implied-hazard-from-a-cds-quote|implied-hazard-from-a-cds-quote]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/06-implied-and-base-correlation|implied-and-base-correlation]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - root-finding-for-inverses
----
-
 # Solving backwards: bisection, Newton and Brent for any inverse problem
 
-Financial mathematics → Greeks by Numbers and Calibration → Inverse problems → Solving backwards
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Greeks by Numbers and Calibration](../../../SYLLABUS.md#w12-s07) → Solving backwards
 
 ---
 
@@ -38,7 +10,7 @@ A screen quotes the one-year Acme call at $9.23. Acme's shares are at $100, the 
 
 Every pricer on this shelf runs one way. Feed it a volatility — a number for how jumpy the share is taken to be — and it hands back a price. Nobody trades in that direction. The price is on the screen; the volatility is the thing nobody can see. The pricer has to be run backwards.
 
-It cannot be rearranged. In the Black–Scholes call price the volatility sits inside two bell-curve areas and inside a division, and no algebra pulls it out ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). There is no formula for the answer. There is only a search.
+It cannot be rearranged. In the Black–Scholes call price the volatility sits inside two bell-curve areas and inside a division, and no algebra pulls it out ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). There is no formula for the answer. There is only a search.
 
 Guess a volatility, price it, compare with the screen, guess again. The craft is all in "guess again". Three ways to do it. Halve a range known to hold the answer: **bisection**. Use the slope of the price curve to aim: **Newton's method**. Do both, and let the range referee the aim: **Brent's method**. Given the exact quote 9.227005508154, Newton returns 20.000 percent in five trips through the pricer. Bisection needs 41, Brent 8. One step here means one trip through the pricer, the honest unit of cost.
 
@@ -107,8 +79,8 @@ Here $x_*$ is the true answer. In words: **the distance from it is at most the l
 
 ### When it holds
 
-- **The output moves continuously with the input.** A sign change then guarantees a crossing between the ends ([intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)). Where the output jumps — a barrier that knocks out — a sign change can straddle the jump instead of a root, and the solver converges neatly onto a cliff.
-- **The output moves one way only.** The Acme call's price strictly rises with volatility, so at most one volatility fits a price. Where a model is not one-way, two inputs can fit one quote and the solver returns whichever its bracket held; base correlation is the standing example ([implied-and-base-correlation](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/06-implied-and-base-correlation.md)).
+- **The output moves continuously with the input.** A sign change then guarantees a crossing between the ends ([Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)). Where the output jumps — a barrier that knocks out — a sign change can straddle the jump instead of a root, and the solver converges neatly onto a cliff.
+- **The output moves one way only.** The Acme call's price strictly rises with volatility, so at most one volatility fits a price. Where a model is not one-way, two inputs can fit one quote and the solver returns whichever its bracket held; base correlation is the standing example ([Implied correlation](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/06-implied-and-base-correlation.md)).
 - **A bracket whose ends straddle the quote.** Check both signs first. Without opposite signs nothing is trapped: the run below shows bisection walking to the end of a bad bracket and reporting 0.100000000000 with a straight face.
 - **A quote inside the model's range.** The Acme call runs from $2.896924880604 at zero volatility up towards $98.019867330676 as the volatility runs away. A quote of $2.50 has no volatility behind it, and the honest answer is to reject the quote.
 - **A slope that has not gone flat where you stop.** Newton divides by it, and every solver's accuracy is read through it. Flat slope, worthless residual — Step 6 puts a number on that.
@@ -225,7 +197,7 @@ The shelf's market: Acme at $100, strike $100, 5 percent cash rate, 2 percent di
 
 The market's $9.23 is the price of 20.000 percent volatility. That number, not the dollar price, is what a desk quotes and compares across strikes; the dollars are its packaging.
 
-The last row is the shelf's house number, delta 0.5869, reproduced by this card's pricer: the thing being inverted is the thing the neighbouring cards differentiate ([bump-and-revalue-and-common-random-numbers](01-bump-and-revalue-and-common-random-numbers.md)).
+The last row is the shelf's house number, delta 0.5869, reproduced by this card's pricer: the thing being inverted is the thing the neighbouring cards differentiate ([Bump and revalue](01-bump-and-revalue-and-common-random-numbers.md)).
 
 ### The cost of each route
 
@@ -714,10 +686,10 @@ The two outputs match line for line, Newton's trace included: the point of runni
 
 ## Where you meet it in real life
 
-- **Every option screen.** The volatility column is this card, run once per quote, thousands of times a second. Desks argue about volatility, so the price is inverted before the conversation starts: [implied-volatility-by-newton-and-bisection](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md), and in currencies [fx-implied-volatility](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/07-fx-implied-volatility.md).
-- **A bond's yield.** The same routines, with cash flows instead of a bell curve: the code takes a 4 percent coupon bond quoted at 96.00 and returns 0.049219056114. The forward direction is [yield-from-price](../01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md).
-- **Building a curve.** Each instrument in turn is inverted for the discount factor that makes it reprice, in date order: [swap-inverses-rate-and-curve-from-price](../28-Swaps/07-swap-inverses-rate-and-curve-from-price.md), and for volatility by date [caplet-stripping](../29-Caps%2C%20Floors%20and%20Swaptions/03-caplet-stripping.md).
-- **Credit and inflation.** A default probability from a spread, [implied-hazard-from-a-cds-quote](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/04-implied-hazard-from-a-cds-quote.md). An inflation rate from the gap between two bonds, [breakeven-inflation](../34-Inflation%20and%20Real%20Rates/03-breakeven-inflation.md).
+- **Every option screen.** The volatility column is this card, run once per quote, thousands of times a second. Desks argue about volatility, so the price is inverted before the conversation starts: [Solving for implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md), and in currencies [Implied vol for a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/07-fx-implied-volatility.md).
+- **A bond's yield.** The same routines, with cash flows instead of a bell curve: the code takes a 4 percent coupon bond quoted at 96.00 and returns 0.049219056114. The forward direction is [Yield from price](../01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md).
+- **Building a curve.** Each instrument in turn is inverted for the discount factor that makes it reprice, in date order: [Solving a swap backwards](../28-Swaps/07-swap-inverses-rate-and-curve-from-price.md), and for volatility by date [Caplet stripping](../29-Caps%2C%20Floors%20and%20Swaptions/03-caplet-stripping.md).
+- **Credit and inflation.** A default probability from a spread, [Implied hazard from one CDS quote](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/04-implied-hazard-from-a-cds-quote.md). An inflation rate from the gap between two bonds, [Breakeven inflation](../34-Inflation%20and%20Real%20Rates/03-breakeven-inflation.md).
 - **Anywhere a spreadsheet says "goal seek".** Internal rates of return, break-even volumes, the rate that prices a lease. The button is a root finder, usually an unguarded secant, which is why it sometimes returns nonsense quietly.
 - **Outside finance.** A burn time from a target orbit, a dose from a target blood concentration. The residual does not care what it measures.
 
@@ -728,22 +700,22 @@ The two outputs match line for line, Newton's trace included: the point of runni
 
 ## What this builds on
 
-- [yield-from-price](../01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md): the first inverse in the wing, and the second case the code solves. It sets up the residual-and-search shape this card generalises.
-- [newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the tangent-line step and the squaring of the error. This card adds the bracket, the failure mode and the units.
-- [intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): why a sign change guarantees a crossing. Every bracketing method here is that theorem applied repeatedly.
+- [Yield from price](../01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md): the first inverse in the wing, and the second case the code solves. It sets up the residual-and-search shape this card generalises.
+- [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the tangent-line step and the squaring of the error. This card adds the bracket, the failure mode and the units.
+- [Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): why a sign change guarantees a crossing. Every bracketing method here is that theorem applied repeatedly.
 
 ## Where this goes next
 
-- [calibration-as-least-squares](06-calibration-as-least-squares.md): many quotes and several dials at once, where no exact answer exists and the residuals are squared and added instead.
-- [implied-volatility-by-newton-and-bisection](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md): this solver applied properly to the vanilla call and put, with the starting guesses that make it fast.
-- [fx-implied-volatility](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/07-fx-implied-volatility.md): the same inverse under currency conventions, where the quote may be a volatility already.
-- [swap-inverses-rate-and-curve-from-price](../28-Swaps/07-swap-inverses-rate-and-curve-from-price.md): inverting for a rate, then for a whole curve one instrument at a time.
-- [caplet-stripping](../29-Caps%2C%20Floors%20and%20Swaptions/03-caplet-stripping.md): a chain of inverses where each answer feeds the next one's model.
-- [breakeven-inflation](../34-Inflation%20and%20Real%20Rates/03-breakeven-inflation.md): an inverse whose unknown is a rate two markets disagree about.
-- [implied-hazard-from-a-cds-quote](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/04-implied-hazard-from-a-cds-quote.md): a default intensity backed out of a spread, with a flat-slope problem of its own.
-- [implied-and-base-correlation](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/06-implied-and-base-correlation.md): the inverse that breaks uniqueness, where two inputs can fit one quote.
+- [Calibration](06-calibration-as-least-squares.md): many quotes and several dials at once, where no exact answer exists and the residuals are squared and added instead.
+- [Solving for implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md): this solver applied properly to the vanilla call and put, with the starting guesses that make it fast.
+- [Implied vol for a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/07-fx-implied-volatility.md): the same inverse under currency conventions, where the quote may be a volatility already.
+- [Solving a swap backwards](../28-Swaps/07-swap-inverses-rate-and-curve-from-price.md): inverting for a rate, then for a whole curve one instrument at a time.
+- [Caplet stripping](../29-Caps%2C%20Floors%20and%20Swaptions/03-caplet-stripping.md): a chain of inverses where each answer feeds the next one's model.
+- [Breakeven inflation](../34-Inflation%20and%20Real%20Rates/03-breakeven-inflation.md): an inverse whose unknown is a rate two markets disagree about.
+- [Implied hazard from one CDS quote](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/04-implied-hazard-from-a-cds-quote.md): a default intensity backed out of a spread, with a flat-slope problem of its own.
+- [Implied correlation](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/06-implied-and-base-correlation.md): the inverse that breaks uniqueness, where two inputs can fit one quote.
 
-This card inverted one price for one unknown, and the slope said exactly how much to believe. A surface of forty quotes and a model with five dials has no exact answer and no single slope to divide by: what "as close as possible" means there, and how to know when a fit is finished, is [calibration-as-least-squares](06-calibration-as-least-squares.md).
+This card inverted one price for one unknown, and the slope said exactly how much to believe. A surface of forty quotes and a model with five dials has no exact answer and no single slope to divide by: what "as close as possible" means there, and how to know when a fit is finished, is [Calibration](06-calibration-as-least-squares.md).
 
 ---
 

@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Black-Scholes from the Ground Up
-topic: Lognormal prices
-item: Prices as geometric Brownian motion
-kind: model
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/04-crr-tree-and-convergence|crr-tree-and-convergence]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/07-geometric-brownian-motion|geometric-brownian-motion]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/06-lognormal-distribution|lognormal-distribution]]"
-next:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/02-risk-neutral-measure-and-the-fundamental-theorems|risk-neutral-measure-and-the-fundamental-theorems]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - geometric-brownian-motion-for-prices
----
-
 # Prices as geometric Brownian motion: the model behind Black-Scholes
 
-Financial mathematics → Black-Scholes from the Ground Up → Lognormal prices → Prices as geometric Brownian motion
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Black-Scholes from the Ground Up](../../../SYLLABUS.md#w12-s05) → Prices as geometric Brownian motion
 
 ---
 
@@ -77,7 +55,7 @@ Said about logarithms, which is the form every later card uses:
 
 $$\ln\!\frac{S_T}{S_0} \;\sim\; \text{Normal}\Big(\big(\mu - \tfrac12\sigma^2\big)T,\;\; \sigma^2 T\Big)$$
 
-In words: the logarithm of the year's growth is a bell curve centred on the log drift, with variance $\sigma^2T$ — the second number in a Normal is the variance, the square of the spread. A quantity whose logarithm is a bell curve is **lognormal** ([lognormal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)), and that word carries the rest of the shelf.
+In words: the logarithm of the year's growth is a bell curve centred on the log drift, with variance $\sigma^2T$ — the second number in a Normal is the variance, the square of the spread. A quantity whose logarithm is a bell curve is **lognormal** ([Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)), and that word carries the rest of the shelf.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -104,8 +82,8 @@ The middle outcome is the **median**, the price with half the weight below it. I
 
 ### When it holds
 
-- **Moves are percentages of the price standing now.** That keeps the price positive, and it is why the model fits shares. A quantity that can cross zero — a profit, the gap between two rates — needs [bachelier-model](07-bachelier-model.md) instead.
-- **The drift and the volatility hold still.** Real volatility clusters. Let it move and the year's law is no longer lognormal, so one volatility stops fitting every strike — the mismatch handled in [shifted-lognormal-and-volatility-conversion](08-shifted-lognormal-and-volatility-conversion.md).
+- **Moves are percentages of the price standing now.** That keeps the price positive, and it is why the model fits shares. A quantity that can cross zero — a profit, the gap between two rates — needs [Bachelier](07-bachelier-model.md) instead.
+- **The drift and the volatility hold still.** Real volatility clusters. Let it move and the year's law is no longer lognormal, so one volatility stops fitting every strike — the mismatch handled in [Shifted lognormal and volatility conversion](08-shifted-lognormal-and-volatility-conversion.md).
 - **The kicks are independent and the path never jumps.** With no overnight gap the tails come out too thin: a one-day fall of a fifth is a move the model prices at essentially never, and days like that have happened.
 - **The start is positive and the horizon is finite.** From $100.00 the price can crawl arbitrarily close to zero without touching it; a company that goes to nothing is outside the model.
 - **The drift is an opinion.** A volatility can be pinned down from a few months of daily moves. A drift cannot: its error shrinks only with the square root of the *span* of the data, so ten years of Acme's history leaves a range wider than the 5% itself. Pricing cards never use $\mu$.
@@ -120,7 +98,7 @@ The middle outcome is the **median**, the price with half the weight below it. I
 
 Percentage moves multiply rather than add: a 20% rise then a 20% fall on $100.00 leaves $96.00, because the fall is taken on the larger balance.
 
-Logarithms turn multiplying into adding ([logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)). So the quantity that behaves well over a year is the logarithm of the growth: the year's log-growth is the sum of the day-by-day log-moves. The rest of the card works inside that sum and exponentiates at the end.
+Logarithms turn multiplying into adding ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)). So the quantity that behaves well over a year is the logarithm of the growth: the year's log-growth is the sum of the day-by-day log-moves. The rest of the card works inside that sum and exponentiates at the end.
 
 ### Step 1: many small independent kicks pile up into a bell curve
 
@@ -134,7 +112,7 @@ The log-growth does not drift at $\mu$. It drifts at $\mu - \tfrac12\sigma^2$, a
 
 **By arithmetic.** For any $x$, $(1+x)(1-x) = 1 - x^2$: a rise of 20% and a fall of 20% leave $96.00, the pair losing the square of the move. Spread over the two steps that is $\tfrac12\ln(0.96) = -0.020411$ of log-growth per step, against $-\tfrac12\sigma^2 = -0.020000$. Half the variance is the size of the loss.
 
-**By Itô's lemma.** Over an instant $d\ln S$ is not $dS/S$: the logarithm bends, so a second term survives, $d\ln S = dS/S - \tfrac12 (dS/S)^2$. A kick of typical size $\sigma\sqrt{dt}$ squares to $\sigma^2dt$, the same order as the drift term rather than smaller, so it does not vanish — proved in [geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md). The log therefore picks up $-\tfrac12\sigma^2\,dt$ every instant.
+**By Itô's lemma.** Over an instant $d\ln S$ is not $dS/S$: the logarithm bends, so a second term survives, $d\ln S = dS/S - \tfrac12 (dS/S)^2$. A kick of typical size $\sigma\sqrt{dt}$ squares to $\sigma^2dt$, the same order as the drift term rather than smaller, so it does not vanish — proved in [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md). The log therefore picks up $-\tfrac12\sigma^2\,dt$ every instant.
 
 Integrate over the horizon — the coefficients are constants, so this is exact — and the log-growth is a bell curve centred on $(\mu - \tfrac12\sigma^2)T$ with spread $\sigma\sqrt{T}$.
 
@@ -183,7 +161,7 @@ xychart-beta
 
 The lopsided line is the model's law: a short left side that cannot reach zero, a long right tail that carries the average above the middle. The symmetric line is a bell curve laid on the price itself, same average and same spread — the tempting shortcut. It is too fat on the left, too thin on the right, and it spills off the end, putting weight 0.000000371 on prices below zero.
 
-A second route needs no calculus. Chop the year into 400 steps and let each one multiply the price by $e^{\sigma\sqrt{T/400}}$ or by its reciprocal, the odds tilted just enough to give the log drift. That lattice's average is 105.126851 against the formula's 105.127110, and its log spread 0.199994 against 0.200000. Pricing on the lattice is the business of [crr-tree-and-convergence](../04-Binomial%20Trees/04-crr-tree-and-convergence.md).
+A second route needs no calculus. Chop the year into 400 steps and let each one multiply the price by $e^{\sigma\sqrt{T/400}}$ or by its reciprocal, the odds tilted just enough to give the log drift. That lattice's average is 105.126851 against the formula's 105.127110, and its log spread 0.199994 against 0.200000. Pricing on the lattice is the business of [Cox-Ross-Rubinstein](../04-Binomial%20Trees/04-crr-tree-and-convergence.md).
 
 ---
 
@@ -736,11 +714,11 @@ The two outputs match line for line, simulated years included, because the gener
 
 ## Where you meet it in real life
 
-- **Every card here.** This law is the input to [black-scholes-by-delta-hedging](03-black-scholes-by-delta-hedging.md) and [black-scholes-by-risk-neutral-expectation](04-black-scholes-by-risk-neutral-expectation.md); the distances called d1 and d2 in the Black-Scholes formula are measured inside this bell curve.
-- **Monte Carlo pricing.** Road four is a pricing engine with the payoff left out: simulate the law, average the payoff, discount — [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md), where exact log-stepping is why no small time step is needed.
+- **Every card here.** This law is the input to [Black-Scholes by hedging](03-black-scholes-by-delta-hedging.md) and [Black-Scholes by expectation](04-black-scholes-by-risk-neutral-expectation.md); the distances called d1 and d2 in the Black-Scholes formula are measured inside this bell curve.
+- **Monte Carlo pricing.** Road four is a pricing engine with the payoff left out: simulate the law, average the payoff, discount — [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md), where exact log-stepping is why no small time step is needed.
 - **Risk numbers.** A value-at-risk figure is a percentile of a horizon's law: one year of Acme has a 5th percentile of $74.16.
 - **Long-run growth and leverage.** Wealth compounds at the log drift. Gearing up multiplies both dials, raising the average outcome while lowering the middle one — which is why an optimal bet size exists.
-- **Where it does not belong.** Interest rates, credit spreads and volatility itself pull back towards a level, which this model cannot do. Changing the unit of account instead of the model is [change-of-numeraire-in-pricing](05-change-of-numeraire-in-pricing.md); the same law written on a forward level is [black-76-and-forward-level-pricing](06-black-76-and-forward-level-pricing.md).
+- **Where it does not belong.** Interest rates, credit spreads and volatility itself pull back towards a level, which this model cannot do. Changing the unit of account instead of the model is [Changing the unit of account](05-change-of-numeraire-in-pricing.md); the same law written on a forward level is [Black-76](06-black-76-and-forward-level-pricing.md).
 
 > **Say it back**
 > A share moves in percentages, so a year is a product of multipliers, not a sum of dollar moves. Take logarithms and the product becomes a sum, which piles up into a bell curve centred on the drift less half the variance, with spread the volatility times the square root of the horizon. Exponentiate and the price is lognormal: always positive, skewed right. The middle outcome grows at the log drift, 3% a year for Acme, the average at the drift itself, 5%, because exponentiating stretches the good draws more than it squashes the bad. Three honest summaries of one year: $99.00 at the peak, $103.05 in the middle, $105.13 on average.
@@ -749,14 +727,14 @@ The two outputs match line for line, simulated years included, because the gener
 
 ## What this builds on
 
-- [crr-tree-and-convergence](../04-Binomial%20Trees/04-crr-tree-and-convergence.md): the up-or-down lattice whose limit is this model, and the calibration that matches its steps to a volatility.
-- [geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): the process itself, and Itô's lemma, which supplies the half-variance term of Step 2.
-- [lognormal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md): the density, the mean, the variance and the peak of a quantity whose logarithm is a bell curve.
+- [Cox-Ross-Rubinstein](../04-Binomial%20Trees/04-crr-tree-and-convergence.md): the up-or-down lattice whose limit is this model, and the calibration that matches its steps to a volatility.
+- [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): the process itself, and Itô's lemma, which supplies the half-variance term of Step 2.
+- [Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md): the density, the mean, the variance and the peak of a quantity whose logarithm is a bell curve.
 
 ## Where this goes next
 
-- [risk-neutral-measure-and-the-fundamental-theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md): why the drift can be replaced by the bank rate less the dividend yield without changing any price, and what "no free money" has to do with it.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): road four turned into a pricing machine, with error bars that shrink like the square root of the years simulated.
+- [The fundamental theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md): why the drift can be replaced by the bank rate less the dividend yield without changing any price, and what "no free money" has to do with it.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): road four turned into a pricing machine, with error bars that shrink like the square root of the years simulated.
 
 The drift on this card is an opinion, and no two traders hold the same one — yet they trade options with each other at a single price. The next card shows how the opinion drops out.
 

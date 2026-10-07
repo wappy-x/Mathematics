@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Powers, Roots and Logarithms
-topic: Logarithms
-item: What a logarithm is
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/01-exponents-and-powers|exponents-and-powers]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/03-roots-and-fractional-exponents|roots-and-fractional-exponents]]"
-next:
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/06-log-laws-and-log-scales|log-laws-and-log-scales]]"
-tags:
-  - mathematics
-  - foundations
-  - logarithms
----
-
 # Logarithms: the question 'what power got me here?'
 
-Foundations → Powers, Roots and Logarithms → Logarithms → What a logarithm is
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Powers, Roots and Logarithms](../../../SYLLABUS.md#w01-s03) → What a logarithm is
 
 ---
 
@@ -51,7 +31,7 @@ The line is the swing. The steps along the bottom are all the same size; the lin
 
 ## The formula
 
-One fact, written two ways. Multiplying forwards, as [exponents-and-powers](01-exponents-and-powers.md) writes it:
+One fact, written two ways. Multiplying forwards, as [Exponents](01-exponents-and-powers.md) writes it:
 
 **10 × 10 × 10 × 10 × 10 × 10 × 10 = 10,000,000**, which that card shortens to **10^7 = 10,000,000**
 
@@ -91,7 +71,7 @@ Multiply seven tens together and you land on 10,000,000 again. Powering and logg
 
 Nothing above cared that the base was ten. Halve 32 until you reach 1: five halvings, so the log base 2 of 32 is 5. And 1 needs no multiplying at all, so the log of 1 is 0 whatever the base. Multiply the base by itself however you like and the answer stays positive — never 0, never negative. So 0 and negative numbers have no log.
 
-Real quakes come with a decimal point: the swing is rarely a clean power of ten, so the count lands between two whole numbers. Reading those is [log-laws-and-log-scales](06-log-laws-and-log-scales.md).
+Real quakes come with a decimal point: the swing is rarely a clean power of ten, so the count lands between two whole numbers. Reading those is [Log laws and log scales](06-log-laws-and-log-scales.md).
 
 ---
 
@@ -268,7 +248,7 @@ The two outputs match line for line: whole numbers throughout, nothing to round.
 - **Earthquake magnitude.** The Richter scale, and the moment magnitude scale that replaced it, are logs of a physical size — which is why the news numbers stay in single digits.
 - **pH.** Acidity, in tens: each point is one ten, three points a thousand.
 - **Decibels.** Loudness, in tens too, but ten decibels to a ten: 30 decibels is a thousandfold.
-- **Writing a big number as a power of ten.** [scientific-notation](04-scientific-notation.md) splits a number into a small one times a power of ten; that power is this card's count.
+- **Writing a big number as a power of ten.** [Scientific notation](04-scientific-notation.md) splits a number into a small one times a power of ten; that power is this card's count.
 
 > **Say it back**
 > A logarithm answers one question: how many of the base, multiplied together, reach this number? Find it by dividing by the base until you hit 1 and counting the divisions. Check it by multiplying that many back up. On the earthquake scale the base is ten: magnitude 7 means seven tens multiplied, 10,000,000 units of swing, and a magnitude 5 is a hundred times weaker, not two units weaker.
@@ -277,12 +257,12 @@ The two outputs match line for line: whole numbers throughout, nothing to round.
 
 ## What this builds on
 
-- [exponents-and-powers](01-exponents-and-powers.md): repeated multiplying, and the short way of writing it. A log is that count, asked for instead of given.
-- [roots-and-fractional-exponents](03-roots-and-fractional-exponents.md): the other way of undoing a power — a root hunts the base, a log hunts the count.
+- [Exponents](01-exponents-and-powers.md): repeated multiplying, and the short way of writing it. A log is that count, asked for instead of given.
+- [Roots](03-roots-and-fractional-exponents.md): the other way of undoing a power — a root hunts the base, a log hunts the count.
 
 ## Where this goes next
 
-- [log-laws-and-log-scales](06-log-laws-and-log-scales.md): what happens when you multiply two numbers and log the result, and how an axis marked 1, 10, 100 reads.
+- [Log laws and log scales](06-log-laws-and-log-scales.md): what happens when you multiply two numbers and log the result, and how an axis marked 1, 10, 100 reads.
 
 ---
 

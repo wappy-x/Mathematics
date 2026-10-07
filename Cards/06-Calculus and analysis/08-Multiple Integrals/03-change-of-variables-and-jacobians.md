@@ -1,27 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Multiple Integrals
-topic: Stretched coordinates
-item: Change of variables
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/02-triple-integrals|triple-integrals]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/04-multivariable-chain-rule-and-jacobians|multivariable-chain-rule-and-jacobians]]"
-next:
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/04-gaussian-integral|gaussian-integral]]"
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/05-surface-integrals-and-flux|surface-integrals-and-flux]]"
-  - "[[Cards/09-Probability and statistics/11-Simulation/03-rejection-sampling-and-box-muller|rejection-sampling-and-box-muller]]"
-  - "[[Cards/20-Harmonic analysis/02-The Fourier Transform/10-multidimensional-transform-and-tomography|multidimensional-transform-and-tomography]]"
-  - "[[Cards/23-Differential geometry and Lie groups/04-Differential Forms/02-pullback-and-change-of-variables|pullback-and-change-of-variables]]"
-tags: [mathematics, calculus and analysis, change-of-variables-and-jacobians]
----
-
 # Change of variables: polar, cylindrical and spherical, and the Jacobian that fixes the area
 
-Calculus and analysis → Multiple Integrals → Stretched coordinates → Change of variables
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Multiple Integrals](../../../SYLLABUS.md#w06-s08) → Change of variables
 
 ---
 
@@ -41,7 +20,7 @@ The price: equal address steps do not cover equal ground. A patch 0.5 km deep an
 
 ## The formula
 
-Reminders: a double or triple integral totals a quantity patch by patch over a region ([double-integrals](01-double-integrals.md)). The Jacobian matrix of a map holds its partial derivatives, each output's rate per unit of each input ([multivariable-chain-rule-and-jacobians](../07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)). Its determinant, det, is a linear map's signed area factor; the bars take its size.
+Reminders: a double or triple integral totals a quantity patch by patch over a region ([Double integrals](01-double-integrals.md)). The Jacobian matrix of a map holds its partial derivatives, each output's rate per unit of each input ([Chain rule in several variables](../07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)). Its determinant, det, is a linear map's signed area factor; the bars take its size.
 
 $T$ sends an address $(u, v)$ to a place $(x, y)$. $S$ is the region of addresses, $D$ the places it covers, $f$ the quantity totalled. In the table below, z is height, ρ distance from a centre, φ the angle down from the vertical.
 
@@ -78,7 +57,7 @@ One millimetre over one square kilometre is 1,000 cubic metres: 188,496 cubic me
 - **T has continuous partial derivatives.** Otherwise the patch argument fails: a corner has no single stretch.
 - **The determinant vanishes only on a set of zero area.** Polar squashes the edge r = 0 onto one point, the outlet; no ground is lost.
 - **Angles in radians.** In degrees the valley gets 10800.000000 mm km^2.
-- **f continuous, D bounded.** Unbounded regions need a limit on top ([gaussian-integral](04-gaussian-integral.md)).
+- **f continuous, D bounded.** Unbounded regions need a limit on top ([The Gaussian integral](04-gaussian-integral.md)).
 
 ---
 
@@ -164,7 +143,7 @@ In the third row the Jacobian is still r; one-to-one failed.
 
 ## Code, from first principles, and it actually runs
 
-Two roads to the valley's total sharing no step: polar with the factor r, by Simpson's rule (a weighted strip sum, exact for cubics), and an east-north grid of small squares that never mentions r ([double-integrals](01-double-integrals.md)). The Jacobians are measured, not quoted: difference-quotient columns, determinant expanded by hand. Patch areas come from polygons hugging each patch's arcs.
+Two roads to the valley's total sharing no step: polar with the factor r, by Simpson's rule (a weighted strip sum, exact for cubics), and an east-north grid of small squares that never mentions r ([Double integrals](01-double-integrals.md)). The Jacobians are measured, not quoted: difference-quotient columns, determinant expanded by hand. Patch areas come from polygons hugging each patch's arcs.
 
 ### Python
 
@@ -379,8 +358,8 @@ The outputs match line for line. The grid error stalls, −0.000832 at 400 a sid
 ## Where you meet it in real life
 
 - **Weather radar.** Radar measures rain by range and bearing, so its cells grow with distance; catchment totals carry the factor r.
-- **Planets and radiation.** Spherical shells give an atmosphere's mass and the energy radiated in every direction ([surface-integrals-and-flux](../09-Vector%20Calculus/05-surface-integrals-and-flux.md)).
-- **Random numbers and scans.** Bell-shaped random numbers from uniform ones rest on the polar factor ([rejection-sampling-and-box-muller](../../09-Probability%20and%20statistics/11-Simulation/03-rejection-sampling-and-box-muller.md)); CT scanners sample by angle and offset (multidimensional-transform-and-tomography).
+- **Planets and radiation.** Spherical shells give an atmosphere's mass and the energy radiated in every direction ([Surface integrals](../09-Vector%20Calculus/05-surface-integrals-and-flux.md)).
+- **Random numbers and scans.** Bell-shaped random numbers from uniform ones rest on the polar factor ([Rejection sampling and Box-Muller](../../09-Probability%20and%20statistics/11-Simulation/03-rejection-sampling-and-box-muller.md)); CT scanners sample by angle and offset (Transforms in two and three dimensions).
 
 > **Say it back**
 > New coordinates relabel the ground without resizing it. A small address patch covers the Jacobian determinant's size times its own area: r in polar and cylindrical, ρ^2 sin φ in spherical. Rewrite the integrand, multiply by the factor, integrate over the addresses, covering each place once. The valley took 188,496 cubic metres, a mean of 40 mm.
@@ -389,18 +368,18 @@ The outputs match line for line. The grid error stalls, −0.000832 at 400 a sid
 
 ## What this builds on
 
-- [triple-integrals](02-triple-integrals.md): totals over solids, which the cylindrical and spherical factors rewrite.
-- [multivariable-chain-rule-and-jacobians](../07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md): the Jacobian matrix as the best linear stand-in for a map near a point.
+- [Triple integrals](02-triple-integrals.md): totals over solids, which the cylindrical and spherical factors rewrite.
+- [Chain rule in several variables](../07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md): the Jacobian matrix as the best linear stand-in for a map near a point.
 
 ## Where this goes next
 
-- [gaussian-integral](04-gaussian-integral.md): the polar factor on the whole plane.
-- [surface-integrals-and-flux](../09-Vector%20Calculus/05-surface-integrals-and-flux.md): a stretch factor for a curved surface.
-- [rejection-sampling-and-box-muller](../../09-Probability%20and%20statistics/11-Simulation/03-rejection-sampling-and-box-muller.md): the same factor keeps total probability at 1.
-- multidimensional-transform-and-tomography: polar coordinates in frequency.
-- pullback-and-change-of-variables: the theorem again, with the sign of the determinant kept.
+- [The Gaussian integral](04-gaussian-integral.md): the polar factor on the whole plane.
+- [Surface integrals](../09-Vector%20Calculus/05-surface-integrals-and-flux.md): a stretch factor for a curved surface.
+- [Rejection sampling and Box-Muller](../../09-Probability%20and%20statistics/11-Simulation/03-rejection-sampling-and-box-muller.md): the same factor keeps total probability at 1.
+- Transforms in two and three dimensions: polar coordinates in frequency.
+- Pullback: the theorem again, with the sign of the determinant kept.
 
-The bell curve e^(−x^2) has no antiderivative in familiar functions; whether the factor r totals it over the infinite plane is what [gaussian-integral](04-gaussian-integral.md) settles.
+The bell curve e^(−x^2) has no antiderivative in familiar functions; whether the factor r totals it over the infinite plane is what [The Gaussian integral](04-gaussian-integral.md) settles.
 
 ---
 

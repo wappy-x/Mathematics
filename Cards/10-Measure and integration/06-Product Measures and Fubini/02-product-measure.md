@@ -1,26 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Product Measures and Fubini
-topic: Area from slices
-item: Product measure
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/01-product-sigma-algebras|product-sigma-algebras]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/06-pi-systems-and-uniqueness|pi-systems-and-uniqueness]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/03-monotone-convergence-theorem|monotone-convergence-theorem]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/03-lebesgue-measure|lebesgue-measure]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/01-double-integrals|double-integrals]]"
-next:
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/03-tonelli-and-fubini|tonelli-and-fubini]]"
-tags: [mathematics, measure and integration, product-measure]
----
-
 # Product measure: rectangles get width times height, and the extension is unique when both factors are sigma-finite
 
-Measure and integration → Product Measures and Fubini → Area from slices → Product measure
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Product Measures and Fubini](../../../SYLLABUS.md#w10-s06) → Product measure
 
 ---
 
@@ -48,7 +28,7 @@ Sliding the line across the board and adding each section's length times its sli
 
 ## The formula
 
-Notation first, in words. $X$ and $Y$ are two spaces, here the board's two sides, each the interval from 0 to 1 metre. $\mathcal{F}$ and $\mathcal{G}$ are their sigma-algebras: the collections of sets allowed a size, here the Borel sets of each side. (The product sigma-algebras card writes these as Ω1, Ω2, F1, F2.) $\mu$ and $\nu$ are measures on them, here length on each side. A **rectangle** $A \times B$ is every pair $(x, y)$ with $x$ in $A$ and $y$ in $B$. The product sigma-algebra $\mathcal{F} \otimes \mathcal{G}$, read "F tensor G", is the smallest sigma-algebra holding every rectangle ([product-sigma-algebras](01-product-sigma-algebras.md)). The product measure is written $\mu \otimes \nu$ and read "mu tensor nu".
+Notation first, in words. $X$ and $Y$ are two spaces, here the board's two sides, each the interval from 0 to 1 metre. $\mathcal{F}$ and $\mathcal{G}$ are their sigma-algebras: the collections of sets allowed a size, here the Borel sets of each side. (The product sigma-algebras card writes these as Ω1, Ω2, F1, F2.) $\mu$ and $\nu$ are measures on them, here length on each side. A **rectangle** $A \times B$ is every pair $(x, y)$ with $x$ in $A$ and $y$ in $B$. The product sigma-algebra $\mathcal{F} \otimes \mathcal{G}$, read "F tensor G", is the smallest sigma-algebra holding every rectangle ([Product sigma-algebras](01-product-sigma-algebras.md)). The product measure is written $\mu \otimes \nu$ and read "mu tensor nu".
 
 A measure is **sigma-finite** when its space is a union of countably many pieces, each of finite size. Length on the whole real line is: the pieces are the intervals from k to k + 1. Counting measure on the interval from 0 to 1, which gives a set its number of points, is not: countably many finite sets hold only countably many points.
 
@@ -117,15 +97,15 @@ Three things must be shown: the function of $x$ can be integrated, the result is
 
 ### Step 1: every section can be measured
 
-If $E$ is in $\mathcal{F} \otimes \mathcal{G}$, every section $E_x$ is in $\mathcal{G}$. The sets whose sections are all measurable form a sigma-algebra holding every rectangle, so they hold all of $\mathcal{F} \otimes \mathcal{G}$; [product-sigma-algebras](01-product-sigma-algebras.md) proves it. So $\nu(E_x)$ is a number, possibly infinite, for every $x$.
+If $E$ is in $\mathcal{F} \otimes \mathcal{G}$, every section $E_x$ is in $\mathcal{G}$. The sets whose sections are all measurable form a sigma-algebra holding every rectangle, so they hold all of $\mathcal{F} \otimes \mathcal{G}$; [Product sigma-algebras](01-product-sigma-algebras.md) proves it. So $\nu(E_x)$ is a number, possibly infinite, for every $x$.
 
 ### Step 2: section size is a measurable function of x
 
-Take $\nu$ finite first, and collect the sets $E$ for which $x \mapsto \nu(E_x)$ is measurable. Rectangles qualify: the function is $\nu(B)$ times the indicator $1_A$. The collection is closed under proper differences, since finite sizes of nested sections subtract, and under increasing unions, since a limit of measurable functions is measurable ([limits-of-measurable-functions](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)): a lambda-system. Rectangles overlap in rectangles, a pi-system, so Dynkin's theorem ([pi-systems-and-uniqueness](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)) puts all of $\mathcal{F} \otimes \mathcal{G}$ in it. A sigma-finite $\nu$ is a countable sum of finite pieces, and so is $\nu(E_x)$.
+Take $\nu$ finite first, and collect the sets $E$ for which $x \mapsto \nu(E_x)$ is measurable. Rectangles qualify: the function is $\nu(B)$ times the indicator $1_A$. The collection is closed under proper differences, since finite sizes of nested sections subtract, and under increasing unions, since a limit of measurable functions is measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)): a lambda-system. Rectangles overlap in rectangles, a pi-system, so Dynkin's theorem ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)) puts all of $\mathcal{F} \otimes \mathcal{G}$ in it. A sigma-finite $\nu$ is a countable sum of finite pieces, and so is $\nu(E_x)$.
 
 ### Step 3: the integral of section sizes is a measure
 
-Define $\rho(E) = \int_X \nu(E_x)\, d\mu(x)$. If $E_1, E_2, \dots$ do not overlap, neither do their sections, so the section size of the union is the sum of the section sizes. The integral of a sum of non-negative functions is the sum of the integrals, by monotone convergence ([monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)). So $\rho$ adds over countably many disjoint pieces: it is a measure, and Step 0 showed it gives rectangles $\mu(A)\nu(B)$.
+Define $\rho(E) = \int_X \nu(E_x)\, d\mu(x)$. If $E_1, E_2, \dots$ do not overlap, neither do their sections, so the section size of the union is the sum of the section sizes. The integral of a sum of non-negative functions is the sum of the integrals, by monotone convergence ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)). So $\rho$ adds over countably many disjoint pieces: it is a measure, and Step 0 showed it gives rectangles $\mu(A)\nu(B)$.
 
 ### Step 4: there is only one, so both orders agree
 
@@ -152,13 +132,13 @@ Slicing the other way, $\int_Y \mu(E^y)\, d\nu(y)$, is also a measure giving rec
 
 ### Step 5: area in the plane and volume in n dimensions
 
-Length $\lambda$ on the Borel sets of the real line is sigma-finite, with pieces from k to k + 1. So $\lambda_2 = \lambda \otimes \lambda$ exists, is unique, and gives each rectangle width times height. Its domain, the product of the Borel sets of two lines, is the Borel sets of the plane ([product-sigma-algebras](01-product-sigma-algebras.md)). Lebesgue measure on the plane is the completion of $\lambda_2$, adding every subset of a set of size 0.
+Length $\lambda$ on the Borel sets of the real line is sigma-finite, with pieces from k to k + 1. So $\lambda_2 = \lambda \otimes \lambda$ exists, is unique, and gives each rectangle width times height. Its domain, the product of the Borel sets of two lines, is the Borel sets of the plane ([Product sigma-algebras](01-product-sigma-algebras.md)). Lebesgue measure on the plane is the completion of $\lambda_2$, adding every subset of a set of size 0.
 
 The same step repeats. $\lambda_3 = \lambda_2 \otimes \lambda$ gives a box the product of its three sides, and so does $\lambda \otimes \lambda_2$; both are measures agreeing on boxes, a pi-system, so they are equal. The order of multiplying factors does not matter, and $\lambda_n$ is volume in n dimensions.
 
 ### Step 6: changing coordinates stretches size by a Jacobian
 
-The disc is round, so polar coordinates suit it: distance $r$ from the centre and angle $\theta$. The map $T(r, \theta) = (0.5 + r\cos\theta,\ 0.5 + r\sin\theta)$ takes the rectangle $U$ of $r$ from 0 to 0.5 and $\theta$ from 0 to 2π onto the disc $V$, one-to-one except on the edges r = 0 and θ = 2π, which have area 0. A small patch of size $dr\, d\theta$ lands on a patch of area $r\, dr\, d\theta$, the polar rule of [change-of-variables-and-jacobians](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md) for Riemann integrals: near the centre the angle wedges are thin, far out they are wide. The stretching factor, here $r$, is the absolute value of the determinant of $DT(u)$, the matrix of partial derivatives of $T$ at a point $u$ of $U$: the **Jacobian**. For any non-negative Borel function $f$ on $V$,
+The disc is round, so polar coordinates suit it: distance $r$ from the centre and angle $\theta$. The map $T(r, \theta) = (0.5 + r\cos\theta,\ 0.5 + r\sin\theta)$ takes the rectangle $U$ of $r$ from 0 to 0.5 and $\theta$ from 0 to 2π onto the disc $V$, one-to-one except on the edges r = 0 and θ = 2π, which have area 0. A small patch of size $dr\, d\theta$ lands on a patch of area $r\, dr\, d\theta$, the polar rule of [Change of variables](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md) for Riemann integrals: near the centre the angle wedges are thin, far out they are wide. The stretching factor, here $r$, is the absolute value of the determinant of $DT(u)$, the matrix of partial derivatives of $T$ at a point $u$ of $U$: the **Jacobian**. For any non-negative Borel function $f$ on $V$,
 
 $$\int_{V} f \, d\lambda_n = \int_U f(T(u))\, \lvert \det DT(u) \rvert \; d\lambda_n(u)$$
 
@@ -167,13 +147,13 @@ For the disc, $f = 1$ and the determinant is $r$: area $= \int_0^{2\pi}\!\int_0^
 <details>
 <summary>Why the determinant, and where the full proof lives</summary>
 
-**Linear maps.** Let $T$ be an invertible linear map of n-dimensional space. The rule $E \mapsto \lambda_n(T(E))$ is a measure, finite on bounded sets and unchanged by shifting $E$, since $T$ carries shifts to shifts and $\lambda_n$ ignores them ([translation-invariance-and-the-vitali-set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md), carried to boxes by the product). A shift-invariant measure finite on boxes is a constant times $\lambda_n$: its value on the unit cube fixes every rational box by cutting into equal cubes, and boxes are a pi-system. The constant multiplies along compositions. Every invertible matrix is a product of swaps of two coordinates (constant 1), scalings of one coordinate (constant: the scale's size, by the box formula) and shears adding one coordinate to another (constant 1: each section is only shifted, so slicing gives the same size). The determinant multiplies the same way, so the constant is $\lvert \det T \rvert$.
+**Linear maps.** Let $T$ be an invertible linear map of n-dimensional space. The rule $E \mapsto \lambda_n(T(E))$ is a measure, finite on bounded sets and unchanged by shifting $E$, since $T$ carries shifts to shifts and $\lambda_n$ ignores them ([Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md), carried to boxes by the product). A shift-invariant measure finite on boxes is a constant times $\lambda_n$: its value on the unit cube fixes every rational box by cutting into equal cubes, and boxes are a pi-system. The constant multiplies along compositions. Every invertible matrix is a product of swaps of two coordinates (constant 1), scalings of one coordinate (constant: the scale's size, by the box formula) and shears adding one coordinate to another (constant 1: each section is only shifted, so slicing gives the same size). The determinant multiplies the same way, so the constant is $\lvert \det T \rvert$.
 
 **Smooth maps.** A one-to-one smooth map $T$ from an open set $U$ onto an open set $V$, with invertible derivative, is nearly the linear map $DT(u)$ on each small cube near $u$, so it scales that cube's volume by nearly $\lvert \det DT(u) \rvert$. Summing over ever finer grids gives the formula for boxes, then for every non-negative Borel $f$ by simple functions and monotone convergence. Folland, *Real Analysis*, Theorem 2.47, carries out the estimates in full. The polar case has $\det DT = r\cos^2\theta + r\sin^2\theta = r$.
 
 </details>
 
-A second route to $\lambda_2$ skips the product: build outer area from covers by rectangles and restrict it, as [caratheodory-extension-theorem](../02-Length%20Done%20Properly/05-caratheodory-extension-theorem.md) does for length. It gives the same measure, by the uniqueness of Step 4.
+A second route to $\lambda_2$ skips the product: build outer area from covers by rectangles and restrict it, as [Caratheodory's extension theorem](../02-Length%20Done%20Properly/05-caratheodory-extension-theorem.md) does for length. It gives the same measure, by the uniqueness of Step 4.
 
 ---
 
@@ -601,9 +581,9 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Monte Carlo estimates.** Throwing random points and counting hits estimates an area or a probability; 157,382 of 200,000 darts gave 0.7869. It works because the uniform law on the square is the product of two uniform laws.
-- **Independent quantities.** Two independent measurements have a joint law equal to the product of their laws, so a joint probability is found by slicing ([independence-as-a-product-measure](04-independence-as-a-product-measure.md)).
+- **Independent quantities.** Two independent measurements have a joint law equal to the product of their laws, so a joint probability is found by slicing ([Independence as a product](04-independence-as-a-product-measure.md)).
 - **Volumes from scans.** A CT scanner reports cross-section areas at fixed spacing; an organ's volume is those areas integrated along the axis.
-- **The bell curve's constant.** The integral of e^(−x^2/2) has no elementary antiderivative; squared, it is an integral over the plane, and in polar coordinates the Jacobian r makes it elementary ([gaussian-integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)).
+- **The bell curve's constant.** The integral of e^(−x^2/2) has no elementary antiderivative; squared, it is an integral over the plane, and in polar coordinates the Jacobian r makes it elementary ([The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)).
 
 > **Say it back**
 > Rectangles get width times height. Any other set's size is the integral of its section sizes. That integral is a measure, and when both sides split into countably many finite pieces it is the only one with the rectangle values, so slicing either way agrees. Repeated, it gives volume in any dimension; a change of coordinates rescales by the Jacobian. The dart lands in the disc with chance π/4 = 0.785398, by sections, by squares, by polar coordinates and by darts.
@@ -612,19 +592,19 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [product-sigma-algebras](01-product-sigma-algebras.md): the sets on pairs that get a size, and why their sections are measurable.
-- [pi-systems-and-uniqueness](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md): rectangles are a pi-system, which gives measurability of section sizes and uniqueness.
-- [monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md): the swap of sum and integral that makes the slice integral countably additive.
-- [lebesgue-measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md): length on each side, the factor from which area and volume are built.
-- [double-integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md): the Riemann version of slicing, which this card extends to every set in the product sigma-algebra.
+- [Product sigma-algebras](01-product-sigma-algebras.md): the sets on pairs that get a size, and why their sections are measurable.
+- [Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md): rectangles are a pi-system, which gives measurability of section sizes and uniqueness.
+- [The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md): the swap of sum and integral that makes the slice integral countably additive.
+- [Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md): length on each side, the factor from which area and volume are built.
+- [Double integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md): the Riemann version of slicing, which this card extends to every set in the product sigma-algebra.
 
 ## Where this goes next
 
-- [tonelli-and-fubini](03-tonelli-and-fubini.md): from sizes of sets to integrals of functions, in either order.
-- [independence-as-a-product-measure](04-independence-as-a-product-measure.md): independence read as a joint law that is a product measure.
-- [infinite-sequences-and-kolmogorov-extension](07-infinite-sequences-and-kolmogorov-extension.md): a product of infinitely many factors, for a coin tossed forever.
+- [Tonelli and Fubini](03-tonelli-and-fubini.md): from sizes of sets to integrals of functions, in either order.
+- [Independence as a product](04-independence-as-a-product-measure.md): independence read as a joint law that is a product measure.
+- [Infinitely many coin tosses](07-infinite-sequences-and-kolmogorov-extension.md): a product of infinitely many factors, for a coin tossed forever.
 
-This card slices sets, where every section size is non-negative; whether a function taking both signs can be integrated in either order, and what goes wrong when it cannot, is [tonelli-and-fubini](03-tonelli-and-fubini.md).
+This card slices sets, where every section size is non-negative; whether a function taking both signs can be integrated in either order, and what goes wrong when it cannot, is [Tonelli and Fubini](03-tonelli-and-fubini.md).
 
 ---
 

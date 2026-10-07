@@ -1,21 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Regulatory Capital in Outline
-topic: Surviving a run
-item: Liquidity and leverage
-kind: convention
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/48-Regulatory Capital in Outline/02-basel-capital-and-risk-weighted-assets|basel-capital-and-risk-weighted-assets]]"
-next: []
-tags: [mathematics, financial mathematics, liquidity-and-leverage-ratios]
----
-
 # Liquidity and leverage: LCR, NSFR and the leverage ratio, and what each guards against
 
-Financial mathematics → Regulatory Capital in Outline → Surviving a run → Liquidity and leverage
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Regulatory Capital in Outline](../../../SYLLABUS.md#w12-s48) → Liquidity and leverage
 
 ---
 
@@ -167,7 +152,7 @@ Funding that may leave comes off the top; assets that could be sold come off the
 
 ### Step 5: the leverage ratio ignores risk on purpose
 
-Risk weights (from [basel-capital-and-risk-weighted-assets](02-basel-capital-and-risk-weighted-assets.md)) let a bank hold less capital against safer assets. Government bonds carry a 0% weight, and a bank's own models set many others. If the weights are too low, the risk-based ratio looks strong while the balance sheet grows without limit.
+Risk weights (from [Basel capital](02-basel-capital-and-risk-weighted-assets.md)) let a bank hold less capital against safer assets. Government bonds carry a 0% weight, and a bank's own models set many others. If the weights are too low, the risk-based ratio looks strong while the balance sheet grows without limit.
 
 The leverage ratio counts every dollar the same. An undrawn credit line is not yet a loan, but a company in trouble draws it, so the 40% conversion factor counts part of it as lent already.
 
@@ -208,7 +193,7 @@ The bank, in millions of dollars:
 | other assets | 30 | | |
 | **total** | **1,450** | **total** | **1,450** |
 
-Off the balance sheet: $200m of undrawn committed credit lines to companies. Company loans repay $40m within the month. Risk-weighted assets are $500m, set by the bank's own risk models, which gives the 12% capital ratio. The bank on [basel-capital-and-risk-weighted-assets](02-basel-capital-and-risk-weighted-assets.md) holds the same loans at the standard weights: $1,000m of risk-weighted assets and $120m of capital for the same 12%. Low model weights let this bank run on half the capital, the case the leverage ratio exists for.
+Off the balance sheet: $200m of undrawn committed credit lines to companies. Company loans repay $40m within the month. Risk-weighted assets are $500m, set by the bank's own risk models, which gives the 12% capital ratio. The bank on [Basel capital](02-basel-capital-and-risk-weighted-assets.md) holds the same loans at the standard weights: $1,000m of risk-weighted assets and $120m of capital for the same 12%. Low model weights let this bank run on half the capital, the case the leverage ratio exists for.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -717,8 +702,8 @@ The two outputs agree line for line.
 - **Northern Rock, 2007.** A UK mortgage lender funded long mortgages with short market borrowing. When those markets froze it could not roll the borrowing over, and depositors queued outside branches. Change B in miniature.
 - **Silicon Valley Bank, March 2023.** Depositors asked for about $42 billion in one day. Its liquid assets were largely bonds that had fallen in price as rates rose. It sat below the size at which the full US liquidity rule applied, and its run outpaced any run-off table.
 - **The 2008 crisis.** Several large banks entered 2008 meeting their risk-based capital rules with balance sheets 30 or more times their equity. A small fall in asset values erased their capital. The leverage ratio is the direct response.
-- **Quarterly disclosures.** Large banks publish all three ratios in their risk reports, beside the risk-based ratios from [basel-capital-and-risk-weighted-assets](02-basel-capital-and-risk-weighted-assets.md).
-- **The rest of the shelf.** Losses that capital must absorb are split into average and surprise on [expected-versus-unexpected-loss](01-expected-versus-unexpected-loss.md); the trading book's own capital charge is on [frtb-and-the-shift-to-expected-shortfall](04-frtb-and-the-shift-to-expected-shortfall.md).
+- **Quarterly disclosures.** Large banks publish all three ratios in their risk reports, beside the risk-based ratios from [Basel capital](02-basel-capital-and-risk-weighted-assets.md).
+- **The rest of the shelf.** Losses that capital must absorb are split into average and surprise on [Expected and unexpected loss](01-expected-versus-unexpected-loss.md); the trading book's own capital charge is on [Market-risk capital](04-frtb-and-the-shift-to-expected-shortfall.md).
 
 > **Say it back**
 > A bank can be solvent and still fail, by running out of cash or by borrowing too much for its capital to cover a small fall in value. The LCR asks whether liquid assets, after haircuts, cover a prescribed 30-day run net of capped inflows. The NSFR asks whether funding that stays a year covers the assets that cannot be sold within a year. The leverage ratio asks whether Tier 1 capital is at least 3% of everything lent or promised, with no risk weights. Each catches a failure the other two pass.
@@ -727,12 +712,12 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [basel-capital-and-risk-weighted-assets](02-basel-capital-and-risk-weighted-assets.md): Tier 1 capital, risk weights and the risk-based ratio that these three rules sit beside.
+- [Basel capital](02-basel-capital-and-risk-weighted-assets.md): Tier 1 capital, risk weights and the risk-based ratio that these three rules sit beside.
 
 ## Where this goes next
 
-- [vasicek-asrf-and-credit-capital](03-vasicek-asrf-and-credit-capital.md): where the risk weights that the leverage ratio distrusts come from, derived from a model of loan defaults.
-- [frtb-and-the-shift-to-expected-shortfall](04-frtb-and-the-shift-to-expected-shortfall.md): the capital charge on the trading book, whose liquidity horizons are the market-risk cousin of this card's run-off rates.
+- [The Basel credit formula](03-vasicek-asrf-and-credit-capital.md): where the risk weights that the leverage ratio distrusts come from, derived from a model of loan defaults.
+- [Market-risk capital](04-frtb-and-the-shift-to-expected-shortfall.md): the capital charge on the trading book, whose liquidity horizons are the market-risk cousin of this card's run-off rates.
 
 The rulebook's run is a fixed table; how fast a real run moves, and what the bank should hold against a run it has never seen, is the question these ratios leave to stress testing and judgement.
 

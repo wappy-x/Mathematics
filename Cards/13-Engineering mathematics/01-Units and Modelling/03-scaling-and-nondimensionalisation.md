@@ -1,31 +1,12 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Units and Modelling
-topic: Natural scales
-item: Nondimensionalisation
-kind: method
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/02-dimensional-analysis-and-buckingham-pi|dimensional-analysis-and-buckingham-pi]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/01-what-a-differential-equation-says|what-a-differential-equation-says]]"
-next:
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/04-similarity-and-model-testing|similarity-and-model-testing]]"
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/05-regular-perturbation|regular-perturbation]]"
-  - "[[Cards/13-Engineering mathematics/08-Fluids and Heat/03-navier-stokes-and-the-reynolds-number|navier-stokes-and-the-reynolds-number]]"
-tags: [mathematics, engineering mathematics, scaling-and-nondimensionalisation]
----
-
 # Nondimensionalisation: choose natural scales and the small parameter appears
 
-Engineering mathematics → Units and Modelling → Natural scales → Nondimensionalisation
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Units and Modelling](../../../SYLLABUS.md#w13-s01) → Nondimensionalisation
 
 ---
 
 ## General Overview
 
-A straight water pipe, 0.1 m across and hundreds of metres long, sits full and still. A pump starts and holds a steady push along it. Two designs. The slow one is meant to carry water at 0.02 m/s: Reynolds number 2,000, laminar, the water sliding in smooth layers. The fast one is meant to carry it at 2 m/s: Reynolds number 200,000, turbulent once it settles. (The Reynolds number, written Re, is speed times diameter divided by the water's viscosity per unit density; it has no units, as [dimensional-analysis-and-buckingham-pi](02-dimensional-analysis-and-buckingham-pi.md) showed, and it compares the water's momentum with its internal friction.)
+A straight water pipe, 0.1 m across and hundreds of metres long, sits full and still. A pump starts and holds a steady push along it. Two designs. The slow one is meant to carry water at 0.02 m/s: Reynolds number 2,000, laminar, the water sliding in smooth layers. The fast one is meant to carry it at 2 m/s: Reynolds number 200,000, turbulent once it settles. (The Reynolds number, written Re, is speed times diameter divided by the water's viscosity per unit density; it has no units, as [Buckingham Pi](02-dimensional-analysis-and-buckingham-pi.md) showed, and it compares the water's momentum with its internal friction.)
 
 The engineer wants to know what the water does in the first moments. Does it start as a solid slug, every layer moving together, or does friction at the wall hold it back from the start? The answer decides how fast the pipe fills with flow, how big the early wall stress is, and which model to trust.
 
@@ -78,7 +59,7 @@ with $u^* = 0$ at the wall $r^* = 1$ and $u^* = 0$ when the pump starts. The sta
 | $\delta$, $y$, $y^*$, $K$, $w$, $g$, $s$ | thickness of the slowed layer at the wall; distance in from the wall, and the same in radii, $y/R$; the layer's constant $8/(3\sqrt\pi)$; in the proof, the shortfall below the plug, its value at the wall, and an earlier rescaled time | $\delta$ = 2.53 mm (fast pipe), $K$ = 1.5045 | — |
 | $\lambda_n$, $\lambda_1$, $J_0$, $J_1$ | the zeros of the Bessel function $J_0$, and the Bessel functions used by the exact solution | $\lambda_1$ = 2.40483 | — |
 
-The dimension check, in square brackets ([M] mass, [L] length, [T] the dimension of time, not the time $T$, as on [si-units-and-dimensional-homogeneity](01-si-units-and-dimensional-homogeneity.md)): viscosity times speed has dimensions [M][L]^-1[T]^-1 times [L][T]^-1, which is [M][T]^-2; push times radius squared has [M][L]^-2[T]^-2 times [L]^2, also [M][T]^-2. They cancel, so $\varepsilon$ is a pure number.
+The dimension check, in square brackets ([M] mass, [L] length, [T] the dimension of time, not the time $T$, as on [Units and dimensions](01-si-units-and-dimensional-homogeneity.md)): viscosity times speed has dimensions [M][L]^-1[T]^-1 times [L][T]^-1, which is [M][T]^-2; push times radius squared has [M][L]^-2[T]^-2 times [L]^2, also [M][T]^-2. They cancel, so $\varepsilon$ is a pure number.
 
 The second form, $8/(f\,\mathrm{Re})$, comes from writing the push through the friction factor, $G = f\rho U^2/(2D)$, which is how a pump is sized.
 
@@ -104,7 +85,7 @@ Take a thin cylindrical shell of water at radius $r$, of small thickness dr, one
 
 $$\rho\,\frac{\partial u}{\partial t} \;=\; G \;+\; \mu\,\frac{1}{r}\frac{\partial}{\partial r}\!\left(r\,\frac{\partial u}{\partial r}\right).$$
 
-Acceleration, push, drag. This is a heat equation in a cylinder with a steady source, the kind met on [the-heat-equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md).
+Acceleration, push, drag. This is a heat equation in a cylinder with a steady source, the kind met on [The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md).
 
 ### Step 2: choose the scales, substitute, divide
 
@@ -134,7 +115,7 @@ Set $\varepsilon = 0$ in the fast pipe. The equation becomes $\partial u^*/\part
 
 At the wall the water must be still. A plug cannot satisfy that, so near the wall the speed changes over a short distance, the starred drag is no longer near one, and the dropped term matters. Rescale again, this time measuring distance in from the wall, $y = R - r$, by a new size $\delta$. The drag term grows by $(R/\delta)^2$. It balances the acceleration when $\varepsilon (R/\delta)^2 = 1$, so $\delta = R\sqrt{\varepsilon} = \sqrt{\nu T}$.
 
-Fast pipe: $\delta$ = 2.53 mm, 0.0506 of the radius. A skin. Slow pipe: $\delta$ = 17.68 mm, 0.3536 of the radius. Not a skin: over a third of the radius, so no part of the slow pipe is free of drag, which is what $\varepsilon$ = 0.125 already said. This second rescaling is the first step of the [boundary-layers-and-singular-perturbation](06-boundary-layers-and-singular-perturbation.md) card, which takes it further.
+Fast pipe: $\delta$ = 2.53 mm, 0.0506 of the radius. A skin. Slow pipe: $\delta$ = 17.68 mm, 0.3536 of the radius. Not a skin: over a third of the radius, so no part of the slow pipe is free of drag, which is what $\varepsilon$ = 0.125 already said. This second rescaling is the first step of the [Boundary layers](06-boundary-layers-and-singular-perturbation.md) card, which takes it further.
 
 The skin costs flow. The slowed layer, spread over the perimeter, cuts the mean speed below the plug's by a fraction $K\sqrt{\varepsilon\tau}$, with $K = 8/(3\sqrt\pi)$ = 1.5045. At $\tau = 1$ in the fast pipe that is 1 − 1.5045 × 0.0506, a mean of 0.92391 of design speed, against an exact 0.92520.
 
@@ -143,7 +124,7 @@ The skin costs flow. The slowed layer, spread over the perimeter, cuts the mean 
 
 Inside the layer the wall looks flat, since $\delta$ is 0.0506 of $R$. Write the shortfall below the plug as $w = \tau - u^*$. It obeys the flat heat equation $\partial w/\partial\tau = \varepsilon\,\partial^2 w/\partial y^{*2}$, where $y^* = y/R$ is the distance in from the wall measured in radii, with $w = \tau$ at the wall (the plug's speed, removed) and $w \to 0$ far from it.
 
-A wall held at 1 from time zero pushes a flux (shortfall entering through the wall per unit time) of $\sqrt{\varepsilon/(\pi\tau)}$ into a half-line obeying this heat equation, read off the error-function solution built from [the-heat-kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md). A wall value $g$ that rises in steps adds one such response per step (the equation is linear), so the flux is $\sqrt{\varepsilon/\pi}\int_0^\tau g'(s)\,(\tau - s)^{-1/2}\,ds$, where $s$ is an earlier rescaled time at which a step was taken. Here $g' = 1$, so the flux is $2\sqrt{\varepsilon\tau/\pi}$.
+A wall held at 1 from time zero pushes a flux (shortfall entering through the wall per unit time) of $\sqrt{\varepsilon/(\pi\tau)}$ into a half-line obeying this heat equation, read off the error-function solution built from [The heat kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md). A wall value $g$ that rises in steps adds one such response per step (the equation is linear), so the flux is $\sqrt{\varepsilon/\pi}\int_0^\tau g'(s)\,(\tau - s)^{-1/2}\,ds$, where $s$ is an earlier rescaled time at which a step was taken. Here $g' = 1$, so the flux is $2\sqrt{\varepsilon\tau/\pi}$.
 
 The total shortfall per unit of wall, the integral of $w$ across the layer, grows at the rate of that flux, so it equals $(4/3)\sqrt{\varepsilon/\pi}\,\tau^{3/2}$. The pipe's perimeter is 2π in rescaled units and its area is π, so the mean shortfall is twice that integral: $(8/3)\sqrt{\varepsilon/\pi}\,\tau^{3/2}$. Divide by the plug speed $\tau$: the fractional shortfall is $(8/(3\sqrt\pi))\sqrt{\varepsilon\tau}$.
 
@@ -153,7 +134,7 @@ The flat-wall step ignores the wall's curve, an error of order $\varepsilon\tau$
 
 ### The other door: solve the full equation exactly
 
-The rescaled equation is linear, so separation of variables solves it with no term dropped ([separation-of-variables-for-the-heat-equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/04-separation-of-variables-for-the-heat-equation.md)). The shapes across the pipe are Bessel functions $J_0(\lambda_n r^*)$, zero at the wall when $\lambda_n$ is a zero of $J_0$ ([bessels-equation-and-the-drum](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/03-bessels-equation-and-the-drum.md)). Each shape fades at the rate $\varepsilon\lambda_n^2$:
+The rescaled equation is linear, so separation of variables solves it with no term dropped ([Separation of variables](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/04-separation-of-variables-for-the-heat-equation.md)). The shapes across the pipe are Bessel functions $J_0(\lambda_n r^*)$, zero at the wall when $\lambda_n$ is a zero of $J_0$ ([Bessel's equation](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/03-bessels-equation-and-the-drum.md)). Each shape fades at the rate $\varepsilon\lambda_n^2$:
 
 $$\bar u^* = \frac{1}{8\varepsilon} - \sum_{n\ge1}\frac{4}{\varepsilon\lambda_n^4}\,e^{-\varepsilon\lambda_n^2\tau}.$$
 
@@ -192,7 +173,7 @@ At 6.39 s after the pump starts, the fast pipe's water is moving at 1.85 m/s on 
 
 ## Code, from first principles, and it actually runs
 
-The scripts solve the rescaled equation three independent ways. Road 1 is the exact Bessel series, with $J_0$ and $J_1$ built from their integral formula and their zeros found by Newton's method. Road 2 is a finite-difference simulation (Crank–Nicolson steps on 400 rings, [finite-differences-for-the-heat-equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md)) that never mentions a Bessel function. Road 3 is the rescaled answer: the plug, plus its wall-layer correction. The asserts tie road 1 to road 2 at both Reynolds numbers, road 3 to road 1 in the fast pipe, the bisected settling time to the one-mode formula, the two forms of $\varepsilon$ to each other, and Prandtl's friction factor to Haaland's explicit fit, a second published formula, within 2%.
+The scripts solve the rescaled equation three independent ways. Road 1 is the exact Bessel series, with $J_0$ and $J_1$ built from their integral formula and their zeros found by Newton's method. Road 2 is a finite-difference simulation (Crank–Nicolson steps on 400 rings, [Stepping the heat equation on a grid](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md)) that never mentions a Bessel function. Road 3 is the rescaled answer: the plug, plus its wall-layer correction. The asserts tie road 1 to road 2 at both Reynolds numbers, road 3 to road 1 in the fast pipe, the bisected settling time to the one-mode formula, the two forms of $\varepsilon$ to each other, and Prandtl's friction factor to Haaland's explicit fit, a second published formula, within 2%.
 
 ### Python
 
@@ -594,9 +575,9 @@ Orange: the plug, $\bar u^* = \tau$, the answer with the small term dropped. Gre
 
 - **Pump and valve start-up in water mains and oil lines.** A heavy crude oil line runs laminar, so its $\varepsilon$ is 1/8 and its start-up is set by the viscous time $R^2/\nu$; a water main's push is large next to laminar drag, so the core moves as a slug.
 - **Blood in arteries.** Womersley rescaled the same equation with a pulsing push. His number, the radius times the square root of the pulse's angular frequency (rad/s) over $\nu$, decides whether the flow in an artery is a plug with a skin (the aorta) or a parabola at every instant (small vessels).
-- **The Navier–Stokes equations.** Rescaling them with one length and one speed leaves 1/Re in front of the viscous term. When that is the right reading, and when the flow's own lengths are different, is the subject of navier-stokes-and-the-reynolds-number.
-- **Wind-tunnel and water-tank models.** Two flows whose rescaled equations carry the same coefficients behave the same, which is what lets a model stand in for the real thing: [similarity-and-model-testing](04-similarity-and-model-testing.md).
-- **Measurement uncertainty.** An error in the viscosity moves $\varepsilon$ in proportion; how such errors travel through a model is [error-propagation-and-sensitivity](07-error-propagation-and-sensitivity.md).
+- **The Navier–Stokes equations.** Rescaling them with one length and one speed leaves 1/Re in front of the viscous term. When that is the right reading, and when the flow's own lengths are different, is the subject of Navier-Stokes.
+- **Wind-tunnel and water-tank models.** Two flows whose rescaled equations carry the same coefficients behave the same, which is what lets a model stand in for the real thing: [Similarity](04-similarity-and-model-testing.md).
+- **Measurement uncertainty.** An error in the viscosity moves $\varepsilon$ in proportion; how such errors travel through a model is [Error propagation](07-error-propagation-and-sensitivity.md).
 
 > **Say it back**
 > Write each variable as its natural size times a number near one, then divide the equation by its biggest term. The pure numbers left in front of the other terms say how much each matters. For water starting in a pipe, that number is $\varepsilon = 8/(f\,\mathrm{Re})$: 0.00256 in the fast pipe, which starts as a slug with a 2.53 mm skin, and 1/8 in any laminar pipe, where drag rules from the start. A small coefficient lets a term be dropped only where its rescaled part stays near one, which fails at the wall.
@@ -605,16 +586,16 @@ Orange: the plug, $\bar u^* = \tau$, the answer with the small term dropped. Gre
 
 ## What this builds on
 
-- [dimensional-analysis-and-buckingham-pi](02-dimensional-analysis-and-buckingham-pi.md): dimensionless groups and the Reynolds number. That card counts the groups; this one puts them into an equation and asks what each one does.
-- [what-a-differential-equation-says](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md): an equation as a balance of rates, the reading every step above relies on.
+- [Buckingham Pi](02-dimensional-analysis-and-buckingham-pi.md): dimensionless groups and the Reynolds number. That card counts the groups; this one puts them into an equation and asks what each one does.
+- [A differential equation](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md): an equation as a balance of rates, the reading every step above relies on.
 
 ## Where this goes next
 
-- [similarity-and-model-testing](04-similarity-and-model-testing.md): matching the rescaled coefficients between a model and the real thing.
-- [regular-perturbation](05-regular-perturbation.md): keeping the small term and adding its effect as a correction, step by step, when it is small everywhere.
-- navier-stokes-and-the-reynolds-number: the full equations of fluid motion, rescaled.
+- [Similarity](04-similarity-and-model-testing.md): matching the rescaled coefficients between a model and the real thing.
+- [Regular perturbation](05-regular-perturbation.md): keeping the small term and adding its effect as a correction, step by step, when it is small everywhere.
+- Navier-Stokes: the full equations of fluid motion, rescaled.
 
-Dropping a small term gave the core right and the wall wrong; how to build an answer that is right at both, by matching a core solution to a wall-layer solution, is the job of [boundary-layers-and-singular-perturbation](06-boundary-layers-and-singular-perturbation.md).
+Dropping a small term gave the core right and the wall wrong; how to build an answer that is right at both, by matching a core solution to a wall-layer solution, is the job of [Boundary layers](06-boundary-layers-and-singular-perturbation.md).
 
 ---
 

@@ -1,30 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Markov Chains
-topic: Long-run balance
-item: Stationary distributions
-kind: theorem
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/03-classifying-states|classifying-states]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/02-eigenvalues-and-eigenvectors|eigenvalues-and-eigenvectors]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/05-rank-nullity|rank-nullity]]"
-  - "[[Cards/09-Probability and statistics/14-Random Graphs and the Probabilistic Method/05-random-walks-on-graphs-and-mixing|random-walks-on-graphs-and-mixing]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/05-convergence-to-equilibrium|convergence-to-equilibrium]]"
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/07-markov-chain-monte-carlo|markov-chain-monte-carlo]]"
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/05-continuous-time-markov-chains-and-queues|continuous-time-markov-chains-and-queues]]"
-  - "[[Cards/14-Applied and computational/02-Randomised and Approximate Algorithms/08-markov-chain-monte-carlo-for-computation|markov-chain-monte-carlo-for-computation]]"
-  - "[[Cards/14-Applied and computational/07-Network Science and Spectral Graphs/01-centrality-and-pagerank|centrality-and-pagerank]]"
-  - "[[Cards/15-Optimization/07-Dynamic Programming and Learning/03-value-and-policy-iteration|value-and-policy-iteration]]"
-tags: [mathematics, stochastic processes and calculus, stationary-distributions]
----
-
 # Stationary distributions: the mix that stays the same under one more step
 
-Stochastic processes and calculus → Markov Chains → Long-run balance → Stationary distributions
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Markov Chains](../../../SYLLABUS.md#w11-s03) → Stationary distributions
 
 ---
 
@@ -60,11 +36,11 @@ Orange: the running share of rainy days in one sample, 100,000 days drawn with a
 
 ## The formula
 
-Notation first, in words. The kind of day on day $n$ is written $X_n$, the value of the process at time $n$, with time counted in days ([processes-and-paths](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md)). The chances of one night's change sit in a table $P$, the transition matrix ([markov-chains](01-markov-chains.md)): its entry $p_{ij}$, in row $i$ and column $j$, is the chance tomorrow is $j$ given today is $i$. Each row adds to 1. Rows and columns run sunny, cloudy, rainy:
+Notation first, in words. The kind of day on day $n$ is written $X_n$, the value of the process at time $n$, with time counted in days ([Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md)). The chances of one night's change sit in a table $P$, the transition matrix ([Markov chains](01-markov-chains.md)): its entry $p_{ij}$, in row $i$ and column $j$, is the chance tomorrow is $j$ given today is $i$. Each row adds to 1. Rows and columns run sunny, cloudy, rainy:
 
 `P = [[0.6, 0.3, 0.1], [0.4, 0.4, 0.2], [0.4, 0.3, 0.3]]`
 
-A mix of chances over the three kinds of day is written as a row of three numbers. The row $\mu P$, the row times the table, is tomorrow's mix when today's is $\mu$; $\mu P^n$ is the mix $n$ days on ([multi-step-transitions](02-multi-step-transitions.md)).
+A mix of chances over the three kinds of day is written as a row of three numbers. The row $\mu P$, the row times the table, is tomorrow's mix when today's is $\mu$; $\mu P^n$ is the mix $n$ days on ([n-step transitions](02-multi-step-transitions.md)).
 
 The Greek letter $\pi$ (here a row of shares, not the circle constant) names the stationary distribution. With $N$ states, here $N = 3$, it is any row with
 
@@ -110,10 +86,10 @@ Each circle's area is drawn to the scale of its long-run share of days, so the s
 ### When it holds
 
 - **Finitely many states.** With a finite list a stationary distribution always exists. On an endless list it can fail to: a walk on all the whole numbers, stepping up or down with chance 1/2, would need every state to hold the same share, and no equal shares of infinitely many states add to 1.
-- **Every state reachable from every other**, the chain being **irreducible** ([classifying-states](03-classifying-states.md)). This buys uniqueness and start-free time fractions. Split the town into a dry spell that never rains and a wet spell that never clears, and two different mixes both balance; the long-run share of rain is 0 or 1 depending on the first day. One closed class plus transient states also gives just one: chance only drains out of the transient states, so a mix that never changes gives them 0, and Step 3 applies on the closed class. On the board of classifying-states the start square gets 0 and the jail 2/3, the 0.6667 seen there after 200 turns.
+- **Every state reachable from every other**, the chain being **irreducible** ([Classifying states](03-classifying-states.md)). This buys uniqueness and start-free time fractions. Split the town into a dry spell that never rains and a wet spell that never clears, and two different mixes both balance; the long-run share of rain is 0 or 1 depending on the first day. One closed class plus transient states also gives just one: chance only drains out of the transient states, so a mix that never changes gives them 0, and Step 3 applies on the closed class. On the board of classifying-states the start square gets 0 and the jail 2/3, the 0.6667 seen there after 200 turns.
 - **The same table every day.** A seasonal climate has a different table each month; one fixed $\pi$ then describes nothing, and the long-run shares come from the year-long cycle instead.
 - **Tomorrow depends on today only.** If a third wet day in a row were likelier than a second, the three-state table is the wrong model. Fitted by counting the record's changes, it still gets the share of rainy days right, since counted changes balance as in Step 0; but long wet spells come out too rare, and forecasts two or more days ahead are off.
-- **Not needed: settling down.** Neither existence, uniqueness nor the time fractions needs the day-by-day forecasts to converge. That extra property, and the aperiodicity it requires, is the business of [convergence-to-equilibrium](05-convergence-to-equilibrium.md).
+- **Not needed: settling down.** Neither existence, uniqueness nor the time fractions needs the day-by-day forecasts to converge. That extra property, and the aperiodicity it requires, is the business of [Convergence to equilibrium](05-convergence-to-equilibrium.md).
 
 ---
 
@@ -129,7 +105,7 @@ If today's mix is $\pi$, tomorrow's is $\pi P = \pi$, and the day after is $\pi 
 
 ### Step 2: a balancing mix always exists
 
-Each row of $P$ adds to 1, so $P$ times a column of ones is that column of ones: 1 is an eigenvalue of $P$ ([eigenvalues-and-eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). A square table and its transpose, the table flipped across its diagonal, share eigenvalues, so some row $v$, not all zero, has $vP = v$. It is a left eigenvector: it multiplies from the left.
+Each row of $P$ adds to 1, so $P$ times a column of ones is that column of ones: 1 is an eigenvalue of $P$ ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). A square table and its transpose, the table flipped across its diagonal, share eigenvalues, so some row $v$, not all zero, has $vP = v$. It is a left eigenvector: it multiplies from the left.
 
 Its entries could be negative, and a share cannot be. Replace every entry by its size, giving $w$. Each entry of the row $w$ times $P$ is at least the matching entry of $w$, because the size of a sum is at most the sum of the sizes. But both rows have the same total, because every row of $P$ adds to 1. A row that is nowhere smaller and has the same total is equal: $wP = w$. Divide $w$ by its total and it is a stationary distribution. Nothing here used irreducibility: every finite chain has at least one.
 
@@ -137,7 +113,7 @@ Its entries could be negative, and a share cannot be. Replace every entry by its
 
 Take any column $h$ with $Ph = h$. Each entry of $P$ times $h$ is an average of entries of $h$, weighted by a row of $P$. Look at the largest entry of $h$. It is an average of entries none larger than itself, so every entry it averages over, every state reachable in one day, holds the same largest value. In an irreducible chain that spreads to every state. So $h$ is constant: the only columns $P$ leaves unchanged are multiples of the column of ones.
 
-That fixes a count. The solutions of $(P - I)h = 0$, with $I$ the table that changes nothing, form a line, so $P - I$ has rank $N - 1$: the rank, the number of independent rows, and the dimension of the solutions add up to $N$ ([rank-nullity](../../03-Algebra/05-Solving%20Systems/05-rank-nullity.md)). A table and its transpose have the same rank, so the rows with $v(P - I) = 0$ also form a line. Requiring a total of 1 picks one point on it. The stationary distribution is unique.
+That fixes a count. The solutions of $(P - I)h = 0$, with $I$ the table that changes nothing, form a line, so $P - I$ has rank $N - 1$: the rank, the number of independent rows, and the dimension of the solutions add up to $N$ ([Rank and nullity](../../03-Algebra/05-Solving%20Systems/05-rank-nullity.md)). A table and its transpose have the same rank, so the rows with $v(P - I) = 0$ also form a line. Requiring a total of 1 picks one point on it. The stationary distribution is unique.
 
 Every entry is positive, too. Some state $i$ has $\pi_i > 0$; state $j$ is reachable from $i$ in some number of days $n$, so $\pi_j = (\pi P^n)_j \ge \pi_i\,(P^n)_{ij} > 0$.
 
@@ -145,7 +121,7 @@ Every entry is positive, too. Some state $i$ has $\pi_i > 0$; state $j$ is reach
 
 Fix rainy. Cut one long run of weather at every rainy day. The stretches between consecutive rainy days are **excursions**. Each excursion starts from a rainy day, and from then on the chain forgets everything earlier. So the excursions are independent, and all share one law of length, with mean $m_R$.
 
-By the strong law of large numbers ([strong-law-of-large-numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md)), $k$ excursions take about $k\,m_R$ days, with probability 1. So among $n$ days about $n / m_R$ are rainy: the fraction of rainy days tends to $1/m_R$ on almost every path, whatever the first day.
+By the strong law of large numbers ([The strong law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md)), $k$ excursions take about $k\,m_R$ days, with probability 1. So among $n$ days about $n / m_R$ are rainy: the fraction of rainy days tends to $1/m_R$ on almost every path, whatever the first day.
 
 It remains to see that $1/m_R$ is $\pi_R$. Let $\nu_i$ be the expected number of $i$-days in one excursion, counting its opening rainy day. Then $\nu_R = 1$, and the $\nu_i$ add to $m_R$, the excursion's mean length. One more day moves each excursion's days one place along: its opening rainy day drops off the front and the rainy day that closes it arrives at the back. So $\nu P = \nu$. By Step 3, $\nu / m_R$ is $\pi$, and its rainy entry is $1/m_R$. Here $\nu$ = (3, 2, 1): an excursion from rain averages 3 sunny days, 2 cloudy and the 1 rainy day, 6 in all.
 
@@ -185,7 +161,7 @@ Orange: the chance, per 100, that day $n$ is rainy; it jumps between 0 and 100 f
 
 </details>
 
-**Another road.** When every change is matched by its reverse, $\pi_i p_{ij} = \pi_j p_{ji}$ for every pair, the flows balance link by link, and summing over $i$ gives $\pi P = \pi$ at once. This **detailed balance** is how [random-walks-on-graphs-and-mixing](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md) finds a random walk's stationary distribution, proportional to each page's number of links, and how [markov-chain-monte-carlo](07-markov-chain-monte-carlo.md) builds a chain with a chosen $\pi$. The town's weather does not have it: $\pi_S p_{SR}$ = 0.05 but $\pi_R p_{RS}$ = 0.0667, so fewer days go straight from sunny to rainy than from rainy to sunny. A net drift round the loop sunny, cloudy, rainy makes up the difference.
+**Another road.** When every change is matched by its reverse, $\pi_i p_{ij} = \pi_j p_{ji}$ for every pair, the flows balance link by link, and summing over $i$ gives $\pi P = \pi$ at once. This **detailed balance** is how [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md) finds a random walk's stationary distribution, proportional to each page's number of links, and how [MCMC](07-markov-chain-monte-carlo.md) builds a chain with a chosen $\pi$. The town's weather does not have it: $\pi_S p_{SR}$ = 0.05 but $\pi_R p_{RS}$ = 0.0667, so fewer days go straight from sunny to rainy than from rainy to sunny. A net drift round the loop sunny, cloudy, rainy makes up the difference.
 
 ---
 
@@ -625,10 +601,10 @@ The two outputs agree line for line.
 ## Where you meet it in real life
 
 - **Weather generators.** Crop and flood models draw wet and dry days from a Markov chain fitted to a station's record; the fitted chain's stationary share of wet days is checked against the record's long-run share.
-- **Web search.** PageRank is the stationary distribution of a surfer clicking links with occasional random jumps (centrality-and-pagerank).
-- **Queues and call centres.** The long-run chance that a line holds $k$ callers is the stationary distribution of a chain in continuous time ([continuous-time-markov-chains-and-queues](../04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md)).
-- **Sampling hard distributions.** MCMC turns this card round: choose the $\pi$ to sample, build a chain that has it, and read averages off one long run, the time fractions of Step 4 ([markov-chain-monte-carlo](07-markov-chain-monte-carlo.md)).
-- **Credit ratings.** Rating agencies publish tables of yearly moves between grades. Default is a trap, so with it in the table the stationary mix is all default ([absorption-and-first-step-analysis](06-absorption-and-first-step-analysis.md)); with default left out and rows rescaled over surviving bonds, it is the long-run spread of grades, if nothing else changes.
+- **Web search.** PageRank is the stationary distribution of a surfer clicking links with occasional random jumps (Centrality).
+- **Queues and call centres.** The long-run chance that a line holds $k$ callers is the stationary distribution of a chain in continuous time ([Continuous-time chains](../04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md)).
+- **Sampling hard distributions.** MCMC turns this card round: choose the $\pi$ to sample, build a chain that has it, and read averages off one long run, the time fractions of Step 4 ([MCMC](07-markov-chain-monte-carlo.md)).
+- **Credit ratings.** Rating agencies publish tables of yearly moves between grades. Default is a trap, so with it in the table the stationary mix is all default ([Absorption](06-absorption-and-first-step-analysis.md)); with default left out and rows rescaled over surviving bonds, it is the long-run spread of grades, if nothing else changes.
 
 > **Say it back**
 > A stationary distribution is a mix of chances over the states that one more step leaves unchanged: $\pi P = \pi$, with non-negative entries adding to 1. Every finite chain has one, and if every state can reach every other it has exactly one, with every entry positive. Its entries are the long-run fractions of time in each state, and one over an entry is the mean time to return. For the town, one day in six is rainy and rain comes back every 6 days on average. None of this needs the forecasts to settle; that is a separate property.
@@ -637,21 +613,21 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [classifying-states](03-classifying-states.md): irreducible and periodic chains, the hypotheses that decide uniqueness and settling.
-- [eigenvalues-and-eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): $\pi$ is a left eigenvector for eigenvalue 1.
-- [rank-nullity](../../03-Algebra/05-Solving%20Systems/05-rank-nullity.md): how Step 3 counts the stationary distributions.
-- [random-walks-on-graphs-and-mixing](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md): the special case solved by detailed balance, shares in proportion to links.
+- [Classifying states](03-classifying-states.md): irreducible and periodic chains, the hypotheses that decide uniqueness and settling.
+- [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): $\pi$ is a left eigenvector for eigenvalue 1.
+- [Rank and nullity](../../03-Algebra/05-Solving%20Systems/05-rank-nullity.md): how Step 3 counts the stationary distributions.
+- [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md): the special case solved by detailed balance, shares in proportion to links.
 
 ## Where this goes next
 
-- [convergence-to-equilibrium](05-convergence-to-equilibrium.md): when forecasts from any start approach $\pi$, and how fast.
-- [markov-chain-monte-carlo](07-markov-chain-monte-carlo.md): building a chain whose stationary distribution is a target.
-- [continuous-time-markov-chains-and-queues](../04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md): the balance equations with rates in place of chances.
-- markov-chain-monte-carlo-for-computation: sampling and counting by running a chain to its stationary distribution.
-- centrality-and-pagerank: a stationary distribution as a ranking.
-- value-and-policy-iteration: long-run average rewards, weighted by a policy's stationary distribution.
+- [Convergence to equilibrium](05-convergence-to-equilibrium.md): when forecasts from any start approach $\pi$, and how fast.
+- [MCMC](07-markov-chain-monte-carlo.md): building a chain whose stationary distribution is a target.
+- [Continuous-time chains](../04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md): the balance equations with rates in place of chances.
+- MCMC as a tool: sampling and counting by running a chain to its stationary distribution.
+- Centrality: a stationary distribution as a ranking.
+- Value and policy iteration: long-run average rewards, weighted by a policy's stationary distribution.
 
-The town's forecasts close in on 1/6 while the rota's never do; why one settles and the other does not, and how fast, is [convergence-to-equilibrium](05-convergence-to-equilibrium.md).
+The town's forecasts close in on 1/6 while the rota's never do; why one settles and the other does not, and how fast, is [Convergence to equilibrium](05-convergence-to-equilibrium.md).
 
 ---
 

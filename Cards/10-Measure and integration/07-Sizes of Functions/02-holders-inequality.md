@@ -1,29 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Sizes of Functions
-topic: Pairing two sizes
-item: Holder's inequality
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/01-lp-spaces|lp-spaces]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/01-dot-product|dot-product]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/09-convex-functions|convex-functions]]"
-next:
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/03-minkowskis-inequality|minkowskis-inequality]]"
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/06-l2-as-a-hilbert-space|l2-as-a-hilbert-space]]"
-  - "[[Cards/18-Functional analysis/01-Normed and Banach Spaces/09-dual-spaces-and-lp-duality|dual-spaces-and-lp-duality]]"
-  - "[[Cards/18-Functional analysis/04-Distributions and Sobolev Spaces/09-sobolev-embedding-and-poincare-inequality|sobolev-embedding-and-poincare-inequality]]"
-  - "[[Cards/20-Harmonic analysis/02-The Fourier Transform/07-uncertainty-principle|uncertainty-principle]]"
-  - "[[Cards/20-Harmonic analysis/06-Maximal Functions and Beyond/04-interpolation-riesz-thorin-and-marcinkiewicz|interpolation-riesz-thorin-and-marcinkiewicz]]"
-tags: [mathematics, measure and integration, holders-inequality]
----
-
 # Holder's inequality: the integral of a product is at most the product of the sizes in matched exponents, with Cauchy-Schwarz as the p = 2 case
 
-Measure and integration → Sizes of Functions → Pairing two sizes → Holder's inequality
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sizes of Functions](../../../SYLLABUS.md#w10-s07) → Holder's inequality
 
 ---
 
@@ -59,7 +36,7 @@ Orange: the ceiling for each p. Green: the true revenue, \$1,515. The lowest cei
 
 ## The formula
 
-Notation, as a reminder. A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the sets we allow ourselves to measure, and a measure giving each a size; $\int f \, d\mu$ is read "the integral of f against mu". For p from 1 up, the **p-size** of a measurable function f, called its p-norm on lp-spaces, is $\lVert f \rVert_p = \left(\int \lvert f \rvert^p \, d\mu\right)^{1/p}$, and $\lVert f \rVert_\infty$, its essential supremum, is the smallest M with $\lvert f \rvert \le M$ almost everywhere, meaning except on a set of measure zero ([lp-spaces](01-lp-spaces.md)).
+Notation, as a reminder. A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the sets we allow ourselves to measure, and a measure giving each a size; $\int f \, d\mu$ is read "the integral of f against mu". For p from 1 up, the **p-size** of a measurable function f, called its p-norm on lp-spaces, is $\lVert f \rVert_p = \left(\int \lvert f \rvert^p \, d\mu\right)^{1/p}$, and $\lVert f \rVert_\infty$, its essential supremum, is the smallest M with $\lvert f \rvert \le M$ almost everywhere, meaning except on a set of measure zero ([Lp spaces](01-lp-spaces.md)).
 
 On the turbine, $\Omega$ is the seven days, $\mathcal{F}$ is every set of days, and $\mu$ is counting measure: each day has size 1, so an integral is a sum. The wind $w$ and price $c$ are functions on $\Omega$, with values $w_i$ and $c_i$ on day $i$. Under the uniform probability $P$, each day has size 1/7 and an integral is an average.
 
@@ -121,7 +98,7 @@ Both sides of Holder's inequality double when $f$ doubles. So divide $f$ and $g$
 
 ### Step 1: Young's inequality, from the shape of the logarithm
 
-Take $a, b > 0$ (if either is 0 the left side is 0 and there is nothing to prove). Put $t = 1/p$, so $1 - t = 1/q$. The logarithm is concave: its graph lies above every chord, so $\ln(t x + (1 - t) y) \ge t \ln x + (1 - t) \ln y$ for $x, y > 0$, with equality only when $x = y$ ([convex-functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)). Choose $x = a^p$ and $y = b^q$:
+Take $a, b > 0$ (if either is 0 the left side is 0 and there is nothing to prove). Put $t = 1/p$, so $1 - t = 1/q$. The logarithm is concave: its graph lies above every chord, so $\ln(t x + (1 - t) y) \ge t \ln x + (1 - t) \ln y$ for $x, y > 0$, with equality only when $x = y$ ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)). Choose $x = a^p$ and $y = b^q$:
 
 $$\ln\!\Big(\frac{a^p}{p} + \frac{b^q}{q}\Big) \;\ge\; \frac{1}{p}\ln a^p + \frac{1}{q}\ln b^q \;=\; \ln a + \ln b \;=\; \ln(ab).$$
 
@@ -139,7 +116,7 @@ Drawn to scale for $p = 3$, $a = 2$, $b = 3$, 45 drawing units to one unit on bo
 
 ### Step 2: Holder for p and q strictly between 1 and infinity
 
-Take both sizes finite and not 0; the other cases are in the detailed proof. Put $F = \lvert f \rvert / \lVert f \rVert_p$ and $G = \lvert g \rvert / \lVert g \rVert_q$. Then $\int F^p \, d\mu = 1$ and $\int G^q \, d\mu = 1$. Young's inequality at each point gives $FG \le F^p/p + G^q/q$. The integral keeps order and adds ([integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), so
+Take both sizes finite and not 0; the other cases are in the detailed proof. Put $F = \lvert f \rvert / \lVert f \rVert_p$ and $G = \lvert g \rvert / \lVert g \rVert_q$. Then $\int F^p \, d\mu = 1$ and $\int G^q \, d\mu = 1$. Young's inequality at each point gives $FG \le F^p/p + G^q/q$. The integral keeps order and adds ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), so
 
 $$\int FG \, d\mu \;\le\; \frac{1}{p}\int F^p \, d\mu + \frac{1}{q}\int G^q \, d\mu \;=\; \frac{1}{p} + \frac{1}{q} \;=\; 1.$$
 
@@ -151,13 +128,13 @@ No Young is needed. Except on a null set (a set of measure 0), $\lvert g \rvert 
 
 ### Step 4: the equality cases
 
-Equality in Step 2 means the gap $F^p/p + G^q/q - FG$ integrates to 0. The gap is never negative, so it is 0 almost everywhere (proved on [markov-and-chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)). Young's equality case then gives $F^p = G^q$ almost everywhere: $\lvert f \rvert^p$ is a constant multiple of $\lvert g \rvert^q$. For the signed integral, $fg$ must also keep one sign.
+Equality in Step 2 means the gap $F^p/p + G^q/q - FG$ integrates to 0. The gap is never negative, so it is 0 almost everywhere (proved on [Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)). Young's equality case then gives $F^p = G^q$ almost everywhere: $\lvert f \rvert^p$ is a constant multiple of $\lvert g \rvert^q$. For the signed integral, $fg$ must also keep one sign.
 
 On the turbine, a price of 10 times the wind meets the Cauchy-Schwarz ceiling: revenue \$2,030, ceiling 2030.000000. At $p = 3$ the rule asks for $w^3$ in proportion to $c^{3/2}$, so a price in proportion to $w^2$: 9, 25, 64, 4, 36, 16, 49 gives revenue \$1,295 and ceiling 1295.000000. At $p = 1$, equality needs $\lvert g \rvert = \lVert g \rVert_\infty$ almost everywhere where $f \ne 0$.
 
 ### Step 5: Cauchy-Schwarz and correlation
 
-At $p = q = 2$ there is a second proof with no Young: $(f - xg)^2$ integrates to something non-negative for every number $x$, and the smallest value over $x$ gives $(\int fg)^2 \le \int f^2 \int g^2$. That is the argument of [dot-product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md) with integrals for sums. On finitely many points the slack has an exact form, Lagrange's identity (expand the right side and the cross terms cancel):
+At $p = q = 2$ there is a second proof with no Young: $(f - xg)^2$ integrates to something non-negative for every number $x$, and the smallest value over $x$ gives $(\int fg)^2 \le \int f^2 \int g^2$. That is the argument of [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md) with integrals for sums. On finitely many points the slack has an exact form, Lagrange's identity (expand the right side and the cross terms cancel):
 
 $$\Big(\sum_i w_i^2\Big)\Big(\sum_i c_i^2\Big) - \Big(\sum_i w_i c_i\Big)^2 \;=\; \sum_{i<j} (w_i c_j - w_j c_i)^2 .$$
 
@@ -168,7 +145,7 @@ For random variables $X$ and $Y$ with finite $\int X^2 \, dP$ and $\int Y^2 \, d
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal{F}, \mu)$ is a measure space; $f, g$ are measurable with respect to $\mathcal{F}$, real or complex. For non-negative measurable functions the integral is monotone, additive and pulls out constants; a non-negative function with integral 0 is 0 almost everywhere ([integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md), [markov-and-chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)). Conventions: $1/\infty = 0$, $0 \cdot \infty = 0$.
+**Setting.** $(\Omega, \mathcal{F}, \mu)$ is a measure space; $f, g$ are measurable with respect to $\mathcal{F}$, real or complex. For non-negative measurable functions the integral is monotone, additive and pulls out constants; a non-negative function with integral 0 is 0 almost everywhere ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md), [Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)). Conventions: $1/\infty = 0$, $0 \cdot \infty = 0$.
 
 **Lemma 1 (Young).** Let $1 < p < \infty$, $q = p/(p - 1)$, $a, b \ge 0$. Then $ab \le a^p/p + b^q/q$, with equality if and only if $a^p = b^q$. *Proof.* If $a$ or $b$ is 0, the left side is 0 and the right side is at least 0, with equality exactly when both are 0. Otherwise put $x = a^p$, $y = b^q$, $t = 1/p \in (0, 1)$. The second derivative of $\ln$ is $-1/x^2 < 0$, so $\ln$ is strictly concave: $\ln(tx + (1 - t)y) \ge t \ln x + (1 - t)\ln y = \ln(ab)$, with equality if and only if $x = y$. Apply the increasing function $\exp$.
 
@@ -176,7 +153,7 @@ For random variables $X$ and $Y$ with finite $\int X^2 \, dP$ and $\int Y^2 \, d
 
 **Theorem 2 (the ends).** $\int \lvert fg \rvert \, d\mu \le \lVert f \rVert_1 \lVert g \rVert_\infty$. *Proof.* The cases with a size 0 or infinite go as in Theorem 1. Let $M = \lVert g \rVert_\infty$. Each set $\{\lvert g \rvert > M + 1/n\}$, for $n$ a whole number, has measure 0 because $M$ is the least bound that holds almost everywhere; their countable union $N = \{\lvert g \rvert > M\}$ has measure 0. Off $N$, $\lvert fg \rvert \le M\lvert f \rvert$, and a null set carries no integral.
 
-**Corollary 1.** If $fg$ is integrable, $\lvert \int fg \, d\mu \rvert \le \int \lvert fg \rvert \, d\mu$ ([integrable-functions-and-l1](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)); Theorems 1 and 2 show that $f$ in $L^p$ and $g$ in $L^q$ make $fg$ integrable.
+**Corollary 1.** If $fg$ is integrable, $\lvert \int fg \, d\mu \rvert \le \int \lvert fg \rvert \, d\mu$ ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)); Theorems 1 and 2 show that $f$ in $L^p$ and $g$ in $L^q$ make $fg$ integrable.
 
 **Theorem 3 (equality, $1 < p < \infty$, finite positive sizes).** Equality holds if and only if $\alpha \lvert f \rvert^p = \beta \lvert g \rvert^q$ almost everywhere, with $\alpha, \beta \ge 0$ not both 0. *Proof.* Equality means $\int (F^p/p + G^q/q - FG) \, d\mu = 0$, all three integrals finite. The integrand is non-negative by Lemma 1, so it is 0 almost everywhere, so $F^p = G^q$ almost everywhere by Lemma 1's equality case: $\lVert g \rVert_q^q \lvert f \rvert^p = \lVert f \rVert_p^p \lvert g \rvert^q$. Conversely, integrating $\alpha \lvert f \rvert^p = \beta \lvert g \rvert^q$ gives $\alpha \lVert f \rVert_p^p = \beta \lVert g \rVert_q^q$; both sizes are positive, so $\alpha, \beta > 0$, and $F^p = G^q$, the integrand is 0 and $\int FG \, d\mu = 1$.
 
@@ -184,7 +161,7 @@ For random variables $X$ and $Y$ with finite $\int X^2 \, dP$ and $\int Y^2 \, d
 
 </details>
 
-Another road runs through Jensen's inequality, of which Young's is the two-point case with weights $1/p$ and $1/q$: [jensens-inequality](04-jensens-inequality.md).
+Another road runs through Jensen's inequality, of which Young's is the two-point case with weights $1/p$ and $1/q$: [Jensen's inequality](04-jensens-inequality.md).
 
 ---
 
@@ -653,10 +630,10 @@ The two outputs are identical line for line.
 
 ## Where you meet it in real life
 
-- **Correlation and portfolio risk.** Every correlation lies between −1 and 1 because of Step 5 (covariances from tables are on [joint-distributions-and-covariance](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)), so a portfolio's standard deviation never exceeds the sum of its parts' standard deviations.
-- **The triangle inequality for sizes.** Holder is the key step in proving $\lVert f + g \rVert_p \le \lVert f \rVert_p + \lVert g \rVert_p$ ([minkowskis-inequality](03-minkowskis-inequality.md)), which makes the p-size a distance.
-- **Moments of random variables.** With $g = 1$ on a probability space, Holder gives $\lVert X \rVert_1 \le \lVert X \rVert_p$: a finite p-th moment forces a finite mean ([jensens-inequality](04-jensens-inequality.md) orders all the moments).
-- **Signal processing and physics.** The uncertainty principle, that a signal cannot be sharply located in both time and frequency, starts from Cauchy-Schwarz (uncertainty-principle).
+- **Correlation and portfolio risk.** Every correlation lies between −1 and 1 because of Step 5 (covariances from tables are on [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)), so a portfolio's standard deviation never exceeds the sum of its parts' standard deviations.
+- **The triangle inequality for sizes.** Holder is the key step in proving $\lVert f + g \rVert_p \le \lVert f \rVert_p + \lVert g \rVert_p$ ([Minkowski's inequality](03-minkowskis-inequality.md)), which makes the p-size a distance.
+- **Moments of random variables.** With $g = 1$ on a probability space, Holder gives $\lVert X \rVert_1 \le \lVert X \rVert_p$: a finite p-th moment forces a finite mean ([Jensen's inequality](04-jensens-inequality.md) orders all the moments).
+- **Signal processing and physics.** The uncertainty principle, that a signal cannot be sharply located in both time and frequency, starts from Cauchy-Schwarz (The uncertainty principle).
 
 > **Say it back**
 > Young's inequality, ab ≤ a^p/p + b^q/q when 1/p + 1/q = 1, comes from the concavity of the logarithm. Rescale two functions to size 1, apply Young at every point and integrate: the product integrates to at most 1. Undoing the rescaling is Holder's inequality; p = q = 2 is Cauchy-Schwarz, which keeps correlations between −1 and 1. Equality needs the p-th power of one function in proportion to the q-th power of the other. The turbine earned \$1,515 against ceilings of \$1,898.22 at p = 2 and \$1,886.91 at the best p.
@@ -665,20 +642,20 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [lp-spaces](01-lp-spaces.md): the p-size of a function and the essential top $\lVert g \rVert_\infty$, which are the two sides of the inequality.
-- [dot-product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): Cauchy-Schwarz for lists of numbers by the smallest squared length, the road Step 5 reuses with integrals.
-- [convex-functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md): chords below a concave graph, which is all Young's inequality needs.
+- [Lp spaces](01-lp-spaces.md): the p-size of a function and the essential top $\lVert g \rVert_\infty$, which are the two sides of the inequality.
+- [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): Cauchy-Schwarz for lists of numbers by the smallest squared length, the road Step 5 reuses with integrals.
+- [Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md): chords below a concave graph, which is all Young's inequality needs.
 
 ## Where this goes next
 
-- [minkowskis-inequality](03-minkowskis-inequality.md): Holder on $\lvert f + g \rvert^{p-1}$ proves the triangle inequality for p-sizes.
-- [l2-as-a-hilbert-space](06-l2-as-a-hilbert-space.md): Cauchy-Schwarz makes $\int fg \, d\mu$ an inner product, with angles and projections.
-- dual-spaces-and-lp-duality: the equality case makes $L^q$ the dual of $L^p$.
-- sobolev-embedding-and-poincare-inequality: Holder turns bounds on a derivative into bounds on the function.
-- uncertainty-principle: Cauchy-Schwarz caps how concentrated a signal and its spectrum can be together.
-- interpolation-riesz-thorin-and-marcinkiewicz: Holder's convexity in 1/p grows into operator bounds between the ends.
+- [Minkowski's inequality](03-minkowskis-inequality.md): Holder on $\lvert f + g \rvert^{p-1}$ proves the triangle inequality for p-sizes.
+- [L2 as a Hilbert space](06-l2-as-a-hilbert-space.md): Cauchy-Schwarz makes $\int fg \, d\mu$ an inner product, with angles and projections.
+- Dual spaces: the equality case makes $L^q$ the dual of $L^p$.
+- Sobolev and Poincare: Holder turns bounds on a derivative into bounds on the function.
+- The uncertainty principle: Cauchy-Schwarz caps how concentrated a signal and its spectrum can be together.
+- Interpolation: Holder's convexity in 1/p grows into operator bounds between the ends.
 
-Holder caps the integral of a product; whether the p-size of a sum is capped by the sum of the p-sizes is the question [minkowskis-inequality](03-minkowskis-inequality.md) answers.
+Holder caps the integral of a product; whether the p-size of a sum is capped by the sum of the p-sizes is the question [Minkowski's inequality](03-minkowskis-inequality.md) answers.
 
 ---
 

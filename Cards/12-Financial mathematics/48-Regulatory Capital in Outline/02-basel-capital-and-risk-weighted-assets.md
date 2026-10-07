@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Regulatory Capital in Outline
-topic: Capital ratios and buffers
-item: Basel capital
-kind: convention
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/48-Regulatory Capital in Outline/01-expected-versus-unexpected-loss|expected-versus-unexpected-loss]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/03-vasicek-loss-distribution-and-basel-capital|vasicek-loss-distribution-and-basel-capital]]"
-next:
-  - "[[Cards/12-Financial mathematics/48-Regulatory Capital in Outline/03-vasicek-asrf-and-credit-capital|vasicek-asrf-and-credit-capital]]"
-  - "[[Cards/12-Financial mathematics/48-Regulatory Capital in Outline/05-liquidity-and-leverage-ratios|liquidity-and-leverage-ratios]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - basel-capital-and-risk-weighted-assets
----
-
 # Basel capital: risk-weighted assets, the ratios, and the buffers on top
 
-Financial mathematics → Regulatory Capital in Outline → Capital ratios and buffers → Basel capital
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Regulatory Capital in Outline](../../../SYLLABUS.md#w12-s48) → Basel capital
 
 ---
 
@@ -107,7 +86,7 @@ This is a convention: it holds wherever a supervisor has written it into law, an
 
 A bank's balance sheet is loans on one side and, on the other, what it owes plus what its owners put in. A loss writes down a loan. The other side must shrink by the same amount, and the owners' claim ranks last, so it shrinks first. So owners' capital is a cushion: it absorbs losses in full until it is gone, and then depositors are exposed.
 
-The question "is there enough cushion?" needs a yardstick. The earlier card [expected-versus-unexpected-loss](01-expected-versus-unexpected-loss.md) split a loan book's losses in two: the **expected loss**, the ordinary cost of lending that prices and provisions already cover, and the **unexpected loss**, the extra a bad year can bring. Capital is for the second. So the yardstick should grow with how much a bad year could cost, not with the face value of the loans.
+The question "is there enough cushion?" needs a yardstick. The earlier card [Expected and unexpected loss](01-expected-versus-unexpected-loss.md) split a loan book's losses in two: the **expected loss**, the ordinary cost of lending that prices and provisions already cover, and the **unexpected loss**, the extra a bad year can bring. Capital is for the second. So the yardstick should grow with how much a bad year could cost, not with the face value of the loans.
 
 ### Step 1: weight each loan by how much a bad year could cost
 
@@ -115,11 +94,11 @@ A dollar lent against a house worth well more than the loan can lose far less th
 
 $$\text{credit RWA} = 0.30 \times 400 + 1.00 \times 400 + 0.75 \times 200 = 120 + 400 + 150 = 670$$
 
-The weights are not guessed. Under the internal-ratings route, a bank's own default probabilities go into a formula that asks how much of a loan could be lost in a year as bad as one in a thousand; [vasicek-loss-distribution-and-basel-capital](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md) derives it. The standardised weights used here are fixed values the Committee sets for each kind of loan: a simpler stand-in for that formula.
+The weights are not guessed. Under the internal-ratings route, a bank's own default probabilities go into a formula that asks how much of a loan could be lost in a year as bad as one in a thousand; [Vasicek's large-pool loss curve](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md) derives it. The standardised weights used here are fixed values the Committee sets for each kind of loan: a simpler stand-in for that formula.
 
 ### Step 2: the 12.5 turns a capital charge into risk-weighted assets
 
-Market risk and operational risk are not measured loan by loan. Their calculations produce a capital charge directly: dollars of capital the bank must hold. The market-risk charge on the trading book comes from [frtb-and-the-shift-to-expected-shortfall](04-frtb-and-the-shift-to-expected-shortfall.md); here it is $12m. The operational charge for a bank this size (business indicator up to €1 billion) is 12 percent of its **business indicator**, a measure of income from lending, fees and trading; a $120m indicator gives $14.40m.
+Market risk and operational risk are not measured loan by loan. Their calculations produce a capital charge directly: dollars of capital the bank must hold. The market-risk charge on the trading book comes from [Market-risk capital](04-frtb-and-the-shift-to-expected-shortfall.md); here it is $12m. The operational charge for a bank this size (business indicator up to €1 billion) is 12 percent of its **business indicator**, a measure of income from lending, fees and trading; a $120m indicator gives $14.40m.
 
 To put those charges on the same scale as credit RWA, ask: what RWA would need exactly this much capital at the 8 percent total minimum? The answer is the charge divided by 8 percent, and dividing by 0.08 is multiplying by 12.5.
 
@@ -183,7 +162,7 @@ The code finds each breaking point twice: from the formula, and by bisection (ha
 
 ### Other routes
 
-Banks approved to use their own models compute credit RWA from the internal-ratings formula instead of fixed weights; [vasicek-asrf-and-credit-capital](03-vasicek-asrf-and-credit-capital.md) does that route properly. Their RWA may not fall below 72.5 percent of the standardised figure, a rule called the output floor. Everything after $R$ on this card is unchanged by the choice.
+Banks approved to use their own models compute credit RWA from the internal-ratings formula instead of fixed weights; [The Basel credit formula](03-vasicek-asrf-and-credit-capital.md) does that route properly. Their RWA may not fall below 72.5 percent of the standardised figure, a rule called the output floor. Everything after $R$ on this card is unchanged by the choice.
 
 ---
 
@@ -693,7 +672,7 @@ The two outputs agree line for line.
 - **Additional Tier 1 coupons.** Interest on Additional Tier 1 bonds counts as a distribution, so a bank inside its buffer may have to skip those coupons. Investors in these bonds watch the cushion closely.
 - **Stress tests.** Supervisors project losses and RWA growth over a severe scenario, the numerator and denominator forces on this card, and check the ratio stays above its floor at the worst point.
 - **Countercyclical buffers.** National authorities raise the buffer rate when credit grows fast and cut it in a crisis, releasing capital for lending.
-- **Leverage and liquidity.** A second rule, [liquidity-and-leverage-ratios](05-liquidity-and-leverage-ratios.md), divides capital by unweighted exposure, a backstop in case the weights are wrong.
+- **Leverage and liquidity.** A second rule, [Liquidity and leverage](05-liquidity-and-leverage-ratios.md), divides capital by unweighted exposure, a backstop in case the weights are wrong.
 
 > **Say it back**
 > A bank's owners' capital absorbs losses before depositors do. The Basel rules measure it against risk-weighted assets: each loan times its weight, plus 12.5 times the capital charges for market and operational risk, $1,000m here. CET1 must first cover the 4.5, 6 and 8 percent minimums wherever other capital is missing, then carry a 2.5 percent buffer, so this bank needs 10.5 percent and holds 12. A loss of $15m or more puts it inside the buffer, which does not close it but limits its payouts in steps as the buffer is used.
@@ -702,13 +681,13 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [expected-versus-unexpected-loss](01-expected-versus-unexpected-loss.md): why capital covers the unexpected part of a year's losses, and provisions the expected part.
-- [vasicek-loss-distribution-and-basel-capital](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md): the credit-capital formula behind the risk weights, a one-in-a-thousand bad year for a whole loan book.
+- [Expected and unexpected loss](01-expected-versus-unexpected-loss.md): why capital covers the unexpected part of a year's losses, and provisions the expected part.
+- [Vasicek's large-pool loss curve](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md): the credit-capital formula behind the risk weights, a one-in-a-thousand bad year for a whole loan book.
 
 ## Where this goes next
 
-- [vasicek-asrf-and-credit-capital](03-vasicek-asrf-and-credit-capital.md): the third card on this shelf, where a bank's own default probabilities replace the fixed 30, 75 and 100 percent weights.
-- [liquidity-and-leverage-ratios](05-liquidity-and-leverage-ratios.md): the unweighted leverage ratio and the cash tests that sit beside the risk-based ratio.
+- [The Basel credit formula](03-vasicek-asrf-and-credit-capital.md): the third card on this shelf, where a bank's own default probabilities replace the fixed 30, 75 and 100 percent weights.
+- [Liquidity and leverage](05-liquidity-and-leverage-ratios.md): the unweighted leverage ratio and the cash tests that sit beside the risk-based ratio.
 
 This card took the risk weights as given; the open question is where a weight such as 100 percent for a corporate loan comes from, and the internal-ratings formula answers it.
 

@@ -1,38 +1,12 @@
----
-type: card
-wing: 03-Algebra
-shelf: Groups
-topic: Counting in blocks
-item: Cosets and Lagrange's theorem
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/08-Groups/02-subgroups-and-cyclic-groups|subgroups-and-cyclic-groups]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/06-equivalence-relations-and-partitions|equivalence-relations-and-partitions]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/03-eulers-totient|eulers-totient]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/04-eulers-theorem|eulers-theorem]]"
-next:
-  - "[[Cards/03-Algebra/08-Groups/05-homomorphisms-and-isomorphisms|homomorphisms-and-isomorphisms]]"
-  - "[[Cards/03-Algebra/08-Groups/08-group-actions-and-counting|group-actions-and-counting]]"
-  - "[[Cards/17-Topology/04-Homotopy/05-covering-spaces|covering-spaces]]"
-  - "[[Cards/21-Algebraic and analytic number theory/05-Fields and Galois Theory/05-galois-groups-and-the-fundamental-theorem|galois-groups-and-the-fundamental-theorem]]"
-  - "[[Cards/23-Differential geometry and Lie groups/06-Lie Groups/06-homogeneous-spaces-and-group-actions|homogeneous-spaces-and-group-actions]]"
-tags:
-  - mathematics
-  - algebra
-  - cosets-and-lagranges-theorem
----
-
 # Cosets and Lagrange's theorem: a subgroup slices the group into equal blocks, so its size divides the group's size
 
-Algebra → Groups → Counting in blocks → Cosets and Lagrange's theorem
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Groups](../../../SYLLABUS.md#w03-s08) → Cosets and Lagrange's theorem
 
 ---
 
 ## General Overview
 
-A 12-hour clock carries twelve hour marks, 0 to 11, and adding hours wraps round: 11 o'clock plus one hour reads 0. The twelve hours under that addition are a group: a set with one operation, a member that changes nothing, and an undo for every member ([groups](01-groups.md)).
+A 12-hour clock carries twelve hour marks, 0 to 11, and adding hours wraps round: 11 o'clock plus one hour reads 0. The twelve hours under that addition are a group: a set with one operation, a member that changes nothing, and an undo for every member ([Groups](01-groups.md)).
 
 Inside them sit the quarter marks. From 0, keep adding 3: 0, 3, 6, 9, then 0 again. Those four are closed under the same addition and hold each other's undos, so they are a group in their own right — a **subgroup**, here called H.
 
@@ -124,13 +98,13 @@ A subgroup holds the member that changes nothing, 0 here, so $g * H$ contains $g
 
 The blocks are all the size of H, no two overlap unless equal, and together they hold everyone. Counting a block at a time gives blocks times block size: 12 = 3 × 4. As arithmetic, 4 divides 12.
 
-Combining a member with itself repeatedly gives a cycle that is a subgroup, of size that member's **order** ([subgroups-and-cyclic-groups](02-subgroups-and-cyclic-groups.md)). So every member's order divides the group's size.
+Combining a member with itself repeatedly gives a cycle that is a subgroup, of size that member's **order** ([Subgroups and cyclic groups](02-subgroups-and-cyclic-groups.md)). So every member's order divides the group's size.
 
 ### Step 4: Euler's theorem is the same count
 
-Keep the twelve hours and multiply instead of adding, still wrapping at 12. Most hours lose their undo: no hour times 2 reads 1, since 2 times anything is even. The hours keeping one share no factor with 12 ([eulers-totient](../../02-Number%20theory/04-Powers%20on%20the%20Clock/03-eulers-totient.md)): 1, 5, 7 and 11, which is what phi(12) counts. They combine to give each other and each has an undo inside — a group of size 4, the **units** of the 12-clock.
+Keep the twelve hours and multiply instead of adding, still wrapping at 12. Most hours lose their undo: no hour times 2 reads 1, since 2 times anything is even. The hours keeping one share no factor with 12 ([Euler's totient](../../02-Number%20theory/04-Powers%20on%20the%20Clock/03-eulers-totient.md)): 1, 5, 7 and 11, which is what phi(12) counts. They combine to give each other and each has an undo inside — a group of size 4, the **units** of the 12-clock.
 
-Step 3 says every member's order divides 4, so four multiplies is a whole number of return trips to 1: each of 1, 5, 7 and 11 to the fourth power reads 1. That is Euler's theorem at this modulus ([eulers-theorem](../../02-Number%20theory/04-Powers%20on%20the%20Clock/04-eulers-theorem.md)), counted in blocks.
+Step 3 says every member's order divides 4, so four multiplies is a whole number of return trips to 1: each of 1, 5, 7 and 11 to the fourth power reads 1. That is Euler's theorem at this modulus ([Euler's theorem](../../02-Number%20theory/04-Powers%20on%20the%20Clock/04-eulers-theorem.md)), counted in blocks.
 
 <details>
 <summary>What Lagrange does not promise</summary>
@@ -139,7 +113,7 @@ The theorem runs one way. The units group has size 4 and its members' orders are
 
 </details>
 
-A second road reaches the same partition: two members are related when combining one's undo with the other lands in H. That relation is reflexive, symmetric and transitive, and such a relation cuts a set into non-overlapping classes ([equivalence-relations-and-partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md)) — the cosets.
+A second road reaches the same partition: two members are related when combining one's undo with the other lands in H. That relation is reflexive, symmetric and transitive, and such a relation cuts a set into non-overlapping classes ([Equivalence relations and partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md)) — the cosets.
 
 ---
 
@@ -388,8 +362,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Clock and calendar arithmetic.** The three blocks here are the remainder classes of division by 3: a congruence class is a coset, seen from the group side.
-- **Public-key cryptography.** RSA rests on Euler's theorem ([eulers-theorem](../../02-Number%20theory/04-Powers%20on%20the%20Clock/04-eulers-theorem.md)), which Step 4 reaches as a block count.
-- **Symmetry.** The turns of a square tile are a subgroup of the ways it can be set down, so those ways fall into equal blocks — counted in [group-actions-and-counting](08-group-actions-and-counting.md).
+- **Public-key cryptography.** RSA rests on Euler's theorem ([Euler's theorem](../../02-Number%20theory/04-Powers%20on%20the%20Clock/04-eulers-theorem.md)), which Step 4 reaches as a block count.
+- **Symmetry.** The turns of a square tile are a subgroup of the ways it can be set down, so those ways fall into equal blocks — counted in [Group actions](08-group-actions-and-counting.md).
 
 > **Say it back**
 > A coset is a subgroup slid to a new place by one member of the group. Sliding can be undone, so every coset is the subgroup's size, and two cosets sharing a member are the same coset. Every member sits in one, so the group's size is the block count times the block size. On the clock the quarter marks give three blocks of four; the same count on the hours coprime to 12 is Euler's theorem.
@@ -398,20 +372,20 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [subgroups-and-cyclic-groups](02-subgroups-and-cyclic-groups.md): the subgroup test, and a member's order.
-- [equivalence-relations-and-partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md): why non-overlapping classes can be counted block by block.
-- [eulers-totient](../../02-Number%20theory/04-Powers%20on%20the%20Clock/03-eulers-totient.md): the count phi(12) = 4.
-- [eulers-theorem](../../02-Number%20theory/04-Powers%20on%20the%20Clock/04-eulers-theorem.md): the same conclusion by shuffling remainders.
+- [Subgroups and cyclic groups](02-subgroups-and-cyclic-groups.md): the subgroup test, and a member's order.
+- [Equivalence relations and partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md): why non-overlapping classes can be counted block by block.
+- [Euler's totient](../../02-Number%20theory/04-Powers%20on%20the%20Clock/03-eulers-totient.md): the count phi(12) = 4.
+- [Euler's theorem](../../02-Number%20theory/04-Powers%20on%20the%20Clock/04-eulers-theorem.md): the same conclusion by shuffling remainders.
 
 ## Where this goes next
 
-- [homomorphisms-and-isomorphisms](05-homomorphisms-and-isomorphisms.md): maps whose equal-value blocks are one subgroup's cosets.
-- [group-actions-and-counting](08-group-actions-and-counting.md): equal blocks counting arrangements.
-- covering-spaces: the index counting sheets above a space.
-- galois-groups-and-the-fundamental-theorem: subgroups sized by the index.
-- homogeneous-spaces-and-group-actions: cosets forming a smooth space.
+- [Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md): maps whose equal-value blocks are one subgroup's cosets.
+- [Group actions](08-group-actions-and-counting.md): equal blocks counting arrangements.
+- Covering spaces: the index counting sheets above a space.
+- The Galois correspondence: subgroups sized by the index.
+- Group action and homogeneous space: cosets forming a smooth space.
 
-The blocks are so far a list of sets with no way to combine two of them; when they form a group of their own is [normal-subgroups-and-quotient-groups](06-normal-subgroups-and-quotient-groups.md).
+The blocks are so far a list of sets with no way to combine two of them; when they form a group of their own is [Normal subgroups and quotient groups](06-normal-subgroups-and-quotient-groups.md).
 
 ---
 

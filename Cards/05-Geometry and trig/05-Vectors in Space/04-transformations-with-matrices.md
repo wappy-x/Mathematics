@@ -1,29 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Vectors in Space
-topic: Homogeneous coordinates
-item: Moving shapes with matrices
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/05-Vectors in Space/01-cross-product-and-oriented-area|cross-product-and-oriented-area]]"
-  - "[[Cards/03-Algebra/04-Matrices/04-linear-maps-as-matrices|linear-maps-as-matrices]]"
-next:
-  - "[[Cards/05-Geometry and trig/05-Vectors in Space/05-perspective-and-projective-coordinates|perspective-and-projective-coordinates]]"
-  - "[[Cards/05-Geometry and trig/06-Beyond Euclid/04-symmetry-and-tilings|symmetry-and-tilings]]"
-  - "[[Cards/13-Engineering mathematics/09-Quantum Mechanics in Outline/06-spin-and-two-state-systems|spin-and-two-state-systems]]"
-  - "[[Cards/23-Differential geometry and Lie groups/06-Lie Groups/04-rotations-so3-and-quaternions|rotations-so3-and-quaternions]]"
-tags:
-  - mathematics
-  - geometry and trig
-  - transformations-with-matrices
----
-
 # Moving shapes with matrices: rotate, reflect, scale and shift with one multiplication
 
-Geometry and trig → Vectors in Space → Homogeneous coordinates → Moving shapes with matrices
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Vectors in Space](../../../SYLLABUS.md#w05-s05) → Moving shapes with matrices
 
 ---
 
@@ -82,7 +59,7 @@ For the logo, H's top two rows are `0.866025 -0.500000 0.901924` and `0.500000 0
 - **Up is up.** On a screen that counts y downwards, the same matrix turns clockwise.
 - **The angle in radians inside code.** Feeding the sine 30 sends B to (3.617006, −2.952126).
 - **A 1 on every point.** A corner written with 0 acts as a direction and ignores every shift.
-- **Bottom row `0 0 1`.** Any other bottom row makes a perspective map, which needs a division ([perspective-and-projective-coordinates](05-perspective-and-projective-coordinates.md)).
+- **Bottom row `0 0 1`.** Any other bottom row makes a perspective map, which needs a division ([Perspective](05-perspective-and-projective-coordinates.md)).
 
 ---
 
@@ -94,9 +71,9 @@ Multiply any matrix into the zero vector and zero comes out. A slide by (a, b) m
 
 ### Step 1: the rotation matrix comes from where the axis arrows go
 
-A matrix's columns are where it sends the axis arrows (1, 0) and (0, 1) ([linear-maps-as-matrices](../../03-Algebra/04-Matrices/04-linear-maps-as-matrices.md)). Turn (1, 0) by θ: it lands on the unit circle at (cos θ, sin θ). Turn (0, 1), which already sits a quarter turn ahead: it lands at (−sin θ, cos θ). Those are the two columns of R.
+A matrix's columns are where it sends the axis arrows (1, 0) and (0, 1) ([Linear maps](../../03-Algebra/04-Matrices/04-linear-maps-as-matrices.md)). Turn (1, 0) by θ: it lands on the unit circle at (cos θ, sin θ). Turn (0, 1), which already sits a quarter turn ahead: it lands at (−sin θ, cos θ). Those are the two columns of R.
 
-Polar coordinates give the same matrix. A point at distance $r$ and angle $\varphi$ is (r cos φ, r sin φ); turning adds θ to the angle, and the addition formulas ([trig-identities](../03-Trigonometry/03-trig-identities.md)) expand the result to x cos θ − y sin θ and x sin θ + y cos θ. That is R times (x, y), and the code's second road.
+Polar coordinates give the same matrix. A point at distance $r$ and angle $\varphi$ is (r cos φ, r sin φ); turning adds θ to the angle, and the addition formulas ([Trig identities](../03-Trigonometry/03-trig-identities.md)) expand the result to x cos θ − y sin θ and x sin θ + y cos θ. That is R times (x, y), and the code's second road.
 
 F keeps y and negates x; S multiplies both by k. Each is read off from where the axis arrows go.
 
@@ -119,7 +96,7 @@ With p = 3, q = 1, θ = 30°, these are 0.901924 and −1.366025. They are exact
 
 R's columns are each 1 long (cos^2θ + sin^2θ = 1) and at right angles (dot product −cos θ sin θ + sin θ cos θ = 0), so R keeps lengths; a shift cancels in any difference of two points. H keeps the sides at 4 cm and 2 cm.
 
-Area follows the determinant of the top-left block ([cross-product-and-oriented-area](01-cross-product-and-oriented-area.md)): cos^2θ + sin^2θ = 1 for R, so 8 square cm stays 8 square cm. A move that keeps every distance, like R, F or H, is an **isometry**. For S(k) it is k × k: scaling by 1.5 gives 18 square cm. For F it is −1: the mirrored logo's corners run clockwise and its signed area reads −8 square cm.
+Area follows the determinant of the top-left block ([Cross product](01-cross-product-and-oriented-area.md)): cos^2θ + sin^2θ = 1 for R, so 8 square cm stays 8 square cm. A move that keeps every distance, like R, F or H, is an **isometry**. For S(k) it is k × k: scaling by 1.5 gives 18 square cm. For F it is −1: the mirrored logo's corners run clockwise and its signed area reads −8 square cm.
 
 <details>
 <summary>Detailed proof: a rotation keeps every distance</summary>
@@ -128,7 +105,7 @@ Two points differ by (u, v). R sends that difference to (u cos θ − v sin θ, 
 
 </details>
 
-In three dimensions the same construction uses 4 × 4 matrices, and the turns themselves are the subject of rotations-so3-and-quaternions.
+In three dimensions the same construction uses 4 × 4 matrices, and the turns themselves are the subject of Rotation group.
 
 ---
 
@@ -364,7 +341,7 @@ ALL CHECKS PASS
 
 - **Graphics files.** An SVG file's `matrix(a b c d e f)` transform is H's top two rows read column by column; this logo's turn is `matrix(0.866025 0.5 -0.5 0.866025 0.901924 -1.366025)`. SVG counts y downwards, so on screen it turns clockwise.
 - **Games, robot arms and drones.** A pose is a chain of matrices, shoulder to elbow to hand, multiplied into one; in space each is 4 × 4.
-- **Tilings and patterns.** The turns and mirrors that map a wallpaper onto itself are these matrices ([symmetry-and-tilings](../06-Beyond%20Euclid/04-symmetry-and-tilings.md)).
+- **Tilings and patterns.** The turns and mirrors that map a wallpaper onto itself are these matrices ([Symmetry](../06-Beyond%20Euclid/04-symmetry-and-tilings.md)).
 
 > **Say it back**
 > A turn, a mirror and a resize are matrices, but a slide is not, because a matrix cannot move the origin. Give every point a third coordinate of 1 and the slide becomes a matrix too. Moves chain by multiplication, first move on the right, so turning about a corner is slide, turn, slide back, all in one matrix. A turn keeps lengths and area, a mirror flips the area's sign, a scale by k multiplies area by k twice.
@@ -373,15 +350,15 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [cross-product-and-oriented-area](01-cross-product-and-oriented-area.md): signed area, whose sign is how a mirror shows up.
-- [linear-maps-as-matrices](../../03-Algebra/04-Matrices/04-linear-maps-as-matrices.md): columns as the images of the axis arrows, and composition as a product with the first move on the right.
+- [Cross product](01-cross-product-and-oriented-area.md): signed area, whose sign is how a mirror shows up.
+- [Linear maps](../../03-Algebra/04-Matrices/04-linear-maps-as-matrices.md): columns as the images of the axis arrows, and composition as a product with the first move on the right.
 
 ## Where this goes next
 
-- [perspective-and-projective-coordinates](05-perspective-and-projective-coordinates.md): a bottom row other than `0 0 1`, and the division that makes far things small.
-- [symmetry-and-tilings](../06-Beyond%20Euclid/04-symmetry-and-tilings.md): the moves that leave a pattern unchanged, and how they combine.
-- spin-and-two-state-systems: rotation matrices acting on a quantum state instead of a logo.
-- rotations-so3-and-quaternions: turns in three dimensions, and a four-number shortcut for chaining them.
+- [Perspective](05-perspective-and-projective-coordinates.md): a bottom row other than `0 0 1`, and the division that makes far things small.
+- [Symmetry](../06-Beyond%20Euclid/04-symmetry-and-tilings.md): the moves that leave a pattern unchanged, and how they combine.
+- Spin one-half: rotation matrices acting on a quantum state instead of a logo.
+- Rotation group: turns in three dimensions, and a four-number shortcut for chaining them.
 
 ---
 

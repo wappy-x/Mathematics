@@ -1,35 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Limits and Continuity
-topic: Roots from sign changes
-item: Intermediate value theorem
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/05-continuity|continuity]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/02-supremum-and-completeness|supremum-and-completeness]]"
-next:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/07-extreme-value-theorem|extreme-value-theorem]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/05-root-finding-for-inverses|root-finding-for-inverses]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/01-implied-volatility|implied-volatility]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/02-implied-volatility-by-newton-and-bisection|implied-volatility-by-newton-and-bisection]]"
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/07-barrier-inverses-level-and-volatility|barrier-inverses-level-and-volatility]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/06-fx-strike-from-delta|fx-strike-from-delta]]"
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/02-market-strangle-and-smile-strangle|market-strangle-and-smile-strangle]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/08-barrier-level-from-a-target-premium|barrier-level-from-a-target-premium]]"
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/05-implied-correlation-from-a-quanto|implied-correlation-from-a-quanto]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/06-implied-correlation-from-a-spread-option|implied-correlation-from-a-spread-option]]"
-  - "[[Cards/16-Numerical analysis/02-Root Finding and Fixed Points/01-bisection-and-bracketing|bisection-and-bracketing]]"
-  - "[[Cards/17-Topology/02-Topological Spaces/07-connectedness-and-path-connectedness|connectedness-and-path-connectedness]]"
-  - "[[Cards/17-Topology/02-Topological Spaces/08-images-of-compact-and-connected-sets|images-of-compact-and-connected-sets]]"
-tags: [mathematics, calculus and analysis, intermediate-value-theorem]
----
-
 # Intermediate value theorem: a continuous function cannot skip a value
 
-Calculus and analysis → Limits and Continuity → Roots from sign changes → Intermediate value theorem
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Limits and Continuity](../../../SYLLABUS.md#w06-s01) → Intermediate value theorem
 
 ---
 
@@ -39,7 +10,7 @@ A square tile of side 1 m covers 1 square metre. A tile of side 2 m covers 4. So
 
 Measure the miss: side squared minus 2. At side 1 it is −1; at side 2 it is +2. As the side grows smoothly, the miss cannot get from below zero to above without passing through zero. That side is the square root of two, about 1.414213562373095 m.
 
-The **intermediate value theorem** turns this into a proof. It says a continuous function (one whose graph has no jumps or holes, [continuity](05-continuity.md)) on a closed interval takes every value between its two end values. A sign change at the ends proves a root exists. Halving the interval over and over, called **bisection**, is both the proof and a way to close in on the root. How many roots there are, the theorem never says.
+The **intermediate value theorem** turns this into a proof. It says a continuous function (one whose graph has no jumps or holes, [Continuity](05-continuity.md)) on a closed interval takes every value between its two end values. A sign change at the ends proves a root exists. Halving the interval over and over, called **bisection**, is both the proof and a way to close in on the root. How many roots there are, the theorem never says.
 
 **A function that is continuous on a closed interval, below a target at one end and above it at the other, equals the target somewhere in between: at least once, possibly more.**
 
@@ -91,7 +62,7 @@ $$b_n - a_n = \frac{b - a}{2^n}$$
 ### When it holds
 
 - **Continuous at every point of the interval.** Drop it and a jump can skip the target: j is −1 below 1.5 and 1 from 1.5 on, changes sign on [1, 2], and is never zero.
-- **A closed interval with no gaps.** The inputs must fill [a, b], ends included. On the fractions alone, x^2 − 2 changes sign on [1, 2] and never hits zero, since the square root of two is not a fraction ([supremum-and-completeness](02-supremum-and-completeness.md)).
+- **A closed interval with no gaps.** The inputs must fill [a, b], ends included. On the fractions alone, x^2 − 2 changes sign on [1, 2] and never hits zero, since the square root of two is not a fraction ([No gaps](02-supremum-and-completeness.md)).
 - **Existence only.** Uniqueness needs a second fact, such as f rising the whole way.
 
 ---
@@ -139,7 +110,7 @@ The cubic h(x) = x^3 − x is −6 at x = −2 and 6 at x = 2. It factors as x(x
 
 For the tile, one more fact gives uniqueness: if 1 ≤ x < z ≤ 2 then z^2 − x^2 = (z − x)(z + x) > 0, so f rises the whole way and crosses zero once. That is a property of this f, not of continuity.
 
-Another road skips the halving: take c = sup of the inputs where f is below zero, and continuity again forbids f(c) above or below zero. The version that treats an interval as one unbroken, connected piece is connectedness-and-path-connectedness.
+Another road skips the halving: take c = sup of the inputs where f is below zero, and continuity again forbids f(c) above or below zero. The version that treats an interval as one unbroken, connected piece is Connected and path-connected.
 
 ---
 
@@ -366,9 +337,9 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Implied volatility.** An option's price rises continuously with volatility; if a low volatility prices below the market and a high one above, some volatility matches the market exactly ([implied-volatility](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md)).
-- **Safe root-finding.** Solvers keep a bracket so they cannot lose the root; halving is the fallback inside faster methods (bisection-and-bracketing).
-- **Desk inverses.** A strike from a quoted delta, a barrier from a target premium: each runs a continuous price backwards, and a sign change proves the answer exists before the search ([fx-strike-from-delta](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md)).
+- **Implied volatility.** An option's price rises continuously with volatility; if a low volatility prices below the market and a high one above, some volatility matches the market exactly ([Implied volatility](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md)).
+- **Safe root-finding.** Solvers keep a bracket so they cannot lose the root; halving is the fallback inside faster methods (Bisection).
+- **Desk inverses.** A strike from a quoted delta, a barrier from a target premium: each runs a continuous price backwards, and a sign change proves the answer exists before the search ([Strike from delta](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md)).
 
 > **Say it back**
 > A continuous function on a closed interval takes every value between its end values. The tile's miss x^2 − 2 is −1 at side 1 and 2 at side 2, so it is zero somewhere between. Halving keeps a bracket, the gap-free real line supplies one point inside all brackets, and continuity forces zero there. A jump or a missing number breaks the argument. The promise is at least one root, not exactly one.
@@ -377,26 +348,26 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [continuity](05-continuity.md): no jumps, stated as a limit; the fact that forces f(c) = 0.
-- [supremum-and-completeness](02-supremum-and-completeness.md): the real line has no gaps, so the shrinking brackets close on a real number.
+- [Continuity](05-continuity.md): no jumps, stated as a limit; the fact that forces f(c) = 0.
+- [No gaps](02-supremum-and-completeness.md): the real line has no gaps, so the shrinking brackets close on a real number.
 
 ## Where this goes next
 
-- [extreme-value-theorem](07-extreme-value-theorem.md): the same hypotheses give a highest and a lowest value.
-- [root-finding-for-inverses](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): solvers that run a price backwards.
-- [implied-volatility](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): its existence is this theorem.
-- [implied-volatility-by-newton-and-bisection](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md): roads 1 and 3, on an option price.
-- [barrier-inverses-level-and-volatility](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/07-barrier-inverses-level-and-volatility.md): a barrier level or volatility, solved for.
-- [fx-strike-from-delta](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md): the strike that gives a quoted delta.
-- [market-strangle-and-smile-strangle](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/02-market-strangle-and-smile-strangle.md): matching a quoted strangle.
-- [barrier-level-from-a-target-premium](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/08-barrier-level-from-a-target-premium.md): the barrier that hits a premium.
-- [implied-correlation-from-a-quanto](../../12-Financial%20mathematics/24-Quantos%20and%20composites/05-implied-correlation-from-a-quanto.md): correlation from a quanto price.
-- [implied-correlation-from-a-spread-option](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/06-implied-correlation-from-a-spread-option.md): correlation from a spread option.
-- bisection-and-bracketing: halving as an algorithm, with stopping rules.
-- connectedness-and-path-connectedness: the property of an interval the proof uses.
-- images-of-compact-and-connected-sets: the theorem in general form.
+- [Extreme value theorem](07-extreme-value-theorem.md): the same hypotheses give a highest and a lowest value.
+- [Solving backwards](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): solvers that run a price backwards.
+- [Implied volatility](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): its existence is this theorem.
+- [Solving for implied volatility](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md): roads 1 and 3, on an option price.
+- [Barrier inverses](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/07-barrier-inverses-level-and-volatility.md): a barrier level or volatility, solved for.
+- [Strike from delta](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md): the strike that gives a quoted delta.
+- [The broker butterfly](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/02-market-strangle-and-smile-strangle.md): matching a quoted strangle.
+- [Solving for the barrier](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/08-barrier-level-from-a-target-premium.md): the barrier that hits a premium.
+- [Correlation from a quanto price](../../12-Financial%20mathematics/24-Quantos%20and%20composites/05-implied-correlation-from-a-quanto.md): correlation from a quanto price.
+- [Correlation from a spread option](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/06-implied-correlation-from-a-spread-option.md): correlation from a spread option.
+- Bisection: halving as an algorithm, with stopping rules.
+- Connected and path-connected: the property of an interval the proof uses.
+- What compactness and connectedness buy: the theorem in general form.
 
-The theorem fills in every value between the end values but says nothing about values beyond them; whether a highest and a lowest are actually reached is [extreme-value-theorem](07-extreme-value-theorem.md).
+The theorem fills in every value between the end values but says nothing about values beyond them; whether a highest and a lowest are actually reached is [Extreme value theorem](07-extreme-value-theorem.md).
 
 ---
 

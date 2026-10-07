@@ -1,29 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Tours - Euler and Hamilton
-topic: Drawing in one stroke
-item: Euler circuits
-kind: theorem
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/02-degree-and-handshaking|degree-and-handshaking]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/04-connectivity-and-breadth-first-search|connectivity-and-breadth-first-search]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/11-Tours - Euler and Hamilton/02-chinese-postman|chinese-postman]]"
-  - "[[Cards/04-Combinatorics and graphs/11-Tours - Euler and Hamilton/03-hamiltonian-cycles|hamiltonian-cycles]]"
-  - "[[Cards/04-Combinatorics and graphs/11-Tours - Euler and Hamilton/05-de-bruijn-sequences|de-bruijn-sequences]]"
-  - "[[Cards/25-Frontier/04-Geometry and Combinatorics/04-cycle-double-cover-conjecture|cycle-double-cover-conjecture]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - euler-circuits
----
-
 # Euler circuits: a closed route using every edge once exists exactly when the graph is connected and every degree is even
 
-Combinatorics and graphs → Tours - Euler and Hamilton → Drawing in one stroke → Euler circuits
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Tours - Euler and Hamilton](../../../SYLLABUS.md#w04-s11) → Euler circuits
 
 ---
 
@@ -31,13 +8,13 @@ Combinatorics and graphs → Tours - Euler and Hamilton → Drawing in one strok
 
 In 1735 Königsberg stood on both banks of the Pregel with two islands in it: four land masses, seven bridges. The town puzzle asked for a walk crossing every bridge exactly once. Nobody managed it, and Leonhard Euler proved nobody could.
 
-Count bridge-ends, not bridges: the island A carries 5, the north bank B 3, the south bank C 3, the east island D 3. That count is a land's **degree** ([degree-and-handshaking](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)), and all four are odd, which settles it.
+Count bridge-ends, not bridges: the island A carries 5, the north bank B 3, the south bank C 3, the east island D 3. That count is a land's **degree** ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)), and all four are odd, which settles it.
 
 Odd is fatal: passing *through* a land spends two bridge-ends, one in and one out, so they pair off. Only the start and the finish leave an end unpaired, so at most two lands may be odd. Königsberg has four.
 
 The count runs forwards too. A snowplough must clear every street of a 3 x 3 grid — nine junctions, 12 streets — and finish at the depot. Four junctions carry three streets, so no closed sweep exists: four extra passes are needed, and the code builds the 16-pass route.
 
-Vocabulary, once. A route repeating no line is a **trail** ([walks-paths-and-cycles](../09-Graphs%20-%20Dots%20and%20Lines/03-walks-paths-and-cycles.md)); closed means it ends where it began. A closed trail covering every line once is an **Euler circuit**, the open one an **Euler trail**.
+Vocabulary, once. A route repeating no line is a **trail** ([Walks, paths and cycles](../09-Graphs%20-%20Dots%20and%20Lines/03-walks-paths-and-cycles.md)); closed means it ends where it began. A closed trail covering every line once is an **Euler circuit**, the open one an **Euler trail**.
 
 **A closed route using every line once exists exactly when the lines sit in one piece and every dot has an even number of line-ends, because passing through a dot spends two of them.**
 
@@ -72,7 +49,7 @@ $$\text{some closed trail } T \text{ covers every line of } G \iff G \text{ is i
 
 The open twin is the same statement with $k = 2$: two odd dots, and the trail must run from one to the other.
 
-"In one piece" is asked of the lines, each reachable from every other ([connectivity-and-breadth-first-search](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)); dots carrying no line sit out. And $k$ is never odd, the degrees adding to twice the line count — so 0 and 2 exhaust the cases that work.
+"In one piece" is asked of the lines, each reachable from every other ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)); dots carrying no line sit out. And $k$ is never odd, the degrees adding to twice the line count — so 0 and 2 exhaust the cases that work.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -88,7 +65,7 @@ The open twin is the same statement with $k = 2$: two odd dots, and the trail mu
 - **Finitely many lines.** The proof takes a longest trail, which an endless network need not have.
 - **Lines scored honestly.** Score the two north bridges as one and the island reads even, so the test lies.
 - **One piece.** Two triangles apart have every degree 2 and no route covering both: the check prints 0 odd dots, no route.
-- **Lines, not dots, and no arrows.** Every dot once is [hamiltonian-cycles](03-hamiltonian-cycles.md); one-way lines have their own test ([directed-graphs-and-topological-order](../09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md)).
+- **Lines, not dots, and no arrows.** Every dot once is [Hamiltonian cycles](03-hamiltonian-cycles.md); one-way lines have their own test ([Directed graphs](../09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md)).
 
 ---
 
@@ -132,7 +109,7 @@ flowchart LR
 
 Every dot is even and the lines are in one piece, so a closed route exists. From A the code returns A-B-C-E-F-G-C-D-A: the first square as far as C, the second square from C back to C, then the rest of the first.
 
-A second proof instead cuts such a network into loops sharing no lines and glues them at shared dots; how far loops reach in general is cycle-double-cover-conjecture.
+A second proof instead cuts such a network into loops sharing no lines and glues them at shared dots; how far loops reach in general is Cycle double cover.
 
 ---
 
@@ -367,7 +344,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Asking for every dot once instead of every line once.** Königsberg's four lands can be toured one after another and back to the start; its seven bridges cannot be walked in one go. Covering lines is a degree count; covering dots is [hamiltonian-cycles](03-hamiltonian-cycles.md), for which no cheap test is known.
+> **Asking for every dot once instead of every line once.** Königsberg's four lands can be toured one after another and back to the start; its seven bridges cannot be walked in one go. Covering lines is a degree count; covering dots is [Hamiltonian cycles](03-hamiltonian-cycles.md), for which no cheap test is known.
 >
 > - **Two odd dots read as a closed tour.** They give an *open* trail, from one odd dot to the other.
 > - **Forgetting the one-piece test.** Two triangles apart have every degree 2 and 0 odd dots, and no route covers both: even degrees are half the theorem.
@@ -378,8 +355,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Snowploughs, gritters, sweepers, postal rounds.** Every line must be covered and the depot wants the vehicle back. Once streets have lengths and the repeats must be picked cheaply, the question becomes [chinese-postman](02-chinese-postman.md).
-- **Reading a genome.** Overlapping fragments are lines and a reconstruction is a trail covering them, so sequence assembly rests on Euler circuits, not dot tours — the trick of [de-bruijn-sequences](05-de-bruijn-sequences.md).
+- **Snowploughs, gritters, sweepers, postal rounds.** Every line must be covered and the depot wants the vehicle back. Once streets have lengths and the repeats must be picked cheaply, the question becomes [The Chinese postman](02-chinese-postman.md).
+- **Reading a genome.** Overlapping fragments are lines and a reconstruction is a trail covering them, so sequence assembly rests on Euler circuits, not dot tours — the trick of [De Bruijn sequences](05-de-bruijn-sequences.md).
 - **One-stroke drawing, cutter paths, inspection routes.** "Without lifting the pen" is the open case: with two odd dots, start at one.
 
 > **Say it back**
@@ -389,17 +366,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [degree-and-handshaking](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md): the degree, and why odd dots come in pairs.
-- [connectivity-and-breadth-first-search](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md): what "in one piece" means, and the flood that tests it.
+- [Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md): the degree, and why odd dots come in pairs.
+- [Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md): what "in one piece" means, and the flood that tests it.
 
 ## Where this goes next
 
-- [chinese-postman](02-chinese-postman.md): choosing the repeats at least cost once streets have lengths.
-- [hamiltonian-cycles](03-hamiltonian-cycles.md): every dot once instead of every line once, an easy test turned hard search.
-- [de-bruijn-sequences](05-de-bruijn-sequences.md): Euler circuits at work, building the shortest string holding every window.
-- cycle-double-cover-conjecture: covering lines with loops in general, still unproved.
+- [The Chinese postman](02-chinese-postman.md): choosing the repeats at least cost once streets have lengths.
+- [Hamiltonian cycles](03-hamiltonian-cycles.md): every dot once instead of every line once, an easy test turned hard search.
+- [De Bruijn sequences](05-de-bruijn-sequences.md): Euler circuits at work, building the shortest string holding every window.
+- Cycle double cover: covering lines with loops in general, still unproved.
 
-This card says whether a closed sweep exists and builds one when it does; the cheapest way to fix a network that fails is [chinese-postman](02-chinese-postman.md).
+This card says whether a closed sweep exists and builds one when it does; the cheapest way to fix a network that fails is [The Chinese postman](02-chinese-postman.md).
 
 ---
 

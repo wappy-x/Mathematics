@@ -1,37 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Continuous Distributions
-topic: Area as chance
-item: Densities
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/01-random-variables-and-distributions|random-variables-and-distributions]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/02-fundamental-theorem-of-calculus|fundamental-theorem-of-calculus]]"
-next:
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/02-uniform-distribution|uniform-distribution]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/03-exponential-distribution|exponential-distribution]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/04-normal-distribution|normal-distribution]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/08-heavy-tails-pareto-and-cauchy|heavy-tails-pareto-and-cauchy]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/01-transforming-a-random-variable|transforming-a-random-variable]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/02-joint-densities-and-marginals|joint-densities-and-marginals]]"
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/01-priors-posteriors-and-updating|priors-posteriors-and-updating]]"
-  - "[[Cards/09-Probability and statistics/11-Simulation/02-inverse-transform-sampling|inverse-transform-sampling]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/06-lebesgue-stieltjes-measures|lebesgue-stieltjes-measures]]"
-  - "[[Cards/10-Measure and integration/03-Measurable Functions/05-pushforward-and-the-law|pushforward-and-the-law]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/06-expectation-as-an-integral|expectation-as-an-integral]]"
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/06-densities-and-likelihood-ratios|densities-and-likelihood-ratios]]"
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/05-butterfly-and-the-implied-density|butterfly-and-the-implied-density]]"
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/01-volatility-smile-and-skew|volatility-smile-and-skew]]"
-  - "[[Cards/12-Financial mathematics/36-Returns and Utility/04-stochastic-dominance|stochastic-dominance]]"
-tags: [mathematics, probability and statistics, densities-and-cdfs]
----
-
 # Densities: probability as area under a curve
 
-Probability and statistics → Continuous Distributions → Area as chance → Densities
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Continuous Distributions](../../../SYLLABUS.md#w09-s04) → Densities
 
 ---
 
@@ -73,7 +42,7 @@ $$f(x) = F'(x), \qquad P(a < X \le b) = F(b) - F(a)$$
 
 A function qualifies as a density on two conditions: it is never negative, and its total area is 1.
 
-This card's example uses one particular density, the bell shape, whose formula the [normal-distribution](04-normal-distribution.md) card derives:
+This card's example uses one particular density, the bell shape, whose formula the [Normal](04-normal-distribution.md) card derives:
 
 $$f(x) = \frac{1}{\sigma\sqrt{2\pi}}\; e^{-x^2/(2\sigma^2)}$$
 
@@ -98,7 +67,7 @@ Here σ (the Greek letter sigma) is the spread, 1.2 percentage points; π and e 
 - **No single value carries a lump of chance.** A share on an exchange that caps a day's fall closes exactly at the cap on some days: a lump of chance at one point. No curve's area can put chance on one point. The CDF still works; it jumps there.
 - **The curve is never negative.** A dip below zero would give some window a negative chance.
 - **Total area 1.** A curve with more area than 1 inflates every chance in the same proportion; divide by the area to repair it.
-- **The bell shape is a model, not a law.** The definitions above hold for any density. The bell is this card's modelling choice, and real daily returns have fatter tails than the bell (Cont, 2001), so the bell can understate the chance of large falls; [heavy-tails-pareto-and-cauchy](08-heavy-tails-pareto-and-cauchy.md) measures by how much.
+- **The bell shape is a model, not a law.** The definitions above hold for any density. The bell is this card's modelling choice, and real daily returns have fatter tails than the bell (Cont, 2001), so the bell can understate the chance of large falls; [Heavy tails](08-heavy-tails-pareto-and-cauchy.md) measures by how much.
 
 ---
 
@@ -126,7 +95,7 @@ so the chance of a window is F(b) − F(a). Three facts follow. F never falls, s
 
 ### Step 3: the density is the CDF's slope
 
-F(x) is the area under f up to x. The [fundamental-theorem-of-calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md) says the rate at which such an area grows, as its right edge moves, is the height of the curve at that edge. So F′(x) = f(x). Numerically: nudge x from −2.001 to −1.999, and F grows by 0.002 × 0.0829; the slope is 0.082898, the same as f(−2) to six decimals.
+F(x) is the area under f up to x. The [Fundamental theorem of calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md) says the rate at which such an area grows, as its right edge moves, is the height of the curve at that edge. So F′(x) = f(x). Numerically: nudge x from −2.001 to −1.999, and F grows by 0.002 × 0.0829; the slope is 0.082898, the same as f(−2) to six decimals.
 
 ### Step 4: a single value has chance zero
 
@@ -148,7 +117,7 @@ Its height is chance per unit of width. Measure the same return in decimals inst
 
 </details>
 
-A second road reaches the same objects without any curve. The chance of every window determines a CDF, and the CDF alone describes any random variable, lumps included; a density exists exactly when that CDF is the running area of some curve. That view, with lengths replaced by a general measure of size, is [lebesgue-stieltjes-measures](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md).
+A second road reaches the same objects without any curve. The chance of every window determines a CDF, and the CDF alone describes any random variable, lumps included; a density exists exactly when that CDF is the running area of some curve. That view, with lengths replaced by a general measure of size, is [Distribution functions and Lebesgue-Stieltjes measures](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md).
 
 ### The CDF, drawn
 
@@ -574,9 +543,9 @@ The two outputs match line for line, including the simulated count of 19,203 day
 ## Where you meet it in real life
 
 - **Risk limits on a trading desk.** "What is the chance of losing more than X tomorrow?" is a CDF read at one point; the finance wing's value-at-risk turns the question round and asks for the point.
-- **Option prices.** Prices of options at neighbouring strikes reveal the market's own density for a share's future price: [butterfly-and-the-implied-density](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md).
-- **Waiting times.** The time until the next customer, call or failure has a density; the simplest is the [exponential-distribution](03-exponential-distribution.md).
-- **Random numbers in simulations.** Running the CDF backwards turns uniform random numbers into draws from any density: [inverse-transform-sampling](../11-Simulation/02-inverse-transform-sampling.md).
+- **Option prices.** Prices of options at neighbouring strikes reveal the market's own density for a share's future price: [The butterfly and the implied density](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md).
+- **Waiting times.** The time until the next customer, call or failure has a density; the simplest is the [Exponential](03-exponential-distribution.md).
+- **Random numbers in simulations.** Running the CDF backwards turns uniform random numbers into draws from any density: [Inverse transform](../11-Simulation/02-inverse-transform-sampling.md).
 
 > **Say it back**
 > A return can take infinitely many values, so no single value carries chance. Instead, a density is a curve whose area over any window is the chance of landing in it, with total area 1. Its height is chance per unit of width, so it can exceed 1 and is never itself a chance. The CDF is the running total of that area, windows are differences of the CDF, and the density is the CDF's slope. For a share with daily spread 1.2 percent, the area left of −2 is 0.0478: a fall of more than 2 percent about 1 day in 21.
@@ -585,28 +554,28 @@ The two outputs match line for line, including the simulated count of 19,203 day
 
 ## What this builds on
 
-- [random-variables-and-distributions](../02-Random%20Variables/01-random-variables-and-distributions.md): the random variable X and a list of chances per value, which a density replaces when values are uncountably many.
-- [fundamental-theorem-of-calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md): why the rate of growth of an area is the height of the curve, so the density is the CDF's slope.
+- [Random variables](../02-Random%20Variables/01-random-variables-and-distributions.md): the random variable X and a list of chances per value, which a density replaces when values are uncountably many.
+- [Fundamental theorem of calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md): why the rate of growth of an area is the height of the curve, so the density is the CDF's slope.
 
 ## Where this goes next
 
-- [uniform-distribution](02-uniform-distribution.md): the flattest density, where area is plain length.
-- [exponential-distribution](03-exponential-distribution.md): a density for waiting times, and a CDF in closed form.
-- [normal-distribution](04-normal-distribution.md): the bell used here, its constant derived, and its CDF named.
-- [heavy-tails-pareto-and-cauchy](08-heavy-tails-pareto-and-cauchy.md): densities whose tails hold far more area than the bell's.
-- [transforming-a-random-variable](../05-Transformations%20and%20Joint%20Laws/01-transforming-a-random-variable.md): how a density changes when the variable is rescaled, as in the percent-to-decimal switch.
-- [joint-densities-and-marginals](../05-Transformations%20and%20Joint%20Laws/02-joint-densities-and-marginals.md): volume under a surface for two returns at once.
-- [priors-posteriors-and-updating](../10-Bayesian%20Inference/01-priors-posteriors-and-updating.md): a density describing belief about an unknown quantity.
-- [inverse-transform-sampling](../11-Simulation/02-inverse-transform-sampling.md): the CDF run backwards to draw random numbers.
-- [lebesgue-stieltjes-measures](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md): a CDF as a way of measuring the size of sets.
-- [pushforward-and-the-law](../../10-Measure%20and%20integration/03-Measurable%20Functions/05-pushforward-and-the-law.md): the law of X, with or without a density.
-- [expectation-as-an-integral](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md): the average of X as an area weighted by the density.
-- [densities-and-likelihood-ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): when a density exists at all, and what it means in general.
-- [butterfly-and-the-implied-density](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md): a density read off option prices.
-- [volatility-smile-and-skew](../../12-Financial%20mathematics/12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): what the market's density looks like when it is not a bell.
-- [stochastic-dominance](../../12-Financial%20mathematics/36-Returns%20and%20Utility/04-stochastic-dominance.md): ranking two investments by comparing their CDFs.
+- [Uniform](02-uniform-distribution.md): the flattest density, where area is plain length.
+- [Exponential](03-exponential-distribution.md): a density for waiting times, and a CDF in closed form.
+- [Normal](04-normal-distribution.md): the bell used here, its constant derived, and its CDF named.
+- [Heavy tails](08-heavy-tails-pareto-and-cauchy.md): densities whose tails hold far more area than the bell's.
+- [Transforming a variable](../05-Transformations%20and%20Joint%20Laws/01-transforming-a-random-variable.md): how a density changes when the variable is rescaled, as in the percent-to-decimal switch.
+- [Joint densities](../05-Transformations%20and%20Joint%20Laws/02-joint-densities-and-marginals.md): volume under a surface for two returns at once.
+- [Bayesian updating](../10-Bayesian%20Inference/01-priors-posteriors-and-updating.md): a density describing belief about an unknown quantity.
+- [Inverse transform](../11-Simulation/02-inverse-transform-sampling.md): the CDF run backwards to draw random numbers.
+- [Distribution functions and Lebesgue-Stieltjes measures](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md): a CDF as a way of measuring the size of sets.
+- [The law of a random variable](../../10-Measure%20and%20integration/03-Measurable%20Functions/05-pushforward-and-the-law.md): the law of X, with or without a density.
+- [Expectation as an integral](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md): the average of X as an area weighted by the density.
+- [Densities and likelihood ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): when a density exists at all, and what it means in general.
+- [The butterfly and the implied density](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md): a density read off option prices.
+- [The volatility smile and skew](../../12-Financial%20mathematics/12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): what the market's density looks like when it is not a bell.
+- [Stochastic dominance](../../12-Financial%20mathematics/36-Returns%20and%20Utility/04-stochastic-dominance.md): ranking two investments by comparing their CDFs.
 
-This card took the bell's formula on trust; where its constant comes from, and how every bell reduces to one standard table, is [normal-distribution](04-normal-distribution.md).
+This card took the bell's formula on trust; where its constant comes from, and how every bell reduces to one standard table, is [Normal](04-normal-distribution.md).
 
 ---
 

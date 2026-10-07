@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Portfolio Theory
-topic: Blending the market with forecasts
-item: Black-Litterman
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/05-factor-models-and-apt|factor-models-and-apt]]"
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/03-normal-normal|normal-normal]]"
-next: []
-tags: [mathematics, financial mathematics, black-litterman]
----
-
 # Black-Litterman: starting from the market and tilting toward your views
 
-Financial mathematics → Portfolio Theory → Blending the market with forecasts → Black-Litterman
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Theory](../../../SYLLABUS.md#w12-s37) → Black-Litterman
 
 ---
 
@@ -24,7 +8,7 @@ Financial mathematics → Portfolio Theory → Blending the market with forecast
 
 A fund holds three things: shares, bonds and gold. Suppose all investors together hold those three in the split 55 percent shares, 30 percent bonds, 15 percent gold, and the fund starts from the same split. Its manager has one opinion: over the next year, gold will beat bonds by 2 percent. She has a second: shares will beat cash by 4 percent. She is half sure of each.
 
-The obvious move is to write down a full list of expected returns and hand it to an optimiser, the machine that picks the best mix of risk and return. That goes badly. The optimiser believes every digit, so small guesses become huge bets: the [estimation-error-and-shrinkage](07-estimation-error-and-shrinkage.md) card shows its weights swinging wildly. And the manager has no opinion at all about most returns; she has two.
+The obvious move is to write down a full list of expected returns and hand it to an optimiser, the machine that picks the best mix of risk and return. That goes badly. The optimiser believes every digit, so small guesses become huge bets: the [Estimation error](07-estimation-error-and-shrinkage.md) card shows its weights swinging wildly. And the manager has no opinion at all about most returns; she has two.
 
 Fischer Black and Robert Litterman, at Goldman Sachs around 1990, fixed both problems. Start from the returns that would make the market's own 55-30-15 split the best portfolio. Treat those as a best guess, held with some doubt. Treat each opinion as a second, noisy measurement. Blend the two the way any two noisy measurements are blended, by how precise each is. Then hand the blend to the optimiser. Here the fund ends at 45.96 percent shares, 19.60 percent bonds, 25.40 percent gold and 9.04 percent cash.
 
@@ -52,7 +36,7 @@ Gold gains exactly what bonds lose: 10.40 points each. That is the first opinion
 
 ## The formula
 
-Notation first. A list of three numbers, one per asset, is a **vector**. A table of numbers is a **matrix**; multiplying a matrix by a vector gives weighted sums, row by row. A raised ⊤, as in $P^\top$, turns rows into columns (the **transpose**). A raised $-1$ undoes multiplication by a matrix (the **inverse**), the way dividing undoes multiplying. The [efficient-frontier-and-minimum-variance](02-efficient-frontier-and-minimum-variance.md) card uses the same notation.
+Notation first. A list of three numbers, one per asset, is a **vector**. A table of numbers is a **matrix**; multiplying a matrix by a vector gives weighted sums, row by row. A raised ⊤, as in $P^\top$, turns rows into columns (the **transpose**). A raised $-1$ undoes multiplication by a matrix (the **inverse**), the way dividing undoes multiplying. The [The efficient frontier](02-efficient-frontier-and-minimum-variance.md) card uses the same notation.
 
 Three lines, one per stage:
 
@@ -85,7 +69,7 @@ The surprise is $q - P\pi$: each opinion minus what the market already implies f
 
 ### When it holds
 
-- **The market's weights are an optimum.** Reverse optimisation assumes some investor with risk aversion $\delta$ and covariance $\Sigma$ would choose $w_m$, which is what [capm-and-beta](04-capm-and-beta.md) argues. If the market is not such an optimum, $\pi$ is only a sensible centre, not an equilibrium.
+- **The market's weights are an optimum.** Reverse optimisation assumes some investor with risk aversion $\delta$ and covariance $\Sigma$ would choose $w_m$, which is what [CAPM](04-capm-and-beta.md) argues. If the market is not such an optimum, $\pi$ is only a sensible centre, not an equilibrium.
 - **The covariance is known.** Any error in $\Sigma$ passes straight into $\pi$, since $\pi$ is $\Sigma$ times a fixed vector.
 - **Normal doubt.** The prior and the opinions' errors are taken as normal. Otherwise the blend is still the best straight-line combination of the two, but no longer the full posterior.
 - **No weight limits.** The optimiser may short and borrow at the cash rate. With a no-shorting rule the flipped opinion below, which asks for minus 5.25 percent gold, would be cut off, and the neat market-plus-slices shape breaks.
@@ -97,7 +81,7 @@ The surprise is $q - P\pi$: each opinion minus what the market already implies f
 
 ### Step 0: two noisy measurements of one unknown
 
-The true expected returns are unknown. The market offers one noisy reading of them. The manager offers another, of certain combinations. The [normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md) card shows how two normal readings of one quantity combine: add their precisions (one over the variance), and average the readings weighted by precision. Black-Litterman is that rule with vectors and matrices in place of single numbers.
+The true expected returns are unknown. The market offers one noisy reading of them. The manager offers another, of certain combinations. The [Normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md) card shows how two normal readings of one quantity combine: add their precisions (one over the variance), and average the readings weighted by precision. Black-Litterman is that rule with vectors and matrices in place of single numbers.
 
 ```mermaid
 flowchart LR
@@ -170,7 +154,7 @@ Feed $\mu_{BL}$ to the optimiser: $w_{BL} = (\delta\Sigma)^{-1}\mu_{BL}$. Split 
 
 So the new portfolio is the market plus $\lambda$ units of each opinion's portfolio. No other direction can appear. An opinion about gold and bonds never touches shares directly. An asset nobody has an opinion about keeps its market weight, unless an opinion's portfolio contains it.
 
-The same blend can be reached as a regression: stack the market reading and the opinions as data, and solve by weighted least squares. That is Theil's mixed estimation, and it pulls the estimate toward $\pi$ the way [estimation-error-and-shrinkage](07-estimation-error-and-shrinkage.md) pulls a noisy covariance toward a target.
+The same blend can be reached as a regression: stack the market reading and the opinions as data, and solve by weighted least squares. That is Theil's mixed estimation, and it pulls the estimate toward $\pi$ the way [Estimation error](07-estimation-error-and-shrinkage.md) pulls a noisy covariance toward a target.
 
 ---
 
@@ -645,8 +629,8 @@ The two outputs are identical to the last digit, Monte Carlo included: both prog
 - **Asset allocation committees.** Pension funds and multi-asset managers start from market weights and write each house view as a row of $P$ with a confidence. The output is a tilt they can explain line by line.
 - **Global bond and currency allocation.** The model's first setting: Black and Litterman built it for global bond, equity and currency portfolios at Goldman Sachs, where raw optimisers gave extreme weights.
 - **Combining analysts.** Several analysts' forecasts become several rows; conflicting opinions pull against each other in proportion to their confidence instead of the last one winning.
-- **Covariance from factors.** The $\Sigma$ that drives everything is often built from a factor model, as in [factor-models-and-apt](05-factor-models-and-apt.md).
-- **Risk budgeting.** Some desks feed the blended returns to a risk-budget optimiser instead of plain mean-variance; [risk-parity-and-alternative-weightings](08-risk-parity-and-alternative-weightings.md) gives that other way of weighting.
+- **Covariance from factors.** The $\Sigma$ that drives everything is often built from a factor model, as in [Factor models](05-factor-models-and-apt.md).
+- **Risk budgeting.** Some desks feed the blended returns to a risk-budget optimiser instead of plain mean-variance; [Risk parity](08-risk-parity-and-alternative-weightings.md) gives that other way of weighting.
 
 > **Say it back**
 > Reverse the optimiser: the market's weights imply a set of expected returns. Treat those as a noisy reading, and each opinion as another noisy reading of one portfolio. Blend them by precision, so a confident opinion moves the estimate further. Run the optimiser on the blend. The result is the market plus a slice of each opinion's portfolio, and nothing else.
@@ -655,15 +639,15 @@ The two outputs are identical to the last digit, Monte Carlo included: both prog
 
 ## What this builds on
 
-- [factor-models-and-apt](05-factor-models-and-apt.md): the covariance matrix and how it is estimated from a few common factors; here it sets both the implied returns and the shape of the doubt.
-- [normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md): two normal readings of one quantity combine by adding precisions; this card is the same rule with matrices.
+- [Factor models](05-factor-models-and-apt.md): the covariance matrix and how it is estimated from a few common factors; here it sets both the implied returns and the shape of the doubt.
+- [Normal-normal](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/03-normal-normal.md): two normal readings of one quantity combine by adding precisions; this card is the same rule with matrices.
 
 ---
 
 ## Where this goes next
 
-- [estimation-error-and-shrinkage](07-estimation-error-and-shrinkage.md): why an optimiser fed raw estimates chases noise, and how shrinking the covariance toward a target calms it, as Black-Litterman shrinks the returns toward $\pi$.
-- [risk-parity-and-alternative-weightings](08-risk-parity-and-alternative-weightings.md): a way to weight assets that needs no expected returns at all.
+- [Estimation error](07-estimation-error-and-shrinkage.md): why an optimiser fed raw estimates chases noise, and how shrinking the covariance toward a target calms it, as Black-Litterman shrinks the returns toward $\pi$.
+- [Risk parity](08-risk-parity-and-alternative-weightings.md): a way to weight assets that needs no expected returns at all.
 
 Black-Litterman calms the expected returns but trusts the covariance completely; the open question is what to do when the covariance itself is a noisy estimate.
 

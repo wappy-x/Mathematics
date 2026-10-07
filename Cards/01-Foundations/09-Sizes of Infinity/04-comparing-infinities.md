@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Sizes of Infinity
-topic: Cantor's argument
-item: Comparing infinities
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/03-cantors-diagonal-argument|cantors-diagonal-argument]]"
-  - "[[Cards/01-Foundations/07-Sets/02-subsets-and-power-set|subsets-and-power-set]]"
-next:
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/05-axiom-of-choice|axiom-of-choice]]"
-tags:
-  - mathematics
-  - foundations
-  - comparing-infinities
----
-
 # Comparing infinities: fits-both-ways means equal, and every set is smaller than its power set
 
-Foundations → Sizes of Infinity → Cantor's argument → Comparing infinities
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sizes of Infinity](../../../SYLLABUS.md#w01-s09) → Comparing infinities
 
 ---
 
@@ -30,7 +10,7 @@ The hotel has a room for every counting number: room 1, room 2, room 3, on forev
 
 How many guest lists? More than there are rooms, and not by a little.
 
-Give each room the list naming just that room: different rooms, different lists, so the rooms fit inside the lists. Go the other way and it fails — hand lists out however you like and one is left over. All the lists, gathered, are the **power set** of the rooms: [subsets-and-power-set](../07-Sets/02-subsets-and-power-set.md).
+Give each room the list naming just that room: different rooms, different lists, so the rooms fit inside the lists. Go the other way and it fails — hand lists out however you like and one is left over. All the lists, gathered, are the **power set** of the rooms: [Subsets and the power set](../07-Sets/02-subsets-and-power-set.md).
 
 When neither side wins, a second tool settles it: if each of two collections fits inside the other, they are the same size — that is **Cantor–Bernstein**.
 
@@ -62,9 +42,9 @@ Two statements, written out.
 
 | Piece | Plain meaning | In the hotel |
 | --- | --- | --- |
-| fits inside | each member gets its own slot: one-to-one, [injective-surjective-bijective](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md) | room 1 to {1}, the list with just room 1 |
+| fits inside | each member gets its own slot: one-to-one, [One-to-one and onto](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md) | room 1 to {1}, the list with just room 1 |
 | the guest lists | all of them at once: the power set | 16, for 4 rooms |
-| the same size | pairable one for one: [same-size-by-pairing](01-same-size-by-pairing.md) | segment, square |
+| the same size | pairable one for one: [Same size means pairable](01-same-size-by-pairing.md) | segment, square |
 
 ---
 
@@ -269,8 +249,8 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Programs against jobs.** A program is a finite piece of text, so programs queue up: [countable-sets](02-countable-sets.md). The jobs — a yes-or-no answer per input — are a power set. Most jobs have no program.
-- **The real numbers.** The points of a line are the counting numbers' guest lists in decimal dress, which is why they cannot be listed: [cantors-diagonal-argument](03-cantors-diagonal-argument.md).
+- **Programs against jobs.** A program is a finite piece of text, so programs queue up: [Countable sets](02-countable-sets.md). The jobs — a yes-or-no answer per input — are a power set. Most jobs have no program.
+- **The real numbers.** The points of a line are the counting numbers' guest lists in decimal dress, which is why they cannot be listed: [Cantor's diagonal](03-cantors-diagonal-argument.md).
 - **Dimension is not size.** A one-inch segment has as many points as a cube.
 
 > **Say it back**
@@ -280,13 +260,13 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [cantors-diagonal-argument](03-cantors-diagonal-argument.md): the same walk, on decimals. Here it runs on guest lists, and on any collection.
-- [subsets-and-power-set](../07-Sets/02-subsets-and-power-set.md): what a subset is, and why all of them together are the power set.
-- [same-size-by-pairing](01-same-size-by-pairing.md) and [injective-surjective-bijective](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md): same size means pairable, and the names for these rules.
+- [Cantor's diagonal](03-cantors-diagonal-argument.md): the same walk, on decimals. Here it runs on guest lists, and on any collection.
+- [Subsets and the power set](../07-Sets/02-subsets-and-power-set.md): what a subset is, and why all of them together are the power set.
+- [Same size means pairable](01-same-size-by-pairing.md) and [One-to-one and onto](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md): same size means pairable, and the names for these rules.
 
 ## Where this goes next
 
-- [axiom-of-choice](05-axiom-of-choice.md): one pick from each of endlessly many boxes — not needed for anything above, and not everybody wants it.
+- [The axiom of choice](05-axiom-of-choice.md): one pick from each of endlessly many boxes — not needed for anything above, and not everybody wants it.
 
 ---
 

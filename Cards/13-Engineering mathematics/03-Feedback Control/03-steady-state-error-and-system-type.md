@@ -1,23 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Feedback Control
-topic: Offset and the integrator
-item: Steady-state error
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/01-feedback-and-closed-loop-transfer-functions|feedback-and-closed-loop-transfer-functions]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/05-final-value-theorem-and-steady-gain|final-value-theorem-and-steady-gain]]"
-next:
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/07-pid-control-and-tuning|pid-control-and-tuning]]"
-tags: [mathematics, engineering mathematics, steady-state-error-and-system-type]
----
-
 # Steady-state error: an integrator is what kills a permanent offset
 
-Engineering mathematics → Feedback Control → Offset and the integrator → Steady-state error
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Feedback Control](../../../SYLLABUS.md#w13-s03) → Steady-state error
 
 ---
 
@@ -52,7 +35,7 @@ Both rooms start at the proportional thermostat's rest, 19.00 °C. The lower lin
 
 ## The formula
 
-Three reminders first. A transfer function says what a system does to each exponential e^(st); s is the Laplace variable, and s = 0 is the input that never changes ([final-value-theorem-and-steady-gain](../02-Linear%20Systems%20and%20Transforms/05-final-value-theorem-and-steady-gain.md)). The loop gain L(s) is the transfer function once round the loop: thermostat, then pipe, then room ([feedback-and-closed-loop-transfer-functions](01-feedback-and-closed-loop-transfer-functions.md)). The sensitivity S(s) = 1/(1 + L(s)) is what the loop does to the error ([sensitivity-and-the-gang-of-four](02-sensitivity-and-the-gang-of-four.md)).
+Three reminders first. A transfer function says what a system does to each exponential e^(st); s is the Laplace variable, and s = 0 is the input that never changes ([Final value and bandwidth](../02-Linear%20Systems%20and%20Transforms/05-final-value-theorem-and-steady-gain.md)). The loop gain L(s) is the transfer function once round the loop: thermostat, then pipe, then room ([Feedback](01-feedback-and-closed-loop-transfer-functions.md)). The sensitivity S(s) = 1/(1 + L(s)) is what the loop does to the error ([Sensitivity functions](02-sensitivity-and-the-gang-of-four.md)).
 
 The error e is the setpoint minus the room temperature. Its transform E(s) is the target's transform R(s) passed through the sensitivity. The final value theorem then gives e_∞, where the error settles:
 
@@ -78,7 +61,7 @@ For the room, with $k_c$ the thermostat's gain in watts per kelvin, $U$ the wall
 
 $$L_{\text{P}}(s) = \frac{k_c/U}{(\tau_r s+1)(\tau_p s+1)}, \qquad L_{\text{PI}}(s) = \frac{k_c}{U}\Big(1+\frac{1}{T_i\, s}\Big)\frac{1}{(\tau_r s+1)(\tau_p s+1)}.$$
 
-The proportional loop is type 0 with K_0 = 1900/100 = 19. Adding integral action, the term with integral time $T_i$, divides by s once: type 1, with K_v = 19/30 = 0.633 per minute. Textbooks often write K_p for the position constant K_0; this library keeps K_p for the proportional gain of [pid-control-and-tuning](07-pid-control-and-tuning.md), so the two never collide.
+The proportional loop is type 0 with K_0 = 1900/100 = 19. Adding integral action, the term with integral time $T_i$, divides by s once: type 1, with K_v = 19/30 = 0.633 per minute. Textbooks often write K_p for the position constant K_0; this library keeps K_p for the proportional gain of [PID control](07-pid-control-and-tuning.md), so the two never collide.
 
 | Symbol | Plain meaning | In our example | Push it up and the error… |
 | --- | --- | --- | --- |
@@ -135,11 +118,11 @@ Around the loop, the room's transform is L times the error's. The error is the t
 
 $$E(s) = \frac{R(s)}{1+L(s)} = S(s)\,R(s).$$
 
-Here everything is measured from outdoors: the target is the room's height above 0 °C. The derivation of the closed loop is on [feedback-and-closed-loop-transfer-functions](01-feedback-and-closed-loop-transfer-functions.md).
+Here everything is measured from outdoors: the target is the room's height above 0 °C. The derivation of the closed loop is on [Feedback](01-feedback-and-closed-loop-transfer-functions.md).
 
 ### Step 2: the final value theorem turns the error into a number
 
-If the error settles, its final value is s E(s) at s = 0 ([final-value-theorem-and-steady-gain](../02-Linear%20Systems%20and%20Transforms/05-final-value-theorem-and-steady-gain.md)). It settles when every root of 1 + L(s) = 0, the closed-loop poles, has a negative real part. That is the stability condition, and the theorem says nothing without it.
+If the error settles, its final value is s E(s) at s = 0 ([Final value and bandwidth](../02-Linear%20Systems%20and%20Transforms/05-final-value-theorem-and-steady-gain.md)). It settles when every root of 1 + L(s) = 0, the closed-loop poles, has a negative real part. That is the stability condition, and the theorem says nothing without it.
 
 ### Step 3: a step leaves A over one plus the zero-frequency gain
 
@@ -205,7 +188,7 @@ Without integral action the room sits a full degree cold on a 0 °C day, and 1.1
 | Integral time 5 min, below the stability edge of 9.05 min | worst error 3.85 °C, then 22.0 °C, then 143 °C in successive two-hour windows (uncapped linear model); the final value theorem claims zero | the final value theorem used on a loop that never settles |
 | −15 °C outdoors, radiator capped at 3000 W | 5.00 °C cold by heat balance, 4.998 °C simulated; the integral term asks for 422,189 W | the linear model fails once the actuator saturates, and the integrator winds up |
 
-The edge of 9.05 minutes comes from the Routh test on the closed loop's cubic ([routh-hurwitz-criterion](04-routh-hurwitz-criterion.md)). The simulation agrees: at 0.9 times the edge the worst error in the third window is 1.78 °C and growing; at 1.1 times it is 0.385 °C and shrinking. With 15 minutes the worst error falls from 1.00 °C to 0.156 °C to 0.026 °C over the same windows. The wind-up and how real controllers stop it are on [pid-on-real-hardware](08-pid-on-real-hardware.md).
+The edge of 9.05 minutes comes from the Routh test on the closed loop's cubic ([Routh-Hurwitz](04-routh-hurwitz-criterion.md)). The simulation agrees: at 0.9 times the edge the worst error in the third window is 1.78 °C and growing; at 1.1 times it is 0.385 °C and shrinking. With 15 minutes the worst error falls from 1.00 °C to 0.156 °C to 0.026 °C over the same windows. The wind-up and how real controllers stop it are on [PID in practice](08-pid-on-real-hardware.md).
 
 ---
 
@@ -586,11 +569,11 @@ The two outputs are identical to the printed precision.
 ## The usual mistake
 
 > [!warning]
-> **Turning up the proportional gain to remove the offset.** A bigger gain shrinks the offset, from 1.00 °C to 0.50 °C at 3900 W/K, but never to zero, because zero error would mean zero heat. Only an integrator holds heat with no error. With the lags of a real pipe and room, a high gain also brings ringing and, once there is a time delay, instability ([smith-predictor-and-time-delays](10-smith-predictor-and-time-delays.md)).
+> **Turning up the proportional gain to remove the offset.** A bigger gain shrinks the offset, from 1.00 °C to 0.50 °C at 3900 W/K, but never to zero, because zero error would mean zero heat. Only an integrator holds heat with no error. With the lags of a real pipe and room, a high gain also brings ringing and, once there is a time delay, instability ([Time delays](10-smith-predictor-and-time-delays.md)).
 >
 > - **Counting integrators in the closed loop.** Type is counted in the loop gain L(s), once round the loop. The closed-loop transfer function of a type-1 loop has no pole at zero at all.
 > - **Using the final value theorem without checking stability.** With T_i = 5 min it returns zero error for a room swinging by 143 °C in the uncapped model.
-> - **Taking the step to be the setpoint change.** The proportional loop must hold the room 20 K above outdoors, so the offset is 20/20 = 1.00 °C on a 0 °C day, even if the setpoint has not moved in a week. That holds for a thermostat with no preset bias. One preset for the operating point (manual reset, as on [feedback-and-closed-loop-transfer-functions](01-feedback-and-closed-loop-transfer-functions.md)) shows an offset only on changes from that point.
+> - **Taking the step to be the setpoint change.** The proportional loop must hold the room 20 K above outdoors, so the offset is 20/20 = 1.00 °C on a 0 °C day, even if the setpoint has not moved in a week. That holds for a thermostat with no preset bias. One preset for the operating point (manual reset, as on [Feedback](01-feedback-and-closed-loop-transfer-functions.md)) shows an offset only on changes from that point.
 > - **Expecting one integrator to track a schedule exactly.** A warm-up ramp still leaves 0.0526 °C; zero ramp error needs type 2.
 
 ---
@@ -601,7 +584,7 @@ The two outputs are identical to the printed precision.
 - **Ovens, kilns and incubators.** Simple proportional controllers droop below the setpoint. Old industrial controllers had a "manual reset" knob to add the missing bias by hand; "automatic reset" was the old name for integral action.
 - **Motors and antennas following a moving target.** A type-1 position servo tracking a target moving at a steady rate trails it by the speed divided by K_v; tracking radars and telescope mounts add a second integrator to remove that lag.
 - **Phase-locked loops in radios.** A frequency offset is a phase ramp; a type-2 loop locks to it with zero phase error.
-- **Every PID controller.** The I in PID is this card's integrator ([pid-control-and-tuning](07-pid-control-and-tuning.md)); its limits on real valves are on [pid-on-real-hardware](08-pid-on-real-hardware.md).
+- **Every PID controller.** The I in PID is this card's integrator ([PID control](07-pid-control-and-tuning.md)); its limits on real valves are on [PID in practice](08-pid-on-real-hardware.md).
 
 > **Say it back**
 > A proportional thermostat makes heat only from error, so to hold a room warm it must leave the room a little cold: 1.00 °C here. The final value theorem reads that offset off the loop gain at zero frequency, as the step divided by one plus L(0). An integrator makes L(0) infinite and the offset zero, because it can hold any output with no error. Each integrator clears one more kind of target, step, then ramp, which is why the count is called the system type. None of it holds unless the loop is stable and the actuator has room to deliver.
@@ -610,14 +593,14 @@ The two outputs are identical to the printed precision.
 
 ## What this builds on
 
-- [feedback-and-closed-loop-transfer-functions](01-feedback-and-closed-loop-transfer-functions.md): the loop gain and the closed loop, from which E = R/(1 + L) follows.
-- [final-value-theorem-and-steady-gain](../02-Linear%20Systems%20and%20Transforms/05-final-value-theorem-and-steady-gain.md): the theorem that turns s E(s) at s = 0 into the error's final value, and its stability hypothesis.
+- [Feedback](01-feedback-and-closed-loop-transfer-functions.md): the loop gain and the closed loop, from which E = R/(1 + L) follows.
+- [Final value and bandwidth](../02-Linear%20Systems%20and%20Transforms/05-final-value-theorem-and-steady-gain.md): the theorem that turns s E(s) at s = 0 into the error's final value, and its stability hypothesis.
 
 ---
 
 ## Where this goes next
 
-- [pid-control-and-tuning](07-pid-control-and-tuning.md): the proportional, integral and derivative terms together, and how to choose their gains so the loop is fast without ringing.
+- [PID control](07-pid-control-and-tuning.md): the proportional, integral and derivative terms together, and how to choose their gains so the loop is fast without ringing.
 
 The integrator removes the offset, but an integral time of 5 minutes turns the room unstable and 30 minutes still takes 160 minutes to reach 20.00 °C; choosing gains that are both quick and safe is what pid-control-and-tuning answers.
 

@@ -1,37 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX spot, forwards and interest parity
-topic: Pricing a currency forward
-item: Covered interest parity
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/01-currency-quotes-and-cross-rates|currency-quotes-and-cross-rates]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/03-compound-interest|compound-interest]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/04-compounding-frequency-and-e|compounding-frequency-and-e]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/06-discounting-and-present-value|discounting-and-present-value]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/03-forward-price-by-cash-and-carry|forward-price-by-cash-and-carry]]"
-next:
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/03-forward-points-and-fx-swaps|forward-points-and-fx-swaps]]"
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/05-implied-yield-and-cross-currency-basis|implied-yield-and-cross-currency-basis]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/01-garman-kohlhagen|garman-kohlhagen]]"
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/01-quanto-forward-and-adjustment|quanto-forward-and-adjustment]]"
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/01-gold-forward-and-the-lease-rate|gold-forward-and-the-lease-rate]]"
-  - "[[Cards/12-Financial mathematics/28-Swaps/06-cross-currency-swaps-and-basis|cross-currency-swaps-and-basis]]"
-tags: [mathematics, financial mathematics, covered-interest-parity]
----
-
 # Covered interest parity: the forward exchange rate from today's rate and the two interest rates
 
-Financial mathematics → FX spot, forwards and interest parity → Pricing a currency forward → Covered interest parity
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX spot, forwards and interest parity](../../../SYLLABUS.md#w12-s20) → Covered interest parity
 
 ---
 
 ## General Overview
 
-One euro costs 1.10 dollars today. That is the **spot rate**: the price for swapping the two currencies now, quoted as dollars per euro ([currency-quotes-and-cross-rates](01-currency-quotes-and-cross-rates.md)). A dollar deposit pays 5 percent a year. A euro deposit pays 3 percent a year.
+One euro costs 1.10 dollars today. That is the **spot rate**: the price for swapping the two currencies now, quoted as dollars per euro ([Reading a currency quote](01-currency-quotes-and-cross-rates.md)). A dollar deposit pays 5 percent a year. A euro deposit pays 3 percent a year.
 
 A bank and an importer agree this morning to swap euros for dollars one year from today, at a rate written down now. No money moves until then. The agreement is an **FX forward**, and the rate in it is the **forward rate**. There is exactly one forward rate that neither side can beat by trading around it: 1.122221 dollars per euro.
 
@@ -61,7 +36,7 @@ The rising line is the forward rate for delivery 0 to 5 years out. The flat line
 
 ## The formula
 
-Notation first, in words. A small letter after a symbol, written low, labels which currency it belongs to: $r_d$ is the **domestic** rate, the rate on the currency prices are counted in (dollars); $r_f$ is the **foreign** rate, on the currency being priced (euros). Both are continuously compounded ([compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)): a deposit of 1 grows to $e^{rT}$ in $T$ years.
+Notation first, in words. A small letter after a symbol, written low, labels which currency it belongs to: $r_d$ is the **domestic** rate, the rate on the currency prices are counted in (dollars); $r_f$ is the **foreign** rate, on the currency being priced (euros). Both are continuously compounded ([Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)): a deposit of 1 grows to $e^{rT}$ in $T$ years.
 
 $$F = S\,e^{(r_d - r_f)\,T}$$
 
@@ -93,7 +68,7 @@ In words: dollars grown for the term, divided by euros grown for the term. Conve
 ### When it holds
 
 - **One rate to borrow and one to lend, the same, in each currency.** Real banks borrow dearer than they lend, and pay a bid–offer spread (the gap between the buying and selling price) at spot and forward. The single $F$ then widens into a band; a quote inside it offers no free money.
-- **Both sides deliver.** A forward is a promise. If default risk or collateral differs between the two deposits and the forward, the rates in the formula are not the rates the trader actually faces, and the gap shows up as the cross-currency basis ([implied-yield-and-cross-currency-basis](05-implied-yield-and-cross-currency-basis.md)).
+- **Both sides deliver.** A forward is a promise. If default risk or collateral differs between the two deposits and the forward, the rates in the formula are not the rates the trader actually faces, and the gap shows up as the cross-currency basis ([The interest rate a forward implies](05-implied-yield-and-cross-currency-basis.md)).
 - **Money can move freely.** Capital controls, or limits on a bank's balance sheet, stop the arbitrage from being run at size. Since 2008 the euro, yen and sterling forwards against the dollar have sat tens of basis points (hundredths of a percent) off this formula for years.
 - **Rates for exactly the forward's term, on one compounding basis.** A 1-year forward needs 1-year deposit rates. Mixing money-market quotes into the continuous formula shifts the one-year forward by 5.74 pips here (What breaks, below).
 
@@ -112,7 +87,7 @@ Both deliver the same euro on the same day with no risk. So
 
 $$F\,e^{-r_d T} = S\,e^{-r_f T} \quad\Longrightarrow\quad F = S\,e^{(r_d - r_f)T}.$$
 
-At the house numbers both routes cost 1.067490 dollars today. This is the forward-price argument from [forward-price-by-cash-and-carry](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md) with one change: the euro, held, pays interest at $r_f$ the way a share pays a dividend. Put $r_f$ where that card has the dividend yield and the two formulas coincide.
+At the house numbers both routes cost 1.067490 dollars today. This is the forward-price argument from [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md) with one change: the euro, held, pays interest at $r_f$ the way a share pays a dividend. Put $r_f$ where that card has the dividend yield and the two formulas coincide.
 
 ### Step 1: the seller's ledger, when the quote is too high
 
@@ -183,7 +158,7 @@ A dealer who expects the euro at 1.30 and one who expects 0.95 quote the same fo
 
 ### The other door: money-market rates
 
-Replace each continuous deposit by a simple-interest deposit with its day count. Route A sets aside $F/(1 + R_d\tau)$ dollars; route B buys $1/(1 + R_f\tau)$ euros. Equating them gives the money-market form. With the house rates converted to 5.0569% and 3.0037%, it returns 1.122221 again. The formula does not depend on how interest is counted, only on each rate being counted consistently. The same carry, read as a number of pips and traded as a two-legged ticket, is [forward-points-and-fx-swaps](03-forward-points-and-fx-swaps.md).
+Replace each continuous deposit by a simple-interest deposit with its day count. Route A sets aside $F/(1 + R_d\tau)$ dollars; route B buys $1/(1 + R_f\tau)$ euros. Equating them gives the money-market form. With the house rates converted to 5.0569% and 3.0037%, it returns 1.122221 again. The formula does not depend on how interest is counted, only on each rate being counted consistently. The same carry, read as a number of pips and traded as a two-legged ticket, is [Forward points and the FX swap](03-forward-points-and-fx-swaps.md).
 
 ---
 
@@ -575,11 +550,11 @@ The two outputs agree line for line. Four roads land on 1.122221 to the printed 
 ## Where you meet it in real life
 
 - **Corporate hedging.** An importer paying euros next year buys them forward at 1.122221. The 222.21 pips over spot are not an insurance premium: they match the extra interest the dollars earn until delivery.
-- **FX swaps and forward points.** Dealers quote forwards as points over spot, and trade spot plus an opposite forward as one ticket, which is this card's ledger in a single contract: [forward-points-and-fx-swaps](03-forward-points-and-fx-swaps.md).
-- **Contracts already on the books.** A forward signed last month at an old rate is now worth something to one side. Its value comes from today's forward and discount factor: [fx-forward-value-after-inception](04-fx-forward-value-after-inception.md).
-- **Currency options.** The Garman–Kohlhagen formula is Black–Scholes with the foreign rate in the dividend slot, and it prices off this card's forward: [garman-kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md).
-- **Funding-stress monitors.** Central banks watch how far quoted forwards sit from this formula. Run backwards, a forward implies an interest rate, and the gap to the quoted deposit rate is the cross-currency basis: [implied-yield-and-cross-currency-basis](05-implied-yield-and-cross-currency-basis.md).
-- **Gold.** Gold lent out earns a lease rate the way a euro earns its deposit rate, and the gold forward is the same formula with the lease rate in place of $r_f$: [gold-forward-and-the-lease-rate](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/01-gold-forward-and-the-lease-rate.md).
+- **FX swaps and forward points.** Dealers quote forwards as points over spot, and trade spot plus an opposite forward as one ticket, which is this card's ledger in a single contract: [Forward points and the FX swap](03-forward-points-and-fx-swaps.md).
+- **Contracts already on the books.** A forward signed last month at an old rate is now worth something to one side. Its value comes from today's forward and discount factor: [Valuing an old currency forward](04-fx-forward-value-after-inception.md).
+- **Currency options.** The Garman–Kohlhagen formula is Black–Scholes with the foreign rate in the dividend slot, and it prices off this card's forward: [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md).
+- **Funding-stress monitors.** Central banks watch how far quoted forwards sit from this formula. Run backwards, a forward implies an interest rate, and the gap to the quoted deposit rate is the cross-currency basis: [The interest rate a forward implies](05-implied-yield-and-cross-currency-basis.md).
+- **Gold.** Gold lent out earns a lease rate the way a euro earns its deposit rate, and the gold forward is the same formula with the lease rate in place of $r_f$: [Gold forward](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/01-gold-forward-and-the-lease-rate.md).
 
 > **Say it back**
 > A currency forward fixes today the rate for a swap on a later date. Buying the foreign currency now and depositing it reaches the same place as agreeing the forward and depositing the home currency, so both must cost the same. That forces the forward to equal spot grown at the home rate minus the foreign rate. Any other quote lets one side lock in cash with no exposure to the exchange rate. The forward is where the two deposits tie, not a forecast of where the rate will land.
@@ -588,20 +563,20 @@ The two outputs agree line for line. Four roads land on 1.122221 to the printed 
 
 ## What this builds on
 
-- [currency-quotes-and-cross-rates](01-currency-quotes-and-cross-rates.md): which currency is priced in which, and what a pip is.
-- [compound-interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md): why a deposit multiplies rather than adds.
-- [compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): where $e^{rT}$ comes from, and how simple and continuous rates convert.
-- [discounting-and-present-value](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): the discount factors that price routes A and B today.
-- [forward-price-by-cash-and-carry](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md): the same argument for a share; the euro's interest takes the dividend's place.
+- [Reading a currency quote](01-currency-quotes-and-cross-rates.md): which currency is priced in which, and what a pip is.
+- [Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md): why a deposit multiplies rather than adds.
+- [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): where $e^{rT}$ comes from, and how simple and continuous rates convert.
+- [Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): the discount factors that price routes A and B today.
+- [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md): the same argument for a share; the euro's interest takes the dividend's place.
 
 ## Where this goes next
 
-- [forward-points-and-fx-swaps](03-forward-points-and-fx-swaps.md): the forward as the market quotes it, in points, and the swap that trades it.
-- [implied-yield-and-cross-currency-basis](05-implied-yield-and-cross-currency-basis.md): this formula run backwards, and what the leftover gap measures.
-- [garman-kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): options on the exchange rate, priced off this forward.
-- [quanto-forward-and-adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): a forward paid in the wrong currency, where the exchange rate's wobble adds a correction.
-- [gold-forward-and-the-lease-rate](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/01-gold-forward-and-the-lease-rate.md): the same carry with a metal's lease rate as the foreign rate.
-- [cross-currency-swaps-and-basis](../28-Swaps/06-cross-currency-swaps-and-basis.md): a string of these forwards, exchanged as interest payments over many years.
+- [Forward points and the FX swap](03-forward-points-and-fx-swaps.md): the forward as the market quotes it, in points, and the swap that trades it.
+- [The interest rate a forward implies](05-implied-yield-and-cross-currency-basis.md): this formula run backwards, and what the leftover gap measures.
+- [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): options on the exchange rate, priced off this forward.
+- [The quanto adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): a forward paid in the wrong currency, where the exchange rate's wobble adds a correction.
+- [Gold forward](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/01-gold-forward-and-the-lease-rate.md): the same carry with a metal's lease rate as the foreign rate.
+- [Cross-currency swaps](../28-Swaps/06-cross-currency-swaps-and-basis.md): a string of these forwards, exchanged as interest payments over many years.
 
 This card fixes the forward from quoted deposit rates; what it leaves open is how the market actually quotes and trades that forward, in points over spot, which the forward-points card takes up.
 

@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Numerical Methods for Pricing
-topic: Noise per path
-item: Cheaper Monte Carlo
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-  - "[[Cards/09-Probability and statistics/11-Simulation/05-variance-reduction|variance-reduction]]"
-next:
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/03-quasi-monte-carlo-and-brownian-bridge|quasi-monte-carlo-and-brownian-bridge]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/02-arithmetic-asian-options|arithmetic-asian-options]]"
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/03-arithmetic-asian-option|arithmetic-asian-option]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - variance-reduction-for-pricing
----
-
 # Cheaper Monte Carlo: antithetic paths, control variates and stratification
 
-Financial mathematics → Numerical Methods for Pricing → Noise per path → Cheaper Monte Carlo
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Numerical Methods for Pricing](../../../SYLLABUS.md#w12-s06) → Cheaper Monte Carlo
 
 ---
 
@@ -32,7 +10,7 @@ Acme shares trade at $100.00. A contract on the desk pays the average of Acme's 
 
 No formula prices it. The desk simulates: invent futures for Acme — each one a **path**, a price for every date the contract reads — then read off what the ticket pays on each path, discount to today, average. Sixteen thousand paths answer $7.22, with an error bar of 8.33 cents.
 
-That bar is the whole problem. It shrinks like one over the square root of the number of paths, so a bar ten times tighter costs a hundred times the machine time ([monte-carlo-pricing](01-monte-carlo-pricing.md)) — across a book of thousands of contracts, overnight, a real bill.
+That bar is the whole problem. It shrinks like one over the square root of the number of paths, so a bar ten times tighter costs a hundred times the machine time ([Monte Carlo pricing](01-monte-carlo-pricing.md)) — across a book of thousands of contracts, overnight, a real bill.
 
 There is a second lever, and it is free. The bar depends on how widely the numbers being averaged scatter, and those numbers are a choice. Three long-standing choices shrink the scatter without buying one extra path: use each random shock twice, once with its sign flipped; subtract a companion contract's own sampling error, its price being known exactly; and spread the draws evenly across the bell curve rather than letting chance clump them.
 
@@ -60,7 +38,7 @@ The upper line is the arithmetic ticket, the lower the geometric. Below the stri
 
 ## The formula
 
-Notation first, in words. A bar over a letter is the average of that quantity across the paths drawn, so $\bar X$ is the average payoff. A capital E with square brackets holds a quantity's *true* average, so $E[Y]$ is what the companion is really worth, known before a path is drawn. Two words carried over from probability: $\operatorname{var}$ is how widely a quantity scatters about its own average, $\operatorname{cov}$ how two of them scatter together ([variance-reduction](../../09-Probability%20and%20statistics/11-Simulation/05-variance-reduction.md)). The house writes $N(x)$ for the bell-curve area to the left of $x$; $N^{-1}(u)$ runs it backwards, returning the point with area $u$ to its left. That area climbs strictly from 0 to 1, so each $u$ between them has exactly one such point and the two ends have none — which is why the code's draws never reach them.
+Notation first, in words. A bar over a letter is the average of that quantity across the paths drawn, so $\bar X$ is the average payoff. A capital E with square brackets holds a quantity's *true* average, so $E[Y]$ is what the companion is really worth, known before a path is drawn. Two words carried over from probability: $\operatorname{var}$ is how widely a quantity scatters about its own average, $\operatorname{cov}$ how two of them scatter together ([Variance reduction](../../09-Probability%20and%20statistics/11-Simulation/05-variance-reduction.md)). The house writes $N(x)$ for the bell-curve area to the left of $x$; $N^{-1}(u)$ runs it backwards, returning the point with area $u$ to its left. That area climbs strictly from 0 to 1, so each $u$ between them has exactly one such point and the two ends have none — which is why the code's draws never reach them.
 
 **Mirrors.** One bell-curve shock $Z$, used twice:
 
@@ -163,7 +141,7 @@ Formally, any spread splits into the spread of the slice averages plus the avera
 
 On the call, one shock and 8,000 slices give 0.13 cents, worth 114.603 million plain paths. On the ticket, whose payoff reads two shocks, the same budget gives 2.96 cents, worth 0.127 million. Slicing one direction of two recovers a fraction of what slicing the only direction does, and that fraction collapses as directions multiply.
 
-Which direction, then? The code slices where the path *ends*, leaving how it got there to chance; slicing the first leg instead gives 4.38 cents against 2.96, worse from the same work. Choosing the direction properly is the Brownian bridge, the business of [quasi-monte-carlo-and-brownian-bridge](03-quasi-monte-carlo-and-brownian-bridge.md).
+Which direction, then? The code slices where the path *ends*, leaving how it got there to chance; slicing the first leg instead gives 4.38 cents against 2.96, worse from the same work. Choosing the direction properly is the Brownian bridge, the business of [Quasi-Monte Carlo](03-quasi-monte-carlo-and-brownian-bridge.md).
 
 <details>
 <summary>Detailed proof: the two variance results</summary>
@@ -180,7 +158,7 @@ No lean appears at any slope, since the average of $\bar Y - E[Y]$ is zero, so t
 
 ### The other door
 
-All three repackage random draws. The alternative is to abandon randomness and choose points deliberately, too evenly spread to be random, which changes the convergence law rather than the constant in front of it. Grids and transforms skip sampling altogether: [finite-differences-for-the-black-scholes-equation](07-finite-differences-for-the-black-scholes-equation.md) and [carr-madan-fft-and-cos-methods](09-carr-madan-fft-and-cos-methods.md) both recover 9.227 on the plain call, as the two-shock grid in this card's code does for the ticket.
+All three repackage random draws. The alternative is to abandon randomness and choose points deliberately, too evenly spread to be random, which changes the convergence law rather than the constant in front of it. Grids and transforms skip sampling altogether: [Pricing on a grid](07-finite-differences-for-the-black-scholes-equation.md) and [Transform pricing](09-carr-madan-fft-and-cos-methods.md) both recover 9.227 on the plain call, as the two-shock grid in this card's code does for the ticket.
 
 ---
 
@@ -680,11 +658,11 @@ The two outputs agree line for line, to every printed digit. They have to: the d
 
 ## Where you meet it in real life
 
-- **The Asian option desk.** Pricing an arithmetic average with its geometric twin as the control is the standard method, and it is why the geometric version — a contract almost nobody trades — sits in every library. The contracts: [arithmetic-asian-options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/02-arithmetic-asian-options.md) and, in commodity form, [arithmetic-asian-option](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/03-arithmetic-asian-option.md).
+- **The Asian option desk.** Pricing an arithmetic average with its geometric twin as the control is the standard method, and it is why the geometric version — a contract almost nobody trades — sits in every library. The contracts: [Arithmetic Asian options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/02-arithmetic-asian-options.md) and, in commodity form, [The Asian option desks trade](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/03-arithmetic-asian-option.md).
 - **Any exotic with a vanilla cousin.** A barrier option controlled by the plain call it would be without the barrier; a basket controlled by an option on the basket's geometric average, which is lognormal and so has a formula. The pattern never changes: find the nearest thing with a formula.
-- **Overnight risk batches, and early exercise.** The work is dominated by paths, so a hundredfold in path efficiency is a hundredfold more pricing inside the same overnight window — and least-squares Monte Carlo, which spends paths on a regression, is short of them by construction: [longstaff-schwartz-least-squares-monte-carlo](06-longstaff-schwartz-least-squares-monte-carlo.md).
-- **Several shares, or a whole path.** More random inputs means more directions, where slicing fades and controls keep working: [correlated-paths-and-cholesky](04-correlated-paths-and-cholesky.md) and [discretisation-schemes-for-sdes](05-discretisation-schemes-for-sdes.md).
-- **The other answer entirely.** Where a contract's shape suits a grid, the grid answers with no error bar to shrink: [american-options-by-psor-and-lcp](08-american-options-by-psor-and-lcp.md). Outside finance, all three came from numerical integration and physics, and any simulation with a tractable approximation nearby can use them.
+- **Overnight risk batches, and early exercise.** The work is dominated by paths, so a hundredfold in path efficiency is a hundredfold more pricing inside the same overnight window — and least-squares Monte Carlo, which spends paths on a regression, is short of them by construction: [Longstaff-Schwartz](06-longstaff-schwartz-least-squares-monte-carlo.md).
+- **Several shares, or a whole path.** More random inputs means more directions, where slicing fades and controls keep working: [Correlated paths](04-correlated-paths-and-cholesky.md) and [Stepping an SDE](05-discretisation-schemes-for-sdes.md).
+- **The other answer entirely.** Where a contract's shape suits a grid, the grid answers with no error bar to shrink: [American options on a grid](08-american-options-by-psor-and-lcp.md). Outside finance, all three came from numerical integration and physics, and any simulation with a tractable approximation nearby can use them.
 
 > **Say it back**
 > A simulated price is an average, and its error bar depends on how widely the numbers being averaged scatter. That scatter is a choice. Mirroring each shock and averaging the pair deletes the one-way part of the noise: small, reliable, nearly free. Subtracting a companion contract's own sampling slip deletes whatever part of the noise the companion can predict, shrinking the bar by one minus the correlation squared. Forcing the draws into equal-chance slices deletes the part that came from chance clumping them, in the one direction sliced. On the two-date ticket the geometric twin correlates 0.999597, and 16,000 paths bought accuracy worth 19.874 million. None of the three changes the price being estimated; each changes only how loudly it is guessed.
@@ -693,14 +671,14 @@ The two outputs agree line for line, to every printed digit. They have to: the d
 
 ## What this builds on
 
-- [monte-carlo-pricing](01-monte-carlo-pricing.md): the sampler this card rebuilds, the square-root law it is escaping, and where the error bar comes from.
-- [variance-reduction](../../09-Probability%20and%20statistics/11-Simulation/05-variance-reduction.md): the same three ideas as general statements about estimating any average, with the covariance algebra done once.
+- [Monte Carlo pricing](01-monte-carlo-pricing.md): the sampler this card rebuilds, the square-root law it is escaping, and where the error bar comes from.
+- [Variance reduction](../../09-Probability%20and%20statistics/11-Simulation/05-variance-reduction.md): the same three ideas as general statements about estimating any average, with the covariance algebra done once.
 
 ## Where this goes next
 
-- [quasi-monte-carlo-and-brownian-bridge](03-quasi-monte-carlo-and-brownian-bridge.md): points chosen to be too even to be random, and the change of coordinates that decides which direction deserves the evenness.
-- [arithmetic-asian-options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/02-arithmetic-asian-options.md): the contract itself, its real observation schedules, and the approximations that compete with simulating it.
-- [arithmetic-asian-option](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/03-arithmetic-asian-option.md): the same average written as a commodity swap, where the average is the contract rather than a wrinkle in it.
+- [Quasi-Monte Carlo](03-quasi-monte-carlo-and-brownian-bridge.md): points chosen to be too even to be random, and the change of coordinates that decides which direction deserves the evenness.
+- [Arithmetic Asian options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/02-arithmetic-asian-options.md): the contract itself, its real observation schedules, and the approximations that compete with simulating it.
+- [The Asian option desks trade](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/03-arithmetic-asian-option.md): the same average written as a commodity swap, where the average is the contract rather than a wrinkle in it.
 
 Slicing paid 114.603 million plain paths' worth in one direction and 0.127 million in two, which leaves the question of which direction of a many-step path deserves the evenness — and that is what the next card answers.
 

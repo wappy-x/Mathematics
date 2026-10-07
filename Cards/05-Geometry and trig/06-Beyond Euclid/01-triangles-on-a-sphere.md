@@ -1,26 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Beyond Euclid
-topic: Spherical trigonometry
-item: Triangles on a sphere
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/06-law-of-cosines|law-of-cosines]]"
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/07-cylindrical-and-spherical-coordinates|cylindrical-and-spherical-coordinates]]"
-next:
-  - "[[Cards/05-Geometry and trig/06-Beyond Euclid/02-spherical-and-hyperbolic-geometry|spherical-and-hyperbolic-geometry]]"
-  - "[[Cards/17-Topology/03-Surfaces and Manifolds/01-topological-manifolds|topological-manifolds]]"
-  - "[[Cards/23-Differential geometry and Lie groups/02-Surfaces/08-theorema-egregium|theorema-egregium]]"
-  - "[[Cards/23-Differential geometry and Lie groups/05-Riemannian Geometry/05-model-spaces-of-constant-curvature|model-spaces-of-constant-curvature]]"
-tags: [mathematics, geometry and trig, triangles-on-a-sphere]
----
-
 # Triangles on a sphere: angles add to more than 180 and the excess is the area
 
-Geometry and trig → Beyond Euclid → Spherical trigonometry → Triangles on a sphere
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Beyond Euclid](../../../SYLLABUS.md#w05-s06) → Triangles on a sphere
 
 ---
 
@@ -46,7 +26,7 @@ To scale, seen from far above the triangle's middle: the Earth's 6371 km radius 
 
 ## The formula
 
-Notation first, in words. The corners are A (London), B (New York) and C (the pole), and each side takes the small letter of the corner it faces. A side is measured as a **central angle**: the angle at the sphere's centre between the arrows to its two ends. Its length on the surface is the radius times that angle in radians ([radians-arcs-and-sectors](../02-Circles%20and%20Solids/02-radians-arcs-and-sectors.md)):
+Notation first, in words. The corners are A (London), B (New York) and C (the pole), and each side takes the small letter of the corner it faces. A side is measured as a **central angle**: the angle at the sphere's centre between the arrows to its two ends. Its length on the surface is the radius times that angle in radians ([Radians](../02-Circles%20and%20Solids/02-radians-arcs-and-sectors.md)):
 
 $$s = R\,c$$
 
@@ -73,7 +53,7 @@ $$K = R^2\,E, \qquad E = A + B + C - \pi$$
 | $E$ | the excess: angle sum minus 180°, in radians | 16.76° = 0.292537 rad | the area grows in step |
 | $K$ | the area enclosed | 11873957 km^2 | — |
 
-The pole makes the inputs easy to read off a map ([cylindrical-and-spherical-coordinates](../04-Coordinates%20and%20Curves/07-cylindrical-and-spherical-coordinates.md)); the laws hold for any corners.
+The pole makes the inputs easy to read off a map ([Cylindrical and spherical coordinates](../04-Coordinates%20and%20Curves/07-cylindrical-and-spherical-coordinates.md)); the laws hold for any corners.
 
 ### When it holds
 
@@ -102,7 +82,7 @@ That is the law, and any triangle can be turned to put a corner at the pole.
 
 ### Step 2: the law of sines, from one volume
 
-The three arrows span a slanted box; its volume is the determinant of their coordinates ([triple-product-and-volume](../05-Vectors%20in%20Space/03-triple-product-and-volume.md)). Turning the globe does not change it. With C at the pole it works out to sin a sin b sin C; with A there, sin b sin c sin A; with B there, sin c sin a sin B. Divide each by sin a sin b sin c and the ratios agree: 1.252344 each here.
+The three arrows span a slanted box; its volume is the determinant of their coordinates ([Triple product](../05-Vectors%20in%20Space/03-triple-product-and-volume.md)). Turning the globe does not change it. With C at the pole it works out to sin a sin b sin C; with A there, sin b sin c sin A; with B there, sin c sin a sin B. Divide each by sin a sin b sin c and the ratios agree: 1.252344 each here.
 
 <details>
 <summary>The algebra behind this</summary>
@@ -113,7 +93,7 @@ With C at the pole the rows are (0, 0, 1), (sin b, 0, cos b) and (sin a cos C, s
 
 ### Step 3: the excess is the area
 
-Two great circles through opposite points cut out a slice like an orange segment, a **lune**. A lune with corner angle A radians is the share A / 2π of the sphere, whose area is 4πR^2 ([pyramids-cones-and-spheres](../02-Circles%20and%20Solids/05-pyramids-cones-and-spheres.md)): 2AR^2.
+Two great circles through opposite points cut out a slice like an orange segment, a **lune**. A lune with corner angle A radians is the share A / 2π of the sphere, whose area is 4πR^2 ([Pyramids, cones and spheres](../02-Circles%20and%20Solids/05-pyramids-cones-and-spheres.md)): 2AR^2.
 
 Extend the sides to full great circles. At each corner take the lune holding the triangle, plus its twin on the far side of the globe. The six lunes cover the sphere once, except the triangle and its far-side mirror, each covered three times. Counting areas both ways gives K = R^2 (A + B + C − π).
 
@@ -132,7 +112,7 @@ A check: the equator and two meridians 90° apart cut the sphere into eight equa
 
 ### Step 4: small triangles look flat
 
-The excess is area over R^2. On a triangle a few kilometres across it is far too small to measure, so the angles add to 180° as far as anyone can tell ([triangle-angle-sum-and-inequality](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). Flat trigonometry is the small end of spherical trigonometry.
+The excess is area over R^2. On a triangle a few kilometres across it is far too small to measure, so the angles add to 180° as far as anyone can tell ([Triangles](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). Flat trigonometry is the small end of spherical trigonometry.
 
 ---
 
@@ -163,7 +143,7 @@ The excess is area over R^2. On a triangle a few kilometres across it is far too
 
 ## Code, from first principles, and it actually runs
 
-The code solves the London triangle and the octant by two roads each. The route: the cosine law, and the straight chord's length k, since on a unit sphere a chord of length k spans the central angle 2 × arcsin(k/2), arcsin being the inverse of sine. The corners: the rearranged cosine law, and the surface directions leaving each corner, compared by dot and cross products ([cross-product-and-oriented-area](../05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md)). The area: Girard, and 262144 small flat triangles with corners on the sphere; each quartering shrinks their gap to Girard about fourfold.
+The code solves the London triangle and the octant by two roads each. The route: the cosine law, and the straight chord's length k, since on a unit sphere a chord of length k spans the central angle 2 × arcsin(k/2), arcsin being the inverse of sine. The corners: the rearranged cosine law, and the surface directions leaving each corner, compared by dot and cross products ([Cross product](../05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md)). The area: Girard, and 262144 small flat triangles with corners on the sphere; each quartering shrinks their gap to Girard about fourfold.
 
 ### Python
 
@@ -365,7 +345,7 @@ The two outputs match line for line.
 >
 > - **Mixing three quantities.** A corner angle lies on the surface; a side is an angle at the centre; a distance is radius times side, in radians.
 > - **Degrees in the area:** 680327650 km^2, larger than the Earth.
-> - **The sine law for a corner.** A sine cannot tell an angle from 180° minus it; the rearranged cosine law can ([law-of-sines-and-the-ambiguous-case](../03-Trigonometry/07-law-of-sines-and-the-ambiguous-case.md)).
+> - **The sine law for a corner.** A sine cannot tell an angle from 180° minus it; the rearranged cosine law can ([Law of sines](../03-Trigonometry/07-law-of-sines-and-the-ambiguous-case.md)).
 
 ---
 
@@ -373,7 +353,7 @@ The two outputs match line for line.
 
 - **Flight planning.** Long-haul routes follow great circles, bowing poleward on a flat map.
 - **Large surveys.** On triangles tens of kilometres across, surveyors take a third of the excess off each angle, then use flat formulas: Legendre's theorem.
-- **Other geometries.** The sphere is the surface where angle sums overshoot; setting it beside the plane and a surface where they fall short is [spherical-and-hyperbolic-geometry](02-spherical-and-hyperbolic-geometry.md).
+- **Other geometries.** The sphere is the surface where angle sums overshoot; setting it beside the plane and a surface where they fall short is [Three geometries](02-spherical-and-hyperbolic-geometry.md).
 
 > **Say it back**
 > On a sphere a side is an angle at the centre; its length is the radius times that angle in radians. One dot product gives the spherical law of cosines; one volume, found three ways, gives the law of sines. The angles add to more than 180°, and the surplus in radians times the radius squared is the area. London, New York and the pole enclose 196.76° and 11873957 km^2.
@@ -382,15 +362,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [law-of-cosines](../03-Trigonometry/06-law-of-cosines.md): the flat law this card curves; two sides and their angle give the third.
-- [cylindrical-and-spherical-coordinates](../04-Coordinates%20and%20Curves/07-cylindrical-and-spherical-coordinates.md): latitude and longitude turned into an arrow from the centre.
+- [Law of cosines](../03-Trigonometry/06-law-of-cosines.md): the flat law this card curves; two sides and their angle give the third.
+- [Cylindrical and spherical coordinates](../04-Coordinates%20and%20Curves/07-cylindrical-and-spherical-coordinates.md): latitude and longitude turned into an arrow from the centre.
 
 ## Where this goes next
 
-- [spherical-and-hyperbolic-geometry](02-spherical-and-hyperbolic-geometry.md): the sphere beside the plane and a surface where triangles fall short.
-- topological-manifolds: spaces that look flat up close, as a small patch of globe does.
-- theorema-egregium: curvature measured from inside a surface.
-- model-spaces-of-constant-curvature: excess per unit area, 1/R^2, as curvature.
+- [Three geometries](02-spherical-and-hyperbolic-geometry.md): the sphere beside the plane and a surface where triangles fall short.
+- Topological manifold: spaces that look flat up close, as a small patch of globe does.
+- Theorema Egregium: curvature measured from inside a surface.
+- Sphere, plane and hyperbolic space: excess per unit area, 1/R^2, as curvature.
 
 The excess reveals curvature from inside the surface; whether a surface can curve the other way, so triangles fall short of 180°, is the next card's question.
 

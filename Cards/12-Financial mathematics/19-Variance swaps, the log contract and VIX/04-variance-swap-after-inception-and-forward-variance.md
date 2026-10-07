@@ -1,33 +1,16 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Variance swaps, the log contract and VIX
-topic: Running swaps
-item: Marking a variance swap
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/03-variance-swap-fair-strike|variance-swap-fair-strike]]"
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/02-term-structure-and-forward-volatility|term-structure-and-forward-volatility]]"
-next:
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/05-volatility-swap-and-jump-bias|volatility-swap-and-jump-bias]]"
-tags: [mathematics, financial mathematics, variance-swap-after-inception-and-forward-variance]
----
-
 # Marking a variance swap: accrued realised plus the remaining forward variance, and the forward variance two expiries imply
 
-Financial mathematics → Variance swaps, the log contract and VIX → Running swaps → Marking a variance swap
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Variance swaps, the log contract and VIX](../../../SYLLABUS.md#w12-s19) → Marking a variance swap
 
 ---
 
 ## General Overview
 
-Acme trades at 100 dollars. A one-year variance swap on Acme was struck at inception at 20 percent volatility, which is 0.04 in variance (volatility squared). At expiry the buyer receives the year's realised variance, the average of Acme's squared daily returns scaled to a year ([realised-variance-from-daily-prices](01-realised-variance-from-daily-prices.md)), and pays 0.04. The size is 100,000 dollars of **vega notional**: roughly 100,000 dollars gained per volatility point that the year realises above 20.
+Acme trades at 100 dollars. A one-year variance swap on Acme was struck at inception at 20 percent volatility, which is 0.04 in variance (volatility squared). At expiry the buyer receives the year's realised variance, the average of Acme's squared daily returns scaled to a year ([Realised variance](01-realised-variance-from-daily-prices.md)), and pays 0.04. The size is 100,000 dollars of **vega notional**: roughly 100,000 dollars gained per volatility point that the year realises above 20.
 
 Six months in, Acme has realised 18 percent. The buyer is behind. But half the year is still to come, and it could make the shortfall up. What is the position worth today? That number is the swap's **mark**, the price at which it would change hands now.
 
-The answer splits the year into the half already lived and the half still ahead. The first half's variance is a known number. The second half's variance is unknown, but the option market prices it today through a strip of puts and calls ([variance-swap-fair-strike](03-variance-swap-fair-strike.md)). Weight each half by its share of the year, subtract the strike, discount. In the house market, where options for the next half-year are priced at a flat 20 percent, the mark is minus 92,654.44 dollars.
+The answer splits the year into the half already lived and the half still ahead. The first half's variance is a known number. The second half's variance is unknown, but the option market prices it today through a strip of puts and calls ([The variance swap](03-variance-swap-fair-strike.md)). Weight each half by its share of the year, subtract the strike, discount. In the house market, where options for the next half-year are priced at a flat 20 percent, the mark is minus 92,654.44 dollars.
 
 The same splitting, run on two quotes instead of one, prices a stretch of time that starts in the future. Six-month options at 18 percent and one-year options at 20 percent together imply a variance of 0.0476, a volatility of 21.82 percent, for the six months in between. That is the **forward variance**. It is also exactly the volatility the second half must deliver for the running swap above to break even.
 
@@ -87,9 +70,9 @@ Conventions verified 27 Sep 2026: variance notional is vega notional divided by 
 ### When it holds
 
 - **A quote for the time left that trades.** $K_{rem}$ must be a price at which a fresh swap on the rest can be dealt. If the strip of options is thin, the quote is a guess and so is the mark; a one-point error in the rest's volatility moves this mark by about the vega, 48,765.50 dollars.
-- **No jumps for the strip to miss.** The strip prices the rest's variance exactly only when Acme moves without jumps. With jumps, the log contract and the squared returns part ways; the gap is on [volatility-swap-and-jump-bias](05-volatility-swap-and-jump-bias.md).
+- **No jumps for the strip to miss.** The strip prices the rest's variance exactly only when Acme moves without jumps. With jumps, the log contract and the squared returns part ways; the gap is on [The volatility swap and the jump bias](05-volatility-swap-and-jump-bias.md).
 - **The same day count on both halves.** The split needs realised variance to be an average over the whole life. If the first half had 126 trading days and the rest has 125, the weights are 126 over 251 and 125 over 251, not a half each.
-- **Forward variance needs rising total variance.** $\xi$ exists only if $w_2 \ge w_1$. Otherwise the two quotes carry an arbitrage and no forward variance fits them ([term-structure-and-forward-volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md)).
+- **Forward variance needs rising total variance.** $\xi$ exists only if $w_2 \ge w_1$. Otherwise the two quotes carry an arbitrage and no forward variance fits them ([Term structure and forward volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md)).
 
 ---
 
@@ -154,7 +137,7 @@ with $\Delta t$ one trading day, 1/252 of a year. With $S^2\Gamma$ constant, eve
 <details>
 <summary>Detailed proof: the strip's dollar gamma is flat</summary>
 
-The strip of puts below the forward $F_0$ and calls above, each weighted $2/(\tau K^2)$ per unit of strike, pays at the end of the rest $\frac{2}{\tau}\left(\frac{S_\tau - F_0}{F_0} - \ln\frac{S_\tau}{F_0}\right)$ ([carr-madan-spanning-and-the-log-contract](02-carr-madan-spanning-and-the-log-contract.md)). The first term is a forward contract, a straight line in Acme's price, with no gamma. The second is the log contract. Its value today, with Acme at $S$, is $-\frac{2}{\tau}e^{-r\tau}\left(\ln S + \text{terms free of } S\right)$, because the average of $\ln S_\tau$ is $\ln S$ plus a drift. Differentiate twice in $S$: $\frac{2}{\tau}e^{-r\tau}\,\frac{1}{S^2}$. Multiply by $S^2$: $\frac{2}{\tau}e^{-r\tau}$, with no $S$ left. The running swap holds $N\tau/T$ of this strip, so its dollar gamma is $2ND/T$, for Acme $2 \times 25{,}000{,}000 \times 0.975310 = 48{,}765{,}496$.
+The strip of puts below the forward $F_0$ and calls above, each weighted $2/(\tau K^2)$ per unit of strike, pays at the end of the rest $\frac{2}{\tau}\left(\frac{S_\tau - F_0}{F_0} - \ln\frac{S_\tau}{F_0}\right)$ ([Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md)). The first term is a forward contract, a straight line in Acme's price, with no gamma. The second is the log contract. Its value today, with Acme at $S$, is $-\frac{2}{\tau}e^{-r\tau}\left(\ln S + \text{terms free of } S\right)$, because the average of $\ln S_\tau$ is $\ln S$ plus a drift. Differentiate twice in $S$: $\frac{2}{\tau}e^{-r\tau}\,\frac{1}{S^2}$. Multiply by $S^2$: $\frac{2}{\tau}e^{-r\tau}$, with no $S$ left. The running swap holds $N\tau/T$ of this strip, so its dollar gamma is $2ND/T$, for Acme $2 \times 25{,}000{,}000 \times 0.975310 = 48{,}765{,}496$.
 
 Summing the daily profits over the rest gives $\frac{N D}{T}\sum (r_i^2 - \sigma^2\Delta t) = D N \frac{\tau}{T}(\sigma_{rest}^2 - \sigma^2)$: the swap's floating leg minus its fair strike, in present value. The hedge and the swap are the same claim.
 
@@ -162,7 +145,7 @@ Summing the daily profits over the rest gives $\frac{N D}{T}\sum (r_i^2 - \sigma
 
 A day with no move takes 3,968.25 dollars off the final payoff; the break-even daily move is $20\%/\sqrt{252} = 1.2599$ percent.
 
-The alternative route to the rest's fair variance is the direct one: simulate Acme's daily path, average the payoff. The code does it as a third road; the strip and the formula belong to [variance-swap-fair-strike](03-variance-swap-fair-strike.md).
+The alternative route to the rest's fair variance is the direct one: simulate Acme's daily path, average the payoff. The code does it as a third road; the strip and the formula belong to [The variance swap](03-variance-swap-fair-strike.md).
 
 ---
 
@@ -691,10 +674,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Daily marks on a derivatives desk.** Every running variance swap is revalued each evening exactly this way: banked realised from the day's closes ([realised-variance-from-daily-prices](01-realised-variance-from-daily-prices.md)), plus a fresh strip quote for the rest.
+- **Daily marks on a derivatives desk.** Every running variance swap is revalued each evening exactly this way: banked realised from the day's closes ([Realised variance](01-realised-variance-from-daily-prices.md)), plus a fresh strip quote for the rest.
 - **Forward-start variance swaps.** A swap on a period that starts in the future is struck at the forward variance, and dealers build it from two ordinary swaps, as Step 3 does with a long 2 and a short 1.
 - **Forward variance models.** Lorenzo Bergomi's models take the whole curve of forward variances, one for each future instant, as the thing that moves at random; the running swap's mark is then a sum of today's forward variances over the time left.
-- **VIX futures.** The index is a 30-day variance quote rebuilt every day ([vix-index](06-vix-index.md)); a future on it trades a quote that starts in the future, which is why forward variance is where VIX futures traders start.
+- **VIX futures.** The index is a 30-day variance quote rebuilt every day ([The VIX](06-vix-index.md)); a future on it trades a quote that starts in the future, which is why forward variance is where VIX futures traders start.
 
 > **Say it back**
 > A variance swap's payoff is realised variance, and realised variance is a time-weighted sum of the part already lived and the part to come. The lived part is a fixed number; the part to come is worth its fair strike today, priced by a strip of options. So the mark is the discounted notional times banked plus quoted, weighted by time, minus the strike. Two quoted expiries, split the same way, give the forward variance between them, which is also the break-even for a swap whose first half went to plan. The swap's vega runs down with the time left, and its hedge has the same dollar gamma at every price, which is why it pays on every day's squared move alike.
@@ -703,12 +686,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [variance-swap-fair-strike](03-variance-swap-fair-strike.md): the swap's payoff, and the strip that prices its fair strike; this card uses that price for the time left.
-- [term-structure-and-forward-volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md): total variance, why it adds along the calendar, and why it may not fall; this card turns it into a tradeable swap.
+- [The variance swap](03-variance-swap-fair-strike.md): the swap's payoff, and the strip that prices its fair strike; this card uses that price for the time left.
+- [Term structure and forward volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md): total variance, why it adds along the calendar, and why it may not fall; this card turns it into a tradeable swap.
 
 ## Where this goes next
 
-- [volatility-swap-and-jump-bias](05-volatility-swap-and-jump-bias.md): a swap on volatility itself, whose payoff is the square root of this card's, and what jumps do to the strip.
+- [The volatility swap and the jump bias](05-volatility-swap-and-jump-bias.md): a swap on volatility itself, whose payoff is the square root of this card's, and what jumps do to the strip.
 
 This card's mark is exact because variance splits cleanly along the calendar; volatility, its square root, does not split at all, and pricing a swap on it needs a view of how uncertain the variance still to come is.
 

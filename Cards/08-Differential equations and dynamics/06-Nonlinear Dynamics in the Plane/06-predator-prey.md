@@ -1,22 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Nonlinear Dynamics in the Plane
-topic: Coupled populations
-item: Predator and prey
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/01-phase-portraits-and-nullclines|phase-portraits-and-nullclines]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/02-linearisation-and-the-jacobian|linearisation-and-the-jacobian]]"
-next: []
-tags: [mathematics, differential equations and dynamics, predator-prey]
----
-
 # Predator and prey: two populations chase each other in cycles that never die out
 
-Differential equations and dynamics → Nonlinear Dynamics in the Plane → Coupled populations → Predator and prey
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → Predator and prey
 
 ---
 
@@ -50,7 +34,7 @@ Orange: gazelles, in hundreds. Green: cheetahs, in tens. The cheetahs peak at 2 
 
 ## The formula
 
-As in [phase-portraits-and-nullclines](01-phase-portraits-and-nullclines.md), $x'$ is the rate of $x$, and paths live in the plane of the two populations. The Lotka-Volterra system is
+As in [Phase portraits and nullclines](01-phase-portraits-and-nullclines.md), $x'$ is the rate of $x$, and paths live in the plane of the two populations. The Lotka-Volterra system is
 
 $$x' = a\,x - b\,x\,y, \qquad y' = -c\,y + d\,x\,y .$$
 
@@ -95,7 +79,7 @@ A rest is a state where both rates are zero. $x(1 - y)$ = 0 and $y(x - 1)$ = 0 h
 
 ### Step 2: linearise at each rest
 
-By [linearisation-and-the-jacobian](02-linearisation-and-the-jacobian.md), the Jacobian (the table of partial derivatives of the two rates) is $\begin{pmatrix} 1 - y & -x \\ y & x - 1 \end{pmatrix}$.
+By [Linearisation](02-linearisation-and-the-jacobian.md), the Jacobian (the table of partial derivatives of the two rates) is $\begin{pmatrix} 1 - y & -x \\ y & x - 1 \end{pmatrix}$.
 
 At (0, 0) it is $\begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$, with $\lambda$ = +1 and −1: a saddle.
 
@@ -134,7 +118,7 @@ With general rates the averages are $c/d$ gazelles and $a/b$ cheetahs: the balan
 
 Near (1, 1) the loops are small circles with period 2π = 6.2832 years. The loop through (2, 1) takes 6.6085 years.
 
-A second road: in the coordinates $\ln x$ and $\ln y$ the system becomes a frictionless oscillator with $H$ as its energy, the picture of [the-nonlinear-pendulum](03-the-nonlinear-pendulum.md).
+A second road: in the coordinates $\ln x$ and $\ln y$ the system becomes a frictionless oscillator with $H$ as its energy, the picture of [The pendulum](03-the-nonlinear-pendulum.md).
 
 ### The picture: the loop through (2, 1), with the nullclines
 
@@ -381,7 +365,7 @@ The outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Reading the loop as a cycle the populations are pulled onto.** Every start has its own loop, nested among the others. Nudge the populations and they move to a neighbouring loop and stay there. A cycle that attracts is a limit cycle, on [limit-cycles-and-van-der-pol](08-limit-cycles-and-van-der-pol.md).
+> **Reading the loop as a cycle the populations are pulled onto.** Every start has its own loop, nested among the others. Nudge the populations and they move to a neighbouring loop and stay there. A cycle that attracts is a limit cycle, on [Limit cycles](08-limit-cycles-and-van-der-pol.md).
 >
 > - **Average from peak and trough.** (0.406376 + 2) ÷ 2 = 1.2032, not 1.
 > - **Trusting plain steps.** Euler's rule with h = 0.1 drives $H$ to 3.9123 in 20 years: a spiral the model lacks.
@@ -393,7 +377,7 @@ The outputs match line for line.
 
 - **Fur-trade records.** Canadian pelt counts of hare and lynx cycle over about a decade, the lynx lagging.
 - **Fisheries.** Volterra built the model to explain why predatory fish rose in the Adriatic catch when fishing paused in the First World War. Fishing lowers $a$ and raises $c$, so by Step 5 the averages shift toward prey.
-- **Epidemics.** Susceptible and infected people meet through the same product term in [the-sir-epidemic-model](07-the-sir-epidemic-model.md).
+- **Epidemics.** Susceptible and infected people meet through the same product term in [The SIR model](07-the-sir-epidemic-model.md).
 
 > **Say it back**
 > Prey breed, predators die, and each meeting moves one count down and the other up. Dividing the two rate laws removes time and leaves a fixed quantity, $H = x - \ln x + y - \ln y$, a bowl with its bottom at the balance point. Every path rides one contour of that bowl, a closed loop repeated forever. Over a lap the averages equal the balance point: 100 gazelles and 10 cheetahs.
@@ -402,17 +386,17 @@ The outputs match line for line.
 
 ## What this builds on
 
-- [phase-portraits-and-nullclines](01-phase-portraits-and-nullclines.md): the plane of two populations, the nullclines and the boxes of arrows.
-- [linearisation-and-the-jacobian](02-linearisation-and-the-jacobian.md): the saddle at the empty reserve, and why a linear centre settles nothing.
+- [Phase portraits and nullclines](01-phase-portraits-and-nullclines.md): the plane of two populations, the nullclines and the boxes of arrows.
+- [Linearisation](02-linearisation-and-the-jacobian.md): the saddle at the empty reserve, and why a linear centre settles nothing.
 
 ## Where this goes next
 
-- [lyapunov-functions](04-lyapunov-functions.md): $H$ as a Lyapunov function with rate exactly zero.
-- [the-sir-epidemic-model](07-the-sir-epidemic-model.md): the product term in an outbreak that runs once.
-- [limit-cycles-and-van-der-pol](08-limit-cycles-and-van-der-pol.md): an isolated loop that pulls paths onto itself.
-- [poincare-bendixson-and-bendixsons-criterion](09-poincare-bendixson-and-bendixsons-criterion.md): when a closed loop must exist, and when none can.
+- [Lyapunov functions](04-lyapunov-functions.md): $H$ as a Lyapunov function with rate exactly zero.
+- [The SIR model](07-the-sir-epidemic-model.md): the product term in an outbreak that runs once.
+- [Limit cycles](08-limit-cycles-and-van-der-pol.md): an isolated loop that pulls paths onto itself.
+- [Poincare-Bendixson](09-poincare-bendixson-and-bendixsons-criterion.md): when a closed loop must exist, and when none can.
 
-The capped herd lost every loop to one small change; which cycles survive a small change is [bifurcations-of-equilibria](10-bifurcations-of-equilibria.md).
+The capped herd lost every loop to one small change; which cycles survive a small change is [Bifurcations](10-bifurcations-of-equilibria.md).
 
 ---
 

@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Black-Scholes from the Ground Up
-topic: Averaging the payoff
-item: Black-Scholes by expectation
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/03-black-scholes-by-delta-hedging|black-scholes-by-delta-hedging]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/04-gaussian-integral|gaussian-integral]]"
-next:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/05-change-of-numeraire-in-pricing|change-of-numeraire-in-pricing]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/06-black-76-and-forward-level-pricing|black-76-and-forward-level-pricing]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/09-carr-madan-fft-and-cos-methods|carr-madan-fft-and-cos-methods]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - black-scholes-by-risk-neutral-expectation
----
-
 # Black-Scholes by expectation: the discounted average payoff under the pricing measure
 
-Financial mathematics → Black-Scholes from the Ground Up → Averaging the payoff → Black-Scholes by expectation
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Black-Scholes from the Ground Up](../../../SYLLABUS.md#w12-s05) → Black-Scholes by expectation
 
 ---
 
@@ -93,8 +71,8 @@ One **wiggle unit** is $\sigma\sqrt{T}$, the spread of Acme's log price over the
 
 ### When it holds
 
-- **One set of weights, and only one.** No free money on the table, and every payoff copyable by trading. Where the second part fails — a market missing the instruments to build the copy — many weight sets fit the quoted prices, the average is no longer a single number, and the honest answer is a range of prices ([risk-neutral-measure-and-the-fundamental-theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)).
-- **Geometric Brownian motion, with $\sigma$, $r$ and $q$ fixed.** The weights in the picture come from that model and nothing else ([geometric-brownian-motion-for-prices](01-geometric-brownian-motion-for-prices.md)). Quoted prices imply fatter far-out bands than the line drawn above, which is why one $\sigma$ cannot fit a whole row of strikes at once.
+- **One set of weights, and only one.** No free money on the table, and every payoff copyable by trading. Where the second part fails — a market missing the instruments to build the copy — many weight sets fit the quoted prices, the average is no longer a single number, and the honest answer is a range of prices ([The fundamental theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)).
+- **Geometric Brownian motion, with $\sigma$, $r$ and $q$ fixed.** The weights in the picture come from that model and nothing else ([Prices as geometric Brownian motion](01-geometric-brownian-motion-for-prices.md)). Quoted prices imply fatter far-out bands than the line drawn above, which is why one $\sigma$ cannot fit a whole row of strikes at once.
 - **Exercise on expiry day only.** The average runs over finishing prices, so nothing in between can matter. Add a right to exercise early and this average becomes a floor, not the price. A payoff that reads the path — the average price over the year, a barrier touched on the way — cannot be reached from finishing prices at all, in either direction.
 - **One rate for lending, borrowing and discounting.** The growth inside the weights and the shrinking outside them are both $r$. Split them — a higher borrowing rate, a haircut on collateral — and the average stops being a price anyone can hedge to.
 - **Trading in any size, at any moment, with no cost.** The hedging card needs this to pin the weights down; without it the average is a model number, not a price.
@@ -159,7 +137,7 @@ $$\text{share leg} \;=\; S\,e^{-qT}\,N(d_1) \;=\; 100 \times 0.980199 \times 0.5
 <details>
 <summary>Detailed proof: both legs, done as integrals</summary>
 
-Write the wiggle unit as $\sigma\sqrt{T}$ and the log growth as $(r-q-\tfrac12\sigma^2)T$. Under $Q$ the finishing price is $S_T=S\exp\!\big((r-q-\tfrac12\sigma^2)T+\sigma\sqrt{T}Z\big)$, with $Z$ standard bell-curved: density $\varphi(z)=e^{-z^{2}/2}/\sqrt{2\pi}$, total area 1 (that total is the Gaussian integral, proved on [gaussian-integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)).
+Write the wiggle unit as $\sigma\sqrt{T}$ and the log growth as $(r-q-\tfrac12\sigma^2)T$. Under $Q$ the finishing price is $S_T=S\exp\!\big((r-q-\tfrac12\sigma^2)T+\sigma\sqrt{T}Z\big)$, with $Z$ standard bell-curved: density $\varphi(z)=e^{-z^{2}/2}/\sqrt{2\pi}$, total area 1 (that total is the Gaussian integral, proved on [The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)).
 
 **When the option is used.** $S_T>K$ rearranges, taking logs of both sides, to $\sigma\sqrt{T}\,z > \ln(K/S)-(r-q-\tfrac12\sigma^2)T$, that is $z>-d_2$. No probability has been used yet: this is algebra on one inequality.
 
@@ -666,10 +644,10 @@ The two outputs match line for line at six decimals, including the drawn average
 
 ## Where you meet it in real life
 
-- **Every payoff that has no formula.** An average can be taken of anything: a payoff depending on the whole path, on several shares, on the highest price reached. Desks simulate, average, discount — this card's recipe with a computer instead of an integral ([carr-madan-fft-and-cos-methods](../06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md) does it with transforms).
+- **Every payoff that has no formula.** An average can be taken of anything: a payoff depending on the whole path, on several shares, on the highest price reached. Desks simulate, average, discount — this card's recipe with a computer instead of an integral ([Transform pricing](../06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md) does it with transforms).
 - **The two legs sold separately.** A bet paying $100 if Acme finishes above $100 is the cash leg on its own, and it costs $49.46. A contract delivering one share on the same condition is the share leg, $58.69. Both trade.
 - **Quoted volatility.** The average runs forwards from $\sigma$ to a price; desks run it backwards, from a screen price to the $\sigma$ that reproduces it. That number is what the market argues about, and the fact that it differs strike by strike is the model's honest limit.
-- **Anything quoted as a forward rather than a share.** The same average, centred on the forward price, prices options on futures, on interest rates and on swaps ([black-76-and-forward-level-pricing](06-black-76-and-forward-level-pricing.md)), and it changes shape when the underlying quantity can go negative ([bachelier-model](07-bachelier-model.md), [shifted-lognormal-and-volatility-conversion](08-shifted-lognormal-and-volatility-conversion.md)).
+- **Anything quoted as a forward rather than a share.** The same average, centred on the forward price, prices options on futures, on interest rates and on swaps ([Black-76](06-black-76-and-forward-level-pricing.md)), and it changes shape when the underlying quantity can go negative ([Bachelier](07-bachelier-model.md), [Shifted lognormal and volatility conversion](08-shifted-lognormal-and-volatility-conversion.md)).
 
 > **Say it back**
 > The hedge argument says a traded price is the discounted average of its future payoff, taken with one particular set of weights, the pricing measure. Under those weights Acme's finishing price is lognormal, growing at the bank rate less its dividend yield. The call's payoff splits into a share received above the strike and cash handed over above the strike, so the average splits too. The cash leg weighs the strike by the chance of being used, $N(d_2)$. The share leg weighs the share by the same event counted in shares, which shifts the bell curve one wiggle unit and gives $N(d_1)$. Subtract: $58.69-49.46=\$9.23$, the same figure the hedge produced.
@@ -678,14 +656,14 @@ The two outputs match line for line at six decimals, including the drawn average
 
 ## What this builds on
 
-- [black-scholes-by-delta-hedging](03-black-scholes-by-delta-hedging.md): the reason an average may be called a price. It builds the copying portfolio and shows that discounted traded values, income reinvested, are fair games under $Q$.
-- [gaussian-integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md): the area under a bell curve, and the completing-the-square move that Step 4 leans on entirely.
+- [Black-Scholes by hedging](03-black-scholes-by-delta-hedging.md): the reason an average may be called a price. It builds the copying portfolio and shows that discounted traded values, income reinvested, are fair games under $Q$.
+- [The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md): the area under a bell curve, and the completing-the-square move that Step 4 leans on entirely.
 
 ## Where this goes next
 
-- [change-of-numeraire-in-pricing](05-change-of-numeraire-in-pricing.md): measuring wealth in shares, or in a bond, instead of in bank cash — which is what makes $N(d_1)$ a probability in its own right.
-- [black-76-and-forward-level-pricing](06-black-76-and-forward-level-pricing.md): the same average with the forward price at its centre, which covers futures, caps and swaptions.
-- [carr-madan-fft-and-cos-methods](../06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md): the same average done through a transform, for models whose weights have no tidy closed form.
+- [Changing the unit of account](05-change-of-numeraire-in-pricing.md): measuring wealth in shares, or in a bond, instead of in bank cash — which is what makes $N(d_1)$ a probability in its own right.
+- [Black-76](06-black-76-and-forward-level-pricing.md): the same average with the forward price at its centre, which covers futures, caps and swaptions.
+- [Transform pricing](../06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md): the same average done through a transform, for models whose weights have no tidy closed form.
 
 This card weighted every outcome in one unit of account, dollars sitting in the bank, and that choice is what left $N(d_1)$ looking like a probability without being one; the next card changes the unit of account and turns it into one.
 

@@ -1,31 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Special Functions and the Zeta Function
-topic: Sums over integers, products over primes
-item: The zeta function
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/02-uniform-limits-of-holomorphic-functions|uniform-limits-of-holomorphic-functions]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/01-infinite-products|infinite-products]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/04-complex-logarithm|complex-logarithm]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/07-unique-factorisation|unique-factorisation]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/08-infinitude-of-primes|infinitude-of-primes]]"
-next:
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/06-dirichlet-series-and-mobius-inversion|dirichlet-series-and-mobius-inversion]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/07-mellin-transform|mellin-transform]]"
-  - "[[Cards/21-Algebraic and analytic number theory/01-Arithmetic Functions Again/04-von-mangoldt-and-the-logarithmic-derivative|von-mangoldt-and-the-logarithmic-derivative]]"
-  - "[[Cards/21-Algebraic and analytic number theory/01-Arithmetic Functions Again/07-squarefree-numbers-and-their-density|squarefree-numbers-and-their-density]]"
-  - "[[Cards/21-Algebraic and analytic number theory/02-The Zeta Function and the Prime Number Theorem/01-zeta-and-the-euler-product-revisited|zeta-and-the-euler-product-revisited]]"
-  - "[[Cards/22-Algebraic geometry/04-Elliptic Curves/07-l-functions-of-elliptic-curves|l-functions-of-elliptic-curves]]"
-tags: [mathematics, complex analysis, zeta-function-and-euler-product]
----
-
 # The zeta function: the sum of 1 over n to the s for complex s, holomorphic past Re s = 1, and equal to a product over the primes
 
-Complex analysis → Special Functions and the Zeta Function → Sums over integers, products over primes → The zeta function
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Special Functions and the Zeta Function](../../../SYLLABUS.md#w07-s09) → The zeta function
 
 ---
 
@@ -39,7 +14,7 @@ Let the power 2 be any complex number $s$ and the sum becomes the **zeta functio
 
 **For complex s with real part above 1, the sum of 1/n^s converges to a holomorphic function, zeta, equal to the product over the primes of 1/(1 − 1/p^s); at s = 2 it is π^2/6, and one over it is the share of coprime pairs.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works; zeta itself is a definition, and the sine product used for π^2/6 is taken from [infinite-products](01-infinite-products.md).
+**What kind of fact this is:** a theorem, proved on this card in Why it works; zeta itself is a definition, and the sine product used for π^2/6 is taken from [Infinite products](01-infinite-products.md).
 
 ### The picture: where the sum defines zeta
 
@@ -82,17 +57,17 @@ $$\zeta(2) = \frac{\pi^2}{6} = 1.64493407, \qquad \frac{C(M)}{M^2} \to \frac{1}{
 
 ### Step 0: one prime factorisation per number
 
-Every whole number is built from primes in exactly one way ([unique-factorisation](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md)). A product offering each prime every power once therefore lists every whole number once.
+Every whole number is built from primes in exactly one way ([Why the factorisation is unique](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md)). A product offering each prime every power once therefore lists every whole number once.
 
 ### Step 1: complex powers of whole numbers
 
-Write $s = \sigma + it$. Then $n^{-s} = n^{-\sigma}e^{-it\ln n}$: size $n^{-\sigma}$, turned by the angle $-t\ln n$. At s = 2 + i, $5^{-s}$ has size 0.040000 = 1/5^2. Since $\ln(mn) = \ln m + \ln n$, $(mn)^{-s} = m^{-s}n^{-s}$. Only the real $\ln n$ is used, so the branch trouble of [complex-logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md) never arises.
+Write $s = \sigma + it$. Then $n^{-s} = n^{-\sigma}e^{-it\ln n}$: size $n^{-\sigma}$, turned by the angle $-t\ln n$. At s = 2 + i, $5^{-s}$ has size 0.040000 = 1/5^2. Since $\ln(mn) = \ln m + \ln n$, $(mn)^{-s} = m^{-s}n^{-s}$. Only the real $\ln n$ is used, so the branch trouble of [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md) never arises.
 
 ### Step 2: the sum converges, and zeta is holomorphic
 
 For σ > 1 the tail past N is at most the area under $x^{-\sigma}$ from N on, $N^{1-\sigma}/(\sigma - 1)$: 1/N at σ = 2. Sharper at s = 2: $1/n^2$ lies between $1/(n(n+1))$ and $1/((n-1)n)$, which telescope, so the tail lies between 1/(N+1) and 1/N.
 
-Fix a number $a > 1$. On the half-plane Re s ≥ a, term n never exceeds the fixed number $n^{-a}$, and those add up. By the Weierstrass M-test (terms bounded by a convergent sum of numbers converge uniformly) the sum converges uniformly there. Each term is holomorphic, so the limit is too ([uniform-limits-of-holomorphic-functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)).
+Fix a number $a > 1$. On the half-plane Re s ≥ a, term n never exceeds the fixed number $n^{-a}$, and those add up. By the Weierstrass M-test (terms bounded by a convergent sum of numbers converge uniformly) the sum converges uniformly there. Each term is holomorphic, so the limit is too ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)).
 
 ### Step 3: the product over primes equals the sum
 
@@ -102,7 +77,7 @@ Every missing n has a prime factor above P, so it exceeds P:
 
 $$|\zeta(s) - E_P(s)| \le \sum_{n > P} n^{-\sigma} \le \frac{P^{1-\sigma}}{\sigma - 1}$$
 
-At s = 2 and P = 1000 the bound is 1/1000; the gap is 0.00020888. Letting P grow gives the Euler product. No factor $1 - p^{-s}$ is 0 and the sizes $|p^{-s}|$ add up, so the factors multiply to a nonzero limit ([infinite-products](01-infinite-products.md)), so ζ(s) is never 0 on Re s > 1.
+At s = 2 and P = 1000 the bound is 1/1000; the gap is 0.00020888. Letting P grow gives the Euler product. No factor $1 - p^{-s}$ is 0 and the sizes $|p^{-s}|$ add up, so the factors multiply to a nonzero limit ([Infinite products](01-infinite-products.md)), so ζ(s) is never 0 on Re s > 1.
 
 ### Step 4: zeta of 2 from the sine product
 
@@ -128,7 +103,7 @@ $E_P(1)$ is the sum of 1/n over $S_P$, which contains every n up to P. So $E_P(1
 
 $$\sum_{p \le P} \frac{1}{p} \ge \ln\ln(P + 1) - 1$$
 
-The right side is unbounded, so the sum of 1/p diverges: a stronger fact than [infinitude-of-primes](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md).
+The right side is unbounded, so the sum of 1/p diverges: a stronger fact than [There are infinitely many primes](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md).
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -384,7 +359,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Reading the sum where it does not converge.** The sum defines zeta only on Re s > 1. Values at negative s belong to the continued function of [continuing-zeta-and-the-functional-equation](08-continuing-zeta-and-the-functional-equation.md); 1 + 2 + 3 + ⋯ still has no total.
+> **Reading the sum where it does not converge.** The sum defines zeta only on Re s > 1. Values at negative s belong to the continued function of [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md); 1 + 2 + 3 + ⋯ still has no total.
 >
 > - **A finite product read as a finite sum.** $E_3(s)$ is not $1 + 2^{-s} + 3^{-s}$: it holds 4, 6, 8, 9, 12, … and never 5.
 > - **The finite count as the limit.** 0.608383 is not 0.607927.
@@ -394,8 +369,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Euclid's algorithm.** About six pairs in ten end at greatest common divisor 1.
-- **Squarefree numbers.** Numbers with no repeated prime factor also have share 6/π^2 (squarefree-numbers-and-their-density).
-- **Counting primes.** The product turns questions about primes into questions about one holomorphic function, whose zeros govern how primes thin out ([zeros-of-zeta-and-the-primes](09-zeros-of-zeta-and-the-primes.md)).
+- **Squarefree numbers.** Numbers with no repeated prime factor also have share 6/π^2 (Squarefree numbers).
+- **Counting primes.** The product turns questions about primes into questions about one holomorphic function, whose zeros govern how primes thin out ([Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md)).
 
 > **Say it back**
 > Zeta of s adds one over n to the s. For real part above 1 the sizes add up, so zeta is holomorphic. Unique factorisation makes the sum a product with one factor per prime. At s = 2 the sine product gives π^2/6, and one over it, 0.607927, is the coprime share. At s = 1 the product makes the sum of one over the primes diverge.
@@ -404,22 +379,22 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [uniform-limits-of-holomorphic-functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md): why zeta is holomorphic.
-- [infinite-products](01-infinite-products.md): nonzero limits of products, and the sine product.
-- [complex-logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md): why n^(−s) needs no branch choice.
-- [unique-factorisation](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md): the engine of the product.
-- [infinitude-of-primes](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md): the fact Step 6 strengthens.
+- [Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md): why zeta is holomorphic.
+- [Infinite products](01-infinite-products.md): nonzero limits of products, and the sine product.
+- [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md): why n^(−s) needs no branch choice.
+- [Why the factorisation is unique](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md): the engine of the product.
+- [There are infinitely many primes](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md): the fact Step 6 strengthens.
 
 ## Where this goes next
 
-- [dirichlet-series-and-mobius-inversion](06-dirichlet-series-and-mobius-inversion.md): general sums of a(n)/n^s.
-- [mellin-transform](07-mellin-transform.md): zeta times gamma as an integral.
-- von-mangoldt-and-the-logarithmic-derivative: the product's logarithmic derivative.
-- squarefree-numbers-and-their-density: 6/π^2 again.
-- zeta-and-the-euler-product-revisited: the product pushed to the line Re s = 1.
-- l-functions-of-elliptic-curves: Euler products built from a curve's point counts.
+- [Dirichlet series](06-dirichlet-series-and-mobius-inversion.md): general sums of a(n)/n^s.
+- [The Mellin transform](07-mellin-transform.md): zeta times gamma as an integral.
+- The von Mangoldt function: the product's logarithmic derivative.
+- Squarefree numbers: 6/π^2 again.
+- Zeta of a complex variable: the product pushed to the line Re s = 1.
+- The L-function: Euler products built from a curve's point counts.
 
-Left of the line Re s = 1 the sum fails; zeta reaches there by [continuing-zeta-and-the-functional-equation](08-continuing-zeta-and-the-functional-equation.md).
+Left of the line Re s = 1 the sum fails; zeta reaches there by [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md).
 
 ---
 

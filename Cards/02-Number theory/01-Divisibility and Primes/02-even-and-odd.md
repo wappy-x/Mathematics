@@ -1,27 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Divisibility and Primes
-topic: Divisibility
-item: Even and odd
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/02-adding-and-subtracting|adding-and-subtracting]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/03-multiplying-and-dividing|multiplying-and-dividing]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/01-divides|divides]]"
-next:
-  - "[[Cards/02-Number theory/07-For the Curious/01-pythagorean-triples|pythagorean-triples]]"
-tags:
-  - mathematics
-  - number theory
-  - even-and-odd
----
-
 # Even and odd: the two-way split, and what adding and multiplying do to it
 
-Number theory → Divisibility and Primes → Divisibility → Even and odd
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Divisibility and Primes](../../../SYLLABUS.md#w02-s01) → Even and odd
 
 ---
 
@@ -65,7 +44,7 @@ Pairing off:
 
 | Piece | Plain meaning | In our example |
 | --- | --- | --- |
-| even | pairs off with nothing over; 2 divides it ([divides](01-divides.md)) | 4, 30, 38, and 0 |
+| even | pairs off with nothing over; 2 divides it ([Divides](01-divides.md)) | 4, 30, 38, and 0 |
 | odd | pairs off with exactly one over | 3, 11, 33, 37 |
 | parity | which of the two a number is | 37 has odd parity |
 | a flip | one press of the switch | 37 of them all week |
@@ -258,15 +237,15 @@ The two outputs match line for line: whole counts, nothing to round.
 > - Calling 0 odd. Zero pairs off with nothing left over, so it is even, and nobody touching the switch leaves the light as it was.
 > - Calling -3 even. Negatives split the same way: -4 is even, -3 is odd.
 > - Reading the count's parity as the light's state. 37 flips says the light changed; it says on only because it started off.
-> - Expecting a row for dividing. There is none: two evens can divide to an odd. See [division-with-remainder](04-division-with-remainder.md).
+> - Expecting a row for dividing. There is none: two evens can divide to an odd. See [Division with a remainder](04-division-with-remainder.md).
 
 ---
 
 ## Where you meet it in real life
 
 - **Anything that toggles.** A light switch, a door bolt. Count the presses; the parity gives the state, however long ago you stopped watching.
-- **Splitting a group in two.** An odd headcount will not split into two equal halves; one person is left over. Same fact as 2 not dividing it: [divides](01-divides.md).
-- **Ruling a claim out.** Someone says three odd numbers add to an even total. Say no without hearing them: two odds make an even, and that even plus the third odd is odd. It narrows down [pythagorean-triples](../07-For%20the%20Curious/01-pythagorean-triples.md) later.
+- **Splitting a group in two.** An odd headcount will not split into two equal halves; one person is left over. Same fact as 2 not dividing it: [Divides](01-divides.md).
+- **Ruling a claim out.** Someone says three odd numbers add to an even total. Say no without hearing them: two odds make an even, and that even plus the third odd is odd. It narrows down [Pythagorean triples](../07-For%20the%20Curious/01-pythagorean-triples.md) later.
 
 > **Say it back**
 > Every whole number pairs off cleanly or with one left over. Clean is even, one over is odd: that is its parity. Adding, only the leftovers matter, so odd plus odd is even and odd plus even is odd. Multiplying, one even factor pairs everything off, so only odd times odd stays odd. The switch was flipped 37 times, 37 is odd, the light is on.
@@ -275,13 +254,13 @@ The two outputs match line for line: whole counts, nothing to round.
 
 ## What this builds on
 
-- [adding-and-subtracting](../../01-Foundations/01-Everyday%20Arithmetic/02-adding-and-subtracting.md): putting counts together, the adding half of the table.
-- [multiplying-and-dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): groups of equal size, like eleven trips of three flips.
-- [divides](01-divides.md): going in with nothing left over. Even is that word with a 2 in it.
+- [Adding and subtracting](../../01-Foundations/01-Everyday%20Arithmetic/02-adding-and-subtracting.md): putting counts together, the adding half of the table.
+- [Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): groups of equal size, like eleven trips of three flips.
+- [Divides](01-divides.md): going in with nothing left over. Even is that word with a 2 in it.
 
 ## Where this goes next
 
-- [pythagorean-triples](../07-For%20the%20Curious/01-pythagorean-triples.md): parity rules out shapes of triple that cannot exist, before the hunt starts.
+- [Pythagorean triples](../07-For%20the%20Curious/01-pythagorean-triples.md): parity rules out shapes of triple that cannot exist, before the hunt starts.
 
 ---
 

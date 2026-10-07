@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Insurance and Actuarial Mathematics
-topic: A year of claims added up
-item: Aggregate claims
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/04-compound-poisson|compound-poisson]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/08-heavy-tails-pareto-and-cauchy|heavy-tails-pareto-and-cauchy]]"
-next:
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/05-panjer-recursion-and-aggregate-claims|panjer-recursion-and-aggregate-claims]]"
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/06-ruin-theory-and-lundberg|ruin-theory-and-lundberg]]"
-tags: [mathematics, financial mathematics, collective-risk-and-compound-poisson]
----
-
 # Aggregate claims: random count times random size
 
-Financial mathematics → Insurance and Actuarial Mathematics → A year of claims added up → Aggregate claims
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Insurance and Actuarial Mathematics](../../../SYLLABUS.md#w12-s51) → Aggregate claims
 
 ---
 
@@ -65,7 +47,7 @@ $$E[S] = \lambda\,\mu, \qquad \operatorname{Var}(S) = \lambda\,E[X^2] = \lambda\
 
 **Read it aloud:** the average total is the expected count times the average claim; the variance of the total is the expected count times the average of the squared claim.
 
-The claim sizes are lognormal: the logarithm of a claim follows a bell curve with centre $m$ and spread $\sigma$ ([normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). Then
+The claim sizes are lognormal: the logarithm of a claim follows a bell curve with centre $m$ and spread $\sigma$ ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). Then
 
 $$\mu = e^{m + \sigma^2/2}, \qquad E[X^2] = e^{2m + 2\sigma^2}$$
 
@@ -146,7 +128,7 @@ This needs $E[X^2]$ finite. For a Poisson count, $E[N] = \operatorname{Var}(N) =
 
 ### Step 3: why the count is Poisson
 
-Each of 50,000 cars has a small chance, 5 percent, of claiming. The count of successes among many independent small chances is close to Poisson with the same mean ([compound-poisson](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md)). The Poisson law also has a clock picture: claims arrive at random moments with gaps drawn from the exponential law, at an average rate of 2,500 a year. The simulation below builds its counts exactly that way. Across its 2,000 years the counts average 2,498.03 with variance 2,450.16: mean and variance agree, the Poisson signature.
+Each of 50,000 cars has a small chance, 5 percent, of claiming. The count of successes among many independent small chances is close to Poisson with the same mean ([Compound Poisson](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md)). The Poisson law also has a clock picture: claims arrive at random moments with gaps drawn from the exponential law, at an average rate of 2,500 a year. The simulation below builds its counts exactly that way. Across its 2,000 years the counts average 2,498.03 with variance 2,450.16: mean and variance agree, the Poisson signature.
 
 ### Step 4: the lognormal's moments
 
@@ -165,7 +147,7 @@ For any number t, $E[e^{tZ}] = \int e^{tz} \tfrac{1}{\sqrt{2\pi}} e^{-z^2/2}\,dz
 
 ### Step 5: fitting a Pareto to the large claims
 
-A lognormal is a fair model of the typical claim. The insurer's worry is the tail: how often a $200,000 claim comes along. Tails are better studied on their own. Keep only the claims above $u = \$25{,}000$ and fit the Pareto law, whose survival (the chance of exceeding $x$, given the claim is above $u$) is $(u/x)^{\alpha}$ ([heavy-tails-pareto-and-cauchy](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)).
+A lognormal is a fair model of the typical claim. The insurer's worry is the tail: how often a $200,000 claim comes along. Tails are better studied on their own. Keep only the claims above $u = \$25{,}000$ and fit the Pareto law, whose survival (the chance of exceeding $x$, given the claim is above $u$) is $(u/x)^{\alpha}$ ([Heavy tails](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)).
 
 Maximum likelihood picks the $\alpha$ that makes the observed claims most probable. The Pareto density above $u$ is $\alpha u^{\alpha} x^{-\alpha - 1}$. Multiply it over the $k$ large claims and take logs:
 
@@ -182,7 +164,7 @@ A true Pareto tail gives the same $\alpha$ at every threshold. A lognormal tail 
 
 </details>
 
-The other route to the whole distribution of $S$, not just its mean and variance, is Panjer's recursion, which builds the probabilities step by step on a grid of claim sizes: [panjer-recursion-and-aggregate-claims](05-panjer-recursion-and-aggregate-claims.md).
+The other route to the whole distribution of $S$, not just its mean and variance, is Panjer's recursion, which builds the probabilities step by step on a grid of claim sizes: [Panjer's recursion](05-panjer-recursion-and-aggregate-claims.md).
 
 ---
 
@@ -235,7 +217,7 @@ $400,000  L                                            0.0569
           P                                            0.3086
 ```
 
-At $400,000 the Pareto expects 0.3086 claims a year, several times the lognormal's 0.0569. Which to believe is a judgment about the real data, and it moves reinsurance prices ([credibility-and-reinsurance](08-credibility-and-reinsurance.md)).
+At $400,000 the Pareto expects 0.3086 claims a year, several times the lognormal's 0.0569. Which to believe is a judgment about the real data, and it moves reinsurance prices ([Credibility and reinsurance](08-credibility-and-reinsurance.md)).
 
 ### What breaks if you drop a piece
 
@@ -683,11 +665,11 @@ The two outputs agree line for line. The simulation uses the same generator and 
 
 ## Where you meet it in real life
 
-- **Pricing a motor or home book.** The pure premium, $308.16 per car here, is the expected total divided by the policies. Loadings for expenses, profit and risk come on top ([premiums-and-reserves](03-premiums-and-reserves.md)).
+- **Pricing a motor or home book.** The pure premium, $308.16 per car here, is the expected total divided by the policies. Loadings for expenses, profit and risk come on top ([Premiums and reserves](03-premiums-and-reserves.md)).
 - **Capital.** Regulators ask how bad a 1-in-200 year could be. The mean and sd give a first answer by the normal approximation; the full distribution of the total gives a better one.
-- **Reinsurance of large claims.** An excess-of-loss treaty pays the part of each claim above a retention. Its price is driven by the tail index; that is what the Pareto fit is for ([credibility-and-reinsurance](08-credibility-and-reinsurance.md)).
+- **Reinsurance of large claims.** An excess-of-loss treaty pays the part of each claim above a retention. Its price is driven by the tail index; that is what the Pareto fit is for ([Credibility and reinsurance](08-credibility-and-reinsurance.md)).
 - **Operational risk in banks.** Losses from fraud, errors and outages are modelled the same way: a Poisson count of events, each with a heavy-tailed size, called the loss distribution approach.
-- **Survival of the insurer over time.** Premiums flow in steadily while compound Poisson claims flow out; the chance the reserve ever runs dry is ruin theory ([ruin-theory-and-lundberg](06-ruin-theory-and-lundberg.md)).
+- **Survival of the insurer over time.** Premiums flow in steadily while compound Poisson claims flow out; the chance the reserve ever runs dry is ruin theory ([Ruin](06-ruin-theory-and-lundberg.md)).
 
 > **Say it back**
 > A year's claims are a random count of random sizes, and the collective risk model keeps the two apart. The average total is the expected count times the average claim. The variance of the total is the expected count times the average squared claim, because a Poisson count's variance equals its mean and the count's spread adds to the sizes' spread. For 50,000 cars that is $15.4 million, give or take $633,000. The large claims get a Pareto fit whose tail index, just above 2 here, says how heavy the tail is, and a year of data pins it down only roughly.
@@ -696,13 +678,13 @@ The two outputs agree line for line. The simulation uses the same generator and 
 
 ## What this builds on
 
-- [compound-poisson](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md): the compound Poisson process itself, a Poisson clock of jumps with random sizes. This card fixes the clock at one year and puts insurance claims on the jumps.
-- [heavy-tails-pareto-and-cauchy](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md): the Pareto law and why its mean and variance can fail to exist, which is what makes the fitted tail index worth estimating.
+- [Compound Poisson](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md): the compound Poisson process itself, a Poisson clock of jumps with random sizes. This card fixes the clock at one year and puts insurance claims on the jumps.
+- [Heavy tails](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md): the Pareto law and why its mean and variance can fail to exist, which is what makes the fitted tail index worth estimating.
 
 ## Where this goes next
 
-- [panjer-recursion-and-aggregate-claims](05-panjer-recursion-and-aggregate-claims.md): the whole distribution of the total, exactly, by a recursion on a grid of claim sizes, so the 1-in-200 year can be read off rather than simulated.
-- [ruin-theory-and-lundberg](06-ruin-theory-and-lundberg.md): the same compound Poisson claims run over many years against steady premium income, and the chance the insurer's reserve is ever exhausted.
+- [Panjer's recursion](05-panjer-recursion-and-aggregate-claims.md): the whole distribution of the total, exactly, by a recursion on a grid of claim sizes, so the 1-in-200 year can be read off rather than simulated.
+- [Ruin](06-ruin-theory-and-lundberg.md): the same compound Poisson claims run over many years against steady premium income, and the chance the insurer's reserve is ever exhausted.
 
 The mean and variance say where the total sits and how widely it wanders; they do not say how likely an extreme year is, and that tail probability is what Panjer's recursion computes.
 

@@ -1,27 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Greatest Common Divisor and Euclid's Algorithm
-topic: Why factorisation is unique
-item: There are infinitely many primes
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/06-Proof/03-proof-by-contradiction|proof-by-contradiction]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/07-prime-factorisation|prime-factorisation]]"
-next:
-  - "[[Cards/02-Number theory/07-For the Curious/03-how-primes-thin-out|how-primes-thin-out]]"
-  - "[[Cards/02-Number theory/07-For the Curious/04-goldbach-and-open-problems|goldbach-and-open-problems]]"
-tags:
-  - mathematics
-  - number theory
-  - infinitude-of-primes
----
-
 # There are infinitely many primes: multiply the ones you have, add one, and a new prime must exist
 
-Number theory → Greatest Common Divisor and Euclid's Algorithm → Why factorisation is unique → There are infinitely many primes
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Greatest Common Divisor and Euclid's Algorithm](../../../SYLLABUS.md#w02-s02) → There are infinitely many primes
 
 ---
 
@@ -68,8 +47,8 @@ When the list is the first few primes, that product plus one is called a **Eucli
 | the list | any finite bunch of primes | 2, 3, 5, 7, 11, 13 |
 | the product | all of them multiplied together | 30030 |
 | the Euclid number | the product, plus one | 30031 |
-| the remainder | what is left over after dividing ([division-with-remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)) | 1, for every prime on the list |
-| a prime factor | a prime that divides it exactly ([prime-factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)) | 59, and 509 |
+| the remainder | what is left over after dividing ([Division with a remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)) | 1, for every prime on the list |
+| a prime factor | a prime that divides it exactly ([Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)) | 59, and 509 |
 | new | not on the list you started with | neither 59 nor 509 is |
 
 ---
@@ -82,19 +61,19 @@ That is what the product is. A 13 went into the multiplication, so 13 comes back
 
 ### So every prime on the list misses the next number up
 
-Divide 30031 by 13: you land on 30030 with 1 to spare. Remainder 1, not 0, so 13 does not divide it. Same for 2, 3, 5, 7 and 11: six primes, six remainders of 1 — numbers one apart never share a factor above 1 ([coprime-numbers](05-coprime-numbers.md)).
+Divide 30031 by 13: you land on 30030 with 1 to spare. Remainder 1, not 0, so 13 does not divide it. Same for 2, 3, 5, 7 and 11: six primes, six remainders of 1 — numbers one apart never share a factor above 1 ([Coprime numbers](05-coprime-numbers.md)).
 
 ### Something prime divides 30031 anyway
 
-Every whole number above 1 has a prime factor: keep splitting and the pieces shrink, so you cannot split forever ([prime-factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md), and the smallest-counterexample argument on [strong-induction-and-well-ordering](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md)). So 30031 has one, and its smallest is 59.
+Every whole number above 1 has a prime factor: keep splitting and the pieces shrink, so you cannot split forever ([Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md), and the smallest-counterexample argument on [Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md)). So 30031 has one, and its smallest is 59.
 
 ### The squeeze
 
-Suppose those six really were all the primes there are. Then 30031's prime factor is one of them. But none of them divides 30031. Both cannot be true, so the supposition was wrong ([proof-by-contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)).
+Suppose those six really were all the primes there are. Then 30031's prime factor is one of them. But none of them divides 30031. Both cannot be true, so the supposition was wrong ([Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)).
 
 Nothing in those four steps mentions six. Hand the machine any finite list and it does the same thing — and "no finite list holds them all" is exactly what infinitely many means.
 
-Another route counts how thinly the primes sit as you climb: [how-primes-thin-out](../07-For%20the%20Curious/03-how-primes-thin-out.md).
+Another route counts how thinly the primes sit as you climb: [How primes thin out](../07-For%20the%20Curious/03-how-primes-thin-out.md).
 
 ---
 
@@ -267,8 +246,8 @@ The two outputs match line for line: whole numbers throughout, nothing to round.
 ## Where you meet it in real life
 
 - **The record-prime hunt.** Volunteers pool spare computer time to find the largest known prime, and the record falls every few years. Euclid is why the search can never finish: there is always a bigger one.
-- **Public-key encryption.** Keys are built from large primes nobody has used before, which works only because the supply never dries up ([primes-and-composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)).
-- **Proof by contradiction.** The example everyone learns it on: assume the opposite, build one object, watch it break ([proof-by-contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)).
+- **Public-key encryption.** Keys are built from large primes nobody has used before, which works only because the supply never dries up ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)).
+- **Proof by contradiction.** The example everyone learns it on: assume the opposite, build one object, watch it break ([Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)).
 
 > **Say it back**
 > Take any finite list of primes. Multiply them and add one. Each listed prime divides the product exactly, so each leaves remainder 1 on the answer and none of them divides it. But every number above 1 has a prime factor, so that factor is a prime the list missed. With 2, 3, 5, 7, 11, 13 the answer is 30031 — not prime, but 59 × 509, both new, which is all the proof asked for. No finite list is complete, so the primes never run out.
@@ -277,13 +256,13 @@ The two outputs match line for line: whole numbers throughout, nothing to round.
 
 ## What this builds on
 
-- [proof-by-contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): assume the opposite, follow it until two facts collide, conclude the assumption was wrong. The shape of this whole card.
-- [prime-factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md): every whole number above 1 breaks into primes — what guarantees 30031 has a prime factor.
+- [Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): assume the opposite, follow it until two facts collide, conclude the assumption was wrong. The shape of this whole card.
+- [Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md): every whole number above 1 breaks into primes — what guarantees 30031 has a prime factor.
 
 ## Where this goes next
 
-- [how-primes-thin-out](../07-For%20the%20Curious/03-how-primes-thin-out.md): they never run out, but they do get rarer — how much rarer, and how fast.
-- [goldbach-and-open-problems](../07-For%20the%20Curious/04-goldbach-and-open-problems.md): prime questions as easy to state as this one, still unanswered.
+- [How primes thin out](../07-For%20the%20Curious/03-how-primes-thin-out.md): they never run out, but they do get rarer — how much rarer, and how fast.
+- [Goldbach, twin primes and friends](../07-For%20the%20Curious/04-goldbach-and-open-problems.md): prime questions as easy to state as this one, still unanswered.
 
 ---
 

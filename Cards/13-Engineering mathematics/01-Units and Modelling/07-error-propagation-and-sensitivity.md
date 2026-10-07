@@ -1,26 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Units and Modelling
-topic: Uncertainty budgets
-item: Error propagation
-kind: method
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/01-si-units-and-dimensional-homogeneity|si-units-and-dimensional-homogeneity]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/04-multivariable-chain-rule-and-jacobians|multivariable-chain-rule-and-jacobians]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/03-variance-and-standard-deviation|variance-and-standard-deviation]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/08-numerical-derivatives-and-sensitivity|numerical-derivatives-and-sensitivity]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/05-delta-method-and-slutsky|delta-method-and-slutsky]]"
-next:
-  - "[[Cards/16-Numerical analysis/01-Floating Point and Error/05-conditioning-and-stability|conditioning-and-stability]]"
-tags: [mathematics, engineering mathematics, error-propagation-and-sensitivity]
----
-
 # Error propagation: measurement slop in the inputs becomes slop in the answer
 
-Engineering mathematics → Units and Modelling → Uncertainty budgets → Error propagation
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Units and Modelling](../../../SYLLABUS.md#w13-s01) → Error propagation
 
 ---
 
@@ -67,7 +47,7 @@ $$C_d = \frac{2F}{\rho\, v^2 A}$$
 
 **Read it aloud:** the drag coefficient is twice the force, divided by the air's density times the speed squared times the frontal area.
 
-Reminder from [si-units-and-dimensional-homogeneity](01-si-units-and-dimensional-homogeneity.md): square brackets give a quantity's dimensions, [M] mass, [L] length, [T] time. Force is [M L T^-2]; the bottom is [M L^-3][L^2 T^-2][L^2], also [M L T^-2]. So $C_d$ has no unit, which is why it is the number a rider's shape is judged by; [dimensional-analysis-and-buckingham-pi](02-dimensional-analysis-and-buckingham-pi.md) shows why such a group must exist.
+Reminder from [Units and dimensions](01-si-units-and-dimensional-homogeneity.md): square brackets give a quantity's dimensions, [M] mass, [L] length, [T] time. Force is [M L T^-2]; the bottom is [M L^-3][L^2 T^-2][L^2], also [M L T^-2]. So $C_d$ has no unit, which is why it is the number a rider's shape is judged by; [Buckingham Pi](02-dimensional-analysis-and-buckingham-pi.md) shows why such a group must exist.
 
 A formula that is a product of powers has a shortcut. If $y = k\,x_1^{n_1} x_2^{n_2}\cdots$, with $k$ a fixed number, then
 
@@ -123,7 +103,7 @@ A 1.5 % error in the speed is a small step. Over a small step a curved formula i
 
 ### Step 1: each error moves the answer by slope times error
 
-Write each reading as its true value plus an error, $x_i + \delta_i$. The multivariable chain rule ([multivariable-chain-rule-and-jacobians](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)) gives the first-order change in the answer:
+Write each reading as its true value plus an error, $x_i + \delta_i$. The multivariable chain rule ([Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)) gives the first-order change in the answer:
 
 $$\delta y \approx \sum_i c_i\, \delta_i$$
 
@@ -131,7 +111,7 @@ A speed reading 0.18 m/s high, alone, moves $C_d$ by −0.115356 × 0.18 = −0.
 
 ### Step 2: independent errors add in squares
 
-Each $\delta_i$ is random, with standard deviation $u(x_i)$. The variance of a constant times a random quantity is the constant squared times its variance. The variance of a sum of independent quantities is the sum of their variances ([variance-and-standard-deviation](../../09-Probability%20and%20statistics/02-Random%20Variables/03-variance-and-standard-deviation.md)). Together:
+Each $\delta_i$ is random, with standard deviation $u(x_i)$. The variance of a constant times a random quantity is the constant squared times its variance. The variance of a sum of independent quantities is the sum of their variances ([Variance](../../09-Probability%20and%20statistics/02-Random%20Variables/03-variance-and-standard-deviation.md)). Together:
 
 $$\mathrm{Var}(\delta y) = \sum_i c_i^2\, u(x_i)^2$$
 
@@ -160,7 +140,7 @@ Take $y = k\,x_1^{n_1}x_2^{n_2}\cdots$. Then $\partial y/\partial x_i = n_i\, y 
 
 Each term squared, over the total, is the fraction of the answer's variance that input causes. Halving the input with the biggest share does the most good. Halving one with a tiny share does almost nothing: the sum of squares lets the big term rule.
 
-The probability wing proves the same linearisation as a limit theorem for a function of an average ([delta-method-and-slutsky](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md)); this card is the engineer's budget built on it. Where a partial derivative is awkward to find by hand, a central difference finds it from the formula alone ([numerical-derivatives-and-sensitivity](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md)), and the code does both.
+The probability wing proves the same linearisation as a limit theorem for a function of an average ([Delta method](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md)); this card is the engineer's budget built on it. Where a partial derivative is awkward to find by hand, a central difference finds it from the formula alone ([Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md)), and the code does both.
 
 ---
 
@@ -560,9 +540,9 @@ The first three roads agree to six decimals on $u(C_d)$ = 0.026126, and the four
 
 - **Wind-tunnel and test-rig reports.** Every quoted coefficient comes with an uncertainty budget like the one here, laid out the way the international guide below sets out.
 - **Choosing instruments.** The budget says where money buys accuracy. Here a speed probe good to 0.5 % cuts the total from 3.775 % to 2.500 %, while a balance good to 0.1 % only reaches 3.641 %.
-- **Scale-model testing.** A model run at a different speed and size, matched by Reynolds number, carries its own budget, and the scaling laws multiply its errors by their powers ([similarity-and-model-testing](04-similarity-and-model-testing.md)).
+- **Scale-model testing.** A model run at a different speed and size, matched by Reynolds number, carries its own budget, and the scaling laws multiply its errors by their powers ([Similarity](04-similarity-and-model-testing.md)).
 - **Calibration certificates.** A certificate's stated uncertainty is the output of this law applied to the calibration's own chain of readings.
-- **Small corrections.** A second-order term that shifts the average is a perturbation in the small relative errors, the subject of [regular-perturbation](05-regular-perturbation.md).
+- **Small corrections.** A second-order term that shifts the average is a perturbation in the small relative errors, the subject of [Regular perturbation](05-regular-perturbation.md).
 
 > **Say it back**
 > Each reading's error moves the answer by the slope times the error. Independent errors add in squares, so the answer's uncertainty is the square root of the sum of the squared terms. For a product of powers, work in percentages and multiply each by its power. The largest squared term is the input to improve. The law is first-order: good for small errors, wrong when the formula bends over the error's range.
@@ -571,15 +551,15 @@ The first three roads agree to six decimals on $u(C_d)$ = 0.026126, and the four
 
 ## What this builds on
 
-- [si-units-and-dimensional-homogeneity](01-si-units-and-dimensional-homogeneity.md): units on every reading, and the dimension check that makes $C_d$ unitless.
-- [multivariable-chain-rule-and-jacobians](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md): how small changes in several inputs combine into one change in the answer.
-- [variance-and-standard-deviation](../../09-Probability%20and%20statistics/02-Random%20Variables/03-variance-and-standard-deviation.md): why independent variances add, and what one standard deviation means.
-- [numerical-derivatives-and-sensitivity](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md): the central difference that gives road 2 its slopes.
-- [delta-method-and-slutsky](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md): the same linearisation, proved as a limit theorem.
+- [Units and dimensions](01-si-units-and-dimensional-homogeneity.md): units on every reading, and the dimension check that makes $C_d$ unitless.
+- [Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md): how small changes in several inputs combine into one change in the answer.
+- [Variance](../../09-Probability%20and%20statistics/02-Random%20Variables/03-variance-and-standard-deviation.md): why independent variances add, and what one standard deviation means.
+- [Numerical derivatives](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/08-numerical-derivatives-and-sensitivity.md): the central difference that gives road 2 its slopes.
+- [Delta method](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md): the same linearisation, proved as a limit theorem.
 
 ## Where this goes next
 
-- conditioning-and-stability: the same sensitivity, turned on a computation, where the condition number says how much a problem magnifies relative errors in its data.
+- Conditioning and stability: the same sensitivity, turned on a computation, where the condition number says how much a problem magnifies relative errors in its data.
 
 This card spreads measurement errors through one formula; the open question is how much any problem, solved by any algorithm, magnifies the errors it is fed, rounding included.
 

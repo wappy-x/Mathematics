@@ -1,22 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Discrete Distributions
-topic: Sampling from a fixed pool
-item: Hypergeometric
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/01-bernoulli-and-binomial|bernoulli-and-binomial]]"
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/05-n-choose-k|n-choose-k]]"
-next: []
-tags: [mathematics, probability and statistics, hypergeometric]
----
-
 # Hypergeometric: drawing without replacement, where every ball taken changes the odds for the next
 
-Probability and statistics → Discrete Distributions → Sampling from a fixed pool → Hypergeometric
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Discrete Distributions](../../../SYLLABUS.md#w09-s03) → Hypergeometric
 
 ---
 
@@ -26,7 +10,7 @@ A lottery machine holds 49 numbered balls. It draws 6, one after another, and ne
 
 The answer is a count between 0 and 6, and it is random. Most draws match none or one: 43.60 percent of draws match nothing and 41.30 percent match one number. Three matches, a small prize in most 6-from-49 games, happens about once in 56.7 draws. All six, the jackpot, happens once in 13,983,816.
 
-What makes this count its own law is the phrase "never puts one back". When the first ball drawn is on the ticket, only 5 ticket numbers are left among 48 balls, so the second ball is slightly less likely to match. Each draw changes the pool for the next. The draws are not independent trials, so the binomial law of [bernoulli-and-binomial](01-bernoulli-and-binomial.md) does not apply exactly. Counting sets of balls does apply, and it gives the whole law in one line. The law it gives is called the **hypergeometric** law, and that name is used from here on.
+What makes this count its own law is the phrase "never puts one back". When the first ball drawn is on the ticket, only 5 ticket numbers are left among 48 balls, so the second ball is slightly less likely to match. Each draw changes the pool for the next. The draws are not independent trials, so the binomial law of [Binomial](01-bernoulli-and-binomial.md) does not apply exactly. Counting sets of balls does apply, and it gives the whole law in one line. The law it gives is called the **hypergeometric** law, and that name is used from here on.
 
 **When a fixed pool holds some marked items and a sample is taken without putting anything back, the chance of exactly k marked items is the number of ways to choose k marked and the rest unmarked, divided by the number of ways to choose the sample.**
 
@@ -50,7 +34,7 @@ Bars: the real lottery, drawn without putting balls back (hypergeometric). Line:
 
 ## The formula
 
-Notation first, in words. $\binom{a}{b}$, read "a choose b", is the number of ways to pick b items from a, order ignored, as on [n-choose-k](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/05-n-choose-k.md); it is written C(a, b) in the code. X is the count of marked items in the sample. Writing $X \sim \text{Hypergeometric}(N, K, n)$ is read "X follows the hypergeometric law with a pool of N, K of them marked, n drawn".
+Notation first, in words. $\binom{a}{b}$, read "a choose b", is the number of ways to pick b items from a, order ignored, as on [Combinations, n choose k](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/05-n-choose-k.md); it is written C(a, b) in the code. X is the count of marked items in the sample. Writing $X \sim \text{Hypergeometric}(N, K, n)$ is read "X follows the hypergeometric law with a pool of N, K of them marked, n drawn".
 
 $$P(X = k) = \frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}}$$
 
@@ -83,7 +67,7 @@ The last factor, $\frac{N-n}{N-1}$, is the **finite-population correction**: the
 - **Every set of n items is equally likely.** A fair machine does this. Weighted balls, or a scoop that reaches the top of a crate first, break it, and the formula gives the wrong odds with no warning.
 - **Nothing goes back.** If each ball is returned before the next draw, the draws become independent and the count is binomial: the jackpot moves from 1 in 13,983,816 to 1 in 296,666.8.
 - **The pool is fixed and known.** N and K must be numbers, not guesses. With the marked share unknown, the count becomes evidence about it, which is the estimation problem of later shelves.
-- **Each item is marked or not.** Three or more kinds of item (red, green, blue) need the several-colour version, the way the binomial grows into [multinomial](05-multinomial.md).
+- **Each item is marked or not.** Three or more kinds of item (red, green, blue) need the several-colour version, the way the binomial grows into [Multinomial](05-multinomial.md).
 
 ---
 
@@ -584,15 +568,15 @@ The two outputs match line for line, simulation included, since both draw the sa
 
 ## What this builds on
 
-- [bernoulli-and-binomial](01-bernoulli-and-binomial.md): the with-replacement law this card compares against, and its variance n p (1 − p).
-- [n-choose-k](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/05-n-choose-k.md): the count of unordered choices, and why dividing ordered draws by 6! gives it.
+- [Binomial](01-bernoulli-and-binomial.md): the with-replacement law this card compares against, and its variance n p (1 − p).
+- [Combinations, n choose k](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/05-n-choose-k.md): the count of unordered choices, and why dividing ordered draws by 6! gives it.
 
 ## Where this goes next
 
-- [poisson](04-poisson.md): the law for counts of rare events when the pool is huge and the chance per item tiny.
-- [multinomial](05-multinomial.md): several kinds of outcome at once; with a fixed pool and no replacement it has a many-colour hypergeometric twin.
-- [sums-of-discrete-variables](06-sums-of-discrete-variables.md): the covariance bookkeeping of Step 5 as a general tool for sums of dependent counts.
-- [birthday-and-coupon-collector](07-birthday-and-coupon-collector.md): more questions about drawing from a fixed set, where repeats are the point.
+- [Poisson](04-poisson.md): the law for counts of rare events when the pool is huge and the chance per item tiny.
+- [Multinomial](05-multinomial.md): several kinds of outcome at once; with a fixed pool and no replacement it has a many-colour hypergeometric twin.
+- [Adding counts](06-sums-of-discrete-variables.md): the covariance bookkeeping of Step 5 as a general tool for sums of dependent counts.
+- [Two classics](07-birthday-and-coupon-collector.md): more questions about drawing from a fixed set, where repeats are the point.
 
 ---
 

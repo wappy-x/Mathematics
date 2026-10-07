@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The smile and the surface
-topic: Hedging a moving smile
-item: Smile-adjusted delta
-kind: model
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/04-svi-smile-fit|svi-smile-fit]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/06-vanna|vanna]]"
-next:
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/06-smile-adjusted-delta-and-sticky-delta|smile-adjusted-delta-and-sticky-delta]]"
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/01-dupire-local-volatility|dupire-local-volatility]]"
-tags: [mathematics, financial mathematics, smile-adjusted-delta]
----
-
 # Smile-adjusted delta: when vol moves with spot, the hedge ratio is not the Black-Scholes delta
 
-Financial mathematics → The smile and the surface → Hedging a moving smile → Smile-adjusted delta
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The smile and the surface](../../../SYLLABUS.md#w12-s12) → Smile-adjusted delta
 
 ---
 
@@ -57,7 +39,7 @@ Orange, flat: sticky strike, where each strike keeps its volatility. Green, risi
 
 ## The formula
 
-Notation first, in words. The ordinary derivative $d\sigma/dS$ is the change in the call's own implied volatility per dollar of Acme's move, with the strike held at $100 and the smile moving by whatever rule is assumed. Vega, written $\mathcal{V}$, is the call's price change per 1.00 of volatility ([vega](../09-The%20Greeks%2C%20one%20each/03-vega.md)).
+Notation first, in words. The ordinary derivative $d\sigma/dS$ is the change in the call's own implied volatility per dollar of Acme's move, with the strike held at $100 and the smile moving by whatever rule is assumed. Vega, written $\mathcal{V}$, is the call's price change per 1.00 of volatility ([Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md)).
 
 $$\Delta_{\text{smile}} \;=\; \Delta_{BS} \;+\; \mathcal{V}\,\frac{d\sigma}{dS}$$
 
@@ -119,7 +101,7 @@ Nudge Acme by a small $\delta S$. The direct route moves the price by $\Delta_{B
 
 $$\frac{dV}{dS} = \frac{\partial V}{\partial S} + \frac{\partial V}{\partial \sigma}\,\frac{d\sigma}{dS} = \Delta_{BS} + \mathcal{V}\,\frac{d\sigma}{dS}.$$
 
-This is the chain rule for a function of two inputs ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). The curly $\partial$ means "with the other input frozen". Nothing here is special to options; everything that follows is about $d\sigma/dS$.
+This is the chain rule for a function of two inputs ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). The curly $\partial$ means "with the other input frozen". Nothing here is special to options; everything that follows is about $d\sigma/dS$.
 
 ### Step 2: today's skew gives the size, the rule gives the sign
 
@@ -137,7 +119,7 @@ Taking "sticky delta" literally, the volatility is a fixed function $G$ of the o
 
 $$\frac{d\sigma}{dS} = \frac{G'\,\Gamma}{1 - G'\,\text{vanna}},$$
 
-with $\Gamma$ = 0.018951 the call's gamma, vanna = −0.094753 ([vanna](../09-The%20Greeks%2C%20one%20each/06-vanna.md)), and $G'$ = 0.021108 the skew's slope per unit of delta. The denominator is 1.002000, so the hedge is 0.601981, against 0.602012 for sticky moneyness. The two readings of "sticky delta" agree to four decimals here.
+with $\Gamma$ = 0.018951 the call's gamma, vanna = −0.094753 ([Vanna](../09-The%20Greeks%2C%20one%20each/06-vanna.md)), and $G'$ = 0.021108 the skew's slope per unit of delta. The denominator is 1.002000, so the hedge is 0.601981, against 0.602012 for sticky moneyness. The two readings of "sticky delta" agree to four decimals here.
 
 <details>
 <summary>Detailed proof: the implicit slope</summary>
@@ -165,7 +147,7 @@ Complete the square: $\operatorname{Var}(\delta V - h\,\delta S) = \operatorname
 
 The simulation behind those numbers draws 40,000 days in which Acme's move has a spread of $1.258324 and the $100-strike volatility moves by $-0.0004$ per dollar plus an independent wobble of 0.05 points. That gives a spot-volatility correlation of −0.703965. Every day is repriced in full, and a least-squares line through the outcomes gives $h^{*}$ = 0.571595, next to $\Delta_{BS} + \mathcal{V}\hat{b}$ = 0.571844 with the fitted slope.
 
-The hedge ratio also depends on how the full surface moves across expiries, not just this one-year strike. For a smile quoted in delta, as in currency markets, the same correction reappears with its own conventions, on [smile-adjusted-delta-and-sticky-delta](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/06-smile-adjusted-delta-and-sticky-delta.md).
+The hedge ratio also depends on how the full surface moves across expiries, not just this one-year strike. For a smile quoted in delta, as in currency markets, the same correction reappears with its own conventions, on [Hedging with the smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/06-smile-adjusted-delta-and-sticky-delta.md).
 
 ---
 
@@ -617,7 +599,7 @@ One line: the daily spread in dollars. It bottoms out near 0.57 shares, at $285.
 > **Try changing**
 > Guess first, then run it.
 > - **Hedge a put.** A put on the same strike has the same vega, so the correction is the same number of shares: the Black-Scholes put delta −0.393348 becomes −0.408508 under the local-volatility rule. The put's hedge grows in size.
-> - **Use the shelf's house smile.** Its one-year quotes, 24% at $92.15, 20% at $100 and 18% at $119.93, give a parabola sloping −0.003939 per dollar at $100, far steeper than this card's skew. The local-volatility hedge falls to 0.437550. A slope that steep strains a first-order formula, which is why desks fit a smooth smile first ([svi-smile-fit](04-svi-smile-fit.md)).
+> - **Use the shelf's house smile.** Its one-year quotes, 24% at $92.15, 20% at $100 and 18% at $119.93, give a parabola sloping −0.003939 per dollar at $100, far steeper than this card's skew. The local-volatility hedge falls to 0.437550. A slope that steep strains a first-order formula, which is why desks fit a smooth smile first ([The SVI smile](04-svi-smile-fit.md)).
 > - **Switch the market to sticky strike.** On the simulation line, set `B` to `0.0`. The simulated volatility no longer follows Acme, the fitted slope goes to about zero, and the regression lands back near the Black-Scholes delta, 0.586851. The last check then stops the run with a division by zero, because the removed spread it predicts is zero.
 > - **Make the wobble vanish.** On the same line, set `ETA` to `0.0`. Volatility now moves only with Acme, the correlation becomes −1, and the minimum-variance hedge removes the whole vega risk; only gamma's share of the spread is left.
 
@@ -639,8 +621,8 @@ One line: the daily spread in dollars. It bottoms out near 0.57 shares, at $285.
 
 - **Equity index desks.** Index volatility tends to rise when the index falls. Hull and White (2017) fit a model for the minimum-variance delta to S&P 500 options; out of sample it hedged better than the Black-Scholes delta, and better than stochastic- or local-volatility models.
 - **Risk systems.** Pricing libraries ask which rule to use when spot is bumped. The choice changes every reported delta on the book, as the 151.60-share gap shows.
-- **Currency options.** Currency smiles are quoted by delta, so sticky delta is the natural rule and the literal implicit equation of Step 3 is in daily use: [smile-adjusted-delta-and-sticky-delta](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/06-smile-adjusted-delta-and-sticky-delta.md).
-- **Reading the smile first.** The slope $\beta$ comes from the skew on [volatility-smile-and-skew](01-volatility-smile-and-skew.md), ideally from a fitted curve on [svi-smile-fit](04-svi-smile-fit.md). A rule that moves the whole surface must keep it free of arbitrage across strikes and dates: [volatility-surface-and-its-arbitrage-rules](03-volatility-surface-and-its-arbitrage-rules.md), and across expiries [term-structure-and-forward-volatility](02-term-structure-and-forward-volatility.md).
+- **Currency options.** Currency smiles are quoted by delta, so sticky delta is the natural rule and the literal implicit equation of Step 3 is in daily use: [Hedging with the smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/06-smile-adjusted-delta-and-sticky-delta.md).
+- **Reading the smile first.** The slope $\beta$ comes from the skew on [The volatility smile and skew](01-volatility-smile-and-skew.md), ideally from a fitted curve on [The SVI smile](04-svi-smile-fit.md). A rule that moves the whole surface must keep it free of arbitrage across strikes and dates: [The volatility surface](03-volatility-surface-and-its-arbitrage-rules.md), and across expiries [Term structure and forward volatility](02-term-structure-and-forward-volatility.md).
 
 > **Say it back**
 > A call's mark depends on the share price directly and through the volatility the smile assigns it. The chain rule adds the two: Black-Scholes delta plus vega times the option's volatility change per dollar of share. Today's skew sets the size of that change, but the rule for how the smile moves sets its sign: zero under sticky strike, up under sticky moneyness, down under the local-volatility rule. The minimum-variance delta measures the change instead of assuming it. For the Acme call the hedge is 0.587, 0.602 or 0.572 shares.
@@ -649,13 +631,13 @@ One line: the daily spread in dollars. It bottoms out near 0.57 shares, at $285.
 
 ## What this builds on
 
-- [svi-smile-fit](04-svi-smile-fit.md): a smooth smile across strikes, whose slope at any strike is the $\beta$ this card needs.
-- [vanna](../09-The%20Greeks%2C%20one%20each/06-vanna.md): how delta changes with volatility; it sets the denominator of the literal sticky-delta rule and the size of the terms the first-order formula drops.
+- [The SVI smile](04-svi-smile-fit.md): a smooth smile across strikes, whose slope at any strike is the $\beta$ this card needs.
+- [Vanna](../09-The%20Greeks%2C%20one%20each/06-vanna.md): how delta changes with volatility; it sets the denominator of the literal sticky-delta rule and the size of the terms the first-order formula drops.
 
 ## Where this goes next
 
-- [smile-adjusted-delta-and-sticky-delta](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/06-smile-adjusted-delta-and-sticky-delta.md): the same correction where the smile is quoted in delta, with premium and currency conventions that change what "delta" means.
-- [dupire-local-volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): the local-volatility model behind this card's third rule, built from the whole surface.
+- [Hedging with the smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/06-smile-adjusted-delta-and-sticky-delta.md): the same correction where the smile is quoted in delta, with premium and currency conventions that change what "delta" means.
+- [Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): the local-volatility model behind this card's third rule, built from the whole surface.
 
 This card leaves the rule as an input; the currency card shows how a market that quotes its smile by delta makes the choice for the desk.
 

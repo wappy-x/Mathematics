@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Implied volatility and the vanilla inverses
-topic: Delta-quoted strikes
-item: Strike from delta
-kind: method
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/01-delta|delta]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/01-implied-volatility|implied-volatility]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/05-normal-quantile|normal-quantile]]"
-next:
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/04-strike-or-spot-from-a-target-premium|strike-or-spot-from-a-target-premium]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - strike-from-delta
----
-
 # Strike from delta: turning a delta quote back into a strike
 
-Financial mathematics → Implied volatility and the vanilla inverses → Delta-quoted strikes → Strike from delta
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Implied volatility and the vanilla inverses](../../../SYLLABUS.md#w12-s11) → Strike from delta
 
 ---
 
@@ -56,7 +35,7 @@ Orange: the call's delta, falling as the strike rises. Green: the put's delta wi
 
 ## The formula
 
-Notation first, in words. $S$ is Acme's price today, $K$ the strike, $T$ the years to expiry, $r$ the riskless rate, $q$ the dividend yield and $\sigma$ (sigma) the volatility, as on the pilot. $\Delta$ (capital Greek delta) is the option's delta. $N(x)$ is the area under the standard bell curve to the left of $x$, a probability between 0 and 1. $N^{-1}(p)$ runs that backwards: the point whose left-hand area is a given probability, called the normal quantile ([normal-quantile](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
+Notation first, in words. $S$ is Acme's price today, $K$ the strike, $T$ the years to expiry, $r$ the riskless rate, $q$ the dividend yield and $\sigma$ (sigma) the volatility, as on the pilot. $\Delta$ (capital Greek delta) is the option's delta. $N(x)$ is the area under the standard bell curve to the left of $x$, a probability between 0 and 1. $N^{-1}(p)$ runs that backwards: the point whose left-hand area is a given probability, called the normal quantile ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
 
 For a call with delta $\Delta$ strictly between 0 and $e^{-qT}$:
 
@@ -91,11 +70,11 @@ $$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}$$
 
 In words: how far below the spot the strike sits, in logs, plus the drift, counted in wiggle units. The strike formula is this line solved for $K$.
 
-The deltas themselves come from [delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): a call's is $e^{-qT}N(d_1)$ and a put's is $-e^{-qT}N(-d_1)$.
+The deltas themselves come from [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): a call's is $e^{-qT}N(d_1)$ and a put's is $-e^{-qT}N(-d_1)$.
 
 ### When it holds
 
-- **One volatility for every strike.** The formula feeds in a single $\sigma$. Real markets show a smile (a different implied volatility at each strike, see [implied-volatility](01-implied-volatility.md)). Then $\sigma$ depends on the $K$ being solved for, the one-line answer becomes a starting guess, and the strike is found by repeating the formula with the smile's volatility at the last guess until it settles.
+- **One volatility for every strike.** The formula feeds in a single $\sigma$. Real markets show a smile (a different implied volatility at each strike, see [Implied volatility](01-implied-volatility.md)). Then $\sigma$ depends on the $K$ being solved for, the one-line answer becomes a starting guess, and the strike is found by repeating the formula with the smile's volatility at the last guess until it settles.
 - **Spot delta, premium not included.** This card's delta is the change in option value per dollar of Acme, paid for in cash. Currency markets also quote forward deltas and premium-included deltas. Those are different functions of the strike with different inverses; feeding one into this formula gives the wrong strike.
 - **Black-Scholes dynamics.** Delta here is the model's delta. If Acme's price can jump, the hedge ratio a desk actually uses differs, but the quoting convention still uses this formula to turn the label into a strike.
 - **The delta is inside the range.** A call delta at or above $e^{-qT}$, or at or below 0, has no strike. The formula signals this: $N^{-1}$ is asked for the point with area 1 or more, or 0 or less, and there is none.
@@ -155,7 +134,7 @@ For a put the target is $N(-d_1) = \lvert\Delta\rvert e^{qT}$, so the quantile's
 
 Where do the call's and the put's deltas balance? Where $N(d_1) = N(-d_1)$, which forces $d_1 = 0$ and $K = S\,e^{(r - q + \frac12\sigma^2)T} = \$105.13$. There the call's delta is $0.4901$ and the put's is $-0.4901$: a call and a put there together carry no delta. Dealers call this the delta-neutral strike. It sits above the forward price $F = S\,e^{(r-q)T} = \$103.05$ (the price agreed today for delivery of one share at expiry), because $d_1$ carries the extra half wiggle-squared.
 
-The other road to the strike skips the quantile: guess a strike, compute its delta, and narrow the guess by halving an interval until the delta matches. That is bisection, and it works because Step 1 made delta one-directional. The method itself belongs to [implied-volatility-by-newton-and-bisection](02-implied-volatility-by-newton-and-bisection.md); the code below uses it as its second road.
+The other road to the strike skips the quantile: guess a strike, compute its delta, and narrow the guess by halving an interval until the delta matches. That is bisection, and it works because Step 1 made delta one-directional. The method itself belongs to [Solving for implied volatility](02-implied-volatility-by-newton-and-bisection.md); the code below uses it as its second road.
 
 ---
 
@@ -566,7 +545,7 @@ The two outputs agree line for line, although one language sums a series and the
 - **Currency option quotes.** Dealers quote the smile as at-the-money, 25-delta risk reversals and 25-delta butterflies, with 10-delta versions for the wings. Every one of those has to be turned into a strike before an option can be priced or booked (Reiswich and Wystup; Clark).
 - **Volatility surfaces stored by delta.** A surface kept at fixed deltas stays roughly in place when the share moves, while a surface at fixed strikes has to be shifted. Looking up the volatility for a given strike then needs this conversion, run with the smile's volatility at each guess.
 - **Hedging orders.** "Buy the 25-delta put" is a common way to ask for downside protection of a set size. The order ticket still needs a strike, here $92.15.
-- **Premium targets.** The sibling problem fixes the price instead of the delta and asks for the strike: [strike-or-spot-from-a-target-premium](04-strike-or-spot-from-a-target-premium.md). Reading the forward and dividend back from market prices is [implied-forward-and-dividend-from-parity](05-implied-forward-and-dividend-from-parity.md).
+- **Premium targets.** The sibling problem fixes the price instead of the delta and asks for the strike: [Strike or spot from a target premium](04-strike-or-spot-from-a-target-premium.md). Reading the forward and dividend back from market prices is [Implied forward and dividend from parity](05-implied-forward-and-dividend-from-parity.md).
 
 > **Say it back**
 > A delta quote names an option by how much it moves with the share instead of by its strike. Delta falls strictly as the strike rises, from a ceiling of $e^{-qT}$ down to zero, so each delta inside that range names one strike and none outside does. Divide out the dividend drag, run the bell curve backwards with the normal quantile, and solve $d_1$ for the strike. On the house market the 25-delta call is $119.93 and the 25-delta put is $92.15, and no strike carries a delta of 0.99.
@@ -575,13 +554,13 @@ The two outputs agree line for line, although one language sums a series and the
 
 ## What this builds on
 
-- [delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): the forward map this card runs backwards, $e^{-qT}N(d_1)$ for a call and $-e^{-qT}N(-d_1)$ for a put.
-- [implied-volatility](01-implied-volatility.md): the volatility fed into the conversion, and the first inverse on the shelf with the same existence-then-solve order.
-- [normal-quantile](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): $N^{-1}$, the bell curve read backwards, which does the one hard step.
+- [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): the forward map this card runs backwards, $e^{-qT}N(d_1)$ for a call and $-e^{-qT}N(-d_1)$ for a put.
+- [Implied volatility](01-implied-volatility.md): the volatility fed into the conversion, and the first inverse on the shelf with the same existence-then-solve order.
+- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): $N^{-1}$, the bell curve read backwards, which does the one hard step.
 
 ## Where this goes next
 
-- [strike-or-spot-from-a-target-premium](04-strike-or-spot-from-a-target-premium.md): the same backward question asked of the price instead of the delta, where no closed form exists and the range has different ends.
+- [Strike or spot from a target premium](04-strike-or-spot-from-a-target-premium.md): the same backward question asked of the price instead of the delta, where no closed form exists and the range has different ends.
 
 A delta pins a strike in one line because delta has a single bell-curve area in it; a premium has two, and whether a price still names exactly one strike is the question the next card answers.
 

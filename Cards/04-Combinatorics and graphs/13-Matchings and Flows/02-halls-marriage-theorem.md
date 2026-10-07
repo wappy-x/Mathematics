@@ -1,28 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Matchings and Flows
-topic: The blocking set
-item: Hall's theorem
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/13-Matchings and Flows/01-matchings-and-augmenting-paths|matchings-and-augmenting-paths]]"
-  - "[[Cards/01-Foundations/06-Proof/05-strong-induction-and-well-ordering|strong-induction-and-well-ordering]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/13-Matchings and Flows/03-konigs-theorem-and-vertex-cover|konigs-theorem-and-vertex-cover]]"
-  - "[[Cards/04-Combinatorics and graphs/13-Matchings and Flows/06-max-flow-min-cut|max-flow-min-cut]]"
-  - "[[Cards/14-Applied and computational/05-Operations Research/05-assignment-and-the-hungarian-algorithm|assignment-and-the-hungarian-algorithm]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - halls-marriage-theorem
----
-
 # Hall's theorem: everyone on the left can be matched exactly when no group of them shares too few options
 
-Combinatorics and graphs → Matchings and Flows → The blocking set → Hall's theorem
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Matchings and Flows](../../../SYLLABUS.md#w04-s13) → Hall's theorem
 
 ---
 
@@ -63,7 +41,7 @@ Applicants on the left, posts on the right, one line per qualification: 13 lines
 
 ## The formula
 
-The hiring is a **bipartite graph**: dots in two groups, every line running across, none inside a group ([matchings-and-augmenting-paths](01-matchings-and-augmenting-paths.md)). Call it $G$, the applicants $A$, the posts $B$. A **matching** is a set of lines, no two sharing an applicant or a post. It **covers** $A$ when every applicant is on one of its lines: a full placement.
+The hiring is a **bipartite graph**: dots in two groups, every line running across, none inside a group ([Matchings](01-matchings-and-augmenting-paths.md)). Call it $G$, the applicants $A$, the posts $B$. A **matching** is a set of lines, no two sharing an applicant or a post. It **covers** $A$ when every applicant is on one of its lines: a full placement.
 
 Write $S$ for any group of applicants and $N(S)$ for the posts it reaches, every post at least one member is qualified for ($N$ for neighbours). Bars count members: $\lvert S\rvert$ applicants, $\lvert N(S)\rvert$ posts.
 
@@ -95,7 +73,7 @@ $$\nu(G) \;=\; \lvert A\rvert - \max_S \bigl(\lvert S\rvert - \lvert N(S)\rvert\
 - **Finitely many applicants.** The induction must reach the bottom. With infinitely many, the condition can hold and placement still fail: one applicant qualified for posts 1, 2, 3, …, and applicant 1 for post 1 alone, applicant 2 for post 2 alone, and so on.
 - **Two sides, lines only across.** If lines may join two applicants, the condition is not enough; a different test (Tutte's) takes over.
 - **One side covered, not both.** With more posts than applicants, some posts stay empty.
-- **Existence, not a best choice.** Whether anyone would swap, and what a placement costs, are separate questions ([stable-matching-gale-shapley](04-stable-matching-gale-shapley.md), assignment-and-the-hungarian-algorithm).
+- **Existence, not a best choice.** Whether anyone would swap, and what a placement costs, are separate questions ([Stable matching](04-stable-matching-gale-shapley.md), The assignment problem).
 
 ---
 
@@ -113,7 +91,7 @@ So Ana, Ben and Cleo, reaching two posts, prove without any search that the hote
 
 ### Step 2: the condition is enough, by working down to a smaller hiring
 
-The other direction is an induction on the number of applicants ([strong-induction-and-well-ordering](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md)): assume the theorem for every hiring with fewer applicants. With no applicants there is nothing to place.
+The other direction is an induction on the number of applicants ([Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md)): assume the theorem for every hiring with fewer applicants. With no applicants there is nothing to place.
 
 Call a group **tight** when it reaches exactly as many posts as it has members, as Ana and Ben do. Two cases.
 
@@ -132,7 +110,7 @@ Every post reached by $S$ or $T$ in the original hiring lies either in $N(S)$ or
 
 Say the worst group beats its reach by $d$, the defect. At least $d$ applicants go unplaced, since that group has $d$ more members than posts. The count is exact: add $d$ spare posts everyone is qualified for. Every non-empty group's reach grows by $d$, so everyone is placed; at most $d$ sit in spare posts, so at least $\lvert A\rvert - d$ hold real ones. The bounds meet: at the hotel, 5 exactly.
 
-Another road: treat the hiring as a network with a pipe along every line. A full placement is a flow of $\lvert A\rvert$ units, and a crowded group is a cheap place to cut the network: [max-flow-min-cut](06-max-flow-min-cut.md).
+Another road: treat the hiring as a network with a pipe along every line. A full placement is a flow of $\lvert A\rvert$ units, and a crowded group is a cheap place to cut the network: [Max-flow min-cut](06-max-flow-min-cut.md).
 
 ---
 
@@ -379,7 +357,7 @@ The two outputs match line for line.
 > **Checking one applicant at a time.** All 6 pass that test, and the placement still stops at 5. The obstruction is a group, not a person. Counting a group's lines instead of its posts hides it too: the trio has 5 lines and 2 posts.
 >
 > - **Checking only the whole side.** All six reach all six posts. The crowded group has three members, so only a scan across every size finds it.
-> - **Taking it for a pairing everyone accepts.** The theorem gives existence, nothing more ([stable-matching-gale-shapley](04-stable-matching-gale-shapley.md)).
+> - **Taking it for a pairing everyone accepts.** The theorem gives existence, nothing more ([Stable matching](04-stable-matching-gale-shapley.md)).
 
 ---
 
@@ -396,16 +374,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [matchings-and-augmenting-paths](01-matchings-and-augmenting-paths.md): matchings, and the search the code's second road uses.
-- [strong-induction-and-well-ordering](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md): why Step 2 may lean on any smaller hiring.
+- [Matchings](01-matchings-and-augmenting-paths.md): matchings, and the search the code's second road uses.
+- [Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md): why Step 2 may lean on any smaller hiring.
 
 ## Where this goes next
 
-- [konigs-theorem-and-vertex-cover](03-konigs-theorem-and-vertex-cover.md): the same fact as the fewest dots touching every line.
-- [max-flow-min-cut](06-max-flow-min-cut.md): the crowded group as the cheapest cut of a network.
-- assignment-and-the-hungarian-algorithm: from "a placement exists" to "the cheapest one".
+- [Konig's theorem](03-konigs-theorem-and-vertex-cover.md): the same fact as the fewest dots touching every line.
+- [Max-flow min-cut](06-max-flow-min-cut.md): the crowded group as the cheapest cut of a network.
+- The assignment problem: from "a placement exists" to "the cheapest one".
 
-Checking the condition meant listing all 64 groups, a count that doubles with each applicant; finding the crowded group without that list is [konigs-theorem-and-vertex-cover](03-konigs-theorem-and-vertex-cover.md).
+Checking the condition meant listing all 64 groups, a count that doubles with each applicant; finding the crowded group without that list is [Konig's theorem](03-konigs-theorem-and-vertex-cover.md).
 
 ---
 

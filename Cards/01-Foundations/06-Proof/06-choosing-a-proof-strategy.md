@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Proof
-topic: Strategy
-item: Choosing a proof strategy
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/06-Proof/03-proof-by-contradiction|proof-by-contradiction]]"
-  - "[[Cards/01-Foundations/06-Proof/05-strong-induction-and-well-ordering|strong-induction-and-well-ordering]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/05-arithmetic-laws|arithmetic-laws]]"
-next: []
-tags:
-  - mathematics
-  - foundations
-  - choosing-a-proof-strategy
----
-
 # Choosing a proof strategy: which move fits which claim, plus existence, uniqueness and working backwards
 
-Foundations → Proof → Strategy → Choosing a proof strategy
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Proof](../../../SYLLABUS.md#w01-s06) → Choosing a proof strategy
 
 ---
 
@@ -28,7 +8,7 @@ Foundations → Proof → Strategy → Choosing a proof strategy
 
 A fault-finding sheet is taped inside a garage's workshop door. Car will not start? Read the symptom first. Lights dead: battery. Engine turns, never fires: fuel. The symptom picks the tool.
 
-Proofs come with the same sheet. The moves are already yours: [direct-proof](01-direct-proof.md), [proof-by-contrapositive](02-proof-by-contrapositive.md), [proof-by-contradiction](03-proof-by-contradiction.md), [proof-by-induction](04-proof-by-induction.md), [strong-induction-and-well-ordering](05-strong-induction-and-well-ordering.md). What stalls people is the blank page: which move this claim wants.
+Proofs come with the same sheet. The moves are already yours: [Direct proof](01-direct-proof.md), [Proof by contrapositive](02-proof-by-contrapositive.md), [Proof by contradiction](03-proof-by-contradiction.md), [Induction](04-proof-by-induction.md), [Strong induction and the least element](05-strong-induction-and-well-ordering.md). What stalls people is the blank page: which move this claim wants.
 
 The claim tells you — not its subject, its **shape**: the words it opens with. Three claims tonight, all about whole numbers.
 
@@ -83,9 +63,9 @@ Line one has to be something you can write down, and each shape hands you differ
 
 ### Step 1: the first two claims, straight off the sheet
 
-**Every whole number is even or odd.** Shape: for every. **Even** means two times a whole number; **odd** means two times a whole number, plus one. Move: induction — 0 = 2 × 0 is even, and each step flips: two times a number, then that plus one, then two times the next ([proof-by-induction](04-proof-by-induction.md)).
+**Every whole number is even or odd.** Shape: for every. **Even** means two times a whole number; **odd** means two times a whole number, plus one. Move: induction — 0 = 2 × 0 is even, and each step flips: two times a number, then that plus one, then two times the next ([Induction](04-proof-by-induction.md)).
 
-**Some number, added to anything, leaves it unchanged.** Shape: there is. Move: produce one. Here: **0**, since 0 + 7 = 7, 0 + 23 = 23, and 0 + n = n for any whole number n. Naming a thing and checking it against the definition is the whole of an **existence proof**. Call such a number a **do-nothing** for adding; order does not matter in addition ([arithmetic-laws](../01-Everyday%20Arithmetic/05-arithmetic-laws.md)), so one check covers both sides.
+**Some number, added to anything, leaves it unchanged.** Shape: there is. Move: produce one. Here: **0**, since 0 + 7 = 7, 0 + 23 = 23, and 0 + n = n for any whole number n. Naming a thing and checking it against the definition is the whole of an **existence proof**. Call such a number a **do-nothing** for adding; order does not matter in addition ([The three rearranging laws](../01-Everyday%20Arithmetic/05-arithmetic-laws.md)), so one check covers both sides.
 
 ### Step 2: "exactly one" is two jobs
 
@@ -104,7 +84,7 @@ One number, two names, so **a = b**. There was nowhere for a second to hide — 
 
 Start at the line you want and ask what would give it. Ask again, until you reach something you have. Two numbers are equal when one number answers to both names. So build one out of a and b — a + b — and read it twice.
 
-Then write it forwards: given first, wanted last ([direct-proof](01-direct-proof.md)). If the sheet stays silent, assume the claim false ([proof-by-contradiction](03-proof-by-contradiction.md)).
+Then write it forwards: given first, wanted last ([Direct proof](01-direct-proof.md)). If the sheet stays silent, assume the claim false ([Proof by contradiction](03-proof-by-contradiction.md)).
 
 ---
 
@@ -262,7 +242,7 @@ The two outputs match line for line.
 > - **Half of "exactly one".** Producing 0 proves at least one exists, not that there is no second.
 > - **Searching instead of proving.** 41 candidates checked is just that, and there is no last whole number.
 > - **Leaving the proof backwards.** Backwards finds the chain; forwards is how it goes on the page.
-> - **Mixing up flipping and assuming.** Flip both halves and swap: [proof-by-contrapositive](02-proof-by-contrapositive.md). Assume it false: [proof-by-contradiction](03-proof-by-contradiction.md).
+> - **Mixing up flipping and assuming.** Flip both halves and swap: [Proof by contrapositive](02-proof-by-contrapositive.md). Assume it false: [Proof by contradiction](03-proof-by-contradiction.md).
 
 ---
 
@@ -279,12 +259,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [proof-by-contradiction](03-proof-by-contradiction.md): the move for a claim with a *not* in it, and the fallback when the sheet is silent.
-- [strong-induction-and-well-ordering](05-strong-induction-and-well-ordering.md): the other route to claim 1 — take the smallest number that fails, show it cannot exist.
+- [Proof by contradiction](03-proof-by-contradiction.md): the move for a claim with a *not* in it, and the fallback when the sheet is silent.
+- [Strong induction and the least element](05-strong-induction-and-well-ordering.md): the other route to claim 1 — take the smallest number that fails, show it cannot exist.
 
 ## Where this goes next
 
-Nothing waits on this card: it is the sheet you keep beside the other five. The shelf closes with [peano-and-one-plus-one](07-peano-and-one-plus-one.md), where the counting numbers begin.
+Nothing waits on this card: it is the sheet you keep beside the other five. The shelf closes with [Peano's three rules](07-peano-and-one-plus-one.md), where the counting numbers begin.
 
 ---
 

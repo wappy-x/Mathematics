@@ -1,27 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Logic
-topic: Statements
-item: If-then
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/05-Logic/01-statements-and-connectives|statements-and-connectives]]"
-next:
-  - "[[Cards/01-Foundations/05-Logic/03-logical-equivalence-and-de-morgan|logical-equivalence-and-de-morgan]]"
-  - "[[Cards/01-Foundations/05-Logic/06-valid-arguments|valid-arguments]]"
-  - "[[Cards/01-Foundations/06-Proof/02-proof-by-contrapositive|proof-by-contrapositive]]"
-tags:
-  - mathematics
-  - foundations
-  - if-then
----
-
 # If-then: a promise that breaks only one way, with its converse and contrapositive
 
-Foundations → Logic → Statements → If-then
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Logic](../../../SYLLABUS.md#w01-s05) → If-then
 
 ---
 
@@ -87,7 +66,7 @@ The verdict uses those two answers alone, not any link between the halves. "If 2
 
 ### The same promise, said with "or"
 
-Read it again: **"either the screen did not crack, or it was replaced free."** Same four verdicts, customer by customer. Moving between the forms: [logical-equivalence-and-de-morgan](03-logical-equivalence-and-de-morgan.md).
+Read it again: **"either the screen did not crack, or it was replaced free."** Same four verdicts, customer by customer. Moving between the forms: [Logical equivalence and De Morgan](03-logical-equivalence-and-de-morgan.md).
 
 ### The converse: a different promise
 
@@ -99,7 +78,7 @@ Cal kills it: free phone, no crack, so the converse is false for him while the w
 
 Flip both halves and swap them: the **contrapositive** is "if we did not replace it free, then the screen did not crack."
 
-What would break it? A customer not replaced free whose screen did crack. Ben again. Same broken row, same promise: 0 rows disagree. The flip is often easier to check: [proof-by-contrapositive](../06-Proof/02-proof-by-contrapositive.md).
+What would break it? A customer not replaced free whose screen did crack. Ben again. Same broken row, same promise: 0 rows disagree. The flip is often easier to check: [Proof by contrapositive](../06-Proof/02-proof-by-contrapositive.md).
 
 ### Enough on its own, and cannot be missing
 
@@ -279,7 +258,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Warranties and refunds.** The row argued about at the counter is Cal's.
-- **Signs.** "No entry without a ticket" says: if no ticket, then not inside. Flip both and swap: if you are inside, you have a ticket. Same promise. Chains of these build arguments: [valid-arguments](06-valid-arguments.md).
+- **Signs.** "No entry without a ticket" says: if no ticket, then not inside. Flip both and swap: if you are inside, you have a ticket. Same promise. Chains of these build arguments: [Valid arguments](06-valid-arguments.md).
 - **Test results.** "If you have the illness, the test is positive." A negative means no illness: contrapositive, sound. A positive meaning illness is the converse: a different claim.
 
 > **Say it back**
@@ -289,13 +268,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [statements-and-connectives](01-statements-and-connectives.md): what "not" and "or" do, and how a small table settles a sentence.
+- [Statements and connectives](01-statements-and-connectives.md): what "not" and "or" do, and how a small table settles a sentence.
 
 ## Where this goes next
 
-- [logical-equivalence-and-de-morgan](03-logical-equivalence-and-de-morgan.md): why the two readings count as one sentence.
-- [valid-arguments](06-valid-arguments.md): what you may conclude from an if-then and one half.
-- [proof-by-contrapositive](../06-Proof/02-proof-by-contrapositive.md): proving the flipped sentence on purpose.
+- [Logical equivalence and De Morgan](03-logical-equivalence-and-de-morgan.md): why the two readings count as one sentence.
+- [Valid arguments](06-valid-arguments.md): what you may conclude from an if-then and one half.
+- [Proof by contrapositive](../06-Proof/02-proof-by-contrapositive.md): proving the flipped sentence on purpose.
 
 ---
 

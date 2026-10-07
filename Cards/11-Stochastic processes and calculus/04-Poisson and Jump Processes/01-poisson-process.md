@@ -1,30 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Poisson and Jump Processes
-topic: Counting arrivals in time
-item: Poisson process
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/01-processes-and-paths|processes-and-paths]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/03-exponential-distribution|exponential-distribution]]"
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/04-poisson|poisson]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/02-arrival-times-and-order-statistics|arrival-times-and-order-statistics]]"
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/03-splitting-and-superposition|splitting-and-superposition]]"
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/04-compound-poisson|compound-poisson]]"
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/05-continuous-time-markov-chains-and-queues|continuous-time-markov-chains-and-queues]]"
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/06-renewal-processes-in-outline|renewal-processes-in-outline]]"
-  - "[[Cards/11-Stochastic processes and calculus/09-Beyond Brownian/01-levy-processes|levy-processes]]"
-  - "[[Cards/14-Applied and computational/05-Operations Research/07-queueing-theory-and-littles-law|queueing-theory-and-littles-law]]"
-tags: [mathematics, stochastic processes and calculus, poisson-process]
----
-
 # Poisson process: arrivals with exponential gaps, and counts that are Poisson
 
-Stochastic processes and calculus → Poisson and Jump Processes → Counting arrivals in time → Poisson process
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Poisson and Jump Processes](../../../SYLLABUS.md#w11-s04) → Poisson process
 
 ---
 
@@ -32,9 +8,9 @@ Stochastic processes and calculus → Poisson and Jump Processes → Counting ar
 
 A switchboard takes calls at 4 an hour on average. The callers do not know about each other. It is nine o'clock. How many calls arrive in the next quarter hour?
 
-No call at all about 37% of the time. Exactly one, also about 37%. Two about 18%, three about 6%, four or more about 2%. These are the chances of the Poisson law with mean 1 ([poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md)). The same table holds for every quarter hour of the morning, and how busy one quarter hour was says nothing about the next.
+No call at all about 37% of the time. Exactly one, also about 37%. Two about 18%, three about 6%, four or more about 2%. These are the chances of the Poisson law with mean 1 ([Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md)). The same table holds for every quarter hour of the morning, and how busy one quarter hour was says nothing about the next.
 
-Those numbers come from a construction. Draw the wait for the first call from the exponential law with a mean of 15 minutes ([exponential-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md)). Draw each later wait afresh, independently, from the same law. Add up the waits and the call times appear. Count the calls so far: the count sits still between calls and rises by one at each. That count, followed through time, is the **Poisson process**: a process in the sense of [processes-and-paths](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md), one random count for each moment.
+Those numbers come from a construction. Draw the wait for the first call from the exponential law with a mean of 15 minutes ([Exponential](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md)). Draw each later wait afresh, independently, from the same law. Add up the waits and the call times appear. Count the calls so far: the count sits still between calls and rises by one at each. That count, followed through time, is the **Poisson process**: a process in the sense of [Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md), one random count for each moment.
 
 **Independent exponential gaps between calls make the count in every window Poisson, with mean rate times length, and make the counts in separate windows independent.**
 
@@ -96,7 +72,7 @@ At 4 calls an hour and a quarter hour, $\lambda t$ = 1: one call expected.
 - **A constant rate.** At 8 calls an hour over lunch and 4 in the morning, no single $\lambda$ describes the day.
 - **Gaps independent of one another.** Callers who redial after a busy signal bring calls in clumps, and the count spreads more than a Poisson count, whose variance equals its mean.
 - **Exponential gaps, not merely the right mean.** Gaps spread evenly between 0 and 30 minutes also average 15 minutes, yet leave the first quarter hour empty half the time, and consecutive quarter hours correlate at −0.2940 ± 0.0022 in simulation instead of 0.
-- **One call at a time.** If calls could arrive in pairs, the count would jump by two. That is [compound-poisson](04-compound-poisson.md).
+- **One call at a time.** If calls could arrive in pairs, the count would jump by two. That is [Compound Poisson](04-compound-poisson.md).
 - **Windows fixed in advance.** The busiest quarter hour of the morning, picked after the fact, does not have the Poisson law with mean 1.
 
 ---
@@ -105,7 +81,7 @@ At 4 calls an hour and a quarter hour, $\lambda t$ = 1: one call expected.
 
 ### Step 0: at any fixed moment, the process starts again
 
-At a quarter past nine, a quarter hour has gone by. The wait from then to the next call still averages 15 minutes: the simulation gives 14.96 minutes, with a standard error of 0.03. The gap in progress has forgotten how long it has run: the no-memory property proved on [exponential-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md). The gaps after it are fresh draws, untouched by the past.
+At a quarter past nine, a quarter hour has gone by. The wait from then to the next call still averages 15 minutes: the simulation gives 14.96 minutes, with a standard error of 0.03. The gap in progress has forgotten how long it has run: the no-memory property proved on [Exponential](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md). The gaps after it are fresh draws, untouched by the past.
 
 So what happens after quarter past is a new copy of the same process, independent of what came before. The steps below make this restart precise.
 
@@ -119,7 +95,7 @@ where $g_1, \dots, g_n$ are the gap values. The sum in the exponent is the time 
 
 $$\lambda^n e^{-\lambda x_n} \quad \text{on } 0 < x_1 < x_2 < \dots < x_n.$$
 
-Only the last call time appears. Where the earlier calls sit, in order, does not change the density. Integrating out the earlier ones gives the gamma law for $T_n$, as on [gamma-and-beta-distributions](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/07-gamma-and-beta-distributions.md).
+Only the last call time appears. Where the earlier calls sit, in order, does not change the density. Integrating out the earlier ones gives the gamma law for $T_n$, as on [Gamma and beta](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/07-gamma-and-beta-distributions.md).
 
 ### Step 2: exactly k calls makes the density constant
 
@@ -145,7 +121,7 @@ A product of Poisson chances, one per window, is exactly what independence means
 
 ### Step 4: the calls never pile up
 
-Could infinitely many calls crowd into one morning? The strong law of large numbers ([strong-law-of-large-numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md)) says $T_n / n$ settles at the mean gap, 0.25 hour, with probability one. So $T_n$ grows without limit, and only finitely many calls come by any time. On the leftover set of chance zero, define the count to be 0; no probability changes.
+Could infinitely many calls crowd into one morning? The strong law of large numbers ([The strong law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md)) says $T_n / n$ settles at the mean gap, 0.25 hour, with probability one. So $T_n$ grows without limit, and only finitely many calls come by any time. On the leftover set of chance zero, define the count to be 0; no probability changes.
 
 <details>
 <summary>Detailed proof: every step, with the change of variables written out</summary>
@@ -164,7 +140,7 @@ The ordered set is one of $k!$ pieces of the cube $(0,t)^k$ obtained by permutin
 
 ### Two other roads to the same law
 
-Condition on the first gap $u$: if it ends inside the window, the process restarts there, and $k$ calls by $t$ needs $k - 1$ in the time left. So $P(N(t) = k)$ is the integral over $u$ from 0 to $t$ of $\lambda e^{-\lambda u}$ times $P(N(t-u) = k-1)$, a recursion the code solves on a grid. Or cut time into slots of length $h$, each holding a call with chance $\lambda h$, and let $h$ shrink: the binomial count tends to the Poisson count, as [poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md) proves. The code takes both roads.
+Condition on the first gap $u$: if it ends inside the window, the process restarts there, and $k$ calls by $t$ needs $k - 1$ in the time left. So $P(N(t) = k)$ is the integral over $u$ from 0 to $t$ of $\lambda e^{-\lambda u}$ times $P(N(t-u) = k-1)$, a recursion the code solves on a grid. Or cut time into slots of length $h$, each holding a call with chance $\lambda h$, and let $h$ shrink: the binomial count tends to the Poisson count, as [Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md) proves. The code takes both roads.
 
 ---
 
@@ -613,10 +589,10 @@ The two outputs are identical line for line.
 
 ## Where you meet it in real life
 
-- **Telephone exchanges.** Agner Krarup Erlang, at the Copenhagen Telephone Company, used this model early in the twentieth century to size exchanges. Queues fed by it are on [continuous-time-markov-chains-and-queues](05-continuous-time-markov-chains-and-queues.md) and queueing-theory-and-littles-law.
+- **Telephone exchanges.** Agner Krarup Erlang, at the Copenhagen Telephone Company, used this model early in the twentieth century to size exchanges. Queues fed by it are on [Continuous-time chains](05-continuous-time-markov-chains-and-queues.md) and Queues.
 - **Radioactive decay.** Clicks of a Geiger counter near a long-lived source: each atom decays independently, and the rate barely changes over an afternoon.
-- **Insurance claims.** Claims arrive as a Poisson process; attach a random size to each and the total is [compound-poisson](04-compound-poisson.md), the base of the classical ruin model.
-- **Jumps in prices.** Models of sudden price moves place jumps at Poisson times; the general family is [levy-processes](../09-Beyond%20Brownian/01-levy-processes.md).
+- **Insurance claims.** Claims arrive as a Poisson process; attach a random size to each and the total is [Compound Poisson](04-compound-poisson.md), the base of the classical ruin model.
+- **Jumps in prices.** Models of sudden price moves place jumps at Poisson times; the general family is [Levy processes](../09-Beyond%20Brownian/01-levy-processes.md).
 
 > **Say it back**
 > Add up independent exponential gaps to get call times, and count the calls so far. The exponential forgets how long it has waited, so at any fixed moment the process starts afresh. Given k calls in a window, every ordered arrangement of them is equally likely, and those arrangements fill a share 1/k! of the cube. That makes the count Poisson with mean rate times length. Separate windows get independent counts; running totals share early calls and are correlated.
@@ -625,19 +601,19 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [processes-and-paths](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md): a process as one random variable per time, and a path as one outcome followed through time. The staircase of calls is such a path.
-- [exponential-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md): the gap law and its lack of memory, which is Step 0.
-- [poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md): the Poisson law itself, its mean equal to its variance, and the binomial limit behind the slot road.
+- [Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md): a process as one random variable per time, and a path as one outcome followed through time. The staircase of calls is such a path.
+- [Exponential](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md): the gap law and its lack of memory, which is Step 0.
+- [Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md): the Poisson law itself, its mean equal to its variance, and the binomial limit behind the slot road.
 
 ## Where this goes next
 
-- [arrival-times-and-order-statistics](02-arrival-times-and-order-statistics.md): given k calls in a window, their times are k uniform points put in order, Step 2 read backwards.
-- [splitting-and-superposition](03-splitting-and-superposition.md): sorting one stream into two, and merging two into one.
-- [compound-poisson](04-compound-poisson.md): a random amount attached to each arrival, summed.
-- [continuous-time-markov-chains-and-queues](05-continuous-time-markov-chains-and-queues.md): exponential waits between changes of state, with a rate matrix in place of one rate.
-- [renewal-processes-in-outline](06-renewal-processes-in-outline.md): independent gaps of any law, such as the evenly spread gaps above.
-- [levy-processes](../09-Beyond%20Brownian/01-levy-processes.md): independent, stationary increments in general, built from Poisson jumps and Brownian motion.
-- queueing-theory-and-littles-law: Poisson arrivals meeting a server.
+- [Given n arrivals, when did they happen](02-arrival-times-and-order-statistics.md): given k calls in a window, their times are k uniform points put in order, Step 2 read backwards.
+- [Splitting and merging](03-splitting-and-superposition.md): sorting one stream into two, and merging two into one.
+- [Compound Poisson](04-compound-poisson.md): a random amount attached to each arrival, summed.
+- [Continuous-time chains](05-continuous-time-markov-chains-and-queues.md): exponential waits between changes of state, with a rate matrix in place of one rate.
+- [Renewal processes](06-renewal-processes-in-outline.md): independent gaps of any law, such as the evenly spread gaps above.
+- [Levy processes](../09-Beyond%20Brownian/01-levy-processes.md): independent, stationary increments in general, built from Poisson jumps and Brownian motion.
+- Queues: Poisson arrivals meeting a server.
 
 This card fixes how many calls a window holds; where inside the window they sit is what the arrival-times card answers.
 

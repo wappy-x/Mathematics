@@ -1,30 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Graphs - Dots and Lines
-topic: Two sides and one obstruction
-item: Bipartite graphs
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/04-connectivity-and-breadth-first-search|connectivity-and-breadth-first-search]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/02-even-and-odd|even-and-odd]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/02-edge-bound-and-kuratowski|edge-bound-and-kuratowski]]"
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/03-vertex-colouring-and-chromatic-number|vertex-colouring-and-chromatic-number]]"
-  - "[[Cards/04-Combinatorics and graphs/13-Matchings and Flows/01-matchings-and-augmenting-paths|matchings-and-augmenting-paths]]"
-  - "[[Cards/04-Combinatorics and graphs/14-Ramsey and Extremal, in Outline/05-mantel-and-turan|mantel-and-turan]]"
-  - "[[Cards/14-Applied and computational/07-Network Science and Spectral Graphs/06-community-detection|community-detection]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - bipartite-graphs-and-odd-cycles
----
-
 # Bipartite graphs: two sides with no edges inside a side, exactly when there is no odd cycle
 
-Combinatorics and graphs → Graphs - Dots and Lines → Two sides and one obstruction → Bipartite graphs
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Graphs - Dots and Lines](../../../SYLLABUS.md#w04-s09) → Bipartite graphs
 
 ---
 
@@ -61,19 +37,19 @@ Staff left, shifts right. Every line crosses the gap.
 
 ## The formula
 
-Notation first, in words. A graph $G$ is two lists: the dots, collected as $V$, and the joined pairs, the lines, collected as $E$ ([graphs-vertices-and-edges](01-graphs-vertices-and-edges.md)). A **bipartition** names two heaps, $X$ and $Y$.
+Notation first, in words. A graph $G$ is two lists: the dots, collected as $V$, and the joined pairs, the lines, collected as $E$ ([Graphs](01-graphs-vertices-and-edges.md)). A **bipartition** names two heaps, $X$ and $Y$.
 
 $$V = X \cup Y, \qquad X \cap Y = \{\,\}, \qquad \text{every line joins a dot of } X \text{ to a dot of } Y$$
 
 **Read it aloud:** every dot sits in $X$ or in $Y$, none in both, and each line runs from one heap to the other.
 
-A graph with such a cut is **bipartite**. A **cycle** is a closed route repeating no dot, its length its number of lines ([walks-paths-and-cycles](03-walks-paths-and-cycles.md)); a length is odd when halving it leaves one over ([even-and-odd](../../02-Number%20theory/01-Divisibility%20and%20Primes/02-even-and-odd.md)). The theorem is one line:
+A graph with such a cut is **bipartite**. A **cycle** is a closed route repeating no dot, its length its number of lines ([Walks, paths and cycles](03-walks-paths-and-cycles.md)); a length is odd when halving it leaves one over ([Even and odd](../../02-Number%20theory/01-Divisibility%20and%20Primes/02-even-and-odd.md)). The theorem is one line:
 
 $$G \text{ is bipartite} \qquad\Longleftrightarrow\qquad G \text{ has no cycle of odd length}$$
 
 **Read it aloud:** the two heaps exist exactly when no closed route uses an odd number of lines.
 
-Finding the heaps means counting steps. Pick a starting dot, the **root**, and let $d(v)$ be the fewest lines from the root to the dot $v$ ([connectivity-and-breadth-first-search](04-connectivity-and-breadth-first-search.md)). Colour $v$ by whether that count is even or odd, its remainder after division by two:
+Finding the heaps means counting steps. Pick a starting dot, the **root**, and let $d(v)$ be the fewest lines from the root to the dot $v$ ([Connected or not](04-connectivity-and-breadth-first-search.md)). Colour $v$ by whether that count is even or odd, its remainder after division by two:
 
 $$c(v) = d(v) \bmod 2$$
 
@@ -158,7 +134,7 @@ The second road drops parity and tries every cut of the dots into two heaps: 2 o
 | the clash, and its loop | both ends 2 steps out; 2 + 1 + 2 | **5 lines, odd** |
 | the shelf's metro map | 8 lines, 64 cuts | **A C E \| B D F**, 2 work |
 
-The even layers are the staff, the odd ones the shifts, and both tallies come to 9, each line counted once from each side ([degree-and-handshaking](02-degree-and-handshaking.md)). The pentagon has no heaps, and its five-line loop is the proof.
+The even layers are the staff, the odd ones the shifts, and both tallies come to 9, each line counted once from each side ([Degrees and the handshaking lemma](02-degree-and-handshaking.md)). The pentagon has no heaps, and its five-line loop is the proof.
 
 ### What breaks if you drop a piece
 
@@ -373,15 +349,15 @@ The two outputs match line for line.
 >
 > - **Stopping at the piece the search started in.** From Ana it colours the roster and never sees the cafes.
 > - **Reading the clash line as the cycle.** The clash is one line; the cycle is that line plus both routes back to where they last met: 5 lines for the cafes.
-> - **Calling a crossed drawing unsplittable.** Crossings on paper are not lines inside a side: K(3, 3), three dots each joined to three others, needs crossings and cuts in two ([edge-bound-and-kuratowski](../12-Planarity%20and%20Colouring/02-edge-bound-and-kuratowski.md)).
+> - **Calling a crossed drawing unsplittable.** Crossings on paper are not lines inside a side: K(3, 3), three dots each joined to three others, needs crossings and cuts in two ([Why some graphs cannot be drawn flat](../12-Planarity%20and%20Colouring/02-edge-bound-and-kuratowski.md)).
 
 ---
 
 ## Where you meet it in real life
 
-- **Rosters and assignment.** Staff to shifts, lorries to depots, exams to rooms: a dot per item, a line per allowed pairing; who takes which is [matchings-and-augmenting-paths](../13-Matchings%20and%20Flows/01-matchings-and-augmenting-paths.md).
-- **Purchase data.** Customers one side, products the other, a line per purchase — the structure community-detection hunts in messier networks.
-- **Splitting a group in two.** Incompatible chemicals, players who must not share a team: a line per conflict, and [vertex-colouring-and-chromatic-number](../12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md) for how many groups suffice.
+- **Rosters and assignment.** Staff to shifts, lorries to depots, exams to rooms: a dot per item, a line per allowed pairing; who takes which is [Matchings](../13-Matchings%20and%20Flows/01-matchings-and-augmenting-paths.md).
+- **Purchase data.** Customers one side, products the other, a line per purchase — the structure Communities hunts in messier networks.
+- **Splitting a group in two.** Incompatible chemicals, players who must not share a team: a line per conflict, and [Colouring](../12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md) for how many groups suffice.
 - **Chessboards and dominoes.** Squares are dots, a line joins squares sharing an edge, light against dark is the cut. A domino covers one light and one dark square, so a board whose counts differ cannot be tiled.
 
 > **Say it back**
@@ -391,16 +367,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [connectivity-and-breadth-first-search](04-connectivity-and-breadth-first-search.md): the search in layers, the distance $d(v)$, and the record of where each dot was reached from.
-- [even-and-odd](../../02-Number%20theory/01-Divisibility%20and%20Primes/02-even-and-odd.md): why a parity, once fixed, settles the question.
+- [Connected or not](04-connectivity-and-breadth-first-search.md): the search in layers, the distance $d(v)$, and the record of where each dot was reached from.
+- [Even and odd](../../02-Number%20theory/01-Divisibility%20and%20Primes/02-even-and-odd.md): why a parity, once fixed, settles the question.
 
 ## Where this goes next
 
-- [edge-bound-and-kuratowski](../12-Planarity%20and%20Colouring/02-edge-bound-and-kuratowski.md): no odd cycle means every loop is even, which tightens the ceiling on lines a flat drawing allows.
-- [vertex-colouring-and-chromatic-number](../12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md): three colours or more, where no clean test survives.
-- [matchings-and-augmenting-paths](../13-Matchings%20and%20Flows/01-matchings-and-augmenting-paths.md): pairing the sides one to one.
-- [mantel-and-turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/05-mantel-and-turan.md): how many lines a triangle-free graph carries, its record holders bipartite.
-- community-detection: groups in a network where no split is clean.
+- [Why some graphs cannot be drawn flat](../12-Planarity%20and%20Colouring/02-edge-bound-and-kuratowski.md): no odd cycle means every loop is even, which tightens the ceiling on lines a flat drawing allows.
+- [Colouring](../12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md): three colours or more, where no clean test survives.
+- [Matchings](../13-Matchings%20and%20Flows/01-matchings-and-augmenting-paths.md): pairing the sides one to one.
+- [Mantel and Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/05-mantel-and-turan.md): how many lines a triangle-free graph carries, its record holders bipartite.
+- Communities: groups in a network where no split is clean.
 
 This card decides whether two heaps exist; who works which shift, one each, is the matching card's question.
 

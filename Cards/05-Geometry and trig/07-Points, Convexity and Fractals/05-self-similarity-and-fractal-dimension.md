@@ -1,23 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Points, Convexity and Fractals
-topic: Copies at every scale
-item: Fractals
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/07-Points, Convexity and Fractals/01-polygon-area-and-orientation|polygon-area-and-orientation]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/05-logarithms|logarithms]]"
-next:
-  - "[[Cards/17-Topology/02-Topological Spaces/09-standard-examples-and-counterexamples|standard-examples-and-counterexamples]]"
-tags: [mathematics, geometry and trig, self-similarity-and-fractal-dimension]
----
-
 # Fractals: shapes made of smaller copies of themselves, and a dimension that is not a whole number
 
-Geometry and trig → Points, Convexity and Fractals → Copies at every scale → Fractals
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Points, Convexity and Fractals](../../../SYLLABUS.md#w05-s07) → Fractals
 
 ---
 
@@ -51,7 +34,7 @@ $$N = s^D \qquad\text{so}\qquad D = \frac{\log N}{\log s}$$
 
 Magnified 3 times, a segment holds 3 copies ($D$ = 1), a square 9 = 3^2 ($D$ = 2), a cube 27 = 3^3 ($D$ = 3).
 
-One side of the snowflake, magnified 3 times, holds 4 copies of itself: $D$ = log 4 / log 3 = 1.2619. The Sierpinski triangle (join the midpoints of a triangle's sides, remove the middle one of the four small triangles, and repeat on every piece left) magnified 2 times holds 3: $D$ = log 3 / log 2 = 1.5850. Any log base works if top and bottom share it ([logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
+One side of the snowflake, magnified 3 times, holds 4 copies of itself: $D$ = log 4 / log 3 = 1.2619. The Sierpinski triangle (join the midpoints of a triangle's sides, remove the middle one of the four small triangles, and repeat on every piece left) magnified 2 times holds 3: $D$ = log 3 / log 2 = 1.5850. Any log base works if top and bottom share it ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
 
 For the snowflake itself, with first side $L$ and stage number $n$:
 
@@ -93,7 +76,7 @@ Four thirds is more than 1, so the powers pass any length named in advance. For 
 
 ### Step 2: the area gains less and less
 
-Stage n adds a small triangle on each of the 3 × 4^(n−1) sides of stage n − 1. Its sides are L/3^n, so its area is $A_0$ / 9^n: shrink lengths by 3^n and areas shrink by 9^n, the square ([similar-triangles-and-scale](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)).
+Stage n adds a small triangle on each of the 3 × 4^(n−1) sides of stage n − 1. Its sides are L/3^n, so its area is $A_0$ / 9^n: shrink lengths by 3^n and areas shrink by 9^n, the square ([Similar triangles](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)).
 
 Stage 1 adds a third of the first area, reaching 420.8883 cm^2. Each later stage adds four ninths of the last gain: four times the triangles, each a ninth the size. Induction gives the formula for $A_n$.
 
@@ -167,7 +150,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-The script builds each stage as a list of corners and takes two roads to each claim. Perimeter: distances round the corners, against 81 × (4/3)^n. Area: the shoelace formula ([polygon-area-and-orientation](01-polygon-area-and-orientation.md)), against the closed form. Stage counts: stepping, against logs. Dimension: log 4 / log 3, against a box count. The fence is a dot-product test on stage 6. Only `math` is imported.
+The script builds each stage as a list of corners and takes two roads to each claim. Perimeter: distances round the corners, against 81 × (4/3)^n. Area: the shoelace formula ([Shoelace formula](01-polygon-area-and-orientation.md)), against the closed form. Stage counts: stepping, against logs. Dimension: log 4 / log 3, against a box count. The fence is a dot-product test on stage 6. Only `math` is imported.
 
 ### Python
 
@@ -376,7 +359,7 @@ The two outputs match line for line.
 
 - **Coastlines.** Measured with shorter rulers, a rocky coast keeps getting longer. Benoit Mandelbrot's 1967 paper read a dimension between 1 and 2 off that growth.
 - **Image analysis.** Box counting gives one number for how rough a boundary is: cell outlines, cracks, porous rock.
-- **Inside or outside.** The fence test is the convex case of [point-in-polygon-and-segment-tests](03-point-in-polygon-and-segment-tests.md); the hexagon is convex in the sense of [convex-sets-and-convex-hulls](02-convex-sets-and-convex-hulls.md).
+- **Inside or outside.** The fence test is the convex case of [Inside or outside](03-point-in-polygon-and-segment-tests.md); the hexagon is convex in the sense of [Convex sets](02-convex-sets-and-convex-hulls.md).
 
 > **Say it back**
 > The Koch snowflake replaces every side with four sides a third as long, for ever. Its perimeter multiplies by four thirds a stage and passes any length. Its area gains four ninths of the last gain, stays inside a hexagon and settles at eight fifths of the first triangle. A self-similar shape magnified s times holds N copies of itself, and its dimension D solves s^D = N. For the Koch edge that is 1.2619: more than a line, less than a surface.
@@ -385,12 +368,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [polygon-area-and-orientation](01-polygon-area-and-orientation.md): the shoelace formula that measures each stage's area from its corners.
-- [logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): solving s^D = N for the power, and finding the stage that passes a given length.
+- [Shoelace formula](01-polygon-area-and-orientation.md): the shoelace formula that measures each stage's area from its corners.
+- [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): solving s^D = N for the power, and finding the stage that passes a given length.
 
 ## Where this goes next
 
-- standard-examples-and-counterexamples: shapes like the Koch curve as test cases for what "curve" and "connected" mean.
+- The test spaces: shapes like the Koch curve as test cases for what "curve" and "connected" mean.
 
 This card counted copies of a shape defined by an endless process; what the finished shape is as a set of points, and in what sense the stages approach it, is what topology answers.
 

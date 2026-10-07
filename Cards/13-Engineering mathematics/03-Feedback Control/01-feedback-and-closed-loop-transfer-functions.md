@@ -1,31 +1,12 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Feedback Control
-topic: Closing the loop
-item: Feedback
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/02-impulse-response-and-transfer-functions|impulse-response-and-transfer-functions]]"
-next:
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/02-sensitivity-and-the-gang-of-four|sensitivity-and-the-gang-of-four]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/03-steady-state-error-and-system-type|steady-state-error-and-system-type]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/04-routh-hurwitz-criterion|routh-hurwitz-criterion]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/06-nyquist-criterion-and-stability-margins|nyquist-criterion-and-stability-margins]]"
-tags: [mathematics, engineering mathematics, feedback-and-closed-loop-transfer-functions]
----
-
 # Feedback: the closed loop is the open loop over one plus the open loop
 
-Engineering mathematics → Feedback Control → Closing the loop → Feedback
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Feedback Control](../../../SYLLABUS.md#w13-s03) → Feedback
 
 ---
 
 ## General Overview
 
-A room sits at 20 °C while it is 5 °C outside. A radiator feeds it 1500 W, exactly what leaks out through the walls, at 100 W for every degree of difference. Three things are slow. Hot water takes about 5 minutes to warm the radiator. The room's air and furniture, about 120 kJ of heat per degree, take about 20 minutes to warm up. The thermostat's own sensor takes about 1 minute to catch up with the air. The thermostat opens the valve in proportion to how cold it reads: 500 W for every degree below the setting. The valve is preset to give the 1500 W when the reading equals the setting (a fixed bias; [steady-state-error-and-system-type](03-steady-state-error-and-system-type.md) shows the offset a thermostat leaves without one).
+A room sits at 20 °C while it is 5 °C outside. A radiator feeds it 1500 W, exactly what leaks out through the walls, at 100 W for every degree of difference. Three things are slow. Hot water takes about 5 minutes to warm the radiator. The room's air and furniture, about 120 kJ of heat per degree, take about 20 minutes to warm up. The thermostat's own sensor takes about 1 minute to catch up with the air. The thermostat opens the valve in proportion to how cold it reads: 500 W for every degree below the setting. The valve is preset to give the 1500 W when the reading equals the setting (a fixed bias; [Steady-state error](03-steady-state-error-and-system-type.md) shows the offset a thermostat leaves without one).
 
 The engineer wants three numbers. Turn the dial up 1 °C: where does the room settle, and how fast? A cold snap takes 5 °C off the outside air: how much colder does the room get? And how hard can the thermostat push before the room's swings stop dying out? Without the thermostat the cold snap costs the full 5 °C. With it, the room loses 0.8333 °C.
 
@@ -45,7 +26,7 @@ The thermostat compares the setting with the reading; the error opens the valve;
 
 ## The formula
 
-Notation first, in words. As on [impulse-response-and-transfer-functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md), a transfer function is what a block does to each exponential e^(st), and a capital letter is the Laplace transform of the lower-case signal. New here: the **loop gain** $L(s)$, the product of every block met once round the loop, and the **closed-loop transfer function** $T(s) = L/(1+L)$, the title's "open loop over one plus the open loop". Time runs in minutes, the room's natural scale, so $s$ is in 1/min.
+Notation first, in words. As on [Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md), a transfer function is what a block does to each exponential e^(st), and a capital letter is the Laplace transform of the lower-case signal. New here: the **loop gain** $L(s)$, the product of every block met once round the loop, and the **closed-loop transfer function** $T(s) = L/(1+L)$, the title's "open loop over one plus the open loop". Time runs in minutes, the room's natural scale, so $s$ is in 1/min.
 
 Every signal below is a change from the 20 °C, 5 °C, 1500 W operating point. The blocks are
 
@@ -81,7 +62,7 @@ The forward path from the dial to the room, $C P_r P_m$, at s = 0 is 500 × 1 ×
 - **Every block time-invariant.** Lags and losses fixed. An open window changes $UA$ and so every transfer function in the loop.
 - **Blocks do not load each other.** The sensor reads the room without heating it, and the room does not slow the radiator. If one block draws on the next, the two must be modelled as one block first.
 - **The loop is wired as drawn, with a minus sign.** A thermostat wired backwards puts $1 - L$ in the denominator, and the room runs away.
-- **No time delay.** Each block here is a lag, which smears a change out. A pipe that holds the water back for a fixed time is a delay, $e^{-s\theta}$, which the loop handles far worse; that is [smith-predictor-and-time-delays](10-smith-predictor-and-time-delays.md).
+- **No time delay.** Each block here is a lag, which smears a change out. A pipe that holds the water back for a fixed time is a delay, $e^{-s\theta}$, which the loop handles far worse; that is [Time delays](10-smith-predictor-and-time-delays.md).
 
 ---
 
@@ -93,7 +74,7 @@ A loop looks circular: the reading depends on the room, which depends on the rad
 
 ### Step 1: blocks in series multiply, blocks in parallel add
 
-From [impulse-response-and-transfer-functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md), a chain of blocks has the product of their transfer functions. Blocks fed the same signal, with their outputs summed, add instead: the proportional-plus-integral thermostat of [steady-state-error-and-system-type](03-steady-state-error-and-system-type.md) is a gain and a running-total block side by side, so its transfer function is a gain plus a gain over s. The forward path from error to room is $G = C P_r P_m$. The return path is $H$. Their product is the loop gain:
+From [Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md), a chain of blocks has the product of their transfer functions. Blocks fed the same signal, with their outputs summed, add instead: the proportional-plus-integral thermostat of [Steady-state error](03-steady-state-error-and-system-type.md) is a gain and a running-total block side by side, so its transfer function is a gain plus a gain over s. The forward path from error to room is $G = C P_r P_m$. The return path is $H$. Their product is the loop gain:
 
 L(s) = 500 × 1/(5s+1) × 0.01/(20s+1) × 1/(s+1) = 5 / ((5s+1)(20s+1)(s+1)).
 
@@ -119,9 +100,9 @@ Multiply the dial's term by $H$: M/R = GH/(1 + GH) = L/(1 + L). This is the titl
 
 ### Step 4: why gain shrinks error and disturbance
 
-Hold the dial 1 °C up for good. At s = 0 the error is $E = R/(1 + L(0))$, so the reading ends 1/(1 + 5) = 0.1667 °C short. A 5 °C cold snap reaches the room as $UA\,P_m(0) = 1$ times 5 °C without the loop, and divided by 6 with it: 0.8333 °C. Each signal that enters the loop is answered by the loop pushing back, and the push is $L$ times what got through. What survives is one part in $1 + L$. [sensitivity-and-the-gang-of-four](02-sensitivity-and-the-gang-of-four.md) names that factor $1/(1+L)$ and follows it across frequency.
+Hold the dial 1 °C up for good. At s = 0 the error is $E = R/(1 + L(0))$, so the reading ends 1/(1 + 5) = 0.1667 °C short. A 5 °C cold snap reaches the room as $UA\,P_m(0) = 1$ times 5 °C without the loop, and divided by 6 with it: 0.8333 °C. Each signal that enters the loop is answered by the loop pushing back, and the push is $L$ times what got through. What survives is one part in $1 + L$. [Sensitivity functions](02-sensitivity-and-the-gang-of-four.md) names that factor $1/(1+L)$ and follows it across frequency.
 
-A proportional thermostat cannot reach a new setting exactly: beyond the preset 1500 W, the radiator's extra heat comes only from a standing error. Removing that error takes integral action, [steady-state-error-and-system-type](03-steady-state-error-and-system-type.md).
+A proportional thermostat cannot reach a new setting exactly: beyond the preset 1500 W, the radiator's extra heat comes only from a standing error. Removing that error takes integral action, [Steady-state error](03-steady-state-error-and-system-type.md).
 
 ### Step 5: the closed-loop poles are the zeros of one plus L
 
@@ -131,11 +112,11 @@ Write $L = n/\delta$ with numerator $n = 5$ and denominator $\delta = (5s+1)(20s
 
 Its roots are the closed-loop poles: −1.0578 and −0.0961 ± 0.2179j 1/min. The pair sets the room's behaviour. Its real part gives a decay time of 1/0.0961 = 10.41 min; its imaginary part a swing period of 2π/0.2179 = 28.83 min; the real part over the pair's distance from the origin, 0.0961/0.2381, is the damping ratio ζ (the fraction of critical damping, from shelf 02), 0.403. So the room overshoots: it peaks at 1.0426 °C after 14.35 min, above the 1 °C asked for, then settles at 0.8333 °C.
 
-Raise $K_c$ and only the constant term of δ + n moves, $1 + k$. A cubic with all coefficients positive has all its roots in the left half-plane exactly when the middle product beats the outer one, 125 × 26 > 100 × (1 + k) ([routh-hurwitz-criterion](04-routh-hurwitz-criterion.md)). That fails at k = 31.5, a thermostat gain of 3150 W/K. For a product of three lags the bound on k is the sum of the lags times the sum of their reciprocals, minus one; the code computes it that way and checks it against the root finder.
+Raise $K_c$ and only the constant term of δ + n moves, $1 + k$. A cubic with all coefficients positive has all its roots in the left half-plane exactly when the middle product beats the outer one, 125 × 26 > 100 × (1 + k) ([Routh-Hurwitz](04-routh-hurwitz-criterion.md)). That fails at k = 31.5, a thermostat gain of 3150 W/K. For a product of three lags the bound on k is the sum of the lags times the sum of their reciprocals, minus one; the code computes it that way and checks it against the root finder.
 
 ### Step 6: the same formula along the frequency axis
 
-Put s = jω. A setting that drifts in a 60-minute cycle (0.1047 rad/min) reaches the room with gain 0.9462 and a lag of 23.42°. A 20-minute cycle (0.3142 rad/min) reaches it with gain 0.6459 and a lag of 123.91°. The loop follows slow changes and lets fast ones go. How close $L(j\omega)$ comes to −1 decides how near the loop is to swinging, read off the plot in [nyquist-criterion-and-stability-margins](06-nyquist-criterion-and-stability-margins.md).
+Put s = jω. A setting that drifts in a 60-minute cycle (0.1047 rad/min) reaches the room with gain 0.9462 and a lag of 23.42°. A 20-minute cycle (0.3142 rad/min) reaches it with gain 0.6459 and a lag of 123.91°. The loop follows slow changes and lets fast ones go. How close $L(j\omega)$ comes to −1 decides how near the loop is to swinging, read off the plot in [Nyquist and margins](06-nyquist-criterion-and-stability-margins.md).
 
 <details>
 <summary>Detailed proof: any single loop, and the cancellation trap</summary>
@@ -144,11 +125,11 @@ Put s = jω. A setting that drifts in a 60-minute cycle (0.1047 rad/min) reaches
 
 **Poles are zeros of 1 + L.** Take $L = n/\delta$ with $n$ and $\delta$ the products of the blocks' numerators and denominators, before any cancelling, and $F = n_F/\delta_F$ formed the same way. The ratio is $F/(1+L) = n_F\,\delta/(\delta_F(\delta + n))$. Every block of $F$ is also a block of $L$, so $\delta_F$ divides $\delta$ and the ratio reduces to a polynomial over $\delta + n$. Its poles are among the roots of $\delta + n$: the zeros of $1 + L$, plus any root that $n$ and $\delta$ share.
 
-**The trap.** If the controller has a zero exactly on a pole of the plant, that factor sits in both $n$ and $\delta$, so it is a root of $\delta + n$, a closed-loop pole. Reducing $L$ to lowest terms cancels it before $1 + L$ is formed. The closed loop from dial to room can then look stable while the cancelled pole survives in another path: from a disturbance entering just ahead of that plant block, to the room. If that pole is unstable, the hardware runs away while the formula looks fine. Checking every input-output pair at once is internal stability, on [sensitivity-and-the-gang-of-four](02-sensitivity-and-the-gang-of-four.md).
+**The trap.** If the controller has a zero exactly on a pole of the plant, that factor sits in both $n$ and $\delta$, so it is a root of $\delta + n$, a closed-loop pole. Reducing $L$ to lowest terms cancels it before $1 + L$ is formed. The closed loop from dial to room can then look stable while the cancelled pole survives in another path: from a disturbance entering just ahead of that plant block, to the room. If that pole is unstable, the hardware runs away while the formula looks fine. Checking every input-output pair at once is internal stability, on [Sensitivity functions](02-sensitivity-and-the-gang-of-four.md).
 
 </details>
 
-The same answer comes from a state-space model, with the controller's equation substituted into the plant's; that road is state-space-models-and-the-matrix-exponential.
+The same answer comes from a state-space model, with the controller's equation substituted into the plant's; that road is State space.
 
 ---
 
@@ -666,11 +647,11 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Room and building heating.** Every thermostat, radiator valve and boiler loop. The house is slow, the sensor sits on a wall, and the tuning of the gain against the lags is [pid-control-and-tuning](07-pid-control-and-tuning.md).
+- **Room and building heating.** Every thermostat, radiator valve and boiler loop. The house is slow, the sensor sits on a wall, and the tuning of the gain against the lags is [PID control](07-pid-control-and-tuning.md).
 - **Feedback amplifiers.** Harold Black's feedback amplifier wraps an amplifier of gain A in a resistor network that feeds back a fraction β. The closed-loop gain A/(1 + Aβ) is close to 1/β when Aβ is large, so it is set by stable resistors rather than by the drifting vacuum tubes; every operational-amplifier circuit uses the same formula.
-- **Cruise control.** The car of [impulse-response-and-transfer-functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md) with a controller round it: a hill is a disturbance, cut by one plus the loop gain.
-- **Valves that hit their stops.** When the actuator saturates, the linear formula stops applying, and an integrating controller winds up; that is [pid-on-real-hardware](08-pid-on-real-hardware.md).
-- **Loops with dead time.** A shower whose hot water takes seconds to arrive is a loop with a delay, where the gain must be much lower: [smith-predictor-and-time-delays](10-smith-predictor-and-time-delays.md).
+- **Cruise control.** The car of [Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md) with a controller round it: a hill is a disturbance, cut by one plus the loop gain.
+- **Valves that hit their stops.** When the actuator saturates, the linear formula stops applying, and an integrating controller winds up; that is [PID in practice](08-pid-on-real-hardware.md).
+- **Loops with dead time.** A shower whose hot water takes seconds to arrive is a loop with a delay, where the gain must be much lower: [Time delays](10-smith-predictor-and-time-delays.md).
 
 > **Say it back**
 > Each block in a loop multiplies; the product once round the loop is the loop gain L. Writing one equation per junction and solving gives every output as its forward path over one plus L, and the reading over the setting as L over one plus L. With L(0) = 5 the room settles at 5/6 of a new setting and a 5 °C cold snap costs 0.8333 °C instead of 5 °C. The closed-loop poles are the zeros of one plus L, here −1.0578 and −0.0961 ± 0.2179j 1/min. More gain shrinks errors further but pulls those poles towards the axis, and past k = 31.5 the room swings ever wider.
@@ -679,16 +660,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [impulse-response-and-transfer-functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md): what a transfer function is, and why blocks in series multiply.
+- [Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md): what a transfer function is, and why blocks in series multiply.
 
 ## Where this goes next
 
-- [sensitivity-and-the-gang-of-four](02-sensitivity-and-the-gang-of-four.md): the factor 1/(1 + L) named and followed across frequency, with sensor noise as the price of high gain.
-- [steady-state-error-and-system-type](03-steady-state-error-and-system-type.md): why a proportional loop stays short, here 0.1667 °C on a 1 °C change, and what removes the gap. Its thermostat has no preset, so there the step the loop must hold is the whole inside-outside difference, not only a change of setting.
-- [routh-hurwitz-criterion](04-routh-hurwitz-criterion.md): the test on the coefficients of 1 + L that gave k = 31.5, for any order.
-- [nyquist-criterion-and-stability-margins](06-nyquist-criterion-and-stability-margins.md): stability read from L(jω) alone, as margins an engineer can measure.
+- [Sensitivity functions](02-sensitivity-and-the-gang-of-four.md): the factor 1/(1 + L) named and followed across frequency, with sensor noise as the price of high gain.
+- [Steady-state error](03-steady-state-error-and-system-type.md): why a proportional loop stays short, here 0.1667 °C on a 1 °C change, and what removes the gap. Its thermostat has no preset, so there the step the loop must hold is the whole inside-outside difference, not only a change of setting.
+- [Routh-Hurwitz](04-routh-hurwitz-criterion.md): the test on the coefficients of 1 + L that gave k = 31.5, for any order.
+- [Nyquist and margins](06-nyquist-criterion-and-stability-margins.md): stability read from L(jω) alone, as margins an engineer can measure.
 
-The formula says how much a loop shrinks a disturbance at each frequency, but not what that costs in sensor noise and robustness; [sensitivity-and-the-gang-of-four](02-sensitivity-and-the-gang-of-four.md) answers that.
+The formula says how much a loop shrinks a disturbance at each frequency, but not what that costs in sensor noise and robustness; [Sensitivity functions](02-sensitivity-and-the-gang-of-four.md) answers that.
 
 ---
 

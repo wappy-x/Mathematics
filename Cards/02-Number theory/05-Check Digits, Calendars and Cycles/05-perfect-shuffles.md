@@ -1,25 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Check Digits, Calendars and Cycles
-topic: Cycles
-item: Perfect shuffles
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/04-Powers on the Clock/05-order-and-primitive-roots|order-and-primitive-roots]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/01-modular-exponentiation|modular-exponentiation]]"
-next: []
-tags:
-  - mathematics
-  - number theory
-  - perfect-shuffles
----
-
 # Perfect shuffles: eight perfect riffles restore a 52-card deck, because doubling on a clock of 51 spots comes home in eight
 
-Number theory → Check Digits, Calendars and Cycles → Cycles → Perfect shuffles
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Check Digits, Calendars and Cycles](../../../SYLLABUS.md#w02-s05) → Perfect shuffles
 
 ---
 
@@ -61,7 +42,7 @@ One rule, on a clock of 51 spots, 0 to 50:
 | the fixed cards | positions 0 and 51 never move | top, bottom |
 | the order of 2 | fewest doublings bringing 1 back to 1 | 8 |
 
-That last row is what this card turns on: [order-and-primitive-roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md).
+That last row is what this card turns on: [The order of a number and primitive roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md).
 
 ---
 
@@ -94,7 +75,7 @@ Riffle so the top card gets buried and you have the in-shuffle: the same rule on
 
 </details>
 
-Or skip the arithmetic: riffle a real deck until it is in order — the second road below. Landing a card after many riffles without doing them one by one is [modular-exponentiation](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md).
+Or skip the arithmetic: riffle a real deck until it is in order — the second road below. Landing a card after many riffles without doing them one by one is [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md).
 
 ---
 
@@ -277,15 +258,15 @@ The two outputs match line for line: whole seats, nothing to round.
 
 ## What this builds on
 
-- [order-and-primitive-roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md): the count this card runs on, the fewest doublings bringing 1 back to 1. Here, 8.
-- [modular-exponentiation](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): where a card sits after many riffles, without doing them one by one.
+- [The order of a number and primitive roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md): the count this card runs on, the fewest doublings bringing 1 back to 1. Here, 8.
+- [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): where a card sits after many riffles, without doing them one by one.
 
 ## Where this goes next
 
 Nothing follows on the shelf. Its neighbours run this arithmetic on other clocks:
 
-- [barcode-check-digit](01-barcode-check-digit.md) and [isbn-check-digit](02-isbn-check-digit.md): a last digit chosen so a total lands on a fixed spot, on a clock of ten and a prime-sized one.
-- [day-of-the-week](03-day-of-the-week.md) and [cycles-that-realign](04-cycles-that-realign.md): the calendar on a clock of seven, and two clocks at once.
+- [Barcode check digits](01-barcode-check-digit.md) and [ISBN-10 and the prime modulus 11](02-isbn-check-digit.md): a last digit chosen so a total lands on a fixed spot, on a clock of ten and a prime-sized one.
+- [Day of the week for any date](03-day-of-the-week.md) and [When cycles meet again](04-cycles-that-realign.md): the calendar on a clock of seven, and two clocks at once.
 
 ---
 

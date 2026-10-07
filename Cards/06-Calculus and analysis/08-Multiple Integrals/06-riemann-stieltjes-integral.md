@@ -1,21 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Multiple Integrals
-topic: Weights that jump
-item: Stieltjes integrals
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/04-Integrals/01-riemann-integral|riemann-integral]]"
-next: []
-tags: [mathematics, calculus and analysis, riemann-stieltjes-integral]
----
-
 # Stieltjes integrals: integrating against a weight that can jump
 
-Calculus and analysis → Multiple Integrals → Weights that jump → Stieltjes integrals
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Multiple Integrals](../../../SYLLABUS.md#w06-s08) → Stieltjes integrals
 
 ---
 
@@ -82,7 +67,7 @@ Units: dollars per contract. The total weight G(b) − G(a) is 1.00, the whole b
 ### When it holds
 
 - **A continuous value.** Continuity of f suffices. Drop it where G jumps and the sums split: a $1 fee on each contract that pays something jumps at $0, as G does. With 125 slices, left tags give 0.5992 and right tags 1.0000, and finer grids keep the split.
-- **An integrator that never falls.** The bracket in Why it works needs weights of zero or more. Integrators that also fall need [functions-of-bounded-variation](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/01-functions-of-bounded-variation.md).
+- **An integrator that never falls.** The bracket in Why it works needs weights of zero or more. Integrators that also fall need [Bounded variation](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/01-functions-of-bounded-variation.md).
 - **A jump counts only inside the interval.** G(0) already includes the zero-payers, so starting at a = 0 would hide that jump; hence the start at −20.
 - **The working formula needs a rate.** G must climb at a continuous rate between finitely many jumps.
 
@@ -92,7 +77,7 @@ Units: dollars per contract. The total weight G(b) − G(a) is 1.00, the whole b
 
 ### Step 0: weight replaces width
 
-If G(x) = x, every weight is a width and the Stieltjes sum is the rectangle sum of [riemann-integral](../04-Integrals/01-riemann-integral.md). That construction only needed weights that are nonnegative and add across neighbouring slices; any running total that never falls supplies them.
+If G(x) = x, every weight is a width and the Stieltjes sum is the rectangle sum of [The integral](../04-Integrals/01-riemann-integral.md). That construction only needed weights that are nonnegative and add across neighbouring slices; any running total that never falls supplies them.
 
 ### Step 1: nonnegative weights give a bracket
 
@@ -104,11 +89,11 @@ An extra cut splits a slice's weight into pieces that add back to it, and each p
 
 Slice by slice, U − L is (highest − lowest value) times weight, so the gap is at most the largest swing of f on one slice times the total weight G(b) − G(a).
 
-For the payout the swing is the slice width and the total weight 1.00, so the gap is the width: 10.000, 1.000, 0.100 at 12, 120, 1200 slices. To land within $0.10, use 1200 slices. For any continuous f the swings shrink together; that is uniform continuity ([uniform-continuity-and-lipschitz](../01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)). So the best lower and upper sums are equal, every tagged sum is squeezed onto them, and the integral exists.
+For the payout the swing is the slice width and the total weight 1.00, so the gap is the width: 10.000, 1.000, 0.100 at 12, 120, 1200 slices. To land within $0.10, use 1200 slices. For any continuous f the swings shrink together; that is uniform continuity ([Uniform continuity](../01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)). So the best lower and upper sums are equal, every tagged sum is squeezed onto them, and the integral exists.
 
 ### Step 3: a steady rise becomes an ordinary integral
 
-Where G climbs at a continuous rate G', the fundamental theorem of calculus ([fundamental-theorem-of-calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)) makes each weight roughly G' times the width: the sum becomes a rectangle sum for f times G'. The spread holds 0.50 of the book over $100, so G' = 0.005 per dollar, and the smooth part is 0.005 × 100 × 100 / 2 = 25.00 dollars per contract.
+Where G climbs at a continuous rate G', the fundamental theorem of calculus ([Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)) makes each weight roughly G' times the width: the sum becomes a rectangle sum for f times G'. The spread holds 0.50 of the book over $100, so G' = 0.005 per dollar, and the smooth part is 0.005 × 100 × 100 / 2 = 25.00 dollars per contract.
 
 ### Step 4: a jump becomes one term
 
@@ -131,7 +116,7 @@ Steady part: if G has a continuous rate G' on [p, q], the mean value theorem giv
 
 </details>
 
-A second road: integration by parts ([integration-by-parts](../04-Integrals/04-integration-by-parts.md)) holds for Stieltjes integrals too, and turns the average into the ordinary integral of 1 − G(x) from 0 to 100, the area above the running share: also 35.00.
+A second road: integration by parts ([Integration by parts](../04-Integrals/04-integration-by-parts.md)) holds for Stieltjes integrals too, and turns the average into the ordinary integral of 1 − G(x) from 0 to 100, the area above the running share: also 35.00.
 
 ---
 
@@ -358,10 +343,10 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Insurance pricing.** Claim lists have a lump at zero, lumps at policy limits and a spread between; the pure premium, the average claim, is this integral.
-- **Probability.** A running share like G is a distribution function, and the average is the expected value of [expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md), for counts, spreads and mixtures alike.
-- **Counting primes.** Sums over primes are integrals against the prime count, which jumps at each prime: abel-and-partial-summation.
+- **Probability.** A running share like G is a distribution function, and the average is the expected value of [Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md), for counts, spreads and mixtures alike.
+- **Counting primes.** Sums over primes are integrals against the prime count, which jumps at each prime: Partial summation.
 
-Weight spread over a region instead of a line is [double-integrals](01-double-integrals.md).
+Weight spread over a region instead of a line is [Double integrals](01-double-integrals.md).
 
 > **Say it back**
 > A Stieltjes integral weighs each slice by how much a running total rises across it, not by its width. With a running total that never falls and a continuous value, lower and upper sums close on one number. A steady rise becomes an ordinary integral; a jump becomes its size times the value there. For the 1,000 contracts: 25 from the spread, 10 from the cap, $35 each.
@@ -370,15 +355,15 @@ Weight spread over a region instead of a line is [double-integrals](01-double-in
 
 ## What this builds on
 
-- [riemann-integral](../04-Integrals/01-riemann-integral.md): the lower and upper sums, and the gap test, reused here with weights in place of widths.
+- [The integral](../04-Integrals/01-riemann-integral.md): the lower and upper sums, and the gap test, reused here with weights in place of widths.
 
 ## Where this goes next
 
-- [expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md): the running share as a distribution, this integral as its average.
-- [lebesgue-stieltjes-integral](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md): the same weights, with values that need not be continuous.
-- [ito-integral](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/01-ito-integral.md): an integrator so rough that the tag choice changes the answer for good.
+- [Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md): the running share as a distribution, this integral as its average.
+- [The Lebesgue-Stieltjes integral](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md): the same weights, with values that need not be continuous.
+- [The Ito integral](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/01-ito-integral.md): an integrator so rough that the tag choice changes the answer for good.
 
-So what: counting prices the fee at once, yet it has no Stieltjes integral; the integral that agrees with counting is [lebesgue-stieltjes-integral](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md).
+So what: counting prices the fee at once, yet it has no Stieltjes integral; the integral that agrees with counting is [The Lebesgue-Stieltjes integral](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md).
 
 ---
 

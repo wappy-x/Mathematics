@@ -1,25 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Poisson and Jump Processes
-topic: Adding up random amounts
-item: Compound Poisson
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/01-poisson-process|poisson-process]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/07-moment-generating-functions|moment-generating-functions]]"
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/04-poisson|poisson]]"
-next:
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/04-merton-jump-diffusion|merton-jump-diffusion]]"
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/04-collective-risk-and-compound-poisson|collective-risk-and-compound-poisson]]"
-tags: [mathematics, stochastic processes and calculus, compound-poisson]
----
-
 # Compound Poisson: random arrivals with random sizes
 
-Stochastic processes and calculus → Poisson and Jump Processes → Adding up random amounts → Compound Poisson
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Poisson and Jump Processes](../../../SYLLABUS.md#w11-s04) → Compound Poisson
 
 ---
 
@@ -52,13 +33,13 @@ One line: the running total, a sample path (one run of the process drawn against
 
 ## The formula
 
-Notation first, in words. Time $t$ is measured in hours. The claims counted by hour $t$ are $N(t)$, a Poisson process at rate $\lambda$, here 4 an hour ([poisson-process](01-poisson-process.md)); so $N(t)$ follows the Poisson law with mean $\lambda t$ ([poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md)). The sizes of the first, second, third claim are $Y_1, Y_2, Y_3, \dots$, drawn independently from one claim law and independently of the arrivals. A generic claim is written $Y$, and the average claim is $\mu = E[Y]$. The total claimed by hour $t$ is
+Notation first, in words. Time $t$ is measured in hours. The claims counted by hour $t$ are $N(t)$, a Poisson process at rate $\lambda$, here 4 an hour ([Poisson process](01-poisson-process.md)); so $N(t)$ follows the Poisson law with mean $\lambda t$ ([Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md)). The sizes of the first, second, third claim are $Y_1, Y_2, Y_3, \dots$, drawn independently from one claim law and independently of the arrivals. A generic claim is written $Y$, and the average claim is $\mu = E[Y]$. The total claimed by hour $t$ is
 
 $$S(t) = Y_1 + Y_2 + \dots + Y_{N(t)}, \qquad S(t) = 0 \text{ when } N(t) = 0.$$
 
 The number of terms is itself random. That is the whole difficulty, and the whole idea.
 
-The moment generating function of a claim is $M_Y(s) = E[e^{sY}]$, the average of e raised to the dial times the claim ([moment-generating-functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md)). That card calls the dial $t$; here $t$ is time, so the dial is $s$, measured per dollar. The three results:
+The moment generating function of a claim is $M_Y(s) = E[e^{sY}]$, the average of e raised to the dial times the claim ([Moment generating functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md)). That card calls the dial $t$; here $t$ is time, so the dial is $s$, measured per dollar. The three results:
 
 $$E[S(t)] = \lambda t\,\mu, \qquad \operatorname{Var} S(t) = \lambda t\,E[Y^2], \qquad M_{S(t)}(s) = \exp\!\big(\lambda t\,(M_Y(s) - 1)\big).$$
 
@@ -122,7 +103,7 @@ One hour: 4 × $600 = $2,400. One shift: 32 × $600 = $19,200.
 
 ### Step 2: the variance has two sources
 
-The law of total variance ([conditional-expectation-as-projection](../../10-Measure%20and%20integration/09-Conditional%20Expectation/03-conditional-expectation-as-projection.md)) splits any variance into the average spread given the condition plus the spread of the conditional average:
+The law of total variance ([Conditional expectation as a projection](../../10-Measure%20and%20integration/09-Conditional%20Expectation/03-conditional-expectation-as-projection.md)) splits any variance into the average spread given the condition plus the spread of the conditional average:
 
 $$\operatorname{Var} S = E\big[\operatorname{Var}(S \mid N)\big] + \operatorname{Var}\big(E[S \mid N]\big).$$
 
@@ -164,11 +145,11 @@ Because the exponent is proportional to $t$, the generating function of a shift 
 
 ### Step 6: why the generating function earns its place
 
-Its main practical use is a bound on the chance of a very bad hour. Since $e^{sS} \ge e^{sx}$ whenever $S \ge x$, Markov's inequality ([markov-and-chebyshev-inequalities](../../09-Probability%20and%20statistics/02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)) gives, for every $s > 0$,
+Its main practical use is a bound on the chance of a very bad hour. Since $e^{sS} \ge e^{sx}$ whenever $S \ge x$, Markov's inequality ([Markov and Chebyshev](../../09-Probability%20and%20statistics/02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)) gives, for every $s > 0$,
 
 $$P(S \ge x) \le e^{-s x}\,M_S(s).$$
 
-This is the Chernoff bound ([concentration-inequalities-hoeffding-and-chernoff](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md)). At $x$ = $10,000 in one hour, the best dial is $s$ = 0.000856 per dollar, and the bound is 0.016437. The exact chance is 0.001707, about 1 hour in 590. The bound is ten times too cautious, but it needs no simulation, and it falls fast as $x$ grows, as the true tail does. Lundberg's bound on an insurer's chance of ruin is built from the same generating function.
+This is the Chernoff bound ([Concentration](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md)). At $x$ = $10,000 in one hour, the best dial is $s$ = 0.000856 per dollar, and the bound is 0.016437. The exact chance is 0.001707, about 1 hour in 590. The bound is ten times too cautious, but it needs no simulation, and it falls fast as $x$ grows, as the true tail does. Lundberg's bound on an insurer's chance of ruin is built from the same generating function.
 
 <details>
 <summary>Detailed proof</summary>
@@ -187,7 +168,7 @@ This is the Chernoff bound ([concentration-inequalities-hoeffding-and-chernoff](
 
 </details>
 
-**Another road.** Split the claims by size. The $100 claims, the $500 claims and the $2,000 claims form three independent Poisson processes at rates 2, 1.2 and 0.8 an hour ([splitting-and-superposition](03-splitting-and-superposition.md)). The total is then $100 N_1 + 500 N_2 + 2000 N_3$, a fixed combination of three independent Poisson counts, and its variance is $100^2 \cdot 2 + 500^2 \cdot 1.2 + 2000^2 \cdot 0.8$ = 20,000 + 300,000 + 3,200,000 = 3,520,000. The same answer, with no conditioning at all, and it shows where the risk sits: the $2,000 claims are a fifth of all claims and 90.9 percent of the variance. Multiplying the three Poisson generating functions gives the third formula the same way.
+**Another road.** Split the claims by size. The $100 claims, the $500 claims and the $2,000 claims form three independent Poisson processes at rates 2, 1.2 and 0.8 an hour ([Splitting and merging](03-splitting-and-superposition.md)). The total is then $100 N_1 + 500 N_2 + 2000 N_3$, a fixed combination of three independent Poisson counts, and its variance is $100^2 \cdot 2 + 500^2 \cdot 1.2 + 2000^2 \cdot 0.8$ = 20,000 + 300,000 + 3,200,000 = 3,520,000. The same answer, with no conditioning at all, and it shows where the risk sits: the $2,000 claims are a fifth of all claims and 90.9 percent of the variance. Multiplying the three Poisson generating functions gives the third formula the same way.
 
 ---
 
@@ -627,9 +608,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Insurance.** The collective risk model of an insurer's whole year is this process with a fitted claim law ([collective-risk-and-compound-poisson](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/04-collective-risk-and-compound-poisson.md)).
-- **Share prices with jumps.** Merton's model adds a compound Poisson stream of jumps to a smooth random drift, so that news can move a price in one step ([merton-jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md)).
-- **Work arriving at a server.** Jobs arrive at random, each needing a random amount of processing; the backlog added in a minute is compound Poisson. The M/M/1 queue of [continuous-time-markov-chains-and-queues](05-continuous-time-markov-chains-and-queues.md) counts the jobs waiting, not the work they bring.
+- **Insurance.** The collective risk model of an insurer's whole year is this process with a fitted claim law ([Aggregate claims](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/04-collective-risk-and-compound-poisson.md)).
+- **Share prices with jumps.** Merton's model adds a compound Poisson stream of jumps to a smooth random drift, so that news can move a price in one step ([Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md)).
+- **Work arriving at a server.** Jobs arrive at random, each needing a random amount of processing; the backlog added in a minute is compound Poisson. The M/M/1 queue of [Continuous-time chains](05-continuous-time-markov-chains-and-queues.md) counts the jobs waiting, not the work they bring.
 - **Operational losses.** Banks model fraud and system-failure losses as random events with random costs.
 
 > **Say it back**
@@ -639,16 +620,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [poisson-process](01-poisson-process.md): the arrival clock, and the fact that disjoint stretches of time carry independent counts.
-- [moment-generating-functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md): the generating function, and moments as its derivatives at 0.
-- [poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md): the count's law, with variance equal to mean.
+- [Poisson process](01-poisson-process.md): the arrival clock, and the fact that disjoint stretches of time carry independent counts.
+- [Moment generating functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md): the generating function, and moments as its derivatives at 0.
+- [Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md): the count's law, with variance equal to mean.
 
 ## Where this goes next
 
-- [merton-jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): compound Poisson jumps inside a share-price model, priced by summing over the jump count.
-- [collective-risk-and-compound-poisson](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/04-collective-risk-and-compound-poisson.md): the same model fitted to a real book of motor policies, with a heavy-tailed claim law.
+- [Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): compound Poisson jumps inside a share-price model, priced by summing over the jump count.
+- [Aggregate claims](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/04-collective-risk-and-compound-poisson.md): the same model fitted to a real book of motor policies, with a heavy-tailed claim law.
 
-The formulas give the mean, the spread and a tail bound, but the exact chance of a bad year came here from brute-force adding; computing that law quickly for a large book is [panjer-recursion-and-aggregate-claims](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/05-panjer-recursion-and-aggregate-claims.md).
+The formulas give the mean, the spread and a tail bound, but the exact chance of a bad year came here from brute-force adding; computing that law quickly for a large book is [Panjer's recursion](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/05-panjer-recursion-and-aggregate-claims.md).
 
 ---
 

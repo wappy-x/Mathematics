@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Caps, Floors and Swaptions
-topic: Inverting the Black and Bachelier prices
-item: Solving rate options backwards
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/08-swaption-greeks-and-hedging|swaption-greeks-and-hedging]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/01-implied-volatility|implied-volatility]]"
-next: []
-tags: [mathematics, financial mathematics, rate-option-inverses]
----
-
 # Solving rate options backwards: implied volatility, strike from delta, and rate from price
 
-Financial mathematics → Caps, Floors and Swaptions → Inverting the Black and Bachelier prices → Solving rate options backwards
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Caps, Floors and Swaptions](../../../SYLLABUS.md#w12-s29) → Solving rate options backwards
 
 ---
 
@@ -24,7 +8,7 @@ Financial mathematics → Caps, Floors and Swaptions → Inverting the Black and
 
 A company will borrow 10 million dollars for five years, starting one year from now. It fears rates will rise before then. So it buys a payer swaption: the right, not the duty, to enter a swap in one year in which it pays a fixed rate of 3.6656 percent a year and receives the floating rate, the market rate reset each period. A swap is an exchange of interest payments on an agreed amount, the notional, which itself never changes hands. The curve is flat: money is discounted at 3.6 percent a year, continuously compounded.
 
-The dealer quotes the swaption as "30.00 percent volatility". The invoice says $189,470.98, which is 1.89 percent of the notional. Desks agree prices in volatility and settle them in dollars. Both directions are needed. Forward is the Black formula for swaptions ([swaptions-payer-and-receiver](04-swaptions-payer-and-receiver.md)). Backward is this card: from 1.9 percent back to 30.00 percent.
+The dealer quotes the swaption as "30.00 percent volatility". The invoice says $189,470.98, which is 1.89 percent of the notional. Desks agree prices in volatility and settle them in dollars. Both directions are needed. Forward is the Black formula for swaptions ([Swaptions](04-swaptions-payer-and-receiver.md)). Backward is this card: from 1.9 percent back to 30.00 percent.
 
 Three backward questions come up every day. Which volatility reproduces a quoted premium? The same premium read in the other market convention, a normal volatility, is 109.56 basis points (a basis point is a hundredth of a percent). Which strike costs exactly a budget, say 1.00 percent of notional? It is 4.2683 percent. Which strike has a delta of 0.25, meaning the swaption moves like a quarter of a forward swap? It is 4.6942 percent. The strike is itself a rate, so the last two questions solve for a rate from a price.
 
@@ -53,7 +37,7 @@ Rising curve: the Black premium. Low flat line: the quote, 1.89 percent; it cros
 
 ## The formula
 
-The forward prices come first, as on [swaptions-payer-and-receiver](04-swaptions-payer-and-receiver.md) and [normal-and-shifted-volatilities-for-rates](06-normal-and-shifted-volatilities-for-rates.md). Black treats the forward swap rate as lognormal (its logarithm is bell-shaped); Bachelier treats it as normal (the rate itself is bell-shaped):
+The forward prices come first, as on [Swaptions](04-swaptions-payer-and-receiver.md) and [Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md). Black treats the forward swap rate as lognormal (its logarithm is bell-shaped); Bachelier treats it as normal (the rate itself is bell-shaped):
 
 $$P_{\text{B}}(\sigma, K) = A\,[\,F\,N(d_1) - K\,N(d_2)\,], \qquad P_{\text{N}}(\sigma_N, K) = A\,[\,(F-K)\,N(d) + \sigma_N\sqrt{T}\,\varphi(d)\,].$$
 
@@ -101,8 +85,8 @@ $$\sigma_N \approx \sigma\,\frac{F-K}{\ln(F/K)}\left(1 - \frac{\sigma^2 T}{24}\r
 - **The quote is read in the model it was quoted in.** A normal volatility fed into Black, or the reverse, gives a wrong price with no warning. Divide the normal volatility by $F$ as a shortcut and 30.00% comes back as 29.89%.
 - **The annuity and forward come from the same curve as the quote.** Change the curve and the same premium means a different volatility. Leave the annuity out altogether and 30.00% comes back as 140.26%.
 - **Exercise is European, on one date.** A Bermudan swaption, exercisable on several dates, is worth at least each European swaption inside it, so no single Black formula prices it.
-- **Black needs a positive forward and strike.** With negative rates the logarithm fails; the normal or shifted conventions on [normal-and-shifted-volatilities-for-rates](06-normal-and-shifted-volatilities-for-rates.md) take over.
-- **One volatility per strike.** Real markets show a smile, a different volatility at each strike; the strike-from-premium solve then needs the smile, as on [sabr-for-rates-and-the-volatility-cube](07-sabr-for-rates-and-the-volatility-cube.md).
+- **Black needs a positive forward and strike.** With negative rates the logarithm fails; the normal or shifted conventions on [Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md) take over.
+- **One volatility per strike.** Real markets show a smile, a different volatility at each strike; the strike-from-premium solve then needs the smile, as on [SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md).
 
 ---
 
@@ -110,7 +94,7 @@ $$\sigma_N \approx \sigma\,\frac{F-K}{\ln(F/K)}\left(1 - \frac{\sigma^2 T}{24}\r
 
 ### Step 0: a price that moves one way hits each level once
 
-If a price changes smoothly with a dial and always in the same direction, then every level between its two ends is reached, and reached at exactly one setting. The first half is the intermediate-value theorem; the second is what "always in the same direction" means. The same facts drive bisection: halve an interval whose ends straddle the quote, keep the half that still straddles it, repeat. So each inverse needs three facts: the slope has one sign, and the two ends are known. The equity version of this argument is on [implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md); what changes here is the unit, the annuity, and the second convention.
+If a price changes smoothly with a dial and always in the same direction, then every level between its two ends is reached, and reached at exactly one setting. The first half is the intermediate-value theorem; the second is what "always in the same direction" means. The same facts drive bisection: halve an interval whose ends straddle the quote, keep the half that still straddles it, repeat. So each inverse needs three facts: the slope has one sign, and the two ends are known. The equity version of this argument is on [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md); what changes here is the unit, the annuity, and the second convention.
 
 ### Step 1: the Black premium rises with volatility, from intrinsic to the floating leg
 
@@ -163,7 +147,7 @@ Hold the volatility at 30 percent and let the strike move. The slope is $\partia
 
 ### Step 6: strike from delta, in closed form
 
-The payer's delta, in forward swaps, is $\Delta = N(d_1)$ ([swaption-greeks-and-hedging](08-swaption-greeks-and-hedging.md)). $N$ is strictly increasing and $d_1$ falls as $K$ rises, so delta falls strictly from 1 to 0 across strikes. Invert in two moves: $d_1 = N^{-1}(\Delta)$, then solve $\ln(F/K)/w + w/2 = d_1$ for $K$:
+The payer's delta, in forward swaps, is $\Delta = N(d_1)$ ([Swaption Greeks](08-swaption-greeks-and-hedging.md)). $N$ is strictly increasing and $d_1$ falls as $K$ rises, so delta falls strictly from 1 to 0 across strikes. Invert in two moves: $d_1 = N^{-1}(\Delta)$, then solve $\ln(F/K)/w + w/2 = d_1$ for $K$:
 
 $$K = F\,e^{-w N^{-1}(\Delta) + w^2/2}, \qquad w = \sigma\sqrt T.$$
 
@@ -171,7 +155,7 @@ At $\Delta = 0.25$, $N^{-1}(0.25) = -0.674490$, and the strike is 4.6942 percent
 
 ### Step 7: why Newton needs a fence of its own
 
-Newton's method steps from a guess $\sigma$ to $\sigma - (P_{\text{B}}(\sigma) - P_{\text{mkt}})/\nu$. Near the answer it doubles the correct digits each step. Far from it, vega can be tiny, and a tiny slope sends the step anywhere. Take the out-of-the-money payer at 4.6656 percent, quoted at 0.6376 percent of notional. One raw Newton step from 5 percent lands at 1,010,540.85 percent. One raw step from 200 percent lands at −22.59 percent. The guard is simple: keep a bracket that is known to hold the root, shrink it with each new price, and replace any step that leaves it by the midpoint. From 5 percent the guarded method lands on 30.00 percent. The same guard and a faster rational first guess are the subject of [implied-volatility-by-newton-and-bisection](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md); Jäckel's 2015 method makes the inversion exact to machine precision in two steps.
+Newton's method steps from a guess $\sigma$ to $\sigma - (P_{\text{B}}(\sigma) - P_{\text{mkt}})/\nu$. Near the answer it doubles the correct digits each step. Far from it, vega can be tiny, and a tiny slope sends the step anywhere. Take the out-of-the-money payer at 4.6656 percent, quoted at 0.6376 percent of notional. One raw Newton step from 5 percent lands at 1,010,540.85 percent. One raw step from 200 percent lands at −22.59 percent. The guard is simple: keep a bracket that is known to hold the root, shrink it with each new price, and replace any step that leaves it by the midpoint. From 5 percent the guarded method lands on 30.00 percent. The same guard and a faster rational first guess are the subject of [Solving for implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md); Jäckel's 2015 method makes the inversion exact to machine precision in two steps.
 
 ---
 
@@ -683,12 +667,12 @@ Falling curve: the premium as the strike rises. Flat line: the 1.00 percent budg
 ## Where you meet it in real life
 
 - **The swaption and cap screens.** Dealers quote volatility, not premium, and the premium on the confirmation is the forward formula applied to that quote. Since rates went negative in several currencies in the 2010s, the normal convention in basis points has been the common one, because it survives a negative forward.
-- **Caplet stripping.** A cap's flat volatility is recovered from its price by exactly this inverse, then peeled into one volatility per caplet on [caplet-stripping](03-caplet-stripping.md).
-- **Smiles quoted by delta.** Risk reversals and strangles are quoted at the 25-delta strikes, so a desk solves strike from delta before it can price anything off the smile ([sabr-for-rates-and-the-volatility-cube](07-sabr-for-rates-and-the-volatility-cube.md)).
+- **Caplet stripping.** A cap's flat volatility is recovered from its price by exactly this inverse, then peeled into one volatility per caplet on [Caplet stripping](03-caplet-stripping.md).
+- **Smiles quoted by delta.** Risk reversals and strangles are quoted at the 25-delta strikes, so a desk solves strike from delta before it can price anything off the smile ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)).
 - **A hedging budget.** A treasurer with a fixed amount to spend on protection asks which cap or swaption strike it buys. That is the strike-from-premium solve, run on the smile rather than one flat volatility.
 - **Model calibration.** Every calibration of a rate model to swaptions starts by turning quoted volatilities into premiums and ends by turning model premiums back into volatilities, so errors can be read in volatility points.
 
-**Conventions verified 28 Sep 2026.** The example sets every fixed accrual to exactly one year, pays fixed annually and discounts on a flat continuously compounded curve. Real contracts take accruals from a day count and discount factors from the overnight curve. Dollar and euro swaptions are quoted mainly in normal volatility, basis points a year; lognormal and shifted quotes remain in use ([normal-and-shifted-volatilities-for-rates](06-normal-and-shifted-volatilities-for-rates.md)).
+**Conventions verified 28 Sep 2026.** The example sets every fixed accrual to exactly one year, pays fixed annually and discounts on a flat continuously compounded curve. Real contracts take accruals from a day count and discount factors from the overnight curve. Dollar and euro swaptions are quoted mainly in normal volatility, basis points a year; lognormal and shifted quotes remain in use ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)).
 
 > **Say it back**
 > A swaption premium rises with volatility and falls with strike, and it never turns back. So a quote has one lognormal volatility if it sits between the intrinsic value and the floating leg's value, one normal volatility if it only sits above intrinsic, and one strike if it is positive and below the floating leg. At the money both volatilities come in closed form, and Hagan's expansion links them to a few thousandths of a basis point. Bisection always finds the answer; Newton finds it fast only inside a bracket. The 1.89 percent quote is 30.00 percent lognormal, 109.56 basis points normal.
@@ -697,15 +681,15 @@ Falling curve: the premium as the strike rises. Flat line: the 1.00 percent budg
 
 ## What this builds on
 
-- [swaption-greeks-and-hedging](08-swaption-greeks-and-hedging.md): delta as $N(d_1)$ in forward swaps and vega as the slope that makes each inverse unique.
-- [implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the existence-and-uniqueness argument on a share option, which this card carries to rates, the annuity and the normal convention.
+- [Swaption Greeks](08-swaption-greeks-and-hedging.md): delta as $N(d_1)$ in forward swaps and vega as the slope that makes each inverse unique.
+- [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the existence-and-uniqueness argument on a share option, which this card carries to rates, the annuity and the normal convention.
 
 ---
 
 ## Where this goes next
 
-- [calibrating-a-short-rate-model](../30-Short-Rate%20Models/08-calibrating-a-short-rate-model.md): fits Hull-White's two parameters to six swaption quotes, each turned into a premium and back by these inverses.
-- [calibrating-a-market-model](../31-Forward-Rate%20Models/04-calibrating-a-market-model.md): matches caplet volatilities exactly and swaption volatilities approximately, with the error read in volatility points.
+- [Calibrating Hull-White](../30-Short-Rate%20Models/08-calibrating-a-short-rate-model.md): fits Hull-White's two parameters to six swaption quotes, each turned into a premium and back by these inverses.
+- [Calibrating a market model](../31-Forward-Rate%20Models/04-calibrating-a-market-model.md): matches caplet volatilities exactly and swaption volatilities approximately, with the error read in volatility points.
 
 Every inverse here assumes one volatility for all strikes; the question left open is how a model with a smile, fitted to many quotes at once, keeps each of those quotes inside its fence.
 

@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Convexity and Exotics
-topic: Paying a rate early
-item: Timing adjustments
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/32-Convexity and Exotics/02-cms-and-the-convexity-adjustment|cms-and-the-convexity-adjustment]]"
-next:
-  - "[[Cards/12-Financial mathematics/32-Convexity and Exotics/04-quanto-adjustments-for-rates|quanto-adjustments-for-rates]]"
-tags: [mathematics, financial mathematics, timing-and-in-arrears-adjustments]
----
-
 # Timing adjustments: rates paid at the start of the period instead of the end
 
-Financial mathematics → Convexity and Exotics → Paying a rate early → Timing adjustments
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Convexity and Exotics](../../../SYLLABUS.md#w12-s32) → Timing adjustments
 
 ---
 
@@ -47,7 +31,7 @@ xychart-beta
     line [250.00, 1000.00, 2250.00, 4000.00, 6250.00]
 ```
 
-One line: the extra dollars, \$10 million times a quarter squared times the fixing squared. It curves upward. A curve that bends up has an average above its value at the average fixing, and that gap is the adjustment. The sibling card on swap-rate coupons meets the same bend in a different product ([cms-and-the-convexity-adjustment](02-cms-and-the-convexity-adjustment.md)).
+One line: the extra dollars, \$10 million times a quarter squared times the fixing squared. It curves upward. A curve that bends up has an average above its value at the average fixing, and that gap is the adjustment. The sibling card on swap-rate coupons meets the same bend in a different product ([Constant-maturity swaps](02-cms-and-the-convexity-adjustment.md)).
 
 ---
 
@@ -84,11 +68,11 @@ $$K_D = \frac{E^U[L_T\,W]}{E^U[W]} = F + \frac{\operatorname{Cov}^U(L_T, W)}{E^U
 | $W$ | cash on D counted in cash on U: the payment's weight | 1 + 0.25 × fixing when D = T | — |
 | $E^U$, $\operatorname{Var}^U$, $\operatorname{Cov}^U$ | average, variance, covariance under the odds that price cash on U (the U-forward measure) | variance 0.000797 | — |
 
-Here $e^x$ is the exponential and the variance of a random quantity is the average squared distance from its average ([normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)).
+Here $e^x$ is the exponential and the variance of a random quantity is the average squared distance from its average ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)).
 
 ### When it holds
 
-- **One curve for rates and discounting.** The proof deposits the coupon at the fixed rate itself. If the index rate differs from the rate cash earns, as in the multi-curve world after 2008 ([basis-swaps-and-the-multi-curve-framework](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md)), the general covariance identity still holds but the variance formula needs a model of both curves.
+- **One curve for rates and discounting.** The proof deposits the coupon at the fixed rate itself. If the index rate differs from the rate cash earns, as in the multi-curve world after 2008 ([Multi-curve](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md)), the general covariance identity still holds but the variance formula needs a model of both curves.
 - **A model for the spread of the fixing.** The lognormal variance assumes one flat volatility. With a smile (volatility that differs by strike), the variance comes from the strip of caplets in Step 5, priced at market volatilities; the closed form is then off by the smile's effect on the second moment.
 - **Payment exactly on the fixing date.** A lag of a few business days moves D. The general identity covers it; the variance box does not.
 - **For any D other than T or U, one more assumption.** The formulas take the rate between D and U to be the fixing itself. The true rate for that stretch is a different random number; the error is second order.
@@ -112,11 +96,11 @@ The cost today is $P(0,T) - P(0,U)$, where $P(0,T)$ is today's price of \$1 paid
 
 $$F = \frac{1}{\delta}\left(\frac{P(0,T)}{P(0,U)} - 1\right).$$
 
-So a coupon paid at U is worth $P(0,U)\,\delta F$, whatever the rates do. The same construction is the forward rate agreement ([forward-rate-agreements](../02-Curves/02-forward-rate-agreements.md)).
+So a coupon paid at U is worth $P(0,U)\,\delta F$, whatever the rates do. The same construction is the forward rate agreement ([Forward rate agreements](../02-Curves/02-forward-rate-agreements.md)).
 
 ### Step 2: price in bonds that pay at U
 
-Any amount X paid at U is worth $P(0,U)$ times an average of X. The average is taken under a particular set of odds, the ones that make this rule agree with every traded price: the **U-forward measure**, written $E^U$. Step 1 fixes one of its averages: $E^U[L_T] = F$. Under these odds the fixing is fair at the forward rate. This is the same move as counting in annuities for a swap rate ([the-annuity-measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md)), with one bond as the unit instead of a strip.
+Any amount X paid at U is worth $P(0,U)$ times an average of X. The average is taken under a particular set of odds, the ones that make this rule agree with every traded price: the **U-forward measure**, written $E^U$. Step 1 fixes one of its averages: $E^U[L_T] = F$. Under these odds the fixing is fair at the forward rate. This is the same move as counting in annuities for a swap rate ([The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md)), with one bond as the unit instead of a strip.
 
 ### Step 3: roll the in-arrears coupon forward to U
 
@@ -142,7 +126,7 @@ A three-state version shows it in numbers. Let the fixing be 2, 6 or 10 percent 
 
 Under Black's model the fixing is lognormal under the U-odds: its logarithm is bell-shaped with spread $\sigma\sqrt{T}$, centred so that the average is F. The average of its square is then $F^2 e^{\sigma^2 T}$, so the variance is $F^2(e^{\sigma^2 T} - 1)$. With 20 percent volatility and five years, $\sigma^2 T$ is 0.2, the bracket is 0.2214 and the variance is 0.000797: almost exactly the three-state 0.0008, which is why the two examples land on 1.96 and 1.97 basis points.
 
-Without a model, the square can be bought. A square of the fixing equals twice the sum of caplet payoffs across every strike (a caplet pays the fixing minus the strike when positive; [caplets-and-floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md)). So the average square is twice the integral of caplet prices over strikes, each price counted in U-bonds per unit of accrual, read off the market's caplets. The code takes this road too; it lands on the same 1.963177 basis points under a flat volatility, and on a market smile it gives the smile-consistent answer.
+Without a model, the square can be bought. A square of the fixing equals twice the sum of caplet payoffs across every strike (a caplet pays the fixing minus the strike when positive; [Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md)). So the average square is twice the integral of caplet prices over strikes, each price counted in U-bonds per unit of accrual, read off the market's caplets. The code takes this road too; it lands on the same 1.963177 basis points under a flat volatility, and on a market smile it gives the smile-consistent answer.
 
 <details>
 <summary>Detailed proof: the U-odds exist, and re-weighting them gives the answer directly</summary>
@@ -176,7 +160,7 @@ xychart-beta
 
 One line: the adjustment, by Simpson integration. It starts at 1.96 basis points for payment on the fixing date, crosses zero at three months where the ordinary coupon is paid, and turns negative for later payment.
 
-The caplet road of Step 5 is static replication, the method the sibling card uses for swap-rate coupons ([cms-and-the-convexity-adjustment](02-cms-and-the-convexity-adjustment.md)); a full term-structure model such as HJM gives the same identity with W computed path by path ([hjm-framework-and-the-drift-condition](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md)).
+The caplet road of Step 5 is static replication, the method the sibling card uses for swap-rate coupons ([Constant-maturity swaps](02-cms-and-the-convexity-adjustment.md)); a full term-structure model such as HJM gives the same identity with W computed path by path ([Heath-Jarrow-Morton](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md)).
 
 ---
 
@@ -665,9 +649,9 @@ The two outputs are identical to the printed precision.
 
 - **In-arrears swaps and caps.** Written when a borrower expected rates to rise faster than the curve implied: the coupon set on the fixing date pays higher if they do. The dealer prices it with this adjustment and hedges it with caplets.
 - **Payment lags.** A coupon paid two business days after its period ends has a tiny negative adjustment; desks with large books still compute it through W.
-- **Constant-maturity swaps.** A swap rate paid on a date that does not match its own annuity carries the same kind of correction, larger because the swap rate spreads more ([cms-and-the-convexity-adjustment](02-cms-and-the-convexity-adjustment.md)).
-- **Futures against forwards.** Daily margining is another way of paying early and late at random, with its own correction ([futures-forward-convexity](01-futures-forward-convexity.md)).
-- **Structured notes.** Coupons on dates chosen for the investor rather than for the index carry timing adjustments inside their prices ([structured-notes-in-outline](06-structured-notes-in-outline.md)).
+- **Constant-maturity swaps.** A swap rate paid on a date that does not match its own annuity carries the same kind of correction, larger because the swap rate spreads more ([Constant-maturity swaps](02-cms-and-the-convexity-adjustment.md)).
+- **Futures against forwards.** Daily margining is another way of paying early and late at random, with its own correction ([Futures against forwards](01-futures-forward-convexity.md)).
+- **Structured notes.** Coupons on dates chosen for the investor rather than for the index carry timing adjustments inside their prices ([Structured rate notes](06-structured-notes-in-outline.md)).
 
 > **Say it back**
 > The forward rate is the fair value of a rate paid at the end of its own period. Paying it earlier lets the receiver deposit the coupon at the same rate that set it, and the two rise together. That makes the fair rate higher by the rate's variance times the accrual fraction, discounted one period. Paid on the fixing date, 6 percent with 20 percent volatility five years out becomes 6.0196 percent. Any other payment date gives the covariance of the rate with the payment's weight: positive when early, zero at the period's end, negative when late.
@@ -676,13 +660,13 @@ The two outputs are identical to the printed precision.
 
 ## What this builds on
 
-- [cms-and-the-convexity-adjustment](02-cms-and-the-convexity-adjustment.md): the first convexity adjustment on the shelf, where a rate paid in the wrong unit picks up a covariance correction and caplets or swaptions replicate the curvature. This card is the simplest case of the same idea.
+- [Constant-maturity swaps](02-cms-and-the-convexity-adjustment.md): the first convexity adjustment on the shelf, where a rate paid in the wrong unit picks up a covariance correction and caplets or swaptions replicate the curvature. This card is the simplest case of the same idea.
 
 ---
 
 ## Where this goes next
 
-- [quanto-adjustments-for-rates](04-quanto-adjustments-for-rates.md): the card after this one on the shelf changes the payment currency instead of the payment date, and the weight becomes an exchange rate.
+- [Quanto rates](04-quanto-adjustments-for-rates.md): the card after this one on the shelf changes the payment currency instead of the payment date, and the weight becomes an exchange rate.
 
 A payment moved in time is re-weighted by the price of time; the open question is what happens when a payment moves between currencies, where the re-weighting runs through the exchange rate's covariance with the fixing.
 

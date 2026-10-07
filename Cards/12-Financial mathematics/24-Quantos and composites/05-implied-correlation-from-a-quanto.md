@@ -1,28 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Quantos and composites
-topic: Running the price backwards
-item: Correlation from a quanto price
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/03-quanto-greeks-and-hedging|quanto-greeks-and-hedging]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/06-intermediate-value-theorem|intermediate-value-theorem]]"
-next: []
-tags: [mathematics, financial mathematics, implied-correlation-from-a-quanto]
----
-
 # Correlation from a quanto price: the one input you cannot see, solved backwards, and the range where a solution exists
 
-Financial mathematics → Quantos and composites → Running the price backwards → Correlation from a quanto price
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Quantos and composites](../../../SYLLABUS.md#w12-s24) → Correlation from a quanto price
 
 ---
 
 ## General Overview
 
-A share trades in Frankfurt at 100 euros. A bank in New York sells a one-year call on it that pays every euro of gain above 100 as 1.10 dollars, a rate fixed on day one. That is a quanto call ([quanto-option](02-quanto-option.md)). With US rates at 5%, euro rates at 3%, a 1% dividend, a share that wobbles 20% a year and a euro that wobbles 10% a year, the price depends on one more number: how closely the share and the euro move together. At a correlation of 0.30 the call costs 9.15 dollars.
+A share trades in Frankfurt at 100 euros. A bank in New York sells a one-year call on it that pays every euro of gain above 100 as 1.10 dollars, a rate fixed on day one. That is a quanto call ([Quanto option](02-quanto-option.md)). With US rates at 5%, euro rates at 3%, a 1% dividend, a share that wobbles 20% a year and a euro that wobbles 10% a year, the price depends on one more number: how closely the share and the euro move together. At a correlation of 0.30 the call costs 9.15 dollars.
 
 Every input but one can be read off a screen. The share's price, the rates and the dividend are quoted. The two volatilities can be read from options on the share and options on the euro. The correlation cannot: no market sells it on its own. So desks run the formula backwards. A quoted quanto price goes in; the correlation that reproduces it comes out. That number is the **implied correlation**, the term used from here on.
 
@@ -30,7 +14,7 @@ Backwards is not always possible. However the correlation is set, between −1 a
 
 **The quanto price falls steadily as the correlation rises, so any quote strictly between the price at correlation +1 and the price at correlation −1 names exactly one correlation, and any quote outside that range names none.**
 
-**What kind of fact this is:** a method (root-finding on a model price) resting on a theorem: existence and uniqueness of the root, proved on this card in Why it works. The model underneath is the quanto model of [quanto-option](02-quanto-option.md), an assumption rather than a law.
+**What kind of fact this is:** a method (root-finding on a model price) resting on a theorem: existence and uniqueness of the root, proved on this card in Why it works. The model underneath is the quanto model of [Quanto option](02-quanto-option.md), an assumption rather than a law.
 
 ### The picture: one falling curve, two flat quotes
 
@@ -76,7 +60,7 @@ $$C(\rho) = C_m, \qquad \text{which has exactly one solution in } [-1, 1] \text{
 | $N(x)$, $\varphi(x)$, $d_1$, $d_2$ | bell-curve area left of $x$ and its height at $x$; the Black-Scholes call's two cut-offs, with $F_Q$ as the forward | — | — |
 | $\partial C / \partial \rho$ | the slope: dollars of price per unit of correlation | −1.204343 at 0.30 | — |
 
-The cut-offs are the ones from [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), written with the forward:
+The cut-offs are the ones from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), written with the forward:
 
 $$d_1 = \frac{\ln(F_Q/K) + \tfrac12\sigma_S^2 T}{\sigma_S\sqrt{T}}, \qquad d_2 = d_1 - \sigma_S\sqrt{T}$$
 
@@ -104,7 +88,7 @@ Conventions verified 2026-09-27: the exchange rate is quoted as dollars per euro
 
 ### Step 0: the correlation acts through one number, the quanto forward
 
-The quanto call is the Black-Scholes call on a share whose fair future price is the quanto forward $F_Q$ ([quanto-forward-and-adjustment](01-quanto-forward-and-adjustment.md)). The correlation appears nowhere else. So inverting in correlation is two smaller inversions in a row: from the price to the forward, and from the forward to the correlation. The first is monotone because a call is worth more when the share is expected to end higher. The second is monotone because the forward is an exponential in $\rho$.
+The quanto call is the Black-Scholes call on a share whose fair future price is the quanto forward $F_Q$ ([The quanto adjustment](01-quanto-forward-and-adjustment.md)). The correlation appears nowhere else. So inverting in correlation is two smaller inversions in a row: from the price to the forward, and from the forward to the correlation. The first is monotone because a call is worth more when the share is expected to end higher. The second is monotone because the forward is an exponential in $\rho$.
 
 ### Step 1: the forward falls as the correlation rises
 
@@ -127,7 +111,7 @@ where $\varphi$ is the bell curve's height. The two height terms cancel, because
 
 ### Step 3: existence, by the intermediate value theorem
 
-$C(\rho)$ is continuous on $[-1, 1]$: it is built from exponentials, a logarithm and the bell-curve area, all continuous. Its ends are $C(-1)$ = 10.808928 and $C(1)$ = 8.334790. The intermediate value theorem ([intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)) says a continuous function on an interval takes every value between its two end values. So any quote from 8.334790 to 10.808928 is hit by at least one correlation.
+$C(\rho)$ is continuous on $[-1, 1]$: it is built from exponentials, a logarithm and the bell-curve area, all continuous. Its ends are $C(-1)$ = 10.808928 and $C(1)$ = 8.334790. The intermediate value theorem ([Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)) says a continuous function on an interval takes every value between its two end values. So any quote from 8.334790 to 10.808928 is hit by at least one correlation.
 
 ### Step 4: uniqueness, from the slope
 
@@ -160,7 +144,7 @@ In practice the euro's volatility is read from currency options, which trade in 
 
 The implied correlation is what the quote charges. The historical correlation is what the last year's daily returns show. They answer different questions, and the historical one is itself noisy. With 252 daily returns and a true correlation of 0.30, an estimate lands within about $(1 - \rho^2)/\sqrt{252}$ = 0.057 of the truth, as a typical error (R. A. Fisher derived the full distribution of such estimates in 1915). The check simulates 1,000 such years: the estimates average 0.2997 with a spread of 0.0570. One simulated year gave 0.275.
 
-Now a dealer quotes 9.40. The implied correlation is 0.096. That sits 3.6 spreads below 0.30, too far to blame on a short history. The dealer is charging for a lower correlation than history shows, either as a view or as a premium for carrying correlation risk that cannot be hedged ([quanto-greeks-and-hedging](03-quanto-greeks-and-hedging.md)).
+Now a dealer quotes 9.40. The implied correlation is 0.096. That sits 3.6 spreads below 0.30, too far to blame on a short history. The dealer is charging for a lower correlation than history shows, either as a view or as a premium for carrying correlation risk that cannot be hedged ([Hedging a quanto](03-quanto-greeks-and-hedging.md)).
 
 ### The other door: go through the forward
 
@@ -656,9 +640,9 @@ The two outputs agree line for line. The simulated numbers match because both pr
 ## Where you meet it in real life
 
 - **Correlation marks on an exotics desk.** A bank that has sold quanto notes needs a correlation to value them each night. Where dealers quote quanto prices or quanto forwards, the implied correlation from those quotes becomes the mark; the historical estimate is a sanity check.
-- **Dollar-settled index futures.** A future on a foreign index settled in dollars at a fixed rate trades at the quanto forward. The log of the ordinary forward over it, divided by $\sigma_S\sigma_X T$, is an implied correlation, the other door of this card in daily use ([quanto-forward-and-adjustment](01-quanto-forward-and-adjustment.md)).
+- **Dollar-settled index futures.** A future on a foreign index settled in dollars at a fixed rate trades at the quanto forward. The log of the ordinary forward over it, divided by $\sigma_S\sigma_X T$, is an implied correlation, the other door of this card in daily use ([The quanto adjustment](01-quanto-forward-and-adjustment.md)).
 - **Currency triangles.** For three currencies, the volatilities of the three exchange rates pin the correlation between two of them. Desks compare that currency-implied number with the quanto-implied one.
-- **The composite alternative.** A composite option converts at the market rate, so the correlation widens the payoff's volatility instead of bending the forward. It can be inverted the same way, with its own band ([composite-option](04-composite-option.md)).
+- **The composite alternative.** A composite option converts at the market rate, so the correlation widens the payoff's volatility instead of bending the forward. It can be inverted the same way, with its own band ([Composite option](04-composite-option.md)).
 
 > **Say it back**
 > The quanto price depends on a correlation no market sells, so desks solve for it from a quoted price. The correlation acts only through the quanto forward, which falls as it rises, so the price falls strictly across the whole range. A quote between the price at +1 and the price at −1 names exactly one correlation, by the intermediate value theorem and the strict slope; a quote outside names none. With the currency's volatility also unknown, a quote pins only correlation times that volatility. The implied number is what the price charges, not what history shows.
@@ -667,15 +651,15 @@ The two outputs agree line for line. The simulated numbers match because both pr
 
 ## What this builds on
 
-- [quanto-greeks-and-hedging](03-quanto-greeks-and-hedging.md): the price's sensitivity to correlation, and why that risk cannot be hedged, which is what the implied number charges for.
-- [intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): a continuous function takes every value between its ends; that is Step 3's existence.
+- [Hedging a quanto](03-quanto-greeks-and-hedging.md): the price's sensitivity to correlation, and why that risk cannot be hedged, which is what the implied number charges for.
+- [Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): a continuous function takes every value between its ends; that is Step 3's existence.
 
 ---
 
 ## Where this goes next
 
-- [composite-option](04-composite-option.md): the same share and currency, converted at the market rate, where the correlation enters the volatility instead of the forward.
-- [correlation-greeks-and-implied-correlation](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/05-correlation-greeks-and-implied-correlation.md): the same inversion for two shares, where a basket or spread quote implies the correlation between them.
+- [Composite option](04-composite-option.md): the same share and currency, converted at the market rate, where the correlation enters the volatility instead of the forward.
+- [Correlation Greeks and implied correlation](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/05-correlation-greeks-and-implied-correlation.md): the same inversion for two shares, where a basket or spread quote implies the correlation between them.
 
 The correlation is now read from a price; what stays open is how a book holding many quantos marks one correlation consistently against another that the currency options already imply.
 

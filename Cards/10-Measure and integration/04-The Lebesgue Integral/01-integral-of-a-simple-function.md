@@ -1,23 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: The Lebesgue Integral
-topic: Adding up a staircase
-item: The integral of a simple function
-kind: definition
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/03-Measurable Functions/03-simple-functions-and-approximation|simple-functions-and-approximation]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/04-measures|measures]]"
-next:
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/02-integral-of-a-nonnegative-function|integral-of-a-nonnegative-function]]"
-tags: [mathematics, measure and integration, integral-of-a-simple-function]
----
-
 # The integral of a simple function: value times size of each piece, added up, whichever way you wrote it
 
-Measure and integration → The Lebesgue Integral → Adding up a staircase → The integral of a simple function
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Lebesgue Integral](../../../SYLLABUS.md#w10-s04) → The integral of a simple function
 
 ---
 
@@ -27,7 +10,7 @@ A river runs for 1 km. A survey boat drops a sounding line marked only in quarte
 
 With rounded readings the job is bookkeeping. The reading is 0.75 m along a stretch 0.5 km long. It is 0.5 m along two stretches totalling 0.2071 km, 0.25 m along two totalling 0.1589 km, and 0 near the banks. Multiply each reading by the length where it holds, add: 0.3750 + 0.1036 + 0.0397 = **0.5183 km·m**. A second surveyor stacks the same answer in layers instead: the water is at least 0.25 m deep along 0.8660 km, at least 0.5 m along 0.7071 km, at least 0.75 m along 0.5 km. Each layer is 0.25 m thick, so the total is 0.25 × (0.8660 + 0.7071 + 0.5) = 0.5183 again.
 
-Henri Lebesgue described this as counting a pile of coins by denomination: sort by value, count each heap, multiply, add. Here the heaps are the stretches where the rounded depth takes one value; from here on they are called **level sets**, and the rounded depth is a **simple function**: a function with finitely many values, each on a measurable set. Nothing requires the level sets to be intervals. The function that is 1 on the rational points of [0, 1] and 0 elsewhere has no Riemann integral, yet its level sets have lengths 0 and 1, so the same bookkeeping gives 1 × 0 + 0 × 1 = 0 ([null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). The card's real work is proving that the pieces, the layers, or any other way of writing the same staircase always give the same total.
+Henri Lebesgue described this as counting a pile of coins by denomination: sort by value, count each heap, multiply, add. Here the heaps are the stretches where the rounded depth takes one value; from here on they are called **level sets**, and the rounded depth is a **simple function**: a function with finitely many values, each on a measurable set. Nothing requires the level sets to be intervals. The function that is 1 on the rational points of [0, 1] and 0 elsewhere has no Riemann integral, yet its level sets have lengths 0 and 1, so the same bookkeeping gives 1 × 0 + 0 × 1 = 0 ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). The card's real work is proving that the pieces, the layers, or any other way of writing the same staircase always give the same total.
 
 **The integral of a non-negative simple function is the sum, over its finitely many values, of each value times the measure of the set where it is taken; any other way of writing the function as a sum of values on sets gives the same number, and the integral adds, scales and respects order.**
 
@@ -45,7 +28,7 @@ Caption: the curve is the depth, the shaded region is the rounded depth. The sha
 
 ## The formula
 
-Notation first, in words. A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$ (omega), the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ (mu) that gives each such set a size of zero or more, possibly infinite ([measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). On the river, $\Omega$ is the stretch [0, 1] in km and the measure is length, written $\lambda$ (lambda). The indicator $\mathbf 1_A$, read "one on A, zero off it", is the function that is 1 at points of the set A and 0 elsewhere. A non-negative **simple function** is a finite sum of indicators with coefficients of zero or more ([simple-functions-and-approximation](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). The new symbol $\int s\,d\mu$ is read "the integral of s against mu".
+Notation first, in words. A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$ (omega), the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ (mu) that gives each such set a size of zero or more, possibly infinite ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). On the river, $\Omega$ is the stretch [0, 1] in km and the measure is length, written $\lambda$ (lambda). The indicator $\mathbf 1_A$, read "one on A, zero off it", is the function that is 1 at points of the set A and 0 elsewhere. A non-negative **simple function** is a finite sum of indicators with coefficients of zero or more ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). The new symbol $\int s\,d\mu$ is read "the integral of s against mu".
 
 Write the simple function $s$ in its **standard form**: list its distinct values $a_1, \dots, a_n$, and let $A_i$ be the set where $s$ equals $a_i$. The sets $A_i$ do not overlap and together cover $\Omega$.
 
@@ -86,7 +69,7 @@ The first fact with one set gives $\int \mathbf 1_A\,d\mu=\mu(A)$: the integral 
 
 The integral itself is a definition, so it does not hold or fail; the three theorems need these hypotheses.
 
-- **Every piece measurable.** The sets $A_i$ must lie in $\mathcal F$, or $\mu(A_i)$ is not defined. A two-valued function that is 1 on the Vitali set ([translation-invariance-and-the-vitali-set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)) has no integral against length.
+- **Every piece measurable.** The sets $A_i$ must lie in $\mathcal F$, or $\mu(A_i)$ is not defined. A two-valued function that is 1 on the Vitali set ([Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)) has no integral against length.
 - **Values of zero or more.** Then every term is at least zero and nothing cancels. With signs and infinite pieces, +1 on [0, ∞) and −1 on (−∞, 0) gives ∞ − ∞, and cutting the line at different places gives 0 or 1000 (What breaks, below).
 - **Finitely many values.** The sums are finite sums, so reordering and regrouping are free. Infinitely many values are the next card's business.
 - **Finite values.** Each $a_i$ is a real number; a set of size ∞ is allowed, a value ∞ is not.
@@ -116,9 +99,9 @@ The proof in outline. Given any representation with m sets $B_1,\dots,B_m$, look
 
 **Arithmetic in [0, ∞].** Sums of terms in [0, ∞] are defined, and for finite sums they may be reordered and regrouped: a finite sum of non-negative terms is ∞ exactly when one term is ∞, and otherwise is an ordinary sum. For finite $c\ge0$ and $x,y\in[0,\infty]$, with $0\cdot\infty=0$, the rule $c(x+y)=cx+cy$ holds: if $c=0$ both sides are 0; if $c>0$ and one of x, y is ∞, both sides are ∞; otherwise it is ordinary algebra. The other distributive rule, $(c_1+\dots+c_m)\,x=c_1x+\dots+c_mx$, for any finite list of finite $c_j\ge0$ and any $x\in[0,\infty]$, holds too: if $x=\infty$, both sides are 0 when every $c_j$ is 0 and ∞ otherwise; if x is finite it is ordinary algebra. No subtraction appears anywhere below.
 
-**Cells.** For each choice $e=(e_1,\dots,e_m)$ of yes or no, let $C_e$ be the intersection over j of $B_j$ (if $e_j$ is yes) or its complement (if no). Complements and finite intersections of sets in $\mathcal F$ are in $\mathcal F$, so each $C_e$ is measurable ([sigma-algebras](../01-Sets%20You%20Can%20Measure/02-sigma-algebras.md)). Every point lies in exactly one cell: its own yes/no pattern. So the cells are disjoint and cover $\Omega$. Discard the empty ones.
+**Cells.** For each choice $e=(e_1,\dots,e_m)$ of yes or no, let $C_e$ be the intersection over j of $B_j$ (if $e_j$ is yes) or its complement (if no). Complements and finite intersections of sets in $\mathcal F$ are in $\mathcal F$, so each $C_e$ is measurable ([Sigma-algebras](../01-Sets%20You%20Can%20Measure/02-sigma-algebras.md)). Every point lies in exactly one cell: its own yes/no pattern. So the cells are disjoint and cover $\Omega$. Discard the empty ones.
 
-**Each set is its cells.** $B_j$ is the disjoint union of the cells with $e_j$ yes. By finite additivity of $\mu$ ([measures](../01-Sets%20You%20Can%20Measure/04-measures.md)), $\mu(B_j)=\sum_{e:\,e_j=\text{yes}}\mu(C_e)$.
+**Each set is its cells.** $B_j$ is the disjoint union of the cells with $e_j$ yes. By finite additivity of $\mu$ ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)), $\mu(B_j)=\sum_{e:\,e_j=\text{yes}}\mu(C_e)$.
 
 **Regroup.** Using that and both distributive rules,
 $$\sum_j c_j\,\mu(B_j)=\sum_j\ \sum_{e:\,e_j=\text{yes}} c_j\,\mu(C_e)=\sum_e\Big(\sum_{j:\,e_j=\text{yes}}c_j\Big)\mu(C_e)=\sum_e s(C_e)\,\mu(C_e),$$
@@ -146,9 +129,9 @@ Round the depth down to the half metre instead. Call it t: 0.5 on the stretch wh
 
 ### Step 5: what the definition does not yet reach
 
-The true depth d is not simple: it takes every value from 0 to 1. The staircases approach it from below as the steps shrink: 0.3536 with half-metre steps, 0.5183 with quarter-metre steps, then 0.5956 and 0.6323 with eighths and sixteenths, rising toward the true 2/3 = 0.6667. Monotonicity is what makes them rise in order. Defining the integral of d as the best such lower total is [integral-of-a-nonnegative-function](02-integral-of-a-nonnegative-function.md).
+The true depth d is not simple: it takes every value from 0 to 1. The staircases approach it from below as the steps shrink: 0.3536 with half-metre steps, 0.5183 with quarter-metre steps, then 0.5956 and 0.6323 with eighths and sixteenths, rising toward the true 2/3 = 0.6667. Monotonicity is what makes them rise in order. Defining the integral of d as the best such lower total is [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md).
 
-An alternative route to the same numbers on an interval is the Riemann step function: a staircase whose pieces are intervals. Where both apply they agree, and when that extends to every Riemann-integrable function is [riemann-meets-lebesgue](05-riemann-meets-lebesgue.md).
+An alternative route to the same numbers on an interval is the Riemann step function: a staircase whose pieces are intervals. Where both apply they agree, and when that extends to every Riemann-integrable function is [Riemann meets Lebesgue](05-riemann-meets-lebesgue.md).
 
 ---
 
@@ -169,7 +152,7 @@ The level set {d ≥ c} is where 4x(1 − x) ≥ c. Since 1 − 4x(1 − x) = (1
 | by layers | 0.25 × (0.8660 + 0.7071 + 0.5000) | 0.5183 km·m |
 | exact | (1 + √2 + √3)/8 | **0.518283 km·m** |
 
-Over 1 km that is an average rounded depth of 0.5183 m, short of the true average 0.6667 m by 0.1484 m. A boat moored at a uniformly random point along the stretch reads, on average, 0.5183 m on the quarter-metre line: with length as the probability, the integral is the expected reading ([expectation-as-an-integral](06-expectation-as-an-integral.md)).
+Over 1 km that is an average rounded depth of 0.5183 m, short of the true average 0.6667 m by 0.1484 m. A boat moored at a uniformly random point along the stretch reads, on average, 0.5183 m on the quarter-metre line: with length as the probability, the integral is the expected reading ([Expectation as an integral](06-expectation-as-an-integral.md)).
 
 The same formula against a probability on six points: a die pays 0 on faces 1, 2, 3, pays 2 on faces 4 and 5, and 6 on face 6. Point by point, (0 + 0 + 0 + 2 + 2 + 6)/6; by level sets, 0 × 0.5 + 2 × (2/6) + 6 × (1/6). Both give 5/3 = 1.6667.
 
@@ -572,7 +555,7 @@ ALL CHECKS PASS
 > - **Adding values, forgetting sizes.** 0.25 + 0.5 + 0.75 = 1.50 is not an integral; the integral weighs each value by how much of the space carries it.
 > - **Worrying about single points.** The rounded depth is 1 m at exactly one point, 0.5 km. That piece has length 0 and contributes 1 × 0 = 0. Changing a simple function on a set of measure zero never changes its integral.
 > - **Treating 0 × ∞ as undefined.** On the whole line the zero function has integral 0 by the convention $0\cdot\infty=0$; without it the definition would fail on its simplest input.
-> - **Subtracting.** Everything here is non-negative. Differences of integrals, and signed functions, need the finite-integral condition of [integrable-functions-and-l1](04-integrable-functions-and-l1.md).
+> - **Subtracting.** Everything here is non-negative. Differences of integrals, and signed functions, need the finite-integral condition of [Integrable functions](04-integrable-functions-and-l1.md).
 
 ---
 
@@ -580,8 +563,8 @@ ALL CHECKS PASS
 
 - **Lake and reservoir volumes.** Hydrographers compute volume from a depth-contour chart: the area inside each contour times the contour interval, added. That is the layer representation, and Step 2 is why it matches a count by depth band.
 - **Histograms and binned data.** A quantity recorded in bins is a simple function; its total is each bin's value times the bin's count or width, added.
-- **Expected payouts.** A payout with finitely many values, integrated against a probability, is its expected value: the die's 5/3. The measure version of expectation is [expectation-as-an-integral](06-expectation-as-an-integral.md).
-- **Tail bounds.** Markov's inequality compares a non-negative quantity with the two-valued simple function that is a on the set where the quantity is at least a. For a quantity that is not itself simple, the proof uses the definition on [integral-of-a-nonnegative-function](02-integral-of-a-nonnegative-function.md); the probability form is [markov-and-chebyshev](07-markov-and-chebyshev.md).
+- **Expected payouts.** A payout with finitely many values, integrated against a probability, is its expected value: the die's 5/3. The measure version of expectation is [Expectation as an integral](06-expectation-as-an-integral.md).
+- **Tail bounds.** Markov's inequality compares a non-negative quantity with the two-valued simple function that is a on the set where the quantity is at least a. For a quantity that is not itself simple, the proof uses the definition on [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md); the probability form is [Markov and Chebyshev](07-markov-and-chebyshev.md).
 
 > **Say it back**
 > A simple function takes finitely many values, each on a measurable set. Its integral is each value times the size of its set, added. Written any other way, overlapping sets included, it gives the same total, because every description breaks down into common cells whose sizes add. The integral adds, scales, and never lets a lower staircase have the larger total. On the river the quarter-metre staircase gives 0.5183 km·m, by level sets, by layers, and cell by cell.
@@ -590,13 +573,13 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [simple-functions-and-approximation](../03-Measurable%20Functions/03-simple-functions-and-approximation.md): what a simple function is, the indicator, and the rising staircases that approach any non-negative measurable function.
-- [measures](../01-Sets%20You%20Can%20Measure/04-measures.md): the sizes, finite additivity over disjoint pieces, and the arithmetic of [0, ∞] used in every step of the proof.
+- [Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md): what a simple function is, the indicator, and the rising staircases that approach any non-negative measurable function.
+- [Measures](../01-Sets%20You%20Can%20Measure/04-measures.md): the sizes, finite additivity over disjoint pieces, and the arithmetic of [0, ∞] used in every step of the proof.
 
 ## Where this goes next
 
-- [integral-of-a-nonnegative-function](02-integral-of-a-nonnegative-function.md): the integral of any non-negative measurable function as the best total of the simple functions below it, which turns 0.3536, 0.5183, 0.5956, 0.6323 into 2/3.
-- [monotone-convergence-theorem](03-monotone-convergence-theorem.md): why those rising totals reach the integral of their limit.
+- [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md): the integral of any non-negative measurable function as the best total of the simple functions below it, which turns 0.3536, 0.5183, 0.5956, 0.6323 into 2/3.
+- [The monotone convergence theorem](03-monotone-convergence-theorem.md): why those rising totals reach the integral of their limit.
 
 The true depth takes every value from 0 to 1 m, so no finite list of values and lengths adds it up: what is its integral, and do the staircase totals reach it?
 

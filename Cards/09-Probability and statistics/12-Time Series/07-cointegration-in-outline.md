@@ -1,22 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Time Series
-topic: Long-run ties
-item: Cointegration
-kind: method
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/12-Time Series/04-differencing-and-unit-roots|differencing-and-unit-roots]]"
-next:
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/02-pairs-trading-and-cointegration|pairs-trading-and-cointegration]]"
-tags: [mathematics, probability-and-statistics, cointegration-in-outline]
----
-
 # Cointegration: two wandering series tied together
 
-Probability and statistics → Time Series → Long-run ties → Cointegration
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Time Series](../../../SYLLABUS.md#w09-s12) → Cointegration
 
 ---
 
@@ -52,7 +36,7 @@ Orange: North. Teal: South. Both climb about 50 cents over the year, and neither
 
 ## The formula
 
-Notation first. A small $t$ under a price names the day: $N_t$ is North's price on day $t$, $S_t$ South's. A capital delta, $\Delta$, means "change since yesterday": $\Delta N_t = N_t - N_{t-1}$. A hat marks a value fitted from data; a bar marks an average over the record, so $\bar N$ is North's average price. A series **wanders**, or is **integrated of order one**, written I(1), when its daily changes are steady but its level has no home ([differencing-and-unit-roots](04-differencing-and-unit-roots.md)). A series is **steady**, written I(0), when it keeps returning to a fixed level with a fixed spread ([stationarity-and-autocorrelation](01-stationarity-and-autocorrelation.md)).
+Notation first. A small $t$ under a price names the day: $N_t$ is North's price on day $t$, $S_t$ South's. A capital delta, $\Delta$, means "change since yesterday": $\Delta N_t = N_t - N_{t-1}$. A hat marks a value fitted from data; a bar marks an average over the record, so $\bar N$ is North's average price. A series **wanders**, or is **integrated of order one**, written I(1), when its daily changes are steady but its level has no home ([Unit roots](04-differencing-and-unit-roots.md)). A series is **steady**, written I(0), when it keeps returning to a fixed level with a fixed spread ([Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md)).
 
 **The definition.** Two I(1) series are cointegrated when, for some fixed $\beta$ and $c$,
 
@@ -60,7 +44,7 @@ $$z_t = N_t - c - \beta S_t \quad \text{is I(0).}$$
 
 **Read it aloud:** take North's price, remove a fixed premium and a fixed multiple of South's price, and what is left no longer wanders.
 
-**Engle–Granger, step one: fit the tie.** Least squares ([least-squares-regression](../09-Regression/01-least-squares-regression.md)) fits the line $N_t = c + \beta S_t + z_t$ over the $n$ = 365 days:
+**Engle–Granger, step one: fit the tie.** Least squares ([Least squares](../09-Regression/01-least-squares-regression.md)) fits the line $N_t = c + \beta S_t + z_t$ over the $n$ = 365 days:
 
 $$\hat\beta = \frac{\sum_t (S_t - \bar S)(N_t - \bar N)}{\sum_t (S_t - \bar S)^2}, \qquad \hat c = \bar N - \hat\beta\,\bar S, \qquad \hat z_t = N_t - \hat c - \hat\beta S_t .$$
 
@@ -89,7 +73,7 @@ $$\Delta N_t = \alpha_N\, \hat z_{t-1} + \varepsilon_{N,t}, \qquad \Delta S_t = 
 | $z_t$ | the leftover or gap, $N_t - c - \beta S_t$ | −$0.05 to $0.11 at the plotted days | North is dear against South |
 | $\Delta$ | change since yesterday | $\Delta N_t$, $\Delta \hat z_t$ | — |
 | $\rho$ | the daily pull-back: minus the share of yesterday's gap removed today (the slope called gamma on differencing-and-unit-roots, which keeps rho for the carry-over, here $\phi$) | fitted −0.1621 | more negative: gaps close faster |
-| $\phi$ | the share of a gap still there tomorrow, $1 + \rho$ (the carry-over of [ar-models](02-ar-models.md)) | built 0.85; fitted 0.8379 | towards 1: gaps linger; at 1 there is no tie |
+| $\phi$ | the share of a gap still there tomorrow, $1 + \rho$ (the carry-over of [Autoregression](02-ar-models.md)) | built 0.85; fitted 0.8379 | towards 1: gaps linger; at 1 there is no tie |
 | $e_t$, $\varepsilon$, $u_t$ | news: the part of a day's change the pull does not explain; $u_t$ the gap's news, in the proof | — | — |
 | $R^2$ | the share of one series' movement that a fitted line appears to explain, from 0 to 1 | median 0.17 over 4,000 unrelated pairs; 0.67 for the unrelated price of Step 3 | nearer 1: the line looks better, which for two wandering series proves nothing |
 | $\tau$, $\tau_{5\%}$ | the test statistic; the cutoff it must fall below | −5.64; −3.353 | more negative: stronger evidence of a tie |
@@ -141,7 +125,7 @@ A steady leftover is pulled towards its level: if North is 10 cents too dear tod
 
 The stations were built so that 15% of each gap closes each day, $\phi$ = 0.85. The fit gives $\hat\rho$ = −0.1621 with standard error 0.0288, a fitted $\phi$ of 0.8379. The statistic is $\tau$ = −0.1621 / 0.0288 = −5.64, far below −3.353. The pair is judged tied.
 
-This is the unit-root test of [differencing-and-unit-roots](04-differencing-and-unit-roots.md), run on the leftover, with a different cutoff.
+This is the unit-root test of [Unit roots](04-differencing-and-unit-roots.md), run on the leftover, with a different cutoff.
 
 ### Step 3: a fitted leftover needs its own cutoff
 
@@ -174,9 +158,9 @@ The two pulls rebuild step two exactly. The leftover's change is North's change 
 
 Suppose each change is a pull on yesterday's gap plus news: $\Delta N_t = \alpha_N z_{t-1} + \varepsilon_{N,t}$ and $\Delta S_t = \alpha_S z_{t-1} + \varepsilon_{S,t}$, with $z_t = N_t - c - \beta S_t$. Subtract $\beta$ times the second from the first. The premium $c$ does not change, so $\Delta z_t = (\alpha_N - \beta\alpha_S)\,z_{t-1} + (\varepsilon_{N,t} - \beta\varepsilon_{S,t})$, that is
 $$z_t = \phi\, z_{t-1} + u_t, \qquad \phi = 1 + \alpha_N - \beta\alpha_S,$$
-with $u_t$ the combined news. That is an AR(1) with carry-over $\phi$, which is steady exactly when $-1 < \phi < 1$ ([ar-models](02-ar-models.md)). Here $\phi = 1 - 0.12 - 0.03 = 0.85$. The wholesale news enters both stations equally and cancels in $u_t$ when $\beta = 1$: Step 0 in symbols. So pulls of the right sign, not too strong, produce a cointegrated pair.
+with $u_t$ the combined news. That is an AR(1) with carry-over $\phi$, which is steady exactly when $-1 < \phi < 1$ ([Autoregression](02-ar-models.md)). Here $\phi = 1 - 0.12 - 0.03 = 0.85$. The wholesale news enters both stations equally and cancels in $u_t$ when $\beta = 1$: Step 0 in symbols. So pulls of the right sign, not too strong, produce a cointegrated pair.
 
-The converse, that every cointegrated pair has an error-correction form, is the **Granger representation theorem**, proved in Engle and Granger (1987). It needs the moving-average algebra of [ma-and-arma](03-ma-and-arma.md) in two dimensions and is stated here, not proved.
+The converse, that every cointegrated pair has an error-correction form, is the **Granger representation theorem**, proved in Engle and Granger (1987). It needs the moving-average algebra of [Moving average and ARMA](03-ma-and-arma.md) in two dimensions and is stated here, not proved.
 
 </details>
 
@@ -674,7 +658,7 @@ The two outputs match line for line.
 - **Spot and futures prices.** A commodity's price today and for delivery in three months wander together, tied by storage costs.
 - **Interest rates.** One-year and ten-year rates each wander; the gap between them keeps returning.
 - **Economics.** Household spending against income was an early use. Clive Granger's share of the 2003 Nobel memorial prize in economics was for this work.
-- **Pairs trading.** Two shares tied this way are held long and short in the fitted ratio, betting on the gap, not the market: [pairs-trading-and-cointegration](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/02-pairs-trading-and-cointegration.md).
+- **Pairs trading.** Two shares tied this way are held long and short in the fitted ratio, betting on the gap, not the market: [Pairs trading](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/02-pairs-trading-and-cointegration.md).
 - **Forecasting.** An error-correction model forecasts tomorrow's change from today's gap, which a model of changes alone cannot do; the day-by-day trace in How a gap closes is such a forecast, with the news set to zero.
 
 > **Say it back**
@@ -684,13 +668,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [differencing-and-unit-roots](04-differencing-and-unit-roots.md): what it means for a series to wander, and the unit-root test that step two runs on the leftover.
-- [ar-models](02-ar-models.md): the carry-over $\phi$, and why a gap with $\phi$ below 1 keeps returning.
-- [least-squares-regression](../09-Regression/01-least-squares-regression.md): the line fitted in step one and the slopes fitted in step two and the error-correction model.
+- [Unit roots](04-differencing-and-unit-roots.md): what it means for a series to wander, and the unit-root test that step two runs on the leftover.
+- [Autoregression](02-ar-models.md): the carry-over $\phi$, and why a gap with $\phi$ below 1 keeps returning.
+- [Least squares](../09-Regression/01-least-squares-regression.md): the line fitted in step one and the slopes fitted in step two and the error-correction model.
 
 ## Where this goes next
 
-- [pairs-trading-and-cointegration](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/02-pairs-trading-and-cointegration.md): the same two steps on two share prices, with a position built in the fitted ratio and the gap traded for profit.
+- [Pairs trading](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/02-pairs-trading-and-cointegration.md): the same two steps on two share prices, with a position built in the fitted ratio and the gap traded for profit.
 
 The test says whether a tie exists and the pulls say how fast it acts; whether that speed is enough to earn money after trading costs is the question the pairs-trading card answers.
 

@@ -1,25 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Everyday Arithmetic
-topic: Whole numbers
-item: Adding and subtracting
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/01-place-value|place-value]]"
-next:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/03-multiplying-and-dividing|multiplying-and-dividing]]"
-tags:
-  - mathematics
-  - foundations
-  - adding-and-subtracting
----
-
 # Adding and subtracting: combining and taking away, with carrying and borrowing
 
-Foundations → Everyday Arithmetic → Whole numbers → Adding and subtracting
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Everyday Arithmetic](../../../SYLLABUS.md#w01-s01) → Adding and subtracting
 
 ---
 
@@ -72,7 +53,7 @@ The left-hand sum carries twice, and that second carry becomes a new column. The
 
 ## Why it works
 
-75 is not one thing. It is 7 tens and 5 ones, which is all the written digits ever meant, and the whole content of [place-value](01-place-value.md). Piles of the same size can be counted together, so you never handle 75 as a quantity, only its piles.
+75 is not one thing. It is 7 tens and 5 ones, which is all the written digits ever meant, and the whole content of [Place value](01-place-value.md). Piles of the same size can be counted together, so you never handle 75 as a quantity, only its piles.
 
 Two apples: 7 tens and 7 tens is 14 tens, 5 ones and 5 ones is 10 ones. True, and unwritable, since there is no digit for fourteen and none for ten. So trade. Ten ones are worth one ten: the ones pile drops to 0, the tens pile goes to 15. Ten tens are worth one hundred: the tens pile drops to 5 and a hundreds pile of 1 appears. That is 1 hundred, 5 tens, 0 ones, or 150. Both trades were carrying, and that is all carrying ever is.
 
@@ -254,11 +235,11 @@ Same numbers, same labels, line for line.
 
 ## What this builds on
 
-- [place-value](01-place-value.md): that 75 means 7 tens and 5 ones, and that the column a digit sits in decides what it is worth. Every trade here moves between two of those columns.
+- [Place value](01-place-value.md): that 75 means 7 tens and 5 ones, and that the column a digit sits in decides what it is worth. Every trade here moves between two of those columns.
 
 ## Where this goes next
 
-- [multiplying-and-dividing](03-multiplying-and-dividing.md): adding the same number over and over is what multiplying is for. Twelve apples was twelve additions here and is one multiplication there.
+- [Multiplying and dividing](03-multiplying-and-dividing.md): adding the same number over and over is what multiplying is for. Twelve apples was twelve additions here and is one multiplication there.
 
 ---
 

@@ -1,27 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Ramsey and Extremal, in Outline
-topic: Monotone runs
-item: Erdos-Szekeres
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/04-Inclusion-Exclusion and Pigeonhole/05-pigeonhole-extended|pigeonhole-extended]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/07-partial-and-total-orders|partial-and-total-orders]]"
-next:
-  - "[[Cards/25-Frontier/03-Primes and Numbers/07-erdos-problems-selected|erdos-problems-selected]]"
-  - "[[Cards/25-Frontier/04-Geometry and Combinatorics/01-unit-distance-problem|unit-distance-problem]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - erdos-szekeres
----
-
 # Erdos-Szekeres: any long enough list of numbers has a long rising run or a long falling run, by labelling and pigeonhole
 
-Combinatorics and graphs → Ramsey and Extremal, in Outline → Monotone runs → Erdos-Szekeres
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Ramsey and Extremal, in Outline](../../../SYLLABUS.md#w04-s14) → Erdos-Szekeres
 
 ---
 
@@ -100,7 +79,7 @@ Take an earlier position i and a later position j. Their numbers differ, so one 
 
 ### Step 2: count the pairs a list without a run of four may use
 
-Suppose no rising run of four and no falling run of four. Every label is then 1, 2 or 3, which allows 3 × 3 = 9 pairs. Ten different pairs cannot fit into nine boxes ([pigeonhole-extended](../04-Inclusion-Exclusion%20and%20Pigeonhole/05-pigeonhole-extended.md)). So some label reaches 4.
+Suppose no rising run of four and no falling run of four. Every label is then 1, 2 or 3, which allows 3 × 3 = 9 pairs. Ten different pairs cannot fit into nine boxes ([Pigeonhole, extended](../04-Inclusion-Exclusion%20and%20Pigeonhole/05-pigeonhole-extended.md)). So some label reaches 4.
 
 ```mermaid
 flowchart TB
@@ -134,7 +113,7 @@ Take $n$ different numbers, labelled as in Step 0. By Step 1 the $n$ label pairs
 <details>
 <summary>The same theorem as chains and antichains: Dilworth</summary>
 
-Day i sits below day j when i is earlier **and** its price is lower ([partial-and-total-orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md)). A **chain**, a set whose members all compare, is a rising run. An **antichain**, a set in which no two compare, is a falling run: later days are lower.
+Day i sits below day j when i is earlier **and** its price is lower ([Orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md)). A **chain**, a set whose members all compare, is a rising run. An **antichain**, a set in which no two compare, is a falling run: later days are lower.
 
 Days sharing a rising label never compare, by Step 1, so the labels cut the days into $A$ antichains of at most $B$ days each. So $n$ is at most $A \times B$ (Mirsky's theorem). Dilworth's theorem (1950) is the mirror: $B$ chains of at most $A$ days each.
 
@@ -402,7 +381,7 @@ The two outputs match line for line.
 
 - **Reading a trend off a price chart.** Any ten different closes contain a four-day climb or a four-day slide, so four rising days prove nothing.
 - **Patience sorting.** Deal the numbers in order onto piles, each on the leftmost pile whose top is larger, starting a new pile when none is. The number of piles equals $A$, the longest rising run.
-- **The shelf's other forced structures.** Colour every pair among enough people red or blue and a one-colour group appears ([friends-and-strangers](01-friends-and-strangers.md)), with most thresholds unknown ([ramsey-numbers](02-ramsey-numbers.md)). Erdos-Szekeres is a rare member whose threshold is exact. Too many edges forcing a triangle is [mantel-and-turan](05-mantel-and-turan.md).
+- **The shelf's other forced structures.** Colour every pair among enough people red or blue and a one-colour group appears ([Friends and strangers](01-friends-and-strangers.md)), with most thresholds unknown ([Ramsey numbers](02-ramsey-numbers.md)). Erdos-Szekeres is a rare member whose threshold is exact. Too many edges forcing a triangle is [Mantel and Turan](05-mantel-and-turan.md).
 
 > **Say it back**
 > Label each number with the longest rising and falling runs ending there. A later number beats an earlier one on one label, so no two share a pair. Without a run of four either way, every label is 1, 2 or 3: nine pairs for ten numbers, impossible. So ten different numbers hold four that rise or four that fall. Nine, in three falling blocks of three, do not.
@@ -411,13 +390,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [pigeonhole-extended](../04-Inclusion-Exclusion%20and%20Pigeonhole/05-pigeonhole-extended.md): the box count that finishes Step 2.
-- [partial-and-total-orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md): comparable pairs and chains, for the Dilworth tip.
+- [Pigeonhole, extended](../04-Inclusion-Exclusion%20and%20Pigeonhole/05-pigeonhole-extended.md): the box count that finishes Step 2.
+- [Orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md): comparable pairs and chains, for the Dilworth tip.
 
 ## Where this goes next
 
-- erdos-problems-selected: more of Erdős's questions, many with no exact threshold known.
-- unit-distance-problem: another Erdős question about points in the plane, still open.
+- Erdos problems: more of Erdős's questions, many with no exact threshold known.
+- The unit-distance problem: another Erdős question about points in the plane, still open.
 
 The lemma was built to force a convex polygon out of enough scattered points, and exactly how many points that takes is still open; the frontier cards pick up Erdős's questions about points in the plane.
 

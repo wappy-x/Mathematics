@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX spot, forwards and interest parity
-topic: Reading rates out of forwards
-item: The interest rate a forward implies
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/02-covered-interest-parity|covered-interest-parity]]"
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/03-forward-points-and-fx-swaps|forward-points-and-fx-swaps]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/05-logarithms|logarithms]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/05-natural-log-and-doubling-time|natural-log-and-doubling-time]]"
-  - "[[Cards/03-Algebra/01-Letters and Equations/03-rearranging-formulas|rearranging-formulas]]"
-next: []
-tags: [mathematics, financial mathematics, implied-yield-and-cross-currency-basis]
----
-
 # The interest rate a forward implies: parity run backwards, and the cross-currency basis where the market says no
 
-Financial mathematics → FX spot, forwards and interest parity → Reading rates out of forwards → The interest rate a forward implies
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX spot, forwards and interest parity](../../../SYLLABUS.md#w12-s20) → The interest rate a forward implies
 
 ---
 
@@ -53,7 +34,7 @@ The falling line is the euro rate each forward quote implies. The flat line is t
 
 ## The formula
 
-Notation, in words first. $r_d$ and $r_f$ are the dollar and euro deposit rates, continuously compounded, as on [covered-interest-parity](02-covered-interest-parity.md). The letter y in place of r marks a rate **read out of a forward** rather than paid by a deposit: $y_f$ is the implied euro yield, $y_d$ the implied dollar yield. $\ln$ is the natural logarithm, the power the number e must be raised to ([natural-log-and-doubling-time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)).
+Notation, in words first. $r_d$ and $r_f$ are the dollar and euro deposit rates, continuously compounded, as on [Covered interest parity](02-covered-interest-parity.md). The letter y in place of r marks a rate **read out of a forward** rather than paid by a deposit: $y_f$ is the implied euro yield, $y_d$ the implied dollar yield. $\ln$ is the natural logarithm, the power the number e must be raised to ([Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)).
 
 Parity says $F = S\,e^{(r_d - r_f)T}$. Solved for the euro rate:
 
@@ -97,7 +78,7 @@ In words: the basis is how much more the forward pays on euros than a euro depos
 ### When it holds
 
 - **A clean, same-moment quote.** A stale forward against a fresh spot, or a mid mixed with a bid, gives a rate nobody can trade, and the error scales as one over $T$.
-- **Rates for exactly the forward's term, on one compounding basis.** The dollar rate must be the one-year rate for a one-year forward, continuously compounded. Money-market quotes (simple interest over a day count, as on [covered-interest-parity](02-covered-interest-parity.md)) must be converted first, or a few basis points of fake basis appear.
+- **Rates for exactly the forward's term, on one compounding basis.** The dollar rate must be the one-year rate for a one-year forward, continuously compounded. Money-market quotes (simple interest over a day count, as on [Covered interest parity](02-covered-interest-parity.md)) must be converted first, or a few basis points of fake basis appear.
 - **The deposit rate compared is one the same bank can actually use.** A basis measured against a rate the trader cannot borrow at is not a price anyone can capture. Du, Tepper and Verdelhan measure against interbank and overnight-index rates for that reason.
 - **Parity itself.** The solve is exact algebra. Whether the implied rate *should* equal the deposit rate is covered parity's claim, and that claim is what the basis tests. When it fails, the solve still works; its answer is the market's rate, not the textbook's.
 
@@ -107,7 +88,7 @@ In words: the basis is how much more the forward pays on euros than a euro depos
 
 ### Step 0: parity is one equation in five numbers
 
-Covered interest parity ties together five numbers: spot, forward, term and two interest rates. Know any four and the fifth is forced. Desks usually trust the dollar rate most, dollar money markets being the deepest, and read the other currency's rate off the forward. This is what rearranging a formula ([rearranging-formulas](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md)) is for.
+Covered interest parity ties together five numbers: spot, forward, term and two interest rates. Know any four and the fifth is forced. Desks usually trust the dollar rate most, dollar money markets being the deepest, and read the other currency's rate off the forward. This is what rearranging a formula ([Rearranging a formula](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md)) is for.
 
 ### Step 1: undo the exponential with a logarithm
 
@@ -115,7 +96,7 @@ Start from parity with the unknown euro rate written $y_f$:
 
 $$F = S\,e^{(r_d - y_f)T}.$$
 
-Divide by $S$: $F/S = e^{(r_d - y_f)T}$. The unknown sits in an exponent. The natural logarithm undoes the exponential: $\ln(e^x) = x$ ([logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)). Take it of both sides:
+Divide by $S$: $F/S = e^{(r_d - y_f)T}$. The unknown sits in an exponent. The natural logarithm undoes the exponential: $\ln(e^x) = x$ ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)). Take it of both sides:
 
 $$\ln(F/S) = (r_d - y_f)\,T.$$
 
@@ -139,7 +120,7 @@ Together: for $S, F, T > 0$ the implied rate exists, is unique, and is given by 
 
 ### Step 3: the implied rate is a rate someone can actually pay
 
-The number $y_f$ is not only algebra. It is the rate on a loan built from spot and forward trades. Take the +249-pip screen. A bank borrows one euro at the 3 percent deposit rate, sells it spot for 1.10 dollars, and buys forward the 1.030455 euros it will owe in a year, at 1.1249. In a year it pays 1.159158 dollars for those euros. So it has borrowed 1.10 dollars today and repays 1.159158 dollars in a year. That is a dollar loan, made out of a euro loan and an FX swap (a spot trade and the opposite forward trade, booked together; see [forward-points-and-fx-swaps](03-forward-points-and-fx-swaps.md)). Its rate is $\ln(1.159158/1.10) = 5.238396$ percent: the **synthetic dollar rate**, $y_d$.
+The number $y_f$ is not only algebra. It is the rate on a loan built from spot and forward trades. Take the +249-pip screen. A bank borrows one euro at the 3 percent deposit rate, sells it spot for 1.10 dollars, and buys forward the 1.030455 euros it will owe in a year, at 1.1249. In a year it pays 1.159158 dollars for those euros. So it has borrowed 1.10 dollars today and repays 1.159158 dollars in a year. That is a dollar loan, made out of a euro loan and an FX swap (a spot trade and the opposite forward trade, booked together; see [Forward points and the FX swap](03-forward-points-and-fx-swaps.md)). Its rate is $\ln(1.159158/1.10) = 5.238396$ percent: the **synthetic dollar rate**, $y_d$.
 
 A direct dollar loan costs 5 percent. The swap route costs 5.24 percent. Dollars are dearer through the FX market by 23.84 basis points.
 
@@ -159,7 +140,7 @@ Step 3 is also an arbitrage: a trade that locks in profit with no risk. On the +
 
 Before 2008 such profits were competed away; Frenkel and Levich found apparent ones vanished once transaction costs were counted. Since 2008 they persist. The trade is riskless but not free: it puts both a loan and a deposit on the bank's balance sheet, and capital rules charge for balance-sheet size whether the assets are risky or not. Borio and co-authors at the BIS and Du, Tepper and Verdelhan trace the basis to that cost, plus heavy one-way demand for dollars from non-US banks, insurers and borrowers hedging dollar assets. The basis is the price of scarce balance sheet, and it jumps around quarter ends, when many banks report their balance sheets.
 
-The other road to an implied rate uses money-market quotes instead of continuous rates: solve $F = S\,(1 + R_d\tau)/(1 + R_f\tau)$ for the euro money-market rate, where $R_d\tau$ is simple interest over the deposit's day-count fraction. It gives the same rate in a different unit. Desks quote it that way; the conversion is on [covered-interest-parity](02-covered-interest-parity.md).
+The other road to an implied rate uses money-market quotes instead of continuous rates: solve $F = S\,(1 + R_d\tau)/(1 + R_f\tau)$ for the euro money-market rate, where $R_d\tau$ is simple interest over the deposit's day-count fraction. It gives the same rate in a different unit. Desks quote it that way; the conversion is on [Covered interest parity](02-covered-interest-parity.md).
 
 ---
 
@@ -591,11 +572,11 @@ The two outputs agree line for line.
 
 ## Where you meet it in real life
 
-- **FX swap desks.** An FX swap is a loan in one currency secured by the other. Desks price the swap by its implied yield and compare it with deposit rates all day. See [forward-points-and-fx-swaps](03-forward-points-and-fx-swaps.md).
+- **FX swap desks.** An FX swap is a loan in one currency secured by the other. Desks price the swap by its implied yield and compare it with deposit rates all day. See [Forward points and the FX swap](03-forward-points-and-fx-swaps.md).
 - **Central bank dollar lines.** In 2008 and again in March 2020 the Federal Reserve lent dollars to other central banks through swap lines, when the basis showed non-US banks paying far above dollar rates to swap for dollars. The BIS 2008 study below documents the first episode.
 - **Hedged foreign bond buying.** A Japanese or European insurer buying US bonds and hedging the currency pays the synthetic dollar rate, not the plain one. A negative basis eats into the hedged yield, and it is often the deciding number.
-- **Cross-currency swaps.** Long-dated versions of the same trade exchange floating interest in two currencies, and the basis is quoted as a spread on one leg: [cross-currency-swaps-and-basis](../28-Swaps/06-cross-currency-swaps-and-basis.md).
-- **Valuing old forwards.** Marking a forward agreed months ago needs discount factors in both currencies; which rate to discount with is exactly the basis question. See [fx-forward-value-after-inception](04-fx-forward-value-after-inception.md).
+- **Cross-currency swaps.** Long-dated versions of the same trade exchange floating interest in two currencies, and the basis is quoted as a spread on one leg: [Cross-currency swaps](../28-Swaps/06-cross-currency-swaps-and-basis.md).
+- **Valuing old forwards.** Marking a forward agreed months ago needs discount factors in both currencies; which rate to discount with is exactly the basis question. See [Valuing an old currency forward](04-fx-forward-value-after-inception.md).
 
 > **Say it back**
 > Covered interest parity links spot, forward, term and two interest rates; knowing four fixes the fifth. Solving for the foreign rate gives $y_f = r_d - \ln(F/S)/T$, and for every positive spot and forward the answer exists and is unique. At the house forward it gives back 3 percent. On real screens since 2008 the implied rate and the deposit rate differ, and that gap, the cross-currency basis, is negative when dollars cost more through the FX market than directly. It persists because the arbitrage is riskless but uses scarce balance sheet.
@@ -604,17 +585,17 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [covered-interest-parity](02-covered-interest-parity.md): the formula this card solves backwards, and the two-route argument that makes it hold.
-- [forward-points-and-fx-swaps](03-forward-points-and-fx-swaps.md): how forwards are quoted as points, and the FX swap that the ledger in Step 3 books.
-- [logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): the logarithm as the undo button for a power, used in Step 1.
-- [natural-log-and-doubling-time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md): the natural log as the continuously compounded rate hidden in a growth factor, which is what $\ln(F/S)$ is.
-- [rearranging-formulas](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md): solving one equation for a different letter, the whole of Step 0.
+- [Covered interest parity](02-covered-interest-parity.md): the formula this card solves backwards, and the two-route argument that makes it hold.
+- [Forward points and the FX swap](03-forward-points-and-fx-swaps.md): how forwards are quoted as points, and the FX swap that the ledger in Step 3 books.
+- [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): the logarithm as the undo button for a power, used in Step 1.
+- [Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md): the natural log as the continuously compounded rate hidden in a growth factor, which is what $\ln(F/S)$ is.
+- [Rearranging a formula](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md): solving one equation for a different letter, the whole of Step 0.
 
 ## Where this goes next
 
-- [fx-forward-value-after-inception](04-fx-forward-value-after-inception.md): marking an existing forward to market, where the choice of discount rate is the basis question in another form.
-- [cross-currency-swaps-and-basis](../28-Swaps/06-cross-currency-swaps-and-basis.md): the basis quoted as a spread on a long-dated swap, and the curve of it across maturities.
-- [garman-kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): currency options, which need a foreign rate; desks feed them the implied one, so the option agrees with the forward.
+- [Valuing an old currency forward](04-fx-forward-value-after-inception.md): marking an existing forward to market, where the choice of discount rate is the basis question in another form.
+- [Cross-currency swaps](../28-Swaps/06-cross-currency-swaps-and-basis.md): the basis quoted as a spread on a long-dated swap, and the curve of it across maturities.
+- [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): currency options, which need a foreign rate; desks feed them the implied one, so the option agrees with the forward.
 
 This card reads one number, the basis, at one term; the question it leaves open is how that number varies across terms from a week to thirty years, and how a desk builds a discount curve that carries it.
 

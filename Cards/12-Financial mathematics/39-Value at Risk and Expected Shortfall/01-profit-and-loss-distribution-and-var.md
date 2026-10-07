@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Value at Risk and Expected Shortfall
-topic: Loss quantiles
-item: Value at risk
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/05-normal-quantile|normal-quantile]]"
-next:
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/02-parametric-var-and-delta-normal|parametric-var-and-delta-normal]]"
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/05-expected-shortfall-and-coherence|expected-shortfall-and-coherence]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/03-vasicek-loss-distribution-and-basel-capital|vasicek-loss-distribution-and-basel-capital]]"
-  - "[[Cards/12-Financial mathematics/47-Collateral, Funding and the Rest of the XVAs/03-mva|mva]]"
-tags: [mathematics, financial-mathematics, profit-and-loss-distribution-and-var]
----
-
 # Value at risk: the loss you exceed one day in a hundred
 
-Financial mathematics → Value at Risk and Expected Shortfall → Loss quantiles → Value at risk
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Value at Risk and Expected Shortfall](../../../SYLLABUS.md#w12-s39) → Value at risk
 
 ---
 
@@ -94,8 +75,8 @@ The words "profit and loss distribution" and "loss distribution" name the same r
 ### When it holds
 
 - **The definition holds for any P&L distribution at all.** It needs only chances for tomorrow's outcomes. It is a definition, so it cannot fail; it can only be computed from a wrong distribution.
-- **The formula $-\mu + z\sigma$ needs a normal P&L.** A book of shares and bonds is close to normal over one day in calm markets. Real daily returns have fatter tails than the bell curve, so the normal VaR sits too low at high confidence; [extreme-value-theory-and-tails](07-extreme-value-theory-and-tails.md) measures by how much.
-- **Options bend the distribution.** The 1,000 Acme calls gain more on up days than they lose on down days, so their P&L is lopsided, not normal. With 1,000 calls in a $15 million book the bend is small; with a large option book it is not, and [delta-gamma-var-and-cornish-fisher](04-delta-gamma-var-and-cornish-fisher.md) handles it.
+- **The formula $-\mu + z\sigma$ needs a normal P&L.** A book of shares and bonds is close to normal over one day in calm markets. Real daily returns have fatter tails than the bell curve, so the normal VaR sits too low at high confidence; [Extreme value theory](07-extreme-value-theory-and-tails.md) measures by how much.
+- **Options bend the distribution.** The 1,000 Acme calls gain more on up days than they lose on down days, so their P&L is lopsided, not normal. With 1,000 calls in a $15 million book the bend is small; with a large option book it is not, and [Options in the book](04-delta-gamma-var-and-cornish-fisher.md) handles it.
 - **The $\sqrt{h}$ rule needs days that are independent and alike.** Real markets have calm weeks and wild weeks, and wild days cluster. Scaling a calm day by $\sqrt{10}$ understates a ten-day loss that starts in a storm.
 - **The book is held fixed over the horizon.** A desk that cuts positions after a bad day loses less than a ten-day VaR says; one that doubles up loses more.
 
@@ -149,7 +130,7 @@ Write the ten days as $X_1, \dots, X_{10}$, independent, each with average $\mu$
 
 ### Step 5: choose the confidence level
 
-$z_\alpha$ climbs slowly through the middle of the bell curve and fast in the tail. Going from 95% to 99% multiplies VaR by 1.41; going from 99% to 99.9% multiplies it by another 1.33, even though it trims the tail by only 0.9 percentage points against the first step's 4. The choice is a policy, not a law: 95% suits a daily report that should be broken a dozen times a year so that people keep watching it; 99% over ten days was the 1996 bank capital standard; 99.9% over a year is the credit capital standard of [vasicek-loss-distribution-and-basel-capital](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md).
+$z_\alpha$ climbs slowly through the middle of the bell curve and fast in the tail. Going from 95% to 99% multiplies VaR by 1.41; going from 99% to 99.9% multiplies it by another 1.33, even though it trims the tail by only 0.9 percentage points against the first step's 4. The choice is a policy, not a law: 95% suits a daily report that should be broken a dozen times a year so that people keep watching it; 99% over ten days was the 1996 bank capital standard; 99.9% over a year is the credit capital standard of [Vasicek's large-pool loss curve](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md).
 
 ```
 VaR by confidence level, one day, each █ = $20,000
@@ -163,7 +144,7 @@ VaR by confidence level, one day, each █ = $20,000
 
 ### The other roads
 
-Here the P&L distribution arrived as a formula. A desk can also build it from the book's last few hundred days replayed on today's positions, or from thousands of simulated days, and read the quantile off a sorted list: [historical-and-monte-carlo-var](03-historical-and-monte-carlo-var.md). The code below does the simulated version as its third road.
+Here the P&L distribution arrived as a formula. A desk can also build it from the book's last few hundred days replayed on today's positions, or from thousands of simulated days, and read the quantile off a sorted list: [Historical and Monte Carlo VaR](03-historical-and-monte-carlo-var.md). The code below does the simulated version as its third road.
 
 ---
 
@@ -181,7 +162,7 @@ The house book: one-day P&L normal, average $\mu = \$0$, standard deviation $\si
 | 99% ten-day VaR | $418{,}742.62 \times \sqrt{10} = 418{,}742.62 \times 3.162278$ | $\$1{,}324{,}180.42$ |
 | days past the 99% line in a 250-day year | $250 \times 0.01$ | $2.5$ |
 
-The desk should expect its daily loss to beat $418,742.62 on two or three days a year. If it happens on twelve, the model is wrong; counting those days is [backtesting-var](08-backtesting-var.md).
+The desk should expect its daily loss to beat $418,742.62 on two or three days a year. If it happens on twelve, the model is wrong; counting those days is [Backtesting VaR](08-backtesting-var.md).
 
 ```
 99% VaR by horizon, square-root rule, each █ = $100,000
@@ -568,12 +549,12 @@ The two outputs agree line for line, the simulations included, because both prog
 ## The usual mistake
 
 > [!warning]
-> **Reading VaR as the most the desk can lose.** It is the least the desk loses on its worst day in a hundred, not the most. VaR says where the tail starts and nothing about how long it is. The lumpy position that loses $1,000,000 with chance 0.5% has a 99% VaR of **$0**: a report built on 99% VaR would call it riskless. For the normal book, the average loss on the days that do break the line is $479,738.56, not $418,742.62; that average is the subject of [expected-shortfall-and-coherence](05-expected-shortfall-and-coherence.md).
+> **Reading VaR as the most the desk can lose.** It is the least the desk loses on its worst day in a hundred, not the most. VaR says where the tail starts and nothing about how long it is. The lumpy position that loses $1,000,000 with chance 0.5% has a 99% VaR of **$0**: a report built on 99% VaR would call it riskless. For the normal book, the average loss on the days that do break the line is $479,738.56, not $418,742.62; that average is the subject of [Expected shortfall](05-expected-shortfall-and-coherence.md).
 >
 > Smaller traps:
 > - **Scaling by the horizon instead of its square root.** Ten days by 10 gives $4,187,426.17; the right figure for independent days is $1,324,180.42.
 > - **Mixing confidence levels.** A 95% VaR of $296,073.65 compared with another desk's 99% VaR of $418,742.62 says nothing about which desk is riskier.
-> - **Adding desks' VaRs.** The VaR of two books together is not the sum of their VaRs. For books whose joint P&L is normal it is never more, and less unless they move in lockstep; for lumpy books it can be more. Splitting a total fairly among desks is [var-decomposition-euler-and-component-var](06-var-decomposition-euler-and-component-var.md).
+> - **Adding desks' VaRs.** The VaR of two books together is not the sum of their VaRs. For books whose joint P&L is normal it is never more, and less unless they move in lockstep; for lumpy books it can be more. Splitting a total fairly among desks is [Whose risk is it](06-var-decomposition-euler-and-component-var.md).
 > - **Trusting the bell curve far out.** A normal model puts the 99.9% line at $556,241.82. Real markets break that line more often than one day in a thousand.
 
 ---
@@ -582,9 +563,9 @@ The two outputs agree line for line, the simulations included, because both prog
 
 - **The daily risk report.** Banks and funds send one VaR figure per desk to senior management each evening, and set **VaR limits**: a desk whose VaR exceeds its limit must cut positions. J.P. Morgan's RiskMetrics service made a 95% one-day version the industry habit in the mid-1990s.
 - **Bank capital, 1996 to the 2020s.** The Basel Committee's 1996 market-risk amendment let banks set capital from their own 99% ten-day VaR, multiplied by at least 3. The 2019 revision replaced it with expected shortfall at 97.5%, because VaR ignores the tail's length.
-- **Checking the model.** A 99% VaR should be broken about 2.5 times in 250 trading days. Regulators count the breaks and raise the multiplier when there are too many: [backtesting-var](08-backtesting-var.md).
-- **Margin at clearing houses.** The collateral a clearing house demands against a portfolio is set near a high quantile of the portfolio's loss over the few days it would take to close it out. Funding that collateral has a cost: [mva](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/03-mva.md).
-- **Credit capital.** A bank's capital against loan losses is a 99.9% one-year quantile of its loan-loss distribution, the same definition on a different distribution: [vasicek-loss-distribution-and-basel-capital](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md).
+- **Checking the model.** A 99% VaR should be broken about 2.5 times in 250 trading days. Regulators count the breaks and raise the multiplier when there are too many: [Backtesting VaR](08-backtesting-var.md).
+- **Margin at clearing houses.** The collateral a clearing house demands against a portfolio is set near a high quantile of the portfolio's loss over the few days it would take to close it out. Funding that collateral has a cost: [MVA](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/03-mva.md).
+- **Credit capital.** A bank's capital against loan losses is a 99.9% one-year quantile of its loan-loss distribution, the same definition on a different distribution: [Vasicek's large-pool loss curve](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md).
 
 Conventions verified 2026-09-28: Basel's 1996 rule (99%, ten days, multiplier at least 3) and its 2019 replacement (expected shortfall at 97.5%) are as stated; national start dates for the 2019 rule differ.
 
@@ -595,14 +576,14 @@ Conventions verified 2026-09-28: Basel's 1996 rule (99%, ten days, multiplier at
 
 ## What this builds on
 
-- [normal-quantile](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): the inverse of the bell curve's cumulative chance, $N^{-1}$, which turns "99%" into 2.326348 standard deviations.
+- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): the inverse of the bell curve's cumulative chance, $N^{-1}$, which turns "99%" into 2.326348 standard deviations.
 
 ## Where this goes next
 
-- [parametric-var-and-delta-normal](02-parametric-var-and-delta-normal.md): how a book's standard deviation, taken as given here, is built out of each position's size, each market's swing and how the markets move together.
-- [expected-shortfall-and-coherence](05-expected-shortfall-and-coherence.md): the average loss beyond the VaR line, and why regulators moved to it.
-- [vasicek-loss-distribution-and-basel-capital](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md): the same quantile taken on a portfolio of loans, at 99.9% over a year.
-- [mva](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/03-mva.md): margin set from a loss quantile, and what it costs to fund it.
+- [Parametric VaR](02-parametric-var-and-delta-normal.md): how a book's standard deviation, taken as given here, is built out of each position's size, each market's swing and how the markets move together.
+- [Expected shortfall](05-expected-shortfall-and-coherence.md): the average loss beyond the VaR line, and why regulators moved to it.
+- [Vasicek's large-pool loss curve](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md): the same quantile taken on a portfolio of loans, at 99.9% over a year.
+- [MVA](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/03-mva.md): margin set from a loss quantile, and what it costs to fund it.
 
 This card took the $180,000 swing as given; the open question is how a desk gets one standard deviation for a book of shares, bonds and options that move together, which parametric VaR answers.
 

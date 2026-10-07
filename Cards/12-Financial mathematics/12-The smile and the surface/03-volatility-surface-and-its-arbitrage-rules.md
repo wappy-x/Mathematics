@@ -1,32 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The smile and the surface
-topic: Static arbitrage checks
-item: The volatility surface
-kind: method
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/02-term-structure-and-forward-volatility|term-structure-and-forward-volatility]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/05-taylors-theorem|taylors-theorem]]"
-next:
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/04-svi-smile-fit|svi-smile-fit]]"
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/01-dupire-local-volatility|dupire-local-volatility]]"
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/06-vix-index|vix-index]]"
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/05-vanna-volga-smile-curve|vanna-volga-smile-curve]]"
-tags: [mathematics, financial mathematics, volatility-surface-and-its-arbitrage-rules]
----
-
 # The volatility surface: a grid of vols in strike and expiry, and the two tests that keep it honest
 
-Financial mathematics → The smile and the surface → Static arbitrage checks → The volatility surface
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The smile and the surface](../../../SYLLABUS.md#w12-s12) → The volatility surface
 
 ---
 
 ## General Overview
 
-At the close, an options desk holds 27 prices on Acme, the house stock at $100. There are three expiries, 3 months, 6 months and 1 year, and nine strikes, $80 to $120 in steps of $5. Each price is quoted as an implied volatility: the one volatility that makes the Black-Scholes formula ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)) return that price. The 1-year $100 call is quoted at 20%, which is the house call at $9.23.
+At the close, an options desk holds 27 prices on Acme, the house stock at $100. There are three expiries, 3 months, 6 months and 1 year, and nine strikes, $80 to $120 in steps of $5. Each price is quoted as an implied volatility: the one volatility that makes the Black-Scholes formula ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)) return that price. The 1-year $100 call is quoted at 20%, which is the house call at $9.23.
 
 Laid out with strike across and expiry down, the 27 numbers look like a relief map: high ground at low strikes, where options that pay in a crash are dear. A trader fills in the ground between the quotes and prices everything else from it. From here on the filled-in map is called by its real name, the **volatility surface**.
 
@@ -127,7 +107,7 @@ In between, the payoff rises in a straight line from 0 to 5 and falls back: a te
 
 The tent is $h$ wide on each side and $h$ tall, so its area is $h^2$. Divide the butterfly price by $h^2$ and it prices a narrowing spike of unit area: a bet paying off only if Acme ends very near $K$. That bet's price is the discounted chance of ending there. So the butterfly divided by $h^2$ is, approximately, the discounted density of Acme's future price.
 
-Taylor's theorem ([taylors-theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)) makes that exact. Expand $C(K \pm h)$ around $K$: the first-slope terms cancel between the two wings, and what is left is $h^2$ times the second derivative, plus a term of size $h^4$. So a non-negative butterfly at every step is a non-negative second derivative, which is a non-negative density.
+Taylor's theorem ([Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)) makes that exact. Expand $C(K \pm h)$ around $K$: the first-slope terms cancel between the two wings, and what is left is $h^2$ times the second derivative, plus a term of size $h^4$. So a non-negative butterfly at every step is a non-negative second derivative, which is a non-negative density.
 
 <details>
 <summary>The algebra behind this</summary>
@@ -170,7 +150,7 @@ Take $T_1 < T_2$ and $a = e^k$. The function $x \mapsto (x-a)^+$ is convex, so b
 
 </details>
 
-Volatility itself may fall with expiry; only $\sigma^2 T$ may not. That is the link to forward volatility ([term-structure-and-forward-volatility](02-term-structure-and-forward-volatility.md)): the variance between two expiries, $w(k,T_2) - w(k,T_1)$, must not be negative.
+Volatility itself may fall with expiry; only $\sigma^2 T$ may not. That is the link to forward volatility ([Term structure and forward volatility](02-term-structure-and-forward-volatility.md)): the variance between two expiries, $w(k,T_2) - w(k,T_1)$, must not be negative.
 
 On a grid, each expiry has its own $k$ nodes, because each has its own forward. The test compares the two linear interpolants at every node of either expiry, inside the range both cover. Between consecutive nodes the gap between two straight-line pieces is itself a straight line, so its lowest point sits at a node. Checking the nodes is complete.
 
@@ -186,7 +166,7 @@ The larger lower bound and the upper bound make a band of honest prices. Each ba
 
 A band says what is allowed, not what is right. The repair here discards the bad quote and refills it from its two neighbours, linear in total variance against $k$. The checks confirm the refill lands inside the band.
 
-A smooth parametric smile that cannot produce these faults in the first place is the other route; that is the job of [svi-smile-fit](04-svi-smile-fit.md).
+A smooth parametric smile that cannot produce these faults in the first place is the other route; that is the job of [The SVI smile](04-svi-smile-fit.md).
 
 ---
 
@@ -687,10 +667,10 @@ The 3-month roads differ by up to 12.6% at one strike, against 0.9% at 1 year: a
 ## Where you meet it in real life
 
 - **End-of-day marking.** Desks and exchanges build a surface from the day's quotes, run both tests, and repair or drop the few quotes that fail before any risk is computed from it.
-- **Exotic pricing.** Barrier and autocallable prices depend on the whole surface. A negative density means a negative probability in the pricer, and an imaginary local volatility ([dupire-local-volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md)).
-- **The VIX.** The index is a weighted strip of out-of-the-money options across strikes at two expiries ([vix-index](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/06-vix-index.md)); a bad quote in the strip moves the number.
-- **Currency options.** FX desks are quoted only a few points per expiry, as at-the-money, risk reversal and butterfly, and fill in the smile from them ([vanna-volga-smile-curve](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/05-vanna-volga-smile-curve.md)). The same two tests apply to the result.
-- **When Acme moves.** A surface is a snapshot. If Acme jumps to $105, "sticky strike" keeps each strike's vol; "sticky delta" keeps each log-moneyness's vol, so the whole smile slides with the forward. The choice changes the hedge ([smile-adjusted-delta](05-smile-adjusted-delta.md)); the shape of a single slice is the subject of [volatility-smile-and-skew](01-volatility-smile-and-skew.md).
+- **Exotic pricing.** Barrier and autocallable prices depend on the whole surface. A negative density means a negative probability in the pricer, and an imaginary local volatility ([Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md)).
+- **The VIX.** The index is a weighted strip of out-of-the-money options across strikes at two expiries ([The VIX](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/06-vix-index.md)); a bad quote in the strip moves the number.
+- **Currency options.** FX desks are quoted only a few points per expiry, as at-the-money, risk reversal and butterfly, and fill in the smile from them ([The vanna-volga smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/05-vanna-volga-smile-curve.md)). The same two tests apply to the result.
+- **When Acme moves.** A surface is a snapshot. If Acme jumps to $105, "sticky strike" keeps each strike's vol; "sticky delta" keeps each log-moneyness's vol, so the whole smile slides with the forward. The choice changes the hedge ([Smile-adjusted delta](05-smile-adjusted-delta.md)); the shape of a single slice is the subject of [The volatility smile and skew](01-volatility-smile-and-skew.md).
 
 > **Say it back**
 > A volatility surface is the grid of implied vols across strike and expiry, filled in between the quotes. It is best read in total variance against log-moneyness, because the call price depends on nothing else. At each expiry, every butterfly must cost at least zero, which is the same as a non-negative probability density. At each log-moneyness, total variance must not fall as expiry lengthens, which is the same as a longer calendar option being worth at least the shorter one. A quote that breaks the first test has a band of honest values, and refilling it from its neighbours in total variance puts it back inside.
@@ -699,17 +679,17 @@ The 3-month roads differ by up to 12.6% at one strike, against 0.9% at 1 year: a
 
 ## What this builds on
 
-- [term-structure-and-forward-volatility](02-term-structure-and-forward-volatility.md): forward variance between two expiries, here required to be non-negative at every log-moneyness, and the house 21.82% forward vol.
-- [taylors-theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): the expansion that turns a butterfly into a second derivative with an $h^4$ error.
+- [Term structure and forward volatility](02-term-structure-and-forward-volatility.md): forward variance between two expiries, here required to be non-negative at every log-moneyness, and the house 21.82% forward vol.
+- [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): the expansion that turns a butterfly into a second derivative with an $h^4$ error.
 
 ---
 
 ## Where this goes next
 
-- [svi-smile-fit](04-svi-smile-fit.md): a five-number smile formula fitted to one expiry, smooth where linear pieces are kinked, with conditions that keep $g$ positive.
-- [dupire-local-volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): turns an honest surface into one volatility per price and date, with the butterfly and calendar quantities in its denominator and numerator.
-- [vix-index](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/06-vix-index.md): integrates one slice of the surface into a single number for the market's expected variance.
-- [vanna-volga-smile-curve](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/05-vanna-volga-smile-curve.md): builds a whole smile from three quotes, which must then pass these tests.
+- [The SVI smile](04-svi-smile-fit.md): a five-number smile formula fitted to one expiry, smooth where linear pieces are kinked, with conditions that keep $g$ positive.
+- [Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): turns an honest surface into one volatility per price and date, with the butterfly and calendar quantities in its denominator and numerator.
+- [The VIX](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/06-vix-index.md): integrates one slice of the surface into a single number for the market's expected variance.
+- [The vanna-volga smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/05-vanna-volga-smile-curve.md): builds a whole smile from three quotes, which must then pass these tests.
 
 This card can test a surface and patch a point, but its linear pieces leave kinks in the density; the next card fits a smooth smile that is honest by construction.
 

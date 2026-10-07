@@ -1,28 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Linear Systems and Transforms
-topic: Reading modes off the s-plane
-item: Poles and zeros
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/02-impulse-response-and-transfer-functions|impulse-response-and-transfer-functions]]"
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/03-rational-functions-and-partial-fractions|rational-functions-and-partial-fractions]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/03-complex-roots-and-damped-oscillation|complex-roots-and-damped-oscillation]]"
-next:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/04-frequency-response-and-bode-plots|frequency-response-and-bode-plots]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/06-second-order-systems-damping-and-natural-frequency|second-order-systems-damping-and-natural-frequency]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/08-z-transform-and-discrete-time-systems|z-transform-and-discrete-time-systems]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/04-routh-hurwitz-criterion|routh-hurwitz-criterion]]"
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/01-state-space-models-and-the-matrix-exponential|state-space-models-and-the-matrix-exponential]]"
-tags: [mathematics, engineering mathematics, poles-zeros-and-stability]
----
-
 # Poles and zeros: where a response decays, rings, or runs away
 
-Engineering mathematics → Linear Systems and Transforms → Reading modes off the s-plane → Poles and zeros
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Linear Systems and Transforms](../../../SYLLABUS.md#w13-s02) → Poles and zeros
 
 ---
 
@@ -55,7 +33,7 @@ The line is the simulated speed, sampled every 5 s. It passes 27 m/s at 10.304 s
 
 ## The formula
 
-Reminder from [impulse-response-and-transfer-functions](02-impulse-response-and-transfer-functions.md): the transfer function $G(s)$ says what the system does to each exponential e^(st) fed into it, and its inverse Laplace transform is the impulse response, written h(t) there and $g(t)$ here, the output after one sharp kick. Engineers write j for the square root of −1, as this wing does; the rest of the library writes i.
+Reminder from [Transfer functions](02-impulse-response-and-transfer-functions.md): the transfer function $G(s)$ says what the system does to each exponential e^(st) fed into it, and its inverse Laplace transform is the impulse response, written h(t) there and $g(t)$ here, the output after one sharp kick. Engineers write j for the square root of −1, as this wing does; the rest of the library writes i.
 
 For the car on cruise control, from set speed to road speed (derived in Step 1):
 
@@ -92,7 +70,7 @@ $$\text{every input with } |\text{input}(t)| \le M \text{ gives a bounded output
 ### When it holds
 
 - **Linear and time-invariant.** Real drag grows with the square of speed; the card uses its slope near 25 m/s. For a 10 m/s change the straight line gives 600 N of extra drag where a 1.2 v^2 law gives 720 N, so poles drawn at 25 m/s do not describe a jump to 35 m/s.
-- **A rational G with common factors cancelled.** A zero that lands on a pole erases it from $G(s)$, but the mode is still inside the machine: an erased runaway pole still runs away, unseen at the output (state-space-models-and-the-matrix-exponential tracks it).
+- **A rational G with common factors cancelled.** A zero that lands on a pole erases it from $G(s)$, but the mode is still inside the machine: an erased runaway pole still runs away, unseen at the output (State space tracks it).
 - **Distinct poles, or care with repeats.** A pole repeated twice gives a mode t e^(pt). The test is unchanged in the open left half-plane, but a repeated pole on the axis grows like t.
 - **Numerator degree below the denominator's, for the sum as written.** At equal degree G also has a constant term: that share of the input passes straight through, so g gains an instant spike of that size, and the area of |g| gains the size too. Above it, a pure differentiator, G(s) = s, has no pole yet fails the test: a bounded input that wiggles ever faster has an unbounded slope.
 - **Starting from rest.** BIBO is about the input-to-output map with zero initial stored energy; a start from a disturbed state adds the same modes with other amounts.
@@ -107,17 +85,17 @@ A linear, time-invariant system fed e^(st) returns G(s) e^(st): same exponential
 
 ### Step 1: turn the car into a transfer function
 
-Call the speed change v, in m/s, and the throttle push u, in N. Newton's law with linearised drag: m v' = −b v + u. The car alone has transfer function 1/(m s + b), one pole at −b/m = −0.04 1/s: a time constant of 25.0 s. This is a draggier vehicle than the car of [linear-time-invariant-systems-and-convolution](01-linear-time-invariant-systems-and-convolution.md): the same mass, but more than twice the drag slope, so it answers faster.
+Call the speed change v, in m/s, and the throttle push u, in N. Newton's law with linearised drag: m v' = −b v + u. The car alone has transfer function 1/(m s + b), one pole at −b/m = −0.04 1/s: a time constant of 25.0 s. This is a draggier vehicle than the car of [Linear and time-invariant](01-linear-time-invariant-systems-and-convolution.md): the same mass, but more than twice the drag slope, so it answers faster.
 
 The controller pushes u = k E + k a × (running total of E), where E is the shortfall, set speed minus speed. Its transfer function is k + k a / s = k (s + a)/s: a **pole at the origin**, the integrator, and a zero at −a = −0.125 1/s. Closing the loop, v = (controller × car)(set speed − v), and solving for v over set speed:
 
 $$G(s) = \frac{(k/m)(s + a)}{s^2 + \frac{b + k}{m}\, s + \frac{k a}{m}} = \frac{0.16\,(s + 0.125)}{s^2 + 0.2\,s + 0.02}.$$
 
-G(0) = 0.02 / 0.02 = 1.0000: a held change in set speed ends as the same change in road speed. That is the integrator's job, and [final-value-theorem-and-steady-gain](05-final-value-theorem-and-steady-gain.md) proves it in general.
+G(0) = 0.02 / 0.02 = 1.0000: a held change in set speed ends as the same change in road speed. That is the integrator's job, and [Final value and bandwidth](05-final-value-theorem-and-steady-gain.md) proves it in general.
 
 ### Step 2: factor, and read one mode per pole
 
-The quadratic formula on s^2 + 0.2 s + 0.02 gives −0.1 ± 0.1j. Each pole p = −σ + jω gives a mode e^(−σt) times a turn at ω rad/s; a conjugate pair combines into a real mix of e^(−σt) cos ωt and e^(−σt) sin ωt ([complex-roots-and-damped-oscillation](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md)). So:
+The quadratic formula on s^2 + 0.2 s + 0.02 gives −0.1 ± 0.1j. Each pole p = −σ + jω gives a mode e^(−σt) times a turn at ω rad/s; a conjugate pair combines into a real mix of e^(−σt) cos ωt and e^(−σt) sin ωt ([Complex roots](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md)). So:
 
 - σ = 0.1 1/s: the envelope halves every ln 2 / 0.1 = 6.93 s.
 - ω = 0.1 rad/s: one swing every 2π / 0.1 = 62.83 s.
@@ -155,7 +133,7 @@ $$\text{speed change}(t) = 1 - e^{-0.1t}\,(\cos 0.1t - 0.6 \sin 0.1t).$$
 
 ### Step 4: a bounded input gives a bounded output exactly when the area of |g| is finite
 
-The output is the input smeared by g, a convolution ([linear-time-invariant-systems-and-convolution](01-linear-time-invariant-systems-and-convolution.md)): at time T it is the integral of g(τ) times the input at T − τ, over τ from 0 to T. If the input never exceeds M, each slice is at most M |g(τ)|, so the output never exceeds M times the area of |g|.
+The output is the input smeared by g, a convolution ([Linear and time-invariant](01-linear-time-invariant-systems-and-convolution.md)): at time T it is the integral of g(τ) times the input at T − τ, over τ from 0 to T. If the input never exceeds M, each slice is at most M |g(τ)|, so the output never exceeds M times the area of |g|.
 
 The converse needs one cruel input. Choose the input at time T − τ to be +M wherever g(τ) is positive and −M wherever it is negative. Every slice then adds, and the output at T equals M times the area of |g| up to T. If that area grows without limit, inputs within ±M drive the output past any bound, so no bound of the form M times a constant covers them all. For a rational G a single input does it, as the poles of Step 5 show: a pole at 0 or in the right half makes a held step's output grow without limit, and a pair at ±jω does the same to a sine at ω.
 
@@ -180,11 +158,11 @@ The zeros of a given G sit in its numerator, so they move its residues, not its 
 - **No zero, same poles and G(0):** overshoot 4.32%, which is e^(−πσ/ω) = e^(−π) for σ = ω.
 - **Zero at +0.125:** the speed first moves the wrong way, to 24.41 m/s at 4.18 s, before rising to a peak of 1.0560 per m/s requested.
 
-That holds for G with its poles fixed. This car's zero is the controller's own, at −a, and a also enters the denominator through ka/m. Put the controller's zero at +0.125, so a = −0.125, and the denominator becomes s^2 + 0.2 s − 0.02, with poles +0.0732 and −0.2732 1/s: the car runs away. A zero inside a loop pulls the closed-loop poles towards it as the gain grows, the subject of [root-locus](../03-Feedback%20Control/05-root-locus.md).
+That holds for G with its poles fixed. This car's zero is the controller's own, at −a, and a also enters the denominator through ka/m. Put the controller's zero at +0.125, so a = −0.125, and the denominator becomes s^2 + 0.2 s − 0.02, with poles +0.0732 and −0.2732 1/s: the car runs away. A zero inside a loop pulls the closed-loop poles towards it as the gain grows, the subject of [Root locus](../03-Feedback%20Control/05-root-locus.md).
 
-A system whose zeros all sit in the left half-plane is called **minimum-phase**. A right-half-plane zero can be split off as an **all-pass** factor, (a − s)/(a + s), which keeps every frequency's size and adds only delay to its phase ([frequency-response-and-bode-plots](04-frequency-response-and-bode-plots.md)). That delay is why a right-half-plane zero limits how fast any controller can make the system respond.
+A system whose zeros all sit in the left half-plane is called **minimum-phase**. A right-half-plane zero can be split off as an **all-pass** factor, (a − s)/(a + s), which keeps every frequency's size and adds only delay to its phase ([Bode plots](04-frequency-response-and-bode-plots.md)). That delay is why a right-half-plane zero limits how fast any controller can make the system respond.
 
-**Another route.** The poles are also the eigenvalues of the car-and-controller state matrix, and state-space-models-and-the-matrix-exponential reads stability from there. When only the sign of the real parts matters, [routh-hurwitz-criterion](../03-Feedback%20Control/04-routh-hurwitz-criterion.md) decides it from the denominator's coefficients without finding a single root.
+**Another route.** The poles are also the eigenvalues of the car-and-controller state matrix, and State space reads stability from there. When only the sign of the real parts matters, [Routh-Hurwitz](../03-Feedback%20Control/04-routh-hurwitz-criterion.md) decides it from the denominator's coefficients without finding a single root.
 
 ---
 
@@ -609,8 +587,8 @@ The two outputs are identical line for line.
 
 - **Cruise control and adaptive cruise control.** The closed-loop poles set how far the car overshoots a new set speed and how long it takes to settle; this card's car overshoots by 0.2684 m/s.
 - **Aircraft handling.** The short-period and phugoid modes of an aircraft's pitch are pole pairs; handling-quality specifications set the minimum damping of each.
-- **Audio and anti-alias filters.** A filter's poles set its ring; a filter with poles near the axis rings audibly after a click ([frequency-response-and-bode-plots](04-frequency-response-and-bode-plots.md)).
-- **Digital controllers.** In sampled time the same test reads "every pole inside the unit circle" ([z-transform-and-discrete-time-systems](08-z-transform-and-discrete-time-systems.md)).
+- **Audio and anti-alias filters.** A filter's poles set its ring; a filter with poles near the axis rings audibly after a click ([Bode plots](04-frequency-response-and-bode-plots.md)).
+- **Digital controllers.** In sampled time the same test reads "every pole inside the unit circle" ([The z-transform](08-z-transform-and-discrete-time-systems.md)).
 - **Footbridges and tall buildings.** A lightly damped structural mode is a pole pair close to the imaginary axis; dampers are fitted to push it left.
 
 > **Say it back**
@@ -620,19 +598,19 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [impulse-response-and-transfer-functions](02-impulse-response-and-transfer-functions.md): G(s) and its kick response g(t), the two objects this card factors.
-- [rational-functions-and-partial-fractions](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/03-rational-functions-and-partial-fractions.md): splitting a rational function into one piece per pole, with the residue formula.
-- [complex-roots-and-damped-oscillation](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md): why a conjugate pair −σ ± jω is a ring inside a shrinking envelope.
+- [Transfer functions](02-impulse-response-and-transfer-functions.md): G(s) and its kick response g(t), the two objects this card factors.
+- [Rational functions](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/03-rational-functions-and-partial-fractions.md): splitting a rational function into one piece per pole, with the residue formula.
+- [Complex roots](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md): why a conjugate pair −σ ± jω is a ring inside a shrinking envelope.
 
 ## Where this goes next
 
-- [frequency-response-and-bode-plots](04-frequency-response-and-bode-plots.md): the same poles and zeros read as gain and phase against frequency.
-- [second-order-systems-damping-and-natural-frequency](06-second-order-systems-damping-and-natural-frequency.md): a pole pair renamed by damping ratio and natural frequency, the engineer's dials.
-- [z-transform-and-discrete-time-systems](08-z-transform-and-discrete-time-systems.md): the left half-plane becomes the inside of the unit circle.
-- [routh-hurwitz-criterion](../03-Feedback%20Control/04-routh-hurwitz-criterion.md): the sign of every pole's real part from the coefficients, no roots needed.
-- state-space-models-and-the-matrix-exponential: poles as eigenvalues, and the hidden modes a cancelled pole leaves behind.
+- [Bode plots](04-frequency-response-and-bode-plots.md): the same poles and zeros read as gain and phase against frequency.
+- [Damping ratio and natural frequency](06-second-order-systems-damping-and-natural-frequency.md): a pole pair renamed by damping ratio and natural frequency, the engineer's dials.
+- [The z-transform](08-z-transform-and-discrete-time-systems.md): the left half-plane becomes the inside of the unit circle.
+- [Routh-Hurwitz](../03-Feedback%20Control/04-routh-hurwitz-criterion.md): the sign of every pole's real part from the coefficients, no roots needed.
+- State space: poles as eigenvalues, and the hidden modes a cancelled pole leaves behind.
 
-The poles say whether the car settles and how it rings; [second-order-systems-damping-and-natural-frequency](06-second-order-systems-damping-and-natural-frequency.md) turns a pole pair into overshoot and settling numbers, and choosing the gain that puts the poles where those numbers are met is the work of [root-locus](../03-Feedback%20Control/05-root-locus.md).
+The poles say whether the car settles and how it rings; [Damping ratio and natural frequency](06-second-order-systems-damping-and-natural-frequency.md) turns a pole pair into overshoot and settling numbers, and choosing the gain that puts the poles where those numbers are met is the work of [Root locus](../03-Feedback%20Control/05-root-locus.md).
 
 ---
 

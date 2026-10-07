@@ -1,38 +1,20 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Length Done Properly
-topic: Splitting test sets
-item: Caratheodory's criterion
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/01-lebesgue-outer-measure|lebesgue-outer-measure]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/02-sigma-algebras|sigma-algebras]]"
-next:
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/03-lebesgue-measure|lebesgue-measure]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/05-caratheodory-extension-theorem|caratheodory-extension-theorem]]"
-tags: [mathematics, measure and integration, caratheodory-measurable-sets]
----
-
 # Caratheodory's criterion: keep the sets that split every other set cleanly, and outer measure adds up on them
 
-Measure and integration → Length Done Properly → Splitting test sets → Caratheodory's criterion
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Length Done Properly](../../../SYLLABUS.md#w10-s02) → Caratheodory's criterion
 
 ---
 
 ## General Overview
 
-A wooden fence runs 3 metres, with 100 rust spots marked on it, one every 3 centimetres, the last on the end post. Outer measure ([lebesgue-outer-measure](01-lebesgue-outer-measure.md)) gave every set of points on the fence a size: the cheapest total length of open intervals covering it. The spots came out at 0, the fence at 3, the fence without its spots at 3. Here 0 + 3 = 3: the sizes of two non-overlapping parts add up to the size of the whole.
+A wooden fence runs 3 metres, with 100 rust spots marked on it, one every 3 centimetres, the last on the end post. Outer measure ([Outer measure](01-lebesgue-outer-measure.md)) gave every set of points on the fence a size: the cheapest total length of open intervals covering it. The spots came out at 0, the fence at 3, the fence without its spots at 3. Here 0 + 3 = 3: the sizes of two non-overlapping parts add up to the size of the whole.
 
-Outer measure does not promise that. It promises only that the parts' sizes add to *at least* the whole's size: covers are bought for each part separately, and two tangled parts can each need tape the other also needs. Such sets exist on the line: the Vitali set ([translation-invariance-and-the-vitali-set](04-translation-invariance-and-the-vitali-set.md)) fails the test below, so some set splits across it into two parts whose outer measures add to more than the whole's.
+Outer measure does not promise that. It promises only that the parts' sizes add to *at least* the whole's size: covers are bought for each part separately, and two tangled parts can each need tape the other also needs. Such sets exist on the line: the Vitali set ([Translation invariance and the Vitali set](04-translation-invariance-and-the-vitali-set.md)) fails the test below, so some set splits across it into two parts whose outer measures add to more than the whole's.
 
 Which sets can be trusted? Constantin Carathéodory's answer, from 1914, is a test. Take the stretch E from 0.5 m to 1.2 m, and a test set T: the fence from 0.2 to 0.8 and from 1.0 to 2.0, of outer measure 0.6 + 1.0 = 1.6. Cut T with E. The part inside E measures 0.5; the part outside measures 1.1; and 0.5 + 1.1 = 1.6. Nothing was lost or double-charged. E passes if this happens for *every* test set. The rust spots pass too: they split the same T into 0 and 1.6.
 
 The sizes 1.6, 0.5 and 1.1 are pinned from both sides, not assumed. T and the gap (0.8, 1.0) make up [0.2, 2.0], of outer measure 1.8, so subadditivity puts T at no less than 1.8 − 0.2 = 1.6, and covering its two pieces puts it at no more. The same squeeze, with the gaps (0.8, 1.0) and E, gives 0.5 and 1.1.
 
-The sets that pass form a sigma-algebra: a collection closed under complements and countable unions ([sigma-algebras](../01-Sets%20You%20Can%20Measure/02-sigma-algebras.md)).
+The sets that pass form a sigma-algebra: a collection closed under complements and countable unions ([Sigma-algebras](../01-Sets%20You%20Can%20Measure/02-sigma-algebras.md)).
 
 **Keep only the sets that split every test set with no loss; they form a sigma-algebra, outer measure adds up countably on them, and for length on the line every interval and every set of size zero is among them.**
 
@@ -60,7 +42,7 @@ $$\mathcal{M} \text{ is a sigma-algebra, and } \ \mu^*\Big(\bigcup_{i} E_i\Big) 
 
 **Read it aloud:** the passing sets survive complements and countable unions, and on them the size of a union of separate pieces is the sum of their sizes.
 
-For Lebesgue outer measure on the line, two families pass: every interval, and every set with $\lambda^*$ equal to 0. The rule $\lambda^*$ kept only on $\mathcal{M}$ is Lebesgue measure $\lambda$ ([lebesgue-measure](03-lebesgue-measure.md)).
+For Lebesgue outer measure on the line, two families pass: every interval, and every set with $\lambda^*$ equal to 0. The rule $\lambda^*$ kept only on $\mathcal{M}$ is Lebesgue measure $\lambda$ ([Lebesgue measure](03-lebesgue-measure.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -105,7 +87,7 @@ Take E and F in $\mathcal{M}$. Cut T by E, then cut the outside part again by F:
 
 ### Step 3: countable unions pass, and sizes add
 
-For separate pieces $E_1, E_2, \dots$ in $\mathcal{M}$, cut T by the first piece, then the rest by the second, and so on. Each cut is exact, so the parts of T in the first few pieces, plus the part outside all of them, add to at most $\mu^*(T)$. Let the number of pieces grow: the sum becomes a series, and by subadditivity the series is at least the size of the part of T in the whole union. So the union passes. An overlapping list is first made separate, keeping from each set only what earlier ones missed. So $\mathcal{M}$ is a sigma-algebra. Taking the union itself as T gives countable additivity: $\mu^*$ is a measure on $\mathcal{M}$, in the sense of [measures](../01-Sets%20You%20Can%20Measure/04-measures.md).
+For separate pieces $E_1, E_2, \dots$ in $\mathcal{M}$, cut T by the first piece, then the rest by the second, and so on. Each cut is exact, so the parts of T in the first few pieces, plus the part outside all of them, add to at most $\mu^*(T)$. Let the number of pieces grow: the sum becomes a series, and by subadditivity the series is at least the size of the part of T in the whole union. So the union passes. An overlapping list is first made separate, keeping from each set only what earlier ones missed. So $\mathcal{M}$ is a sigma-algebra. Taking the union itself as T gives countable additivity: $\mu^*$ is a measure on $\mathcal{M}$, in the sense of [Measures](../01-Sets%20You%20Can%20Measure/04-measures.md).
 
 ### Step 4: sets of size zero pass
 
@@ -115,7 +97,7 @@ For the rust spots R, the part of any T inside R measures 0, since it sits insid
 
 Start with a half-line: every point beyond a cut point. Cover T by open intervals $I_k$ whose lengths total at most $\lambda^*(T) + \varepsilon$. Cut each $I_k$ at the cut point: two intervals whose lengths add to exactly the length of $I_k$. The inside pieces cover the part of T in the half-line, the outside pieces cover the rest, so the two parts measure at most $\lambda^*(T) + \varepsilon$ together, for every slack $\varepsilon$. On the fence, a cover of T totalling 1.61 cuts at 0.5 and 1.2 into 0.505 inside E and 1.105 outside.
 
-Complements of half-lines pass by Step 1. E = [0.5, 1.2] is the overlap of "from 0.5 on" and "up to 1.2", so it passes by Step 2. Every interval is built the same way, open ones as countable unions, so every Borel set passes ([generated-and-borel-sigma-algebras](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)).
+Complements of half-lines pass by Step 1. E = [0.5, 1.2] is the overlap of "from 0.5 on" and "up to 1.2", so it passes by Step 2. Every interval is built the same way, open ones as countable unions, so every Borel set passes ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)).
 
 <details>
 <summary>Detailed proof</summary>
@@ -140,13 +122,13 @@ So $B \in \mathcal{M}$. For an arbitrary list in $\mathcal{M}$, the sets $F_1 = 
 
 **6. Null sets.** If $\mu^*(N) = 0$, monotonicity gives $\mu^*(T \cap N) = 0$ and $\mu^*(T \cap N^c) \le \mu^*(T)$ for every $T$, so $N \in \mathcal{M}$.
 
-**7. Half-lines for $\lambda^*$.** Let $H = (c, \infty)$ and $\varepsilon > 0$. As $\lambda^*(T)$ is a greatest lower bound, some open intervals $I_1, I_2, \dots$ cover $T$ with $\sum_k \ell(I_k) \le \lambda^*(T) + \varepsilon$, where $\ell(I_k)$ is the length of $I_k$. The sets $I_k \cap H$ and $I_k \cap H^c$ are intervals, possibly empty, with $\ell(I_k \cap H) + \ell(I_k \cap H^c) = \ell(I_k)$; the first family covers $T \cap H$ and the second covers $T \cap H^c$. An interval's outer measure is its length ([lebesgue-outer-measure](01-lebesgue-outer-measure.md)), so by subadditivity
+**7. Half-lines for $\lambda^*$.** Let $H = (c, \infty)$ and $\varepsilon > 0$. As $\lambda^*(T)$ is a greatest lower bound, some open intervals $I_1, I_2, \dots$ cover $T$ with $\sum_k \ell(I_k) \le \lambda^*(T) + \varepsilon$, where $\ell(I_k)$ is the length of $I_k$. The sets $I_k \cap H$ and $I_k \cap H^c$ are intervals, possibly empty, with $\ell(I_k \cap H) + \ell(I_k \cap H^c) = \ell(I_k)$; the first family covers $T \cap H$ and the second covers $T \cap H^c$. An interval's outer measure is its length ([Outer measure](01-lebesgue-outer-measure.md)), so by subadditivity
 $$\lambda^*(T \cap H) + \lambda^*(T \cap H^c) \le \sum_k \ell(I_k \cap H) + \sum_k \ell(I_k \cap H^c) = \sum_k \ell(I_k) \le \lambda^*(T) + \varepsilon.$$
 The slack is arbitrary, so $H \in \mathcal{M}$. Then $(-\infty, c] = H^c$, $(a, b] = (a, \infty) \cap (-\infty, b]$, $\{b\} = \bigcap_k (b - 1/k, b]$ and $(a, b) = \bigcup_k (a, b - 1/k]$ put every interval in $\mathcal{M}$ by 1, 2 and 4, and with them the sigma-algebra they generate: the Borel sets.
 
 </details>
 
-The same filter builds more than length. Start from any rule that sizes the sets of a simple family, form its outer measure by cheapest covers, and keep the sets that pass: that is [caratheodory-extension-theorem](05-caratheodory-extension-theorem.md).
+The same filter builds more than length. Start from any rule that sizes the sets of a simple family, form its outer measure by cheapest covers, and keep the sets that pass: that is [Caratheodory's extension theorem](05-caratheodory-extension-theorem.md).
 
 ---
 
@@ -582,7 +564,7 @@ Orange: the part of T inside E, falling to 0.5. Green: the part outside E, falli
 > [!warning]
 > **Reading "measurable" as "has a size".** Every set has an outer measure; that is the point of outer measure. Measurable means the size behaves: it adds up with the sizes of the other pieces. On the toy fence b has size 1 and c has size 1, yet b and c together cost 1, not 2.
 >
-> - **Testing with one convenient set.** For a general outer measure the whole space is the obvious test set and the weakest one: b passes it with 1 + 2 = 3 and still fails with bc. For length on a bounded stretch such as the fence, the whole-stretch test happens to suffice, because it forces the tightest wrappings of the set from outside and from inside to have equal length ([lebesgue-measure](03-lebesgue-measure.md)).
+> - **Testing with one convenient set.** For a general outer measure the whole space is the obvious test set and the weakest one: b passes it with 1 + 2 = 3 and still fails with bc. For length on a bounded stretch such as the fence, the whole-stretch test happens to suffice, because it forces the tightest wrappings of the set from outside and from inside to have equal length ([Lebesgue measure](03-lebesgue-measure.md)).
 > - **Taking one cover as the size.** A grid of 10 cells per metre makes the rust spots look 3.1 m long; the cheapest cover is what counts, and it gives 0.
 > - **Stretching "countable" to "any".** Every single point passes; the Vitali set, a union of points, does not.
 
@@ -590,9 +572,9 @@ Orange: the part of T inside E, falling to 0.5. Green: the part outside E, falli
 
 ## Where you meet it in real life
 
-- **Length, area and volume.** Lebesgue measure is Lebesgue outer measure kept on the sets passing this test ([lebesgue-measure](03-lebesgue-measure.md)); area and volume come the same way from rectangles and boxes.
-- **Probability distributions on the line.** Every running-total function of a distribution builds its measure through the same filter ([lebesgue-stieltjes-measures](06-lebesgue-stieltjes-measures.md)).
-- **Sets with no interior.** The Cantor set passes because it is closed, and its size, 0, is read from lengths removed ([the-cantor-set](07-the-cantor-set.md)).
+- **Length, area and volume.** Lebesgue measure is Lebesgue outer measure kept on the sets passing this test ([Lebesgue measure](03-lebesgue-measure.md)); area and volume come the same way from rectangles and boxes.
+- **Probability distributions on the line.** Every running-total function of a distribution builds its measure through the same filter ([Distribution functions and Lebesgue-Stieltjes measures](06-lebesgue-stieltjes-measures.md)).
+- **Sets with no interior.** The Cantor set passes because it is closed, and its size, 0, is read from lengths removed ([The Cantor set](07-the-cantor-set.md)).
 - **Fractal sizes.** Hausdorff measure, which gives fractional dimensions to fractals, starts as an outer measure and becomes a measure through this same test.
 
 > **Say it back**
@@ -602,15 +584,15 @@ Orange: the part of T inside E, falling to 0.5. Green: the part outside E, falli
 
 ## What this builds on
 
-- [lebesgue-outer-measure](01-lebesgue-outer-measure.md): sizes by cheapest covers, subadditivity, and an interval's outer measure equal to its length.
-- [sigma-algebras](../01-Sets%20You%20Can%20Measure/02-sigma-algebras.md): the closure rules the passing sets turn out to obey.
+- [Outer measure](01-lebesgue-outer-measure.md): sizes by cheapest covers, subadditivity, and an interval's outer measure equal to its length.
+- [Sigma-algebras](../01-Sets%20You%20Can%20Measure/02-sigma-algebras.md): the closure rules the passing sets turn out to obey.
 
 ## Where this goes next
 
-- [lebesgue-measure](03-lebesgue-measure.md): the measure this card produces on the line, squeezed between open and closed sets.
-- [caratheodory-extension-theorem](05-caratheodory-extension-theorem.md): the same filter applied to any rule that sizes a simple family of sets.
+- [Lebesgue measure](03-lebesgue-measure.md): the measure this card produces on the line, squeezed between open and closed sets.
+- [Caratheodory's extension theorem](05-caratheodory-extension-theorem.md): the same filter applied to any rule that sizes a simple family of sets.
 
-The criterion gives a measure on a sigma-algebra; exactly which sets of the line it holds, and how tightly open and closed sets pin them, is the question [lebesgue-measure](03-lebesgue-measure.md) answers.
+The criterion gives a measure on a sigma-algebra; exactly which sets of the line it holds, and how tightly open and closed sets pin them, is the question [Lebesgue measure](03-lebesgue-measure.md) answers.
 
 ---
 

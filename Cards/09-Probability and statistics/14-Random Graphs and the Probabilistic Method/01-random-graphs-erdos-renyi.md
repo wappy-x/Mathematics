@@ -1,31 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Random Graphs and the Probabilistic Method
-topic: Networks built by coin tosses
-item: Random graphs
-kind: model
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/04-poisson|poisson]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/01-graphs-vertices-and-edges|graphs-vertices-and-edges]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/02-degree-and-handshaking|degree-and-handshaking]]"
-next:
-  - "[[Cards/09-Probability and statistics/14-Random Graphs and the Probabilistic Method/02-the-giant-component|the-giant-component]]"
-  - "[[Cards/09-Probability and statistics/14-Random Graphs and the Probabilistic Method/05-random-walks-on-graphs-and-mixing|random-walks-on-graphs-and-mixing]]"
-  - "[[Cards/14-Applied and computational/07-Network Science and Spectral Graphs/04-small-world-and-scale-free-models|small-world-and-scale-free-models]]"
-  - "[[Cards/14-Applied and computational/07-Network Science and Spectral Graphs/05-epidemics-on-networks|epidemics-on-networks]]"
-  - "[[Cards/25-Frontier/05-Analysis and Dynamics/06-dying-percolation-and-critical-phenomena|dying-percolation-and-critical-phenomena]]"
-tags:
-  - mathematics
-  - probability and statistics
-  - random-graphs-erdos-renyi
----
-
 # Random graphs: every edge tossed with probability p
 
-Probability and statistics → Random Graphs and the Probabilistic Method → Networks built by coin tosses → Random graphs
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Graphs and the Probabilistic Method](../../../SYLLABUS.md#w09-s14) → Random graphs
 
 ---
 
@@ -35,7 +10,7 @@ A town has 1,000 people. Nobody plans who befriends whom. For every pair of peop
 
 That rule makes 499,500 tosses, one per pair. It yields 1,498.5 friendships on average, and each person ends up with about 3 friends: 2.997 on average. Not everyone gets 3. About 1 person in 20 has no friends at all, and about 1 in 125 has 8.
 
-The network drawn this way is a **graph**: dots for people, lines for friendships ([graphs-vertices-and-edges](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). From here on the dots are **vertices**, the lines **edges**, and a person's friend count is their **degree** ([degree-and-handshaking](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)). A graph built by tossing one coin per pair is a **random graph**. Edgar Gilbert defined this version in 1959; Paul Erdős and Alfréd Rényi, the same year, studied a close cousin with a fixed number of edges, and both now go by their names.
+The network drawn this way is a **graph**: dots for people, lines for friendships ([Graphs](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). From here on the dots are **vertices**, the lines **edges**, and a person's friend count is their **degree** ([Degrees and the handshaking lemma](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)). A graph built by tossing one coin per pair is a **random graph**. Edgar Gilbert defined this version in 1959; Paul Erdős and Alfréd Rényi, the same year, studied a close cousin with a fixed number of edges, and both now go by their names.
 
 The model is a baseline. It says what a network looks like when nothing but chance links people. A real network's departures from it, such as far more closed triangles of mutual friends, are what reveal structure.
 
@@ -105,7 +80,7 @@ A second quantity follows from the same sums. The expected number of people with
 
 ### When it holds
 
-- **Every pair has the same chance.** If some people are far more sociable, the degree law grows a long right tail of hubs that no binomial has; small-world-and-scale-free-models builds those networks.
+- **Every pair has the same chance.** If some people are far more sociable, the degree law grows a long right tail of hubs that no binomial has; Small worlds and hubs builds those networks.
 - **The coins are independent.** The averages survive dependence, since an average of a sum never needs independence, but the laws do not. If one coin decided every pair at once, the average degree would still be 2.997, yet each person would have no friends with chance 0.997.
 - **p is small for the Poisson form.** The binomial law is exact for any p. Poisson is a stand-in whose error is at most $(n-1)p^2$: 0.009 here, but in a town of 11 at p = 0.3 the gap is 0.0864.
 - **The model, not the world.** Real friendships cluster: two friends of one person are often friends. Here that chance is just p, 0.003, and the whole town holds about 4.49 triangles.
@@ -130,7 +105,7 @@ pairs, and 499,500 coins.
 
 The friendship count is the sum of the 499,500 indicators. Each is 1 with chance 0.003. By Step 0 the average is 499,500 × 0.003 = 1,498.5.
 
-The coins are independent and alike, so M is the number of successes in 499,500 independent trials: that is the binomial law by definition ([bernoulli-and-binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). Its variance is the number of trials times p(1 − p), so its standard deviation is 38.65: town to town, the friendship count typically strays from 1,498.5 by about that much.
+The coins are independent and alike, so M is the number of successes in 499,500 independent trials: that is the binomial law by definition ([Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). Its variance is the number of trials times p(1 − p), so its standard deviation is 38.65: town to town, the friendship count typically strays from 1,498.5 by about that much.
 
 ### Step 3: one person's degree is binomial
 
@@ -150,7 +125,7 @@ Each next chance is the last one times a ratio:
 
 $$\frac{P(D=k+1)}{P(D=k)} = \frac{n-1-k}{k+1}\cdot\frac{p}{1-p}$$
 
-For a fixed k and large n, n − 1 − k is nearly n − 1 and 1 − p is nearly 1, so the ratio tends to λ/(k + 1). The Poisson law has exactly that start and exactly that ratio. The [poisson](../03-Discrete%20Distributions/04-poisson.md) card proves this limit in full; nothing about graphs enters it.
+For a fixed k and large n, n − 1 − k is nearly n − 1 and 1 − p is nearly 1, so the ratio tends to λ/(k + 1). The Poisson law has exactly that start and exactly that ratio. The [Poisson](../03-Discrete%20Distributions/04-poisson.md) card proves this limit in full; nothing about graphs enters it.
 
 ### Step 5: how close, in one number
 
@@ -165,7 +140,7 @@ Build each of a person's n − 1 coins from one uniform number U between 0 and 1
 
 Since $e^{-p} \ge 1-p$, the two disagree only when $1-p < U \le e^{-p}$ (coin 1, count 0), with chance $e^{-p}-1+p$, or when $U > e^{-p}(1+p)$ (count at least 2), with chance $1-e^{-p}-p\,e^{-p}$. The two add to $p(1-e^{-p})$, and since $1-e^{-p} \le p$, that is at most $p^2$.
 
-Do this for all n − 1 coins with independent U's. The coins sum to D. The Poisson counts sum to a Poisson count with mean (n − 1)p = λ, since independent Poisson counts add ([sums-of-discrete-variables](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md)). The two sums can differ only if some coin disagrees with its partner. By the union bound, that has chance at most $(n-1)\,p\,(1-e^{-p})$.
+Do this for all n − 1 coins with independent U's. The coins sum to D. The Poisson counts sum to a Poisson count with mean (n − 1)p = λ, since independent Poisson counts add ([Adding counts](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md)). The two sums can differ only if some coin disagrees with its partner. By the union bound, that has chance at most $(n-1)\,p\,(1-e^{-p})$.
 
 For any event A, P(D in A) and P(Poisson in A) are two chances of events that coincide except when the sums differ. So they differ by at most the chance that the sums differ. That is $\Delta \le (n-1)\,p\,(1-e^{-p}) \le (n-1)p^2$.
 
@@ -177,7 +152,7 @@ The share of the town with k friends is a sum over people: 1 for each person wit
 
 The same indicator sum counts people with no friends: n chances of $(1-p)^{n-1}$ each, 1,000 × 0.049712 = 49.71. It counts triangles too. There are $\binom{n}{3}$ = 166,167,000 groups of three, and each is a triangle only when its three coins all land, chance $p^3$. The average is 4.486509.
 
-How tightly the share clusters around its average is a question about variance, not averages. The tool is the variance of a sum of indicators, which [first-and-second-moment-methods](04-first-and-second-moment-methods.md) works out for the triangle count.
+How tightly the share clusters around its average is a question about variance, not averages. The tool is the variance of a sum of indicators, which [First and second moments](04-first-and-second-moment-methods.md) works out for the triangle count.
 
 Erdős and Rényi's own model is the close cousin: fix a number of edges, then choose exactly that many of the 499,500 pairs, every choice equally likely. Fix the number near 1,498.5 and most questions get the same answers as in $G(n,p)$, because the edge count of $G(n,p)$ rarely strays far from its average. The Frieze and Karoński book below treats both and moves between them.
 
@@ -634,9 +609,9 @@ The two outputs match line for line: the generator is integer arithmetic in both
 ## Where you meet it in real life
 
 - **Network science's yardstick.** A measured network, of friendships, citations or proteins, is compared with a random graph of the same size and density. A triangle count far above the model's, 4.49 for our town, is evidence of clustering that chance alone does not produce.
-- **Epidemics.** Disease passes along edges; in a random graph each case meets on average λ contacts, and whether an outbreak takes off depends on that number (epidemics-on-networks).
-- **Existence proofs.** To show that a graph with some property exists, build a random one and prove it has the property with positive chance ([probabilistic-method](03-probabilistic-method.md)).
-- **Percolation and phase changes.** Raising p past 1/n makes a single huge connected cluster appear, the same abrupt change physicists study in porous materials (dying-percolation-and-critical-phenomena).
+- **Epidemics.** Disease passes along edges; in a random graph each case meets on average λ contacts, and whether an outbreak takes off depends on that number (Epidemics on a network).
+- **Existence proofs.** To show that a graph with some property exists, build a random one and prove it has the property with positive chance ([The probabilistic method](03-probabilistic-method.md)).
+- **Percolation and phase changes.** Raising p past 1/n makes a single huge connected cluster appear, the same abrupt change physicists study in porous materials (Percolation).
 
 > **Say it back**
 > A random graph tosses one independent coin with chance p for every pair of n people. The friendship count is then binomial over the n(n − 1)/2 pairs, 1,498.5 on average for 1,000 people at p = 0.003. Each person's friend count is binomial over the other n − 1 people, averaging 2.997. When p is small that law is nearly Poisson, and the gap is at most (n − 1)p^2, under 0.009 here. Averages need only counting; the laws need the coins to be independent.
@@ -645,19 +620,19 @@ The two outputs match line for line: the generator is integer arithmetic in both
 
 ## What this builds on
 
-- [poisson](../03-Discrete%20Distributions/04-poisson.md): the Poisson law and its proof as the limit of the binomial.
-- [graphs-vertices-and-edges](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md): what a graph, a vertex and an edge are.
-- [degree-and-handshaking](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md): degree, and why degrees sum to twice the edges.
+- [Poisson](../03-Discrete%20Distributions/04-poisson.md): the Poisson law and its proof as the limit of the binomial.
+- [Graphs](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md): what a graph, a vertex and an edge are.
+- [Degrees and the handshaking lemma](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md): degree, and why degrees sum to twice the edges.
 
 ## Where this goes next
 
-- [the-giant-component](02-the-giant-component.md): once the average degree passes 1, one cluster swallows a fixed share of the town.
-- [random-walks-on-graphs-and-mixing](05-random-walks-on-graphs-and-mixing.md): wandering from friend to friend, and how fast a walk forgets where it began.
-- small-world-and-scale-free-models: models that add the clustering and the hubs this one lacks.
-- epidemics-on-networks: infection spreading along random edges.
-- dying-percolation-and-critical-phenomena: the sharp change at the threshold, seen as a physical phase change.
+- [The giant component](02-the-giant-component.md): once the average degree passes 1, one cluster swallows a fixed share of the town.
+- [Random walks on a graph](05-random-walks-on-graphs-and-mixing.md): wandering from friend to friend, and how fast a walk forgets where it began.
+- Small worlds and hubs: models that add the clustering and the hubs this one lacks.
+- Epidemics on a network: infection spreading along random edges.
+- Percolation: the sharp change at the threshold, seen as a physical phase change.
 
-This card counts friends one person at a time; whether those friendships knit the town into one connected whole is the question [the-giant-component](02-the-giant-component.md) answers.
+This card counts friends one person at a time; whether those friendships knit the town into one connected whole is the question [The giant component](02-the-giant-component.md) answers.
 
 ---
 

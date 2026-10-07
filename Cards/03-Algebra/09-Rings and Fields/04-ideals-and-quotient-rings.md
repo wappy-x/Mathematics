@@ -1,35 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Rings and Fields
-topic: Collapsing a ring
-item: Ideals and quotient rings
-kind: definition
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/08-Groups/06-normal-subgroups-and-quotient-groups|normal-subgroups-and-quotient-groups]]"
-  - "[[Cards/03-Algebra/09-Rings and Fields/01-rings|rings]]"
-  - "[[Cards/03-Algebra/09-Rings and Fields/03-polynomials-behave-like-integers|polynomials-behave-like-integers]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/02-modular-addition-and-multiplication|modular-addition-and-multiplication]]"
-next:
-  - "[[Cards/03-Algebra/09-Rings and Fields/05-finite-fields|finite-fields]]"
-  - "[[Cards/18-Functional analysis/06-Banach Algebras and Fixed Points/01-banach-algebras-and-the-gelfand-transform|banach-algebras-and-the-gelfand-transform]]"
-  - "[[Cards/21-Algebraic and analytic number theory/05-Fields and Galois Theory/03-splitting-fields-and-algebraic-closure|splitting-fields-and-algebraic-closure]]"
-  - "[[Cards/21-Algebraic and analytic number theory/06-Algebraic Numbers/04-ideals-and-unique-factorisation-in-dedekind-domains|ideals-and-unique-factorisation-in-dedekind-domains]]"
-  - "[[Cards/22-Algebraic geometry/01-Polynomial Systems/01-ideals-and-varieties|ideals-and-varieties]]"
-  - "[[Cards/22-Algebraic geometry/02-Affine and Projective Varieties/01-affine-varieties-and-coordinate-rings|affine-varieties-and-coordinate-rings]]"
-  - "[[Cards/22-Algebraic geometry/06-Schemes and Modern Language/02-spectrum-of-a-ring-and-schemes|spectrum-of-a-ring-and-schemes]]"
-  - "[[Cards/25-Frontier/05-Analysis and Dynamics/05-sofic-groups-and-kothe|sofic-groups-and-kothe]]"
-tags:
-  - mathematics
-  - algebra
-  - ideals-and-quotient-rings
----
-
 # Ideals and quotient rings: the multiples of n are the model, collapsing by them gives Z mod n, and every ring map has one as its kernel
 
-Algebra → Rings and Fields → Collapsing a ring → Ideals and quotient rings
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Rings and Fields](../../../SYLLABUS.md#w03-s09) → Ideals and quotient rings
 
 ---
 
@@ -58,7 +29,7 @@ flowchart LR
 
 ## The formula
 
-Write $R$ for the ring being collapsed ([rings](01-rings.md)) and $I$ for the set thrown away — here the multiples of 9, written 9Z, with Z naming the whole numbers. A **class** is a pile the collapse leaves: everything differing from a name $a$ by a thrown-away amount.
+Write $R$ for the ring being collapsed ([Rings](01-rings.md)) and $I$ for the set thrown away — here the multiples of 9, written 9Z, with Z naming the whole numbers. A **class** is a pile the collapse leaves: everything differing from a name $a$ by a thrown-away amount.
 
 $$a + I = \{\, a + i : i \in I \,\} \qquad a + I = b + I \ \text{ exactly when } \ a - b \in I$$
 
@@ -111,7 +82,7 @@ Small names first: 47 leaves 2, 23 leaves 5, and 2 × 5 = 10 leaves 1. Large nam
 
 ### Step 3: the clock is Z over 9Z
 
-Those nine classes are Z mod 9 ([modular-addition-and-multiplication](../../02-Number%20theory/03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)). Clock arithmetic is no separate invention: it is this construction, $R$ the whole numbers, $I$ the multiples of 9. Every ideal of Z is the multiples of some n: its smallest positive member divides the rest.
+Those nine classes are Z mod 9 ([Adding and multiplying on the clock](../../02-Number%20theory/03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)). Clock arithmetic is no separate invention: it is this construction, $R$ the whole numbers, $I$ the multiples of 9. Every ideal of Z is the multiples of some n: its smallest positive member divides the rest.
 
 ### Step 4: kernels are ideals
 
@@ -160,11 +131,11 @@ The roads agree, so the total passes; a mismatch would prove an error.
 
 ### A second collapse: polynomials by x^2 + 1
 
-The same runs on polynomials ([polynomials-behave-like-integers](03-polynomials-behave-like-integers.md)). Throw away every multiple of x^2 + 1. Division with remainder gives each class one name c + dx, two coordinates, and x^2 + 1 being 0 makes squaring x give −1. Multiplying (2 + 3x)(4 + x) out gives 8 + 14x + 3x^2; replacing 3x^2 by −3 leaves **5 + 14x**. The coordinate rule, with c, d, u, v real,
+The same runs on polynomials ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)). Throw away every multiple of x^2 + 1. Division with remainder gives each class one name c + dx, two coordinates, and x^2 + 1 being 0 makes squaring x give −1. Multiplying (2 + 3x)(4 + x) out gives 8 + 14x + 3x^2; replacing 3x^2 by −3 leaves **5 + 14x**. The coordinate rule, with c, d, u, v real,
 
 $$(c + dx)(u + vx) = (cu - dv) + (cv + du)x$$
 
-gives 5 + 14x as well. That world is the doorway to the complex numbers; the collapse run over a clock instead is [finite-fields](05-finite-fields.md).
+gives 5 + 14x as well. That world is the doorway to the complex numbers; the collapse run over a clock instead is [Finite fields](05-finite-fields.md).
 
 ### What breaks if you drop a piece
 
@@ -391,9 +362,9 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Checks on paper.** Casting out nines, and the rule that 9 divides a number when it divides its digit sum, are one statement: every power of ten is class 1.
-- **Computer algebra and cryptography.** Reduction by a fixed polynomial holds every answer inside a fixed number of coordinates: [finite-fields](05-finite-fields.md).
+- **Computer algebra and cryptography.** Reduction by a fixed polynomial holds every answer inside a fixed number of coordinates: [Finite fields](05-finite-fields.md).
 - **Error-correcting codes.** Many codes are the multiples of one chosen polynomial, an ideal; decoding reads off the class.
-- **Geometry.** The polynomials vanishing on a set of points form an ideal: ideals-and-varieties.
+- **Geometry.** The polynomials vanishing on a set of points form an ideal: Ideals and varieties.
 
 > **Say it back**
 > An ideal is a set inside a ring, closed under subtraction, that absorbs multiplication by the whole ring. Throw it away and the ring falls into classes, two members sharing a class when their difference was thrown away, and those classes add and multiply: the quotient ring. The multiples of 9 give Z mod 9, which is why casting out nines checks the invoice: 47 and 23 become 2 and 5, and 2 × 5 = 10 is class 1, matching 1,081. Every ring map's kernel is an ideal, and collapsing by it leaves the image.
@@ -402,21 +373,21 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [normal-subgroups-and-quotient-groups](../08-Groups/06-normal-subgroups-and-quotient-groups.md): the same collapse with one operation; absorbing is its condition once piles multiply.
-- [rings](01-rings.md): the two operations, and the distributive law absorbing leans on.
-- [polynomials-behave-like-integers](03-polynomials-behave-like-integers.md): division with remainder, one name per class.
-- [modular-addition-and-multiplication](../../02-Number%20theory/03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md): arithmetic on leftovers, the case this generalises.
+- [Normal subgroups and quotient groups](../08-Groups/06-normal-subgroups-and-quotient-groups.md): the same collapse with one operation; absorbing is its condition once piles multiply.
+- [Rings](01-rings.md): the two operations, and the distributive law absorbing leans on.
+- [Polynomials behave like integers](03-polynomials-behave-like-integers.md): division with remainder, one name per class.
+- [Adding and multiplying on the clock](../../02-Number%20theory/03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md): arithmetic on leftovers, the case this generalises.
 
 ## Where this goes next
 
-- [finite-fields](05-finite-fields.md): collapse by a polynomial that cannot be factored, and division appears.
-- banach-algebras-and-the-gelfand-transform: rings of functions, where a maximal ideal gives a number.
-- splitting-fields-and-algebraic-closure: the x^2 + 1 move on purpose, to make a root.
-- ideals-and-unique-factorisation-in-dedekind-domains: factorisation into ideals where numbers fail.
-- ideals-and-varieties: an ideal as every equation a shape satisfies.
-- affine-varieties-and-coordinate-rings: that quotient ring as functions on a shape.
-- spectrum-of-a-ring-and-schemes: prime ideals as a space, a ring as geometry.
-- sofic-groups-and-kothe: one-sided absorbing sets, and an open question.
+- [Finite fields](05-finite-fields.md): collapse by a polynomial that cannot be factored, and division appears.
+- Banach algebras: rings of functions, where a maximal ideal gives a number.
+- Splitting fields: the x^2 + 1 move on purpose, to make a root.
+- Ideals factor uniquely even where numbers do not: factorisation into ideals where numbers fail.
+- Ideals and varieties: an ideal as every equation a shape satisfies.
+- Affine varieties: that quotient ring as functions on a shape.
+- The spectrum of a ring: prime ideals as a space, a ring as geometry.
+- Two algebra questions: one-sided absorbing sets, and an open question.
 
 This collapse kept addition and multiplication and lost division. Which ideals leave a world where division works? The next card.
 

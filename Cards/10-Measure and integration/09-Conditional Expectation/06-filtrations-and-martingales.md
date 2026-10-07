@@ -1,23 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Conditional Expectation
-topic: Forecasts that update
-item: Filtrations and martingales
-kind: definition
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/04-rules-of-conditional-expectation|rules-of-conditional-expectation]]"
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/04-radon-nikodym-derivative|radon-nikodym-derivative]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/03-filtrations-and-information|filtrations-and-information]]"
-tags: [mathematics, measure and integration, filtrations-and-martingales]
----
-
 # Filtrations and martingales: information that grows with time, and a process whose best forecast of tomorrow is today's value
 
-Measure and integration → Conditional Expectation → Forecasts that update → Filtrations and martingales
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Conditional Expectation](../../../SYLLABUS.md#w10-s09) → Filtrations and martingales
 
 ---
 
@@ -43,7 +26,7 @@ Height is the bankroll in dollars, to scale; the dashed line is $100. Each point
 
 ## The formula
 
-Notation first, in words. $\Omega$ (omega) is the set of all ways the night can go: here the eight win-loss histories, WWW to LLL. $\mathcal F$ is the collection of sets of histories we allow ourselves to measure, and $P$ the probability on it, 0.125 per history. A number that depends on the history is a random quantity. $E[Y \mid \mathcal G]$, from [conditional-expectation-on-a-sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md), is the best forecast of $Y$ using only the sets in a smaller collection $\mathcal G$. The subscript $n$ counts hands played, from 0 to 3.
+Notation first, in words. $\Omega$ (omega) is the set of all ways the night can go: here the eight win-loss histories, WWW to LLL. $\mathcal F$ is the collection of sets of histories we allow ourselves to measure, and $P$ the probability on it, 0.125 per history. A number that depends on the history is a random quantity. $E[Y \mid \mathcal G]$, from [Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md), is the best forecast of $Y$ using only the sets in a smaller collection $\mathcal G$. The subscript $n$ counts hands played, from 0 to 3.
 
 **Filtration.** A sequence of collections of measurable sets, each inside the next:
 
@@ -73,7 +56,7 @@ $$E[X_m \mid \mathcal F_n] = X_n \text{ for } m \ge n, \quad\text{so}\quad E[X_n
 
 **Read them aloud:** a forecast of a fixed final result, updated as information arrives, is a martingale. The exchange rate between two sets of odds, measured on what is known so far, is a martingale under the old odds. A martingale's forecast of any later value is its present value, so its average never moves.
 
-Here $Q|_{\mathcal F_n}$ is $Q$ used only on the sets in $\mathcal F_n$, and the fraction is the density of one against the other ([radon-nikodym-derivative](../08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md)). On a finite space with cells, $Z_n$ on a cell is $Q(\text{cell}) / P(\text{cell})$. $E_P$ and $E_Q$ are averages under $P$ and under $Q$.
+Here $Q|_{\mathcal F_n}$ is $Q$ used only on the sets in $\mathcal F_n$, and the fraction is the density of one against the other ([The Radon-Nikodym derivative](../08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md)). On a finite space with cells, $Z_n$ on a cell is $Q(\text{cell}) / P(\text{cell})$. $E_P$ and $E_Q$ are averages under $P$ and under $Q$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -105,7 +88,7 @@ Here $Q|_{\mathcal F_n}$ is $Q$ used only on the sets in $\mathcal F_n$, and the
 
 ### Step 0: forecasting a forecast gives the forecast
 
-The whole card rests on one rule from [rules-of-conditional-expectation](04-rules-of-conditional-expectation.md), the tower rule: if $\mathcal H \subseteq \mathcal G$, then $E[E[Y \mid \mathcal G] \mid \mathcal H] = E[Y \mid \mathcal H]$. Averaging over a fine cell and then over the coarse cell holding it is averaging over the coarse cell. A filtration is a chain of such inclusions, so the rule applies at every step.
+The whole card rests on one rule from [The rules of conditional expectation](04-rules-of-conditional-expectation.md), the tower rule: if $\mathcal H \subseteq \mathcal G$, then $E[E[Y \mid \mathcal G] \mid \mathcal H] = E[Y \mid \mathcal H]$. Averaging over a fine cell and then over the coarse cell holding it is averaging over the coarse cell. A filtration is a chain of such inclusions, so the rule applies at every step.
 
 ### Step 1: a filtration is information that only grows
 
@@ -127,7 +110,7 @@ The same theorem applies to any final result, not only money. Let $Y$ be 1 if th
 
 ### Step 3: the density process is a martingale
 
-Roll the loaded die three times; $P$ is a fair die, $Q$ the loaded one of [radon-nikodym-derivative](../08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md), rolls independent under each. $\mathcal F_n$ holds the sets decided by the first $n$ rolls. On $\mathcal F_n$, $Q$ has a density against $P$: on the cell of a given start of $n$ rolls, $Z_n$ is $Q(\text{cell})/P(\text{cell})$, and since rolls are independent that is the product of the per-roll rates. Three sixes give $Z$ values 1, 2.4, 5.76 and about 13.82.
+Roll the loaded die three times; $P$ is a fair die, $Q$ the loaded one of [The Radon-Nikodym derivative](../08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md), rolls independent under each. $\mathcal F_n$ holds the sets decided by the first $n$ rolls. On $\mathcal F_n$, $Q$ has a density against $P$: on the cell of a given start of $n$ rolls, $Z_n$ is $Q(\text{cell})/P(\text{cell})$, and since rolls are independent that is the product of the per-roll rates. Three sixes give $Z$ values 1, 2.4, 5.76 and about 13.82.
 
 Why a martingale, in general? Take a set $B$ in $\mathcal F_n$. It is also in $\mathcal F_{n+1}$. So both $Z_n$ and $Z_{n+1}$ give it the same $Q$-weight:
 
@@ -159,7 +142,7 @@ The converse fails. Let $N_0 = 100$, $N_1$ the bankroll after hand 1, and $N_2 =
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal F, P)$ a probability space; $\mathcal F_0 \subseteq \mathcal F_1 \subseteq \dots \subseteq \mathcal F$ sigma-algebras. For an integrable $Y$ and a sigma-algebra $\mathcal G \subseteq \mathcal F$, $E[Y \mid \mathcal G]$ is the a.s.-unique $\mathcal G$-measurable integrable $W$ with $E[W \mathbf 1_B] = E[Y \mathbf 1_B]$ for all $B \in \mathcal G$ ([conditional-expectation-on-a-sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md)).
+**Setting.** $(\Omega, \mathcal F, P)$ a probability space; $\mathcal F_0 \subseteq \mathcal F_1 \subseteq \dots \subseteq \mathcal F$ sigma-algebras. For an integrable $Y$ and a sigma-algebra $\mathcal G \subseteq \mathcal F$, $E[Y \mid \mathcal G]$ is the a.s.-unique $\mathcal G$-measurable integrable $W$ with $E[W \mathbf 1_B] = E[Y \mathbf 1_B]$ for all $B \in \mathcal G$ ([Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md)).
 
 **Theorem 1.** Let $E\lvert Y\rvert < \infty$ and $M_n = E[Y \mid \mathcal F_n]$. *Adapted:* $M_n$ is $\mathcal F_n$-measurable by definition. *Integrable:* by the rules card, $\lvert E[Y \mid \mathcal F_n]\rvert \le E[\lvert Y\rvert \mid \mathcal F_n]$ a.s.; take means and use $E[E[\lvert Y\rvert \mid \mathcal F_n]] = E\lvert Y\rvert < \infty$. *Martingale:* for $B \in \mathcal F_n$, also $B \in \mathcal F_{n+1}$, so $E[M_{n+1} \mathbf 1_B] = E[Y \mathbf 1_B] = E[M_n \mathbf 1_B]$, the first equality by the defining property at level $n + 1$, the second at level $n$. $M_n$ is $\mathcal F_n$-measurable and integrable, so by uniqueness $M_n = E[M_{n+1} \mid \mathcal F_n]$ a.s. This is the tower rule, written out.
 
@@ -617,9 +600,9 @@ The two outputs match line for line, the simulated nights included.
 
 ## Where you meet it in real life
 
-- **Gambling systems.** No stake rule decided from past hands turns fair bets into a positive average, as the chasing rule here shows; why stopping rules cannot either, under conditions, is wing 11's optional stopping ([stopping-times-and-optional-stopping](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/03-stopping-times-and-optional-stopping.md)).
+- **Gambling systems.** No stake rule decided from past hands turns fair bets into a positive average, as the chasing rule here shows; why stopping rules cannot either, under conditions, is wing 11's optional stopping ([Stopping times](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/03-stopping-times-and-optional-stopping.md)).
 - **Forecasts that update.** A well-calibrated running forecast of a fixed outcome, such as an election or a match result, is the process $A_n$: its expected next revision is zero.
-- **Changing the odds in pricing.** A pricing model reaches its pricing odds from real-world odds through a density process, a martingale under the old odds: [change-of-measure-and-density-processes](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/01-change-of-measure-and-density-processes.md).
+- **Changing the odds in pricing.** A pricing model reaches its pricing odds from real-world odds through a density process, a martingale under the old odds: [Changing the measure](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/01-change-of-measure-and-density-processes.md).
 - **Sequential testing.** The running likelihood ratio between two models of the data, a density process, is a martingale under the first model, which bounds how often it can climb high by chance.
 
 > **Say it back**
@@ -629,14 +612,14 @@ The two outputs match line for line, the simulated nights included.
 
 ## What this builds on
 
-- [rules-of-conditional-expectation](04-rules-of-conditional-expectation.md): the tower rule, taking out what is known, and the bound $\lvert E[Y \mid \mathcal G]\rvert \le E[\lvert Y\rvert \mid \mathcal G]$.
-- [radon-nikodym-derivative](../08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md): the loaded die's rates 0.6, 1.2 and 2.4, and the density of one measure against another.
+- [The rules of conditional expectation](04-rules-of-conditional-expectation.md): the tower rule, taking out what is known, and the bound $\lvert E[Y \mid \mathcal G]\rvert \le E[\lvert Y\rvert \mid \mathcal G]$.
+- [The Radon-Nikodym derivative](../08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md): the loaded die's rates 0.6, 1.2 and 2.4, and the density of one measure against another.
 
 ## Where this goes next
 
-- [filtrations-and-information](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md): filtrations generated by a random walk, as the setting for processes in time.
+- [Filtrations](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md): filtrations generated by a random walk, as the setting for processes in time.
 
-Every theorem here holds at fixed steps; whether a martingale keeps its mean when stopped at a time chosen from the path, and whether it settles down as time runs on, is the business of wing 11, starting at [filtrations-and-information](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md); the answers are on [stopping-times-and-optional-stopping](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/03-stopping-times-and-optional-stopping.md) and [martingale-convergence](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/04-martingale-convergence.md).
+Every theorem here holds at fixed steps; whether a martingale keeps its mean when stopped at a time chosen from the path, and whether it settles down as time runs on, is the business of wing 11, starting at [Filtrations](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md); the answers are on [Stopping times](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/03-stopping-times-and-optional-stopping.md) and [Martingale convergence](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/04-martingale-convergence.md).
 
 ---
 

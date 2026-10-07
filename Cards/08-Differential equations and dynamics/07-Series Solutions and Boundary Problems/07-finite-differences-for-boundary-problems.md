@@ -1,27 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Series Solutions and Boundary Problems
-topic: Grid solutions
-item: Finite differences
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/05-two-point-boundary-value-problems|two-point-boundary-value-problems]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/02-gaussian-elimination|gaussian-elimination]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/10-greens-function-for-a-boundary-problem|greens-function-for-a-boundary-problem]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/09-finite-differences-for-the-heat-equation|finite-differences-for-the-heat-equation]]"
-  - "[[Cards/13-Engineering mathematics/08-Fluids and Heat/09-finite-element-method-in-outline|finite-element-method-in-outline]]"
-  - "[[Cards/16-Numerical analysis/06-ODE Solvers/07-boundary-value-problems-shooting-and-collocation|boundary-value-problems-shooting-and-collocation]]"
-  - "[[Cards/19-Partial differential equations/06-Weak Solutions and Free Boundaries/04-galerkin-and-finite-elements|galerkin-and-finite-elements]]"
-tags: [mathematics, differential equations and dynamics, finite-differences-for-boundary-problems]
----
-
 # Finite differences: replace the derivatives by differences on a grid and solve one linear system
 
-Differential equations and dynamics → Series Solutions and Boundary Problems → Grid solutions → Finite differences
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Series Solutions and Boundary Problems](../../../SYLLABUS.md#w08-s07) → Finite differences
 
 ---
 
@@ -29,7 +8,7 @@ Differential equations and dynamics → Series Solutions and Boundary Problems �
 
 A fabric strap, used as a shelf, is slung between two pins 1 m apart, pulled tight at 200 N, with books spread evenly along it at 200 N per metre. How far does the middle sag?
 
-The strap's curvature at each point (how fast its slope turns) equals the load there divided by the tension, here 1 per metre, and both ends are pinned at zero sag. That is a boundary-value problem: an equation plus a condition at each end ([two-point-boundary-value-problems](05-two-point-boundary-value-problems.md)). Here the exact sag at distance x from the left pin is x(1 − x)/2 metres: 0.125 m at the middle.
+The strap's curvature at each point (how fast its slope turns) equals the load there divided by the tension, here 1 per metre, and both ends are pinned at zero sag. That is a boundary-value problem: an equation plus a condition at each end ([Boundary value problems](05-two-point-boundary-value-problems.md)). Here the exact sag at distance x from the left pin is x(1 − x)/2 metres: 0.125 m at the middle.
 
 Most boundary problems have no such formula. Finite differences keep only the sag at nine marks 0.1 m apart and turn the curvature at each into a difference of neighbouring values: nine linked equations, solved by one sweep forward and one back. The grid gives 0.125000 m at the middle, matching the exact curve at every printed digit.
 
@@ -78,7 +57,7 @@ where $M$ is the largest size of the fourth derivative $y''''$ over the span.
 
 - **A smooth load.** The bound needs $y''''$ bounded; one heavy book at a point puts a corner in the sag and slows the error's fall.
 - **Even spacing.** The odd error terms cancel only when both neighbours are equally far away.
-- **A matrix that cannot be singular.** Here every pivot has size at least 1. Add a spring term, $y'' + ky = f$ with a constant k, and the matrix turns singular for k close to $\pi^2, 4\pi^2, 9\pi^2, \dots$, where the exact problem also fails ([eigenvalues-and-eigenfunctions](08-eigenvalues-and-eigenfunctions.md)).
+- **A matrix that cannot be singular.** Here every pivot has size at least 1. Add a spring term, $y'' + ky = f$ with a constant k, and the matrix turns singular for k close to $\pi^2, 4\pi^2, 9\pi^2, \dots$, where the exact problem also fails ([Eigenvalue problems](08-eigenvalues-and-eigenfunctions.md)).
 - **Spacing not absurdly small.** Dividing a difference of nearly equal numbers by $h^2$ magnifies rounding, so past some tiny spacing the error rises again.
 
 ---
@@ -107,7 +86,7 @@ Row $i$ involves only $y_{i-1}$, $y_i$ and $y_{i+1}$. The pinned ends are known 
 
 ### Step 3: the Thomas sweep, Gaussian elimination on a band
 
-Gaussian elimination ([gaussian-elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md)) clears the entries below each pivot (the diagonal entry used to divide). A tridiagonal matrix has one entry below each pivot, and clearing it touches only the next row: that shortcut is the Thomas sweep.
+Gaussian elimination ([Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md)) clears the entries below each pivot (the diagonal entry used to divide). A tridiagonal matrix has one entry below each pivot, and clearing it touches only the next row: that shortcut is the Thomas sweep.
 
 Forward: row 1 keeps $p_1 = -2$ and $r_1 = h^2 f_1$. Subtract row $i-1$, divided by its pivot, from row $i$:
 
@@ -151,7 +130,7 @@ The line is the midpoint error. Doubling the spacing multiplies it by about 4: a
 
 ### Other roads
 
-Shooting ([the-shooting-method](06-the-shooting-method.md)) guesses the slope at the left pin, marches across and corrects the guess; finite differences solve for every mark at once.
+Shooting ([Shooting](06-the-shooting-method.md)) guesses the slope at the left pin, marches across and corrects the guess; finite differences solve for every mark at once.
 
 ---
 
@@ -380,7 +359,7 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Cables and strings.** Washing lines and cable runs under an even load sag by this equation.
-- **Steady heat in a rod.** Temperature along a rod with heat sources and fixed end temperatures obeys the same equation; the implicit steps of [finite-differences-for-the-heat-equation](../10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md) are tridiagonal solves by this sweep.
+- **Steady heat in a rod.** Temperature along a rod with heat sources and fixed end temperatures obeys the same equation; the implicit steps of [Stepping the heat equation on a grid](../10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md) are tridiagonal solves by this sweep.
 - **Option pricing grids.** Finite-difference pricers step back in time across a grid of share prices, one tridiagonal solve per step.
 
 > **Say it back**
@@ -390,16 +369,16 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [two-point-boundary-value-problems](05-two-point-boundary-value-problems.md): the equation with a condition at each end, and when it has one answer.
-- [gaussian-elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md): row elimination and back substitution, which the Thomas sweep specialises to a band.
+- [Boundary value problems](05-two-point-boundary-value-problems.md): the equation with a condition at each end, and when it has one answer.
+- [Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md): row elimination and back substitution, which the Thomas sweep specialises to a band.
 
 ## Where this goes next
 
-- [greens-function-for-a-boundary-problem](10-greens-function-for-a-boundary-problem.md): the exact solution as an integral of the load.
-- [finite-differences-for-the-heat-equation](../10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md): the same difference, now with time steps.
-- finite-element-method-in-outline: small elements on any shape.
-- boundary-value-problems-shooting-and-collocation: nonlinear problems and higher-order methods.
-- galerkin-and-finite-elements: why finite elements converge.
+- [Green's function](10-greens-function-for-a-boundary-problem.md): the exact solution as an integral of the load.
+- [Stepping the heat equation on a grid](../10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md): the same difference, now with time steps.
+- Finite elements: small elements on any shape.
+- Two-point boundary problems: nonlinear problems and higher-order methods.
+- Galerkin: why finite elements converge.
 
 ---
 

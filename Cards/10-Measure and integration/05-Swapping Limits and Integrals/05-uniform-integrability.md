@@ -1,26 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Swapping Limits and Integrals
-topic: Keeping mass from escaping
-item: Uniform integrability
-kind: definition
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/04-modes-of-convergence|modes-of-convergence]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/04-integrable-functions-and-l1|integrable-functions-and-l1]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/06-uniform-integrability-and-unbounded-stopping|uniform-integrability-and-unbounded-stopping]]"
-tags:
-  - mathematics
-  - measure and integration
-  - uniform-integrability
----
-
 # Uniform integrability: no mass escaping to infinity, and the exact condition for convergence in mean
 
-Measure and integration → Swapping Limits and Integrals → Keeping mass from escaping → Uniform integrability
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Swapping Limits and Integrals](../../../SYLLABUS.md#w10-s05) → Uniform integrability
 
 ---
 
@@ -48,9 +28,9 @@ Each rectangle's base is the chance of winning and its height is the prize. The 
 
 ## The formula
 
-Notation first, in words. Work on a probability space $(\Omega, \mathcal{F}, P)$: outcomes, the events we allow ourselves to measure, and their probabilities. For the lottery, the outcomes are points U of [0, 1) and P is length, the Lebesgue measure λ. The expectation $E[X]$ is the integral of X against P, read "the average of X" ([expectation-as-an-integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)). A random variable is **integrable**, in $L^1$, when $E|X|$ is finite ([integrable-functions-and-l1](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). The indicator $\mathbf{1}_A$ is one on the event A, zero off it.
+Notation first, in words. Work on a probability space $(\Omega, \mathcal{F}, P)$: outcomes, the events we allow ourselves to measure, and their probabilities. For the lottery, the outcomes are points U of [0, 1) and P is length, the Lebesgue measure λ. The expectation $E[X]$ is the integral of X against P, read "the average of X" ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)). A random variable is **integrable**, in $L^1$, when $E|X|$ is finite ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). The indicator $\mathbf{1}_A$ is one on the event A, zero off it.
 
-Two modes of convergence from [modes-of-convergence](04-modes-of-convergence.md): $X_n$ converges to $X$ **in probability** when $P(|X_n - X| > \varepsilon) \to 0$ for every $\varepsilon > 0$, and **in mean**, or in $L^1$, when $E|X_n - X| \to 0$.
+Two modes of convergence from [Modes of convergence](04-modes-of-convergence.md): $X_n$ converges to $X$ **in probability** when $P(|X_n - X| > \varepsilon) \to 0$ for every $\varepsilon > 0$, and **in mean**, or in $L^1$, when $E|X_n - X| \to 0$.
 
 The definition. A family $\mathcal{H}$ of integrable random variables is **uniformly integrable**, written UI, when
 
@@ -96,7 +76,7 @@ $$X_n \to X \text{ in probability, and } \{X_n\} \text{ UI} \iff X \in L^1 \text
 
 ### When it holds
 
-- **A finite measure.** Everything here is on a probability space; the same proofs work for any finite measure μ. On the whole line with length λ, the flat spread 1/n on [0, n) of [modes-of-convergence](04-modes-of-convergence.md) never exceeds 1, so every tail above K = 1 is zero, yet its integral stays 1. The mass escapes sideways, and a separate condition, tightness (most of every member's mass stays on one set of finite measure), is needed to stop that.
+- **A finite measure.** Everything here is on a probability space; the same proofs work for any finite measure μ. On the whole line with length λ, the flat spread 1/n on [0, n) of [Modes of convergence](04-modes-of-convergence.md) never exceeds 1, so every tail above K = 1 is zero, yet its integral stays 1. The mass escapes sideways, and a separate condition, tightness (most of every member's mass stays on one set of finite measure), is needed to stop that.
 - **Convergence in probability, on one space.** UI alone gives no convergence: fair coin flips of ±1 dollar are bounded, hence UI, and never settle. Vitali's theorem needs both hypotheses.
 - **Integrable members.** A family containing one variable with $E|X| = \infty$ is not UI: its tail at every K is infinite.
 - **Uniform, not member by member.** Each lottery ticket alone has tail 0 once K reaches n; the family still fails, since one cutoff must serve all members.
@@ -119,7 +99,7 @@ The square-root ticket $R_n$ has tail 1/√n when √n > K. The worst is at the 
 
 ### Step 2: three tests that give UI
 
-**Finite families.** One integrable X has a tail that vanishes: the integrand falls to zero wherever X is finite, which is almost everywhere, and stays under |X|, so dominated convergence ([dominated-convergence-theorem](02-dominated-convergence-theorem.md)) applies. For finitely many members take the largest of their cutoffs.
+**Finite families.** One integrable X has a tail that vanishes: the integrand falls to zero wherever X is finite, which is almost everywhere, and stays under |X|, so dominated convergence ([Dominated convergence](02-dominated-convergence-theorem.md)) applies. For finitely many members take the largest of their cutoffs.
 
 **Dominated families.** If $|X| \le Z$, then where |X| > K also Z > K, so each member's tail lies under the envelope's tail, which vanishes. The cap at 100 is the case Z = 100.
 
@@ -135,7 +115,7 @@ $$E\big[|X|\mathbf{1}_A\big] \;\le\; K\,P(A) + E\big[|X|\mathbf{1}_{\{|X| > K\}}
 
 Choose K with the tail below ε/2, then δ = ε/(2K): any event smaller than δ carries less than ε. That is absolute continuity of the integral. With a supremum over the family, UI gives one K, hence one δ, for all members; taking A to be all of Ω, of probability 1, bounds the averages by K plus the tail; here the finite measure is needed.
 
-The other direction works for any measure. With averages at most M, Markov's inequality ([markov-and-chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) gives $P(|X| > K) \le M/K$ for every member, so for large K the event {|X| > K} is below δ for everyone and carries less than ε.
+The other direction works for any measure. With averages at most M, Markov's inequality ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) gives $P(|X| > K) \le M/K$ for every member, so for large K the event {|X| > K} is below δ for everyone and carries less than ε.
 
 On the event {U < 0.001}, ticket 1,000 and every later lottery ticket carry their whole dollar. The capped tickets carry at most 100 × 0.001 = 0.1 dollars there, the square-root tickets at most √0.001 = 0.0316.
 
@@ -143,7 +123,7 @@ On the event {U < 0.001}, ticket 1,000 and every later lottery ticket carry thei
 
 Suppose $X_n \to X$ in probability and the $X_n$ are UI, with averages at most M.
 
-*The limit is integrable.* Cap at a level L: $|X|$ capped at L is at most $|X_n|$ capped at L plus $|X - X_n|$ capped at L. The first averages at most M; the second at most ε plus L times $P(|X_n - X| > \varepsilon)$, which tends to ε. So every capped average of |X| is at most M, and monotone convergence ([monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) gives $E|X| \le M$.
+*The limit is integrable.* Cap at a level L: $|X|$ capped at L is at most $|X_n|$ capped at L plus $|X - X_n|$ capped at L. The first averages at most M; the second at most ε plus L times $P(|X_n - X| > \varepsilon)$, which tends to ε. So every capped average of |X| is at most M, and monotone convergence ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) gives $E|X| \le M$.
 
 *The error goes to zero.* Let $A_n$ be the event $|X_n - X| > \varepsilon$. Off it the error is at most ε; on it, at most $|X_n| + |X|$:
 
@@ -179,7 +159,7 @@ Orange: the lottery, flat at 1 dollar, not UI, no convergence in mean. Green: th
 
 Throughout, $(\Omega, \mathcal{F}, P)$ is a probability space; for a finite measure μ replace P(Ω) = 1 by μ(Ω) where it appears. $\mathcal{H}$ is a non-empty family of integrable random variables, and $T(K) = \sup_{X \in \mathcal{H}} E[|X|\mathbf{1}_{\{|X| > K\}}]$.
 
-**Lemma 1 (one variable).** If $E|X| < \infty$ then $E[|X|\mathbf{1}_{\{|X| > K\}}] \to 0$ as $K \to \infty$. *Proof.* $|X|$ is finite a.e. ([integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md), finite integral gives finite a.e.). At each such point the integrand is 0 once K ≥ |X|. The integrands lie under |X|; dominated convergence along K = 1, 2, 3, … gives the limit 0, and the tail is non-increasing in K.
+**Lemma 1 (one variable).** If $E|X| < \infty$ then $E[|X|\mathbf{1}_{\{|X| > K\}}] \to 0$ as $K \to \infty$. *Proof.* $|X|$ is finite a.e. ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md), finite integral gives finite a.e.). At each such point the integrand is 0 once K ≥ |X|. The integrands lie under |X|; dominated convergence along K = 1, 2, 3, … gives the limit 0, and the tail is non-increasing in K.
 
 **Theorem 1 (three tests).** (a) A finite family is UI: $T(K)$ is the largest of finitely many tails, each tending to 0 by Lemma 1. (b) If $|X| \le Z$ for all $X \in \mathcal{H}$ with $EZ < \infty$: on $\{|X| > K\}$, $Z \ge |X| > K$, so $|X|\mathbf{1}_{\{|X| > K\}} \le Z\mathbf{1}_{\{Z > K\}}$ pointwise; monotonicity of the integral gives $T(K) \le E[Z\mathbf{1}_{\{Z > K\}}] \to 0$ by Lemma 1. (c) If $p > 1$ and $E|X|^p \le M$ for all members: on $\{|X| > K\}$, $(|X|/K)^{p-1} \ge 1$, so $|X|\mathbf{1}_{\{|X| > K\}} \le |X|^p/K^{p-1}$; averaging gives $T(K) \le M/K^{p-1} \to 0$.
 
@@ -193,7 +173,7 @@ Throughout, $(\Omega, \mathcal{F}, P)$ is a probability space; for a finite meas
 
 </details>
 
-A second test, due to de la Vallée Poussin, replaces the power x^p by any increasing φ with φ(x)/x growing without bound; this card proves only the power case. The martingale use of UI is on [uniform-integrability-and-unbounded-stopping](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/06-uniform-integrability-and-unbounded-stopping.md).
+A second test, due to de la Vallée Poussin, replaces the power x^p by any increasing φ with φ(x)/x growing without bound; this card proves only the power case. The martingale use of UI is on [Stopping without a bound](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/06-uniform-integrability-and-unbounded-stopping.md).
 
 ---
 
@@ -616,7 +596,7 @@ The two outputs are identical line for line.
 
 ## Where you meet it in real life
 
-- **Fair games that stop late.** A doubling strategy at a fair coin wins 1 dollar almost surely, yet each version forced to stop by a fixed toss averages 0. Its gains are not UI, which is why its average does not follow its limit ([uniform-integrability-and-unbounded-stopping](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/06-uniform-integrability-and-unbounded-stopping.md)).
+- **Fair games that stop late.** A doubling strategy at a fair coin wins 1 dollar almost surely, yet each version forced to stop by a fixed toss averages 0. Its gains are not UI, which is why its average does not follow its limit ([Stopping without a bound](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/06-uniform-integrability-and-unbounded-stopping.md)).
 - **Simulating rare, large losses.** A Monte Carlo average sees only the tail its sample reaches: 200,000 draws usually miss a one-in-a-million loss of a million, and the estimate reads 0.
 - **Insurance limits.** Capping each claim is Step 2's dominated test: capped losses form a UI family. Uncapped catastrophe losses need their tails checked directly.
 - **Averages of samples.** For independent draws from one integrable law, the sample means form a UI family: on a small event A, each draw's contribution is at most the largest $E[|X|\mathbf{1}_B]$ over events B no bigger than A, the same bound for every draw, and averaging keeps it. So the law of large numbers in probability upgrades to convergence in mean.
@@ -628,16 +608,16 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [modes-of-convergence](04-modes-of-convergence.md): convergence in probability and in mean, and the growing spike between them, this lottery as a function of U; this card supplies the condition that joins the two.
-- [integrable-functions-and-l1](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md): integrable random variables and the average absolute distance $E|X_n - X|$ used throughout.
+- [Modes of convergence](04-modes-of-convergence.md): convergence in probability and in mean, and the growing spike between them, this lottery as a function of U; this card supplies the condition that joins the two.
+- [Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md): integrable random variables and the average absolute distance $E|X_n - X|$ used throughout.
 
-Within the shelf, [dominated-convergence-theorem](02-dominated-convergence-theorem.md) is the special case with an envelope, and [fatous-lemma](01-fatous-lemma.md) gives only the one-sided inequality that UI closes.
+Within the shelf, [Dominated convergence](02-dominated-convergence-theorem.md) is the special case with an envelope, and [Fatou's lemma](01-fatous-lemma.md) gives only the one-sided inequality that UI closes.
 
 ## Where this goes next
 
-- [uniform-integrability-and-unbounded-stopping](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/06-uniform-integrability-and-unbounded-stopping.md): UI as the condition under which a fair game stopped at an unbounded random time keeps its fair value, and why the doubling strategy fails it.
+- [Stopping without a bound](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/06-uniform-integrability-and-unbounded-stopping.md): UI as the condition under which a fair game stopped at an unbounded random time keeps its fair value, and why the doubling strategy fails it.
 
-Which fair games stopped at an unbounded random time are UI is the question [uniform-integrability-and-unbounded-stopping](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/06-uniform-integrability-and-unbounded-stopping.md) answers.
+Which fair games stopped at an unbounded random time are UI is the question [Stopping without a bound](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/06-uniform-integrability-and-unbounded-stopping.md) answers.
 
 ---
 

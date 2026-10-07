@@ -1,37 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Black-Scholes call and put
-topic: No-arbitrage links
-item: Put-call parity
-kind: theorem
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/02-black-scholes-put|black-scholes-put]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price|no-arbitrage-and-the-law-of-one-price]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/03-forward-price-by-cash-and-carry|forward-price-by-cash-and-carry]]"
-next:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/04-option-price-bounds|option-price-bounds]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/06-intrinsic-and-time-value|intrinsic-and-time-value]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/08-known-cash-dividends|known-cash-dividends]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/09-black-scholes-assumptions-and-failures|black-scholes-assumptions-and-failures]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/05-implied-forward-and-dividend-from-parity|implied-forward-and-dividend-from-parity]]"
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/01-american-options-and-early-exercise|american-options-and-early-exercise]]"
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/01-knock-out-and-knock-in-options|knock-out-and-knock-in-options]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/04-chooser-options|chooser-options]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/01-garman-kohlhagen|garman-kohlhagen]]"
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/01-merton-model-equity-as-a-call|merton-model-equity-as-a-call]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - put-call-parity
----
-
 # Put-call parity: call minus put is a forward, so three prices fix the fourth
 
-Financial mathematics → The Black-Scholes call and put → No-arbitrage links → Put-call parity
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Black-Scholes call and put](../../../SYLLABUS.md#w12-s08) → Put-call parity
 
 ---
 
@@ -80,7 +49,7 @@ The same statement rearranged is the version desks say out loud, **call plus cas
 
 $$C + K\,e^{-rT} = P + S\,e^{-qT}$$
 
-And with the forward price $F = S\,e^{(r-q)T}$ from [forward-price-by-cash-and-carry](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md), the difference is the forward's head start over the strike, discounted back:
+And with the forward price $F = S\,e^{(r-q)T}$ from [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md), the difference is the forward's head start over the strike, discounted back:
 
 $$C - P = e^{-rT}\,(F - K)$$
 
@@ -103,10 +72,10 @@ Each price enters once, and only added or subtracted, so any three of the four f
 
 ### When it holds
 
-- **Both tickets European**, usable on the one day only. An early-exercise right makes each price at least as large and turns the equality into a corridor: [american-options-and-early-exercise](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md). The numbers for this market are in The usual mistake.
+- **Both tickets European**, usable on the one day only. An early-exercise right makes each price at least as large and turns the equality into a corridor: [American options](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md). The numbers for this market are in The usual mistake.
 - **The two legs matched**: same share, strike, expiry day and size. Mismatch any of those and the kinks stop cancelling; what is left is a spread, not a forward, and the equation says nothing about it.
 - **One rate for borrowing and lending, and the share can be sold short.** Real markets charge more to borrow than they pay to lend, and charge a fee to borrow shares, so the equality widens into a band about as wide as those costs.
-- **Dividends known, and paid as a yield.** Announced cash amounts need [known-cash-dividends](08-known-cash-dividends.md). Guess the yield 1% too high here and the forward shrinks, so the put backed out of the call comes out at $7.31 instead of $6.33: a dollar too dear.
+- **Dividends known, and paid as a yield.** Announced cash amounts need [Known cash dividends](08-known-cash-dividends.md). Guess the yield 1% too high here and the forward shrinks, so the put backed out of the call comes out at $7.31 instead of $6.33: a dollar too dear.
 - **Prices that can actually be traded.** A stale mid-quote on an illiquid strike breaks parity on the screen and nowhere else, which is why a desk's first response to a violation is to try trading it.
 
 ---
@@ -115,7 +84,7 @@ Each price enters once, and only added or subtracted, so any three of the four f
 
 ### Step 0: two packages that pay the same in every future cost the same today
 
-The proof rests on one rule. If two packages pay the same amount on the same day, whatever happens in between, they must cost the same today ([no-arbitrage-and-the-law-of-one-price](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)). If one were cheaper, buying it and selling the other would hand over cash today and leave nothing to settle later, and money like that on a screen is taken within seconds.
+The proof rests on one rule. If two packages pay the same amount on the same day, whatever happens in between, they must cost the same today ([No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)). If one were cheaper, buying it and selling the other would hand over cash today and leave nothing to settle later, and money like that on a screen is taken within seconds.
 
 Nothing in that rule is a belief about Acme. So the job is to find two packages with identical payoffs, one built out of the two tickets and one built without them.
 
@@ -189,11 +158,11 @@ Both boxes hold the larger of $S_T$ and $K$ in both columns, so by Step 0 they c
 
 **Both violation trades.** Write the price gap as $(C - P) - (S\,e^{-qT} - K\,e^{-rT})$. If it is positive, sell the call, buy the put, buy the prepaid share and borrow $K\,e^{-rT}$: the legs bring in that gap today, and on expiry day the package pays $-(S_T - K) + S_T - K = 0$ at every price, so the money was free. If the gap is negative, reverse all four legs and take in its size instead. Both signs produce free money, so the gap is zero.
 
-**What this does not prove.** Parity pins the difference only. Adding the same amount to both prices leaves the difference untouched, so parity alone cannot say whether $9.23 and $6.33 are sane levels; that takes [option-price-bounds](04-option-price-bounds.md).
+**What this does not prove.** Parity pins the difference only. Adding the same amount to both prices leaves the difference untouched, so parity alone cannot say whether $9.23 and $6.33 are sane levels; that takes [Option price bounds](04-option-price-bounds.md).
 
 </details>
 
-There is a second door, and it is longer. Average both sides of the Step 1 identity over the pretend world where everything grows at the bank rate, then discount — the machinery in Step 0 of [black-scholes-call](01-black-scholes-call.md). The discounted average of the share price is $S\,e^{-qT}$ and of the strike is $K\,e^{-rT}$, so the same formula appears. Worth seeing once, because it shows every model must obey parity; wrong road to take first, because it drags in an apparatus that Steps 1 to 3 never needed.
+There is a second door, and it is longer. Average both sides of the Step 1 identity over the pretend world where everything grows at the bank rate, then discount — the machinery in Step 0 of [Black–Scholes call](01-black-scholes-call.md). The discounted average of the share price is $S\,e^{-qT}$ and of the strike is $K\,e^{-rT}$, so the same formula appears. Worth seeing once, because it shows every model must obey parity; wrong road to take first, because it drags in an apparatus that Steps 1 to 3 never needed.
 
 ---
 
@@ -214,7 +183,7 @@ The house market: Acme at $S$ = $100.00, strike $K$ = $100.00, riskless rate $r$
 | the forward price, the strike plus the gap carried a year at 5.00% | $100.00 + 2.896925 \times e^{0.05}$ | $103.05 |
 | the forward price by cash and carry, $S\,e^{(r-q)T}$ | $100.00 \times e^{0.03}$ | $103.05 |
 
-One forward, two prices, reached from opposite directions: one from two option quotes, one from a share price and two rates. Reading the forward off option prices is a working tool — it is how a desk finds the dividend the options market is quietly assuming ([implied-forward-and-dividend-from-parity](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/05-implied-forward-and-dividend-from-parity.md)).
+One forward, two prices, reached from opposite directions: one from two option quotes, one from a share price and two rates. Reading the forward off option prices is a working tool — it is how a desk finds the dividend the options market is quietly assuming ([Implied forward and dividend from parity](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/05-implied-forward-and-dividend-from-parity.md)).
 
 ### What breaks if you drop a piece
 
@@ -704,7 +673,7 @@ The two outputs are identical line for line, from different code taking differen
 ## The usual mistake
 
 > [!warning]
-> **Using the equality on options that can be exercised early.** Listed single-share options in the US are American: usable any day, not only expiry day. Feed their prices into $C - P = S\,e^{-qT} - K\,e^{-rT}$ and the "free money" that appears is mostly the value of the early-exercise right, which is real and is nobody else's to collect. On the house market's 1000-step tree the American put is worth $6.659759 against the European $6.328137, and the difference between the American prices is $2.565303 instead of $2.896925. The equality becomes a corridor: [american-options-and-early-exercise](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md).
+> **Using the equality on options that can be exercised early.** Listed single-share options in the US are American: usable any day, not only expiry day. Feed their prices into $C - P = S\,e^{-qT} - K\,e^{-rT}$ and the "free money" that appears is mostly the value of the early-exercise right, which is real and is nobody else's to collect. On the house market's 1000-step tree the American put is worth $6.659759 against the European $6.328137, and the difference between the American prices is $2.565303 instead of $2.896925. The equality becomes a corridor: [American options](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md).
 >
 > **Conventions verified 19 Sep 2026:** listed US single-share options are American-style, while most index options, SPX among them, are European and cash-settled, and there the equality holds as written.
 >
@@ -718,11 +687,11 @@ The two outputs are identical line for line, from different code taking differen
 ## Where you meet it in real life
 
 - **Backing one price out of the other.** An illiquid put is quoted from the liquid call at the same strike, and no implied volatility is trusted until the pair has been checked against parity.
-- **Reading the forward off the option screen.** The forward price is the strike plus the gap carried forward, $103.05 here, the same number cash and carry gives. Desks run it to find the dividend, or the share-borrowing cost, the options market is assuming: [implied-forward-and-dividend-from-parity](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/05-implied-forward-and-dividend-from-parity.md).
+- **Reading the forward off the option screen.** The forward price is the strike plus the gap carried forward, $103.05 here, the same number cash and carry gives. Desks run it to find the dividend, or the share-borrowing cost, the options market is assuming: [Implied forward and dividend from parity](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/05-implied-forward-and-dividend-from-parity.md).
 - **Conversions and reversals.** A trader long the share, long the put and short the call holds no exposure to the share at all, only the carry — the standing way to lock a parity violation, and where the $0.33 of Step 4 came from.
 - **One volatility per strike.** For European tickets a call and a put at one strike must imply the same volatility. When they do not, the suspect is the forward, the rate or the dividend fed in, never the volatility.
-- **Barriers and choosers.** The same adding-up trick reappears elsewhere: a knock-in plus a knock-out at one barrier is the plain option ([knock-out-and-knock-in-options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md)), and a ticket whose holder picks call or put later is priced by parity ([chooser-options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/04-chooser-options.md)).
-- **A company's balance sheet.** Treat its shares as a call on its assets and its debt becomes the assets minus that call, which parity rewrites as a safe bond minus a put: [merton-model-equity-as-a-call](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md). That put is the risk of default.
+- **Barriers and choosers.** The same adding-up trick reappears elsewhere: a knock-in plus a knock-out at one barrier is the plain option ([Knock-out and knock-in options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md)), and a ticket whose holder picks call or put later is priced by parity ([Chooser options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/04-chooser-options.md)).
+- **A company's balance sheet.** Treat its shares as a call on its assets and its debt becomes the assets minus that call, which parity rewrites as a safe bond minus a put: [Merton's model](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md). That put is the risk of default.
 
 > **Say it back**
 > Buy a call and sell a put at the same strike and expiry, and one of the two is always the live one, so the pair pays $S_T - K$ whatever happens: a forward. The same forward can be built by buying $e^{-qT}$ of a share and borrowing $K\,e^{-rT}$, at a cost today of $S\,e^{-qT} - K\,e^{-rT}$. Two packages with the same payoff cost the same, so $C - P = S\,e^{-qT} - K\,e^{-rT}$. On the house market that is $9.23 - $6.33 = $2.90 = $98.02 - $95.12. No volatility appears, so no model is needed, and a put quoted $0.33 cheap hands $0.33 to whoever sells the pair and buys the forward.
@@ -731,23 +700,23 @@ The two outputs are identical line for line, from different code taking differen
 
 ## What this builds on
 
-- [black-scholes-call](01-black-scholes-call.md): where the $9.23 comes from. Parity does not need it; the check uses it to have two prices worth comparing.
-- [black-scholes-put](02-black-scholes-put.md): the $6.33, priced on its own so the two sides of this card can be tested against each other.
-- [no-arbitrage-and-the-law-of-one-price](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md): the single rule Step 0 leans on, and the only assumption in the proof.
-- [forward-price-by-cash-and-carry](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md): the prepaid share, the loan, and the forward price $F$ that Step 2 buys off the shelf.
+- [Black–Scholes call](01-black-scholes-call.md): where the $9.23 comes from. Parity does not need it; the check uses it to have two prices worth comparing.
+- [Black-Scholes put](02-black-scholes-put.md): the $6.33, priced on its own so the two sides of this card can be tested against each other.
+- [No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md): the single rule Step 0 leans on, and the only assumption in the proof.
+- [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md): the prepaid share, the loan, and the forward price $F$ that Step 2 buys off the shelf.
 
 ## Where this goes next
 
-- [option-price-bounds](04-option-price-bounds.md): parity plus "a put is never worth less than nothing" pins each price on its own.
-- [intrinsic-and-time-value](06-intrinsic-and-time-value.md): the same two prices cut the other way, into payoff now and what waiting is worth.
-- [known-cash-dividends](08-known-cash-dividends.md): parity when dividends are announced cash amounts on known dates.
-- [black-scholes-assumptions-and-failures](09-black-scholes-assumptions-and-failures.md): which assumptions the model needs and this card does without.
-- [implied-forward-and-dividend-from-parity](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/05-implied-forward-and-dividend-from-parity.md): this card run backwards, to read the forward and the dividend out of live quotes.
-- [american-options-and-early-exercise](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md): the corridor that replaces the equality once a ticket can be used early.
-- [knock-out-and-knock-in-options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md): in plus out equals the plain option, the same argument at a barrier.
-- [chooser-options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/04-chooser-options.md): a ticket whose holder picks call or put later, priced by parity.
-- [garman-kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): currency options, where the dividend slot holds the foreign interest rate.
-- [merton-model-equity-as-a-call](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md): shares as a call on a company's assets, its risky debt as a bond minus a put.
+- [Option price bounds](04-option-price-bounds.md): parity plus "a put is never worth less than nothing" pins each price on its own.
+- [Intrinsic and time value](06-intrinsic-and-time-value.md): the same two prices cut the other way, into payoff now and what waiting is worth.
+- [Known cash dividends](08-known-cash-dividends.md): parity when dividends are announced cash amounts on known dates.
+- [The Black-Scholes assumptions](09-black-scholes-assumptions-and-failures.md): which assumptions the model needs and this card does without.
+- [Implied forward and dividend from parity](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/05-implied-forward-and-dividend-from-parity.md): this card run backwards, to read the forward and the dividend out of live quotes.
+- [American options](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md): the corridor that replaces the equality once a ticket can be used early.
+- [Knock-out and knock-in options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md): in plus out equals the plain option, the same argument at a barrier.
+- [Chooser options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/04-chooser-options.md): a ticket whose holder picks call or put later, priced by parity.
+- [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): currency options, where the dividend slot holds the foreign interest rate.
+- [Merton's model](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md): shares as a call on a company's assets, its risky debt as a bond minus a put.
 
 Parity fixes the difference between the two prices and says nothing about the level of either, so a call could still be quoted above the share itself and pass this test; what rules that out is the next card, option price bounds.
 

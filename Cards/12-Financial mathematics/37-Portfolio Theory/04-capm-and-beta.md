@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Portfolio Theory
-topic: Pricing market risk
-item: CAPM
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/03-tangency-portfolio-and-the-capital-market-line|tangency-portfolio-and-the-capital-market-line]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/01-least-squares-regression|least-squares-regression]]"
-next:
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/05-factor-models-and-apt|factor-models-and-apt]]"
-  - "[[Cards/12-Financial mathematics/38-Performance and Multi-Period/03-mertons-portfolio-problem|mertons-portfolio-problem]]"
-tags: [mathematics, financial mathematics, capm-and-beta]
----
-
 # CAPM: expected return as a reward for beta only
 
-Financial mathematics → Portfolio Theory → Pricing market risk → CAPM
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Theory](../../../SYLLABUS.md#w12-s37) → CAPM
 
 ---
 
@@ -98,7 +80,7 @@ An investor who holds a broad portfolio and adds a sliver of Kestrel does not ta
 
 ### Step 1: at the tangency portfolio, every share pays the same reward per unit of covariance
 
-The previous card ([tangency-portfolio-and-the-capital-market-line](03-tangency-portfolio-and-the-capital-market-line.md)) finds the risky mix $T$ with the highest **Sharpe ratio**: expected return above the bank rate, divided by volatility. Every investor holds that mix plus a bank account.
+The previous card ([Adding a riskless asset](03-tangency-portfolio-and-the-capital-market-line.md)) finds the risky mix $T$ with the highest **Sharpe ratio**: expected return above the bank rate, divided by volatility. Every investor holds that mix plus a bank account.
 
 Take a tiny amount $h$ of money out of the bank and put it into share $i$, on top of the tangency mix. The portfolio's expected return rises by $h$ times share $i$'s excess return, $E[R_i] - r_f$. Its variance rises by $2h$ times $\operatorname{Cov}(R_i, R_T)$, to first order in $h$.
 
@@ -152,13 +134,13 @@ Pinecrest has less total volatility than Kestrel, 25 percent against 30, and les
 <details>
 <summary>Why the private part cannot earn a premium</summary>
 
-Suppose Kestrel's private wobble did earn extra return. An investor could hold Kestrel and short-sell (borrow and sell) the market in the ratio 1.2 to 1: the market-driven part cancels, leaving 18 percent private volatility and the extra return. Hold a hundred such positions on different shares and their private wobbles, being unrelated, shrink the portfolio's volatility by a factor of ten, while the extra return stays. That is close to free money. Its pursuit bids the shares up until the extra return is gone. Stephen Ross turned this argument into a pricing theory of its own: [factor-models-and-apt](05-factor-models-and-apt.md).
+Suppose Kestrel's private wobble did earn extra return. An investor could hold Kestrel and short-sell (borrow and sell) the market in the ratio 1.2 to 1: the market-driven part cancels, leaving 18 percent private volatility and the extra return. Hold a hundred such positions on different shares and their private wobbles, being unrelated, shrink the portfolio's volatility by a factor of ten, while the extra return stays. That is close to free money. Its pursuit bids the shares up until the extra return is gone. Stephen Ross turned this argument into a pricing theory of its own: [Factor models](05-factor-models-and-apt.md).
 
 </details>
 
 ### Step 5: estimating beta is fitting a straight line
 
-Nobody observes a covariance directly. From $n$ past periods, record the market's return above the bank rate, $x_t$, and the share's, $y_t$. Fit the line $y = a + b\,x$ that makes the sum of squared misses smallest ([least-squares-regression](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)). With $\bar x$ and $\bar y$ the averages:
+Nobody observes a covariance directly. From $n$ past periods, record the market's return above the bank rate, $x_t$, and the share's, $y_t$. Fit the line $y = a + b\,x$ that makes the sum of squared misses smallest ([Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)). With $\bar x$ and $\bar y$ the averages:
 
 $$\hat\beta = \frac{\sum_t (x_t - \bar x)(y_t - \bar y)}{\sum_t (x_t - \bar x)^2}, \qquad \hat\alpha = \bar y - \hat\beta\,\bar x.$$
 
@@ -687,8 +669,8 @@ Bars: the beta estimated in each window, 1.34, 1.20, 1.28 and 1.05. Line: the tr
 - **Fund performance.** Jensen's alpha, the intercept of a fund's excess returns regressed on the market's, is the oldest test of whether a manager earned more than the risk taken. Most funds' alphas are within noise of zero, or below it after fees.
 - **Published betas.** Data services commonly quote betas from five years of monthly returns against a stock index. The windows in the chart above show why two services can disagree.
 - **Regulated prices.** Utility and pipeline regulators set allowed returns with a CAPM calculation, so beta estimates end up in household bills.
-- **Starting portfolios.** Black-Litterman runs this card backwards: it takes the market's weights and asks what expected returns would make them the tangency mix ([black-litterman](06-black-litterman.md)).
-- **Estimation noise.** How much the optimiser's weights swing when the inputs are estimated is the subject of [estimation-error-and-shrinkage](07-estimation-error-and-shrinkage.md).
+- **Starting portfolios.** Black-Litterman runs this card backwards: it takes the market's weights and asks what expected returns would make them the tangency mix ([Black-Litterman](06-black-litterman.md)).
+- **Estimation noise.** How much the optimiser's weights swing when the inputs are estimated is the subject of [Estimation error](07-estimation-error-and-shrinkage.md).
 
 > **Say it back**
 > Every investor holds the same best risky mix, so that mix is the market. At the best mix, every share must pay the same extra return per unit of covariance with it, or money could be moved to improve it. Dividing by the market's own variance turns that covariance into beta, and the market's premium sets the price of one unit. Kestrel, with beta 1.2, should earn 4 percent plus 1.2 times 4, or 8.8 percent. Risk that does not move with the market can be diversified away, so it earns nothing, and a fitted alpha is a measurement that needs its error bar.
@@ -697,13 +679,13 @@ Bars: the beta estimated in each window, 1.34, 1.20, 1.28 and 1.05. Line: the tr
 
 ## What this builds on
 
-- [tangency-portfolio-and-the-capital-market-line](03-tangency-portfolio-and-the-capital-market-line.md): the best risky mix when a bank account is available, and the fact that every investor holds it. Steps 1 to 3 start there.
-- [least-squares-regression](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md): the straight-line fit whose slope estimates beta and whose intercept estimates alpha.
+- [Adding a riskless asset](03-tangency-portfolio-and-the-capital-market-line.md): the best risky mix when a bank account is available, and the fact that every investor holds it. Steps 1 to 3 start there.
+- [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md): the straight-line fit whose slope estimates beta and whose intercept estimates alpha.
 
 ## Where this goes next
 
-- [factor-models-and-apt](05-factor-models-and-apt.md): several common factors instead of one market, and a pricing rule that needs no equilibrium, only the absence of free money.
-- [mertons-portfolio-problem](../38-Performance%20and%20Multi-Period/03-mertons-portfolio-problem.md): the same trade-off over many periods, where investors also hedge changes in future opportunities.
+- [Factor models](05-factor-models-and-apt.md): several common factors instead of one market, and a pricing rule that needs no equilibrium, only the absence of free money.
+- [Merton's problem](../38-Performance%20and%20Multi-Period/03-mertons-portfolio-problem.md): the same trade-off over many periods, where investors also hedge changes in future opportunities.
 
 CAPM leaves open why data show flat lines and rewards for size and value that beta does not explain; factor models are the answer the field built next.
 

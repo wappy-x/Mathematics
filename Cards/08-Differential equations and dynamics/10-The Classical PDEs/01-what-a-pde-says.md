@@ -1,29 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: The Classical PDEs
-topic: Three families and their conditions
-item: A partial differential equation
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/05-two-point-boundary-value-problems|two-point-boundary-value-problems]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/02-the-transport-equation-and-characteristics|the-transport-equation-and-characteristics]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/03-the-heat-equation|the-heat-equation]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/03-black-scholes-by-delta-hedging|black-scholes-by-delta-hedging]]"
-  - "[[Cards/13-Engineering mathematics/08-Fluids and Heat/03-navier-stokes-and-the-reynolds-number|navier-stokes-and-the-reynolds-number]]"
-  - "[[Cards/16-Numerical analysis/07-PDE Solvers/01-pde-families-elliptic-parabolic-hyperbolic|pde-families-elliptic-parabolic-hyperbolic]]"
-  - "[[Cards/18-Functional analysis/04-Distributions and Sobolev Spaces/08-weak-solutions-of-differential-equations|weak-solutions-of-differential-equations]]"
-  - "[[Cards/19-Partial differential equations/01-Classification and Well-Posedness/01-what-a-pde-problem-is|what-a-pde-problem-is]]"
-tags: [mathematics, differential equations and dynamics, what-a-pde-says]
----
-
 # A partial differential equation: rates in more than one direction, and three families with three personalities
 
-Differential equations and dynamics → The Classical PDEs → Three families and their conditions → A partial differential equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → A partial differential equation
 
 ---
 
@@ -49,7 +26,7 @@ To scale: 90 units per metre across; up, 90 per scaled time unit or per metre. T
 
 ## The formula
 
-Notation first, in words. A subscript names a partial derivative, a rate in one direction with the other variables held still ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). So u_t is how fast the temperature at one fixed point changes in time, and u_x is the slope along the rod at one instant. A doubled letter takes the rate twice: u_xx is the **bend** of the profile (its second derivative in x), and u_tt the acceleration of one point of the string.
+Notation first, in words. A subscript names a partial derivative, a rate in one direction with the other variables held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). So u_t is how fast the temperature at one fixed point changes in time, and u_x is the slope along the rod at one instant. A doubled letter takes the rate twice: u_xx is the **bend** of the profile (its second derivative in x), and u_tt the acceleration of one point of the string.
 
 The three equations, with the rod's diffusivity κ and the string's wave speed c scaled to 1:
 
@@ -81,7 +58,7 @@ For the rod, time plays the part of y: u_xx − u_t = 0 has A = 1 and B = C = 0.
 
 The names are a definition. The sort assumes:
 
-- **Second order.** The transport equation u_t + u_x = 0 sits outside the three ([the-transport-equation-and-characteristics](02-the-transport-equation-and-characteristics.md)).
+- **Second order.** The transport equation u_t + u_x = 0 sits outside the three ([The transport equation](02-the-transport-equation-and-characteristics.md)).
 - **One convention.** Books writing 2B u_xy test B^2 − AC.
 - **Two variables.** With more, the test reads the eigenvalue signs of the coefficient matrix, `[[A, B/2], [B/2, C]]` in two variables: all one sign, elliptic; one opposite, hyperbolic; one zero, parabolic.
 - **Point by point.** Varying coefficients can change the family: the Tricomi equation y u_xx + u_yy = 0, a model of airflow near the speed of sound, is elliptic for y > 0, hyperbolic for y < 0.
@@ -99,7 +76,7 @@ The rod's and string's equations give the highest time rate from the shape. Ever
 
 On a grid of points h apart, the bend is (left + right − 2 × middle)/h^2: the gap between the neighbours' mean and the point, over h^2/2. So each point warms at a rate set by how far it sits below its neighbours' mean.
 
-Given the profile at one instant, every rate is known; a small step along them gives the next instant (Euler's rule, [eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)). The end points have one neighbour each, so each end must be told, here 0 C. A starting rate cannot be handed in too: the profile fixes it.
+Given the profile at one instant, every rate is known; a small step along them gives the next instant (Euler's rule, [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)). The end points have one neighbour each, so each end must be told, here 0 C. A starting rate cannot be handed in too: the profile fixes it.
 
 From u(x, 0) = sin(πx) the solution is u = e^(−π^2 t) sin(πx). The middle reads 0.3727 C at t = 0.1 and has halved by t = 0.0702.
 
@@ -130,7 +107,7 @@ The code's second road scans Q round 3600 directions instead: both signs, hyperb
 
 New variables ξ(x, y), η(x, y) with Jacobian determinant J = ξ_x η_y − ξ_y η_x ≠ 0 turn the top-order part into A' u_ξξ + B' u_ξη + C' u_ηη. The chain rule gives the matrix `[[A', B'/2], [B'/2, C']]` as M^T `[[A, B/2], [B/2, C]]` M, where M has columns (ξ_x, ξ_y) and (η_x, η_y). Determinants multiply, so A'C' − B'^2/4 = J^2 (AC − B^2/4), that is B'^2 − 4A'C' = J^2 (B^2 − 4AC). As J^2 > 0, the sign survives.
 
-For the wave, ξ = x + t and η = x − t give J = −2 and turn u_xx − u_tt = 0 into 4u_ξη = 0, solved by F(x + t) + G(x − t): d'Alembert's formula, proved in [the-wave-equation-and-dalemberts-formula](05-the-wave-equation-and-dalemberts-formula.md).
+For the wave, ξ = x + t and η = x − t give J = −2 and turn u_xx − u_tt = 0 into 4u_ξη = 0, solved by F(x + t) + G(x − t): d'Alembert's formula, proved in [The wave equation](05-the-wave-equation-and-dalemberts-formula.md).
 
 </details>
 
@@ -148,7 +125,7 @@ xychart-beta
 
 Orange: the rod's middle, e^(−π^2 t). Teal: the plucked string's, cos(πt), back at full height at t = 2.
 
-A problem is **well posed** when it has one solution that moves little when the data do; the general theory is what-a-pde-problem-is.
+A problem is **well posed** when it has one solution that moves little when the data do; the general theory is A PDE problem.
 
 ---
 
@@ -163,7 +140,7 @@ A problem is **well posed** when it has one solution that moves little when the 
 | struck string's middle, t = 0.5 | cos(π/2) + sin(π/2)/π | 0.3183 cm |
 | plate centre | sinh(π/2)/sinh(π) | **0.1993 C** |
 
-An end condition can fix the value (held at 0 C) or the flow (insulated, slope zero); [the-heat-equation](03-the-heat-equation.md) uses both.
+An end condition can fix the value (held at 0 C) or the flow (insulated, slope zero); [The heat equation](03-the-heat-equation.md) uses both.
 
 ### What breaks if you drop a piece
 
@@ -396,11 +373,11 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Diffusion.** Heat in a wall, a drug in tissue: parabolic ([the-heat-equation](03-the-heat-equation.md)).
-- **Option prices.** Black-Scholes is parabolic; its start is the payoff at expiry, and it runs backwards in calendar time ([black-scholes-by-delta-hedging](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md)).
-- **Sound and vibration.** Hyperbolic, with finite speed ([standing-waves-on-a-string](06-standing-waves-on-a-string.md)).
-- **Steady fields.** Voltage between conductors, a soap film on a wire loop: elliptic ([laplaces-equation-and-harmonic-functions](07-laplaces-equation-and-harmonic-functions.md)).
-- **Flight near the speed of sound.** The flow changes family across the sonic line, as in Tricomi's model (navier-stokes-and-the-reynolds-number).
+- **Diffusion.** Heat in a wall, a drug in tissue: parabolic ([The heat equation](03-the-heat-equation.md)).
+- **Option prices.** Black-Scholes is parabolic; its start is the payoff at expiry, and it runs backwards in calendar time ([Black-Scholes by hedging](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md)).
+- **Sound and vibration.** Hyperbolic, with finite speed ([Standing waves](06-standing-waves-on-a-string.md)).
+- **Steady fields.** Voltage between conductors, a soap film on a wire loop: elliptic ([Laplace's equation](07-laplaces-equation-and-harmonic-functions.md)).
+- **Flight near the speed of sound.** The flow changes family across the sonic line, as in Tricomi's model (Navier-Stokes).
 
 > **Say it back**
 > A PDE links a function's rates in several directions: u_t a rate in time, u_xx a bend in space. In two variables the sign of B^2 − 4AC names the family: zero heat, positive wave, negative Laplace. Heat needs a start and its ends, and runs forward only. Waves also need a starting speed. Laplace needs its whole edge and nothing else.
@@ -409,18 +386,18 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [two-point-boundary-value-problems](../07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md): conditions at two ends, the pattern every edge condition here repeats.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): rates with the other variables held still, and the chain rule behind the proof.
+- [Boundary value problems](../07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md): conditions at two ends, the pattern every edge condition here repeats.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): rates with the other variables held still, and the chain rule behind the proof.
 
 ## Where this goes next
 
-- [the-transport-equation-and-characteristics](02-the-transport-equation-and-characteristics.md): a shape carried along characteristic lines.
-- [the-heat-equation](03-the-heat-equation.md): the rod's equation from conservation of heat.
-- [black-scholes-by-delta-hedging](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md): a parabolic equation from hedging.
-- navier-stokes-and-the-reynolds-number: a nonlinear system mixing families.
-- pde-families-elliptic-parabolic-hyperbolic: a grid solver for each family.
-- weak-solutions-of-differential-equations: solutions with corners, where u_xx fails to exist.
-- what-a-pde-problem-is: well-posedness in general.
+- [The transport equation](02-the-transport-equation-and-characteristics.md): a shape carried along characteristic lines.
+- [The heat equation](03-the-heat-equation.md): the rod's equation from conservation of heat.
+- [Black-Scholes by hedging](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md): a parabolic equation from hedging.
+- Navier-Stokes: a nonlinear system mixing families.
+- Three families: a grid solver for each family.
+- Weak solutions: solutions with corners, where u_xx fails to exist.
+- A PDE problem: well-posedness in general.
 
 ---
 

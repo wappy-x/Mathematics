@@ -1,25 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Transforms in Outline
-topic: Half planes, strips and damping
-item: Where a transform lives
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/05-laplace-transform|laplace-transform]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/03-fourier-transform|fourier-transform]]"
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/03-cauchys-theorem|cauchys-theorem]]"
-next:
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/07-inverse-laplace-by-residues|inverse-laplace-by-residues]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/07-mellin-transform|mellin-transform]]"
-tags: [mathematics, complex analysis, strips-of-convergence-and-shifting-the-line]
----
-
 # Where a transform lives: a strip or half plane of convergence, and inside it the line of integration slides without changing the answer
 
-Complex analysis → Transforms in Outline → Half planes, strips and damping → Where a transform lives
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Transforms in Outline](../../../SYLLABUS.md#w07-s08) → Where a transform lives
 
 ---
 
@@ -27,7 +8,7 @@ Complex analysis → Transforms in Outline → Half planes, strips and damping �
 
 A savings balance of 1 dollar grows at 5 percent a year, compounded continuously: after t years it holds e^(0.05t) dollars.
 
-It has no Fourier transform ([fourier-transform](03-fourier-transform.md)). At frequency 0 its defining integral, summed to 100 years, reads 2948.263182; summed to 200, 440509.315896. It never settles.
+It has no Fourier transform ([The Fourier transform](03-fourier-transform.md)). At frequency 0 its defining integral, summed to 100 years, reads 2948.263182; summed to 200, 440509.315896. It never settles.
 
 Multiply by a damping factor e^(−0.10t). The product e^(−0.05t) dies away, and its transform exists: 20 at frequency 0. The damping must beat the growth.
 
@@ -41,7 +22,7 @@ A complex number s = σ + iω holds a damping rate σ and a frequency ω. A tran
 
 ## The formula
 
-The **two-sided Laplace transform** is the Laplace transform ([laplace-transform](05-laplace-transform.md)) run over all time, past as well as future.
+The **two-sided Laplace transform** is the Laplace transform ([The Laplace transform](05-laplace-transform.md)) run over all time, past as well as future.
 
 $$F(s) = \int_{-\infty}^{\infty} f(t)\, e^{-st}\, dt, \qquad \alpha < \operatorname{Re} s < \beta$$
 
@@ -121,13 +102,13 @@ Fix s0 inside and δ > 0 with Re s0 ± 2δ inside. For s within δ of s0, |f(t) 
 
 ### Step 4: the line slides by Cauchy's theorem
 
-Join the lines Re s = −0.10 and Re s = 0 into a rectangle from height −R to R, anticlockwise. By [cauchys-theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md) the loop is 0, as the code finds at t = 5 for R = 0.1 and 10.
+Join the lines Re s = −0.10 and Re s = 0 into a rectangle from height −R to R, anticlockwise. By [Cauchy's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md) the loop is 0, as the code finds at t = 5 for R = 0.1 and 10.
 
 The loop is the right side up, minus the left side up, plus two short sides. At t = 5 the top side measures 0.753695 at R = 0.1, 0.019309 at R = 1 and 0.000197 at R = 10. They vanish, so the two line integrals are equal. Both give 0.367879 = h(5) at t = 5 and 0.606531 = h(−10) at t = −10.
 
 ### Step 5: crossing an edge adds a residue
 
-Slide the line from Re s = 0 to 0.10. The rectangle now holds the pole at 0.05, where 1/(0.05 − s) = −1/(s − 0.05) gives H(s) e^(st) the residue −e^(0.05t). At t = 5 the loop is −8.067770i, which is 2πi times that residue ([the-residue-theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)).
+Slide the line from Re s = 0 to 0.10. The rectangle now holds the pole at 0.05, where 1/(0.05 − s) = −1/(s − 0.05) gives H(s) e^(st) the residue −e^(0.05t). At t = 5 the loop is −8.067770i, which is 2πi times that residue ([The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)).
 
 So the line at 0.10 returns h(t) − e^(0.05t): −0.916146 at t = 5, 0 at t = −10. That signal starts today: it is the one whose transform is H on Re s > 0.05. Crossing to Re s = −0.25 gives h(t) − e^(−0.20t), a signal living only in the past: −6.782525 at t = −10.
 
@@ -396,7 +377,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Option pricing.** A call price does not fade as the log-strike k falls, so it has no Fourier transform. Carr and Madan damp it by e^(ak), a chosen inside the strip ([carr-madan-fft-and-cos-methods](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md)).
+- **Option pricing.** A call price does not fade as the log-strike k falls, so it has no Fourier transform. Carr and Madan damp it by e^(ak), a chosen inside the strip ([Transform pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md)).
 - **Valuation.** The growing-perpetuity price 1/(r − g) is the balance's transform at s = r; its failure at r ≤ g is the half plane's edge.
 
 > **Say it back**
@@ -406,14 +387,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [laplace-transform](05-laplace-transform.md): the one-sided transform, here run over all time.
-- [fourier-transform](03-fourier-transform.md): the transform on the imaginary axis and its inversion with 1/(2π).
-- [cauchys-theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md): the zero loop integral that lets the line slide.
+- [The Laplace transform](05-laplace-transform.md): the one-sided transform, here run over all time.
+- [The Fourier transform](03-fourier-transform.md): the transform on the imaginary axis and its inversion with 1/(2π).
+- [Cauchy's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md): the zero loop integral that lets the line slide.
 
 ## Where this goes next
 
-- [inverse-laplace-by-residues](07-inverse-laplace-by-residues.md): slide the line left past every pole and sum the residues.
-- [mellin-transform](../09-Special%20Functions%20and%20the%20Zeta%20Function/07-mellin-transform.md): the same strips for the transform built on powers t^s.
+- [Inverting a Laplace transform](07-inverse-laplace-by-residues.md): slide the line left past every pole and sum the residues.
+- [The Mellin transform](../09-Special%20Functions%20and%20the%20Zeta%20Function/07-mellin-transform.md): the same strips for the transform built on powers t^s.
 
 ---
 

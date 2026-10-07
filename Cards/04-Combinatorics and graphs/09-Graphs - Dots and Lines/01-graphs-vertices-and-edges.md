@@ -1,34 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Graphs - Dots and Lines
-topic: The object and its families
-item: Graphs
-kind: definition
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/05-n-choose-k|n-choose-k]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/01-relations|relations]]"
-  - "[[Cards/01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product|ordered-pairs-and-cartesian-product]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/02-degree-and-handshaking|degree-and-handshaking]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/03-walks-paths-and-cycles|walks-paths-and-cycles]]"
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/03-vertex-colouring-and-chromatic-number|vertex-colouring-and-chromatic-number]]"
-  - "[[Cards/04-Combinatorics and graphs/14-Ramsey and Extremal, in Outline/01-friends-and-strangers|friends-and-strangers]]"
-  - "[[Cards/09-Probability and statistics/14-Random Graphs and the Probabilistic Method/01-random-graphs-erdos-renyi|random-graphs-erdos-renyi]]"
-  - "[[Cards/14-Applied and computational/07-Network Science and Spectral Graphs/04-small-world-and-scale-free-models|small-world-and-scale-free-models]]"
-  - "[[Cards/17-Topology/06-Topological Data Analysis/02-vietoris-rips-and-cech-complexes|vietoris-rips-and-cech-complexes]]"
-  - "[[Cards/25-Frontier/06-Algebra, Logic and Computation/04-graph-isomorphism|graph-isomorphism]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - graphs-vertices-and-edges
----
-
 # Graphs: dots joined by lines, the named families, and when two drawings are the same graph
 
-Combinatorics and graphs → Graphs - Dots and Lines → The object and its families → Graphs
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Graphs - Dots and Lines](../../../SYLLABUS.md#w04-s09) → Graphs
 
 ---
 
@@ -72,13 +44,13 @@ $$G = (V, E)$$
 
 Here $V$ is A to F, $E$ the eight pairs above, and $n$ the number of vertices, six; bars count members, so $\lvert E\rvert$ is 8. One row per station naming its neighbours holds the same map — the **adjacency list**, which the code prints.
 
-An edge is an unordered pair of different stations, so the pairs available are the two-element subsets of $V$, counted by C(6, 2), read "six choose two" ([n-choose-k](../01-Counting%20Principles/05-n-choose-k.md)):
+An edge is an unordered pair of different stations, so the pairs available are the two-element subsets of $V$, counted by C(6, 2), read "six choose two" ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)):
 
 $$\lvert E\rvert \;\le\; C(n, 2) \;=\; \frac{n(n-1)}{2}$$
 
 **Read it aloud:** the lines can never outnumber the pairs of stations, so 15 are possible and the city runs 8.
 
-A renaming $f$ matches the stations of one map one-to-one onto those of the other ([relations](../../01-Foundations/08-Relations%20and%20Functions/01-relations.md)). It makes them **isomorphic** — "the same graph, differently named" — when
+A renaming $f$ matches the stations of one map one-to-one onto those of the other ([Relations](../../01-Foundations/08-Relations%20and%20Functions/01-relations.md)). It makes them **isomorphic** — "the same graph, differently named" — when
 
 $$u\text{-}v \text{ is an edge of the first} \quad\text{exactly when}\quad f(u)\text{-}f(v) \text{ is an edge of the second}$$
 
@@ -98,7 +70,7 @@ $$u\text{-}v \text{ is an edge of the first} \quad\text{exactly when}\quad f(u)\
 ### When it holds
 
 - **Simple: one line per pair, none from a station to itself.** Two tracks from B to C make a **multigraph**, a line from B to B a **loop**; the ceiling of fifteen assumes neither.
-- **No direction, and no numbers on the lines.** A line joins A and B both ways and is present or absent: one-way track needs arrows ([directed-graphs-and-topological-order](06-directed-graphs-and-topological-order.md)), and adding a cost changes shortest-route answers.
+- **No direction, and no numbers on the lines.** A line joins A and B both ways and is present or absent: one-way track needs arrows ([Directed graphs](06-directed-graphs-and-topological-order.md)), and adding a cost changes shortest-route answers.
 - **Finitely many stations, each named once.** Two names for one station merge its lines and drop the count.
 
 ---
@@ -121,7 +93,7 @@ By listing: A pairs with five others, B with four not yet counted, then three, t
 - **K(m, n), complete bipartite:** two groups, every cross pair joined, none inside a group, m × n edges. K(3, 3), 9.
 - **Q(3), the 3-cube:** the 8 corners of a cube, joined when they differ in one coordinate. Each corner has 3 coordinates to flip and each line has two ends: 8 × 3 / 2 = 12 lines, 4 per direction.
 
-A graph whose vertices all meet the same number of lines is **regular**, as Q(3) is; the ring map is not, its tally being 2, 2, 3, 3, 3, 3 ([degree-and-handshaking](02-degree-and-handshaking.md) counts them properly).
+A graph whose vertices all meet the same number of lines is **regular**, as Q(3) is; the ring map is not, its tally being 2, 2, 3, 3, 3, 3 ([Degrees and the handshaking lemma](02-degree-and-handshaking.md) counts them properly).
 
 Now place the ring map. Split the stations into A, C, E and B, D, F: all eight lines cross between the groups, none inside either. K(3, 3) holds nine such crossings, so the map is K(3, 3) less one line — the pair left out is A-D.
 
@@ -162,7 +134,7 @@ Some counts survive every renaming: the vertices, the edges, the sorted tally of
 
 That is a cheap test and a trap. A third map, A-B, A-C, B-C, B-E, C-F, D-E, D-F, E-F, matches the ring map on the first three: 8 lines, the tally 2, 2, 3, 3, 3, 3. But it holds 2 triangles, A-B-C and D-E-F, where the ring map holds 0, and the search over all 720 returns zero. Fingerprints rule a difference out; never sameness in.
 
-A second route stores the graph as a square table of yes-and-no entries and reorders its rows and columns: the adjacency matrix, on [adjacency-matrix-and-walk-counting](07-adjacency-matrix-and-walk-counting.md).
+A second route stores the graph as a square table of yes-and-no entries and reorders its rows and columns: the adjacency matrix, on [The adjacency matrix](07-adjacency-matrix-and-walk-counting.md).
 
 ---
 
@@ -413,9 +385,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Timetables and routing.** A rail network is stored as the adjacency list this card prints ([walks-paths-and-cycles](03-walks-paths-and-cycles.md)).
+- **Timetables and routing.** A rail network is stored as the adjacency list this card prints ([Walks, paths and cycles](03-walks-paths-and-cycles.md)).
 - **Chemistry.** Molecules with one formula but different bonding are different graphs on the same atoms, so database search is isomorphism testing.
-- **Chip layout.** Checking a layout against its schematic is an isomorphism test. Tasks as vertices and clashes as edges asks how few groups dodge them all ([vertex-colouring-and-chromatic-number](../12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md)).
+- **Chip layout.** Checking a layout against its schematic is an isomorphism test. Tasks as vertices and clashes as edges asks how few groups dodge them all ([Colouring](../12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md)).
 
 > **Say it back**
 > A graph is two lists: the vertices, the dots, and the edges, the pairs joined by a line. Six stations carry at most C(6, 2) = 15 lines; the metro map runs 8 and is K(3, 3) less one line. Keep some stations and some lines for a subgraph, every line between them for the induced one. Two drawings are one graph when renaming either's stations gives the other's line list — 8 of 720 renamings do it here.
@@ -424,20 +396,20 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [n-choose-k](../01-Counting%20Principles/05-n-choose-k.md): the count C(6, 2) = 15 of available pairs.
-- [relations](../../01-Foundations/08-Relations%20and%20Functions/01-relations.md): joined pairs form a relation; a renaming is a function one-to-one and onto.
-- [ordered-pairs-and-cartesian-product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md): why an edge is an unordered pair.
+- [Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md): the count C(6, 2) = 15 of available pairs.
+- [Relations](../../01-Foundations/08-Relations%20and%20Functions/01-relations.md): joined pairs form a relation; a renaming is a function one-to-one and onto.
+- [Ordered pairs and the Cartesian product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md): why an edge is an unordered pair.
 
 ## Where this goes next
 
-- [degree-and-handshaking](02-degree-and-handshaking.md): the tally sums to twice the line count.
-- [walks-paths-and-cycles](03-walks-paths-and-cycles.md): travelling the lines, not listing them.
-- [vertex-colouring-and-chromatic-number](../12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md): how few groups leave no line inside a group.
-- [friends-and-strangers](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/01-friends-and-strangers.md): six vertices force three all joined or three all unjoined.
-- [random-graphs-erdos-renyi](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/01-random-graphs-erdos-renyi.md): which pairs get a line, chosen at random.
-- small-world-and-scale-free-models: the tallies real networks show.
-- vietoris-rips-and-cech-complexes: joining nearby data points, then filling triangles.
-- graph-isomorphism: how hard sameness is when renamings cannot all be tried.
+- [Degrees and the handshaking lemma](02-degree-and-handshaking.md): the tally sums to twice the line count.
+- [Walks, paths and cycles](03-walks-paths-and-cycles.md): travelling the lines, not listing them.
+- [Colouring](../12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md): how few groups leave no line inside a group.
+- [Friends and strangers](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/01-friends-and-strangers.md): six vertices force three all joined or three all unjoined.
+- [Random graphs](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/01-random-graphs-erdos-renyi.md): which pairs get a line, chosen at random.
+- Small worlds and hubs: the tallies real networks show.
+- Vietoris-Rips, Cech and alpha complexes: joining nearby data points, then filling triangles.
+- Graph isomorphism: how hard sameness is when renamings cannot all be tried.
 
 Every renaming was tried here; a real network has far too many, and cutting that search down is what this shelf opens.
 

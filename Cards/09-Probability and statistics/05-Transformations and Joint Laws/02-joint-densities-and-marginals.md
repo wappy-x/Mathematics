@@ -1,26 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Transformations and Joint Laws
-topic: Chance as volume
-item: Joint densities
-kind: definition
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/01-densities-and-cdfs|densities-and-cdfs]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/04-joint-distributions-and-covariance|joint-distributions-and-covariance]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/01-double-integrals|double-integrals]]"
-next:
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/03-conditional-densities|conditional-densities]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/04-sums-and-convolution|sums-and-convolution]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/08-order-statistics-and-extremes|order-statistics-and-extremes]]"
-tags: [mathematics, probability and statistics, joint-densities-and-marginals]
----
-
 # Joint densities: two continuous variables and the surface over the plane
 
-Probability and statistics → Transformations and Joint Laws → Chance as volume → Joint densities
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Transformations and Joint Laws](../../../SYLLABUS.md#w09-s05) → Joint densities
 
 ---
 
@@ -60,7 +40,7 @@ $$f_H(h) = \int_{-\infty}^{\infty} f(h, w)\,dw \qquad\qquad f_W(w) = \int_{-\inf
 
 **Read it aloud:** the density of height alone, at height h, is the area of the surface's cross-section at h, taken across every weight; the same with the roles swapped gives weight alone.
 
-The surface on this card is a tilted bell, fixed by five settings: the centre μ_H = 175 cm and μ_W = 78 kg (the averages), the spreads σ_H = 7 cm and σ_W = 12 kg (the standard deviations), and the tilt ρ (rho) = 0.5, the correlation of height and weight. Three helpers follow from them. The standardised height $z_h$ is (h − 175)/7: how many spreads above average. The standardised weight $z_w$ is (w − 78)/12. The squeeze factor $c$ is the square root of 1 − ρ^2, here 0.8660. The bell's derivation belongs to [bivariate-normal-and-conditioning](05-bivariate-normal-and-conditioning.md); here it is taken as given:
+The surface on this card is a tilted bell, fixed by five settings: the centre μ_H = 175 cm and μ_W = 78 kg (the averages), the spreads σ_H = 7 cm and σ_W = 12 kg (the standard deviations), and the tilt ρ (rho) = 0.5, the correlation of height and weight. Three helpers follow from them. The standardised height $z_h$ is (h − 175)/7: how many spreads above average. The standardised weight $z_w$ is (w − 78)/12. The squeeze factor $c$ is the square root of 1 − ρ^2, here 0.8660. The bell's derivation belongs to [Bivariate normal](05-bivariate-normal-and-conditioning.md); here it is taken as given:
 
 $$f(h, w) = \frac{1}{2\pi\,\sigma_H\,\sigma_W\,c}\;e^{-Q/2}, \qquad Q = \frac{z_h^2 - 2\rho\,z_h z_w + z_w^2}{c^2}$$
 
@@ -81,7 +61,7 @@ $$f(h, w) = \frac{1}{2\pi\,\sigma_H\,\sigma_W\,c}\;e^{-Q/2}, \qquad Q = \frac{z_
 | $c$ | the squeeze factor, the square root of 1 − ρ^2 | 0.8660 | wider rings, lower peak |
 | $\Phi$ | the standard normal's area left of a point | 1 − Φ(1) = 0.1587 | — |
 
-The tilt ρ is the correlation of [joint-distributions-and-covariance](../02-Random%20Variables/04-joint-distributions-and-covariance.md): the covariance Cov(H, W) divided by both spreads. The code integrates the covariance off the surface and gets 42.000000 cm kg, which is 0.5 × 7 × 12.
+The tilt ρ is the correlation of [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md): the covariance Cov(H, W) divided by both spreads. The code integrates the covariance off the surface and gets 42.000000 cm kg, which is 0.5 × 7 × 12.
 
 ### When it holds
 
@@ -98,7 +78,7 @@ The tilt ρ is the correlation of [joint-distributions-and-covariance](../02-Ran
 
 Cut the plane into small boxes, 1 cm wide in height and 1 kg deep in weight. Over one box the surface is nearly flat, so the chance of landing in it is about the surface's height times the box's area. At the centre that is 0.002188 × 1 × 1. The grid in the code gives 0.002184 for that box: about 1 adult in 458 stands between 174.5 and 175.5 cm and between 77.5 and 78.5 kg.
 
-The chance of any region is the sum over its boxes. As the boxes shrink the sum becomes the volume under the surface: the double integral of [double-integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md). A joint density is defined as a surface for which this is exact for every region. That is the same move the one-variable card [densities-and-cdfs](../04-Continuous%20Distributions/01-densities-and-cdfs.md) made with area, one dimension up.
+The chance of any region is the sum over its boxes. As the boxes shrink the sum becomes the volume under the surface: the double integral of [Double integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md). A joint density is defined as a surface for which this is exact for every region. That is the same move the one-variable card [Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md) made with area, one dimension up.
 
 ### Step 1: the surface holds total volume 1
 
@@ -125,11 +105,11 @@ The chance that height is at most some value a is the chance that the pair lands
 
 $$P(H \le a) = \int_{-\infty}^{a} \left[\int_{-\infty}^{\infty} f(h, w)\,dw\right] dh$$
 
-The double integral over the strip was taken slice by slice: first across every weight at a fixed height, then along the heights. For a surface that never goes negative the order of slicing never changes the answer ([double-integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md)).
+The double integral over the strip was taken slice by slice: first across every weight at a fixed height, then along the heights. For a surface that never goes negative the order of slicing never changes the answer ([Double integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md)).
 
-The left side is the cumulative distribution F(a) of height alone. The right side is the running area, up to a, of the bracket. A density is exactly a curve whose running area is the cumulative distribution, and it is the slope of that cumulative distribution ([densities-and-cdfs](../04-Continuous%20Distributions/01-densities-and-cdfs.md)). So the bracket is the density of height: that is $f_H$. Nothing assumed that height and weight were unrelated.
+The left side is the cumulative distribution F(a) of height alone. The right side is the running area, up to a, of the bracket. A density is exactly a curve whose running area is the cumulative distribution, and it is the slope of that cumulative distribution ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)). So the bracket is the density of height: that is $f_H$. Nothing assumed that height and weight were unrelated.
 
-This is the joint table's row total from [joint-distributions-and-covariance](../02-Random%20Variables/04-joint-distributions-and-covariance.md), with boxes shrunk to nothing: adding across a row forgets the column variable.
+This is the joint table's row total from [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md), with boxes shrunk to nothing: adding across a row forgets the column variable.
 
 ### Step 3: for the tilted bell, the marginal is a plain bell
 
@@ -137,7 +117,7 @@ Step 1's inner integral is the whole calculation. At any fixed height, integrati
 
 $$f_H(h) = \frac{1}{\sigma_H\sqrt{2\pi}}\,e^{-z_h^2/2}$$
 
-That is the normal law N(175, 7^2) of [normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md). The tilt ρ has vanished. By the same algebra with the roles swapped, weight alone is N(78, 12^2). At the centre the two marginals are 0.056992 per cm and 0.033245 per kg.
+That is the normal law N(175, 7^2) of [Normal](../04-Continuous%20Distributions/04-normal-distribution.md). The tilt ρ has vanished. By the same algebra with the roles swapped, weight alone is N(78, 12^2). At the centre the two marginals are 0.056992 per cm and 0.033245 per kg.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -163,9 +143,9 @@ The same slicing answers the clothing maker's question. For each height above 18
 
 $$P(H > 185,\ W > 90) = \int_{185}^{\infty} f_H(h)\left[1 - \Phi\!\left(\frac{1 - \rho\,z_h}{c}\right)\right] dh = 0.036110$$
 
-The 1 in the numerator is the standardised weight at 90 kg, (90 − 78)/12. The bracket is the share of adults at height h who weigh more than 90 kg. Reading that bracket as a chance in its own right, given the height, is the work of [conditional-densities](03-conditional-densities.md). No shortcut removes the last integral; it is done numerically.
+The 1 in the numerator is the standardised weight at 90 kg, (90 − 78)/12. The bracket is the share of adults at height h who weigh more than 90 kg. Reading that bracket as a chance in its own right, given the height, is the work of [Conditional densities](03-conditional-densities.md). No shortcut removes the last integral; it is done numerically.
 
-A second route to the marginal exists for any pair: simulate many pairs, throw away one coordinate, and histogram the other. That is the green line of the chart, and road 3 of the code; its law of averages is proved on [law-of-large-numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md).
+A second route to the marginal exists for any pair: simulate many pairs, throw away one coordinate, and histogram the other. That is the green line of the chart, and road 3 of the code; its law of averages is proved on [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md).
 
 ---
 
@@ -603,9 +583,9 @@ The two outputs match line for line, including the simulated counts, since both 
 ## Where you meet it in real life
 
 - **Sizing clothes and equipment.** Garment sizes and cockpit seats are set from joint height-weight data: a size must fit a region of the plane, not a range of one measurement.
-- **Growth and health charts.** Doctors read weight-for-height, which is the slice view developed in [conditional-densities](03-conditional-densities.md), built on the joint surface here.
+- **Growth and health charts.** Doctors read weight-for-height, which is the slice view developed in [Conditional densities](03-conditional-densities.md), built on the joint surface here.
 - **Heredity.** Francis Galton's 1886 table of parents' and children's heights showed contours of equal frequency that were tilted ellipses, an early picture of a joint density read off data.
-- **Credit risk.** Two firms' default times as a joint law, with the marginals kept and the dependence chosen separately, is the finance use in [copulas-and-sklars-theorem](07-copulas-and-sklars-theorem.md).
+- **Credit risk.** Two firms' default times as a joint law, with the marginals kept and the dependence chosen separately, is the finance use in [Copulas](07-copulas-and-sklars-theorem.md).
 
 > **Say it back**
 > A joint density is a surface over the plane of pairs, and the volume above a region is the chance of landing there. The total volume is 1, and any single point has chance 0. Integrating across one variable leaves the other's own density, the marginal, with no independence assumed. The marginals do not fix the surface: tilted or not, the height-weight bell has the same two marginals. So a joint chance, such as 0.0361 for tall and heavy, needs the surface itself, not the product 0.0121.
@@ -614,17 +594,17 @@ The two outputs match line for line, including the simulated counts, since both 
 
 ## What this builds on
 
-- [densities-and-cdfs](../04-Continuous%20Distributions/01-densities-and-cdfs.md): chance as area under a curve, and the density as the slope of the cumulative distribution.
-- [joint-distributions-and-covariance](../02-Random%20Variables/04-joint-distributions-and-covariance.md): the joint table, marginals as row totals, and covariance.
-- [double-integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md): volume under a surface, computed slice by slice in either order.
+- [Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md): chance as area under a curve, and the density as the slope of the cumulative distribution.
+- [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md): the joint table, marginals as row totals, and covariance.
+- [Double integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md): volume under a surface, computed slice by slice in either order.
 
 ## Where this goes next
 
-- [conditional-densities](03-conditional-densities.md): the slice at one height, rescaled to area 1, as the law of weight given that height.
-- [sums-and-convolution](04-sums-and-convolution.md): the volume above a slanted strip gives the density of a sum of two variables.
-- [order-statistics-and-extremes](08-order-statistics-and-extremes.md): the volume above a corner of the plane gives the law of the larger of two readings.
+- [Conditional densities](03-conditional-densities.md): the slice at one height, rescaled to area 1, as the law of weight given that height.
+- [Adding continuous variables](04-sums-and-convolution.md): the volume above a slanted strip gives the density of a sum of two variables.
+- [Order statistics](08-order-statistics-and-extremes.md): the volume above a corner of the plane gives the law of the larger of two readings.
 
-The bracket in Step 5 was a share of adults at one exact height, a height that has chance 0; how to condition on an event of chance 0 is the question [conditional-densities](03-conditional-densities.md) answers.
+The bracket in Step 5 was a share of adults at one exact height, a height that has chance 0; how to condition on an event of chance 0 is the question [Conditional densities](03-conditional-densities.md) answers.
 
 ---
 

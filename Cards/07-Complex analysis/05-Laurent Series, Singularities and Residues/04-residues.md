@@ -1,23 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Laurent Series, Singularities and Residues
-topic: Tolls at singular points
-item: Residues
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/02-classifying-singularities|classifying-singularities]]"
-next:
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/05-the-residue-theorem|the-residue-theorem]]"
-  - "[[Cards/21-Algebraic and analytic number theory/02-The Zeta Function and the Prime Number Theorem/04-perrons-formula|perrons-formula]]"
-tags: [mathematics, complex analysis, residues]
----
-
 # Residues: the one coefficient that survives a loop, and three ways to compute it
 
-Complex analysis → Laurent Series, Singularities and Residues → Tolls at singular points → Residues
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Laurent Series, Singularities and Residues](../../../SYLLABUS.md#w07-s05) → Residues
 
 ---
 
@@ -43,7 +26,7 @@ To scale: 70 units per 1, with 0 at (180, 135), i at (180, 65), −i at (180, 20
 
 ## The formula
 
-Notation first, in words. The residue of f at a is written $\operatorname{Res}(f, a)$. Near an isolated bad point, f is a two-sided power series with coefficients $c_n$ ([laurent-series](01-laurent-series.md)). A ring on the integral sign means one anticlockwise lap.
+Notation first, in words. The residue of f at a is written $\operatorname{Res}(f, a)$. Near an isolated bad point, f is a two-sided power series with coefficients $c_n$ ([Laurent series](01-laurent-series.md)). A ring on the integral sign means one anticlockwise lap.
 
 $$f(z) = \sum_{n=-\infty}^{\infty} c_n (z-a)^n, \qquad \operatorname{Res}(f, a) = c_{-1} = \frac{1}{2\pi i}\oint_{|z-a|=r} f(z)\,dz$$
 
@@ -113,11 +96,11 @@ Order m means the series starts at n = −m. Multiply by (z − a)^m and the res
 
 $$H(z) = c_{-m} + c_{-m+1}(z-a) + \cdots + c_{-1}(z-a)^{m-1} + \cdots$$
 
-The residue sits in the slot of power m − 1, which by Taylor's formula holds H's (m − 1)-th derivative at a divided by (m − 1)! ([taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). For e^z/z^3: m = 3, H = e^z = 1 + z + z^2/2! + …, and the z^2 slot is H''(0)/2! = 1/2.
+The residue sits in the slot of power m − 1, which by Taylor's formula holds H's (m − 1)-th derivative at a divided by (m − 1)! ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). For e^z/z^3: m = 3, H = e^z = 1 + z + z^2/2! + …, and the z^2 slot is H''(0)/2! = 1/2.
 
 ### Step 4: at an essential singularity, read the series
 
-Near 0, e^(1/z) = 1 + 1/z + 1/(2! z^2) + …, with infinitely many negative powers, so no m tames it ([classifying-singularities](02-classifying-singularities.md)). Multiply by z:
+Near 0, e^(1/z) = 1 + 1/z + 1/(2! z^2) + …, with infinitely many negative powers, so no m tames it ([Isolated singularities](02-classifying-singularities.md)). Multiply by z:
 
 $$z\,e^{1/z} = z + 1 + \frac{1}{2!\,z} + \frac{1}{3!\,z^2} + \cdots$$
 
@@ -126,7 +109,7 @@ The only 1/z term is z × 1/(2! z^2), so the residue is 1/2. Swapping z for 1/w 
 <details>
 <summary>Detailed proof</summary>
 
-**The loop picks out the residue.** For f holomorphic on 0 < |z − a| < R, the Laurent series converges uniformly on each circle |z − a| = r < R ([laurent-series](01-laurent-series.md)): for every ε > 0 the partial sums lie within ε of f there, their integrals within 2πrε of f's. Step 0 then gives 2πi $c_{-1}$ for every such r.
+**The loop picks out the residue.** For f holomorphic on 0 < |z − a| < R, the Laurent series converges uniformly on each circle |z − a| = r < R ([Laurent series](01-laurent-series.md)): for every ε > 0 the partial sums lie within ε of f there, their integrals within 2πrε of f's. Step 0 then gives 2πi $c_{-1}$ for every such r.
 
 **Order m.** H(z) = (z − a)^m f(z) extends holomorphically to a, and by uniqueness of the series its Taylor coefficient of (z − a)^j is $c_{j-m}$. Taking j = m − 1 gives $c_{-1}$ = H^(m−1)(a)/(m − 1)!; the limit form holds because H's derivatives are continuous at a. With k > m in place of m, (z − a)^(k−m) H still holds $c_{-1}$ in slot k − 1, so overestimating the order is harmless.
 
@@ -134,7 +117,7 @@ The only 1/z term is z × 1/(2! z^2), so the residue is 1/2. Swapping z for 1/w 
 
 </details>
 
-A second route for fractions of polynomials: the residues at simple poles are the coefficients of the partial fractions, as in [rational-functions-and-partial-fractions](03-rational-functions-and-partial-fractions.md).
+A second route for fractions of polynomials: the residues at simple poles are the coefficients of the partial fractions, as in [Rational functions](03-rational-functions-and-partial-fractions.md).
 
 ---
 
@@ -378,9 +361,9 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Real integrals.** The integral of 1/(1 + x^2) over the real line is π, the booth at i's toll, proved by closing the line into a loop in [the-residue-theorem](05-the-residue-theorem.md).
+- **Real integrals.** The integral of 1/(1 + x^2) over the real line is π, the booth at i's toll, proved by closing the line into a loop in [The residue theorem](05-the-residue-theorem.md).
 - **Circuits and control.** A circuit's response, written as a fraction in a complex variable, returns to a signal in time as a sum of residues at its poles; the engineers' "cover-up" trick is the simple-pole limit.
-- **Counting primes.** perrons-formula reads sums over whole numbers off residues of zeta-built functions.
+- **Counting primes.** Perron's formula reads sums over whole numbers off residues of zeta-built functions.
 
 > **Say it back**
 > Near an isolated bad point a function is a series in powers of (z − a), negative ones included. A loop round the point returns 2πi times the coefficient of 1/(z − a): the residue. At a simple pole, cancel the bad factor and take the limit, or divide the top by the bottom's slope. At a pole of order m, differentiate the tamed factor m − 1 times and divide by (m − 1)!; at an essential singularity, read the series.
@@ -389,12 +372,12 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [classifying-singularities](02-classifying-singularities.md): the pole order m, and why e^(1/z) has none.
+- [Isolated singularities](02-classifying-singularities.md): the pole order m, and why e^(1/z) has none.
 
 ## Where this goes next
 
-- [the-residue-theorem](05-the-residue-theorem.md): a loop round several booths pays the sum of their tolls, 2πi times the sum of their residues.
-- perrons-formula: residues turning a sum over whole numbers into a loop integral.
+- [The residue theorem](05-the-residue-theorem.md): a loop round several booths pays the sum of their tolls, 2πi times the sum of their residues.
+- Perron's formula: residues turning a sum over whole numbers into a loop integral.
 
 ---
 

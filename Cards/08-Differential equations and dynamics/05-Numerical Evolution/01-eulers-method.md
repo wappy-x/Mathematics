@@ -1,30 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Numerical Evolution
-topic: Stepping along the slope
-item: Euler's method
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/01-what-a-differential-equation-says|what-a-differential-equation-says]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/01-linear-approximation-and-related-rates|linear-approximation-and-related-rates]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/02-local-and-global-error-and-order|local-and-global-error-and-order]]"
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/06-stiff-equations-and-backward-euler|stiff-equations-and-backward-euler]]"
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/07-symplectic-steps-for-oscillators|symplectic-steps-for-oscillators]]"
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/04-euler-maruyama-scheme|euler-maruyama-scheme]]"
-  - "[[Cards/16-Numerical analysis/06-ODE Solvers/01-runge-kutta-and-butcher-tableaux|runge-kutta-and-butcher-tableaux]]"
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/07-operator-splitting-and-the-trotter-formula|operator-splitting-and-the-trotter-formula]]"
-  - "[[Cards/23-Differential geometry and Lie groups/02-Surfaces/09-geodesics-on-surfaces|geodesics-on-surfaces]]"
-  - "[[Cards/23-Differential geometry and Lie groups/05-Riemannian Geometry/03-parallel-transport-and-holonomy|parallel-transport-and-holonomy]]"
-tags: [mathematics, differential equations and dynamics, eulers-method]
----
-
 # Euler's method: step forward along the current slope, and the smaller the step the closer you land
 
-Differential equations and dynamics → Numerical Evolution → Stepping along the slope → Euler's method
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Numerical Evolution](../../../SYLLABUS.md#w08-s05) → Euler's method
 
 ---
 
@@ -59,7 +35,7 @@ From the top: Euler with 2 s steps (orange), with 1 s steps (green), and the exa
 
 ## The formula
 
-Reminder: $y' = f(t, y)$ says the rate of the unknown $y$ at time $t$ is the rule $f$ applied to $t$ and $y$ ([what-a-differential-equation-says](../01-Rate%20Equations/01-what-a-differential-equation-says.md)). New here: the **step size** $h$, the time one step covers, and a small number written low after a letter to count steps: $y_n$ is the estimate after $n$ steps, at time $t_n$.
+Reminder: $y' = f(t, y)$ says the rate of the unknown $y$ at time $t$ is the rule $f$ applied to $t$ and $y$ ([A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md)). New here: the **step size** $h$, the time one step covers, and a small number written low after a letter to count steps: $y_n$ is the estimate after $n$ steps, at time $t_n$.
 
 $$y_{n+1} = y_n + h\,f(t_n, y_n), \qquad t_{n+1} = t_n + h$$
 
@@ -82,7 +58,7 @@ For the skydiver the rule is $v' = 9.8 - 0.2v$, from $v = 0$ at $t = 0$, so each
 
 - **The true curve bends a bounded amount $M$.** If the rule jumps, say when the parachute opens, the step across the jump loses accuracy.
 - **The rule reacts to $y$ at a bounded rate $L$.** Then each step grows earlier error by at most a factor $1 + hL$. A leaking bucket whose rate is minus the square root of its height fails this near empty.
-- **The step is short against the equation's own pace.** Each skydiver step multiplies the gap to 49 m/s by $1 - 0.2h$; past $h$ = 10 s that factor is below −1 and the steps swing and grow. See [stiff-equations-and-backward-euler](06-stiff-equations-and-backward-euler.md).
+- **The step is short against the equation's own pace.** Each skydiver step multiplies the gap to 49 m/s by $1 - 0.2h$; past $h$ = 10 s that factor is below −1 and the steps swing and grow. See [Stiff equations](06-stiff-equations-and-backward-euler.md).
 - **The step is not so short that rounding takes over.** Millions of tiny steps add millions of tiny rounding errors, so the error eventually stops falling.
 
 ---
@@ -91,7 +67,7 @@ For the skydiver the rule is $v' = 9.8 - 0.2v$, from $v = 0$ at $t = 0$, so each
 
 ### Step 0: over a short time, a curve is close to its tangent line
 
-Near any point a smooth curve sits close to the line through that point with the curve's slope: its tangent line ([linear-approximation-and-related-rates](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md)). The rate rule gives that slope without knowing the curve, so Euler's method is a chain of linear approximations.
+Near any point a smooth curve sits close to the line through that point with the curve's slope: its tangent line ([Linear approximation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md)). The rate rule gives that slope without knowing the curve, so Euler's method is a chain of linear approximations.
 
 ### Step 1: one step's miss shrinks with the square of the step
 
@@ -105,7 +81,7 @@ To scale: 140 units per second across, 8 units per m/s up. The upright bar at 2 
 
 ### Step 2: the misses add up to an error of order h
 
-Reaching 10 s takes $10/h$ steps, each adding a miss of order $h^2$, so the total is of order $(10/h) \times h^2$: proportional to $h$. Halving the step halves the error at 10 s: 2.82, 1.37, 0.67, 0.33 m/s for steps of 2, 1, 0.5 and 0.25 s. Error proportional to $h$ makes a method **first order**; [local-and-global-error-and-order](02-local-and-global-error-and-order.md) makes the two kinds of error precise.
+Reaching 10 s takes $10/h$ steps, each adding a miss of order $h^2$, so the total is of order $(10/h) \times h^2$: proportional to $h$. Halving the step halves the error at 10 s: 2.82, 1.37, 0.67, 0.33 m/s for steps of 2, 1, 0.5 and 0.25 s. Error proportional to $h$ makes a method **first order**; [Order of a method](02-local-and-global-error-and-order.md) makes the two kinds of error precise.
 
 ### Step 3: for the skydiver the steps have a closed form
 
@@ -134,7 +110,7 @@ For the skydiver, $L = 0.2$ and $v'' = -0.2\,v'$, largest at the jump: $M = 1.96
 
 </details>
 
-The other road improves the slope instead of shrinking the step: reading the rate mid-step is [midpoint-and-heun-methods](03-midpoint-and-heun-methods.md), and four slopes per step is [runge-kutta-four](04-runge-kutta-four.md).
+The other road improves the slope instead of shrinking the step: reading the rate mid-step is [Midpoint and Heun](03-midpoint-and-heun-methods.md), and four slopes per step is [Runge-Kutta four](04-runge-kutta-four.md).
 
 ---
 
@@ -379,9 +355,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Game engines.** Updating each position by velocity times frame time is Euler's step; orbits that drift outward are why [symplectic-steps-for-oscillators](07-symplectic-steps-for-oscillators.md) exists.
-- **Pricing by simulation.** A share price stepped forward with a random kick each step is Euler with noise, [euler-maruyama-scheme](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md).
-- **Solver software.** Adaptive solvers step with two methods of different order and read the error from their difference; the simplest pair is Euler beside Heun ([adaptive-step-size](05-adaptive-step-size.md)).
+- **Game engines.** Updating each position by velocity times frame time is Euler's step; orbits that drift outward are why [Symplectic steps](07-symplectic-steps-for-oscillators.md) exists.
+- **Pricing by simulation.** A share price stepped forward with a random kick each step is Euler with noise, [Euler-Maruyama](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md).
+- **Solver software.** Adaptive solvers step with two methods of different order and read the error from their difference; the simplest pair is Euler beside Heun ([Adaptive steps](05-adaptive-step-size.md)).
 
 > **Say it back**
 > Euler's method reads the rate now, assumes it holds for one short step, moves, and repeats. Each step misses by about the step squared, because the curve bends away from its tangent. A fixed time needs a number of steps inversely proportional to the step, so the final error is proportional to the step. For the skydiver, 2 s steps miss by 2.82 m/s at 10 s and 1 s steps by 1.37. Steps too long for the equation swing and grow.
@@ -390,21 +366,21 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [what-a-differential-equation-says](../01-Rate%20Equations/01-what-a-differential-equation-says.md): the rate rule and starting value that Euler steps.
-- [linear-approximation-and-related-rates](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md): the tangent line and its squared-step miss.
+- [A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md): the rate rule and starting value that Euler steps.
+- [Linear approximation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md): the tangent line and its squared-step miss.
 
 ## Where this goes next
 
-- [local-and-global-error-and-order](02-local-and-global-error-and-order.md): one step's miss against the accumulated error.
-- [stiff-equations-and-backward-euler](06-stiff-equations-and-backward-euler.md): why long steps swing, and the Euler step that reads the end slope.
-- [symplectic-steps-for-oscillators](07-symplectic-steps-for-oscillators.md): a reordered step that keeps a spring's energy.
-- [euler-maruyama-scheme](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): the same step with random noise added.
-- runge-kutta-and-butcher-tableaux: Euler as the simplest entry in a table of methods.
-- operator-splitting-and-the-trotter-formula: Step 3's compounding limit, for operators.
-- geodesics-on-surfaces: shortest paths traced step by step.
-- parallel-transport-and-holonomy: carrying a vector along a curve in small steps.
+- [Order of a method](02-local-and-global-error-and-order.md): one step's miss against the accumulated error.
+- [Stiff equations](06-stiff-equations-and-backward-euler.md): why long steps swing, and the Euler step that reads the end slope.
+- [Symplectic steps](07-symplectic-steps-for-oscillators.md): a reordered step that keeps a spring's energy.
+- [Euler-Maruyama](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): the same step with random noise added.
+- Runge-Kutta: Euler as the simplest entry in a table of methods.
+- Splitting: Step 3's compounding limit, for operators.
+- Geodesic on a surface: shortest paths traced step by step.
+- Parallel transport: carrying a vector along a curve in small steps.
 
-Euler's method gets one digit more accuracy only for ten times the work; how to measure a method's order, and why better slopes buy far more, is [local-and-global-error-and-order](02-local-and-global-error-and-order.md).
+Euler's method gets one digit more accuracy only for ten times the work; how to measure a method's order, and why better slopes buy far more, is [Order of a method](02-local-and-global-error-and-order.md).
 
 ---
 

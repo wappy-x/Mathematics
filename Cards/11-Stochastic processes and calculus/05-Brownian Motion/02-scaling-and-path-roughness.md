@@ -1,23 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Brownian Motion
-topic: Zooming in on a random path
-item: Brownian paths
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/01-brownian-motion|brownian-motion]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/03-quadratic-variation|quadratic-variation]]"
-  - "[[Cards/11-Stochastic processes and calculus/09-Beyond Brownian/06-rough-paths-and-fractional-brownian-motion-in-outline|rough-paths-and-fractional-brownian-motion-in-outline]]"
-tags: [mathematics, stochastic processes and calculus, scaling-and-path-roughness]
----
-
 # Brownian paths: scaling by root t, continuous everywhere, smooth nowhere
 
-Stochastic processes and calculus → Brownian Motion → Zooming in on a random path → Brownian paths
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Brownian Motion](../../../SYLLABUS.md#w11-s05) → Brownian paths
 
 ---
 
@@ -29,7 +12,7 @@ Now film faster: every quarter second, every sixteenth, down to every 1/4096 of 
 
 Two facts sit behind that. **Scaling**: distances grow like the square root of time, so 4 times as long means about 2 times as far. **Roughness**: the average speed read off the film depends on the film. With frames 1 second apart it reads 0.76 micrometres per second; with frames 1/4096 s apart, 51.18. Halve the gap and the reading grows by the square root of 2, forever. The path has no slope at any time.
 
-The model is Brownian motion $W_t$, read "the position at time $t$" ([brownian-motion](01-brownian-motion.md)): it starts at 0, its moves over separate stretches of time are independent, the move over a stretch of length $h$ is normal with mean 0 and variance $h$, and its path is continuous.
+The model is Brownian motion $W_t$, read "the position at time $t$" ([Brownian motion](01-brownian-motion.md)): it starts at 0, its moves over separate stretches of time are independent, the move over a stretch of length $h$ is normal with mean 0 and variance $h$, and its path is continuous.
 
 **Stretch time by a factor c-squared and position by c, and Brownian motion turns into Brownian motion again; so typical distances grow like root t, every zoom looks as rough as the whole, and with probability one the path has a slope at no time at all.**
 
@@ -56,7 +39,7 @@ Orange: the whole 16 seconds, read every half second. Green: the stretch from se
 
 ## The formula
 
-Notation first, in words. A process built from $W_t$ by zooming is written $V_t$. The zoom factor is $c$, any positive number. The sampling step is $h$, in seconds. $Z$ stands for a standard normal number: mean 0, variance 1. $\Phi$ is its cumulative chance, $\Phi(x) = P(Z \le x)$ ([normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). "Has the same law as" is written with the letter d over an equals sign: two random objects with identical chances for every event.
+Notation first, in words. A process built from $W_t$ by zooming is written $V_t$. The zoom factor is $c$, any positive number. The sampling step is $h$, in seconds. $Z$ stands for a standard normal number: mean 0, variance 1. $\Phi$ is its cumulative chance, $\Phi(x) = P(Z \le x)$ ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). "Has the same law as" is written with the letter d over an equals sign: two random objects with identical chances for every event.
 
 The scaling law:
 
@@ -99,9 +82,9 @@ $$P\big(\text{the path } t \mapsto W_t \text{ has a finite slope at some time } 
 
 ### When it holds
 
-- **Independent moves with variance proportional to time.** These make c-squared the only zoom that works. If moves stay correlated over arbitrarily long stretches (long memory), the exponent is no longer one half: fractional Brownian motion, in [rough-paths-and-fractional-brownian-motion-in-outline](../09-Beyond%20Brownian/06-rough-paths-and-fractional-brownian-motion-in-outline.md). Memory that fades fast only changes the spread rate ([brownian-motion](01-brownian-motion.md)).
+- **Independent moves with variance proportional to time.** These make c-squared the only zoom that works. If moves stay correlated over arbitrarily long stretches (long memory), the exponent is no longer one half: fractional Brownian motion, in [Rougher than Brownian](../09-Beyond%20Brownian/06-rough-paths-and-fractional-brownian-motion-in-outline.md). Memory that fades fast only changes the spread rate ([Brownian motion](01-brownian-motion.md)).
 - **The model, not the grain.** A real particle has mass, so over very short times it coasts. Li and co-workers measured the instantaneous speed of an optically trapped silica bead in 2010. Brownian motion fits at camera speeds, not below the time a particle takes to forget its own push.
-- **Continuous paths are assumed.** The definition asks for them, and [brownian-motion](01-brownian-motion.md) cites their construction (Wiener, 1923; Durrett, section 7.1). Without that requirement the laws of the moves say nothing about a single path.
+- **Continuous paths are assumed.** The definition asks for them, and [Brownian motion](01-brownian-motion.md) cites their construction (Wiener, 1923; Durrett, section 7.1). Without that requirement the laws of the moves say nothing about a single path.
 - **With probability one.** The theorems exclude a set of paths of probability zero, and say nothing about a path drawn by hand.
 
 ---
@@ -135,13 +118,13 @@ Fix a time t, say 8 seconds. The chord's slope over a step h is $(W_{t+h} - W_t)
 
 Now fix a speed limit K. The chance that a chord breaks it is $P(\lvert Z\rvert > K\sqrt{h}) = 2(1 - \Phi(K\sqrt{h}))$. As h shrinks, $K\sqrt{h}$ falls to 0 and the chance climbs to 1.
 
-That gives a proof. Take the steps 1/4, 1/16, 1/64 and so on, and call event j "the chord over step 4 to the power −j breaks the limit K". The chance of event j tends to 1. The chance that infinitely many of the events happen is the limit, as m grows, of the chance that at least one from event m on happens ([continuity-of-measure](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md): continuity from above). Each of those chances is at least the chance of event m alone, which tends to 1. So with probability one, chords break the limit K at arbitrarily small steps.
+That gives a proof. Take the steps 1/4, 1/16, 1/64 and so on, and call event j "the chord over step 4 to the power −j breaks the limit K". The chance of event j tends to 1. The chance that infinitely many of the events happen is the limit, as m grows, of the chance that at least one from event m on happens ([Continuity and subadditivity](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md): continuity from above). Each of those chances is at least the chance of event m alone, which tends to 1. So with probability one, chords break the limit K at arbitrarily small steps.
 
 Do that for K = 1, 2, 3 and so on. Countably many events of probability one happen together with probability one. So with probability one the chords at time t are unbounded as h shrinks. A slope $D$ would force them to settle near D. There is none.
 
 ### Step 4: almost every time is a time without slope
 
-Step 3 holds for each time separately. The expected total length of the set of times in a second at which a slope exists is the integral over t of the chance of a slope at t ([tonelli-and-fubini](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md) lets the expectation pass inside). Each chance is 0, so the expected length is 0. With probability one, the times with a slope take up no length at all.
+Step 3 holds for each time separately. The expected total length of the set of times in a second at which a slope exists is the integral over t of the chance of a slope at t ([Tonelli and Fubini](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md) lets the expectation pass inside). Each chance is 0, so the expected length is 0. With probability one, the times with a slope take up no length at all.
 
 That is not yet the theorem. A set of no length can still hold points, and those points are chosen by the path after it is drawn. Step 3 shows that a time named in advance is bad. It does not show that no good time hides somewhere else in the path.
 
@@ -172,7 +155,7 @@ The argument never uses the left side of s and needs only a speed limit near s, 
 
 On this film the largest move between neighbouring frames is 1.4057 micrometres at 1-second frames and 0.0723 at 1/4096 s. It falls a little slower than root h, because the largest of many moves picks the luckiest one; Paul Lévy found the exact rate, proved in Mörters and Peres (Sources). A move over a frame of length h is about root h in size, never about h. Root h shrinks to 0, matching the continuity the definition asks for. Root h divided by h grows without bound, so there is no slope. Continuous everywhere and smooth nowhere are one fact seen from two sides.
 
-A second road to the missing slope adds up squared moves instead of chords. The total stays at the elapsed time however fine the frames, which forces infinite length on every interval and rules out a slope on any interval: [quadratic-variation](03-quadratic-variation.md) does it properly.
+A second road to the missing slope adds up squared moves instead of chords. The total stays at the elapsed time however fine the frames, which forces infinite length on every interval and rules out a slope on any interval: [Quadratic variation](03-quadratic-variation.md) does it properly.
 
 ---
 
@@ -205,7 +188,7 @@ The code prints every one of them.
 
 ## Code, from first principles, and it actually runs
 
-Random numbers come from SplitMix64, seed 20260930, made normal by Box-Muller, both written out. Three roads. **Formulas:** the root-t laws, the normal cumulative chance written twice (Simpson's rule and a Taylor series), and the proof's bound. **Exact enumeration:** a coin-flip walk's mean distance, summed over every path, closing on $\sqrt{2/\pi}$ ([simple-random-walk](../01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md)). **Simulation:** one 16-second path by Lévy's midpoint refinement, from 1-second frames to 1/4096 s; each new midpoint is its neighbours' average plus a normal move with a quarter of the old frame's variance. Earlier points never move, so each level is the same path filmed faster. Then 20,000 paths on a 1/8 s grid over 4 seconds test the scaling law; a sum of normal moves is exactly normal at every grid time, so the grid adds no bias. Simulated numbers carry standard errors, and asserts on them allow four.
+Random numbers come from SplitMix64, seed 20260930, made normal by Box-Muller, both written out. Three roads. **Formulas:** the root-t laws, the normal cumulative chance written twice (Simpson's rule and a Taylor series), and the proof's bound. **Exact enumeration:** a coin-flip walk's mean distance, summed over every path, closing on $\sqrt{2/\pi}$ ([Simple random walk](../01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md)). **Simulation:** one 16-second path by Lévy's midpoint refinement, from 1-second frames to 1/4096 s; each new midpoint is its neighbours' average plus a normal move with a quarter of the old frame's variance. Earlier points never move, so each level is the same path filmed faster. Then 20,000 paths on a 1/8 s grid over 4 seconds test the scaling law; a sum of normal moves is exactly normal at every grid time, so the grid adds no bias. Simulated numbers carry standard errors, and asserts on them allow four.
 
 ### Python
 
@@ -663,10 +646,10 @@ Orange: the simulated path, one sample. Green: the formula $\sqrt{2/(\pi h)}$. D
 ## Where you meet it in real life
 
 - **Particle tracking.** Labs follow beads and proteins under a microscope and estimate their spread from the mean squared move against time, a straight line. Frame-to-frame speeds depend on the frame rate.
-- **Volatility over horizons.** A share price's random part spreads like root time, so a daily spread becomes yearly by the square root of the trading days. This root-t rule sits inside [geometric-brownian-motion](07-geometric-brownian-motion.md) and the volatility-times-root-time term of [black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
-- **Why stochastic calculus needs its own rules.** A path with no slope cannot be fed to ordinary calculus. The Ito integral, written with dW_t, uses dW_t as shorthand for an integral, never a derivative, for exactly this reason; its foundation is [quadratic-variation](03-quadratic-variation.md).
-- **Simulating paths.** Lévy's midpoint refinement fills in a coarse path without moving its points; its pinned pieces are [brownian-bridge](05-brownian-bridge.md).
-- **Rough signals.** Some measured signals look rough at every zoom with exponents other than one half: [rough-paths-and-fractional-brownian-motion-in-outline](../09-Beyond%20Brownian/06-rough-paths-and-fractional-brownian-motion-in-outline.md).
+- **Volatility over horizons.** A share price's random part spreads like root time, so a daily spread becomes yearly by the square root of the trading days. This root-t rule sits inside [Geometric Brownian motion](07-geometric-brownian-motion.md) and the volatility-times-root-time term of [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+- **Why stochastic calculus needs its own rules.** A path with no slope cannot be fed to ordinary calculus. The Ito integral, written with dW_t, uses dW_t as shorthand for an integral, never a derivative, for exactly this reason; its foundation is [Quadratic variation](03-quadratic-variation.md).
+- **Simulating paths.** Lévy's midpoint refinement fills in a coarse path without moving its points; its pinned pieces are [Brownian bridge](05-brownian-bridge.md).
+- **Rough signals.** Some measured signals look rough at every zoom with exponents other than one half: [Rougher than Brownian](../09-Beyond%20Brownian/06-rough-paths-and-fractional-brownian-motion-in-outline.md).
 
 > **Say it back**
 > Run Brownian motion's clock c-squared times faster and shrink its distances by c, and it is Brownian motion again. So a grain's typical distance grows like root t, and any stretch of its path, blown up the right way, looks like the whole. The chord over a frame of length h is about root h tall, so its slope, about one over root h, runs away as frames get closer: no slope at any named time. Counting three small moves in a row shows that, with probability one, there is no slope at any time at all. Continuous everywhere and smooth nowhere are the same root-h fact.
@@ -675,14 +658,14 @@ Orange: the simulated path, one sample. Green: the formula $\sqrt{2/(\pi h)}$. D
 
 ## What this builds on
 
-- [brownian-motion](01-brownian-motion.md): the four defining properties, checked one by one in Step 1, and the continuous path this card takes as given.
+- [Brownian motion](01-brownian-motion.md): the four defining properties, checked one by one in Step 1, and the continuous path this card takes as given.
 
 ## Where this goes next
 
-- [quadratic-variation](03-quadratic-variation.md): the sum of squared moves, which stays at the elapsed time however fine the frames, and is the quantity Ito calculus is built on.
-- [rough-paths-and-fractional-brownian-motion-in-outline](../09-Beyond%20Brownian/06-rough-paths-and-fractional-brownian-motion-in-outline.md): paths that scale with other exponents, and calculus for paths too rough for ordinary rules.
+- [Quadratic variation](03-quadratic-variation.md): the sum of squared moves, which stays at the elapsed time however fine the frames, and is the quantity Ito calculus is built on.
+- [Rougher than Brownian](../09-Beyond%20Brownian/06-rough-paths-and-fractional-brownian-motion-in-outline.md): paths that scale with other exponents, and calculus for paths too rough for ordinary rules.
 
-The chord's slope runs away like one over root h, but its square, divided back by the time, does not: whether a path with no slope still has a measurable roughness that adds up exactly is what [quadratic-variation](03-quadratic-variation.md) answers.
+The chord's slope runs away like one over root h, but its square, divided back by the time, does not: whether a path with no slope still has a measurable roughness that adds up exactly is what [Quadratic variation](03-quadratic-variation.md) answers.
 
 ---
 

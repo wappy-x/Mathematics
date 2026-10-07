@@ -1,23 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Angles, Triangles and Congruence
-topic: Turning and copying angles
-item: Angles
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/09-ratios-and-rates|ratios-and-rates]]"
-next:
-  - "[[Cards/05-Geometry and trig/01-Angles, Triangles and Congruence/02-triangle-angle-sum-and-inequality|triangle-angle-sum-and-inequality]]"
-  - "[[Cards/05-Geometry and trig/06-Beyond Euclid/03-ruler-and-compass-constructions|ruler-and-compass-constructions]]"
-tags: [mathematics, geometry-and-trig, angles-and-parallel-lines]
----
-
 # Angles: what a degree measures and why parallel lines copy angles
 
-Geometry and trig → Angles, Triangles and Congruence → Turning and copying angles → Angles
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Angles, Triangles and Congruence](../../../SYLLABUS.md#w05-s01) → Angles
 
 ---
 
@@ -74,7 +57,7 @@ Angle types: under 90° is **acute** (20°, 70°); exactly 90° is **right**; be
 
 ### Step 0: an angle is a share of one full turn
 
-An angle is a ratio: turning done over one full turn ([ratios-and-rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md)). The degree fixes the denominator at 360. Two consequences carry the rest: a straight line is half a turn, 180°, and an upright wall on level ground is a quarter turn, 90°.
+An angle is a ratio: turning done over one full turn ([Ratios and rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md)). The degree fixes the denominator at 360. Two consequences carry the rest: a straight line is half a turn, 180°, and an upright wall on level ground is a quarter turn, 90°.
 
 <details>
 <summary>Why 360 and not 100?</summary>
@@ -116,7 +99,7 @@ At the top, the alternate angle (below the gutter line, away from the wall) face
 
 The wall meets the ground at 90° and crosses the gutter line too, so by Step 3 it meets the gutter line at 90°. At the top the ladder splits that right angle into the alternate angle, 70°, and the angle against the wall: $w = 90^\circ - 70^\circ = 20^\circ$.
 
-Step 3 also runs backwards: equal corresponding angles make two lines parallel. That direction needs only Proposition 16, not the postulate. It is how parallels are drawn with a set square or a compass: [ruler-and-compass-constructions](../06-Beyond%20Euclid/03-ruler-and-compass-constructions.md).
+Step 3 also runs backwards: equal corresponding angles make two lines parallel. That direction needs only Proposition 16, not the postulate. It is how parallels are drawn with a set square or a compass: [Ruler and compass](../06-Beyond%20Euclid/03-ruler-and-compass-constructions.md).
 
 ---
 
@@ -368,12 +351,12 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [ratios-and-rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md): an angle is a ratio, turning done over a full turn.
+- [Ratios and rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md): an angle is a ratio, turning done over a full turn.
 
 ## Where this goes next
 
-- [triangle-angle-sum-and-inequality](02-triangle-angle-sum-and-inequality.md): the gutter-line trick, a parallel through a triangle's top corner, proves its angles total 180°.
-- [ruler-and-compass-constructions](../06-Beyond%20Euclid/03-ruler-and-compass-constructions.md): drawing a parallel by copying an angle, the backwards direction of Step 3.
+- [Triangles](02-triangle-angle-sum-and-inequality.md): the gutter-line trick, a parallel through a triangle's top corner, proves its angles total 180°.
+- [Ruler and compass](../06-Beyond%20Euclid/03-ruler-and-compass-constructions.md): drawing a parallel by copying an angle, the backwards direction of Step 3.
 
 ---
 

@@ -1,25 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Survival, Design and Causality
-topic: Hazards that scale
-item: Cox regression in outline
-kind: model
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/02-kaplan-meier|kaplan-meier]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/05-logistic-regression|logistic-regression]]"
-next:
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/04-randomised-experiments-and-ab-tests|randomised-experiments-and-ab-tests]]"
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/07-confounding-and-simpsons-paradox|confounding-and-simpsons-paradox]]"
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/06-filtrations-and-martingales|filtrations-and-martingales]]"
-tags: [mathematics, probability and statistics, cox-proportional-hazards-in-outline]
----
-
 # Cox regression in outline: how covariates scale the hazard
 
-Probability and statistics → Survival, Design and Causality → Hazards that scale → Cox regression in outline
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Survival, Design and Causality](../../../SYLLABUS.md#w09-s13) → Cox regression in outline
 
 ---
 
@@ -27,7 +8,7 @@ Probability and statistics → Survival, Design and Causality → Hazards that s
 
 A study of male British doctors, started in 1951, recorded who smoked and then followed every death for fifty years. For the doctors born in the first decade of the 1900s, the chance of dying between ages 35 and 69 was 24% for lifelong non-smokers and 42% for men who kept smoking cigarettes. The authors call this "a twofold death rate ratio". Yet 42 is not twice 24.
 
-The doubling lives somewhere else. It is in the **hazard**: the death rate among the men still alive at each age, measured per year ([survival-functions-and-hazards](01-survival-functions-and-hazards.md)). Read as one ratio that holds at every age, the paper's twofold ratio says a smoker still alive was dying at twice the rate of a non-smoker of the same age. Twice the rate, compounded over 35 years, turns a 24% chance of dying into 42%, not 48%.
+The doubling lives somewhere else. It is in the **hazard**: the death rate among the men still alive at each age, measured per year ([Survival](01-survival-functions-and-hazards.md)). Read as one ratio that holds at every age, the paper's twofold ratio says a smoker still alive was dying at twice the rate of a non-smoker of the same age. Twice the rate, compounded over 35 years, turns a 24% chance of dying into 42%, not 48%.
 
 **Cox regression** measures that ratio from data. It handles men who join late, men who leave the study alive, and deaths spread over decades. It never needs to know how the death rate itself rises with age: that part cancels. David Cox published the method in 1972, and it is now the standard way a medical study reports a risk factor.
 
@@ -143,13 +124,13 @@ Add this over all men $i$ and the first death happens in that interval with chan
 
 Each death contributes its "which one" chance, and the partial likelihood $L(\beta)$ multiplies them. A censored man never appears on top of a fraction. He appears in the denominators of every death that happened while he was still in the study, then drops out. So the three men who left alive still count: they were at risk, and they did not die.
 
-What the product leaves out is the timing of the deaths: how long the gaps between them were. The gaps carry information about $h_0$, which the model never needed, and almost none about $\beta$. Cox argued in 1975 that $L(\beta)$ can be treated like an ordinary likelihood: its peak settles on the true $\beta$ as the study grows, and its curvature gives the standard error. The full proof uses martingales, sums of surprises whose average is zero ([filtrations-and-martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md) has the idea), run in continuous time, and belongs to wing 11. This card checks it by simulation instead: 400 cohorts of 200 men with a true ratio of 2 give an average $\hat\beta$ of 0.6981, standard error 0.0145, against ln 2 = 0.6931. The 400 estimates spread by 0.2898; the curvature reported 0.2934 on average.
+What the product leaves out is the timing of the deaths: how long the gaps between them were. The gaps carry information about $h_0$, which the model never needed, and almost none about $\beta$. Cox argued in 1975 that $L(\beta)$ can be treated like an ordinary likelihood: its peak settles on the true $\beta$ as the study grows, and its curvature gives the standard error. The full proof uses martingales, sums of surprises whose average is zero ([Filtrations and martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md) has the idea), run in continuous time, and belongs to wing 11. This card checks it by simulation instead: 400 cohorts of 200 men with a true ratio of 2 give an average $\hat\beta$ of 0.6981, standard error 0.0145, against ln 2 = 0.6931. The 400 estimates spread by 0.2898; the curvature reported 0.2934 on average.
 
 ### Step 4: slope and curvature
 
 Take logarithms: $\ln L(\beta) = \sum_j \big[\beta x_{(j)} - \ln \sum_{i \in R_j} e^{\beta x_i}\big]$. Differentiate once. The first term gives $x_{(j)}$. The second gives the weighted average of $x$ over the risk set, which is $m_j$. So the slope is the score $U(\beta)$: observed smoker deaths minus expected. Setting it to zero says the fitted ratio is the one at which the smokers died exactly as often as their weight predicted.
 
-Differentiate again. The slope of $m_j$ is the weighted variance of $x$ in the risk set; for a 0 or 1 covariate that is $m_j(1 - m_j)$. The information $I(\beta)$ is their sum. Newton's method climbs to the peak by repeating $\beta \leftarrow \beta + U(\beta)/I(\beta)$, the same step used for [logistic-regression](../09-Regression/05-logistic-regression.md), and $1/\sqrt{I(\hat\beta)}$ is the standard error as for any maximum likelihood fit.
+Differentiate again. The slope of $m_j$ is the weighted variance of $x$ in the risk set; for a 0 or 1 covariate that is $m_j(1 - m_j)$. The information $I(\beta)$ is their sum. Newton's method climbs to the peak by repeating $\beta \leftarrow \beta + U(\beta)/I(\beta)$, the same step used for [Logistic regression](../09-Regression/05-logistic-regression.md), and $1/\sqrt{I(\hat\beta)}$ is the standard error as for any maximum likelihood fit.
 
 ### Step 5: from hazard to survival
 
@@ -171,7 +152,7 @@ xychart-beta
 
 First line (orange): non-smokers. Second line (green): smokers, each value the square of the first. After ten years, 0.2212 of non-smokers and 0.3935 of smokers have died: a ratio of 1.7788, not 2.
 
-A different road fits a full shape for the baseline, such as the Weibull hazard of [weibull-and-hazard-rates](../04-Continuous%20Distributions/09-weibull-and-hazard-rates.md), and estimates it together with $\beta$ by [maximum-likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md). It gains a little precision when the shape is right and gives a wrong $\beta$ when it is not. Cox's road gives up the shape and keeps $\beta$ safe.
+A different road fits a full shape for the baseline, such as the Weibull hazard of [Weibull and hazards](../04-Continuous%20Distributions/09-weibull-and-hazard-rates.md), and estimates it together with $\beta$ by [Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md). It gains a little precision when the shape is right and gives a wrong $\beta$ when it is not. Cox's road gives up the shape and keeps $\beta$ safe.
 
 ---
 
@@ -654,7 +635,7 @@ ALL CHECKS PASS
 > **A hazard ratio of 2 is not twice the chance of dying.** It doubles the death rate among the living, moment by moment. Survival then compounds: a smoker's chance of being alive is the non-smoker's raised to the power 2. For the doctors, 24% becomes 42.24%, not 48%. In the simulated cohorts, a ten-year risk of 0.2212 becomes 0.3935: a ratio of 1.7788. The gap between the two ratios grows as the risk grows; only for rare events are they close.
 >
 > - **Treating men who left alive as deaths, or dropping them.** Both rewrite the data: the ten men give 1.8329 or 1.3703 instead of 2.
-> - **Reading the ratio as a cause.** The cohort was observed, not assigned. A smoker's ratio of 2 includes everything else that travels with smoking. See [confounding-and-simpsons-paradox](07-confounding-and-simpsons-paradox.md).
+> - **Reading the ratio as a cause.** The cohort was observed, not assigned. A smoker's ratio of 2 includes everything else that travels with smoking. See [Confounding](07-confounding-and-simpsons-paradox.md).
 > - **One ratio for an effect that changes with time.** The fading effect fits as 2.2334, a number true at no time. Fit the periods apart, or check that the ratio holds, before quoting one.
 > - **Quoting the estimate without its interval.** Ten men give 2.0000 with an interval from 0.4342 to 9.2124; the ratio alone looks like a finding, the interval shows it is not one.
 
@@ -663,10 +644,10 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Cohort studies of risk factors.** Smoking, blood pressure, weight: nearly every long-term medical cohort reports hazard ratios fitted this way, with other covariates added so each ratio is "at equal age, sex and so on".
-- **Clinical trials.** A trial of a new drug reports the hazard ratio of treated to untreated patients beside the [kaplan-meier](02-kaplan-meier.md) curves. Because patients are assigned by chance, there the ratio can be read as the drug's effect ([randomised-experiments-and-ab-tests](04-randomised-experiments-and-ab-tests.md)).
+- **Clinical trials.** A trial of a new drug reports the hazard ratio of treated to untreated patients beside the [Kaplan-Meier](02-kaplan-meier.md) curves. Because patients are assigned by chance, there the ratio can be read as the drug's effect ([Randomised experiments](04-randomised-experiments-and-ab-tests.md)).
 - **The log-rank test.** The standard test that two survival curves differ is the Cox score evaluated at a ratio of 1, divided by its standard error. For the ten men it is z = 0.9054, well inside the range chance alone produces: the data cannot separate a ratio of 2 from a ratio of 1.
 - **Customers and machines.** Time until a subscriber cancels, or a pump fails, with covariates such as price plan or operating temperature.
-- **Credit.** A lender's hazard of default, scaled by a borrower's covariates, is the same object as the hazard rate of [hazard-rate-and-survival-probability](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md).
+- **Credit.** A lender's hazard of default, scaled by a borrower's covariates, is the same object as the hazard rate of [The hazard rate](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md).
 
 > **Say it back**
 > The Cox model says a covariate multiplies the hazard by one fixed factor, e to the beta, at every moment, and leaves the baseline hazard free. At each death it asks which of the men at risk died; the answer is each man's weight over the total, and the baseline cancels. Multiplying those chances gives the partial likelihood, whose peak is where observed deaths in a group equal expected ones. Its curvature gives the standard error. A hazard ratio of 2 doubles the death rate among the living, not the chance of dying.
@@ -675,16 +656,16 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [kaplan-meier](02-kaplan-meier.md): risk sets, and how a man who leaves alive still counts until he leaves.
-- [logistic-regression](../09-Regression/05-logistic-regression.md): a covariate acting on a log scale, a ratio read as e to the beta, and a fit by Newton's method with curvature standard errors.
+- [Kaplan-Meier](02-kaplan-meier.md): risk sets, and how a man who leaves alive still counts until he leaves.
+- [Logistic regression](../09-Regression/05-logistic-regression.md): a covariate acting on a log scale, a ratio read as e to the beta, and a fit by Newton's method with curvature standard errors.
 
 ## Where this goes next
 
-- [randomised-experiments-and-ab-tests](04-randomised-experiments-and-ab-tests.md): why assignment by chance turns an association into an effect.
-- [confounding-and-simpsons-paradox](07-confounding-and-simpsons-paradox.md): how a hidden variable makes a fitted ratio misleading.
-- [filtrations-and-martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md): the tool behind the proof that the partial likelihood behaves like a likelihood.
+- [Randomised experiments](04-randomised-experiments-and-ab-tests.md): why assignment by chance turns an association into an effect.
+- [Confounding](07-confounding-and-simpsons-paradox.md): how a hidden variable makes a fitted ratio misleading.
+- [Filtrations and martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md): the tool behind the proof that the partial likelihood behaves like a likelihood.
 
-The model measures how much faster smokers die, and says nothing about why; when a ratio may be read as "because" is the question [randomised-experiments-and-ab-tests](04-randomised-experiments-and-ab-tests.md) answers.
+The model measures how much faster smokers die, and says nothing about why; when a ratio may be read as "because" is the question [Randomised experiments](04-randomised-experiments-and-ab-tests.md) answers.
 
 ---
 

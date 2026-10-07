@@ -1,31 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Default, Survival and the Hazard Rate
-topic: Default intensity
-item: The hazard rate
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/01-default-probability-recovery-and-expected-loss|default-probability-recovery-and-expected-loss]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/05-natural-log-and-doubling-time|natural-log-and-doubling-time]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/04-compounding-frequency-and-e|compounding-frequency-and-e]]"
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/05-conditional-probability|conditional-probability]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/03-exponential-distribution|exponential-distribution]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/01-riemann-integral|riemann-integral]]"
-next:
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/03-piecewise-flat-hazard-curve|piecewise-flat-hazard-curve]]"
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/04-rating-transition-matrix-and-cumulative-default-rates|rating-transition-matrix-and-cumulative-default-rates]]"
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/02-cds-legs-risky-annuity-and-par-spread|cds-legs-risky-annuity-and-par-spread]]"
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/03-stochastic-hazard-cox-process|stochastic-hazard-cox-process]]"
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/01-survival-life-tables-and-force-of-mortality|survival-life-tables-and-force-of-mortality]]"
-tags: [mathematics, financial mathematics, hazard-rate-and-survival-probability]
----
-
 # The hazard rate: the chance of failing in the next instant given survival so far, and the survival curve it builds
 
-Financial mathematics → Default, Survival and the Hazard Rate → Default intensity → The hazard rate
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Default, Survival and the Hazard Rate](../../../SYLLABUS.md#w12-s41) → The hazard rate
 
 ---
 
@@ -59,7 +34,7 @@ Orange, curved: the true survival curve at a flat 2% hazard. Green, straight: th
 
 ## The formula
 
-Notation first, in words. The random date on which Northwind defaults is written $\tau$ (Greek "tau"). The chance of an event is written $P(\ldots)$, and a bar inside it means "given": $P(A \mid B)$ is the chance of A counting only the cases where B happens ([conditional-probability](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/05-conditional-probability.md)). A short stretch of time is $\Delta t$ ("delta t").
+Notation first, in words. The random date on which Northwind defaults is written $\tau$ (Greek "tau"). The chance of an event is written $P(\ldots)$, and a bar inside it means "given": $P(A \mid B)$ is the chance of A counting only the cases where B happens ([Conditional probability](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/05-conditional-probability.md)). A short stretch of time is $\Delta t$ ("delta t").
 
 The hazard at time $t$ is defined by
 
@@ -94,14 +69,14 @@ $$S(t) = e^{-\lambda t}, \qquad P(\tau \le T) = 1 - e^{-\lambda T}, \qquad \lamb
 | $P(A \mid B)$ | chance of A, counting only cases where B happens | P(default in year 3 given alive at 2) = 0.0198 | — |
 | $e$, $\ln$ | the growth constant 2.71828… and its undo, the natural log | $e^{-0.1} = 0.9048$ | — |
 
-A reminder on $e$ and $\ln$: $e^{x}$ is what continuous compounding at rate x for one period does to a dollar ([compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)), and $\ln$ undoes it: $\ln e^{x} = x$ ([natural-log-and-doubling-time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)). The integral sign $\int_0^t$ means the area under a curve between 0 and t ([riemann-integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md)).
+A reminder on $e$ and $\ln$: $e^{x}$ is what continuous compounding at rate x for one period does to a dollar ([Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)), and $\ln$ undoes it: $\ln e^{x} = x$ ([Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)). The integral sign $\int_0^t$ means the area under a curve between 0 and t ([The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md)).
 
 ### When it holds
 
 The hazard itself is a definition: any default date whose chances change smoothly over time has one. The survival formula is then a theorem. What can fail is the model around it.
 
 - **Default is one event, and nothing comes back.** The formula counts the first default only. A company that restructures and later defaults again needs a different count.
-- **The hazard is known in advance.** Here $\lambda(t)$ is a fixed curve. If it moves at random with the economy, survival is an average of $e^{-\Lambda}$ over the possible curves, which is not $e$ to the minus the average area; see [stochastic-hazard-cox-process](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md).
+- **The hazard is known in advance.** Here $\lambda(t)$ is a fixed curve. If it moves at random with the economy, survival is an average of $e^{-\Lambda}$ over the possible curves, which is not $e$ to the minus the average area; see [A random hazard](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md).
 - **No sure-thing jump dates.** A company that defaults for certain if it misses a named bond payment has a lump of probability on one day and no finite hazard there. Smooth hazards cannot hold a lump.
 - **Whose probability.** A hazard read from bond or swap prices is a pricing hazard. It includes what investors charge for carrying default risk, so it usually sits above the hazard seen in historical default counts. The mathematics is the same; the two numbers are not interchangeable.
 - **A flat hazard is a choice.** The flat model forgets age: a firm alive at year 10 faces the same next five years as a fresh one. Real hazards drift. In the rising-hazard case below, a flat 2% fitted to the same five-year survival puts year-1 defaults at 1.98% against a true 1.19%.
@@ -122,7 +97,7 @@ For Northwind and one-day slices: $\Delta t = 1/365$, and the chance of survivin
 
 ### Step 2: multiply the slices
 
-Surviving to T means surviving slice 1, then slice 2 given slice 1, and so on. The rule for chained "given"s ([conditional-probability](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/05-conditional-probability.md)) multiplies them:
+Surviving to T means surviving slice 1, then slice 2 given slice 1, and so on. The rule for chained "given"s ([Conditional probability](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/05-conditional-probability.md)) multiplies them:
 
 $$S(T) \approx (1 - \lambda\,\Delta t)^{n}.$$
 
@@ -170,7 +145,7 @@ With a flat hazard, the chance of surviving the next five years given alive at y
 
 $$\frac{S(15)}{S(10)} = \frac{e^{-0.3}}{e^{-0.2}} = e^{-0.1} = 0.904837,$$
 
-the same as for a brand-new company. This is **memorylessness**: having survived tells nothing about the future beyond the current hazard. Only the flat hazard has it, and it makes the default date follow the exponential distribution, with mean $1/\lambda$ = 50 years and median $\ln 2/\lambda$ = 34.66 years ([exponential-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md)). The median is carbon-14's half-life in credit clothing: carbon-14's hazard is $\ln 2 / 5730$ = 0.000121 a year.
+the same as for a brand-new company. This is **memorylessness**: having survived tells nothing about the future beyond the current hazard. Only the flat hazard has it, and it makes the default date follow the exponential distribution, with mean $1/\lambda$ = 50 years and median $\ln 2/\lambda$ = 34.66 years ([Exponential](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md)). The median is carbon-14's half-life in credit clothing: carbon-14's hazard is $\ln 2 / 5730$ = 0.000121 a year.
 
 <details>
 <summary>Why a rate, and not a probability per year?</summary>
@@ -179,7 +154,7 @@ A probability per year depends on how the year is cut. "2% a year, checked yearl
 
 </details>
 
-The same default date can be drawn by computer, one company at a time, by inverting the survival curve; that road is [simulating-a-default-time](05-simulating-a-default-time.md).
+The same default date can be drawn by computer, one company at a time, by inverting the survival curve; that road is [Simulating a default time](05-simulating-a-default-time.md).
 
 ---
 
@@ -249,7 +224,7 @@ xychart-beta
 
 Orange: flat 2% hazard. Green: hazard rising from 1% to 3% by year 5 and on beyond. They cross at year 5, at 0.9048. After that the rising hazard pulls away: a firm alive at year 5 survives the next five years with probability 0.8187, not 0.9048. The rising firm has memory; the flat one does not.
 
-So one survival number pins down a flat hazard, and nothing more. Markets quote several horizons, and fitting a separate flat piece between each pair of quotes is [piecewise-flat-hazard-curve](03-piecewise-flat-hazard-curve.md).
+So one survival number pins down a flat hazard, and nothing more. Markets quote several horizons, and fitting a separate flat piece between each pair of quotes is [The piecewise-flat hazard curve](03-piecewise-flat-hazard-curve.md).
 
 ---
 
@@ -635,10 +610,10 @@ The two outputs agree line for line, coin flips included, since both languages r
 
 ## Where you meet it in real life
 
-- **Credit default swaps.** A swap buyer pays a premium while the reference company survives and is paid if it defaults. Both sides are sums over the survival curve and $\lambda S(t)$; see [cds-legs-risky-annuity-and-par-spread](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md).
-- **Expected loss on a loan book.** A lender's expected loss needs the default chance over the loan's life, which the survival curve supplies; recovery and exposure come from [default-probability-recovery-and-expected-loss](01-default-probability-recovery-and-expected-loss.md).
-- **Rating agency tables.** Agencies publish cumulative default rates by rating and horizon. Turning a column of those into hazards is the inverse on this card, done year by year; the rating-to-rating version is [rating-transition-matrix-and-cumulative-default-rates](04-rating-transition-matrix-and-cumulative-default-rates.md).
-- **Life insurance.** Actuaries call the hazard the **force of mortality**: the same definition, with death in place of default. Life tables are survival curves; see [survival-life-tables-and-force-of-mortality](../51-Insurance%20and%20Actuarial%20Mathematics/01-survival-life-tables-and-force-of-mortality.md).
+- **Credit default swaps.** A swap buyer pays a premium while the reference company survives and is paid if it defaults. Both sides are sums over the survival curve and $\lambda S(t)$; see [Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md).
+- **Expected loss on a loan book.** A lender's expected loss needs the default chance over the loan's life, which the survival curve supplies; recovery and exposure come from [Default probability, recovery and expected loss](01-default-probability-recovery-and-expected-loss.md).
+- **Rating agency tables.** Agencies publish cumulative default rates by rating and horizon. Turning a column of those into hazards is the inverse on this card, done year by year; the rating-to-rating version is [Rating transition matrices](04-rating-transition-matrix-and-cumulative-default-rates.md).
+- **Life insurance.** Actuaries call the hazard the **force of mortality**: the same definition, with death in place of default. Life tables are survival curves; see [Life tables](../51-Insurance%20and%20Actuarial%20Mathematics/01-survival-life-tables-and-force-of-mortality.md).
 - **Engineering and medicine.** Failure rates of machine parts and survival in clinical trials use the same hazard; Cox's 1972 model lets the hazard scale up or down with a patient's traits.
 - **Radioactive dating.** Carbon-14's decay rate, 0.000121 a year, is a flat hazard per atom, and its half-life is the median of an exponential default date.
 
@@ -649,20 +624,20 @@ The two outputs agree line for line, coin flips included, since both languages r
 
 ## What this builds on
 
-- [default-probability-recovery-and-expected-loss](01-default-probability-recovery-and-expected-loss.md): what a default probability is and why lenders need one; this card gives it a time shape.
-- [natural-log-and-doubling-time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md): the log that inverts survival, and the half-life that becomes the median default date.
-- [compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): the limit of ever-finer compounding, run here in reverse for losses.
-- [conditional-probability](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/05-conditional-probability.md): the "given" in the hazard's definition and the chain rule that multiplies slices.
-- [exponential-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md): the distribution of the default date under a flat hazard, with its mean and memorylessness.
-- [riemann-integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md): the area under the hazard as the limit of thin rectangles.
+- [Default probability, recovery and expected loss](01-default-probability-recovery-and-expected-loss.md): what a default probability is and why lenders need one; this card gives it a time shape.
+- [Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md): the log that inverts survival, and the half-life that becomes the median default date.
+- [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): the limit of ever-finer compounding, run here in reverse for losses.
+- [Conditional probability](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/05-conditional-probability.md): the "given" in the hazard's definition and the chain rule that multiplies slices.
+- [Exponential](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md): the distribution of the default date under a flat hazard, with its mean and memorylessness.
+- [The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md): the area under the hazard as the limit of thin rectangles.
 
 ## Where this goes next
 
-- [piecewise-flat-hazard-curve](03-piecewise-flat-hazard-curve.md): one flat hazard per stretch between market quotes, so several survival numbers fit at once.
-- [rating-transition-matrix-and-cumulative-default-rates](04-rating-transition-matrix-and-cumulative-default-rates.md): default reached by moving between ratings, with cumulative default rates built by matrix powers.
-- [cds-legs-risky-annuity-and-par-spread](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md): the survival curve and $\lambda S(t)$ turned into the two cash-flow legs of a credit default swap.
-- [stochastic-hazard-cox-process](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md): a hazard that itself moves at random, and survival as an average of exponentials.
-- [survival-life-tables-and-force-of-mortality](../51-Insurance%20and%20Actuarial%20Mathematics/01-survival-life-tables-and-force-of-mortality.md): the same mathematics applied to human lives.
+- [The piecewise-flat hazard curve](03-piecewise-flat-hazard-curve.md): one flat hazard per stretch between market quotes, so several survival numbers fit at once.
+- [Rating transition matrices](04-rating-transition-matrix-and-cumulative-default-rates.md): default reached by moving between ratings, with cumulative default rates built by matrix powers.
+- [Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md): the survival curve and $\lambda S(t)$ turned into the two cash-flow legs of a credit default swap.
+- [A random hazard](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md): a hazard that itself moves at random, and survival as an average of exponentials.
+- [Life tables](../51-Insurance%20and%20Actuarial%20Mathematics/01-survival-life-tables-and-force-of-mortality.md): the same mathematics applied to human lives.
 
 ---
 

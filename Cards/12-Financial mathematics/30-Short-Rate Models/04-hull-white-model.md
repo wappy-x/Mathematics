@@ -1,34 +1,14 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Short-Rate Models
-topic: Fitting the curve by construction
-item: Hull-White
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/02-vasicek-model|vasicek-model]]"
-next:
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/05-bond-options-and-jamshidians-trick|bond-options-and-jamshidians-trick]]"
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/06-hull-white-trinomial-tree|hull-white-trinomial-tree]]"
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/07-two-factor-and-lognormal-short-rate-models|two-factor-and-lognormal-short-rate-models]]"
-  - "[[Cards/12-Financial mathematics/31-Forward-Rate Models/01-hjm-framework-and-the-drift-condition|hjm-framework-and-the-drift-condition]]"
-  - "[[Cards/12-Financial mathematics/32-Convexity and Exotics/01-futures-forward-convexity|futures-forward-convexity]]"
-tags: [mathematics, financial mathematics, hull-white-model]
----
-
 # Hull-White: Vasicek with a time-dependent drift that fits today's curve exactly
 
-Financial mathematics → Short-Rate Models → Fitting the curve by construction → Hull-White
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Short-Rate Models](../../../SYLLABUS.md#w12-s30) → Hull-White
 
 ---
 
 ## General Overview
 
-One morning a screen carries six quotes: two deposits and four par swaps, from six months out to five years. The ladder on [bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md) turns them into six prices of a future dollar. A dollar due in five years costs 0.79621728 dollars that morning. Every bond and swap on the desk is valued off those six numbers.
+One morning a screen carries six quotes: two deposits and four par swaps, from six months out to five years. The ladder on [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md) turns them into six prices of a future dollar. A dollar due in five years costs 0.79621728 dollars that morning. Every bond and swap on the desk is valued off those six numbers.
 
-Now the desk sells an option on a bond. The option pays off only if rates move, so its price needs a model of how the overnight rate wanders. The shelf's model is Vasicek ([vasicek-model](02-vasicek-model.md)): the rate is pulled toward 5 percent at speed 0.3 a year, shaken with volatility 1 percent a year, and starts at 4 percent. It prices every bond in closed form. It prices the five-year dollar at 0.79985563. On a 10,000,000 dollar payment that is 36,383.48 dollars too much.
+Now the desk sells an option on a bond. The option pays off only if rates move, so its price needs a model of how the overnight rate wanders. The shelf's model is Vasicek ([Vasicek](02-vasicek-model.md)): the rate is pulled toward 5 percent at speed 0.3 a year, shaken with volatility 1 percent a year, and starts at 4 percent. It prices every bond in closed form. It prices the five-year dollar at 0.79985563. On a 10,000,000 dollar payment that is 36,383.48 dollars too much.
 
 That miss is fatal. An option hedged with bonds the model misprices is priced off the wrong bonds.
 
@@ -40,7 +20,7 @@ John Hull and Alan White fixed this in 1990 with one change. Vasicek pulls towar
 
 ### The picture: the curve Vasicek cannot draw
 
-A **forward rate** is the rate the curve charges for borrowing over one instant at a future date, locked today. Between two quoted dates the six quotes pin only an average, so this card holds the forward flat in each gap: the simplest rule on [curve-interpolation-and-shape](../02-Curves/05-curve-interpolation-and-shape.md).
+A **forward rate** is the rate the curve charges for borrowing over one instant at a future date, locked today. Between two quoted dates the six quotes pin only an average, so this card holds the forward flat in each gap: the simplest rule on [Between the pillars](../02-Curves/05-curve-interpolation-and-shape.md).
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -58,7 +38,7 @@ Orange: the market's forward curve, flat inside each gap and stepping at each qu
 
 ## The formula
 
-Notation first, in words. The **short rate** $r(t)$ is the rate for borrowing over one instant at time $t$, in years from today. $dr$ is its change over the next instant, $dt$ is that instant's length, and $dW$ is a random kick with mean zero and variance $dt$: the Brownian step of [ornstein-uhlenbeck-and-cir-processes](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md). $D(T)$ is the discount factor: today's price of a dollar due at time $T$. $f(0,t)$ is today's forward rate for the instant at $t$, and $f'(0,t)$ is its slope, how fast it changes with the date. They are tied by $D(T) = e^{-\int_0^T f(0,s)\,ds}$: a future dollar is discounted at the forward rate of every instant on the way. $a$ is the pull speed and $\sigma$ the noise size, Vasicek's two constants. $\theta(t)$ is the drift term.
+Notation first, in words. The **short rate** $r(t)$ is the rate for borrowing over one instant at time $t$, in years from today. $dr$ is its change over the next instant, $dt$ is that instant's length, and $dW$ is a random kick with mean zero and variance $dt$: the Brownian step of [Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md). $D(T)$ is the discount factor: today's price of a dollar due at time $T$. $f(0,t)$ is today's forward rate for the instant at $t$, and $f'(0,t)$ is its slope, how fast it changes with the date. They are tied by $D(T) = e^{-\int_0^T f(0,s)\,ds}$: a future dollar is discounted at the forward rate of every instant on the way. $a$ is the pull speed and $\sigma$ the noise size, Vasicek's two constants. $\theta(t)$ is the drift term.
 
 The model:
 
@@ -103,9 +83,9 @@ $$V(T) \;=\; \frac{\sigma^2}{a^2}\Bigl(T - 2B(0,T) + \frac{1 - e^{-2aT}}{2a}\Big
 
 ### When it holds
 
-- **Rates are normally distributed.** The noise is added, not multiplied, so the rate can go below zero. Here the five-year rate has mean 4.7077 percent and spread 1.2584 percent, and the chance it sits below zero is 0.000092. Products that break at a negative rate need [cox-ingersoll-ross-model](03-cox-ingersoll-ross-model.md) or a lognormal cousin.
-- **One source of noise.** Every maturity is driven by the same kick, so long and short rates always move the same way. Products that pay on the curve's shape are mispriced; [two-factor-and-lognormal-short-rate-models](07-two-factor-and-lognormal-short-rate-models.md) adds a second.
-- **Speed and noise are constants.** Two numbers cannot match every option quote across expiries; which quotes pin them is [calibrating-a-short-rate-model](08-calibrating-a-short-rate-model.md).
+- **Rates are normally distributed.** The noise is added, not multiplied, so the rate can go below zero. Here the five-year rate has mean 4.7077 percent and spread 1.2584 percent, and the chance it sits below zero is 0.000092. Products that break at a negative rate need [Cox-Ingersoll-Ross](03-cox-ingersoll-ross-model.md) or a lognormal cousin.
+- **One source of noise.** Every maturity is driven by the same kick, so long and short rates always move the same way. Products that pay on the curve's shape are mispriced; [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md) adds a second.
+- **Speed and noise are constants.** Two numbers cannot match every option quote across expiries; which quotes pin them is [Calibrating Hull-White](08-calibrating-a-short-rate-model.md).
 - **The curve is filled between its quotes.** Theta needs a forward at every date. The quoted prices are matched whatever the fill; the prices between them, and theta's kicks, belong to the interpolation rule, not the market.
 - **Today only.** Tomorrow's curve needs a new theta, so model prices move when the curve moves, not only when the rate does.
 
@@ -115,11 +95,11 @@ $$V(T) \;=\; \frac{\sigma^2}{a^2}\Bigl(T - 2B(0,T) + \frac{1 - e^{-2aT}}{2a}\Big
 
 ### Step 0: a bond price depends on the rate's average path and its spread, and only the drift touches the average
 
-A zero-coupon bond pays one dollar at $T$. Its price today is the average, over every path the rate might take (weighted the pricing way, not by real-world odds), of the discount $e^{-\int_0^T r\,dt}$ ([the-term-structure-equation](01-the-term-structure-equation.md)). In a Vasicek-type model the total rate paid, $\int_0^T r\,dt$, is normally distributed. So the price depends on two things only: the total's mean and its variance. The noise sets the variance, and the drift cannot change it. The drift sets the mean. A moving target can steer the mean path one date at a time, and a curve is one condition per date. That match of freedom to conditions is the whole idea.
+A zero-coupon bond pays one dollar at $T$. Its price today is the average, over every path the rate might take (weighted the pricing way, not by real-world odds), of the discount $e^{-\int_0^T r\,dt}$ ([A short-rate model](01-the-term-structure-equation.md)). In a Vasicek-type model the total rate paid, $\int_0^T r\,dt$, is normally distributed. So the price depends on two things only: the total's mean and its variance. The noise sets the variance, and the drift cannot change it. The drift sets the mean. A moving target can steer the mean path one date at a time, and a curve is one condition per date. That match of freedom to conditions is the whole idea.
 
 ### Step 1: split the rate into a known path and pure noise
 
-Write the rate as $r(t) = \varphi(t) + x(t)$. Here $\varphi(t)$ (phi) is a path known today, the rate's expected path. $x(t)$ is the noise part: it obeys $dx = -a\,x\,dt + \sigma\,dW$ and starts at zero. That is an Ornstein-Uhlenbeck process, pulled toward zero ([ornstein-uhlenbeck-and-cir-processes](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)). Adding the two equations shows the split works whenever
+Write the rate as $r(t) = \varphi(t) + x(t)$. Here $\varphi(t)$ (phi) is a path known today, the rate's expected path. $x(t)$ is the noise part: it obeys $dx = -a\,x\,dt + \sigma\,dW$ and starts at zero. That is an Ornstein-Uhlenbeck process, pulled toward zero ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)). Adding the two equations shows the split works whenever
 
 $$\theta(t) \;=\; \varphi'(t) + a\,\varphi(t)$$
 
@@ -181,7 +161,7 @@ so the whole term equals $\frac{\sigma^2}{2a^2}(1-E)^2 B + \frac{\sigma^2}{4a}(1
 
 </details>
 
-The same drift falls out of a different road. [hjm-framework-and-the-drift-condition](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md) models the whole forward curve, lets no-arbitrage fix its drift, and recovers Hull-White when each forward's volatility fades as $\sigma e^{-a(T-t)}$. [hull-white-trinomial-tree](06-hull-white-trinomial-tree.md) finds theta numerically instead, one tree step at a time.
+The same drift falls out of a different road. [Heath-Jarrow-Morton](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md) models the whole forward curve, lets no-arbitrage fix its drift, and recovers Hull-White when each forward's volatility fades as $\sigma e^{-a(T-t)}$. [The Hull-White tree](06-hull-white-trinomial-tree.md) finds theta numerically instead, one tree step at a time.
 
 ---
 
@@ -661,9 +641,9 @@ The two outputs are identical, digit for digit, including the Monte Carlo lines:
 
 ## Where you meet it in real life
 
-- **Rates option desks.** The one-factor Hull-White model is a standard engine for Bermudan swaptions and callable bonds: fit the curve with theta, fit $a$ and $\sigma$ to swaption quotes, price on a tree. The tree is [hull-white-trinomial-tree](06-hull-white-trinomial-tree.md).
-- **Bond and cap options in closed form.** Because the rate stays normal, an option on a zero-coupon bond has a Black-type formula, and a caplet is a put on a zero. That is [bond-options-and-jamshidians-trick](05-bond-options-and-jamshidians-trick.md).
-- **Futures convexity.** The gap between a rate future and the matching forward rate agreement is a Hull-White calculation on most desks: [futures-forward-convexity](../32-Convexity%20and%20Exotics/01-futures-forward-convexity.md).
+- **Rates option desks.** The one-factor Hull-White model is a standard engine for Bermudan swaptions and callable bonds: fit the curve with theta, fit $a$ and $\sigma$ to swaption quotes, price on a tree. The tree is [The Hull-White tree](06-hull-white-trinomial-tree.md).
+- **Bond and cap options in closed form.** Because the rate stays normal, an option on a zero-coupon bond has a Black-type formula, and a caplet is a put on a zero. That is [Bond options](05-bond-options-and-jamshidians-trick.md).
+- **Futures convexity.** The gap between a rate future and the matching forward rate agreement is a Hull-White calculation on most desks: [Futures against forwards](../32-Convexity%20and%20Exotics/01-futures-forward-convexity.md).
 - **Risk and valuation adjustments.** Exposure simulations need thousands of future curves consistent with today's; each is the $A$, $B$ formula at one simulated rate.
 - **Negative rates.** Euro, Swiss franc and yen rates went below zero from 2014 onward; a normal model allowed that, positive-rate models did not.
 
@@ -674,17 +654,17 @@ The two outputs are identical, digit for digit, including the Monte Carlo lines:
 
 ## What this builds on
 
-- [vasicek-model](02-vasicek-model.md): the pull, the noise, the normal rate and the closed-form bond; this card changes only the target.
+- [Vasicek](02-vasicek-model.md): the pull, the noise, the normal rate and the closed-form bond; this card changes only the target.
 
 ---
 
 ## Where this goes next
 
-- [bond-options-and-jamshidians-trick](05-bond-options-and-jamshidians-trick.md): numbered next on this shelf. It prices an option on a zero with the $A$, $B$ formula, and an option on a coupon bond as a bundle of them.
-- [hull-white-trinomial-tree](06-hull-white-trinomial-tree.md): theta found numerically on a lattice, for payoffs with early exercise.
-- [two-factor-and-lognormal-short-rate-models](07-two-factor-and-lognormal-short-rate-models.md): a second noise so the curve can twist, and lognormal models that keep rates positive.
-- [hjm-framework-and-the-drift-condition](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md): the same fit seen from the forward curve, where no-arbitrage fixes the drift of every maturity at once.
-- [futures-forward-convexity](../32-Convexity%20and%20Exotics/01-futures-forward-convexity.md): the model's first everyday job, the gap between a rate future and a forward.
+- [Bond options](05-bond-options-and-jamshidians-trick.md): numbered next on this shelf. It prices an option on a zero with the $A$, $B$ formula, and an option on a coupon bond as a bundle of them.
+- [The Hull-White tree](06-hull-white-trinomial-tree.md): theta found numerically on a lattice, for payoffs with early exercise.
+- [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md): a second noise so the curve can twist, and lognormal models that keep rates positive.
+- [Heath-Jarrow-Morton](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md): the same fit seen from the forward curve, where no-arbitrage fixes the drift of every maturity at once.
+- [Futures against forwards](../32-Convexity%20and%20Exotics/01-futures-forward-convexity.md): the model's first everyday job, the gap between a rate future and a forward.
 
 The curve fixes theta but leaves $a$ and $\sigma$ open, and they decide every option price.
 

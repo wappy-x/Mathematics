@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Signals, Mean Reversion and Backtesting
-topic: Winners minus losers
-item: Momentum and factor signals
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/02-pairs-trading-and-cointegration|pairs-trading-and-cointegration]]"
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/05-factor-models-and-apt|factor-models-and-apt]]"
-next:
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/04-information-coefficient-and-the-fundamental-law|information-coefficient-and-the-fundamental-law]]"
-tags: [mathematics, financial mathematics, momentum-and-factor-signals]
----
-
 # Momentum and factor signals: sorting stocks and reading the spread
 
-Financial mathematics → Signals, Mean Reversion and Backtesting → Winners minus losers → Momentum and factor signals
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Signals, Mean Reversion and Backtesting](../../../SYLLABUS.md#w12-s50) → Momentum and factor signals
 
 ---
 
@@ -156,11 +139,11 @@ In the invented market the long-run variance is 1.8610 times the plain variance.
 
 ### Step 6: the spread is a factor
 
-A monthly winners-minus-losers return is a tradable portfolio with zero net cost, which is exactly what a factor is in [factor-models-and-apt](../37-Portfolio%20Theory/05-factor-models-and-apt.md). Mark Carhart added it in 1997 as a fourth factor beside the market, size and value. Data libraries publish it as UMD, "up minus down", or WML, "winners minus losers". Any signal can be tested the same way: book-to-price, profitability, low volatility. Each becomes a factor once sorted into a spread.
+A monthly winners-minus-losers return is a tradable portfolio with zero net cost, which is exactly what a factor is in [Factor models](../37-Portfolio%20Theory/05-factor-models-and-apt.md). Mark Carhart added it in 1997 as a fourth factor beside the market, size and value. Data libraries publish it as UMD, "up minus down", or WML, "winners minus losers". Any signal can be tested the same way: book-to-price, profitability, low volatility. Each becomes a factor once sorted into a spread.
 
 A second route to momentum ranks each stock against its own past rather than against other stocks. **Time-series momentum**, studied by Tobias Moskowitz, Yao Hua Ooi and Lasse Pedersen in 2012, holds an asset long if its own past-year return is positive and short if negative. The 12-1 version earns 1.23 percent a year in the invented market: the drift here lives in the differences between stocks, which the sort isolates and the own-past rule mixes with the market's direction. Moskowitz, Ooi and Pedersen found it strong across futures on stock indices, bonds, currencies and commodities.
 
-A third route skips the deciles: each month, measure the rank correlation between signal and next month's return, and average it. That correlation is the information coefficient, the subject of [information-coefficient-and-the-fundamental-law](04-information-coefficient-and-the-fundamental-law.md).
+A third route skips the deciles: each month, measure the rank correlation between signal and next month's return, and average it. That correlation is the information coefficient, the subject of [The fundamental law](04-information-coefficient-and-the-fundamental-law.md).
 
 ---
 
@@ -598,7 +581,7 @@ The two outputs agree line for line. The block bootstrap gives 0.2628 against th
 >
 > - **Peeking.** A signal built with any price from the holding month is not a signal. The invented market returns 99.79 percent a year that way. Subtler peeks, such as using a company's year-end accounts before they were published, do the same thing more quietly.
 > - **Forgetting the skip.** Ranking on the full twelve months gives 5.88 percent a year instead of 8.10, because the most recent month reverses.
-> - **Trusting one test.** A t of 2.68 is strong for one signal chosen in advance. It is weak for the best of fifty signals tried: see [deflated-sharpe-and-multiple-testing](06-deflated-sharpe-and-multiple-testing.md).
+> - **Trusting one test.** A t of 2.68 is strong for one signal chosen in advance. It is weak for the best of fifty signals tried: see [Trying many strategies](06-deflated-sharpe-and-multiple-testing.md).
 > - **Ignoring costs and the short leg.** The spread assumes the losers can be borrowed and sold at the quoted price. Small, falling stocks are often the hardest and dearest to borrow.
 
 ---
@@ -608,8 +591,8 @@ The two outputs agree line for line. The block bootstrap gives 0.2628 against th
 - **Fund performance reports.** A fund's return is regressed on the market, size, value and momentum factors. A manager whose excess return disappears once momentum is added was riding the tide, not picking stocks.
 - **The factor zoo.** Hundreds of published signals have been tested by exactly this recipe: sort, spread, Newey-West t. Because so many have been tried, a new factor now has to clear a higher bar than a t-statistic that would satisfy a single test.
 - **Momentum and trend funds.** Funds sold as "momentum" hold the top of a 12-1 sort. Managed-futures funds run time-series momentum across bond, currency and commodity futures.
-- **The opposite trade.** [pairs-trading-and-cointegration](02-pairs-trading-and-cointegration.md) and [ornstein-uhlenbeck-mean-reversion-trading](01-ornstein-uhlenbeck-mean-reversion-trading.md) bet on reversal over days and weeks. Momentum bets on continuation over months. The one-month reversal on this card is where the two meet.
-- **Backtests in general.** Every pitfall here, from look-ahead to overlapping months, recurs in [backtesting-pitfalls](05-backtesting-pitfalls.md).
+- **The opposite trade.** [Pairs trading](02-pairs-trading-and-cointegration.md) and [Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md) bet on reversal over days and weeks. Momentum bets on continuation over months. The one-month reversal on this card is where the two meet.
+- **Backtests in general.** Every pitfall here, from look-ahead to overlapping months, recurs in [Backtesting](05-backtesting-pitfalls.md).
 
 > **Say it back**
 > A signal is a number known today that ranks stocks for next month. Momentum ranks on the past year's return, skipping the latest month because single months reverse. Sorting into deciles and holding the top against the bottom removes the market and leaves the signal's value as one monthly spread: 8.10 percent a year here. Whether that is real depends on its standard error, and because momentum's good months come in runs, the error must count the runs: Newey-West does, and turns a t of 3.66 into 2.68.
@@ -618,12 +601,12 @@ The two outputs agree line for line. The block bootstrap gives 0.2628 against th
 
 ## What this builds on
 
-- [pairs-trading-and-cointegration](02-pairs-trading-and-cointegration.md): a long-short position that cancels a shared tide, and the habit of testing a trading rule with statistics.
-- [factor-models-and-apt](../37-Portfolio%20Theory/05-factor-models-and-apt.md): what a factor is, why a zero-cost spread is one, and how a fund's loadings on factors are measured.
+- [Pairs trading](02-pairs-trading-and-cointegration.md): a long-short position that cancels a shared tide, and the habit of testing a trading rule with statistics.
+- [Factor models](../37-Portfolio%20Theory/05-factor-models-and-apt.md): what a factor is, why a zero-cost spread is one, and how a fund's loadings on factors are measured.
 
 ## Where this goes next
 
-- [information-coefficient-and-the-fundamental-law](04-information-coefficient-and-the-fundamental-law.md): replaces the decile sort with the signal's correlation to next month's returns, and turns that correlation and the number of independent bets into an expected performance.
+- [The fundamental law](04-information-coefficient-and-the-fundamental-law.md): replaces the decile sort with the signal's correlation to next month's returns, and turns that correlation and the number of independent bets into an expected performance.
 
 The decile spread says whether a signal works; it does not say how good the signal is per bet, or how much of it a portfolio can capture, and that is the question the information coefficient answers.
 

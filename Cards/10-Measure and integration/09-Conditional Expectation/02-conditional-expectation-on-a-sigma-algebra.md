@@ -1,24 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Conditional Expectation
-topic: Forecasts from partial information
-item: Conditional expectation on a sigma-algebra
-kind: definition
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/01-conditioning-on-a-partition|conditioning-on-a-partition]]"
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/03-radon-nikodym-theorem|radon-nikodym-theorem]]"
-next:
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/03-conditional-expectation-as-projection|conditional-expectation-as-projection]]"
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/04-rules-of-conditional-expectation|rules-of-conditional-expectation]]"
-tags: [mathematics, measure and integration, conditional-expectation-on-a-sigma-algebra]
----
-
 # Conditional expectation on a sigma-algebra: the unique measurable forecast whose integrals match X's on every known event, existing by Radon-Nikodym
 
-Measure and integration → Conditional Expectation → Forecasts from partial information → Conditional expectation on a sigma-algebra
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Conditional Expectation](../../../SYLLABUS.md#w10-s09) → Conditional expectation on a sigma-algebra
 
 ---
 
@@ -28,7 +10,7 @@ A rain gauge has logged the long-run rainfall for each month of the year: 30 mm 
 
 Now suppose only the season is known, not the month. Winter (December, January, February) averages 30 mm. Spring averages 60, summer 90, autumn 40. That list of four numbers is a forecast: a rule that turns what is known into a best guess. Know less, and the forecast gets coarser. Told only "wet season" (spring and summer) or "dry season" (autumn and winter), the forecast is 75 or 35.
 
-Averaging within a group works when every group has positive probability; [conditioning-on-a-partition](01-conditioning-on-a-partition.md) does exactly that, at another station with different months but the same four season averages. It breaks when the information is an exact reading. Read the date exactly, as a point in a continuous year, and each date has probability zero. Averaging over a group of probability zero means dividing zero by zero. This card replaces the division with two tests a forecast must pass. The forecast may use only what is known. And on every event that the known information can decide, the forecast and the true rainfall must add up to the same total. Radon-Nikodym supplies a forecast that passes both tests, and any two that pass agree except on a set of probability zero.
+Averaging within a group works when every group has positive probability; [Conditioning on a partition](01-conditioning-on-a-partition.md) does exactly that, at another station with different months but the same four season averages. It breaks when the information is an exact reading. Read the date exactly, as a point in a continuous year, and each date has probability zero. Averaging over a group of probability zero means dividing zero by zero. This card replaces the division with two tests a forecast must pass. The forecast may use only what is known. And on every event that the known information can decide, the forecast and the true rainfall must add up to the same total. Radon-Nikodym supplies a forecast that passes both tests, and any two that pass agree except on a set of probability zero.
 
 **The conditional expectation of X given the information G is the forecast that uses only that information and matches X's total on every event the information can decide; it always exists when X has a finite average, and it is unique up to a set of probability zero.**
 
@@ -101,7 +83,7 @@ $X^+$ and $X^-$ are both non-negative and $X = X^+ - X^-$. $P|_{\mathcal{G}}$ is
 
 ### Step 0: test totals on known events, instead of dividing
 
-The partition rule divides a total by a probability. Division fails on an event of probability zero, but a total over such an event is fine: it is zero. So state what the average does, not how to compute it. A forecast from the season must agree with the rainfall's total on winter, on spring, on "winter or spring", and on every other event the season decides. Finding a $\mathcal{G}$-measurable function whose totals reproduce a given measure on $\mathcal{G}$ is what the [radon-nikodym-theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md) does.
+The partition rule divides a total by a probability. Division fails on an event of probability zero, but a total over such an event is fine: it is zero. So state what the average does, not how to compute it. A forecast from the season must agree with the rainfall's total on winter, on spring, on "winter or spring", and on every other event the season decides. Finding a $\mathcal{G}$-measurable function whose totals reproduce a given measure on $\mathcal{G}$ is what the [The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md) does.
 
 ### Step 1: the season averages pass both tests, and the obvious impostors fail
 
@@ -158,7 +140,7 @@ A $\mathcal{G}$-measurable function is constant on each atom C, since "equal to 
 
 What the code shows and what only the proof shows: the code checks both tests on all 16 events of the season sigma-algebra and on three date intervals of a continuous example. That the construction works for every sigma-algebra, and for every Borel set of dates, only the proof shows.
 
-The same forecast has a second description, as the closest $\mathcal{G}$-measurable function to X in mean squared distance. [conditional-expectation-as-projection](03-conditional-expectation-as-projection.md) proves existence that way, without Radon-Nikodym, when X has a finite variance.
+The same forecast has a second description, as the closest $\mathcal{G}$-measurable function to X in mean squared distance. [Conditional expectation as a projection](03-conditional-expectation-as-projection.md) proves existence that way, without Radon-Nikodym, when X has a finite variance.
 
 ---
 
@@ -592,8 +574,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Weather and climate.** A seasonal normal, the rainfall expected given the calendar, is a conditional expectation on the sigma-algebra the calendar generates. Forecasts from the exact date use the sigma-algebra form, since no single date has positive probability.
-- **Insurance pricing.** A premium set by rating class (age band, region) is the conditional expectation of claims given the sigma-algebra those classes generate; when the rating variable is continuous, as with a building's exact age, [conditioning-on-a-random-variable](05-conditioning-on-a-random-variable.md) is the tool.
-- **Pricing and trading.** A price today is a conditional expectation of a future payoff given the information available today, under a changed probability; the flow of information through time is a filtration ([filtrations-and-martingales](06-filtrations-and-martingales.md)).
+- **Insurance pricing.** A premium set by rating class (age band, region) is the conditional expectation of claims given the sigma-algebra those classes generate; when the rating variable is continuous, as with a building's exact age, [Conditioning on a random variable](05-conditioning-on-a-random-variable.md) is the tool.
+- **Pricing and trading.** A price today is a conditional expectation of a future payoff given the information available today, under a changed probability; the flow of information through time is a filtration ([Filtrations and martingales](06-filtrations-and-martingales.md)).
 - **Regression and machine learning.** A regression function estimates the conditional expectation of a target given the sigma-algebra of the inputs: in this card's letters, E[X | G], with X the target and G the information in the inputs.
 
 > **Say it back**
@@ -603,15 +585,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [conditioning-on-a-partition](01-conditioning-on-a-partition.md): the cell-average rule this definition recovers when every cell has positive probability.
-- [radon-nikodym-theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md): the density that makes existence a one-line consequence.
+- [Conditioning on a partition](01-conditioning-on-a-partition.md): the cell-average rule this definition recovers when every cell has positive probability.
+- [The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md): the density that makes existence a one-line consequence.
 
 ## Where this goes next
 
-- [conditional-expectation-as-projection](03-conditional-expectation-as-projection.md): the same forecast as the best mean-squared guess, and a second existence proof.
-- [rules-of-conditional-expectation](04-rules-of-conditional-expectation.md): linearity, taking out what is known, and the tower rule that turned the season forecast into the wet-or-not forecast.
+- [Conditional expectation as a projection](03-conditional-expectation-as-projection.md): the same forecast as the best mean-squared guess, and a second existence proof.
+- [The rules of conditional expectation](04-rules-of-conditional-expectation.md): linearity, taking out what is known, and the tower rule that turned the season forecast into the wet-or-not forecast.
 
-The definition says the forecast exists and is unique, but not in what sense it is the best guess; [conditional-expectation-as-projection](03-conditional-expectation-as-projection.md) answers that.
+The definition says the forecast exists and is unique, but not in what sense it is the best guess; [Conditional expectation as a projection](03-conditional-expectation-as-projection.md) answers that.
 
 ---
 

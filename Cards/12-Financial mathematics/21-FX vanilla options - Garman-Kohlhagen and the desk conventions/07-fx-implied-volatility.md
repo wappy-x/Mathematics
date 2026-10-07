@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX vanilla options - Garman-Kohlhagen and the desk conventions
-topic: From premium to vol
-item: Implied vol for a currency option
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/01-garman-kohlhagen|garman-kohlhagen]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/02-premium-currency-and-foreign-domestic-symmetry|premium-currency-and-foreign-domestic-symmetry]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/03-garman-kohlhagen-greeks|garman-kohlhagen-greeks]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/01-implied-volatility|implied-volatility]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/05-root-finding-for-inverses|root-finding-for-inverses]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/06-newtons-method|newtons-method]]"
-next:
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/01-risk-reversal-and-butterfly|risk-reversal-and-butterfly]]"
-tags: [mathematics, financial mathematics, fx-implied-volatility]
----
-
 # Implied vol for a currency option: from a premium in any quote to the one vol, and the bounds that say when none exists
 
-Financial mathematics → FX vanilla options - Garman-Kohlhagen and the desk conventions → From premium to vol → Implied vol for a currency option
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../../../SYLLABUS.md#w12-s21) → Implied vol for a currency option
 
 ---
 
@@ -83,11 +62,11 @@ $$\max(A - B,\,0) \;<\; C_{\text{mkt}} \;<\; A, \qquad A = S\,e^{-r_f T}, \quad 
 | $\nu$ | vega: dollars per euro gained per unit of $\sigma$ | 0.412764 | Newton's steps shrink |
 | $\sigma_0$ | the solver's starting guess | 0.20 | |
 
-The helpers, as on [garman-kohlhagen](01-garman-kohlhagen.md):
+The helpers, as on [Garman-Kohlhagen](01-garman-kohlhagen.md):
 
 $$d_1 = \frac{\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \nu = S\,e^{-r_f T}\,\varphi(d_1)\sqrt{T}.$$
 
-In words: $d_2$ counts how many standard swings separate the strike from where the rate is expected to end; $d_1$ is one swing more. Vega, from [garman-kohlhagen-greeks](03-garman-kohlhagen-greeks.md), is a euro's discounted cost times a bell-curve height times a square root: every factor positive.
+In words: $d_2$ counts how many standard swings separate the strike from where the rate is expected to end; $d_1$ is one swing more. Vega, from [The Greeks of a currency option](03-garman-kohlhagen-greeks.md), is a euro's discounted cost times a bell-curve height times a square root: every factor positive.
 
 The solver's start is the volatility where the price curve bends from curving up to curving down:
 
@@ -104,7 +83,7 @@ Implied vol is defined, not assumed, so it is never false; it is available or no
 - **Both rates are fixed first, each on its own currency.** Swap them and the same premium implies 15.0903 percent. Implied vol absorbs every error in the other inputs.
 - **Time and strike are positive.** On expiry day the price is the payoff whatever the volatility.
 
-Conventions verified 2026-09-27: the four premium forms and their conversions below are fixed by arithmetic; which form a currency pair uses by default is a desk convention, set out on [premium-currency-and-foreign-domestic-symmetry](02-premium-currency-and-foreign-domestic-symmetry.md).
+Conventions verified 2026-09-27: the four premium forms and their conversions below are fixed by arithmetic; which form a currency pair uses by default is a desk convention, set out on [One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md).
 
 ---
 
@@ -162,7 +141,7 @@ Write $w = \sigma\sqrt{T} > 0$ for the total swing and $m = \ln(A/B) = \ln(F/K)$
 
 ### Step 4: bracketed Newton finds the crossing
 
-Newton's method ([newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) slides down the tangent: next guess = guess minus (price error divided by vega). From a good start it doubles the correct digits each step. From a bad one it can leap out of range. A bracket fixes that: keep a low volatility whose price is too low and a high one whose price is too high. Each step, tighten the bracket using the sign of the error. If Newton's next guess lands outside the bracket, take the bracket's midpoint instead.
+Newton's method ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) slides down the tangent: next guess = guess minus (price error divided by vega). From a good start it doubles the correct digits each step. From a bad one it can leap out of range. A bracket fixes that: keep a low volatility whose price is too low and a high one whose price is too high. Each step, tighten the bracket using the sign of the error. If Newton's next guess lands outside the bracket, take the bracket's midpoint instead.
 
 From the start 0.20, Newton needs three steps to reach 0.100000555683 for the quote 0.053556, with the price error falling from 0.041621814093 to 0.000120022626 to 0.000000006501 and then below a trillionth. Started at 1.5 with no bracket, one Newton step lands on −0.180907, a negative volatility with no meaning. With the bracket, the path is 1.5, 0.75, 0.072669, 0.100277, 0.100000: one halving, then Newton takes over.
 
@@ -185,9 +164,9 @@ The loop ends when the price error falls below a hundred-trillionth. The refusal
 
 The option to buy one euro for 1.1000 dollars is also the option to sell 1.1000 dollars for one euro. Seen from Frankfurt, it is a put on the dollar. There the spot is 0.909091 euros per dollar, the strike is its reciprocal, the domestic rate is the euro's 3 percent and the foreign rate is the dollar's 5 percent. Its premium, per dollar of notional, is 442.609675 euro pips.
 
-Inverting that put on its own formula gives 0.100000 again. The reason: the log of euros-per-dollar is minus the log of dollars-per-euro, so the two spreads are the same size. The full symmetry is on [premium-currency-and-foreign-domestic-symmetry](02-premium-currency-and-foreign-domestic-symmetry.md). A third road uses parity: the dollar put at the same strike costs $C - (A - B) = 0.032418$, and inverting it on the put formula gives 0.100000 too.
+Inverting that put on its own formula gives 0.100000 again. The reason: the log of euros-per-dollar is minus the log of dollars-per-euro, so the two spreads are the same size. The full symmetry is on [One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md). A third road uses parity: the dollar put at the same strike costs $C - (A - B) = 0.032418$, and inverting it on the put formula gives 0.100000 too.
 
-The general inverse, with a share and a dividend in place of the euro and its rate, is [implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md); root-finders in general, bracketing included, are on [root-finding-for-inverses](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md).
+The general inverse, with a share and a dividend in place of the euro and its rate, is [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md); root-finders in general, bracketing included, are on [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md).
 
 ---
 
@@ -693,7 +672,7 @@ The two outputs agree line for line, including the twelve-decimal Newton path.
 
 - **Currency option screens.** Interbank brokers show vols, not premiums. A 1-year EURUSD at 10.00 is the number traders move; the premium is worked out on the ticket.
 - **The trade ticket.** It turns the agreed vol back into money in the premium currency the client asked for. This card runs the ticket in reverse, from any of the four forms.
-- **Strikes from deltas.** Currency options are quoted by delta, not strike, and the strike follows from the vol: [fx-strike-from-delta](06-fx-strike-from-delta.md), using the deltas of [fx-delta-conventions](04-fx-delta-conventions.md) and the at-the-money strike of [at-the-money-conventions](05-at-the-money-conventions.md).
+- **Strikes from deltas.** Currency options are quoted by delta, not strike, and the strike follows from the vol: [Strike from delta](06-fx-strike-from-delta.md), using the deltas of [Four deltas for one option](04-fx-delta-conventions.md) and the at-the-money strike of [Three meanings of at-the-money](05-at-the-money-conventions.md).
 - **Risk control.** A risk system reprices every option in a book from its vol each night. A premium that lands outside the bounds is a data error or a free trade, and the bounds check finds it before a solver hides it.
 - **The smile.** Invert quotes at several strikes of one expiry and the vols differ. The pattern they trace is quoted as risk reversals and butterflies.
 
@@ -704,16 +683,16 @@ The two outputs agree line for line, including the twelve-decimal Newton path.
 
 ## What this builds on
 
-- [garman-kohlhagen](01-garman-kohlhagen.md): the formula run backwards, and the house premium 0.053556.
-- [premium-currency-and-foreign-domestic-symmetry](02-premium-currency-and-foreign-domestic-symmetry.md): the four premium forms, and the mirror option seen from the euro side.
-- [garman-kohlhagen-greeks](03-garman-kohlhagen-greeks.md): vega, the positive slope that makes the answer unique and drives Newton.
-- [implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the same inverse on a share, with its floor and ceiling.
-- [root-finding-for-inverses](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): brackets, halving and safeguarded steps in general.
-- [newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): stepping along the tangent, and why it can overshoot.
+- [Garman-Kohlhagen](01-garman-kohlhagen.md): the formula run backwards, and the house premium 0.053556.
+- [One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md): the four premium forms, and the mirror option seen from the euro side.
+- [The Greeks of a currency option](03-garman-kohlhagen-greeks.md): vega, the positive slope that makes the answer unique and drives Newton.
+- [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the same inverse on a share, with its floor and ceiling.
+- [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): brackets, halving and safeguarded steps in general.
+- [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): stepping along the tangent, and why it can overshoot.
 
 ## Where this goes next
 
-- [risk-reversal-and-butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md): implied vols read at several deltas of one expiry, and the two numbers desks use to quote their shape.
+- [Risk reversal and butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md): implied vols read at several deltas of one expiry, and the two numbers desks use to quote their shape.
 
 This card turns one premium into one vol; why the vols of the same pair differ from strike to strike, and how the market quotes that difference, is the question the smile answers.
 

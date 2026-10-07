@@ -1,27 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Proof
-topic: Induction
-item: Proof by induction
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/06-Proof/01-direct-proof|direct-proof]]"
-  - "[[Cards/01-Foundations/05-Logic/04-quantifiers|quantifiers]]"
-next:
-  - "[[Cards/01-Foundations/06-Proof/05-strong-induction-and-well-ordering|strong-induction-and-well-ordering]]"
-  - "[[Cards/01-Foundations/06-Proof/07-peano-and-one-plus-one|peano-and-one-plus-one]]"
-tags:
-  - mathematics
-  - foundations
-  - proof-by-induction
----
-
 # Induction: knock over the first domino and show each knocks the next
 
-Foundations → Proof → Induction → Proof by induction
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Proof](../../../SYLLABUS.md#w01-s06) → Proof by induction
 
 ---
 
@@ -89,9 +68,9 @@ The claim at size k + 1 reads (k + 1) × ((k + 1) − 1) ÷ 2, and (k + 1) − 1
 
 ### Step 3: why those two are enough
 
-The base case puts the claim at 1, and the step hands it from any size to the next: 1 gives 2, 2 gives 3, 3 gives 4, nothing missed. The step is an if-then, not a claim that k works ([valid-arguments](../05-Logic/06-valid-arguments.md)): if 7 works, 8 does.
+The base case puts the claim at 1, and the step hands it from any size to the next: 1 gives 2, 2 gives 3, 3 gives 4, nothing missed. The step is an if-then, not a claim that k works ([Valid arguments](../05-Logic/06-valid-arguments.md)): if 7 works, 8 does.
 
-One route skips induction: each of n people shakes n − 1 hands, and n × (n − 1) counts every handshake twice, so halve it — the style of [direct-proof](01-direct-proof.md). When one step back is not enough, [strong-induction-and-well-ordering](05-strong-induction-and-well-ordering.md).
+One route skips induction: each of n people shakes n − 1 hands, and n × (n − 1) counts every handshake twice, so halve it — the style of [Direct proof](01-direct-proof.md). When one step back is not enough, [Strong induction and the least element](05-strong-induction-and-well-ordering.md).
 
 ---
 
@@ -254,13 +233,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [direct-proof](01-direct-proof.md): what a proof is — the induction step is itself a small direct proof.
-- [quantifiers](../05-Logic/04-quantifiers.md): the "for every n" that induction exists to settle.
+- [Direct proof](01-direct-proof.md): what a proof is — the induction step is itself a small direct proof.
+- [Quantifiers](../05-Logic/04-quantifiers.md): the "for every n" that induction exists to settle.
 
 ## Where this goes next
 
-- [strong-induction-and-well-ordering](05-strong-induction-and-well-ordering.md): when one step back is not enough, and the smallest-counterexample version.
-- [peano-and-one-plus-one](07-peano-and-one-plus-one.md): where induction comes from, as a rule of the counting numbers.
+- [Strong induction and the least element](05-strong-induction-and-well-ordering.md): when one step back is not enough, and the smallest-counterexample version.
+- [Peano's three rules](07-peano-and-one-plus-one.md): where induction comes from, as a rule of the counting numbers.
 
 ---
 

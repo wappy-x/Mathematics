@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Greeks, one each
-topic: Rate and yield sensitivity
-item: Rho and dividend rho
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/01-delta|delta]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-next:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/09-greeks-together-taylor-pnl|greeks-together-taylor-pnl]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/03-garman-kohlhagen-greeks|garman-kohlhagen-greeks]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/02-futures-option-greeks|futures-option-greeks]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - rho-and-dividend-rho
----
-
 # Rho and dividend rho: how rates and the yield move the price
 
-Financial mathematics → The Greeks, one each → Rate and yield sensitivity → Rho and dividend rho
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Greeks, one each](../../../SYLLABUS.md#w12-s09) → Rho and dividend rho
 
 ---
 
@@ -34,7 +12,7 @@ Now the central bank moves, and cash earns 6 percent instead of 5. Acme's price,
 
 **Rho** is the name for that sensitivity: dollars of option price per unit of interest rate, with every other input held still. **Dividend rho** is the same question asked about the dividend yield. For the Acme call, rho is 49.46 and dividend rho is −58.69. One unit of rate is 100 percentage points, so those raw numbers get scaled before anyone uses them. A move of one percentage point is worth about $0.49 on this call. A move of one basis point, a hundredth of a percentage point, is worth about half a cent: 0.0049.
 
-The Black–Scholes price is a share half minus a cash half ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The interest rate reaches the price in two places: the discount on the cash half, and the chances of exercise inside both halves. The card proves that the second effect cancels to zero. Only the discount on the strike is left doing the moving. The dividend yield is the mirror case: only the dividend drag on the share half moves.
+The Black–Scholes price is a share half minus a cash half ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The interest rate reaches the price in two places: the discount on the cash half, and the chances of exercise inside both halves. The card proves that the second effect cancels to zero. Only the discount on the strike is left doing the moving. The dividend yield is the mirror case: only the dividend drag on the share half moves.
 
 **Rho is the time to expiry times the cash half of the price, and dividend rho is minus the time to expiry times the share half; every other effect of the rate cancels.**
 
@@ -60,7 +38,7 @@ The first line (orange) is the call priced at each rate. The second line (green)
 
 ## The formula
 
-A partial derivative ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)) is the slope in one input with every other input frozen. It is written with a curly d: $\partial C/\partial r$ reads "the change in the call price per unit change in the rate, all else fixed".
+A partial derivative ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)) is the slope in one input with every other input frozen. It is written with a curly d: $\partial C/\partial r$ reads "the change in the call price per unit change in the rate, all else fixed".
 
 $$\rho = \frac{\partial C}{\partial r} = K\,T\,e^{-rT}\,N(d_2), \qquad \rho_q = \frac{\partial C}{\partial q} = -\,T\,S\,e^{-qT}\,N(d_1)$$
 
@@ -95,9 +73,9 @@ In words: $d_2$ counts how many units of spread separate Acme from the strike, a
 
 ### When it holds
 
-- **Only one input moves.** Rho holds the share price fixed. In markets a rate decision often moves shares too; that part of the loss or gain belongs to [delta](01-delta.md), not rho.
+- **Only one input moves.** Rho holds the share price fixed. In markets a rate decision often moves shares too; that part of the loss or gain belongs to [Delta](01-delta.md), not rho.
 - **One flat rate for every date.** The model uses a single continuously compounded rate. A real rate curve can twist, and then the rho that matters is the slope to the rate at the option's own expiry.
-- **A continuous dividend yield.** A known cash dividend on a known date behaves differently: the dividend rho formula no longer applies as written ([known-cash-dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md)).
+- **A continuous dividend yield.** A known cash dividend on a known date behaves differently: the dividend rho formula no longer applies as written ([Known cash dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md)).
 - **Small moves.** Rho is a slope. Over a one-point move the Acme call gains $0.50 while rho predicts $0.49; the error grows with the square of the move.
 - **European exercise.** An option that can be exercised early has its own rate trade-off, and these closed forms stop being exact.
 
@@ -165,7 +143,7 @@ So each rate owns one half of the price. **Rho is $T$ times the cash half. Divid
 
 ### Step 5: parity gives the put, and checks the call
 
-Put–call parity says $C - P = S\,e^{-qT} - K\,e^{-rT}$ for any model ([put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)). Differentiate both sides in $r$. The share term has no $r$:
+Put–call parity says $C - P = S\,e^{-qT} - K\,e^{-rT}$ for any model ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)). Differentiate both sides in $r$. The share term has no $r$:
 
 $$\frac{\partial C}{\partial r} - \frac{\partial P}{\partial r} = K\,T\,e^{-rT}.$$
 
@@ -185,7 +163,7 @@ For Acme, $49.46 - 58.69 = -9.23$, which is minus the call's price. The reason: 
 
 ### The other door: differentiate inside the average
 
-The call price is a discounted average of the payoff over the pricing world's possible end prices. Road 4 in the code differentiates inside that average, one possible future at a time. Hold the random draw fixed and raise $r$. Each possible end price grows in proportion to $T$ per unit of rate, because the pricing-world drift is $r - q - \tfrac12\sigma^2$. That adds $T$ times the share half. Meanwhile the discount on the whole payoff tightens, which removes $T$ times the whole call price. Net: $T \times 58.69 - T \times 9.23 = T \times 49.46$, the cash half again. No boundary term appears, because the payoff is zero at the strike. Same answer by a different bookkeeping. The method is the subject of [pathwise-and-likelihood-ratio-greeks](../07-Greeks%20by%20Numbers%20and%20Calibration/02-pathwise-and-likelihood-ratio-greeks.md).
+The call price is a discounted average of the payoff over the pricing world's possible end prices. Road 4 in the code differentiates inside that average, one possible future at a time. Hold the random draw fixed and raise $r$. Each possible end price grows in proportion to $T$ per unit of rate, because the pricing-world drift is $r - q - \tfrac12\sigma^2$. That adds $T$ times the share half. Meanwhile the discount on the whole payoff tightens, which removes $T$ times the whole call price. Net: $T \times 58.69 - T \times 9.23 = T \times 49.46$, the cash half again. No boundary term appears, because the payoff is zero at the strike. Same answer by a different bookkeeping. The method is the subject of [Greeks inside the simulation](../07-Greeks%20by%20Numbers%20and%20Calibration/02-pathwise-and-likelihood-ratio-greeks.md).
 
 ---
 
@@ -649,7 +627,7 @@ The two outputs agree line for line. The bumped roads sit within a millionth of 
 ## The usual mistake
 
 > [!warning]
-> **Reading rho as the option's exposure to a rate decision.** Rho holds the share price fixed. A real rate decision also moves Acme's price, its volatility and the whole rate curve. Rho is one term in that total, and on a short equity option the smallest one. The full move is the sum of the Greeks times their input moves ([greeks-together-taylor-pnl](09-greeks-together-taylor-pnl.md)).
+> **Reading rho as the option's exposure to a rate decision.** Rho holds the share price fixed. A real rate decision also moves Acme's price, its volatility and the whole rate curve. Rho is one term in that total, and on a short equity option the smallest one. The full move is the sum of the Greeks times their input moves ([The Greeks together](09-greeks-together-taylor-pnl.md)).
 >
 > Smaller traps:
 > - **Units.** The formula gives dollars per unit of rate, where one unit is 100 percentage points. Per percentage point divide by 100 (0.49); per basis point divide by 10,000 (0.0049). A report that mixes them is off by a hundred or ten thousand times.
@@ -664,9 +642,9 @@ The two outputs agree line for line. The bumped roads sit within a millionth of 
 - **Long-dated options and warrants.** A ten-year Acme call has rho 341.37: a one-point rate rise moves it by $3.41, over 11 percent of its price. Rate risk is part of hedging them.
 - **Employee stock options.** Grants often run many years, so the rate assumed in their accounting value shifts that value noticeably.
 - **Dividend forecasts.** Long-dated equity options carry dividend risk through dividend rho. A cut in Acme's expected payout lifts every call and lowers every put.
-- **Currency options.** The dividend yield becomes the foreign interest rate. Dividend rho becomes the foreign-rate rho, of the same order of size as the domestic one ([garman-kohlhagen-greeks](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md)).
-- **Options on futures.** The underlying futures price already contains the rate, so $q$ is replaced by $r$ and the two rho terms combine into Step 6's $-T C$ ([futures-option-greeks](../26-Options%20on%20commodity%20futures%20and%20spreads/02-futures-option-greeks.md)).
-- **The rest of the shelf.** [delta](01-delta.md) is the slope in the share price, [vega](03-vega.md) in volatility, [theta](04-theta.md) in time. Rho and dividend rho are the slopes in the two rates.
+- **Currency options.** The dividend yield becomes the foreign interest rate. Dividend rho becomes the foreign-rate rho, of the same order of size as the domestic one ([The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md)).
+- **Options on futures.** The underlying futures price already contains the rate, so $q$ is replaced by $r$ and the two rho terms combine into Step 6's $-T C$ ([Greeks of a futures option](../26-Options%20on%20commodity%20futures%20and%20spreads/02-futures-option-greeks.md)).
+- **The rest of the shelf.** [Delta](01-delta.md) is the slope in the share price, [Vega](03-vega.md) in volatility, [Theta](04-theta.md) in time. Rho and dividend rho are the slopes in the two rates.
 
 > **Say it back**
 > Rho is the slope of the option price in the bank rate, with every other input frozen; dividend rho is the slope in the dividend yield. The rate changes the discount on the strike and the chances of exercise, but the chance effects cancel exactly, because at the exercise boundary the payoff is zero. What remains is $T$ times the cash half for rho and minus $T$ times the share half for dividend rho: 49.46 and −58.69 for the Acme call. Parity sets the put's values, −45.66 and +39.33. The factor $T$ makes rho negligible on short equity options and large on long ones.
@@ -675,16 +653,16 @@ The two outputs agree line for line. The bumped roads sit within a millionth of 
 
 ## What this builds on
 
-- [delta](01-delta.md): the first Greek, and the pattern this card repeats: differentiate the price, watch terms cancel. Delta's own cancellation uses the same density identity.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): the slope in one input with the others frozen, and the chain rule that carries the rate through $d_1$ and $d_2$.
+- [Delta](01-delta.md): the first Greek, and the pattern this card repeats: differentiate the price, watch terms cancel. Delta's own cancellation uses the same density identity.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): the slope in one input with the others frozen, and the chain rule that carries the rate through $d_1$ and $d_2$.
 
 ## Where this goes next
 
-- [greeks-together-taylor-pnl](09-greeks-together-taylor-pnl.md): every slope on this shelf, summed into one estimate of the day's gain or loss.
-- [garman-kohlhagen-greeks](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the same two rhos with a domestic and a foreign interest rate, where neither is small.
-- [futures-option-greeks](../26-Options%20on%20commodity%20futures%20and%20spreads/02-futures-option-greeks.md): when the underlying is a futures price, the two rhos merge into one.
+- [The Greeks together](09-greeks-together-taylor-pnl.md): every slope on this shelf, summed into one estimate of the day's gain or loss.
+- [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the same two rhos with a domestic and a foreign interest rate, where neither is small.
+- [Greeks of a futures option](../26-Options%20on%20commodity%20futures%20and%20spreads/02-futures-option-greeks.md): when the underlying is a futures price, the two rhos merge into one.
 
-Rho treats the rate as a single fixed number. The open question is what happens when both rates and the share move on the same day; [greeks-together-taylor-pnl](09-greeks-together-taylor-pnl.md) adds every slope together to answer it.
+Rho treats the rate as a single fixed number. The open question is what happens when both rates and the share move on the same day; [The Greeks together](09-greeks-together-taylor-pnl.md) adds every slope together to answer it.
 
 ---
 

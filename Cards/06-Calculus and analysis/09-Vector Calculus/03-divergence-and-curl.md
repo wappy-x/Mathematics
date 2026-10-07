@@ -1,29 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Vector Calculus
-topic: Spreading and spinning
-item: Divergence and curl
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-  - "[[Cards/05-Geometry and trig/05-Vectors in Space/01-cross-product-and-oriented-area|cross-product-and-oriented-area]]"
-next:
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/04-conservative-fields-and-potentials|conservative-fields-and-potentials]]"
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/05-surface-integrals-and-flux|surface-integrals-and-flux]]"
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/04-electrostatics-gauss-and-potential|electrostatics-gauss-and-potential]]"
-  - "[[Cards/13-Engineering mathematics/08-Fluids and Heat/01-continuity-and-bernoulli|continuity-and-bernoulli]]"
-  - "[[Cards/19-Partial differential equations/07-Nonlinear PDE and Fluids/01-navier-stokes-derivation|navier-stokes-derivation]]"
-  - "[[Cards/19-Partial differential equations/07-Nonlinear PDE and Fluids/04-vorticity-and-the-euler-equations|vorticity-and-the-euler-equations]]"
-  - "[[Cards/23-Differential geometry and Lie groups/04-Differential Forms/03-exterior-derivative|exterior-derivative]]"
-tags: [mathematics, calculus and analysis, divergence-and-curl]
----
-
 # Divergence and curl: how much a field spreads out and how much it spins
 
-Calculus and analysis → Vector Calculus → Spreading and spinning → Divergence and curl
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Vector Calculus](../../../SYLLABUS.md#w06-s09) → Divergence and curl
 
 ---
 
@@ -31,7 +8,7 @@ Calculus and analysis → Vector Calculus → Spreading and spinning → Diverge
 
 A breeze of about 3 m/s blows east past a weather mast, but not evenly. At spot S, 40 m east, the air speeds up and fans out: a cold gust from above spreads across the ground. At spot E, 50 m north, the air runs slower than just south of it and drifts north on its east side. Leaves dropped at E turn slowly anticlockwise.
 
-Two numbers say what the air does at a spot, its own drift set aside. How fast air spreads out, per unit of area, is the **divergence**: 0.06 per second at S, zero at E. How fast it circulates round the spot, per unit of area, is the **curl**: zero at S, 0.06 per second at E. S is a source; E, an eddy. Both are built from the wind's **partial derivatives**, its rates of change east and north ([partial-derivatives](../07-Several%20Variables/01-partial-derivatives.md)).
+Two numbers say what the air does at a spot, its own drift set aside. How fast air spreads out, per unit of area, is the **divergence**: 0.06 per second at S, zero at E. How fast it circulates round the spot, per unit of area, is the **curl**: zero at S, 0.06 per second at E. S is a source; E, an eddy. Both are built from the wind's **partial derivatives**, its rates of change east and north ([Partial derivatives](../07-Several%20Variables/01-partial-derivatives.md)).
 
 ### The picture: the wind at S and at E, with each spot's own wind taken away
 
@@ -100,11 +77,11 @@ At S, edge sums with no derivatives give 0.061 for a 40 m square, 0.06025 for 20
 
 ### Step 2: circulation round a small square gives the curl
 
-Walk the square anticlockwise, adding each edge's along-edge wind times its length: the **circulation** $\Gamma$ ([line-integrals](02-line-integrals.md)). The east edge, walked north, collects $Q$; the west edge, walked south, gives it back. The pair nets about $(\partial Q/\partial x)\,\ell^2$. The south edge is walked east and the north edge west, netting about $-(\partial P/\partial y)\,\ell^2$. So
+Walk the square anticlockwise, adding each edge's along-edge wind times its length: the **circulation** $\Gamma$ ([Line integrals of a field](02-line-integrals.md)). The east edge, walked north, collects $Q$; the west edge, walked south, gives it back. The pair nets about $(\partial Q/\partial x)\,\ell^2$. The south edge is walked east and the north edge west, netting about $-(\partial P/\partial y)\,\ell^2$. So
 
 $$\frac{\Gamma}{\ell^2} \to \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \quad \text{as } \ell \to 0.$$
 
-At E, 0.030 − (−0.030) = 0.06, and the edge sums give 0.06 at every side, since this wind's curl changes evenly across the square. The other two curl parts are the same walk in the other two planes, anticlockwise seen from each axis's tip: the cross product's cyclic order ([cross-product-and-oriented-area](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md)).
+At E, 0.030 − (−0.030) = 0.06, and the edge sums give 0.06 at every side, since this wind's curl changes evenly across the square. The other two curl parts are the same walk in the other two planes, anticlockwise seen from each axis's tip: the cross product's cyclic order ([Cross product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md)).
 
 <details>
 <summary>Detailed proof: the square ratios tend to the formulas</summary>
@@ -127,7 +104,7 @@ Rigid turning at $\omega$ gives both straws $\omega$, hence curl $2\omega$. Carr
 
 A breeze of 3 m/s at the ground, gaining 1 m/s per 10 m of height, has $P = 3 + z/10$ and nothing else. Its one rate is $\partial P/\partial z$, 0.1 per second, so its curl is (0, 0.1, 0), pointing north: faster air on top rolls it about a level north–south axis at 0.05 rad/s. A square walked in the east–up plane gives 0.1 per unit area.
 
-A cross-check with [line-integrals](02-line-integrals.md): its wind force $(y/10, -1)$ N has curl −0.1 N/m, and the anticlockwise walk round its 40 m by 30 m field collects −120 J, curl times area. Side by side, small squares' inner edges cancel: that is [greens-theorem](06-greens-theorem.md).
+A cross-check with [Line integrals of a field](02-line-integrals.md): its wind force $(y/10, -1)$ N has curl −0.1 N/m, and the anticlockwise walk round its 40 m by 30 m field collects −120 J, curl times area. Side by side, small squares' inner edges cancel: that is [Green's theorem](06-greens-theorem.md).
 
 ---
 
@@ -371,7 +348,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Curl is not wind going round in circles.** At E the wind blows straight east at 2.250 m/s, yet its curl is 0.06 per second: the turning lives in how the wind changes across space. Conversely, water circling a drain far from its centre has zero curl; [conservative-fields-and-potentials](04-conservative-fields-and-potentials.md) shows what that costs.
+> **Curl is not wind going round in circles.** At E the wind blows straight east at 2.250 m/s, yet its curl is 0.06 per second: the turning lives in how the wind changes across space. Conversely, water circling a drain far from its centre has zero curl; [Conservative fields](04-conservative-fields-and-potentials.md) shows what that costs.
 >
 > - **Strong wind is not a source.** The wind at S is 3.640 m/s, the divergence 0.06 per second: change of speed matters, not speed.
 > - **Zero both is not stillness.** A wind of $(0.01x, -0.01y)$ m/s has divergence 0 and curl 0, yet stretches a square east–west and squeezes it north–south. Two numbers cannot hold all four rates.
@@ -381,8 +358,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Weather.** Air spreading at the ground, as at S, is fed from above; air gathering in must rise. Forecasters follow storms by the wind's curl, called vorticity.
-- **Fluid flow.** Water cannot be squeezed, so its velocity has zero divergence where nothing is pumped in: continuity-and-bernoulli.
-- **Electric charge.** The electric field's divergence is the charge density, up to a constant: electrostatics-gauss-and-potential.
+- **Fluid flow.** Water cannot be squeezed, so its velocity has zero divergence where nothing is pumped in: Continuity and Bernoulli.
+- **Electric charge.** The electric field's divergence is the charge density, up to a constant: Electric fields.
 
 > **Say it back**
 > Divergence adds each part's rate along its own direction: outflow per unit area round a shrinking square. Curl subtracts the cross rates: circulation per unit area, along the spin axis. S spreads at 0.06 per second without turning; E turns with curl 0.06 per second without spreading. A patch of air at E spins at half the curl.
@@ -391,20 +368,20 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [partial-derivatives](../07-Several%20Variables/01-partial-derivatives.md): the four rates, each taken with the other coordinates held still.
-- [cross-product-and-oriented-area](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md): the right-hand rule and the cyclic order that set the curl's direction.
+- [Partial derivatives](../07-Several%20Variables/01-partial-derivatives.md): the four rates, each taken with the other coordinates held still.
+- [Cross product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md): the right-hand rule and the cyclic order that set the curl's direction.
 
 ## Where this goes next
 
-- [conservative-fields-and-potentials](04-conservative-fields-and-potentials.md): zero curl as the test for a gradient field, and where it fails.
-- [surface-integrals-and-flux](05-surface-integrals-and-flux.md): outflow across a curved surface.
-- electrostatics-gauss-and-potential: divergence of the electric field as charge.
-- continuity-and-bernoulli: zero divergence as conservation of fluid.
-- navier-stokes-derivation: both operators in the fluid equations.
-- vorticity-and-the-euler-equations: the curl of a flow, followed in time.
-- exterior-derivative: gradient, curl and divergence as one operation.
+- [Conservative fields](04-conservative-fields-and-potentials.md): zero curl as the test for a gradient field, and where it fails.
+- [Surface integrals](05-surface-integrals-and-flux.md): outflow across a curved surface.
+- Electric fields: divergence of the electric field as charge.
+- Continuity and Bernoulli: zero divergence as conservation of fluid.
+- Navier-Stokes: both operators in the fluid equations.
+- Vorticity: the curl of a flow, followed in time.
+- Exterior derivative: gradient, curl and divergence as one operation.
 
-Divergence and curl work one point at a time; what local spreading adds up to over a solid is [divergence-theorem](07-divergence-theorem.md), and local spin over a surface, [stokes-theorem](08-stokes-theorem.md).
+Divergence and curl work one point at a time; what local spreading adds up to over a solid is [Divergence theorem](07-divergence-theorem.md), and local spin over a surface, [Stokes' theorem](08-stokes-theorem.md).
 
 ---
 

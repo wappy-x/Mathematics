@@ -1,27 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Lattice Paths and Catalan Numbers
-topic: Heights, returns and excursions
-item: Counting coin-flip paths
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/06-Lattice Paths and Catalan Numbers/03-catalan-numbers|catalan-numbers]]"
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/07-central-binomial-and-bounds|central-binomial-and-bounds]]"
-next:
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/01-bernoulli-and-binomial|bernoulli-and-binomial]]"
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/02-simple-random-walk|simple-random-walk]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - random-walk-path-counts
----
-
 # Counting coin-flip paths: how many end at a given height, how many return to zero, how many never touch it
 
-Combinatorics and graphs → Lattice Paths and Catalan Numbers → Heights, returns and excursions → Counting coin-flip paths
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Lattice Paths and Catalan Numbers](../../../SYLLABUS.md#w04-s06) → Counting coin-flip paths
 
 ---
 
@@ -54,7 +33,7 @@ Odd heights are missing on purpose: ten flips cannot finish at an odd total.
 
 ## The formula
 
-Notation first, in words. $n$ is the number of flips, $h$ the height the path ends at, $u$ how many flips came up heads. C(n, k) in brackets is the count of ways to choose k things from n, read "n choose k". A Catalan number keeps the shelf's notation, Cat(m) ([catalan-numbers](03-catalan-numbers.md)).
+Notation first, in words. $n$ is the number of flips, $h$ the height the path ends at, $u$ how many flips came up heads. C(n, k) in brackets is the count of ways to choose k things from n, read "n choose k". A Catalan number keeps the shelf's notation, Cat(m) ([Catalan numbers](03-catalan-numbers.md)).
 
 $$P(n, h) \;=\; C\!\left(n,\ \frac{n + h}{2}\right)$$
 
@@ -83,7 +62,7 @@ $$\text{never below zero} = \mathrm{Cat}(m) = \frac{C(2m,\ m)}{m+1}, \qquad \tex
 - **Every flip moves the total by one, up or down.** A step of any other size breaks the link between head count and height, and the count comes out too low.
 - **Flip count and ending height share parity.** Ten flips cannot end at +1: the formula asks for five and a half heads, and the count is 0.
 - **The height cannot outrun the flips.** Outside −n to n, (n + h)/2 leaves the range 0 to n and the count is 0 again.
-- **The Catalan counts assume a level ending.** Paths that stay above zero and finish elsewhere are the ballot numbers of [reflection-principle-and-ballot-problem](02-reflection-principle-and-ballot-problem.md).
+- **The Catalan counts assume a level ending.** Paths that stay above zero and finish elsewhere are the ballot numbers of [The reflection principle](02-reflection-principle-and-ballot-problem.md).
 
 ---
 
@@ -103,15 +82,15 @@ No slack in that. A ten-flip path ending at +2 had exactly six heads, so those p
 
 ### Step 2: ending level is the middle of the row
 
-Put h = 0 into Step 1: the head count is n/2, which needs n even. Write n = 2m and the count is C(2m, m), the middle entry of row 2m ([central-binomial-and-bounds](../03-Binomial%20Coefficients%20and%20Identities/07-central-binomial-and-bounds.md)). With m of 5 that is 252.
+Put h = 0 into Step 1: the head count is n/2, which needs n even. Write n = 2m and the count is C(2m, m), the middle entry of row 2m ([The middle of the row](../03-Binomial%20Coefficients%20and%20Identities/07-central-binomial-and-bounds.md)). With m of 5 that is 252.
 
 ### Step 3: never dipping below zero is a Catalan count
 
-Of the 252 level enders, some sink below zero and some never do. The ones staying at or above zero throughout are the shelf's Dyck paths ([lattice-paths](01-lattice-paths.md)), counted by the Catalan number Cat(m) — the middle entry shared among m + 1 equal parts:
+Of the 252 level enders, some sink below zero and some never do. The ones staying at or above zero throughout are the shelf's Dyck paths ([Lattice paths](01-lattice-paths.md)), counted by the Catalan number Cat(m) — the middle entry shared among m + 1 equal parts:
 
 $$\mathrm{Cat}(m) = \frac{C(2m,\ m)}{m+1} \quad\longrightarrow\quad \frac{252}{6} = 42$$
 
-The divisor is proved on [catalan-numbers](03-catalan-numbers.md). The reflection principle reaches the same 42 without it: every dipping path matches one for one with a path ending at −2 ([reflection-principle-and-ballot-problem](02-reflection-principle-and-ballot-problem.md)), and those number C(10, 4) = 210, leaving 252 − 210 = 42.
+The divisor is proved on [Catalan numbers](03-catalan-numbers.md). The reflection principle reaches the same 42 without it: every dipping path matches one for one with a path ending at −2 ([The reflection principle](02-reflection-principle-and-ballot-problem.md)), and those number C(10, 4) = 210, leaving 252 − 210 = 42.
 
 ### Step 4: staying strictly above zero costs two flips
 
@@ -370,9 +349,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Vote counting.** A tally that must never let the trailing candidate lead is a path that must never dip below zero — see [reflection-principle-and-ballot-problem](02-reflection-principle-and-ballot-problem.md).
-- **Balanced brackets.** Read a head as an opening bracket and a tail as a closing one: the paths that never dip below zero are the strings that never close what was not opened, 42 of them on ten symbols ([catalan-bijections](04-catalan-bijections.md)).
-- **Grids.** Turn each head into a step east and each tail into a step north and the path becomes a route across a grid ([lattice-paths](01-lattice-paths.md)).
+- **Vote counting.** A tally that must never let the trailing candidate lead is a path that must never dip below zero — see [The reflection principle](02-reflection-principle-and-ballot-problem.md).
+- **Balanced brackets.** Read a head as an opening bracket and a tail as a closing one: the paths that never dip below zero are the strings that never close what was not opened, 42 of them on ten symbols ([Catalan everywhere](04-catalan-bijections.md)).
+- **Grids.** Turn each head into a step east and each tail into a step north and the path becomes a route across a grid ([Lattice paths](01-lattice-paths.md)).
 
 > **Say it back**
 > A run of coin flips scored +1 and −1 draws a path, and the path is fixed by which flips were heads. The ending height fixes the head count, (n + h)/2, so the paths ending there number C(n, (n+h)/2): 210 endings at +2 and 252 at zero, out of 1,024 runs. Of those 252, the ones that never dip below zero number 42, the middle entry shared among six. The ones staying strictly above zero number 14, two flips forced and a shorter count left.
@@ -381,13 +360,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [catalan-numbers](03-catalan-numbers.md): why the paths that never dip below zero are the middle entry shared among m + 1, and the sequence 1, 1, 2, 5, 14, 42 this card lands on twice.
-- [central-binomial-and-bounds](../03-Binomial%20Coefficients%20and%20Identities/07-central-binomial-and-bounds.md): C(2m, m) as the biggest entry of an even row, and how large it is.
+- [Catalan numbers](03-catalan-numbers.md): why the paths that never dip below zero are the middle entry shared among m + 1, and the sequence 1, 1, 2, 5, 14, 42 this card lands on twice.
+- [The middle of the row](../03-Binomial%20Coefficients%20and%20Identities/07-central-binomial-and-bounds.md): C(2m, m) as the biggest entry of an even row, and how large it is.
 
 ## Where this goes next
 
-- [bernoulli-and-binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the same row of counts divided by 1,024, read as chances.
-- [simple-random-walk](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md): the walk as a process in time, with its long-run behaviour.
+- [Binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the same row of counts divided by 1,024, read as chances.
+- [Simple random walk](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md): the walk as a process in time, with its long-run behaviour.
 - **Probability and statistics.** Divide each count here by 1,024 and it becomes a chance, because a fair coin makes the 1,024 runs equally likely. The shape of the row, high in the middle and thin at the edges, is the bell curve before anyone takes a limit.
 - **Stochastic processes.** Shrink the step and speed up the flips and the staircase becomes a continuous wandering line, with these counts surviving in another form.
 

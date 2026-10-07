@@ -1,26 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Rate Equations
-topic: Reading equations by eye
-item: Slope fields and the phase line
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/01-what-a-differential-equation-says|what-a-differential-equation-says]]"
-  - "[[Cards/01-Foundations/02-The Number Line/02-number-line-and-inequalities|number-line-and-inequalities]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/07-logistic-growth|logistic-growth]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/01-phase-portraits-and-nullclines|phase-portraits-and-nullclines]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/10-bifurcations-of-equilibria|bifurcations-of-equilibria]]"
-  - "[[Cards/08-Differential equations and dynamics/11-Discrete Dynamics and Chaos/01-iteration-and-cobweb-plots|iteration-and-cobweb-plots]]"
-tags: [mathematics, differential equations and dynamics, slope-fields-and-the-phase-line]
----
-
 # Slope fields and the phase line: sketch every solution without solving anything
 
-Differential equations and dynamics → Rate Equations → Reading equations by eye → Slope fields and the phase line
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Rate Equations](../../../SYLLABUS.md#w08-s01) → Slope fields and the phase line
 
 ---
 
@@ -46,7 +26,7 @@ Scale: 10 units per second across, 2 units per m/s up; the dashed line is 49 m/s
 
 ## The formula
 
-Notation from [what-a-differential-equation-says](01-what-a-differential-equation-says.md): $v'$ is the rate of $v$, read "the rate of v at time t is …". An equation whose right side mentions only the unknown, not the time, is called **autonomous**. The skydiver's is:
+Notation from [A differential equation](01-what-a-differential-equation-says.md): $v'$ is the rate of $v$, read "the rate of v at time t is …". An equation whose right side mentions only the unknown, not the time, is called **autonomous**. The skydiver's is:
 
 $$v' = f(v) = 9.8 - 0.2\,v$$
 
@@ -127,7 +107,7 @@ The law $v' = (v - 49)^2$ has slope zero at its rest. Arrows point up on both si
 
 </details>
 
-Solving gives the same answer, $v = 49 + (v_0 - 49)\,e^{-0.2t}$, by the method of [separable-equations](03-separable-equations.md).
+Solving gives the same answer, $v = 49 + (v_0 - 49)\,e^{-0.2t}$, by the method of [Separable equations](03-separable-equations.md).
 
 ---
 
@@ -376,9 +356,9 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Falling objects.** Real drag grows faster than speed; the phase line still finds terminal velocity without solving.
-- **A cooling cup.** Room temperature is the stable rest: [exponential-growth-decay-and-cooling](04-exponential-growth-decay-and-cooling.md).
-- **A drip into a tank or a vein.** The level settles where inflow balances outflow: [mixing-tanks-and-compartments](06-mixing-tanks-and-compartments.md).
-- **Populations.** Extinction and capacity are rests of opposite kinds: [logistic-growth](07-logistic-growth.md).
+- **A cooling cup.** Room temperature is the stable rest: [Growth, decay and cooling](04-exponential-growth-decay-and-cooling.md).
+- **A drip into a tank or a vein.** The level settles where inflow balances outflow: [Mixing tanks](06-mixing-tanks-and-compartments.md).
+- **Populations.** Extinction and capacity are rests of opposite kinds: [Logistic growth](07-logistic-growth.md).
 
 > **Say it back**
 > A rate law gives every solution's slope at every point, so a field of ticks shows every solution's shape. When the law ignores the clock, one line of arrows says it all. Between rests the motion is one way and never crosses a rest. The skydiver's line has one rest, 49 m/s, with arrows pointing in, so every diver settles there. The law's slope there, −0.2 per s, confirms it attracts.
@@ -387,15 +367,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [what-a-differential-equation-says](01-what-a-differential-equation-says.md): the rate law, the initial value, and what counts as a solution.
-- [number-line-and-inequalities](../../01-Foundations/02-The%20Number%20Line/02-number-line-and-inequalities.md): the line, its order, and reading which side of a value a number sits.
+- [A differential equation](01-what-a-differential-equation-says.md): the rate law, the initial value, and what counts as a solution.
+- [The number line and inequalities](../../01-Foundations/02-The%20Number%20Line/02-number-line-and-inequalities.md): the line, its order, and reading which side of a value a number sits.
 
 ## Where this goes next
 
-- [logistic-growth](07-logistic-growth.md): a phase line with a stable and an unstable rest.
-- [phase-portraits-and-nullclines](../06-Nonlinear%20Dynamics%20in%20the%20Plane/01-phase-portraits-and-nullclines.md): the phase line grown into a plane, for two quantities at once.
-- [bifurcations-of-equilibria](../06-Nonlinear%20Dynamics%20in%20the%20Plane/10-bifurcations-of-equilibria.md): rests appearing and vanishing as a constant in the law is turned.
-- [iteration-and-cobweb-plots](../11-Discrete%20Dynamics%20and%20Chaos/01-iteration-and-cobweb-plots.md): rules applied in steps, where overshooting like the 10 s walk here is the main event.
+- [Logistic growth](07-logistic-growth.md): a phase line with a stable and an unstable rest.
+- [Phase portraits and nullclines](../06-Nonlinear%20Dynamics%20in%20the%20Plane/01-phase-portraits-and-nullclines.md): the phase line grown into a plane, for two quantities at once.
+- [Bifurcations](../06-Nonlinear%20Dynamics%20in%20the%20Plane/10-bifurcations-of-equilibria.md): rests appearing and vanishing as a constant in the law is turned.
+- [Iteration](../11-Discrete%20Dynamics%20and%20Chaos/01-iteration-and-cobweb-plots.md): rules applied in steps, where overshooting like the 10 s walk here is the main event.
 
 ---
 

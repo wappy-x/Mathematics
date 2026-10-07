@@ -1,32 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Repeats, Groups and Double Counting
-topic: Proof by counting
-item: Bijections and double counting
-kind: method
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/05-n-choose-k|n-choose-k]]"
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/02-strings-and-powers|strings-and-powers]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/01-same-size-by-pairing|same-size-by-pairing]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/04-injective-surjective-bijective|injective-surjective-bijective]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/01-pascals-rule-and-the-triangle|pascals-rule-and-the-triangle]]"
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/05-committee-chair-identity|committee-chair-identity]]"
-  - "[[Cards/04-Combinatorics and graphs/06-Lattice Paths and Catalan Numbers/02-reflection-principle-and-ballot-problem|reflection-principle-and-ballot-problem]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/02-degree-and-handshaking|degree-and-handshaking]]"
-  - "[[Cards/04-Combinatorics and graphs/10-Trees and Cheapest Routes/03-spanning-trees-and-cayleys-formula|spanning-trees-and-cayleys-formula]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - bijection-and-double-counting
----
-
 # Bijections and double counting: match two collections one-to-one, or count one collection two ways, and the numbers must agree
 
-Combinatorics and graphs → Repeats, Groups and Double Counting → Proof by counting → Bijections and double counting
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Repeats, Groups and Double Counting](../../../SYLLABUS.md#w04-s02) → Bijections and double counting
 
 ---
 
@@ -66,7 +40,7 @@ Ten lines, so 10 matches. Counted from the teams instead, each of the 5 touches 
 
 ## The formula
 
-Notation first, in words. Bars count members: $\lvert A \rvert$ is how many things collection A holds. An arrow names a rule sending each member of one collection to a member of another, so $f : A \to B$ reads "f sends each member of A to a member of B"; a double arrow means "so". And C(n, k), read "n choose k", counts the ways of choosing k things out of n when order does not matter ([n-choose-k](../01-Counting%20Principles/05-n-choose-k.md)).
+Notation first, in words. Bars count members: $\lvert A \rvert$ is how many things collection A holds. An arrow names a rule sending each member of one collection to a member of another, so $f : A \to B$ reads "f sends each member of A to a member of B"; a double arrow means "so". And C(n, k), read "n choose k", counts the ways of choosing k things out of n when order does not matter ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
 
 $$f : A \to B \ \text{one to one and onto} \quad \Longrightarrow \quad \lvert A \rvert = \lvert B \rvert$$
 
@@ -95,7 +69,7 @@ $$C(n, 2) = \frac{n(n-1)}{2} \qquad \text{and} \qquad C(n, k) = C(n, n-k)$$
 ### When it holds
 
 - **One to one and onto, both.** Filing the 38760 six-team picks under their smallest team fuses them into 15 buckets: a rule landing many members on one proves no equality.
-- **The same d every time, and finitely many.** Every match draws two slips: the check prints smallest 2, largest 2. Where some draw two and others three, no division fixes the total, and endless collections leave no number to divide ([same-size-by-pairing](../../01-Foundations/09-Sizes%20of%20Infinity/01-same-size-by-pairing.md)).
+- **The same d every time, and finitely many.** Every match draws two slips: the check prints smallest 2, largest 2. Where some draw two and others three, no division fixes the total, and endless collections leave no number to divide ([Same size means pairable](../../01-Foundations/09-Sizes%20of%20Infinity/01-same-size-by-pairing.md)).
 - **The same collection, both times.** Counting slips one road and matches the other proves nothing: 380 and 190 are both correct, and they differ.
 
 ---
@@ -141,7 +115,7 @@ The league takes 6 teams into a playoff. How many playoff sixes are possible?
 
 Write a line of 20 marks, one per team in league order: 1 for in, 0 for out. The six named 2, 5, 9, 11, 14 and 20 becomes 01001000101001000001.
 
-Every six gives one such string, and every string of 20 marks holding six 1s gives back one six. That is a bijection, so counting the strings counts the sixes: C(20, 6) = 38760 ([strings-and-powers](../01-Counting%20Principles/02-strings-and-powers.md) counts strings of marks).
+Every six gives one such string, and every string of 20 marks holding six 1s gives back one six. That is a bijection, so counting the strings counts the sixes: C(20, 6) = 38760 ([Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md) counts strings of marks).
 
 ### Step 4: swap the marks, and C(n, k) = C(n, n − k)
 
@@ -160,9 +134,9 @@ $$C(n, k) = C(n, n-k)$$
 
 Choosing who is in is the same act as choosing who is out. Nothing is computed.
 
-The factorial formula reaches both identities too, and the check uses it as the second road ([n-choose-k](../01-Counting%20Principles/05-n-choose-k.md)): quicker here, silent about why.
+The factorial formula reaches both identities too, and the check uses it as the second road ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)): quicker here, silent about why.
 
-The rest of this shelf is these two moves at work. [stars-and-bars](02-stars-and-bars.md) matches each way of handing out items with a line of dots and dividers; [multiset-permutations](01-multiset-permutations.md), [splitting-into-groups](03-splitting-into-groups.md) and [circular-arrangements](04-circular-arrangements.md) each divide by a block of arrangements naming one thing.
+The rest of this shelf is these two moves at work. [Stars and bars](02-stars-and-bars.md) matches each way of handing out items with a line of dots and dividers; [Arranging with repeats](01-multiset-permutations.md), [Splitting into groups](03-splitting-into-groups.md) and [Round tables and bracelets](04-circular-arrangements.md) each divide by a block of arrangements naming one thing.
 
 ---
 
@@ -412,7 +386,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Fixture lists.** A 20-team league playing home and away runs 380 matches a season: the slip count, undivided, because home and away are different matches.
-- **Handshakes and cables.** Twenty people who all shake hands once make 190 handshakes — 380 hand-ends, two per shake — and joining 20 offices to each other needs 190 cables. The same count told with dots and lines is [degree-and-handshaking](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md).
+- **Handshakes and cables.** Twenty people who all shake hands once make 190 handshakes — 380 hand-ends, two per shake — and joining 20 offices to each other needs 190 cables. The same count told with dots and lines is [Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md).
 - **Shortlists.** Choosing which 6 of 20 applicants to interview also names the 14 to decline, so the two lists are one list: 38760 either way.
 
 > **Say it back**
@@ -422,18 +396,18 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [n-choose-k](../01-Counting%20Principles/05-n-choose-k.md): the count C(n, k), and its factorial formula, the second road here.
-- [strings-and-powers](../01-Counting%20Principles/02-strings-and-powers.md): strings of marks, and how many of a given length.
-- [same-size-by-pairing](../../01-Foundations/09-Sizes%20of%20Infinity/01-same-size-by-pairing.md): pairing as the test of equal size, before any counting.
-- [injective-surjective-bijective](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md): one to one, onto, and the word bijection.
+- [Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md): the count C(n, k), and its factorial formula, the second road here.
+- [Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md): strings of marks, and how many of a given length.
+- [Same size means pairable](../../01-Foundations/09-Sizes%20of%20Infinity/01-same-size-by-pairing.md): pairing as the test of equal size, before any counting.
+- [One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md): one to one, onto, and the word bijection.
 
 ## Where this goes next
 
-- [pascals-rule-and-the-triangle](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md): one identity generating every C(n, k), proved by splitting on one member.
-- [committee-chair-identity](../03-Binomial%20Coefficients%20and%20Identities/05-committee-chair-identity.md): a committee with a chair, counted two ways.
-- [reflection-principle-and-ballot-problem](../06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md): a bijection that flips part of a path to count the bad cases.
-- [degree-and-handshaking](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md): the slip count as a statement about dots and lines.
-- [spanning-trees-and-cayleys-formula](../10-Trees%20and%20Cheapest%20Routes/03-spanning-trees-and-cayleys-formula.md): a hard count made easy by matching each object with a string.
+- [Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md): one identity generating every C(n, k), proved by splitting on one member.
+- [Committee and chair](../03-Binomial%20Coefficients%20and%20Identities/05-committee-chair-identity.md): a committee with a chair, counted two ways.
+- [The reflection principle](../06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md): a bijection that flips part of a path to count the bad cases.
+- [Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md): the slip count as a statement about dots and lines.
+- [Spanning trees](../10-Trees%20and%20Cheapest%20Routes/03-spanning-trees-and-cayleys-formula.md): a hard count made easy by matching each object with a string.
 
 Each identity here took its own argument, invented on the spot; a later card gets every value of C(n, k) from a single split, so the counts can be generated rather than re-argued.
 

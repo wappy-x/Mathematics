@@ -1,28 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: For the Curious
-topic: The limit of radicals
-item: Why there is no quintic formula
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/02-Polynomials/03-quadratic-formula|quadratic-formula]]"
-  - "[[Cards/03-Algebra/08-Groups/03-permutations-and-the-symmetric-group|permutations-and-the-symmetric-group]]"
-  - "[[Cards/03-Algebra/08-Groups/06-normal-subgroups-and-quotient-groups|normal-subgroups-and-quotient-groups]]"
-  - "[[Cards/01-Foundations/06-Proof/03-proof-by-contradiction|proof-by-contradiction]]"
-next:
-  - "[[Cards/21-Algebraic and analytic number theory/05-Fields and Galois Theory/07-solvability-by-radicals-and-the-quintic|solvability-by-radicals-and-the-quintic]]"
-tags:
-  - mathematics
-  - algebra
-  - why-no-quintic-formula
----
-
 # Why there is no quintic formula: degrees 2, 3 and 4 have one, degree 5 provably cannot, because the roots' symmetries are too tangled
 
-Algebra → For the Curious → The limit of radicals → Why there is no quintic formula
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [For the Curious](../../../SYLLABUS.md#w03-s10) → Why there is no quintic formula
 
 ---
 
@@ -32,11 +10,11 @@ Two equations of degree five: the highest power of the unknown is the fifth. One
 
 The first is x^5 - 2 = 0, answered by the fifth root of 2: 1.1486983550 to ten places. The second is x^5 - x - 1 = 0, answered by 1.1673039783, which fifty halvings of an interval around it pin down. What cannot be done is write that root from whole numbers using plus, minus, times, divide and root-taking. Such an expression is a **radical expression**, and this root has none: Abel proved in 1824 that no radical formula solves every quintic; Ruffini had argued so in 1799.
 
-A **quintic** is a degree-five polynomial equation, and it is where the school formulas stop. The reason is how the five roots may be shuffled without any whole-number equation between them noticing ([permutations-and-the-symmetric-group](../08-Groups/03-permutations-and-the-symmetric-group.md)). Taking a root breaks a group of shuffles into layers where order stops mattering. The 120 shuffles of five things refuse to break.
+A **quintic** is a degree-five polynomial equation, and it is where the school formulas stop. The reason is how the five roots may be shuffled without any whole-number equation between them noticing ([Permutations](../08-Groups/03-permutations-and-the-symmetric-group.md)). Taking a root breaks a group of shuffles into layers where order stops mattering. The 120 shuffles of five things refuse to break.
 
 **A radical formula would take the shuffles of an equation's roots apart one order-free layer at a time; the shuffles of five roots stop coming apart at a core of 60, so no radical formula solves every quintic — while the roots are all still there to be found.**
 
-**What kind of fact this is:** a theorem. Its group half is proved here and computed in the code; the bridge from radicals to peelable groups is stated here, proved in solvability-by-radicals-and-the-quintic.
+**What kind of fact this is:** a theorem. Its group half is proved here and computed in the code; the bridge from radicals to peelable groups is stated here, proved in Solvable by radicals.
 
 ### The picture: two questions about one equation
 
@@ -48,7 +26,7 @@ flowchart TB
     C --> E["No. Proved impossible:<br/>Ruffini 1799, Abel 1824"]
 ```
 
-The left road is settled by the fundamental theorem of algebra ([fundamental-theorem-of-algebra](01-fundamental-theorem-of-algebra.md)); the right one closes.
+The left road is settled by the fundamental theorem of algebra ([The fundamental theorem of algebra](01-fundamental-theorem-of-algebra.md)); the right one closes.
 
 ---
 
@@ -91,7 +69,7 @@ Collect the commutators of every pair in a group of shuffles and close them unde
 
 ### Step 0: existence and spelling are different questions
 
-Every degree-five polynomial has five complex roots, counted with repeats ([fundamental-theorem-of-algebra](01-fundamental-theorem-of-algebra.md)). Existence is settled; naming is not.
+Every degree-five polynomial has five complex roots, counted with repeats ([The fundamental theorem of algebra](01-fundamental-theorem-of-algebra.md)). Existence is settled; naming is not.
 
 ### Step 1: every root taken buys one order-free layer
 
@@ -380,7 +358,7 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Eigenvalues of a 5 by 5 matrix.** Roots of a degree-five polynomial: no radical formula gives them in general, and every library iterates ([eigenvalues-and-eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)).
+- **Eigenvalues of a 5 by 5 matrix.** Roots of a degree-five polynomial: no radical formula gives them in general, and every library iterates ([Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)).
 - **Computer algebra.** Asked to solve a quintic, a package returns radicals where the equation allows, else numbers or a name for the roots.
 - **Engineering and graphics.** Polynomial roots in control design, ray tracing and orbit work are found by bracketing and iteration. Abel–Ruffini sits with the other proved impossibilities, such as trisecting an angle: knowing a tool cannot do a job redirects the work.
 
@@ -391,14 +369,14 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [quadratic-formula](../02-Polynomials/03-quadratic-formula.md): the radical formula everyone has met, whose pattern degree 5 breaks.
-- [permutations-and-the-symmetric-group](../08-Groups/03-permutations-and-the-symmetric-group.md): shuffles, how they compose, and even-or-odd as a property of the shuffle.
-- [normal-subgroups-and-quotient-groups](../08-Groups/06-normal-subgroups-and-quotient-groups.md): throwing part of a group away and having a group left, as each peel does.
-- [proof-by-contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): the argument's shape — assume the formula, reach a chain that cannot exist.
+- [The quadratic formula](../02-Polynomials/03-quadratic-formula.md): the radical formula everyone has met, whose pattern degree 5 breaks.
+- [Permutations](../08-Groups/03-permutations-and-the-symmetric-group.md): shuffles, how they compose, and even-or-odd as a property of the shuffle.
+- [Normal subgroups and quotient groups](../08-Groups/06-normal-subgroups-and-quotient-groups.md): throwing part of a group away and having a group left, as each peel does.
+- [Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): the argument's shape — assume the formula, reach a chain that cannot exist.
 
 ## Where this goes next
 
-- solvability-by-radicals-and-the-quintic: the bridge proved, and how to test one equation rather than a whole degree.
+- Solvable by radicals: the bridge proved, and how to test one equation rather than a whole degree.
 
 This card takes that bridge on trust: the one thing left to earn.
 

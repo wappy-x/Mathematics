@@ -23,8 +23,7 @@ If you're confident of the fix, send a pull request instead.
 Typos, unclear sentences, a better example, a sharper check: send a pull request that changes one card, plus its two checks if the maths changes. Before you send it:
 
 - keep the card's shape, with the same sections in the same order (the [agent brief](AGENTS.md#the-card-format) spells it out);
-- if any number changes, update both checks, run them, and paste the new output under the card's two "Ran …" lines with today's date and your platform;
-- leave `status` as it is; the maintainers update it after their own re-run.
+- if any number changes, update both checks, run them, and paste the new output under the card's two "Ran …" lines with today's date and your platform.
 
 ## Build new cards
 
@@ -92,7 +91,7 @@ Then open a pull request against `main`. The template has a short checklist.
 
 1. The maintainers re-run every check from a clean folder and compare the output with what is pasted on the card.
 2. They run the house linter, which checks shape, sizes, links, symbols and sources, and an independent review that recomputes the numbers and reads the proofs.
-3. They send back anything that needs fixing, or merge it. A card is marked `status: verified` only after it passes all of that.
+3. They send back anything that needs fixing, or merge it. A card is merged only after it passes all of that.
 
 Small fixes are usually quick. A new shelf gets a careful read.
 

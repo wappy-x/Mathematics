@@ -1,24 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Discrete Dynamics and Chaos
-topic: Attracting and repelling rest points
-item: Fixed points of a map
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/11-Discrete Dynamics and Chaos/01-iteration-and-cobweb-plots|iteration-and-cobweb-plots]]"
-  - "[[Cards/08-Differential equations and dynamics/02-Existence, Uniqueness and Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem|lipschitz-and-the-picard-lindelof-theorem]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/06-newtons-method|newtons-method]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/11-Discrete Dynamics and Chaos/03-the-logistic-map-and-period-doubling|the-logistic-map-and-period-doubling]]"
-tags: [mathematics, differential equations and dynamics, fixed-points-of-a-map]
----
-
 # Fixed points of a map: a slope smaller than one in size pulls nearby points in, larger pushes them away
 
-Differential equations and dynamics → Discrete Dynamics and Chaos → Attracting and repelling rest points → Fixed points of a map
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Discrete Dynamics and Chaos](../../../SYLLABUS.md#w08-s11) → Fixed points of a map
 
 ---
 
@@ -44,7 +26,7 @@ To scale: 200 px is the island's ceiling on both axes, so a population v sits at
 
 ## The formula
 
-A map is written $x_{n+1} = g(x_n)$: next summer's population is the rule $g$ applied to this summer's ([iteration-and-cobweb-plots](01-iteration-and-cobweb-plots.md)). The moth rule is the logistic map:
+A map is written $x_{n+1} = g(x_n)$: next summer's population is the rule $g$ applied to this summer's ([Iteration](01-iteration-and-cobweb-plots.md)). The moth rule is the logistic map:
 
 $$g(x) = r\,x\,(1 - x)$$
 
@@ -100,7 +82,7 @@ The slope changes smoothly, so on some window round $x^*$ its size stays below a
 
 $$|e_{n+1}| \le L\,|e_n|$$
 
-The population stays in the window, and after $n$ summers the gap is at most $L^n$ times the first: it goes to 0. A map shrinking distances by a fixed factor below 1 is a **contraction** ([fixed-point-iteration-and-the-contraction-principle](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md)), here used only near the point. The check scans the window: nothing lands farther than 0.017120 from $x^*$.
+The population stays in the window, and after $n$ summers the gap is at most $L^n$ times the first: it goes to 0. A map shrinking distances by a fixed factor below 1 is a **contraction** ([Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md)), here used only near the point. The check scans the window: nothing lands farther than 0.017120 from $x^*$.
 
 With slope size above 1 the argument runs backwards: gaps grow by a fixed factor, so the population leaves. At 3.2: 2 hundredths, 2.53, 2.83.
 
@@ -127,7 +109,7 @@ Step it $h$ years at a time with Euler's rule (follow the current rate for one w
 
 ### Step 6: Newton's method is a map with slope 0
 
-Newton's method ([newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) replaces a guess by the guess minus the equation's value over its slope. For $x^2 = 2$ that is the map
+Newton's method ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) replaces a guess by the guess minus the equation's value over its slope. For $x^2 = 2$ that is the map
 
 $$N(x) = \frac{x}{2} + \frac{1}{x}$$
 
@@ -401,7 +383,7 @@ The two outputs match line for line.
 - **Insect and fish populations.** Yearly breeders are modelled by maps; May's 1976 paper showed with this one that high breeding alone can destroy a steady level.
 - **Simulation step sizes.** Euler's limit, step times rate constant below 2, is Step 5's slope test.
 - **Square roots in software.** Newton's map $x/2 + 1/x$ has slope 0 at its fixed point, which is why four steps from 1 reach 1.414213562375.
-- **Chaos.** [chaos-and-the-lyapunov-exponent](04-chaos-and-the-lyapunov-exponent.md) averages the slope's size along a whole orbit.
+- **Chaos.** [The Lyapunov exponent](04-chaos-and-the-lyapunov-exponent.md) averages the slope's size along a whole orbit.
 
 > **Say it back**
 > A fixed point is a value the map sends to itself. Near it the map multiplies the gap by its slope, so the gap shrinks when the slope is below 1 in size and grows when above. The mean value theorem makes that exact in a small window. Unlike the differential-equation sign rule, a slope of −1.2 repels. Newton's method is a map with slope 0 at the root, so its errors square.
@@ -410,13 +392,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [iteration-and-cobweb-plots](01-iteration-and-cobweb-plots.md): the map notation and the cobweb staircase.
-- [lipschitz-and-the-picard-lindelof-theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md): a bound on slope turned into a bound on distance, the tool of Step 3.
-- [newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the tangent-line rule Step 6 reads as a map.
+- [Iteration](01-iteration-and-cobweb-plots.md): the map notation and the cobweb staircase.
+- [The Picard-Lindelof theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md): a bound on slope turned into a bound on distance, the tool of Step 3.
+- [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the tangent-line rule Step 6 reads as a map.
 
 ## Where this goes next
 
-- [the-logistic-map-and-period-doubling](03-the-logistic-map-and-period-doubling.md): the two-summer cycle past 3, and why cycles keep doubling.
+- [The logistic map](03-the-logistic-map-and-period-doubling.md): the two-summer cycle past 3, and why cycles keep doubling.
 
 The slope test says the fixed point lets go at 3, not where the moths go instead; that cycle and the cascade after it come next.
 

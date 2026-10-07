@@ -1,28 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Martingales
-topic: Stakes set before the toss
-item: Betting on a martingale
-kind: theorem
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/01-martingales|martingales]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/03-stopping-times-and-optional-stopping|stopping-times-and-optional-stopping]]"
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/07-martingale-representation-in-discrete-time|martingale-representation-in-discrete-time]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/01-ito-integral|ito-integral]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/06-replication-and-self-financing|replication-and-self-financing]]"
-tags:
-  - mathematics
-  - stochastic processes and calculus
-  - predictable-bets-and-the-martingale-transform
----
-
 # Betting on a martingale: any predictable strategy leaves a martingale
 
-Stochastic processes and calculus → Martingales → Stakes set before the toss → Betting on a martingale
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Martingales](../../../SYLLABUS.md#w11-s02) → Betting on a martingale
 
 ---
 
@@ -55,7 +33,7 @@ One line: the gambler's net winnings after each toss, playing session after sess
 
 ## The formula
 
-Notation first, in words. The fair game is a **martingale** ([martingales](01-martingales.md)): $M_n$ is what $1 bet on every round would have won after $n$ rounds, and the best forecast of tomorrow's value, given everything known today, is today's value. The information known after round $k - 1$ is written $\mathcal F_{k-1}$, read "what is known by time $k - 1$": here, the first $k - 1$ tosses.
+Notation first, in words. The fair game is a **martingale** ([Martingales](01-martingales.md)): $M_n$ is what $1 bet on every round would have won after $n$ rounds, and the best forecast of tomorrow's value, given everything known today, is today's value. The information known after round $k - 1$ is written $\mathcal F_{k-1}$, read "what is known by time $k - 1$": here, the first $k - 1$ tosses.
 
 A stake $H_k$ for round $k$ is **predictable** when it is fixed by $\mathcal F_{k-1}$: it may use every toss already seen, never the toss it is betting on. The gain from round $k$ is the stake times what $1 won on that round, $\Delta M_k = M_k - M_{k-1}$. Adding the rounds gives the **martingale transform**:
 
@@ -102,7 +80,7 @@ Before round $k$ the stake is already settled. Given what is known, it is a fixe
 
 ### Step 1: one round averages to zero
 
-Stand just before round $k$. The information $\mathcal F_{k-1}$ fixes the stake $H_k$, so the stake comes outside the conditional average, the "taking out what is known" rule from [rules-of-conditional-expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md):
+Stand just before round $k$. The information $\mathcal F_{k-1}$ fixes the stake $H_k$, so the stake comes outside the conditional average, the "taking out what is known" rule from [The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md):
 
 $$E[H_k\,\Delta M_k \mid \mathcal F_{k-1}] = H_k\,E[\Delta M_k \mid \mathcal F_{k-1}] = H_k \times 0 = 0.$$
 
@@ -145,17 +123,17 @@ as Step 2 promised. Now the money. The deepest debt, the most the gambler is eve
 
 $$\sum_{k=1}^{N} 2^{-k}(2^{k-1} - 1) + 2^{-N}(2^N - 1) = \Big(\frac{N}{2} - 1 + 2^{-N}\Big) + \big(1 - 2^{-N}\big) = \frac{N}{2}.$$
 
-Each extra doubling allowed adds 50 cents to the average debt, without end. Remove the cap and two things happen. The gambler finishes $1 ahead with probability 1, since a run of tails that never ends has chance zero. And the average debt along the way is infinite. For each fixed round $n$ the average gain is still exactly 0; the probability-1 gain of $1 appears only in the limit, and averages need not pass to limits. When they may is the subject of [uniform-integrability-and-unbounded-stopping](06-uniform-integrability-and-unbounded-stopping.md).
+Each extra doubling allowed adds 50 cents to the average debt, without end. Remove the cap and two things happen. The gambler finishes $1 ahead with probability 1, since a run of tails that never ends has chance zero. And the average debt along the way is infinite. For each fixed round $n$ the average gain is still exactly 0; the probability-1 gain of $1 appears only in the limit, and averages need not pass to limits. When they may is the subject of [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md).
 
 ### Step 5: an unfair game passes its drift through
 
-Roulette red wins with chance $p = 18/37$. The result of a $1 bet averages $2p - 1 = -1/37$ dollars, so the game is not a martingale. Split each round's result into a fair part and a known drift, $\Delta M_k = (\Delta M_k + 1/37) - 1/37$: the first part averages zero, the second is fixed in advance. That split, a martingale plus a predictable drift $A_n$, is the Doob decomposition ([martingales](01-martingales.md) proves it). The fair part contributes nothing by Step 2, so
+Roulette red wins with chance $p = 18/37$. The result of a $1 bet averages $2p - 1 = -1/37$ dollars, so the game is not a martingale. Split each round's result into a fair part and a known drift, $\Delta M_k = (\Delta M_k + 1/37) - 1/37$: the first part averages zero, the second is fixed in advance. That split, a martingale plus a predictable drift $A_n$, is the Doob decomposition ([Martingales](01-martingales.md) proves it). The fair part contributes nothing by Step 2, so
 
 $$E[G_n] = -\tfrac{1}{37}\,E\Big[\sum_{k=1}^{n} H_k\Big].$$
 
 **Every dollar staked costs 2.7 cents on average, whatever the pattern of staking.** Doubling with the $15 pocket stakes $4.165104 on average, so it loses $0.112570 a session. A strategy can move the house edge around; it cannot remove it.
 
-Stopping is a bet too: stake $1 each round until the chosen moment, then nothing. That strategy is predictable exactly when the moment can be recognised without seeing the future, and this card's theorem then gives optional stopping for bounded times, in [stopping-times-and-optional-stopping](03-stopping-times-and-optional-stopping.md).
+Stopping is a bet too: stake $1 each round until the chosen moment, then nothing. That strategy is predictable exactly when the moment can be recognised without seeing the future, and this card's theorem then gives optional stopping for bounded times, in [Stopping times](03-stopping-times-and-optional-stopping.md).
 
 ---
 
@@ -593,7 +571,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **The casino doubling system.** Gamblers called doubling after a loss a martingale long before probability took the word for fair games. Table limits cap the stake, which caps the number of doublings, which is exactly the bounded case on this card.
-- **Trading.** A portfolio holding $H_k$ shares over day $k$ gains $H_k$ times the day's price change: a martingale transform. Where prices, measured against the bank account, form a martingale, no trading rule has an average edge; that is the engine of [replication-and-self-financing](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/06-replication-and-self-financing.md).
+- **Trading.** A portfolio holding $H_k$ shares over day $k$ gains $H_k$ times the day's price change: a martingale transform. Where prices, measured against the bank account, form a martingale, no trading rule has an average edge; that is the engine of [Replication](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/06-replication-and-self-financing.md).
 - **Card counting.** A blackjack counter bets more when the remaining deck favours the player. That works because, given the count, the next hand is not a fair game: the hypothesis that the game underneath is fair fails. No staking pattern alone would do it.
 
 > **Say it back**
@@ -603,16 +581,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [martingales](01-martingales.md): the fair game, $E[M_{n+1} \mid \mathcal F_n] = M_n$, and the filtration that says what is known when.
+- [Martingales](01-martingales.md): the fair game, $E[M_{n+1} \mid \mathcal F_n] = M_n$, and the filtration that says what is known when.
 
 ## Where this goes next
 
-- [stopping-times-and-optional-stopping](03-stopping-times-and-optional-stopping.md): stopping is a strategy of stakes 1 then 0, so this card's theorem proves quitting cannot help by a fixed deadline.
-- [martingale-representation-in-discrete-time](07-martingale-representation-in-discrete-time.md): the reverse direction. On a coin-toss tree every martingale is a martingale transform of the coin, so every fair payoff is some strategy's gain.
-- [ito-integral](../06-Ito%20Calculus/01-ito-integral.md): the same sum of stake times move, with rounds shrunk to nothing and the coin replaced by Brownian motion.
-- [replication-and-self-financing](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/06-replication-and-self-financing.md): the finance use, where the stake is a holding of shares and the gain is a self-financing portfolio's profit.
+- [Stopping times](03-stopping-times-and-optional-stopping.md): stopping is a strategy of stakes 1 then 0, so this card's theorem proves quitting cannot help by a fixed deadline.
+- [Representing a martingale](07-martingale-representation-in-discrete-time.md): the reverse direction. On a coin-toss tree every martingale is a martingale transform of the coin, so every fair payoff is some strategy's gain.
+- [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md): the same sum of stake times move, with rounds shrunk to nothing and the coin replaced by Brownian motion.
+- [Replication](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/06-replication-and-self-financing.md): the finance use, where the stake is a holding of shares and the gain is a self-financing portfolio's profit.
 
-No predictable strategy beats a fair game by a fixed round, a stop with a deadline included; what this card leaves open is a stop with no deadline, and when the average may pass to that limit, the question optional stopping raises and [uniform-integrability-and-unbounded-stopping](06-uniform-integrability-and-unbounded-stopping.md) answers.
+No predictable strategy beats a fair game by a fixed round, a stop with a deadline included; what this card leaves open is a stop with no deadline, and when the average may pass to that limit, the question optional stopping raises and [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md) answers.
 
 ---
 

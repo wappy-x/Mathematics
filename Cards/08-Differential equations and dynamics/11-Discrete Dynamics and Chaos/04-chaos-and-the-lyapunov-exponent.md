@@ -1,30 +1,12 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Discrete Dynamics and Chaos
-topic: Measuring sensitive dependence
-item: The Lyapunov exponent
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/11-Discrete Dynamics and Chaos/03-the-logistic-map-and-period-doubling|the-logistic-map-and-period-doubling]]"
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/03-trig-identities|trig-identities]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/11-Discrete Dynamics and Chaos/05-the-doubling-map-and-symbolic-dynamics|the-doubling-map-and-symbolic-dynamics]]"
-  - "[[Cards/08-Differential equations and dynamics/11-Discrete Dynamics and Chaos/06-the-lorenz-system-and-strange-attractors|the-lorenz-system-and-strange-attractors]]"
-tags: [mathematics, differential equations and dynamics, chaos-and-the-lyapunov-exponent]
----
-
 # The Lyapunov exponent: how fast two nearly identical starts drift apart, and positive means chaos
 
-Differential equations and dynamics → Discrete Dynamics and Chaos → Measuring sensitive dependence → The Lyapunov exponent
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Discrete Dynamics and Chaos](../../../SYLLABUS.md#w08-s11) → The Lyapunov exponent
 
 ---
 
 ## General Overview
 
-A forest's moths are counted once a year, as a fraction of the most the forest can carry. Next year's fraction is 3.9 times this year's, times the room left: the logistic map of [the-logistic-map-and-period-doubling](03-the-logistic-map-and-period-doubling.md). The rule has no chance in it. Two forecasts start from 0.2, one off by 1e-10, a ten-billionth.
+A forest's moths are counted once a year, as a fraction of the most the forest can carry. Next year's fraction is 3.9 times this year's, times the room left: the logistic map of [The logistic map](03-the-logistic-map-and-period-doubling.md). The rule has no chance in it. Two forecasts start from 0.2, one off by 1e-10, a ten-billionth.
 
 The error grows by a roughly steady factor each year until the two forecasts differ by 0.5, half the whole range. From 0.2 that takes 40 years; across 1,000 starting fractions, a median of 45. The rule is exact; the uncertainty about the start is what grows. That is **sensitive dependence on initial conditions**.
 
@@ -100,7 +82,7 @@ The horizon depends on $\ln(\Delta / \delta_0)$. A survey a thousand times sharp
 
 ### Step 3: at growth factor 4, the sine-squared substitution doubles an angle
 
-Write the state as $x = \sin^2\theta$ ([trig-identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)). Then $1 - x = \cos^2\theta$ and
+Write the state as $x = \sin^2\theta$ ([Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)). Then $1 - x = \cos^2\theta$ and
 
 $$f(x) = 4\sin^2\theta\cos^2\theta = (2\sin\theta\cos\theta)^2 = \sin^2(2\theta).$$
 
@@ -131,7 +113,7 @@ From below: $\theta_n / \pi$ doubles each step, and only its fractional part mat
 
 </details>
 
-A second road never uses the derivative: carry a twin orbit a fixed tiny distance away, record the log of each step's stretch of that distance, and pull the twin back. The code takes it; it agrees to four decimals. Angle doubling read as a shift of binary digits is [the-doubling-map-and-symbolic-dynamics](05-the-doubling-map-and-symbolic-dynamics.md).
+A second road never uses the derivative: carry a twin orbit a fixed tiny distance away, record the log of each step's stretch of that distance, and pull the twin back. The code takes it; it agrees to four decimals. Angle doubling read as a shift of binary digits is [The doubling map](05-the-doubling-map-and-symbolic-dynamics.md).
 
 ---
 
@@ -389,7 +371,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Weather forecasting.** The atmosphere has a positive exponent, so forecast skill fades after a stretch of days, and better instruments add days only logarithmically. The model flow is [the-lorenz-system-and-strange-attractors](06-the-lorenz-system-and-strange-attractors.md).
+- **Weather forecasting.** The atmosphere has a positive exponent, so forecast skill fades after a stretch of days, and better instruments add days only logarithmically. The model flow is [The Lorenz system](06-the-lorenz-system-and-strange-attractors.md).
 - **Population ecology.** Robert May's 1976 survey showed the logistic map can be chaotic, so erratic census data need not mean a noisy environment.
 - **Measured data.** Wolf and colleagues estimate the exponent from a recorded series alone, following nearby points as the twin-orbit road does.
 
@@ -400,13 +382,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [the-logistic-map-and-period-doubling](03-the-logistic-map-and-period-doubling.md): the map, its cycles, and the cascade into chaos that the exponent measures.
-- [trig-identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md): the double-angle formulas behind the exact value ln 2.
+- [The logistic map](03-the-logistic-map-and-period-doubling.md): the map, its cycles, and the cascade into chaos that the exponent measures.
+- [Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md): the double-angle formulas behind the exact value ln 2.
 
 ## Where this goes next
 
-- [the-doubling-map-and-symbolic-dynamics](05-the-doubling-map-and-symbolic-dynamics.md): the angle doubling of Step 3 read as a shift of binary digits.
-- [the-lorenz-system-and-strange-attractors](06-the-lorenz-system-and-strange-attractors.md): a positive exponent in a continuous flow in three dimensions.
+- [The doubling map](05-the-doubling-map-and-symbolic-dynamics.md): the angle doubling of Step 3 read as a shift of binary digits.
+- [The Lorenz system](06-the-lorenz-system-and-strange-attractors.md): a positive exponent in a continuous flow in three dimensions.
 
 ---
 

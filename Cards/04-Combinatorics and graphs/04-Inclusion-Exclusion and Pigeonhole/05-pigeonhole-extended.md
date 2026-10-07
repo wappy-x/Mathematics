@@ -1,30 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Inclusion-Exclusion and Pigeonhole
-topic: Forcing a crowded box
-item: Pigeonhole, extended
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/01-rules-of-sum-and-product|rules-of-sum-and-product]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/08-pigeonhole-principle|pigeonhole-principle]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/01-congruence-mod-n|congruence-mod-n]]"
-  - "[[Cards/01-Foundations/06-Proof/03-proof-by-contradiction|proof-by-contradiction]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/14-Ramsey and Extremal, in Outline/01-friends-and-strangers|friends-and-strangers]]"
-  - "[[Cards/04-Combinatorics and graphs/14-Ramsey and Extremal, in Outline/04-erdos-szekeres|erdos-szekeres]]"
-  - "[[Cards/25-Frontier/04-Geometry and Combinatorics/05-sunflower-and-union-closed-conjectures|sunflower-and-union-closed-conjectures]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - pigeonhole-extended
----
-
 # Pigeonhole, extended: n items in k boxes force a box with at least n/k rounded up, and choosing the boxes is the whole trick
 
-Combinatorics and graphs → Inclusion-Exclusion and Pigeonhole → Forcing a crowded box → Pigeonhole, extended
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Inclusion-Exclusion and Pigeonhole](../../../SYLLABUS.md#w04-s04) → Pigeonhole, extended
 
 ---
 
@@ -32,7 +8,7 @@ Combinatorics and graphs → Inclusion-Exclusion and Pigeonhole → Forcing a cr
 
 An inbox holds 100 emails. Twelve folders are open, and every email must go in one. File them by sender, by date, by mood — any rule at all — and some folder finishes with at least 9 in it.
 
-Nine, not two. The familiar version says only that more items than boxes force some box to take two ([pigeonhole-principle](../../01-Foundations/08-Relations%20and%20Functions/08-pigeonhole-principle.md)) — far too weak here. Cap every folder at 8 and twelve folders hold 96 emails, leaving 4 standing. Share 100 over 12 folders and each gets 8.3333; folders hold whole emails, so round up.
+Nine, not two. The familiar version says only that more items than boxes force some box to take two ([Pigeonhole](../../01-Foundations/08-Relations%20and%20Functions/08-pigeonhole-principle.md)) — far too weak here. Cap every folder at 8 and twelve folders hold 96 emails, leaving 4 standing. Share 100 over 12 folders and each gets 8.3333; folders hold whole emails, so round up.
 
 The principle is free; choosing what counts as an item and what counts as a box is where arguments are won. Ten days of email arrivals — 23, 41, 17, 8, 36, 52, 12, 29, 4, 31 — hide a run of consecutive days totalling an exact multiple of 10. Nothing in the list announces it; the right boxes make it certain, and they are not the days.
 
@@ -93,7 +69,7 @@ Twelve folder loads add up to 100, so their average is 8.3333. Were every one be
 
 ### Step 1: the loads add up to the item count, so the average is n/k
 
-Every item lands in exactly one box, so counting box by box counts each item once ([rules-of-sum-and-product](../01-Counting%20Principles/01-rules-of-sum-and-product.md)):
+Every item lands in exactly one box, so counting box by box counts each item once ([The rules of sum and product](../01-Counting%20Principles/01-rules-of-sum-and-product.md)):
 
 $$\sum_{i=1}^{k} \lvert B_i \rvert = n$$
 
@@ -101,7 +77,7 @@ The sigma sign says: add up what follows, once for every box, from the first to 
 
 ### Step 2: the same thing by contradiction
 
-Suppose the claim fails: every box holds at most one less than n/k rounded up. Rounding up moves a number less than a whole step, so that capped load is below n/k, and k boxes at the cap hold fewer than n items. They hold n between them, so an item has vanished ([proof-by-contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)).
+Suppose the claim fails: every box holds at most one less than n/k rounded up. Rounding up moves a number less than a whole step, so that capped load is below n/k, and k boxes at the cap hold fewer than n items. They hold n between them, so an item has vanished ([Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)).
 
 ### Step 3: 9 cannot be sharpened, because a filing reaches it
 
@@ -111,7 +87,7 @@ Deal the 100 emails out one at a time round the twelve folders: the loads come o
 
 Back to the ten days of arrivals, and the run that totals a multiple of 10.
 
-The items are not the days. They are the eleven **running totals**: 0 before any day has passed, 23 after one day, 64 after two, on to 253. The boxes are the ten remainders after dividing by 10 ([congruence-mod-n](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md)).
+The items are not the days. They are the eleven **running totals**: 0 before any day has passed, 23 after one day, 64 after two, on to 253. The boxes are the ten remainders after dividing by 10 ([Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md)).
 
 Eleven items, ten boxes, so two totals share a box: 89 and 189 both leave 9. Subtract, and equal remainders cancel: 189 − 89 = 100, a multiple of 10 — and the difference of two running totals is the total of the days between them, here days 5 to 7.
 
@@ -126,7 +102,7 @@ The empty total p(0) does two jobs: it makes the item count n + 1, and it lets a
 
 </details>
 
-Pigeonhole forces a crowded box and stops; it never counts the filings that avoid one. That counting is the sieve's job on [inclusion-exclusion-for-n-sets](01-inclusion-exclusion-for-n-sets.md), cut short for a quick bound on [union-bound-and-bonferroni](04-union-bound-and-bonferroni.md).
+Pigeonhole forces a crowded box and stops; it never counts the filings that avoid one. That counting is the sieve's job on [Inclusion-exclusion for any number of sets](01-inclusion-exclusion-for-n-sets.md), cut short for a quick bound on [Stopping the sieve early](04-union-bound-and-bonferroni.md).
 
 ---
 
@@ -367,8 +343,8 @@ ALL CHECKS PASS
 
 - **Hash tables.** More keys than slots and two must share one, so collision handling is compulsory, not defensive. The extended form sizes the worst bucket: 100 keys in 12 slots put at least 9 somewhere.
 - **Capacity planning.** Send 100 requests to 12 workers and one takes at least 9. Planning against the average of 8.3333 plans for a case that cannot happen.
-- **Remainders as boxes.** When a question asks for a multiple of something, make the remainders the boxes ([congruence-mod-n](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md)).
-- **Colouring arguments.** Colours as boxes give [friends-and-strangers](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/01-friends-and-strangers.md).
+- **Remainders as boxes.** When a question asks for a multiple of something, make the remainders the boxes ([Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md)).
+- **Colouring arguments.** Colours as boxes give [Friends and strangers](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/01-friends-and-strangers.md).
 
 > **Say it back**
 > Put items into boxes and the fullest box holds at least the average, rounded up: no list has every member below its own average, and loads are whole numbers. One hundred emails in twelve folders force a folder with 9, and a filing reaching exactly 9 exists, so 9 cannot be sharpened. Choosing the items and boxes is the work: ten days of arrivals hide a run totalling a multiple of 10 once the running totals are the items and the remainders the boxes.
@@ -377,16 +353,16 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [rules-of-sum-and-product](../01-Counting%20Principles/01-rules-of-sum-and-product.md): why counting box by box returns the item count once.
-- [pigeonhole-principle](../../01-Foundations/08-Relations%20and%20Functions/08-pigeonhole-principle.md): the simple form, sharpened here and used in the running-totals proof.
-- [congruence-mod-n](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md): remainders after division, and why equal ones cancel on subtraction.
-- [proof-by-contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): the shape of Step 2, where capping every box loses an item.
+- [The rules of sum and product](../01-Counting%20Principles/01-rules-of-sum-and-product.md): why counting box by box returns the item count once.
+- [Pigeonhole](../../01-Foundations/08-Relations%20and%20Functions/08-pigeonhole-principle.md): the simple form, sharpened here and used in the running-totals proof.
+- [Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md): remainders after division, and why equal ones cancel on subtraction.
+- [Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): the shape of Step 2, where capping every box loses an item.
 
 ## Where this goes next
 
-- [friends-and-strangers](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/01-friends-and-strangers.md): three mutual friends or three mutual strangers among any six people.
-- [erdos-szekeres](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/04-erdos-szekeres.md): two labels at once as boxes, forcing a long run that only rises or only falls.
-- sunflower-and-union-closed-conjectures: questions of this shape nobody has settled.
+- [Friends and strangers](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/01-friends-and-strangers.md): three mutual friends or three mutual strangers among any six people.
+- [Erdos-Szekeres](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/04-erdos-szekeres.md): two labels at once as boxes, forcing a long run that only rises or only falls.
+- Sunflowers and union-closed families: questions of this shape nobody has settled.
 
 A crowded box is not yet a pattern, and forcing patterns rather than mere crowding is the Ramsey cards' work.
 

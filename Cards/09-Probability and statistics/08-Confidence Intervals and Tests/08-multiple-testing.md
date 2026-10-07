@@ -1,33 +1,12 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Confidence Intervals and Tests
-topic: Error rates across a family of tests
-item: Many tests
-kind: theorem
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/03-hypothesis-tests-and-p-values|hypothesis-tests-and-p-values]]"
-  - "[[Cards/04-Combinatorics and graphs/04-Inclusion-Exclusion and Pigeonhole/04-union-bound-and-bonferroni|union-bound-and-bonferroni]]"
-next:
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/06-deflated-sharpe-and-multiple-testing|deflated-sharpe-and-multiple-testing]]"
-  - "[[Cards/17-Topology/06-Topological Data Analysis/05-comparing-diagrams-and-vectorising-them|comparing-diagrams-and-vectorising-them]]"
-tags:
-  - mathematics
-  - probability and statistics
-  - multiple-testing
----
-
 # Many tests: why one in twenty lies, and Bonferroni and false discovery control
 
-Probability and statistics → Confidence Intervals and Tests → Error rates across a family of tests → Many tests
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Confidence Intervals and Tests](../../../SYLLABUS.md#w09-s08) → Many tests
 
 ---
 
 ## General Overview
 
-A lab compares tumour tissue with healthy tissue on 100 genes. For each gene it runs one test and gets one p-value: the chance, if the gene truly does nothing, of a difference at least as large as the one seen ([hypothesis-tests-and-p-values](03-hypothesis-tests-and-p-values.md)). The usual rule flags a gene when its p-value is 0.05 or less.
+A lab compares tumour tissue with healthy tissue on 100 genes. For each gene it runs one test and gets one p-value: the chance, if the gene truly does nothing, of a difference at least as large as the one seen ([Hypothesis tests](03-hypothesis-tests-and-p-values.md)). The usual rule flags a gene when its p-value is 0.05 or less.
 
 That rule is built for one test. It lets a gene that does nothing through 1 time in 20. Run it 100 times and the slips add up. If no gene does anything at all, the lab still expects 5 flags; if the tests are also independent, the chance of at least one flag is 99.4%: almost every such experiment reports a discovery that is pure noise. Twelve genes are flagged in this lab's run. Some are real; the p-values alone cannot say which.
 
@@ -122,7 +101,7 @@ The simulation gave 0.9933, standard error 0.0006. That is the "one in twenty li
 
 ### Step 1: the union bound caps the chance of any false alarm
 
-Let $A_i$ be the event that true null $i$ is rejected. A false discovery happens exactly when at least one $A_i$ happens. The chance of a union is at most the sum of the chances ([union-bound-and-bonferroni](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md)): the sum counts each overlap more than once, never less. So
+Let $A_i$ be the event that true null $i$ is rejected. A false discovery happens exactly when at least one $A_i$ happens. The chance of a union is at most the sum of the chances ([Stopping the sieve early](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md)): the sum counts each overlap more than once, never less. So
 
 $$\mathrm{FWER} = P\Big(\bigcup_{i \text{ null}} A_i\Big) \le \sum_{i \text{ null}} P(A_i) \le m_0 \cdot \frac{\alpha}{m} \le \alpha.$$
 
@@ -139,7 +118,7 @@ If the tests are independent, the cutoff $c$ that makes $1 - (1 - c)^{100}$ exac
 
 ### Step 2: the price of Bonferroni is missed discoveries
 
-Suppose 10 of the 100 genes are real, each producing a test statistic shifted 3 standard deviations upward. At the uncorrected cutoff 0.05 the bar sits 1.6449 standard deviations up, and the lab finds 9.1231 of the 10 on average. At Bonferroni's 0.0005 the bar is 3.2905 standard deviations, above the typical real gene, and the average falls to 3.8571 of the 10. The simulation agrees: 3.8662 found, standard error 0.0109. Protection against even one false flag costs more than half of the real genes. That trade is the subject of [power-and-sample-size](04-power-and-sample-size.md).
+Suppose 10 of the 100 genes are real, each producing a test statistic shifted 3 standard deviations upward. At the uncorrected cutoff 0.05 the bar sits 1.6449 standard deviations up, and the lab finds 9.1231 of the 10 on average. At Bonferroni's 0.0005 the bar is 3.2905 standard deviations, above the typical real gene, and the average falls to 3.8571 of the 10. The simulation agrees: 3.8662 found, standard error 0.0109. Protection against even one false flag costs more than half of the real genes. That trade is the subject of [Power](04-power-and-sample-size.md).
 
 ### Step 3: Benjamini–Hochberg lets the cutoff grow with the evidence
 
@@ -698,8 +677,8 @@ The two outputs match line for line, simulation included, because both draw the 
 - **Genomics.** A gene-expression study tests tens of thousands of genes at once; FDR control is the standard, often reported as Storey's q-value: the smallest FDR level at which a gene would be flagged.
 - **Brain imaging.** A scan is tested voxel by voxel, tens of thousands of small cubes of brain; a well-known poster found "activity" in a dead salmon's brain by skipping the correction.
 - **Clinical trials.** Regulators ask for a primary outcome named in advance, so a trial is not judged on whichever of many outcomes happened to cross 0.05; secondary outcomes get Bonferroni-type or Holm corrections.
-- **Simultaneous confidence intervals.** Widen each of $m$ intervals from 95% to $1 - 0.05/m$ and all of them hold together with chance at least 95%, the interval twin of Bonferroni ([confidence-intervals](01-confidence-intervals.md)).
-- **Trading strategies.** Backtest enough rules and the best one looks brilliant by chance; the finance wing corrects the Sharpe ratio, a strategy's return per unit of risk, for the number of trials in [deflated-sharpe-and-multiple-testing](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/06-deflated-sharpe-and-multiple-testing.md).
+- **Simultaneous confidence intervals.** Widen each of $m$ intervals from 95% to $1 - 0.05/m$ and all of them hold together with chance at least 95%, the interval twin of Bonferroni ([Confidence intervals](01-confidence-intervals.md)).
+- **Trading strategies.** Backtest enough rules and the best one looks brilliant by chance; the finance wing corrects the Sharpe ratio, a strategy's return per unit of risk, for the number of trials in [Trying many strategies](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/06-deflated-sharpe-and-multiple-testing.md).
 
 > **Say it back**
 > A test at 5% lets a true null through 1 time in 20, so 100 tests on nothing produce about 5 false flags and at least one with chance 99.4%. Bonferroni divides the level by the number of tests; the union bound then keeps the chance of any false flag under the level, whatever the dependence. Benjamini–Hochberg flags every p-value up to the deepest rank under the line $kq/m$, and under independence the average false share of its list stays under $q$. The first is strict and loses real findings; the second finds more and accepts a controlled share of false ones. Neither turns a p-value into the chance that a finding is real.
@@ -708,13 +687,13 @@ The two outputs match line for line, simulation included, because both draw the 
 
 ## What this builds on
 
-- [hypothesis-tests-and-p-values](03-hypothesis-tests-and-p-values.md): the single test, the p-value, and the promise that a true null is rejected with chance at most the level.
-- [union-bound-and-bonferroni](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md): the chance of a union is at most the sum of the chances, the one line behind Bonferroni's theorem.
+- [Hypothesis tests](03-hypothesis-tests-and-p-values.md): the single test, the p-value, and the promise that a true null is rejected with chance at most the level.
+- [Stopping the sieve early](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md): the chance of a union is at most the sum of the chances, the one line behind Bonferroni's theorem.
 
 ## Where this goes next
 
-- [deflated-sharpe-and-multiple-testing](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/06-deflated-sharpe-and-multiple-testing.md): many backtested strategies as one family of tests, and a Sharpe ratio discounted for the number tried.
-- comparing-diagrams-and-vectorising-them: shape summaries turned into many features and tested together, where the same corrections decide which features count.
+- [Trying many strategies](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/06-deflated-sharpe-and-multiple-testing.md): many backtested strategies as one family of tests, and a Sharpe ratio discounted for the number tried.
+- Comparing diagrams: shape summaries turned into many features and tested together, where the same corrections decide which features count.
 
 Both guarantees here count errors among tests already chosen; what these cards take up is how to count honestly when the family is a search over strategies or features, and the number of tests is itself hard to pin down.
 

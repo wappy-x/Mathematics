@@ -1,39 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Sizes of Functions
-topic: The p-norm family
-item: Lp spaces
-kind: definition
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/04-integrable-functions-and-l1|integrable-functions-and-l1]]"
-  - "[[Cards/03-Algebra/03-Vectors/02-vector-spaces-and-subspaces|vector-spaces-and-subspaces]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/03-roots-and-fractional-exponents|roots-and-fractional-exponents]]"
-next:
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/02-holders-inequality|holders-inequality]]"
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/04-jensens-inequality|jensens-inequality]]"
-  - "[[Cards/16-Numerical analysis/07-PDE Solvers/08-finite-element-assembly-and-error|finite-element-assembly-and-error]]"
-  - "[[Cards/17-Topology/01-Metric Spaces/02-distances-on-vectors-and-functions|distances-on-vectors-and-functions]]"
-  - "[[Cards/18-Functional analysis/01-Normed and Banach Spaces/02-sequence-spaces-lp-and-c0|sequence-spaces-lp-and-c0]]"
-  - "[[Cards/18-Functional analysis/01-Normed and Banach Spaces/03-function-spaces-c-and-lp|function-spaces-c-and-lp]]"
-  - "[[Cards/18-Functional analysis/01-Normed and Banach Spaces/09-dual-spaces-and-lp-duality|dual-spaces-and-lp-duality]]"
-  - "[[Cards/18-Functional analysis/01-Normed and Banach Spaces/10-reflexive-spaces-and-the-second-dual|reflexive-spaces-and-the-second-dual]]"
-  - "[[Cards/18-Functional analysis/04-Distributions and Sobolev Spaces/07-weak-derivatives-and-sobolev-spaces|weak-derivatives-and-sobolev-spaces]]"
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/01-unbounded-operators-and-domains|unbounded-operators-and-domains]]"
-  - "[[Cards/19-Partial differential equations/06-Weak Solutions and Free Boundaries/02-sobolev-spaces-for-pdes|sobolev-spaces-for-pdes]]"
-  - "[[Cards/20-Harmonic analysis/02-The Fourier Transform/05-plancherel-and-l2|plancherel-and-l2]]"
-  - "[[Cards/20-Harmonic analysis/03-Convolution and Approximate Identities/01-convolution-and-youngs-inequality|convolution-and-youngs-inequality]]"
-  - "[[Cards/20-Harmonic analysis/06-Maximal Functions and Beyond/01-hardy-littlewood-maximal-function|hardy-littlewood-maximal-function]]"
-  - "[[Cards/20-Harmonic analysis/06-Maximal Functions and Beyond/03-singular-integrals-and-the-hilbert-transform-bound|singular-integrals-and-the-hilbert-transform-bound]]"
-  - "[[Cards/20-Harmonic analysis/06-Maximal Functions and Beyond/04-interpolation-riesz-thorin-and-marcinkiewicz|interpolation-riesz-thorin-and-marcinkiewicz]]"
-tags: [mathematics, measure and integration, lp-spaces]
----
-
 # Lp spaces: measure a function's size by the p-th root of the integral of its p-th power, and treat almost-everywhere-equal functions as one
 
-Measure and integration → Sizes of Functions → The p-norm family → Lp spaces
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sizes of Functions](../../../SYLLABUS.md#w10-s07) → Lp spaces
 
 ---
 
@@ -49,7 +16,7 @@ Now suppose a logger that records the speed at every instant misfires once and r
 
 **Size a function by integrating the p-th power of its absolute value and taking the p-th root; for p = ∞ use the smallest ceiling it breaks only on a set of measure zero; and count two functions as one element of L^p when they differ only on such a set, which makes L^p a vector space on which the p-norm is zero only at zero.**
 
-**What kind of fact this is:** a definition (the p-norm, the essential supremum, conjugate exponents, the space L^p), with the facts that make it work proved on this card in Why it works; the triangle inequality is proved on [minkowskis-inequality](03-minkowskis-inequality.md).
+**What kind of fact this is:** a definition (the p-norm, the essential supremum, conjugate exponents, the space L^p), with the facts that make it work proved on this card in Why it works; the triangle inequality is proved on [Minkowski's inequality](03-minkowskis-inequality.md).
 
 ### The picture: one week, three sizes
 
@@ -71,7 +38,7 @@ The bars are the seven days. With each day weighing 1/7, the lowest line is the 
 
 ## The formula
 
-Notation first. A measure space $(\Omega, \mathcal F, \mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). For the week, $\Omega$ is the seven days, $\mathcal F$ is every set of days, and two measures are in play: **counting measure**, each day weighing 1, and the **uniform probability**, each day weighing 1/7. The integral $\int f\,d\mu$, read "the integral of f against mu", is here the weighted sum of the seven values. A property holds **almost everywhere**, written a.e., when it fails only on a set of measure zero, a **null set** ([null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). Double bars $\lVert f\rVert$ denote a size.
+Notation first. A measure space $(\Omega, \mathcal F, \mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). For the week, $\Omega$ is the seven days, $\mathcal F$ is every set of days, and two measures are in play: **counting measure**, each day weighing 1, and the **uniform probability**, each day weighing 1/7. The integral $\int f\,d\mu$, read "the integral of f against mu", is here the weighted sum of the seven values. A property holds **almost everywhere**, written a.e., when it fails only on a set of measure zero, a **null set** ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). Double bars $\lVert f\rVert$ denote a size.
 
 For a measurable $f$ and an exponent $p$ with $1 \le p < \infty$, the **p-norm** is
 
@@ -91,7 +58,7 @@ Two exponents $p$ and $q$ are **conjugate** when
 
 $$\frac1p + \frac1q = 1, \qquad\text{that is}\qquad q = \frac{p}{p-1},$$
 
-with 1 and ∞ counted as a conjugate pair. So 2 pairs with 2, and 3 with 3/2. Conjugate pairs are the exponents that [holders-inequality](02-holders-inequality.md) can pair; Step 6 shows why no other pair can work.
+with 1 and ∞ counted as a conjugate pair. So 2 pairs with 2, and 3 with 3/2. Conjugate pairs are the exponents that [Holder's inequality](02-holders-inequality.md) can pair; Step 6 shows why no other pair can work.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -137,7 +104,7 @@ The root also keeps the units: m/s under the uniform probability; under counting
 
 Let f be 1 on Monday and 0 elsewhere, g be 1 on Tuesday and 0 elsewhere, and count days. At p = 1/2 each has size $1^{1/2}$ squared, 1. Their sum is 1 on two days, of size $(1 + 1)^2 = 4$. The size of the sum beats the sum of the sizes, 4 > 2, so the triangle inequality fails.
 
-For $p \ge 1$ the triangle inequality holds, because $t^p$ bends upward exactly then; [minkowskis-inequality](03-minkowskis-inequality.md) proves it.
+For $p \ge 1$ the triangle inequality holds, because $t^p$ bends upward exactly then; [Minkowski's inequality](03-minkowskis-inequality.md) proves it.
 
 ### Step 3: p = ∞ is the limit, and why "essential"
 
@@ -169,7 +136,7 @@ If f and g have finite p-norm, does f + g? At every point $\lvert f + g\rvert$ i
 
 $$\lvert f+g\rvert^p \le 2^p\big(\lvert f\rvert^p + \lvert g\rvert^p\big).$$
 
-Integrate: the left side is finite whenever the right is. With Step 1, $\mathcal L^p(\mu)$ is a vector space, closed under adding and scaling ([vector-spaces-and-subspaces](../../03-Algebra/03-Vectors/02-vector-spaces-and-subspaces.md)). Minkowski's inequality replaces this crude bound with the sharp one, $\lVert f+g\rVert_p \le \lVert f\rVert_p + \lVert g\rVert_p$.
+Integrate: the left side is finite whenever the right is. With Step 1, $\mathcal L^p(\mu)$ is a vector space, closed under adding and scaling ([Vector spaces and subspaces](../../03-Algebra/03-Vectors/02-vector-spaces-and-subspaces.md)). Minkowski's inequality replaces this crude bound with the sharp one, $\lVert f+g\rVert_p \le \lVert f\rVert_p + \lVert g\rVert_p$.
 
 Not every function is in. The spike $s(t) = 1/\sqrt t$ on (0, 1] has 1-norm 2. But $s^2 = 1/t$ puts ln 2 = 0.6931 on every halving, 1/2 to 1, 1/4 to 1/2, and on forever: 27.73 by $2^{-40}$ and no end. The spike is in $L^1$, not in $L^2$.
 
@@ -180,8 +147,8 @@ A space small enough to list in full: Monday and Tuesday weigh 1 each, the glitc
 Three facts make classes behave on every measure:
 
 - **The functions zero a.e. form a subspace.** The union of two null sets is null, so $\mathcal N$ is closed under sums and scaling.
-- **Norm zero means zero a.e.** If $\int \lvert f\rvert^p\,d\mu = 0$, Markov's inequality ([markov-and-chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) gives the set where $\lvert f\rvert^p \ge 1/n$ measure 0 for every n, and those countably many null sets cover everywhere f is nonzero.
-- **The norm and the operations ignore representatives.** Changing f on a null set changes no integral ([integrable-functions-and-l1](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md), Detailed proof, part 5), and if e and e' are zero a.e., $(f + e) + (g + e') = (f + g) + (e + e')$ with $e + e'$ still in $\mathcal N$. On the listed space all 256 choices of representatives add into the class predicted.
+- **Norm zero means zero a.e.** If $\int \lvert f\rvert^p\,d\mu = 0$, Markov's inequality ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) gives the set where $\lvert f\rvert^p \ge 1/n$ measure 0 for every n, and those countably many null sets cover everywhere f is nonzero.
+- **The norm and the operations ignore representatives.** Changing f on a null set changes no integral ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md), Detailed proof, part 5), and if e and e' are zero a.e., $(f + e) + (g + e') = (f + g) + (e + e')$ with $e + e'$ still in $\mathcal N$. On the listed space all 256 choices of representatives add into the class predicted.
 
 So $L^p(\mu)$, the classes, is a vector space, and the p-norm on it is zero only at the zero class. With Minkowski's triangle inequality it is a **normed space**: a vector space with a size obeying Steps 0 to 2.
 
@@ -191,12 +158,12 @@ A pairing bound, the integral of $\lvert fg\rvert$ at most a constant times $\lV
 
 $$c^{\,1 - 1/p - 1/q}.$$
 
-Unless the exponent is 0, sending c toward 0 or infinity makes the ratio as large as anyone likes, and no constant can serve. Take the week and g the constant 1. For p = 2 and q = 2 the ratio is 0.9285 at weights 1/7, 1, 7 and 49. For p = 3 and q = 3/2 it is 0.8775 at all four. For p = 2 and q = 3, not conjugate, it runs 0.9285, 1.2842, 1.7761, 2.4565, growing as $c^{1/6}$. The best constant for conjugate pairs is 1, which is [holders-inequality](02-holders-inequality.md).
+Unless the exponent is 0, sending c toward 0 or infinity makes the ratio as large as anyone likes, and no constant can serve. Take the week and g the constant 1. For p = 2 and q = 2 the ratio is 0.9285 at weights 1/7, 1, 7 and 49. For p = 3 and q = 3/2 it is 0.8775 at all four. For p = 2 and q = 3, not conjugate, it runs 0.9285, 1.2842, 1.7761, 2.4565, growing as $c^{1/6}$. The best constant for conjugate pairs is 1, which is [Holder's inequality](02-holders-inequality.md).
 
 <details>
 <summary>Detailed proof</summary>
 
-Throughout, $(\Omega, \mathcal F, \mu)$ is a measure space, $f$ and $g$ are measurable with real values, and $a$, $b$ are real numbers. Facts used: **(I1)** for non-negative measurable functions the integral adds, scales by non-negative constants and respects order ([integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)); **(I2)** a non-negative function that is zero off a null set has integral 0 ([integrable-functions-and-l1](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md), part 5); **(I3)** Markov: for a non-negative measurable function h and a threshold $\varepsilon > 0$, $\mu(h \ge \varepsilon) \le \frac1\varepsilon\int h\,d\mu$ ([markov-and-chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)); **(I4)** a countable union of null sets is null, by countable subadditivity ([null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)); **(I5)** a continuous function of a measurable function is measurable, so $\lvert f\rvert^p$ is.
+Throughout, $(\Omega, \mathcal F, \mu)$ is a measure space, $f$ and $g$ are measurable with real values, and $a$, $b$ are real numbers. Facts used: **(I1)** for non-negative measurable functions the integral adds, scales by non-negative constants and respects order ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)); **(I2)** a non-negative function that is zero off a null set has integral 0 ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md), part 5); **(I3)** Markov: for a non-negative measurable function h and a threshold $\varepsilon > 0$, $\mu(h \ge \varepsilon) \le \frac1\varepsilon\int h\,d\mu$ ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)); **(I4)** a countable union of null sets is null, by countable subadditivity ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)); **(I5)** a continuous function of a measurable function is measurable, so $\lvert f\rvert^p$ is.
 
 **1. Scaling.** $\lvert af\rvert^p = \lvert a\rvert^p\lvert f\rvert^p$ pointwise; by (I1) $\int\lvert af\rvert^p = \lvert a\rvert^p\int\lvert f\rvert^p$; take p-th roots. For $p = \infty$: $\lvert af\rvert > \lvert a\rvert M$ exactly where $\lvert f\rvert > M$ (for $a \ne 0$), so the admissible ceilings scale by $\lvert a\rvert$.
 
@@ -210,7 +177,7 @@ Throughout, $(\Omega, \mathcal F, \mu)$ is a measure space, $f$ and $g$ are meas
 
 **6. The norm ignores representatives.** If $f = g$ off a null set $Z$, then $\lvert f\rvert^p = \lvert g\rvert^p$ off $Z$. Splitting each over $Z$ and its complement, the pieces on $Z$ have integral 0 by (I2), so by (I1) both integrals equal the common integral off $Z$. For $p = \infty$, the sets $\{\lvert f\rvert > M\}$ and $\{\lvert g\rvert > M\}$ differ only inside $Z$, so one is null exactly when the other is.
 
-**7. The quotient.** Define $[f] + [g] = [f + g]$ and $a[f] = [af]$. These do not depend on the representatives: if $f' = f + e$ and $g' = g + e'$ with $e, e' \in \mathcal N$, then $f' + g' = (f+g) + (e + e')$ and $af' = af + ae$, and part 3 puts $e + e'$ and $a\,e$ in $\mathcal N$. The vector-space rules hold for classes because they hold for representatives. By 6 the norm $\lVert [f]\rVert_p = \lVert f\rVert_p$ is well defined; by 4 it is zero only on $[0] = \mathcal N$; by 1 it scales. The triangle inequality is [minkowskis-inequality](03-minkowskis-inequality.md) for $1 \le p < \infty$ and part 2 for $p = \infty$.
+**7. The quotient.** Define $[f] + [g] = [f + g]$ and $a[f] = [af]$. These do not depend on the representatives: if $f' = f + e$ and $g' = g + e'$ with $e, e' \in \mathcal N$, then $f' + g' = (f+g) + (e + e')$ and $af' = af + ae$, and part 3 puts $e + e'$ and $a\,e$ in $\mathcal N$. The vector-space rules hold for classes because they hold for representatives. By 6 the norm $\lVert [f]\rVert_p = \lVert f\rVert_p$ is well defined; by 4 it is zero only on $[0] = \mathcal N$; by 1 it scales. The triangle inequality is [Minkowski's inequality](03-minkowskis-inequality.md) for $1 \le p < \infty$ and part 2 for $p = \infty$.
 
 **8. The limit p → ∞.** Let $\mu(\Omega)$ be finite and $S = \lVert f\rVert_\infty$ finite. Upper: $\lvert f\rvert^p \le S^p$ a.e. by 5, so by (I1), (I2) $\lVert f\rVert_p \le S\,\mu(\Omega)^{1/p}$, which tends to S (or equals 0 if $\mu(\Omega) = 0$). Lower: for $M < S$ the set $A = \{\lvert f\rvert > M\}$ has $\mu(A) > 0$, else M would be admissible; $\lvert f\rvert^p \ge M^p\mathbf 1_A$, so $\lVert f\rVert_p \ge M\mu(A)^{1/p}$, which tends to M. So every limit point of $\lVert f\rVert_p$ lies between M and S for every $M < S$, and the limit is S. If $S = \infty$, the lower bound alone holds for every M, and $\lVert f\rVert_p \to \infty$.
 
@@ -218,7 +185,7 @@ Throughout, $(\Omega, \mathcal F, \mu)$ is a measure space, $f$ and $g$ are meas
 
 </details>
 
-On counting measure over the whole numbers the same definitions give the sequence spaces, sized by sums instead of integrals; sequence-spaces-lp-and-c0 studies them as spaces in their own right.
+On counting measure over the whole numbers the same definitions give the sequence spaces, sized by sums instead of integrals; Sequence spaces studies them as spaces in their own right.
 
 ---
 
@@ -237,7 +204,7 @@ The week, three exponents, two measures.
 | ∞-norm, both measures | every day has positive weight, so the largest value | **8** |
 | deviation from the mean | −2, 0, 3, −3, 1, −1, 2; squares sum to 28; 28/7 | 4, so 2-norm **2 m/s** |
 
-Under the uniform probability the 2-norm is the root-mean-square speed, 5.3852 m/s. Its square, 29, splits as 25 + 4: the squared mean plus the squared 2-norm of the deviation. That 2 m/s is the week's standard deviation; the split is Pythagoras in L^2, the subject of [l2-as-a-hilbert-space](06-l2-as-a-hilbert-space.md).
+Under the uniform probability the 2-norm is the root-mean-square speed, 5.3852 m/s. Its square, 29, splits as 25 + 4: the squared mean plus the squared 2-norm of the deviation. That 2 m/s is the week's standard deviation; the split is Pythagoras in L^2, the subject of [L2 as a Hilbert space](06-l2-as-a-hilbert-space.md).
 
 In the world: the week's energy matches a steady 5.70 m/s, not the average 5, and the blades must survive 8.
 
@@ -647,7 +614,7 @@ The two outputs match line for line.
 > **Treating L^p as a space of functions rather than of classes.** The zero function and the glitch alone are different functions, yet both have every p-norm 0. As separate elements they would break "norm zero means zero". An element of L^p is a class, and its value at a single point has no meaning.
 >
 > - **The plain maximum for p = ∞.** The glitched gust has maximum 40 m/s, essential supremum 8.
-> - **Assuming bigger p gives a bigger norm.** Under the uniform probability, yes: 5, 5.39, 5.70. Under counting, the opposite: 35, 14.25, 10.90; [jensens-inequality](04-jensens-inequality.md) proves the probability direction.
+> - **Assuming bigger p gives a bigger norm.** Under the uniform probability, yes: 5, 5.39, 5.70. Under counting, the opposite: 35, 14.25, 10.90; [Jensen's inequality](04-jensens-inequality.md) proves the probability direction.
 > - **Assuming the spaces coincide.** The spike $1/\sqrt t$ is in $L^1$ of the unit interval and not in $L^2$.
 
 ---
@@ -657,8 +624,8 @@ The two outputs match line for line.
 - **Wind energy.** Power grows with the cube of wind speed, so yield follows the 3-norm of the speed record under the time average, not the mean.
 - **Root-mean-square.** Mains voltage is quoted by its 2-norm under the time average over a cycle; the standard deviation is the 2-norm of the deviation from the mean.
 - **Fitting and tolerances.** Fitting by the 1-norm of the errors resists outliers better than least squares, the 2-norm; safety limits use the ∞-norm.
-- **Simulation error.** Finite-element codes report their error as an L^2 norm over the domain: finite-element-assembly-and-error.
-- **Signal energy.** The energy of a signal is its squared L^2 norm, and the Fourier transform keeps it: plancherel-and-l2.
+- **Simulation error.** Finite-element codes report their error as an L^2 norm over the domain: Assembly and error.
+- **Signal energy.** The energy of a signal is its squared L^2 norm, and the Fourier transform keeps it: Plancherel.
 
 > **Say it back**
 > The p-norm is the p-th root of the integral of the p-th power of a function's size. The power sets how much big values count; the root makes the size scale with the function. For p = ∞ it is the least ceiling broken only on a null set, the limit of the p-norms on a finite measure. Functions equal a.e. share every norm, so L^p counts them as one; the classes form a vector space where only zero has norm zero. Exponents with 1/p + 1/q = 1 are conjugate, the only pairs a pairing bound can use on every measure.
@@ -667,30 +634,30 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [integrable-functions-and-l1](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md): the space L^1, and the fact that changing a function on a null set changes no integral.
-- [vector-spaces-and-subspaces](../../03-Algebra/03-Vectors/02-vector-spaces-and-subspaces.md): what closure under adding and scaling means, and subspaces such as the null functions.
-- [roots-and-fractional-exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): the p-th root, and powers such as 1/2 and 1/p.
+- [Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md): the space L^1, and the fact that changing a function on a null set changes no integral.
+- [Vector spaces and subspaces](../../03-Algebra/03-Vectors/02-vector-spaces-and-subspaces.md): what closure under adding and scaling means, and subspaces such as the null functions.
+- [Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): the p-th root, and powers such as 1/2 and 1/p.
 
 ## Where this goes next
 
-- [holders-inequality](02-holders-inequality.md): the pairing bound with constant 1 for conjugate exponents.
-- [jensens-inequality](04-jensens-inequality.md): why the p-norms rise with p on a probability.
-- finite-element-assembly-and-error: L^2 norms as the yardstick for simulation error.
-- distances-on-vectors-and-functions: the p-norm of a difference as a distance.
-- sequence-spaces-lp-and-c0: the counting-measure case on the whole numbers.
-- function-spaces-c-and-lp: L^p beside the continuous functions, as normed spaces.
-- dual-spaces-and-lp-duality: L^q as the dual of L^p for conjugate exponents.
-- reflexive-spaces-and-the-second-dual: L^p as its own second dual for 1 < p < ∞.
-- weak-derivatives-and-sobolev-spaces: functions whose derivatives also lie in L^p.
-- unbounded-operators-and-domains: operators defined only on part of L^2.
-- sobolev-spaces-for-pdes: L^p sizes of a solution and its derivatives.
-- plancherel-and-l2: the Fourier transform preserving the L^2 norm.
-- convolution-and-youngs-inequality: L^p norms of a smoothed function.
-- hardy-littlewood-maximal-function: an operator bounded on L^p for p > 1 but not on L^1.
-- singular-integrals-and-the-hilbert-transform-bound: L^p bounds for the Hilbert transform.
-- interpolation-riesz-thorin-and-marcinkiewicz: bounds at two exponents giving bounds at every exponent between.
+- [Holder's inequality](02-holders-inequality.md): the pairing bound with constant 1 for conjugate exponents.
+- [Jensen's inequality](04-jensens-inequality.md): why the p-norms rise with p on a probability.
+- Assembly and error: L^2 norms as the yardstick for simulation error.
+- The distance menu: the p-norm of a difference as a distance.
+- Sequence spaces: the counting-measure case on the whole numbers.
+- Function spaces C and Lp: L^p beside the continuous functions, as normed spaces.
+- Dual spaces: L^q as the dual of L^p for conjugate exponents.
+- Reflexive spaces: L^p as its own second dual for 1 < p < ∞.
+- Weak derivatives: functions whose derivatives also lie in L^p.
+- Unbounded operators: operators defined only on part of L^2.
+- Sobolev spaces: L^p sizes of a solution and its derivatives.
+- Plancherel: the Fourier transform preserving the L^2 norm.
+- Convolution: L^p norms of a smoothed function.
+- The maximal function: an operator bounded on L^p for p > 1 but not on L^1.
+- Singular integrals: L^p bounds for the Hilbert transform.
+- Interpolation: bounds at two exponents giving bounds at every exponent between.
 
-The p-norm is a size, but a size is not yet a distance one can take limits in: whether a sequence whose members crowd together in p-norm always has a limit inside L^p is the question [completeness-of-lp](05-completeness-of-lp.md) answers.
+The p-norm is a size, but a size is not yet a distance one can take limits in: whether a sequence whose members crowd together in p-norm always has a limit inside L^p is the question [Riesz-Fischer](05-completeness-of-lp.md) answers.
 
 ---
 

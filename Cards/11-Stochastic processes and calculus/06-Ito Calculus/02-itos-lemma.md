@@ -1,36 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Ito Calculus
-topic: Change of variables for random paths
-item: Ito's lemma
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/01-ito-integral|ito-integral]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/05-taylors-theorem|taylors-theorem]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/03-ito-product-rule|ito-product-rule]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/04-stochastic-differential-equations|stochastic-differential-equations]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/06-multidimensional-ito-and-correlation|multidimensional-ito-and-correlation]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/02-girsanov-theorem|girsanov-theorem]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/06-feynman-kac-formula|feynman-kac-formula]]"
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/01-infinitesimal-generator|infinitesimal-generator]]"
-  - "[[Cards/11-Stochastic processes and calculus/09-Beyond Brownian/02-jump-diffusions|jump-diffusions]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/03-black-scholes-by-delta-hedging|black-scholes-by-delta-hedging]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/07-black-scholes-equation|black-scholes-equation]]"
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/03-variance-swap-fair-strike|variance-swap-fair-strike]]"
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/01-quanto-forward-and-adjustment|quanto-forward-and-adjustment]]"
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/06-mean-reverting-spot-and-the-futures-curve|mean-reverting-spot-and-the-futures-curve]]"
-  - "[[Cards/12-Financial mathematics/31-Forward-Rate Models/01-hjm-framework-and-the-drift-condition|hjm-framework-and-the-drift-condition]]"
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/04-asset-value-and-volatility-from-the-share-price|asset-value-and-volatility-from-the-share-price]]"
-tags: [mathematics, stochastic processes and calculus, itos-lemma]
----
-
 # Ito's lemma: the chain rule with a second-derivative term
 
-Stochastic processes and calculus → Ito Calculus → Change of variables for random paths → Ito's lemma
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Ito Calculus](../../../SYLLABUS.md#w11-s06) → Ito's lemma
 
 ---
 
@@ -64,7 +34,7 @@ The upper line is the average price, growing at 10 percent a year. The lower lin
 
 ## The formula
 
-Reminders first. $W_t$ is Brownian motion, "the random walk seen from far away", with time $t$ in years; $X_t$ is the value at time $t$ of a moving process. The rule $dX_t = a\,dt + b\,dW_t$ says: in each short slice of time, drift by $a$ times the slice and take a kick of $b$ times the Brownian step. Here $dW_t$ is shorthand for an Ito integral ([ito-integral](01-ito-integral.md)), never a derivative: the Brownian path has no slope anywhere.
+Reminders first. $W_t$ is Brownian motion, "the random walk seen from far away", with time $t$ in years; $X_t$ is the value at time $t$ of a moving process. The rule $dX_t = a\,dt + b\,dW_t$ says: in each short slice of time, drift by $a$ times the slice and take a kick of $b$ times the Brownian step. Here $dW_t$ is shorthand for an Ito integral ([The Ito integral](01-ito-integral.md)), never a derivative: the Brownian path has no slope anywhere.
 
 New notation, for a function $f(t, x)$: $f_t$ is its slope in time with $x$ held still, $f_x$ its slope in $x$ with time held still, and $f_{xx}$ the slope of $f_x$ in $x$, the curvature.
 
@@ -76,7 +46,7 @@ In integral form, which is what the shorthand means:
 
 $$f(T, X_T) = f(0, X_0) + \int_0^T \Big(f_t + a f_x + \tfrac12 b^2 f_{xx}\Big)\,dt + \int_0^T b f_x\, dW_t$$
 
-The quick way to use it: expand to second order, $df = f_t\,dt + f_x\,dX + \tfrac12 f_{xx}\,(dX)^2$, and multiply out $(dX)^2$ with the table $dt \cdot dt = 0$, $dt \cdot dW = 0$, $dW \cdot dW = dt$. The last rule is the quadratic variation of Brownian motion, $[W]_t = t$ ([quadratic-variation](../05-Brownian%20Motion/03-quadratic-variation.md)), in shorthand.
+The quick way to use it: expand to second order, $df = f_t\,dt + f_x\,dX + \tfrac12 f_{xx}\,(dX)^2$, and multiply out $(dX)^2$ with the table $dt \cdot dt = 0$, $dt \cdot dW = 0$, $dW \cdot dW = dt$. The last rule is the quadratic variation of Brownian motion, $[W]_t = t$ ([Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)), in shorthand.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -109,10 +79,10 @@ Integrating gives the share's price in closed form: $S_T = S_0 \exp\big((\mu - \
 ### When it holds
 
 - **$f$ has a continuous curvature in $x$ and a continuous time slope.** At a kink the curvature is a spike: for $f(x) = |x|$ the formula needs an extra term, local time, which measures how long the path lingers at the kink.
-- **The path is continuous.** A jump's square arrives in one instant, not spread over $dt$, so the dW-times-dW rule fails. Jump paths need their own version: [jump-diffusions](../09-Beyond%20Brownian/02-jump-diffusions.md).
+- **The path is continuous.** A jump's square arrives in one instant, not spread over $dt$, so the dW-times-dW rule fails. Jump paths need their own version: [Jump diffusions](../09-Beyond%20Brownian/02-jump-diffusions.md).
 - **The integral is Ito's, built from left-end sums.** From right ends, the sum for $\int W\,dW$ averages +0.9993 (standard error 0.0111) instead of zero (code below). Midpoints (Stratonovich's integral) keep the ordinary chain rule but lose the fair-game property.
 - **The drift and kick sizes use only the past.** They may depend on time and the path so far, with $\int|a|\,dt$ and $\int b^2\,dt$ finite. A coefficient that peeks at the future breaks the left-end construction.
-- **One Brownian motion.** Several correlated ones bring cross terms: [multidimensional-ito-and-correlation](06-multidimensional-ito-and-correlation.md).
+- **One Brownian motion.** Several correlated ones bring cross terms: [Several Brownian motions](06-multidimensional-ito-and-correlation.md).
 
 ---
 
@@ -120,7 +90,7 @@ Integrating gives the share's price in closed form: $S_T = S_0 \exp\big((\mu - \
 
 ### Step 0: Taylor to second order, and the second order refuses to vanish
 
-For a smooth path, a small step $\Delta x$ changes $f$ by $f'\,\Delta x + \tfrac12 f''\,(\Delta x)^2 + \dots$ ([taylors-theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)). Cut a year into $n$ steps. Each step is about $1/n$ in size, its square about $1/n^2$, and $n$ of those squares add to about $1/n$: nothing, as $n$ grows. That is why ordinary calculus stops at the first derivative.
+For a smooth path, a small step $\Delta x$ changes $f$ by $f'\,\Delta x + \tfrac12 f''\,(\Delta x)^2 + \dots$ ([Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)). Cut a year into $n$ steps. Each step is about $1/n$ in size, its square about $1/n^2$, and $n$ of those squares add to about $1/n$: nothing, as $n$ grows. That is why ordinary calculus stops at the first derivative.
 
 A Brownian step over time $\Delta t$ has size about $\sqrt{\Delta t}$, so its square is about $\Delta t$. Then $n$ squares add up to about $n \cdot \Delta t = T$. The second-order term survives. Everything else on this card is that sentence made exact.
 
@@ -144,11 +114,11 @@ By Taylor's theorem, each term is $f'(W_k)\,\Delta W_k + \tfrac12 f''(W_k)\,(\De
 
 ### Step 3: the slope sum becomes the Ito integral
 
-$\sum f'(W_k)\,\Delta W_k$ evaluates the slope at the left end of each step, before the step is known. That is exactly the sum that defines the Ito integral $\int f'(W_t)\,dW_t$ on [ito-integral](01-ito-integral.md), and it converges to it as the steps shrink. Each term has average zero, because the step ahead is independent of the slope already fixed.
+$\sum f'(W_k)\,\Delta W_k$ evaluates the slope at the left end of each step, before the step is known. That is exactly the sum that defines the Ito integral $\int f'(W_t)\,dW_t$ on [The Ito integral](01-ito-integral.md), and it converges to it as the steps shrink. Each term has average zero, because the step ahead is independent of the slope already fixed.
 
 ### Step 4: the squared steps become time
 
-Split each squared step into its average and a wobble: $(\Delta W_k)^2 = \Delta t + \big((\Delta W_k)^2 - \Delta t\big)$. The averages give $\sum \tfrac12 f''(W_k)\,\Delta t$, an ordinary sum of rectangles, which tends to $\tfrac12\int f''(W_t)\,dt$. The wobbles each average zero and are uncorrelated across steps; each has variance $2\,\Delta t^2$, so their total variance is about $n \cdot 2\Delta t^2 = 2T\Delta t$, which goes to zero. The squared steps behave, in the limit, as if they were $dt$ exactly. This is the quadratic variation $[W]_T = T$, proved on [quadratic-variation](../05-Brownian%20Motion/03-quadratic-variation.md), doing its work.
+Split each squared step into its average and a wobble: $(\Delta W_k)^2 = \Delta t + \big((\Delta W_k)^2 - \Delta t\big)$. The averages give $\sum \tfrac12 f''(W_k)\,\Delta t$, an ordinary sum of rectangles, which tends to $\tfrac12\int f''(W_t)\,dt$. The wobbles each average zero and are uncorrelated across steps; each has variance $2\,\Delta t^2$, so their total variance is about $n \cdot 2\Delta t^2 = 2T\Delta t$, which goes to zero. The squared steps behave, in the limit, as if they were $dt$ exactly. This is the quadratic variation $[W]_T = T$, proved on [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md), doing its work.
 
 ### Step 5: the remainders vanish
 
@@ -660,11 +630,11 @@ The flat upper line is the ordinary chain rule's formula, $\log S_0 + 0.10 + 0.4
 
 ## Where you meet it in real life
 
-- **The closed-form share price.** Every simulation of geometric Brownian motion that draws $S_T = S_0\exp((\mu - \tfrac12\sigma^2)T + \sigma W_T)$ in one step uses this card. See [geometric-brownian-motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md).
+- **The closed-form share price.** Every simulation of geometric Brownian motion that draws $S_T = S_0\exp((\mu - \tfrac12\sigma^2)T + \sigma W_T)$ in one step uses this card. See [Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md).
 - **Volatility drag in investing.** A portfolio's long-run compound growth rate is its average return minus half its variance, so of two funds with equal average returns the jumpier one grows slower.
-- **The Black-Scholes equation.** Ito's lemma applied to the option price $V(t, S_t)$ produces the term $\tfrac12\sigma^2 S^2 V_{SS}$, and hedging away the $dW$ term leaves the equation: [black-scholes-equation](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md).
-- **Variance swaps.** The gap between $dS/S$ and $d\log S$ is exactly $\tfrac12\sigma^2\,dt$, so a position in the log of the price, hedged with shares, collects realised variance: [variance-swap-fair-strike](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/03-variance-swap-fair-strike.md).
-- **A company's assets seen through its shares.** The equity of a firm is a function of its asset value; Ito's lemma ties the equity's volatility to the assets' volatility: [asset-value-and-volatility-from-the-share-price](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/04-asset-value-and-volatility-from-the-share-price.md).
+- **The Black-Scholes equation.** Ito's lemma applied to the option price $V(t, S_t)$ produces the term $\tfrac12\sigma^2 S^2 V_{SS}$, and hedging away the $dW$ term leaves the equation: [The Black-Scholes equation](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md).
+- **Variance swaps.** The gap between $dS/S$ and $d\log S$ is exactly $\tfrac12\sigma^2\,dt$, so a position in the log of the price, hedged with shares, collects realised variance: [The variance swap](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/03-variance-swap-fair-strike.md).
+- **A company's assets seen through its shares.** The equity of a firm is a function of its asset value; Ito's lemma ties the equity's volatility to the assets' volatility: [Backing out the unobservable](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/04-asset-value-and-volatility-from-the-share-price.md).
 
 > **Say it back**
 > A random path's steps are of size the square root of the time step, so their squares add up to time instead of vanishing. A function of the path changes by its slope times the step plus half its curvature times the squared kick size. For $W^2$ that term is $dt$, so $W_T^2$ averages $T$. For the log of a share it is $-\tfrac12\sigma^2$, so a share whose average grows at 0.10 a year has a middle price growing at 0.02. The proof is Taylor's theorem plus Brownian motion's squared steps adding up to time.
@@ -673,28 +643,28 @@ The flat upper line is the ordinary chain rule's formula, $\log S_0 + 0.10 + 0.4
 
 ## What this builds on
 
-- [ito-integral](01-ito-integral.md): the integral built from left-end sums, which the slope sum in Step 3 becomes.
-- [quadratic-variation](../05-Brownian%20Motion/03-quadratic-variation.md): the squared Brownian steps add up to the elapsed time, $[W]_t = t$, the fact Step 4 turns into the dt term.
-- [taylors-theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): the second-order expansion with a bounded remainder, applied once per step.
+- [The Ito integral](01-ito-integral.md): the integral built from left-end sums, which the slope sum in Step 3 becomes.
+- [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md): the squared Brownian steps add up to the elapsed time, $[W]_t = t$, the fact Step 4 turns into the dt term.
+- [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): the second-order expansion with a bounded remainder, applied once per step.
 
 ## Where this goes next
 
-- [ito-product-rule](03-ito-product-rule.md): two random paths multiplied, with a cross term from the same table.
-- [stochastic-differential-equations](04-stochastic-differential-equations.md): equations like the share's, solved by choosing the right function to apply this lemma to.
-- [multidimensional-ito-and-correlation](06-multidimensional-ito-and-correlation.md): several Brownian motions and the cross terms between them.
-- [girsanov-theorem](../07-Changing%20Measure/02-girsanov-theorem.md): Ito's lemma on the exponential of a Brownian motion gives the density process that changes the measure.
-- [feynman-kac-formula](../07-Changing%20Measure/06-feynman-kac-formula.md): Ito's lemma on a function of time and the path turns averages into equations.
-- [infinitesimal-generator](../08-Generators%2C%20Densities%20and%20Simulation/01-infinitesimal-generator.md): the dt part of this card's formula, $a f_x + \tfrac12 b^2 f_{xx}$, named as an operator.
-- [jump-diffusions](../09-Beyond%20Brownian/02-jump-diffusions.md): the lemma with jumps added.
-- [black-scholes-by-delta-hedging](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md): the lemma applied to an option, with the $dW$ term hedged away.
-- [black-scholes-equation](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md): the equation that hedge produces.
-- [variance-swap-fair-strike](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/03-variance-swap-fair-strike.md): the log's Ito term, sold as a contract.
-- [quanto-forward-and-adjustment](../../12-Financial%20mathematics/24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): a product of two prices, and the drift its cross term adds.
-- [mean-reverting-spot-and-the-futures-curve](../../12-Financial%20mathematics/25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md): a log spot price that is pulled back to a level, priced forward with this lemma.
-- [hjm-framework-and-the-drift-condition](../../12-Financial%20mathematics/31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md): Ito's lemma on bond prices fixes the drift of forward rates.
-- [asset-value-and-volatility-from-the-share-price](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/04-asset-value-and-volatility-from-the-share-price.md): the lemma linking a firm's equity volatility to its asset volatility.
+- [Ito's product rule](03-ito-product-rule.md): two random paths multiplied, with a cross term from the same table.
+- [Stochastic differential equations](04-stochastic-differential-equations.md): equations like the share's, solved by choosing the right function to apply this lemma to.
+- [Several Brownian motions](06-multidimensional-ito-and-correlation.md): several Brownian motions and the cross terms between them.
+- [Girsanov](../07-Changing%20Measure/02-girsanov-theorem.md): Ito's lemma on the exponential of a Brownian motion gives the density process that changes the measure.
+- [Feynman-Kac](../07-Changing%20Measure/06-feynman-kac-formula.md): Ito's lemma on a function of time and the path turns averages into equations.
+- [The generator](../08-Generators%2C%20Densities%20and%20Simulation/01-infinitesimal-generator.md): the dt part of this card's formula, $a f_x + \tfrac12 b^2 f_{xx}$, named as an operator.
+- [Jump diffusions](../09-Beyond%20Brownian/02-jump-diffusions.md): the lemma with jumps added.
+- [Black-Scholes by hedging](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md): the lemma applied to an option, with the $dW$ term hedged away.
+- [The Black-Scholes equation](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md): the equation that hedge produces.
+- [The variance swap](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/03-variance-swap-fair-strike.md): the log's Ito term, sold as a contract.
+- [The quanto adjustment](../../12-Financial%20mathematics/24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): a product of two prices, and the drift its cross term adds.
+- [A spot price that reverts](../../12-Financial%20mathematics/25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md): a log spot price that is pulled back to a level, priced forward with this lemma.
+- [Heath-Jarrow-Morton](../../12-Financial%20mathematics/31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md): Ito's lemma on bond prices fixes the drift of forward rates.
+- [Backing out the unobservable](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/04-asset-value-and-volatility-from-the-share-price.md): the lemma linking a firm's equity volatility to its asset volatility.
 
-This card handles one function of one path; what happens when two random paths are multiplied, and the second-order term comes from their shared kicks, is the question [ito-product-rule](03-ito-product-rule.md) answers.
+This card handles one function of one path; what happens when two random paths are multiplied, and the second-order term comes from their shared kicks, is the question [Ito's product rule](03-ito-product-rule.md) answers.
 
 ---
 

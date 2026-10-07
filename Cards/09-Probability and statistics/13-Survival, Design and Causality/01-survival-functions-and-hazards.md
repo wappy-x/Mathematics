@@ -1,23 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Survival, Design and Causality
-topic: Time to an event
-item: Survival
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/09-weibull-and-hazard-rates|weibull-and-hazard-rates]]"
-next:
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/02-kaplan-meier|kaplan-meier]]"
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/01-survival-life-tables-and-force-of-mortality|survival-life-tables-and-force-of-mortality]]"
-tags: [mathematics, probability and statistics, survival-functions-and-hazards]
----
-
 # Survival: the chance of lasting past t, and the hazard that drives it
 
-Probability and statistics → Survival, Design and Causality → Time to an event → Survival
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Survival, Design and Causality](../../../SYLLABUS.md#w09-s13) → Survival
 
 ---
 
@@ -119,7 +102,7 @@ At 1.5 years, with a slice of 0.001 years, the conditional chance divided by the
 
 Rearranged, Step 1 says $f(t) = h(t)\,S(t)$: the share of everyone dying near $t$ is the rate among the living times the share still living. Since $f$ is minus the slope of $S$, the slope of $S$ is $-h(t)\,S(t)$. The slope of $\ln S$ is the slope of $S$ divided by $S$, which is $-h(t)$.
 
-Everyone is alive at diagnosis, so $S(0) = 1$ and $\ln S(0) = 0$. Adding up the slope from 0 to $t$ gives $\ln S(t) = -H(t)$, so $S(t) = e^{-H(t)}$. [weibull-and-hazard-rates](../04-Continuous%20Distributions/09-weibull-and-hazard-rates.md) already proved this for any lifetime whose density is continuous; the proof below also allows the hazard to jump, as the cohort's does at each anniversary of diagnosis.
+Everyone is alive at diagnosis, so $S(0) = 1$ and $\ln S(0) = 0$. Adding up the slope from 0 to $t$ gives $\ln S(t) = -H(t)$, so $S(t) = e^{-H(t)}$. [Weibull and hazards](../04-Continuous%20Distributions/09-weibull-and-hazard-rates.md) already proved this for any lifetime whose density is continuous; the proof below also allows the hazard to jump, as the cohort's does at each anniversary of diagnosis.
 
 The same result comes from Step 0. With slices of length $\Delta$, survival is a product of $1 - h\Delta$ factors. The logarithm of each factor is close to $-h\Delta$, and their sum is close to $-H(t)$. The code multiplies 50,000 slices of 0.0001 years without calling the exponential and gets 0.427411 at five years, against $e^{-0.85}$ = 0.427415.
 
@@ -152,13 +135,13 @@ This needs the censoring to be **independent** of the lifetime: when a patient l
 
 ### Step 5: deaths over time watched
 
-Put the pieces together. Using $S = e^{-H}$, patient i contributes $h(y)^{\delta}\,e^{-H(y)}$, where the power $\delta$ keeps the death factor only for a seen death. The log of the chance of all the records, called the **log-likelihood** ([maximum-likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)), is
+Put the pieces together. Using $S = e^{-H}$, patient i contributes $h(y)^{\delta}\,e^{-H(y)}$, where the power $\delta$ keeps the death factor only for a seen death. The log of the chance of all the records, called the **log-likelihood** ([Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)), is
 
 $$\sum_{\text{deaths}} \ln h(Y) \;-\; \sum_{\text{everyone}} H(Y).$$
 
 Take a constant hazard $\lambda$. Then $H(Y) = \lambda Y$, and the log-likelihood is $D \ln\lambda - \lambda E$: $D$ deaths seen, $E$ the total time watched over all patients. Its slope in $\lambda$ is $D/\lambda - E$, zero at $\hat\lambda = D/E$. Every patient, censored or not, adds to $E$; only seen deaths add to $D$.
 
-The curvature of the log-likelihood at its peak is $-D/\hat\lambda^2$. One over the square root of minus the curvature is the standard error ([fisher-information-and-cramer-rao](../07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md)), so it is about $\hat\lambda/\sqrt{D}$. Precision grows with deaths seen, not with patients enrolled.
+The curvature of the log-likelihood at its peak is $-D/\hat\lambda^2$. One over the square root of minus the curvature is the standard error ([Fisher information](../07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md)), so it is about $\hat\lambda/\sqrt{D}$. Precision grows with deaths seen, not with patients enrolled.
 
 When the hazard changes by year, the log-likelihood splits into one such piece per year. The estimate for year j is deaths in that year over person-years lived in it, and survival is rebuilt as e to the minus their sum. The simulation below does exactly that.
 
@@ -171,7 +154,7 @@ Over independent patients the chances multiply. Every factor built from $C$ alon
 
 </details>
 
-The estimate of survival at a time from the records without any model for the hazard, one step at each death, is [kaplan-meier](02-kaplan-meier.md). It is Step 0's product with each $q_j$ estimated from the patients still watched.
+The estimate of survival at a time from the records without any model for the hazard, one step at each death, is [Kaplan-Meier](02-kaplan-meier.md). It is Step 0's product with each $q_j$ estimated from the patients still watched.
 
 ---
 
@@ -189,7 +172,7 @@ A pilot study watches ten patients. Four deaths are seen, at 0.4, 1.3, 2.1 and 3
 | standard error of five-year survival | $e^{-0.7117}$ × 5 × 0.0712 = 0.4908 × 5 × 0.0712 | 0.1747 |
 | **five-year survival** | $e^{-0.7117}$ | **0.4908** (se 0.1747) |
 
-About half the patients are estimated to be alive at five years, and with four deaths the standard error is 0.1747: the pilot cannot tell 30% from 70%. That error is carried over from the rate's error by the delta method ([delta-method-and-slutsky](../06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md)): survival $e^{-5\lambda}$ moves by 5 × 0.4908 per unit of rate, so its error is that slope times the rate's 0.0712. The code reaches the same rate a second way, by searching for the peak of the log-likelihood patient by patient without the formula $D/E$.
+About half the patients are estimated to be alive at five years, and with four deaths the standard error is 0.1747: the pilot cannot tell 30% from 70%. That error is carried over from the rate's error by the delta method ([Delta method](../06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md)): survival $e^{-5\lambda}$ moves by 5 × 0.4908 per unit of rate, so its error is that slope times the rate's 0.0712. The code reaches the same rate a second way, by searching for the peak of the log-likelihood patient by patient without the formula $D/E$.
 
 ### What breaks if you drop a piece
 
@@ -596,10 +579,10 @@ The two outputs match line for line: both languages draw the same numbers from t
 ## Where you meet it in real life
 
 - **Cancer statistics.** Five-year survival, and conditional survival for patients who have already lived some years, are the figures behind prognosis. The conditional figures are Step 3.
-- **Clinical trials.** Every trial with staggered enrolment and dropouts produces censored records. Comparing two treatments by their hazards is [cox-proportional-hazards-in-outline](03-cox-proportional-hazards-in-outline.md); making the comparison fair is [randomised-experiments-and-ab-tests](04-randomised-experiments-and-ab-tests.md).
-- **Life insurance and pensions.** A life table is Step 0's product for a whole population, and the hazard is the force of mortality: [survival-life-tables-and-force-of-mortality](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/01-survival-life-tables-and-force-of-mortality.md).
+- **Clinical trials.** Every trial with staggered enrolment and dropouts produces censored records. Comparing two treatments by their hazards is [Cox regression in outline](03-cox-proportional-hazards-in-outline.md); making the comparison fair is [Randomised experiments](04-randomised-experiments-and-ab-tests.md).
+- **Life insurance and pensions.** A life table is Step 0's product for a whole population, and the hazard is the force of mortality: [Life tables](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/01-survival-life-tables-and-force-of-mortality.md).
 - **Customer churn.** A subscriber still paying when the data were pulled is a censored record; the monthly cancellation rate among current subscribers is a hazard.
-- **Reliability.** Machines still running when a test stops are censored in exactly the same way; the Weibull law of [weibull-and-hazard-rates](../04-Continuous%20Distributions/09-weibull-and-hazard-rates.md) is one family of hazards.
+- **Reliability.** Machines still running when a test stops are censored in exactly the same way; the Weibull law of [Weibull and hazards](../04-Continuous%20Distributions/09-weibull-and-hazard-rates.md) is one family of hazards.
 
 > **Say it back**
 > Survival is the chance of being alive past a time. The hazard is the death rate among those still alive, per unit of time, and survival is e to the minus the hazard added up since the start. The chance of going on from any point uses only the hazard still ahead. A censored record says the patient was alive when watching stopped, so it adds time watched and no death, and a constant hazard is estimated as deaths over person-years. All of it assumes that leaving the study says nothing about how long a patient would have lived.
@@ -608,14 +591,14 @@ The two outputs match line for line: both languages draw the same numbers from t
 
 ## What this builds on
 
-- [weibull-and-hazard-rates](../04-Continuous%20Distributions/09-weibull-and-hazard-rates.md): the hazard and cumulative hazard, survival as a run of survived slices, and the proof that $S = e^{-H}$ for any lifetime whose density is continuous; this card adds hazards that jump, the life table and censored records.
+- [Weibull and hazards](../04-Continuous%20Distributions/09-weibull-and-hazard-rates.md): the hazard and cumulative hazard, survival as a run of survived slices, and the proof that $S = e^{-H}$ for any lifetime whose density is continuous; this card adds hazards that jump, the life table and censored records.
 
 ## Where this goes next
 
-- [kaplan-meier](02-kaplan-meier.md): survival estimated from censored records with no model for the hazard, one factor at each death.
-- [survival-life-tables-and-force-of-mortality](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/01-survival-life-tables-and-force-of-mortality.md): the same survival and hazard, read as a population's life table and priced into annuities.
+- [Kaplan-Meier](02-kaplan-meier.md): survival estimated from censored records with no model for the hazard, one factor at each death.
+- [Life tables](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/01-survival-life-tables-and-force-of-mortality.md): the same survival and hazard, read as a population's life table and priced into annuities.
 
-The pilot's answer rested on a constant hazard it could not test; how to read a survival curve off censored records without choosing any hazard at all is what [kaplan-meier](02-kaplan-meier.md) answers.
+The pilot's answer rested on a constant hazard it could not test; how to read a survival curve off censored records without choosing any hazard at all is what [Kaplan-Meier](02-kaplan-meier.md) answers.
 
 ---
 

@@ -1,25 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Transforms in Outline
-topic: Signals that start at zero
-item: The Laplace transform
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/03-exponential-sine-and-cosine-in-the-plane|exponential-sine-and-cosine-in-the-plane]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/06-complex-limits-series-and-regions|complex-limits-series-and-regions]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/07-improper-integrals|improper-integrals]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/04-integration-by-parts|integration-by-parts]]"
-next:
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/06-strips-of-convergence-and-shifting-the-line|strips-of-convergence-and-shifting-the-line]]"
-tags: [mathematics, complex analysis, laplace-transform]
----
-
 # The Laplace transform: multiply by e to the minus st and integrate from zero, and derivatives become multiplication by s
 
-Complex analysis → Transforms in Outline → Signals that start at zero → The Laplace transform
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Transforms in Outline](../../../SYLLABUS.md#w07-s08) → The Laplace transform
 
 ---
 
@@ -45,7 +26,7 @@ Drawn to scale, 40 units to one unit of the plane. The car's transform converges
 
 ## The formula
 
-Notation first, in words. A curly L, $\mathcal{L}$, read "the Laplace transform of", turns a signal into a new function, named by the capital letter: $\mathcal{L}[f] = F$. The variable $s$ is a complex number, a point of the plane. Its real part, Re s, sets how fast the weight fades; its imaginary part only turns the weight ([exponential-sine-and-cosine-in-the-plane](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md)).
+Notation first, in words. A curly L, $\mathcal{L}$, read "the Laplace transform of", turns a signal into a new function, named by the capital letter: $\mathcal{L}[f] = F$. The variable $s$ is a complex number, a point of the plane. Its real part, Re s, sets how fast the weight fades; its imaginary part only turns the weight ([The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md)).
 
 $$F(s)=\int_0^\infty f(t)e^{-st}dt$$
 
@@ -98,7 +79,7 @@ The size of e^(−st) is e^(−(Re s) t), so for Re s > 0 the weight fades and t
 
 **The exponential e^(at).** e^(at) e^(−st) = e^(−(s − a)t), the constant's integrand with s − a for s. So F(s) = 1/(s − a), for Re s > a. The car's a = −2 gives 1/(s + 2).
 
-**The ramp t.** Integrate by parts ([integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)), differentiating t. The boundary term vanishes when Re s > 0, leaving (1/s) times the constant's transform: 1/s^2.
+**The ramp t.** Integrate by parts ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)), differentiating t. The boundary term vanishes when Re s > 0, leaving (1/s) times the constant's transform: 1/s^2.
 
 **The wave cos(bt).** Write it as two turning arrows, (e^(ibt) + e^(−ibt))/2: exponentials with a = ±ib, real part 0, so Re s > 0. Adding:
 
@@ -108,7 +89,7 @@ The code sums each integral directly and matches all eight table values.
 
 ### Step 2: the half plane of convergence
 
-If |f(t)| stays below M e^(at), the integrand stays below M e^(−(Re s − a) t), which has a finite integral for Re s > a: the transform converges absolutely ([improper-integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)). Re s > a is a half plane: everything right of a vertical line ([complex-limits-series-and-regions](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md)).
+If |f(t)| stays below M e^(at), the integrand stays below M e^(−(Re s − a) t), which has a finite integral for Re s > a: the transform converges absolutely ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)). Re s > a is a half plane: everything right of a vertical line ([Limits and regions in the plane](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md)).
 
 Take e^t, so a = 1, and cut the integral off at time T. At s = 1.5 it reaches 1.986524 by T = 10, heading for 2. At s = 1/2 it is 294.826318 and racing away.
 
@@ -160,11 +141,11 @@ Transform both sides of v' = −2v, with v(0) = 5:
 
 $$sV-5=-2V \quad\Longrightarrow\quad V(s)=\frac{5}{s+2}.$$
 
-That is the e^(at) row with a = −2, times 5. So v = 5e^(−2t), and v(1) = 0.676676 m/s. Reading the table backwards rests on Lerch's theorem, stated without proof: continuous signals with equal transforms are equal. The direct way back, an integral up a vertical line inside the half plane (the Bromwich integral), is [inverse-laplace-by-residues](07-inverse-laplace-by-residues.md).
+That is the e^(at) row with a = −2, times 5. So v = 5e^(−2t), and v(1) = 0.676676 m/s. Reading the table backwards rests on Lerch's theorem, stated without proof: continuous signals with equal transforms are equal. The direct way back, an integral up a vertical line inside the half plane (the Bromwich integral), is [Inverting a Laplace transform](07-inverse-laplace-by-residues.md).
 
 At s = 0, right of the pole at −2, the weight is 1, so V(0) is the distance: 2.5 metres.
 
-The shutter's transform, the integral of e^(−st) from 0 to 1, is (1 − e^(−s))/s at every s. At s = i it is 0.841471 − 0.459698i, of size 0.958851, which is 2 sin(1/2), the centred shutter's Fourier transform at frequency 1 ([fourier-transform](03-fourier-transform.md)). Starting at 0 instead of −1/2 only turns the value. On the imaginary axis the two transforms meet.
+The shutter's transform, the integral of e^(−st) from 0 to 1, is (1 − e^(−s))/s at every s. At s = i it is 0.841471 − 0.459698i, of size 0.958851, which is 2 sin(1/2), the centred shutter's Fourier transform at frequency 1 ([The Fourier transform](03-fourier-transform.md)). Starting at 0 instead of −1/2 only turns the value. On the imaginary axis the two transforms meet.
 
 ---
 
@@ -403,7 +384,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Treating the formula as the transform everywhere.** The transform of e^t equals 1/(s − 1) only right of Re s = 1. At s = 1/2 the formula says −2 for a positive signal; the cut integral reads 294.826318 and climbing. What the formula means beyond the line is [strips-of-convergence-and-shifting-the-line](06-strips-of-convergence-and-shifting-the-line.md).
+> **Treating the formula as the transform everywhere.** The transform of e^t equals 1/(s − 1) only right of Re s = 1. At s = 1/2 the formula says −2 for a positive signal; the cut integral reads 294.826318 and climbing. What the formula means beyond the line is [Where a transform lives](06-strips-of-convergence-and-shifting-the-line.md).
 >
 > - **Reading the sign backwards.** 5/(s + 2) is 5e^(−2t); reading 5e^(2t) has the car at 36.945280 m/s after one second.
 
@@ -412,7 +393,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Control engineering.** A system's transform is its transfer function; poles left of the imaginary axis, like the car's at −2, mean responses die away.
-- **Electric circuits.** A capacitor draining through a resistor follows the car's rule. Each capacitor or coil becomes a factor of s; driving the circuit is a convolution, a product after transforming ([convolution-theorem](04-convolution-theorem.md)).
+- **Electric circuits.** A capacitor draining through a resistor follows the car's rule. Each capacitor or coil becomes a factor of s; driving the circuit is a convolution, a product after transforming ([Convolution](04-convolution-theorem.md)).
 
 > **Say it back**
 > The Laplace transform weighs a signal from time zero on by e^(−st) and adds it up. It converges right of a vertical line, Re s > a, for a signal growing no faster than e^(at). A derivative becomes s times the transform, minus the starting value. So v' = −2v with v(0) = 5 becomes V = 5/(s + 2), read back as 5e^(−2t).
@@ -421,14 +402,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [exponential-sine-and-cosine-in-the-plane](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md): the size of e^(−st) is e^(−(Re s)t), and cos as two turning exponentials.
-- [complex-limits-series-and-regions](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md): half planes as regions, and limits taken from any direction.
-- [improper-integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md): an integral out to infinity, and absolute convergence by comparison.
-- [integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): the one move behind the ramp's transform and the derivative rule.
+- [The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md): the size of e^(−st) is e^(−(Re s)t), and cos as two turning exponentials.
+- [Limits and regions in the plane](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md): half planes as regions, and limits taken from any direction.
+- [Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md): an integral out to infinity, and absolute convergence by comparison.
+- [Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): the one move behind the ramp's transform and the derivative rule.
 
 ## Where this goes next
 
-- [strips-of-convergence-and-shifting-the-line](06-strips-of-convergence-and-shifting-the-line.md): the car's 5/(s + 2) is a formula on the whole plane but an integral only right of −2. That card finds where convergence starts and joins Laplace and Fourier into one transform.
+- [Where a transform lives](06-strips-of-convergence-and-shifting-the-line.md): the car's 5/(s + 2) is a formula on the whole plane but an integral only right of −2. That card finds where convergence starts and joins Laplace and Fourier into one transform.
 
 ---
 

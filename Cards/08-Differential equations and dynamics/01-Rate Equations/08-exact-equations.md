@@ -1,23 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Rate Equations
-topic: Walking the level lines
-item: Exact equations
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/03-separable-equations|separable-equations]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/05-hessian-and-second-order-approximation|hessian-and-second-order-approximation]]"
-next: []
-tags: [mathematics, differential equations and dynamics, exact-equations]
----
-
 # Exact equations: when the equation is the derivative of a hidden function, find that function
 
-Differential equations and dynamics → Rate Equations → Walking the level lines → Exact equations
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Rate Equations](../../../SYLLABUS.md#w08-s01) → Exact equations
 
 ---
 
@@ -45,7 +28,7 @@ To scale, 50 px per km, floor where the axes cross. Rings: the 25, 100 and 225 m
 
 ## The formula
 
-Notation first, in words. $M\,dx + N\,dy = 0$ says a small step $dx$ east and $dy$ north changes the hidden quantity by nothing. On a path y(x) it means $M + N y' = 0$: the slope is $y' = -M/N$. A **partial derivative** $\partial M/\partial y$ is M's rate as y moves with x held fixed ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)).
+Notation first, in words. $M\,dx + N\,dy = 0$ says a small step $dx$ east and $dy$ north changes the hidden quantity by nothing. On a path y(x) it means $M + N y' = 0$: the slope is $y' = -M/N$. A **partial derivative** $\partial M/\partial y$ is M's rate as y moves with x held fixed ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)).
 
 The test for exactness:
 
@@ -76,7 +59,7 @@ $$F(x, y) = C.$$
 
 - **Continuous partials.** Without them the test proves nothing.
 - **A region with no holes.** On a rectangle or disc a passed test guarantees F. The angle form, M = −y/(x^2 + y^2) and N = x/(x^2 + y^2), passes off the origin, yet a lap of the unit circle climbs 6.2832: no single height fits.
-- **Exactness belongs to the written form.** Divide by N and the same slope fails the test. A failed form may pass after multiplying by a well-chosen factor ([integrating-factor](05-integrating-factor.md)).
+- **Exactness belongs to the written form.** Divide by N and the same slope fails the test. A failed form may pass after multiplying by a well-chosen factor ([The integrating factor](05-integrating-factor.md)).
 - **A graph y(x) only where N is not zero.** At (1.1547, −0.5774), N = 0 and M = 1.7321: the ring goes on, the graph stops.
 
 ---
@@ -93,7 +76,7 @@ The equation says this is zero, so F is constant along every solution; and every
 
 ### Step 1: the test is necessary
 
-If F exists, $\partial M/\partial y$ is F differentiated in x then y, and $\partial N/\partial x$ the same in the other order. With continuous second partials the order does not matter: the Hessian's off-diagonal entries agree ([hessian-and-second-order-approximation](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)). Unequal partials mean no F.
+If F exists, $\partial M/\partial y$ is F differentiated in x then y, and $\partial N/\partial x$ the same in the other order. With continuous second partials the order does not matter: the Hessian's off-diagonal entries agree ([Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)). Unequal partials mean no F.
 
 ### Step 2: the test is sufficient, and integrating twice builds F
 
@@ -127,7 +110,7 @@ the branch through (0, 1), valid for x within 1.1547 km of zero. At x = 0.5 the 
 
 F is the climb from the floor: sum M dx + N dy along a route to (1, 2). East first, slope 2x: climb 1. Then north at x = 1, slope 1 + 2y: climb 6. Total 7 = F(1, 2). Along y = 2x^2 the climb is also 7. An exact form climbs the same by every route; that is what a height is.
 
-A third road, Euler's rule ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)), moves h east and h times the slope −M/N north, step after step; it never sees F. A separable equation, written as (time part) dt − dy/(unknown's part) = 0, has both mixed partials zero: it is exact, with F the pair of antiderivatives from [separable-equations](03-separable-equations.md).
+A third road, Euler's rule ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)), moves h east and h times the slope −M/N north, step after step; it never sees F. A separable equation, written as (time part) dt − dy/(unknown's part) = 0, has both mixed partials zero: it is exact, with F the pair of antiderivatives from [Separable equations](03-separable-equations.md).
 
 ---
 
@@ -381,17 +364,17 @@ At h = 0.05 the Euler path ends at height 1.0198, not 1: tangent steps drift out
 
 ## What this builds on
 
-- [separable-equations](03-separable-equations.md): implicit answers H(y) = G(t) + C, the simplest exact case.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes in one direction with the other variable held fixed, and the two-variable chain rule of Step 0.
-- [hessian-and-second-order-approximation](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md): mixed second partials agree, which makes the test necessary.
+- [Separable equations](03-separable-equations.md): implicit answers H(y) = G(t) + C, the simplest exact case.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes in one direction with the other variable held fixed, and the two-variable chain rule of Step 0.
+- [Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md): mixed second partials agree, which makes the test necessary.
 
 ## Where this goes next
 
-- [bernoulli-and-riccati-substitutions](09-bernoulli-and-riccati-substitutions.md): equations made linear by a change of unknown.
-- [eulers-method](../05-Numerical%20Evolution/01-eulers-method.md): the code's small-step road, and why its error falls with the step.
-- [lipschitz-and-the-picard-lindelof-theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md): why one start fixes one contour where N is not zero.
+- [Bernoulli and Riccati equations](09-bernoulli-and-riccati-substitutions.md): equations made linear by a change of unknown.
+- [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md): the code's small-step road, and why its error falls with the step.
+- [The Picard-Lindelof theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md): why one start fixes one contour where N is not zero.
 
-A form that fails the test may pass once multiplied by the right factor; for linear equations that factor is [integrating-factor](05-integrating-factor.md).
+A form that fails the test may pass once multiplied by the right factor; for linear equations that factor is [The integrating factor](05-integrating-factor.md).
 
 ---
 

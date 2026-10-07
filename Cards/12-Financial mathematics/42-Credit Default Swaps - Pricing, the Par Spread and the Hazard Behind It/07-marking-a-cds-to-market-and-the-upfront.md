@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It
-topic: Marking a trade and quoting upfront
-item: Valuing an existing CDS
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/06-bootstrapping-the-hazard-curve-from-cds-quotes|bootstrapping-the-hazard-curve-from-cds-quotes]]"
-next:
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/08-cds-risk-numbers|cds-risk-numbers]]"
-tags: [mathematics, financial mathematics, marking-a-cds-to-market-and-the-upfront]
----
-
 # Valuing an existing CDS: (par spread minus contract spread) times the risky annuity, and the fixed-coupon-plus-upfront convention
 
-Financial mathematics → Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It → Marking a trade and quoting upfront → Valuing an existing CDS
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../../../SYLLABUS.md#w12-s42) → Valuing an existing CDS
 
 ---
 
@@ -77,7 +61,7 @@ $$U = (s - c)\,A \quad\text{with } c = 100 \text{ or } 500 \text{ bp}$$
 | $r$ | riskless rate, continuously compounded | 5% | lowers $A$ |
 | $T$, $\Delta$, $t_i$ | years left; the quarter's length, 0.25; fee date number i, which falls at 0.25 i years | 5; 0.25; 0.25 to 5 | |
 
-The protection leg, from [cds-legs-risky-annuity-and-par-spread](02-cds-legs-risky-annuity-and-par-spread.md), is the loss $1 - R$ paid at default, discounted, averaged over when default happens:
+The protection leg, from [Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md), is the loss $1 - R$ paid at default, discounted, averaged over when default happens:
 
 $$P = (1 - R)\int_0^T \lambda\, e^{-(r+\lambda)t}\,dt = (1-R)\,\frac{\lambda}{r+\lambda}\left(1 - e^{-(r+\lambda)T}\right)$$
 
@@ -87,7 +71,7 @@ and the par spread is the fee that balances the two legs: $s = P / A$.
 
 - **Same name, same dates, same notional.** The formula compares two contracts that share their protection leg and their fee dates. Change the maturity or the definition of default and the protection legs no longer cancel, so the gap is no longer the whole story.
 - **Today's annuity, not the trade date's.** $A$ is computed on today's hazard. Using the annuity from the day of the trade gives \$334,554.82 instead of \$324,006.96.
-- **A flat hazard for quote conversion.** Turning a quoted spread into an upfront needs a hazard, and the market's convention is one flat hazard that reprices the quote. A mark on a real book uses the whole curve built in [bootstrapping-the-hazard-curve-from-cds-quotes](06-bootstrapping-the-hazard-curve-from-cds-quotes.md); with a sloped curve the two differ: 6.0409 percent on the curve against 5.9545 flat.
+- **A flat hazard for quote conversion.** Turning a quoted spread into an upfront needs a hazard, and the market's convention is one flat hazard that reprices the quote. A mark on a real book uses the whole curve built in [Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md); with a sloped curve the two differ: 6.0409 percent on the curve against 5.9545 flat.
 - **Recovery fixed at 40 percent.** The upfront depends on the recovery assumed, through the hazard. At 25 percent the 250 bp name's upfront is 6.0751 percent, not 5.9545.
 - **The seller pays.** Nothing here allows for the protection seller defaulting too; that risk is priced separately.
 
@@ -172,7 +156,7 @@ Hence $U(\lambda) = P(\lambda) - cA(\lambda)$ is strictly increasing for $c \ge 
 
 </details>
 
-**Another road.** With fees paid continuously instead of quarterly, the par spread collapses to $s = (1-R)\lambda$ and the annuity to $\left(1 - e^{-(r+\lambda)T}\right)/(r+\lambda)$; the mark keeps the same shape, $(s - c)A$. That shortcut is [the-credit-triangle](03-the-credit-triangle.md); here it guesses the 200 bp hazard at 3.3333 percent against the exact 3.2989.
+**Another road.** With fees paid continuously instead of quarterly, the par spread collapses to $s = (1-R)\lambda$ and the annuity to $\left(1 - e^{-(r+\lambda)T}\right)/(r+\lambda)$; the mark keeps the same shape, $(s - c)A$. That shortcut is [The credit triangle](03-the-credit-triangle.md); here it guesses the 200 bp hazard at 3.3333 percent against the exact 3.2989.
 
 ---
 
@@ -243,7 +227,7 @@ xychart-beta
     line [324.01, 269.49, 210.26, 145.90, 75.98, 0.00]
 ```
 
-The one line is the mark, $P - cA$ over the years that remain. The yearly drops grow as maturity nears. With a constant hazard, a contract with y years left is priced like a new y-year contract, so each year that passes removes the last year of gap. Going from 5 years to 4 removes the most distant year, the most discounted and the least likely to be reached; going from 1 to 0 removes the nearest year, which is worth the most. Two forces move a mark, and the formula keeps them apart: a change in $s$ moves the gap, and the passage of time or a change in hazard moves $A$. How much each one moves the value is the subject of [cds-risk-numbers](08-cds-risk-numbers.md).
+The one line is the mark, $P - cA$ over the years that remain. The yearly drops grow as maturity nears. With a constant hazard, a contract with y years left is priced like a new y-year contract, so each year that passes removes the last year of gap. Going from 5 years to 4 removes the most distant year, the most discounted and the least likely to be reached; going from 1 to 0 removes the nearest year, which is worth the most. Two forces move a mark, and the formula keeps them apart: a change in $s$ moves the gap, and the passage of time or a change in hazard moves $A$. How much each one moves the value is the subject of [CDS risk numbers](08-cds-risk-numbers.md).
 
 ---
 
@@ -718,8 +702,8 @@ The two outputs agree line for line. The simulated value, 0.032151 with a standa
 - **Daily margin.** Cleared contracts are marked every day, and the change in the mark moves as cash between the two sides' margin accounts.
 - **Points upfront.** Screens quote stressed names in upfront percent and price rather than in spread, because a 1,000 bp spread hides how much cash changes hands on day one. The conversion runs both ways through the market's standard calculator.
 - **Index contracts.** Credit indices, baskets of a hundred or more names traded as one contract, trade at a fixed coupon with an upfront in the same way.
-- **The fund's accounts.** A protection contract appears in the books at its mark, and the change in the mark is a profit or loss even though no default has happened. See [credit-default-swap-contract](01-credit-default-swap-contract.md) for what the contract itself obliges.
-- **Recovery disputes.** Because the upfront depends on the recovery assumed, desks agree on one recovery for the conversion; the effect of changing it is on [recovery-assumptions-and-what-they-change](05-recovery-assumptions-and-what-they-change.md).
+- **The fund's accounts.** A protection contract appears in the books at its mark, and the change in the mark is a profit or loss even though no default has happened. See [The credit default swap](01-credit-default-swap-contract.md) for what the contract itself obliges.
+- **Recovery disputes.** Because the upfront depends on the recovery assumed, desks agree on one recovery for the conversion; the effect of changing it is on [Recovery assumptions](05-recovery-assumptions-and-what-they-change.md).
 - **Conventions verified 28 Sep 2026** against the ISDA CDS Standard Model page: single-name contracts trade with a fixed coupon and an upfront payment, and the published model converts upfront quotes to spread quotes and back in a standardised way. That calculator also pays accrued fees on default and counts days actual/360, which this card leaves out, so a desk's figures differ slightly from these. Markets can change these rules; the identity $V = (s - c)A$ does not change with them.
 
 > **Say it back**
@@ -729,11 +713,11 @@ The two outputs agree line for line. The simulated value, 0.032151 with a standa
 
 ## What this builds on
 
-- [bootstrapping-the-hazard-curve-from-cds-quotes](06-bootstrapping-the-hazard-curve-from-cds-quotes.md): the hazard curve built from market quotes, which supplies today's annuity for a real mark, and the root search that turns one quote into one hazard.
+- [Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md): the hazard curve built from market quotes, which supplies today's annuity for a real mark, and the root search that turns one quote into one hazard.
 
 ## Where this goes next
 
-- [cds-risk-numbers](08-cds-risk-numbers.md): how much the mark moves for a one basis point change in spread, a change in recovery, or a day passing; the annuity reappears there as the spread sensitivity.
+- [CDS risk numbers](08-cds-risk-numbers.md): how much the mark moves for a one basis point change in spread, a change in recovery, or a day passing; the annuity reappears there as the spread sensitivity.
 
 The mark says what the trade is worth now; the open question is how fast that number moves when Northwind's spread or the calendar does, which is what a desk has to hedge.
 

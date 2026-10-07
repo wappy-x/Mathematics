@@ -1,28 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Compound Growth and Discounting
-topic: Interest
-item: Compound interest
-kind: model
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/01-growth-factors|growth-factors]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/02-simple-interest|simple-interest]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/01-exponents-and-powers|exponents-and-powers]]"
-next:
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/04-compounding-frequency-and-e|compounding-frequency-and-e]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/05-natural-log-and-doubling-time|natural-log-and-doubling-time]]"
-tags:
-  - mathematics
-  - foundations
-  - compound-interest
----
-
 # Compound interest: interest that earns interest
 
-Foundations → Compound Growth and Discounting → Interest → Compound interest
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Compound Growth and Discounting](../../../SYLLABUS.md#w01-s04) → Compound interest
 
 ---
 
@@ -48,7 +26,7 @@ xychart-beta
     line [100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150]
 ```
 
-The bending line is the interest left in. The straight line is the same 5% taken out each year — simple interest, [simple-interest](02-simple-interest.md). They agree for one year, then separate.
+The bending line is the interest left in. The straight line is the same 5% taken out each year — simple interest, [Simple interest](02-simple-interest.md). They agree for one year, then separate.
 
 ---
 
@@ -58,9 +36,9 @@ There is one multiply per year, and that is the whole rule:
 
 **$100.00 × 1.05 × 1.05 × 1.05 … ten 1.05s in all … = $162.89**
 
-1.05 is the growth factor for a 5% rise: keep the whole amount, add 5% of it, and you have multiplied by 1.05 ([growth-factors](01-growth-factors.md)). One year is one multiply, so ten years is ten of them.
+1.05 is the growth factor for a 5% rise: keep the whole amount, add 5% of it, and you have multiplied by 1.05 ([Growth factors](01-growth-factors.md)). One year is one multiply, so ten years is ten of them.
 
-Ten 1.05s in a row is written 1.05^10, the raised number counting the multiplies ([exponents-and-powers](../03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)):
+Ten 1.05s in a row is written 1.05^10, the raised number counting the multiplies ([Exponents](../03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)):
 
 **$100.00 × 1.05^10 = $162.89**
 
@@ -86,7 +64,7 @@ Put letters where the numbers are and you have the compound interest formula, th
 
 In year one the bank works out 5% of $100.00 and pays $5.00. In year two it works out 5% of what is actually there: $105.00, so it pays $5.25. Last year's $5 is no longer a payment you received. It is money in the account, and money in the account earns.
 
-That is the only difference from simple interest ([simple-interest](02-simple-interest.md)): there the $5 leaves and the bank keeps returning to the original $100.00. Here the base grows.
+That is the only difference from simple interest ([Simple interest](02-simple-interest.md)): there the $5 leaves and the bank keeps returning to the original $100.00. Here the base grows.
 
 ### The gain grows because the balance grew
 
@@ -286,14 +264,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [growth-factors](01-growth-factors.md): why a 5% rise is a multiply by 1.05.
-- [simple-interest](02-simple-interest.md): interest charged only on the money first handed over — the straight line this card bends away from.
-- [exponents-and-powers](../03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): the shorthand for multiplying the same number in ten times.
+- [Growth factors](01-growth-factors.md): why a 5% rise is a multiply by 1.05.
+- [Simple interest](02-simple-interest.md): interest charged only on the money first handed over — the straight line this card bends away from.
+- [Exponents](../03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): the shorthand for multiplying the same number in ten times.
 
 ## Where this goes next
 
-- [compounding-frequency-and-e](04-compounding-frequency-and-e.md): what happens when the bank pays monthly or daily, and the ceiling 5% runs into.
-- [natural-log-and-doubling-time](05-natural-log-and-doubling-time.md): how long the same 5% takes to double the money.
+- [Compounding more often, and the number e](04-compounding-frequency-and-e.md): what happens when the bank pays monthly or daily, and the ceiling 5% runs into.
+- [Natural log and doubling time](05-natural-log-and-doubling-time.md): how long the same 5% takes to double the money.
 
 ---
 

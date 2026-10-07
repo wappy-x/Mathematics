@@ -1,27 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Codes and Secrets
-topic: Primality tests
-item: The Fermat test
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/04-Powers on the Clock/02-fermats-little-theorem|fermats-little-theorem]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/01-modular-exponentiation|modular-exponentiation]]"
-  - "[[Cards/01-Foundations/05-Logic/02-if-then|if-then]]"
-next:
-  - "[[Cards/02-Number theory/06-Codes and Secrets/05-miller-rabin|miller-rabin]]"
-tags:
-  - mathematics
-  - number theory
-  - fermat-test-and-carmichael
----
-
 # The Fermat test: a quick primality check that can be fooled, and the Carmichael numbers that fool it every time
 
-Number theory → Codes and Secrets → Primality tests → The Fermat test
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Codes and Secrets](../../../SYLLABUS.md#w02-s06) → The Fermat test
 
 ---
 
@@ -29,11 +8,11 @@ Number theory → Codes and Secrets → Primality tests → The Fermat test
 
 A number lands in front of you: **341**. Prime, or not?
 
-Dividing by 2, 3, 5, 7 and up settles it in a minute. For a number hundreds of digits long, the size a code needs ([rsa-in-outline](03-rsa-in-outline.md)), there is no time in the world.
+Dividing by 2, 3, 5, 7 and up settles it in a minute. For a number hundreds of digits long, the size a code needs ([RSA in outline](03-rsa-in-outline.md)), there is no time in the world.
 
-So screen it. Pick a **base** — any number, say 2. Work on a clock of size 341: count round, keep only the remainder. Raise 2 to the 340, one less than the number under test. A few steps of squaring and multiplying ([modular-exponentiation](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)). It lands on **1**.
+So screen it. Pick a **base** — any number, say 2. Work on a clock of size 341: count round, keep only the remainder. Raise 2 to the 340, one less than the number under test. A few steps of squaring and multiplying ([Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)). It lands on **1**.
 
-A prime would force exactly that ([fermats-little-theorem](../04-Powers%20on%20the%20Clock/02-fermats-little-theorem.md)). So 341 survives — a **pseudoprime**, a composite that passes for some base. It is still not prime: 341 = 11 × 31.
+A prime would force exactly that ([Fermat's little theorem](../04-Powers%20on%20the%20Clock/02-fermats-little-theorem.md)). So 341 survives — a **pseudoprime**, a composite that passes for some base. It is still not prime: 341 = 11 × 31.
 
 Base 3 lands on **56**. Not 1, so 341 is composite — proved, without naming 11 or 31.
 
@@ -59,7 +38,7 @@ On 341, run twice:
 
 **3 to the 340 ≡ 56 (mod 341), so 341 is composite**
 
-The ≡ sign: both sides leave the same remainder on the clock in brackets ([congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md)).
+The ≡ sign: both sides leave the same remainder on the clock in brackets ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)).
 
 **Read it aloud: raise your base to one less than the number under test, on that number's clock. Land on 1 and it survives; land elsewhere and it is composite.**
 
@@ -77,11 +56,11 @@ The ≡ sign: both sides leave the same remainder on the clock in brackets ([con
 
 ### Step 0: what a prime forces
 
-On a clock of prime size, a base the prime does not divide, raised to one less than the prime, lands on 1 ([fermats-little-theorem](../04-Powers%20on%20the%20Clock/02-fermats-little-theorem.md)). Not rebuilt here.
+On a clock of prime size, a base the prime does not divide, raised to one less than the prime, lands on 1 ([Fermat's little theorem](../04-Powers%20on%20the%20Clock/02-fermats-little-theorem.md)). Not rebuilt here.
 
 ### Step 1: the direction you may flip
 
-"Prime, therefore the answer is 1" flips into its negative: **not 1, therefore not prime** ([if-then](../../01-Foundations/05-Logic/02-if-then.md), [proof-by-contrapositive](../../01-Foundations/06-Proof/02-proof-by-contrapositive.md)). Base 3 lands on 56, so 341 is composite — a proof that never finds a factor. Not prime and not factored are different facts ([one-way-streets](01-one-way-streets.md)).
+"Prime, therefore the answer is 1" flips into its negative: **not 1, therefore not prime** ([If-then](../../01-Foundations/05-Logic/02-if-then.md), [Proof by contrapositive](../../01-Foundations/06-Proof/02-proof-by-contrapositive.md)). Base 3 lands on 56, so 341 is composite — a proof that never finds a factor. Not prime and not factored are different facts ([One-way streets](01-one-way-streets.md)).
 
 ### Step 2: the converse is false
 
@@ -89,7 +68,7 @@ On a clock of prime size, a base the prime does not divide, raised to one less t
 
 ### Step 3: change the base
 
-Of the 300 bases below 341 sharing no factor with it — coprime to it ([coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)) — only 100 land on 1. The other 200 are witnesses, so a coprime base picked at random exposes 341 two times in three. Only a coprime base can answer 1 at all ([modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)).
+Of the 300 bases below 341 sharing no factor with it — coprime to it ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)) — only 100 land on 1. The other 200 are witnesses, so a coprime base picked at random exposes 341 two times in three. Only a coprime base can answer 1 at all ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)).
 
 ### Step 4: 561, where no base helps
 
@@ -98,17 +77,17 @@ Of the 300 bases below 341 sharing no factor with it — coprime to it ([coprime
 <details>
 <summary>Why 561 gets away with it</summary>
 
-Each prime appears once, and 560 divides exactly by 2, by 10 and by 16 — that is 3 − 1, 11 − 1 and 17 − 1. So on each small clock the base is home on 1 early, and the three 1s glue into one on the 561 clock ([chinese-remainder-theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md)). Korselt found the pattern in 1899, Carmichael the numbers in 1910.
+Each prime appears once, and 560 divides exactly by 2, by 10 and by 16 — that is 3 − 1, 11 − 1 and 17 − 1. So on each small clock the base is home on 1 early, and the three 1s glue into one on the 561 clock ([The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md)). Korselt found the pattern in 1899, Carmichael the numbers in 1910.
 
 </details>
 
-The repair is not more bases but watching the power on the way up: [miller-rabin](05-miller-rabin.md).
+The repair is not more bases but watching the power on the way up: [The Miller-Rabin test](05-miller-rabin.md).
 
 ---
 
 ## Worked numbers, by hand
 
-341, both bases. 341 = 11 × 31, so its clock splits into an 11 clock and a 31 clock; the two answers glue back into one ([chinese-remainder-theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md)).
+341, both bases. 341 = 11 × 31, so its clock splits into an 11 clock and a 31 clock; the two answers glue back into one ([The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md)).
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -266,8 +245,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Finding a prime for a code.** [rsa-in-outline](03-rsa-in-outline.md) needs primes nobody has met. This is the cheap screen; the verdict comes from [miller-rabin](05-miller-rabin.md).
-- **Any screening test.** A fail rules out; a pass only fails to rule out — the converse trap in ordinary clothes ([if-then](../../01-Foundations/05-Logic/02-if-then.md)).
+- **Finding a prime for a code.** [RSA in outline](03-rsa-in-outline.md) needs primes nobody has met. This is the cheap screen; the verdict comes from [The Miller-Rabin test](05-miller-rabin.md).
+- **Any screening test.** A fail rules out; a pass only fails to rule out — the converse trap in ordinary clothes ([If-then](../../01-Foundations/05-Logic/02-if-then.md)).
 - **1729.** The taxicab number is Carmichael too, answering 1 to all 1296 coprime bases.
 
 > **Say it back**
@@ -277,13 +256,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [fermats-little-theorem](../04-Powers%20on%20the%20Clock/02-fermats-little-theorem.md): the fact the test rides on, a prime sending every base home to 1.
-- [modular-exponentiation](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): squaring and multiplying, which makes raising to the 340 cheap.
-- [if-then](../../01-Foundations/05-Logic/02-if-then.md): which way a true sentence turns, and which way traps you.
+- [Fermat's little theorem](../04-Powers%20on%20the%20Clock/02-fermats-little-theorem.md): the fact the test rides on, a prime sending every base home to 1.
+- [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): squaring and multiplying, which makes raising to the 340 cheap.
+- [If-then](../../01-Foundations/05-Logic/02-if-then.md): which way a true sentence turns, and which way traps you.
 
 ## Where this goes next
 
-- [miller-rabin](05-miller-rabin.md): the same power, watched on the way up, catching 561 and every Carmichael number.
+- [The Miller-Rabin test](05-miller-rabin.md): the same power, watched on the way up, catching 561 and every Carmichael number.
 
 ---
 

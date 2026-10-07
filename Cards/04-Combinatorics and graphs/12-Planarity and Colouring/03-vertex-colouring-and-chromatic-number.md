@@ -1,31 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Planarity and Colouring
-topic: Fewest colours
-item: Colouring
-kind: definition
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/01-graphs-vertices-and-edges|graphs-vertices-and-edges]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/05-bipartite-graphs-and-odd-cycles|bipartite-graphs-and-odd-cycles]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/04-chromatic-polynomial|chromatic-polynomial]]"
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/05-five-and-four-colour-theorems|five-and-four-colour-theorems]]"
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/06-edge-colouring-and-round-robin|edge-colouring-and-round-robin]]"
-  - "[[Cards/14-Applied and computational/02-Randomised and Approximate Algorithms/07-local-search-and-metaheuristics|local-search-and-metaheuristics]]"
-  - "[[Cards/24-Computability and complexity/03-Time Complexity/03-polynomial-reductions-and-np-completeness|polynomial-reductions-and-np-completeness]]"
-  - "[[Cards/25-Frontier/04-Geometry and Combinatorics/03-hadwiger-nelson-chromatic-number-of-the-plane|hadwiger-nelson-chromatic-number-of-the-plane]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - vertex-colouring-and-chromatic-number
----
-
 # Colouring: give joined vertices different colours, and the fewest colours needed is the size of the timetable
 
-Combinatorics and graphs → Planarity and Colouring → Fewest colours → Colouring
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Planarity and Colouring](../../../SYLLABUS.md#w04-s12) → Colouring
 
 ---
 
@@ -62,7 +37,7 @@ Each triangle is a student sitting three exams; each line between the triangles 
 
 ## The formula
 
-Notation first, in words. A graph $G$ is two lists: its dots, collected as $V$, and its joined pairs, the lines, collected as $E$ ([graphs-vertices-and-edges](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). Write $n$ for the dot count, 6 here. A **colouring** is a rule $c$ handing the dot $v$ a colour $c(v)$, the colours numbered 1, 2, 3 upward, $k$ of them on offer. It is **proper** when
+Notation first, in words. A graph $G$ is two lists: its dots, collected as $V$, and its joined pairs, the lines, collected as $E$ ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). Write $n$ for the dot count, 6 here. A **colouring** is a rule $c$ handing the dot $v$ a colour $c(v)$, the colours numbered 1, 2, 3 upward, $k$ of them on offer. It is **proper** when
 
 $$c(u) \ne c(v) \quad \text{for every line joining the dots } u \text{ and } v$$
 
@@ -74,7 +49,7 @@ $$\omega(G) \le \chi(G) \le \Delta(G) + 1$$
 
 **Read it aloud:** never fewer colours than the biggest all-joined group, never more than one past the busiest dot's line count.
 
-**Brooks' theorem** (1941) takes one off the ceiling, with two exceptions. A graph in one piece that is neither **complete** — every pair of dots joined — nor an odd ring, a cycle of odd length ([bipartite-graphs-and-odd-cycles](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)), has $\chi(G) \le \Delta(G)$.
+**Brooks' theorem** (1941) takes one off the ceiling, with two exceptions. A graph in one piece that is neither **complete** — every pair of dots joined — nor an odd ring, a cycle of odd length ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)), has $\chi(G) \le \Delta(G)$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -131,7 +106,7 @@ Suppose some dot has fewer than $\Delta(G)$ lines. Grow a tree of shortest route
 
 </details>
 
-A second route counts instead of searching: how many proper colourings $k$ colours allow, with $\chi(G)$ the smallest $k$ whose count is not zero ([chromatic-polynomial](04-chromatic-polynomial.md)).
+A second route counts instead of searching: how many proper colourings $k$ colours allow, with $\chi(G)$ the smallest $k$ whose count is not zero ([The chromatic polynomial](04-chromatic-polynomial.md)).
 
 ---
 
@@ -377,19 +352,19 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Believing the largest all-clashing group settles the count.** Five exams clashing in a ring hold no clashing triple, so that floor reads 2, and the ring still needs 3: two colours alternate round it and collide when it closes ([bipartite-graphs-and-odd-cycles](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)).
+> **Believing the largest all-clashing group settles the count.** Five exams clashing in a ring hold no clashing triple, so that floor reads 2, and the ring still needs 3: two colours alternate round it and collide when it closes ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)).
 >
 > - **Greedy's count read as the chromatic number.** The listed order spends 4 sessions where 3 suffice.
 > - **Brooks without its two exceptions.** The triangle alone has a busiest count of 2 and needs 3.
-> - **Colouring the lines instead of the dots.** A different question, with a different count ([edge-colouring-and-round-robin](06-edge-colouring-and-round-robin.md)).
+> - **Colouring the lines instead of the dots.** A different question, with a different count ([Edge colouring](06-edge-colouring-and-round-robin.md)).
 
 ---
 
 ## Where you meet it in real life
 
 - **Exam and lecture timetables.** Dots are exams, lines shared students, colours sessions. Welsh and Powell put that translation in print in 1967, running greedy in order of decreasing clash count.
-- **Maps.** Regions sharing a border are joined, and any flat map needs at most four colours ([five-and-four-colour-theorems](05-five-and-four-colour-theorems.md)).
-- **Compilers and radio channels.** Two values needed at once cannot share a processor register, and two transmitters with overlapping ranges cannot share a frequency: both are colourings, done in practice by search that settles for good (local-search-and-metaheuristics), since the exact answer is among the standard hard problems (polynomial-reductions-and-np-completeness).
+- **Maps.** Regions sharing a border are joined, and any flat map needs at most four colours ([Colouring maps](05-five-and-four-colour-theorems.md)).
+- **Compilers and radio channels.** Two values needed at once cannot share a processor register, and two transmitters with overlapping ranges cannot share a frequency: both are colourings, done in practice by search that settles for good (Local search), since the exact answer is among the standard hard problems (Reductions).
 
 > **Say it back**
 > A proper colouring gives joined dots different colours, and the chromatic number is the fewest that manage it. Read backwards, a colouring splits the dots into groups holding no line, so a timetable is a colouring. Dots joined in every pair need a colour each, which sets a floor. Colouring one dot at a time, lowest free colour each time, never spends more than one past the busiest dot's line count, and Brooks takes that one back off except on complete graphs and odd rings. Here both limits read 3.
@@ -398,17 +373,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [graphs-vertices-and-edges](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md): dots, lines, and the line count the ceiling is built from.
-- [bipartite-graphs-and-odd-cycles](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md): the two-colour case in full, and why an odd ring refuses two colours.
+- [Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md): dots, lines, and the line count the ceiling is built from.
+- [Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md): the two-colour case in full, and why an odd ring refuses two colours.
 
 ## Where this goes next
 
-- [chromatic-polynomial](04-chromatic-polynomial.md): counts the colourings in $k$ colours rather than hunting one.
-- [five-and-four-colour-theorems](05-five-and-four-colour-theorems.md): the ceiling for graphs drawn flat with no crossings.
-- [edge-colouring-and-round-robin](06-edge-colouring-and-round-robin.md): the same question asked of the lines.
-- local-search-and-metaheuristics: clash graphs with thousands of exams.
-- polynomial-reductions-and-np-completeness: why no fast exact method is known.
-- hadwiger-nelson-chromatic-number-of-the-plane: the same count over every point of the plane.
+- [The chromatic polynomial](04-chromatic-polynomial.md): counts the colourings in $k$ colours rather than hunting one.
+- [Colouring maps](05-five-and-four-colour-theorems.md): the ceiling for graphs drawn flat with no crossings.
+- [Edge colouring](06-edge-colouring-and-round-robin.md): the same question asked of the lines.
+- Local search: clash graphs with thousands of exams.
+- Reductions: why no fast exact method is known.
+- Colouring the plane: the same count over every point of the plane.
 
 The limits pinned this graph only because they met; on most graphs they leave a range, which the next card closes by counting colourings rather than hunting one.
 

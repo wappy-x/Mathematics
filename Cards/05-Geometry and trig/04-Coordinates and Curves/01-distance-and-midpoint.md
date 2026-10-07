@@ -1,26 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Coordinates and Curves
-topic: Gaps between points
-item: Distance and midpoint
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/01-Angles, Triangles and Congruence/05-pythagoras-and-its-converse|pythagoras-and-its-converse]]"
-next:
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/02-lines-slopes-and-intersections|lines-slopes-and-intersections]]"
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/03-polar-coordinates|polar-coordinates]]"
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/04-circles-and-parabolas|circles-and-parabolas]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/06-k-means-and-clustering|k-means-and-clustering]]"
-  - "[[Cards/25-Frontier/04-Geometry and Combinatorics/01-unit-distance-problem|unit-distance-problem]]"
-tags: [mathematics, geometry and trig, distance-and-midpoint]
----
-
 # Distance and midpoint: Pythagoras on a grid
 
-Geometry and trig → Coordinates and Curves → Gaps between points → Distance and midpoint
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Coordinates and Curves](../../../SYLLABUS.md#w05-s04) → Distance and midpoint
 
 ---
 
@@ -75,7 +55,7 @@ $$d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}$$
 
 ### When it holds
 
-- **Axes at right angles.** The moves form a right triangle only because grid lines cross square. On slanted axes the formula misses a term, which the law of cosines supplies ([law-of-cosines](../03-Trigonometry/06-law-of-cosines.md)).
+- **Axes at right angles.** The moves form a right triangle only because grid lines cross square. On slanted axes the formula misses a term, which the law of cosines supplies ([Law of cosines](../03-Trigonometry/06-law-of-cosines.md)).
 - **One unit on every axis.** East in kilometres and north in miles give a number that is no length at all. Convert first.
 - **Flat ground.** A town is flat enough; latitude and longitude are angles on a round Earth, and across a continent the formula fails.
 - **A straight line, not a road.** The van on a square street grid drives at least 8 km, 5 east plus 3 south; 5.83 km is the drone's line.
@@ -91,7 +71,7 @@ From A to B the east number changes by 5 and the north number by −3. Both move
 
 ### Step 1: Pythagoras on the grid
 
-Walk from A east to the corner (8, 4), then south to B. The legs are 5 km and 3 km, square at the corner. Pythagoras ([pythagoras-and-its-converse](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)) gives
+Walk from A east to the corner (8, 4), then south to B. The legs are 5 km and 3 km, square at the corner. Pythagoras ([Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)) gives
 
 $$d^2 = 5^2 + 3^2 = 25 + 9 = 34, \qquad d = \sqrt{34} = 5.8309518948 \text{ km}.$$
 
@@ -107,7 +87,7 @@ Halfway along the line from A means half the east move and half the north move: 
 
 Each half of the trip is the same move, 2.5 east and 1.5 south. By Step 1 each half has length $\sqrt{2.5^2 + 1.5^2} = 2.9154759474$ km, exactly half of 5.8309518948.
 
-The halves add up to the full distance, and a route through a point off the line is always longer than the line (the triangle inequality, [triangle-angle-sum-and-inequality](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). So M sits on the line, with equal parts on each side.
+The halves add up to the full distance, and a route through a point off the line is always longer than the line (the triangle inequality, [Triangles](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). So M sits on the line, with equal parts on each side.
 
 <details>
 <summary>Detailed proof: the only point that is halfway</summary>
@@ -116,7 +96,7 @@ Every point P on the line from A to B is A plus a fraction $t$ of the whole move
 
 The two are equal only when $t = 1/2$: A plus half the move, the average of Step 2. So the midpoint is the one point on the line equally far from both ends.
 
-Off the line, a whole line of points is equally far from A and B, the perpendicular bisector ([lines-slopes-and-intersections](02-lines-slopes-and-intersections.md)).
+Off the line, a whole line of points is equally far from A and B, the perpendicular bisector ([Lines](02-lines-slopes-and-intersections.md)).
 
 </details>
 
@@ -126,7 +106,7 @@ At the depot a cable runs from a floor bolt at (1, 2, 0) to a shelf bracket at (
 
 The floor square 5^2 was 3^2 + 4^2, so the three squares add: 9 + 16 + 144 = 169. The midpoint averages each number: (2.5, 4, 6), and each half is 6.5 m.
 
-A second road starts at the depot. The dot product of two positions multiplies matching coordinates and adds ([dot-product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)). A's squared distance from the depot, plus B's, minus twice their dot product, is 25 + 65 − 2 × 28 = 34: the law of cosines in coordinates. A third road measures the square built on AB from its corners. The code runs all three.
+A second road starts at the depot. The dot product of two positions multiplies matching coordinates and adds ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)). A's squared distance from the depot, plus B's, minus twice their dot product, is 25 + 65 − 2 × 28 = 34: the law of cosines in coordinates. A third road measures the square built on AB from its corners. The code runs all three.
 
 ---
 
@@ -376,8 +356,8 @@ The two outputs match line for line.
 
 - **Deliveries and drones.** The straight line is a drone's flight and a lower bound on any road route.
 - **Maps and screens.** Map grids, floor plans and screen pixels all use this formula, when both axes share one scale.
-- **Grouping data.** Clustering sorts points by which centre is nearest, with this distance in many dimensions, and each new centre is an average, a midpoint of many points (k-means-and-clustering).
-- **Triangles on a grid.** The balance point of a triangle averages its three corners, the midpoint idea with three points ([triangle-centres](08-triangle-centres.md)).
+- **Grouping data.** Clustering sorts points by which centre is nearest, with this distance in many dimensions, and each new centre is an average, a midpoint of many points (k-means).
+- **Triangles on a grid.** The balance point of a triangle averages its three corners, the midpoint idea with three points ([Triangle centres](08-triangle-centres.md)).
 
 > **Say it back**
 > Coordinates turn the gap between two points into a move along each axis. The moves meet at right angles, so Pythagoras gives the distance: square, add, take the root. The midpoint is half of each move added to the start, which is the average of the coordinates. In space a third move joins the sum. The drops are 5.83 km apart; the locker goes at (5.5, 2.5).
@@ -386,17 +366,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [pythagoras-and-its-converse](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md): the right-triangle rule this card applies twice.
+- [Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md): the right-triangle rule this card applies twice.
 
 ## Where this goes next
 
-- [lines-slopes-and-intersections](02-lines-slopes-and-intersections.md): the line through A and B as an equation, and the perpendicular bisector.
-- [polar-coordinates](03-polar-coordinates.md): a point named by its distance from the origin and a direction.
-- [circles-and-parabolas](04-circles-and-parabolas.md): a circle is this formula set equal to one number.
-- k-means-and-clustering: distance and averaging over many points, to find groups.
-- unit-distance-problem: how many pairs among many points can sit exactly one unit apart, still open.
+- [Lines](02-lines-slopes-and-intersections.md): the line through A and B as an equation, and the perpendicular bisector.
+- [Polar coordinates](03-polar-coordinates.md): a point named by its distance from the origin and a direction.
+- [Circles and parabolas](04-circles-and-parabolas.md): a circle is this formula set equal to one number.
+- k-means: distance and averaging over many points, to find groups.
+- The unit-distance problem: how many pairs among many points can sit exactly one unit apart, still open.
 
-This card measures between two fixed points; describing every point on a given line or at a given distance needs an equation, which starts with [lines-slopes-and-intersections](02-lines-slopes-and-intersections.md).
+This card measures between two fixed points; describing every point on a given line or at a given distance needs an equation, which starts with [Lines](02-lines-slopes-and-intersections.md).
 
 ---
 

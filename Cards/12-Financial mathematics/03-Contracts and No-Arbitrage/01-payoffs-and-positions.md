@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Contracts and No-Arbitrage
-topic: Reading a contract at expiry
-item: Payoffs
-kind: definition
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/06-negative-numbers|negative-numbers]]"
-next:
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price|no-arbitrage-and-the-law-of-one-price]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - payoffs-and-positions
----
-
 # Payoffs: long and short, calls and puts, and the diagram that shows what you get at the end
 
-Financial mathematics → Contracts and No-Arbitrage → Reading a contract at expiry → Payoffs
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Contracts and No-Arbitrage](../../../SYLLABUS.md#w12-s03) → Payoffs
 
 ---
 
@@ -72,7 +53,7 @@ $$\Pi(S_T) = a\,\bigl[\,c(S_T) - V_0\,\bigr]$$
 
 **Read it aloud:** take what the contract pays, subtract what was paid for it, then scale by the position — sign flipped if the position was sold rather than bought.
 
-Swap $c$ for $p$ or $f$ for the other two. All three tickets carry the same strike, so their diagrams lay over one another; a forward is normally written instead at the delivery price that makes $V_0$ zero, and which price that is, is [forward-price-by-cash-and-carry](03-forward-price-by-cash-and-carry.md).
+Swap $c$ for $p$ or $f$ for the other two. All three tickets carry the same strike, so their diagrams lay over one another; a forward is normally written instead at the delivery price that makes $V_0$ zero, and which price that is, is [Forward price](03-forward-price-by-cash-and-carry.md).
 
 Break-even is the price at which profit is zero. A long call bought for a positive premium has exactly one, and which number it is depends on where the premium is dated:
 
@@ -184,7 +165,7 @@ xychart-beta
 
 The upper V is the straddle's payoff, the lower V its profit after the $15.56, the flat line zero. Profit turns positive below $84.44 and above $115.56. A straddle is a position on movement, not direction: it pays if Acme ends far enough from $100.00 either way, and loses most if Acme sits still.
 
-Stacking runs the other way too. The code takes the call apart into 100,000 thin bets — one per price level above the strike, each paying a sliver if Acme clears it — and adding the slivers back rebuilds the call's payoff to within a billionth of a dollar. Any payoff drawn as a line can be built from simple pieces, and what the pieces cost is how the line gets a price. The simplest piece has a card of its own, [cash-or-nothing-digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md).
+Stacking runs the other way too. The code takes the call apart into 100,000 thin bets — one per price level above the strike, each paying a sliver if Acme clears it — and adding the slivers back rebuilds the call's payoff to within a billionth of a dollar. Any payoff drawn as a line can be built from simple pieces, and what the pieces cost is how the line gets a price. The simplest piece has a card of its own, [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md).
 
 ### Step 5: where the profit line crosses zero
 
@@ -194,7 +175,7 @@ The boundary cases are the interesting part. A ticket that cost nothing breaks e
 
 The code finds the same crossing a second way, by bisection: take a price where profit is negative and one where it is positive, halve the interval two hundred times, and read where the sign changes. The bisection knows nothing of strikes or premiums; it only asks the profit line for its sign. It lands on $109.227006, and so does the algebra.
 
-One route was not taken here. A payoff can also be built from the other end, by holding shares and cash and adjusting them as the price moves until the expiry-day cash matches. That is [replication-and-self-financing](06-replication-and-self-financing.md): how a shape acquires a price instead of only a picture.
+One route was not taken here. A payoff can also be built from the other end, by holding shares and cash and adjusting them as the price moves until the expiry-day cash matches. That is [Replication](06-replication-and-self-financing.md): how a shape acquires a price instead of only a picture.
 
 ---
 
@@ -664,7 +645,7 @@ The two outputs match line for line.
 - **Employee share options.** A grant is a call struck near the share price on the grant date. The flat stretch to the left is why a grant can be worth nothing for years, then a great deal quickly.
 - **Insurance.** A policy with an excess pays the loss above a threshold and nothing below: the same positive-part rule, with a loss in place of a price. An airline's call on jet fuel is the same ticket, capping the price paid without forcing the purchase.
 - **Structured deposits.** "Your money back, plus a share of the index" is a bond plus a call sold as one product: two payoff lines added, each with a cost.
-- **The rest of this shelf.** [no-arbitrage-and-the-law-of-one-price](02-no-arbitrage-and-the-law-of-one-price.md) turns shapes into prices, and [state-prices-and-risk-neutral-pricing-in-one-period](07-state-prices-and-risk-neutral-pricing-in-one-period.md) prices each ending separately — what the stack of thin bets was pointing at.
+- **The rest of this shelf.** [No arbitrage](02-no-arbitrage-and-the-law-of-one-price.md) turns shapes into prices, and [State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md) prices each ending separately — what the stack of thin bets was pointing at.
 
 **Conventions verified 14 Sep 2026:** one listed US equity option contract covers 100 shares, so a screen price is per share and the cash paid is a hundred times it; listed equity options are normally American-style, usable any day up to expiry, while most index options are European and cash-settled.
 
@@ -675,11 +656,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [negative-numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md): every one of these diagrams runs below zero, and the short side is the long side multiplied by −1. Losses written as negative numbers are what let one identity cover both sides of a contract.
+- [Negative numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md): every one of these diagrams runs below zero, and the short side is the long side multiplied by −1. Losses written as negative numbers are what let one identity cover both sides of a contract.
 
 ## Where this goes next
 
-- [no-arbitrage-and-the-law-of-one-price](02-no-arbitrage-and-the-law-of-one-price.md): the rule that two contracts paying the same cash in every ending must cost the same today — the step from a shape to a price.
+- [No arbitrage](02-no-arbitrage-and-the-law-of-one-price.md): the rule that two contracts paying the same cash in every ending must cost the same today — the step from a shape to a price.
 
 The $9.23 and $6.33 used here were quoted, never justified. What forces those two numbers to be what they are is the next card, and the identity in Step 3 is the lever it uses.
 

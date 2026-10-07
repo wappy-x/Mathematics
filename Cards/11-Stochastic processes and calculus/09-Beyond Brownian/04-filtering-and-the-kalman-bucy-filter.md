@@ -1,24 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Beyond Brownian
-topic: Reading a rate through noise
-item: Filtering
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/05-ornstein-uhlenbeck-and-cir-processes|ornstein-uhlenbeck-and-cir-processes]]"
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/08-hidden-markov-models|hidden-markov-models]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/03-multiple-regression-and-gauss-markov|multiple-regression-and-gauss-markov]]"
-next:
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/07-kalman-filter|kalman-filter]]"
-tags: [mathematics, stochastic processes and calculus, filtering-and-the-kalman-bucy-filter]
----
-
 # Filtering: estimating a hidden state from noisy observations in continuous time
 
-Stochastic processes and calculus → Beyond Brownian → Reading a rate through noise → Filtering
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Beyond Brownian](../../../SYLLABUS.md#w11-s09) → Filtering
 
 ---
 
@@ -53,7 +35,7 @@ Orange: that day's average quote, every third trading day, jumping between 3.28 
 
 ## The formula
 
-Notation first, in words. Time $t$ is in years, with 250 trading days a year, so one day is $\Delta$ = 1/250 = 0.004 years. The hidden rate at time $t$ is $X_t$, in percentage points. It follows the Ornstein-Uhlenbeck equation of [ornstein-uhlenbeck-and-cir-processes](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md):
+Notation first, in words. Time $t$ is in years, with 250 trading days a year, so one day is $\Delta$ = 1/250 = 0.004 years. The hidden rate at time $t$ is $X_t$, in percentage points. It follows the Ornstein-Uhlenbeck equation of [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md):
 
 $$dX_t = -a\,(X_t - \theta)\,dt + \sigma\,dW_t .$$
 
@@ -63,7 +45,7 @@ $$dY_t = X_t\,dt + \rho\,dB_t .$$
 
 **Read it aloud:** over the next instant, the quote total grows by the true rate times the instant, plus noise. $B_t$ is a second Brownian motion, independent of $W_t$, and $\rho$ sets the size of the quote noise. One day's average quote is the day's average rate plus an error of standard deviation $\rho/\sqrt{\Delta}$, here $s$ = 0.5 points, so $\rho^2 = s^2\Delta$ = 0.001.
 
-"What the quotes have shown by time $t$" is the filtration of the quotes, $\mathcal{F}^Y_t$ ([filtrations-and-information](../01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md)). The filter is the conditional mean and variance given it:
+"What the quotes have shown by time $t$" is the filtration of the quotes, $\mathcal{F}^Y_t$ ([Filtrations](../01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md)). The filter is the conditional mean and variance given it:
 
 $$m_t = E[X_t \mid \mathcal{F}^Y_t], \qquad P_t = E[(X_t - m_t)^2] .$$
 
@@ -119,11 +101,11 @@ The rate is linear in its normal shocks and the quotes are linear in the rate pl
 
 ### Step 1: one quote is a regression
 
-Before a quote, the rate has mean $m$ and variance $P$. A quote $y = X + \text{error}$ arrives, with error variance $R$, independent of the rate. The best guess of $X$ given $y$ is a straight line in $y$ with slope $k = \operatorname{Cov}(X, y)/\operatorname{Var}(y)$, exactly as in least squares ([multiple-regression-and-gauss-markov](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md)): the filter's gain is a regression coefficient. Here $\operatorname{Cov}(X, y) = P$ and $\operatorname{Var}(y) = P + R$, so
+Before a quote, the rate has mean $m$ and variance $P$. A quote $y = X + \text{error}$ arrives, with error variance $R$, independent of the rate. The best guess of $X$ given $y$ is a straight line in $y$ with slope $k = \operatorname{Cov}(X, y)/\operatorname{Var}(y)$, exactly as in least squares ([Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md)): the filter's gain is a regression coefficient. Here $\operatorname{Cov}(X, y) = P$ and $\operatorname{Var}(y) = P + R$, so
 
 $$m^{\text{new}} = m + k\,(y - m), \qquad k = \frac{P}{P+R}, \qquad P^{\text{new}} = (1-k)\,P = \frac{PR}{P+R} .$$
 
-Why this is the conditional mean, not just the best straight line: the leftover $X - m - k(y - m)$ has zero correlation with $y$ by the choice of $k$, and jointly normal variables with zero correlation are independent ([bivariate-normal-and-conditioning](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)), so the quote says nothing more about the leftover. Its variance is $P - P^2/(P+R)$, which does not depend on $y$: the uncertainty after a quote is known before the quote is seen.
+Why this is the conditional mean, not just the best straight line: the leftover $X - m - k(y - m)$ has zero correlation with $y$ by the choice of $k$, and jointly normal variables with zero correlation are independent ([Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)), so the quote says nothing more about the leftover. Its variance is $P - P^2/(P+R)$, which does not depend on $y$: the uncertainty after a quote is known before the quote is seen.
 
 ### Step 2: time passes between quotes
 
@@ -131,7 +113,7 @@ Over a step $h$ the Ornstein-Uhlenbeck card gives the rate's exact move: the gap
 
 $$m \to \theta + \varphi\,(m - \theta), \qquad P \to \varphi^2 P + q_h .$$
 
-Predict, update, predict again: that is the discrete Kalman filter. It is the forward algorithm of [hidden-markov-models](../03-Markov%20Chains/08-hidden-markov-models.md) with a normal law in place of a table of chances.
+Predict, update, predict again: that is the discrete Kalman filter. It is the forward algorithm of [Hidden Markov models](../03-Markov%20Chains/08-hidden-markov-models.md) with a normal law in place of a table of chances.
 
 ### Step 3: shrink the step
 
@@ -163,7 +145,7 @@ A second road, with no limits taken. Take any filter of the same shape with gain
 
 $$de_t = -(a + K_t)\,e_t\,dt + \sigma\,dW_t - K_t\,\rho\,dB_t .$$
 
-Ito's lemma ([itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md)) on $e_t^2$ adds the squared noise sizes, $\sigma^2 + K_t^2\rho^2$, because the two Brownian motions are independent. Take expectations, where the Ito integrals have mean zero:
+Ito's lemma ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)) on $e_t^2$ adds the squared noise sizes, $\sigma^2 + K_t^2\rho^2$, because the two Brownian motions are independent. Take expectations, where the Ito integrals have mean zero:
 
 $$\frac{d}{dt}E[e_t^2] = -2(a + K_t)\,E[e_t^2] + \sigma^2 + K_t^2\rho^2 .$$
 
@@ -184,7 +166,7 @@ In the long run the estimate's own pull is $a + K_\infty = \lambda$, so $m_t$ is
 
 **1. Finite grids give exact linear conditioning.** Fix $t$ and a grid $0 = t_0 < \dots < t_n = t$. $X_t$ and the increments $Y_{t_{j+1}} - Y_{t_j}$ are jointly normal, being linear in the normal start and the two Brownian motions. Let $\mathcal{G}_n$ be the sigma-algebra the increments generate. By Step 1's argument in many dimensions, $E[X_t \mid \mathcal{G}_n]$ is linear in them and the conditional variance $\Pi_n$ is a number, not random.
 
-**2. Finer grids, more information.** On dyadic grids, each refining the last, $\mathcal{G}_n$ grows with $n$. $Y$ has continuous paths, so its dyadic values fix the path on $[0, t]$, and the $\mathcal{G}_n$ together generate $\mathcal{F}^Y_t$. The sequence $E[X_t \mid \mathcal{G}_n]$ is a martingale bounded in mean square, so by martingale convergence ([martingale-convergence](../02-Martingales/04-martingale-convergence.md)) it converges in mean square to $E[X_t \mid \mathcal{F}^Y_t]$, and $\Pi_n$ decreases to the conditional variance given $\mathcal{F}^Y_t$, again a number.
+**2. Finer grids, more information.** On dyadic grids, each refining the last, $\mathcal{G}_n$ grows with $n$. $Y$ has continuous paths, so its dyadic values fix the path on $[0, t]$, and the $\mathcal{G}_n$ together generate $\mathcal{F}^Y_t$. The sequence $E[X_t \mid \mathcal{G}_n]$ is a martingale bounded in mean square, so by martingale convergence ([Martingale convergence](../02-Martingales/04-martingale-convergence.md)) it converges in mean square to $E[X_t \mid \mathcal{F}^Y_t]$, and $\Pi_n$ decreases to the conditional variance given $\mathcal{F}^Y_t$, again a number.
 
 **3. The limit is the filter.** On each grid, Steps 1 and 2 compute the conditional law, up to a term of order $h$ from the gap between a step's average rate and its end rate. Step 3 shows the recursions converge to the two filter equations as $h \to 0$, and Step 5 shows no filter of that shape beats $P_t$.
 
@@ -681,8 +663,8 @@ The two outputs agree line for line: both draw the same SplitMix64 stream and do
 
 - **Navigation.** Kalman's filter estimated the Apollo spacecraft's position; a phone blends satellite fixes with motion sensors the same way.
 - **Interest-rate models.** Short rates are not observed directly. Ornstein-Uhlenbeck and Cox-Ingersoll-Ross models are fitted to bond yields through a Kalman filter, the yields serving as noisy quotes.
-- **Hedge ratios that drift.** In pairs trading the ratio between two prices is a hidden state filtered from daily prices: [kalman-filter-for-dynamic-hedge-ratios](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/07-kalman-filter-for-dynamic-hedge-ratios.md).
-- **Control under noise.** Steering a linear-normal system with a quadratic cost, seen through noisy sensors, splits in two: filter the state, then control the estimate as if it were exact. The control half is [stochastic-control-and-the-hjb-equation](03-stochastic-control-and-the-hjb-equation.md).
+- **Hedge ratios that drift.** In pairs trading the ratio between two prices is a hidden state filtered from daily prices: [A moving hedge ratio](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/07-kalman-filter-for-dynamic-hedge-ratios.md).
+- **Control under noise.** Steering a linear-normal system with a quadratic cost, seen through noisy sensors, splits in two: filter the state, then control the estimate as if it were exact. The control half is [Stochastic control](03-stochastic-control-and-the-hjb-equation.md).
 
 > **Say it back**
 > A hidden rate follows a linear equation with normal noise and is seen through quotes with normal noise. So the rate given the quotes is normal, tracked by two numbers: the estimate and its variance. Each quote moves the estimate by a gain times the surprise; the gain, variance over quote noise, is a regression coefficient. Shrinking the time between quotes turns the discrete Kalman filter into the Kalman-Bucy filter, whose variance follows the Riccati equation, fixed before any data arrives. Here it settles at 0.029686, an error of 0.17 points.
@@ -691,13 +673,13 @@ The two outputs agree line for line: both draw the same SplitMix64 stream and do
 
 ## What this builds on
 
-- [ornstein-uhlenbeck-and-cir-processes](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): the hidden rate's equation and its exact one-step law, used in Step 2.
-- [hidden-markov-models](../03-Markov%20Chains/08-hidden-markov-models.md): filtering a hidden chain by a forward recursion; this card does the same with a normal law in place of a table.
-- [multiple-regression-and-gauss-markov](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md): the best linear predictor, whose coefficient is the gain of Step 1.
+- [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): the hidden rate's equation and its exact one-step law, used in Step 2.
+- [Hidden Markov models](../03-Markov%20Chains/08-hidden-markov-models.md): filtering a hidden chain by a forward recursion; this card does the same with a normal law in place of a table.
+- [Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md): the best linear predictor, whose coefficient is the gain of Step 1.
 
 ## Where this goes next
 
-- kalman-filter: the discrete filter with many hidden states at once, in matrices, as engineers run it.
+- The Kalman filter: the discrete filter with many hidden states at once, in matrices, as engineers run it.
 
 This card tracks one hidden number with a known model; it leaves open how to track several at once and run the filter step by step on a computer, which the engineering card answers.
 

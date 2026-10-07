@@ -1,23 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Nonlinear Dynamics in the Plane
-topic: Energy that only pauses
-item: LaSalle's principle
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/04-lyapunov-functions|lyapunov-functions]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/03-the-nonlinear-pendulum|the-nonlinear-pendulum]]"
-next:
-  - "[[Cards/13-Engineering mathematics/10-Robustness and Adaptation/05-passivity-and-absolute-stability|passivity-and-absolute-stability]]"
-tags: [mathematics, differential equations and dynamics, lasalle-and-the-damped-pendulum]
----
-
 # LaSalle's principle: when the energy only pauses on a thin set, solutions still end where they can stay on it
 
-Differential equations and dynamics → Nonlinear Dynamics in the Plane → Energy that only pauses → LaSalle's principle
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → LaSalle's principle
 
 ---
 
@@ -25,7 +8,7 @@ Differential equations and dynamics → Nonlinear Dynamics in the Plane → Ener
 
 A playground swing hangs from rigid rods 1 m long. Pull the seat back to 60 degrees and let go. Air and the pivots drag on it, more at higher speed. It ends hanging straight down, yet the equation of motion has no formula solution to prove it.
 
-Energy is the natural witness: drag only takes it, so it never rises. But at the release and each turnaround the seat is still for an instant, drag does nothing, and the energy pauses. The energy test of [lyapunov-functions](04-lyapunov-functions.md) needs the energy to fall at every moment away from rest, so it gives no verdict.
+Energy is the natural witness: drag only takes it, so it never rises. But at the release and each turnaround the seat is still for an instant, drag does nothing, and the energy pauses. The energy test of [Lyapunov functions](04-lyapunov-functions.md) needs the energy to fall at every moment away from rest, so it gives no verdict.
 
 The way out: a pause is not a place to stay. At a turnaround gravity still pulls the seat off. Only hanging straight down is a still position gravity leaves alone. Joseph LaSalle made this a theorem in 1960: **LaSalle's principle**.
 
@@ -56,7 +39,7 @@ The line is the energy V: steep while the seat is fast, flat near the turnaround
 
 ## The formula
 
-A prime means a rate, as across this wing: θ′ is how fast the angle changes, V′ how fast the energy does. From [the-nonlinear-pendulum](03-the-nonlinear-pendulum.md), with drag added:
+A prime means a rate, as across this wing: θ′ is how fast the angle changes, V′ how fast the energy does. From [The pendulum](03-the-nonlinear-pendulum.md), with drag added:
 
 $$\theta'' + c\,\theta' + \sin\theta = 0, \qquad v = \theta'$$
 
@@ -132,13 +115,13 @@ Let x(t) be the motion from a start in K, and φ(s, p) the state at time s of th
 
 ### Step 4: only hanging at rest can stay on the pause line
 
-A motion staying on v = 0 has θ′ = 0, so θ is constant, and v′ = −sin θ must be 0. Within ±π only θ = 0 works. So M is the point (0, 0): the swing approaches hanging at rest. With the stay-near half from [lyapunov-functions](04-lyapunov-functions.md), the bottom is **asymptotically stable**: nearby motions stay near and settle.
+A motion staying on v = 0 has θ′ = 0, so θ is constant, and v′ = −sin θ must be 0. Within ±π only θ = 0 works. So M is the point (0, 0): the swing approaches hanging at rest. With the stay-near half from [Lyapunov functions](04-lyapunov-functions.md), the bottom is **asymptotically stable**: nearby motions stay near and settle.
 
 ### Step 5: the eye is inside the basin
 
 Only one fact about 60° was used: its energy is below 2. So every start within ±π below energy 2 ends at (0, 0). Since 1 + cos θ = 2 cos^2(θ/2), the edge V = 2 is v = ±2 cos(θ/2): the eye. It lies inside the **basin**, the starts that end at rest, but is not all of it: a push of speed 3 from the bottom, energy 4.500, loses enough to drag on the way up to fall back.
 
-A second road: linearise at (0, 0) ([linearisation-and-the-jacobian](02-linearisation-and-the-jacobian.md)). Trace −c and determinant 1 give λ^2 + 0.5λ + 1 = 0, so λ = −0.250 ± 0.9682i. That covers only starts near rest; LaSalle covers the eye.
+A second road: linearise at (0, 0) ([Linearisation](02-linearisation-and-the-jacobian.md)). Trace −c and determinant 1 give λ^2 + 0.5λ + 1 = 0, so λ = −0.250 ± 0.9682i. That covers only starts near rest; LaSalle covers the eye.
 
 ---
 
@@ -387,7 +370,7 @@ The two outputs match line for line.
 - **Power grids.** A generator's rotor angle obeys this law, the swing equation; an eye-like energy region bounds the fault it survives.
 - **Robot arms.** Drag added through velocity alone gives an energy rate like −c v^2; the settling proof is this card's.
 - **Checking a simulation.** Energy lost must equal the drag integral: 0.500000 against 0.500000 here.
-- **Limit sets.** Step 3's limit set is what [poincare-bendixson-and-bendixsons-criterion](09-poincare-bendixson-and-bendixsons-criterion.md) classifies; a closed loop, as in [limit-cycles-and-van-der-pol](08-limit-cycles-and-van-der-pol.md), can be one.
+- **Limit sets.** Step 3's limit set is what [Poincare-Bendixson](09-poincare-bendixson-and-bendixsons-criterion.md) classifies; a closed loop, as in [Limit cycles](08-limit-cycles-and-van-der-pol.md), can be one.
 
 > **Say it back**
 > The swing's energy drains at c times speed squared: it never rises, but pauses at each turnaround. Below the energy of upside down, the swing is trapped. Its late motion loses no energy, so it lies on the pause line for all time. Only hanging at rest can, so the swing ends there, as does every start in the eye.
@@ -396,12 +379,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [lyapunov-functions](04-lyapunov-functions.md): the energy test, and the stay-near half of the conclusion.
-- [the-nonlinear-pendulum](03-the-nonlinear-pendulum.md): the equation of motion, its time unit, its energy and its rest points.
+- [Lyapunov functions](04-lyapunov-functions.md): the energy test, and the stay-near half of the conclusion.
+- [The pendulum](03-the-nonlinear-pendulum.md): the equation of motion, its time unit, its energy and its rest points.
 
 ## Where this goes next
 
-- passivity-and-absolute-stability: systems that only store or burn energy, and feedback proved stable by the same pause-set argument.
+- Passivity: systems that only store or burn energy, and feedback proved stable by the same pause-set argument.
 
 Physics handed the swing its energy function; for a controller or a circuit with no obvious energy, the open question is how to build one whose rate is never positive, and passivity supplies it.
 

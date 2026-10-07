@@ -1,32 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: What Derivatives Tell You
-topic: Iterating to a standstill
-item: Fixed points
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/08-uniform-continuity-and-lipschitz|uniform-continuity-and-lipschitz]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/06-newtons-method|newtons-method]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/02-Existence, Uniqueness and Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem|lipschitz-and-the-picard-lindelof-theorem]]"
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/07-yield-from-price|yield-from-price]]"
-  - "[[Cards/15-Optimization/07-Dynamic Programming and Learning/04-the-bellman-operator-as-a-contraction|the-bellman-operator-as-a-contraction]]"
-  - "[[Cards/16-Numerical analysis/02-Root Finding and Fixed Points/06-fixed-point-iteration-and-contraction|fixed-point-iteration-and-contraction]]"
-  - "[[Cards/17-Topology/01-Metric Spaces/08-banach-fixed-point-in-metric-spaces|banach-fixed-point-in-metric-spaces]]"
-  - "[[Cards/17-Topology/04-Homotopy/08-brouwer-and-borsuk-ulam|brouwer-and-borsuk-ulam]]"
-  - "[[Cards/18-Functional analysis/03-Bounded Operators/06-neumann-series-and-inverting-close-to-the-identity|neumann-series-and-inverting-close-to-the-identity]]"
-tags:
-  - mathematics
-  - calculus-and-analysis
-  - fixed-point-iteration-and-the-contraction-principle
----
-
 # Fixed points: iterating a function until it stops moving, and the contraction rule that guarantees it
 
-Calculus and analysis → What Derivatives Tell You → Iterating to a standstill → Fixed points
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [What Derivatives Tell You](../../../SYLLABUS.md#w06-s03) → Fixed points
 
 ---
 
@@ -116,7 +90,7 @@ Terms that bunch up closer than any tolerance have a limit, because the real num
 
 ### Step 4: the limit is fixed, and it is the only one
 
-A contraction is Lipschitz with constant q ([uniform-continuity-and-lipschitz](../01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)), so continuous. The readings head for p, so their images head for g(p); but their images are the next readings, which head for p. So g(p) = p.
+A contraction is Lipschitz with constant q ([Uniform continuity](../01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)), so continuous. The readings head for p, so their images head for g(p); but their images are the next readings, which head for p. So g(p) = p.
 
 A second fixed point r would give |p − r| = |g(p) − g(r)| ≤ q |p − r|. A distance at most 0.841471 times itself is zero, so r = p.
 
@@ -143,7 +117,7 @@ Let g map [a, b] into itself with |g(x) − g(y)| ≤ q|x − y|, 0 ≤ q < 1, a
 
 ### Step 6: checking that cos is a contraction, with the derivative
 
-Two facts about cos on 0 to 1. It maps the interval into itself: cos falls from 1 at 0 to 0.540302 at 1. And the factor q: the mean value theorem ([mean-value-theorem](02-mean-value-theorem.md)) says a chord's slope equals the curve's slope at some point $c$ between the ends. The slope of cos is −sin, so
+Two facts about cos on 0 to 1. It maps the interval into itself: cos falls from 1 at 0 to 0.540302 at 1. And the factor q: the mean value theorem ([Mean value theorem](02-mean-value-theorem.md)) says a chord's slope equals the curve's slope at some point $c$ between the ends. The slope of cos is −sin, so
 
 $$|\cos x - \cos y| = |\sin c|\,|x - y| \le \sin 1\,|x - y|$$
 
@@ -151,7 +125,7 @@ since sin rises from 0 to 0.841471 across the interval. So q = sin 1. In general
 
 That q is a worst case. Near the answer each press shrinks the error by the slope there, sin p = 0.673612; the code measures 0.673611 at press 30.
 
-Newton's step ([newtons-method](06-newtons-method.md)) is itself a rule to press, built to have slope 0 at the root, so its error shrinks faster than any fixed factor.
+Newton's step ([Newton's method](06-newtons-method.md)) is itself a rule to press, built to have slope 0 at the root, so its error shrinks faster than any fixed factor.
 
 ---
 
@@ -387,7 +361,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Solving equations.** Rearrange to x = g(x) and the contraction test says which rearrangement to press; [yield-from-price](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md) finds a bond's yield this way.
+- **Solving equations.** Rearrange to x = g(x) and the contraction test says which rearrangement to press; [Yield from price](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md) finds a bond's yield this way.
 - **Differential equations.** Picard's method presses an integral rule on whole curves.
 - **Planning and ranking.** Value iteration and PageRank press rules that shrink by a discount or damping factor.
 
@@ -398,20 +372,20 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [uniform-continuity-and-lipschitz](../01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md): a Lipschitz bound on distances, and the continuity it brings, used in Step 4.
-- [newtons-method](06-newtons-method.md): an iteration whose rule is built to have slope 0 at the root, the fast case of this card's slow one.
+- [Uniform continuity](../01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md): a Lipschitz bound on distances, and the continuity it brings, used in Step 4.
+- [Newton's method](06-newtons-method.md): an iteration whose rule is built to have slope 0 at the root, the fast case of this card's slow one.
 
 ## Where this goes next
 
-- [lipschitz-and-the-picard-lindelof-theorem](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md): the theorem on curves: one solution per equation.
-- [yield-from-price](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md): a yield recovered by iteration.
-- the-bellman-operator-as-a-contraction: the discount factor as q.
-- fixed-point-iteration-and-contraction: rates, rounding and acceleration.
-- banach-fixed-point-in-metric-spaces: the same proof in any complete space.
-- brouwer-and-borsuk-ulam: fixed points without shrinking, or a way to find them.
-- neumann-series-and-inverting-close-to-the-identity: inverting a matrix by pressing.
+- [The Picard-Lindelof theorem](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md): the theorem on curves: one solution per equation.
+- [Yield from price](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md): a yield recovered by iteration.
+- The Bellman operator contracts: the discount factor as q.
+- Fixed points: rates, rounding and acceleration.
+- Banach's fixed point theorem: the same proof in any complete space.
+- Brouwer and Borsuk-Ulam: fixed points without shrinking, or a way to find them.
+- Neumann series: inverting a matrix by pressing.
 
-Whether the argument survives on curves and matrices, where distance must first be defined, is what banach-fixed-point-in-metric-spaces answers.
+Whether the argument survives on curves and matrices, where distance must first be defined, is what Banach's fixed point theorem answers.
 
 ---
 

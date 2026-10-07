@@ -1,25 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Series Solutions and Boundary Problems
-topic: Aiming at the far end
-item: Shooting
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/05-two-point-boundary-value-problems|two-point-boundary-value-problems]]"
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/04-runge-kutta-four|runge-kutta-four]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/07-hyperbolic-functions|hyperbolic-functions]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/06-newtons-method|newtons-method]]"
-next:
-  - "[[Cards/16-Numerical analysis/06-ODE Solvers/07-boundary-value-problems-shooting-and-collocation|boundary-value-problems-shooting-and-collocation]]"
-tags: [mathematics, differential equations and dynamics, the-shooting-method]
----
-
 # Shooting: guess the missing starting slope, integrate forward, see how far you miss, and correct
 
-Differential equations and dynamics → Series Solutions and Boundary Problems → Aiming at the far end → Shooting
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Series Solutions and Boundary Problems](../../../SYLLABUS.md#w08-s07) → Shooting
 
 ---
 
@@ -27,7 +8,7 @@ Differential equations and dynamics → Series Solutions and Boundary Problems �
 
 A cable 1 m long is stretched between two posts over a mat of springs. The left post holds it 1 cm above the mat, the right post 2 cm. The springs pull each piece down in proportion to its height, and the tension holds it by curving the cable upward just as much. With stiffness over tension equal to 1 per square metre, the rule is: the cable's bending at each point equals its height there.
 
-Both ends are pinned: a boundary value problem ([two-point-boundary-value-problems](05-two-point-boundary-value-problems.md)). A stepping method needs the height and the slope at the start. The height is known. The slope is not.
+Both ends are pinned: a boundary value problem ([Boundary value problems](05-two-point-boundary-value-problems.md)). A stepping method needs the height and the slope at the start. The height is known. The slope is not.
 
 So guess it, the way an archer aims. Pick a slope, step the cable out to the right post, see where it lands. Slope 0 lands at 1.543081 cm, short. Slope 1 lands at 2.718282 cm, over. Here the landing moves in a straight line with the slope, so two shots fix the answer: slope 0.38880097 lands at 2.00000000 cm. The method is called **shooting**, and each trial run a **shot**.
 
@@ -55,9 +36,9 @@ $$s_{\text{new}} = s_1 - g(s_1)\,\frac{s_1 - s_0}{g(s_1) - g(s_0)}.$$
 
 **Read it aloud:** move the aim from the last shot by its miss, divided by how much the miss changed per unit of aim between the last two shots.
 
-This is the **secant method**: Newton's method ([newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) with the derivative replaced by the slope through two recent shots.
+This is the **secant method**: Newton's method ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) with the derivative replaced by the slope through two recent shots.
 
-For the cable, $y'' = y$ with $y(0) = 1$ cm and $y(1) = 2$ cm, the closed form in cosh and sinh ([hyperbolic-functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)) gives the aim
+For the cable, $y'' = y$ with $y(0) = 1$ cm and $y(1) = 2$ cm, the closed form in cosh and sinh ([Hyperbolic functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)) gives the aim
 
 $$s = \frac{2 - \cosh 1}{\sinh 1} = 0.38880097.$$
 
@@ -75,7 +56,7 @@ $$s = \frac{2 - \cosh 1}{\sinh 1} = 0.38880097.$$
 
 - **Every shot must reach the far end.** Some nonlinear runs blow up before it; those aims have no landing.
 - **The landing must depend on the aim.** For $y'' = -\pi^2 y$ from height 0, every shot returns to 0: the miss never changes and the secant divides by zero.
-- **The far end must not be too sensitive.** With a fast-growing solution, the last digit of the aim swings the landing and rounding decides the answer; [finite-differences-for-boundary-problems](07-finite-differences-for-boundary-problems.md) avoids aiming.
+- **The far end must not be too sensitive.** With a fast-growing solution, the last digit of the aim swings the landing and rounding decides the answer; [Finite differences](07-finite-differences-for-boundary-problems.md) avoids aiming.
 - **The starting shots choose the answer.** A nonlinear problem can have several solutions; the secant finds one near its start, or none.
 
 ---
@@ -98,7 +79,7 @@ the only run with height 1 and slope $s$ at the left end. At the far end, $g(s) 
 
 The secant draws a line through two points of the miss. If the miss is a line, that line is the miss, and its zero is the answer: 0.456919 / 1.175201 = 0.38880097.
 
-Runge-Kutta four ([runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) on a linear rule is linear in its starting values, so the computed landing is a straight line too. The third shot lands at 2.00000000; only stepping error remains.
+Runge-Kutta four ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) on a linear rule is linear in its starting values, so the computed landing is a straight line too. The third shot lands at 2.00000000; only stepping error remains.
 
 ### Step 3: the stepping error passes to the aim, divided by the steepness
 
@@ -126,7 +107,7 @@ Try $y = 2\ln\cosh(\theta/4) - 2\ln\cosh(\theta(x - \tfrac12)/2)$, which is 0 at
 
 </details>
 
-Two roots mean two steady profiles: the cool one is the slab's resting state; the hot one, found from aims 10 and 12, is a balance any disturbance knocks off. Solving for all interior points at once, with no aiming, is [finite-differences-for-boundary-problems](07-finite-differences-for-boundary-problems.md).
+Two roots mean two steady profiles: the cool one is the slab's resting state; the hot one, found from aims 10 and 12, is a balance any disturbance knocks off. Solving for all interior points at once, with no aiming, is [Finite differences](07-finite-differences-for-boundary-problems.md).
 
 ---
 
@@ -154,7 +135,7 @@ The cable leaves the left post rising 0.3888 cm per metre and meets the right po
 | Shooting $y'' = -\pi^2 y$ from 0 at 1 | miss −1.000000 at s = 0 and at s = 1 | Every shot lands at 0; the secant divides by zero, and no aim exists |
 | Slab heating 4 times as fast | best landing −0.2630 for aims 0 to 30, never 0 | No steady state: the slab ignites |
 
-The second row is the shelf's house problem at its first eigenvalue: [eigenvalues-and-eigenfunctions](08-eigenvalues-and-eigenfunctions.md).
+The second row is the shelf's house problem at its first eigenvalue: [Eigenvalue problems](08-eigenvalues-and-eigenfunctions.md).
 
 ---
 
@@ -392,7 +373,7 @@ Orange: the miss for each aim. Green: zero, the target. The miss crosses zero tw
 
 - **Structures on soft ground.** Rails on ballast and pipelines on a seabed rest on springs, with both ends fixed: boundary problems like the cable.
 - **Stockpiles.** Hay, coal and wood chips ignite when no steady temperature profile exists, as for the slab heating 4 times as fast.
-- **Quantum bound states.** Shooting on the energy instead of the slope finds the energies at which a wave dies away at both ends, as in [eigenvalues-and-eigenfunctions](08-eigenvalues-and-eigenfunctions.md).
+- **Quantum bound states.** Shooting on the energy instead of the slope finds the energies at which a wave dies away at both ends, as in [Eigenvalue problems](08-eigenvalues-and-eigenfunctions.md).
 
 > **Say it back**
 > A boundary problem gives conditions at both ends, so a forward run lacks its starting slope. Shooting guesses it, runs forward, measures the miss and re-aims along the line through the last two shots. For a linear rule the miss is a straight line, so two shots give the exact slope: 0.38880097 for the cable. For a nonlinear rule the corrections repeat, four of them for the slab. The starting shots decide which solution is found.
@@ -401,14 +382,14 @@ Orange: the miss for each aim. Green: zero, the target. The miss crosses zero tw
 
 ## What this builds on
 
-- [two-point-boundary-value-problems](05-two-point-boundary-value-problems.md): problems pinned at both ends, with one solution, none or many.
-- [runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md): the forward run each shot fires, and its fourth-order error.
-- [hyperbolic-functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md): cosh and sinh, the cable's closed form.
-- [newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the root-finding step the secant copies without a derivative.
+- [Boundary value problems](05-two-point-boundary-value-problems.md): problems pinned at both ends, with one solution, none or many.
+- [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md): the forward run each shot fires, and its fourth-order error.
+- [Hyperbolic functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md): cosh and sinh, the cable's closed form.
+- [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the root-finding step the secant copies without a derivative.
 
 ## Where this goes next
 
-- boundary-value-problems-shooting-and-collocation: multiple shooting, which aims from several points at once, and collocation, which fits a curve to all conditions together.
+- Two-point boundary problems: multiple shooting, which aims from several points at once, and collocation, which fits a curve to all conditions together.
 
 Shooting fails when a tiny change of aim moves the landing enormously; that card splits the interval so the far end stops amplifying each error.
 

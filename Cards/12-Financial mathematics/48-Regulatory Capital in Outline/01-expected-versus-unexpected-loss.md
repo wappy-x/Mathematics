@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Regulatory Capital in Outline
-topic: The average and the tail of credit losses
-item: Expected and unexpected loss
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/01-default-probability-recovery-and-expected-loss|default-probability-recovery-and-expected-loss]]"
-next:
-  - "[[Cards/12-Financial mathematics/48-Regulatory Capital in Outline/02-basel-capital-and-risk-weighted-assets|basel-capital-and-risk-weighted-assets]]"
-tags: [mathematics, financial-mathematics, expected-versus-unexpected-loss]
----
-
 # Expected and unexpected loss: provisions cover the average, capital covers the surprise
 
-Financial mathematics → Regulatory Capital in Outline → The average and the tail of credit losses → Expected and unexpected loss
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Regulatory Capital in Outline](../../../SYLLABUS.md#w12-s48) → Expected and unexpected loss
 
 ---
 
@@ -54,7 +38,7 @@ Orange line: book B, where each borrower fails or not on its own. Every year lan
 
 ## The formula
 
-Notation first, in words. $L$ is the bank's credit loss over the year, in dollars: a random amount, not yet known. $\mathbb{E}[L]$ is its expectation, the long-run average over many such years ([default-probability-recovery-and-expected-loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md) builds it for one loan). $P(L \le x)$ is the chance the loss is at most $x$ dollars. PD, LGD and EAD are a loan's probability of default, loss given default and exposure at default, as on that card. $\alpha$ (alpha) is a confidence level the bank chooses, such as 99.9%. The capital sigma, $\sum$, means "add up over the loans", numbered $i = 1$ to $n$.
+Notation first, in words. $L$ is the bank's credit loss over the year, in dollars: a random amount, not yet known. $\mathbb{E}[L]$ is its expectation, the long-run average over many such years ([Default probability, recovery and expected loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md) builds it for one loan). $P(L \le x)$ is the chance the loss is at most $x$ dollars. PD, LGD and EAD are a loan's probability of default, loss given default and exposure at default, as on that card. $\alpha$ (alpha) is a confidence level the bank chooses, such as 99.9%. The capital sigma, $\sum$, means "add up over the loans", numbered $i = 1$ to $n$.
 
 $$\text{EL} = \mathbb{E}[L] = \sum_{i=1}^{n} \text{PD}_i \times \text{LGD}_i \times \text{EAD}_i$$
 
@@ -155,7 +139,7 @@ That is the reason for the subtraction. Capital does not need to cover the avera
 
 Split $1 billion into more, smaller loans that fail independently and the losses average out: some fail, most do not, and a year far from the average needs many unlucky draws at once. Book A (10 loans) has UL $72.00 million; book B (1,000 loans) has $6.00 million. A shared cause of default, such as a recession, does not average out, because it hits every loan in the same year. Book C has book B's loans and book B's EL, and UL of $45.60 million.
 
-The regulatory formula for credit capital builds exactly this: one shared economic factor, a 99.9% quantile, minus EL. It is taken apart in [vasicek-asrf-and-credit-capital](03-vasicek-asrf-and-credit-capital.md). How defaults move together in general is [default-correlation-and-joint-default](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/01-default-correlation-and-joint-default.md).
+The regulatory formula for credit capital builds exactly this: one shared economic factor, a 99.9% quantile, minus EL. It is taken apart in [The Basel credit formula](03-vasicek-asrf-and-credit-capital.md). How defaults move together in general is [Default correlation](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/01-default-correlation-and-joint-default.md).
 
 ---
 
@@ -630,9 +614,9 @@ Columns are in $ millions. "formula" is road 1; "EL" is road 2, the average over
 
 - **Loan pricing.** A bank's lending rate carries the expected-loss rate, PD × LGD, as a charge on top of its funding cost, plus a return on the capital the loan uses up. The first part pays for EL; the second pays the owners for carrying UL.
 - **Provisions in the accounts.** Accounting rules for loan losses, IFRS 9 internationally and CECL in the United States, make banks book an allowance for expected credit losses. That allowance is the EL side of this card, measured under accounting rules rather than the regulatory ones.
-- **Basel credit capital.** The Basel rules set capital for loans as the 99.9% one-year loss under a one-shared-factor model, minus EL. Since Basel II, EL is compared with provisions separately, and a shortfall is deducted from capital. See [vasicek-asrf-and-credit-capital](03-vasicek-asrf-and-credit-capital.md) for the formula and [basel-capital-and-risk-weighted-assets](02-basel-capital-and-risk-weighted-assets.md) for how that capital becomes a ratio.
+- **Basel credit capital.** The Basel rules set capital for loans as the 99.9% one-year loss under a one-shared-factor model, minus EL. Since Basel II, EL is compared with provisions separately, and a shortfall is deducted from capital. See [The Basel credit formula](03-vasicek-asrf-and-credit-capital.md) for the formula and [Basel capital](02-basel-capital-and-risk-weighted-assets.md) for how that capital becomes a ratio.
 - **Concentration limits.** Regulators cap how much a bank may lend to one borrower or one group. Force one above is why: a book of a few large loans needs far more capital for the same EL.
-- **Market risk.** The trading book asks the same question of price moves instead of defaults, with a different tail measure: [frtb-and-the-shift-to-expected-shortfall](04-frtb-and-the-shift-to-expected-shortfall.md).
+- **Market risk.** The trading book asks the same question of price moves instead of defaults, with a different tail measure: [Market-risk capital](04-frtb-and-the-shift-to-expected-shortfall.md).
 
 > **Say it back**
 > A loan book's expected loss is each loan's chance of default times the fraction lost times the money at stake, added up; averages add, so this needs no view on how defaults move together. The unexpected loss is a high quantile of the year's loss minus that average. Pricing and provisions pay for the average; capital covers the unexpected loss, so the bank survives every year but the rarest. The average is blind to clustering; the tail is ruled by it. Same $8 million EL, and UL anywhere from $6 million to $392 million.
@@ -641,12 +625,12 @@ Columns are in $ millions. "formula" is road 1; "EL" is road 2, the average over
 
 ## What this builds on
 
-- [default-probability-recovery-and-expected-loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md): PD, LGD, EAD and the expected loss of one loan. This card adds them over a book and asks what the average leaves out.
+- [Default probability, recovery and expected loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md): PD, LGD, EAD and the expected loss of one loan. This card adds them over a book and asks what the average leaves out.
 
 ## Where this goes next
 
-- [basel-capital-and-risk-weighted-assets](02-basel-capital-and-risk-weighted-assets.md): turns a capital amount into risk-weighted assets and the ratios a regulator checks.
-- [vasicek-asrf-and-credit-capital](03-vasicek-asrf-and-credit-capital.md): replaces this card's recession mixture with the one-factor model behind the Basel formula.
+- [Basel capital](02-basel-capital-and-risk-weighted-assets.md): turns a capital amount into risk-weighted assets and the ratios a regulator checks.
+- [The Basel credit formula](03-vasicek-asrf-and-credit-capital.md): replaces this card's recession mixture with the one-factor model behind the Basel formula.
 
 This card says capital should cover the unexpected loss; it leaves open how a regulator turns that amount into a rule every bank can be held to, which is the job of risk-weighted assets.
 

@@ -1,31 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Densities and Changing Measure
-topic: When a density must exist
-item: The Radon-Nikodym theorem
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/02-signed-measures-and-hahn-jordan|signed-measures-and-hahn-jordan]]"
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/06-l2-as-a-hilbert-space|l2-as-a-hilbert-space]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/03-monotone-convergence-theorem|monotone-convergence-theorem]]"
-next:
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/04-radon-nikodym-derivative|radon-nikodym-derivative]]"
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/05-lebesgue-decomposition|lebesgue-decomposition]]"
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/02-conditional-expectation-on-a-sigma-algebra|conditional-expectation-on-a-sigma-algebra]]"
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem|absolutely-continuous-functions-and-the-fundamental-theorem]]"
-  - "[[Cards/20-Harmonic analysis/06-Maximal Functions and Beyond/05-bochner-and-positive-definite-functions|bochner-and-positive-definite-functions]]"
-tags:
-  - mathematics
-  - measure and integration
-  - radon-nikodym-theorem
----
-
 # The Radon-Nikodym theorem: absolute continuity is exactly having a density, when both measures are sigma-finite
 
-Measure and integration → Densities and Changing Measure → When a density must exist → The Radon-Nikodym theorem
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Densities and Changing Measure](../../../SYLLABUS.md#w10-s08) → The Radon-Nikodym theorem
 
 ---
 
@@ -61,7 +36,7 @@ Bars: the loaded die. Line: the fair die at 1/6, drawn as 0.17. The density is b
 
 ## The formula
 
-Notation first. A measure space $(\Omega, \mathcal{F}, \mu)$ is a whole space $\Omega$, a sigma-algebra $\mathcal{F}$ (the collection of sets we allow ourselves to measure) and a measure $\mu$. A second measure $\nu$ on $\mathcal{F}$ is **absolutely continuous** with respect to $\mu$, written $\nu \ll \mu$, when $\mu(A) = 0$ forces $\nu(A) = 0$ ([absolutely-continuous-and-singular-measures](01-absolutely-continuous-and-singular-measures.md)). A measure is **sigma-finite** when $\Omega$ is a countable union of sets $E_1, E_2, \dots$ of finite size; length on the line is, with pieces $[k, k+1)$.
+Notation first. A measure space $(\Omega, \mathcal{F}, \mu)$ is a whole space $\Omega$, a sigma-algebra $\mathcal{F}$ (the collection of sets we allow ourselves to measure) and a measure $\mu$. A second measure $\nu$ on $\mathcal{F}$ is **absolutely continuous** with respect to $\mu$, written $\nu \ll \mu$, when $\mu(A) = 0$ forces $\nu(A) = 0$ ([Absolutely continuous and singular measures](01-absolutely-continuous-and-singular-measures.md)). A measure is **sigma-finite** when $\Omega$ is a countable union of sets $E_1, E_2, \dots$ of finite size; length on the line is, with pieces $[k, k+1)$.
 
 $$\nu \ll \mu \quad\Longleftrightarrow\quad \text{there is a measurable } f \ge 0 \text{ with } \nu(A) = \int_A f\,d\mu \text{ for every } A \in \mathcal{F} \qquad (\mu,\ \nu \text{ sigma-finite})$$
 
@@ -92,7 +67,7 @@ Right to left is easy: an integral over a μ-null set is zero. The theorem is le
 
 ### When it holds
 
-- **Absolute continuity, $\nu \ll \mu$.** A die $M$ that never shows 6 gives face 6 the chance 0, $Q$ gives it 0.4, and no factor times 0 makes 0.4. The best function that never overshoots collects 0.6 and strands 0.4; splitting off that part is [lebesgue-decomposition](05-lebesgue-decomposition.md).
+- **Absolute continuity, $\nu \ll \mu$.** A die $M$ that never shows 6 gives face 6 the chance 0, $Q$ gives it 0.4, and no factor times 0 makes 0.4. The best function that never overshoots collects 0.6 and strands 0.4; splitting off that part is [Lebesgue decomposition](05-lebesgue-decomposition.md).
 - **The reference μ is sigma-finite.** Counting measure $c$ on [0, 1] against length $\lambda$: only the empty set has count 0, so $\lambda \ll c$. But every point has length 0, forcing the factor to 0 everywhere, and the integral of 0 is 0, not 1.
 - **ν is sigma-finite.** This makes the density finite. On [0, 1], the measure giving every set of positive length the size infinity is absolutely continuous with respect to length, but its densities are infinite except on a null set.
 - **One sigma-algebra.** Both measures live on $\mathcal{F}$, and the density is measurable with respect to it; changing it on a μ-null set gives another version.
@@ -107,7 +82,7 @@ Collect every non-negative function whose integral against μ never exceeds ν o
 
 ### Step 1: the class of functions that never overshoot has a best member
 
-Let $\mathcal{G}$ be the measurable $g \ge 0$ with $\int_A g\,d\mu \le \nu(A)$ for every $A$ in $\mathcal{F}$; zero is one. The larger of two members at each point is a member: where $g_1$ is larger it stays under ν, and on the rest $g_2$ does. Let $m$ be the supremum (least upper bound) of $\int g\,d\mu$ over $\mathcal{G}$, at most $\nu(\Omega)$. Running maxima of members whose totals approach $m$ rise, and the monotone convergence theorem ([monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) carries the inequality on every set to the limit $f$. So $f$ is in $\mathcal{G}$ and its total is exactly $m$.
+Let $\mathcal{G}$ be the measurable $g \ge 0$ with $\int_A g\,d\mu \le \nu(A)$ for every $A$ in $\mathcal{F}$; zero is one. The larger of two members at each point is a member: where $g_1$ is larger it stays under ν, and on the rest $g_2$ does. Let $m$ be the supremum (least upper bound) of $\int g\,d\mu$ over $\mathcal{G}$, at most $\nu(\Omega)$. Running maxima of members whose totals approach $m$ rise, and the monotone convergence theorem ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) carries the inequality on every set to the limit $f$. So $f$ is in $\mathcal{G}$ and its total is exactly $m$.
 
 On the die, $m = 1$: the best member takes all of the loaded die's probability.
 
@@ -115,7 +90,7 @@ On the die, $m = 1$: the best member takes all of the loaded die's probability.
 
 The leftover $\nu_0(A) = \nu(A) - \int_A f\,d\mu$ is a measure, never negative. Suppose $\nu_0(\Omega) > 0$. With μ finite, pick $\varepsilon > 0$ with $\nu_0(\Omega) > \varepsilon\,\mu(\Omega)$.
 
-The difference $\nu_0 - \varepsilon\mu$ is a signed measure (it can be negative). The Hahn decomposition ([signed-measures-and-hahn-jordan](02-signed-measures-and-hahn-jordan.md)) splits $\Omega$ into a positive set $H$, where every subset has signed size at least 0, and a negative set $N$, where every subset has signed size at most 0. The whole space has positive signed size, so $H$ does too. Hence $\nu_0(H) > 0$, so $\nu(H) > 0$, so $\mu(H) > 0$: this is where absolute continuity enters.
+The difference $\nu_0 - \varepsilon\mu$ is a signed measure (it can be negative). The Hahn decomposition ([Signed measures](02-signed-measures-and-hahn-jordan.md)) splits $\Omega$ into a positive set $H$, where every subset has signed size at least 0, and a negative set $N$, where every subset has signed size at most 0. The whole space has positive signed size, so $H$ does too. Hence $\nu_0(H) > 0$, so $\nu(H) > 0$, so $\mu(H) > 0$: this is where absolute continuity enters.
 
 Raise $f$ by $\varepsilon$ on $H$. On any set $A$ the extra integral is $\varepsilon\,\mu(A \cap H)$, at most $\nu_0(A \cap H)$ since $A \cap H$ lies in the positive set. The raised function still never overshoots ν, and its total $m + \varepsilon\,\mu(H)$ beats $m$: a contradiction. So $\nu_0 = 0$ and $\nu(A) = \int_A f\,d\mu$ for every $A$.
 
@@ -191,7 +166,7 @@ Finite grids show the squeeze. Give each of $k$ equally spaced points the length
 
 **4. The leftover is a measure.** Put $\nu_0(A) = \nu(A) - \int_A f\,d\mu$, a difference of finite numbers, non-negative by step 3. It is countably additive because ν is and because $A \mapsto \int_A f\,d\mu$ is, by the term-by-term form of monotone convergence. And $\nu_0 \le \nu$, so $\nu_0 \ll \mu$.
 
-**5. The leftover is zero.** Suppose $\nu_0(\Omega) > 0$ and fix $\varepsilon > 0$ with $\varepsilon\,\mu(\Omega) < \nu_0(\Omega)$. The set function $\nu_0 - \varepsilon\mu$ is a finite signed measure, so it has a Hahn decomposition $\Omega = H \cup N$, disjoint, with $(\nu_0 - \varepsilon\mu)(A) \ge 0$ for $A \subseteq H$ and $\le 0$ for $A \subseteq N$ ([signed-measures-and-hahn-jordan](02-signed-measures-and-hahn-jordan.md)). Then $(\nu_0 - \varepsilon\mu)(H) = (\nu_0 - \varepsilon\mu)(\Omega) - (\nu_0 - \varepsilon\mu)(N) > 0$, so $\nu_0(H) > \varepsilon\,\mu(H) \ge 0$. By $\nu_0 \ll \mu$, $\mu(H) > 0$. Put $g = f + \varepsilon 1_H$. For any A, $\int_A g\,d\mu = \int_A f\,d\mu + \varepsilon\,\mu(A \cap H) \le \int_A f\,d\mu + \nu_0(A \cap H) \le \int_A f\,d\mu + \nu_0(A) = \nu(A)$, using that $A \cap H \subseteq H$ and that $\nu_0$ is a measure. So $g \in \mathcal{G}$ with $\int g\,d\mu = m + \varepsilon\,\mu(H) > m$, contradicting step 3. Hence $\nu_0 = 0$.
+**5. The leftover is zero.** Suppose $\nu_0(\Omega) > 0$ and fix $\varepsilon > 0$ with $\varepsilon\,\mu(\Omega) < \nu_0(\Omega)$. The set function $\nu_0 - \varepsilon\mu$ is a finite signed measure, so it has a Hahn decomposition $\Omega = H \cup N$, disjoint, with $(\nu_0 - \varepsilon\mu)(A) \ge 0$ for $A \subseteq H$ and $\le 0$ for $A \subseteq N$ ([Signed measures](02-signed-measures-and-hahn-jordan.md)). Then $(\nu_0 - \varepsilon\mu)(H) = (\nu_0 - \varepsilon\mu)(\Omega) - (\nu_0 - \varepsilon\mu)(N) > 0$, so $\nu_0(H) > \varepsilon\,\mu(H) \ge 0$. By $\nu_0 \ll \mu$, $\mu(H) > 0$. Put $g = f + \varepsilon 1_H$. For any A, $\int_A g\,d\mu = \int_A f\,d\mu + \varepsilon\,\mu(A \cap H) \le \int_A f\,d\mu + \nu_0(A \cap H) \le \int_A f\,d\mu + \nu_0(A) = \nu(A)$, using that $A \cap H \subseteq H$ and that $\nu_0$ is a measure. So $g \in \mathcal{G}$ with $\int g\,d\mu = m + \varepsilon\,\mu(H) > m$, contradicting step 3. Hence $\nu_0 = 0$.
 
 **6. A finite version.** $\{f = \infty\}$ lies inside $\{f \ge j\}$, of μ-size at most $\nu(\Omega)/j$ for every whole number j, so it is null; set $f = 0$ there.
 
@@ -206,13 +181,13 @@ Finite grids show the squeeze. Give each of $k$ equally spaced points the length
 <details>
 <summary>Another proof: von Neumann's L2 argument</summary>
 
-Put $\rho = \mu + \nu$, finite. The map $g \mapsto \int g\,d\nu$ on $L^2(\rho)$ is linear and, by Cauchy-Schwarz, bounded: $|\int g\,d\nu| \le \int |g|\,d\rho \le \rho(\Omega)^{1/2} \|g\|_{L^2(\rho)}$. Every bounded linear map on this complete inner-product space is an inner product with a fixed function ([l2-as-a-hilbert-space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md)), so there is $h$ with $\int g\,d\nu = \int g h\,d\rho$ for all $g$ in $L^2(\rho)$. Testing on $g = 1_A$ gives $0 \le \nu(A) \le \rho(A)$, which forces $0 \le h \le 1$ except on a ρ-null set. Rearranged, $\int g(1 - h)\,d\nu = \int g h\,d\mu$. On $Z = \{h = 1\}$, taking $g = 1_Z$ gives $\mu(Z) = 0$, so $\nu(Z) = 0$ by absolute continuity. Off Z, take $g = 1_A(1 + h + \dots + h^n)$: the left side is $\int_A (1 - h^{n+1})\,d\nu$, which rises to $\nu(A \setminus Z)$, and the right side rises to $\int_{A \setminus Z} h/(1 - h)\,d\mu$, both by monotone convergence. So $f = h/(1 - h)$ off Z, and 0 on Z, is the density.
+Put $\rho = \mu + \nu$, finite. The map $g \mapsto \int g\,d\nu$ on $L^2(\rho)$ is linear and, by Cauchy-Schwarz, bounded: $|\int g\,d\nu| \le \int |g|\,d\rho \le \rho(\Omega)^{1/2} \|g\|_{L^2(\rho)}$. Every bounded linear map on this complete inner-product space is an inner product with a fixed function ([L2 as a Hilbert space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md)), so there is $h$ with $\int g\,d\nu = \int g h\,d\rho$ for all $g$ in $L^2(\rho)$. Testing on $g = 1_A$ gives $0 \le \nu(A) \le \rho(A)$, which forces $0 \le h \le 1$ except on a ρ-null set. Rearranged, $\int g(1 - h)\,d\nu = \int g h\,d\mu$. On $Z = \{h = 1\}$, taking $g = 1_Z$ gives $\mu(Z) = 0$, so $\nu(Z) = 0$ by absolute continuity. Off Z, take $g = 1_A(1 + h + \dots + h^n)$: the left side is $\int_A (1 - h^{n+1})\,d\nu$, which rises to $\nu(A \setminus Z)$, and the right side rises to $\int_{A \setminus Z} h/(1 - h)\,d\mu$, both by monotone convergence. So $f = h/(1 - h)$ off Z, and 0 on Z, is the density.
 
 On the die, $h$ is the density of $Q$ against $P + Q$: 0.3750 on faces 1 to 4, 0.5455 on face 5 and 0.7059 on face 6. Then $h/(1 - h)$ is 0.6, 1.2, 2.4 again.
 
 </details>
 
-Working with the density once it exists is [radon-nikodym-derivative](04-radon-nikodym-derivative.md).
+Working with the density once it exists is [The Radon-Nikodym derivative](04-radon-nikodym-derivative.md).
 
 ---
 
@@ -644,11 +619,11 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Likelihood ratios in statistics.** A test weighs each outcome by the density of one model against the other: [densities-and-likelihood-ratios](06-densities-and-likelihood-ratios.md) and [likelihood-ratio-tests](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md).
-- **Importance sampling.** Draws from one distribution, reweighted by a density, estimate averages under another: [importance-sampling](../../09-Probability%20and%20statistics/11-Simulation/06-importance-sampling.md). The weight exists only if the drawing distribution is not zero where the target is not.
+- **Likelihood ratios in statistics.** A test weighs each outcome by the density of one model against the other: [Densities and likelihood ratios](06-densities-and-likelihood-ratios.md) and [Likelihood ratio tests](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md).
+- **Importance sampling.** Draws from one distribution, reweighted by a density, estimate averages under another: [Importance sampling](../../09-Probability%20and%20statistics/11-Simulation/06-importance-sampling.md). The weight exists only if the drawing distribution is not zero where the target is not.
 - **Probability densities themselves.** A density function is the density of a law against length; a probability mass function is the density against counting measure on the whole numbers, which is sigma-finite.
-- **Pricing.** Risk-neutral pricing reweights real-world probabilities by a density: [risk-neutral-measure-and-the-fundamental-theorems](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md).
-- **Conditional expectation.** An average given partial information is defined as a density on a smaller sigma-algebra, in [conditional-expectation-on-a-sigma-algebra](../09-Conditional%20Expectation/02-conditional-expectation-on-a-sigma-algebra.md).
+- **Pricing.** Risk-neutral pricing reweights real-world probabilities by a density: [The fundamental theorems](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md).
+- **Conditional expectation.** An average given partial information is defined as a density on a smaller sigma-algebra, in [Conditional expectation on a sigma-algebra](../09-Conditional%20Expectation/02-conditional-expectation-on-a-sigma-algebra.md).
 
 > **Say it back**
 > A density of ν against μ is a function whose integral over each set gives ν of that set. If one exists, ν ignores every set μ ignores. For sigma-finite measures that is enough: take the best function that never overshoots ν; the Hahn decomposition shows any leftover could be collected, so there is none. The density is unique except on a μ-null set. Without absolute continuity part of ν is stranded; without sigma-finiteness, as with counting measure against length, no density exists.
@@ -657,19 +632,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [signed-measures-and-hahn-jordan](02-signed-measures-and-hahn-jordan.md): the Hahn decomposition that finds where the leftover beats a multiple of μ.
-- [l2-as-a-hilbert-space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md): bounded linear maps as inner products, the engine of the folded L2 proof.
-- [monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md): carries the never-overshoot inequality to the limit, and glues the sigma-finite pieces.
+- [Signed measures](02-signed-measures-and-hahn-jordan.md): the Hahn decomposition that finds where the leftover beats a multiple of μ.
+- [L2 as a Hilbert space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md): bounded linear maps as inner products, the engine of the folded L2 proof.
+- [The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md): carries the never-overshoot inequality to the limit, and glues the sigma-finite pieces.
 
 ## Where this goes next
 
-- [radon-nikodym-derivative](04-radon-nikodym-derivative.md): the density as an object in its own right.
-- [lebesgue-decomposition](05-lebesgue-decomposition.md): what to do with the stranded part when absolute continuity fails.
-- [conditional-expectation-on-a-sigma-algebra](../09-Conditional%20Expectation/02-conditional-expectation-on-a-sigma-algebra.md): conditional expectation built as a density on a smaller sigma-algebra.
-- [absolutely-continuous-functions-and-the-fundamental-theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem.md): the same idea for functions on the line, where the density becomes an ordinary derivative.
-- bochner-and-positive-definite-functions: a positive-definite function as the Fourier transform of a measure; when that measure has a density against length, the density is an ordinary function behind it.
+- [The Radon-Nikodym derivative](04-radon-nikodym-derivative.md): the density as an object in its own right.
+- [Lebesgue decomposition](05-lebesgue-decomposition.md): what to do with the stranded part when absolute continuity fails.
+- [Conditional expectation on a sigma-algebra](../09-Conditional%20Expectation/02-conditional-expectation-on-a-sigma-algebra.md): conditional expectation built as a density on a smaller sigma-algebra.
+- [Absolutely continuous functions and the fundamental theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem.md): the same idea for functions on the line, where the density becomes an ordinary derivative.
+- Bochner's theorem: a positive-definite function as the Fourier transform of a measure; when that measure has a density against length, the density is an ordinary function behind it.
 
-The theorem guarantees a density but no formula for it; [radon-nikodym-derivative](04-radon-nikodym-derivative.md) takes the density as given and asks how it behaves.
+The theorem guarantees a density but no formula for it; [The Radon-Nikodym derivative](04-radon-nikodym-derivative.md) takes the density as given and asks how it behaves.
 
 ---
 

@@ -1,34 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Greeks by Numbers and Calibration
-topic: Fitting a model to quotes
-item: Calibration
-kind: method
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/05-root-finding-for-inverses|root-finding-for-inverses]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/01-least-squares-regression|least-squares-regression]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/06-multivariable-extrema|multivariable-extrema]]"
-next:
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/07-model-risk-and-parameter-stability|model-risk-and-parameter-stability]]"
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/04-svi-smile-fit|svi-smile-fit]]"
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/05-merton-greeks-hedge-error-and-calibration|merton-greeks-hedge-error-and-calibration]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/03-heston-greeks-and-calibration|heston-greeks-and-calibration]]"
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/08-calibrating-a-short-rate-model|calibrating-a-short-rate-model]]"
-  - "[[Cards/12-Financial mathematics/31-Forward-Rate Models/04-calibrating-a-market-model|calibrating-a-market-model]]"
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/04-asset-value-and-volatility-from-the-share-price|asset-value-and-volatility-from-the-share-price]]"
-  - "[[Cards/15-Optimization/02-Unconstrained Methods/09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt|nonlinear-least-squares-gauss-newton-and-levenberg-marquardt]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - calibration-as-least-squares
----
-
 # Calibration: choosing parameters so the model reprices the quotes
 
-Financial mathematics → Greeks by Numbers and Calibration → Fitting a model to quotes → Calibration
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Greeks by Numbers and Calibration](../../../SYLLABUS.md#w12-s07) → Calibration
 
 ---
 
@@ -38,7 +10,7 @@ A dealer's screen shows five one-year call options on Acme stock — a call bein
 
 The Black-Scholes model prices all five from two unquoted numbers: a volatility, how jumpy Acme's price is, and a dividend yield, the payout rate on the share. Neither is on the screen, and both must be chosen before anything else can be priced — a strike nobody quoted, a longer option, a package of several. The two are the model's **parameters**, called knobs from here on.
 
-Five prices, two knobs, and no exact answer. Inverting one quote into one volatility is clean root-finding ([root-finding-for-inverses](05-root-finding-for-inverses.md)); doing it to these five separately gives five different volatilities — 22%, 21%, 20%, 19% and 18.5% — because the market does not charge one volatility for every strike.
+Five prices, two knobs, and no exact answer. Inverting one quote into one volatility is clean root-finding ([Solving backwards](05-root-finding-for-inverses.md)); doing it to these five separately gives five different volatilities — 22%, 21%, 20%, 19% and 18.5% — because the market does not charge one volatility for every strike.
 
 So the question changes shape: not *which knobs reprice the quotes*, but *which come closest*, with "closest" spelled out in advance. That spelling out is most of the work: the scoring rule decides the answer, and two defensible rules on these five quotes give 18.39% and 18.58%.
 
@@ -90,7 +62,7 @@ The slope table has one row per quote and one column per knob, each entry divide
 
 $$J_{i1} = \frac{1}{s_i}\frac{\partial C_i}{\partial \sigma}, \qquad J_{i2} = \frac{1}{s_i}\frac{\partial C_i}{\partial q}$$
 
-The first derivative in each row is that quote's vega, the dollars it gains per one unit of volatility. At 20% volatility and a 2% payout the five vegas are $15.39, $28.92, $37.90, $38.11 and $31.42, and those same five numbers serve as the vega scales below. The second derivative is dollars per one unit of dividend yield, negative everywhere, a bigger payout draining the share before the option can be used. Both are Black-Scholes derivatives, written out in the checks and derived on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+The first derivative in each row is that quote's vega, the dollars it gains per one unit of volatility. At 20% volatility and a 2% payout the five vegas are $15.39, $28.92, $37.90, $38.11 and $31.42, and those same five numbers serve as the vega scales below. The second derivative is dollars per one unit of dividend yield, negative everywhere, a bigger payout draining the share before the option can be used. Both are Black-Scholes derivatives, written out in the checks and derived on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
 
 One step of the fit then solves a two-by-two system:
 
@@ -105,8 +77,8 @@ $J^{\mathsf T}J$ is the two-by-two table of column dot products, and $J^{\mathsf
 - **The quotes must be reachable.** One volatility and one payout produce only smile-free prices, so against a real smile the best fit still misses by up to 0.95 volatility points under dollar scales. No optimiser fixes that: it is the model's shortfall, not the search's.
 - **The scales must be stated.** Identical quotes give 18.39% under dollar scales and 18.58% under vega scales. Neither is wrong; an unstated choice is.
 - **The slope columns must be independent.** Two distinct strikes tell the two knobs apart. One quote does not, and the fit then returns whatever its start drifts to.
-- **The model price must be smooth in the knobs.** Black-Scholes prices are. A price from a simulation with fresh random numbers each call is not, and the fit chases the noise ([bump-and-revalue-and-common-random-numbers](01-bump-and-revalue-and-common-random-numbers.md) holds the fix: reuse the draws).
-- **The answer is local.** The loss can have several valleys, and this method walks down the one it starts in ([multivariable-extrema](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md)).
+- **The model price must be smooth in the knobs.** Black-Scholes prices are. A price from a simulation with fresh random numbers each call is not, and the fit chases the noise ([Bump and revalue](01-bump-and-revalue-and-common-random-numbers.md) holds the fix: reuse the draws).
+- **The answer is local.** The loss can have several valleys, and this method walks down the one it starts in ([Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md)).
 
 Conventions verified 19 September 2026: quotes are dollar prices of European calls, one year to expiry, volatility as a percent a year, the bank rate continuously compounded. Desks that quote in volatility rather than dollars fit the same loss with vega scales, the second fit below.
 
@@ -123,7 +95,7 @@ Squares are blind to sign, so a quote ten cents dear and one ten cents cheap bot
 <details>
 <summary>Why squares rather than the size of the miss</summary>
 
-Adding up unsigned misses is a defensible score, and desks sometimes use it. Its derivative jumps from $-1$ to $+1$ as a miss changes sign, so the loss gains creases and the step equations stop being linear. Squares give a smooth bowl. There is a statistical reading too: were each quote's error an independent bell-curve draw of width $s_i$, the squared sum would be the negative log-likelihood, so minimising it picks the most likely knobs ([least-squares-regression](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)). That reading is a loan from statistics, not a fact about quotes: a bid-ask spread is not a standard deviation.
+Adding up unsigned misses is a defensible score, and desks sometimes use it. Its derivative jumps from $-1$ to $+1$ as a miss changes sign, so the loss gains creases and the step equations stop being linear. Squares give a smooth bowl. There is a statistical reading too: were each quote's error an independent bell-curve draw of width $s_i$, the squared sum would be the negative log-likelihood, so minimising it picks the most likely knobs ([Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)). That reading is a loan from statistics, not a fact about quotes: a bid-ask spread is not a standard deviation.
 
 </details>
 
@@ -137,7 +109,7 @@ That is a straight-line stand-in for a curved model, trusted only nearby. Substi
 
 $$J^{\mathsf T}J\,d = -\,J^{\mathsf T}e$$
 
-These are the normal equations that fit a straight line through data ([least-squares-regression](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)), here solving for a step rather than a slope. Take the step, rebuild the slopes there, repeat: that is the Gauss-Newton method, and when it works it is fast. The five-quote fit below takes five accepted steps.
+These are the normal equations that fit a straight line through data ([Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)), here solving for a step rather than a slope. Take the step, rebuild the slopes there, repeat: that is the Gauss-Newton method, and when it works it is fast. The five-quote fit below takes five accepted steps.
 
 ### Step 2: damp the step, because the straight line was a lie
 
@@ -172,7 +144,7 @@ The slope and the step point into opposite half-spaces, which is what downhill m
 $$L(\theta + t\,d) = L(\theta) + t\,(g\cdot d) + o(t),$$
 so for every small enough fraction the loss falls, and tripling the damping shrinks the step towards nothing until the retry loop finds one.
 
-**What is not proved.** That the run reaches a minimum, that the minimum found is the lowest, or that the fitted knobs are the market's. A continuous loss does attain a smallest value on a closed bounded box of knobs ([multivariable-extrema](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md)); finding it is a separate matter.
+**What is not proved.** That the run reaches a minimum, that the minimum found is the lowest, or that the fitted knobs are the market's. A continuous loss does attain a smallest value on a closed bounded box of knobs ([Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md)); finding it is a separate matter.
 
 </details>
 
@@ -196,7 +168,7 @@ The rising line is the curve of perfect fits; the flat line is the payout that a
 
 Damping cannot supply what the quotes withhold. On the five zero-strike tickets Levenberg's $\lambda I$ still returns one well-defined step, and that step moves volatility by exactly 0.000000: nothing in the data points either way. Marquardt's diagonal damping returns no step at all: its determinant is 0.000000, since scaling a zero column leaves it zero. A unique step and an unidentified parameter sit together happily, which is why a converged optimiser is never on its own a reason to believe a number.
 
-A second road reaches the same fitted pair with none of this machinery: cover the knobs with a grid, keep the best corner, shrink the grid around it, repeat. No slopes, no damping, far slower, and it agrees to six decimals. Derivative-free and global searches belong to nonlinear-least-squares-gauss-newton-and-levenberg-marquardt.
+A second road reaches the same fitted pair with none of this machinery: cover the knobs with a grid, keep the best corner, shrink the grid around it, repeat. No slopes, no damping, far slower, and it agrees to six decimals. Derivative-free and global searches belong to Nonlinear least squares.
 
 ---
 
@@ -670,10 +642,10 @@ The two outputs match line for line, from two different bell curves and two diff
 ## Where you meet it in real life
 
 - **Every trading desk, every morning.** The model is fitted to the day's quotes before anything untraded is priced, so the fit decides what everything else is worth.
-- **The volatility smile.** Fitting a curve through one expiry's quotes, rather than one flat number, is the same objective with more knobs: [svi-smile-fit](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md).
-- **Richer models.** Jumps and moving volatility exist partly because one volatility leaves the 0.95-point wing miss above: [merton-greeks-hedge-error-and-calibration](../13-Local%20volatility%20and%20jumps/05-merton-greeks-hedge-error-and-calibration.md) and [heston-greeks-and-calibration](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/03-heston-greeks-and-calibration.md).
-- **Interest rates.** Short-rate and forward-rate models are fitted to quoted swaptions and caps the same way, with far more knobs and the same identifiability worries: [calibrating-a-short-rate-model](../30-Short-Rate%20Models/08-calibrating-a-short-rate-model.md).
-- **Credit from equity.** A company's assets are not quoted; its shares are. Backing asset value and asset volatility out of the share price is this method on two unknowns: [asset-value-and-volatility-from-the-share-price](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/04-asset-value-and-volatility-from-the-share-price.md).
+- **The volatility smile.** Fitting a curve through one expiry's quotes, rather than one flat number, is the same objective with more knobs: [The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md).
+- **Richer models.** Jumps and moving volatility exist partly because one volatility leaves the 0.95-point wing miss above: [Greeks under jumps](../13-Local%20volatility%20and%20jumps/05-merton-greeks-hedge-error-and-calibration.md) and [Heston Greeks and calibration](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/03-heston-greeks-and-calibration.md).
+- **Interest rates.** Short-rate and forward-rate models are fitted to quoted swaptions and caps the same way, with far more knobs and the same identifiability worries: [Calibrating Hull-White](../30-Short-Rate%20Models/08-calibrating-a-short-rate-model.md).
+- **Credit from equity.** A company's assets are not quoted; its shares are. Backing asset value and asset volatility out of the share price is this method on two unknowns: [Backing out the unobservable](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/04-asset-value-and-volatility-from-the-share-price.md).
 - **Everywhere outside finance.** Reaction rates from concentrations, orbits from telescope readings, camera lenses from photographs of grids: the same damped loop.
 
 > **Say it back**
@@ -683,22 +655,22 @@ The two outputs match line for line, from two different bell curves and two diff
 
 ## What this builds on
 
-- [root-finding-for-inverses](05-root-finding-for-inverses.md): one quote into one parameter, exactly. This card is that job once the quotes outnumber the parameters.
-- [least-squares-regression](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md): the normal equations, and why squared misses are the standard score.
-- [multivariable-extrema](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md): gradients, the difference between a flat spot and a lowest point, and why a closed bounded box has a smallest value.
+- [Solving backwards](05-root-finding-for-inverses.md): one quote into one parameter, exactly. This card is that job once the quotes outnumber the parameters.
+- [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md): the normal equations, and why squared misses are the standard score.
+- [Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md): gradients, the difference between a flat spot and a lowest point, and why a closed bounded box has a smallest value.
 
 ## Where this goes next
 
-- [model-risk-and-parameter-stability](07-model-risk-and-parameter-stability.md): the same fit run tomorrow, and what a parameter that jumps overnight is saying.
-- [svi-smile-fit](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): five parameters fitted to one expiry's smile, with no-arbitrage shackles.
-- [merton-greeks-hedge-error-and-calibration](../13-Local%20volatility%20and%20jumps/05-merton-greeks-hedge-error-and-calibration.md): jumps added, and the wing misses this card leaves behind.
-- [heston-greeks-and-calibration](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/03-heston-greeks-and-calibration.md): five knobs and a slow price, making calibration the day's real computing cost.
-- [calibrating-a-short-rate-model](../30-Short-Rate%20Models/08-calibrating-a-short-rate-model.md): the same loss over a term structure, instruments instead of strikes.
-- [calibrating-a-market-model](../31-Forward-Rate%20Models/04-calibrating-a-market-model.md): knobs that are whole functions, and a roughness penalty joining the loss.
-- [asset-value-and-volatility-from-the-share-price](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/04-asset-value-and-volatility-from-the-share-price.md): two unknowns, two equations, this method as the solver.
-- nonlinear-least-squares-gauss-newton-and-levenberg-marquardt: the algorithm on its own ground: convergence results, trust regions, derivative-free alternatives.
+- [Model risk](07-model-risk-and-parameter-stability.md): the same fit run tomorrow, and what a parameter that jumps overnight is saying.
+- [The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): five parameters fitted to one expiry's smile, with no-arbitrage shackles.
+- [Greeks under jumps](../13-Local%20volatility%20and%20jumps/05-merton-greeks-hedge-error-and-calibration.md): jumps added, and the wing misses this card leaves behind.
+- [Heston Greeks and calibration](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/03-heston-greeks-and-calibration.md): five knobs and a slow price, making calibration the day's real computing cost.
+- [Calibrating Hull-White](../30-Short-Rate%20Models/08-calibrating-a-short-rate-model.md): the same loss over a term structure, instruments instead of strikes.
+- [Calibrating a market model](../31-Forward-Rate%20Models/04-calibrating-a-market-model.md): knobs that are whole functions, and a roughness penalty joining the loss.
+- [Backing out the unobservable](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/04-asset-value-and-volatility-from-the-share-price.md): two unknowns, two equations, this method as the solver.
+- Nonlinear least squares: the algorithm on its own ground: convergence results, trust regions, derivative-free alternatives.
 
-The fit here was performed once, on one screen, and reported one pair of knobs; nothing in the loss says whether that pair survives the next screen, which is the question [model-risk-and-parameter-stability](07-model-risk-and-parameter-stability.md) takes up.
+The fit here was performed once, on one screen, and reported one pair of knobs; nothing in the loss says whether that pair survives the next screen, which is the question [Model risk](07-model-risk-and-parameter-stability.md) takes up.
 
 ---
 

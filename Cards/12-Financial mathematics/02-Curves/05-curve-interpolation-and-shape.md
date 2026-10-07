@@ -1,32 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Curves
-topic: Shape between the quotes
-item: Between the pillars
-kind: method
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/12-Financial mathematics/02-Curves/04-bootstrapping-the-discount-curve|bootstrapping-the-discount-curve]]"
-next:
-  - "[[Cards/12-Financial mathematics/33-Curves in Depth/03-nelson-siegel-and-svensson-fitting|nelson-siegel-and-svensson-fitting]]"
-  - "[[Cards/16-Numerical analysis/04-Interpolation and Approximation/05-splines|splines]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - curve-interpolation-and-shape
----
-
 # Between the pillars: log-linear, monotone convex and Nelson-Siegel, and what each does to forwards
 
-Financial mathematics → Curves → Shape between the quotes → Between the pillars
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves](../../../SYLLABUS.md#w12-s02) → Between the pillars
 
 ---
 
 ## General Overview
 
-A different morning, and a screen that reaches further out: a three-month deposit, then interest rate swaps at one, two, five, ten and thirty years. Bootstrapping turns those six quotes into six **discount factors**, each one the price today of a dollar due on that date ([bootstrapping-the-discount-curve](04-bootstrapping-the-discount-curve.md)).
+A different morning, and a screen that reaches further out: a three-month deposit, then interest rate swaps at one, two, five, ten and thirty years. Bootstrapping turns those six quotes into six **discount factors**, each one the price today of a dollar due on that date ([Bootstrapping](04-bootstrapping-the-discount-curve.md)).
 
 Six dates, six numbers. Written as **zero rates** — the one steady rate that grows a dollar today into the dollar due at that date — they read 4.30%, 4.00%, 3.80%, 3.90%, 4.20% and 4.50% a year. Those six dates are the **pillars** of the curve.
 
@@ -100,13 +80,13 @@ Both bracketed pieces average to zero across the gap, which is why the area — 
 
 ### When it holds
 
-- **The pillars are already exact.** The bootstrap that produced them used an interpolation rule inside itself, so it must be this same rule; change the rule afterwards and the pillars stop repricing the swaps they came from ([bootstrapping-the-discount-curve](04-bootstrapping-the-discount-curve.md)).
+- **The pillars are already exact.** The bootstrap that produced them used an interpolation rule inside itself, so it must be this same rule; change the rule afterwards and the pillars stop repricing the swaps they came from ([Bootstrapping](04-bootstrapping-the-discount-curve.md)).
 - **Dates sorted and distinct, discount factors positive.** Repeated dates divide by a zero gap length; a discount factor of zero or less has no logarithm.
 - **Inside the quoted range only.** The two exact rules say nothing past thirty years: extrapolation is a separate rule, and the usual one is to hold the last forward flat. Nelson-Siegel does run on, but only on the strength of its assumed shape.
-- **One curve, no spread.** These are one currency's risk-free discount factors, with no credit or collateral adjustment on top; a spread over this curve is measured separately ([z-spread-and-asset-swap-spread](06-z-spread-and-asset-swap-spread.md)).
+- **One curve, no spread.** These are one currency's risk-free discount factors, with no credit or collateral adjustment on top; a spread over this curve is measured separately ([Spreads over the curve](06-z-spread-and-asset-swap-spread.md)).
 - **Nelson-Siegel also assumes its own shape.** It says the whole curve is a level plus a fading piece plus one hump. When the market disagrees, the fit misses the quotes: by 1.5162 basis points here, which is 1,456.86 dollars on a 10,000,000.00 dollar payment due in a year.
 
-Conventions verified 14 Sep 2026: rates on this card are continuously compounded and times are in years. Market quotes carry day-count conventions that decide where the pillars fall, not what happens between them ([money-market-instruments-and-sofr](03-money-market-instruments-and-sofr.md)).
+Conventions verified 14 Sep 2026: rates on this card are continuously compounded and times are in years. Market quotes carry day-count conventions that decide where the pillars fall, not what happens between them ([Money markets](03-money-market-instruments-and-sofr.md)).
 
 ---
 
@@ -128,7 +108,7 @@ $$D(t) = D_{i-1}^{\,1-w}\,D_i^{\,w}.$$
 
 Every quote comes back exactly; every discount factor stays positive, because an exponential cannot be negative. It is one line of arithmetic, and it is the common default.
 
-What it does to forward rates is a staircase. Inside a gap the forward never moves; at a pillar it jumps. At ten years the log-linear forward steps from 4.5000% to 4.6500% — fifteen basis points from one day to the next, purely because a quote happens to land there. A forward rate agreement fixing just before that date and one fixing just after are priced apart by a step no market put there ([forward-rate-agreements](02-forward-rate-agreements.md)).
+What it does to forward rates is a staircase. Inside a gap the forward never moves; at a pillar it jumps. At ten years the log-linear forward steps from 4.5000% to 4.6500% — fifteen basis points from one day to the next, purely because a quote happens to land there. A forward rate agreement fixing just before that date and one fixing just after are priced apart by a step no market put there ([Forward rate agreements](02-forward-rate-agreements.md)).
 
 ### Step 2: the same areas, drawn as one continuous curve
 
@@ -202,7 +182,7 @@ xychart-beta
 
 First line, log-linear: sampled once a year, it looks like a slope, but between samples it is flat and it moves only at a pillar. Second line, monotone convex: continuous, and flat at 4.5300% from about a quarter of the way into the five-to-ten-year gap onward, which is the amendment holding a hump down. Third line, Nelson-Siegel: smooth throughout, and free to sit away from the other two because it is not pinned to the quotes. The first two carry all six quotes exactly. The third misses them by up to 1.5162 basis points, which is why it sits away from the others in places.
 
-The fourth candidate is a cubic spline through the zero rates, which is what a drawing program would do. It looks best of all on a chart of the curve and worst of all here: a forward rate is a derivative of what the spline drew, and a spline's derivative swings well outside its data, so the forwards ripple. That was Hagan and West's argument for building the forward curve first and the discount curve from it. The spline machinery itself is a card of its own (splines), and the tension spline is the version that pulls those ripples flat.
+The fourth candidate is a cubic spline through the zero rates, which is what a drawing program would do. It looks best of all on a chart of the curve and worst of all here: a forward rate is a derivative of what the spline drew, and a spline's derivative swings well outside its data, so the forwards ripple. That was Hagan and West's argument for building the forward curve first and the discount curve from it. The spline machinery itself is a card of its own (Cubic splines), and the tension spline is the version that pulls those ripples flat.
 
 ---
 
@@ -687,11 +667,11 @@ The two outputs match line for line: different languages, the same six roads, th
 
 ## Where you meet it in real life
 
-- **A curve build, every morning.** Every rates system asks which interpolation to use, and the answer is a setting saved in a file. Log-linear on discount factors and monotone convex on forwards are the two usual answers ([bootstrapping-the-discount-curve](04-bootstrapping-the-discount-curve.md)).
-- **Pricing a forward rate agreement.** Its rate is read off the curve between two future dates that are rarely pillars, so the number quoted to the client is partly the rule's ([forward-rate-agreements](02-forward-rate-agreements.md)).
+- **A curve build, every morning.** Every rates system asks which interpolation to use, and the answer is a setting saved in a file. Log-linear on discount factors and monotone convex on forwards are the two usual answers ([Bootstrapping](04-bootstrapping-the-discount-curve.md)).
+- **Pricing a forward rate agreement.** Its rate is read off the curve between two future dates that are rarely pillars, so the number quoted to the client is partly the rule's ([Forward rate agreements](02-forward-rate-agreements.md)).
 - **Published central bank curves.** Many central banks publish Nelson-Siegel or Svensson parameters rather than pillar-by-pillar discount factors; the BIS documentation below lists which country fits what.
 - **Risk reports.** A bucketed sensitivity asks what the book is worth if the five-year quote moves one basis point. Under a local rule only the neighbouring gaps move; under a fitted family the whole curve moves, and the report reads differently for the same book.
-- **Spread measurement.** A bond's spread is quoted over this curve, so whatever the rule invented between the pillars is inside the spread ([z-spread-and-asset-swap-spread](06-z-spread-and-asset-swap-spread.md)).
+- **Spread measurement.** A bond's spread is quoted over this curve, so whatever the rule invented between the pillars is inside the spread ([Spreads over the curve](06-z-spread-and-asset-swap-spread.md)).
 
 > **Say it back**
 > Quotes pin the curve down at a handful of dates and nowhere else. Between two pillars they fix only the average forward rate across the gap, so the shape inside it is a choice. Log-linear spreads that average flat, which reprices everything and leaves the forward curve a staircase that jumps at every pillar. Monotone convex keeps the same averages but draws a continuous forward through a rate at each pillar, flattening part of a gap wherever the plain parabola would invent a hump. Nelson-Siegel abandons the gaps and fits four numbers to the whole curve, which is smooth but misses the quotes. On one 10,000,000.00 dollar payment due in three years, the first two rules differ by 14,858.58 dollars.
@@ -700,13 +680,13 @@ The two outputs match line for line: different languages, the same six roads, th
 
 ## What this builds on
 
-- [bootstrapping-the-discount-curve](04-bootstrapping-the-discount-curve.md): where the six pillars come from, and why the interpolation rule is already inside the bootstrap that produced them.
-- [spot-forward-and-par-rates](01-spot-forward-and-par-rates.md): zero rates, forward rates and the discount factors they all describe — the vocabulary this card interpolates.
+- [Bootstrapping](04-bootstrapping-the-discount-curve.md): where the six pillars come from, and why the interpolation rule is already inside the bootstrap that produced them.
+- [Spot, forward and par rates](01-spot-forward-and-par-rates.md): zero rates, forward rates and the discount factors they all describe — the vocabulary this card interpolates.
 
 ## Where this goes next
 
-- [nelson-siegel-and-svensson-fitting](../33-Curves%20in%20Depth/03-nelson-siegel-and-svensson-fitting.md): the fitted family taken seriously — a second hump for the long end, weighting the quotes, and what the four numbers mean when they move day to day.
-- splines: the general machinery, including why a cubic spline's derivative ripples and what tension does about it.
+- [Fitting a curve with four or six parameters](../33-Curves%20in%20Depth/03-nelson-siegel-and-svensson-fitting.md): the fitted family taken seriously — a second hump for the long end, weighting the quotes, and what the four numbers mean when they move day to day.
+- Cubic splines: the general machinery, including why a cubic spline's derivative ripples and what tension does about it.
 
 This card trusted six quotes completely and asked only what to do between them; the next question is what to do when eighty quotes arrive and disagree with each other, which is where fitting a shape stops being a compromise and starts being the point.
 

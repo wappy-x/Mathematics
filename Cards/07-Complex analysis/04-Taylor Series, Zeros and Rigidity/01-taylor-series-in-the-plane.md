@@ -1,26 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Taylor Series, Zeros and Rigidity
-topic: Holomorphic means analytic
-item: Taylor series in the plane
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/06-derivatives-from-the-boundary|derivatives-from-the-boundary]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/02-complex-power-series|complex-power-series]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/05-taylor-series|taylor-series]]"
-next:
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/02-uniform-limits-of-holomorphic-functions|uniform-limits-of-holomorphic-functions]]"
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/03-zeros-and-the-identity-theorem|zeros-and-the-identity-theorem]]"
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/01-laurent-series|laurent-series]]"
-tags: [mathematics, complex analysis, taylor-series-in-the-plane]
----
-
 # Taylor series in the plane: a holomorphic function equals its power series out to the nearest singularity
 
-Complex analysis → Taylor Series, Zeros and Rigidity → Holomorphic means analytic → Taylor series in the plane
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Taylor Series, Zeros and Rigidity](../../../SYLLABUS.md#w07-s04) → Taylor series in the plane
 
 ---
 
@@ -46,7 +26,7 @@ To scale: 45 units per unit, 0 at (90, 120). The dashed circle about 0 has radiu
 
 ## The formula
 
-Notation first, in words. The loop integral sign ∮ is a contour integral once round a closed path, anticlockwise, as on [derivatives-from-the-boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md). $f^{(n)}(a)$ is the n-th complex derivative of $f$ at $a$.
+Notation first, in words. The loop integral sign ∮ is a contour integral once round a closed path, anticlockwise, as on [Derivatives from the boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md). $f^{(n)}(a)$ is the n-th complex derivative of $f$ at $a$.
 
 $$f(z) = \sum_{n=0}^{\infty} c_n (z - a)^n \quad\text{for } |z - a| < R, \qquad c_n = \frac{f^{(n)}(a)}{n!} = \frac{1}{2\pi i}\oint_{|w - a| = r} \frac{f(w)}{(w - a)^{n+1}}\,dw$$
 
@@ -87,7 +67,7 @@ Take a circle of radius $r$ about $a$, with $r$ below $R$. For any $z$ strictly 
 
 $$f(z) = \frac{1}{2\pi i}\oint_{|w - a| = r} \frac{f(w)}{w - z}\,dw.$$
 
-This is Cauchy's integral formula, proved on [derivatives-from-the-boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md).
+This is Cauchy's integral formula, proved on [Derivatives from the boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md).
 
 ### Step 2: expand the weight
 
@@ -107,7 +87,7 @@ Steps 1 to 3 needed only a holomorphic closed disc of radius $r$. Every $r$ belo
 
 ### Step 5: holomorphic equals analytic
 
-Steps 1 to 4 show holomorphic implies analytic. The reverse was shown on [complex-power-series](../02-Holomorphic%20Functions/02-complex-power-series.md). So one complex derivative brings infinitely many.
+Steps 1 to 4 show holomorphic implies analytic. The reverse was shown on [Power series in the plane](../02-Holomorphic%20Functions/02-complex-power-series.md). So one complex derivative brings infinitely many.
 
 <details>
 <summary>Detailed proof: the error bound and the term-by-term swap</summary>
@@ -375,7 +355,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Why a real series stops.** The series for arctan x, whose derivative is 1/(1 + x^2), stops at |x| = 1 for the same reason: the poles ±i.
-- **Rigidity.** A holomorphic function's values near one point fix it wherever it continues: [zeros-and-the-identity-theorem](03-zeros-and-the-identity-theorem.md) and [analytic-continuation](04-analytic-continuation.md).
+- **Rigidity.** A holomorphic function's values near one point fix it wherever it continues: [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md) and [Analytic continuation](04-analytic-continuation.md).
 
 > **Say it back**
 > Cauchy's formula writes a holomorphic function's value as a circle average. Expanding one over w − z as a geometric series turns it into a power series. The series is exact on every disc the function fills, and a pole stops it. For 1/(1 + z^2) the poles ±i give reach 1 about 0 and √5 about 2. Holomorphic and analytic are one property.
@@ -384,15 +364,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [derivatives-from-the-boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md): Cauchy's integral formula and its derivative form, the start of Step 1.
-- [complex-power-series](../02-Holomorphic%20Functions/02-complex-power-series.md): discs of convergence, and why a power series is holomorphic inside its own.
-- [taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the real Taylor series, whose radius this card explains.
+- [Derivatives from the boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md): Cauchy's integral formula and its derivative form, the start of Step 1.
+- [Power series in the plane](../02-Holomorphic%20Functions/02-complex-power-series.md): discs of convergence, and why a power series is holomorphic inside its own.
+- [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the real Taylor series, whose radius this card explains.
 
 ## Where this goes next
 
-- [uniform-limits-of-holomorphic-functions](02-uniform-limits-of-holomorphic-functions.md): limits of holomorphic functions stay holomorphic, by the same circle average.
-- [zeros-and-the-identity-theorem](03-zeros-and-the-identity-theorem.md): a power series' zeros are isolated, so a function is pinned by a small piece.
-- [laurent-series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md): past the pole, on a ring, a series needs negative powers.
+- [Limits of holomorphic functions](02-uniform-limits-of-holomorphic-functions.md): limits of holomorphic functions stay holomorphic, by the same circle average.
+- [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md): a power series' zeros are isolated, so a function is pinned by a small piece.
+- [Laurent series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md): past the pole, on a ring, a series needs negative powers.
 
 ---
 

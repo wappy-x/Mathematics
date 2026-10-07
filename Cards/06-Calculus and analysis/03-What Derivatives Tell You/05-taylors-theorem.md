@@ -1,36 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: What Derivatives Tell You
-topic: Polynomial stand-ins
-item: Taylor's theorem
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/08-higher-derivatives-and-concavity|higher-derivatives-and-concavity]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/02-mean-value-theorem|mean-value-theorem]]"
-next:
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/08-numerical-derivatives-and-sensitivity|numerical-derivatives-and-sensitivity]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/08-numerical-integration|numerical-integration]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/05-taylor-series|taylor-series]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/07-central-limit-theorem|central-limit-theorem]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/06-duration-and-convexity|duration-and-convexity]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/09-greeks-together-taylor-pnl|greeks-together-taylor-pnl]]"
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/03-volatility-surface-and-its-arbitrage-rules|volatility-surface-and-its-arbitrage-rules]]"
-  - "[[Cards/16-Numerical analysis/01-Floating Point and Error/04-truncation-versus-rounding-error|truncation-versus-rounding-error]]"
-  - "[[Cards/16-Numerical analysis/02-Root Finding and Fixed Points/02-newton-and-secant-with-convergence-orders|newton-and-secant-with-convergence-orders]]"
-  - "[[Cards/16-Numerical analysis/04-Interpolation and Approximation/03-polynomial-interpolation-error|polynomial-interpolation-error]]"
-  - "[[Cards/16-Numerical analysis/05-Quadrature/02-error-bounds-and-romberg|error-bounds-and-romberg]]"
-  - "[[Cards/16-Numerical analysis/06-ODE Solvers/01-runge-kutta-and-butcher-tableaux|runge-kutta-and-butcher-tableaux]]"
-  - "[[Cards/16-Numerical analysis/08-Derivatives by Machine/01-forward-backward-and-central-differences|forward-backward-and-central-differences]]"
-tags: [mathematics, calculus and analysis, taylors-theorem]
----
-
 # Taylor's theorem: the best polynomial stand-in and a bound on its error
 
-Calculus and analysis → What Derivatives Tell You → Polynomial stand-ins → Taylor's theorem
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [What Derivatives Tell You](../../../SYLLABUS.md#w06-s03) → Taylor's theorem
 
 ---
 
@@ -65,7 +35,7 @@ Orange is e^x, green the tangent line 1 + x, dark the degree-3 stand-in. All thr
 
 ## The formula
 
-Notation first, in words. The k-th derivative of f, the rate of change taken k times over, is written $f^{(k)}$; the brackets keep it from reading as a power, and $f^{(0)}$ is f itself ([higher-derivatives-and-concavity](../02-Derivatives/08-higher-derivatives-and-concavity.md)). The factorial k! is 1 × 2 × … × k, with 0! = 1.
+Notation first, in words. The k-th derivative of f, the rate of change taken k times over, is written $f^{(k)}$; the brackets keep it from reading as a power, and $f^{(0)}$ is f itself ([Second derivatives](../02-Derivatives/08-higher-derivatives-and-concavity.md)). The factorial k! is 1 × 2 × … × k, with 0! = 1.
 
 The **Taylor polynomial of degree n** of f at the anchor a:
 
@@ -97,7 +67,7 @@ So if $\lvert f^{(n+1)}\rvert \le M$ everywhere between a and x, then $\lvert R_
 - **f has n + 1 derivatives strictly between a and x, the n-th continuous up to both ends.** Drop this and the remainder need not look like a next term: the corner function in What breaks has remainder 0.1 and second derivative 0 wherever one exists.
 - **The ceiling covers the whole stretch.** A ceiling read at the anchor alone put a false ceiling on e^0.1, below the truth.
 - **Not a hypothesis: a small step.** The theorem holds at any x, but far from the anchor the bound is loose: at x = −2 the cubic reads −0.33 where e^x is 0.14.
-- **Not covered: n running forever.** Whether the terms summed forever give back f is for [taylor-series](../06-Series/05-taylor-series.md).
+- **Not covered: n running forever.** Whether the terms summed forever give back f is for [Taylor series](../06-Series/05-taylor-series.md).
 
 ---
 
@@ -105,7 +75,7 @@ So if $\lvert f^{(n+1)}\rvert \le M$ everywhere between a and x, then $\lvert R_
 
 ### Step 0: match more rates of change and the copy stays close longer
 
-A tangent line matches value and slope, then drifts as the curve bends ([linear-approximation-and-related-rates](01-linear-approximation-and-related-rates.md)). Match the bend too and the drift starts later. Each matched derivative removes one more power of the step from the error.
+A tangent line matches value and slope, then drifts as the curve bends ([Linear approximation](01-linear-approximation-and-related-rates.md)). Match the bend too and the drift starts later. Each matched derivative removes one more power of the step from the error.
 
 ### Step 1: the factorials make the derivatives match
 
@@ -115,7 +85,7 @@ For e^x at 0 every derivative is 1, so the coefficients are 1/k! and $P_3(0.1)$ 
 
 ### Step 2: the remainder is the next term, read somewhere in between
 
-For n = 0 the claim is $f(x) = f(a) + f'(\xi)h$: the mean value theorem ([mean-value-theorem](02-mean-value-theorem.md)). Taylor's theorem pushes it up n rungs.
+For n = 0 the claim is $f(x) = f(a) + f'(\xi)h$: the mean value theorem ([Mean value theorem](02-mean-value-theorem.md)). Taylor's theorem pushes it up n rungs.
 
 The proof in words: freeze the target x and slide the anchor to t. Measure how far the polynomial anchored at t falls short of f(x), less one extra next-power term whose constant makes the total 0 at t = a. It is also 0 at t = x. Rolle's theorem gives a flat point between; differentiated, the sum cancels in pairs, and the flat point forces the constant to be $f^{(n+1)}(\xi)$.
 
@@ -146,7 +116,7 @@ The degree-3 remainder carries the fourth power of the step, so halving the step
 
 The theorem only says $\xi$ exists. With the true e^0.1 in hand, solving $e^{\xi}$ × 0.000004167 = 0.000004251 gives $\xi$ = 0.020134, inside the stretch.
 
-A second route writes the remainder as an integral, by integrating by parts n times; error-bounds-and-romberg leans on that form.
+A second route writes the remainder as an integral, by integrating by parts n times; Error bounds and Romberg leans on that form.
 
 ---
 
@@ -398,9 +368,9 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Maths libraries.** An exponential routine shrinks its input to a short stretch near 0, then runs a polynomial whose length a remainder bound chose.
-- **Bond prices.** A price change for a small yield shift is read from the first two Taylor terms ([duration-and-convexity](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md)).
-- **Root finders.** Newton's method solves the degree-1 polynomial in place of the function ([newtons-method](06-newtons-method.md)).
-- **Ratios heading for 0 over 0.** Taylor polynomials show which part vanishes faster, the idea [lhopitals-rule](04-lhopitals-rule.md) packages as a rule.
+- **Bond prices.** A price change for a small yield shift is read from the first two Taylor terms ([Duration and convexity](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md)).
+- **Root finders.** Newton's method solves the degree-1 polynomial in place of the function ([Newton's method](06-newtons-method.md)).
+- **Ratios heading for 0 over 0.** Taylor polynomials show which part vanishes faster, the idea [L'Hopital's rule](04-lhopitals-rule.md) packages as a rule.
 
 > **Say it back**
 > A Taylor polynomial copies a function's value and first n derivatives at one anchor; the factorials make the copy exact. What it misses is the next term, its derivative read at an unknown point in between. Bound that derivative across the whole stretch and the error is bounded. For e^0.1, four terms and a two-sided remainder give a window whose ends both round to 1.105171.
@@ -409,27 +379,27 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [higher-derivatives-and-concavity](../02-Derivatives/08-higher-derivatives-and-concavity.md): derivatives taken again and again, the coefficients' raw material.
-- [mean-value-theorem](02-mean-value-theorem.md): the n = 0 case, and Rolle's theorem, which drives the proof.
+- [Second derivatives](../02-Derivatives/08-higher-derivatives-and-concavity.md): derivatives taken again and again, the coefficients' raw material.
+- [Mean value theorem](02-mean-value-theorem.md): the n = 0 case, and Rolle's theorem, which drives the proof.
 
 ## Where this goes next
 
-- [numerical-derivatives-and-sensitivity](08-numerical-derivatives-and-sensitivity.md): a difference quotient's error, from a remainder.
-- [numerical-integration](../04-Integrals/08-numerical-integration.md): why Simpson's rule errs so little.
-- [taylor-series](../06-Series/05-taylor-series.md): the polynomial carried on forever.
-- [central-limit-theorem](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md): a second-order expansion behind the bell curve.
-- [itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): an expansion whose second-order term survives.
-- [duration-and-convexity](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md): a bond's first two terms in yield.
-- [greeks-together-taylor-pnl](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/09-greeks-together-taylor-pnl.md): daily profit as a sum of Greeks.
-- [volatility-surface-and-its-arbitrage-rules](../../12-Financial%20mathematics/12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md): local expansions of a price surface.
-- truncation-versus-rounding-error: the remainder as truncation error.
-- newton-and-secant-with-convergence-orders: why Newton's error squares.
-- polynomial-interpolation-error: the same form through several points.
-- error-bounds-and-romberg: the integral remainder at work.
-- runge-kutta-and-butcher-tableaux: steps built to match Taylor terms.
-- forward-backward-and-central-differences: difference formulas ranked by Taylor terms.
+- [Numerical derivatives](08-numerical-derivatives-and-sensitivity.md): a difference quotient's error, from a remainder.
+- [Numerical integration](../04-Integrals/08-numerical-integration.md): why Simpson's rule errs so little.
+- [Taylor series](../06-Series/05-taylor-series.md): the polynomial carried on forever.
+- [The central limit theorem, proved](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md): a second-order expansion behind the bell curve.
+- [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): an expansion whose second-order term survives.
+- [Duration and convexity](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md): a bond's first two terms in yield.
+- [The Greeks together](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/09-greeks-together-taylor-pnl.md): daily profit as a sum of Greeks.
+- [The volatility surface](../../12-Financial%20mathematics/12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md): local expansions of a price surface.
+- Two different errors: the remainder as truncation error.
+- Newton and secant: why Newton's error squares.
+- The interpolation error theorem: the same form through several points.
+- Error bounds and Romberg: the integral remainder at work.
+- Runge-Kutta: steps built to match Taylor terms.
+- Forward, backward and central differences: difference formulas ranked by Taylor terms.
 
-The theorem controls one polynomial of fixed degree; whether adding terms forever recovers e^x far from 0 is the question [taylor-series](../06-Series/05-taylor-series.md) answers.
+The theorem controls one polynomial of fixed degree; whether adding terms forever recovers e^x far from 0 is the question [Taylor series](../06-Series/05-taylor-series.md) answers.
 
 ---
 

@@ -1,22 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Angles, Triangles and Congruence
-topic: Four tests for an exact copy
-item: Congruent triangles
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/05-Geometry and trig/01-Angles, Triangles and Congruence/02-triangle-angle-sum-and-inequality|triangle-angle-sum-and-inequality]]"
-next:
-  - "[[Cards/05-Geometry and trig/01-Angles, Triangles and Congruence/04-similar-triangles-and-scale|similar-triangles-and-scale]]"
-tags: [mathematics, geometry and trig, congruent-triangles]
----
-
 # Congruent triangles: when two triangles are the same shape and size
 
-Geometry and trig → Angles, Triangles and Congruence → Four tests for an exact copy → Congruent triangles
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Angles, Triangles and Congruence](../../../SYLLABUS.md#w05-s01) → Congruent triangles
 
 ---
 
@@ -91,7 +75,7 @@ This is Euclid's Book I, Proposition 4. His postulates never say a triangle can 
 
 ### Step 2: ASA, by trying to break it
 
-Suppose angles A and D match, angles B and E match, and AB = DE, but stile AC is longer than DF. Mark G on AC with AG = DF. Triangles ABG and DEF match by SAS, so angle ABG equals angle E, which equals angle ABC. But G lies strictly between A and C, so angle ABG is smaller than angle ABC. So AC is not longer than DF; swapping the triangles shows it is not shorter. So AC = DF, and SAS finishes. By the angle sum ([triangle-angle-sum-and-inequality](02-triangle-angle-sum-and-inequality.md)), two matching angles force the third, so any matching side will do (AAS). On the gate, a bevel gauge (a hinged blade that copies an angle) copies the brace angle at the rail hole; the copied line meets the right stile 0.800 m up.
+Suppose angles A and D match, angles B and E match, and AB = DE, but stile AC is longer than DF. Mark G on AC with AG = DF. Triangles ABG and DEF match by SAS, so angle ABG equals angle E, which equals angle ABC. But G lies strictly between A and C, so angle ABG is smaller than angle ABC. So AC is not longer than DF; swapping the triangles shows it is not shorter. So AC = DF, and SAS finishes. By the angle sum ([Triangles](02-triangle-angle-sum-and-inequality.md)), two matching angles force the third, so any matching side will do (AAS). On the gate, a bevel gauge (a hinged blade that copies an angle) copies the brace angle at the rail hole; the copied line meets the right stile 0.800 m up.
 
 ### Step 3: SSS, by building a kite
 
@@ -108,7 +92,7 @@ Now let AB = DE, BC = EF, CA = FD, and copy DEF onto AB on the side away from C,
 
 ### Step 4: RHS, by standing back to back
 
-Take right triangles with equal hypotenuses BC and EF and equal legs AB and DE. Fit the second against the first along AB, on the far side, so F lands at G. The two right angles at A make a straight line, so C, A, G are in line. Triangle BCG has BC = BG, so its angles at C and G are equal. Triangles ABC and ABG share AB, the right angle, and that equal angle: AAS. On the gate, a 1.70 m brace from the rail hole reaches the stile at one point only, 0.800 m up. The arithmetic road is [pythagoras-and-its-converse](05-pythagoras-and-its-converse.md).
+Take right triangles with equal hypotenuses BC and EF and equal legs AB and DE. Fit the second against the first along AB, on the far side, so F lands at G. The two right angles at A make a straight line, so C, A, G are in line. Triangle BCG has BC = BG, so its angles at C and G are equal. Triangles ABC and ABG share AB, the right angle, and that equal angle: AAS. On the gate, a 1.70 m brace from the rail hole reaches the stile at one point only, 0.800 m up. The arithmetic road is [Pythagoras](05-pythagoras-and-its-converse.md).
 
 ### Step 5: SSA is not a test
 
@@ -363,11 +347,11 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [triangle-angle-sum-and-inequality](02-triangle-angle-sum-and-inequality.md): the angle sum that turns two matching angles into three, which gives AAS and RHS.
+- [Triangles](02-triangle-angle-sum-and-inequality.md): the angle sum that turns two matching angles into three, which gives AAS and RHS.
 
 ## Where this goes next
 
-- [similar-triangles-and-scale](04-similar-triangles-and-scale.md): the AAA row as a theorem: same angles, sides in one ratio.
+- [Similar triangles](04-similar-triangles-and-scale.md): the AAA row as a theorem: same angles, sides in one ratio.
 
 ---
 

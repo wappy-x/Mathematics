@@ -1,26 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Planarity and Colouring
-topic: Counting colourings
-item: The chromatic polynomial
-kind: theorem
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/03-vertex-colouring-and-chromatic-number|vertex-colouring-and-chromatic-number]]"
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/01-recurrences-and-fibonacci|recurrences-and-fibonacci]]"
-  - "[[Cards/03-Algebra/02-Polynomials/01-polynomials|polynomials]]"
-next: []
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - chromatic-polynomial
----
-
 # The chromatic polynomial: count the colourings with q colours, by deleting an edge and contracting it
 
-Combinatorics and graphs → Planarity and Colouring → Counting colourings → The chromatic polynomial
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Planarity and Colouring](../../../SYLLABUS.md#w04-s12) → The chromatic polynomial
 
 ---
 
@@ -113,7 +93,7 @@ Call the chosen line's two dots its **ends**, and take a proper colouring of $G 
 
 ### Step 2: rows straight off, rings by climbing
 
-A row has no round trip, so it is a tree ([trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md)). Paint room 1: q ways; then walk along, each new room meeting one painted room, so q − 1 ways each. Three tins, four rooms: 3 × 2 × 2 × 2 = 24, and any tree goes the same way.
+A row has no round trip, so it is a tree ([Trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md)). Paint room 1: q ways; then walk along, each new room meeting one painted room, so q − 1 ways each. Three tins, four rooms: 3 × 2 × 2 × 2 = 24, and any tree goes the same way.
 
 A ring closes on itself, so no such walk exists and the recurrence works instead:
 
@@ -121,7 +101,7 @@ $$P(\text{ring of 4}, q) = q(q-1)^3 - q(q-1)(q-2) = q^4 - 4q^3 + 6q^2 - 3q$$
 
 At q = 3 that is 24 − 6 = 18: highest power 4, the rooms, and next coefficient −4, the walls, as the folded proof promises.
 
-One wall out of a ring of n rooms leaves a row of n, fusing its ends a ring of n − 1, so each ring leans on the one below ([recurrences-and-fibonacci](../05-Recurrences/01-recurrences-and-fibonacci.md)); climbing from the triangle closes the form.
+One wall out of a ring of n rooms leaves a row of n, fusing its ends a ring of n − 1, so each ring leans on the one below ([Recurrences](../05-Recurrences/01-recurrences-and-fibonacci.md)); climbing from the triangle closes the form.
 
 <details>
 <summary>The ring formula by induction</summary>
@@ -134,7 +114,7 @@ since subtracting $(-1)^{n-1}$ adds $(-1)^n$: the claim for $n$.
 
 ### Step 3: where the count leaves zero
 
-The value is a count, so 0 means no colouring exists: the fewest colours that work is the smallest whole q with P(G, q) above 0, the chromatic number ([vertex-colouring-and-chromatic-number](03-vertex-colouring-and-chromatic-number.md)). Row and ring read 2 at two tins; the triangle reads 0 there and 6 at three, so it needs three. A five-room ring also reads 0 at two, since (2−1)^5 − (2−1) = 0: odd rings need three tins, even rings two.
+The value is a count, so 0 means no colouring exists: the fewest colours that work is the smallest whole q with P(G, q) above 0, the chromatic number ([Colouring](03-vertex-colouring-and-chromatic-number.md)). Row and ring read 2 at two tins; the triangle reads 0 there and 6 at three, so it needs three. A five-room ring also reads 0 at two, since (2−1)^5 − (2−1) = 0: odd rings need three tins, even rings two.
 
 A second road skips the recurrence: over every set of walls, add q raised to the number of pieces that set ties the rooms into, minus for odd-sized sets. Each term counts the schemes where those walls all match across, and the signs strike out the schemes that break a rule. Hassler Whitney published it in 1932; it gives the courtyard's 18.
 
@@ -389,8 +369,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Timetabling and radio channels.** Clashing exams or transmitters make a network, the colours slots or frequencies ([vertex-colouring-and-chromatic-number](03-vertex-colouring-and-chromatic-number.md)). The polynomial says how many schedules q slots allow, not just whether one exists.
-- **Map colouring.** Birkhoff defined it to attack the claim that a flat map's count never reads 0 at four colours ([five-and-four-colour-theorems](05-five-and-four-colour-theorems.md)).
+- **Timetabling and radio channels.** Clashing exams or transmitters make a network, the colours slots or frequencies ([Colouring](03-vertex-colouring-and-chromatic-number.md)). The polynomial says how many schedules q slots allow, not just whether one exists.
+- **Map colouring.** Birkhoff defined it to attack the claim that a flat map's count never reads 0 at four colours ([Colouring maps](05-five-and-four-colour-theorems.md)).
 - **The move itself.** Rub out a part or fuse its ends, then combine: the move also counts spanning trees and network reliability.
 
 > **Say it back**
@@ -400,14 +380,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [vertex-colouring-and-chromatic-number](03-vertex-colouring-and-chromatic-number.md): proper colourings, and the chromatic number read off a polynomial here.
-- [recurrences-and-fibonacci](../05-Recurrences/01-recurrences-and-fibonacci.md): unwinding a count written in terms of smaller cases.
-- [polynomials](../../03-Algebra/02-Polynomials/01-polynomials.md): degree and coefficients.
+- [Colouring](03-vertex-colouring-and-chromatic-number.md): proper colourings, and the chromatic number read off a polynomial here.
+- [Recurrences](../05-Recurrences/01-recurrences-and-fibonacci.md): unwinding a count written in terms of smaller cases.
+- [Polynomials](../../03-Algebra/02-Polynomials/01-polynomials.md): degree and coefficients.
 
 ## Where this goes next
 
-- [five-and-four-colour-theorems](05-five-and-four-colour-theorems.md): whether a flat map's count is ever 0 at four colours, Birkhoff's plan.
-- [edge-colouring-and-round-robin](06-edge-colouring-and-round-robin.md): the same question, asked of the lines.
+- [Colouring maps](05-five-and-four-colour-theorems.md): whether a flat map's count is ever 0 at four colours, Birkhoff's plan.
+- [Edge colouring](06-edge-colouring-and-round-robin.md): the same question, asked of the lines.
 
 Every wall doubles the split, so a real floor plan is past hand calculation. And nothing here rules out a flat map whose count reads 0 at four colours: that is the next card's question.
 

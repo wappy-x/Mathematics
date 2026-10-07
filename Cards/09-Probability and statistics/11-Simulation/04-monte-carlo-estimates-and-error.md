@@ -1,29 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Simulation
-topic: Error bars for random sampling
-item: Monte Carlo
-kind: method
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/02-central-limit-theorem|central-limit-theorem]]"
-  - "[[Cards/09-Probability and statistics/11-Simulation/01-pseudo-random-numbers|pseudo-random-numbers]]"
-next:
-  - "[[Cards/09-Probability and statistics/11-Simulation/05-variance-reduction|variance-reduction]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/03-arithmetic-asian-option|arithmetic-asian-option]]"
-  - "[[Cards/12-Financial mathematics/38-Performance and Multi-Period/05-life-cycle-and-glide-paths|life-cycle-and-glide-paths]]"
-  - "[[Cards/14-Applied and computational/02-Randomised and Approximate Algorithms/05-monte-carlo-integration-in-many-dimensions|monte-carlo-integration-in-many-dimensions]]"
-  - "[[Cards/16-Numerical analysis/05-Quadrature/06-multidimensional-and-monte-carlo-quadrature|multidimensional-and-monte-carlo-quadrature]]"
-  - "[[Cards/16-Numerical analysis/08-Derivatives by Machine/08-bumped-sensitivities-and-monte-carlo-noise|bumped-sensitivities-and-monte-carlo-noise]]"
-tags: [mathematics, probability and statistics, monte-carlo-estimates-and-error]
----
-
 # Monte Carlo: an average of random draws, and the square-root-of-n error bar
 
-Probability and statistics → Simulation → Error bars for random sampling → Monte Carlo
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Simulation](../../../SYLLABUS.md#w09-s11) → Monte Carlo
 
 ---
 
@@ -37,7 +14,7 @@ An estimate without an error bar is half an answer. The same run also says how f
 
 **Write the answer as an average of a random quantity, average many independent draws of it, and quote the result with its standard error: the spread of one draw divided by the square root of the number of draws.**
 
-**What kind of fact this is:** a method. Its error bar rests on two theorems: the spread of an average of n draws is σ/√n, one draw's spread σ divided by the square root of n, proved on this card in Why it works, and the central limit theorem, stated in [central-limit-theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md), which turns that spread into a 95 percent interval.
+**What kind of fact this is:** a method. Its error bar rests on two theorems: the spread of an average of n draws is σ/√n, one draw's spread σ divided by the square root of n, proved on this card in Why it works, and the central limit theorem, stated in [Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md), which turns that spread into a 95 percent interval.
 
 ### The picture: the first 20 darts
 
@@ -87,7 +64,7 @@ In words: a score that is 4 or 0 has spread 4 times the spread of a yes-or-no co
 ### When it holds
 
 - **Draws independent of each other.** If the two numbers of a dart are the same number, every dart lands on the diagonal and the estimate settles on 2.8284, not π; more darts only make it more precisely wrong.
-- **Draws from the intended law.** The average targets E[g(U)] for whatever law U actually follows; a generator that favours one corner estimates a different number. The generator is the subject of [pseudo-random-numbers](01-pseudo-random-numbers.md).
+- **Draws from the intended law.** The average targets E[g(U)] for whatever law U actually follows; a generator that favours one corner estimates a different number. The generator is the subject of [Random numbers from a computer](01-pseudo-random-numbers.md).
 - **Finite mean** for the average to settle, and **finite variance** for σ/√n to mean anything. In the infinite-variance test under What breaks, the 95 percent interval covered the truth in only 110 of 200 runs.
 - **Enough draws for the bell.** The 1.96 comes from the central limit theorem, a statement about large n. With few darts, or a target hit very rarely, the bell is a poor fit and the interval's coverage drifts from 95 percent.
 
@@ -132,11 +109,11 @@ Chebyshev gives the same kind of promise without the bell, at a price. To be wit
 
 ### Step 5: measure σ from the run
 
-σ is usually unknown, since it depends on the answer. Replace it with s, the spread of the scores the run produced. For the darts, $s = 1.641704$ against the true 1.642183. Using s in place of σ leaves the 95 percent coverage intact as n grows; the proof is in [delta-method-and-slutsky](../06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md).
+σ is usually unknown, since it depends on the answer. Replace it with s, the spread of the scores the run produced. For the darts, $s = 1.641704$ against the true 1.642183. Using s in place of σ leaves the 95 percent coverage intact as n grows; the proof is in [Delta method](../06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md).
 
 ### The other door: a grid
 
-Instead of random darts, put one dart at the centre of each cell of a 100 by 100 grid. The same 10,000 points give 3.142800, an error of about 0.0012, better than the random darts' 0.016. In two dimensions a grid wins. The grid loses as the dimension grows: in d dimensions, n points give only the d-th root of n points along each direction, while Monte Carlo's σ/√n has no d in it. That trade is the subject of multidimensional-and-monte-carlo-quadrature.
+Instead of random darts, put one dart at the centre of each cell of a 100 by 100 grid. The same 10,000 points give 3.142800, an error of about 0.0012, better than the random darts' 0.016. In two dimensions a grid wins. The grid loses as the dimension grows: in d dimensions, n points give only the d-th root of n points along each direction, while Monte Carlo's σ/√n has no d in it. That trade is the subject of Many dimensions.
 
 ---
 
@@ -577,7 +554,7 @@ The two outputs are identical line for line.
 > **Try changing**
 > - **40,000 darts instead of 10,000.** Guess first: four times the work. The standard error falls from 0.0164 to 0.0082, exactly half.
 > - **1,000,000 darts.** Guess first: 100 times the work. The standard error is 0.0016: one more correct decimal place, no more.
-> - **Read heights instead of counting hits.** Average $4\sqrt{1-x^2}$ at 10,000 random x. Guess first: same cost, same target. The standard error drops to 0.0089 against the darts' 0.0164, because a height varies less than a 4-or-0 score. Shrinking σ is the other lever, pulled in [variance-reduction](05-variance-reduction.md).
+> - **Read heights instead of counting hits.** Average $4\sqrt{1-x^2}$ at 10,000 random x. Guess first: same cost, same target. The standard error drops to 0.0089 against the darts' 0.0164, because a height varies less than a 4-or-0 score. Shrinking σ is the other lever, pulled in [Variance reduction](05-variance-reduction.md).
 > - **Change the seed.** Guess first: does 3.1424 survive? No: each seed gives its own estimate, but about 95 in 100 of their intervals still contain π; the 200 runs above caught it 193 times.
 
 ---
@@ -597,9 +574,9 @@ The two outputs are identical line for line.
 ## Where you meet it in real life
 
 - **Physics at Los Alamos.** The method was built there in the late 1940s to follow neutrons through matter, where each neutron's path is a chain of random collisions and no formula gives the average. Metropolis and Ulam's 1949 paper named it.
-- **Option pricing.** A price is a discounted average payoff over random futures; a bank simulates the futures and quotes the price with its standard error: [monte-carlo-pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md).
+- **Option pricing.** A price is a discounted average payoff over random futures; a bank simulates the futures and quotes the price with its standard error: [Monte Carlo pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md).
 - **Computer graphics.** A film renderer estimates each pixel's brightness by averaging random light paths. The speckled noise in a quick render is σ/√n made visible; four times the paths halve it.
-- **Polls.** A poll of 1,000 people is a Monte Carlo estimate with people as draws, and the quoted margin is 1.96 standard errors: [confidence-intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md).
+- **Polls.** A poll of 1,000 people is a Monte Carlo estimate with people as draws, and the quoted margin is 1.96 standard errors: [Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md).
 
 > **Say it back**
 > Many quantities, π among them, are averages of something random. Monte Carlo draws that something many times independently and takes the plain average. The average is right on average, and its typical miss is one draw's spread divided by root n, so four times the draws halve the error. The central limit theorem turns that miss into an interval that catches the truth in about 95 runs out of 100. Ten thousand darts give π as 3.14 plus or minus 0.02.
@@ -608,20 +585,20 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [central-limit-theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md): the bell shape of an average's error, which turns σ/√n into a 95 percent interval.
-- [pseudo-random-numbers](01-pseudo-random-numbers.md): where the darts come from, and the SplitMix64 generator both programs use.
+- [Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md): the bell shape of an average's error, which turns σ/√n into a 95 percent interval.
+- [Random numbers from a computer](01-pseudo-random-numbers.md): where the darts come from, and the SplitMix64 generator both programs use.
 
 ## Where this goes next
 
-- [variance-reduction](05-variance-reduction.md): shrinking σ instead of buying more draws.
-- [monte-carlo-pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): an option's price as an average payoff, quoted with its standard error.
-- [arithmetic-asian-option](../../12-Financial%20mathematics/27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/03-arithmetic-asian-option.md): a payoff with no closed formula, priced by simulation.
-- [life-cycle-and-glide-paths](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/05-life-cycle-and-glide-paths.md): simulated retirement savings paths and the spread of their outcomes.
-- monte-carlo-integration-in-many-dimensions: why σ/√n with no dimension in it beats a grid in high dimensions.
-- multidimensional-and-monte-carlo-quadrature: grids and random points compared as quadrature rules.
-- bumped-sensitivities-and-monte-carlo-noise: what the noise does to a difference of two simulated numbers.
+- [Variance reduction](05-variance-reduction.md): shrinking σ instead of buying more draws.
+- [Monte Carlo pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): an option's price as an average payoff, quoted with its standard error.
+- [The Asian option desks trade](../../12-Financial%20mathematics/27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/03-arithmetic-asian-option.md): a payoff with no closed formula, priced by simulation.
+- [Investing over a lifetime](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/05-life-cycle-and-glide-paths.md): simulated retirement savings paths and the spread of their outcomes.
+- Monte Carlo integration: why σ/√n with no dimension in it beats a grid in high dimensions.
+- Many dimensions: grids and random points compared as quadrature rules.
+- Bumping a simulated price: what the noise does to a difference of two simulated numbers.
 
-The error bar has two levers, n and σ, and n is the expensive one: a hundred times the work for one digit. Whether σ can be cut instead, at no extra draws, is the question [variance-reduction](05-variance-reduction.md) answers.
+The error bar has two levers, n and σ, and n is the expensive one: a hundred times the work for one digit. Whether σ can be cut instead, at no extra draws, is the question [Variance reduction](05-variance-reduction.md) answers.
 
 ---
 

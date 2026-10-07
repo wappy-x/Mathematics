@@ -1,33 +1,14 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Local volatility and jumps
-topic: Pricing after calibration
-item: Pricing with local volatility
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/02-local-volatility-from-implied-volatility|local-volatility-from-implied-volatility]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/07-finite-differences-for-the-black-scholes-equation|finite-differences-for-the-black-scholes-equation]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/04-euler-maruyama-scheme|euler-maruyama-scheme]]"
-next:
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/06-stochastic-local-volatility|stochastic-local-volatility]]"
-tags: [mathematics, financial mathematics, pricing-under-local-volatility-and-the-forward-smile]
----
-
 # Pricing with local volatility: it reprices every vanilla exactly, then predicts a future smile that is too flat
 
-Financial mathematics → Local volatility and jumps → Pricing after calibration → Pricing with local volatility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Local volatility and jumps](../../../SYLLABUS.md#w12-s13) → Pricing with local volatility
 
 ---
 
 ## General Overview
 
-Acme shares trade at $100. Its one-year options are quoted at nine strikes, $80 to $120, each at its own implied volatility: the volatility that makes the Black-Scholes formula return that option's price. The quotes slope down, from 23.82% at $80 through 20.00% at $100 to 16.95% at $120. Six-month quotes slope more steeply, from 25.31% to 15.91%. The grid of quotes across strikes and expiries is the **volatility surface** ([volatility-surface-and-its-arbitrage-rules](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md)).
+Acme shares trade at $100. Its one-year options are quoted at nine strikes, $80 to $120, each at its own implied volatility: the volatility that makes the Black-Scholes formula return that option's price. The quotes slope down, from 23.82% at $80 through 20.00% at $100 to 16.95% at $120. Six-month quotes slope more steeply, from 25.31% to 15.91%. The grid of quotes across strikes and expiries is the **volatility surface** ([The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md)).
 
-A desk selling anything but a plain call or put needs a model of Acme that agrees with every quote. The simplest gives Acme one volatility per price level and date: a table, read off the surface by Dupire's formula ([dupire-local-volatility](01-dupire-local-volatility.md)). From here on the table is called **local volatility**.
+A desk selling anything but a plain call or put needs a model of Acme that agrees with every quote. The simplest gives Acme one volatility per price level and date: a table, read off the surface by Dupire's formula ([Dupire local volatility](01-dupire-local-volatility.md)). From here on the table is called **local volatility**.
 
 Pricing with the table, by simulated paths and on a grid, brings the nine quotes back, the $100 call at $9.23 included. Then comes a **forward start**: a call whose strike is set in six months at whatever Acme trades at then, paid at one year. A market whose smile keeps its shape against Acme's price charges $6.24. Local volatility charges $6.08: the smile it predicts for six months ahead is flatter than today's and sits lower at the money.
 
@@ -53,13 +34,13 @@ Orange: today's six-month smile, read off the surface. Green: local volatility's
 
 ## The formula
 
-Notation first, in words. $S_t$ is Acme's price $t$ years from today; $r$ = 5% and $q$ = 2% are the riskless rate and dividend yield; $T$ is an expiry in years and $V_0$ a contract's price today. The local volatility $\sigma_{\text{loc}}(S, t)$ is one number for each price $S$ and date $t$. $dW_t$ is the random shock over a short step $dt$, a bell-curve draw with spread $\sqrt{dt}$ ([geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). $\mathbb{E}$ is the average in the pricing world, where every asset grows at the riskless rate ([risk-neutral-measure-and-the-fundamental-theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)).
+Notation first, in words. $S_t$ is Acme's price $t$ years from today; $r$ = 5% and $q$ = 2% are the riskless rate and dividend yield; $T$ is an expiry in years and $V_0$ a contract's price today. The local volatility $\sigma_{\text{loc}}(S, t)$ is one number for each price $S$ and date $t$. $dW_t$ is the random shock over a short step $dt$, a bell-curve draw with spread $\sqrt{dt}$ ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). $\mathbb{E}$ is the average in the pricing world, where every asset grows at the riskless rate ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)).
 
 $$dS_t = (r - q)\,S_t\,dt + \sigma_{\text{loc}}(S_t, t)\,S_t\,dW_t, \qquad V_0 = e^{-rT}\,\mathbb{E}\big[\text{payoff at } T\big]$$
 
 **Read it aloud:** Acme drifts at the riskless rate less its dividend yield, its volatility at each instant is looked up in a fixed table by where it stands and what the date is, and a contract is worth its average payoff in that world, discounted to today.
 
-Black-Scholes is the special case of a flat table. The table comes from the surface ([local-volatility-from-implied-volatility](02-local-volatility-from-implied-volatility.md)). Gyöngy's theorem says such a table exists for any model without jumps: if $\sigma_t$ is that model's volatility, even a random one, its local-volatility twin uses, at price $K$ and date $T$,
+Black-Scholes is the special case of a flat table. The table comes from the surface ([Local volatility in implied-vol terms](02-local-volatility-from-implied-volatility.md)). Gyöngy's theorem says such a table exists for any model without jumps: if $\sigma_t$ is that model's volatility, even a random one, its local-volatility twin uses, at price $K$ and date $T$,
 
 $$\sigma_{\text{loc}}^2(K, T) = \mathbb{E}\big[\,\sigma_T^2 \;\big|\; S_T = K\,\big]$$
 
@@ -93,9 +74,9 @@ In words: a rounded V in log-strike, leaning toward low strikes, whose tilt shri
 
 ### When it holds
 
-- **A surface with no static arbitrage.** Local variance is a time slope of total variance over a density factor (`g` in the code); both must stay positive, or the table has negative or infinite entries. Across the whole grid the check finds the least density factor 0.254182 and the least time slope 0.017986 ([volatility-surface-and-its-arbitrage-rules](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md)).
+- **A surface with no static arbitrage.** Local variance is a time slope of total variance over a density factor (`g` in the code); both must stay positive, or the table has negative or infinite entries. Across the whole grid the check finds the least density factor 0.254182 and the least time slope 0.017986 ([The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md)).
 - **A surface defined everywhere.** Dupire's formula needs slopes; between and beyond the quotes the surface is an interpolation choice, and the table inherits it.
-- **No jumps, for Gyöngy's average.** Gyöngy's proof needs a continuous price path with volatility kept away from zero and infinity. A jump model still gets a twin through Dupire's formula applied to its prices ([merton-jump-diffusion](04-merton-jump-diffusion.md)), but the table moves smoothly where the model gaps.
+- **No jumps, for Gyöngy's average.** Gyöngy's proof needs a continuous price path with volatility kept away from zero and infinity. A jump model still gets a twin through Dupire's formula applied to its prices ([Merton jump-diffusion](04-merton-jump-diffusion.md)), but the table moves smoothly where the model gaps.
 - **One date at a time.** A contract paying on two dates depends on how the dates join, which no plain option tests.
 - **Short time steps.** Each simulated step holds the volatility fixed; 100 steps a year suffice here.
 
@@ -113,19 +94,19 @@ Step the log of Acme's price forward by $dt$ = 0.01 year, reading the volatility
 
 $$\ln S_{t+dt} = \ln S_t + \big(r - q - \tfrac12\,\sigma_{\text{loc}}^2\big)\,dt + \sigma_{\text{loc}}(S_t, t)\,\sqrt{dt}\;Z$$
 
-This is the Euler–Maruyama scheme ([euler-maruyama-scheme](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md)) on the log; the $-\tfrac12\sigma_{\text{loc}}^2$ keeps the average price on the forward. The table is read between its 601 log-strikes by a straight line.
+This is the Euler–Maruyama scheme ([Euler-Maruyama](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md)) on the log; the $-\tfrac12\sigma_{\text{loc}}^2$ keeps the average price on the forward. The table is read between its 601 log-strikes by a straight line.
 
-The run takes 20,000 paths, 10,000 sets of draws and their mirror images, from the recurrence of [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md). A path and its mirror are not independent, so every standard error here comes from the 10,000 pair averages. Each set of draws also drives a path at flat 20%, whose call is known to be worth 9.227006; the simulation averages the difference of the two payoffs and adds 9.227006 back. That is a control variate ([variance-reduction-for-pricing](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)): at $100 it cuts the standard error from 0.0477 to 0.0262. The plain estimate is 9.2522. The flat paths alone price the forward start at 6.2112, standard error 0.0497, against their formula's 6.244873: the control is honest.
+The run takes 20,000 paths, 10,000 sets of draws and their mirror images, from the recurrence of [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md). A path and its mirror are not independent, so every standard error here comes from the 10,000 pair averages. Each set of draws also drives a path at flat 20%, whose call is known to be worth 9.227006; the simulation averages the difference of the two payoffs and adds 9.227006 back. That is a control variate ([Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)): at $100 it cuts the standard error from 0.0477 to 0.0262. The plain estimate is 9.2522. The flat paths alone price the forward start at 6.2112, standard error 0.0497, against their formula's 6.244873: the control is honest.
 
 ### Step 2: price on a grid, every strike at once
 
-Dupire's forward equation moves call prices forward in expiry ([dupire-local-volatility](01-dupire-local-volatility.md)):
+Dupire's forward equation moves call prices forward in expiry ([Dupire local volatility](01-dupire-local-volatility.md)):
 
 $$\frac{\partial C}{\partial T} = \tfrac12\,\sigma_{\text{loc}}^2(K, T)\,K^2\,\frac{\partial^2 C}{\partial K^2} - (r - q)\,K\,\frac{\partial C}{\partial K} - q\,C, \qquad C(K, 0) = \max(S_0 - K,\ 0)$$
 
 **Read it aloud:** a call gains value with expiry at the local variance at its strike times the bend of prices across strikes, less a carry term; at expiry zero every call is worth what it pays now.
 
-The grid, 601 log-strikes by 100 time steps, is marched by Crank–Nicolson ([finite-differences-for-the-black-scholes-equation](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md)), with the kink at $100 averaged across its cell. One march returns every strike at six months and at a year. It draws no random numbers, so it shares nothing with Step 1 but the table.
+The grid, 601 log-strikes by 100 time steps, is marched by Crank–Nicolson ([Pricing on a grid](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md)), with the kink at $100 averaged across its cell. One march returns every strike at six months and at a year. It draws no random numbers, so it shares nothing with Step 1 but the table.
 
 ### Step 3: why every plain option comes back
 
@@ -142,12 +123,12 @@ The twin prices every plain option as the coin-flip model does, yet it is a diff
 
 Let $dS_t = (r-q)S_t\,dt + \sigma_t S_t\,dW_t$ with any random volatility $\sigma_t$, and $C(K, T) = e^{-rT}\,\mathbb{E}[(S_T - K)^+]$.
 
-1. Itô's lemma stretched over the kink of $(S - K)^+$ (Tanaka's formula) gives $d(S_t - K)^+ = \mathbf{1}\{S_t > K\}\,dS_t + \tfrac12\,\sigma_t^2 S_t^2\,\delta(S_t - K)\,dt$, where $\mathbf{1}\{S_t > K\}$ is 1 when $S_t > K$ and 0 otherwise, and $\delta(S_t - K)$ is a spike that picks out the paths standing at $K$ ([itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)).
+1. Itô's lemma stretched over the kink of $(S - K)^+$ (Tanaka's formula) gives $d(S_t - K)^+ = \mathbf{1}\{S_t > K\}\,dS_t + \tfrac12\,\sigma_t^2 S_t^2\,\delta(S_t - K)\,dt$, where $\mathbf{1}\{S_t > K\}$ is 1 when $S_t > K$ and 0 otherwise, and $\delta(S_t - K)$ is a spike that picks out the paths standing at $K$ ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)).
 2. Average, with $p(K, T)$ the density of $S_T$: $\partial_T\,\mathbb{E}[(S_T - K)^+] = (r - q)\,\mathbb{E}[S_T\mathbf{1}\{S_T > K\}] + \tfrac12 K^2\,\mathbb{E}[\sigma_T^2 \mid S_T = K]\,p(K, T)$.
-3. In call prices, $\mathbb{E}[S_T\mathbf{1}\{S_T > K\}] = e^{rT}(C - K\,\partial_K C)$ and $p = e^{rT}\,\partial_{KK} C$ ([butterfly-and-the-implied-density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)). With $\partial_T C = -rC + e^{-rT}\,\partial_T\mathbb{E}[(S_T - K)^+]$:
+3. In call prices, $\mathbb{E}[S_T\mathbf{1}\{S_T > K\}] = e^{rT}(C - K\,\partial_K C)$ and $p = e^{rT}\,\partial_{KK} C$ ([The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)). With $\partial_T C = -rC + e^{-rT}\,\partial_T\mathbb{E}[(S_T - K)^+]$:
 $$\partial_T C = \tfrac12\,\mathbb{E}[\sigma_T^2 \mid S_T = K]\,K^2\,\partial_{KK} C - (r - q)K\,\partial_K C - qC.$$
 4. That is Dupire's forward equation with local variance $\mathbb{E}[\sigma_T^2 \mid S_T = K]$. The local-volatility model with that table obeys the same equation from the same start, $C(K, 0) = (S_0 - K)^+$, since for it the average is the table itself.
-5. One equation, one start, one solution: the calls agree at every strike and expiry. Gyöngy (1986) proves more, that the whole one-date distributions agree, for volatility bounded and kept away from zero; the density version of the computation is the Fokker–Planck equation ([fokker-planck-forward-equation](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/03-fokker-planck-forward-equation.md)).
+5. One equation, one start, one solution: the calls agree at every strike and expiry. Gyöngy (1986) proves more, that the whole one-date distributions agree, for volatility bounded and kept away from zero; the density version of the computation is the Fokker–Planck equation ([Fokker-Planck](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/03-fokker-planck-forward-equation.md)).
 
 </details>
 
@@ -156,9 +137,9 @@ $$\partial_T C = \tfrac12\,\mathbb{E}[\sigma_T^2 \mid S_T = K]\,K^2\,\partial_{K
 The at-the-money forward start pays $\max(S_1 - S_{0.5}, 0)$ at one year. Its price depends on how Acme's prices at six months and at a year hang together, which Step 0 says no plain option fixes. Two roads under local volatility:
 
 - **Simulation.** The same paths, reading Acme at the halfway step: 6.0894, standard error 0.0179.
-- **Split at the reset.** Where Acme can stand at six months is read off the density the surface implies ([butterfly-and-the-implied-density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)); from each of 35 reset levels a grid march prices the second half-year's call; Simpson's rule sums the products: 6.083342.
+- **Split at the reset.** Where Acme can stand at six months is read off the density the surface implies ([The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)); from each of 35 reset levels a grid march prices the second half-year's call; Simpson's rule sums the products: 6.083342.
 
-The roads agree within half a standard error. A market whose smile keeps its shape against Acme's price uses today's six-month smile for the second half-year, 20.00% at the money, whatever happened first: 6.244873, the price at a flat forward volatility of 20% ([term-structure-and-forward-volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md)).
+The roads agree within half a standard error. A market whose smile keeps its shape against Acme's price uses today's six-month smile for the second half-year, 20.00% at the money, whatever happened first: 6.244873, the price at a flat forward volatility of 20% ([Term structure and forward volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md)).
 
 ### Step 6: why the future smile flattens
 
@@ -192,7 +173,7 @@ $122.14  ███████████████             14.63%
 
 Averaged over where Acme may stand, it is 20.03%, no lower than today's. But the forward start holds $S_{0.5}$ copies of a call on one dollar's worth of Acme, and the rises carry the most copies and the lowest volatilities. Weighted by Acme's price the average is 19.40%, the 19.41% the price implies.
 
-The flat forward smile and the cheap forward start are one fault: volatility fixed by price and date makes tomorrow's smile whatever slice of the table Acme lands on: lower after a rise, higher after a fall, and shallower than today's. Putting randomness back into volatility while keeping every plain price is the road of [stochastic-local-volatility](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/06-stochastic-local-volatility.md).
+The flat forward smile and the cheap forward start are one fault: volatility fixed by price and date makes tomorrow's smile whatever slice of the table Acme lands on: lower after a rise, higher after a fall, and shallower than today's. Putting randomness back into volatility while keeping every plain price is the road of [Stochastic-local volatility](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/06-stochastic-local-volatility.md).
 
 ---
 
@@ -204,7 +185,7 @@ The at-the-money forward start on the house market: strike reset at six months, 
 | --- | --- | --- |
 | d1, half a year at 20% | (0.05 − 0.02) × 0.5 / (0.20 × √0.5) + ½ × 0.20 × √0.5 | 0.176777 |
 | d2 | d1 − 0.20 × √0.5 | 0.035355 |
-| N(d1), N(d2), bell-curve areas to the left ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)) | from d1, d2 | 0.570158, 0.514102 |
+| N(d1), N(d2), bell-curve areas to the left ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)) | from d1, d2 | 0.570158, 0.514102 |
 | call on one dollar, struck at one dollar | e^(−0.02 × 0.5) × 0.570158 − e^(−0.05 × 0.5) × 0.514102 | 0.063076 |
 | today's value of receiving Acme's six-month price | 100 × e^(−0.02 × 0.5) | 99.004983 |
 | forward start at flat 20% | 99.004983 × 0.063076 | **6.244873** |
@@ -667,18 +648,18 @@ The two outputs match line for line: both programs do the same arithmetic in the
 >
 > - **Implied volatility used as local volatility.** The $80 call comes out at $23.17, not $23.43.
 > - **One date's table used for every date.** The one-month table held for a year prices the $80 call at $24.24.
-> - **Trusting local volatility's hedge.** It says the at-the-money volatility drops fast as Acme rises, from 19.97% at $100.00 to 16.93% at $110.52 after the reset; markets often move less, and the hedge is off by the difference ([smile-adjusted-delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md)).
+> - **Trusting local volatility's hedge.** It says the at-the-money volatility drops fast as Acme rises, from 19.97% at $100.00 to 16.93% at $110.52 after the reset; markets often move less, and the hedge is off by the difference ([Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md)).
 
 ---
 
 ## Where you meet it in real life
 
 - **Equity exotics desks.** Barriers and autocallable notes are marked in local volatility or its stochastic cousin, because such a model cannot misprice the plain options that hedge them.
-- **Cliquets.** A cliquet is a chain of forward starts ([cliquets-and-ratchets](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/07-cliquets-and-ratchets.md), [forward-start-options-and-forward-volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/06-forward-start-options-and-forward-volatility.md)). Its price lives on the forward smile, which local volatility gets wrong.
+- **Cliquets.** A cliquet is a chain of forward starts ([Cliquets](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/07-cliquets-and-ratchets.md), [Forward-start options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/06-forward-start-options-and-forward-volatility.md)). Its price lives on the forward smile, which local volatility gets wrong.
 - **The CEV model.** The simplest local volatility ignores the date: the constant elasticity of variance model makes volatility a fixed power of the price, and a power that falls with the price gives a skew from one number.
-- **Barriers and the Brownian bridge.** A barrier can be crossed between two simulated steps; the Brownian bridge, a random path pinned at both ends, gives the chance ([quasi-monte-carlo-and-brownian-bridge](../06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md)).
-- **Jumps and random volatility.** Merton's jumps ([merton-jump-diffusion](04-merton-jump-diffusion.md)) and Heston's wandering volatility ([heston-model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md)) renew their skew; each has a local-vol twin with the same plain prices and a flatter forward smile ([merton-greeks-hedge-error-and-calibration](05-merton-greeks-hedge-error-and-calibration.md)).
-- **Model reserves.** When local-vol and stochastic-vol prices of one exotic differ, the gap is held as a reserve ([model-risk-and-parameter-stability](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md)).
+- **Barriers and the Brownian bridge.** A barrier can be crossed between two simulated steps; the Brownian bridge, a random path pinned at both ends, gives the chance ([Quasi-Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md)).
+- **Jumps and random volatility.** Merton's jumps ([Merton jump-diffusion](04-merton-jump-diffusion.md)) and Heston's wandering volatility ([The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md)) renew their skew; each has a local-vol twin with the same plain prices and a flatter forward smile ([Greeks under jumps](05-merton-greeks-hedge-error-and-calibration.md)).
+- **Model reserves.** When local-vol and stochastic-vol prices of one exotic differ, the gap is held as a reserve ([Model risk](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md)).
 
 > **Say it back**
 > Local volatility gives Acme one volatility per price and date, read off today's surface, and priced by simulation or on a grid it returns every plain option, the $100 call at $9.23 included. Gyöngy's theorem gives every model without jumps such a twin: its local variance is the average squared volatility of the paths arriving at each price on each date. Plain options see one date at a time, so a model and its twin can still disagree on anything paying on two dates. The table stores the skew in its early dates, so its forecast of the six-month smile is flatter than today's and lower after a rise. The at-the-money forward start comes out at $6.08, against $6.24 in a market whose smile keeps its shape.
@@ -687,16 +668,16 @@ The two outputs match line for line: both programs do the same arithmetic in the
 
 ## What this builds on
 
-- [local-volatility-from-implied-volatility](02-local-volatility-from-implied-volatility.md): the surface's slopes turned into the table, the function `lv` here.
-- [finite-differences-for-the-black-scholes-equation](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): the Crank–Nicolson march and the averaged kink cell.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): the recurrence, the bell-curve draws and the standard error.
-- [euler-maruyama-scheme](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): stepping a price whose volatility changes along its path.
+- [Local volatility in implied-vol terms](02-local-volatility-from-implied-volatility.md): the surface's slopes turned into the table, the function `lv` here.
+- [Pricing on a grid](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): the Crank–Nicolson march and the averaged kink cell.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): the recurrence, the bell-curve draws and the standard error.
+- [Euler-Maruyama](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): stepping a price whose volatility changes along its path.
 
 ## Where this goes next
 
-- [stochastic-local-volatility](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/06-stochastic-local-volatility.md): random volatility, divided by Gyöngy's average to keep every plain price.
+- [Stochastic-local volatility](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/06-stochastic-local-volatility.md): random volatility, divided by Gyöngy's average to keep every plain price.
 
-Local volatility fits today's smile and forgets tomorrow's; how to put randomness back into volatility without losing the fit is the question [stochastic-local-volatility](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/06-stochastic-local-volatility.md) answers.
+Local volatility fits today's smile and forgets tomorrow's; how to put randomness back into volatility without losing the fit is the question [Stochastic-local volatility](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/06-stochastic-local-volatility.md) answers.
 
 ---
 

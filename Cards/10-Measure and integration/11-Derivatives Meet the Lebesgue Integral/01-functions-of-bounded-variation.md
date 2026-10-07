@@ -1,26 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Derivatives Meet the Lebesgue Integral
-topic: Total up-and-down movement
-item: Bounded variation
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/02-supremum-and-completeness|supremum-and-completeness]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/05-continuity|continuity]]"
-next:
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/03-monotone-functions-differentiable-almost-everywhere|monotone-functions-differentiable-almost-everywhere]]"
-tags:
-  - mathematics
-  - measure and integration
-  - functions-of-bounded-variation
----
-
 # Bounded variation: total up-and-down movement is finite, and any such function is the difference of two increasing ones
 
-Measure and integration → Derivatives Meet the Lebesgue Integral → Total up-and-down movement → Bounded variation
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Derivatives Meet the Lebesgue Integral](../../../SYLLABUS.md#w10-s11) → Bounded variation
 
 ---
 
@@ -59,7 +39,7 @@ $$V_a^b(f) = \sup\Big\{ \sum_{k=1}^{n} \big\lvert f(x_k) - f(x_{k-1}) \big\rvert
 
 **Read it aloud:** the total variation of f from a to b is the most that any partition can collect by adding up the sizes of the changes across its pieces.
 
-f has **bounded variation** on [a, b] when this supremum (least upper bound: [supremum-and-completeness](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)) is finite. The **positive variation** $P$ and **negative variation** $N$ collect only the rises, or only the falls, over [a, x], again as a supremum over partitions:
+f has **bounded variation** on [a, b] when this supremum (least upper bound: [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)) is finite. The **positive variation** $P$ and **negative variation** $N$ collect only the rises, or only the falls, over [a, x], again as a supremum over partitions:
 
 $$P(x) = \sup \sum_{k} \max\big(f(x_k) - f(x_{k-1}),\, 0\big), \qquad N(x) = \sup \sum_{k} \max\big(f(x_{k-1}) - f(x_k),\, 0\big).$$
 
@@ -79,7 +59,7 @@ exist, as $t$ approaches x from below and from above (only one of them at an end
 
 **Read it aloud:** approaching any point from either side, the values settle down.
 
-Three quick cases. An increasing f has $V_a^b(f) = f(b) - f(a)$. A piecewise-monotone f has variation equal to the sum of the sizes of its rises and falls. A **Lipschitz** f, with $\lvert f(x) - f(t) \rvert \le K \lvert x - t \rvert$ for a fixed $K$ ([uniform-continuity-and-lipschitz](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)), has $V_a^b(f) \le K(b - a)$.
+Three quick cases. An increasing f has $V_a^b(f) = f(b) - f(a)$. A piecewise-monotone f has variation equal to the sum of the sizes of its rises and falls. A **Lipschitz** f, with $\lvert f(x) - f(t) \rvert \le K \lvert x - t \rvert$ for a fixed $K$ ([Uniform continuity](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)), has $V_a^b(f) \le K(b - a)$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -127,7 +107,7 @@ Take f(x) = x sin(1/x) on [0, 2/π], with f(0) = 0. It touches y = x and y = −
 
 $$x_0 + 2\,(x_1 + x_2 + \cdots + x_n) = \frac{2}{\pi} + \frac{4}{\pi}\Big(\frac13 + \frac15 + \cdots + \frac{1}{2n+1}\Big).$$
 
-The bracket is at least a third of the harmonic series 1 + 1/2 + ⋯ + 1/n, which passes every bound ([series-convergence](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)). So the variation is infinite. The sums grow like (2/π) ln n: 1.06 at n = 1, 7.94 at n = 100,000.
+The bracket is at least a third of the harmonic series 1 + 1/2 + ⋯ + 1/n, which passes every bound ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)). So the variation is infinite. The sums grow like (2/π) ln n: 1.06 at n = 1, 7.94 at n = 100,000.
 
 Damp the swings to x^2 sin(1/x). The same partitions collect x_0^2 + 2(x_1^2 + ⋯ + x_n^2), which settles at 1 − 4/π^2 = 0.5947. Its slope, 2x sin(1/x) − cos(1/x), is at most 1 + 4/π in size, so it is Lipschitz and its variation is at most (1 + 4/π)(2/π) = 1.4472: finite.
 
@@ -199,7 +179,7 @@ Here f is a real function on [a, b], a partition is a = x_0 < ⋯ < x_n = b, d_k
 
 </details>
 
-A second route for a function with a continuous derivative: V_a^b(f) is the integral of |f′| from a to b. For an absolutely continuous f ([absolutely-continuous-functions-and-the-fundamental-theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md)) the same identity holds with the Lebesgue integral; Folland gets it in Section 3.5, from Exercise 28 and the fundamental theorem there.
+A second route for a function with a continuous derivative: V_a^b(f) is the integral of |f′| from a to b. For an absolutely continuous f ([Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md)) the same identity holds with the Lebesgue integral; Folland gets it in Section 3.5, from Exercise 28 and the fundamental theorem there.
 
 ---
 
@@ -630,9 +610,9 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Elevation gain in fitness apps.** The "total ascent" an app reports is P(b), estimated from GPS samples. Sparse samples miss summits and undercount, as the 3 km partition does; noisy samples invent small ups and downs and overcount, so apps smooth the track before adding.
-- **Fourier series.** Jordan introduced bounded variation in 1881 to prove that the Fourier series of such a function converges at every point, to the average of the two one-sided limits, (f(x−) + f(x+))/2. The series themselves are on [fourier-series-and-orthogonality](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/01-fourier-series-and-orthogonality.md).
-- **Integrating against a function.** A Stieltjes integral weights each piece of the line by the change of an integrator; functions of bounded variation are exactly the integrators that work for every continuous integrand ([riemann-stieltjes-integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/06-riemann-stieltjes-integral.md), and in measure form [lebesgue-stieltjes-integral](05-lebesgue-stieltjes-integral.md)).
-- **Signed measures.** A right-continuous function of bounded variation defines a signed measure, and its Jordan decomposition into climb and descent is the function-side version of the measure-side split on [signed-measures-and-hahn-jordan](../08-Densities%20and%20Changing%20Measure/02-signed-measures-and-hahn-jordan.md).
+- **Fourier series.** Jordan introduced bounded variation in 1881 to prove that the Fourier series of such a function converges at every point, to the average of the two one-sided limits, (f(x−) + f(x+))/2. The series themselves are on [Fourier series](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/01-fourier-series-and-orthogonality.md).
+- **Integrating against a function.** A Stieltjes integral weights each piece of the line by the change of an integrator; functions of bounded variation are exactly the integrators that work for every continuous integrand ([Stieltjes integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/06-riemann-stieltjes-integral.md), and in measure form [The Lebesgue-Stieltjes integral](05-lebesgue-stieltjes-integral.md)).
+- **Signed measures.** A right-continuous function of bounded variation defines a signed measure, and its Jordan decomposition into climb and descent is the function-side version of the measure-side split on [Signed measures](../08-Densities%20and%20Changing%20Measure/02-signed-measures-and-hahn-jordan.md).
 - **Price paths.** Continuous-time models of share prices have paths of infinite variation on every interval, like x sin(1/x) near 0 but everywhere; their calculus needs rules of its own.
 
 > **Say it back**
@@ -642,12 +622,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [supremum-and-completeness](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md): the least upper bound, which defines the variation and gives an increasing function its one-sided limits.
-- [continuity](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/05-continuity.md): limits from one side, and the rule that limits pass through differences.
+- [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md): the least upper bound, which defines the variation and gives an increasing function its one-sided limits.
+- [Continuity](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/05-continuity.md): limits from one side, and the rule that limits pass through differences.
 
 ## Where this goes next
 
-- [monotone-functions-differentiable-almost-everywhere](03-monotone-functions-differentiable-almost-everywhere.md): every increasing function has a derivative except on a set of length zero, so through the Jordan decomposition every function of bounded variation does too.
+- [Lebesgue's theorem on monotone functions](03-monotone-functions-differentiable-almost-everywhere.md): every increasing function has a derivative except on a set of length zero, so through the Jordan decomposition every function of bounded variation does too.
 
 The trail has a slope at every km except its turning points, but an increasing function can have countably many jumps and far stranger corners; whether it still has a slope almost everywhere, meaning except on a set of length zero, is what Lebesgue's theorem on monotone functions answers.
 

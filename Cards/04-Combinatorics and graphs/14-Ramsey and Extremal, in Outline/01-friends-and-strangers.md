@@ -1,27 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Ramsey and Extremal, in Outline
-topic: Two colours, one trio
-item: Friends and strangers
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/04-Inclusion-Exclusion and Pigeonhole/05-pigeonhole-extended|pigeonhole-extended]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/01-graphs-vertices-and-edges|graphs-vertices-and-edges]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/08-pigeonhole-principle|pigeonhole-principle]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/14-Ramsey and Extremal, in Outline/02-ramsey-numbers|ramsey-numbers]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - friends-and-strangers
----
-
 # Friends and strangers: among any six people, three all know each other or three are all strangers, and five is not enough
 
-Combinatorics and graphs → Ramsey and Extremal, in Outline → Two colours, one trio → Friends and strangers
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Ramsey and Extremal, in Outline](../../../SYLLABUS.md#w04-s14) → Friends and strangers
 
 ---
 
@@ -61,7 +40,7 @@ Solid lines are the five acquainted pairs, the sides of the table. Dotted lines 
 
 ## The formula
 
-Notation first, in words. A party where every pair is decided is the complete graph K(n): n dots, one line for every pair ([graphs-vertices-and-edges](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)), each line labelled **acquainted** or **strangers**. Three guests whose three lines carry the same label are a trio **all alike** (graph theory says monochromatic triangle: a triangle of one colour). $R(3,3)$ is the fewest guests that force such a trio however the labels fall; the two 3s give the trio's size for each kind ([ramsey-numbers](02-ramsey-numbers.md) takes the notation further).
+Notation first, in words. A party where every pair is decided is the complete graph K(n): n dots, one line for every pair ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)), each line labelled **acquainted** or **strangers**. Three guests whose three lines carry the same label are a trio **all alike** (graph theory says monochromatic triangle: a triangle of one colour). $R(3,3)$ is the fewest guests that force such a trio however the labels fall; the two 3s give the trio's size for each kind ([Ramsey numbers](02-ramsey-numbers.md) takes the notation further).
 
 $$R(3,3) = 6$$
 
@@ -87,7 +66,7 @@ That five is not enough needs one arrangement that escapes: the ring above. The 
 ### When it holds
 
 - **Every pair decided, one label each.** Leave one pair undecided (Eve and Finn cannot agree whether they have met) and the guarantee goes: 12 of the 16384 labellings of the other 14 pairs hold no trio.
-- **Two labels, not three.** A third label ("met once, cannot place the face") gives the guests more room, and six no longer force a trio. How many do is the general question of [ramsey-numbers](02-ramsey-numbers.md).
+- **Two labels, not three.** A third label ("met once, cannot place the face") gives the guests more room, and six no longer force a trio. How many do is the general question of [Ramsey numbers](02-ramsey-numbers.md).
 - **Either kind of trio counts.** Three mutual friends are not promised: two teams of three, acquainted across and strangers within, hold 0 trios of friends and 2 of strangers.
 - **Three, not four.** Forcing four alike takes far more guests; the next card starts there.
 
@@ -99,7 +78,7 @@ That five is not enough needs one arrangement that escapes: the ring above. The 
 
 Fifteen pairs are too many to picture, and the theorem must cover all 32768 labellings. So the proof looks at one guest instead of the party.
 
-Fix on Finn. Finn has five relationships, one with each other guest, each of two kinds. Two kinds of two account for only four, so one kind holds at least three ([pigeonhole-extended](../04-Inclusion-Exclusion%20and%20Pigeonhole/05-pigeonhole-extended.md)). That single count drives the whole argument.
+Fix on Finn. Finn has five relationships, one with each other guest, each of two kinds. Two kinds of two account for only four, so one kind holds at least three ([Pigeonhole, extended](../04-Inclusion-Exclusion%20and%20Pigeonhole/05-pigeonhole-extended.md)). That single count drives the whole argument.
 
 ### Step 1: three guests who stand the same way to Finn
 
@@ -143,7 +122,7 @@ So five guests force nothing: $R(3,3) > 5$. With Step 2, $R(3,3) = 6$.
 
 The ring is the only escape. Of all 1024 labellings of five guests, 12 hold no trio. There are also exactly 12 ways to seat five guests in a ring: 120 orders, each ring counted 10 times (5 starting seats, 2 directions). The code confirms that each of the 12 escapes is one of these rings.
 
-A second route counts instead of tracing cases. A. W. Goodman showed in 1959 that six guests hold at least two trios all alike; the search agrees, with the fewest 2, as in the two-teams labelling. Counting arguments carry Ramsey theory past the small cases ([probabilistic-method-by-counting](03-probabilistic-method-by-counting.md)).
+A second route counts instead of tracing cases. A. W. Goodman showed in 1959 that six guests hold at least two trios all alike; the search agrees, with the fewest 2, as in the two-teams labelling. Counting arguments carry Ramsey theory past the small cases ([Erdos's counting trick](03-probabilistic-method-by-counting.md)).
 
 ---
 
@@ -404,7 +383,7 @@ The two outputs match line for line.
 - **Any relation with two labels.** Six chemicals, each pair reacting or not. Six papers, each pair sharing an author or not. The proof never mentions people, so each forces a trio all alike.
 - **Guarantees that survive adversaries.** A network designer who wants six machines with no three mutually fast links and no three mutually slow ones cannot have it: the search over all 32768 labellings says no design exists.
 - **Reading too much into a small pattern.** Three mutual acquaintances among six people are not evidence of anything: they were forced before anyone looked. The same holds for small patterns in large data sets.
-- **Where the small cases end.** Bigger trios need far more guests: [ramsey-numbers](02-ramsey-numbers.md). Related forcings: two labels on a sequence give [erdos-szekeres](04-erdos-szekeres.md), and counting lines gives [mantel-and-turan](05-mantel-and-turan.md).
+- **Where the small cases end.** Bigger trios need far more guests: [Ramsey numbers](02-ramsey-numbers.md). Related forcings: two labels on a sequence give [Erdos-Szekeres](04-erdos-szekeres.md), and counting lines gives [Mantel and Turan](05-mantel-and-turan.md).
 
 > **Say it back**
 > Label every pair of six people acquainted or strangers. Fix one guest: five relationships in two kinds, so one kind holds at least three. If a pair among those three is of the same kind, that pair and the fixed guest are a trio all alike; if none is, the three are a trio of the other kind. Five guests escape: seat them in a ring where each knows only the two beside them, and both kinds of pair form rings of five, which hold no triangle.
@@ -413,13 +392,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [pigeonhole-extended](../04-Inclusion-Exclusion%20and%20Pigeonhole/05-pigeonhole-extended.md): five relationships over two kinds force a kind holding three, the count Step 0 runs on.
-- [graphs-vertices-and-edges](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md): dots and lines, the complete graph K(6) with its 15 lines, and the ring of five.
-- [pigeonhole-principle](../../01-Foundations/08-Relations%20and%20Functions/08-pigeonhole-principle.md): the plain form of the count, and the habit of choosing what the boxes are.
+- [Pigeonhole, extended](../04-Inclusion-Exclusion%20and%20Pigeonhole/05-pigeonhole-extended.md): five relationships over two kinds force a kind holding three, the count Step 0 runs on.
+- [Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md): dots and lines, the complete graph K(6) with its 15 lines, and the ring of five.
+- [Pigeonhole](../../01-Foundations/08-Relations%20and%20Functions/08-pigeonhole-principle.md): the plain form of the count, and the habit of choosing what the boxes are.
 
 ## Where this goes next
 
-- [ramsey-numbers](02-ramsey-numbers.md): the same question for trios of any two sizes, what is known about those numbers, and why so little is.
+- [Ramsey numbers](02-ramsey-numbers.md): the same question for trios of any two sizes, what is known about those numbers, and why so little is.
 
 Exhaustive search does not survive a bigger party: the labellings number 2 multiplied in C(n, 2) times. The next card needs arguments that never list them.
 

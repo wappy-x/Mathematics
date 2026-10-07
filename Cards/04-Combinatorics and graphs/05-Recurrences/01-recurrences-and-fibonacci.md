@@ -1,34 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Recurrences
-topic: Step rules and seeds
-item: Recurrences and Fibonacci
-kind: definition
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/01-rules-of-sum-and-product|rules-of-sum-and-product]]"
-  - "[[Cards/01-Foundations/06-Proof/04-proof-by-induction|proof-by-induction]]"
-  - "[[Cards/01-Foundations/06-Proof/05-strong-induction-and-well-ordering|strong-induction-and-well-ordering]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/02-finite-differences-and-telescoping-sums|finite-differences-and-telescoping-sums]]"
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/03-first-order-recurrences-and-loans|first-order-recurrences-and-loans]]"
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/04-characteristic-equation-and-binet|characteristic-equation-and-binet]]"
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/07-divide-and-conquer-recurrences|divide-and-conquer-recurrences]]"
-  - "[[Cards/04-Combinatorics and graphs/07-Generating Functions/01-ordinary-generating-functions|ordinary-generating-functions]]"
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/04-chromatic-polynomial|chromatic-polynomial]]"
-  - "[[Cards/14-Applied and computational/01-Algorithms and Growth/04-recurrences-and-the-master-theorem|recurrences-and-the-master-theorem]]"
-  - "[[Cards/14-Applied and computational/01-Algorithms and Growth/07-dynamic-programming|dynamic-programming]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - recurrences-and-fibonacci
----
-
 # Recurrences: a rule for the next term from the last few, with Fibonacci as the first example
 
-Combinatorics and graphs → Recurrences → Step rules and seeds → Recurrences and Fibonacci
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Recurrences](../../../SYLLABUS.md#w04-s05) → Recurrences and Fibonacci
 
 ---
 
@@ -102,7 +74,7 @@ A count too large to list is still pinned down if the collection splits into sma
 
 ### Step 1: the two answers split the floors, with no overlap
 
-Look at the tile covering the top square of the far column: it either stands upright and fills the column, or lies flat and reaches back a column. In that second case only a flat tile can cover the square below, reaching back as well. So the far end is one upright tile or two stacked flat tiles, never both, never neither: the counts add rather than multiply ([rules-of-sum-and-product](../01-Counting%20Principles/01-rules-of-sum-and-product.md)).
+Look at the tile covering the top square of the far column: it either stands upright and fills the column, or lies flat and reaches back a column. In that second case only a flat tile can cover the square below, reaching back as well. So the far end is one upright tile or two stacked flat tiles, never both, never neither: the counts add rather than multiply ([The rules of sum and product](../01-Counting%20Principles/01-rules-of-sum-and-product.md)).
 
 ### Step 2: each part is a shorter hallway, matched one for one
 
@@ -114,7 +86,7 @@ A 2 × 1 hallway takes one upright tile and nothing else: T(1) = 1. A 2 × 2 tak
 
 ### Step 4: another rule, a guessed closed form, a proof
 
-The largest disc must move at some point, and at that moment the other n − 1 sit stacked on the one remaining peg: getting them there costs h(n − 1) at best, the largest costs 1, rebuilding costs h(n − 1) again. That is h(n) = 2h(n−1) + 1, with h(0) = 0 because no discs need no moves. Run it forward: 1, 3, 7, 15, 31, every term one short of a power of 2. That suggests the **closed form** h(n) = 2^n − 1, computed straight from the position. Five numbers are a guess; induction settles it, by checking the start and checking that the rule carries the guess onward ([proof-by-induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)), so h(10) = 1023.
+The largest disc must move at some point, and at that moment the other n − 1 sit stacked on the one remaining peg: getting them there costs h(n − 1) at best, the largest costs 1, rebuilding costs h(n − 1) again. That is h(n) = 2h(n−1) + 1, with h(0) = 0 because no discs need no moves. Run it forward: 1, 3, 7, 15, 31, every term one short of a power of 2. That suggests the **closed form** h(n) = 2^n − 1, computed straight from the position. Five numbers are a guess; induction settles it, by checking the start and checking that the rule carries the guess onward ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)), so h(10) = 1023.
 
 <details>
 <summary>Detailed proof: the closed form h(n) = 2^n − 1, by induction</summary>
@@ -123,11 +95,11 @@ The largest disc must move at some point, and at that moment the other n − 1 s
 
 **The first step.** At n = 0 the seed gives 0, and 2^0 − 1 is 1 − 1, also 0.
 
-**The step onward.** Suppose h(n−1) = 2^(n−1) − 1. Then h(n) = 2h(n−1) + 1 = 2 × (2^(n−1) − 1) + 1 = 2^n − 2 + 1 = 2^n − 1. Holding at n − 1 forces it at n, so holding at 0 it holds everywhere after ([strong-induction-and-well-ordering](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md)).
+**The step onward.** Suppose h(n−1) = 2^(n−1) − 1. Then h(n) = 2h(n−1) + 1 = 2 × (2^(n−1) − 1) + 1 = 2^n − 2 + 1 = 2^n − 1. Holding at n − 1 forces it at n, so holding at 0 it holds everywhere after ([Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md)).
 
 </details>
 
-A forward run costs one step per position. Escaping it is the rest of this shelf: read as an equation in an unknown growth factor the rule gives a closed form ([characteristic-equation-and-binet](04-characteristic-equation-and-binet.md)), as a matrix one power ([recurrences-as-matrix-powers](06-recurrences-as-matrix-powers.md)), as one function a fraction ([ordinary-generating-functions](../07-Generating%20Functions/01-ordinary-generating-functions.md)).
+A forward run costs one step per position. Escaping it is the rest of this shelf: read as an equation in an unknown growth factor the rule gives a closed form ([The characteristic equation](04-characteristic-equation-and-binet.md)), as a matrix one power ([A recurrence is a matrix](06-recurrences-as-matrix-powers.md)), as one function a fraction ([Generating functions](../07-Generating%20Functions/01-ordinary-generating-functions.md)).
 
 ---
 
@@ -372,15 +344,15 @@ The two outputs match line for line.
 >
 > - **Cases that overlap.** Counting the flat pair once for the top row and again for the bottom turns every step into a doubling and ends at 512.
 > - **Trusting a pattern as a proof.** Terms running 1, 3, 7, 15, 31 make a closed form look certain; the guess h(n) = 2^n fits none and claims 1024.
-> - **Working each term out from scratch.** Recomputing T(n−1) and T(n−2) from the beginning repeats the same work over and over; keeping the last two answers gets there in n steps (dynamic-programming).
+> - **Working each term out from scratch.** Recomputing T(n−1) and T(n−2) from the beginning repeats the same work over and over; keeping the last two answers gets there in n steps (Dynamic programming).
 
 ---
 
 ## Where you meet it in real life
 
-- **Loan balances.** Next month's balance is this month's, grown by the rate and cut by the payment: a rule reaching back one place ([first-order-recurrences-and-loans](03-first-order-recurrences-and-loans.md)).
+- **Loan balances.** Next month's balance is this month's, grown by the rate and cut by the payment: a rule reaching back one place ([First-order recurrences](03-first-order-recurrences-and-loans.md)).
 - **Arrangements with a ban.** Strings of 0s and 1s with no two 1s in a row obey the same rule, found by the same question: what sits at the end?
-- **Running times.** Code halving its input and calling itself gives a recurrence for the work done ([divide-and-conquer-recurrences](07-divide-and-conquer-recurrences.md), recurrences-and-the-master-theorem).
+- **Running times.** Code halving its input and calling itself gives a recurrence for the work done ([Divide-and-conquer recurrences](07-divide-and-conquer-recurrences.md), Recurrences).
 
 > **Say it back**
 > A recurrence writes each term out of the terms just behind it, and it is a definition only once the first terms are fixed by hand. Asking what covers the far end of a 2 × 10 hallway splits its floors in two, so the count at length 10 is the count at 9 plus the count at 8. Seeded with 1 and 2 the rule reaches 89: the Fibonacci numbers, one place along. Hanoi obeys h(n) = 2h(n−1) + 1, whose closed form 2^n − 1 is guessed and proved by induction: 1023 moves for ten discs.
@@ -389,20 +361,20 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [rules-of-sum-and-product](../01-Counting%20Principles/01-rules-of-sum-and-product.md): why two cases that never overlap are added.
-- [proof-by-induction](../../01-Foundations/06-Proof/04-proof-by-induction.md): what turns a closed-form guess into a fact.
-- [strong-induction-and-well-ordering](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md): why stepping forward reaches every position.
+- [The rules of sum and product](../01-Counting%20Principles/01-rules-of-sum-and-product.md): why two cases that never overlap are added.
+- [Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md): what turns a closed-form guess into a fact.
+- [Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md): why stepping forward reaches every position.
 
 ## Where this goes next
 
-- [finite-differences-and-telescoping-sums](02-finite-differences-and-telescoping-sums.md): rules that collapse when terms are subtracted in pairs.
-- [first-order-recurrences-and-loans](03-first-order-recurrences-and-loans.md): rules reaching back one place.
-- [characteristic-equation-and-binet](04-characteristic-equation-and-binet.md): this rule's closed form, from an equation's roots.
-- [divide-and-conquer-recurrences](07-divide-and-conquer-recurrences.md): rules reaching back by halving, not stepping.
-- [ordinary-generating-functions](../07-Generating%20Functions/01-ordinary-generating-functions.md): a whole sequence carried by one function.
-- [chromatic-polynomial](../12-Planarity%20and%20Colouring/04-chromatic-polynomial.md): a recurrence on networks, from deleting a link.
-- recurrences-and-the-master-theorem: a running time read off a recurrence unsolved.
-- dynamic-programming: storing what a recurrence computed instead of recomputing it.
+- [Finite differences](02-finite-differences-and-telescoping-sums.md): rules that collapse when terms are subtracted in pairs.
+- [First-order recurrences](03-first-order-recurrences-and-loans.md): rules reaching back one place.
+- [The characteristic equation](04-characteristic-equation-and-binet.md): this rule's closed form, from an equation's roots.
+- [Divide-and-conquer recurrences](07-divide-and-conquer-recurrences.md): rules reaching back by halving, not stepping.
+- [Generating functions](../07-Generating%20Functions/01-ordinary-generating-functions.md): a whole sequence carried by one function.
+- [The chromatic polynomial](../12-Planarity%20and%20Colouring/04-chromatic-polynomial.md): a recurrence on networks, from deleting a link.
+- Recurrences: a running time read off a recurrence unsolved.
+- Dynamic programming: storing what a recurrence computed instead of recomputing it.
 
 Stepping forward costs one step per position, hopeless far out; the next cards reach the answer in one jump.
 

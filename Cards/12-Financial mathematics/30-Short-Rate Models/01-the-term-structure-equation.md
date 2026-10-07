@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Short-Rate Models
-topic: Pricing every bond from one rate
-item: A short-rate model
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/06-feynman-kac-formula|feynman-kac-formula]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/05-ornstein-uhlenbeck-and-cir-processes|ornstein-uhlenbeck-and-cir-processes]]"
-next:
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/02-vasicek-model|vasicek-model]]"
-  - "[[Cards/19-Partial differential equations/03-The Heat Equation in Depth/06-convection-diffusion-and-drift|convection-diffusion-and-drift]]"
-tags: [mathematics, financial mathematics, the-term-structure-equation]
----
-
 # A short-rate model: one random rate, and the equation every bond must satisfy
 
-Financial mathematics → Short-Rate Models → Pricing every bond from one rate → A short-rate model
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Short-Rate Models](../../../SYLLABUS.md#w12-s30) → A short-rate model
 
 ---
 
@@ -51,7 +33,7 @@ The single line is the five-year zero's price as today's short rate runs from 0 
 
 ## The formula
 
-Notation first. The rate is written in the shorthand of Itô calculus ([itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)): $dr_t$ is the change in the rate over a short step of time $dt$, and $dW_t$ is a random shock over that step, with average zero and variance $dt$. A price that depends on time and on the rate is written $p(t, r)$. A subscript marks a rate of change with the other input held still: $p_t$ is how fast the price moves as the clock runs, $p_r$ how fast it moves as the rate moves, and $p_{rr}$ how fast $p_r$ itself moves, the curvature.
+Notation first. The rate is written in the shorthand of Itô calculus ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)): $dr_t$ is the change in the rate over a short step of time $dt$, and $dW_t$ is a random shock over that step, with average zero and variance $dt$. A price that depends on time and on the rate is written $p(t, r)$. A subscript marks a rate of change with the other input held still: $p_t$ is how fast the price moves as the clock runs, $p_r$ how fast it moves as the rate moves, and $p_{rr}$ how fast $p_r$ itself moves, the curvature.
 
 The model, in the real world:
 
@@ -65,7 +47,7 @@ $$\boxed{\;p_t + \bigl(\mu + \lambda s\bigr)\,p_r + \tfrac12 s^2\,p_{rr} - r\,p 
 
 **Read it aloud:** the price's change from the clock, from the rate's drift nudged by the market price of risk, and from the rate's randomness together pay exactly the bank rate on the price; and at maturity the zero is worth its $1.
 
-Its solution, by the Feynman-Kac formula ([feynman-kac-formula](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md)):
+Its solution, by the Feynman-Kac formula ([Feynman-Kac](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md)):
 
 $$P(t, T) = \mathbb{E}_Q\!\left[\,e^{-\int_t^T r_u\,du}\,\right], \qquad \text{with the rate drifting at } \mu + \lambda s \text{ under } Q.$$
 
@@ -90,7 +72,7 @@ In the example the pricing-world drift works out as $a(\theta_P - r) + \lambda\s
 
 ### When it holds
 
-- **One random number drives every bond.** All maturities then move in lockstep: a rise in the two-year yield forces a rise in the ten-year. Real curves also twist, the short end up and the long end down. Two or more shocks are needed for that: [two-factor-and-lognormal-short-rate-models](07-two-factor-and-lognormal-short-rate-models.md).
+- **One random number drives every bond.** All maturities then move in lockstep: a rise in the two-year yield forces a rise in the ten-year. Real curves also twist, the short end up and the long end down. Two or more shocks are needed for that: [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md).
 - **The rate moves continuously.** Brownian shocks, no jumps. On a central-bank day the rate jumps by a quarter point, and a jump cannot be hedged away by a second bond in the same instant.
 - **The market price of risk depends only on time and today's rate.** If investors' appetite for risk moves with something else, such as inflation news, that something is a second state variable and one rate no longer prices everything.
 - **Frictionless borrowing at the short rate, no default.** The hedge in Step 2 borrows and lends at $r$. Government zeros fit; a corporate bond needs a credit spread on top.
@@ -174,15 +156,15 @@ The product rule for Itô processes gives $dX_u = D_u\,dp - r_u D_u p\,du$, sinc
 $$dX_u = D_u\bigl(p_t + (\mu + \lambda s)p_r + \tfrac12 s^2 p_{rr} - r_u p\bigr)du + D_u\,s\,p_r\,dW^Q_u.$$
 The bracket is zero by the equation. What is left has no drift. If $\mathbb{E}_Q\int_t^T (D_u s p_r)^2 du$ is finite, the remaining term is a true martingale (a fair bet), so $X_t = \mathbb{E}_Q[X_T]$. Now $X_t = p(t, r_t)$ because $D_t = 1$, and $X_T = D_T \cdot 1$ by the final condition. So $p(t, r_t) = \mathbb{E}_Q[e^{-\int_t^T r_u du}]$.
 
-The finiteness condition is the "genuine fair bet" assumption in When it holds. It is met in Vasicek: $p_r = -Bp$ with $B$ bounded, and the discounted price has finite variance. For the reverse direction, that the average is smooth enough to satisfy the equation, see [feynman-kac-formula](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md).
+The finiteness condition is the "genuine fair bet" assumption in When it holds. It is met in Vasicek: $p_r = -Bp$ with $B$ bounded, and the discounted price has finite variance. For the reverse direction, that the average is smooth enough to satisfy the equation, see [Feynman-Kac](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md).
 
 </details>
 
 ### Step 6: in the example, the average has a closed form
 
-Under $Q$ the example rate is a pulled random walk, an Ornstein-Uhlenbeck process ([ornstein-uhlenbeck-and-cir-processes](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)). The area $I$ under its path is then normal. For a normal $I$ with mean $m$ and variance $v$, the average of $e^{-I}$ is $e^{-m + v/2}$. The mean follows from the rate's expected path, which still has a fraction $e^{-au}$ of today's gap to 5% left after $u$ years. The variance adds up each shock's effect on the rest of the path. Both come out in closed form; [vasicek-model](02-vasicek-model.md) derives them and the bond formula they give. This card only uses the result, as one road among four.
+Under $Q$ the example rate is a pulled random walk, an Ornstein-Uhlenbeck process ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)). The area $I$ under its path is then normal. For a normal $I$ with mean $m$ and variance $v$, the average of $e^{-I}$ is $e^{-m + v/2}$. The mean follows from the rate's expected path, which still has a fraction $e^{-au}$ of today's gap to 5% left after $u$ years. The variance adds up each shock's effect on the rest of the path. Both come out in closed form; [Vasicek](02-vasicek-model.md) derives them and the bond formula they give. This card only uses the result, as one road among four.
 
-The other route runs the opposite way. Instead of choosing the short rate and solving for every bond, model the whole forward curve and let no-arbitrage fix its drift. That is the Heath-Jarrow-Morton framework, [hjm-framework-and-the-drift-condition](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md), and every short-rate model is a special case of it.
+The other route runs the opposite way. Instead of choosing the short rate and solving for every bond, model the whole forward curve and let no-arbitrage fix its drift. That is the Heath-Jarrow-Morton framework, [Heath-Jarrow-Morton](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md), and every short-rate model is a special case of it.
 
 ---
 
@@ -233,7 +215,7 @@ Every row is reproduced by both check scripts below.
 
 ## Code, from first principles, and it actually runs
 
-The code prices the five-year zero four ways. Road 1 computes the path area's mean and variance by Simpson's rule, adding thin slices, and takes $e^{-m+v/2}$. Road 2 simulates 8,000 rate paths with its own random numbers and averages the path discount. Road 3 solves the term structure equation itself on a grid of rates, marching backward from $p = 1$ at maturity. Road 4 is the closed form from [vasicek-model](02-vasicek-model.md), used only as a cross-check. Then the closed form is plugged into the equation to confirm it solves it, and the market price of risk is read back from three bonds.
+The code prices the five-year zero four ways. Road 1 computes the path area's mean and variance by Simpson's rule, adding thin slices, and takes $e^{-m+v/2}$. Road 2 simulates 8,000 rate paths with its own random numbers and averages the path discount. Road 3 solves the term structure equation itself on a grid of rates, marching backward from $p = 1$ at maturity. Road 4 is the closed form from [Vasicek](02-vasicek-model.md), used only as a cross-check. Then the closed form is plugged into the equation to confirm it solves it, and the market price of risk is read back from three bonds.
 
 ### Python
 
@@ -617,9 +599,9 @@ The two outputs agree line for line at the printed precision.
 ## Where you meet it in real life
 
 - **Term-premium estimates.** Central banks and research desks split long yields into expected future short rates and a term premium. The split is Step 3's chart: the gap between the pricing-world curve and the no-premium curve.
-- **Pricing callable bonds and bond options.** A callable bond has no closed-form average, so desks solve this equation on a grid or a tree with the option's payoff as the final condition: [bond-options-and-jamshidians-trick](05-bond-options-and-jamshidians-trick.md) and [hull-white-trinomial-tree](06-hull-white-trinomial-tree.md).
-- **Choosing the rate's volatility shape.** Swap $s = \sigma$ for $s = \sigma\sqrt{r}$ and the same equation gives rates that cannot go negative: [cox-ingersoll-ross-model](03-cox-ingersoll-ross-model.md).
-- **Fitting today's curve exactly.** Let the level move with time and the equation reproduces every quoted zero: [hull-white-model](04-hull-white-model.md) and [calibrating-a-short-rate-model](08-calibrating-a-short-rate-model.md).
+- **Pricing callable bonds and bond options.** A callable bond has no closed-form average, so desks solve this equation on a grid or a tree with the option's payoff as the final condition: [Bond options](05-bond-options-and-jamshidians-trick.md) and [The Hull-White tree](06-hull-white-trinomial-tree.md).
+- **Choosing the rate's volatility shape.** Swap $s = \sigma$ for $s = \sigma\sqrt{r}$ and the same equation gives rates that cannot go negative: [Cox-Ingersoll-Ross](03-cox-ingersoll-ross-model.md).
+- **Fitting today's curve exactly.** Let the level move with time and the equation reproduces every quoted zero: [Hull-White](04-hull-white-model.md) and [Calibrating Hull-White](08-calibrating-a-short-rate-model.md).
 - **Pension and insurance liabilities.** A promise to pay pensions for decades is a stack of zeros. Valuing it under a random rate, rather than at one frozen rate, is this card's average applied to every payment date.
 
 > **Say it back**
@@ -629,15 +611,15 @@ The two outputs agree line for line at the printed precision.
 
 ## What this builds on
 
-- [feynman-kac-formula](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md): the bridge between a linear equation with a final condition and an average over random paths; Step 5 is that bridge with the short rate as the discounting term.
-- [ornstein-uhlenbeck-and-cir-processes](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): the pulled random walk used as the example rate, and its square-root cousin; why the area under its path is normal.
+- [Feynman-Kac](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md): the bridge between a linear equation with a final condition and an average over random paths; Step 5 is that bridge with the short rate as the discounting term.
+- [Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): the pulled random walk used as the example rate, and its square-root cousin; why the area under its path is normal.
 
 ## Where this goes next
 
-- [vasicek-model](02-vasicek-model.md): solves this card's equation in closed form for the example rate, giving every maturity's price as an exponential of a straight line in today's rate.
-- convection-diffusion-and-drift: the term structure equation seen as a physicist would, drift carrying the price along and volatility spreading it out, with the $-rp$ term as a steady leak.
+- [Vasicek](02-vasicek-model.md): solves this card's equation in closed form for the example rate, giving every maturity's price as an exponential of a straight line in today's rate.
+- Convection-diffusion: the term structure equation seen as a physicist would, drift carrying the price along and volatility spreading it out, with the $-rp$ term as a steady leak.
 
-The equation says what every bond price must satisfy but not what it is; solving it for a named rate model, and seeing how the level, speed and volatility shape the whole yield curve, is the work of [vasicek-model](02-vasicek-model.md).
+The equation says what every bond price must satisfy but not what it is; solving it for a named rate model, and seeing how the level, speed and volatility shape the whole yield curve, is the work of [Vasicek](02-vasicek-model.md).
 
 ---
 

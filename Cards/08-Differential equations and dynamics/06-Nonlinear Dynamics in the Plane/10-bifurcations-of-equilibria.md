@@ -1,30 +1,12 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Nonlinear Dynamics in the Plane
-topic: Turning a dial
-item: Bifurcations
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/02-slope-fields-and-the-phase-line|slope-fields-and-the-phase-line]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/08-limit-cycles-and-van-der-pol|limit-cycles-and-van-der-pol]]"
-next:
-  - "[[Cards/13-Engineering mathematics/07-Mechanics and Structures/08-buckling-and-stability|buckling-and-stability]]"
-  - "[[Cards/19-Partial differential equations/07-Nonlinear PDE and Fluids/05-reaction-diffusion-and-pattern-formation|reaction-diffusion-and-pattern-formation]]"
-tags: [mathematics, differential equations and dynamics, bifurcations-of-equilibria]
----
-
 # Bifurcations: turn a dial slowly and a resting state can vanish, swap stability or split in two
 
-Differential equations and dynamics → Nonlinear Dynamics in the Plane → Turning a dial → Bifurcations
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → Bifurcations
 
 ---
 
 ## General Overview
 
-A fish stock grows by the logistic law: fast when sparse, slow near the most the lake can hold ([logistic-growth](../01-Rate%20Equations/07-logistic-growth.md)). Measure the stock as a share of that capacity, so a full lake is 1. At half capacity it grows fastest: a quarter of capacity a year.
+A fish stock grows by the logistic law: fast when sparse, slow near the most the lake can hold ([Logistic growth](../01-Rate%20Equations/07-logistic-growth.md)). Measure the stock as a share of that capacity, so a full lake is 1. At half capacity it grows fastest: a quarter of capacity a year.
 
 A fleet takes a fixed catch every year. At 21% of capacity a year the stock settles at 70%, where growth replaces the catch: a resting state, or **equilibrium** (a rest, for short). At 24% it settles at 60%; at 25%, at 50%. At 26% there is no resting stock at all, and a stock at 70% reaches zero 24.805 years later.
 
@@ -105,7 +87,7 @@ This is the saddle-node normal form exactly, with dial $\mu = \tfrac14 - h$. Bel
 
 ### Step 2: the sign of the slope decides stability
 
-The slope of the rate is $1 - 2x$. At the upper rest it is negative: a stock above falls back, one below rises, so the rest attracts ([linearisation-and-the-jacobian](02-linearisation-and-the-jacobian.md) makes the test exact). The lower rest has the opposite slope and repels. At catch 0.21 the slopes are −0.40 and +0.40; at 0.24, −0.20 and +0.20. Both shrink toward zero: Step 0's warning sign.
+The slope of the rate is $1 - 2x$. At the upper rest it is negative: a stock above falls back, one below rises, so the rest attracts ([Linearisation](02-linearisation-and-the-jacobian.md) makes the test exact). The lower rest has the opposite slope and repels. At catch 0.21 the slopes are −0.40 and +0.40; at 0.24, −0.20 and +0.20. Both shrink toward zero: Step 0's warning sign.
 
 ### Step 3: past the fold, the collapse time in closed form
 
@@ -130,7 +112,7 @@ Expand the rate in $u$ and the dial at a rest with zero slope. If the dial moves
 
 ### Step 5: in the plane, a spiral point can birth a cycle
 
-With two variables a rest can be a **spiral point**: nearby motion winds around it, and its linearised eigenvalues are complex, a growth rate (real part) and a turning rate (imaginary part). Turn the dial so the growth rate passes from negative to positive while the turning rate stays away from zero. The spiral turns from winding in to winding out. Typically a small stable limit cycle is born, its radius growing like the square root of the dial's distance past the crossing; otherwise a small unstable cycle shrinks onto the point and vanishes. The cubic terms decide which (Kuznetsov). That is the **Hopf bifurcation**. The polar model of [limit-cycles-and-van-der-pol](08-limit-cycles-and-van-der-pol.md) with a dial, $r' = r(\mu - r^2)$, $\theta' = 1$, shows the first case: a cycle of radius $\sqrt{\mu}$ once $\mu > 0$. Van der Pol's cycle appears at full size, radius about 2: a degenerate case.
+With two variables a rest can be a **spiral point**: nearby motion winds around it, and its linearised eigenvalues are complex, a growth rate (real part) and a turning rate (imaginary part). Turn the dial so the growth rate passes from negative to positive while the turning rate stays away from zero. The spiral turns from winding in to winding out. Typically a small stable limit cycle is born, its radius growing like the square root of the dial's distance past the crossing; otherwise a small unstable cycle shrinks onto the point and vanishes. The cubic terms decide which (Kuznetsov). That is the **Hopf bifurcation**. The polar model of [Limit cycles](08-limit-cycles-and-van-der-pol.md) with a dial, $r' = r(\mu - r^2)$, $\theta' = 1$, shows the first case: a cycle of radius $\sqrt{\mu}$ once $\mu > 0$. Van der Pol's cycle appears at full size, radius about 2: a degenerate case.
 
 ---
 
@@ -387,8 +369,8 @@ ALL CHECKS PASS
 
 - **Fisheries.** Fixed quotas give this card's fold; the maximum sustainable yield, 0.25 of capacity a year, sits on it.
 - **Lakes.** A clear lake turning murky as nutrients rise, and staying murky when they fall, is a fold with hysteresis.
-- **Buckling.** A loaded column is a pitchfork (buckling-and-stability).
-- **Epidemics.** Add births to the SIR model and, as infection speeds up, the disease-free state hands its stability to one where the disease persists: transcritical ([the-sir-epidemic-model](07-the-sir-epidemic-model.md)).
+- **Buckling.** A loaded column is a pitchfork (Buckling).
+- **Epidemics.** Add births to the SIR model and, as infection speeds up, the disease-free state hands its stability to one where the disease persists: transcritical ([The SIR model](07-the-sir-epidemic-model.md)).
 - **Oscillators.** Circuits and aircraft wings start shaking through a Hopf bifurcation.
 
 > **Say it back**
@@ -398,13 +380,13 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [slope-fields-and-the-phase-line](../01-Rate%20Equations/02-slope-fields-and-the-phase-line.md): the phase line, with rests and arrows, that the bifurcation diagram stacks side by side.
-- [limit-cycles-and-van-der-pol](08-limit-cycles-and-van-der-pol.md): the limit cycle the Hopf bifurcation gives birth to.
+- [Slope fields and the phase line](../01-Rate%20Equations/02-slope-fields-and-the-phase-line.md): the phase line, with rests and arrows, that the bifurcation diagram stacks side by side.
+- [Limit cycles](08-limit-cycles-and-van-der-pol.md): the limit cycle the Hopf bifurcation gives birth to.
 
 ## Where this goes next
 
-- buckling-and-stability: the pitchfork in a loaded column.
-- reaction-diffusion-and-pattern-formation: a uniform state losing stability across space.
+- Buckling: the pitchfork in a loaded column.
+- Reaction-diffusion: a uniform state losing stability across space.
 
 ---
 

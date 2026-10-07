@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Portfolio Theory
-topic: Mixing two holdings
-item: Two assets
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/36-Returns and Utility/01-returns-simple-log-and-annualised|returns-simple-log-and-annualised]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/04-joint-distributions-and-covariance|joint-distributions-and-covariance]]"
-next:
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/02-efficient-frontier-and-minimum-variance|efficient-frontier-and-minimum-variance]]"
-tags: [mathematics, financial mathematics, two-asset-portfolio-risk-and-return]
----
-
 # Two assets: mean adds, variance does not, and correlation does the work
 
-Financial mathematics → Portfolio Theory → Mixing two holdings → Two assets
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Theory](../../../SYLLABUS.md#w12-s37) → Two assets
 
 ---
 
@@ -56,7 +39,7 @@ Top line (orange): the weighted average of the two spreads, a straight line from
 
 ## The formula
 
-Notation first, in words. Call shares asset A and bonds asset B. $R_A$ and $R_B$ are their returns over the year: simple returns, the change in value divided by the starting value ([returns-simple-log-and-annualised](../36-Returns%20and%20Utility/01-returns-simple-log-and-annualised.md)). They are random: nobody knows them in advance. $E[\,\cdot\,]$ is the expectation, the probability-weighted average of a random quantity; $\operatorname{Var}$ is its variance and $\operatorname{Cov}$ the covariance of two, the average product of their deviations from their means ([joint-distributions-and-covariance](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). Shares have expected return $\mu_A$ (the Greek letter mu), spread $\sigma_A$ (sigma) and variance $\sigma_A^2$; bonds have $\mu_B$, $\sigma_B$, $\sigma_B^2$. $\rho$ (rho) is their correlation. A fraction $w$ of the money goes into shares and the rest, $1-w$, into bonds. $\mu_p$ and $\sigma_p$ are the mix's expected return and spread.
+Notation first, in words. Call shares asset A and bonds asset B. $R_A$ and $R_B$ are their returns over the year: simple returns, the change in value divided by the starting value ([Returns](../36-Returns%20and%20Utility/01-returns-simple-log-and-annualised.md)). They are random: nobody knows them in advance. $E[\,\cdot\,]$ is the expectation, the probability-weighted average of a random quantity; $\operatorname{Var}$ is its variance and $\operatorname{Cov}$ the covariance of two, the average product of their deviations from their means ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). Shares have expected return $\mu_A$ (the Greek letter mu), spread $\sigma_A$ (sigma) and variance $\sigma_A^2$; bonds have $\mu_B$, $\sigma_B$, $\sigma_B^2$. $\rho$ (rho) is their correlation. A fraction $w$ of the money goes into shares and the rest, $1-w$, into bonds. $\mu_p$ and $\sigma_p$ are the mix's expected return and spread.
 
 The portfolio's return is
 
@@ -96,7 +79,7 @@ In words: the bond variance, less the covariance, over the variance of the gap b
 ### When it holds
 
 - **One period, weights fixed at the start.** Over several years the weights drift as prices move; unless the mix is rebalanced, next year's weights are not 60-40 and the formula needs the new ones.
-- **The inputs are known.** In practice the means, spreads and correlation are estimates from past data. The formula is exact for the numbers put in, and those numbers are uncertain; the mean estimates are the worst ([estimation-error-and-shrinkage](07-estimation-error-and-shrinkage.md)).
+- **The inputs are known.** In practice the means, spreads and correlation are estimates from past data. The formula is exact for the numbers put in, and those numbers are uncertain; the mean estimates are the worst ([Estimation error](07-estimation-error-and-shrinkage.md)).
 - **Simple returns, not log returns.** A mix's simple return is the weighted average of the simple returns. Its log return is not the weighted average of the log returns, so the formula applied to log returns is slightly off.
 - **Spread stands in for risk.** That is fair for returns that swing roughly symmetrically. For lopsided returns (options, crash-prone assets) the spread understates the pain of the bad side.
 - **Correlation stays put.** If correlation rises from 0.2 to 0.5 in a crisis, the 60-40 spread rises from 12.70% to 13.36%, precisely when calm was wanted.
@@ -189,7 +172,7 @@ If $d = 0$ the gap $R_A - R_B$ is a constant: the two assets move in lockstep up
 
 ### Another road
 
-The same variance comes out of a small grid. Stack the weights into a list, `w = [0.6, 0.4]`, and the variances and covariances into a 2 × 2 grid, the **covariance matrix**. Then the variance is the weights times the grid times the weights. With two assets that is the formula above, term for term. With many assets it is the only sensible way to write it, and it is where [efficient-frontier-and-minimum-variance](02-efficient-frontier-and-minimum-variance.md) begins.
+The same variance comes out of a small grid. Stack the weights into a list, `w = [0.6, 0.4]`, and the variances and covariances into a 2 × 2 grid, the **covariance matrix**. Then the variance is the weights times the grid times the weights. With two assets that is the formula above, term for term. With many assets it is the only sensible way to write it, and it is where [The efficient frontier](02-efficient-frontier-and-minimum-variance.md) begins.
 
 ---
 
@@ -651,7 +634,7 @@ The two outputs are identical, including the simulation, since both use the same
 - **When correlation turned.** The benefit rests on correlation staying low. In 2022 shares and bonds fell together as interest rates rose, and 60-40 funds lost heavily on both sides. A correlation that rises in a crisis shrinks the cross-term saving when it is needed.
 - **Currency hedging.** A foreign share held unhedged is a two-asset position: the share and the currency. Whether hedging the currency lowers the spread depends on the correlation between the two, by the same formula.
 - **The calmest mix is not all-bonds.** Whenever $\rho < \sigma_B/\sigma_A$, a sliver of the riskier asset lowers the spread; here the least-risk weight is 3.09% shares. A low-risk mandate that holds only bonds leaves that on the table.
-- **Pricing risk.** How much a single asset adds to a portfolio's variance is its covariance with the portfolio, not its own variance. That is the idea behind [capm-and-beta](04-capm-and-beta.md). Weighting assets so each contributes the same variance is [risk-parity-and-alternative-weightings](08-risk-parity-and-alternative-weightings.md).
+- **Pricing risk.** How much a single asset adds to a portfolio's variance is its covariance with the portfolio, not its own variance. That is the idea behind [CAPM](04-capm-and-beta.md). Weighting assets so each contributes the same variance is [Risk parity](08-risk-parity-and-alternative-weightings.md).
 
 > **Say it back**
 > A two-asset portfolio's return is the weighted average of the two returns, in every outcome. So its expected return is the weighted average of the expected returns. Its variance is each variance times its weight squared, plus twice the product of the weights times the covariance. Because correlation is at most +1, the spread of the mix never exceeds the weighted average of the spreads, and falls below it whenever the two are not in lockstep. For 60-40 shares and bonds at correlation 0.2: mean 6.40%, spread 12.70%, against 14.40% for the naive average.
@@ -660,14 +643,14 @@ The two outputs are identical, including the simulation, since both use the same
 
 ## What this builds on
 
-- [returns-simple-log-and-annualised](../36-Returns%20and%20Utility/01-returns-simple-log-and-annualised.md): simple returns, the kind that mix by weight, and spread as the measure of swing.
-- [joint-distributions-and-covariance](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md): expectation, variance, covariance and correlation, and the variance of a sum.
+- [Returns](../36-Returns%20and%20Utility/01-returns-simple-log-and-annualised.md): simple returns, the kind that mix by weight, and spread as the measure of swing.
+- [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md): expectation, variance, covariance and correlation, and the variance of a sum.
 
 ---
 
 ## Where this goes next
 
-- [efficient-frontier-and-minimum-variance](02-efficient-frontier-and-minimum-variance.md): many assets at once, the covariance matrix, and the set of mixes with the least spread for each mean.
+- [The efficient frontier](02-efficient-frontier-and-minimum-variance.md): many assets at once, the covariance matrix, and the set of mixes with the least spread for each mean.
 
 With two assets there is one weight to choose and one curve to walk along; with many there are countless mixes for each mean, and the open question is which one has the least spread.
 

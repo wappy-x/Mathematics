@@ -1,26 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Random Variables
-topic: Numbers from outcomes
-item: Random variables
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/02-sample-spaces-and-events|sample-spaces-and-events]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/02-functions|functions]]"
-next:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/02-expectation|expectation]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/01-densities-and-cdfs|densities-and-cdfs]]"
-  - "[[Cards/10-Measure and integration/03-Measurable Functions/04-random-variables-and-their-information|random-variables-and-their-information]]"
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/01-processes-and-paths|processes-and-paths]]"
-tags: [mathematics, probability and statistics, random-variables-and-distributions]
----
-
 # Random variables: a number for each outcome, and the table of its chances
 
-Probability and statistics → Random Variables → Numbers from outcomes → Random variables
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Variables](../../../SYLLABUS.md#w09-s02) → Random variables
 
 ---
 
@@ -28,7 +8,7 @@ Probability and statistics → Random Variables → Numbers from outcomes → Ra
 
 A club sells 100 raffle tickets, numbered 1 to 100. On Friday one number is drawn, and that ticket wins $100. Follow ticket 37. There are 100 ways Friday can go, one for each number drawn. In 99 of them the ticket pays nothing. In one it pays $100.
 
-Nobody cares which losing number came up. What matters is the payout. So attach a number to every way Friday can go: $100 to the draw of 37, $0 to each of the other 99. That rule is the **random variable**. It is a function in the ordinary sense ([functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md)): each outcome goes in, one number comes out. Nothing about the rule is random. The randomness is all in which outcome happens.
+Nobody cares which losing number came up. What matters is the payout. So attach a number to every way Friday can go: $100 to the draw of 37, $0 to each of the other 99. That rule is the **random variable**. It is a function in the ordinary sense ([Functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md)): each outcome goes in, one number comes out. Nothing about the rule is random. The randomness is all in which outcome happens.
 
 Once the rule is fixed, the 100 outcomes collapse into a two-line table: pays $0 with chance 0.99, pays $100 with chance 0.01. That table is the ticket's **distribution**. A running total of the same table, read from the left, is its **cumulative distribution function**. The table answers "how likely is exactly this payout?" The running total answers "how likely is at most this payout?"
 
@@ -53,7 +33,7 @@ One bar per payout value: 0.99 at $0 and 0.01 at $100, a bar one ninety-ninth th
 
 ## The formula
 
-Notation first, in words. $P(A)$ is the chance of the event A, as on [sample-spaces-and-events](../01-Chance%20and%20Events/02-sample-spaces-and-events.md). A random variable gets a capital letter, $X$; a value it might take gets the lower-case letter, $x$. So $P(X = x)$ is read "the chance that X comes out equal to x", and $P(X = 100)$ is "the chance the ticket pays $100". The outcomes form the sample space $\Omega$ (capital omega); one outcome is $\omega$ (small omega), here the number drawn.
+Notation first, in words. $P(A)$ is the chance of the event A, as on [Sample spaces and events](../01-Chance%20and%20Events/02-sample-spaces-and-events.md). A random variable gets a capital letter, $X$; a value it might take gets the lower-case letter, $x$. So $P(X = x)$ is read "the chance that X comes out equal to x", and $P(X = 100)$ is "the chance the ticket pays $100". The outcomes form the sample space $\Omega$ (capital omega); one outcome is $\omega$ (small omega), here the number drawn.
 
 The random variable is a function from outcomes to numbers:
 
@@ -96,8 +76,8 @@ And the chance of one exact value is the height of the step the running total cl
 This is a definition, so it holds by fiat. Three conditions make it the right one:
 
 - **Every outcome gets exactly one number.** A rule that gave draw 37 two payouts would not be a function, and the table would count that outcome twice, adding to more than 1.
-- **The values can be listed**, finitely many or one after another (0, 1, 2, …). A payout that could be any amount on a continuous scale usually gives each single value chance 0; the table is then replaced by a density, on [densities-and-cdfs](../04-Continuous%20Distributions/01-densities-and-cdfs.md). The running total F survives that change unchanged.
-- **Every set of outcomes asked about has a chance.** On a finite space this is automatic. On an infinite one it is a real condition, and it is what [random-variables-and-their-information](../../10-Measure%20and%20integration/03-Measurable%20Functions/04-random-variables-and-their-information.md) makes precise.
+- **The values can be listed**, finitely many or one after another (0, 1, 2, …). A payout that could be any amount on a continuous scale usually gives each single value chance 0; the table is then replaced by a density, on [Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md). The running total F survives that change unchanged.
+- **Every set of outcomes asked about has a chance.** On a finite space this is automatic. On an infinite one it is a real condition, and it is what [Random variables as measurable maps](../../10-Measure%20and%20integration/03-Measurable%20Functions/04-random-variables-and-their-information.md) makes precise.
 
 ---
 
@@ -163,7 +143,7 @@ The steps above use a finite sample space. The same four facts hold when the val
 
 </details>
 
-Another route defines the distribution directly as the rule sending each set of values B to P(X in B), with the table and the running total as two ways to record it. For a random variable with a density, or one mixing jumps and a density, the table fails and this route still works; [random-variables-and-their-information](../../10-Measure%20and%20integration/03-Measurable%20Functions/04-random-variables-and-their-information.md) takes it.
+Another route defines the distribution directly as the rule sending each set of values B to P(X in B), with the table and the running total as two ways to record it. For a random variable with a density, or one mixing jumps and a density, the table fails and this route still works; [Random variables as measurable maps](../../10-Measure%20and%20integration/03-Measurable%20Functions/04-random-variables-and-their-information.md) takes it.
 
 ---
 
@@ -544,7 +524,7 @@ The two outputs are identical line for line: every count is a whole number, and 
 
 - **Lotteries and raffles.** Every prize table printed on the back of a ticket is a probability mass function: values in dollars, chances beside them.
 - **Insurance.** The claim a policy pays in a year is a random variable; an insurer prices from its table, with most of the chance at $0 and small chances on large amounts, the raffle's shape.
-- **Several quantities at once.** Two random variables on the same draws, such as this week's and next week's payouts, need a table of pairs: [joint-distributions-and-covariance](04-joint-distributions-and-covariance.md).
+- **Several quantities at once.** Two random variables on the same draws, such as this week's and next week's payouts, need a table of pairs: [Two variables at once](04-joint-distributions-and-covariance.md).
 
 > **Say it back**
 > A random variable is a fixed rule that gives each outcome a number. Its distribution is the table of chances for those numbers, made by pooling all outcomes that give the same number, and the table adds to 1. The cumulative distribution function is the running total of the table: it climbs from 0 to 1, stays flat between values, and jumps by each value's chance at that value. The chance of a window is a difference of two running totals. One raffle ticket pays $100 with chance 0.01; one ticket in each of three raffles wins something with chance 0.029701.
@@ -553,17 +533,17 @@ The two outputs are identical line for line: every count is a whole number, and 
 
 ## What this builds on
 
-- [sample-spaces-and-events](../01-Chance%20and%20Events/02-sample-spaces-and-events.md): the outcomes, the events, and the addition rule for events that do not overlap.
-- [functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md): one output for each input, the property that makes the table add to 1.
+- [Sample spaces and events](../01-Chance%20and%20Events/02-sample-spaces-and-events.md): the outcomes, the events, and the addition rule for events that do not overlap.
+- [Functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md): one output for each input, the property that makes the table add to 1.
 
 ## Where this goes next
 
-- [expectation](02-expectation.md): one number that summarises the table, the long-run average payout.
-- [densities-and-cdfs](../04-Continuous%20Distributions/01-densities-and-cdfs.md): values on a continuous scale, where the table becomes a density and the running total carries over.
-- [random-variables-and-their-information](../../10-Measure%20and%20integration/03-Measurable%20Functions/04-random-variables-and-their-information.md): the definition on infinite sample spaces, and what a random variable reveals about the outcome.
-- [processes-and-paths](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md): a random variable for every date, such as a running balance of weekly raffle payouts.
+- [Expectation](02-expectation.md): one number that summarises the table, the long-run average payout.
+- [Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md): values on a continuous scale, where the table becomes a density and the running total carries over.
+- [Random variables as measurable maps](../../10-Measure%20and%20integration/03-Measurable%20Functions/04-random-variables-and-their-information.md): the definition on infinite sample spaces, and what a random variable reveals about the outcome.
+- [Stochastic processes](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md): a random variable for every date, such as a running balance of weekly raffle payouts.
 
-The table says how the payout is spread; what a ticket is worth on average, and so whether $2 is a fair price, is the question [expectation](02-expectation.md) answers.
+The table says how the payout is spread; what a ticket is worth on average, and so whether $2 is a fair price, is the question [Expectation](02-expectation.md) answers.
 
 ---
 

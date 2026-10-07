@@ -1,29 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Inclusion-Exclusion and Pigeonhole
-topic: Guaranteed bounds
-item: Stopping the sieve early
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/04-Inclusion-Exclusion and Pigeonhole/01-inclusion-exclusion-for-n-sets|inclusion-exclusion-for-n-sets]]"
-  - "[[Cards/01-Foundations/02-The Number Line/02-number-line-and-inequalities|number-line-and-inequalities]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/14-Ramsey and Extremal, in Outline/03-probabilistic-method-by-counting|probabilistic-method-by-counting]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/08-multiple-testing|multiple-testing]]"
-  - "[[Cards/14-Applied and computational/02-Randomised and Approximate Algorithms/02-tail-bounds-and-repeated-trials|tail-bounds-and-repeated-trials]]"
-  - "[[Cards/24-Computability and complexity/06-Data, Learning and Fine-Grained Complexity/04-pac-learning-and-vc-dimension|pac-learning-and-vc-dimension]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - union-bound-and-bonferroni
----
-
 # Stopping the sieve early: the first term over-counts, two terms under-count, and both are guaranteed bounds
 
-Combinatorics and graphs → Inclusion-Exclusion and Pigeonhole → Guaranteed bounds → Stopping the sieve early
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Inclusion-Exclusion and Pigeonhole](../../../SYLLABUS.md#w04-s04) → Stopping the sieve early
 
 ---
 
@@ -35,7 +12,7 @@ Adding gives 25. As a count that is wrong: a day both rainy and windy sits in tw
 
 The pair counts arrive later: 4 days rainy and windy, 2 rainy and foggy, 1 windy and foggy. Take all 7 off and the answer reads 18. Wrong the other way: the day that was rainy, windy and foggy went in three times and came out three times, so it dropped out. But 18 is a floor: the answer sits between 18 and 25 before the log is opened, and the log gives 19.
 
-The exact sieve — add the sets, subtract the pair overlaps, add the triples, keep flipping ([inclusion-exclusion-for-n-sets](01-inclusion-exclusion-for-n-sets.md)) — can be cut off after any layer, and every cut-off is a bound.
+The exact sieve — add the sets, subtract the pair overlaps, add the triples, keep flipping ([Inclusion-exclusion for any number of sets](01-inclusion-exclusion-for-n-sets.md)) — can be cut off after any layer, and every cut-off is a bound.
 
 **Stop the sieve after an odd number of layers and the total never falls below the true size of the union; after an even number it never rises above it.**
 
@@ -71,7 +48,7 @@ The right side is $S_1$, so the line reads $N \le S_1$: the union bound. One mor
 
 $$S_1 - S_2 \;\le\; N \;\le\; S_1$$
 
-Keeping $m$ layers is the general statement. The sigma sign $\sum$ means "add these as $j$ runs from 1 to $m$" ([binomial-theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)); $(-1)^{j+1}$ flips the sign, plus on odd $j$.
+Keeping $m$ layers is the general statement. The sigma sign $\sum$ means "add these as $j$ runs from 1 to $m$" ([The binomial theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)); $(-1)^{j+1}$ flips the sign, plus on odd $j$.
 
 $$\sum_{j=1}^{m} (-1)^{j+1} S_j \;\ge\; N \ (m \text{ odd}), \qquad \sum_{j=1}^{m} (-1)^{j+1} S_j \;\le\; N \ (m \text{ even})$$
 
@@ -102,7 +79,7 @@ A union's size is the number of days appearing at least once, so the sets can be
 
 ### Step 1: a day under k headings is counted C(k, j) times in layer j
 
-The 12th was rainy, windy and foggy, so k = 3. It appears in all three set sizes, all three pair overlaps and the one triple overlap — 3, 3, 1. Those are the ways of choosing j of its 3 headings, so its share of layer $j$ is C(k, j), the ways to pick j from k ([n-choose-k](../01-Counting%20Principles/05-n-choose-k.md)).
+The 12th was rainy, windy and foggy, so k = 3. It appears in all three set sizes, all three pair overlaps and the one triple overlap — 3, 3, 1. Those are the ways of choosing j of its 3 headings, so its share of layer $j$ is C(k, j), the ways to pick j from k ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
 
 ### Step 2: one layer overshoots, two undershoot
 
@@ -121,7 +98,7 @@ Counts of ways to choose are never negative, so the correction comes off when m 
 <details>
 <summary>Detailed proof: the partial sum collapses to one coefficient</summary>
 
-Pascal's rule splits each coefficient into the two above it ([pascals-rule-and-the-triangle](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md)), and regrouping the signs makes each term one step of a staircase:
+Pascal's rule splits each coefficient into the two above it ([Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md)), and regrouping the signs makes each term one step of a staircase:
 $$(-1)^j C(k,\, j) \;=\; (-1)^{j} C(k-1,\, j) \;-\; (-1)^{j-1} C(k-1,\, j-1).$$
 Each step's second half cancels the first half of the one before, so adding j from 0 to m leaves only the top: (−1)^m C(k−1, m); the bottom is C(k−1, −1) = 0, there being no way to choose −1 things. That sum differs from the card's by the term C(k, 0) = 1 and by a sign, so the card's is 1 minus it.
 
@@ -381,8 +358,8 @@ Both outputs match line for line.
 ## Where you meet it in real life
 
 - **Error budgets.** A project slips if any of its twelve tasks slips, so slipping runs are at most the twelve task counts added up, however the delays are linked.
-- **Proving something exists by counting.** If the bad arrangements fall into families whose sizes add to less than the total, some arrangement escapes them all: the engine behind [probabilistic-method-by-counting](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md).
-- **Testing many things at once.** The chance any of twenty tests raises a false alarm is capped by the twenty chances added up; shrinking each allowance to match carries Bonferroni's name ([multiple-testing](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md)).
+- **Proving something exists by counting.** If the bad arrangements fall into families whose sizes add to less than the total, some arrangement escapes them all: the engine behind [Erdos's counting trick](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md).
+- **Testing many things at once.** The chance any of twenty tests raises a false alarm is capped by the twenty chances added up; shrinking each allowance to match carries Bonferroni's name ([Many tests](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md)).
 
 > **Say it back**
 > Counting a union exactly means adding the sets, subtracting the pair overlaps, adding the triples, onwards. Cut it off early and what remains is still a guarantee: an odd number of terms never lands below the truth, an even number never above. The sizes alone give the union bound; the pair overlaps taken off too give a floor. At the airfield, 25 and 18 around a true 19.
@@ -391,15 +368,15 @@ Both outputs match line for line.
 
 ## What this builds on
 
-- [inclusion-exclusion-for-n-sets](01-inclusion-exclusion-for-n-sets.md): the full alternating sieve cut short here, and the C(k, j) appearances in layer j.
-- [number-line-and-inequalities](../../01-Foundations/02-The%20Number%20Line/02-number-line-and-inequalities.md): what "at most" and "at least" claim, and why adding something never negative moves a total one way only.
+- [Inclusion-exclusion for any number of sets](01-inclusion-exclusion-for-n-sets.md): the full alternating sieve cut short here, and the C(k, j) appearances in layer j.
+- [The number line and inequalities](../../01-Foundations/02-The%20Number%20Line/02-number-line-and-inequalities.md): what "at most" and "at least" claim, and why adding something never negative moves a total one way only.
 
 ## Where this goes next
 
-- [probabilistic-method-by-counting](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md): the bound proving an object exists without producing one.
-- [multiple-testing](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md): the same inequality on chances.
-- tail-bounds-and-repeated-trials: capping the chance that any of many trials goes wrong.
-- pac-learning-and-vc-dimension: bounding the chance that any rule in a large collection misleads.
+- [Erdos's counting trick](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md): the bound proving an object exists without producing one.
+- [Many tests](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md): the same inequality on chances.
+- Tail bounds: capping the chance that any of many trials goes wrong.
+- Learning with a guarantee: bounding the chance that any rule in a large collection misleads.
 
 A ceiling from sizes alone is generous when the sets overlap heavily, and nothing here says how generous without opening the log; turning that slack into a proof is a later card's work.
 

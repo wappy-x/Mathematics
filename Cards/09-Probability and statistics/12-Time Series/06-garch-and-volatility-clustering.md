@@ -1,24 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Time Series
-topic: Changing variance
-item: GARCH
-kind: model
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/12-Time Series/02-ar-models|ar-models]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/04-maximum-likelihood|maximum-likelihood]]"
-  - "[[Cards/09-Probability and statistics/12-Time Series/01-stationarity-and-autocorrelation|stationarity-and-autocorrelation]]"
-next:
-  - "[[Cards/12-Financial mathematics/40-Hedging, Volatility Forecasts and Stress/04-volatility-forecasting-ewma-garch-and-realised|volatility-forecasting-ewma-garch-and-realised]]"
-tags: [mathematics, probability and statistics, time-series, garch-and-volatility-clustering]
----
-
 # GARCH: volatility that clusters, and a model for tomorrow's spread
 
-Probability and statistics → Time Series → Changing variance → GARCH
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Time Series](../../../SYLLABUS.md#w09-s12) → GARCH
 
 ---
 
@@ -60,7 +42,7 @@ $$r_t = \sqrt{h_t}\; z_t, \qquad h_{t+1} = \omega + \alpha\, r_t^2 + \beta\, h_t
 
 **Read it aloud:** each day's return is a normal draw scaled by that day's volatility; tomorrow's variance is a small constant, plus alpha times today's squared return, plus beta times today's variance.
 
-The name spells out the idea: generalised autoregressive conditional heteroskedasticity. Heteroskedastic means of unequal spread; conditional, given the past; autoregressive, built from its own past, as on [ar-models](02-ar-models.md); generalised, because yesterday's variance enters as well as yesterday's squared return. The (1,1) counts one day back of each.
+The name spells out the idea: generalised autoregressive conditional heteroskedasticity. Heteroskedastic means of unequal spread; conditional, given the past; autoregressive, built from its own past, as on [Autoregression](02-ar-models.md); generalised, because yesterday's variance enters as well as yesterday's squared return. The (1,1) counts one day back of each.
 
 The sum $\phi = \alpha + \beta$ is the **persistence**: the share of today's variance above its long-run level that survives to tomorrow. When it is below 1, the variance has a long-run level, and the forecast k days ahead drifts towards it:
 
@@ -74,7 +56,7 @@ $$h_{t+1} = \lambda\, h_t + (1 - \lambda)\, r_t^2$$
 
 It is GARCH with the constant removed and the persistence set to exactly 1: $\omega = 0$, $\alpha = 1 - \lambda$, $\beta = \lambda$. It has no long-run level to return to.
 
-The settings are fitted by maximum likelihood ([maximum-likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)). Over $n$ days, the log-likelihood $\ell$ is
+The settings are fitted by maximum likelihood ([Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)). Over $n$ days, the log-likelihood $\ell$ is
 
 $$\ell(\omega, \alpha, \beta) = -\frac{1}{2} \sum_{t=1}^{n} \left[ \ln\left(2\pi h_t\right) + \frac{r_t^2}{h_t} \right]$$
 
@@ -113,9 +95,9 @@ The model makes a return's direction fresh each day, through the normal draw, an
 
 ### Step 1: returns are uncorrelated, but their squares are not
 
-Take today's return and one from k days earlier. Given last evening's information, today's volatility and the earlier return are fixed numbers and today's draw averages zero, so their product averages zero; averaging over all evenings keeps it zero (the tower rule, [conditional-expectation-in-tables](../02-Random%20Variables/05-conditional-expectation-in-tables.md)). The returns are uncorrelated at every lag. On the share the measured correlations run from −0.05 to 0.03. Pure noise over 2,500 days stays inside ±0.04 about 19 times in 20; nine of the ten lags do, and one stray at lag 3 is what noise gives. That band is for independent noise. Returns that cluster are uncorrelated but not independent, and their measured correlations spread wider still, so the stray is even less remarkable.
+Take today's return and one from k days earlier. Given last evening's information, today's volatility and the earlier return are fixed numbers and today's draw averages zero, so their product averages zero; averaging over all evenings keeps it zero (the tower rule, [Conditional expectation](../02-Random%20Variables/05-conditional-expectation-in-tables.md)). The returns are uncorrelated at every lag. On the share the measured correlations run from −0.05 to 0.03. Pure noise over 2,500 days stays inside ±0.04 about 19 times in 20; nine of the ten lags do, and one stray at lag 3 is what noise gives. That band is for independent noise. Returns that cluster are uncorrelated but not independent, and their measured correlations spread wider still, so the stray is even less remarkable.
 
-The squares are not. Given last evening, today's squared return averages $h_t$, which contains yesterday's squared return with weight α: a large move yesterday raises the expected square today. That correlation is the clustering. It is measured by the **autocorrelation**, the correlation of a series with itself k days earlier ([stationarity-and-autocorrelation](01-stationarity-and-autocorrelation.md)).
+The squares are not. Given last evening, today's squared return averages $h_t$, which contains yesterday's squared return with weight α: a large move yesterday raises the expected square today. That correlation is the clustering. It is measured by the **autocorrelation**, the correlation of a series with itself k days earlier ([Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md)).
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -167,7 +149,7 @@ Write the squared return as its forecast plus a surprise: $r_t^2 = h_t + u_t$, w
 
 $$r_t^2 = \omega + \phi\, r_{t-1}^2 + u_t - \beta\, u_{t-1}$$
 
-The squares follow an autoregression with coefficient φ, plus a one-day moving average of the surprises: an ARMA(1,1) ([ma-and-arma](03-ma-and-arma.md)). Its autocorrelations decay by φ per day after the first:
+The squares follow an autoregression with coefficient φ, plus a one-day moving average of the surprises: an ARMA(1,1) ([Moving average and ARMA](03-ma-and-arma.md)). Its autocorrelations decay by φ per day after the first:
 
 $$\rho_1 = \frac{\alpha\,(1 - \alpha\beta - \beta^2)}{1 - 2\alpha\beta - \beta^2}, \qquad \rho_k = \phi^{\,k-1}\,\rho_1$$
 
@@ -196,7 +178,7 @@ The chance of the whole record factors day by day: the density of day 1, times t
 
 The two terms pull against each other: the squared-return term rewards a large forecast variance and the logarithm term charges for it. For one day alone the best variance is that day's squared return; three settings must serve all 2,500 days, and the peak is the best compromise.
 
-The peak has no formula, so the code climbs to it. The Nelder–Mead method keeps four trial points in the three settings and keeps reflecting the worst through the others. Standard errors come from the curvature at the peak, as on [fisher-information-and-cramer-rao](../07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md). EWMA's one setting is found by golden-section search, which shrinks an interval by a fixed ratio each step.
+The peak has no formula, so the code climbs to it. The Nelder–Mead method keeps four trial points in the three settings and keeps reflecting the worst through the others. Standard errors come from the curvature at the peak, as on [Fisher information](../07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md). EWMA's one setting is found by golden-section search, which shrinks an interval by a fixed ratio each step.
 
 ### Step 6: several days at once
 
@@ -204,7 +186,7 @@ Returns are uncorrelated, so the variance of a 20-day total return is the sum of
 
 ### The other door
 
-Step 4 opens a second road: match the squared returns' autocorrelations to the ARMA(1,1), as on [method-of-moments](../07-Sampling%20and%20Estimation/05-method-of-moments.md). It is quicker but noisier than the likelihood, since those autocorrelations settle slowly. EWMA itself is exponential smoothing of the squares ([forecasting-and-exponential-smoothing](05-forecasting-and-exponential-smoothing.md)).
+Step 4 opens a second road: match the squared returns' autocorrelations to the ARMA(1,1), as on [Method of moments](../07-Sampling%20and%20Estimation/05-method-of-moments.md). It is quicker but noisier than the likelihood, since those autocorrelations settle slowly. EWMA itself is exponential smoothing of the squares ([Forecasting](05-forecasting-and-exponential-smoothing.md)).
 
 ---
 
@@ -237,7 +219,7 @@ The fitted rule, from the ten years:
 
 Every true value lies within one standard error of its estimate. The grid search, with the long-run level pinned to the plain variance, lands on α = 0.09 and β = 0.88, each within 0.01 of the climb's answer. An interval of two standard errors either side is a statement about the method: built this way on many simulated decades, it would cover the truth about 95 times in 100. The half-life is loosely pinned: 25.3 days at the estimate, anywhere from 15.2 to 74.0 days across two standard errors of persistence.
 
-The likelihood ranks the three rules. Constant variance reaches −4612.65, EWMA −4504.79, and GARCH −4488.21, a gain of 124.44 over constant variance and 16.58 over EWMA. How large a gain must be before it counts is the business of [likelihood-ratio-tests](../08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md); these are far past any usual threshold. The true settings score −4488.59, just below the peak, as they must: the peak is the best score any settings can reach on this record.
+The likelihood ranks the three rules. Constant variance reaches −4612.65, EWMA −4504.79, and GARCH −4488.21, a gain of 124.44 over constant variance and 16.58 over EWMA. How large a gain must be before it counts is the business of [Likelihood ratio tests](../08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md); these are far past any usual threshold. The true settings score −4488.59, just below the peak, as they must: the peak is the best score any settings can reach on this record.
 
 The live forecast, at the close of the last day: GARCH puts tomorrow's variance at 2.5407 and twenty days out at 2.4682, already close to its long-run 2.3620. EWMA says 2.2847, for tomorrow and for every day after.
 
@@ -256,7 +238,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows the answer. The scripts simulate the share from the true rule, using a SplitMix64 generator (seed 2026) and Box–Muller normal draws ([rejection-sampling-and-box-muller](../11-Simulation/03-rejection-sampling-and-box-muller.md)). They fit both rules with searches written out here. Three roads meet. The fit is checked against the known truth and against a grid search with the long-run level pinned to the plain variance. The forecast formula is checked against 20,000 simulated futures ([monte-carlo-estimates-and-error](../11-Simulation/04-monte-carlo-estimates-and-error.md)), with four standard errors allowed. The clustering is checked against the same days shuffled and, loosely, against the model's $\rho_1$; the $\rho_1$ formula itself is checked tightly against the ARMA(1,1)'s own weights, summed 4,000 days back.
+Nothing imported knows the answer. The scripts simulate the share from the true rule, using a SplitMix64 generator (seed 2026) and Box–Muller normal draws ([Rejection sampling and Box-Muller](../11-Simulation/03-rejection-sampling-and-box-muller.md)). They fit both rules with searches written out here. Three roads meet. The fit is checked against the known truth and against a grid search with the long-run level pinned to the plain variance. The forecast formula is checked against 20,000 simulated futures ([Monte Carlo](../11-Simulation/04-monte-carlo-estimates-and-error.md)), with four standard errors allowed. The clustering is checked against the same days shuffled and, loosely, against the model's $\rho_1$; the $\rho_1$ formula itself is checked tightly against the ARMA(1,1)'s own weights, summed 4,000 days back.
 
 ### Python
 
@@ -669,17 +651,17 @@ The two outputs match line for line: the same generator, the same climb and the 
 >
 > - **Decaying the forecast by β.** The pull home runs at α + β. Using β alone brings the storm forecast 20 days out down to 3.3011 instead of 7.5198.
 > - **Treating EWMA as a smaller GARCH.** It has persistence exactly 1 and no long-run level. From the storm it still forecasts 3.34% volatility 120 days out, where GARCH has come back to 1.64%.
-> - **Scoring the fit on the days it was fitted to.** The storm replay above uses settings that saw the whole decade. A forecast is only tested on days its settings never saw; the scoring is on [volatility-forecasting-ewma-garch-and-realised](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/04-volatility-forecasting-ewma-garch-and-realised.md).
+> - **Scoring the fit on the days it was fitted to.** The storm replay above uses settings that saw the whole decade. A forecast is only tested on days its settings never saw; the scoring is on [Tomorrow's volatility](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/04-volatility-forecasting-ewma-garch-and-realised.md).
 > - **Quoting a forecast without its uncertainty.** The forecasts above treat the fitted settings as exact. The half-life alone could be anywhere from 15.2 to 74.0 days.
 
 ---
 
 ## Where you meet it in real life
 
-- **Market risk.** Banks size tomorrow's possible loss from a variance forecast. RiskMetrics published EWMA with λ = 0.94 for this; GARCH is its standard rival ([volatility-forecasting-ewma-garch-and-realised](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/04-volatility-forecasting-ewma-garch-and-realised.md)).
+- **Market risk.** Banks size tomorrow's possible loss from a variance forecast. RiskMetrics published EWMA with λ = 0.94 for this; GARCH is its standard rival ([Tomorrow's volatility](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/04-volatility-forecasting-ewma-garch-and-realised.md)).
 - **Inflation.** Robert Engle introduced the ARCH model in 1982 to measure how uncertain UK inflation was, and shared the 2003 Nobel memorial prize in economics for it.
 - **Any series with bursts.** Electricity prices and network traffic cluster too. The mean is modelled first, often by an autoregression; GARCH models the spread of what is left.
-- **Persistence near 1.** Fitted daily persistence for shares is often close to 1. At exactly 1 the variance behaves like a series with a unit root ([differencing-and-unit-roots](04-differencing-and-unit-roots.md)): shocks never fade.
+- **Persistence near 1.** Fitted daily persistence for shares is often close to 1. At exactly 1 the variance behaves like a series with a unit root ([Unit roots](04-differencing-and-unit-roots.md)): shocks never fade.
 
 > **Say it back**
 > Share returns have no memory for direction but a strong memory for size: large moves follow large moves. GARCH sets tomorrow's variance to a constant plus weights on today's squared return and today's variance. Its settings are fitted by maximum likelihood, which scores each day's return against the variance forecast for it. The persistence, alpha plus beta, pulls every forecast back to a long-run level, halving the excess every ln(1/2) / ln(φ) days. EWMA is the special case with persistence 1, which never comes home.
@@ -688,13 +670,13 @@ The two outputs match line for line: the same generator, the same climb and the 
 
 ## What this builds on
 
-- [ar-models](02-ar-models.md): a series built from its own past; here the variance, and the squared returns, are built that way.
-- [maximum-likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md): choosing settings that make the record least surprising, and reading standard errors off the curvature of the peak.
-- [stationarity-and-autocorrelation](01-stationarity-and-autocorrelation.md): the autocorrelation that shows clustering, and the settled long-run behaviour Step 2 assumes.
+- [Autoregression](02-ar-models.md): a series built from its own past; here the variance, and the squared returns, are built that way.
+- [Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md): choosing settings that make the record least surprising, and reading standard errors off the curvature of the peak.
+- [Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md): the autocorrelation that shows clustering, and the settled long-run behaviour Step 2 assumes.
 
 ## Where this goes next
 
-- [volatility-forecasting-ewma-garch-and-realised](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/04-volatility-forecasting-ewma-garch-and-realised.md): GARCH, EWMA and realised variance set against each other on a trading desk, with forecasts scored on days they never saw.
+- [Tomorrow's volatility](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/04-volatility-forecasting-ewma-garch-and-realised.md): GARCH, EWMA and realised variance set against each other on a trading desk, with forecasts scored on days they never saw.
 
 GARCH here is fitted and replayed on the same ten years; whether its forecasts beat simpler rules on days the fit never saw, and what that is worth to a risk desk, is what that card measures.
 

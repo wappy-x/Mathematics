@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Structural Models - Default from the Balance Sheet
-topic: Default at the first touch
-item: Black-Cox
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/01-merton-model-equity-as-a-call|merton-model-equity-as-a-call]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/04-reflection-principle-and-running-maximum|reflection-principle-and-running-maximum]]"
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/01-knock-out-and-knock-in-options|knock-out-and-knock-in-options]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-next:
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/06-where-structural-models-fail|where-structural-models-fail]]"
-tags: [mathematics, financial mathematics, black-cox-first-passage-default]
----
-
 # Black-Cox: default the first moment assets touch a barrier, and the reflection term Merton misses
 
-Financial mathematics → Structural Models - Default from the Balance Sheet → Default at the first touch → Black-Cox
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Structural Models - Default from the Balance Sheet](../../../SYLLABUS.md#w12-s43) → Black-Cox
 
 ---
 
@@ -27,7 +8,7 @@ Financial mathematics → Structural Models - Default from the Balance Sheet →
 
 A firm owns assets worth $100m today. It owes one debt of $80m, due in one year. Its assets swing by about 20% a year, and cash in the bank earns 5%.
 
-Merton's model checks the firm once, on the due date. If the assets are below $80m then, the firm defaults. In the **pricing world** (the risk-neutral world, where every asset is taken to grow at the riskless rate) the chance is **10.28%** ([merton-model-equity-as-a-call](01-merton-model-equity-as-a-call.md)).
+Merton's model checks the firm once, on the due date. If the assets are below $80m then, the firm defaults. In the **pricing world** (the risk-neutral world, where every asset is taken to grow at the riskless rate) the chance is **10.28%** ([Merton's model](01-merton-model-equity-as-a-call.md)).
 
 Real bond contracts are often less patient. A **safety covenant**, a clause in the loan agreement, can hand the firm to its lenders the moment the assets fall to a set level. Put that level at $80m. Now a firm that sinks to $78m in May and recovers to $95m by December has defaulted in May. Merton's year-end check would have called it healthy.
 
@@ -87,7 +68,7 @@ Two helper numbers have names of their own:
 
 ### When it holds
 
-- **Continuous paths.** The assets move without jumps, so a default lands exactly on the barrier. A sudden loss that jumps the assets from $85m to $70m overnight is outside the model; [where-structural-models-fail](06-where-structural-models-fail.md) shows what that costs.
+- **Continuous paths.** The assets move without jumps, so a default lands exactly on the barrier. A sudden loss that jumps the assets from $85m to $70m overnight is outside the model; [Where structural models break](06-where-structural-models-fail.md) shows what that costs.
 - **Watched every instant.** A covenant tested monthly misses touches between tests. Here monthly tests give 16.74% in the simulation, not 22.24%.
 - **A flat barrier, constant rate and volatility, no payouts.** Black and Cox allowed a barrier that rises over time and a firm that pays out cash; both change the formula. With constant inputs it is the one above.
 - **Barrier below today's value.** With $H \ge V_0$ the firm is already in default. With $H$ near zero the chance goes to zero.
@@ -111,7 +92,7 @@ The whole difficulty is the second group: touched and recovered.
 
 Take a path that touches the barrier and ends above it. After the first touch, flip the rest of the path upside down about the barrier. A path that ended $y$ above the barrier in log units now ends $y$ below it.
 
-The flip pairs every touched-and-recovered path with exactly one path that ends below the barrier. With no drift, up and down moves are equally likely, so the flip keeps probabilities ([reflection-principle-and-running-maximum](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)). The recovered group is as likely as the "ends below" group. So without drift the default chance is exactly twice Merton's term at the same level.
+The flip pairs every touched-and-recovered path with exactly one path that ends below the barrier. With no drift, up and down moves are equally likely, so the flip keeps probabilities ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)). The recovered group is as likely as the "ends below" group. So without drift the default chance is exactly twice Merton's term at the same level.
 
 The check confirms it. Set the rate to 2%, so $\nu = 0.02 - \tfrac12(0.20)^2 = 0$. Adding up the first-touch times gives 0.264543, and twice the finish-below term gives 0.264543.
 
@@ -157,7 +138,7 @@ This is what makes simulation honest. A simulation that samples the path monthly
 
 ### Other roads
 
-The first-touch time has a density of its own, the inverse Gaussian law in the proof callout. Adding it up from 0 to $T$ is a second route to 0.222369, and the check does it. A third route is the simulation, with no formula inside it at all. The same mirror prices barrier options: [knock-out-and-knock-in-options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md) uses it to value a call that dies at a barrier.
+The first-touch time has a density of its own, the inverse Gaussian law in the proof callout. Adding it up from 0 to $T$ is a second route to 0.222369, and the check does it. A third route is the simulation, with no formula inside it at all. The same mirror prices barrier options: [Knock-out and knock-in options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md) uses it to value a call that dies at a barrier.
 
 ---
 
@@ -230,7 +211,7 @@ how often the $80m level is checked     chance of default within the year, %
   continuously (formula)                ██████████████████████████████    22.24
 ```
 
-Looking more often finds more defaults, because more of the dips are seen. The shifted-barrier rule treats monthly checks as continuous watching of a slightly lower barrier, $80 \times e^{-0.5826 \times 0.20 \times \sqrt{1/12}} = 77.3538$; it lands within half a point of the monthly simulation ([discrete-monitoring-correction](../16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md)).
+Looking more often finds more defaults, because more of the dips are seen. The shifted-barrier rule treats monthly checks as continuous watching of a slightly lower barrier, $80 \times e^{-0.5826 \times 0.20 \times \sqrt{1/12}} = 77.3538$; it lands within half a point of the monthly simulation ([Daily monitoring](../16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md)).
 
 ### The other force: where the barrier sits
 
@@ -598,10 +579,10 @@ The two outputs are identical line for line: different bell-curve routes agree t
 ## Where you meet it in real life
 
 - **Bond covenants.** Loan agreements set asset or net-worth floors that let lenders act before maturity. Black and Cox wrote their paper to value exactly those clauses.
-- **Equity as a knock-out call.** If lenders take the whole firm at the barrier, the shares pay nothing after a touch. The shares are then a down-and-out call on the assets, priced with the same mirror as [knock-out-and-knock-in-options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md).
-- **Credit models in banks.** First-passage models with an uncertain barrier are used to turn share prices into credit spreads. They start from asset values backed out of the share price, as on [asset-value-and-volatility-from-the-share-price](04-asset-value-and-volatility-from-the-share-price.md).
-- **Distance to default.** The real-world year-end chance here, 0.078429, is the default frequency on [distance-to-default-and-expected-default-frequency](03-distance-to-default-and-expected-default-frequency.md); the first-touch version, 0.184582, is its path-watching counterpart.
-- **Sensitivities.** How each claim moves when assets or volatility move is on [structural-model-sensitivities](02-structural-model-sensitivities.md); a barrier adds a steep slope near the barrier.
+- **Equity as a knock-out call.** If lenders take the whole firm at the barrier, the shares pay nothing after a touch. The shares are then a down-and-out call on the assets, priced with the same mirror as [Knock-out and knock-in options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md).
+- **Credit models in banks.** First-passage models with an uncertain barrier are used to turn share prices into credit spreads. They start from asset values backed out of the share price, as on [Backing out the unobservable](04-asset-value-and-volatility-from-the-share-price.md).
+- **Distance to default.** The real-world year-end chance here, 0.078429, is the default frequency on [Distance to default](03-distance-to-default-and-expected-default-frequency.md); the first-touch version, 0.184582, is its path-watching counterpart.
+- **Sensitivities.** How each claim moves when assets or volatility move is on [How the balance-sheet claims move](02-structural-model-sensitivities.md); a barrier adds a steep slope near the barrier.
 
 > **Say it back**
 > Black-Cox defaults a firm the first moment its assets touch a barrier, not only if they are low on the due date. The chance splits into paths that end below the barrier and paths that touched and recovered. A mirror flips each recovered path into one that ends below the barrier's mirror point, and a single weight corrects for drift. For assets of $100m and a barrier at $80m that gives 22.24% against Merton's 10.28%; a lower barrier can give far less. Simulations must count touches between their sample dates, which the bridge chance does.
@@ -610,16 +591,16 @@ The two outputs are identical line for line: different bell-curve routes agree t
 
 ## What this builds on
 
-- [merton-model-equity-as-a-call](01-merton-model-equity-as-a-call.md): the firm as assets against debt, and the year-end default chance of 10.28% that this card's first term reproduces.
-- [reflection-principle-and-running-maximum](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the mirror argument without drift, which Step 1 uses as given.
-- [knock-out-and-knock-in-options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md): the same drifted mirror and its weight, used there to price options.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): simulated paths and their standard error, the third road here.
+- [Merton's model](01-merton-model-equity-as-a-call.md): the firm as assets against debt, and the year-end default chance of 10.28% that this card's first term reproduces.
+- [Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the mirror argument without drift, which Step 1 uses as given.
+- [Knock-out and knock-in options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md): the same drifted mirror and its weight, used there to price options.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): simulated paths and their standard error, the third road here.
 
 ## Where this goes next
 
-- [where-structural-models-fail](06-where-structural-models-fail.md): what continuous asset paths leave out, above all sudden jumps.
+- [Where structural models break](06-where-structural-models-fail.md): what continuous asset paths leave out, above all sudden jumps.
 
-A barrier makes default happen earlier, but in this model a firm far from its barrier still has almost no chance of default in the next month, as the 0.01% for January shows; whether real short-dated credit spreads agree is the question [where-structural-models-fail](06-where-structural-models-fail.md) answers.
+A barrier makes default happen earlier, but in this model a firm far from its barrier still has almost no chance of default in the next month, as the 0.01% for January shows; whether real short-dated credit spreads agree is the question [Where structural models break](06-where-structural-models-fail.md) answers.
 
 ---
 

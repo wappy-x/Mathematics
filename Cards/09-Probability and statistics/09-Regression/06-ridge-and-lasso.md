@@ -1,25 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Regression
-topic: Penalised least squares
-item: Regularisation
-kind: method
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/09-Regression/03-multiple-regression-and-gauss-markov|multiple-regression-and-gauss-markov]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/06-bias-variance-and-mean-squared-error|bias-variance-and-mean-squared-error]]"
-next:
-  - "[[Cards/09-Probability and statistics/09-Regression/08-cross-validation-and-overfitting|cross-validation-and-overfitting]]"
-  - "[[Cards/13-Engineering mathematics/05-Signals/10-compressed-sensing-in-outline|compressed-sensing-in-outline]]"
-  - "[[Cards/15-Optimization/06-Conic, Quadratic and Stochastic Programs/06-proximal-methods-ista-fista-and-the-lasso|proximal-methods-ista-fista-and-the-lasso]]"
-tags: [mathematics, probability and statistics, ridge-and-lasso]
----
-
 # Regularisation: shrinking coefficients to trade bias for stability
 
-Probability and statistics → Regression → Penalised least squares → Regularisation
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Regression](../../../SYLLABUS.md#w09-s09) → Regularisation
 
 ---
 
@@ -29,7 +10,7 @@ A used-car dealer prices trade-ins from twenty measurements taken when a car com
 
 This dealer is a simulation, which is what makes it useful: the true pricing rule is known. The average car sells for $15,000. Only three measurements matter. One standard deviation on the first adds $4,000, on the second $3,000, on the third $2,000; the other seventeen add nothing. Each sale also misses the rule by random noise with a standard deviation of $3,000. The dealer has 40 past sales to fit and 100 more held back. Prices below are in thousands of dollars.
 
-Ordinary least squares, the fit of [multiple-regression-and-gauss-markov](03-multiple-regression-and-gauss-markov.md), gets the first three slopes in the right order: 4.27, 4.00 and 2.19, against a true 4, 3 and 2. It also gives the sixth measurement, worth nothing, a slope of −2.53. On new cars its average squared miss is 16.70. A dealer who knew the true rule would still have an average squared miss of 9.00, the noise alone; the rest is avoidable.
+Ordinary least squares, the fit of [Multiple regression](03-multiple-regression-and-gauss-markov.md), gets the first three slopes in the right order: 4.27, 4.00 and 2.19, against a true 4, 3 and 2. It also gives the sixth measurement, worth nothing, a slope of −2.53. On new cars its average squared miss is 16.70. A dealer who knew the true rule would still have an average squared miss of 9.00, the noise alone; the rest is avoidable.
 
 The cause is the correlation. Forty sales pin down what the twenty measurements do together, but barely how they differ, so a little noise swings the split of credit between near-twins a long way.
 
@@ -127,13 +108,13 @@ For any nonzero direction h, $h^\top (G + \lambda I) h = \lVert Xh\rVert^2 + \la
 
 ### Step 2: along each direction, ridge multiplies by d/(d + λ)
 
-The spectral theorem for symmetric matrices ([spectral-theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) says $G$ has twenty perpendicular directions along which it only stretches, each by its strength $d_j$ (its eigenvalue). Along direction j, least squares estimates the true coordinate $\theta_j$ with no bias and variance $\sigma^2/d_j$. Ridge multiplies that estimate by $d_j/(d_j + \lambda)$. Its mean falls short of $\theta_j$ by the same factor and its variance becomes $\sigma^2 d_j/(d_j + \lambda)^2$.
+The spectral theorem for symmetric matrices ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) says $G$ has twenty perpendicular directions along which it only stretches, each by its strength $d_j$ (its eigenvalue). Along direction j, least squares estimates the true coordinate $\theta_j$ with no bias and variance $\sigma^2/d_j$. Ridge multiplies that estimate by $d_j/(d_j + \lambda)$. Its mean falls short of $\theta_j$ by the same factor and its variance becomes $\sigma^2 d_j/(d_j + \lambda)^2$.
 
 In the dealer's 40 cars the strongest direction has strength 741.9 and the weakest 0.86. Along the strongest, a charge of 5 changes almost nothing. Along the weakest, least squares' variance is 10.43 and ridge's at charge 5 is 0.23. Ridge leaves what the data measured alone and flattens what they did not.
 
 ### Step 3: some charge always beats least squares
 
-A direction's mean squared error is its variance plus its squared bias ([bias-variance-and-mean-squared-error](../07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md)):
+A direction's mean squared error is its variance plus its squared bias ([Bias and variance](../07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md)):
 
 $$E\big[(\hat\theta_j - \theta_j)^2\big] = \frac{\sigma^2 d_j + \lambda^2 \theta_j^2}{(d_j + \lambda)^2}$$
 
@@ -188,7 +169,7 @@ The answer can be checked without trusting the search. At lasso's minimum, every
 
 Training error, the squared misses on the fitted cars, always prefers no charge, since least squares minimises exactly that. So each candidate charge is fitted on the 40 sales and scored on the 100 held back. The lowest score wins: charge 5 for ridge, at 15.97 ± 2.01, and charge 20 for lasso, at 13.98 ± 1.81.
 
-The validation score is an estimate, with a standard error of about 2: as a guess at the error level it is rough, since ridge's true error at charge 5 is 12.42. It ranks charges much more sharply, because every charge faces the same 100 cars. Here both picks match the grid's lowest true error. Reusing every car for both fitting and scoring, in turns, is cross-validation: [cross-validation-and-overfitting](08-cross-validation-and-overfitting.md).
+The validation score is an estimate, with a standard error of about 2: as a guess at the error level it is rough, since ridge's true error at charge 5 is 12.42. It ranks charges much more sharply, because every charge faces the same 100 cars. Here both picks match the grid's lowest true error. Reusing every car for both fitting and scoring, in turns, is cross-validation: [Overfitting](08-cross-validation-and-overfitting.md).
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -202,7 +183,7 @@ xychart-beta
 
 Orange: ridge, lowest at charge 5. Green: lasso, lowest at charge 20. At charge zero both are least squares.
 
-A different route to stability drops the weak directions of Step 2 entirely instead of shrinking them: [principal-components](07-principal-components.md).
+A different route to stability drops the weak directions of Step 2 entirely instead of shrinking them: [Principal components](07-principal-components.md).
 
 ---
 
@@ -658,10 +639,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Pricing and credit scoring.** Insurers and lenders fit many overlapping customer features; ridge-style charges keep fitted rates stable from year to year. The same idea on the logistic curve is penalised [logistic-regression](05-logistic-regression.md).
+- **Pricing and credit scoring.** Insurers and lenders fit many overlapping customer features; ridge-style charges keep fitted rates stable from year to year. The same idea on the logistic curve is penalised [Logistic regression](05-logistic-regression.md).
 - **Genetics.** Thousands of gene readings, a few hundred patients: least squares has no single answer, and lasso is a standard first screen.
 - **Machine learning.** "Weight decay" in a neural network is ridge's charge applied to every weight.
-- **Portfolios.** Estimated asset returns and covariances are shrunk toward simple targets for the same trade of bias for variance: [estimation-error-and-shrinkage](../../12-Financial%20mathematics/37-Portfolio%20Theory/07-estimation-error-and-shrinkage.md).
+- **Portfolios.** Estimated asset returns and covariances are shrunk toward simple targets for the same trade of bias for variance: [Estimation error](../../12-Financial%20mathematics/37-Portfolio%20Theory/07-estimation-error-and-shrinkage.md).
 
 > **Say it back**
 > Correlated measurements leave directions the data barely measure, and least squares swings wildly along them. Ridge adds a charge on squared slopes, which shrinks each direction by d/(d + λ): the weak ones almost to nothing, the strong ones hardly at all. Lasso charges slope sizes instead, which subtracts a fixed amount and cuts small slopes to exactly zero. Both accept a bias to remove more variance, and the charge is picked on cars the fit has not seen. For the dealer, the true error per new car falls from 16.70 to 12.42 with ridge and 11.41 with lasso, against 9.00 for knowing the rule.
@@ -670,14 +651,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [multiple-regression-and-gauss-markov](03-multiple-regression-and-gauss-markov.md): least squares with many measurements, the normal equations this card adds lambda to, and the unbiasedness ridge gives up.
-- [bias-variance-and-mean-squared-error](../07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md): the split of mean squared error into variance plus squared bias, and shrinking toward zero for one number.
+- [Multiple regression](03-multiple-regression-and-gauss-markov.md): least squares with many measurements, the normal equations this card adds lambda to, and the unbiasedness ridge gives up.
+- [Bias and variance](../07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md): the split of mean squared error into variance plus squared bias, and shrinking toward zero for one number.
 
 ## Where this goes next
 
-- [cross-validation-and-overfitting](08-cross-validation-and-overfitting.md): picking the charge with every car used for both fitting and scoring, in turns.
-- compressed-sensing-in-outline: the sum-of-sizes charge recovering a sparse signal exactly.
-- proximal-methods-ista-fista-and-the-lasso: the soft-threshold as a general step for sums with corners, and how fast it converges.
+- [Overfitting](08-cross-validation-and-overfitting.md): picking the charge with every car used for both fitting and scoring, in turns.
+- Compressed sensing: the sum-of-sizes charge recovering a sparse signal exactly.
+- Proximal gradient: the soft-threshold as a general step for sums with corners, and how fast it converges.
 
 One held-back set picked the charge here, and a smaller one picked badly; how to pick it reliably when every car is precious is the question cross-validation answers.
 

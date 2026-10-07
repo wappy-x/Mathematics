@@ -1,25 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Markov Chains
-topic: Reading a hidden chain
-item: Hidden Markov models
-kind: model
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/01-markov-chains|markov-chains]]"
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/06-bayes-rule|bayes-rule]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/09-Beyond Brownian/04-filtering-and-the-kalman-bucy-filter|filtering-and-the-kalman-bucy-filter]]"
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/08-extended-kalman-filter-and-nonlinear-estimation|extended-kalman-filter-and-nonlinear-estimation]]"
-  - "[[Cards/14-Applied and computational/03-Information Theory/09-ldpc-turbo-and-polar-codes-in-outline|ldpc-turbo-and-polar-codes-in-outline]]"
-tags: [mathematics, stochastic processes and calculus, hidden-markov-models]
----
-
 # Hidden Markov models: a chain you cannot see, observed through noise
 
-Stochastic processes and calculus → Markov Chains → Reading a hidden chain → Hidden Markov models
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Markov Chains](../../../SYLLABUS.md#w11-s03) → Hidden Markov models
 
 ---
 
@@ -29,7 +10,7 @@ An office has no windows. Each morning one worker notes a single fact: whether t
 
 One working week reads: umbrella, umbrella, none, none, umbrella. Three questions about it have exact answers. How likely was that umbrella week at all? About 1.40%. How likely was rain on each day, given the whole week? On Friday, about 41%. Which single week of weather explains the umbrellas best? Rainy, rainy, sunny, sunny, cloudy.
 
-The weather is a Markov chain ([markov-chains](01-markov-chains.md)): tomorrow depends on today alone. It is not that card's town: this rule was chosen so that sun never turns straight to rain. Here the chain is hidden, and each day shows only a noisy signal of its state. A hidden chain read through such signals is a **hidden Markov model**, the term used from here on. Three short recursions answer the questions without listing all 243 possible weeks of weather. The **forward algorithm** adds up over the unseen past one day at a time, and a backward pass does the same over the days still to come. **Viterbi decoding** runs the forward sweep with "take the largest" in place of "add".
+The weather is a Markov chain ([Markov chains](01-markov-chains.md)): tomorrow depends on today alone. It is not that card's town: this rule was chosen so that sun never turns straight to rain. Here the chain is hidden, and each day shows only a noisy signal of its state. A hidden chain read through such signals is a **hidden Markov model**, the term used from here on. Three short recursions answer the questions without listing all 243 possible weeks of weather. The **forward algorithm** adds up over the unseen past one day at a time, and a backward pass does the same over the days still to come. **Viterbi decoding** runs the forward sweep with "take the largest" in place of "add".
 
 **A hidden Markov model is a Markov chain seen only through a noisy signal of each day's state; because the chain forgets everything but today, the chance of the signals and the most likely hidden path can both be built one day at a time from the day before.**
 
@@ -55,7 +36,7 @@ The first line is the chance of rain given the umbrellas up to that day: what co
 
 Notation first, in words. Days are numbered $n = 1$ (Monday) to $N = 5$ (Friday). $X_n$ is the weather on day $n$: S, C or R, for sunny, cloudy, rainy. It is hidden. $Y_n$ is the signal on day $n$: 1 for an umbrella, 0 for none; $y_n$ is the value actually seen, here 1, 1, 0, 0, 1. The letters $i$ and $j$ stand for weathers.
 
-The chain's habits are the transition matrix $P$ with entries $p_{ij}$: the chance that tomorrow is $j$ given today is $i$ ([markov-chains](01-markov-chains.md)). Two new ingredients join it. The **start law** $\nu_i$, read "nu", is the chance Monday is $i$, before any umbrella is seen. The **emission chance** $b_i(y)$ is the chance of signal $y$ on a day whose weather is $i$.
+The chain's habits are the transition matrix $P$ with entries $p_{ij}$: the chance that tomorrow is $j$ given today is $i$ ([Markov chains](01-markov-chains.md)). Two new ingredients join it. The **start law** $\nu_i$, read "nu", is the chance Monday is $i$, before any umbrella is seen. The **emission chance** $b_i(y)$ is the chance of signal $y$ on a day whose weather is $i$.
 
 | Today | Tomorrow S | Tomorrow C | Tomorrow R | Chance Monday is this, $\nu_i$ | Umbrella chance, $b_i(1)$ |
 | --- | --- | --- | --- | --- | --- |
@@ -133,7 +114,7 @@ $(0.05 \times 0 + 0.12 \times 0.4 + 0.16 \times 0.6) \times 0.8 = 0.144 \times 0
 
 That is $\alpha_2(\text{R})$. Wednesday's values need only Tuesday's three, never Monday's: the whole past is folded into three numbers. Friday's three numbers sum to $L$ = 0.0139810329, the chance of the umbrella week, about 1.40%.
 
-Divide each day's three forward values by their total and Bayes' rule appears ([bayes-rule](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/06-bayes-rule.md)). The forward step is a prediction, "yesterday's belief moved by the chain", followed by an update, "multiplied by the chance of today's signal and rescaled". On Monday the prior 0.5, 0.3, 0.2 meets an umbrella and becomes 0.1515, 0.3636, 0.4848.
+Divide each day's three forward values by their total and Bayes' rule appears ([Bayes' rule](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/06-bayes-rule.md)). The forward step is a prediction, "yesterday's belief moved by the chain", followed by an update, "multiplied by the chance of today's signal and rescaled". On Monday the prior 0.5, 0.3, 0.2 meets an umbrella and becomes 0.1515, 0.3636, 0.4848.
 
 ### Step 3: backwards, for the whole week
 
@@ -641,7 +622,7 @@ The two outputs match line for line. The simulated chance of the umbrella week, 
 ## Where you meet it in real life
 
 - **Speech recognition.** For decades a spoken word was modelled as a hidden chain of sound states read through noisy acoustic measurements; Rabiner's tutorial below set the notation.
-- **Error-correcting codes.** Viterbi's algorithm was invented in 1967 to decode convolutional codes, where the hidden state is the encoder's memory and the signal is a noisy radio bit. Turbo codes, in ldpc-turbo-and-polar-codes-in-outline, are decoded by forward-backward passes of the same kind.
+- **Error-correcting codes.** Viterbi's algorithm was invented in 1967 to decode convolutional codes, where the hidden state is the encoder's memory and the signal is a noisy radio bit. Turbo codes, in LDPC, turbo and polar codes, are decoded by forward-backward passes of the same kind.
 - **Genes and language.** DNA is read as signals from hidden "coding" and "non-coding" states; words, from hidden grammatical classes.
 - **Robot location.** A position on a map is the hidden state, noisy sensor readings are the signals, and the forward algorithm keeps the running estimate.
 - **Markets.** Regime-switching models treat "calm" and "turbulent" as a hidden chain behind daily returns.
@@ -653,14 +634,14 @@ The two outputs match line for line. The simulated chance of the umbrella week, 
 
 ## What this builds on
 
-- [markov-chains](01-markov-chains.md): what a weather chain and its transition matrix are, and the rule that tomorrow depends on today alone.
-- [bayes-rule](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/06-bayes-rule.md): turning the chance of an umbrella given the weather into the chance of the weather given the umbrella, the update inside every forward step.
+- [Markov chains](01-markov-chains.md): what a weather chain and its transition matrix are, and the rule that tomorrow depends on today alone.
+- [Bayes' rule](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/06-bayes-rule.md): turning the chance of an umbrella given the weather into the chance of the weather given the umbrella, the update inside every forward step.
 
 ## Where this goes next
 
-- [filtering-and-the-kalman-bucy-filter](../09-Beyond%20Brownian/04-filtering-and-the-kalman-bucy-filter.md): the forward step for a hidden number that moves linearly, continuously in time, seen through Gaussian noise; the three forward numbers become a mean and a variance.
-- extended-kalman-filter-and-nonlinear-estimation: the same predict-then-update loop when the hidden motion and the sensor are curved, not straight-line, functions.
-- ldpc-turbo-and-polar-codes-in-outline: decoding by passing forward and backward chances along a code's structure.
+- [Filtering](../09-Beyond%20Brownian/04-filtering-and-the-kalman-bucy-filter.md): the forward step for a hidden number that moves linearly, continuously in time, seen through Gaussian noise; the three forward numbers become a mean and a variance.
+- Filtering a nonlinear plant: the same predict-then-update loop when the hidden motion and the sensor are curved, not straight-line, functions.
+- LDPC, turbo and polar codes: decoding by passing forward and backward chances along a code's structure.
 
 This card took the model's chances as known and its weather as one of three kinds; what it leaves open is how to track a hidden quantity that moves continuously and is seen through continuous noise.
 

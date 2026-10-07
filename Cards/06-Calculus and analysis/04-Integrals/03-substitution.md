@@ -1,26 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Integrals
-topic: Changing the variable
-item: Substitution
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/04-Integrals/02-fundamental-theorem-of-calculus|fundamental-theorem-of-calculus]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/03-chain-rule|chain-rule]]"
-next:
-  - "[[Cards/06-Calculus and analysis/04-Integrals/06-trig-substitution|trig-substitution]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/03-separable-equations|separable-equations]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/07-variation-of-parameters|variation-of-parameters]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/01-transforming-a-random-variable|transforming-a-random-variable]]"
-tags: [mathematics, calculus and analysis, substitution]
----
-
 # Substitution: the chain rule run backwards
 
-Calculus and analysis → Integrals → Changing the variable → Substitution
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Integrals](../../../SYLLABUS.md#w06-s04) → Substitution
 
 ---
 
@@ -54,7 +34,7 @@ Orange: x e^(x^2) plotted against x. Teal: e^u / 2 plotted against u = x^2. The 
 
 ## The formula
 
-Reminders: the integral sign with limits a and b accumulates from a to b, and dx names the variable ([riemann-integral](01-riemann-integral.md)); an antiderivative of a function is any function whose rate it is; g'(x) is the rate of g per unit of x.
+Reminders: the integral sign with limits a and b accumulates from a to b, and dx names the variable ([The integral](01-riemann-integral.md)); an antiderivative of a function is any function whose rate it is; g'(x) is the rate of g per unit of x.
 
 $$\int_a^b f\big(g(x)\big)\,g'(x)\,dx \;=\; \int_{g(a)}^{g(b)} f(u)\,du$$
 
@@ -92,7 +72,7 @@ The line du = g'(x) dx is bookkeeping: a strip of width dx on the x ruler become
 
 ### Step 0: an integrand of the form f(g(x)) g'(x) is already a rate
 
-The chain rule says: the rate of F(g(x)) is F'(g(x)) times g'(x) ([chain-rule](../02-Derivatives/03-chain-rule.md)). If F is an antiderivative of f, that rate is f(g(x)) g'(x), exactly the integrand. So the integrand has an antiderivative, F(g(x)), and the fundamental theorem evaluates it at the two ends. The rest is bookkeeping.
+The chain rule says: the rate of F(g(x)) is F'(g(x)) times g'(x) ([Chain rule](../02-Derivatives/03-chain-rule.md)). If F is an antiderivative of f, that rate is f(g(x)) g'(x), exactly the integrand. So the integrand has an antiderivative, F(g(x)), and the fundamental theorem evaluates it at the two ends. The rest is bookkeeping.
 
 ### Step 1: the renaming stretches the ruler
 
@@ -108,7 +88,7 @@ Now read one strip of area. In x it is height x e^(x^2) times width dx. Split th
 
 ### Step 2: the proof, in words
 
-The fundamental theorem ([fundamental-theorem-of-calculus](02-fundamental-theorem-of-calculus.md)) builds an antiderivative F of f on an interval holding every value g takes. The chain rule gives F(g(x)) the rate f(g(x)) g'(x). The fundamental theorem, applied in x, turns the left side into F(g(b)) − F(g(a)); applied in u, it turns the right side into the same difference.
+The fundamental theorem ([Fundamental theorem of calculus](02-fundamental-theorem-of-calculus.md)) builds an antiderivative F of f on an interval holding every value g takes. The chain rule gives F(g(x)) the rate f(g(x)) g'(x). The fundamental theorem, applied in x, turns the left side into F(g(b)) − F(g(a)); applied in u, it turns the right side into the same difference.
 
 <details>
 <summary>Detailed proof</summary>
@@ -135,7 +115,7 @@ Extend to x = 2. The u path is 1 down to 0, then 0 up to 4. The retraced part ca
 
 The integrand 2x/(x^2 − 1) has the shape f(g(x)) g'(x) with g(x) = x^2 − 1 and f(u) = 1/u. From x = 0 to x = 2 the formula offers ln|u| from −1 to 3, which is ln 3 = 1.098612. But u passes through 0 at x = 1, where 1/u has no value. The area from 0 to 0.99 is −3.917036; to 0.9999 it is −8.517243; it has no floor. No area equals 1.098612.
 
-Substitution can also run the other way: write x = h(t) for a new variable t and read the theorem right to left. That direction needs h to cover the whole interval and drives [trig-substitution](06-trig-substitution.md).
+Substitution can also run the other way: write x = h(t) for a new variable t and read the theorem right to left. That direction needs h to cover the whole interval and drives [Trig substitution](06-trig-substitution.md).
 
 ---
 
@@ -376,8 +356,8 @@ The two outputs match line for line. The midpoint sum up to 0.9999 lags the true
 
 - **Energy of motion.** Work on a moving mass accrues at mass times speed times the speed's rate; with the speed as u, the total from rest is half the mass times the speed squared.
 - **Discounting a payment stream.** Money paid continuously and discounted at rate r is worth e^(−rt) per unit at time t; the substitution u = −rt totals it.
-- **Bell-shaped curves.** e^(−x^2/2) has no antiderivative built from familiar functions, but x times it does, by this substitution. Rescaling a random quantity is the same move ([transforming-a-random-variable](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/01-transforming-a-random-variable.md)).
-- **Rate equations.** Separating a rate equation and integrating turns an integral in time into one in the unknown quantity: a substitution ([separable-equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/03-separable-equations.md)).
+- **Bell-shaped curves.** e^(−x^2/2) has no antiderivative built from familiar functions, but x times it does, by this substitution. Rescaling a random quantity is the same move ([Transforming a variable](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/01-transforming-a-random-variable.md)).
+- **Rate equations.** Separating a rate equation and integrating turns an integral in time into one in the unknown quantity: a substitution ([Separable equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/03-separable-equations.md)).
 
 > **Say it back**
 > Substitution is the chain rule run in reverse. When the integrand is an outer function of an inner function times the inner rate, rename the inner function u. The rate is the stretch between the two rulers, so strips in x and in u carry the same area. Move the limits, keep their order, and check the outer function is continuous wherever u goes. For x e^(x^2) from 0 to 1 the area is 0.859141.
@@ -386,17 +366,17 @@ The two outputs match line for line. The midpoint sum up to 0.9999 lags the true
 
 ## What this builds on
 
-- [fundamental-theorem-of-calculus](02-fundamental-theorem-of-calculus.md): builds the antiderivative F and turns each side into F(g(b)) − F(g(a)).
-- [chain-rule](../02-Derivatives/03-chain-rule.md): the rate of F(g(x)) is f(g(x)) g'(x), the fact this card runs backwards.
+- [Fundamental theorem of calculus](02-fundamental-theorem-of-calculus.md): builds the antiderivative F and turns each side into F(g(b)) − F(g(a)).
+- [Chain rule](../02-Derivatives/03-chain-rule.md): the rate of F(g(x)) is f(g(x)) g'(x), the fact this card runs backwards.
 
 ## Where this goes next
 
-- [trig-substitution](06-trig-substitution.md): substitution run the other way, x = sin t, to clear square roots.
-- [separable-equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/03-separable-equations.md): both sides of a rate equation integrated by substitution.
-- [variation-of-parameters](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/07-variation-of-parameters.md): the integrals it produces, often settled by a substitution.
-- [transforming-a-random-variable](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/01-transforming-a-random-variable.md): the stretch g'(x) as the factor that keeps total probability at 1.
+- [Trig substitution](06-trig-substitution.md): substitution run the other way, x = sin t, to clear square roots.
+- [Separable equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/03-separable-equations.md): both sides of a rate equation integrated by substitution.
+- [Variation of parameters](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/07-variation-of-parameters.md): the integrals it produces, often settled by a substitution.
+- [Transforming a variable](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/01-transforming-a-random-variable.md): the stretch g'(x) as the factor that keeps total probability at 1.
 
-Substitution needs the inner rate already sitting in the integrand; when one such as the square root of 1 − x^2 offers none, the variable must change the other way round, the job of [trig-substitution](06-trig-substitution.md).
+Substitution needs the inner rate already sitting in the integrand; when one such as the square root of 1 − x^2 offers none, the variable must change the other way round, the job of [Trig substitution](06-trig-substitution.md).
 
 ---
 

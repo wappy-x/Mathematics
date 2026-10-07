@@ -1,34 +1,14 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Numerical Methods for Pricing
-topic: Even-spread sampling
-item: Quasi-Monte Carlo
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/02-variance-reduction-for-pricing|variance-reduction-for-pricing]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/05-brownian-bridge|brownian-bridge]]"
-next:
-  - "[[Cards/16-Numerical analysis/05-Quadrature/07-quasi-monte-carlo-and-sparse-grids|quasi-monte-carlo-and-sparse-grids]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - quasi-monte-carlo-and-brownian-bridge
----
-
 # Quasi-Monte Carlo: Sobol points and the Brownian bridge that makes them work
 
-Financial mathematics → Numerical Methods for Pricing → Even-spread sampling → Quasi-Monte Carlo
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Numerical Methods for Pricing](../../../SYLLABUS.md#w12-s06) → Quasi-Monte Carlo
 
 ---
 
 ## General Overview
 
-Acme shares trade at $100.00. A one-year call on them, struck at $100.00, is worth $9.23 in this market. Simulation reaches that price by throwing random paths and averaging what the option pays on each one ([monte-carlo-pricing](01-monte-carlo-pricing.md)).
+Acme shares trade at $100.00. A one-year call on them, struck at $100.00, is worth $9.23 in this market. Simulation reaches that price by throwing random paths and averaging what the option pays on each one ([Monte Carlo pricing](01-monte-carlo-pricing.md)).
 
-The trouble is the exchange rate between work and accuracy. A random average improves like one over the square root of the number of paths. One more correct decimal therefore costs a hundred times the paths. Variance reduction buys a constant factor and leaves that square root alone ([variance-reduction-for-pricing](02-variance-reduction-for-pricing.md)).
+The trouble is the exchange rate between work and accuracy. A random average improves like one over the square root of the number of paths. One more correct decimal therefore costs a hundred times the paths. Variance reduction buys a constant factor and leaves that square root alone ([Cheaper Monte Carlo](02-variance-reduction-for-pricing.md)).
 
 Quasi-Monte Carlo changes what gets thrown. In place of 4,096 random paths it uses 4,096 points fixed in advance, chosen to cover the space of paths as evenly as points can. Think of points dropped one after another, each into the largest gap the ones before it left; the real name for such a set is a **low-discrepancy sequence**, and the workhorse is Ilya Sobol's, published in 1967. Nothing about it is random, so there is no luck to average out.
 
@@ -138,7 +118,7 @@ The nudge is not cosmetic. It makes the rule a midpoint rule, which is accurate,
 
 A coordinate between 0 and 1 becomes a kick by the inverse bell curve: the number with that much area to its left. Area 0.975 sits at 1.959964, which the code checks against the known value, since it builds both the area and its inverse from scratch.
 
-Sixteen kicks then become a path. Date by date is the obvious rule, each step adding one kick scaled by the root of the step length ([discretisation-schemes-for-sdes](05-discretisation-schemes-for-sdes.md)). The bridge is the other rule, the one the picture above shows: each new date lands on the straight line between its neighbours, plus one kick off it.
+Sixteen kicks then become a path. Date by date is the obvious rule, each step adding one kick scaled by the root of the step length ([Stepping an SDE](05-discretisation-schemes-for-sdes.md)). The bridge is the other rule, the one the picture above shows: each new date lands on the straight line between its neighbours, plus one kick off it.
 
 Both rules are linear in the kicks, so each is a table of numbers — a matrix — and both tables must describe the same process. The test is the covariance: the wiggle shared by any two dates must equal the earlier date's own time in years. Each build rule is run once per kick, with that kick set to 1 and the rest to 0, which reads off the table column by column. Both tables reproduce the earlier date to every printed decimal, worst gap 0.000000.
 
@@ -198,7 +178,7 @@ Top line: the random road's error bar. Middle: the same Sobol points in date-by-
 
 One note on that bottom line. A midpoint rule on a smooth function of one variable does better than this: one over the count squared. This integrand is not that smooth, because the payoff climbs without limit as the coordinate approaches 1, and the end cell holds the error. One halving per doubling is what that cell allows.
 
-A different route to the same gain gives the error bar back: shift every point by one random amount, wrap round the edges, repeat a handful of times and use the scatter of the answers. That is randomised quasi-Monte Carlo, the honest way to quote an uncertainty here (quasi-monte-carlo-and-sparse-grids).
+A different route to the same gain gives the error bar back: shift every point by one random amount, wrap round the edges, repeat a handful of times and use the scatter of the answers. That is randomised quasi-Monte Carlo, the honest way to quote an uncertainty here (Quasi-Monte Carlo and sparse grids).
 
 ---
 
@@ -667,9 +647,9 @@ The two outputs match line for line: two languages, one series for the bell-curv
 ## Where you meet it in real life
 
 - **Mortgage-backed securities.** The case that made the method's reputation: 360 monthly dates, and quasi-Monte Carlo working far better than 360 dimensions had any right to, because the cashflows lean on the early, bridge-ordered coordinates.
-- **Exotic desks.** Asians, barriers and baskets are priced on tens or hundreds of dates, which is where the even points pay for themselves; correlated underlyings add a second build rule on top of this one ([correlated-paths-and-cholesky](04-correlated-paths-and-cholesky.md)).
+- **Exotic desks.** Asians, barriers and baskets are priced on tens or hundreds of dates, which is where the even points pay for themselves; correlated underlyings add a second build rule on top of this one ([Correlated paths](04-correlated-paths-and-cholesky.md)).
 - **Overnight risk runs and sensitivities.** A fixed point set makes yesterday's number reproducible to the last digit, which matters more to a risk controller than to a mathematician; and bumping an input, then re-pricing on *the same* points, cancels most of the error in the difference.
-- **Where it does not go.** Exercise decisions need paths in time order for the regression, so the bridge sits awkwardly with least-squares Monte Carlo ([longstaff-schwartz-least-squares-monte-carlo](06-longstaff-schwartz-least-squares-monte-carlo.md)), and a one-dimensional European call is better priced on a grid ([finite-differences-for-the-black-scholes-equation](07-finite-differences-for-the-black-scholes-equation.md)) or by transform ([carr-madan-fft-and-cos-methods](09-carr-madan-fft-and-cos-methods.md)).
+- **Where it does not go.** Exercise decisions need paths in time order for the regression, so the bridge sits awkwardly with least-squares Monte Carlo ([Longstaff-Schwartz](06-longstaff-schwartz-least-squares-monte-carlo.md)), and a one-dimensional European call is better priced on a grid ([Pricing on a grid](07-finite-differences-for-the-black-scholes-equation.md)) or by transform ([Transform pricing](09-carr-madan-fft-and-cos-methods.md)).
 
 > **Say it back**
 > A simulated price is an average over a cube of random numbers, so it is an integral, and integrals do not need random points — they need even ones. Sobol's points are built from bit patterns so that every coordinate covers its grid exactly once and the early coordinates cover the cube well together. That evenness is wasted if the payoff's variation is spread over all the coordinates, which is exactly what building a path date by date does. The Brownian bridge builds the path end first, then middles, so the first draws carry most of the path and the late ones almost none. On Acme's call with 4,096 points the bridge order is 0.000856 out and the date order 0.164125, and the error falls one halving per doubling instead of one per two.
@@ -678,12 +658,12 @@ The two outputs match line for line: two languages, one series for the bell-curv
 
 ## What this builds on
 
-- [variance-reduction-for-pricing](02-variance-reduction-for-pricing.md): the tricks that shrink the constant in front of the square root, and the reason this card goes after the square root itself.
-- [brownian-bridge](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/05-brownian-bridge.md): the conditional law of the path between two known dates, which is the one formula the build rule applies fifteen times.
+- [Cheaper Monte Carlo](02-variance-reduction-for-pricing.md): the tricks that shrink the constant in front of the square root, and the reason this card goes after the square root itself.
+- [Brownian bridge](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/05-brownian-bridge.md): the conditional law of the path between two known dates, which is the one formula the build rule applies fifteen times.
 
 ## Where this goes next
 
-- quasi-monte-carlo-and-sparse-grids: the same idea without the finance, alongside sparse grids, with the discrepancy theory and the randomised versions done properly.
+- Quasi-Monte Carlo and sparse grids: the same idea without the finance, alongside sparse grids, with the discrepancy theory and the randomised versions done properly.
 
 The rate here was measured, not bounded; recovering an honest error bar by shifting the points at random is where the quadrature card begins.
 

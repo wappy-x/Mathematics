@@ -1,36 +1,16 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Binomial Trees
-topic: Stopping early
-item: Early exercise
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/04-crr-tree-and-convergence|crr-tree-and-convergence]]"
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/07-optimal-stopping-and-snell-envelope|optimal-stopping-and-snell-envelope]]"
-next:
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/06-longstaff-schwartz-least-squares-monte-carlo|longstaff-schwartz-least-squares-monte-carlo]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - american-exercise-on-a-tree
----
-
 # Early exercise: compare holding with exercising at every node
 
-Financial mathematics → Binomial Trees → Stopping early → Early exercise
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Binomial Trees](../../../SYLLABUS.md#w12-s04) → Early exercise
 
 ---
 
 ## General Overview
 
-Acme trades at $100.00. A put on Acme is the right, and not the duty, to sell one share for $100.00 — the **strike**. The European version fixes the day: one year from today, and no other. The American version lets its holder sell at $100.00 on any trading day of that year. Same share, same strike, same year; the only difference is who picks the date. The European put is worth $6.33, the closed-form price on [black-scholes-put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md). The American put is worth **$6.6602**, and the extra 33 cents buys nothing but the choice of day.
+Acme trades at $100.00. A put on Acme is the right, and not the duty, to sell one share for $100.00 — the **strike**. The European version fixes the day: one year from today, and no other. The American version lets its holder sell at $100.00 on any trading day of that year. Same share, same strike, same year; the only difference is who picks the date. The European put is worth $6.33, the closed-form price on [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md). The American put is worth **$6.6602**, and the extra 33 cents buys nothing but the choice of day.
 
 That choice pays for one reason. Exercising a put hands over a share and takes in $100.00 of cash, and cash earns the riskless rate, 5 percent a year. Exercise three months in and that $100.00 earns interest for the nine months left. A European holder collects nothing on it until the final day. So the freedom cannot be worth more than a year's interest on the strike, $K(1 - e^{-rT})$ in symbols, which is $4.88 here. The American put collects just 33 cents of that $4.88, because the right pays only in the futures where Acme falls far enough to make selling worthwhile.
 
-No formula returns $6.6602. What there is instead is one comparison, made at every node of a tree ([multi-step-trees-and-backward-induction](03-multi-step-trees-and-backward-induction.md)). At a node the holder can do exactly two things: take the payoff now, or carry the option one step further. Both are numbers. Keep the bigger one and walk back.
+No formula returns $6.6602. What there is instead is one comparison, made at every node of a tree ([Many steps](03-multi-step-trees-and-backward-induction.md)). At a node the holder can do exactly two things: take the payoff now, or carry the option one step further. Both are numbers. Keep the bigger one and walk back.
 
 **At every node the option is worth the larger of two numbers: what exercising pays right now, and what holding is worth.**
 
@@ -55,7 +35,7 @@ Three lines. The top one is the American put; the one running down to zero at $1
 
 ## The formula
 
-Notation first, in words. A node is fixed by two counts: how many steps have passed, written under the letter, and how many of those steps were up moves, written in brackets after it ([multi-step-trees-and-backward-induction](03-multi-step-trees-and-backward-induction.md)). Write $g$ for the **payoff function**: what exercising pays at a given share price. For a put, $g(S) = \max(K - S,\,0)$ — the strike minus the share price where the share is below the strike, and zero elsewhere. For a call it is $\max(S - K,\,0)$.
+Notation first, in words. A node is fixed by two counts: how many steps have passed, written under the letter, and how many of those steps were up moves, written in brackets after it ([Many steps](03-multi-step-trees-and-backward-induction.md)). Write $g$ for the **payoff function**: what exercising pays at a given share price. For a put, $g(S) = \max(K - S,\,0)$ — the strike minus the share price where the share is below the strike, and zero elsewhere. For a call it is $\max(S - K,\,0)$.
 
 $$V_N(j) = g\big(S_N(j)\big)$$
 
@@ -63,7 +43,7 @@ $$V_n(j) = \max\Big(\;g\big(S_n(j)\big)\;,\;\; e^{-r\Delta t}\big[\,p\,V_{n+1}(j
 
 **Read it aloud:** the last column is the payoff; every earlier node is worth the better of taking the payoff there and carrying the option one step further.
 
-Delete the $\max$ and what is left is the European rule from [multi-step-trees-and-backward-induction](03-multi-step-trees-and-backward-induction.md). The branch factors, the weight and the discount are untouched; the American price is that same walk plus one comparison per node.
+Delete the $\max$ and what is left is the European rule from [Many steps](03-multi-step-trees-and-backward-induction.md). The branch factors, the weight and the discount are untouched; the American price is that same walk plus one comparison per node.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -80,14 +60,14 @@ Delete the $\max$ and what is left is the European rule from [multi-step-trees-a
 | $V$, $g$ | the option's worth at a node; what exercising there pays | 6.660226 at the root; 25.918178 at one node | — |
 | $S^*$ | the exercise boundary: exercise at or below it, hold above | 78.90 two months in | — |
 
-Three helpers come from earlier cards and are used unchanged: $\Delta t = T/N$, the branch factors $u = e^{\sigma\sqrt{\Delta t}}$ and $d = 1/u$, and the weight $p = (e^{(r-q)\Delta t} - d)/(u - d)$. Why those, and how fast the price settles as $N$ grows, is [crr-tree-and-convergence](04-crr-tree-and-convergence.md).
+Three helpers come from earlier cards and are used unchanged: $\Delta t = T/N$, the branch factors $u = e^{\sigma\sqrt{\Delta t}}$ and $d = 1/u$, and the weight $p = (e^{(r-q)\Delta t} - d)/(u - d)$. Why those, and how fast the price settles as $N$ grows, is [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md).
 
 ### When it holds
 
 - **Exercise only on the tree's own dates.** An $N$-step tree prices a contract exercisable on $N + 1$ dates, today included, not on any day. The American price is the limit as those dates crowd together: 6.6602 at 2,000 steps, and still creeping up in the fourth decimal.
 - **A payoff read off today's price, not the path.** Two histories meeting at a node must be worth the same from there on, or the comparison is made against the wrong number. A payoff that remembers where the share has been needs more than a node to decide by.
 - **A holder who never errs.** The price assumes the larger of the two numbers is taken every time, which is what the seller must be funded for. A holder who follows a worse rule collects less, and the code prices how much less.
-- **One fixed rate above zero, one fixed yield and volatility**, as on [crr-tree-and-convergence](04-crr-tree-and-convergence.md). Let volatility move and the tree prices a share that does not exist. Let the rate go negative and Step 5's call argument breaks with it.
+- **One fixed rate above zero, one fixed yield and volatility**, as on [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md). Let volatility move and the tree prices a share that does not exist. Let the rate go negative and Step 5's call argument breaks with it.
 - **Exercise settles in cash or shares at once**, with no fee and no delay. A fee subtracts from the payoff side of the comparison and shrinks the exercise region.
 
 ---
@@ -98,7 +78,7 @@ Three helpers come from earlier cards and are used unchanged: $\Delta t = T/N$, 
 
 At any node the holder can do one of two things and nothing else. Exercise, which pays a number read straight off that node's share price. Or wait one step, which leads to two nodes whose values are already written down, because the walk runs backwards from the end. So the node's worth is the larger of two known numbers.
 
-That the larger of the two, taken node by node, is the best any exercise rule can do — and not merely a sensible rule — is the content of [optimal-stopping-and-snell-envelope](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md). The price is a maximum over every rule for picking the day, and the backward walk computes that maximum without listing the rules.
+That the larger of the two, taken node by node, is the best any exercise rule can do — and not merely a sensible rule — is the content of [Optimal stopping](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md). The price is a maximum over every rule for picking the day, and the backward walk computes that maximum without listing the rules.
 
 ### Step 1: the last column settles itself
 
@@ -149,7 +129,7 @@ Fix a date. High up, holding wins; far down, exercising wins. Between them the t
 
 Nobody supplies $S^*$. It falls out of the same backward walk — that is what makes this a *free-boundary* problem: the line separating the two regions is part of the answer, not part of the question. The tree reports it for nothing, as the highest node price at which the comparison chose exercise, and the next section reads it off.
 
-The same problem in continuous time is that free boundary written as an equation: the Black–Scholes equation holds where the holder waits, the value equals the payoff where the holder exercises, and the two pieces meet without a kink — the *smooth pasting* condition. Road three in the code solves that version on a grid of prices and returns 6.659428, within a tenth of a cent of the tree. What the grid is, and why it is a trinomial tree in disguise, is [trinomial-trees-and-the-grid-connection](06-trinomial-trees-and-the-grid-connection.md).
+The same problem in continuous time is that free boundary written as an equation: the Black–Scholes equation holds where the holder waits, the value equals the payoff where the holder exercises, and the two pieces meet without a kink — the *smooth pasting* condition. Road three in the code solves that version on a grid of prices and returns 6.659428, within a tenth of a cent of the tree. What the grid is, and why it is a trinomial tree in disguise, is [Trinomial trees](06-trinomial-trees-and-the-grid-connection.md).
 
 ---
 
@@ -706,7 +686,7 @@ The two outputs match line for line, from different code taking a different rout
 - **Convertible bonds and callable bonds.** A bond the issuer may buy back, or the holder may turn into shares, is a bundle of early-exercise decisions on a tree of the same shape.
 - **Mortgage prepayment.** A borrower who may repay early holds an American option on their own loan. The lender is short it, and prices it with the same comparison against a refinancing payoff.
 - **Employee share schemes.** Grants are typically exercisable over a window, so their accounting value is an early-exercise calculation, not a Black–Scholes number.
-- **Where the tree runs out.** One share fits on a tree; five do not, because the nodes multiply. That is [longstaff-schwartz-least-squares-monte-carlo](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md).
+- **Where the tree runs out.** One share fits on a tree; five do not, because the nodes multiply. That is [Longstaff-Schwartz](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md).
 
 > **Say it back**
 > An American option may be exercised on any day, so at every node of the tree its holder has two choices: take the payoff now, or carry the option one step further. The option is worth the larger of the two, and that one comparison, repeated at every node, is the whole method. For a put the early choice is worth money because exercising turns the strike into cash that earns interest: $6.6602 against $6.33 for the European twin, with the gap vanishing at a zero rate. For a call on a share paying no dividend it is worth nothing, because holding keeps both the interest and the floor. The prices where the two choices tie form a boundary that nobody supplies; it comes out of the same walk, and it climbs to the strike as expiry nears.
@@ -715,12 +695,12 @@ The two outputs match line for line, from different code taking a different rout
 
 ## What this builds on
 
-- [crr-tree-and-convergence](04-crr-tree-and-convergence.md): the branch factors, the up weight, and how fast a tree price settles as the steps multiply. This card adds one comparison to that walk and changes nothing else.
-- [optimal-stopping-and-snell-envelope](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md): why taking the larger of the two at every node is the best of all rules, and not merely a good one.
+- [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md): the branch factors, the up weight, and how fast a tree price settles as the steps multiply. This card adds one comparison to that walk and changes nothing else.
+- [Optimal stopping](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md): why taking the larger of the two at every node is the best of all rules, and not merely a good one.
 
 ## Where this goes next
 
-- [longstaff-schwartz-least-squares-monte-carlo](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md): the same comparison when there is no tree to walk, with the holding value estimated by fitting a curve through simulated paths.
+- [Longstaff-Schwartz](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md): the same comparison when there is no tree to walk, with the holding value estimated by fitting a curve through simulated paths.
 
 The comparison needs the holding value at every node, and a tree hands it over for one share. Put five shares in the payoff and the nodes multiply beyond counting — where that continuation value comes from instead is a later card.
 
@@ -734,4 +714,4 @@ Verified 14 Sep 2026: every link below resolves to the publisher's page.
 - Merton, Robert C. "Theory of Rational Option Pricing." *Bell Journal of Economics and Management Science* 4, no. 1 (1973): 141–183. [doi:10.2307/3003143](https://doi.org/10.2307/3003143). Proves that an American call on a share paying no dividend is never exercised early: Step 5.
 - Brennan, Michael J., and Eduardo S. Schwartz. "The Valuation of American Put Options." *Journal of Finance* 32, no. 2 (1977): 449–462. [doi:10.2307/2326779](https://doi.org/10.2307/2326779). The put as a free-boundary problem solved numerically; the ancestor of road three.
 - Carr, Peter, Robert Jarrow, and Ravi Myneni. "Alternative Characterizations of American Put Options." *Mathematical Finance* 2, no. 2 (1992): 87–106. [doi:10.1111/j.1467-9965.1992.tb00040.x](https://doi.org/10.1111/j.1467-9965.1992.tb00040.x). Splits the American put into its European twin plus interest on the strike collected inside the exercise region.
-- Longstaff, Francis A., and Eduardo S. Schwartz. "Valuing American Options by Simulation: A Simple Least-Squares Approach." *Review of Financial Studies* 14, no. 1 (2001): 113–147. [doi:10.1093/rfs/14.1.113](https://doi.org/10.1093/rfs/14.1.113). What to do when the tree will not fit: [longstaff-schwartz-least-squares-monte-carlo](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md).
+- Longstaff, Francis A., and Eduardo S. Schwartz. "Valuing American Options by Simulation: A Simple Least-Squares Approach." *Review of Financial Studies* 14, no. 1 (2001): 113–147. [doi:10.1093/rfs/14.1.113](https://doi.org/10.1093/rfs/14.1.113). What to do when the tree will not fit: [Longstaff-Schwartz](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md).

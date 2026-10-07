@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Sizes of Infinity
-topic: Pairing
-item: Countable sets
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/01-same-size-by-pairing|same-size-by-pairing]]"
-  - "[[Cards/01-Foundations/02-The Number Line/01-number-families|number-families]]"
-next:
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/03-cantors-diagonal-argument|cantors-diagonal-argument]]"
-tags:
-  - mathematics
-  - foundations
-  - countable-sets
----
-
 # Countable sets: anything you can put in a queue, fractions included
 
-Foundations → Sizes of Infinity → Pairing → Countable sets
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sizes of Infinity](../../../SYLLABUS.md#w01-s09) → Countable sets
 
 ---
 
@@ -77,7 +57,7 @@ The fractions, the first ten rooms:
 
 ### A queue is a pairing
 
-The clerk never counts. He hands out rooms so everyone gets one and no room takes two: a pairing, the whole of "same size" ([same-size-by-pairing](01-same-size-by-pairing.md)). Room numbers **are** counting numbers, so a queue pairs the set with them. The rule sending guest to room is a function ([functions](../08-Relations%20and%20Functions/02-functions.md)); one each, none missed, none shared, is a bijection ([injective-surjective-bijective](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md)).
+The clerk never counts. He hands out rooms so everyone gets one and no room takes two: a pairing, the whole of "same size" ([Same size means pairable](01-same-size-by-pairing.md)). Room numbers **are** counting numbers, so a queue pairs the set with them. The rule sending guest to room is a function ([Functions](../08-Relations%20and%20Functions/02-functions.md)); one each, none missed, none shared, is a bijection ([One-to-one and onto](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md)).
 
 ### The integers bounce out from zero
 
@@ -260,7 +240,7 @@ The two outputs match line for line.
 
 - **Anything a program can print.** Every file, every sentence, every program that could be written lines up by length then alphabet.
 - **Work that arrives without end.** A log, a sensor feed, a ticket line: first, second, third.
-- **Marks on a ruler.** Every point named by a fraction of an inch is countable, however dense the marks. The points no fraction names are the ones no queue reaches: [cantors-diagonal-argument](03-cantors-diagonal-argument.md).
+- **Marks on a ruler.** Every point named by a fraction of an inch is countable, however dense the marks. The points no fraction names are the ones no queue reaches: [Cantor's diagonal](03-cantors-diagonal-argument.md).
 
 > **Say it back**
 > A set is countable when it fits in one queue: a first, a second, a third, everyone in it once. The integers bounce out from zero, so 2 gets room 4 and −2 room 5. The fractions come off the grid of top over bottom, walked along the diagonals with renamed ones skipped: 1/2 gets room 3, 2/1 room 4. The queue never ends, and never has to: a guest needs a room, not a last room.
@@ -269,12 +249,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [same-size-by-pairing](01-same-size-by-pairing.md): same size means pairing off with nothing left over; a queue is that pairing, against the counting numbers.
-- [number-families](../02-The%20Number%20Line/01-number-families.md): which numbers are which — here, the integers and the fractions.
+- [Same size means pairable](01-same-size-by-pairing.md): same size means pairing off with nothing left over; a queue is that pairing, against the counting numbers.
+- [The number families](../02-The%20Number%20Line/01-number-families.md): which numbers are which — here, the integers and the fractions.
 
 ## Where this goes next
 
-- [cantors-diagonal-argument](03-cantors-diagonal-argument.md): the guests who cannot be queued at all. Every list of the real numbers misses one, built out of the list itself.
+- [Cantor's diagonal](03-cantors-diagonal-argument.md): the guests who cannot be queued at all. Every list of the real numbers misses one, built out of the list itself.
 
 ---
 

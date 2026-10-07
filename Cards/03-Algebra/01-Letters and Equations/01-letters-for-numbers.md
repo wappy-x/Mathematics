@@ -1,28 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Letters and Equations
-topic: Unknowns
-item: Letters for numbers
-kind: definition
-status: verified
-updated: 2026-09-07
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/05-arithmetic-laws|arithmetic-laws]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/04-order-of-operations|order-of-operations]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/06-negative-numbers|negative-numbers]]"
-next:
-  - "[[Cards/03-Algebra/01-Letters and Equations/02-linear-equations|linear-equations]]"
-  - "[[Cards/03-Algebra/02-Polynomials/01-polynomials|polynomials]]"
-tags:
-  - mathematics
-  - algebra
-  - letters-for-numbers
----
-
 # Letters for numbers: a letter is a number you have not been told yet, and an expression is a recipe that uses one
 
-Algebra → Letters and Equations → Unknowns → Letters for numbers
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Letters and Equations](../../../SYLLABUS.md#w03-s01) → Letters for numbers
 
 ---
 
@@ -81,7 +59,7 @@ m is a slot. Whatever number goes in the slot, the recipe runs the same way and 
 
 ### Step 1: an expression is a recipe, run in order
 
-Putting a number where the letter is and doing the arithmetic is called **substituting**. Two operations, and they happen in a fixed order: multiply first, then add ([order-of-operations](../../01-Foundations/01-Everyday%20Arithmetic/04-order-of-operations.md)).
+Putting a number where the letter is and doing the arithmetic is called **substituting**. Two operations, and they happen in a fixed order: multiply first, then add ([Order of operations](../../01-Foundations/01-Everyday%20Arithmetic/04-order-of-operations.md)).
 
 ```mermaid
 flowchart LR
@@ -100,7 +78,7 @@ Now put two taxis on the same trip. Two fares added:
 
 3 + 2m + 3 + 2m
 
-A sum may be reordered and regrouped freely ([arithmetic-laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)), so bring the plain numbers together and the m terms together. 3 + 3 is 6. Two lots of 2m is 4 lots of m, so 2m + 2m is 4m. The two fares come to:
+A sum may be reordered and regrouped freely ([The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)), so bring the plain numbers together and the m terms together. 3 + 3 is 6. Two lots of 2m is 4 lots of m, so 2m + 2m is 4m. The two fares come to:
 
 6 + 4m
 
@@ -114,7 +92,7 @@ $$2(3 + 2m)$$
 
 A bracket means do that part first, and a number written against a bracket multiplies it. Doubling a total is the same as doubling each part of it: double the 3 to get 6, double the 2m to get 4m. So 2(3 + 2m) is 6 + 4m — the same expression Step 2 reached by a different route.
 
-That is the **distributive law**: a multiplier outside a bracket reaches every term inside, one at a time. It is the same law that lets 7 × 23 be done as 7 × 20 plus 7 × 3 ([arithmetic-laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)); the only new thing is a letter sitting inside the bracket.
+That is the **distributive law**: a multiplier outside a bracket reaches every term inside, one at a time. It is the same law that lets 7 × 23 be done as 7 × 20 plus 7 × 3 ([The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)); the only new thing is a letter sitting inside the bracket.
 
 At 6 miles: one fare is $15, so two are $30. And 6 + 4 × 6 is 6 + 24, which is $30. The code checks that agreement at every distance from 0 to 20 miles.
 
@@ -124,7 +102,7 @@ On the price list, m stands for any number of miles at all. You pick it. A lette
 
 Now flip the question. The meter says $15 — how far did the taxi go? Here m is one particular number that already exists in the world, and nobody has told you what it is. A letter used that way is an **unknown**. The card's title means this: a number you have not been told yet.
 
-Trying values finds it. 6 miles gives $15 and no other whole number up to 20 does, which the code confirms. Trying works because the answer is a small whole number, and stops working the moment it is not. Finding an unknown without guessing is [linear-equations](02-linear-equations.md), the next card.
+Trying values finds it. 6 miles gives $15 and no other whole number up to 20 does, which the code confirms. Trying works because the answer is a small whole number, and stops working the moment it is not. Finding an unknown without guessing is [Linear equations](02-linear-equations.md), the next card.
 
 ---
 
@@ -355,7 +333,7 @@ The two outputs match line for line.
 - **Any price with a fixed part and a rate.** A phone plan at $20 a month plus 5 cents a minute, a van hire at a day rate plus mileage, electricity at a standing charge plus a per-unit price. All are start fee plus rate, all are one expression.
 - **Spreadsheets.** A cell formula is exactly this: a recipe with slots, where the cell reference is the letter. Change the input cell and the recipe re-runs, which is substituting.
 - **Code.** A named value in a program is the same idea under a longer name. `miles` is m with more letters in it.
-- **One formula, many questions.** Once a rule is written with letters you can turn it around and ask for a different piece of it: that is [rearranging-formulas](03-rearranging-formulas.md). Two rules with two letters at once is [two-equations-two-unknowns](04-two-equations-two-unknowns.md).
+- **One formula, many questions.** Once a rule is written with letters you can turn it around and ask for a different piece of it: that is [Rearranging a formula](03-rearranging-formulas.md). Two rules with two letters at once is [Two equations, two unknowns](04-two-equations-two-unknowns.md).
 
 > **Say it back**
 > A letter is a slot where a number goes. An expression is a recipe with slots in it, so 3 + 2m turns miles into a taxi fare: 6 miles gives $15, 10 miles gives $23. Terms of the same kind can be collected and terms of different kinds cannot, which is why two fares come to 6 + 4m and why 3 + 2m stays as it is. A number outside a bracket multiplies everything inside, so 2(3 + 2m) is the same 6 + 4m. And a letter does two jobs: a number you choose, or a number the world already fixed and has not told you yet.
@@ -364,14 +342,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [arithmetic-laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): reorder and regroup a sum, and multiply across a bracket — the permissions behind collecting terms and the distributive law.
-- [order-of-operations](../../01-Foundations/01-Everyday%20Arithmetic/04-order-of-operations.md): multiply before add, which is why 3 + 2m is not (3 + 2)m.
-- [negative-numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md): how a term is subtracted as well as added, so a discount fits the same expression.
+- [The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): reorder and regroup a sum, and multiply across a bracket — the permissions behind collecting terms and the distributive law.
+- [Order of operations](../../01-Foundations/01-Everyday%20Arithmetic/04-order-of-operations.md): multiply before add, which is why 3 + 2m is not (3 + 2)m.
+- [Negative numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md): how a term is subtracted as well as added, so a discount fits the same expression.
 
 ## Where this goes next
 
-- [linear-equations](02-linear-equations.md): finding the unknown without trying every value, by doing the same thing to both sides.
-- [polynomials](../02-Polynomials/01-polynomials.md): expressions where the letter carries powers, collected and bracketed by the same two moves.
+- [Linear equations](02-linear-equations.md): finding the unknown without trying every value, by doing the same thing to both sides.
+- [Polynomials](../02-Polynomials/01-polynomials.md): expressions where the letter carries powers, collected and bracketed by the same two moves.
 
 ---
 

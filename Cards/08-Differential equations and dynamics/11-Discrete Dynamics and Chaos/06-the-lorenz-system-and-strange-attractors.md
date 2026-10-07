@@ -1,23 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Discrete Dynamics and Chaos
-topic: Weather in three numbers
-item: The Lorenz system
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/11-Discrete Dynamics and Chaos/04-chaos-and-the-lyapunov-exponent|chaos-and-the-lyapunov-exponent]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/09-poincare-bendixson-and-bendixsons-criterion|poincare-bendixson-and-bendixsons-criterion]]"
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/04-runge-kutta-four|runge-kutta-four]]"
-next: []
-tags: [mathematics, differential equations and dynamics, the-lorenz-system-and-strange-attractors]
----
-
 # The Lorenz system: three weather equations that never settle and never repeat, on a butterfly no thicker than a sheet
 
-Differential equations and dynamics → Discrete Dynamics and Chaos → Weather in three numbers → The Lorenz system
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Discrete Dynamics and Chaos](../../../SYLLABUS.md#w08-s11) → The Lorenz system
 
 ---
 
@@ -53,7 +36,7 @@ Lorenz's values: $\sigma = 10$, $\rho = 28$, $\beta = 8/3$, start (1, 1, 1). The
 
 $$C_\pm = \left(\pm\sqrt{\beta(\rho - 1)},\ \pm\sqrt{\beta(\rho - 1)},\ \rho - 1\right) = (\pm 8.485281,\ \pm 8.485281,\ 27).$$
 
-The Jacobian $J$, the table of partial slopes of the three rates ([linearisation-and-the-jacobian](../06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md)), is `[[-sigma, sigma, 0], [rho - z, -1, -x], [y, x, -beta]]`. Its diagonal sum, the **divergence**, is $-(\sigma + 1 + \beta) = -13.666667$ everywhere: the rate at which the flow shrinks volume.
+The Jacobian $J$, the table of partial slopes of the three rates ([Linearisation](../06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md)), is `[[-sigma, sigma, 0], [rho - z, -1, -x], [y, x, -beta]]`. Its diagonal sum, the **divergence**, is $-(\sigma + 1 + \beta) = -13.666667$ everywhere: the rate at which the flow shrinks volume.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -68,7 +51,7 @@ The Jacobian $J$, the table of partial slopes of the three rates ([linearisation
 
 ### When it holds
 
-- **Three variables.** In the plane a trapped, restless path must close into a loop ([poincare-bendixson-and-bendixsons-criterion](../06-Nonlinear%20Dynamics%20in%20the%20Plane/09-poincare-bendixson-and-bendixsons-criterion.md)).
+- **Three variables.** In the plane a trapped, restless path must close into a loop ([Poincare-Bendixson](../06-Nonlinear%20Dynamics%20in%20the%20Plane/09-poincare-bendixson-and-bendixsons-criterion.md)).
 - **Heating above 24.736842.** Below it the lobe centres attract nearby paths (from about 24.06 they share space with the butterfly); at $\rho = 20$ the path from (1, 1, 1) rests at (−7.118052, −7.118052, 19).
 - **As air, only near the onset of rolling.** Lorenz dropped every other motion; the chaos is exact, the match to air is not.
 - **No exact arithmetic.** Each computed step is a nudge, so one run is faithful only until nudges grow.
@@ -116,15 +99,15 @@ A box of starts carried by the flow changes volume at the divergence times its v
 
 Runs from (1, 1, 1) and (1.00000001, 1, 1) stay below 2e-8 apart until about time 12, spiralling near one lobe centre. Then the gap grows from 2.4e-07 at time 15 to 0.16 at 30, a rate of 0.894374 per unit.
 
-The second road uses one run. It carries a small arrow along the path by $J$ and rescales it each time unit; the average log-stretch over 500 units is the **Lyapunov exponent** $\Lambda$ = 0.917773, the exponent of [chaos-and-the-lyapunov-exponent](04-chaos-and-the-lyapunov-exponent.md) for a flow. From 1e-8 to the butterfly's size, about 10, takes $\ln(10^9)/\Lambda$ = 22.58 units after the calm spell. Each extra digit buys 2.51 units.
+The second road uses one run. It carries a small arrow along the path by $J$ and rescales it each time unit; the average log-stretch over 500 units is the **Lyapunov exponent** $\Lambda$ = 0.917773, the exponent of [The Lyapunov exponent](04-chaos-and-the-lyapunov-exponent.md) for a flow. From 1e-8 to the butterfly's size, about 10, takes $\ln(10^9)/\Lambda$ = 22.58 units after the calm spell. Each extra digit buys 2.51 units.
 
-The flow stretches one direction at 0.917773, leaves the direction of travel alone, and squeezes the third at 14.5844, summing to the divergence. The Kaplan-Yorke estimate of dimension, the two unsqueezed directions plus the share of the squeezed one that the stretch fills ([self-similarity-and-fractal-dimension](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/05-self-similarity-and-fractal-dimension.md)) is 2 + 0.9178/14.5844 = 2.0629: a sheet, plus a sliver.
+The flow stretches one direction at 0.917773, leaves the direction of travel alone, and squeezes the third at 14.5844, summing to the divergence. The Kaplan-Yorke estimate of dimension, the two unsqueezed directions plus the share of the squeezed one that the stretch fills ([Fractals](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/05-self-similarity-and-fractal-dimension.md)) is 2 + 0.9178/14.5844 = 2.0629: a sheet, plus a sliver.
 
 ### Step 5: attractor, basin, Poincaré section
 
 An **attractor** is a closed, bounded set that paths on it never leave, that pulls in every path starting near it, and no smaller piece of which does the same. Its **basin** is every start whose path approaches it. A **strange attractor** separates nearby paths exponentially. The butterfly's basin appears to be all of space except the resting points and the paths that run into them, such as the $z$ axis, which leads straight to the origin. From (1, 1, 1), (30, −40, 90) and (−0.01, 0, 0) the average height over 200 units is 23.49, 23.53 and 23.56.
 
-A **Poincaré section** records the flow only when it crosses a chosen surface, turning it into a map, a rule $x_{n+1} = g(x_n)$ ([iteration-and-cobweb-plots](01-iteration-and-cobweb-plots.md)). Lorenz recorded each top, where $z$ stops rising: 134 tops from time 10 to 110, between 31.82 and 45.61. Each top against the next falls on a thin tent-shaped curve, a one-dimensional map. Every top below 38.5 was followed by a higher one, 84 of 84; the first, 33.84, 34.57, 35.50, 36.78, 38.82, 42.98, climb by growing steps, Step 2's widening spiral seen once a lap.
+A **Poincaré section** records the flow only when it crosses a chosen surface, turning it into a map, a rule $x_{n+1} = g(x_n)$ ([Iteration](01-iteration-and-cobweb-plots.md)). Lorenz recorded each top, where $z$ stops rising: 134 tops from time 10 to 110, between 31.82 and 45.61. Each top against the next falls on a thin tent-shaped curve, a one-dimensional map. Every top below 38.5 was followed by a higher one, 84 of 84; the first, 33.84, 34.57, 35.50, 36.78, 38.82, 42.98, climb by growing steps, Step 2's widening spiral seen once a lap.
 
 ---
 
@@ -392,15 +375,15 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [chaos-and-the-lyapunov-exponent](04-chaos-and-the-lyapunov-exponent.md): the exponent as average log-stretch, and the prediction horizon.
-- [poincare-bendixson-and-bendixsons-criterion](../06-Nonlinear%20Dynamics%20in%20the%20Plane/09-poincare-bendixson-and-bendixsons-criterion.md): why the plane forbids chaos; divergence as shrink rate.
-- [runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md): the stepper under every number here.
+- [The Lyapunov exponent](04-chaos-and-the-lyapunov-exponent.md): the exponent as average log-stretch, and the prediction horizon.
+- [Poincare-Bendixson](../06-Nonlinear%20Dynamics%20in%20the%20Plane/09-poincare-bendixson-and-bendixsons-criterion.md): why the plane forbids chaos; divergence as shrink rate.
+- [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md): the stepper under every number here.
 
 ## Where this goes next
 
-- [the-doubling-map-and-symbolic-dynamics](05-the-doubling-map-and-symbolic-dynamics.md): a path coded as symbols, here left and right lobes.
-- runge-kutta-and-butcher-tableaux: higher-order steppers, which push the computed horizon back only a few units.
-- [stochastic-differential-equations](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/04-stochastic-differential-equations.md): rate laws with noise.
+- [The doubling map](05-the-doubling-map-and-symbolic-dynamics.md): a path coded as symbols, here left and right lobes.
+- Runge-Kutta: higher-order steppers, which push the computed horizon back only a few units.
+- [Stochastic differential equations](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/04-stochastic-differential-equations.md): rate laws with noise.
 
 One path is unforecastable past 25 units, yet the average height is near 23.5 from every start tried: averages over the butterfly can be forecast when single paths cannot.
 

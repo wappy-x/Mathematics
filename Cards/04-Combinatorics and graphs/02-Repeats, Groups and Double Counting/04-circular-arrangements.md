@@ -1,26 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Repeats, Groups and Double Counting
-topic: Counting up to rotation
-item: Round tables and bracelets
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/03-factorial|factorial]]"
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/05-n-choose-k|n-choose-k]]"
-  - "[[Cards/03-Algebra/08-Groups/08-group-actions-and-counting|group-actions-and-counting]]"
-next: []
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - circular-arrangements
----
-
 # Round tables and bracelets: fix one seat to kill the rotations, halve again if flipping counts the same
 
-Combinatorics and graphs → Repeats, Groups and Double Counting → Counting up to rotation → Round tables and bracelets
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Repeats, Groups and Double Counting](../../../SYLLABUS.md#w04-s02) → Round tables and bracelets
 
 ---
 
@@ -28,7 +8,7 @@ Combinatorics and graphs → Repeats, Groups and Double Counting → Counting up
 
 Eight friends come to dinner. The table is round, the chairs identical, no head of the table. How many different dinners are there?
 
-In a row the eight make 40,320 orders: eight choices for the first place, seven for the next, down to one. That is 8!, spoken "eight factorial" ([factorial](../01-Counting%20Principles/03-factorial.md)). Round a table it is too big. Ask everyone to move one chair clockwise: every guest keeps the same neighbours. Nothing about the dinner changed. Eight of those 40,320 orders are one dinner wearing eight labels.
+In a row the eight make 40,320 orders: eight choices for the first place, seven for the next, down to one. That is 8!, spoken "eight factorial" ([Factorials](../01-Counting%20Principles/03-factorial.md)). Round a table it is too big. Ask everyone to move one chair clockwise: every guest keeps the same neighbours. Nothing about the dinner changed. Eight of those 40,320 orders are one dinner wearing eight labels.
 
 So divide by eight: 40,320 / 8 = 5,040, which is 7!.
 
@@ -104,7 +84,7 @@ There are 40,320 orders, every family holds 8, and no order sits in two families
 
 ### Step 3: the same answer with one guest nailed down
 
-Every family holds exactly one order with Ada in chair 1: rotate until she is there, and only one rotation does it. So the families match those orders one for one, and those orders put the other seven guests in the seven other chairs: 7! = 5,040. No division anywhere, and it is where the shape $(n-1)!$ comes from. Matching two collections one for one is a method of its own ([bijection-and-double-counting](05-bijection-and-double-counting.md)).
+Every family holds exactly one order with Ada in chair 1: rotate until she is there, and only one rotation does it. So the families match those orders one for one, and those orders put the other seven guests in the seven other chairs: 7! = 5,040. No division anywhere, and it is where the shape $(n-1)!$ comes from. Matching two collections one for one is a method of its own ([Bijections and double counting](05-bijection-and-double-counting.md)).
 
 ### Step 4: the flip halves it again
 
@@ -131,7 +111,7 @@ Number the positions round the ring; all $n$ items differ.
 
 Repeat a bead and an arrangement can survive a move. Its family is then smaller than the rest, and one division cannot serve all. Take six beads, two red, two blue, one green, one yellow: R R B B G Y. There are 180 different orders in a row and 30 necklaces, so halving gives 15 — but the brute force in the code finds 16 bracelets. The gap is the 2 necklaces left unchanged when the ring is turned over: they have no partner to pair with, so 16 = (30 + 2) / 2.
 
-The general repair counts what each move leaves unchanged and averages over the moves ([group-actions-and-counting](../../03-Algebra/08-Groups/08-group-actions-and-counting.md)). Where only the do-nothing move spares anything, that average collapses back to the division used here.
+The general repair counts what each move leaves unchanged and averages over the moves ([Group actions](../../03-Algebra/08-Groups/08-group-actions-and-counting.md)). Where only the do-nothing move spares anything, that average collapses back to the division used here.
 
 ---
 
@@ -383,7 +363,7 @@ The two outputs match line for line.
 - **Seating plans.** A round table for eight has 5,040 arrangements, not 40,320; a host who fixes one guest and works round is using the second road.
 - **Bead work.** A piece that can only turn: 120 necklaces. One that can also be worn either way up: 60 bracelets.
 - **Round trips.** A van that leaves a depot, calls once at each of seven stops and returns has 5,040 routes, half of them the same loop backwards.
-- **Repeats, not rotations.** The same division handles identical items ([multiset-permutations](01-multiset-permutations.md)) and interchangeable groups ([splitting-into-groups](03-splitting-into-groups.md)).
+- **Repeats, not rotations.** The same division handles identical items ([Arranging with repeats](01-multiset-permutations.md)) and interchangeable groups ([Splitting into groups](03-splitting-into-groups.md)).
 
 > **Say it back**
 > A round table has no first chair, so the 40,320 ways of lining eight guests up count every dinner eight times over. Divide by eight: 5,040 dinners, which is 7! — also the count with one guest nailed to a chair and the other seven ordered round. A bracelet allows one move more — turn it over and the bead order reverses — so six different beads make 60 bracelets against 120 necklaces. All of it needs every arrangement counted the same number of times: repeat a bead and it fails, as R R B B G Y shows with 16 bracelets where halving said 15.
@@ -392,13 +372,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [factorial](../01-Counting%20Principles/03-factorial.md): the 40,320 orders in a row that everything here starts from.
-- [n-choose-k](../01-Counting%20Principles/05-n-choose-k.md): the same habit of dividing out an order nobody wanted counted.
-- [group-actions-and-counting](../../03-Algebra/08-Groups/08-group-actions-and-counting.md): the turns and the flip as a set of moves, and the count that survives unequal families.
+- [Factorials](../01-Counting%20Principles/03-factorial.md): the 40,320 orders in a row that everything here starts from.
+- [Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md): the same habit of dividing out an order nobody wanted counted.
+- [Group actions](../../03-Algebra/08-Groups/08-group-actions-and-counting.md): the turns and the flip as a set of moves, and the count that survives unequal families.
 
 ## Where this goes next
 
-Every division here needed the families to come out equal, a promise dividing cannot make on its own. Matching one collection against another can, and [bijection-and-double-counting](05-bijection-and-double-counting.md) turns that into a method: Step 3 already used it, with Ada nailed to her chair.
+Every division here needed the families to come out equal, a promise dividing cannot make on its own. Matching one collection against another can, and [Bijections and double counting](05-bijection-and-double-counting.md) turns that into a method: Step 3 already used it, with Ada nailed to her chair.
 
 ---
 

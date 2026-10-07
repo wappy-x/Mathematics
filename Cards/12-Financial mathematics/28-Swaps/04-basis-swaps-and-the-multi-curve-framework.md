@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Swaps
-topic: Forecasting apart from discounting
-item: Multi-curve
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/28-Swaps/03-swap-dv01-and-hedging|swap-dv01-and-hedging]]"
-  - "[[Cards/12-Financial mathematics/02-Curves/03-money-market-instruments-and-sofr|money-market-instruments-and-sofr]]"
-next:
-  - "[[Cards/12-Financial mathematics/28-Swaps/05-ois-discounting-and-collateral|ois-discounting-and-collateral]]"
-tags: [mathematics, financial mathematics, basis-swaps-and-the-multi-curve-framework]
----
-
 # Multi-curve: one curve to forecast, another to discount, and the basis between them
 
-Financial mathematics → Swaps → Forecasting apart from discounting → Multi-curve
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Swaps](../../../SYLLABUS.md#w12-s28) → Multi-curve
 
 ---
 
@@ -96,7 +79,7 @@ $$H_3(t) = D(t)\,e^{-b_3 t}, \qquad H_6(t) = D(t)\,e^{-b_6 t}$$
 
 ### When it holds
 
-- **One discount curve for all cash in the deal.** Both legs pay dollars under one collateral agreement, so a dollar on a date has one price. If the legs were collateralised differently, or not at all, each would need its own discount curve; which curve is right is taken up in [ois-discounting-and-collateral](05-ois-discounting-and-collateral.md).
+- **One discount curve for all cash in the deal.** Both legs pay dollars under one collateral agreement, so a dollar on a date has one price. If the legs were collateralised differently, or not at all, each would need its own discount curve; which curve is right is taken up in [Collateral discounting](05-ois-discounting-and-collateral.md).
 - **Each coupon is fixed at the start of its period and paid at the end.** Then the market's forward is the right forecast and no correction is needed. A coupon paid late, or fixed at the end of its own period, needs a small timing adjustment the formula above leaves out.
 - **The curve between quotes is a choice.** One quote per curve buys one number, $b_3$ or $b_6$. The fair 1-year basis this curve set prints, 7.981845 bp, comes from the flat-spread shape, not from any market. More quotes buy more shape.
 - **Accruals in exact quarters and years.** Real contracts count days, so a real quarter is 0.25 only by coincidence; the error is a few dollars in a thousand on each coupon, not a change of method.
@@ -129,7 +112,7 @@ Give each index a curve $H$ whose neighbouring ratios hold its forecasts, as in 
 <details>
 <summary>Why the forward is the right forecast</summary>
 
-The pricing rule of [money-market-instruments-and-sofr](../02-Curves/03-money-market-instruments-and-sofr.md) and its neighbours values a payment as today's value of a dollar on the payment date, times the average payment taken under the probability that measures everything in units of that dated dollar. For a coupon fixed at $t_{i-1}$ and paid at $t_i$, that average is exactly the number the market's own swaps imply for the index over that period. It is not a prediction of where the index will fix. The forecast curve is a store for those market-implied averages, and $F_i$ reads one back.
+The pricing rule of [Money markets](../02-Curves/03-money-market-instruments-and-sofr.md) and its neighbours values a payment as today's value of a dollar on the payment date, times the average payment taken under the probability that measures everything in units of that dated dollar. For a coupon fixed at $t_{i-1}$ and paid at $t_i$, that average is exactly the number the market's own swaps imply for the index over that period. It is not a prediction of where the index will fix. The forecast curve is a store for those market-implied averages, and $F_i$ reads one back.
 
 </details>
 
@@ -158,7 +141,7 @@ The first bracket telescopes over the periods to $D(0) - D(T) = 1 - D(T)$. The s
 
 The quotes are taken so each one leaves a single unknown.
 
-1. **Discount curve.** The house curve's five par quotes, 4.20, 4.40, 4.55, 4.62 and 4.65 percent, read as overnight index swap (OIS) quotes: fixed once a year against compounded overnight rates. Bootstrapping them, as on [bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md), gives $D(1)$ to $D(5)$. Between those dates the log of $D$ runs in a straight line, a rule from [curve-interpolation-and-shape](../02-Curves/05-curve-interpolation-and-shape.md).
+1. **Discount curve.** The house curve's five par quotes, 4.20, 4.40, 4.55, 4.62 and 4.65 percent, read as overnight index swap (OIS) quotes: fixed once a year against compounded overnight rates. Bootstrapping them, as on [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md), gives $D(1)$ to $D(5)$. Between those dates the log of $D$ runs in a straight line, a rule from [Between the pillars](../02-Curves/05-curve-interpolation-and-shape.md).
 2. **3-month forecast curve.** A five-year swap, fixed once a year against the 3-month index, is quoted at par at $S_3 = 4.75$ percent. At par the legs match, so $C_3 = S_3 A_f$. One equation, one unknown: $b_3$.
 3. **6-month forecast curve.** The five-year basis swap is quoted at 8 bp: 3-month plus 8 bp against 6-month is fair. So $C_6 = C_3 + 0.0008\,A_3$. One more equation, one more unknown: $b_6$.
 
@@ -172,7 +155,7 @@ With all three curves in place, any swap on these indices has a value. Three res
 - **The 6-month par rate.** Divide $C_6 = C_3 + s A_3$ by $A_f$: $S_6 = S_3 + s\,A_3/A_f$. The annuity ratio is above 1, because quarterly payments arrive sooner, so the par rates sit a shade more than 8 bp apart. $S_6$ = 4.8314 percent.
 - **A basis swap nobody quoted.** A basis swap struck last year at 10 bp, with five years left, is worth $N(0.0010 - 0.0008)A_3$ = 8,916.23 dollars to the side receiving the spread. Shorter basis swaps come straight off the curves: 7.989920 bp for two years, 7.998792 bp for four.
 
-A second route builds each forecast curve pillar by pillar from a strip of quotes, one per maturity, exactly as the discount curve was built; that gives the basis a real term structure instead of this card's flat one. Running the build backwards, from values to rates and curve points, is the work of [swap-inverses-rate-and-curve-from-price](07-swap-inverses-rate-and-curve-from-price.md).
+A second route builds each forecast curve pillar by pillar from a strip of quotes, one per maturity, exactly as the discount curve was built; that gives the basis a real term structure instead of this card's flat one. Running the build backwards, from values to rates and curve points, is the work of [Solving a swap backwards](07-swap-inverses-rate-and-curve-from-price.md).
 
 ---
 
@@ -198,7 +181,7 @@ The sums 18.036250 and 9.069361 are the discount factors at the start of each qu
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Forecast the 3-month coupons off the OIS curve | 65,736.36 dollars | the index is not the overnight rate; its 9.717966 bp spread is lost, and 40 percent of the value with it. This is the single-curve answer of [interest-rate-swaps](01-interest-rate-swaps.md) |
+| Forecast the 3-month coupons off the OIS curve | 65,736.36 dollars | the index is not the overnight rate; its 9.717966 bp spread is lost, and 40 percent of the value with it. This is the single-curve answer of [Interest rate swaps](01-interest-rate-swaps.md) |
 | One 3-month curve both forecasts and discounts | 109,890.97 dollars | the pre-2007 method: the forecasts are right, but the cash is discounted at a bank-credit rate, 330 dollars too high |
 | 6-month par rate taken as 4.75% + 8 bp | 4.8300%, not 4.8314% | the basis sits on quarterly coupons, the fixed rate on yearly ones; a swap struck there is off by 605.54 dollars |
 | The 8 bp moved to the 6-month leg as −8 bp | fair spread is −8.045710 bp | the spread is paid on a different annuity, 4.432789 not 4.458117 |
@@ -218,7 +201,7 @@ Forecasting is the error that matters: it cuts the answer by 40 percent. Discoun
 
 ## Code, from first principles, and it actually runs
 
-The scripts bootstrap the discount curve, build both forecast curves, value the house swap and price basis swaps. They take three roads. Road one adds coupons one by one and finds each spread with a bisection root finder written out in the script. Road two uses the closed forms of Step 3 and the par identity $V = N(K - S_3)A_f$. Road three is the control: with the spread set to zero, the coupon sum must equal the telescope $1 - D(5)$. Seven asserts compare roads; an eighth ties $D(5)$ and the single-curve value to [interest-rate-swaps](01-interest-rate-swaps.md). Each would fail if a formula were broken.
+The scripts bootstrap the discount curve, build both forecast curves, value the house swap and price basis swaps. They take three roads. Road one adds coupons one by one and finds each spread with a bisection root finder written out in the script. Road two uses the closed forms of Step 3 and the par identity $V = N(K - S_3)A_f$. Road three is the control: with the spread set to zero, the coupon sum must equal the telescope $1 - D(5)$. Seven asserts compare roads; an eighth ties $D(5)$ and the single-curve value to [Interest rate swaps](01-interest-rate-swaps.md). Each would fail if a formula were broken.
 
 ### Python
 
@@ -580,9 +563,9 @@ The two outputs agree byte for byte.
 ## Where you meet it in real life
 
 - **Euro swap desks.** Euribor is still published at 3-month and 6-month tenors, and basis swaps between them trade every day. The desk's curve set has one discount curve and one forecast curve per tenor, built exactly in the order of Step 4.
-- **Every swap's hedge.** A multi-curve swap has a sensitivity to each curve, not one DV01. Shift the discount curve and the forecast curve separately and the house swap moves by different amounts; the single-number hedge of [swap-dv01-and-hedging](03-swap-dv01-and-hedging.md) becomes one hedge per curve.
-- **Plain swaps, valued properly.** The two-bond and forward-strip valuations of [interest-rate-swaps](01-interest-rate-swaps.md) and the par rate of [par-swap-rate-and-annuity](02-par-swap-rate-and-annuity.md) keep their shape; only the forecast inside each coupon changes curve.
-- **Swaps between currencies.** A dollar leg against a euro leg adds a second discount curve and a second kind of basis: [cross-currency-swaps-and-basis](06-cross-currency-swaps-and-basis.md).
+- **Every swap's hedge.** A multi-curve swap has a sensitivity to each curve, not one DV01. Shift the discount curve and the forecast curve separately and the house swap moves by different amounts; the single-number hedge of [Swap DV01](03-swap-dv01-and-hedging.md) becomes one hedge per curve.
+- **Plain swaps, valued properly.** The two-bond and forward-strip valuations of [Interest rate swaps](01-interest-rate-swaps.md) and the par rate of [The par swap rate](02-par-swap-rate-and-annuity.md) keep their shape; only the forecast inside each coupon changes curve.
+- **Swaps between currencies.** A dollar leg against a euro leg adds a second discount curve and a second kind of basis: [Cross-currency swaps](06-cross-currency-swaps-and-basis.md).
 - **SOFR swaps.** A dollar swap paying compounded SOFR, collateralised in cash that earns SOFR, forecasts and discounts off the same overnight curve. The telescope of Step 1 returns: the special case with no spread.
 
 > **Say it back**
@@ -592,14 +575,14 @@ The two outputs agree byte for byte.
 
 ## What this builds on
 
-- [swap-dv01-and-hedging](03-swap-dv01-and-hedging.md): the swap, its annuity and its one-number hedge, all of which this card splits across curves.
-- [money-market-instruments-and-sofr](../02-Curves/03-money-market-instruments-and-sofr.md): overnight rates, compounding in arrears and the term indices, the raw material of the discount curve and the forecast curves.
+- [Swap DV01](03-swap-dv01-and-hedging.md): the swap, its annuity and its one-number hedge, all of which this card splits across curves.
+- [Money markets](../02-Curves/03-money-market-instruments-and-sofr.md): overnight rates, compounding in arrears and the term indices, the raw material of the discount curve and the forecast curves.
 
 ## Where this goes next
 
-- [ois-discounting-and-collateral](05-ois-discounting-and-collateral.md): why a collateralised swap's cash is discounted at the overnight rate, the choice this card took as given, and what the house swap loses when the discount curve changes.
+- [Collateral discounting](05-ois-discounting-and-collateral.md): why a collateralised swap's cash is discounted at the overnight rate, the choice this card took as given, and what the house swap loses when the discount curve changes.
 
-This card used the overnight curve to discount without proving it the right one; why collateral makes it so is the question [ois-discounting-and-collateral](05-ois-discounting-and-collateral.md) answers.
+This card used the overnight curve to discount without proving it the right one; why collateral makes it so is the question [Collateral discounting](05-ois-discounting-and-collateral.md) answers.
 
 ---
 

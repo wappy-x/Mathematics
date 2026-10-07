@@ -1,25 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Everyday Arithmetic
-topic: Whole numbers
-item: Order of operations
-kind: convention
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/03-multiplying-and-dividing|multiplying-and-dividing]]"
-next:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/05-arithmetic-laws|arithmetic-laws]]"
-tags:
-  - mathematics
-  - foundations
-  - order-of-operations
----
-
 # Order of operations: which step goes first, and why brackets exist
 
-Foundations → Everyday Arithmetic → Whole numbers → Order of operations
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Everyday Arithmetic](../../../SYLLABUS.md#w01-s01) → Order of operations
 
 ---
 
@@ -239,12 +220,12 @@ Two languages, different code, identical output line for line: the rungs are not
 
 ## What this builds on
 
-- [multiplying-and-dividing](03-multiplying-and-dividing.md): multiplying as repeated adding. That is the whole reason multiply outranks add, so if the "package" idea felt thin tonight, that card is where it is built.
-- [adding-and-subtracting](02-adding-and-subtracting.md): carrying and borrowing. Every rung eventually bottoms out in those.
+- [Multiplying and dividing](03-multiplying-and-dividing.md): multiplying as repeated adding. That is the whole reason multiply outranks add, so if the "package" idea felt thin tonight, that card is where it is built.
+- [Adding and subtracting](02-adding-and-subtracting.md): carrying and borrowing. Every rung eventually bottoms out in those.
 
 ## Where this goes next
 
-- [arithmetic-laws](05-arithmetic-laws.md): swapping, regrouping, and spreading multiplication over addition. This card says which operation goes first; that one says which rearrangements are safe inside a rung.
+- [The three rearranging laws](05-arithmetic-laws.md): swapping, regrouping, and spreading multiplication over addition. This card says which operation goes first; that one says which rearrangements are safe inside a rung.
 
 ---
 

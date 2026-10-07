@@ -1,31 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Recurrences
-topic: Closed forms from roots
-item: The characteristic equation
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/01-recurrences-and-fibonacci|recurrences-and-fibonacci]]"
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/03-first-order-recurrences-and-loans|first-order-recurrences-and-loans]]"
-  - "[[Cards/03-Algebra/02-Polynomials/03-quadratic-formula|quadratic-formula]]"
-  - "[[Cards/03-Algebra/01-Letters and Equations/04-two-equations-two-unknowns|two-equations-two-unknowns]]"
-  - "[[Cards/01-Foundations/02-The Number Line/03-irrational-numbers|irrational-numbers]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/05-nonhomogeneous-recurrences|nonhomogeneous-recurrences]]"
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/06-recurrences-as-matrix-powers|recurrences-as-matrix-powers]]"
-  - "[[Cards/04-Combinatorics and graphs/07-Generating Functions/03-generating-functions-solve-recurrences|generating-functions-solve-recurrences]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - characteristic-equation-and-binet
----
-
 # The characteristic equation: try r^n, solve a quadratic, and any two-term step rule becomes a formula
 
-Combinatorics and graphs → Recurrences → Closed forms from roots → The characteristic equation
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Recurrences](../../../SYLLABUS.md#w04-s05) → The characteristic equation
 
 ---
 
@@ -33,7 +8,7 @@ Combinatorics and graphs → Recurrences → Closed forms from roots → The cha
 
 A hallway is two tiles wide and ten tiles long. The tiles are 1 × 2 rectangles, laid flat, no gaps and no overlaps. The floor can be covered 89 ways.
 
-That count comes out of the far end: the last column is closed by one tile standing across it, leaving a hallway nine long, or by two lying lengthwise, leaving one eight long. So ten's count is nine's plus eight's — the step rule of [recurrences-and-fibonacci](01-recurrences-and-fibonacci.md), whose counts are the Fibonacci numbers.
+That count comes out of the far end: the last column is closed by one tile standing across it, leaving a hallway nine long, or by two lying lengthwise, leaving one eight long. So ten's count is nine's plus eight's — the step rule of [Recurrences](01-recurrences-and-fibonacci.md), whose counts are the Fibonacci numbers.
 
 A step rule answers one question at a time: nothing in "add the last two" says the counts climb by a factor near 1.618. The formula comes from a guess: that the counts are a geometric sequence, each term a fixed multiple of the one before. Feed that in and a quadratic is left, whose roots are the only growth rates allowed.
 
@@ -60,7 +35,7 @@ Each point is the two before it added together, and the climb steepens because e
 
 ## The formula
 
-The term at step $n$ is written a(n), and a two-term step rule makes each term a fixed mix of the two behind it ([recurrences-and-fibonacci](01-recurrences-and-fibonacci.md)):
+The term at step $n$ is written a(n), and a two-term step rule makes each term a fixed mix of the two behind it ([Recurrences](01-recurrences-and-fibonacci.md)):
 
 $$a(n) = c_1\,a(n-1) + c_2\,a(n-2)$$
 
@@ -70,7 +45,7 @@ $$r^2 = c_1 r + c_2$$
 
 **Read it aloud:** a sequence multiplying by r each step obeys the rule exactly when r squared equals the first weight times r, plus the second.
 
-By the quadratic formula ([quadratic-formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)), if the roots $r$ and $s$ differ, every solution is
+By the quadratic formula ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)), if the roots $r$ and $s$ differ, every solution is
 
 $$a(n) = A\,r^n + B\,s^n$$
 
@@ -78,7 +53,7 @@ and if the quadratic is one bracket squared, a single root $r$ standing twice, e
 
 $$a(n) = (A + Bn)\,r^n$$
 
-$A$ and $B$ come from a(0) and a(1): two equations, two unknowns ([two-equations-two-unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
+$A$ and $B$ come from a(0) and a(1): two equations, two unknowns ([Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -92,12 +67,12 @@ Fitted to the Fibonacci start, the mixture is **Binet's formula**:
 
 $$F(n) = \frac{\varphi^n - \psi^n}{\sqrt{5}}, \qquad \varphi = \frac{1+\sqrt{5}}{2}, \qquad \psi = \frac{1-\sqrt{5}}{2}$$
 
-A Fibonacci number is one geometric sequence minus another — one climbing by the golden ratio, one shrinking and flipping sign — over the square root of 5 ([irrational-numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md)), which cancels from the answer.
+A Fibonacci number is one geometric sequence minus another — one climbing by the golden ratio, one shrinking and flipping sign — over the square root of 5 ([Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md)), which cancels from the answer.
 
 ### When it holds
 
-- **Fixed weights, and a second weight that is not zero.** Weights moving with the step, as in a(n) = n·a(n−1), leave no quadratic behind; c2 = 0 makes the rule one-step, which is [first-order-recurrences-and-loans](03-first-order-recurrences-and-loans.md).
-- **Nothing added on the right.** A cost paid afresh each step spoils the cancellation in Step 0; the repair is on [nonhomogeneous-recurrences](05-nonhomogeneous-recurrences.md).
+- **Fixed weights, and a second weight that is not zero.** Weights moving with the step, as in a(n) = n·a(n−1), leave no quadratic behind; c2 = 0 makes the rule one-step, which is [First-order recurrences](03-first-order-recurrences-and-loans.md).
+- **Nothing added on the right.** A cost paid afresh each step spoils the cancellation in Step 0; the repair is on [Recurrences with a driving term](05-nonhomogeneous-recurrences.md).
 - **Real roots.** The part under the quadratic formula's square root, c1^2 + 4c2, is 5 here. Where it is negative the sequence swings instead of climbing.
 
 ---
@@ -163,7 +138,7 @@ Exactly what the rule demands. Worked: a(n) = 4a(n−1) − 4a(n−2) gives r^2 
 
 $\psi$ = −0.6180339887… is under 1 in size, so its powers shrink; over √5 that piece starts at 0.4472135955 and only falls. It never reaches half a unit, so φ^n/√5 always rounds to F(n): at step 10 it is 55.0036361232, and 0.0036361232 is thrown away.
 
-Two other roads reach this closed form: splitting a fraction, on [generating-functions-solve-recurrences](../07-Generating%20Functions/03-generating-functions-solve-recurrences.md), and a 2 by 2 matrix with these roots as eigenvalues, on [recurrences-as-matrix-powers](06-recurrences-as-matrix-powers.md).
+Two other roads reach this closed form: splitting a fraction, on [Solving a recurrence with a generating function](../07-Generating%20Functions/03-generating-functions-solve-recurrences.md), and a 2 by 2 matrix with these roots as eigenvalues, on [A recurrence is a matrix](06-recurrences-as-matrix-powers.md).
 
 ---
 
@@ -411,7 +386,7 @@ The two outputs match line for line.
 
 - **Counting coverings, paths and strings.** Anything built by closing off a last piece in a fixed number of ways obeys such a rule, whose larger root is the growth rate.
 - **Digital filters**, the code that smooths a stream of measurements. Its output is a fixed mix of its last few outputs, and the roots decide its fate: all under 1 in size and the response dies away, one past 1 and it runs away. That test is stability.
-- **Costs of recursive routines.** A routine calling itself twice on smaller inputs has a cost obeying a step rule; cutting the input by a factor needs the tools on [divide-and-conquer-recurrences](07-divide-and-conquer-recurrences.md).
+- **Costs of recursive routines.** A routine calling itself twice on smaller inputs has a cost obeying a step rule; cutting the input by a factor needs the tools on [Divide-and-conquer recurrences](07-divide-and-conquer-recurrences.md).
 
 > **Say it back**
 > A two-term step rule with fixed weights is solved by guessing a geometric sequence. Feeding r^n into it cancels everything but a quadratic, whose roots are the only growth rates allowed. Root sequences mix freely, and the two starting values fix exactly one mixture: for Fibonacci, whose quadratic is r^2 = r + 1, that mixture is Binet's formula. Where the roots coincide, one serves twice and the second sequence is n times it.
@@ -420,17 +395,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [recurrences-and-fibonacci](01-recurrences-and-fibonacci.md): the step rule and the Fibonacci numbers.
-- [first-order-recurrences-and-loans](03-first-order-recurrences-and-loans.md): the one-step case, one growth rate.
-- [quadratic-formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): how the roots come out.
-- [two-equations-two-unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): fitting A and B.
-- [irrational-numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md): what √5 is.
+- [Recurrences](01-recurrences-and-fibonacci.md): the step rule and the Fibonacci numbers.
+- [First-order recurrences](03-first-order-recurrences-and-loans.md): the one-step case, one growth rate.
+- [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): how the roots come out.
+- [Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): fitting A and B.
+- [Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md): what √5 is.
 
 ## Where this goes next
 
-- [nonhomogeneous-recurrences](05-nonhomogeneous-recurrences.md): a cost added at every step, spoiling the cancellation in Step 0.
-- [recurrences-as-matrix-powers](06-recurrences-as-matrix-powers.md): the same roots as eigenvalues, and huge steps by repeated squaring.
-- [generating-functions-solve-recurrences](../07-Generating%20Functions/03-generating-functions-solve-recurrences.md): the same closed form by splitting a fraction.
+- [Recurrences with a driving term](05-nonhomogeneous-recurrences.md): a cost added at every step, spoiling the cancellation in Step 0.
+- [A recurrence is a matrix](06-recurrences-as-matrix-powers.md): the same roots as eigenvalues, and huge steps by repeated squaring.
+- [Solving a recurrence with a generating function](../07-Generating%20Functions/03-generating-functions-solve-recurrences.md): the same closed form by splitting a fraction.
 
 Two weights and two starting values are settled; what a rule does when it looks back further, or pays a cost at every step, is the shelf's next question.
 

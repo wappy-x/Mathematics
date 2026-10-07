@@ -1,31 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: American and Bermudan exercise
-topic: Hedging and inverting the early-exercise put
-item: American Greeks and implied volatility
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/06-barone-adesi-whaley-approximation|barone-adesi-whaley-approximation]]"
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/01-american-options-and-early-exercise|american-options-and-early-exercise]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/02-implied-volatility-by-newton-and-bisection|implied-volatility-by-newton-and-bisection]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/04-greeks-from-a-tree-or-grid|greeks-from-a-tree-or-grid]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/01-bump-and-revalue-and-common-random-numbers|bump-and-revalue-and-common-random-numbers]]"
-next: []
-tags: [mathematics, financial mathematics, american-greeks-and-implied-volatility]
----
-
 # American Greeks and implied volatility: sensitivities off the tree, a delta that hits -1, and a unique implied vol
 
-Financial mathematics → American and Bermudan exercise → Hedging and inverting the early-exercise put → American Greeks and implied volatility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [American and Bermudan exercise](../../../SYLLABUS.md#w12-s15) → American Greeks and implied volatility
 
 ---
 
 ## General Overview
 
-Acme shares trade at $100. A one-year American put on them, strike $100, gives the right to sell one share for $100 on any day of the coming year. Cash earns 5 percent, the shares pay a 2 percent dividend yield, and Acme's volatility (how jumpy its price is) is 20 percent. A 2,000-step coin-flip tree prices the put at $6.66, to full precision 6.660226. The European put, exercisable only at the end, is worth $6.33; the $0.33 gap is the early-exercise premium ([american-options-and-early-exercise](01-american-options-and-early-exercise.md)).
+Acme shares trade at $100. A one-year American put on them, strike $100, gives the right to sell one share for $100 on any day of the coming year. Cash earns 5 percent, the shares pay a 2 percent dividend yield, and Acme's volatility (how jumpy its price is) is 20 percent. A 2,000-step coin-flip tree prices the put at $6.66, to full precision 6.660226. The European put, exercisable only at the end, is worth $6.33; the $0.33 gap is the early-exercise premium ([American options](01-american-options-and-early-exercise.md)).
 
 A trading desk that sells this put needs its **Greeks**: the rates at which the price moves when one input moves. Delta is the share hedge, gamma how fast it drifts, vega the cost of a volatility move, theta of a day passing, rho of a rate move. The American put has no formula, so each Greek comes out of the pricer: read off neighbouring nodes, or found by nudging an input and pricing again.
 
@@ -57,7 +38,7 @@ Upper line: the American put, from the 2,000-step tree. Lower line: the European
 
 Notation first, in words. $P$ is the American put's price as a pricer computes it. A tree node is named by two counts, steps taken from today and how many were up moves: $V_n(j)$ is the put's worth there and $S_n(j)$ is Acme's price. One step lasts $\Delta t$ years, one two-thousandth of a year here. Delta, gamma and theta are written $\Delta$, $\Gamma$ and $\Theta$; $\Delta t$ is one symbol, not delta times a time.
 
-Delta and gamma off the nodes, as on [greeks-from-a-tree-or-grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md). Two steps in, $h_+ = S_2(2) - S_2(1)$ and $h_- = S_2(1) - S_2(0)$ are the dollar gaps above and below the middle node:
+Delta and gamma off the nodes, as on [Greeks from a tree or grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md). Two steps in, $h_+ = S_2(2) - S_2(1)$ and $h_- = S_2(1) - S_2(0)$ are the dollar gaps above and below the middle node:
 
 $$\Delta \approx \frac{V_1(1) - V_1(0)}{S_1(1) - S_1(0)}, \qquad \Gamma \approx \frac{2}{h_+ + h_-}\left(\frac{V_2(2) - V_2(1)}{h_+} - \frac{V_2(1) - V_2(0)}{h_-}\right)$$
 
@@ -121,7 +102,7 @@ $P(0^+)$ is the best discounted payoff of a share drifting at $r - q$ with no no
 
 Backward induction on a tree, or time-stepping on a grid, fills in the put's worth at every price and date it visits. A Greek is a slope of that map in one direction, so delta, gamma and theta are already in the numbers. Only directions the map never covers, volatility and the rate, need a second pricing.
 
-The American map is split in two. Where holding beats exercising, the price obeys the Black–Scholes equation. Elsewhere it is the payoff and nothing else. The line between is the exercise boundary ([exercise-boundary-and-smooth-pasting](04-exercise-boundary-and-smooth-pasting.md)). Every result below concerns one side of it, or the line itself.
+The American map is split in two. Where holding beats exercising, the price obeys the Black–Scholes equation. Elsewhere it is the payoff and nothing else. The line between is the exercise boundary ([The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md)). Every result below concerns one side of it, or the line itself.
 
 ### Step 1: delta, gamma and theta off the nodes
 
@@ -135,7 +116,7 @@ Node Greeks are dated a step or two in the future. At 2,000 steps a step is unde
 
 No node holds the put at another volatility, so the tree prices it again at 0.21 and 0.19: 7.040707 and 6.280069. Their difference over 0.02 is vega, 38.031884 per 1.00 of volatility. The grid, bumped alike, gives 38.042070. The same recipe on the rate gives rho: −34.369887 on the tree, −34.376124 on the grid. Rho is negative because a higher rate shrinks today's value of the strike received later.
 
-A two-sided bump's error shrinks with the bump squared ([bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)), but on a tree it also moves the lattice, adding a jitter that does not shrink. Divided by 0.02 it moves vega by about a hundredth, against 38; divided by a cent squared, for gamma, it gives 0.890311. Node readings re-price nothing, so nothing jitters.
+A two-sided bump's error shrinks with the bump squared ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)), but on a tree it also moves the lattice, adding a jitter that does not shrink. Divided by 0.02 it moves vega by about a hundredth, against 38; divided by a cent squared, for gamma, it gives 0.890311. Node readings re-price nothing, so nothing jitters.
 
 ### Step 3: in the exercise region, delta is exactly −1
 
@@ -202,7 +183,7 @@ The edges, stated before solving:
 
 Bisection then solves. The bracket 0.01 to 2.00 straddles the quote; price the middle, keep the half that still straddles, repeat until the bracket is a billionth wide. The tree returns 0.200000. The grid, solved by the secant method (Newton's method with the slope taken from the last two guesses), returns 0.199989. Bisection needs no vega and cannot leave its bracket, whatever lattice jitter the price carries.
 
-A faster road inverts the Barone-Adesi–Whaley closed-form approximation instead of a tree ([barone-adesi-whaley-approximation](06-barone-adesi-whaley-approximation.md)). Its implied volatility then belongs to that formula.
+A faster road inverts the Barone-Adesi–Whaley closed-form approximation instead of a tree ([Barone-Adesi-Whaley](06-barone-adesi-whaley-approximation.md)). Its implied volatility then belongs to that formula.
 
 ---
 
@@ -722,9 +703,9 @@ The two outputs agree line for line at the printed precision.
 
 - **Listed single-stock options.** Exchange-traded options on individual US shares are American (conventions verified 2026-09-24), so the implied volatilities shown for them come from American pricers, often trees, inverted as in Step 6.
 - **Risk reports.** With no formula to differentiate, desks report American delta and gamma off lattice or grid nodes and vega and rho by bump-and-revalue.
-- **Deep in-the-money puts.** A put with delta −1, hedged with one share, is cash in all but name. A report showing delta pinned at −1 and gamma at 0 is showing a put that should be exercised ([american-options-and-early-exercise](01-american-options-and-early-exercise.md)).
+- **Deep in-the-money puts.** A put with delta −1, hedged with one share, is cash in all but name. A report showing delta pinned at −1 and gamma at 0 is showing a put that should be exercised ([American options](01-american-options-and-early-exercise.md)).
 - **Volatility surfaces.** Surfaces built from American quotes need an American pricer inverted at every strike; skipping that leaves the false skew of the warning above.
-- **Fewer exercise dates.** A Bermudan put, exercisable only on set dates, has a delta that reaches −1 only on those dates ([bermudan-options](03-bermudan-options.md)). With no expiry at all the boundary is fixed and has a formula ([perpetual-american-put](05-perpetual-american-put.md)).
+- **Fewer exercise dates.** A Bermudan put, exercisable only on set dates, has a delta that reaches −1 only on those dates ([Bermudan options](03-bermudan-options.md)). With no expiry at all the boundary is fixed and has a formula ([The perpetual American put](05-perpetual-american-put.md)).
 
 > **Say it back**
 > An American put has no formula, so its Greeks come from the pricer: delta, gamma and theta off neighbouring nodes, vega and rho by pricing again one volatility point or one rate point either side. Where exercising now is optimal, the put is the strike minus the share price, so delta is exactly −1 and gamma 0. At the boundary gamma jumps to twice the carry of exercising, interest on the strike minus dividends on the share, over the volatility squared and the price squared. The price climbs strictly with volatility wherever the put is held, so a quote between the floor and the strike has exactly one implied volatility, and a bracket search finds it. Invert with the European formula instead and the early-exercise premium turns into false volatility.
@@ -733,15 +714,15 @@ The two outputs agree line for line at the printed precision.
 
 ## What this builds on
 
-- [barone-adesi-whaley-approximation](06-barone-adesi-whaley-approximation.md): a closed-form approximation to the American price, the fast thing to invert instead of a tree.
-- [american-options-and-early-exercise](01-american-options-and-early-exercise.md): the contract, the tree with its exercise check at every node, and the $0.33 premium.
-- [implied-volatility-by-newton-and-bisection](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md): brackets, bisection and Newton steps, here carried to a pricer with no formula.
-- [greeks-from-a-tree-or-grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md): the node formulas for delta, gamma and theta, used here unchanged.
-- [bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): why a two-sided bump beats a one-sided one.
+- [Barone-Adesi-Whaley](06-barone-adesi-whaley-approximation.md): a closed-form approximation to the American price, the fast thing to invert instead of a tree.
+- [American options](01-american-options-and-early-exercise.md): the contract, the tree with its exercise check at every node, and the $0.33 premium.
+- [Solving for implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md): brackets, bisection and Newton steps, here carried to a pricer with no formula.
+- [Greeks from a tree or grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md): the node formulas for delta, gamma and theta, used here unchanged.
+- [Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): why a two-sided bump beats a one-sided one.
 
 ## Where this goes next
 
-Nothing on the ladder builds on this card directly; it closes the American shelf. Its siblings carry the same tools sideways: [bermudan-options](03-bermudan-options.md) for exercise on set dates only, and [mertons-no-early-exercise-theorem](02-mertons-no-early-exercise-theorem.md) for when the matching call carries no premium to hedge. The question left open is how the boundary $S^*$ itself shifts when volatility or rates move, which decides when a desk exercises; [exercise-boundary-and-smooth-pasting](04-exercise-boundary-and-smooth-pasting.md) studies that boundary as an object in its own right.
+Nothing on the ladder builds on this card directly; it closes the American shelf. Its siblings carry the same tools sideways: [Bermudan options](03-bermudan-options.md) for exercise on set dates only, and [Merton's theorem](02-mertons-no-early-exercise-theorem.md) for when the matching call carries no premium to hedge. The question left open is how the boundary $S^*$ itself shifts when volatility or rates move, which decides when a desk exercises; [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md) studies that boundary as an object in its own right.
 
 ---
 

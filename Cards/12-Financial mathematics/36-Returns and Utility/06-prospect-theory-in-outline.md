@@ -1,21 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Returns and Utility
-topic: Reference-dependent choice
-item: Prospect theory in outline
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/36-Returns and Utility/03-certainty-equivalent-and-risk-premium|certainty-equivalent-and-risk-premium]]"
-next: []
-tags: [mathematics, financial mathematics, prospect-theory-in-outline]
----
-
 # Prospect theory in outline: how people actually weigh gains, losses and small chances
 
-Financial mathematics → Returns and Utility → Reference-dependent choice → Prospect theory in outline
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Returns and Utility](../../../SYLLABUS.md#w12-s36) → Prospect theory in outline
 
 ---
 
@@ -99,7 +84,7 @@ The four numbers 0.88, 2.25, 0.61 and 0.69 are the **median estimates** from Tve
 
 ### Step 0: two bent rulers
 
-Expected utility, on [expected-utility-and-risk-aversion](02-expected-utility-and-risk-aversion.md), measures outcomes with one bent ruler (a utility curve) and chances with a straight one (the probabilities themselves). Prospect theory bends both rulers. The value curve bends outcomes, differently for gains and losses. The weighting curve bends chances. Every reversal below comes from one of those two bends.
+Expected utility, on [Expected utility](02-expected-utility-and-risk-aversion.md), measures outcomes with one bent ruler (a utility curve) and chances with a straight one (the probabilities themselves). Prospect theory bends both rulers. The value curve bends outcomes, differently for gains and losses. The weighting curve bends chances. Every reversal below comes from one of those two bends.
 
 ### Step 1: expected utility cannot produce the certainty reversal
 
@@ -167,7 +152,7 @@ For a continuous prospect, such as a fund whose return follows a bell curve, the
 
 $$V=\int_0^\infty w^{+}\!\big(\text{chance that } v(\text{outcome}) > y\big)\,dy \;-\; \int_0^\infty w^{-}\!\big(\text{chance that } v(\text{outcome}) < -y\big)\,dy.$$
 
-This is road 1 in the code. The dominance argument itself, without weights, is on [stochastic-dominance](04-stochastic-dominance.md).
+This is road 1 in the code. The dominance argument itself, without weights, is on [Stochastic dominance](04-stochastic-dominance.md).
 
 ---
 
@@ -195,7 +180,7 @@ All four majorities from 1979 come out of one set of four numbers. In Problem 3 
 
 The shelf's saver has $10,000 and a choice. A deposit pays 4%: a sure gain of $400. A fund returns 8% on average with a spread (standard deviation) of 15%: a gain of $800 on average, spread $1,500, following a bell curve. The fund loses money in 29.7% of years.
 
-The deposit scores $v(400)$ = 194.90. The fund's score needs the integral from Step 5, done numerically: 41.81. The sure-dollar amount with that same value, the prospect-theory **certainty equivalent** (see [certainty-equivalent-and-risk-premium](03-certainty-equivalent-and-risk-premium.md)), is $69.57. The model's saver prefers the $400 deposit to a fund that pays $800 on average. Loss aversion does most of the work: set $\lambda$ to 1 and the fund's certainty equivalent jumps to $584.08, above the deposit.
+The deposit scores $v(400)$ = 194.90. The fund's score needs the integral from Step 5, done numerically: 41.81. The sure-dollar amount with that same value, the prospect-theory **certainty equivalent** (see [Risk premium](03-certainty-equivalent-and-risk-premium.md)), is $69.57. The model's saver prefers the $400 deposit to a fund that pays $800 on average. Loss aversion does most of the work: set $\lambda$ to 1 and the fund's certainty equivalent jumps to $584.08, above the deposit.
 
 ### What breaks if you drop a piece
 
@@ -623,7 +608,7 @@ Orange is the gain weight $w^{+}$, green the loss weight $w^{-}$, dark blue the 
 ## The usual mistake
 
 > [!warning]
-> **Treating prospect theory as advice.** The model describes what people do; it does not say they are right to do it. The saver who takes a sure $400 over a fund worth $800 on average, because 29.7% of years show a loss, is described by the model, not endorsed by it. For choosing well, the normative tools are on [expected-utility-and-risk-aversion](02-expected-utility-and-risk-aversion.md) and [kelly-criterion-and-growth](05-kelly-criterion-and-growth.md).
+> **Treating prospect theory as advice.** The model describes what people do; it does not say they are right to do it. The saver who takes a sure $400 over a fund worth $800 on average, because 29.7% of years show a loss, is described by the model, not endorsed by it. For choosing well, the normative tools are on [Expected utility](02-expected-utility-and-risk-aversion.md) and [Kelly](05-kelly-criterion-and-growth.md).
 >
 > Smaller traps:
 > - **Reading weights as beliefs.** $w^{+}(0.05)$ = 0.13 does not mean the person thinks the chance is 13%. It is how heavily a known 5% chance counts in the choice.
@@ -648,12 +633,12 @@ Orange is the gain weight $w^{+}$, green the loss weight $w^{-}$, dark blue the 
 
 ## What this builds on
 
-- [certainty-equivalent-and-risk-premium](03-certainty-equivalent-and-risk-premium.md): the sure amount with the same score as a gamble. This card computes one for the saver's fund under prospect theory, $69.57, where that card computes it under expected utility.
+- [Risk premium](03-certainty-equivalent-and-risk-premium.md): the sure amount with the same score as a gamble. This card computes one for the saver's fund under prospect theory, $69.57, where that card computes it under expected utility.
 
 ## Where this goes next
 
-- [stochastic-dominance](04-stochastic-dominance.md): the comparison every sensible chooser agrees on; the detailed proof above shows cumulative prospect theory respects it and the 1979 version does not.
-- [kelly-criterion-and-growth](05-kelly-criterion-and-growth.md): the normative answer to the saver's question when the same bet repeats, set against the one-year view that makes the fund look bad here.
+- [Stochastic dominance](04-stochastic-dominance.md): the comparison every sensible chooser agrees on; the detailed proof above shows cumulative prospect theory respects it and the 1979 version does not.
+- [Kelly](05-kelly-criterion-and-growth.md): the normative answer to the saver's question when the same bet repeats, set against the one-year view that makes the fund look bad here.
 
 The question this card leaves open is what to do about it: once a choice is known to be bent by loss aversion and weighting, the normative tools of this shelf say what an unbent chooser would pick instead.
 

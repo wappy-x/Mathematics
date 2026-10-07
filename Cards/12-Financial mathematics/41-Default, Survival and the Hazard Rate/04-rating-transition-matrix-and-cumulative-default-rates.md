@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Default, Survival and the Hazard Rate
-topic: Grade migration
-item: Rating transition matrices
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/02-hazard-rate-and-survival-probability|hazard-rate-and-survival-probability]]"
-  - "[[Cards/03-Algebra/04-Matrices/03-matrix-multiplication|matrix-multiplication]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/03-diagonalisation-and-matrix-powers|diagonalisation-and-matrix-powers]]"
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/01-markov-chains|markov-chains]]"
-next:
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/09-market-implied-versus-historical-default-probability|market-implied-versus-historical-default-probability]]"
-tags: [mathematics, financial mathematics, rating-transition-matrix-and-cumulative-default-rates]
----
-
 # Rating transition matrices: a one-year table of grade moves, and multi-year default chances by multiplying it
 
-Financial mathematics → Default, Survival and the Hazard Rate → Grade migration → Rating transition matrices
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Default, Survival and the Hazard Rate](../../../SYLLABUS.md#w12-s41) → Rating transition matrices
 
 ---
 
@@ -54,7 +35,7 @@ Orange: a borrower that starts Solid. It bends upward: each year more Solid borr
 
 ## The formula
 
-Notation first, in words. A **matrix** is a table of numbers, named by one capital letter; the one here is $P$. The number in row $i$, column $j$ is written $p_{ij}$: the chance of moving from grade $i$ to grade $j$ in one year. Grades are labelled S (Solid), H (Shaky) and D (Default), so $p_{SD}$ is the one-year default chance of a Solid borrower. $P^T$ means $T$ copies of $P$ multiplied together, by the row-times-column rule of [matrix-multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md).
+Notation first, in words. A **matrix** is a table of numbers, named by one capital letter; the one here is $P$. The number in row $i$, column $j$ is written $p_{ij}$: the chance of moving from grade $i$ to grade $j$ in one year. Grades are labelled S (Solid), H (Shaky) and D (Default), so $p_{SD}$ is the one-year default chance of a Solid borrower. $P^T$ means $T$ copies of $P$ multiplied together, by the row-times-column rule of [Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md).
 
 $$P = \begin{pmatrix} p_{SS} & p_{SH} & p_{SD} \\ p_{HS} & p_{HH} & p_{HD} \\ 0 & 0 & 1 \end{pmatrix} = \begin{pmatrix} 0.90 & 0.09 & 0.01 \\ 0.10 & 0.80 & 0.10 \\ 0 & 0 & 1 \end{pmatrix}$$
 
@@ -70,7 +51,7 @@ The two-year case written out, one term per road:
 
 $$\mathrm{PD}_S(2) = p_{SS}\,p_{SD} + p_{SH}\,p_{HD} + p_{SD}\cdot 1 = 0.90 \times 0.01 + 0.09 \times 0.10 + 0.01 = 0.028$$
 
-The average hazard a cumulative default chance implies, for anyone who wants a single flat rate that reproduces it ([hazard-rate-and-survival-probability](02-hazard-rate-and-survival-probability.md)):
+The average hazard a cumulative default chance implies, for anyone who wants a single flat rate that reproduces it ([The hazard rate](02-hazard-rate-and-survival-probability.md)):
 
 $$\bar\lambda_i(T) = -\frac{\ln\big(1 - \mathrm{PD}_i(T)\big)}{T}$$
 
@@ -111,7 +92,7 @@ $$\hat p_{ij} = \frac{N_{ij}}{N_i}$$
 
 ### Step 0: the grade carries everything
 
-The whole method rests on one assumption: where a borrower goes next year depends on its grade today, and on nothing else in its past. A process with that property is a **Markov chain** ([markov-chains](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/01-markov-chains.md)). With it, the same one-year table applies again next year to whatever grade the borrower has then. Two years become two applications of the table, and applying a table twice is matrix multiplication.
+The whole method rests on one assumption: where a borrower goes next year depends on its grade today, and on nothing else in its past. A process with that property is a **Markov chain** ([Markov chains](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/01-markov-chains.md)). With it, the same one-year table applies again next year to whatever grade the borrower has then. Two years become two applications of the table, and applying a table twice is matrix multiplication.
 
 ### Step 1: two years is a sum over the middle grade
 
@@ -141,7 +122,7 @@ Drop the Default row and column, keeping the living block
 
 $$Q = \begin{pmatrix} 0.90 & 0.09 \\ 0.10 & 0.80 \end{pmatrix}.$$
 
-A living borrower's chance of still being alive after T years is its row sum of $Q^T$. The diagonalisation card ([diagonalisation-and-matrix-powers](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md)) shows that every entry of $Q^T$ is a fixed mix of $\mu_1^T$ and $\mu_2^T$, where $\mu_1$ and $\mu_2$ are the **eigenvalues** of Q: the two numbers by which Q scales its two special mixes of grades. For a 2-by-2 table they are the roots of a quadratic,
+A living borrower's chance of still being alive after T years is its row sum of $Q^T$. The diagonalisation card ([Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md)) shows that every entry of $Q^T$ is a fixed mix of $\mu_1^T$ and $\mu_2^T$, where $\mu_1$ and $\mu_2$ are the **eigenvalues** of Q: the two numbers by which Q scales its two special mixes of grades. For a 2-by-2 table they are the roots of a quadratic,
 
 $$\mu_{1,2} = \frac{(0.90 + 0.80) \pm \sqrt{(0.90 - 0.80)^2 + 4 \times 0.09 \times 0.10}}{2} = 0.957238,\; 0.742762.$$
 
@@ -181,7 +162,7 @@ A cohort only looks at 1 January each year. A **generator matrix** G instead giv
 
 </details>
 
-The other route to the same numbers is to follow borrowers rather than tables: simulate grades year by year with random draws and count defaults. The code does that as its fourth road; [simulating-a-default-time](05-simulating-a-default-time.md) builds simulation of default dates properly.
+The other route to the same numbers is to follow borrowers rather than tables: simulate grades year by year with random draws and count defaults. The code does that as its fourth road; [Simulating a default time](05-simulating-a-default-time.md) builds simulation of default dates properly.
 
 ---
 
@@ -219,7 +200,7 @@ year   default chance that year, Solid start, alive at start (%)
  long  ███████████████████████████████████████████ 4.28
 ```
 
-It climbs toward the long-run 4.28% from below. A Shaky borrower's does the reverse: its average hazard falls from 10.54% over one year to 8.63% over five and 7.19% over ten, as survivors drift up to Solid. Stacked year by year, these rates are a hazard curve that is flat within each year and steps between years: [piecewise-flat-hazard-curve](03-piecewise-flat-hazard-curve.md).
+It climbs toward the long-run 4.28% from below. A Shaky borrower's does the reverse: its average hazard falls from 10.54% over one year to 8.63% over five and 7.19% over ten, as survivors drift up to Solid. Stacked year by year, these rates are a hazard curve that is flat within each year and steps between years: [The piecewise-flat hazard curve](03-piecewise-flat-hazard-curve.md).
 
 ### What breaks if you drop a piece
 
@@ -659,7 +640,7 @@ The two outputs are identical, byte for byte.
 ## Where you meet it in real life
 
 - **Agency default studies.** S&P Global and Moody's publish annual transition matrices and cumulative default tables by grade, AAA down to C, built from decades of cohorts of rated companies. Their multi-year cumulative rates are counted directly from those cohorts, not by powering a one-year table, so the two can differ; the gap is one test of the Markov assumption.
-- **Bank loan-loss provisions.** Accounting rules that require lifetime expected losses (IFRS 9 for loans that have worsened, its stage 2; CECL in the United States for all loans) need multi-year default chances. Many banks get them by powering an internal grade-to-grade matrix, then multiply by exposure and loss given default as in [default-probability-recovery-and-expected-loss](01-default-probability-recovery-and-expected-loss.md).
+- **Bank loan-loss provisions.** Accounting rules that require lifetime expected losses (IFRS 9 for loans that have worsened, its stage 2; CECL in the United States for all loans) need multi-year default chances. Many banks get them by powering an internal grade-to-grade matrix, then multiply by exposure and loss given default as in [Default probability, recovery and expected loss](01-default-probability-recovery-and-expected-loss.md).
 - **Portfolio credit risk.** CreditMetrics, published by J.P. Morgan in 1997, revalues each bond in every grade it might migrate to over a year, using a transition matrix for the chances.
 - **Pricing with grades.** Jarrow, Lando and Turnbull (1997) turned a historical transition matrix into a market-implied one by adjusting it to fit bond prices, and used it to price credit risk; the adjustment is the gap the usual mistake warns about.
 
@@ -670,14 +651,14 @@ The two outputs are identical, byte for byte.
 
 ## What this builds on
 
-- [hazard-rate-and-survival-probability](02-hazard-rate-and-survival-probability.md): survival as $e^{-\lambda T}$ for a flat hazard, which Step 5 runs backwards to get the average hazard.
-- [matrix-multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md): the row-times-column rule that Step 1 shows is a sum over the middle grade.
-- [diagonalisation-and-matrix-powers](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md): why a matrix power is a mix of eigenvalue powers, the closed form in Step 4.
-- [markov-chains](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/01-markov-chains.md): the memoryless assumption, absorbing states and Chapman–Kolmogorov in general.
+- [The hazard rate](02-hazard-rate-and-survival-probability.md): survival as $e^{-\lambda T}$ for a flat hazard, which Step 5 runs backwards to get the average hazard.
+- [Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md): the row-times-column rule that Step 1 shows is a sum over the middle grade.
+- [Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md): why a matrix power is a mix of eigenvalue powers, the closed form in Step 4.
+- [Markov chains](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/01-markov-chains.md): the memoryless assumption, absorbing states and Chapman–Kolmogorov in general.
 
 ## Where this goes next
 
-- [market-implied-versus-historical-default-probability](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md): sets this card's historical default chances beside those implied by credit-default-swap prices, and measures the gap between them. The Jarrow–Lando–Turnbull model, which reshapes a historical matrix to fit market prices, sits on that bridge.
+- [Two default probabilities](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md): sets this card's historical default chances beside those implied by credit-default-swap prices, and measures the gap between them. The Jarrow–Lando–Turnbull model, which reshapes a historical matrix to fit market prices, sits on that bridge.
 
 This card's 2.29% a year is what history says a Solid borrower costs; the open question is why the market charges more for the same borrower, and how much more.
 

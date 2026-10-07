@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Default, Survival and the Hazard Rate
-topic: Hazard term structure
-item: The piecewise-flat hazard curve
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/02-hazard-rate-and-survival-probability|hazard-rate-and-survival-probability]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/01-exponents-and-powers|exponents-and-powers]]"
-next:
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/05-simulating-a-default-time|simulating-a-default-time]]"
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/06-bootstrapping-the-hazard-curve-from-cds-quotes|bootstrapping-the-hazard-curve-from-cds-quotes]]"
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve|pricing-a-defaultable-bond-from-the-survival-curve]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - piecewise-flat-hazard-curve
----
-
 # The piecewise-flat hazard curve: a handful of rates that give survival at every date
 
-Financial mathematics → Default, Survival and the Hazard Rate → Hazard term structure → The piecewise-flat hazard curve
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Default, Survival and the Hazard Rate](../../../SYLLABUS.md#w12-s41) → The piecewise-flat hazard curve
 
 ---
 
@@ -32,13 +10,13 @@ A courier firm buys a used delivery van. Its mechanic's reading of vans like it:
 
 The firm wants more than three numbers. It wants the chance the van is still running at any date: 18 months, 2.5 years, 4 years. It wants the chance the van dies in year four in particular, to budget for a replacement. The three rates answer all of it. Survival at one year is 0.980, at three years 0.905, at five years 0.803. The chance the van dies in year four is 5.27%.
 
-The rate in each stretch is the **hazard rate**: the chance of failing in the next instant, per year, counted only among vans still running ([hazard-rate-and-survival-probability](02-hazard-rate-and-survival-probability.md)). A hazard that holds flat between a few chosen dates and jumps at those dates is a **piecewise-flat hazard curve**, and the chosen dates are its **nodes**. Credit markets build this curve for every company with credit default swaps (contracts that pay out if the company defaults) quoted on it; the van is the same arithmetic with a breakdown in place of a default.
+The rate in each stretch is the **hazard rate**: the chance of failing in the next instant, per year, counted only among vans still running ([The hazard rate](02-hazard-rate-and-survival-probability.md)). A hazard that holds flat between a few chosen dates and jumps at those dates is a **piecewise-flat hazard curve**, and the chosen dates are its **nodes**. Credit markets build this curve for every company with credit default swaps (contracts that pay out if the company defaults) quoted on it; the van is the same arithmetic with a breakdown in place of a default.
 
 The curve also teaches a reading lesson. Averaged from today, the van's hazard looks gentle: 2% over one year, 3.33% over three, 4.4% over five. The rates actually in force in each stretch are 2%, 4% and 6%. The averages trail behind the rates in force and hide how steep the back end is.
 
 **A few flat hazard rates, one per stretch between node dates, add up to a staircase whose area at any date gives survival as e to the minus that area; between nodes this is the same as drawing survival along a straight line in its logarithm, and on a rising staircase the average rate from today lags the rate in force.**
 
-**What kind of fact this is:** a method: a modelling choice about the shape of the hazard between the dates where it is known. Survival as e to the minus the area is a theorem, proved on [hazard-rate-and-survival-probability](02-hazard-rate-and-survival-probability.md); the facts about the staircase are proved on this card in Why it works.
+**What kind of fact this is:** a method: a modelling choice about the shape of the hazard between the dates where it is known. Survival as e to the minus the area is a theorem, proved on [The hazard rate](02-hazard-rate-and-survival-probability.md); the facts about the staircase are proved on this card in Why it works.
 
 ### The picture: the rate in force and the average from today
 
@@ -95,7 +73,7 @@ $$P(a < \tau \le b) = S(a) - S(b).$$
 | $a$, $b$ | the start and end of a window | 3 and 4 | a longer window catches more deaths |
 | $e$, $\ln$ | the growth constant 2.71828… and its undo, the natural log | $e^{-0.22}$ = 0.8025 | — |
 
-A reminder on powers: $e^{-x}$ is $1/e^{x}$, and $e^{x}\,e^{y} = e^{x+y}$, so multiplying survivals adds their areas ([exponents-and-powers](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)).
+A reminder on powers: $e^{-x}$ is $1/e^{x}$, and $e^{x}\,e^{y} = e^{x+y}$, so multiplying survivals adds their areas ([Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)).
 
 ### When it holds
 
@@ -177,7 +155,7 @@ xychart-beta
 
 Orange: the staircase, 2%, 4%, 6%. Green: one flat hazard of 4.4%, the five-year average. Both end at 0.80, because both have area 0.22. The staircase holds up early and falls late. The flat curve loses 4.30% of vans in year one, against the staircase's 1.98%.
 
-A second road to every number above is to simulate vans one at a time: each month, a van alive at its start breaks down with chance equal to that month's hazard times one twelfth of a year. Drawing the breakdown date directly from the survival curve, in one draw per van, is [simulating-a-default-time](05-simulating-a-default-time.md).
+A second road to every number above is to simulate vans one at a time: each month, a van alive at its start breaks down with chance equal to that month's hazard times one twelfth of a year. Drawing the breakdown date directly from the survival curve, in one draw per van, is [Simulating a default time](05-simulating-a-default-time.md).
 
 ---
 
@@ -664,11 +642,11 @@ The two outputs agree line for line, simulated vans included, since both languag
 
 ## Where you meet it in real life
 
-- **Credit default swap curves.** Dealers quote swaps at maturities such as 1, 3, 5, 7 and 10 years, and the standard model puts one flat hazard between each pair. Solving for those hazards from the quotes is [bootstrapping-the-hazard-curve-from-cds-quotes](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md); this card runs the curve forwards once it is built.
-- **Risky bond prices.** Each coupon of a company's bond is weighted by the survival curve at its payment date, read off the staircase between nodes: [pricing-a-defaultable-bond-from-the-survival-curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md).
+- **Credit default swap curves.** Dealers quote swaps at maturities such as 1, 3, 5, 7 and 10 years, and the standard model puts one flat hazard between each pair. Solving for those hazards from the quotes is [Bootstrapping a hazard curve](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md); this card runs the curve forwards once it is built.
+- **Risky bond prices.** Each coupon of a company's bond is weighted by the survival curve at its payment date, read off the staircase between nodes: [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md).
 - **Interest-rate curves.** Straight lines in the log of discount factors, the prices today of a dollar paid later, give flat forward interest rates between nodes. It is the same construction, with interest in place of hazard.
-- **Expected loss by year.** A lender budgets each year's losses from that year's slice of default probability, $S(a) - S(b)$, times the loss if default happens: [default-probability-recovery-and-expected-loss](01-default-probability-recovery-and-expected-loss.md).
-- **Rating agency tables.** Cumulative default rates by horizon are survival curves read at nodes; turning them into the rate in force each year is the recovery formula on this card. Default reached through rating changes is [rating-transition-matrix-and-cumulative-default-rates](04-rating-transition-matrix-and-cumulative-default-rates.md).
+- **Expected loss by year.** A lender budgets each year's losses from that year's slice of default probability, $S(a) - S(b)$, times the loss if default happens: [Default probability, recovery and expected loss](01-default-probability-recovery-and-expected-loss.md).
+- **Rating agency tables.** Cumulative default rates by horizon are survival curves read at nodes; turning them into the rate in force each year is the recovery formula on this card. Default reached through rating changes is [Rating transition matrices](04-rating-transition-matrix-and-cumulative-default-rates.md).
 - **Life tables and machine fleets.** Actuaries often hold the force of mortality flat within each year of age, and fleet managers do the same with failure rates by age band: piecewise-flat hazards under other names.
 
 > **Say it back**
@@ -678,14 +656,14 @@ The two outputs agree line for line, simulated vans included, since both languag
 
 ## What this builds on
 
-- [hazard-rate-and-survival-probability](02-hazard-rate-and-survival-probability.md): the hazard as a rate among survivors, and survival as e to the minus its area. This card gives the hazard a shape.
-- [exponents-and-powers](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): why multiplying survivals adds their areas, the rule behind Step 2.
+- [The hazard rate](02-hazard-rate-and-survival-probability.md): the hazard as a rate among survivors, and survival as e to the minus its area. This card gives the hazard a shape.
+- [Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): why multiplying survivals adds their areas, the rule behind Step 2.
 
 ## Where this goes next
 
-- [simulating-a-default-time](05-simulating-a-default-time.md): one draw per van or company, inverting the staircase's survival curve.
-- [bootstrapping-the-hazard-curve-from-cds-quotes](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md): the staircase solved for, piece by piece, from market quotes.
-- [pricing-a-defaultable-bond-from-the-survival-curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md): the survival curve used to value a company's bond.
+- [Simulating a default time](05-simulating-a-default-time.md): one draw per van or company, inverting the staircase's survival curve.
+- [Bootstrapping a hazard curve](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md): the staircase solved for, piece by piece, from market quotes.
+- [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md): the survival curve used to value a company's bond.
 
 Here the rates were handed over by a mechanic; a market hands over prices instead, and turning quoted prices into the steps of the staircase is what the bootstrap does.
 

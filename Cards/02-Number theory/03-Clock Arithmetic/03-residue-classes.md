@@ -1,27 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Clock Arithmetic
-topic: Remainder buckets
-item: Residue classes
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/02-modular-addition-and-multiplication|modular-addition-and-multiplication]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/06-equivalence-relations-and-partitions|equivalence-relations-and-partitions]]"
-next:
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/04-modular-inverse|modular-inverse]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/03-eulers-totient|eulers-totient]]"
-tags:
-  - mathematics
-  - number theory
-  - residue-classes
----
-
 # Residue classes: the n remainder buckets, and the small addition and multiplication tables they form
 
-Number theory → Clock Arithmetic → Remainder buckets → Residue classes
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Clock Arithmetic](../../../SYLLABUS.md#w02-s03) → Residue classes
 
 ---
 
@@ -53,7 +32,7 @@ A bucket is a set, running on forever:
 
 **bucket 2 (mod 12) = ... -22, -10, 2, 14, 26 ...**
 
-"mod 12" says divide by 12 and keep the remainder ([congruence-mod-n](01-congruence-mod-n.md)). Any member names the whole bucket: "bucket 14" and "bucket 2" are one set. The rule behind every table:
+"mod 12" says divide by 12 and keep the remainder ([Congruence](01-congruence-mod-n.md)). Any member names the whole bucket: "bucket 14" and "bucket 2" are one set. The rule behind every table:
 
 **bucket 7 + bucket 7 = bucket 2, because 7 + 7 = 14, and 14 leaves 2 after one whole 12**
 
@@ -62,7 +41,7 @@ A bucket is a set, running on forever:
 | Piece | Plain meaning | In our piano |
 | --- | --- | --- |
 | the modulus, n | how many buckets, and what you divide by | 12 semitones per octave |
-| the remainder | what is left after whole n's come off ([division-with-remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)) | 14 leaves 2 |
+| the remainder | what is left after whole n's come off ([Division with a remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)) | 14 leaves 2 |
 | a residue class | every number with that remainder, as one thing | bucket 2: ... 2, 14, 26 ... |
 | Z mod n | Z, the whole numbers, sorted into all n buckets, with their own plus and times | Z mod 12, the pitch classes |
 
@@ -72,13 +51,13 @@ A bucket is a set, running on forever:
 
 ### Step 0: every whole number lands in one bucket and no other
 
-Divide by 12 and exactly one remainder from 0 to 11 comes back ([division-with-remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)) — negatives included, which is why -22 sits in bucket 2. The buckets cover every whole number and none overlap.
+Divide by 12 and exactly one remainder from 0 to 11 comes back ([Division with a remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)) — negatives included, which is why -22 sits in bucket 2. The buckets cover every whole number and none overlap.
 
 ### Step 1: which member you pick does not matter
 
 Play the G above middle C, 19 semitones up, not 7, and stack it again: 19 + 19 = 38, octaves off, leaves 2. D again.
 
-[modular-addition-and-multiplication](02-modular-addition-and-multiplication.md) showed that reducing before or after agrees, so the bucket you land in never depends on the members picked — the licence to add buckets rather than numbers.
+[Adding and multiplying on the clock](02-modular-addition-and-multiplication.md) showed that reducing before or after agrees, so the bucket you land in never depends on the members picked — the licence to add buckets rather than numbers.
 
 **Residue classes**, the name from line one, and the set of all n is **Z mod n** — on the piano, Z mod 12. (A set adding and multiplying this well is a **ring** — wing 03 takes that apart.)
 
@@ -86,7 +65,7 @@ Play the G above middle C, 19 semitones up, not 7, and stack it again: 19 + 19 =
 
 Bucket 2 times bucket 3 is bucket 0: 2 × 3 = 6, one whole 6, nothing over. Neither side is zero and the answer is zero — whole numbers never do that.
 
-Why: 6 splits as 2 × 3, both above 1 and below 6, so those buckets multiply to one whole 6. Any modulus that splits does the same. 5 is prime and cannot split; and if a prime divides a product it divides one of the factors ([euclids-lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)), so out of 5 a zero answer needs a zero factor.
+Why: 6 splits as 2 × 3, both above 1 and below 6, so those buckets multiply to one whole 6. Any modulus that splits does the same. 5 is prime and cannot split; and if a prime divides a product it divides one of the factors ([Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)), so out of 5 a zero answer needs a zero factor.
 
 ---
 
@@ -131,8 +110,8 @@ Every non-zero row of the mod 5 square holds all four non-zero buckets; rows 2, 
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Cancelling the 2 in 2 × 3 = 2 × 0, out of 6 | 3 = 0 | Nothing undoes bucket 2 ([modular-inverse](04-modular-inverse.md)) |
-| Stacking 8 semitones, expecting 12 | 0, 8, 4 | 8 and 12 share a factor ([coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)) |
+| Cancelling the 2 in 2 × 3 = 2 × 0, out of 6 | 3 = 0 | Nothing undoes bucket 2 ([The modular inverse](04-modular-inverse.md)) |
+| Stacking 8 semitones, expecting 12 | 0, 8, 4 | 8 and 12 share a factor ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)) |
 
 ---
 
@@ -267,7 +246,7 @@ Both outputs match line for line.
 > [!warning]
 > **Treating a bucket as the small number sitting in it.** Bucket 2 is not the number 2. It is 2, 14, 26, -10 and -22 as one thing, each answering to the name.
 >
-> - Expecting division to work. Out of 6, bucket 2 times bucket 3 is bucket 0, so "divide by 2" means nothing: [modular-inverse](04-modular-inverse.md).
+> - Expecting division to work. Out of 6, bucket 2 times bucket 3 is bucket 0, so "divide by 2" means nothing: [The modular inverse](04-modular-inverse.md).
 > - Reading Z mod 12 as the numbers 0 to 11. It is twelve buckets, each holding infinitely many, -22 included.
 
 ---
@@ -285,13 +264,13 @@ Both outputs match line for line.
 
 ## What this builds on
 
-- [modular-addition-and-multiplication](02-modular-addition-and-multiplication.md): reducing before or after agrees — what lets a bucket be added and multiplied, not just a number.
-- [equivalence-relations-and-partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md): cutting a set into non-overlapping bunches, the general idea; these buckets come from [division-with-remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md).
+- [Adding and multiplying on the clock](02-modular-addition-and-multiplication.md): reducing before or after agrees — what lets a bucket be added and multiplied, not just a number.
+- [Equivalence relations and partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md): cutting a set into non-overlapping bunches, the general idea; these buckets come from [Division with a remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md).
 
 ## Where this goes next
 
-- [modular-inverse](04-modular-inverse.md): which buckets you may divide by, and why bucket 2 fails out of 6.
-- [eulers-totient](../04-Powers%20on%20the%20Clock/03-eulers-totient.md): counting the buckets that have an undo.
+- [The modular inverse](04-modular-inverse.md): which buckets you may divide by, and why bucket 2 fails out of 6.
+- [Euler's totient](../04-Powers%20on%20the%20Clock/03-eulers-totient.md): counting the buckets that have an undo.
 
 ---
 

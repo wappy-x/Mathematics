@@ -1,28 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Laurent Series, Singularities and Residues
-topic: Series round a hole
-item: Laurent series
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/01-taylor-series-in-the-plane|taylor-series-in-the-plane]]"
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/04-deforming-contours-and-winding-numbers|deforming-contours-and-winding-numbers]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/01-series-convergence|series-convergence]]"
-next:
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/02-classifying-singularities|classifying-singularities]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/08-z-transform-and-discrete-time-systems|z-transform-and-discrete-time-systems]]"
-  - "[[Cards/16-Numerical analysis/04-Interpolation and Approximation/09-pade-and-rational-approximation|pade-and-rational-approximation]]"
-  - "[[Cards/18-Functional analysis/03-Bounded Operators/07-spectrum-and-resolvent|spectrum-and-resolvent]]"
-  - "[[Cards/22-Algebraic geometry/03-Plane Curves/07-divisors-and-riemann-roch|divisors-and-riemann-roch]]"
-tags: [mathematics, complex analysis, laurent-series]
----
-
 # Laurent series: allow negative powers, and a function with a hole expands in a ring
 
-Complex analysis → Laurent Series, Singularities and Residues → Series round a hole → Laurent series
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Laurent Series, Singularities and Residues](../../../SYLLABUS.md#w07-s05) → Laurent series
 
 ---
 
@@ -30,7 +8,7 @@ Complex analysis → Laurent Series, Singularities and Residues → Series round
 
 The function f(z) = 1/(z(z − 1)) is defined everywhere in the plane except z = 0 and z = 1, where its denominator is zero; call these its bad points, or **singularities**. At z = 0.5 it gives −4; at z = 2, 0.5.
 
-A Taylor series about 0 ([taylor-series-in-the-plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md)) needs a value at its centre, and there is none. The fix is to allow negative powers too: 1/z, 1/z^2, 1/z^3.
+A Taylor series about 0 ([Taylor series in the plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md)) needs a value at its centre, and there is none. The fix is to allow negative powers too: 1/z, 1/z^2, 1/z^3.
 
 Picture a flat doughnut round the centre: the region between two circles. A series with negative powers converges on such a ring. This function has two rings round 0, split by the circle through its other bad point, 1. Inside, where 0 < |z| < 1, it equals −1/z − 1 − z − z^2 − …. Outside, where |z| > 1, it equals 1/z^2 + 1/z^3 + …. From here on the ring is an **annulus**, and such a series a **Laurent series**, after Pierre Alphonse Laurent, whose memoir Cauchy reported on in May 1843.
 
@@ -50,7 +28,7 @@ To scale: 50 units per 1, with 0 at (150, 120) and the hole 1 at (200, 120). Sha
 
 ## The formula
 
-Notation first, in words. A sum from −∞ to ∞ means two sums, over the powers 0, 1, 2, … and over −1, −2, …, each converging on its own. The loop sign $\oint$ is the contour integral round a closed path, anticlockwise ([deforming-contours-and-winding-numbers](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md)).
+Notation first, in words. A sum from −∞ to ∞ means two sums, over the powers 0, 1, 2, … and over −1, −2, …, each converging on its own. The loop sign $\oint$ is the contour integral round a closed path, anticlockwise ([Deforming a loop](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md)).
 
 If $f$ is holomorphic (has a complex derivative) at every point of the ring $r < |z - a| < R$, then on that ring
 
@@ -93,7 +71,7 @@ The geometric series 1/(1 − w) = 1 + w + w^2 + … converges when |w| < 1. For
 
 ### Step 1: the example by algebra
 
-Split the fraction ([rational-functions-and-partial-fractions](03-rational-functions-and-partial-fractions.md)): 1/(z(z − 1)) = 1/(z − 1) − 1/z; at z = 2, 1 − 0.5 = 0.5. Only 1/(z − 1) needs expanding.
+Split the fraction ([Rational functions](03-rational-functions-and-partial-fractions.md)): 1/(z(z − 1)) = 1/(z − 1) − 1/z; at z = 2, 1 − 0.5 = 0.5. Only 1/(z − 1) needs expanding.
 
 Inside, |z| < 1, use ratio z: 1/(z − 1) = −1/(1 − z) = −1 − z − z^2 − …. So f = −1/z − 1 − z − z^2 − …, and every coefficient from $c_{-1}$ up is −1.
 
@@ -101,7 +79,7 @@ Outside, |z| > 1, use ratio 1/z: 1/(z − 1) = (1/z) · 1/(1 − 1/z) = 1/z + 1/
 
 ### Step 2: the exponential example by shifting
 
-The series $e^z = 1 + z + z^2/2! + z^3/3! + \cdots$ converges for every z ([taylor-series-in-the-plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md)). Dividing by z^3 lowers every power by 3. The coefficient of z^n becomes 1/(n + 3)! for n ≥ −3. The 1/z term comes from z^2/2!, so $c_{-1} = 1/2$. The only hole is 0, so the ring is 0 < |z| < ∞.
+The series $e^z = 1 + z + z^2/2! + z^3/3! + \cdots$ converges for every z ([Taylor series in the plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md)). Dividing by z^3 lowers every power by 3. The coefficient of z^n becomes 1/(n + 3)! for n ≥ −3. The 1/z term comes from z^2/2!, so $c_{-1} = 1/2$. The only hole is 0, so the ring is 0 < |z| < ∞.
 
 ### Step 3: every holomorphic function on a ring has such a series
 
@@ -122,13 +100,13 @@ On the circle z = ρe^(it), the loop integral of z^k is the integral of iρ^(k+1
 
 Suppose f equals some series in positive and negative powers on the ring. Divide by z^(k+1) and integrate term by term round a circle in the ring; each half converges uniformly on that circle, which allows it. Every term dies except the power k, leaving 2πi times the coefficient of z^k. So each coefficient is the loop integral in the formula, fixed by f and the ring, and every method gives the same numbers.
 
-By [deforming-contours-and-winding-numbers](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md), the loop integral stays put as the circle moves within the ring: radii 0.5 and 0.75 give $c_{-1} = -1$, radii 1.5 and 2 give 0. Crossing the hole at 1 changes it.
+By [Deforming a loop](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md), the loop integral stays put as the circle moves within the ring: radii 0.5 and 0.75 give $c_{-1} = -1$, radii 1.5 and 2 give 0. Crossing the hole at 1 changes it.
 
 ### Step 5: reading the annulus
 
 The widest rings round a centre are bounded by circles through the bad points. In the example, each geometric ratio reaches size 1 exactly there. For 1/(z(z − 1)) about 0 the bad points lie at distances 0 and 1: rings 0 < |z| < 1 and 1 < |z| < ∞.
 
-The code's second road is this formula, as an average round a circle. Faster rules for $c_{-1}$ alone are in [residues](04-residues.md).
+The code's second road is this formula, as an average round a circle. Faster rules for $c_{-1}$ alone are in [Residues](04-residues.md).
 
 ---
 
@@ -373,15 +351,15 @@ The two outputs match line for line.
 >
 > - **Summing outside the ring.** Five inner terms at z = 2 give −15.5, not 0.5; five outer terms at z = 0.5 give 124, not −4.
 > - **Losing the shift.** The 1/z coefficient of e^z/z^3 is 1/2!, not 1/3!: 0.5, not 0.166667.
-> - **Judging the centre from the wrong ring.** The outer series has endless negative powers, yet 0 is a mild bad point; only a ring 0 < |z − a| < R speaks for a: [classifying-singularities](02-classifying-singularities.md).
+> - **Judging the centre from the wrong ring.** The outer series has endless negative powers, yet 0 is a mild bad point; only a ring 0 < |z − a| < R speaks for a: [Isolated singularities](02-classifying-singularities.md).
 
 ---
 
 ## Where you meet it in real life
 
-- **Digital filters.** A sampled signal's z-transform is a Laurent series, and its ring decides the signal: 1/(z − 1) outside and inside the unit circle are two different signals ([z-transform-and-discrete-time-systems](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md)).
-- **Contour integrals.** A loop integral sees only $c_{-1}$: e^z/z^3 round the unit circle gives 2πi times 1/2, or 3.141593i ([the-residue-theorem](05-the-residue-theorem.md)).
-- **Matrices.** For large z, the inverse of z − A is 1/z + A/z^2 + A^2/z^3 + …, the outer series with a matrix A in place of 1 (spectrum-and-resolvent).
+- **Digital filters.** A sampled signal's z-transform is a Laurent series, and its ring decides the signal: 1/(z − 1) outside and inside the unit circle are two different signals ([The z-transform](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md)).
+- **Contour integrals.** A loop integral sees only $c_{-1}$: e^z/z^3 round the unit circle gives 2πi times 1/2, or 3.141593i ([The residue theorem](05-the-residue-theorem.md)).
+- **Matrices.** For large z, the inverse of z − A is 1/z + A/z^2 + A^2/z^3 + …, the outer series with a matrix A in place of 1 (Spectrum).
 
 > **Say it back**
 > A Laurent series allows negative powers, so it can describe a function round a hole. It converges on a ring bounded by circles through the bad points. On a given ring it is unique, since each coefficient is a loop integral. About 0, 1/(z(z − 1)) is −1/z − 1 − z − … inside the unit circle and 1/z^2 + 1/z^3 + … outside. The 1/z coefficient of e^z/z^3 is 1/2.
@@ -390,17 +368,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [taylor-series-in-the-plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md): the one-sided series, Cauchy's integral formula, and the series for e^z.
-- [deforming-contours-and-winding-numbers](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md): why a loop integral stays put as the circle moves within the ring.
-- [series-convergence](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md): the geometric series and when a sum converges.
+- [Taylor series in the plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md): the one-sided series, Cauchy's integral formula, and the series for e^z.
+- [Deforming a loop](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md): why a loop integral stays put as the circle moves within the ring.
+- [Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md): the geometric series and when a sum converges.
 
 ## Where this goes next
 
-- [classifying-singularities](02-classifying-singularities.md): the principal part sorts bad points into kinds.
-- [z-transform-and-discrete-time-systems](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md): the ring as a region of convergence.
-- pade-and-rational-approximation: fractions matched to series.
-- spectrum-and-resolvent: the outer series for operators.
-- divisors-and-riemann-roch: the lowest power as a zero's or pole's order.
+- [Isolated singularities](02-classifying-singularities.md): the principal part sorts bad points into kinds.
+- [The z-transform](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md): the ring as a region of convergence.
+- Pade approximants: fractions matched to series.
+- Spectrum: the outer series for operators.
+- Divisors and Riemann-Roch: the lowest power as a zero's or pole's order.
 
 ---
 

@@ -1,26 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Generating Functions
-topic: One factor per kind
-item: Counting by multiplying series
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/07-Generating Functions/01-ordinary-generating-functions|ordinary-generating-functions]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/02-stars-and-bars|stars-and-bars]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/08-Partitions/02-partitions-generating-function|partitions-generating-function]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - counting-with-generating-functions
----
-
 # Counting by multiplying series: each constraint is a factor, and the answer is one coefficient
 
-Combinatorics and graphs → Generating Functions → One factor per kind → Counting by multiplying series
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Generating Functions](../../../SYLLABUS.md#w04-s07) → Counting by multiplying series
 
 ---
 
@@ -28,7 +8,7 @@ Combinatorics and graphs → Generating Functions → One factor per kind → Co
 
 A till holds pennies (1 cent), nickels (5), dimes (10) and quarters (25), plenty of each. A charge of 50 cents must be paid in exact coins. How many piles pay it? Only the counts matter: three pennies and a nickel is one pile, in any order.
 
-The rule of product looks like the tool ([rules-of-sum-and-product](../01-Counting%20Principles/01-rules-of-sum-and-product.md)): nickels 0 to 10, dimes 0 to 5, quarters 0, 1 or 2, pennies filling the rest. Eleven times six times three is 198 — badly wrong, since most of those combinations spend past 50 cents. The choices are tied together: they must reach one fixed total.
+The rule of product looks like the tool ([The rules of sum and product](../01-Counting%20Principles/01-rules-of-sum-and-product.md)): nickels 0 to 10, dimes 0 to 5, quarters 0, 1 or 2, pennies filling the rest. Eleven times six times three is 198 — badly wrong, since most of those combinations spend past 50 cents. The choices are tied together: they must reach one fixed total.
 
 Here is the move that handles the total. Give each kind of coin a menu of what it could contribute: pennies 0, 1, 2, 3 cents and on up, quarters 0, 25 or 50. Write each menu as a row of powers of a placeholder, one power per amount, and multiply the four rows. Powers multiply by adding their exponents, so the entry landing on the power for 50 counts the piles worth 50 cents. Such a menu is a **factor**, the word used from here on; the product of the four is this count's generating function.
 
@@ -56,7 +36,7 @@ No pile is chosen along the way: the multiplication chooses, and the reading hap
 
 ## The formula
 
-A series here is a bookkeeping row: the number on $x^{n}$ is the count for a total of $n$, with $x$ a placeholder, never a quantity. "The coefficient of $x^{n}$" names that number ([ordinary-generating-functions](01-ordinary-generating-functions.md)).
+A series here is a bookkeeping row: the number on $x^{n}$ is the count for a total of $n$, with $x$ a placeholder, never a quantity. "The coefficient of $x^{n}$" names that number ([Generating functions](01-ordinary-generating-functions.md)).
 
 A kind of coin worth $v$ cents, in unlimited supply, can contribute 0, $v$, $2v$, $3v$ cents and on up, one pile per amount:
 
@@ -112,7 +92,7 @@ A limit only cuts the list short. A die shows 1 to 6 and must show something, so
 
 $$x + x^{2} + x^{3} + x^{4} + x^{5} + x^{6}$$
 
-no constant term, since 0 is not a face, and nothing above $x^{6}$. Two dice square it. The code checks both numbers that square gives ([ordinary-generating-functions](01-ordinary-generating-functions.md)): 6 on $x^{7}$, and 36 once every coefficient is added. At most two quarters is the same cut: $1 + x^{25} + x^{50}$.
+no constant term, since 0 is not a face, and nothing above $x^{6}$. Two dice square it. The code checks both numbers that square gives ([Generating functions](01-ordinary-generating-functions.md)): 6 on $x^{7}$, and 36 once every coefficient is added. At most two quarters is the same cut: $1 + x^{25} + x^{50}$.
 
 ### Step 2: the coefficient keeps only what adds up
 
@@ -126,7 +106,7 @@ That is where 198 failed: each choice here pushes the exponent up by what it spe
 
 ### Step 3: stars and bars is the case where every factor is the same
 
-Let each of $k$ kinds contribute any whole number of single items. Every factor is then the all-ones list $1 + x + x^{2} + \cdots$ and the product is $1/(1-x)^{k}$. Its coefficient of $x^{n}$ collects exponents adding to $n$ — every way to share $n$ identical items among $k$ labelled kinds, the choose count $C(n + k - 1, k - 1)$ ([stars-and-bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md)).
+Let each of $k$ kinds contribute any whole number of single items. Every factor is then the all-ones list $1 + x + x^{2} + \cdots$ and the product is $1/(1-x)^{k}$. Its coefficient of $x^{n}$ collects exponents adding to $n$ — every way to share $n$ identical items among $k$ labelled kinds, the choose count $C(n + k - 1, k - 1)$ ([Stars and bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md)).
 
 Three kinds, total 5: three all-ones lists put 21 on $x^{5}$, and $C(7, 2)$ is 21, that card's count. Stars and bars is the flat case, every value 1; coin values make the till harder.
 
@@ -137,7 +117,7 @@ Induction on the number of factors, with no bars and no stars. One factor: $1/(1
 
 $$C(k - 1, k - 1) + C(k, k - 1) + \cdots + C(n + k - 1, k - 1)$$
 
-The hockey-stick identity adds such a run into one coefficient further along ([hockey-stick-identity](../03-Binomial%20Coefficients%20and%20Identities/04-hockey-stick-identity.md)): the sum is $C(n + k, k)$, the claim for one factor more.
+The hockey-stick identity adds such a run into one coefficient further along ([The hockey stick](../03-Binomial%20Coefficients%20and%20Identities/04-hockey-stick-identity.md)): the sum is $C(n + k, k)$, the claim for one factor more.
 
 </details>
 
@@ -392,7 +372,7 @@ The two outputs match line for line.
 
 - **Change machines and till software.** Whether a price can be paid from a float, and in how many ways, is one coefficient in this product. The counts for 1, 5, 10 and 25 cents are sequence A001299.
 - **Dice and scoring.** Two dice are one die's factor squared, three dice cube it; unusual faces only change the terms.
-- **Splitting a number into allowed parts.** Packing units into boxes of 1, 5, 10 and 25 is the same product renamed — the road to [partitions-generating-function](../08-Partitions/02-partitions-generating-function.md).
+- **Splitting a number into allowed parts.** Packing units into boxes of 1, 5, 10 and 25 is the same product renamed — the road to [Euler's product](../08-Partitions/02-partitions-generating-function.md).
 
 > **Say it back**
 > Each kind of coin gets a factor: the amounts it could contribute, one term each, on powers of a placeholder. Multiplying the factors adds the exponents, so every term lands on the power recording one pile's total, and that coefficient counts the piles. For 50 cents from pennies, nickels, dimes and quarters it is 49, not the 198 the rule of product suggests. A limit shortens a factor; all-ones factors give back stars and bars.
@@ -401,12 +381,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [ordinary-generating-functions](01-ordinary-generating-functions.md): what a series of counts is, and where the count for $n$ sits in it.
-- [stars-and-bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md): the count Step 3 re-derives, and the 21 the code agrees with.
+- [Generating functions](01-ordinary-generating-functions.md): what a series of counts is, and where the count for $n$ sits in it.
+- [Stars and bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md): the count Step 3 re-derives, and the 21 the code agrees with.
 
 ## Where this goes next
 
-- [partitions-generating-function](../08-Partitions/02-partitions-generating-function.md): one factor for every part size, and what their endless product counts.
+- [Euler's product](../08-Partitions/02-partitions-generating-function.md): one factor for every part size, and what their endless product counts.
 
 These four factors were chosen by hand; what happens when the kinds are every whole number at once is a later card's product.
 

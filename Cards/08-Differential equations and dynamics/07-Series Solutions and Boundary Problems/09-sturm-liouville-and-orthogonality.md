@@ -1,37 +1,14 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Series Solutions and Boundary Problems
-topic: Modes that do not overlap
-item: Sturm-Liouville
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/08-eigenvalues-and-eigenfunctions|eigenvalues-and-eigenfunctions]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/03-bessels-equation-and-the-drum|bessels-equation-and-the-drum]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/03-gram-schmidt-and-orthonormal-bases|gram-schmidt-and-orthonormal-bases]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/04-integration-by-parts|integration-by-parts]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/09-Fourier Series/01-fourier-series-and-orthogonality|fourier-series-and-orthogonality]]"
-  - "[[Cards/13-Engineering mathematics/09-Quantum Mechanics in Outline/03-schrodinger-equation-and-the-particle-in-a-box|schrodinger-equation-and-the-particle-in-a-box]]"
-  - "[[Cards/18-Functional analysis/03-Bounded Operators/08-spectral-theorem-for-compact-self-adjoint-operators|spectral-theorem-for-compact-self-adjoint-operators]]"
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/02-self-adjoint-extensions-and-the-spectral-theorem|self-adjoint-extensions-and-the-spectral-theorem]]"
-  - "[[Cards/19-Partial differential equations/04-Laplace, Poisson and Potentials/08-helmholtz-and-eigenfunctions|helmholtz-and-eigenfunctions]]"
-tags: [mathematics, differential equations and dynamics, sturm-liouville-and-orthogonality]
----
-
 # Sturm-Liouville: the standard form whose modes are real, perpendicular under a weight, and rich enough to expand functions in
 
-Differential equations and dynamics → Series Solutions and Boundary Problems → Modes that do not overlap → Sturm-Liouville
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Series Solutions and Boundary Problems](../../../SYLLABUS.md#w08-s07) → Sturm-Liouville
 
 ---
 
 ## General Overview
 
-A string 1 m long is pinned at both ends. It vibrates in a mix of pure shapes called modes: one arch, two arches, three, each at its own pitch ([eigenvalues-and-eigenfunctions](08-eigenvalues-and-eigenfunctions.md)). Multiply the one-arch shape by the two-arch shape, point by point, and integrate along the string. The answer is exactly 0.
+A string 1 m long is pinned at both ends. It vibrates in a mix of pure shapes called modes: one arch, two arches, three, each at its own pitch ([Eigenvalue problems](08-eigenvalues-and-eigenfunctions.md)). Multiply the one-arch shape by the two-arch shape, point by point, and integrate along the string. The answer is exactly 0.
 
-A round drum skin of radius 1 m has ring-shaped modes built from Bessel's function ([bessels-equation-and-the-drum](03-bessels-equation-and-the-drum.md)). Multiply two and integrate along a radius: 0.196082, not 0. Count each point by its ring's circumference, which grows with the radius, and the answer is 0 again.
+A round drum skin of radius 1 m has ring-shaped modes built from Bessel's function ([Bessel's equation](03-bessels-equation-and-the-drum.md)). Multiply two and integrate along a radius: 0.196082, not 0. Count each point by its ring's circumference, which grows with the radius, and the answer is 0 again.
 
 Both are one theorem about equations in the Sturm-Liouville form, and the cancellation is what splits any starting shape into modes, one pitch at a time.
 
@@ -85,7 +62,7 @@ $$\int_a^b w(x)\,y_m(x)\,y_n(x)\,dx = 0 \quad (m \ne n), \qquad c_n = \frac{\int
 
 ### Step 0: the operator behaves like a symmetric matrix
 
-A symmetric matrix A, with u · Av equal to v · Au for all vectors u and v, has real eigenvalues and perpendicular eigenvectors. For functions the integral of a product is the dot product ([gram-schmidt-and-orthonormal-bases](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md)). The Sturm-Liouville form is the shape that makes the integral of u L v equal that of v L u.
+A symmetric matrix A, with u · Av equal to v · Au for all vectors u and v, has real eigenvalues and perpendicular eigenvectors. For functions the integral of a product is the dot product ([Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md)). The Sturm-Liouville form is the shape that makes the integral of u L v equal that of v L u.
 
 ### Step 1: put the equation in the form
 
@@ -95,7 +72,7 @@ The drum's ring modes solve y'' + (1/r) y' + λ y = 0, with y(1) = 0 at the rim.
 
 ### Step 2: the two-sided integration by parts
 
-Take shapes u and v with the same end conditions. Integrate u (p v')' by parts twice ([integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)); each round moves a derivative from v to u and leaves an end term, and the middle pieces p u' v' cancel:
+Take shapes u and v with the same end conditions. Integrate u (p v')' by parts twice ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)); each round moves a derivative from v to u and leaves an end term, and the middle pieces p u' v' cancel:
 
 $$\int_a^b (u\,Lv - v\,Lu)\,dx = \Big[\,p\,(u'v - u\,v')\,\Big]_a^b .$$
 
@@ -117,7 +94,7 @@ Suppose a mode y were complex, with eigenvalue λ. Since p, q and w are real, it
 
 If f = c1 y1 + c2 y2 + …, multiply by w y_n and integrate. By Step 3 every term dies but the one with y_n, leaving c_n times the integral of w y_n^2. Divide: that is the formula for $c_n$, the same move that finds a vector's components along perpendicular axes.
 
-Whether the sum rebuilds f with nothing missing is a separate claim, **completeness**. It holds for regular problems (finite interval, p and w positive on all of it, ends included) and for the drum; the proof is on spectral-theorem-for-compact-self-adjoint-operators.
+Whether the sum rebuilds f with nothing missing is a separate claim, **completeness**. It holds for regular problems (finite interval, p and w positive on all of it, ends included) and for the drum; the proof is on Compact and symmetric.
 
 <details>
 <summary>Detailed proof: Lagrange's identity and the reality of eigenvalues</summary>
@@ -130,7 +107,7 @@ Reality. If L y = λ w y with y ≠ 0 complex, conjugating gives L ȳ = λ̄ w �
 
 </details>
 
-A second road replaces the string by a row of beads and derivatives by differences ([finite-differences-for-boundary-problems](07-finite-differences-for-boundary-problems.md)): the matrix is symmetric, so its eigenvectors are perpendicular, and they approach the modes as the beads multiply.
+A second road replaces the string by a row of beads and derivatives by differences ([Finite differences](07-finite-differences-for-boundary-problems.md)): the matrix is symmetric, so its eigenvectors are perpendicular, and they approach the modes as the beads multiply.
 
 ---
 
@@ -372,9 +349,9 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Strings and drums.** The c_n say how loud each harmonic is.
-- **Heat in a rod.** Each mode cools at its own rate ([fourier-series-and-orthogonality](../09-Fourier%20Series/01-fourier-series-and-orthogonality.md)).
-- **Legendre's polynomials.** Already in form, with p = 1 − x^2, so perpendicular on −1 to 1 ([legendre-polynomials](04-legendre-polynomials.md)).
-- **A forced string.** Expanding the force in modes solves one mode at a time; the closed form is [greens-function-for-a-boundary-problem](10-greens-function-for-a-boundary-problem.md).
+- **Heat in a rod.** Each mode cools at its own rate ([Fourier series](../09-Fourier%20Series/01-fourier-series-and-orthogonality.md)).
+- **Legendre's polynomials.** Already in form, with p = 1 − x^2, so perpendicular on −1 to 1 ([Legendre's equation](04-legendre-polynomials.md)).
+- **A forced string.** Expanding the force in modes solves one mode at a time; the closed form is [Green's function](10-greens-function-for-a-boundary-problem.md).
 
 > **Say it back**
 > Sturm-Liouville form: minus the rate of stiffness times slope, plus a potential, equals an eigenvalue times a weight times the shape. Integrating by parts twice shows the operator is symmetric under shared end conditions. Symmetry forces real eigenvalues and perpendicular modes under the weight. Each mode's amount in a shape is the weighted overlap over the mode's size. Drum modes need the weight r.
@@ -383,18 +360,18 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [eigenvalues-and-eigenfunctions](08-eigenvalues-and-eigenfunctions.md): the string's modes.
-- [bessels-equation-and-the-drum](03-bessels-equation-and-the-drum.md): J0 and the drum's modes.
-- [gram-schmidt-and-orthonormal-bases](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md): components along perpendicular axes.
-- [integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): Lagrange's identity.
+- [Eigenvalue problems](08-eigenvalues-and-eigenfunctions.md): the string's modes.
+- [Bessel's equation](03-bessels-equation-and-the-drum.md): J0 and the drum's modes.
+- [Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md): components along perpendicular axes.
+- [Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): Lagrange's identity.
 
 ## Where this goes next
 
-- [fourier-series-and-orthogonality](../09-Fourier%20Series/01-fourier-series-and-orthogonality.md): the sine and cosine case, and convergence.
-- schrodinger-equation-and-the-particle-in-a-box: the string equation as allowed energies.
-- spectral-theorem-for-compact-self-adjoint-operators: the proof of completeness.
-- self-adjoint-extensions-and-the-spectral-theorem: end conditions as a choice of operator.
-- helmholtz-and-eigenfunctions: the theorem in two and three dimensions.
+- [Fourier series](../09-Fourier%20Series/01-fourier-series-and-orthogonality.md): the sine and cosine case, and convergence.
+- Schrodinger's equation: the string equation as allowed energies.
+- Compact and symmetric: the proof of completeness.
+- Self-adjoint extensions: end conditions as a choice of operator.
+- Helmholtz: the theorem in two and three dimensions.
 
 ---
 

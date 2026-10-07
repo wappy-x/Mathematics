@@ -1,22 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Survival, Design and Causality
-topic: Survival from incomplete follow-up
-item: Kaplan-Meier
-kind: method
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/01-survival-functions-and-hazards|survival-functions-and-hazards]]"
-next:
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/03-cox-proportional-hazards-in-outline|cox-proportional-hazards-in-outline]]"
-tags: [mathematics, probability and statistics, kaplan-meier]
----
-
 # Kaplan-Meier: a survival curve from data with dropouts
 
-Probability and statistics → Survival, Design and Causality → Survival from incomplete follow-up → Kaplan-Meier
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Survival, Design and Causality](../../../SYLLABUS.md#w09-s13) → Kaplan-Meier
 
 ---
 
@@ -42,7 +26,7 @@ Each line is one patient, drawn to scale from joining the trial at month 0. A cr
 
 ## The formula
 
-Notation first. The sibling card [survival-functions-and-hazards](01-survival-functions-and-hazards.md) writes $S(t)$ for the **survival function**: the chance that a patient is still relapse-free at time $t$. A hat marks an estimate made from data, so $\hat S(t)$ is the estimate of $S(t)$ from the twelve records. The months at which at least one relapse is seen are listed in order and called $t_j$, where the label j counts them: the first is month 3, the second month 5, and so on. At each one, $r_j$ counts the patients **at risk**: still in the study, relapse-free, just before $t_j$. $d_j$ counts the relapses at $t_j$. The capital pi, $\prod$, means "multiply together", as the capital sigma, $\sum$, means "add together".
+Notation first. The sibling card [Survival](01-survival-functions-and-hazards.md) writes $S(t)$ for the **survival function**: the chance that a patient is still relapse-free at time $t$. A hat marks an estimate made from data, so $\hat S(t)$ is the estimate of $S(t)$ from the twelve records. The months at which at least one relapse is seen are listed in order and called $t_j$, where the label j counts them: the first is month 3, the second month 5, and so on. At each one, $r_j$ counts the patients **at risk**: still in the study, relapse-free, just before $t_j$. $d_j$ counts the relapses at $t_j$. The capital pi, $\prod$, means "multiply together", as the capital sigma, $\sum$, means "add together".
 
 $$\hat S(t) \;=\; \prod_{t_j \le t} \left(1 - \frac{d_j}{r_j}\right)$$
 
@@ -71,7 +55,7 @@ $$\widehat{\mathrm{Var}}\big(\hat S(t)\big) \;=\; \hat S(t)^2 \sum_{t_j \le t} \
 
 A dropout never appears in any $d_j$. It appears in every $r_j$ up to and including the month it leaves. When a relapse and a dropout share a month, as at month 8, the relapse is counted first: the dropout was still under watch that month, so it stays in that month's $r_j$.
 
-The plain 95% **confidence interval** ([confidence-intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md)) is $\hat S(t)$ plus or minus $z$ standard errors. Some packages, Python's lifelines among them, instead work on the scale of the log of minus the log of $\hat S(t)$ and transform back, which keeps both ends between 0 and 1. Its half-width on that scale is $z$ times the square root of the Greenwood sum, divided by the size of the log of $\hat S(t)$. R's survival package uses the plain log of $\hat S(t)$ by default instead.
+The plain 95% **confidence interval** ([Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md)) is $\hat S(t)$ plus or minus $z$ standard errors. Some packages, Python's lifelines among them, instead work on the scale of the log of minus the log of $\hat S(t)$ and transform back, which keeps both ends between 0 and 1. Its half-width on that scale is $z$ times the square root of the Greenwood sum, divided by the size of the log of $\hat S(t)$. R's survival package uses the plain log of $\hat S(t)$ by default instead.
 
 ### When it holds
 
@@ -86,7 +70,7 @@ The plain 95% **confidence interval** ([confidence-intervals](../08-Confidence%2
 
 ### Step 0: survive each month in turn
 
-Being relapse-free at month 14 means getting through every month up to 14. By the multiplication rule for chances ([conditional-probability](../01-Chance%20and%20Events/05-conditional-probability.md)), the chance of getting through them all is the chance of getting through month 1, times the chance of getting through month 2 given month 1, and so on. Each factor is a question about the patients who are still relapse-free at that month.
+Being relapse-free at month 14 means getting through every month up to 14. By the multiplication rule for chances ([Conditional probability](../01-Chance%20and%20Events/05-conditional-probability.md)), the chance of getting through them all is the chance of getting through month 1, times the chance of getting through month 2 given month 1, and so on. Each factor is a question about the patients who are still relapse-free at that month.
 
 That is what makes dropouts usable: each factor needs only the patients watched at that moment. The patient who left at month 12 helps answer the questions for months 1 to 12 and is not asked after that.
 
@@ -102,7 +86,7 @@ A month with no relapse could carry its own unknown chance $h$, but it enters th
 
 $$\prod_j h_j^{\,d_j}\,(1 - h_j)^{\,r_j - d_j}.$$
 
-Each factor is the chance of $d_j$ relapses and $r_j - d_j$ survivals among $r_j$ patients, the binomial shape ([bernoulli-and-binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). Each is largest at $h_j = d_j/r_j$, so the Kaplan-Meier curve is the **maximum-likelihood estimate** ([maximum-likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)): the curve under which the record actually seen is most probable. Independent censoring is what lets the dropout terms separate out; the code checks the maximum at all six relapse months by a grid search.
+Each factor is the chance of $d_j$ relapses and $r_j - d_j$ survivals among $r_j$ patients, the binomial shape ([Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). Each is largest at $h_j = d_j/r_j$, so the Kaplan-Meier curve is the **maximum-likelihood estimate** ([Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)): the curve under which the record actually seen is most probable. Independent censoring is what lets the dropout terms separate out; the code checks the maximum at all six relapse months by a grid search.
 
 <details>
 <summary>Detailed proof: the record's chance factorises and d/r maximises each factor</summary>
@@ -130,7 +114,7 @@ Claim: just before each time, every patient still at risk holds the same share, 
 
 ### Step 4: Greenwood's error bar
 
-Take logs, so the product becomes a sum: $\ln \hat S(t) = \sum \ln(1 - d_j/r_j)$. Given who is at risk, $d_j$ behaves like a binomial count out of $r_j$ with chance $h_j$, so the estimated chance $d_j/r_j$ has variance $h_j(1-h_j)/r_j$. The **delta method** ([delta-method-and-slutsky](../06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md)) carries that through the log: the variance is multiplied by the slope squared, $1/(1-h_j)^2$, which leaves $h_j/(r_j(1-h_j))$. Putting in $d_j/r_j$ for $h_j$ gives $d_j/(r_j(r_j - d_j))$, one term of the Greenwood sum.
+Take logs, so the product becomes a sum: $\ln \hat S(t) = \sum \ln(1 - d_j/r_j)$. Given who is at risk, $d_j$ behaves like a binomial count out of $r_j$ with chance $h_j$, so the estimated chance $d_j/r_j$ has variance $h_j(1-h_j)/r_j$. The **delta method** ([Delta method](../06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md)) carries that through the log: the variance is multiplied by the slope squared, $1/(1-h_j)^2$, which leaves $h_j/(r_j(1-h_j))$. Putting in $d_j/r_j$ for $h_j$ gives $d_j/(r_j(r_j - d_j))$, one term of the Greenwood sum.
 
 The terms at different months are added as if they were independent. They are not quite: the number at risk depends on what happened earlier. But each month's relapse count, given the past, is a fresh draw with average zero error, and errors of that kind are uncorrelated. The proof of that step uses martingales, which belong to wing 11. A second use of the delta method returns from the log to the curve itself: the variance of $\hat S$ is about $\hat S^2$ times the variance of $\ln \hat S$.
 
@@ -616,10 +600,10 @@ The two outputs are identical line for line, simulation included, because both p
 
 ## Where you meet it in real life
 
-- **Clinical trials.** Almost every trial of a cancer or heart treatment reports Kaplan-Meier curves for each arm, with the numbers at risk printed beneath. Whether the arms differ is a question for the log-rank test, which [cox-proportional-hazards-in-outline](03-cox-proportional-hazards-in-outline.md) derives as the Cox score at a hazard ratio of 1; relabelling patients between the arms, as in [permutation-tests](06-permutation-tests.md), is a general alternative. Either runs inside a [randomised-experiments-and-ab-tests](04-randomised-experiments-and-ab-tests.md) design.
+- **Clinical trials.** Almost every trial of a cancer or heart treatment reports Kaplan-Meier curves for each arm, with the numbers at risk printed beneath. Whether the arms differ is a question for the log-rank test, which [Cox regression in outline](03-cox-proportional-hazards-in-outline.md) derives as the Cox score at a hazard ratio of 1; relabelling patients between the arms, as in [Permutation tests](06-permutation-tests.md), is a general alternative. Either runs inside a [Randomised experiments](04-randomised-experiments-and-ab-tests.md) design.
 - **Engineering reliability.** Machines still working when a test ends are censored in exactly this sense.
 - **Customer retention.** A subscriber who joined last month cannot yet have stayed a year; "still subscribed" is a censored record.
-- **Informative dropout in observational data.** When the reason for leaving is related to the outcome, the curve is biased, the same trap [confounding-and-simpsons-paradox](07-confounding-and-simpsons-paradox.md) shows in comparisons between groups.
+- **Informative dropout in observational data.** When the reason for leaving is related to the outcome, the curve is biased, the same trap [Confounding](07-confounding-and-simpsons-paradox.md) shows in comparisons between groups.
 
 > **Say it back**
 > Dropouts make simple shares wrong, because a patient who left at month 4 was relapse-free only until month 4. Kaplan-Meier asks, at each relapse month, what share of the patients still watched got through, and multiplies those shares. A dropout counts in every risk set until it leaves and in no relapse count. The product is the best fit to the record, and Efron's redistribute-to-the-right gives the same curve. Greenwood's formula gives its error bar, which is honest only while enough patients remain at risk and while dropout is unrelated to relapse.
@@ -628,13 +612,13 @@ The two outputs are identical line for line, simulation included, because both p
 
 ## What this builds on
 
-- [survival-functions-and-hazards](01-survival-functions-and-hazards.md): the survival function S(t), the hazard, and what a censored record means.
-- [maximum-likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md): the best-fit principle Step 2 applies to each factor.
-- [delta-method-and-slutsky](../06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md): the tool behind Greenwood's formula.
+- [Survival](01-survival-functions-and-hazards.md): the survival function S(t), the hazard, and what a censored record means.
+- [Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md): the best-fit principle Step 2 applies to each factor.
+- [Delta method](../06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md): the tool behind Greenwood's formula.
 
 ## Where this goes next
 
-- [cox-proportional-hazards-in-outline](03-cox-proportional-hazards-in-outline.md): survival curves that depend on a patient's age, dose or treatment arm, with each patient's own risk set used the same way.
+- [Cox regression in outline](03-cox-proportional-hazards-in-outline.md): survival curves that depend on a patient's age, dose or treatment arm, with each patient's own risk set used the same way.
 
 A Kaplan-Meier curve describes one group; how a treatment or a patient's age shifts the chance of relapse at every month at once, without fitting a separate curve for each kind of patient, is the question Cox regression answers.
 

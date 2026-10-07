@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Inflation and Real Rates
-topic: Money against what it buys
-item: Real rates
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/05-bonds-price-and-yield|bonds-price-and-yield]]"
-next:
-  - "[[Cards/12-Financial mathematics/34-Inflation and Real Rates/02-inflation-linked-bonds|inflation-linked-bonds]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - real-rates-and-the-fisher-equation
----
-
 # Real rates: nominal minus inflation, exactly and approximately
 
-Financial mathematics → Inflation and Real Rates → Money against what it buys → Real rates
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Inflation and Real Rates](../../../SYLLABUS.md#w12-s34) → Real rates
 
 ---
 
@@ -53,7 +34,7 @@ The upper line is the balance as the bank statement shows it: $1,552.97 after te
 
 ## The formula
 
-Notation first, in words. The Greek letter $\pi$ ("pi") is used here for the inflation rate, as economists write it; on this card it never means 3.14159. A small c set low and to the right of a rate marks the **continuous** version of that rate, the one that compounds at every instant ([compounding-and-discount-factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)).
+Notation first, in words. The Greek letter $\pi$ ("pi") is used here for the inflation rate, as economists write it; on this card it never means 3.14159. A small c set low and to the right of a rate marks the **continuous** version of that rate, the one that compounds at every instant ([Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)).
 
 The exact relation, named after Irving Fisher, who set it out in 1896:
 
@@ -145,7 +126,7 @@ With $i - \pi = 0.02$ and $\pi = 0.025$: $0.02 \times 0.025 / 1.025 = 0.00048780
 
 The relation can be read as an equation to solve rather than a division to do: find the $r$ for which $(1 + r)(1 + \pi)$ lands on $1 + i$. With $1 + \pi$ above zero the left side rises steadily as $r$ rises, so there is exactly one such $r$, and halving an interval that brackets it (bisection) finds it without ever dividing. The code does that. It also takes the continuous road: subtract the two logarithms, then undo the logarithm. All roads land on 1.9512195 percent.
 
-The same relation run backwards turns a real rate into a nominal one. The shelf's house bond yields 1 percent real (its coupon, priced at par), and markets price 2.5 percent inflation against it; Fisher's form gives $1.01 \times 1.025 - 1 = 3.525$ percent as the nominal yield that matches it. How markets read that 2.5 percent out of prices is [breakeven-inflation](03-breakeven-inflation.md).
+The same relation run backwards turns a real rate into a nominal one. The shelf's house bond yields 1 percent real (its coupon, priced at par), and markets price 2.5 percent inflation against it; Fisher's form gives $1.01 \times 1.025 - 1 = 3.525$ percent as the nominal yield that matches it. How markets read that 2.5 percent out of prices is [Breakeven inflation](03-breakeven-inflation.md).
 
 ---
 
@@ -212,7 +193,7 @@ realised inflation   realised real rate (percent a year), nominal locked at 4.5
       5.0%                                        -0.48
 ```
 
-Each extra point of inflation costs almost exactly one point of real return. At 5 percent inflation the real rate turns negative: the account grew from $1,000 to $1,045 and still buys fewer baskets than at the start. The saver carried the whole of the inflation risk. A bond that pays a fixed real rate instead, with the dollars adjusted for whatever inflation turns out to be, moves that risk to the borrower: [inflation-linked-bonds](02-inflation-linked-bonds.md).
+Each extra point of inflation costs almost exactly one point of real return. At 5 percent inflation the real rate turns negative: the account grew from $1,000 to $1,045 and still buys fewer baskets than at the start. The saver carried the whole of the inflation risk. A bond that pays a fixed real rate instead, with the dollars adjusted for whatever inflation turns out to be, moves that risk to the borrower: [Inflation-linked bonds](02-inflation-linked-bonds.md).
 
 ---
 
@@ -595,9 +576,9 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **A savings account or a pay rise.** A 3 percent raise in a 4 percent inflation year is a real pay cut, since 1.03 ÷ 1.04 is below 1. The same division as the deposit.
-- **Government inflation-linked bonds.** The United States Treasury sells TIPS, bonds whose principal is scaled by the consumer price index, so they pay a fixed real rate. Their yields are quoted as real rates (conventions verified 2026-09-28 on TreasuryDirect: terms of 5, 10 and 30 years, principal scaled by the consumer price index, auctions bid in real yield): [inflation-linked-bonds](02-inflation-linked-bonds.md).
-- **Reading inflation out of prices.** An ordinary bond and a real-rate bond of the same maturity, run through Fisher's form, give the inflation the market is pricing in. The shelf's house bond, 1 percent real with 2.5 percent inflation priced in, matches a 3.525 percent nominal yield: [breakeven-inflation](03-breakeven-inflation.md).
-- **Trading the inflation number itself.** A contract that swaps a fixed rate for realised inflation removes the saver's risk from the bar chart above: [zero-coupon-inflation-swaps](04-zero-coupon-inflation-swaps.md). Options that pay when inflation passes a level come after: [inflation-options-in-outline](05-inflation-options-in-outline.md).
+- **Government inflation-linked bonds.** The United States Treasury sells TIPS, bonds whose principal is scaled by the consumer price index, so they pay a fixed real rate. Their yields are quoted as real rates (conventions verified 2026-09-28 on TreasuryDirect: terms of 5, 10 and 30 years, principal scaled by the consumer price index, auctions bid in real yield): [Inflation-linked bonds](02-inflation-linked-bonds.md).
+- **Reading inflation out of prices.** An ordinary bond and a real-rate bond of the same maturity, run through Fisher's form, give the inflation the market is pricing in. The shelf's house bond, 1 percent real with 2.5 percent inflation priced in, matches a 3.525 percent nominal yield: [Breakeven inflation](03-breakeven-inflation.md).
+- **Trading the inflation number itself.** A contract that swaps a fixed rate for realised inflation removes the saver's risk from the bar chart above: [Inflation swaps](04-zero-coupon-inflation-swaps.md). Options that pay when inflation passes a level come after: [Inflation caps and floors in outline](05-inflation-options-in-outline.md).
 - **Central banks.** A policy rate is set in nominal terms and judged in real terms: a 5 percent policy rate with 6 percent inflation is loose money, not tight.
 
 > **Say it back**
@@ -607,11 +588,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [bonds-price-and-yield](../01-Money%2C%20Dates%20and%20Discounting/05-bonds-price-and-yield.md): what a yield is, and that a quoted rate is growth per year on a stated compounding label. This card splits that yield into a real part and an inflation part.
+- [Bond price and yield](../01-Money%2C%20Dates%20and%20Discounting/05-bonds-price-and-yield.md): what a yield is, and that a quoted rate is growth per year on a stated compounding label. This card splits that yield into a real part and an inflation part.
 
 ## Where this goes next
 
-- [inflation-linked-bonds](02-inflation-linked-bonds.md): a bond that pays the real rate by scaling its dollars with a price index, so the lender no longer carries the risk in the bar chart.
+- [Inflation-linked bonds](02-inflation-linked-bonds.md): a bond that pays the real rate by scaling its dollars with a price index, so the lender no longer carries the risk in the bar chart.
 
 The saver above learns the real rate only after the year is over; the open question is how to lock a real rate in on the first day, and the inflation-linked bond is the answer.
 

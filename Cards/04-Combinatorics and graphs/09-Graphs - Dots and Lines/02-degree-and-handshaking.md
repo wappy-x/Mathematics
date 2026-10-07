@@ -1,30 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Graphs - Dots and Lines
-topic: Counting edge-ends
-item: Degrees and the handshaking lemma
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/01-graphs-vertices-and-edges|graphs-vertices-and-edges]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/05-bijection-and-double-counting|bijection-and-double-counting]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/02-even-and-odd|even-and-odd]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/11-Tours - Euler and Hamilton/01-euler-circuits|euler-circuits]]"
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/06-edge-colouring-and-round-robin|edge-colouring-and-round-robin]]"
-  - "[[Cards/04-Combinatorics and graphs/14-Ramsey and Extremal, in Outline/05-mantel-and-turan|mantel-and-turan]]"
-  - "[[Cards/09-Probability and statistics/14-Random Graphs and the Probabilistic Method/01-random-graphs-erdos-renyi|random-graphs-erdos-renyi]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - degree-and-handshaking
----
-
 # Degrees and the handshaking lemma: the degrees add to twice the edges, so the odd-degree vertices come in pairs
 
-Combinatorics and graphs → Graphs - Dots and Lines → Counting edge-ends → Degrees and the handshaking lemma
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Graphs - Dots and Lines](../../../SYLLABUS.md#w04-s09) → Degrees and the handshaking lemma
 
 ---
 
@@ -32,7 +8,7 @@ Combinatorics and graphs → Graphs - Dots and Lines → Counting edge-ends → 
 
 Nine people leave a party. Each is asked how many of the others they shook hands with, and each says three. At least one answer is wrong: add them and 9 × 3 = 27. Every handshake was reported twice, so the answers total twice the handshakes. Twice anything is even. 27 is odd.
 
-Parties are incidental. In any network of dots joined by lines — vertices and edges, in the standard words ([graphs-vertices-and-edges](01-graphs-vertices-and-edges.md)) — the count of line-ends meeting a dot is its **degree**, and the degrees add to twice the line count, each line counted at both ends. This shelf's standing example is a six-station metro map: A to F, eight lines, degrees 2, 3, 3, 2, 3, 3, adding to 16 = 2 × 8.
+Parties are incidental. In any network of dots joined by lines — vertices and edges, in the standard words ([Graphs](01-graphs-vertices-and-edges.md)) — the count of line-ends meeting a dot is its **degree**, and the degrees add to twice the line count, each line counted at both ends. This shelf's standing example is a six-station metro map: A to F, eight lines, degrees 2, 3, 3, 2, 3, 3, adding to 16 = 2 × 8.
 
 The leftover earns its keep: odd-degree dots cannot themselves be odd in number, so no network has exactly three. The metro has four.
 
@@ -82,7 +58,7 @@ Shared out, that total is the average degree, $2\lvert E\rvert$ over $n$: 16 / 6
 
 - **Finitely many dots and lines.** Both sides are counts; with infinitely many, nothing to compare.
 - **A loop adds two, and parallel lines count separately.** Either shortcut breaks the count: scored as one end, a loop at A makes the metro read 17 for nine lines, odd.
-- **No arrows.** Tails add to the arrow count and heads add to it separately: two identities, not this one ([directed-graphs-and-topological-order](06-directed-graphs-and-topological-order.md)).
+- **No arrows.** Tails add to the arrow count and heads add to it separately: two identities, not this one ([Directed graphs](06-directed-graphs-and-topological-order.md)).
 
 ---
 
@@ -90,7 +66,7 @@ Shared out, that total is the average degree, $2\lvert E\rvert$ over $n$: 16 / 6
 
 ### Step 0: count one pile two ways
 
-Every line has exactly two ends. Lay a token on each: the metro's eight lines put sixteen tokens on the map, no more and no fewer. The proof gathers that one pile twice, grouping it differently each time — double counting ([bijection-and-double-counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)).
+Every line has exactly two ends. Lay a token on each: the metro's eight lines put sixteen tokens on the map, no more and no fewer. The proof gathers that one pile twice, grouping it differently each time — double counting ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)).
 
 ### Step 1: gather the tokens station by station
 
@@ -115,7 +91,7 @@ A 1 marks a line ending there. Row totals are the degrees, read across; every co
 
 ### Step 3: the odd-degree stations come in pairs
 
-Split the vertices by parity of degree. The even degrees add to an even number and the whole total is even, so the odd degrees add to an even number too. But odd numbers add to an even result only for an even count of them ([even-and-odd](../../02-Number%20theory/01-Divisibility%20and%20Primes/02-even-and-odd.md)). So the odd-degree vertices number 0, 2, 4, never 1, 3 or 5.
+Split the vertices by parity of degree. The even degrees add to an even number and the whole total is even, so the odd degrees add to an even number too. But odd numbers add to an even result only for an even count of them ([Even and odd](../../02-Number%20theory/01-Divisibility%20and%20Primes/02-even-and-odd.md)). So the odd-degree vertices number 0, 2, 4, never 1, 3 or 5.
 
 <details>
 <summary>Detailed proof, written out</summary>
@@ -395,9 +371,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Street sweeping and postal rounds.** A route covering every line once and returning to its start needs every degree even; with the map in one piece, two odd dots allow an open route, and more than two allow neither. The metro's four odd stations are why its map cannot be swept in one closed trip ([euler-circuits](../11-Tours%20-%20Euler%20and%20Hamilton/01-euler-circuits.md)).
-- **Fixtures, rotas and valences.** A round-robin of nine teams each playing three others is the impossible party again ([edge-colouring-and-round-robin](../12-Planarity%20and%20Colouring/06-edge-colouring-and-round-robin.md)). Atoms behave the same, degree fixed by valence — carbon 4, hydrogen 1: a formula whose valences total an odd number describes nothing.
-- **Network measurement.** A large network's headline figure is its average degree, 16 / 6 = 2.67 here, and random models are matched to it ([random-graphs-erdos-renyi](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/01-random-graphs-erdos-renyi.md)); the stored table of joined pairs gives the degrees as its row totals ([adjacency-matrix-and-walk-counting](07-adjacency-matrix-and-walk-counting.md)).
+- **Street sweeping and postal rounds.** A route covering every line once and returning to its start needs every degree even; with the map in one piece, two odd dots allow an open route, and more than two allow neither. The metro's four odd stations are why its map cannot be swept in one closed trip ([Euler circuits](../11-Tours%20-%20Euler%20and%20Hamilton/01-euler-circuits.md)).
+- **Fixtures, rotas and valences.** A round-robin of nine teams each playing three others is the impossible party again ([Edge colouring](../12-Planarity%20and%20Colouring/06-edge-colouring-and-round-robin.md)). Atoms behave the same, degree fixed by valence — carbon 4, hydrogen 1: a formula whose valences total an odd number describes nothing.
+- **Network measurement.** A large network's headline figure is its average degree, 16 / 6 = 2.67 here, and random models are matched to it ([Random graphs](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/01-random-graphs-erdos-renyi.md)); the stored table of joined pairs gives the degrees as its row totals ([The adjacency matrix](07-adjacency-matrix-and-walk-counting.md)).
 
 > **Say it back**
 > A vertex's degree is how many line-ends meet it, a loop counting two. Every line has two ends, so counting the ends by vertex and by line counts one pile twice: the degrees add to twice the line count. The metro's add to 16 = 2 × 8. Twice anything is even, so the odd-degree vertices come in pairs, never 1 or 3. Nine people shaking three hands each would need 27 ends, so that party cannot happen.
@@ -406,18 +382,18 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [graphs-vertices-and-edges](01-graphs-vertices-and-edges.md): the dots and joined pairs, the metro map, and what a loop or parallel line is.
-- [bijection-and-double-counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md): why two groupings of one collection give one number, which is the whole proof.
-- [even-and-odd](../../02-Number%20theory/01-Divisibility%20and%20Primes/02-even-and-odd.md): why a sum of odd numbers is even only when there is an even count of them.
+- [Graphs](01-graphs-vertices-and-edges.md): the dots and joined pairs, the metro map, and what a loop or parallel line is.
+- [Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md): why two groupings of one collection give one number, which is the whole proof.
+- [Even and odd](../../02-Number%20theory/01-Divisibility%20and%20Primes/02-even-and-odd.md): why a sum of odd numbers is even only when there is an even count of them.
 
 ## Where this goes next
 
-- [euler-circuits](../11-Tours%20-%20Euler%20and%20Hamilton/01-euler-circuits.md): degree parity turned into a test for a route using every line once.
-- [edge-colouring-and-round-robin](../12-Planarity%20and%20Colouring/06-edge-colouring-and-round-robin.md): how few rounds a fixture list needs, bounded by the largest degree.
-- [mantel-and-turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/05-mantel-and-turan.md): the most lines a network carries with no triangle, argued through degrees.
-- [random-graphs-erdos-renyi](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/01-random-graphs-erdos-renyi.md): joining pairs at random, and what the degrees then look like.
+- [Euler circuits](../11-Tours%20-%20Euler%20and%20Hamilton/01-euler-circuits.md): degree parity turned into a test for a route using every line once.
+- [Edge colouring](../12-Planarity%20and%20Colouring/06-edge-colouring-and-round-robin.md): how few rounds a fixture list needs, bounded by the largest degree.
+- [Mantel and Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/05-mantel-and-turan.md): the most lines a network carries with no triangle, argued through degrees.
+- [Random graphs](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/01-random-graphs-erdos-renyi.md): joining pairs at random, and what the degrees then look like.
 
-The lemma allows the metro's four odd stations and says nothing further: what 0, 2 or 4 of them decides about walking the whole map in one trip is [euler-circuits](../11-Tours%20-%20Euler%20and%20Hamilton/01-euler-circuits.md).
+The lemma allows the metro's four odd stations and says nothing further: what 0, 2 or 4 of them decides about walking the whole map in one trip is [Euler circuits](../11-Tours%20-%20Euler%20and%20Hamilton/01-euler-circuits.md).
 
 ---
 

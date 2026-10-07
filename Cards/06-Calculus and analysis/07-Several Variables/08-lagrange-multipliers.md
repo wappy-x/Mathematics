@@ -1,32 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Several Variables
-topic: Best point under a rule
-item: Lagrange multipliers
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/03-gradient-and-directional-derivatives|gradient-and-directional-derivatives]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/06-multivariable-extrema|multivariable-extrema]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/03-constrained-paths-and-the-hanging-chain|constrained-paths-and-the-hanging-chain]]"
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/02-efficient-frontier-and-minimum-variance|efficient-frontier-and-minimum-variance]]"
-  - "[[Cards/12-Financial mathematics/49-Microstructure and Execution/04-optimal-execution-almgren-chriss|optimal-execution-almgren-chriss]]"
-  - "[[Cards/13-Engineering mathematics/07-Mechanics and Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers|lagrangian-and-hamiltonian-mechanics-for-engineers]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/09-kernels-and-support-vector-machines|kernels-and-support-vector-machines]]"
-  - "[[Cards/15-Optimization/03-Constrained Optimisation/01-lagrange-multipliers-revisited|lagrange-multipliers-revisited]]"
-  - "[[Cards/18-Functional analysis/06-Banach Algebras and Fixed Points/07-legendre-fenchel-and-subgradients|legendre-fenchel-and-subgradients]]"
-  - "[[Cards/18-Functional analysis/06-Banach Algebras and Fixed Points/08-minimax-theorem-and-convex-duality|minimax-theorem-and-convex-duality]]"
-  - "[[Cards/23-Differential geometry and Lie groups/03-Manifolds/06-submanifolds-and-the-regular-value-theorem|submanifolds-and-the-regular-value-theorem]]"
-  - "[[Cards/23-Differential geometry and Lie groups/07-Geometric Analysis and Physics/05-optimisation-on-manifolds|optimisation-on-manifolds]]"
-tags: [mathematics, calculus and analysis, lagrange-multipliers]
----
-
 # Lagrange multipliers: the best point on a constraint is where the gradients line up
 
-Calculus and analysis → Several Variables → Best point under a rule → Lagrange multipliers
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Several Variables](../../../SYLLABUS.md#w06-s07) → Lagrange multipliers
 
 ---
 
@@ -34,7 +8,7 @@ Calculus and analysis → Several Variables → Best point under a rule → Lagr
 
 A roll of 40 metres of fencing will enclose a rectangular paddock. A thin strip, 18 m by 2 m, holds 36 square metres. A 15 m by 5 m pen holds 75. A 10 m square holds 100, and no other shape does better.
 
-There are two dials, length and width, and a rule tying them: the sides add to 40 m. Calculus with no rule seeks a point where every rate is zero ([multivariable-extrema](06-multivariable-extrema.md)); for area, only the empty paddock. The real question: which shape the fence allows is best?
+There are two dials, length and width, and a rule tying them: the sides add to 40 m. Calculus with no rule seeks a point where every rate is zero ([Extrema in several variables](06-multivariable-extrema.md)); for area, only the empty paddock. The real question: which shape the fence allows is best?
 
 Lagrange's answer, published in 1788, adds one unknown. At the best point, the direction that grows the area fastest is the direction that uses fence fastest. The stretch factor between those two arrows is the **multiplier**, the word used from here on. It is also a price: one more metre of fence buys about 5 square metres.
 
@@ -59,7 +33,7 @@ The line is the area of every rectangle the fence allows. It peaks at 100 m^2 at
 
 ## The formula
 
-Notation first, in words. The rule is written $g(x, y) = P$: a function of the dials equals a fixed number. The gradient $\nabla A$, "grad A", is the arrow of the partial rates of $A$ ([gradient-and-directional-derivatives](03-gradient-and-directional-derivatives.md)). The Greek letter $\lambda$, "lambda", is the multiplier.
+Notation first, in words. The rule is written $g(x, y) = P$: a function of the dials equals a fixed number. The gradient $\nabla A$, "grad A", is the arrow of the partial rates of $A$ ([Gradient](03-gradient-and-directional-derivatives.md)). The Greek letter $\lambda$, "lambda", is the multiplier.
 
 $$\nabla A(x, y) = \lambda \, \nabla g(x, y), \qquad g(x, y) = P$$
 
@@ -119,7 +93,7 @@ Along the fence, $y = 20 - x$, and the area is $x(20 - x) = 100 - (x - 10)^2$. A
 
 ### Step 6: the multiplier is the price of the rule
 
-Let the fence length $P$ vary, and assume the best point moves smoothly with it; the best area $A^*(P)$ moves too. By the chain rule ([multivariable-chain-rule-and-jacobians](04-multivariable-chain-rule-and-jacobians.md)), the best area's rate is $\nabla A$ dotted with the best point's velocity, how fast it moves per metre of fence. Swap in $\lambda \nabla g$: the rate is $\lambda$ times the rate of $g$, and $g$ equals $P$ throughout, so that rate is 1. The best area grows at $\lambda$ square metres per metre of fence.
+Let the fence length $P$ vary, and assume the best point moves smoothly with it; the best area $A^*(P)$ moves too. By the chain rule ([Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md)), the best area's rate is $\nabla A$ dotted with the best point's velocity, how fast it moves per metre of fence. Swap in $\lambda \nabla g$: the rate is $\lambda$ times the rate of $g$, and $g$ equals $P$ throughout, so that rate is 1. The best area grows at $\lambda$ square metres per metre of fence.
 
 Here $A^*(P) = P^2 / 16$, with rate $40 / 8 = 5$ at 40 m. A 41 m fence gives a 10.25 m square, 105.0625 m^2: a gain of 5.0625, the extra from the bend.
 
@@ -128,14 +102,14 @@ Against a river, one long side needs no fence: $x + 2y = 40$. The same steps giv
 <details>
 <summary>Detailed proof, for any smooth objective and one regular rule in the plane</summary>
 
-Let $f$ and $g$ have continuous partial rates near $p = (a, b)$, with $g(p) = c$, $\nabla g(p) \neq 0$, and $p$ a local best point of $f$ among nearby points with $g = c$. Write $f_x = \partial f / \partial x$ and so on, and say $g_y \neq 0$ at $p$ (else swap $x$ and $y$). The implicit function theorem ([inverse-and-implicit-function-theorems](07-inverse-and-implicit-function-theorems.md)) gives a smooth $Y(x)$ near $x = a$ with $Y(a) = b$ and $g(x, Y(x)) = c$, covering the rule near $p$.
+Let $f$ and $g$ have continuous partial rates near $p = (a, b)$, with $g(p) = c$, $\nabla g(p) \neq 0$, and $p$ a local best point of $f$ among nearby points with $g = c$. Write $f_x = \partial f / \partial x$ and so on, and say $g_y \neq 0$ at $p$ (else swap $x$ and $y$). The implicit function theorem ([Inverse and implicit function theorems](07-inverse-and-implicit-function-theorems.md)) gives a smooth $Y(x)$ near $x = a$ with $Y(a) = b$ and $g(x, Y(x)) = c$, covering the rule near $p$.
 
 Then $\Phi(x) = f(x, Y(x))$ has a local best value at the inner point $x = a$, so $0 = \Phi'(a) = f_x + f_y Y'(a)$, while $g_x + g_y Y'(a) = 0$, partials at $p$. Put $\lambda = f_y / g_y$. Then $f_y = \lambda g_y$, and $f_x = -f_y Y'(a) = -\lambda g_y Y'(a) = \lambda g_x$.
 
 </details>
 
 
-Several rules bring one multiplier each, and "at most" rules add sign conditions: lagrange-multipliers-revisited.
+Several rules bring one multiplier each, and "at most" rules add sign conditions: Lagrange multipliers, proved.
 
 ### The picture: the fence touches the best area curve
 
@@ -379,8 +353,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Economics.** A fixed budget is spent for the most benefit; the multiplier is the worth of one more pound, called the shadow price.
-- **Mechanics.** A bead on a wire obeys a rule; the multiplier is the wire's push, in lagrangian-and-hamiltonian-mechanics-for-engineers.
-- **Machine learning.** A support vector machine finds the widest gap between two classes; the multipliers pick out the points that matter, in kernels-and-support-vector-machines.
+- **Mechanics.** A bead on a wire obeys a rule; the multiplier is the wire's push, in Lagrangian and Hamiltonian mechanics.
+- **Machine learning.** A support vector machine finds the widest gap between two classes; the multipliers pick out the points that matter, in Support vector machines.
 
 > **Say it back**
 > A rule ties the dials, so only some steps are allowed. At the best point no allowed step pays, so both gradients are at right angles to every allowed step and share a line: one is $\lambda$ times the other. With the rule, that lists candidates, which still need checking. The multiplier is the rule's price: 5 m^2 per metre of fence.
@@ -389,22 +363,22 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [gradient-and-directional-derivatives](03-gradient-and-directional-derivatives.md): the gradient, and the rate along a direction as a dot product.
-- [multivariable-extrema](06-multivariable-extrema.md): best points with no rule, where the whole gradient must vanish.
+- [Gradient](03-gradient-and-directional-derivatives.md): the gradient, and the rate along a direction as a dot product.
+- [Extrema in several variables](06-multivariable-extrema.md): best points with no rule, where the whole gradient must vanish.
 
 ## Where this goes next
 
-- [convex-functions](09-convex-functions.md): when a candidate is sure to be best.
-- lagrange-multipliers-revisited: many rules, and "at most" rules.
-- [constrained-paths-and-the-hanging-chain](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/03-constrained-paths-and-the-hanging-chain.md): the unknown is a whole curve.
-- [efficient-frontier-and-minimum-variance](../../12-Financial%20mathematics/37-Portfolio%20Theory/02-efficient-frontier-and-minimum-variance.md): least risk, set return.
-- [optimal-execution-almgren-chriss](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/04-optimal-execution-almgren-chriss.md): selling a fixed block at least cost.
-- lagrangian-and-hamiltonian-mechanics-for-engineers: the multiplier as a force.
-- kernels-and-support-vector-machines: multipliers pick support points.
-- legendre-fenchel-and-subgradients: prices as a transform.
-- minimax-theorem-and-convex-duality: solve for the prices first.
-- submanifolds-and-the-regular-value-theorem: a regular rule cuts a smooth surface.
-- optimisation-on-manifolds: walking the rule itself.
+- [Convex functions](09-convex-functions.md): when a candidate is sure to be best.
+- Lagrange multipliers, proved: many rules, and "at most" rules.
+- [Paths with a budget](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/03-constrained-paths-and-the-hanging-chain.md): the unknown is a whole curve.
+- [The efficient frontier](../../12-Financial%20mathematics/37-Portfolio%20Theory/02-efficient-frontier-and-minimum-variance.md): least risk, set return.
+- [Almgren-Chriss](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/04-optimal-execution-almgren-chriss.md): selling a fixed block at least cost.
+- Lagrangian and Hamiltonian mechanics: the multiplier as a force.
+- Support vector machines: multipliers pick support points.
+- The slope transform: prices as a transform.
+- Minimax: solve for the prices first.
+- Regular value theorem: a regular rule cuts a smooth surface.
+- Riemannian gradient descent: walking the rule itself.
 
 ---
 

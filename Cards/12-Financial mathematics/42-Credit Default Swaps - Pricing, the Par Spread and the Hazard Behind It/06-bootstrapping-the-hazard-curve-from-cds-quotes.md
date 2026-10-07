@@ -1,36 +1,16 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It
-topic: Stripping a credit curve
-item: Bootstrapping a hazard curve
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/04-implied-hazard-from-a-cds-quote|implied-hazard-from-a-cds-quote]]"
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/03-piecewise-flat-hazard-curve|piecewise-flat-hazard-curve]]"
-  - "[[Cards/12-Financial mathematics/02-Curves/04-bootstrapping-the-discount-curve|bootstrapping-the-discount-curve]]"
-next:
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/07-marking-a-cds-to-market-and-the-upfront|marking-a-cds-to-market-and-the-upfront]]"
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/09-market-implied-versus-historical-default-probability|market-implied-versus-historical-default-probability]]"
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/04-forward-cds-and-the-forward-spread|forward-cds-and-the-forward-spread]]"
-tags: [mathematics, financial mathematics, bootstrapping-the-hazard-curve-from-cds-quotes]
----
-
 # Bootstrapping a hazard curve: one tenor at a time, each quote fixing one flat piece
 
-Financial mathematics → Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It → Stripping a credit curve → Bootstrapping a hazard curve
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../../../SYLLABUS.md#w12-s42) → Bootstrapping a hazard curve
 
 ---
 
 ## General Overview
 
-Northwind Lines, the shipping company this shelf follows, has three default-insurance prices on the screen. One year of protection costs 120 basis points a year (a basis point, bp, is a hundredth of a percent, so 120 bp is 1.20%). Three years cost 200 bp a year. Five years cost 250 bp a year. The contract behind each price is a credit default swap: the buyer pays that yearly premium, in quarterly instalments, for as long as Northwind survives, and the seller pays the 60% of face value lost if Northwind defaults first, 40% being assumed recovered ([credit-default-swap-contract](01-credit-default-swap-contract.md)). The length of a contract is its **tenor**.
+Northwind Lines, the shipping company this shelf follows, has three default-insurance prices on the screen. One year of protection costs 120 basis points a year (a basis point, bp, is a hundredth of a percent, so 120 bp is 1.20%). Three years cost 200 bp a year. Five years cost 250 bp a year. The contract behind each price is a credit default swap: the buyer pays that yearly premium, in quarterly instalments, for as long as Northwind survives, and the seller pays the 60% of face value lost if Northwind defaults first, 40% being assumed recovered ([The credit default swap](01-credit-default-swap-contract.md)). The length of a contract is its **tenor**.
 
 A client asks for two years of protection, which nobody quotes. A straight line between 120 and 200 says 160 bp. That is wrong by 20 bp.
 
-The three prices are averages. Each one prices the whole stretch from today to its end date. What a pricing model needs is the default rate in each stretch on its own: the **hazard rate**, the chance of defaulting in the next instant among companies still alive, per year ([hazard-rate-and-survival-probability](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)). The method takes the quotes in order of length. The one-year quote fixes a flat hazard for year one. Holding that fixed, the three-year quote fixes a flat hazard for years one to three. Holding both, the five-year quote fixes years three to five. Each step solves one equation in one unknown. The name is **bootstrapping**, as for the discount curve ([bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md)).
+The three prices are averages. Each one prices the whole stretch from today to its end date. What a pricing model needs is the default rate in each stretch on its own: the **hazard rate**, the chance of defaulting in the next instant among companies still alive, per year ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)). The method takes the quotes in order of length. The one-year quote fixes a flat hazard for year one. Holding that fixed, the three-year quote fixes a flat hazard for years one to three. Holding both, the five-year quote fixes years three to five. Each step solves one equation in one unknown. The name is **bootstrapping**, as for the discount curve ([Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md)).
 
 For Northwind the three pieces come out at 1.98%, 4.04% and 5.68% a year. The chance Northwind is still alive is 0.9804 at one year, 0.9042 at three and 0.8070 at five. The unquoted two-year contract then prices at 180.12 bp, and ten years, with the last hazard carried on, at 285.73 bp.
 
@@ -56,13 +36,13 @@ Orange: the par spread (the premium that makes a new contract worth nothing to e
 
 ## The formula
 
-Notation first, in words. The quoted tenors are $T_1 = 1$, $T_2 = 3$, $T_3 = 5$ years, with $T_0 = 0$ for today. The quote for tenor $T_i$ is $s_i$, written as a decimal: 120 bp is 0.0120. The hazard on the stretch from $T_{i-1}$ to $T_i$ is the flat number $\lambda_i$ (Greek "lambda"). The survival curve $S(t)$ is the chance Northwind has not defaulted by time $t$. Discounting uses $D(t) = e^{-rt}$, today's value of one dollar paid at $t$, with the riskless rate $r = 5\%$ ([compound-interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)). Premiums fall on the quarter-dates $t_j = 0.25, 0.50, \ldots$ years.
+Notation first, in words. The quoted tenors are $T_1 = 1$, $T_2 = 3$, $T_3 = 5$ years, with $T_0 = 0$ for today. The quote for tenor $T_i$ is $s_i$, written as a decimal: 120 bp is 0.0120. The hazard on the stretch from $T_{i-1}$ to $T_i$ is the flat number $\lambda_i$ (Greek "lambda"). The survival curve $S(t)$ is the chance Northwind has not defaulted by time $t$. Discounting uses $D(t) = e^{-rt}$, today's value of one dollar paid at $t$, with the riskless rate $r = 5\%$ ([Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)). Premiums fall on the quarter-dates $t_j = 0.25, 0.50, \ldots$ years.
 
-A step-shaped hazard makes survival a product of flat decays ([piecewise-flat-hazard-curve](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/03-piecewise-flat-hazard-curve.md)):
+A step-shaped hazard makes survival a product of flat decays ([The piecewise-flat hazard curve](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/03-piecewise-flat-hazard-curve.md)):
 
 $$S(1) = e^{-\lambda_1}, \qquad S(3) = e^{-\lambda_1 - 2\lambda_2}, \qquad S(5) = e^{-\lambda_1 - 2\lambda_2 - 2\lambda_3}.$$
 
-A contract of tenor $T$ has two legs ([cds-legs-risky-annuity-and-par-spread](02-cds-legs-risky-annuity-and-par-spread.md)). The premium leg is the spread times the **risky annuity** $A(T)$, the value of one dollar a year paid quarterly while Northwind survives. The protection leg $P(T)$ is the value of the payout:
+A contract of tenor $T$ has two legs ([Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md)). The premium leg is the spread times the **risky annuity** $A(T)$, the value of one dollar a year paid quarterly while Northwind survives. The protection leg $P(T)$ is the value of the payout:
 
 $$A(T) = \sum_{t_j \le T} 0.25\, D(t_j)\, S(t_j), \qquad P(T) = L \int_0^T D(t)\,\lambda(t)\,S(t)\,dt.$$
 
@@ -94,7 +74,7 @@ Inside one flat piece, discounting and survival decay at constant rates, so thei
 ### When it holds
 
 - **A known discount curve, unrelated to default.** The method takes $D(t)$ as given. If rates and default move together, the legs need a joint model and flat pieces fitted this way are biased.
-- **A known recovery.** Every piece scales roughly with $1/L$; a different recovery moves the whole curve ([recovery-assumptions-and-what-they-change](05-recovery-assumptions-and-what-they-change.md)).
+- **A known recovery.** Every piece scales roughly with $1/L$; a different recovery moves the whole curve ([Recovery assumptions](05-recovery-assumptions-and-what-they-change.md)).
 - **Quotes on one set of terms.** All three must be par spreads for contracts with the same premium dates, credit events and settlement. A quote on other terms has to be converted first, or the pieces absorb the difference.
 - **Flat pieces are a choice.** The quotes fix only the average hazard over each stretch, weighted by the legs. Beyond the last tenor they fix nothing: carrying 5.68% on gives 285.73 bp at ten years, zero hazard gives 148.27 bp.
 - **Each quote between its floor and ceiling.** Otherwise no nonnegative hazard matches it (Step 2).
@@ -133,7 +113,7 @@ $$s_{\min} = \frac{P(T_{i-1})}{A(T_{i-1}) + W_i \sum_{T_{i-1} < t_j \le T_i} 0.2
 
 As $\lambda_i$ grows without bound, Northwind defaults at the very start of the stretch for certain. The new premium-years vanish and the new protection approaches $L\,W_i$, so the spread approaches the ceiling $(P(T_{i-1}) + L\,W_i)/A(T_{i-1})$ without reaching it. For the first piece there are no earlier premium-years, the floor is zero and there is no ceiling.
 
-So: a quote strictly between floor and ceiling has exactly one nonnegative piece. A quote at the floor has the piece zero. A quote below the floor, or at or above the ceiling, has none. Existence of the crossing is the intermediate value theorem ([intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)); bisection (halving a bracket that contains the root) finds it.
+So: a quote strictly between floor and ceiling has exactly one nonnegative piece. A quote at the floor has the piece zero. A quote below the floor, or at or above the ceiling, has none. Existence of the crossing is the intermediate value theorem ([Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)); bisection (halving a bracket that contains the root) finds it.
 
 <details>
 <summary>Detailed proof: the fair spread rises strictly with the new piece</summary>
@@ -166,7 +146,7 @@ xychart-beta
     line [2.00, 3.00, 3.33, 3.86, 4.17, 4.37, 4.51, 4.62, 4.70, 4.76]
 ```
 
-Orange: the bootstrapped hazard in force during each year, a staircase. Green: the par spread at that tenor divided by the loss 0.60, the credit triangle's reading of an average hazard ([the-credit-triangle](03-the-credit-triangle.md)). The average climbs gently because it drags the cheap early years along; the staircase shows the rate each year actually carries.
+Orange: the bootstrapped hazard in force during each year, a staircase. Green: the par spread at that tenor divided by the loss 0.60, the credit triangle's reading of an average hazard ([The credit triangle](03-the-credit-triangle.md)). The average climbs gently because it drags the cheap early years along; the staircase shows the rate each year actually carries.
 
 Ten years runs past the last quote, so a tail must be assumed. This card carries 5.68% on, giving 285.73 bp; any other tail leaves the three quotes untouched and changes the ten-year price.
 
@@ -192,7 +172,7 @@ A second route solves all three equations at once by Newton's method (repeatedly
 | 2 years, unquoted | $P(2)/A(2)$ | **180.12 bp** |
 | 10 years, tail at $\lambda_3$ | $P(10)/A(10)$ | **285.73 bp** |
 
-The first piece sits just under the triangle's 2%: premiums arrive at quarter-ends, a little later than the protection they pay for, so the fair spread runs slightly above $L\lambda$ and the fitted hazard slightly below $s/L$. The same legs price a flat 2% hazard at 121.06 bp over five years, the shelf's Northwind contract ([cds-legs-risky-annuity-and-par-spread](02-cds-legs-risky-annuity-and-par-spread.md)).
+The first piece sits just under the triangle's 2%: premiums arrive at quarter-ends, a little later than the protection they pay for, so the fair spread runs slightly above $L\lambda$ and the fitted hazard slightly below $s/L$. The same legs price a flat 2% hazard at 121.06 bp over five years, the shelf's Northwind contract ([Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md)).
 
 In the world: two years of Northwind protection is worth about 180 bp a year; selling it at 160 gives value away on every dollar covered.
 
@@ -642,8 +622,8 @@ The two outputs agree line for line. The simulation's 180.43 bp sits within one 
 ## Where you meet it in real life
 
 - **Every credit desk, every day.** Dealers strip each name's quoted tenors into a hazard curve like this one, then price everything else off it.
-- **Valuing a trade done last year.** An old contract has its own coupon and a remaining tenor nobody quotes; the curve prices it ([marking-a-cds-to-market-and-the-upfront](07-marking-a-cds-to-market-and-the-upfront.md)).
-- **Risk reports.** Bump one quote by a basis point, re-bootstrap, reprice the book: the change is the sensitivity to that tenor ([cds-risk-numbers](08-cds-risk-numbers.md)).
+- **Valuing a trade done last year.** An old contract has its own coupon and a remaining tenor nobody quotes; the curve prices it ([Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md)).
+- **Risk reports.** Bump one quote by a basis point, re-bootstrap, reprice the book: the change is the sensitivity to that tenor ([CDS risk numbers](08-cds-risk-numbers.md)).
 - **Counterparty charges.** A bank pricing the chance a trading partner fails before paying reads that partner's default probabilities off its bootstrapped curve.
 
 > **Say it back**
@@ -653,17 +633,17 @@ The two outputs agree line for line. The simulation's 180.43 bp sits within one 
 
 ## What this builds on
 
-- [implied-hazard-from-a-cds-quote](04-implied-hazard-from-a-cds-quote.md): solving one quote for one flat hazard, with its existence and boundary cases; this card repeats that step piece by piece.
-- [piecewise-flat-hazard-curve](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/03-piecewise-flat-hazard-curve.md): survival as e to the minus the staircase's area, the shape every piece here plugs into.
-- [bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md): the same triangular solve on bond prices; an analogy, not a step in the proof.
+- [Implied hazard from one CDS quote](04-implied-hazard-from-a-cds-quote.md): solving one quote for one flat hazard, with its existence and boundary cases; this card repeats that step piece by piece.
+- [The piecewise-flat hazard curve](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/03-piecewise-flat-hazard-curve.md): survival as e to the minus the staircase's area, the shape every piece here plugs into.
+- [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md): the same triangular solve on bond prices; an analogy, not a step in the proof.
 
 ---
 
 ## Where this goes next
 
-- [marking-a-cds-to-market-and-the-upfront](07-marking-a-cds-to-market-and-the-upfront.md): uses the fitted annuity and protection leg to value an existing contract and the upfront on a standard coupon.
-- [market-implied-versus-historical-default-probability](09-market-implied-versus-historical-default-probability.md): sets this curve's 0.8070 five-year survival beside what default histories say, and explains the gap.
-- [forward-cds-and-the-forward-spread](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/04-forward-cds-and-the-forward-spread.md): reads the price of protection starting in the future straight off the pieces.
+- [Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md): uses the fitted annuity and protection leg to value an existing contract and the upfront on a standard coupon.
+- [Two default probabilities](09-market-implied-versus-historical-default-probability.md): sets this curve's 0.8070 five-year survival beside what default histories say, and explains the gap.
+- [The forward CDS](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/04-forward-cds-and-the-forward-spread.md): reads the price of protection starting in the future straight off the pieces.
 
 The curve now prices any tenor today; what is an existing contract with a 100 bp coupon worth against it, and how much cash changes hands to enter one?
 

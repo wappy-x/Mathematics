@@ -1,24 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Changing Measure
-topic: Reweighting coin paths
-item: Changing the measure
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/06-brownian-martingales-and-exponential-martingale|brownian-martingales-and-exponential-martingale]]"
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/04-radon-nikodym-derivative|radon-nikodym-derivative]]"
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/06-densities-and-likelihood-ratios|densities-and-likelihood-ratios]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/02-girsanov-theorem|girsanov-theorem]]"
-tags: [mathematics, stochastic processes and calculus, change-of-measure-and-density-processes]
----
-
 # Changing the measure: a density that reweights every path
 
-Stochastic processes and calculus → Changing Measure → Reweighting coin paths → Changing the measure
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Changing Measure](../../../SYLLABUS.md#w11-s07) → Changing the measure
 
 ---
 
@@ -28,7 +10,7 @@ A coin lands heads 6 times in 10. A game is played on it for ten tosses: each he
 
 That can be done by reweighting. Take one run of ten tosses, say tail, four heads, tail, three heads, tail. The loaded coin gives that run a chance of 0.00179159. A fair coin gives every run the same chance, 1 in 1,024, which is 0.00097656. The fair chance over the loaded chance, 0.545081, is the run's **weight**. Average anything over loaded-coin runs, each counted with its own weight, and the answer is the fair-coin average. The game's weighted average is $0, not $2.
 
-The weight is built one toss at a time. A head multiplies it by 5/6, the fair chance 0.5 over the loaded chance 0.6. A tail multiplies it by 5/4, which is 0.5 over 0.4. The running product after each toss is the **density process**, the subject of this card. On average each factor is exactly 1, so the running product is a fair game under the loaded coin: a martingale. Wing 10 changed measure with one density on one sigma-algebra ([radon-nikodym-derivative](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md)). Here the density becomes a process in time, and that brings in conditional averages, Bayes' rule and a failure over an infinite horizon.
+The weight is built one toss at a time. A head multiplies it by 5/6, the fair chance 0.5 over the loaded chance 0.6. A tail multiplies it by 5/4, which is 0.5 over 0.4. The running product after each toss is the **density process**, the subject of this card. On average each factor is exactly 1, so the running product is a fair game under the loaded coin: a martingale. Wing 10 changed measure with one density on one sigma-algebra ([The Radon-Nikodym derivative](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md)). Here the density becomes a process in time, and that brings in conditional averages, Bayes' rule and a failure over an infinite horizon.
 
 **A positive martingale with mean 1 reweights every path of a process into a second, equivalent probability, and every average under the new probability is the old average of the quantity times the density.**
 
@@ -52,7 +34,7 @@ The line peaking at 6 heads is the loaded coin. The symmetric line peaking at 5 
 
 ## The formula
 
-Notation first. The loaded coin's probability, the chance it puts on every run, is $P$, as in wing 09. A second probability on the same runs is written $Q$, read "the measure Q"; here it is the fair coin. An average taken with $Q$'s chances is written $E^Q$, read "the average under Q"; $E^P$ is the average under the loaded coin. The filtration $\mathcal{F}_n$ is what is known after $n$ tosses: the first $n$ results ([filtrations-and-information](../01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md)). $H_n$ counts heads in the first $n$ tosses and $S_n = 2H_n - n$ is the money won so far.
+Notation first. The loaded coin's probability, the chance it puts on every run, is $P$, as in wing 09. A second probability on the same runs is written $Q$, read "the measure Q"; here it is the fair coin. An average taken with $Q$'s chances is written $E^Q$, read "the average under Q"; $E^P$ is the average under the loaded coin. The filtration $\mathcal{F}_n$ is what is known after $n$ tosses: the first $n$ results ([Filtrations](../01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md)). $H_n$ counts heads in the first $n$ tosses and $S_n = 2H_n - n$ is the money won so far.
 
 The density process, after $n$ tosses:
 
@@ -104,7 +86,7 @@ Every step below is a finite sum over 1,024 runs. The folded proof at the end do
 
 ### Step 0: reweight the runs, do not edit them
 
-A measure is a list of chances, one per run. Two coins on the same ten tosses are two lists over the same 1,024 runs. To turn the first list into the second, multiply each entry by the ratio of the two: $Q(\text{run}) = P(\text{run}) \times Z_N(\text{run})$. That is the whole idea. The runs, and every quantity computed from a run, stay exactly as they were. Only how much each run counts in an average changes. On one run this is the likelihood ratio of [densities-and-likelihood-ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md).
+A measure is a list of chances, one per run. Two coins on the same ten tosses are two lists over the same 1,024 runs. To turn the first list into the second, multiply each entry by the ratio of the two: $Q(\text{run}) = P(\text{run}) \times Z_N(\text{run})$. That is the whole idea. The runs, and every quantity computed from a run, stay exactly as they were. Only how much each run counts in an average changes. On one run this is the likelihood ratio of [Densities and likelihood ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md).
 
 ### Step 1: the weight averages 1, so Q is a probability
 
@@ -124,7 +106,7 @@ After four tosses the last six are still unknown. Average the final weight over 
 
 $$E^P[Z_N \mid \mathcal{F}_n] = Z_n.$$
 
-The code checks this exactly, in fractions, after every one of the 2,047 possible beginnings of zero to ten tosses. Two consequences follow. First, $Z_n$ is a martingale under $P$ ([martingales](../02-Martingales/01-martingales.md)), by the tower property: $E^P[Z_{n+1} \mid \mathcal{F}_n] = E^P[E^P[Z_N \mid \mathcal{F}_{n+1}] \mid \mathcal{F}_n] = Z_n$. Second, $Z_n$ is itself the Radon-Nikodym derivative of $Q$ against $P$ on events decided by the first $n$ tosses. For such an event $A$, $Q(A) = E^P[Z_N \mathbf{1}_A] = E^P[E^P[Z_N \mid \mathcal{F}_n] \mathbf{1}_A] = E^P[Z_n \mathbf{1}_A]$.
+The code checks this exactly, in fractions, after every one of the 2,047 possible beginnings of zero to ten tosses. Two consequences follow. First, $Z_n$ is a martingale under $P$ ([Martingales](../02-Martingales/01-martingales.md)), by the tower property: $E^P[Z_{n+1} \mid \mathcal{F}_n] = E^P[E^P[Z_N \mid \mathcal{F}_{n+1}] \mid \mathcal{F}_n] = Z_n$. Second, $Z_n$ is itself the Radon-Nikodym derivative of $Q$ against $P$ on events decided by the first $n$ tosses. For such an event $A$, $Q(A) = E^P[Z_N \mathbf{1}_A] = E^P[E^P[Z_N \mid \mathcal{F}_n] \mathbf{1}_A] = E^P[Z_n \mathbf{1}_A]$.
 
 The converse is the definition this shelf runs on. Start from any positive $P$-martingale $Z_n$ with $Z_0 = 1$. Define $Q_N(A) = E^P[Z_N \mathbf{1}_A]$ for each horizon $N$. The martingale property makes these agree: an event decided by toss 4 gets the same chance whichever later horizon builds the measure. **A density process is a positive martingale with mean 1, and it defines one measure that is consistent across every finite horizon.**
 
@@ -161,15 +143,15 @@ Let $(\Omega, \mathcal{F}, P)$ be a probability space with a filtration $\mathca
 
 ### Step 6: speed the coin up and the density becomes the exponential martingale
 
-Measure time in rounds, one round being the gap between tosses of the original coin. Now toss every $h$ rounds, move the winnings up or down by $\sqrt{h}$, and lean the coin so heads has chance $(1 + \mu\sqrt{h})/2$, with $\mu = 0.2$. With $h = 1$ this is the original coin: heads 0.6. As $h$ shrinks, the winnings path becomes Brownian motion with drift $\mu$ per round ([brownian-motion](../05-Brownian%20Motion/01-brownian-motion.md)). The fair coin becomes driftless Brownian motion.
+Measure time in rounds, one round being the gap between tosses of the original coin. Now toss every $h$ rounds, move the winnings up or down by $\sqrt{h}$, and lean the coin so heads has chance $(1 + \mu\sqrt{h})/2$, with $\mu = 0.2$. With $h = 1$ this is the original coin: heads 0.6. As $h$ shrinks, the winnings path becomes Brownian motion with drift $\mu$ per round ([Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md)). The fair coin becomes driftless Brownian motion.
 
 The density for this coin, at winnings $x$ after time $t$, with $H$ heads in $n = t/h$ tosses, takes logarithms to a sum: $-H \ln(1 + \mu\sqrt{h}) - (n - H)\ln(1 - \mu\sqrt{h})$. Expand each logarithm. The first-order terms add to $-\mu x$. The second-order terms add to $+\tfrac12\mu^2 t$, because there are $t/h$ tosses and each contributes $\tfrac12\mu^2 h$. Everything after that shrinks in proportion to $h$. Writing the winnings as $x = W_t + \mu t$, with $W_t$ the driftless part under $P$:
 
 $$Z_t = \exp\big(-\mu x + \tfrac12\mu^2 t\big) = \exp\big(-\mu W_t - \tfrac12\mu^2 t\big).$$
 
-That is the exponential martingale of [brownian-martingales-and-exponential-martingale](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md), which writes it $\exp(\theta W_t - \tfrac12\theta^2 t)$ for a fixed number $\theta$; here $\theta = -\mu$. The code compares the coin's exact density with this limit at $x = 2$ and $t = 10$ rounds for six step sizes. The error falls from 0.0011087 at $h = 1$ to 0.0000011 at $h = 1/1024$, about four-fold each time $h$ is quartered.
+That is the exponential martingale of [Brownian martingales](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md), which writes it $\exp(\theta W_t - \tfrac12\theta^2 t)$ for a fixed number $\theta$; here $\theta = -\mu$. The code compares the coin's exact density with this limit at $x = 2$ and $t = 10$ rounds for six step sizes. The error falls from 0.0011087 at $h = 1$ to 0.0000011 at $h = 1/1024$, about four-fold each time $h$ is quartered.
 
-This card proves the change of measure for the coins and shows the limit numerically. It does not prove the continuous-time statement. That statement, with $W_t$ a $P$-Brownian motion and $Z_T = \exp(-\mu W_T - \tfrac12\mu^2 T)$ defining $Q$ at a horizon of $T$ rounds, is that $W_t + \mu t$ is a $Q$-Brownian motion on $[0, T]$. It is Girsanov's theorem, proved in [girsanov-theorem](02-girsanov-theorem.md) and in Karatzas and Shreve, section 3.5. No Ito calculus was used here: the step above is ordinary Taylor expansion of a logarithm, toss by toss.
+This card proves the change of measure for the coins and shows the limit numerically. It does not prove the continuous-time statement. That statement, with $W_t$ a $P$-Brownian motion and $Z_T = \exp(-\mu W_T - \tfrac12\mu^2 T)$ defining $Q$ at a horizon of $T$ rounds, is that $W_t + \mu t$ is a $Q$-Brownian motion on $[0, T]$. It is Girsanov's theorem, proved in [Girsanov](02-girsanov-theorem.md) and in Karatzas and Shreve, section 3.5. No Ito calculus was used here: the step above is ordinary Taylor expansion of a logarithm, toss by toss.
 
 ---
 
@@ -704,10 +686,10 @@ The two outputs match line for line. The simulated weighted winnings, −0.0059 
 
 ## Where you meet it in real life
 
-- **Pricing.** A risk-neutral price is an average under a reweighted measure in which every asset grows at the bank rate; the one-period version is [state-prices-and-risk-neutral-pricing-in-one-period](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md), and its continuous-time density comes from [girsanov-theorem](02-girsanov-theorem.md).
+- **Pricing.** A risk-neutral price is an average under a reweighted measure in which every asset grows at the bank rate; the one-period version is [State prices](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md), and its continuous-time density comes from [Girsanov](02-girsanov-theorem.md).
 - **Rare-event simulation.** To estimate a small chance, simulate under a measure that makes the event common, then multiply each run by the density back to the real one. This is importance sampling; the weights here are its weights read the other way.
 - **Sequential testing.** A quality inspector deciding between two defect rates multiplies a likelihood ratio toss by toss and stops when it crosses a line. That running ratio is a density process, a martingale under one hypothesis.
-- **Choosing what to measure money in.** Swapping the unit of account from cash to a share changes the measure by a density built from the share's price: [change-of-numeraire](05-change-of-numeraire.md).
+- **Choosing what to measure money in.** Swapping the unit of account from cash to a share changes the measure by a density built from the share's price: [Change of numeraire](05-change-of-numeraire.md).
 
 > **Say it back**
 > A second measure can be built on the same runs by multiplying each run's chance by a positive weight that averages 1. Every average under the new measure is the old average of the quantity times the weight. Seen partway through, the weight is the conditional average of the final weight, so it is a martingale under the old measure, and forecasts under the new one divide by it. For a loaded coin viewed as fair, the weight multiplies by 5/6 on a head and 5/4 on a tail, and the $2 game becomes worth $0. Over an infinite horizon the weight sinks to 0 and the two coins become singular.
@@ -716,16 +698,16 @@ The two outputs match line for line. The simulated weighted winnings, −0.0059 
 
 ## What this builds on
 
-- [brownian-martingales-and-exponential-martingale](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md): the clock-corrected exponential of Brownian motion, which Step 6 reaches as the limit of the coin's density.
-- [radon-nikodym-derivative](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md): one measure against another on one sigma-algebra, and its uniqueness, used in Step 3 and the folded proof.
-- [densities-and-likelihood-ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): the ratio of two models' chances, here applied one toss at a time.
+- [Brownian martingales](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md): the clock-corrected exponential of Brownian motion, which Step 6 reaches as the limit of the coin's density.
+- [The Radon-Nikodym derivative](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md): one measure against another on one sigma-algebra, and its uniqueness, used in Step 3 and the folded proof.
+- [Densities and likelihood ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): the ratio of two models' chances, here applied one toss at a time.
 
 ## Where this goes next
 
-- [girsanov-theorem](02-girsanov-theorem.md): the continuous-time density $\exp(-\mu W_t - \tfrac12\mu^2 t)$ turns Brownian motion with drift into Brownian motion without it, and leaves the wiggle untouched.
-- [novikov-condition](03-novikov-condition.md): when an exponential density is a true martingale with mean 1, and not one that leaks mass.
+- [Girsanov](02-girsanov-theorem.md): the continuous-time density $\exp(-\mu W_t - \tfrac12\mu^2 t)$ turns Brownian motion with drift into Brownian motion without it, and leaves the wiggle untouched.
+- [Novikov](03-novikov-condition.md): when an exponential density is a true martingale with mean 1, and not one that leaks mass.
 
-This card shows that a positive mean-1 martingale reweights the coin into a fair one; what the reweighting does to a Brownian path's drift, and why its volatility cannot move, is what [girsanov-theorem](02-girsanov-theorem.md) answers.
+This card shows that a positive mean-1 martingale reweights the coin into a fair one; what the reweighting does to a Brownian path's drift, and why its volatility cannot move, is what [Girsanov](02-girsanov-theorem.md) answers.
 
 ---
 

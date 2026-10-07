@@ -1,29 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Divisibility and Primes
-topic: Divisibility
-item: Division with a remainder
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/03-multiplying-and-dividing|multiplying-and-dividing]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/01-divides|divides]]"
-next:
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/05-primes-and-composites|primes-and-composites]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/03-euclidean-algorithm|euclidean-algorithm]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/01-congruence-mod-n|congruence-mod-n]]"
-  - "[[Cards/02-Number theory/05-Check Digits, Calendars and Cycles/03-day-of-the-week|day-of-the-week]]"
-tags:
-  - mathematics
-  - number theory
-  - division-with-remainder
----
-
 # Division with a remainder: the quotient and the leftover are unique, and the leftover is smaller than the divisor
 
-Number theory → Divisibility and Primes → Divisibility → Division with a remainder
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Divisibility and Primes](../../../SYLLABUS.md#w02-s01) → Division with a remainder
 
 ---
 
@@ -249,7 +226,7 @@ The two outputs match line for line: whole days, nothing to round.
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the house numbers.
 > - **Give every year 366 days.** Change the three year lengths to 366, 366, 366. The birthday moves two weekdays a year, and the last assert fires.
-> - **Take 5 away instead of 7.** Call `strip(365, 5)`: a quotient of 73, nothing over, because 5 goes into 365 exactly. A remainder of 0 is the [divides](01-divides.md) case. This one runs clean.
+> - **Take 5 away instead of 7.** Call `strip(365, 5)`: a quotient of 73, nothing over, because 5 goes into 365 exactly. A remainder of 0 is the [Divides](01-divides.md) case. This one runs clean.
 
 ---
 
@@ -260,13 +237,13 @@ The two outputs match line for line: whole days, nothing to round.
 >
 > - Letting the leftover reach the divisor: 51 weeks with 8 days over is not an answer.
 > - Swapping the words: the quotient counts the whole copies, the remainder what did not fill one.
-> - Dividing a negative count. Which way the leftover goes is a separate rule, in [congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md).
+> - Dividing a negative count. Which way the leftover goes is a separate rule, in [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md).
 
 ---
 
 ## Where you meet it in real life
 
-- **Calendars.** Any day-of-the-week question is a leftover after dividing by 7: [day-of-the-week](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md).
+- **Calendars.** Any day-of-the-week question is a leftover after dividing by 7: [Day of the week for any date](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md).
 - **Clocks.** 100 minutes is 1 hour and 40 minutes: divide by 60, keep the leftover.
 - **Loading a van.** 365 chairs into vans holding 7 needs 52 full vans plus one carrying a single chair. The leftover still costs a van.
 
@@ -277,15 +254,15 @@ The two outputs match line for line: whole days, nothing to round.
 
 ## What this builds on
 
-- [multiplying-and-dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): whole-number division, and the 52 × 7 that dividing 365 by 7 undoes.
-- [divides](01-divides.md): the case where nothing is left over. This card covers the rest.
+- [Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): whole-number division, and the 52 × 7 that dividing 365 by 7 undoes.
+- [Divides](01-divides.md): the case where nothing is left over. This card covers the rest.
 
 ## Where this goes next
 
-- [primes-and-composites](05-primes-and-composites.md): testing for a prime asks for remainders, caring only whether one is 0.
-- [euclidean-algorithm](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md): this step run again on each leftover, to find the largest number dividing two numbers.
-- [congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md): keeping the remainder and throwing the quotient away, negative counts included.
-- [day-of-the-week](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md): this drift, built into a rule for any date.
+- [Primes and composites](05-primes-and-composites.md): testing for a prime asks for remainders, caring only whether one is 0.
+- [Euclid's algorithm](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md): this step run again on each leftover, to find the largest number dividing two numbers.
+- [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md): keeping the remainder and throwing the quotient away, negative counts included.
+- [Day of the week for any date](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md): this drift, built into a rule for any date.
 
 ---
 

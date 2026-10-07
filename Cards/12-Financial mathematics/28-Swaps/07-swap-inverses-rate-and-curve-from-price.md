@@ -1,28 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Swaps
-topic: Running a swap in reverse
-item: Solving a swap backwards
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/28-Swaps/02-par-swap-rate-and-annuity|par-swap-rate-and-annuity]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/05-root-finding-for-inverses|root-finding-for-inverses]]"
-next: []
-tags: [mathematics, financial mathematics, swap-inverses-rate-and-curve-from-price]
----
-
 # Solving a swap backwards: the fixed rate from a value, and a curve point from a par quote
 
-Financial mathematics → Swaps → Running a swap in reverse → Solving a swap backwards
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Swaps](../../../SYLLABUS.md#w12-s28) → Solving a swap backwards
 
 ---
 
 ## General Overview
 
-A pension fund agrees a five-year interest rate swap with a dealer on 10,000,000 dollars. Once a year for five years the fund receives a fixed rate on that amount and pays a floating rate, reset each year to the going rate for one-year money. The screen says the fair fixed rate today is 4.65 percent: at that rate the swap is worth nothing to either side ([interest-rate-swaps](01-interest-rate-swaps.md)).
+A pension fund agrees a five-year interest rate swap with a dealer on 10,000,000 dollars. Once a year for five years the fund receives a fixed rate on that amount and pays a floating rate, reset each year to the going rate for one-year money. The screen says the fair fixed rate today is 4.65 percent: at that rate the swap is worth nothing to either side ([Interest rate swaps](01-interest-rate-swaps.md)).
 
 The fund wants a bigger coupon, and offers to pay 100,000 dollars up front for it. What fixed rate does 100,000 dollars buy? Every pricer on the shelf runs the other way: rate in, value out. This question runs it backwards, value in, rate out. The answer is 4.8782 percent. Take the 100,000 dollars away and the same line runs back to 4.65 percent, the fair rate.
 
@@ -51,11 +35,11 @@ One line: the fixed rate that makes the swap worth each value to whoever receive
 
 Notation first, in words. The swap pays once a year, so its dates are numbered by year: $i$ runs from 1 to 5. $D_i$ is the discount factor for year $i$: what one dollar paid at the end of year $i$ costs today. Each period is one year long, so its accrual fraction $\alpha$, the share of a year a rate is paid for, is 1. The swap's size is its notional $N$, and its fixed rate is $K$. The value $V$ is always the value to whoever receives fixed.
 
-The fixed side pays $N K$ each year. The floating side, discounted, is worth $N(1 - D_5)$ today, whatever the floating rates turn out to be ([interest-rate-swaps](01-interest-rate-swaps.md)). So
+The fixed side pays $N K$ each year. The floating side, discounted, is worth $N(1 - D_5)$ today, whatever the floating rates turn out to be ([Interest rate swaps](01-interest-rate-swaps.md)). So
 
 $$V = N\bigl(K A - (1 - D_5)\bigr), \qquad A = D_1 + D_2 + D_3 + D_4 + D_5$$
 
-$A$ is the **annuity**: what one dollar a year for five years costs today ([par-swap-rate-and-annuity](02-par-swap-rate-and-annuity.md)). The par rate $S_5$ is the $K$ that makes $V$ zero, $S_5 = (1 - D_5)/A$. The first inversion solves the line for $K$:
+$A$ is the **annuity**: what one dollar a year for five years costs today ([The par swap rate](02-par-swap-rate-and-annuity.md)). The par rate $S_5$ is the $K$ that makes $V$ zero, $S_5 = (1 - D_5)/A$. The first inversion solves the line for $K$:
 
 $$K = S_5 + \frac{V}{N A}$$
 
@@ -80,14 +64,14 @@ $$D_5 = \frac{1 - S_5 B_5}{1 + S_5}$$
 | $\alpha$ | accrual fraction: the share of a year a rate is paid for | 1 | every payment scales up |
 | $i$ | the year a payment lands in | 1 to 5 | later payments are discounted more |
 
-**Conventions verified 27 Sep 2026.** Accrual fractions are set to exactly 1 by hand, so every number can be rechecked with a calculator. Real swap legs carry day-count rules that move them by a day or two of interest; those rules are on [money-market-instruments-and-sofr](../02-Curves/03-money-market-instruments-and-sofr.md). The sign convention here, value to the fixed receiver, is a choice; the payer's value is the same number with the sign flipped.
+**Conventions verified 27 Sep 2026.** Accrual fractions are set to exactly 1 by hand, so every number can be rechecked with a calculator. Real swap legs carry day-count rules that move them by a day or two of interest; those rules are on [Money markets](../02-Curves/03-money-market-instruments-and-sofr.md). The sign convention here, value to the fixed receiver, is a choice; the payer's value is the same number with the sign flipped.
 
-The discount factors are the five-year end of the curve built on [bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md): a one-year deposit at 4.20 percent and par swaps at 4.40, 4.55, 4.62 and 4.65 percent for two to five years.
+The discount factors are the five-year end of the curve built on [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md): a one-year deposit at 4.20 percent and par swaps at 4.40, 4.55, 4.62 and 4.65 percent for two to five years.
 
 ### When it holds
 
-- **The value is a straight line in the fixed rate.** True for a plain swap: the fixed side is $K$ times a fixed sum. Add an option, a cap on the floating rate or a right to cancel, and the value bends; the one-line inverse is then wrong and a search is needed ([root-finding-for-inverses](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md)).
-- **One curve discounts and forecasts.** The floating side collapses to $N(1 - D_5)$ only when the same curve sets the floating rates and discounts them. With separate curves the line is still straight in $K$, but its intercept changes ([basis-swaps-and-the-multi-curve-framework](04-basis-swaps-and-the-multi-curve-framework.md)).
+- **The value is a straight line in the fixed rate.** True for a plain swap: the fixed side is $K$ times a fixed sum. Add an option, a cap on the floating rate or a right to cancel, and the value bends; the one-line inverse is then wrong and a search is needed ([Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md)).
+- **One curve discounts and forecasts.** The floating side collapses to $N(1 - D_5)$ only when the same curve sets the floating rates and discounts them. With separate curves the line is still straight in $K$, but its intercept changes ([Multi-curve](04-basis-swaps-and-the-multi-curve-framework.md)).
 - **The first four discount factors are already known.** Otherwise the five-year quote holds more than one unknown and no single answer exists: two curves can reprice it exactly.
 - **The quote sits inside its range.** $D_5$ comes out positive only for $S_5$ between $-100$ percent and $1/B_5$, which is 27.88 percent here. Outside it there is no curve point, only a sign that a quote is wrong.
 
@@ -103,13 +87,13 @@ Solving backwards is usually a search: guess, price, compare, guess again. Here 
 
 The fixed side pays $N K$ at the end of each year. Discount each payment and add: $N K (D_1 + \dots + D_5) = N K A$.
 
-The floating side pays the one-year rate that is fixed at the start of year $i$, unknown today. Its value today is that of a payment of $N f_i$, where $f_i = D_{i-1}/D_i - 1$ is the forward rate the curve locks in for that year ([forward-rate-agreements](../02-Curves/02-forward-rate-agreements.md)). Discounted, that is worth $N f_i D_i = N(D_{i-1} - D_i)$. Added over five years, the middle terms cancel in pairs and $N(D_0 - D_5) = N(1 - D_5)$ survives. On this curve that is 2,037,827.18 dollars. The code builds all five floating payments one at a time from their forward rates and gets the same number, so the cancelling is checked, not assumed.
+The floating side pays the one-year rate that is fixed at the start of year $i$, unknown today. Its value today is that of a payment of $N f_i$, where $f_i = D_{i-1}/D_i - 1$ is the forward rate the curve locks in for that year ([Forward rate agreements](../02-Curves/02-forward-rate-agreements.md)). Discounted, that is worth $N f_i D_i = N(D_{i-1} - D_i)$. Added over five years, the middle terms cancel in pairs and $N(D_0 - D_5) = N(1 - D_5)$ survives. On this curve that is 2,037,827.18 dollars. The code builds all five floating payments one at a time from their forward rates and gets the same number, so the cancelling is checked, not assumed.
 
 The receiver's value is fixed side minus floating side: $V = N K A - N(1 - D_5)$.
 
 ### Step 2: the value to the fixed rate, one answer always
 
-Rearranging needs one division, by $N A$. That is legitimate whenever $N A$ is not zero. The notional is positive and every discount factor is positive, so $N A$ is positive: 43,824,240.35 dollars per unit of rate (a rate of 1, that is 100 percent), or 4,382.42 dollars per basis point, a hundredth of a percentage point. That per-basis-point figure is the swap's sensitivity to its own fixed rate ([swap-dv01-and-hedging](03-swap-dv01-and-hedging.md)).
+Rearranging needs one division, by $N A$. That is legitimate whenever $N A$ is not zero. The notional is positive and every discount factor is positive, so $N A$ is positive: 43,824,240.35 dollars per unit of rate (a rate of 1, that is 100 percent), or 4,382.42 dollars per basis point, a hundredth of a percentage point. That per-basis-point figure is the swap's sensitivity to its own fixed rate ([Swap DV01](03-swap-dv01-and-hedging.md)).
 
 So the three questions every inverse must answer have short answers.
 
@@ -163,7 +147,7 @@ Take $(1 + S_5) D_5 = 1 - S_5 B_5$ with $B_5 > 0$, the sum of four positive pric
 
 </details>
 
-Another road reaches all five points at once. Write the five quotes as five linear equations in five unknowns and solve them together; ordered shortest first the system is a staircase, and the single-rung formula here is its last step ([bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md)).
+Another road reaches all five points at once. Write the five quotes as five linear equations in five unknowns and solve them together; ordered shortest first the system is a staircase, and the single-rung formula here is its last step ([Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md)).
 
 ---
 
@@ -584,9 +568,9 @@ The two outputs agree line for line.
 
 - **Off-market swaps.** A client pays or receives cash up front for a coupon away from par, to match a bond it holds or a loan it owes. Setting that coupon is this card's first inverse.
 - **Unwinding a swap.** Ending a swap early means paying its value today. Quoting the unwind as a rate, so many basis points above or below par, is the same line read the other way.
-- **Checking a counterparty's mark.** When two firms disagree about a swap's value for collateral, turning each value into an implied rate shows at once whether they disagree about the curve or about the trade ([ois-discounting-and-collateral](05-ois-discounting-and-collateral.md)).
-- **Building the curve every morning.** Each par quote gives up one discount factor, exactly as in Step 4, and a desk rebuilds its curve this way through the trading day ([bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md)).
-- **Other currencies and other floating rates.** The same two inversions run on each curve of a multi-curve set-up and on cross-currency swaps, with the basis spread as one more unknown to solve for ([cross-currency-swaps-and-basis](06-cross-currency-swaps-and-basis.md)).
+- **Checking a counterparty's mark.** When two firms disagree about a swap's value for collateral, turning each value into an implied rate shows at once whether they disagree about the curve or about the trade ([Collateral discounting](05-ois-discounting-and-collateral.md)).
+- **Building the curve every morning.** Each par quote gives up one discount factor, exactly as in Step 4, and a desk rebuilds its curve this way through the trading day ([Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md)).
+- **Other currencies and other floating rates.** The same two inversions run on each curve of a multi-curve set-up and on cross-currency swaps, with the basis spread as one more unknown to solve for ([Cross-currency swaps](06-cross-currency-swaps-and-basis.md)).
 
 > **Say it back**
 > A plain swap's value is a straight line in its fixed rate, with slope the notional times the annuity. So a value turns back into exactly one fixed rate: the par rate plus the value divided by that slope, 4.8782 percent for 100,000 dollars on this swap. A par quote, with the earlier discount factors known, is one linear equation in the next discount factor, so it turns back into exactly one curve point: 0.79621728 from 4.65 percent. The first inverse works for every value; the second needs the quote between minus 100 percent and 27.88 percent. A search agrees with both, which is the check, not the method.
@@ -595,13 +579,13 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [par-swap-rate-and-annuity](02-par-swap-rate-and-annuity.md): the annuity and the par rate, the two numbers both inversions are built from.
-- [root-finding-for-inverses](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): bisection and the secant idea used here as checks, and the existence-uniqueness-edges discipline every inverse follows.
+- [The par swap rate](02-par-swap-rate-and-annuity.md): the annuity and the par rate, the two numbers both inversions are built from.
+- [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): bisection and the secant idea used here as checks, and the existence-uniqueness-edges discipline every inverse follows.
 
 ## Where this goes next
 
-- [swaptions-payer-and-receiver](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md): an option to enter this swap later; its value is no longer a line in the fixed rate.
-- [rate-option-inverses](../29-Caps%2C%20Floors%20and%20Swaptions/09-rate-option-inverses.md): running rate options backwards, where the straight line gives way to a search.
+- [Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md): an option to enter this swap later; its value is no longer a line in the fixed rate.
+- [Solving rate options backwards](../29-Caps%2C%20Floors%20and%20Swaptions/09-rate-option-inverses.md): running rate options backwards, where the straight line gives way to a search.
 
 Both inversions here were exact because a plain swap is linear; the question left open is what to solve when an option bends the value, and the swaption cards answer it.
 

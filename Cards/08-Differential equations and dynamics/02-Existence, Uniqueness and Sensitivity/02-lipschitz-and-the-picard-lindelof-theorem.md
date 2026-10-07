@@ -1,30 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Existence, Uniqueness and Sensitivity
-topic: Speed limits on a rate law
-item: The Picard-Lindelof theorem
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/02-Existence, Uniqueness and Sensitivity/01-picard-iteration|picard-iteration]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/03-separable-equations|separable-equations]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/07-fixed-point-iteration-and-the-contraction-principle|fixed-point-iteration-and-the-contraction-principle]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/03-sequences-and-limits|sequences-and-limits]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/02-Existence, Uniqueness and Sensitivity/03-blow-up-and-the-life-span-of-a-solution|blow-up-and-the-life-span-of-a-solution]]"
-  - "[[Cards/08-Differential equations and dynamics/02-Existence, Uniqueness and Sensitivity/04-gronwall-and-continuous-dependence|gronwall-and-continuous-dependence]]"
-  - "[[Cards/08-Differential equations and dynamics/11-Discrete Dynamics and Chaos/02-fixed-points-of-a-map|fixed-points-of-a-map]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/07-existence-and-uniqueness-for-sdes|existence-and-uniqueness-for-sdes]]"
-  - "[[Cards/16-Numerical analysis/06-ODE Solvers/02-convergence-of-one-step-methods|convergence-of-one-step-methods]]"
-  - "[[Cards/23-Differential geometry and Lie groups/03-Manifolds/07-vector-fields-and-flows|vector-fields-and-flows]]"
-tags: [mathematics, differential equations and dynamics, lipschitz-and-the-picard-lindelof-theorem]
----
-
 # The Picard-Lindelof theorem: a speed limit on the rate guarantees exactly one solution
 
-Differential equations and dynamics → Existence, Uniqueness and Sensitivity → Speed limits on a rate law → The Picard-Lindelof theorem
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Existence, Uniqueness and Sensitivity](../../../SYLLABUS.md#w08-s02) → The Picard-Lindelof theorem
 
 ---
 
@@ -64,7 +40,7 @@ $$y' = f(t, y),\;\; y(t_0) = y_0 \quad\text{has exactly one solution for } \lver
 
 **Read it aloud:** the start fixes one solution, lasting at least until the box's time runs out or the solution could first reach its edge.
 
-The proof uses the **Picard map** $P$ of [picard-iteration](01-picard-iteration.md): a guessed curve in, the start value plus the rule's integral along the guess out.
+The proof uses the **Picard map** $P$ of [Picard iteration](01-picard-iteration.md): a guessed curve in, the start value plus the rule's integral along the guess out.
 
 $$P[y](t) = y_0 + \int_{t_0}^{t} f\bigl(s, y(s)\bigr)\,ds$$
 
@@ -85,7 +61,7 @@ When $f$ has a derivative in the value, $L$ is its steepest slope in the box, by
 
 - **The rule is continuous in the box.** Drop this and there may be no solution: with rate −1 at zero and above, +1 below, every curve from zero is pushed back across.
 - **A Lipschitz bound on the state.** Drop it and a solution still exists (Peano's theorem: continuity alone gives existence, not uniqueness), but several may leave the same start. The bucket at empty has infinitely many.
-- **Time only up to $T$.** The promise is local: $y' = y^2$ from $y = 1$ reaches infinity at $t = 1$ ([blow-up-and-the-life-span-of-a-solution](03-blow-up-and-the-life-span-of-a-solution.md)).
+- **Time only up to $T$.** The promise is local: $y' = y^2$ from $y = 1$ reaches infinity at $t = 1$ ([Blow-up](03-blow-up-and-the-life-span-of-a-solution.md)).
 
 ---
 
@@ -93,7 +69,7 @@ When $f$ has a derivative in the value, $L$ is its steepest slope in the box, by
 
 ### Step 0: a solution is a curve the Picard map leaves unchanged
 
-By the fundamental theorem of calculus, a continuous curve solves $y' = f(t, y)$ with $y(t_0) = y_0$ exactly when $P[y] = y$. So "how many solutions?" becomes "how many curves does $P$ leave fixed?" The contraction principle answers that ([fixed-point-iteration-and-the-contraction-principle](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md)): a map that brings any two inputs closer by a fixed factor below 1 has exactly one fixed point.
+By the fundamental theorem of calculus, a continuous curve solves $y' = f(t, y)$ with $y(t_0) = y_0$ exactly when $P[y] = y$. So "how many solutions?" becomes "how many curves does $P$ leave fixed?" The contraction principle answers that ([Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md)): a map that brings any two inputs closer by a fixed factor below 1 has exactly one fixed point.
 
 ### Step 1: the map keeps curves inside the box
 
@@ -105,7 +81,7 @@ Take two guesses $y$ and $z$; their gap is the largest distance between them ove
 
 ### Step 3: the rounds settle on a curve
 
-Start from the flat guess $y_0$ and apply $P$ repeatedly. Each move is at most a third of the last, so the moves total at most $10 + 10/3 + 10/9 + \dots = 15$ cm, and the curves close in on one limit ([sequences-and-limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md)). $P$ leaves the limit fixed: a solution exists.
+Start from the flat guess $y_0$ and apply $P$ repeatedly. Each move is at most a third of the last, so the moves total at most $10 + 10/3 + 10/9 + \dots = 15$ cm, and the curves close in on one limit ([Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md)). $P$ leaves the limit fixed: a solution exists.
 
 ### Step 4: two solutions would have to coincide
 
@@ -124,7 +100,7 @@ The factorial beats any power, so for some count of rounds the factor falls belo
 
 </details>
 
-The factorial is why the code's measured shrink falls from 0.107930 to 0.037537, under the promised 1/3. Gronwall's inequality reaches uniqueness without iterating ([gronwall-and-continuous-dependence](04-gronwall-and-continuous-dependence.md)).
+The factorial is why the code's measured shrink falls from 0.107930 to 0.037537, under the promised 1/3. Gronwall's inequality reaches uniqueness without iterating ([Gronwall's inequality](04-gronwall-and-continuous-dependence.md)).
 
 ---
 
@@ -143,7 +119,7 @@ The bucket from 25 cm at minute 0, box of 10 minutes by 16 cm.
 | round 2 at 10 min | $25 - \tfrac{2}{15}(125 - 15^{3/2})$ | 16.0793 cm |
 | separation formula | $(5 - 0.1 \times 10)^2$ | **16 cm** |
 
-Four more rounds land on 16.000000 cm, the value [separable-equations](../01-Rate%20Equations/03-separable-equations.md) gives. After 10 minutes the bucket holds 16 cm, and no other depth is possible.
+Four more rounds land on 16.000000 cm, the value [Separable equations](../01-Rate%20Equations/03-separable-equations.md) gives. After 10 minutes the bucket holds 16 cm, and no other depth is possible.
 
 ### What breaks if you drop a piece
 
@@ -157,7 +133,7 @@ Four more rounds land on 16.000000 cm, the value [separable-equations](../01-Rat
 
 ## Code, from first principles, and it actually runs
 
-Three roads to the depth at 10 minutes: the separation formula; six Picard rounds, integrating by the trapezoid rule (averaging the rate at both ends of each small slice); and Euler's rule, small steps along the slope ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)), whose error halves with the step. $L$ is found by calculus and by the largest quotient on a fine grid. The full-bucket past is checked against the integral equation, not the formula that drew it.
+Three roads to the depth at 10 minutes: the separation formula; six Picard rounds, integrating by the trapezoid rule (averaging the rate at both ends of each small slice); and Euler's rule, small steps along the slope ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)), whose error halves with the step. $L$ is found by calculus and by the largest quotient on a fine grid. The full-bucket past is checked against the integral equation, not the formula that drew it.
 
 ### Python
 
@@ -371,7 +347,7 @@ The outputs match line for line.
 ## Where you meet it in real life
 
 - **Draining tanks.** Torricelli's law makes outflow grow with the square root of the depth, so an empty tank does not reveal when it emptied; reconstructing past levels needs extra data.
-- **Simulation software.** A solver assumes the current state fixes the next; $L$ also governs how its errors grow (convergence-of-one-step-methods).
+- **Simulation software.** A solver assumes the current state fixes the next; $L$ also governs how its errors grow (From local error to global error).
 
 > **Say it back**
 > A rate law can allow several solutions from one start. If the rule is continuous and its rate changes at most L times as fast as the value, the Picard map shrinks the gap between any two guesses by a fixed factor. Its rounds settle on one curve, and no second curve exists, for a window the box fixes. The bucket from 25 cm has one future; the empty bucket has many pasts, because the square root has no such bound at zero.
@@ -380,21 +356,21 @@ The outputs match line for line.
 
 ## What this builds on
 
-- [picard-iteration](01-picard-iteration.md): the Picard map and its rounds.
-- [separable-equations](../01-Rate%20Equations/03-separable-equations.md): the closed form $(5 - 0.1t)^2$.
-- [fixed-point-iteration-and-the-contraction-principle](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md): a shrinking map has exactly one fixed point.
-- [sequences-and-limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md): why shrinking moves have a limit.
+- [Picard iteration](01-picard-iteration.md): the Picard map and its rounds.
+- [Separable equations](../01-Rate%20Equations/03-separable-equations.md): the closed form $(5 - 0.1t)^2$.
+- [Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md): a shrinking map has exactly one fixed point.
+- [Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md): why shrinking moves have a limit.
 
 ## Where this goes next
 
-- [blow-up-and-the-life-span-of-a-solution](03-blow-up-and-the-life-span-of-a-solution.md): how long a unique solution runs.
-- [gronwall-and-continuous-dependence](04-gronwall-and-continuous-dependence.md): $L$ bounds how nearby starts drift apart.
-- [fixed-points-of-a-map](../11-Discrete%20Dynamics%20and%20Chaos/02-fixed-points-of-a-map.md): shrinking maps on numbers.
-- [existence-and-uniqueness-for-sdes](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/07-existence-and-uniqueness-for-sdes.md): the argument with noise added.
-- convergence-of-one-step-methods: $L$ controlling solver error.
-- vector-fields-and-flows: one solution through every point.
+- [Blow-up](03-blow-up-and-the-life-span-of-a-solution.md): how long a unique solution runs.
+- [Gronwall's inequality](04-gronwall-and-continuous-dependence.md): $L$ bounds how nearby starts drift apart.
+- [Fixed points of a map](../11-Discrete%20Dynamics%20and%20Chaos/02-fixed-points-of-a-map.md): shrinking maps on numbers.
+- [When an SDE has one solution](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/07-existence-and-uniqueness-for-sdes.md): the argument with noise added.
+- From local error to global error: $L$ controlling solver error.
+- Vector field and its flow: one solution through every point.
 
-The theorem certifies 10 minutes; how long a solution actually survives, and whether it can reach infinity in finite time, is answered in [blow-up-and-the-life-span-of-a-solution](03-blow-up-and-the-life-span-of-a-solution.md).
+The theorem certifies 10 minutes; how long a solution actually survives, and whether it can reach infinity in finite time, is answered in [Blow-up](03-blow-up-and-the-life-span-of-a-solution.md).
 
 ---
 

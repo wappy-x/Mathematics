@@ -1,25 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Derivatives
-topic: Exponential split in two
-item: Hyperbolic functions
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/05-derivatives-of-exp-and-log|derivatives-of-exp-and-log]]"
-next:
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/03-exponential-sine-and-cosine-in-the-plane|exponential-sine-and-cosine-in-the-plane]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/06-the-shooting-method|the-shooting-method]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/08-laplace-on-a-rectangle|laplace-on-a-rectangle]]"
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/03-constrained-paths-and-the-hanging-chain|constrained-paths-and-the-hanging-chain]]"
-tags: [mathematics, calculus and analysis, hyperbolic-functions]
----
-
 # Hyperbolic functions: sinh and cosh, the exponential's even and odd halves
 
-Calculus and analysis → Derivatives → Exponential split in two → Hyperbolic functions
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Derivatives](../../../SYLLABUS.md#w06-s02) → Hyperbolic functions
 
 ---
 
@@ -33,7 +14,7 @@ Cosh squared minus sinh squared is always 1, so the point (cosh t, sinh t) sits 
 
 **Cosh and sinh are the even and odd halves of the exponential; their squares differ by exactly 1, each is the other's rate, and a hanging chain takes the shape of a cosh.**
 
-**What kind of fact this is:** a definition; the identity, rates and inverse formulas are theorems proved in Why it works, and the chain's cosh shape is a physical model, derived on [constrained-paths-and-the-hanging-chain](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/03-constrained-paths-and-the-hanging-chain.md).
+**What kind of fact this is:** a definition; the identity, rates and inverse formulas are theorems proved in Why it works, and the chain's cosh shape is a physical model, derived on [Paths with a budget](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/03-constrained-paths-and-the-hanging-chain.md).
 
 ### The picture: the chain against a parabola
 
@@ -53,7 +34,7 @@ Orange: the chain, 8 cosh(x/8) − 8. Green: Galileo's guess, the parabola throu
 
 ## The formula
 
-Notation: e^−t is 1 divided by e^t; $\cosh^2 t$ is cosh t times itself; d/dt is the rate per unit of t ([the-derivative](01-the-derivative.md)).
+Notation: e^−t is 1 divided by e^t; $\cosh^2 t$ is cosh t times itself; d/dt is the rate per unit of t ([The derivative](01-the-derivative.md)).
 
 $$\cosh t = \frac{e^t + e^{-t}}{2}, \qquad \sinh t = \frac{e^t - e^{-t}}{2}, \qquad \tanh t = \frac{\sinh t}{\cosh t}$$
 
@@ -119,15 +100,15 @@ At t = 1: 2.381098 − 1.381098 = 1. So cosh, a positive number whose square is 
 
 ### Step 2: each is the other's rate
 
-The rate of e^t is e^t ([derivatives-of-exp-and-log](05-derivatives-of-exp-and-log.md)); the chain rule ([chain-rule](03-chain-rule.md)) gives e^−t the rate −e^−t. Rates of sums are sums of rates:
+The rate of e^t is e^t ([Derivatives of exp and log](05-derivatives-of-exp-and-log.md)); the chain rule ([Chain rule](03-chain-rule.md)) gives e^−t the rate −e^−t. Rates of sums are sums of rates:
 
 $$\frac{d}{dt}\sinh t = \frac{e^t + e^{-t}}{2} = \cosh t, \qquad \frac{d}{dt}\cosh t = \frac{e^t - e^{-t}}{2} = \sinh t$$
 
-The minus inside e^−t cancels the minus between the terms, so no minus survives, unlike cosine's rate ([derivatives-of-trig-functions](04-derivatives-of-trig-functions.md)).
+The minus inside e^−t cancels the minus between the terms, so no minus survives, unlike cosine's rate ([Derivatives of sine and cosine](04-derivatives-of-trig-functions.md)).
 
 The rise over run of sinh at 1 closes in: 1.604463, 1.548982, 1.543668 for h = 0.1, 0.01, 0.001, against cosh 1 = 1.543081, each gap about a tenth of the last.
 
-For tanh the quotient rule ([product-and-quotient-rules](02-product-and-quotient-rules.md)) gives cosh × cosh − sinh × sinh, which Step 1 makes 1, over $\cosh^2 t$: 0.419974 at t = 1.
+For tanh the quotient rule ([Product and quotient rules](02-product-and-quotient-rules.md)) gives cosh × cosh − sinh × sinh, which Step 1 makes 1, over $\cosh^2 t$: 0.419974 at t = 1.
 
 ### Step 3: the chain's slope and length
 
@@ -137,7 +118,7 @@ The slope's own rate is (1/8) cosh(x/8), 0.192885 per metre at the hook; Step 1 
 
 $$\text{rate of the slope} = \frac{1}{a}\sqrt{1 + \text{slope}^2}$$
 
-That is the chain's balance of forces, derived on [constrained-paths-and-the-hanging-chain](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/03-constrained-paths-and-the-hanging-chain.md). The identity is what lets cosh obey it.
+That is the chain's balance of forces, derived on [Paths with a budget](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/03-constrained-paths-and-the-hanging-chain.md). The identity is what lets cosh obey it.
 
 A short piece rises slope × run, so by Pythagoras its length is √(1 + slope^2) × run, which Step 1 makes cosh(x/8) × run. So 8 sinh(x/8), which has that rate and starts at 0, is the length from the middle; two functions with the same rate everywhere and the same start agree (the mean value theorem), so no other fits. Hook to hook: 16 sinh 1 = 18.803219 m.
 
@@ -152,7 +133,7 @@ Where is the chain 2 m above its lowest point? Where cosh(x/8) = 1.25, so x/8 = 
 
 Put u = e^y, which is positive. If x = sinh y, then u^2 − 2xu − 1 = 0, with roots x ± √(x^2 + 1); only the plus root is positive, so y = ln(x + √(x^2 + 1)). If x = cosh y, then u^2 − 2xu + 1 = 0, with roots x ± √(x^2 − 1), real only for x ≥ 1; y ≥ 0 means u ≥ 1, the plus root. If x = tanh y, then u^2 = (1 + x)/(1 − x), positive only for −1 < x < 1.
 
-An inverse's rate is 1 over the forward rate ([implicit-and-inverse-differentiation](06-implicit-and-inverse-differentiation.md)): cosh y = √(1 + x^2) for arsinh, by Step 1; sinh y = √(x^2 − 1) for arcosh, which is 0 at x = 1, so there arcosh has no finite rate; 1 − tanh^2 y = 1 − x^2 for artanh. At arcosh 1.25 the rate is 1.333333, at arsinh 1 it is 0.707107, at artanh 0.5 it is 1.333333.
+An inverse's rate is 1 over the forward rate ([Implicit and inverse differentiation](06-implicit-and-inverse-differentiation.md)): cosh y = √(1 + x^2) for arsinh, by Step 1; sinh y = √(x^2 − 1) for arcosh, which is 0 at x = 1, so there arcosh has no finite rate; 1 − tanh^2 y = 1 − x^2 for artanh. At arcosh 1.25 the rate is 1.333333, at arsinh 1 it is 0.707107, at artanh 0.5 it is 1.333333.
 
 </details>
 
@@ -415,7 +396,7 @@ ALL CHECKS PASS
 
 - **Chains and power lines.** Sag and length come from cosh and sinh.
 - **Arches.** A hanging chain turned upside down is an arch in pure compression; the Gateway Arch in St. Louis is a flattened cosh.
-- **Growth plus decay.** Any mix of e^t and e^−t is a mix of cosh and sinh ([laplace-on-a-rectangle](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/08-laplace-on-a-rectangle.md)).
+- **Growth plus decay.** Any mix of e^t and e^−t is a mix of cosh and sinh ([Laplace on a rectangle](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/08-laplace-on-a-rectangle.md)).
 
 > **Say it back**
 > Cosh and sinh are the even and odd halves of e^t. Their sum times their difference is e^t × e^−t, so cosh squared minus sinh squared is 1. Each is the other's rate, with no minus sign. Cosh is undone only on t at 0 or more. A chain with a = 8 m between hooks 16 m apart hangs as 8 cosh(x/8), sagging 4.344645 m.
@@ -424,14 +405,14 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [derivatives-of-exp-and-log](05-derivatives-of-exp-and-log.md): the rate of e^t, and the logarithm in the inverse formulas.
+- [Derivatives of exp and log](05-derivatives-of-exp-and-log.md): the rate of e^t, and the logarithm in the inverse formulas.
 
 ## Where this goes next
 
-- [exponential-sine-and-cosine-in-the-plane](../../07-Complex%20analysis/02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md): cosine and sine as the same split of an exponential.
-- [the-shooting-method](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md): sinh and cosh fitted to values at two ends.
-- [laplace-on-a-rectangle](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/08-laplace-on-a-rectangle.md): sinh carries steady heat across a rectangle.
-- [constrained-paths-and-the-hanging-chain](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/03-constrained-paths-and-the-hanging-chain.md): derives the chain's cosh shape.
+- [The elementary functions](../../07-Complex%20analysis/02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md): cosine and sine as the same split of an exponential.
+- [Shooting](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md): sinh and cosh fitted to values at two ends.
+- [Laplace on a rectangle](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/08-laplace-on-a-rectangle.md): sinh carries steady heat across a rectangle.
+- [Paths with a budget](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/03-constrained-paths-and-the-hanging-chain.md): derives the chain's cosh shape.
 
 ---
 

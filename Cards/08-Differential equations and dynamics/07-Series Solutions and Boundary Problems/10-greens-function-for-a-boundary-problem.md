@@ -1,28 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Series Solutions and Boundary Problems
-topic: Responses to a point load
-item: Green's function
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/05-two-point-boundary-value-problems|two-point-boundary-value-problems]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/07-finite-differences-for-boundary-problems|finite-differences-for-boundary-problems]]"
-next:
-  - "[[Cards/18-Functional analysis/03-Bounded Operators/02-integral-operators-and-the-shift|integral-operators-and-the-shift]]"
-  - "[[Cards/18-Functional analysis/03-Bounded Operators/09-fredholm-alternative-and-integral-equations|fredholm-alternative-and-integral-equations]]"
-  - "[[Cards/18-Functional analysis/04-Distributions and Sobolev Spaces/04-fundamental-solutions-and-the-response-to-a-spike|fundamental-solutions-and-the-response-to-a-spike]]"
-  - "[[Cards/19-Partial differential equations/04-Laplace, Poisson and Potentials/04-greens-functions-and-the-representation-formula|greens-functions-and-the-representation-formula]]"
-  - "[[Cards/19-Partial differential equations/07-Nonlinear PDE and Fluids/07-integral-equations-fredholm-and-volterra|integral-equations-fredholm-and-volterra]]"
-  - "[[Cards/20-Harmonic analysis/03-Convolution and Approximate Identities/09-fourier-methods-for-differential-equations|fourier-methods-for-differential-equations]]"
-tags: [mathematics, differential equations and dynamics, greens-function-for-a-boundary-problem]
----
-
 # Green's function: the response to a single point load, from which every load's response is a sum
 
-Differential equations and dynamics → Series Solutions and Boundary Problems → Responses to a point load → Green's function
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Series Solutions and Boundary Problems](../../../SYLLABUS.md#w08-s07) → Green's function
 
 ---
 
@@ -52,7 +30,7 @@ Write x for the distance from the left bracket in metres and y(x) for the sag th
 
 $$-y'' = f, \qquad y(0) = 0, \quad y(1) = 0$$
 
-Its conditions sit at both ends, not at the start ([two-point-boundary-value-problems](05-two-point-boundary-value-problems.md)). Its solution is
+Its conditions sit at both ends, not at the start ([Boundary value problems](05-two-point-boundary-value-problems.md)). Its solution is
 
 $$y(x) = \int_0^1 G(x, s)\, f(s)\, ds, \qquad G(x, s) = \begin{cases} x\,(1 - s), & x \le s \\ s\,(1 - x), & x \ge s \end{cases}$$
 
@@ -123,7 +101,7 @@ Ends: y(0) = 1 × L(0) + 0 × R(0) = 0, since L(0) = 0; y(1) = 0 × L(1) + 1 × 
 
 </details>
 
-A second route runs through the grid of [finite-differences-for-boundary-problems](07-finite-differences-for-boundary-problems.md). The inverse of its matrix holds the step h times G at the grid points, which is why the grid below lands on the tent exactly. The formula also gives G(x, s) = G(s, x): a bag at 0.3 sags the point 0.7 by 0.045 m, as the same bag at 0.7 sags the point 0.3.
+A second route runs through the grid of [Finite differences](07-finite-differences-for-boundary-problems.md). The inverse of its matrix holds the step h times G at the grid points, which is why the grid below lands on the tent exactly. The formula also gives G(x, s) = G(s, x): a bag at 0.3 sags the point 0.7 by 0.045 m, as the same bag at 0.7 sags the point 0.3.
 
 ---
 
@@ -384,8 +362,8 @@ The two outputs are identical.
 
 - **Bridges.** Engineers call G an influence line: the sag at one point as a truck crosses the deck.
 - **Heat in a rod.** Ends at 0 °C, heat made along it: −k θ″ = source, θ the temperature, k the conductivity. The same tents.
-- **Electrostatics.** Green's 1828 essay; the plane version is greens-functions-and-the-representation-formula.
-- **Modes.** G splits into the shelf's modes sin(nπx) from [eigenvalues-and-eigenfunctions](08-eigenvalues-and-eigenfunctions.md), by the orthogonality of [sturm-liouville-and-orthogonality](09-sturm-liouville-and-orthogonality.md).
+- **Electrostatics.** Green's 1828 essay; the plane version is Green's function.
+- **Modes.** G splits into the shelf's modes sin(nπx) from [Eigenvalue problems](08-eigenvalues-and-eigenfunctions.md), by the orthogonality of [Sturm-Liouville](09-sturm-liouville-and-orthogonality.md).
 
 > **Say it back**
 > A linear boundary problem adds responses, so a load is a pile of point loads. Under a unit point load the canvas is straight on each side, pinned at both brackets, its slope dropping by 1 at the load. That fixes the tent min(x, s)(1 − max(x, s)). Any load's sag is the load-weighted sum of tents, and nothing else.
@@ -394,17 +372,17 @@ The two outputs are identical.
 
 ## What this builds on
 
-- [two-point-boundary-value-problems](05-two-point-boundary-value-problems.md): conditions at both ends.
-- [finite-differences-for-boundary-problems](07-finite-differences-for-boundary-problems.md): the grid, the second road here.
+- [Boundary value problems](05-two-point-boundary-value-problems.md): conditions at both ends.
+- [Finite differences](07-finite-differences-for-boundary-problems.md): the grid, the second road here.
 
 ## Where this goes next
 
-- integral-operators-and-the-shift: the map from load to sag as an operator.
-- fredholm-alternative-and-integral-equations: the sliding-ends failure made general.
-- fundamental-solutions-and-the-response-to-a-spike: the unit bag made exact.
-- greens-functions-and-the-representation-formula: the same idea on a drumhead.
-- integral-equations-fredholm-and-volterra: the unknown inside such a sum.
-- fourier-methods-for-differential-equations: with no brackets, the sum becomes a convolution.
+- Three model operators: the map from load to sag as an operator.
+- Fredholm alternative: the sliding-ends failure made general.
+- Fundamental solution: the unit bag made exact.
+- Green's function: the same idea on a drumhead.
+- Integral equations: the unknown inside such a sum.
+- Solving differential equations by transform: with no brackets, the sum becomes a convolution.
 
 The tent settles a strip held at two brackets; what replaces it on a surface, where a point load's sag grows without bound near the point, is what the plane Green's function answers.
 

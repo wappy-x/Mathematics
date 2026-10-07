@@ -1,26 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: The Classical PDEs
-topic: Cooling a rod mode by mode
-item: Separation of variables
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/03-the-heat-equation|the-heat-equation]]"
-  - "[[Cards/08-Differential equations and dynamics/09-Fourier Series/04-half-range-sine-and-cosine-series|half-range-sine-and-cosine-series]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/06-standing-waves-on-a-string|standing-waves-on-a-string]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/08-laplace-on-a-rectangle|laplace-on-a-rectangle]]"
-  - "[[Cards/13-Engineering mathematics/08-Fluids and Heat/05-heat-conduction-and-fouriers-law|heat-conduction-and-fouriers-law]]"
-  - "[[Cards/16-Numerical analysis/07-PDE Solvers/10-spectral-methods-and-the-fft|spectral-methods-and-the-fft]]"
-tags: [mathematics, differential equations and dynamics, separation-of-variables-for-the-heat-equation]
----
-
 # Separation of variables: guess a product of a space shape and a time factor, and the PDE splits into two ODEs
 
-Differential equations and dynamics → The Classical PDEs → Cooling a rod mode by mode → Separation of variables
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → Separation of variables
 
 ---
 
@@ -28,7 +8,7 @@ Differential equations and dynamics → The Classical PDEs → Cooling a rod mod
 
 A copper bar 1 m long comes out of an oven at a uniform 100 C, its sides wrapped in insulation. Both ends go straight into iced water, which holds them at 0 C. How warm is the middle a few minutes later?
 
-The heat equation ([the-heat-equation](03-the-heat-equation.md)) governs the bar, but a flat 100 C start fits no formula on sight. The way in is to find temperature patterns that keep their shape and only fade. A chord is several pure notes sounding at once; the bar's pure notes are sine-shaped humps, one, two, three. From here on each is called a **mode**. Each mode fades at its own fixed rate, and the flat start is a sum of modes.
+The heat equation ([The heat equation](03-the-heat-equation.md)) governs the bar, but a flat 100 C start fits no formula on sight. The way in is to find temperature patterns that keep their shape and only fade. A chord is several pure notes sounding at once; the bar's pure notes are sine-shaped humps, one, two, three. From here on each is called a **mode**. Each mode fades at its own fixed rate, and the flat start is a sum of modes.
 
 The answer: after 450 s, 7.5 min, the middle of the bar is at 77.23 C.
 
@@ -55,7 +35,7 @@ Orange: t = 0.01. Teal: t = 0.05. Dark blue: t = 0.20, in the bar's own time uni
 
 ## The formula
 
-Notation first, in words. $u(x, t)$ is the temperature in C at $x$ metres from the left end at time $t$. A subscript is a rate ([what-a-pde-says](01-what-a-pde-says.md)): $u_t$ the change in time, $u_{xx}$ the curvature along the bar. $\kappa$, the thermal diffusivity in m^2/s, sets how fast heat spreads. With cold ends:
+Notation first, in words. $u(x, t)$ is the temperature in C at $x$ metres from the left end at time $t$. A subscript is a rate ([A partial differential equation](01-what-a-pde-says.md)): $u_t$ the change in time, $u_{xx}$ the curvature along the bar. $\kappa$, the thermal diffusivity in m^2/s, sets how fast heat spreads. With cold ends:
 
 $$u_t = \kappa\, u_{xx}, \qquad u(0, t) = u(1, t) = 0, \qquad u(x, 0) = f(x).$$
 
@@ -87,7 +67,7 @@ $$u(x, t) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n\, e^{-\kappa n^2 \pi^2 t} \c
 - **A linear equation.** Modes add only because κ does not depend on u; if it does, modes interact.
 - **Ends at zero, or at zero slope.** Ends at 0 C and 20 C defeat the sines: subtract the straight-line steady state first, then separate the rest.
 - **A uniform bar.** If κ varies along the bar, the modes are no longer sines.
-- **A finite bar.** An endless bar has no list of modes; its solution is an integral ([the-heat-kernel](10-the-heat-kernel.md)).
+- **A finite bar.** An endless bar has no list of modes; its solution is an integral ([The heat kernel](10-the-heat-kernel.md)).
 
 ---
 
@@ -119,11 +99,11 @@ So λ = n^2 π^2 and X = sin(nπx), n = 1, 2, 3, …: exactly the humps that van
 
 ### Step 3: each mode fades on its own clock
 
-With λ = n^2 π^2, T' = −κ n^2 π^2 T is exponential decay ([exponential-growth-decay-and-cooling](../01-Rate%20Equations/04-exponential-growth-decay-and-cooling.md)): T = e^(−κ n^2 π^2 t). Three humps fade nine times as fast as one: tighter wiggles have more curvature, which drives heat.
+With λ = n^2 π^2, T' = −κ n^2 π^2 T is exponential decay ([Growth, decay and cooling](../01-Rate%20Equations/04-exponential-growth-decay-and-cooling.md)): T = e^(−κ n^2 π^2 t). Three humps fade nine times as fast as one: tighter wiggles have more curvature, which drives heat.
 
 ### Step 4: add the modes to fit the start
 
-The equation is linear, so any sum of modes is a solution with cold ends. At t = 0 it must equal f: Σ b_n sin(nπx) = f(x), a Fourier sine series ([half-range-sine-and-cosine-series](../09-Fourier%20Series/04-half-range-sine-and-cosine-series.md)). The shapes are perpendicular: the integral from 0 to 1 of sin(mπx) sin(nπx) is 0 when m ≠ n and 1/2 when m = n. Multiply both sides by sin(mπx) and integrate; every term but the m-th vanishes, leaving b_m / 2 = ∫ f sin(mπx) dx.
+The equation is linear, so any sum of modes is a solution with cold ends. At t = 0 it must equal f: Σ b_n sin(nπx) = f(x), a Fourier sine series ([Half-range series](../09-Fourier%20Series/04-half-range-sine-and-cosine-series.md)). The shapes are perpendicular: the integral from 0 to 1 of sin(mπx) sin(nπx) is 0 when m ≠ n and 1/2 when m = n. Multiply both sides by sin(mπx) and integrate; every term but the m-th vanishes, leaving b_m / 2 = ∫ f sin(mπx) dx.
 
 ### Step 5: insulated ends give cosines
 
@@ -140,7 +120,7 @@ Uniqueness: let w be the difference of two solutions with the same start and end
 
 </details>
 
-A second road needs no modes: step the heat equation on a grid of cells, as the code does and [finite-differences-for-the-heat-equation](09-finite-differences-for-the-heat-equation.md) develops.
+A second road needs no modes: step the heat equation on a grid of cells, as the code does and [Stepping the heat equation on a grid](09-finite-differences-for-the-heat-equation.md) develops.
 
 ---
 
@@ -364,7 +344,7 @@ The two outputs match line for line.
 > **Try changing**
 > Guess first, then run it.
 > - **Move the probe.** Print `sine_sum(0.25, 0.05)`. It lands between 46.16 (x = 0.2) and 63.04 (x = 0.3): nearer a cold end, cooler.
-> - **A greedy time step.** In `grid`, change both 4s to 1.9. The old value now gets a negative weight, the grid values swing and blow up, and the second assert stops the run. The limit is explained on [finite-differences-for-the-heat-equation](09-finite-differences-for-the-heat-equation.md).
+> - **A greedy time step.** In `grid`, change both 4s to 1.9. The old value now gets a negative weight, the grid values swing and blow up, and the second assert stops the run. The limit is explained on [Stepping the heat equation on a grid](09-finite-differences-for-the-heat-equation.md).
 
 ---
 
@@ -381,7 +361,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Quenching and heat treatment.** The core of a plate cools on the slowest mode's clock, since faster modes die first. That clock scales with thickness squared: twice as thick, four times as long. Cooking a thick joint of meat obeys the same square law.
-- **Heat through walls.** Conduction through a slab is treated this way; the physics is on heat-conduction-and-fouriers-law.
+- **Heat through walls.** Conduction through a slab is treated this way; the physics is on Fourier's law.
 
 > **Say it back**
 > Guess a shape along the bar times a factor in time, and the heat equation splits into two ordinary equations sharing one constant. Cold ends allow only sin(nπx), fading like e^(−n^2 π^2 κ t); insulated ends allow cosines plus a flat mode that never fades. Fourier coefficients size the modes to fit any start. The bar from 100 C reads 77.23 C at its middle at t = 0.05; a grid agrees.
@@ -390,15 +370,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [the-heat-equation](03-the-heat-equation.md): the equation u_t = κ u_xx and why curvature drives heat.
-- [half-range-sine-and-cosine-series](../09-Fourier%20Series/04-half-range-sine-and-cosine-series.md): expanding a start on 0 to 1 in sines or cosines, and the coefficient integrals.
+- [The heat equation](03-the-heat-equation.md): the equation u_t = κ u_xx and why curvature drives heat.
+- [Half-range series](../09-Fourier%20Series/04-half-range-sine-and-cosine-series.md): expanding a start on 0 to 1 in sines or cosines, and the coefficient integrals.
 
 ## Where this goes next
 
-- [standing-waves-on-a-string](06-standing-waves-on-a-string.md): the wave equation split the same way.
-- [laplace-on-a-rectangle](08-laplace-on-a-rectangle.md): separation in two space directions.
-- heat-conduction-and-fouriers-law: the heat equation in real materials and units.
-- spectral-methods-and-the-fft: computing with modes, summed by a fast transform.
+- [Standing waves](06-standing-waves-on-a-string.md): the wave equation split the same way.
+- [Laplace on a rectangle](08-laplace-on-a-rectangle.md): separation in two space directions.
+- Fourier's law: the heat equation in real materials and units.
+- Spectral methods: computing with modes, summed by a fast transform.
 
 ---
 

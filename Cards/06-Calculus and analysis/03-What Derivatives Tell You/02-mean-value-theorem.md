@@ -1,32 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: What Derivatives Tell You
-topic: Average and instant rates
-item: Mean value theorem
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/07-extreme-value-theorem|extreme-value-theorem]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/01-the-derivative|the-derivative]]"
-next:
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/03-monotonicity-and-optimisation|monotonicity-and-optimisation]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/04-lhopitals-rule|lhopitals-rule]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/05-taylors-theorem|taylors-theorem]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/02-fundamental-theorem-of-calculus|fundamental-theorem-of-calculus]]"
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/03-differentiating-under-the-integral|differentiating-under-the-integral]]"
-  - "[[Cards/16-Numerical analysis/04-Interpolation and Approximation/03-polynomial-interpolation-error|polynomial-interpolation-error]]"
-  - "[[Cards/18-Functional analysis/04-Distributions and Sobolev Spaces/09-sobolev-embedding-and-poincare-inequality|sobolev-embedding-and-poincare-inequality]]"
-tags:
-  - mathematics
-  - calculus and analysis
-  - mean-value-theorem
----
-
 # Mean value theorem: somewhere the instantaneous rate equals the average rate
 
-Calculus and analysis → What Derivatives Tell You → Average and instant rates → Mean value theorem
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [What Derivatives Tell You](../../../SYLLABUS.md#w06-s03) → Mean value theorem
 
 ---
 
@@ -117,7 +91,7 @@ Take slopes of $g$ over short steps from there. Forward, $g$ can only rise, so t
 | 0.01 h | +1.7121 | −1.7521 |
 | 0.001 h | +0.1730 | −0.1734 |
 
-The derivative is the number both columns head for as the step shrinks ([the-derivative](../02-Derivatives/01-the-derivative.md)). The "after" column is never negative and the "before" column never positive, so that number is 0. To land both slopes within 0.2 of 0, a step of 0.001 h is enough; each tenfold cut in the step cuts both about tenfold.
+The derivative is the number both columns head for as the step shrinks ([The derivative](../02-Derivatives/01-the-derivative.md)). The "after" column is never negative and the "before" column never positive, so that number is 0. To land both slopes within 0.2 of 0, a step of 0.001 h is enough; each tenfold cut in the step cuts both about tenfold.
 
 The same holds at any inside peak or trough where a derivative exists. At an end only one column exists, so the argument fails there: an end can be highest with a nonzero slope.
 
@@ -125,7 +99,7 @@ The same holds at any inside peak or trough where a derivative exists. At an end
 
 Suppose $f(a) = f(b)$. If $f$ is constant, every slope is 0. If not, $f$ goes above or below the end height somewhere.
 
-A continuous function on a closed stretch reaches a highest and a lowest value ([extreme-value-theorem](../01-Limits%20and%20Continuity/07-extreme-value-theorem.md)). If $f$ goes above the end height, its highest value is reached inside, and Step 0 makes the derivative there 0. Going below uses the lowest value.
+A continuous function on a closed stretch reaches a highest and a lowest value ([Extreme value theorem](../01-Limits%20and%20Continuity/07-extreme-value-theorem.md)). If $f$ goes above the end height, its highest value is reached inside, and Step 0 makes the derivative there 0. Going below uses the lowest value.
 
 The lead $g$ is 0 km at both ends, lowest (−9.62 km) at $c_1$ and highest (+9.62 km) at $c_2$ = 0.788675 h: two flat points.
 
@@ -154,7 +128,7 @@ So $f$ is constant. A train at zero speed for a whole hour did not move. Likewis
 
 </details>
 
-The same tilt, with two functions, gives Cauchy's version, behind [lhopitals-rule](04-lhopitals-rule.md). Repeated, it gives the error term in [taylors-theorem](05-taylors-theorem.md).
+The same tilt, with two functions, gives Cauchy's version, behind [L'Hopital's rule](04-lhopitals-rule.md). Repeated, it gives the error term in [Taylor's theorem](05-taylors-theorem.md).
 
 ---
 
@@ -389,8 +363,8 @@ The two outputs are identical.
 ## Where you meet it in real life
 
 - **Average-speed cameras.** Two cameras time a car over a known distance. An average above the limit means the car was at that speed at some instant, though no camera saw it.
-- **Error bounds.** A rate never above a bound means a change at most that bound times the length: the train, never above 150 km/h, covers at most 150 km/h times any stretch's duration. [linear-approximation-and-related-rates](01-linear-approximation-and-related-rates.md) and [numerical-derivatives-and-sensitivity](08-numerical-derivatives-and-sensitivity.md) live on bounds of this kind.
-- **Solving by iteration.** A map with slope below 1 in size pulls points together, by this theorem: the engine of [fixed-point-iteration-and-the-contraction-principle](07-fixed-point-iteration-and-the-contraction-principle.md).
+- **Error bounds.** A rate never above a bound means a change at most that bound times the length: the train, never above 150 km/h, covers at most 150 km/h times any stretch's duration. [Linear approximation](01-linear-approximation-and-related-rates.md) and [Numerical derivatives](08-numerical-derivatives-and-sensitivity.md) live on bounds of this kind.
+- **Solving by iteration.** A map with slope below 1 in size pulls points together, by this theorem: the engine of [Fixed points](07-fixed-point-iteration-and-the-contraction-principle.md).
 
 > **Say it back**
 > A function with no jumps on a closed stretch and a derivative inside takes its average rate as an instantaneous rate somewhere inside. The 100 km, one-hour train did exactly 100 km/h at 12.68 and 47.32 minutes. The proof levels the ends by subtracting the steady line, then finds a lowest or highest point, where the slope is zero. So a zero derivative on an unbroken stretch means a constant. A corner, a jump or a gap removes the guarantee.
@@ -399,18 +373,18 @@ The two outputs are identical.
 
 ## What this builds on
 
-- [extreme-value-theorem](../01-Limits%20and%20Continuity/07-extreme-value-theorem.md): highest and lowest values are reached, the fact Rolle stands on.
-- [the-derivative](../02-Derivatives/01-the-derivative.md): the slope as a limit of difference quotients, used in Step 0.
+- [Extreme value theorem](../01-Limits%20and%20Continuity/07-extreme-value-theorem.md): highest and lowest values are reached, the fact Rolle stands on.
+- [The derivative](../02-Derivatives/01-the-derivative.md): the slope as a limit of difference quotients, used in Step 0.
 
 ## Where this goes next
 
-- [monotonicity-and-optimisation](03-monotonicity-and-optimisation.md): a positive derivative means rising, by Step 3's argument.
-- [lhopitals-rule](04-lhopitals-rule.md): Cauchy's two-function version settles 0 over 0.
-- [taylors-theorem](05-taylors-theorem.md): repeated use sizes a polynomial approximation's error.
-- [fundamental-theorem-of-calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md): antiderivatives differ by a constant.
-- [differentiating-under-the-integral](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/03-differentiating-under-the-integral.md): slope bounds control quotients inside an integral.
-- polynomial-interpolation-error: Rolle, repeated, measures an interpolation miss.
-- sobolev-embedding-and-poincare-inequality: size bounded by derivative size, in many dimensions.
+- [Optimisation](03-monotonicity-and-optimisation.md): a positive derivative means rising, by Step 3's argument.
+- [L'Hopital's rule](04-lhopitals-rule.md): Cauchy's two-function version settles 0 over 0.
+- [Taylor's theorem](05-taylors-theorem.md): repeated use sizes a polynomial approximation's error.
+- [Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md): antiderivatives differ by a constant.
+- [Differentiating under the integral sign](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/03-differentiating-under-the-integral.md): slope bounds control quotients inside an integral.
+- The interpolation error theorem: Rolle, repeated, measures an interpolation miss.
+- Sobolev and Poincare: size bounded by derivative size, in many dimensions.
 
 ---
 

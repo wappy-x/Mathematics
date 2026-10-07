@@ -1,25 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Fourier Series
-topic: Reflecting to fit the ends
-item: Half-range series
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/09-Fourier Series/01-fourier-series-and-orthogonality|fourier-series-and-orthogonality]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/08-eigenvalues-and-eigenfunctions|eigenvalues-and-eigenfunctions]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/04-separation-of-variables-for-the-heat-equation|separation-of-variables-for-the-heat-equation]]"
-  - "[[Cards/19-Partial differential equations/05-Waves/03-reflection-at-a-wall-and-the-half-line|reflection-at-a-wall-and-the-half-line]]"
-  - "[[Cards/20-Harmonic analysis/01-Fourier Series in Depth/08-gibbs-and-summability|gibbs-and-summability]]"
-tags: [mathematics, differential equations and dynamics, half-range-sine-and-cosine-series]
----
-
 # Half-range series: extend a function on [0, L] as odd or even so the series matches fixed or insulated ends
 
-Differential equations and dynamics → Fourier Series → Reflecting to fit the ends → Half-range series
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Fourier Series](../../../SYLLABUS.md#w08-s09) → Half-range series
 
 ---
 
@@ -27,7 +8,7 @@ Differential equations and dynamics → Fourier Series → Reflecting to fit the
 
 A string 1 m long is pinned at both ends. Pull its middle 1 cm aside and hold it. The string makes a triangle: 0 cm at the ends, 1 cm at the middle. Released, it vibrates in its own shapes, the modes: one hump, two, three, each pinned at both ends. Which mix makes the triangle?
 
-The Fourier series of [fourier-series-and-orthogonality](01-fourier-series-and-orthogonality.md) needs a function that repeats forever. The string lives only on 0 to 1 m, so invent the rest: reflect the triangle across the left end, and repeat. Flip the copy upside down and only sine waves appear, each zero at both ends, as a pinned string demands. Mirror it upright and only cosines appear, each flat at both ends.
+The Fourier series of [Fourier series](01-fourier-series-and-orthogonality.md) needs a function that repeats forever. The string lives only on 0 to 1 m, so invent the rest: reflect the triangle across the left end, and repeat. Flip the copy upside down and only sine waves appear, each zero at both ends, as a pinned string demands. Mirror it upright and only cosines appear, each flat at both ends.
 
 Flat ends suit a metal rod. Heat flows along it at a rate set by the slope of its temperature, so zero slope at an end means no heat crosses: an insulated end. Give a 1 m rod the same triangle as its temperature, in °C above the room, and the cosine series describes it.
 
@@ -77,7 +58,7 @@ Here sin(nπ/2) is 1, −1, 1 on n = 1, 3, 5 and 0 on even n; the cosine coeffic
 ### When it holds
 
 - **Ends at zero, or ends sealed.** Sines suit f = 0 at both ends (a Dirichlet condition: the value is fixed); cosines suit zero slope (a Neumann condition: the slope is fixed). An end held at 20 °C needs the straight line through the end values subtracted first.
-- **A piecewise smooth shape.** Finitely many corners and jumps; then both series converge inside ([convergence-jumps-and-gibbs](02-convergence-jumps-and-gibbs.md)). The triangle has one corner.
+- **A piecewise smooth shape.** Finitely many corners and jumps; then both series converge inside ([Convergence](02-convergence-jumps-and-gibbs.md)). The triangle has one corner.
 - **Matching ends for speed.** With f(0) = f(L) = 0 the odd extension is continuous and the sine coefficients shrink like 1/n^2. With f(L) ≠ 0 it jumps: coefficients shrink like 1/n and the sum overshoots beside the end. The even extension never jumps when f is continuous, so cosine coefficients shrink like 1/n^2 whatever the end values.
 - **The same kind of end at both ends.** One pinned and one sealed end need quarter waves instead, sin((2k − 1)πx/(2L)).
 
@@ -106,7 +87,7 @@ Swap the roles: even times sine cancels, even times cosine doubles. The cosine s
 
 ### Step 3: the modes are the ends' own shapes
 
-The same formulas come from the ends alone. Pinned ends ask X(0) = X(L) = 0 of each mode shape X; the problem X'' = −λX, with λ a constant to be found, then has the solutions sin(nπx/L). Sealed ends, X'(0) = X'(L) = 0, give cos(nπx/L) for n = 0, 1, 2 and on ([eigenvalues-and-eigenfunctions](../07-Series%20Solutions%20and%20Boundary%20Problems/08-eigenvalues-and-eigenfunctions.md)). On 0 to L the integral of sin(mπx/L) sin(nπx/L) is 0 when m ≠ n and L/2 when m = n; the cosines behave the same, except the constant mode, whose integral is L, which is why its term is a0/2. Multiply the series by one mode and integrate: one term survives, and the formula returns. Every partial sum obeys the end condition term by term.
+The same formulas come from the ends alone. Pinned ends ask X(0) = X(L) = 0 of each mode shape X; the problem X'' = −λX, with λ a constant to be found, then has the solutions sin(nπx/L). Sealed ends, X'(0) = X'(L) = 0, give cos(nπx/L) for n = 0, 1, 2 and on ([Eigenvalue problems](../07-Series%20Solutions%20and%20Boundary%20Problems/08-eigenvalues-and-eigenfunctions.md)). On 0 to L the integral of sin(mπx/L) sin(nπx/L) is 0 when m ≠ n and L/2 when m = n; the cosines behave the same, except the constant mode, whose integral is L, which is why its term is a0/2. Multiply the series by one mode and integrate: one term survives, and the formula returns. Every partial sum obeys the end condition term by term.
 
 ### Step 4: the triangle's coefficients
 
@@ -131,7 +112,7 @@ For odd n, cos(nπ/2) = 0, so the sine coefficient is 4I = 8 sin(nπ/2)/(n^2π^2
 
 A corner, not a jump, makes the coefficients shrink like 1/n^2. Their sizes add to a finite total, so after N modes the error anywhere is at most the sum of the dropped ones. For odd n above 99 that sum is below 8/(π^2 × 198), which is 0.00409 cm; the check measures 0.00405 cm.
 
-A third road checks the coefficients through the sum of their squares: [parsevals-identity](03-parsevals-identity.md).
+A third road checks the coefficients through the sum of their squares: [Parseval's identity](03-parsevals-identity.md).
 
 ---
 
@@ -400,14 +381,14 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [fourier-series-and-orthogonality](01-fourier-series-and-orthogonality.md): the full-period series and its coefficients, which the reflection reuses.
-- [eigenvalues-and-eigenfunctions](../07-Series%20Solutions%20and%20Boundary%20Problems/08-eigenvalues-and-eigenfunctions.md): sines and cosines as the mode shapes that pinned and sealed ends allow.
+- [Fourier series](01-fourier-series-and-orthogonality.md): the full-period series and its coefficients, which the reflection reuses.
+- [Eigenvalue problems](../07-Series%20Solutions%20and%20Boundary%20Problems/08-eigenvalues-and-eigenfunctions.md): sines and cosines as the mode shapes that pinned and sealed ends allow.
 
 ## Where this goes next
 
-- [separation-of-variables-for-the-heat-equation](../10-The%20Classical%20PDEs/04-separation-of-variables-for-the-heat-equation.md): each mode here decays at its own rate once heat flows.
-- reflection-at-a-wall-and-the-half-line: the two reflections solving waves on a half-line.
-- gibbs-and-summability: the overshoot beside an end not at zero, and how averaging tames it.
+- [Separation of variables](../10-The%20Classical%20PDEs/04-separation-of-variables-for-the-heat-equation.md): each mode here decays at its own rate once heat flows.
+- Reflection: the two reflections solving waves on a half-line.
+- The Gibbs overshoot and the cure: the overshoot beside an end not at zero, and how averaging tames it.
 
 ---
 

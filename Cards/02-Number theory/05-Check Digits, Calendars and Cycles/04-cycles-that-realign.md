@@ -1,26 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Check Digits, Calendars and Cycles
-topic: Cycles
-item: When cycles meet again
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/02-lcm|lcm]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/06-chinese-remainder-theorem|chinese-remainder-theorem]]"
-next:
-  - "[[Cards/02-Number theory/05-Check Digits, Calendars and Cycles/05-perfect-shuffles|perfect-shuffles]]"
-tags:
-  - mathematics
-  - number theory
-  - cycles-that-realign
----
-
 # When cycles meet again: the 60-year calendar, the 52-year calendar round, and why some remainder pairs never happen
 
-Number theory → Check Digits, Calendars and Cycles → Cycles → When cycles meet again
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Check Digits, Calendars and Cycles](../../../SYLLABUS.md#w02-s05) → When cycles meet again
 
 ---
 
@@ -65,8 +45,8 @@ The same line runs the Maya 260-day and 365-day counts:
 | --- | --- | --- |
 | the cycle length | how long a list runs | 10 and 12 |
 | the remainder | how far a list has moved | 2 and 6 |
-| gcd | biggest number into both ([gcd](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/01-gcd.md)) | 2 |
-| lcm | first number both go into ([lcm](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/02-lcm.md)) | 60 |
+| gcd | biggest number into both ([Greatest common divisor](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/01-gcd.md)) | 2 |
+| lcm | first number both go into ([Least common multiple](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/02-lcm.md)) | 60 |
 | pairs on paper | the lengths multiplied | 120 |
 | pairs that happen | those, divided by the gcd | 60 |
 
@@ -76,11 +56,11 @@ The same line runs the Maya 260-day and 365-day counts:
 
 ### Step 0 — there is one count, read two ways
 
-Nothing runs two clocks. There is one number, years since 1984, and each list reports the remainder when it is divided by that list's length ([division-with-remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)). Stem and branch are two readings of one 42.
+Nothing runs two clocks. There is one number, years since 1984, and each list reports the remainder when it is divided by that list's length ([Division with a remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)). Stem and branch are two readings of one 42.
 
 ### Step 1 — both are home on a year both lengths go into
 
-The stems are back at the start when the year count divides by 10 with nothing over, the branches when it divides by 12. Both at once needs a number 10 and 12 both go into, and the first is lcm(10, 12) = 60 ([lcm](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/02-lcm.md)). 120 is also a year both are home, but the second one.
+The stems are back at the start when the year count divides by 10 with nothing over, the branches when it divides by 12. Both at once needs a number 10 and 12 both go into, and the first is lcm(10, 12) = 60 ([Least common multiple](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/02-lcm.md)). 120 is also a year both are home, but the second one.
 
 ### Step 2 — the shared factor rules pairs out
 
@@ -90,7 +70,7 @@ That is the whole restriction. Stem 3 with branch 4, odd against even, asks one 
 
 ### Step 3 — share nothing and nothing is ruled out
 
-Had the lengths shared no number above 1 — coprime ([coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)) — nothing could disagree, and every pair would happen, once per product. That is [chinese-remainder-theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md).
+Had the lengths shared no number above 1 — coprime ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)) — nothing could disagree, and every pair would happen, once per product. That is [The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md).
 
 The biggest number going into both Maya counts is 5, so their positions must agree on the remainder from 5. One pair in five survives, every 18980 days, not every 94900.
 
@@ -253,9 +233,9 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Two calendars at once.** A payday against a billing date: when are both back at the beginning ([day-of-the-week](03-day-of-the-week.md)).
+- **Two calendars at once.** A payday against a billing date: when are both back at the beginning ([Day of the week for any date](03-day-of-the-week.md)).
 - **Gears.** A 10-tooth wheel driving a 12-tooth wheel: one pair of teeth meets again only after 60 tooth-steps.
-- **Anything that returns to the start.** The same counting says how many repeats undo an operation: [perfect-shuffles](05-perfect-shuffles.md).
+- **Anything that returns to the start.** The same counting says how many repeats undo an operation: [Perfect shuffles](05-perfect-shuffles.md).
 
 > **Say it back**
 > A Chinese year carries two names, one from a list of ten, one from a list of twelve, both read off one count of years. 2026 is 42 years after the Wood Rat of 1984: stem 2, branch 6, the Fire Horse. The lists come home together after 10 × 12 ÷ 2 = 60 years, because 2 is the biggest number both lengths share. That same 2 rules out every pair with one remainder odd and the other even: only 60 of the 120 pairs are ever a year. The Maya counts, 260 and 365, share 5 and meet after 18980 days: the 52-year round.
@@ -264,12 +244,12 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [lcm](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/02-lcm.md): the first number two lengths both go into, and why it is the product divided by the gcd.
-- [chinese-remainder-theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): the coprime case, every pair happening once per product. This card is the rest.
+- [Least common multiple](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/02-lcm.md): the first number two lengths both go into, and why it is the product divided by the gcd.
+- [The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): the coprime case, every pair happening once per product. This card is the rest.
 
 ## Where this goes next
 
-[perfect-shuffles](05-perfect-shuffles.md) asks it of one cycle: how many repeats bring a deck back.
+[Perfect shuffles](05-perfect-shuffles.md) asks it of one cycle: how many repeats bring a deck back.
 
 ---
 

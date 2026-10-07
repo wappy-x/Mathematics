@@ -1,28 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Regression
-topic: Odds on a straight line
-item: Logistic regression
-kind: model
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/09-Regression/03-multiple-regression-and-gauss-markov|multiple-regression-and-gauss-markov]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/04-maximum-likelihood|maximum-likelihood]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/06-newtons-method|newtons-method]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/09-convex-functions|convex-functions]]"
-next:
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/03-cox-proportional-hazards-in-outline|cox-proportional-hazards-in-outline]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/03-perceptron-and-neural-networks|perceptron-and-neural-networks]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/05-softmax-and-cross-entropy-for-classification|softmax-and-cross-entropy-for-classification]]"
-  - "[[Cards/15-Optimization/06-Conic, Quadratic and Stochastic Programs/03-support-vector-machines-as-a-quadratic-program|support-vector-machines-as-a-quadratic-program]]"
-tags: [mathematics, probability and statistics, logistic-regression]
----
-
 # Logistic regression: predicting a yes or no
 
-Probability and statistics → Regression → Odds on a straight line → Logistic regression
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Regression](../../../SYLLABUS.md#w09-s09) → Logistic regression
 
 ---
 
@@ -113,7 +91,7 @@ $$\frac{\text{odds of default at debt ratio } x_{i2} + 10}{\text{odds of default
 ### When it holds
 
 - **Loans independent of each other.** The likelihood multiplies one chance per loan. If a factory closure sinks twenty borrowers at once, the defaults cluster and the standard errors come out too small.
-- **Log-odds straight in the predictors.** If risk jumps once debt passes 50%, the straight line averages the jump away, and fitted chances run high in one region and low in another. The check works in bands: group the loans by fitted chance and compare each band's average fitted chance with its observed share of defaults (Hosmer and Lemeshow's test, in the Sources, turns the gaps into one number). It is the yes-or-no form of judging a fit by what it misses, the idea of [diagnostics-and-residuals](04-diagnostics-and-residuals.md).
+- **Log-odds straight in the predictors.** If risk jumps once debt passes 50%, the straight line averages the jump away, and fitted chances run high in one region and low in another. The check works in bands: group the loans by fitted chance and compare each band's average fitted chance with its observed share of defaults (Hosmer and Lemeshow's test, in the Sources, turns the gaps into one number). It is the yes-or-no form of judging a fit by what it misses, the idea of [Diagnostics](04-diagnostics-and-residuals.md).
 - **Outcomes that overlap.** No straight line in income and debt may split the defaults from the repayments. If one does, even with some loans lying on the line, no finite best fit exists (Step 8).
 - **The same population.** A lender's past loans were approved loans. Applicants the lender rejected never appear, so the model describes approved borrowers, not all comers.
 - **Enough loans.** The curvature standard errors are a large-sample approximation. Here they agree with 400 simulated refits to within about 5%; a book of a few dozen loans gives no such promise.
@@ -134,7 +112,7 @@ Differentiate $(1+e^{-z})^{-1}$ and the slope is $e^{-z}/(1+e^{-z})^2$, which is
 
 ### Step 2: the likelihood of a yes-or-no record
 
-Each loan is one Bernoulli trial, a single yes-or-no draw with its own chance ([bernoulli-and-binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). Loan i contributes $p_i$ if it defaulted and $1 - p_i$ if not. Independence multiplies the contributions, and the logarithm turns the product into the sum in the formula.
+Each loan is one Bernoulli trial, a single yes-or-no draw with its own chance ([Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). Loan i contributes $p_i$ if it defaulted and $1 - p_i$ if not. Independence multiplies the contributions, and the logarithm turns the product into the sum in the formula.
 
 The sum simplifies. Split $y \ln p + (1-y)\ln(1-p)$ as $y \ln\big(p/(1-p)\big) + \ln(1-p)$. The first log is the score $z$. The second is $\ln\big(1/(1+e^{z})\big) = -\ln(1+e^{z})$. So each loan adds $y z - \ln(1+e^{z})$, the second form in the formula. The check writes $\ln(1+e^{z})$ as $\max(z, 0) + \ln(1+e^{-\lvert z\rvert})$, the same number, so it never overflows.
 
@@ -142,11 +120,11 @@ The sum simplifies. Split $y \ln p + (1-y)\ln(1-p)$ as $y \ln\big(p/(1-p)\big) +
 
 Differentiate one loan's term in its score: $y - e^{z}/(1+e^{z}) = y - p$. The score depends on each coefficient through the chain rule: moving $\beta_1$ by one moves $z_i$ by $x_{i1}$. So the slope of $\ell$ in $\beta_1$ is the sum of $x_{i1}(y_i - p_i)$, and likewise for the other two. Setting all three to zero gives the likelihood equations.
 
-On [multiple-regression-and-gauss-markov](03-multiple-regression-and-gauss-markov.md) the same equations are linear in the coefficients and solve in one step. Here each $p_i$ bends through the logistic curve, so no formula solves them; they are solved by climbing.
+On [Multiple regression](03-multiple-regression-and-gauss-markov.md) the same equations are linear in the coefficients and solve in one step. Here each $p_i$ bends through the logistic curve, so no formula solves them; they are solved by climbing.
 
 ### Step 4: one peak at most
 
-Differentiate the slopes once more. Loan i's term bends by $-p_i(1-p_i) = -w_i$ in its own score, so the curvature of $\ell$ is minus the information table. Along any straight path through the coefficients, the second derivative of $\ell$ is minus a sum of weights times squares. It is never positive: $\ell$ is **concave**, shaped like a dome ([convex-functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)). It is strictly negative unless the path leaves every score unchanged, which happens only when one predictor is an exact combination of the others.
+Differentiate the slopes once more. Loan i's term bends by $-p_i(1-p_i) = -w_i$ in its own score, so the curvature of $\ell$ is minus the information table. Along any straight path through the coefficients, the second derivative of $\ell$ is minus a sum of weights times squares. It is never positive: $\ell$ is **concave**, shaped like a dome ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)). It is strictly negative unless the path leaves every score unchanged, which happens only when one predictor is an exact combination of the others.
 
 A strictly concave dome has at most one top, and any point where all slopes are zero is that top. So when Newton's method, below, finds a point where every slope is zero, the search is over: no other coefficients fit better.
 
@@ -163,7 +141,7 @@ A strictly concave dome has at most one top, and any point where all slopes are 
 
 ### Step 5: climb by Newton's method
 
-Near the current guess, replace $\ell$ by its quadratic Taylor approximation, which uses the slopes and the curvature. Jump to that quadratic's top: the step is the inverse of the information table times the slopes. Then repeat ([newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)).
+Near the current guess, replace $\ell$ by its quadratic Taylor approximation, which uses the slopes and the curvature. Jump to that quadratic's top: the step is the inverse of the information table times the slopes. Then repeat ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)).
 
 Starting from all coefficients at zero, which gives every loan a chance of one half, Newton's method reached the peak in 7 steps. There the largest slope was below 0.000000001. The fit:
 
@@ -185,9 +163,9 @@ These are associations in past loans: borrowers with more debt defaulted more of
 
 ### Step 7: standard errors from the bend of the peak
 
-A sharply bent peak pins the coefficients down; a flat one does not. Invert the information table at the peak and take square roots of its diagonal: 0.5091, 0.0047 and 0.0105. Why the inverse curvature measures the spread of an estimate is shown on [fisher-information-and-cramer-rao](../07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md). The check draws 400 fresh loan books from the fitted model, refits each, and measures the spread of the estimates: 0.5360, 0.0047 and 0.0106.
+A sharply bent peak pins the coefficients down; a flat one does not. Invert the information table at the peak and take square roots of its diagonal: 0.5091, 0.0047 and 0.0105. Why the inverse curvature measures the spread of an estimate is shown on [Fisher information](../07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md). The check draws 400 fresh loan books from the fitted model, refits each, and measures the spread of the estimates: 0.5360, 0.0047 and 0.0106.
 
-A 95% interval is the estimate plus or minus 1.96 standard errors, 1.96 being the normal quantile $\Phi^{-1}(0.975)$ ([confidence-intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md)). For the debt odds multiplier it runs from 1.8657 to 2.8129. The interval is a statement about the method: across the 400 simulated books, the interval built this way caught the debt coefficient the books were drawn from in 0.9500 of them. It is not a 95% chance that this particular interval holds the truth.
+A 95% interval is the estimate plus or minus 1.96 standard errors, 1.96 being the normal quantile $\Phi^{-1}(0.975)$ ([Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md)). For the debt odds multiplier it runs from 1.8657 to 2.8129. The interval is a statement about the method: across the 400 simulated books, the interval built this way caught the debt coefficient the books were drawn from in 0.9500 of them. It is not a 95% chance that this particular interval holds the truth.
 
 ### Step 8: when the peak runs away
 
@@ -206,7 +184,7 @@ xychart-beta
 
 One line: the log-likelihood of the eight loans along the path. At slope 0 every chance is one half, giving eight times ln 0.5, −5.55. It rises for ever toward a ceiling of 0.
 
-Newton's method on this book never converges. The slope reaches 0.6777 after 5 steps, 1.6655 after 10 and 4.6654 after 25, while its curvature standard error goes from 0.7 to 16442.2. Software that stops after a fixed number of steps prints a large coefficient with an enormous standard error: a symptom of separation, not an estimate. The remedies are more data, fewer predictors, or a penalty on large coefficients ([ridge-and-lasso](06-ridge-and-lasso.md)).
+Newton's method on this book never converges. The slope reaches 0.6777 after 5 steps, 1.6655 after 10 and 4.6654 after 25, while its curvature standard error goes from 0.7 to 16442.2. Software that stops after a fixed number of steps prints a large coefficient with an enormous standard error: a symptom of separation, not an estimate. The remedies are more data, fewer predictors, or a penalty on large coefficients ([Regularisation](06-ridge-and-lasso.md)).
 
 ### The other door
 
@@ -673,10 +651,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Credit scoring.** Many lenders' scorecards are logistic regressions, with the log-odds rescaled into points. A bank's estimated chance of default then feeds its capital calculation on [vasicek-asrf-and-credit-capital](../../12-Financial%20mathematics/48-Regulatory%20Capital%20in%20Outline/03-vasicek-asrf-and-credit-capital.md).
+- **Credit scoring.** Many lenders' scorecards are logistic regressions, with the log-odds rescaled into points. A bank's estimated chance of default then feeds its capital calculation on [The Basel credit formula](../../12-Financial%20mathematics/48-Regulatory%20Capital%20in%20Outline/03-vasicek-asrf-and-credit-capital.md).
 - **Medicine.** Odds ratios for smoking, age or a gene in studies of disease risk are exponentials of logistic regression coefficients.
-- **Machine learning.** A single artificial neuron with a logistic output, trained on yes-or-no labels by minimising cross-entropy, is exactly this model fitted by maximum likelihood (perceptron-and-neural-networks).
-- **Checking predictions.** Whether a model predicts new loans as well as old ones is judged by holding some back, on [cross-validation-and-overfitting](08-cross-validation-and-overfitting.md).
+- **Machine learning.** A single artificial neuron with a logistic output, trained on yes-or-no labels by minimising cross-entropy, is exactly this model fitted by maximum likelihood (The perceptron and its stack).
+- **Checking predictions.** Whether a model predicts new loans as well as old ones is judged by holding some back, on [Overfitting](08-cross-validation-and-overfitting.md).
 
 > **Say it back**
 > A chance must stay between 0 and 1, so logistic regression draws its straight line on the log-odds scale and converts back through the logistic curve. The line is chosen by maximum likelihood; the log-likelihood is a dome, so there is at most one best fit, and Newton's method finds it in a few steps. A coefficient multiplies the odds by a fixed factor, but the change in chance depends on where the borrower starts. Standard errors come from the bend of the dome. If a line separates the yeses from the noes, the dome has no top and the coefficients run off to infinity.
@@ -685,18 +663,18 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [multiple-regression-and-gauss-markov](03-multiple-regression-and-gauss-markov.md): a straight line in several predictors, fitted by normal equations; this card keeps the line and changes the scale.
-- [maximum-likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md): the rule that picks the coefficients, the failure at an edge, and the curvature standard error.
-- [newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md) and [convex-functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md): the climb, and why a dome has one top.
+- [Multiple regression](03-multiple-regression-and-gauss-markov.md): a straight line in several predictors, fitted by normal equations; this card keeps the line and changes the scale.
+- [Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md): the rule that picks the coefficients, the failure at an edge, and the curvature standard error.
+- [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md) and [Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md): the climb, and why a dome has one top.
 
 ## Where this goes next
 
-- [cox-proportional-hazards-in-outline](../13-Survival%2C%20Design%20and%20Causality/03-cox-proportional-hazards-in-outline.md): not whether a loan defaults but when, with coefficients read as hazard multipliers.
-- perceptron-and-neural-networks: logistic units stacked in layers, fitted by the same likelihood.
-- softmax-and-cross-entropy-for-classification: more than two outcomes, one score each.
-- support-vector-machines-as-a-quadratic-program: a dividing line chosen for its margin rather than its likelihood, which welcomes the separation that breaks this fit.
+- [Cox regression in outline](../13-Survival%2C%20Design%20and%20Causality/03-cox-proportional-hazards-in-outline.md): not whether a loan defaults but when, with coefficients read as hazard multipliers.
+- The perceptron and its stack: logistic units stacked in layers, fitted by the same likelihood.
+- Softmax and cross-entropy: more than two outcomes, one score each.
+- Support vector machines: a dividing line chosen for its margin rather than its likelihood, which welcomes the separation that breaks this fit.
 
-This card sorts each loan into two outcomes; when there are three or more, such as repaid, late and defaulted, the log-odds line becomes one score per outcome, and how those scores share out the chance is softmax-and-cross-entropy-for-classification.
+This card sorts each loan into two outcomes; when there are three or more, such as repaid, late and defaulted, the log-odds line becomes one score per outcome, and how those scores share out the chance is Softmax and cross-entropy.
 
 ---
 

@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Compound Growth and Discounting
-topic: Interest
-item: Simple interest
-kind: model
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/01-growth-factors|growth-factors]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/02-linear-vs-exponential-growth|linear-vs-exponential-growth]]"
-next:
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/03-compound-interest|compound-interest]]"
-tags:
-  - mathematics
-  - foundations
-  - simple-interest
----
-
 # Simple interest: the same $20 every year, a straight line
 
-Foundations → Compound Growth and Discounting → Interest → Simple interest
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Compound Growth and Discounting](../../../SYLLABUS.md#w01-s04) → Simple interest
 
 ---
 
@@ -45,7 +25,7 @@ xychart-beta
     line [500, 520, 540, 560, 580, 600]
 ```
 
-The line is the balance owed; the axis starts at $480 so the steps show. Each year adds the same $20.00, so the points land on a straight line. Interest that earned interest would bend upward — [compound-interest](03-compound-interest.md).
+The line is the balance owed; the axis starts at $480 so the steps show. Each year adds the same $20.00, so the points land on a straight line. Interest that earned interest would bend upward — [Compound interest](03-compound-interest.md).
 
 ---
 
@@ -71,7 +51,7 @@ The standard form, the one you will meet elsewhere: interest = principal × rate
 | the interest | the charge for use of the money, added up | $100.00 | rises in step with all three above |
 | the total to repay | principal plus interest | $600.00 | rises with all three above too |
 
-4% means four per hundred, which as a decimal is 0.04 — the move made on [growth-factors](01-growth-factors.md).
+4% means four per hundred, which as a decimal is 0.04 — the move made on [Growth factors](01-growth-factors.md).
 
 ---
 
@@ -87,9 +67,9 @@ Five years of the deal is $20.00 owed, five times over. Adding one fixed amount 
 
 ### That is exactly what makes it a straight line
 
-A straight line is the shape of equal steps: the same rise for every step sideways. The step here is $20.00 a year, unchanging, so the balance walks 500.00, 520.00, 540.00, 560.00, 580.00, 600.00 — a line. Equal-step growth has a name: [linear-vs-exponential-growth](../03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md).
+A straight line is the shape of equal steps: the same rise for every step sideways. The step here is $20.00 a year, unchanging, so the balance walks 500.00, 520.00, 540.00, 560.00, 580.00, 600.00 — a line. Equal-step growth has a name: [Linear versus exponential growth](../03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md).
 
-Let each year's interest join the principal and start earning, and the step stops being equal, so the shape stops being a line. That is [compound-interest](03-compound-interest.md).
+Let each year's interest join the principal and start earning, and the step stops being equal, so the shape stops being a line. That is [Compound interest](03-compound-interest.md).
 
 ---
 
@@ -263,7 +243,7 @@ The two outputs match line for line.
 
 - **Car loans.** Mostly simple interest: the charge never earns interest, and the same rule is applied to the part of the loan still unpaid, which is why paying early saves money.
 - **A late invoice.** A flat percent per month, charged on the overdue bill itself and not on the penalties already added.
-- **Money lent between people.** The cousin deal. Unless somebody says compound, this is what both of you have in mind — and it is the wrong model for a bank account: [compound-interest](03-compound-interest.md).
+- **Money lent between people.** The cousin deal. Unless somebody says compound, this is what both of you have in mind — and it is the wrong model for a bank account: [Compound interest](03-compound-interest.md).
 
 > **Say it back**
 > Simple interest charges the percent on the money actually lent, never on the interest. $500 at 4% earns $20.00 a year, the same $20.00 each time. Five years of that is $100.00, so your cousin repays $600.00. The same amount added each year means equal steps, which plot as a straight line. Let the interest earn interest and it becomes $608.33, and a curve.
@@ -272,12 +252,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [growth-factors](01-growth-factors.md): turning 4% into the decimal 0.04 you multiply by.
-- [linear-vs-exponential-growth](../03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md): the shape of equal steps, which is what this balance is.
+- [Growth factors](01-growth-factors.md): turning 4% into the decimal 0.04 you multiply by.
+- [Linear versus exponential growth](../03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md): the shape of equal steps, which is what this balance is.
 
 ## Where this goes next
 
-- [compound-interest](03-compound-interest.md): what happens when each year's interest joins the principal and earns too. It runs its own example, a savings account.
+- [Compound interest](03-compound-interest.md): what happens when each year's interest joins the principal and earns too. It runs its own example, a savings account.
 
 ---
 

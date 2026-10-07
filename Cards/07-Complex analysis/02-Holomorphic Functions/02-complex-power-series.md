@@ -1,25 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Holomorphic Functions
-topic: Discs of convergence
-item: Power series in the plane
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/06-complex-limits-series-and-regions|complex-limits-series-and-regions]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/01-complex-derivative-and-cauchy-riemann|complex-derivative-and-cauchy-riemann]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/04-power-series|power-series]]"
-next:
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/03-exponential-sine-and-cosine-in-the-plane|exponential-sine-and-cosine-in-the-plane]]"
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/01-taylor-series-in-the-plane|taylor-series-in-the-plane]]"
-tags: [mathematics, complex analysis, complex-power-series]
----
-
 # Power series in the plane: a disc of convergence, and the invisible poles that set its radius
 
-Complex analysis → Holomorphic Functions → Discs of convergence → Power series in the plane
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Holomorphic Functions](../../../SYLLABUS.md#w07-s02) → Power series in the plane
 
 ---
 
@@ -33,7 +14,7 @@ The reason is off the road. Let x be any point z of the complex plane. At z = i 
 
 **A power series converges on an open disc and fails outside it; inside, it can be differentiated term by term; and its radius reaches from the centre to the nearest point where the function it sums stops being holomorphic, such as a point where it blows up, even off the real line.**
 
-**What kind of fact this is:** a theorem, proved in Why it works for the disc, the termwise slope and the bump's radius; the general rule "radius = distance to the nearest point where the function stops being holomorphic" is proved on [taylor-series-in-the-plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md).
+**What kind of fact this is:** a theorem, proved in Why it works for the disc, the termwise slope and the bump's radius; the general rule "radius = distance to the nearest point where the function stops being holomorphic" is proved on [Taylor series in the plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md).
 
 ### The picture: partial sums on the road
 
@@ -98,17 +79,17 @@ $$\frac{1}{1 + z^2} = \sum_{k=0}^{\infty} (-1)^k z^{2k} = 1 - z^2 + z^4 - \cdots
 
 ### Step 0: every term is beaten by a geometric series
 
-Suppose at distance s from the centre every term's length $|a_n| s^n$ stays below a fixed number M. At a closer distance r, the n-th term is at most M times (r/s)^n: a geometric series with ratio below 1, which settles ([complex-limits-series-and-regions](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md)). Only the length |z − c| enters, never the direction, so pushing s out as far as it goes gives a disc, of radius $R$. Beyond $R$ the terms do not shrink to 0, so no sum exists.
+Suppose at distance s from the centre every term's length $|a_n| s^n$ stays below a fixed number M. At a closer distance r, the n-th term is at most M times (r/s)^n: a geometric series with ratio below 1, which settles ([Limits and regions in the plane](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md)). Only the length |z − c| enters, never the direction, so pushing s out as far as it goes gives a disc, of radius $R$. Beyond $R$ the terms do not shrink to 0, so no sum exists.
 
 ### Step 1: the ratio test finds R
 
-For the bump about 0, consecutive non-zero terms are $(-1)^k z^{2k}$ and $(-1)^{k+1} z^{2k+2}$. Their ratio has length |z|^2. The real ratio test ([power-series](../../06-Calculus%20and%20analysis/06-Series/04-power-series.md)) says: below 1, the series converges; above 1, it fails. So R = 1.
+For the bump about 0, consecutive non-zero terms are $(-1)^k z^{2k}$ and $(-1)^{k+1} z^{2k+2}$. Their ratio has length |z|^2. The real ratio test ([Power series](../../06-Calculus%20and%20analysis/06-Series/04-power-series.md)) says: below 1, the series converges; above 1, it fails. So R = 1.
 
 The ratio of coefficients fails here: every odd coefficient is 0, so a_0/a_1 has no value. The root form never divides: the non-zero coefficients have size 1, so 1/R = 1.
 
 ### Step 2: termwise differentiation is legal inside
 
-Multiplying the n-th coefficient by n leaves the radius alone, since the n-th root of n tends to 1. Inside the disc, the difference quotient (f(z + h) − f(z))/h differs from the derivative series by at most a constant times |h|, in whatever direction the small step $h$ points. So the sum has a complex derivative everywhere in its disc: it is **holomorphic** there ([complex-derivative-and-cauchy-riemann](01-complex-derivative-and-cauchy-riemann.md)).
+Multiplying the n-th coefficient by n leaves the radius alone, since the n-th root of n tends to 1. Inside the disc, the difference quotient (f(z + h) − f(z))/h differs from the derivative series by at most a constant times |h|, in whatever direction the small step $h$ points. So the sum has a complex derivative everywhere in its disc: it is **holomorphic** there ([The complex derivative](01-complex-derivative-and-cauchy-riemann.md)).
 
 At z = 0.5 + 0.5i, sixty terms of the derivative series give −1.12 + 0.16i; so do the quotient rule and difference quotients along 1 and along i.
 
@@ -385,7 +366,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Counting with generating functions.** Coefficients grow or shrink at rate 1/R, set by the nearest pole: about 1 the bump's shrink by a factor near 1/1.414214 per step.
-- **The elementary functions.** The exponential, sine and cosine are holomorphic on the whole plane, so their series converge everywhere: [exponential-sine-and-cosine-in-the-plane](03-exponential-sine-and-cosine-in-the-plane.md).
+- **The elementary functions.** The exponential, sine and cosine are holomorphic on the whole plane, so their series converge everywhere: [The elementary functions](03-exponential-sine-and-cosine-in-the-plane.md).
 
 > **Say it back**
 > A power series settles on an open disc about its centre and fails outside; the rim is decided point by point. The ratio test or the root formula finds the radius. Inside, the series differentiates term by term, so its sum is holomorphic. The radius reaches the nearest point where the function stops being holomorphic. For the bump those points are i and −i, off the road, so the real series stops at one metre.
@@ -394,16 +375,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [complex-limits-series-and-regions](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md): the complex geometric series and the open disc.
-- [complex-derivative-and-cauchy-riemann](01-complex-derivative-and-cauchy-riemann.md): what it means to have a slope in every direction.
-- [power-series](../../06-Calculus%20and%20analysis/06-Series/04-power-series.md): the real radius, the ratio test and the endpoints.
+- [Limits and regions in the plane](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md): the complex geometric series and the open disc.
+- [The complex derivative](01-complex-derivative-and-cauchy-riemann.md): what it means to have a slope in every direction.
+- [Power series](../../06-Calculus%20and%20analysis/06-Series/04-power-series.md): the real radius, the ratio test and the endpoints.
 
 ## Where this goes next
 
-- [exponential-sine-and-cosine-in-the-plane](03-exponential-sine-and-cosine-in-the-plane.md): series with an infinite radius define e^z, sin z and cos z.
-- [taylor-series-in-the-plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md): the radius reaches the nearest point where the function stops being holomorphic, in general.
+- [The elementary functions](03-exponential-sine-and-cosine-in-the-plane.md): series with an infinite radius define e^z, sin z and cos z.
+- [Taylor series in the plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md): the radius reaches the nearest point where the function stops being holomorphic, in general.
 
-A power series is holomorphic; whether every holomorphic function is a power series is the question this leaves, and [taylor-series-in-the-plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md) answers yes.
+A power series is holomorphic; whether every holomorphic function is a power series is the question this leaves, and [Taylor series in the plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md) answers yes.
 
 ---
 

@@ -1,25 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Conformal Maps and Harmonic Functions
-topic: Reading a drumhead from its rim
-item: The Poisson formula
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/05-mean-value-and-maximum-principle-for-harmonic-functions|mean-value-and-maximum-principle-for-harmonic-functions]]"
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/02-mobius-transformations-and-the-point-at-infinity|mobius-transformations-and-the-point-at-infinity]]"
-next:
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/07-solving-boundary-problems-by-mapping|solving-boundary-problems-by-mapping]]"
-  - "[[Cards/19-Partial differential equations/04-Laplace, Poisson and Potentials/05-method-of-images|method-of-images]]"
-  - "[[Cards/20-Harmonic analysis/03-Convolution and Approximate Identities/04-gaussian-and-poisson-kernels|gaussian-and-poisson-kernels]]"
-tags: [mathematics, complex analysis, poisson-integral-formula]
----
-
 # The Poisson formula: fill a disc from its rim by weighting each boundary value by how close it is
 
-Complex analysis → Conformal Maps and Harmonic Functions → Reading a drumhead from its rim → The Poisson formula
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Conformal Maps and Harmonic Functions](../../../SYLLABUS.md#w07-s07) → The Poisson formula
 
 ---
 
@@ -27,7 +8,7 @@ Complex analysis → Conformal Maps and Harmonic Functions → Reading a drumhea
 
 A drumhead of radius 1 sits on a warped hoop. At angle s round the hoop, the rim is 20 + 5 cos s millimetres above the floor: 25 on the right, 15 on the left, 20 at top and bottom. Nothing presses on the skin. How high is it halfway from the centre towards the high side?
 
-The skin settles into a **harmonic** shape: its two second slopes cancel, so no point is a bump or a dip ([harmonic-functions-and-conjugates](04-harmonic-functions-and-conjugates.md)). The centre is the plain average of the rim, 20 ([mean-value-and-maximum-principle-for-harmonic-functions](05-mean-value-and-maximum-principle-for-harmonic-functions.md)). Off centre, near rim points must count more.
+The skin settles into a **harmonic** shape: its two second slopes cancel, so no point is a bump or a dip ([Harmonic functions](04-harmonic-functions-and-conjugates.md)). The centre is the plain average of the rim, 20 ([Mean value and maximum principle](05-mean-value-and-maximum-principle-for-harmonic-functions.md)). Off centre, near rim points must count more.
 
 One fixed weighting does it, the **Poisson kernel**. Halfway out towards the high side it gives the nearest rim point weight 3, the farthest 0.33, and the height 22.5 millimetres; a numerical integral round the rim returns 22.500000.
 
@@ -83,7 +64,7 @@ $$u(x+iy) = \frac{1}{\pi}\int_{-\infty}^{\infty} \frac{y}{(x-q)^2+y^2}\,h(q)\,dq
 
 ### Step 0: Cauchy's formula already reads the inside from the rim
 
-Cauchy's integral formula recovers a holomorphic f inside from its rim values ([cauchys-integral-formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md)). Its weights are complex. Adding an integral that is zero makes them real and positive; then taking real parts gives the harmonic functions.
+Cauchy's integral formula recovers a holomorphic f inside from its rim values ([Cauchy's integral formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md)). Its weights are complex. Adding an integral that is zero makes them real and positive; then taking real parts gives the harmonic functions.
 
 ### Step 1: Cauchy at the point a
 
@@ -93,7 +74,7 @@ $$f(a) = \frac{1}{2\pi i}\oint \frac{f(z)}{z-a}\,dz.$$
 
 ### Step 2: add zero, from the reflected point
 
-Take a ≠ 0; a = 0 is the mean value property. Reflect a in the rim: 1/ā (ā is a-bar, the conjugate) lies on a's ray at distance 1/r, so 2 for a = 1/2. It is outside the rim, so f(z)/(z − 1/ā) has no bad point inside, and its loop integral is 0 by Cauchy's theorem ([cauchys-theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md)). Subtract it:
+Take a ≠ 0; a = 0 is the mean value property. Reflect a in the rim: 1/ā (ā is a-bar, the conjugate) lies on a's ray at distance 1/r, so 2 for a = 1/2. It is outside the rim, so f(z)/(z − 1/ā) has no bad point inside, and its loop integral is 0 by Cauchy's theorem ([Cauchy's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md)). Subtract it:
 
 $$f(a) = \frac{1}{2\pi i}\oint f(z)\Big(\frac{1}{z-a} - \frac{1}{z-1/\bar a}\Big)dz.$$
 
@@ -114,7 +95,7 @@ So f(a) is the kernel-weighted average of f round the rim. At a = 1/2 the neares
 
 ### Step 4: take real parts
 
-The kernel is real, so the real part of the average is the average of real parts. A harmonic u on the disc is the real part of a holomorphic f ([harmonic-functions-and-conjugates](04-harmonic-functions-and-conjugates.md)). That gives the Poisson formula for u. If u is only continuous up to the rim, apply it on the circle of radius ρ < 1 and let ρ grow to 1.
+The kernel is real, so the real part of the average is the average of real parts. A harmonic u on the disc is the real part of a holomorphic f ([Harmonic functions](04-harmonic-functions-and-conjugates.md)). That gives the Poisson formula for u. If u is only continuous up to the rim, apply it on the circle of radius ρ < 1 and let ρ grow to 1.
 
 ### Step 5: the weights total 1
 
@@ -139,7 +120,7 @@ Recovery: by total weight 1, $u(re^{it}) - h(t) = \frac{1}{2\pi}\int_{-\pi}^{\pi
 
 ### Step 8: the half-plane, through the Cayley map
 
-The Cayley map w = (p − i)/(p + i) is a Möbius map ([mobius-transformations-and-the-point-at-infinity](02-mobius-transformations-and-the-point-at-infinity.md)) sending the upper half-plane onto the disc and the real line onto the rim. Harmonic functions stay harmonic under it, and changing variable turns the disc kernel into y/((x − q)^2 + y^2) with 1/π in front. On the drum, 3i maps to 1/2, and the half-plane integral at 3i returns 22.500000.
+The Cayley map w = (p − i)/(p + i) is a Möbius map ([Mobius transformations](02-mobius-transformations-and-the-point-at-infinity.md)) sending the upper half-plane onto the disc and the real line onto the rim. Harmonic functions stay harmonic under it, and changing variable turns the disc kernel into y/((x − q)^2 + y^2) with 1/π in front. On the drum, 3i maps to 1/2, and the half-plane integral at 3i returns 22.500000.
 
 <details>
 <summary>The change of variable</summary>
@@ -148,7 +129,7 @@ Write C(p) = (p − i)/(p + i), q on the line: $1 - |C(p)|^2 = \frac{4y}{|p+i|^2
 
 </details>
 
-A second road: the kernel is the rim slope of the disc's Green's function, its response to a single point source, reached by method-of-images.
+A second road: the kernel is the rim slope of the disc's Green's function, its response to a single point source, reached by Method of images.
 
 ---
 
@@ -390,7 +371,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Steady heat in a round plate, or voltage in a hollow tube.** With the rim held at known values and no source inside, the field is harmonic, and the formula gives it everywhere.
-- **Signal smoothing.** Averaging a repeating signal against the kernel at radius r shrinks its n-th frequency by r^n, damping fast wiggles more than slow ones (gaussian-and-poisson-kernels).
+- **Signal smoothing.** Averaging a repeating signal against the kernel at radius r shrinks its n-th frequency by r^n, damping fast wiggles more than slow ones (The Gaussian and Poisson kernels).
 
 > **Say it back**
 > A harmonic function on a disc is fixed by its rim. Cauchy's formula plus a zero integral from the reflected point becomes a real weighted average. Each weight is 1 − r^2 over a squared distance, and they total 1. Rim 20 + 5 cos s gives 22.5 halfway out. The Cayley map carries this to the half-plane.
@@ -399,14 +380,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [mean-value-and-maximum-principle-for-harmonic-functions](05-mean-value-and-maximum-principle-for-harmonic-functions.md): the centre case of the formula, and the maximum principle that makes the answer unique.
-- [mobius-transformations-and-the-point-at-infinity](02-mobius-transformations-and-the-point-at-infinity.md): the Cayley map that carries the disc onto the half-plane.
+- [Mean value and maximum principle](05-mean-value-and-maximum-principle-for-harmonic-functions.md): the centre case of the formula, and the maximum principle that makes the answer unique.
+- [Mobius transformations](02-mobius-transformations-and-the-point-at-infinity.md): the Cayley map that carries the disc onto the half-plane.
 
 ## Where this goes next
 
-- [solving-boundary-problems-by-mapping](07-solving-boundary-problems-by-mapping.md): other shapes, mapped to the disc first.
-- method-of-images: Step 2's reflected point as a mirror charge.
-- gaussian-and-poisson-kernels: the kernel among positive weights that pile up at a point.
+- [Solving by mapping](07-solving-boundary-problems-by-mapping.md): other shapes, mapped to the disc first.
+- Method of images: Step 2's reflected point as a mirror charge.
+- The Gaussian and Poisson kernels: the kernel among positive weights that pile up at a point.
 
 ---
 

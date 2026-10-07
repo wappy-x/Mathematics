@@ -1,41 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: What Derivatives Tell You
-topic: Solving by tangents
-item: Newton's method
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/01-linear-approximation-and-related-rates|linear-approximation-and-related-rates]]"
-next:
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/07-fixed-point-iteration-and-the-contraction-principle|fixed-point-iteration-and-the-contraction-principle]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/06-the-shooting-method|the-shooting-method]]"
-  - "[[Cards/08-Differential equations and dynamics/11-Discrete Dynamics and Chaos/02-fixed-points-of-a-map|fixed-points-of-a-map]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/05-normal-quantile|normal-quantile]]"
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/04-net-present-value-and-irr|net-present-value-and-irr]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/05-root-finding-for-inverses|root-finding-for-inverses]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/02-implied-volatility-by-newton-and-bisection|implied-volatility-by-newton-and-bisection]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/04-strike-or-spot-from-a-target-premium|strike-or-spot-from-a-target-premium]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/05-sabr-calibration-from-three-quotes|sabr-calibration-from-three-quotes]]"
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/06-barone-adesi-whaley-approximation|barone-adesi-whaley-approximation]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/05-compound-options|compound-options]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/06-fx-strike-from-delta|fx-strike-from-delta]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/07-fx-implied-volatility|fx-implied-volatility]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/03-commodity-implied-vol-and-the-call-skew|commodity-implied-vol-and-the-call-skew]]"
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/05-asian-implied-volatility|asian-implied-volatility]]"
-  - "[[Cards/15-Optimization/02-Unconstrained Methods/05-newton-and-quasi-newton-bfgs|newton-and-quasi-newton-bfgs]]"
-  - "[[Cards/16-Numerical analysis/02-Root Finding and Fixed Points/02-newton-and-secant-with-convergence-orders|newton-and-secant-with-convergence-orders]]"
-tags:
-  - mathematics
-  - calculus and analysis
-  - newtons-method
----
-
 # Newton's method: solving f(x) equals a target by sliding down tangent lines
 
-Calculus and analysis → What Derivatives Tell You → Solving by tangents → Newton's method
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [What Derivatives Tell You](../../../SYLLABUS.md#w06-s03) → Newton's method
 
 ---
 
@@ -97,7 +62,7 @@ The **residual** is $f(x_n)$: how far the guess misses, in the equation's units.
 
 ### Step 0: a curve looks straight up close
 
-Zoomed in, a smooth curve looks like its tangent line ([linear-approximation-and-related-rates](01-linear-approximation-and-related-rates.md)). A line's zero can be found exactly, so use it as the next guess.
+Zoomed in, a smooth curve looks like its tangent line ([Linear approximation](01-linear-approximation-and-related-rates.md)). A line's zero can be found exactly, so use it as the next guess.
 
 ### Step 1: solve the tangent line
 
@@ -126,7 +91,7 @@ The line counts decimal places the guess shares with the root, from the code's s
 
 ### Step 3: any smooth function behaves the same near a simple root
 
-Taylor's theorem ([taylors-theorem](05-taylors-theorem.md)) says a curve leaves its tangent by an amount proportional to the distance squared. The step removes the straight part of the error; the bent part remains:
+Taylor's theorem ([Taylor's theorem](05-taylors-theorem.md)) says a curve leaves its tangent by an amount proportional to the distance squared. The step removes the straight part of the error; the bent part remains:
 
 $$e_{n+1} = \frac{f''(\xi)}{2 f'(x_n)}\, e_n^2$$
 
@@ -143,7 +108,7 @@ By continuity, pick $\delta > 0$ so that from $r - \delta$ to $r + \delta$ the s
 
 ### Step 4: a small residual bounds the error, through the slope
 
-The error needs the unknown root; the residual does not. The mean value theorem ([mean-value-theorem](02-mean-value-theorem.md)) connects them: $f(x_n) - f(r) = f'(\xi)(x_n - r)$ for some $\xi$ between. With $f(r) = 0$ and every slope at least $m$ in size:
+The error needs the unknown root; the residual does not. The mean value theorem ([Mean value theorem](02-mean-value-theorem.md)) connects them: $f(x_n) - f(r) = f'(\xi)(x_n - r)$ for some $\xi$ between. With $f(r) = 0$ and every slope at least $m$ in size:
 
 $$|x_n - r| \le \frac{|f(x_n)|}{m}$$
 
@@ -155,7 +120,7 @@ First check that $f(a)$ and $f(b)$ differ in sign: $f(1) = -1$, $f(2) = 2$, so a
 
 The cubic $x^3 - 2x + 2$ on $-2$ to 0 shows it. Unguarded from 0 it cycles. Guarded, two tangents point outside, so two halvings, then five Newton steps land on $-1.769292354239$.
 
-Bisection alone, halving by signs and never using the slope, is the second road: it reaches 1.414213562373095 but needs 34 halvings to get under $10^{-10}$ wide. Newton needed 4. When any rule of the form "next = rule(current)" must converge is [fixed-point-iteration-and-the-contraction-principle](07-fixed-point-iteration-and-the-contraction-principle.md).
+Bisection alone, halving by signs and never using the slope, is the second road: it reaches 1.414213562373095 but needs 34 halvings to get under $10^{-10}$ wide. Newton needed 4. When any rule of the form "next = rule(current)" must converge is [Fixed points](07-fixed-point-iteration-and-the-contraction-principle.md).
 
 ---
 
@@ -402,9 +367,9 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Square roots in hardware.** Chips refine a table-lookup start for 1/x and square roots by a few Newton steps.
-- **Interest rates.** The rate that makes a stream of payments worth a given price has no formula: [net-present-value-and-irr](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/04-net-present-value-and-irr.md).
-- **Implied volatility.** Traders solve backwards from an option's price, pairing Newton with bisection as the bracket here does: [implied-volatility-by-newton-and-bisection](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md).
-- **Optimisation.** A lowest point solves "slope = 0", and Newton on the slope is newton-and-quasi-newton-bfgs.
+- **Interest rates.** The rate that makes a stream of payments worth a given price has no formula: [NPV and IRR](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/04-net-present-value-and-irr.md).
+- **Implied volatility.** Traders solve backwards from an option's price, pairing Newton with bisection as the bracket here does: [Solving for implied volatility](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md).
+- **Optimisation.** A lowest point solves "slope = 0", and Newton on the slope is Newton and BFGS.
 
 > **Say it back**
 > Write the equation as a miss that should be zero. At each guess, replace the curve by its tangent and take the tangent's zero as the next guess. Near a root with a nonzero slope the error is squared each step: root two goes from 1 to eleven decimals in four steps. Stop when the residual over the smallest slope is small, and keep a sign-changing bracket so a bad tangent costs only a halving.
@@ -413,27 +378,27 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [linear-approximation-and-related-rates](01-linear-approximation-and-related-rates.md): the tangent line as the best straight stand-in for a curve, which each Newton step solves.
+- [Linear approximation](01-linear-approximation-and-related-rates.md): the tangent line as the best straight stand-in for a curve, which each Newton step solves.
 
 ## Where this goes next
 
-- [fixed-point-iteration-and-the-contraction-principle](07-fixed-point-iteration-and-the-contraction-principle.md): Newton as one rule among many.
-- [the-shooting-method](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md): Newton on a launch angle.
-- [fixed-points-of-a-map](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/02-fixed-points-of-a-map.md): the 0, 1, 0, 1 cycle as an orbit.
-- [normal-quantile](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): inverting the bell curve's area.
-- [net-present-value-and-irr](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/04-net-present-value-and-irr.md): a rate of return as a root.
-- [root-finding-for-inverses](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): bracketed Newton as the desk's inverse.
-- [implied-volatility-by-newton-and-bisection](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md): the guarded step on an option price.
-- [strike-or-spot-from-a-target-premium](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/04-strike-or-spot-from-a-target-premium.md): solving for strike or spot.
-- [sabr-calibration-from-three-quotes](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/05-sabr-calibration-from-three-quotes.md): three unknowns at once.
-- [barone-adesi-whaley-approximation](../../12-Financial%20mathematics/15-American%20and%20Bermudan%20exercise/06-barone-adesi-whaley-approximation.md): an exercise boundary as a root.
-- [compound-options](../../12-Financial%20mathematics/17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/05-compound-options.md): a critical price as a root.
-- [fx-strike-from-delta](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md): the strike for a quoted delta.
-- [fx-implied-volatility](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/07-fx-implied-volatility.md): implied volatility with two rates.
-- [commodity-implied-vol-and-the-call-skew](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md): one inversion per strike.
-- [asian-implied-volatility](../../12-Financial%20mathematics/27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/05-asian-implied-volatility.md): inverting an averaged payoff.
-- newton-and-quasi-newton-bfgs: Newton on the gradient.
-- newton-and-secant-with-convergence-orders: Newton without a derivative.
+- [Fixed points](07-fixed-point-iteration-and-the-contraction-principle.md): Newton as one rule among many.
+- [Shooting](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md): Newton on a launch angle.
+- [Fixed points of a map](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/02-fixed-points-of-a-map.md): the 0, 1, 0, 1 cycle as an orbit.
+- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): inverting the bell curve's area.
+- [NPV and IRR](../../12-Financial%20mathematics/01-Money%2C%20Dates%20and%20Discounting/04-net-present-value-and-irr.md): a rate of return as a root.
+- [Solving backwards](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): bracketed Newton as the desk's inverse.
+- [Solving for implied volatility](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md): the guarded step on an option price.
+- [Strike or spot from a target premium](../../12-Financial%20mathematics/11-Implied%20volatility%20and%20the%20vanilla%20inverses/04-strike-or-spot-from-a-target-premium.md): solving for strike or spot.
+- [SABR from three quotes](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/05-sabr-calibration-from-three-quotes.md): three unknowns at once.
+- [Barone-Adesi-Whaley](../../12-Financial%20mathematics/15-American%20and%20Bermudan%20exercise/06-barone-adesi-whaley-approximation.md): an exercise boundary as a root.
+- [Compound options](../../12-Financial%20mathematics/17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/05-compound-options.md): a critical price as a root.
+- [Strike from delta](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md): the strike for a quoted delta.
+- [Implied vol for a currency option](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/07-fx-implied-volatility.md): implied volatility with two rates.
+- [Implied vol on a futures option and the commodity smile](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md): one inversion per strike.
+- [Implied vol from an Asian quote](../../12-Financial%20mathematics/27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/05-asian-implied-volatility.md): inverting an averaged payoff.
+- Newton and BFGS: Newton on the gradient.
+- Newton and secant: Newton without a derivative.
 
 ---
 

@@ -1,29 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Clock Arithmetic
-topic: Congruence
-item: Adding and multiplying on the clock
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/01-congruence-mod-n|congruence-mod-n]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/05-arithmetic-laws|arithmetic-laws]]"
-next:
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/03-residue-classes|residue-classes]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/01-modular-exponentiation|modular-exponentiation]]"
-  - "[[Cards/02-Number theory/05-Check Digits, Calendars and Cycles/01-barcode-check-digit|barcode-check-digit]]"
-  - "[[Cards/02-Number theory/05-Check Digits, Calendars and Cycles/03-day-of-the-week|day-of-the-week]]"
-tags:
-  - mathematics
-  - number theory
-  - modular-addition-and-multiplication
----
-
 # Adding and multiplying on the clock: reduce before or after, the answer agrees
 
-Number theory → Clock Arithmetic → Congruence → Adding and multiplying on the clock
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Clock Arithmetic](../../../SYLLABUS.md#w02-s03) → Adding and multiplying on the clock
 
 ---
 
@@ -33,7 +10,7 @@ A market stall works your order out by hand on the receipt: 47 boxes at 23 cents
 
 Add the digits instead. 47 gives 4 + 7 = 11, then 1 + 1 = 2. 23 gives 5. Multiply those: 2 × 5 = 10, then 1. Now the receipt's answer: 1 + 0 + 8 + 1 = 10, then 1.
 
-Both roads end on 1, so the receipt passes. Shrinking a number means keeping the remainder — what is left once whole 9s are thrown away ([congruence-mod-n](01-congruence-mod-n.md)).
+Both roads end on 1, so the receipt passes. Shrinking a number means keeping the remainder — what is left once whole 9s are thrown away ([Congruence](01-congruence-mod-n.md)).
 
 This is called **casting out nines**. It works because shrinking first then multiplying gives the same result as multiplying first then shrinking.
 
@@ -80,7 +57,7 @@ Card 01's shorthand for that: 47 ≡ 2 (mod 9) and 23 ≡ 5 (mod 9), so 47 × 23
 
 ### Step 1: adding, the piles merge
 
-47 + 23 = (45 + 2) + (18 + 5). Reorder the pieces ([arithmetic-laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)) into (45 + 18) + (2 + 5). The first bracket is seven 9s: still invisible. What shows is 2 + 5 = 7. The long way: 47 + 23 = 70, seven 9s and 7 over. The same 7.
+47 + 23 = (45 + 2) + (18 + 5). Reorder the pieces ([The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)) into (45 + 18) + (2 + 5). The first bracket is seven 9s: still invisible. What shows is 2 + 5 = 7. The long way: 47 + 23 = 70, seven 9s and 7 over. The same 7.
 
 ### Step 2: multiplying, every cross piece carries a 9
 
@@ -92,7 +69,7 @@ Nothing there was about 9, or about 47 and 23. Split any two numbers into remain
 
 10 leaves 1 on the 9-clock, since 10 = 9 + 1. So does 100, being eleven 9s + 1, and so does 1,000.
 
-Read 1,081 by its columns ([place-value](../../01-Foundations/01-Everyday%20Arithmetic/01-place-value.md)): 1 thousand, 0 hundreds, 8 tens, 1 one. By Step 2 each column's worth can be swapped for the 1 it leaves, and by Step 1 the columns still add, so every digit contributes only itself: 1 + 0 + 8 + 1 = 10, then 1.
+Read 1,081 by its columns ([Place value](../../01-Foundations/01-Everyday%20Arithmetic/01-place-value.md)): 1 thousand, 0 hundreds, 8 tens, 1 one. By Step 2 each column's worth can be swapped for the 1 it leaves, and by Step 1 the columns still add, so every digit contributes only itself: 1 + 0 + 8 + 1 = 10, then 1.
 
 A digit total of 9 is remainder 0: nine hours on, the clock reads zero.
 
@@ -248,7 +225,7 @@ The two outputs match line for line: whole numbers, nothing to round.
 ## The usual mistake
 
 > [!warning]
-> **Dividing.** Adding and multiplying carry over to remainders. Dividing does not. On the 9-clock 3 × 4 = 12 leaves 3, and 3 × 1 = 3 leaves 3 too. Cancel the 3 and you have said 4 and 1 are the same number. Division comes later, with a condition attached ([modular-inverse](04-modular-inverse.md)). Until then, do not cancel.
+> **Dividing.** Adding and multiplying carry over to remainders. Dividing does not. On the 9-clock 3 × 4 = 12 leaves 3, and 3 × 1 = 3 leaves 3 too. Cancel the 3 and you have said 4 and 1 are the same number. Division comes later, with a condition attached ([The modular inverse](04-modular-inverse.md)). Until then, do not cancel.
 >
 > - The check can catch a wrong answer, never confirm a right one. 1,801 passes and is still wrong.
 > - A digit total of 9 is remainder 0, not 9.
@@ -258,9 +235,9 @@ The two outputs match line for line: whole numbers, nothing to round.
 
 ## Where you meet it in real life
 
-- **Check digits.** A barcode's last digit is set so the whole code leaves a fixed remainder; a typo breaks it: [barcode-check-digit](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/01-barcode-check-digit.md).
-- **Days and dates.** Weekday arithmetic is a 7-hour clock: [day-of-the-week](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md).
-- **Enormous powers.** Reducing at every step keeps the numbers small enough to compute: [modular-exponentiation](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md).
+- **Check digits.** A barcode's last digit is set so the whole code leaves a fixed remainder; a typo breaks it: [Barcode check digits](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/01-barcode-check-digit.md).
+- **Days and dates.** Weekday arithmetic is a 7-hour clock: [Day of the week for any date](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md).
+- **Enormous powers.** Reducing at every step keeps the numbers small enough to compute: [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md).
 
 > **Say it back**
 > On a clock you keep only the remainder. Reduce two numbers and then add or multiply: you land where multiplying first and reducing at the end lands. Each number is its remainder plus a pile of the modulus, and every piece built from a pile is invisible. On the 9-clock every column's worth leaves 1, so reducing is adding the digits: 47 gives 2, 23 gives 5, 2 × 5 gives 1, 1,081 gives 1, receipt passes. Division is not part of the deal.
@@ -269,15 +246,15 @@ The two outputs match line for line: whole numbers, nothing to round.
 
 ## What this builds on
 
-- [congruence-mod-n](01-congruence-mod-n.md): what a remainder on a clock is, and what "leaves the same remainder as" means.
-- [arithmetic-laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): reordering and regrouping a sum or a product, which Steps 1 and 2 lean on.
+- [Congruence](01-congruence-mod-n.md): what a remainder on a clock is, and what "leaves the same remainder as" means.
+- [The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): reordering and regrouping a sum or a product, which Steps 1 and 2 lean on.
 
 ## Where this goes next
 
-- [residue-classes](03-residue-classes.md): the remainders as numbers in their own right, with their own small tables.
-- [modular-exponentiation](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): multiplying on the clock over and over, so huge powers stay small.
-- [barcode-check-digit](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/01-barcode-check-digit.md): this check, built into every barcode.
-- [day-of-the-week](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md): the 7-hour clock, and what day a date lands on.
+- [Residue classes](03-residue-classes.md): the remainders as numbers in their own right, with their own small tables.
+- [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): multiplying on the clock over and over, so huge powers stay small.
+- [Barcode check digits](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/01-barcode-check-digit.md): this check, built into every barcode.
+- [Day of the week for any date](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md): the 7-hour clock, and what day a date lands on.
 
 ---
 

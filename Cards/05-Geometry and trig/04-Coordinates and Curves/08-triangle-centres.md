@@ -1,21 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Coordinates and Curves
-topic: Three meanings of the middle
-item: Triangle centres
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/02-lines-slopes-and-intersections|lines-slopes-and-intersections]]"
-next: []
-tags: [mathematics, geometry and trig, triangle-centres]
----
-
 # Triangle centres: centroid, circumcentre and incentre, and the different questions they answer
 
-Geometry and trig → Coordinates and Curves → Three meanings of the middle → Triangle centres
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Coordinates and Curves](../../../SYLLABUS.md#w05-s04) → Triangle centres
 
 ---
 
@@ -39,7 +24,7 @@ Drawn at 1 km = 22 units. Dashed: the circle through the farms, centre O. Solid:
 
 ## The formula
 
-Notation first, in words. Adding points, or multiplying one by a number, acts on each coordinate separately, as with vectors. Bars, as in $\lvert O - A\rvert$, mean the straight-line distance between two points ([distance-and-midpoint](01-distance-and-midpoint.md)). Each road takes the small letter of the farm it faces: road $a$ runs from B to C.
+Notation first, in words. Adding points, or multiplying one by a number, acts on each coordinate separately, as with vectors. Bars, as in $\lvert O - A\rvert$, mean the straight-line distance between two points ([Distance and midpoint](01-distance-and-midpoint.md)). Each road takes the small letter of the farm it faces: road $a$ runs from B to C.
 
 $$G = \frac{A + B + C}{3}$$
 
@@ -77,7 +62,7 @@ $$I = \frac{aA + bB + cC}{a + b + c}, \qquad r = \frac{K}{s}$$
 
 ### Step 0: two lines fix the point, and the third comes free
 
-The circumcentre is equally far from three farms, the incentre from three roads. Equal from the first two is one straight line (for roads, the one running inside the triangle); from the first and third, another. Two non-parallel lines cross at exactly one point ([lines-slopes-and-intersections](02-lines-slopes-and-intersections.md)). There the second and third are equal too, both being equal to the first, so the third line passes through the same point.
+The circumcentre is equally far from three farms, the incentre from three roads. Equal from the first two is one straight line (for roads, the one running inside the triangle); from the first and third, another. Two non-parallel lines cross at exactly one point ([Lines](02-lines-slopes-and-intersections.md)). There the second and third are equal too, both being equal to the first, so the third line passes through the same point.
 
 ### Step 1: the centroid sits two-thirds along every median
 
@@ -108,7 +93,7 @@ For the farms, A and B give 16x = 64, so x = 4; A and C give 4x + 12y = 40, so y
 
 ### Step 3: equal distance from two roads is an angle bisector
 
-Distance to a road means the shortest distance, at right angles to it. From a point inside the triangle, equally far from the two roads at farm A, drop those two shortest lines. The two right triangles share their hypotenuse and have another side equal, so they are congruent by RHS ([congruent-triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)): the point lies on the **angle bisector**, halving angle A. Run backwards, the same congruence shows every point of that bisector is equally far from both roads. Two bisectors cross at I, the third passes too, and every road is 2.10 km away.
+Distance to a road means the shortest distance, at right angles to it. From a point inside the triangle, equally far from the two roads at farm A, drop those two shortest lines. The two right triangles share their hypotenuse and have another side equal, so they are congruent by RHS ([Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)): the point lies on the **angle bisector**, halving angle A. Run backwards, the same congruence shows every point of that bisector is equally far from both roads. Two bisectors cross at I, the third passes too, and every road is 2.10 km away.
 
 The weights come from the point D where the bisector from A meets road $a$: it splits that road in the ratio c to b.
 
@@ -125,7 +110,7 @@ The weights come from the point D where the bisector from A meets road $a$: it s
 
 ### Step 4: the largest pond has radius area over half-perimeter
 
-Join any inside point P to the three farms. Each of the three pieces has area half its road times P's distance to that road ([area-of-triangles-and-polygons](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)). A pond centred at P fits only if every distance is at least its radius, so K is at least radius times s, and no radius exceeds K over s. At I all three distances equal r, so the pond there reaches that ceiling: 2.1044 km.
+Join any inside point P to the three farms. Each of the three pieces has area half its road times P's distance to that road ([Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)). A pond centred at P fits only if every distance is at least its radius, so K is at least radius times s, and no radius exceeds K over s. At I all three distances equal r, so the pond there reaches that ceiling: 2.1044 km.
 
 ---
 
@@ -373,7 +358,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Nearest-site maps.** Maps giving each spot to its nearest mast have borders along perpendicular bisectors, meeting in threes at circumcentres.
-- **Round things from three marks.** Three points on a broken plate's rim fix the circle through them, centred at their circumcentre ([circles-and-parabolas](04-circles-and-parabolas.md)).
+- **Round things from three marks.** Three points on a broken plate's rim fix the circle through them, centred at their circumcentre ([Circles and parabolas](04-circles-and-parabolas.md)).
 - **Plates and offcuts.** An evenly thick triangular plate hangs level from its centroid; the largest disc cut from a triangular offcut is centred at its incentre.
 
 > **Say it back**
@@ -383,13 +368,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [lines-slopes-and-intersections](02-lines-slopes-and-intersections.md): two non-parallel lines cross at exactly one point, found by solving two equations.
+- [Lines](02-lines-slopes-and-intersections.md): two non-parallel lines cross at exactly one point, found by solving two equations.
 
 ## Where this goes next
 
-The sibling [circles-and-parabolas](04-circles-and-parabolas.md) writes the circumcircle as an equation.
+The sibling [Circles and parabolas](04-circles-and-parabolas.md) writes the circumcircle as an equation.
 
-Every answer here assumed flat ground; asked of three towns on the curved Earth, "equally far" has different answers, which is where [triangles-on-a-sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md) takes geometry off the plane.
+Every answer here assumed flat ground; asked of three towns on the curved Earth, "equally far" has different answers, which is where [Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md) takes geometry off the plane.
 
 ---
 

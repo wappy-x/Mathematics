@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Convexity and Exotics
-topic: Swaps with an exit
-item: Callable and cancellable swaps
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/32-Convexity and Exotics/02-cms-and-the-convexity-adjustment|cms-and-the-convexity-adjustment]]"
-  - "[[Cards/12-Financial mathematics/31-Forward-Rate Models/06-bermudan-swaptions-by-regression|bermudan-swaptions-by-regression]]"
-next:
-  - "[[Cards/12-Financial mathematics/32-Convexity and Exotics/06-structured-notes-in-outline|structured-notes-in-outline]]"
-tags: [mathematics, financial mathematics, callable-and-cancellable-swaps]
----
-
 # Callable and cancellable swaps: a swap plus a Bermudan swaption
 
-Financial mathematics → Convexity and Exotics → Swaps with an exit → Callable and cancellable swaps
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Convexity and Exotics](../../../SYLLABUS.md#w12-s32) → Callable and cancellable swaps
 
 ---
 
@@ -61,13 +44,13 @@ $$V_{\rm callable} = V_{\rm swap} + B_R \qquad\qquad V_{\rm cancellable\ by\ ban
 
 **Read it aloud:** the swap with the company's exit is the plain swap plus a receiver Bermudan swaption; the swap with the bank's exit is the plain swap minus a payer Bermudan swaption.
 
-A **receiver swaption** is the right to enter a swap receiving the fixed rate; a **payer swaption** is the right to enter one paying it ([swaptions-payer-and-receiver](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md)). **Bermudan** means usable on any one of a list of dates ([bermudan-options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md)). Here both are struck at the swap's own $K$ and each ends the swap at year 10.
+A **receiver swaption** is the right to enter a swap receiving the fixed rate; a **payer swaption** is the right to enter one paying it ([Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md)). **Bermudan** means usable on any one of a list of dates ([Bermudan options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md)). Here both are struck at the swap's own $K$ and each ends the swap at year 10.
 
 The plain swap, to the fixed payer, from the curve alone:
 
 $$V_{\rm swap} = N\,\bigl[\,1 - D(10) - K\,A\,\bigr], \qquad A = \sum_{t=1}^{10} D(t)$$
 
-In words: the floating payments are worth $1 - D(10)$ per dollar of notional, the fixed payments are worth $K$ times the **annuity** $A$, the value of $1 a year for ten years ([par-swap-rate-and-annuity](../28-Swaps/02-par-swap-rate-and-annuity.md)).
+In words: the floating payments are worth $1 - D(10)$ per dollar of notional, the fixed payments are worth $K$ times the **annuity** $A$, the value of $1 a year for ten years ([The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)).
 
 The option's value comes from rolling back on a rate tree. On a listed year $i$, at a tree node where the one-year rate is $r_i$:
 
@@ -95,7 +78,7 @@ In words: at each node, cancel if what cancelling saves beats what waiting is wo
 
 - **No fee and a clean date.** Cancelling just after a payment, with nothing owed on exit. A break fee lowers each exercise reward by the fee; notice given between payment dates leaves a stub period that the formula misses.
 - **The option is struck at the swap's own rate.** The offsetting swap must pay exactly $K$. A swaption struck at the new market rate on the exercise date does not cancel the old payments and prices a different thing.
-- **One curve prices and projects.** The floating rate is the same rate used to discount. With a separate projection curve, $1 - D(10)$ no longer values the floating leg ([basis-swaps-and-the-multi-curve-framework](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md)).
+- **One curve prices and projects.** The floating rate is the same rate used to discount. With a separate projection curve, $1 - D(10)$ no longer values the floating leg ([Multi-curve](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md)).
 - **The rate model is right.** The decomposition holds in any model; the dollar price does not. A one-factor tree moves every rate together. Real curves twist, and the Bermudan's price depends on how the European options on each date hang together.
 - **The holder exercises well.** $B_R$ assumes the best stopping rule. Cancelling by a simpler rule, such as "whenever the swap is underwater", is worth less: $306,871.10 here.
 
@@ -142,7 +125,7 @@ Allowing only year 3 gives a European receiver swaption worth $362,494.53, the b
 
 ### The other door
 
-The option can also be priced by simulating many rate paths and learning the wait value by regression, which scales to models with many rate factors where a tree cannot follow the state. That route is [bermudan-swaptions-by-regression](../31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md).
+The option can also be priced by simulating many rate paths and learning the wait value by regression, which scales to models with many rate factors where a tree cannot follow the state. That route is [Bermudan swaptions](../31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md).
 
 ---
 
@@ -666,7 +649,7 @@ The two outputs agree byte for byte.
 - **Callable bonds.** A company issues a 10-year bond it may repay from year 2 and swaps it to floating, receiving fixed. When rates fall it will call the bond, so it wants the swap to end then too. It sells the bank the right to cancel: the bank pays fixed and holds exactly this card's receiver Bermudan. The issuer's call on its bond and the bank's exit from the swap are one option seen from two sides, and this is where most Bermudan swaption volume comes from.
 - **Borrowers buying flexibility.** A borrower who may repay a loan early buys a callable swap so the hedge can end with the loan. It pays through a higher fixed rate, as in the 6.0988% here.
 - **Lower rate for giving up the exit.** The ICE instrument guide describes a borrower accepting a lower fixed rate by letting the other side cancel after year 3: the 4.0578% of this card's Try-changing box, on different numbers.
-- **Structured notes.** A callable note is a bond with this option inside, and the dealer hedges it with a callable swap: [structured-notes-in-outline](06-structured-notes-in-outline.md).
+- **Structured notes.** A callable note is a bond with this option inside, and the dealer hedges it with a callable swap: [Structured rate notes](06-structured-notes-in-outline.md).
 - **Desk risk.** Callable swap books carry the vega and negative convexity of the Greeks table. Hedging them is what sets the price of long-dated swaption volatility.
 
 Conventions verified 28 Sep 2026 against the ICE guide: callable when the fixed payer holds the right (swap plus receiver swaption), putable when the fixed receiver does (swap plus payer swaption). ICE uses "cancelable" for the one-date (European) version; elsewhere "cancellable" is used loosely for either side.
@@ -678,12 +661,12 @@ Conventions verified 28 Sep 2026 against the ICE guide: callable when the fixed 
 
 ## What this builds on
 
-- [cms-and-the-convexity-adjustment](02-cms-and-the-convexity-adjustment.md): the shelf's other way of adding optionality to a swap, where the rate paid, not the end date, carries the option.
-- [bermudan-swaptions-by-regression](../31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md): the Bermudan swaption on its own, priced by simulation and regression; this card prices the same object on a tree and puts it inside a swap.
+- [Constant-maturity swaps](02-cms-and-the-convexity-adjustment.md): the shelf's other way of adding optionality to a swap, where the rate paid, not the end date, carries the option.
+- [Bermudan swaptions](../31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md): the Bermudan swaption on its own, priced by simulation and regression; this card prices the same object on a tree and puts it inside a swap.
 
 ## Where this goes next
 
-- [structured-notes-in-outline](06-structured-notes-in-outline.md): notes that bundle a callable swap with other rate options, sold to investors as one bond.
+- [Structured rate notes](06-structured-notes-in-outline.md): notes that bundle a callable swap with other rate options, sold to investors as one bond.
 
 The decomposition leaves open how a dealer packages this option, and others, into a single note an investor buys; that is where the shelf goes next.
 

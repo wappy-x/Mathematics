@@ -1,32 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Portfolio Theory
-topic: Noisy inputs
-item: Estimation error
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/02-efficient-frontier-and-minimum-variance|efficient-frontier-and-minimum-variance]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/06-bias-variance-and-mean-squared-error|bias-variance-and-mean-squared-error]]"
-next:
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/08-risk-parity-and-alternative-weightings|risk-parity-and-alternative-weightings]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - estimation-error-and-shrinkage
----
-
 # Estimation error: why optimised portfolios chase noise, and shrinkage that calms them
 
-Financial mathematics → Portfolio Theory → Noisy inputs → Estimation error
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Theory](../../../SYLLABUS.md#w12-s37) → Estimation error
 
 ---
 
 ## General Overview
 
-A fund holds twenty stocks and wants the mix with the least risk. It has five years of monthly returns: 60 months, twenty numbers a month. It measures how much each stock wobbles and how each pair moves together, feeds those measurements to the minimum-variance optimiser from [efficient-frontier-and-minimum-variance](02-efficient-frontier-and-minimum-variance.md), and gets a portfolio.
+A fund holds twenty stocks and wants the mix with the least risk. It has five years of monthly returns: 60 months, twenty numbers a month. It measures how much each stock wobbles and how each pair moves together, feeds those measurements to the minimum-variance optimiser from [The efficient frontier](02-efficient-frontier-and-minimum-variance.md), and gets a portfolio.
 
 This card runs that fund in a laboratory, where the true behaviour of every stock was chosen in advance. The best possible mix has 10.56% risk a year (risk here means standard deviation of the yearly return), and it puts 49% in stock 1, the calmest stock. Draw one five-year history from the true market and optimise on it, and the optimiser reports 9.19% risk. The same portfolio, held in the true market, carries 12.82%. It promised less risk than is possible and delivered more than the best.
 
@@ -160,7 +140,7 @@ Score a blend by its squared distance from the truth, entry by entry. That score
 
 $$a_{\text{best}} = \frac{\text{average of } \langle S-\Sigma,\ S-\tau I\rangle}{\text{average of } \lVert S-\tau I\rVert^{2}}$$
 
-where the angle brackets multiply two matrices entry by entry and add the products. With a fixed target, the top is the noise in $S$ and the bottom is noise plus the distance from truth to target. So the best amount is **the share of the observed distance that is noise**. This is the bias-variance trade from [bias-variance-and-mean-squared-error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md), applied to a whole matrix at once.
+where the angle brackets multiply two matrices entry by entry and add the products. With a fixed target, the top is the noise in $S$ and the bottom is noise plus the distance from truth to target. So the best amount is **the share of the observed distance that is noise**. This is the bias-variance trade from [Bias and variance](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md), applied to a whole matrix at once.
 
 Both averages need the unknown truth. Ledoit and Wolf estimate each from the one history: $d^2$ stands in for the bottom, since it is the observed distance from the target, and $\bar b^2$ stands in for the top, since it measures how much $S$ would wobble from one history to the next. Capping $\bar b^2$ at $d^2$ keeps the intensity at most 1. If $d^2 = 0$, $S$ already equals the target and there is nothing to shrink.
 
@@ -188,7 +168,7 @@ One line: the entry-by-entry score averaged over 300 histories. It dips below th
 
 </details>
 
-Other roads exist. Michaud's later remedy resamples: draw many histories from the fitted numbers, optimise each, average the weights. A target with the market factor in it, such as the constant-correlation target of Ledoit and Wolf's second 2004 paper, fits stocks better than $\tau I$; factor structure is [factor-models-and-apt](05-factor-models-and-apt.md). Shrinking the expected returns rather than the covariance is [black-litterman](06-black-litterman.md).
+Other roads exist. Michaud's later remedy resamples: draw many histories from the fitted numbers, optimise each, average the weights. A target with the market factor in it, such as the constant-correlation target of Ledoit and Wolf's second 2004 paper, fits stocks better than $\tau I$; factor structure is [Factor models](05-factor-models-and-apt.md). Shrinking the expected returns rather than the covariance is [Black-Litterman](06-black-litterman.md).
 
 ---
 
@@ -646,8 +626,8 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Minimum-variance funds.** Funds holding the least risky mix of an index rebuild their weights from a few years of data, so their risk estimates need taming before any optimiser sees them.
-- **Risk models at asset managers.** A covariance matrix for thousands of stocks from a few hundred observations cannot be inverted at all; blends like Ledoit-Wolf, or factor structure as in [factor-models-and-apt](05-factor-models-and-apt.md), make it usable.
-- **Choosing a portfolio with expected returns.** Mean estimates are noisier still, and the tangency portfolio of [tangency-portfolio-and-the-capital-market-line](03-tangency-portfolio-and-the-capital-market-line.md) maximises their errors the same way; [black-litterman](06-black-litterman.md) shrinks them toward market-implied returns.
+- **Risk models at asset managers.** A covariance matrix for thousands of stocks from a few hundred observations cannot be inverted at all; blends like Ledoit-Wolf, or factor structure as in [Factor models](05-factor-models-and-apt.md), make it usable.
+- **Choosing a portfolio with expected returns.** Mean estimates are noisier still, and the tangency portfolio of [Adding a riskless asset](03-tangency-portfolio-and-the-capital-market-line.md) maximises their errors the same way; [Black-Litterman](06-black-litterman.md) shrinks them toward market-implied returns.
 - **Statistics beyond finance.** Ledoit and Wolf's first paper is written for any large covariance matrix estimated from few samples, a problem shared by genomics and signal processing.
 
 > **Say it back**
@@ -657,12 +637,12 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [efficient-frontier-and-minimum-variance](02-efficient-frontier-and-minimum-variance.md): the minimum-variance weights $S^{-1}\mathbf 1$ scaled to add to 1, used here on noisy inputs.
-- [bias-variance-and-mean-squared-error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md): accepting some bias to remove more variance, the trade shrinkage makes.
+- [The efficient frontier](02-efficient-frontier-and-minimum-variance.md): the minimum-variance weights $S^{-1}\mathbf 1$ scaled to add to 1, used here on noisy inputs.
+- [Bias and variance](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md): accepting some bias to remove more variance, the trade shrinkage makes.
 
 ## Where this goes next
 
-- [risk-parity-and-alternative-weightings](08-risk-parity-and-alternative-weightings.md): weightings that avoid inverting the covariance matrix at all.
+- [Risk parity](08-risk-parity-and-alternative-weightings.md): weightings that avoid inverting the covariance matrix at all.
 
 Shrinkage calms the optimiser but keeps it; whether a portfolio can be built from risks without the inverse that amplifies the noise is what risk parity answers.
 

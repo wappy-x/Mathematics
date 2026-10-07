@@ -1,25 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Random Variables
-topic: Guaranteed tail bounds
-item: Markov and Chebyshev
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/03-variance-and-standard-deviation|variance-and-standard-deviation]]"
-next:
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/01-law-of-large-numbers|law-of-large-numbers]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/06-concentration-inequalities-hoeffding-and-chernoff|concentration-inequalities-hoeffding-and-chernoff]]"
-  - "[[Cards/09-Probability and statistics/14-Random Graphs and the Probabilistic Method/04-first-and-second-moment-methods|first-and-second-moment-methods]]"
-  - "[[Cards/14-Applied and computational/02-Randomised and Approximate Algorithms/02-tail-bounds-and-repeated-trials|tail-bounds-and-repeated-trials]]"
-tags: [mathematics, probability and statistics, markov-and-chebyshev-inequalities]
----
-
 # Markov and Chebyshev: bounds on tails from a mean and a variance alone
 
-Probability and statistics → Random Variables → Guaranteed tail bounds → Markov and Chebyshev
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Variables](../../../SYLLABUS.md#w09-s02) → Markov and Chebyshev
 
 ---
 
@@ -150,7 +131,7 @@ The first sum is at least 0 because every $x$ is; the second has each $x$ at lea
 
 **Equality in Chebyshev.** For any $\varepsilon > 0$ and $0 < v \le \varepsilon^2$, put chance $v/(2\varepsilon^2)$ at each of $\mu - \varepsilon$ and $\mu + \varepsilon$ and the rest at $\mu$. The mean is $\mu$, the variance is $2 \cdot \frac{v}{2\varepsilon^2} \cdot \varepsilon^2 = v$, and the two-sided tail is $v/\varepsilon^2$: the ceiling. The 8-ticket law is the case $\mu = 2$, $\varepsilon = 2$, $v = 1$.
 
-**Densities.** For a variable with a density the sums become integrals, and every line holds unchanged. The single statement covering both is proved in [expectation-as-an-integral](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md).
+**Densities.** For a variable with a density the sums become integrals, and every line holds unchanged. The single statement covering both is proved in [Expectation as an integral](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md).
 
 </details>
 
@@ -161,7 +142,7 @@ Chebyshev spends its quarter on both tails, and at the fête some of that goes o
 
 </details>
 
-A second route to tail bounds applies Markov to an exponential of $X$ instead of $(X - \mu)^2$. It uses the moment generating function ([moment-generating-functions](07-moment-generating-functions.md)) and gives tails that shrink exponentially rather than like $1/k^2$: [concentration-inequalities-hoeffding-and-chernoff](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md).
+A second route to tail bounds applies Markov to an exponential of $X$ instead of $(X - \mu)^2$. It uses the moment generating function ([Moment generating functions](07-moment-generating-functions.md)) and gives tails that shrink exponentially rather than like $1/k^2$: [Concentration](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md).
 
 ---
 
@@ -195,7 +176,7 @@ xychart-beta
     line [0.32, 0.13, 0.05, 0.01, 0.00]
 ```
 
-Orange, top: Chebyshev's ceiling $1/k^2$. Green, middle: the fête's tickets, counted. Dark, bottom: a normal law, the bell curve of [normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md), at the same $k$. Both real laws stay under the ceiling at every $k$, the normal law far under it from two standard deviations on.
+Orange, top: Chebyshev's ceiling $1/k^2$. Green, middle: the fête's tickets, counted. Dark, bottom: a normal law, the bell curve of [Normal](../04-Continuous%20Distributions/04-normal-distribution.md), at the same $k$. Both real laws stay under the ceiling at every $k$, the normal law far under it from two standard deviations on.
 
 ### What breaks if you drop a piece
 
@@ -666,9 +647,9 @@ The two outputs match line for line. The simulated shares, 0.040111 and 0.090472
 
 ## Where you meet it in real life
 
-- **Polls and the law of large numbers.** The share answering yes in a poll of $n$ people has variance at most $1/(4n)$. Chebyshev then says a poll of 2,000 lands within 5 points of the truth with chance at least 95%, for any population. The bell-curve approximation needs only about 384, because it assumes more. The first version is how [law-of-large-numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md) is proved.
-- **Randomised algorithms.** A program that is fast on average is rarely slow: Markov bounds how often a run takes more than a few times its mean, and repeating the run drives that down fast. tail-bounds-and-repeated-trials.
-- **Counting arguments.** If the average count of some structure is below 1, Markov shows it is often absent; if the variance is small next to the mean squared, Chebyshev shows it is usually present. [first-and-second-moment-methods](../14-Random%20Graphs%20and%20the%20Probabilistic%20Method/04-first-and-second-moment-methods.md).
+- **Polls and the law of large numbers.** The share answering yes in a poll of $n$ people has variance at most $1/(4n)$. Chebyshev then says a poll of 2,000 lands within 5 points of the truth with chance at least 95%, for any population. The bell-curve approximation needs only about 384, because it assumes more. The first version is how [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md) is proved.
+- **Randomised algorithms.** A program that is fast on average is rarely slow: Markov bounds how often a run takes more than a few times its mean, and repeating the run drives that down fast. Tail bounds.
+- **Counting arguments.** If the average count of some structure is below 1, Markov shows it is often absent; if the variance is small next to the mean squared, Chebyshev shows it is usually present. [First and second moments](../14-Random%20Graphs%20and%20the%20Probabilistic%20Method/04-first-and-second-moment-methods.md).
 - **Risk without a bell curve.** A loss known only by its mean and standard deviation still has a guaranteed ceiling on a 3-sigma event: 1/9. The finance wing's value-at-risk, the loss exceeded only on the worst few percent of days, usually assumes a shape and gets a much smaller number.
 
 > **Say it back**
@@ -678,16 +659,16 @@ The two outputs match line for line. The simulated shares, 0.040111 and 0.090472
 
 ## What this builds on
 
-- [variance-and-standard-deviation](03-variance-and-standard-deviation.md): the variance as the average squared distance, which Step 2 feeds to Markov.
+- [Variance](03-variance-and-standard-deviation.md): the variance as the average squared distance, which Step 2 feeds to Markov.
 
 ## Where this goes next
 
-- [law-of-large-numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): Chebyshev on an average of $n$ draws, whose variance falls like $1/n$.
-- [concentration-inequalities-hoeffding-and-chernoff](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md): Markov on an exponential, for tails that shrink exponentially.
-- [first-and-second-moment-methods](../14-Random%20Graphs%20and%20the%20Probabilistic%20Method/04-first-and-second-moment-methods.md): both inequalities deciding whether a random graph holds a structure.
-- tail-bounds-and-repeated-trials: running time and error chance of randomised programs.
+- [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): Chebyshev on an average of $n$ draws, whose variance falls like $1/n$.
+- [Concentration](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md): Markov on an exponential, for tails that shrink exponentially.
+- [First and second moments](../14-Random%20Graphs%20and%20the%20Probabilistic%20Method/04-first-and-second-moment-methods.md): both inequalities deciding whether a random graph holds a structure.
+- Tail bounds: running time and error chance of randomised programs.
 
-One ticket's tail is now capped by its mean and variance; what happens to the cap when many tickets are averaged, and why it then falls to zero, is the question [law-of-large-numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md) answers.
+One ticket's tail is now capped by its mean and variance; what happens to the cap when many tickets are averaged, and why it then falls to zero, is the question [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md) answers.
 
 ---
 

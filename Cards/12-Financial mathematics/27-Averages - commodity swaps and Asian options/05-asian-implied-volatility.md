@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Averages - commodity swaps and Asian options
-topic: Reading vol off an average
-item: Implied vol from an Asian quote
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/04-asian-greeks-and-the-running-average|asian-greeks-and-the-running-average]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/03-commodity-implied-vol-and-the-call-skew|commodity-implied-vol-and-the-call-skew]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/06-newtons-method|newtons-method]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/03-asian-greeks-and-implied-volatility|asian-greeks-and-implied-volatility]]"
-next: []
-tags: [mathematics, financial mathematics, asian-implied-volatility]
----
-
 # Implied vol from an Asian quote: invert the moment-matched price, and why it is not the vanilla's vol
 
-Financial mathematics → Averages - commodity swaps and Asian options → Reading vol off an average → Implied vol from an Asian quote
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages - commodity swaps and Asian options](../../../SYLLABUS.md#w12-s27) → Implied vol from an Asian quote
 
 ---
 
@@ -28,13 +10,13 @@ A broker offers an airline a one-year call on the average price of jet fuel at \
 
 Every input to the price can be looked up except one: the **volatility**, the yearly spread of the futures price's log changes. Desks argue in volatility, not dollars. So the premium is run backwards: the **implied volatility** is the one volatility at which the pricing formula returns the quote.
 
-The quick formula for this contract is Turnbull-Wakeman, which treats the average as lognormal (its log follows a bell curve) with the average's exact mean and mean square ([arithmetic-asian-option](03-arithmetic-asian-option.md)). Run backwards on \$5.854, it answers 19.91 percent. A simulation of the exact model, run backwards the same way, answers 20.00 percent. The \$5.854 was that simulation's price at 20 percent, so both roads agree the quote means 20 percent volatility.
+The quick formula for this contract is Turnbull-Wakeman, which treats the average as lognormal (its log follows a bell curve) with the average's exact mean and mean square ([The Asian option desks trade](03-arithmetic-asian-option.md)). Run backwards on \$5.854, it answers 19.91 percent. A simulation of the exact model, run backwards the same way, answers 20.00 percent. The \$5.854 was that simulation's price at 20 percent, so both roads agree the quote means 20 percent volatility.
 
 Now read the same \$5.854 through the plain call formula, fed the strip's own forward, the swap price of \$102.59. It answers 11.75 percent. Fed the December futures price, it answers 7.08 percent. Neither is a volatility of jet fuel: an average moves less than one price, and the plain formula mistakes the averaging for calm. The wrong contract gives the wrong vol. A rule of thumb repairs the reading: an average taken evenly from today to expiry carries about one third of the last price's total variance, so 11.75 percent times the square root of 3 should land near the Asian's vol. It gives 20.36 percent.
 
 **The moment-matched price rises strictly with volatility, so an Asian quote between its zero-volatility floor and its infinite-volatility ceiling gives exactly one implied vol, on the same scale as a vanilla's; the same premium read through the vanilla formula returns the average's own spread, about the square root of a third of it.**
 
-**What kind of fact this is:** a method, inverting a price formula, resting on a theorem: the price rises strictly with volatility, proved on this card in Why it works for Turnbull-Wakeman and on [asian-greeks-and-implied-volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/03-asian-greeks-and-implied-volatility.md) for the exact price. The divide-by-three rule is an approximation, its error stated in Worked numbers.
+**What kind of fact this is:** a method, inverting a price formula, resting on a theorem: the price rises strictly with volatility, proved on this card in Why it works for Turnbull-Wakeman and on [Asian Greeks and implied volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/03-asian-greeks-and-implied-volatility.md) for the exact price. The divide-by-three rule is an approximation, its error stated in Worked numbers.
 
 ### The picture: two price curves, one quote
 
@@ -61,7 +43,7 @@ $$C_{TW}(\hat\sigma) = Q, \qquad C_{TW}(\sigma) = e^{-rT}\big(M_1\,N(e_1) - K\,N
 
 **Read it aloud:** find the volatility at which the moment-matched price of the average equals the quote.
 
-The price is Black-76, the plain call formula for a futures price, fed the average's forward $M_1$ and the average's own log-spread $v_A$. [arithmetic-asian-option](03-arithmetic-asian-option.md) derives the parts; here they are in one line each.
+The price is Black-76, the plain call formula for a futures price, fed the average's forward $M_1$ and the average's own log-spread $v_A$. [The Asian option desks trade](03-arithmetic-asian-option.md) derives the parts; here they are in one line each.
 
 $$M_1 = \frac1n\sum_{i=1}^{n} F(0,t_i), \qquad M_2(\sigma) = \frac{1}{n^2}\sum_{i=1}^{n}\sum_{j=1}^{n} F(0,t_i)\,F(0,t_j)\,e^{\sigma^2\min(t_i,\,t_j)}$$
 
@@ -110,7 +92,7 @@ $$\sigma_{\text{van}} \approx \hat\sigma\,\sqrt{c}, \qquad c = \frac{(n+1)(2n+1)
 - **One random path moves the whole curve.** If the fixings read delivery months that are not perfectly correlated, the true $M_2$ is smaller, the market price is lower, and the implied vol reads low.
 - **The lognormal fit.** Turnbull-Wakeman overprices this contract by 1.9 cents at 20 percent. Divided by the vega of 22 cents a point, that is roughly the gap between its 19.91 percent and the simulation's 20.00 percent, and it grows with the total variance $\sigma^2 T$.
 - **A quote inside the band.** Below \$2.47 or above \$97.59 no volatility fits; a solver without the check returns the edge of its search interval, which means nothing.
-- **No fixings banked.** Part-way through the year, invert the open part of the contract with its shifted strike ([asian-greeks-and-the-running-average](04-asian-greeks-and-the-running-average.md)). If the banked fixings already guarantee payment, the price no longer depends on volatility and no implied vol exists.
+- **No fixings banked.** Part-way through the year, invert the open part of the contract with its shifted strike ([Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md)). If the banked fixings already guarantee payment, the price no longer depends on volatility and no implied vol exists.
 
 ---
 
@@ -118,7 +100,7 @@ $$\sigma_{\text{van}} \approx \hat\sigma\,\sqrt{c}, \qquad c = \frac{(n+1)(2n+1)
 
 ### Step 0: an inverse needs a price that only climbs
 
-A quote maps to one volatility only if the price rises strictly as volatility rises. Then each price level is crossed once, and a search that keeps the half of an interval containing the quote cannot miss. The equity card on shelf 17 proves the exact Asian price has this property, by a convexity argument, and inverts an Acme quote back to 20 percent ([asian-greeks-and-implied-volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/03-asian-greeks-and-implied-volatility.md)). This card spends its length on what a commodity changes: the average is of futures prices along a curve, the formula is Black-76 with the strip's forward in place of a spot price, and the fixing schedule is the contract's own.
+A quote maps to one volatility only if the price rises strictly as volatility rises. Then each price level is crossed once, and a search that keeps the half of an interval containing the quote cannot miss. The equity card on shelf 17 proves the exact Asian price has this property, by a convexity argument, and inverts an Acme quote back to 20 percent ([Asian Greeks and implied volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/03-asian-greeks-and-implied-volatility.md)). This card spends its length on what a commodity changes: the average is of futures prices along a curve, the formula is Black-76 with the strip's forward in place of a spot price, and the fixing schedule is the contract's own.
 
 ### Step 1: the band comes from the swap price
 
@@ -149,11 +131,11 @@ Volatility enters only through $M_2$. Each term of $M_2$ is $F_i F_j e^{\sigma^2
 
 **Bisection** brackets the root between 0.0001 percent and 500 percent, checks that the quote lies between the prices at the two ends, and halves until the interval is narrower than $10^{-13}$. It cannot fail, because the price only climbs.
 
-**Newton's method** replaces the price curve by its tangent at the current guess and jumps to where the tangent meets the quote ([newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)). The slope is the exact vega from Step 2. From 30 percent the guesses run 19.987221, 19.913274, 19.913267 percent. The curve in the picture is nearly straight, so the first jump lands within a tenth of a point. Bisection and Newton agree to every printed digit.
+**Newton's method** replaces the price curve by its tangent at the current guess and jumps to where the tangent meets the quote ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)). The slope is the exact vega from Step 2. From 30 percent the guesses run 19.987221, 19.913274, 19.913267 percent. The curve in the picture is nearly straight, so the first jump lands within a tenth of a point. Bisection and Newton agree to every printed digit.
 
 ### Step 4: a third road, inverting the simulation
 
-Turnbull-Wakeman is an approximation. The exact model has no formula, but it has a precise simulation: 50,000 simulated years of weekly fixings, priced with the geometric average as a control, whose exact price corrects most of the noise (the method of [arithmetic-asian-option](03-arithmetic-asian-option.md)). At 20 percent it gives \$5.854446 with an error bar of a tenth of a cent.
+Turnbull-Wakeman is an approximation. The exact model has no formula, but it has a precise simulation: 50,000 simulated years of weekly fixings, priced with the geometric average as a control, whose exact price corrects most of the noise (the method of [The Asian option desks trade](03-arithmetic-asian-option.md)). At 20 percent it gives \$5.854446 with an error bar of a tenth of a cent.
 
 To invert it, draw the random numbers once and reuse them at every trial volatility. Then the simulated price is a smooth function of $\sigma$, not a new noisy number at each try. The secant method, Newton with the slope estimated from the last two tries, needs 6 simulated prices to find 19.998 percent. The formula's 19.91 percent is the lognormal fit's error expressed in volatility.
 
@@ -186,7 +168,7 @@ For a window of length $L$ ending at $T$, starting at $t_0 = T - L$, split the p
 
 Commodity average options often settle on one calendar month: the average of the daily prices in that month. Take one on the December month, bought now: 21 daily fixings from 11/12 of a year to one year.
 
-**Conventions verified 28 Sep 2026:** a listed Gulf Coast jet fuel swap averages a daily price over every business day of its contract month ([asian-greeks-and-the-running-average](04-asian-greeks-and-the-running-average.md)). The 52 weekly fixings elsewhere on this card are the shelf's simpler schedule.
+**Conventions verified 28 Sep 2026:** a listed Gulf Coast jet fuel swap averages a daily price over every business day of its contract month ([Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md)). The 52 weekly fixings elsewhere on this card are the shelf's simpler schedule.
 
 Most of the variance is already in place before the window opens, so the average keeps almost all of it: $c \approx 11/12 + 1/36$, and the rule says $\sigma_{\text{van}} \approx$ 19.44 percent.
 
@@ -635,11 +617,11 @@ The two outputs agree line for line.
 
 ## Where you meet it in real life
 
-- **An airline's hedge desk.** Before paying \$5.854 a barrel, the desk inverts the quote and compares 20 percent with the December option's implied vol ([commodity-implied-vol-and-the-call-skew](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md)). Like for like, the premium is fair or it is not.
+- **An airline's hedge desk.** Before paying \$5.854 a barrel, the desk inverts the quote and compares 20 percent with the December option's implied vol ([Implied vol on a futures option and the commodity smile](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md)). Like for like, the premium is fair or it is not.
 - **Talking in volatility.** A desk compares options of different shapes by their volatility, not their premium. For an average-price option that comparison needs this inverse, and a counterparty checking a premium against an agreed volatility runs it too.
 - **Model validation.** The gap between the formula's implied vol and the simulation's, 19.91 against 20.00 percent, states an approximation's error in the units traders use.
-- **Seasoned trades.** Halfway through the year, the vol is read off the open part of the average with its shifted strike ([asian-greeks-and-the-running-average](04-asian-greeks-and-the-running-average.md)).
-- **The swap underneath.** The floor and the rule both start from the swap price ([commodity-swap-and-average-price-forward](01-commodity-swap-and-average-price-forward.md)); the geometric twin that steers the simulation is priced exactly on [kemna-vorst-geometric-asian](02-kemna-vorst-geometric-asian.md).
+- **Seasoned trades.** Halfway through the year, the vol is read off the open part of the average with its shifted strike ([Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md)).
+- **The swap underneath.** The floor and the rule both start from the swap price ([Commodity swap](01-commodity-swap-and-average-price-forward.md)); the geometric twin that steers the simulation is priced exactly on [Kemna-Vorst](02-kemna-vorst-geometric-asian.md).
 
 > **Say it back**
 > An Asian quote is turned into a volatility by solving the moment-matched price for $\sigma$. That price rises strictly with volatility, from the discounted swap-price payoff to the discounted swap price, so every quote in between has one answer. For jet fuel, \$5.854 means 20 percent, the same kind of number as a vanilla's vol. The vanilla formula applied to the same premium reads the average's own spread, 11.75 percent. Multiply that by the square root of 3, or by the schedule's own factor, and the fixing's volatility comes back.
@@ -648,15 +630,15 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [asian-greeks-and-the-running-average](04-asian-greeks-and-the-running-average.md): the Asian's vega, the slope every solver here uses, and the seasoned contract with its shifted strike.
-- [commodity-implied-vol-and-the-call-skew](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md): implied vol for a plain option on one futures contract, the number the Asian's vol is compared with.
-- [newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the tangent-line step that solves the equation in a few steps.
-- [asian-greeks-and-implied-volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/03-asian-greeks-and-implied-volatility.md): the equity version, which proves the exact Asian price rises strictly with volatility and inverts it on the Acme market.
+- [Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md): the Asian's vega, the slope every solver here uses, and the seasoned contract with its shifted strike.
+- [Implied vol on a futures option and the commodity smile](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md): implied vol for a plain option on one futures contract, the number the Asian's vol is compared with.
+- [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the tangent-line step that solves the equation in a few steps.
+- [Asian Greeks and implied volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/03-asian-greeks-and-implied-volatility.md): the equity version, which proves the exact Asian price rises strictly with volatility and inverts it on the Acme market.
 
 ## Where this goes next
 
-- [caplet-stripping](../29-Caps%2C%20Floors%20and%20Swaptions/03-caplet-stripping.md): a strip of interest-rate options read back into one volatility per date, the problem an Asian's single blended vol hides.
-- [rate-option-inverses](../29-Caps%2C%20Floors%20and%20Swaptions/09-rate-option-inverses.md): the same existence, uniqueness and solver argument for rate options.
+- [Caplet stripping](../29-Caps%2C%20Floors%20and%20Swaptions/03-caplet-stripping.md): a strip of interest-rate options read back into one volatility per date, the problem an Asian's single blended vol hides.
+- [Solving rate options backwards](../29-Caps%2C%20Floors%20and%20Swaptions/09-rate-option-inverses.md): the same existence, uniqueness and solver argument for rate options.
 
 This card reads one flat volatility off one average; when near fuel contracts move more than far ones, which volatility belongs to which fixing is the question stripping answers.
 

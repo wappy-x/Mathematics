@@ -1,21 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Forward-Rate Models
-topic: Which rate gets to be lognormal
-item: Swap market model
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/31-Forward-Rate Models/04-calibrating-a-market-model|calibrating-a-market-model]]"
-next: []
-tags: [mathematics, financial mathematics, swap-market-model-in-outline]
----
-
 # Swap market model: lognormal swap rates instead of forwards, and why you cannot have both
 
-Financial mathematics → Forward-Rate Models → Which rate gets to be lognormal → Swap market model
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Forward-Rate Models](../../../SYLLABUS.md#w12-s31) → Swap market model
 
 ---
 
@@ -23,7 +8,7 @@ Financial mathematics → Forward-Rate Models → Which rate gets to be lognorma
 
 A rates desk runs two books. One book sells caplets: each pays out if a single one-year borrowing rate ends up above a strike. The other sells swaptions: each is the right, one year from now, to enter a two-year swap paying a fixed rate. Both books quote prices with Black's formula, the lognormal formula from the Black-Scholes family. Lognormal means the logarithm of the rate follows a bell curve, so the rate stays positive and its percentage moves have a fixed size.
 
-The two one-year borrowing rates that the swap covers stand today at 3% (year 1 to year 2) and 4% (year 2 to year 3). These are **forward rates**: rates agreed today for loans that start later. The desk gives the first a volatility of 20% a year and the second 10%, each driven by its own independent random shock. That is a **forward market model** ([libor-and-sofr-market-models](03-libor-and-sofr-market-models.md)): every forward rate lognormal, every caplet priced exactly by Black.
+The two one-year borrowing rates that the swap covers stand today at 3% (year 1 to year 2) and 4% (year 2 to year 3). These are **forward rates**: rates agreed today for loans that start later. The desk gives the first a volatility of 20% a year and the second 10%, each driven by its own independent random shock. That is a **forward market model** ([Market models](03-libor-and-sofr-market-models.md)): every forward rate lognormal, every caplet priced exactly by Black.
 
 The swap's fair fixed rate, the **swap rate**, is built from the same two forwards. Today it is 3.4902%. The swaption desk would like it lognormal too, with one fixed volatility near 10.40%. Making the swap rate lognormal instead of the forwards is the **swap market model**. The trouble is that the swap rate is a weighted average of the forwards, and the weights move when rates move. If the first forward climbs from 3% to 6%, the swap rate's own volatility climbs from 10.40% to 12.81%. A lognormal rate's volatility cannot depend on where rates are. So the two models cannot both hold.
 
@@ -51,7 +36,7 @@ Orange: the swap rate's volatility implied by the forward market model, rising f
 
 ## The formula
 
-Notation first, in words. $P(t,T)$ is the price at date $t$ of one dollar paid at date $T$: a zero-coupon bond. A superscript on $Q$ names the unit of account that prices are counted in: $Q^{A}$ is the **annuity measure** ([the-annuity-measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md)), under which prices are counted in annuities, and $Q^{T_3}$ counts them in bonds paying at $T_3$. A $dW$ is the tiny random kick of a Brownian motion over a tiny slice of time.
+Notation first, in words. $P(t,T)$ is the price at date $t$ of one dollar paid at date $T$: a zero-coupon bond. A superscript on $Q$ names the unit of account that prices are counted in: $Q^{A}$ is the **annuity measure** ([The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md)), under which prices are counted in annuities, and $Q^{T_3}$ counts them in bonds paying at $T_3$. A $dW$ is the tiny random kick of a Brownian motion over a tiny slice of time.
 
 The swap starts at $T_1$ = 1 year and pays fixed at $T_2$ = 2 and $T_3$ = 3 years, one year's interest each time. Its **annuity** and **swap rate** are
 
@@ -98,7 +83,7 @@ $$\Gamma_1 = \frac{\sigma_1 L_1 (1 + L_2)}{L_1 + L_2 + L_1 L_2}, \qquad \Gamma_2
 
 ### When it holds
 
-- **Positive rates, one curve.** The same bonds set both the forwards and the discounting. Lognormal rates cannot go below zero. With negative rates a desk shifts the rate or uses a normal model ([normal-and-shifted-volatilities-for-rates](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)); the clash on this card survives in the shifted rates.
+- **Positive rates, one curve.** The same bonds set both the forwards and the discounting. Lognormal rates cannot go below zero. With negative rates a desk shifts the rate or uses a normal model ([Rate volatilities](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)); the clash on this card survives in the shifted rates.
 - **Deterministic volatility.** $\gamma$ may depend on time, not on rates. Let it depend on rates or on a random factor and the clash can go away, at the price of Black no longer being exact.
 - **A physically settled swaption.** The holder receives the swap itself, worth $A(T_1)(S(T_1) - K)$ per dollar of notional. Cash settlement uses a different annuity formula and needs its own pricing unit.
 - **Two or more coupons, and moving forwards.** With one coupon the swap rate is the forward itself and nothing clashes. With every volatility zero nothing moves and nothing clashes either.
@@ -131,7 +116,7 @@ The draws in the code confirm the no-drift half: averaged with annuity weights o
 
 ### Step 3: under the forward market model, the swap rate's volatility depends on the rates
 
-Take the forward market model with independent shocks. Counted in $T_3$ bonds, both forwards have no drift: the second by construction, the first because its drift correction is proportional to the correlation between the shocks, here zero. Now apply Itô's lemma ([itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)) to Step 1's formula. The random part of the swap rate's percentage move is
+Take the forward market model with independent shocks. Counted in $T_3$ bonds, both forwards have no drift: the second by construction, the first because its drift correction is proportional to the correlation between the shocks, here zero. Now apply Itô's lemma ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)) to Step 1's formula. The random part of the swap rate's percentage move is
 
 $$\frac{dS}{S} = (\text{no drift under } Q^{A}) + \Gamma_1\,dW_1 + \Gamma_2\,dW_2^{A},$$
 
@@ -169,7 +154,7 @@ Suppose the swap rate and the second forward are both lognormal, as a swap marke
 
 ### Another road: freeze the weights
 
-The practical escape is approximation: pretend the moving parts stay where they are today. Rebonato's formula, the one the calibration card uses ([calibrating-a-market-model](04-calibrating-a-market-model.md)), freezes Step 0's weights at 0.509804 and 0.490196. The swap rate's volatility is then 10.4101% for the whole life of the option. Freezing instead Step 3's sensitivities, which also count how the weights move, gives today's $\Gamma$, 10.3953%. At the money these price the swaption at $26,918.72 and $26,880.39, against the forward model's $26,905.75: close, not exact, and the gap grows away from the money.
+The practical escape is approximation: pretend the moving parts stay where they are today. Rebonato's formula, the one the calibration card uses ([Calibrating a market model](04-calibrating-a-market-model.md)), freezes Step 0's weights at 0.509804 and 0.490196. The swap rate's volatility is then 10.4101% for the whole life of the option. Freezing instead Step 3's sensitivities, which also count how the weights move, gives today's $\Gamma$, 10.3953%. At the money these price the swaption at $26,918.72 and $26,880.39, against the forward model's $26,905.75: close, not exact, and the gap grows away from the money.
 
 ---
 
@@ -649,10 +634,10 @@ The two outputs agree line for line. The random draws agree too, because both pr
 
 ## Where you meet it in real life
 
-- **Swaption books.** Physically settled European swaptions quote and hedge in Black-type volatilities; a swap market model makes a chosen set of those prices exact inside one model ([swaptions-payer-and-receiver](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md)).
-- **Bermudan swaptions.** A Bermudan swaption can be exercised on several dates into swaps that all end on the same date: the co-terminal swaps. A swap market model on exactly those swaps prices each European piece exactly, which is why desks built it; valuing the exercise decision is [bermudan-swaptions-by-regression](06-bermudan-swaptions-by-regression.md).
-- **Calibration.** Rebonato's frozen-weight formula lets a forward market model fit swaption volatilities approximately without leaving the model ([calibrating-a-market-model](04-calibrating-a-market-model.md)).
-- **The whole-curve view.** Both models are special cases of [hjm-framework-and-the-drift-condition](01-hjm-framework-and-the-drift-condition.md), each counted in its own unit ([forward-measures-for-rates](02-forward-measures-for-rates.md)).
+- **Swaption books.** Physically settled European swaptions quote and hedge in Black-type volatilities; a swap market model makes a chosen set of those prices exact inside one model ([Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md)).
+- **Bermudan swaptions.** A Bermudan swaption can be exercised on several dates into swaps that all end on the same date: the co-terminal swaps. A swap market model on exactly those swaps prices each European piece exactly, which is why desks built it; valuing the exercise decision is [Bermudan swaptions](06-bermudan-swaptions-by-regression.md).
+- **Calibration.** Rebonato's frozen-weight formula lets a forward market model fit swaption volatilities approximately without leaving the model ([Calibrating a market model](04-calibrating-a-market-model.md)).
+- **The whole-curve view.** Both models are special cases of [Heath-Jarrow-Morton](01-hjm-framework-and-the-drift-condition.md), each counted in its own unit ([Forward measures](02-forward-measures-for-rates.md)).
 
 > **Say it back**
 > A swap market model makes a swap rate lognormal, with a fixed volatility, when prices are counted in annuities, so its swaptions are priced exactly by Black. A forward market model makes the forward rates lognormal instead, so its caplets are exact. The swap rate is an average of the forwards whose weights move with the rates, so its volatility moves too: 10.40% at a 3% first forward, 12.81% at 6%. A fixed volatility cannot match a moving one, so the two models contradict each other except in the one-coupon case. A desk picks one, and prices everything else inside it or by an approximation with a measured error.
@@ -661,11 +646,11 @@ The two outputs agree line for line. The random draws agree too, because both pr
 
 ## What this builds on
 
-- [calibrating-a-market-model](04-calibrating-a-market-model.md): fitting a forward market model to caplets exactly and to swaptions through Rebonato's frozen-weight approximation; this card shows why the swaption fit can only be approximate.
+- [Calibrating a market model](04-calibrating-a-market-model.md): fitting a forward market model to caplets exactly and to swaptions through Rebonato's frozen-weight approximation; this card shows why the swaption fit can only be approximate.
 
 ## Where this goes next
 
-- [bermudan-swaptions-by-regression](06-bermudan-swaptions-by-regression.md): simulate one market model and decide, date by date, whether to exercise into a co-terminal swap.
+- [Bermudan swaptions](06-bermudan-swaptions-by-regression.md): simulate one market model and decide, date by date, whether to exercise into a co-terminal swap.
 
 Choosing a market model settles which European prices are exact; the open question is how to value a contract whose holder chooses when to exercise, which no single Black formula prices.
 

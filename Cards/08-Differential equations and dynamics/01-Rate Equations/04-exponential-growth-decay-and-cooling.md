@@ -1,25 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Rate Equations
-topic: Proportional rates
-item: Growth, decay and cooling
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/03-separable-equations|separable-equations]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/04-compounding-frequency-and-e|compounding-frequency-and-e]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/05-natural-log-and-doubling-time|natural-log-and-doubling-time]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/05-integrating-factor|integrating-factor]]"
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/01-the-laplace-transform|the-laplace-transform]]"
-tags: [mathematics, differential equations and dynamics, exponential-growth-decay-and-cooling]
----
-
 # Growth, decay and cooling: when the rate is proportional to the amount, the answer is an exponential
 
-Differential equations and dynamics → Rate Equations → Proportional rates → Growth, decay and cooling
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Rate Equations](../../../SYLLABUS.md#w08-s01) → Growth, decay and cooling
 
 ---
 
@@ -53,7 +34,7 @@ Orange: the coffee, T = 20 + 60e^(−0.1t). Teal: the room, 20 C. The gap betwee
 
 ## The formula
 
-Reminder: y' = f(t, y) says "the rate of y at time t is f(t, y)", and y(0) = y0 is the starting value ([what-a-differential-equation-says](01-what-a-differential-equation-says.md)). Here the rate is k times the amount:
+Reminder: y' = f(t, y) says "the rate of y at time t is f(t, y)", and y(0) = y0 is the starting value ([A differential equation](01-what-a-differential-equation-says.md)). Here the rate is k times the amount:
 
 $$y' = k\,y,\qquad y(0) = y_0 \qquad\Longleftrightarrow\qquad y(t) = y_0\,e^{kt}$$
 
@@ -87,9 +68,9 @@ $$t_{1/2} = \frac{\ln 2}{-k}\ \ (k<0),\qquad t_2 = \frac{\ln 2}{k}\ \ (k>0)$$
 ### When it holds
 
 - **k is a constant.** If the account pays 4% for five years, then 2%, the answer is 6,749.29 dollars, not 7,459.12: the exponent becomes the sum of rate times time, piece by piece.
-- **The rate depends on the amount alone, in proportion.** A deposit of 100 dollars a year adds a term that does not scale with the balance; that law needs [integrating-factor](05-integrating-factor.md).
+- **The rate depends on the amount alone, in proportion.** A deposit of 100 dollars a year adds a term that does not scale with the balance; that law needs [The integrating factor](05-integrating-factor.md).
 - **The room stays at one temperature.** If A drifts, the gap's rate picks up A's own rate and the shift fails.
-- **Nothing limits growth.** Crowding slows a population below the exponential; see [logistic-growth](07-logistic-growth.md).
+- **Nothing limits growth.** Crowding slows a population below the exponential; see [Logistic growth](07-logistic-growth.md).
 
 ---
 
@@ -97,7 +78,7 @@ $$t_{1/2} = \frac{\ln 2}{-k}\ \ (k<0),\qquad t_2 = \frac{\ln 2}{k}\ \ (k>0)$$
 
 ### Step 0: divide out the expected growth, and nothing is left to change
 
-If y grows like e^(kt), then e^(−kt)y should not change at all. Showing its rate is zero proves every solution is the exponential. No division by y is needed, so the solution y = 0 is not lost, as it can be when separating ([separable-equations](03-separable-equations.md)).
+If y grows like e^(kt), then e^(−kt)y should not change at all. Showing its rate is zero proves every solution is the exponential. No division by y is needed, so the solution y = 0 is not lost, as it can be when separating ([Separable equations](03-separable-equations.md)).
 
 ### Step 1: the exponential solves the equation
 
@@ -124,7 +105,7 @@ Conversely y0 e^(kt) is defined and differentiable for every real t, with rate k
 
 ### Step 3: read k from a half-life or a doubling time
 
-After a half-life, e^(k t½) = 1/2. Take natural logarithms ([natural-log-and-doubling-time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)): k t½ = −ln 2. For carbon-14, k = −0.6931/5730 = −0.000120968 per year. The same halving holds over any 5,730 years, whenever they start.
+After a half-life, e^(k t½) = 1/2. Take natural logarithms ([Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)): k t½ = −ln 2. For carbon-14, k = −0.6931/5730 = −0.000120968 per year. The same halving holds over any 5,730 years, whenever they start.
 
 Doubling works the same way: the account doubles after ln 2/0.04 = 17.33 years.
 
@@ -134,7 +115,7 @@ The bone with 30% left satisfies e^(kt) = 0.3, so t = ln 0.3/k = 9,953 years.
 
 Set y = T − A, the gap. A is a constant, so y' = T', and the cooling law reads y' = k y. Step 2 gives y = (T0 − A)e^(kt); add A back. For the coffee, k = −0.1 per minute, the gap starts at 60 and halves every 10 ln 2 = 6.93 minutes, so the coffee is at 20 + 30 = 50 C then.
 
-A second road steps along the slope. Euler's rule, new value = old value + step length h × rate, multiplies the balance by (1 + kh) each step. With h = 1 year that is annual compounding: 7,401.22 dollars. Halving the step halves the error, and the steps converge to e^(kt), the limit in [compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md). The method has its own card, [eulers-method](../05-Numerical%20Evolution/01-eulers-method.md).
+A second road steps along the slope. Euler's rule, new value = old value + step length h × rate, multiplies the balance by (1 + kh) each step. With h = 1 year that is annual compounding: 7,401.22 dollars. Halving the step halves the error, and the steps converge to e^(kt), the limit in [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md). The method has its own card, [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md).
 
 ---
 
@@ -371,7 +352,7 @@ The two outputs match line for line.
 - **Radiocarbon dating.** The fraction of carbon-14 left gives the age, t = ln(fraction)/k.
 - **Medicine.** Many drugs leave the blood in proportion to the amount left; the half-life sets the dose interval.
 - **Forensics.** A body cools roughly by Newton's law; two readings give k, once the room is subtracted.
-- **Tanks and compartments.** Salt washed out of a tank of clean water decays the same way ([mixing-tanks-and-compartments](06-mixing-tanks-and-compartments.md)).
+- **Tanks and compartments.** Salt washed out of a tank of clean water decays the same way ([Mixing tanks](06-mixing-tanks-and-compartments.md)).
 
 > **Say it back**
 > When a rate is a fixed multiple k of the amount, the amount is its starting value times e^(kt). Multiplying any solution by e^(−kt) gives something with zero rate, so no other answer exists. The half-life or doubling time is ln 2 divided by the size of k, which is how k is read from data. Cooling is the same law on the gap between the object and the room. The coffee's gap halves every 6.93 minutes, so it is at 50 C then.
@@ -380,14 +361,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [separable-equations](03-separable-equations.md): y' = ky is separable; this card proves the answer without dividing by y.
-- [compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): e as the limit of ever more frequent compounding, which Euler's steps reproduce.
-- [natural-log-and-doubling-time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md): the logarithm that turns a factor into a time.
+- [Separable equations](03-separable-equations.md): y' = ky is separable; this card proves the answer without dividing by y.
+- [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): e as the limit of ever more frequent compounding, which Euler's steps reproduce.
+- [Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md): the logarithm that turns a factor into a time.
 
 ## Where this goes next
 
-- [integrating-factor](05-integrating-factor.md): Step 2's multiplier, e^(−kt), generalised to rates that vary and to added deposits or heaters.
-- [the-laplace-transform](../08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md): solves the same equation by turning the rate into multiplication.
+- [The integrating factor](05-integrating-factor.md): Step 2's multiplier, e^(−kt), generalised to rates that vary and to added deposits or heaters.
+- [The Laplace transform](../08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md): solves the same equation by turning the rate into multiplication.
 
 ---
 

@@ -1,24 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Angles, Triangles and Congruence
-topic: Shape without size
-item: Similar triangles
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/05-Geometry and trig/01-Angles, Triangles and Congruence/03-congruent-triangles|congruent-triangles]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/09-ratios-and-rates|ratios-and-rates]]"
-next:
-  - "[[Cards/05-Geometry and trig/01-Angles, Triangles and Congruence/05-pythagoras-and-its-converse|pythagoras-and-its-converse]]"
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/04-similarity-and-model-testing|similarity-and-model-testing]]"
-tags: [mathematics, geometry and trig, similar-triangles-and-scale]
----
-
 # Similar triangles: same shape, different size, and the scale factor between them
 
-Geometry and trig → Angles, Triangles and Congruence → Shape without size → Similar triangles
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Angles, Triangles and Congruence](../../../SYLLABUS.md#w05-s01) → Similar triangles
 
 ---
 
@@ -28,7 +10,7 @@ A flagpole stands on a level field. Nobody can climb it with a tape measure, but
 
 The pole's shadow is 12 times the stick's, so the pole is 12 times the stick's height: 12 m. The sun hits both at the same angle, so the pole's triangle of height, shadow and sun's ray is the stick's triangle blown up 12 times.
 
-Two triangles with the same shape are **similar**: one is a uniformly enlarged or shrunk copy of the other. The number that turns one into the other, 12 here, is the **scale factor**. Similarity is congruence with the size let go ([congruent-triangles](03-congruent-triangles.md)): congruent triangles are similar with a scale factor of 1.
+Two triangles with the same shape are **similar**: one is a uniformly enlarged or shrunk copy of the other. The number that turns one into the other, 12 here, is the **scale factor**. Similarity is congruence with the size let go ([Congruent triangles](03-congruent-triangles.md)): congruent triangles are similar with a scale factor of 1.
 
 Lengths scale by the factor; areas do not. The pole's triangle covers 144 times the stick's, because an area has two directions and both stretch.
 
@@ -84,7 +66,7 @@ Angles say nothing about size. Fix them, and the only freedom left is how big to
 
 ### Step 1: the sun gives two equal angles, so the third matches too
 
-Each object stands upright, so each triangle has a right angle at the ground. Parallel rays cross level ground at equal angles ([angles-and-parallel-lines](01-angles-and-parallel-lines.md)): 51.3° at both shadow tips. The three angles of any triangle add to 180° ([triangle-angle-sum-and-inequality](02-triangle-angle-sum-and-inequality.md)), so the angles at the tops match as well. Two equal angles are enough; this is the **AA test** (angle-angle).
+Each object stands upright, so each triangle has a right angle at the ground. Parallel rays cross level ground at equal angles ([Angles](01-angles-and-parallel-lines.md)): 51.3° at both shadow tips. The three angles of any triangle add to 180° ([Triangles](02-triangle-angle-sum-and-inequality.md)), so the angles at the tops match as well. Two equal angles are enough; this is the **AA test** (angle-angle).
 
 ### Step 2: slide the small triangle inside the big one
 
@@ -362,7 +344,7 @@ The outputs agree line for line. The square count lands exactly on the formula b
 - **Heights from shadows.** Thales of Miletus is reported to have measured a pyramid this way, against a staff's shadow.
 - **Surveying across obstacles.** The river construction measures a width by walking on the near side only.
 - **Maps and plans.** A plan at one scale keeps every angle, so lengths shrink by one factor and areas by its square: a plan twice the size needs four times the ink.
-- **Scale models.** An engineering model is a similar copy of the full-size machine; its areas and forces scale by powers of the factor ([similarity-and-model-testing](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/04-similarity-and-model-testing.md)).
+- **Scale models.** An engineering model is a similar copy of the full-size machine; its areas and forces scale by powers of the factor ([Similarity](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/04-similarity-and-model-testing.md)).
 
 > **Say it back**
 > Two triangles are similar when one is a uniformly scaled copy of the other. Two equal angles are enough to prove it, because a line parallel to one side of a triangle cuts the other two sides in the same ratio. Every length of the big triangle is then the scale factor times its match: 9.6 m of shadow against 0.8 m gives 12, and the pole is 12 m tall. Areas scale by the factor squared, 144 here, because base and height both stretch.
@@ -371,15 +353,15 @@ The outputs agree line for line. The square count lands exactly on the formula b
 
 ## What this builds on
 
-- [congruent-triangles](03-congruent-triangles.md): matching corners in order, and the tests that fix a triangle; similarity is congruence with the size set free.
-- [ratios-and-rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md): equal ratios, and why a ratio of like units has no unit.
+- [Congruent triangles](03-congruent-triangles.md): matching corners in order, and the tests that fix a triangle; similarity is congruence with the size set free.
+- [Ratios and rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md): equal ratios, and why a ratio of like units has no unit.
 
 ## Where this goes next
 
-- [pythagoras-and-its-converse](05-pythagoras-and-its-converse.md): the height dropped onto the long side of a right triangle splits it into two triangles similar to the whole, and that gives Pythagoras.
-- [similarity-and-model-testing](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/04-similarity-and-model-testing.md): scaling laws for whole machines, where lengths, areas and volumes grow at different rates.
+- [Pythagoras](05-pythagoras-and-its-converse.md): the height dropped onto the long side of a right triangle splits it into two triangles similar to the whole, and that gives Pythagoras.
+- [Similarity](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/04-similarity-and-model-testing.md): scaling laws for whole machines, where lengths, areas and volumes grow at different rates.
 
-Each area here came from a base and a height; finding one from the sides alone, or for shapes that are not triangles, is [area-of-triangles-and-polygons](06-area-of-triangles-and-polygons.md).
+Each area here came from a base and a height; finding one from the sides alone, or for shapes that are not triangles, is [Area](06-area-of-triangles-and-polygons.md).
 
 ---
 

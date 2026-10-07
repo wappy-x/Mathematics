@@ -1,29 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Forward-Rate Models
-topic: Pricing in bond units
-item: Forward measures
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/31-Forward-Rate Models/01-hjm-framework-and-the-drift-condition|hjm-framework-and-the-drift-condition]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/05-change-of-numeraire|change-of-numeraire]]"
-next:
-  - "[[Cards/12-Financial mathematics/31-Forward-Rate Models/03-libor-and-sofr-market-models|libor-and-sofr-market-models]]"
-tags: [mathematics, financial mathematics, forward-measures-for-rates]
----
-
 # Forward measures: a bond as the unit makes its forward rate a martingale
 
-Financial mathematics → Forward-Rate Models → Pricing in bond units → Forward measures
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Forward-Rate Models](../../../SYLLABUS.md#w12-s31) → Forward measures
 
 ---
 
 ## General Overview
 
-A company pays a floating rate on a $10 million loan. One quarter worries it most: the three months from 1.75 years out to 2.00 years out. The rate for that quarter is looked up (fixed) at 1.75 years and the interest is paid at 2.00 years. Today's curve prices that quarter's rate at 4.75 percent. The company buys insurance: if the rate fixes above 5 percent, the insurer pays the excess on $10 million for a quarter of a year. That contract is a **caplet** ([caplets-and-floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md)). It is the last quarter of the shelf's 2-year cap ([caps-floors-and-parity](../29-Caps%2C%20Floors%20and%20Swaptions/02-caps-floors-and-parity.md)), and the market prices it at **$14,793.71** with Black's formula.
+A company pays a floating rate on a $10 million loan. One quarter worries it most: the three months from 1.75 years out to 2.00 years out. The rate for that quarter is looked up (fixed) at 1.75 years and the interest is paid at 2.00 years. Today's curve prices that quarter's rate at 4.75 percent. The company buys insurance: if the rate fixes above 5 percent, the insurer pays the excess on $10 million for a quarter of a year. That contract is a **caplet** ([Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md)). It is the last quarter of the shelf's 2-year cap ([Caps and floors](../29-Caps%2C%20Floors%20and%20Swaptions/02-caps-floors-and-parity.md)), and the market prices it at **$14,793.71** with Black's formula.
 
 Black's formula was built for a world where the bank rate stays fixed. Here the rate is the random thing: discounting and payoff both depend on it, and the two are tangled. Why should the formula still be right?
 
@@ -84,7 +67,7 @@ A **fair bet** (the technical word is *martingale*) is a quantity whose average 
 - **The payment falls on $T_2$.** The unit must match the payment date. Pay the same amount at the fixing date instead and the payoff no longer lives in $T_2$ bonds; the price picks up a convexity adjustment (a correction from the curvature of the payoff in the rate).
 - **The rate fixes at the start of the quarter.** That is how term rates (the old LIBOR, Term SOFR) work. A caplet on overnight SOFR compounded through the quarter is known only at $T_2$; $F$ is still a fair bet under $Q^{T_2}$, but it keeps moving, more and more slowly, until $T_2$. Conventions verified 2026-09-28.
 - **The forward is lognormal with constant $\sigma$.** This is the model half. The fair-bet property is exact in any model; only Black's closed form needs the bell curve in logs. A market that prices each strike at its own volatility (a smile) is outside it.
-- **Rates stay positive.** A lognormal forward cannot go below zero. Where rates can, desks switch to a normal or shifted-lognormal spread ([normal-and-shifted-volatilities-for-rates](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)); the fair-bet property survives the switch.
+- **Rates stay positive.** A lognormal forward cannot go below zero. Where rates can, desks switch to a normal or shifted-lognormal spread ([Rate volatilities](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)); the fair-bet property survives the switch.
 
 ---
 
@@ -96,7 +79,7 @@ Prices in dollars already use a unit: the dollar held in the bank. Nothing force
 
 ### Step 1: switching unit reweights the paths by the unit's growth
 
-Start from the bank account $B(t)$ and its odds $Q$, the risk-neutral measure ([change-of-numeraire-in-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/05-change-of-numeraire-in-pricing.md)). Under $Q$, every price divided by $B(t)$ is a fair bet. To use the payment-date bond as the unit instead, reweight each path (one possible history of prices) by how well that bond did against the bank, relative to the start:
+Start from the bank account $B(t)$ and its odds $Q$, the risk-neutral measure ([Changing the unit of account](../05-Black-Scholes%20from%20the%20Ground%20Up/05-change-of-numeraire-in-pricing.md)). Under $Q$, every price divided by $B(t)$ is a fair bet. To use the payment-date bond as the unit instead, reweight each path (one possible history of prices) by how well that bond did against the bank, relative to the start:
 
 $$\text{weight of a path} = \frac{P(t,T_2)/B(t)}{P(0,T_2)/B(0)}.$$
 
@@ -107,7 +90,7 @@ These weights average to one under $Q$, because the bond counted in bank units i
 
 Write $Z(t) = \dfrac{P(t,T_2)/B(t)}{P(0,T_2)/B(0)}$. It is positive, starts at 1, and is a fair bet under $Q$ because $P(t,T_2)/B(t)$ is. Define $Q^{T_2}$ by giving each outcome up to time $T_2$ the weight $Z(T_2)$. Averages given what is known at time $t$ then change by Bayes' rule (the rule for reweighting a conditional average): for any payoff $Y$ settled at time $s \ge t$,
 $$\mathbb{E}^{T_2}[Y \mid \text{now}] = \frac{\mathbb{E}^{Q}[Z(s)\,Y \mid \text{now}]}{Z(t)}.$$
-Take $Y = X(s)/P(s,T_2)$ for a traded price $X$. Then $Z(s)\,Y = \dfrac{X(s)/B(s)}{P(0,T_2)/B(0)}$, a fair bet under $Q$, so its average is $\dfrac{X(t)/B(t)}{P(0,T_2)/B(0)}$. Divide by $Z(t)$: the answer is $X(t)/P(t,T_2)$. So $X/P(\cdot,T_2)$ is a fair bet under $Q^{T_2}$. The same three lines work for any positive traded unit; that is the change-of-numeraire theorem of Geman, El Karoui and Rochet (1995) ([change-of-numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md)).
+Take $Y = X(s)/P(s,T_2)$ for a traded price $X$. Then $Z(s)\,Y = \dfrac{X(s)/B(s)}{P(0,T_2)/B(0)}$, a fair bet under $Q$, so its average is $\dfrac{X(t)/B(t)}{P(0,T_2)/B(0)}$. Divide by $Z(t)$: the answer is $X(t)/P(t,T_2)$. So $X/P(\cdot,T_2)$ is a fair bet under $Q^{T_2}$. The same three lines work for any positive traded unit; that is the change-of-numeraire theorem of Geman, El Karoui and Rochet (1995) ([Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md)).
 
 </details>
 
@@ -129,7 +112,7 @@ All the randomness of discounting has gone into the unit. What is left to averag
 
 ### Step 4: add Black's model
 
-Now the one modelling assumption: under $Q^{T_2}$ the forward moves as $dF = \sigma\,F\,dW$ with constant $\sigma$. No drift term appears, because Step 2 forbids one. So $\ln F(T_1)$ is a bell curve with centre $\ln F(0) - \tfrac12\sigma^2 T_1$ and spread $\sigma\sqrt{T_1}$. The average of a call payoff on such a number is the Black-76 bracket ([black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)):
+Now the one modelling assumption: under $Q^{T_2}$ the forward moves as $dF = \sigma\,F\,dW$ with constant $\sigma$. No drift term appears, because Step 2 forbids one. So $\ln F(T_1)$ is a bell curve with centre $\ln F(0) - \tfrac12\sigma^2 T_1$ and spread $\sigma\sqrt{T_1}$. The average of a call payoff on such a number is the Black-76 bracket ([Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)):
 
 $$\mathbb{E}^{T_2}\big[(F(T_1) - K)^+\big] = F(0)\,N(d_1) - K\,N(d_2).$$
 
@@ -162,7 +145,7 @@ The simulation gives $14,744.51 (standard error $66.94). Paired path by path wit
 
 ### Step 6: the same fact for the instantaneous forward
 
-The HJM card ([hjm-framework-and-the-drift-condition](01-hjm-framework-and-the-drift-condition.md)) found that under the bank-account odds the instantaneous forward for date $T$ drifts at its volatility times $\int_t^T\sigma(t,u)\,du$, the size of the $T$-bond's volatility. Switching to $Q^{T}$ shifts the Brownian motion by the bond's volatility, which removes exactly that drift. So every forward rate, instantaneous or over a quarter, is a fair bet under the forward measure of its own payment date. The bank-account unit needs the whole curve's volatility to set the drift; the payment-date unit needs none of it.
+The HJM card ([Heath-Jarrow-Morton](01-hjm-framework-and-the-drift-condition.md)) found that under the bank-account odds the instantaneous forward for date $T$ drifts at its volatility times $\int_t^T\sigma(t,u)\,du$, the size of the $T$-bond's volatility. Switching to $Q^{T}$ shifts the Brownian motion by the bond's volatility, which removes exactly that drift. So every forward rate, instantaneous or over a quarter, is a fair bet under the forward measure of its own payment date. The bank-account unit needs the whole curve's volatility to set the drift; the payment-date unit needs none of it.
 
 ---
 
@@ -570,10 +553,10 @@ The two outputs agree line for line, the simulations included: both scripts use 
 
 ## Where you meet it in real life
 
-- **Every cap and floor quote.** Brokers quote caplet volatilities that go into exactly the formula of Step 4, one caplet per quarter, each under its own forward measure. See [caps-floors-and-parity](../29-Caps%2C%20Floors%20and%20Swaptions/02-caps-floors-and-parity.md).
-- **Swaptions.** The same trick with a different unit: the annuity (the value of a strip of payment-date bonds) makes the forward swap rate a fair bet. See [the-annuity-measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md).
+- **Every cap and floor quote.** Brokers quote caplet volatilities that go into exactly the formula of Step 4, one caplet per quarter, each under its own forward measure. See [Caps and floors](../29-Caps%2C%20Floors%20and%20Swaptions/02-caps-floors-and-parity.md).
+- **Swaptions.** The same trick with a different unit: the annuity (the value of a strip of payment-date bonds) makes the forward swap rate a fair bet. See [The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md).
 - **Convexity adjustments.** A payment made on the wrong date for its rate, such as a rate paid at its fixing date, is priced by Step 5: the drift of the rate under the unit of the actual payment date is the adjustment.
-- **Monte Carlo for many rates.** A simulation of the whole curve must pick one unit for all dates, often the last bond (the terminal measure). Only the last forward is then driftless; each earlier one gets a drift of the Step 5 kind. See [libor-and-sofr-market-models](03-libor-and-sofr-market-models.md).
+- **Monte Carlo for many rates.** A simulation of the whole curve must pick one unit for all dates, often the last bond (the terminal measure). Only the last forward is then driftless; each earlier one gets a drift of the Step 5 kind. See [Market models](03-libor-and-sofr-market-models.md).
 - **Bond options.** Jamshidian (1989) priced an option on a bond in a Gaussian rate model by the same unit change, which turns the option into a Black-type formula on the bond's forward price.
 
 > **Say it back**
@@ -583,12 +566,12 @@ The two outputs agree line for line, the simulations included: both scripts use 
 
 ## What this builds on
 
-- [hjm-framework-and-the-drift-condition](01-hjm-framework-and-the-drift-condition.md): forward rates under the bank-account odds, and the drift no-arbitrage forces on them. This card removes that drift by changing the unit.
-- [change-of-numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md): the general theorem that any positive traded price can be the unit, with its own odds. Step 1 applies it to a bond.
+- [Heath-Jarrow-Morton](01-hjm-framework-and-the-drift-condition.md): forward rates under the bank-account odds, and the drift no-arbitrage forces on them. This card removes that drift by changing the unit.
+- [Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md): the general theorem that any positive traded price can be the unit, with its own odds. Step 1 applies it to a bond.
 
 ## Where this goes next
 
-- [libor-and-sofr-market-models](03-libor-and-sofr-market-models.md): many quarterly forwards simulated together under one unit, with the Step 5 drift for every forward whose own unit was not chosen.
+- [Market models](03-libor-and-sofr-market-models.md): many quarterly forwards simulated together under one unit, with the Step 5 drift for every forward whose own unit was not chosen.
 
 Each caplet here was priced in its own unit, which works only while each payoff depends on one rate; the open question is how to move all the forwards at once when a product depends on several of them.
 

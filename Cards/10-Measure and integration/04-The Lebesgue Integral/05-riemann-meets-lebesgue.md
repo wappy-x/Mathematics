@@ -1,26 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: The Lebesgue Integral
-topic: Two integrals, one number
-item: Riemann meets Lebesgue
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/04-integrable-functions-and-l1|integrable-functions-and-l1]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/01-riemann-integral|riemann-integral]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/07-improper-integrals|improper-integrals]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/03-monotone-convergence-theorem|monotone-convergence-theorem]]"
-next:
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/06-expectation-as-an-integral|expectation-as-an-integral]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/07-markov-and-chebyshev|markov-and-chebyshev]]"
-tags: [mathematics, measure and integration, riemann-meets-lebesgue]
----
-
 # Riemann meets Lebesgue: every Riemann integral is a Lebesgue integral with the same value, and Lebesgue's criterion says exactly when Riemann works
 
-Measure and integration → The Lebesgue Integral → Two integrals, one number → Riemann meets Lebesgue
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Lebesgue Integral](../../../SYLLABUS.md#w10-s04) → Riemann meets Lebesgue
 
 ---
 
@@ -48,7 +28,7 @@ Drawn to scale: 1 km is 150 px across and 1 m of depth 150 px up; the right pane
 
 ## The formula
 
-Notation first. $\lambda$ is Lebesgue measure, length on the line. $\int_{[a,b]} f \, d\lambda$ is the integral of f against $\lambda$ over [a, b], from [integral-of-a-simple-function](01-integral-of-a-simple-function.md) and [integral-of-a-nonnegative-function](02-integral-of-a-nonnegative-function.md). $\int_a^b f(x)\,dx$ keeps its old meaning: the Riemann integral, the one number between every lower sum and every upper sum ([riemann-integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md)). The best lower sum, the sup of all lower sums, is written $\underline{I}$; the best upper sum, the inf of all upper sums, is $\overline{I}$. The **Lebesgue sets** are the sets $\lambda$ can measure: every Borel set, give or take any subset of a set of length zero ([lebesgue-measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)).
+Notation first. $\lambda$ is Lebesgue measure, length on the line. $\int_{[a,b]} f \, d\lambda$ is the integral of f against $\lambda$ over [a, b], from [The integral of a simple function](01-integral-of-a-simple-function.md) and [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md). $\int_a^b f(x)\,dx$ keeps its old meaning: the Riemann integral, the one number between every lower sum and every upper sum ([The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md)). The best lower sum, the sup of all lower sums, is written $\underline{I}$; the best upper sum, the inf of all upper sums, is $\overline{I}$. The **Lebesgue sets** are the sets $\lambda$ can measure: every Borel set, give or take any subset of a set of length zero ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)).
 
 One new word. The **oscillation** of f at a point x, written $\omega_f(x)$ (omega), is how far apart f's values spread in ever-smaller windows around x:
 
@@ -72,7 +52,7 @@ $$\text{(iii)}\quad f \text{ Riemann integrable on each } [a, b'] \implies \Big(
 
 **Read them aloud:** a Riemann integral is a Lebesgue integral with the same value; Riemann works exactly when the jumps take up no length; an improper integral is a Lebesgue integral exactly when it survives absolute values.
 
-In (iii), $L^1$ is the collection of functions whose absolute value has a finite integral ([integrable-functions-and-l1](04-integrable-functions-and-l1.md)), and $\int_a^\infty$ is the improper integral: the limit of $\int_a^b$ as b grows ([improper-integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)).
+In (iii), $L^1$ is the collection of functions whose absolute value has a finite integral ([Integrable functions](04-integrable-functions-and-l1.md)), and $\int_a^\infty$ is the improper integral: the limit of $\int_a^b$ as b grows ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -108,7 +88,7 @@ So Riemann's approximations are already Lebesgue objects. Refine the slicing and
 
 ### Step 1: one sequence of slicings that does every job
 
-Choose slicings $P_n$, each refining the one before, strips shrinking to width zero, lower sums rising to $\underline{I}$ and upper sums falling to $\overline{I}$. Adding cuts never lowers a lower sum or raises an upper sum ([riemann-integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md), Step 1), so this costs nothing.
+Choose slicings $P_n$, each refining the one before, strips shrinking to width zero, lower sums rising to $\underline{I}$ and upper sums falling to $\overline{I}$. Adding cuts never lowers a lower sum or raises an upper sum ([The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md), Step 1), so this costs nothing.
 
 On the river, 1,000 equal strips give lower sum 0.6656660 and upper sum 0.6676660, 0.002 apart: the depth rises 1 m and falls 1 m, and each strip's gap is its share of that, times the strip width.
 
@@ -116,7 +96,7 @@ On the river, 1,000 equal strips give lower sum 0.6656660 and upper sum 0.667666
 
 Off the cut points, let $g_n(x)$ be the lowest value of f on x's strip of $P_n$ and $h_n(x)$ the highest. All the cut points together are countably many: a set $C$ of length zero, which changes no integral.
 
-Strips of $P_{n+1}$ lie inside strips of $P_n$, so $g_n \le g_{n+1} \le f \le h_{n+1} \le h_n$, and the bounded monotone sequences have limits $g$ and $h$. Let every value of f lie between −M and M. Then $g_n + M$ is a non-negative simple function rising to $g + M$, so the [monotone-convergence-theorem](03-monotone-convergence-theorem.md) gives $\int g \, d\lambda = \lim$ (lower sums) $= \underline{I}$. Likewise $\int h \, d\lambda = \overline{I}$.
+Strips of $P_{n+1}$ lie inside strips of $P_n$, so $g_n \le g_{n+1} \le f \le h_{n+1} \le h_n$, and the bounded monotone sequences have limits $g$ and $h$. Let every value of f lie between −M and M. Then $g_n + M$ is a non-negative simple function rising to $g + M$, so the [The monotone convergence theorem](03-monotone-convergence-theorem.md) gives $\int g \, d\lambda = \lim$ (lower sums) $= \underline{I}$. Likewise $\int h \, d\lambda = \overline{I}$.
 
 ### Step 3: the gap at a point is the jump
 
@@ -131,7 +111,7 @@ Let every value of f on [a, b] lie between −M and M.
 
 *Slicings.* By the definitions of $\underline{I}$ and $\overline{I}$, for each n there are slicings $Q_n$ with lower sum above $\underline{I} - 1/n$ and $Q'_n$ with upper sum below $\overline{I} + 1/n$. Let $P_n$ use all the cuts of $Q_1, Q'_1, \dots, Q_n, Q'_n$ and of the equal slicing into $2^n$ strips. Refinement raises lower sums and lowers upper sums (riemann-integral card), so the lower sums $L(P_n)$ rise to $\underline{I}$, the upper sums $U(P_n)$ fall to $\overline{I}$, and strips are no wider than $(b - a) 2^{-n}$.
 
-*Step functions.* Let $C$ be the union of all cut points: countable, so $\lambda(C) = 0$ ([null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). For x not in $C$, let $J_n(x)$ be the closed strip of $P_n$ containing x, and put $g_n(x) = \inf_{J_n(x)} f$ and $h_n(x) = \sup_{J_n(x)} f$; on $C$ put both to 0. Each is a simple function on intervals, so $\int g_n \, d\lambda = L(P_n)$ and $\int h_n \, d\lambda = U(P_n)$ (integral-of-a-simple-function card). $J_{n+1}(x) \subseteq J_n(x)$, so off $C$, $g_n \le g_{n+1} \le f \le h_{n+1} \le h_n$, all between −M and M. The limits $g$ and $h$ exist off $C$ (bounded monotone sequences); put them to 0 on $C$. They are Borel measurable, as limits of Borel simple functions.
+*Step functions.* Let $C$ be the union of all cut points: countable, so $\lambda(C) = 0$ ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). For x not in $C$, let $J_n(x)$ be the closed strip of $P_n$ containing x, and put $g_n(x) = \inf_{J_n(x)} f$ and $h_n(x) = \sup_{J_n(x)} f$; on $C$ put both to 0. Each is a simple function on intervals, so $\int g_n \, d\lambda = L(P_n)$ and $\int h_n \, d\lambda = U(P_n)$ (integral-of-a-simple-function card). $J_{n+1}(x) \subseteq J_n(x)$, so off $C$, $g_n \le g_{n+1} \le f \le h_{n+1} \le h_n$, all between −M and M. The limits $g$ and $h$ exist off $C$ (bounded monotone sequences); put them to 0 on $C$. They are Borel measurable, as limits of Borel simple functions.
 
 *Integrals.* Monotone convergence on $g_n + M \ge 0$, rising to $g + M$, then subtracting the finite $M(b - a)$, gives $\int g \, d\lambda = \lim_n L(P_n) = \underline{I}$; on $M - h_n$ it gives $\int h \, d\lambda = \overline{I}$.
 
@@ -160,7 +140,7 @@ Putting these together with the engine: f is Riemann integrable ⟺ $\overline{I
 
 ### Step 5: Riemann's value is Lebesgue's value
 
-Let f be Riemann integrable. Then $h = g$ outside a null set $Z$ (cut points and jumps), and f, squeezed between them, equals $g$ there. The set where f exceeds a level c is the Borel set where $g$ does, altered only inside $Z$. Every subset of a null set is a Lebesgue set ([lebesgue-measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)), so f is measurable with respect to the Lebesgue sets. It is bounded on an interval of finite length, so it is integrable, and
+Let f be Riemann integrable. Then $h = g$ outside a null set $Z$ (cut points and jumps), and f, squeezed between them, equals $g$ there. The set where f exceeds a level c is the Borel set where $g$ does, altered only inside $Z$. Every subset of a null set is a Lebesgue set ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)), so f is measurable with respect to the Lebesgue sets. It is bounded on an interval of finite length, so it is integrable, and
 
 $$\int_{[a,b]} f \, d\lambda = \int g \, d\lambda = \underline{I} = \int_a^b f(x)\,dx$$
 
@@ -169,7 +149,7 @@ On the river: 0.6666670 from 1,000 strip midpoints, 0.6666590 from 65,536 depth 
 <details>
 <summary>A Riemann-integrable function that is not Borel measurable</summary>
 
-The Cantor set has length 0 and as many points as the line, so it has more subsets than there are Borel sets ([lebesgue-measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md), by a counting argument not proved there). Take a subset A that is not Borel, and let f be 1 on A and 0 elsewhere. Off the closed Cantor set f is 0 on an open set, so f jumps only on a set of length 0: Riemann integrable, integral 0. Yet the set where f exceeds 1/2 is A, not a Borel set. Step 5 needs the Lebesgue sets.
+The Cantor set has length 0 and as many points as the line, so it has more subsets than there are Borel sets ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md), by a counting argument not proved there). Take a subset A that is not Borel, and let f be 1 on A and 0 elsewhere. Off the closed Cantor set f is 0 on an open set, so f jumps only on a set of length 0: Riemann integrable, integral 0. Yet the set where f exceeds 1/2 is A, not a Borel set. Step 5 needs the Lebesgue sets.
 
 </details>
 
@@ -205,7 +185,7 @@ The code's second road for π/2 is the classical identity: the integral of sin(x
 
 </details>
 
-[expectation-as-an-integral](06-expectation-as-an-integral.md) uses Step 5 to turn every density-weighted average of wing 09 into a Lebesgue integral without recomputing it.
+[Expectation as an integral](06-expectation-as-an-integral.md) uses Step 5 to turn every density-weighted average of wing 09 into a Lebesgue integral without recomputing it.
 
 ---
 
@@ -673,8 +653,8 @@ The two outputs are identical, byte for byte. Python's `sum()` adds floats with 
 
 ## Where you meet it in real life
 
-- **Every density in wing 09.** Chances and means there were Riemann integrals; Step 5 says the Lebesgue integral gives the same numbers, so measure-theoretic probability inherits them: [expectation-as-an-integral](06-expectation-as-an-integral.md).
-- **Numerical integration.** Quadrature software computes Riemann-style sums; for the river the midpoint rule's error at 1,000 strips is exactly 1/3000000. The methods are compared in [numerical-integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md).
+- **Every density in wing 09.** Chances and means there were Riemann integrals; Step 5 says the Lebesgue integral gives the same numbers, so measure-theoretic probability inherits them: [Expectation as an integral](06-expectation-as-an-integral.md).
+- **Numerical integration.** Quadrature software computes Riemann-style sums; for the river the midpoint rule's error at 1,000 strips is exactly 1/3000000. The methods are compared in [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md).
 - **Signal processing.** sin(x)/x is the sinc function, the shape of an ideal low-pass filter. It is not absolutely integrable, so formulas for such a filter are read as improper integrals, or through the square of sinc, which does have a finite integral.
 
 > **Say it back**
@@ -684,17 +664,17 @@ The two outputs are identical, byte for byte. Python's `sum()` adds floats with 
 
 ## What this builds on
 
-- [integrable-functions-and-l1](04-integrable-functions-and-l1.md): $L^1$, positive and negative parts, and equal-almost-everywhere functions having equal integrals.
-- [riemann-integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md): lower and upper sums, refinement, and the best-sum definition of the Riemann integral.
-- [improper-integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md): the improper integral as a limit of cut-off integrals, and the comparison test for non-negative rates.
-- [monotone-convergence-theorem](03-monotone-convergence-theorem.md): the limit step in Steps 2 and 6.
+- [Integrable functions](04-integrable-functions-and-l1.md): $L^1$, positive and negative parts, and equal-almost-everywhere functions having equal integrals.
+- [The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md): lower and upper sums, refinement, and the best-sum definition of the Riemann integral.
+- [Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md): the improper integral as a limit of cut-off integrals, and the comparison test for non-negative rates.
+- [The monotone convergence theorem](03-monotone-convergence-theorem.md): the limit step in Steps 2 and 6.
 
 ## Where this goes next
 
-- [expectation-as-an-integral](06-expectation-as-an-integral.md): an expectation as the integral of a quantity against a probability, with densities read through Step 5.
-- [markov-and-chebyshev](07-markov-and-chebyshev.md): the zero-integral argument of Step 4 made into a bound on how often a quantity is large.
+- [Expectation as an integral](06-expectation-as-an-integral.md): an expectation as the integral of a quantity against a probability, with densities read through Step 5.
+- [Markov and Chebyshev](07-markov-and-chebyshev.md): the zero-integral argument of Step 4 made into a bound on how often a quantity is large.
 
-Whether one integral covers sums and densities alike is the question [expectation-as-an-integral](06-expectation-as-an-integral.md) answers.
+Whether one integral covers sums and densities alike is the question [Expectation as an integral](06-expectation-as-an-integral.md) answers.
 
 ---
 

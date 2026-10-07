@@ -1,28 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: The Limit Theorems, Proved
-topic: Fingerprints of a law
-item: Characteristic functions
-kind: theorem
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/03-differentiating-under-the-integral|differentiating-under-the-integral]]"
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/04-independence-as-a-product-measure|independence-as-a-product-measure]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/05-convergence-in-distribution|convergence-in-distribution]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/04-eulers-formula|eulers-formula]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/07-moment-generating-functions|moment-generating-functions]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/04-characteristic-functions-and-inversion|characteristic-functions-and-inversion]]"
-next:
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/07-central-limit-theorem|central-limit-theorem]]"
-  - "[[Cards/20-Harmonic analysis/04-Characteristic Functions and Probability/01-characteristic-functions-in-depth|characteristic-functions-in-depth]]"
-tags: [mathematics, measure and integration, characteristic-functions]
----
-
 # Characteristic functions: the average of e^(itX) pins down the law, and convergence of these functions is convergence of the laws
 
-Measure and integration → The Limit Theorems, Proved → Fingerprints of a law → Characteristic functions
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Limit Theorems, Proved](../../../SYLLABUS.md#w10-s10) → Characteristic functions
 
 ---
 
@@ -32,7 +10,7 @@ A fair die is rolled 100 times. What is the chance the total is exactly 350? The
 
 There is a way to turn the problem into multiplication. Pick a rate, half a radian per pip. Place face k at the point on a circle of radius 1 turned by 0.5k radians, and average the six points. The average is one point inside the circle: −0.119777 across, 0.661214 up. Doing this at every rate gives a function of the rate: the die's **characteristic function**. The total of 100 independent rolls has one too, and it is the die's raised to the 100th power. From that power the code reads back the chance of a total of 350 exactly: 0.023322606.
 
-Two theorems make this more than a trick. The **uniqueness theorem**: two laws with the same characteristic function are the same law. **Lévy's continuity theorem**: characteristic functions that converge at every rate, to a limit continuous at rate zero, belong to laws that converge. The probability wing defines the function and inverts it for densities ([characteristic-functions-and-inversion](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md)). This card does it for every law, as an integral against a measure, and spends its length on the proofs.
+Two theorems make this more than a trick. The **uniqueness theorem**: two laws with the same characteristic function are the same law. **Lévy's continuity theorem**: characteristic functions that converge at every rate, to a limit continuous at rate zero, belong to laws that converge. The probability wing defines the function and inverts it for densities ([Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md)). This card does it for every law, as an integral against a measure, and spends its length on the proofs.
 
 **The characteristic function averages a point on the unit circle, turned by the rate times the variable, against the variable's law; it always exists, turns independent sums into products and moments into derivatives, determines the law, and converges when the laws do.**
 
@@ -48,7 +26,7 @@ Face k sits at angle 0.5k radians on the circle of radius 1. The hollow dot is t
 
 ## The formula
 
-Notation first. Reminders: the law of X, written $\mu_X$, is the probability $P \circ X^{-1}$ that X carries onto the Borel sets of the line, and $\int f\,d\mu$ is read "the integral of f against μ". New here: $i$ is the imaginary unit, the number whose square is −1. By Euler's formula, $e^{i\theta} = \cos\theta + i\sin\theta$ is the point at angle θ on the circle of radius 1 ([eulers-formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). A complex-valued function is integrated one coordinate at a time: $\int (a + ib)\,d\mu = \int a\,d\mu + i\int b\,d\mu$, whenever both real integrals are finite. The characteristic function is written $\varphi_X$, read "phi of X".
+Notation first. Reminders: the law of X, written $\mu_X$, is the probability $P \circ X^{-1}$ that X carries onto the Borel sets of the line, and $\int f\,d\mu$ is read "the integral of f against μ". New here: $i$ is the imaginary unit, the number whose square is −1. By Euler's formula, $e^{i\theta} = \cos\theta + i\sin\theta$ is the point at angle θ on the circle of radius 1 ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). A complex-valued function is integrated one coordinate at a time: $\int (a + ib)\,d\mu = \int a\,d\mu + i\int b\,d\mu$, whenever both real integrals are finite. The characteristic function is written $\varphi_X$, read "phi of X".
 
 $$\varphi_X(t) = E\big[e^{itX}\big] = \int_{\mathbb R} e^{itx}\,d\mu_X(x) = \int \cos(tx)\,d\mu_X(x) + i\int \sin(tx)\,d\mu_X(x), \qquad t \in \mathbb R.$$
 
@@ -67,7 +45,7 @@ The six theorems. X and Y are random variables on a probability space $(\Omega, 
 3. **Independent sums multiply.** If X and Y are independent, $\varphi_{X+Y}(t) = \varphi_X(t)\,\varphi_Y(t)$. So the total $S_n$ of n independent rolls has $\varphi_{S_n} = \varphi_{\text{die}}^{\,n}$.
 4. **Moments from derivatives.** If $E|X|^m < \infty$, then $\varphi_X$ has m continuous derivatives and $\varphi_X^{(k)}(0) = i^k E[X^k]$ for each k up to m.
 5. **Uniqueness.** If $\varphi_X(t) = \varphi_Y(t)$ for every real t, then $\mu_X = \mu_Y$.
-6. **Lévy's continuity theorem.** The double arrow $\Rightarrow$ is read "converges in distribution to" ([convergence-in-distribution](05-convergence-in-distribution.md)).
+6. **Lévy's continuity theorem.** The double arrow $\Rightarrow$ is read "converges in distribution to" ([Convergence in distribution](05-convergence-in-distribution.md)).
    - (a) If $X_n \Rightarrow X$, then $\varphi_{X_n}(t) \to \varphi_X(t)$ for every real t.
    - (b) If $\varphi_{X_n}(t) \to g(t)$ for every real t, and the limit g is continuous at t = 0, then g is the characteristic function of some random variable X, and $X_n \Rightarrow X$.
 
@@ -98,7 +76,7 @@ $$P(S_n = k) = \frac{1}{2\pi}\int_{-\pi}^{\pi} e^{-ikt}\,\varphi_{S_n}(t)\,dt.$$
 
 ### When it holds
 
-- **Existence needs nothing.** The integrand has size 1, so every law has one. The moment generating function can be infinite ([moment-generating-functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md)); the Cauchy law has none, yet its characteristic function is e^(−|t|). The average of n independent Cauchy draws has φ(t/n)^n = e^(−|t|), so by uniqueness it is again standard Cauchy.
+- **Existence needs nothing.** The integrand has size 1, so every law has one. The moment generating function can be infinite ([Moment generating functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md)); the Cauchy law has none, yet its characteristic function is e^(−|t|). The average of n independent Cauchy draws has φ(t/n)^n = e^(−|t|), so by uniqueness it is again standard Cauchy.
 - **The product rule needs independence.** One die counted twice is not two dice (What breaks, below).
 - **Moments need the moment to exist.** The Cauchy's e^(−|t|) has a corner at 0, and the Cauchy law has no mean.
 - **Uniqueness needs every rate.** A die and a die shifted up by 6 agree at every multiple of π/3 and are different laws.
@@ -124,15 +102,15 @@ Subtract the values at t + h and t and factor out the point at angle tx:
 
 $$|\varphi_X(t+h) - \varphi_X(t)| = \Big|\int e^{itx}\big(e^{ihx} - 1\big)\,d\mu_X(x)\Big| \le \int \big|e^{ihx} - 1\big|\,d\mu_X(x).$$
 
-The right side does not involve t. As h shrinks to 0, the integrand tends to 0 at every x and never exceeds 2. The constant 2 has integral 2 against a probability, so [dominated-convergence-theorem](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md) sends the right side to 0. One step size serves every t: uniform continuity.
+The right side does not involve t. As h shrinks to 0, the integrand tends to 0 at every x and never exceeds 2. The constant 2 has integral 2 against a probability, so [Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md) sends the right side to 0. One step size serves every t: uniform continuity.
 
 ### Step 3: independent sums multiply
 
-X and Y are independent exactly when the law of the pair (X, Y) is the product measure $\mu_X \otimes \mu_Y$ ([independence-as-a-product-measure](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)). Then
+X and Y are independent exactly when the law of the pair (X, Y) is the product measure $\mu_X \otimes \mu_Y$ ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)). Then
 
 $$\varphi_{X+Y}(t) = \iint e^{itx}e^{ity}\,d(\mu_X\otimes\mu_Y)(x,y) = \int e^{itx}\,d\mu_X(x)\int e^{ity}\,d\mu_Y(y).$$
 
-The second equality is [tonelli-and-fubini](../06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md), applied to the four bounded real products cos·cos, sin·sin, cos·sin and sin·cos, and reassembled. By induction, n independent rolls give $\varphi_{S_n} = \varphi_{\text{die}}^{\,n}$.
+The second equality is [Tonelli and Fubini](../06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md), applied to the four bounded real products cos·cos, sin·sin, cos·sin and sin·cos, and reassembled. By induction, n independent rolls give $\varphi_{S_n} = \varphi_{\text{die}}^{\,n}$.
 
 The die's closed form is a geometric series: the six terms sum to $e^{it}(e^{6it}-1)/(e^{it}-1)$. Pulling $e^{3it}$ from the top bracket and $e^{it/2}$ from the bottom leaves $\sin 3t/\sin(t/2)$ times $e^{3.5it}$. At t = 0.5 sum and closed form both give −0.119777 + 0.661214i.
 
@@ -150,7 +128,7 @@ Orange: one roll. Teal: the total of four rolls, the fourth power. The size is 0
 
 ### Step 4: moments are derivatives at zero
 
-The rate of change of $e^{itx}$ in t is $ix\,e^{itx}$, of size |x|. A chord of the circle is never longer than its arc, so $|e^{iu} - e^{iv}| \le |u - v|$, and every difference quotient in t is capped by |x|. If E|X| is finite, |x| is an integrable cap for all t at once, and [differentiating-under-the-integral](../05-Swapping%20Limits%20and%20Integrals/03-differentiating-under-the-integral.md) gives
+The rate of change of $e^{itx}$ in t is $ix\,e^{itx}$, of size |x|. A chord of the circle is never longer than its arc, so $|e^{iu} - e^{iv}| \le |u - v|$, and every difference quotient in t is capped by |x|. If E|X| is finite, |x| is an integrable cap for all t at once, and [Differentiating under the integral sign](../05-Swapping%20Limits%20and%20Integrals/03-differentiating-under-the-integral.md) gives
 
 $$\varphi_X'(t) = \int ix\,e^{itx}\,d\mu_X(x), \qquad \varphi_X'(0) = i\,E[X].$$
 
@@ -160,7 +138,7 @@ Differentiating $\varphi^n$ gives the total's mean 3.5n and variance 35n/12: at 
 
 ### Step 5: the uniform and the normal
 
-**Uniform.** The law of U is Lebesgue measure λ restricted to [0, 1]. Each coordinate of the integrand is continuous, so the Lebesgue integral equals the Riemann one ([riemann-meets-lebesgue](../04-The%20Lebesgue%20Integral/05-riemann-meets-lebesgue.md)), and
+**Uniform.** The law of U is Lebesgue measure λ restricted to [0, 1]. Each coordinate of the integrand is continuous, so the Lebesgue integral equals the Riemann one ([Riemann meets Lebesgue](../04-The%20Lebesgue%20Integral/05-riemann-meets-lebesgue.md)), and
 
 $$\varphi_U(t) = \int_0^1 e^{itx}\,d\lambda(x) = \Big[\frac{e^{itx}}{it}\Big]_0^1 = \frac{e^{it}-1}{it}.$$
 
@@ -189,28 +167,28 @@ Two laws with one characteristic function therefore have identical blurred versi
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $\varphi_X(t) = \varphi_Y(t)$ for every real t. Only laws matter, so each variable may sit on its own space. On a product space ([independence-as-a-product-measure](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)) take Z standard normal and independent of X. Fix σ > 0 and write $p_\sigma(y) = e^{-y^2/(2\sigma^2)}/(\sigma\sqrt{2\pi})$ for the density of σZ.
+**Setting.** $\varphi_X(t) = \varphi_Y(t)$ for every real t. Only laws matter, so each variable may sit on its own space. On a product space ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)) take Z standard normal and independent of X. Fix σ > 0 and write $p_\sigma(y) = e^{-y^2/(2\sigma^2)}/(\sigma\sqrt{2\pi})$ for the density of σZ.
 
 **1. The normal density as an integral over rates.** Z/σ has characteristic function $\varphi_Z(y/\sigma) = e^{-y^2/(2\sigma^2)}$ by Step 5 and the scaling rule. Its law is normal with standard deviation 1/σ, density $q(t) = \sigma e^{-\sigma^2t^2/2}/\sqrt{2\pi}$. Writing that characteristic function as an integral against its density gives $\int e^{ity}\,e^{-\sigma^2t^2/2}\,dt = (\sqrt{2\pi}/\sigma)\,e^{-y^2/(2\sigma^2)}$. Divide by 2π:
 $$\frac{1}{2\pi}\int_{-\infty}^{\infty} e^{ity}\,e^{-\sigma^2t^2/2}\,dt = p_\sigma(y).$$
 The right side is even in y, so the same holds with $e^{-ity}$ in place of $e^{ity}$.
 
-**2. The density of the blurred variable.** X and σZ are independent, so X + σZ has density $h_\sigma(y) = \int p_\sigma(y - x)\,d\mu_X(x)$ ([convolution-and-sums](../06-Product%20Measures%20and%20Fubini/05-convolution-and-sums.md)). Substitute step 1 at the point y − x:
+**2. The density of the blurred variable.** X and σZ are independent, so X + σZ has density $h_\sigma(y) = \int p_\sigma(y - x)\,d\mu_X(x)$ ([Convolution](../06-Product%20Measures%20and%20Fubini/05-convolution-and-sums.md)). Substitute step 1 at the point y − x:
 $$h_\sigma(y) = \frac{1}{2\pi}\int\!\!\int e^{-it(y-x)}\,e^{-\sigma^2t^2/2}\,dt\,d\mu_X(x).$$
 
-**3. Swap the order.** The integrand has size $e^{-\sigma^2t^2/2}$, whose integral against length times $\mu_X$ is $\sqrt{2\pi}/\sigma$, finite. Fubini's theorem ([tonelli-and-fubini](../06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md)), applied to the real and imaginary parts, lets the x-integral go inside:
+**3. Swap the order.** The integrand has size $e^{-\sigma^2t^2/2}$, whose integral against length times $\mu_X$ is $\sqrt{2\pi}/\sigma$, finite. Fubini's theorem ([Tonelli and Fubini](../06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md)), applied to the real and imaginary parts, lets the x-integral go inside:
 $$h_\sigma(y) = \frac{1}{2\pi}\int e^{-ity}\,e^{-\sigma^2t^2/2}\Big(\int e^{itx}\,d\mu_X(x)\Big)dt = \frac{1}{2\pi}\int e^{-ity}\,e^{-\sigma^2t^2/2}\,\varphi_X(t)\,dt.$$
 The right side sees X only through $\varphi_X$, so Y + σZ′, with Z′ an independent normal beside Y, has the same density and the same law, for every σ > 0.
 
 **4. Bounded continuous test functions agree.** Let f be bounded and continuous. Equal laws give $E f(X + \sigma Z) = E f(Y + \sigma Z')$. Take σ = 1/r for whole numbers r. At every outcome $f(X + Z/r) \to f(X)$ by continuity, and $|f(X + Z/r)|$ never exceeds the constant sup|f|. Dominated convergence gives $E f(X + Z/r) \to E f(X)$, and likewise for Y. So $E f(X) = E f(Y)$.
 
-**5. From test functions to the law.** Fix a real a. Let $f_r(x)$ be 1 for x ≤ a, 0 for x ≥ a + 1/r, and linear in between. Each is bounded and continuous, and $f_r(x)$ tends to the indicator of $(-\infty, a]$ at every x as r grows. Dominated convergence once more gives $P(X \le a) = P(Y \le a)$. The half-lines $(-\infty, a]$ are closed under intersection and generate the Borel sets, so two probability measures that agree on them agree on every Borel set ([pi-systems-and-uniqueness](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)). So $\mu_X = \mu_Y$. ∎
+**5. From test functions to the law.** Fix a real a. Let $f_r(x)$ be 1 for x ≤ a, 0 for x ≥ a + 1/r, and linear in between. Each is bounded and continuous, and $f_r(x)$ tends to the indicator of $(-\infty, a]$ at every x as r grows. Dominated convergence once more gives $P(X \le a) = P(Y \le a)$. The half-lines $(-\infty, a]$ are closed under intersection and generate the Borel sets, so two probability measures that agree on them agree on every Borel set ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)). So $\mu_X = \mu_Y$. ∎
 
 </details>
 
 ### Step 7: Lévy's continuity theorem
 
-**Forward, proved.** [convergence-in-distribution](05-convergence-in-distribution.md) proves that $X_n \Rightarrow X$ means $E f(X_n) \to E f(X)$ for every bounded continuous f. Cos(tx) and sin(tx) are two such functions, so both coordinates of $\varphi_{X_n}(t)$ converge. That is (a).
+**Forward, proved.** [Convergence in distribution](05-convergence-in-distribution.md) proves that $X_n \Rightarrow X$ means $E f(X_n) \to E f(X)$ for every bounded continuous f. Cos(tx) and sin(tx) are two such functions, so both coordinates of $\varphi_{X_n}(t)$ converge. That is (a).
 
 **Converse, outlined.** Three moves, with the full proof in Durrett, Theorem 3.3.17.
 
@@ -239,11 +217,11 @@ Orange: one roll, scaled. Teal: four rolls. Dark blue: the normal's e^(−t^2/2)
 
 At t = 1 the values for 1, 10, 100 and 1,000 rolls are 0.567548, 0.603269, 0.606210 and 0.606499, closing on e^(−1/2) = 0.606531. The limit is continuous at 0, so (b) gives $W_n \Rightarrow Z$. The chance that $W_n \le 1$ is 0.843496, 0.847031 and 0.843711 at 10, 100 and 400 rolls, against the normal's 0.841345. The gaps shrink only unevenly, because the total moves in whole pips.
 
-The same move proves the die's weak law. The running average $S_n/n$ has characteristic function $\varphi(t/n)^n$. At t = 1 it is −0.809015 − 0.303045i, −0.922899 − 0.345705i and −0.935092 − 0.350272i at 10, 100 and 1,000 rolls, closing on $e^{3.5i}$ = −0.936457 − 0.350783i, the characteristic function of the constant 3.5. So the average converges in distribution to 3.5, which for a constant limit is convergence in probability ([weak-law-of-large-numbers](03-weak-law-of-large-numbers.md)).
+The same move proves the die's weak law. The running average $S_n/n$ has characteristic function $\varphi(t/n)^n$. At t = 1 it is −0.809015 − 0.303045i, −0.922899 − 0.345705i and −0.935092 − 0.350272i at 10, 100 and 1,000 rolls, closing on $e^{3.5i}$ = −0.936457 − 0.350783i, the characteristic function of the constant 3.5. So the average converges in distribution to 3.5, which for a constant limit is convergence in probability ([The weak law of large numbers](03-weak-law-of-large-numbers.md)).
 
 ### Another road
 
-Lévy's inversion formula recovers the chance of any interval from $\varphi_X$ by an integral over rates with a growing cut-off, giving uniqueness at once, at the price of a delicate limit. The probability wing states it ([characteristic-functions-and-inversion](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md)); levy-inversion-and-uniqueness proves it. The blur-and-unblur route above uses only the normal's characteristic function, Fubini and dominated convergence.
+Lévy's inversion formula recovers the chance of any interval from $\varphi_X$ by an integral over rates with a growing cut-off, giving uniqueness at once, at the price of a delicate limit. The probability wing states it ([Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md)); Levy's inversion formula proves it. The blur-and-unblur route above uses only the normal's characteristic function, Fubini and dominated convergence.
 
 ---
 
@@ -702,9 +680,9 @@ The two outputs are identical, line for line.
 
 ## Where you meet it in real life
 
-- **The central limit theorem.** Its second proof is Step 7 with the limit e^(−t^2/2): show the scaled total's characteristic function converges, and Lévy's converse turns that into convergence of the laws ([central-limit-theorem](07-central-limit-theorem.md)).
+- **The central limit theorem.** Its second proof is Step 7 with the limit e^(−t^2/2): show the scaled total's characteristic function converges, and Lévy's converse turns that into convergence of the laws ([The central limit theorem, proved](07-central-limit-theorem.md)).
 - **Exact laws of sums.** Raising φ to a power and inverting on a grid of rates is the discrete Fourier transform: exact laws for totals of independent whole-number quantities, such as insurance claim counts, far faster than repeated convolution.
-- **Option prices from transforms.** Stock-price models whose law has no simple formula but whose characteristic function does are priced by inverting it ([heston-pricing-by-characteristic-function](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md)).
+- **Option prices from transforms.** Stock-price models whose law has no simple formula but whose characteristic function does are priced by inverting it ([Pricing Heston exactly](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md)).
 - **Errors with no mean.** Heavy-tailed measurement errors, such as Cauchy errors, have no mean, but they have characteristic functions, and independent errors still combine by multiplication.
 
 > **Say it back**
@@ -714,17 +692,17 @@ The two outputs are identical, line for line.
 
 ## What this builds on
 
-- [differentiating-under-the-integral](../05-Swapping%20Limits%20and%20Integrals/03-differentiating-under-the-integral.md): moments as derivatives at 0, and the normal's equation φ′ = −tφ.
-- [independence-as-a-product-measure](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md): the product rule for independent sums, and the independent blur in the uniqueness proof.
-- [convergence-in-distribution](05-convergence-in-distribution.md): the double arrow, the test-function form used in Lévy's forward half, and tightness.
-- [eulers-formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): the point $e^{i\theta}$ on the unit circle, and the rule that turns sums into products.
-- [moment-generating-functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md): the same average with a real exponent, which can be infinite; the characteristic function never is.
-- [characteristic-functions-and-inversion](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): the definition, the normal's bell and density inversion, stated without measure.
+- [Differentiating under the integral sign](../05-Swapping%20Limits%20and%20Integrals/03-differentiating-under-the-integral.md): moments as derivatives at 0, and the normal's equation φ′ = −tφ.
+- [Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md): the product rule for independent sums, and the independent blur in the uniqueness proof.
+- [Convergence in distribution](05-convergence-in-distribution.md): the double arrow, the test-function form used in Lévy's forward half, and tightness.
+- [Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): the point $e^{i\theta}$ on the unit circle, and the rule that turns sums into products.
+- [Moment generating functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md): the same average with a real exponent, which can be infinite; the characteristic function never is.
+- [Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): the definition, the normal's bell and density inversion, stated without measure.
 
 ## Where this goes next
 
-- [central-limit-theorem](07-central-limit-theorem.md): in its second road, a second-order expansion of φ near 0 shows the scaled total's characteristic function tends to e^(−t^2/2) for every law with a finite variance; Lévy's converse finishes the proof.
-- characteristic-functions-in-depth: the same object read as a Fourier transform, opening the shelf that proves Lévy's inversion formula and his continuity theorem in full.
+- [The central limit theorem, proved](07-central-limit-theorem.md): in its second road, a second-order expansion of φ near 0 shows the scaled total's characteristic function tends to e^(−t^2/2) for every law with a finite variance; Lévy's converse finishes the proof.
+- Characteristic functions: the same object read as a Fourier transform, opening the shelf that proves Lévy's inversion formula and his continuity theorem in full.
 
 This card showed that convergence of characteristic functions is enough; it left open why, for every law with a finite variance, the scaled totals' characteristic functions converge to the normal's, and that is what the central limit theorem's second road supplies.
 

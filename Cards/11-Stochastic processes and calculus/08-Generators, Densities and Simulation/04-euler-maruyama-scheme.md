@@ -1,31 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Generators, Densities and Simulation
-topic: Simulating an SDE on a grid
-item: Euler-Maruyama
-kind: method
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/01-ito-integral|ito-integral]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/04-stochastic-differential-equations|stochastic-differential-equations]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/07-existence-and-uniqueness-for-sdes|existence-and-uniqueness-for-sdes]]"
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/01-eulers-method|eulers-method]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/05-milstein-and-strong-weak-convergence|milstein-and-strong-weak-convergence]]"
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/06-exact-simulation-of-gbm-and-ou|exact-simulation-of-gbm-and-ou]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/05-discretisation-schemes-for-sdes|discretisation-schemes-for-sdes]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/10-theta-pays-for-gamma-hedged-pnl|theta-pays-for-gamma-hedged-pnl]]"
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/03-pricing-under-local-volatility-and-the-forward-smile|pricing-under-local-volatility-and-the-forward-smile]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/01-heston-model|heston-model]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/04-sabr-model-and-hagan-formula|sabr-model-and-hagan-formula]]"
-tags: [mathematics, stochastic processes and calculus, euler-maruyama-scheme]
----
-
 # Euler-Maruyama: stepping an SDE with Gaussian increments
 
-Stochastic processes and calculus → Generators, Densities and Simulation → Simulating an SDE on a grid → Euler-Maruyama
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Generators, Densities and Simulation](../../../SYLLABUS.md#w11-s08) → Euler-Maruyama
 
 ---
 
@@ -60,7 +35,7 @@ Orange: Euler-Maruyama with 13 steps of 4 weeks. Green: Euler-Maruyama with 52 w
 
 ## The formula
 
-Reminder from [stochastic-differential-equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md): time $t$ is in years, $W_t$ is Brownian motion, and an SDE $dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t$ is shorthand for an integral equation, never a derivative, since a Brownian path has no slope. Split the horizon $T$ into $n$ steps of length $\Delta t = T/n$, at grid times $t_k = k\,\Delta t$. The scheme builds numbers $Y_0, Y_1, \dots, Y_n$, one per grid time:
+Reminder from [Stochastic differential equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md): time $t$ is in years, $W_t$ is Brownian motion, and an SDE $dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t$ is shorthand for an integral equation, never a derivative, since a Brownian path has no slope. Split the horizon $T$ into $n$ steps of length $\Delta t = T/n$, at grid times $t_k = k\,\Delta t$. The scheme builds numbers $Y_0, Y_1, \dots, Y_n$, one per grid time:
 
 $$Y_{k+1} = Y_k + \mu(Y_k, t_k)\,\Delta t + \sigma(Y_k, t_k)\,\Delta W_k, \qquad \Delta W_k = W_{t_{k+1}} - W_{t_k} = \sqrt{\Delta t}\,Z_k .$$
 
@@ -100,7 +75,7 @@ $$\varepsilon(\Delta t) = E\,\big|Y_n - S_T\big| \;\le\; C\sqrt{\Delta t}, \qqua
 - **Lipschitz coefficients with linear growth.** Drift and noise size change at most in proportion to the change in x, and grow at most in proportion to x. Drop this and the scheme can fail outright: for a drift that grows like a cube, its moments explode while the true solution's stay finite (Hutzenthaler, Jentzen and Kloeden, under Sources; named here, not proved).
 - **A step small against the noise.** With one step for the whole year, the share's price goes below zero about 1 time in 300 (0.32 percent ± 0.02), while the exact price is never negative.
 - **The Ito reading.** The noise size is read at the start of each step; reading it at the midpoint simulates a different SDE.
-- **Path-by-path error.** The error in averages is a different, smaller quantity; [milstein-and-strong-weak-convergence](05-milstein-and-strong-weak-convergence.md) treats the two kinds of error side by side.
+- **Path-by-path error.** The error in averages is a different, smaller quantity; [Milstein and the two kinds of error](05-milstein-and-strong-weak-convergence.md) treats the two kinds of error side by side.
 
 ---
 
@@ -108,7 +83,7 @@ $$\varepsilon(\Delta t) = E\,\big|Y_n - S_T\big| \;\le\; C\sqrt{\Delta t}, \qqua
 
 ### Step 0: a zero-average error per step adds up like a random walk
 
-Euler's method for a rate equation makes an error of order $\Delta t^2$ in each step, all pushing the same way ([eulers-method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/01-eulers-method.md)). There are $T/\Delta t$ steps, so the errors add to order $\Delta t$. Euler-Maruyama makes an error of order $\Delta t$ in each step, one power of $\Delta t$ larger, but each averages to zero and they are independent. Independent zero-average errors add like a random walk: $n$ of them, each of size $\Delta t$, total about $\sqrt{n}\,\Delta t = \sqrt{T\Delta t}$. That square root is the whole story. The steps below find the dropped term, measure it, and add it up.
+Euler's method for a rate equation makes an error of order $\Delta t^2$ in each step, all pushing the same way ([Euler's method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/01-eulers-method.md)). There are $T/\Delta t$ steps, so the errors add to order $\Delta t$. Euler-Maruyama makes an error of order $\Delta t$ in each step, one power of $\Delta t$ larger, but each averages to zero and they are independent. Independent zero-average errors add like a random walk: $n$ of them, each of size $\Delta t$, total about $\sqrt{n}\,\Delta t = \sqrt{T\Delta t}$. That square root is the whole story. The steps below find the dropped term, measure it, and add it up.
 
 ### Step 1: where the scheme comes from
 
@@ -116,7 +91,7 @@ Over one step, the SDE's integral equation reads
 
 $$X_{t_{k+1}} = X_{t_k} + \int_{t_k}^{t_{k+1}} \mu(X_s, s)\,ds + \int_{t_k}^{t_{k+1}} \sigma(X_s, s)\,dW_s .$$
 
-Freeze both integrands at the left end of the step. The first integral becomes $\mu(X_{t_k}, t_k)\,\Delta t$. The second becomes $\sigma(X_{t_k}, t_k)$ times the Brownian change over the step. That is the scheme. Freezing at the left end is not a choice of convenience: the Ito integral itself is the limit of left-end sums ([ito-integral](../06-Ito%20Calculus/01-ito-integral.md)). With $\sigma = 0$ the scheme is Euler's method, term for term.
+Freeze both integrands at the left end of the step. The first integral becomes $\mu(X_{t_k}, t_k)\,\Delta t$. The second becomes $\sigma(X_{t_k}, t_k)$ times the Brownian change over the step. That is the scheme. Freezing at the left end is not a choice of convenience: the Ito integral itself is the limit of left-end sums ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)). With $\sigma = 0$ the scheme is Euler's method, term for term.
 
 The code draws $Z_k$ and multiplies by $\sqrt{\Delta t}$, not by $\Delta t$: Brownian variance grows with time, so its size grows with the square root.
 
@@ -179,7 +154,7 @@ The bound holds for every SDE whose drift and noise size are Lipschitz (they cha
 
 **0. The interpolated scheme.** For $s$ in $[t_k, t_{k+1})$ write $\bar Y_s = Y_k$. Define $\tilde Y_t = x_0 + \int_0^t \mu(\bar Y_s)\,ds + \int_0^t \sigma(\bar Y_s)\,dW_s$. On each step the integrands are constant, so $\tilde Y_{t_k} = Y_k$ at every grid time. Each $Y_k$ has a finite second moment, by induction on k under linear growth.
 
-**1. The solution barely moves within a step.** Lipschitz implies linear growth, $|\mu(x)|^2 + |\sigma(x)|^2 \le K(1 + x^2)$ for some $K$, and the existence theorem gives $\sup_{t \le T} E X_t^2 \le M$ ([existence-and-uniqueness-for-sdes](../06-Ito%20Calculus/07-existence-and-uniqueness-for-sdes.md)). For $s$ in $[t_k, t_{k+1})$, using $(a+b)^2 \le 2a^2 + 2b^2$, Cauchy-Schwarz on the time integral and Ito's isometry on the Brownian integral,
+**1. The solution barely moves within a step.** Lipschitz implies linear growth, $|\mu(x)|^2 + |\sigma(x)|^2 \le K(1 + x^2)$ for some $K$, and the existence theorem gives $\sup_{t \le T} E X_t^2 \le M$ ([When an SDE has one solution](../06-Ito%20Calculus/07-existence-and-uniqueness-for-sdes.md)). For $s$ in $[t_k, t_{k+1})$, using $(a+b)^2 \le 2a^2 + 2b^2$, Cauchy-Schwarz on the time integral and Ito's isometry on the Brownian integral,
 $E|X_s - X_{t_k}|^2 \le 2\Delta t\int_{t_k}^{s} E\mu(X_r)^2\,dr + 2\int_{t_k}^{s} E\sigma(X_r)^2\,dr \le 2K(1+M)(\Delta t^2 + \Delta t) \le c_1\Delta t$, with $c_1 = 2K(1+M)(T+1)$.
 
 **2. The gap as two integrals.** $X_t - \tilde Y_t = \int_0^t (\mu(X_s) - \mu(\bar Y_s))\,ds + \int_0^t (\sigma(X_s) - \sigma(\bar Y_s))\,dW_s$. The same three tools and the Lipschitz bound give, with $e(t) = E|X_t - \tilde Y_t|^2$,
@@ -195,7 +170,7 @@ $e(t) \le 2tL^2\int_0^t E|X_s - \bar Y_s|^2\,ds + 2L^2\int_0^t E|X_s - \bar Y_s|
 
 </details>
 
-**Another road.** Put the dropped term into the scheme, with $\Delta W^2 - \Delta t$ multiplied by $\tfrac12\sigma\,\partial\sigma/\partial x$ in general. The result is the Milstein scheme, whose strong error falls like the step itself: [milstein-and-strong-weak-convergence](05-milstein-and-strong-weak-convergence.md). For the share, the dropped term can be avoided entirely by stepping the logarithm, which has constant coefficients: [exact-simulation-of-gbm-and-ou](06-exact-simulation-of-gbm-and-ou.md).
+**Another road.** Put the dropped term into the scheme, with $\Delta W^2 - \Delta t$ multiplied by $\tfrac12\sigma\,\partial\sigma/\partial x$ in general. The result is the Milstein scheme, whose strong error falls like the step itself: [Milstein and the two kinds of error](05-milstein-and-strong-weak-convergence.md). For the share, the dropped term can be avoided entirely by stepping the logarithm, which has constant coefficients: [Exact simulation](06-exact-simulation-of-gbm-and-ou.md).
 
 ---
 
@@ -626,16 +601,16 @@ The two outputs agree line for line. The weak line shows the other kind of error
 > - **Scaling the Brownian step by $\Delta t$.** The spread of the log price comes out at 0.0251 instead of 0.40.
 > - **Measuring strong error on two different paths.** The gap is then the share's own spread, $24.28, and never shrinks.
 > - **Trusting long steps on a positive quantity.** With one step for the year the share goes negative about 1 time in 300 (0.32 percent). Prices, interest rates under some models and variances need short steps or a scheme that respects the sign.
-> - **Confusing the two errors.** The error in averages, such as an option's price, falls like the step; quoting the strong order for a pricing run overstates the steps needed; [milstein-and-strong-weak-convergence](05-milstein-and-strong-weak-convergence.md) separates them.
+> - **Confusing the two errors.** The error in averages, such as an option's price, falls like the step; quoting the strong order for a pricing run overstates the steps needed; [Milstein and the two kinds of error](05-milstein-and-strong-weak-convergence.md) separates them.
 
 ---
 
 ## Where you meet it in real life
 
-- **Pricing under models with no formula.** Volatility that moves has no closed form; banks simulate it by this scheme or a refinement: [pricing-under-local-volatility-and-the-forward-smile](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md), [heston-model](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md), [sabr-model-and-hagan-formula](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md).
-- **Interest-rate paths.** The shelf's house example, a short rate pulled back to its long-run level and simulated with 1,000 steps, is run by exactly this loop; for that model an exact step also exists ([exact-simulation-of-gbm-and-ou](06-exact-simulation-of-gbm-and-ou.md)).
+- **Pricing under models with no formula.** Volatility that moves has no closed form; banks simulate it by this scheme or a refinement: [Pricing with local volatility](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md), [The Heston model](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md), [SABR and Hagan's formula](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md).
+- **Interest-rate paths.** The shelf's house example, a short rate pulled back to its long-run level and simulated with 1,000 steps, is run by exactly this loop; for that model an exact step also exists ([Exact simulation](06-exact-simulation-of-gbm-and-ou.md)).
 - **Image-generating models.** Diffusion models generate an image by running a reverse-time SDE from noise; the simplest sampler is an Euler-Maruyama loop.
-- **Checking densities.** A histogram of simulated endpoints roughly pictures the density that [fokker-planck-forward-equation](03-fokker-planck-forward-equation.md) computes exactly.
+- **Checking densities.** A histogram of simulated endpoints roughly pictures the density that [Fokker-Planck](03-fokker-planck-forward-equation.md) computes exactly.
 
 > **Say it back**
 > Euler-Maruyama steps an SDE like Euler's method steps a rate equation, plus a Brownian step with variance equal to the time step. Each step drops a term of the size of the step, $\tfrac12\sigma^2 S(\Delta W^2 - \Delta t)$, which averages to zero. Zero-average errors add like a random walk, so the path-by-path error at the horizon shrinks like the square root of the step. For the share it is $\sigma^2\sqrt{T\Delta t/\pi}$ times the mean price: 31 cents at 256 steps, and halving it takes four times the work. The error must be measured against the exact solution on the same Brownian path.
@@ -644,22 +619,22 @@ The two outputs agree line for line. The weak line shows the other kind of error
 
 ## What this builds on
 
-- [ito-integral](../06-Ito%20Calculus/01-ito-integral.md): the Ito integral as a limit of left-end sums, which is why the scheme freezes its coefficients at the start of each step, and Ito's isometry, used in the Detailed proof.
-- [stochastic-differential-equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md): what an SDE says, its integral form with left-end Ito integrals, and the share's exact solution used here as the yardstick.
-- [existence-and-uniqueness-for-sdes](../06-Ito%20Calculus/07-existence-and-uniqueness-for-sdes.md): the solution exists and its mean square stays bounded, the bound $M$ that step 1 of the Detailed proof starts from.
-- [eulers-method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/01-eulers-method.md): stepping along the slope, with error proportional to the step; this card adds the random increment and shows why the rate halves.
+- [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md): the Ito integral as a limit of left-end sums, which is why the scheme freezes its coefficients at the start of each step, and Ito's isometry, used in the Detailed proof.
+- [Stochastic differential equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md): what an SDE says, its integral form with left-end Ito integrals, and the share's exact solution used here as the yardstick.
+- [When an SDE has one solution](../06-Ito%20Calculus/07-existence-and-uniqueness-for-sdes.md): the solution exists and its mean square stays bounded, the bound $M$ that step 1 of the Detailed proof starts from.
+- [Euler's method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/01-eulers-method.md): stepping along the slope, with error proportional to the step; this card adds the random increment and shows why the rate halves.
 
 ## Where this goes next
 
-- [milstein-and-strong-weak-convergence](05-milstein-and-strong-weak-convergence.md): the dropped term put back, strong order one, and the error in averages.
-- [exact-simulation-of-gbm-and-ou](06-exact-simulation-of-gbm-and-ou.md): steps with no error at all, for the share and the mean-reverting rate.
-- [discretisation-schemes-for-sdes](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/05-discretisation-schemes-for-sdes.md): the schemes a pricing desk chooses between.
-- [theta-pays-for-gamma-hedged-pnl](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md): a hedged option stepped through time, where squared moves scatter around their average.
-- [pricing-under-local-volatility-and-the-forward-smile](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md): a model priced by simulation because no formula exists.
-- [heston-model](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): a variance that must stay positive, where the long-step trap bites.
-- [sabr-model-and-hagan-formula](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md): an approximate formula checked against simulated paths.
+- [Milstein and the two kinds of error](05-milstein-and-strong-weak-convergence.md): the dropped term put back, strong order one, and the error in averages.
+- [Exact simulation](06-exact-simulation-of-gbm-and-ou.md): steps with no error at all, for the share and the mean-reverting rate.
+- [Stepping an SDE](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/05-discretisation-schemes-for-sdes.md): the schemes a pricing desk chooses between.
+- [Theta pays for gamma](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md): a hedged option stepped through time, where squared moves scatter around their average.
+- [Pricing with local volatility](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md): a model priced by simulation because no formula exists.
+- [The Heston model](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): a variance that must stay positive, where the long-step trap bites.
+- [SABR and Hagan's formula](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md): an approximate formula checked against simulated paths.
 
-This card found the dropped term $\tfrac12\sigma^2 S(\Delta W^2 - \Delta t)$ and put it back only after the run; [milstein-and-strong-weak-convergence](05-milstein-and-strong-weak-convergence.md) builds it into every step, and asks whether a price, which is an average, needs the path error small at all.
+This card found the dropped term $\tfrac12\sigma^2 S(\Delta W^2 - \Delta t)$ and put it back only after the run; [Milstein and the two kinds of error](05-milstein-and-strong-weak-convergence.md) builds it into every step, and asks whether a price, which is an average, needs the path error small at all.
 
 ---
 

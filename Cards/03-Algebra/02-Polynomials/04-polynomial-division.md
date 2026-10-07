@@ -1,28 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Polynomials
-topic: Dividing polynomials
-item: Polynomial long division
-kind: theorem
-status: verified
-updated: 2026-09-07
-needs_first:
-  - "[[Cards/03-Algebra/02-Polynomials/01-polynomials|polynomials]]"
-  - "[[Cards/03-Algebra/02-Polynomials/02-factoring-quadratics|factoring-quadratics]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/04-division-with-remainder|division-with-remainder]]"
-next:
-  - "[[Cards/03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem|roots-and-the-factor-theorem]]"
-  - "[[Cards/03-Algebra/09-Rings and Fields/03-polynomials-behave-like-integers|polynomials-behave-like-integers]]"
-tags:
-  - mathematics
-  - algebra
-  - polynomial-division
----
-
 # Polynomial long division: divide with a remainder exactly as with whole numbers, and the remainder is the value at the root
 
-Algebra → Polynomials → Dividing polynomials → Polynomial long division
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Polynomials](../../../SYLLABUS.md#w03-s02) → Polynomial long division
 
 ---
 
@@ -32,9 +10,9 @@ A cardboard box holds x^3 + 6x^2 + 11x + 6 cubic cm. One edge has been measured:
 
 The box stands on a face, and volume is that face's area times the height. So the face's area is the volume divided by the edge you know. That division is the job.
 
-Do it and the face, or cross-section, comes out at x^2 + 5x + 6 square cm, which un-multiplies into (x + 2)(x + 3) ([factoring-quadratics](02-factoring-quadratics.md)). So the other two edges are x + 2 and x + 3. Set x = 2 and the box is 3 by 4 by 5 cm, holding 60 cubic cm.
+Do it and the face, or cross-section, comes out at x^2 + 5x + 6 square cm, which un-multiplies into (x + 2)(x + 3) ([Factoring](02-factoring-quadratics.md)). So the other two edges are x + 2 and x + 3. Set x = 2 and the box is 3 by 4 by 5 cm, holding 60 cubic cm.
 
-Dividing 17 by 5 gives 3 with 2 left over, and the 2 stays put because it is smaller than 5 ([division-with-remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md)). Polynomials do the same with one word swapped: the leftover has to be a *lower power* than the divisor, not a smaller number.
+Dividing 17 by 5 gives 3 with 2 left over, and the 2 stays put because it is smaller than 5 ([Division with a remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md)). Polynomials do the same with one word swapped: the leftover has to be a *lower power* than the divisor, not a smaller number.
 
 **Divide one polynomial by another the way you divide whole numbers. Stop when what is left has a lower highest power than the thing you divided by. And if you divided by x minus a number, what is left is that polynomial worked out at that number.**
 
@@ -57,7 +35,7 @@ $$p(x) = d(x)\,q(x) + s(x)$$
 
 **Read it aloud:** what you started with is the divisor, times how many of it fit, plus a scrap too small to divide again.
 
-The size rule is half the formula: the scrap's degree must be lower than the divisor's. Degree is the highest power of x present ([polynomials](01-polynomials.md)). Divide by a degree-1 thing like x + 1 and the scrap is a plain number. And only one pair fits: for a given p and d, one quotient and one scrap.
+The size rule is half the formula: the scrap's degree must be lower than the divisor's. Degree is the highest power of x present ([Polynomials](01-polynomials.md)). Divide by a degree-1 thing like x + 1 and the scrap is a plain number. And only one pair fits: for a given p and d, one quotient and one scrap.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -129,7 +107,7 @@ xychart-beta
 
 The line is the remainder from the full division, and also the volume worked out at r: one line does for both. It sits on zero at r = -3, -2 and -1, where the divisor goes in exactly, matching the edges x + 3, x + 2 and x + 1. At r = 2 it is 60, the 3 by 4 by 5 box.
 
-A remainder of zero means a factor, and a factor means a root ([roots-and-the-factor-theorem](05-roots-and-the-factor-theorem.md)).
+A remainder of zero means a factor, and a factor means a root ([Roots and factors](05-roots-and-the-factor-theorem.md)).
 
 ---
 
@@ -389,8 +367,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Testing a factor without factoring.** Working the polynomial out at -1 takes one line and tells you x + 1 divides exactly. That is [roots-and-the-factor-theorem](05-roots-and-the-factor-theorem.md).
-- **Ordinary long division.** The same loop with 10 in place of x: 1716 divided by 11 is 156, nothing left over. That is [polynomials-behave-like-integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md).
+- **Testing a factor without factoring.** Working the polynomial out at -1 takes one line and tells you x + 1 divides exactly. That is [Roots and factors](05-roots-and-the-factor-theorem.md).
+- **Ordinary long division.** The same loop with 10 in place of x: 1716 divided by 11 is 156, nothing left over. That is [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md).
 - **Sizing a part.** A container of known volume with one edge fixed by the shelf it sits on: divide, and the allowed face comes out at once.
 - **Check digits on a disc or a network packet.** They are the remainder of a polynomial division, and the receiver divides again. A remainder of zero means the check passed.
 
@@ -401,14 +379,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [polynomials](01-polynomials.md): what a polynomial is, and what degree means — the "size" that decides when the division stops.
-- [factoring-quadratics](02-factoring-quadratics.md): un-multiplying the face x^2 + 5x + 6 into (x + 2)(x + 3), the other two edges.
-- [division-with-remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md): the whole-number original, where the leftover has to be smaller than the divisor.
+- [Polynomials](01-polynomials.md): what a polynomial is, and what degree means — the "size" that decides when the division stops.
+- [Factoring](02-factoring-quadratics.md): un-multiplying the face x^2 + 5x + 6 into (x + 2)(x + 3), the other two edges.
+- [Division with a remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md): the whole-number original, where the leftover has to be smaller than the divisor.
 
 ## Where this goes next
 
-- [roots-and-the-factor-theorem](05-roots-and-the-factor-theorem.md): a remainder of zero means x - r is a factor, which caps a degree-n polynomial at n roots.
-- [polynomials-behave-like-integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): gcds, the Euclidean algorithm and factoring, carried over from whole numbers on the back of this division.
+- [Roots and factors](05-roots-and-the-factor-theorem.md): a remainder of zero means x - r is a factor, which caps a degree-n polynomial at n roots.
+- [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): gcds, the Euclidean algorithm and factoring, carried over from whole numbers on the back of this division.
 
 ---
 

@@ -1,21 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Real Integrals and Counting Zeros
-topic: The unit-circle substitution
-item: Integrals round a full turn
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/05-the-residue-theorem|the-residue-theorem]]"
-next: []
-tags: [mathematics, complex analysis, trigonometric-integrals-on-the-unit-circle]
----
-
 # Integrals round a full turn: set z = e to the i-theta and the trig integral becomes a residue on the unit circle
 
-Complex analysis → Real Integrals and Counting Zeros → The unit-circle substitution → Integrals round a full turn
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Real Integrals and Counting Zeros](../../../SYLLABUS.md#w07-s06) → Integrals round a full turn
 
 ---
 
@@ -41,7 +26,7 @@ To scale: 50 units per 1, origin at (230, 120); the poles sit at (216.60, 120) a
 
 ## The formula
 
-Reminders: z is the point e^(it) ([eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)); the loop sign over |z| = 1 is the contour integral once anticlockwise round the unit circle ([contour-integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md)); Res is the residue ([the-residue-theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)). The translations:
+Reminders: z is the point e^(it) ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)); the loop sign over |z| = 1 is the contour integral once anticlockwise round the unit circle ([Contour integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md)); Res is the residue ([The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)). The translations:
 
 $$\cos t = \frac{z + 1/z}{2}, \qquad \sin t = \frac{z - 1/z}{2i}, \qquad dt = \frac{dz}{iz}$$
 
@@ -87,7 +72,7 @@ As t runs from 0 to 2π, z = e^(it) runs once anticlockwise round the unit circl
 
 ### Step 1: cosine from the point and its reciprocal
 
-On the unit circle, 1/z = e^(−it), the mirror image of z in the real axis: its conjugate ([conjugate-and-modulus](../01-Complex%20Numbers%20and%20the%20Plane/02-conjugate-and-modulus.md)). Adding the two cancels the imaginary parts: z + 1/z = 2 cos t. Subtracting cancels the real parts: z − 1/z = 2i sin t. At t = π, z = 1/z = −1, and the sum −2 is twice cos π.
+On the unit circle, 1/z = e^(−it), the mirror image of z in the real axis: its conjugate ([Conjugate and modulus](../01-Complex%20Numbers%20and%20the%20Plane/02-conjugate-and-modulus.md)). Adding the two cancels the imaginary parts: z + 1/z = 2 cos t. Subtracting cancels the real parts: z − 1/z = 2i sin t. At t = π, z = 1/z = −1, and the sum −2 is twice cos π.
 
 ### Step 2: the step in angle
 
@@ -126,7 +111,7 @@ The residue at z₊ is 2/(iR (z₊ − z₋)) = 1/(i√(A^2 − R^2)). Times 2π
 
 </details>
 
-A road with no complex numbers: the substitution u = tan(t/2) turns the wheel's integral into the integral of 2/(3 + u^2) along the whole real line, again 2π/√3. Integrals along the whole line are the business of [semicircle-contours](01-semicircle-contours.md).
+A road with no complex numbers: the substitution u = tan(t/2) turns the wheel's integral into the integral of 2/(3 + u^2) along the whole real line, again 2π/√3. Integrals along the whole line are the business of [The semicircle contour](01-semicircle-contours.md).
 
 ---
 
@@ -389,13 +374,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [the-residue-theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md): a loop integral is 2π i times the residues inside, the engine of Step 5.
-- [eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e^(it) is the point at angle t on the unit circle, which gives Steps 1 and 2.
+- [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md): a loop integral is 2π i times the residues inside, the engine of Step 5.
+- [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e^(it) is the point at angle t on the unit circle, which gives Steps 1 and 2.
 
 ## Where this goes next
 
-- [oscillatory-integrals-and-jordans-lemma](03-oscillatory-integrals-and-jordans-lemma.md): cos and sin again, along the whole line rather than round one turn.
-- [the-argument-principle](06-the-argument-principle.md): the same loop round a circle, used to count zeros instead of adding residues.
+- [Jordan's lemma](03-oscillatory-integrals-and-jordans-lemma.md): cos and sin again, along the whole line rather than round one turn.
+- [The argument principle](06-the-argument-principle.md): the same loop round a circle, used to count zeros instead of adding residues.
 
 ---
 

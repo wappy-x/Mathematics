@@ -1,45 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Eigenvalues and Symmetric Matrices
-topic: Stretch directions
-item: Eigenvalues and eigenvectors
-kind: definition
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/05-Solving Systems/04-determinants|determinants]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/01-matrix-equation-ax-b|matrix-equation-ax-b]]"
-  - "[[Cards/03-Algebra/02-Polynomials/03-quadratic-formula|quadratic-formula]]"
-next:
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/03-diagonalisation-and-matrix-powers|diagonalisation-and-matrix-powers]]"
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/06-recurrences-as-matrix-powers|recurrences-as-matrix-powers]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/07-complex-vectors-and-matrices|complex-vectors-and-matrices]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/02-the-eigenvalue-method|the-eigenvalue-method]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/08-eigenvalues-and-eigenfunctions|eigenvalues-and-eigenfunctions]]"
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/04-stationary-distributions|stationary-distributions]]"
-  - "[[Cards/12-Financial mathematics/49-Microstructure and Execution/04-optimal-execution-almgren-chriss|optimal-execution-almgren-chriss]]"
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/04-pole-placement-and-observers|pole-placement-and-observers]]"
-  - "[[Cards/13-Engineering mathematics/07-Mechanics and Structures/06-vibration-modes-and-resonance|vibration-modes-and-resonance]]"
-  - "[[Cards/13-Engineering mathematics/09-Quantum Mechanics in Outline/04-quantum-harmonic-oscillator|quantum-harmonic-oscillator]]"
-  - "[[Cards/13-Engineering mathematics/09-Quantum Mechanics in Outline/06-spin-and-two-state-systems|spin-and-two-state-systems]]"
-  - "[[Cards/14-Applied and computational/07-Network Science and Spectral Graphs/02-power-iteration-and-the-damping-factor|power-iteration-and-the-damping-factor]]"
-  - "[[Cards/14-Applied and computational/07-Network Science and Spectral Graphs/03-graph-laplacian-and-spectral-clustering|graph-laplacian-and-spectral-clustering]]"
-  - "[[Cards/16-Numerical analysis/02-Root Finding and Fixed Points/08-polynomial-roots-and-companion-matrices|polynomial-roots-and-companion-matrices]]"
-  - "[[Cards/16-Numerical analysis/03-Numerical Linear Algebra/07-eigenvalues-power-iteration-and-the-qr-algorithm|eigenvalues-power-iteration-and-the-qr-algorithm]]"
-  - "[[Cards/18-Functional analysis/03-Bounded Operators/07-spectrum-and-resolvent|spectrum-and-resolvent]]"
-  - "[[Cards/22-Algebraic geometry/01-Polynomial Systems/07-solving-zero-dimensional-systems|solving-zero-dimensional-systems]]"
-  - "[[Cards/22-Algebraic geometry/06-Schemes and Modern Language/06-smith-normal-form-and-canonical-forms|smith-normal-form-and-canonical-forms]]"
-  - "[[Cards/23-Differential geometry and Lie groups/06-Lie Groups/02-lie-algebras-and-the-exponential-map|lie-algebras-and-the-exponential-map]]"
-tags:
-  - mathematics
-  - algebra
-  - eigenvalues-and-eigenvectors
----
-
 # Eigenvalues and eigenvectors: the directions a matrix only stretches, and the stretch factors, found from a quadratic
 
-Algebra → Eigenvalues and Symmetric Matrices → Stretch directions → Eigenvalues and eigenvectors
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Eigenvalues and Symmetric Matrices](../../../SYLLABUS.md#w03-s07) → Eigenvalues and eigenvectors
 
 ---
 
@@ -47,7 +8,7 @@ Algebra → Eigenvalues and Symmetric Matrices → Stretch directions → Eigenv
 
 A rental company runs 1000 cars out of two cities. Each month 80% of city A's cars come back in A and 20% are dropped in B; of B's cars, 70% stay and 30% arrive in A.
 
-That month is a matrix, row by row: `[[0.8, 0.3], [0.2, 0.7]]`. Its top row builds next month's count for A, its bottom row B's ([matrix-equation-ax-b](../05-Solving%20Systems/01-matrix-equation-ax-b.md)).
+That month is a matrix, row by row: `[[0.8, 0.3], [0.2, 0.7]]`. Its top row builds next month's count for A, its bottom row B's ([Solving A x = b](../05-Solving%20Systems/01-matrix-equation-ax-b.md)).
 
 Park 600 in A and 400 in B. A then holds 0.8 × 600 + 0.3 × 400 — 600 again — and B holds 400. Cars moved; the split did not.
 
@@ -86,7 +47,7 @@ The eigenvalues are then the numbers solving
 
 $$\det(A - \lambda I) = 0$$
 
-$I$ is the identity matrix `[[1, 0], [0, 1]]`, which changes no column. $\det$ is the determinant: what a matrix does to area, zero meaning the picture was flattened ([determinants](../05-Solving%20Systems/04-determinants.md)). Take lambda off both diagonal entries; ask which values flatten the plane.
+$I$ is the identity matrix `[[1, 0], [0, 1]]`, which changes no column. $\det$ is the determinant: what a matrix does to area, zero meaning the picture was flattened ([Determinants](../05-Solving%20Systems/04-determinants.md)). Take lambda off both diagonal entries; ask which values flatten the plane.
 
 Write the matrix as `[[a, b], [c, d]]`. That determinant is a quadratic in the eigenvalue:
 
@@ -103,13 +64,13 @@ Lambda squared, minus the **trace** (the diagonal entries added, a + d) times la
 | $I$ | the identity matrix | `[[1, 0], [0, 1]]` | — |
 | $\det$ | the determinant, ad − bc | 0.5 | — |
 
-Its **discriminant**, the part under the root in the quadratic formula ([quadratic-formula](../02-Polynomials/03-quadratic-formula.md)), is (a + d)^2 − 4(ad − bc): here 1.5 × 1.5 − 4 × 0.5 = 0.25, positive, so two real factors.
+Its **discriminant**, the part under the root in the quadratic formula ([The quadratic formula](../02-Polynomials/03-quadratic-formula.md)), is (a + d)^2 − 4(ad − bc): here 1.5 × 1.5 − 4 × 0.5 = 0.25, positive, so two real factors.
 
 ### When it holds
 
 - **Square, and the pattern never all zeros.** A 2 by 3 matrix returns fewer numbers than it takes, so output and input cannot be compared; and if zeros counted, every number would qualify.
-- **A discriminant of zero or more.** Negative, and the matrix turns every direction, as a rotation does: complex factors ([complex-vectors-and-matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md)).
-- **Two roots, maybe one direction.** A repeated root can leave a single line: [diagonalisation-and-matrix-powers](03-diagonalisation-and-matrix-powers.md).
+- **A discriminant of zero or more.** Negative, and the matrix turns every direction, as a rotation does: complex factors ([Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md)).
+- **Two roots, maybe one direction.** A repeated root can leave a single line: [Diagonalisation](03-diagonalisation-and-matrix-powers.md).
 
 ---
 
@@ -123,7 +84,7 @@ $$(A - \lambda I)\,v = 0$$
 
 ### Step 1: only a flattening matrix kills a pattern
 
-Sending a nonzero column to the origin collapses two directions into one and takes area to zero ([determinants](../05-Solving%20Systems/04-determinants.md)), so lambda is an eigenvalue exactly when the shift's determinant is zero.
+Sending a nonzero column to the origin collapses two directions into one and takes area to zero ([Determinants](../05-Solving%20Systems/04-determinants.md)), so lambda is an eigenvalue exactly when the shift's determinant is zero.
 
 <details>
 <summary>Detailed proof: the determinant test, for a 2 by 2</summary>
@@ -165,7 +126,7 @@ Put the matrix into its own characteristic quadratic — itself times itself, th
 
 </details>
 
-A big matrix is handled instead by multiplying a column by it repeatedly and watching where that settles: power-iteration-and-the-damping-factor.
+A big matrix is handled instead by multiplying a column by it repeatedly and watching where that settles: PageRank by power iteration.
 
 ---
 
@@ -418,9 +379,9 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Fixed reshuffles.** Cars, customers, money: a steady pattern with factor 1, and fading ones saying how fast the start is forgotten. As probability: [stationary-distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md).
-- **Structures.** A bridge has a few patterns in which all of it moves together, their factors fixing the frequencies it rings at: vibration-modes-and-resonance.
-- **Better coordinates.** Along its stretch directions a problem stops mixing: [change-of-basis](01-change-of-basis.md). Always-real, square-on directions: [spectral-theorem](04-spectral-theorem.md). Their shapes: [quadratic-forms-and-positive-definite](05-quadratic-forms-and-positive-definite.md). Not-square matrices: [singular-value-decomposition](06-singular-value-decomposition.md).
+- **Fixed reshuffles.** Cars, customers, money: a steady pattern with factor 1, and fading ones saying how fast the start is forgotten. As probability: [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md).
+- **Structures.** A bridge has a few patterns in which all of it moves together, their factors fixing the frequencies it rings at: Vibration modes.
+- **Better coordinates.** Along its stretch directions a problem stops mixing: [Change of basis](01-change-of-basis.md). Always-real, square-on directions: [The spectral theorem](04-spectral-theorem.md). Their shapes: [Quadratic forms](05-quadratic-forms-and-positive-definite.md). Not-square matrices: [The singular value decomposition](06-singular-value-decomposition.md).
 
 > **Say it back**
 > A few patterns come out of a matrix rescaled along the line they went in on; the rest point somewhere new. Those few are the eigenvectors, their rescaling numbers the eigenvalues. To find them, take the eigenvalue off both diagonal entries and ask which values flatten the plane. For a 2 by 2 that test is a quadratic; the fleet's gives 1 and 0.5, patterns (3, 2) and (1, −1).
@@ -429,31 +390,31 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [determinants](../05-Solving%20Systems/04-determinants.md): area, and that zero means something was flattened — Step 1's hinge.
-- [matrix-equation-ax-b](../05-Solving%20Systems/01-matrix-equation-ax-b.md): how a matrix multiplies a column.
-- [quadratic-formula](../02-Polynomials/03-quadratic-formula.md): the two roots and the discriminant.
+- [Determinants](../05-Solving%20Systems/04-determinants.md): area, and that zero means something was flattened — Step 1's hinge.
+- [Solving A x = b](../05-Solving%20Systems/01-matrix-equation-ax-b.md): how a matrix multiplies a column.
+- [The quadratic formula](../02-Polynomials/03-quadratic-formula.md): the two roots and the discriminant.
 
 ## Where this goes next
 
-- [diagonalisation-and-matrix-powers](03-diagonalisation-and-matrix-powers.md): both patterns at once.
-- [recurrences-as-matrix-powers](../../04-Combinatorics%20and%20graphs/05-Recurrences/06-recurrences-as-matrix-powers.md): counting rules.
-- [complex-vectors-and-matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): complex factors.
-- [the-eigenvalue-method](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/02-the-eigenvalue-method.md): continuous change.
-- [eigenvalues-and-eigenfunctions](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/08-eigenvalues-and-eigenfunctions.md): whole curves.
-- [stationary-distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md): probability, properly.
-- [optimal-execution-almgren-chriss](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/04-optimal-execution-almgren-chriss.md): trade schedules.
-- pole-placement-and-observers: factors by design.
-- vibration-modes-and-resonance: vibration modes.
-- quantum-harmonic-oscillator: allowed energies.
-- spin-and-two-state-systems: measured values.
-- power-iteration-and-the-damping-factor: road two at scale.
-- graph-laplacian-and-spectral-clustering: network cuts.
-- polynomial-roots-and-companion-matrices: the trick reversed.
-- eigenvalues-power-iteration-and-the-qr-algorithm: no quadratic.
-- spectrum-and-resolvent: infinite dimensions.
-- solving-zero-dimensional-systems: polynomial systems.
-- smith-normal-form-and-canonical-forms: all the shapes.
-- lie-algebras-and-the-exponential-map: matrix generators.
+- [Diagonalisation](03-diagonalisation-and-matrix-powers.md): both patterns at once.
+- [A recurrence is a matrix](../../04-Combinatorics%20and%20graphs/05-Recurrences/06-recurrences-as-matrix-powers.md): counting rules.
+- [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): complex factors.
+- [The eigenvalue method](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/02-the-eigenvalue-method.md): continuous change.
+- [Eigenvalue problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/08-eigenvalues-and-eigenfunctions.md): whole curves.
+- [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md): probability, properly.
+- [Almgren-Chriss](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/04-optimal-execution-almgren-chriss.md): trade schedules.
+- Pole placement: factors by design.
+- Vibration modes: vibration modes.
+- The quantum oscillator: allowed energies.
+- Spin one-half: measured values.
+- PageRank by power iteration: road two at scale.
+- The graph Laplacian: network cuts.
+- Every root at once: the trick reversed.
+- Eigenvalues by iteration: no quadratic.
+- Spectrum: infinite dimensions.
+- Finitely many solutions: polynomial systems.
+- Smith normal form: all the shapes.
+- Lie algebra: matrix generators.
 
 This card says nothing about a mixture of the two patterns, which is every other pattern there is. Splitting any column into its two is next.
 

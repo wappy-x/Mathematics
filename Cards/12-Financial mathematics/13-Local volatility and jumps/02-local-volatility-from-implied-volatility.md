@@ -1,33 +1,16 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Local volatility and jumps
-topic: Local vol from the smile
-item: Local volatility in implied-vol terms
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/01-dupire-local-volatility|dupire-local-volatility]]"
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/04-svi-smile-fit|svi-smile-fit]]"
-next:
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/03-pricing-under-local-volatility-and-the-forward-smile|pricing-under-local-volatility-and-the-forward-smile]]"
-tags: [mathematics, financial mathematics, local-volatility-from-implied-volatility]
----
-
 # Local volatility in implied-vol terms: the version you can compute from quotes, and the twice-the-skew rule
 
-Financial mathematics → Local volatility and jumps → Local vol from the smile → Local volatility in implied-vol terms
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Local volatility and jumps](../../../SYLLABUS.md#w12-s13) → Local volatility in implied-vol terms
 
 ---
 
 ## General Overview
 
-Acme shares trade at \$100. Its one-year options are summed up by one smooth curve, the SVI fit of [svi-smile-fit](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): implied volatility 26.12% at the \$80 strike, 20.00% at \$100, 17.90% at \$120. Each is one volatility for the whole year, the number that makes Black-Scholes return that option's price.
+Acme shares trade at \$100. Its one-year options are summed up by one smooth curve, the SVI fit of [The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): implied volatility 26.12% at the \$80 strike, 20.00% at \$100, 17.90% at \$120. Each is one volatility for the whole year, the number that makes Black-Scholes return that option's price.
 
 A client asks for an option that dies if Acme ever trades at \$80 during the year. Its value depends on how widely Acme's price swings when it is near \$80. No implied volatility says that: each is one average over every path the share might take to its strike.
 
-**Local volatility** says it: one volatility for each share price and date, chosen so that a share moving with it reprices every quoted option. Dupire's formula ([dupire-local-volatility](01-dupire-local-volatility.md)) reads it off call prices at every strike and expiry. A desk holds fitted smiles instead. This card rewrites Dupire's formula in the smile's own terms, implied volatility and its slopes, and applies it to the SVI curve.
+**Local volatility** says it: one volatility for each share price and date, chosen so that a share moving with it reprices every quoted option. Dupire's formula ([Dupire local volatility](01-dupire-local-volatility.md)) reads it off call prices at every strike and expiry. A desk holds fitted smiles instead. This card rewrites Dupire's formula in the smile's own terms, implied volatility and its slopes, and applies it to the SVI curve.
 
 One year out, local volatility at \$92 is 22.58% against an implied 21.85%; at \$120 it is 16.45% against 17.90%. The local curve is steeper. At short expiry the steepness obeys a rule: near the money, local volatility slopes twice as fast as implied.
 
@@ -53,7 +36,7 @@ The orange line is implied volatility at one year, one number per strike. The gr
 
 ## The formula
 
-Notation from [svi-smile-fit](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md), in words first. The **forward** $F_T = S\,e^{(r-q)T}$ is the price agreed today for Acme delivered in $T$ years, from share price $S$ = \$100, rate $r$ = 5% and dividend yield $q$ = 2%. **Log-moneyness** $k = \ln(K/F_T)$ measures a strike $K$ against that forward on a log scale; $k = 0$ is the forward. **Total implied variance** $w = \sigma_{\text{imp}}^2\,T$ is implied volatility squared, times years. Its slope and bend in $k$ are $w'$ and $w''$; its slope in expiry, holding $k$ fixed, is $\partial w/\partial T$.
+Notation from [The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md), in words first. The **forward** $F_T = S\,e^{(r-q)T}$ is the price agreed today for Acme delivered in $T$ years, from share price $S$ = \$100, rate $r$ = 5% and dividend yield $q$ = 2%. **Log-moneyness** $k = \ln(K/F_T)$ measures a strike $K$ against that forward on a log scale; $k = 0$ is the forward. **Total implied variance** $w = \sigma_{\text{imp}}^2\,T$ is implied volatility squared, times years. Its slope and bend in $k$ are $w'$ and $w''$; its slope in expiry, holding $k$ fixed, is $\partial w/\partial T$.
 
 $$\sigma_{\text{loc}}^2(K, T) \;=\; \frac{\partial w/\partial T}{g(k)}, \qquad g(k) = \Bigl(1 - \frac{k\,w'}{2w}\Bigr)^2 - \frac{(w')^2}{4}\Bigl(\frac{1}{w} + \frac14\Bigr) + \frac{w''}{2}$$
 
@@ -114,7 +97,7 @@ Dupire's formula needs the slopes of call prices in strike and expiry. Every cal
 
 ### Step 1: measure strikes from the forward, and the rates drop out
 
-Dupire's formula, from [dupire-local-volatility](01-dupire-local-volatility.md), with $C(K, T)$ the call price:
+Dupire's formula, from [Dupire local volatility](01-dupire-local-volatility.md), with $C(K, T)$ the call price:
 
 $$\sigma_{\text{loc}}^2 = \frac{\partial C/\partial T + (r - q)\,K\,\partial C/\partial K + q\,C}{\tfrac12 K^2\,\partial^2 C/\partial K^2}$$
 
@@ -147,7 +130,7 @@ The chain rule on the strike side, with $w$ now a function of $k$, gives
 
 $$c'' - c' = 2\,\frac{\partial c}{\partial w}\;g(k)$$
 
-This is the identity inside the butterfly test of [svi-smile-fit](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): the density of Acme's price is $g$ times a positive factor. Divide Step 2 by Step 3 and the vega cancels:
+This is the identity inside the butterfly test of [The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): the density of Acme's price is $g$ times a positive factor. Divide Step 2 by Step 3 and the vega cancels:
 
 $$\sigma_{\text{loc}}^2 = \frac{2\,(\partial c/\partial w)\,\partial w/\partial T}{2\,(\partial c/\partial w)\,g} = \frac{\partial w/\partial T}{g}$$
 
@@ -170,7 +153,7 @@ The two lone $w'$ terms cancel. Take out a factor 2 and the bracket becomes $1 -
 
 A flat surface first. Flat means $w' = w'' = 0$, so $g = 1$ and $\partial w/\partial T$ is the volatility squared: local equals implied. The house example's flat 20% gives 20% everywhere; road 2 of the code confirms it from call prices alone.
 
-The top is the calendar half. At fixed $k$, $\partial w/\partial T$ is the variance the market adds between one expiry and the next: the forward variance of [term-structure-and-forward-volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md), at one moneyness.
+The top is the calendar half. At fixed $k$, $\partial w/\partial T$ is the variance the market adds between one expiry and the next: the forward variance of [Term structure and forward volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md), at one moneyness.
 
 The bottom is the butterfly half, the smile's shape. Below the forward on a downward skew, $k$ and $w'$ are both negative, so the first term of $g$ drops below 1: 0.749172 at \$92. The bend adds back 0.254460, but $g$ is still 0.935717, so local volatility sits above implied. At \$120 $k$ is positive and $w'$ still negative, so the first term exceeds 1 and $g$ is 1.184289: local sits below implied. The skew makes local volatility steeper than implied; the bend pulls it back.
 
@@ -217,7 +200,7 @@ xychart-beta
 
 Orange: implied volatility at one week. Green: local volatility at one week. Dark: the straight line through the at-the-money implied volatility with twice the implied skew as its slope. Near $k = 0$ the local curve runs along it; further out it bends above it on both sides.
 
-For longer expiries Gatheral's book names a refinement, the most-likely-path approximation: implied volatility is roughly local volatility averaged along the path the share most likely takes to finish at the strike. This card names it only. The other road to the local volatilities is Dupire's formula on call prices by finite differences, the method of [dupire-local-volatility](01-dupire-local-volatility.md) and road 2 of the code.
+For longer expiries Gatheral's book names a refinement, the most-likely-path approximation: implied volatility is roughly local volatility averaged along the path the share most likely takes to finish at the strike. This card names it only. The other road to the local volatilities is Dupire's formula on call prices by finite differences, the method of [Dupire local volatility](01-dupire-local-volatility.md) and road 2 of the code.
 
 ---
 
@@ -665,10 +648,10 @@ The two outputs match line for line. Road 2 differs from road 1 only in the last
 
 ## Where you meet it in real life
 
-- **Exotic-option desks.** Barrier, lookback and cliquet prices under local volatility start from this formula applied to the day's fitted smiles. Pricing with the result is [pricing-under-local-volatility-and-the-forward-smile](03-pricing-under-local-volatility-and-the-forward-smile.md).
-- **How the smile moves with the share.** In a local-volatility world short-dated at-the-money implied volatility follows local volatility at the current price, so it moves with the share at twice the implied skew: one input to the hedge ratio on [smile-adjusted-delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md).
-- **Mixed models.** Stochastic-local-volatility models start from this local volatility and share it between a random volatility and a price-dependent one: [stochastic-local-volatility](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/06-stochastic-local-volatility.md).
-- **Jumps.** Local volatility matches any arbitrage-free smile, but its paths never jump; sudden falls are the other account of steep short-dated skews: [merton-jump-diffusion](04-merton-jump-diffusion.md).
+- **Exotic-option desks.** Barrier, lookback and cliquet prices under local volatility start from this formula applied to the day's fitted smiles. Pricing with the result is [Pricing with local volatility](03-pricing-under-local-volatility-and-the-forward-smile.md).
+- **How the smile moves with the share.** In a local-volatility world short-dated at-the-money implied volatility follows local volatility at the current price, so it moves with the share at twice the implied skew: one input to the hedge ratio on [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md).
+- **Mixed models.** Stochastic-local-volatility models start from this local volatility and share it between a random volatility and a price-dependent one: [Stochastic-local volatility](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/06-stochastic-local-volatility.md).
+- **Jumps.** Local volatility matches any arbitrage-free smile, but its paths never jump; sudden falls are the other account of steep short-dated skews: [Merton jump-diffusion](04-merton-jump-diffusion.md).
 
 > **Say it back**
 > Local volatility is one volatility for each price and date, the one that reprices every option. In the smile's own terms, local variance is how fast total implied variance grows with expiry at a fixed forward-relative strike, divided by the butterfly function $g$. Rates and dividends drop out because strikes are measured from the forward. On Acme's SVI surface it gives 22.58% at \$92 and 16.45% at \$120 one year out, as Dupire's formula on call prices does. At short expiry implied volatility is the harmonic mean of local volatility between forward and strike, so near the money local volatility slopes twice as steeply.
@@ -677,12 +660,12 @@ The two outputs match line for line. Road 2 differs from road 1 only in the last
 
 ## What this builds on
 
-- [dupire-local-volatility](01-dupire-local-volatility.md): the formula in call prices that Step 1 rewrites, and road 2 of the code.
-- [svi-smile-fit](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): the fitted one-year curve, its closed-form slopes, and the butterfly function $g$ with the identity Step 3 uses.
+- [Dupire local volatility](01-dupire-local-volatility.md): the formula in call prices that Step 1 rewrites, and road 2 of the code.
+- [The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): the fitted one-year curve, its closed-form slopes, and the butterfly function $g$ with the identity Step 3 uses.
 
 ## Where this goes next
 
-- [pricing-under-local-volatility-and-the-forward-smile](03-pricing-under-local-volatility-and-the-forward-smile.md): a share simulated with these local volatilities, the vanillas repriced, and the future smiles the model predicts.
+- [Pricing with local volatility](03-pricing-under-local-volatility-and-the-forward-smile.md): a share simulated with these local volatilities, the vanillas repriced, and the future smiles the model predicts.
 
 This card turns a smile into a volatility for every price and date; whether a share driven by it gives back the quoted prices, and what it predicts for future smiles, is the next card's question.
 

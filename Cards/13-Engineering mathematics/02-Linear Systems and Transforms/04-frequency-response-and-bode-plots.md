@@ -1,27 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Linear Systems and Transforms
-topic: Gain and phase against frequency
-item: Bode plots
-kind: method
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/02-impulse-response-and-transfer-functions|impulse-response-and-transfer-functions]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/03-poles-zeros-and-stability|poles-zeros-and-stability]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/04-eulers-formula|eulers-formula]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/06-log-laws-and-log-scales|log-laws-and-log-scales]]"
-next:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/05-final-value-theorem-and-steady-gain|final-value-theorem-and-steady-gain]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/06-nyquist-criterion-and-stability-margins|nyquist-criterion-and-stability-margins]]"
-  - "[[Cards/13-Engineering mathematics/05-Signals/01-sampling-and-the-nyquist-theorem|sampling-and-the-nyquist-theorem]]"
-tags: [mathematics, engineering mathematics, frequency-response-and-bode-plots]
----
-
 # Bode plots: how much a system magnifies and delays each frequency
 
-Engineering mathematics → Linear Systems and Transforms → Gain and phase against frequency → Bode plots
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Linear Systems and Transforms](../../../SYLLABUS.md#w13-s02) → Bode plots
 
 ---
 
@@ -57,7 +36,7 @@ Orange: the throttle, in percent. Green: the simulated speed change, in m/s. Aft
 
 ## The formula
 
-Three pieces of notation first, in words. Engineers write $j$ for the square root of −1; the rest of the library writes i. The **transfer function** $G(s)$ says what the system does to each exponential $e^{st}$: feed it in, and $G(s)\,e^{st}$ comes out ([impulse-response-and-transfer-functions](02-impulse-response-and-transfer-functions.md)). A **decibel** (dB) measures a gain on a log scale: the gain $g$ is $20\log_{10} g$ decibels, so a gain of 10 is +20 dB, a gain of 1 is 0 dB and a gain of 0.1 is −20 dB.
+Three pieces of notation first, in words. Engineers write $j$ for the square root of −1; the rest of the library writes i. The **transfer function** $G(s)$ says what the system does to each exponential $e^{st}$: feed it in, and $G(s)\,e^{st}$ comes out ([Transfer functions](02-impulse-response-and-transfer-functions.md)). A **decibel** (dB) measures a gain on a log scale: the gain $g$ is $20\log_{10} g$ decibels, so a gain of 10 is +20 dB, a gain of 1 is 0 dB and a gain of 0.1 is −20 dB.
 
 For the car, with throttle $u$ in percent and speed change $y$ in m/s, two first-order equations make the model. The engine delivers thrust $F$, counted in the throttle percent it settles to, with a 0.5 s time constant: $\tau_2 F' = -F + u$. The car's speed follows the thrust against its drag: $\tau_1 y' = -y + K F$. Started from rest, the Laplace transform turns each derivative into a factor $s$, so the thrust is $1/(\tau_2 s + 1)$ times the throttle and the speed is $K/(\tau_1 s + 1)$ times the thrust. Their product is the transfer function:
 
@@ -111,11 +90,11 @@ A phase in degrees turns into a time lag by dividing the phase in radians by $\o
 
 ### Step 0: a sine is two exponentials, and exponentials pass through unchanged
 
-A linear time-invariant system answers the exponential $e^{st}$ with the same exponential times one complex number, $G(s)$. That is what the transfer function means. Euler's formula ([eulers-formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)) writes a sine as two such exponentials: $\sin(\omega t) = \big(e^{j\omega t} - e^{-j\omega t}\big)/2j$. Each passes through, multiplied by $G$ at $s = j\omega$ or $s = -j\omega$. Putting the two back together gives a sine again. Everything on this card is that one move: evaluate $G(s)$ along the imaginary axis, $s = j\omega$.
+A linear time-invariant system answers the exponential $e^{st}$ with the same exponential times one complex number, $G(s)$. That is what the transfer function means. Euler's formula ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)) writes a sine as two such exponentials: $\sin(\omega t) = \big(e^{j\omega t} - e^{-j\omega t}\big)/2j$. Each passes through, multiplied by $G$ at $s = j\omega$ or $s = -j\omega$. Putting the two back together gives a sine again. Everything on this card is that one move: evaluate $G(s)$ along the imaginary axis, $s = j\omega$.
 
 ### Step 1: the settled response to $e^{j\omega t}$ is $G(j\omega)\,e^{j\omega t}$
 
-The output is the input convolved with the impulse response $h$, the output after a sharp unit kick ([linear-time-invariant-systems-and-convolution](01-linear-time-invariant-systems-and-convolution.md)). Switch $e^{j\omega t}$ on at time 0, and the output at time $t$ is $e^{j\omega t}$ times the integral of $h(r)e^{-j\omega r}$ over past times $r$ from 0 to $t$. As $t$ grows, that integral approaches $G(j\omega)$, provided $h$ dies away fast enough. Stability is exactly that condition ([poles-zeros-and-stability](03-poles-zeros-and-stability.md)).
+The output is the input convolved with the impulse response $h$, the output after a sharp unit kick ([Linear and time-invariant](01-linear-time-invariant-systems-and-convolution.md)). Switch $e^{j\omega t}$ on at time 0, and the output at time $t$ is $e^{j\omega t}$ times the integral of $h(r)e^{-j\omega r}$ over past times $r$ from 0 to $t$. As $t$ grows, that integral approaches $G(j\omega)$, provided $h$ dies away fast enough. Stability is exactly that condition ([Poles and zeros](03-poles-zeros-and-stability.md)).
 
 <details>
 <summary>Detailed proof</summary>
@@ -138,7 +117,7 @@ The impulse response of a real car is a real function. Its value at $-j\omega$ i
 
 ### Step 3: logs turn the product of factors into a sum
 
-$G(j\omega)$ for the car is a product: $K$, times $1/(1 + j\omega\tau_1)$, times $1/(1 + j\omega\tau_2)$. Sizes of complex numbers multiply and their angles add. Take $20\log_{10}$ of the size and the product becomes a sum ([log-laws-and-log-scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md)). So the Bode plot of a chain of simple factors is the plain sum of their plots, in dB and in degrees. Hendrik Bode drew the plots this way at Bell Labs in the 1930s for exactly that reason: a designer could add straight lines by hand.
+$G(j\omega)$ for the car is a product: $K$, times $1/(1 + j\omega\tau_1)$, times $1/(1 + j\omega\tau_2)$. Sizes of complex numbers multiply and their angles add. Take $20\log_{10}$ of the size and the product becomes a sum ([Log laws and log scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md)). So the Bode plot of a chain of simple factors is the plain sum of their plots, in dB and in degrees. Hendrik Bode drew the plots this way at Bell Labs in the 1930s for exactly that reason: a designer could add straight lines by hand.
 
 ### Step 4: one factor, two straight lines
 
@@ -156,7 +135,7 @@ Two more pieces appear in most plots. A **zero**, a factor $1 + j\omega\tau$ on 
 
 For the car the corners sit at 0.1 rad/s and 2 rad/s. Below 0.1 rad/s both factors are flat: 0 dB, because $K$ = 1 is 0 dB. From 0.1 to 2 rad/s the car's factor falls at −20 dB per decade, reaching −26.02 dB at 2 rad/s. Above 2 rad/s the engine's factor adds its own −20, for −40 dB per decade: −66.02 dB by 20 rad/s. The code measures the true slope far out, between 100 and 1,000 rad/s, at −39.998 dB per decade. The phase sketch adds the two factors' ramps and ends at −180°, which the exact phase approaches but never reaches.
 
-A second road to the same complex number draws it as one curve in the plane, size and angle together, as $\omega$ runs from 0 upwards. That is the Nyquist plot, which counts encirclements to judge a feedback loop: [nyquist-criterion-and-stability-margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md).
+A second road to the same complex number draws it as one curve in the plane, size and angle together, as $\omega$ runs from 0 upwards. That is the Nyquist plot, which counts encirclements to judge a feedback loop: [Nyquist and margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md).
 
 ---
 
@@ -620,7 +599,7 @@ The two outputs agree line for line at the printed precision.
 ## The usual mistake
 
 > [!warning]
-> **Reading the straight-line sketch as the system.** The sketch is a drawing aid. It is 3.01 dB high at every isolated corner, more where corners crowd together, and it misses whatever has no corner: a pure delay adds lag without changing the gain, so a sketch drawn from poles alone can show a comfortable −110.85° where the true phase is −168.15°. Lightly damped pairs of poles peak above the sketch instead of below it ([second-order-systems-damping-and-natural-frequency](06-second-order-systems-damping-and-natural-frequency.md)). Sketch to think; compute to decide.
+> **Reading the straight-line sketch as the system.** The sketch is a drawing aid. It is 3.01 dB high at every isolated corner, more where corners crowd together, and it misses whatever has no corner: a pure delay adds lag without changing the gain, so a sketch drawn from poles alone can show a comfortable −110.85° where the true phase is −168.15°. Lightly damped pairs of poles peak above the sketch instead of below it ([Damping ratio and natural frequency](06-second-order-systems-damping-and-natural-frequency.md)). Sketch to think; compute to decide.
 >
 > - **Ten instead of twenty.** Decibels of a gain of swings are $20\log_{10}$, since power goes as the square of a swing. Using ten halves every number: −10.51 dB where −21.01 dB is right.
 > - **Hertz for radians per second.** The corner at 0.1 rad/s is 0.0159 Hz. A plot labelled in one and read in the other is off by a factor of 2π along the whole axis.
@@ -631,11 +610,11 @@ The two outputs agree line for line at the printed precision.
 
 ## Where you meet it in real life
 
-- **Cruise control and every other feedback loop.** Control engineers shape a loop's Bode plot so that its gain crosses 0 dB with phase to spare; how much is the subject of [nyquist-criterion-and-stability-margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md).
+- **Cruise control and every other feedback loop.** Control engineers shape a loop's Bode plot so that its gain crosses 0 dB with phase to spare; how much is the subject of [Nyquist and margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md).
 - **Audio.** A loudspeaker's or amplifier's data sheet shows a magnitude plot in dB against frequency in hertz. Its −3 dB points are the corners.
 - **Measuring a machine you cannot model.** Shake it with sines at many frequencies and record gain and phase: the Bode plot comes straight from the bench, and the corners reveal the time constants.
-- **Digital filters.** The same curves, with the frequency axis ending at half the sampling rate: [z-transform-and-discrete-time-systems](08-z-transform-and-discrete-time-systems.md).
-- **The steady gain.** The left end of the magnitude plot, at $\omega$ = 0, is $G(0) = K$, the settled response to a held step: [final-value-theorem-and-steady-gain](05-final-value-theorem-and-steady-gain.md).
+- **Digital filters.** The same curves, with the frequency axis ending at half the sampling rate: [The z-transform](08-z-transform-and-discrete-time-systems.md).
+- **The steady gain.** The left end of the magnitude plot, at $\omega$ = 0, is $G(0) = K$, the settled response to a held step: [Final value and bandwidth](05-final-value-theorem-and-steady-gain.md).
 
 > **Say it back**
 > A stable linear system answers a sine with a sine of the same frequency. Its height is multiplied by the size of the transfer function at $s = j\omega$ and its timing shifted by that number's angle. On log scales the factors of the transfer function add, so each pole contributes a flat line, a corner and a −20 dB-per-decade slope, with its phase falling to −90°. The cruise-controlled car follows throttle wobbles slower than 0.1 rad/s and ignores most faster ones: at 1 rad/s it passes 0.0890 m/s per percent, 1.93 s late. The sketch is 3.01 dB off at each corner and blind to delays, so the exact curve decides.
@@ -644,16 +623,16 @@ The two outputs agree line for line at the printed precision.
 
 ## What this builds on
 
-- [impulse-response-and-transfer-functions](02-impulse-response-and-transfer-functions.md): $G(s)$ and the impulse response $h$; this card evaluates the first along the imaginary axis.
-- [poles-zeros-and-stability](03-poles-zeros-and-stability.md): the corners are the poles, and the settled sine exists only when they are stable.
-- [eulers-formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): a sine as two exponentials, the move that makes Step 0 work.
-- [log-laws-and-log-scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md): the log of a product is a sum, which turns factors into straight lines.
+- [Transfer functions](02-impulse-response-and-transfer-functions.md): $G(s)$ and the impulse response $h$; this card evaluates the first along the imaginary axis.
+- [Poles and zeros](03-poles-zeros-and-stability.md): the corners are the poles, and the settled sine exists only when they are stable.
+- [Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): a sine as two exponentials, the move that makes Step 0 work.
+- [Log laws and log scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md): the log of a product is a sum, which turns factors into straight lines.
 
 ## Where this goes next
 
-- [final-value-theorem-and-steady-gain](05-final-value-theorem-and-steady-gain.md): the left end of the plot as the settled answer to a step, and the bandwidth read off the magnitude curve.
-- [nyquist-criterion-and-stability-margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): the same complex numbers used to judge a closed loop, and the gain and phase margins read straight off a Bode plot.
-- sampling-and-the-nyquist-theorem: what happens to the frequency axis when the signal is only measured at sample times.
+- [Final value and bandwidth](05-final-value-theorem-and-steady-gain.md): the left end of the plot as the settled answer to a step, and the bandwidth read off the magnitude curve.
+- [Nyquist and margins](../03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): the same complex numbers used to judge a closed loop, and the gain and phase margins read straight off a Bode plot.
+- Sampling: what happens to the frequency axis when the signal is only measured at sample times.
 
 This card says how much and how late the car follows each wobble on its own; whether a controller wrapped around it settles or rings is the question the Nyquist card answers from these same curves.
 

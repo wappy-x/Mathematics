@@ -1,36 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Solving Systems
-topic: Rank
-item: Rank and nullity
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/03-Algebra/05-Solving Systems/02-gaussian-elimination|gaussian-elimination]]"
-  - "[[Cards/03-Algebra/04-Matrices/04-linear-maps-as-matrices|linear-maps-as-matrices]]"
-  - "[[Cards/03-Algebra/03-Vectors/05-basis-and-dimension|basis-and-dimension]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/04-injective-surjective-bijective|injective-surjective-bijective]]"
-next:
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/06-singular-value-decomposition|singular-value-decomposition]]"
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/02-dimensional-analysis-and-buckingham-pi|dimensional-analysis-and-buckingham-pi]]"
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/03-controllability-and-observability|controllability-and-observability]]"
-  - "[[Cards/17-Topology/05-Homology/02-homology-groups|homology-groups]]"
-  - "[[Cards/17-Topology/05-Homology/06-mayer-vietoris-and-long-exact-sequences|mayer-vietoris-and-long-exact-sequences]]"
-  - "[[Cards/18-Functional analysis/03-Bounded Operators/05-compact-operators|compact-operators]]"
-  - "[[Cards/18-Functional analysis/03-Bounded Operators/09-fredholm-alternative-and-integral-equations|fredholm-alternative-and-integral-equations]]"
-  - "[[Cards/22-Algebraic geometry/02-Affine and Projective Varieties/07-dimension-and-tangent-spaces|dimension-and-tangent-spaces]]"
-  - "[[Cards/23-Differential geometry and Lie groups/03-Manifolds/04-diffeomorphisms-immersions-and-embeddings|diffeomorphisms-immersions-and-embeddings]]"
-tags:
-  - mathematics
-  - algebra
-  - rank-nullity
----
-
 # Rank and nullity: what a matrix keeps and what it kills, and why the two counts add up to the number of inputs
 
-Algebra → Solving Systems → Rank → Rank and nullity
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Solving Systems](../../../SYLLABUS.md#w03-s05) → Rank and nullity
 
 ---
 
@@ -76,13 +46,13 @@ $$\text{rank}(A) + \text{nullity}(A) = n$$
 | rank(A) | independent directions that survive: the size of the **column space**, or image — what the matrix hits | 2 | fewer get killed; the sum stays at $n$ |
 | nullity(A) | independent directions sent to nothing: the size of the **null space**, or kernel — what it kills | 1 | fewer survive, same trade |
 
-"Independent" means directions that are not copies or mixtures of each other ([basis-and-dimension](../03-Vectors/05-basis-and-dimension.md)).
+"Independent" means directions that are not copies or mixtures of each other ([Basis and dimension](../03-Vectors/05-basis-and-dimension.md)).
 
 ### When it holds
 
 - **Finitely many rows and columns of ordinary numbers.** Both piles then have a size, and a column count to add them to.
 - **A matrix, with nothing added on.** Shift every output by a fixed amount and the inputs sent to nothing no longer include the zero input: not a pile of directions at all.
-- **Exact arithmetic.** A column nearly a mixture of the others still carries its own pivot, so measured data reads a rank too high; [singular-value-decomposition](../07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md) grades near misses.
+- **Exact arithmetic.** A column nearly a mixture of the others still carries its own pivot, so measured data reads a rank too high; [The singular value decomposition](../07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md) grades near misses.
 
 ---
 
@@ -92,11 +62,11 @@ $$\text{rank}(A) + \text{nullity}(A) = n$$
 
 The points (3, 4, 5) and (3, 4, 9) both draw (3, 4). Subtract one from the other: (0, 0, 4). Feed that to the projector and nothing comes out — the zero output.
 
-A matrix applied to a difference gives the difference of the results ([linear-maps-as-matrices](../04-Matrices/04-linear-maps-as-matrices.md)), so every collision is a killed direction showing up twice: counting killed directions counts every way information is lost.
+A matrix applied to a difference gives the difference of the results ([Linear maps](../04-Matrices/04-linear-maps-as-matrices.md)), so every collision is a killed direction showing up twice: counting killed directions counts every way information is lost.
 
 ### Step 1: elimination sorts the columns into two piles
 
-Run the three legal row moves from [gaussian-elimination](02-gaussian-elimination.md) until the matrix is a staircase. Each column then either carries a pivot — the leading entry of a step — or it does not. No third option: pivot columns and free columns. The projector is already a staircase, column 1 leading row 1, column 2 leading row 2, column 3 leading nothing: two pivot columns, one free.
+Run the three legal row moves from [Gaussian elimination](02-gaussian-elimination.md) until the matrix is a staircase. Each column then either carries a pivot — the leading entry of a step — or it does not. No third option: pivot columns and free columns. The projector is already a staircase, column 1 leading row 1, column 2 leading row 2, column 3 leading nothing: two pivot columns, one free.
 
 ### Step 2: each free column buys exactly one killed direction
 
@@ -106,7 +76,7 @@ Do that once per free column. The results are independent, they reach every kill
 
 ### Step 3: each pivot column carries one surviving direction
 
-The pivot columns are independent, and every free column is a mixture of the pivot columns to its left. Row moves keep those mixtures, so the matching columns of the original matrix are a basis for its column space ([basis-and-dimension](../03-Vectors/05-basis-and-dimension.md)): the rank is the number of pivot columns.
+The pivot columns are independent, and every free column is a mixture of the pivot columns to its left. Row moves keep those mixtures, so the matching columns of the original matrix are a basis for its column space ([Basis and dimension](../03-Vectors/05-basis-and-dimension.md)): the rank is the number of pivot columns.
 
 The projector's columns 1 and 2 are (1, 0) and (0, 1) — the whole screen. Rank 2. The loss is on the way in, not the way out.
 
@@ -132,7 +102,7 @@ The **row space** is everything you can build out of the rows, and its size is a
 
 </details>
 
-**The other route.** The rank is also the size of the biggest square block cut from the matrix — any rows with any columns — whose determinant is not zero ([determinants](04-determinants.md)): such a block squashes nothing flat. It shares no working with elimination, which is why the code takes it as the second road.
+**The other route.** The rank is also the size of the biggest square block cut from the matrix — any rows with any columns — whose determinant is not zero ([Determinants](04-determinants.md)): such a block squashes nothing flat. It shares no working with elimination, which is why the code takes it as the second road.
 
 ---
 
@@ -406,8 +376,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Every frame of a 3D game.** Depth dies on the way to the screen, which is why a renderer keeps a depth buffer: the flat picture cannot say what is in front.
-- **Reading A x = b before solving it.** Nullity 0 means at most one answer; nullity 1 a line of them, one answer plus any amount of the killed direction ([matrix-equation-ax-b](01-matrix-equation-ax-b.md)).
-- **Undoing a matrix, and one-to-one.** Nullity 0 says different inputs always give different outputs ([injective-surjective-bijective](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md)), since collisions are killed directions. For a square matrix that is exactly when an inverse exists, the same fact as a nonzero determinant ([inverse-matrix](03-inverse-matrix.md), [determinants](04-determinants.md)).
+- **Reading A x = b before solving it.** Nullity 0 means at most one answer; nullity 1 a line of them, one answer plus any amount of the killed direction ([Solving A x = b](01-matrix-equation-ax-b.md)).
+- **Undoing a matrix, and one-to-one.** Nullity 0 says different inputs always give different outputs ([One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md)), since collisions are killed directions. For a square matrix that is exactly when an inverse exists, the same fact as a nonzero determinant ([The inverse matrix](03-inverse-matrix.md), [Determinants](04-determinants.md)).
 - **Spreadsheets and sensors.** A table with one column the sum of two others has nullity above zero, so fitting anything to it gives a line of equally good answers, not one. Rank warns first.
 
 > **Say it back**
@@ -417,24 +387,24 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [gaussian-elimination](02-gaussian-elimination.md): the row moves that build the staircase, and the pivots counted here.
-- [linear-maps-as-matrices](../04-Matrices/04-linear-maps-as-matrices.md): a matrix read as a machine — what makes Step 0's rule true.
-- [basis-and-dimension](../03-Vectors/05-basis-and-dimension.md): what counting independent directions means, so both counts are numbers.
-- [injective-surjective-bijective](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md): one-to-one and onto in words. Nullity 0 is one-to-one; rank equal to $m$ is onto.
+- [Gaussian elimination](02-gaussian-elimination.md): the row moves that build the staircase, and the pivots counted here.
+- [Linear maps](../04-Matrices/04-linear-maps-as-matrices.md): a matrix read as a machine — what makes Step 0's rule true.
+- [Basis and dimension](../03-Vectors/05-basis-and-dimension.md): what counting independent directions means, so both counts are numbers.
+- [One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md): one-to-one and onto in words. Nullity 0 is one-to-one; rank equal to $m$ is onto.
 
 ## Where this goes next
 
-- [singular-value-decomposition](../07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md): rank read off a list of sizes.
-- [dimensional-analysis-and-buckingham-pi](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/02-dimensional-analysis-and-buckingham-pi.md): the same count on a table of units.
-- controllability-and-observability: rank deciding whether a machine can be steered.
-- homology-groups: these two counts along one map after another.
-- mayer-vietoris-and-long-exact-sequences: the same bookkeeping along a chain of maps.
-- compact-operators: rank where the inputs are functions.
-- fredholm-alternative-and-integral-equations: which equations have answers.
-- dimension-and-tangent-spaces: rank of a slope matrix as a dimension.
-- diffeomorphisms-immersions-and-embeddings: full rank as the test for a map that folds nothing.
+- [The singular value decomposition](../07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md): rank read off a list of sizes.
+- [Buckingham Pi](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/02-dimensional-analysis-and-buckingham-pi.md): the same count on a table of units.
+- Can you steer every state, and can you see every state: rank deciding whether a machine can be steered.
+- Homology groups: these two counts along one map after another.
+- Mayer-Vietoris and exact sequences: the same bookkeeping along a chain of maps.
+- Compact operators: rank where the inputs are functions.
+- Fredholm alternative: which equations have answers.
+- Dimension and tangent space: rank of a slope matrix as a dimension.
+- Diffeomorphism, immersion, submersion: full rank as the test for a map that folds nothing.
 
-Rank counts directions, but not how close a matrix is to losing one more, which is what measured data needs: that grading waits for [singular-value-decomposition](../07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md).
+Rank counts directions, but not how close a matrix is to losing one more, which is what measured data needs: that grading waits for [The singular value decomposition](../07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md).
 
 ---
 

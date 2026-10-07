@@ -1,35 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Binomial Coefficients and Identities
-topic: Building the triangle
-item: Pascal's rule
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/05-n-choose-k|n-choose-k]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/05-bijection-and-double-counting|bijection-and-double-counting]]"
-  - "[[Cards/01-Foundations/06-Proof/04-proof-by-induction|proof-by-induction]]"
-  - "[[Cards/01-Foundations/07-Sets/02-subsets-and-power-set|subsets-and-power-set]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/02-binomial-theorem|binomial-theorem]]"
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/03-vandermonde-identity|vandermonde-identity]]"
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/04-hockey-stick-identity|hockey-stick-identity]]"
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/05-committee-chair-identity|committee-chair-identity]]"
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/07-central-binomial-and-bounds|central-binomial-and-bounds]]"
-  - "[[Cards/04-Combinatorics and graphs/06-Lattice Paths and Catalan Numbers/01-lattice-paths|lattice-paths]]"
-  - "[[Cards/04-Combinatorics and graphs/08-Partitions/03-set-partitions-and-bell-numbers|set-partitions-and-bell-numbers]]"
-  - "[[Cards/04-Combinatorics and graphs/14-Ramsey and Extremal, in Outline/02-ramsey-numbers|ramsey-numbers]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - pascals-rule-and-the-triangle
----
-
 # Pascal's rule: each entry is the sum of the two above it, so the whole triangle builds itself and each row sums to 2^n
 
-Combinatorics and graphs → Binomial Coefficients and Identities → Building the triangle → Pascal's rule
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Binomial Coefficients and Identities](../../../SYLLABUS.md#w04-s03) → Pascal's rule
 
 ---
 
@@ -62,7 +33,7 @@ The branches add to the whole: 6 + 4 = 10.
 
 ## The formula
 
-C(n, k) counts the ways to choose k items from n when order is ignored, read "n choose k" ([n-choose-k](../01-Counting%20Principles/05-n-choose-k.md)). One convention makes the ends of a row behave: a count of something impossible is zero, so C(n, k) = 0 whenever k is below 0 or above n.
+C(n, k) counts the ways to choose k items from n when order is ignored, read "n choose k" ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)). One convention makes the ends of a row behave: a count of something impossible is zero, so C(n, k) = 0 whenever k is below 0 or above n.
 
 $$C(n, k) = C(n-1, k-1) + C(n-1, k)$$
 
@@ -96,7 +67,7 @@ $$C(n, 0) + C(n, 1) + \cdots + C(n, n) = 2^n$$
 
 ### Step 0: one item turns a count into two smaller counts
 
-Every two-song set answers one question about Ember — in or out — exactly once. Splitting a count along such a question is the plainest form of counting a collection two ways ([bijection-and-double-counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)).
+Every two-song set answers one question about Ember — in or out — exactly once. Splitting a count along such a question is the plainest form of counting a collection two ways ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)).
 
 ### Step 1: size the two branches
 
@@ -115,13 +86,13 @@ The first and last entry of every row is 1: one way to take nothing, one to take
 
 Row 0 is a single 1. Lined up by k, the size of the pick, each entry of row n is the sum of the one directly above it and the one above-left — the parents C(n − 1, k) and C(n − 1, k − 1), with blanks off the row counting as zero. Row 3 is 1 3 3 1, so row 4 is 1 4 6 4 1: the 6 is 3 + 3, each 4 is 1 + 3. The run below carries the array to row 10.
 
-Step 1 proved the rule for every n and k, so the array of sums is the array of counts all the way down ([proof-by-induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)): every entry is reachable by addition, no factorial formed, no division done.
+Step 1 proved the rule for every n and k, so the array of sums is the array of counts all the way down ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)): every entry is reachable by addition, no factorial formed, no division done.
 
 ### Step 4: the row doubles, by two separate arguments
 
 **From the rule.** Each entry C(n − 1, j) of row n − 1 is a parent twice over, feeding C(n, j) and C(n, j + 1), so row n adds to twice row n − 1. Row 0 adds to 1, so row n adds to 2 multiplied in n times.
 
-**Without the rule.** A pick of any size is a subset ([subsets-and-power-set](../../01-Foundations/07-Sets/02-subsets-and-power-set.md)), and a subset is one yes-or-no answer per item: 2 × 2 × … × 2, n times over. Sorting the subsets by size and adding must reach the same total. Five songs give 32 sets, and 1 + 5 + 10 + 10 + 5 + 1 = 32.
+**Without the rule.** A pick of any size is a subset ([Subsets and the power set](../../01-Foundations/07-Sets/02-subsets-and-power-set.md)), and a subset is one yes-or-no answer per item: 2 × 2 × … × 2, n times over. Sorting the subsets by size and adding must reach the same total. Five songs give 32 sets, and 1 + 5 + 10 + 10 + 5 + 1 = 32.
 
 <details>
 <summary>The algebra behind the rule, if you want it</summary>
@@ -130,7 +101,7 @@ Write C(m, j) = m! / (j! (m − j)!), with m! = 1 × 2 × … × m and 0! = 1. F
 
 </details>
 
-A third route sets both letters to 1 in the expansion of a two-term power, collapsing it to the row's total; [binomial-theorem](02-binomial-theorem.md) does that, and the rule proved here is what makes those coefficients the triangle.
+A third route sets both letters to 1 in the expansion of a two-term power, collapsing it to the row's total; [The binomial theorem](02-binomial-theorem.md) does that, and the rule proved here is what makes those coefficients the triangle.
 
 ---
 
@@ -383,7 +354,7 @@ The two outputs match line for line.
 
 - **Tables of choice counts in software.** Addition keeps every number no larger than the answer; the factorial road builds enormous products first and overflows fixed-width integers far sooner.
 - **Switches and trials.** Five on-off switches give 32 settings, 10 of them with exactly two on; the same row says 10 of the 32 records of five coin tosses show exactly two heads, favourable over possible.
-- **Routes across a grid.** Each junction's count is the sum of the two feeding it — this rule drawn on paper: [lattice-paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md).
+- **Routes across a grid.** Each junction's count is the sum of the two feeding it — this rule drawn on paper: [Lattice paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md).
 
 > **Say it back**
 > Five songs, and a two-song set is one of ten. Count the ten again by singling out one song: six sets leave it out, four keep it in, and the piles never overlap. That split works for any number of items and any size of pick, so each count is the sum of two smaller counts, and addition alone fills Pascal's triangle. A row adds to 2 multiplied in n times, since a pick of any size is one yes-or-no answer per item: row 5 adds to 32, row 10 to 1,024.
@@ -392,23 +363,23 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [n-choose-k](../01-Counting%20Principles/05-n-choose-k.md): what C(n, k) counts, and the factorial formula the second road uses.
-- [bijection-and-double-counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md): why splitting a count into non-overlapping piles and adding is legitimate.
-- [proof-by-induction](../../01-Foundations/06-Proof/04-proof-by-induction.md): how one row's total carries down to the next, forever.
-- [subsets-and-power-set](../../01-Foundations/07-Sets/02-subsets-and-power-set.md): the yes-or-no count of subsets that gives the row sum without the rule.
+- [Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md): what C(n, k) counts, and the factorial formula the second road uses.
+- [Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md): why splitting a count into non-overlapping piles and adding is legitimate.
+- [Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md): how one row's total carries down to the next, forever.
+- [Subsets and the power set](../../01-Foundations/07-Sets/02-subsets-and-power-set.md): the yes-or-no count of subsets that gives the row sum without the rule.
 
 ## Where this goes next
 
-- [binomial-theorem](02-binomial-theorem.md): the rows as the coefficients of a two-term power.
-- [vandermonde-identity](03-vandermonde-identity.md): the same splitting argument run on two groups at once.
-- [hockey-stick-identity](04-hockey-stick-identity.md): what a diagonal of the triangle adds to.
-- [committee-chair-identity](05-committee-chair-identity.md): singling out a member of the pick instead of the pool.
-- [central-binomial-and-bounds](07-central-binomial-and-bounds.md): how large the middle entry of a row gets.
-- [lattice-paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md): the triangle drawn as a grid of routes.
-- [set-partitions-and-bell-numbers](../08-Partitions/03-set-partitions-and-bell-numbers.md): the in-or-out split applied to breaking a set into groups.
-- [ramsey-numbers](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/02-ramsey-numbers.md): row entries used as bounds on when order must appear.
+- [The binomial theorem](02-binomial-theorem.md): the rows as the coefficients of a two-term power.
+- [Vandermonde's identity](03-vandermonde-identity.md): the same splitting argument run on two groups at once.
+- [The hockey stick](04-hockey-stick-identity.md): what a diagonal of the triangle adds to.
+- [Committee and chair](05-committee-chair-identity.md): singling out a member of the pick instead of the pool.
+- [The middle of the row](07-central-binomial-and-bounds.md): how large the middle entry of a row gets.
+- [Lattice paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md): the triangle drawn as a grid of routes.
+- [Set partitions and Bell numbers](../08-Partitions/03-set-partitions-and-bell-numbers.md): the in-or-out split applied to breaking a set into groups.
+- [Ramsey numbers](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/02-ramsey-numbers.md): row entries used as bounds on when order must appear.
 
-The rule fills the triangle but says nothing about what the rows are for; they turn out to be the coefficients of a two-term power, which is [binomial-theorem](02-binomial-theorem.md).
+The rule fills the triangle but says nothing about what the rows are for; they turn out to be the coefficients of a two-term power, which is [The binomial theorem](02-binomial-theorem.md).
 
 ---
 

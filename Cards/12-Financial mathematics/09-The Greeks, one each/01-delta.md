@@ -1,36 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Greeks, one each
-topic: Share-equivalent slope
-item: Delta
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/02-black-scholes-put|black-scholes-put]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/03-chain-rule|chain-rule]]"
-next:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/02-gamma|gamma]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/03-vega|vega]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/05-rho-and-dividend-rho|rho-and-dividend-rho]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/06-vanna|vanna]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/08-charm|charm]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/03-strike-from-delta|strike-from-delta]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/03-garman-kohlhagen-greeks|garman-kohlhagen-greeks]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/02-futures-option-greeks|futures-option-greeks]]"
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/02-structural-model-sensitivities|structural-model-sensitivities]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - delta
----
-
 # Delta: how many shares an option behaves like, and the number that hedges it
 
-Financial mathematics → The Greeks, one each → Share-equivalent slope → Delta
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Greeks, one each](../../../SYLLABUS.md#w12-s09) → Delta
 
 ---
 
@@ -58,13 +28,13 @@ xychart-beta
     line [-2.51, 0.42, 3.36, 6.29, 9.23, 12.16, 15.10, 18.03, 20.96]
 ```
 
-Orange: the call's Black-Scholes price at each share price, one year left. Green: the straight line touching it at $100 with slope 0.586851, the tangent. Delta is that slope. The curve bends upward away from the tangent on both sides; that bend is [gamma](02-gamma.md), and it is why a delta hedge leaks a little on every move.
+Orange: the call's Black-Scholes price at each share price, one year left. Green: the straight line touching it at $100 with slope 0.586851, the tangent. Delta is that slope. The curve bends upward away from the tangent on both sides; that bend is [Gamma](02-gamma.md), and it is why a delta hedge leaks a little on every move.
 
 ---
 
 ## The formula
 
-Notation first, in words. A partial derivative, written with a curly $\partial$, is the slope in one input while every other input is held still ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). The capital Greek letter $\Delta$ (delta) names that slope in the share price.
+Notation first, in words. A partial derivative, written with a curly $\partial$, is the slope in one input while every other input is held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). The capital Greek letter $\Delta$ (delta) names that slope in the share price.
 
 $$\Delta_C = \frac{\partial C}{\partial S} = e^{-qT}\,N(d_1), \qquad \Delta_P = \frac{\partial P}{\partial S} = \Delta_C - e^{-qT} = -e^{-qT}\,N(-d_1)$$
 
@@ -93,10 +63,10 @@ In words: $d_1$ is the distance from today's price to the strike, plus the drift
 
 ### When it holds
 
-- **The Black-Scholes model.** Acme's log price moves as a bell curve with constant volatility. If volatility rises when Acme falls, as equity markets usually show, the price also moves through volatility, and the true hedge adds [vega](03-vega.md) times volatility's change per dollar of Acme.
-- **Every other input frozen.** Delta is a partial derivative. Over a real day the clock also runs, and delta drifts even if Acme does not: [charm](08-charm.md).
+- **The Black-Scholes model.** Acme's log price moves as a bell curve with constant volatility. If volatility rises when Acme falls, as equity markets usually show, the price also moves through volatility, and the true hedge adds [Vega](03-vega.md) times volatility's change per dollar of Acme.
+- **Every other input frozen.** Delta is a partial derivative. Over a real day the clock also runs, and delta drifts even if Acme does not: [Charm](08-charm.md).
 - **Small moves.** The hedge is exact only to first order. The leftover is about half of gamma times the move squared: under a cent for a $1 move, 23 to 24 cents for $5.
-- **A continuous dividend yield.** Dividends paid as fixed cash on fixed dates change both the ceiling and the formula ([known-cash-dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md)).
+- **A continuous dividend yield.** Dividends paid as fixed cash on fixed dates change both the ceiling and the formula ([Known cash dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md)).
 - **Time left.** At expiry the price is the payoff, with a corner at the strike: delta is 0 below $100, 1 above, and undefined at $100 itself.
 
 ---
@@ -109,7 +79,7 @@ A call's price moves with Acme. Holding $\Delta$ shares moves by $\Delta$ dollar
 
 ### Step 1: differentiate, and three terms appear
 
-The call price is $C = S e^{-qT} N(d_1) - K e^{-rT} N(d_2)$. The share price $S$ appears in three places: out in front, inside $d_1$, and inside $d_2$. The product rule and the [chain-rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md) give one term for each.
+The call price is $C = S e^{-qT} N(d_1) - K e^{-rT} N(d_2)$. The share price $S$ appears in three places: out in front, inside $d_1$, and inside $d_2$. The product rule and the [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md) give one term for each.
 
 The front term gives $e^{-qT} N(d_1)$. The other two come from moving $d_1$ and $d_2$. The slope of $N$ is the bell curve's height $\varphi$, and both $d_1$ and $d_2$ move by $1/(S\sigma\sqrt{T})$ per dollar of $S$, since $S$ sits only in $\ln(S/K)$ and they differ by a constant. So
 
@@ -186,7 +156,7 @@ xychart-beta
 
 Delta times 100: the shares a desk holds against 100 calls. Orange: one year left. Green: a quarter year left, steeper, with its own higher ceiling of 99.50 shares, since a quarter year's dividends drag less ($e^{-0.005}$ = 0.995012). Dark: the one-year ceiling, 98.02 shares, which is $100 e^{-0.02}$. The orange curve climbs toward the dark line and never reaches 100.
 
-A second route to delta is the binomial tree: the two nodes one step in give a slope directly, and the code reads 0.586845 off a 2,000-step tree. The method is on [greeks-from-a-tree-or-grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md).
+A second route to delta is the binomial tree: the two nodes one step in give a slope directly, and the code reads 0.586845 off a 2,000-step tree. The method is on [Greeks from a tree or grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md).
 
 ---
 
@@ -596,17 +566,17 @@ The two outputs agree line for line. They reach the bell-curve area by different
 > - **Delta between 0 and 1.** For a call on a dividend-paying share the ceiling is $e^{-qT}$ = 0.980199. Deep in the money, a hedge of one full share per call is over-hedged.
 > - **Put delta as minus the call delta.** The two differ by $e^{-qT}$: −0.393348, not −0.586851.
 > - **At the money means delta one half.** Here it is 0.586851, because the forward sits above the strike and share-counting adds half a variance.
-> - **A hedge set once.** Delta changes as Acme moves and as the clock runs; a $5 move already leaves 23 to 24 cents unhedged. Keeping the hedge right is continuous work, and its cost is the subject of [theta-pays-for-gamma-hedged-pnl](10-theta-pays-for-gamma-hedged-pnl.md).
+> - **A hedge set once.** Delta changes as Acme moves and as the clock runs; a $5 move already leaves 23 to 24 cents unhedged. Keeping the hedge right is continuous work, and its cost is the subject of [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md).
 
 ---
 
 ## Where you meet it in real life
 
-- **A market maker's hedge.** After selling calls, a dealer buys delta shares per call and adjusts through the day. The replication argument of [black-scholes-by-delta-hedging](../05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md) is this card run continuously.
-- **Share-equivalent exposure.** Risk reports add up delta times the share price, $58.69 per Acme call here, so a book of options can be compared with a book of shares. Adding it across the Greeks gives the first line of [greeks-together-taylor-pnl](09-greeks-together-taylor-pnl.md).
-- **Options quoted by delta.** Currency desks name strikes by delta: a "25-delta call" is the strike whose call has delta 0.25. Turning a delta back into a strike is [strike-from-delta](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md).
+- **A market maker's hedge.** After selling calls, a dealer buys delta shares per call and adjusts through the day. The replication argument of [Black-Scholes by hedging](../05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md) is this card run continuously.
+- **Share-equivalent exposure.** Risk reports add up delta times the share price, $58.69 per Acme call here, so a book of options can be compared with a book of shares. Adding it across the Greeks gives the first line of [The Greeks together](09-greeks-together-taylor-pnl.md).
+- **Options quoted by delta.** Currency desks name strikes by delta: a "25-delta call" is the strike whose call has delta 0.25. Turning a delta back into a strike is [Strike from delta](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md).
 - **Other underlyings.** A currency option replaces $q$ with the foreign interest rate; an option on a futures contract has its own delta. Same skeleton, different drags.
-- **A company's shares.** In Merton's model, equity is a call on the firm's assets, and its delta says how far the share price moves per dollar of asset value ([structural-model-sensitivities](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/02-structural-model-sensitivities.md)).
+- **A company's shares.** In Merton's model, equity is a call on the firm's assets, and its delta says how far the share price moves per dollar of asset value ([How the balance-sheet claims move](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/02-structural-model-sensitivities.md)).
 
 > **Say it back**
 > Delta is the slope of an option's price in the share price: the one-year Acme call moves 0.59 cents per cent, the put minus 0.39. Differentiating the Black-Scholes price, two density terms cancel exactly and leave $e^{-qT}N(d_1)$. Parity makes call and put deltas differ by $e^{-qT}$, the delta of a share delivered without its dividends. The same number is the hedge that cancels a small move, and the exercise chance counted in shares; it is not the plain exercise chance $N(d_2)$. It lives between 0 and $e^{-qT}$, not 0 and 1.
@@ -615,22 +585,22 @@ The two outputs agree line for line. They reach the bell-curve area by different
 
 ## What this builds on
 
-- [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the price being differentiated, and the share-counted chance $N(d_1)$.
-- [black-scholes-put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the put's price, and the parity used in Step 3.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): a slope in one input with the others held still, which is what every Greek is.
-- [chain-rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): how $S$ inside $d_1$ and $d_2$ produces the two density terms.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the price being differentiated, and the share-counted chance $N(d_1)$.
+- [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the put's price, and the parity used in Step 3.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): a slope in one input with the others held still, which is what every Greek is.
+- [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): how $S$ inside $d_1$ and $d_2$ produces the two density terms.
 
 ## Where this goes next
 
-- [gamma](02-gamma.md): delta's own slope, the bend that leaves a delta hedge about a cent short on each dollar move.
-- [vega](03-vega.md): the slope in volatility; its value, 37.901158, is the density term that cancelled in Step 2, times $\sqrt{T}$.
-- [rho-and-dividend-rho](05-rho-and-dividend-rho.md): the slopes in the rate and the dividend yield, where the cash half and the share half separate again.
-- [vanna](06-vanna.md): how delta moves when volatility moves.
-- [charm](08-charm.md): how delta drifts as the clock runs with Acme still.
-- [strike-from-delta](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md): this card's formula run backwards, from a quoted delta to a strike.
-- [garman-kohlhagen-greeks](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): currency deltas, where the dividend yield becomes a foreign rate and desks keep several deltas at once.
-- [futures-option-greeks](../26-Options%20on%20commodity%20futures%20and%20spreads/02-futures-option-greeks.md): delta when the thing bought is a futures contract.
-- [structural-model-sensitivities](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/02-structural-model-sensitivities.md): delta of a company's equity in its assets.
+- [Gamma](02-gamma.md): delta's own slope, the bend that leaves a delta hedge about a cent short on each dollar move.
+- [Vega](03-vega.md): the slope in volatility; its value, 37.901158, is the density term that cancelled in Step 2, times $\sqrt{T}$.
+- [Rho and dividend rho](05-rho-and-dividend-rho.md): the slopes in the rate and the dividend yield, where the cash half and the share half separate again.
+- [Vanna](06-vanna.md): how delta moves when volatility moves.
+- [Charm](08-charm.md): how delta drifts as the clock runs with Acme still.
+- [Strike from delta](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md): this card's formula run backwards, from a quoted delta to a strike.
+- [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): currency deltas, where the dividend yield becomes a foreign rate and desks keep several deltas at once.
+- [Greeks of a futures option](../26-Options%20on%20commodity%20futures%20and%20spreads/02-futures-option-greeks.md): delta when the thing bought is a futures contract.
+- [How the balance-sheet claims move](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/02-structural-model-sensitivities.md): delta of a company's equity in its assets.
 
 A delta hedge cancels the first-order move and leaves the bend; how big that leftover is, and how fast delta itself changes, is gamma's question.
 

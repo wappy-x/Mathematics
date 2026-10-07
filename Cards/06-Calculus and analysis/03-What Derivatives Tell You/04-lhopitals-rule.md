@@ -1,24 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: What Derivatives Tell You
-topic: Limits of ratios
-item: L'Hopital's rule
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/02-mean-value-theorem|mean-value-theorem]]"
-next: []
-tags:
-  - mathematics
-  - calculus and analysis
-  - lhopitals-rule
----
-
 # L'Hopital's rule: limits of 0 over 0 and infinity over infinity, with the conditions that make it legal
 
-Calculus and analysis → What Derivatives Tell You → Limits of ratios → L'Hopital's rule
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [What Derivatives Tell You](../../../SYLLABUS.md#w06-s03) → L'Hopital's rule
 
 ---
 
@@ -84,11 +66,11 @@ Both rates are per unit of x, which cancels, so the rate ratio has the ratio's u
 
 ### Step 0: near a, both functions look like straight lines through zero
 
-Close to 0, sin x is nearly the line through the origin with slope cos 0 = 1, and x is that line exactly ([linear-approximation-and-related-rates](01-linear-approximation-and-related-rates.md)). Two lines through one zero have heights in the ratio of their slopes. The work is making "nearly" exact, with no rate needed at a itself.
+Close to 0, sin x is nearly the line through the origin with slope cos 0 = 1, and x is that line exactly ([Linear approximation](01-linear-approximation-and-related-rates.md)). Two lines through one zero have heights in the ratio of their slopes. The work is making "nearly" exact, with no rate needed at a itself.
 
 ### Step 1: one shared in-between point
 
-The mean value theorem ([mean-value-theorem](02-mean-value-theorem.md)) gives one function a point where its rate equals its average slope. On f and g separately it gives two different points; the rule needs one shared point, Cauchy's mean value theorem.
+The mean value theorem ([Mean value theorem](02-mean-value-theorem.md)) gives one function a point where its rate equals its average slope. On f and g separately it gives two different points; the rule needs one shared point, Cauchy's mean value theorem.
 
 Set f(a) = g(a) = 0; since both head for 0, this makes both unbroken at a. Fix x near a and build a helper h(t) = f(t) g(x) − g(t) f(x), for t from a to x. At t = a both terms are 0; at t = x they cancel. So h starts and ends at 0, and Rolle's theorem (the equal-ends case of the mean value theorem) gives a point c between a and x where the rate of h is 0:
 
@@ -104,7 +86,7 @@ The point c is trapped between a and x, so as x heads for a, c is dragged along.
 
 The tolerance game in numbers: to land sin x / x within 0.001 of 1, it is enough, by Step 1, that cos c is. Now 1 − cos c = 2 sin^2(c/2), and sin t < t, so 1 − cos c is at most c^2/2, below 0.001 once c is below the square root of 0.002, about 0.0447 (cos 0.0447 = 0.9990002). Since c is smaller than x, every x within 0.0447 of 0 wins. At x = 0.0447 the ratio is 0.999667.
 
-Where c sits is sharper than "between": at x = 0.01, c/x = 0.57735, which is 1/sqrt(3), because sin x / x falls from 1 like x^2/6 and cos c like c^2/2. Reading limits off such leading terms is the other route, done properly in [taylors-theorem](05-taylors-theorem.md).
+Where c sits is sharper than "between": at x = 0.01, c/x = 0.57735, which is 1/sqrt(3), because sin x / x falls from 1 like x^2/6 and cos c like c^2/2. Reading limits off such leading terms is the other route, done properly in [Taylor's theorem](05-taylors-theorem.md).
 
 <details>
 <summary>Detailed proof</summary>
@@ -121,7 +103,7 @@ As |g(x)| grows, the bracket heads for 1 and the last term for 0: the total ends
 
 ### Step 3: infinity over infinity, on x e^(-x)
 
-Rewrite the product x e^(-x) as the ratio x / e^x, where both parts blow up. The rates are 1 and e^x, never 0, and 1 / e^x heads for 0. The exponential outruns the line. It is below 0.001 once x passes 9.1180, and stays there, since its rate (1 − x) e^(-x) is negative for x above 1 ([monotonicity-and-optimisation](03-monotonicity-and-optimisation.md)).
+Rewrite the product x e^(-x) as the ratio x / e^x, where both parts blow up. The rates are 1 and e^x, never 0, and 1 / e^x heads for 0. The exponential outruns the line. It is below 0.001 once x passes 9.1180, and stays there, since its rate (1 − x) e^(-x) is negative for x above 1 ([Optimisation](03-monotonicity-and-optimisation.md)).
 
 ### Step 4: rearrange the other forms first
 
@@ -384,12 +366,12 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [mean-value-theorem](02-mean-value-theorem.md): Rolle's theorem, applied to the helper h, yields Cauchy's shared in-between point.
+- [Mean value theorem](02-mean-value-theorem.md): Rolle's theorem, applied to the helper h, yields Cauchy's shared in-between point.
 
 ## Where this goes next
 
-- [taylors-theorem](05-taylors-theorem.md): limits read off leading terms, and the 1/sqrt(3) of Step 2 explained.
-- [numerical-derivatives-and-sensitivity](08-numerical-derivatives-and-sensitivity.md): the difference quotient as a 0 over 0 form, with its error measured.
+- [Taylor's theorem](05-taylors-theorem.md): limits read off leading terms, and the 1/sqrt(3) of Step 2 explained.
+- [Numerical derivatives](08-numerical-derivatives-and-sensitivity.md): the difference quotient as a 0 over 0 form, with its error measured.
 
 ---
 

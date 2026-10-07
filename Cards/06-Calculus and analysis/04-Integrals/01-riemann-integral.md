@@ -1,36 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Integrals
-topic: Adding up a rate
-item: The integral
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/03-sequences-and-limits|sequences-and-limits]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/02-supremum-and-completeness|supremum-and-completeness]]"
-next:
-  - "[[Cards/06-Calculus and analysis/04-Integrals/02-fundamental-theorem-of-calculus|fundamental-theorem-of-calculus]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/08-numerical-integration|numerical-integration]]"
-  - "[[Cards/06-Calculus and analysis/05-Curves and Solids/02-arc-length|arc-length]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/08-swapping-limits-with-integrals-and-derivatives|swapping-limits-with-integrals-and-derivatives]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/01-double-integrals|double-integrals]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/06-riemann-stieltjes-integral|riemann-stieltjes-integral]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/01-why-a-new-integral|why-a-new-integral]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/05-riemann-meets-lebesgue|riemann-meets-lebesgue]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/01-ito-integral|ito-integral]]"
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/02-hazard-rate-and-survival-probability|hazard-rate-and-survival-probability]]"
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/02-cds-legs-risky-annuity-and-par-spread|cds-legs-risky-annuity-and-par-spread]]"
-  - "[[Cards/16-Numerical analysis/05-Quadrature/01-newton-cotes-and-composite-rules|newton-cotes-and-composite-rules]]"
-  - "[[Cards/21-Algebraic and analytic number theory/01-Arithmetic Functions Again/05-average-orders-and-the-hyperbola-method|average-orders-and-the-hyperbola-method]]"
-  - "[[Cards/21-Algebraic and analytic number theory/01-Arithmetic Functions Again/06-abel-and-partial-summation|abel-and-partial-summation]]"
-tags: [mathematics, calculus and analysis, riemann-integral]
----
-
 # The integral: area as a limit of thin rectangles
 
-Calculus and analysis → Integrals → Adding up a rate → The integral
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Integrals](../../../SYLLABUS.md#w06-s04) → The integral
 
 ---
 
@@ -85,7 +55,7 @@ Units multiply: litres per minute times minutes gives litres.
 
 ### When it holds
 
-- **A bounded rate.** A rate like 1/t grows without limit near t = 0, so a slice starting there has no highest rate and no upper sum; [improper-integrals](07-improper-integrals.md) adds a second limit.
+- **A bounded rate.** A rate like 1/t grows without limit near t = 0, so a slice starting there has no highest rate and no upper sum; [Improper integrals](07-improper-integrals.md) adds a second limit.
 - **A closed, finite interval.** An endless interval needs the same second limit.
 - **Continuous or monotone is enough.** Monotone means only rising or only falling, jumps allowed. A rate with neither can fail: the fraction rule in What breaks.
 - **Signs count.** A negative rate (the tank draining) subtracts, so the integral is a signed area.
@@ -96,7 +66,7 @@ Units multiply: litres per minute times minutes gives litres.
 
 ### Step 0: a lower total can never pass an upper total
 
-Every lower sum is at most every upper sum, even from different slicings. So the lower sums have a ceiling, and completeness (the real numbers have no gaps, [supremum-and-completeness](../01-Limits%20and%20Continuity/02-supremum-and-completeness.md)) supplies a best lower sum and a best upper sum.
+Every lower sum is at most every upper sum, even from different slicings. So the lower sums have a ceiling, and completeness (the real numbers have no gaps, [No gaps](../01-Limits%20and%20Continuity/02-supremum-and-completeness.md)) supplies a best lower sum and a best upper sum.
 
 ### Step 1: an extra cut tightens the bracket
 
@@ -120,7 +90,7 @@ For the tank: 10/n times 23 − 3, or 200/n litres. No formula for the rate was 
 
 The tank's rate climbs 2 litres per minute each minute, so within a slice of width w its rates differ by at most 2w, and the gap is at most 2w × 10. Width 0.05 holds it to 1 litre.
 
-A general continuous rate has no fixed climb. On a closed interval, though, it is **uniformly continuous** ([uniform-continuity-and-lipschitz](../01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)): for every tolerance on the rate, one width works everywhere, so any two times closer than it have rates within that tolerance. Take the rate tolerance as the total tolerance over the interval's length and slice that finely.
+A general continuous rate has no fixed climb. On a closed interval, though, it is **uniformly continuous** ([Uniform continuity](../01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)): for every tolerance on the rate, one width works everywhere, so any two times closer than it have rates within that tolerance. Take the rate tolerance as the total tolerance over the interval's length and slice that finely.
 
 <details>
 <summary>Detailed proof</summary>
@@ -141,7 +111,7 @@ $$L = \sum_{k=0}^{n-1}\Bigl(3 + 2\cdot\tfrac{10k}{n}\Bigr)\tfrac{10}{n} = 30 + \
 
 The count 0 + 1 + … + (n − 1) is n(n − 1)/2, by induction. So L = 130 − 100/n, and right ends give U = 130 + 100/n. Both close on 130 litres. Geometry agrees: a 3-by-10 rectangle holds 30, the triangle above it (base 10, height 20) holds 100.
 
-Riemann's own version samples one point anywhere in each slice. Any such sum lies between L and U, so it is squeezed to the same number; [numerical-integration](08-numerical-integration.md) chooses the points to get close with few slices.
+Riemann's own version samples one point anywhere in each slice. Any such sum lies between L and U, so it is squeezed to the same number; [Numerical integration](08-numerical-integration.md) chooses the points to get close with few slices.
 
 ---
 
@@ -405,7 +375,7 @@ The two outputs match line for line.
 
 - **Water and gas meters.** A meter adds flow rate times short time steps, an integral read in litres.
 - **Energy bills.** Kilowatts added over hours give kilowatt-hours.
-- **Credit risk.** A default rate integrated over years sets a borrower's survival chance: [hazard-rate-and-survival-probability](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md).
+- **Credit risk.** A default rate integrated over years sets a borrower's survival chance: [The hazard rate](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md).
 
 > **Say it back**
 > Slice the interval. Lowest rate times width is too little, highest too much. Extra cuts only tighten the bracket, and no lower total passes an upper one. When the bracket closes below any tolerance, the number left is the integral. Monotone and continuous rates always close it; the tank closes on 130 litres.
@@ -414,25 +384,25 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [sequences-and-limits](../01-Limits%20and%20Continuity/03-sequences-and-limits.md): the lower sums 130 − 100/n as a sequence with a limit.
-- [supremum-and-completeness](../01-Limits%20and%20Continuity/02-supremum-and-completeness.md): the best lower and upper sums exist because the real numbers have no gaps.
+- [Sequences](../01-Limits%20and%20Continuity/03-sequences-and-limits.md): the lower sums 130 − 100/n as a sequence with a limit.
+- [No gaps](../01-Limits%20and%20Continuity/02-supremum-and-completeness.md): the best lower and upper sums exist because the real numbers have no gaps.
 
 ## Where this goes next
 
-- [fundamental-theorem-of-calculus](02-fundamental-theorem-of-calculus.md): integrals from antiderivatives.
-- [numerical-integration](08-numerical-integration.md): sample points that close the gap fast.
-- [arc-length](../05-Curves%20and%20Solids/02-arc-length.md): length as an integral.
-- [swapping-limits-with-integrals-and-derivatives](../06-Series/08-swapping-limits-with-integrals-and-derivatives.md): limits passing through integrals.
-- [double-integrals](../08-Multiple%20Integrals/01-double-integrals.md): brackets over a rectangle.
-- [riemann-stieltjes-integral](../08-Multiple%20Integrals/06-riemann-stieltjes-integral.md): widths measured by another function.
-- [why-a-new-integral](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/01-why-a-new-integral.md): an integral for the fraction rule.
-- [riemann-meets-lebesgue](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/05-riemann-meets-lebesgue.md): which rates this definition accepts.
-- [ito-integral](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/01-ito-integral.md): sums against a random path.
-- [hazard-rate-and-survival-probability](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): survival from a default rate.
-- [cds-legs-risky-annuity-and-par-spread](../../12-Financial%20mathematics/42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md): swap legs as integrals over time.
-- newton-cotes-and-composite-rules: slicing rules with error bounds.
-- average-orders-and-the-hyperbola-method: sums compared with integrals.
-- abel-and-partial-summation: sums turned into integrals.
+- [Fundamental theorem of calculus](02-fundamental-theorem-of-calculus.md): integrals from antiderivatives.
+- [Numerical integration](08-numerical-integration.md): sample points that close the gap fast.
+- [Arc length](../05-Curves%20and%20Solids/02-arc-length.md): length as an integral.
+- [Swapping limits](../06-Series/08-swapping-limits-with-integrals-and-derivatives.md): limits passing through integrals.
+- [Double integrals](../08-Multiple%20Integrals/01-double-integrals.md): brackets over a rectangle.
+- [Stieltjes integrals](../08-Multiple%20Integrals/06-riemann-stieltjes-integral.md): widths measured by another function.
+- [Why a new integral](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/01-why-a-new-integral.md): an integral for the fraction rule.
+- [Riemann meets Lebesgue](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/05-riemann-meets-lebesgue.md): which rates this definition accepts.
+- [The Ito integral](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/01-ito-integral.md): sums against a random path.
+- [The hazard rate](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): survival from a default rate.
+- [Pricing a CDS](../../12-Financial%20mathematics/42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md): swap legs as integrals over time.
+- Trapezoid, midpoint and Simpson: slicing rules with error bounds.
+- Average orders: sums compared with integrals.
+- Partial summation: sums turned into integrals.
 
 The tank reached 130 only because a counting formula was at hand; most rates have none, and the fundamental theorem of calculus replaces the sum with an antiderivative.
 

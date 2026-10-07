@@ -1,39 +1,12 @@
----
-type: card
-wing: 03-Algebra
-shelf: Matrices
-topic: Matrices as tables
-item: Matrix times vector
-kind: definition
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/03-Algebra/04-Matrices/01-matrices-and-the-matrix-zoo|matrices-and-the-matrix-zoo]]"
-  - "[[Cards/03-Algebra/03-Vectors/03-linear-combinations-and-span|linear-combinations-and-span]]"
-next:
-  - "[[Cards/03-Algebra/04-Matrices/03-matrix-multiplication|matrix-multiplication]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/01-matrix-equation-ax-b|matrix-equation-ax-b]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/01-dot-product|dot-product]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/02-discrete-fourier-transform|discrete-fourier-transform]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/01-from-one-equation-to-a-system|from-one-equation-to-a-system]]"
-  - "[[Cards/14-Applied and computational/03-Information Theory/08-error-correcting-codes-hamming-and-reed-solomon|error-correcting-codes-hamming-and-reed-solomon]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/03-perceptron-and-neural-networks|perceptron-and-neural-networks]]"
-  - "[[Cards/18-Functional analysis/03-Bounded Operators/02-integral-operators-and-the-shift|integral-operators-and-the-shift]]"
-tags:
-  - mathematics
-  - algebra
-  - matrix-times-vector
----
-
 # Matrix times vector: mix the columns, or run each row along the list, and get the same answer
 
-Algebra → Matrices → Matrices as tables → Matrix times vector
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Matrices](../../../SYLLABUS.md#w03-s04) → Matrix times vector
 
 ---
 
 ## General Overview
 
-A cafe keeps one table of what it sold. Monday: 2 coffees and 1 pastry. Tuesday: 1 coffee and 1 pastry. Written row by row in square brackets, that table is the matrix `[[2, 1], [1, 1]]`: two rows, one per day, two columns, one per product ([matrices-and-the-matrix-zoo](01-matrices-and-the-matrix-zoo.md)).
+A cafe keeps one table of what it sold. Monday: 2 coffees and 1 pastry. Tuesday: 1 coffee and 1 pastry. Written row by row in square brackets, that table is the matrix `[[2, 1], [1, 1]]`: two rows, one per day, two columns, one per product ([Matrices](01-matrices-and-the-matrix-zoo.md)).
 
 A coffee costs $4, a pastry $3. That is a list of two numbers, a vector, written in round brackets: (4, 3).
 
@@ -87,7 +60,7 @@ So an $m$ by $n$ matrix eats a vector of length $n$ and hands back one of length
 - **The lengths must match.** Hand the 2 by 2 table three prices and there is no answer at all, not a wrong one.
 - **One weight per column, in order.** Prices (3, 4) instead of (4, 3) still give an answer, (10, 7), with nothing marking it wrong.
 - **The table is fixed while the list varies.** If Tuesday's prices differ from Monday's, that is two products, not one.
-- **Nothing is added on.** All-zero weights give an all-zero answer, so a fixed daily fee needs its own term ([linear-maps-as-matrices](04-linear-maps-as-matrices.md)).
+- **Nothing is added on.** All-zero weights give an all-zero answer, so a fixed daily fee needs its own term ([Linear maps](04-linear-maps-as-matrices.md)).
 
 ---
 
@@ -99,7 +72,7 @@ The column (2, 1) is not a 2 and a 1. It is one object: the coffee, Monday then 
 
 ### Step 1: the mix, and where the answer is allowed to land
 
-Some of this column plus some of that one, the weights any numbers at all, is a linear combination ([linear-combinations-and-span](../03-Vectors/03-linear-combinations-and-span.md)). So A x is one of those, the entries of the vector being the weights.
+Some of this column plus some of that one, the weights any numbers at all, is a linear combination ([Linear combinations and span](../03-Vectors/03-linear-combinations-and-span.md)). So A x is one of those, the entries of the vector being the weights.
 
 Whatever list goes in, **A x lands in the span of the columns** — everything those columns can build between them. Nothing outside is reachable. That sentence later decides which systems of equations have answers.
 
@@ -107,11 +80,11 @@ Whatever list goes in, **A x lands in the span of the columns** — everything t
 
 Add the two weighed columns entry by entry and read the first entry: 4*2 + 3*1, the numbers in Monday's row, each meeting its own price. The second entry is 4*1 + 3*1, Tuesday's row against the prices.
 
-So the row road is not a second rule, only the same additions in a different order: finish each column and add, or finish each output number in turn. Pairing two lists, multiplying the pairs and adding, has its own card: the dot product ([dot-product](../06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)).
+So the row road is not a second rule, only the same additions in a different order: finish each column and add, or finish each output number in turn. Pairing two lists, multiplying the pairs and adding, has its own card: the dot product ([The dot product](../06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)).
 
 ### Step 3: why the two roads must agree
 
-Both roads multiply the same numbers: every entry against the weight of its own column. The column road totals them product by product, the row road day by day. Addition does not care how a sum is grouped ([arithmetic-laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)), so the totals match, for any table.
+Both roads multiply the same numbers: every entry against the weight of its own column. The column road totals them product by product, the row road day by day. Addition does not care how a sum is grouped ([The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)), so the totals match, for any table.
 
 <details>
 <summary>Detailed proof: the two roads agree at every size</summary>
@@ -138,7 +111,7 @@ Collect the unknowns into one list, x, and the totals into another, b. Any syste
 
 $$A\,x \;=\; b$$
 
-One row of the table is one equation, one entry of b one till total, one entry of x one unknown. Both letters do double duty: x is one unknown inside the brackets and the whole list outside, b the list of totals and not the matrix entry b. By Step 1, A x is a mix of the columns, so "has this system an answer?" becomes "can b be built from the columns?" — the question [matrix-equation-ax-b](../05-Solving%20Systems/01-matrix-equation-ax-b.md) answers. Here it is (4, 3), where the card started.
+One row of the table is one equation, one entry of b one till total, one entry of x one unknown. Both letters do double duty: x is one unknown inside the brackets and the whole list outside, b the list of totals and not the matrix entry b. By Step 1, A x is a mix of the columns, so "has this system an answer?" becomes "can b be built from the columns?" — the question [Solving A x = b](../05-Solving%20Systems/01-matrix-equation-ax-b.md) answers. Here it is (4, 3), where the card started.
 
 ---
 
@@ -364,7 +337,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Any till, payroll or invoice.** One table of quantities, one list of unit prices, one multiplication, every total at once.
-- **Screens and games.** Turning or stretching a point about the origin is a small matrix times its coordinates, the columns saying where the axes end up. Sliding every point a fixed distance needs an added list too ([linear-maps-as-matrices](04-linear-maps-as-matrices.md)).
+- **Screens and games.** Turning or stretching a point about the origin is a small matrix times its coordinates, the columns saying where the axes end up. Sliding every point a fixed distance needs an added list too ([Linear maps](04-linear-maps-as-matrices.md)).
 - **Machine learning.** A network layer multiplies by a matrix, adds a fixed list, then bends each number. The matrices are enormous; this card's rule is the whole multiplication.
 
 > **Say it back**
@@ -374,21 +347,21 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [matrices-and-the-matrix-zoo](01-matrices-and-the-matrix-zoo.md): what a matrix is, how its size is written rows × columns, and how to read a row against a column.
-- [linear-combinations-and-span](../03-Vectors/03-linear-combinations-and-span.md): weighing a set of vectors and adding them, and the name for everything they reach between them.
+- [Matrices](01-matrices-and-the-matrix-zoo.md): what a matrix is, how its size is written rows × columns, and how to read a row against a column.
+- [Linear combinations and span](../03-Vectors/03-linear-combinations-and-span.md): weighing a set of vectors and adding them, and the name for everything they reach between them.
 
 ## Where this goes next
 
-- [matrix-multiplication](03-matrix-multiplication.md): a matrix times a *matrix*: this card, once per column of the second.
-- [matrix-equation-ax-b](../05-Solving%20Systems/01-matrix-equation-ax-b.md): turning A x = b around to the prices, and when that fails.
-- [dot-product](../06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): the row-against-list step alone, where it starts measuring length and angle.
-- [discrete-fourier-transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): one fixed table, its columns waves, times a list of samples.
-- [from-one-equation-to-a-system](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md): this product as the rule pushing a state forward in time.
-- error-correcting-codes-hamming-and-reed-solomon: a table times a message, the answer betraying which bit flipped.
-- perceptron-and-neural-networks: one layer is one such product, with a bend after it.
-- integral-operators-and-the-shift: the list becomes a function, the table an integral, the rule unchanged.
+- [Matrix multiplication](03-matrix-multiplication.md): a matrix times a *matrix*: this card, once per column of the second.
+- [Solving A x = b](../05-Solving%20Systems/01-matrix-equation-ax-b.md): turning A x = b around to the prices, and when that fails.
+- [The dot product](../06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): the row-against-list step alone, where it starts measuring length and angle.
+- [The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): one fixed table, its columns waves, times a list of samples.
+- [From one equation to a system](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md): this product as the rule pushing a state forward in time.
+- Hamming and Reed-Solomon: a table times a message, the answer betraying which bit flipped.
+- The perceptron and its stack: one layer is one such product, with a bend after it.
+- Three model operators: the list becomes a function, the table an integral, the rule unchanged.
 
-This card mixes the columns for one list of weights; many lists at once, each wanting the same table, is [matrix-multiplication](03-matrix-multiplication.md).
+This card mixes the columns for one list of weights; many lists at once, each wanting the same table, is [Matrix multiplication](03-matrix-multiplication.md).
 
 ---
 

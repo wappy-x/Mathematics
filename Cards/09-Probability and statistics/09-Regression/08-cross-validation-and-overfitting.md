@@ -1,29 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Regression
-topic: Testing a fit on data it has not seen
-item: Overfitting
-kind: method
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/09-Regression/06-ridge-and-lasso|ridge-and-lasso]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/01-least-squares-regression|least-squares-regression]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/04-diagnostics-and-residuals|diagnostics-and-residuals]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/06-bias-variance-and-mean-squared-error|bias-variance-and-mean-squared-error]]"
-next:
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/01-loss-functions-and-empirical-risk|loss-functions-and-empirical-risk]]"
-  - "[[Cards/15-Optimization/07-Dynamic Programming and Learning/08-global-optimisation-and-bayesian-optimisation|global-optimisation-and-bayesian-optimisation]]"
-  - "[[Cards/16-Numerical analysis/04-Interpolation and Approximation/07-least-squares-and-orthogonal-polynomials|least-squares-and-orthogonal-polynomials]]"
-  - "[[Cards/17-Topology/06-Topological Data Analysis/07-persistence-in-practice|persistence-in-practice]]"
-  - "[[Cards/24-Computability and complexity/06-Data, Learning and Fine-Grained Complexity/04-pac-learning-and-vc-dimension|pac-learning-and-vc-dimension]]"
-tags: [mathematics, probability and statistics, cross-validation-and-overfitting]
----
-
 # Overfitting: a model that memorises, and the held-out test that catches it
 
-Probability and statistics → Regression → Testing a fit on data it has not seen → Overfitting
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Regression](../../../SYLLABUS.md#w09-s09) → Overfitting
 
 ---
 
@@ -37,7 +14,7 @@ That is **overfitting**: a curve flexible enough to copy the noise in its data a
 
 **A curve's error on its own data is biased low by an amount that grows with its flexibility, so a fitting procedure is judged, and its flexibility chosen, by its error on data held out from the fit.**
 
-**What kind of fact this is:** a method. The fact that makes it work is a theorem proved on this card in Why it works: against repeat readings at the same hours, training error flatters a least-squares fit by $2\sigma^2 p/n$ on average. The shortcut that gives a fit's leave-one-out errors from one fit is proved on [diagnostics-and-residuals](04-diagnostics-and-residuals.md).
+**What kind of fact this is:** a method. The fact that makes it work is a theorem proved on this card in Why it works: against repeat readings at the same hours, training error flatters a least-squares fit by $2\sigma^2 p/n$ on average. The shortcut that gives a fit's leave-one-out errors from one fit is proved on [Diagnostics](04-diagnostics-and-residuals.md).
 
 ### The picture: ten readings, two curves
 
@@ -51,7 +28,7 @@ The cubic stays near the true level except at the left end, where the low readin
 
 ## The formula
 
-Notation first. Reading $i$ is $y_i$, taken at hour $t_i$, for $i = 1, \dots, n$; here $n = 10$ and $t_i = i - 1$. A hat marks an estimate, as on [populations-samples-and-estimators](../07-Sampling%20and%20Estimation/01-populations-samples-and-estimators.md): $\hat f$ is the fitted curve. A superscript in brackets with a minus sign names what was left out: $\hat f^{(-k)}$ is the curve fitted with part $k$ of the data held back. The data are cut into $K$ parts of about equal size, called **folds**; here $K = 5$, and fold $k$ holds hours $k - 1$ and $k + 4$: hours 0 and 5, then 1 and 6, and so on. The **K-fold cross-validation estimate** of a procedure's error is
+Notation first. Reading $i$ is $y_i$, taken at hour $t_i$, for $i = 1, \dots, n$; here $n = 10$ and $t_i = i - 1$. A hat marks an estimate, as on [Samples and estimators](../07-Sampling%20and%20Estimation/01-populations-samples-and-estimators.md): $\hat f$ is the fitted curve. A superscript in brackets with a minus sign names what was left out: $\hat f^{(-k)}$ is the curve fitted with part $k$ of the data held back. The data are cut into $K$ parts of about equal size, called **folds**; here $K = 5$, and fold $k$ holds hours $k - 1$ and $k + 4$: hours 0 and 5, then 1 and 6, and so on. The **K-fold cross-validation estimate** of a procedure's error is
 
 $$\mathrm{CV}_K = \frac{1}{n}\sum_{k=1}^{K}\ \sum_{i \in \text{fold } k}\big(y_i - \hat f^{(-k)}(t_i)\big)^2$$
 
@@ -63,7 +40,7 @@ $$y_i - \hat f^{(-i)}(t_i) = \frac{e_i}{1 - h_i}$$
 
 **Read it aloud:** the miss on a reading the fit never saw is the ordinary miss on it, its residual, divided by one minus its leverage.
 
-The **leverage** $h_i$ is how strongly reading $i$ pulls the fitted curve toward itself, a number between 0 and 1 ([diagnostics-and-residuals](04-diagnostics-and-residuals.md) proves the shortcut above and uses leverage to flag influential points). The leverages are the diagonal entries of the **hat matrix** $H$, the matrix that turns the ten readings into the ten fitted values.
+The **leverage** $h_i$ is how strongly reading $i$ pulls the fitted curve toward itself, a number between 0 and 1 ([Diagnostics](04-diagnostics-and-residuals.md) proves the shortcut above and uses leverage to flag influential points). The leverages are the diagonal entries of the **hat matrix** $H$, the matrix that turns the ten readings into the ten fitted values.
 
 Why training error cannot be trusted is one more line. Write $\overline{\mathrm{err}}$ for the **training error**, the average squared residual over the $n$ readings; $p$ for the number of coefficients; and $\sigma$ for the noise's standard deviation. Suppose each reading is taken again at the same hour, with new noise. The average amount by which training error falls short of the error on those repeat readings is the **in-sample optimism**: in-sample, because the repeat readings sit at the hours the curve was fitted to. Averaged over all the records the gauge could produce,
 
@@ -123,20 +100,20 @@ Orange: training error, falling to 0.00 at degree 9. Green: true error, lowest a
 
 ### Step 2: how much training error flatters
 
-Write each reading as the true level plus noise: $y_i = f(t_i) + \varepsilon_i$. A least-squares fitted value is a weighted sum of all the readings, and reading $i$'s own weight is its leverage $h_i$. So the fitted value at hour $t_i$ contains $h_i \varepsilon_i$, a share of the very noise it is scored against. A repeat reading at the same hour carries fresh noise the fit never copied. The two errors differ on average by $2\sigma^2 h_i$, and the leverages add up to $p$ ([diagnostics-and-residuals](04-diagnostics-and-residuals.md)), so the average gap over the readings is $2\sigma^2 p/n$.
+Write each reading as the true level plus noise: $y_i = f(t_i) + \varepsilon_i$. A least-squares fitted value is a weighted sum of all the readings, and reading $i$'s own weight is its leverage $h_i$. So the fitted value at hour $t_i$ contains $h_i \varepsilon_i$, a share of the very noise it is scored against. A repeat reading at the same hour carries fresh noise the fit never copied. The two errors differ on average by $2\sigma^2 h_i$, and the leverages add up to $p$ ([Diagnostics](04-diagnostics-and-residuals.md)), so the average gap over the readings is $2\sigma^2 p/n$.
 
 For the cubic: 2 × 0.09 × 4 / 10 = 0.0720 square metres. Ten thousand simulated records give 0.0721, with standard error 0.0007. At degree 9 the in-sample optimism is 0.1800, twice the noise variance: the curve has swallowed all the noise. Between the readings a flexible curve can do far worse. The chart's gap at degree 9, true error at random moments minus training error, is 0.5327 − 0.0000 = 0.53, about three times the optimism, because the curve through every reading swings far from the tide between them, to −3.48 m at hour 8.75. For the cubic the two nearly agree: training error plus optimism is 0.0434 + 0.0720 = 0.1154, against a true error of 0.1197.
 
 <details>
 <summary>Detailed proof: the optimism of training error is $2\sigma^2 p/n$</summary>
 
-**Setup.** Readings $y_i = f(t_i) + \varepsilon_i$ for $i = 1, \dots, n$. The noises have average 0 and variance $\sigma^2$, and no two are correlated. A repeat reading $y_i' = f(t_i) + \varepsilon_i'$ has fresh noise with the same properties, uncorrelated with all the $\varepsilon_j$. The fit is least squares on a design matrix $X$ with $n$ rows and $p$ columns, full column rank (no column is a mix of the others), so the fitted values are $\hat y = Hy$, where $H = X(X^\top X)^{-1}X^\top$ is the hat matrix of [diagnostics-and-residuals](04-diagnostics-and-residuals.md). Write $h_{ij}$ for the entries of $H$ and $h_i = h_{ii}$.
+**Setup.** Readings $y_i = f(t_i) + \varepsilon_i$ for $i = 1, \dots, n$. The noises have average 0 and variance $\sigma^2$, and no two are correlated. A repeat reading $y_i' = f(t_i) + \varepsilon_i'$ has fresh noise with the same properties, uncorrelated with all the $\varepsilon_j$. The fit is least squares on a design matrix $X$ with $n$ rows and $p$ columns, full column rank (no column is a mix of the others), so the fitted values are $\hat y = Hy$, where $H = X(X^\top X)^{-1}X^\top$ is the hat matrix of [Diagnostics](04-diagnostics-and-residuals.md). Write $h_{ij}$ for the entries of $H$ and $h_i = h_{ii}$.
 
 **The repeat reading.** $y_i' - \hat y_i = \varepsilon_i' + (f(t_i) - \hat y_i)$. The fitted value does not involve $\varepsilon_i'$, so the cross term averages to zero: $E[(y_i' - \hat y_i)^2] = \sigma^2 + E[(f(t_i) - \hat y_i)^2]$.
 
 **The training reading.** $y_i - \hat y_i = \varepsilon_i + (f(t_i) - \hat y_i)$, so $E[(y_i - \hat y_i)^2] = \sigma^2 + E[(f(t_i) - \hat y_i)^2] - 2E[\varepsilon_i \hat y_i]$, using $E[\varepsilon_i f(t_i)] = 0$. Now $\hat y_i = \sum_j h_{ij}(f(t_j) + \varepsilon_j)$, and $E[\varepsilon_i \varepsilon_j]$ is $\sigma^2$ when $j = i$ and 0 otherwise, so $E[\varepsilon_i \hat y_i] = h_i \sigma^2$.
 
-**Subtract and average.** Each reading's gap is $2\sigma^2 h_i$. Averaged over $i$ it is $2\sigma^2 \big(\sum_i h_i\big)/n$, and the leverages add up to $p$, as [diagnostics-and-residuals](04-diagnostics-and-residuals.md) proves, so the average gap is $2\sigma^2 p/n$.
+**Subtract and average.** Each reading's gap is $2\sigma^2 h_i$. Averaged over $i$ it is $2\sigma^2 \big(\sum_i h_i\big)/n$, and the leverages add up to $p$, as [Diagnostics](04-diagnostics-and-residuals.md) proves, so the average gap is $2\sigma^2 p/n$.
 
 Nothing here needed bell-shaped noise, or the true level to be a polynomial. The checks confirm $\sum_i h_i = p$ for every degree, 4.0000 for the cubic and 10.0000 for degree 9.
 
@@ -158,7 +135,7 @@ The first fold is the worst because it holds out hour 0, and the curve fitted to
 
 ### Step 5: leave-one-out from a single fit
 
-Leave-one-out seems to need ten refits per degree. For least squares one fit is enough: the held-out miss is $e_i/(1 - h_i)$, the deleted-residual identity proved on [diagnostics-and-residuals](04-diagnostics-and-residuals.md).
+Leave-one-out seems to need ten refits per degree. For least squares one fit is enough: the held-out miss is $e_i/(1 - h_i)$, the deleted-residual identity proved on [Diagnostics](04-diagnostics-and-residuals.md).
 
 At hour 0 the cubic's residual is 0.1583 m and its leverage 0.8238: an end reading pulls a cubic hard toward itself. So the held-out miss is 0.1583 / (1 − 0.8238) = 0.8984 m, and the refit without hour 0 misses by 0.8984 m too.
 
@@ -170,7 +147,7 @@ Run the estimate for each degree and take the lowest. Five-fold and leave-one-ou
 
 The scores tend to sit above the true error on average, because each was earned by a curve fitted to fewer readings; part of this record's gap is noise, since it is smaller than the 0.0775 standard error. The ranking matters more than the level. Hitting the very best degree is not guaranteed, and this record is a kind one: on most records from the same gauge, at the same noise, leave-one-out picks a degree near the best rather than the best itself, usually one off, and only rarely one of the wild high degrees. Try changing shows misses with a quieter gauge, a noisier one and another record.
 
-Two other roads lead to the same place. Adding $2\sigma^2 p/n$ back onto the training error estimates the repeat-reading error directly; this is Mallows' Cp, and it needs the noise level known. Resampling the readings with replacement estimates the optimism instead ([bootstrap](../07-Sampling%20and%20Estimation/08-bootstrap.md)). Cross-validation needs neither a noise level nor a least-squares fit, which is why it is the default.
+Two other roads lead to the same place. Adding $2\sigma^2 p/n$ back onto the training error estimates the repeat-reading error directly; this is Mallows' Cp, and it needs the noise level known. Resampling the readings with replacement estimates the optimism instead ([Bootstrap](../07-Sampling%20and%20Estimation/08-bootstrap.md)). Cross-validation needs neither a noise level nor a least-squares fit, which is why it is the default.
 
 ---
 
@@ -623,8 +600,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Machine learning.** Tuning settings, from a tree's depth to how long a network trains, are chosen by held-out error; a final untouched test set reports the result. loss-functions-and-empirical-risk names training error as empirical risk.
-- **Choosing a penalty.** Ridge regression and the lasso trade fit for smaller coefficients through a penalty weight ([ridge-and-lasso](06-ridge-and-lasso.md)). Standard practice picks that weight by ten-fold cross-validation.
+- **Machine learning.** Tuning settings, from a tree's depth to how long a network trains, are chosen by held-out error; a final untouched test set reports the result. Loss and empirical risk names training error as empirical risk.
+- **Choosing a penalty.** Ridge regression and the lasso trade fit for smaller coefficients through a penalty weight ([Regularisation](06-ridge-and-lasso.md)). Standard practice picks that weight by ten-fold cross-validation.
 - **Clinical prediction rules.** A risk score is cross-validated on one hospital's patients, then checked on another's, which usually scores it worse.
 - **Competition leaderboards.** Teams that tune against the public score often drop when the private test set is revealed: the public set was used for choosing.
 
@@ -635,18 +612,18 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [ridge-and-lasso](06-ridge-and-lasso.md): flexibility as something to be paid for, and a penalty weight that needs choosing.
-- [least-squares-regression](01-least-squares-regression.md): the fit itself, found by minimising squared misses.
-- [diagnostics-and-residuals](04-diagnostics-and-residuals.md): residuals, the hat matrix and leverage.
-- [bias-variance-and-mean-squared-error](../07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md): why a stiffer curve can miss by less on average than a flexible one.
+- [Regularisation](06-ridge-and-lasso.md): flexibility as something to be paid for, and a penalty weight that needs choosing.
+- [Least squares](01-least-squares-regression.md): the fit itself, found by minimising squared misses.
+- [Diagnostics](04-diagnostics-and-residuals.md): residuals, the hat matrix and leverage.
+- [Bias and variance](../07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md): why a stiffer curve can miss by less on average than a flexible one.
 
 ## Where this goes next
 
-- loss-functions-and-empirical-risk: training error as empirical risk, for losses other than the squared miss.
-- global-optimisation-and-bayesian-optimisation: searching many tuning settings when each cross-validation run is expensive.
-- least-squares-and-orthogonal-polynomials: polynomial fits that stay stable at high degree, and why equally spaced interpolation swings at the ends.
-- persistence-in-practice: telling real shape from noise, asked of holes and loops.
-- pac-learning-and-vc-dimension: bounds on the gap between training and true error that hold before any data are held out.
+- Loss and empirical risk: training error as empirical risk, for losses other than the squared miss.
+- Bayesian optimisation: searching many tuning settings when each cross-validation run is expensive.
+- Fitting instead of passing through: polynomial fits that stay stable at high degree, and why equally spaced interpolation swings at the ends.
+- Persistence in practice: telling real shape from noise, asked of holes and loops.
+- Learning with a guarantee: bounds on the gap between training and true error that hold before any data are held out.
 
 Cross-validation measures the gap between training and true error after the fact, one record at a time; how large that gap can be before any data are held out, for a whole family of curves at once, is the question pac-learning-and-vc-dimension answers.
 

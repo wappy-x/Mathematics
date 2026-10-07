@@ -1,37 +1,12 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Random Variables
-topic: Packing moments into a function
-item: Moment generating functions
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/02-expectation|expectation]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/05-taylor-series|taylor-series]]"
-  - "[[Cards/04-Combinatorics and graphs/07-Generating Functions/01-ordinary-generating-functions|ordinary-generating-functions]]"
-  - "[[Cards/04-Combinatorics and graphs/07-Generating Functions/04-exponential-generating-functions|exponential-generating-functions]]"
-next:
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/06-sums-of-discrete-variables|sums-of-discrete-variables]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/04-sums-and-convolution|sums-and-convolution]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/04-characteristic-functions-and-inversion|characteristic-functions-and-inversion]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/06-concentration-inequalities-hoeffding-and-chernoff|concentration-inequalities-hoeffding-and-chernoff]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/06-characteristic-functions|characteristic-functions]]"
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/04-compound-poisson|compound-poisson]]"
-  - "[[Cards/20-Harmonic analysis/04-Characteristic Functions and Probability/02-moments-and-cumulants-from-the-fingerprint|moments-and-cumulants-from-the-fingerprint]]"
-tags: [mathematics, probability and statistics, moment-generating-functions]
----
-
 # Moment generating functions: one function that stores every moment
 
-Probability and statistics → Random Variables → Packing moments into a function → Moment generating functions
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Variables](../../../SYLLABUS.md#w09-s02) → Moment generating functions
 
 ---
 
 ## General Overview
 
-Toss a fair coin and score 1 for heads, 0 for tails. The score averages 0.5 in the long run ([expectation](02-expectation.md)). The average of its square is also 0.5, since 1 squared is 1 and 0 squared is 0. So is the average of its cube, and of every higher power. These averages of powers are the score's **moments**. The first is the mean. The second, less the mean squared, is the variance ([variance-and-standard-deviation](03-variance-and-standard-deviation.md)). The third and fourth, taken about the mean, measure lean to one side and how heavy the tails are.
+Toss a fair coin and score 1 for heads, 0 for tails. The score averages 0.5 in the long run ([Expectation](02-expectation.md)). The average of its square is also 0.5, since 1 squared is 1 and 0 squared is 0. So is the average of its cube, and of every higher power. These averages of powers are the score's **moments**. The first is the mean. The second, less the mean squared, is the variance ([Variance](03-variance-and-standard-deviation.md)). The third and fourth, taken about the mean, measure lean to one side and how heavy the tails are.
 
 Now toss the coin ten times and count the heads. The count's moments are harder: its average cube means cubing the count on each of 1,024 equally likely sequences and averaging.
 
@@ -39,7 +14,7 @@ One function does it. Picture a filing cabinet with a drawer for every moment, b
 
 **The moment generating function of a random variable is the long-run average of e raised to t times the variable; its k-th derivative at t = 0 is the k-th moment, and for independent variables the function of the sum is the product of their functions.**
 
-**What kind of fact this is:** a definition, with two theorems about it (moments by differentiation, and the product rule for independent sums), proved on this card in Why it works; a third theorem, that the function pins down the whole law, is stated here and proved in [characteristic-functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md).
+**What kind of fact this is:** a definition, with two theorems about it (moments by differentiation, and the product rule for independent sums), proved on this card in Why it works; a third theorem, that the function pins down the whole law, is stated here and proved in [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md).
 
 ### The picture: the coin's function and the moments in its shape
 
@@ -60,7 +35,7 @@ Orange: the coin's moment generating function. Green: its tangent line at zero, 
 
 ## The formula
 
-A reminder of the notation. $X$ is a random variable, here the coin's score, and its values are written in lower case, $x$. $P(X = x)$ is the chance that $X$ equals $x$, and $E[\,\cdot\,]$ is the long-run average ([expectation](02-expectation.md)). New on this card: $M_X(t)$, read "the moment generating function of X at t", and $M_X^{(k)}(0)$, its k-th derivative at t = 0.
+A reminder of the notation. $X$ is a random variable, here the coin's score, and its values are written in lower case, $x$. $P(X = x)$ is the chance that $X$ equals $x$, and $E[\,\cdot\,]$ is the long-run average ([Expectation](02-expectation.md)). New on this card: $M_X(t)$, read "the moment generating function of X at t", and $M_X^{(k)}(0)$, its k-th derivative at t = 0.
 
 $$M_X(t) = E\big[e^{tX}\big] = \sum_x e^{tx}\,P(X = x)$$
 
@@ -74,7 +49,7 @@ $$M_X(t) = \sum_{k=0}^{\infty} \frac{E[X^k]}{k!}\,t^k$$
 
 **Read it aloud:** written as a power series in the dial, the function's k-th coefficient is the k-th moment divided by k factorial.
 
-That last line says the moment generating function is the exponential generating function of the moment sequence ([exponential-generating-functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/04-exponential-generating-functions.md)): the moments are packed into a power series with k! under each term, exactly as the combinatorics wing packs a counting sequence.
+That last line says the moment generating function is the exponential generating function of the moment sequence ([Exponential generating functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/04-exponential-generating-functions.md)): the moments are packed into a power series with k! under each term, exactly as the combinatorics wing packs a counting sequence.
 
 $$M_{X+Y}(t) = M_X(t)\,M_Y(t) \qquad \text{for independent } X \text{ and } Y$$
 
@@ -102,7 +77,7 @@ For the coin, with chance of heads $p$ = 0.5, the definition gives $M_X(t) = (1 
 - **The function must be finite on an interval around $t$ = 0.** Every variable with finitely many values passes: the coin, the ten-toss count, any die. A count $L$ whose chance of the value $k$ is proportional to $e^{-\sqrt{k}}$ fails. Its moments are finite (average 4.47, average square 89.87), yet for any positive dial the sum defining $M_L(t)$ runs off to infinity, and no derivative at zero exists to read.
 - **Derivatives are read at zero, not elsewhere.** At $t$ = 1 the coin's slope is 0.5e = 1.359, which is no moment of anything.
 - **The product rule needs independence.** One toss copied ten times has function 0.5 + 0.5e^(10t), not (0.5 + 0.5e^t)^10: at $t$ = 0.1 it reads 1.859 against 1.669. What breaks, below, shows the gap.
-- **Uniqueness needs the interval, not just the moments.** Two variables whose functions agree on an interval around zero have the same law: same chances, value for value. The proof runs through the complex-valued cousin of this function and lives in [characteristic-functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md). Without that interval, two different laws can share every moment. The standard example is the lognormal law (e raised to a normal variable): every moment is finite, yet its function is infinite for every positive dial.
+- **Uniqueness needs the interval, not just the moments.** Two variables whose functions agree on an interval around zero have the same law: same chances, value for value. The proof runs through the complex-valued cousin of this function and lives in [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md). Without that interval, two different laws can share every moment. The standard example is the lognormal law (e raised to a normal variable): every moment is finite, yet its function is infinite for every positive dial.
 
 ---
 
@@ -110,7 +85,7 @@ For the coin, with chance of heads $p$ = 0.5, the definition gives $M_X(t) = (1 
 
 ### Step 0: e^(tx) carries every power of x, each tagged by its own power of t
 
-The exponential is a power series: e^(tx) = 1 + tx + (tx)^2/2! + (tx)^3/3! + … ([taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). Every power of $x$ appears once, and the matching power of $t$ labels it. Averaging over $X$ turns each $x^k$ into the moment $E[X^k]$ and leaves the labels alone. Differentiating at zero is the way to strip the labels off one at a time. Multiplying exponentials adds their exponents, e^(tx) e^(ty) = e^(t(x+y)), and that is why sums turn into products.
+The exponential is a power series: e^(tx) = 1 + tx + (tx)^2/2! + (tx)^3/3! + … ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). Every power of $x$ appears once, and the matching power of $t$ labels it. Averaging over $X$ turns each $x^k$ into the moment $E[X^k]$ and leaves the labels alone. Differentiating at zero is the way to strip the labels off one at a time. Multiplying exponentials adds their exponents, e^(tx) e^(ty) = e^(t(x+y)), and that is why sums turn into products.
 
 ### Step 1: the k-th derivative at zero is the k-th moment
 
@@ -128,7 +103,7 @@ A power series's k-th coefficient is its k-th derivative at zero divided by k!, 
 
 ### Step 3: independent sums multiply
 
-Take independent $X$ and $Y$ with finitely many values each. Independence means $P(X = x, Y = y) = P(X = x)\,P(Y = y)$ for every pair ([joint-distributions-and-covariance](04-joint-distributions-and-covariance.md)). Then
+Take independent $X$ and $Y$ with finitely many values each. Independence means $P(X = x, Y = y) = P(X = x)\,P(Y = y)$ for every pair ([Two variables at once](04-joint-distributions-and-covariance.md)). Then
 
 $$E\big[e^{t(X+Y)}\big] = \sum_x \sum_y e^{tx}\,e^{ty}\,P(X = x)\,P(Y = y) = \Big(\sum_x e^{tx} P(X = x)\Big)\Big(\sum_y e^{ty} P(Y = y)\Big)$$
 
@@ -152,11 +127,11 @@ Differentiate $M_S(t) = (0.5 + 0.5e^t)^{10}$ with the chain rule: $M_S'(t)$ = 10
 <details>
 <summary>The logarithm turns the product into a sum</summary>
 
-Take the natural logarithm: ln $M_S$ = 10 ln $M_X$. Its first derivative at zero is the mean and its second the variance, so both add across independent tosses: 10 × 0.5 = 5 and 10 × 0.25 = 2.5. These derivatives are the **cumulants**; moments-and-cumulants-from-the-fingerprint develops them.
+Take the natural logarithm: ln $M_S$ = 10 ln $M_X$. Its first derivative at zero is the mean and its second the variance, so both add across independent tosses: 10 × 0.5 = 5 and 10 × 0.25 = 2.5. These derivatives are the **cumulants**; Moments and cumulants develops them.
 
 </details>
 
-A second road packs the probabilities rather than the moments. The average of s^S, as a polynomial in a new variable s, is (0.5 + 0.5s)^10; its coefficients are the chances $P(S = k)$, so it is the ordinary generating function of the law ([ordinary-generating-functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/01-ordinary-generating-functions.md)). The coefficient of s^5 is 252/1,024, about 0.246, the chance of exactly five heads. Putting s = e^t turns it into the moment generating function. Counts built this way are the business of [sums-of-discrete-variables](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md).
+A second road packs the probabilities rather than the moments. The average of s^S, as a polynomial in a new variable s, is (0.5 + 0.5s)^10; its coefficients are the chances $P(S = k)$, so it is the ordinary generating function of the law ([Generating functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/01-ordinary-generating-functions.md)). The coefficient of s^5 is 252/1,024, about 0.246, the chance of exactly five heads. Putting s = e^t turns it into the moment generating function. Counts built this way are the business of [Adding counts](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md).
 
 ---
 
@@ -616,9 +591,9 @@ The two outputs match line for line. The simulated mean, 5.0041, sits about 1.2 
 
 ## Where you meet it in real life
 
-- **Sums of independent counts.** Multiplying functions identifies the law of a sum without adding up every pair of outcomes: [sums-of-discrete-variables](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md) for counts, [sums-and-convolution](../05-Transformations%20and%20Joint%20Laws/04-sums-and-convolution.md) for measurements.
-- **Tail bounds.** The chance that ten tosses give nine or more heads is at most e^(−9t) times $M_S(t)$ for every positive dial; choosing the best dial gives the Chernoff bound of [concentration-inequalities-hoeffding-and-chernoff](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md).
-- **Insurance totals.** A year's claims are a random number of random amounts; their total's function comes from composing two functions, as [compound-poisson](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md) shows.
+- **Sums of independent counts.** Multiplying functions identifies the law of a sum without adding up every pair of outcomes: [Adding counts](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md) for counts, [Adding continuous variables](../05-Transformations%20and%20Joint%20Laws/04-sums-and-convolution.md) for measurements.
+- **Tail bounds.** The chance that ten tosses give nine or more heads is at most e^(−9t) times $M_S(t)$ for every positive dial; choosing the best dial gives the Chernoff bound of [Concentration](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md).
+- **Insurance totals.** A year's claims are a random number of random amounts; their total's function comes from composing two functions, as [Compound Poisson](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md) shows.
 - **Asset prices.** When a stock's log-return is normal, its average future price is today's price times the normal law's moment generating function at a dial of 1.
 
 > **Say it back**
@@ -628,22 +603,22 @@ The two outputs match line for line. The simulated mean, 5.0041, sits about 1.2 
 
 ## What this builds on
 
-- [expectation](02-expectation.md): the long-run average, and the linearity that lets it pass through a sum.
-- [taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the series for e^x, and coefficients as derivatives at zero divided by k!.
-- [ordinary-generating-functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/01-ordinary-generating-functions.md): packing a sequence into a power series, here the chances of each count.
-- [exponential-generating-functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/04-exponential-generating-functions.md): the same packing with k! underneath, which the moment generating function is for the moments.
+- [Expectation](02-expectation.md): the long-run average, and the linearity that lets it pass through a sum.
+- [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the series for e^x, and coefficients as derivatives at zero divided by k!.
+- [Generating functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/01-ordinary-generating-functions.md): packing a sequence into a power series, here the chances of each count.
+- [Exponential generating functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/04-exponential-generating-functions.md): the same packing with k! underneath, which the moment generating function is for the moments.
 
 ## Where this goes next
 
-- [sums-of-discrete-variables](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md): the law of a sum of independent counts, found by multiplying functions.
-- [sums-and-convolution](../05-Transformations%20and%20Joint%20Laws/04-sums-and-convolution.md): the same for measurements with densities, and the convolution the product replaces.
-- [characteristic-functions-and-inversion](../06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): the complex-valued cousin, finite for every law, and how to recover the law from it.
-- [concentration-inequalities-hoeffding-and-chernoff](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md): the function turned into exponentially small tail bounds.
-- [characteristic-functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md): the uniqueness theorem proved, and the swap of derivative and average justified.
-- [compound-poisson](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md): a random number of random amounts, handled by composing functions.
-- moments-and-cumulants-from-the-fingerprint: cumulants, the derivatives of the logarithm, and what they measure.
+- [Adding counts](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md): the law of a sum of independent counts, found by multiplying functions.
+- [Adding continuous variables](../05-Transformations%20and%20Joint%20Laws/04-sums-and-convolution.md): the same for measurements with densities, and the convolution the product replaces.
+- [Characteristic functions](../06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): the complex-valued cousin, finite for every law, and how to recover the law from it.
+- [Concentration](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md): the function turned into exponentially small tail bounds.
+- [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md): the uniqueness theorem proved, and the swap of derivative and average justified.
+- [Compound Poisson](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md): a random number of random amounts, handled by composing functions.
+- Moments and cumulants: cumulants, the derivatives of the logarithm, and what they measure.
 
-The coin's function exists for every dial, but the heavy-tailed count's does not; a transform that exists for every law, and still multiplies over independent sums, is what [characteristic-functions-and-inversion](../06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md) builds.
+The coin's function exists for every dial, but the heavy-tailed count's does not; a transform that exists for every law, and still multiplies over independent sums, is what [Characteristic functions](../06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md) builds.
 
 ---
 

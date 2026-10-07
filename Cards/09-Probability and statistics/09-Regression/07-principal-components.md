@@ -1,33 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Regression
-topic: Dimension reduction
-item: Principal components
-kind: method
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/06-multivariate-normal|multivariate-normal]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/04-spectral-theorem|spectral-theorem]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/06-singular-value-decomposition|singular-value-decomposition]]"
-next:
-  - "[[Cards/12-Financial mathematics/33-Curves in Depth/01-principal-components-of-the-curve|principal-components-of-the-curve]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/07-principal-components-and-dimension-reduction|principal-components-and-dimension-reduction]]"
-  - "[[Cards/16-Numerical analysis/03-Numerical Linear Algebra/08-svd-and-the-pseudoinverse|svd-and-the-pseudoinverse]]"
-  - "[[Cards/17-Topology/06-Topological Data Analysis/06-mapper-and-reeb-graphs|mapper-and-reeb-graphs]]"
-  - "[[Cards/18-Functional analysis/02-Hilbert Spaces/08-reproducing-kernel-hilbert-spaces|reproducing-kernel-hilbert-spaces]]"
-  - "[[Cards/23-Differential geometry and Lie groups/07-Geometric Analysis and Physics/08-frechet-means-and-statistics-on-curved-data|frechet-means-and-statistics-on-curved-data]]"
-  - "[[Cards/23-Differential geometry and Lie groups/07-Geometric Analysis and Physics/10-manifold-learning-and-the-manifold-hypothesis|manifold-learning-and-the-manifold-hypothesis]]"
-tags:
-  - mathematics
-  - probability and statistics
-  - principal-components
----
-
 # Principal components: the directions your data varies most
 
-Probability and statistics → Regression → Dimension reduction → Principal components
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Regression](../../../SYLLABUS.md#w09-s09) → Principal components
 
 ---
 
@@ -68,7 +41,7 @@ The flat orange line is the first component, level: every yield up about 3 bp. T
 
 Notation first, in words. One day's ten yield moves form a **vector**: a list of numbers treated as one object, written $x_t$ for day t. A **direction** is a vector $u$ of length one, so that the sum of its squared entries is 1. Writing $u^T x_t$ means: multiply entry by entry and add up. It is a weighted sum of the day's ten moves, and it measures how far the day went along the direction. The superscript T is the transpose, turning a column into a row. As on the rest of this wing, a hat marks a quantity estimated from data.
 
-The covariance matrix gathers every variance and every covariance of the ten maturities into one ten-by-ten table ([multivariate-normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)):
+The covariance matrix gathers every variance and every covariance of the ten maturities into one ten-by-ten table ([Multivariate normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)):
 
 $$\hat\Sigma = \frac{1}{n-1}\sum_{t=1}^{n} (x_t - \bar x)(x_t - \bar x)^T$$
 
@@ -111,7 +84,7 @@ Each day's position along component k is its **score**, $z_{tk} = u_k^T (x_t - \
 - **The average removed.** PCA describes spread about the centre. Run it on yield levels without subtracting the average curve and the "first component" is the average curve itself, claiming 99.961% of a quantity that is mostly the curve's height, not its moves.
 - **Separated eigenvalues.** A direction is pinned down only when its eigenvalue stands clear of its neighbours. Here the seven smallest are all 0.25 in the model: those directions are noise, and two samples of 500 days give fourth components at cosine 0.0327, nearly perpendicular.
 - **Enough days.** Every $\hat\lambda_k$ is an estimate. For normal data with separated eigenvalues its standard error is about $\lambda_k$ times the square root of 2/(n − 1): 5.714 on the first eigenvalue here.
-- **Flat structure.** PCA finds flat subspaces through the centre of the data. Data lying on a curved surface needs a different tool: manifold-learning-and-the-manifold-hypothesis.
+- **Flat structure.** PCA finds flat subspaces through the centre of the data. Data lying on a curved surface needs a different tool: Manifold learning.
 
 ---
 
@@ -119,7 +92,7 @@ Each day's position along component k is its **score**, $z_{tk} = u_k^T (x_t - \
 
 ### Step 0: spread along any direction is a question about one matrix
 
-Once the covariance matrix is known, the variance of every weighted sum of the ten yields follows from it, without going back to the data. So "which direction carries the most variance?" is a question about one symmetric table of numbers. The spectral theorem ([spectral-theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) says every such table has a set of perpendicular axes along which it only stretches. Along those axes the question answers itself.
+Once the covariance matrix is known, the variance of every weighted sum of the ten yields follows from it, without going back to the data. So "which direction carries the most variance?" is a question about one symmetric table of numbers. The spectral theorem ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) says every such table has a set of perpendicular axes along which it only stretches. Along those axes the question answers itself.
 
 ### Step 1: the variance along a direction is $u^T \hat\Sigma u$
 
@@ -141,7 +114,7 @@ The variance along any direction is a weighted average of the eigenvalues, with 
 
 Ask for the most variance among directions perpendicular to $u_1$. Those directions have $c_1 = 0$, and the same averaging argument gives $\hat\lambda_2$, reached at $u_2$. Continue for $u_3$ and on down.
 
-The scores on two components are uncorrelated. Their covariance is $u_j^T \hat\Sigma u_k = \hat\lambda_k\, u_j^T u_k = 0$, because the eigenvectors are perpendicular. In the code the level and slope scores have covariance 0.000000. Uncorrelated is not independent in general; for normal data it is ([multivariate-normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)).
+The scores on two components are uncorrelated. Their covariance is $u_j^T \hat\Sigma u_k = \hat\lambda_k\, u_j^T u_k = 0$, because the eigenvectors are perpendicular. In the code the level and slope scores have covariance 0.000000. Uncorrelated is not independent in general; for normal data it is ([Multivariate normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)).
 
 ### Step 4: total variance is conserved, so shares make sense
 
@@ -171,7 +144,7 @@ In this card's model the three shapes were chosen perpendicular: level adds 1 at
 
 </details>
 
-The alternative road skips the covariance matrix. Stack the centred days as the rows of a 500-by-10 table and take its singular value decomposition ([singular-value-decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md)). Its right singular vectors are the principal components, and each squared singular value divided by n − 1 is an eigenvalue. Software does it this way because it avoids squaring the data's rounding errors: svd-and-the-pseudoinverse.
+The alternative road skips the covariance matrix. Stack the centred days as the rows of a 500-by-10 table and take its singular value decomposition ([The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md)). Its right singular vectors are the principal components, and each squared singular value divided by n − 1 is an eigenvalue. Software does it this way because it avoids squaring the data's rounding errors: Singular value decomposition.
 
 ---
 
@@ -641,7 +614,7 @@ The two outputs agree line for line. Both sum in the same order, so both land on
 > [!warning]
 > **Reading "explains 82% of the variance" as "matters 82%".** A share of variance is a statement about spread in the data, not about importance for any particular question. A portfolio hedged against level alone still loses on a slope day, and when the components are used to predict something else, as in principal components regression, the direction that predicts can be one with a small eigenvalue. PCA never looks at the thing to be predicted.
 >
-> - **Taking PCA for a regression line.** The first component minimises squared distances measured perpendicular to the line, treating every variable alike; least squares minimises vertical distances from one chosen response ([least-squares-regression](01-least-squares-regression.md)). On the same data they give different lines.
+> - **Taking PCA for a regression line.** The first component minimises squared distances measured perpendicular to the line, treating every variable alike; least squares minimises vertical distances from one chosen response ([Least squares](01-least-squares-regression.md)). On the same data they give different lines.
 > - **Mixing units.** The 30-year yield in percent gets a loading of 0.0031 and drops out.
 > - **Forgetting to centre.** On levels the first component claims 99.961% and is only the average curve.
 > - **Trusting signs and small components.** Each component is defined only up to sign, and a component whose eigenvalue ties with others is noise: two samples' fourth components meet at cosine 0.0327.
@@ -650,11 +623,11 @@ The two outputs agree line for line. Both sum in the same order, so both land on
 
 ## Where you meet it in real life
 
-- **Bond risk.** Desks report exposure to level, slope and curvature instead of ten maturities, and hedge those three: [principal-components-of-the-curve](../../12-Financial%20mathematics/33-Curves%20in%20Depth/01-principal-components-of-the-curve.md).
-- **Regression with tangled predictors.** When predictors move together, regressing on the first few components instead is one repair, principal components regression: least squares on the predictors' first r scores keeps the fit along the r strongest directions whole and sets it to zero along every weaker one. Ridge works along the same directions but shrinks instead of cutting, multiplying the fit along each by a factor between 0 and 1, near 1 where the eigenvalue is large and near 0 where it is small ([ridge-and-lasso](06-ridge-and-lasso.md)). How many components to keep is then chosen on held-out data ([cross-validation-and-overfitting](08-cross-validation-and-overfitting.md)).
+- **Bond risk.** Desks report exposure to level, slope and curvature instead of ten maturities, and hedge those three: [Level, slope and curvature](../../12-Financial%20mathematics/33-Curves%20in%20Depth/01-principal-components-of-the-curve.md).
+- **Regression with tangled predictors.** When predictors move together, regressing on the first few components instead is one repair, principal components regression: least squares on the predictors' first r scores keeps the fit along the r strongest directions whole and sets it to zero along every weaker one. Ridge works along the same directions but shrinks instead of cutting, multiplying the fit along each by a factor between 0 and 1, near 1 where the eigenvalue is large and near 0 where it is small ([Regularisation](06-ridge-and-lasso.md)). How many components to keep is then chosen on held-out data ([Overfitting](08-cross-validation-and-overfitting.md)).
 - **Genetics.** Plotting people's first two principal component scores, computed from many thousands of genetic markers, separates populations by ancestry; studies correct for that structure before testing a gene.
 - **Images and signals.** A face image of many thousands of pixels is stored as a short list of scores on components learned from other faces; the same compression shrinks sensor logs and survey batteries.
-- **Machine learning.** PCA is the first step of many pipelines, and its curved and kernel versions follow: principal-components-and-dimension-reduction.
+- **Machine learning.** PCA is the first step of many pipelines, and its curved and kernel versions follow: Principal components.
 
 > **Say it back**
 > Centre the data and build its covariance matrix. The variance along any unit direction is that matrix sandwiched by the direction, and a weighted average of the eigenvalues, so the top eigenvector is the direction of most variance and each eigenvalue is the variance along its own eigenvector. The eigenvalues add up to the total variance, so each one's share says how much spread its direction holds. On ten yields, level and slope keep about 95% of the day-to-day variance, so two scores replace ten numbers. Shares depend on units and centring, and small tied components are noise.
@@ -663,19 +636,19 @@ The two outputs agree line for line. Both sum in the same order, so both land on
 
 ## What this builds on
 
-- [multivariate-normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md): the covariance matrix, and the variance of a weighted sum as the matrix sandwiched by the weights.
-- [spectral-theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): perpendicular eigenvectors for every symmetric matrix, the fact Step 2 stands on.
-- [singular-value-decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md): the same components read straight off the data table.
+- [Multivariate normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md): the covariance matrix, and the variance of a weighted sum as the matrix sandwiched by the weights.
+- [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): perpendicular eigenvectors for every symmetric matrix, the fact Step 2 stands on.
+- [The singular value decomposition](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/06-singular-value-decomposition.md): the same components read straight off the data table.
 
 ## Where this goes next
 
-- [principal-components-of-the-curve](../../12-Financial%20mathematics/33-Curves%20in%20Depth/01-principal-components-of-the-curve.md): the same analysis on real yield curves, and hedging with it.
-- principal-components-and-dimension-reduction: PCA inside learning pipelines, with choosing r.
-- svd-and-the-pseudoinverse: computing the components stably from the data table.
-- mapper-and-reeb-graphs: principal component scores as the lens for mapping the shape of data.
-- reproducing-kernel-hilbert-spaces: kernel PCA, the same eigenvalue problem after a curved change of coordinates.
-- frechet-means-and-statistics-on-curved-data: averages and principal directions when the data live on a curved space.
-- manifold-learning-and-the-manifold-hypothesis: when the data lie near a curved surface that no flat subspace fits.
+- [Level, slope and curvature](../../12-Financial%20mathematics/33-Curves%20in%20Depth/01-principal-components-of-the-curve.md): the same analysis on real yield curves, and hedging with it.
+- Principal components: PCA inside learning pipelines, with choosing r.
+- Singular value decomposition: computing the components stably from the data table.
+- Mapper and Reeb graphs: principal component scores as the lens for mapping the shape of data.
+- Reproducing kernels: kernel PCA, the same eigenvalue problem after a curved change of coordinates.
+- Frechet mean: averages and principal directions when the data live on a curved space.
+- Manifold learning: when the data lie near a curved surface that no flat subspace fits.
 
 PCA finds the best flat summary through the centre of the data; what to do when the data bend away from every flat subspace is the question the manifold-learning cards answer.
 

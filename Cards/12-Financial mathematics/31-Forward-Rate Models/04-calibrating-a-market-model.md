@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Forward-Rate Models
-topic: Fitting forward-rate volatilities
-item: Calibrating a market model
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/31-Forward-Rate Models/03-libor-and-sofr-market-models|libor-and-sofr-market-models]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/06-calibration-as-least-squares|calibration-as-least-squares]]"
-next:
-  - "[[Cards/12-Financial mathematics/31-Forward-Rate Models/05-swap-market-model-in-outline|swap-market-model-in-outline]]"
-tags: [mathematics, financial mathematics, calibrating-a-market-model]
----
-
 # Calibrating a market model: caplet volatilities exactly, swaptions approximately
 
-Financial mathematics → Forward-Rate Models → Fitting forward-rate volatilities → Calibrating a market model
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Forward-Rate Models](../../../SYLLABUS.md#w12-s31) → Calibrating a market model
 
 ---
 
@@ -25,7 +8,7 @@ Financial mathematics → Forward-Rate Models → Fitting forward-rate volatilit
 
 A rates desk's screen shows twenty numbers. Ten are caplet volatilities, one for each of the next ten yearly interest periods. A caplet is insurance on one future year's rate: it pays if that rate fixes above a strike. Its volatility is the market's price for how much that one rate will wander before it fixes. The other ten are swaption volatilities. A swaption is the right to enter a swap, a trade of fixed rate for floating, on a future date, so it bets on a block of years at once.
 
-The desk wants one model that reprices all twenty: the forward market model of [libor-and-sofr-market-models](03-libor-and-sofr-market-models.md), one random rate per year, each with its own wobble, all moving together to some degree. Before it prices anything untraded, such as a Bermudan swaption, its wobbles and their togetherness must be set. That setting is calibration.
+The desk wants one model that reprices all twenty: the forward market model of [Market models](03-libor-and-sofr-market-models.md), one random rate per year, each with its own wobble, all moving together to some degree. Before it prices anything untraded, such as a Bermudan swaption, its wobbles and their togetherness must be set. That setting is calibration.
 
 A caplet watches one rate alone, so it pins down that rate's total wobble and nothing else: ten caplets, ten multipliers, ten exact matches. A swaption watches several rates, so it also feels *when* each wobbles and *how closely* they move together. Four numbers carry that: three shape the wobble over time, one sets how fast togetherness fades. Ten quotes, four numbers: the fit settles for the smallest misses, pricing each swaption with a fast approximate formula, Rebonato's.
 
@@ -92,11 +75,11 @@ The shape $g$ is the "abcd" curve. At fixing it equals $a + d$; far from fixing 
 
 ### When it holds
 
-- **Positive rates, lognormal wobble.** Each forward's logarithm moves by bell-curve steps. Near or below zero, quotes come as normal or shifted volatilities and the formulas change ([normal-and-shifted-volatilities-for-rates](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)).
-- **Genuine caplet volatilities.** Screens quote caps at one flat volatility; each caplet's own volatility must be stripped out first ([caplet-stripping](../29-Caps%2C%20Floors%20and%20Swaptions/03-caplet-stripping.md)), or every multiplier is wrong.
-- **At-the-money only.** Volatility here depends on time, not strike, so the model has no smile ([sabr-for-rates-and-the-volatility-cube](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md)).
+- **Positive rates, lognormal wobble.** Each forward's logarithm moves by bell-curve steps. Near or below zero, quotes come as normal or shifted volatilities and the formulas change ([Rate volatilities](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)).
+- **Genuine caplet volatilities.** Screens quote caps at one flat volatility; each caplet's own volatility must be stripped out first ([Caplet stripping](../29-Caps%2C%20Floors%20and%20Swaptions/03-caplet-stripping.md)), or every multiplier is wrong.
+- **At-the-money only.** Volatility here depends on time, not strike, so the model has no smile ([SABR for rates](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md)).
 - **Frozen weights.** Rebonato's formula pretends the swap's weights never move. On the five-into-five swaption the model's own price implies 15.58% against the formula's 15.64%. That gap is measured at one point only; elsewhere it must be measured again, not assumed.
-- **One curve.** Discounting and forward rates come from the same curve; with separate curves the weights change ([basis-swaps-and-the-multi-curve-framework](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md)).
+- **One curve.** Discounting and forward rates come from the same curve; with separate curves the weights change ([Multi-curve](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md)).
 
 Conventions verified 28 September 2026: at-the-money lognormal (Black) volatilities in percent a year; one-year periods paid at the end; caplet $i$ fixes at $T_i$. Many desks now quote rate options in normal volatility; the method is the same with a normal model underneath.
 
@@ -122,7 +105,7 @@ Hence a division of labour: ten multipliers absorb the ten caplets exactly; four
 
 ### Step 1: caplets are matched exactly
 
-Price a caplet in units of the bond that pays on its payment date. Under those pricing weights, the forward measure of [forward-measures-for-rates](02-forward-measures-for-rates.md), forward $i$ has no drift. Its logarithm at fixing is then a bell curve with variance $\int_0^{T_i}\sigma_i(t)^2\,dt$. Black-76 prices the caplet from a bell curve with variance $v_i^2 T_i$ ([black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)). Same distribution, same price, whenever
+Price a caplet in units of the bond that pays on its payment date. Under those pricing weights, the forward measure of [Forward measures](02-forward-measures-for-rates.md), forward $i$ has no drift. Its logarithm at fixing is then a bell curve with variance $\int_0^{T_i}\sigma_i(t)^2\,dt$. Black-76 prices the caplet from a bell curve with variance $v_i^2 T_i$ ([Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)). Same distribution, same price, whenever
 
 $$\int_0^{T_i} k_i^2\,g(T_i - t)^2\,dt = v_i^2\,T_i.$$
 
@@ -144,14 +127,14 @@ The weights $w_i(t)$ are ratios of discount factors, and they move with rates. R
 
 $$\frac{dS}{S} \approx \sum_i \frac{w_i L_i}{S}\,\frac{dL_i}{L_i}.$$
 
-Over a short time $dt$ the random part of $dL_i / L_i$ has variance $\sigma_i(t)^2\,dt$, and two forwards' random parts have covariance $\rho_{ij}\,\sigma_i(t)\sigma_j(t)\,dt$. A weighted sum's variance is the double sum of weights times covariances. Add it up to the swaption's expiry, freeze $L_i$ and $S$ at today's values too, and that is Rebonato's formula. Treat the swap rate as lognormal with that variance, and Black's swaption formula gives the price ([swaptions-payer-and-receiver](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md)).
+Over a short time $dt$ the random part of $dL_i / L_i$ has variance $\sigma_i(t)^2\,dt$, and two forwards' random parts have covariance $\rho_{ij}\,\sigma_i(t)\sigma_j(t)\,dt$. A weighted sum's variance is the double sum of weights times covariances. Add it up to the swaption's expiry, freeze $L_i$ and $S$ at today's values too, and that is Rebonato's formula. Treat the swap rate as lognormal with that variance, and Black's swaption formula gives the price ([Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md)).
 
 A consistency check comes free. A one-period swaption is a caplet: one forward, weight 1, and the formula returns $v_p^2$ by Step 1. The checks put the five-into-one swaption at 19.630000% against the five-year caplet quote of 19.630000%.
 
 <details>
 <summary>Detailed proof: what the frozen basket keeps and what it throws away</summary>
 
-Price swaptions in units of the annuity $A(t)$, the annuity measure of [the-annuity-measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md). Under it the swap rate has no drift, and a payer swaption is worth $A(0)\,\mathbb{E}^A[(S(T_p) - K)^+]$, where $K$ is the strike and $\mathbb{E}^A$ the average under those weights. Changing the unit changes drifts only, never the random parts, so the random part of each $dL_i$ is $L_i\,\sigma_i(t)\,dW_i$, with $dW_i$ the random kick to forward $i$ and $dW_i\,dW_j = \rho_{ij}\,dt$.
+Price swaptions in units of the annuity $A(t)$, the annuity measure of [The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md). Under it the swap rate has no drift, and a payer swaption is worth $A(0)\,\mathbb{E}^A[(S(T_p) - K)^+]$, where $K$ is the strike and $\mathbb{E}^A$ the average under those weights. Changing the unit changes drifts only, never the random parts, so the random part of each $dL_i$ is $L_i\,\sigma_i(t)\,dW_i$, with $dW_i$ the random kick to forward $i$ and $dW_i\,dW_j = \rho_{ij}\,dt$.
 
 Ito's product rule on $S = \sum_i w_i L_i$ gives
 $$dS = \sum_i \big(w_i\,dL_i + L_i\,dw_i + dw_i\,dL_i\big).$$
@@ -163,7 +146,7 @@ Two approximations so far: dropping the weight terms, and freezing the proportio
 
 ### Step 4: fit four knobs to ten swaptions
 
-With the multipliers recomputed inside every evaluation, the loss depends on $a$, $b$, $c$ and $\beta$ only: the least-squares problem of [calibration-as-least-squares](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md). Levenberg-Marquardt, with slopes found by nudging each knob, takes 10 accepted steps. Nelder-Mead, which uses no slopes and only compares losses at the five corners of a shrinking simplex, takes 576 loss evaluations from a different start. Both report $a$ = 0.020228, $b$ = 0.137257, $c$ = 0.796333, $\beta$ = 0.128525, loss 0.020388.
+With the multipliers recomputed inside every evaluation, the loss depends on $a$, $b$, $c$ and $\beta$ only: the least-squares problem of [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md). Levenberg-Marquardt, with slopes found by nudging each knob, takes 10 accepted steps. Nelder-Mead, which uses no slopes and only compares losses at the five corners of a shrinking simplex, takes 576 loss evaluations from a different start. Both report $a$ = 0.020228, $b$ = 0.137257, $c$ = 0.796333, $\beta$ = 0.128525, loss 0.020388.
 
 Speed comes from a closed form for the overlap integrals, checked against Simpson's rule for forwards 3 and 7 up to year 3: 0.06971338 both ways.
 
@@ -198,13 +181,13 @@ Rebonato's formula stands in for the model's true swaption price; the only way t
 
 $$-\,\sigma_i(t)\sum_{j=i+1}^{10}\frac{L_j\,\rho_{ij}\,\sigma_j(t)}{1 + L_j}$$
 
-the cost of measuring every forward against the same far bond ([forward-measures-for-rates](02-forward-measures-for-rates.md)). Twenty quarterly steps; each step's random moves carry exactly the covariance the closed-form integrals give, through a Cholesky factor (a lower-triangular matrix whose product with its own transpose is that covariance); 20,000 pairs of paths with opposite signs.
+the cost of measuring every forward against the same far bond ([Forward measures](02-forward-measures-for-rates.md)). Twenty quarterly steps; each step's random moves carry exactly the covariance the closed-form integrals give, through a Cholesky factor (a lower-triangular matrix whose product with its own transpose is that covariance); 20,000 pairs of paths with opposite signs.
 
 The five-year caplet comes out at 0.005675 per 1 of notional, standard error 0.000052, against Black's 0.005653 at the quote: within one standard error, as Step 1 promised. The five-into-five swaption comes out at 0.022660, standard error 0.000036, against 0.022752 from Rebonato's volatility. The error is small thanks to a control: the forward swap, worth exactly zero today, is simulated alongside and its sampling error subtracted. In volatility the model says 15.58%, give or take 0.03, and the formula 15.64%: the formula overstates this swaption by 0.06 points, about the size of the fit's own misses.
 
 ### The other door
 
-Price each swaption in the loop by simulation instead. The misses then belong to the model alone, but every loss evaluation costs a simulation, and noisy losses need the common-random-numbers fix of [bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md). The usual compromise is this card's: fit with the formula, check by simulation. Another door makes swap rates, not forwards, the lognormal quantities: [swap-market-model-in-outline](05-swap-market-model-in-outline.md).
+Price each swaption in the loop by simulation instead. The misses then belong to the model alone, but every loss evaluation costs a simulation, and noisy losses need the common-random-numbers fix of [Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md). The usual compromise is this card's: fit with the formula, check by simulation. Another door makes swap rates, not forwards, the lognormal quantities: [Swap market model](05-swap-market-model-in-outline.md).
 
 ---
 
@@ -655,10 +638,10 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Bermudan swaptions.** Exercisable on several dates, they depend on how forwards move together over time, exactly what the four knobs set: [bermudan-swaptions-by-regression](06-bermudan-swaptions-by-regression.md).
-- **The morning screen.** Caplet volatilities come from stripping cap quotes: [caplet-stripping](../29-Caps%2C%20Floors%20and%20Swaptions/03-caplet-stripping.md). Swaption volatilities come from the at-the-money column of the volatility cube: [sabr-for-rates-and-the-volatility-cube](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md).
-- **Model validation.** Validators refit on successive days, watch the knobs, and reprice swaptions the fit never saw: [model-risk-and-parameter-stability](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md).
-- **After LIBOR.** The forward rates were once LIBOR fixings. Since USD LIBOR panels ended in June 2023, the same machinery runs on compounded SOFR periods, with the caplet's rate known only at the end of its period: [libor-and-sofr-market-models](03-libor-and-sofr-market-models.md).
+- **Bermudan swaptions.** Exercisable on several dates, they depend on how forwards move together over time, exactly what the four knobs set: [Bermudan swaptions](06-bermudan-swaptions-by-regression.md).
+- **The morning screen.** Caplet volatilities come from stripping cap quotes: [Caplet stripping](../29-Caps%2C%20Floors%20and%20Swaptions/03-caplet-stripping.md). Swaption volatilities come from the at-the-money column of the volatility cube: [SABR for rates](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md).
+- **Model validation.** Validators refit on successive days, watch the knobs, and reprice swaptions the fit never saw: [Model risk](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md).
+- **After LIBOR.** The forward rates were once LIBOR fixings. Since USD LIBOR panels ended in June 2023, the same machinery runs on compounded SOFR periods, with the caplet's rate known only at the end of its period: [Market models](03-libor-and-sofr-market-models.md).
 
 > **Say it back**
 > A caplet watches one forward, so it fixes that forward's total wobble; a swaption watches a basket, so it also sees when forwards wobble and how closely they move together. Calibration gives each forward a multiplier that reprices its caplet exactly, then fits a hump-shaped time profile and one correlation decay to the swaptions, priced by Rebonato's frozen-weight formula. Here four knobs bring ten swaptions to within about 0.12 points, and simulating the model shows the formula itself off by 0.06 points on the five-into-five. The fit is exact where it was built to be, approximate elsewhere, and silent on whether its knobs are real.
@@ -667,14 +650,14 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [libor-and-sofr-market-models](03-libor-and-sofr-market-models.md): the model being calibrated, one lognormal forward per period, with its drifts under different bond units.
-- [calibration-as-least-squares](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): the loss, the scales, the Levenberg-Marquardt loop and the question of whether quotes can tell knobs apart.
+- [Market models](03-libor-and-sofr-market-models.md): the model being calibrated, one lognormal forward per period, with its drifts under different bond units.
+- [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): the loss, the scales, the Levenberg-Marquardt loop and the question of whether quotes can tell knobs apart.
 
 ## Where this goes next
 
-- [swap-market-model-in-outline](05-swap-market-model-in-outline.md): the model that makes swap rates, not forwards, the lognormal quantities, so swaptions are priced exactly and caplets approximately.
+- [Swap market model](05-swap-market-model-in-outline.md): the model that makes swap rates, not forwards, the lognormal quantities, so swaptions are priced exactly and caplets approximately.
 
-This card bought exact caplets and paid with an approximate swaption formula; whether the trade can be reversed, and why forwards and swap rates cannot both be lognormal at once, is what [swap-market-model-in-outline](05-swap-market-model-in-outline.md) takes up.
+This card bought exact caplets and paid with an approximate swaption formula; whether the trade can be reversed, and why forwards and swap rates cannot both be lognormal at once, is what [Swap market model](05-swap-market-model-in-outline.md) takes up.
 
 ---
 

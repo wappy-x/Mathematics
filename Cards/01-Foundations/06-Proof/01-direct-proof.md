@@ -1,27 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Proof
-topic: Direct proof
-item: What a proof is
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/05-Logic/06-valid-arguments|valid-arguments]]"
-next:
-  - "[[Cards/01-Foundations/06-Proof/02-proof-by-contrapositive|proof-by-contrapositive]]"
-  - "[[Cards/01-Foundations/06-Proof/04-proof-by-induction|proof-by-induction]]"
-  - "[[Cards/01-Foundations/07-Sets/02-subsets-and-power-set|subsets-and-power-set]]"
-tags:
-  - mathematics
-  - foundations
-  - direct-proof
----
-
 # Direct proof: what a proof is, and the straight-line kind
 
-Foundations → Proof → Direct proof → What a proof is
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Proof](../../../SYLLABUS.md#w01-s06) → What a proof is
 
 ---
 
@@ -73,7 +52,7 @@ Letters cover every pair at once. Let m and n be the counts, a and b their row l
 
 **Definitions** fix what a word means. Even: splits into two equal whole rows. A decision made in advance, so nobody can wriggle.
 
-**Axioms** are starting rules, taken as given, never proved. Two here: whole numbers added give a whole number, and a shared 2 pulls out of a sum ([arithmetic-laws](../01-Everyday%20Arithmetic/05-arithmetic-laws.md)).
+**Axioms** are starting rules, taken as given, never proved. Two here: whole numbers added give a whole number, and a shared 2 pulls out of a sum ([The three rearranging laws](../01-Everyday%20Arithmetic/05-arithmetic-laws.md)).
 
 **Theorems** are what you build. Once proved, a theorem is reused without being re-argued.
 
@@ -265,7 +244,7 @@ The two outputs match line for line: whole eggs, whole squares.
 
 - **Guarantees in software.** "This never returns a negative balance" is a theorem about the code, argued forwards through what each line does. Tests are trays.
 - **Contracts.** Arguing from the definitions section to a conclusion is a direct proof — which is why definitions sit at the front.
-- **Covering every option.** "Whatever the weather, the event is fine" holds only if the weathers listed leave no gap: proof by cases in a coat. Single steps: [valid-arguments](../05-Logic/06-valid-arguments.md).
+- **Covering every option.** "Whatever the weather, the event is fine" holds only if the weathers listed leave no gap: proof by cases in a coat. Single steps: [Valid arguments](../05-Logic/06-valid-arguments.md).
 
 > **Say it back**
 > A definition fixes what a word means. An axiom is a starting rule taken as given. A theorem is proved from those, and a proof is the chain to it with no gap. A direct proof walks forwards: assume the *if* part, unpack it with a definition, push on with agreed rules, stop when the *then* part is on the page. Two evens are 2 × a and 2 × b, so the total is 2 × (a + b). When a claim changes shape case to case, cover every case.
@@ -274,13 +253,13 @@ The two outputs match line for line: whole eggs, whole squares.
 
 ## What this builds on
 
-- [valid-arguments](../05-Logic/06-valid-arguments.md): what makes one step follow from the one before. A proof is those steps in a row, given a place to start and stop.
+- [Valid arguments](../05-Logic/06-valid-arguments.md): what makes one step follow from the one before. A proof is those steps in a row, given a place to start and stop.
 
 ## Where this goes next
 
-- [proof-by-contrapositive](02-proof-by-contrapositive.md): when the forward chain stalls, flip the claim and walk that one.
-- [proof-by-induction](04-proof-by-induction.md): the chain made endless — prove the first case, then that each hands on the next.
-- [subsets-and-power-set](../07-Sets/02-subsets-and-power-set.md): where these proofs earn their keep, on collections instead of counts.
+- [Proof by contrapositive](02-proof-by-contrapositive.md): when the forward chain stalls, flip the claim and walk that one.
+- [Induction](04-proof-by-induction.md): the chain made endless — prove the first case, then that each hands on the next.
+- [Subsets and the power set](../07-Sets/02-subsets-and-power-set.md): where these proofs earn their keep, on collections instead of counts.
 
 ---
 

@@ -1,34 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Integrals
-topic: Totals with no end
-item: Improper integrals
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/04-Integrals/02-fundamental-theorem-of-calculus|fundamental-theorem-of-calculus]]"
-next:
-  - "[[Cards/06-Calculus and analysis/06-Series/02-comparison-ratio-and-root-tests|comparison-ratio-and-root-tests]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/04-gaussian-integral|gaussian-integral]]"
-  - "[[Cards/07-Complex analysis/06-Real Integrals and Counting Zeros/01-semicircle-contours|semicircle-contours]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/03-fourier-transform|fourier-transform]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/05-laplace-transform|laplace-transform]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/02-gamma-function|gamma-function]]"
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/01-the-laplace-transform|the-laplace-transform]]"
-  - "[[Cards/08-Differential equations and dynamics/09-Fourier Series/05-complex-fourier-series-and-the-transform-in-outline|complex-fourier-series-and-the-transform-in-outline]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/08-heavy-tails-pareto-and-cauchy|heavy-tails-pareto-and-cauchy]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/05-riemann-meets-lebesgue|riemann-meets-lebesgue]]"
-  - "[[Cards/16-Numerical analysis/05-Quadrature/05-adaptive-and-improper-quadrature|adaptive-and-improper-quadrature]]"
-  - "[[Cards/21-Algebraic and analytic number theory/01-Arithmetic Functions Again/06-abel-and-partial-summation|abel-and-partial-summation]]"
-  - "[[Cards/21-Algebraic and analytic number theory/02-The Zeta Function and the Prime Number Theorem/06-the-logarithmic-integral-and-the-error-term|the-logarithmic-integral-and-the-error-term]]"
-tags: [mathematics, calculus and analysis, improper-integrals]
----
-
 # Improper integrals: infinite intervals and infinite spikes, each as a limit
 
-Calculus and analysis → Integrals → Totals with no end → Improper integrals
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Integrals](../../../SYLLABUS.md#w06-s04) → Improper integrals
 
 ---
 
@@ -36,7 +8,7 @@ Calculus and analysis → Integrals → Totals with no end → Improper integral
 
 Two taps open at minute 1 and are never shut. At minute t the first pours 1/t^2 litres a minute, the second 1/t. By minute 10 they are down to a hundredth and a tenth. Does either, left running for ever, pour a finite amount?
 
-An ordinary integral needs a finite interval ([riemann-integral](01-riemann-integral.md)). So stop the clock at minute B, total as usual, and push B out.
+An ordinary integral needs a finite interval ([The integral](01-riemann-integral.md)). So stop the clock at minute B, total as usual, and push B out.
 
 The first tap has poured 0.9 litres by minute 10, 0.99 by minute 100, 0.999 by minute 1000: heading for 1 litre, the answer. The second adds 0.693147 litres every time the clock doubles, for ever. The first integral **converges** (settles on a finite number); the second **diverges**.
 
@@ -112,7 +84,7 @@ The definition needs only that each finite piece is an ordinary integral. The te
 
 ### Step 0: cut, total, then let the cut move
 
-An ordinary integral needs finitely many strips of finite height; an endless interval breaks the first, a spike the second. On a finite piece clear of trouble, the fundamental theorem ([fundamental-theorem-of-calculus](02-fundamental-theorem-of-calculus.md)) evaluates it with an antiderivative. The limit comes afterwards.
+An ordinary integral needs finitely many strips of finite height; an endless interval breaks the first, a spike the second. On a finite piece clear of trouble, the fundamental theorem ([Fundamental theorem of calculus](02-fundamental-theorem-of-calculus.md)) evaluates it with an antiderivative. The limit comes afterwards.
 
 ### Step 1: the 1/t^2 tap settles on 1 litre
 
@@ -150,7 +122,7 @@ and s^(1−p) heads for 0 exactly when p < 1: the rule flips. A tap gushing 1/�
 
 Take 0 ≤ f(t) ≤ g(t) from minute a on, with g's total finite, G litres. The running total of f never falls, since f is never negative, and never passes G. A total that only rises below a ceiling has a limit: the real numbers have no gaps, and its least upper bound (sup) is that limit.
 
-Example: 1/(t^2 + t) is below 1/t^2, so its total is at most 1 litre. [partial-fractions](05-partial-fractions.md) gives the exact value, ln 2 = 0.693147.
+Example: 1/(t^2 + t) is below 1/t^2, so its total is at most 1 litre. [Partial fractions](05-partial-fractions.md) gives the exact value, ln 2 = 0.693147.
 
 Turned round: 1/√t is at least 1/t from minute 1, so it diverges; its totals 2√B − 2 read 18 at B = 100 and 198 at B = 10,000.
 
@@ -167,7 +139,7 @@ Take any target closeness $\varepsilon > 0$, the 0.001 of Step 1 made general. $
 
 </details>
 
-A second road to every number here adds up the blocks by Simpson's rule, with no antiderivative ([numerical-integration](08-numerical-integration.md)).
+A second road to every number here adds up the blocks by Simpson's rule, with no antiderivative ([Numerical integration](08-numerical-integration.md)).
 
 ---
 
@@ -403,7 +375,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Escape from a planet.** Gravity weakens like 1/r^2 with distance r, so the work to lift a mass away for ever is finite, the first tap's integral.
-- **Heavy tails.** Some averages in statistics are integrals whose rate fades like a power; they exist only when the integral converges: [heavy-tails-pareto-and-cauchy](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md).
+- **Heavy tails.** Some averages in statistics are integrals whose rate fades like a power; they exist only when the integral converges: [Heavy tails](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md).
 
 > **Say it back**
 > An improper integral totals a finite piece and moves the cut-off toward the trouble. If the totals settle, it converges; otherwise it diverges. 1/t^2 from 1 settles at 1 because its doubling blocks halve; 1/t does not, because its blocks stay at ln 2. Powers above 1 converge far out, powers below 1 at a spike. A never-negative rate below a convergent one converges too.
@@ -412,23 +384,23 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [fundamental-theorem-of-calculus](02-fundamental-theorem-of-calculus.md): evaluates each finite piece before the limit is taken.
+- [Fundamental theorem of calculus](02-fundamental-theorem-of-calculus.md): evaluates each finite piece before the limit is taken.
 
 ## Where this goes next
 
-- [comparison-ratio-and-root-tests](../06-Series/02-comparison-ratio-and-root-tests.md): the doubling blocks made this integral a sum; the same comparison, run on sums.
-- [gaussian-integral](../08-Multiple%20Integrals/04-gaussian-integral.md): an endless integral found without an antiderivative.
-- [semicircle-contours](../../07-Complex%20analysis/06-Real%20Integrals%20and%20Counting%20Zeros/01-semicircle-contours.md): endless integrals by closing a loop.
-- [fourier-transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md): an integral over the whole line.
-- [laplace-transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/05-laplace-transform.md): an integral from 0 on, tamed by decay.
-- [gamma-function](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): a spike and a tail at once.
-- [the-laplace-transform](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md): the transform applied to rate equations.
-- [complex-fourier-series-and-the-transform-in-outline](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/05-complex-fourier-series-and-the-transform-in-outline.md): a series stretched into an integral.
-- [heavy-tails-pareto-and-cauchy](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md): averages that diverge.
-- [riemann-meets-lebesgue](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/05-riemann-meets-lebesgue.md): what a stronger integral accepts.
-- adaptive-and-improper-quadrature: computing them to a stated error.
-- abel-and-partial-summation: sums turned into integrals.
-- the-logarithmic-integral-and-the-error-term: an integral of 1/ln t that estimates prime counts.
+- [Convergence tests](../06-Series/02-comparison-ratio-and-root-tests.md): the doubling blocks made this integral a sum; the same comparison, run on sums.
+- [The Gaussian integral](../08-Multiple%20Integrals/04-gaussian-integral.md): an endless integral found without an antiderivative.
+- [The semicircle contour](../../07-Complex%20analysis/06-Real%20Integrals%20and%20Counting%20Zeros/01-semicircle-contours.md): endless integrals by closing a loop.
+- [The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md): an integral over the whole line.
+- [The Laplace transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/05-laplace-transform.md): an integral from 0 on, tamed by decay.
+- [The gamma function](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): a spike and a tail at once.
+- [The Laplace transform](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md): the transform applied to rate equations.
+- [The complex form](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/05-complex-fourier-series-and-the-transform-in-outline.md): a series stretched into an integral.
+- [Heavy tails](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md): averages that diverge.
+- [Riemann meets Lebesgue](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/05-riemann-meets-lebesgue.md): what a stronger integral accepts.
+- Adaptive quadrature and awkward integrals: computing them to a stated error.
+- Partial summation: sums turned into integrals.
+- The logarithmic integral: an integral of 1/ln t that estimates prime counts.
 
 ---
 

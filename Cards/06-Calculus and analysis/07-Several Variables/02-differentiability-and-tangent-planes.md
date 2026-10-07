@@ -1,32 +1,12 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Several Variables
-topic: The flat local model
-item: Tangent planes
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/01-dot-product|dot-product]]"
-next:
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/03-gradient-and-directional-derivatives|gradient-and-directional-derivatives]]"
-  - "[[Cards/22-Algebraic geometry/02-Affine and Projective Varieties/07-dimension-and-tangent-spaces|dimension-and-tangent-spaces]]"
-  - "[[Cards/22-Algebraic geometry/05-Cohomology and the Hodge Conjecture/04-complex-manifolds-and-kahler-forms|complex-manifolds-and-kahler-forms]]"
-  - "[[Cards/23-Differential geometry and Lie groups/02-Surfaces/01-regular-surfaces-and-tangent-planes|regular-surfaces-and-tangent-planes]]"
-tags: [mathematics, calculus and analysis, differentiability-and-tangent-planes]
----
-
 # Tangent planes: the linear model of a surface, and the honest definition of differentiable
 
-Calculus and analysis → Several Variables → The flat local model → Tangent planes
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Several Variables](../../../SYLLABUS.md#w06-s07) → Tangent planes
 
 ---
 
 ## General Overview
 
-A surveyor stands on a grassy hillside, 100 m east and 50 m north of a peg. The ground there stands 62.5 m high. It falls 0.225 m per metre walked due east and 0.25 m per metre due north: the hill's partial derivatives, slopes along one compass line at a time ([partial-derivatives](01-partial-derivatives.md)).
+A surveyor stands on a grassy hillside, 100 m east and 50 m north of a peg. The ground there stands 62.5 m high. It falls 0.225 m per metre walked due east and 0.25 m per metre due north: the hill's partial derivatives, slopes along one compass line at a time ([Partial derivatives](01-partial-derivatives.md)).
 
 Lay a flat board on the ground there, tilted to match both slopes. It predicts the height at every nearby point, in every direction. That board is the **tangent plane**, the term used from here on. Walk 10 m east and 20 m north: the plane says 55.25 m, the hill is at 54.25 m.
 
@@ -74,7 +54,7 @@ $$\frac{R(h,k)}{\rho} \to 0 \quad \text{as } \rho \to 0, \text{ from every direc
 
 "Every direction at once" is the honest part: for any tolerance, one radius must serve every step inside it, east, north or slanting.
 
-The arrow $(-f_x, -f_y, 1)$, here (0.225, 0.250, 1), stands straight out of the plane, its **normal**: every arrow lying in the plane has zero dot product with it ([dot-product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)).
+The arrow $(-f_x, -f_y, 1)$, here (0.225, 0.250, 1), stands straight out of the plane, its **normal**: every arrow lying in the plane has zero dot product with it ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -110,7 +90,7 @@ A differentiable surface is also continuous: its height change is the plane's ch
 
 ### Step 2: continuous slopes guarantee the plane
 
-Walk from $(a, b)$ to $(a+h, b+k)$ in two legs, east then north. Each leg moves one coordinate, a one-variable problem. The [mean-value-theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md) says each leg's height change is its length times the slope at some point along it.
+Walk from $(a, b)$ to $(a+h, b+k)$ in two legs, east then north. Each leg moves one coordinate, a one-variable problem. The [Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md) says each leg's height change is its length times the slope at some point along it.
 
 On the hill, walking to (110, 70): the east leg changes the height by −2.35 m, which is 10 × −0.235, the east slope at (105, 50). The north leg by −5.9 m, 20 × −0.295, the north slope at (110, 60). Together, −8.25 m: exactly 62.5 m down to 54.25 m.
 
@@ -141,7 +121,7 @@ Take the surface $g(x, y) = xy/\sqrt{x^2 + y^2}$, with height 0 at the origin. I
 
 Walk out along the diagonal to the point $(t, t)$. The height is $|t|/\sqrt{2}$ and the step length is $\sqrt{2}\,|t|$, so the ratio is 0.5 however small $t$ is: at $t$ = 0.01 the height is 0.007071 m over a step of 0.014142 m. No tangent plane exists, though both slopes do and the surface is continuous (twice $|xy|$ is at most $x^2 + y^2$, so the height is at most half the step). The broken hypothesis: the east slope is 0.353553 at every diagonal point $(t, t)$ but 0 at the origin, so it is not continuous there.
 
-In one variable the same test is the tangent line of [linear-approximation-and-related-rates](../03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md), where one slope is enough.
+In one variable the same test is the tangent line of [Linear approximation](../03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md), where one slope is enough.
 
 ---
 
@@ -367,17 +347,17 @@ mistake, plane without the shift, at (110, 70): 20.250000 m
 
 ## What this builds on
 
-- [partial-derivatives](01-partial-derivatives.md): the two slopes, each taken along one line with the other coordinate held fixed.
-- [dot-product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): step length by Pythagoras, and the plane as every arrow at right angles to its normal.
+- [Partial derivatives](01-partial-derivatives.md): the two slopes, each taken along one line with the other coordinate held fixed.
+- [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): step length by Pythagoras, and the plane as every arrow at right angles to its normal.
 
 ## Where this goes next
 
-- [gradient-and-directional-derivatives](03-gradient-and-directional-derivatives.md): the slope in any direction, read off the plane as a dot product.
-- dimension-and-tangent-spaces: tangent spaces of shapes cut out by polynomials.
-- complex-manifolds-and-kahler-forms: spaces with a flat model at every point.
-- regular-surfaces-and-tangent-planes: tangent planes for surfaces such as a sphere, not graphs of a height.
+- [Gradient](03-gradient-and-directional-derivatives.md): the slope in any direction, read off the plane as a dot product.
+- Dimension and tangent space: tangent spaces of shapes cut out by polynomials.
+- Complex manifolds and Kahler forms: spaces with a flat model at every point.
+- Regular surface: tangent planes for surfaces such as a sphere, not graphs of a height.
 
-The plane gives the slope along every direction, but not yet which direction is steepest or how steep it is; [gradient-and-directional-derivatives](03-gradient-and-directional-derivatives.md) answers both.
+The plane gives the slope along every direction, but not yet which direction is steepest or how steep it is; [Gradient](03-gradient-and-directional-derivatives.md) answers both.
 
 ---
 

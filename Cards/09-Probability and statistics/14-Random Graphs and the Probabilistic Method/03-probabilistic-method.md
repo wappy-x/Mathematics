@@ -1,25 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Random Graphs and the Probabilistic Method
-topic: Existence by averaging
-item: The probabilistic method
-kind: method
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/02-expectation|expectation]]"
-  - "[[Cards/04-Combinatorics and graphs/14-Ramsey and Extremal, in Outline/03-probabilistic-method-by-counting|probabilistic-method-by-counting]]"
-  - "[[Cards/04-Combinatorics and graphs/14-Ramsey and Extremal, in Outline/02-ramsey-numbers|ramsey-numbers]]"
-next:
-  - "[[Cards/09-Probability and statistics/14-Random Graphs and the Probabilistic Method/04-first-and-second-moment-methods|first-and-second-moment-methods]]"
-  - "[[Cards/21-Algebraic and analytic number theory/08-Additive Combinatorics and Probabilistic Number Theory/05-szemeredi-and-green-tao-in-outline|szemeredi-and-green-tao-in-outline]]"
-tags: [mathematics, probability and statistics, probabilistic-method]
----
-
 # The probabilistic method: proving something exists by showing a random choice works
 
-Probability and statistics → Random Graphs and the Probabilistic Method → Existence by averaging → The probabilistic method
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Graphs and the Probabilistic Method](../../../SYLLABUS.md#w09-s14) → The probabilistic method
 
 ---
 
@@ -54,7 +35,7 @@ Bars: a seeded simulation of 20000 colourings. Their average is 3.2517 with a st
 
 ## The formula
 
-Notation first, in words, with reminders. $P(A)$ is the chance of event A. $E[X]$ is the expectation of a random count $X$, read "the average value of X in the long run" ([expectation](../02-Random%20Variables/02-expectation.md)). C(n, k), read "n choose k", counts the ways to pick k things from n. $K(n)$ is n dots with every pair joined, and $R(k,k)$ is the smallest n at which every two-colouring of $K(n)$ has a one-colour set of k dots ([ramsey-numbers](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/02-ramsey-numbers.md)). A set of dots all joined in one colour is a one-colour **clique**.
+Notation first, in words, with reminders. $P(A)$ is the chance of event A. $E[X]$ is the expectation of a random count $X$, read "the average value of X in the long run" ([Expectation](../02-Random%20Variables/02-expectation.md)). C(n, k), read "n choose k", counts the ways to pick k things from n. $K(n)$ is n dots with every pair joined, and $R(k,k)$ is the smallest n at which every two-colouring of $K(n)$ has a one-colour set of k dots ([Ramsey numbers](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/02-ramsey-numbers.md)). A set of dots all joined in one colour is a one-colour **clique**.
 
 The method rests on one fact about averages:
 
@@ -128,7 +109,7 @@ Two six-sets sharing four nails share six threads; their indicators are strongly
 
 ### Step 3: when the expectation is below 1
 
-$X$ is a whole number, never negative. If $E[X] < 1$, Step 1 gives an outcome with $X < 1$, so $X = 0$: a clean colouring. This is the counting card's argument in the language of chance ([probabilistic-method-by-counting](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md)): the largest six-set board it clears is 17 nails, so R(6,6) > 17. Markov's inequality ([markov-and-chebyshev-inequalities](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)) adds a little: the chance of a clean colouring is at least 1 − E[X].
+$X$ is a whole number, never negative. If $E[X] < 1$, Step 1 gives an outcome with $X < 1$, so $X = 0$: a clean colouring. This is the counting card's argument in the language of chance ([Erdos's counting trick](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md)): the largest six-set board it clears is 17 nails, so R(6,6) > 17. Markov's inequality ([Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)) adds a little: the chance of a clean colouring is at least 1 − E[X].
 
 ### Step 4: when it is not, delete
 
@@ -158,7 +139,7 @@ An office has 10 staff and 15 pairs who clash. Two rooms are free. Put each pers
 
 The rule holds for any network: a graph with $m$ edges (lines joining dots) has a **cut**, a split of the dots into two groups, crossed by at least $m/2$ edges. Nothing about the network's shape was used.
 
-A different route to existence with dependent bad events is the Lovász local lemma, which gains another factor of about 1.4142 on Ramsey bounds (Spencer, in Sources). When $E[X]$ is large, the question flips to whether $X$ is above 0 for most choices, which needs the variance: [first-and-second-moment-methods](04-first-and-second-moment-methods.md).
+A different route to existence with dependent bad events is the Lovász local lemma, which gains another factor of about 1.4142 on Ramsey bounds (Spencer, in Sources). When $E[X]$ is large, the question flips to whether $X$ is above 0 for most choices, which needs the variance: [First and second moments](04-first-and-second-moment-methods.md).
 
 ---
 
@@ -597,9 +578,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Ramsey theory.** Every known exponential lower bound on R(k,k) comes from a random colouring; no explicitly described colouring is known to reach one ([ramsey-numbers](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/02-ramsey-numbers.md)).
-- **Random graphs.** The red threads of a coin-flipped board are a random graph in which each edge appears with chance one half ([random-graphs-erdos-renyi](01-random-graphs-erdos-renyi.md)); what such graphs contain is counted with these expectations.
-- **Algorithms.** Splitting a network by coin flips is an algorithm: it reaches half the edges on average, and fixing the coins one at a time, never letting the conditional average drop, finds such a split without luck (randomised-algorithms-and-expectation).
+- **Ramsey theory.** Every known exponential lower bound on R(k,k) comes from a random colouring; no explicitly described colouring is known to reach one ([Ramsey numbers](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/02-ramsey-numbers.md)).
+- **Random graphs.** The red threads of a coin-flipped board are a random graph in which each edge appears with chance one half ([Random graphs](01-random-graphs-erdos-renyi.md)); what such graphs contain is counted with these expectations.
+- **Algorithms.** Splitting a network by coin flips is an algorithm: it reaches half the edges on average, and fixing the coins one at a time, never letting the conditional average drop, finds such a split without luck (Randomised algorithms).
 - **Error-correcting codes.** A random code of the right size is good on average, so good codes exist (the Gilbert–Varshamov bound); for codes made of bits, no explicit family is known that beats this random guarantee.
 
 > **Say it back**
@@ -609,16 +590,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [expectation](../02-Random%20Variables/02-expectation.md): the weighted sum, and linearity for dependent pieces, which carries Step 2.
-- [probabilistic-method-by-counting](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md): the same argument as a count, and the bound R(k,k) > 2^(k/2) that deletion improves.
-- [ramsey-numbers](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/02-ramsey-numbers.md): what R(k,k) means and why one clean colouring bounds it from below.
+- [Expectation](../02-Random%20Variables/02-expectation.md): the weighted sum, and linearity for dependent pieces, which carries Step 2.
+- [Erdos's counting trick](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md): the same argument as a count, and the bound R(k,k) > 2^(k/2) that deletion improves.
+- [Ramsey numbers](../../04-Combinatorics%20and%20graphs/14-Ramsey%20and%20Extremal%2C%20in%20Outline/02-ramsey-numbers.md): what R(k,k) means and why one clean colouring bounds it from below.
 
 ## Where this goes next
 
-- [first-and-second-moment-methods](04-first-and-second-moment-methods.md): E[X] small forces X = 0 usually, and the variance decides when E[X] large forces X > 0 usually.
-- szemeredi-and-green-tao-in-outline: random-looking structure inside the primes, where comparing with a random model is the central move.
+- [First and second moments](04-first-and-second-moment-methods.md): E[X] small forces X = 0 usually, and the variance decides when E[X] large forces X > 0 usually.
+- Long progressions: random-looking structure inside the primes, where comparing with a random model is the central move.
 
-This card shows that some choice does at least as well as the average; when the average is large, whether most random choices hold at least one bad set, or only a few do, is the question [first-and-second-moment-methods](04-first-and-second-moment-methods.md) answers with the variance.
+This card shows that some choice does at least as well as the average; when the average is large, whether most random choices hold at least one bad set, or only a few do, is the question [First and second moments](04-first-and-second-moment-methods.md) answers with the variance.
 
 ---
 

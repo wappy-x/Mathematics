@@ -1,25 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Curves and Solids
-topic: Rates along a moving point
-item: Parametric motion
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/03-chain-rule|chain-rule]]"
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/06-parametric-curves|parametric-curves]]"
-next:
-  - "[[Cards/06-Calculus and analysis/05-Curves and Solids/02-arc-length|arc-length]]"
-  - "[[Cards/23-Differential geometry and Lie groups/01-Curves/01-regular-curves-and-arc-length|regular-curves-and-arc-length]]"
-  - "[[Cards/23-Differential geometry and Lie groups/01-Curves/02-curvature-of-plane-curves|curvature-of-plane-curves]]"
-tags: [mathematics, calculus and analysis, parametric-motion]
----
-
 # Parametric motion: position, velocity and acceleration as vectors
 
-Calculus and analysis → Curves and Solids → Rates along a moving point → Parametric motion
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Curves and Solids](../../../SYLLABUS.md#w06-s05) → Parametric motion
 
 ---
 
@@ -29,7 +10,7 @@ A ball leaves a hand moving 12 m/s across and 16 m/s up. Gravity pulls it down a
 
 How fast is it going at the top? Not zero. It has stopped rising, but it is still crossing the ground at 12 m/s.
 
-Two numbers place the ball at each instant: how far across and how high. Each is a function of time, so the path is a parametric curve ([parametric-curves](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/06-parametric-curves.md)) with time as the parameter. From those two functions calculus gives the velocity (which way and how fast), the speed (how fast only) and the slope (how steep the path is).
+Two numbers place the ball at each instant: how far across and how high. Each is a function of time, so the path is a parametric curve ([Parametric curves](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/06-parametric-curves.md)) with time as the parameter. From those two functions calculus gives the velocity (which way and how fast), the speed (how fast only) and the slope (how steep the path is).
 
 **Differentiate each coordinate separately to get the velocity; its length is the speed; the slope of the path is the up-rate over the across-rate, wherever the across-rate is not zero.**
 
@@ -114,7 +95,7 @@ At the top the velocity is (12, 0), length 12 m/s. The code measures the distanc
 
 ### Step 3: the slope rule, from the chain rule
 
-Where dx/dt is never zero, x keeps moving one way, so each x belongs to one time and the height is a function of x alone: call it Y, so y(t) = Y(x(t)). The chain rule ([chain-rule](../02-Derivatives/03-chain-rule.md)) says
+Where dx/dt is never zero, x keeps moving one way, so each x belongs to one time and the height is a function of x alone: call it Y, so y(t) = Y(x(t)). The chain rule ([Chain rule](../02-Derivatives/03-chain-rule.md)) says
 
 $$y'(t) = Y'\big(x(t)\big)\, x'(t).$$
 
@@ -378,7 +359,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Sports ballistics.** Golf and baseball launch monitors measure the across and up rates and report speed and angle from them.
-- **Curves into solids.** The shelf's other cards spin curves into solids: [volumes-by-slices-and-shells](03-volumes-by-slices-and-shells.md), [surface-area-of-revolution](04-surface-area-of-revolution.md) and [centre-of-mass-and-pappus](05-centre-of-mass-and-pappus.md).
+- **Curves into solids.** The shelf's other cards spin curves into solids: [Volumes](03-volumes-by-slices-and-shells.md), [Surface area](04-surface-area-of-revolution.md) and [Centre of mass](05-centre-of-mass-and-pappus.md).
 
 > **Say it back**
 > A moving point has two coordinates, each a function of time. Differentiating each gives the velocity; differentiating again gives the acceleration. The speed is the velocity's length, by Pythagoras, so the ball at the top still moves at 12 m/s. The path's slope is the up-rate over the across-rate, by the chain rule, while the across-rate is not zero.
@@ -387,16 +368,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [chain-rule](../02-Derivatives/03-chain-rule.md): the rate of a function of a function, which turns into the slope rule.
-- [parametric-curves](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/06-parametric-curves.md): a curve as two coordinates driven by one number, and removing that number.
+- [Chain rule](../02-Derivatives/03-chain-rule.md): the rate of a function of a function, which turns into the slope rule.
+- [Parametric curves](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/06-parametric-curves.md): a curve as two coordinates driven by one number, and removing that number.
 
 ## Where this goes next
 
-- [arc-length](02-arc-length.md): adding up speed over time to get distance along the path.
-- regular-curves-and-arc-length: curves whose velocity never vanishes, measured by their own length instead of a clock.
-- curvature-of-plane-curves: how sharply the path bends, separated from how fast it is travelled.
+- [Arc length](02-arc-length.md): adding up speed over time to get distance along the path.
+- Regular curve and arc length: curves whose velocity never vanishes, measured by their own length instead of a clock.
+- Curvature: how sharply the path bends, separated from how fast it is travelled.
 
-The speed is known at every instant; how far the ball travels along its arch is the question [arc-length](02-arc-length.md) answers.
+The speed is known at every instant; how far the ball travels along its arch is the question [Arc length](02-arc-length.md) answers.
 
 ---
 

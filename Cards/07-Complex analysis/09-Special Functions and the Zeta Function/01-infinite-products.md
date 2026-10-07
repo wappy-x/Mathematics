@@ -1,25 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Special Functions and the Zeta Function
-topic: Multiplying without end
-item: Infinite products
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/02-uniform-limits-of-holomorphic-functions|uniform-limits-of-holomorphic-functions]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/04-complex-logarithm|complex-logarithm]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/02-comparison-ratio-and-root-tests|comparison-ratio-and-root-tests]]"
-next:
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/05-zeta-function-and-euler-product|zeta-function-and-euler-product]]"
-  - "[[Cards/21-Algebraic and analytic number theory/01-Arithmetic Functions Again/09-mertens-theorems|mertens-theorems]]"
-tags: [mathematics, complex analysis, infinite-products]
----
-
 # Infinite products: a product converges exactly when the sum of its small parts does, and sine is a product over its zeros
 
-Complex analysis → Special Functions and the Zeta Function → Multiplying without end → Infinite products
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Special Functions and the Zeta Function](../../../SYLLABUS.md#w07-s09) → Infinite products
 
 ---
 
@@ -73,7 +54,7 @@ $$\sin(\pi z) = \pi z \prod_{n=1}^{\infty} \left(1 - \frac{z^2}{n^2}\right)$$
 
 **Read it aloud:** sine of π z is π z times, over every whole number n, one minus z squared over n squared.
 
-At z = i each factor is 1 + 1/n^2 and sin(πi) = i sinh(π) ([exponential-sine-and-cosine-in-the-plane](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md)): the account. At z = 1/2 each factor is 1 − 1/(4n^2); turned upside down, that is Wallis:
+At z = i each factor is 1 + 1/n^2 and sin(πi) = i sinh(π) ([The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md)): the account. At z = 1/2 each factor is 1 − 1/(4n^2); turned upside down, that is Wallis:
 
 $$\frac{\pi}{2} = \prod_{n=1}^{\infty} \frac{4n^2}{4n^2 - 1}$$
 
@@ -105,11 +86,11 @@ The log of a product is the sum of the logs. So the balance settles exactly when
 
 ### Step 1: a small factor's log is close to its small part
 
-For a complex number a of size at most 1/2, the series log(1 + a) = a − a^2/2 + a^3/3 − … ([complex-logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)) has a tail after a of size at most (|a|^2/2)(1 + |a| + |a|^2 + …) ≤ |a|^2. So |log(1 + a)| lies between |a|/2 and 3|a|/2.
+For a complex number a of size at most 1/2, the series log(1 + a) = a − a^2/2 + a^3/3 − … ([The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)) has a tail after a of size at most (|a|^2/2)(1 + |a| + |a|^2 + …) ≤ |a|^2. So |log(1 + a)| lies between |a|/2 and 3|a|/2.
 
 ### Step 2: a finite total gives a convergent sum of logs
 
-If $S$ is finite, the parts shrink to 0, so past some year every |a_n| is at most 1/2 and each |log(1 + a_n)| at most 3|a_n|/2. By comparison ([comparison-ratio-and-root-tests](../../06-Calculus%20and%20analysis/06-Series/02-comparison-ratio-and-root-tests.md)) the logs converge to some L, and P_N tends to e^L times the early factors. Since e^L is never zero, neither is P. A product sliding to zero is a log sum running to minus infinity: divergence.
+If $S$ is finite, the parts shrink to 0, so past some year every |a_n| is at most 1/2 and each |log(1 + a_n)| at most 3|a_n|/2. By comparison ([Convergence tests](../../06-Calculus%20and%20analysis/06-Series/02-comparison-ratio-and-root-tests.md)) the logs converge to some L, and P_N tends to e^L times the early factors. Since e^L is never zero, neither is P. A product sliding to zero is a log sum running to minus infinity: divergence.
 
 ### Step 3: for positive parts the test runs both ways
 
@@ -117,7 +98,7 @@ When every a_n is at least 0, multiplying out gives P_N ≥ 1 + a_1 + … + a_N,
 
 ### Step 4: in the plane the product is holomorphic
 
-Now a_n(z) = −z^2/n^2. On the disc |z| ≤ R the sizes are at most R^2/n^2, a finite total. Past the first few factors, Step 1 makes the sum of logs converge uniformly on the disc, so it is holomorphic ([uniform-limits-of-holomorphic-functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)), and so is e to it. The early factors are polynomials. The product is holomorphic everywhere and zero exactly where a factor is: at 0, ±1, ±2, …, the zeros of sin(πz).
+Now a_n(z) = −z^2/n^2. On the disc |z| ≤ R the sizes are at most R^2/n^2, a finite total. Past the first few factors, Step 1 makes the sum of logs converge uniformly on the disc, so it is holomorphic ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)), and so is e to it. The early factors are polynomials. The product is holomorphic everywhere and zero exactly where a factor is: at 0, ±1, ±2, …, the zeros of sin(πz).
 
 ### Step 5: Euler's product equals sine
 
@@ -130,7 +111,7 @@ Equal zeros do not make equal functions. The product's logarithmic derivative, i
 
 **Partial fractions of the cotangent.** Fix such a z. Integrate $\pi\cot(\pi w)/(w^2 - z^2)$ anticlockwise round the square with corners $(M + \tfrac12)(\pm 1 \pm i)$. There cot stays bounded while $|w^2 - z^2|$ grows like $M^2$ along a path of length $8M + 4$, so the integral tends to 0.
 
-**The residues.** Near $w = n$, $\pi\cot(\pi w) \approx 1/(w - n)$, giving residue $1/(n^2 - z^2)$; at $w = \pm z$ the two residues sum to $\pi\cot(\pi z)/z$. By the residue theorem ([the-residue-theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)), letting $M \to \infty$:
+**The residues.** Near $w = n$, $\pi\cot(\pi w) \approx 1/(w - n)$, giving residue $1/(n^2 - z^2)$; at $w = \pm z$ the two residues sum to $\pi\cot(\pi z)/z$. By the residue theorem ([The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)), letting $M \to \infty$:
 $$\frac{\pi\cot(\pi z)}{z} + \sum_{n = -\infty}^{\infty} \frac{1}{n^2 - z^2} = 0, \quad\text{so}\quad \pi\cot(\pi z) = \frac1z + \sum_{n \ge 1}\frac{2z}{z^2 - n^2}.$$
 
 **The constant.** Since $\pi\cot(\pi z)$ is also sine's logarithmic derivative, $g/\sin(\pi z)$ has derivative 0 off the whole numbers, a connected set, so it is a constant; near 0 both behave like $\pi z$, so it is 1.
@@ -394,8 +375,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Life tables.** The share of a group alive after N years is a product of yearly survival fractions; it stays above zero exactly when the yearly death fractions have a finite total.
-- **The primes.** Zeta is a product with one factor per prime, convergent by this card's test: [zeta-function-and-euler-product](05-zeta-function-and-euler-product.md).
-- **The gamma function.** Its reciprocal is a product over zeros at 0, −1, −2, …: [gamma-function](02-gamma-function.md).
+- **The primes.** Zeta is a product with one factor per prime, convergent by this card's test: [The zeta function](05-zeta-function-and-euler-product.md).
+- **The gamma function.** Its reciprocal is a product over zeros at 0, −1, −2, …: [The gamma function](02-gamma-function.md).
 - **An early formula for π.** Wallis published his product in 1656.
 
 > **Say it back**
@@ -405,14 +386,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [uniform-limits-of-holomorphic-functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md): a uniform limit of holomorphic functions is holomorphic (Step 4).
-- [complex-logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md): the principal log and its series (Step 1).
-- [comparison-ratio-and-root-tests](../../06-Calculus%20and%20analysis/06-Series/02-comparison-ratio-and-root-tests.md): comparison moves the finite total from the parts to the logs.
+- [Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md): a uniform limit of holomorphic functions is holomorphic (Step 4).
+- [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md): the principal log and its series (Step 1).
+- [Convergence tests](../../06-Calculus%20and%20analysis/06-Series/02-comparison-ratio-and-root-tests.md): comparison moves the finite total from the parts to the logs.
 
 ## Where this goes next
 
-- [zeta-function-and-euler-product](05-zeta-function-and-euler-product.md): the product over primes that equals the sum of 1/n^s.
-- mertens-theorems: how fast the product of 1 − 1/p over primes p sinks to zero.
+- [The zeta function](05-zeta-function-and-euler-product.md): the product over primes that equals the sum of 1/n^s.
+- Mertens' theorems: how fast the product of 1 − 1/p over primes p sinks to zero.
 
 ---
 

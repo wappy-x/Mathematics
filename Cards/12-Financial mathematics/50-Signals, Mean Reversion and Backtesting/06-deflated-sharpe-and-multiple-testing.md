@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Signals, Mean Reversion and Backtesting
-topic: Selection bias in backtests
-item: Trying many strategies
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/05-backtesting-pitfalls|backtesting-pitfalls]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/08-multiple-testing|multiple-testing]]"
-next: []
-tags: [mathematics, financial mathematics, deflated-sharpe-and-multiple-testing]
----
-
 # Trying many strategies: the deflated Sharpe ratio and the probability of backtest overfitting
 
-Financial mathematics → Signals, Mean Reversion and Backtesting → Selection bias in backtests → Trying many strategies
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Signals, Mean Reversion and Backtesting](../../../SYLLABUS.md#w12-s50) → Trying many strategies
 
 ---
 
@@ -54,7 +38,7 @@ The rising curve is luck's best; it crosses the flat line at 1.4, the winner's S
 
 ## The formula
 
-Notation first, in words. $N(x)$ is the bell-curve area to the left of $x$, as on the [normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md) card, and $N^{-1}$ runs it backwards: given an area, it returns the point with that much area to its left. A hat marks a number measured from data. Everything inside the formula is **per period**, here per trading day; a yearly Sharpe is the daily one times $\sqrt{252}$.
+Notation first, in words. $N(x)$ is the bell-curve area to the left of $x$, as on the [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md) card, and $N^{-1}$ runs it backwards: given an area, it returns the point with that much area to its left. A hat marks a number measured from data. Everything inside the formula is **per period**, here per trading day; a yearly Sharpe is the daily one times $\sqrt{252}$.
 
 The bar the winner must clear:
 
@@ -176,7 +160,7 @@ The 20 splits share days, so they are not 20 independent tests; the fraction for
 
 A family with real skill behaves differently. Give the 100 strategies true annual Sharpes spread evenly from 0 to 2, and CSCV's PBO drops to 0.2132: the in-sample winner is usually one of the genuinely good strategies, and they stay good out of sample.
 
-The same question has a classical answer on the [multiple-testing](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md) card: Bonferroni multiplies the single-test p-value by the number of tests. Here 100 × 0.0078 = 0.78, far above 0.05. Same verdict, cruder tool: Bonferroni asks only whether to reject, while the DSR says by how much the winner falls short.
+The same question has a classical answer on the [Many tests](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md) card: Bonferroni multiplies the single-test p-value by the number of tests. Here 100 × 0.0078 = 0.78, far above 0.05. Same verdict, cruder tool: Bonferroni asks only whether to reject, while the DSR says by how much the winner falls short.
 
 ---
 
@@ -683,10 +667,10 @@ The simulated average best Sharpe, 1.4559, sits just above the exact 1.448718. P
 ## Where you meet it in real life
 
 - **Fund due diligence.** Allocators ask how many variants were tried before the backtest they are shown. A manager who cannot answer has a Sharpe that cannot be deflated.
-- **The factor zoo.** Hundreds of published return factors were found on the same few decades of data. Harvey and Liu show how to haircut a Sharpe ratio for the number of tests behind it, and argue that a new factor needs a higher bar than a single test's for the same reason. See [momentum-and-factor-signals](03-momentum-and-factor-signals.md).
-- **Pair screening.** Testing thousands of stock pairs for a stable spread and trading the best is a search of thousands: [pairs-trading-and-cointegration](02-pairs-trading-and-cointegration.md).
-- **Threshold sweeps.** Trying every entry and exit level for a mean-reversion trade counts every level as a trial: [ornstein-uhlenbeck-mean-reversion-trading](01-ornstein-uhlenbeck-mean-reversion-trading.md).
-- **Signal research.** A forecast's correlation with later returns, measured after screening many forecasts, is inflated in the same way: [information-coefficient-and-the-fundamental-law](04-information-coefficient-and-the-fundamental-law.md).
+- **The factor zoo.** Hundreds of published return factors were found on the same few decades of data. Harvey and Liu show how to haircut a Sharpe ratio for the number of tests behind it, and argue that a new factor needs a higher bar than a single test's for the same reason. See [Momentum and factor signals](03-momentum-and-factor-signals.md).
+- **Pair screening.** Testing thousands of stock pairs for a stable spread and trading the best is a search of thousands: [Pairs trading](02-pairs-trading-and-cointegration.md).
+- **Threshold sweeps.** Trying every entry and exit level for a mean-reversion trade counts every level as a trial: [Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md).
+- **Signal research.** A forecast's correlation with later returns, measured after screening many forecasts, is inflated in the same way: [The fundamental law](04-information-coefficient-and-the-fundamental-law.md).
 - **Machine-learning model tuning.** Choosing the best of many settings on one validation set is the same maximum, and the same deflation applies.
 
 > **Say it back**
@@ -696,13 +680,13 @@ The simulated average best Sharpe, 1.4559, sits just above the exact 1.448718. P
 
 ## What this builds on
 
-- [backtesting-pitfalls](05-backtesting-pitfalls.md): the honest record this card assumes, with no look-ahead, surviving-stocks-only bias or missing costs, and the rule of logging every trial.
-- [multiple-testing](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md): why many tests inflate false discoveries, and the Bonferroni correction this card compares against.
+- [Backtesting](05-backtesting-pitfalls.md): the honest record this card assumes, with no look-ahead, surviving-stocks-only bias or missing costs, and the rule of logging every trial.
+- [Many tests](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md): why many tests inflate false discoveries, and the Bonferroni correction this card compares against.
 
 ## Where this goes next
 
-- [kalman-filter-for-dynamic-hedge-ratios](07-kalman-filter-for-dynamic-hedge-ratios.md): a hedge ratio that updates itself; each tuning of its noise settings tried on the same history is one more trial in $M$.
-- [momentum-and-factor-signals](03-momentum-and-factor-signals.md): signals chosen from a crowded field, where the deflation here decides which survive.
+- [A moving hedge ratio](07-kalman-filter-for-dynamic-hedge-ratios.md): a hedge ratio that updates itself; each tuning of its noise settings tried on the same history is one more trial in $M$.
+- [Momentum and factor signals](03-momentum-and-factor-signals.md): signals chosen from a crowded field, where the deflation here decides which survive.
 
 ---
 

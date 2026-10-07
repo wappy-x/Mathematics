@@ -1,30 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Greatest Common Divisor and Euclid's Algorithm
-topic: Common factors
-item: Least common multiple
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/03-multiplying-and-dividing|multiplying-and-dividing]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/04-division-with-remainder|division-with-remainder]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/05-primes-and-composites|primes-and-composites]]"
-  - "[[Cards/01-Foundations/06-Proof/05-strong-induction-and-well-ordering|strong-induction-and-well-ordering]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/01-gcd|gcd]]"
-next:
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/06-chinese-remainder-theorem|chinese-remainder-theorem]]"
-  - "[[Cards/02-Number theory/05-Check Digits, Calendars and Cycles/04-cycles-that-realign|cycles-that-realign]]"
-tags:
-  - mathematics
-  - number theory
-  - lcm
----
-
 # Least common multiple: the first number both divide into, and why gcd times lcm equals the product
 
-Number theory → Greatest Common Divisor and Euclid's Algorithm → Common factors → Least common multiple
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Greatest Common Divisor and Euclid's Algorithm](../../../SYLLABUS.md#w02-s02) → Least common multiple
 
 ---
 
@@ -34,7 +10,7 @@ A drum pattern 6 beats long, over a bass line 8 beats long. Both start on beat o
 
 Keep counting and they snap back. The drum comes round on beat 6, 12, 18, 24. The bass on 8, 16, 24. First number in both lists: 24. Four drum loops, three bass loops, back on beat one.
 
-That 24 is the **least common multiple** of 6 and 8 — lcm(6, 8) for short. A multiple of a number is that number counted out whole times; a common multiple turns up in both counts; the least one is where the patterns meet. [gcd](01-gcd.md) asked what goes into both; this asks what both go into.
+That 24 is the **least common multiple** of 6 and 8 — lcm(6, 8) for short. A multiple of a number is that number counted out whole times; a common multiple turns up in both counts; the least one is where the patterns meet. [Greatest common divisor](01-gcd.md) asked what goes into both; this asks what both go into.
 
 **The first number both go into is the two numbers multiplied, divided by the biggest number that goes into both.**
 
@@ -58,13 +34,13 @@ On our two loops:
 
 **Read it aloud:** the first beat both patterns come round on is 24, and the biggest number going into both loops, times that beat, is 6 × 8.
 
-Two ways to the 24. From the lists: write out the multiples of each, stop at the first shared one. From the primes, the numbers that break down no further ([primes-and-composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)): 6 = 2 × 3 and 8 = 2 × 2 × 2, so take each prime as often as the greedier wants it — three 2s and one 3, and 2 × 2 × 2 × 3 = 24.
+Two ways to the 24. From the lists: write out the multiples of each, stop at the first shared one. From the primes, the numbers that break down no further ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)): 6 = 2 × 3 and 8 = 2 × 2 × 2, so take each prime as often as the greedier wants it — three 2s and one 3, and 2 × 2 × 2 × 3 = 24.
 
 | Piece | Plain meaning | In our beats |
 | --- | --- | --- |
 | a multiple | the number counted out whole times | 6, 12, 18, 24 |
 | the least common multiple, lcm | the first number in both lists of multiples | 24 |
-| the greatest common divisor, gcd | the biggest number going into both ([gcd](01-gcd.md)) | 2 |
+| the greatest common divisor, gcd | the biggest number going into both ([Greatest common divisor](01-gcd.md)) | 2 |
 | the product | the two loop lengths multiplied | 48 |
 
 ---
@@ -73,11 +49,11 @@ Two ways to the 24. From the lists: write out the multiples of each, stop at the
 
 ### Step 0 — there is a first shared beat to find
 
-Play the drum 8 times and the bass 6 times: both finish at beat 48, so shared beats exist. Any collection of counting numbers that is not empty has a smallest member ([strong-induction-and-well-ordering](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md)), and that smallest shared beat is the least common multiple.
+Play the drum 8 times and the bass 6 times: both finish at beat 48, so shared beats exist. Any collection of counting numbers that is not empty has a smallest member ([Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md)), and that smallest shared beat is the least common multiple.
 
 ### Step 1 — every shared beat is a multiple of the first one
 
-Take any beat where both patterns come round. Divide it by 24 and keep the remainder ([division-with-remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)): a whole number of 24s, plus a remainder under 24.
+Take any beat where both patterns come round. Divide it by 24 and keep the remainder ([Division with a remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)): a whole number of 24s, plus a remainder under 24.
 
 Those 24s are a shared beat, and so is the beat you started with. Subtract, and the remainder is shared too — 6 goes into both, so 6 goes into their difference, and the same for 8. But a shared beat under 24 would have beaten 24 to the title, so the remainder is nothing. Shared beats are exactly 24, 48, and on up in 24s.
 
@@ -91,7 +67,7 @@ Nothing bigger does. Take any number that goes into both, call it d, and divide 
 
 So the biggest number into both, times the first number both go into, is the two multiplied — and nothing here was special to 6 and 8, or to any two counting numbers.
 
-The prime route says it too: for each prime the lcm takes the most and the gcd the fewest, and most plus fewest is how many the two have between them ([prime-factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)).
+The prime route says it too: for each prime the lcm takes the most and the gcd the fewest, and most plus fewest is how many the two have between them ([Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)).
 
 ---
 
@@ -248,7 +224,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Polyrhythms.** A 6 against an 8 is a pattern drummers play, and the bar it fits in is 24 beats long: [cycles-that-realign](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/04-cycles-that-realign.md).
+- **Polyrhythms.** A 6 against an 8 is a pattern drummers play, and the bar it fits in is 24 beats long: [When cycles meet again](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/04-cycles-that-realign.md).
 - **Common denominators.** Sixths and eighths get rewritten over 24 before adding.
 - **Gears.** A 6-tooth wheel driving an 8-tooth wheel: the same two teeth meet after 24 teeth.
 
@@ -259,13 +235,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [multiplying-and-dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): multiples, and the division that undoes them.
-- [gcd](01-gcd.md): the biggest number going into both, the 2 this card divides by.
+- [Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): multiples, and the division that undoes them.
+- [Greatest common divisor](01-gcd.md): the biggest number going into both, the 2 this card divides by.
 
 ## Where this goes next
 
-- [chinese-remainder-theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): which beat lands two patterns on any pair of positions you pick.
-- [cycles-that-realign](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/04-cycles-that-realign.md): cycles of different lengths meeting again, drawn as time.
+- [The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): which beat lands two patterns on any pair of positions you pick.
+- [When cycles meet again](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/04-cycles-that-realign.md): cycles of different lengths meeting again, drawn as time.
 
 ---
 

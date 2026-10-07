@@ -1,28 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Ito Calculus
-topic: Rates pulled back to a level
-item: Mean reversion
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/04-stochastic-differential-equations|stochastic-differential-equations]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/05-integrating-factor|integrating-factor]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/06-exact-simulation-of-gbm-and-ou|exact-simulation-of-gbm-and-ou]]"
-  - "[[Cards/11-Stochastic processes and calculus/09-Beyond Brownian/04-filtering-and-the-kalman-bucy-filter|filtering-and-the-kalman-bucy-filter]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/01-heston-model|heston-model]]"
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/06-mean-reverting-spot-and-the-futures-curve|mean-reverting-spot-and-the-futures-curve]]"
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/01-the-term-structure-equation|the-term-structure-equation]]"
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/01-ornstein-uhlenbeck-mean-reversion-trading|ornstein-uhlenbeck-mean-reversion-trading]]"
-tags: [mathematics, stochastic processes and calculus, ornstein-uhlenbeck-and-cir-processes]
----
-
 # Mean reversion: the Ornstein-Uhlenbeck and Cox-Ingersoll-Ross processes
 
-Stochastic processes and calculus → Ito Calculus → Rates pulled back to a level → Mean reversion
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Ito Calculus](../../../SYLLABUS.md#w11-s06) → Mean reversion
 
 ---
 
@@ -57,7 +35,7 @@ Orange: one sample path, a single simulated run: seed 20260930, stepped every 0.
 
 ## The formula
 
-Notation first, in words. Time $t$ is in years. The rate at time $t$ is $r_t$, a decimal, so 0.06 is 6 percent; $r_0$ is today's rate. $W_t$ is Brownian motion, the random walk seen from far away. As in [stochastic-differential-equations](04-stochastic-differential-equations.md), $dW_t$ is shorthand for an Ito integral, never a derivative, because the path has none.
+Notation first, in words. Time $t$ is in years. The rate at time $t$ is $r_t$, a decimal, so 0.06 is 6 percent; $r_0$ is today's rate. $W_t$ is Brownian motion, the random walk seen from far away. As in [Stochastic differential equations](04-stochastic-differential-equations.md), $dW_t$ is shorthand for an Ito integral, never a derivative, because the path has none.
 
 The Ornstein-Uhlenbeck equation, OU for short, is
 
@@ -116,11 +94,11 @@ $$2\kappa\theta \;\ge\; \sigma^2 .$$
 
 ### Step 0: cancel the pull with an exponential
 
-Without noise, the gap shrinks like $e^{-\kappa t}$. So multiply the gap by $e^{\kappa t}$, the integrating factor of [integrating-factor](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/05-integrating-factor.md), which grows exactly as fast as the gap decays. What is left changes only through the noise, and noise alone integrates directly.
+Without noise, the gap shrinks like $e^{-\kappa t}$. So multiply the gap by $e^{\kappa t}$, the integrating factor of [The integrating factor](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/05-integrating-factor.md), which grows exactly as fast as the gap decays. What is left changes only through the noise, and noise alone integrates directly.
 
 ### Step 1: the product rule removes the drift
 
-Set $Y_t = e^{\kappa t}(r_t - \theta)$. Ito's product rule ([ito-product-rule](03-ito-product-rule.md)) adds a cross term, the product of the two noise parts. The exponential has no noise part, so the cross term is zero:
+Set $Y_t = e^{\kappa t}(r_t - \theta)$. Ito's product rule ([Ito's product rule](03-ito-product-rule.md)) adds a cross term, the product of the two noise parts. The exponential has no noise part, so the cross term is zero:
 
 $$dY_t = \kappa e^{\kappa t}(r_t-\theta)\,dt + e^{\kappa t}\,dr_t = \kappa e^{\kappa t}(r_t-\theta)\,dt + e^{\kappa t}\big[\kappa(\theta - r_t)\,dt + \sigma\,dW_t\big] = \sigma e^{\kappa t}\,dW_t .$$
 
@@ -132,7 +110,7 @@ Integrate: $Y_t = Y_0 + \sigma\int_0^t e^{\kappa u}\,dW_u$. Multiply by $e^{-\ka
 
 ### Step 3: mean and variance from two Ito facts
 
-An Ito integral of a fixed function has mean zero ([ito-integral](01-ito-integral.md)), so the mean is the fading gap alone: 0.04 + 0.02 × 0.606531 = 5.2131 percent after a year. The Ito isometry says the variance is the integral of the squared integrand. A shock at time u survives to time t as the fraction $e^{-\kappa(t-u)}$, and variance scales with the square of that fraction:
+An Ito integral of a fixed function has mean zero ([The Ito integral](01-ito-integral.md)), so the mean is the fading gap alone: 0.04 + 0.02 × 0.606531 = 5.2131 percent after a year. The Ito isometry says the variance is the integral of the squared integrand. A shock at time u survives to time t as the fraction $e^{-\kappa(t-u)}$, and variance scales with the square of that fraction:
 
 $$\operatorname{Var}(r_t) = \sigma^2\int_0^t e^{-2\kappa(t-u)}\,du = \frac{\sigma^2}{2\kappa}\big(1-e^{-2\kappa t}\big).$$
 
@@ -155,9 +133,9 @@ The expected gap $(r_0-\theta)e^{-\kappa t}$ is half its start when $e^{-\kappa 
 
 **1. The formula solves the equation.** Let $J_t = \int_0^t e^{\kappa u}\,dW_u$, a continuous martingale started at zero. Define $\tilde r_t = \theta + (r_0-\theta)e^{-\kappa t} + \sigma e^{-\kappa t}J_t$. By Ito's product rule for $e^{-\kappa t}$, which has no noise part, and $J_t$, whose differential is $e^{\kappa t}\,dW_t$: $d(e^{-\kappa t}J_t) = -\kappa e^{-\kappa t}J_t\,dt + dW_t$, with no cross term. So $d\tilde r_t = -\kappa(r_0-\theta)e^{-\kappa t}\,dt - \kappa\sigma e^{-\kappa t}J_t\,dt + \sigma\,dW_t = \kappa(\theta - \tilde r_t)\,dt + \sigma\,dW_t$, and $\tilde r_0 = r_0$.
 
-**2. It is the only solution.** If $r$ and $\tilde r$ solve the equation with the same start and the same $W$, their difference $D$ satisfies $D_t = -\kappa\int_0^t D_u\,du$ path by path. So $D$ is differentiable with $D' = -\kappa D$ and $D_0 = 0$; then $(e^{\kappa t}D_t)' = 0$ and $D \equiv 0$. The general Lipschitz theorem gives the same result ([existence-and-uniqueness-for-sdes](07-existence-and-uniqueness-for-sdes.md)).
+**2. It is the only solution.** If $r$ and $\tilde r$ solve the equation with the same start and the same $W$, their difference $D$ satisfies $D_t = -\kappa\int_0^t D_u\,du$ path by path. So $D$ is differentiable with $D' = -\kappa D$ and $D_0 = 0$; then $(e^{\kappa t}D_t)' = 0$ and $D \equiv 0$. The general Lipschitz theorem gives the same result ([When an SDE has one solution](07-existence-and-uniqueness-for-sdes.md)).
 
-**3. Normality.** Fix $t$, let $f(u) = e^{-\kappa(t-u)}$ and $I = \int_0^t f\,dW$. Its left-endpoint sums on finer grids are fixed combinations of independent normal increments, so each is normal with mean 0 and variance $q_k = \int_0^t f_k^2$, where $f_k$ is the step version of $f$. By the isometry the sums converge to $I$ in mean square, since $\int_0^t (f_k - f)^2 \to 0$ by uniform continuity. Mean-square convergence gives convergence in distribution, and the characteristic functions (the transform that pins down a law, [characteristic-functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md)) $e^{-s^2 q_k/2}$ tend to $e^{-s^2 q/2}$ with $q = \int_0^t f^2 = (1 - e^{-2\kappa t})/(2\kappa)$. So $I$ is normal, and so is $r_t$.
+**3. Normality.** Fix $t$, let $f(u) = e^{-\kappa(t-u)}$ and $I = \int_0^t f\,dW$. Its left-endpoint sums on finer grids are fixed combinations of independent normal increments, so each is normal with mean 0 and variance $q_k = \int_0^t f_k^2$, where $f_k$ is the step version of $f$. By the isometry the sums converge to $I$ in mean square, since $\int_0^t (f_k - f)^2 \to 0$ by uniform continuity. Mean-square convergence gives convergence in distribution, and the characteristic functions (the transform that pins down a law, [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md)) $e^{-s^2 q_k/2}$ tend to $e^{-s^2 q/2}$ with $q = \int_0^t f^2 = (1 - e^{-2\kappa t})/(2\kappa)$. So $I$ is normal, and so is $r_t$.
 
 **4. Invariance.** Let $r_0$ be normal with mean $\theta$ and variance $v_\infty$, independent of $W$. Then $r_t - \theta = e^{-\kappa t}(r_0 - \theta) + \sigma I$ is a sum of independent normals with variance $e^{-2\kappa t}v_\infty + v_\infty(1 - e^{-2\kappa t}) = v_\infty$: the law is unchanged. From a fixed start the two moments converge, so the characteristic functions do, and the law converges in distribution to the stationary one.
 
@@ -167,7 +145,7 @@ The expected gap $(r_0-\theta)e^{-\kappa t}$ is half its start when $e^{-\kappa 
 
 ### Step 6: a second road, the moment equations
 
-Ito's lemma ([itos-lemma](02-itos-lemma.md)) gives $d(r_t^2) = 2r_t\,dr_t + (\text{noise size})^2\,dt$. Take expectations, where the Ito integral part has mean zero, and write $m(t)$ and $v(t)$ for the mean and variance:
+Ito's lemma ([Ito's lemma](02-itos-lemma.md)) gives $d(r_t^2) = 2r_t\,dr_t + (\text{noise size})^2\,dt$. Take expectations, where the Ito integral part has mean zero, and write $m(t)$ and $v(t)$ for the mean and variance:
 
 $$m'(t) = \kappa(\theta - m), \qquad v'(t) = -2\kappa\,v + E[\text{noise size}^2].$$
 
@@ -684,19 +662,19 @@ The two outputs agree line for line: both draw the same SplitMix64 stream and do
 > - **Dropping the 2.** $\sigma^2/\kappa$ gives a 2.8284 point spread instead of 2.0000.
 > - **Calling $1/\kappa$ the half-life.** That is the time constant, 2 years; the half-life is 1.386294 years.
 > - **Reading kappa as the fraction closed per year.** Kappa 0.5 does not close half the gap in a year: the fraction closed is $1 - e^{-\kappa t}$, 0.393469 after one year.
-> - **Large Euler steps.** The factor $1 - \kappa h$ copies $e^{-\kappa h}$ only for small $\kappa h$. Between 1 and 2 the scheme oscillates around the level; at 2 its variance grows without limit; above 2 it explodes. For OU an exact step exists ([exact-simulation-of-gbm-and-ou](../08-Generators%2C%20Densities%20and%20Simulation/06-exact-simulation-of-gbm-and-ou.md)).
+> - **Large Euler steps.** The factor $1 - \kappa h$ copies $e^{-\kappa h}$ only for small $\kappa h$. Between 1 and 2 the scheme oscillates around the level; at 2 its variance grows without limit; above 2 it explodes. For OU an exact step exists ([Exact simulation](../08-Generators%2C%20Densities%20and%20Simulation/06-exact-simulation-of-gbm-and-ou.md)).
 > - **Assuming CIR is always positive.** Only with $2\kappa\theta \ge \sigma^2$; at sigma 0.30, 94 percent of paths reach zero.
 
 ---
 
 ## Where you meet it in real life
 
-- **Interest-rate models.** OU for the short rate is the Vasicek model (1977); CIR (1985) changed the noise so rates stay positive. Both feed [the-term-structure-equation](../../12-Financial%20mathematics/30-Short-Rate%20Models/01-the-term-structure-equation.md). Since 2014 some central banks have set negative rates, so OU's negative tail is sometimes a feature.
-- **Volatility.** In the Heston model a stock's variance follows CIR, and Feller's condition decides whether it can hit zero: [heston-model](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md).
-- **Pairs trading.** The spread between two related prices is modelled as OU; the half-life sets the holding period: [ornstein-uhlenbeck-mean-reversion-trading](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/01-ornstein-uhlenbeck-mean-reversion-trading.md).
-- **Commodities.** A commodity's log spot price is often taken to be OU: [mean-reverting-spot-and-the-futures-curve](../../12-Financial%20mathematics/25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md).
+- **Interest-rate models.** OU for the short rate is the Vasicek model (1977); CIR (1985) changed the noise so rates stay positive. Both feed [A short-rate model](../../12-Financial%20mathematics/30-Short-Rate%20Models/01-the-term-structure-equation.md). Since 2014 some central banks have set negative rates, so OU's negative tail is sometimes a feature.
+- **Volatility.** In the Heston model a stock's variance follows CIR, and Feller's condition decides whether it can hit zero: [The Heston model](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md).
+- **Pairs trading.** The spread between two related prices is modelled as OU; the half-life sets the holding period: [Mean reversion](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/01-ornstein-uhlenbeck-mean-reversion-trading.md).
+- **Commodities.** A commodity's log spot price is often taken to be OU: [A spot price that reverts](../../12-Financial%20mathematics/25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md).
 - **Physics, where it began.** Uhlenbeck and Ornstein (1930) modelled a particle's velocity in a fluid: friction pulls it to zero, molecular kicks keep it moving, and the stationary variance is proportional to temperature.
-- **Tracking a hidden state.** A mean-reverting level seen only through noisy readings is the standard state of the Kalman-Bucy filter: [filtering-and-the-kalman-bucy-filter](../09-Beyond%20Brownian/04-filtering-and-the-kalman-bucy-filter.md).
+- **Tracking a hidden state.** A mean-reverting level seen only through noisy readings is the standard state of the Kalman-Bucy filter: [Filtering](../09-Beyond%20Brownian/04-filtering-and-the-kalman-bucy-filter.md).
 
 > **Say it back**
 > A mean-reverting rate is pulled toward a level in proportion to its distance, plus random shocks. Multiplying the gap by $e^{\kappa t}$ cancels the pull, so the Ornstein-Uhlenbeck rate solves exactly and is normal. Its expected gap halves every $\ln 2/\kappa$ years, and its variance fills to $\sigma^2/(2\kappa)$, where noise in balances pull out. Cox-Ingersoll-Ross shrinks the noise near zero and never reaches zero when $2\kappa\theta \ge \sigma^2$.
@@ -705,18 +683,18 @@ The two outputs agree line for line: both draw the same SplitMix64 stream and do
 
 ## What this builds on
 
-- [stochastic-differential-equations](04-stochastic-differential-equations.md): what an equation with $dW_t$ in it means, and what counts as a solution.
-- [integrating-factor](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/05-integrating-factor.md): the exponential that turns a linear equation into one that integrates directly; Step 0 uses it unchanged.
-- [ito-product-rule](03-ito-product-rule.md) and [ito-integral](01-ito-integral.md): the product rule of Step 1, and the mean-zero and isometry facts of Step 3.
+- [Stochastic differential equations](04-stochastic-differential-equations.md): what an equation with $dW_t$ in it means, and what counts as a solution.
+- [The integrating factor](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/05-integrating-factor.md): the exponential that turns a linear equation into one that integrates directly; Step 0 uses it unchanged.
+- [Ito's product rule](03-ito-product-rule.md) and [The Ito integral](01-ito-integral.md): the product rule of Step 1, and the mean-zero and isometry facts of Step 3.
 
 ## Where this goes next
 
-- [exact-simulation-of-gbm-and-ou](../08-Generators%2C%20Densities%20and%20Simulation/06-exact-simulation-of-gbm-and-ou.md): steps OU exactly with this card's normal law.
-- [filtering-and-the-kalman-bucy-filter](../09-Beyond%20Brownian/04-filtering-and-the-kalman-bucy-filter.md): estimates an OU state seen only through noise.
-- [the-term-structure-equation](../../12-Financial%20mathematics/30-Short-Rate%20Models/01-the-term-structure-equation.md): prices bonds when the short rate follows OU or CIR.
-- [heston-model](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): a CIR variance under a stock price.
-- [mean-reverting-spot-and-the-futures-curve](../../12-Financial%20mathematics/25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md): the futures curve of an OU log price.
-- [ornstein-uhlenbeck-mean-reversion-trading](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/01-ornstein-uhlenbeck-mean-reversion-trading.md): fitting the three numbers to data.
+- [Exact simulation](../08-Generators%2C%20Densities%20and%20Simulation/06-exact-simulation-of-gbm-and-ou.md): steps OU exactly with this card's normal law.
+- [Filtering](../09-Beyond%20Brownian/04-filtering-and-the-kalman-bucy-filter.md): estimates an OU state seen only through noise.
+- [A short-rate model](../../12-Financial%20mathematics/30-Short-Rate%20Models/01-the-term-structure-equation.md): prices bonds when the short rate follows OU or CIR.
+- [The Heston model](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): a CIR variance under a stock price.
+- [A spot price that reverts](../../12-Financial%20mathematics/25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md): the futures curve of an OU log price.
+- [Mean reversion](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/01-ornstein-uhlenbeck-mean-reversion-trading.md): fitting the three numbers to data.
 
 This card fixes kappa, theta and sigma and solves for the rate; it leaves open how to step the rate exactly on a computer and how to read the three numbers off an observed rate, which the simulation and trading cards answer.
 

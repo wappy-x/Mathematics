@@ -1,24 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Circles and Solids
-topic: Corners, seams and faces
-item: Polyhedra
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/02-Circles and Solids/04-prisms-and-cylinders|prisms-and-cylinders]]"
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/01-planar-graphs-and-eulers-formula|planar-graphs-and-eulers-formula]]"
-next:
-  - "[[Cards/17-Topology/03-Surfaces and Manifolds/04-euler-characteristic-and-triangulations|euler-characteristic-and-triangulations]]"
-  - "[[Cards/23-Differential geometry and Lie groups/02-Surfaces/10-gauss-bonnet-theorem|gauss-bonnet-theorem]]"
-tags: [mathematics, geometry and trig, polyhedra-and-eulers-formula]
----
-
 # Polyhedra: vertices minus edges plus faces is two, and what that forbids
 
-Geometry and trig → Circles and Solids → Corners, seams and faces → Polyhedra
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Circles and Solids](../../../SYLLABUS.md#w05-s02) → Polyhedra
 
 ---
 
@@ -32,7 +14,7 @@ A count that cannot change forbids things. Every ball of pentagons and hexagons 
 
 **Corners minus edges plus faces is 2 for every solid with polygon faces that could be pumped up into a ball, which forces 12 pentagons onto every ball like this one and allows exactly five regular solids.**
 
-**What kind of fact this is:** a theorem, proved in Why it works for convex solids by reducing it to [planar-graphs-and-eulers-formula](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md); the twelve pentagons and the five solids follow from it.
+**What kind of fact this is:** a theorem, proved in Why it works for convex solids by reducing it to [Planar graphs](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md); the twelve pentagons and the five solids follow from it.
 
 ### The picture: one pentagon and its five hexagons, laid flat
 
@@ -44,7 +26,7 @@ Scale: seams 40 units, pentagon centred at (180, 117), hexagons turned in 72° s
 
 ## The formula
 
-$V$ counts vertices (corners), $E$ edges (seams, each between two faces) and $F$ faces, as on [planar-graphs-and-eulers-formula](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md). A **polyhedron** is a solid bounded by flat polygon faces; the football's pattern is one; pumping it up only bulges the panels.
+$V$ counts vertices (corners), $E$ edges (seams, each between two faces) and $F$ faces, as on [Planar graphs](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md). A **polyhedron** is a solid bounded by flat polygon faces; the football's pattern is one; pumping it up only bulges the panels.
 
 $$V - E + F = 2$$
 
@@ -82,12 +64,12 @@ The first four spell out "pumped up into a ball". Convexity (every straight segm
 
 ### Step 0: a solid seen through one face is a flat drawing
 
-Look into a cube through its top face as if it were glass: the bottom face shows as a small square inside the top one, the sides as four strips between, and no edge crosses another. That is the drawing [planar-graphs-and-eulers-formula](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md) counts, with the outside region standing for the glass face. Any convex polyhedron seen this way keeps V, E and F, and that card proves the drawing reads 2. So does the solid.
+Look into a cube through its top face as if it were glass: the bottom face shows as a small square inside the top one, the sides as four strips between, and no edge crosses another. That is the drawing [Planar graphs](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md) counts, with the outside region standing for the glass face. Any convex polyhedron seen this way keeps V, E and F, and that card proves the drawing reads 2. So does the solid.
 
 <details>
 <summary>Detailed proof: the view through one face has no crossings</summary>
 
-Put the eye just beyond one face, the window, and on the solid's side of every other face's plane; every sightline to the rest of the surface then enters through the window. A straight line meets a convex solid in one unbroken piece, so it crosses the surface at most twice: in through the window, then out. Each point of the other faces thus has its own sightline, and marking where sightlines pierce the window draws those faces inside it, nothing overlapping. Dented solids without tunnels flatten by stretching instead: euler-characteristic-and-triangulations.
+Put the eye just beyond one face, the window, and on the solid's side of every other face's plane; every sightline to the rest of the surface then enters through the window. A straight line meets a convex solid in one unbroken piece, so it crosses the surface at most twice: in through the window, then out. Each point of the other faces thus has its own sightline, and marking where sightlines pierce the window draws those faces inside it, nothing overlapping. Dented solids without tunnels flatten by stretching instead: Euler characteristic.
 
 </details>
 
@@ -121,7 +103,7 @@ E is positive, so one over p plus one over q beats a half. Multiplying by 2pq gi
 
 ### Step 4: the same answers from angles
 
-At a corner of a convex solid the face angles add to less than 360°; the shortfall is the corner's **gap**. A regular p-sided face has corners of 180° × (p − 2) ÷ p: cut from one corner, it makes p − 2 triangles ([triangle-angle-sum-and-inequality](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). On a regular solid q such corners must fit under 360°, which rearranges to (p − 2)(q − 2) < 4 again: the same five pairs, with no edge counted. Euclid ends the *Elements* this way.
+At a corner of a convex solid the face angles add to less than 360°; the shortfall is the corner's **gap**. A regular p-sided face has corners of 180° × (p − 2) ÷ p: cut from one corner, it makes p − 2 triangles ([Triangles](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). On a regular solid q such corners must fit under 360°, which rearranges to (p − 2)(q − 2) < 4 again: the same five pairs, with no edge counted. Euclid ends the *Elements* this way.
 
 The gaps always total 720°. Each ball corner has a 12° gap, and 60 corners make 720°; so does each regular solid. Every ball corner touches one pentagon, so each pentagon carries 5 × 12° = 60°, and 720° ÷ 60° = 12.
 
@@ -398,15 +380,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [prisms-and-cylinders](04-prisms-and-cylinders.md): solids with flat faces, and the words face, edge and corner.
-- [planar-graphs-and-eulers-formula](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md): the proof, borrowed in Step 0, that a crossing-free drawing in one piece reads 2.
+- [Prisms and cylinders](04-prisms-and-cylinders.md): solids with flat faces, and the words face, edge and corner.
+- [Planar graphs](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md): the proof, borrowed in Step 0, that a crossing-free drawing in one piece reads 2.
 
 ## Where this goes next
 
-- euler-characteristic-and-triangulations: the count on any surface; each tunnel lowers it by 2.
-- gauss-bonnet-theorem: the 720° of gaps, spread over a curved surface as curvature.
+- Euler characteristic: the count on any surface; each tunnel lowers it by 2.
+- Gauss-Bonnet: the 720° of gaps, spread over a curved surface as curvature.
 
-Left open: why no way of cutting a surface into faces changes its count, which euler-characteristic-and-triangulations settles.
+Left open: why no way of cutting a surface into faces changes its count, which Euler characteristic settles.
 
 ---
 

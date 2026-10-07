@@ -1,31 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Product Measures and Fubini
-topic: Factoring a joint law
-item: Independence as a product
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/03-tonelli-and-fubini|tonelli-and-fubini]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/06-pi-systems-and-uniqueness|pi-systems-and-uniqueness]]"
-  - "[[Cards/10-Measure and integration/03-Measurable Functions/05-pushforward-and-the-law|pushforward-and-the-law]]"
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/07-independence|independence]]"
-next:
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/05-convolution-and-sums|convolution-and-sums]]"
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/07-infinite-sequences-and-kolmogorov-extension|infinite-sequences-and-kolmogorov-extension]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/01-borel-cantelli-lemmas|borel-cantelli-lemmas]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/02-kolmogorov-zero-one-law|kolmogorov-zero-one-law]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/03-weak-law-of-large-numbers|weak-law-of-large-numbers]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/06-characteristic-functions|characteristic-functions]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/07-central-limit-theorem|central-limit-theorem]]"
-tags: [mathematics, measure and integration, independence-as-a-product-measure]
----
-
 # Independence as a product: two quantities are independent exactly when their joint law is the product of their laws, so E[XY] = E[X]E[Y]
 
-Measure and integration → Product Measures and Fubini → Factoring a joint law → Independence as a product
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Product Measures and Fubini](../../../SYLLABUS.md#w10-s06) → Independence as a product
 
 ---
 
@@ -55,7 +30,7 @@ On the right, learning that x + y is small forces x to be small too.
 
 ## The formula
 
-Notation first, in words. A probability space $(\Omega, \mathcal{F}, P)$ is a set of outcomes, the sets we allow ourselves to measure, and a probability on them: here the board, its Borel sets, and area, Lebesgue measure $\lambda$. $\sigma(X)$ is the sigma-algebra a random variable X generates, every event "X lands in B" for a Borel set B: what learning X can tell ([random-variables-and-their-information](../03-Measurable%20Functions/04-random-variables-and-their-information.md)). $\mu_X$ is the law of X, $P(X \in B)$ as a measure on the line ([pushforward-and-the-law](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). $\mu_{(X,Y)}$ is the joint law, $P((X, Y) \in C)$ for Borel sets C of the plane. $\mu \otimes \nu$ is the product measure, giving every rectangle A × B the size $\mu(A)\,\nu(B)$ ([product-measure](02-product-measure.md)).
+Notation first, in words. A probability space $(\Omega, \mathcal{F}, P)$ is a set of outcomes, the sets we allow ourselves to measure, and a probability on them: here the board, its Borel sets, and area, Lebesgue measure $\lambda$. $\sigma(X)$ is the sigma-algebra a random variable X generates, every event "X lands in B" for a Borel set B: what learning X can tell ([Random variables as measurable maps](../03-Measurable%20Functions/04-random-variables-and-their-information.md)). $\mu_X$ is the law of X, $P(X \in B)$ as a measure on the line ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). $\mu_{(X,Y)}$ is the joint law, $P((X, Y) \in C)$ for Borel sets C of the plane. $\mu \otimes \nu$ is the product measure, giving every rectangle A × B the size $\mu(A)\,\nu(B)$ ([Product measure](02-product-measure.md)).
 
 **Definition.** Two sigma-algebras $\mathcal{G}$ and $\mathcal{H}$ inside $\mathcal{F}$ are independent when every event of one and every event of the other multiply:
 
@@ -119,7 +94,7 @@ $$\mathrm{Var}(X + Y) = \mathrm{Var}(X) + \mathrm{Var}(Y).$$
 
 Two measures live on the plane. The joint law gives the true chance that the pair (X, Y) lands in a set. The product law $\mu_X \otimes \mu_Y$ gives the chance it would have if its coordinates ignored each other. On a rectangle A × B they give $P(X \in A, Y \in B)$ and $P(X \in A)\,P(Y \in B)$. Independence says these agree on every rectangle.
 
-Rectangles overlap in rectangles, so they form a pi-system, and they generate the Borel sets of the plane ([product-sigma-algebras](01-product-sigma-algebras.md)). Dynkin's theorem ([pi-systems-and-uniqueness](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)) does the rest: two probability measures that agree on a pi-system agree on everything it generates. Theorem 1 is Dynkin's theorem applied twice, once from each side; Theorem 2 is that uniqueness on the rectangle pi-system; Theorem 3 integrates against the product.
+Rectangles overlap in rectangles, so they form a pi-system, and they generate the Borel sets of the plane ([Product sigma-algebras](01-product-sigma-algebras.md)). Dynkin's theorem ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)) does the rest: two probability measures that agree on a pi-system agree on everything it generates. Theorem 1 is Dynkin's theorem applied twice, once from each side; Theorem 2 is that uniqueness on the rectangle pi-system; Theorem 3 integrates against the product.
 
 ### Step 1: the definition, on examples small enough to list
 
@@ -143,13 +118,13 @@ Rays overlap in rays and generate $\sigma(X)$, so the chance of "X at most s and
 **First half.** Fix $A \in \mathcal{P}_1$ and let $\mathcal{D}_A$ be the events $B \in \mathcal{F}$ with $P(A \cap B) = P(A)P(B)$.
 - $\Omega \in \mathcal{D}_A$: $P(A \cap \Omega) = P(A) = P(A) \cdot 1$.
 - Proper differences: if $B \subseteq C$ are in $\mathcal{D}_A$, then $A \cap (C \setminus B) = (A \cap C) \setminus (A \cap B)$ with $A \cap B \subseteq A \cap C$, so by additivity of $P$, with every chance finite, $P(A \cap (C \setminus B)) = P(A \cap C) - P(A \cap B) = P(A)(P(C) - P(B)) = P(A)P(C \setminus B)$.
-- Increasing unions: if $B_1 \subseteq B_2 \subseteq \dots$ are in $\mathcal{D}_A$ with union $B$, then $A \cap B_n$ increases to $A \cap B$, and continuity from below ([continuity-of-measure](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) gives $P(A \cap B) = \lim P(A \cap B_n) = \lim P(A)P(B_n) = P(A)P(B)$.
+- Increasing unions: if $B_1 \subseteq B_2 \subseteq \dots$ are in $\mathcal{D}_A$ with union $B$, then $A \cap B_n$ increases to $A \cap B$, and continuity from below ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) gives $P(A \cap B) = \lim P(A \cap B_n) = \lim P(A)P(B_n) = P(A)P(B)$.
 
 So $\mathcal{D}_A$ is a lambda-system containing $\mathcal{P}_2$. Dynkin's pi-lambda theorem gives $\sigma(\mathcal{P}_2) \subseteq \mathcal{D}_A$. As $A$ was any member of $\mathcal{P}_1$: every $A \in \mathcal{P}_1$ multiplies with every $B \in \sigma(\mathcal{P}_2)$.
 
 **Second half.** Fix $B \in \sigma(\mathcal{P}_2)$ and let $\mathcal{D}'_B$ be the events $A$ with $P(A \cap B) = P(A)P(B)$. The same three checks, with the roles swapped, show it is a lambda-system; the first half shows it contains $\mathcal{P}_1$. Dynkin gives $\sigma(\mathcal{P}_1) \subseteq \mathcal{D}'_B$. So $\sigma(\mathcal{P}_1)$ and $\sigma(\mathcal{P}_2)$ are independent.
 
-**Rays.** Let $\mathcal{R}_X$ be the events $\{X \le s\}$, $s$ real. It is a pi-system: $\{X \le s\} \cap \{X \le s'\} = \{X \le \min(s, s')\}$. Its sigma-algebra is $\sigma(X)$. One way, each ray event lies in $\sigma(X)$, so $\sigma(\mathcal{R}_X) \subseteq \sigma(X)$. The other way, the Borel sets $B$ with $\{X \in B\} \in \sigma(\mathcal{R}_X)$ form a sigma-algebra, because taking preimages commutes with complements and countable unions; it holds every ray $(-\infty, s]$, and rays generate $\mathcal{B}(\mathbb{R})$ ([generated-and-borel-sigma-algebras](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)), so it holds every Borel set. Apply the first two parts to $\mathcal{R}_X$ and $\mathcal{R}_Y$.
+**Rays.** Let $\mathcal{R}_X$ be the events $\{X \le s\}$, $s$ real. It is a pi-system: $\{X \le s\} \cap \{X \le s'\} = \{X \le \min(s, s')\}$. Its sigma-algebra is $\sigma(X)$. One way, each ray event lies in $\sigma(X)$, so $\sigma(\mathcal{R}_X) \subseteq \sigma(X)$. The other way, the Borel sets $B$ with $\{X \in B\} \in \sigma(\mathcal{R}_X)$ form a sigma-algebra, because taking preimages commutes with complements and countable unions; it holds every ray $(-\infty, s]$, and rays generate $\mathcal{B}(\mathbb{R})$ ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)), so it holds every Borel set. Apply the first two parts to $\mathcal{R}_X$ and $\mathcal{R}_Y$.
 
 </details>
 
@@ -162,9 +137,9 @@ On the dart the joint law is area, which is length ⊗ length. The pair (x, x + 
 <details>
 <summary>Detailed proof of Theorem 2</summary>
 
-**The pair is measurable.** The preimage of a rectangle $A \times B$ under $\omega \mapsto (X(\omega), Y(\omega))$ is $\{X \in A\} \cap \{Y \in B\}$, which lies in $\mathcal{F}$. The sets of the plane whose preimage lies in $\mathcal{F}$ form a sigma-algebra, since preimages commute with complements and countable unions; it holds every rectangle, so it holds the product sigma-algebra $\mathcal{B}(\mathbb{R}) \otimes \mathcal{B}(\mathbb{R})$, which equals the Borel sets of the plane ([product-sigma-algebras](01-product-sigma-algebras.md)). So $\mu_{(X,Y)}(C) = P((X, Y) \in C)$ is a probability measure on the plane, the pushforward of $P$.
+**The pair is measurable.** The preimage of a rectangle $A \times B$ under $\omega \mapsto (X(\omega), Y(\omega))$ is $\{X \in A\} \cap \{Y \in B\}$, which lies in $\mathcal{F}$. The sets of the plane whose preimage lies in $\mathcal{F}$ form a sigma-algebra, since preimages commute with complements and countable unions; it holds every rectangle, so it holds the product sigma-algebra $\mathcal{B}(\mathbb{R}) \otimes \mathcal{B}(\mathbb{R})$, which equals the Borel sets of the plane ([Product sigma-algebras](01-product-sigma-algebras.md)). So $\mu_{(X,Y)}(C) = P((X, Y) \in C)$ is a probability measure on the plane, the pushforward of $P$.
 
-**Independent implies product.** For Borel $A$, $B$: $\mu_{(X,Y)}(A \times B) = P(X \in A, Y \in B) = P(X \in A)P(Y \in B) = \mu_X(A)\mu_Y(B) = (\mu_X \otimes \mu_Y)(A \times B)$, the last step by the defining property of product measure ([product-measure](02-product-measure.md)). Rectangles form a pi-system, since $(A \times B) \cap (A' \times B') = (A \cap A') \times (B \cap B')$, and generate the product sigma-algebra. Both measures have total 1. The uniqueness theorem ([pi-systems-and-uniqueness](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)) gives $\mu_{(X,Y)} = \mu_X \otimes \mu_Y$.
+**Independent implies product.** For Borel $A$, $B$: $\mu_{(X,Y)}(A \times B) = P(X \in A, Y \in B) = P(X \in A)P(Y \in B) = \mu_X(A)\mu_Y(B) = (\mu_X \otimes \mu_Y)(A \times B)$, the last step by the defining property of product measure ([Product measure](02-product-measure.md)). Rectangles form a pi-system, since $(A \times B) \cap (A' \times B') = (A \cap A') \times (B \cap B')$, and generate the product sigma-algebra. Both measures have total 1. The uniqueness theorem ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)) gives $\mu_{(X,Y)} = \mu_X \otimes \mu_Y$.
 
 **Product implies independent.** Evaluate both sides on $A \times B$ and read the chain above from right to left.
 
@@ -172,12 +147,12 @@ On the dart the joint law is area, which is length ⊗ length. The pair (x, x + 
 
 ### Step 4: averages of products factor (Theorem 3, first half)
 
-The average of a function of the pair is its integral against the pair's law ([expectation-as-an-integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)). By Theorem 2 that law is a product measure, so the integral goes one coordinate at a time ([tonelli-and-fubini](03-tonelli-and-fubini.md)): over y, xy gives x E[Y]; over x, that gives E[X]E[Y]. Tonelli, on the never-negative |x||y|, first shows the product has a finite average, the licence Fubini needs. On the dart: x/2, then 1/4.
+The average of a function of the pair is its integral against the pair's law ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)). By Theorem 2 that law is a product measure, so the integral goes one coordinate at a time ([Tonelli and Fubini](03-tonelli-and-fubini.md)): over y, xy gives x E[Y]; over x, that gives E[X]E[Y]. Tonelli, on the never-negative |x||y|, first shows the product has a finite average, the licence Fubini needs. On the dart: x/2, then 1/4.
 
 <details>
 <summary>Detailed proof of Theorem 3, the product</summary>
 
-**Change of variables on the plane.** For a Borel function $h \ge 0$ on the plane, $E[h(X, Y)] = \int h \, d\mu_{(X,Y)}$. For an indicator $h = 1_C$ this is the definition of $\mu_{(X,Y)}$; it passes to simple functions by linearity and to every $h \ge 0$ by monotone convergence, the same three steps as on the line ([expectation-as-an-integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)). For integrable h, split into positive and negative parts.
+**Change of variables on the plane.** For a Borel function $h \ge 0$ on the plane, $E[h(X, Y)] = \int h \, d\mu_{(X,Y)}$. For an indicator $h = 1_C$ this is the definition of $\mu_{(X,Y)}$; it passes to simple functions by linearity and to every $h \ge 0$ by monotone convergence, the same three steps as on the line ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)). For integrable h, split into positive and negative parts.
 
 **Integrability, by Tonelli.** Take $h(x, y) = |x|\,|y| \ge 0$. By the change of variables and Theorem 2,
 $$E|XY| = \int |x|\,|y| \; d(\mu_X \otimes \mu_Y) = \int \Big( \int |x|\,|y| \, \mu_Y(dy) \Big) \mu_X(dx) = \int |x| \, E|Y| \, \mu_X(dx) = E|X| \, E|Y| < \infty,$$
@@ -208,7 +183,7 @@ By linearity of the integral, $\mathrm{Var}(X + Y) = E[(X' + Y')^2] = E[X'^2] + 
 
 For (x, x + y) the average of the product is E[x^2] + E[xy] = 1/3 + 1/4 = 7/12: the second term factors, the first does not, since x is not independent of itself. The product of averages is 1/2 × 1 = 1/2. The gap, 1/12, is the covariance, and equals Var(x).
 
-The probability wing computes E[XY] = E[X]E[Y] for tables and densities separately ([joint-distributions-and-covariance](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)); the measure version covers every law at once. The code checks finite grids in full and the dart's numbers three ways; only the proofs reach every Borel set and every integrable pair.
+The probability wing computes E[XY] = E[X]E[Y] for tables and densities separately ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)); the measure version covers every law at once. The code checks finite grids in full and the dart's numbers three ways; only the proofs reach every Borel set and every integrable pair.
 
 ---
 
@@ -606,10 +581,10 @@ The two outputs match line for line: the same generator, the same order of float
 
 ## Where you meet it in real life
 
-- **Error bars on an average.** The standard error of a sample mean, spread divided by the square root of the sample size, is Theorem 3's variance rule applied to independent measurements ([sample-mean-and-standard-error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)).
+- **Error bars on an average.** The standard error of a sample mean, spread divided by the square root of the sample size, is Theorem 3's variance rule applied to independent measurements ([Standard error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)).
 - **Tolerances in engineering.** For a stack of parts with independent errors, the stack's variance is the sum of the parts' variances, so spreads add as squares.
 - **Simulation.** A Monte Carlo estimate, an average over simulated draws, is trusted because its draws behave as independent; generators are tested against the product rule.
-- **Sums of random quantities.** The law of x + y for independent x and y is the product measure pushed through addition, worked out in [convolution-and-sums](05-convolution-and-sums.md).
+- **Sums of random quantities.** The law of x + y for independent x and y is the product measure pushed through addition, worked out in [Convolution](05-convolution-and-sums.md).
 
 > **Say it back**
 > Independence means every event of one sigma-algebra and every event of the other multiply. Rays overlap in rays and generate the Borel sets, so by Dynkin's theorem the product rule on "at most s, at most t" is enough, and the joint law is the product of the laws. Fubini on that product gives E[XY] = E[X]E[Y], and variances add. The dart's x and y pass, E[xy] = 1/4; x and x + y fail on the first rectangle, 0.125 against 0.0625.
@@ -618,22 +593,22 @@ The two outputs match line for line: the same generator, the same order of float
 
 ## What this builds on
 
-- [tonelli-and-fubini](03-tonelli-and-fubini.md): integrating one coordinate at a time, the step that factors E[XY].
-- [pi-systems-and-uniqueness](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md): Dynkin's theorem and uniqueness of measures, used in every proof here.
-- [pushforward-and-the-law](../03-Measurable%20Functions/05-pushforward-and-the-law.md): the law of a random variable, and of a pair.
-- [independence](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/07-independence.md): the product rule for two events, which this card extends to whole sigma-algebras.
+- [Tonelli and Fubini](03-tonelli-and-fubini.md): integrating one coordinate at a time, the step that factors E[XY].
+- [Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md): Dynkin's theorem and uniqueness of measures, used in every proof here.
+- [The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md): the law of a random variable, and of a pair.
+- [Independence](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/07-independence.md): the product rule for two events, which this card extends to whole sigma-algebras.
 
 ## Where this goes next
 
-- [convolution-and-sums](05-convolution-and-sums.md): the law of the sum of two independent quantities.
-- [infinite-sequences-and-kolmogorov-extension](07-infinite-sequences-and-kolmogorov-extension.md): infinitely many independent coordinates on one space.
-- [borel-cantelli-lemmas](../10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md): independence turns a divergent sum of chances into "infinitely many happen".
-- [kolmogorov-zero-one-law](../10-The%20Limit%20Theorems%2C%20Proved/02-kolmogorov-zero-one-law.md): an event fixed by the far tail of an independent sequence has chance 0 or 1.
-- [weak-law-of-large-numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md): variances adding make the spread of an average shrink.
-- [characteristic-functions](../10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md): E[XY] = E[X]E[Y] for complex exponentials turns sums into products.
-- [central-limit-theorem](../10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md): the normal shape of a sum of many independent quantities.
+- [Convolution](05-convolution-and-sums.md): the law of the sum of two independent quantities.
+- [Infinitely many coin tosses](07-infinite-sequences-and-kolmogorov-extension.md): infinitely many independent coordinates on one space.
+- [The Borel-Cantelli lemmas](../10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md): independence turns a divergent sum of chances into "infinitely many happen".
+- [Kolmogorov's zero-one law](../10-The%20Limit%20Theorems%2C%20Proved/02-kolmogorov-zero-one-law.md): an event fixed by the far tail of an independent sequence has chance 0 or 1.
+- [The weak law of large numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md): variances adding make the spread of an average shrink.
+- [Characteristic functions](../10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md): E[XY] = E[X]E[Y] for complex exponentials turns sums into products.
+- [The central limit theorem, proved](../10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md): the normal shape of a sum of many independent quantities.
 
-Independence makes the pair's law a product; what law that product gives the sum x + y is the question [convolution-and-sums](05-convolution-and-sums.md) answers.
+Independence makes the pair's law a product; what law that product gives the sum x + y is the question [Convolution](05-convolution-and-sums.md) answers.
 
 ---
 

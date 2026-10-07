@@ -1,27 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Check Digits, Calendars and Cycles
-topic: Calendars
-item: Day of the week for any date
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/01-congruence-mod-n|congruence-mod-n]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/04-division-with-remainder|division-with-remainder]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/02-modular-addition-and-multiplication|modular-addition-and-multiplication]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/03-multiplying-and-dividing|multiplying-and-dividing]]"
-next: []
-tags:
-  - mathematics
-  - number theory
-  - day-of-the-week
----
-
 # Day of the week for any date: the calendar is arithmetic mod 7
 
-Number theory → Check Digits, Calendars and Cycles → Calendars → Day of the week for any date
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Check Digits, Calendars and Cycles](../../../SYLLABUS.md#w02-s05) → Day of the week for any date
 
 ---
 
@@ -78,11 +57,11 @@ Good from 1900 to 2099. A century year is a leap year only if it divides by 400 
 
 ### Step 0: only the leftover survives
 
-You can throw 7 away whenever you like and keep what is left, 0 to 6 — congruence mod 7 ([congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md)). It also lets the pieces be added in any order, each shrunk at any point ([modular-addition-and-multiplication](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)).
+You can throw 7 away whenever you like and keep what is left, 0 to 6 — congruence mod 7 ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)). It also lets the pieces be added in any order, each shrunk at any point ([Adding and multiplying on the clock](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)).
 
 ### Step 1: a year moves the calendar on one day, a 29 February one more
 
-365 = 52 × 7 + 1 ([division-with-remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)), so 365 ≡ 1 (mod 7): the same date next year falls one day later in the week. A leap year is 366 days, and 366 ≡ 2 (mod 7) — one step for the year, one more for the 29 February. Count them apart: 1900 to 1969 is 69 steps, and the 29 Februaries, 1904 to 1968, are 69 ÷ 4, fraction dropped, so 17.
+365 = 52 × 7 + 1 ([Division with a remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)), so 365 ≡ 1 (mod 7): the same date next year falls one day later in the week. A leap year is 366 days, and 366 ≡ 2 (mod 7) — one step for the year, one more for the 29 February. Count them apart: 1900 to 1969 is 69 steps, and the 29 Februaries, 1904 to 1968, are 69 ÷ 4, fraction dropped, so 17.
 
 ### Step 2: each month starts a fixed distance into the year
 
@@ -267,8 +246,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Deadlines.** "Ninety days from today" is not the same day of the week: 90 ≡ 6 (mod 7), so it lands one day earlier in the week.
-- **Birthdays drifting.** One day a year, two across a leap year — the same 365 and 366 remainders, in [division-with-remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md).
-- **Remainder tricks at the till.** Throwing away the multiples also checks a barcode ([barcode-check-digit](01-barcode-check-digit.md)) and an ISBN ([isbn-check-digit](02-isbn-check-digit.md)).
+- **Birthdays drifting.** One day a year, two across a leap year — the same 365 and 366 remainders, in [Division with a remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md).
+- **Remainder tricks at the till.** Throwing away the multiples also checks a barcode ([Barcode check digits](01-barcode-check-digit.md)) and an ISBN ([ISBN-10 and the prime modulus 11](02-isbn-check-digit.md)).
 
 > **Say it back**
 > A week is 7 days and never skips, so any date question is a leftover after dividing by 7. Add the day of the month, the month's offset, the years since 1900 and the leap days in those years; divide by 7 and read the leftover, 0 being Sunday. For 20 July 1969: 20 + 6 + 69 + 17 = 112, leftover 0, Sunday.
@@ -277,14 +256,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md): throwing 7 away and keeping the leftover, 0 to 6.
-- [division-with-remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md): 365 = 52 × 7 + 1 and 366 = 52 × 7 + 2, the facts the year steps rest on.
-- [modular-addition-and-multiplication](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md): why the pieces can be added in any order and shrunk mod 7 at any point.
-- [multiplying-and-dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): the 69 ÷ 4 with its fraction dropped, and the 16 × 7 taken off at the end.
+- [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md): throwing 7 away and keeping the leftover, 0 to 6.
+- [Division with a remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md): 365 = 52 × 7 + 1 and 366 = 52 × 7 + 2, the facts the year steps rest on.
+- [Adding and multiplying on the clock](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md): why the pieces can be added in any order and shrunk mod 7 at any point.
+- [Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): the 69 ÷ 4 with its fraction dropped, and the 16 × 7 taken off at the end.
 
 ## Where this goes next
 
-Nothing depends on this card. The shelf goes on to [cycles-that-realign](04-cycles-that-realign.md), where cycles of different lengths meet again, and [perfect-shuffles](05-perfect-shuffles.md), where the cycle is a deck of cards.
+Nothing depends on this card. The shelf goes on to [When cycles meet again](04-cycles-that-realign.md), where cycles of different lengths meet again, and [Perfect shuffles](05-perfect-shuffles.md), where the cycle is a deck of cards.
 
 ---
 

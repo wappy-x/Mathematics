@@ -1,27 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Trees and Cheapest Routes
-topic: Safe edges
-item: The cheapest skeleton
-kind: theorem
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/10-Trees and Cheapest Routes/03-spanning-trees-and-cayleys-formula|spanning-trees-and-cayleys-formula]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/11-Tours - Euler and Hamilton/04-travelling-salesman-in-outline|travelling-salesman-in-outline]]"
-  - "[[Cards/14-Applied and computational/01-Algorithms and Growth/08-greedy-algorithms-and-matroids|greedy-algorithms-and-matroids]]"
-  - "[[Cards/14-Applied and computational/01-Algorithms and Growth/09-graph-algorithms-in-practice|graph-algorithms-in-practice]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - minimum-spanning-trees
----
-
 # The cheapest skeleton: Kruskal adds the cheapest safe edge, Prim grows from one vertex, and the cut property says both are right
 
-Combinatorics and graphs → Trees and Cheapest Routes → Safe edges → The cheapest skeleton
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Trees and Cheapest Routes](../../../SYLLABUS.md#w04-s10) → The cheapest skeleton
 
 ---
 
@@ -29,7 +8,7 @@ Combinatorics and graphs → Trees and Cheapest Routes → Safe edges → The ch
 
 A campus has seven buildings, A to G. Fibre arrives at A; every building must reach the network. A contractor prices eleven trench runs, in thousands of dollars, from AD at 5 to DE at 15 — the picture below carries all eleven.
 
-Six runs will do it, and six is the fewest: joining seven buildings with no loop takes exactly six, a spanning tree ([spanning-trees-and-cayleys-formula](03-spanning-trees-and-cayleys-formula.md)). Six of the eleven can be picked 462 ways; 141 of those join all seven without a loop; one beats the rest, at 39.
+Six runs will do it, and six is the fewest: joining seven buildings with no loop takes exactly six, a spanning tree ([Spanning trees](03-spanning-trees-and-cayleys-formula.md)). Six of the eleven can be picked 462 ways; 141 of those join all seven without a loop; one beats the rest, at 39.
 
 Two procedures find it without pricing all 141: Kruskal's walk sorts the runs cheap to dear, Prim's walk grows one group out of A. They keep the same six.
 
@@ -91,7 +70,7 @@ Split the vertices into a group $S$ and the rest, neither empty: that is a **cut
 
 ### When it holds
 
-- **Some chain of edges joins any two vertices.** Otherwise no spanning tree exists at any price, and both walks return a cheapest skeleton per piece ([trees](01-trees.md)).
+- **Some chain of edges joins any two vertices.** Otherwise no spanning tree exists at any price, and both walks return a cheapest skeleton per piece ([Trees](01-trees.md)).
 - **No directions, and weights fixed in advance.** Negative weights are fine; a price that shifts with the other choices breaks the swap.
 - **Ties may multiply the answers.** All weights different makes the answer unique; here 5 ties with 5 and 7 with 7, and it is still the only one.
 
@@ -134,7 +113,7 @@ Prim's cut is the group itself: every kept edge lies inside it, and the edge kep
 
 Suppose an edge is dearer than every other on a loop, and a cheapest skeleton held it. Removing it splits the skeleton in two; the loop crosses that split again, so a cheaper loop edge swaps in and the price strictly falls — it was not cheapest. Each skip closes a loop of runs already kept, none dearer and here none tied, so all five are dearest on their loops: forcing one in costs 40 at best for BC, then 41, 47, 40, 41 for BD, DE, EF, FG, against 39. A skip that only ties the dearest is not covered: it can sit in another cheapest skeleton.
 
-Greedy — taking the cheapest thing available at each step — usually promises nothing; it works here because loop-free sets of edges have a swap property strong enough, the one naming a matroid (greedy-algorithms-and-matroids).
+Greedy — taking the cheapest thing available at each step — usually promises nothing; it works here because loop-free sets of edges have a swap property strong enough, the one naming a matroid (Greedy).
 
 ---
 
@@ -388,11 +367,11 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Confusing the cheapest network with the cheapest routes.** The skeleton minimises what the build costs, not how far a signal travels inside it. It sends B to C the long way, through E, rather than buying BC at 8, because BE 7 and CE 5 are each cheaper than that one run. Cheapest routes from one building are another question, answered by [dijkstra](05-dijkstra.md).
+> **Confusing the cheapest network with the cheapest routes.** The skeleton minimises what the build costs, not how far a signal travels inside it. It sends B to C the long way, through E, rather than buying BC at 8, because BE 7 and CE 5 are each cheaper than that one run. Cheapest routes from one building are another question, answered by [Dijkstra's algorithm](05-dijkstra.md).
 >
 > - **Taking the six cheapest runs.** That comes to 38, buys a loop, and leaves G off the network. Cheap is not the test; "joins two separate pieces" is.
 > - **Reading a tie as many answers.** Two pairs of runs tie here, and still just one network prices at 39.
-> - **Treating Prim's start as a root.** It fixes the order of the keeps, nothing else; the skeleton has no root and no direction ([rooted-and-binary-trees](02-rooted-and-binary-trees.md)).
+> - **Treating Prim's start as a root.** It fixes the order of the keeps, nothing else; the skeleton has no root and no direction ([Rooted trees](02-rooted-and-binary-trees.md)).
 
 ---
 
@@ -400,7 +379,7 @@ The two outputs match line for line.
 
 - **Utility build-outs.** Fibre, water, power, leased lines: every site must be reached, and only the total build is charged.
 - **Clustering.** Price each pair of data points by how far apart they lie, build the skeleton, cut its dearest runs: the pieces falling away are clusters.
-- **A floor under tour prices.** A round trip with one leg dropped joins every building without a loop, so no tour here costs under 39 — where [travelling-salesman-in-outline](../11-Tours%20-%20Euler%20and%20Hamilton/04-travelling-salesman-in-outline.md) starts.
+- **A floor under tour prices.** A round trip with one leg dropped joins every building without a loop, so no tour here costs under 39 — where [The travelling salesman](../11-Tours%20-%20Euler%20and%20Hamilton/04-travelling-salesman-in-outline.md) starts.
 
 > **Say it back**
 > Seven buildings need six runs to be joined with no loop, and one choice of six is cheapest, at 39. Kruskal sorts the runs cheap to dear and keeps each whose ends are not yet joined; Prim starts anywhere and keeps taking the cheapest run out of the group. Both are right for one reason: split the buildings in two, and a cheapest run crossing the split can always be kept.
@@ -409,13 +388,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [spanning-trees-and-cayleys-formula](03-spanning-trees-and-cayleys-formula.md): what a spanning tree is, and why seven buildings take six runs.
+- [Spanning trees](03-spanning-trees-and-cayleys-formula.md): what a spanning tree is, and why seven buildings take six runs.
 
 ## Where this goes next
 
-- [travelling-salesman-in-outline](../11-Tours%20-%20Euler%20and%20Hamilton/04-travelling-salesman-in-outline.md): the skeleton as a floor under a tour's price, and how a tour is built from one.
-- greedy-algorithms-and-matroids: why a sorted greedy walk is right here and wrong for tours.
-- graph-algorithms-in-practice: union-find and heaps, and what these walks cost on maps of millions of edges.
+- [The travelling salesman](../11-Tours%20-%20Euler%20and%20Hamilton/04-travelling-salesman-in-outline.md): the skeleton as a floor under a tour's price, and how a tour is built from one.
+- Greedy: why a sorted greedy walk is right here and wrong for tours.
+- Graph algorithms as code: union-find and heaps, and what these walks cost on maps of millions of edges.
 
 The skeleton says nothing about distances inside it — B reaches C only through E — so the price of one trip visiting every building is a separate question, the one travelling salesman opens.
 

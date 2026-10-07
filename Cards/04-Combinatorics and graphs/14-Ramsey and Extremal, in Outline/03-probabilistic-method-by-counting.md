@@ -1,24 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Ramsey and Extremal, in Outline
-topic: Existence by counting
-item: Erdos's counting trick
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/14-Ramsey and Extremal, in Outline/02-ramsey-numbers|ramsey-numbers]]"
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/07-central-binomial-and-bounds|central-binomial-and-bounds]]"
-  - "[[Cards/04-Combinatorics and graphs/04-Inclusion-Exclusion and Pigeonhole/04-union-bound-and-bonferroni|union-bound-and-bonferroni]]"
-next:
-  - "[[Cards/09-Probability and statistics/14-Random Graphs and the Probabilistic Method/03-probabilistic-method|probabilistic-method]]"
-tags: [mathematics, combinatorics and graphs, probabilistic-method-by-counting]
----
-
 # Erdos's counting trick: if the bad colourings are fewer than all colourings, a good one exists, so R(k,k) grows at least like 2^(k/2)
 
-Combinatorics and graphs → Ramsey and Extremal, in Outline → Existence by counting → Erdos's counting trick
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Ramsey and Extremal, in Outline](../../../SYLLABUS.md#w04-s14) → Erdos's counting trick
 
 ---
 
@@ -30,7 +12,7 @@ Call a plan **bad** if some ten machines have all 45 cables among them in one ma
 
 Paul Erdos, in 1947, counted instead of searching. Every bad plan has a ten-set and a material to blame. Fix the blame and the 45 cables inside the ten-set are forced; the other 451 are free. With 64512240 ten-sets and two materials, the bad plans number at most 2 x 64512240 x 2^451, a share of at most 0.00000367. The rest are good. Not one has been named.
 
-In graph language the machines are dots, the cables edges, the materials two colours, and the hall the complete graph K(32). A clique is a set of dots all joined to each other. The same count for any clique size k gives R(k,k) > 2^(k/2) ([ramsey-numbers](02-ramsey-numbers.md)): each step up in k multiplies the guaranteed hall size by the square root of 2, so the guarantee grows exponentially.
+In graph language the machines are dots, the cables edges, the materials two colours, and the hall the complete graph K(32). A clique is a set of dots all joined to each other. The same count for any clique size k gives R(k,k) > 2^(k/2) ([Ramsey numbers](02-ramsey-numbers.md)): each step up in k multiplies the guaranteed hall size by the square root of 2, so the guarantee grows exponentially.
 
 **Count the bad cases, even roughly from above; if the count falls short of all cases, a good case exists, though the count shows none.**
 
@@ -103,7 +85,7 @@ Each of the 496 cables is settled on its own, two ways: 2^496 plans.
 
 In a bad plan, pick one ten-set joined all one way, and its material: the plan's **witness**. A fixed witness forces 45 cables and frees 451, so 2^451 plans carry it. There are 2 x 64512240 witnesses, so at most 2 x 64512240 x 2^451 bad plans.
 
-A plan with two offending ten-sets is counted twice. That is allowed. Adding the sizes of overlapping collections always gives at least the size of their union, which is the union bound ([union-bound-and-bonferroni](../04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md)).
+A plan with two offending ten-sets is counted twice. That is allowed. Adding the sizes of overlapping collections always gives at least the size of their union, which is the union bound ([Stopping the sieve early](../04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md)).
 
 ### Step 3: divide by the total
 
@@ -115,7 +97,7 @@ So a good plan exists, and R(10,10) > 32.
 
 ### Step 4: why the threshold is 2^(k/2)
 
-Now let $n$ and $k$ vary. The k-set count C(n, k) grows with $n$; the shrink factor $2^{\,1-C(k,2)}$ ignores $n$. The cheap bound C(n, k) ≤ n^k / k! ([central-binomial-and-bounds](../03-Binomial%20Coefficients%20and%20Identities/07-central-binomial-and-bounds.md)) shows the balance. At $n$ = 2^(k/2), n^k = 2^(k^2/2) almost exactly cancels the shrink factor, leaving $2^{\,1+k/2}/k!$, under 1 from k = 3 on. So R(k,k) > 2^(k/2). At k = 10 it reads 0.00001764: looser than the exact 0.00000367, as a cheaper bound should be.
+Now let $n$ and $k$ vary. The k-set count C(n, k) grows with $n$; the shrink factor $2^{\,1-C(k,2)}$ ignores $n$. The cheap bound C(n, k) ≤ n^k / k! ([The middle of the row](../03-Binomial%20Coefficients%20and%20Identities/07-central-binomial-and-bounds.md)) shows the balance. At $n$ = 2^(k/2), n^k = 2^(k^2/2) almost exactly cancels the shrink factor, leaving $2^{\,1+k/2}/k!$, under 1 from k = 3 on. So R(k,k) > 2^(k/2). At k = 10 it reads 0.00001764: looser than the exact 0.00000367, as a cheaper bound should be.
 
 <details>
 <summary>Detailed proof, for every clique size at once</summary>
@@ -127,7 +109,7 @@ This is under 1 when $2^{\,1+k/2} < k!$, which squared reads 2^(k+2) < (k!)^2. A
 
 </details>
 
-The argument is often told with a coin flipped for each edge; with a chance read as favourable plans over possible plans, that is this count divided by the total. The version with averages is [probabilistic-method](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md).
+The argument is often told with a coin flipped for each edge; with a chance read as favourable plans over possible plans, that is this count divided by the total. The version with averages is [The probabilistic method](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md).
 
 ---
 
@@ -379,7 +361,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Lower bounds on Ramsey numbers.** Still the standard one: Joel Spencer's 1975 paper improved only the constant in front of 2^(k/2). Upper bounds sit near 4^k ([ramsey-numbers](02-ramsey-numbers.md)); a 2023 proof first pushed that base below 4. The gap between the bases is a famous open problem.
+- **Lower bounds on Ramsey numbers.** Still the standard one: Joel Spencer's 1975 paper improved only the constant in front of 2^(k/2). Upper bounds sit near 4^k ([Ramsey numbers](02-ramsey-numbers.md)); a 2023 proof first pushed that base below 4. The gap between the bases is a famous open problem.
 - **Error-correcting codes.** The Gilbert-Varshamov bound is this argument on strings of bits: count the failing codes, find them fewer than all.
 
 > **Say it back**
@@ -389,13 +371,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [ramsey-numbers](02-ramsey-numbers.md): what R(k,k) means, and why a lower bound on it is one colouring that avoids the clique.
-- [central-binomial-and-bounds](../03-Binomial%20Coefficients%20and%20Identities/07-central-binomial-and-bounds.md): the cheap bound C(n, k) ≤ n^k / k! that turns the exact test into the clean fraction.
-- [union-bound-and-bonferroni](../04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md): why adding overlapping counts gives an upper bound, the licence to over-count.
+- [Ramsey numbers](02-ramsey-numbers.md): what R(k,k) means, and why a lower bound on it is one colouring that avoids the clique.
+- [The middle of the row](../03-Binomial%20Coefficients%20and%20Identities/07-central-binomial-and-bounds.md): the cheap bound C(n, k) ≤ n^k / k! that turns the exact test into the clean fraction.
+- [Stopping the sieve early](../04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md): why adding overlapping counts gives an upper bound, the licence to over-count.
 
 ## Where this goes next
 
-- [probabilistic-method](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md): the same argument with chance and averages, where the count becomes an expected number of bad cliques and reaches results this form cannot.
+- [The probabilistic method](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md): the same argument with chance and averages, where the count becomes an expected number of bad cliques and reaches results this form cannot.
 
 ---
 

@@ -1,26 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Insurance and Actuarial Mathematics
-topic: Actuarial present values
-item: Life annuities and insurance
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/01-survival-life-tables-and-force-of-mortality|survival-life-tables-and-force-of-mortality]]"
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/03-annuities-and-loans|annuities-and-loans]]"
-next:
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/03-premiums-and-reserves|premiums-and-reserves]]"
-tags:
-  - mathematics
-  - financial-mathematics
-  - life-annuities-and-insurance-values
----
-
 # Life annuities and insurance: paying while alive, paying at death, and the relation between them
 
-Financial mathematics → Insurance and Actuarial Mathematics → Actuarial present values → Life annuities and insurance
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Insurance and Actuarial Mathematics](../../../SYLLABUS.md#w12-s51) → Life annuities and insurance
 
 ---
 
@@ -28,7 +8,7 @@ Financial mathematics → Insurance and Actuarial Mathematics → Actuarial pres
 
 A pension fund promises a retiree 10,000 dollars on her 65th birthday and on every birthday after that, for as long as she lives. She turns 65 today. The fund must set money aside now, and it has to know how much.
 
-A bank loan would be easy. Its payments are certain and stop on a fixed date, so each one is discounted and the discounts are added ([annuities-and-loans](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md)). The pension is different. Each payment happens only if she is alive on that birthday. So each one gets two reductions: one for waiting, one for the chance she is not there to collect it. Add up every birthday reduced both ways and the answer, on a standard life table and 5 percent interest, is 135,497.90 dollars.
+A bank loan would be easy. Its payments are certain and stop on a fixed date, so each one is discounted and the discounts are added ([Annuities](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md)). The pension is different. Each payment happens only if she is alive on that birthday. So each one gets two reductions: one for waiting, one for the chance she is not there to collect it. Add up every birthday reduced both ways and the answer, on a standard life table and 5 percent interest, is 135,497.90 dollars.
 
 A payment stream that lasts as long as a life is a **life annuity**, the term used from here on. Its mirror image is **whole-life insurance**: one payment, made when the life ends, whenever that is. The annuity pays for living, the insurance pays for dying, and between them they account for every year of the same life. That is why one number fixes the other: on the same table and interest, a death benefit of 100,000 dollars for her is worth 35,477.19 dollars today, and that figure falls straight out of the pension's 135,497.90.
 
@@ -167,7 +147,7 @@ Let $K$ be the whole years lived past $x$, and assume the life ends with certain
 
 ### Step 4: a second road, one year at a time
 
-Stand at age $x$. The annuity pays 1 now; then, with chance ${}_1p_x$, she reaches $x+1$ holding an annuity worth $\ddot a_{x+1}$ one year from now. So $\ddot a_x = 1 + v\,{}_1p_x\,\ddot a_{x+1}$. The insurance pays $v$ if she dies this year, otherwise it rolls on: $A_x = v\,q_x + v\,{}_1p_x\,A_{x+1}$. Starting from age 130, where nothing is left, and stepping back to 65 reproduces 13.549790 and 0.354772 without ever forming the long sums. This recursion is how reserves are computed year by year ([premiums-and-reserves](03-premiums-and-reserves.md)).
+Stand at age $x$. The annuity pays 1 now; then, with chance ${}_1p_x$, she reaches $x+1$ holding an annuity worth $\ddot a_{x+1}$ one year from now. So $\ddot a_x = 1 + v\,{}_1p_x\,\ddot a_{x+1}$. The insurance pays $v$ if she dies this year, otherwise it rolls on: $A_x = v\,q_x + v\,{}_1p_x\,A_{x+1}$. Starting from age 130, where nothing is left, and stepping back to 65 reproduces 13.549790 and 0.354772 without ever forming the long sums. This recursion is how reserves are computed year by year ([Premiums and reserves](03-premiums-and-reserves.md)).
 
 ### Step 5: a pension bought young
 
@@ -650,8 +630,8 @@ The two outputs are identical line for line: the same generator seeds the same 1
 
 - **Buying an annuity at retirement.** An insurer quotes a lump sum for a lifetime income. The core of the quote is $\ddot a_x$ on the insurer's table and rates, plus expenses and margin.
 - **Defined-benefit pension schemes.** A company's pension debt on its balance sheet is thousands of these values, one per member, each with its own age and deferral, as in the 40-year-old's 38,096.20.
-- **Whole-life insurance.** The single premium for a death benefit is $A_x$; annual premiums spread it over a life annuity of payments, which is where [premiums-and-reserves](03-premiums-and-reserves.md) starts.
-- **A life office with 10,000 pensioners.** The expected liability is 10,000 times the single value, but the actual outcome scatters around it; how widely is a question about sums of random claims ([collective-risk-and-compound-poisson](04-collective-risk-and-compound-poisson.md)).
+- **Whole-life insurance.** The single premium for a death benefit is $A_x$; annual premiums spread it over a life annuity of payments, which is where [Premiums and reserves](03-premiums-and-reserves.md) starts.
+- **A life office with 10,000 pensioners.** The expected liability is 10,000 times the single value, but the actual outcome scatters around it; how widely is a question about sums of random claims ([Aggregate claims](04-collective-risk-and-compound-poisson.md)).
 - **History.** Edmond Halley priced life annuities from Breslau's birth and burial records in 1693, when governments sold them at one price for every age.
 
 > **Say it back**
@@ -661,12 +641,12 @@ The two outputs are identical line for line: the same generator seeds the same 1
 
 ## What this builds on
 
-- [survival-life-tables-and-force-of-mortality](01-survival-life-tables-and-force-of-mortality.md): the chances ${}_kp_x$ and $q_{x+k}$, the force of mortality $\mu$, and Makeham's law that produces them.
-- [annuities-and-loans](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md): discount factors, the certain annuity, and the geometric sum that Step 3 reuses.
+- [Life tables](01-survival-life-tables-and-force-of-mortality.md): the chances ${}_kp_x$ and $q_{x+k}$, the force of mortality $\mu$, and Makeham's law that produces them.
+- [Annuities](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md): discount factors, the certain annuity, and the geometric sum that Step 3 reuses.
 
 ## Where this goes next
 
-- [premiums-and-reserves](03-premiums-and-reserves.md): sets a premium stream whose value matches the benefit's, and tracks what the insurer must hold each year.
+- [Premiums and reserves](03-premiums-and-reserves.md): sets a premium stream whose value matches the benefit's, and tracks what the insurer must hold each year.
 
 These values say what a promise is worth on the day it is made; what the insurer charges for it, year by year, and what it must hold back as the life goes on is the open question.
 

@@ -1,27 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Lattice Paths and Catalan Numbers
-topic: Balanced counts
-item: Catalan numbers
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/06-Lattice Paths and Catalan Numbers/02-reflection-principle-and-ballot-problem|reflection-principle-and-ballot-problem]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/06-Lattice Paths and Catalan Numbers/04-catalan-bijections|catalan-bijections]]"
-  - "[[Cards/04-Combinatorics and graphs/06-Lattice Paths and Catalan Numbers/05-random-walk-path-counts|random-walk-path-counts]]"
-  - "[[Cards/04-Combinatorics and graphs/07-Generating Functions/05-catalan-generating-function|catalan-generating-function]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - catalan-numbers
----
-
 # Catalan numbers: paths that never dip below the start, balanced brackets, and the formula C(2n,n)/(n+1)
 
-Combinatorics and graphs → Lattice Paths and Catalan Numbers → Balanced counts → Catalan numbers
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Lattice Paths and Catalan Numbers](../../../SYLLABUS.md#w04-s06) → Catalan numbers
 
 ---
 
@@ -31,7 +10,7 @@ A cinema charges $5 a ticket and the cashier's till starts empty. Ten people are
 
 A $10 can only be changed out of a $5 already taken, so the order decides whether the line stalls. Five, ten, five, ten is fine. Five, ten, ten is not: the second $10 meets an empty till.
 
-Only the pattern of notes matters, and choosing the five places for the $5 notes fixes it: C(10, 5) = 252 orders, by the choose-count of this wing ([n-choose-k](../01-Counting%20Principles/05-n-choose-k.md)). Of those, 42 never strand the cashier.
+Only the pattern of notes matters, and choosing the five places for the $5 notes fixes it: C(10, 5) = 252 orders, by the choose-count of this wing ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)). Of those, 42 never strand the cashier.
 
 Three of each fits in a table: twenty orders, five safe, F for a $5 note and T for a $10. The second column is the same rule in costume, a bracket string where no close comes before its open.
 
@@ -79,7 +58,7 @@ $$\mathrm{Cat}(n) = C(2n,\,n) - C(2n,\,n+1)$$
 
 **Read it aloud:** all the orders, less the failures, each failure counted in disguise as an order of n + 1 tens and n − 1 fives.
 
-And as a recurrence, a rule reaching a term from earlier terms ([recurrences-and-fibonacci](../05-Recurrences/01-recurrences-and-fibonacci.md)). Sigma, the sign ∑, says add the term once for each whole number i from 0 to n ([binomial-theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)).
+And as a recurrence, a rule reaching a term from earlier terms ([Recurrences](../05-Recurrences/01-recurrences-and-fibonacci.md)). Sigma, the sign ∑, says add the term once for each whole number i from 0 to n ([The binomial theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)).
 
 $$\mathrm{Cat}(n+1) = \sum_{i=0}^{n} \mathrm{Cat}(i)\,\mathrm{Cat}(n-i), \qquad \mathrm{Cat}(0) = 1$$
 
@@ -97,7 +76,7 @@ $$\mathrm{Cat}(n+1) = \sum_{i=0}^{n} \mathrm{Cat}(i)\,\mathrm{Cat}(n-i), \qquad 
 
 ### When it holds
 
-- **Equal numbers of the two notes.** Six fives against four tens is the ballot count of [reflection-principle-and-ballot-problem](02-reflection-principle-and-ballot-problem.md), not this one.
+- **Equal numbers of the two notes.** Six fives against four tens is the ballot count of [The reflection principle](02-reflection-principle-and-ballot-problem.md), not this one.
 - **An empty till at the start.** One $5 already in the drawer rescues some of the 210, and the count is no longer Cat(5).
 - **One note of change, exactly.** A customer owed two notes back could empty a till this count calls full.
 - **Patterns of notes, not people.** Tell the customers apart and the 42 become 604,800. Cat(5) counts patterns.
@@ -110,7 +89,7 @@ $$\mathrm{Cat}(n+1) = \sum_{i=0}^{n} \mathrm{Cat}(i)\,\mathrm{Cat}(n-i), \qquad 
 
 The cashier's fate hangs on one number: the $5 notes in the till, fives taken minus tens served. A $5 customer raises it by one, a $10 lowers it by one, and the queue is safe exactly when it never falls below zero.
 
-Nothing else about the cinema survives. What is left is ten steps, five up and five down, whose running total never dips below the start: the lattice path of this shelf ([lattice-paths](01-lattice-paths.md)), and the bracket strings of the table.
+Nothing else about the cinema survives. What is left is ten steps, five up and five down, whose running total never dips below the start: the lattice path of this shelf ([Lattice paths](01-lattice-paths.md)), and the bracket strings of the table.
 
 ### Step 1: count every order, failures included
 
@@ -122,7 +101,7 @@ Take a stranded order and find the first customer the cashier cannot serve, the 
 
 At the cut the count stands at −1, so the untouched stretch holds one more ten than fives, and the swap trades the two kinds in the rest. Whichever stranded order went in, six $10 notes and four $5 notes come out.
 
-The move runs backwards. An order of six tens and four fives finishes at −2, and a count moving one step at a time cannot reach −2 without passing −1, so it has a first bad moment too: cut there, swap the tail back. Neither move touches the cut or anything before it, and swapping a tail twice restores it, so the two collections are matched one for one ([bijection-and-double-counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)). There are C(10, 6) = 210 orders of six tens and four fives, so 210 stranded orders.
+The move runs backwards. An order of six tens and four fives finishes at −2, and a count moving one step at a time cannot reach −2 without passing −1, so it has a first bad moment too: cut there, swap the tail back. Neither move touches the cut or anything before it, and swapping a tail twice restores it, so the two collections are matched one for one ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)). There are C(10, 6) = 210 orders of six tens and four fives, so 210 stranded orders.
 
 <details>
 <summary>The same count for any n</summary>
@@ -154,7 +133,7 @@ flowchart LR
 
 Everything between the two notes is a safe queue of its own: the till never emptied inside, so that stretch never dipped below its own start. Everything after the $10 is another safe queue, from an empty till. In general a queue of n + 1 pairs splits into i inside and n − i after, exactly one way. Adding over i: 1×14 + 1×5 + 2×2 + 5×1 + 14×1 = 42.
 
-A third road packs the whole sequence into one expression and reads the closed form off it in a step: [catalan-generating-function](../07-Generating%20Functions/05-catalan-generating-function.md).
+A third road packs the whole sequence into one expression and reads the closed form off it in a step: [The Catalan generating function](../07-Generating%20Functions/05-catalan-generating-function.md).
 
 ---
 
@@ -410,8 +389,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Brackets, and the stacks that read them.** Five pairs of brackets nest 42 ways, no close before its open. Five pushes and five pops on a stack never popped empty come to the same 42: the till is a stack of $5 notes.
-- **Tree shapes.** Branching structures where every fork splits in two are counted by the same sequence, matched to queues in [catalan-bijections](04-catalan-bijections.md).
-- **Runs of luck.** A record of coin flips that never falls behind its start is this list of ups and downs, counted in [random-walk-path-counts](05-random-walk-path-counts.md).
+- **Tree shapes.** Branching structures where every fork splits in two are counted by the same sequence, matched to queues in [Catalan everywhere](04-catalan-bijections.md).
+- **Runs of luck.** A record of coin flips that never falls behind its start is this list of ups and downs, counted in [Counting coin-flip paths](05-random-walk-path-counts.md).
 
 > **Say it back**
 > Ten people queue for a $5 ticket, five with a $5 note and five with a $10, the till empty. Of the 252 orders, 42 never leave the cashier without change. Every failing order has a first bad moment; swapping the notes after it gives one of the 210 orders holding six tens and four fives. That match runs both ways, so 252 − 210 = 42, which is also C(10, 5)/6.
@@ -420,15 +399,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [reflection-principle-and-ballot-problem](02-reflection-principle-and-ballot-problem.md): the swap after the first bad moment, and why it counts the failures exactly.
+- [The reflection principle](02-reflection-principle-and-ballot-problem.md): the swap after the first bad moment, and why it counts the failures exactly.
 
 ## Where this goes next
 
-- [catalan-bijections](04-catalan-bijections.md): the same 42 counted as trees, triangulated shapes and handshakes.
-- [random-walk-path-counts](05-random-walk-path-counts.md): the same steps read as coin flips.
-- [catalan-generating-function](../07-Generating%20Functions/05-catalan-generating-function.md): the recurrence solved in one pass.
+- [Catalan everywhere](04-catalan-bijections.md): the same 42 counted as trees, triangulated shapes and handshakes.
+- [Counting coin-flip paths](05-random-walk-path-counts.md): the same steps read as coin flips.
+- [The Catalan generating function](../07-Generating%20Functions/05-catalan-generating-function.md): the recurrence solved in one pass.
 
-The recurrence reaches Cat(9) = 4862 only by grinding out every earlier term; turning a recurrence into a formula in one pass is [catalan-generating-function](../07-Generating%20Functions/05-catalan-generating-function.md).
+The recurrence reaches Cat(9) = 4862 only by grinding out every earlier term; turning a recurrence into a formula in one pass is [The Catalan generating function](../07-Generating%20Functions/05-catalan-generating-function.md).
 
 ---
 

@@ -1,21 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Poisson and Jump Processes
-topic: Routing and pooling arrivals
-item: Splitting and merging
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/01-poisson-process|poisson-process]]"
-next: []
-tags: [mathematics, stochastic processes and calculus, splitting-and-superposition]
----
-
 # Splitting and merging: thinning a Poisson process and adding two
 
-Stochastic processes and calculus → Poisson and Jump Processes → Routing and pooling arrivals → Splitting and merging
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Poisson and Jump Processes](../../../SYLLABUS.md#w11-s04) → Splitting and merging
 
 ---
 
@@ -41,7 +26,7 @@ One sample: the first two hours of the code's simulation, seed 20260930, with ca
 
 ## The formula
 
-A reminder from [poisson-process](01-poisson-process.md): $N(t)$ counts the calls by time $t$, in hours, and a **Poisson process with rate** $\lambda$ has independent exponential waits between calls, with mean $1/\lambda$. That card proves the counting description this card works with: the process starts at 0, rises one call at a time, its counts in windows that do not overlap are independent, and the count in a window of length $t$ is Poisson with mean $\mu = \lambda t$, so exactly $k$ calls has chance $e^{-\mu}\mu^k/k!$. It states the converse, so either description fixes the process.
+A reminder from [Poisson process](01-poisson-process.md): $N(t)$ counts the calls by time $t$, in hours, and a **Poisson process with rate** $\lambda$ has independent exponential waits between calls, with mean $1/\lambda$. That card proves the counting description this card works with: the process starts at 0, rises one call at a time, its counts in windows that do not overlap are independent, and the count in a window of length $t$ is Poisson with mean $\mu = \lambda t$, so exactly $k$ calls has chance $e^{-\mu}\mu^k/k!$. It states the converse, so either description fixes the process.
 
 Label each call sales with chance $p$, by a fresh coin that ignores the call times and the other labels. Write $N_1(t)$ for the sales calls by time $t$ and $N_2(t)$ for the support calls, so $N_1(t) + N_2(t) = N(t)$.
 
@@ -88,7 +73,7 @@ and each call on the merged stream came from the first with chance $\lambda_1/(\
 
 ### Step 0: in a tiny slot of time, the two desks never compete
 
-Cut an hour into $m$ equal slots, the slot road [poisson-process](01-poisson-process.md) also takes. Each slot holds a call with chance about $\lambda/m$, independently of other slots; two calls in one slot become negligible as $m$ grows. Label the call, and the slot holds a sales call with chance $p\lambda/m$ and a support call with chance $(1-p)\lambda/m$.
+Cut an hour into $m$ equal slots, the slot road [Poisson process](01-poisson-process.md) also takes. Each slot holds a call with chance about $\lambda/m$, independently of other slots; two calls in one slot become negligible as $m$ grows. Label the call, and the slot holds a sales call with chance $p\lambda/m$ and a support call with chance $(1-p)\lambda/m$.
 
 The only link between the desks is that one slot cannot serve both, a chance of about $p(1-p)\lambda^2/m^2$ per slot, of order $1/m$ over the hour: it vanishes in the limit, leaving two separate streams at rates $p\lambda$ and $(1-p)\lambda$. In the code, the chance of 1 sales and 2 support calls is 0.090699 at 10 slots an hour and 0.082429 at 10000, the error shrinking about tenfold per tenfold refinement towards the formula's 0.082420.
 
@@ -108,7 +93,7 @@ More than two labels work the same way. With $r$ labels of chances $p_1$ to $p_r
 
 Take several windows that do not overlap. The switchboard's counts in them are independent, and each window's calls use their own block of coins. So Step 1 applies window by window, and the joint chance of all the desk counts is a product over windows, each a sales part times a support part.
 
-Read one way: each desk's counts in separate windows are independent Poisson counts, so each desk is a Poisson process. Read the other way: every list of sales counts is independent of every list of support counts. Wing 10's π-λ theorem ([pi-systems-and-uniqueness](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)), which lifts a product rule from simple events to every event about a stream, extends that from finite lists to whole streams, in the Detailed proof.
+Read one way: each desk's counts in separate windows are independent Poisson counts, so each desk is a Poisson process. Read the other way: every list of sales counts is independent of every list of support counts. Wing 10's π-λ theorem ([Pi-systems and Dynkin's theorem](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)), which lifts a product rule from simple events to every event about a stream, extends that from finite lists to whole streams, in the Detailed proof.
 
 ### Step 3: why a busy support hour says nothing about sales
 
@@ -163,7 +148,7 @@ by the algebra of Step 1 in each window. Summing over all $b_j$ shows the increm
 
 **4. No two calls at once.** The m-th call of $N_1'$ and the n-th of $N_2'$ are independent and each has a density, so by Fubini they coincide with chance 0; a countable union over m and n is still null.
 
-The argument is complete given the counting description of [poisson-process](01-poisson-process.md) and wing 10's π-λ theorem ([pi-systems-and-uniqueness](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)) and Fubini ([tonelli-and-fubini](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md)).
+The argument is complete given the counting description of [Poisson process](01-poisson-process.md) and wing 10's π-λ theorem ([Pi-systems and Dynkin's theorem](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)) and Fubini ([Tonelli and Fubini](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md)).
 
 </details>
 
@@ -617,10 +602,10 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Call centres.** Routing by caller choice is splitting, which licenses staffing each desk as its own Poisson stream; queues fed this way are in [continuous-time-markov-chains-and-queues](05-continuous-time-markov-chains-and-queues.md).
+- **Call centres.** Routing by caller choice is splitting, which licenses staffing each desk as its own Poisson stream; queues fed this way are in [Continuous-time chains](05-continuous-time-markov-chains-and-queues.md).
 - **Detectors that miss.** A Geiger counter that registers each particle with a fixed chance sees a thinned stream: still Poisson, at the reduced rate.
 - **Networks and roads.** Packets from independent sources pooling at a router, or cars from two side streets joining a main road, are modelled as one Poisson stream at the summed rate.
-- **Insurance.** Claims split by type, or pooled from several independent portfolios, stay Poisson in number; attaching a size to each claim is [compound-poisson](04-compound-poisson.md).
+- **Insurance.** Claims split by type, or pooled from several independent portfolios, stay Poisson in number; attaching a size to each claim is [Compound Poisson](04-compound-poisson.md).
 - **Simulation.** A rate that changes through the day is simulated by drawing at the peak rate and keeping each call with chance (rate now) / (peak rate).
 
 > **Say it back**
@@ -630,13 +615,13 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [poisson-process](01-poisson-process.md): the definition by independent Poisson counts in windows, and the exponential waits between calls.
+- [Poisson process](01-poisson-process.md): the definition by independent Poisson counts in windows, and the exponential waits between calls.
 
 ## Where this goes next
 
-- [compound-poisson](04-compound-poisson.md): each call carries an amount, and splitting by type becomes splitting by size.
-- [continuous-time-markov-chains-and-queues](05-continuous-time-markov-chains-and-queues.md): split and merged streams feeding queues and chains that jump at exponential times.
-- [renewal-processes-in-outline](06-renewal-processes-in-outline.md): the rota's sales stream, whose gaps are sums of four exponential waits, is a renewal process, not a Poisson one.
+- [Compound Poisson](04-compound-poisson.md): each call carries an amount, and splitting by type becomes splitting by size.
+- [Continuous-time chains](05-continuous-time-markov-chains-and-queues.md): split and merged streams feeding queues and chains that jump at exponential times.
+- [Renewal processes](06-renewal-processes-in-outline.md): the rota's sales stream, whose gaps are sums of four exponential waits, is a renewal process, not a Poisson one.
 
 This card counts the calls of each type; the question it leaves open is what the calls add up to when each one carries a random amount, which the next card answers.
 

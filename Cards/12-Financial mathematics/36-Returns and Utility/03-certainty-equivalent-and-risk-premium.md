@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Returns and Utility
-topic: Pricing a gamble in sure dollars
-item: Risk premium
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/36-Returns and Utility/02-expected-utility-and-risk-aversion|expected-utility-and-risk-aversion]]"
-next:
-  - "[[Cards/12-Financial mathematics/36-Returns and Utility/06-prospect-theory-in-outline|prospect-theory-in-outline]]"
-tags: [mathematics, financial mathematics, certainty-equivalent-and-risk-premium]
----
-
 # Risk premium: what a gamble is worth to you, and the discount you demand for it
 
-Financial mathematics → Returns and Utility → Pricing a gamble in sure dollars → Risk premium
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Returns and Utility](../../../SYLLABUS.md#w12-s36) → Risk premium
 
 ---
 
@@ -28,7 +12,7 @@ Now offer the saver a swap: give up the position and take a fixed sum today inst
 
 That $86.60 has a name: the **certainty equivalent**, the sure amount that feels as good as the gamble. The gap between the gamble's average and its certainty equivalent, $100 − $86.60 = $13.40, is the **risk premium**: the discount demanded for carrying the risk. The same number seen from the other side is the most the saver would pay an insurer to take the coin away.
 
-Utility itself is in units nobody can spend. Expected utility says which gamble is preferred ([expected-utility-and-risk-aversion](02-expected-utility-and-risk-aversion.md)) but not by how many dollars. The certainty equivalent translates the verdict back into dollars. That translation is why the idea exists.
+Utility itself is in units nobody can spend. Expected utility says which gamble is preferred ([Expected utility](02-expected-utility-and-risk-aversion.md)) but not by how many dollars. The certainty equivalent translates the verdict back into dollars. That translation is why the idea exists.
 
 **The certainty equivalent is the sure sum whose utility equals the gamble's expected utility; the risk premium is the gamble's average minus that sum.**
 
@@ -148,7 +132,7 @@ At $\gamma = 0$ the saver cares only about the average. At $\gamma = 10$ the coi
 
 Expand both sides of $u(\mathrm{CE}) = \mathbb{E}[u(W)]$ around the average wealth $m = \mathbb{E}[W]$. The left side moves by the premium times the slope: $u(m) - \pi\,u'(m)$. On the right, the up and down swings cancel at first order, and what survives is half the bend times the average squared swing: $u(m) + \tfrac12 u''(m)\sigma^2$. Set them equal and $\pi \approx \tfrac12\big(-u''(m)/u'(m)\big)\sigma^2$.
 
-That ratio $-u''/u'$ is the local risk aversion $A$ from [expected-utility-and-risk-aversion](02-expected-utility-and-risk-aversion.md). Dividing by the slope makes it a property of preferences, not of the units: doubling $u$, or adding a constant to it, changes neither $A$ nor the certainty equivalent. For the log, $A = 1/W$, and $\gamma = W \times A = 1$.
+That ratio $-u''/u'$ is the local risk aversion $A$ from [Expected utility](02-expected-utility-and-risk-aversion.md). Dividing by the slope makes it a property of preferences, not of the units: doubling $u$, or adding a constant to it, changes neither $A$ nor the certainty equivalent. For the log, $A = 1/W$, and $\gamma = W \times A = 1$.
 
 <details>
 <summary>Detailed proof: the Arrow–Pratt formula and its error</summary>
@@ -193,7 +177,7 @@ The insurer holds many such policies whose losses do not move together, so its a
 
 Arrow–Pratt here says $1.72, well short of $2.76. The loss is lopsided: small chance, large size. Step 4's third-order term is doing the work.
 
-The same premium, read in rates instead of dollars, is the extra return investors demand for holding a risky fund over a deposit. [stochastic-dominance](04-stochastic-dominance.md) asks when every risk-averse saver agrees on a ranking without choosing a $u$ at all.
+The same premium, read in rates instead of dollars, is the extra return investors demand for holding a risky fund over a deposit. [Stochastic dominance](04-stochastic-dominance.md) asks when every risk-averse saver agrees on a ranking without choosing a $u$ at all.
 
 ---
 
@@ -214,7 +198,7 @@ The coin, log utility, $100 staked:
 
 The saver would trade the coin for any sure sum above $86.60, and so would accept up to $13.40 less than its average to be rid of it.
 
-**The house fund.** The shelf's saver chooses between a 4% deposit and a fund whose gross return $R$ (end value per dollar) averages 1.08 with spread 0.15. Take $R$ lognormal: $\ln R$ follows a bell curve with centre $\mu$ and variance $s^2$ ([returns-simple-log-and-annualised](01-returns-simple-log-and-annualised.md) sets out log returns). Matching the mean and spread gives $s^2 = \ln(1 + (0.15/1.08)^2) = 0.019106$ and $\mu = \ln 1.08 - s^2/2 = 0.067408$. Then for power utility
+**The house fund.** The shelf's saver chooses between a 4% deposit and a fund whose gross return $R$ (end value per dollar) averages 1.08 with spread 0.15. Take $R$ lognormal: $\ln R$ follows a bell curve with centre $\mu$ and variance $s^2$ ([Returns](01-returns-simple-log-and-annualised.md) sets out log returns). Matching the mean and spread gives $s^2 = \ln(1 + (0.15/1.08)^2) = 0.019106$ and $\mu = \ln 1.08 - s^2/2 = 0.067408$. Then for power utility
 
 $$\mathrm{CE} = \exp\!\big(\mu + (1-\gamma)\,s^2/2\big).$$
 
@@ -685,7 +669,7 @@ The two outputs agree line for line. The Monte Carlo road lands at 1.0694 agains
 - **Insurance.** Every policy is sold inside the gap Step 6 describes: above the average loss, below the average loss plus the buyer's risk premium. Insurers profit because pooling makes them close to risk-neutral while buyers are not.
 - **The equity premium.** Shares have long returned more than bank deposits. The house fund pays 4 points over the deposit. A log saver would give up only 1.03 of them for certainty; a saver with $\gamma = 3.95$ would give up all 4.
 - **Selling a lottery-like asset.** A private business owner or an employee holding company stock often values it below its average payoff: the certainty equivalent. That gap explains why concentrated holders sell to diversified buyers at a discount.
-- **Kelly betting.** The log saver maximises the average of $\ln W$, which is the long-run growth rate of wealth: [kelly-criterion-and-growth](05-kelly-criterion-and-growth.md).
+- **Kelly betting.** The log saver maximises the average of $\ln W$, which is the long-run growth rate of wealth: [Kelly](05-kelly-criterion-and-growth.md).
 - **Mean-variance portfolio rules.** "Expected return minus half of risk aversion times variance", the objective of mean-variance portfolio choice, is the Arrow–Pratt formula written as a target.
 
 > **Say it back**
@@ -695,13 +679,13 @@ The two outputs agree line for line. The Monte Carlo road lands at 1.0694 agains
 
 ## What this builds on
 
-- [expected-utility-and-risk-aversion](02-expected-utility-and-risk-aversion.md): the utility function, choosing by expected utility, and the risk-aversion measures $A$ and $\gamma$. This card turns those verdicts into dollars.
+- [Expected utility](02-expected-utility-and-risk-aversion.md): the utility function, choosing by expected utility, and the risk-aversion measures $A$ and $\gamma$. This card turns those verdicts into dollars.
 
 ## Where this goes next
 
-- [prospect-theory-in-outline](06-prospect-theory-in-outline.md): what real people do instead, measuring gains and losses from a reference point and weighting small probabilities too heavily.
-- [stochastic-dominance](04-stochastic-dominance.md): rankings every risk-averse saver agrees on, with no utility chosen.
-- [kelly-criterion-and-growth](05-kelly-criterion-and-growth.md): the log saver's choice, repeated, as a rule for sizing bets.
+- [Prospect theory in outline](06-prospect-theory-in-outline.md): what real people do instead, measuring gains and losses from a reference point and weighting small probabilities too heavily.
+- [Stochastic dominance](04-stochastic-dominance.md): rankings every risk-averse saver agrees on, with no utility chosen.
+- [Kelly](05-kelly-criterion-and-growth.md): the log saver's choice, repeated, as a rule for sizing bets.
 
 Expected utility with one concave $u$ predicts that the same person never both insures and buys a lottery ticket, yet many do; prospect theory is the account of choice built to explain that.
 

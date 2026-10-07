@@ -1,36 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Solving Systems
-topic: Inverses
-item: The inverse matrix
-kind: definition
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/03-Algebra/05-Solving Systems/02-gaussian-elimination|gaussian-elimination]]"
-  - "[[Cards/03-Algebra/04-Matrices/03-matrix-multiplication|matrix-multiplication]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/05-inverse-functions|inverse-functions]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/04-modular-inverse|modular-inverse]]"
-next:
-  - "[[Cards/03-Algebra/05-Solving Systems/04-determinants|determinants]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/04-least-squares|least-squares]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/01-change-of-basis|change-of-basis]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/07-inverse-and-implicit-function-theorems|inverse-and-implicit-function-theorems]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/06-forced-systems-and-variation-of-constants|forced-systems-and-variation-of-constants]]"
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/06-absorption-and-first-step-analysis|absorption-and-first-step-analysis]]"
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/04-vanna-volga-pricing|vanna-volga-pricing]]"
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/02-efficient-frontier-and-minimum-variance|efficient-frontier-and-minimum-variance]]"
-  - "[[Cards/16-Numerical analysis/03-Numerical Linear Algebra/01-matrix-norms-and-the-condition-number|matrix-norms-and-the-condition-number]]"
-tags:
-  - mathematics
-  - algebra
-  - inverse-matrix
----
-
 # The inverse matrix: the matrix that undoes another, the 2 by 2 formula, and when no inverse exists
 
-Algebra → Solving Systems → Inverses → The inverse matrix
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Solving Systems](../../../SYLLABUS.md#w03-s05) → The inverse matrix
 
 ---
 
@@ -74,7 +44,7 @@ $$\det A = ps - qr \qquad\qquad A^{-1} = \frac{1}{ps - qr}\;[[\,s,\; -q\,],\; [\
 
 **Read it aloud:** swap the main diagonal, flip the sign of the other two, divide every entry by ps − qr.
 
-That ps − qr is the **determinant**, $\det A$: not zero and the formula works, zero and it divides by zero. [determinants](04-determinants.md) takes it apart.
+That ps − qr is the **determinant**, $\det A$: not zero and the formula works, zero and it divides by zero. [Determinants](04-determinants.md) takes it apart.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -86,7 +56,7 @@ That ps − qr is the **determinant**, $\det A$: not zero and the formula works,
 | $b$ | the takings — what you know | (11, 7) | the prices scale with it |
 | $x$ | the prices — what you want | (4, 3) | — |
 
-The payoff: the system $A x = b$ from [matrix-equation-ax-b](01-matrix-equation-ax-b.md), counts times unknown prices equals known takings, is one multiply from solved.
+The payoff: the system $A x = b$ from [Solving A x = b](01-matrix-equation-ax-b.md), counts times unknown prices equals known takings, is one multiply from solved.
 
 $$A x = b \qquad \text{becomes} \qquad x = A^{-1} b$$
 
@@ -94,10 +64,10 @@ Multiply on the left by $A^{-1}$: $A^{-1} A$ is $I$, and $I$ times $x$ is $x$.
 
 ### When it holds
 
-- **Square: as many rows as columns.** A 2 by 3 matrix turns three prices into two takings, and two numbers cannot pin down three ([least-squares](../06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md) fits those).
+- **Square: as many rows as columns.** A 2 by 3 matrix turns three prices into two takings, and two numbers cannot pin down three ([Least squares](../06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md) fits those).
 - **A nonzero determinant.** At zero the idea fails, not just the formula: two price lists then share one set of takings.
-- **Numbers that divide.** On a clock the determinant needs an inverse there too: 2 is not zero mod 4, yet nothing multiplies it to 1 ([modular-inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md)).
-- **Inputs exact enough.** With measured takings, a determinant small beside the entries makes the prices swing on rounding (matrix-norms-and-the-condition-number).
+- **Numbers that divide.** On a clock the determinant needs an inverse there too: 2 is not zero mod 4, yet nothing multiplies it to 1 ([The modular inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md)).
+- **Inputs exact enough.** With measured takings, a determinant small beside the entries makes the prices swing on rounding (Matrix norms and the condition number).
 
 ---
 
@@ -109,7 +79,7 @@ Multiply on the left by $A^{-1}$: $A^{-1} A$ is $I$, and $I$ times $x$ is $x$.
 
 ### Step 1: swapping and flipping leaves a plain number
 
-Take $A$ = `[[p, q], [r, s]]`, swap the diagonal, flip the other two's signs, and multiply row by column ([matrix-multiplication](../04-Matrices/03-matrix-multiplication.md)):
+Take $A$ = `[[p, q], [r, s]]`, swap the diagonal, flip the other two's signs, and multiply row by column ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)):
 
 - the diagonal comes out ps − qr twice: p × s + q × (−r) top left, r × (−q) + s × p bottom right
 - the other two cancel: p × (−q) + q × p = 0 and r × s + s × (−r) = 0
@@ -139,11 +109,11 @@ For a square matrix these agree: if one fails, all fail.
 - no column is a mix of the other columns
 - the only price list $A$ sends to all-zero takings is all-zero prices
 
-The third rules out every inverse, not just this formula: if another price list also gave zero takings, no matrix could send those takings back to both. That is the one-to-one test from [inverse-functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md), and [rank-nullity](05-rank-nullity.md) counts what is lost. A zero determinant always supplies such a list: the columns are then multiples of one another. `[[2, 4], [1, 2]]` fails all three.
+The third rules out every inverse, not just this formula: if another price list also gave zero takings, no matrix could send those takings back to both. That is the one-to-one test from [Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md), and [Rank and nullity](05-rank-nullity.md) counts what is lost. A zero determinant always supplies such a list: the columns are then multiples of one another. `[[2, 4], [1, 2]]` fails all three.
 
 ### Step 4: bigger than 2 by 2, by Gauss-Jordan on [A | I]
 
-The 2 by 2 trick does not extend by shuffling entries. Write $A$ and the identity side by side as one wide block, [A | I], and run the row moves from [gaussian-elimination](02-gaussian-elimination.md) across the full width until the left half is the identity — **Gauss-Jordan elimination**. The right half is then $A^{-1}$; a column with no pivot means no inverse.
+The 2 by 2 trick does not extend by shuffling entries. Write $A$ and the identity side by side as one wide block, [A | I], and run the row moves from [Gaussian elimination](02-gaussian-elimination.md) across the full width until the left half is the identity — **Gauss-Jordan elimination**. The right half is then $A^{-1}$; a column with no pivot means no inverse.
 
 Each row move is a multiply on the left by a small matrix, so the run is one matrix; it turns $A$ into $I$, so it is $A^{-1}$. Applied to the identity, the same moves build $A^{-1}$.
 
@@ -400,7 +370,7 @@ The two outputs match line for line.
 > [!warning]
 > **There is no dividing by a matrix.** Nothing written as "the takings over A" means anything: what exists is multiplying by the inverse, and only when there is one.
 >
-> - **Order matters.** $A^{-1} b$, not $b$ then $A^{-1}$. Matrices do not commute ([matrix-multiplication](../04-Matrices/03-matrix-multiplication.md)).
+> - **Order matters.** $A^{-1} b$, not $b$ then $A^{-1}$. Matrices do not commute ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)).
 > - **Square is not the same as invertible.** `[[2, 4], [1, 2]]` is square and singular. Square is only the entry ticket.
 > - **Undoing two flips their order.** The inverse of AB is the inverse of B times the inverse of A. Socks then shoes; to undo, shoes first.
 
@@ -409,8 +379,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Undoing a movement.** In graphics a matrix rotates or stretches a shape; its inverse puts it back. A rotation always has one; flattening onto the screen does not.
-- **Fitting a line through messy data.** Least squares ends in a small square system to invert ([least-squares](../06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md)).
-- **Changing the directions you measure in.** Swapping to a better set, and back, needs an inverse ([change-of-basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md)).
+- **Fitting a line through messy data.** Least squares ends in a small square system to invert ([Least squares](../06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md)).
+- **Changing the directions you measure in.** Swapping to a better set, and back, needs an inverse ([Change of basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md)).
 
 > **Say it back**
 > A matrix takes prices and hands back takings; its inverse does the reverse. Multiply the two in either order and out comes the identity, the do-nothing matrix. For a 2 by 2: swap the main diagonal, flip the sign of the other two, divide by ps − qr — the cafe's `[[2, 1], [1, 1]]` gives `[[1, -1], [-1, 2]]`, turning (11, 7) into (4, 3). Anything bigger comes out of Gauss-Jordan on [A | I]; at ps − qr = 0 there is no inverse at all.
@@ -419,24 +389,24 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [gaussian-elimination](02-gaussian-elimination.md): the row moves, run on [A | I].
-- [matrix-multiplication](../04-Matrices/03-matrix-multiplication.md): what A times its inverse means, and why order matters.
-- [inverse-functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md): undo for functions, and the one-to-one test behind it.
-- [modular-inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md): undo on the clock, for a number sharing no factor with it.
+- [Gaussian elimination](02-gaussian-elimination.md): the row moves, run on [A | I].
+- [Matrix multiplication](../04-Matrices/03-matrix-multiplication.md): what A times its inverse means, and why order matters.
+- [Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md): undo for functions, and the one-to-one test behind it.
+- [The modular inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md): undo on the clock, for a number sharing no factor with it.
 
 ## Where this goes next
 
-- [determinants](04-determinants.md): ps − qr in full, and why zero means squashed flat.
-- [least-squares](../06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the closest answer when the matrix is not square.
-- [change-of-basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md): the same map in different directions.
-- [inverse-and-implicit-function-theorems](../../06-Calculus%20and%20analysis/07-Several%20Variables/07-inverse-and-implicit-function-theorems.md): undoing a curved map near a point, via the inverse of its slopes.
-- [forced-systems-and-variation-of-constants](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md): an inverse inside a driven system's answer.
-- [absorption-and-first-step-analysis](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/06-absorption-and-first-step-analysis.md): average steps to the end of a random walk, from one inverse.
-- [vanna-volga-pricing](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): three option prices fixed by inverting a 3 by 3.
-- [efficient-frontier-and-minimum-variance](../../12-Financial%20mathematics/37-Portfolio%20Theory/02-efficient-frontier-and-minimum-variance.md): portfolio weights from the inverse of a covariance table.
-- matrix-norms-and-the-condition-number: how far an almost-flat matrix magnifies an error.
+- [Determinants](04-determinants.md): ps − qr in full, and why zero means squashed flat.
+- [Least squares](../06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the closest answer when the matrix is not square.
+- [Change of basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md): the same map in different directions.
+- [Inverse and implicit function theorems](../../06-Calculus%20and%20analysis/07-Several%20Variables/07-inverse-and-implicit-function-theorems.md): undoing a curved map near a point, via the inverse of its slopes.
+- [Forced systems](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md): an inverse inside a driven system's answer.
+- [Absorption](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/06-absorption-and-first-step-analysis.md): average steps to the end of a random walk, from one inverse.
+- [Vanna-volga pricing](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): three option prices fixed by inverting a 3 by 3.
+- [The efficient frontier](../../12-Financial%20mathematics/37-Portfolio%20Theory/02-efficient-frontier-and-minimum-variance.md): portfolio weights from the inverse of a covariance table.
+- Matrix norms and the condition number: how far an almost-flat matrix magnifies an error.
 
-The determinant has been only a number that must not be zero; what it measures, and why zero flattens, is [determinants](04-determinants.md).
+The determinant has been only a number that must not be zero; what it measures, and why zero flattens, is [Determinants](04-determinants.md).
 
 ---
 

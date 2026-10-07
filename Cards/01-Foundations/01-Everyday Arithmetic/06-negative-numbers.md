@@ -1,27 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Everyday Arithmetic
-topic: Negative numbers
-item: Numbers below zero
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/05-arithmetic-laws|arithmetic-laws]]"
-next:
-  - "[[Cards/01-Foundations/02-The Number Line/01-number-families|number-families]]"
-  - "[[Cards/01-Foundations/02-The Number Line/05-absolute-value-and-distance|absolute-value-and-distance]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/01-exponents-and-powers|exponents-and-powers]]"
-tags:
-  - mathematics
-  - foundations
-  - negative-numbers
----
-
 # Negative numbers: the number line runs both ways
 
-Foundations → Everyday Arithmetic → Negative numbers → Numbers below zero
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Everyday Arithmetic](../../../SYLLABUS.md#w01-s01) → Numbers below zero
 
 ---
 
@@ -84,11 +63,11 @@ The opposite of 65 is −65: the number that cancels it. 65 + (−65) = 0. That 
 
 Taking $65 out of an account and adding a $65 debt to it leave the same balance, so 40 − 65 and 40 + (−65) are one sum: −25. The thermometer agrees: −3 − 5 is −3 + (−5) = −8.
 
-Subtraction is now a kind of adding, so the laws on [arithmetic-laws](05-arithmetic-laws.md) cover it.
+Subtraction is now a kind of adding, so the laws on [The three rearranging laws](05-arithmetic-laws.md) cover it.
 
 ### Step 2: a plus times a minus is a minus
 
-Two facts do the rest. Three lots of nothing is nothing: 3 × 0 = 0. And spreading, from [arithmetic-laws](05-arithmetic-laws.md), sends a multiplier outside a bracket into everything inside. Aim it at a bracket worth zero.
+Two facts do the rest. Three lots of nothing is nothing: 3 × 0 = 0. And spreading, from [The three rearranging laws](05-arithmetic-laws.md), sends a multiplier outside a bracket into everything inside. Aim it at a bracket worth zero.
 
 - 25 + (−25) = 0, so 3 × (25 + (−25)) = 3 × 0 = 0.
 - Spread it: 3 × 25 + 3 × (−25) = 0, that is 75 + 3 × (−25) = 0.
@@ -275,13 +254,13 @@ Identical, line for line.
 
 ## What this builds on
 
-- [arithmetic-laws](05-arithmetic-laws.md): the spreading law, which at a bracket worth zero is the whole argument for the sign rules here.
+- [The three rearranging laws](05-arithmetic-laws.md): the spreading law, which at a bracket worth zero is the whole argument for the sign rules here.
 
 ## Where this goes next
 
-- [number-families](../02-The%20Number%20Line/01-number-families.md): each family of numbers named by the sum the one before could not do.
-- [absolute-value-and-distance](../02-The%20Number%20Line/05-absolute-value-and-distance.md): the "size, sign ignored" row above, made into its own tool.
-- [exponents-and-powers](../03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): a minus sign moved up into the count of the multiplications.
+- [The number families](../02-The%20Number%20Line/01-number-families.md): each family of numbers named by the sum the one before could not do.
+- [Absolute value](../02-The%20Number%20Line/05-absolute-value-and-distance.md): the "size, sign ignored" row above, made into its own tool.
+- [Exponents](../03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): a minus sign moved up into the count of the multiplications.
 
 ---
 

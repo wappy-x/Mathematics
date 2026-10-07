@@ -1,31 +1,12 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Generators, Densities and Simulation
-topic: What a diffusion does next, on average
-item: The generator
-kind: definition
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/02-kolmogorov-backward-equation|kolmogorov-backward-equation]]"
-  - "[[Cards/11-Stochastic processes and calculus/09-Beyond Brownian/03-stochastic-control-and-the-hjb-equation|stochastic-control-and-the-hjb-equation]]"
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/05-hille-yosida-and-generators|hille-yosida-and-generators]]"
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/08-feller-semigroups-and-markov-processes|feller-semigroups-and-markov-processes]]"
-tags: [mathematics, stochastic processes and calculus, infinitesimal-generator]
----
-
 # The generator: the drift-and-diffusion operator that summarises an SDE
 
-Stochastic processes and calculus → Generators, Densities and Simulation → What a diffusion does next, on average → The generator
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Generators, Densities and Simulation](../../../SYLLABUS.md#w11-s08) → The generator
 
 ---
 
 ## General Overview
 
-A short-term interest rate stands at 6 percent. Over the long run it settles near 4 percent. The further it strays, the harder it is pulled back, and on top of the pull come random shocks. This is the Ornstein-Uhlenbeck rate of [ornstein-uhlenbeck-and-cir-processes](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md), with the same numbers: pull speed 0.5 a year, noise 0.02 per square-root year, time in years.
+A short-term interest rate stands at 6 percent. Over the long run it settles near 4 percent. The further it strays, the harder it is pulled back, and on top of the pull come random shocks. This is the Ornstein-Uhlenbeck rate of [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md), with the same numbers: pull speed 0.5 a year, noise 0.02 per square-root year, time in years.
 
 Three questions about the next instant. How fast is the average rate changing, right now? It falls by 1 percentage point a year. How fast is the average of the squared rate changing? It falls by 8 "percent squared" a year, from 36. How fast is the average squared gap to 4 percent changing? Not at all: the pull shrinks the gap exactly as fast as the shocks widen it.
 
@@ -56,9 +37,9 @@ Orange: the exact average of the squared rate, from the rate's known bell-curve 
 
 ## The formula
 
-Reminders first. $X_t$ is the value at time $t$ of a process, here the rate $r_t$. $W_t$ is Brownian motion, the random walk seen from far away. The process obeys a stochastic differential equation, $dX_t = \mu(X_t)\,dt + \sigma(X_t)\,dW_t$: in each short slice of time, drift by $\mu$ times the slice and take a shove of $\sigma$ times the Brownian step. The symbol $dW_t$ is shorthand for an Ito integral, never a derivative, because the path has none ([stochastic-differential-equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md)).
+Reminders first. $X_t$ is the value at time $t$ of a process, here the rate $r_t$. $W_t$ is Brownian motion, the random walk seen from far away. The process obeys a stochastic differential equation, $dX_t = \mu(X_t)\,dt + \sigma(X_t)\,dW_t$: in each short slice of time, drift by $\mu$ times the slice and take a shove of $\sigma$ times the Brownian step. The symbol $dW_t$ is shorthand for an Ito integral, never a derivative, because the path has none ([Stochastic differential equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md)).
 
-New notation. $E_x$ means an average over all paths that start at $x$. $f'$ and $f''$ are the slope and the curvature of a function $f$, as on [itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md). The generator is written $L$; $Lf$ is the new function it makes from $f$, read "L applied to f".
+New notation. $E_x$ means an average over all paths that start at $x$. $f'$ and $f''$ are the slope and the curvature of a function $f$, as on [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md). The generator is written $L$; $Lf$ is the new function it makes from $f$, read "L applied to f".
 
 The definition: start at $x$, wait a short time $h$, and measure how much the average of $f$ has moved, per unit time.
 
@@ -107,7 +88,7 @@ $$p(x) = \frac{\int_a^x e^{\,c(y-\theta)^2}\,dy}{\int_a^b e^{\,c(y-\theta)^2}\,d
 ### When it holds
 
 - **Two continuous slopes in f.** The formula needs a curvature. A kink breaks it: the measurement $|r - \theta|$ has no curvature at 4 percent, and its expected change there grows like the square root of $h$, so the ratio in the definition has no limit.
-- **An equation with one solution.** Drift and noise whose change between two states is at most a fixed multiple of the distance between them (the Lipschitz condition of [stochastic-differential-equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md)) give each start one law of paths, so $E_x$ means one thing.
+- **An equation with one solution.** Drift and noise whose change between two states is at most a fixed multiple of the distance between them (the Lipschitz condition of [Stochastic differential equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md)) give each start one law of paths, so $E_x$ means one thing.
 - **Drift and noise that do not depend on the clock.** If they do, the generator carries the time as well; for a measurement that depends on time too, $\partial f/\partial t$, its slope in time, is added to $Lf$.
 - **For Dynkin, a stopping time with finite average, and f and Lf bounded where the path lives before it.** In the band both hold. Drop them and the formula fails outright: Brownian motion stopped at its first visit to 1, measured by $f(x) = x$, ends at 1, while Dynkin would predict 0.
 - **Averages that exist.** On the whole line, $f$ must not grow so fast that $E_x f(X_h)$ is infinite; for GBM, powers $S^n$ are fine, while $e^{S}$ is not, since the lognormal law's right tail is too heavy.
@@ -122,7 +103,7 @@ Ito's lemma splits every small change of $f(X_t)$ into two pieces: a drift piece
 
 ### Step 1: the formula, from Ito's lemma
 
-By [itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md), in integral form,
+By [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md), in integral form,
 
 $$f(X_h) = f(x) + \int_0^h \Big(\mu f' + \tfrac12\sigma^2 f''\Big)(X_u)\,du + \int_0^h \sigma f'(X_u)\,dW_u.$$
 
@@ -135,7 +116,7 @@ The right side is the average over the first $h$ years of the drift piece. As $h
 <details>
 <summary>Detailed proof: the limit, with its hypotheses</summary>
 
-Take $f$ with two continuous slopes, and suppose $f$, $f'$ and $f''$ are bounded and vanish outside a bounded interval, and that $\mu$ and $\sigma$ are continuous. Then the integrand $\sigma f'$ is bounded, so $\int_0^t \sigma f'(X_u)\,dW_u$ is a martingale with mean zero ([ito-integral](../06-Ito%20Calculus/01-ito-integral.md)). Write $k(y) = \mu(y)f'(y) + \tfrac12\sigma(y)^2f''(y)$; it is continuous and bounded, by a number $M$ say. Paths of $X$ are continuous, so $k(X_u) \to k(x)$ as $u \to 0$, path by path. The average $\frac1h\int_0^h k(X_u)\,du$ therefore tends to $k(x)$ on every path, and it is bounded by $M$. Dominated convergence (wing 10) moves the limit through $E_x$: the ratio tends to $k(x)$. A function that does not vanish outside an interval, such as $r^2$, is handled by stopping the process when it first leaves a large interval and letting the interval grow; for the OU rate the code checks the answer directly against the exact law.
+Take $f$ with two continuous slopes, and suppose $f$, $f'$ and $f''$ are bounded and vanish outside a bounded interval, and that $\mu$ and $\sigma$ are continuous. Then the integrand $\sigma f'$ is bounded, so $\int_0^t \sigma f'(X_u)\,dW_u$ is a martingale with mean zero ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)). Write $k(y) = \mu(y)f'(y) + \tfrac12\sigma(y)^2f''(y)$; it is continuous and bounded, by a number $M$ say. Paths of $X$ are continuous, so $k(X_u) \to k(x)$ as $u \to 0$, path by path. The average $\frac1h\int_0^h k(X_u)\,du$ therefore tends to $k(x)$ on every path, and it is bounded by $M$. Dominated convergence (wing 10) moves the limit through $E_x$: the ratio tends to $k(x)$. A function that does not vanish outside an interval, such as $r^2$, is handled by stopping the process when it first leaves a large interval and letting the interval grow; for the OU rate the code checks the answer directly against the exact law.
 
 </details>
 
@@ -154,7 +135,7 @@ The third line has a consequence. In general $L[(r-\theta)^2] = -2\kappa(r-\thet
 A share at $100 with drift 0.05 and noise 0.20 a year:
 
 - $L[S] = \mu S = 5$: the average price climbs $5 a year, now.
-- $L[\log S] = \mu S \cdot \tfrac1S + \tfrac12\sigma^2 S^2 \cdot (-\tfrac1{S^2}) = \mu - \tfrac12\sigma^2 = 0.03$: the log price drifts 3 percent a year, the Ito correction of [itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md) seen as one evaluation of $L$.
+- $L[\log S] = \mu S \cdot \tfrac1S + \tfrac12\sigma^2 S^2 \cdot (-\tfrac1{S^2}) = \mu - \tfrac12\sigma^2 = 0.03$: the log price drifts 3 percent a year, the Ito correction of [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md) seen as one evaluation of $L$.
 - $L[S^2] = 2\mu S^2 + \sigma^2 S^2 = 0.14 \times 10000 = 1400$.
 
 Powers are special for GBM. $L[S^n] = \big(n\mu + \tfrac12 n(n-1)\sigma^2\big) S^n$: the generator returns the same function times a number. A function with that property is an **eigenfunction** of $L$, and its number the eigenvalue. Averaging gives $\frac{d}{dt}E[S_t^n] = \lambda E[S_t^n]$ with that number $\lambda$, so $E[S_t^n] = S_0^n e^{\lambda t}$: the moments of the lognormal law, read off the generator without its density.
@@ -165,7 +146,7 @@ Run Step 1's identity up to a stopping time $\tau$ instead of a fixed $h$:
 
 $$f(X_\tau) = f(x) + \int_0^\tau Lf(X_u)\,du + \int_0^\tau \sigma f'(X_u)\,dW_u.$$
 
-The last term is a martingale stopped at $\tau$. When $\tau$ is bounded, optional stopping ([stopping-times-and-optional-stopping](../02-Martingales/03-stopping-times-and-optional-stopping.md)) keeps its mean at zero, and averaging gives Dynkin's formula. For an unbounded $\tau$ with finite average, apply it to the bounded time $\min(\tau, n)$ and let $n$ grow.
+The last term is a martingale stopped at $\tau$. When $\tau$ is bounded, optional stopping ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)) keeps its mean at zero, and averaging gives Dynkin's formula. For an unbounded $\tau$ with finite average, apply it to the bounded time $\min(\tau, n)$ and let $n$ grow.
 
 <details>
 <summary>Detailed proof: from bounded times to a finite average</summary>
@@ -191,7 +172,7 @@ $Lp = 0$ reads $\tfrac12\sigma^2 p'' + \kappa(\theta - x)p' = 0$, a first-order 
 
 </details>
 
-A second road to the generator runs through time instead of space: $u(t, x) = E_x[f(X_t)]$ changes in time exactly as $L$ says it changes in space, $\partial u/\partial t = Lu$. That is the backward equation, derived on [kolmogorov-backward-equation](02-kolmogorov-backward-equation.md).
+A second road to the generator runs through time instead of space: $u(t, x) = E_x[f(X_t)]$ changes in time exactly as $L$ says it changes in space, $\partial u/\partial t = Lu$. That is the backward equation, derived on [Kolmogorov backward equation](02-kolmogorov-backward-equation.md).
 
 ---
 
@@ -226,7 +207,7 @@ Dynkin's formula on the band, from the code: the chance of reaching 8 percent be
 
 ## Code, from first principles, and it actually runs
 
-Both programs take four roads to the same generator. First, the formula, drift times slope plus half squared noise times curvature. Second, the definition itself: the ratio $(E_x f(X_h) - f(x))/h$ with the average taken under the exact law (normal for the OU rate, lognormal for the share), by Simpson's rule against the bell curve, at four shrinking steps. Third, Dynkin's formula on the house example, 4,000 rate paths of 1,000 Euler steps of 0.002 years from a SplitMix64 generator with Box-Muller normals ([euler-maruyama-scheme](04-euler-maruyama-scheme.md) studies that scheme's own error). Fourth, for the band, the exit chance and mean exit time by the two integrations, by finite differences with a tridiagonal solve, and by simulation at three step sizes. Every simulated number carries its standard error.
+Both programs take four roads to the same generator. First, the formula, drift times slope plus half squared noise times curvature. Second, the definition itself: the ratio $(E_x f(X_h) - f(x))/h$ with the average taken under the exact law (normal for the OU rate, lognormal for the share), by Simpson's rule against the bell curve, at four shrinking steps. Third, Dynkin's formula on the house example, 4,000 rate paths of 1,000 Euler steps of 0.002 years from a SplitMix64 generator with Box-Muller normals ([Euler-Maruyama](04-euler-maruyama-scheme.md) studies that scheme's own error). Fourth, for the band, the exit chance and mean exit time by the two integrations, by finite differences with a tridiagonal solve, and by simulation at three step sizes. Every simulated number carries its standard error.
 
 ### Python
 
@@ -657,17 +638,17 @@ The two outputs agree line for line, including every simulated digit: both progr
 > - **Ordinary calculus.** Dropping $\tfrac12\sigma^2 f''$ gives $L[r^2]$ = −0.0012 instead of −0.0008, and predicts a squared gap that shrinks when it stands still.
 > - **Losing the half.** It gives −0.0004, and the average squared rate falls at half its true speed.
 > - **Dynkin with an infinite average wait.** It needs a finite average wait and bounded measurements up to the stop. Brownian motion stopped at 1 breaks it: 1 against a predicted 0.
-> - **Confusing L with its mirror image.** The generator acts on measurements, functions of the state. The operator that moves the density of the state forward in time is its adjoint, a different formula with the drift and noise inside the derivatives: [fokker-planck-forward-equation](03-fokker-planck-forward-equation.md).
+> - **Confusing L with its mirror image.** The generator acts on measurements, functions of the state. The operator that moves the density of the state forward in time is its adjoint, a different formula with the drift and noise inside the derivatives: [Fokker-Planck](03-fokker-planck-forward-equation.md).
 
 ---
 
 ## Where you meet it in real life
 
-- **Pricing a bond on a mean-reverting rate.** A bond's price as a function of today's rate solves "its slope in time, plus the generator of the rate applied to it, minus the rate times the price, equals zero", the term-structure equation of [the-term-structure-equation](../../12-Financial%20mathematics/30-Short-Rate%20Models/01-the-term-structure-equation.md); Vasicek's model is this card's OU rate.
-- **Continuous-time chains.** For a chain on finitely many states, the generator is a matrix: the rate matrix $G$ of [continuous-time-markov-chains-and-queues](../04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md), and $Lf$ is $G$ times the column of values of $f$. Same definition, same Dynkin formula.
+- **Pricing a bond on a mean-reverting rate.** A bond's price as a function of today's rate solves "its slope in time, plus the generator of the rate applied to it, minus the rate times the price, equals zero", the term-structure equation of [A short-rate model](../../12-Financial%20mathematics/30-Short-Rate%20Models/01-the-term-structure-equation.md); Vasicek's model is this card's OU rate.
+- **Continuous-time chains.** For a chain on finitely many states, the generator is a matrix: the rate matrix $G$ of [Continuous-time chains](../04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md), and $Lf$ is $G$ times the column of values of $f$. Same definition, same Dynkin formula.
 - **Exit problems.** How long until a reservoir level, an inventory or a price leaves a band, and through which side: Step 5's two equations.
-- **Stopping problems.** The value, the best expected payoff over all stopping rules, lies on or above the payoff everywhere. Where waiting is right, $L$ applied to the value is zero; where stopping is right, the value equals the payoff and $L$ applied to the payoff is zero or negative. So, with no discounting, waiting is right wherever $L$ applied to the payoff is positive. Discrete time: [optimal-stopping-and-snell-envelope](07-optimal-stopping-and-snell-envelope.md); the continuous problem in full: american-options-as-a-free-boundary-problem.
-- **Simulation error.** The weak error of a time-stepping scheme, how far its averages sit from the true ones, is computed by expanding in powers of $L$: [milstein-and-strong-weak-convergence](05-milstein-and-strong-weak-convergence.md).
+- **Stopping problems.** The value, the best expected payoff over all stopping rules, lies on or above the payoff everywhere. Where waiting is right, $L$ applied to the value is zero; where stopping is right, the value equals the payoff and $L$ applied to the payoff is zero or negative. So, with no discounting, waiting is right wherever $L$ applied to the payoff is positive. Discrete time: [Optimal stopping](07-optimal-stopping-and-snell-envelope.md); the continuous problem in full: An American option.
+- **Simulation error.** The weak error of a time-stepping scheme, how far its averages sit from the true ones, is computed by expanding in powers of $L$: [Milstein and the two kinds of error](05-milstein-and-strong-weak-convergence.md).
 
 > **Say it back**
 > The generator takes a smooth measurement of a diffusion and returns its expected rate of change from each state. It is defined as a limit and computed as drift times slope plus half the squared noise times curvature, because averaging deletes the fair-game shove in Ito's lemma. For the OU rate at 6 percent it gives −0.01 for the rate, −0.0008 for the squared rate and zero for the squared gap. Dynkin's formula adds those rates up to a stopping time with finite average wait. Solving Lp = 0 and Lg = −1 then gives the chance of each exit and the mean time to it.
@@ -676,16 +657,16 @@ The two outputs agree line for line, including every simulated digit: both progr
 
 ## What this builds on
 
-- [itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md): the split of $df(X_t)$ into a drift piece and a shove. The generator is the drift piece.
-- [ornstein-uhlenbeck-and-cir-processes](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): the rate, its exact normal law, and the long-run variance that makes the squared gap stand still.
-- [stopping-times-and-optional-stopping](../02-Martingales/03-stopping-times-and-optional-stopping.md): why a stopped martingale keeps its mean at a bounded stopping time, the step that turns Ito's lemma into Dynkin's formula.
+- [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md): the split of $df(X_t)$ into a drift piece and a shove. The generator is the drift piece.
+- [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): the rate, its exact normal law, and the long-run variance that makes the squared gap stand still.
+- [Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md): why a stopped martingale keeps its mean at a bounded stopping time, the step that turns Ito's lemma into Dynkin's formula.
 
 ## Where this goes next
 
-- [kolmogorov-backward-equation](02-kolmogorov-backward-equation.md): the generator's slope at the start, extended to every time: $E_x f(X_t)$ solves $\partial u/\partial t = Lu$.
-- [stochastic-control-and-the-hjb-equation](../09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md): a controller who can turn the drift and noise dials picks the generator that does best; the HJB equation is a maximum over generators.
-- hille-yosida-and-generators: the generator as the derivative at zero of the family of averaging operators, and which operators arise this way.
-- feller-semigroups-and-markov-processes: the general theory, where a Markov process is built from its generator rather than from an SDE.
+- [Kolmogorov backward equation](02-kolmogorov-backward-equation.md): the generator's slope at the start, extended to every time: $E_x f(X_t)$ solves $\partial u/\partial t = Lu$.
+- [Stochastic control](../09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md): a controller who can turn the drift and noise dials picks the generator that does best; the HJB equation is a maximum over generators.
+- Hille-Yosida: the generator as the derivative at zero of the family of averaging operators, and which operators arise this way.
+- Feller semigroups: the general theory, where a Markov process is built from its generator rather than from an SDE.
 
 The generator gives the slope of every average at the start; the backward equation answers what those averages are at every later time.
 

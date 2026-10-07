@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Money, Dates and Discounting
-topic: Year fractions
-item: Day counts
-kind: convention
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/01-compounding-and-discount-factors|compounding-and-discount-factors]]"
-  - "[[Cards/02-Number theory/05-Check Digits, Calendars and Cycles/03-day-of-the-week|day-of-the-week]]"
-next:
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/05-bonds-price-and-yield|bonds-price-and-yield]]"
-  - "[[Cards/12-Financial mathematics/02-Curves/03-money-market-instruments-and-sofr|money-market-instruments-and-sofr]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - day-counts-and-dates
----
-
 # Day counts: Actual/360, 30/360 and Actual/Actual, and why the same coupon has three sizes
 
-Financial mathematics → Money, Dates and Discounting → Year fractions → Day counts
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Money, Dates and Discounting](../../../SYLLABUS.md#w12-s01) → Day counts
 
 ---
 
@@ -99,7 +78,7 @@ Read the top line as synthetic years of 360 days, plus synthetic months of 30 da
 ### When it holds
 
 - **Valid dates, in order.** Real Gregorian dates, end on or after start. Reversed, every fraction turns negative or zero, and the interest with it.
-- **Simple interest across the period.** The year fraction multiplies the rate exactly once; compounding inside the period is the separate calculation in [compounding-and-discount-factors](01-compounding-and-discount-factors.md). Two simple factors multiplied together do not equal one simple factor over the joined period.
+- **Simple interest across the period.** The year fraction multiplies the rate exactly once; compounding inside the period is the separate calculation in [Discount factors](01-compounding-and-discount-factors.md). Two simple factors multiplied together do not equal one simple factor over the joined period.
 - **Unadjusted accrual endpoints.** This contract accrues between the scheduled dates and moves only the payment. A contract may instead say "adjusted" and accrue to the moved date, differing by whole days of interest.
 - **A named variant.** "Actual/Actual" alone is not a rule: the ISDA, ICMA and AFB versions share the name and answer differently, which is why the 1999 ISDA paper prints all three. "30/360" collides the same way: the 30E/360 ISDA of section 4.16(h) drags a February month-end to a 30th, which 4.16(g) here never does.
 - **30E/360 is not elapsed time.** It reads 46 days where the calendar reads 45, 89 where it reads 91, and 0 where it reads 1, from 30 to 31 January, both clipped to the 30th. Anything treating it as a measure of time is wrong by days.
@@ -203,7 +182,7 @@ On the note's four payment dates: 1 March 2007 is a Thursday and stays put. 1 Se
 
 Holidays enter through the same door: any date the contract's calendar marks closed is not a business day, whatever the weekday. With 3 March 2008 named a holiday the March payment moves on to Tuesday 4 March; with 30 May named a holiday the May payment steps back further, to Thursday 29 May.
 
-Deciding whether a date is a Saturday is the one arithmetic step here, and the code does it twice: once by dividing the ordinal by 7 and reading the remainder, since 1 January of year 1 was a Monday, and once by Zeller's congruence, which never mentions ordinals ([day-of-the-week](../../02-Number%20theory/05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md)). They agree on all four dates.
+Deciding whether a date is a Saturday is the one arithmetic step here, and the code does it twice: once by dividing the ordinal by 7 and reading the remainder, since 1 January of year 1 was a Monday, and once by Zeller's congruence, which never mentions ordinals ([Day of the week for any date](../../02-Number%20theory/05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md)). They agree on all four dates.
 
 One separation matters more than the rest. Rolling moves the cash, not the accrual. The final stub still accrues from 1 March to 31 May — 91 days, $91.00 under Actual/360 — and merely pays on 30 May. Accruing to the moved date instead counts 90 days and pays $90.00. Both are legal contracts; only one was signed.
 
@@ -680,10 +659,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Money-market deposits.** Dollar and euro deposits count Actual/360; sterling counts on a 365-day year. The same quoted rate hands over different cash, which is why a cross-currency comparison converts the basis first. The overnight benchmarks built on those deposits are in [money-market-instruments-and-sofr](../02-Curves/03-money-market-instruments-and-sofr.md).
-- **Accrued interest on a bond.** A buyer between coupon dates pays the seller the part of the coupon already earned: a year fraction under the bond's stated convention, and the first line of [bonds-price-and-yield](05-bonds-price-and-yield.md).
+- **Money-market deposits.** Dollar and euro deposits count Actual/360; sterling counts on a 365-day year. The same quoted rate hands over different cash, which is why a cross-currency comparison converts the basis first. The overnight benchmarks built on those deposits are in [Money markets](../02-Curves/03-money-market-instruments-and-sofr.md).
+- **Accrued interest on a bond.** A buyer between coupon dates pays the seller the part of the coupon already earned: a year fraction under the bond's stated convention, and the first line of [Bond price and yield](05-bonds-price-and-yield.md).
 - **Interest rate swaps.** A fixed leg on 30E/360 against a floating leg on Actual/360 is ordinary, not sloppy; the mismatch is written into the confirmation and priced.
-- **Loan schedules.** Whether a monthly instalment is a twelfth of a year or the actual days over 365 changes the payment, and changes it in February most of all — the level-payment machinery is in [annuities-and-loans](03-annuities-and-loans.md).
+- **Loan schedules.** Whether a monthly instalment is a twelfth of a year or the actual days over 365 changes the payment, and changes it in February most of all — the level-payment machinery is in [Annuities](03-annuities-and-loans.md).
 
 > **Say it back**
 > A day count convention turns two dates into a year fraction, and interest is the notional times the rate times that fraction. Actual/360 counts real days over 360. Actual/Actual ISDA counts real days but divides each calendar year's share by that year's own length, 365 or 366. 30E/360 throws the calendar away and pretends every month has 30 days, clipping any 31st to a 30th. On the same 45 days at the same 10 percent, the three pay $46.00, $45.00 and $44.38. A separate rule, modified following, moves a payment off a closed day to the next business day, or back to the previous one if the next would fall in a new month — and it moves the cash only, not the accrual.
@@ -692,15 +671,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [compounding-and-discount-factors](01-compounding-and-discount-factors.md): what a rate does to money over a stated span of time, which is the question a year fraction supplies the time for.
-- [day-of-the-week](../../02-Number%20theory/05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md): the calendar arithmetic behind the ordinal and Zeller's congruence, both used here to find the Saturdays.
+- [Discount factors](01-compounding-and-discount-factors.md): what a rate does to money over a stated span of time, which is the question a year fraction supplies the time for.
+- [Day of the week for any date](../../02-Number%20theory/05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md): the calendar arithmetic behind the ordinal and Zeller's congruence, both used here to find the Saturdays.
 
 ## Where this goes next
 
-- [bonds-price-and-yield](05-bonds-price-and-yield.md): a bond's quoted price excludes the interest already accrued, and the year fraction on this card is what separates the two.
-- [money-market-instruments-and-sofr](../02-Curves/03-money-market-instruments-and-sofr.md): deposits, bills and overnight benchmarks, every one of them quoted with a convention attached.
+- [Bond price and yield](05-bonds-price-and-yield.md): a bond's quoted price excludes the interest already accrued, and the year fraction on this card is what separates the two.
+- [Money markets](../02-Curves/03-money-market-instruments-and-sofr.md): deposits, bills and overnight benchmarks, every one of them quoted with a convention attached.
 
-A convention fixes the size of one coupon on one date. What it cannot do is say what a coupon promised years from now is worth today, and a bond is a whole string of them — which is where [bonds-price-and-yield](05-bonds-price-and-yield.md) begins.
+A convention fixes the size of one coupon on one date. What it cannot do is say what a coupon promised years from now is worth today, and a bond is a whole string of them — which is where [Bond price and yield](05-bonds-price-and-yield.md) begins.
 
 ---
 

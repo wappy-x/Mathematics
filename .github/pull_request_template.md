@@ -9,4 +9,4 @@
 - [ ] Every number on each card is printed by both checks.
 - [ ] Each new card was written in one pass and checked in a separate one (a fresh agent session or a second person), then read once by a person.
 - [ ] Every source was opened and confirmed, and every DOI was checked on Crossref.
-- [ ] New cards follow the specs from the claim issue, and `status` is `draft`.
+- [ ] New cards follow the specs from the claim issue: no frontmatter, the title first, then the path line.

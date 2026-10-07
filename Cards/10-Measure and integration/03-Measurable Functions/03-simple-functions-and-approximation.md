@@ -1,27 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Measurable Functions
-topic: Staircases from below
-item: Simple functions
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/03-Measurable Functions/02-limits-of-measurable-functions|limits-of-measurable-functions]]"
-next:
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/01-integral-of-a-simple-function|integral-of-a-simple-function]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/02-integral-of-a-nonnegative-function|integral-of-a-nonnegative-function]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/03-monotone-convergence-theorem|monotone-convergence-theorem]]"
-tags:
-  - mathematics
-  - measure and integration
-  - simple-functions-and-approximation
----
-
 # Simple functions: finitely many values on measurable pieces, and every non-negative measurable function is a rising limit of them
 
-Measure and integration → Measurable Functions → Staircases from below → Simple functions
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Measurable Functions](../../../SYLLABUS.md#w10-s03) → Simple functions
 
 ---
 
@@ -49,7 +28,7 @@ The shaded area is 13.25 kWh; the area under the dashed curve is 24.8 kWh. Later
 
 ## The formula
 
-Notation first, in words. The **indicator** $\mathbf{1}_A$, read "one on A, zero off it", equals 1 at every point of the set A and 0 elsewhere. As a reminder, a measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the collection of its subsets we allow ourselves to measure, and a size for each ([measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). Here $\Omega$ is the day, hours 0 to 24, $\mathcal{F}$ its Borel sets, and the measure is length, Lebesgue measure $\lambda$.
+Notation first, in words. The **indicator** $\mathbf{1}_A$, read "one on A, zero off it", equals 1 at every point of the set A and 0 elsewhere. As a reminder, a measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the collection of its subsets we allow ourselves to measure, and a size for each ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). Here $\Omega$ is the day, hours 0 to 24, $\mathcal{F}$ its Borel sets, and the measure is length, Lebesgue measure $\lambda$.
 
 A **simple function** is a function $s$ on $\Omega$, measurable with respect to $\mathcal{F}$, that takes only finitely many values. Its **standard form** lists each value once, with the set where it is taken:
 
@@ -69,7 +48,7 @@ $$0 \le s_1 \le s_2 \le s_3 \le \cdots \le f, \qquad s_n(\omega) \to f(\omega) \
 
 **Read it aloud:** the staircases never fall, never pass f, reach f at every point, and wherever f is at most n the stage-n staircase is less than one step below it.
 
-If $f$ never exceeds $M$, every stage $n \ge M$ keeps every gap below $2^{-n}$: the convergence is uniform. Since a pointwise limit of measurable functions is measurable ([limits-of-measurable-functions](02-limits-of-measurable-functions.md)), a non-negative function is measurable exactly when it is a rising limit of simple functions.
+If $f$ never exceeds $M$, every stage $n \ge M$ keeps every gap below $2^{-n}$: the convergence is uniform. Since a pointwise limit of measurable functions is measurable ([Sums, products, sups and limits](02-limits-of-measurable-functions.md)), a non-negative function is measurable exactly when it is a rising limit of simple functions.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -86,8 +65,8 @@ If $f$ never exceeds $M$, every stage $n \ge M$ keeps every gap below $2^{-n}$: 
 | $j$, $k$, $N$ | counters for the levels $j\,2^{-n}$; $N$ a whole-number stage | level $j = 49$ at stage 4 is 3.0625 kW | — |
 | $f^+$, $f^-$ | the positive part $\max(f, 0)$ and the negative part $\max(-f, 0)$ | net draw with solar at 12:00: $f^+ = 0$, $f^- = 0.6$ kW | — |
 
-- **Simple.** Stage 1 of the day. Also the indicator of the rational numbers in `[0, 1]`: its pieces are Borel sets but not intervals, so it is no step function and has no Riemann integral ([why-a-new-integral](../01-Sets%20You%20Can%20Measure/01-why-a-new-integral.md)), yet it is simple.
-- **Not simple.** The curve $p$: it takes every value from 0.30 to 3.10 kW. And the indicator of the Vitali set ([translation-invariance-and-the-vitali-set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)): two values, but one piece cannot be measured.
+- **Simple.** Stage 1 of the day. Also the indicator of the rational numbers in `[0, 1]`: its pieces are Borel sets but not intervals, so it is no step function and has no Riemann integral ([Why a new integral](../01-Sets%20You%20Can%20Measure/01-why-a-new-integral.md)), yet it is simple.
+- **Not simple.** The curve $p$: it takes every value from 0.30 to 3.10 kW. And the indicator of the Vitali set ([Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)): two values, but one piece cannot be measured.
 
 ### When it holds
 
@@ -106,7 +85,7 @@ A Riemann sum chops the time axis and needs the curve's height on each piece, wh
 
 ### Step 1: each staircase is a simple function
 
-At stage $n$ the value is a multiple of $2^{-n}$ between 0 and $n$, so there are at most $n\,2^n + 1$ values: 3 at stage 1, 9 at stage 2, 2049 at stage 8. The piece carrying the value $j\,2^{-n}$ is where $f$ lies between $j\,2^{-n}$ and the next grid mark; the top piece is where $f \ge n$. A measurable function pulls every interval back to a set in $\mathcal{F}$ ([measurable-functions](01-measurable-functions.md)), so every piece is measurable and $s_n$ is simple, already in standard form.
+At stage $n$ the value is a multiple of $2^{-n}$ between 0 and $n$, so there are at most $n\,2^n + 1$ values: 3 at stage 1, 9 at stage 2, 2049 at stage 8. The piece carrying the value $j\,2^{-n}$ is where $f$ lies between $j\,2^{-n}$ and the next grid mark; the top piece is where $f \ge n$. A measurable function pulls every interval back to a set in $\mathcal{F}$ ([Measurable functions](01-measurable-functions.md)), so every piece is measurable and $s_n$ is simple, already in standard form.
 
 On the day, the curve crosses 0.5 kW at hours 5.3333 and 23.5000, and 1 kW at 6.1818, 8.5714, 16.2500 and 22.2000. Stage 1 reads 0 for 5.833333 hours, 0.5 kW for 9.827056 hours and 1 kW for 8.339610 hours; the three add to 24.
 
@@ -138,12 +117,12 @@ Orange: the area under the stage-$n$ staircase. Green: the area under the curve.
 
 ### Step 4: functions that go negative
 
-A rooftop panel producing 1.5 kW at noon, against a draw of 0.9 kW, makes the net draw from the grid −0.6 kW. Split the net draw $f$ into its positive part $f^+ = \max(f, 0)$ and negative part $f^- = \max(-f, 0)$. Both are non-negative and measurable ([limits-of-measurable-functions](02-limits-of-measurable-functions.md)), and $f = f^+ - f^-$. At 12:00 they are 0 and 0.6; their stage-4 staircases give 0 and 0.5625, so the approximation is −0.5625 kW. The difference of staircases converges at every point and never exceeds $\lvert f \rvert$ in size, but on the negative side it falls towards $f$ rather than rising.
+A rooftop panel producing 1.5 kW at noon, against a draw of 0.9 kW, makes the net draw from the grid −0.6 kW. Split the net draw $f$ into its positive part $f^+ = \max(f, 0)$ and negative part $f^- = \max(-f, 0)$. Both are non-negative and measurable ([Sums, products, sups and limits](02-limits-of-measurable-functions.md)), and $f = f^+ - f^-$. At 12:00 they are 0 and 0.6; their stage-4 staircases give 0 and 0.5625, so the approximation is −0.5625 kW. The difference of staircases converges at every point and never exceeds $\lvert f \rvert$ in size, but on the negative side it falls towards $f$ rather than rising.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal{F})$ is a set with a sigma-algebra; no measure is needed. $f : \Omega \to [0, \infty]$ is measurable with respect to $\mathcal{F}$: the set where $f$ lies in any interval of $[0, \infty]$ belongs to $\mathcal{F}$ ([measurable-functions](01-measurable-functions.md)). Define $s_n$ as in The formula.
+**Setting.** $(\Omega, \mathcal{F})$ is a set with a sigma-algebra; no measure is needed. $f : \Omega \to [0, \infty]$ is measurable with respect to $\mathcal{F}$: the set where $f$ lies in any interval of $[0, \infty]$ belongs to $\mathcal{F}$ ([Measurable functions](01-measurable-functions.md)). Define $s_n$ as in The formula.
 
 **Lemma 1 (standard form).** A function with finitely many values $a_i$ is simple exactly when each level set $A_i = \{s = a_i\}$ is in $\mathcal{F}$, and then $s = \sum_i a_i \mathbf{1}_{A_i}$, uniquely. *Proof.* A level set is the preimage of one value; conversely the preimage of any set of values is a finite union of level sets. The level sets do not overlap and cover $\Omega$, so at a point of $A_i$ the sum is $a_i$. In any such sum with distinct values on non-overlapping covering pieces, the piece carrying $a_i$ is exactly where $s = a_i$.
 
@@ -161,13 +140,13 @@ A rooftop panel producing 1.5 kW at noon, against a draw of 0.9 kW, makes the ne
 
 (e) For $n \ge M$, (c) applies at every point of $B$ at once: $\sup_B (f - s_n) \le 2^{-n}$, which tends to 0.
 
-**Corollary 1 (signed functions).** If $f : \Omega \to \mathbb{R}$ is measurable, then $f^+ = \max(f, 0)$ and $f^- = \max(-f, 0)$ are non-negative and measurable ([limits-of-measurable-functions](02-limits-of-measurable-functions.md)), and $f = f^+ - f^-$. With $s_n$ and $r_n$ the staircases of $f^+$ and $f^-$, the difference $g_n = s_n - r_n$ is simple (finitely many values, level sets built from finitely many level sets), converges to $f$ at every point by (d), and satisfies $\lvert g_n \rvert \le \lvert f \rvert$, since at each point one of $f^+$, $f^-$ is 0 and so is its staircase.
+**Corollary 1 (signed functions).** If $f : \Omega \to \mathbb{R}$ is measurable, then $f^+ = \max(f, 0)$ and $f^- = \max(-f, 0)$ are non-negative and measurable ([Sums, products, sups and limits](02-limits-of-measurable-functions.md)), and $f = f^+ - f^-$. With $s_n$ and $r_n$ the staircases of $f^+$ and $f^-$, the difference $g_n = s_n - r_n$ is simple (finitely many values, level sets built from finitely many level sets), converges to $f$ at every point by (d), and satisfies $\lvert g_n \rvert \le \lvert f \rvert$, since at each point one of $f^+$, $f^-$ is 0 and so is its staircase.
 
-**Corollary 2 (the converse).** Every simple function is measurable, and a pointwise limit of measurable functions is measurable ([limits-of-measurable-functions](02-limits-of-measurable-functions.md)). With the theorem: $f : \Omega \to [0, \infty]$ is measurable exactly when it is the pointwise limit of a rising sequence of simple functions.
+**Corollary 2 (the converse).** Every simple function is measurable, and a pointwise limit of measurable functions is measurable ([Sums, products, sups and limits](02-limits-of-measurable-functions.md)). With the theorem: $f : \Omega \to [0, \infty]$ is measurable exactly when it is the pointwise limit of a rising sequence of simple functions.
 
 </details>
 
-A second road to the same staircase counts layers instead of pieces. At every point, $s_n = 2^{-n} \sum_{k=1}^{n 2^n} \mathbf{1}_{\{f \ge k\,2^{-n}\}}$: stack one thin slab of height $2^{-n}$ for every grid level the function reaches. The code computes the energies both ways and they agree exactly at all eight stages. Turning that stacking into a formula for integrals is [layer-cake-and-tail-integrals](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md).
+A second road to the same staircase counts layers instead of pieces. At every point, $s_n = 2^{-n} \sum_{k=1}^{n 2^n} \mathbf{1}_{\{f \ge k\,2^{-n}\}}$: stack one thin slab of height $2^{-n}$ for every grid level the function reaches. The code computes the energies both ways and they agree exactly at all eight stages. Turning that stacking into a formula for integrals is [The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md).
 
 ---
 
@@ -546,9 +525,9 @@ The two outputs are identical line for line.
 ## Where you meet it in real life
 
 - **Digital meters and sound cards.** A truncating analogue-to-digital converter rounds each reading down to its step; one more bit halves the step, one stage of this staircase.
-- **The Lebesgue integral.** The integral of a non-negative function is built from the areas under simple functions below it, starting at [integral-of-a-simple-function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md).
-- **Probability.** A die's score is a simple function on the sample space ([random-variables-and-their-information](04-random-variables-and-their-information.md)). Every non-negative random variable is a rising limit of such variables, which is how expectations of continuous quantities are defined.
-- **Proofs by stages.** Prove a statement for indicators, then for simple functions by adding, then for every non-negative measurable function by the rising limit. The rules of conditional expectation are proved this way, taking out what is known among them ([rules-of-conditional-expectation](../09-Conditional%20Expectation/04-rules-of-conditional-expectation.md)).
+- **The Lebesgue integral.** The integral of a non-negative function is built from the areas under simple functions below it, starting at [The integral of a simple function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md).
+- **Probability.** A die's score is a simple function on the sample space ([Random variables as measurable maps](04-random-variables-and-their-information.md)). Every non-negative random variable is a rising limit of such variables, which is how expectations of continuous quantities are defined.
+- **Proofs by stages.** Prove a statement for indicators, then for simple functions by adding, then for every non-negative measurable function by the rising limit. The rules of conditional expectation are proved this way, taking out what is known among them ([The rules of conditional expectation](../09-Conditional%20Expectation/04-rules-of-conditional-expectation.md)).
 
 > **Say it back**
 > A simple function takes finitely many values, each on a measurable piece; its standard form lists each value once with the piece where it is taken. For a non-negative measurable function, round down to steps of 1/2^n and cap at n. Because halving grids nest, the staircases never fall; because rounding down never overshoots, they stay below the function. Wherever the function is at most n the gap is under one step, so the staircases reach it at every point, uniformly if it is bounded. On the day's power curve their areas climb from 13.25 to 24.75 kWh towards 24.8.
@@ -557,15 +536,15 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [limits-of-measurable-functions](02-limits-of-measurable-functions.md): maxima and pointwise limits of measurable functions are measurable, which gives the positive and negative parts and the converse of the theorem.
+- [Sums, products, sups and limits](02-limits-of-measurable-functions.md): maxima and pointwise limits of measurable functions are measurable, which gives the positive and negative parts and the converse of the theorem.
 
 ## Where this goes next
 
-- [integral-of-a-simple-function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md): the area under a simple function, value times size of piece, and why any way of writing it gives the same answer.
-- [integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md): the integral as the best area reached by simple functions from below.
-- [monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md): why the staircases' areas converge to the function's area.
+- [The integral of a simple function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md): the area under a simple function, value times size of piece, and why any way of writing it gives the same answer.
+- [The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md): the integral as the best area reached by simple functions from below.
+- [The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md): why the staircases' areas converge to the function's area.
 
-The staircases reach the curve at every point, but that their areas must reach the curve's area is not yet proved; it starts with giving a simple function an area, on [integral-of-a-simple-function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md).
+The staircases reach the curve at every point, but that their areas must reach the curve's area is not yet proved; it starts with giving a simple function an area, on [The integral of a simple function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md).
 
 ---
 

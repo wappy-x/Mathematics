@@ -1,29 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Options on commodity futures and spreads
-topic: Hedging a Brent option
-item: Greeks of a futures option
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/01-options-on-commodity-futures|options-on-commodity-futures]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/01-delta|delta]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/03-vega|vega]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/05-rho-and-dividend-rho|rho-and-dividend-rho]]"
-next:
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/03-commodity-implied-vol-and-the-call-skew|commodity-implied-vol-and-the-call-skew]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/05-spread-option-greeks|spread-option-greeks]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - futures-option-greeks
----
-
 # Greeks of a futures option: delta in contracts not barrels, rho that is minus time times price, and vega per vol point per lot
 
-Financial mathematics → Options on commodity futures and spreads → Hedging a Brent option → Greeks of a futures option
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Options on commodity futures and spreads](../../../SYLLABUS.md#w12-s26) → Greeks of a futures option
 
 ---
 
@@ -57,7 +34,7 @@ The first line (orange) is the option's price per barrel as the futures price va
 
 ## The formula
 
-The price itself comes from [options-on-commodity-futures](01-options-on-commodity-futures.md): Black's 1976 formula, the Black–Scholes call with the futures price in place of the share and no dividend term.
+The price itself comes from [Options on a futures price](01-options-on-commodity-futures.md): Black's 1976 formula, the Black–Scholes call with the futures price in place of the share and no dividend term.
 
 $$V = e^{-rT}\big[F\,N(d_1) - K\,N(d_2)\big], \qquad d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
 
@@ -103,11 +80,11 @@ A basis point is a hundredth of a percentage point. A volatility point is one pe
 
 ### When it holds
 
-- **The futures price is lognormal with one fixed volatility.** Real Brent options show a smile ([commodity-implied-vol-and-the-call-skew](03-commodity-implied-vol-and-the-call-skew.md)); if volatility moves with the price, the true hedge differs from $\Delta$ by vega times that co-movement.
+- **The futures price is lognormal with one fixed volatility.** Real Brent options show a smile ([Implied vol on a futures option and the commodity smile](03-commodity-implied-vol-and-the-call-skew.md)); if volatility moves with the price, the true hedge differs from $\Delta$ by vega times that co-movement.
 - **The premium is paid today and financed at one fixed rate.** For a margined option, where nothing is paid up front, delta is $N(d_1)$ and rho is zero (Step 5). Using the paid formulas on a margined option under-hedges by $13.39 per dollar per lot.
 - **Rho holds the futures price still.** If a rate move also shifts the future, the total effect adds delta times that shift (Step 4).
 - **Hedging is continuous and fractional.** Only whole lots trade. A single option's 0.53 lot rounds to one lot or none, leaving half a lot unhedged; desks net many options before rounding.
-- **European exercise, or a margined American one.** A premium-paid American futures call can be worth exercising early; a margined one never is ([options-on-commodity-futures](01-options-on-commodity-futures.md)).
+- **European exercise, or a margined American one.** A premium-paid American futures call can be worth exercising early; a margined one never is ([Options on a futures price](01-options-on-commodity-futures.md)).
 
 ---
 
@@ -115,7 +92,7 @@ A basis point is a hundredth of a percentage point. A volatility point is one pe
 
 ### Step 0: a future costs nothing, so the only money at stake today is the premium
 
-A share must be paid for. A future costs nothing to enter: its gains and losses are settled in cash every day, called **marking to market**. In the pricing world of [options-on-commodity-futures](01-options-on-commodity-futures.md) the futures price therefore has no drift: it is expected to stay where it is. The option's premium, by contrast, is real money paid today for a payoff six months away. The whole card follows from those two facts. The futures price carries no interest; the premium does.
+A share must be paid for. A future costs nothing to enter: its gains and losses are settled in cash every day, called **marking to market**. In the pricing world of [Options on a futures price](01-options-on-commodity-futures.md) the futures price therefore has no drift: it is expected to stay where it is. The option's premium, by contrast, is real money paid today for a payoff six months away. The whole card follows from those two facts. The futures price carries no interest; the premium does.
 
 ### Step 1: delta is the discount times $N(d_1)$
 
@@ -146,14 +123,14 @@ Delta is dollars of option value per dollar on the future, per barrel. The optio
 
 The discount inside delta has a plain reason. A future's gain is paid into the account today. The option's gain is a larger payoff at expiry, worth today only its discounted value. So the hedge holds $e^{-rT}N(d_1)$ futures, not $N(d_1)$. Traders call this **tailing** the hedge. Selling 0.5422 lots against a premium-paid option over-hedges by 13.39 barrels of exposure per lot.
 
-Compare a spot option. The house Acme call, on a share at $100 with dividend yield $q$ = 2 percent, is hedged with $e^{-qT}N(d_1)$ = 0.5869 shares bought with borrowed cash ([delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)). The same call can be priced by Black's formula on Acme's one-year future: it gives the same $9.23. Its delta there is 0.5695 futures: the spot delta divided by $e^{(r-q)T}$ = 1.0305, the dollars the future moves per dollar on the share. Two differences, then: the futures hedge needs no cash to buy the hedge, only margin; and it needs fewer contracts, because each future moves more than the share does.
+Compare a spot option. The house Acme call, on a share at $100 with dividend yield $q$ = 2 percent, is hedged with $e^{-qT}N(d_1)$ = 0.5869 shares bought with borrowed cash ([Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)). The same call can be priced by Black's formula on Acme's one-year future: it gives the same $9.23. Its delta there is 0.5695 futures: the spot delta divided by $e^{(r-q)T}$ = 1.0305, the dollars the future moves per dollar on the share. Two differences, then: the futures hedge needs no cash to buy the hedge, only margin; and it needs fewer contracts, because each future moves more than the share does.
 
 ### Step 3: gamma, vega and theta share one piece
 
 All three contain $e^{-rT}F\phi(d_1)$: the discounted futures price times the bell curve's height at $d_1$. For the house call it is 32.8873.
 
 - **Gamma** divides it by $F^2\sigma\sqrt{T}$: 0.0215. After a $1 rise the hedge needs 0.0215 lots more.
-- **Vega** multiplies it by $\sqrt{T}$: 23.25 per unit of volatility, 0.2325 per point per barrel, $232.55 per point per lot ([vega](../09-The%20Greeks%2C%20one%20each/03-vega.md) explains why desks divide by 100).
+- **Vega** multiplies it by $\sqrt{T}$: 23.25 per unit of volatility, 0.2325 per point per barrel, $232.55 per point per lot ([Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md) explains why desks divide by 100).
 - **Theta** subtracts $\sigma/(2\sqrt{T})$ times it, 6.9765, from the interest on the premium, $r\,V$ = 0.3501: −6.63 per year, −0.0182 per barrel per day, −$18.15 per lot per day.
 
 The three are tied by Black's equation, $\Theta + \tfrac12\sigma^2F^2\Gamma = r\,V$. Time decay pays for gamma, less the interest on money already spent.
@@ -162,17 +139,17 @@ The three are tied by Black's equation, $\Theta + \tfrac12\sigma^2F^2\Gamma = r\
 
 Hold the future still and raise the rate. The chances $N(d_1)$ and $N(d_2)$ do not change, because $F$ already carries every effect of rates on the oil price. Only the discount changes, and it falls at rate $T$ per unit of rate. So $\rho = -T V$ = −0.5 × 7.00 = −3.50 per barrel. On a lot, −$3,501.34 per unit of rate, −$0.35 per basis point. A small number: rates barely touch a six-month futures option.
 
-For a share the story reverses. The Acme call's rho is $K T e^{-rT}N(d_2)$ = 49.46, positive ([rho-and-dividend-rho](../09-The%20Greeks%2C%20one%20each/05-rho-and-dividend-rho.md)). The difference is what is held still. Holding the share still lets the forward, $S e^{(r-q)T}$, rise with the rate. Holding the future still does not. The chain rule joins them: the stock rho equals the futures rho plus delta times the futures price's slope in the rate, $-TV + \Delta \cdot T F$. For Acme both roads give 49.46.
+For a share the story reverses. The Acme call's rho is $K T e^{-rT}N(d_2)$ = 49.46, positive ([Rho and dividend rho](../09-The%20Greeks%2C%20one%20each/05-rho-and-dividend-rho.md)). The difference is what is held still. Holding the share still lets the forward, $S e^{(r-q)T}$, rise with the rate. Holding the future still does not. The chain rule joins them: the stock rho equals the futures rho plus delta times the futures price's slope in the rate, $-TV + \Delta \cdot T F$. For Acme both roads give 49.46.
 
 ### Step 5: a margined option has no premium to discount
 
-On some exchanges, Brent among them, the buyer of a futures option pays no premium up front. The option is marked to market daily like a future, and [options-on-commodity-futures](01-options-on-commodity-futures.md) shows its fair quote is the paid premium without the discount, and that such an option is never worth exercising early. That card calls the paid premium C and the margined quote V; here $V$ is the paid premium, so that rho reads $-T\,V$, and $V_m$ is the margined quote:
+On some exchanges, Brent among them, the buyer of a futures option pays no premium up front. The option is marked to market daily like a future, and [Options on a futures price](01-options-on-commodity-futures.md) shows its fair quote is the paid premium without the discount, and that such an option is never worth exercising early. That card calls the paid premium C and the margined quote V; here $V$ is the paid premium, so that rho reads $-T\,V$, and $V_m$ is the margined quote:
 
 $$V_m = F\,N(d_1) - K\,N(d_2) = e^{rT}V$$
 
 Its Greeks follow by the same differentiation with the discount removed. Nothing is financed, so nothing is discounted. For the house call, $V_m$ = 7.18. Its delta is $N(d_1)$ = 0.5422 lots: the untailed number is right here, because the option's own gains are now paid daily, like the future's. Its rho is zero with the future held still, and its theta is the decay term alone, −0.0196 per barrel per day.
 
-A second road to every Greek is bump-and-reprice: nudge one input, reprice, divide. The code does it for all five and lands on the formulas; [delta](../09-The%20Greeks%2C%20one%20each/01-delta.md) shows why the central difference is accurate.
+A second road to every Greek is bump-and-reprice: nudge one input, reprice, divide. The code does it for all five and lands on the formulas; [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md) shows why the central difference is accurate.
 
 ---
 
@@ -729,8 +706,8 @@ The two outputs are identical line for line.
 - **ICE Brent options.** Each covers 1,000 barrels, exercises into the Brent future, and is margined futures-style: no premium changes hands on the trade, and the option is marked to market daily. The exchange names the Brent future as the option's delta hedge. Conventions verified 2026-09-27 on the ICE contract page.
 - **Airline and refinery fuel hedging.** A buyer of calls on oil futures reports its exposure in futures lots, so that option and futures positions add up in one number.
 - **Risk reports.** Desks sum vega per volatility point per lot and theta per day across every option in a book. The per-unit and per-year numbers from the formulas are never what appears on the report.
-- **Spread positions.** A refiner holding options on the gap between gasoline and crude has a delta in each leg. [spread-option-greeks](05-spread-option-greeks.md) extends this card to two futures, and [margrabe-and-kirk-spread-options](04-margrabe-and-kirk-spread-options.md) prices them.
-- **Implied volatility.** Vega is the step size when a market price is turned back into a volatility: [commodity-implied-vol-and-the-call-skew](03-commodity-implied-vol-and-the-call-skew.md).
+- **Spread positions.** A refiner holding options on the gap between gasoline and crude has a delta in each leg. [Greeks of a spread option](05-spread-option-greeks.md) extends this card to two futures, and [Spread options](04-margrabe-and-kirk-spread-options.md) prices them.
+- **Implied volatility.** Vega is the step size when a market price is turned back into a volatility: [Implied vol on a futures option and the commodity smile](03-commodity-implied-vol-and-the-call-skew.md).
 
 > **Say it back**
 > A futures option's Greeks are the Black–Scholes Greeks with the futures price in place of the share and one discount over everything. Delta, $e^{-rT}N(d_1)$, counts futures per barrel; the lot hedge divides by the barrels in a future, 0.53 lots here, not 529. The discount stays in because a future pays its gains today. With the future held still, rates touch only the discount, so rho is minus the time left times the premium, −3.50 per barrel. A margined option has no premium to discount: its delta is $N(d_1)$ and its rho is zero.
@@ -739,15 +716,15 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [options-on-commodity-futures](01-options-on-commodity-futures.md): Black's formula for the price, the Brent house example, and the paid versus margined premium.
-- [delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): the slope in the underlying and the hedge it defines, on a share.
-- [vega](../09-The%20Greeks%2C%20one%20each/03-vega.md): the slope in volatility and the per-point convention.
-- [rho-and-dividend-rho](../09-The%20Greeks%2C%20one%20each/05-rho-and-dividend-rho.md): the share's rho, which this card's chain rule recovers from the futures rho.
+- [Options on a futures price](01-options-on-commodity-futures.md): Black's formula for the price, the Brent house example, and the paid versus margined premium.
+- [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): the slope in the underlying and the hedge it defines, on a share.
+- [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md): the slope in volatility and the per-point convention.
+- [Rho and dividend rho](../09-The%20Greeks%2C%20one%20each/05-rho-and-dividend-rho.md): the share's rho, which this card's chain rule recovers from the futures rho.
 
 ## Where this goes next
 
-- [commodity-implied-vol-and-the-call-skew](03-commodity-implied-vol-and-the-call-skew.md): runs the price backwards to a volatility with vega as the step, and meets the smile that breaks the one-volatility assumption.
-- [spread-option-greeks](05-spread-option-greeks.md): two futures, two deltas, and a sensitivity to their correlation.
+- [Implied vol on a futures option and the commodity smile](03-commodity-implied-vol-and-the-call-skew.md): runs the price backwards to a volatility with vega as the step, and meets the smile that breaks the one-volatility assumption.
+- [Greeks of a spread option](05-spread-option-greeks.md): two futures, two deltas, and a sensitivity to their correlation.
 
 This card assumed one volatility for every strike; the market's prices say otherwise, and the implied-volatility card asks what number the market is really quoting.
 

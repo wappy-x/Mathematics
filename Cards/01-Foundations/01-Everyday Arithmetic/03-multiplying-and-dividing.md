@@ -1,28 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Everyday Arithmetic
-topic: Whole numbers
-item: Multiplying and dividing
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/01-place-value|place-value]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/02-adding-and-subtracting|adding-and-subtracting]]"
-next:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/04-order-of-operations|order-of-operations]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/07-fractions|fractions]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/01-exponents-and-powers|exponents-and-powers]]"
-tags:
-  - mathematics
-  - foundations
-  - multiplying-and-dividing
----
-
 # Multiplying and dividing: adding in one move, and sharing out what is left
 
-Foundations → Everyday Arithmetic → Whole numbers → Multiplying and dividing
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Everyday Arithmetic](../../../SYLLABUS.md#w01-s01) → Multiplying and dividing
 
 ---
 
@@ -89,7 +67,7 @@ Fourteen apples now. Deal a round to the four friends, then a second, then a thi
 
 Why can the leftover never reach four? If it did, another round would go out.
 
-The other way out is to cut those two apples in half and share them anyway. That move invents fractions: [fractions](07-fractions.md).
+The other way out is to cut those two apples in half and share them anyway. That move invents fractions: [Fractions](07-fractions.md).
 
 <details>
 <summary>The exact statement, if you want it</summary>
@@ -281,14 +259,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [place-value](01-place-value.md): reading 900 as nine hundred, a $10 bill as 1000 cents.
-- [adding-and-subtracting](02-adding-and-subtracting.md): the cross-check here is nothing but adding.
+- [Place value](01-place-value.md): reading 900 as nine hundred, a $10 bill as 1000 cents.
+- [Adding and subtracting](02-adding-and-subtracting.md): the cross-check here is nothing but adding.
 
 ## Where this goes next
 
-- [order-of-operations](04-order-of-operations.md): which goes first when they share a line.
-- [fractions](07-fractions.md): what to do with the two apples left over. Cut them.
-- [exponents-and-powers](../03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): multiplying a number by itself, over and over.
+- [Order of operations](04-order-of-operations.md): which goes first when they share a line.
+- [Fractions](07-fractions.md): what to do with the two apples left over. Cut them.
+- [Exponents](../03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): multiplying a number by itself, over and over.
 
 ---
 

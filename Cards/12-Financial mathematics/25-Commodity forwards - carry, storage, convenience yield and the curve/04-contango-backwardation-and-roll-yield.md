@@ -1,30 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Commodity forwards - carry, storage, convenience yield and the curve
-topic: Reading the curve
-item: Contango and backwardation
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/03-convenience-yield-implied-by-the-forward|convenience-yield-implied-by-the-forward]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/10-percentages|percentages]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/01-growth-factors|growth-factors]]"
-next:
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/05-seasonality-and-the-gas-curve|seasonality-and-the-gas-curve]]"
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/06-mean-reverting-spot-and-the-futures-curve|mean-reverting-spot-and-the-futures-curve]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/01-options-on-commodity-futures|options-on-commodity-futures]]"
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/01-commodity-swap-and-average-price-forward|commodity-swap-and-average-price-forward]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - contango-backwardation-and-roll-yield
----
-
 # Contango and backwardation: reading a futures strip, and the roll that pays or bleeds a long-only holder
 
-Financial mathematics → Commodity forwards - carry, storage, convenience yield and the curve → Reading the curve → Contango and backwardation
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Commodity forwards - carry, storage, convenience yield and the curve](../../../SYLLABUS.md#w12-s25) → Contango and backwardation
 
 ---
 
@@ -75,7 +51,7 @@ $$\ln\frac{F_{\text{end}}}{F_{\text{start}}} \;=\; \ln\frac{S_{\text{end}}}{S_{\
 
 **Read it aloud: the future's return is the spot's return plus the roll yield, and the roll yield is minus the slope of the strip times the time held.**
 
-The natural log, $\ln$, turns a ratio into a return that adds across months ([growth-factors](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/01-growth-factors.md) multiplies the same ratios). As a plain percentage, one month of roll is $e^{-c\Delta} - 1$.
+The natural log, $\ln$, turns a ratio into a return that adds across months ([Growth factors](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/01-growth-factors.md) multiplies the same ratios). As a plain percentage, one month of roll is $e^{-c\Delta} - 1$.
 
 | Symbol | Plain meaning | In our example | Push it up and the roll… |
 | --- | --- | --- | --- |
@@ -96,7 +72,7 @@ The natural log, $\ln$, turns a ratio into a return that adds across months ([gr
 ### When it holds
 
 - **The strip keeps its shape.** The identity assumes $c$ is the same when the contract is sold as when it was bought. If the strip steepens while the front contract is held, that contract gains the change in $c$ times its time left, a third term the spot and the roll do not capture.
-- **One slope for the whole strip.** A single $c$ makes the strip a smooth curve. Real strips kink: gas is dear in winter and cheap in summer ([seasonality-and-the-gas-curve](05-seasonality-and-the-gas-curve.md)). Then the roll is the local slope between the first two contracts, not the twelve-month average.
+- **One slope for the whole strip.** A single $c$ makes the strip a smooth curve. Real strips kink: gas is dear in winter and cheap in summer ([Seasonal curves](05-seasonality-and-the-gas-curve.md)). Then the roll is the local slope between the first two contracts, not the twelve-month average.
 - **Rolled at delivery.** The card rolls on the delivery day, when the front contract equals spot. Funds roll days earlier, so they earn the gap between the first and second contracts instead; with a smooth strip it is the same slope.
 - **Futures treated as forwards.** Futures settle gains and losses daily through margin. With a fixed interest rate the two prices are equal; when rates move, the gap is too small to see at these horizons.
 - **Cash counted apart.** The roll yield is a return on the contract's value, with no cash held. A fund that keeps the contract's full value in the bank earns the bank rate on top (Step 4).
@@ -113,7 +89,7 @@ Convergence is the whole story of the roll. A contract bought above spot, on a d
 
 ### Step 1: the slope of the strip is the carry
 
-The earlier cards on this shelf price a future by the cost of the alternative: buy the barrel now, borrow the money at the bank rate $r$, pay the tank rent $u$, and give up the convenience yield $y$ that a physical barrel offers and a paper contract does not ([storage-cost-and-the-carry-ceiling](02-storage-cost-and-the-carry-ceiling.md), [convenience-yield-implied-by-the-forward](03-convenience-yield-implied-by-the-forward.md)). Every point on the strip is spot times $e^{c\tau}$ with the same $c$.
+The earlier cards on this shelf price a future by the cost of the alternative: buy the barrel now, borrow the money at the bank rate $r$, pay the tank rent $u$, and give up the convenience yield $y$ that a physical barrel offers and a paper contract does not ([Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md), [Convenience yield](03-convenience-yield-implied-by-the-forward.md)). Every point on the strip is spot times $e^{c\tau}$ with the same $c$.
 
 So $\ln F(\tau)$ is a straight line in $\tau$ with slope $c$. Contango and backwardation are the sign of that slope. For crude, $c = \ln(84/80) = 4.88\%$ a year. With $r = 5\%$ and $u = 2\%$, the market is saying $y = 2.12\%$: the same crude, and the same answer, as the convenience-yield card. For copper, $c = \ln(8{,}700/9{,}000) = -3.39\%$: the convenience of holding copper now beats the bank rate plus storage, so the strip falls.
 
@@ -160,7 +136,7 @@ The market has a second habit of quoting the roll: on roll day, (price of the co
 
 **Conventions verified 27 Sep 2026:** NYMEX crude futures are quoted in US dollars a barrel, LME copper in US dollars a tonne. Commodity indices such as the S&P GSCI publish an excess-return version (rolled futures alone) and a total-return version (plus interest on the cash). Exchanges could change contract terms; the arithmetic needs only prices for each delivery month.
 
-How a spot price that drifts back toward a normal level shapes the strip is [mean-reverting-spot-and-the-futures-curve](06-mean-reverting-spot-and-the-futures-curve.md).
+How a spot price that drifts back toward a normal level shapes the strip is [A spot price that reverts](06-mean-reverting-spot-and-the-futures-curve.md).
 
 ---
 
@@ -631,10 +607,10 @@ The two outputs match line for line, the random path included, because both prog
 
 - **Commodity index funds.** A fund that tracks oil by holding front-month futures reports two returns: the futures return, which includes the roll, and the spot move people see on the news. In a steep contango the fund can lag spot for months on end.
 - **Excess return and total return.** Commodity indices publish both: the excess return is the rolled futures alone, the total return adds interest on the cash. Step 4 is the difference between the two.
-- **Storage filling up.** When tanks fill, storage turns dear and $y$ falls toward nothing, so crude strips steepen toward full carry ([storage-cost-and-the-carry-ceiling](02-storage-cost-and-the-carry-ceiling.md)). Rollers bleed fastest exactly then.
+- **Storage filling up.** When tanks fill, storage turns dear and $y$ falls toward nothing, so crude strips steepen toward full carry ([Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md)). Rollers bleed fastest exactly then.
 - **Tight metals markets.** Copper, when warehouse stocks run low, trades in backwardation: users pay up for metal now. Rollers are paid for holding the risk that stocks come back.
-- **Gold.** Gold's strip almost always sits in mild contango, with the lease rate playing the part of $y$ ([gold-forward-and-the-lease-rate](01-gold-forward-and-the-lease-rate.md)).
-- **Options on futures.** A crude option usually settles into a futures contract, so it is priced off that contract's point on the strip, not off spot: [options-on-commodity-futures](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md).
+- **Gold.** Gold's strip almost always sits in mild contango, with the lease rate playing the part of $y$ ([Gold forward](01-gold-forward-and-the-lease-rate.md)).
+- **Options on futures.** A crude option usually settles into a futures contract, so it is priced off that contract's point on the strip, not off spot: [Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md).
 
 > **Say it back**
 > A futures strip lists the price of a commodity for each delivery month. Its slope in log terms is the carry, $r + u - y$: rising is contango, falling is backwardation. Each contract meets spot on its delivery day, so a front-month holder earns spot's move plus the drift down (or up) to spot, which is minus the slope times the time held. A year of monthly rolls earns what the twelve-month contract earns, and with the cash interest added the roller earns what a barrel in a tank earns. The roll is carry, not a forecast and not a fee.
@@ -643,18 +619,18 @@ The two outputs match line for line, the random path included, because both prog
 
 ## What this builds on
 
-- [convenience-yield-implied-by-the-forward](03-convenience-yield-implied-by-the-forward.md): the $y$ read backwards from a market forward, and the same crude at $80.00 and $84.00 with $y = 2.12\%$.
-- [percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): returns as percentages of a price, and why −0.41% of $80.33 is the 33 cents lost.
-- [growth-factors](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/01-growth-factors.md): why twelve monthly rolls multiply rather than add, and why the log slope, not the spread over twelve, gives the month.
+- [Convenience yield](03-convenience-yield-implied-by-the-forward.md): the $y$ read backwards from a market forward, and the same crude at $80.00 and $84.00 with $y = 2.12\%$.
+- [Percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): returns as percentages of a price, and why −0.41% of $80.33 is the 33 cents lost.
+- [Growth factors](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/01-growth-factors.md): why twelve monthly rolls multiply rather than add, and why the log slope, not the spread over twelve, gives the month.
 
 ## Where this goes next
 
-- [seasonality-and-the-gas-curve](05-seasonality-and-the-gas-curve.md): a strip with no single slope, where the roll depends on the month of the year.
-- [mean-reverting-spot-and-the-futures-curve](06-mean-reverting-spot-and-the-futures-curve.md): a spot that is pulled back to a normal level, which bends the strip toward that level and explains backwardation after a price spike.
-- [options-on-commodity-futures](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md): options priced off one point of the strip.
-- [commodity-swap-and-average-price-forward](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/01-commodity-swap-and-average-price-forward.md): a fixed price for a whole stretch of the strip, set from its average.
+- [Seasonal curves](05-seasonality-and-the-gas-curve.md): a strip with no single slope, where the roll depends on the month of the year.
+- [A spot price that reverts](06-mean-reverting-spot-and-the-futures-curve.md): a spot that is pulled back to a normal level, which bends the strip toward that level and explains backwardation after a price spike.
+- [Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md): options priced off one point of the strip.
+- [Commodity swap](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/01-commodity-swap-and-average-price-forward.md): a fixed price for a whole stretch of the strip, set from its average.
 
-This card gave the whole strip one slope; when the slope changes from month to month, as gas does between summer and winter, the roll a holder earns depends on the calendar, and [seasonality-and-the-gas-curve](05-seasonality-and-the-gas-curve.md) prices that.
+This card gave the whole strip one slope; when the slope changes from month to month, as gas does between summer and winter, the roll a holder earns depends on the calendar, and [Seasonal curves](05-seasonality-and-the-gas-curve.md) prices that.
 
 ---
 

@@ -1,24 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Trigonometry
-topic: Right-triangle ratios
-item: Sine, cosine and tangent
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first: []
-next:
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/02-radians-and-the-unit-circle|radians-and-the-unit-circle]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/03-complex-roots-and-damped-oscillation|complex-roots-and-damped-oscillation]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/03-the-nonlinear-pendulum|the-nonlinear-pendulum]]"
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/05-seasonality-and-the-gas-curve|seasonality-and-the-gas-curve]]"
-tags: [mathematics, geometry and trig, right-triangle-trigonometry]
----
-
 # Sine, cosine and tangent: three ratios that turn an angle into lengths
 
-Geometry and trig → Trigonometry → Right-triangle ratios → Sine, cosine and tangent
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Trigonometry](../../../SYLLABUS.md#w05-s03) → Sine, cosine and tangent
 
 ---
 
@@ -71,7 +53,7 @@ Tangent is sine over cosine: (a ÷ c) ÷ (b ÷ c) = a ÷ b.
 As definitions, the ratios hold in every right triangle. The crane needs:
 
 - **A true right angle at C, and A measured from level.** The hook hangs plumb and the reach is level. Read against a tilted deck, the angle is wrong and so is every length; cranes are levelled before a lift.
-- **An angle strictly between 0° and 90°.** At either end the triangle collapses into a line; there and beyond, the ratios need [radians-and-the-unit-circle](02-radians-and-the-unit-circle.md).
+- **An angle strictly between 0° and 90°.** At either end the triangle collapses into a line; there and beyond, the ratios need [The unit circle](02-radians-and-the-unit-circle.md).
 - **A straight boom, heights from the pivot.** The triangle uses the straight line from pivot to tip; height above the ground adds the pivot's own.
 
 ---
@@ -80,7 +62,7 @@ As definitions, the ratios hold in every right triangle. The crane needs:
 
 ### Step 0: one angle fixes the shape
 
-The right angle is one angle and A a second; the three total 180°, so B is forced: 50° ([triangle-angle-sum-and-inequality](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). Two triangles with equal angles are **similar**: one is a scaled copy of the other ([similar-triangles-and-scale](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)). Size is the only freedom left.
+The right angle is one angle and A a second; the three total 180°, so B is forced: 50° ([Triangles](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). Two triangles with equal angles are **similar**: one is a scaled copy of the other ([Similar triangles](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)). Size is the only freedom left.
 
 ### Step 1: the scale cancels, so each ratio belongs to the angle
 
@@ -108,7 +90,7 @@ The crane knew the boom, c: sine gives the height, cosine the reach.
 
 ### Step 4: reading a table or a calculator
 
-Three angles take exact values from simple figures. Halve an equilateral triangle of side 2: angles of 30° and 60°, short side 1, hypotenuse 2, so the sine of 30° is exactly 0.5. By Pythagoras ([pythagoras-and-its-converse](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)) the long side is √3, so the cosine of 30° is √3 ÷ 2, or 0.8660. Halve a square of side 1 along its diagonal, √2 long: the sine and cosine of 45° are both 1 ÷ √2, or 0.7071.
+Three angles take exact values from simple figures. Halve an equilateral triangle of side 2: angles of 30° and 60°, short side 1, hypotenuse 2, so the sine of 30° is exactly 0.5. By Pythagoras ([Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)) the long side is √3, so the cosine of 30° is √3 ÷ 2, or 0.8660. Halve a square of side 1 along its diagonal, √2 long: the sine and cosine of 45° are both 1 ÷ √2, or 0.7071.
 
 Raise a boom of fixed length and its tip climbs and comes in: from 0° to 90°, sine rises from 0 toward 1, cosine falls from 1 toward 0, and tangent passes 1 at 45° and grows without bound. So 40°, between 30° and 45°, must have a sine between 0.5 and 0.7071; the table's 0.6428 passes. A four-figure table is off by at most 0.00005, moving the height by at most 0.0015 m.
 
@@ -155,7 +137,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported; a built-in sine would already hold the answer. Each road finds the tip of a one-unit boom at 40°, a point on a circle of radius 1; its height and reach are the sine and cosine. Road one takes the degree at its word, an angle being the fraction of a turn its arc covers. It walks up the circle in 400,000 straight steps and stops at 40/45 of the walk to the 45° point. Road two shares no arithmetic with it: it halves angles. A **chord**, the straight line joining two points of the circle, has its midpoint on the line halving their angle, since the two halves are congruent ([congruent-triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)). Pushed out to radius 1, that midpoint lands on the circle. Sixty halvings from 0° and 90°, each keeping the half that holds 40°, close in far below a billionth of a degree. Four asserts: the roads agree on sine and on cosine, road one gives 0.5 at 30°, and the telescopic boom comes out the same by the ratios as by shrinking the crane.
+Nothing is imported; a built-in sine would already hold the answer. Each road finds the tip of a one-unit boom at 40°, a point on a circle of radius 1; its height and reach are the sine and cosine. Road one takes the degree at its word, an angle being the fraction of a turn its arc covers. It walks up the circle in 400,000 straight steps and stops at 40/45 of the walk to the 45° point. Road two shares no arithmetic with it: it halves angles. A **chord**, the straight line joining two points of the circle, has its midpoint on the line halving their angle, since the two halves are congruent ([Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)). Pushed out to radius 1, that midpoint lands on the circle. Sixty halvings from 0° and 90°, each keeping the half that holds 40°, close in far below a billionth of a degree. Four asserts: the roads agree on sine and on cosine, road one gives 0.5 at 30°, and the telescopic boom comes out the same by the ratios as by shrinking the crane.
 
 ### Python
 
@@ -378,7 +360,7 @@ The two outputs match line for line.
 - **Cranes.** A mobile crane's load chart gives the safe load by boom length and working radius, the level distance from the crane's turning centre to the hook; boom length times the cosine of its angle is most of that radius.
 - **Heights.** A clinometer, a sighting tube with an angle scale, reads the angle to a treetop; the measured distance times the tangent, plus eye height, gives the tree.
 - **Forces.** A cable pulling at 40° above level splits its pull into a level part, 0.7660 of it, and an upward part, 0.6428.
-- **Other triangles.** [law-of-cosines](06-law-of-cosines.md) and [law-of-sines-and-the-ambiguous-case](07-law-of-sines-and-the-ambiguous-case.md) carry the ratios into any triangle; [inverse-trig-and-solving-equations](05-inverse-trig-and-solving-equations.md) runs them backwards.
+- **Other triangles.** [Law of cosines](06-law-of-cosines.md) and [Law of sines](07-law-of-sines-and-the-ambiguous-case.md) carry the ratios into any triangle; [Inverse trig](05-inverse-trig-and-solving-equations.md) runs them backwards.
 
 > **Say it back**
 > One acute angle fixes a right triangle's shape, so every ratio of two sides depends on that angle alone. From a chosen corner, sine is opposite over hypotenuse, cosine adjacent over hypotenuse, tangent opposite over adjacent. To solve a triangle, take the ratio holding the side known and the side wanted, then multiply or divide. A 30 m boom at 40° reaches 22.98 m out, its tip 19.28 m up. The exact values at 30° and 45° bracket the reading at 40°.
@@ -387,19 +369,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [similar-triangles-and-scale](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md): the angle-angle test, which makes each ratio depend on the angle alone.
-- [triangle-angle-sum-and-inequality](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md): why the angle at the tip is forced to 50°.
-- [pythagoras-and-its-converse](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md): the third side of the 30° and 45° benchmark triangles.
-- [congruent-triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md): why a chord's midpoint halves its angle, in the code's second road.
+- [Similar triangles](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md): the angle-angle test, which makes each ratio depend on the angle alone.
+- [Triangles](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md): why the angle at the tip is forced to 50°.
+- [Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md): the third side of the 30° and 45° benchmark triangles.
+- [Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md): why a chord's midpoint halves its angle, in the code's second road.
 
 ## Where this goes next
 
-- [radians-and-the-unit-circle](02-radians-and-the-unit-circle.md): sine and cosine for any angle, as a point on a circle, and the radian.
-- [complex-roots-and-damped-oscillation](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md): sine and cosine as the shape of a dying vibration.
-- [the-nonlinear-pendulum](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md): the pull restoring a pendulum follows the sine of its angle.
-- [seasonality-and-the-gas-curve](../../12-Financial%20mathematics/25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/05-seasonality-and-the-gas-curve.md): a one-year sine wave tracks the winter peak in gas prices.
+- [The unit circle](02-radians-and-the-unit-circle.md): sine and cosine for any angle, as a point on a circle, and the radian.
+- [Complex roots](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md): sine and cosine as the shape of a dying vibration.
+- [The pendulum](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md): the pull restoring a pendulum follows the sine of its angle.
+- [Seasonal curves](../../12-Financial%20mathematics/25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/05-seasonality-and-the-gas-curve.md): a one-year sine wave tracks the winter peak in gas prices.
 
-Every angle here sat inside a triangle, below 90°; what sine and cosine mean for a boom raised past upright, or a wheel that keeps turning, is [radians-and-the-unit-circle](02-radians-and-the-unit-circle.md).
+Every angle here sat inside a triangle, below 90°; what sine and cosine mean for a boom raised past upright, or a wheel that keeps turning, is [The unit circle](02-radians-and-the-unit-circle.md).
 
 ---
 

@@ -1,24 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Bayesian Inference
-topic: Counting heads into a belief
-item: Beta-binomial
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/01-priors-posteriors-and-updating|priors-posteriors-and-updating]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/07-gamma-and-beta-distributions|gamma-and-beta-distributions]]"
-next:
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/04-gamma-poisson|gamma-poisson]]"
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/05-credible-intervals-and-decisions|credible-intervals-and-decisions]]"
-tags: [mathematics, probability and statistics, beta-binomial]
----
-
 # Beta-binomial: the conjugate update for a proportion
 
-Probability and statistics → Bayesian Inference → Counting heads into a belief → Beta-binomial
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Bayesian Inference](../../../SYLLABUS.md#w09-s10) → Beta-binomial
 
 ---
 
@@ -26,7 +8,7 @@ Probability and statistics → Bayesian Inference → Counting heads into a beli
 
 A mint releases a new commemorative coin. Its faces are stamped unevenly, so nobody can say in advance that it lands heads half the time. Someone flips it 10 times and sees 7 heads. Call the coin's unknown chance of heads θ (theta), a number between 0 and 1. What is θ now, and how likely is the 11th flip to come up heads?
 
-Before any flip, the belief about that chance was mild: probably near a half, but far from sure. That belief is the **prior**, the distribution held before the data ([priors-posteriors-and-updating](01-priors-posteriors-and-updating.md)). Here it is the beta law Beta(2, 2): a hump centred on 0.5 with standard deviation 0.2236 ([gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)).
+Before any flip, the belief about that chance was mild: probably near a half, but far from sure. That belief is the **prior**, the distribution held before the data ([Bayesian updating](01-priors-posteriors-and-updating.md)). Here it is the beta law Beta(2, 2): a hump centred on 0.5 with standard deviation 0.2236 ([Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)).
 
 After the 10 flips, the updated belief, the **posterior**, is Beta(9, 5). Nothing was integrated to get it: the 7 heads were added to the first number and the 3 tails to the second. The posterior averages 0.6429, not the raw 0.7, because the prior still holds some weight. The chance that the next flip lands heads is that same average, 9 in 14.
 
@@ -104,7 +86,7 @@ where α = a + s and β = b + n − s are the posterior's two numbers, 9 and 5 h
 
 ### Step 0: each flip multiplies the belief by θ or by 1 − θ, and a beta curve is already such a product
 
-Bayes' rule says the posterior is the prior times the likelihood, divided by one constant ([priors-posteriors-and-updating](01-priors-posteriors-and-updating.md)). A head has chance θ, a tail 1 − θ. A beta density is θ to a power times 1 − θ to a power. Multiplying such a curve by more factors of θ and 1 − θ only raises the two powers. The family is closed under updating; the rest is reading off the powers and the constant.
+Bayes' rule says the posterior is the prior times the likelihood, divided by one constant ([Bayesian updating](01-priors-posteriors-and-updating.md)). A head has chance θ, a tail 1 − θ. A beta density is θ to a power times 1 − θ to a power. Multiplying such a curve by more factors of θ and 1 − θ only raises the two powers. The family is closed under updating; the rest is reading off the powers and the constant.
 
 ### Step 1: the likelihood of the record
 
@@ -129,7 +111,7 @@ The constant thrown away along the way is worth keeping once. Before any flip, t
 
 Let the prior be $f(\theta) = \theta^{a-1}(1-\theta)^{b-1}/B(a,b)$ on $0 < \theta < 1$, with $a, b > 0$. A record of $n$ flips with $s$ heads, independent given θ, has likelihood $L(\theta) = \theta^s(1-\theta)^{n-s}$. Bayes' rule for a density gives
 $$f(\theta \mid \text{data}) = \frac{L(\theta) f(\theta)}{\int_0^1 L(u) f(u)\,du} = \frac{\theta^{a+s-1}(1-\theta)^{b+n-s-1}/B(a,b)}{B(a+s,\,b+n-s)/B(a,b)} = \frac{\theta^{a+s-1}(1-\theta)^{b+n-s-1}}{B(a+s,\,b+n-s)}.$$
-The middle step uses the definition of the beta integral, $B(\alpha,\beta) = \int_0^1 u^{\alpha-1}(1-u)^{\beta-1}\,du$, which is finite because $a + s > 0$ and $b + n - s > 0$. The right side is the Beta(a + s, b + n − s) density. The denominator of the first fraction is the evidence for the ordered record; for the count alone multiply by $\binom{n}{s}$, which cancels between top and bottom and leaves the posterior unchanged. Both B values are ratios of factorials when the numbers are whole: $B(\alpha,\beta) = (\alpha-1)!\,(\beta-1)!/(\alpha+\beta-1)!$, from [gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md).
+The middle step uses the definition of the beta integral, $B(\alpha,\beta) = \int_0^1 u^{\alpha-1}(1-u)^{\beta-1}\,du$, which is finite because $a + s > 0$ and $b + n - s > 0$. The right side is the Beta(a + s, b + n − s) density. The denominator of the first fraction is the evidence for the ordered record; for the count alone multiply by $\binom{n}{s}$, which cancels between top and bottom and leaves the posterior unchanged. Both B values are ratios of factorials when the numbers are whole: $B(\alpha,\beta) = (\alpha-1)!\,(\beta-1)!/(\alpha+\beta-1)!$, from [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md).
 
 </details>
 
@@ -143,7 +125,7 @@ The prior pulls with the weight of a + b = 4 flips, the data with the weight of 
 
 The spread shrinks too. Var(θ | data) = αβ/((α + β)^2 (α + β + 1)) = 45/2940, a standard deviation of 0.1237, down from the prior's 0.2236. The peak, the **mode**, sits at (α − 1)/(α + β − 2) = 8/12 = 0.6667 (the formula needs both numbers above 1): the posterior's highest point is not its average, because the long left tail pulls the average down.
 
-One more reading: how sure is the coin to favour heads? For whole numbers, a Beta(9, 5) draw behaves like the 9th smallest of 13 random numbers spread evenly on 0 to 1, so it lies above 0.5 exactly when fewer than 9 of the 13 fall below 0.5, a sum of binomial terms ([gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md), Step 6): 7099/8192 = 0.8666. Before the flips it was 0.5000. That is a statement about the coin given the data and the prior; it is not a p-value.
+One more reading: how sure is the coin to favour heads? For whole numbers, a Beta(9, 5) draw behaves like the 9th smallest of 13 random numbers spread evenly on 0 to 1, so it lies above 0.5 exactly when fewer than 9 of the 13 fall below 0.5, a sum of binomial terms ([Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md), Step 6): 7099/8192 = 0.8666. Before the flips it was 0.5000. That is a statement about the coin given the data and the prior; it is not a p-value.
 
 ### Step 4: the next flip's chance is the posterior average
 
@@ -172,7 +154,7 @@ For the next ten flips: variance 3.6735 against the binomial's 2.2959, standard 
 
 Given θ, the count K in m flips is Binomial(m, θ). Average over the posterior Beta(α, β):
 $$P(K = k \mid \text{data}) = \int_0^1 \binom{m}{k}\theta^k(1-\theta)^{m-k}\,\frac{\theta^{\alpha-1}(1-\theta)^{\beta-1}}{B(\alpha,\beta)}\,d\theta = \binom{m}{k}\frac{B(\alpha+k,\,\beta+m-k)}{B(\alpha,\beta)}.$$
-Here Γ is the gamma integral of [gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md), the factorial extended to every positive number, with Γ(k) = (k − 1)! for whole k. For any positive numbers u, v and z, $B(u,v) = \Gamma(u)\Gamma(v)/\Gamma(u+v)$ and $\Gamma(z+1) = z\,\Gamma(z)$; with these, the ratio of beta integrals collapses to the rising products in The formula. Summing over $k$ inside the integral gives $(\theta + 1 - \theta)^m = 1$, so the chances total 1.
+Here Γ is the gamma integral of [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md), the factorial extended to every positive number, with Γ(k) = (k − 1)! for whole k. For any positive numbers u, v and z, $B(u,v) = \Gamma(u)\Gamma(v)/\Gamma(u+v)$ and $\Gamma(z+1) = z\,\Gamma(z)$; with these, the ratio of beta integrals collapses to the rising products in The formula. Summing over $k$ inside the integral gives $(\theta + 1 - \theta)^m = 1$, so the chances total 1.
 
 For the variance, write $K = I_1 + \cdots + I_m$, with $I_j$ equal to 1 when future flip $j$ is heads. Each has average $\mu = E[\theta]$ and variance $\mu(1-\mu)$. For $i \neq j$, $E[I_i I_j] = E[\theta^2]$, so $\mathrm{Cov}(I_i, I_j) = E[\theta^2] - \mu^2 = \mathrm{Var}(\theta)$, all under the posterior. Adding the $m$ variances and the $m(m-1)$ covariances gives the formula in Step 5. With $E[\theta^2] = \alpha(\alpha+1)/((\alpha+\beta)(\alpha+\beta+1))$ the right side simplifies to $m\alpha\beta(\alpha+\beta+m)/((\alpha+\beta)^2(\alpha+\beta+1))$.
 
@@ -203,7 +185,7 @@ Orange bars: the beta-binomial predictive, averaged over the posterior Beta(9, 5
 
 Update one flip at a time and the posterior average walks 0.6000, 0.5000, 0.5714, 0.6250, 0.6667, 0.6000, 0.6364, 0.6667, 0.6154, 0.6429, ending where the batch update ended. Each step adds 1 to one of the two numbers, and addition does not care about order. So yesterday's posterior is today's prior, and a coin flipped by two people can be updated in either order.
 
-The same bookkeeping exists for other pairs of prior and data. A normal prior with normal measurements stays normal ([normal-normal](03-normal-normal.md)); a gamma prior on a rate, with Poisson counts, stays gamma ([gamma-poisson](04-gamma-poisson.md)). When no such pair fits, the posterior is found by simulation ([markov-chain-monte-carlo-in-outline](06-markov-chain-monte-carlo-in-outline.md)).
+The same bookkeeping exists for other pairs of prior and data. A normal prior with normal measurements stays normal ([Normal-normal](03-normal-normal.md)); a gamma prior on a rate, with Poisson counts, stays gamma ([Gamma-Poisson](04-gamma-poisson.md)). When no such pair fits, the posterior is found by simulation ([MCMC in outline](06-markov-chain-monte-carlo-in-outline.md)).
 
 ---
 
@@ -623,7 +605,7 @@ The two outputs are identical, simulation included, because both programs draw t
 
 ## Where you meet it in real life
 
-- **A/B tests on web pages.** Each page's conversion rate gets a beta prior; buyers go into the first number, non-buyers into the second, and the chance one page beats the other is read from the two posteriors. The prior side is on [gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md).
+- **A/B tests on web pages.** Each page's conversion rate gets a beta prior; buyers go into the first number, non-buyers into the second, and the chance one page beats the other is read from the two posteriors. The prior side is on [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md).
 - **Drug trials.** Early-phase trials often track a response rate with a beta prior, updated patient by patient, and stop when the posterior chance of a useful rate falls too low.
 - **Sports averages early in a season.** A batter's first few games say little; a beta prior built from past seasons pulls the estimate towards the league average, the same compromise as Step 3.
 - **Ranking by ratings.** A product with a handful of perfect reviews should not outrank one with hundreds of mostly good ones; the posterior average under a modest prior orders them sensibly.
@@ -635,13 +617,13 @@ The two outputs are identical, simulation included, because both programs draw t
 
 ## What this builds on
 
-- [priors-posteriors-and-updating](01-priors-posteriors-and-updating.md): Bayes' rule for a belief about an unknown, posterior proportional to prior times likelihood.
-- [gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md): the beta law, its constant B(a, b), its average and variance, and its tail as a binomial sum.
+- [Bayesian updating](01-priors-posteriors-and-updating.md): Bayes' rule for a belief about an unknown, posterior proportional to prior times likelihood.
+- [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md): the beta law, its constant B(a, b), its average and variance, and its tail as a binomial sum.
 
 ## Where this goes next
 
-- [gamma-poisson](04-gamma-poisson.md): the same add-the-counts update for a rate of events rather than a proportion.
-- [credible-intervals-and-decisions](05-credible-intervals-and-decisions.md): turning Beta(9, 5) into an interval for θ and into a decision.
+- [Gamma-Poisson](04-gamma-poisson.md): the same add-the-counts update for a rate of events rather than a proportion.
+- [Credible intervals and decisions](05-credible-intervals-and-decisions.md): turning Beta(9, 5) into an interval for θ and into a decision.
 
 This card ends with a whole law for θ and one number to bet on; how to report a range for θ, and how to act on it, is what credible intervals and decisions settle.
 

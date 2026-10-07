@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Quantos and composites
-topic: Paid at a fixed exchange rate
-item: Quanto option
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/01-quanto-forward-and-adjustment|quanto-forward-and-adjustment]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-next:
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/03-quanto-greeks-and-hedging|quanto-greeks-and-hedging]]"
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/04-composite-option|composite-option]]"
-tags: [mathematics, financial mathematics, quanto-option]
----
-
 # Quanto option: Black-Scholes on the foreign share with its drift slowed, discounted at home, times the fixed rate
 
-Financial mathematics → Quantos and composites → Paid at a fixed exchange rate → Quanto option
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Quantos and composites](../../../SYLLABUS.md#w12-s24) → Quanto option
 
 ---
 
@@ -82,7 +64,7 @@ The put is the mirror, and the two are tied by **quanto put-call parity**, a cal
 
 $$P = \bar{X}\left[K e^{-r_d T} N(-d_2) - S e^{(\mu - r_d)T} N(-d_1)\right], \qquad C - P = \bar{X}\,e^{-r_d T}\left(S e^{\mu T} - K\right)$$
 
-Here $S e^{\mu T}$ = 101.41 euros is the **quanto forward**, against the ordinary euro forward of 102.02 ([quanto-forward-and-adjustment](01-quanto-forward-and-adjustment.md)).
+Here $S e^{\mu T}$ = 101.41 euros is the **quanto forward**, against the ordinary euro forward of 102.02 ([The quanto adjustment](01-quanto-forward-and-adjustment.md)).
 
 ### When it holds
 
@@ -98,7 +80,7 @@ Here $S e^{\mu T}$ = 101.41 euros is the **quanto forward**, against the ordinar
 
 ### Step 0: two prices are pinned, and the share's growth is what is left
 
-In the dollar pricing world (the risk-neutral world of [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), where every dollar asset earns the dollar rate), two things an American can hold have their growth rates fixed by no-arbitrage: a euro deposit, and one share held in dollars. The share's value in dollars is its euro price times the exchange rate. Fix the product's growth and the currency's growth, and the share's growth is forced. The adjustment falls out of one fact about products.
+In the dollar pricing world (the risk-neutral world of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), where every dollar asset earns the dollar rate), two things an American can hold have their growth rates fixed by no-arbitrage: a euro deposit, and one share held in dollars. The share's value in dollars is its euro price times the exchange rate. Fix the product's growth and the currency's growth, and the share's growth is forced. The adjustment falls out of one fact about products.
 
 ### Step 1: a product of two things that move together grows faster than its parts
 
@@ -156,7 +138,7 @@ In the euro pricing world the exchange rate grows at $r_d - r_f + \sigma_X^2$: t
 
 ### The other door: a relabelled dividend
 
-The formula is the pilot's Black-Scholes call with $r = r_d$ and a substitute dividend yield $q^{*} = r_d - r_f + q + \rho\sigma_S\sigma_X$ = 3.6%, since then $r - q^{*} = \mu$, all times $\bar{X}$. Any Black-Scholes routine prices a quanto if fed that one number. How the seller hedges it, day by day, is [quanto-greeks-and-hedging](03-quanto-greeks-and-hedging.md).
+The formula is the pilot's Black-Scholes call with $r = r_d$ and a substitute dividend yield $q^{*} = r_d - r_f + q + \rho\sigma_S\sigma_X$ = 3.6%, since then $r - q^{*} = \mu$, all times $\bar{X}$. Any Black-Scholes routine prices a quanto if fed that one number. How the seller hedges it, day by day, is [Hedging a quanto](03-quanto-greeks-and-hedging.md).
 
 ---
 
@@ -221,7 +203,7 @@ The sensitivities (Greeks: how much the price moves per unit of each input), by 
 | currency volatility | −0.036130 per volatility point | negative because $\rho$ is positive |
 | today's exchange rate | 0 | cancels |
 
-Turning these into a hedge is [quanto-greeks-and-hedging](03-quanto-greeks-and-hedging.md).
+Turning these into a hedge is [Hedging a quanto](03-quanto-greeks-and-hedging.md).
 
 ---
 
@@ -636,11 +618,11 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Dollar-settled futures on foreign indices.** Nikkei 225 futures that pay a fixed number of dollars per index point are quanto futures; their fair level is the quanto forward, 101.41 against 102.02 in the house example ([quanto-forward-and-adjustment](01-quanto-forward-and-adjustment.md)).
+- **Dollar-settled futures on foreign indices.** Nikkei 225 futures that pay a fixed number of dollars per index point are quanto futures; their fair level is the quanto forward, 101.41 against 102.02 in the house example ([The quanto adjustment](01-quanto-forward-and-adjustment.md)).
 - **Structured notes.** A bank sells a US saver a note that pays the rise of a European index in dollars. The option inside is a quanto call, often with the fixed rate set to 1 so a point of index gain is a dollar.
 - **Warrants on foreign indices.** Index warrants listed at home on foreign markets were early quanto products, and the correlation term decided whether they were priced fairly.
-- **The alternative the buyer turned down.** A composite option pays the foreign gain converted at the market rate on the day, so the buyer keeps the currency bet: [composite-option](04-composite-option.md).
-- **Reading correlation from prices.** Where quanto prices are quoted, the formula can be run backwards to the correlation the market charges: [implied-correlation-from-a-quanto](05-implied-correlation-from-a-quanto.md).
+- **The alternative the buyer turned down.** A composite option pays the foreign gain converted at the market rate on the day, so the buyer keeps the currency bet: [Composite option](04-composite-option.md).
+- **Reading correlation from prices.** Where quanto prices are quoted, the formula can be run backwards to the correlation the market charges: [Correlation from a quanto price](05-implied-correlation-from-a-quanto.md).
 
 > **Say it back**
 > A quanto call pays a foreign share's gain in home currency at a rate fixed on day one. Its price is the Black-Scholes call on the foreign share, discounted at the home rate and multiplied by the fixed rate. The one change is the share's growth: its own rate less dividends, cut by correlation times the two volatilities. That cut comes from the product of share and currency growing faster when they move together. Today's exchange rate cancels; its wobble and its correlation with the share do not.
@@ -649,15 +631,15 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [quanto-forward-and-adjustment](01-quanto-forward-and-adjustment.md): the slowed drift and the quanto forward 101.41, which this card turns into an option price.
-- [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the two halves, the two chances $N(d_1)$ and $N(d_2)$, and the completed square reused in Step 4.
+- [The quanto adjustment](01-quanto-forward-and-adjustment.md): the slowed drift and the quanto forward 101.41, which this card turns into an option price.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the two halves, the two chances $N(d_1)$ and $N(d_2)$, and the completed square reused in Step 4.
 
 ---
 
 ## Where this goes next
 
-- [quanto-greeks-and-hedging](03-quanto-greeks-and-hedging.md): the Greeks above turned into a hedge in euro shares and a currency position, and what the correlation risk costs.
-- [composite-option](04-composite-option.md): the same share paid at the market rate instead, where the currency's volatility widens the payoff rather than bending the drift.
+- [Hedging a quanto](03-quanto-greeks-and-hedging.md): the Greeks above turned into a hedge in euro shares and a currency position, and what the correlation risk costs.
+- [Composite option](04-composite-option.md): the same share paid at the market rate instead, where the currency's volatility widens the payoff rather than bending the drift.
 
 The price is known; what this card leaves open is how the seller, holding euro shares against a dollar promise, stays hedged as share, currency and correlation move.
 

@@ -1,32 +1,14 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Existence, Uniqueness and Sensitivity
-topic: Keeping nearby solutions close
-item: Gronwall's inequality
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/02-Existence, Uniqueness and Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem|lipschitz-and-the-picard-lindelof-theorem]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/02-Existence, Uniqueness and Sensitivity/05-the-flow-of-an-equation|the-flow-of-an-equation]]"
-  - "[[Cards/16-Numerical analysis/06-ODE Solvers/02-convergence-of-one-step-methods|convergence-of-one-step-methods]]"
-  - "[[Cards/19-Partial differential equations/01-Classification and Well-Posedness/06-well-posedness-and-hadamard|well-posedness-and-hadamard]]"
-tags: [mathematics, differential equations and dynamics, gronwall-and-continuous-dependence]
----
-
 # Gronwall's inequality: nearby starts stay nearby for a while, and here is the bound
 
-Differential equations and dynamics → Existence, Uniqueness and Sensitivity → Keeping nearby solutions close → Gronwall's inequality
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Existence, Uniqueness and Sensitivity](../../../SYLLABUS.md#w08-s02) → Gronwall's inequality
 
 ---
 
 ## General Overview
 
-Two cups of coffee are poured in a 20 C room, one at 80 C and one at 81 C. Each cup's temperature falls at 0.1 per minute times its excess over the room ([exponential-growth-decay-and-cooling](../01-Rate%20Equations/04-exponential-growth-decay-and-cooling.md)). The hotter cup cools faster, so the 1 C gap shrinks to 0.3679 C after 10 minutes. They stay within 1 C forever.
+Two cups of coffee are poured in a 20 C room, one at 80 C and one at 81 C. Each cup's temperature falls at 0.1 per minute times its excess over the room ([Growth, decay and cooling](../01-Rate%20Equations/04-exponential-growth-decay-and-cooling.md)). The hotter cup cools faster, so the 1 C gap shrinks to 0.3679 C after 10 minutes. They stay within 1 C forever.
 
-Two rumours start in a 1,000-pupil school, one with 10 pupils and one with 11. Both spread by the logistic law with rate 0.8 per day ([logistic-growth](../01-Rate%20Equations/07-logistic-growth.md)). Here the gap grows, to 9.02 pupils by day 3 and a widest 24.08 on day 5.68, before the ceiling of 1,000 squeezes the counts together.
+Two rumours start in a 1,000-pupil school, one with 10 pupils and one with 11. Both spread by the logistic law with rate 0.8 per day ([Logistic growth](../01-Rate%20Equations/07-logistic-growth.md)). Here the gap grows, to 9.02 pupils by day 3 and a widest 24.08 on day 5.68, before the ceiling of 1,000 squeezes the counts together.
 
 Gronwall's inequality controls such gaps without solving anything: for the rumours, the gap is at most e^(0.8t) pupils after t days. With existence and uniqueness, that bound makes a model **well-posed**: its answer exists, is the only one, and moves only a little when the start moves a little.
 
@@ -52,7 +34,7 @@ Orange: the true gap between the two rumour counts. Green: the bound e^(0.8t). T
 
 ## The formula
 
-Notation ([what-a-differential-equation-says](../01-Rate%20Equations/01-what-a-differential-equation-says.md)): $y' = f(t, y)$ says "the rate of $y$ at time $t$ is $f(t, y)$". Vertical bars, $|y - z|$, mean the distance between two numbers.
+Notation ([A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md)): $y' = f(t, y)$ says "the rate of $y$ at time $t$ is $f(t, y)$". Vertical bars, $|y - z|$, mean the distance between two numbers.
 
 **Gronwall's inequality, integral form.** Let $w$ be continuous and never negative for times from 0 to $T$, and $L \ge 0$, $\delta \ge 0$ constants. If, at every such time,
 
@@ -64,7 +46,7 @@ $$w(t) \le \delta\,e^{Lt}.$$
 
 **Read it aloud:** a quantity never above a constant δ plus L times its own running total is never above δ grown exponentially at rate L.
 
-**Continuous dependence.** Suppose $|f(t, y) - f(t, z)| \le L\,|y - z|$ in a region, the Lipschitz condition of [lipschitz-and-the-picard-lindelof-theorem](02-lipschitz-and-the-picard-lindelof-theorem.md). If two solutions of $y' = f(t, y)$ start at $y_0$ and $z_0$ and stay in that region up to time $T$, then up to $T$
+**Continuous dependence.** Suppose $|f(t, y) - f(t, z)| \le L\,|y - z|$ in a region, the Lipschitz condition of [The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md). If two solutions of $y' = f(t, y)$ start at $y_0$ and $z_0$ and stay in that region up to time $T$, then up to $T$
 
 $$|y(t) - z(t)| \le |y_0 - z_0|\,e^{Lt}.$$
 
@@ -86,7 +68,7 @@ For the rumours, the law's slope 0.8(1 − 2y/1000) lies between −0.8 and 0.8 
 ### When it holds
 
 - **One constant wherever both solutions go.** For $y' = y^2$ the slope 2y grows as solutions climb; a constant read at the start fails (What breaks).
-- **Both solutions exist throughout.** If one blows up first ([blow-up-and-the-life-span-of-a-solution](03-blow-up-and-the-life-span-of-a-solution.md)), there is nothing to compare.
+- **Both solutions exist throughout.** If one blows up first ([Blow-up](03-blow-up-and-the-life-span-of-a-solution.md)), there is nothing to compare.
 - **A Lipschitz condition at all.** The leaking bucket run backwards from empty has none at zero depth: two runs start 0 apart and end 25 apart.
 - **A finite horizon.** The rumour bound passes 1,000 pupils, the whole school, on day 8.63 and says nothing useful after.
 - **L at least zero in the integral form.** A law that pulls solutions together needs the one-sided form of Step 4.
@@ -136,7 +118,7 @@ The coffee's law, $y' = -0.1(y - 20)$ with $y$ in C, has $L$ = 0.1 per minute, s
 
 Subtract the two cooling laws directly: the gap $w = z - y$ obeys $w' = -0.1\,w$. The one-sided form says: if $w' \le k\,w$ for a constant $k$ of either sign, then $w(t) \le w(0)\,e^{kt}$, because the rate of $e^{-kt}w$ is $e^{-kt}(w' - kw)$, at most zero. With $k = -0.1$ per minute the gap never exceeds 1 C.
 
-Differentiating the solution with respect to its start is [the-flow-of-an-equation](05-the-flow-of-an-equation.md).
+Differentiating the solution with respect to its start is [The flow](05-the-flow-of-an-equation.md).
 
 ---
 
@@ -373,7 +355,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Weather forecasting.** A forecast starts from slightly wrong measurements. Bounds of this kind keep its error controlled over a fixed horizon but allow exponential growth with the horizon. In the atmosphere that growth really happens, which is why forecasts stop after some days.
-- **Numerical solvers.** Each step's error is a small starting gap for the rest of the run. Adding those up, each grown by e^(Lt), is how convergence-of-one-step-methods proves a solver converges.
+- **Numerical solvers.** Each step's error is a small starting gap for the rest of the run. Adding those up, each grown by e^(Lt), is how From local error to global error proves a solver converges.
 - **Measured starting values.** A thermometer 1 C off shifts a cooling prediction by at most 1 C.
 
 > **Say it back**
@@ -383,13 +365,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [lipschitz-and-the-picard-lindelof-theorem](02-lipschitz-and-the-picard-lindelof-theorem.md): the Lipschitz condition, and the existence and uniqueness that well-posedness also needs.
+- [The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md): the Lipschitz condition, and the existence and uniqueness that well-posedness also needs.
 
 ## Where this goes next
 
-- [the-flow-of-an-equation](05-the-flow-of-an-equation.md): the map from a start to its whole solution, now known to be continuous.
-- convergence-of-one-step-methods: step errors added up by this bound.
-- well-posedness-and-hadamard: well-posedness for equations in time and place, where it can fail.
+- [The flow](05-the-flow-of-an-equation.md): the map from a start to its whole solution, now known to be continuous.
+- From local error to global error: step errors added up by this bound.
+- Well posed: well-posedness for equations in time and place, where it can fail.
 
 Gronwall says the solution moves continuously with its start; how fast it moves, as a rate that can be computed, is the question the flow answers.
 

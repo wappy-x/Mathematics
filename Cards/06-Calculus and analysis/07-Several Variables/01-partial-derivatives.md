@@ -1,51 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Several Variables
-topic: One input at a time
-item: Partial derivatives
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/01-the-derivative|the-derivative]]"
-next:
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/02-differentiability-and-tangent-planes|differentiability-and-tangent-planes]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/05-differentiating-under-the-integral|differentiating-under-the-integral]]"
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/03-divergence-and-curl|divergence-and-curl]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/01-complex-derivative-and-cauchy-riemann|complex-derivative-and-cauchy-riemann]]"
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/04-harmonic-functions-and-conjugates|harmonic-functions-and-conjugates]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/08-exact-equations|exact-equations]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/02-linearisation-and-the-jacobian|linearisation-and-the-jacobian]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/01-what-a-pde-says|what-a-pde-says]]"
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/01-functionals-and-the-euler-lagrange-equation|functionals-and-the-euler-lagrange-equation]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/07-black-scholes-equation|black-scholes-equation]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/01-delta|delta]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/02-gamma|gamma]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/03-vega|vega]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/04-theta|theta]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/05-rho-and-dividend-rho|rho-and-dividend-rho]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/06-vanna|vanna]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/07-volga|volga]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/08-charm|charm]]"
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/03-digital-greeks-and-pin-risk|digital-greeks-and-pin-risk]]"
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/01-dupire-local-volatility|dupire-local-volatility]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/03-garman-kohlhagen-greeks|garman-kohlhagen-greeks]]"
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/03-vanna-and-volga-on-the-smile|vanna-and-volga-on-the-smile]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/05-spread-option-greeks|spread-option-greeks]]"
-  - "[[Cards/13-Engineering mathematics/08-Fluids and Heat/07-thermodynamic-laws-and-entropy|thermodynamic-laws-and-entropy]]"
-  - "[[Cards/16-Numerical analysis/07-PDE Solvers/02-finite-differences-consistency-stability-and-convergence|finite-differences-consistency-stability-and-convergence]]"
-  - "[[Cards/16-Numerical analysis/07-PDE Solvers/05-adi-and-multidimensional-grids|adi-and-multidimensional-grids]]"
-  - "[[Cards/18-Functional analysis/04-Distributions and Sobolev Spaces/07-weak-derivatives-and-sobolev-spaces|weak-derivatives-and-sobolev-spaces]]"
-  - "[[Cards/19-Partial differential equations/01-Classification and Well-Posedness/01-what-a-pde-problem-is|what-a-pde-problem-is]]"
-  - "[[Cards/22-Algebraic geometry/02-Affine and Projective Varieties/08-smooth-and-singular-points|smooth-and-singular-points]]"
-  - "[[Cards/23-Differential geometry and Lie groups/05-Riemannian Geometry/02-levi-civita-connection-and-christoffel-symbols|levi-civita-connection-and-christoffel-symbols]]"
-tags: [mathematics, calculus and analysis, partial-derivatives]
----
-
 # Partial derivatives: change one input, freeze the rest
 
-Calculus and analysis → Several Variables → One input at a time → Partial derivatives
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Several Variables](../../../SYLLABUS.md#w06-s07) → Partial derivatives
 
 ---
 
@@ -79,7 +34,7 @@ Orange: 20 m^2 of glass. Green: 40 m^2. Each curve is a slice with the glass fro
 
 ## The formula
 
-Notation first, in words. A partial derivative is written with a curly d, ∂, read "partial": $\frac{\partial Q}{\partial t}$ is "the rate of Q per unit of t, all else held fixed". A derivative is the limit of average rates ([the-derivative](../02-Derivatives/01-the-derivative.md)).
+Notation first, in words. A partial derivative is written with a curly d, ∂, read "partial": $\frac{\partial Q}{\partial t}$ is "the rate of Q per unit of t, all else held fixed". A derivative is the limit of average rates ([The derivative](../02-Derivatives/01-the-derivative.md)).
 
 The heat loss in watts, with $t$ cm of board and $g$ m^2 of glass, is
 
@@ -113,7 +68,7 @@ $$\frac{\partial^2 Q}{\partial g\,\partial t} = \frac{\partial^2 Q}{\partial t\,
 - **The frozen inputs are named.** The total 120 m^2 stays fixed; freezing the brick area instead gives 50 W per m^2.
 - **The one-input limit exists.** A corner or a jump along the line where only that input moves leaves no partial there.
 - **For the mixed partials to agree: second partials continuous near the point.** Without it, G in Why it works gives −1 and +1.
-- **Partials see only two directions.** A function can have both and still jump along a diagonal; see [differentiability-and-tangent-planes](02-differentiability-and-tangent-planes.md).
+- **Partials see only two directions.** A function can have both and still jump along a diagonal; see [Tangent planes](02-differentiability-and-tangent-planes.md).
 
 ---
 
@@ -133,7 +88,7 @@ Dividing by h is allowed because h is not zero. As h heads for 0 the quotient he
 
 The tolerance game: the quotient is off by 125h / (8 + h), so to land within 0.1 W per cm of −125, any step under 0.8 / 124.9, about 0.006405 cm, will do.
 
-For any setting, the quotient rule ([product-and-quotient-rules](../02-Derivatives/02-product-and-quotient-rules.md)) gives
+For any setting, the quotient rule ([Product and quotient rules](../02-Derivatives/02-product-and-quotient-rules.md)) gives
 
 $$\frac{\partial Q}{\partial t} = -\frac{\Delta T\,(A-g)}{4\,R(t)^2}$$
 
@@ -163,7 +118,7 @@ $$\text{corners} = Q(t{+}h,g{+}k) - Q(t{+}h,g) - Q(t,g{+}k) + Q(t,g)$$
 
 Grouped one way it is a board step's effect changing with glass; grouped the other, a glass step's effect changing with board. Divided by hk it approximates both mixed partials: 1.111111 at h = k = 1, 1.234568 at 0.1, 1.249844 at 0.001.
 
-The mean value theorem ([mean-value-theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)), used twice, makes that quotient equal each mixed partial somewhere inside the rectangle. Shrink it, and continuity drags both values to one limit.
+The mean value theorem ([Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)), used twice, makes that quotient equal each mixed partial somewhere inside the rectangle. Shrink it, and continuity drags both values to one limit.
 
 <details>
 <summary>Detailed proof</summary>
@@ -411,8 +366,8 @@ The two outputs agree line for line.
 
 ## Where you meet it in real life
 
-- **Option risk.** Each Greek is a partial of an option's price: [delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md) in the stock price, [vega](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/03-vega.md) in volatility. [vanna](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/06-vanna.md) is a mixed partial, one value either way.
-- **Thermodynamics.** Equal mixed partials link tabulated rates (thermodynamic-laws-and-entropy).
+- **Option risk.** Each Greek is a partial of an option's price: [Delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md) in the stock price, [Vega](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/03-vega.md) in volatility. [Vanna](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/06-vanna.md) is a mixed partial, one value either way.
+- **Thermodynamics.** Equal mixed partials link tabulated rates (The thermodynamic laws).
 
 > **Say it back**
 > A function of several inputs has one rate per input: move it, freeze the rest, take the ordinary derivative. Board saves 125 W per centimetre; glass costs 40 W per square metre. Glass changes board's value by 1.25, and board changes glass's cost by the same 1.25. Mixed partials agree when continuous; G shows they can differ otherwise.
@@ -421,30 +376,30 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [the-derivative](../02-Derivatives/01-the-derivative.md): the limit of average rates, used here one input at a time.
+- [The derivative](../02-Derivatives/01-the-derivative.md): the limit of average rates, used here one input at a time.
 
 ## Where this goes next
 
-- [differentiability-and-tangent-planes](02-differentiability-and-tangent-planes.md): one tangent plane.
-- [differentiating-under-the-integral](../08-Multiple%20Integrals/05-differentiating-under-the-integral.md): an integral's partial.
-- [divergence-and-curl](../09-Vector%20Calculus/03-divergence-and-curl.md): spreading and spin.
-- [complex-derivative-and-cauchy-riemann](../../07-Complex%20analysis/02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md), [harmonic-functions-and-conjugates](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/04-harmonic-functions-and-conjugates.md): partials forced to match.
-- [exact-equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/08-exact-equations.md): mixed partials as a test.
-- [linearisation-and-the-jacobian](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md): partials near a rest point.
-- [what-a-pde-says](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/01-what-a-pde-says.md), what-a-pde-problem-is: equations in partials.
-- [functionals-and-the-euler-lagrange-equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/01-functionals-and-the-euler-lagrange-equation.md): partials of a cost.
-- [black-scholes-equation](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md): an option's partials.
-- [delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md), [gamma](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/02-gamma.md), [vega](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/03-vega.md), [theta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/04-theta.md), [rho-and-dividend-rho](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/05-rho-and-dividend-rho.md): one input at a time.
-- [vanna](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/06-vanna.md), [volga](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/07-volga.md), [charm](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/08-charm.md): mixed and second partials.
-- [digital-greeks-and-pin-risk](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/03-digital-greeks-and-pin-risk.md), [garman-kohlhagen-greeks](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md), [vanna-and-volga-on-the-smile](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/03-vanna-and-volga-on-the-smile.md), [spread-option-greeks](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/05-spread-option-greeks.md): other contracts.
-- [dupire-local-volatility](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): volatility from partials.
-- thermodynamic-laws-and-entropy: the frozen quantity named.
-- finite-differences-consistency-stability-and-convergence, adi-and-multidimensional-grids: quotients on grids.
-- weak-derivatives-and-sobolev-spaces: rough functions.
-- smooth-and-singular-points: all partials vanishing.
-- levi-civita-connection-and-christoffel-symbols: curved distance.
+- [Tangent planes](02-differentiability-and-tangent-planes.md): one tangent plane.
+- [Differentiating under the integral](../08-Multiple%20Integrals/05-differentiating-under-the-integral.md): an integral's partial.
+- [Divergence and curl](../09-Vector%20Calculus/03-divergence-and-curl.md): spreading and spin.
+- [The complex derivative](../../07-Complex%20analysis/02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md), [Harmonic functions](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/04-harmonic-functions-and-conjugates.md): partials forced to match.
+- [Exact equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/08-exact-equations.md): mixed partials as a test.
+- [Linearisation](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md): partials near a rest point.
+- [A partial differential equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/01-what-a-pde-says.md), A PDE problem: equations in partials.
+- [The Euler-Lagrange equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/01-functionals-and-the-euler-lagrange-equation.md): partials of a cost.
+- [The Black-Scholes equation](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md): an option's partials.
+- [Delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md), [Gamma](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/02-gamma.md), [Vega](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/03-vega.md), [Theta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/04-theta.md), [Rho and dividend rho](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/05-rho-and-dividend-rho.md): one input at a time.
+- [Vanna](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/06-vanna.md), [Volga](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/07-volga.md), [Charm](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/08-charm.md): mixed and second partials.
+- [Digital Greeks and pin risk](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/03-digital-greeks-and-pin-risk.md), [The Greeks of a currency option](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md), [Vanna and volga](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/03-vanna-and-volga-on-the-smile.md), [Greeks of a spread option](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/05-spread-option-greeks.md): other contracts.
+- [Dupire local volatility](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): volatility from partials.
+- The thermodynamic laws: the frozen quantity named.
+- Finite differences on a grid, Two space dimensions: quotients on grids.
+- Weak derivatives: rough functions.
+- Smooth and singular points: all partials vanishing.
+- Levi-Civita connection: curved distance.
 
-Partials see two lines only, board alone or glass alone; whether they predict a change in both at once is [differentiability-and-tangent-planes](02-differentiability-and-tangent-planes.md).
+Partials see two lines only, board alone or glass alone; whether they predict a change in both at once is [Tangent planes](02-differentiability-and-tangent-planes.md).
 
 ---
 

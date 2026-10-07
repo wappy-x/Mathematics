@@ -1,30 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Codes and Secrets
-topic: One-way functions
-item: One-way streets
-kind: conjecture
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/05-primes-and-composites|primes-and-composites]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/01-congruence-mod-n|congruence-mod-n]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/01-modular-exponentiation|modular-exponentiation]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/05-order-and-primitive-roots|order-and-primitive-roots]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/02-linear-vs-exponential-growth|linear-vs-exponential-growth]]"
-next:
-  - "[[Cards/02-Number theory/06-Codes and Secrets/02-diffie-hellman|diffie-hellman]]"
-  - "[[Cards/02-Number theory/06-Codes and Secrets/03-rsa-in-outline|rsa-in-outline]]"
-tags:
-  - mathematics
-  - number theory
-  - one-way-streets
----
-
 # One-way streets: multiplying two primes and raising to a power on the clock are easy, and undoing them is slow
 
-Number theory → Codes and Secrets → One-way functions → One-way streets
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Codes and Secrets](../../../SYLLABUS.md#w02-s06) → One-way streets
 
 ---
 
@@ -32,11 +8,11 @@ Number theory → Codes and Secrets → One-way functions → One-way streets
 
 Multiply 1,009 by 1,013. Four digits by four digits: sixteen little multiplications and a column of adding, about a minute on paper. It comes to 1,022,117.
 
-Now the other way. Someone hands you 1,022,117 and says it is two primes multiplied — a **prime** being a number nothing divides but itself and 1 ([primes-and-composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)). Which two? There is no cheap way back: you try 2, then 3, then 5, on up. 1,009 is the 169th prime, so 168 tries fail first.
+Now the other way. Someone hands you 1,022,117 and says it is two primes multiplied — a **prime** being a number nothing divides but itself and 1 ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)). Which two? There is no cheap way back: you try 2, then 3, then 5, on up. 1,009 is the 169th prime, so 168 tries fail first.
 
 A minute out, an afternoon back, by hand; by machine, both under a second. Give each prime a few hundred digits: the way out is still under a second, the way back a research project. A 240-digit number came apart in 2020, after centuries of processor time.
 
-There is a second street. Multiply 11 by itself 613 times on a **clock** of 1,009: each time the total passes 1,009, drop a whole clock and keep the rest ([congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md)). It lands on 956 — fifteen multiplications, done cleverly. Backwards: 956 is 11 multiplied by itself how many times? The clock threw the size away. You walk: 11, 121, 322, and on, 613 steps.
+There is a second street. Multiply 11 by itself 613 times on a **clock** of 1,009: each time the total passes 1,009, drop a whole clock and keep the rest ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)). It lands on 956 — fifteen multiplications, done cleverly. Backwards: 956 is 11 multiplied by itself how many times? The clock threw the size away. You walk: 11, 121, 322, and on, 613 steps.
 
 Call it a one-way street to picture it. The real name is a **one-way function**: quick to do, slow to undo. Both are used: Diffie-Hellman rests on the clock, RSA on the primes.
 
@@ -71,7 +47,7 @@ Two pairs of jobs: one easy, its undoing not.
 | a prime | a number nothing divides but itself and 1 | 1,009 and 1,013 |
 | the product | the two primes multiplied out | 1,022,117 |
 | factoring | pulling the primes back out | 168 tries and counting |
-| the clock | the size the count wraps at ([congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md)) | 1,009 |
+| the clock | the size the count wraps at ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)) | 1,009 |
 | raising to a power on the clock | multiply by 11, take off whole clocks | 613 times, landing on 956 |
 | the discrete logarithm | the exponent found again from where it landed | 613 |
 
@@ -85,19 +61,19 @@ Multiplying is a procedure: the work is fixed before you start, and you know whe
 
 ### Step 1: the hunt is long, and lengthens faster than the number grows
 
-You only need primes up to the square root of 1,022,117, a shade over 1,010: past that, the other factor would be the smaller one, already found. That still leaves 168 failures. Extra digits do not add to the hunt, they multiply it ([linear-vs-exponential-growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md)).
+You only need primes up to the square root of 1,022,117, a shade over 1,010: past that, the other factor would be the smaller one, already found. That still leaves 168 failures. Extra digits do not add to the hunt, they multiply it ([Linear versus exponential growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md)).
 
 ### Step 2: the clock throws away the size
 
-Off the clock, 11 raised to a power grows steadily: bigger exponent, bigger answer. Read the exponent back off the size and you have done a logarithm ([logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
+Off the clock, 11 raised to a power grows steadily: bigger exponent, bigger answer. Read the exponent back off the size and you have done a logarithm ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
 
 On a clock of 1,009 the answer wraps every time it passes 1,009, and the size is gone. For all you can tell from looking at 956, it is the 2nd step or the 613th. Nothing steers you, so the only move left is to try exponents. The exponent you are hunting has a real name: the **discrete logarithm**, discrete because it is counted in whole steps.
 
-11 is a **primitive root** of 1,009: its powers visit all 1,008 non-zero slots, each once ([order-and-primitive-roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md)). So the exponent is unique.
+11 is a **primitive root** of 1,009: its powers visit all 1,008 non-zero slots, each once ([The order of a number and primitive roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md)). So the exponent is unique.
 
 ### Step 3: fast up, slow down
 
-Going up is not 613 multiplications. Square 11 for the 2nd power, square that for the 4th, multiply the pieces you need ([modular-exponentiation](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)): 15. Coming back, one multiply at a time, takes 613. Cleverer searches exist; they cut the count without closing the gap.
+Going up is not 613 multiplications. Square 11 for the 2nd power, square that for the 4th, multiply the pieces you need ([Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)): 15. Coming back, one multiply at a time, takes 613. Cleverer searches exist; they cut the count without closing the gap.
 
 ---
 
@@ -249,15 +225,15 @@ ALL CHECKS PASS
 > **Thinking a slow job is a broken job.** Factoring is not impossible: trial division on 1,022,117 finishes in under a second. A code is a bet on how long, and every bet has a date on it — a working quantum machine already has a factoring method waiting.
 >
 > - **Reading "hard" as "nobody has tried".** People have tried for centuries; what is missing is a shortcut.
-> - **Assuming the clock is the hard part.** Multiplying on a clock is cheaply undoable ([modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)); raising to a power is not.
+> - **Assuming the clock is the hard part.** Multiplying on a clock is cheaply undoable ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)); raising to a power is not.
 > - **Picking small numbers to be safe.** 168 tries is under a second by machine.
 
 ---
 
 ## Where you meet it in real life
 
-- **Agreeing a secret out loud.** Two strangers trade numbers over an open line and end up sharing one no listener can compute: [diffie-hellman](02-diffie-hellman.md).
-- **The padlock on a web address.** The public key is a product like 1,022,117 but far bigger; the private key is its two primes: [rsa-in-outline](03-rsa-in-outline.md).
+- **Agreeing a secret out loud.** Two strangers trade numbers over an open line and end up sharing one no listener can compute: [Diffie-Hellman key exchange](02-diffie-hellman.md).
+- **The padlock on a web address.** The public key is a product like 1,022,117 but far bigger; the private key is its two primes: [RSA in outline](03-rsa-in-outline.md).
 - **Stored passwords.** A site keeps what your password turns into, never the password.
 
 > **Say it back**
@@ -267,16 +243,16 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [primes-and-composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md): what a prime is.
-- [congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md): the clock, and taking whole clocks off.
-- [modular-exponentiation](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): 15 steps instead of 613.
-- [order-and-primitive-roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md): why 11 visits all 1,008 slots.
-- [linear-vs-exponential-growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md): a cost that doubles against one that squares.
+- [Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md): what a prime is.
+- [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md): the clock, and taking whole clocks off.
+- [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): 15 steps instead of 613.
+- [The order of a number and primitive roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md): why 11 visits all 1,008 slots.
+- [Linear versus exponential growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md): a cost that doubles against one that squares.
 
 ## Where this goes next
 
-- [diffie-hellman](02-diffie-hellman.md): the hard direction turned into a shared secret.
-- [rsa-in-outline](03-rsa-in-outline.md): the same trick with factoring, plus locking and unlocking.
+- [Diffie-Hellman key exchange](02-diffie-hellman.md): the hard direction turned into a shared secret.
+- [RSA in outline](03-rsa-in-outline.md): the same trick with factoring, plus locking and unlocking.
 
 ---
 

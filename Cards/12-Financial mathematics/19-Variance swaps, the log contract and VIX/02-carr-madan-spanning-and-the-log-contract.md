@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Variance swaps, the log contract and VIX
-topic: Building payoffs from vanillas
-item: Any payoff from a strip of options
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/05-butterfly-and-the-implied-density|butterfly-and-the-implied-density]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/05-strike-and-calendar-shape|strike-and-calendar-shape]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/04-integration-by-parts|integration-by-parts]]"
-next:
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/03-variance-swap-fair-strike|variance-swap-fair-strike]]"
-tags: [mathematics, financial mathematics, carr-madan-spanning-and-the-log-contract]
----
-
 # Any payoff from a strip of options: integrate by parts twice, and the log contract is the case that trades variance
 
-Financial mathematics → Variance swaps, the log contract and VIX → Building payoffs from vanillas → Any payoff from a strip of options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Variance swaps, the log contract and VIX](../../../SYLLABUS.md#w12-s19) → Any payoff from a strip of options
 
 ---
 
@@ -94,7 +76,7 @@ Compare it with the strip formula: the options leg is worth exactly $100\,D\cdot
 
 ### When it holds
 
-- **The payoff has a curvature at every strike.** A payoff with a kink, like a call itself, has all its curvature at one point: the recipe then says "one option at that strike", which is correct. A payoff that jumps, like a digital, has no curvature to read at the jump; it is built from a tight call spread instead ([digital-from-a-call-spread-and-the-skew-term](../10-Digitals%20and%20the%20implied%20density/04-digital-from-a-call-spread-and-the-skew-term.md)).
+- **The payoff has a curvature at every strike.** A payoff with a kink, like a call itself, has all its curvature at one point: the recipe then says "one option at that strike", which is correct. A payoff that jumps, like a digital, has no curvature to read at the jump; it is built from a tight call spread instead ([A digital from a call spread](../10-Digitals%20and%20the%20implied%20density/04-digital-from-a-call-spread-and-the-skew-term.md)).
 - **European options at every strike, all at the payoff's expiry.** Listed strikes are discrete and stop somewhere. The two-strike book misses the log by $0.33; a book stopping at $50 and $200 still misses by 0.008251.
 - **Prices, not a model, for the strip.** The pathwise identity and the strip price use only market prices of options. The closed form, $0.95, is the house lognormal model; on a real smile the same strip gives a different number, and that number is the market's.
 - **Static, not dynamic.** Nothing is rebalanced before expiry. The log contract's link to realised variance, in Step 5, does need a daily hedge and continuous price paths; a jump breaks that link while leaving the strip identity intact.
@@ -115,7 +97,7 @@ Take a finishing price above the forward, $S_T > F$. Look at the calls between t
 
 $$\int_F^{S_T} g''(K)\,(S_T - K)\,dK.$$
 
-Integrate by parts ([integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)): let $S_T - K$ be the part to differentiate, whose slope in $K$ is $-1$, and $g''$ the part to integrate, whose integral is $g'$. The first pass removes one derivative:
+Integrate by parts ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)): let $S_T - K$ be the part to differentiate, whose slope in $K$ is $-1$, and $g''$ the part to integrate, whose integral is $g'$. The first pass removes one derivative:
 
 $$\Big[(S_T - K)\,g'(K)\Big]_F^{S_T} + \int_F^{S_T} g'(K)\,dK.$$
 
@@ -138,7 +120,7 @@ The calls above the forward pay nothing, so again one formula covers both sides.
 
 Let $g$ have a continuous curvature on the positive prices. Fix $S_T > 0$.
 
-Case $S_T \ge F$. Every put with strike $K \le F$ pays $(K - S_T)^+ = 0$, and every call with $K > S_T$ pays 0. So the options leg is $\int_F^{S_T} g''(K)(S_T - K)\,dK$. Integration by parts with $u = S_T - K$, $du = -dK$, $dv = g''(K)\,dK$, $v = g'(K)$ gives $[(S_T - K)g'(K)]_F^{S_T} + \int_F^{S_T} g'(K)\,dK = -(S_T - F)g'(F) + g(S_T) - g(F)$, the last step by the fundamental theorem of calculus ([fundamental-theorem-of-calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md)). Rearranged, $g(S_T) = g(F) + g'(F)(S_T - F) + \text{options leg}$.
+Case $S_T \ge F$. Every put with strike $K \le F$ pays $(K - S_T)^+ = 0$, and every call with $K > S_T$ pays 0. So the options leg is $\int_F^{S_T} g''(K)(S_T - K)\,dK$. Integration by parts with $u = S_T - K$, $du = -dK$, $dv = g''(K)\,dK$, $v = g'(K)$ gives $[(S_T - K)g'(K)]_F^{S_T} + \int_F^{S_T} g'(K)\,dK = -(S_T - F)g'(F) + g(S_T) - g(F)$, the last step by the fundamental theorem of calculus ([Fundamental theorem of calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md)). Rearranged, $g(S_T) = g(F) + g'(F)(S_T - F) + \text{options leg}$.
 
 Case $S_T < F$. Every call with $K \ge F$ pays 0, and every put with $K < S_T$ pays 0. The options leg is $\int_{S_T}^F g''(K)(K - S_T)\,dK = [(K - S_T)g'(K)]_{S_T}^F - \int_{S_T}^F g'(K)\,dK = (F - S_T)g'(F) - g(F) + g(S_T)$. Rearranged, the same identity.
 
@@ -160,9 +142,9 @@ The same recipe rebuilds any other payoff. For $(S_T - 100)^2$ the curvature is 
 
 Look at today's price of the log contract as a function of today's share price $S$, with the house model: $100\,D\,(\ln(S/100) + (r - q - \tfrac12\sigma^2)T)$. Its **delta** (slope in $S$) is $100\,D/S$. Its **gamma** (curvature in $S$) is $-100\,D/S^2$. Multiply gamma by $S^2$ and the answer, $-95.12$, does not depend on $S$ at all.
 
-That product, dollar gamma, sets what a delta-hedged position earns or pays per move: about $\tfrac12 S^2\Gamma$ times the squared percent move ([theta-pays-for-gamma-hedged-pnl](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md)). A call's dollar gamma peaks near its strike and fades away from it, so a hedged call earns from moves only while the price is nearby. The log contract's is flat, so a hedged short log contract collects the same amount from a 1% move at $60 or at $160. Summed over the year, its gains from moves add up to half the realised variance, times $100\,D$.
+That product, dollar gamma, sets what a delta-hedged position earns or pays per move: about $\tfrac12 S^2\Gamma$ times the squared percent move ([Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md)). A call's dollar gamma peaks near its strike and fades away from it, so a hedged call earns from moves only while the price is nearby. The log contract's is flat, so a hedged short log contract collects the same amount from a 1% move at $60 or at $160. Summed over the year, its gains from moves add up to half the realised variance, times $100\,D$.
 
-So the options leg of the strip, worth 1.902459, is $100\,D \times \tfrac12\sigma^2 T$. Solve for the variance: $2 \times 1.902459 / 95.1229 = 0.040000$, which is 20% squared. Reading the options leg as variance is what [variance-swap-fair-strike](03-variance-swap-fair-strike.md) does with market prices.
+So the options leg of the strip, worth 1.902459, is $100\,D \times \tfrac12\sigma^2 T$. Solve for the variance: $2 \times 1.902459 / 95.1229 = 0.040000$, which is 20% squared. Reading the options leg as variance is what [The variance swap](03-variance-swap-fair-strike.md) does with market prices.
 
 <details>
 <summary>Why not the square payoff, whose weights are flat?</summary>
@@ -171,7 +153,7 @@ The square $(S_T - 100)^2$ has constant curvature in dollars, so it earns the sa
 
 </details>
 
-The same spanning, differentiated twice in strike, is the butterfly reading of the implied density ([butterfly-and-the-implied-density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)): there the curvature of call prices gives probabilities; here the curvature of a payoff gives holdings. One is the other read backwards.
+The same spanning, differentiated twice in strike, is the butterfly reading of the implied density ([The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)): there the curvature of call prices gives probabilities; here the curvature of a payoff gives holdings. One is the other read backwards.
 
 ---
 
@@ -594,17 +576,17 @@ Orange: the log contract's dollar gamma, in size, the same at every price. Green
 > - **Selling too few far options.** The weights grow as strikes fall, so the low-strike puts matter most. A book from $80 to $120 prices the log at 1.136774 against 0.951229.
 > - **Buying the strip.** The log is concave, so the options are sold. Buying them gives 4.756152.
 > - **Using in-the-money calls below the forward.** It gives −673.402728 on the finest book: the forward hidden inside each deep call is not cancelled by the cash leg.
-> - **Confusing the log contract with the variance swap.** The log contract is the static half. The variance swap adds a daily delta hedge and a factor of 2/T; that is [variance-swap-fair-strike](03-variance-swap-fair-strike.md).
+> - **Confusing the log contract with the variance swap.** The log contract is the static half. The variance swap adds a daily delta hedge and a factor of 2/T; that is [The variance swap](03-variance-swap-fair-strike.md).
 
 ---
 
 ## Where you meet it in real life
 
-- **Variance swaps.** Dealers quote a variance swap's strike from the one-over-strike-squared strip of listed options; the sibling [variance-swap-fair-strike](03-variance-swap-fair-strike.md) turns this card's options leg into that strike, and [variance-swap-after-inception-and-forward-variance](04-variance-swap-after-inception-and-forward-variance.md) marks it afterwards.
-- **The VIX.** The published index is this strip on S&P 500 options, discretised with a fixed recipe: [vix-index](06-vix-index.md).
+- **Variance swaps.** Dealers quote a variance swap's strike from the one-over-strike-squared strip of listed options; the sibling [The variance swap](03-variance-swap-fair-strike.md) turns this card's options leg into that strike, and [Marking a variance swap](04-variance-swap-after-inception-and-forward-variance.md) marks it afterwards.
+- **The VIX.** The published index is this strip on S&P 500 options, discretised with a fixed recipe: [The VIX](06-vix-index.md).
 - **Hedging exotic European payoffs.** A structured-note desk that owes a curved payoff at one date hedges it statically with a strip, set up once, instead of rebalancing daily.
 - **Pricing on a smile.** Any European payoff's price follows from the smile's option prices without choosing a model; the density shelf does the same trick in the other direction.
-- **Measuring the realised side.** What the hedged log contract collects is the daily variance of [realised-variance-from-daily-prices](01-realised-variance-from-daily-prices.md); the square-root of it is not static, which is the problem of [volatility-swap-and-jump-bias](05-volatility-swap-and-jump-bias.md).
+- **Measuring the realised side.** What the hedged log contract collects is the daily variance of [Realised variance](01-realised-variance-from-daily-prices.md); the square-root of it is not static, which is the problem of [The volatility swap and the jump bias](05-volatility-swap-and-jump-bias.md).
 
 > **Say it back**
 > Any smooth payoff at one expiry is a straight line through the forward plus a strip of options. The line is cash plus a forward; the options are puts below the forward and calls above, each held in the amount of the payoff's curvature at its strike. Integrating by parts twice proves it, for every finishing price, with no model. For the log payoff the curvature is minus 100 over strike squared, so the options are sold with weights that fall as strikes rise. That weighting makes the dollar gamma flat, so the options leg prices variance: $1.90 here, which reads back as 20% squared.
@@ -613,13 +595,13 @@ Orange: the log contract's dollar gamma, in size, the same at every price. Green
 
 ## What this builds on
 
-- [butterfly-and-the-implied-density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md): the curvature of option prices in strike, and why a book of strikes can stand for any payoff.
-- [strike-and-calendar-shape](../08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md): how put and call prices fall away from the forward, which is what the strip integrates.
-- [integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): the one move behind the whole identity, used twice.
+- [The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md): the curvature of option prices in strike, and why a book of strikes can stand for any payoff.
+- [Shape across strikes and expiries](../08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md): how put and call prices fall away from the forward, which is what the strip integrates.
+- [Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): the one move behind the whole identity, used twice.
 
 ## Where this goes next
 
-- [variance-swap-fair-strike](03-variance-swap-fair-strike.md): the log strip scaled by 2/T, plus a daily hedge, becomes a contract that pays realised variance.
+- [The variance swap](03-variance-swap-fair-strike.md): the log strip scaled by 2/T, plus a daily hedge, becomes a contract that pays realised variance.
 
 ---
 

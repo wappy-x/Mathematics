@@ -1,32 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Contracts and No-Arbitrage
-topic: Daily settlement
-item: Futures
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/04-forward-value-after-inception|forward-value-after-inception]]"
-next:
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/01-options-on-commodity-futures|options-on-commodity-futures]]"
-  - "[[Cards/12-Financial mathematics/32-Convexity and Exotics/01-futures-forward-convexity|futures-forward-convexity]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - futures-margining-and-the-forward-futures-difference
----
-
 # Futures: daily settlement, and why a futures price can differ from a forward
 
-Financial mathematics → Contracts and No-Arbitrage → Daily settlement → Futures
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Contracts and No-Arbitrage](../../../SYLLABUS.md#w12-s03) → Futures
 
 ---
 
 ## General Overview
 
-An exchange lists a contract on Acme shares for delivery in a year. Acme trades at 100.00 dollars today, the bank pays and charges 5 percent a year, and Acme pays its holders 2 percent a year in dividends, so the agreed delivery price is 103.05 — the cash-and-carry figure from [forward-price-by-cash-and-carry](03-forward-price-by-cash-and-carry.md).
+An exchange lists a contract on Acme shares for delivery in a year. Acme trades at 100.00 dollars today, the bank pays and charges 5 percent a year, and Acme pays its holders 2 percent a year in dividends, so the agreed delivery price is 103.05 — the cash-and-carry figure from [Forward price](03-forward-price-by-cash-and-carry.md).
 
 A forward settles once, on delivery day. The exchange's contract settles every evening: it marks every open position to one official closing quote and moves that day's change in cash between the two sides the same night. Losers pay winners, daily. That contract is a **futures contract**, the nightly transfer is **margining**, and the cash moved is **variation margin**. This card uses two settlement dates rather than 252, six months in and at expiry, so the account can be followed by hand.
 
@@ -76,7 +56,7 @@ $$h_i \;=\; \frac{B_{i+1}}{B_N}$$
 
 With those sizes the sum collapses to $F_N - F_0$. The last quote is the share's own price on expiry day, $F_N = S_T$, so that is the payoff of a forward struck at today's quote. Both contracts now cost nothing to enter and pay the same on every record, so today's quote must equal $K$, the delivery price written into that forward. Step 3 prices any daylight between them as free money.
 
-Both prices are also averages taken in the **risk-neutral world**, the pretend market in which every asset drifts at the bank rate ([state-prices-and-risk-neutral-pricing-in-one-period](07-state-prices-and-risk-neutral-pricing-in-one-period.md)). The futures price $F_0$ is the plain average of the finishing price $S_T$; $K$ is that same average weighted by $D$, what one dollar paid at expiry is worth today on one record. Step 5 works out when the two part.
+Both prices are also averages taken in the **risk-neutral world**, the pretend market in which every asset drifts at the bank rate ([State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md)). The futures price $F_0$ is the plain average of the finishing price $S_T$; $K$ is that same average weighted by $D$, what one dollar paid at expiry is worth today on one record. Step 5 works out when the two part.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -95,7 +75,7 @@ Both prices are also averages taken in the **risk-neutral world**, the pretend m
 
 ### When it holds
 
-- **One rate for borrowing and lending, no fees, any position size, trades reversible.** Drop it and the single fair price widens into a band, as on [no-arbitrage-and-the-law-of-one-price](02-no-arbitrage-and-the-law-of-one-price.md).
+- **One rate for borrowing and lending, no fees, any position size, trades reversible.** Drop it and the single fair price widens into a band, as on [No arbitrage](02-no-arbitrage-and-the-law-of-one-price.md).
 - **The rate over each period is known before the position for that period is chosen.** The load-bearing assumption: take it away and the tail cannot be computed in time, and on this tree the two prices part by 0.15.
 - **Settlement cash moves freely at that rate.** Real margin sits in a clearing account paying less, and part of it cannot be withdrawn, pushing the futures price further from the forward than the model says.
 - **Every margin call is met.** A position closed out by force leaves a ledger no fixed rescaling repairs — which is how a correct hedge still bankrupts its holder.
@@ -150,7 +130,7 @@ What remains is the pair of averages. Nothing is carried across a futures settle
 
 On this tree the arithmetic closes in one line. The gap is the size of the quote's move times $\tanh$ of the rate tilt over half a year, where $\tanh x = (e^{x} - e^{-x})/(e^{x} + e^{-x})$, a function very nearly equal to its own argument for small inputs. So 10.00 × tanh(0.015) = 0.149989, computed without reference to either average and agreeing with their difference to the last digit. In words: **the gap is a covariance, between the finishing price and the cost of money.**
 
-A second road to Step 3 avoids trees entirely. In the risk-neutral world a futures quote is a **martingale** — a running number whose average next value is its current value — since a position that costs nothing and settles instantly has no drift to pay for. A forward price is a ratio of two averages; it equals the plain average whenever $D$ and the finishing price do not move together, which a known rate guarantees by making $D$ the same on every record. That framing belongs to [state-prices-and-risk-neutral-pricing-in-one-period](07-state-prices-and-risk-neutral-pricing-in-one-period.md).
+A second road to Step 3 avoids trees entirely. In the risk-neutral world a futures quote is a **martingale** — a running number whose average next value is its current value — since a position that costs nothing and settles instantly has no drift to pay for. A forward price is a ratio of two averages; it equals the plain average whenever $D$ and the finishing price do not move together, which a known rate guarantees by making $D$ the same on every record. That framing belongs to [State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md).
 
 ---
 
@@ -699,7 +679,7 @@ The two outputs match line for line.
 
 - **Every exchange-traded futures contract.** One official settlement price per contract per day, the difference moved in cash that night, so no loss is carried forward to threaten the clearing house.
 - **Tailing a hedge.** A treasurer using futures in place of a forward scales the position down by the discount factor to the hedge's end date, and rescales as that date nears: Step 2, on a desk.
-- **Interest-rate futures.** The underlying is itself a rate, so the correlation with the bank is as strong as it gets and the gap is no rounding error. A quoted futures rate must be cut by a **convexity adjustment** before it is treated as a forward rate — see [futures-forward-convexity](../32-Convexity%20and%20Exotics/01-futures-forward-convexity.md).
+- **Interest-rate futures.** The underlying is itself a rate, so the correlation with the bank is as strong as it gets and the gap is no rounding error. A quoted futures rate must be cut by a **convexity adjustment** before it is treated as a forward rate — see [Futures against forwards](../32-Convexity%20and%20Exotics/01-futures-forward-convexity.md).
 - **Short-dated equity and commodity futures.** Weak correlation and a short life, so the gap hides inside the bid-offer spread and desks quote the two interchangeably. French measured it on silver and copper in 1983: small, but not always zero.
 - **Cleared swaps.** Since the reforms that followed 2008, over-the-counter forwards and swaps mostly post variation margin daily too, so the dividing line now runs between cleared and uncleared.
 
@@ -712,12 +692,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [forward-value-after-inception](04-forward-value-after-inception.md): what a signed forward is worth once the market has moved, and why a freshly struck one is worth nothing. That second fact is what lets a futures position be resized for free at every settlement, which is the whole of Step 2.
+- [An old forward](04-forward-value-after-inception.md): what a signed forward is worth once the market has moved, and why a freshly struck one is worth nothing. That second fact is what lets a futures position be resized for free at every settlement, which is the whole of Step 2.
 
 ## Where this goes next
 
-- [options-on-commodity-futures](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md): options written on the futures quote rather than the share. The quote's being a plain risk-neutral average is what lets the familiar formula price them with the quote in place of the spot.
-- [futures-forward-convexity](../32-Convexity%20and%20Exotics/01-futures-forward-convexity.md): the same gap on real interest-rate contracts, where the correlation is strongest and the numbers are large enough to trade on.
+- [Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md): options written on the futures quote rather than the share. The quote's being a plain risk-neutral average is what lets the familiar formula price them with the quote in place of the spot.
+- [Futures against forwards](../32-Convexity%20and%20Exotics/01-futures-forward-convexity.md): the same gap on real interest-rate contracts, where the correlation is strongest and the numbers are large enough to trade on.
 
 This card gives the sign of the difference and its size on one two-step tree. It cannot give the size in a market where the rate wanders continuously and the contract runs for years: that number is the convexity adjustment, a later card's subject.
 

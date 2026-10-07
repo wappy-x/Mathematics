@@ -1,23 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Laurent Series, Singularities and Residues
-topic: Kinds of bad point
-item: Isolated singularities
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/01-laurent-series|laurent-series]]"
-next:
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/03-rational-functions-and-partial-fractions|rational-functions-and-partial-fractions]]"
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/04-residues|residues]]"
-tags: [mathematics, complex analysis, classifying-singularities]
----
-
 # Isolated singularities: removable, a pole or essential, and the negative powers tell you which
 
-Complex analysis → Laurent Series, Singularities and Residues → Kinds of bad point → Isolated singularities
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Laurent Series, Singularities and Residues](../../../SYLLABUS.md#w07-s05) → Isolated singularities
 
 ---
 
@@ -27,7 +10,7 @@ Three potholes sit on a road through the plane, each a point where a formula div
 
 The first is sin z/z at 0. A step 0.1 east gives 0.998334; 0.1 north gives 1.001668. One slab is missing: set the value at 0 to 1 and the hole is gone. The second is 1/(z − 2)^2 at 2. At distance 0.1 its size is 100; at half that, 400, in every direction: a hole of definite depth. The third is e^(1/z) at 0: 2980.957987 at 1/8, 0.000335 at −1/8. A sinkhole with no bottom.
 
-From here on a pothole is an **isolated singularity**: a point where a function is undefined, though holomorphic (has a complex derivative) everywhere else on a small disc round it. The kinds are **removable**, **pole** and **essential**. One test sorts them: write the Laurent series, a power series allowed negative powers ([laurent-series](01-laurent-series.md)), and read the negative powers.
+From here on a pothole is an **isolated singularity**: a point where a function is undefined, though holomorphic (has a complex derivative) everywhere else on a small disc round it. The kinds are **removable**, **pole** and **essential**. One test sorts them: write the Laurent series, a power series allowed negative powers ([Laurent series](01-laurent-series.md)), and read the negative powers.
 
 **No negative powers means removable, finitely many means a pole whose order is the most negative power, infinitely many means essential; bounded near the point means no negative powers, and near an essential point the function comes within any distance of every value.**
 
@@ -143,7 +126,7 @@ To scale: 300 units per unit, 0 at (90, 50). Dots z_0 to z_4 at (237.4, 162.9), 
 
 1/(z − 2)^2 and tan z = sin z/cos z are meromorphic on the whole plane. e^(1/z) is meromorphic on the plane without 0, not on the whole plane: the domain is part of the claim.
 
-A second road to a pole's order: a pole of order m of f is a zero of order m of 1/f. For polynomial quotients that road runs in [rational-functions-and-partial-fractions](03-rational-functions-and-partial-fractions.md).
+A second road to a pole's order: a pole of order m of f is a zero of order m of 1/f. For polynomial quotients that road runs in [Rational functions](03-rational-functions-and-partial-fractions.md).
 
 ---
 
@@ -382,8 +365,8 @@ The two outputs match line for line.
 
 - **Signal processing.** sinc, sin(πx)/(πx), is set to 1 at 0: a patched removable singularity.
 - **Numerical code.** (e^z − 1)/z loses digits near its removable 0, so libraries switch to its power series: Step 1 in practice.
-- **Circuits and control.** A response is a quotient of polynomials whose poles and orders set how it rings and decays ([rational-functions-and-partial-fractions](03-rational-functions-and-partial-fractions.md)).
-- **Contour integrals.** A loop sees only $c_{-1}$: [residues](04-residues.md), summed in [the-residue-theorem](05-the-residue-theorem.md).
+- **Circuits and control.** A response is a quotient of polynomials whose poles and orders set how it rings and decays ([Rational functions](03-rational-functions-and-partial-fractions.md)).
+- **Contour integrals.** A loop sees only $c_{-1}$: [Residues](04-residues.md), summed in [The residue theorem](05-the-residue-theorem.md).
 
 > **Say it back**
 > An isolated singularity is one bad point with a holomorphic function all round it. With no negative powers in the Laurent series the hole fills, as sin z/z fills with 1. A lowest negative power −m makes a pole of order m, as for 1/(z − 2)^2 with m = 2. Infinitely many make it essential, and the function comes within any distance of every value, as e^(1/z) does. Bounded near the point means removable.
@@ -392,12 +375,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [laurent-series](01-laurent-series.md): the series with negative powers, its uniqueness, and the loop-integral formula for each coefficient.
+- [Laurent series](01-laurent-series.md): the series with negative powers, its uniqueness, and the loop-integral formula for each coefficient.
 
 ## Where this goes next
 
-- [rational-functions-and-partial-fractions](03-rational-functions-and-partial-fractions.md): quotients of polynomials, whose only singularities are poles, split into principal parts.
-- [residues](04-residues.md): the coefficient on the power −1, found without the whole series.
+- [Rational functions](03-rational-functions-and-partial-fractions.md): quotients of polynomials, whose only singularities are poles, split into principal parts.
+- [Residues](04-residues.md): the coefficient on the power −1, found without the whole series.
 
 ---
 

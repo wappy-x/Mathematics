@@ -1,36 +1,12 @@
----
-type: card
-wing: 03-Algebra
-shelf: Vectors
-topic: Span and independence
-item: Basis and dimension
-kind: theorem
-status: verified
-updated: 2026-09-07
-needs_first:
-  - "[[Cards/03-Algebra/03-Vectors/03-linear-combinations-and-span|linear-combinations-and-span]]"
-  - "[[Cards/03-Algebra/03-Vectors/04-linear-independence|linear-independence]]"
-  - "[[Cards/01-Foundations/06-Proof/03-proof-by-contradiction|proof-by-contradiction]]"
-next:
-  - "[[Cards/03-Algebra/04-Matrices/04-linear-maps-as-matrices|linear-maps-as-matrices]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/05-rank-nullity|rank-nullity]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/03-gram-schmidt-and-orthonormal-bases|gram-schmidt-and-orthonormal-bases]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/01-change-of-basis|change-of-basis]]"
-tags:
-  - mathematics
-  - algebra
-  - basis-and-dimension
----
-
 # Basis and dimension: the smallest set that reaches everything, and the count that never changes
 
-Algebra → Vectors → Span and independence → Basis and dimension
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Vectors](../../../SYLLABUS.md#w03-s03) → Basis and dimension
 
 ---
 
 ## General Overview
 
-A rowing crew launches from a boathouse. A buoy sits 5 km east and 3 km north of it. As a vector — a list of numbers in round brackets ([vectors](01-vectors.md)) — the buoy is at (5, 3).
+A rowing crew launches from a boathouse. A buoy sits 5 km east and 3 km north of it. As a vector — a list of numbers in round brackets ([Vectors](01-vectors.md)) — the buoy is at (5, 3).
 
 That pair is not the buoy. It is an instruction: go 5 east, then 3 north. Two directions, one amount each.
 
@@ -70,7 +46,7 @@ $$[v]_B = (x, y)$$
 
 **Read it aloud:** so much of the first direction plus so much of the second lands on the point, and those two amounts are its address in that basis.
 
-The list $b_1$, $b_2$ is a basis when both hold: it **spans**, so every point is some mix of the two ([linear-combinations-and-span](03-linear-combinations-and-span.md)), and it is **independent**, so neither is a multiple of the other and neither is spare ([linear-independence](04-linear-independence.md)).
+The list $b_1$, $b_2$ is a basis when both hold: it **spans**, so every point is some mix of the two ([Linear combinations and span](03-linear-combinations-and-span.md)), and it is **independent**, so neither is a multiple of the other and neither is spare ([Linear independence](04-linear-independence.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -81,7 +57,7 @@ The list $b_1$, $b_2$ is a basis when both hold: it **spans**, so every point is
 | $y$ | the amount of $b_2$ in the mix | -1: one stroke back across | the point slides across |
 | $[v]_B$ | the coordinates of $v$ in that basis | (4, -1) | — |
 | $e_1$ and $e_2$ | the **standard basis**: (1, 0) and (0, 1), one east and one north | coordinates against these are just the entries, (5, 3) | — |
-| the cross-number | whether two vectors reach the whole plane ([linear-combinations-and-span](03-linear-combinations-and-span.md)) | 1 × 1 − (-1) × 1 = 2 | only zero versus not-zero matters |
+| the cross-number | whether two vectors reach the whole plane ([Linear combinations and span](03-linear-combinations-and-span.md)) | 1 × 1 − (-1) × 1 = 2 | only zero versus not-zero matters |
 
 The number of vectors in a basis is the space's **dimension**: 2 here, under either basis.
 
@@ -115,7 +91,7 @@ Suppose the buoy had two addresses in the river basis:
 
 $$x\,b_1 + y\,b_2 = v \quad\text{and}\quad x'\,b_1 + y'\,b_2 = v$$
 
-for two different pairs. Subtract: the right side is the zero vector, the left is $(x - x')\,b_1 + (y - y')\,b_2$. The pairs differ, so one bracket is not zero — a mix of $b_1$ and $b_2$ with a non-zero amount landing on the zero vector, which independence forbids ([linear-independence](04-linear-independence.md)). The assumption of two addresses collapses ([proof-by-contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)).
+for two different pairs. Subtract: the right side is the zero vector, the left is $(x - x')\,b_1 + (y - y')\,b_2$. The pairs differ, so one bracket is not zero — a mix of $b_1$ and $b_2$ with a non-zero amount landing on the zero vector, which independence forbids ([Linear independence](04-linear-independence.md)). The assumption of two addresses collapses ([Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)).
 
 That is the payoff of independence: not a tidier list, a *unique* address.
 
@@ -147,7 +123,7 @@ One lemma does it in any space: an independent list can never be longer than a s
 
 ### The other route
 
-Stack the vectors as the columns of a matrix and all of this becomes one question: is that matrix invertible? The cross-number is then the determinant — the route taken properly on [linear-maps-as-matrices](../04-Matrices/04-linear-maps-as-matrices.md).
+Stack the vectors as the columns of a matrix and all of this becomes one question: is that matrix invertible? The cross-number is then the determinant — the route taken properly on [Linear maps](../04-Matrices/04-linear-maps-as-matrices.md).
 
 ---
 
@@ -183,7 +159,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The coordinates are found twice: road one is the elimination from Step 3, road two the cross-number rule from [linear-combinations-and-span](03-linear-combinations-and-span.md), where each amount is one cross-number divided by another. It never touches those equations. Both run on the buoy and on the finish marker at (0, 6), and each answer is multiplied back out to confirm where it lands.
+Nothing is imported. The coordinates are found twice: road one is the elimination from Step 3, road two the cross-number rule from [Linear combinations and span](03-linear-combinations-and-span.md), where each amount is one cross-number divided by another. It never touches those equations. Both run on the buoy and on the finish marker at (0, 6), and each answer is multiplied back out to confirm where it lands.
 
 ### Python
 
@@ -411,7 +387,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Choosing better axes.** Measuring along a natural grain — downstream and across, or with the wind and across it — is a change of basis, and the numbers get easier ([change-of-basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md)).
+- **Choosing better axes.** Measuring along a natural grain — downstream and across, or with the wind and across it — is a change of basis, and the numbers get easier ([Change of basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md)).
 - **File and audio compression.** A sound clip is a vector with thousands of entries. Rewriting it in a basis where most coordinates land near zero, then discarding those, is most of a codec.
 - **Data with too many columns.** A spreadsheet of 200 measurements often holds a handful of independent directions. The dimension of the span says how many quantities it really records.
 - **Engineering.** The independent forces on a truss are a basis for every other force in it. Count them and you know how many to measure.
@@ -423,16 +399,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [linear-combinations-and-span](03-linear-combinations-and-span.md): span, and the cross-number that tests it.
-- [linear-independence](04-linear-independence.md): the nothing-is-spare half of the definition, and the reason an address cannot be written two ways.
-- [proof-by-contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): the shape of Steps 2 and 4 — assume the opposite, watch it break.
+- [Linear combinations and span](03-linear-combinations-and-span.md): span, and the cross-number that tests it.
+- [Linear independence](04-linear-independence.md): the nothing-is-spare half of the definition, and the reason an address cannot be written two ways.
+- [Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): the shape of Steps 2 and 4 — assume the opposite, watch it break.
 
 ## Where this goes next
 
-- [linear-maps-as-matrices](../04-Matrices/04-linear-maps-as-matrices.md): with a basis fixed, a linear map is just the matrix of what it does to the basis vectors.
-- [rank-nullity](../05-Solving%20Systems/05-rank-nullity.md): what a map does to dimension — how many directions survive, how many are flattened.
-- [gram-schmidt-and-orthonormal-bases](../06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md): straightening any basis into one whose vectors are at right angles and one unit long.
-- [change-of-basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md): translating an address from one basis to another, both ways.
+- [Linear maps](../04-Matrices/04-linear-maps-as-matrices.md): with a basis fixed, a linear map is just the matrix of what it does to the basis vectors.
+- [Rank and nullity](../05-Solving%20Systems/05-rank-nullity.md): what a map does to dimension — how many directions survive, how many are flattened.
+- [Gram-Schmidt](../06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md): straightening any basis into one whose vectors are at right angles and one unit long.
+- [Change of basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md): translating an address from one basis to another, both ways.
 
 ---
 

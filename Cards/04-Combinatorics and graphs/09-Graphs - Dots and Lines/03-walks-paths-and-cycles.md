@@ -1,34 +1,12 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Graphs - Dots and Lines
-topic: Travelling the lines
-item: Walks, paths and cycles
-kind: definition
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/01-graphs-vertices-and-edges|graphs-vertices-and-edges]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/04-connectivity-and-breadth-first-search|connectivity-and-breadth-first-search]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/07-adjacency-matrix-and-walk-counting|adjacency-matrix-and-walk-counting]]"
-  - "[[Cards/04-Combinatorics and graphs/10-Trees and Cheapest Routes/01-trees|trees]]"
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/01-planar-graphs-and-eulers-formula|planar-graphs-and-eulers-formula]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - walks-paths-and-cycles
----
-
 # Walks, paths and cycles: a wander, a route with no repeats, and a closed loop, with distance measured in steps
 
-Combinatorics and graphs → Graphs - Dots and Lines → Travelling the lines → Walks, paths and cycles
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Graphs - Dots and Lines](../../../SYLLABUS.md#w04-s09) → Walks, paths and cycles
 
 ---
 
 ## General Overview
 
-The city's six stations are A to F, and eight lines join them: A-B, B-C, C-D, D-E, E-F, F-A, and the crossings B-E and C-F ([graphs-vertices-and-edges](01-graphs-vertices-and-edges.md)). A passenger at A wants D: A-B, then B-C, then C-D, three steps. No two-step route exists; four take three.
+The city's six stations are A to F, and eight lines join them: A-B, B-C, C-D, D-E, E-F, F-A, and the crossings B-E and C-F ([Graphs](01-graphs-vertices-and-edges.md)). A passenger at A wants D: A-B, then B-C, then C-D, three steps. No two-step route exists; four take three.
 
 A journey along the lines is a **walk**: a list of stations, each joined by a line to the one before. Its **length** is the step count, one less than the stations listed. A walk may double back — A-B-A-B-C-D is five steps. Three tidier journeys have names: a **trail** repeats no line, a **path** no station, a **cycle** nothing but its start. B-A-F-C-B-E is a trail and not a path: it passes B twice, but no line twice.
 
@@ -89,9 +67,9 @@ The **girth** $g(G)$ is the fewest stations in a cycle. A cycle's stations and s
 ### When it holds
 
 - **Steps are counted, nothing else.** Put fares on the lines and the cheapest route can stop being the shortest.
-- **Every station reachable.** Otherwise two stations have no distance, and the map no diameter: [connectivity-and-breadth-first-search](04-connectivity-and-breadth-first-search.md).
-- **Lines run both ways,** which makes $d(u,v)$ and $d(v,u)$ agree; one-way track breaks it ([directed-graphs-and-topological-order](06-directed-graphs-and-topological-order.md)).
-- **A cycle needs three different stations.** Out and back repeats a line, so it is a walk; a map with no loop has no girth ([trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md)).
+- **Every station reachable.** Otherwise two stations have no distance, and the map no diameter: [Connected or not](04-connectivity-and-breadth-first-search.md).
+- **Lines run both ways,** which makes $d(u,v)$ and $d(v,u)$ agree; one-way track breaks it ([Directed graphs](06-directed-graphs-and-topological-order.md)).
+- **A cycle needs three different stations.** Out and back repeats a line, so it is a walk; a map with no loop has no girth ([Trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md)).
 
 ---
 
@@ -127,7 +105,7 @@ Nothing was added, so no shortest walk repeats a station; and a path visits each
 
 Listing every route to find one distance is wasteful. Sweep instead: mark A with 0, its neighbours B and F with 1, the unmarked stations they reach, C and E, with 2, then D with 3. The picture above is that sweep.
 
-The marks are the distances. A marked station is reached in that many steps, so its distance is at most its mark; nor can it be less, since a shorter route would have marked it earlier. Each round looks only at the lines of the stations just marked ([degree-and-handshaking](02-degree-and-handshaking.md)).
+The marks are the distances. A marked station is reached in that many steps, so its distance is at most its mark; nor can it be less, since a shorter route would have marked it earlier. Each round looks only at the lines of the stations just marked ([Degrees and the handshaking lemma](02-degree-and-handshaking.md)).
 
 ### Step 3: distance behaves like distance
 
@@ -147,9 +125,9 @@ The left half is automatic: the smallest of six numbers cannot beat the largest.
 
 Girth takes the same two roads. Listing: a cycle through a line is a repeat-free route between that line's ends plus the line itself, so enumerate those and keep the shortest. Sweeping: remove a line, measure the distance between the stations it joined, add 1, take the smallest over the eight. Both give 4.
 
-Four, not three: no three stations here form a triangle. The map has no odd loop at all — every line joins one row of the picture to the next, so a loop comes down as often as it goes up — the subject of [bipartite-graphs-and-odd-cycles](05-bipartite-graphs-and-odd-cycles.md).
+Four, not three: no three stations here form a triangle. The map has no odd loop at all — every line joins one row of the picture to the next, so a loop comes down as often as it goes up — the subject of [Bipartite graphs](05-bipartite-graphs-and-odd-cycles.md).
 
-A third road counts walks instead of shortening them, by multiplying a square table of noughts and ones by itself ([adjacency-matrix-and-walk-counting](07-adjacency-matrix-and-walk-counting.md)).
+A third road counts walks instead of shortening them, by multiplying a square table of noughts and ones by itself ([The adjacency matrix](07-adjacency-matrix-and-walk-counting.md)).
 
 ---
 
@@ -405,7 +383,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Route planners.** Any "fewest changes" or "fewest hops" search is the sweep of Step 2, run as the procedure of [connectivity-and-breadth-first-search](04-connectivity-and-breadth-first-search.md).
+- **Route planners.** Any "fewest changes" or "fewest hops" search is the sweep of Step 2, run as the procedure of [Connected or not](04-connectivity-and-breadth-first-search.md).
 - **Network engineering.** Routing protocols count hops, a network's diameter is its worst-case hop count, and the centre is where the cache goes.
 - **Social networks.** The small-world claim is about distance in a graph of acquaintances: the diameter is far smaller than the head count suggests, as Travers and Milgram measured with posted letters.
 - **Molecules.** The girth of a bond graph is its smallest ring, the first thing a chemist reads off a structure.
@@ -417,14 +395,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [graphs-vertices-and-edges](01-graphs-vertices-and-edges.md): the stations and lines this card travels, and the metro map itself.
+- [Graphs](01-graphs-vertices-and-edges.md): the stations and lines this card travels, and the metro map itself.
 
 ## Where this goes next
 
-- [connectivity-and-breadth-first-search](04-connectivity-and-breadth-first-search.md): the sweep as a named procedure, and distance when no route exists.
-- [adjacency-matrix-and-walk-counting](07-adjacency-matrix-and-walk-counting.md): walks counted rather than shortened, by multiplying a table of noughts and ones.
-- [trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md): maps with no cycle, where every pair has exactly one route.
-- [planar-graphs-and-eulers-formula](../12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md): why the girth limits how many lines a map drawn without crossings can carry.
+- [Connected or not](04-connectivity-and-breadth-first-search.md): the sweep as a named procedure, and distance when no route exists.
+- [The adjacency matrix](07-adjacency-matrix-and-walk-counting.md): walks counted rather than shortened, by multiplying a table of noughts and ones.
+- [Trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md): maps with no cycle, where every pair has exactly one route.
+- [Planar graphs](../12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md): why the girth limits how many lines a map drawn without crossings can carry.
 
 Every distance here assumed every station could be reached; running the sweep as a procedure, and saying what happens when one is cut off, is the next card.
 

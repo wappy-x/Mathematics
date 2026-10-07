@@ -1,26 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX exotics as desks use them - digitals, touches and barriers
-topic: Bets on a first touch
-item: One-touch and no-touch
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/02-barrier-options-by-reflection|barrier-options-by-reflection]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/01-fx-digitals|fx-digitals]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/04-reflection-principle-and-running-maximum|reflection-principle-and-running-maximum]]"
-next:
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/05-double-barriers-and-double-no-touch|double-barriers-and-double-no-touch]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/06-barrier-and-touch-greeks|barrier-and-touch-greeks]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/07-barriers-with-the-smile|barriers-with-the-smile]]"
-tags: [mathematics, financial mathematics, fx-one-touch-and-no-touch]
----
-
 # One-touch and no-touch: a fixed payout on whether a level ever trades, priced from the chance of a first touch
 
-Financial mathematics → FX exotics as desks use them - digitals, touches and barriers → Bets on a first touch → One-touch and no-touch
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX exotics as desks use them - digitals, touches and barriers](../../../SYLLABUS.md#w12-s23) → One-touch and no-touch
 
 ---
 
@@ -28,7 +8,7 @@ Financial mathematics → FX exotics as desks use them - digitals, touches and b
 
 The euro trades at 1.10 dollars, written EURUSD 1.10. A fund thinks the euro will rally hard at some point this year but has no view on where it ends. It buys a contract from a bank: *if EURUSD trades at 1.20 or higher at any moment in the next year, the bank pays USD 1 million on the expiry date; if it never does, nothing.* The euro can touch 1.20 in May and fall back to 1.05 by December. The contract still pays.
 
-That contract is a **one-touch**: a fixed payout triggered the first time a level trades, whatever happens afterwards. Its opposite, which pays only if the level is **never** touched, is a **no-touch**. The level is the **barrier**, the same kind of wall as on [barrier-options-by-reflection](02-barrier-options-by-reflection.md). Desks quote both as a percentage of the payout.
+That contract is a **one-touch**: a fixed payout triggered the first time a level trades, whatever happens afterwards. Its opposite, which pays only if the level is **never** touched, is a **no-touch**. The level is the **barrier**, the same kind of wall as on [Knock-out and knock-in](02-barrier-options-by-reflection.md). Desks quote both as a percentage of the payout.
 
 In the house currency market the one-touch at 1.20 costs 41.42% of the payout: USD 414,213 per million. The no-touch costs 53.70%. They add to 95.12%, not 100%: the missing 4.88% is a year's discounting of the payout. The rest is where 41.42% comes from: the chance that EURUSD ever reaches 1.20, which is 0.4355, discounted for a year.
 
@@ -56,7 +36,7 @@ Orange: the one-touch, nothing until the year's high reaches 1.20, then the full
 
 ## The formula
 
-Notation first. $S$ is EURUSD today in dollars per euro, so the euro is the **foreign** currency and the dollar the **domestic** one. $H$ is the barrier. The first moment EURUSD reaches $H$ is written $\tau$, read "tau", the **first touch time**; if it never happens, $\tau$ is taken as infinite. Everything else follows [fx-digitals](01-fx-digitals.md): $N(x)$ is the area under the standard bell curve left of $x$.
+Notation first. $S$ is EURUSD today in dollars per euro, so the euro is the **foreign** currency and the dollar the **domestic** one. $H$ is the barrier. The first moment EURUSD reaches $H$ is written $\tau$, read "tau", the **first touch time**; if it never happens, $\tau$ is taken as infinite. Everything else follows [Currency digitals](01-fx-digitals.md): $N(x)$ is the area under the standard bell curve left of $x$.
 
 For an upper barrier ($H$ above $S$), the chance of a touch by expiry, in the dollar pricing world, is
 
@@ -104,9 +84,9 @@ In words: a daily check behaves like a continuous check against a slightly more 
 ### When it holds
 
 - **Continuous monitoring.** The formula counts every touch, however brief. A contract checked once a day at a fixing sees fewer touches: 0.392953 in simulation against 0.414213 continuous. The shift above gives 0.395051.
-- **A lognormal rate with one constant volatility, no jumps.** A touch contract is priced almost entirely by the volatility near the wall, not at the money. On a real smile this model price is off, and the size of the error is measured on [barriers-with-the-smile](07-barriers-with-the-smile.md).
+- **A lognormal rate with one constant volatility, no jumps.** A touch contract is priced almost entirely by the volatility near the wall, not at the money. On a real smile this model price is off, and the size of the error is measured on [Barriers on a smile](07-barriers-with-the-smile.md).
 - **Known, constant rates in both currencies.** Both the drift and the discount come from them.
-- **One wall.** A contract with a wall on each side is not the product of two single-wall chances: [double-barriers-and-double-no-touch](05-double-barriers-and-double-no-touch.md).
+- **One wall.** A contract with a wall on each side is not the product of two single-wall chances: [Two walls](05-double-barriers-and-double-no-touch.md).
 - **A real tilted drift.** Pay-at-hit needs $\nu^2 + 2r_d\sigma^2 \ge 0$. A negative rate deep enough makes the square root fail; the time integral in the code still prices it.
 - **The complement needs the same payment date.** $V_{OT} + V_{NT} = e^{-r_d T}$ holds for a one-touch paid at expiry. A pay-at-hit one-touch plus a no-touch does not pay one dollar at a single date, so the identity fails.
 
@@ -116,7 +96,7 @@ In words: a daily check behaves like a continuous check against a slightly more 
 
 ### Step 0: the price is a discounted chance about the path's highest point
 
-A one-touch pays one dollar at expiry exactly when the year's highest EURUSD is at or above $H$. In the dollar pricing world ([fx-digitals](01-fx-digitals.md)), a dollar paid at $T$ on an event is worth $e^{-r_d T}$ times the event's chance. So everything reduces to one number: the chance that a drifting random walk ever reaches a level. A mirror in the wall counts that chance.
+A one-touch pays one dollar at expiry exactly when the year's highest EURUSD is at or above $H$. In the dollar pricing world ([Currency digitals](01-fx-digitals.md)), a dollar paid at $T$ on an event is worth $e^{-r_d T}$ times the event's chance. So everything reduces to one number: the chance that a drifting random walk ever reaches a level. A mirror in the wall counts that chance.
 
 ### Step 1: work on the log scale, where the wall is flat
 
@@ -130,7 +110,7 @@ The second group is the hard one, and it is where the mirror comes in.
 
 ### Step 3: without drift, the second group is a copy of the first
 
-Suppose the drift were zero. Take a path that touches $b$ and ends at some $x$ below it. Flip everything after the first touch, up for down, about $b$. The flipped path ends at $2b - x$, above $b$. The pairing is one for one, and flipping a driftless Brownian motion keeps every probability ([reflection-principle-and-running-maximum](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)). So touch-and-return is exactly as likely as finish-above, and the touch chance is twice the digital chance. Desks call this the **twice-the-digital rule**, and without drift it is exact.
+Suppose the drift were zero. Take a path that touches $b$ and ends at some $x$ below it. Flip everything after the first touch, up for down, about $b$. The flipped path ends at $2b - x$, above $b$. The pairing is one for one, and flipping a driftless Brownian motion keeps every probability ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)). So touch-and-return is exactly as likely as finish-above, and the touch chance is twice the digital chance. Desks call this the **twice-the-digital rule**, and without drift it is exact.
 
 ### Step 4: put the drift back, and the mirror gets a weight
 
@@ -169,7 +149,7 @@ Here $\hat\nu = \sqrt{0.000225 + 0.001} = 0.035$ and $(\nu - \hat\nu)/\sigma^2 =
 
 ### Step 6: paying in euros changes the counting currency
 
-A one-touch paying one euro at expiry, valued in euros, is the euro-discounted chance of a touch counted in the euro pricing world. Counting in euros weights the futures where the euro is strong, which raises the drift of $X_t$ by $\sigma^2$: $\nu_f = 0.015 + 0.01 = 0.025$. This is the same slide that gives the euro digital $N(d_1)$ in place of $N(d_2)$ on [fx-digitals](01-fx-digitals.md). The touch chance becomes 0.470507, and the price is $e^{-0.03} \times 0.470507 = 0.456601$ euros per euro.
+A one-touch paying one euro at expiry, valued in euros, is the euro-discounted chance of a touch counted in the euro pricing world. Counting in euros weights the futures where the euro is strong, which raises the drift of $X_t$ by $\sigma^2$: $\nu_f = 0.015 + 0.01 = 0.025$. This is the same slide that gives the euro digital $N(d_1)$ in place of $N(d_2)$ on [Currency digitals](01-fx-digitals.md). The touch chance becomes 0.470507, and the price is $e^{-0.03} \times 0.470507 = 0.456601$ euros per euro.
 
 Paying one euro at the touch needs no new chance at all. At the moment of the touch one euro is worth exactly $H = 1.20$ dollars. So the contract is 1.20 pay-at-hit dollar one-touches, worth $1.20 \times 0.425164$ dollars, which is $1.20/1.10 \times 0.425164 = 0.463815$ euros. The code also reaches that number the long way, integrating the discounted first-touch density in the euro world, and the two agree.
 
@@ -254,7 +234,7 @@ xychart-beta
 
 Orange: the one-touch, rising to 0.951229 on the wall, one discounted dollar, because the touch has happened and the payout is certain. Green: the no-touch, falling to zero on the wall. At every rate the two add to 0.951229.
 
-The curve is steepest just below the wall, so the hedge (the amount of euros a bank holds against the contract) is largest there and vanishes the moment the wall trades. That jump is the whole risk of running a touch book, taken apart on [barrier-and-touch-greeks](06-barrier-and-touch-greeks.md). At today's rate, by bumping the inputs:
+The curve is steepest just below the wall, so the hedge (the amount of euros a bank holds against the contract) is largest there and vanishes the moment the wall trades. That jump is the whole risk of running a touch book, taken apart on [Greeks at the wall](06-barrier-and-touch-greeks.md). At today's rate, by bumping the inputs:
 
 | Greek | One-touch, per 1 USD of payout | No-touch | Meaning |
 | --- | --- | --- | --- |
@@ -707,10 +687,10 @@ The two outputs agree line for line.
 ## Where you meet it in real life
 
 - **FX options desks.** One-touches and no-touches are among the most traded exotic currency options. They are quoted as a percentage of payout, and a client asking "what's the 1.20 one-touch" expects a number like 41.4%.
-- **Hedge funds expressing a range view.** A fund that expects EURUSD to stay between two levels buys the pair of walls as one contract: [double-barriers-and-double-no-touch](05-double-barriers-and-double-no-touch.md).
-- **Rebates on barrier options.** A knock-out that pays a fixed cash sum on the touch contains a pay-at-hit one-touch; its price is the Step 5 formula. Every one of the eight single barriers can carry one: [the-eight-barrier-types](03-the-eight-barrier-types.md).
-- **Choosing the wall for a budget.** A client with a premium in mind asks where the wall must sit to cost it; the desk runs this card's formula backwards: [barrier-level-from-a-target-premium](08-barrier-level-from-a-target-premium.md).
-- **Reading the market's view of the smile.** The market price of a one-touch differs from this card's model price; the gap, known as the touch's smile correction, is what traders argue about, and it is measured on [barriers-with-the-smile](07-barriers-with-the-smile.md).
+- **Hedge funds expressing a range view.** A fund that expects EURUSD to stay between two levels buys the pair of walls as one contract: [Two walls](05-double-barriers-and-double-no-touch.md).
+- **Rebates on barrier options.** A knock-out that pays a fixed cash sum on the touch contains a pay-at-hit one-touch; its price is the Step 5 formula. Every one of the eight single barriers can carry one: [The eight single barriers in one table](03-the-eight-barrier-types.md).
+- **Choosing the wall for a budget.** A client with a premium in mind asks where the wall must sit to cost it; the desk runs this card's formula backwards: [Solving for the barrier](08-barrier-level-from-a-target-premium.md).
+- **Reading the market's view of the smile.** The market price of a one-touch differs from this card's model price; the gap, known as the touch's smile correction, is what traders argue about, and it is measured on [Barriers on a smile](07-barriers-with-the-smile.md).
 
 > **Say it back**
 > A one-touch pays a fixed amount if the rate ever trades at the wall; a no-touch pays if it never does. The one-touch paid at expiry is the discounted chance of a touch. That chance is the chance of finishing past the wall plus a mirror term for paths that touch and come back, weighted for the drift. Paying at the touch tilts the drift; paying in euros changes the counting currency. The no-touch is one discounted dollar minus the one-touch, in any model.
@@ -719,15 +699,15 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [barrier-options-by-reflection](02-barrier-options-by-reflection.md): the mirror in the wall with its drift weight, applied there to a call; here to a fixed payout.
-- [fx-digitals](01-fx-digitals.md): a fixed payout priced as a discounted probability, and why the currency of the payout changes the drift.
-- [reflection-principle-and-running-maximum](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the flip after the first touch, and the law of the running maximum it gives.
+- [Knock-out and knock-in](02-barrier-options-by-reflection.md): the mirror in the wall with its drift weight, applied there to a call; here to a fixed payout.
+- [Currency digitals](01-fx-digitals.md): a fixed payout priced as a discounted probability, and why the currency of the payout changes the drift.
+- [Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the flip after the first touch, and the law of the running maximum it gives.
 
 ## Where this goes next
 
-- [double-barriers-and-double-no-touch](05-double-barriers-and-double-no-touch.md): two walls at once, where one mirror becomes an infinite hall of mirrors.
-- [barrier-and-touch-greeks](06-barrier-and-touch-greeks.md): the delta and vega above, and why they jump at the wall.
-- [barriers-with-the-smile](07-barriers-with-the-smile.md): what happens to 41.42% when volatility depends on the level.
+- [Two walls](05-double-barriers-and-double-no-touch.md): two walls at once, where one mirror becomes an infinite hall of mirrors.
+- [Greeks at the wall](06-barrier-and-touch-greeks.md): the delta and vega above, and why they jump at the wall.
+- [Barriers on a smile](07-barriers-with-the-smile.md): what happens to 41.42% when volatility depends on the level.
 
 This card prices one wall with one volatility; the question it leaves open is what a touch is worth when the market's volatility near 1.20 is not the 10% used at 1.10.
 

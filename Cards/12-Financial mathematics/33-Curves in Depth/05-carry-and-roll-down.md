@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Curves in Depth
-topic: Holding a bond through time
-item: Carry and roll-down
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/33-Curves in Depth/04-term-premium-and-expectations|term-premium-and-expectations]]"
-next:
-  - "[[Cards/12-Financial mathematics/33-Curves in Depth/06-negative-rates-and-floors|negative-rates-and-floors]]"
-tags: [mathematics, financial mathematics, carry-and-roll-down]
----
-
 # Carry and roll-down: what a bond earns if the curve does not move
 
-Financial mathematics → Curves in Depth → Holding a bond through time → Carry and roll-down
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves in Depth](../../../SYLLABUS.md#w12-s33) → Carry and roll-down
 
 ---
 
@@ -52,7 +36,7 @@ Lower line (orange): today's curve, 3.00% for one year up to 4.05% for four. Upp
 
 ## The formula
 
-Notation first, in words. $y(t)$ is today's **zero yield** for money due in $t$ years, continuously compounded: a payment of 1 due in $t$ years is worth $D(t) = e^{-t\,y(t)}$ today, where $D(t)$ is the **discount factor** and $e$ is the exponential base ([term-premium-and-expectations](04-term-premium-and-expectations.md) reads the same curve). The bond matures in $T$ years and is held for $h$ years. Returns are **log returns**, the natural log of sale price over purchase price, because those add exactly.
+Notation first, in words. $y(t)$ is today's **zero yield** for money due in $t$ years, continuously compounded: a payment of 1 due in $t$ years is worth $D(t) = e^{-t\,y(t)}$ today, where $D(t)$ is the **discount factor** and $e$ is the exponential base ([What a curve says](04-term-premium-and-expectations.md) reads the same curve). The bond matures in $T$ years and is held for $h$ years. Returns are **log returns**, the natural log of sale price over purchase price, because those add exactly.
 
 $$C = h\,y(T), \qquad R = (T-h)\,\bigl(y(T) - y(T-h)\bigr), \qquad \ln\frac{P_h}{P_0} = C + R$$
 
@@ -142,7 +126,7 @@ That is cash's growth. For a zero the only term is $N\,D(T)/D(h)$, and $D(T)/D(h
 
 </details>
 
-The same breakeven can be read the other way round. The term-premium card splits a forward rate into what the market expects plus a premium for bearing risk ([term-premium-and-expectations](04-term-premium-and-expectations.md)). If rates are expected to stay put, the whole excess of carry and roll-down over cash is that premium; if they are expected to rise to the forwards, the excess is zero.
+The same breakeven can be read the other way round. The term-premium card splits a forward rate into what the market expects plus a premium for bearing risk ([What a curve says](04-term-premium-and-expectations.md)). If rates are expected to stay put, the whole excess of carry and roll-down over cash is that premium; if they are expected to rise to the forwards, the excess is zero.
 
 ---
 
@@ -604,7 +588,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Reading carry and roll-down as an expected return.** They are the return on one scenario, a curve that does not move. The forward curve names a second scenario, at which the same bond only matches cash. Which one is closer to what happens is the term premium's question ([term-premium-and-expectations](04-term-premium-and-expectations.md)), and a steep curve can mean either high expected returns or rates expected to rise.
+> **Reading carry and roll-down as an expected return.** They are the return on one scenario, a curve that does not move. The forward curve names a second scenario, at which the same bond only matches cash. Which one is closer to what happens is the term premium's question ([What a curve says](04-term-premium-and-expectations.md)), and a steep curve can mean either high expected returns or rates expected to rise.
 >
 > - **The yield gap is not the return.** 45 bp of roll-down in yield is 1.80% of return on a bond with 4 years left, not 0.45%.
 > - **The wrong multiplier.** Multiplying by the original 5 years gives 2.25%; the price moves by the years left at sale.
@@ -617,8 +601,8 @@ The two outputs match line for line.
 
 - **Carry-and-roll tables on bond desks.** For each maturity: carry, roll-down, and breakeven in basis points, as in the bars above. A position with a wide breakeven is a cushion against rising rates; one with a narrow breakeven is a bet that they will not rise.
 - **Riding the curve.** A money-market fund that needs cash in three months buys a six-month bill and sells it after three, earning the roll-down on a steep short end. It works while the short end stays steep.
-- **Curve trades.** Traders weigh a steepener or flattener (a bet that the curve steepens or flattens) by its carry and roll per unit of risk; the risk comes from how the curve moves, which [principal-components-of-the-curve](01-principal-components-of-the-curve.md) splits into level, slope and curvature, and [key-rate-durations-and-curve-hedging](02-key-rate-durations-and-curve-hedging.md) into single maturities.
-- **Fitted curves.** Roll-down between listed maturities needs yields at every maturity, usually from a smooth fitted curve such as [nelson-siegel-and-svensson-fitting](03-nelson-siegel-and-svensson-fitting.md); the fit's shape changes the roll.
+- **Curve trades.** Traders weigh a steepener or flattener (a bet that the curve steepens or flattens) by its carry and roll per unit of risk; the risk comes from how the curve moves, which [Level, slope and curvature](01-principal-components-of-the-curve.md) splits into level, slope and curvature, and [Key-rate durations](02-key-rate-durations-and-curve-hedging.md) into single maturities.
+- **Fitted curves.** Roll-down between listed maturities needs yields at every maturity, usually from a smooth fitted curve such as [Fitting a curve with four or six parameters](03-nelson-siegel-and-svensson-fitting.md); the fit's shape changes the roll.
 - **The carry factor.** Koijen, Moskowitz, Pedersen and Vrugt define a bond's carry as net carry plus roll-down on an unchanged curve and find that high-carry bonds have, on average, earned more.
 
 > **Say it back**
@@ -628,11 +612,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [term-premium-and-expectations](04-term-premium-and-expectations.md): forward rates as expectations plus a premium; this card turns that premium into a holding return and a breakeven.
+- [What a curve says](04-term-premium-and-expectations.md): forward rates as expectations plus a premium; this card turns that premium into a holding return and a breakeven.
 
 ## Where this goes next
 
-- [negative-rates-and-floors](06-negative-rates-and-floors.md): yields below zero, where carry itself turns negative and floors in contracts change what a bond or loan pays.
+- [Negative rates](06-negative-rates-and-floors.md): yields below zero, where carry itself turns negative and floors in contracts change what a bond or loan pays.
 
 Every yield here was positive. What happens to carry, and to loans and options with a floor on the rate, once yields go below zero is the next question.
 

@@ -1,28 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Derivatives Meet the Lebesgue Integral
-topic: Recovering values from averages
-item: The Lebesgue differentiation theorem
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/05-completeness-of-lp|completeness-of-lp]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/03-lebesgue-measure|lebesgue-measure]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/07-markov-and-chebyshev|markov-and-chebyshev]]"
-next:
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/03-monotone-functions-differentiable-almost-everywhere|monotone-functions-differentiable-almost-everywhere]]"
-  - "[[Cards/20-Harmonic analysis/06-Maximal Functions and Beyond/01-hardy-littlewood-maximal-function|hardy-littlewood-maximal-function]]"
-tags:
-  - mathematics
-  - measure and integration
-  - lebesgue-differentiation-theorem
----
-
 # The Lebesgue differentiation theorem: averages over shrinking intervals return the function's value at almost every point
 
-Measure and integration → Derivatives Meet the Lebesgue Integral → Recovering values from averages → The Lebesgue differentiation theorem
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Derivatives Meet the Lebesgue Integral](../../../SYLLABUS.md#w10-s11) → The Lebesgue differentiation theorem
 
 ---
 
@@ -48,7 +26,7 @@ One unit of time is 5 pixels and one kilowatt is 30. An open circle is the value
 
 ## The formula
 
-Notation first. $\lambda$ is Lebesgue measure, the length of a set on the line ([lebesgue-measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)). "Almost every point", written a.e., means every point outside a set of length zero. A function is **locally integrable** when the integral of its absolute value over every bounded interval is finite; $L^1_{\mathrm{loc}}$ is the collection of them. The **window average** of $f$ at $x$ with half-width $h$ is
+Notation first. $\lambda$ is Lebesgue measure, the length of a set on the line ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)). "Almost every point", written a.e., means every point outside a set of length zero. A function is **locally integrable** when the integral of its absolute value over every bounded interval is finite; $L^1_{\mathrm{loc}}$ is the collection of them. The **window average** of $f$ at $x$ with half-width $h$ is
 
 $$A_h f(x) = \frac{1}{2h}\int_{x-h}^{x+h} f\,d\lambda .$$
 
@@ -64,7 +42,7 @@ Two tools carry the proof. The **maximal function** takes the largest window ave
 
 $$Mf(x) = \sup_{h > 0}\ \frac{1}{2h}\int_{x-h}^{x+h} \lvert f\rvert\,d\lambda .$$
 
-Write $\|f\|_1 = \int \lvert f\rvert\,d\lambda$ for the total of $\lvert f\rvert$ ([completeness-of-lp](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)). The **Hardy-Littlewood maximal inequality** bounds how much of the line $Mf$ can make large:
+Write $\|f\|_1 = \int \lvert f\rvert\,d\lambda$ for the total of $\lvert f\rvert$ ([Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)). The **Hardy-Littlewood maximal inequality** bounds how much of the line $Mf$ can make large:
 
 $$\lambda\{x : Mf(x) > \alpha\} \;\le\; \frac{3}{\alpha}\,\|f\|_1 \qquad\text{for every } f \in L^1 \text{ and } \alpha > 0 .$$
 
@@ -101,7 +79,7 @@ A consequence names the theorem. With $F(x) = \int_0^x f\,d\lambda$, the running
 
 ### Step 0: continuous functions obey it everywhere, and every integrable function is nearly continuous
 
-For a continuous function the averages converge at every point. An integrable function is a continuous one plus a remainder of small total ([completeness-of-lp](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)). The maximal inequality says the remainder's averages are large only on a small set. So the misbehaving points fit inside sets of every positive size, and have length zero.
+For a continuous function the averages converge at every point. An integrable function is a continuous one plus a remainder of small total ([Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)). The maximal inequality says the remainder's averages are large only on a small set. So the misbehaving points fit inside sets of every positive size, and have length zero.
 
 ### Step 1: the continuous case, and the smooth part of the meter
 
@@ -135,7 +113,7 @@ Let $E$ be the set where $Mf > \alpha$. Each point of $E$ has a **witness window
 
 $$\lambda(K) \le 3\sum_i \lambda(J_i) < \frac{3}{\alpha}\sum_i \int_{J_i}\lvert f\rvert\,d\lambda \le \frac{3}{\alpha}\,\|f\|_1 .$$
 
-Closed bounded pieces fill $E$ up to any slack, by the regularity of Lebesgue measure ([lebesgue-measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)), so the bound holds for $E$.
+Closed bounded pieces fill $E$ up to any slack, by the regularity of Lebesgue measure ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)), so the bound holds for $E$.
 
 On the meter, $\varphi$ is the demand with each jump replaced by a straight ramp one minute wide, and $g = f - \varphi$: two triangles of total 1.5 kW-minutes. With $\alpha$ = 0.2, the grid finds $Mg > \alpha$ on about 5.70 minutes; three times the chosen lengths is 21.9000; the bound is 22.5000. Loose, and enough.
 
@@ -145,7 +123,7 @@ Fix a level $\alpha > 0$ and a tolerance $\varepsilon > 0$. Pick $\varphi$ conti
 
 $$\lvert f(s) - f(x)\rvert \le \lvert \varphi(s) - \varphi(x)\rvert + \lvert g(s)\rvert + \lvert g(x)\rvert .$$
 
-Average over the window and let $h$ shrink. The first term goes to 0 (Step 1). The second is at most $Mg(x)$. So $\Theta f(x) \le Mg(x) + \lvert g(x)\rvert$. If $\Theta f(x) > 2\alpha$, then $Mg(x) > \alpha$ or $\lvert g(x)\rvert > \alpha$. The maximal inequality bounds the first set by $3\varepsilon/\alpha$. Markov's inequality ([markov-and-chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) bounds the second by $\varepsilon/\alpha$. So the set where $\Theta f > 2\alpha$ fits inside a set of length at most $4\varepsilon/\alpha$, for every $\varepsilon$. Its length is zero. Letting $\alpha$ run through 1, 1/2, 1/3, … gives a countable union of null sets, still null. Off it, $\Theta f = 0$.
+Average over the window and let $h$ shrink. The first term goes to 0 (Step 1). The second is at most $Mg(x)$. So $\Theta f(x) \le Mg(x) + \lvert g(x)\rvert$. If $\Theta f(x) > 2\alpha$, then $Mg(x) > \alpha$ or $\lvert g(x)\rvert > \alpha$. The maximal inequality bounds the first set by $3\varepsilon/\alpha$. Markov's inequality ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) bounds the second by $\varepsilon/\alpha$. So the set where $\Theta f > 2\alpha$ fits inside a set of length at most $4\varepsilon/\alpha$, for every $\varepsilon$. Its length is zero. Letting $\alpha$ run through 1, 1/2, 1/3, … gives a countable union of null sets, still null. Off it, $\Theta f = 0$.
 
 On the meter, narrower ramps shrink the bound $4\|g\|_1/\alpha$: 30.000000 for ramps one minute wide, 7.500000 at a quarter-minute, 1.875000 at 1/16, 0.029297 at 1/1024. The set being bounded, where the spread beats 2α = 0.4, is the three instants t = 20, 30 and 45, whose spreads are 0.5, 95 and 1. Three points have length zero.
 
@@ -174,7 +152,7 @@ At a Lebesgue point the running total has slope $f(x)$: the slope over $[x, x+h]
 
 </details>
 
-Another route first proves that rising functions have a slope almost everywhere, by Riesz's rising-sun lemma (Stein and Shakarchi, Chapter 3); the statement is on [monotone-functions-differentiable-almost-everywhere](03-monotone-functions-differentiable-almost-everywhere.md), which proves it from this card instead. The running total of a non-negative function rises, so it has a slope almost everywhere, and with more work that slope is the integrand; applying that to $\lvert f - q\rvert$ for each rational $q$ gives Lebesgue points. The maximal-function route is the one that carries over to higher dimensions and other averaging kernels, in hardy-littlewood-maximal-function.
+Another route first proves that rising functions have a slope almost everywhere, by Riesz's rising-sun lemma (Stein and Shakarchi, Chapter 3); the statement is on [Lebesgue's theorem on monotone functions](03-monotone-functions-differentiable-almost-everywhere.md), which proves it from this card instead. The running total of a non-negative function rises, so it has a slope almost everywhere, and with more work that slope is the integrand; applying that to $\lvert f - q\rvert$ for each rational $q$ gives Lebesgue points. The maximal-function route is the one that carries over to higher dimensions and other averaging kernels, in The maximal function.
 
 ---
 
@@ -608,9 +586,9 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Interval metering.** Electricity, gas and water meters log interval averages; fine enough logs determine demand up to instants of no duration.
-- **Probability densities.** A random variable's density at almost every point is the limit of P(X in the window) over the window's length. This is the concrete face of [radon-nikodym-derivative](../08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md) on the line.
-- **The fundamental theorem of calculus for Lebesgue integrals.** The slope of the running total is the integrand almost everywhere; which functions are running totals is [absolutely-continuous-functions-and-the-fundamental-theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md).
-- **Smoothing signals.** A moving average of shrinking width, or a bell-shaped averaging kernel, returns the signal at almost every instant; the maximal function controls all such kernels at once, in hardy-littlewood-maximal-function.
+- **Probability densities.** A random variable's density at almost every point is the limit of P(X in the window) over the window's length. This is the concrete face of [The Radon-Nikodym derivative](../08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md) on the line.
+- **The fundamental theorem of calculus for Lebesgue integrals.** The slope of the running total is the integrand almost everywhere; which functions are running totals is [Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md).
+- **Smoothing signals.** A moving average of shrinking width, or a bell-shaped averaging kernel, returns the signal at almost every instant; the maximal function controls all such kernels at once, in The maximal function.
 
 > **Say it back**
 > An integrable function can be read back from its averages over shrinking windows everywhere outside a set of length zero. A continuous function obeys this everywhere, and an integrable one is continuous plus a remainder of small total. The Vitali choice of disjoint windows proves the maximal inequality: the remainder's averages beat a level only on a set at most three times its total over the level. So the misbehaving points fit in sets of every positive length. The meter's averages land mid-jump at the switch instants and ignore the glitch, the exceptions the theorem allows.
@@ -619,14 +597,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [completeness-of-lp](../07-Sizes%20of%20Functions/05-completeness-of-lp.md): continuous functions come within any tolerance of an integrable one in total, which splits f into a continuous part and a small remainder.
-- [lebesgue-measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md): length, null sets, and regularity, which lets closed bounded pieces measure an open set.
-- [markov-and-chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md): the bound on where the remainder itself is large.
+- [Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md): continuous functions come within any tolerance of an integrable one in total, which splits f into a continuous part and a small remainder.
+- [Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md): length, null sets, and regularity, which lets closed bounded pieces measure an open set.
+- [Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md): the bound on where the remainder itself is large.
 
 ## Where this goes next
 
-- [monotone-functions-differentiable-almost-everywhere](03-monotone-functions-differentiable-almost-everywhere.md): every rising function has a slope almost everywhere, whether or not it is a running total.
-- hardy-littlewood-maximal-function: the maximal function in higher dimensions, its bounds on $L^p$, and the averaging kernels it controls.
+- [Lebesgue's theorem on monotone functions](03-monotone-functions-differentiable-almost-everywhere.md): every rising function has a slope almost everywhere, whether or not it is a running total.
+- The maximal function: the maximal function in higher dimensions, its bounds on $L^p$, and the averaging kernels it controls.
 
 ---
 

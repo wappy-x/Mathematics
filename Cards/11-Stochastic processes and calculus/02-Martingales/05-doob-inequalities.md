@@ -1,30 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Martingales
-topic: The peak of a fair game
-item: Doob's inequalities
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/04-martingale-convergence|martingale-convergence]]"
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/03-stopping-times-and-optional-stopping|stopping-times-and-optional-stopping]]"
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/02-predictable-bets-and-the-martingale-transform|predictable-bets-and-the-martingale-transform]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/06-uniform-integrability-and-unbounded-stopping|uniform-integrability-and-unbounded-stopping]]"
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/07-martingale-representation-in-discrete-time|martingale-representation-in-discrete-time]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/06-brownian-martingales-and-exponential-martingale|brownian-martingales-and-exponential-martingale]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/01-ito-integral|ito-integral]]"
-tags:
-  - mathematics
-  - stochastic processes and calculus
-  - doob-inequalities
----
-
 # Doob's inequalities: the maximum of a martingale is controlled by its endpoint
 
-Stochastic processes and calculus → Martingales → The peak of a fair game → Doob's inequalities
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Martingales](../../../SYLLABUS.md#w11-s02) → Doob's inequalities
 
 ---
 
@@ -58,7 +34,7 @@ The rising line is the exact chance, in percent, computed by both checks for eac
 
 ## The formula
 
-Notation first, in words. The fortune after round n is $X_n$, so $X_0$ is the starting $10. Reminder from [martingales](01-martingales.md): $\mathcal F_n$ is what is known after round n, and a martingale is a fair game, $E[X_{n+1} \mid \mathcal F_n] = X_n$. A submartingale is a game tilted in the player's favour or fair: $E[X_{n+1} \mid \mathcal F_n] \ge X_n$. The running peak is the highest value seen so far, written with a star: $X^*_N = \max_{0 \le n \le N} X_n$. A semicolon inside an average means "counted only on this event": $E[X_N;\, X^*_N \ge \lambda]$ is the average of $X_N \mathbf 1\{X^*_N \ge \lambda\}$, where the indicator $\mathbf 1\{\cdot\}$ is 1 when the event happens and 0 when it does not.
+Notation first, in words. The fortune after round n is $X_n$, so $X_0$ is the starting $10. Reminder from [Martingales](01-martingales.md): $\mathcal F_n$ is what is known after round n, and a martingale is a fair game, $E[X_{n+1} \mid \mathcal F_n] = X_n$. A submartingale is a game tilted in the player's favour or fair: $E[X_{n+1} \mid \mathcal F_n] \ge X_n$. The running peak is the highest value seen so far, written with a star: $X^*_N = \max_{0 \le n \le N} X_n$. A semicolon inside an average means "counted only on this event": $E[X_N;\, X^*_N \ge \lambda]$ is the average of $X_N \mathbf 1\{X^*_N \ge \lambda\}$, where the indicator $\mathbf 1\{\cdot\}$ is 1 when the event happens and 0 when it does not.
 
 Doob's maximal inequality. For a submartingale that is never negative, any level $\lambda > 0$ and any number of rounds $N$:
 
@@ -104,7 +80,7 @@ Watch each path and stop the clock at the first round it touches $31. At that mo
 
 ### Step 1: the peak event is a stopping-time event
 
-Let $\tau$ be the first round $n \le N$ with $X_n \ge \lambda$. Whether $\tau = k$ is decided by the first k tosses, so $\tau$ is a stopping time ([stopping-times-and-optional-stopping](03-stopping-times-and-optional-stopping.md)). The peak reaches $\lambda$ exactly when $\tau \le N$. So the event "the peak reached the level" splits into the pieces "it first did so at round k", for k = 0 to N, and nothing is counted twice.
+Let $\tau$ be the first round $n \le N$ with $X_n \ge \lambda$. Whether $\tau = k$ is decided by the first k tosses, so $\tau$ is a stopping time ([Stopping times](03-stopping-times-and-optional-stopping.md)). The peak reaches $\lambda$ exactly when $\tau \le N$. So the event "the peak reached the level" splits into the pieces "it first did so at round k", for k = 0 to N, and nothing is counted twice.
 
 ### Step 2: on each piece, the end is worth at least the level
 
@@ -144,7 +120,7 @@ the equality by Tonelli again and the last step by Cauchy–Schwarz. If $E[Y^2] 
 The maximal inequality applies to any non-negative submartingale, and a convex function of a martingale is one (conditional Jensen, in the proof above). Choosing the function well tightens the bound for the same question.
 
 - **Squares.** Net winnings $M_n = X_n - 10$ form a martingale, so $M_n^2$ is a submartingale. The fortune reaches $31 only if $M_n^2$ reaches $21^2 = 441$. The bound is the average of $M_N^2$ over 441. That average equals the mean number of rounds actually played, 85.013575, because $M_n^2$ minus the rounds played is itself a martingale. The bound is 0.192775; without the stop at $0 the average would be all 100 rounds, giving 0.226757. For sums of independent steps this is Kolmogorov's inequality, a standard route to the strong law of large numbers.
-- **Exponentials.** Drop the stop at $0 for a moment and let the walk run into debt. Every path on which the stopped fortune reaches $31 is a path on which the free walk gains $21, since the two agree until ruin. For the free walk, $e^{\theta M_n}$ is a submartingale with average $\cosh(\theta)^{100}$ after 100 rounds: each ±1 step multiplies it by $e^{\theta}$ or $e^{-\theta}$, and the average of those two is the hyperbolic cosine $\cosh\theta$ ([hyperbolic-functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)). So the chance of gaining $21 is at most $\cosh(\theta)^{100} e^{-21\theta}$ for every tilt $\theta > 0$. Setting the slope in $\theta$ to zero gives $\tanh\theta = 21/100$, where the hyperbolic tangent tanh is half the difference of $e^{\theta}$ and $e^{-\theta}$ over their average; undoing it (atanh) gives $\theta = 0.213171$. The bound is 0.108446.
+- **Exponentials.** Drop the stop at $0 for a moment and let the walk run into debt. Every path on which the stopped fortune reaches $31 is a path on which the free walk gains $21, since the two agree until ruin. For the free walk, $e^{\theta M_n}$ is a submartingale with average $\cosh(\theta)^{100}$ after 100 rounds: each ±1 step multiplies it by $e^{\theta}$ or $e^{-\theta}$, and the average of those two is the hyperbolic cosine $\cosh\theta$ ([Hyperbolic functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)). So the chance of gaining $21 is at most $\cosh(\theta)^{100} e^{-21\theta}$ for every tilt $\theta > 0$. Setting the slope in $\theta$ to zero gives $\tanh\theta = 21/100$, where the hyperbolic tangent tanh is half the difference of $e^{\theta}$ and $e^{-\theta}$ over their average; undoing it (atanh) gives $\theta = 0.213171$. The bound is 0.108446.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -159,7 +135,7 @@ Each bar left of the last is Doob's maximal inequality applied to a different su
 
 ### The other road: count the paths
 
-For the simple walk the peak's exact law comes from the reflection principle ([reflection-principle-for-walks](../01-Random%20Walks%20and%20Filtrations/05-reflection-principle-for-walks.md)), and with the floor at $0 added, from reflecting in both walls in turn (the method of images). The checks use that as an independent road to 0.035168. Path counting needs the steps to be plus or minus one with known odds. Doob's inequality needs only the martingale property and one average, so it still works when the bets change size, depend on the past, or come from an unknown source.
+For the simple walk the peak's exact law comes from the reflection principle ([Reflection principle](../01-Random%20Walks%20and%20Filtrations/05-reflection-principle-for-walks.md)), and with the floor at $0 added, from reflecting in both walls in turn (the method of images). The checks use that as an independent road to 0.035168. Path counting needs the steps to be plus or minus one with known odds. Doob's inequality needs only the martingale property and one average, so it still works when the bets change size, depend on the past, or come from an unknown source.
 
 ---
 
@@ -613,7 +589,7 @@ The two outputs agree line for line. The Rust path count uses 128-bit whole numb
 > [!TIP]
 > **Try changing**
 > Guess first, then run.
-> - **Give her no time limit.** The chart's last point, 3,200 rounds, already reads 32.26 percent, equal to the bound at the printed precision. With no limit the chance is exactly 10/31, the gambler's-ruin answer ([gamblers-ruin](../01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md)), so Doob's bound is as tight as a bound from the average can be.
+> - **Give her no time limit.** The chart's last point, 3,200 rounds, already reads 32.26 percent, equal to the bound at the printed precision. With no limit the chance is exactly 10/31, the gambler's-ruin answer ([Gambler's ruin](../01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md)), so Doob's bound is as tight as a bound from the average can be.
 > - **Tilt the coin.** In `hit_by`, send 0.51 of the mass up and 0.49 down. The two-barrier program now disagrees with the path count, which assumes a fair coin, and the assert comparing them stops the run.
 > - **Change the seed.** The simulated chance moves by about one standard error, 0.00059; the three exact roads do not move at all.
 
@@ -635,8 +611,8 @@ The two outputs agree line for line. The Rust path count uses 128-bit whole numb
 
 - **Risk limits.** A desk whose running profit is a martingale can bound the chance it ever breaches a loss limit during the day from the end-of-day spread alone, by applying the maximal inequality to its size or square.
 - **Tests that may stop at any time.** A trial that watches a non-negative martingale built from its data, and stops as soon as the martingale is large, keeps its false-alarm rate controlled by the maximal inequality; the version for an unlimited number of looks is Ville's inequality.
-- **The Ito integral.** The L2 inequality controls the whole path of a stochastic integral by its end, which is how the integral is built as a continuous path: [ito-integral](../06-Ito%20Calculus/01-ito-integral.md).
-- **Brownian peaks.** The same inequalities bound how far a pollen grain wanders within a time limit, alongside the exact answer from [reflection-principle-and-running-maximum](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md).
+- **The Ito integral.** The L2 inequality controls the whole path of a stochastic integral by its end, which is how the integral is built as a continuous path: [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md).
+- **Brownian peaks.** The same inequalities bound how far a pollen grain wanders within a time limit, alongside the exact answer from [Reflection principle](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md).
 
 > **Say it back**
 > The best moment of a fair game is controlled by its last moment. For a fair game that never goes negative, the chance the running peak reaches a level is at most the average final value over the level, because every path that reaches it must carry at least that level on average to the end. For any fair game, the average squared peak is at most four times the average squared end. The gambler with $10 reaches $31 in 100 rounds with chance 0.035168; Doob says at most 0.3226, and with no time limit that is exactly the answer.
@@ -645,18 +621,18 @@ The two outputs agree line for line. The Rust path count uses 128-bit whole numb
 
 ## What this builds on
 
-- [martingale-convergence](04-martingale-convergence.md): a martingale bounded on average settles down; this card bounds how high it climbs on the way.
-- [stopping-times-and-optional-stopping](03-stopping-times-and-optional-stopping.md): the first round at the level is a stopping time, and a fair game stays fair from a stopping time to a fixed end.
-- [predictable-bets-and-the-martingale-transform](02-predictable-bets-and-the-martingale-transform.md): betting $1 until broke and nothing after is a predictable strategy, so the stopped fortune is still a martingale.
+- [Martingale convergence](04-martingale-convergence.md): a martingale bounded on average settles down; this card bounds how high it climbs on the way.
+- [Stopping times](03-stopping-times-and-optional-stopping.md): the first round at the level is a stopping time, and a fair game stays fair from a stopping time to a fixed end.
+- [Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md): betting $1 until broke and nothing after is a predictable strategy, so the stopped fortune is still a martingale.
 
 ## Where this goes next
 
-- [uniform-integrability-and-unbounded-stopping](06-uniform-integrability-and-unbounded-stopping.md): when a game may run with no fixed end, and why a start-over-goal ratio such as 10/31 comes out of a single line.
-- [martingale-representation-in-discrete-time](07-martingale-representation-in-discrete-time.md): every martingale on a coin tree written as a bet on the coin.
-- [brownian-martingales-and-exponential-martingale](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md): the exponential submartingale of Step 5, for Brownian motion.
-- [ito-integral](../06-Ito%20Calculus/01-ito-integral.md): the L2 inequality holding a whole stochastic integral path in place.
+- [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md): when a game may run with no fixed end, and why a start-over-goal ratio such as 10/31 comes out of a single line.
+- [Representing a martingale](07-martingale-representation-in-discrete-time.md): every martingale on a coin tree written as a bet on the coin.
+- [Brownian martingales](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md): the exponential submartingale of Step 5, for Brownian motion.
+- [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md): the L2 inequality holding a whole stochastic integral path in place.
 
-Doob's bound is reached only when the game has no time limit, and stopping a fair game at an unbounded time can break fairness altogether; when it is safe is the question [uniform-integrability-and-unbounded-stopping](06-uniform-integrability-and-unbounded-stopping.md) answers.
+Doob's bound is reached only when the game has no time limit, and stopping a fair game at an unbounded time can break fairness altogether; when it is safe is the question [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md) answers.
 
 ---
 

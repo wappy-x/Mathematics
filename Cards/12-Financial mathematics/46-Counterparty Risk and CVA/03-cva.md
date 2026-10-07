@@ -1,36 +1,16 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Counterparty Risk and CVA
-topic: Pricing the counterparty's default
-item: CVA
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/02-expected-exposure-profiles|expected-exposure-profiles]]"
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/02-cds-legs-risky-annuity-and-par-spread|cds-legs-risky-annuity-and-par-spread]]"
-next:
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/04-dva-and-bilateral-cva|dva-and-bilateral-cva]]"
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/05-wrong-way-risk|wrong-way-risk]]"
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/06-cva-risk-numbers-and-hedging|cva-risk-numbers-and-hedging]]"
-  - "[[Cards/12-Financial mathematics/47-Collateral, Funding and the Rest of the XVAs/01-collateral-and-the-residual-exposure|collateral-and-the-residual-exposure]]"
-tags: [mathematics, financial mathematics, cva]
----
-
 # CVA: the price of the counterparty's default, as loss times default chance times exposure summed over the deal's life
 
-Financial mathematics → Counterparty Risk and CVA → Pricing the counterparty's default → CVA
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Counterparty Risk and CVA](../../../SYLLABUS.md#w12-s46) → CVA
 
 ---
 
 ## General Overview
 
-A bank buys a one-year call option on Acme shares. Acme trades at \$100, the strike is \$100, and in the house market the call is worth **\$9.23** ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). That price assumes whoever sold the call will pay up in a year. The seller here is Northwind, a company the credit market reads as failing at 2% a year, with 40 cents on the dollar recovered from the wreck if it does.
+A bank buys a one-year call option on Acme shares. Acme trades at \$100, the strike is \$100, and in the house market the call is worth **\$9.23** ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). That price assumes whoever sold the call will pay up in a year. The seller here is Northwind, a company the credit market reads as failing at 2% a year, with 40 cents on the dollar recovered from the wreck if it does.
 
 If Northwind fails before the year is out, the bank does not get its option's worth. It files a claim for what the option was worth on the day of the failure and collects 40% of it. The call bought from Northwind is therefore worth less than the same call bought from a counterparty that cannot fail. The gap is the **credit valuation adjustment**, CVA for short, the term used from here on. For this trade it is **10.96 cents**, so the risky call is worth **\$9.12**.
 
-CVA is built from three pieces. How much the bank would be owed if Northwind failed at a given date: the **exposure** ([counterparty-exposure-and-netting](01-counterparty-exposure-and-netting.md)). The chance Northwind fails near that date. And the fraction lost when it does. Multiply the three, shrink to today's money, and add over every date in the deal's life.
+CVA is built from three pieces. How much the bank would be owed if Northwind failed at a given date: the **exposure** ([Counterparty exposure](01-counterparty-exposure-and-netting.md)). The chance Northwind fails near that date. And the fraction lost when it does. Multiply the three, shrink to today's money, and add over every date in the deal's life.
 
 **CVA is the loss fraction times the sum, over the deal's life, of the discounted expected exposure at each date times the chance of default at that date; the risky price is the clean price minus CVA.**
 
@@ -54,13 +34,13 @@ Orange, lower: the CVA itself, loss × price × chance of default within the yea
 
 ## The formula
 
-Notation first, in words. $V(t)$ is the call's clean value to the bank at date $t$, the value it would have if Northwind could not fail. $V^+(t)$ is its positive part, $\max(V(t), 0)$: what Northwind would owe on that date, or zero if the bank owed Northwind. The default date is $\tau$ (Greek "tau"), a random number of years from today. $\mathbb{E}[\,\cdot\,]$ is an average over the pricing world, where every asset grows at the riskless rate ([risk-neutral-measure-and-the-fundamental-theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)). The **expected exposure** $\mathrm{EE}(t) = \mathbb{E}[V^+(t)]$ is the average amount owed at date $t$; times the discount factor $D(t) = e^{-rt}$ it becomes the **discounted expected exposure**, in today's dollars ([expected-exposure-profiles](02-expected-exposure-profiles.md)). $T$ is the expiry in years. $\lambda$ ("lambda") is Northwind's **hazard**, its yearly default rate among survivors; $Q(t) = e^{-\lambda t}$ is the chance it survives to $t$. $R$ is the **recovery**, the fraction of the claim collected, so $1-R$ is the fraction lost.
+Notation first, in words. $V(t)$ is the call's clean value to the bank at date $t$, the value it would have if Northwind could not fail. $V^+(t)$ is its positive part, $\max(V(t), 0)$: what Northwind would owe on that date, or zero if the bank owed Northwind. The default date is $\tau$ (Greek "tau"), a random number of years from today. $\mathbb{E}[\,\cdot\,]$ is an average over the pricing world, where every asset grows at the riskless rate ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)). The **expected exposure** $\mathrm{EE}(t) = \mathbb{E}[V^+(t)]$ is the average amount owed at date $t$; times the discount factor $D(t) = e^{-rt}$ it becomes the **discounted expected exposure**, in today's dollars ([Expected exposure over time](02-expected-exposure-profiles.md)). $T$ is the expiry in years. $\lambda$ ("lambda") is Northwind's **hazard**, its yearly default rate among survivors; $Q(t) = e^{-\lambda t}$ is the chance it survives to $t$. $R$ is the **recovery**, the fraction of the claim collected, so $1-R$ is the fraction lost.
 
 $$\mathrm{CVA} = (1-R)\int_0^T D(t)\,\mathrm{EE}(t)\,\lambda\,Q(t)\,dt \;\approx\; (1-R)\sum_{i=1}^{n} D(t_i^*)\,\mathrm{EE}(t_i^*)\,\bigl[Q(t_{i-1}) - Q(t_i)\bigr]$$
 
 **Read it aloud:** the loss fraction, times the sum over the deal's life of what the bank would be owed at each date in today's money, weighted by the chance Northwind defaults at that date.
 
-On the right the year is cut into $n$ buckets with edges $t_i = iT/n$, and $t_i^*$ is the middle of bucket $i$. The bracket $Q(t_{i-1}) - Q(t_i)$ is the chance default lands in that bucket: alive at its start, gone by its end. The integral on the left is the limit as the buckets shrink; $\lambda Q(t)\,dt$ is the chance default lands in the short stretch after $t$ ([hazard-rate-and-survival-probability](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)).
+On the right the year is cut into $n$ buckets with edges $t_i = iT/n$, and $t_i^*$ is the middle of bucket $i$. The bracket $Q(t_{i-1}) - Q(t_i)$ is the chance default lands in that bucket: alive at its start, gone by its end. The integral on the left is the limit as the buckets shrink; $\lambda Q(t)\,dt$ is the chance default lands in the short stretch after $t$ ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)).
 
 For a long option under a flat hazard the whole integral collapses:
 
@@ -85,9 +65,9 @@ $$\mathrm{CVA} = (1-R)\times C_0\times\bigl(1 - e^{-\lambda T}\bigr), \qquad \te
 
 ### When it holds
 
-- **Default is independent of the exposure.** The formula multiplies the average exposure by the default chance, which is only right if Northwind's failure says nothing about Acme's price. If the exposure tends to be high exactly when Northwind fails, CVA is larger than this; see [wrong-way-risk](05-wrong-way-risk.md).
-- **The bank itself cannot fail.** This is the one-sided CVA. If the bank can fail too, Northwind faces the mirror cost, and the two sides' adjustments meet in [dva-and-bilateral-cva](04-dva-and-bilateral-cva.md).
-- **No collateral.** Collateral posted by Northwind shrinks the amount owed at default, and with it the CVA; [collateral-and-the-residual-exposure](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md) prices what is left.
+- **Default is independent of the exposure.** The formula multiplies the average exposure by the default chance, which is only right if Northwind's failure says nothing about Acme's price. If the exposure tends to be high exactly when Northwind fails, CVA is larger than this; see [Wrong-way risk](05-wrong-way-risk.md).
+- **The bank itself cannot fail.** This is the one-sided CVA. If the bank can fail too, Northwind faces the mirror cost, and the two sides' adjustments meet in [DVA](04-dva-and-bilateral-cva.md).
+- **No collateral.** Collateral posted by Northwind shrinks the amount owed at default, and with it the CVA; [Collateral](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md) prices what is left.
 - **The hazard comes from the market.** $\lambda$ is read off Northwind's CDS quotes, not off a history of defaults. A historical rate gives a different number, and a bank that cannot hedge at it.
 - **A fixed recovery, paid at default.** Real recoveries arrive months later and vary. A random recovery independent of everything else can be replaced by its average; one that falls in bad times cannot.
 
@@ -160,13 +140,13 @@ A flat discounted exposure comes out of the integral:
 
 $$\mathrm{CVA} = (1-R)\,C_0\int_0^T \lambda e^{-\lambda t}\,dt = (1-R)\,C_0\,\bigl(1 - e^{-\lambda T}\bigr).$$
 
-The integral is the chance of default before $T$. That is the closed form: loss × price × default chance. It also explains why the bucket count does not matter here. A flat exposure times the bucket chances adds up to the same total however the year is cut; the checks get 0.109624 from one bucket and from 52. For a swap, whose exposure rises and falls over its life ([expected-exposure-profiles](02-expected-exposure-profiles.md)), the buckets matter and the sum is the only road.
+The integral is the chance of default before $T$. That is the closed form: loss × price × default chance. It also explains why the bucket count does not matter here. A flat exposure times the bucket chances adds up to the same total however the year is cut; the checks get 0.109624 from one bucket and from 52. For a swap, whose exposure rises and falls over its life ([Expected exposure over time](02-expected-exposure-profiles.md)), the buckets matter and the sum is the only road.
 
 ### Step 4: CVA is a CDS written on the exposure
 
-The protection leg of a credit default swap on Northwind, per \$1 insured, is $(1-R)\int_0^T D(t)\,\lambda Q(t)\,dt$ ([cds-legs-risky-annuity-and-par-spread](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md)). Put $\mathrm{EE}(t)$ in place of the \$1 and it is the CVA integral, term for term. CVA is the price of default protection on Northwind whose insured amount, at each date, is the exposure at that date. Such a contract is called a **contingent CDS**. A bank that buys ordinary CDS protection on Northwind in roughly that amount has hedged its CVA, and this is what CVA desks do; [cva-risk-numbers-and-hedging](06-cva-risk-numbers-and-hedging.md) sizes the hedge.
+The protection leg of a credit default swap on Northwind, per \$1 insured, is $(1-R)\int_0^T D(t)\,\lambda Q(t)\,dt$ ([Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md)). Put $\mathrm{EE}(t)$ in place of the \$1 and it is the CVA integral, term for term. CVA is the price of default protection on Northwind whose insured amount, at each date, is the exposure at that date. Such a contract is called a **contingent CDS**. A bank that buys ordinary CDS protection on Northwind in roughly that amount has hedged its CVA, and this is what CVA desks do; [CVA risk numbers](06-cva-risk-numbers-and-hedging.md) sizes the hedge.
 
-The CDS view also gives CVA as a running premium. Protection paid for continuously at the rate $s$ a year, on the exposure, while Northwind survives, has a premium leg of $s$ times the **exposure annuity** $A_E = \int_0^T D(t)\,\mathrm{EE}(t)\,Q(t)\,dt$. Under a flat hazard the fair rate is $s = (1-R)\lambda$, 120 basis points (1.2% a year) for Northwind: the credit triangle ([the-credit-triangle](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/03-the-credit-triangle.md)). The checks integrate $A_E = 9.135348$ with the exposure found numerically, and $0.012 \times 9.135348 = 0.109624$. Same CVA, reached through the premium side of the swap instead of the protection side.
+The CDS view also gives CVA as a running premium. Protection paid for continuously at the rate $s$ a year, on the exposure, while Northwind survives, has a premium leg of $s$ times the **exposure annuity** $A_E = \int_0^T D(t)\,\mathrm{EE}(t)\,Q(t)\,dt$. Under a flat hazard the fair rate is $s = (1-R)\lambda$, 120 basis points (1.2% a year) for Northwind: the credit triangle ([The credit triangle](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/03-the-credit-triangle.md)). The checks integrate $A_E = 9.135348$ with the exposure found numerically, and $0.012 \times 9.135348 = 0.109624$. Same CVA, reached through the premium side of the swap instead of the protection side.
 
 ### The other roads: simulation, and risky discounting
 
@@ -569,7 +549,7 @@ The two outputs agree line for line. The simulation draws the same numbers in bo
 > - **Recovery in place of loss.** $R$ where $1 - R$ belongs gives 0.073083.
 > - **Undiscounted exposure.** Using the average amount owed in that date's dollars gives 0.112402: the error grows with the deal's length.
 > - **Charging twice.** A price already discounted at the risky rate has CVA in it. Subtracting CVA again gives 9.007319.
-> - **CVA on the wrong side.** A call sold to Northwind is owed by the bank, never to it. Its CVA to the bank is zero; the cost sits on Northwind's books, as the mirror adjustment on [dva-and-bilateral-cva](04-dva-and-bilateral-cva.md).
+> - **CVA on the wrong side.** A call sold to Northwind is owed by the bank, never to it. Its CVA to the bank is zero; the cost sits on Northwind's books, as the mirror adjustment on [DVA](04-dva-and-bilateral-cva.md).
 
 ---
 
@@ -577,8 +557,8 @@ The two outputs agree line for line. The simulation draws the same numbers in bo
 
 - **Bank accounts.** Banks report derivatives at fair value, and fair value includes the counterparty's credit. CVA is the line that takes the clean model price to the reported one.
 - **Capital rules.** In the 2007 to 2009 crisis, banks lost more to CVA rising as counterparties' spreads widened than to actual defaults. Basel III answered with a capital charge for CVA risk, revised by the Basel Committee in 2020.
-- **The CVA desk.** Large banks run one desk that charges each trading desk the CVA of its new trades and hedges the total with CDS on the counterparties, as Step 4 describes. How much the CVA moves with spreads and markets is on [cva-risk-numbers-and-hedging](06-cva-risk-numbers-and-hedging.md).
-- **Collateral agreements.** A counterparty that posts collateral daily leaves only a few days' moves at risk. CVA is the price of not having such an agreement: [collateral-and-the-residual-exposure](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md).
+- **The CVA desk.** Large banks run one desk that charges each trading desk the CVA of its new trades and hedges the total with CDS on the counterparties, as Step 4 describes. How much the CVA moves with spreads and markets is on [CVA risk numbers](06-cva-risk-numbers-and-hedging.md).
+- **Collateral agreements.** A counterparty that posts collateral daily leaves only a few days' moves at risk. CVA is the price of not having such an agreement: [Collateral](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md).
 
 > **Say it back**
 > A trade with a company that can fail is worth its clean price minus the expected loss from that failure. On default the bank loses the loss fraction of what it is owed on that date, so CVA is the loss fraction times the discounted expected exposure, weighted by the chance of default at each date and added over the deal's life. For a bought option the discounted exposure is flat at today's price, so CVA is loss × price × default chance: 0.6 × 9.227 × 0.0198, or 10.96 cents, for the Acme call from Northwind. It is the price of CDS protection written on the exposure, which is how banks hedge it.
@@ -587,15 +567,15 @@ The two outputs agree line for line. The simulation draws the same numbers in bo
 
 ## What this builds on
 
-- [expected-exposure-profiles](02-expected-exposure-profiles.md): the expected exposure at each date, and why a bought option's discounted exposure is flat.
-- [cds-legs-risky-annuity-and-par-spread](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md): the protection leg, whose integral CVA reuses with the exposure as the insured amount.
+- [Expected exposure over time](02-expected-exposure-profiles.md): the expected exposure at each date, and why a bought option's discounted exposure is flat.
+- [Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md): the protection leg, whose integral CVA reuses with the exposure as the insured amount.
 
 ## Where this goes next
 
-- [dva-and-bilateral-cva](04-dva-and-bilateral-cva.md): the same adjustment seen from Northwind's side, and what happens when both firms can fail.
-- [wrong-way-risk](05-wrong-way-risk.md): CVA when default and exposure move together, and the product of averages breaks.
-- [cva-risk-numbers-and-hedging](06-cva-risk-numbers-and-hedging.md): how CVA moves with Northwind's spread and Acme's price, and the CDS amounts that hedge it.
-- [collateral-and-the-residual-exposure](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md): what is left of the exposure, and of CVA, once collateral changes hands.
+- [DVA](04-dva-and-bilateral-cva.md): the same adjustment seen from Northwind's side, and what happens when both firms can fail.
+- [Wrong-way risk](05-wrong-way-risk.md): CVA when default and exposure move together, and the product of averages breaks.
+- [CVA risk numbers](06-cva-risk-numbers-and-hedging.md): how CVA moves with Northwind's spread and Acme's price, and the CDS amounts that hedge it.
+- [Collateral](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md): what is left of the exposure, and of CVA, once collateral changes hands.
 
 This card charges the bank for Northwind's default as if the bank could not fail; Northwind sees the same trade from the other side and charges for the bank's default, and the DVA card asks what price both can agree on.
 

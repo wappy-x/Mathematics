@@ -1,26 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Coordinates and Curves
-topic: Two-focus distance rules
-item: Ellipses and hyperbolas
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/04-circles-and-parabolas|circles-and-parabolas]]"
-next:
-  - "[[Cards/13-Engineering mathematics/07-Mechanics and Structures/09-orbital-mechanics-and-the-kepler-problem|orbital-mechanics-and-the-kepler-problem]]"
-  - "[[Cards/22-Algebraic geometry/02-Affine and Projective Varieties/04-projective-varieties-and-closure|projective-varieties-and-closure]]"
-tags:
-  - mathematics
-  - geometry and trig
-  - ellipses-and-hyperbolas
----
-
 # Ellipses and hyperbolas: fixed sum and fixed difference of distances
 
-Geometry and trig → Coordinates and Curves → Two-focus distance rules → Ellipses and hyperbolas
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Coordinates and Curves](../../../SYLLABUS.md#w05-s04) → Ellipses and hyperbolas
 
 ---
 
@@ -86,7 +66,7 @@ The comet shares the foci, (±20, 0), and its distances differ by 32 million km,
 
 ### Step 0: one identity serves both curves
 
-For any point (x, y), the distance formula ([distance-and-midpoint](01-distance-and-midpoint.md)) gives $L^2 = (x + c)^2 + y^2$ and $R^2 = (x - c)^2 + y^2$. Subtract, and all but one term cancels:
+For any point (x, y), the distance formula ([Distance and midpoint](01-distance-and-midpoint.md)) gives $L^2 = (x + c)^2 + y^2$ and $R^2 = (x - c)^2 + y^2$. Subtract, and all but one term cancels:
 
 $$L^2 - R^2 = 4cx$$
 
@@ -116,7 +96,7 @@ Drawn at 1 million km = 3 units. The comet's arm bends round the sun, 4 million 
 
 ### Step 4: eccentricity is one ratio for all four curves
 
-Step 1 gave $R = a - ex = e(a/e - x)$. The bracket is the distance to the upright line $x = a/e$ = 500, the **directrix**. So the sun's distance is always $e$ times the directrix distance: at T, 88 ÷ 440 = 0.2000. The comet's directrix is $x$ = 12.8: at its tip, 4 ÷ 3.2 = 1.2500. Equal distances, $e$ = 1, is the parabola of [circles-and-parabolas](04-circles-and-parabolas.md); a circle is an ellipse whose foci have met, $c$ = 0 and so $e$ = 0.
+Step 1 gave $R = a - ex = e(a/e - x)$. The bracket is the distance to the upright line $x = a/e$ = 500, the **directrix**. So the sun's distance is always $e$ times the directrix distance: at T, 88 ÷ 440 = 0.2000. The comet's directrix is $x$ = 12.8: at its tip, 4 ÷ 3.2 = 1.2500. Equal distances, $e$ = 1, is the parabola of [Circles and parabolas](04-circles-and-parabolas.md); a circle is an ellipse whose foci have met, $c$ = 0 and so $e$ = 0.
 
 ### Step 5: read the curve off a general equation
 
@@ -133,7 +113,7 @@ Squaring can add points, so the reverse needs checking.
 
 </details>
 
-Another route names them: each is a flat slice of a double cone, hence "conic"; projective-varieties-and-closure makes the four one curve.
+Another route names them: each is a flat slice of a double cone, hence "conic"; Projective varieties makes the four one curve.
 
 ---
 
@@ -384,9 +364,9 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Planetary orbits.** Every planet's path is an ellipse with its sun at one focus: Kepler's first law. Measured from the sun by distance and angle, it is one line of [polar-coordinates](03-polar-coordinates.md).
+- **Planetary orbits.** Every planet's path is an ellipse with its sun at one focus: Kepler's first law. Measured from the sun by distance and angle, it is one line of [Polar coordinates](03-polar-coordinates.md).
 - **Position from timing.** Two beacons pulse together; the gap between arrivals fixes the difference of distances, so the receiver is on one hyperbola, and a second pair's hyperbola crosses it at the position.
-- **Drawing it.** Stepping a point round an ellipse by a clock-like parameter is [parametric-curves](06-parametric-curves.md).
+- **Drawing it.** Stepping a point round an ellipse by a clock-like parameter is [Parametric curves](06-parametric-curves.md).
 
 > **Say it back**
 > An ellipse fixes the sum of the distances to two foci; a hyperbola fixes their difference. In coordinates that is a plus or a minus between two squares. The eccentricity $e = c/a$ is 0 for a circle, below 1 for an ellipse, 1 for a parabola, above 1 for a hyperbola, and the signs of an equation's $x^2$ and $y^2$ numbers say which. An orbit of eccentricity 0.2 and half-axis 100 million km keeps its sun between 80 and 120 million km away.
@@ -395,12 +375,12 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [circles-and-parabolas](04-circles-and-parabolas.md): a curve as the points obeying one distance rule, the parabola's focus and line, and completing the square.
+- [Circles and parabolas](04-circles-and-parabolas.md): a curve as the points obeying one distance rule, the parabola's focus and line, and completing the square.
 
 ## Where this goes next
 
-- orbital-mechanics-and-the-kepler-problem: why an inverse-square pull sends a body along exactly these curves, sun at a focus.
-- projective-varieties-and-closure: points at infinity, where a hyperbola's two arms join and the four conics become one.
+- Orbits: why an inverse-square pull sends a body along exactly these curves, sun at a focus.
+- Projective varieties: points at infinity, where a hyperbola's two arms join and the four conics become one.
 
 This card gives an orbit's shape, not the reason for it; why gravity produces a conic at all is the orbital mechanics card's result.
 

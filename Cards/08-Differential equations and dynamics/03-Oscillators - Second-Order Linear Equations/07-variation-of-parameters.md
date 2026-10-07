@@ -1,24 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Oscillators - Second-Order Linear Equations
-topic: Particular solutions for any forcing
-item: Variation of parameters
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/04-wronskian-and-reduction-of-order|wronskian-and-reduction-of-order]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/05-undetermined-coefficients|undetermined-coefficients]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/03-substitution|substitution]]"
-next:
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/06-duhamels-principle-for-a-forced-evolution|duhamels-principle-for-a-forced-evolution]]"
-tags: [mathematics, differential equations and dynamics, variation-of-parameters]
----
-
 # Variation of parameters: let the constants vary and any forcing term can be handled
 
-Differential equations and dynamics → Oscillators - Second-Order Linear Equations → Particular solutions for any forcing → Variation of parameters
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Oscillators - Second-Order Linear Equations](../../../SYLLABUS.md#w08-s03) → Variation of parameters
 
 ---
 
@@ -28,7 +10,7 @@ A 1 kg cart rolls on a frictionless track, tied to a wall by a spring of stiffne
 
 With y the cart's distance from balance in metres and y'' its acceleration, Newton's law reads y'' + y = sec t: the acceleration is the push minus the displacement. The cart starts at rest at balance.
 
-Guessing an answer shaped like the push, as [undetermined-coefficients](05-undetermined-coefficients.md) does, fails here: each derivative of sec t brings a higher power of sec t, so no finite list of trial shapes closes up. Instead take the free swing c1 cos t + c2 sin t and let the constants change with time: **variation of parameters**. It gives y = cos t ln cos t + t sin t, with ln the natural logarithm.
+Guessing an answer shaped like the push, as [Undetermined coefficients](05-undetermined-coefficients.md) does, fails here: each derivative of sec t brings a higher power of sec t, so no finite list of trial shapes closes up. Instead take the free swing c1 cos t + c2 sin t and let the constants change with time: **variation of parameters**. It gives y = cos t ln cos t + t sin t, with ln the natural logarithm.
 
 **Let the constant weights on the free motions become functions of time, make one choice that keeps the velocity simple, and the forcing then fixes the weights' rates through a two-by-two system whose determinant is the Wronskian.**
 
@@ -53,7 +35,7 @@ Orange: the cart. Teal: the part t sin t. Dark blue: the part cos t ln cos t. Or
 
 ## The formula
 
-A second-order linear equation in standard form is y'' + p(t) y' + q(t) y = g(t), with 1 in front of y''; p and q are given functions of time, and g is the **forcing**, the push. With g set to zero it is the **free** equation, and two free solutions y1 and y2, neither a multiple of the other, build every free motion as c1 y1 + c2 y2 ([superposition-and-the-shape-of-linear-solutions](01-superposition-and-the-shape-of-linear-solutions.md)). Their **Wronskian** W = y1 y2' − y2 y1' is never zero for such a pair ([wronskian-and-reduction-of-order](04-wronskian-and-reduction-of-order.md)).
+A second-order linear equation in standard form is y'' + p(t) y' + q(t) y = g(t), with 1 in front of y''; p and q are given functions of time, and g is the **forcing**, the push. With g set to zero it is the **free** equation, and two free solutions y1 and y2, neither a multiple of the other, build every free motion as c1 y1 + c2 y2 ([Superposition](01-superposition-and-the-shape-of-linear-solutions.md)). Their **Wronskian** W = y1 y2' − y2 y1' is never zero for such a pair ([The Wronskian](04-wronskian-and-reduction-of-order.md)).
 
 Try y = u1 y1 + u2 y2 with weights u1 and u2 that vary in time. Their rates must be
 
@@ -85,7 +67,7 @@ $$u_1 = \ln\cos t, \qquad u_2 = t, \qquad y_p = \cos t\,\ln\cos t + t\sin t$$
 ### When it holds
 
 - **Linear, in standard form.** Divide a(t) y'' + b(t) y' + c(t) y = f(t) by a(t) first, so g = f/a; skip it and the answer is off by the factor a.
-- **Two independent free solutions in hand.** [the-characteristic-equation](02-the-characteristic-equation.md) finds them for constant coefficients. A dependent pair such as cos t and 2 cos t has W = 0, and the division is impossible.
+- **Two independent free solutions in hand.** [The characteristic equation](02-the-characteristic-equation.md) finds them for constant coefficients. A dependent pair such as cos t and 2 cos t has W = 0, and the division is impossible.
 - **p, q and g continuous on an interval.** The answer lives there and no further. The push exists only for |t| < 1.5708 s; at t = 1.57 s the cart is at 1.5643 m, moving at 7.14 m/s and speeding up without limit.
 
 ---
@@ -118,7 +100,7 @@ Their determinant is W. Cramer's rule, which solves a two-by-two system by ratio
 
 ### Step 4: the cart's weights
 
-With W = 1: u1' = −sin t sec t = −tan t, and u2' = cos t sec t = 1, so u2 = t. For u1, substitute w = cos t, dw = −sin t dt ([substitution](../../06-Calculus%20and%20analysis/04-Integrals/03-substitution.md)): the integral of −tan t is ln cos t, which is 0 at the start and real while cos t is positive.
+With W = 1: u1' = −sin t sec t = −tan t, and u2' = cos t sec t = 1, so u2 = t. For u1, substitute w = cos t, dw = −sin t dt ([Substitution](../../06-Calculus%20and%20analysis/04-Integrals/03-substitution.md)): the integral of −tan t is ln cos t, which is 0 at the start and real while cos t is positive.
 
 Check: y_p'' = −cos t ln cos t + sin^2 t / cos t + cos t − t sin t, and adding y_p leaves (sin^2 t + cos^2 t) / cos t = sec t.
 
@@ -139,7 +121,7 @@ One kernel. For the cart, the sine subtraction rule joins the two integrals: y_p
 
 </details>
 
-So each past push g(s) starts a free swing sin(t − s), and the response adds them up. [forced-systems-and-variation-of-constants](../04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md) does it for systems with the matrix exponential.
+So each past push g(s) starts a free swing sin(t − s), and the response adds them up. [Forced systems](../04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md) does it for systems with the matrix exponential.
 
 ---
 
@@ -172,7 +154,7 @@ From rest, the motor has pushed the cart 0.5603 m out after 1.0472 s; at t = π/
 
 ## Code, from first principles, and it actually runs
 
-Three roads to y_p(π/3). One: the closed answer. Two: the rates u1' and u2' summed by Simpson's rule (a weighted sum of samples approximating an integral), with the pair cos t, sin t and again with 2 cos t, 3 sin t; no logarithm is used. Three: Euler's rule, small steps along the slope of position and velocity ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)), whose error halves with the step. A finite-difference second derivative rebuilds the push.
+Three roads to y_p(π/3). One: the closed answer. Two: the rates u1' and u2' summed by Simpson's rule (a weighted sum of samples approximating an integral), with the pair cos t, sin t and again with 2 cos t, 3 sin t; no logarithm is used. Three: Euler's rule, small steps along the slope of position and velocity ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)), whose error halves with the step. A finite-difference second derivative rebuilds the push.
 
 ### Python
 
@@ -381,9 +363,9 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Measured forcing.** A suspension driven by a recorded road profile gets its push as data; the integrals are summed numerically, as in road two.
-- **Circuits.** A series RLC circuit driven by a source voltage of any shape obeys the same equation for charge ([the-rlc-circuit-and-the-spring](08-the-rlc-circuit-and-the-spring.md)).
-- **Resonance.** For y'' + y = cos t the integrals produce the growing term (t/2) sin t of [resonance-and-beats](06-resonance-and-beats.md).
-- **Varying coefficients.** Only a free pair is needed, so the method also solves a forced [the-cauchy-euler-equation](09-the-cauchy-euler-equation.md).
+- **Circuits.** A series RLC circuit driven by a source voltage of any shape obeys the same equation for charge ([The RLC circuit](08-the-rlc-circuit-and-the-spring.md)).
+- **Resonance.** For y'' + y = cos t the integrals produce the growing term (t/2) sin t of [Resonance](06-resonance-and-beats.md).
+- **Varying coefficients.** Only a free pair is needed, so the method also solves a forced [The Cauchy-Euler equation](09-the-cauchy-euler-equation.md).
 
 > **Say it back**
 > Let the weights on two free motions change. Require their rates to leave the velocity looking frozen; the forcing then fixes the rates through a two-by-two system whose determinant is the Wronskian. Integrate, then add a free motion to match the start. Pushed by sec t newtons, the cart gets weights ln cos t and t and is 0.5603 m out at 1.0472 s.
@@ -392,13 +374,13 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [wronskian-and-reduction-of-order](04-wronskian-and-reduction-of-order.md): the determinant that never vanishes for an independent pair, which makes Step 3 possible.
-- [undetermined-coefficients](05-undetermined-coefficients.md): the guessing method, whose reach ends where the forcing's derivatives stop closing up.
-- [substitution](../../06-Calculus%20and%20analysis/04-Integrals/03-substitution.md): the change of variable that integrates −tan t to ln cos t.
+- [The Wronskian](04-wronskian-and-reduction-of-order.md): the determinant that never vanishes for an independent pair, which makes Step 3 possible.
+- [Undetermined coefficients](05-undetermined-coefficients.md): the guessing method, whose reach ends where the forcing's derivatives stop closing up.
+- [Substitution](../../06-Calculus%20and%20analysis/04-Integrals/03-substitution.md): the change of variable that integrates −tan t to ln cos t.
 
 ## Where this goes next
 
-- duhamels-principle-for-a-forced-evolution: proves that every forced linear evolution is the free evolution of each past push, added up; here the kernel sin(t − s) came from a trigonometric identity.
+- Duhamel: proves that every forced linear evolution is the free evolution of each past push, added up; here the kernel sin(t − s) came from a trigonometric identity.
 
 ---
 

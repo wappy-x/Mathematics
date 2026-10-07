@@ -1,36 +1,20 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Caps, Floors and Swaptions
-topic: Fitting the rates smile
-item: SABR for rates
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/06-normal-and-shifted-volatilities-for-rates|normal-and-shifted-volatilities-for-rates]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/04-sabr-model-and-hagan-formula|sabr-model-and-hagan-formula]]"
-next: []
-tags: [mathematics, financial mathematics, sabr-for-rates-and-the-volatility-cube]
----
-
 # SABR for rates: the smile across strikes, expiries and tenors
 
-Financial mathematics → Caps, Floors and Swaptions → Fitting the rates smile → SABR for rates
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Caps, Floors and Swaptions](../../../SYLLABUS.md#w12-s29) → SABR for rates
 
 ---
 
 ## General Overview
 
-A company has $1 million of floating-rate debt and wants the right, one year from today, to lock in a fixed rate for five years. It looks at a **1-into-5 payer swaption**: an option expiring in one year to enter a five-year swap paying a fixed rate ([swaptions-payer-and-receiver](04-swaptions-payer-and-receiver.md)). Today's forward swap rate for that swap is 2.50 percent. The dealer quotes three strikes, 50 basis points apart (a basis point, bp, is a hundredth of one percent): 2.00, 2.50 and 3.00 percent.
+A company has $1 million of floating-rate debt and wants the right, one year from today, to lock in a fixed rate for five years. It looks at a **1-into-5 payer swaption**: an option expiring in one year to enter a five-year swap paying a fixed rate ([Swaptions](04-swaptions-payer-and-receiver.md)). Today's forward swap rate for that swap is 2.50 percent. The dealer quotes three strikes, 50 basis points apart (a basis point, bp, is a hundredth of one percent): 2.00, 2.50 and 3.00 percent.
 
-Each strike comes with its own volatility, quoted in the shifted-lognormal language with a 2 percent shift ([normal-and-shifted-volatilities-for-rates](06-normal-and-shifted-volatilities-for-rates.md)): 22.625 percent, 22 percent and 22.375 percent. Two numbers summarise the shape. The **risk reversal** is the high-strike volatility minus the low-strike one: −25 vol bp, where a vol bp is a hundredth of a volatility point. The **butterfly** is the average of the two wings minus the middle: +50 vol bp. A negative risk reversal tilts the smile down to the right; a positive butterfly curls both ends up.
+Each strike comes with its own volatility, quoted in the shifted-lognormal language with a 2 percent shift ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)): 22.625 percent, 22 percent and 22.375 percent. Two numbers summarise the shape. The **risk reversal** is the high-strike volatility minus the low-strike one: −25 vol bp, where a vol bp is a hundredth of a volatility point. The **butterfly** is the average of the two wings minus the middle: +50 vol bp. A negative risk reversal tilts the smile down to the right; a positive butterfly curls both ends up.
 
-A desk needs a volatility at every strike, not three. It also needs one for every expiry and every swap length, because it trades them all. SABR, the model in which the rate and its volatility both move at random ([sabr-model-and-hagan-formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md)), turns the three quotes into four dials. The **backbone exponent** beta is fixed in advance. The **level** alpha comes from the middle quote. The **correlation** rho comes mainly from the risk reversal, and the **vol of vol** nu mainly from the butterfly. For this smile: alpha 0.044702, rho 0.1353, nu 0.7114. The at-the-money payer costs $17,342.94.
+A desk needs a volatility at every strike, not three. It also needs one for every expiry and every swap length, because it trades them all. SABR, the model in which the rate and its volatility both move at random ([SABR and Hagan's formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md)), turns the three quotes into four dials. The **backbone exponent** beta is fixed in advance. The **level** alpha comes from the middle quote. The **correlation** rho comes mainly from the risk reversal, and the **vol of vol** nu mainly from the butterfly. For this smile: alpha 0.044702, rho 0.1353, nu 0.7114. The at-the-money payer costs $17,342.94.
 
 **SABR for rates is fitted one node at a time: shift the rate so it is positive, fix beta from how the at-the-money volatility moves with the rate, solve alpha from the at-the-money quote, and read rho off the risk reversal and nu off the butterfly; one set of dials for each expiry and swap length, stacked, is the volatility cube.**
 
-**What kind of fact this is:** a method: three quotes in, three dials out, solved two independent ways on this card. It runs on Hagan's formula, an approximation whose error [sabr-model-and-hagan-formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md) measures; the reading of the dials is a second approximation, derived in Why it works, Step 2.
+**What kind of fact this is:** a method: three quotes in, three dials out, solved two independent ways on this card. It runs on Hagan's formula, an approximation whose error [SABR and Hagan's formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md) measures; the reading of the dials is a second approximation, derived in Why it works, Step 2.
 
 ### The picture: three betas, one smile
 
@@ -65,7 +49,7 @@ $$\alpha_k = \frac{\alpha}{(fk)^{1/4}}, \qquad z = -\frac{\nu\,y}{\alpha_k}, \qq
 
 **Read it aloud:** the volatility at a strike is the level seen from that strike, bent by the vol of vol and the correlation, and lifted a little by time.
 
-The premium of a payer swaption on notional $L$ with annuity $A$ is Black's formula on the shifted rate ([the-annuity-measure](05-the-annuity-measure.md)):
+The premium of a payer swaption on notional $L$ with annuity $A$ is Black's formula on the shifted rate ([The annuity measure](05-the-annuity-measure.md)):
 
 $$V = L\,A\,\bigl[f\,N(d_1) - k\,N(d_2)\bigr], \qquad d_1 = \frac{\ln(f/k) + \tfrac12\sigma_B^2T}{\sigma_B\sqrt T}, \qquad d_2 = d_1 - \sigma_B\sqrt T.$$
 
@@ -94,7 +78,7 @@ $$\frac{\sigma_B(K)}{\sigma_B(F)} \approx 1 - \tfrac12\,(1 - \beta - \rho\lambda
 
 - **The shift is fixed and larger than any rate the node will see.** With $\delta$ = 2% the 2y-into-2y node below, at −0.50%, has a shifted forward of 1.50% and fits. A rate below −2% would put the logarithm out of range. Change the shift and every volatility changes with it, so the shift is part of the quote.
 - **Beta is fixed before the fit.** Beta and rho both tilt the smile; three quotes cannot separate them (the picture above). Beta comes from the backbone, Step 4, or from house convention.
-- **Hagan's formula is accurate.** It is an expansion for short expiries and strikes near the money; [sabr-model-and-hagan-formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md) measures how it drifts from the model at long expiries and far strikes. Long expiries on the cube's far edge need the arbitrage-free repairs of Hagan and co-authors (2014).
+- **Hagan's formula is accurate.** It is an expansion for short expiries and strikes near the money; [SABR and Hagan's formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md) measures how it drifts from the model at long expiries and far strikes. Long expiries on the cube's far edge need the arbitrage-free repairs of Hagan and co-authors (2014).
 - **The fitted smile has no negative butterfly.** A butterfly (long one low and one high strike, short two in the middle) never pays less than zero, so its price must be positive. Here the smallest 25 bp butterfly on the grid costs $660.52. Far wings at long expiries can fail this.
 - **Each node stands alone.** Fitting one expiry and one swap length at a time says nothing about how neighbouring nodes relate. Nothing in the fit stops two nodes from implying an arbitrage between them.
 
@@ -110,7 +94,7 @@ A smile has three things the eye picks out: how high it sits, which way it tilts
 
 ### Step 1: shift first, so the logarithm exists
 
-Hagan's formula takes the logarithm of forward over strike and raises both to fractional powers. Both must be positive. Swap rates were negative in euros and Swiss francs for years after 2014. The fix is to model $f = F + \delta$ instead of $F$. The payoff does not change: $f - k = F - K$, so the payer still pays the rate minus the strike. Only the language of the volatility changes. The 22% quote at the money means 22% of 4.50%, not of 2.50%. In the normal language, basis points a year with no percentage of anything, the same premium is 98.80 bp ([normal-and-shifted-volatilities-for-rates](06-normal-and-shifted-volatilities-for-rates.md)).
+Hagan's formula takes the logarithm of forward over strike and raises both to fractional powers. Both must be positive. Swap rates were negative in euros and Swiss francs for years after 2014. The fix is to model $f = F + \delta$ instead of $F$. The payoff does not change: $f - k = F - K$, so the payer still pays the rate minus the strike. Only the language of the volatility changes. The 22% quote at the money means 22% of 4.50%, not of 2.50%. In the normal language, basis points a year with no percentage of anything, the same premium is 98.80 bp ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)).
 
 ### Step 2: the reading, and why rho's sign is not the risk reversal's
 
@@ -137,13 +121,13 @@ Write $y = \ln(k/f)$ and $e = 1 - \beta$. Keep terms to $y^2$ and drop the time 
 
 **Multiply.** The $y$ terms: $-\tfrac e2 + \tfrac{\rho\lambda}2$. The $y^2$ terms: $\tfrac{e^2}8 - \tfrac{e^2}{24} = \tfrac{e^2}{12}$ from the level and divisor; $+\tfrac{\rho\lambda e}4$ from the bend's own $y^2$ term; $-\tfrac{\rho\lambda e}4$ from the cross product of $-\tfrac e2 y$ and $\tfrac{\rho\lambda}2 y$, which cancels it; and $\tfrac{(2-3\rho^2)\lambda^2}{12}$. So
 $$\frac{\sigma_B(K)}{\sigma_B(F)} \approx 1 - \tfrac12(e - \rho\lambda)\,y + \tfrac1{12}\bigl[e^2 + (2-3\rho^2)\lambda^2\bigr]y^2,$$
-which is Hagan et al. (2002), equation 3.1, divided through by its at-the-money value. At $\beta = 1$ it reduces to the reading on [sabr-model-and-hagan-formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md), Step 4.
+which is Hagan et al. (2002), equation 3.1, divided through by its at-the-money value. At $\beta = 1$ it reduces to the reading on [SABR and Hagan's formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md), Step 4.
 
 </details>
 
 ### Step 3: the exact fit, two ways
 
-The reading is a first guess. The exact fit solves the full formula. For any trial rho and nu, alpha is set so the middle quote is met exactly: the at-the-money formula rises with alpha through the bracket searched, so bisection finds the one root there. The existence of that root, and which root to keep when there are two, is the business of [sabr-calibration-from-three-quotes](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/05-sabr-calibration-from-three-quotes.md). What is left is two equations, one per wing, in rho and nu.
+The reading is a first guess. The exact fit solves the full formula. For any trial rho and nu, alpha is set so the middle quote is met exactly: the at-the-money formula rises with alpha through the bracket searched, so bisection finds the one root there. The existence of that root, and which root to keep when there are two, is the business of [SABR from three quotes](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/05-sabr-calibration-from-three-quotes.md). What is left is two equations, one per wing, in rho and nu.
 
 **Road 1** is Newton's method on both equations at once, started from the reading. **Road 2** uses the two features separately. At a fixed nu the risk reversal rises steadily with rho, so an inner bisection finds the rho that matches −25 vol bp. The butterfly then rises with nu, so an outer bisection finds the nu that matches +50. Both land on rho 0.135320 and nu 0.711387, agreeing to eight decimals, and alpha is 0.044702.
 
@@ -166,7 +150,7 @@ A swaption has three coordinates: the option's expiry, the swap's length (its **
 | 2y into 2y | −0.50% | 24.00% | −500.0 | 100.0 | 0.02906 | −0.0616 | 0.2590 |
 | 2y into 5y | 1.00% | 21.00% | −550.0 | 75.0 | 0.03543 | −0.4091 | 0.5454 |
 
-Every node meets its three quotes: the largest miss prints as 0.000000 vol bp. The dials vary smoothly enough to interpolate. For a node between the grid points, a desk interpolates rho and nu across expiry and tenor, interpolates the at-the-money volatility, and solves alpha afresh so the at-the-money quote is met exactly. Interpolating alpha directly would miss it, because alpha's meaning depends on the forward. The swaption smile is the cube's strike axis; the caplet smiles, stripped from caps ([caplet-stripping](03-caplet-stripping.md)), are fitted the same way, one SABR per caplet expiry.
+Every node meets its three quotes: the largest miss prints as 0.000000 vol bp. The dials vary smoothly enough to interpolate. For a node between the grid points, a desk interpolates rho and nu across expiry and tenor, interpolates the at-the-money volatility, and solves alpha afresh so the at-the-money quote is met exactly. Interpolating alpha directly would miss it, because alpha's meaning depends on the forward. The swaption smile is the cube's strike axis; the caplet smiles, stripped from caps ([Caplet stripping](03-caplet-stripping.md)), are fitted the same way, one SABR per caplet expiry.
 
 The other route to a whole cube is a single model of the entire curve with SABR-style volatilities. It ties the nodes together at the cost of a far slower fit.
 
@@ -213,7 +197,7 @@ The quotes are the same today under all three betas. The difference shows up the
 | 1/2 | 21.41% | $17,818.51 |
 | 1 | 22.00% | $18,306.44 |
 
-Under beta 0 the premium barely changes from today's $17,342.94: the normal volatility, the one that sets an at-the-money premium, holds still, and the percentage volatility falls to make room. Under beta 1 the percentage holds at 22% and the premium rises to $18,306.44. A desk hedged under the wrong beta has the wrong delta, the sensitivity to the rate, and finds out when the rate moves ([swaption-greeks-and-hedging](08-swaption-greeks-and-hedging.md)).
+Under beta 0 the premium barely changes from today's $17,342.94: the normal volatility, the one that sets an at-the-money premium, holds still, and the percentage volatility falls to make room. Under beta 1 the percentage holds at 22% and the premium rises to $18,306.44. A desk hedged under the wrong beta has the wrong delta, the sensitivity to the rate, and finds out when the rate moves ([Swaption Greeks](08-swaption-greeks-and-hedging.md)).
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -665,10 +649,10 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Swaption desks.** Every day the cube is refitted: at-the-money volatilities from brokers, smiles at the quoted nodes, SABR dials per node. Risk is reported per node, and a trader's view on rho or nu is a view on risk reversals or butterflies.
-- **Caps and floors.** Caplet volatilities, stripped from quoted caps ([caplet-stripping](03-caplet-stripping.md)), get one SABR smile per caplet expiry, on the same shifted scale.
+- **Caps and floors.** Caplet volatilities, stripped from quoted caps ([Caplet stripping](03-caplet-stripping.md)), get one SABR smile per caplet expiry, on the same shifted scale.
 - **Negative rates.** From 2014 euro and Swiss franc swap rates went below zero. Shifted SABR kept the existing models running; the shift became part of every quote.
 - **Constant-maturity swaps.** A payment linked to a future swap rate is priced by replicating it with swaptions across all strikes, so it depends on the smile far into the wings. That is where Hagan's formula is least reliable and where the arbitrage-free versions earn their place.
-- **Solving backwards.** A dealer who quotes a premium lets the other side solve for the volatility; [rate-option-inverses](09-rate-option-inverses.md) does that inversion properly.
+- **Solving backwards.** A dealer who quotes a premium lets the other side solve for the volatility; [Solving rate options backwards](09-rate-option-inverses.md) does that inversion properly.
 
 > **Say it back**
 > A swaption smile is three quotes: the at-the-money volatility, a risk reversal and a butterfly. Shifted SABR, with beta fixed first, turns them into three dials: alpha from the middle, rho mainly from the tilt, nu mainly from the curl. Beta cannot be seen in one smile; it is chosen from how the at-the-money volatility has moved with the rate. Each expiry and swap length gets its own dials, and the stack of fitted smiles is the volatility cube.
@@ -677,13 +661,13 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [normal-and-shifted-volatilities-for-rates](06-normal-and-shifted-volatilities-for-rates.md): the shifted and normal languages, and the at-the-money conversion that gives 98.80 bp here.
-- [sabr-model-and-hagan-formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md): the model, Hagan's formula, why it holds and how large its error is.
+- [Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md): the shifted and normal languages, and the at-the-money conversion that gives 98.80 bp here.
+- [SABR and Hagan's formula](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/04-sabr-model-and-hagan-formula.md): the model, Hagan's formula, why it holds and how large its error is.
 
 ## Where this goes next
 
-- [swaption-greeks-and-hedging](08-swaption-greeks-and-hedging.md): card 08 on this shelf: the swaption's sensitivities, where the backbone chosen here decides the delta.
-- [rate-option-inverses](09-rate-option-inverses.md): running the pricing formulas backwards, with existence and uniqueness stated.
+- [Swaption Greeks](08-swaption-greeks-and-hedging.md): card 08 on this shelf: the swaption's sensitivities, where the backbone chosen here decides the delta.
+- [Solving rate options backwards](09-rate-option-inverses.md): running the pricing formulas backwards, with existence and uniqueness stated.
 
 The fit leaves the dials fixed while the rate moves; how a swaption's value changes when the forward, the annuity and the smile all move together is what the Greeks card answers.
 

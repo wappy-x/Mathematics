@@ -1,28 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Chance and Events
-topic: Updating on evidence
-item: Conditional probability
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/03-probability-rules-and-complements|probability-rules-and-complements]]"
-next:
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/06-bayes-rule|bayes-rule]]"
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/07-independence|independence]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/05-conditional-expectation-in-tables|conditional-expectation-in-tables]]"
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/07-confounding-and-simpsons-paradox|confounding-and-simpsons-paradox]]"
-  - "[[Cards/09-Probability and statistics/14-Random Graphs and the Probabilistic Method/05-random-walks-on-graphs-and-mixing|random-walks-on-graphs-and-mixing]]"
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/01-conditioning-on-a-partition|conditioning-on-a-partition]]"
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/02-hazard-rate-and-survival-probability|hazard-rate-and-survival-probability]]"
-tags: [mathematics, probability and statistics, conditional-probability]
----
-
 # Conditional probability: the chance of one thing given another has happened
 
-Probability and statistics → Chance and Events → Updating on evidence → Conditional probability
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Chance and Events](../../../SYLLABUS.md#w09-s01) → Conditional probability
 
 ---
 
@@ -59,7 +37,7 @@ A positive result keeps two of the four end boxes, 90 and 495, and discards the 
 
 ## The formula
 
-Notation first, in words. $P(A)$ is the chance of the event $A$, as on [what-probability-means](01-what-probability-means.md). The new notation is $P(A \mid B)$, read "the chance of $A$ given $B$": the chance of $A$ once $B$ is known to have happened. The upright bar means "given"; it is not division. $A \cap B$, read "$A$ and $B$", is the event that both happen.
+Notation first, in words. $P(A)$ is the chance of the event $A$, as on [Probability](01-what-probability-means.md). The new notation is $P(A \mid B)$, read "the chance of $A$ given $B$": the chance of $A$ once $B$ is known to have happened. The upright bar means "given"; it is not division. $A \cap B$, read "$A$ and $B$", is the event that both happen.
 
 $$P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \qquad \text{defined only when } P(B) > 0$$
 
@@ -77,7 +55,7 @@ $$P(A) = P(B_1)\,P(A \mid B_1) + P(B_2)\,P(A \mid B_2) + \dots + P(B_n)\,P(A \mi
 
 **Read it aloud:** the chance of $A$ is its rate in each piece, weighted by the size of that piece, added up.
 
-In the town, $D$ is "has the disease" and $T$ is "tests positive". The pieces are $D$ and $D^c$, read "not $D$" as on [probability-rules-and-complements](03-probability-rules-and-complements.md).
+In the town, $D$ is "has the disease" and $T$ is "tests positive". The pieces are $D$ and $D^c$, read "not $D$" as on [The rules](03-probability-rules-and-complements.md).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -98,7 +76,7 @@ In the town, $D$ is "has the disease" and $T$ is "tests positive". The pieces ar
 
 It is a definition, so it needs no proof, only one condition. The two rules drawn from it carry their own conditions.
 
-- **The known event must be possible: $P(B) > 0$.** Divide by zero and the ratio means nothing. Conditioning on an event of probability zero needs the heavier machinery of [conditioning-on-a-partition](../../10-Measure%20and%20integration/09-Conditional%20Expectation/01-conditioning-on-a-partition.md) and the cards after it.
+- **The known event must be possible: $P(B) > 0$.** Divide by zero and the ratio means nothing. Conditioning on an event of probability zero needs the heavier machinery of [Conditioning on a partition](../../10-Measure%20and%20integration/09-Conditional%20Expectation/01-conditioning-on-a-partition.md) and the cards after it.
 - **The pieces of a partition must cover everything.** Leave out the healthy and the town's chance of a positive drops from 0.0585 to 0.009; the answer then comes out at 1, as if every positive were sick.
 - **The pieces must not overlap.** An outcome in two pieces is counted twice, and the total can pass 1.
 - **Each piece must be possible: $P(B_i) > 0$.** Otherwise $P(A \mid B_i)$ is undefined. A piece of chance zero adds nothing to $P(A)$, so it is left out of the sum.
@@ -114,7 +92,7 @@ Before the result, all 10,000 people are possible. After a positive, only the 58
 
 ### Step 1: with equally likely outcomes, the formula is a count
 
-When all outcomes are equally likely, a chance is a count divided by the total ([equally-likely-outcomes-and-counting](04-equally-likely-outcomes-and-counting.md)). Pick one of the 10,000 residents at random. Among the positives, the share who are sick is
+When all outcomes are equally likely, a chance is a count divided by the total ([Counting chances](04-equally-likely-outcomes-and-counting.md)). Pick one of the 10,000 residents at random. Among the positives, the share who are sick is
 
 90 / 585 = (90 / 10,000) / (585 / 10,000) = 0.009 / 0.0585 = 0.153846.
 
@@ -122,7 +100,7 @@ The middle step divides top and bottom by the same 10,000. The top is now $P(D \
 
 ### Step 2: the result is a genuine probability
 
-Given $B$, the new chances obey every rule on [probability-rules-and-complements](03-probability-rules-and-complements.md). None is negative. $B$ itself now has chance 1. Chances of events that cannot happen together add. So the complement rule works inside the smaller world: the chance of being healthy given a positive is 1 − 0.153846 = 0.846154, and the count agrees, 495 / 585.
+Given $B$, the new chances obey every rule on [The rules](03-probability-rules-and-complements.md). None is negative. $B$ itself now has chance 1. Chances of events that cannot happen together add. So the complement rule works inside the smaller world: the chance of being healthy given a positive is 1 − 0.153846 = 0.846154, and the count agrees, 495 / 585.
 
 <details>
 <summary>Detailed proof: conditioning on B gives a probability</summary>
@@ -131,7 +109,7 @@ Fix $B$ with $P(B) > 0$ and write $Q(A)$ for $P(A \mid B)$.
 
 **Never negative.** $P(A \cap B) \ge 0$ and $P(B) > 0$, so the ratio is at least 0.
 
-**The whole world has chance 1.** Every outcome is in the whole sample space $S$ ([sample-spaces-and-events](02-sample-spaces-and-events.md)), so $S \cap B = B$ and $Q(S) = P(B) / P(B) = 1$.
+**The whole world has chance 1.** Every outcome is in the whole sample space $S$ ([Sample spaces and events](02-sample-spaces-and-events.md)), so $S \cap B = B$ and $Q(S) = P(B) / P(B) = 1$.
 
 **Separate events add.** Let $A_1$ and $A_2$ share no outcome. Then $A_1 \cap B$ and $A_2 \cap B$ share none either, and together they make $(A_1 \text{ or } A_2) \cap B$. The addition rule for $P$ gives $P((A_1 \text{ or } A_2) \cap B) = P(A_1 \cap B) + P(A_2 \cap B)$. Divide both sides by $P(B)$: $Q(A_1 \text{ or } A_2) = Q(A_1) + Q(A_2)$. The same step works for any list of events, one pair at a time, and for an endless list because dividing a convergent sum by a fixed number divides each term.
 
@@ -165,7 +143,7 @@ With $n$ pieces the argument is the same, one term per piece, and the rule is ex
 
 The question was the chance of disease given a positive. The definition asks for $P(D \cap T) / P(T)$. The multiplication rule gave the top, 0.009. Total probability gave the bottom, 0.0585. Divide: 0.153846.
 
-Written as one line, that calculation is Bayes' rule: it turns "positive given sick" into "sick given positive". It gets its own card: [bayes-rule](06-bayes-rule.md).
+Written as one line, that calculation is Bayes' rule: it turns "positive given sick" into "sick given positive". It gets its own card: [Bayes' rule](06-bayes-rule.md).
 
 ---
 
@@ -196,7 +174,7 @@ The right answer is 0.153846.
 | Drop the healthy piece of the partition | 0.009 for the chance of a positive, then 1.000000 | The pieces no longer cover everyone; the 495 false alarms vanish |
 | Multiply as if the result and the disease were unrelated | 0.000585 for sick and positive | Plain chances multiply only under independence; the true value is 0.009 |
 
-The last row is the multiplication rule with its conditional factor dropped. It is right only when knowing one event does not change the other's chance, which is the subject of [independence](07-independence.md).
+The last row is the multiplication rule with its conditional factor dropped. It is right only when knowing one event does not change the other's chance, which is the subject of [Independence](07-independence.md).
 
 ### The base rate decides
 
@@ -614,10 +592,10 @@ The simulation found 58,399 positives, 9,056 of them sick: an estimate of 0.1550
 ## Where you meet it in real life
 
 - **Screening programmes.** Cancer screening and antibody tests report hit rates and false-alarm rates; the chance a positive is real depends on who is screened. Gigerenzer and Hoffrage found that people given the numbers as counts, like the town of 10,000, get the answer right far more often.
-- **Spam filters.** A filter learns the chance a word appears given spam and given ordinary mail, then weighs them with total probability to find the chance a message is spam given its words: [bayes-rule](06-bayes-rule.md).
+- **Spam filters.** A filter learns the chance a word appears given spam and given ordinary mail, then weighs them with total probability to find the chance a message is spam given its words: [Bayes' rule](06-bayes-rule.md).
 - **Courtrooms.** A tiny chance of the evidence if the defendant is innocent is a statement given innocence. It is not the chance of innocence given the evidence.
-- **Group comparisons.** A treatment can look better in every group and worse overall when the groups have different weights, a reversal that total probability explains: [confounding-and-simpsons-paradox](../13-Survival%2C%20Design%20and%20Causality/07-confounding-and-simpsons-paradox.md).
-- **Credit risk.** A lender prices the chance a company defaults this year given it survived to now; finance calls the rate of that conditional chance the hazard rate: [hazard-rate-and-survival-probability](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md).
+- **Group comparisons.** A treatment can look better in every group and worse overall when the groups have different weights, a reversal that total probability explains: [Confounding](../13-Survival%2C%20Design%20and%20Causality/07-confounding-and-simpsons-paradox.md).
+- **Credit risk.** A lender prices the chance a company defaults this year given it survived to now; finance calls the rate of that conditional chance the hazard rate: [The hazard rate](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md).
 
 > **Say it back**
 > Knowing that B happened shrinks the world to B. The chance of A given B is the part of B where A also happens, divided by all of B. Turned round, the chance of both is the chance of the first times the chance of the second given the first. Split the world into pieces that cover it without overlap, and the chance of A is its rate in each piece weighted by the piece's size. A test that catches 90% of a disease one person in a hundred has leaves a positive with only about a 15% chance of disease, because the healthy are 99 times as many and their false alarms outnumber the true hits.
@@ -626,19 +604,19 @@ The simulation found 58,399 positives, 9,056 of them sick: an estimate of 0.1550
 
 ## What this builds on
 
-- [probability-rules-and-complements](03-probability-rules-and-complements.md): the addition rule for events that cannot happen together, which gives total probability, and the complement "not A", which gives the healthy piece of the partition.
+- [The rules](03-probability-rules-and-complements.md): the addition rule for events that cannot happen together, which gives total probability, and the complement "not A", which gives the healthy piece of the partition.
 
 ## Where this goes next
 
-- [bayes-rule](06-bayes-rule.md): Step 5 as one formula, in odds form, and applied again after a second test.
-- [independence](07-independence.md): when knowing B does not change the chance of A, and the multiplication rule loses its conditional factor.
-- [conditional-expectation-in-tables](../02-Random%20Variables/05-conditional-expectation-in-tables.md): the average of a number once something is known, built from these conditional chances.
-- [confounding-and-simpsons-paradox](../13-Survival%2C%20Design%20and%20Causality/07-confounding-and-simpsons-paradox.md): what the weights in total probability do when groups differ in size.
-- [random-walks-on-graphs-and-mixing](../14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md): a walk whose next step is chosen given where it stands; total probability moves its whole distribution one step at a time.
-- [conditioning-on-a-partition](../../10-Measure%20and%20integration/09-Conditional%20Expectation/01-conditioning-on-a-partition.md): the same idea rebuilt on measure theory, reaching conditions of probability zero.
-- [hazard-rate-and-survival-probability](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): conditional chances of default, chained through time by the multiplication rule.
+- [Bayes' rule](06-bayes-rule.md): Step 5 as one formula, in odds form, and applied again after a second test.
+- [Independence](07-independence.md): when knowing B does not change the chance of A, and the multiplication rule loses its conditional factor.
+- [Conditional expectation](../02-Random%20Variables/05-conditional-expectation-in-tables.md): the average of a number once something is known, built from these conditional chances.
+- [Confounding](../13-Survival%2C%20Design%20and%20Causality/07-confounding-and-simpsons-paradox.md): what the weights in total probability do when groups differ in size.
+- [Random walks on a graph](../14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md): a walk whose next step is chosen given where it stands; total probability moves its whole distribution one step at a time.
+- [Conditioning on a partition](../../10-Measure%20and%20integration/09-Conditional%20Expectation/01-conditioning-on-a-partition.md): the same idea rebuilt on measure theory, reaching conditions of probability zero.
+- [The hazard rate](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): conditional chances of default, chained through time by the multiplication rule.
 
-This card turns "positive given sick" into "sick given positive" only by a count; the question it leaves open is how to make that reversal a single rule that can be applied again as each new piece of evidence arrives, which [bayes-rule](06-bayes-rule.md) answers.
+This card turns "positive given sick" into "sick given positive" only by a count; the question it leaves open is how to make that reversal a single rule that can be applied again as each new piece of evidence arrives, which [Bayes' rule](06-bayes-rule.md) answers.
 
 ---
 

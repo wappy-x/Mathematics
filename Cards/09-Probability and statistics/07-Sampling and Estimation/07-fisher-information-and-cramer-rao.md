@@ -1,27 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Sampling and Estimation
-topic: Precision floors
-item: Fisher information
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/04-maximum-likelihood|maximum-likelihood]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/06-bias-variance-and-mean-squared-error|bias-variance-and-mean-squared-error]]"
-next:
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/07-likelihood-ratio-tests|likelihood-ratio-tests]]"
-  - "[[Cards/23-Differential geometry and Lie groups/07-Geometric Analysis and Physics/09-information-geometry-and-the-fisher-metric|information-geometry-and-the-fisher-metric]]"
-tags:
-  - mathematics
-  - probability and statistics
-  - fisher-information-and-cramer-rao
----
-
 # Fisher information: how much a sample can tell you, and the floor on any estimator's error
 
-Probability and statistics → Sampling and Estimation → Precision floors → Fisher information
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Sampling and Estimation](../../../SYLLABUS.md#w09-s07) → Fisher information
 
 ---
 
@@ -55,7 +34,7 @@ First line (orange): one head in 4 flips. Second line (green): 10 heads in 40 fl
 
 ## The formula
 
-Notation first, in words. The **log-likelihood** ℓ(p), from [maximum-likelihood](04-maximum-likelihood.md), is the logarithm of the chance of the flips actually seen, read as a function of the candidate chance p. Its slope in p, with the flips held fixed, is the **score**, written S. The **Fisher information** I(p) is the average of the squared score over all the flip records the coin could produce. An **estimator** T is any rule that turns the flips into a guess; it is **unbiased** when its average guess equals p, for every p.
+Notation first, in words. The **log-likelihood** ℓ(p), from [Maximum likelihood](04-maximum-likelihood.md), is the logarithm of the chance of the flips actually seen, read as a function of the candidate chance p. Its slope in p, with the flips held fixed, is the **score**, written S. The **Fisher information** I(p) is the average of the squared score over all the flip records the coin could produce. An **estimator** T is any rule that turns the flips into a guess; it is **unbiased** when its average guess equals p, for every p.
 
 $$S = \frac{d}{dp}\,\ell(p), \qquad I(p) = E\!\left[S^2\right], \qquad \operatorname{Var}(T) \;\ge\; \frac{1}{I(p)}$$
 
@@ -181,7 +160,7 @@ The bent coin, p = 0.25, four flips.
 
 The four chances in the check are those of 0, 2, 3 and 4 heads; one head scores 0 and drops out. No rule that is right on average can pin a bent coin's chance from four flips more tightly than a standard deviation of about 0.22. Sixty-four flips bring that to 0.054127, and a hundred to 0.043301: the floor falls like one over the number of flips, its square root like one over the square root.
 
-The shelf's house poll gives the same floor at scale: 1,000 voters with 52 percent on one side. The floor is 0.52 × 0.48 / 1,000 = 0.0002496, a standard deviation of 0.015799, about 1.6 percentage points, and the exact binomial sum over all 1,001 possible counts gives the poll fraction the same variance, 0.0002496. No unbiased way of reading those 1,000 answers does better. The information is 1,000/(0.52 × 0.48) = 4,006.4, one over that floor, and it is the curvature of about 4,006 that [maximum-likelihood](04-maximum-likelihood.md) measured at the poll's peak. The match is exact: at the peak $K = n\hat p$, so the curvature $K/\hat p^2 + (n-K)/(1-\hat p)^2$ is $n/\hat p + n/(1-\hat p) = n/(\hat p(1-\hat p))$, the information at $\hat p$.
+The shelf's house poll gives the same floor at scale: 1,000 voters with 52 percent on one side. The floor is 0.52 × 0.48 / 1,000 = 0.0002496, a standard deviation of 0.015799, about 1.6 percentage points, and the exact binomial sum over all 1,001 possible counts gives the poll fraction the same variance, 0.0002496. No unbiased way of reading those 1,000 answers does better. The information is 1,000/(0.52 × 0.48) = 4,006.4, one over that floor, and it is the curvature of about 4,006 that [Maximum likelihood](04-maximum-likelihood.md) measured at the poll's peak. The match is exact: at the peak $K = n\hat p$, so the curvature $K/\hat p^2 + (n-K)/(1-\hat p)^2$ is $n/\hat p + n/(1-\hat p) = n/(\hat p(1-\hat p))$, the information at $\hat p$.
 
 ### What breaks if you drop a piece
 
@@ -191,7 +170,7 @@ The shelf's house poll gives the same floor at scale: 1,000 voters with 52 perce
 | Unbiased at one p only: always answer 0.25 | variance 0 at p = 0.25; mean squared error 0.1225 at p = 0.6 | Step 2 differentiates unbiasedness; a rule unbiased at a single point has nothing to differentiate |
 | Moving edge: 4 draws spread evenly on (0, 2), estimate the top 2 by 5/4 of the largest draw | variance 0.166667 exact, 0.166950 ± 0.000615 simulated, under the "floor" 0.25 | Each draw's score is −0.5, never averaging 0: the range itself moves with the unknown |
 
-The moving-edge "floor" of 0.25 comes from plugging the squared score into 1/I(θ): every draw scores −0.5 whatever it is, so four draws score −2, and one over (−2) squared is 0.25. The corrected largest draw is unbiased: the largest of n draws is at most x with chance (x/θ)^n, so its average, the integral of 1 − (x/θ)^n from 0 to θ, is nθ/(n+1), and (n+1)/n of it averages θ. With 2x in front, the same integral gives the average square, nθ^2/(n+2), and the corrected draw's variance works out to θ^2/(n(n+2)) = 4/24 = 0.166667, as the beta law of the top rank on [order-statistics-and-extremes](../05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md) also gives. It beats the "floor" by a third. Nothing is contradicted: Step 1 failed, because raising θ adds new possible values at the top that the slope of the density inside the range does not see.
+The moving-edge "floor" of 0.25 comes from plugging the squared score into 1/I(θ): every draw scores −0.5 whatever it is, so four draws score −2, and one over (−2) squared is 0.25. The corrected largest draw is unbiased: the largest of n draws is at most x with chance (x/θ)^n, so its average, the integral of 1 − (x/θ)^n from 0 to θ, is nθ/(n+1), and (n+1)/n of it averages θ. With 2x in front, the same integral gives the average square, nθ^2/(n+2), and the corrected draw's variance works out to θ^2/(n(n+2)) = 4/24 = 0.166667, as the beta law of the top rank on [Order statistics](../05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md) also gives. It beats the "floor" by a third. Nothing is contradicted: Step 1 failed, because raising θ adds new possible values at the top that the slope of the density inside the range does not see.
 
 ### The picture: a biased rule under the floor, then over it
 
@@ -663,10 +642,10 @@ The two outputs are identical line for line. The simulated variance, 0.046844 wi
 
 ## Where you meet it in real life
 
-- **Polls and surveys.** For 1,000 voters and 52 percent support, no unbiased reading of the answers has a standard deviation below 0.015799. The reported margin of error is a multiple of this number: [sample-mean-and-standard-error](02-sample-mean-and-standard-error.md).
+- **Polls and surveys.** For 1,000 voters and 52 percent support, no unbiased reading of the answers has a standard deviation below 0.015799. The reported margin of error is a multiple of this number: [Standard error](02-sample-mean-and-standard-error.md).
 - **Planning an experiment.** Because the floor is one over the information and information adds, a target precision fixes a minimum sample size before a single measurement is taken. Clinical trials and quality-control plans are sized this way.
-- **Maximum likelihood.** In a regular model (one meeting the conditions under When it holds), the maximum-likelihood estimate's variance times I approaches 1 as the sample grows, so the floor is the benchmark it is judged against: [maximum-likelihood](04-maximum-likelihood.md). Its standard error is routinely read off the curvature of the log-likelihood at its peak.
-- **Trading bias for variance.** Shrinking a guess towards a sensible value, as Laplace's rule does, steps outside the bound on purpose: [bias-variance-and-mean-squared-error](06-bias-variance-and-mean-squared-error.md).
+- **Maximum likelihood.** In a regular model (one meeting the conditions under When it holds), the maximum-likelihood estimate's variance times I approaches 1 as the sample grows, so the floor is the benchmark it is judged against: [Maximum likelihood](04-maximum-likelihood.md). Its standard error is routinely read off the curvature of the log-likelihood at its peak.
+- **Trading bias for variance.** Shrinking a guess towards a sensible value, as Laplace's rule does, steps outside the bound on purpose: [Bias and variance](06-bias-variance-and-mean-squared-error.md).
 - **Measurement physics.** Atomic clocks and interferometers quote their sensitivity limits as Cramér–Rao bounds, with a quantum version of the information.
 
 > **Say it back**
@@ -676,13 +655,13 @@ The two outputs are identical line for line. The simulated variance, 0.046844 wi
 
 ## What this builds on
 
-- [maximum-likelihood](04-maximum-likelihood.md): the log-likelihood, and the slope that is zero at the best-fitting value; this card averages that slope's square.
-- [bias-variance-and-mean-squared-error](06-bias-variance-and-mean-squared-error.md): bias, variance and mean squared error, the terms in which the floor and its exceptions are stated.
+- [Maximum likelihood](04-maximum-likelihood.md): the log-likelihood, and the slope that is zero at the best-fitting value; this card averages that slope's square.
+- [Bias and variance](06-bias-variance-and-mean-squared-error.md): bias, variance and mean squared error, the terms in which the floor and its exceptions are stated.
 
 ## Where this goes next
 
-- [likelihood-ratio-tests](../08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md): the score's zero average and its variance, the information, are the two facts behind Wilks' rule that twice the log of a likelihood ratio follows a chi-square law in large samples.
-- information-geometry-and-the-fisher-metric: the information, followed from one value of p to the next, read as a ruler on the space of models, so that two coins are far apart when data tell them apart easily.
+- [Likelihood ratio tests](../08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md): the score's zero average and its variance, the information, are the two facts behind Wilks' rule that twice the log of a likelihood ratio follows a chi-square law in large samples.
+- Fisher metric: the information, followed from one value of p to the next, read as a ruler on the space of models, so that two coins are far apart when data tell them apart easily.
 
 This card fixed how precisely one sample can pin down one unknown; whether a model with an extra parameter fits better than chance allows, and how far apart two models are, are the questions those cards answer with the same information.
 

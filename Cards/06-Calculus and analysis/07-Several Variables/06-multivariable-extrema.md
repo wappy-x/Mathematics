@@ -1,28 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Several Variables
-topic: Flat spots and what they are
-item: Extrema in several variables
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/05-hessian-and-second-order-approximation|hessian-and-second-order-approximation]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/04-spectral-theorem|spectral-theorem]]"
-next:
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/08-lagrange-multipliers|lagrange-multipliers]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/09-convex-functions|convex-functions]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/06-calibration-as-least-squares|calibration-as-least-squares]]"
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/06-linear-quadratic-regulator|linear-quadratic-regulator]]"
-  - "[[Cards/15-Optimization/01-Convexity/01-local-and-global-minima|local-and-global-minima]]"
-  - "[[Cards/15-Optimization/02-Unconstrained Methods/01-optimality-conditions|optimality-conditions]]"
-tags: [mathematics, calculus and analysis, multivariable-extrema]
----
-
 # Extrema in several variables: peaks, pits and saddles
 
-Calculus and analysis → Several Variables → Flat spots and what they are → Extrema in several variables
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Several Variables](../../../SYLLABUS.md#w06-s07) → Extrema in several variables
 
 ---
 
@@ -56,7 +34,7 @@ Orange keeps the base square (y = x); green holds the width at 2 metres. Both bo
 
 ## The formula
 
-Notation from this shelf: a curly $\partial$ marks a partial derivative, the rate as one input moves and the others hold still; the gradient $\nabla S$ lists those rates ([gradient-and-directional-derivatives](03-gradient-and-directional-derivatives.md)); the Hessian $H$ is the square table of second partial derivatives.
+Notation from this shelf: a curly $\partial$ marks a partial derivative, the rate as one input moves and the others hold still; the gradient $\nabla S$ lists those rates ([Gradient](03-gradient-and-directional-derivatives.md)); the Hessian $H$ is the square table of second partial derivatives.
 
 The sheet used is the base plus four walls. Two walls are x long and 4/(xy) tall, 4/y each; the other two are 4/x each:
 
@@ -110,7 +88,7 @@ half the quadratic form $h^{\mathsf T}Hh$: one number built from the step and th
 
 ### Step 0: a lowest point is lowest along every road through it
 
-If (2, 2) beats every nearby shape, hold the width at 2 and vary the length: a one-dial problem lowest at x = 2, so slope zero there ([monotonicity-and-optimisation](../03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md)). The same holds for the width. So the gradient is zero. Flat says nothing about which way the ground bends.
+If (2, 2) beats every nearby shape, hold the width at 2 and vary the length: a one-dial problem lowest at x = 2, so slope zero there ([Optimisation](../03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md)). The same holds for the width. So the gradient is zero. Flat says nothing about which way the ground bends.
 
 For the bin: y = 8/x^2 and x = 8/y^2. Substituting, x = x^4/8, so x^3 = 8, x = 2 and y = 2. That is the only flat spot with positive sides.
 
@@ -136,14 +114,14 @@ The bin: A = 2, D = 3. A pit. Negate the cost and A = −2, D = 3: a peak.
 
 ### Step 3: the bowl beats the remainder
 
-The spectral theorem ([spectral-theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) gives H two square-on directions along which it only stretches; the stretches, its eigenvalues, are 3 along (1, 1) and 1 along (1, −1). So the quadratic form is at least the smallest, $\lambda$ = 1, times the squared step length. The remainder shrinks faster, so for short steps it stays under a quarter of that floor and the rise stays positive: a strict pit. The picture's square-base road runs along (1, 1), the most sharply curved direction.
+The spectral theorem ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) gives H two square-on directions along which it only stretches; the stretches, its eigenvalues, are 3 along (1, 1) and 1 along (1, −1). So the quadratic form is at least the smallest, $\lambda$ = 1, times the squared step length. The remainder shrinks faster, so for short steps it stays under a quarter of that floor and the rise stays positive: a strict pit. The picture's square-base road runs along (1, 1), the most sharply curved direction.
 
 <details>
 <summary>Detailed proof</summary>
 
 Let S have continuous second partials near p, with ∇S(p) = 0, and A > 0, D > 0 at p. The eigenvalues have product D > 0 and sum A + C > 0, so both are positive; with λ the smaller, $h^{\mathsf T}H(p)h \ge \lambda\lvert h\rvert^2$.
 
-With g(t) = S(p + th), [taylors-theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md) gives S(p + h) − S(p) = ½g''(τ) = ½ $h^{\mathsf T}H(p + \tau h)h$ for some τ in (0, 1), since g'(0) = 0.
+With g(t) = S(p + th), [Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md) gives S(p + h) − S(p) = ½g''(τ) = ½ $h^{\mathsf T}H(p + \tau h)h$ for some τ in (0, 1), since g'(0) = 0.
 
 Set ε = λ/2. Continuity gives δ > 0 with every entry of H(q) − H(p) within ε/2 of zero when |q − p| < δ, so their quadratic forms differ by at most (ε/2)(|h₁| + |h₂|)^2 ≤ ε|h|^2. For 0 < |h| < δ, S(p + h) − S(p) ≥ ½(λ − ε)|h|^2 = ¼λ|h|^2 > 0. Use −S for a peak; for D < 0, Step 2's two steps, scaled small, keep their signs by the same bound.
 
@@ -153,11 +131,11 @@ Set ε = λ/2. Continuity gives δ > 0 with every entry of H(q) − H(p) within 
 
 The allowed region, all positive x and y, runs to infinity, so a pit need not be global. Fence it: the closed square with sides from 8/13 = 0.615385 to 169/8 = 21.125000 metres. Outside it, and on its edges, the steel is at least 13 square metres:
 
-a side below 0.615385 makes its walls, 8/x or 8/y, exceed 13, and a side above 21.125000 with the other at least 0.615385 makes the base exceed 13. The lowest edge value found is 17.437647. Inside, S is continuous on a closed bounded square, so the extreme value theorem ([extreme-value-theorem](../01-Limits%20and%20Continuity/07-extreme-value-theorem.md)) gives a cheapest point. It costs at most 12, so it is off the fence, flat by Step 0, hence (2, 2). The pit is global.
+a side below 0.615385 makes its walls, 8/x or 8/y, exceed 13, and a side above 21.125000 with the other at least 0.615385 makes the base exceed 13. The lowest edge value found is 17.437647. Inside, S is continuous on a closed bounded square, so the extreme value theorem ([Extreme value theorem](../01-Limits%20and%20Continuity/07-extreme-value-theorem.md)) gives a cheapest point. It costs at most 12, so it is off the fence, flat by Step 0, hence (2, 2). The pit is global.
 
 A calculus-free grid search over the fence lands on (2.000, 2.000) with 12.000000.
 
-The other route to "local is global" is convexity, a Hessian passing the pit test everywhere ([convex-functions](09-convex-functions.md)). The bin fails it far out, where the wall curvatures shrink below the cross term.
+The other route to "local is global" is convexity, a Hessian passing the pit test everywhere ([Convex functions](09-convex-functions.md)). The bin fails it far out, where the wall curvatures shrink below the cross term.
 
 ---
 
@@ -187,7 +165,7 @@ Base, one wall pair and the other split the steel 4, 4, 4.
 
 ## Code, from first principles, and it actually runs
 
-Two independent roads. Road one is calculus: Newton's method ([newtons-method](../03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) on the gradient, with the Hessian as its slope, eight jumps from (1, 3); then difference quotients, eigenvalues and real rises. Road two is a grid search over the fence, plus a scan of two of its edges (the cost is symmetric in x and y). Four asserts: difference quotients against the formula, real rise against the quadratic model, grid winner against Newton, D's verdict against two steps.
+Two independent roads. Road one is calculus: Newton's method ([Newton's method](../03-What%20Derivatives%20Tell%20You/06-newtons-method.md)) on the gradient, with the Hessian as its slope, eight jumps from (1, 3); then difference quotients, eigenvalues and real rises. Road two is a grid search over the fence, plus a scan of two of its edges (the cost is symmetric in x and y). Four asserts: difference quotients against the formula, real rise against the quadratic model, grid winner against Newton, D's verdict against two steps.
 
 ### Python
 
@@ -380,7 +358,7 @@ The two outputs agree line for line.
 ## Where you meet it in real life
 
 - **Packaging.** Cans, cartons and bins trade base against walls; if the base costs more, the answer moves off the square and the same recipe finds it.
-- **Fitting models to data.** A least-squares fit is the pit of summed squared errors; its Hessian says how firmly the data pin each parameter ([calibration-as-least-squares](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)).
+- **Fitting models to data.** A least-squares fit is the pit of summed squared errors; its Hessian says how firmly the data pin each parameter ([Calibration](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)).
 
 > **Say it back**
 > A smooth lowest or highest point inside the region has every partial slope zero. Near a flat spot the surface is half the Hessian's quadratic form plus a fading remainder. With two inputs, D = AC − B^2 and the sign of A sort it into pit, peak or saddle; zero D gives no verdict. A pit is only best nearby; the bin's pit, 12 square metres, is fenced into the global minimum.
@@ -389,17 +367,17 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [hessian-and-second-order-approximation](05-hessian-and-second-order-approximation.md): the Hessian and the quadratic picture, Step 1.
-- [spectral-theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): square-on directions and real eigenvalues, Step 3.
+- [Hessian](05-hessian-and-second-order-approximation.md): the Hessian and the quadratic picture, Step 1.
+- [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): square-on directions and real eigenvalues, Step 3.
 
 ## Where this goes next
 
-- [lagrange-multipliers](08-lagrange-multipliers.md): flat spots when the inputs must satisfy an equation that cannot be solved by hand, as the volume was.
-- [convex-functions](09-convex-functions.md): every pit global, no fence needed.
-- [calibration-as-least-squares](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): model fitting as a pit.
-- linear-quadratic-regulator: control as the pit of a quadratic cost.
-- local-and-global-minima: local against global in general.
-- optimality-conditions: these tests in any number of inputs.
+- [Lagrange multipliers](08-lagrange-multipliers.md): flat spots when the inputs must satisfy an equation that cannot be solved by hand, as the volume was.
+- [Convex functions](09-convex-functions.md): every pit global, no fence needed.
+- [Calibration](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): model fitting as a pit.
+- The LQR: control as the pit of a quadratic cost.
+- Local and global minima: local against global in general.
+- Optimality conditions: these tests in any number of inputs.
 
 ---
 

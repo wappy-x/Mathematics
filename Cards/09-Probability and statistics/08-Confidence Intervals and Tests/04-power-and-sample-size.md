@@ -1,28 +1,12 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Confidence Intervals and Tests
-topic: Planning a trial's size
-item: Power
-kind: method
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/03-hypothesis-tests-and-p-values|hypothesis-tests-and-p-values]]"
-next:
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/04-randomised-experiments-and-ab-tests|randomised-experiments-and-ab-tests]]"
-tags: [mathematics, probability and statistics, power-and-sample-size]
----
-
 # Power: the chance of catching a real effect, and the sample size that buys it
 
-Probability and statistics → Confidence Intervals and Tests → Planning a trial's size → Power
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Confidence Intervals and Tests](../../../SYLLABUS.md#w09-s08) → Power
 
 ---
 
 ## General Overview
 
-A small drug trial put 100 patients on a new drug and 100 on a placebo, a dummy pill. On the drug, 45 recovered. On the placebo, 35 did. That is a 10-point gain. The test from [hypothesis-tests-and-p-values](03-hypothesis-tests-and-p-values.md) gave a p-value of 0.1489: not significant at the usual 5 percent line.
+A small drug trial put 100 patients on a new drug and 100 on a placebo, a dummy pill. On the drug, 45 recovered. On the placebo, 35 did. That is a 10-point gain. The test from [Hypothesis tests](03-hypothesis-tests-and-p-values.md) gave a p-value of 0.1489: not significant at the usual 5 percent line.
 
 Was the drug useless? The data cannot say. Before the trial, its planners had named a 10-point gain, from 35 to 45 percent, as the effect worth finding. If the drug really delivers it, a trial of 100 per arm comes out significant only about 31 times in 100. The trial was built too small to see what it was looking for.
 
@@ -52,7 +36,7 @@ Orange: the gap's bell if the drug does nothing. Green: its bell if the drug add
 
 ## The formula
 
-Notation first, in words. Write $p_0$ for the placebo's recovery chance and $p_1$ for the drug's. The gain is $\delta = p_1 - p_0$ (delta). Write $n$ for the number of patients in each arm. The test's false-alarm rate, the chance it calls a useless drug significant, is $\alpha$ (alpha). The chance it misses a real gain is $\beta$ (beta), so the power is $1 - \beta$. A reminder from [normal-quantile](../04-Continuous%20Distributions/05-normal-quantile.md): $\Phi$ is the standard bell's area to the left of a point, and $\Phi^{-1}$ undoes it. Here $z_{1-\alpha/2} = \Phi^{-1}(1 - \alpha/2)$ and $z_{1-\beta} = \Phi^{-1}(1 - \beta)$.
+Notation first, in words. Write $p_0$ for the placebo's recovery chance and $p_1$ for the drug's. The gain is $\delta = p_1 - p_0$ (delta). Write $n$ for the number of patients in each arm. The test's false-alarm rate, the chance it calls a useless drug significant, is $\alpha$ (alpha). The chance it misses a real gain is $\beta$ (beta), so the power is $1 - \beta$. A reminder from [Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md): $\Phi$ is the standard bell's area to the left of a point, and $\Phi^{-1}$ undoes it. Here $z_{1-\alpha/2} = \Phi^{-1}(1 - \alpha/2)$ and $z_{1-\beta} = \Phi^{-1}(1 - \beta)$.
 
 $$n = \frac{\bigl(z_{1-\alpha/2}\,\sigma_0 + z_{1-\beta}\,\sigma_1\bigr)^2}{\delta^2}$$
 
@@ -101,7 +85,7 @@ A test is a rule: compute the observed gap and call it significant if it lands b
 
 ### Step 1: the observed gap scatters round the true gain
 
-Write $\hat D$ for the observed gap. Each arm's recovery count follows the binomial law ([bernoulli-and-binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). A recovery rate built from $n$ patients, each recovering with chance $p_0$ (or $p_1$), has variance $p_0(1-p_0)/n$ (or $p_1(1-p_1)/n$). The two arms are independent, so their variances add:
+Write $\hat D$ for the observed gap. Each arm's recovery count follows the binomial law ([Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). A recovery rate built from $n$ patients, each recovering with chance $p_0$ (or $p_1$), has variance $p_0(1-p_0)/n$ (or $p_1(1-p_1)/n$). The two arms are independent, so their variances add:
 
 $$\operatorname{Var}(\hat D) = \frac{p_0(1-p_0) + p_1(1-p_1)}{n} = \frac{\sigma_1^2}{n}$$
 
@@ -115,7 +99,7 @@ $$c = z_{1-\alpha/2}\,\frac{\sigma_0}{\sqrt n} = 1.959964 \times 0.034641 = 0.06
 
 ### Step 3: the power is the area of the gain's bell beyond the cutoff
 
-The central limit theorem ([central-limit-theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)) makes the gap close to normal: centre $\delta$, standard error $\sigma_1/\sqrt n$. The chance it lands above the cutoff is the bell's area beyond $c$:
+The central limit theorem ([Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)) makes the gap close to normal: centre $\delta$, standard error $\sigma_1/\sqrt n$. The chance it lands above the cutoff is the bell's area beyond $c$:
 
 $$P(\hat D > c) \approx \Phi\!\left(\frac{\delta - c}{\sigma_1/\sqrt n}\right) = \Phi\!\left(\frac{0.10 - 0.0679}{0.034460}\right) = \Phi(0.9317) = 0.8242$$
 
@@ -157,7 +141,7 @@ xychart-beta
 
 Orange: the formula. Green: the exact count; the two nearly overlap. Dark flat line: the 80 percent target, crossed between 350 and 400. At 100 per arm the power is only 0.30; the step from 500 to 600 adds 0.04.
 
-The same argument for averages rather than rates, with a spread measured in days or dollars, gives the sample-size rule of [t-tests-and-comparing-means](05-t-tests-and-comparing-means.md). Only the spreads change.
+The same argument for averages rather than rates, with a spread measured in days or dollars, gives the sample-size rule of [t-tests](05-t-tests-and-comparing-means.md). Only the spreads change.
 
 ---
 
@@ -586,20 +570,20 @@ The two outputs agree line for line. The simulated powers, 0.3124 ± 0.0046 and 
 ## The usual mistake
 
 > [!warning]
-> **Computing power after the trial, from the gain it happened to see.** The 100-per-arm trial saw a gap of 0.10 and a p-value of 0.1489. That gap happens to equal the 10-point gain named before the trial, so plugging it into the power formula returns the planned power, 0.30, by coincidence; the 0.30 belongs to the planned gain, not to what the trial saw. The fallacy shows on any other result. Had the trial seen 40 against 35 of 100, plugging that 5-point gap into the power formula would give 0.1126, and the tempting reading is "the trial was underpowered, so the drug probably works". That number is a rewording of the p-value: any non-significant result gives low "observed power", by construction. Power is a planning quantity, fixed before the data at a gain chosen for its importance. After the trial, the honest summary is an interval for the gain ([hypothesis-tests-and-p-values](03-hypothesis-tests-and-p-values.md)), which here runs from −0.0351 to 0.2351: anything from a small harm to a 23-point gain.
+> **Computing power after the trial, from the gain it happened to see.** The 100-per-arm trial saw a gap of 0.10 and a p-value of 0.1489. That gap happens to equal the 10-point gain named before the trial, so plugging it into the power formula returns the planned power, 0.30, by coincidence; the 0.30 belongs to the planned gain, not to what the trial saw. The fallacy shows on any other result. Had the trial seen 40 against 35 of 100, plugging that 5-point gap into the power formula would give 0.1126, and the tempting reading is "the trial was underpowered, so the drug probably works". That number is a rewording of the p-value: any non-significant result gives low "observed power", by construction. Power is a planning quantity, fixed before the data at a gain chosen for its importance. After the trial, the honest summary is an interval for the gain ([Hypothesis tests](03-hypothesis-tests-and-p-values.md)), which here runs from −0.0351 to 0.2351: anything from a small harm to a 23-point gain.
 >
 > Smaller traps:
 > - **Not significant read as no effect.** At 100 per arm a real 10-point gain is missed 69 times in 100. A p-value is never the chance the drug works.
 > - **Per arm against total.** Reading 376 as the total leaves 188 per arm and power 0.5077.
 > - **An optimistic gain.** Plan for the smallest gain worth finding. Plan for 15 points when the truth is 10 and 170 per arm gives power 0.4688.
-> - **Dropouts and many outcomes.** Patients who leave shrink $n$. Testing several outcomes at 5 percent each raises the false-alarm rate, which [multiple-testing](08-multiple-testing.md) repairs, at the price of a smaller $\alpha$ and so a larger trial.
+> - **Dropouts and many outcomes.** Patients who leave shrink $n$. Testing several outcomes at 5 percent each raises the false-alarm rate, which [Many tests](08-multiple-testing.md) repairs, at the price of a smaller $\alpha$ and so a larger trial.
 
 ---
 
 ## Where you meet it in real life
 
 - **Drug approval.** A trial protocol states, before enrolment, the gain it is powered to detect, the power, usually 80 or 90 percent, and the resulting number of patients. An underpowered trial exposes patients to risk with little chance of an answer, so ethics boards read that paragraph first.
-- **A/B tests on websites.** Two page designs, a 5 percent click rate on one, a hoped-for 5.5 on the other. The gain is half a point, so the square law demands 31234 visitors per arm. The design side is on [randomised-experiments-and-ab-tests](../13-Survival%2C%20Design%20and%20Causality/04-randomised-experiments-and-ab-tests.md).
+- **A/B tests on websites.** Two page designs, a 5 percent click rate on one, a hoped-for 5.5 on the other. The gain is half a point, so the square law demands 31234 visitors per arm. The design side is on [Randomised experiments](../13-Survival%2C%20Design%20and%20Causality/04-randomised-experiments-and-ab-tests.md).
 - **Opinion polls.** Detecting a swing from 50 to 53 percent between two months, with 80 percent power, takes 4356 people in each poll.
 - **Sizing an interval instead of a test.** A study that wants its 95 percent interval for the gap to reach no more than $m$ either side solves the same equation with the power term removed and the interval's own spread, $\sigma_1$, in the cutoff term: $n = (z_{1-\alpha/2}\,\sigma_1 / m)^2$ per arm. For ±5 points at the house rates that is (1.959964 × 0.689202 / 0.05)^2, rounded up: 730 per arm.
 
@@ -610,11 +594,11 @@ The two outputs agree line for line. The simulated powers, 0.3124 ± 0.0046 and 
 
 ## What this builds on
 
-- [hypothesis-tests-and-p-values](03-hypothesis-tests-and-p-values.md): the test whose firing chance this card measures, its false-alarm rate $\alpha$, and the two-proportion z statistic.
+- [Hypothesis tests](03-hypothesis-tests-and-p-values.md): the test whose firing chance this card measures, its false-alarm rate $\alpha$, and the two-proportion z statistic.
 
 ## Where this goes next
 
-- [randomised-experiments-and-ab-tests](../13-Survival%2C%20Design%20and%20Causality/04-randomised-experiments-and-ab-tests.md): how to assign the 400 patients per arm so the gap measures the drug and nothing else, and how the same sizing runs an A/B test.
+- [Randomised experiments](../13-Survival%2C%20Design%20and%20Causality/04-randomised-experiments-and-ab-tests.md): how to assign the 400 patients per arm so the gap measures the drug and nothing else, and how the same sizing runs an A/B test.
 
 A power calculation says how many patients to enrol. It does not say how to split them so that the gap measures the drug; that design question belongs to randomised experiments.
 

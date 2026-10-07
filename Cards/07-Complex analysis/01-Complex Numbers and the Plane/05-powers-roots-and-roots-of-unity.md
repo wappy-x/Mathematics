@@ -1,31 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Complex Numbers and the Plane
-topic: Turning by whole steps
-item: Powers and roots
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/04-eulers-formula|eulers-formula]]"
-  - "[[Cards/03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem|roots-and-the-factor-theorem]]"
-next:
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/07-complex-vectors-and-matrices|complex-vectors-and-matrices]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/05-branch-cuts-and-complex-powers|branch-cuts-and-complex-powers]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/02-discrete-fourier-transform|discrete-fourier-transform]]"
-  - "[[Cards/21-Algebraic and analytic number theory/03-Characters and L-functions/01-dirichlet-characters|dirichlet-characters]]"
-  - "[[Cards/21-Algebraic and analytic number theory/03-Characters and L-functions/06-gauss-sums|gauss-sums]]"
-  - "[[Cards/21-Algebraic and analytic number theory/05-Fields and Galois Theory/08-cyclotomic-extensions-and-roots-of-unity|cyclotomic-extensions-and-roots-of-unity]]"
-tags:
-  - mathematics
-  - complex-analysis
-  - powers-roots-and-roots-of-unity
----
-
 # Powers and roots: de Moivre multiplies the angle, so the n-th roots sit evenly round a circle
 
-Complex analysis → Complex Numbers and the Plane → Turning by whole steps → Powers and roots
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Complex Numbers and the Plane](../../../SYLLABUS.md#w07-s01) → Powers and roots
 
 ---
 
@@ -33,7 +8,7 @@ Complex analysis → Complex Numbers and the Plane → Turning by whole steps �
 
 A game spinner has 8 equal sectors. Put its pivot at 0 on the complex plane, arrow length 1. Where the arrow can rest, mid-sector, are eight points on the circle of radius 1, one every 45 degrees, starting due east at 1.
 
-Multiplying on this plane is "turn and stretch" ([polar-form-and-argument](03-polar-form-and-argument.md)), so one sector on, a 45-degree turn, is multiplication by the point at 45 degrees, 0.707107 + 0.707107i. Call that click ω, the Greek letter omega. Eight clicks bring the arrow home: ω multiplied by itself 8 times is 1. Each resting point is a number whose 8th power is 1, an **8th root of unity** (unity is the old word for 1). The eight add to zero.
+Multiplying on this plane is "turn and stretch" ([Polar form](03-polar-form-and-argument.md)), so one sector on, a 45-degree turn, is multiplication by the point at 45 degrees, 0.707107 + 0.707107i. Call that click ω, the Greek letter omega. Eight clicks bring the arrow home: ω multiplied by itself 8 times is 1. Each resting point is a number whose 8th power is 1, an **8th root of unity** (unity is the old word for 1). The eight add to zero.
 
 Raising a number to the n-th power multiplies its angle by n and raises its length to the n-th power: **de Moivre's formula**. Undoing it divides the angle by n, but an angle is known only up to whole turns, so there are n answers. The cube roots of 8 are 2 and −1 ± 1.732051i. The equation z^4 = −16 has four roots of length 2, at 45, 135, 225 and 315 degrees.
 
@@ -51,7 +26,7 @@ Drawn to scale at 90 units per 1, centre at 0. Point k is ω multiplied by itsel
 
 ## The formula
 
-Reminder: polar form writes a nonzero number as $r(\cos\theta + i\sin\theta)$, length (modulus) $r$, angle (argument) $\theta$ in radians ([polar-form-and-argument](03-polar-form-and-argument.md)). Euler's formula writes that point as $e^{i\theta}$ ([eulers-formula](04-eulers-formula.md)).
+Reminder: polar form writes a nonzero number as $r(\cos\theta + i\sin\theta)$, length (modulus) $r$, angle (argument) $\theta$ in radians ([Polar form](03-polar-form-and-argument.md)). Euler's formula writes that point as $e^{i\theta}$ ([Euler's formula](04-eulers-formula.md)).
 
 $$\bigl(r(\cos\theta + i\sin\theta)\bigr)^n = r^n(\cos n\theta + i\sin n\theta)$$
 
@@ -82,7 +57,7 @@ $$\omega = \cos\frac{2\pi}{n} + i\sin\frac{2\pi}{n}, \qquad 1 + \omega + \omega^
 
 ### When it holds
 
-- **n a whole number.** Negative n works too, for z not 0. For a fraction such as 1/3 the formula gives one of three roots; which one is the branch problem of [branch-cuts-and-complex-powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md).
+- **n a whole number.** Negative n works too, for z not 0. For a fraction such as 1/3 the formula gives one of three roots; which one is the branch problem of [Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md).
 - **c not zero.** Zero has no angle; its only n-th root is 0.
 - **Angles up to whole turns.** The principal argument, in (−π, π], only picks which root is k = 0.
 - **n at least 2 for the zero sum.** For n = 1 the only root is 1.
@@ -109,7 +84,7 @@ Each step in $k$ turns the root by 2π/n. After n steps that is a full circle an
 
 For 8: length 2, angles 0°, 120°, 240°. For −16, at 180°: length 2, angles 45°, 135°, 225°, 315°.
 
-The factor theorem ([roots-and-the-factor-theorem](../../03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem.md)) checks this without angles: $z^3 - 8 = (z - 2)(z^2 + 2z + 4)$, and the quadratic formula gives $-1 \pm \sqrt{3}\,i$. It also caps a degree-n polynomial at n roots, so these are all.
+The factor theorem ([Roots and factors](../../03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem.md)) checks this without angles: $z^3 - 8 = (z - 2)(z^2 + 2z + 4)$, and the quadratic formula gives $-1 \pm \sqrt{3}\,i$. It also caps a degree-n polynomial at n roots, so these are all.
 
 ### The picture: two equations, one circle of radius 2
 
@@ -128,7 +103,7 @@ Call the sum S and multiply each term by ω. Every root moves on one click, and 
 <details>
 <summary>Detailed proof: all whole powers, and exactly n roots</summary>
 
-**De Moivre for every whole n.** With $u = \cos\theta + i\sin\theta$, the addition rules give $(\cos a + i\sin a)(\cos b + i\sin b) = \cos(a + b) + i\sin(a + b)$, so induction from $u^0 = 1$ gives $u^n = \cos n\theta + i\sin n\theta$. Since $u(\cos\theta - i\sin\theta) = 1$, the inverse is the point at angle $-\theta$, and the same induction covers negative n. Lengths multiply separately ([conjugate-and-modulus](02-conjugate-and-modulus.md)), giving $r^n$.
+**De Moivre for every whole n.** With $u = \cos\theta + i\sin\theta$, the addition rules give $(\cos a + i\sin a)(\cos b + i\sin b) = \cos(a + b) + i\sin(a + b)$, so induction from $u^0 = 1$ gives $u^n = \cos n\theta + i\sin n\theta$. Since $u(\cos\theta - i\sin\theta) = 1$, the inverse is the point at angle $-\theta$, and the same induction covers negative n. Lengths multiply separately ([Conjugate and modulus](02-conjugate-and-modulus.md)), giving $r^n$.
 
 **Every root is on the list.** If $z^n = c \ne 0$, write $z = \rho(\cos\varphi + i\sin\varphi)$. De Moivre gives $\rho^n = r$, so $\rho = r^{1/n}$, and $n\varphi = \theta + 2\pi m$ for some whole m. Dividing m by n with remainder, $m = qn + k$ with $0 \le k \le n - 1$, makes $\varphi$ the angle of $z_k$ plus q whole turns.
 
@@ -386,7 +361,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Three-phase electricity.** Three voltages a third of a cycle apart, scaled cube roots of unity, add to zero, so a balanced load sends almost nothing down the shared return wire.
-- **Signal processing.** The discrete Fourier transform measures a signal against the roots of unity; their zero sum keeps frequencies apart ([discrete-fourier-transform](../08-Transforms%20in%20Outline/02-discrete-fourier-transform.md)).
+- **Signal processing.** The discrete Fourier transform measures a signal against the roots of unity; their zero sum keeps frequencies apart ([The discrete Fourier transform](../08-Transforms%20in%20Outline/02-discrete-fourier-transform.md)).
 
 > **Say it back**
 > Multiplying multiplies lengths and adds angles, so an n-th power multiplies the angle by n. A root divides the angle by n; since an angle carries any number of whole turns, there are n roots, an n-th of a circle apart. The roots of 1 are the powers of one click, and add to zero because one click leaves the set unchanged.
@@ -395,17 +370,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [eulers-formula](04-eulers-formula.md): the point at angle θ as $e^{i\theta}$, which turns powers into multiplying the angle.
-- [roots-and-the-factor-theorem](../../03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem.md): at most n roots for a degree-n polynomial, and the angle-free road to the cube roots of 8.
+- [Euler's formula](04-eulers-formula.md): the point at angle θ as $e^{i\theta}$, which turns powers into multiplying the angle.
+- [Roots and factors](../../03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem.md): at most n roots for a degree-n polynomial, and the angle-free road to the cube roots of 8.
 
 ## Where this goes next
 
-- [complex-vectors-and-matrices](07-complex-vectors-and-matrices.md): roots of unity filling the Fourier matrix.
-- [branch-cuts-and-complex-powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md): choosing one root continuously.
-- [discrete-fourier-transform](../08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): a signal split along the roots of unity.
-- dirichlet-characters: clock arithmetic mapped into roots of unity.
-- gauss-sums: sums of roots of unity that do not cancel.
-- cyclotomic-extensions-and-roots-of-unity: number systems built from a primitive root.
+- [Complex vectors and matrices](07-complex-vectors-and-matrices.md): roots of unity filling the Fourier matrix.
+- [Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md): choosing one root continuously.
+- [The discrete Fourier transform](../08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): a signal split along the roots of unity.
+- Dirichlet characters: clock arithmetic mapped into roots of unity.
+- Gauss sums: sums of roots of unity that do not cancel.
+- Cyclotomic fields: number systems built from a primitive root.
 
 ---
 

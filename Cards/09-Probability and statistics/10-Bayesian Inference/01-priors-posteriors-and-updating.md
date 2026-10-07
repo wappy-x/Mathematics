@@ -1,25 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Bayesian Inference
-topic: Learning a coin's bias
-item: Bayesian updating
-kind: method
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/06-bayes-rule|bayes-rule]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/01-densities-and-cdfs|densities-and-cdfs]]"
-next:
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/02-beta-binomial|beta-binomial]]"
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/03-normal-normal|normal-normal]]"
-  - "[[Cards/14-Applied and computational/05-Operations Research/08-decision-theory-and-the-value-of-information|decision-theory-and-the-value-of-information]]"
-tags: [mathematics, probability and statistics, priors-posteriors-and-updating]
----
-
 # Bayesian updating: a prior belief, the data, and the posterior that combines them
 
-Probability and statistics → Bayesian Inference → Learning a coin's bias → Bayesian updating
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Bayesian Inference](../../../SYLLABUS.md#w09-s10) → Bayesian updating
 
 ---
 
@@ -27,13 +8,13 @@ Probability and statistics → Bayesian Inference → Learning a coin's bias →
 
 A coin comes out of a new batch. Nobody knows whether it is fair. It is flipped 10 times and lands heads 7 times. What does that say about the coin?
 
-The coin has one hidden number: its chance of landing heads on any flip, called its **bias** (the coin sense of the word, not the estimator's bias of [bias-variance-and-mean-squared-error](../07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md)). A fair coin has bias 0.5. Seven heads in ten does not prove the bias is 0.7. A fair coin shows 7 or more heads in 10 flips with chance 176/1024 = 0.1719, about 1 time in 6. What the flips can do is shift belief: some biases now look more plausible than others, and by a computable amount.
+The coin has one hidden number: its chance of landing heads on any flip, called its **bias** (the coin sense of the word, not the estimator's bias of [Bias and variance](../07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md)). A fair coin has bias 0.5. Seven heads in ten does not prove the bias is 0.7. A fair coin shows 7 or more heads in 10 flips with chance 176/1024 = 0.1719, about 1 time in 6. What the flips can do is shift belief: some biases now look more plausible than others, and by a computable amount.
 
 Bayesian updating does that computation. It starts from a **prior**: a statement, before any flip, of how plausible each possible bias is. It multiplies in how well each bias explains the 7 heads. It rescales the product so it is a probability law again. The result is the **posterior**: the belief after the data. For this coin, starting from "every bias from 0 to 1 equally plausible", the posterior puts the bias near 0.67, give or take 0.13, and gives a chance of about 8 in 9 (0.8867) that the coin favours heads.
 
 **Bayesian updating treats an unknown number as uncertain, gives it a prior, and uses Bayes' rule over every possible value at once: the posterior is prior times how well each value explains the data, rescaled to total one.**
 
-**What kind of fact this is:** a method. Its engine is Bayes' rule, a theorem proved on [bayes-rule](../01-Chance%20and%20Events/06-bayes-rule.md) and extended to a continuous unknown on this card in Why it works; the prior is a modelling choice, not a fact.
+**What kind of fact this is:** a method. Its engine is Bayes' rule, a theorem proved on [Bayes' rule](../01-Chance%20and%20Events/06-bayes-rule.md) and extended to a continuous unknown on this card in Why it works; the prior is a modelling choice, not a fact.
 
 ### The picture: belief before and after 7 heads in 10
 
@@ -53,7 +34,7 @@ Orange, flat: the prior, every bias equally plausible. Green, humped: the poster
 
 ## The formula
 
-Notation first. $\theta$, the Greek letter theta, is the coin's bias. $n$ is the number of flips, $h$ the heads and $t = n - h$ the tails. $D$ stands for the data, here "7 heads in 10 flips". Inside the integral, $u$ stands for the bias so it does not clash with $\theta$. A density $f$ spreads belief over a range of values the way a density spreads chance ([densities-and-cdfs](../04-Continuous%20Distributions/01-densities-and-cdfs.md)): the chance that $\theta$ lands in an interval is the area under $f$ over that interval.
+Notation first. $\theta$, the Greek letter theta, is the coin's bias. $n$ is the number of flips, $h$ the heads and $t = n - h$ the tails. $D$ stands for the data, here "7 heads in 10 flips". Inside the integral, $u$ stands for the bias so it does not clash with $\theta$. A density $f$ spreads belief over a range of values the way a density spreads chance ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)): the chance that $\theta$ lands in an interval is the area under $f$ over that interval.
 
 $$f(\theta \mid D) = \frac{P(D \mid \theta)\, f(\theta)}{P(D)}, \qquad P(D) = \int_0^1 P(D \mid u)\, f(u)\, du$$
 
@@ -98,7 +79,7 @@ The bias is fixed but unknown. Bayesian updating puts a probability law on it an
 
 ### Step 1: eleven candidate coins
 
-Start with a list. Suppose the coin must be one of eleven: bias 0.0, 0.1, …, 1.0, each with prior chance 1/11. These eleven hypotheses do not overlap and cover every case, so Bayes' rule in its general form from [bayes-rule](../01-Chance%20and%20Events/06-bayes-rule.md) applies directly:
+Start with a list. Suppose the coin must be one of eleven: bias 0.0, 0.1, …, 1.0, each with prior chance 1/11. These eleven hypotheses do not overlap and cover every case, so Bayes' rule in its general form from [Bayes' rule](../01-Chance%20and%20Events/06-bayes-rule.md) applies directly:
 
 $$P(\theta = 0.7 \mid D) = \frac{P(D \mid 0.7) \times \tfrac{1}{11}}{\sum_{\text{all 11 candidates}} P(D \mid \text{candidate}) \times \tfrac{1}{11}}.$$
 
@@ -122,7 +103,7 @@ $$\theta^{7}(1-\theta)^{3} = \theta^{7} - 3\theta^{8} + 3\theta^{9} - \theta^{10
 
 So the posterior density is $1320\,\theta^{7}(1-\theta)^{3}$, and the evidence is $P(D) = 120/1320 = 1/11$. That last number has a plain meaning: before any flip, with a flat prior, all eleven head counts from 0 to 10 are equally likely.
 
-Every question about the bias is now an area. The posterior mean $E[\theta \mid D]$, the average bias under the posterior, is $1320 \times I(8,3)$, and $I(8,3) = 1/1980$ by the same expansion, so the mean is $1320/1980 = 2/3$. The chance the coin favours heads is the area to the right of 0.5, which comes to $227/256 = 0.8867$. The posterior's spread, its standard deviation, is 0.1307. How to turn areas like these into an interval and a decision is [credible-intervals-and-decisions](05-credible-intervals-and-decisions.md).
+Every question about the bias is now an area. The posterior mean $E[\theta \mid D]$, the average bias under the posterior, is $1320 \times I(8,3)$, and $I(8,3) = 1/1980$ by the same expansion, so the mean is $1320/1980 = 2/3$. The chance the coin favours heads is the area to the right of 0.5, which comes to $227/256 = 0.8867$. The posterior's spread, its standard deviation, is 0.1307. How to turn areas like these into an interval and a decision is [Credible intervals and decisions](05-credible-intervals-and-decisions.md).
 
 ### Step 4: today's posterior is tomorrow's prior
 
@@ -171,7 +152,7 @@ since the bracket vanishes at both ends. Repeating $b$ times gives $I(a,b) = \fr
 
 </details>
 
-A second road to the posterior needs no integral at all. Draw a bias from the prior, flip a coin with that bias ten times, and keep the bias only if the flips show 7 heads. The kept biases are draws from the posterior, because a bias is kept in proportion to prior times likelihood. The code does this 200,000 times. The general engine behind drawing from a posterior that cannot be integrated by hand is [markov-chain-monte-carlo-in-outline](06-markov-chain-monte-carlo-in-outline.md).
+A second road to the posterior needs no integral at all. Draw a bias from the prior, flip a coin with that bias ten times, and keep the bias only if the flips show 7 heads. The kept biases are draws from the posterior, because a bias is kept in proportion to prior times likelihood. The code does this 200,000 times. The general engine behind drawing from a posterior that cannot be integrated by hand is [MCMC in outline](06-markov-chain-monte-carlo-in-outline.md).
 
 ---
 
@@ -631,7 +612,7 @@ The two outputs match line for line, including the simulated numbers, because bo
 ## The usual mistake
 
 > [!warning]
-> **Reading the likelihood as the posterior.** A coin with bias 0.7 shows 7 heads in 10 with chance 0.2668. That is not "a 27 percent chance the bias is 0.7". The first is a chance of the data for a fixed coin; the second is a belief about the coin, and it needs a prior. Integrated over every bias, the likelihood has area 0.0909, not 1: it is not a probability law for the bias at all. The same turn-around confuses a test's hit rate with the chance a positive is real on [bayes-rule](../01-Chance%20and%20Events/06-bayes-rule.md).
+> **Reading the likelihood as the posterior.** A coin with bias 0.7 shows 7 heads in 10 with chance 0.2668. That is not "a 27 percent chance the bias is 0.7". The first is a chance of the data for a fixed coin; the second is a belief about the coin, and it needs a prior. Integrated over every bias, the likelihood has area 0.0909, not 1: it is not a probability law for the bias at all. The same turn-around confuses a test's hit rate with the chance a positive is real on [Bayes' rule](../01-Chance%20and%20Events/06-bayes-rule.md).
 >
 > - **Skipping the rescaling.** Reading chances off prior × likelihood without dividing by the evidence gives 0.0806 for "bias above 0.5", eleven times too small; the right answer is 0.8867.
 > - **A prior that rules out the truth.** Zero prior weight outside 0.4 to 0.6 leaves the mean at 0.5977 after 700 heads in 1000. No amount of data revives a value given zero weight.
@@ -642,11 +623,11 @@ The two outputs match line for line, including the simulated numbers, because bo
 
 ## Where you meet it in real life
 
-- **Website tests.** A shop that shows two versions of a page treats each version's click rate as an unknown bias and updates it visit by visit; the counting shortcut for this case is [beta-binomial](02-beta-binomial.md).
+- **Website tests.** A shop that shows two versions of a page treats each version's click rate as an unknown bias and updates it visit by visit; the counting shortcut for this case is [Beta-binomial](02-beta-binomial.md).
 - **Drug trials.** Some trials update the chance a treatment works after each group of patients, and stop early when the posterior is decisive either way.
 - **Spam filters.** Each word in a message updates the chance the message is spam, one word at a time, as in Step 4.
 - **Search for lost objects.** Searchers keep a posterior map of where a wreck might lie; each empty search area lowers the belief there and raises it everywhere else.
-- **Rates of rare events.** Accidents per year or calls per hour are unknown rates updated the same way, with a different likelihood: [gamma-poisson](04-gamma-poisson.md).
+- **Rates of rare events.** Accidents per year or calls per hour are unknown rates updated the same way, with a different likelihood: [Gamma-Poisson](04-gamma-poisson.md).
 
 > **Say it back**
 > An unknown number, like a coin's bias, gets a prior: a density saying how plausible each value is before the data. Multiply the prior by the likelihood, the chance each value gives to the data seen, and divide by the total area so the result is a probability law again: that is the posterior. For 7 heads in 10 from a flat prior, the posterior is $1320\,\theta^{7}(1-\theta)^{3}$, with mean 2/3 and a chance of 0.8867 that the coin favours heads. Updating one flip at a time gives the same answer as all at once. As data pile up, any prior that gave the truth some room is outweighed, and the posteriors from different priors agree.
@@ -655,16 +636,16 @@ The two outputs match line for line, including the simulated numbers, because bo
 
 ## What this builds on
 
-- [bayes-rule](../01-Chance%20and%20Events/06-bayes-rule.md): the rule for a list of hypotheses, and the evidence as the total chance of the data; this card applies it to every possible bias at once.
-- [densities-and-cdfs](../04-Continuous%20Distributions/01-densities-and-cdfs.md): a density as chance per unit, and chance as the area under it.
+- [Bayes' rule](../01-Chance%20and%20Events/06-bayes-rule.md): the rule for a list of hypotheses, and the evidence as the total chance of the data; this card applies it to every possible bias at once.
+- [Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md): a density as chance per unit, and chance as the area under it.
 
 ## Where this goes next
 
-- [beta-binomial](02-beta-binomial.md): the priors $\theta^{a}(1-\theta)^{b}$ used here form a family that the coin's data keep inside itself, so updating becomes adding heads and tails to two counters. That card names the curve $\theta^{a}(1-\theta)^{b}$ Beta($a + 1$, $b + 1$), one more than each power, so the flat-prior posterior $\theta^{7}(1-\theta)^{3}$ here is its Beta(8, 4).
-- [normal-normal](03-normal-normal.md): the same update for an unknown average measured with bell-curve noise, where certainty adds up measurement by measurement.
-- decision-theory-and-the-value-of-information: turning a posterior into an action, and pricing the next flip before paying for it.
+- [Beta-binomial](02-beta-binomial.md): the priors $\theta^{a}(1-\theta)^{b}$ used here form a family that the coin's data keep inside itself, so updating becomes adding heads and tails to two counters. That card names the curve $\theta^{a}(1-\theta)^{b}$ Beta($a + 1$, $b + 1$), one more than each power, so the flat-prior posterior $\theta^{7}(1-\theta)^{3}$ here is its Beta(8, 4).
+- [Normal-normal](03-normal-normal.md): the same update for an unknown average measured with bell-curve noise, where certainty adds up measurement by measurement.
+- Deciding under uncertainty: turning a posterior into an action, and pricing the next flip before paying for it.
 
-The normalisation here took a polynomial expansion; which priors make that step collapse into adding counts, and what the posterior then says about the next flip, is [beta-binomial](02-beta-binomial.md).
+The normalisation here took a polynomial expansion; which priors make that step collapse into adding counts, and what the posterior then says about the next flip, is [Beta-binomial](02-beta-binomial.md).
 
 ---
 

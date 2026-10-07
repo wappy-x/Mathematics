@@ -1,31 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Vectors in Space
-topic: Area with a direction
-item: Cross product
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/03-Algebra/03-Vectors/01-vectors|vectors]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/04-determinants|determinants]]"
-next:
-  - "[[Cards/05-Geometry and trig/05-Vectors in Space/02-lines-and-planes-in-space|lines-and-planes-in-space]]"
-  - "[[Cards/05-Geometry and trig/05-Vectors in Space/04-transformations-with-matrices|transformations-with-matrices]]"
-  - "[[Cards/05-Geometry and trig/07-Points, Convexity and Fractals/01-polygon-area-and-orientation|polygon-area-and-orientation]]"
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/03-divergence-and-curl|divergence-and-curl]]"
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/05-surface-integrals-and-flux|surface-integrals-and-flux]]"
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/05-magnetism-and-faradays-law|magnetism-and-faradays-law]]"
-  - "[[Cards/13-Engineering mathematics/07-Mechanics and Structures/03-gyroscopes-and-precession|gyroscopes-and-precession]]"
-  - "[[Cards/23-Differential geometry and Lie groups/01-Curves/04-frenet-serret-frames|frenet-serret-frames]]"
-  - "[[Cards/23-Differential geometry and Lie groups/04-Differential Forms/01-forms-and-the-wedge-product|forms-and-the-wedge-product]]"
-tags: [mathematics, geometry and trig, cross-product-and-oriented-area]
----
-
 # Cross product: a vector perpendicular to two others, with the parallelogram's area as its length
 
-Geometry and trig → Vectors in Space → Area with a direction → Cross product
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Vectors in Space](../../../SYLLABUS.md#w05-s05) → Cross product
 
 ---
 
@@ -57,7 +32,7 @@ $$u \times v = (u_2 v_3 - u_3 v_2,\; u_3 v_1 - u_1 v_3,\; u_1 v_2 - u_2 v_1)$$
 
 **Read it aloud:** each part is a two-by-two determinant of the other two directions, taken round the cycle east, north, up, east.
 
-Call the answer $w$. Bars mean length, as on [dot-product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md). With $\theta$ the angle between the edges, three facts, proved below:
+Call the answer $w$. Bars mean length, as on [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md). With $\theta$ the angle between the edges, three facts, proved below:
 
 $$w \cdot u = 0, \qquad w \cdot v = 0, \qquad \lvert w\rvert = \lvert u\rvert\,\lvert v\rvert \sin\theta$$
 
@@ -78,7 +53,7 @@ Dividing $w$ by its length gives the **unit normal** $n$, length 1, same directi
 
 ### When it holds
 
-- **Three dimensions.** In a flat plane only the third part survives, one signed number ([polygon-area-and-orientation](../07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md)). In four dimensions there is no single square-on direction.
+- **Three dimensions.** In a flat plane only the third part survives, one signed number ([Shoelace formula](../07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md)). In four dimensions there is no single square-on direction.
 - **Right-handed axes.** Curl the right hand's fingers from east to north and the thumb points up. Software with left-handed axes gets the same numbers but an arrow facing the other way.
 - **Edges not parallel.** Parallel edges give (0, 0, 0): no area, no normal. Nearly parallel edges give a tiny arrow that small errors swing.
 - **Units multiply.** Metres times metres gives square metres; lever arm times force gives a turning effect.
@@ -89,7 +64,7 @@ Dividing $w$ by its length gives the **unit normal** $n$, length 1, same directi
 
 ### Step 0: each part is a shadow, and a shadow's area is a two-by-two determinant
 
-Shine a light straight down. The edges' shadows on the ground keep only east and north: (10, 0) and (0, 4.8). A flat parallelogram on edges (a, c) and (b, d) has signed area ad − bc ([determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). The ground shadow: 10 × 4.8 − 0 × 0 = 48, the third part.
+Shine a light straight down. The edges' shadows on the ground keep only east and north: (10, 0) and (0, 4.8). A flat parallelogram on edges (a, c) and (b, d) has signed area ad − bc ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). The ground shadow: 10 × 4.8 − 0 × 0 = 48, the third part.
 
 Light from the east throws a shadow on the north–up wall, parts taken north then up: the first part. Light from the north uses the up–east wall, and the cycle says up then east: $u_3 v_1 - u_1 v_3$. The middle part only looks reversed; it follows the cycle.
 
@@ -105,7 +80,7 @@ Each appears once with plus, once with minus: the sum is 0. Likewise $w \cdot v$
 
 ### Step 2: the length is base times height
 
-Geometry first. Area is base $\lvert u\rvert$ times height, the part of $v$ left after removing its part along $u$ ([orthogonal-projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)). That part has length $u \cdot v / \lvert u\rvert$, so Pythagoras gives the height, and
+Geometry first. Area is base $\lvert u\rvert$ times height, the part of $v$ left after removing its part along $u$ ([Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)). That part has length $u \cdot v / \lvert u\rvert$, so Pythagoras gives the height, and
 
 $$\text{area}^2 = \lvert u\rvert^2 \lvert v\rvert^2 - (u \cdot v)^2$$
 
@@ -122,15 +97,15 @@ Subtract. The matching squares cancel. Group the rest by pairs of directions: $u
 
 ### Step 3: the sine form
 
-The dot product gives $u \cdot v = \lvert u\rvert\,\lvert v\rvert \cos\theta$. Put that into Step 2 and use $\cos^2\theta + \sin^2\theta = 1$ ([right-triangle-trigonometry](../03-Trigonometry/01-right-triangle-trigonometry.md)). The sine is never negative from 0° to 180°, so the length is $\lvert u\rvert\,\lvert v\rvert \sin\theta$: here 10 × 6 × 1 = 60.
+The dot product gives $u \cdot v = \lvert u\rvert\,\lvert v\rvert \cos\theta$. Put that into Step 2 and use $\cos^2\theta + \sin^2\theta = 1$ ([Sine, cosine and tangent](../03-Trigonometry/01-right-triangle-trigonometry.md)). The sine is never negative from 0° to 180°, so the length is $\lvert u\rvert\,\lvert v\rvert \sin\theta$: here 10 × 6 × 1 = 60.
 
 ### Step 4: the direction follows the right-hand rule
 
-A normal could point either way; the formula picks one. Stack $u$, $v$, $w$ as the rows of a three-by-three. Along the bottom row its cofactors (minors with alternating signs) are the parts of $w$, so the determinant is $w \cdot w$: positive unless the edges are parallel. Positive means the three keep the handedness of east, north, up ([determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). The check expands along the top row instead: 3600.
+A normal could point either way; the formula picks one. Stack $u$, $v$, $w$ as the rows of a three-by-three. Along the bottom row its cofactors (minors with alternating signs) are the parts of $w$, so the determinant is $w \cdot w$: positive unless the edges are parallel. Positive means the three keep the handedness of east, north, up ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). The check expands along the top row instead: 3600.
 
 In the hand: fingers along $u$, curl towards $v$, thumb along $w$: up and south here. Swapping the edges flips every sign: $v \times u$ = (0, 36, −48).
 
-With any third edge in the bottom row, the same determinant is a box's volume: [triple-product-and-volume](03-triple-product-and-volume.md) (Triple product).
+With any third edge in the bottom row, the same determinant is a box's volume: [Triple product](03-triple-product-and-volume.md) (Triple product).
 
 ---
 
@@ -372,7 +347,7 @@ The two outputs match line for line.
 - **Solar design.** The unit normal, dotted with the sun's direction, says how squarely light strikes a panel.
 - **3D graphics.** Each triangle in a game mesh takes its normal from the cross product of two edges; the order of its corners decides which face is drawn.
 - **Turning effects.** Torque is lever arm cross force: length the turning strength, direction the axis. Feynman builds its parts as turning effects in the three coordinate planes (sources).
-- **Planes in space.** A point and a normal fix a plane: [lines-and-planes-in-space](02-lines-and-planes-in-space.md) (Lines and planes).
+- **Planes in space.** A point and a normal fix a plane: [Lines and planes](02-lines-and-planes-in-space.md) (Lines and planes).
 
 > **Say it back**
 > The cross product turns two ordered edges into one arrow. Its parts are the edges' shadow areas on the three coordinate walls. The arrow is square to both edges, and its length is base times height. Swapping the edges reverses it. The panel gives (0, −36, 48): 60 square metres, facing up and south.
@@ -381,24 +356,24 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [vectors](../../03-Algebra/03-Vectors/01-vectors.md): edges as arrows with east, north and up parts.
-- [determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): ad − bc as signed area, and a determinant's sign as handedness.
+- [Vectors](../../03-Algebra/03-Vectors/01-vectors.md): edges as arrows with east, north and up parts.
+- [Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): ad − bc as signed area, and a determinant's sign as handedness.
 
-The card also leans on the dot product for lengths and right angles ([dot-product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)).
+The card also leans on the dot product for lengths and right angles ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)).
 
 ## Where this goes next
 
-- [lines-and-planes-in-space](02-lines-and-planes-in-space.md): the normal becomes a plane's equation.
-- [transformations-with-matrices](04-transformations-with-matrices.md): turning the panel with a matrix.
-- [polygon-area-and-orientation](../07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md): the third part alone, for flat polygons.
-- [divergence-and-curl](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/03-divergence-and-curl.md): how a flow swirls.
-- [surface-integrals-and-flux](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/05-surface-integrals-and-flux.md): area vectors of small patches, added over a surface.
-- magnetism-and-faradays-law: the push on a moving charge, square to motion and field.
-- gyroscopes-and-precession: torque turning a spinning axis.
-- frenet-serret-frames: a curve's third frame direction from the first two.
-- forms-and-the-wedge-product: the shadows kept as they are, in any dimension.
+- [Lines and planes](02-lines-and-planes-in-space.md): the normal becomes a plane's equation.
+- [Moving shapes with matrices](04-transformations-with-matrices.md): turning the panel with a matrix.
+- [Shoelace formula](../07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md): the third part alone, for flat polygons.
+- [Divergence and curl](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/03-divergence-and-curl.md): how a flow swirls.
+- [Surface integrals](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/05-surface-integrals-and-flux.md): area vectors of small patches, added over a surface.
+- Magnetic fields: the push on a moving charge, square to motion and field.
+- Precession: torque turning a spinning axis.
+- Frenet-Serret frame: a curve's third frame direction from the first two.
+- Differential form: the shadows kept as they are, in any dimension.
 
-The panel now has a normal and an area, but nothing yet says which points in space lie on its plane or where a straight flight path would strike it; that is [lines-and-planes-in-space](02-lines-and-planes-in-space.md).
+The panel now has a normal and an area, but nothing yet says which points in space lie on its plane or where a straight flight path would strike it; that is [Lines and planes](02-lines-and-planes-in-space.md).
 
 ---
 

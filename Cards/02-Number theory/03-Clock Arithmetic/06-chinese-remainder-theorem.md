@@ -1,28 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Clock Arithmetic
-topic: Combining clocks
-item: The Chinese remainder theorem
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/04-modular-inverse|modular-inverse]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/05-coprime-numbers|coprime-numbers]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/02-lcm|lcm]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/06-negative-numbers|negative-numbers]]"
-next:
-  - "[[Cards/02-Number theory/05-Check Digits, Calendars and Cycles/04-cycles-that-realign|cycles-that-realign]]"
-tags:
-  - mathematics
-  - number theory
-  - chinese-remainder-theorem
----
-
 # The Chinese remainder theorem: three rotas, one day — day numbers on cycles that share no factor pin down one day, and how to rebuild it
 
-Number theory → Clock Arithmetic → Combining clocks → The Chinese remainder theorem
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Clock Arithmetic](../../../SYLLABUS.md#w02-s03) → The Chinese remainder theorem
 
 ---
 
@@ -61,7 +39,7 @@ The answer, read off against each rota:
 
 **Read it aloud: 23 days is seven 3-day cycles and 2 over, four 5-day cycles and 3 over, three weeks and 2 over.**
 
-In the shelf's shorthand ([congruence-mod-n](01-congruence-mod-n.md)): 23 ≡ 2 (mod 3), 23 ≡ 3 (mod 5), 23 ≡ 2 (mod 7).
+In the shelf's shorthand ([Congruence](01-congruence-mod-n.md)): 23 ≡ 2 (mod 3), 23 ≡ 3 (mod 5), 23 ≡ 2 (mod 7).
 
 Building it takes two folds, one modular inverse each. The first turns the 3-day and 5-day rotas into one: day 8 of a 15-day cycle. The second folds in the week: day 23 of 105.
 
@@ -85,15 +63,15 @@ Cleaning day 2 means the count is 2 plus a whole number of 3s. That is all one r
 
 Each 3 pushes the delivery rota on by 3 too. It starts at day 2 and must reach day 3, one further on. So the number of 3s, times 3, must come to 1 on the 5-cycle.
 
-Because 3 and 5 share no factor ([coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)), multiplying by 3 can be undone there ([modular-inverse](04-modular-inverse.md)): the undoer is 2, since 3 × 2 = 6, one past 5. So the number of 3s is 2, and 2 + 3 × 2 = 8. Any other day fitting both is 8 plus some 15s.
+Because 3 and 5 share no factor ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)), multiplying by 3 can be undone there ([The modular inverse](04-modular-inverse.md)): the undoer is 2, since 3 × 2 = 6, one past 5. So the number of 3s is 2, and 2 + 3 × 2 = 8. Any other day fitting both is 8 plus some 15s.
 
 ### Step 2: fold the week in with the same move
 
-A 15-cycle and a 7-cycle now, again sharing no factor. Each 15 pushes the week on by 1, since 15 is two weeks and a day over. Day 8 sits on week day 1, we want day 2, so one step: 8 + 15 = 23. The scripts get there by subtracting: 2 − 8 = −6, which is 1 forward on a 7-cycle ([negative-numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md)).
+A 15-cycle and a 7-cycle now, again sharing no factor. Each 15 pushes the week on by 1, since 15 is two weeks and a day over. Day 8 sits on week day 1, we want day 2, so one step: 8 + 15 = 23. The scripts get there by subtracting: 2 − 8 = −6, which is 1 forward on a 7-cycle ([Negative numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md)).
 
 ### Step 3: why exactly one day fits
 
-Say two days both fit. Their difference is a whole number of 3s, of 5s and of 7s. Divisible by 3 and by 5, which share no factor, means divisible by 15 — for coprime lengths the smallest number both divide is their product ([lcm](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/02-lcm.md)). Again with the 7: divisible by 105. So the two are one day of the 105-day cycle. And 105 days give 105 readings, no two alike, so every reading has its day.
+Say two days both fit. Their difference is a whole number of 3s, of 5s and of 7s. Divisible by 3 and by 5, which share no factor, means divisible by 15 — for coprime lengths the smallest number both divide is their product ([Least common multiple](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/02-lcm.md)). Again with the 7: divisible by 105. So the two are one day of the 105-day cycle. And 105 days give 105 readings, no two alike, so every reading has its day.
 
 ---
 
@@ -270,14 +248,14 @@ Both outputs match line for line.
 
 ## What this builds on
 
-- [modular-inverse](04-modular-inverse.md): the undoer each fold needs; it exists only when the lengths share no factor.
-- [coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md): sharing no factor above 1, the condition all of this rests on.
-- [lcm](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/02-lcm.md): for coprime lengths the smallest number both divide is their product, so the answer repeats every 105 days.
-- [negative-numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md): a step back on a cycle is a step forward the other way.
+- [The modular inverse](04-modular-inverse.md): the undoer each fold needs; it exists only when the lengths share no factor.
+- [Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md): sharing no factor above 1, the condition all of this rests on.
+- [Least common multiple](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/02-lcm.md): for coprime lengths the smallest number both divide is their product, so the answer repeats every 105 days.
+- [Negative numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md): a step back on a cycle is a step forward the other way.
 
 ## Where this goes next
 
-- [cycles-that-realign](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/04-cycles-that-realign.md): cycles that do share factors, and the line-ups that never happen.
+- [When cycles meet again](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/04-cycles-that-realign.md): cycles that do share factors, and the line-ups that never happen.
 
 ---
 

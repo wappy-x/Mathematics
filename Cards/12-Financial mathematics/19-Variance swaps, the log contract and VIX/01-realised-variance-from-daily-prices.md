@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Variance swaps, the log contract and VIX
-topic: Volatility measured from history
-item: Realised variance
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/10-theta-pays-for-gamma-hedged-pnl|theta-pays-for-gamma-hedged-pnl]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/02-sample-mean-and-standard-error|sample-mean-and-standard-error]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/03-quadratic-variation|quadratic-variation]]"
-next:
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/03-variance-swap-fair-strike|variance-swap-fair-strike]]"
-  - "[[Cards/17-Topology/06-Topological Data Analysis/07-persistence-in-practice|persistence-in-practice]]"
-tags: [mathematics, financial mathematics, realised-variance-from-daily-prices]
----
-
 # Realised variance: add up squared daily returns, annualise, and know what the number is estimating
 
-Financial mathematics → Variance swaps, the log contract and VIX → Volatility measured from history → Realised variance
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Variance swaps, the log contract and VIX](../../../SYLLABUS.md#w12-s19) → Realised variance
 
 ---
 
@@ -91,7 +72,7 @@ $$\text{expected measured variance per year} = \sigma^2 + \frac{2nh^2}{T}$$
 
 ### When it holds
 
-- **Steady volatility and no jumps.** Realised variance then centres on $\sigma^2$. If volatility changes during the month it centres on the month's average variance instead, which is exactly what a variance swap pays on. A jump adds its own square in full, however rare it was meant to be. The jump bias gets its own card: [volatility-swap-and-jump-bias](05-volatility-swap-and-jump-bias.md).
+- **Steady volatility and no jumps.** Realised variance then centres on $\sigma^2$. If volatility changes during the month it centres on the month's average variance instead, which is exactly what a variance swap pays on. A jump adds its own square in full, however rare it was meant to be. The jump bias gets its own card: [The volatility swap and the jump bias](05-volatility-swap-and-jump-bias.md).
 - **Enough returns.** With $N$ = 21 the estimate's spread is about 31 percent of its size. A single month reading 19.05 percent against a true 20 is inside the normal wobble, not evidence of anything.
 - **Prices that are the share's price.** Every traded price carries bid-ask noise. At daily sampling it barely matters; at five-minute sampling it adds 0.039312 a year. The rule of thumb in practice is to sample no faster than every five to thirty minutes, or to use a noise-corrected estimator.
 - **Trading through the day, and a true high and low.** The range estimators assume the price is watched continuously. Read from minute prices they miss the true extremes by a little and read low: across 400 simulated months, 19.43 percent for Parkinson and 19.12 percent for Garman-Klass against the true 20. They also assume the open equals yesterday's close: real overnight gaps need an extra term.
@@ -106,7 +87,7 @@ A random move with average zero has variance equal to its average square. One da
 
 ### Step 1: each squared return averages $\sigma^2\Delta t$
 
-Under geometric Brownian motion ([quadratic-variation](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/03-quadratic-variation.md) has the background), one step's log return is a fixed drift piece plus a bell-curve shock:
+Under geometric Brownian motion ([Quadratic variation](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/03-quadratic-variation.md) has the background), one step's log return is a fixed drift piece plus a bell-curve shock:
 
 $$r_i = \big(\mu - \tfrac12\sigma^2\big)\Delta t + \sigma\sqrt{\Delta t}\,Z_i$$
 
@@ -118,7 +99,7 @@ So each squared return averages $\sigma^2\Delta t$. Add $N$ of them, one per day
 
 A squared bell-curve draw has variance 2 (its fourth moment is 3, less its mean squared, 1). So each $r_i^2$ wobbles by $\sqrt2\,\sigma^2\Delta t$ around its average. The $N$ days are independent, so their variances add: the sum wobbles by $\sqrt{2N}\,\sigma^2\Delta t$. Relative to its average $N\sigma^2\Delta t$, that is $\sqrt{2/N}$.
 
-For 21 days: 0.3086. The simulation of 400 months measures 0.3053. For a year of 252 days: 0.0891. The same law as a sample mean's standard error ([sample-mean-and-standard-error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)), applied to squares.
+For 21 days: 0.3086. The simulation of 400 months measures 0.3053. For a year of 252 days: 0.0891. The same law as a sample mean's standard error ([Standard error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)), applied to squares.
 
 ### Step 3: sample faster and the sum converges on the quadratic variation
 
@@ -183,7 +164,7 @@ Efficiency: 4.99 for Parkinson, 7.22 for Garman-Klass, near the theoretical 4.9 
 
 ### The other road: the delta-hedger's profit
 
-A dealer who sells an option at 20 percent volatility and hedges daily earns, each day, half the gamma times the squared price times the gap between 0.04/252 and that day's squared return ([theta-pays-for-gamma-hedged-pnl](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md)). Added up over the month, the dealer's profit is a gamma-weighted realised variance compared with the implied one. Realised variance is the quantity the hedging book already settles on; a variance swap removes the gamma weighting and pays it directly.
+A dealer who sells an option at 20 percent volatility and hedges daily earns, each day, half the gamma times the squared price times the gap between 0.04/252 and that day's squared return ([Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md)). Added up over the month, the dealer's profit is a gamma-weighted realised variance compared with the implied one. Realised variance is the quantity the hedging book already settles on; a variance swap removes the gamma weighting and pays it directly.
 
 ---
 
@@ -587,9 +568,9 @@ The two outputs are identical line for line. The asserts compare simulation with
 
 ## Where you meet it in real life
 
-- **Variance swap settlement.** A variance swap pays the difference between realised variance over its life and a strike fixed on day one, times a notional. The exchange-traded version, Cboe's S&P 500 variance futures, uses exactly this card's formula: daily log returns, mean taken as zero, 252 days a year, times 10,000 to quote in percent squared. Conventions verified 2026-09-27 against the Cboe contract specification in Sources. Pricing the strike is [variance-swap-fair-strike](03-variance-swap-fair-strike.md); marking one halfway through, with realised and implied pieces added, is [variance-swap-after-inception-and-forward-variance](04-variance-swap-after-inception-and-forward-variance.md).
+- **Variance swap settlement.** A variance swap pays the difference between realised variance over its life and a strike fixed on day one, times a notional. The exchange-traded version, Cboe's S&P 500 variance futures, uses exactly this card's formula: daily log returns, mean taken as zero, 252 days a year, times 10,000 to quote in percent squared. Conventions verified 2026-09-27 against the Cboe contract specification in Sources. Pricing the strike is [The variance swap](03-variance-swap-fair-strike.md); marking one halfway through, with realised and implied pieces added, is [Marking a variance swap](04-variance-swap-after-inception-and-forward-variance.md).
 - **Option desks.** Traders compare implied volatility, the number the option price implies, with realised volatility, the number the share delivered. The gap is what a delta-hedged book earns or loses.
-- **The VIX against realised.** The VIX is a 30-day implied variance read off option prices ([vix-index](06-vix-index.md)). Realised variance over the following 30 days is what it is compared with after the fact.
+- **The VIX against realised.** The VIX is a 30-day implied variance read off option prices ([The VIX](06-vix-index.md)). Realised variance over the following 30 days is what it is compared with after the fact.
 - **Risk systems.** Position limits and value-at-risk models scale by recent realised volatility; forecasting models build tomorrow's variance out of today's squared returns.
 - **High-frequency econometrics.** Research on intraday data uses realised variance from five-minute returns, a compromise between wobble and bid-ask noise, or two-scale estimators that subtract the noise term measured at the fastest sampling.
 
@@ -600,14 +581,14 @@ The two outputs are identical line for line. The asserts compare simulation with
 
 ## What this builds on
 
-- [theta-pays-for-gamma-hedged-pnl](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md): why realised variance is money. A hedged option book earns half gamma times the squared price times implied variance less realised variance, day by day.
-- [sample-mean-and-standard-error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md): realised variance is a sample mean of squares, and its wobble shrinks the way a standard error does.
-- [quadratic-variation](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/03-quadratic-variation.md): the limit the sum of squares converges to, for any path driven by Brownian motion.
+- [Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md): why realised variance is money. A hedged option book earns half gamma times the squared price times implied variance less realised variance, day by day.
+- [Standard error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md): realised variance is a sample mean of squares, and its wobble shrinks the way a standard error does.
+- [Quadratic variation](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/03-quadratic-variation.md): the limit the sum of squares converges to, for any path driven by Brownian motion.
 
 ## Where this goes next
 
-- [variance-swap-fair-strike](03-variance-swap-fair-strike.md): a contract that pays realised variance, and the price of that promise today, from a strip of options through [carr-madan-spanning-and-the-log-contract](02-carr-madan-spanning-and-the-log-contract.md).
-- persistence-in-practice: another way to summarise the shape of a price history from sliding windows of returns, used alongside realised variance to flag turbulent stretches.
+- [The variance swap](03-variance-swap-fair-strike.md): a contract that pays realised variance, and the price of that promise today, from a strip of options through [Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md).
+- Persistence in practice: another way to summarise the shape of a price history from sliding windows of returns, used alongside realised variance to flag turbulent stretches.
 
 Realised variance says what a month delivered; what the market charges today for the variance the next month will deliver, and how options replicate that payment, is the question variance-swap-fair-strike answers.
 

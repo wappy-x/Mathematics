@@ -1,41 +1,18 @@
----
-type: card
-wing: 02-Number theory
-shelf: Powers on the Clock
-topic: Cycles of powers
-item: Wilson's theorem
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/01-congruence-mod-n|congruence-mod-n]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/04-modular-inverse|modular-inverse]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/06-euclids-lemma|euclids-lemma]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/06-negative-numbers|negative-numbers]]"
-next:
-  - "[[Cards/02-Number theory/06-Codes and Secrets/04-fermat-test-and-carmichael|fermat-test-and-carmichael]]"
-  - "[[Cards/02-Number theory/06-Codes and Secrets/05-miller-rabin|miller-rabin]]"
-tags:
-  - mathematics
-  - number theory
-  - wilsons-theorem
----
-
 # Wilson's theorem: multiply everything below a prime and the clock shows -1, and only primes do this
 
-Number theory → Powers on the Clock → Cycles of powers → Wilson's theorem
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Powers on the Clock](../../../SYLLABUS.md#w02-s04) → Wilson's theorem
 
 ---
 
 ## General Overview
 
-Six dancers, 1 to 6, on a floor marked as a 7-hour clock: hours 0 to 6, and a step past 6 lands on 0 ([congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md)). Each must find the partner who undoes them: the one they multiply with to reach 1 ([modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)).
+Six dancers, 1 to 6, on a floor marked as a 7-hour clock: hours 0 to 6, and a step past 6 lands on 0 ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)). Each must find the partner who undoes them: the one they multiply with to reach 1 ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)).
 
 2 takes 4: 2 × 4 is 8, one clock and 1 over. 3 takes 5: 15 is two clocks and 1 over. 1 partners itself, and so does 6: 36 is five clocks and 1 over.
 
 Multiply all six together. Each couple collapses to 1. 6 undoes itself, but it is in the row once, so it has nothing to cancel with. It survives, leaving 1 × 6, which is 6. The long way agrees: 720 is 102 clocks and 6 over.
 
-6 is one short of a full clock, so the reading is -1 ([negative-numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md)).
+6 is one short of a full clock, so the reading is -1 ([Negative numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md)).
 
 **Multiply every number below a prime clock size together and the clock reads -1 — and no clock that is not prime ever does that.**
 
@@ -81,13 +58,13 @@ It runs backwards too: a reading of -1 means the clock size is prime.
 
 ### Step 0: on a prime clock every dancer has one undo
 
-7 is prime, so no dancer from 1 to 6 shares a factor with it. That is the condition for an undo, and it is unique ([modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)). Partnering is mutual: if 4 undoes 2, 2 undoes 4.
+7 is prime, so no dancer from 1 to 6 shares a factor with it. That is the condition for an undo, and it is unique ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)). Partnering is mutual: if 4 undoes 2, 2 undoes 4.
 
 ### Step 1: only 1 and 6 are their own partner
 
 A dancer is its own partner when multiplying it by itself reads 1. That means 7 divides the dancer times itself, minus 1 — one below the dancer times one above it. Take dancer 3: 3 × 3 - 1 is 8, which is 2 × 4.
 
-7 is prime, so it divides one of those two pieces ([euclids-lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)). One below is 0 only for dancer 1; one above is 7 only for dancer 6.
+7 is prime, so it divides one of those two pieces ([Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)). One below is 0 only for dancer 1; one above is 7 only for dancer 6.
 
 ### Step 2: everyone else cancels in couples, and 1 × 6 is left
 
@@ -103,7 +80,7 @@ A 9-clock has just one factor, 3, twice over. Still 0: 3 and its double 6 both s
 
 That leaves the 4-clock, too small to hold its factors apart: 1 × 2 × 3 is 6, which reads 2.
 
-Fermat's little theorem shuffles these dancers ([fermats-little-theorem](02-fermats-little-theorem.md)); this one multiplies them together.
+Fermat's little theorem shuffles these dancers ([Fermat's little theorem](02-fermats-little-theorem.md)); this one multiplies them together.
 
 ---
 
@@ -260,15 +237,15 @@ ALL CHECKS PASS
 >
 > - **Thinking -1 is not 6.** Same hour, two names. -1 is the useful one: it holds on every prime clock.
 > - **Believing every composite reads 0.** The 4-clock reads 2, alone among them, and still fails.
-> - **Using it on big primes.** It never lies, but the row for a 40-digit prime is unwritable: [fermat-test-and-carmichael](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md).
+> - **Using it on big primes.** It never lies, but the row for a 40-digit prime is unwritable: [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md).
 
 ---
 
 ## Where you meet it in real life
 
-- **Proving a number prime on paper.** An exact test both ways, no liars to rule out — unlike Fermat's ([primes-and-composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md), [fermat-test-and-carmichael](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md)).
+- **Proving a number prime on paper.** An exact test both ways, no liars to rule out — unlike Fermat's ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md), [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md)).
 - **Square roots on a prime clock.** Step 1 stands alone: only 1 and the top hour are their own partner, so a square root has two answers or none.
-- **Clocks where every number has an undo.** The pairing still runs, but more dancers are their own partner, so the answer changes: an 8-clock and a 12-clock read 1. Only 4, powers of one prime, and twice those, read -1 ([order-and-primitive-roots](05-order-and-primitive-roots.md)).
+- **Clocks where every number has an undo.** The pairing still runs, but more dancers are their own partner, so the answer changes: an 8-clock and a 12-clock read 1. Only 4, powers of one prime, and twice those, read -1 ([The order of a number and primitive roots](05-order-and-primitive-roots.md)).
 
 > **Say it back**
 > Line up 1 to 6. Each has one partner it multiplies with to reach 1 on the 7-clock, and only 1 and 6 are their own partner. So the row folds into couples reading 1, leaving 1 × 6 = 6, one short of the clock: -1. A clock that is not prime never gets there: its own factors sit in the row and spoil it. A reading of -1 proves a prime — exact, and far too slow to use.
@@ -277,14 +254,14 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md): the partner that undoes a number, and why a prime clock gives everyone one.
-- [euclids-lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): a prime dividing a product divides one of its pieces — Step 1.
-- [negative-numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md): why one short of a full clock is written -1.
+- [The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md): the partner that undoes a number, and why a prime clock gives everyone one.
+- [Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): a prime dividing a product divides one of its pieces — Step 1.
+- [Negative numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md): why one short of a full clock is written -1.
 
 ## Where this goes next
 
-- [fermat-test-and-carmichael](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md): a quick primality test, and the numbers that fool it.
-- [miller-rabin](../06-Codes%20and%20Secrets/05-miller-rabin.md): the test RSA actually uses.
+- [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md): a quick primality test, and the numbers that fool it.
+- [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md): the test RSA actually uses.
 
 ---
 

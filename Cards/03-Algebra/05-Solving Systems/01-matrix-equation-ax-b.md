@@ -1,38 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Solving Systems
-topic: Systems
-item: Solving A x = b
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/03-Algebra/04-Matrices/02-matrix-times-vector|matrix-times-vector]]"
-  - "[[Cards/03-Algebra/01-Letters and Equations/04-two-equations-two-unknowns|two-equations-two-unknowns]]"
-  - "[[Cards/03-Algebra/03-Vectors/04-linear-independence|linear-independence]]"
-next:
-  - "[[Cards/03-Algebra/05-Solving Systems/02-gaussian-elimination|gaussian-elimination]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/02-eigenvalues-and-eigenvectors|eigenvalues-and-eigenvectors]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/03-multiple-regression-and-gauss-markov|multiple-regression-and-gauss-markov]]"
-  - "[[Cards/12-Financial mathematics/40-Hedging, Volatility Forecasts and Stress/02-delta-gamma-vega-hedging|delta-gamma-vega-hedging]]"
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/01-kirchhoffs-laws-and-equivalent-circuits|kirchhoffs-laws-and-equivalent-circuits]]"
-  - "[[Cards/13-Engineering mathematics/08-Fluids and Heat/09-finite-element-method-in-outline|finite-element-method-in-outline]]"
-  - "[[Cards/14-Applied and computational/05-Operations Research/01-modelling-with-linear-programs|modelling-with-linear-programs]]"
-  - "[[Cards/15-Optimization/02-Unconstrained Methods/07-conjugate-gradient-method|conjugate-gradient-method]]"
-  - "[[Cards/15-Optimization/04-Linear Programming/01-linear-programs-and-polyhedra|linear-programs-and-polyhedra]]"
-  - "[[Cards/16-Numerical analysis/02-Root Finding and Fixed Points/07-newton-for-systems-and-broyden|newton-for-systems-and-broyden]]"
-  - "[[Cards/16-Numerical analysis/03-Numerical Linear Algebra/01-matrix-norms-and-the-condition-number|matrix-norms-and-the-condition-number]]"
-  - "[[Cards/16-Numerical analysis/04-Interpolation and Approximation/02-lagrange-and-newton-interpolation|lagrange-and-newton-interpolation]]"
-tags:
-  - mathematics
-  - algebra
-  - matrix-equation-ax-b
----
-
 # Solving A x = b: one answer, no answer or a line of answers, and how to tell which before you start
 
-Algebra → Solving Systems → Systems → Solving A x = b
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Solving Systems](../../../SYLLABUS.md#w03-s05) → Solving A x = b
 
 ---
 
@@ -44,7 +12,7 @@ Subtract Tuesday's slip from Monday's. The pastries cancel, one coffee is left, 
 
 That worked because each price is only multiplied by a count and added on: such an equation is **linear**, and a pile that must all hold at once is a **system**.
 
-Strip the words off the slips and only the counts are left, written row by row in square brackets, one row per day: `[[2, 1], [1, 1]]`, a matrix of size 2 by 2. The prices are a list, $(x, y)$, the takings another, $(11, 7)$; multiplying counts into prices rebuilds both totals ([matrix-times-vector](../04-Matrices/02-matrix-times-vector.md)). The cafe is one line:
+Strip the words off the slips and only the counts are left, written row by row in square brackets, one row per day: `[[2, 1], [1, 1]]`, a matrix of size 2 by 2. The prices are a list, $(x, y)$, the takings another, $(11, 7)$; multiplying counts into prices rebuilds both totals ([Matrix times vector](../04-Matrices/02-matrix-times-vector.md)). The cafe is one line:
 
 **counts × prices = takings**, or in letters, $A x = b$.
 
@@ -88,9 +56,9 @@ $$A x = b$$
 | $y$ | the pastry price, the second entry of $x$ | $3.00 | fixed by the slips too |
 | $b$ | the totals, one per row of $A$ | $(11, 7)$ | move $b$, the answer moves |
 | $A x$ | $A$'s columns mixed, with $x$'s entries as the amounts | $(11, 7)$, the takings rebuilt | — |
-| $A^{-1}$ | the matrix that undoes $A$, when it exists | exists here, not needed here | [inverse-matrix](03-inverse-matrix.md) |
+| $A^{-1}$ | the matrix that undoes $A$, when it exists | exists here, not needed here | [The inverse matrix](03-inverse-matrix.md) |
 
-Two words do the classifying, both about $A$ alone. The **span** of the columns is every list their mixes reach; the columns are **independent** when neither is a multiple of the other ([linear-independence](../03-Vectors/04-linear-independence.md)).
+Two words do the classifying, both about $A$ alone. The **span** of the columns is every list their mixes reach; the columns are **independent** when neither is a multiple of the other ([Linear independence](../03-Vectors/04-linear-independence.md)).
 
 One warning about $x$: alone it is the coffee price, but in $A x = b$ the letter means the whole list $(x, y)$.
 
@@ -106,7 +74,7 @@ One warning about $x$: alone it is the coffee price, but in $A x = b$ the letter
 
 ### Step 0: the columns are the things being mixed
 
-Multiply $A$ into $(4, 3)$ the column way ([matrix-times-vector](../04-Matrices/02-matrix-times-vector.md)):
+Multiply $A$ into $(4, 3)$ the column way ([Matrix times vector](../04-Matrices/02-matrix-times-vector.md)):
 
 **4.00 × (2, 1) + 3.00 × (1, 1) = (11.00, 7.00)**
 
@@ -118,7 +86,7 @@ Solving $A x = b$ is that sentence backwards: **find the amounts that mix the co
 
 Written out, the system is 2x + y = 11 and x + y = 7. Subtract 0.50 of row one from row two: the x terms cancel, since 1 minus 0.50 × 2 is 0. That leaves 0.50 y = 1.50, a $3.00 pastry, and Monday's row then gives (11 − 1 × 3.00) / 2 = 4.00, a $4.00 coffee.
 
-That is **elimination**: subtract a multiple of one row from another to kill an unknown, then read the answers back up. Nothing is lost or invented: adding the multiple back restores the old row, so both systems have the same answers. Organised for bigger systems, it is [gaussian-elimination](02-gaussian-elimination.md).
+That is **elimination**: subtract a multiple of one row from another to kill an unknown, then read the answers back up. Nothing is lost or invented: adding the multiple back restores the old row, so both systems have the same answers. Organised for bigger systems, it is [Gaussian elimination](02-gaussian-elimination.md).
 
 The till-slip subtraction at the top is the code's second road: Tuesday says y = 7 − x, so Monday becomes 2x + (7 − x) = 11, giving x = 11 − 7 = 4.00 and y = 3.00.
 
@@ -140,7 +108,7 @@ Change that total to $23 and $(11, 23)$ is off the line: no mix reaches it, and 
 | dependent, one a multiple of the other | on their line | a line of answers | takings (11, 22) |
 | dependent, one a multiple of the other | off their line | no answer | takings (11, 23) |
 
-That is the "before you start" in the title: for a square system, independent columns give one answer for every $b$, while dependent columns give none or infinitely many, and only then does $b$ matter. One number runs the test: top-left times bottom-right, minus top-right times bottom-left — 1 for the cafe, 0 for the doubled Tuesday, and zero is the collapse. That number is the determinant, [determinants](04-determinants.md).
+That is the "before you start" in the title: for a square system, independent columns give one answer for every $b$, while dependent columns give none or infinitely many, and only then does $b$ matter. One number runs the test: top-left times bottom-right, minus top-right times bottom-left — 1 for the cafe, 0 for the doubled Tuesday, and zero is the collapse. That number is the determinant, [Determinants](04-determinants.md).
 
 <details>
 <summary>Detailed proof: why there is no fourth outcome</summary>
@@ -151,7 +119,7 @@ Adding any multiple of $d$ to a pair that fits changes no total, so two answers 
 
 </details>
 
-The top row has a shortcut: with independent columns and $A$ square, one matrix undoes $A$, written $A^{-1}$, so $x = A^{-1} b$ in one multiplication ([inverse-matrix](03-inverse-matrix.md)). Counting the surviving columns, and the directions squashed flat, is [rank-nullity](05-rank-nullity.md).
+The top row has a shortcut: with independent columns and $A$ square, one matrix undoes $A$, written $A^{-1}$, so $x = A^{-1} b$ in one multiplication ([The inverse matrix](03-inverse-matrix.md)). Counting the surviving columns, and the directions squashed flat, is [Rank and nullity](05-rank-nullity.md).
 
 ---
 
@@ -388,7 +356,7 @@ The two outputs match line for line.
 > [!warning]
 > **Two equations and two unknowns do not guarantee one answer.** The doubled Tuesday has two of each and a square block of counts, yet its answers number infinitely many or none. What decides is whether the columns are independent.
 >
-> - **"Just divide by $A$."** There is no dividing by a matrix; the nearest thing is the inverse, [inverse-matrix](03-inverse-matrix.md), which exists only when the columns are independent.
+> - **"Just divide by $A$."** There is no dividing by a matrix; the nearest thing is the inverse, [The inverse matrix](03-inverse-matrix.md), which exists only when the columns are independent.
 > - **"No answer means I slipped up."** No: the $23 day is impossible, two days contradicting each other, and 0 = 1.00 says so.
 > - **"A line of answers means any prices at all."** They still satisfy 2x + y = 11: one choice is free, the other follows.
 
@@ -407,26 +375,26 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [matrix-times-vector](../04-Matrices/02-matrix-times-vector.md): why $A x$ mixes $A$'s columns.
-- [two-equations-two-unknowns](../01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): the same job with no matrices.
-- [linear-independence](../03-Vectors/04-linear-independence.md): the test that picks the outcome.
+- [Matrix times vector](../04-Matrices/02-matrix-times-vector.md): why $A x$ mixes $A$'s columns.
+- [Two equations, two unknowns](../01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): the same job with no matrices.
+- [Linear independence](../03-Vectors/04-linear-independence.md): the test that picks the outcome.
 
 ## Where this goes next
 
-- [gaussian-elimination](02-gaussian-elimination.md): the same row moves, organised, past 2 by 2.
-- [eigenvalues-and-eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the other question, $b$ a multiple of $x$.
-- [multiple-regression-and-gauss-markov](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md): far more rows than unknowns.
-- [delta-gamma-vega-hedging](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/02-delta-gamma-vega-hedging.md): hedge sizes as the cancelling $x$.
-- kirchhoffs-laws-and-equivalent-circuits: junction and loop rules, one system.
-- finite-element-method-in-outline: a heat or stress field, chopped up.
-- modelling-with-linear-programs: the same rows, plus inequalities and a cost.
-- conjugate-gradient-method: huge systems by descent, no $A^{-1}$.
-- linear-programs-and-polyhedra: rows as walls, answers as corners.
-- newton-for-systems-and-broyden: a curved system, one solve per step.
-- matrix-norms-and-the-condition-number: how far $x$ moves when $b$ is rounded.
-- lagrange-and-newton-interpolation: a curve through points, solved for coefficients.
+- [Gaussian elimination](02-gaussian-elimination.md): the same row moves, organised, past 2 by 2.
+- [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the other question, $b$ a multiple of $x$.
+- [Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md): far more rows than unknowns.
+- [Hedging three Greeks at once](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/02-delta-gamma-vega-hedging.md): hedge sizes as the cancelling $x$.
+- Kirchhoff's laws: junction and loop rules, one system.
+- Finite elements: a heat or stress field, chopped up.
+- Linear programs: the same rows, plus inequalities and a cost.
+- Conjugate gradient: huge systems by descent, no $A^{-1}$.
+- Linear programs: rows as walls, answers as corners.
+- Newton in several unknowns, and Broyden when a Jacobian is too expensive: a curved system, one solve per step.
+- Matrix norms and the condition number: how far $x$ moves when $b$ is rounded.
+- One polynomial through n points: a curve through points, solved for coefficients.
 
-Which outcome holds is settled here; reaching the answer when the counts fill a page is the bookkeeping of [gaussian-elimination](02-gaussian-elimination.md).
+Which outcome holds is settled here; reaching the answer when the counts fill a page is the bookkeeping of [Gaussian elimination](02-gaussian-elimination.md).
 
 ---
 

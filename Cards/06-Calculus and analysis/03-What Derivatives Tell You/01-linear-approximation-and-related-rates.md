@@ -1,24 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: What Derivatives Tell You
-topic: Predicting from a slope
-item: Linear approximation
-kind: approximation
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/01-the-derivative|the-derivative]]"
-next:
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/06-newtons-method|newtons-method]]"
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/01-eulers-method|eulers-method]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/05-delta-method-and-slutsky|delta-method-and-slutsky]]"
-tags: [mathematics, calculus and analysis, linear-approximation-and-related-rates]
----
-
 # Linear approximation: the tangent line as a stand-in, and rates linked through a relation
 
-Calculus and analysis → What Derivatives Tell You → Predicting from a slope → Linear approximation
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [What Derivatives Tell You](../../../SYLLABUS.md#w06-s03) → Linear approximation
 
 ---
 
@@ -52,7 +34,7 @@ Orange: the true radius. Green: the tangent line at time 0, climbing at a consta
 
 ## The formula
 
-Notation first, in words. $f'(a)$ is the derivative of $f$ at the input $a$, the rate of output per unit of input ([the-derivative](../02-Derivatives/01-the-derivative.md)). $f''$ is the derivative of that rate, how fast the slope itself turns. $h$ is the step, and $R(h)$ the remainder: true value minus tangent forecast.
+Notation first, in words. $f'(a)$ is the derivative of $f$ at the input $a$, the rate of output per unit of input ([The derivative](../02-Derivatives/01-the-derivative.md)). $f''$ is the derivative of that rate, how fast the slope itself turns. $h$ is the step, and $R(h)$ the remainder: true value minus tangent forecast.
 
 $$f(a+h) = f(a) + f'(a)\,h + R(h), \qquad \frac{R(h)}{h} \to 0 \text{ as } h \to 0$$
 
@@ -116,9 +98,9 @@ The first line says the error is small, not how small. The tangent's slope is fi
 
 Take h > 0; a negative step is the mirror image. For s from 0 to h let g(s) = f(a+s) − f(a) − f'(a)s, the gap between curve and tangent. Then g(0) = 0 and g'(s) = f'(a+s) − f'(a).
 
-Since the size of f'' is at most M, by the [mean-value-theorem](02-mean-value-theorem.md), f'(a+s) − f'(a) equals f'' at some point times s, so |g'(s)| ≤ Ms.
+Since the size of f'' is at most M, by the [Mean value theorem](02-mean-value-theorem.md), f'(a+s) − f'(a) equals f'' at some point times s, so |g'(s)| ≤ Ms.
 
-Let p(s) = Ms^2/2 − g(s). Then p(0) = 0 and p'(s) = Ms − g'(s) ≥ 0. A function whose derivative is never negative never falls ([monotonicity-and-optimisation](03-monotonicity-and-optimisation.md)), so p(h) ≥ 0: g(h) ≤ Mh^2/2. The same on Ms^2/2 + g(s) gives g(h) ≥ −Mh^2/2. So |R(h)| ≤ Mh^2/2. In epsilon language: every step with |h| < delta = 2 epsilon / M keeps |R(h)/h| below epsilon.
+Let p(s) = Ms^2/2 − g(s). Then p(0) = 0 and p'(s) = Ms − g'(s) ≥ 0. A function whose derivative is never negative never falls ([Optimisation](03-monotonicity-and-optimisation.md)), so p(h) ≥ 0: g(h) ≤ Mh^2/2. The same on Ms^2/2 + g(s) gives g(h) ≥ −Mh^2/2. So |R(h)| ≤ Mh^2/2. In epsilon language: every step with |h| < delta = 2 epsilon / M keeps |R(h)/h| below epsilon.
 
 </details>
 
@@ -147,7 +129,7 @@ The slope of radius against volume is 1/(4πr^2) = 0.000795775 cm per cm^3; time
 
 A check that never uses the formula: find the true radius after a time dt from the volume, and divide the gain by dt. The tolerance game, with numbers: at dt = 0.1 s this quotient is off by −0.001572728 cm/s, at 0.01 s by −0.000158209, at 0.001 s by −0.000015830. To land within 0.001 cm/s, a step of 0.01 s is enough.
 
-A second road to the bound adds a curvature term to the tangent line; [taylors-theorem](05-taylors-theorem.md) builds it.
+A second road to the bound adds a curvature term to the tangent line; [Taylor's theorem](05-taylors-theorem.md) builds it.
 
 ---
 
@@ -367,7 +349,7 @@ mistake, fix r = 10 before differentiating: dV/dt = 0.0, so dr/dt = 0
 
 ## Where you meet it in real life
 
-- **Measurement error.** The slope turns an error in a measured length into the error of a computed volume; [numerical-derivatives-and-sensitivity](08-numerical-derivatives-and-sensitivity.md) measures it when no formula is at hand.
+- **Measurement error.** The slope turns an error in a measured length into the error of a computed volume; [Numerical derivatives](08-numerical-derivatives-and-sensitivity.md) measures it when no formula is at hand.
 - **The pendulum.** Replacing sin x by x for small swings is the tangent line of sin at 0.
 - **Bond prices.** Modified duration is minus the slope of price against yield, divided by the price; price times duration times the yield change estimates the price fall.
 - **Filling a tank.** The water level's rate from the inflow is related rates on the tank's shape.
@@ -379,15 +361,15 @@ mistake, fix r = 10 before differentiating: dV/dt = 0.0, so dr/dt = 0
 
 ## What this builds on
 
-- [the-derivative](../02-Derivatives/01-the-derivative.md): the slope as the limit of chord slopes, which is the whole of Step 1.
+- [The derivative](../02-Derivatives/01-the-derivative.md): the slope as the limit of chord slopes, which is the whole of Step 1.
 
 ## Where this goes next
 
-- [newtons-method](06-newtons-method.md): set the tangent line to zero and solve.
-- [eulers-method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/01-eulers-method.md): follow a rate forward in many short tangent steps.
-- [delta-method-and-slutsky](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md): the slope carries a measurement's spread through a function.
+- [Newton's method](06-newtons-method.md): set the tangent line to zero and solve.
+- [Euler's method](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/01-eulers-method.md): follow a rate forward in many short tangent steps.
+- [Delta method](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md): the slope carries a measurement's spread through a function.
 
-Open question: where to step to make a function zero. [newtons-method](06-newtons-method.md) repeats the tangent step.
+Open question: where to step to make a function zero. [Newton's method](06-newtons-method.md) repeats the tangent step.
 
 ---
 

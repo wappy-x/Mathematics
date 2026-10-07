@@ -1,24 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: The Classical PDEs
-topic: One hot edge of a square plate
-item: Laplace on a rectangle
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/07-laplaces-equation-and-harmonic-functions|laplaces-equation-and-harmonic-functions]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/04-separation-of-variables-for-the-heat-equation|separation-of-variables-for-the-heat-equation]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/07-hyperbolic-functions|hyperbolic-functions]]"
-next:
-  - "[[Cards/16-Numerical analysis/07-PDE Solvers/05-adi-and-multidimensional-grids|adi-and-multidimensional-grids]]"
-tags: [mathematics, differential equations and dynamics, laplace-on-a-rectangle]
----
-
 # Laplace on a rectangle: separate into sines one way and sinh the other, one hot edge at a time
 
-Differential equations and dynamics → The Classical PDEs → One hot edge of a square plate → Laplace on a rectangle
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → Laplace on a rectangle
 
 ---
 
@@ -26,9 +8,9 @@ Differential equations and dynamics → The Classical PDEs → One hot edge of a
 
 A square metal plate, 1 m on a side, has its top edge clamped to a bar at 100 C. The other three edges sit in iced water at 0 C. After a long wait the temperatures stop changing. What does a thermometer read at any chosen point?
 
-At the centre no formula is needed: four quarter turns of the plate, added, make every edge 100 C, so each turn gives the centre an equal share, 25 C ([laplaces-equation-and-harmonic-functions](07-laplaces-equation-and-harmonic-functions.md)). That trick works only at the centre. Three quarters of the way up the middle, the plate reads 54.05 C, and that needs a formula for every point.
+At the centre no formula is needed: four quarter turns of the plate, added, make every edge 100 C, so each turn gives the centre an equal share, 25 C ([Laplace's equation](07-laplaces-equation-and-harmonic-functions.md)). That trick works only at the centre. Three quarters of the way up the middle, the plate reads 54.05 C, and that needs a formula for every point.
 
-The formula comes from the move that cooled a rod mode by mode ([separation-of-variables-for-the-heat-equation](04-separation-of-variables-for-the-heat-equation.md)): guess a shape across the plate times a profile up it. The cold side edges force sine waves across. Up the plate the equation forces the opposite bending: the hyperbolic sine, sinh, zero at the cold bottom and growing towards the hot top. Several warm edges are handled one at a time, and the answers added.
+The formula comes from the move that cooled a rod mode by mode ([Separation of variables](04-separation-of-variables-for-the-heat-equation.md)): guess a shape across the plate times a profile up it. The cold side edges force sine waves across. Up the plate the equation forces the opposite bending: the hyperbolic sine, sinh, zero at the cold bottom and growing towards the hot top. Several warm edges are handled one at a time, and the answers added.
 
 **The settled temperature is a sum of sine waves across the plate, sized by Fourier coefficients to the hot edge, each growing like sinh up from the cold edge; several warm edges are solved one at a time and added.**
 
@@ -44,7 +26,7 @@ To scale, 200 units to the metre, from the points both checks print on their "fi
 
 ## The formula
 
-Reminder from [what-a-pde-says](01-what-a-pde-says.md): $u_{xx}$ is the bend of the temperature across the plate, height held still; $u_{yy}$ the bend up it. $u(x, y)$ is the settled temperature in C, $x$ metres from the left edge and $y$ up from the bottom:
+Reminder from [A partial differential equation](01-what-a-pde-says.md): $u_{xx}$ is the bend of the temperature across the plate, height held still; $u_{yy}$ the bend up it. $u(x, y)$ is the settled temperature in C, $x$ metres from the left edge and $y$ up from the bottom:
 
 $$u_{xx} + u_{yy} = 0, \qquad u(0, y) = u(1, y) = u(x, 0) = 0, \qquad u(x, 1) = f(x).$$
 
@@ -100,11 +82,11 @@ The sign flip between them is Step 0 in symbols.
 
 ### Step 2: the cold sides choose the sines
 
-The X problem is the rod's boundary-value problem, solved on [separation-of-variables-for-the-heat-equation](04-separation-of-variables-for-the-heat-equation.md): a nonzero X exists only for λ = n^2 π^2, and then X = sin(nπx), n = 1, 2, 3, …
+The X problem is the rod's boundary-value problem, solved on [Separation of variables](04-separation-of-variables-for-the-heat-equation.md): a nonzero X exists only for λ = n^2 π^2, and then X = sin(nπx), n = 1, 2, 3, …
 
 ### Step 3: the cold bottom chooses sinh
 
-Now Y'' = n^2 π^2 Y, solved by combinations of e^(nπy) and e^(−nπy). The cold bottom needs Y(0) = 0, which leaves their difference, halved: sinh(nπy) ([hyperbolic-functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)). Dividing by sinh(nπ) makes it read 1 at the top edge. Each product is zero on three edges and satisfies the equation.
+Now Y'' = n^2 π^2 Y, solved by combinations of e^(nπy) and e^(−nπy). The cold bottom needs Y(0) = 0, which leaves their difference, halved: sinh(nπy) ([Hyperbolic functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)). Dividing by sinh(nπ) makes it read 1 at the top edge. Each product is zero on three edges and satisfies the equation.
 
 ### Step 4: fit the hot edge
 
@@ -125,11 +107,11 @@ Let r_n(y) = sinh(nπy)/sinh(nπ) ≤ e^(−nπ(1−y)) / (1 − e^(−2π)). Fo
 
 Edges: every term is zero at x = 0, x = 1 and y = 0. At y = 1 the sum is the sine series of 100, converging to 100 for 0 < x < 1. The factors r_n(y) are at most 1 and fall with n, so by Abel's test u tends to 100 as y rises to 1.
 
-Uniqueness: two settled temperatures with the same edges differ by a harmonic w that is zero on every edge. By the maximum principle ([laplaces-equation-and-harmonic-functions](07-laplaces-equation-and-harmonic-functions.md)), w lies between its edge values, 0 and 0, so w = 0.
+Uniqueness: two settled temperatures with the same edges differ by a harmonic w that is zero on every edge. By the maximum principle ([Laplace's equation](07-laplaces-equation-and-harmonic-functions.md)), w lies between its edge values, 0 and 0, so w = 0.
 
 </details>
 
-A second road needs no sines: relax every grid point to the average of its four neighbours, the grid form of Laplace's equation. The code does this; adi-and-multidimensional-grids makes it fast.
+A second road needs no sines: relax every grid point to the average of its four neighbours, the grid form of Laplace's equation. The code does this; Two space dimensions makes it fast.
 
 ---
 
@@ -400,13 +382,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [laplaces-equation-and-harmonic-functions](07-laplaces-equation-and-harmonic-functions.md): the equation, the grid average, the turning argument, the maximum principle.
-- [separation-of-variables-for-the-heat-equation](04-separation-of-variables-for-the-heat-equation.md): the product guess, the sine eigenfunctions, the coefficients.
-- [hyperbolic-functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md): sinh and cosh.
+- [Laplace's equation](07-laplaces-equation-and-harmonic-functions.md): the equation, the grid average, the turning argument, the maximum principle.
+- [Separation of variables](04-separation-of-variables-for-the-heat-equation.md): the product guess, the sine eigenfunctions, the coefficients.
+- [Hyperbolic functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md): sinh and cosh.
 
 ## Where this goes next
 
-- adi-and-multidimensional-grids: an L-shaped or heated plate has no series; grids solve it fast, a row and a column at a time.
+- Two space dimensions: an L-shaped or heated plate has no series; grids solve it fast, a row and a column at a time.
 
 ---
 

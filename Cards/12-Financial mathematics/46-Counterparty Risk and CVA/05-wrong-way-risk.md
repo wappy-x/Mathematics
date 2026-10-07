@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Counterparty Risk and CVA
-topic: Exposure and default moving together
-item: Wrong-way risk
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/03-cva|cva]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/02-one-factor-gaussian-copula|one-factor-gaussian-copula]]"
-next: []
-tags: [mathematics, financial mathematics, wrong-way-risk]
----
-
 # Wrong-way risk: when the exposure grows just as the counterparty weakens, and what it does to CVA
 
-Financial mathematics → Counterparty Risk and CVA → Exposure and default moving together → Wrong-way risk
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Counterparty Risk and CVA](../../../SYLLABUS.md#w12-s46) → Wrong-way risk
 
 ---
 
@@ -24,7 +8,7 @@ Financial mathematics → Counterparty Risk and CVA → Exposure and default mov
 
 A fund buys a one-year put on Northwind's shares. The shares trade at $100, the strike is $100, and the market is the house market: a 5% bank rate, a 2% dividend yield, 20% volatility. The put is worth $6.33. The fund bought it from Northwind itself.
 
-Northwind can fail. Its credit spread implies a hazard rate (the default chance per year, counted continuously) of 2%, so about a 1.98% chance of failing within the year. If it fails, the fund collects 40 cents on the dollar of whatever the put is owed. The price of that risk is the **CVA** (credit valuation adjustment): the average loss from the seller's default, counted in today's dollars ([cva](03-cva.md)).
+Northwind can fail. Its credit spread implies a hazard rate (the default chance per year, counted continuously) of 2%, so about a 1.98% chance of failing within the year. If it fails, the fund collects 40 cents on the dollar of whatever the put is owed. The price of that risk is the **CVA** (credit valuation adjustment): the average loss from the seller's default, counted in today's dollars ([CVA](03-cva.md)).
 
 The CVA card multiplies three numbers: the loss share, 60%, the default chance, 1.98%, and the put's value, $6.33. That gives $0.0752. The multiplication assumes the put's payoff and Northwind's default have nothing to do with each other. Here they have everything to do with each other. The put pays most when Northwind's shares have fallen hard, and a firm whose shares have fallen hard is the firm most likely to be failing. The protection pays out in exactly the worlds where its seller cannot pay.
 
@@ -91,12 +75,12 @@ $$\mathrm{CVA}_{\text{call}}(\rho) = L\left[S e^{-qT} N_2\!\left(d_1,\,a-\rho\si
 | $N$, $N_2$, $\varphi$, $h$, $k$ | bell-curve area to the left; the same for a correlated pair, below $h$ and $k$; bell-curve height | $N(a) = p$ | — |
 | $U$, $V$, $f$, $g$ | any two quantities in a covariance; two functions of the share score in the proofs | $U$ the discounted payoff, $V$ the default | — |
 
-The helpers: the share price at year end is $S_T = S e^{(r - q - \sigma^2/2)T + \sigma\sqrt{T}\,Y}$, as in [geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md). The put pays when $Y < -d_2$, that is when the shares end below $100. The cutoff $a = N^{-1}(p)$ is the point with 1.98% of the bell curve to its left.
+The helpers: the share price at year end is $S_T = S e^{(r - q - \sigma^2/2)T + \sigma\sqrt{T}\,Y}$, as in [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md). The put pays when $Y < -d_2$, that is when the shares end below $100. The cutoff $a = N^{-1}(p)$ is the point with 1.98% of the bell curve to its left.
 
 ### When it holds
 
-- **Settlement at year end.** If Northwind fails during the year, the put still settles at expiry and the fund collects 40% of what it is owed. Real contracts close out at the default date, on the replacement value then; the numbers move, the direction does not. [expected-exposure-profiles](02-expected-exposure-profiles.md) handles exposure date by date.
-- **A Gaussian link.** Bell-curve scores give joint extremes little weight. A fatter-tailed copula puts more weight on "shares crash and Northwind fails together", and raises the put's CVA further ([tail-dependence-and-the-t-copula](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md)).
+- **Settlement at year end.** If Northwind fails during the year, the put still settles at expiry and the fund collects 40% of what it is owed. Real contracts close out at the default date, on the replacement value then; the numbers move, the direction does not. [Expected exposure over time](02-expected-exposure-profiles.md) handles exposure date by date.
+- **A Gaussian link.** Bell-curve scores give joint extremes little weight. A fatter-tailed copula puts more weight on "shares crash and Northwind fails together", and raises the put's CVA further ([Tail dependence](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md)).
 - **No jump at default.** In this model a failing Northwind's shares are merely low. Real shares of a defaulted firm fall toward zero. That pushes the put's CVA toward its ceiling, $1.13, computed below.
 - **Fixed recovery.** Recoveries are lower when the firm fails in a bad state; a fixed 40% understates the loss.
 - **A correlation nobody quotes.** No market trades $\rho$. It is a judgement or a stress parameter, and the answer triples between 0% and 50%.
@@ -111,13 +95,13 @@ CVA is an average of a product: payoff times default. If a big payoff and a defa
 
 ### Step 1: the covariance split
 
-Covariance is defined as $\mathrm{Cov}(U, V) = \mathbb{E}[UV] - \mathbb{E}[U]\,\mathbb{E}[V]$, for any two quantities $U$ and $V$ with finite averages. Rearranged, $\mathbb{E}[UV] = \mathbb{E}[U]\,\mathbb{E}[V] + \mathrm{Cov}(U, V)$. Put $U = e^{-rT}X$ and $V = B$. The average of the discounted payoff is the clean put, $P$, because the put's price is its discounted average payoff ([black-scholes-put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md)). The average of $B$ is $p$. Multiply by $L$ and the split in The formula follows. It is exact and needs no model. The model is needed to compute the covariance.
+Covariance is defined as $\mathrm{Cov}(U, V) = \mathbb{E}[UV] - \mathbb{E}[U]\,\mathbb{E}[V]$, for any two quantities $U$ and $V$ with finite averages. Rearranged, $\mathbb{E}[UV] = \mathbb{E}[U]\,\mathbb{E}[V] + \mathrm{Cov}(U, V)$. Put $U = e^{-rT}X$ and $V = B$. The average of the discounted payoff is the clean put, $P$, because the put's price is its discounted average payoff ([Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md)). The average of $B$ is $p$. Multiply by $L$ and the split in The formula follows. It is exact and needs no model. The model is needed to compute the covariance.
 
 ### Step 2: join the scores without moving the default chance
 
 Northwind's credit score is $Z = \rho Y + \sqrt{1-\rho^2}\,\varepsilon$, with $\varepsilon$ a private bell-curve draw independent of $Y$. The weights are chosen so that the variance is $\rho^2 + (1 - \rho^2) = 1$ at every correlation. So $Z$ is a standard bell-curve draw whatever $\rho$ is, and the chance that $Z < a$ is $N(a) = p = 1.98\%$. Correlation only decides which worlds the defaults fall in.
 
-This is the one-factor construction of [one-factor-gaussian-copula](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md), with Northwind's share score playing the economy factor. That card weights the factor by $\sqrt{\rho}$, because its $\rho$ is the correlation between two firms. Here $\rho$ is the correlation between the credit score and the factor itself, so the weight is $\rho$.
+This is the one-factor construction of [The one-factor Gaussian copula](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md), with Northwind's share score playing the economy factor. That card weights the factor by $\sqrt{\rho}$, because its $\rho$ is the correlation between two firms. Here $\rho$ is the correlation between the credit score and the factor itself, so the weight is $\rho$.
 
 ### Step 3: the default chance once the share score is known
 
@@ -668,7 +652,7 @@ The two outputs agree line for line, including the simulation, since both use th
 - **Currency trades with a local bank.** A forward that receives dollars from a bank in a country whose currency may collapse is worth most after a devaluation, and a devaluation is when that bank is most likely to fail.
 - **Lending against the borrower's own bonds.** A loan secured by the borrower's own debt loses its collateral in the same event that stops the borrower paying.
 - **Right-way hedges.** A producer that sells oil forward to a bank owes the bank most when oil is expensive, which is when the producer is richest. The bank's exposure and the producer's default chance move apart.
-- **The shelf.** [counterparty-exposure-and-netting](01-counterparty-exposure-and-netting.md) defines what is owed; [dva-and-bilateral-cva](04-dva-and-bilateral-cva.md) lets the fund's own default count too, where the same coincidence can arise.
+- **The shelf.** [Counterparty exposure](01-counterparty-exposure-and-netting.md) defines what is owed; [DVA](04-dva-and-bilateral-cva.md) lets the fund's own default count too, where the same coincidence can arise.
 
 > **Say it back**
 > CVA averages the loss from default over all worlds, which is exposure times default. That average equals the independent product plus a covariance term. For a put on Northwind's shares bought from Northwind, large payoffs and default happen together, so the covariance is positive and the CVA at 50% correlation is 3.05 times the independent figure. The call on the same shares is right-way: its CVA drops to under a tenth of the independent figure. The default chance never changes; only which worlds it lands in.
@@ -677,14 +661,14 @@ The two outputs agree line for line, including the simulation, since both use th
 
 ## What this builds on
 
-- [cva](03-cva.md): the loss-from-default average and the independent product $L p P$ that this card corrects.
-- [one-factor-gaussian-copula](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md): a factor plus private noise, a cutoff that keeps each default chance fixed, and the conditional default chance given the factor.
-- [black-scholes-put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the clean put, $6.33, and the slid bell curve behind the share half.
+- [CVA](03-cva.md): the loss-from-default average and the independent product $L p P$ that this card corrects.
+- [The one-factor Gaussian copula](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md): a factor plus private noise, a cutoff that keeps each default chance fixed, and the conditional default chance given the factor.
+- [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the clean put, $6.33, and the slid bell curve behind the share half.
 
 ## Where this goes next
 
-- [cva-risk-numbers-and-hedging](06-cva-risk-numbers-and-hedging.md): the card after this one on the shelf. How CVA moves when the share price, volatility or credit spread moves, and how a desk hedges it; under wrong-way risk the share hedge and the credit hedge can no longer be set separately.
-- [tail-dependence-and-the-t-copula](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md): a copula that gives joint crashes more weight than the Gaussian, pushing the put's CVA toward its ceiling.
+- [CVA risk numbers](06-cva-risk-numbers-and-hedging.md): the card after this one on the shelf. How CVA moves when the share price, volatility or credit spread moves, and how a desk hedges it; under wrong-way risk the share hedge and the credit hedge can no longer be set separately.
+- [Tail dependence](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md): a copula that gives joint crashes more weight than the Gaussian, pushing the put's CVA toward its ceiling.
 
 ---
 

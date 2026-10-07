@@ -1,27 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Vectors in Space
-topic: Flight paths and flat surfaces
-item: Lines and planes
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/05-Vectors in Space/01-cross-product-and-oriented-area|cross-product-and-oriented-area]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/01-dot-product|dot-product]]"
-next:
-  - "[[Cards/05-Geometry and trig/05-Vectors in Space/03-triple-product-and-volume|triple-product-and-volume]]"
-  - "[[Cards/23-Differential geometry and Lie groups/02-Surfaces/01-regular-surfaces-and-tangent-planes|regular-surfaces-and-tangent-planes]]"
-tags:
-  - mathematics
-  - geometry and trig
-  - lines-and-planes-in-space
----
-
 # Lines and planes: a point plus a direction, a point plus a normal
 
-Geometry and trig → Vectors in Space → Flight paths and flat surfaces → Lines and planes
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Vectors in Space](../../../SYLLABUS.md#w05-s05) → Lines and planes
 
 ---
 
@@ -47,7 +26,7 @@ Drawn at 1 m = 40 units, looking along the 10 m edge: across is y, up is z. The 
 
 ## The formula
 
-A point or an arrow in space is a list of three numbers ([vectors](../../03-Algebra/03-Vectors/01-vectors.md)). Reminders: $a \cdot b$, the dot product, is zero exactly at a right angle ([dot-product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)); $a \times b$, the cross product, is perpendicular to both, its length their parallelogram's area ([cross-product-and-oriented-area](01-cross-product-and-oriented-area.md)). Bars give a length: $\lvert a\rvert = \sqrt{a \cdot a}$.
+A point or an arrow in space is a list of three numbers ([Vectors](../../03-Algebra/03-Vectors/01-vectors.md)). Reminders: $a \cdot b$, the dot product, is zero exactly at a right angle ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)); $a \times b$, the cross product, is perpendicular to both, its length their parallelogram's area ([Cross product](01-cross-product-and-oriented-area.md)). Bars give a length: $\lvert a\rvert = \sqrt{a \cdot a}$.
 
 $$X = p + t\,d \qquad\qquad n \cdot X = c, \quad c = n \cdot A, \quad n = u \times v$$
 
@@ -109,7 +88,7 @@ Move from the drone along the normal until the test is passed, reaching the **fo
 
 $$F = p - \frac{n \cdot p - c}{n \cdot n}\, n$$
 
-It passes the test, and its distance from the drone is the gap over $\lvert n\rvert$: that is $D$. Any other point of the plane is further, by Pythagoras ([pythagoras-and-its-converse](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)): the route to it is a leg along the normal plus a leg in the plane, at right angles.
+It passes the test, and its distance from the drone is the gap over $\lvert n\rvert$: that is $D$. Any other point of the plane is further, by Pythagoras ([Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)): the route to it is a leg along the normal plus a leg in the plane, at right angles.
 
 <details>
 <summary>Detailed proof: the foot is closest, and D ignores the normal's size</summary>
@@ -130,7 +109,7 @@ Scaling $n$ and $c$ by a non-zero number scales the gap and the length alike, so
 
 A camera mast's tip is at $q$ = (5, 1.5, 5). Stand $q - p$ and $d$ at the drone: they span a parallelogram with base $d$ and height the mast tip's distance from the line. The cross product's length is the area, so area over base is height: $E = 9 / 3 = 3$ m, reached at $t = 0.5$.
 
-Projecting $q - p$ onto $d$ is a second route, in [orthogonal-projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md).
+Projecting $q - p$ onto $d$ is a second route, in [Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md).
 
 ---
 
@@ -364,7 +343,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Graphics and games.** A ray traced from a camera is a line, tested against each triangle's plane, then its edges. Placing and viewing scenes is [transformations-with-matrices](04-transformations-with-matrices.md) and [perspective-and-projective-coordinates](05-perspective-and-projective-coordinates.md).
+- **Graphics and games.** A ray traced from a camera is a line, tested against each triangle's plane, then its edges. Placing and viewing scenes is [Moving shapes with matrices](04-transformations-with-matrices.md) and [Perspective](05-perspective-and-projective-coordinates.md).
 - **Drones and robots.** Clearance from a wall or roof is a point-to-plane distance, the plane built from three measured points.
 - **Surveying and machining.** A measured point's gap along the normal from a reference surface is its flatness error.
 
@@ -375,13 +354,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [cross-product-and-oriented-area](01-cross-product-and-oriented-area.md): the normal from two edges, and the area behind the point-to-line distance.
-- [dot-product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): the right-angle test that defines a plane, and every length.
+- [Cross product](01-cross-product-and-oriented-area.md): the normal from two edges, and the area behind the point-to-line distance.
+- [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): the right-angle test that defines a plane, and every length.
 
 ## Where this goes next
 
-- [triple-product-and-volume](03-triple-product-and-volume.md): the normal dotted with a third arrow, a signed volume.
-- regular-surfaces-and-tangent-planes: a curved surface has a plane like this one at every point, its tangent plane.
+- [Triple product](03-triple-product-and-volume.md): the normal dotted with a third arrow, a signed volume.
+- Regular surface: a curved surface has a plane like this one at every point, its tangent plane.
 
 The gap $n \cdot p - c$ is secretly a box's volume; why, and what it says about three arrows lying flat, is the triple product.
 

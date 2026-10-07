@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Many underlyings - exchange, spread, basket and rainbow
-topic: Co-movement risk
-item: Correlation Greeks and implied correlation
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/18-Many underlyings - exchange, spread, basket and rainbow/04-rainbow-best-of-and-worst-of|rainbow-best-of-and-worst-of]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/01-bump-and-revalue-and-common-random-numbers|bump-and-revalue-and-common-random-numbers]]"
-next: []
-tags: [mathematics, financial mathematics, correlation-greeks-and-implied-correlation]
----
-
 # Correlation Greeks and implied correlation: the sensitivity nobody can hedge directly, and the number an index option implies
 
-Financial mathematics → Many underlyings - exchange, spread, basket and rainbow → Co-movement risk → Correlation Greeks and implied correlation
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Many underlyings - exchange, spread, basket and rainbow](../../../SYLLABUS.md#w12-s18) → Correlation Greeks and implied correlation
 
 ---
 
@@ -139,7 +123,7 @@ Boundary cases: a quote of exactly 20 percent implies correlation 1; exactly 14.
 
 ### Step 3: the correlation Greek by bumping
 
-The correlation Greek is a slope in an input that has no market price, so bump and revalue ([bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)): price at 0.51 and at 0.49, subtract, halve. When the pricer is a simulation, both prices must reuse the same random draws. Otherwise each price carries its own noise of about 2 cents, and the difference, about 2 cents for the basket, drowns.
+The correlation Greek is a slope in an input that has no market price, so bump and revalue ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)): price at 0.51 and at 0.49, subtract, halve. When the pricer is a simulation, both prices must reuse the same random draws. Otherwise each price carries its own noise of about 2 cents, and the difference, about 2 cents for the basket, drowns.
 
 ### Step 4: the bridge from correlation to cross-gamma
 
@@ -168,9 +152,9 @@ For any two finishing prices, the larger plus the smaller is the sum. The payoff
 
 ### Step 6: the basket seen as an index
 
-A third road to the basket's Greek treats the basket as a single share with volatility $\sigma_I$. Then the correlation Greek is the index option's vega (its slope in volatility), 37.81, times the slope of $\sigma_I$ in correlation, $w_1w_2\sigma_1\sigma_2/\sigma_I = 0.057735$. That gives 0.021828 per 0.01, against the exact 0.021598. The gap, 1 percent, is the price of pretending the basket is lognormal (its log bell-shaped), the approximation the sibling card on [basket-options](03-basket-options.md) studies. It is also why implied correlation read against the exact basket is 0.618564, not 0.62: the market convention prices the index as one lognormal share.
+A third road to the basket's Greek treats the basket as a single share with volatility $\sigma_I$. Then the correlation Greek is the index option's vega (its slope in volatility), 37.81, times the slope of $\sigma_I$ in correlation, $w_1w_2\sigma_1\sigma_2/\sigma_I = 0.057735$. That gives 0.021828 per 0.01, against the exact 0.021598. The gap, 1 percent, is the price of pretending the basket is lognormal (its log bell-shaped), the approximation the sibling card on [Basket options](03-basket-options.md) studies. It is also why implied correlation read against the exact basket is 0.618564, not 0.62: the market convention prices the index as one lognormal share.
 
-For the rainbow options a closed form exists, Stulz's two-dimensional bell-curve formula, done on [rainbow-best-of-and-worst-of](04-rainbow-best-of-and-worst-of.md). This card needs only prices it can bump, and reaches them by integration and by simulation.
+For the rainbow options a closed form exists, Stulz's two-dimensional bell-curve formula, done on [Rainbow options](04-rainbow-best-of-and-worst-of.md). This card needs only prices it can bump, and reaches them by integration and by simulation.
 
 ---
 
@@ -669,7 +653,7 @@ ALL CHECKS PASS
 - **Index options against member options.** The gap between an index option's volatility and its members' volatilities is the implied correlation. Conventions verified 24 Sep 2026: Cboe publishes a 3-Month Implied Correlation Index, ticker COR3M, read off the same kind of gap.
 - **Dispersion trading.** Sell index volatility and buy the members' volatility, or the reverse: a position that profits if the shares turn out less correlated than the index price implied. It is a trade on this card's number.
 - **Structured notes on the worst of several shares.** A note that pays unless the worst of three shares falls below a level is built from worst-of options. The bank that sells it keeps a correlation Greek it cannot unwind share by share, only by trading other correlation-dependent products.
-- **The rest of the shelf.** The exchange option ([exchange-option-margrabe](01-exchange-option-margrabe.md)) and the spread option ([spread-options-and-kirk](02-spread-options-and-kirk.md)) depend on the volatility of a difference, where the cross term enters with a minus sign: their correlation Greeks are negative, like the best-of's.
+- **The rest of the shelf.** The exchange option ([The exchange option](01-exchange-option-margrabe.md)) and the spread option ([Spread options](02-spread-options-and-kirk.md)) depend on the volatility of a difference, where the cross term enters with a minus sign: their correlation Greeks are negative, like the best-of's.
 
 > **Say it back**
 > An index's variance is its members' own variances, weighted, plus a cross term that grows in a straight line with correlation. Turned round, an index option's quoted volatility gives one implied correlation, provided the quote sits between the zero- and full-correlation levels; 18 percent on the house pair gives 0.62, and 25 percent gives none, since 20 percent is the ceiling. The correlation Greek is found by bumping correlation with the same random draws, and it equals the cross-gamma scaled by both prices, both volatilities and time. The best-of and worst-of Greeks cancel, because together they are two ordinary calls. Shares cannot hedge this risk; only other correlation-dependent options can.
@@ -678,14 +662,14 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [rainbow-best-of-and-worst-of](04-rainbow-best-of-and-worst-of.md): the best-of and worst-of calls whose correlation Greeks this card measures, and their closed-form prices.
-- [bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): bumping an input, choosing the bump size, and reusing random draws so the noise cancels.
+- [Rainbow options](04-rainbow-best-of-and-worst-of.md): the best-of and worst-of calls whose correlation Greeks this card measures, and their closed-form prices.
+- [Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): bumping an input, choosing the bump size, and reusing random draws so the noise cancels.
 
 ---
 
 ## Where this goes next
 
-The shelf's other cards price the options: [basket-options](03-basket-options.md) builds the basket price this card bumps.
+The shelf's other cards price the options: [Basket options](03-basket-options.md) builds the basket price this card bumps.
 
 The question it leaves open is what correlation will actually be: implied correlation is a price, and whether it is worth paying is a trading question about how correlations behave in calm and in crashes.
 

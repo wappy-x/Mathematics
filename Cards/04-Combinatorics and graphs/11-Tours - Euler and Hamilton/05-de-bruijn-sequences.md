@@ -1,27 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Tours - Euler and Hamilton
-topic: Every code in one string
-item: De Bruijn sequences
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/11-Tours - Euler and Hamilton/01-euler-circuits|euler-circuits]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/06-directed-graphs-and-topological-order|directed-graphs-and-topological-order]]"
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/02-strings-and-powers|strings-and-powers]]"
-next:
-  - "[[Cards/14-Applied and computational/03-Information Theory/08-error-correcting-codes-hamming-and-reed-solomon|error-correcting-codes-hamming-and-reed-solomon]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - de-bruijn-sequences
----
-
 # De Bruijn sequences: an Euler circuit that packs every possible code into one shortest string
 
-Combinatorics and graphs → Tours - Euler and Hamilton → Every code in one string → De Bruijn sequences
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Tours - Euler and Hamilton](../../../SYLLABUS.md#w04-s11) → De Bruijn sequences
 
 ---
 
@@ -33,7 +12,7 @@ But presses overlap: type 0000, then 1, and the lock has seen 0000 and 0001 — 
 
 The small case is checkable by eye. Two digits and codes of length 3 give eight codes, 24 digits in a plain list. Read the eight digits 00010111 as a ring instead — a circle with no start — three at a time, wrapping past the end: 000, 001, 010, 101, 011, 111, 110, 100. Each code once.
 
-Such a string is a **de Bruijn sequence**, after Nicolaas de Bruijn, whose 1946 paper counted the binary ones. The construction never searches. It makes the codes the **arrows** of a graph, not its places, and walks every arrow once — an Euler circuit ([euler-circuits](01-euler-circuits.md)), as I. J. Good showed that year.
+Such a string is a **de Bruijn sequence**, after Nicolaas de Bruijn, whose 1946 paper counted the binary ones. The construction never searches. It makes the codes the **arrows** of a graph, not its places, and walks every arrow once — an Euler circuit ([Euler circuits](01-euler-circuits.md)), as I. J. Good showed that year.
 
 **Take the windows one digit shorter than a code as the places of a graph and the codes as arrows between them; every place then has as many arrows in as out, so one closed walk uses every arrow once, and the digits it adds spell a ring with one digit per code.**
 
@@ -63,7 +42,7 @@ Each place is a two-digit window, each arrow a three-digit code: leaving a place
 
 ## The formula
 
-Two letters, both plain counts. $n$ is how many digits are available, 2 for the ring and 10 for the lock; $k$ is how long a code is, 3 and 4. A **window** is a code with one digit trimmed off, so $k-1$ digits long. There are $n^k$ codes ([strings-and-powers](../01-Counting%20Principles/02-strings-and-powers.md)), and $n^{k-1}$ windows.
+Two letters, both plain counts. $n$ is how many digits are available, 2 for the ring and 10 for the lock; $k$ is how long a code is, 3 and 4. A **window** is a code with one digit trimmed off, so $k-1$ digits long. There are $n^k$ codes ([Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md)), and $n^{k-1}$ windows.
 
 $$\text{length of the ring} = n^k$$
 
@@ -87,7 +66,7 @@ $$\text{how many rings} = \frac{(n!)^{\,n^{k-1}}}{n^k}$$
 
 ### When it holds
 
-- **No code is banned.** Ban some and a window can end with more arrows in than out; then no circuit exists, and some arrows must be walked twice — the postman's question ([chinese-postman](02-chinese-postman.md)).
+- **No code is banned.** Ban some and a window can end with more arrows in than out; then no circuit exists, and some arrows must be walked twice — the postman's question ([The Chinese postman](02-chinese-postman.md)).
 - **The reading wraps round.** Stop after the lock's 10,000 digits and the 3 codes straddling the join never happen.
 - **Whatever reads the string judges every window.** An enter key, or a pad clearing every four presses, kills the overlap: back to 40,000. Repeated digits must count as codes too, since the ring includes 000 and 111.
 
@@ -97,15 +76,15 @@ $$\text{how many rings} = \frac{(n!)^{\,n^{k-1}}}{n^k}$$
 
 ### Step 0: make the codes the arrows, not the places
 
-The obvious graph makes the eight codes its places, joining 001 to 011 because they overlap in two digits, and asks for a cycle through every place — a Hamiltonian cycle ([hamiltonian-cycles](03-hamiltonian-cycles.md)), for which no fast method is known ([travelling-salesman-in-outline](04-travelling-salesman-in-outline.md)).
+The obvious graph makes the eight codes its places, joining 001 to 011 because they overlap in two digits, and asks for a cycle through every place — a Hamiltonian cycle ([Hamiltonian cycles](03-hamiltonian-cycles.md)), for which no fast method is known ([The travelling salesman](04-travelling-salesman-in-outline.md)).
 
-Drop a level. The places become the four two-digit windows, the arrows the codes: 001 runs from 00 to 01. Now "every code once" means "every arrow once" — an Euler circuit, with a one-line test and a fast method ([euler-circuits](01-euler-circuits.md)). Same task, different graph, and the difficulty went with it.
+Drop a level. The places become the four two-digit windows, the arrows the codes: 001 runs from 00 to 01. Now "every code once" means "every arrow once" — an Euler circuit, with a one-line test and a fast method ([Euler circuits](01-euler-circuits.md)). Same task, different graph, and the difficulty went with it.
 
 ### Step 1: every window has as many arrows in as out
 
 Two arrows leave window 01, 010 and 011, one per digit appended; two arrive, 001 and 101, one per digit put in front. The count is $n$ both ways at every window. The checks tally both off the list of codes, not off the construction: in- and out-degree 2 to 2 everywhere.
 
-Connected, too: pressing another window's digits reaches it within $k-1$ presses. Equal degrees plus connected is the condition for a closed walk using every arrow once ([euler-circuits](01-euler-circuits.md)), so one exists for every graph of this shape, with no search.
+Connected, too: pressing another window's digits reaches it within $k-1$ presses. Equal degrees plus connected is the condition for a closed walk using every arrow once ([Euler circuits](01-euler-circuits.md)), so one exists for every graph of this shape, with no search.
 
 ### Step 2: the walk spells the string
 
@@ -124,7 +103,7 @@ Two, not one, at this size. Brute force over all 256 eight-digit strings finds 1
 <details>
 <summary>Detailed proof: the ring exists for every alphabet and every code length</summary>
 
-Places: the $n^{k-1}$ windows; arrows: each code, from its first $k-1$ digits to its last $k-1$. For any $n$ and $k$, every window has $n$ arrows out and $n$ in, so the degrees match, and typing a window's digits reaches it from any other in $k-1$ steps, so the graph is connected. A connected directed graph with matching degrees has a closed walk using every arrow once ([euler-circuits](01-euler-circuits.md)). Steps 2 and 3 are written for any $n$ and $k$ already, so the ring exists and is shortest at every size.
+Places: the $n^{k-1}$ windows; arrows: each code, from its first $k-1$ digits to its last $k-1$. For any $n$ and $k$, every window has $n$ arrows out and $n$ in, so the degrees match, and typing a window's digits reaches it from any other in $k-1$ steps, so the graph is connected. A connected directed graph with matching degrees has a closed walk using every arrow once ([Euler circuits](01-euler-circuits.md)). Steps 2 and 3 are written for any $n$ and $k$ already, so the ring exists and is shortest at every size.
 
 </details>
 
@@ -385,13 +364,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [euler-circuits](01-euler-circuits.md): the test for a closed walk using every arrow once, and the splicing method that finds one.
-- [directed-graphs-and-topological-order](../09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md): arrows with a direction, counted in and out of a place.
-- [strings-and-powers](../01-Counting%20Principles/02-strings-and-powers.md): why $n$ digits in $k$ slots give $n^k$ codes.
+- [Euler circuits](01-euler-circuits.md): the test for a closed walk using every arrow once, and the splicing method that finds one.
+- [Directed graphs](../09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md): arrows with a direction, counted in and out of a place.
+- [Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md): why $n$ digits in $k$ slots give $n^k$ codes.
 
 ## Where this goes next
 
-- error-correcting-codes-hamming-and-reed-solomon: shift registers and codes built from the same finite-field arithmetic.
+- Hamming and Reed-Solomon: shift registers and codes built from the same finite-field arithmetic.
 - **Shift registers.** A few bits of memory and a feedback rule emit one of these rings a digit at a time, storing no table.
 - **Counting the walks.** The BEST theorem counts the circuits by turning them into spanning trees.
 

@@ -1,30 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Powers, Roots and Logarithms
-topic: Powers
-item: Exponents
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/03-multiplying-and-dividing|multiplying-and-dividing]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/06-negative-numbers|negative-numbers]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/07-fractions|fractions]]"
-next:
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/02-linear-vs-exponential-growth|linear-vs-exponential-growth]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/03-roots-and-fractional-exponents|roots-and-fractional-exponents]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/04-scientific-notation|scientific-notation]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/05-logarithms|logarithms]]"
-tags:
-  - mathematics
-  - foundations
-  - exponents-and-powers
----
-
 # Exponents: repeated multiplication, and why zero and negative powers make sense
 
-Foundations → Powers, Roots and Logarithms → Powers → Exponents
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Powers, Roots and Logarithms](../../../SYLLABUS.md#w01-s03) → Exponents
 
 ---
 
@@ -278,9 +254,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Anything that spreads.** Rumours, viruses, forwarded posts: each step multiplies instead of adding, which is why they look flat and then do not: [linear-vs-exponential-growth](02-linear-vs-exponential-growth.md).
+- **Anything that spreads.** Rumours, viruses, forwarded posts: each step multiplies instead of adding, which is why they look flat and then do not: [Linear versus exponential growth](02-linear-vs-exponential-growth.md).
 - **Compound interest.** A balance growing a fixed percentage a year is a chain message with a small base.
-- **Huge and tiny numbers.** Star distances and virus sizes are a number times a power of ten: [scientific-notation](04-scientific-notation.md).
+- **Huge and tiny numbers.** Star distances and virus sizes are a number times a power of ten: [Scientific notation](04-scientific-notation.md).
 
 > **Say it back**
 > An exponent counts copies. 3^5 means five 3s multiplied together, which is 243; the 3 is the base, the 5 is the exponent. Multiplying powers of the same base adds those counts, dividing subtracts them. Stacking, (3^2)^3, multiplies them. That settles the odd cases: 243 ÷ 243 is 1 and is also 3^0; 9 ÷ 243 is 1/27 and is also 3^-3.
@@ -289,16 +265,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [multiplying-and-dividing](../01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): repeated multiplication, and cancelling factors.
-- [negative-numbers](../01-Everyday%20Arithmetic/06-negative-numbers.md): what a minus sign on the exponent means.
-- [fractions](../01-Everyday%20Arithmetic/07-fractions.md): where 3^-3 lands, one twenty-seventh.
+- [Multiplying and dividing](../01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): repeated multiplication, and cancelling factors.
+- [Negative numbers](../01-Everyday%20Arithmetic/06-negative-numbers.md): what a minus sign on the exponent means.
+- [Fractions](../01-Everyday%20Arithmetic/07-fractions.md): where 3^-3 lands, one twenty-seventh.
 
 ## Where this goes next
 
-- [linear-vs-exponential-growth](02-linear-vs-exponential-growth.md): this chain against one that adds 3 people a round.
-- [roots-and-fractional-exponents](03-roots-and-fractional-exponents.md): what half a round would mean, and why it is a root.
-- [scientific-notation](04-scientific-notation.md): powers of ten, for very big and very small numbers.
-- [logarithms](05-logarithms.md): this card backwards — given 243 and base 3, what power got me here?
+- [Linear versus exponential growth](02-linear-vs-exponential-growth.md): this chain against one that adds 3 people a round.
+- [Roots](03-roots-and-fractional-exponents.md): what half a round would mean, and why it is a root.
+- [Scientific notation](04-scientific-notation.md): powers of ten, for very big and very small numbers.
+- [Logarithms](05-logarithms.md): this card backwards — given 243 and base 3, what power got me here?
 
 ---
 

@@ -1,26 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Densities and Changing Measure
-topic: Reweighting one model into another
-item: Densities and likelihood ratios
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/04-radon-nikodym-derivative|radon-nikodym-derivative]]"
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/04-jensens-inequality|jensens-inequality]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/06-expectation-as-an-integral|expectation-as-an-integral]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/01-densities-and-cdfs|densities-and-cdfs]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/04-maximum-likelihood|maximum-likelihood]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/01-change-of-measure-and-density-processes|change-of-measure-and-density-processes]]"
-tags: [mathematics, measure and integration, densities-and-likelihood-ratios]
----
-
 # Densities and likelihood ratios: the everyday density is a Radon-Nikodym derivative against length, and a ratio of two tilts one model into another
 
-Measure and integration → Densities and Changing Measure → Reweighting one model into another → Densities and likelihood ratios
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Densities and Changing Measure](../../../SYLLABUS.md#w10-s08) → Densities and likelihood ratios
 
 ---
 
@@ -30,7 +10,7 @@ A rider times the wait at a busy city stop: 0.30 minutes. Two models compete, bo
 
 Which model does 0.30 minutes favour, and by how much? Under both models a wait of exactly 0.30 minutes has probability zero: a single point has no length. A ratio of two zeros says nothing. Yet statisticians answer at once: Q favours this wait by a factor of 1.4816. A wait of 2 minutes goes the other way: Q's weight is 0.2707 of P's.
 
-That factor is a **likelihood ratio**: how much more weight one model puts at a wait than the other. The everyday density of a waiting time ([densities-and-cdfs](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)) is an exchange rate between probability and length. A ratio of two densities is the exchange rate between the two models, with length cancelled: multiply P by it and Q comes out. The average logarithm of the ratio, the **Kullback-Leibler divergence**, measures how far apart the models sit, and is never negative. An exponential ratio leans a fair die, by a controlled amount, towards sixes.
+That factor is a **likelihood ratio**: how much more weight one model puts at a wait than the other. The everyday density of a waiting time ([Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)) is an exchange rate between probability and length. A ratio of two densities is the exchange rate between the two models, with length cancelled: multiply P by it and Q comes out. The average logarithm of the ratio, the **Kullback-Leibler divergence**, measures how far apart the models sit, and is never negative. An exponential ratio leans a fair die, by a controlled amount, towards sixes.
 
 **A density is a Radon-Nikodym derivative against length, the ratio of two densities is the Radon-Nikodym derivative of one model against the other, and its average logarithm is a distance-like number that is zero only when the models agree.**
 
@@ -55,7 +35,7 @@ Orange is model P's density, $e^{-x}$. Green is model Q's, $2e^{-2x}$. Dark blue
 
 ## The formula
 
-Notation first, in words. As on [radon-nikodym-derivative](04-radon-nikodym-derivative.md), $dQ/dP$ is read "the density of Q against P": the function that turns P into Q under an integral. Here the space $\Omega$ is the waits `[0, ∞)` and $\mathcal{F}$, the collection of sets we allow ourselves to measure, is its Borel sets. P and Q are probability measures on them, and $\lambda$ is length.
+Notation first, in words. As on [The Radon-Nikodym derivative](04-radon-nikodym-derivative.md), $dQ/dP$ is read "the density of Q against P": the function that turns P into Q under an integral. Here the space $\Omega$ is the waits `[0, ∞)` and $\mathcal{F}$, the collection of sets we allow ourselves to measure, is its Borel sets. P and Q are probability measures on them, and $\lambda$ is length.
 
 **Density.** A probability measure P has density $p$ against a reference measure $\nu$ when, for every set A in $\mathcal{F}$,
 
@@ -96,9 +76,9 @@ $$\frac{dQ_\theta}{dP}(x) = \frac{e^{\theta x}}{M(\theta)}, \qquad M(\theta) = \
 
 ### When it holds
 
-- **Q puts no mass where P puts none**, written $Q \ll P$ and read "Q is absolutely continuous with respect to P" ([absolutely-continuous-and-singular-measures](01-absolutely-continuous-and-singular-measures.md)). Drop it and the ratio loses mass: Q uniform on `[0, 2]` against P uniform on `[0, 1]` gives $\int (q/p)\,dP = 0.5$, not 1.
+- **Q puts no mass where P puts none**, written $Q \ll P$ and read "Q is absolutely continuous with respect to P" ([Absolutely continuous and singular measures](01-absolutely-continuous-and-singular-measures.md)). Drop it and the ratio loses mass: Q uniform on `[0, 2]` against P uniform on `[0, 1]` gives $\int (q/p)\,dP = 0.5$, not 1.
 - **Each model has a density against the reference.** A law has a density against length only if it gives zero to every set of length zero. The fair die puts 1/6 on the single point 6; its "probability per unit length" near 6 reads 0.8333, 8.3333, 83.3333 as the window shrinks, and grows without bound.
-- **The reference measure is σ-finite**: the space splits into countably many pieces of finite size, as for length. The Radon-Nikodym theorem needs it ([radon-nikodym-theorem](03-radon-nikodym-theorem.md)).
+- **The reference measure is σ-finite**: the space splits into countably many pieces of finite size, as for length. The Radon-Nikodym theorem needs it ([The Radon-Nikodym theorem](03-radon-nikodym-theorem.md)).
 - **The divergence needs $Q \ll P$ too.** Without it, $D(Q\,\|\,P)$ is defined to be $+\infty$: Q expects outcomes that P calls impossible.
 - **The tilt needs a finite $M(\theta)$.** For the bus under P, $M(\theta) = 1/(1 - \theta)$, finite only for $\theta < 1$. For the die, any $\theta$ works, but only means strictly between 1 and 6 can be reached.
 
@@ -122,7 +102,7 @@ Take densities $p$ and $q$ against one reference $\nu$, and $Q \ll P$. Set $L = 
 
 1. **Q ignores the places P ignores.** On the set where $p = 0$, P has mass $\int p \, d\nu = 0$. Since $Q \ll P$, Q has mass 0 there too.
 2. **Rewrite Q's density as ratio times P's density.** Off that set, $q = (q/p)\,p = L\,p$.
-3. **Move p into the measure.** The change-of-measure rule from [radon-nikodym-derivative](04-radon-nikodym-derivative.md) says $\int g\,p \, d\nu = \int g \, dP$. With $g = L$ on A, $Q(A) = \int_A L\,p\,d\nu = \int_A L\,dP$.
+3. **Move p into the measure.** The change-of-measure rule from [The Radon-Nikodym derivative](04-radon-nikodym-derivative.md) says $\int g\,p \, d\nu = \int g \, dP$. With $g = L$ on A, $Q(A) = \int_A L\,p\,d\nu = \int_A L\,dP$.
 
 So $L$ satisfies the defining property of $dQ/dP$, and the Radon-Nikodym theorem says any two such functions agree P-almost everywhere. For the bus, $L(x) = 2e^{-2x}/e^{-x} = 2e^{-x}$.
 
@@ -134,7 +114,7 @@ The working consequence is the reweighting rule: $\int g\,dQ = \int g\,L\,dP$ fo
 
 Define $D(Q\,\|\,P) = \int \ln L \, dQ$ when $Q \ll P$, and $+\infty$ otherwise. By the reweighting rule it is also $\int L \ln L \, dP$.
 
-The proof that $D \ge 0$ is one use of Jensen's inequality ([jensens-inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md)). The logarithm bends downward, so the average of a logarithm is at most the logarithm of the average:
+The proof that $D \ge 0$ is one use of Jensen's inequality ([Jensen's inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md)). The logarithm bends downward, so the average of a logarithm is at most the logarithm of the average:
 
 $$-D(Q\,\|\,P) = \int \ln\frac{1}{L}\,dQ \;\le\; \ln \int \frac{1}{L}\,dQ = \ln P(L > 0) \;\le\; \ln 1 = 0.$$
 
@@ -148,7 +128,7 @@ Set $Z = e^{\theta X}/M(\theta)$, with $X$ the outcome. It is positive with P-av
 
 The bus model Q is itself a tilt of P. With $\theta = -1$, $M(-1) = 1/2$ and $Z = 2e^{-x}$: the likelihood ratio of Step 2. The tilt formula gives the divergence a third time: $D(Q_\theta\,\|\,P) = \int (\theta x - \ln M)\,dQ_\theta = \theta\,m - \ln M(\theta)$, here $-1/2 + \ln 2 = 0.193147$.
 
-Now the die, fair with mean 3.5. Tilting by $e^{\theta k}$ with $\theta = 0.328605407$ gives mean 4.4 and weights 0.0629, 0.0874, 0.1214, 0.1686, 0.2342, 0.3254. The shelf's loaded die, (0.1, 0.1, 0.1, 0.1, 0.2, 0.4), also has mean 4.4; [radon-nikodym-derivative](04-radon-nikodym-derivative.md) calls it Q, and below it is R. The tilt lies closer to fair, by a fixed rule: for any model R with the same mean as $Q_\theta$,
+Now the die, fair with mean 3.5. Tilting by $e^{\theta k}$ with $\theta = 0.328605407$ gives mean 4.4 and weights 0.0629, 0.0874, 0.1214, 0.1686, 0.2342, 0.3254. The shelf's loaded die, (0.1, 0.1, 0.1, 0.1, 0.2, 0.4), also has mean 4.4; [The Radon-Nikodym derivative](04-radon-nikodym-derivative.md) calls it Q, and below it is R. The tilt lies closer to fair, by a fixed rule: for any model R with the same mean as $Q_\theta$,
 
 $$D(R\,\|\,P) = D(R\,\|\,Q_\theta) + D(Q_\theta\,\|\,P).$$
 
@@ -174,13 +154,13 @@ Orange is the fair die. Green is the tilt: each step up a face multiplies the we
 
 **Setting.** $(\Omega, \mathcal{F})$ is a measurable space, $\nu$ a σ-finite measure on it, and P, Q probability measures with $P = p\,\nu$ and $Q = q\,\nu$, meaning $P(A) = \int_A p\,d\nu$ and $Q(A) = \int_A q\,d\nu$, with $p, q \ge 0$ measurable with respect to $\mathcal{F}$.
 
-**1. Densities against length.** A probability measure P on the Borel sets of the line has a density against $\lambda$ if and only if $P(A) = 0$ whenever $\lambda(A) = 0$: this is the Radon-Nikodym theorem for the σ-finite $\lambda$ ([radon-nikodym-theorem](03-radon-nikodym-theorem.md)), and two densities agree $\lambda$-a.e. If F is continuous and has a continuous derivative f except at finitely many points, the fundamental theorem of calculus, applied piece by piece, gives $\int_{(-\infty, x]} f\,d\lambda = F(x)$, so the measures $A \mapsto \int_A f\,d\lambda$ and P agree on half-lines. Half-lines are closed under intersection and generate the Borel sets, so the two measures agree everywhere (shelf 01). Hence $f = dP/d\lambda$.
+**1. Densities against length.** A probability measure P on the Borel sets of the line has a density against $\lambda$ if and only if $P(A) = 0$ whenever $\lambda(A) = 0$: this is the Radon-Nikodym theorem for the σ-finite $\lambda$ ([The Radon-Nikodym theorem](03-radon-nikodym-theorem.md)), and two densities agree $\lambda$-a.e. If F is continuous and has a continuous derivative f except at finitely many points, the fundamental theorem of calculus, applied piece by piece, gives $\int_{(-\infty, x]} f\,d\lambda = F(x)$, so the measures $A \mapsto \int_A f\,d\lambda$ and P agree on half-lines. Half-lines are closed under intersection and generate the Borel sets, so the two measures agree everywhere (shelf 01). Hence $f = dP/d\lambda$.
 
 **2. P ignores $\{p = 0\}$, and so does Q.** Let $N = \{p = 0\}$. Then $P(N) = \int_N p\,d\nu = \int_N 0\,d\nu = 0$. Since $Q \ll P$, $Q(N) = 0$.
 
-**3. $L$ is dQ/dP.** Define $L = q/p$ off N and $L = 0$ on N; it is measurable. For A in $\mathcal{F}$, step 2 and $q = L\,p$ off N give $Q(A) = Q(A \setminus N) = \int_{A \setminus N} L\,p\,d\nu$. The change-of-measure rule ([radon-nikodym-derivative](04-radon-nikodym-derivative.md): $\int g\,p\,d\nu = \int g\,dP$ for measurable $g \ge 0$) with $g = L\,1_{A \setminus N}$ turns this into $\int_{A \setminus N} L\,dP = \int_A L\,dP$, since $P(N) = 0$. Any other function with this property equals $L$ P-a.e., by the uniqueness in the Radon-Nikodym theorem. The reweighting rule $\int g\,dQ = \int g\,L\,dP$ follows from indicators by linearity and monotone convergence.
+**3. $L$ is dQ/dP.** Define $L = q/p$ off N and $L = 0$ on N; it is measurable. For A in $\mathcal{F}$, step 2 and $q = L\,p$ off N give $Q(A) = Q(A \setminus N) = \int_{A \setminus N} L\,p\,d\nu$. The change-of-measure rule ([The Radon-Nikodym derivative](04-radon-nikodym-derivative.md): $\int g\,p\,d\nu = \int g\,dP$ for measurable $g \ge 0$) with $g = L\,1_{A \setminus N}$ turns this into $\int_{A \setminus N} L\,dP = \int_A L\,dP$, since $P(N) = 0$. Any other function with this property equals $L$ P-a.e., by the uniqueness in the Radon-Nikodym theorem. The reweighting rule $\int g\,dQ = \int g\,L\,dP$ follows from indicators by linearity and monotone convergence.
 
-**4. Without $Q \ll P$.** The measure $A \mapsto \int_A L\,dP$ is still defined and equals $A \mapsto Q(A \setminus N)$: the absolutely continuous part of Q in the Lebesgue decomposition ([lebesgue-decomposition](05-lebesgue-decomposition.md)), and $Q(N) > 0$ is exactly the mass it misses.
+**4. Without $Q \ll P$.** The measure $A \mapsto \int_A L\,dP$ is still defined and equals $A \mapsto Q(A \setminus N)$: the absolutely continuous part of Q in the Lebesgue decomposition ([Lebesgue decomposition](05-lebesgue-decomposition.md)), and $Q(N) > 0$ is exactly the mass it misses.
 
 **5. The divergence is well defined.** Assume $Q \ll P$ and $L = dQ/dP$. Then $Q(L = 0) = \int_{\{L=0\}} L\,dP = 0$, so $\ln L$ is finite Q-a.s. Its negative part has $\int (\ln L)^- \,dQ = \int_{\{L<1\}} L \ln(1/L)\,dP \le 1/e$, because $t\ln(1/t) \le 1/e$ for $0 < t < 1$ (its derivative $\ln(1/t) - 1$ vanishes at $t = 1/e$) and $P(\Omega) = 1$. So $D(Q\,\|\,P) = \int \ln L\,dQ$ is defined in `[−1/e, ∞]`, and by the reweighting rule applied to the positive and negative parts it equals $\int L \ln L\,dP$.
 
@@ -190,7 +170,7 @@ Orange is the fair die. Green is the tilt: each step up a face multiplies the we
 
 **8. The tilt.** Let X be a real measurable function with $M(\theta) = \int e^{\theta X}\,dP < \infty$. Then $Z = e^{\theta X}/M(\theta) > 0$ and $\int Z\,dP = 1$, so $Q_\theta = Z\,P$ is a probability measure, and $Q_\theta(A) = 0$ exactly when $P(A) = 0$ because $Z > 0$. For the die, $M(\theta) = \frac{1}{6}\sum_{k=1}^{6} e^{\theta k}$ is a finite sum, differentiated term by term: $M' = \int X e^{\theta X}\,dP$, $M'' = \int X^2 e^{\theta X}\,dP$. So $m(\theta) = \int X\,dQ_\theta = M'/M$ and $m' = M''/M - (M'/M)^2$, the variance of X under $Q_\theta$, positive because the faces differ. As $\theta \to \pm\infty$, $m \to 6$ or 1; by the intermediate value theorem and strict increase, each target in `(1, 6)` has exactly one $\theta$. Since $\ln Z = \theta X - \ln M(\theta)$, $D(Q_\theta\,\|\,P) = \int (\theta X - \ln M)\,dQ_\theta = \theta\,m(\theta) - \ln M(\theta)$.
 
-**9. The tilt minimises the divergence.** Let R be a probability measure with $R \ll P$ and $\int X\,dR = m(\theta)$. Since $Q_\theta$ and P have the same null sets, $R \ll Q_\theta$, and the chain rule ([radon-nikodym-derivative](04-radon-nikodym-derivative.md)) gives $dR/dP = (dR/dQ_\theta)\,Z$ P-a.s. Taking logarithms and integrating against R, $D(R\,\|\,P) = D(R\,\|\,Q_\theta) + \int (\theta X - \ln M)\,dR = D(R\,\|\,Q_\theta) + \theta\,m(\theta) - \ln M(\theta) = D(R\,\|\,Q_\theta) + D(Q_\theta\,\|\,P)$. By step 6 the first term is at least 0, with equality only when $R = Q_\theta$. Equivalently, the convex function $t \mapsto \ln M(t) - m\,t$ has derivative $m(t) - m$, so it is least at $t = \theta$, where its value is $-D(Q_\theta\,\|\,P)$.
+**9. The tilt minimises the divergence.** Let R be a probability measure with $R \ll P$ and $\int X\,dR = m(\theta)$. Since $Q_\theta$ and P have the same null sets, $R \ll Q_\theta$, and the chain rule ([The Radon-Nikodym derivative](04-radon-nikodym-derivative.md)) gives $dR/dP = (dR/dQ_\theta)\,Z$ P-a.s. Taking logarithms and integrating against R, $D(R\,\|\,P) = D(R\,\|\,Q_\theta) + \int (\theta X - \ln M)\,dR = D(R\,\|\,Q_\theta) + \theta\,m(\theta) - \ln M(\theta) = D(R\,\|\,Q_\theta) + D(Q_\theta\,\|\,P)$. By step 6 the first term is at least 0, with equality only when $R = Q_\theta$. Equivalently, the convex function $t \mapsto \ln M(t) - m\,t$ has derivative $m(t) - m$, so it is least at $t = \theta$, where its value is $-D(Q_\theta\,\|\,P)$.
 
 </details>
 
@@ -645,9 +625,9 @@ The two outputs match line for line. Python's `sum` adds floats with a compensat
 
 ## Where you meet it in real life
 
-- **Hypothesis tests.** The Neyman-Pearson lemma says the most powerful test between two simple models rejects when the likelihood ratio is large; the test statistic is $dQ/dP$ evaluated at the data ([likelihood-ratio-tests](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md)).
-- **Maximum likelihood.** The average log-likelihood of the data estimates $-D(\text{true law}\,\|\,\text{model})$ plus a term that does not involve the model, so maximising it aims at the model closest to the true law ([maximum-likelihood](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/04-maximum-likelihood.md)).
-- **Rare-event simulation.** Sampling from a tilted model that makes the rare event common, then weighting each draw by the likelihood ratio, is importance sampling ([importance-sampling](../../09-Probability%20and%20statistics/11-Simulation/06-importance-sampling.md)).
+- **Hypothesis tests.** The Neyman-Pearson lemma says the most powerful test between two simple models rejects when the likelihood ratio is large; the test statistic is $dQ/dP$ evaluated at the data ([Likelihood ratio tests](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md)).
+- **Maximum likelihood.** The average log-likelihood of the data estimates $-D(\text{true law}\,\|\,\text{model})$ plus a term that does not involve the model, so maximising it aims at the model closest to the true law ([Maximum likelihood](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/04-maximum-likelihood.md)).
+- **Rare-event simulation.** Sampling from a tilted model that makes the rare event common, then weighting each draw by the likelihood ratio, is importance sampling ([Importance sampling](../../09-Probability%20and%20statistics/11-Simulation/06-importance-sampling.md)).
 - **Machine learning.** The cross-entropy loss that trains classifiers is $D(\text{true labels}\,\|\,\text{predictions})$ plus a constant.
 - **Insurance.** The Esscher transform, an exponential tilt of the claims distribution, dates from 1932.
 - **Physics.** The Boltzmann distribution, weight proportional to $e^{-\text{energy}/\text{temperature}}$, is the tilt of the uniform distribution that fixes the average energy.
@@ -659,16 +639,16 @@ The two outputs match line for line. Python's `sum` adds floats with a compensat
 
 ## What this builds on
 
-- [radon-nikodym-derivative](04-radon-nikodym-derivative.md): the change-of-measure rule for integrals and the chain rule, used in Steps 2 and 4.
-- [jensens-inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md): the inequality, with its equality case, that makes the divergence non-negative.
-- [expectation-as-an-integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md): averages under P and Q as integrals against them.
-- [densities-and-cdfs](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md): the density as a curve whose areas are probabilities, and the distribution function it is the slope of.
-- [maximum-likelihood](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/04-maximum-likelihood.md): the likelihood as a density evaluated at the data.
+- [The Radon-Nikodym derivative](04-radon-nikodym-derivative.md): the change-of-measure rule for integrals and the chain rule, used in Steps 2 and 4.
+- [Jensen's inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md): the inequality, with its equality case, that makes the divergence non-negative.
+- [Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md): averages under P and Q as integrals against them.
+- [Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md): the density as a curve whose areas are probabilities, and the distribution function it is the slope of.
+- [Maximum likelihood](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/04-maximum-likelihood.md): the likelihood as a density evaluated at the data.
 
 ## Where this goes next
 
-- [change-of-measure-and-density-processes](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/01-change-of-measure-and-density-processes.md): the likelihood ratio followed through time, as a process whose value on each day is dQ/dP for what is known by then.
-- [risk-neutral-measure-and-the-fundamental-theorems](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md): pricing under a second set of odds, reached from the real-world ones by a density.
+- [Changing the measure](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/01-change-of-measure-and-density-processes.md): the likelihood ratio followed through time, as a process whose value on each day is dQ/dP for what is known by then.
+- [The fundamental theorems](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md): pricing under a second set of odds, reached from the real-world ones by a density.
 
 This card compares two models on one draw; the open question is how the ratio behaves as draws pile up over time, and whether it can switch one random walk's drift for another's.
 

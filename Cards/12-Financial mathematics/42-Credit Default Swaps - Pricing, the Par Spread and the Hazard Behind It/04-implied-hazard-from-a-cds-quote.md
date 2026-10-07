@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It
-topic: Reading a spread backwards
-item: Implied hazard from one CDS quote
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/03-the-credit-triangle|the-credit-triangle]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/05-root-finding-for-inverses|root-finding-for-inverses]]"
-next:
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/05-recovery-assumptions-and-what-they-change|recovery-assumptions-and-what-they-change]]"
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/06-bootstrapping-the-hazard-curve-from-cds-quotes|bootstrapping-the-hazard-curve-from-cds-quotes]]"
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis|implied-hazard-from-a-bond-price-and-the-cds-bond-basis]]"
-tags: [mathematics, financial mathematics, implied-hazard-from-a-cds-quote]
----
-
 # Implied hazard from one CDS quote: solving the par-spread equation backwards, and why the answer is unique
 
-Financial mathematics → Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It → Reading a spread backwards → Implied hazard from one CDS quote
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../../../SYLLABUS.md#w12-s42) → Implied hazard from one CDS quote
 
 ---
 
@@ -27,9 +8,9 @@ Financial mathematics → Credit Default Swaps - Pricing, the Par Spread and the
 
 A lender holds 10 million dollars of loans to a music-festival promoter. Festivals are cash-hungry and weather-exposed, so the lender buys five years of protection: a credit default swap, a contract that pays out the loss if the promoter defaults. The dealer's screen quotes it at **300 basis points**. A basis point is a hundredth of a percent, so 300 bp is 3% a year: 300,000 dollars a year on 10 million, paid 75,000 a quarter while the promoter survives.
 
-The quote is a price. The lender's risk system wants something else: how likely the market thinks default is. The number that carries that is the **hazard rate**, the chance of defaulting in the next short stretch of time, per year, given survival so far ([hazard-rate-and-survival-probability](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)). Pricing a CDS runs from hazard to spread ([cds-legs-risky-annuity-and-par-spread](02-cds-legs-risky-annuity-and-par-spread.md)). This card runs it the other way.
+The quote is a price. The lender's risk system wants something else: how likely the market thinks default is. The number that carries that is the **hazard rate**, the chance of defaulting in the next short stretch of time, per year, given survival so far ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)). Pricing a CDS runs from hazard to spread ([Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md)). This card runs it the other way.
 
-The credit triangle gives a first guess: spread divided by the share lost in default. With 40% recovered, 60% is lost, and 3% / 60% = 5% a year ([the-credit-triangle](03-the-credit-triangle.md)). The exact answer is **4.94% a year**, a **21.9% chance of default within five years**. The gap comes from paying premiums quarterly, after the fact, instead of continuously. Twelve halvings of the range from zero to the triangle's 5% pin it down.
+The credit triangle gives a first guess: spread divided by the share lost in default. With 40% recovered, 60% is lost, and 3% / 60% = 5% a year ([The credit triangle](03-the-credit-triangle.md)). The exact answer is **4.94% a year**, a **21.9% chance of default within five years**. The gap comes from paying premiums quarterly, after the fact, instead of continuously. Twelve halvings of the range from zero to the triangle's 5% pin it down.
 
 Solving backwards is only safe if there is exactly one answer to find. There is. The spread climbs strictly as the hazard climbs, from zero and without limit, so every positive quote meets the curve exactly once.
 
@@ -89,13 +70,13 @@ $$\text{chance of default by } T \;=\; 1 - e^{-\lambda T} \;=\; 1 - e^{-0.049381
 
 ### When it holds
 
-- **A flat hazard.** One quote pins one number. The real risk may rise or fall over the five years; a curve that changes shape needs several quotes and a bootstrap ([bootstrapping-the-hazard-curve-from-cds-quotes](06-bootstrapping-the-hazard-curve-from-cds-quotes.md)).
+- **A flat hazard.** One quote pins one number. The real risk may rise or fall over the five years; a curve that changes shape needs several quotes and a bootstrap ([Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md)).
 - **A flat discount rate.** Only then does the closed form hold and maturity drop out. On a curve whose rates climb from 2% at the short end to 7% at five years, the same quote implies 4.93% instead of 4.94%. The proof below then no longer applies word for word; the check confirms the spread still rises strictly on that curve.
-- **A recovery taken as known.** The quote cannot separate hazard from recovery. Assume 25% recovered and the hazard is 3.96%; assume 60% and it is 7.38% ([recovery-assumptions-and-what-they-change](05-recovery-assumptions-and-what-they-change.md)).
+- **A recovery taken as known.** The quote cannot separate hazard from recovery. Assume 25% recovered and the hazard is 3.96%; assume 60% and it is 7.38% ([Recovery assumptions](05-recovery-assumptions-and-what-they-change.md)).
 - **Recovery below 100% and a positive spread.** At 100% recovery nobody loses anything, the fair spread is zero at every hazard, and no positive quote has an answer. A zero spread gives zero hazard; a negative one gives none.
 - **This card's contract conventions:** premiums at quarter ends, nothing accrued if default falls mid-quarter, the loss paid at the moment of default. Real contracts pay the accrued premium too, which moves the answer by a small fraction of its size.
 
-**Conventions verified 2026-09-28:** single-name CDS trade with a fixed coupon plus an upfront payment, and the ISDA CDS Standard Model is the published code for converting between upfront and spread quotes (source 5). This card solves from a spread quote; the upfront is priced on [marking-a-cds-to-market-and-the-upfront](07-marking-a-cds-to-market-and-the-upfront.md).
+**Conventions verified 2026-09-28:** single-name CDS trade with a fixed coupon plus an upfront payment, and the ISDA CDS Standard Model is the published code for converting between upfront and spread quotes (source 5). This card solves from a spread quote; the upfront is priced on [Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md).
 
 ---
 
@@ -103,11 +84,11 @@ $$\text{chance of default by } T \;=\; 1 - e^{-\lambda T} \;=\; 1 - e^{-0.049381
 
 ### Step 0: an inverse is safe when the spread curve only climbs
 
-Running a pricer backwards is a search: guess a hazard, price the contract, compare with the screen, guess again ([root-finding-for-inverses](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md)). A search can fail two ways. The curve may never reach the quote, so there is nothing to find. Or it may reach it twice, so the answer depends on where the search started. Both vanish if the par spread starts at zero, climbs strictly, and has no ceiling. The steps below prove that, by getting the par spread into a form where it can be read off.
+Running a pricer backwards is a search: guess a hazard, price the contract, compare with the screen, guess again ([Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md)). A search can fail two ways. The curve may never reach the quote, so there is nothing to find. Or it may reach it twice, so the answer depends on where the search started. Both vanish if the par spread starts at zero, climbs strictly, and has no ceiling. The steps below prove that, by getting the par spread into a form where it can be read off.
 
 ### Step 1: the spread curve in closed form, where maturity cancels
 
-With a flat hazard and a flat rate, surviving and discounting combine into one decay, $e^{-(r+\lambda)t}$. The annuity's terms each shrink by the same factor from one quarter to the next, a geometric series; the protection integral is an exponential. Both sum in closed form, both carry the factor $1 - e^{-(r+\lambda)T}$, and the division cancels it. What is left is the formula above, $s_{\text{par}}(\lambda) = (1-R)\,\lambda\, g(x)$ with $x = (r+\lambda)\delta$, and no $T$ anywhere. The credit triangle card derives this timing factor and reads it as the cost of paying late ([the-credit-triangle](03-the-credit-triangle.md)); the sums are in the folded proof below.
+With a flat hazard and a flat rate, surviving and discounting combine into one decay, $e^{-(r+\lambda)t}$. The annuity's terms each shrink by the same factor from one quarter to the next, a geometric series; the protection integral is an exponential. Both sum in closed form, both carry the factor $1 - e^{-(r+\lambda)T}$, and the division cancels it. What is left is the formula above, $s_{\text{par}}(\lambda) = (1-R)\,\lambda\, g(x)$ with $x = (r+\lambda)\delta$, and no $T$ anywhere. The credit triangle card derives this timing factor and reads it as the cost of paying late ([The credit triangle](03-the-credit-triangle.md)); the sums are in the folded proof below.
 
 The cancellation has a consequence worth checking. On a flat curve the one-, three-, five- and ten-year contracts all imply the same 4.9381% from a 300 bp quote. Every quarter is a scaled copy of the first, so payout over premium is the same quarter by quarter.
 
@@ -211,7 +192,7 @@ The code prints every one.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows the answer. The hazard is found by **two independent roads and confirmed by a third**. Road 1 prices both legs term by term, the protection integral by Simpson's rule (thin slices under the curve), and bisects from $[0, \lambda_0]$; it never uses the closed form. Road 2 runs Newton on the closed form from the seed, with its slope worked out by hand. Road 3 simulates a million default times at the implied hazard with a hand-written random number generator, averages both legs, and checks the simulated spread is the 300 bp quote within its sampling error ([simulating-a-default-time](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md)). The checks then sweep the hazard from 0 to 100% on the flat curve and the sloped one to confirm the strict rise, and print every "what breaks" and "try changing" number.
+Nothing imported knows the answer. The hazard is found by **two independent roads and confirmed by a third**. Road 1 prices both legs term by term, the protection integral by Simpson's rule (thin slices under the curve), and bisects from $[0, \lambda_0]$; it never uses the closed form. Road 2 runs Newton on the closed form from the seed, with its slope worked out by hand. Road 3 simulates a million default times at the implied hazard with a hand-written random number generator, averages both legs, and checks the simulated spread is the 300 bp quote within its sampling error ([Simulating a default time](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md)). The checks then sweep the hazard from 0 to 100% on the flat curve and the sloped one to confirm the strict rise, and print every "what breaks" and "try changing" number.
 
 ### Python
 
@@ -611,7 +592,7 @@ The two outputs are identical line for line, simulation included, since both gen
 ## The usual mistake
 
 > [!warning]
-> **Reading the implied hazard as a forecast.** It is the hazard that makes the market's price fair, and the price includes what investors charge for carrying default risk. Historical default rates for companies like this promoter are usually lower. The 21.9% is a market price of risk, stated as a probability, and the gap to real-world odds is its own subject ([market-implied-versus-historical-default-probability](09-market-implied-versus-historical-default-probability.md)).
+> **Reading the implied hazard as a forecast.** It is the hazard that makes the market's price fair, and the price includes what investors charge for carrying default risk. Historical default rates for companies like this promoter are usually lower. The 21.9% is a market price of risk, stated as a probability, and the gap to real-world odds is its own subject ([Two default probabilities](09-market-implied-versus-historical-default-probability.md)).
 >
 > Smaller traps:
 > - **The spread is not a default probability.** 300 bp is not a 3% annual chance of default; it is 60% of about 5%. Read it directly and the five-year chance comes out at 13.93% instead of 21.88%.
@@ -625,8 +606,8 @@ The two outputs are identical line for line, simulation included, since both gen
 
 - **Credit risk systems.** A bank turns every name's CDS quote into a hazard, then into default chances at every horizon, which feed loss estimates and counterparty charges.
 - **Comparing names.** Two quotes on different maturities, or marked with different recoveries, are not comparable as spreads. As hazards and default chances they are.
-- **Upfront quotes.** Contracts trade with a fixed coupon plus an upfront payment. Desks convert the upfront back to a single "flat" spread, then to a flat hazard, with exactly this search ([marking-a-cds-to-market-and-the-upfront](07-marking-a-cds-to-market-and-the-upfront.md)).
-- **Risk numbers.** Bump the quote by one basis point, solve again, reprice: that is how a desk measures a position's sensitivity to spreads ([cds-risk-numbers](08-cds-risk-numbers.md)).
+- **Upfront quotes.** Contracts trade with a fixed coupon plus an upfront payment. Desks convert the upfront back to a single "flat" spread, then to a flat hazard, with exactly this search ([Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md)).
+- **Risk numbers.** Bump the quote by one basis point, solve again, reprice: that is how a desk measures a position's sensitivity to spreads ([CDS risk numbers](08-cds-risk-numbers.md)).
 - **The first step of every curve.** The bootstrap solves this card's equation once per quote, shortest first, each time holding the earlier pieces fixed.
 
 > **Say it back**
@@ -636,14 +617,14 @@ The two outputs are identical line for line, simulation included, since both gen
 
 ## What this builds on
 
-- [the-credit-triangle](03-the-credit-triangle.md): spread equals loss share times hazard, exactly with continuous premiums; here it supplies the seed and the top of the bracket.
-- [root-finding-for-inverses](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): brackets, bisection and Newton, with their guarantees; this card supplies the rising curve those guarantees need.
+- [The credit triangle](03-the-credit-triangle.md): spread equals loss share times hazard, exactly with continuous premiums; here it supplies the seed and the top of the bracket.
+- [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): brackets, bisection and Newton, with their guarantees; this card supplies the rising curve those guarantees need.
 
 ## Where this goes next
 
-- [recovery-assumptions-and-what-they-change](05-recovery-assumptions-and-what-they-change.md): the recovery held fixed here, varied, and what each choice does to the hazard and to the contract's value.
-- [bootstrapping-the-hazard-curve-from-cds-quotes](06-bootstrapping-the-hazard-curve-from-cds-quotes.md): several quotes, a hazard that changes over time, and this card's solve repeated once per maturity.
-- [implied-hazard-from-a-bond-price-and-the-cds-bond-basis](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis.md): the same backwards solve from a bond price, and the gap when bond and CDS disagree.
+- [Recovery assumptions](05-recovery-assumptions-and-what-they-change.md): the recovery held fixed here, varied, and what each choice does to the hazard and to the contract's value.
+- [Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md): several quotes, a hazard that changes over time, and this card's solve repeated once per maturity.
+- [Implied hazard from a bond price, and why the CDS disagrees](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis.md): the same backwards solve from a bond price, and the gap when bond and CDS disagree.
 
 One quote fixes one flat hazard; what a rising quote curve says about how the risk changes over time is the bootstrap's question.
 

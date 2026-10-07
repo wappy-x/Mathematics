@@ -1,25 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Special Functions and the Zeta Function
-topic: Zeta beyond its series
-item: Continuing zeta
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/04-analytic-continuation|analytic-continuation]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/02-gamma-function|gamma-function]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/07-mellin-transform|mellin-transform]]"
-next:
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/09-zeros-of-zeta-and-the-primes|zeros-of-zeta-and-the-primes]]"
-  - "[[Cards/21-Algebraic and analytic number theory/02-The Zeta Function and the Prime Number Theorem/02-functional-equation-proved|functional-equation-proved]]"
-tags: [mathematics, complex analysis, continuing-zeta-and-the-functional-equation]
----
-
 # Continuing zeta: past s = 1 with an alternating series, a pole at 1, and a mirror that reflects s to 1 - s
 
-Complex analysis → Special Functions and the Zeta Function → Zeta beyond its series → Continuing zeta
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Special Functions and the Zeta Function](../../../SYLLABUS.md#w07-s09) → Continuing zeta
 
 ---
 
@@ -27,13 +8,13 @@ Complex analysis → Special Functions and the Zeta Function → Zeta beyond its
 
 A Jenga block is 7.5 cm long. Stack blocks one per level at a table's edge, each pushed out as far as it goes without tipping. The k-th block from the top sticks out 1/(2k) of a block past the one below: a half, a quarter, a sixth. A full set of 54 blocks reaches 2.2877 block lengths, 17.16 cm, past the table.
 
-Three block lengths take 227 blocks, and any distance can be reached. The sum 1/2 + 1/4 + 1/6 + … has no total. It is half of 1 + 1/2 + 1/3 + …, the zeta sum at s = 1 ([zeta-function-and-euler-product](05-zeta-function-and-euler-product.md)).
+Three block lengths take 227 blocks, and any distance can be reached. The sum 1/2 + 1/4 + 1/6 + … has no total. It is half of 1 + 1/2 + 1/3 + …, the zeta sum at s = 1 ([The zeta function](05-zeta-function-and-euler-product.md)).
 
 The zeta sum 1 + 1/2^s + 1/3^s + … settles only when the real part of s exceeds 1. Flipping every other sign reaches every s with positive real part, except a pole at 1: the Jenga overhang stays infinite. A mirror formula, from here on the **functional equation**, reaches the left half. Out come ζ(0.5) = −1.460355, ζ(0) = −1/2, ζ(−1) = −1/12, and zeros at −2, −4, −6, ….
 
 **The alternating series over 1 − 2^(1−s) continues zeta to Re s > 0, with one pole, at 1, of residue 1; the functional equation, sending s to 1 − s, carries those values to the rest of the plane.**
 
-**What kind of fact this is:** a theorem. The continuation to Re s > 0 and the pole are proved below; the functional equation is stated with its source and proved in functional-equation-proved.
+**What kind of fact this is:** a theorem. The continuation to Re s > 0 and the pole are proved below; the functional equation is stated with its source and proved in The functional equation.
 
 ### The picture: the overhang against the number of blocks
 
@@ -52,7 +33,7 @@ Each doubling adds close to half of ln 2 = 0.693147 block lengths, for ever.
 
 ## The formula
 
-Σ adds the terms its limits name. Re s is the real part of s. Res marks a residue, the coefficient of 1/(s − 1) near a pole ([residues](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/04-residues.md)).
+Σ adds the terms its limits name. Re s is the real part of s. Res marks a residue, the coefficient of 1/(s − 1) near a pole ([Residues](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/04-residues.md)).
 
 $$\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s}\ \ (\operatorname{Re} s > 1), \qquad \eta(s) = \sum_{n=1}^{\infty} \frac{(-1)^{n-1}}{n^s}\ \ (\operatorname{Re} s > 0)$$
 
@@ -90,11 +71,11 @@ $$\zeta(s) = 2^{s}\, \pi^{s-1} \sin\!\left(\frac{\pi s}{2}\right) \Gamma(1-s)\, 
 
 ### Step 0: change the series, not the function
 
-A holomorphic function (one with a complex derivative throughout a region) extends in at most one way ([analytic-continuation](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/04-analytic-continuation.md)). So any holomorphic formula that equals the sum where it settles is zeta further out.
+A holomorphic function (one with a complex derivative throughout a region) extends in at most one way ([Analytic continuation](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/04-analytic-continuation.md)). So any holomorphic formula that equals the sum where it settles is zeta further out.
 
 ### Step 1: flipped signs make neighbours cancel
 
-Pair eta's terms: 1/n^s − 1/(n+1)^s is the drop of x^(−s) across one step, at most |s|/n^(Re s + 1) in size. Those sizes add to a finite total when Re s > 0, though 1/n^s alone does not. The convergence is uniform on any closed bounded piece of the half-plane, so eta is holomorphic there ([uniform-limits-of-holomorphic-functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)). The partial sums swing about the limit; averaging neighbours twelve times cancels the swing, giving η(0.5) = 0.604899 from 4,000 terms.
+Pair eta's terms: 1/n^s − 1/(n+1)^s is the drop of x^(−s) across one step, at most |s|/n^(Re s + 1) in size. Those sizes add to a finite total when Re s > 0, though 1/n^s alone does not. The convergence is uniform on any closed bounded piece of the half-plane, so eta is holomorphic there ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)). The partial sums swing about the limit; averaging neighbours twelve times cancels the swing, giving η(0.5) = 0.604899 from 4,000 terms.
 
 ### Step 2: eta is zeta with the even terms taken off twice
 
@@ -133,7 +114,7 @@ The area term carries the pole, residue 1 on sight. With three corrections the l
 
 ### Step 6: the mirror
 
-Riemann's 1859 functional equation pairs s with 1 − s, a half-turn about s = 1/2; real points swap across the dashed line. Its proof writes π^(−s/2) Γ(s/2) ζ(s) as a Mellin transform of θ(x) = Σ e^(−πn^2 x) over whole n ([mellin-transform](07-mellin-transform.md)), whose symmetry under x → 1/x swaps s and 1 − s.
+Riemann's 1859 functional equation pairs s with 1 − s, a half-turn about s = 1/2; real points swap across the dashed line. Its proof writes π^(−s/2) Γ(s/2) ζ(s) as a Mellin transform of θ(x) = Σ e^(−πn^2 x) over whole n ([The Mellin transform](07-mellin-transform.md)), whose symmetry under x → 1/x swaps s and 1 − s.
 
 ### The picture: the s-plane
 
@@ -149,7 +130,7 @@ At −2, −4, … the sine is 0 and nothing else is infinite: the **trivial zer
 
 ### Step 8: what 1 + 2 + 3 + … = −1/12 says
 
-It says ζ(−1) = −1/12, a value of the continued function; the partial sums n(n+1)/2 have no limit. In road two the −1/12 is a correction term; a smoothed sum shows it beside a growing term ([analytic-continuation](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/04-analytic-continuation.md)). The Jenga sum gets no value: it sits on the pole.
+It says ζ(−1) = −1/12, a value of the continued function; the partial sums n(n+1)/2 have no limit. In road two the −1/12 is a correction term; a smoothed sum shows it beside a growing term ([Analytic continuation](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/04-analytic-continuation.md)). The Jenga sum gets no value: it sits on the pole.
 
 ---
 
@@ -400,7 +381,7 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Prime numbers.** The pole and the zeros control how primes thin out: [zeros-of-zeta-and-the-primes](09-zeros-of-zeta-and-the-primes.md).
+- **Prime numbers.** The pole and the zeros control how primes thin out: [Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md).
 - **Stacking.** With several blocks per level, overhang can grow like the cube root of n (Paterson and Zwick).
 - **Physics.** Zeta regularisation gives divergent sums their continued values; ζ(−3) = 1/120 sits inside the Casimir force between metal plates.
 
@@ -411,14 +392,14 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [analytic-continuation](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/04-analytic-continuation.md): why a formula that agrees with the sum is zeta.
-- [gamma-function](02-gamma-function.md): the gamma values in the mirror.
-- [mellin-transform](07-mellin-transform.md): the transform the mirror's proof runs through.
+- [Analytic continuation](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/04-analytic-continuation.md): why a formula that agrees with the sum is zeta.
+- [The gamma function](02-gamma-function.md): the gamma values in the mirror.
+- [The Mellin transform](07-mellin-transform.md): the transform the mirror's proof runs through.
 
 ## Where this goes next
 
-- [zeros-of-zeta-and-the-primes](09-zeros-of-zeta-and-the-primes.md): the zeros in the strip, and the primes.
-- functional-equation-proved: the mirror proved by theta and Poisson summation.
+- [Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md): the zeros in the strip, and the primes.
+- The functional equation: the mirror proved by theta and Poisson summation.
 
 ---
 

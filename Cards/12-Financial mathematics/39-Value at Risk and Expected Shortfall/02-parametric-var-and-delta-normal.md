@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Value at Risk and Expected Shortfall
-topic: Risk from a covariance matrix
-item: Parametric VaR
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/01-profit-and-loss-distribution-and-var|profit-and-loss-distribution-and-var]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/06-multivariate-normal|multivariate-normal]]"
-next:
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/03-historical-and-monte-carlo-var|historical-and-monte-carlo-var]]"
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/06-var-decomposition-euler-and-component-var|var-decomposition-euler-and-component-var]]"
-tags: [mathematics, financial mathematics, parametric-var-and-delta-normal]
----
-
 # Parametric VaR: map the book to risk factors, assume normal, and use a covariance matrix
 
-Financial mathematics → Value at Risk and Expected Shortfall → Risk from a covariance matrix → Parametric VaR
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Value at Risk and Expected Shortfall](../../../SYLLABUS.md#w12-s39) → Parametric VaR
 
 ---
 
@@ -26,7 +8,7 @@ Financial mathematics → Value at Risk and Expected Shortfall → Risk from a c
 
 A trading book holds three things at the close on a Monday. There are $10,000,000 of shares, spread across the stock market. There is a $5,000,000 government bond. And there are 1,000 Acme call contracts, each on 100 Acme shares, priced in the house market: Acme at $100, strike $100, one year left, worth $9.23 a share, so $922,700.55 for the lot.
 
-The risk manager needs one number by Tuesday morning: the loss the book should exceed on only one day in a hundred. That number is the **value at risk**, VaR for short, defined on [profit-and-loss-distribution-and-var](01-profit-and-loss-distribution-and-var.md). That card took the book's daily profit and loss as a bell curve with an assumed spread of $180,000 and read off about $420,000. This card builds the spread from the parts, and gets $181,290.28.
+The risk manager needs one number by Tuesday morning: the loss the book should exceed on only one day in a hundred. That number is the **value at risk**, VaR for short, defined on [Value at risk](01-profit-and-loss-distribution-and-var.md). That card took the book's daily profit and loss as a bell curve with an assumed spread of $180,000 and read off about $420,000. This card builds the spread from the parts, and gets $181,290.28.
 
 Three moves do it. First, **map** each position to a few market quantities that drive it, called **risk factors**: the stock market's return, Acme's return, and the five-year bond yield. Second, **assume** those daily moves follow a joint bell curve, the multivariate normal. Third, combine the positions' sizes with a table of how the factors wiggle and move together, the **covariance matrix**, to get the spread of the whole book's profit and loss. Multiply by 2.33 and the answer is $421,744. The same arithmetic splits that number by position: the shares carry 69.40 percent of it, the calls 31.48 percent, and the bond takes 0.89 percent off.
 
@@ -77,7 +59,7 @@ $$\text{VaR}_{99\%} \;=\; z\,\sigma_P, \qquad \sigma_P \;=\; \sqrt{w^\top \Sigma
 | $\Delta V$ | the book's profit or loss over one day | | |
 | $L$ | the **Cholesky factor**: a lower-triangular matrix with $LL^\top = \Sigma$ | used by the checks' second road | |
 
-Delta, $d_1 = 0.25$ and the house inputs $S, K, r, q, \sigma, T$ are as on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+Delta, $d_1 = 0.25$ and the house inputs $S, K, r, q, \sigma, T$ are as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
 
 Two helper lines do the mapping:
 
@@ -87,8 +69,8 @@ In words: the book's P&L is each exposure times its factor's move. The calls' ex
 
 ### When it holds
 
-- **P&L is a straight line in the factors.** True for shares, close for a bond over one day, wrong for options on big moves: a long call loses less than delta says when Acme falls, so the method overstates this book's loss; [delta-gamma-var-and-cornish-fisher](04-delta-gamma-var-and-cornish-fisher.md) adds the curve.
-- **Daily factor moves are jointly normal.** Real returns have fatter tails, so the true 1-in-100 loss is usually larger than 2.33 spreads; [extreme-value-theory-and-tails](07-extreme-value-theory-and-tails.md) measures by how much.
+- **P&L is a straight line in the factors.** True for shares, close for a bond over one day, wrong for options on big moves: a long call loses less than delta says when Acme falls, so the method overstates this book's loss; [Options in the book](04-delta-gamma-var-and-cornish-fisher.md) adds the curve.
+- **Daily factor moves are jointly normal.** Real returns have fatter tails, so the true 1-in-100 loss is usually larger than 2.33 spreads; [Extreme value theory](07-extreme-value-theory-and-tails.md) measures by how much.
 - **The covariance matrix is known and stays put.** It is estimated from the past, and correlations rise in a crash: moving one correlation from 0.5 to 0.75 lifts VaR from $421,740 to $452,630.
 - **The expected move over one day is zero.** Over a day the drift is tiny beside the spread; over a year it is not, and the mean must be added back.
 - **The positions stay fixed over the horizon.** Scaling to 10 days by the square root of 10 also needs days that are independent of each other.
@@ -99,7 +81,7 @@ In words: the book's P&L is each exposure times its factor's move. The calls' ex
 
 ### Step 0: one bell curve for the whole book
 
-A sum of moves that are jointly normal is itself normal ([multivariate-normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)). So if the book's P&L is a weighted sum of the three factor moves, it is one bell curve. A bell curve centred at zero is fixed by one number, its spread. Find the spread and the 1 percent loss follows. Everything below is finding the spread.
+A sum of moves that are jointly normal is itself normal ([Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)). So if the book's P&L is a weighted sum of the three factor moves, it is one bell curve. A bell curve centred at zero is fixed by one number, its spread. Find the spread and the 1 percent loss follows. Everything below is finding the spread.
 
 ### Step 1: map every position to exposures
 
@@ -136,9 +118,9 @@ For a bell curve centred at zero, a loss beyond 2.326348 spreads happens with ch
 
 ### Step 4: splitting the answer by position
 
-Double every position and $\sigma_P$ doubles, so VaR doubles: VaR scales in step with the book. For any such quantity, each position's size times the rate at which VaR changes with it, summed over positions, gives back the total. Here the rate is explicit. Differentiating $z\sqrt{w^\top\Sigma w}$ in $w_i$ gives $z\,(\Sigma w)_i/\sigma_P$, where $(\Sigma w)_i$ is row $i$ of the matrix times the exposures. Multiply by $w_i$ and add: $z\,w^\top\Sigma w/\sigma_P = z\sigma_P$, the VaR. Each term, $w_i\,z\,(\Sigma w)_i/\sigma_P$, is that position's **component VaR**. The general rule, and marginal and incremental VaR, are on [var-decomposition-euler-and-component-var](06-var-decomposition-euler-and-component-var.md).
+Double every position and $\sigma_P$ doubles, so VaR doubles: VaR scales in step with the book. For any such quantity, each position's size times the rate at which VaR changes with it, summed over positions, gives back the total. Here the rate is explicit. Differentiating $z\sqrt{w^\top\Sigma w}$ in $w_i$ gives $z\,(\Sigma w)_i/\sigma_P$, where $(\Sigma w)_i$ is row $i$ of the matrix times the exposures. Multiply by $w_i$ and add: $z\,w^\top\Sigma w/\sigma_P = z\sigma_P$, the VaR. Each term, $w_i\,z\,(\Sigma w)_i/\sigma_P$, is that position's **component VaR**. The general rule, and marginal and incremental VaR, are on [Whose risk is it](06-var-decomposition-euler-and-component-var.md).
 
-A second route skips the matrix: draw many days of factor moves at random, revalue the book on each, and read the 1 percent worst. That is Monte Carlo VaR, on [historical-and-monte-carlo-var](03-historical-and-monte-carlo-var.md); here it serves as the fourth check.
+A second route skips the matrix: draw many days of factor moves at random, revalue the book on each, and read the 1 percent worst. That is Monte Carlo VaR, on [Historical and Monte Carlo VaR](03-historical-and-monte-carlo-var.md); here it serves as the fourth check.
 
 ---
 
@@ -163,7 +145,7 @@ Daily volatilities: shares 1.35 percent; Acme 20 percent a year divided by $\sqr
 | $\sigma_P$ | square root of the sum of the six rows | $181,290.28 |
 | **VaR, 99%, one day** | 2.326348 × 181,290.28 | **$421,744.26** |
 
-On one trading day in a hundred, the book should lose more than $421,744: the $420,000 of [profit-and-loss-distribution-and-var](01-profit-and-loss-distribution-and-var.md), now built from its parts.
+On one trading day in a hundred, the book should lose more than $421,744: the $420,000 of [Value at risk](01-profit-and-loss-distribution-and-var.md), now built from its parts.
 
 Split by position, with each component being exposure × z × (row of $\Sigma$ times exposures) ÷ $\sigma_P$:
 
@@ -659,9 +641,9 @@ The two outputs are identical line for line. The rows headed "term" are the six 
 ## Where you meet it in real life
 
 - **RiskMetrics.** J.P. Morgan published this method in 1994, with daily volatilities and correlations for hundreds of factors, so any bank could map its book and compute VaR the same evening. The 1996 technical document is still the fullest account of the mapping.
-- **Trading desk limits.** Banks set a VaR limit for each desk and check it every night. Component VaR tells the desk head which position to cut: here, trimming shares buys the most reduction per dollar ([var-decomposition-euler-and-component-var](06-var-decomposition-euler-and-component-var.md)).
-- **Bank capital rules.** The Basel Committee let banks base market-risk capital on their own VaR models from 1996. Its revised market-risk standard replaced VaR with expected shortfall ([expected-shortfall-and-coherence](05-expected-shortfall-and-coherence.md)), whose normal version uses the same $\sigma_P$.
-- **Checking the model.** Every day's actual P&L is compared with the previous evening's VaR; about one exceedance in a hundred days is expected ([backtesting-var](08-backtesting-var.md)).
+- **Trading desk limits.** Banks set a VaR limit for each desk and check it every night. Component VaR tells the desk head which position to cut: here, trimming shares buys the most reduction per dollar ([Whose risk is it](06-var-decomposition-euler-and-component-var.md)).
+- **Bank capital rules.** The Basel Committee let banks base market-risk capital on their own VaR models from 1996. Its revised market-risk standard replaced VaR with expected shortfall ([Expected shortfall](05-expected-shortfall-and-coherence.md)), whose normal version uses the same $\sigma_P$.
+- **Checking the model.** Every day's actual P&L is compared with the previous evening's VaR; about one exceedance in a hundred days is expected ([Backtesting VaR](08-backtesting-var.md)).
 
 > **Say it back**
 > Each position becomes a few exposures: dollars gained per unit move of the stock market, a stock, or a yield, with options entering through delta and bonds through duration. If the factor moves are jointly normal, the book's one-day P&L is normal, and its spread squared is exposures times covariance matrix times exposures. The 99 percent VaR is 2.33 of those spreads: $421,744 for this book. The same formula splits the total by position, and the pieces add back exactly. The method is only as good as its straight-line mapping, its bell-curve tails and its correlations.
@@ -670,15 +652,15 @@ The two outputs are identical line for line. The rows headed "term" are the six 
 
 ## What this builds on
 
-- [profit-and-loss-distribution-and-var](01-profit-and-loss-distribution-and-var.md): what VaR means, and the quantile of a normal P&L.
-- [multivariate-normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md): jointly normal moves, their covariance matrix, and why a weighted sum stays normal.
+- [Value at risk](01-profit-and-loss-distribution-and-var.md): what VaR means, and the quantile of a normal P&L.
+- [Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md): jointly normal moves, their covariance matrix, and why a weighted sum stays normal.
 
 ## Where this goes next
 
-- [historical-and-monte-carlo-var](03-historical-and-monte-carlo-var.md): drops the bell curve, and replays past days or simulates new ones.
-- [var-decomposition-euler-and-component-var](06-var-decomposition-euler-and-component-var.md): component, marginal and incremental VaR for any risk measure that scales with the book.
+- [Historical and Monte Carlo VaR](03-historical-and-monte-carlo-var.md): drops the bell curve, and replays past days or simulates new ones.
+- [Whose risk is it](06-var-decomposition-euler-and-component-var.md): component, marginal and incremental VaR for any risk measure that scales with the book.
 
-The covariance matrix gave one answer from two assumptions, straight lines and bell curves; whether the book's own history agrees is the question [historical-and-monte-carlo-var](03-historical-and-monte-carlo-var.md) answers.
+The covariance matrix gave one answer from two assumptions, straight lines and bell curves; whether the book's own history agrees is the question [Historical and Monte Carlo VaR](03-historical-and-monte-carlo-var.md) answers.
 
 ---
 

@@ -1,26 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Numerical Evolution
-topic: Long runs of frictionless motion
-item: Symplectic steps
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/01-eulers-method|eulers-method]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/07-coupled-oscillators-and-normal-modes|coupled-oscillators-and-normal-modes]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/04-determinants|determinants]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/05-hamiltons-equations|hamiltons-equations]]"
-  - "[[Cards/16-Numerical analysis/06-ODE Solvers/06-symplectic-integrators|symplectic-integrators]]"
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/07-operator-splitting-and-the-trotter-formula|operator-splitting-and-the-trotter-formula]]"
-tags: [mathematics, differential equations and dynamics, symplectic-steps-for-oscillators]
----
-
 # Symplectic steps: for frictionless motion, a stepper that keeps energy bounded for a million steps
 
-Differential equations and dynamics → Numerical Evolution → Long runs of frictionless motion → Symplectic steps
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Numerical Evolution](../../../SYLLABUS.md#w08-s05) → Symplectic steps
 
 ---
 
@@ -28,7 +8,7 @@ Differential equations and dynamics → Numerical Evolution → Long runs of fri
 
 A planet circles its sun at 1 AU (the Earth–Sun distance) once a year. Nothing slows it, so its energy and its circle never change. A computer follows it for 1,000 years at 100 steps a year.
 
-Euler's method, which steps along the current slope ([eulers-method](01-eulers-method.md)), fails inside the first year. After 100 steps the planet is at 1.7166 AU, 72% too far out; over 1,000 years it wanders up to 25.88 AU from the true circle.
+Euler's method, which steps along the current slope ([Euler's method](01-eulers-method.md)), fails inside the first year. After 100 steps the planet is at 1.7166 AU, 72% too far out; over 1,000 years it wanders up to 25.88 AU from the true circle.
 
 A different stepper uses the same 100 steps a year. Change the speed by half a step's worth of pull, move the planet at that speed, then give the second half of the pull at the new position. Over all 1,000 years the distance never leaves the true circle by more than 0.00197 AU, 0.197%. This kick–drift–kick step is **leapfrog**, or velocity Verlet, after Loup Verlet's 1967 molecule simulations.
 
@@ -46,7 +26,7 @@ Scale: 60 px per AU, the Sun at the centre. The dashed path is Euler every 5 ste
 
 ## The formula
 
-Reminder: $q'' = -q$ says the acceleration of $q$ is minus $q$ itself, as for a mass on a spring ([coupled-oscillators-and-normal-modes](../04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md)). Measure distance in AU and time so one orbit takes $2\pi$ units; on the true circle the planet's $x$-coordinate $q = \cos t$ obeys it exactly. As a pair: $q' = v$, $v' = -q$, with $v$ the velocity. The step size $h$ is the time one step covers; $q_n$, $v_n$ are the values after $n$ steps.
+Reminder: $q'' = -q$ says the acceleration of $q$ is minus $q$ itself, as for a mass on a spring ([Normal modes](../04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md)). Measure distance in AU and time so one orbit takes $2\pi$ units; on the true circle the planet's $x$-coordinate $q = \cos t$ obeys it exactly. As a pair: $q' = v$, $v' = -q$, with $v$ the velocity. The step size $h$ is the time one step covers; $q_n$, $v_n$ are the values after $n$ steps.
 
 $$v_{n+1/2} = v_n - \tfrac{h}{2}\,q_n, \qquad q_{n+1} = q_n + h\,v_{n+1/2}, \qquad v_{n+1} = v_{n+1/2} - \tfrac{h}{2}\,q_{n+1}$$
 
@@ -76,7 +56,7 @@ $$\tilde E = \tfrac12\,(b\,q^2 + v^2) \quad \text{is the same after every step.}
 ### When it holds
 
 - **No friction, no driving force.** The true motion must keep its energy; for a damped spring keeping area is the wrong target.
-- **A fixed step.** Change $h$ as [adaptive-step-size](05-adaptive-step-size.md) does, and each step keeps a different hidden energy; the drift comes back.
+- **A fixed step.** Change $h$ as [Adaptive steps](05-adaptive-step-size.md) does, and each step keeps a different hidden energy; the drift comes back.
 - **A small enough step.** For $q'' = -q$ the band needs $h < 2$; at $h = 2.5$ one pattern of motion reaches 4096 in 6 steps.
 - **A pull that depends on position only.** Then kick and drift are each exact; a velocity-dependent pull, like a magnetic force, needs a different splitting.
 
@@ -90,7 +70,7 @@ Freeze the position and $v' = -q$ is trivial: the velocity changes by $-hq$. Tha
 
 ### Step 1: leapfrog's matrix has determinant 1
 
-Substitute the half kick into the drift: $q_{n+1} = a\,q_n + h\,v_n$. Substitute that into the last half kick: $v_{n+1} = -hb\,q_n + a\,v_n$. The determinant of a 2-by-2 matrix is the factor by which it scales areas ([determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). Here it is
+Substitute the half kick into the drift: $q_{n+1} = a\,q_n + h\,v_n$. Substitute that into the last half kick: $v_{n+1} = -hb\,q_n + a\,v_n$. The determinant of a 2-by-2 matrix is the factor by which it scales areas ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). Here it is
 
 $$a^2 + h^2 b = 1 - h^2 + \tfrac{h^4}{4} + h^2 - \tfrac{h^4}{4} = 1.$$
 
@@ -133,7 +113,7 @@ Leapfrog turns the state by an angle $\theta = 2\arcsin(h/2)$ per step; the true
 
 </details>
 
-The general setting, motion written from its energy function, is [hamiltons-equations](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md).
+The general setting, motion written from its energy function, is [Hamilton's equations](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md).
 
 ---
 
@@ -396,15 +376,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [eulers-method](01-eulers-method.md): the stepper whose energy growth this card measures.
-- [coupled-oscillators-and-normal-modes](../04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md): $q'' = -q$ as a pair of first-order equations, and its energy.
-- [determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): the determinant as the factor that scales area.
+- [Euler's method](01-eulers-method.md): the stepper whose energy growth this card measures.
+- [Normal modes](../04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md): $q'' = -q$ as a pair of first-order equations, and its energy.
+- [Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): the determinant as the factor that scales area.
 
 ## Where this goes next
 
-- [hamiltons-equations](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md): motion written from its energy function; symplectic in general.
-- symplectic-integrators: higher-order methods and the theorem behind the planet's band.
-- operator-splitting-and-the-trotter-formula: kick–drift–kick as one case of splitting a flow into exactly solvable pieces.
+- [Hamilton's equations](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/05-hamiltons-equations.md): motion written from its energy function; symplectic in general.
+- Symplectic steps: higher-order methods and the theorem behind the planet's band.
+- Splitting: kick–drift–kick as one case of splitting a flow into exactly solvable pieces.
 
 ---
 

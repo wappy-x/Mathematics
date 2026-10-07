@@ -1,32 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX exotics as desks use them - digitals, touches and barriers
-topic: Hedging next to the wall
-item: Greeks at the wall
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/03-the-eight-barrier-types|the-eight-barrier-types]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/04-fx-one-touch-and-no-touch|fx-one-touch-and-no-touch]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/03-garman-kohlhagen-greeks|garman-kohlhagen-greeks]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/01-bump-and-revalue-and-common-random-numbers|bump-and-revalue-and-common-random-numbers]]"
-next:
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/07-barriers-with-the-smile|barriers-with-the-smile]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/08-barrier-level-from-a-target-premium|barrier-level-from-a-target-premium]]"
-tags: [mathematics, financial mathematics, barrier-and-touch-greeks]
----
-
 # Greeks at the wall: delta past one, gamma turning negative, vega flipping sign, and how desks bend the barrier to survive it
 
-Financial mathematics → FX exotics as desks use them - digitals, touches and barriers → Hedging next to the wall → Greeks at the wall
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX exotics as desks use them - digitals, touches and barriers](../../../SYLLABUS.md#w12-s23) → Greeks at the wall
 
 ---
 
 ## General Overview
 
-A bank has sold a US importer a euro call. Strike 1.10 dollars per euro, one month left, and one clause: if EURUSD (the price of one euro in dollars) trades at 1.20 at any moment before expiry, the option dies. At the wall the option would pay ten cents per euro (1.20 minus the strike), so the payoff climbs toward the wall and then drops to nothing. That shape is a **reverse knock-out** ([the-eight-barrier-types](03-the-eight-barrier-types.md)). The same bank has also sold a fund a **one-touch** at 1.20: one dollar paid at expiry if 1.20 ever trades ([fx-one-touch-and-no-touch](04-fx-one-touch-and-no-touch.md)).
+A bank has sold a US importer a euro call. Strike 1.10 dollars per euro, one month left, and one clause: if EURUSD (the price of one euro in dollars) trades at 1.20 at any moment before expiry, the option dies. At the wall the option would pay ten cents per euro (1.20 minus the strike), so the payoff climbs toward the wall and then drops to nothing. That shape is a **reverse knock-out** ([The eight single barriers in one table](03-the-eight-barrier-types.md)). The same bank has also sold a fund a **one-touch** at 1.20: one dollar paid at expiry if 1.20 ever trades ([One-touch and no-touch](04-fx-one-touch-and-no-touch.md)).
 
 The bank hedges both with its **Greeks**: the sensitivities of the price to spot, to volatility, and to both at once. On a plain call they are tame. Delta, the euros to hold per euro of option, lives between 0 and 1. Gamma, the change in delta as spot moves, is positive. Vega, the change in price as volatility rises, is positive. Next to a wall all three break these rules. At 1.19, with a month left, the knock-out's delta is minus 1.22: a one-pip rise in EURUSD costs the holder 1.22 pips, where a pip is 0.0001 dollars. Its gamma is negative. Its vega is minus 20.18 pips per volatility point: more jumpiness makes it cheaper. With one day left, the delta at the wall is minus 11.59.
 
@@ -55,7 +35,7 @@ Orange: the knock-out's delta. Green: zero. Dark blue: minus one. At 1.10 the op
 
 ## The formula
 
-Notation first, in words. $G$ is the price today of the contract's payoff with everything at or above the wall cut off, and no wall watched during the life. For the knock-out that is a plain call at 1.10, minus a plain call at 1.20, minus 0.10 dollars paid if EURUSD finishes above 1.20. For the one-touch it is its partner, the **no-touch** piece: one dollar paid if EURUSD finishes below 1.20. A prime means slope in spot: $G'$ is the delta of $G$, $G''$ its gamma. The price of the barrier contract comes from the mirror formula on [barrier-options-by-reflection](02-barrier-options-by-reflection.md), written for a wall above spot:
+Notation first, in words. $G$ is the price today of the contract's payoff with everything at or above the wall cut off, and no wall watched during the life. For the knock-out that is a plain call at 1.10, minus a plain call at 1.20, minus 0.10 dollars paid if EURUSD finishes above 1.20. For the one-touch it is its partner, the **no-touch** piece: one dollar paid if EURUSD finishes below 1.20. A prime means slope in spot: $G'$ is the delta of $G$, $G''$ its gamma. The price of the barrier contract comes from the mirror formula on [Knock-out and knock-in](02-barrier-options-by-reflection.md), written for a wall above spot:
 
 $$V(S) = G(S) - w\,G(m), \qquad w = \left(\frac{H}{S}\right)^{2\lambda},\quad m = \frac{H^2}{S},\quad \lambda = \frac{r_d - r_f - \tfrac12\sigma^2}{\sigma^2}$$
 
@@ -92,7 +72,7 @@ In words: the delta at the wall grows like one over the square root of the time 
 | $G$, $C$, $D$, $k$ | price of the cut-off payoff; plain Garman–Kohlhagen call; cash digital paying one dollar above a strike $k$ | $G(1.19) = 0.041442$ | |
 | $V$, $N$, $\varphi$ | price of the knock-out or one-touch; bell-curve area left of a point; bell-curve height | 125.59 pips at 1.19 | |
 | $\Delta$, $\Gamma$ | delta, euros per euro of notional (or per dollar of payout); gamma, reported as change in delta per one-cent move | −1.2161; −0.1395 | |
-| $d_1$, $d_2$ | the two bell-curve distances of [garman-kohlhagen-greeks](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md) | | |
+| $d_1$, $d_2$ | the two bell-curve distances of [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md) | | |
 
 Units: the knock-out in pips per euro of notional, the one-touch in percent of payout. Gamma per one-cent (100-pip) move; vega, vanna and volga per volatility point (one percent of volatility).
 
@@ -100,8 +80,8 @@ Units: the knock-out in pips per euro of notional, the one-touch in percent of p
 
 ### When it holds
 
-- **Continuous monitoring.** The formulas watch every tick. A contract checked once a day has a different wall-delta ([barrier-options-by-reflection](02-barrier-options-by-reflection.md) shifts the wall for that).
-- **One constant volatility.** Near the wall the local volatility there decides the price, and the vega here is sensitivity to a parallel move in one number. On a smile the Greeks shift, most near the wall: [barriers-with-the-smile](07-barriers-with-the-smile.md).
+- **Continuous monitoring.** The formulas watch every tick. A contract checked once a day has a different wall-delta ([Knock-out and knock-in](02-barrier-options-by-reflection.md) shifts the wall for that).
+- **One constant volatility.** Near the wall the local volatility there decides the price, and the vega here is sensitivity to a parallel move in one number. On a smile the Greeks shift, most near the wall: [Barriers on a smile](07-barriers-with-the-smile.md).
 - **Spot moves without jumps.** The hedge unwind at the wall assumes spot passes through 1.20 and the desk can deal close to it. A gap through the wall makes the unwind cost larger than any shift anticipated.
 - **The wall-delta rule needs little time left.** With a month it is 3% off (minus 1.3033 against minus 1.2653); with a day, 1%.
 
@@ -117,7 +97,7 @@ At 1.19 the knock-out is worth 125.59 pips. At 1.20 it is worth nothing. The pri
 
 $V = G(S) - w\,G(m)$ has three places where spot enters: $G(S)$ directly, the weight $w = (H/S)^{2\lambda}$, and the mirror spot $m = H^2/S$. The weight's slope in spot is $-2\lambda w/S$. The mirror spot's slope is $-m/S$: as spot rises toward the wall, the mirror falls toward it from the other side. The chain rule gives the delta formula term by term. Differentiating again, with $w/S$ and $w/S^2$ each picking up one more factor of $1/S$, gives the gamma formula.
 
-The pieces $G'$ and $G''$ are Garman–Kohlhagen Greeks of calls and digitals ([garman-kohlhagen-greeks](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md)). For the digital paying one dollar above strike $k$, with $v = \sigma\sqrt{T}$:
+The pieces $G'$ and $G''$ are Garman–Kohlhagen Greeks of calls and digitals ([The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md)). For the digital paying one dollar above strike $k$, with $v = \sigma\sqrt{T}$:
 
 $$D = e^{-r_d T}N(d_2),\quad D' = \frac{e^{-r_d T}\varphi(d_2)}{x\,v},\quad D'' = -\frac{e^{-r_d T}\varphi(d_2)\,d_1}{x^2 v^2},\quad \partial_\sigma D = -\frac{e^{-r_d T}\varphi(d_2)\,d_1}{\sigma}$$
 
@@ -160,7 +140,7 @@ A desk short a one-touch shifts the other way. Pulling the wall to 1.1990 makes 
 
 ### Another road
 
-Bump and revalue ([bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)) needs only the price. A Crank–Nicolson grid, which steps the pricing equation backward from expiry on a ladder of spot levels with the wall on a rung, needs no formula at all. The code runs both.
+Bump and revalue ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)) needs only the price. A Crank–Nicolson grid, which steps the pricing equation backward from expiry on a ladder of spot levels with the wall on a rung, needs no formula at all. The code runs both.
 
 ---
 
@@ -701,9 +681,9 @@ The two outputs agree line for line. The grid's price at 1.10 sits 0.007 pips be
 - **FX exotic desks.** Reverse knock-outs sold to importers and exporters, and one-touches sold to funds, are among the most traded FX exotics. The risk report shows each barrier's distance, its delta at the wall, and the reserve.
 - **Stop-loss orders at the wall.** A desk hedging a knock-out leaves an order to buy back its delta hedge at the barrier level, sized by the wall-delta.
 - **Reserves and valuation control.** The shifted-wall price is the book value; the difference from the unshifted price is the reserve that product control signs off.
-- **Solving for the barrier.** A client who wants a target premium gets a barrier level solved for it: [barrier-level-from-a-target-premium](08-barrier-level-from-a-target-premium.md). The Greeks here decide how close to spot a desk will let that level sit.
-- **Two walls.** A double no-touch has a wall on each side and the same blow-ups at both: [double-barriers-and-double-no-touch](05-double-barriers-and-double-no-touch.md).
-- **Digitals at expiry.** The same blow-up hits a digital at its strike: [fx-digitals](01-fx-digitals.md).
+- **Solving for the barrier.** A client who wants a target premium gets a barrier level solved for it: [Solving for the barrier](08-barrier-level-from-a-target-premium.md). The Greeks here decide how close to spot a desk will let that level sit.
+- **Two walls.** A double no-touch has a wall on each side and the same blow-ups at both: [Two walls](05-double-barriers-and-double-no-touch.md).
+- **Digitals at expiry.** The same blow-up hits a digital at its strike: [Currency digitals](01-fx-digitals.md).
 
 > **Say it back**
 > A barrier contract's price is a plain price minus a weighted mirror, so every Greek is a plain Greek minus the mirror's, plus terms from the mirror moving. Near the wall the price must fall to zero over a few pips, so the reverse knock-out's delta passes minus one and its price curve bends down, which is negative gamma. Vega is gamma summed along the surviving paths, so it turns negative where gamma does, eight cents before the wall. The delta at the wall grows like one over the square root of the time left, eleven times the notional with a day to go. Desks price to a wall shifted a few pips away, and the extra value funds the buy-back that cannot be done at the level.
@@ -712,15 +692,15 @@ The two outputs agree line for line. The grid's price at 1.10 sits 0.007 pips be
 
 ## What this builds on
 
-- [the-eight-barrier-types](03-the-eight-barrier-types.md): what makes a knock-out "reverse", and the formula family this card differentiates.
-- [fx-one-touch-and-no-touch](04-fx-one-touch-and-no-touch.md): the one-touch's price as a discounted touch chance, and the no-touch piece used here.
-- [garman-kohlhagen-greeks](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the call and digital Greeks every term on this card is built from.
-- [bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): how to choose a bump size, and why a bump must not straddle a wall.
+- [The eight single barriers in one table](03-the-eight-barrier-types.md): what makes a knock-out "reverse", and the formula family this card differentiates.
+- [One-touch and no-touch](04-fx-one-touch-and-no-touch.md): the one-touch's price as a discounted touch chance, and the no-touch piece used here.
+- [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the call and digital Greeks every term on this card is built from.
+- [Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): how to choose a bump size, and why a bump must not straddle a wall.
 
 ## Where this goes next
 
-- [barriers-with-the-smile](07-barriers-with-the-smile.md): the vega and vanna here are sensitivities to one flat volatility; with a smile the volatility near the wall prices the knock-out, and the vanna-volga overlay turns these Greeks into a price correction.
-- [barrier-level-from-a-target-premium](08-barrier-level-from-a-target-premium.md): runs the pricing backward, solving for the wall that gives a target premium, with the existence and boundary cases stated.
+- [Barriers on a smile](07-barriers-with-the-smile.md): the vega and vanna here are sensitivities to one flat volatility; with a smile the volatility near the wall prices the knock-out, and the vanna-volga overlay turns these Greeks into a price correction.
+- [Solving for the barrier](08-barrier-level-from-a-target-premium.md): runs the pricing backward, solving for the wall that gives a target premium, with the existence and boundary cases stated.
 
 The Greeks here assume one flat volatility, and a reverse knock-out's value lives in the last cent below the wall, where the market's volatility is not flat; what the smile does to these numbers is the question the smile card answers.
 

@@ -1,26 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Conditional Expectation
-topic: Best forecasts in mean square
-item: Conditional expectation as a projection
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/02-conditional-expectation-on-a-sigma-algebra|conditional-expectation-on-a-sigma-algebra]]"
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/06-l2-as-a-hilbert-space|l2-as-a-hilbert-space]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/02-orthogonal-projection|orthogonal-projection]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/04-least-squares|least-squares]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/05-conditional-expectation-in-tables|conditional-expectation-in-tables]]"
-next:
-  - "[[Cards/18-Functional analysis/02-Hilbert Spaces/02-projection-theorem-and-orthogonal-complements|projection-theorem-and-orthogonal-complements]]"
-tags: [mathematics, measure and integration, conditional-expectation-as-projection]
----
-
 # Conditional expectation as a projection: for square-integrable X the forecast is the closest known quantity, and the error is perpendicular to everything known
 
-Measure and integration → Conditional Expectation → Best forecasts in mean square → Conditional expectation as a projection
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Conditional Expectation](../../../SYLLABUS.md#w10-s09) → Conditional expectation as a projection
 
 ---
 
@@ -58,9 +38,9 @@ Bars: the rainfall X in each of the eight equally likely cases. First line: the 
 
 Notation first, in words. The **probability space** $(\Omega, \mathcal F, P)$ lists the outcomes, the collection of events we allow ourselves to measure, and their probabilities. Here $\Omega$ is the eight season-and-year cases, each with probability 0.125. The **sub-sigma-algebra** $\mathcal G$ is the smaller collection of events the forecaster can see: the 16 unions of whole seasons. A quantity is **$\mathcal G$-measurable**, or **known**, when it is computed from the season alone. $\mathbf 1_A$ is the indicator of an event $A$, one on A and zero off it.
 
-The conditional expectation $M = E[X \mid \mathcal G]$ is the known quantity with $E[M\,\mathbf 1_A] = E[X\,\mathbf 1_A]$ for every event $A$ in $\mathcal G$ ([conditional-expectation-on-a-sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md)); on a partition into seasons it is the average within each season ([conditioning-on-a-partition](01-conditioning-on-a-partition.md)). The probability wing computes the same thing from tables ([conditional-expectation-in-tables](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md)); this card is the general statement as a projection.
+The conditional expectation $M = E[X \mid \mathcal G]$ is the known quantity with $E[M\,\mathbf 1_A] = E[X\,\mathbf 1_A]$ for every event $A$ in $\mathcal G$ ([Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md)); on a partition into seasons it is the average within each season ([Conditioning on a partition](01-conditioning-on-a-partition.md)). The probability wing computes the same thing from tables ([Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md)); this card is the general statement as a projection.
 
-$L^2$ is every quantity with finite mean square, $E[X^2] < \infty$, with two quantities equal almost surely counted as one ([l2-as-a-hilbert-space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md)). $L^2(\mathcal G)$ is the part of it that is known. Its **inner product**, the analogue of the dot product, is $\langle U, V\rangle = E[UV]$, and its length is $\lVert U\rVert_2 = \sqrt{E[U^2]}$, so the squared distance between two quantities is their mean squared difference. Two quantities are **orthogonal**, at right angles, when $E[UV] = 0$.
+$L^2$ is every quantity with finite mean square, $E[X^2] < \infty$, with two quantities equal almost surely counted as one ([L2 as a Hilbert space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md)). $L^2(\mathcal G)$ is the part of it that is known. Its **inner product**, the analogue of the dot product, is $\langle U, V\rangle = E[UV]$, and its length is $\lVert U\rVert_2 = \sqrt{E[U^2]}$, so the squared distance between two quantities is their mean squared difference. Two quantities are **orthogonal**, at right angles, when $E[UV] = 0$.
 
 For $X$ in $L^2$ and every known $Z$ in $L^2(\mathcal G)$:
 
@@ -102,7 +82,7 @@ $$\operatorname{Var}(X) = E\big[\operatorname{Var}(X \mid \mathcal G)\big] + \op
 
 ### Step 0: squared error is squared distance
 
-Mean squared error $E[(X - Z)^2]$ is the squared length of $X - Z$ in $L^2$. The known quantities form a subspace, a flat floor: sums and multiples of seasonal rules are seasonal rules. In the plane, the nearest point of a line to a given point is the foot of the perpendicular ([orthogonal-projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)). So the whole proof is one claim: the error $X - M$ is perpendicular to every known quantity. Pythagoras does the rest.
+Mean squared error $E[(X - Z)^2]$ is the squared length of $X - Z$ in $L^2$. The known quantities form a subspace, a flat floor: sums and multiples of seasonal rules are seasonal rules. In the plane, the nearest point of a line to a given point is the foot of the perpendicular ([Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)). So the whole proof is one claim: the error $X - M$ is perpendicular to every known quantity. Pythagoras does the rest.
 
 The definition of $M$ already says something perpendicular. $E[M\,\mathbf 1_A] = E[X\,\mathbf 1_A]$ rearranges to $E[(X - M)\,\mathbf 1_A] = 0$: the error is orthogonal to every indicator of a visible event. The steps below spread that from indicators to every known quantity in $L^2$.
 
@@ -114,7 +94,7 @@ In the rainfall case the error is ±10 in every season, averaging to 0 inside ea
 
 ### Step 2: the forecast has finite mean square
 
-The inner product $E[(X - M) Z]$ needs $M$ in $L^2$, and the definition only promised a finite mean. Truncate $M$ at height n, pair it with $X$ using Step 1, and apply Cauchy–Schwarz: the average of a product is at most the product of the two root-mean-squares, the p = q = 2 case of [holders-inequality](../07-Sizes%20of%20Functions/02-holders-inequality.md). The result is $E[M^2] \le E[X^2]$: forecasting never adds spread. Here $E[M^2] = 3550$ and $E[X^2] = 3650$; the gap, 100, is the error's mean square.
+The inner product $E[(X - M) Z]$ needs $M$ in $L^2$, and the definition only promised a finite mean. Truncate $M$ at height n, pair it with $X$ using Step 1, and apply Cauchy–Schwarz: the average of a product is at most the product of the two root-mean-squares, the p = q = 2 case of [Holder's inequality](../07-Sizes%20of%20Functions/02-holders-inequality.md). The result is $E[M^2] \le E[X^2]$: forecasting never adds spread. Here $E[M^2] = 3550$ and $E[X^2] = 3650$; the gap, 100, is the error's mean square.
 
 ### Step 3: the error is orthogonal to every known quantity in $L^2$
 
@@ -131,7 +111,7 @@ The code runs through all 81 forecasts that shift each seasonal mean by −10, 0
 
 Setting: $X$ in $L^2(\Omega, \mathcal F, P)$, $\mathcal G$ a sub-sigma-algebra of $\mathcal F$, and $M$ a version of $E[X \mid \mathcal G]$: $\mathcal G$-measurable, integrable, with $E[M\mathbf 1_A] = E[X\mathbf 1_A]$ for all $A$ in $\mathcal G$. $X$ is integrable, by Cauchy–Schwarz against the constant 1.
 
-**(a) Bounded multipliers.** If $Z = \sum_j c_j \mathbf 1_{A_j}$ with finitely many $A_j$ in $\mathcal G$, linearity of the integral gives $E[MZ] = E[XZ]$. If $Z$ is $\mathcal G$-measurable with $\lvert Z\rvert \le K$, set $Z_n = 2^{-n}\lfloor 2^n Z\rfloor$. Each $Z_n$ is $\mathcal G$-measurable and takes finitely many values, $\lvert Z_n - Z\rvert \le 2^{-n}$ and $\lvert Z_n\rvert \le K + 1$. Then $Z_n M \to ZM$ and $Z_n X \to ZX$ at every point, with integrable envelopes $(K+1)\lvert M\rvert$ and $(K+1)\lvert X\rvert$; dominated convergence ([dominated-convergence-theorem](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)) gives $E[MZ] = E[XZ]$.
+**(a) Bounded multipliers.** If $Z = \sum_j c_j \mathbf 1_{A_j}$ with finitely many $A_j$ in $\mathcal G$, linearity of the integral gives $E[MZ] = E[XZ]$. If $Z$ is $\mathcal G$-measurable with $\lvert Z\rvert \le K$, set $Z_n = 2^{-n}\lfloor 2^n Z\rfloor$. Each $Z_n$ is $\mathcal G$-measurable and takes finitely many values, $\lvert Z_n - Z\rvert \le 2^{-n}$ and $\lvert Z_n\rvert \le K + 1$. Then $Z_n M \to ZM$ and $Z_n X \to ZX$ at every point, with integrable envelopes $(K+1)\lvert M\rvert$ and $(K+1)\lvert X\rvert$; dominated convergence ([Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)) gives $E[MZ] = E[XZ]$.
 
 **(b) $E[M^2] \le E[X^2]$.** Let $Z_n = M\mathbf 1_{\{\lvert M\rvert \le n\}}$, bounded and $\mathcal G$-measurable, and $a_n = E[M^2\mathbf 1_{\{\lvert M\rvert \le n\}}] = E[Z_n^2]$. By (a), $a_n = E[MZ_n] = E[XZ_n]$, and Cauchy–Schwarz gives $a_n \le \lVert X\rVert_2\, a_n^{1/2}$. If $a_n > 0$ divide: $a_n \le E[X^2]$; if $a_n = 0$ it holds anyway. The $a_n$ rise to $E[M^2]$ by monotone convergence (a rising sequence of non-negative functions may pass its limit inside the integral), since $M$ is finite almost surely. So $M$ is in $L^2(\mathcal G)$.
 
@@ -157,13 +137,13 @@ A constant is known under any information, so take $Z = E[X]$. The definition wi
 
 ### Step 6: least-squares regression is the same drop onto a smaller floor
 
-A straight line in temperature, $a + bT$, is also a seasonal rule: temperature is a function of the season. The lines form a two-dimensional floor inside the four-dimensional floor $L^2(\mathcal G)$. The best line makes its miss orthogonal to both $1$ and $T$: two equations in $a$ and $b$, the **normal equations** of [least-squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md). They give $a = 7$ and $b = 4$: forecasts 27, 51, 83 and 59.
+A straight line in temperature, $a + bT$, is also a seasonal rule: temperature is a function of the season. The lines form a two-dimensional floor inside the four-dimensional floor $L^2(\mathcal G)$. The best line makes its miss orthogonal to both $1$ and $T$: two equations in $a$ and $b$, the **normal equations** of [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md). They give $a = 7$ and $b = 4$: forecasts 27, 51, 83 and 59.
 
 Fitting the line to $X$ or to $M$ gives the same line. The reason is Step 3: $X - M$ is orthogonal to $1$ and $T$, so it drops out of both normal equations. Dropping straight onto the small floor lands where dropping first to the big floor, then across, lands. The errors add by Pythagoras again: 225 = 100 within + 125 from line to seasonal means. And 525 = 400 explained by the line + 125 left over.
 
 Give the regression enough features to reach every seasonal rule and it returns $M$ itself. Four distinct temperatures let a cubic, $1$, $T$, $T^2$, $T^3$, pass through any four seasonal values. Least squares on those four features gives 30, 60, 90, 40, the second road to $M$ in the code.
 
-A second route to the whole theorem runs the other way. $L^2(\mathcal G)$ is complete ([completeness-of-lp](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)), so it is a closed subspace of $L^2$, and every $X$ in $L^2$ has a closest point in it, by the projection theorem of [l2-as-a-hilbert-space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md). Part (f) of the proof shows that closest point satisfies the definition. That builds conditional expectation for $L^2$ without densities, and truncation extends it to every integrable $X$: the route of Williams's book.
+A second route to the whole theorem runs the other way. $L^2(\mathcal G)$ is complete ([Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)), so it is a closed subspace of $L^2$, and every $X$ in $L^2$ has a closest point in it, by the projection theorem of [L2 as a Hilbert space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md). Part (f) of the proof shows that closest point satisfies the definition. That builds conditional expectation for $L^2$ without densities, and truncation extends it to every integrable $X$: the route of Williams's book.
 
 ---
 
@@ -626,8 +606,8 @@ The two outputs agree line for line.
 
 - **Weather and demand forecasting.** A forecast scored by mean squared error should be a conditional mean given what is known at forecast time; the skill score is the share of variance it removes, 0.84 here.
 - **Analysis of variance.** One-way ANOVA splits a sum of squares into within-group and between-group parts: the law of total variance on the sample.
-- **Regression.** Fitted values are projections of the response; R^2 is between over total ([least-squares-regression](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)).
-- **Martingales.** A square-integrable martingale is a sequence of projections onto growing information, and its increments are orthogonal ([filtrations-and-martingales](06-filtrations-and-martingales.md)).
+- **Regression.** Fitted values are projections of the response; R^2 is between over total ([Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)).
+- **Martingales.** A square-integrable martingale is a sequence of projections onto growing information, and its increments are orthogonal ([Filtrations and martingales](06-filtrations-and-martingales.md)).
 
 > **Say it back**
 > Mean squared error is a squared distance, and the forecasts built from what is known form a flat subspace. The conditional expectation is the foot of the perpendicular: its error has zero average product with every known quantity. Pythagoras then says any other known forecast scores the conditional expectation's error plus the squared distance between them. With a constant as the other forecast, that is the law of total variance: 625 = 100 within + 525 between. A least-squares line is the same drop onto a smaller floor.
@@ -636,20 +616,20 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [conditional-expectation-on-a-sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md): the definition by equal integrals on every known event, and existence.
-- [l2-as-a-hilbert-space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md): the inner product $E[UV]$, lengths, Cauchy–Schwarz in $L^2$, and the projection theorem.
-- [orthogonal-projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md): the nearest point is where the leftover is perpendicular, in the plane.
-- [least-squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the normal equations behind the regression line.
-- [conditional-expectation-in-tables](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md): conditional expectation and the tower rule computed from tables.
+- [Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md): the definition by equal integrals on every known event, and existence.
+- [L2 as a Hilbert space](../07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md): the inner product $E[UV]$, lengths, Cauchy–Schwarz in $L^2$, and the projection theorem.
+- [Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md): the nearest point is where the leftover is perpendicular, in the plane.
+- [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the normal equations behind the regression line.
+- [Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md): conditional expectation and the tower rule computed from tables.
 
 ## Where this goes next
 
-- projection-theorem-and-orthogonal-complements: a closest point in any closed subspace of any Hilbert space, and the orthogonal complement.
-- [rules-of-conditional-expectation](04-rules-of-conditional-expectation.md): the tower rule, taking out what is known, and conditional Jensen, several of them read off the projection.
-- [conditioning-on-a-random-variable](05-conditioning-on-a-random-variable.md): the forecast as a function of an observed quantity, such as the season.
-- [filtrations-and-martingales](06-filtrations-and-martingales.md): projections onto information that grows over time.
+- Projection: a closest point in any closed subspace of any Hilbert space, and the orthogonal complement.
+- [The rules of conditional expectation](04-rules-of-conditional-expectation.md): the tower rule, taking out what is known, and conditional Jensen, several of them read off the projection.
+- [Conditioning on a random variable](05-conditioning-on-a-random-variable.md): the forecast as a function of an observed quantity, such as the season.
+- [Filtrations and martingales](06-filtrations-and-martingales.md): projections onto information that grows over time.
 
-Step 6 dropped twice, onto the seasons and then onto the lines, and landed where one drop would; that two drops onto nested sigma-algebras always equal one drop onto the smaller is the tower rule, proved in [rules-of-conditional-expectation](04-rules-of-conditional-expectation.md).
+Step 6 dropped twice, onto the seasons and then onto the lines, and landed where one drop would; that two drops onto nested sigma-algebras always equal one drop onto the smaller is the tower rule, proved in [The rules of conditional expectation](04-rules-of-conditional-expectation.md).
 
 ---
 

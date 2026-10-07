@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX exotics as desks use them - digitals, touches and barriers
-topic: All-or-nothing bets on an exchange rate
-item: Currency digitals
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/03-garman-kohlhagen-greeks|garman-kohlhagen-greeks]]"
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/05-vanna-volga-smile-curve|vanna-volga-smile-curve]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/02-premium-currency-and-foreign-domestic-symmetry|premium-currency-and-foreign-domestic-symmetry]]"
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/01-cash-or-nothing-digital|cash-or-nothing-digital]]"
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/02-asset-or-nothing-digital|asset-or-nothing-digital]]"
-next:
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/04-fx-one-touch-and-no-touch|fx-one-touch-and-no-touch]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/08-barrier-level-from-a-target-premium|barrier-level-from-a-target-premium]]"
-tags: [mathematics, financial mathematics, fx-digitals]
----
-
 # Currency digitals: a fixed payout in dollars or in euros, priced as a discounted probability and corrected for the smile's slope
 
-Financial mathematics → FX exotics as desks use them - digitals, touches and barriers → All-or-nothing bets on an exchange rate → Currency digitals
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX exotics as desks use them - digitals, touches and barriers](../../../SYLLABUS.md#w12-s23) → Currency digitals
 
 ---
 
@@ -58,7 +37,7 @@ The step is the payoff on expiry day, the same for both contracts in their own c
 
 ## The formula
 
-Notation first. The rate $S$ is quoted in dollars per euro, so the euro is the **foreign** currency (the one being priced) and the dollar the **domestic** one (the currency prices are counted in). $r_d$ is the dollar interest rate and $r_f$ the euro rate, both continuously compounded. Everything else is the Garman-Kohlhagen notation of [garman-kohlhagen-greeks](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md); $N(x)$ is the area under the standard bell curve to the left of $x$.
+Notation first. The rate $S$ is quoted in dollars per euro, so the euro is the **foreign** currency (the one being priced) and the dollar the **domestic** one (the currency prices are counted in). $r_d$ is the dollar interest rate and $r_f$ the euro rate, both continuously compounded. Everything else is the Garman-Kohlhagen notation of [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md); $N(x)$ is the area under the standard bell curve to the left of $x$.
 
 The dollar digital pays one dollar if $S_T > K$. The euro digital pays one euro if $S_T > K$ and is valued here in euros:
 
@@ -97,7 +76,7 @@ In words: $d_2$ is how many wiggle units, $\sigma\sqrt{T}$ each, the euro has to
 
 - **A lognormal rate with one volatility.** The flat formulas assume it. On a smile, the flat price at the strike's own volatility misses exactly the $-\nu\beta$ term: at 1.10 on the house smile, 0.530331 flat against 0.567758 on the smile.
 - **Known, constant interest rates in both currencies.** If rates move, both discount factors and the forward move; the digital carries two rate risks, one per currency.
-- **One look, on expiry day.** A payout that fires the first time the rate touches a level is a different contract with a different price: [fx-one-touch-and-no-touch](04-fx-one-touch-and-no-touch.md).
+- **One look, on expiry day.** A payout that fires the first time the rate touches a level is a different contract with a different price: [One-touch and no-touch](04-fx-one-touch-and-no-touch.md).
 - **Ordinary options at every strike, traded without cost.** The replication in Why it works needs calls a hair apart. Real call spreads have a finite width, so desks charge the spread's price, which sits above the formula.
 
 ---
@@ -120,7 +99,7 @@ Garman-Kohlhagen prices the call as $C = S e^{-r_f T} N(d_1) - K e^{-r_d T} N(d_
 
 $$-\frac{\partial C}{\partial K} = e^{-r_d T} N(d_2).$$
 
-The same answer comes from the pricing world directly. In the dollar pricing world the log of the rate is bell-shaped, centred at $\ln S + (r_d - r_f - \tfrac12\sigma^2)T$ with spread $\sigma\sqrt{T}$. The chance of finishing above $K$ is $N(d_2)$. A dollar paid at $T$ is worth $e^{-r_d T}$ today. Chance times discount: $e^{-r_d T}N(d_2)$, as on [cash-or-nothing-digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md), with the euro rate in place of the dividend yield.
+The same answer comes from the pricing world directly. In the dollar pricing world the log of the rate is bell-shaped, centred at $\ln S + (r_d - r_f - \tfrac12\sigma^2)T$ with spread $\sigma\sqrt{T}$. The chance of finishing above $K$ is $N(d_2)$. A dollar paid at $T$ is worth $e^{-r_d T}$ today. Chance times discount: $e^{-r_d T}N(d_2)$, as on [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md), with the euro rate in place of the dividend yield.
 
 A digital put pays one dollar when $S_T \le K$. Call and put together pay one dollar for sure, so together they cost $e^{-r_d T}$: $0.532325 + 0.418905 = 0.951229$.
 
@@ -136,7 +115,7 @@ In $\partial C/\partial K$ the first height multiplies $\partial d_1/\partial K 
 
 ### Step 2: the euro digital is the share half, counted in euros
 
-One euro paid when $S_T > K$ is worth $S_T$ dollars at that moment. So in dollars the euro digital pays $S_T$ if $S_T > K$: an asset-or-nothing payoff, the "share half" of the call ([asset-or-nothing-digital](../10-Digitals%20and%20the%20implied%20density/02-asset-or-nothing-digital.md)). Its dollar value is $S e^{-r_f T} N(d_1)$. Divide by today's rate to state it in euros:
+One euro paid when $S_T > K$ is worth $S_T$ dollars at that moment. So in dollars the euro digital pays $S_T$ if $S_T > K$: an asset-or-nothing payoff, the "share half" of the call ([Asset-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/02-asset-or-nothing-digital.md)). Its dollar value is $S e^{-r_f T} N(d_1)$. Divide by today's rate to state it in euros:
 
 $$D_f = e^{-r_f T} N(d_1).$$
 
@@ -150,11 +129,11 @@ A euro-based bank quotes the same market the other way up: $1/S$ euros per dolla
 
 The event "euro above 1.10" is the event "dollar below $1/1.10$ euros". So the euro digital is a digital **put** on the inverted quote, paying one unit of that bank's domestic currency. Its price is the Step 1 formula for a put, with the rates swapped and the strike inverted: $e^{-r_f T} N(-d_2^{\text{inv}})$. Working out $d_2^{\text{inv}}$ with $1/S$, $1/K$, $r_f$ domestic and $r_d$ foreign gives exactly $-d_1$. So $N(-d_2^{\text{inv}}) = N(d_1)$, and the two views agree.
 
-So there is only one formula: a foreign-paying digital is a domestic-paying digital seen from the other side of the quote, as on [premium-currency-and-foreign-domestic-symmetry](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/02-premium-currency-and-foreign-domestic-symmetry.md).
+So there is only one formula: a foreign-paying digital is a domestic-paying digital seen from the other side of the quote, as on [One option, two currencies](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/02-premium-currency-and-foreign-domestic-symmetry.md).
 
 ### Step 4: on a smile the slope picks up vega times the smile's slope
 
-The market does not quote one volatility. The house smile, built on [vanna-volga-smile-curve](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/05-vanna-volga-smile-curve.md), runs through 10.75% at the 25-delta put strike 1.052466, 10.00% at the at-the-money strike 1.127847 and 9.75% at the 25-delta call strike 1.201425. Every call is priced at its own strike's volatility: $C\big(K, \sigma(K)\big)$.
+The market does not quote one volatility. The house smile, built on [The vanna-volga smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/05-vanna-volga-smile-curve.md), runs through 10.75% at the 25-delta put strike 1.052466, 10.00% at the at-the-money strike 1.127847 and 9.75% at the 25-delta call strike 1.201425. Every call is priced at its own strike's volatility: $C\big(K, \sigma(K)\big)$.
 
 Step 0 still holds, because it only used call prices. But now $K$ enters twice: directly, and through $\sigma(K)$. The chain rule (the slope of a function inside a function) gives
 
@@ -261,7 +240,7 @@ Sensitivities per unit of payout, at the 1.10 strike, flat 10%:
 | vega, per volatility point | −0.009381 | −0.005629 |
 | spot where vega changes sign | 1.072841 | 1.083623 |
 
-The checks confirm the dollar delta and vega by bumping spot and volatility. Both deltas are 3.411276 only because the strike equals the spot: then the Step 1 identity makes the two bell-curve heights equal. Vega is negative at the money. More volatility spreads the outcomes, and a bet already more likely than not to pay loses some of its edge. Vega turns positive only below 1.072841 for the dollar digital, where $d_1 = 0$, not at the strike. Near expiry the delta becomes a tall spike around the strike, which is the hedging problem [barrier-and-touch-greeks](06-barrier-and-touch-greeks.md) takes up at a barrier.
+The checks confirm the dollar delta and vega by bumping spot and volatility. Both deltas are 3.411276 only because the strike equals the spot: then the Step 1 identity makes the two bell-curve heights equal. Vega is negative at the money. More volatility spreads the outcomes, and a bet already more likely than not to pay loses some of its edge. Vega turns positive only below 1.072841 for the dollar digital, where $d_1 = 0$, not at the strike. Near expiry the delta becomes a tall spike around the strike, which is the hedging problem [Greeks at the wall](06-barrier-and-touch-greeks.md) takes up at a barrier.
 
 ---
 
@@ -693,9 +672,9 @@ The two outputs agree line for line, including the Monte Carlo rows.
 
 - **Corporate hedging desks.** A digital caps a budget-rate miss with a known payout. Desks quote the price as a percentage of payout (convention as of 2026-09-27): 53.2% for the dollar digital here.
 - **Structured deposits.** A deposit that pays a bonus coupon if EURUSD finishes above a level is a bond plus a digital. The bank's margin sits in the gap between the call spread it buys and the formula.
-- **Barrier formulas.** The closed-form knock-out and knock-in prices on [barrier-options-by-reflection](02-barrier-options-by-reflection.md) are sums of vanilla and digital pieces, sorted on [the-eight-barrier-types](03-the-eight-barrier-types.md).
-- **Two-sided bets.** A range digital paying if the rate ends between two levels is one digital minus another; the path-dependent version is on [double-barriers-and-double-no-touch](05-double-barriers-and-double-no-touch.md).
-- **Smile risk in exotics.** The skew term is the simplest case of the correction that [barriers-with-the-smile](07-barriers-with-the-smile.md) applies to contracts that watch the whole path.
+- **Barrier formulas.** The closed-form knock-out and knock-in prices on [Knock-out and knock-in](02-barrier-options-by-reflection.md) are sums of vanilla and digital pieces, sorted on [The eight single barriers in one table](03-the-eight-barrier-types.md).
+- **Two-sided bets.** A range digital paying if the rate ends between two levels is one digital minus another; the path-dependent version is on [Two walls](05-double-barriers-and-double-no-touch.md).
+- **Smile risk in exotics.** The skew term is the simplest case of the correction that [Barriers on a smile](07-barriers-with-the-smile.md) applies to contracts that watch the whole path.
 
 > **Say it back**
 > A currency digital pays a fixed amount, in dollars or in euros, if the rate finishes above the strike. It is the slope of the call price against the strike, so a tight call spread builds it. In a flat market the dollar digital is $e^{-r_d T}N(d_2)$ and the euro digital is $e^{-r_f T}N(d_1)$: each is a chance counted and discounted in the currency it pays. Seen from the euro side, the euro digital is an ordinary digital on the inverted quote. On a smile each gains minus vega times the smile's slope.
@@ -704,16 +683,16 @@ The two outputs agree line for line, including the Monte Carlo rows.
 
 ## What this builds on
 
-- [garman-kohlhagen-greeks](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the call price, $d_1$, $d_2$ and vega that every step here differentiates.
-- [vanna-volga-smile-curve](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/05-vanna-volga-smile-curve.md): the house smile, the curve whose slope the skew term uses.
-- [premium-currency-and-foreign-domestic-symmetry](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/02-premium-currency-and-foreign-domestic-symmetry.md): the inverted quote, which turns a euro payout into a domestic one.
-- [cash-or-nothing-digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md): the dollar digital on a share, which this card moves to a currency.
-- [asset-or-nothing-digital](../10-Digitals%20and%20the%20implied%20density/02-asset-or-nothing-digital.md): the share half of the call, which in currencies is the euro digital.
+- [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the call price, $d_1$, $d_2$ and vega that every step here differentiates.
+- [The vanna-volga smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/05-vanna-volga-smile-curve.md): the house smile, the curve whose slope the skew term uses.
+- [One option, two currencies](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/02-premium-currency-and-foreign-domestic-symmetry.md): the inverted quote, which turns a euro payout into a domestic one.
+- [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md): the dollar digital on a share, which this card moves to a currency.
+- [Asset-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/02-asset-or-nothing-digital.md): the share half of the call, which in currencies is the euro digital.
 
 ## Where this goes next
 
-- [fx-one-touch-and-no-touch](04-fx-one-touch-and-no-touch.md): the payout fires the first time the rate touches a level, at any moment of the year, not only on expiry day.
-- [barrier-level-from-a-target-premium](08-barrier-level-from-a-target-premium.md): the price run backwards, from a premium the client will pay to the level that delivers it.
+- [One-touch and no-touch](04-fx-one-touch-and-no-touch.md): the payout fires the first time the rate touches a level, at any moment of the year, not only on expiry day.
+- [Solving for the barrier](08-barrier-level-from-a-target-premium.md): the price run backwards, from a premium the client will pay to the level that delivers it.
 
 ---
 

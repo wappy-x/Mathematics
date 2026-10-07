@@ -1,36 +1,16 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Greeks by Numbers and Calibration
-topic: Reverse-mode sweeps
-item: Adjoint differentiation
-kind: method
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/02-pathwise-and-likelihood-ratio-greeks|pathwise-and-likelihood-ratio-greeks]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/04-multivariable-chain-rule-and-jacobians|multivariable-chain-rule-and-jacobians]]"
-next:
-  - "[[Cards/16-Numerical analysis/08-Derivatives by Machine/07-reverse-mode-automatic-differentiation|reverse-mode-automatic-differentiation]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - adjoint-differentiation-in-outline
----
-
 # Adjoint differentiation: every sensitivity for the cost of one extra pass
 
-Financial mathematics → Greeks by Numbers and Calibration → Reverse-mode sweeps → Adjoint differentiation
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Greeks by Numbers and Calibration](../../../SYLLABUS.md#w12-s07) → Adjoint differentiation
 
 ---
 
 ## General Overview
 
-Acme's shares trade at $100 today. A one-year option to buy one share for $100 costs $9.23 in this market: a risk-free rate of 5% a year, a dividend yield of 2%, volatility of 20%. That price comes from [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+Acme's shares trade at $100 today. A one-year option to buy one share for $100 costs $9.23 in this market: a risk-free rate of 5% a year, a dividend yield of 2%, volatility of 20%. That price comes from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
 
 A desk holding the option wants the slopes, not the price: what the option gains if Acme rises a dollar, if volatility rises a point, if a day passes. Six inputs went into $9.23, and the desk wants the derivative with respect to every one.
 
-The plain way is to nudge one input, price again, and divide by the nudge — [bump-and-revalue-and-common-random-numbers](01-bump-and-revalue-and-common-random-numbers.md). That costs a fresh pricing per nudge, two per input if the nudge goes each way: thirteen pricings for the price and all six slopes. Affordable here, ruinous on a book whose inputs are every point of a yield curve and a volatility surface.
+The plain way is to nudge one input, price again, and divide by the nudge — [Bump and revalue](01-bump-and-revalue-and-common-random-numbers.md). That costs a fresh pricing per nudge, two per input if the nudge goes each way: thirteen pricings for the price and all six slopes. Affordable here, ruinous on a book whose inputs are every point of a yield curve and a volatility surface.
 
 Adjoint differentiation replaces that per-input bill with a flat surcharge. Price the option once, keeping a record of every arithmetic step, then read the record backwards once. Every input's derivative falls out of that single walk — exactly, with no nudge to choose.
 
@@ -38,7 +18,7 @@ Three words carry the rest of the card. The record of the steps is a **tape**: a
 
 **Record the arithmetic that produced the price, then walk the record backwards, multiplying by each step's local slope and adding up wherever a value was used more than once: the inputs' adjoints are every derivative at once, at a cost that does not depend on how many inputs there are.**
 
-**What kind of fact this is:** a method, exact up to rounding; it rests on the chain rule for several variables, proved in [multivariable-chain-rule-and-jacobians](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md).
+**What kind of fact this is:** a method, exact up to rounding; it rests on the chain rule for several variables, proved in [Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md).
 
 ### The picture: four steps, walked both ways
 
@@ -106,7 +86,7 @@ One slope per kind of step, nine kinds in all. Here `c` is a fixed number, `phi`
 
 ### When it holds
 
-- **Every step has a known slope.** A kink has none: `max(S - K, 0)` has no slope at the strike, and a payoff that either pays or does not has none anywhere useful — those want [pathwise-and-likelihood-ratio-greeks](02-pathwise-and-likelihood-ratio-greeks.md).
+- **Every step has a known slope.** A kink has none: `max(S - K, 0)` has no slope at the strike, and a payoff that either pays or does not has none anywhere useful — those want [Greeks inside the simulation](02-pathwise-and-likelihood-ratio-greeks.md).
 - **The tape has to be kept.** Memory grows with the number of steps: a simulated path of a million steps wants a million stored values.
 - **One sweep, first derivatives only.** Gamma is a derivative of a derivative and needs a second pass.
 - **One answer at a time.** A sweep hands back the derivatives of one output. A routine returning a price and a hedge ratio wants a sweep each, so many answers and few inputs is forward mode's case, not this one.
@@ -161,7 +141,7 @@ Four derivatives, seven multiply-and-adds, one walk, matching hand-differentiate
 
 On the toy tape every value fed exactly one later step. Real tapes are untidier. On the Black-Scholes tape $T$ feeds four steps — the square root, the drift times $T$, the dividend exponent, the rate exponent — and sigma feeds three, since `sigma x sigma` uses it twice over.
 
-Each use sends its own number back and the numbers add. That is the multivariable chain rule ([multivariable-chain-rule-and-jacobians](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)): when a value reaches the answer by several routes, the total slope is the sum along the routes, and the sweep does that sum by accumulating. Get it wrong and the last route swept overwrites the others. The code runs that mistake on purpose: vega lands on 47.376447 instead of 37.901158, a quarter too big.
+Each use sends its own number back and the numbers add. That is the multivariable chain rule ([Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)): when a value reaches the answer by several routes, the total slope is the sum along the routes, and the sweep does that sum by accumulating. Get it wrong and the last route swept overwrites the others. The code runs that mistake on purpose: vega lands on 47.376447 instead of 37.901158, a quarter too big.
 
 ### Step 4: the Black-Scholes tape, and the zero hiding in it
 
@@ -217,7 +197,7 @@ So the choice is a question of shape: many inputs and one answer, sweep; one inp
 
 </details>
 
-Two other routes reach the same six numbers. Differentiating the formula on paper gives the closed forms the code checks against, one Greek at a time, as [delta](../09-The%20Greeks%2C%20one%20each/01-delta.md) and its shelf-mates do; that works for a formula, not for a thousand-line pricer. Nudging works for any pricer and returns an approximation whose accuracy hangs on a step size — the trade [bump-and-revalue-and-common-random-numbers](01-bump-and-revalue-and-common-random-numbers.md) examines.
+Two other routes reach the same six numbers. Differentiating the formula on paper gives the closed forms the code checks against, one Greek at a time, as [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md) and its shelf-mates do; that works for a formula, not for a thousand-line pricer. Nudging works for any pricer and returns an approximation whose accuracy hangs on a step size — the trade [Bump and revalue](01-bump-and-revalue-and-common-random-numbers.md) examines.
 
 ---
 
@@ -249,7 +229,7 @@ Six derivatives from one walk down 42 arrows. Delta is 0.5869, the shelf's house
 
 **Conventions verified 19 Sep 2026:** the right-hand column is quoting habit, not mathematics. A volatility point is 0.01 of $\sigma$, a basis point 0.0001 of a rate, and the day one of 365 calendar days; a desk counting business days divides by about 252 instead. The sweep's own numbers, per year and per whole unit, do not change.
 
-Two identities test the six together rather than one at a time. Doubling $S$ and $K$ doubles the price, which forces $S$ times delta plus $K$ times the strike slope back to the price: $58.685115 - 49.458109 = 9.227006$ — the same two numerals as psi and rho above, signs swapped, because $T$ is one year. And the slopes must satisfy the equation the price obeys ([black-scholes-equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)),
+Two identities test the six together rather than one at a time. Doubling $S$ and $K$ doubles the price, which forces $S$ times delta plus $K$ times the strike slope back to the price: $58.685115 - 49.458109 = 9.227006$ — the same two numerals as psi and rho above, signs swapped, because $T$ is one year. And the slopes must satisfy the equation the price obeys ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)),
 
 $$\frac{\partial C}{\partial t} + (r-q)\,S\,\frac{\partial C}{\partial S} + \tfrac{1}{2}\sigma^2 S^2\,\Gamma - rC = 0,$$
 
@@ -726,7 +706,7 @@ The two outputs match line for line at six decimals, from different bell-curve a
 > - **Overwriting where a value is reused.** Sigma appears three times on the Acme tape; assign instead of add and vega reads 47.376447 against the true 37.901158, with no error message.
 > - **Expecting second derivatives.** Gamma, 0.018951 here, takes a second pass; "all the Greeks in one pass" oversells it.
 > - **Losing the sign of theta.** The tape carries $T$, the time remaining, whose slope is $+5.089319$ a year. Theta runs with the clock: $-5.089319$ a year, $-0.013943$ a day.
-> - **Sweeping through a kink.** Where a payoff bends or jumps there is no slope to record, and the sweep returns a one-sided number or a zero without complaint: [pathwise-and-likelihood-ratio-greeks](02-pathwise-and-likelihood-ratio-greeks.md).
+> - **Sweeping through a kink.** Where a payoff bends or jumps there is no slope to record, and the sweep returns a one-sided number or a zero without complaint: [Greeks inside the simulation](02-pathwise-and-likelihood-ratio-greeks.md).
 
 ---
 
@@ -734,9 +714,9 @@ The two outputs match line for line at six decimals, from different bell-curve a
 
 - **Overnight risk runs.** A bank's book depends on thousands of market inputs; nudging each is impossible in a night, one sweep per trade is routine. Giles and Glasserman's 2006 note put this in front of trading desks.
 - **Machine learning.** Backpropagation is this sweep on a network's tape, the loss in place of the price and the weights in place of the inputs: millions of inputs, one answer.
-- **Calibration.** Fitting a model to market prices minimises a mismatch over many parameters, and every search step wants the gradient: [calibration-as-least-squares](06-calibration-as-least-squares.md).
-- **Solving backwards.** Newton's method needs a derivative at every guess, and a sweep supplies it for the cost of the guess: [root-finding-for-inverses](05-root-finding-for-inverses.md).
-- **Lattices, and the model underneath.** A tree or a grid is arithmetic too, so it has a tape and can be swept ([greeks-from-a-tree-or-grid](04-greeks-from-a-tree-or-grid.md)) — though exact derivatives of a wrong model are exactly wrong ([model-risk-and-parameter-stability](07-model-risk-and-parameter-stability.md)).
+- **Calibration.** Fitting a model to market prices minimises a mismatch over many parameters, and every search step wants the gradient: [Calibration](06-calibration-as-least-squares.md).
+- **Solving backwards.** Newton's method needs a derivative at every guess, and a sweep supplies it for the cost of the guess: [Solving backwards](05-root-finding-for-inverses.md).
+- **Lattices, and the model underneath.** A tree or a grid is arithmetic too, so it has a tape and can be swept ([Greeks from a tree or grid](04-greeks-from-a-tree-or-grid.md)) — though exact derivatives of a wrong model are exactly wrong ([Model risk](07-model-risk-and-parameter-stability.md)).
 
 > **Say it back**
 > Write the pricing arithmetic out as a numbered list of one-operation steps, a tape. Run it forward for the price, keeping every value and every step's local slope. Then set the price's adjoint to 1 and walk the list backwards, pushing each step's adjoint to its inputs multiplied by the local slope, adding wherever a value was used twice. The inputs' adjoints are all the derivatives, exactly, from one walk — the price, five Greeks and the strike slope for 2.62 forward passes against thirteen pricings by nudging.
@@ -745,12 +725,12 @@ The two outputs match line for line at six decimals, from different bell-curve a
 
 ## What this builds on
 
-- [pathwise-and-likelihood-ratio-greeks](02-pathwise-and-likelihood-ratio-greeks.md): differentiating inside a simulation, and what to do where a payoff has no slope.
-- [multivariable-chain-rule-and-jacobians](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md): the rule that makes contributions add when a value reaches the answer by several routes. The sweep is that rule, run once.
+- [Greeks inside the simulation](02-pathwise-and-likelihood-ratio-greeks.md): differentiating inside a simulation, and what to do where a payoff has no slope.
+- [Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md): the rule that makes contributions add when a value reaches the answer by several routes. The sweep is that rule, run once.
 
 ## Where this goes next
 
-- reverse-mode-automatic-differentiation: the same sweep as a general tool rather than a finance trick — how memory is traded against recomputation, and how second derivatives arrive.
+- Reverse mode: the same sweep as a general tool rather than a finance trick — how memory is traded against recomputation, and how second derivatives arrive.
 
 This card's tape was typed out by hand, which nobody does for a real pricer; how a program records its own tape as it runs is what a later card builds.
 

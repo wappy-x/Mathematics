@@ -1,36 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Sets You Can Measure
-topic: Sets of size zero
-item: Null sets and almost everywhere
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/04-measures|measures]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/05-continuity-of-measure|continuity-of-measure]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/02-countable-sets|countable-sets]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/03-cantors-diagonal-argument|cantors-diagonal-argument]]"
-next:
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/01-lebesgue-outer-measure|lebesgue-outer-measure]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/03-lebesgue-measure|lebesgue-measure]]"
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/04-modes-of-convergence|modes-of-convergence]]"
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/01-absolutely-continuous-and-singular-measures|absolutely-continuous-and-singular-measures]]"
-  - "[[Cards/17-Topology/01-Metric Spaces/10-baire-category-theorem|baire-category-theorem]]"
-  - "[[Cards/18-Functional analysis/04-Distributions and Sobolev Spaces/10-trace-and-rellich-kondrachov-in-outline|trace-and-rellich-kondrachov-in-outline]]"
-  - "[[Cards/20-Harmonic analysis/01-Fourier Series in Depth/09-carleson-in-outline|carleson-in-outline]]"
-  - "[[Cards/20-Harmonic analysis/06-Maximal Functions and Beyond/02-calderon-zygmund-decomposition-in-outline|calderon-zygmund-decomposition-in-outline]]"
-  - "[[Cards/20-Harmonic analysis/06-Maximal Functions and Beyond/06-restriction-and-kakeya-in-outline|restriction-and-kakeya-in-outline]]"
-tags:
-  - mathematics
-  - measure and integration
-  - null-sets-and-almost-everywhere
----
-
 # Null sets and almost everywhere: sets of size zero, why countably many still weigh nothing, and completing a measure
 
-Measure and integration → Sets You Can Measure → Sets of size zero → Null sets and almost everywhere
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sets You Can Measure](../../../SYLLABUS.md#w10-s01) → Null sets and almost everywhere
 
 ---
 
@@ -72,7 +42,7 @@ Orange: within r of the centre, exactly r times r. Green: within r of the rim, e
 
 ## The formula
 
-Notation first, in words. A **measure space** $(\Omega, \mathcal{F}, \mu)$ is a set of outcomes, the collection of its subsets we allow ourselves to measure, and a measure that gives each of them a size ([measures](04-measures.md)). Here the outcomes are the points of the board, the sizes are areas, and the probability is area divided by π.
+Notation first, in words. A **measure space** $(\Omega, \mathcal{F}, \mu)$ is a set of outcomes, the collection of its subsets we allow ourselves to measure, and a measure that gives each of them a size ([Measures](04-measures.md)). Here the outcomes are the points of the board, the sizes are areas, and the probability is area divided by π.
 
 A **null set** is a set we may measure whose measure is zero:
 
@@ -130,17 +100,17 @@ Size zero means smaller than every positive number. To show a set is null, cover
 
 ### Step 1: every single point is null
 
-Put a disc of radius r around the centre. The dart's chance of landing in it is π r r divided by π, which is r times r. The centre lies inside every such disc, and a set inside another cannot be bigger (monotonicity, [continuity-of-measure](05-continuity-of-measure.md)). So the centre's chance is at most 0.01, at most 0.0001, at most r times r for every r. The only number that small is 0.
+Put a disc of radius r around the centre. The dart's chance of landing in it is π r r divided by π, which is r times r. The centre lies inside every such disc, and a set inside another cannot be bigger (monotonicity, [Continuity and subadditivity](05-continuity-of-measure.md)). So the centre's chance is at most 0.01, at most 0.0001, at most r times r for every r. The only number that small is 0.
 
 The same argument works at any point of the board. The rim circle, a closed set and so in $\mathcal{F}$, is null too: it lies inside the ring of points within r of it, of chance 1 − (1 − r)(1 − r), which falls to 0.
 
 ### Step 2: countably many null sets make a null set
 
-A countable set is one whose members can be listed first, second, third ([countable-sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)). The rational points of the board are countable: list them by the size of their denominators. The code lists the 225 rational points of the board with denominator at most 6.
+A countable set is one whose members can be listed first, second, third ([Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)). The rational points of the board are countable: list them by the size of their denominators. The code lists the 225 rational points of the board with denominator at most 6.
 
 Give the k-th point a small square of area $\varepsilon$ divided by 2 to the power k. After K points the squares' total area is $\varepsilon$ times (1 − 1/2^K), below $\varepsilon$ for every K. With $\varepsilon$ = 0.001 square metres, the chance of landing on some rational point is at most 0.001/π, about 0.0003183099. Since $\varepsilon$ was any positive number, that chance is 0.
 
-The general statement needs no squares. The union of null sets $N_1, N_2, \ldots$ is measurable, since a sigma-algebra is closed under countable unions. Its size is at most the sum of their sizes (countable subadditivity, [continuity-of-measure](05-continuity-of-measure.md)). The sum of zeros is zero.
+The general statement needs no squares. The union of null sets $N_1, N_2, \ldots$ is measurable, since a sigma-algebra is closed under countable unions. Its size is at most the sum of their sizes (countable subadditivity, [Continuity and subadditivity](05-continuity-of-measure.md)). The sum of zeros is zero.
 
 Turn it round. If each of countably many properties holds almost everywhere, they all hold together almost everywhere: the outcomes where some property fails form a countable union of null sets. "The dart lands off the first rational point" holds a.s., and so does each of the rest; so "off every rational point" holds a.s.
 
@@ -149,11 +119,11 @@ Turn it round. If each of countably many properties holds almost everywhere, the
 
 **Theorem 1.** In a measure space $(\Omega, \mathcal{F}, \mu)$, if $N_1, N_2, \ldots$ are null sets, their union $N$ is null.
 
-*Proof.* Each $N_k$ is in $\mathcal{F}$, and a sigma-algebra holds every countable union of its members, so $N$ is in $\mathcal{F}$. Countable subadditivity (proved from countable additivity on [continuity-of-measure](05-continuity-of-measure.md)) gives $\mu(N) \le \sum_k \mu(N_k) = 0$. A measure is never negative, so $\mu(N) = 0$.
+*Proof.* Each $N_k$ is in $\mathcal{F}$, and a sigma-algebra holds every countable union of its members, so $N$ is in $\mathcal{F}$. Countable subadditivity (proved from countable additivity on [Continuity and subadditivity](05-continuity-of-measure.md)) gives $\mu(N) \le \sum_k \mu(N_k) = 0$. A measure is never negative, so $\mu(N) = 0$.
 
 **Corollary.** If each property in a list holds $\mu$-a.e., they hold together $\mu$-a.e. *Proof.* Property number k fails only inside a null set $N_k$. An outcome where some property fails lies in the union of the $N_k$, null by Theorem 1.
 
-**Theorem 2 (the board is not a countable set).** *Proof.* Every point $p$ of the board lies in the disc of radius r around it, of chance at most r r, so $P(\{p\}) \le r r$ for every r > 0, and $P(\{p\}) = 0$. If the points could be listed, Theorem 1 would make the board null, but $P(\text{board}) = 1$. So they cannot be listed. The diagonal argument ([cantors-diagonal-argument](../../01-Foundations/09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md)) reaches the same conclusion with no measure at all.
+**Theorem 2 (the board is not a countable set).** *Proof.* Every point $p$ of the board lies in the disc of radius r around it, of chance at most r r, so $P(\{p\}) \le r r$ for every r > 0, and $P(\{p\}) = 0$. If the points could be listed, Theorem 1 would make the board null, but $P(\text{board}) = 1$. So they cannot be listed. The diagonal argument ([Cantor's diagonal](../../01-Foundations/09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md)) reaches the same conclusion with no measure at all.
 
 **Theorem 3 (an uncountable null set).** The horizontal diameter is uncountable, since its points match the numbers from −1 to 1. It is a closed segment, so it is in $\mathcal{F}$. It lies inside n squares of side 2/n laid along it, of total area n times (2/n)(2/n) = 4/n. That falls below any $\varepsilon$, so the diameter is null.
 
@@ -187,16 +157,16 @@ A four-point example shows the gap. Split the board into four outcomes: the cent
 
 Completion adds every piece of a null set, glued to any measurable set, and gives the glued set the measurable set's size. The machine's four sets become eight: the four subsets of {centre, rim} with chance 0, and {inner, outer} with each of those four glued on, chance 1. The set {inner} stays out: splitting inner from outer is new information, not a piece of a null set. The code builds the eight twice, by gluing and by the sandwich form of the Detailed proof.
 
-The same move applied to area on the Borel sets, the sigma-algebra generated by open sets ([generated-and-borel-sigma-algebras](03-generated-and-borel-sigma-algebras.md)), gives the Lebesgue measurable sets, built on [lebesgue-measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md).
+The same move applied to area on the Borel sets, the sigma-algebra generated by open sets ([Generated sigma-algebras and Borel sets](03-generated-and-borel-sigma-algebras.md)), gives the Lebesgue measurable sets, built on [Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md).
 
 <details>
 <summary>Why completion adds so much</summary>
 
-The diameter is null and has as many points as the whole line. Every one of its subsets is a piece of a null set, so every one is measurable after completion. There are more such subsets than Borel sets, so completion genuinely enlarges the collection. A counting argument, not given here, shows there are only as many Borel sets as real numbers ([lebesgue-measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md) states it); the diameter, as large as the line, has more subsets than that, because every set is smaller than its collection of subsets ([comparing-infinities](../../01-Foundations/09-Sizes%20of%20Infinity/04-comparing-infinities.md)). The added sets all have size zero.
+The diameter is null and has as many points as the whole line. Every one of its subsets is a piece of a null set, so every one is measurable after completion. There are more such subsets than Borel sets, so completion genuinely enlarges the collection. A counting argument, not given here, shows there are only as many Borel sets as real numbers ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md) states it); the diameter, as large as the line, has more subsets than that, because every set is smaller than its collection of subsets ([Comparing infinities](../../01-Foundations/09-Sizes%20of%20Infinity/04-comparing-infinities.md)). The added sets all have size zero.
 
 </details>
 
-A second road to null sets starts from covers instead of a measure: a set is null when it fits inside countably many rectangles of total area below every $\varepsilon$. That definition needs no sigma-algebra and makes completeness automatic; it is built on [lebesgue-outer-measure](../02-Length%20Done%20Properly/01-lebesgue-outer-measure.md).
+A second road to null sets starts from covers instead of a measure: a set is null when it fits inside countably many rectangles of total area below every $\varepsilon$. That definition needs no sigma-algebra and makes completeness automatic; it is built on [Outer measure](../02-Length%20Done%20Properly/01-lebesgue-outer-measure.md).
 
 ---
 
@@ -626,10 +596,10 @@ The two outputs are identical line for line.
 
 ## Where you meet it in real life
 
-- **Probability.** "Almost surely" is the working vocabulary of limit theorems: an average of repeated measurements settles down except on an event of chance 0. The ways a random sequence can converge, almost surely among them, are compared on [modes-of-convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md).
-- **Integration.** A score of 1 on every rational point and 0 elsewhere has no Riemann integral ([why-a-new-integral](01-why-a-new-integral.md)); it equals the zero function almost everywhere, and the new integral gives both the value 0.
-- **Signal processing.** The Fourier series of a square-integrable signal converges back to it almost everywhere, not everywhere; the exceptions are null (carleson-in-outline).
-- **Pricing with two sets of odds.** Two measures that agree on which events are null can be converted into each other; that is the condition behind changing to risk-neutral odds ([absolutely-continuous-and-singular-measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md)).
+- **Probability.** "Almost surely" is the working vocabulary of limit theorems: an average of repeated measurements settles down except on an event of chance 0. The ways a random sequence can converge, almost surely among them, are compared on [Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md).
+- **Integration.** A score of 1 on every rational point and 0 elsewhere has no Riemann integral ([Why a new integral](01-why-a-new-integral.md)); it equals the zero function almost everywhere, and the new integral gives both the value 0.
+- **Signal processing.** The Fourier series of a square-integrable signal converges back to it almost everywhere, not everywhere; the exceptions are null (Carleson's theorem in outline).
+- **Pricing with two sets of odds.** Two measures that agree on which events are null can be converted into each other; that is the condition behind changing to risk-neutral odds ([Absolutely continuous and singular measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md)).
 - **Numerical computing.** Floating-point numbers are all fractions over powers of 2, a countable and so null set. A statement true almost surely can fail at every number a computer can produce.
 
 > **Say it back**
@@ -639,24 +609,24 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [measures](04-measures.md): the measure space and countable additivity.
-- [continuity-of-measure](05-continuity-of-measure.md): monotonicity, and countable subadditivity, the one inequality the union theorem needs.
-- [countable-sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md): why the rational points can be listed.
-- [cantors-diagonal-argument](../../01-Foundations/09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md): why the board's points and the diameter's cannot.
+- [Measures](04-measures.md): the measure space and countable additivity.
+- [Continuity and subadditivity](05-continuity-of-measure.md): monotonicity, and countable subadditivity, the one inequality the union theorem needs.
+- [Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md): why the rational points can be listed.
+- [Cantor's diagonal](../../01-Foundations/09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md): why the board's points and the diameter's cannot.
 
 ## Where this goes next
 
-- [lebesgue-outer-measure](../02-Length%20Done%20Properly/01-lebesgue-outer-measure.md): null sets defined directly by covers of small total length.
-- [lebesgue-measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md): length and area built, and the Lebesgue sets as the completion of the Borel sets.
-- [modes-of-convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md): convergence almost surely against its weaker cousins.
-- [absolutely-continuous-and-singular-measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md): comparing two measures by their null sets.
-- baire-category-theorem: a different notion of "small", which can disagree with null.
-- trace-and-rellich-kondrachov-in-outline: giving a function boundary values although the boundary is null.
-- carleson-in-outline: Fourier series converging almost everywhere.
-- calderon-zygmund-decomposition-in-outline: splitting a function into good and bad parts, with inequalities that hold almost everywhere.
-- restriction-and-kakeya-in-outline: sets that hold a needle in every direction yet can have size zero.
+- [Outer measure](../02-Length%20Done%20Properly/01-lebesgue-outer-measure.md): null sets defined directly by covers of small total length.
+- [Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md): length and area built, and the Lebesgue sets as the completion of the Borel sets.
+- [Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md): convergence almost surely against its weaker cousins.
+- [Absolutely continuous and singular measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md): comparing two measures by their null sets.
+- Baire category theorem: a different notion of "small", which can disagree with null.
+- Boundary values and compactness: giving a function boundary values although the boundary is null.
+- Carleson's theorem in outline: Fourier series converging almost everywhere.
+- Calderon-Zygmund decomposition: splitting a function into good and bad parts, with inequalities that hold almost everywhere.
+- Restriction and Kakeya in outline: sets that hold a needle in every direction yet can have size zero.
 
-The dart's rule "chance equals area over π" was taken on trust here; building area so that it exists on every Borel set, and proving that its completion gives the Lebesgue sets, is [lebesgue-measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md).
+The dart's rule "chance equals area over π" was taken on trust here; building area so that it exists on every Borel set, and proving that its completion gives the Lebesgue sets, is [Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md).
 
 ---
 

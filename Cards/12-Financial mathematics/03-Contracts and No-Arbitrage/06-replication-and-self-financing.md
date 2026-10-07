@@ -1,38 +1,16 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Contracts and No-Arbitrage
-topic: Copying a payoff
-item: Replication
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price|no-arbitrage-and-the-law-of-one-price]]"
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/02-predictable-bets-and-the-martingale-transform|predictable-bets-and-the-martingale-transform]]"
-next:
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period|state-prices-and-risk-neutral-pricing-in-one-period]]"
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/01-one-step-binomial-replication|one-step-binomial-replication]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - replication-and-self-financing
----
-
 # Replication: a portfolio that copies a payoff without new money
 
-Financial mathematics → Contracts and No-Arbitrage → Copying a payoff → Replication
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Contracts and No-Arbitrage](../../../SYLLABUS.md#w12-s03) → Replication
 
 ---
 
 ## General Overview
 
-Acme shares trade at $100.00 today. A call written on them sits on the desk with no price on it: the right, not the duty, to buy one Acme share for $100.00 in a year's time ([payoffs-and-positions](01-payoffs-and-positions.md)). Nobody knows where Acme will be by then, and the price has to be found anyway.
+Acme shares trade at $100.00 today. A call written on them sits on the desk with no price on it: the right, not the duty, to buy one Acme share for $100.00 in a year's time ([Payoffs](01-payoffs-and-positions.md)). Nobody knows where Acme will be by then, and the price has to be found anyway.
 
 Two things can be bought today at prices already on the screen: Acme shares, and a bank account paying 5 percent. Buy a mixture of the two, and fix a rule for changing the mixture as Acme moves. The rule carries one clause: after the opening day, no money goes in and none comes out. Every share bought is paid for by a sale or by borrowing. A strategy carrying that clause is **self-financing**, the term used from here on.
 
-Suppose such a mixture ends the year holding exactly what the call pays, whatever Acme did. It is a copy of the call. Two things that pay the same in every state cost the same today, or free money is on the table ([no-arbitrage-and-the-law-of-one-price](02-no-arbitrage-and-the-law-of-one-price.md)), so the call's price is the cost of the copy.
+Suppose such a mixture ends the year holding exactly what the call pays, whatever Acme did. It is a copy of the call. Two things that pay the same in every state cost the same today, or free money is on the table ([No arbitrage](02-no-arbitrage-and-the-law-of-one-price.md)), so the call's price is the cost of the copy.
 
 Cut the year into two six-month steps. Acme's 20 percent-a-year jumpiness makes each step multiply its price by 1.151910 or by 0.868123. The copy then costs **$9.54**: 0.6223 of a share, funded by that $9.54 and a loan of $52.69. Not a forecast. A bill.
 
@@ -115,7 +93,7 @@ $$V_N = X \text{ on every path, and the strategy self-financing} \implies \text{
 
 ### Step 0: two payoffs that agree everywhere must cost the same
 
-Suppose a portfolio ends holding exactly what the call pays on every path, and sells for less than the call today. Buy the portfolio, sell the call, pocket the difference. Every future payment cancels: whatever the call owes, the portfolio hands over. The difference was free money, and free money does not sit on a screen ([no-arbitrage-and-the-law-of-one-price](02-no-arbitrage-and-the-law-of-one-price.md)).
+Suppose a portfolio ends holding exactly what the call pays on every path, and sells for less than the call today. Buy the portfolio, sell the call, pocket the difference. Every future payment cancels: whatever the call owes, the portfolio hands over. The difference was free money, and free money does not sit on a screen ([No arbitrage](02-no-arbitrage-and-the-law-of-one-price.md)).
 
 ### Step 1: the clause that makes a cost meaningful
 
@@ -140,7 +118,7 @@ Measure each date's figures in today's dollars by multiplying by $D_i = e^{-r t_
 
 $$D_{i+1} V_{i+1} - D_i V_i = h_i\,\bigl(D_{i+1} S_{i+1} - D_i S_i\bigr)$$
 
-Discounted wealth changes only through the discounted share price, times a share count chosen before the move was known: the shape of a bet placed before a toss and settled after it ([predictable-bets-and-the-martingale-transform](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/02-predictable-bets-and-the-martingale-transform.md)). Much of pricing theory lives in that line: find weights making the discounted share price a fair game, and discounted wealth is a fair game for every self-financing strategy at once.
+Discounted wealth changes only through the discounted share price, times a share count chosen before the move was known: the shape of a bet placed before a toss and settled after it ([Betting on a martingale](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/02-predictable-bets-and-the-martingale-transform.md)). Much of pricing theory lives in that line: find weights making the discounted share price a fair game, and discounted wealth is a fair game for every self-financing strategy at once.
 
 ### Step 4: one step, two states, two equations
 
@@ -148,7 +126,7 @@ At the up node Acme is at $115.19 with six months to run. From there it reaches 
 
 $$h \times 132.69 + b\,g = 32.69, \qquad h \times 100.00 + b\,g = 0$$
 
-Subtract: $h \times 32.69 = 32.69$, so $h = 1$. One whole share. Put that back and $b\,g = -100.00$, so $b = -97.53$: borrow the strike, discounted. The copy there is one share against a debt that grows into exactly $100.00, which is a forward ([forward-price-by-cash-and-carry](03-forward-price-by-cash-and-carry.md)). It costs $115.19 − $97.53 = **$17.66**.
+Subtract: $h \times 32.69 = 32.69$, so $h = 1$. One whole share. Put that back and $b\,g = -100.00$, so $b = -97.53$: borrow the strike, discounted. The copy there is one share against a debt that grows into exactly $100.00, which is a forward ([Forward price](03-forward-price-by-cash-and-carry.md)). It costs $115.19 − $97.53 = **$17.66**.
 
 The down node is quicker. From $86.81 Acme reaches $100.00 or $75.36, and the call pays nothing at either: no shares, nothing in the bank, worth zero.
 
@@ -173,7 +151,7 @@ The copy ends holding $32.69 after two up moves and nothing on the other three p
 
 </details>
 
-The same two equations read the other way round solve for two weights instead of two holdings: the weights making today's share price the discounted average of its two next values. They price every payoff on the tree by averaging, with no hedging at all — the second road the checks take, and the subject of [state-prices-and-risk-neutral-pricing-in-one-period](07-state-prices-and-risk-neutral-pricing-in-one-period.md).
+The same two equations read the other way round solve for two weights instead of two holdings: the weights making today's share price the discounted average of its two next values. They price every payoff on the tree by averaging, with no hedging at all — the second road the checks take, and the subject of [State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md).
 
 ---
 
@@ -197,7 +175,7 @@ Acme at $100.00, a call struck at $100.00, one year, the bank at 5 percent, jump
 | bank today | $(17.66 - 0.6223 \times 115.19) \div 1.025315$ | −52.69 |
 | **the copy's cost today** | $0.6223 \times 100.00 - 52.69$ | **9.54** |
 
-The call is worth $9.54 on this tree because that is the cheque a desk writes today to own something paying whatever the call pays. Two steps is a caricature of a year, allowing Acme three closing prices; cutting finer changes the fit, not the method. The checks run the same recipe with 4, 16, 64, 256 and 1024 steps: the cost climbs to $10.4486, heading for $10.4506, the Black–Scholes price of this call ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The wing's Acme also pays a 2 percent dividend, handled by letting a holding grow as its dividends go back in; with that on, 1024 steps give $9.2251 against the house price of $9.2270.
+The call is worth $9.54 on this tree because that is the cheque a desk writes today to own something paying whatever the call pays. Two steps is a caricature of a year, allowing Acme three closing prices; cutting finer changes the fit, not the method. The checks run the same recipe with 4, 16, 64, 256 and 1024 steps: the cost climbs to $10.4486, heading for $10.4506, the Black–Scholes price of this call ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The wing's Acme also pays a 2 percent dividend, handled by letting a holding grow as its dividends go back in; with that on, 1024 steps give $9.2251 against the house price of $9.2270.
 
 ### What breaks if you drop a piece
 
@@ -686,10 +664,10 @@ The two outputs match line for line, including the limit reached by two differen
 
 ## Where you meet it in real life
 
-- **An option desk.** A market maker who sells the call runs this ledger for real, rebalancing daily rather than twice a year. The share count is what the desk calls delta ([delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)); the gap between daily and continuous rebalancing is the hedging error a desk is paid to manage.
+- **An option desk.** A market maker who sells the call runs this ledger for real, rebalancing daily rather than twice a year. The share count is what the desk calls delta ([Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)); the gap between daily and continuous rebalancing is the hedging error a desk is paid to manage.
 - **Structured products.** A bank selling a note that promises the money back plus half of any rise in an index prices it by building the copy: a bond for the money back, options for the rise.
 - **Index funds.** An exchange-traded fund quotes a price because its shares can be swapped for a basket that copies them. While the copy is cheap to build, the fund's price stays pinned to it.
-- **The rest of this wing.** Every price on the later shelves is a copy's cost in disguise, taken to the limit of continuous trading ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
+- **The rest of this wing.** Every price on the later shelves is a copy's cost in disguise, taken to the limit of continuous trading ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
 
 > **Say it back**
 > A copy of a contract is a holding of shares and cash, plus a rule for changing the mixture, that ends holding exactly what the contract pays on every path. The rule may never be fed: every purchase is paid for by a sale or by borrowing. Wealth then moves only through the share price and the interest, so the strategy has one cost: the money it started with. On a two-way tree it is built backwards, two equations at each node, and the money arriving is always the money needed. Two things that pay the same must cost the same, so the copy's cost is the contract's price: $9.54 for this call on a two-step tree, $10.4506 as the tree is refined.
@@ -698,14 +676,14 @@ The two outputs match line for line, including the limit reached by two differen
 
 ## What this builds on
 
-- [no-arbitrage-and-the-law-of-one-price](02-no-arbitrage-and-the-law-of-one-price.md): the step from "pays the same" to "costs the same", which turns a copy into a price.
-- [predictable-bets-and-the-martingale-transform](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/02-predictable-bets-and-the-martingale-transform.md): a bet chosen before the move and settled after it, summed over steps — the shape Step 3's discounted identity takes.
+- [No arbitrage](02-no-arbitrage-and-the-law-of-one-price.md): the step from "pays the same" to "costs the same", which turns a copy into a price.
+- [Betting on a martingale](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/02-predictable-bets-and-the-martingale-transform.md): a bet chosen before the move and settled after it, summed over steps — the shape Step 3's discounted identity takes.
 
 ## Where this goes next
 
-- [state-prices-and-risk-neutral-pricing-in-one-period](07-state-prices-and-risk-neutral-pricing-in-one-period.md): the same two equations solved for weights instead of holdings, which prices any payoff by averaging.
-- [one-step-binomial-replication](../04-Binomial%20Trees/01-one-step-binomial-replication.md): the single step taken apart on its own, with the algebra in full.
-- [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): this ledger with the steps made infinitely small, which is where 10.4506 comes from.
+- [State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md): the same two equations solved for weights instead of holdings, which prices any payoff by averaging.
+- [One step](../04-Binomial%20Trees/01-one-step-binomial-replication.md): the single step taken apart on its own, with the algebra in full.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): this ledger with the steps made infinitely small, which is where 10.4506 comes from.
 
 The copy here was built node by node, which needs the whole tree written down in advance. What the same argument gives when the price can land anywhere and trading never stops is the question the rest of the wing answers.
 

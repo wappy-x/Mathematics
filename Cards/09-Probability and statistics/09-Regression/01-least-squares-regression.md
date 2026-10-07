@@ -1,33 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Regression
-topic: Line through a cloud
-item: Least squares
-kind: method
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/04-joint-distributions-and-covariance|joint-distributions-and-covariance]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/04-least-squares|least-squares]]"
-next:
-  - "[[Cards/09-Probability and statistics/09-Regression/02-regression-inference|regression-inference]]"
-  - "[[Cards/09-Probability and statistics/12-Time Series/02-ar-models|ar-models]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/06-longstaff-schwartz-least-squares-monte-carlo|longstaff-schwartz-least-squares-monte-carlo]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/06-calibration-as-least-squares|calibration-as-least-squares]]"
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/04-capm-and-beta|capm-and-beta]]"
-  - "[[Cards/12-Financial mathematics/40-Hedging, Volatility Forecasts and Stress/03-hedge-ratios-basis-risk-and-cross-hedging|hedge-ratios-basis-risk-and-cross-hedging]]"
-  - "[[Cards/13-Engineering mathematics/10-Robustness and Adaptation/04-gain-scheduling-and-adaptive-control|gain-scheduling-and-adaptive-control]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/01-loss-functions-and-empirical-risk|loss-functions-and-empirical-risk]]"
-  - "[[Cards/15-Optimization/02-Unconstrained Methods/09-nonlinear-least-squares-gauss-newton-and-levenberg-marquardt|nonlinear-least-squares-gauss-newton-and-levenberg-marquardt]]"
-  - "[[Cards/16-Numerical analysis/03-Numerical Linear Algebra/06-least-squares-normal-equations-versus-qr|least-squares-normal-equations-versus-qr]]"
-  - "[[Cards/18-Functional analysis/02-Hilbert Spaces/08-reproducing-kernel-hilbert-spaces|reproducing-kernel-hilbert-spaces]]"
-tags: [mathematics, probability-and-statistics, least-squares-regression]
----
-
 # Least squares: the line closest to the points, and what its slope means
 
-Probability and statistics → Regression → Line through a cloud → Least squares
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Regression](../../../SYLLABUS.md#w09-s09) → Least squares
 
 ---
 
@@ -88,16 +61,16 @@ $$R^2 = 1 - \frac{SSE}{S_{yy}}, \qquad SSE = \sum_i (y_i - a - b\,x_i)^2$$
 | $SSE$ | sum of squared residuals, the score least squares minimises | 396,000,000 $^2 | R squared falls |
 | $R^2$, $r$ | share of price spread explained; the correlation, whose square it is | 0.9830 and 0.9915 | — |
 
-Dividing $S_{xy}$ and $S_{xx}$ both by $n$ turns them into the covariance of area and price and the variance of area from [joint-distributions-and-covariance](../02-Random%20Variables/04-joint-distributions-and-covariance.md). The $n$ cancels, so the slope is Cov(area, price) / Var(area): 1,820,000 / 866.67 = 2,100.
+Dividing $S_{xy}$ and $S_{xx}$ both by $n$ turns them into the covariance of area and price and the variance of area from [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md). The $n$ cancels, so the slope is Cov(area, price) / Var(area): 1,820,000 / 866.67 = 2,100.
 
 The units check themselves. $S_{xy}$ is dollars times square metres; $S_{xx}$ is square metres times square metres; the ratio is dollars per square metre. R squared has no units: it is the same number whether prices are in dollars or thousands, areas in metres or feet.
 
 ### When it holds
 
 - **The areas must differ.** If all six houses had 100 square metres, $S_{xx}$ would be 0 and the slope 0/0: no data can say what an extra metre is worth when no house has one.
-- **The pattern must be roughly straight.** The method returns a line for any cloud, curved or not, and a high R squared does not prove straightness. Plot first; [diagnostics-and-residuals](04-diagnostics-and-residuals.md) reads the residuals for curves.
+- **The pattern must be roughly straight.** The method returns a line for any cloud, curved or not, and a high R squared does not prove straightness. Plot first; [Diagnostics](04-diagnostics-and-residuals.md) reads the residuals for curves.
 - **No single sale may dominate.** Squaring makes a big miss count heavily. Raise the last house from $337,000 to $437,000 and the slope jumps to $2,869.23 per square metre.
-- **For the slope to estimate a market-wide rate,** the misses must average zero at every area: the sales must be a fair sample of the street. The line itself is exact arithmetic on the data; calling $2,100 an estimate of something beyond these six houses is a statistical claim, and its uncertainty is the work of [regression-inference](02-regression-inference.md).
+- **For the slope to estimate a market-wide rate,** the misses must average zero at every area: the sales must be a fair sample of the street. The line itself is exact arithmetic on the data; calling $2,100 an estimate of something beyond these six houses is a statistical claim, and its uncertainty is the work of [Regression error bars](02-regression-inference.md).
 - **Inside the range of the data.** The line was fitted on 60 to 140 square metres. The intercept, $45,000 at zero area, lies far outside and describes no real house.
 
 ---
@@ -153,7 +126,7 @@ The first fraction is $S_{xy}^2/(S_{xx}\,S_{yy})$, the square of the correlation
 
 At the best line, two facts hold. The residuals add to zero, because the line runs through the average sale. And the residuals, weighted by area, also add to zero: they show no leftover trend with area, or a steeper or shallower line would have scored better. On the houses: −6,000 + 13,000 − 5,000 − 9,000 + 9,000 − 2,000 = 0. Weighted by area, in thousand dollars times square metres: −6 × 60 + 13 × 70 − 5 × 90 − 9 × 110 + 9 × 130 − 2 × 140 = −360 + 910 − 450 − 990 + 1,170 − 280 = 0. These two balance conditions are the normal equations.
 
-The other door: stack the sales into a matrix and the normal equations say the residuals stand at right angles to everything a line can produce. The fitted prices are the shadow of the real ones, called their projection. That view, which extends to many predictors at once, is [least-squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md) and then [multiple-regression-and-gauss-markov](03-multiple-regression-and-gauss-markov.md).
+The other door: stack the sales into a matrix and the normal equations say the residuals stand at right angles to everything a line can produce. The fitted prices are the shadow of the real ones, called their projection. That view, which extends to many predictors at once, is [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md) and then [Multiple regression](03-multiple-regression-and-gauss-markov.md).
 
 ---
 
@@ -176,7 +149,7 @@ Prices in thousands of dollars; areas in square metres. Gaps are measured from t
 | $SSE$ | 36 + 169 + 25 + 81 + 81 + 4 | 396 |
 | $S_{yy}$ | 8,100 + 2,500 + 676 + 144 + 5,184 + 6,724 | 23,328 |
 | $R^2$ | 1 − 396 / 23,328 | **0.9830** |
-| standard error of $b$ | from [regression-inference](02-regression-inference.md) | $138 per m^2 |
+| standard error of $b$ | from [Regression error bars](02-regression-inference.md) | $138 per m^2 |
 
 On this street, a house with 10 more square metres sold, on average, for about $21,000 more; the line accounts for 98.3% of the spread in prices. Six sales pin the slope only to $2,100 ± $138 per square metre (one standard error): a description of these six sales, and a rough estimate for the street.
 
@@ -195,7 +168,7 @@ Same six sales; the right slope is $2,100 per square metre.
 
 The shelf's house example has 50 sales. The code builds a market where the true rule is known: 50 areas drawn between 50 and 150 square metres, each price set to $45,000 + $2,100 × area plus a random miss with standard deviation $25,000 (the noise). One such market fits a slope of $2,161.75 per square metre, standard error $139.11, R squared 0.8342: noisier than the six-house street, so the line explains less.
 
-Repeat with fresh noise 2,000 times. The fitted slopes average $2,104.42. The standard error of that average is $2.76, so that average sits 1.6 standard errors from the true $2,100: no sign that least squares leans either way. The slopes themselves spread by $123.55 from market to market, matching $123.46 from the formula on [regression-inference](02-regression-inference.md).
+Repeat with fresh noise 2,000 times. The fitted slopes average $2,104.42. The standard error of that average is $2.76, so that average sits 1.6 standard errors from the true $2,100: no sign that least squares leans either way. The slopes themselves spread by $123.55 from market to market, matching $123.46 from the formula on [Regression error bars](02-regression-inference.md).
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -635,11 +608,11 @@ The two outputs agree line for line, including the simulated markets: both progr
 
 ## Where you meet it in real life
 
-- **Property valuation.** Price per square metre comes from fits like this one, usually with more readings such as location and age: [multiple-regression-and-gauss-markov](03-multiple-regression-and-gauss-markov.md).
-- **A stock's beta.** Regress a stock's returns on the market's returns; the slope is beta, the stock's sensitivity to the market: [capm-and-beta](../../12-Financial%20mathematics/37-Portfolio%20Theory/04-capm-and-beta.md).
-- **Hedge ratios.** How many futures contracts offset a holding is a regression slope of one price change on another: [hedge-ratios-basis-risk-and-cross-hedging](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/03-hedge-ratios-basis-risk-and-cross-hedging.md).
+- **Property valuation.** Price per square metre comes from fits like this one, usually with more readings such as location and age: [Multiple regression](03-multiple-regression-and-gauss-markov.md).
+- **A stock's beta.** Regress a stock's returns on the market's returns; the slope is beta, the stock's sensitivity to the market: [CAPM](../../12-Financial%20mathematics/37-Portfolio%20Theory/04-capm-and-beta.md).
+- **Hedge ratios.** How many futures contracts offset a holding is a regression slope of one price change on another: [Imperfect hedges](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/03-hedge-ratios-basis-risk-and-cross-hedging.md).
 - **Calibration of instruments.** A thermometer or scale is read against known standards, and the least-squares line converts its reading into the true value.
-- **Machine learning.** Squared-error loss, averaged over training data, is this card's score with more parameters: loss-functions-and-empirical-risk.
+- **Machine learning.** Squared-error loss, averaged over training data, is this card's score with more parameters: Loss and empirical risk.
 
 > **Say it back**
 > Least squares scores a line by its squared vertical misses and takes the line with the lowest score. Completing the square shows the winner runs through the average sale and has slope equal to covariance over variance. On six house sales it gives $2,100 per square metre with an intercept of $45,000. R squared splits the price spread into the part the line reproduces and the part it misses: 98.3% explained here. The slope describes how price and area moved together in these sales, not what an extension would add.
@@ -648,24 +621,24 @@ The two outputs agree line for line, including the simulated markets: both progr
 
 ## What this builds on
 
-- [joint-distributions-and-covariance](../02-Random%20Variables/04-joint-distributions-and-covariance.md): covariance and correlation, the two quantities the slope and R squared are built from.
-- [least-squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the same minimisation as a projection, with the normal equations in matrix form.
+- [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md): covariance and correlation, the two quantities the slope and R squared are built from.
+- [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the same minimisation as a projection, with the normal equations in matrix form.
 
 ## Where this goes next
 
-- [regression-inference](02-regression-inference.md): the standard error of the slope from one sample, confidence intervals and tests for it.
-- [ar-models](../12-Time%20Series/02-ar-models.md): regressing a series on its own past values.
-- [longstaff-schwartz-least-squares-monte-carlo](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md): a regression inside a simulation decides when to exercise an option early.
-- [calibration-as-least-squares](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): fitting a pricing model's inputs to market prices by squared misses.
-- [capm-and-beta](../../12-Financial%20mathematics/37-Portfolio%20Theory/04-capm-and-beta.md): beta as a least-squares slope.
-- [hedge-ratios-basis-risk-and-cross-hedging](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/03-hedge-ratios-basis-risk-and-cross-hedging.md): the minimum-variance hedge ratio is covariance over variance.
-- gain-scheduling-and-adaptive-control: a controller that refits its model by least squares as data arrive.
-- loss-functions-and-empirical-risk: squared error as one loss among several.
-- nonlinear-least-squares-gauss-newton-and-levenberg-marquardt: the same score when the model is curved in its parameters.
-- least-squares-normal-equations-versus-qr: why software avoids the raw normal equations of road 2 on hard problems.
-- reproducing-kernel-hilbert-spaces: least squares over whole spaces of functions.
+- [Regression error bars](02-regression-inference.md): the standard error of the slope from one sample, confidence intervals and tests for it.
+- [Autoregression](../12-Time%20Series/02-ar-models.md): regressing a series on its own past values.
+- [Longstaff-Schwartz](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md): a regression inside a simulation decides when to exercise an option early.
+- [Calibration](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): fitting a pricing model's inputs to market prices by squared misses.
+- [CAPM](../../12-Financial%20mathematics/37-Portfolio%20Theory/04-capm-and-beta.md): beta as a least-squares slope.
+- [Imperfect hedges](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/03-hedge-ratios-basis-risk-and-cross-hedging.md): the minimum-variance hedge ratio is covariance over variance.
+- Adapting as you go: a controller that refits its model by least squares as data arrive.
+- Loss and empirical risk: squared error as one loss among several.
+- Nonlinear least squares: the same score when the model is curved in its parameters.
+- Least squares two ways: why software avoids the raw normal equations of road 2 on hard problems.
+- Reproducing kernels: least squares over whole spaces of functions.
 
-The fitted $2,100 is one draw from a pile of possible slopes; how wide that pile is, judged from a single sample of sales, is [regression-inference](02-regression-inference.md).
+The fitted $2,100 is one draw from a pile of possible slopes; how wide that pile is, judged from a single sample of sales, is [Regression error bars](02-regression-inference.md).
 
 ---
 

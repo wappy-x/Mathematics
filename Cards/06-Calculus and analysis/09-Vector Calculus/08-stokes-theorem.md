@@ -1,27 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Vector Calculus
-topic: Rim and sheet
-item: Stokes' theorem
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/06-greens-theorem|greens-theorem]]"
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/05-surface-integrals-and-flux|surface-integrals-and-flux]]"
-next:
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/05-magnetism-and-faradays-law|magnetism-and-faradays-law]]"
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/07-maxwells-equations|maxwells-equations]]"
-  - "[[Cards/17-Topology/05-Homology/08-cohomology-and-cup-product-in-outline|cohomology-and-cup-product-in-outline]]"
-  - "[[Cards/22-Algebraic geometry/05-Cohomology and the Hodge Conjecture/02-de-rham-cohomology-of-varieties|de-rham-cohomology-of-varieties]]"
-  - "[[Cards/23-Differential geometry and Lie groups/04-Differential Forms/06-stokes-theorem-on-manifolds|stokes-theorem-on-manifolds]]"
-tags: [mathematics, calculus and analysis, stokes-theorem]
----
-
 # Stokes' theorem: circulation round the rim equals curl flux through the sheet
 
-Calculus and analysis → Vector Calculus → Rim and sheet → Stokes' theorem
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Vector Calculus](../../../SYLLABUS.md#w06-s09) → Stokes' theorem
 
 ---
 
@@ -29,9 +8,9 @@ Calculus and analysis → Vector Calculus → Rim and sheet → Stokes' theorem
 
 A bowl sits in a garden: the lower half of a sphere 2 m in radius, open side up, its rim a level circle. Wind circles over it, anticlockwise seen from above, at 1 m/s along the rim.
 
-Walk once round the rim and add up the wind's push along the path. That total is the **circulation** ([line-integrals](02-line-integrals.md)): 1 m/s times the rim's 4π m, about 12.566 m^2/s.
+Walk once round the rim and add up the wind's push along the path. That total is the **circulation** ([Line integrals of a field](02-line-integrals.md)): 1 m/s times the rim's 4π m, about 12.566 m^2/s.
 
-Now forget the rim. At each point of the bowl, measure how hard the wind spins, its **curl** ([divergence-and-curl](03-divergence-and-curl.md)), and keep the part aimed straight through the surface. Added over the bowl, that is a **flux** ([surface-integrals-and-flux](05-surface-integrals-and-flux.md)). It also comes to 12.566 m^2/s. So does a flat lid across the rim, and so does the bowl when the wind below the rim changes but the wind on it does not.
+Now forget the rim. At each point of the bowl, measure how hard the wind spins, its **curl** ([Divergence and curl](03-divergence-and-curl.md)), and keep the part aimed straight through the surface. Added over the bowl, that is a **flux** ([Surface integrals](05-surface-integrals-and-flux.md)). It also comes to 12.566 m^2/s. So does a flat lid across the rim, and so does the bowl when the wind below the rim changes but the wind on it does not.
 
 **A smooth field's circulation round a rim, walked the matching way round, equals the flux of its curl through any surface on that rim.**
 
@@ -89,7 +68,7 @@ Cut the bowl into small patches and walk each edge the matching way round. An ed
 
 ### Step 1: the flat case is Green's theorem
 
-On the lid, the flat disc of radius $R$ with $\mathbf n$ straight up, only the curl's third component, $\partial F_2/\partial x - \partial F_1/\partial y$, crosses. Circulation round the circle equals that added over the disc: [greens-theorem](06-greens-theorem.md), proved there.
+On the lid, the flat disc of radius $R$ with $\mathbf n$ straight up, only the curl's third component, $\partial F_2/\partial x - \partial F_1/\partial y$, crosses. Circulation round the circle equals that added over the disc: [Green's theorem](06-greens-theorem.md), proved there.
 
 For the swirl the upward curl is w − (−w) = 1 per second everywhere, over πR^2 = 4π m^2: flux 4π, the rim's 12.566.
 
@@ -120,7 +99,7 @@ A second wind: the swirl times 1 + z/R, fading to nothing at the bottom, unchang
 
 ### Step 4: swap the surface when it helps
 
-Two surfaces on the same rim give the same flux, both equal to the circulation, so the easier one may be used where the field is smooth on it. The closed-skin cousin is the [divergence-theorem](07-divergence-theorem.md). Zero curl on a region with no holes means zero circulation round every loop: [conservative-fields-and-potentials](04-conservative-fields-and-potentials.md).
+Two surfaces on the same rim give the same flux, both equal to the circulation, so the easier one may be used where the field is smooth on it. The closed-skin cousin is the [Divergence theorem](07-divergence-theorem.md). Zero curl on a region with no holes means zero circulation round every loop: [Conservative fields](04-conservative-fields-and-potentials.md).
 
 ---
 
@@ -371,7 +350,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Generators and electromagnetism.** A changing magnetic flux through a coil drives current round it. Stokes' theorem turns such loop laws into laws at each point: magnetism-and-faradays-law, maxwells-equations.
+- **Generators and electromagnetism.** A changing magnetic flux through a coil drives current round it. Stokes' theorem turns such loop laws into laws at each point: Magnetic fields, Maxwell's equations.
 - **Weather and flight.** Spin in air is **vorticity**, the curl of the velocity; circulation round a loop, such as a ring round a wing, is the vorticity crossing any sheet it bounds.
 - **History.** William Thomson stated it in an 1850 letter to George Stokes, who set it on Cambridge's 1854 Smith's Prize examination.
 
@@ -382,16 +361,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [greens-theorem](06-greens-theorem.md): the flat case, where the proof pulls the bowl back to.
-- [surface-integrals-and-flux](05-surface-integrals-and-flux.md): grids, the area arrow, flux through a sheet.
+- [Green's theorem](06-greens-theorem.md): the flat case, where the proof pulls the bowl back to.
+- [Surface integrals](05-surface-integrals-and-flux.md): grids, the area arrow, flux through a sheet.
 
 ## Where this goes next
 
-- magnetism-and-faradays-law: a changing flux through a loop, felt as a push round it.
-- maxwells-equations: loop laws turned into curl laws at each point.
-- cohomology-and-cup-product-in-outline: counting holes by the loops that bound nothing.
-- de-rham-cohomology-of-varieties: curl-free fields modulo gradients, as a measure of shape.
-- stokes-theorem-on-manifolds: Green, Stokes, divergence and the fundamental theorem of calculus as one statement.
+- Magnetic fields: a changing flux through a loop, felt as a push round it.
+- Maxwell's equations: loop laws turned into curl laws at each point.
+- Cohomology and the cup product in outline: counting holes by the loops that bound nothing.
+- De Rham cohomology: curl-free fields modulo gradients, as a measure of shape.
+- Stokes on manifolds: Green, Stokes, divergence and the fundamental theorem of calculus as one statement.
 
 The drain wind leaves a question open: when a field with zero curl wherever it is defined still circulates, what does that say about the holes in its space?
 

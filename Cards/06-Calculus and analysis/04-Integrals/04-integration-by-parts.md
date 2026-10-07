@@ -1,36 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Integrals
-topic: Undoing the product rule
-item: Integration by parts
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/04-Integrals/02-fundamental-theorem-of-calculus|fundamental-theorem-of-calculus]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/02-product-and-quotient-rules|product-and-quotient-rules]]"
-next:
-  - "[[Cards/06-Calculus and analysis/04-Integrals/05-partial-fractions|partial-fractions]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/01-fourier-series-in-complex-form|fourier-series-in-complex-form]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/05-laplace-transform|laplace-transform]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/02-gamma-function|gamma-function]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/05-integrating-factor|integrating-factor]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/09-sturm-liouville-and-orthogonality|sturm-liouville-and-orthogonality]]"
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/02-transforms-of-derivatives|transforms-of-derivatives]]"
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/01-functionals-and-the-euler-lagrange-equation|functionals-and-the-euler-lagrange-equation]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/07-gamma-and-beta-distributions|gamma-and-beta-distributions]]"
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/05-lebesgue-stieltjes-integral|lebesgue-stieltjes-integral]]"
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/05-butterfly-and-the-implied-density|butterfly-and-the-implied-density]]"
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/02-carr-madan-spanning-and-the-log-contract|carr-madan-spanning-and-the-log-contract]]"
-  - "[[Cards/16-Numerical analysis/07-PDE Solvers/07-finite-elements-galerkin-and-hat-functions|finite-elements-galerkin-and-hat-functions]]"
-  - "[[Cards/20-Harmonic analysis/01-Fourier Series in Depth/06-decay-of-coefficients-and-smoothness|decay-of-coefficients-and-smoothness]]"
-tags: [mathematics, calculus and analysis, integration-by-parts]
----
-
 # Integration by parts: the product rule run backwards
 
-Calculus and analysis → Integrals → Undoing the product rule → Integration by parts
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Integrals](../../../SYLLABUS.md#w06-s04) → Integration by parts
 
 ---
 
@@ -38,7 +8,7 @@ Calculus and analysis → Integrals → Undoing the product rule → Integration
 
 Draw the curve y = x e^x from x = 0 to x = 1, where e is Euler's number, 2.718282. The area under it is exactly 1 square unit. Draw y = ln x from x = 1 to x = e: again exactly 1. One exchange gives both.
 
-The first curve is a product, x times e^x. Antiderivatives (functions whose rate is the curve) have no product rule of their own. Rates do: the product rule splits a product's rate into two shares ([product-and-quotient-rules](../02-Derivatives/02-product-and-quotient-rules.md)). Added up over an interval, the shares make the product's change from end to end. Know that change and one share, and the other follows.
+The first curve is a product, x times e^x. Antiderivatives (functions whose rate is the curve) have no product rule of their own. Rates do: the product rule splits a product's rate into two shares ([Product and quotient rules](../02-Derivatives/02-product-and-quotient-rules.md)). Added up over an interval, the shares make the product's change from end to end. Know that change and one share, and the other follows.
 
 So the method trades the integral wanted for another: differentiate one factor, integrate the other, and pay with a term measured at the two ends. It pays when the new integral is easier. Here x differentiates to 1 and e^x integrates to itself; ln x is read as ln x times 1.
 
@@ -84,7 +54,7 @@ $$J_n = e - n\,J_{n-1}, \qquad J_0 = e - 1$$
 ### When it holds
 
 - **u and v have continuous rates on the closed interval.** Take u = x on 0 to 3 and let v jump from 0 to 1 at x = 1. The rate of v is 0 wherever it exists, so the left side is 0; the right side is 1, u at the jump times the jump.
-- **The interval is finite and both factors are defined on it.** The log is undefined at 0, so the area under ln x from 0 to 1 needs its boundary term as a limit ([improper-integrals](07-improper-integrals.md)).
+- **The interval is finite and both factors are defined on it.** The log is undefined at 0, so the area under ln x from 0 to 1 needs its boundary term as a limit ([Improper integrals](07-improper-integrals.md)).
 - **The leftover must be easier.** Every split is true; u = e^x for x e^x leaves x^2 e^x, a higher power.
 - **The reduction needs n of at least 1, and exact arithmetic.** Each step multiplies rounding error by n: at n = 20 it prints −129.263708 for an area of 0.123804.
 
@@ -102,7 +72,7 @@ The product rule holds at every point:
 
 $$\big(u v\big)' = u'\,v + u\,v'$$
 
-Integrate both sides from a to b. The fundamental theorem of calculus ([fundamental-theorem-of-calculus](02-fundamental-theorem-of-calculus.md)) turns the left side into u(b)v(b) − u(a)v(a). The right side splits into two integrals. Move one across the equals sign: the formula appears, minus sign included.
+Integrate both sides from a to b. The fundamental theorem of calculus ([Fundamental theorem of calculus](02-fundamental-theorem-of-calculus.md)) turns the left side into u(b)v(b) − u(a)v(a). The right side splits into two integrals. Move one across the equals sign: the formula appears, minus sign included.
 
 <details>
 <summary>Detailed proof</summary>
@@ -137,9 +107,9 @@ Make u the factor whose rate is simpler than itself, and dv one that integrates 
 
 Apply Step 2 to x^n e^x with u = x^n. The rate of u is n x^(n−1), so the leftover is n times the same integral one power lower: $J_n = e - n J_{n-1}$. A **reduction formula** is exactly this: parts once, landing one step down the same family, repeated until the first member.
 
-Step 3 applied to (ln x)^n on 1 to e gives boundary e, leftover n times the integral of (ln x)^(n−1), start e − 1: the same recurrence, confirmed by the checks for n from 0 to 4. The reason is that x = e^t turns one integral into the other ([substitution](03-substitution.md)).
+Step 3 applied to (ln x)^n on 1 to e gives boundary e, leftover n times the integral of (ln x)^(n−1), start e − 1: the same recurrence, confirmed by the checks for n from 0 to 4. The reason is that x = e^t turns one integral into the other ([Substitution](03-substitution.md)).
 
-A second road never uses parts: add up thin strips under the original curve, as on [numerical-integration](08-numerical-integration.md). The checks do this with Simpson's rule. Sums have their own version, summation by parts.
+A second road never uses parts: add up thin strips under the original curve, as on [Numerical integration](08-numerical-integration.md). The checks do this with Simpson's rule. Sums have their own version, summation by parts.
 
 ---
 
@@ -373,9 +343,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Engineering transforms.** The Laplace transform turns a rate into multiplication, by parts ([transforms-of-derivatives](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/02-transforms-of-derivatives.md)).
-- **Factorials beyond whole numbers.** The same reduction on x^n e^(−x) from 0 to infinity gives n!, and defines the gamma function ([gamma-function](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md)).
-- **Option markets.** Parts, applied twice, rebuilds a payoff from calls and puts, the step behind the VIX index ([carr-madan-spanning-and-the-log-contract](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md)).
+- **Engineering transforms.** The Laplace transform turns a rate into multiplication, by parts ([Transforming a derivative](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/02-transforms-of-derivatives.md)).
+- **Factorials beyond whole numbers.** The same reduction on x^n e^(−x) from 0 to infinity gives n!, and defines the gamma function ([The gamma function](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md)).
+- **Option markets.** Parts, applied twice, rebuilds a payoff from calls and puts, the step behind the VIX index ([Any payoff from a strip of options](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md)).
 
 > **Say it back**
 > The product rule splits a product's rate into two shares; integrated, they give the product's change between the ends. So one share's integral is that change minus the other's. Differentiate the factor that gets simpler; integrate the one that does not get worse. Repeating the trade on x^n e^x gives a reduction formula that ends at e − 1.
@@ -384,25 +354,25 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [fundamental-theorem-of-calculus](02-fundamental-theorem-of-calculus.md): integrating a rate gives the change between the ends.
-- [product-and-quotient-rules](../02-Derivatives/02-product-and-quotient-rules.md): the rule being run backwards.
+- [Fundamental theorem of calculus](02-fundamental-theorem-of-calculus.md): integrating a rate gives the change between the ends.
+- [Product and quotient rules](../02-Derivatives/02-product-and-quotient-rules.md): the rule being run backwards.
 
 ## Where this goes next
 
-- [partial-fractions](05-partial-fractions.md): quotients of polynomials.
-- [fourier-series-in-complex-form](../../07-Complex%20analysis/08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): coefficients that parts evaluates.
-- [laplace-transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/05-laplace-transform.md): a transform whose derivative rule is parts.
-- [gamma-function](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): this reduction, taken to infinity.
-- [integrating-factor](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/05-integrating-factor.md): the product rule run backwards on a rate equation.
-- [sturm-liouville-and-orthogonality](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/09-sturm-liouville-and-orthogonality.md): parts twice, boundary terms made to vanish.
-- [transforms-of-derivatives](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/02-transforms-of-derivatives.md): one parts step per derivative.
-- [functionals-and-the-euler-lagrange-equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/01-functionals-and-the-euler-lagrange-equation.md): parts moves the derivative off a change of path.
-- [gamma-and-beta-distributions](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/07-gamma-and-beta-distributions.md): average waiting times by this reduction.
-- [lebesgue-stieltjes-integral](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md): parts that counts a jump's share.
-- [butterfly-and-the-implied-density](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md): a density read off call prices.
-- [carr-madan-spanning-and-the-log-contract](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md): any payoff from calls and puts.
-- finite-elements-galerkin-and-hat-functions: the weak form, made by parts.
-- decay-of-coefficients-and-smoothness: smoother curves, faster-shrinking coefficients.
+- [Partial fractions](05-partial-fractions.md): quotients of polynomials.
+- [Fourier series](../../07-Complex%20analysis/08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): coefficients that parts evaluates.
+- [The Laplace transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/05-laplace-transform.md): a transform whose derivative rule is parts.
+- [The gamma function](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): this reduction, taken to infinity.
+- [The integrating factor](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/05-integrating-factor.md): the product rule run backwards on a rate equation.
+- [Sturm-Liouville](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/09-sturm-liouville-and-orthogonality.md): parts twice, boundary terms made to vanish.
+- [Transforming a derivative](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/02-transforms-of-derivatives.md): one parts step per derivative.
+- [The Euler-Lagrange equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/01-functionals-and-the-euler-lagrange-equation.md): parts moves the derivative off a change of path.
+- [Gamma and beta](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/07-gamma-and-beta-distributions.md): average waiting times by this reduction.
+- [The Lebesgue-Stieltjes integral](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md): parts that counts a jump's share.
+- [The butterfly and the implied density](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md): a density read off call prices.
+- [Any payoff from a strip of options](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md): any payoff from calls and puts.
+- Finite elements: the weak form, made by parts.
+- Smoothness shows in the tail: smoother curves, faster-shrinking coefficients.
 
 ---
 

@@ -1,23 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Existence, Uniqueness and Sensitivity
-topic: How long a solution lasts
-item: Blow-up
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/02-Existence, Uniqueness and Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem|lipschitz-and-the-picard-lindelof-theorem]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/02-linear-vs-exponential-growth|linear-vs-exponential-growth]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/02-Existence, Uniqueness and Sensitivity/05-the-flow-of-an-equation|the-flow-of-an-equation]]"
-tags: [mathematics, differential equations and dynamics, blow-up-and-the-life-span-of-a-solution]
----
-
 # Blow-up: a smooth equation can send its solution to infinity in finite time
 
-Differential equations and dynamics → Existence, Uniqueness and Sensitivity → How long a solution lasts → Blow-up
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Existence, Uniqueness and Sensitivity](../../../SYLLABUS.md#w08-s02) → Blow-up
 
 ---
 
@@ -51,7 +34,7 @@ Orange: the square scheme, y = 100/(10 − t), heading for infinity at 10 months
 
 ## The formula
 
-Reminder: y' = f(t, y) says "the rate of y at time t is f(t, y)", with y(0) = y0 the start ([what-a-differential-equation-says](../01-Rate%20Equations/01-what-a-differential-equation-says.md)). For the square scheme:
+Reminder: y' = f(t, y) says "the rate of y at time t is f(t, y)", with y(0) = y0 the start ([A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md)). For the square scheme:
 
 $$y' = k\,y^2,\quad y(0) = y_0>0 \qquad\Longrightarrow\qquad y(t) = \frac{y_0}{1 - k\,y_0\,t},\qquad T = \frac{1}{k\,y_0}$$
 
@@ -98,7 +81,7 @@ For the linear scheme every doubling takes the same 6.93 months, so infinitely m
 
 ### Step 1: separate and solve
 
-The equation is separable ([separable-equations](../01-Rate%20Equations/03-separable-equations.md)). While y > 0, divide by y^2 and integrate both sides from 0 to t:
+The equation is separable ([Separable equations](../01-Rate%20Equations/03-separable-equations.md)). While y > 0, divide by y^2 and integrate both sides from 0 to t:
 
 $$\int_{y_0}^{y}\frac{du}{u^2} = \int_0^t k\,ds \qquad\Longrightarrow\qquad \frac{1}{y_0} - \frac{1}{y} = k\,t.$$
 
@@ -114,7 +97,7 @@ At Y = 10 that is 5 months, then 2.5, 1.25, 0.625. The total is 5 × (1 + 1/2 + 
 
 ### Step 3: a life span ends only at infinity or at an edge
 
-The Picard-Lindelof theorem gives a solution for a short time from any start ([lipschitz-and-the-picard-lindelof-theorem](02-lipschitz-and-the-picard-lindelof-theorem.md)), and how short depends only on how big the rate gets near the start. If a solution stayed in a bounded range near a finite end T, one fixed step would fit from every point near T and carry it past T. So a finite end needs |y| to grow without bound, or an edge.
+The Picard-Lindelof theorem gives a solution for a short time from any start ([The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md)), and how short depends only on how big the rate gets near the start. If a solution stayed in a bounded range near a finite end T, one fixed step would fit from every point near T and carry it past T. So a finite end needs |y| to grow without bound, or an edge.
 
 <details>
 <summary>Detailed proof</summary>
@@ -133,7 +116,7 @@ Every piece is continuous and finite for every real t, so the solution lives on 
 
 ### Step 4: linear equations last forever
 
-The integrating factor ([integrating-factor](../01-Rate%20Equations/05-integrating-factor.md)) writes a linear equation's solution with exponentials and integrals of continuous functions, none of which becomes infinite at a finite time. For the linear scheme it is 10e^(0.1t): 27.18 members at month 10. A rate growing no faster than a multiple of y allows at most exponential growth, the bound made exact in [gronwall-and-continuous-dependence](04-gronwall-and-continuous-dependence.md).
+The integrating factor ([The integrating factor](../01-Rate%20Equations/05-integrating-factor.md)) writes a linear equation's solution with exponentials and integrals of continuous functions, none of which becomes infinite at a finite time. For the linear scheme it is 10e^(0.1t): 27.18 members at month 10. A rate growing no faster than a multiple of y allows at most exponential growth, the bound made exact in [Gronwall's inequality](04-gronwall-and-continuous-dependence.md).
 
 <details>
 <summary>Which rates blow up?</summary>
@@ -142,7 +125,7 @@ For y' = f(y) with f positive, the time to reach infinity is the integral of 1/f
 
 </details>
 
-A formula-free road: Euler's rule, new value = old value + step length × rate ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)). With steps of 0.0001 month it passes a million members at t = 10.0011; the formula says 9.9999.
+A formula-free road: Euler's rule, new value = old value + step length × rate ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)). With steps of 0.0001 month it passes a million members at t = 10.0011; the formula says 9.9999.
 
 ---
 
@@ -382,7 +365,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Thermal runaway.** Heat that speeds up its own reaction faster than linearly is modelled by a rate like y^2; the blow-up time is the time to ignition.
-- **Population models.** The logistic law caps growth by crowding ([logistic-growth](../01-Rate%20Equations/07-logistic-growth.md)); a square rate without the cap blows up.
+- **Population models.** The logistic law caps growth by crowding ([Logistic growth](../01-Rate%20Equations/07-logistic-growth.md)); a square rate without the cap blows up.
 
 > **Say it back**
 > The solution of y' = k y^2 is y0/(1 − k y0 t), infinite at 1/(k y0). Each doubling takes half as long as the last, and the halves add to that time. A maximal interval ends at a finite time only by blow-up or at an edge. Linear rate laws have finite explicit solutions, so they last forever.
@@ -391,12 +374,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [lipschitz-and-the-picard-lindelof-theorem](02-lipschitz-and-the-picard-lindelof-theorem.md): the short-time solution behind the blow-up alternative.
-- [linear-vs-exponential-growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md): the comparison of growth rates, pushed here past exponential.
+- [The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md): the short-time solution behind the blow-up alternative.
+- [Linear versus exponential growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md): the comparison of growth rates, pushed here past exponential.
 
 ## Where this goes next
 
-- [the-flow-of-an-equation](05-the-flow-of-an-equation.md): every start carried forward by its own solution, defined only where each start's life span reaches.
+- [The flow](05-the-flow-of-an-equation.md): every start carried forward by its own solution, defined only where each start's life span reaches.
 
 ---
 

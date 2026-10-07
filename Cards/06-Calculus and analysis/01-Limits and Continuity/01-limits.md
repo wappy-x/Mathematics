@@ -1,28 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Limits and Continuity
-topic: Heading for a value
-item: Limits
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/01-Foundations/08-Relations and Functions/02-functions|functions]]"
-  - "[[Cards/03-Algebra/02-Polynomials/04-polynomial-division|polynomial-division]]"
-next:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/02-supremum-and-completeness|supremum-and-completeness]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/04-limit-laws-and-the-squeeze|limit-laws-and-the-squeeze]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/05-continuity|continuity]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/01-the-derivative|the-derivative]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/05-final-value-theorem-and-steady-gain|final-value-theorem-and-steady-gain]]"
-  - "[[Cards/17-Topology/01-Metric Spaces/04-convergence-and-continuity-in-metric-spaces|convergence-and-continuity-in-metric-spaces]]"
-tags: [mathematics, calculus and analysis, limits]
----
-
 # Limits: the value a function is heading for, and the promise that makes 'heading for' precise
 
-Calculus and analysis → Limits and Continuity → Heading for a value → Limits
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Limits and Continuity](../../../SYLLABUS.md#w06-s01) → Limits
 
 ---
 
@@ -89,7 +67,7 @@ The limit never looks at x = 1, only at inputs near it, so a rule can have a lim
 
 ### Step 1: the fraction is a line with one point missing
 
-Divide x^2 − 1 by x − 1 ([polynomial-division](../../03-Algebra/02-Polynomials/04-polynomial-division.md)): x^2 − 1 = (x − 1)(x + 1). For any x other than 1, the factor x − 1 is not zero and cancels:
+Divide x^2 − 1 by x − 1 ([Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md)): x^2 − 1 = (x − 1)(x + 1). For any x other than 1, the factor x − 1 is not zero and cancels:
 
 $$\frac{x^2 - 1}{x - 1} = x + 1 \quad \text{for } x \ne 1$$
 
@@ -115,7 +93,7 @@ For any straight line with slope $m$ (not zero), the answer to a tolerance is to
 
 ### Step 5: a patched value and a jump
 
-Fill the hole with the value 100 and call the result $g$: $g(1)$ = 100. The promise never tests x = 1, so $g$ keeps limit 2, with distance 0.001 at tolerance 0.001. When value and limit agree, the rule is continuous there ([continuity](05-continuity.md)).
+Fill the hole with the value 100 and call the result $g$: $g(1)$ = 100. The promise never tests x = 1, so $g$ keeps limit 2, with distance 0.001 at tolerance 0.001. When value and limit agree, the rule is continuous there ([Continuity](05-continuity.md)).
 
 A jump is different. Take the rule giving 0 for x below 1 and 1 from 1 upwards. Every window around 1 holds outputs 0 and 1. No single L sits within 0.25 of both, so at tolerance 0.25 no window works: no limit. The best candidate, L = 0.5, still misses by 0.5. From the left alone the rule heads for 0, from the right for 1; these one-sided limits exist but disagree.
 
@@ -130,7 +108,7 @@ A jump is different. Take the rule giving 0 for x below 1 and 1 from 1 upwards. 
 
 </details>
 
-A second road feeds in a list of inputs marching to 1, such as 0.9, 0.99, 0.999, and asks where the outputs go; [sequences-and-limits](03-sequences-and-limits.md) builds it.
+A second road feeds in a list of inputs marching to 1, such as 0.9, 0.99, 0.999, and asks where the outputs go; [Sequences](03-sequences-and-limits.md) builds it.
 
 ---
 
@@ -350,9 +328,9 @@ The two outputs agree line for line.
 
 ## Where you meet it in real life
 
-- **Speed at an instant.** Distance covered over time taken, as the time shrinks to nothing, is another 0 ÷ 0 that heads for a value: [the-derivative](../02-Derivatives/01-the-derivative.md).
+- **Speed at an instant.** Distance covered over time taken, as the time shrinks to nothing, is another 0 ÷ 0 that heads for a value: [The derivative](../02-Derivatives/01-the-derivative.md).
 - **Machining tolerances.** A part must come out within 0.01 mm of spec, so the machine setting is held within some distance of its target: tolerance first, distance second.
-- **Signals settling.** A circuit's steady output is a limit as time runs on; [final-value-theorem-and-steady-gain](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/05-final-value-theorem-and-steady-gain.md) computes it.
+- **Signals settling.** A circuit's steady output is a limit as time runs on; [Final value and bandwidth](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/05-final-value-theorem-and-steady-gain.md) computes it.
 
 > **Say it back**
 > A limit is the value a rule's outputs head for as its input heads for a point, with the point itself left out. The promise: for every output tolerance there is an input distance that keeps every nearby output within it. The fraction is the line x + 1 with a hole at 1, so its miss from 2 equals the input's distance from 1. A line of slope 3 needs a distance a third as wide. A patched value does not move a limit; a jump destroys it.
@@ -361,19 +339,19 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md): a rule with allowed inputs, which may have a hole.
-- [polynomial-division](../../03-Algebra/02-Polynomials/04-polynomial-division.md): the division that exposes the line.
+- [Functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md): a rule with allowed inputs, which may have a hole.
+- [Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md): the division that exposes the line.
 
 ## Where this goes next
 
-- [supremum-and-completeness](02-supremum-and-completeness.md): the real numbers have no gaps for a limit to fall into.
-- [limit-laws-and-the-squeeze](04-limit-laws-and-the-squeeze.md): limits of sums and products, and trapping.
-- [continuity](05-continuity.md): limit and value agree.
-- [the-derivative](../02-Derivatives/01-the-derivative.md): the limit of a rate of change.
-- [final-value-theorem-and-steady-gain](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/05-final-value-theorem-and-steady-gain.md): a system's limit as time runs on.
-- convergence-and-continuity-in-metric-spaces: the same promise with other distances.
+- [No gaps](02-supremum-and-completeness.md): the real numbers have no gaps for a limit to fall into.
+- [Limit laws and the squeeze](04-limit-laws-and-the-squeeze.md): limits of sums and products, and trapping.
+- [Continuity](05-continuity.md): limit and value agree.
+- [The derivative](../02-Derivatives/01-the-derivative.md): the limit of a rate of change.
+- [Final value and bandwidth](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/05-final-value-theorem-and-steady-gain.md): a system's limit as time runs on.
+- Limits and continuity with distances: the same promise with other distances.
 
-Cancelling worked because the fraction was a line in disguise; most rules are not, and building their limits from simpler ones is [limit-laws-and-the-squeeze](04-limit-laws-and-the-squeeze.md).
+Cancelling worked because the fraction was a line in disguise; most rules are not, and building their limits from simpler ones is [Limit laws and the squeeze](04-limit-laws-and-the-squeeze.md).
 
 ---
 

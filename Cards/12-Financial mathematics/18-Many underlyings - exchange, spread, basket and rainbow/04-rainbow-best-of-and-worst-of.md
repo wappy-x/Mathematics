@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Many underlyings - exchange, spread, basket and rainbow
-topic: Options on the better or the worse share
-item: Rainbow options
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/18-Many underlyings - exchange, spread, basket and rainbow/03-basket-options|basket-options]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/05-compound-options|compound-options]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/05-bivariate-normal-and-conditioning|bivariate-normal-and-conditioning]]"
-next:
-  - "[[Cards/12-Financial mathematics/18-Many underlyings - exchange, spread, basket and rainbow/05-correlation-greeks-and-implied-correlation|correlation-greeks-and-implied-correlation]]"
-tags: [mathematics, financial mathematics, rainbow-best-of-and-worst-of]
----
-
 # Rainbow options: pay on the best or the worst of several shares, and the correlation sign flips between them
 
-Financial mathematics → Many underlyings - exchange, spread, basket and rainbow → Options on the better or the worse share → Rainbow options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Many underlyings - exchange, spread, basket and rainbow](../../../SYLLABUS.md#w12-s18) → Rainbow options
 
 ---
 
@@ -58,7 +40,7 @@ First line, the best-of call: a floor of $10 from Bolt, whatever Acme does, then
 
 ## The formula
 
-Notation first. Write $S_1$ and $S_2$ for today's prices of Acme and Bolt, and $\rho$ (say "rho") for the correlation of their log returns. Write $M(a, b; \rho)$ for the chance that two standard bell-curve draws with correlation $\rho$ land below a and below b at the same time. It is the two-share version of $N(x)$, the chance that one draw lands below x, and it is built on [bivariate-normal-and-conditioning](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md).
+Notation first. Write $S_1$ and $S_2$ for today's prices of Acme and Bolt, and $\rho$ (say "rho") for the correlation of their log returns. Write $M(a, b; \rho)$ for the chance that two standard bell-curve draws with correlation $\rho$ land below a and below b at the same time. It is the two-share version of $N(x)$, the chance that one draw lands below x, and it is built on [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md).
 
 Stulz's best-of call, the call on the maximum:
 
@@ -91,11 +73,11 @@ The helper quantities, each one line of plain words:
 
 $$d_i^+ = \frac{\ln(S_i/K) + (r - q_i + \tfrac12\sigma_i^2)T}{\sigma_i\sqrt{T}}, \qquad d_i^- = d_i^+ - \sigma_i\sqrt{T}$$
 
-These are each share's own $d_1$ and $d_2$ from the [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card, with i standing for 1 or 2: how far the share must travel to clear the strike, counted in its own wiggles. One wiggle is $\sigma_i\sqrt{T}$, the standard deviation of the share's log return over the contract's life.
+These are each share's own $d_1$ and $d_2$ from the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card, with i standing for 1 or 2: how far the share must travel to clear the strike, counted in its own wiggles. One wiggle is $\sigma_i\sqrt{T}$, the standard deviation of the share's log return over the contract's life.
 
 $$d_{12} = \frac{\ln(S_1/S_2) + (q_2 - q_1 + \tfrac12\sigma_X^2)T}{\sigma_X\sqrt{T}}, \qquad d_{21} = \frac{\ln(S_2/S_1) + (q_1 - q_2 + \tfrac12\sigma_X^2)T}{\sigma_X\sqrt{T}}$$
 
-These are the distances from the [exchange-option-margrabe](01-exchange-option-margrabe.md) card: how far Acme must travel to beat Bolt, counted in wiggles of the ratio between them.
+These are the distances from the [The exchange option](01-exchange-option-margrabe.md) card: how far Acme must travel to beat Bolt, counted in wiggles of the ratio between them.
 
 $$\rho_1 = \frac{\sigma_1 - \rho\,\sigma_2}{\sigma_X}, \qquad \rho_2 = \frac{\sigma_2 - \rho\,\sigma_1}{\sigma_X}$$
 
@@ -121,7 +103,7 @@ At expiry the best-of pays $\max(\max(S_{1,T}, S_{2,T}) - K, 0)$, where $S_{1,T}
 - receive Bolt, in the endings where Bolt is the winner and above K;
 - hand over K, in the endings where at least one share is above K.
 
-Each piece is priced the way the [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card priced its two halves. Work in the pretend world where every asset grows at the bank rate: each log price is bell-curved, and the two bell curves are tied by the correlation $\rho$. A cash piece is the discounted chance of its event. A share piece is the discounted share times the chance of its event, counted in units of that share, which slides the bell curves before the chance is taken. Only the volatilities and the correlation enter; nothing predicts the market.
+Each piece is priced the way the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card priced its two halves. Work in the pretend world where every asset grows at the bank rate: each log price is bell-curved, and the two bell curves are tied by the correlation $\rho$. A cash piece is the discounted chance of its event. A share piece is the discounted share times the chance of its event, counted in units of that share, which slides the bell curves before the chance is taken. Only the volatilities and the correlation enter; nothing predicts the market.
 
 ### Step 1: the cash piece
 
@@ -193,7 +175,7 @@ First line, the best-of call, falling from $18.18 at correlation −0.9 to $9.23
 
 The shape follows from $\sigma_X$, the volatility of the ratio. It is 0 at correlation 1 and grows as the correlation falls. The more the ratio wiggles, the further apart the two shares end, and the more the hindsight choice is worth. So a buyer of a best-of is **short correlation**, meaning the position loses value when correlation rises, and a buyer of a worst-of is **long correlation**, gaining when it rises.
 
-Two routes check the formula without using it. At a strike near zero the best-of pays the larger share outright, and the larger of two is one share plus the option to swap it for the other: $\max(S_{1,T}, S_{2,T}) = S_{2,T} + \max(S_{1,T} - S_{2,T}, 0)$. So the best-of at zero strike must equal Bolt's discounted price, $98.02, plus the Margrabe exchange option, $7.81: $105.83, which the formula reproduces. And simulation, as on [basket-options](03-basket-options.md), draws the two correlated prices directly and averages the payoffs. The code takes both.
+Two routes check the formula without using it. At a strike near zero the best-of pays the larger share outright, and the larger of two is one share plus the option to swap it for the other: $\max(S_{1,T}, S_{2,T}) = S_{2,T} + \max(S_{1,T} - S_{2,T}, 0)$. So the best-of at zero strike must equal Bolt's discounted price, $98.02, plus the Margrabe exchange option, $7.81: $105.83, which the formula reproduces. And simulation, as on [Basket options](03-basket-options.md), draws the two correlated prices directly and averages the payoffs. The code takes both.
 
 ---
 
@@ -244,7 +226,7 @@ Sensitivities by bumping the formula; each delta is checked against its closed f
 | vega to Acme | dollars per one point of Acme's volatility | 0.3002 | 0.0788 |
 | correlation sensitivity | dollars per 0.01 rise in ρ | −0.0460 | +0.0460 |
 
-The two deltas to Acme add to the vanilla call's delta, as Step 4 says they must. The correlation sensitivities are equal and opposite for the same reason. Their measurement, and backing a correlation out of traded prices, belong to [correlation-greeks-and-implied-correlation](05-correlation-greeks-and-implied-correlation.md).
+The two deltas to Acme add to the vanilla call's delta, as Step 4 says they must. The correlation sensitivities are equal and opposite for the same reason. Their measurement, and backing a correlation out of traded prices, belong to [Correlation Greeks and implied correlation](05-correlation-greeks-and-implied-correlation.md).
 
 ---
 
@@ -696,7 +678,7 @@ The two outputs agree line for line, simulation included: both languages run the
 - **Worst-of structured notes.** Retail notes that pay a high coupon unless the worst of three or four shares falls below a barrier. The investor has sold a put on the worst share. That put gains value as correlation falls and the worst share drifts further from the rest, so the investor loses when the shares stop moving together; the coupon is paid for by that sale. Banks' correlation books are built from these.
 - **Best-of funds and outperformance bonuses.** A payout on the better of two indices, or the better of equities and bonds, is a best-of call. The buyer pays for the hindsight choice and is short correlation.
 - **Stulz's original uses.** Debt repayable in whichever of two currencies is worth more, bonds convertible into either of two assets, and a manager's bonus tied to the better of two benchmarks: each a best-of or worst-of payoff.
-- **The rest of this shelf.** The exchange option is the best-of at zero strike, less one share: [exchange-option-margrabe](01-exchange-option-margrabe.md). The spread option pays on the difference of the shares rather than the larger one: [spread-options-and-kirk](02-spread-options-and-kirk.md). The basket call pays on their average: [basket-options](03-basket-options.md).
+- **The rest of this shelf.** The exchange option is the best-of at zero strike, less one share: [The exchange option](01-exchange-option-margrabe.md). The spread option pays on the difference of the shares rather than the larger one: [Spread options](02-spread-options-and-kirk.md). The basket call pays on their average: [Basket options](03-basket-options.md).
 
 > **Say it back**
 > A best-of call pays on the better of two shares, a worst-of call on the worse. On every ending the two payoffs add to two vanilla call payoffs, so their prices add to two vanilla calls, $18.45 for Acme and Bolt. Stulz prices each piece with two-share bell-curve chances: each share counted with the chance it wins (or loses) and clears the strike, the cash with the chance that one (or both) shares clear it. Correlation decides the split: at 0.5 the best-of is $13.88 and the worst-of $4.57, and at correlation 1 both are the vanilla $9.23. The best-of buyer is short correlation and the worst-of buyer is long it.
@@ -705,13 +687,13 @@ The two outputs agree line for line, simulation included: both languages run the
 
 ## What this builds on
 
-- [basket-options](03-basket-options.md): two correlated lognormal shares simulated together, and correlation as the input that sets a multi-share price.
-- [compound-options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/05-compound-options.md): a Black-Scholes price that needs the two-dimensional bell-curve chance M, met there for the first time in pricing.
-- [bivariate-normal-and-conditioning](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): two correlated bell curves, and the conditioning step that turns M into a one-dimensional integral, the one the code uses.
+- [Basket options](03-basket-options.md): two correlated lognormal shares simulated together, and correlation as the input that sets a multi-share price.
+- [Compound options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/05-compound-options.md): a Black-Scholes price that needs the two-dimensional bell-curve chance M, met there for the first time in pricing.
+- [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): two correlated bell curves, and the conditioning step that turns M into a one-dimensional integral, the one the code uses.
 
 ## Where this goes next
 
-- [correlation-greeks-and-implied-correlation](05-correlation-greeks-and-implied-correlation.md): the sensitivity to correlation measured properly, and a correlation read back out of the prices of best-of, worst-of and basket contracts.
+- [Correlation Greeks and implied correlation](05-correlation-greeks-and-implied-correlation.md): the sensitivity to correlation measured properly, and a correlation read back out of the prices of best-of, worst-of and basket contracts.
 
 This card prices a best-of and a worst-of given a correlation, but no exchange quotes a correlation the way it quotes a share price; how much a desk is exposed to it, and how to recover it from traded prices, is the next card's question.
 

@@ -1,33 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Black-Scholes call and put
-topic: Black-Scholes
-item: Black-Scholes call
-kind: model
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/05-logarithms|logarithms]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/04-normal-distribution|normal-distribution]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/07-geometric-brownian-motion|geometric-brownian-motion]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period|state-prices-and-risk-neutral-pricing-in-one-period]]"
-next:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/02-black-scholes-put|black-scholes-put]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/03-put-call-parity|put-call-parity]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/01-delta|delta]]"
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/01-cash-or-nothing-digital|cash-or-nothing-digital]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/07-black-scholes-equation|black-scholes-equation]]"
-tags:
-  - mathematics
-  - finance
-  - options
-  - black-scholes
----
-
 # Black–Scholes call: what a call option is, and what it should cost
 
-Financial mathematics → The Black-Scholes call and put → Black-Scholes → Black-Scholes call
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Black-Scholes call and put](../../../SYLLABUS.md#w12-s08) → Black-Scholes call
 
 ---
 
@@ -190,7 +163,7 @@ Three reasons, and they're the same reason seen three ways.
 
 ### The other door: the hedge as an equation
 
-Black and Scholes didn't do the average. They did Step 0 literally: wrote down the hedge, demanded it earn the bank rate, and got a differential equation the option's price has to obey. Solve that equation with the option's payoff as the ending condition and out comes the same formula. Two doors, one room. The equation gets its own card: [black-scholes-equation](07-black-scholes-equation.md).
+Black and Scholes didn't do the average. They did Step 0 literally: wrote down the hedge, demanded it earn the bank rate, and got a differential equation the option's price has to obey. Solve that equation with the option's payoff as the ending condition and out comes the same formula. Two doors, one room. The equation gets its own card: [The Black-Scholes equation](07-black-scholes-equation.md).
 
 ---
 
@@ -300,7 +273,7 @@ Top curve: 12 months left. Middle: 3 months left. Bottom, the hockey stick: expi
 
 ### The other side of the option
 
-Somebody sold you that option. They took your $9.23 and promised to hand over a share for $100 if you ask. Their picture is yours upside down: they keep the $9.23 if Acme stays under $100, and they lose without limit above it. Selling options is a real business and a real way to blow up. How a seller protects themselves is Step 0 of this card done for real, day after day: [black-scholes-by-delta-hedging](../05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md).
+Somebody sold you that option. They took your $9.23 and promised to hand over a share for $100 if you ask. Their picture is yours upside down: they keep the $9.23 if Acme stays under $100, and they lose without limit above it. Selling options is a real business and a real way to blow up. How a seller protects themselves is Step 0 of this card done for real, day after day: [Black-Scholes by hedging](../05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md).
 
 ---
 
@@ -740,9 +713,9 @@ The two outputs agree line for line at six decimals. They were produced by diffe
 - **Your brokerage app.** Every option price on the screen was checked against this formula by somebody's computer before it got there.
 - **"Trading at 20 vol."** When traders quote an option by its volatility instead of its dollar price, they've run this formula backwards to find the $\sigma$ that reproduces the market price. That number, implied volatility, is what they actually argue about.
 - **Employee stock options.** The grant you get at a startup is a call on the company's shares. Its value on the company's books comes from this formula or a cousin of it.
-- **The put.** The mirror option, the right to *sell* at $K$. You get it for free from this card via put–call parity: $C - P = Se^{-qT} - Ke^{-rT}$. See [black-scholes-put](02-black-scholes-put.md).
-- **The Greeks.** How the price moves when you nudge each input. Delta, $e^{-qT}N(d_1)$, is literally the slope of this card's formula. See [delta](../09-The%20Greeks%2C%20one%20each/01-delta.md).
-- **The two halves on their own.** A bet that pays cash if Acme finishes above $100 is the cash half by itself: [cash-or-nothing-digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md). The share half by itself is an asset-or-nothing.
+- **The put.** The mirror option, the right to *sell* at $K$. You get it for free from this card via put–call parity: $C - P = Se^{-qT} - Ke^{-rT}$. See [Black-Scholes put](02-black-scholes-put.md).
+- **The Greeks.** How the price moves when you nudge each input. Delta, $e^{-qT}N(d_1)$, is literally the slope of this card's formula. See [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md).
+- **The two halves on their own.** A bet that pays cash if Acme finishes above $100 is the cash half by itself: [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md). The share half by itself is an asset-or-nothing.
 - **Currencies and futures.** Same skeleton. For a currency option, $q$ becomes the foreign interest rate (Garman–Kohlhagen). For an option on a future, $S$ becomes the futures price and $q$ becomes $r$ (Black 76).
 - **A whole company.** Merton's view: a company's shares are a call on the company's assets, with the debt as the strike. If the assets are worth more than the debt at maturity, shareholders "exercise" by paying off the debt and keeping the rest.
 
@@ -755,19 +728,19 @@ The two outputs agree line for line at six decimals. They were produced by diffe
 
 If any of these felt shaky tonight, go back one card. Each one hands this card a piece.
 
-- [logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): why the stock's moves are measured in logs. Prices multiply; logs turn multiplying into adding.
-- [normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, and $N(x)$, the area under it to the left of $x$. Both probabilities on this card are bell-curve areas.
+- [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): why the stock's moves are measured in logs. Prices multiply; logs turn multiplying into adding.
+- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, and $N(x)$, the area under it to the left of $x$. Both probabilities on this card are bell-curve areas.
 - Compound interest and discounting: why a dollar due in a year is worth $e^{-rT}$ dollars today, and why rates on this card are "continuously compounded."
-- [geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): the model of a stock that wiggles: a steady drift plus random kicks, in log space. It's the engine inside the pretend world.
-- [risk-neutral-measure-and-the-fundamental-theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md): the pretend world itself, and why pricing there is legitimate rather than a trick.
+- [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): the model of a stock that wiggles: a steady drift plus random kicks, in log space. It's the engine inside the pretend world.
+- [The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md): the pretend world itself, and why pricing there is legitimate rather than a trick.
 
 ## Where this goes next
 
-- [black-scholes-put](02-black-scholes-put.md): the mirror option, the right to *sell* at $K$. One line from this card via put–call parity.
-- [delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): the grid above taken apart one input at a time: delta, theta, vega and friends.
-- [black-scholes-by-delta-hedging](../05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md): how the seller of an option protects themselves. Step 0 of this card, done for real, day after day.
-- [cash-or-nothing-digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md): the cash half of this formula sold as an option on its own.
-- [black-scholes-equation](07-black-scholes-equation.md): the other door. The hedge written as an equation the price must obey.
+- [Black-Scholes put](02-black-scholes-put.md): the mirror option, the right to *sell* at $K$. One line from this card via put–call parity.
+- [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): the grid above taken apart one input at a time: delta, theta, vega and friends.
+- [Black-Scholes by hedging](../05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md): how the seller of an option protects themselves. Step 0 of this card, done for real, day after day.
+- [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md): the cash half of this formula sold as an option on its own.
+- [The Black-Scholes equation](07-black-scholes-equation.md): the other door. The hedge written as an equation the price must obey.
 
 ---
 

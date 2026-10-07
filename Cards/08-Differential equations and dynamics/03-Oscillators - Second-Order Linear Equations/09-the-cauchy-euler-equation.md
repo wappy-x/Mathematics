@@ -1,23 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Oscillators - Second-Order Linear Equations
-topic: Equations that ignore scale
-item: The Cauchy-Euler equation
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/02-the-characteristic-equation|the-characteristic-equation]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/05-logarithms|logarithms]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/02-frobenius-and-regular-singular-points|frobenius-and-regular-singular-points]]"
-tags: [mathematics, differential equations and dynamics, the-cauchy-euler-equation]
----
-
 # The Cauchy-Euler equation: coefficients that scale with x are solved by powers of x
 
-Differential equations and dynamics → Oscillators - Second-Order Linear Equations → Equations that ignore scale → The Cauchy-Euler equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Oscillators - Second-Order Linear Equations](../../../SYLLABUS.md#w08-s03) → The Cauchy-Euler equation
 
 ---
 
@@ -52,7 +35,7 @@ Orange: the total shift, A x + B/x. Teal: its A x part, growing outward. Dark bl
 
 ## The formula
 
-Reminder: a differential equation links a function to its own rates ([what-a-differential-equation-says](../01-Rate%20Equations/01-what-a-differential-equation-says.md)). Here the rates run along the distance x: y' is the shift's change per millimetre outward, y'' the change of that.
+Reminder: a differential equation links a function to its own rates ([A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md)). Here the rates run along the distance x: y' is the shift's change per millimetre outward, y'' the change of that.
 
 $$x^2\,y'' + a\,x\,y' + b\,y = 0 \qquad\xrightarrow{\;y\,=\,x^r\;}\qquad p(r) = r(r-1) + a\,r + b = 0$$
 
@@ -79,10 +62,10 @@ For the pipe, a = 1 and b = −1, so p(r) = r^2 − 1 and the powers are 1 and �
 
 ### When it holds
 
-- **Matching powers:** x^2 with y'', x with y', a constant with y. In x^2 y'' + x y' + (x^2 − 1) y = 0 one power leaves an x^2 term over; the answer needs a series ([frobenius-and-regular-singular-points](../07-Series%20Solutions%20and%20Boundary%20Problems/02-frobenius-and-regular-singular-points.md)).
+- **Matching powers:** x^2 with y'', x with y', a constant with y. In x^2 y'' + x y' + (x^2 − 1) y = 0 one power leaves an x^2 term over; the answer needs a series ([Frobenius](../07-Series%20Solutions%20and%20Boundary%20Problems/02-frobenius-and-regular-singular-points.md)).
 - **One side of x = 0:** there 1/x blows up and ln x is undefined. For x < 0, replace x by −x.
-- **Right side zero:** a load such as spin needs [variation-of-parameters](07-variation-of-parameters.md).
-- **Real roots:** if (a − 1)^2 < 4b the roots are α ± iβ and the solutions are x^α cos(β ln x) and x^α sin(β ln x), as on [complex-roots-and-damped-oscillation](03-complex-roots-and-damped-oscillation.md).
+- **Right side zero:** a load such as spin needs [Variation of parameters](07-variation-of-parameters.md).
+- **Real roots:** if (a − 1)^2 < 4b the roots are α ± iβ and the solutions are x^α cos(β ln x) and x^α sin(β ln x), as on [Complex roots](03-complex-roots-and-damped-oscillation.md).
 
 ---
 
@@ -111,15 +94,15 @@ For x > 0, x^r is never zero, so this vanishes for every x exactly when p(r) = 0
 
 ### Step 2: two powers, fitted to two walls
 
-The equation is linear, so any mix A x + B/x solves it ([superposition-and-the-shape-of-linear-solutions](01-superposition-and-the-shape-of-linear-solutions.md)). Two facts fix the amounts: σ_r = −20 MPa at the bore (negative means squeezed) and σ_r = 0 outside. With y = A x + B/x, σ_r = K((1 + ν)A − (1 − ν)B/x^2): two equations, two unknowns, solved in Worked numbers. The conditions sit at two places: a boundary-value problem.
+The equation is linear, so any mix A x + B/x solves it ([Superposition](01-superposition-and-the-shape-of-linear-solutions.md)). Two facts fix the amounts: σ_r = −20 MPa at the bore (negative means squeezed) and σ_r = 0 outside. With y = A x + B/x, σ_r = K((1 + ν)A − (1 − ν)B/x^2): two equations, two unknowns, solved in Worked numbers. The conditions sit at two places: a boundary-value problem.
 
 ### Step 3: logarithmic distance turns it into the car's equation
 
-Set t = ln x ([logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)) and write the shift as Y, a function of t. The chain rule gives x y' = Y' and x^2 y'' = Y'' − Y', primes on Y being rates in t. The equation becomes
+Set t = ln x ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)) and write the shift as Y, a function of t. The chain rule gives x y' = Y' and x^2 y'' = Y'' − Y', primes on Y being rates in t. The equation becomes
 
 $$Y'' + (a - 1)\,Y' + b\,Y = 0,$$
 
-a constant-coefficient equation whose characteristic equation, r^2 + (a − 1)r + b = 0, is p(r) again ([the-characteristic-equation](02-the-characteristic-equation.md)). There e^(rt) is x^r, and at a repeated root t e^(rt) is x^r ln x.
+a constant-coefficient equation whose characteristic equation, r^2 + (a − 1)r + b = 0, is p(r) again ([The characteristic equation](02-the-characteristic-equation.md)). There e^(rt) is x^r, and at a repeated root t e^(rt) is x^r ln x.
 
 A repeated case: x^2 y'' − x y' + y = 0 has p(r) = (r − 1)^2, so r = 1 twice: solutions x and x ln x. From y(1) = 0 with rate 1 the answer is x ln x, 1.386294 at x = 2.
 
@@ -130,7 +113,7 @@ Put y = x^r ln x. Then y' = x^(r−1)(r ln x + 1) and y'' = x^(r−2)(r(r − 1)
 x^2 y'' + a x y' + b y = x^r [p(r) ln x + (2r − 1 + a)] = x^r [p(r) ln x + p'(r)],
 with p'(r) the slope of p. At a repeated root p(r) = p'(r) = 0, so x^r ln x solves the equation; at a simple root it does not.
 
-Completeness. t = ln x matches solutions on x > 0 one to one with solutions in t, where [the-characteristic-equation](02-the-characteristic-equation.md) proves the exponential mixes are all of them. Translated back, every solution is A x^(r1) + B x^(r2), or (A + B ln x) x^r.
+Completeness. t = ln x matches solutions on x > 0 one to one with solutions in t, where [The characteristic equation](02-the-characteristic-equation.md) proves the exponential mixes are all of them. Translated back, every solution is A x^(r1) + B x^(r2), or (A + B ln x) x^r.
 
 </details>
 
@@ -138,7 +121,7 @@ Completeness. t = ln x matches solutions on x > 0 one to one with solutions in t
 
 Divide by x^2: y'' + (a/x) y' + (b/x^2) y = 0. The coefficients blow up at x = 0, but no faster than 1/x and 1/x^2: a **regular singular point**, of which this equation is the simplest case. A solid shaft's shift must stay finite at the centre, which forces B = 0 and leaves y = A x.
 
-Reduction of order also finds x ln x, starting from x alone ([wronskian-and-reduction-of-order](04-wronskian-and-reduction-of-order.md)).
+Reduction of order also finds x ln x, starting from x alone ([The Wronskian](04-wronskian-and-reduction-of-order.md)).
 
 ---
 
@@ -171,7 +154,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Two roads to the bore's shift. Road one fits x and 1/x to the pressures. Road two uses no power: Euler's rule steps shift and rate outward, adding step length times rate ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)). The bore's shift is unknown, so it shoots with guesses 0 and 10 µm and, the equation being linear, blends them to leave the outside stress-free. Its error halves with the step length h. Lamé's textbook formula checks the hoop stress; stepping to x ln x checks the repeated root; putting x^r into the equation by finite differences checks the indicial roots.
+Two roads to the bore's shift. Road one fits x and 1/x to the pressures. Road two uses no power: Euler's rule steps shift and rate outward, adding step length times rate ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)). The bore's shift is unknown, so it shoots with guesses 0 and 10 µm and, the equation being linear, blends them to leave the outside stress-free. Its error halves with the step length h. Lamé's textbook formula checks the hoop stress; stepping to x ln x checks the repeated root; putting x^r into the equation by finite differences checks the indicial roots.
 
 ### Python
 
@@ -392,7 +375,7 @@ The two outputs match line for line.
 
 - **Pressure vessels, gun barrels, shrink fits.** Lamé's thick-cylinder stresses are A x + B/x turned into stress.
 - **Heat in a disc.** Steady temperature in polar coordinates leaves x^2 R'' + x R' − n^2 R = 0, solved by x^n and x^(−n).
-- **Finance.** A put option with no expiry obeys a Cauchy-Euler equation in the share price ([perpetual-american-put](../../12-Financial%20mathematics/15-American%20and%20Bermudan%20exercise/05-perpetual-american-put.md)).
+- **Finance.** A put option with no expiry obeys a Cauchy-Euler equation in the share price ([The perpetual American put](../../12-Financial%20mathematics/15-American%20and%20Bermudan%20exercise/05-perpetual-american-put.md)).
 
 > **Say it back**
 > When x^2 sits with y'', x with y' and a constant with y, the equation looks the same at every scale. Trying y = x^r turns it into r(r − 1) + a r + b = 0. Two roots give two powers to mix; a repeated root gives x^r and x^r ln x, since ln x plays the part time plays for the car.
@@ -401,12 +384,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [the-characteristic-equation](02-the-characteristic-equation.md): the trial-and-quadratic method and its repeated root.
-- [logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): ln x, which turns powers into exponentials.
+- [The characteristic equation](02-the-characteristic-equation.md): the trial-and-quadratic method and its repeated root.
+- [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): ln x, which turns powers into exponentials.
 
 ## Where this goes next
 
-- [frobenius-and-regular-singular-points](../07-Series%20Solutions%20and%20Boundary%20Problems/02-frobenius-and-regular-singular-points.md): x^r times a power series.
+- [Frobenius](../07-Series%20Solutions%20and%20Boundary%20Problems/02-frobenius-and-regular-singular-points.md): x^r times a power series.
 
 The trial x^r needs coefficients exactly x^2, x and a constant; when they only behave that way near x = 0, as in Bessel's equation for a vibrating drum, the Frobenius method takes over.
 

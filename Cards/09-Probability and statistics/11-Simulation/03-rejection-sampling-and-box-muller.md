@@ -1,30 +1,14 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Simulation
-topic: Exact normal draws
-item: Rejection sampling and Box-Muller
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/09-Probability and statistics/11-Simulation/02-inverse-transform-sampling|inverse-transform-sampling]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/03-change-of-variables-and-jacobians|change-of-variables-and-jacobians]]"
-next: []
-tags: [mathematics, probability and statistics, rejection-sampling-and-box-muller]
----
-
 # Rejection sampling and Box-Muller: distributions without an invertible CDF, and normals from uniforms
 
-Probability and statistics → Simulation → Exact normal draws → Rejection sampling and Box-Muller
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Simulation](../../../SYLLABUS.md#w09-s11) → Rejection sampling and Box-Muller
 
 ---
 
 ## General Overview
 
-A risk desk simulates a share priced at $100 one year ahead. The model it uses says the price in a year is 100 times e raised to 0.01 plus 0.2 times a standard normal draw: a number from the bell curve with centre 0 and spread 1 ([lognormal-distribution](../04-Continuous%20Distributions/06-lognormal-distribution.md)). The 0.2 is the share's yearly volatility, 20%. The 0.01 is the pricing drift: a 5% interest rate, minus 2% dividends, minus half of 0.2 squared. A draw of 0.479519 puts the share at $111.17; a negative draw puts it lower. A run of 200,000 simulated years needs 200,000 bell-curve draws.
+A risk desk simulates a share priced at $100 one year ahead. The model it uses says the price in a year is 100 times e raised to 0.01 plus 0.2 times a standard normal draw: a number from the bell curve with centre 0 and spread 1 ([Lognormal](../04-Continuous%20Distributions/06-lognormal-distribution.md)). The 0.2 is the share's yearly volatility, 20%. The 0.01 is the pricing drift: a 5% interest rate, minus 2% dividends, minus half of 0.2 squared. A draw of 0.479519 puts the share at $111.17; a negative draw puts it lower. A run of 200,000 simulated years needs 200,000 bell-curve draws.
 
-A computer's generator hands out uniform numbers: values between 0 and 1, every stretch of equal length equally likely ([pseudo-random-numbers](01-pseudo-random-numbers.md)). The inverse transform turns a uniform into any law by reading its cumulative curve backwards ([inverse-transform-sampling](02-inverse-transform-sampling.md)). For the bell curve that backwards reading, the normal quantile, has no formula in logs, roots and powers; a computer finds it by searching ([normal-quantile](../04-Continuous%20Distributions/05-normal-quantile.md)). Doing a search 200,000 times is slow, and the answer is only as good as the search.
+A computer's generator hands out uniform numbers: values between 0 and 1, every stretch of equal length equally likely ([Random numbers from a computer](01-pseudo-random-numbers.md)). The inverse transform turns a uniform into any law by reading its cumulative curve backwards ([Inverse transform](02-inverse-transform-sampling.md)). For the bell curve that backwards reading, the normal quantile, has no formula in logs, roots and powers; a computer finds it by searching ([Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md)). Doing a search 200,000 times is slow, and the answer is only as good as the search.
 
 Two exact tricks avoid the search. **Rejection sampling** draws from an easy law that sits above the hard one everywhere, then throws some draws away so the ones kept follow the hard law. It works for any density that can be bounded that way. **Box-Muller** takes two uniforms, reads them as a distance and an angle, and returns two independent bell-curve draws with one log, one square root, a cosine and a sine. Both return the exact law, not an approximation of it.
 
@@ -50,7 +34,7 @@ Bars: the share of 200,000 Box-Muller draws landing in each half-unit bin, divid
 
 ## The formula
 
-Reminders. $\varphi$ is the standard bell's height and $\Phi$ its area to the left of a point ([normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md)); P(A) is the chance of A, and P(A | B) the chance of A given B.
+Reminders. $\varphi$ is the standard bell's height and $\Phi$ its area to the left of a point ([Normal](../04-Continuous%20Distributions/04-normal-distribution.md)); P(A) is the chance of A, and P(A | B) the chance of A given B.
 
 **Rejection sampling.** The target density $f$ is the law wanted. The proposal density $g$ is a law that is easy to draw from. Find a number $M$ with
 
@@ -72,7 +56,7 @@ $$R = \sqrt{-2\ln U_1}, \qquad \Theta = 2\pi U_2, \qquad Z_1 = R\cos\Theta, \qqu
 
 **Read it aloud:** turn the first uniform into a distance from the centre and the second into an angle; the point at that distance and angle has two coordinates, each a standard normal draw, and neither tells anything about the other.
 
-On this card the target of the rejection sampler is the size of a normal draw, its distance from 0 ignoring sign, and a fair coin then adds the sign. The proposal is the exponential law with rate 1, drawn by the inverse transform as −ln of a uniform ([exponential-distribution](../04-Continuous%20Distributions/03-exponential-distribution.md)):
+On this card the target of the rejection sampler is the size of a normal draw, its distance from 0 ignoring sign, and a fair coin then adds the sign. The proposal is the exponential law with rate 1, drawn by the inverse transform as −ln of a uniform ([Exponential](../04-Continuous%20Distributions/03-exponential-distribution.md)):
 
 $$f(y) = \sqrt{2/\pi}\;e^{-y^2/2}, \qquad g(y) = e^{-y}, \qquad M = \sqrt{2e/\pi} = 1.315489, \qquad \frac{f(y)}{M\,g(y)} = e^{-(y-1)^2/2}.$$
 
@@ -100,7 +84,7 @@ $$f(y) = \sqrt{2/\pi}\;e^{-y^2/2}, \qquad g(y) = e^{-y}, \qquad M = \sqrt{2e/\pi
 - **The proposal must reach everywhere the target lives.** Where $g$ is 0 and $f$ is not, no proposal ever lands, and that part of the law is missing however long the run.
 - **Each test uses a fresh uniform, independent of the proposal.** Reusing the number that made $Y$ makes the keep decision a fixed function of $Y$, and the output follows a different law.
 - **Uniforms in (0, 1], never 0.** Box-Muller takes the log of $U_1$; ln 0 is minus infinity. With 53-bit uniforms the smallest $U_1$ is 2^(−53), so the longest radius is 8.5717: no draw beyond 8.5717 standard deviations, a limit that matters only for tails far beyond anything a share simulation uses.
-- **Real uniforms are a model.** A generator produces a long fixed cycle of numbers that pass tests for uniformity ([pseudo-random-numbers](01-pseudo-random-numbers.md)). The theorems are exact for true uniforms; the program is as good as its generator.
+- **Real uniforms are a model.** A generator produces a long fixed cycle of numbers that pass tests for uniformity ([Random numbers from a computer](01-pseudo-random-numbers.md)). The theorems are exact for true uniforms; the program is as good as its generator.
 
 ---
 
@@ -158,7 +142,7 @@ The right side depends only on $x^2 + y^2$, the squared distance from the centre
 
 ### Step 5: the angle and the distance, each from one uniform
 
-Switch to distance $R$ and angle $\Theta$. A small patch dr by dθ covers area r dr dθ, the Jacobian factor for polar coordinates ([change-of-variables-and-jacobians](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)). So the density in the new coordinates is
+Switch to distance $R$ and angle $\Theta$. A small patch dr by dθ covers area r dr dθ, the Jacobian factor for polar coordinates ([Change of variables](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)). So the density in the new coordinates is
 
 $$\frac{1}{2\pi} \times r\,e^{-r^2/2}, \qquad r > 0,\; 0 \le \theta < 2\pi.$$
 
@@ -166,7 +150,7 @@ It splits into a factor in θ alone, 1/(2π), and a factor in r alone, r e^(−r
 
 $$P(R > r) = \int_r^\infty s\,e^{-s^2/2}\,ds = e^{-r^2/2}.$$
 
-Set this tail chance equal to a uniform and solve: $e^{-R^2/2} = U_1$ gives $R = \sqrt{-2\ln U_1}$. The inverse transform does this, run on the tail chance instead of the cumulative curve, which is allowed because 1 − U is uniform too ([inverse-transform-sampling](02-inverse-transform-sampling.md)); it works because the distance, unlike the normal itself, has a cumulative curve that can be turned round by algebra. Half the squared distance, $R^2/2 = -\ln U_1$, is an exponential draw with rate 1.
+Set this tail chance equal to a uniform and solve: $e^{-R^2/2} = U_1$ gives $R = \sqrt{-2\ln U_1}$. The inverse transform does this, run on the tail chance instead of the cumulative curve, which is allowed because 1 − U is uniform too ([Inverse transform](02-inverse-transform-sampling.md)); it works because the distance, unlike the normal itself, has a cumulative curve that can be turned round by algebra. Half the squared distance, $R^2/2 = -\ln U_1$, is an exponential draw with rate 1.
 
 ### Step 6: run it backwards
 
@@ -226,7 +210,7 @@ For the share, with the house market of the finance wing (rate 5%, dividends 2%,
 | average price, 100 e^0.03 | $103.0455 | $103.0302 ± 0.0466 |
 | call with strike $100, discounted average payoff | $9.227006 | $9.2326 ± 0.0310 |
 
-The simulated call lands within one standard error of the Black-Scholes price ([black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)): the normals are good enough to price an option.
+The simulated call lands within one standard error of the Black-Scholes price ([Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)): the normals are good enough to price an option.
 
 ### What breaks if you drop a piece
 
@@ -653,7 +637,7 @@ The two outputs match line for line: the same generator feeds the same arithmeti
 
 - **Share and option simulations.** Every simulated price path starts from normal draws. Glasserman's text on Monte Carlo in finance covers Box-Muller, the polar method and a fast normal quantile in its section on normal draws.
 - **Standard libraries.** Python's `random.gauss` uses a Box-Muller form; Java's `Random.nextGaussian` documents the polar method. Faster modern normal samplers, such as the ziggurat, are rejection samplers with a staircase envelope built to keep almost every proposal.
-- **Laws with no invertible curve.** The gamma law of waiting times ([gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)) is sampled in practice by rejection against a simple envelope, and the beta law of proportions from two gamma draws.
+- **Laws with no invertible curve.** The gamma law of waiting times ([Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)) is sampled in practice by rejection against a simple envelope, and the beta law of proportions from two gamma draws.
 - **Bayesian computing.** A posterior known only up to a constant can be sampled by rejection, since the keep test needs $f$ only up to a fixed factor folded into $M$.
 
 > **Say it back**
@@ -663,14 +647,14 @@ The two outputs match line for line: the same generator feeds the same arithmeti
 
 ## What this builds on
 
-- [inverse-transform-sampling](02-inverse-transform-sampling.md): turns a uniform into an exponential by −ln U, the proposal for rejection and the radius for Box-Muller.
-- [change-of-variables-and-jacobians](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md): the polar area factor r dr dθ and the Jacobian determinant behind the Box-Muller proof.
+- [Inverse transform](02-inverse-transform-sampling.md): turns a uniform into an exponential by −ln U, the proposal for rejection and the radius for Box-Muller.
+- [Change of variables](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md): the polar area factor r dr dθ and the Jacobian determinant behind the Box-Muller proof.
 
 ## Where this goes next
 
-- [monte-carlo-estimates-and-error](04-monte-carlo-estimates-and-error.md): turns these draws into an estimate, such as the $9.2326 call, and says where its ± comes from.
-- [variance-reduction](05-variance-reduction.md): shrinks that ± without more draws, for instance by pairing each Z with −Z.
-- [importance-sampling](06-importance-sampling.md): draws from a proposal as rejection does, but keeps every draw and weights it by the height ratio instead of throwing any away.
+- [Monte Carlo](04-monte-carlo-estimates-and-error.md): turns these draws into an estimate, such as the $9.2326 call, and says where its ± comes from.
+- [Variance reduction](05-variance-reduction.md): shrinks that ± without more draws, for instance by pairing each Z with −Z.
+- [Importance sampling](06-importance-sampling.md): draws from a proposal as rejection does, but keeps every draw and weights it by the height ratio instead of throwing any away.
 
 Exact draws are now cheap; what remains open is how many are needed before an average of them, such as a simulated option price, can be trusted to a stated precision.
 

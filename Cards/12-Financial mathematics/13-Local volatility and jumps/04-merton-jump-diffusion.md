@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Local volatility and jumps
-topic: Prices that gap
-item: Merton jump-diffusion
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/01-volatility-smile-and-skew|volatility-smile-and-skew]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/04-poisson|poisson]]"
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/04-compound-poisson|compound-poisson]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-next:
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/05-merton-greeks-hedge-error-and-calibration|merton-greeks-hedge-error-and-calibration]]"
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/05-volatility-swap-and-jump-bias|volatility-swap-and-jump-bias]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/07-electricity-and-the-spark-spread|electricity-and-the-spark-spread]]"
-tags: [mathematics, financial mathematics, merton-jump-diffusion]
----
-
 # Merton jump-diffusion: add sudden gaps, and the price is a weighted sum of Black-Scholes prices
 
-Financial mathematics → Local volatility and jumps → Prices that gap → Merton jump-diffusion
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Local volatility and jumps](../../../SYLLABUS.md#w12-s13) → Merton jump-diffusion
 
 ---
 
@@ -30,11 +8,11 @@ Financial mathematics → Local volatility and jumps → Prices that gap → Mer
 
 Acme shares trade at $100. Most days the price wiggles by small amounts. A few mornings a decade it opens far from where it closed, after a profit warning or a lost lawsuit. No trade happened in between. The price gapped.
 
-Black-Scholes has no room for a gap. Its share price moves continuously, so every path from $100 down to $90 passes through $95. That model prices the house one-year call, struck at $100, at $9.23 ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
+Black-Scholes has no room for a gap. Its share price moves continuously, so every path from $100 down to $90 passes through $95. That model prices the house one-year call, struck at $100, at $9.23 ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
 
 Robert Merton's 1976 answer keeps the wiggle and adds jumps. Here they arrive at random, half a jump a year on average, so a year has a 0.6065 chance of none. Each jump multiplies the price by a random factor: typically 0.9048, a drop of just under 10%, with a spread of 15% around that in log terms. With those jumps, the same call costs $10.42.
 
-The price rests on one question: how many jumps happen before expiry? Were the answer known to be exactly one, the log of the ending price would still follow one bell curve, only wider and lower, and the call would have an ordinary Black-Scholes price. The answer is not known, so the model prices the call for every possible count and averages the prices, each weighted by its chance. Those chances are Poisson probabilities, the counting law for events that arrive at random at a steady rate ([poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md)).
+The price rests on one question: how many jumps happen before expiry? Were the answer known to be exactly one, the log of the ending price would still follow one bell curve, only wider and lower, and the call would have an ordinary Black-Scholes price. The answer is not known, so the model prices the call for every possible count and averages the prices, each weighted by its chance. Those chances are Poisson probabilities, the counting law for events that arrive at random at a steady rate ([Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md)).
 
 **Merton's price is a Black-Scholes price for each possible number of jumps, weighted by the chance of that many: 0.6065 of the $11.94 no-jump price, plus 0.3033 of the $8.64 one-jump price, and so on, $10.42 in all.**
 
@@ -64,7 +42,7 @@ $$S_T = S\,\exp\!\Big(\big(r - q - \lambda k - \tfrac12\sigma^2\big)T + \sigma\s
 
 **Read it aloud:** the ending price is today's price moved by the Black-Scholes drift and wiggle, then multiplied by every jump that happened (by nothing if none did); the drift carries an extra $-\lambda k$ that pays for the jumps' average effect.
 
-$k$ is the average jump as a fraction of the price, −0.0849: the average jump takes 8.49% off. (It is Merton's letter, not the log-moneyness of [volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md).) The price of the call:
+$k$ is the average jump as a fraction of the price, −0.0849: the average jump takes 8.49% off. (It is Merton's letter, not the log-moneyness of [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md).) The price of the call:
 
 $$C = \sum_{n=0}^{\infty} w_n\; C_{\text{BS}}\big(S,\,K,\,r,\,q_n,\,\sigma_n,\,T\big), \qquad w_n = \frac{e^{-\lambda T}(\lambda T)^n}{n!}$$
 
@@ -152,7 +130,7 @@ Write $\ln(S_T/S) = m + \sigma\sqrt{T}Z + (\ln Y_1 + \cdots + \ln Y_{N_T})$ with
 
 **Split.** $C = e^{-rT}E[\max(S_T - K, 0)] = \sum_n w_n\,e^{-rT}E[\max(S_T - K, 0) \mid n \text{ jumps}]$, by total expectation.
 
-**Branch.** Given $n$ jumps, $\ln(S_T/S)$ is the constant drift plus $n + 1$ independent normals, so it is normal with mean $m + n\mu_J$ and variance $\sigma_n^2 T$, and $E[S_T \mid n] = S e^{(r - q_n)T}$ as in Step 3. The computation on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) uses only those two facts, so the branch term is $S e^{-q_nT}N(d_1) - K e^{-rT}N(d_2)$, with $d_1 = [\ln(S/K) + (r - q_n + \frac12\sigma_n^2)T]/(\sigma_n\sqrt{T})$ and $d_2 = d_1 - \sigma_n\sqrt{T}$: that is $C_{\text{BS}}(S, K, r, q_n, \sigma_n, T)$.
+**Branch.** Given $n$ jumps, $\ln(S_T/S)$ is the constant drift plus $n + 1$ independent normals, so it is normal with mean $m + n\mu_J$ and variance $\sigma_n^2 T$, and $E[S_T \mid n] = S e^{(r - q_n)T}$ as in Step 3. The computation on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) uses only those two facts, so the branch term is $S e^{-q_nT}N(d_1) - K e^{-rT}N(d_2)$, with $d_1 = [\ln(S/K) + (r - q_n + \frac12\sigma_n^2)T]/(\sigma_n\sqrt{T})$ and $d_2 = d_1 - \sigma_n\sqrt{T}$: that is $C_{\text{BS}}(S, K, r, q_n, \sigma_n, T)$.
 
 **Convergence.** $0 \le C_{\text{BS}} \le S e^{-q_nT} = S e^{-(q+\lambda k)T}(1+k)^n$. For $-1 < k \le 0$ the terms beyond any cut-off total at most $S e^{-(q+\lambda k)T}$ times the chance of more jumps than the cut-off, and Poisson tail chances fall faster than any power. For $k > 0$, fold $(1+k)^n$ into the weight: the bound becomes $S e^{-qT}$ times a Poisson tail at rate $\lambda(1+k)$, the regrouping below. The series converges absolutely to the price.
 
@@ -160,7 +138,7 @@ Write $\ln(S_T/S) = m + \sigma\sqrt{T}Z + (\ln Y_1 + \cdots + \ln Y_{N_T})$ with
 
 ### Step 5: the smile the model creates
 
-Run each strike's Merton price backwards through Black-Scholes to find the one volatility that reproduces it, the implied volatility ([implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md)).
+Run each strike's Merton price backwards through Black-Scholes to find the one volatility that reproduces it, the implied volatility ([Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md)).
 
 The inverse exists and is unique. A Black-Scholes call rises strictly with volatility, from $e^{-rT}\max(F - K, 0)$ at zero towards $S e^{-qT}$ as volatility grows without limit. Each branch price sits strictly inside its own range. The branch upper ends average to $S e^{-qT}$, by Step 1's identity. The branch lower ends average to at least $e^{-rT}\max(F - K, 0)$, since the branch forwards average to $F$ and the positive part of an average never beats the average of the positive parts. So every Merton price sits strictly inside the Black-Scholes range. It never lands on a boundary: at the lower end the answer would be zero volatility, at the upper end there would be none. Bisection (halving a bracket that holds the answer) finds exactly one volatility.
 
@@ -179,7 +157,7 @@ The orange curve is the one-year strip, the green curve the three-month strip un
 
 The whole strip sits above 20%, 23.14% at the money, because jumps add variance. At one year it is a skew, steep on the low side: 25.17% at $70, but only down to 22.44% at $130. Downward jumps load the left tail, where low strikes pay. At three months it is far steeper: 32.10% at $70 against 22.48% at the money, turning up to 22.63% at $130. In three months the wiggle almost never carries Acme 30% lower, so a $70 put is nearly a pure bet on a jump. Over a year the wiggle can go that far alone. And the longer the life, the more independent pieces the log price sums, and such sums drift towards one bell curve, so the strip flattens as expiry lengthens.
 
-Two other routes reach the same number. Merton's 1976 paper moves the factor $e^{-\lambda kT}(1+k)^n$ from each branch into its weight, which makes Poisson weights at the tilted rate $\lambda' = \lambda(1 + k)$ and prices each branch at its own rate $r_n = r - \lambda k + n\ln(1+k)/T$: road 2 in the code. And the log price is a Lévy process (its changes over equal, separate stretches of time are independent and alike) with a closed-form characteristic function (the average of $e^{iu\ln S_T}$ for each real $u$), which a Fourier transform turns into prices at every strike: [carr-madan-fft-and-cos-methods](../06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md).
+Two other routes reach the same number. Merton's 1976 paper moves the factor $e^{-\lambda kT}(1+k)^n$ from each branch into its weight, which makes Poisson weights at the tilted rate $\lambda' = \lambda(1 + k)$ and prices each branch at its own rate $r_n = r - \lambda k + n\ln(1+k)/T$: road 2 in the code. And the log price is a Lévy process (its changes over equal, separate stretches of time are independent and alike) with a closed-form characteristic function (the average of $e^{iu\ln S_T}$ for each real $u$), which a Fourier transform turns into prices at every strike: [Transform pricing](../06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md).
 
 ---
 
@@ -223,7 +201,7 @@ The code prints all eight.
 
 ## Code, from first principles, and it actually runs
 
-Nothing imported knows the answer. The bell-curve area comes from Marsaglia's power series, summed until a new term no longer changes it; the root finder is bisection; the integral is Simpson's rule; and the random numbers come from the recurrence of [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md), turned into bell-curve draws by Box-Muller. Four roads reach the price. Road 1 is the series. Road 2 is Merton's own grouping, checked at one year and at three months. Road 3 averages each branch's payoff over its bell curve by Simpson's rule, with no Black-Scholes formula. Road 4 simulates a million years: the jump count comes from multiplying uniform numbers until the product falls below $e^{-\lambda T}$, and each jump's size is drawn separately. The same years check the compensator and each branch; the put checks parity; with no jumps the series must return the house call.
+Nothing imported knows the answer. The bell-curve area comes from Marsaglia's power series, summed until a new term no longer changes it; the root finder is bisection; the integral is Simpson's rule; and the random numbers come from the recurrence of [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md), turned into bell-curve draws by Box-Muller. Four roads reach the price. Road 1 is the series. Road 2 is Merton's own grouping, checked at one year and at three months. Road 3 averages each branch's payoff over its bell curve by Simpson's rule, with no Black-Scholes formula. Road 4 simulates a million years: the jump count comes from multiplying uniform numbers until the product falls below $e^{-\lambda T}$, and each jump's size is drawn separately. The same years check the compensator and each branch; the put checks parity; with no jumps the series must return the house call.
 
 ### Python
 
@@ -679,17 +657,17 @@ The two outputs match line for line.
 > - **$k$ as $e^{\mu_J} - 1$.** The average multiplier is $e^{\mu_J + \frac12\delta^2}$. The slip prices the call at $10.49 and moves the forward off $F$.
 > - **Mixing the two groupings.** Branch rates $r_n$ go with weights at $\lambda(1+k)$. Plain $\lambda$ weights give $10.33, which the simulation, at 10.397850 with standard error 0.015591, rules out.
 > - **Units.** $\lambda$ is per year; $\mu_J$ and $\delta$ are per jump, in logs, and do not scale with the square root of $T$ as $\sigma$ does. $\mu_J$ = −0.10 is a typical factor of 0.9048, not 0.90.
-> - **Hedging as if Black-Scholes held.** A delta hedge follows the wiggle but not a gap: [merton-greeks-hedge-error-and-calibration](05-merton-greeks-hedge-error-and-calibration.md).
+> - **Hedging as if Black-Scholes held.** A delta hedge follows the wiggle but not a gap: [Greeks under jumps](05-merton-greeks-hedge-error-and-calibration.md).
 
 ---
 
 ## Where you meet it in real life
 
 - **Earnings dates.** A stock can gap on the morning it reports; short-dated options across that date carry the steep smile of Step 5.
-- **Power prices.** Electricity cannot be stored, so its price spikes; the spikes are jumps in [electricity-and-the-spark-spread](../26-Options%20on%20commodity%20futures%20and%20spreads/07-electricity-and-the-spark-spread.md).
-- **Variance swaps.** The option strip that replicates variance assumes no gaps; jumps leave an error, measured in [volatility-swap-and-jump-bias](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md).
-- **Local volatility, the other way to a skew.** A volatility that depends on price and date can fit this very strip ([dupire-local-volatility](01-dupire-local-volatility.md)) but predicts a different future smile ([pricing-under-local-volatility-and-the-forward-smile](03-pricing-under-local-volatility-and-the-forward-smile.md)).
-- **Jumps plus wandering volatility.** Bates put Merton's jumps on a volatility that itself moves ([heston-model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md)): jumps give the short-dated skew, the moving volatility keeps it steep for longer.
+- **Power prices.** Electricity cannot be stored, so its price spikes; the spikes are jumps in [Power that cannot be stored](../26-Options%20on%20commodity%20futures%20and%20spreads/07-electricity-and-the-spark-spread.md).
+- **Variance swaps.** The option strip that replicates variance assumes no gaps; jumps leave an error, measured in [The volatility swap and the jump bias](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md).
+- **Local volatility, the other way to a skew.** A volatility that depends on price and date can fit this very strip ([Dupire local volatility](01-dupire-local-volatility.md)) but predicts a different future smile ([Pricing with local volatility](03-pricing-under-local-volatility-and-the-forward-smile.md)).
+- **Jumps plus wandering volatility.** Bates put Merton's jumps on a volatility that itself moves ([The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md)): jumps give the short-dated skew, the moving volatility keeps it steep for longer.
 
 > **Say it back**
 > Merton keeps the Black-Scholes wiggle and adds jumps that arrive at random at a steady rate, each multiplying the price by a lognormal factor. Fix the number of jumps and the log price is one bell curve again, so each case has a Black-Scholes price with its own width and centre. The call is those prices weighted by the Poisson chance of each count: $10.42 for Acme, against $9.23 without jumps. The $-\lambda k$ in the drift only cancels the jumps' average drag, so the pricing world still expects the forward. Run the prices back through Black-Scholes and a skew appears, steepest for short-dated options.
@@ -698,17 +676,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): implied volatility strike by strike, and the two-leg crash market this card extends to one leg per count.
-- [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the formula priced in every branch, and the house call the series returns without jumps.
-- [poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md): the chance of exactly $n$ events at a steady rate, the series' weights.
-- [compound-poisson](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md): a random number of random jumps added up, the jump part of the log price.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): simulated averages, the recurrence and the standard error road 4 uses.
+- [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): implied volatility strike by strike, and the two-leg crash market this card extends to one leg per count.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the formula priced in every branch, and the house call the series returns without jumps.
+- [Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md): the chance of exactly $n$ events at a steady rate, the series' weights.
+- [Compound Poisson](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md): a random number of random jumps added up, the jump part of the log price.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): simulated averages, the recurrence and the standard error road 4 uses.
 
 ## Where this goes next
 
-- [merton-greeks-hedge-error-and-calibration](05-merton-greeks-hedge-error-and-calibration.md): the Greeks from the series, the error a gap leaves in a hedge, and reading the jump numbers back from a smile.
-- [volatility-swap-and-jump-bias](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md): what jumps do to the replication of variance.
-- [electricity-and-the-spark-spread](../26-Options%20on%20commodity%20futures%20and%20spreads/07-electricity-and-the-spark-spread.md): a market where jumps are the main event.
+- [Greeks under jumps](05-merton-greeks-hedge-error-and-calibration.md): the Greeks from the series, the error a gap leaves in a hedge, and reading the jump numbers back from a smile.
+- [The volatility swap and the jump bias](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md): what jumps do to the replication of variance.
+- [Power that cannot be stored](../26-Options%20on%20commodity%20futures%20and%20spreads/07-electricity-and-the-spark-spread.md): a market where jumps are the main event.
 
 The call now has a price but no perfect hedge; how far a delta hedge misses when Acme gaps, and whether the jump numbers can be read back from the strip at all, is the next card's question.
 

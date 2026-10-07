@@ -1,30 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX vanilla options - Garman-Kohlhagen and the desk conventions
-topic: Hedge ratios and quote labels
-item: Four deltas for one option
-kind: convention
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/03-garman-kohlhagen-greeks|garman-kohlhagen-greeks]]"
-next:
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/05-at-the-money-conventions|at-the-money-conventions]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/06-fx-strike-from-delta|fx-strike-from-delta]]"
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/06-smile-adjusted-delta-and-sticky-delta|smile-adjusted-delta-and-sticky-delta]]"
-tags: [mathematics, financial mathematics, fx-delta-conventions]
----
-
 # Four deltas for one option: spot, forward, and premium-adjusted, and which one a currency desk means
 
-Financial mathematics → FX vanilla options - Garman-Kohlhagen and the desk conventions → Hedge ratios and quote labels → Four deltas for one option
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../../../SYLLABUS.md#w12-s21) → Four deltas for one option
 
 ---
 
 ## General Overview
 
-A dealer sells a one-year option on EUR 10,000,000. It gives the buyer the right to buy those euros at 1.1000 dollars each. Today one euro costs 1.1000 dollars. Dollar interest is 5 percent a year, euro interest 3 percent, and the market prices the euro's jumpiness (its volatility) at 10 percent a year. This is the shelf's house market, priced on [garman-kohlhagen](01-garman-kohlhagen.md) at 0.053556 dollars per euro of notional (the amount the contract covers): USD 535,558 in all.
+A dealer sells a one-year option on EUR 10,000,000. It gives the buyer the right to buy those euros at 1.1000 dollars each. Today one euro costs 1.1000 dollars. Dollar interest is 5 percent a year, euro interest 3 percent, and the market prices the euro's jumpiness (its volatility) at 10 percent a year. This is the shelf's house market, priced on [Garman-Kohlhagen](01-garman-kohlhagen.md) at 0.053556 dollars per euro of notional (the amount the contract covers): USD 535,558 in all.
 
 Having sold it, the dealer buys euros so that a small move in the exchange rate leaves the book flat. How many? Four answers are all correct, each for a different question:
 
@@ -83,7 +65,7 @@ In words: $d_2$ is how many volatility units the forward sits above the strike, 
 
 A convention is an agreement, not a claim that could fail; the formulas it names rest on the Garman-Kohlhagen model, and those assumptions carry over.
 
-- **One volatility for all strikes.** Real markets charge a different volatility at each strike (the smile). The deltas above then miss the slope of that smile; [smile-adjusted-delta-and-sticky-delta](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/06-smile-adjusted-delta-and-sticky-delta.md) adds it back.
+- **One volatility for all strikes.** Real markets charge a different volatility at each strike (the smile). The deltas above then miss the slope of that smile; [Hedging with the smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/06-smile-adjusted-delta-and-sticky-delta.md) adds it back.
 - **Constant, continuously compounded rates.** A desk reads its two discount factors off curves rather than flat rates; the formulas take those factors unchanged, but a quoted simple rate fed in as continuous gives slightly wrong ones.
 - **European exercise.** One exercise date. Early exercise changes the price and every delta with it.
 - **Premium paid today.** Real premiums settle on the spot date, usually two business days later; the discounting over those days is left out here.
@@ -98,7 +80,7 @@ The option's price moves when the exchange rate moves. The dealer who sold it wa
 
 ### Step 1: spot delta is the slope of the price
 
-Buy one euro today and hold it. Its dollar value moves one-for-one with the rate, and the euro earns euro interest, so a euro due at expiry costs $e^{-r_f T}$ euros today. The slope of the call's price in the spot rate is (from [garman-kohlhagen-greeks](03-garman-kohlhagen-greeks.md)):
+Buy one euro today and hold it. Its dollar value moves one-for-one with the rate, and the euro earns euro interest, so a euro due at expiry costs $e^{-r_f T}$ euros today. The slope of the call's price in the spot rate is (from [The Greeks of a currency option](03-garman-kohlhagen-greeks.md)):
 
 $$\frac{\partial C}{\partial S} = e^{-r_f T}N(d_1) = 0.970446 \times 0.598706 = 0.581012.$$
 
@@ -151,7 +133,7 @@ Setting this to zero gives $\sigma\sqrt{T}\,N(d_2) = n(d_2)$, the condition in R
 
 So an adjusted call delta above 0.778348 names no strike, and one below it names two. Desks mean the strike right of the peak, on the out-of-the-money side. A premium-adjusted put delta has no such turn: it falls steadily with the strike.
 
-The inversion itself, and its bracket, belong to [fx-strike-from-delta](06-fx-strike-from-delta.md).
+The inversion itself, and its bracket, belong to [Strike from delta](06-fx-strike-from-delta.md).
 
 ---
 
@@ -623,7 +605,7 @@ Orange: spot delta. Green: forward delta, which starts at 1.00 for deep in-the-m
 ## Where you meet it in real life
 
 - **The interbank volatility screen.** Currency smiles are quoted at the 10-delta and 25-delta points plus at the money. Before any of those can be priced, the screen's delta convention turns each label into a strike.
-- **Which convention, by pair.** The published defaults: the delta is premium-adjusted when the premium is paid in the pair's foreign currency (the one being bought or sold). EURUSD, GBPUSD and AUDUSD pay in dollars and use regular deltas. USDJPY, USDCHF, USDCAD, EURJPY, EURCHF, EURGBP and AUDJPY pay in the foreign currency and use adjusted deltas. The premium usually goes in the more traded currency, in the order USD, EUR, GBP, AUD, NZD, CAD, CHF, then NOK, SEK and DKK, with the yen last. Which currency pays is the subject of [premium-currency-and-foreign-domestic-symmetry](02-premium-currency-and-foreign-domestic-symmetry.md).
+- **Which convention, by pair.** The published defaults: the delta is premium-adjusted when the premium is paid in the pair's foreign currency (the one being bought or sold). EURUSD, GBPUSD and AUDUSD pay in dollars and use regular deltas. USDJPY, USDCHF, USDCAD, EURJPY, EURCHF, EURGBP and AUDJPY pay in the foreign currency and use adjusted deltas. The premium usually goes in the more traded currency, in the order USD, EUR, GBP, AUD, NZD, CAD, CHF, then NOK, SEK and DKK, with the yen last. Which currency pays is the subject of [One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md).
 - **Which convention, by maturity.** Pairs made only of the currencies USD, EUR, JPY, GBP, AUD, NZD, CAD, CHF, NOK, SEK and DKK use spot deltas up to and including one year and forward deltas beyond. A pair with an emerging-market currency, such as USDMXN or USDZAR, uses forward deltas at every maturity. The house EURUSD one-year option is therefore quoted in unadjusted spot delta: 0.5810.
 - **Risk reversals and butterflies.** The 25-delta risk reversal is the volatility of the 25-delta call minus that of the 25-delta put. With forward deltas the call and put deltas pair up to one (Step 2), one reason long-dated smiles use them.
 - **Trade confirmations.** A delta-quoted trade books a strike. The confirmation states the strike and premium currency; the convention only matters until that strike is agreed.
@@ -648,13 +630,13 @@ flowchart TB
 
 ## What this builds on
 
-- [garman-kohlhagen-greeks](03-garman-kohlhagen-greeks.md): the spot delta $e^{-r_f T}N(d_1)$ as the slope of the Garman-Kohlhagen price, which Step 1 takes as given and every other delta here rescales or adjusts.
+- [The Greeks of a currency option](03-garman-kohlhagen-greeks.md): the spot delta $e^{-r_f T}N(d_1)$ as the slope of the Garman-Kohlhagen price, which Step 1 takes as given and every other delta here rescales or adjusts.
 
 ## Where this goes next
 
-- [at-the-money-conventions](05-at-the-money-conventions.md): "at the money" has three meanings, and one of them, the strike where call and put deltas cancel, depends on which of these four deltas is in use.
-- [fx-strike-from-delta](06-fx-strike-from-delta.md): the inversion from a delta label back to a strike, done properly for each convention, including the two-strike bracket of Step 5.
-- [smile-adjusted-delta-and-sticky-delta](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/06-smile-adjusted-delta-and-sticky-delta.md): when volatility differs by strike, the true hedge adds the smile's slope to these formulas.
+- [Three meanings of at-the-money](05-at-the-money-conventions.md): "at the money" has three meanings, and one of them, the strike where call and put deltas cancel, depends on which of these four deltas is in use.
+- [Strike from delta](06-fx-strike-from-delta.md): the inversion from a delta label back to a strike, done properly for each convention, including the two-strike bracket of Step 5.
+- [Hedging with the smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/06-smile-adjusted-delta-and-sticky-delta.md): when volatility differs by strike, the true hedge adds the smile's slope to these formulas.
 
 The four deltas settle what a "25 delta" quote measures; the question left open is which strike counts as "at the money" when each convention gives a different answer.
 

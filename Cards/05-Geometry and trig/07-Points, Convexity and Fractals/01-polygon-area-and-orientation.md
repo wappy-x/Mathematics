@@ -1,25 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Points, Convexity and Fractals
-topic: Area from a corner list
-item: Shoelace formula
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/05-Vectors in Space/01-cross-product-and-oriented-area|cross-product-and-oriented-area]]"
-next:
-  - "[[Cards/05-Geometry and trig/07-Points, Convexity and Fractals/02-convex-sets-and-convex-hulls|convex-sets-and-convex-hulls]]"
-  - "[[Cards/05-Geometry and trig/07-Points, Convexity and Fractals/03-point-in-polygon-and-segment-tests|point-in-polygon-and-segment-tests]]"
-  - "[[Cards/05-Geometry and trig/07-Points, Convexity and Fractals/05-self-similarity-and-fractal-dimension|self-similarity-and-fractal-dimension]]"
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/06-greens-theorem|greens-theorem]]"
-tags: [mathematics, geometry-and-trig, polygon-area-and-orientation]
----
-
 # Shoelace formula: area of any polygon from its corners, with a sign that says which way round
 
-Geometry and trig → Points, Convexity and Fractals → Area from a corner list → Shoelace formula
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Points, Convexity and Fractals](../../../SYLLABUS.md#w05-s07) → Shoelace formula
 
 ---
 
@@ -47,7 +28,7 @@ Drawn to scale, 100 m = 26 units, north up: peg (30, 222), A (82, 196), B (290, 
 
 ## The formula
 
-Notation first, in words. Corners are numbered 1 to $n$ in walking order; corner $i$ sits at $(x_i, y_i)$, east then north. The corner after the last is the first again, so the fence F to A counts. The capital sigma, Σ, means "add the bracket for every $i$ from 1 to $n$". A reminder from [cross-product-and-oriented-area](../05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md): for two arrows in the plane, $u \times v$ is east of u times north of v, minus north of u times east of v. It is the signed area of the parallelogram they span, positive when v lies anticlockwise from u.
+Notation first, in words. Corners are numbered 1 to $n$ in walking order; corner $i$ sits at $(x_i, y_i)$, east then north. The corner after the last is the first again, so the fence F to A counts. The capital sigma, Σ, means "add the bracket for every $i$ from 1 to $n$". A reminder from [Cross product](../05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md): for two arrows in the plane, $u \times v$ is east of u times north of v, minus north of u times east of v. It is the signed area of the parallelogram they span, positive when v lies anticlockwise from u.
 
 $$S = \frac{1}{2}\sum_{i=1}^{n}\left(x_i\,y_{i+1} - y_i\,x_{i+1}\right), \qquad x_{n+1} = x_1,\ \ y_{n+1} = y_1$$
 
@@ -130,7 +111,7 @@ An anticlockwise walk keeps the inside on its left. Ordinary corners turn left; 
 
 The peg's place changes the terms, not the total. With the peg on A the terms are 0, 40, 2, 26, 15, 0, still 83. Shifting every corner by one arrow adds that arrow crossed with each fence arrow; the fence arrows of a closed loop add to zero, so the extras do too.
 
-Slice a curved boundary ever finer and the same boundary sum becomes [greens-theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md); this card is its straight-edged case.
+Slice a curved boundary ever finer and the same boundary sum becomes [Green's theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md); this card is its straight-edged case.
 
 ---
 
@@ -376,14 +357,14 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [cross-product-and-oriented-area](../05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md): the cross product as the signed area of a parallelogram, the brick every term is made of.
+- [Cross product](../05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md): the cross product as the signed area of a parallelogram, the brick every term is made of.
 
 ## Where this goes next
 
-- [convex-sets-and-convex-hulls](02-convex-sets-and-convex-hulls.md): the turn test picks out the outer boundary of a scattered set of points.
-- [point-in-polygon-and-segment-tests](03-point-in-polygon-and-segment-tests.md): turn signs decide whether two fences cross and whether a point is inside.
-- [self-similarity-and-fractal-dimension](05-self-similarity-and-fractal-dimension.md): polygons whose area settles while their perimeter grows without end.
-- [greens-theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md): the boundary sum for curved boundaries.
+- [Convex sets](02-convex-sets-and-convex-hulls.md): the turn test picks out the outer boundary of a scattered set of points.
+- [Inside or outside](03-point-in-polygon-and-segment-tests.md): turn signs decide whether two fences cross and whether a point is inside.
+- [Fractals](05-self-similarity-and-fractal-dimension.md): polygons whose area settles while their perimeter grows without end.
+- [Green's theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md): the boundary sum for curved boundaries.
 
 ---
 

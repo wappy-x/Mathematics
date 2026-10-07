@@ -1,31 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Transforms in Outline
-topic: Signals as spinning arrows
-item: Fourier series
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/04-eulers-formula|eulers-formula]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/06-complex-limits-series-and-regions|complex-limits-series-and-regions]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/04-integration-by-parts|integration-by-parts]]"
-next:
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/02-discrete-fourier-transform|discrete-fourier-transform]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/03-fourier-transform|fourier-transform]]"
-  - "[[Cards/18-Functional analysis/02-Hilbert Spaces/04-completeness-of-the-trigonometric-system|completeness-of-the-trigonometric-system]]"
-  - "[[Cards/18-Functional analysis/06-Banach Algebras and Fixed Points/02-wieners-lemma-and-invertible-filters|wieners-lemma-and-invertible-filters]]"
-  - "[[Cards/20-Harmonic analysis/01-Fourier Series in Depth/01-fourier-coefficients-and-orthogonality|fourier-coefficients-and-orthogonality]]"
-  - "[[Cards/20-Harmonic analysis/02-The Fourier Transform/08-poisson-summation-and-sampling|poisson-summation-and-sampling]]"
-  - "[[Cards/21-Algebraic and analytic number theory/08-Additive Combinatorics and Probabilistic Number Theory/03-equidistribution-and-weyls-criterion|equidistribution-and-weyls-criterion]]"
-  - "[[Cards/23-Differential geometry and Lie groups/01-Curves/09-isoperimetric-and-four-vertex-theorems|isoperimetric-and-four-vertex-theorems]]"
-tags: [mathematics, complex analysis, fourier-series-in-complex-form]
----
-
 # Fourier series: any repeating signal is a sum of spinning arrows e to the inx, and each coefficient is an average
 
-Complex analysis → Transforms in Outline → Signals as spinning arrows → Fourier series
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Transforms in Outline](../../../SYLLABUS.md#w07-s08) → Fourier series
 
 ---
 
@@ -35,11 +10,11 @@ A synthesiser's square-wave oscillator plays A below middle C, 220 cycles a seco
 
 The difference is hidden tones. A spectrum analyser shows energy at 220, 660 and 1100 Hz and every further odd multiple of 220, each quieter than the last. Even multiples are silent.
 
-Each pure tone is an arrow spinning round a circle, the point e^(inx) of [eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md). How much of each arrow the signal holds is one average over a cycle.
+Each pure tone is an arrow spinning round a circle, the point e^(inx) of [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md). How much of each arrow the signal holds is one average over a cycle.
 
 **A signal that repeats every 2π is a sum of arrows c_n e^(inx), each spinning n times per cycle, and each coefficient c_n is the average over one cycle of the signal times e^(−inx).**
 
-**What kind of fact this is:** a theorem. The coefficient formula is proved in Why it works; that the sum returns the signal, under the conditions in When it holds, is proved in fourier-coefficients-and-orthogonality; Parseval's identity is stated, its proof folded.
+**What kind of fact this is:** a theorem. The coefficient formula is proved in Why it works; that the sum returns the signal, under the conditions in When it holds, is proved in Fourier coefficients; Parseval's identity is stated, its proof folded.
 
 ### The picture: two arrows make one real tone
 
@@ -85,7 +60,7 @@ $$c_n=\frac{2}{i\pi n}\ \ (n \text{ odd}), \qquad c_n=0\ \ (n \text{ even}), \qq
 - **Repeats every 2π, finite average size.** Otherwise, as for 1/x near 0, the averages do not exist.
 - **Piecewise smooth, for each point.** With finitely many jumps, S_N(x) tends to f(x) where f is continuous and to the jump's midpoint at a jump: 0 at x = 0, however f(0) is set.
 - **Also continuous, for uniform closeness.** Only without jumps does the largest error shrink to 0. Beside each jump the square wave's sums overshoot above 1.178980 for every N: the Gibbs phenomenon.
-- **Finite average of |f|^2, for closeness on average.** Then the average of |f − S_N|^2 tends to 0 and Parseval holds. All three are proved in fourier-coefficients-and-orthogonality.
+- **Finite average of |f|^2, for closeness on average.** Then the average of |f − S_N|^2 tends to 0 and Parseval holds. All three are proved in Fourier coefficients.
 
 ---
 
@@ -97,7 +72,7 @@ An arrow that turns a whole number of times, k ≠ 0, per cycle points every way
 
 ### Step 1: the averages, computed
 
-For a whole number k ≠ 0, e^(ikx) has antiderivative e^(ikx)/(ik), by [eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md). At x = π and x = −π it takes the same value, since e^(ikπ) and e^(−ikπ) are both (−1)^k. With k = m − n, e^(imx) e^(−inx) is e^(ikx), so
+For a whole number k ≠ 0, e^(ikx) has antiderivative e^(ikx)/(ik), by [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md). At x = π and x = −π it takes the same value, since e^(ikπ) and e^(−ikπ) are both (−1)^k. With k = m − n, e^(imx) e^(−inx) is e^(ikx), so
 
 $$\frac{1}{2\pi}\int_{-\pi}^{\pi} e^{imx}\, e^{-inx}\, dx=\begin{cases} 1 & m=n \\ 0 & m \neq n \end{cases}$$
 
@@ -105,7 +80,7 @@ This is orthogonality: two different arrows, one turned back against the other, 
 
 ### Step 2: each coefficient is an average
 
-Suppose f is a sum of arrows c_m e^(imx). Multiply by e^(−inx), turning every arrow back by n times the angle. Arrow n stops turning; every other arrow still turns. Average over one cycle: by Step 1 only c_n survives. Swapping the average with the infinite sum needs the sum to converge well enough ([complex-limits-series-and-regions](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md)).
+Suppose f is a sum of arrows c_m e^(imx). Multiply by e^(−inx), turning every arrow back by n times the angle. Arrow n stops turning; every other arrow still turns. Average over one cycle: by Step 1 only c_n survives. Swapping the average with the infinite sum needs the sum to converge well enough ([Limits and regions in the plane](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md)).
 
 ### Step 3: partners make a real signal
 
@@ -113,7 +88,7 @@ Expand the partners with Euler's formula: c_n e^(inx) + c_(−n) e^(−inx) = (c
 
 ### Step 4: smoothness sets how fast the coefficients fall
 
-If f is smooth and repeats, [integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md) shows the coefficient of the slope f′ is in times c_n; the boundary terms cancel because both factors repeat. So each derivative buys a factor 1/n. A jump allows none: the square wave's coefficients fall only like 1/n, so it sounds bright. A triangle wave, cornered but unbroken, falls like 1/n^2.
+If f is smooth and repeats, [Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md) shows the coefficient of the slope f′ is in times c_n; the boundary terms cancel because both factors repeat. So each derivative buys a factor 1/n. A jump allows none: the square wave's coefficients fall only like 1/n, so it sounds bright. A triangle wave, cornered but unbroken, falls like 1/n^2.
 
 ### Step 5: Parseval
 
@@ -130,11 +105,11 @@ Let S_N be the sum of the arrows from −N to N. For |n| ≤ N the average of (f
 
 Orthogonal pieces add their powers, as a right triangle's sides do: the average of |f|^2 is that of |S_N|^2 plus that of |f − S_N|^2, and by Step 1 the first is the sum of |c_n|^2 for |n| ≤ N. For N = 5 the mean-square error is 1 − 0.933056 = 0.066944, matched by integrating (f − S_5)^2.
 
-The error is never negative, so partial sums of |c_n|^2 never exceed the average of |f|^2 (Bessel's inequality). Equality in the limit says the arrows suffice: completeness-of-the-trigonometric-system.
+The error is never negative, so partial sums of |c_n|^2 never exceed the average of |f|^2 (Bessel's inequality). Equality in the limit says the arrows suffice: Completeness of sines and cosines.
 
 </details>
 
-The real form reaches the same series with three formulas where one does; sampling instead of averaging is [discrete-fourier-transform](02-discrete-fourier-transform.md).
+The real form reaches the same series with three formulas where one does; sampling instead of averaging is [The discrete Fourier transform](02-discrete-fourier-transform.md).
 
 ---
 
@@ -396,9 +371,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Synthesisers.** A square oscillator has only odd harmonics, falling like 1/n. A filter dimming the upper ones softens the buzz; its action on each coefficient is [convolution-theorem](04-convolution-theorem.md).
+- **Synthesisers.** A square oscillator has only odd harmonics, falling like 1/n. A filter dimming the upper ones softens the buzz; its action on each coefficient is [Convolution](04-convolution-theorem.md).
 - **Heat.** Fourier invented the series for heat flow: each tone of a temperature profile fades at its own rate.
-- **Digital audio.** A sampled signal has only finitely many tones, found by [discrete-fourier-transform](02-discrete-fourier-transform.md).
+- **Digital audio.** A sampled signal has only finitely many tones, found by [The discrete Fourier transform](02-discrete-fourier-transform.md).
 
 > **Say it back**
 > A signal repeating every 2π is a sum of arrows e^(inx), each turning n times per cycle. Different arrows average to zero against each other, so the amount of arrow n is the average of the signal times e^(−inx). Partners n and −n make a real cosine and sine. The square wave has only odd tones, c_n = 2/(iπn), and Parseval gives 1 + 1/9 + 1/25 + … = π^2/8. Beside a jump the sums overshoot to about 1.178980, however many tones are kept.
@@ -407,22 +382,22 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e^(ix) is the point at angle x on the unit circle.
-- [complex-limits-series-and-regions](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md): when an infinite complex sum converges.
-- [integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): ties smoothness to how fast coefficients fall.
+- [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e^(ix) is the point at angle x on the unit circle.
+- [Limits and regions in the plane](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md): when an infinite complex sum converges.
+- [Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): ties smoothness to how fast coefficients fall.
 
 ## Where this goes next
 
-- [discrete-fourier-transform](02-discrete-fourier-transform.md): the same coefficients from finitely many samples.
-- [fourier-transform](03-fourier-transform.md): a signal that never repeats; the tones fill a continuum.
-- completeness-of-the-trigonometric-system: why the arrows are enough; Parseval in full.
-- wieners-lemma-and-invertible-filters: when a filter's action on the coefficients can be undone.
-- fourier-coefficients-and-orthogonality: the three kinds of convergence, proved.
-- poisson-summation-and-sampling: series and transform tied together.
-- equidistribution-and-weyls-criterion: arrow averages deciding whether a sequence spreads evenly.
-- isoperimetric-and-four-vertex-theorems: Parseval proving the circle encloses the most area.
+- [The discrete Fourier transform](02-discrete-fourier-transform.md): the same coefficients from finitely many samples.
+- [The Fourier transform](03-fourier-transform.md): a signal that never repeats; the tones fill a continuum.
+- Completeness of sines and cosines: why the arrows are enough; Parseval in full.
+- Wiener's lemma: when a filter's action on the coefficients can be undone.
+- Fourier coefficients: the three kinds of convergence, proved.
+- Poisson summation and sampling: series and transform tied together.
+- Equidistribution: arrow averages deciding whether a sequence spreads evenly.
+- Isoperimetric and four-vertex: Parseval proving the circle encloses the most area.
 
-A repeating signal has a list of tones; a camera shutter's one-second pulse never repeats, and what replaces the list is [fourier-transform](03-fourier-transform.md).
+A repeating signal has a list of tones; a camera shutter's one-second pulse never repeats, and what replaces the list is [The Fourier transform](03-fourier-transform.md).
 
 ---
 

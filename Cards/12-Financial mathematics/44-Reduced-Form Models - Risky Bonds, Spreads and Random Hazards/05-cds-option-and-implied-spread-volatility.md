@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Reduced-Form Models - Risky Bonds, Spreads and Random Hazards
-topic: Credit spread options
-item: Options on a CDS
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/04-forward-cds-and-the-forward-spread|forward-cds-and-the-forward-spread]]"
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/03-stochastic-hazard-cox-process|stochastic-hazard-cox-process]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/06-black-76-and-forward-level-pricing|black-76-and-forward-level-pricing]]"
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/05-the-annuity-measure|the-annuity-measure]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/01-implied-volatility|implied-volatility]]"
-next: []
-tags: [mathematics, financial mathematics, cds-option-and-implied-spread-volatility]
----
-
 # Options on a CDS: Black's formula on the forward spread with the risky annuity as the unit, and the implied spread volatility
 
-Financial mathematics → Reduced-Form Models - Risky Bonds, Spreads and Random Hazards → Credit spread options → Options on a CDS
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Reduced-Form Models - Risky Bonds, Spreads and Random Hazards](../../../SYLLABUS.md#w12-s44) → Options on a CDS
 
 ---
 
@@ -29,7 +10,7 @@ Northwind's credit default swap curve today reads 120, 200 and 250 basis points 
 
 A fund holds Northwind bonds and worries about next year. It does not want to buy protection now at today's price. It wants the **right**, in one year, to buy protection at 250 basis points a year that runs to year five, four years by then. If Northwind's spread has blown out to 400, that right is valuable: protection worth 400 a year for 250. If the spread has fallen to 150, the fund walks away. That right is a **payer option**, or payer swaption: the holder may pay the premium. The mirror right, to sell protection at a fixed spread, is a **receiver option**.
 
-Today's curve already implies a fair spread for protection that starts in a year and runs to year five: 290.55 basis points, the **forward spread** of [forward-cds-and-the-forward-spread](04-forward-cds-and-the-forward-spread.md). Assume the spread in a year is scattered around that forward with a volatility of 50 percent: the yearly standard deviation of its logarithm. The option costs **2.33 percent of the notional**. A version that also pays out if Northwind defaults before the year is up costs a further **1.12 percent**, the **front-end protection**. Run backwards, the 2.33 percent premium returns the 50 percent: the **implied spread volatility**, the number traders actually quote.
+Today's curve already implies a fair spread for protection that starts in a year and runs to year five: 290.55 basis points, the **forward spread** of [The forward CDS](04-forward-cds-and-the-forward-spread.md). Assume the spread in a year is scattered around that forward with a volatility of 50 percent: the yearly standard deviation of its logarithm. The option costs **2.33 percent of the notional**. A version that also pays out if Northwind defaults before the year is up costs a further **1.12 percent**, the **front-end protection**. Run backwards, the 2.33 percent premium returns the 50 percent: the **implied spread volatility**, the number traders actually quote.
 
 **A CDS option is Black's call (the Black-Scholes call written on a forward) on the forward spread, paid in units of the forward risky annuity (the value of one unit of premium a year, paid only while Northwind survives); the premium pins down one volatility exactly when it lies inside Black's price range.**
 
@@ -55,7 +36,7 @@ Rising line (orange): the payer. Falling line (green): the receiver. Neither lin
 
 ## The formula
 
-Notation first, in words. The option expires at $T$ and the underlying contract matures at $T_M$. $A$ is today's value of the **forward risky annuity**: one unit of premium a year, paid quarterly from $T$ to $T_M$, only while Northwind survives. $V_{\text{prot}}$ is today's value of the protection over the same window. Their ratio is the forward spread $F$. $N(x)$ is the standard bell-curve area to the left of $x$ ([black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)).
+Notation first, in words. The option expires at $T$ and the underlying contract matures at $T_M$. $A$ is today's value of the **forward risky annuity**: one unit of premium a year, paid quarterly from $T$ to $T_M$, only while Northwind survives. $V_{\text{prot}}$ is today's value of the protection over the same window. Their ratio is the forward spread $F$. $N(x)$ is the standard bell-curve area to the left of $x$ ([Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)).
 
 $$V_{\text{pay}} = A\left[F\,N(d_1) - K\,N(d_2)\right], \qquad V_{\text{rec}} = A\left[K\,N(-d_2) - F\,N(-d_1)\right], \qquad F = \frac{V_{\text{prot}}}{A}$$
 
@@ -98,12 +79,12 @@ $$A\,(F - K)^+ < V < A\,F,$$
 
 where $(y)^+$ means y if positive and zero otherwise. For Northwind that range is 1.244724 to 8.919113 percent. At or outside either end there is no volatility.
 
-**Conventions verified 2026-09-28** against the shelf's bootstrapped curve ([bootstrapping-the-hazard-curve-from-cds-quotes](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md)): quarterly premiums paid at the end of each quarter survived, year fractions of 0.25, no premium accrued between the last payment and default, strike quoted as a running spread. Standard traded contracts pay a fixed coupon plus an upfront amount ([marking-a-cds-to-market-and-the-upfront](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/07-marking-a-cds-to-market-and-the-upfront.md)); that changes the strike's units, not the method.
+**Conventions verified 2026-09-28** against the shelf's bootstrapped curve ([Bootstrapping a hazard curve](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md)): quarterly premiums paid at the end of each quarter survived, year fractions of 0.25, no premium accrued between the last payment and default, strike quoted as a running spread. Standard traded contracts pay a fixed coupon plus an upfront amount ([Valuing an existing CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/07-marking-a-cds-to-market-and-the-upfront.md)); that changes the strike's units, not the method.
 
 ### When it holds
 
 - **The option knocks out on default before expiry.** Single-name CDS options usually do. Then the payoff is zero on the paths the unit ignores, and the unit change is exact. If the payer survives a default, add the front-end protection: 1.12 percent here, almost half the knock-out premium.
-- **The forward spread is lognormal under the survival measure.** This is Black's assumption. Spreads jump when news breaks, so real smiles slope upward, and one volatility cannot price every strike. A random-hazard model ([stochastic-hazard-cox-process](03-stochastic-hazard-cox-process.md)) produces its own smile.
+- **The forward spread is lognormal under the survival measure.** This is Black's assumption. Spreads jump when news breaks, so real smiles slope upward, and one volatility cannot price every strike. A random-hazard model ([A random hazard](03-stochastic-hazard-cox-process.md)) produces its own smile.
 - **Rates and default are independent for the front-end protection.** The formula for FEP multiplies a discount factor by a default chance. With a constant 5 percent rate that is exact; with random rates tied to credit it needs a correction.
 - **The curve is free of arbitrage.** Survival must fall with time, which the bootstrapped pieces guarantee. A negative hazard piece would make survival rise, and the survival weights would stop being probabilities.
 
@@ -113,7 +94,7 @@ where $(y)^+$ means y if positive and zero otherwise. For Northwind that range i
 
 ### Step 0: price in units of the thing the option pays in
 
-A payer, once exercised, gives the holder a CDS whose value is a number of basis points times an annuity. So count money in annuities. Any positive traded price can serve as the unit of account, and in that unit every other price ratio has no drift ([the-annuity-measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md)). The forward spread is protection divided by annuity. In annuity units it is a fair game: its average future value is today's value. The twist for credit is that this unit can hit zero.
+A payer, once exercised, gives the holder a CDS whose value is a number of basis points times an annuity. So count money in annuities. Any positive traded price can serve as the unit of account, and in that unit every other price ratio has no drift ([The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md)). The forward spread is protection divided by annuity. In annuity units it is a fair game: its average future value is today's value. The twist for credit is that this unit can hit zero.
 
 ### Step 1: the payoff is the annuity times a call on the spread
 
@@ -166,7 +147,7 @@ A payer that does not knock out has one more outcome. If Northwind defaults befo
 
 Hold $F$, $K$, $A$ fixed and let $\sigma$ vary. The premium is continuous in $\sigma$. It is strictly increasing, because its slope is vega, $A\,F\,\varphi(d_1)\sqrt{T}$, which is positive. As $\sigma$ shrinks to zero the spread becomes certain, and the price falls to $A\,(F - K)^+$: 1.244724 percent. As $\sigma$ grows without bound, $N(d_1)$ goes to 1 and $N(d_2)$ to 0, so the price climbs towards $A\,F = V_{\text{prot}}$: 8.919113 percent, the whole forward protection leg. A continuous, strictly increasing function takes each value between its limits exactly once. So every premium strictly between 1.244724 and 8.919113 percent has one implied volatility, and every premium outside has none.
 
-The bounds are prices, not artefacts. A payer below $A(F - K)^+$ could be bought and a forward CDS sold against it for a sure profit. A payer above $V_{\text{prot}}$ would cost more than simply buying the forward protection outright. Bisection (halve an interval known to contain the answer, keep the half that still does) is guaranteed to find the root; Newton's method (follow the slope to where the line crosses) is faster from a good start. Both are on [implied-volatility-by-newton-and-bisection](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md).
+The bounds are prices, not artefacts. A payer below $A(F - K)^+$ could be bought and a forward CDS sold against it for a sure profit. A payer above $V_{\text{prot}}$ would cost more than simply buying the forward protection outright. Bisection (halve an interval known to contain the answer, keep the half that still does) is guaranteed to find the root; Newton's method (follow the slope to where the line crosses) is faster from a good start. Both are on [Solving for implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md).
 
 The other road to the price is a hedge: hold the option, sell forward protection in the amount of the spread delta, and require the hedged book to earn the riskless rate. The annuity-unit route above is shorter and shows why the annuity, not a discount factor, multiplies the bracket.
 
@@ -686,11 +667,11 @@ The two outputs are identical to the printed precision.
 
 ## Where you meet it in real life
 
-- **Index options.** Most traded credit options are on CDS indices such as CDX and iTraxx ([credit-indices](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/04-credit-indices.md)). They are priced the same way: Black on the forward index spread, with the index's risky annuity as the unit. One difference matters. An index option does not knock out: names that default before expiry are settled when the option is exercised, so the front-end protection sits inside the payoff and inside the exercise decision, not on top of it. The market fix adds the expected loss before expiry, per unit of annuity, to the forward before Black is applied, and quotes the strike against the index's fixed coupon.
+- **Index options.** Most traded credit options are on CDS indices such as CDX and iTraxx ([Credit indices (CDX and iTraxx in outline)](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/04-credit-indices.md)). They are priced the same way: Black on the forward index spread, with the index's risky annuity as the unit. One difference matters. An index option does not knock out: names that default before expiry are settled when the option is exercised, so the front-end protection sits inside the payoff and inside the exercise decision, not on top of it. The market fix adds the expected loss before expiry, per unit of annuity, to the forward before Black is applied, and quotes the strike against the index's fixed coupon.
 - **Volatility quotes.** Dealers quote CDS and index options in implied spread volatility, the $\sigma$ that makes Black match the premium. Step 7 is why a single number can stand in for the price: inside the bounds, one premium and one volatility determine each other.
 - **Hedging bond portfolios.** A payer is cheap tail cover: it pays when spreads widen, and it costs less than protection bought outright because it can expire unused. Its delta, 0.021766 percent of notional per basis point here, says how much forward protection hedges it day to day.
 - **Stress in credit markets.** When spreads jump, the annuity shrinks as the spread rises: the payoff chart's bend. A hedge built on the fixed-annuity delta drifts off as spreads move.
-- **Random-hazard models.** Where spread volatility comes from is the subject of [stochastic-hazard-cox-process](03-stochastic-hazard-cox-process.md). The bond and basis cards, [pricing-a-defaultable-bond-from-the-survival-curve](01-pricing-a-defaultable-bond-from-the-survival-curve.md) and [implied-hazard-from-a-bond-price-and-the-cds-bond-basis](02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis.md), price the cash side of the same Northwind curve.
+- **Random-hazard models.** Where spread volatility comes from is the subject of [A random hazard](03-stochastic-hazard-cox-process.md). The bond and basis cards, [A risky bond from the hazard curve](01-pricing-a-defaultable-bond-from-the-survival-curve.md) and [Implied hazard from a bond price, and why the CDS disagrees](02-implied-hazard-from-a-bond-price-and-the-cds-bond-basis.md), price the cash side of the same Northwind curve.
 
 > **Say it back**
 > A CDS option is the right to buy or sell protection at a fixed spread on a future date. Once exercised it delivers a CDS, worth the spread gap times a risky annuity, so the annuity is the natural unit. Counted in that unit the forward spread has no drift, the random annuity cancels, and a lognormal spread gives Black's formula times today's forward risky annuity. A payer that survives an early default also collects the front-end protection. The premium is strictly increasing in volatility between two hard bounds, so inside them it pins down exactly one implied spread volatility, and outside them none.
@@ -699,15 +680,15 @@ The two outputs are identical to the printed precision.
 
 ## What this builds on
 
-- [forward-cds-and-the-forward-spread](04-forward-cds-and-the-forward-spread.md): the forward risky annuity and the forward spread, 290.55 bp, that this card takes as its underlying.
-- [stochastic-hazard-cox-process](03-stochastic-hazard-cox-process.md): a random hazard, the reason a spread moves and has a volatility at all.
-- [black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md): Black's formula for a call on a driftless forward, used here on a spread.
-- [the-annuity-measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md): the same change of unit with a riskless annuity; this card adds default and the knock-out.
-- [implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the inverse of a Black price and why vega makes it unique.
+- [The forward CDS](04-forward-cds-and-the-forward-spread.md): the forward risky annuity and the forward spread, 290.55 bp, that this card takes as its underlying.
+- [A random hazard](03-stochastic-hazard-cox-process.md): a random hazard, the reason a spread moves and has a volatility at all.
+- [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md): Black's formula for a call on a driftless forward, used here on a spread.
+- [The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md): the same change of unit with a riskless annuity; this card adds default and the knock-out.
+- [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the inverse of a Black price and why vega makes it unique.
 
 ## Where this goes next
 
-- [credit-indices](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/04-credit-indices.md): the index whose options are the traded version of this card, with defaults settled inside the payoff.
+- [Credit indices (CDX and iTraxx in outline)](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/04-credit-indices.md): the index whose options are the traded version of this card, with defaults settled inside the payoff.
 
 This card prices an option on one name's spread with one volatility; it leaves open how spreads of many names move together, which the portfolio credit shelf takes up.
 

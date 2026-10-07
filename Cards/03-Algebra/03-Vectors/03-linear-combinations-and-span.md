@@ -1,33 +1,12 @@
----
-type: card
-wing: 03-Algebra
-shelf: Vectors
-topic: Span and independence
-item: Linear combinations and span
-kind: definition
-status: verified
-updated: 2026-09-07
-needs_first:
-  - "[[Cards/03-Algebra/03-Vectors/02-vector-spaces-and-subspaces|vector-spaces-and-subspaces]]"
-  - "[[Cards/03-Algebra/01-Letters and Equations/04-two-equations-two-unknowns|two-equations-two-unknowns]]"
-next:
-  - "[[Cards/03-Algebra/03-Vectors/04-linear-independence|linear-independence]]"
-  - "[[Cards/03-Algebra/04-Matrices/02-matrix-times-vector|matrix-times-vector]]"
-tags:
-  - mathematics
-  - algebra
-  - linear-combinations-and-span
----
-
 # Linear combinations and span: everything you can reach by mixing a few vectors
 
-Algebra → Vectors → Span and independence → Linear combinations and span
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Vectors](../../../SYLLABUS.md#w03-s03) → Linear combinations and span
 
 ---
 
 ## General Overview
 
-A garden centre stocks two fertiliser blends. Bag A holds 10 kg of nitrogen and 5 kg of phosphorus. As a vector — a list of numbers in round brackets ([vectors](01-vectors.md)) — that is A = (10, 5). Bag B holds 2 kg of nitrogen and 8 kg of phosphorus: B = (2, 8).
+A garden centre stocks two fertiliser blends. Bag A holds 10 kg of nitrogen and 5 kg of phosphorus. As a vector — a list of numbers in round brackets ([Vectors](01-vectors.md)) — that is A = (10, 5). Bag B holds 2 kg of nitrogen and 8 kg of phosphorus: B = (2, 8).
 
 A lawn needs 14 kg of nitrogen and 21 kg of phosphorus. Can these two bags supply it?
 
@@ -85,7 +64,7 @@ Read the colon as "such that". Three vectors would mean a third amount and a thi
 | span{$a$, $b$} | every target the mixes can reach | the whole flat plane | — |
 | the cross-number | one number saying whether the two vectors reach everything | 70 | nothing changes; only zero versus not-zero matters |
 
-The cross-number of two vectors in the plane: the first slot of $a$ times the second slot of $b$, minus the first slot of $b$ times the second slot of $a$. Here, 10 × 8 − 2 × 5 = 70. Not zero, and that is the whole test: $a$ and $b$ span the entire plane. That number's real name is the **determinant**, taken further in [determinants](../05-Solving%20Systems/04-determinants.md).
+The cross-number of two vectors in the plane: the first slot of $a$ times the second slot of $b$, minus the first slot of $b$ times the second slot of $a$. Here, 10 × 8 − 2 × 5 = 70. Not zero, and that is the whole test: $a$ and $b$ span the entire plane. That number's real name is the **determinant**, taken further in [Determinants](../05-Solving%20Systems/04-determinants.md).
 
 ---
 
@@ -99,7 +78,7 @@ Two lists are equal when they agree slot by slot. So $x\,a + y\,b = t$ is not on
 
 Nitrogen: 10x + 2y = 14. Phosphorus: 5x + 8y = 21.
 
-Two equations, two unknowns: the shape solved on [two-equations-two-unknowns](../01-Letters%20and%20Equations/04-two-equations-two-unknowns.md).
+Two equations, two unknowns: the shape solved on [Two equations, two unknowns](../01-Letters%20and%20Equations/04-two-equations-two-unknowns.md).
 
 ### Step 2: solve, and the solution is the verdict
 
@@ -124,13 +103,13 @@ That number is the divisor for every target you will ever try. Divide by it and 
 
 Add two mixes and the result is a mix: add the amounts. Scale a mix and the result is a mix: scale the amounts. Set both amounts to zero and you get the zero vector, (0, 0), so the span always contains it.
 
-Those three facts are precisely the test for a subspace ([vector-spaces-and-subspaces](02-vector-spaces-and-subspaces.md)). So the span of any list of vectors is a subspace — and the smallest one containing them: any subspace holding $a$ and $b$ must hold every mix of them too.
+Those three facts are precisely the test for a subspace ([Vector spaces and subspaces](02-vector-spaces-and-subspaces.md)). So the span of any list of vectors is a subspace — and the smallest one containing them: any subspace holding $a$ and $b$ must hold every mix of them too.
 
 ### The shapes a span takes
 
-Any one vector but the zero one: its span is a line through the origin, every scaling of it. Two vectors pointing different ways: a flat plane. Three vectors in space, none of them a mix of the other two: all of space. A vector already a mix of the others adds nothing — the question [linear-independence](04-linear-independence.md) answers.
+Any one vector but the zero one: its span is a line through the origin, every scaling of it. Two vectors pointing different ways: a flat plane. Three vectors in space, none of them a mix of the other two: all of space. A vector already a mix of the others adds nothing — the question [Linear independence](04-linear-independence.md) answers.
 
-Once matrices exist this shortens to one line: stack the bags as the columns of a matrix and ask whether the matrix times some list of amounts hits the target ([matrix-times-vector](../04-Matrices/02-matrix-times-vector.md)).
+Once matrices exist this shortens to one line: stack the bags as the columns of a matrix and ask whether the matrix times some list of amounts hits the target ([Matrix times vector](../04-Matrices/02-matrix-times-vector.md)).
 
 ---
 
@@ -361,7 +340,7 @@ The two outputs match line for line.
 - **Mixing anything to a specification.** Fertiliser, paint, animal feed, concrete, alloy. Each ingredient is a vector of contents, the recipe is a linear combination, the specification is the target.
 - **Portfolios.** Two funds, each with a known split across assets, blended to hit a chosen split. The span says which splits are available at all.
 - **Balancing a chemical reaction.** Each compound is a vector of atom counts. Balancing hunts for a combination that lands on the target; it either exists or the equation cannot be balanced.
-- **Solving equations.** Asking whether two equations in two unknowns have a solution is the same question as asking whether the target is in the span of the two columns ([two-equations-two-unknowns](../01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
+- **Solving equations.** Asking whether two equations in two unknowns have a solution is the same question as asking whether the target is in the span of the two columns ([Two equations, two unknowns](../01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
 
 > **Say it back**
 > A linear combination is a mix: so much of one vector, so much of another, added together. The span is every target those mixes reach. Bag A = (10, 5) and bag B = (2, 8): one A and two B land exactly on (14, 21), so (14, 21) is in the span. To test any target, match slot by slot and solve the two equations you get. The cross-number here is 70, not zero, so these bags reach the whole plane — (14, 22) too, with fractions of a bag. One vector spans a line, two spread-out vectors a plane, three a whole space.
@@ -370,13 +349,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [vector-spaces-and-subspaces](02-vector-spaces-and-subspaces.md): what it means for a collection to be closed under adding and scaling. A span is always one of those.
-- [two-equations-two-unknowns](../01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): the elimination that turns "can these bags reach that target?" into two numbers.
+- [Vector spaces and subspaces](02-vector-spaces-and-subspaces.md): what it means for a collection to be closed under adding and scaling. A span is always one of those.
+- [Two equations, two unknowns](../01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): the elimination that turns "can these bags reach that target?" into two numbers.
 
 ## Where this goes next
 
-- [linear-independence](04-linear-independence.md): whether any vector in the list was redundant — already a mix of the others, adding nothing to the span.
-- [matrix-times-vector](../04-Matrices/02-matrix-times-vector.md): the same mix written as a matrix times a list of amounts, which shortens everything here.
+- [Linear independence](04-linear-independence.md): whether any vector in the list was redundant — already a mix of the others, adding nothing to the span.
+- [Matrix times vector](../04-Matrices/02-matrix-times-vector.md): the same mix written as a matrix times a list of amounts, which shortens everything here.
 
 ---
 

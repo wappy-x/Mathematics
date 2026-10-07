@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Inflation and Real Rates
-topic: Options on the yearly price rise
-item: Inflation caps and floors in outline
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/34-Inflation and Real Rates/04-zero-coupon-inflation-swaps|zero-coupon-inflation-swaps]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/08-shifted-lognormal-and-volatility-conversion|shifted-lognormal-and-volatility-conversion]]"
-next: []
-tags: [mathematics, financial mathematics, inflation-options-in-outline]
----
-
 # Inflation caps and floors in outline: year-on-year options priced with a shifted Black formula
 
-Financial mathematics → Inflation and Real Rates → Options on the yearly price rise → Inflation caps and floors in outline
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Inflation and Real Rates](../../../SYLLABUS.md#w12-s34) → Inflation caps and floors in outline
 
 ---
 
@@ -26,7 +10,7 @@ A contract pays each year's inflation on one million dollars, for five years. Ea
 
 A **floor** at 0 percent removes that. In any year the price index falls, the floor pays $10,000 for each percentage point of the fall; in any year it rises, the floor pays nothing. Each year's piece is called a **floorlet**. The mirror image, paying for each point above a level, is a **cap**, made of **caplets**. Both are written on the **year-on-year rate**: the percentage change in the index over one year.
 
-The market on this shelf expects 2.5 percent a year: the breakeven that sits between a 1 percent real yield and the nominal one ([breakeven-inflation](03-breakeven-inflation.md)). A fall below zero is 2.5 points away. Not likely, not impossible: US consumer prices were lower in the middle of 2009 than a year before.
+The market on this shelf expects 2.5 percent a year: the breakeven that sits between a 1 percent real yield and the nominal one ([Breakeven inflation](03-breakeven-inflation.md)). A fall below zero is 2.5 points away. Not likely, not impossible: US consumer prices were lower in the middle of 2009 than a year before.
 
 Hand this floor to Black's formula and the answer is exactly $0.00. Black's model moves the rate in percentage steps, so the rate never reaches zero, and insurance against reaching it is free. The repair is the one from the shifted-lognormal card: slide the rate and the strike up by the same amount, 3 percentage points here, and run Black on the slid pair. The model now has a wall at −3 percent instead of at zero. At a 20 percent volatility the five-year floor costs **$1,268.01**. A 5 percent cap on the same contract costs **$7,264.41**.
 
@@ -83,7 +67,7 @@ $$C - P = \sum_{i=1}^{n} M\,D(T_i)\,(F - K)$$
 | $d_1$, $d_2$ | the two cut-offs, in wiggle units, for one year | 1.578968 and 1.131754 in year 5 | — |
 | $\rho$, $v_I$, $v_P$, $P_R$, $J$ | Step 4's correlation, the spreads of the index and of a future real bond price, that bond price, and the index at the year's start | 0.5; each $0.01\sqrt{T_{i-1}}$ | — |
 
-The nominal rate comes from the shelf's first card, the Fisher relation: $1 + r_N = 1.01 \times 1.025$, so 3.525 percent ([real-rates-and-the-fisher-equation](01-real-rates-and-the-fisher-equation.md)).
+The nominal rate comes from the shelf's first card, the Fisher relation: $1 + r_N = 1.01 \times 1.025$, so 3.525 percent ([Real rates](01-real-rates-and-the-fisher-equation.md)).
 
 ### When it holds
 
@@ -105,7 +89,7 @@ Each floorlet pays on one year's rate and nothing else. The price of a sum of pa
 
 ### Step 1: the forward rate comes from inflation swaps
 
-A zero-coupon inflation swap fixes today the growth $(1 + b)^{T}$ that the index is expected to show by time $T$ ([zero-coupon-inflation-swaps](04-zero-coupon-inflation-swaps.md)). Divide the expected growth to the end of year $i$ by the growth to its start:
+A zero-coupon inflation swap fixes today the growth $(1 + b)^{T}$ that the index is expected to show by time $T$ ([Inflation swaps](04-zero-coupon-inflation-swaps.md)). Divide the expected growth to the end of year $i$ by the growth to its start:
 
 $$1 + F_i \approx \frac{(1 + b)^{T_i}}{(1 + b)^{T_{i-1}}}$$
 
@@ -115,7 +99,7 @@ On a flat 2.5 percent breakeven every year's forward is 2.5 percent. The sign is
 
 Black's rule moves a quantity in percentage steps, so it stays above zero forever. Inflation does not. At a zero strike, plain Black returns $0.00 for the whole floor, while the floorlets are real insurance.
 
-The slide from [shifted-lognormal-and-volatility-conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md) fixes it. The floorlet pays $\max(K - y_i, 0)$. Add $a$ to both: $\max\bigl(L - (y_i + a), 0\bigr)$. Same payment at every outcome, since only the gap enters. The model assumption moves onto $y_i + a$, which is taken to be lognormal and fair on average:
+The slide from [Shifted lognormal and volatility conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md) fixes it. The floorlet pays $\max(K - y_i, 0)$. Add $a$ to both: $\max\bigl(L - (y_i + a), 0\bigr)$. Same payment at every outcome, since only the gap enters. The model assumption moves onto $y_i + a$, which is taken to be lognormal and fair on average:
 
 $$y_i + a = G\,\exp\!\left(-\tfrac12 w^2 + w Z\right), \qquad Z \ \text{a standard bell-curve draw}$$
 
@@ -176,12 +160,12 @@ The check computes $\mathbb{E}\bigl[e^{v_I z_1 - v_I^2/2}\,e^{v_P z_2 - v_P^2/2}
 
 Four more things the outline takes as given.
 
-- **A volatility for each expiry and strike.** One $\sigma$ and one $a$ fit one price. Quotes at several strikes need a smile model ([sabr-for-rates-and-the-volatility-cube](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md)).
-- **How the years move together.** The floor does not care, by Step 0. A zero-coupon floor does: the principal guarantee on an inflation-linked bond pays only if the index ends below where it started, a single option on five years of inflation combined ([inflation-linked-bonds](02-inflation-linked-bonds.md)). Its price needs the correlations between years, which year-on-year quotes never reveal.
+- **A volatility for each expiry and strike.** One $\sigma$ and one $a$ fit one price. Quotes at several strikes need a smile model ([SABR for rates](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md)).
+- **How the years move together.** The floor does not care, by Step 0. A zero-coupon floor does: the principal guarantee on an inflation-linked bond pays only if the index ends below where it started, a single option on five years of inflation combined ([Inflation-linked bonds](02-inflation-linked-bonds.md)). Its price needs the correlations between years, which year-on-year quotes never reveal.
 - **One model for both kinds of quote.** Jarrow and Yildirim (2003) model nominal rates, real rates and the index together, which produces the Step 4 correction from the full curves; Mercurio (2005) builds market models directly on year-on-year forwards.
 - **The index itself.** Monthly publication, a lag of months, and seasonal patterns within the year, none of which a flat 2.5 percent carries.
 
-The alternative road for Step 2 is the normal model, where the rate itself is bell-curved and has no wall at all ([bachelier-model](../05-Black-Scholes%20from%20the%20Ground%20Up/07-bachelier-model.md)). At this shift, 20 percent on a 5.5 percent slid rate is a wobble of about 1.1 percentage points a year in the normal model's units.
+The alternative road for Step 2 is the normal model, where the rate itself is bell-curved and has no wall at all ([Bachelier](../05-Black-Scholes%20from%20the%20Ground%20Up/07-bachelier-model.md)). At this shift, 20 percent on a 5.5 percent slid rate is a wobble of about 1.1 percentage points a year in the normal model's units.
 
 ---
 
@@ -687,9 +671,9 @@ The two outputs match line for line, from different code taking different routes
 ## Where you meet it in real life
 
 - **UK pensions.** Many defined-benefit pensions rise each year by inflation, floored at 0 percent and capped at 5 percent, an arrangement called limited price indexation. A scheme owing that is short a year-on-year floor and long a cap relative to plain inflation; here the floor minus the cap is worth −$5,996.40 on a million over five years. Real schemes compound the increases, which turns the sum of options into a chain.
-- **Inflation-linked bonds.** US Treasury inflation-protected bonds repay at least the original principal: a zero-coupon floor at 0 percent over the whole life, embedded in every bond ([inflation-linked-bonds](02-inflation-linked-bonds.md)). A bond issued just before a spell of falling prices has its floor close by; one that has already gathered years of inflation has it far away, and its floor is worth less.
+- **Inflation-linked bonds.** US Treasury inflation-protected bonds repay at least the original principal: a zero-coupon floor at 0 percent over the whole life, embedded in every bond ([Inflation-linked bonds](02-inflation-linked-bonds.md)). A bond issued just before a spell of falling prices has its floor close by; one that has already gathered years of inflation has it far away, and its floor is worth less.
 - **Inflation swap desks.** A client receiving year-on-year inflation who never wants to pay in a year of falling prices buys this floor. The desk that sells it hedges mostly volatility: $283.16 per volatility point here, against $12.15 per basis point of forward.
-- **Reading the market's fear of deflation.** The breakeven gives the middle of the market's view of inflation. Prices of floors at zero give the lower tail, the chance put on a year of falling prices, which the breakeven alone cannot show ([breakeven-inflation](03-breakeven-inflation.md)).
+- **Reading the market's fear of deflation.** The breakeven gives the middle of the market's view of inflation. Prices of floors at zero give the lower tail, the chance put on a year of falling prices, which the breakeven alone cannot show ([Breakeven inflation](03-breakeven-inflation.md)).
 
 > **Say it back**
 > A year-on-year inflation floor is a row of one-year puts on each year's inflation rate. Inflation can go negative, so slide rate and strike up by the same amount, run Black's put on the slid pair, discount each year from its payment date at the nominal rate, and add. With a 2.5 percent forward, a 3 percent shift and 20 percent volatility, five years of protection at zero cost $1,268.01 per million, and most of that is volatility. The forward from zero-coupon swaps needs a correction that depends on how inflation and real rates move together. A proper model adds that correction, a smile across strikes, the links between years, and the index's own calendar.
@@ -698,8 +682,8 @@ The two outputs match line for line, from different code taking different routes
 
 ## What this builds on
 
-- [zero-coupon-inflation-swaps](04-zero-coupon-inflation-swaps.md): the breakeven curve that gives each year's forward rate, and the real bond prices behind Step 4.
-- [shifted-lognormal-and-volatility-conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md): the slide that lets a lognormal model price a strike at zero, and the reason a shifted volatility means nothing without its shift.
+- [Inflation swaps](04-zero-coupon-inflation-swaps.md): the breakeven curve that gives each year's forward rate, and the real bond prices behind Step 4.
+- [Shifted lognormal and volatility conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md): the slide that lets a lognormal model price a strike at zero, and the reason a shifted volatility means nothing without its shift.
 
 ---
 
@@ -707,9 +691,9 @@ The two outputs match line for line, from different code taking different routes
 
 The pieces this outline takes as given are built on cards elsewhere in the wing:
 
-- [forward-measures-for-rates](../31-Forward-Rate%20Models/02-forward-measures-for-rates.md): why each payment date gets its own pricing measure, which is where Step 4's correction comes from once nominal rates move too.
-- [quanto-adjustments-for-rates](../32-Convexity%20and%20Exotics/04-quanto-adjustments-for-rates.md): the same kind of correlation correction, for a rate paid in another currency; in Jarrow and Yildirim's model the real economy plays the foreign currency and the index the exchange rate.
-- [sabr-for-rates-and-the-volatility-cube](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md): a volatility for every strike and expiry, the smile a single shifted lognormal cannot fit.
+- [Forward measures](../31-Forward-Rate%20Models/02-forward-measures-for-rates.md): why each payment date gets its own pricing measure, which is where Step 4's correction comes from once nominal rates move too.
+- [Quanto rates](../32-Convexity%20and%20Exotics/04-quanto-adjustments-for-rates.md): the same kind of correlation correction, for a rate paid in another currency; in Jarrow and Yildirim's model the real economy plays the foreign currency and the index the exchange rate.
+- [SABR for rates](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md): a volatility for every strike and expiry, the smile a single shifted lognormal cannot fit.
 
 This card prices the floor one year at a time; the open question is how the years, real rates and the index move together, and those cards supply the machinery for a joint model.
 

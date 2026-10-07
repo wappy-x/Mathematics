@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Barriers, touches and lookbacks
-topic: Path-triggered contracts
-item: Knock-out and knock-in options
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/03-put-call-parity|put-call-parity]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/04-reflection-principle-and-running-maximum|reflection-principle-and-running-maximum]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-next:
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/02-reiner-rubinstein-barrier-formulas|reiner-rubinstein-barrier-formulas]]"
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/05-one-touch-and-no-touch|one-touch-and-no-touch]]"
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/05-black-cox-first-passage-default|black-cox-first-passage-default]]"
-tags: [mathematics, financial mathematics, knock-out-and-knock-in-options]
----
-
 # Knock-out and knock-in options: a contract that dies or is born the first time the share touches a line
 
-Financial mathematics → Barriers, touches and lookbacks → Path-triggered contracts → Knock-out and knock-in options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Barriers, touches and lookbacks](../../../SYLLABUS.md#w12-s16) → Knock-out and knock-in options
 
 ---
 
@@ -59,7 +38,7 @@ Upper line (orange): the path never touched $80, so the contract pays like a pla
 
 ## The formula
 
-Notation first, in words. $C(x)$ means the Black-Scholes call price with today's share price set to $x$ and every other input left alone ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). So $C(S)$ is the plain call, and $C(H^2/S)$ is the same call priced as if the share stood at a different level. The subscripts "do" and "di" stand for down-and-out and down-and-in.
+Notation first, in words. $C(x)$ means the Black-Scholes call price with today's share price set to $x$ and every other input left alone ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). So $C(S)$ is the plain call, and $C(H^2/S)$ is the same call priced as if the share stood at a different level. The subscripts "do" and "di" stand for down-and-out and down-and-in.
 
 $$C_{\text{di}} + C_{\text{do}} = C(S)$$
 
@@ -102,12 +81,12 @@ A barrier sits **down** (below today's price) or **up** (above it). Touching it 
 | up-and-out: dies if the running maximum reaches the barrier | up-and-out call | up-and-out put | up-and-in |
 | up-and-in: born if the running maximum reaches the barrier | up-and-in call | up-and-in put | up-and-out |
 
-Parity pairs each row with its twin, so only four of the eight need their own formula. This card derives one, the down-and-out call with the barrier at or below the strike. All eight live on [reiner-rubinstein-barrier-formulas](02-reiner-rubinstein-barrier-formulas.md).
+Parity pairs each row with its twin, so only four of the eight need their own formula. This card derives one, the down-and-out call with the barrier at or below the strike. All eight live on [The eight barrier formulas](02-reiner-rubinstein-barrier-formulas.md).
 
 ### When it holds
 
 - **Parity holds in any model.** It uses only the payoffs and the rule that two things paying the same must cost the same. It fails only when the twins differ in small print: a cash **rebate** paid on knock-out, or a different watching rule on each leg.
-- **The share is watched continuously.** The formula counts a touch at any instant. A contract that checks only daily closes misses touches between closes and is worth more: here about 0.019 more, as the simulation below measures. The fix is on [discrete-monitoring-correction](03-discrete-monitoring-correction.md).
+- **The share is watched continuously.** The formula counts a touch at any instant. A contract that checks only daily closes misses touches between closes and is worth more: here about 0.019 more, as the simulation below measures. The fix is on [Daily monitoring](03-discrete-monitoring-correction.md).
 - **Black-Scholes dynamics: constant volatility, rate and dividend yield.** The mirror argument needs the log price to be a Brownian motion with constant drift. Quoted option prices imply a volatility that changes with the price level; there the reflected formula misprices the barrier, and desks use other models.
 - **The barrier sits at or below the strike, and below today's price.** With $H \le K$ every touched path's mirror ends below the strike, which is what makes one subtraction enough. A barrier above the strike needs extra terms. With $S \le H$ the knock-out is already dead, worth 0, and the knock-in is already a plain call.
 
@@ -121,7 +100,7 @@ Hold a knock-in and a knock-out on the same terms, and take any path Acme might 
 
 If the path touches $80, the knock-out died and the knock-in was born: the holder has a plain call at expiry. If the path never touches $80, the knock-in never came to life and the knock-out survived: again a plain call. There is no third case.
 
-So the pair pays exactly a plain call's payoff on every path. Two holdings that pay the same in every future must cost the same today, or the cheaper one could be bought and the dearer one sold for a riskless gain ([put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md) runs the same argument). That is in-out parity. It needed no model of how Acme moves.
+So the pair pays exactly a plain call's payoff on every path. Two holdings that pay the same in every future must cost the same today, or the cheaper one could be bought and the dearer one sold for a riskless gain ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md) runs the same argument). That is in-out parity. It needed no model of how Acme moves.
 
 ### Step 1: price only the untouched paths
 
@@ -135,7 +114,7 @@ The knock-out must drop the paths that touched $b$ on the way. So the task is to
 
 Take a path that starts at 0, touches $b$, and ends at $x$ above $b$. Flip everything after the first touch upside down about $b$. The new path ends at $2b - x$, below the barrier.
 
-The flip is one-to-one and, with no drift, keeps probabilities. So "touched $b$ and ended at $x$" is exactly as likely as "ended at $2b - x$". The second event needs no path at all; it is one reading of the bell curve. This is the reflection principle ([reflection-principle-and-running-maximum](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)).
+The flip is one-to-one and, with no drift, keeps probabilities. So "touched $b$ and ended at $x$" is exactly as likely as "ended at $2b - x$". The second event needs no path at all; it is one reading of the bell curve. This is the reflection principle ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)).
 
 ### Step 3: drift tilts the mirror by a fixed weight
 
@@ -253,7 +232,7 @@ The sensitivities, by nudging the formula, show the barrier's pull at $100:
 | gamma, change in delta per $1 | 0.016972 | 0.018951 | the barrier trims the curvature of the price |
 | vega, dollars per volatility point | 0.344293 | 0.378999 | more volatility also means more touches |
 
-Near the barrier these numbers change fast and the delta jumps at the wall itself: [barrier-greeks-at-the-wall](04-barrier-greeks-at-the-wall.md).
+Near the barrier these numbers change fast and the delta jumps at the wall itself: [Barrier Greeks](04-barrier-greeks-at-the-wall.md).
 
 ---
 
@@ -462,7 +441,7 @@ ALL CHECKS PASS
 
 Road 2 matches the formula to six decimals. The grid, which never heard of mirrors, agrees to within a tenth of a cent. Grid knock-out plus integral knock-in gives 9.226489 against the plain 9.227006: parity through independent code.
 
-The simulation's plain call came out at 9.293414, error bar 0.138221: this set of paths runs slightly rich, and the knock-out estimates share that luck. The continuous knock-out, 9.192604, sits well inside one error bar of 9.133306. The knock-in is the sharper test, since it pays on few paths: 0.100810 plus or minus 0.011862 against 0.093699. The **monitoring bias** is measured on the same paths, so the luck cancels: the daily contract is worth 0.019080 more, error bar 0.004469, and the daily knock-in, 0.081730, is that much cheaper. Shifting the barrier down by $e^{-0.5826\,\sigma\sqrt{1/252}}$ and reusing the continuous formula predicts 0.018117, inside the error bar; that shift is the subject of [discrete-monitoring-correction](03-discrete-monitoring-correction.md).
+The simulation's plain call came out at 9.293414, error bar 0.138221: this set of paths runs slightly rich, and the knock-out estimates share that luck. The continuous knock-out, 9.192604, sits well inside one error bar of 9.133306. The knock-in is the sharper test, since it pays on few paths: 0.100810 plus or minus 0.011862 against 0.093699. The **monitoring bias** is measured on the same paths, so the luck cancels: the daily contract is worth 0.019080 more, error bar 0.004469, and the daily knock-in, 0.081730, is that much cheaper. Shifting the barrier down by $e^{-0.5826\,\sigma\sqrt{1/252}}$ and reusing the continuous formula predicts 0.018117, inside the error bar; that shift is the subject of [Daily monitoring](03-discrete-monitoring-correction.md).
 
 ### Rust
 
@@ -724,9 +703,9 @@ The two outputs are identical line for line.
 - **Currency markets.** Barrier options on exchange rates are widely traded. A company hedging an import bill buys a knock-out to pay less for protection it hopes not to need.
 - **Structured notes.** Many capital-at-risk notes sold to savers hold a down-and-in put: the investor loses capital only if the underlying index falls through a barrier, often 60% or 70% of its starting level.
 - **Knock-out warrants.** Exchange-listed leveraged products that die when a stop level trades are knock-out calls and puts, usually with the barrier near the strike.
-- **Touch payments.** Replace the call payoff with a fixed sum paid on the first touch and the result is a one-touch: [one-touch-and-no-touch](05-one-touch-and-no-touch.md).
-- **Company default.** A company's shares behave like a down-and-out call on its assets: shareholders lose everything if asset value first hits a covenant level ([black-cox-first-passage-default](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/05-black-cox-first-passage-default.md)).
-- **The extreme itself.** An option paying on the lowest or highest price reached is a lookback: [lookback-options](06-lookback-options.md). Solving for the barrier or volatility behind a quoted price: [barrier-inverses-level-and-volatility](07-barrier-inverses-level-and-volatility.md).
+- **Touch payments.** Replace the call payoff with a fixed sum paid on the first touch and the result is a one-touch: [One-touch and no-touch](05-one-touch-and-no-touch.md).
+- **Company default.** A company's shares behave like a down-and-out call on its assets: shareholders lose everything if asset value first hits a covenant level ([Black-Cox](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/05-black-cox-first-passage-default.md)).
+- **The extreme itself.** An option paying on the lowest or highest price reached is a lookback: [Lookback options](06-lookback-options.md). Solving for the barrier or volatility behind a quoted price: [Barrier inverses](07-barrier-inverses-level-and-volatility.md).
 
 > **Say it back**
 > A barrier option is a plain option that dies (knock-out) or is born (knock-in) the first time the share touches a set level. Every path touches or does not, so the in and the out together cost one plain option, in any model. In the Black-Scholes model the touched paths mirror other paths across the barrier, with a weight for drift, so the knock-out is the plain call minus a weighted call started from the image spot $H^2/S$. For Acme with a barrier at $80 that is 9.227006 minus 0.093699, giving 9.133306. A grid with no mirror and a simulation with continuous watching agree; a contract watched only at daily closes is worth a little more.
@@ -735,16 +714,16 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the plain call $C(x)$ that appears twice in the formula, once at today's price and once at the image spot.
-- [put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): the "same payoff, same price" argument that in-out parity repeats with a different pair.
-- [reflection-principle-and-running-maximum](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the driftless mirror of Step 2 and the law of the running minimum.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): simulated paths, averages and error bars, as used in road 4.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the plain call $C(x)$ that appears twice in the formula, once at today's price and once at the image spot.
+- [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): the "same payoff, same price" argument that in-out parity repeats with a different pair.
+- [Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the driftless mirror of Step 2 and the law of the running minimum.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): simulated paths, averages and error bars, as used in road 4.
 
 ## Where this goes next
 
-- [reiner-rubinstein-barrier-formulas](02-reiner-rubinstein-barrier-formulas.md): all eight contracts, barriers above the strike, and rebates, in one family of formulas.
-- [one-touch-and-no-touch](05-one-touch-and-no-touch.md): the touch event priced on its own, with no option attached.
-- [black-cox-first-passage-default](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/05-black-cox-first-passage-default.md): the same first-touch mathematics applied to a company's assets and its debt.
+- [The eight barrier formulas](02-reiner-rubinstein-barrier-formulas.md): all eight contracts, barriers above the strike, and rebates, in one family of formulas.
+- [One-touch and no-touch](05-one-touch-and-no-touch.md): the touch event priced on its own, with no option attached.
+- [Black-Cox](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/05-black-cox-first-passage-default.md): the same first-touch mathematics applied to a company's assets and its debt.
 
 This card priced one barrier contract with one subtraction; what it leaves open is the other seven, and the barrier above the strike where one subtraction is no longer enough.
 

@@ -1,39 +1,12 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Complex Numbers and the Plane
-topic: Complex linear algebra
-item: Complex vectors and matrices
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/02-conjugate-and-modulus|conjugate-and-modulus]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/05-powers-roots-and-roots-of-unity|powers-roots-and-roots-of-unity]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/02-eigenvalues-and-eigenvectors|eigenvalues-and-eigenvectors]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/04-spectral-theorem|spectral-theorem]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/01-dot-product|dot-product]]"
-next:
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/02-discrete-fourier-transform|discrete-fourier-transform]]"
-  - "[[Cards/13-Engineering mathematics/09-Quantum Mechanics in Outline/02-state-vectors-operators-and-measurement|state-vectors-operators-and-measurement]]"
-  - "[[Cards/18-Functional analysis/03-Bounded Operators/03-adjoints-self-adjoint-and-unitary-operators|adjoints-self-adjoint-and-unitary-operators]]"
-  - "[[Cards/18-Functional analysis/06-Banach Algebras and Fixed Points/03-c-star-algebras-in-outline|c-star-algebras-in-outline]]"
-  - "[[Cards/24-Computability and complexity/05-Algebraic, Interactive and Quantum/05-qubits-superposition-and-measurement|qubits-superposition-and-measurement]]"
-tags:
-  - mathematics
-  - complex-analysis
-  - complex-vectors-and-matrices
----
-
 # Complex vectors and matrices: the dot product grows a conjugate, and a rotation's eigenvalues come home
 
-Complex analysis → Complex Numbers and the Plane → Complex linear algebra → Complex vectors and matrices
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Complex Numbers and the Plane](../../../SYLLABUS.md#w07-s01) → Complex vectors and matrices
 
 ---
 
 ## General Overview
 
-A game sprite has a button that turns it a quarter turn anticlockwise. Row by row, that button is the matrix `[[0, -1], [1, 0]]` ([linear-maps-as-matrices](../../03-Algebra/04-Matrices/04-linear-maps-as-matrices.md)). It moves every real arrow, so it has no real eigenvector: no direction it only stretches ([eigenvalues-and-eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)).
+A game sprite has a button that turns it a quarter turn anticlockwise. Row by row, that button is the matrix `[[0, -1], [1, 0]]` ([Linear maps](../../03-Algebra/04-Matrices/04-linear-maps-as-matrices.md)). It moves every real arrow, so it has no real eigenvector: no direction it only stretches ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)).
 
 Allow complex entries and two such directions appear. The pair (1, −i) comes back as (i, 1), i times itself; the pair (1, i) comes back as −i times itself. Multiplying by i is a quarter turn of the complex plane: the rotation's eigenvalues are rotations too.
 
@@ -85,11 +58,11 @@ A square matrix $H$ is **Hermitian** when $H^* = H$: flipped across its diagonal
 
 ### Step 0: conjugating turns each product into a squared distance
 
-Complex squares can cancel: i × i = −1 undoes 1 × 1. A number times its conjugate is its squared distance from 0, never negative ([conjugate-and-modulus](02-conjugate-and-modulus.md)). The star builds that into the dot product.
+Complex squares can cancel: i × i = −1 undoes 1 × 1. A number times its conjugate is its squared distance from 0, never negative ([Conjugate and modulus](02-conjugate-and-modulus.md)). The star builds that into the dot product.
 
 ### Step 1: the length is real, and zero only for the zero vector
 
-Each term of $v^* v$ is $\bar v_j v_j = \lvert v_j\rvert^2$. With $v_j = a_j + b_j i$ the sum is $a_1^2 + b_1^2 + \dots + a_n^2 + b_n^2$: the squared length of a real vector with 2n coordinates ([dot-product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)). For v = (1, i) those four coordinates are 1, 0, 0, 1: squared length 2.
+Each term of $v^* v$ is $\bar v_j v_j = \lvert v_j\rvert^2$. With $v_j = a_j + b_j i$ the sum is $a_1^2 + b_1^2 + \dots + a_n^2 + b_n^2$: the squared length of a real vector with 2n coordinates ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)). For v = (1, i) those four coordinates are 1, 0, 0, 1: squared length 2.
 
 Columns are **perpendicular** when $w^* v = 0$: for w = (1, −i) and v = (1, i), 1 × 1 + i × i = 0.
 
@@ -115,7 +88,7 @@ If $U v = \lambda v$ with v non-zero, lengths give $\lvert\lambda\rvert\,\lVert 
 
 $R$ is real, so $R^* = R^T$ = `[[0, 1], [-1, 0]]`, and $R^* R = I$: $R$ is unitary, and by Step 4 its eigenvalues have modulus 1.
 
-An eigenvalue makes the determinant of $R - \lambda I$ zero. Trace 0 and determinant 1 give $\lambda^2 + 1 = 0$, discriminant −4, so $\lambda = \pm i$ ([powers-roots-and-roots-of-unity](05-powers-roots-and-roots-of-unity.md)).
+An eigenvalue makes the determinant of $R - \lambda I$ zero. Trace 0 and determinant 1 give $\lambda^2 + 1 = 0$, discriminant −4, so $\lambda = \pm i$ ([Powers and roots](05-powers-roots-and-roots-of-unity.md)).
 
 A second road needs no quadratic. Four quarter turns are no turn, $R^4 = I$, so $\lambda^4 = 1$: a fourth root of unity, 1, i, −1 or −i. The top row of $R v = \lambda v$ makes the second entry −λ times the first, so test (1, −λ) for each. Only i and −i pass. For $\lambda = i$ the vector is (1, −i), and $R$(1, −i) = (i, 1) = i(1, −i), as drawn above.
 
@@ -132,7 +105,7 @@ Since $R^* = -R$, $(-iR)^* = i R^* = -iR$: so $H = 2I - iR$ = `[[2, i], [-i, 2]]
 
 **Perpendicular eigenvectors.** Let $H v = \lambda v$ and $H w = \mu w$ with $\lambda \ne \mu$, both real by Step 3. Then $\mu\, w^* v = (H w)^* v = w^* H v = \lambda\, w^* v$, so $w^* v = 0$, as for (1, −i) and (1, i).
 
-**The complex spectral theorem, stated.** Every Hermitian matrix is $Q$ times a real diagonal matrix times $Q^*$, with $Q$ unitary: its columns are perpendicular unit eigenvectors. The proof on [spectral-theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md) carries over with every transpose starred; the general version is on adjoints-self-adjoint-and-unitary-operators.
+**The complex spectral theorem, stated.** Every Hermitian matrix is $Q$ times a real diagonal matrix times $Q^*$, with $Q$ unitary: its columns are perpendicular unit eigenvectors. The proof on [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md) carries over with every transpose starred; the general version is on Adjoints.
 
 </details>
 
@@ -382,9 +355,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Quantum computing.** A qubit's state is a complex vector of length 1; its gates are unitary, so probabilities keep adding to 1 (qubits-superposition-and-measurement).
-- **Measurement in physics.** Measurable quantities are Hermitian matrices, so their readings, the eigenvalues, are real (state-vectors-operators-and-measurement).
-- **Signals and audio.** The scaled discrete Fourier transform is unitary, so a signal's energy is unchanged ([discrete-fourier-transform](../08-Transforms%20in%20Outline/02-discrete-fourier-transform.md)).
+- **Quantum computing.** A qubit's state is a complex vector of length 1; its gates are unitary, so probabilities keep adding to 1 (Qubits).
+- **Measurement in physics.** Measurable quantities are Hermitian matrices, so their readings, the eigenvalues, are real (States as vectors).
+- **Signals and audio.** The scaled discrete Fourier transform is unitary, so a signal's energy is unchanged ([The discrete Fourier transform](../08-Transforms%20in%20Outline/02-discrete-fourier-transform.md)).
 
 > **Say it back**
 > A complex column is measured by v-star v: conjugate the first copy, multiply and add. Every non-zero vector then has a positive length, where the plain square of (1, i) is 0. A Hermitian matrix equals its conjugate transpose and has real eigenvalues. A unitary matrix is undone by its conjugate transpose and keeps lengths. The sprite's quarter turn is unitary, with eigenvalues i and −i on (1, −i) and (1, i).
@@ -393,19 +366,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [conjugate-and-modulus](02-conjugate-and-modulus.md): z times z-bar is a squared distance.
-- [powers-roots-and-roots-of-unity](05-powers-roots-and-roots-of-unity.md): the fourth roots of unity.
-- [eigenvalues-and-eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the trace-and-determinant quadratic.
-- [spectral-theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): the real case Hermitian matrices extend.
-- [dot-product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): the dot product the conjugate repairs.
+- [Conjugate and modulus](02-conjugate-and-modulus.md): z times z-bar is a squared distance.
+- [Powers and roots](05-powers-roots-and-roots-of-unity.md): the fourth roots of unity.
+- [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the trace-and-determinant quadratic.
+- [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): the real case Hermitian matrices extend.
+- [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): the dot product the conjugate repairs.
 
 ## Where this goes next
 
-- [discrete-fourier-transform](../08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): a unitary matrix of roots of unity.
-- state-vectors-operators-and-measurement: Hermitian measurements, unitary time steps.
-- adjoints-self-adjoint-and-unitary-operators: the star in infinitely many coordinates.
-- c-star-algebras-in-outline: the star turned into an axiom.
-- qubits-superposition-and-measurement: unit complex vectors as quantum states.
+- [The discrete Fourier transform](../08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): a unitary matrix of roots of unity.
+- States as vectors: Hermitian measurements, unitary time steps.
+- Adjoints: the star in infinitely many coordinates.
+- C-star algebras: the star turned into an axiom.
+- Qubits: unit complex vectors as quantum states.
 
 ---
 

@@ -1,32 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Multiple Integrals
-topic: Adding over an area
-item: Double integrals
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/04-Integrals/01-riemann-integral|riemann-integral]]"
-next:
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/02-triple-integrals|triple-integrals]]"
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/06-greens-theorem|greens-theorem]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/04-convolution-theorem|convolution-theorem]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/03-beta-function|beta-function]]"
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/07-convolution-and-the-impulse-response|convolution-and-the-impulse-response]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/07-laplaces-equation-and-harmonic-functions|laplaces-equation-and-harmonic-functions]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/02-joint-densities-and-marginals|joint-densities-and-marginals]]"
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/02-product-measure|product-measure]]"
-  - "[[Cards/16-Numerical analysis/05-Quadrature/06-multidimensional-and-monte-carlo-quadrature|multidimensional-and-monte-carlo-quadrature]]"
-  - "[[Cards/20-Harmonic analysis/02-The Fourier Transform/10-multidimensional-transform-and-tomography|multidimensional-transform-and-tomography]]"
-  - "[[Cards/23-Differential geometry and Lie groups/02-Surfaces/03-surface-area-from-the-first-fundamental-form|surface-area-from-the-first-fundamental-form]]"
-tags: [mathematics, calculus and analysis, double-integrals]
----
-
 # Double integrals: volume under a surface by slicing twice
 
-Calculus and analysis → Multiple Integrals → Adding over an area → Double integrals
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Multiple Integrals](../../../SYLLABUS.md#w06-s08) → Double integrals
 
 ---
 
@@ -90,7 +64,7 @@ $$\iint_D f\,dA = \int_a^b\!\left[\int_{g_1(x)}^{g_2(x)} f(x,y)\,dy\right]dx = \
 
 ### Step 0: a thin strip is a one-variable problem
 
-Fix $x$ and walk north. Along that line the depth depends on $y$ alone, so the rain on a thin strip is an ordinary integral times the strip's width, which [riemann-integral](../04-Integrals/01-riemann-integral.md) handles. What needs proof is that strips-then-add equals patch-and-add.
+Fix $x$ and walk north. Along that line the depth depends on $y$ alone, so the rain on a thin strip is an ordinary integral times the strip's width, which [The integral](../04-Integrals/01-riemann-integral.md) handles. What needs proof is that strips-then-add equals patch-and-add.
 
 ### Step 1: patch sums settle, with actual numbers
 
@@ -137,7 +111,7 @@ $$\int_0^2\left(24 + 8y - 6y^2 - 2y^3\right)dy = 48 + 16 - 16 - 8 = 40$$
 
 Different antiderivatives, different limits, one total.
 
-Another route re-shapes the region instead of the order: [change-of-variables-and-jacobians](03-change-of-variables-and-jacobians.md) maps the triangle to a square and pays for the stretch with a factor.
+Another route re-shapes the region instead of the order: [Change of variables](03-change-of-variables-and-jacobians.md) maps the triangle to a square and pays for the stretch with a factor.
 
 ---
 
@@ -381,9 +355,9 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Hydrology.** A depth surface fitted between gauges, integrated over the catchment.
-- **Probability.** A joint density over a region gives a probability: [joint-densities-and-marginals](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/02-joint-densities-and-marginals.md).
-- **The bell curve.** Squaring its integral into a double integral is how [gaussian-integral](04-gaussian-integral.md) finds its value.
-- **Computation.** Weather and engineering codes add patches as the grid road does: multidimensional-and-monte-carlo-quadrature.
+- **Probability.** A joint density over a region gives a probability: [Joint densities](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/02-joint-densities-and-marginals.md).
+- **The bell curve.** Squaring its integral into a double integral is how [The Gaussian integral](04-gaussian-integral.md) finds its value.
+- **Computation.** Weather and engineering codes add patches as the grid road does: Many dimensions.
 
 > **Say it back**
 > A double integral adds depth times area over a region, as the limit of patch sums. For a bounded, continuous depth it equals strips of strips: integrate along each strip with the other variable fixed, then integrate the strips. Each order needs its own limits, read off a picture of the same region. On the catchment both give 40 mm·km^2, or 40,000 m^3. Drop boundedness and the orders can disagree.
@@ -392,23 +366,23 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [riemann-integral](../04-Integrals/01-riemann-integral.md): lower and upper sums, the gap test, and the one-variable integral each strip uses.
+- [The integral](../04-Integrals/01-riemann-integral.md): lower and upper sums, the gap test, and the one-variable integral each strip uses.
 
 ## Where this goes next
 
-- [triple-integrals](02-triple-integrals.md): a third variable, for solids.
-- [greens-theorem](../09-Vector%20Calculus/06-greens-theorem.md): a region's integral traded for a walk round its edge.
-- [convolution-theorem](../../07-Complex%20analysis/08-Transforms%20in%20Outline/04-convolution-theorem.md): an order swap proves it.
-- [beta-function](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/03-beta-function.md): two integrals multiplied into one double integral.
-- [convolution-and-the-impulse-response](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md): the swap over a triangle like this one.
-- [laplaces-equation-and-harmonic-functions](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/07-laplaces-equation-and-harmonic-functions.md): averages over discs.
-- [joint-densities-and-marginals](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/02-joint-densities-and-marginals.md): the inner integral integrates a variable out.
-- [product-measure](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/02-product-measure.md): Fubini in full, and the hypothesis the spike breaks.
-- multidimensional-and-monte-carlo-quadrature: grids and random points in many dimensions.
-- multidimensional-transform-and-tomography: scanner readings are strip integrals.
-- surface-area-from-the-first-fundamental-form: patch area on a curved surface.
+- [Triple integrals](02-triple-integrals.md): a third variable, for solids.
+- [Green's theorem](../09-Vector%20Calculus/06-greens-theorem.md): a region's integral traded for a walk round its edge.
+- [Convolution](../../07-Complex%20analysis/08-Transforms%20in%20Outline/04-convolution-theorem.md): an order swap proves it.
+- [The beta function](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/03-beta-function.md): two integrals multiplied into one double integral.
+- [Convolution](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md): the swap over a triangle like this one.
+- [Laplace's equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/07-laplaces-equation-and-harmonic-functions.md): averages over discs.
+- [Joint densities](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/02-joint-densities-and-marginals.md): the inner integral integrates a variable out.
+- [Product measure](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/02-product-measure.md): Fubini in full, and the hypothesis the spike breaks.
+- Many dimensions: grids and random points in many dimensions.
+- Transforms in two and three dimensions: scanner readings are strip integrals.
+- Surface area: patch area on a curved surface.
 
-Rain soaking into the ground fills a solid, and adding over a volume is [triple-integrals](02-triple-integrals.md).
+Rain soaking into the ground fills a solid, and adding over a volume is [Triple integrals](02-triple-integrals.md).
 
 ---
 

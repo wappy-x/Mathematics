@@ -1,29 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Codes and Secrets
-topic: Primality tests
-item: The Miller-Rabin test
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/06-Codes and Secrets/04-fermat-test-and-carmichael|fermat-test-and-carmichael]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/02-fermats-little-theorem|fermats-little-theorem]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/06-euclids-lemma|euclids-lemma]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/01-modular-exponentiation|modular-exponentiation]]"
-next:
-  - "[[Cards/14-Applied and computational/02-Randomised and Approximate Algorithms/01-randomised-algorithms-and-expectation|randomised-algorithms-and-expectation]]"
-  - "[[Cards/24-Computability and complexity/03-Time Complexity/02-p-and-np|p-and-np]]"
-tags:
-  - mathematics
-  - number theory
-  - miller-rabin
----
-
 # The Miller-Rabin test: how RSA finds 300-digit primes, with an error as small as you like
 
-Number theory → Codes and Secrets → Primality tests → The Miller-Rabin test
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Codes and Secrets](../../../SYLLABUS.md#w02-s06) → The Miller-Rabin test
 
 ---
 
@@ -31,9 +8,9 @@ Number theory → Codes and Secrets → Primality tests → The Miller-Rabin tes
 
 Is 221 prime? Divide and see. Not 2, not 3, not 5, not 7, not 11 — and 13 goes in. 221 = 13 × 17.
 
-Now give it three hundred digits. RSA ([rsa-in-outline](03-rsa-in-outline.md)) wants two like that before lunch, and dividing up to the square root would outlast the sun. Miller-Rabin settles one in moments, at a price: it proves a number composite, but at that size never prime.
+Now give it three hundred digits. RSA ([RSA in outline](03-rsa-in-outline.md)) wants two like that before lunch, and dividing up to the square root would outlast the sun. Miller-Rabin settles one in moments, at a price: it proves a number composite, but at that size never prime.
 
-Back to 221, by hand. Pick a number below it — call it the **base**. Raise it to a power 221 fixes — the 55th, here — on the 221 clock ([congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md)), square that, and read the result. Base 137 lands in a shape no prime could make. Base 174 looks blameless, and lies.
+Back to 221, by hand. Pick a number below it — call it the **base**. Raise it to a power 221 fixes — the 55th, here — on the 221 clock ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)), square that, and read the result. Base 137 lands in a shape no prime could make. Base 174 looks blameless, and lies.
 
 **A prime's chain of squarings has only two allowed shapes, and a chain with neither proves the number composite.**
 
@@ -73,17 +50,17 @@ A chain passes if it starts at 1 or shows 221 − 1; anything else is a witness.
 
 ### Step 0: on a prime clock, only two numbers square to 1
 
-Say a number times itself lands on 1. Then the prime divides (the number minus 1) times (the number plus 1). A prime dividing a product divides one of them ([euclids-lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)), so the number is **1 or one-below**, never a third.
+Say a number times itself lands on 1. Then the prime divides (the number minus 1) times (the number plus 1). A prime dividing a product divides one of them ([Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)), so the number is **1 or one-below**, never a third.
 
 A composite clock can have more, and that extra root is the crack. On 221 four numbers square to 1: 1, 103, 118 and 220. Base 18's chain lands on 103, a root no prime clock owns. That is the conviction.
 
 ### Step 1: halve until the halving stops
 
-The Fermat test ([fermat-test-and-carmichael](04-fermat-test-and-carmichael.md)) raises the base to the 220th and asks for 1. Miller-Rabin takes the same road and stops early: 220 = 4 × 55, so that power is the base to the 55th, squared twice. Each squaring is a chance to look.
+The Fermat test ([The Fermat test](04-fermat-test-and-carmichael.md)) raises the base to the 220th and asks for 1. Miller-Rabin takes the same road and stops early: 220 = 4 × 55, so that power is the base to the 55th, squared twice. Each squaring is a chance to look.
 
 ### Step 2: a prime puts 1 at the top, and the walk down has two endings
 
-If 221 were prime, Fermat's little theorem ([fermats-little-theorem](../04-Powers%20on%20the%20Clock/02-fermats-little-theorem.md)) would put that 1 at the top. The chain stops one squaring short of it on purpose: base 174's chain ends at 220, and squaring 220 gives the 1 — a squaring that tells you nothing.
+If 221 were prime, Fermat's little theorem ([Fermat's little theorem](../04-Powers%20on%20the%20Clock/02-fermats-little-theorem.md)) would put that 1 at the top. The chain stops one squaring short of it on purpose: base 174's chain ends at 220, and squaring 220 gives the 1 — a squaring that tells you nothing.
 
 The value below a 1 squares to it, so by Step 0 it is 1 or 221 − 1; if it is 1, drop a step and ask again. So the chain starts at 1 or shows 221 − 1. No third shape.
 
@@ -109,7 +86,7 @@ Trial division by small primes clears most candidates cheaply. The one-in-four b
 | Step | Arithmetic | Value |
 | --- | --- | --- |
 | split one-below | 220 = 4 × 55, halved twice | 55 |
-| base 174 | to the 55th ([modular-exponentiation](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)) is 47, squared is 220 | **liar: 221 − 1 is allowed** |
+| base 174 | to the 55th ([Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)) is 47, squared is 220 | **liar: 221 − 1 is allowed** |
 | base 18 | to the 55th is 86, squared is 103 | **witness: 103 squares to 1, and only 1 and 220 may** |
 | base 137 | to the 55th is 188, squared is 205 | **witness: neither shape** |
 
@@ -253,9 +230,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Making an RSA key.** The machine picks a huge odd number and tests it. NIST's 2023 standard puts the primes at 1024 bits and up — over three hundred digits — with Miller-Rabin as the test (FIPS 186-5, B.3.1). See [rsa-in-outline](03-rsa-in-outline.md) and [one-way-streets](01-one-way-streets.md).
+- **Making an RSA key.** The machine picks a huge odd number and tests it. NIST's 2023 standard puts the primes at 1024 bits and up — over three hundred digits — with Miller-Rabin as the test (FIPS 186-5, B.3.1). See [RSA in outline](03-rsa-in-outline.md) and [One-way streets](01-one-way-streets.md).
 - **"Probable prime" in software.** Big-number libraries run this test.
-- **Setting up Diffie-Hellman.** It needs a big prime clock too ([diffie-hellman](02-diffie-hellman.md)).
+- **Setting up Diffie-Hellman.** It needs a big prime clock too ([Diffie-Hellman key exchange](02-diffie-hellman.md)).
 
 > **Say it back**
 > Take one less than the number and halve it until odd: 220 becomes 4 × 55. Raise a random base to the 55th, then keep squaring. A prime's chain starts at 1 or shows one-below, since only those two square to 1 there. Anything else proves it composite: that base is a witness. Base 18 fools the older Fermat test; this one catches it, on the 103.
@@ -264,14 +241,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [fermat-test-and-carmichael](04-fermat-test-and-carmichael.md): the weaker test this one repairs.
-- [euclids-lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): why only two numbers square to 1 on a prime clock.
-- [modular-exponentiation](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): the base to the 55th, without 55 multiplications.
+- [The Fermat test](04-fermat-test-and-carmichael.md): the weaker test this one repairs.
+- [Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): why only two numbers square to 1 on a prime clock.
+- [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): the base to the 55th, without 55 multiplications.
 
 ## Where this goes next
 
-- randomised-algorithms-and-expectation: coin-flipping algorithms and their error bounds.
-- p-and-np: where fast primality sits among problems computers solve quickly.
+- Randomised algorithms: coin-flipping algorithms and their error bounds.
+- P and NP: where fast primality sits among problems computers solve quickly.
 
 
 ---

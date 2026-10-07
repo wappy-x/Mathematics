@@ -1,32 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The smile and the surface
-topic: Fitting one expiry
-item: The SVI smile
-kind: model
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/03-volatility-surface-and-its-arbitrage-rules|volatility-surface-and-its-arbitrage-rules]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/04-least-squares|least-squares]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/06-calibration-as-least-squares|calibration-as-least-squares]]"
-next:
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/05-smile-adjusted-delta|smile-adjusted-delta]]"
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/02-local-volatility-from-implied-volatility|local-volatility-from-implied-volatility]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/03-heston-greeks-and-calibration|heston-greeks-and-calibration]]"
-tags: [mathematics, financial mathematics, svi-smile-fit]
----
-
 # The SVI smile: five numbers that fit one expiry, and the constraints that keep it arbitrage-free
 
-Financial mathematics → The smile and the surface → Fitting one expiry → The SVI smile
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The smile and the surface](../../../SYLLABUS.md#w12-s12) → The SVI smile
 
 ---
 
 ## General Overview
 
-A desk quotes one-year options on Acme shares at seven strikes: $80, $90, $95, $100, $105, $110 and $120. A **strike** is the fixed price written into an option contract. Each strike has its own implied volatility, the one volatility that makes Black-Scholes reproduce that option's market price. The seven come from the crash market built on [volatility-smile-and-skew](01-volatility-smile-and-skew.md): they fall from 26.12% at the $80 strike to 17.90% at the $120 strike.
+A desk quotes one-year options on Acme shares at seven strikes: $80, $90, $95, $100, $105, $110 and $120. A **strike** is the fixed price written into an option contract. Each strike has its own implied volatility, the one volatility that makes Black-Scholes reproduce that option's market price. The seven come from the crash market built on [The volatility smile and skew](01-volatility-smile-and-skew.md): they fall from 26.12% at the $80 strike to 17.90% at the $120 strike.
 
 Seven dots are not enough to trade on. A client asks for the $85 strike, or the $60 strike that nobody quoted. Joining the dots with straight lines gives a volatility for every strike, but the kinks imply a probability distribution with spikes and holes, and a hole can be a negative probability: free money for whoever spots it.
 
@@ -103,7 +83,7 @@ SVI is a shape, so "holds" means "is safe to use". Four conditions, each with wh
 - **Butterfly test: $g(k) \ge 0$ at every $k$.** Where $g$ is negative the implied probability density is negative, and a butterfly spread (long one option at each outer strike, short two at the middle one) costs less than nothing.
 - **Lee's wing bound: both slopes at most 2.** Steeper wings stop far-out call prices, and far-out put prices divided by the strike, from falling toward zero, which no probability distribution can produce. SVI's condition is $b(1 + |\rho|) \le 2$.
 
-One expiry only. Matching several expiries against each other (calendar arbitrage) is the job of the surface on [volatility-surface-and-its-arbitrage-rules](03-volatility-surface-and-its-arbitrage-rules.md); the SVI family built for that is SSVI, named in Step 6.
+One expiry only. Matching several expiries against each other (calendar arbitrage) is the job of the surface on [The volatility surface](03-volatility-surface-and-its-arbitrage-rules.md); the SVI family built for that is SSVI, named in Step 6.
 
 ---
 
@@ -147,7 +127,7 @@ The Acme fit has $\rho$ close to −1. The crash market is almost pure skew betw
 
 ### Step 3: fitting is least squares, and one trick makes it easy
 
-Fitting means choosing the five numbers that make the curve pass as close as possible to the seven quoted total variances. "Close" is measured by the sum of squared misses, as on [least-squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md):
+Fitting means choosing the five numbers that make the curve pass as close as possible to the seven quoted total variances. "Close" is measured by the sum of squared misses, as on [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md):
 
 $$\text{minimise } \sum_{i=1}^{7} \big(w(k_i) - w_i\big)^2$$
 
@@ -161,11 +141,11 @@ $$w(k) = a + (b\rho)\,(k - m) + b\,\sqrt{(k-m)^2 + s^2}$$
 
 is a straight-line combination of three known columns: 1, $k - m$ and the square root. Finding $a$, $b\rho$ and $b$ is ordinary linear least squares, solved exactly by the normal equations. That leaves a search over two numbers, $m$ and $s$, instead of five. The check searches a shrinking grid over $(m, s)$ and solves the linear problem at each grid point.
 
-**The second road** fits all five at once by Levenberg-Marquardt, the standard method of [calibration-as-least-squares](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): linearise the misses around the current guess, take the step that minimises the linearised sum of squares, and damp the step when it overshoots. It starts from a flat guess, knows nothing of the linear trick, and writes $b$ and $s$ as exponentials and $\rho$ as a hyperbolic tangent so that no step can leave the legal range. Both roads land on the same five numbers, apart by at most one unit in the sixth decimal, with a sum of squared misses of 7.168e-11.
+**The second road** fits all five at once by Levenberg-Marquardt, the standard method of [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): linearise the misses around the current guess, take the step that minimises the linearised sum of squares, and damp the step when it overshoots. It starts from a flat guess, knows nothing of the linear trick, and writes $b$ and $s$ as exponentials and $\rho$ as a hyperbolic tangent so that no step can leave the legal range. Both roads land on the same five numbers, apart by at most one unit in the sixth decimal, with a sum of squared misses of 7.168e-11.
 
 ### Step 4: the butterfly test, and why $g$ is the density in disguise
 
-A butterfly spread buys one call at strike $K - h$, sells two at $K$ and buys one at $K + h$, where h is a small step in strike. It pays nothing or something, never less. So its price must be non-negative, and as the step shrinks, price divided by $h^2$ tends to the second derivative of the call price in strike. Breeden and Litzenberger's result, on [butterfly-and-the-implied-density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md), makes that second derivative, grown at the bank rate, the market's probability density for the share price at expiry.
+A butterfly spread buys one call at strike $K - h$, sells two at $K$ and buys one at $K + h$, where h is a small step in strike. It pays nothing or something, never less. So its price must be non-negative, and as the step shrinks, price divided by $h^2$ tends to the second derivative of the call price in strike. Breeden and Litzenberger's result, on [The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md), makes that second derivative, grown at the bank rate, the market's probability density for the share price at expiry.
 
 Push the SVI curve through Black-Scholes and differentiate twice. The density that comes out factors into a positive bell-curve piece times one bracket:
 
@@ -224,7 +204,7 @@ Fitting SVI separately at each expiry can produce two curves that cross, which i
 
 $$w(k, \theta) = \frac{\theta}{2}\left(1 + \rho\,\varphi(\theta)\,k + \sqrt{\big(\varphi(\theta)\,k + \rho\big)^2 + 1 - \rho^2}\right)$$
 
-Here θ (theta) is the at-the-money total variance at that expiry, the value at $k = 0$, and φ (phi) is a chosen function saying how the smile's curvature shrinks as θ grows. Simple inequalities on θ, φ and ρ rule out both butterfly and calendar arbitrage for the whole surface. Fitting a stochastic volatility model directly, instead of a curve, is the business of [heston-greeks-and-calibration](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/03-heston-greeks-and-calibration.md).
+Here θ (theta) is the at-the-money total variance at that expiry, the value at $k = 0$, and φ (phi) is a chosen function saying how the smile's curvature shrinks as θ grows. Simple inequalities on θ, φ and ρ rule out both butterfly and calendar arbitrage for the whole surface. Fitting a stochastic volatility model directly, instead of a curve, is the business of [Heston Greeks and calibration](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/03-heston-greeks-and-calibration.md).
 
 ---
 
@@ -725,9 +705,9 @@ The two outputs agree line for line.
 
 - **Equity index option desks.** SVI or one of its variants is the standard way to turn a day's listed option quotes into a smile per expiry. The fitted curve prices every unlisted strike.
 - **Risk systems.** A fitted smile's five numbers are stored daily; a jump in $\rho$ or $b$ flags a change in how the market prices crashes, before any single quote looks odd.
-- **Hedging with the smile.** The fitted curve's slope in strike feeds the delta correction on [smile-adjusted-delta](05-smile-adjusted-delta.md).
+- **Hedging with the smile.** The fitted curve's slope in strike feeds the delta correction on [Smile-adjusted delta](05-smile-adjusted-delta.md).
 - **Local volatility.** Dupire's formula needs the first and second derivatives of total variance in strike. SVI gives them in closed form, with no noise from differencing quotes.
-- **Surfaces.** SSVI, or SVI slices checked for crossing, turn many expiries into one arbitrage-free surface, the object of [volatility-surface-and-its-arbitrage-rules](03-volatility-surface-and-its-arbitrage-rules.md).
+- **Surfaces.** SSVI, or SVI slices checked for crossing, turn many expiries into one arbitrage-free surface, the object of [The volatility surface](03-volatility-surface-and-its-arbitrage-rules.md).
 
 > **Say it back**
 > SVI writes one expiry's total variance as a tilted hyperbola in log-moneyness, with five numbers: level, wing steepness, tilt, centre and rounding. For fixed centre and rounding it is linear in the rest, so fitting reduces to a two-number search plus ordinary least squares. Fitted to Acme's seven quotes it misses by at most 0.0012 of a volatility point. A fit is safe when $g$, which carries the sign of the implied density, stays non-negative and both wing slopes stay at or below Lee's 2. A positive total variance is not enough, and a legal wing is not a correct one.
@@ -736,17 +716,17 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [volatility-surface-and-its-arbitrage-rules](03-volatility-surface-and-its-arbitrage-rules.md): total variance, log-moneyness and the butterfly test in general; this card applies them to one curve family.
-- [least-squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the normal equations that solve the inner, linear part of the fit.
-- [calibration-as-least-squares](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): fitting model parameters to market quotes, and the Levenberg-Marquardt method used as the second road.
+- [The volatility surface](03-volatility-surface-and-its-arbitrage-rules.md): total variance, log-moneyness and the butterfly test in general; this card applies them to one curve family.
+- [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the normal equations that solve the inner, linear part of the fit.
+- [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): fitting model parameters to market quotes, and the Levenberg-Marquardt method used as the second road.
 
 ---
 
 ## Where this goes next
 
-- [smile-adjusted-delta](05-smile-adjusted-delta.md): with a smooth smile in hand, the hedge ratio picks up a term from the smile's slope.
-- [local-volatility-from-implied-volatility](../13-Local%20volatility%20and%20jumps/02-local-volatility-from-implied-volatility.md): the fitted curve's derivatives become a volatility for every price and time.
-- [heston-greeks-and-calibration](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/03-heston-greeks-and-calibration.md): fitting a model whose smile SVI imitates, instead of the imitation.
+- [Smile-adjusted delta](05-smile-adjusted-delta.md): with a smooth smile in hand, the hedge ratio picks up a term from the smile's slope.
+- [Local volatility in implied-vol terms](../13-Local%20volatility%20and%20jumps/02-local-volatility-from-implied-volatility.md): the fitted curve's derivatives become a volatility for every price and time.
+- [Heston Greeks and calibration](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/03-heston-greeks-and-calibration.md): fitting a model whose smile SVI imitates, instead of the imitation.
 
 SVI describes the smile without explaining it; the question it leaves open is what the smile does when the share price moves, which is where the delta and the models behind the curve come in.
 

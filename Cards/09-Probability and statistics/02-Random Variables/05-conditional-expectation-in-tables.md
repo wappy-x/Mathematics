@@ -1,26 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Random Variables
-topic: Averages within groups
-item: Conditional expectation
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/04-joint-distributions-and-covariance|joint-distributions-and-covariance]]"
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/05-conditional-probability|conditional-probability]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/01-martingales|martingales]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/06-stochastic-local-volatility|stochastic-local-volatility]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/06-forward-start-options-and-forward-volatility|forward-start-options-and-forward-volatility]]"
-  - "[[Cards/14-Applied and computational/03-Information Theory/02-conditional-entropy-and-mutual-information|conditional-entropy-and-mutual-information]]"
-tags: [mathematics, probability and statistics, conditional-expectation-in-tables]
----
-
 # Conditional expectation: the average given what you know, and the tower rule
 
-Probability and statistics → Random Variables → Averages within groups → Conditional expectation
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Variables](../../../SYLLABUS.md#w09-s02) → Conditional expectation
 
 ---
 
@@ -54,9 +34,9 @@ Bars: the average claim within each region, $4,100, $4,500 and $9,800. Flat line
 
 ## The formula
 
-Notation first, in words. As on [expectation](02-expectation.md), $E[X]$ is the long-run average value of $X$. A vertical bar inside the brackets means "given", as in $P(A \mid B)$: $E[X \mid Y = y]$ is read "the average of X given that Y equals y". A capital sigma, Σ, with x beneath it means: add one term for every value x that X can take.
+Notation first, in words. As on [Expectation](02-expectation.md), $E[X]$ is the long-run average value of $X$. A vertical bar inside the brackets means "given", as in $P(A \mid B)$: $E[X \mid Y = y]$ is read "the average of X given that Y equals y". A capital sigma, Σ, with x beneath it means: add one term for every value x that X can take.
 
-Let $X$ be the size of one claim and $Y$ its region. The joint table ([joint-distributions-and-covariance](04-joint-distributions-and-covariance.md)) gives $P(X = x, Y = y)$, the chance that a claim has size $x$ and region $y$.
+Let $X$ be the size of one claim and $Y$ its region. The joint table ([Two variables at once](04-joint-distributions-and-covariance.md)) gives $P(X = x, Y = y)$, the chance that a claim has size $x$ and region $y$.
 
 $$E[X \mid Y = y] \;=\; \sum_x x\,P(X = x \mid Y = y) \;=\; \frac{\sum_x x\,P(X = x,\ Y = y)}{P(Y = y)}$$
 
@@ -106,13 +86,13 @@ The plain average $E[X]$ is a sum over every cell of the table: size times chanc
 
 ### Step 1: a conditional average is a plain average with rescaled chances
 
-The Coast row of the table holds the chances 0.06, 0.06 and 0.08 for $1,000, $5,000 and $20,000. They add to 0.20, not 1: they are chances out of all claims. Given that a claim is from the Coast, the chances out of Coast claims are each divided by 0.20: 0.30, 0.30, 0.40. That division is conditional probability, $P(X = x \mid Y = y) = P(X = x, Y = y) / P(Y = y)$ ([conditional-probability](../01-Chance%20and%20Events/05-conditional-probability.md)).
+The Coast row of the table holds the chances 0.06, 0.06 and 0.08 for $1,000, $5,000 and $20,000. They add to 0.20, not 1: they are chances out of all claims. Given that a claim is from the Coast, the chances out of Coast claims are each divided by 0.20: 0.30, 0.30, 0.40. That division is conditional probability, $P(X = x \mid Y = y) = P(X = x, Y = y) / P(Y = y)$ ([Conditional probability](../01-Chance%20and%20Events/05-conditional-probability.md)).
 
 With rescaled chances, the average is the ordinary one: 0.30 × 1,000 + 0.30 × 5,000 + 0.40 × 20,000 = 9,800 dollars.
 
 ### Step 2: before the region is known, the regional average is random
 
-Once $Y$ is revealed, $E[X \mid Y]$ is one number. Before, it is a random variable ([random-variables-and-distributions](01-random-variables-and-distributions.md)) whose law is read off the row totals: $4,100 with chance 0.50, $4,500 with chance 0.30, $9,800 with chance 0.20.
+Once $Y$ is revealed, $E[X \mid Y]$ is one number. Before, it is a random variable ([Random variables](01-random-variables-and-distributions.md)) whose law is read off the row totals: $4,100 with chance 0.50, $4,500 with chance 0.30, $9,800 with chance 0.20.
 
 ### Step 3: the tower rule
 
@@ -134,7 +114,7 @@ One hard average became two easy ones. The identity is Wald's; actuaries call it
 
 ### Step 5: the conditional average is the best guess from the information
 
-Why this particular number? Among all guesses that may use the region and nothing else, $E[X \mid Y]$ has the smallest average squared error. Guessing $4,100, $4,500 or $9,800 by region leaves an average squared error of 39,072,000 dollars squared. Guessing $5,360 for every claim leaves 44,030,400, which is the variance of $X$ ([variance-and-standard-deviation](03-variance-and-standard-deviation.md)). Shifting every regional guess up or down by $500 leaves 39,322,000: worse by exactly 500 × 500.
+Why this particular number? Among all guesses that may use the region and nothing else, $E[X \mid Y]$ has the smallest average squared error. Guessing $4,100, $4,500 or $9,800 by region leaves an average squared error of 39,072,000 dollars squared. Guessing $5,360 for every claim leaves 44,030,400, which is the variance of $X$ ([Variance](03-variance-and-standard-deviation.md)). Shifting every regional guess up or down by $500 leaves 39,322,000: worse by exactly 500 × 500.
 
 The difference, 4,958,400, is the variance of the regional averages: the variance splits into spread within regions plus spread between them. Region removes 11% of the squared error. Most of what makes a claim large is not its region.
 
@@ -603,19 +583,19 @@ The outputs agree line for line. Each simulated average sits within about one st
 
 ## What this builds on
 
-- [joint-distributions-and-covariance](04-joint-distributions-and-covariance.md): the joint table of two random variables, its row and column totals.
-- [conditional-probability](../01-Chance%20and%20Events/05-conditional-probability.md): $P(A \mid B)$, the rescaling that turns a row of the table into a law of its own.
+- [Two variables at once](04-joint-distributions-and-covariance.md): the joint table of two random variables, its row and column totals.
+- [Conditional probability](../01-Chance%20and%20Events/05-conditional-probability.md): $P(A \mid B)$, the rescaling that turns a row of the table into a law of its own.
 
 ## Where this goes next
 
-- [martingales](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/01-martingales.md): a fair game, where the conditional average of tomorrow's value given today's history is today's value.
-- [stochastic-local-volatility](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/06-stochastic-local-volatility.md): a volatility calibrated as the conditional average of variance given the price.
-- [forward-start-options-and-forward-volatility](../../12-Financial%20mathematics/17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/06-forward-start-options-and-forward-volatility.md): an option priced by conditioning on the price at its start date, then averaging with the tower rule.
-- conditional-entropy-and-mutual-information: the same average-within-each-group step, applied to uncertainty instead of size.
+- [Martingales](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/01-martingales.md): a fair game, where the conditional average of tomorrow's value given today's history is today's value.
+- [Stochastic-local volatility](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/06-stochastic-local-volatility.md): a volatility calibrated as the conditional average of variance given the price.
+- [Forward-start options](../../12-Financial%20mathematics/17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/06-forward-start-options-and-forward-volatility.md): an option priced by conditioning on the price at its start date, then averaging with the tower rule.
+- Conditional entropy and mutual information: the same average-within-each-group step, applied to uncertainty instead of size.
 
-On this shelf, [jensens-inequality](06-jensens-inequality.md) compares the average of a curved function with the function of the average.
+On this shelf, [Jensen's inequality](06-jensens-inequality.md) compares the average of a curved function with the function of the average.
 
-This card conditions on information fixed once and for all; what happens when the information grows step by step, a little more history each day, is the question [martingales](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/01-martingales.md) answers.
+This card conditions on information fixed once and for all; what happens when the information grows step by step, a little more history each day, is the question [Martingales](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/01-martingales.md) answers.
 
 ---
 

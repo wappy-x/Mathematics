@@ -1,31 +1,12 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Markov Chains
-topic: Forgetting the start
-item: Convergence to equilibrium
-kind: theorem
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/04-stationary-distributions|stationary-distributions]]"
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/02-multi-step-transitions|multi-step-transitions]]"
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/03-classifying-states|classifying-states]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/07-markov-chain-monte-carlo|markov-chain-monte-carlo]]"
-  - "[[Cards/14-Applied and computational/07-Network Science and Spectral Graphs/07-expanders-and-mixing|expanders-and-mixing]]"
-tags: [mathematics, stochastic processes and calculus, convergence-to-equilibrium]
----
-
 # Convergence to equilibrium: an irreducible aperiodic chain forgets where it started
 
-Stochastic processes and calculus → Markov Chains → Forgetting the start → Convergence to equilibrium
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Markov Chains](../../../SYLLABUS.md#w11-s03) → Convergence to equilibrium
 
 ---
 
 ## General Overview
 
-A town's weather comes in three kinds: sunny, cloudy, rainy. Each day's weather depends only on the day before. After a sunny day, the next is sunny with chance 0.8, cloudy 0.1, rainy 0.1. After a cloudy day: sunny 0.5, cloudy 0.4, rainy 0.1. After a rainy day: sunny 0.1, cloudy 0.3, rainy 0.6. This is not the town of [stationary-distributions](04-stationary-distributions.md) or of the earlier cards of this shelf; its table is chosen so the rates come out round.
+A town's weather comes in three kinds: sunny, cloudy, rainy. Each day's weather depends only on the day before. After a sunny day, the next is sunny with chance 0.8, cloudy 0.1, rainy 0.1. After a cloudy day: sunny 0.5, cloudy 0.4, rainy 0.1. After a rainy day: sunny 0.1, cloudy 0.3, rainy 0.6. This is not the town of [Stationary distributions](04-stationary-distributions.md) or of the earlier cards of this shelf; its table is chosen so the rates come out round.
 
 Three forecasters look at that table on three different mornings. One sees sun outside, one sees cloud, one sees rain. Each forecasts the chance of sun some days ahead. Tomorrow they disagree a lot: 0.8, 0.5 and 0.1. A week out they nearly agree: 0.603125, 0.602906, 0.587719. A month out all three say 0.600000 to six decimals. Today's weather has been forgotten. What remains is the town's long-run mix: sunny 60% of days, cloudy 20%, rainy 20%.
 
@@ -54,9 +35,9 @@ Orange: sunny today. Green: cloudy today. Dark: rainy today. These are exact cha
 
 ## The formula
 
-Notation from earlier cards. The weather on day n is $X_n$, time in days. The table is the transition matrix $P$ ([markov-chains](01-markov-chains.md)): its entry $p_{ij}$ is the chance that tomorrow is state $j$ when today is state $i$. Its power $P^n$ holds the n-day chances ([multi-step-transitions](02-multi-step-transitions.md)). The stationary law $\pi$ is the mix that one day of weather leaves unchanged, $\pi P = \pi$ ([stationary-distributions](04-stationary-distributions.md)). For this table it is 0.6, 0.2, 0.2; the sunny column checks it: 0.6 × 0.8 + 0.2 × 0.5 + 0.2 × 0.1 = 0.6.
+Notation from earlier cards. The weather on day n is $X_n$, time in days. The table is the transition matrix $P$ ([Markov chains](01-markov-chains.md)): its entry $p_{ij}$ is the chance that tomorrow is state $j$ when today is state $i$. Its power $P^n$ holds the n-day chances ([n-step transitions](02-multi-step-transitions.md)). The stationary law $\pi$ is the mix that one day of weather leaves unchanged, $\pi P = \pi$ ([Stationary distributions](04-stationary-distributions.md)). For this table it is 0.6, 0.2, 0.2; the sunny column checks it: 0.6 × 0.8 + 0.2 × 0.5 + 0.2 × 0.1 = 0.6.
 
-One more notion, met on [random-walks-on-graphs-and-mixing](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md) and recalled here: a distance between two forecasts. A forecast is a law $\mu$ on the three states, three chances adding to 1. The **total variation distance** between two laws is half the sum of their gaps, state by state:
+One more notion, met on [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md) and recalled here: a distance between two forecasts. A forecast is a law $\mu$ on the three states, three chances adding to 1. The **total variation distance** between two laws is half the sum of their gaps, state by state:
 
 $$\operatorname{TV}(\mu, \nu) = \tfrac12 \sum_j \lvert \mu_j - \nu_j \rvert .$$
 
@@ -68,7 +49,7 @@ The theorem. Suppose that for some block of $r$ days, every row of $P^r$ gives e
 
 $$d(n) \;\le\; (1 - \varepsilon)^{\lfloor n / r \rfloor}, \qquad \text{so } (P^n)_{ij} \to \pi_j \text{ for every start } i .$$
 
-The brackets $\lfloor n/r \rfloor$ count complete blocks of $r$ days. Every finite chain that is irreducible (every state can reach every other) and aperiodic (not locked into a cycle) has such a block ([classifying-states](03-classifying-states.md) defines both words).
+The brackets $\lfloor n/r \rfloor$ count complete blocks of $r$ days. Every finite chain that is irreducible (every state can reach every other) and aperiodic (not locked into a cycle) has such a block ([Classifying states](03-classifying-states.md) defines both words).
 
 **Read it aloud:** if every starting day shares a slice of size epsilon of its r-day forecast, then each block of r days removes at least that share of the remaining disagreement, whatever the start.
 
@@ -160,7 +141,7 @@ Some chains have a zero in every column of $P$, so no single day shares anything
 
 **(c) One block contracts by $1 - \varepsilon$.** If $\varepsilon = 1$, every row of $K$ equals $\nu$, so $\mu K = \nu K$ for all laws and the distance after one block is 0. Otherwise set $R_{ij} = (K_{ij} - \varepsilon\nu_j)/(1 - \varepsilon)$: its entries are non-negative and its rows add to 1. Start copies $X$, $Y$ from laws $\mu$, $\nu'$, equal as often as possible: the overlap $\min(\mu_j, \nu'_j)$ has total $1 - \operatorname{TV}(\mu, \nu')$ by (a), so with that chance draw one state for both from the overlap, rescaled, and otherwise draw each from what its own law has left, rescaled. Each block, while unequal: with chance $\varepsilon$ both jump to one state drawn from $\nu$; otherwise each moves by its own row of $R$. Once equal, one draw from $K$ moves both. Each copy moves by $\varepsilon\nu_j + (1 - \varepsilon)R_{ij} = K_{ij}$, so its law after $m$ blocks is the start times $K^m$. The copies are unequal after $m$ blocks only if they started unequal and every coin failed: chance at most $(1 - \varepsilon)^m \operatorname{TV}(\mu, \nu')$. By the argument of Step 2, which uses only (a), $\operatorname{TV}(\mu K^m, \nu' K^m) \le (1 - \varepsilon)^m \operatorname{TV}(\mu, \nu')$.
 
-**(d) The limit exists and is stationary.** Fix $\mu$ and put $\mu_m = \mu K^m$. Apply (c) to the starts $\mu$ and $\mu K^k$: $\operatorname{TV}(\mu_{m+k}, \mu_m) \le (1 - \varepsilon)^m$ for all $k$. Each coordinate is therefore a Cauchy sequence of real numbers, and converges (completeness of the reals, [supremum-and-completeness](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). The limit $\pi$ has non-negative entries adding to 1. Matrix products are finite sums, so they pass to the limit: $\pi K = \pi$. If $\rho K = \rho$ too, (c) gives $\operatorname{TV}(\pi, \rho) \le (1 - \varepsilon)\operatorname{TV}(\pi, \rho)$, so $\rho = \pi$: the $K$-stationary law is unique. Since $(\pi P)K = (\pi K)P = \pi P$, uniqueness gives $\pi P = \pi$.
+**(d) The limit exists and is stationary.** Fix $\mu$ and put $\mu_m = \mu K^m$. Apply (c) to the starts $\mu$ and $\mu K^k$: $\operatorname{TV}(\mu_{m+k}, \mu_m) \le (1 - \varepsilon)^m$ for all $k$. Each coordinate is therefore a Cauchy sequence of real numbers, and converges (completeness of the reals, [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). The limit $\pi$ has non-negative entries adding to 1. Matrix products are finite sums, so they pass to the limit: $\pi K = \pi$. If $\rho K = \rho$ too, (c) gives $\operatorname{TV}(\pi, \rho) \le (1 - \varepsilon)\operatorname{TV}(\pi, \rho)$, so $\rho = \pi$: the $K$-stationary law is unique. Since $(\pi P)K = (\pi K)P = \pi P$, uniqueness gives $\pi P = \pi$.
 
 **(e) The rate for every day.** Write $n = mr + s$ with $0 \le s < r$. Then $\mu P^n = (\mu K^m) P^s$ and $\pi = \pi K^m P^s$. By (c) and then (b), $\operatorname{TV}(\mu P^n, \pi) \le (1 - \varepsilon)^m$. Taking $\mu$ as a certain start $i$ gives $d(n) \le (1 - \varepsilon)^{\lfloor n/r \rfloor}$.
 
@@ -174,11 +155,11 @@ The guarantee 0.7 is a floor on progress; the actual speed is in the eigenvalues
 
 $$P^n = \Pi + \lambda_2^{\,n} A_2 + \lambda_3^{\,n} A_3 ,$$
 
-where $\Pi$ has every row equal to $\pi$, and $A_2 = (P - I)(P - \lambda_3 I) / \bigl((\lambda_2 - 1)(\lambda_2 - \lambda_3)\bigr)$, with $I$ the identity table and $A_3$ built the same way. This is Sylvester's formula. [diagonalisation-and-matrix-powers](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md) splits $P^n$ into fixed pieces times powers of the eigenvalues, and a factor $P - \lambda I$ wipes out the piece at $\lambda$ while scaling each other piece by its eigenvalue minus $\lambda$; so the product in $A_2$ keeps only the piece at $\lambda_2$, scaled by the denominator. The last two pieces fade, and the one at 0.5 fades last. So after a few days the distance halves every day: $d(31)/d(30)$ is 0.5 to six decimals in the check.
+where $\Pi$ has every row equal to $\pi$, and $A_2 = (P - I)(P - \lambda_3 I) / \bigl((\lambda_2 - 1)(\lambda_2 - \lambda_3)\bigr)$, with $I$ the identity table and $A_3$ built the same way. This is Sylvester's formula. [Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md) splits $P^n$ into fixed pieces times powers of the eigenvalues, and a factor $P - \lambda I$ wipes out the piece at $\lambda$ while scaling each other piece by its eigenvalue minus $\lambda$; so the product in $A_2$ keeps only the piece at $\lambda_2$, scaled by the denominator. The last two pieces fade, and the one at 0.5 fades last. So after a few days the distance halves every day: $d(31)/d(30)$ is 0.5 to six decimals in the check.
 
 The guarantee is loose because it credits the copies with only a 0.3 chance of meeting each day; from most pairs of states they meet more often. For a sunny and a rainy start the coupling itself wastes nothing: computed exactly over the nine pairs of states, its chance of not having met equals the distance on each of days 1 to 6, 0.4100 on day 2. The simulated 0.4111 ± 0.0035 differs from it only by sampling noise.
 
-The other road to the rate goes through the spectral gap $1 - \lvert\lambda_2\rvert$, here 0.5, which for a chain with detailed balance traps $d(n)$ between two multiples of $\lvert\lambda_2\rvert^n$, and through the conductance of a graph, which ties the gap to bottlenecks. It is done properly in expanders-and-mixing.
+The other road to the rate goes through the spectral gap $1 - \lvert\lambda_2\rvert$, here 0.5, which for a chain with detailed balance traps $d(n)$ between two multiples of $\lvert\lambda_2\rvert^n$, and through the conductance of a graph, which ties the gap to bottlenecks. It is done properly in Expanders.
 
 ---
 
@@ -646,11 +627,11 @@ The coupling rows are one seeded sample; another seed moves each estimate by abo
 
 ## Where you meet it in real life
 
-- **Sampling by simulation.** Markov chain Monte Carlo runs a chain whose stationary law is the distribution wanted and discards the early steps while the start is forgotten; how many is a question about $d(n)$: [markov-chain-monte-carlo](07-markov-chain-monte-carlo.md).
+- **Sampling by simulation.** Markov chain Monte Carlo runs a chain whose stationary law is the distribution wanted and discards the early steps while the start is forgotten; how many is a question about $d(n)$: [MCMC](07-markov-chain-monte-carlo.md).
 - **Ranking web pages.** PageRank adds a step in which the surfer jumps to a page chosen at random. That jump is a common share in exactly the sense of Step 3, so the ranking converges geometrically from any starting guess.
 - **Shuffling cards.** How many riffle shuffles make a deck fair is $d(n)$ for a chain on the deck's orderings.
-- **Long-run averages.** The fraction of sunny days over a long record tends to 0.6 from any start; the time-average version is on [stationary-distributions](04-stationary-distributions.md).
-- **Chains that do settle.** A chain that stops in an end state, such as a finished board game, settles for a different reason: [absorption-and-first-step-analysis](06-absorption-and-first-step-analysis.md).
+- **Long-run averages.** The fraction of sunny days over a long record tends to 0.6 from any start; the time-average version is on [Stationary distributions](04-stationary-distributions.md).
+- **Chains that do settle.** A chain that stops in an end state, such as a finished board game, settles for a different reason: [Absorption](06-absorption-and-first-step-analysis.md).
 
 > **Say it back**
 > Run two copies of a chain, tied so that once they meet they move together. Their forecasts differ by at most the chance they have not met. If every row shares a slice epsilon, they meet with at least that chance each day, so the distance from equilibrium falls at least like (1 − epsilon) to the n. Irreducible aperiodic finite chains always have such a slice after some block of days. The true speed is the second eigenvalue: here the disagreement halves daily.
@@ -659,14 +640,14 @@ The coupling rows are one seeded sample; another seed moves each estimate by abo
 
 ## What this builds on
 
-- [stationary-distributions](04-stationary-distributions.md): the law $\pi$ with $\pi P = \pi$, here 0.6, 0.2, 0.2.
-- [multi-step-transitions](02-multi-step-transitions.md): the n-day forecast as $P^n$.
-- [classifying-states](03-classifying-states.md): irreducible and aperiodic, the two hypotheses.
+- [Stationary distributions](04-stationary-distributions.md): the law $\pi$ with $\pi P = \pi$, here 0.6, 0.2, 0.2.
+- [n-step transitions](02-multi-step-transitions.md): the n-day forecast as $P^n$.
+- [Classifying states](03-classifying-states.md): irreducible and aperiodic, the two hypotheses.
 
 ## Where this goes next
 
-- [markov-chain-monte-carlo](07-markov-chain-monte-carlo.md): builds a chain with a chosen stationary law and uses this card's convergence to sample from it.
-- expanders-and-mixing: the rate from the spectral gap, and graphs on which walks forget their start fast.
+- [MCMC](07-markov-chain-monte-carlo.md): builds a chain with a chosen stationary law and uses this card's convergence to sample from it.
+- Expanders: the rate from the spectral gap, and graphs on which walks forget their start fast.
 
 This card takes a chain as given and measures how fast it forgets its start; the question it leaves open is the reverse one, how to build a chain that settles on a law someone wants to sample, and how long to run it.
 

@@ -1,25 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Series
-topic: Infinite polynomials
-item: Power series
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/06-Series/02-comparison-ratio-and-root-tests|comparison-ratio-and-root-tests]]"
-next:
-  - "[[Cards/06-Calculus and analysis/06-Series/05-taylor-series|taylor-series]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/02-complex-power-series|complex-power-series]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/01-power-series-at-an-ordinary-point|power-series-at-an-ordinary-point]]"
-  - "[[Cards/16-Numerical analysis/04-Interpolation and Approximation/08-weierstrass-and-best-approximation|weierstrass-and-best-approximation]]"
-tags: [mathematics, calculus and analysis, power-series]
----
-
 # Power series: polynomials that never stop, and the radius inside which they behave
 
-Calculus and analysis → Series → Infinite polynomials → Power series
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Series](../../../SYLLABUS.md#w06-s06) → Power series
 
 ---
 
@@ -54,7 +35,7 @@ Orange is ln(1 + x), computed as an area; teal, the series cut after x^4; dark b
 
 ## The formula
 
-A power series has a centre c, fixed numbers $a_n$ called coefficients, and an input x. The bars in $|x - c|$ mean the distance from x to c. A sigma sign running to infinity means the limit of partial sums ([series-convergence](01-series-convergence.md)).
+A power series has a centre c, fixed numbers $a_n$ called coefficients, and an input x. The bars in $|x - c|$ mean the distance from x to c. A sigma sign running to infinity means the limit of partial sums ([Infinite series](01-series-convergence.md)).
 
 $$f(x) = \sum_{n=0}^{\infty} a_n (x-c)^n = a_0 + a_1 (x-c) + a_2 (x-c)^2 + \cdots$$
 
@@ -86,7 +67,7 @@ $$\frac{1}{1-x} = \sum_{n=0}^{\infty} x^n, \qquad \ln(1+x) = \sum_{n=1}^{\infty}
 ### When it holds
 
 - **Strictly inside.** At distance exactly R the theorem is silent: the two series here behave differently at their endpoints.
-- **The ratio formula needs a limit.** If ratios never settle, or coefficients vanish, R still exists (Step 1) but the root test finds it ([comparison-ratio-and-root-tests](02-comparison-ratio-and-root-tests.md)).
+- **The ratio formula needs a limit.** If ratios never settle, or coefficients vanish, R still exists (Step 1) but the root test finds it ([Convergence tests](02-comparison-ratio-and-root-tests.md)).
 - **Term by term only inside.** At x = 1 the log series converges; its differentiated series 1 − 1 + 1 − … does not.
 
 ---
@@ -114,7 +95,7 @@ At distance R the ratio heads for exactly 1 and the test is silent.
 - **1/(1 − x) at 1:** 1 + 1 + 1 + …; through x^99 the sum is 100. Diverges.
 - **1/(1 − x) at −1:** sums run 1, 0, 1, 0. Diverges.
 - **Log at −1:** minus the harmonic series, −7.485471 after 1,000 terms. Diverges.
-- **Log at 1:** 1 − 1/2 + 1/3 − …, which converges ([alternating-and-conditional-convergence](03-alternating-and-conditional-convergence.md)); Step 5 proves it equals ln 2.
+- **Log at 1:** 1 − 1/2 + 1/3 − …, which converges ([Alternating series](03-alternating-and-conditional-convergence.md)); Step 5 proves it equals ln 2.
 
 So 1/(1 − x) works for −1 < x < 1; the log for −1 < x ≤ 1.
 
@@ -143,7 +124,7 @@ A finite version gives the error. The finite geometric sum says 1/(1 + t) is 1 �
 
 At x = 0.5, N = 20 the bound is 0.000000023. At x = 1 it is 1/(N + 1), heading for 0, so the log series at 1 equals ln 2. To land within 0.001 of ln 2, N = 1,000 is enough: the actual gap is 0.000500.
 
-Differentiating instead gives 1 + 2x + 3x^2 + … = 1/(1 − x)^2, which is 4 at 0.5. Where coefficients come from is [taylor-series](05-taylor-series.md); the general rules for passing limits through integrals and derivatives are [swapping-limits-with-integrals-and-derivatives](08-swapping-limits-with-integrals-and-derivatives.md).
+Differentiating instead gives 1 + 2x + 3x^2 + … = 1/(1 − x)^2, which is 4 at 0.5. Where coefficients come from is [Taylor series](05-taylor-series.md); the general rules for passing limits through integrals and derivatives are [Swapping limits](08-swapping-limits-with-integrals-and-derivatives.md).
 
 ---
 
@@ -364,7 +345,7 @@ ALL CHECKS PASS
 
 - **Calculators.** Logs come from polynomials, on inputs first shrunk towards the centre so few terms are needed.
 - **Finance.** The geometric series prices a perpetual bond, the shelf's house example; x times its derivative, x + 2x^2 + 3x^3 + …, weights each payment by its date; divided by the price, it gives the bond's duration.
-- **Differential equations.** Solutions are sought as power series, and the radius says how far to trust them: [power-series-at-an-ordinary-point](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/01-power-series-at-an-ordinary-point.md).
+- **Differential equations.** Solutions are sought as power series, and the radius says how far to trust them: [Series solutions](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/01-power-series-at-an-ordinary-point.md).
 
 > **Say it back**
 > A power series is a polynomial that never stops, read as the limit of its partial sums. Working at one distance forces working at every smaller one, so one radius R splits inside from outside. Coefficient ratios find R; the two points exactly R away are tested one by one. Inside, term-by-term calculus holds, and integrating 1 − t + t^2 − … gives the log series with its error bound.
@@ -373,14 +354,14 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [comparison-ratio-and-root-tests](02-comparison-ratio-and-root-tests.md): geometric comparison and the ratio test, which find the radius.
+- [Convergence tests](02-comparison-ratio-and-root-tests.md): geometric comparison and the ratio test, which find the radius.
 
 ## Where this goes next
 
-- [taylor-series](05-taylor-series.md): the coefficients a function's own derivatives force.
-- [complex-power-series](../../07-Complex%20analysis/02-Holomorphic%20Functions/02-complex-power-series.md): the fence becomes a circle, explaining the radius.
-- [power-series-at-an-ordinary-point](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/01-power-series-at-an-ordinary-point.md): solving for a function by solving for its coefficients.
-- weierstrass-and-best-approximation: polynomials good over a whole interval.
+- [Taylor series](05-taylor-series.md): the coefficients a function's own derivatives force.
+- [Power series in the plane](../../07-Complex%20analysis/02-Holomorphic%20Functions/02-complex-power-series.md): the fence becomes a circle, explaining the radius.
+- [Series solutions](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/01-power-series-at-an-ordinary-point.md): solving for a function by solving for its coefficients.
+- Weierstrass and the minimax fit: polynomials good over a whole interval.
 
 ---
 

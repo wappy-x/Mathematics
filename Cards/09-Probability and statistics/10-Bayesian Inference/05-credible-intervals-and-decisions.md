@@ -1,24 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Bayesian Inference
-topic: Reporting and acting on a posterior
-item: Credible intervals and decisions
-kind: method
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/02-beta-binomial|beta-binomial]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/01-confidence-intervals|confidence-intervals]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/02-intervals-for-proportions|intervals-for-proportions]]"
-next:
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/06-markov-chain-monte-carlo-in-outline|markov-chain-monte-carlo-in-outline]]"
-tags: [mathematics, probability and statistics, credible-intervals-and-decisions]
----
-
 # Credible intervals and decisions: what the posterior lets you say and do
 
-Probability and statistics → Bayesian Inference → Reporting and acting on a posterior → Credible intervals and decisions
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Bayesian Inference](../../../SYLLABUS.md#w09-s10) → Credible intervals and decisions
 
 ---
 
@@ -26,13 +8,13 @@ Probability and statistics → Bayesian Inference → Reporting and acting on a 
 
 A new coin comes out of a souvenir shop's bag. Flipped ten times, it lands heads 7 times. Two friends want to use it to settle a running bet: $10 a flip, even money, and one of them may pick the side. Should the coin be used, and on which side?
 
-Nobody knows the coin's true chance of heads. What is known is a curve over every candidate chance from 0 to 1, saying how believable each one is after the ten flips. [beta-binomial](02-beta-binomial.md) gives the rule that builds that curve: add the heads to a beta law's first number and the tails to its second. Start from a flat prior (every chance equally believable, Beta(1, 1)), add 7 heads and 3 tails, and the posterior (the belief after the data) is Beta(8, 4). That card's gentler Beta(2, 2) prior gives Beta(9, 5) instead; the flat prior is used here, and the difference is measured below. This card does two things with the posterior.
+Nobody knows the coin's true chance of heads. What is known is a curve over every candidate chance from 0 to 1, saying how believable each one is after the ten flips. [Beta-binomial](02-beta-binomial.md) gives the rule that builds that curve: add the heads to a beta law's first number and the tails to its second. Start from a flat prior (every chance equally believable, Beta(1, 1)), add 7 heads and 3 tails, and the posterior (the belief after the data) is Beta(8, 4). That card's gentler Beta(2, 2) prior gives Beta(9, 5) instead; the flat prior is used here, and the difference is measured below. This card does two things with the posterior.
 
 **It says something.** Picture the posterior as a pile of sand spread along the line from 0 to 1, deepest near 0.7. A stretch of the line holding 95% of the sand is a **credible interval**, the term used from here on, and its sand is posterior probability. For this coin, the chance of heads lies between 0.39 and 0.89 with posterior probability 0.95. That sentence is about this coin, after these ten flips.
 
 **It does something.** Each action, bet heads, bet tails or decline, gains or loses money depending on the true chance. Weigh the money by the posterior at every chance, add up, and compare. Betting heads averages a profit of $3.33 a flip; betting tails averages a loss of $3.33; declining is $0. Bet heads.
 
-A confidence interval ([confidence-intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md)) looks similar, 0.35 to 0.93 for the same flips by the exact recipe of [intervals-for-proportions](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md), but promises something else: a recipe that catches the true chance 95 times in 100 at every possible coin. The card computes both promises and shows where they part.
+A confidence interval ([Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md)) looks similar, 0.35 to 0.93 for the same flips by the exact recipe of [Intervals for a proportion](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md), but promises something else: a recipe that catches the true chance 95 times in 100 at every possible coin. The card computes both promises and shows where they part.
 
 **Once the data are in, the posterior is the whole answer: a credible interval is a stretch holding a stated share of it, and the best action is the one whose loss, averaged over it, is smallest.**
 
@@ -91,7 +73,7 @@ $$\rho(d) \;=\; E[\,L(d,\theta) \mid x\,] \;=\; \int_0^1 L(d,\theta)\, f(\theta 
 | $\rho(d)$ | posterior expected loss of d | −$3.33 for bet heads | the action looks worse |
 | $t$, $j$, $h$, B(8, 4) | helpers: t a mark on the line from 0 to 1; j a count of points in Step 1's sum; h a small step in the median proof; B(8, 4) the beta integral | F(t) at t = 1/2; B(8, 4) = 1/1320 | — |
 
-Two helpers. The density's constant 1320 is 1/B(8, 4), the reciprocal of the beta integral from [gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md), so the whole area is 1. The mean and variance of Beta(a, b) are a/(a + b) and ab/((a + b)^2 (a + b + 1)), from the same card.
+Two helpers. The density's constant 1320 is 1/B(8, 4), the reciprocal of the beta integral from [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md), so the whole area is 1. The mean and variance of Beta(a, b) are a/(a + b) and ab/((a + b)^2 (a + b + 1)), from the same card.
 
 ### When it holds
 
@@ -111,7 +93,7 @@ The posterior is a complete probability law for theta. The chance that theta lie
 
 ### Step 1: the area up to any point, by counting
 
-Beta(8, 4) is the law of the 8th smallest of 11 points dropped independently and uniformly on 0 to 1 ([gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md) proves it by counting). The 8th smallest point sits at or below some mark exactly when at least 8 of the 11 points do. Each point lands below the mark independently, with chance equal to the mark. So the cumulative area is a binomial tail:
+Beta(8, 4) is the law of the 8th smallest of 11 points dropped independently and uniformly on 0 to 1 ([Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md) proves it by counting). The 8th smallest point sits at or below some mark exactly when at least 8 of the 11 points do. Each point lands below the mark independently, with chance equal to the mark. So the cumulative area is a binomial tail:
 
 $$F(t) \;=\; \sum_{j=8}^{11} \binom{11}{j}\, t^{j} (1-t)^{11-j}$$
 
@@ -171,7 +153,7 @@ Write the expected absolute loss as the integral of |d − θ| times the density
 
 ### Step 5: credible and confidence intervals answer different questions
 
-A confidence interval is judged at each fixed coin. Fix the true chance, imagine ten fresh flips again and again, and ask how often the recipe's interval contains the chance: the **coverage**. The exact (Clopper–Pearson) recipe from [intervals-for-proportions](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md) guarantees at least 95% at every coin. For 7 heads it gives 0.3475 to 0.9333.
+A confidence interval is judged at each fixed coin. Fix the true chance, imagine ten fresh flips again and again, and ask how often the recipe's interval contains the chance: the **coverage**. The exact (Clopper–Pearson) recipe from [Intervals for a proportion](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md) guarantees at least 95% at every coin. For 7 heads it gives 0.3475 to 0.9333.
 
 A credible interval is judged at the data actually seen. Its 95% is area under this posterior. Run the equal-tailed credible recipe as if it were a confidence recipe, one interval for each possible count from 0 to 10, and its coverage at a fixed coin can be anything:
 
@@ -209,7 +191,7 @@ xychart-beta
 
 Orange: the equal-tailed credible recipe, dipping to 0.91 near the ends and averaging 0.95 over the prior. Teal: the exact confidence recipe, never below 0.95, paid for with wider intervals. Dark: the 0.95 line. The saw-teeth come from whole-number counts: as the chance slides out of one count's interval, coverage drops by that count's chance.
 
-The simulation in the code is a third road to the posterior that uses no beta formula: draw a chance from the flat prior, flip ten times, keep the chance only if 7 heads appear. The kept chances are draws from the posterior. When a posterior has no closed form, this idea, grown into a walk that proposes near where the posterior already is, is how its areas get computed: [markov-chain-monte-carlo-in-outline](06-markov-chain-monte-carlo-in-outline.md).
+The simulation in the code is a third road to the posterior that uses no beta formula: draw a chance from the flat prior, flip ten times, keep the chance only if 7 heads appear. The kept chances are draws from the posterior. When a posterior has no closed form, this idea, grown into a walk that proposes near where the posterior already is, is how its areas get computed: [MCMC in outline](06-markov-chain-monte-carlo-in-outline.md).
 
 ---
 
@@ -675,7 +657,7 @@ The two outputs match line for line. The simulation keeps 20,116 of 220,000 runs
 
 - **A/B tests on websites.** A Bayesian A/B test reports the posterior probability that version B converts better, and the expected loss of shipping it if it does not: Step 3 with two posteriors.
 - **Clinical trials.** Adaptive trials stop early when the posterior probability of benefit passes a threshold, a credible statement about this trial's data.
-- **A measurement with a known error.** The same interval for a mean, with a normal posterior, is on [normal-normal](03-normal-normal.md); for a rate of events, on [gamma-poisson](04-gamma-poisson.md).
+- **A measurement with a known error.** The same interval for a mean, with a normal posterior, is on [Normal-normal](03-normal-normal.md); for a rate of events, on [Gamma-Poisson](04-gamma-poisson.md).
 
 > **Say it back**
 > After 7 heads in 10 flips and a flat prior, the chance of heads has the posterior Beta(8, 4). A credible interval is a stretch holding a stated share of that posterior: 0.39 to 0.89 holds 95%. A decision averages each action's loss over the posterior and takes the smallest; betting heads averages $3.33 a flip. A confidence interval promises coverage at every fixed coin; a credible interval promises posterior probability for the data seen, and 95% coverage only on average over the prior.
@@ -684,13 +666,13 @@ The two outputs match line for line. The simulation keeps 20,116 of 220,000 runs
 
 ## What this builds on
 
-- [beta-binomial](02-beta-binomial.md): the posterior Beta(8, 4) itself, and why heads add to a and tails to b.
-- [confidence-intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md): coverage, the promise a confidence interval makes and a credible interval does not.
-- [intervals-for-proportions](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md): the exact (Clopper–Pearson) interval for a proportion, 0.3475 to 0.9333 here, and its proof of at least 95% coverage at every coin.
+- [Beta-binomial](02-beta-binomial.md): the posterior Beta(8, 4) itself, and why heads add to a and tails to b.
+- [Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md): coverage, the promise a confidence interval makes and a credible interval does not.
+- [Intervals for a proportion](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md): the exact (Clopper–Pearson) interval for a proportion, 0.3475 to 0.9333 here, and its proof of at least 95% coverage at every coin.
 
 ## Where this goes next
 
-- [markov-chain-monte-carlo-in-outline](06-markov-chain-monte-carlo-in-outline.md): posteriors with no closed form, whose intervals and expected losses must be computed from draws, as the simulation road here did.
+- [MCMC in outline](06-markov-chain-monte-carlo-in-outline.md): posteriors with no closed form, whose intervals and expected losses must be computed from draws, as the simulation road here did.
 
 Every area on this card came from a posterior with a formula; when the model has many unknowns and no formula, the question left open is how to draw from the posterior at all, which is what MCMC answers.
 

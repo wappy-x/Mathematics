@@ -1,30 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Averages - commodity swaps and Asian options
-topic: Hedging a part-fixed average
-item: Asian Greeks and the average already banked
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/03-arithmetic-asian-option|arithmetic-asian-option]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/01-bump-and-revalue-and-common-random-numbers|bump-and-revalue-and-common-random-numbers]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/03-asian-greeks-and-implied-volatility|asian-greeks-and-implied-volatility]]"
-next:
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/05-asian-implied-volatility|asian-implied-volatility]]"
-tags: [mathematics, financial mathematics, asian-greeks-and-the-running-average]
----
-
 # Asian Greeks and the average already banked: damped delta and vega, and the strike that shrinks as fixings come in
 
-Financial mathematics → Averages - commodity swaps and Asian options → Hedging a part-fixed average → Asian Greeks and the average already banked
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages - commodity swaps and Asian options](../../../SYLLABUS.md#w12-s27) → Asian Greeks and the average already banked
 
 ---
 
 ## General Overview
 
-A bank has sold an airline a one-year call on the average price of jet fuel, which costs $100 a barrel. The contract reads the price once a week, 52 times; each reading is a **fixing**. At the end of the year the airline receives, per barrel, the average of the 52 fixings minus the $100 strike, if that is positive. This **arithmetic Asian call** costs $5.85 per barrel, simulated on [arithmetic-asian-option](03-arithmetic-asian-option.md). A plain call on the last week's price costs $10.45.
+A bank has sold an airline a one-year call on the average price of jet fuel, which costs $100 a barrel. The contract reads the price once a week, 52 times; each reading is a **fixing**. At the end of the year the airline receives, per barrel, the average of the 52 fixings minus the $100 strike, if that is positive. This **arithmetic Asian call** costs $5.85 per barrel, simulated on [The Asian option desks trade](03-arithmetic-asian-option.md). A plain call on the last week's price costs $10.45.
 
 The bank has to hedge what it sold, and hedging runs on the **Greeks**: the rates at which the price moves when one input moves. **Delta** is the dollars gained per $1 rise in jet fuel. **Gamma** is how fast delta itself changes per $1. **Vega** is the dollars gained per one percentage point of volatility (the yearly jumpiness of the price, 20 percent here). On a desk nobody hedges jet fuel with barrels in a tank. The hedge is a strip of futures, one for each delivery month, so the delta is also reported month by month, or here quarter by quarter: a **delta ladder**.
 
@@ -32,7 +14,7 @@ Six months on, 26 fixings are in, averaging $103, and jet fuel is back at $100. 
 
 **An Asian's Greeks come from two roads that must agree: reprice after a small bump on the same random draws, or differentiate the moment-matched formula; the fixings already in turn the rest of the contract into a smaller Asian with a new strike, so with prices steady every Greek drains as the year runs.**
 
-**What kind of fact this is:** a method, bump and revalue on common random numbers, checked against the Greeks of an approximation (the moment-matched formula, within 2 cents on price and 0.005 on delta here); the rewrite of a part-fixed contract as a smaller option is an exact identity, proved on [asian-greeks-and-implied-volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/03-asian-greeks-and-implied-volatility.md) and checked here by simulation.
+**What kind of fact this is:** a method, bump and revalue on common random numbers, checked against the Greeks of an approximation (the moment-matched formula, within 2 cents on price and 0.005 on delta here); the rewrite of a part-fixed contract as a smaller option is an exact identity, proved on [Asian Greeks and implied volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/03-asian-greeks-and-implied-volatility.md) and checked here by simulation.
 
 ### The picture: the half-fixed contract at expiry
 
@@ -101,7 +83,7 @@ $$\Delta \approx \frac{V(S+h) - V(S-h)}{2h}, \qquad \Gamma \approx \frac{V(S+h) 
 
 - **One volatility for every fixing.** A real curve has more volatility near the front month than in the back; each fixing then needs its own σ, and a single number misprices the option by roughly the gap, in points, times the vega.
 - **All fixings driven by one random path.** Real curve points do not move in lockstep; with a second factor the far fixings are less correlated with the near ones, and the average is calmer than this card says.
-- **Shared draws for every bump.** With fresh random numbers per bump, delta becomes the difference of two noisy prices; the noise does not shrink as the bump does ([bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)).
+- **Shared draws for every bump.** With fresh random numbers per bump, delta becomes the difference of two noisy prices; the noise does not shrink as the bump does ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)).
 - **New strike above zero.** If the banked average $\bar a$ is so high that $K^* \le 0$, the call pays for certain: its price is $e^{-r\tau} w (M_1 - K^*)$, an average-price forward, vega is zero and gamma is zero. With 26 fixings at $205 the new strike is −5 and the price $51.84; the simulation agrees.
 - **Draining is not a law.** It holds with prices steady. If the banked prices pull $K^*$ from far out of the money to the money, the half-option left has more gamma and vega than the fresh one had.
 - **Lognormal matching is close, not exact.** A sum of lognormals is not lognormal. Here the formula sits 2 cents above the simulation on price and 0.004 on delta; the gap grows with volatility and length.
@@ -116,11 +98,11 @@ A simulated price is an average of payoffs over many random paths. Nudge an inpu
 
 ### Step 1: each fixing is a futures price, so the curve is the input
 
-A commodity desk has no spot price and dividend yield to feed a model. It has the futures curve. A futures price has no drift in the pricing world: the contract costs nothing to enter, so its expected change must be zero ([options-on-commodity-futures](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md)). Fixing i is that date's price, which the matching futures price reaches at delivery, so
+A commodity desk has no spot price and dividend yield to feed a model. It has the futures curve. A futures price has no drift in the pricing world: the contract costs nothing to enter, so its expected change must be zero ([Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md)). Fixing i is that date's price, which the matching futures price reaches at delivery, so
 
 $$X_i = F_i\,\exp\!\big(\sigma W(t_i) - \tfrac12\sigma^2 t_i\big),$$
 
-where $W$ is one random path (a Brownian motion) shared by every fixing. The $-\tfrac12\sigma^2 t_i$ keeps the expected fixing equal to $F_i$. Here the curve is the house one, $F_i = 100\,e^{0.05\,t_i}$: full carry at the bank rate, no storage cost, no convenience yield. A real curve in backwardation (falling with delivery date) goes in the same slot; see [contango-backwardation-and-roll-yield](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/04-contango-backwardation-and-roll-yield.md).
+where $W$ is one random path (a Brownian motion) shared by every fixing. The $-\tfrac12\sigma^2 t_i$ keeps the expected fixing equal to $F_i$. Here the curve is the house one, $F_i = 100\,e^{0.05\,t_i}$: full carry at the bank rate, no storage cost, no convenience yield. A real curve in backwardation (falling with delivery date) goes in the same slot; see [Contango and backwardation](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/04-contango-backwardation-and-roll-yield.md).
 
 On the equity card every fixing was today's share price grown at $r - q$. Here the input is a list of 52 prices, and every Greek can be asked per point of it.
 
@@ -128,7 +110,7 @@ On the equity card every fixing was today's share price grown at $r - q$. Here t
 
 ### Step 2: the two moments, from the one path
 
-The average's mean is the average of the forwards: $M_1 = \frac1m \sum F_i$. For the fresh contract that is $102.59, the fair fixed price of a jet-fuel swap on the same fixings ([commodity-swap-and-average-price-forward](01-commodity-swap-and-average-price-forward.md)).
+The average's mean is the average of the forwards: $M_1 = \frac1m \sum F_i$. For the fresh contract that is $102.59, the fair fixed price of a jet-fuel swap on the same fixings ([Commodity swap](01-commodity-swap-and-average-price-forward.md)).
 
 For the mean square, multiply two fixings. Their logs share the path up to the earlier date, so the covariance of the logs is $\sigma^2 \min(t_i, t_j)$, and the expected product is $F_i F_j e^{\sigma^2 \min(t_i, t_j)}$. Average over all pairs: $M_2$. A lognormal variable with the same two moments has log-spread $v = \sqrt{\ln(M_2/M_1^2)}$: 0.1180 for the fresh contract, against 0.20 for one fixing a year out. Black-76 on a forward $M_1$ with spread $v$ gives the price.
 
@@ -165,7 +147,7 @@ Vega shrinks three ways at once (the weight, the shorter time, the in-the-money 
 
 ### Step 5: the other door
 
-Pathwise differentiation (differentiating each path's payoff, then averaging) gives delta and vega with no bump; the equity card uses it, and [pathwise-and-likelihood-ratio-greeks](../07-Greeks%20by%20Numbers%20and%20Calibration/02-pathwise-and-likelihood-ratio-greeks.md) proves when it is valid. Bumps are used here because a commodity risk system bumps each curve point anyway, and the ladder comes from the same runs.
+Pathwise differentiation (differentiating each path's payoff, then averaging) gives delta and vega with no bump; the equity card uses it, and [Greeks inside the simulation](../07-Greeks%20by%20Numbers%20and%20Calibration/02-pathwise-and-likelihood-ratio-greeks.md) proves when it is valid. Bumps are used here because a commodity risk system bumps each curve point anyway, and the ladder comes from the same runs.
 
 ---
 
@@ -252,7 +234,7 @@ Top line: a plain call with the same time left, its vega shrinking roughly with 
 
 ## Code, from first principles, and it actually runs
 
-The script prices the fresh and half-fixed contracts and their Greeks by two independent roads. Road 1 simulates 20,000 pairs of paths (each path and its mirror image) of 52 weekly fixings from a hand-written random number generator, with the geometric average (exact price from [kemna-vorst-geometric-asian](02-kemna-vorst-geometric-asian.md)) as control variate, and bumps jet fuel, volatility and each quarter's forwards on the same draws. For the half-fixed contract it simulates the **original** payoff, banked fixings and all, so it tests the rewrite rather than assuming it. Road 2 is the moment-matched formula and its closed-form Greeks. The bell-curve area is a power series written out.
+The script prices the fresh and half-fixed contracts and their Greeks by two independent roads. Road 1 simulates 20,000 pairs of paths (each path and its mirror image) of 52 weekly fixings from a hand-written random number generator, with the geometric average (exact price from [Kemna-Vorst](02-kemna-vorst-geometric-asian.md)) as control variate, and bumps jet fuel, volatility and each quarter's forwards on the same draws. For the half-fixed contract it simulates the **original** payoff, banked fixings and all, so it tests the rewrite rather than assuming it. Road 2 is the moment-matched formula and its closed-form Greeks. The bell-curve area is a power series written out.
 
 ### Python
 
@@ -689,9 +671,9 @@ The two outputs agree line for line.
 ## Where you meet it in real life
 
 - **Airline fuel hedging.** A fuel bill is an average, so its hedge is an average-price option or swap. Mid-year, the bank hedges only the months still open.
-- **The swap next door.** When the new strike falls to zero or below, the option is certain to pay and becomes an average-price forward: [commodity-swap-and-average-price-forward](01-commodity-swap-and-average-price-forward.md).
+- **The swap next door.** When the new strike falls to zero or below, the option is certain to pay and becomes an average-price forward: [Commodity swap](01-commodity-swap-and-average-price-forward.md).
 - **Delta ladders on a commodity desk.** Risk is reported per futures month, not as one number, because each month is hedged with its own contract. The ladder on this card, by quarter, is the coarse version.
-- **Quotes in volatility.** A dealer quoting the half-fixed Asian in volatility must say which model and which banked average it assumes; that inverse is [asian-implied-volatility](05-asian-implied-volatility.md).
+- **Quotes in volatility.** A dealer quoting the half-fixed Asian in volatility must say which model and which banked average it assumes; that inverse is [Implied vol from an Asian quote](05-asian-implied-volatility.md).
 
 > **Say it back**
 > An Asian's Greeks come from two roads: bump the input and reprice on the same random draws, or differentiate the moment-matched Black-76 formula fed the futures curve. Averaging damps delta a little and vega a lot. Once fixings are in, the settled part is money: the rest is a smaller option, weight m over n, struck at the strike minus the settled part, divided by the weight. For the jet-fuel contract half-way through at $103, that is half an option struck at $97, with delta 0.35 against 0.59 fresh. The banked months drop out of the delta ladder, and with prices steady every Greek drains as the year runs.
@@ -700,13 +682,13 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [arithmetic-asian-option](03-arithmetic-asian-option.md): the contract itself, its $5.85 price, and the controlled simulation that this card bumps.
-- [bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): why a bump on shared draws gives a clean slope and a bump on fresh draws does not.
-- [asian-greeks-and-implied-volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/03-asian-greeks-and-implied-volatility.md): the equity version on Acme shares, which proves the banked-fixing rewrite and that the price rises strictly with volatility. This card reuses both and changes the inputs to a futures curve.
+- [The Asian option desks trade](03-arithmetic-asian-option.md): the contract itself, its $5.85 price, and the controlled simulation that this card bumps.
+- [Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): why a bump on shared draws gives a clean slope and a bump on fresh draws does not.
+- [Asian Greeks and implied volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/03-asian-greeks-and-implied-volatility.md): the equity version on Acme shares, which proves the banked-fixing rewrite and that the price rises strictly with volatility. This card reuses both and changes the inputs to a futures curve.
 
 ## Where this goes next
 
-- [asian-implied-volatility](05-asian-implied-volatility.md): the same formula run backwards, from a dealer's Asian quote to the one volatility that reproduces it, for fresh and half-fixed contracts.
+- [Implied vol from an Asian quote](05-asian-implied-volatility.md): the same formula run backwards, from a dealer's Asian quote to the one volatility that reproduces it, for fresh and half-fixed contracts.
 
 This card prices the Greeks from a known volatility; the question left open is which volatility a quoted Asian price implies, and whether a half-fixed quote pins one down at all.
 

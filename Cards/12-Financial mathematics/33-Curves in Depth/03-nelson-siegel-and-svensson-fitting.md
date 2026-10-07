@@ -1,26 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Curves in Depth
-topic: A whole curve from a few dials
-item: Fitting a curve with four or six parameters
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/33-Curves in Depth/02-key-rate-durations-and-curve-hedging|key-rate-durations-and-curve-hedging]]"
-  - "[[Cards/12-Financial mathematics/02-Curves/05-curve-interpolation-and-shape|curve-interpolation-and-shape]]"
-next:
-  - "[[Cards/12-Financial mathematics/33-Curves in Depth/04-term-premium-and-expectations|term-premium-and-expectations]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - nelson-siegel-and-svensson-fitting
----
-
 # Fitting a curve with four or six parameters: Nelson-Siegel and Svensson
 
-Financial mathematics → Curves in Depth → A whole curve from a few dials → Fitting a curve with four or six parameters
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves in Depth](../../../SYLLABUS.md#w12-s33) → Fitting a curve with four or six parameters
 
 ---
 
@@ -117,7 +97,7 @@ Conventions verified 28 Sep 2026: the card's bonds pay one coupon a year, on ann
 
 Twelve prices and four dials: in general no setting of four numbers hits twelve targets. So the question changes from "which curve passes through the prices?" to "which curve in this family misses them least?" That is **least squares**: add up the squared misses and make the total as small as possible. Squaring counts a miss twice as large four times as heavily, and makes misses above and below the market count alike.
 
-The family is chosen for reading, not only for fitting. Rate curves move mostly in three patterns: the whole curve up or down, the short end against the long end, and the middle against both ends. [principal-components-of-the-curve](01-principal-components-of-the-curve.md) finds those three patterns in rate history. Nelson-Siegel builds them in as dials.
+The family is chosen for reading, not only for fitting. Rate curves move mostly in three patterns: the whole curve up or down, the short end against the long end, and the middle against both ends. [Level, slope and curvature](01-principal-components-of-the-curve.md) finds those three patterns in rate history. Nelson-Siegel builds them in as dials.
 
 ### Step 1: from a forward rate to a bond price
 
@@ -201,7 +181,7 @@ Both roads land on the same four numbers: 3.8595%, −2.2528%, 5.1761% and 3.134
 
 Svensson with $\beta_3 = 0$ is Nelson-Siegel. So every Nelson-Siegel curve is also a Svensson curve, and Svensson's best score can only be equal or lower: 0.000036 against 0.189162 dollars squared. Extra dials never raise the score. The question is whether they lower it by more than noise. Here Svensson's typical miss, the root of the mean squared miss, is 0.173 cents, the size of rounding to the cent. Nelson-Siegel's is 12.555 cents, and its misses run in waves: negative, positive, negative, positive, negative along the maturities. A pattern in the misses is a missing shape.
 
-A different road fits yields rather than prices. Price misses weigh long bonds more heavily in rate terms, because their prices move more per unit of rate; yield misses weigh every maturity alike, and give somewhat different dials. Svensson's 1994 paper discusses both choices. [curve-interpolation-and-shape](../02-Curves/05-curve-interpolation-and-shape.md) fits Nelson-Siegel to zero rates directly, which is simpler when a bootstrapped curve already exists.
+A different road fits yields rather than prices. Price misses weigh long bonds more heavily in rate terms, because their prices move more per unit of rate; yield misses weigh every maturity alike, and give somewhat different dials. Svensson's 1994 paper discusses both choices. [Between the pillars](../02-Curves/05-curve-interpolation-and-shape.md) fits Nelson-Siegel to zero rates directly, which is simpler when a bootstrapped curve already exists.
 
 ---
 
@@ -679,10 +659,10 @@ The two outputs agree line for line, each language taking both roads with its ow
 
 - **Central bank yield curves.** The Federal Reserve publishes Svensson dials for the US Treasury curve for each business day, from the Gürkaynak, Sack and Wright fit. The Bank for International Settlements has catalogued which central banks use Nelson-Siegel and which use Svensson.
 - **Rich and cheap bonds.** A bond whose market price sits well above the fitted curve is **rich**, one below is **cheap**. Traders read the misses in the chart above as trade ideas, once the fit is trusted.
-- **Level, slope and curvature over time.** Diebold and Li fit Nelson-Siegel each month with the time scale fixed, and forecast the three beta dials as time series. [principal-components-of-the-curve](01-principal-components-of-the-curve.md) finds the same three patterns in the data without assuming a shape.
-- **Hedging a book.** A fitted curve can be bumped one dial at a time, or at single maturities as in [key-rate-durations-and-curve-hedging](02-key-rate-durations-and-curve-hedging.md).
-- **Roll-down.** The fitted curve's slope says how a bond's yield should drift as it ages: [carry-and-roll-down](05-carry-and-roll-down.md).
-- **Rates below zero.** Nothing in the formula stops $\beta_0 + \beta_1$ from being negative. The European Central Bank's euro-area curve is a Svensson fit, and its short end sat below zero for years after 2014: [negative-rates-and-floors](06-negative-rates-and-floors.md).
+- **Level, slope and curvature over time.** Diebold and Li fit Nelson-Siegel each month with the time scale fixed, and forecast the three beta dials as time series. [Level, slope and curvature](01-principal-components-of-the-curve.md) finds the same three patterns in the data without assuming a shape.
+- **Hedging a book.** A fitted curve can be bumped one dial at a time, or at single maturities as in [Key-rate durations](02-key-rate-durations-and-curve-hedging.md).
+- **Roll-down.** The fitted curve's slope says how a bond's yield should drift as it ages: [Carry and roll-down](05-carry-and-roll-down.md).
+- **Rates below zero.** Nothing in the formula stops $\beta_0 + \beta_1$ from being negative. The European Central Bank's euro-area curve is a Svensson fit, and its short end sat below zero for years after 2014: [Negative rates](06-negative-rates-and-floors.md).
 
 > **Say it back**
 > Nelson-Siegel writes the forward curve as a level, a fading start and one hump: four dials. Svensson adds a second hump: six. Averaging the forward gives the zero rate, which gives each discount factor, which prices every bond. The dials are chosen to make the total squared price miss smallest. The level is where the curve settles, minus the start is the slope, and the hump is the middle; a four-dial curve that lacks a shape the market has will misread them.
@@ -691,12 +671,12 @@ The two outputs agree line for line, each language taking both roads with its ow
 
 ## What this builds on
 
-- [key-rate-durations-and-curve-hedging](02-key-rate-durations-and-curve-hedging.md): the curve as many maturity-by-maturity rates that can move separately. This card compresses them into four or six dials.
-- [curve-interpolation-and-shape](../02-Curves/05-curve-interpolation-and-shape.md): Nelson-Siegel first appears there as one of three ways to fill a curve, fitted to six zero rates. This card fits bond prices directly and adds Svensson.
+- [Key-rate durations](02-key-rate-durations-and-curve-hedging.md): the curve as many maturity-by-maturity rates that can move separately. This card compresses them into four or six dials.
+- [Between the pillars](../02-Curves/05-curve-interpolation-and-shape.md): Nelson-Siegel first appears there as one of three ways to fill a curve, fitted to six zero rates. This card fits bond prices directly and adds Svensson.
 
 ## Where this goes next
 
-- [term-premium-and-expectations](04-term-premium-and-expectations.md): what a fitted forward curve says about where rates are expected to go, and how much of it is pay for bearing risk.
+- [What a curve says](04-term-premium-and-expectations.md): what a fitted forward curve says about where rates are expected to go, and how much of it is pay for bearing risk.
 
 A fitted curve is a clean description of today's prices; whether its upward slope is a forecast of higher rates or a reward for lending long is the question that card answers.
 

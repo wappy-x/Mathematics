@@ -1,31 +1,14 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Greeks, one each
-topic: Second-order volatility risk
-item: Volga
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/03-vega|vega]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-next:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/09-greeks-together-taylor-pnl|greeks-together-taylor-pnl]]"
-tags: [mathematics, financial mathematics, volga]
----
-
 # Volga: the curvature of the volatility bet
 
-Financial mathematics → The Greeks, one each → Second-order volatility risk → Volga
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Greeks, one each](../../../SYLLABUS.md#w12-s09) → Volga
 
 ---
 
 ## General Overview
 
-Acme shares trade at $100. A one-year call option on Acme with a $100 strike costs $9.23 when the market prices Acme's volatility (how widely its price swings in a year) at 20 percent. The option's vega is 37.90: each full unit of volatility, 1.00 or 100 percentage points, is worth $37.90 to the price, so one vol point is worth about 38 cents ([vega](03-vega.md)).
+Acme shares trade at $100. A one-year call option on Acme with a $100 strike costs $9.23 when the market prices Acme's volatility (how widely its price swings in a year) at 20 percent. The option's vega is 37.90: each full unit of volatility, 1.00 or 100 percentage points, is worth $37.90 to the price, so one vol point is worth about 38 cents ([Vega](03-vega.md)).
 
-Vega is a slope, and slopes change. Push volatility from 20 to 21 percent and vega itself drifts, from 37.90 to 37.92. The rate at which vega changes as volatility changes is **volga**, short for "volatility gamma" and also called vomma. It is to vega what gamma is to delta ([gamma](02-gamma.md)): the bend in the curve, where vega is the tilt.
+Vega is a slope, and slopes change. Push volatility from 20 to 21 percent and vega itself drifts, from 37.90 to 37.92. The rate at which vega changes as volatility changes is **volga**, short for "volatility gamma" and also called vomma. It is to vega what gamma is to delta ([Gamma](02-gamma.md)): the bend in the curve, where vega is the tilt.
 
 Volga matters because volatility does not sit still. When the market's volatility figure itself jumps around, an option with positive volga gains on the jumps up more than it loses on the jumps down. Acme's $130 call, far above today's price, has volga 149.08, more than sixty times the house option's 2.37. If Acme's volatility turns out to be 15 or 25 percent with even odds, that $130 call is worth 18.77 cents more than at a sure 20 percent. The call struck at Acme's forward price, $103.05, is worth 0.24 cents less.
 
@@ -52,7 +35,7 @@ One line: volga of the call at each strike. It dips just below zero between $101
 
 ## The formula
 
-The notation $\partial C / \partial \sigma$ means the rate at which the price changes as volatility moves while every other input is held still ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Applying it twice gives the second derivative.
+The notation $\partial C / \partial \sigma$ means the rate at which the price changes as volatility moves while every other input is held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Applying it twice gives the second derivative.
 
 $$\text{Volga} \;=\; \frac{\partial^2 C}{\partial \sigma^2} \;=\; \frac{\partial \mathcal{V}}{\partial \sigma} \;=\; \mathcal{V}\,\frac{d_1\,d_2}{\sigma}$$
 
@@ -73,7 +56,7 @@ $$\text{Volga} \;=\; \frac{\partial^2 C}{\partial \sigma^2} \;=\; \frac{\partial
 | $\mathcal{V}$ | vega, $\partial C / \partial \sigma$, per unit of volatility | 37.90 | scales volga up |
 | $\Delta\sigma$ | a move in volatility | 0.05 | the gain from it grows as its square |
 
-The helpers, unchanged from the pilot [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
+The helpers, unchanged from the pilot [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
 
 $$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \mathcal{V} = S\,e^{-qT}\,\varphi(d_1)\sqrt{T}.$$
 
@@ -88,7 +71,7 @@ $$d_1\,d_2 \;=\; \frac{m^2}{\sigma^2 T} \;-\; \frac{\sigma^2 T}{4}$$
 ### When it holds
 
 - **Black-Scholes prices.** The formula differentiates the Black-Scholes price. A model with a volatility smile (implied volatility that differs by strike) gives a different second derivative; the formula remains the market's standard way to quote the number.
-- **Volatility as an input, not a state.** Volga measures how the price would bend if the one volatility number were changed. Treating it as the payoff from random volatility needs that randomness to be independent of Acme's own shocks; with correlation, vanna enters as well ([vanna](06-vanna.md)).
+- **Volatility as an input, not a state.** Volga measures how the price would bend if the one volatility number were changed. Treating it as the payoff from random volatility needs that randomness to be independent of Acme's own shocks; with correlation, vanna enters as well ([Vanna](06-vanna.md)).
 - **Small moves.** Half volga times $\Delta\sigma^2$ is a second-order estimate. For the \$130 call it is off by 0.14 cents on a 5-point move and by 0.48 cents on a 10-point move.
 - **Units stated.** The formula is per unit of volatility squared. Per vol point squared, divide by 10,000: the house figure is 0.000237.
 
@@ -162,7 +145,7 @@ Hull and White (1987) showed that when volatility wanders at random, independent
 
 </details>
 
-A second road to the number needs no formula at all: price the option by averaging its payoff over the bell curve for volatilities a hair above and below 20 percent, and measure how the price bends. The code does exactly that. How volga sits beside delta, gamma, vega and the others in one expansion of a day's profit and loss is [greeks-together-taylor-pnl](09-greeks-together-taylor-pnl.md).
+A second road to the number needs no formula at all: price the option by averaging its payoff over the bell curve for volatilities a hair above and below 20 percent, and measure how the price bends. The code does exactly that. How volga sits beside delta, gamma, vega and the others in one expansion of a day's profit and loss is [The Greeks together](09-greeks-together-taylor-pnl.md).
 
 ---
 
@@ -629,7 +612,7 @@ The two outputs agree line for line at the printed precision.
 - **The smile in the wings.** Far strikes trade at higher implied volatility than at-the-money ones. Part of that premium is the price of positive volga: the wings gain from volatility of volatility, and sellers charge for it.
 - **Currency option desks.** The vanna-volga method prices an unusual option by buying the vega, vanna and volga it carries from three quoted options, at-the-money and two wings (Castagna and Mercurio, 2007). The wings supply the volga, the at-the-money option almost none.
 - **Straddles and strangles.** A straddle (a call and a put at the same strike near the forward) is nearly a pure vega bet with little volga. A strangle (a call and a put at far strikes) is the volga bet.
-- **Risk reports.** A book that is flat in vega can still lose when volatility jumps if it is short volga; the report shows volga next to vega and vanna ([vanna](06-vanna.md)).
+- **Risk reports.** A book that is flat in vega can still lose when volatility jumps if it is short volga; the report shows volga next to vega and vanna ([Vanna](06-vanna.md)).
 - **Stochastic volatility models.** Models in which volatility wanders produce a smile whose curvature grows with the volatility of volatility; volga is the Black-Scholes number that measures an option's exposure to that.
 
 > **Say it back**
@@ -639,14 +622,14 @@ The two outputs agree line for line at the printed precision.
 
 ## What this builds on
 
-- [vega](03-vega.md): the slope this card differentiates, $S e^{-qT}\varphi(d_1)\sqrt{T}$, and the per-unit versus per-point convention.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): holding every input still but one, and the chain rule used in Step 3.
+- [Vega](03-vega.md): the slope this card differentiates, $S e^{-qT}\varphi(d_1)\sqrt{T}$, and the per-unit versus per-point convention.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): holding every input still but one, and the chain rule used in Step 3.
 
 ## Where this goes next
 
-- [greeks-together-taylor-pnl](09-greeks-together-taylor-pnl.md): volga's term, half volga times the squared volatility move, beside every other Greek in one expansion of a day's profit and loss.
+- [The Greeks together](09-greeks-together-taylor-pnl.md): volga's term, half volga times the squared volatility move, beside every other Greek in one expansion of a day's profit and loss.
 
-The open question is how large volga's term is next to delta's, gamma's and vega's on an ordinary day, and [greeks-together-taylor-pnl](09-greeks-together-taylor-pnl.md) answers it by lining the terms up on one move.
+The open question is how large volga's term is next to delta's, gamma's and vega's on an ordinary day, and [The Greeks together](09-greeks-together-taylor-pnl.md) answers it by lining the terms up on one move.
 
 ---
 

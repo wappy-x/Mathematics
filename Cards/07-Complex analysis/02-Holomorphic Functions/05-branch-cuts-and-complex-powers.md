@@ -1,29 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Holomorphic Functions
-topic: Many-valued powers
-item: Branch cuts and complex powers
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/04-complex-logarithm|complex-logarithm]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/05-powers-roots-and-roots-of-unity|powers-roots-and-roots-of-unity]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/03-roots-and-fractional-exponents|roots-and-fractional-exponents]]"
-next:
-  - "[[Cards/07-Complex analysis/06-Real Integrals and Counting Zeros/05-keyhole-contours|keyhole-contours]]"
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/03-standard-maps-and-composing-them|standard-maps-and-composing-them]]"
-  - "[[Cards/22-Algebraic geometry/03-Plane Curves/08-riemann-surfaces-and-the-weierstrass-p-function|riemann-surfaces-and-the-weierstrass-p-function]]"
-tags:
-  - mathematics
-  - complex-analysis
-  - branch-cuts-and-complex-powers
----
-
 # Branch cuts and complex powers: z to the a is e to the a log z, it depends on the branch, and software picks one for you
 
-Complex analysis → Holomorphic Functions → Many-valued powers → Branch cuts and complex powers
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Holomorphic Functions](../../../SYLLABUS.md#w07-s02) → Branch cuts and complex powers
 
 ---
 
@@ -49,7 +26,7 @@ Drawn to scale at 40 units per 1, 0 at the centre. The dots are the cube roots o
 
 ## The formula
 
-Reminder: a logarithm $\log z$ of a nonzero z is any number whose exponential is z: real part ln|z|, imaginary part an angle of z, known up to whole turns ([complex-logarithm](04-complex-logarithm.md)). The principal logarithm $\operatorname{Log} z$ uses the principal argument $\operatorname{Arg} z$, the angle in (−π, π].
+Reminder: a logarithm $\log z$ of a nonzero z is any number whose exponential is z: real part ln|z|, imaginary part an angle of z, known up to whole turns ([The complex logarithm](04-complex-logarithm.md)). The principal logarithm $\operatorname{Log} z$ uses the principal argument $\operatorname{Arg} z$, the angle in (−π, π].
 
 $$z^a = e^{a \log z} = e^{a(\ln|z| + i\operatorname{Arg} z + 2\pi i k)}, \qquad k = 0, \pm 1, \pm 2, \dots$$
 
@@ -76,7 +53,7 @@ $$\frac{\text{principal value just above the cut}}{\text{principal value just be
 
 - **z not 0.** Zero has no logarithm. 0 is the **branch point**: the point a loop must circle to change the value.
 - **The principal value is a convention.** Angles in [0, 2π) give another function, equal in the upper half-plane, different below.
-- **Off the cut the principal power is holomorphic** (it has a complex derivative at each point: [complex-derivative-and-cauchy-riemann](01-complex-derivative-and-cauchy-riemann.md)), with derivative a z^a / z. On the cut it is not even continuous.
+- **Off the cut the principal power is holomorphic** (it has a complex derivative at each point: [The complex derivative](01-complex-derivative-and-cauchy-riemann.md)), with derivative a z^a / z. On the cut it is not even continuous.
 - **Laws of exponents lose their guarantee.** (zw)^a = z^a w^a can fail by a factor $e^{2\pi i a k}$.
 
 ---
@@ -89,7 +66,7 @@ For positive x, x^a = e^(a ln x), as 8^(1/3) = e^(ln 8 / 3) = 2. Nothing else ca
 
 ### Step 1: many logarithms give many powers
 
-The exponential repeats every 2πi ([exponential-sine-and-cosine-in-the-plane](03-exponential-sine-and-cosine-in-the-plane.md)), so the logarithms of z are Log z + 2πik, and
+The exponential repeats every 2πi ([The elementary functions](03-exponential-sine-and-cosine-in-the-plane.md)), so the logarithms of z are Log z + 2πik, and
 
 $$e^{a(\operatorname{Log} z + 2\pi i k)} = e^{a \operatorname{Log} z} \cdot e^{2\pi i a k}$$
 
@@ -97,7 +74,7 @@ For i^i: Log i = iπ/2, so i · Log i = −π/2 and the principal value is e^(�
 
 ### Step 2: count the values
 
-Branch k repeats the principal value when $e^{2\pi i a k} = 1$, that is, when ak is a whole number. Whole a: one value. a = p/q in lowest terms: the factors repeat every q steps of k, so q values: the q-th roots of z^p ([powers-roots-and-roots-of-unity](../01-Complex%20Numbers%20and%20the%20Plane/05-powers-roots-and-roots-of-unity.md)). Any other a: infinitely many, as i^i shows.
+Branch k repeats the principal value when $e^{2\pi i a k} = 1$, that is, when ak is a whole number. Whole a: one value. a = p/q in lowest terms: the factors repeat every q steps of k, so q values: the q-th roots of z^p ([Powers and roots](../01-Complex%20Numbers%20and%20the%20Plane/05-powers-roots-and-roots-of-unity.md)). Any other a: infinitely many, as i^i shows.
 
 For (−8)^(1/3): Log(−8) = ln 8 + iπ, and a third of it is ln 2 + iπ/3. The principal value is 2(cos π/3 + i sin π/3) = 1 + 1.732051i. k = 1 adds a turn: 2(cos π + i sin π) = −2. k = −1 gives 1 − 1.732051i. The real cube root is a branch, not the principal one.
 
@@ -109,7 +86,7 @@ The cut must run from 0 to infinity, so that every loop round 0 crosses it. Whic
 
 ### Step 4: follow a value instead of recomputing it
 
-Walk a path in small steps. Each step multiplies z by 1 + u, with u small, so it multiplies the power by $(1 + u)^a$. For small u that is the binomial series 1 + au + a(a − 1)u^2/2 + …, which needs no logarithm and no choice ([complex-power-series](02-complex-power-series.md)). The product is the value **followed continuously**; it depends on the path only through how often it circled 0.
+Walk a path in small steps. Each step multiplies z by 1 + u, with u small, so it multiplies the power by $(1 + u)^a$. For small u that is the binomial series 1 + au + a(a − 1)u^2/2 + …, which needs no logarithm and no choice ([Power series in the plane](02-complex-power-series.md)). The product is the value **followed continuously**; it depends on the path only through how often it circled 0.
 
 Walk the diamond 4 → 4i → −4 → −4i → 4 from √4 = 2. The followed square root runs 2 → 1.414214 + 1.414214i → 2i → −1.414214 + 1.414214i → −2. The principal value agrees until the walk crosses the cut, then reads 1.414214 − 1.414214i at −4i and 2 at the end.
 
@@ -123,7 +100,7 @@ Cut the path at z_0, z_1, …, z_N so each ratio z_(j+1)/z_j lies within distanc
 <details>
 <summary>Two floors: the Riemann surface of the square root</summary>
 
-Stack two copies of the plane, each cut along the negative real axis, and glue each floor's upper cut edge to the other floor's lower edge. Put √z on floor one, −√z on floor two. One walk round 0 climbs a floor; a second climbs back. On this surface the square root is one continuous function, and the cut is only the seam. z^(1/3) needs three floors, z^i infinitely many: riemann-surfaces-and-the-weierstrass-p-function.
+Stack two copies of the plane, each cut along the negative real axis, and glue each floor's upper cut edge to the other floor's lower edge. Put √z on floor one, −√z on floor two. One walk round 0 climbs a floor; a second climbs back. On this surface the square root is one continuous function, and the cut is only the seam. z^(1/3) needs three floors, z^i infinitely many: Riemann surfaces.
 
 </details>
 
@@ -400,15 +377,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [complex-logarithm](04-complex-logarithm.md): the logarithms Log z + 2πik.
-- [powers-roots-and-roots-of-unity](../01-Complex%20Numbers%20and%20the%20Plane/05-powers-roots-and-roots-of-unity.md): the q roots a fractional power chooses among.
-- [roots-and-fractional-exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): x^(p/q) for positive x, which every branch must match.
+- [The complex logarithm](04-complex-logarithm.md): the logarithms Log z + 2πik.
+- [Powers and roots](../01-Complex%20Numbers%20and%20the%20Plane/05-powers-roots-and-roots-of-unity.md): the q roots a fractional power chooses among.
+- [Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): x^(p/q) for positive x, which every branch must match.
 
 ## Where this goes next
 
-- [keyhole-contours](../06-Real%20Integrals%20and%20Counting%20Zeros/05-keyhole-contours.md): a contour hugging both sides of a cut.
-- [standard-maps-and-composing-them](../07-Conformal%20Maps%20and%20Harmonic%20Functions/03-standard-maps-and-composing-them.md): √z and z^a as maps that open and close wedges.
-- riemann-surfaces-and-the-weierstrass-p-function: the many-floored surface on which a many-valued function is single-valued.
+- [The keyhole contour](../06-Real%20Integrals%20and%20Counting%20Zeros/05-keyhole-contours.md): a contour hugging both sides of a cut.
+- [The standard maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/03-standard-maps-and-composing-them.md): √z and z^a as maps that open and close wedges.
+- Riemann surfaces: the many-floored surface on which a many-valued function is single-valued.
 
 The jump e^(2πia) looks like a defect; a contour run along both sides of the cut turns it into a tool for real integrals.
 

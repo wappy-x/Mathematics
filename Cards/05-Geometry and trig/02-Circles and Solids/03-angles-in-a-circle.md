@@ -1,21 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Circles and Solids
-topic: Circle theorems
-item: Angles at a circle
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/02-Circles and Solids/02-radians-arcs-and-sectors|radians-arcs-and-sectors]]"
-next: []
-tags: [mathematics, geometry and trig, angles-in-a-circle]
----
-
 # Angles at a circle: the inscribed-angle rule and the tangent that meets the radius square on
 
-Geometry and trig → Circles and Solids → Circle theorems → Angles at a circle
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Circles and Solids](../../../SYLLABUS.md#w05-s02) → Angles at a circle
 
 ---
 
@@ -39,13 +24,13 @@ To scale, 1 m = 17 units. A and B are the stage's ends, M its midpoint. Dashed: 
 
 ## The formula
 
-A **chord** joins two points of a circle: here the stage's front edge AB. An **inscribed angle**, or rim angle, has its corner V on the circle and its arms running to A and B: the camera's view, θ (theta). The **central angle** has its corner at the centre O. Both stand on the arc from A to B that does not contain V. Three letters name the angle at the middle letter ([congruent-triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)).
+A **chord** joins two points of a circle: here the stage's front edge AB. An **inscribed angle**, or rim angle, has its corner V on the circle and its arms running to A and B: the camera's view, θ (theta). The **central angle** has its corner at the centre O. Both stand on the arc from A to B that does not contain V. Three letters name the angle at the middle letter ([Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)).
 
 $$\theta = \angle AVB = \tfrac12\,\angle AOB$$
 
 **Read it aloud:** the angle at the rim is half the angle at the centre, both standing on the same arc.
 
-V's place on the arc does not enter, so every spot on it sees the same angle. A 60° lens needs 120° at the centre. In radians a central angle is its arc over the radius ([radians-arcs-and-sectors](02-radians-arcs-and-sectors.md)), so the rim angle is the far arc, behind the stage, over the diameter: 14.51 m ÷ 13.86 m = 1.0472 rad, which is 60°.
+V's place on the arc does not enter, so every spot on it sees the same angle. A 60° lens needs 120° at the centre. In radians a central angle is its arc over the radius ([Radians](02-radians-arcs-and-sectors.md)), so the rim angle is the far arc, behind the stage, over the diameter: 14.51 m ÷ 13.86 m = 1.0472 rad, which is 60°.
 
 When AB is a diameter the central angle is 180°, so the rim angle is 90°: **Thales' theorem**. A **tangent**, a straight line meeting the circle at one point only, meets the radius there at a right angle. Now let a straight aisle run back from a point $P$ on the stage line, square to it. P is $a$ from the near end and $b$ from the far end. The best spot $T$ on the aisle is where a circle through A and B touches it, $t$ back:
 
@@ -76,7 +61,7 @@ $$t = \sqrt{ab}$$
 
 ### Step 0: two radii make an isosceles triangle
 
-Two radii make an **isosceles** triangle (two sides equal), so its angles facing those sides are equal ([congruent-triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)). The other tool: a triangle's **exterior angle**, between one side and the next side extended, equals the two far corners added ([triangle-angle-sum-and-inequality](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)).
+Two radii make an **isosceles** triangle (two sides equal), so its angles facing those sides are equal ([Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)). The other tool: a triangle's **exterior angle**, between one side and the next side extended, equals the two far corners added ([Triangles](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)).
 
 ### Step 1: the centre sees twice what the rim sees
 
@@ -117,9 +102,9 @@ To scale, 1 m = 10 units. Dashed: OM and OB. The square marks the right angle at
 
 OT and the stage are both square to the aisle, so O and T are equally far back, and the radius is M's distance from the aisle: 4 + 6 = 10 m. In triangle OMB, OB = 10 m and MB = 6 m, so OM = √(10^2 − 6^2) = 8 m: T is 8 m back. In letters the radius is (a + b) ÷ 2 and MB is (b − a) ÷ 2; their squares differ by $a \times b$, so $t = \sqrt{ab}$.
 
-The angle at T is half of angle AOB, which OM halves: it is angle MOB. Triangle OMB, sides 6, 8 and 10 m, is the 3, 4, 5 triangle doubled ([similar-triangles-and-scale](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)), so that corner is the 36.87° one facing 3 ([triangle-angle-sum-and-inequality](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). At 4 m or 16 m back the view shrinks to 30.96°.
+The angle at T is half of angle AOB, which OM halves: it is angle MOB. Triangle OMB, sides 6, 8 and 10 m, is the 3, 4, 5 triangle doubled ([Similar triangles](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)), so that corner is the 36.87° one facing 3 ([Triangles](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). At 4 m or 16 m back the view shrinks to 30.96°.
 
-Grid coordinates give a second road, the code's: see [distance-and-midpoint](../04-Coordinates%20and%20Curves/01-distance-and-midpoint.md).
+Grid coordinates give a second road, the code's: see [Distance and midpoint](../04-Coordinates%20and%20Curves/01-distance-and-midpoint.md).
 
 ---
 
@@ -149,7 +134,7 @@ A 60° lens frames the stage from anywhere on the arc; on the aisle nothing beat
 
 ## Code, from first principles, and it actually runs
 
-Two roads: the card's rules, and a grid. The grid puts M at (0, 0), A at (−6, 0) and B at (6, 0): metres right of M, then metres back. It measures each angle from the dot product of the two sight lines, at seven cameras round the arc, grid spots 5 cm apart and aisle spots 1 mm apart. Cos, sin and the inverse cosine come from [right-triangle-trigonometry](../03-Trigonometry/01-right-triangle-trigonometry.md).
+Two roads: the card's rules, and a grid. The grid puts M at (0, 0), A at (−6, 0) and B at (6, 0): metres right of M, then metres back. It measures each angle from the dot product of the two sight lines, at seven cameras round the arc, grid spots 5 cm apart and aisle spots 1 mm apart. Cos, sin and the inverse cosine come from [Sine, cosine and tangent](../03-Trigonometry/01-right-triangle-trigonometry.md).
 
 ### Python
 
@@ -376,14 +361,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [radians-arcs-and-sectors](02-radians-arcs-and-sectors.md): an angle measured by its arc, which makes the rim angle the far arc over the diameter.
-- [circle-circumference-and-area](01-circle-circumference-and-area.md) and [pythagoras-and-its-converse](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md): centre, radius and diameter; the lengths OM, r and t.
+- [Radians](02-radians-arcs-and-sectors.md): an angle measured by its arc, which makes the rim angle the far arc over the diameter.
+- [Circles](01-circle-circumference-and-area.md) and [Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md): centre, radius and diameter; the lengths OM, r and t.
 
 ## Where this goes next
 
-- [law-of-sines-and-the-ambiguous-case](../03-Trigonometry/07-law-of-sines-and-the-ambiguous-case.md): this rule makes each side of a triangle, over the sine of the angle facing it, the diameter of the circle through its corners.
+- [Law of sines](../03-Trigonometry/07-law-of-sines-and-the-ambiguous-case.md): this rule makes each side of a triangle, over the sine of the angle facing it, the diameter of the circle through its corners.
 
-This card sized circles only for 60° and 90°; any other angle needs the sine ratio of [right-triangle-trigonometry](../03-Trigonometry/01-right-triangle-trigonometry.md).
+This card sized circles only for 60° and 90°; any other angle needs the sine ratio of [Sine, cosine and tangent](../03-Trigonometry/01-right-triangle-trigonometry.md).
 
 ---
 

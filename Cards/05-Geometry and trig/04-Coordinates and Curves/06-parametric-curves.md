@@ -1,24 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Coordinates and Curves
-topic: Curves drawn by a moving point
-item: Parametric curves
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/03-polar-coordinates|polar-coordinates]]"
-next:
-  - "[[Cards/06-Calculus and analysis/05-Curves and Solids/01-parametric-motion|parametric-motion]]"
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/02-the-brachistochrone-and-the-beltrami-identity|the-brachistochrone-and-the-beltrami-identity]]"
-  - "[[Cards/22-Algebraic geometry/01-Polynomial Systems/05-elimination-and-implicitisation|elimination-and-implicitisation]]"
-tags: [mathematics, geometry and trig, parametric-curves]
----
-
 # Parametric curves: a point that moves with time
 
-Geometry and trig → Coordinates and Curves → Curves drawn by a moving point → Parametric curves
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Coordinates and Curves](../../../SYLLABUS.md#w05-s04) → Parametric curves
 
 ---
 
@@ -44,7 +26,7 @@ Drawn to scale, 1 m = 140 units. Solid: the valve. Dashed: a pebble in the tread
 
 ## The formula
 
-Notation first, in words. Here $x$ is metres along the road from the valve's lowest point and $y$ metres above the road. The Greek letter $\theta$, "theta", is the angle turned since then, in radians ([radians-and-the-unit-circle](../03-Trigonometry/02-radians-and-the-unit-circle.md)): a full turn is 2π, about 6.2832. Writing $x(\theta)$ means "x, worked out from theta".
+Notation first, in words. Here $x$ is metres along the road from the valve's lowest point and $y$ metres above the road. The Greek letter $\theta$, "theta", is the angle turned since then, in radians ([The unit circle](../03-Trigonometry/02-radians-and-the-unit-circle.md)): a full turn is 2π, about 6.2832. Writing $x(\theta)$ means "x, worked out from theta".
 
 $$x(\theta) = R\,\theta - b\sin\theta, \qquad y(\theta) = R - b\cos\theta$$
 
@@ -63,13 +45,13 @@ At 3.5 m/s the hub covers 3.5t metres in t seconds, so θ = 3.5t/R: time drives 
 
 Removing the parameter leaves one shape per moving part.
 
-- **The hub,** (Rθ, R): the height never involves θ, so y = 0.35, a line ([lines-slopes-and-intersections](02-lines-slopes-and-intersections.md)).
-- **The valve seen from the hub,** (−b sinθ, −b cosθ): across^2 + up^2 = b^2, a circle of radius 0.30 m ([circles-and-parabolas](04-circles-and-parabolas.md)).
+- **The hub,** (Rθ, R): the height never involves θ, so y = 0.35, a line ([Lines](02-lines-slopes-and-intersections.md)).
+- **The valve seen from the hub,** (−b sinθ, −b cosθ): across^2 + up^2 = b^2, a circle of radius 0.30 m ([Circles and parabolas](04-circles-and-parabolas.md)).
 - **The valve seen from the kerb,** on the rising half of each arch:
 
 $$x = R\arccos\!\Big(\frac{R - y}{b}\Big) - \sqrt{b^2 - (R - y)^2}, \qquad \text{for } 0 \le \theta \le \pi$$
 
-Here arccos, the inverse cosine, returns the angle from 0 to π with the given cosine ([inverse-trig-and-solving-equations](../03-Trigonometry/05-inverse-trig-and-solving-equations.md)). With b equal to R the point is on the tread and the arch is a **cycloid**, named by Galileo in 1599. With b less than R it is a **curtate** (shortened) **cycloid**, never reaching the road.
+Here arccos, the inverse cosine, returns the angle from 0 to π with the given cosine ([Inverse trig](../03-Trigonometry/05-inverse-trig-and-solving-equations.md)). With b equal to R the point is on the tread and the arch is a **cycloid**, named by Galileo in 1599. With b less than R it is a **curtate** (shortened) **cycloid**, never reaching the road.
 
 ### When it holds
 
@@ -102,7 +84,7 @@ Hub plus arrow gives the formula. After a quarter turn the valve is at (0.5498 �
 
 ### Step 4: remove the parameter
 
-To eliminate a parameter, solve one formula for it and substitute into the other, or combine the two so it cancels. The spoke's circle uses sine squared plus cosine squared equals 1 ([trig-identities](../03-Trigonometry/03-trig-identities.md)). For the valve, the height gives the cosine, arccos gives θ on the rising half, the sine follows from the cosine, and x comes out in terms of y alone.
+To eliminate a parameter, solve one formula for it and substitute into the other, or combine the two so it cancels. The spoke's circle uses sine squared plus cosine squared equals 1 ([Trig identities](../03-Trigonometry/03-trig-identities.md)). For the valve, the height gives the cosine, arccos gives θ on the rising half, the sine follows from the cosine, and x comes out in terms of y alone.
 
 <details>
 <summary>Detailed proof: the eliminated equation, and why it stops at half a turn</summary>
@@ -115,11 +97,11 @@ For θ from π to 2π the sine is negative and θ = 2π − arccos((R − y)/b),
 
 ### Step 5: the cycloid, and why the top of a wheel blurs
 
-Put b = R: a pebble in the tread. Its lowest height is 0, so it touches the road once a turn at a sharp point, a **cusp**. One arch is 8R = 2.80 m long while the bike covers 2.1991 m; Christopher Wren found that length in 1658. The proof needs [parametric-motion](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/01-parametric-motion.md); the code checks it with 100,000 short straight pieces.
+Put b = R: a pebble in the tread. Its lowest height is 0, so it touches the road once a turn at a sharp point, a **cusp**. One arch is 8R = 2.80 m long while the bike covers 2.1991 m; Christopher Wren found that length in 1658. The proof needs [Parametric motion](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/01-parametric-motion.md); the code checks it with 100,000 short straight pieces.
 
 Without slipping, the point touching the road is still for an instant, so over a small turn the wheel pivots about it: a point straight above it, h metres up, moves h/R times as far as the hub. The valve at the top moves 1.8571 times as far, at the bottom 0.1429 times; the pebble at the bottom stops dead. Hence the blurred top of a wheel in photographs.
 
-Another road: seen from the hub the valve is a polar point with fixed distance 0.30 m and changing angle ([polar-coordinates](03-polar-coordinates.md)); adding the hub's slide gives the same formulas.
+Another road: seen from the hub the valve is a polar point with fixed distance 0.30 m and changing angle ([Polar coordinates](03-polar-coordinates.md)); adding the hub's slide gives the same formulas.
 
 ---
 
@@ -378,13 +360,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [polar-coordinates](03-polar-coordinates.md): a point fixed by distance and angle, the valve seen from the hub.
+- [Polar coordinates](03-polar-coordinates.md): a point fixed by distance and angle, the valve seen from the hub.
 
 ## Where this goes next
 
-- [parametric-motion](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/01-parametric-motion.md): velocity and arch length, exactly.
-- [the-brachistochrone-and-the-beltrami-identity](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/02-the-brachistochrone-and-the-beltrami-identity.md): the upside-down cycloid as the fastest slide.
-- elimination-and-implicitisation: when a parameter can be removed exactly.
+- [Parametric motion](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/01-parametric-motion.md): velocity and arch length, exactly.
+- [The brachistochrone](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/02-the-brachistochrone-and-the-beltrami-identity.md): the upside-down cycloid as the fastest slide.
+- Elimination: when a parameter can be removed exactly.
 
 This card measured the arch by short pieces and the speed by one small click; getting both exactly, at every instant, is what a later card does.
 

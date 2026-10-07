@@ -1,25 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Oscillators - Second-Order Linear Equations
-topic: Adding solutions
-item: Superposition
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/01-what-a-differential-equation-says|what-a-differential-equation-says]]"
-  - "[[Cards/03-Algebra/03-Vectors/03-linear-combinations-and-span|linear-combinations-and-span]]"
-  - "[[Cards/03-Algebra/03-Vectors/05-basis-and-dimension|basis-and-dimension]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/02-the-characteristic-equation|the-characteristic-equation]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/01-power-series-at-an-ordinary-point|power-series-at-an-ordinary-point]]"
-tags: [mathematics, differential equations and dynamics, superposition-and-the-shape-of-linear-solutions]
----
-
 # Superposition: for a linear equation, solutions add and scale, so two of them are enough
 
-Differential equations and dynamics → Oscillators - Second-Order Linear Equations → Adding solutions → Superposition
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Oscillators - Second-Order Linear Equations](../../../SYLLABUS.md#w08-s03) → Superposition
 
 ---
 
@@ -33,7 +14,7 @@ Two independent swings (neither a multiple of the other), weighted by two number
 
 **For a linear equation, any weighted sum of free solutions is a free solution; two independent ones cover them all, two starting values pick the weights, and a forced equation's solutions are one forced solution plus that free family.**
 
-**What kind of fact this is:** a theorem, proved for the spring in Why it works; the general second-order case is in the Detailed proof, resting on [lipschitz-and-the-picard-lindelof-theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md).
+**What kind of fact this is:** a theorem, proved for the spring in Why it works; the general second-order case is in the Detailed proof, resting on [The Picard-Lindelof theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md).
 
 ### The picture: a free swing, the hook, and the forced motion
 
@@ -54,7 +35,7 @@ Orange, straight: the hook's height t/2 cm, itself a forced solution. Green: the
 
 ## The formula
 
-Notation first, in words. As on [what-a-differential-equation-says](../01-Rate%20Equations/01-what-a-differential-equation-says.md), a dash means a rate: $y'$ is the weight's speed, and $y''$, "y double prime", its acceleration. $L[y]$ is a machine that takes a whole curve and returns another: the curve's acceleration plus the curve itself.
+Notation first, in words. As on [A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md), a dash means a rate: $y'$ is the weight's speed, and $y''$, "y double prime", its acceleration. $L[y]$ is a machine that takes a whole curve and returns another: the curve's acceleration plus the curve itself.
 
 The spring pulls 1 cm/s^2 per cm of stretch (stiffness over mass, 1 per s^2), so with the hook fixed
 
@@ -108,15 +89,15 @@ The rate of a sum is the sum of the rates; the rate of 3 times a curve is 3 time
 
 ### Step 1: weighted sums of free swings are free swings
 
-cos t has acceleration −cos t, so $L[\cos t] = 0$; likewise $L[\sin t] = 0$. By Step 0, $L[3\cos t - 2\sin t] = 3 \times 0 - 2 \times 0 = 0$. The free solutions are closed under weighted sums ([linear-combinations-and-span](../../03-Algebra/03-Vectors/03-linear-combinations-and-span.md)): a vector space whose members are curves.
+cos t has acceleration −cos t, so $L[\cos t] = 0$; likewise $L[\sin t] = 0$. By Step 0, $L[3\cos t - 2\sin t] = 3 \times 0 - 2 \times 0 = 0$. The free solutions are closed under weighted sums ([Linear combinations and span](../../03-Algebra/03-Vectors/03-linear-combinations-and-span.md)): a vector space whose members are curves.
 
 ### Step 2: two starting readings fix the two weights
 
-At t = 0, cos is 1 with speed 0 and sin is 0 with speed 1, so $y_h(0) = c_1$ and $y_h'(0) = c_2$: here 3 and −2. Height alone allows 3 cos t + c sin t for every number c. The pair works because its starting table, height and speed of each, has determinant 1, not 0; that test is [wronskian-and-reduction-of-order](04-wronskian-and-reduction-of-order.md).
+At t = 0, cos is 1 with speed 0 and sin is 0 with speed 1, so $y_h(0) = c_1$ and $y_h'(0) = c_2$: here 3 and −2. Height alone allows 3 cos t + c sin t for every number c. The pair works because its starting table, height and speed of each, has determinant 1, not 0; that test is [The Wronskian](04-wronskian-and-reduction-of-order.md).
 
 ### Step 3: nothing is missed
 
-Take any free motion $y$. Build $w = y(0)\cos t + y'(0)\sin t$, which starts the same way. The difference $z = y - w$ is free and starts at height 0, speed 0. Its $E = z'^2 + z^2$ has rate $2z'z'' + 2zz' = 2z'(z'' + z) = 0$, so $E$ stays at its starting value, 0. Two squares summing to 0 force $z = 0$. So $y = w$: the free solutions form a space of dimension 2 with basis cos t and sin t ([basis-and-dimension](../../03-Algebra/03-Vectors/05-basis-and-dimension.md)).
+Take any free motion $y$. Build $w = y(0)\cos t + y'(0)\sin t$, which starts the same way. The difference $z = y - w$ is free and starts at height 0, speed 0. Its $E = z'^2 + z^2$ has rate $2z'z'' + 2zz' = 2z'(z'' + z) = 0$, so $E$ stays at its starting value, 0. Two squares summing to 0 force $z = 0$. So $y = w$: the free solutions form a space of dimension 2 with basis cos t and sin t ([Basis and dimension](../../03-Algebra/03-Vectors/05-basis-and-dimension.md)).
 
 For the swing 3 cos t − 2 sin t, $E$ reads 13 throughout, so it peaks at √13 = 3.61 cm.
 
@@ -126,20 +107,20 @@ If $y$ and $y_p$ both solve $L[y] = t/2$, Step 0 gives $L[y - y_p] = t/2 - t/2 =
 
 ### Step 5: forcing scales and adds
 
-$L[2y] = 2L[y]$: twice a motion needs twice the forcing. Raise the hook at 1 cm/s, start at 6 cm, −4 cm/s, and the weight moves exactly twice as far. Two forcings together are met by the sum of their responses, which is why [undetermined-coefficients](05-undetermined-coefficients.md) can treat a forcing term by term.
+$L[2y] = 2L[y]$: twice a motion needs twice the forcing. Raise the hook at 1 cm/s, start at 6 cm, −4 cm/s, and the weight moves exactly twice as far. Two forcings together are met by the sum of their responses, which is why [Undetermined coefficients](05-undetermined-coefficients.md) can treat a forcing term by term.
 
 <details>
 <summary>Detailed proof: any second-order linear equation</summary>
 
 Let the coefficients p(t), q(t) and the forcing f(t) be continuous on an interval containing 0, and L[y] = y'' + p(t)y' + q(t)y. Step 0 holds unchanged whatever the coefficients.
 
-Send each homogeneous solution to its starting pair, height and speed at 0. This map is linear. By the existence and uniqueness theorem for linear equations, each pair is reached by exactly one solution on the whole interval, since linear equations never blow up ([blow-up-and-the-life-span-of-a-solution](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/03-blow-up-and-the-life-span-of-a-solution.md)). So the map is one-to-one and onto the plane: the solutions form a vector space of dimension 2, and two of them are a basis exactly when their starting pairs are independent.
+Send each homogeneous solution to its starting pair, height and speed at 0. This map is linear. By the existence and uniqueness theorem for linear equations, each pair is reached by exactly one solution on the whole interval, since linear equations never blow up ([Blow-up](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/03-blow-up-and-the-life-span-of-a-solution.md)). So the map is one-to-one and onto the plane: the solutions form a vector space of dimension 2, and two of them are a basis exactly when their starting pairs are independent.
 
 For $L[y] = f$, if $y_p$ is one solution then $L[y - y_p] = 0$ for every other, so $y - y_p$ lies in that plane of solutions. The forced solutions are one point plus that plane, not a vector space: two of them sum to forcing 2f.
 
 </details>
 
-A second road needs no formula: from the start, step the height by the speed and the speed by the rule's acceleration, in small time steps. This is Euler's rule, given its own card at [eulers-method](../05-Numerical%20Evolution/01-eulers-method.md).
+A second road needs no formula: from the start, step the height by the speed and the speed by the rule's acceleration, in small time steps. This is Euler's rule, given its own card at [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md).
 
 ---
 
@@ -378,8 +359,8 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Structural engineering.** Under small loads a beam bends linearly, so each load case is computed alone and the results added; this fails once the steel yields.
-- **Electrical circuits.** A circuit of resistors, coils and capacitors obeys the spring's kind of equation; its response to two sources is the sum of the responses ([the-rlc-circuit-and-the-spring](08-the-rlc-circuit-and-the-spring.md)).
-- **Shaking at the natural rhythm.** Shake the hook at the spring's own rhythm and the particular solution grows without bound: [resonance-and-beats](06-resonance-and-beats.md).
+- **Electrical circuits.** A circuit of resistors, coils and capacitors obeys the spring's kind of equation; its response to two sources is the sum of the responses ([The RLC circuit](08-the-rlc-circuit-and-the-spring.md)).
+- **Shaking at the natural rhythm.** Shake the hook at the spring's own rhythm and the particular solution grows without bound: [Resonance](06-resonance-and-beats.md).
 
 > **Say it back**
 > For a linear equation, the machine that checks a curve respects sums and multiples. So weighted sums of free solutions are free solutions, and two independent ones, here cos t and sin t, cover every free motion. The starting height and speed fix the two weights. A forced solution is one particular solution, here t/2, plus a free one. Double the forcing and the start, and the motion doubles.
@@ -388,14 +369,14 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [what-a-differential-equation-says](../01-Rate%20Equations/01-what-a-differential-equation-says.md): rate rules, substitution, and the order counting starting values.
-- [linear-combinations-and-span](../../03-Algebra/03-Vectors/03-linear-combinations-and-span.md): weighted sums, and the set they reach.
-- [basis-and-dimension](../../03-Algebra/03-Vectors/05-basis-and-dimension.md): why two independent solutions are exactly enough.
+- [A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md): rate rules, substitution, and the order counting starting values.
+- [Linear combinations and span](../../03-Algebra/03-Vectors/03-linear-combinations-and-span.md): weighted sums, and the set they reach.
+- [Basis and dimension](../../03-Algebra/03-Vectors/05-basis-and-dimension.md): why two independent solutions are exactly enough.
 
 ## Where this goes next
 
-- [the-characteristic-equation](02-the-characteristic-equation.md): the two solutions of any constant-coefficient equation, by trying an exponential.
-- [power-series-at-an-ordinary-point](../07-Series%20Solutions%20and%20Boundary%20Problems/01-power-series-at-an-ordinary-point.md): the two solutions as power series when coefficients vary.
+- [The characteristic equation](02-the-characteristic-equation.md): the two solutions of any constant-coefficient equation, by trying an exponential.
+- [Series solutions](../07-Series%20Solutions%20and%20Boundary%20Problems/01-power-series-at-an-ordinary-point.md): the two solutions as power series when coefficients vary.
 
 For a damped spring, such as a car's shock absorber, the characteristic equation supplies the two solutions.
 

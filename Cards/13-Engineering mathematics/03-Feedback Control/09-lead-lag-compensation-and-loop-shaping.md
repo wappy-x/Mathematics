@@ -1,24 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Feedback Control
-topic: Lead and lag sections
-item: Loop shaping
-kind: method
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/06-nyquist-criterion-and-stability-margins|nyquist-criterion-and-stability-margins]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/07-pid-control-and-tuning|pid-control-and-tuning]]"
-next:
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/10-smith-predictor-and-time-delays|smith-predictor-and-time-delays]]"
-  - "[[Cards/13-Engineering mathematics/10-Robustness and Adaptation/03-h-infinity-control-in-outline|h-infinity-control-in-outline]]"
-tags: [mathematics, engineering mathematics, lead-lag-compensation-and-loop-shaping]
----
-
 # Loop shaping: buy phase with a lead, buy accuracy with a lag
 
-Engineering mathematics → Feedback Control → Lead and lag sections → Loop shaping
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Feedback Control](../../../SYLLABUS.md#w13-s03) → Loop shaping
 
 ---
 
@@ -55,7 +37,7 @@ Orange: gain only, flat at −180°, no margin anywhere. Green: with the lead, a
 
 ## The formula
 
-Four pieces of notation from earlier cards, in one line each. $G(s)$ is the transfer function, what the system does to each exponential $e^{st}$; $s = j\omega$ reads off the response to a sine of angular frequency $\omega$, with $j$ the square root of −1 as engineers write it (the rest of the library writes i). The loop gain $L(s)$ is controller times plant, the round trip a signal makes ([feedback-and-closed-loop-transfer-functions](01-feedback-and-closed-loop-transfer-functions.md)). The sensitivity $S = 1/(1+L)$ is the factor by which feedback shrinks a disturbance's effect at each frequency ([sensitivity-and-the-gang-of-four](02-sensitivity-and-the-gang-of-four.md)). The phase margin is 180° plus the loop's phase at the crossover frequency $\omega_c$, where $|L| = 1$ ([nyquist-criterion-and-stability-margins](06-nyquist-criterion-and-stability-margins.md)).
+Four pieces of notation from earlier cards, in one line each. $G(s)$ is the transfer function, what the system does to each exponential $e^{st}$; $s = j\omega$ reads off the response to a sine of angular frequency $\omega$, with $j$ the square root of −1 as engineers write it (the rest of the library writes i). The loop gain $L(s)$ is controller times plant, the round trip a signal makes ([Feedback](01-feedback-and-closed-loop-transfer-functions.md)). The sensitivity $S = 1/(1+L)$ is the factor by which feedback shrinks a disturbance's effect at each frequency ([Sensitivity functions](02-sensitivity-and-the-gang-of-four.md)). The phase margin is 180° plus the loop's phase at the crossover frequency $\omega_c$, where $|L| = 1$ ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)).
 
 The gimbal, the two sections and the loop:
 
@@ -104,7 +86,7 @@ The design follows from three lines. A pure inertia has phase −180° at every 
 
 ### Step 0: phases of factors add, and a zero adds phase before its pole takes it away
 
-At $s = j\omega$, the loop gain is a product of complex numbers, so its phase is a sum ([frequency-response-and-bode-plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md)). A factor $T s + 1$, a zero, adds up to +90° of phase as $\omega$ climbs past $1/T$. A factor $1/(\alpha T s + 1)$, a pole, takes up to 90° away as $\omega$ climbs past $1/(\alpha T)$. Put the zero first and, in the band between them, the zero has given more than the pole has taken. That band is where the lead earns its keep. Swap the order and the same pair is a lag.
+At $s = j\omega$, the loop gain is a product of complex numbers, so its phase is a sum ([Bode plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md)). A factor $T s + 1$, a zero, adds up to +90° of phase as $\omega$ climbs past $1/T$. A factor $1/(\alpha T s + 1)$, a pole, takes up to 90° away as $\omega$ climbs past $1/(\alpha T)$. Put the zero first and, in the band between them, the zero has given more than the pole has taken. That band is where the lead earns its keep. Swap the order and the same pair is a lag.
 
 ### Step 1: the peak sits at the geometric mean, and its height depends on alpha alone
 
@@ -160,9 +142,9 @@ Poles of $L$ on the imaginary axis, such as the gimbal's double pole at 0, are z
 
 ### Step 5: what the waterbed forbids
 
-Three things follow. First, no controller makes $\lvert S\rvert < 1$ at every frequency: the area must balance. Second, an unstable plant pays extra. A top-heavy camera, its centre of mass above the axis, has gravity torque 0.09 N m/rad pushing it over, an unstable pole at +3 rad/s. The same lead still stabilises it (the Routh test, [routh-hurwitz-criterion](04-routh-hurwitz-criterion.md), gives 0.000828 > 0), but the integral is now 9.4248 rad/s, π times 3: net amplification is compulsory. Third, the balance can only be spread thin over frequencies where the loop gain is small, and those are limited by noise, by the motor and by delays. A delay caps how high crossover can go; that limit is the subject of [smith-predictor-and-time-delays](10-smith-predictor-and-time-delays.md). A right-half-plane zero (a zero with positive real part) caps it too, holding crossover well below the zero's frequency (Freudenberg and Looze, in Sources).
+Three things follow. First, no controller makes $\lvert S\rvert < 1$ at every frequency: the area must balance. Second, an unstable plant pays extra. A top-heavy camera, its centre of mass above the axis, has gravity torque 0.09 N m/rad pushing it over, an unstable pole at +3 rad/s. The same lead still stabilises it (the Routh test, [Routh-Hurwitz](04-routh-hurwitz-criterion.md), gives 0.000828 > 0), but the integral is now 9.4248 rad/s, π times 3: net amplification is compulsory. Third, the balance can only be spread thin over frequencies where the loop gain is small, and those are limited by noise, by the motor and by delays. A delay caps how high crossover can go; that limit is the subject of [Time delays](10-smith-predictor-and-time-delays.md). A right-half-plane zero (a zero with positive real part) caps it too, holding crossover well below the zero's frequency (Freudenberg and Looze, in Sources).
 
-The same design can be reached in the complex plane by placing closed-loop poles with the lead's zero and pole ([root-locus](05-root-locus.md)); a lead is also a filtered derivative term, the D of [pid-control-and-tuning](07-pid-control-and-tuning.md) with the filter of [pid-on-real-hardware](08-pid-on-real-hardware.md) (its Step 5), and a lag a softened integral.
+The same design can be reached in the complex plane by placing closed-loop poles with the lead's zero and pole ([Root locus](05-root-locus.md)); a lead is also a filtered derivative term, the D of [PID control](07-pid-control-and-tuning.md) with the filter of [PID in practice](08-pid-on-real-hardware.md) (its Step 5), and a lag a softened integral.
 
 ---
 
@@ -641,7 +623,7 @@ ALL CHECKS PASS
 - **Camera gimbals, drones and telescopes.** Pointing loops on nearly pure inertias are the classic lead job; a lag or an integral term then fixes the steady pull of imbalance or wind.
 - **Hard-disk and optical-drive heads.** The arm is close to a double integrator; designers shape a lead around crossover and notch out structural resonances above it, watching $\lvert S\rvert$'s peak.
 - **Power supplies.** A switching converter's feedback "type II" and "type III" compensators are lag and lead-lag networks of resistors and capacitors, tuned for crossover and phase margin.
-- **PID in disguise.** A PID controller with a filtered derivative is a lead and a lag in series: [pid-control-and-tuning](07-pid-control-and-tuning.md) and [pid-on-real-hardware](08-pid-on-real-hardware.md).
+- **PID in disguise.** A PID controller with a filtered derivative is a lead and a lag in series: [PID control](07-pid-control-and-tuning.md) and [PID in practice](08-pid-on-real-hardware.md).
 - **Unstable machines.** Balancing robots and rockets carry the $\pi p$ penalty: the faster the unstable pole, the larger the amplification they must accept somewhere.
 
 > **Say it back**
@@ -651,13 +633,13 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [nyquist-criterion-and-stability-margins](06-nyquist-criterion-and-stability-margins.md): phase margin, crossover and delay margin, the quantities this card designs for.
-- [pid-control-and-tuning](07-pid-control-and-tuning.md): the derivative and integral actions that the lead and the lag soften into band-limited forms.
+- [Nyquist and margins](06-nyquist-criterion-and-stability-margins.md): phase margin, crossover and delay margin, the quantities this card designs for.
+- [PID control](07-pid-control-and-tuning.md): the derivative and integral actions that the lead and the lag soften into band-limited forms.
 
 ## Where this goes next
 
-- [smith-predictor-and-time-delays](10-smith-predictor-and-time-delays.md): a delay adds phase lag that no lead can repay at high frequency, and the Smith predictor's way around it.
-- h-infinity-control-in-outline: loop shaping made systematic, with weights on $S$ and its partners and the largest peak minimised directly.
+- [Time delays](10-smith-predictor-and-time-delays.md): a delay adds phase lag that no lead can repay at high frequency, and the Smith predictor's way around it.
+- H-infinity design: loop shaping made systematic, with weights on $S$ and its partners and the largest peak minimised directly.
 
 Hand shaping hits a margin and an error target but leaves the time delay as a fixed cost in phase; how far a predictor can remove that cost is the question the Smith predictor card answers.
 

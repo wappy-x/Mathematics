@@ -1,31 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Quantos and composites
-topic: The desk's hedge book
-item: Hedging a quanto
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/02-quanto-option|quanto-option]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/03-garman-kohlhagen-greeks|garman-kohlhagen-greeks]]"
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/03-multi-step-trees-and-backward-induction|multi-step-trees-and-backward-induction]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/01-bump-and-revalue-and-common-random-numbers|bump-and-revalue-and-common-random-numbers]]"
-next:
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/05-implied-correlation-from-a-quanto|implied-correlation-from-a-quanto]]"
-tags: [mathematics, financial mathematics, quanto-greeks-and-hedging]
----
-
 # Hedging a quanto: shares in euros, a currency hedge that resizes itself, and the Greek nobody else has, sensitivity to correlation
 
-Financial mathematics → Quantos and composites → The desk's hedge book → Hedging a quanto
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Quantos and composites](../../../SYLLABUS.md#w12-s24) → Hedging a quanto
 
 ---
 
 ## General Overview
 
-A dealing desk in New York has sold a one-year call on a Frankfurt share. The share trades at 100 euros. The buyer, a dollar fund, is paid 1.10 dollars for every euro the share ends above 100, whatever the euro is worth next year. That is the quanto call of [quanto-option](02-quanto-option.md), and the desk took in 9.15 dollars for it. Today one euro costs 1.15 dollars.
+A dealing desk in New York has sold a one-year call on a Frankfurt share. The share trades at 100 euros. The buyer, a dollar fund, is paid 1.10 dollars for every euro the share ends above 100, whatever the euro is worth next year. That is the quanto call of [Quanto option](02-quanto-option.md), and the desk took in 9.15 dollars for it. Today one euro costs 1.15 dollars.
 
 The desk now owes a payment it cannot predict. Its defence is to build a copy of the call out of things it can trade, and keep the copy up to date. The copy has three pieces. The desk buys about half a Frankfurt share per call. It pays for the shares with euros it borrows, not with dollars. It keeps the 9.15 dollars in a dollar account. As the share moves, both the share count and the euro loan must be changed.
 
@@ -75,7 +56,7 @@ Notation first, in words. $V_S$ is the **delta**: how many dollars the price mov
 | $\rho$ | correlation of share moves with dollars-per-euro moves, from −1 to +1 | 0.30 | cheapens the call, shrinks the delta |
 | $T$ | years to expiry | 1 | more time for the drift to bite |
 | $\mu$, $F$ | quanto drift $r_f - q - \rho\sigma_S\sigma_X$, and quanto forward $F = S e^{\mu T}$ | 1.4%; 101.41 EUR | raises delta |
-| $N$, $\varphi$, $d_1$, $d_2$ | bell-curve area and height; the two cut-offs of [quanto-option](02-quanto-option.md) | $d_1$ = 0.17 | — |
+| $N$, $\varphi$, $d_1$, $d_2$ | bell-curve area and height; the two cut-offs of [Quanto option](02-quanto-option.md) | $d_1$ = 0.17 | — |
 
 The cut-offs are $d_1 = [\ln(S/K) + (\mu + \tfrac12\sigma_S^2)T]/(\sigma_S\sqrt{T})$ and $d_2 = d_1 - \sigma_S\sqrt{T}$: how many standard deviations of room the share has above the strike, counted in shares and in cash.
 
@@ -122,7 +103,7 @@ The call's dollar price depends on the share, the rates, the volatilities and th
 
 The price moves $V_S$ = 0.602171 dollars per euro the share moves. One share moves one euro, which is worth $X$ = 1.15 dollars today. So the desk needs $V_S / X$ shares for the dollar moves to match: 0.602171 / 1.15 = 0.523627 shares.
 
-The quanto-option formula gives $V_S$ directly. Its share half is $\bar{X} e^{(\mu - r_d)T} S N(d_1)$, and the cut-off terms cancel on differentiation, as on the pilot [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): $\varphi(d_1) F = \varphi(d_2) K$. So $V_S = \bar{X} e^{(\mu - r_d)T} N(d_1)$.
+The quanto-option formula gives $V_S$ directly. Its share half is $\bar{X} e^{(\mu - r_d)T} S N(d_1)$, and the cut-off terms cancel on differentiation, as on the pilot [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): $\varphi(d_1) F = \varphi(d_2) K$. So $V_S = \bar{X} e^{(\mu - r_d)T} N(d_1)$.
 
 ### Step 2: the currency leak, and the loan that plugs it
 
@@ -147,7 +128,7 @@ Hold $\eta = V_S / X$ shares, owe $L = \eta S$ euros, and keep $V$ dollars. The 
 $$dG = \eta\,[d(SX) + qSX\,dt] - \eta S\,[dX + r_f X\,dt] + r_d V\,dt.$$
 Ito's product rule gives $d(SX) = X\,dS + S\,dX + dS\,dX$. The $dX$ terms cancel, since the loan is sized to the shares' euro value. With $\eta X = V_S$ what remains is
 $$dG = V_S\,dS + (\rho\sigma_S\sigma_X + q - r_f)\,S V_S\,dt + r_d V\,dt = V_S\,dS - \mu S V_S\,dt + r_d V\,dt.$$
-The call's price is the Black-Scholes price with dividend yield $r_d - \mu$, so it solves the Black-Scholes equation with that yield ([black-scholes-equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)): $\partial V/\partial t + \mu S V_S + \tfrac12\sigma_S^2 S^2 V_{SS} - r_d V = 0$, the first term being the price's slope in calendar time. Ito's lemma on $V(t, S)$ gives $dV = (\partial V/\partial t)\,dt + V_S\,dS + \tfrac12\sigma_S^2 S^2 V_{SS}\,dt = V_S\,dS + (r_d V - \mu S V_S)\,dt$. So $dG = dV$ at every instant.
+The call's price is the Black-Scholes price with dividend yield $r_d - \mu$, so it solves the Black-Scholes equation with that yield ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)): $\partial V/\partial t + \mu S V_S + \tfrac12\sigma_S^2 S^2 V_{SS} - r_d V = 0$, the first term being the price's slope in calendar time. Ito's lemma on $V(t, S)$ gives $dV = (\partial V/\partial t)\,dt + V_S\,dS + \tfrac12\sigma_S^2 S^2 V_{SS}\,dt = V_S\,dS + (r_d V - \mu S V_S)\,dt$. So $dG = dV$ at every instant.
 
 The copy starts at $V$, needs no money added or taken out (self-financing), and gains what the call gains. At expiry $V$ equals the payoff $\bar{X}\max(S_T - K, 0)$, so the copy pays the fund. No $dW^X$ term survives anywhere: the currency risk is gone. With $\sigma_S, \sigma_X > 0$ and $|\rho| < 1$ the two random terms are independent directions, and matching them forces this $\eta$ and this $L$: the hedge is the only one. $\blacksquare$
 
@@ -164,15 +145,15 @@ Correlation, currency volatility and the euro rate appear only inside $\mu$. A c
 - **Euro rate.** $\mu$ rises one for one, so $V_{r_f} = T S V_S$ = 60.217133.
 - **Share volatility** does two jobs: it widens the outcomes, and it sits in the drift through $\rho\sigma_S\sigma_X$. Its vega is the width part minus $\rho\sigma_X T \cdot S V_S$.
 
-The chain rule through $\mu$ is the whole story; [garman-kohlhagen-greeks](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md) does the same bookkeeping for a currency option, where the foreign rate plays the part $\mu$ plays here.
+The chain rule through $\mu$ is the whole story; [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md) does the same bookkeeping for a currency option, where the foreign rate plays the part $\mu$ plays here.
 
 ### Step 5: correlation is a risk the desk carries
 
-Every other input has something to trade against it. Shares hedge delta, the euro loan hedges the currency, options on the share hedge share vega, currency options hedge currency vega. Correlation has no market of its own. The desk estimates it, marks the book at the estimate, and holds a reserve against being wrong; [model-risk-and-parameter-stability](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md) treats that practice in general.
+Every other input has something to trade against it. Shares hedge delta, the euro loan hedges the currency, options on the share hedge share vega, currency options hedge currency vega. Correlation has no market of its own. The desk estimates it, marks the book at the estimate, and holds a reserve against being wrong; [Model risk](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md) treats that practice in general.
 
 ### The other door: a tree with two coordinates
 
-A second road to the price never writes $\mu$ down. Step share and exchange rate together on a tree with four branches per step, each with chance one quarter: the currency's shock is ±1, and the share's is $\rho$ times the currency's plus $\sqrt{1-\rho^2}$ times a second ±1. Choose the two step multipliers so that a euro deposit and a share, both held in dollars, grow at the dollar rate on average, interest and dividends included. Work backwards from expiry, discounting at $r_d$ ([multi-step-trees-and-backward-induction](../04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md)). With 200 steps the tree's average share at expiry is 101.409869 euros, against the quanto forward 101.409846: the tree finds the slowed drift without being told it. Boyle (1988) built this kind of lattice for two assets.
+A second road to the price never writes $\mu$ down. Step share and exchange rate together on a tree with four branches per step, each with chance one quarter: the currency's shock is ±1, and the share's is $\rho$ times the currency's plus $\sqrt{1-\rho^2}$ times a second ±1. Choose the two step multipliers so that a euro deposit and a share, both held in dollars, grow at the dollar rate on average, interest and dividends included. Work backwards from expiry, discounting at $r_d$ ([Many steps](../04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md)). With 200 steps the tree's average share at expiry is 101.409869 euros, against the quanto forward 101.409846: the tree finds the slowed drift without being told it. Boyle (1988) built this kind of lattice for two assets.
 
 ---
 
@@ -260,7 +241,7 @@ One line: the call's price. It falls from 10.81 dollars at −1 to 8.33 at +1, a
 
 ## Code, from first principles, and it actually runs
 
-The scripts build their own normal CDF (a series), a two-coordinate tree, and random numbers (splitmix64 with the Box-Muller transform). The price is reached by **three independent roads**: the closed form; the four-branch tree, which never uses the quanto drift, run at 100 and 200 steps and extrapolated; and a simulation of the desk's hedge over 2,000 years of daily rebalancing, whose average cost is the price. Every Greek is computed twice, from its formula and by bump-and-revalue (nudging one input up and down and re-pricing, [bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)); the correlation Greek a third time, by bumping the tree. The simulation runs four hedges side by side on the same paths: the right one and three broken ones. The two languages agree to every printed digit.
+The scripts build their own normal CDF (a series), a two-coordinate tree, and random numbers (splitmix64 with the Box-Muller transform). The price is reached by **three independent roads**: the closed form; the four-branch tree, which never uses the quanto drift, run at 100 and 200 steps and extrapolated; and a simulation of the desk's hedge over 2,000 years of daily rebalancing, whose average cost is the price. Every Greek is computed twice, from its formula and by bump-and-revalue (nudging one input up and down and re-pricing, [Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)); the correlation Greek a third time, by bumping the tree. The simulation runs four hedges side by side on the same paths: the right one and three broken ones. The two languages agree to every printed digit.
 
 ### Python
 
@@ -710,9 +691,9 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Equity-derivatives desks.** A bank selling quanto notes on foreign indices runs exactly this book: index futures for delta, a foreign-currency funding line for the currency, and a correlation reserve it cannot hedge away.
-- **Dollar-settled foreign index futures.** An index future paid in a currency other than the index's is a quanto forward ([quanto-forward-and-adjustment](01-quanto-forward-and-adjustment.md)). The desk that makes a market in it carries the same funded hedge and the same correlation exposure.
-- **Composite options.** Convert at the market rate on expiry day instead of a fixed one and the currency does widen the payoff; the hedge changes shape ([composite-option](04-composite-option.md)).
-- **Reading correlation back.** Where quanto prices are quoted, the correlation they imply can be solved for ([implied-correlation-from-a-quanto](05-implied-correlation-from-a-quanto.md)).
+- **Dollar-settled foreign index futures.** An index future paid in a currency other than the index's is a quanto forward ([The quanto adjustment](01-quanto-forward-and-adjustment.md)). The desk that makes a market in it carries the same funded hedge and the same correlation exposure.
+- **Composite options.** Convert at the market rate on expiry day instead of a fixed one and the currency does widen the payoff; the hedge changes shape ([Composite option](04-composite-option.md)).
+- **Reading correlation back.** Where quanto prices are quoted, the correlation they imply can be solved for ([Correlation from a quanto price](05-implied-correlation-from-a-quanto.md)).
 
 > **Say it back**
 > The quanto's price ignores today's exchange rate, but its hedge cannot. The desk holds the dollar delta divided by the exchange rate in foreign shares, borrows exactly the euro value of those shares, and keeps the price in dollars. Both the share count and the loan are resized as the share and the euro move. Correlation, currency volatility and the foreign rate reach the price only through the slowed drift, so their Greeks are delta's dollar position times the drift's own sensitivity. Correlation has no market to hedge it in, so the desk carries it.
@@ -721,14 +702,14 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [quanto-option](02-quanto-option.md): the price, the slowed drift $\mu$, and the house numbers this card differentiates.
-- [garman-kohlhagen-greeks](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): Greeks in two currencies, and the habit of stating which currency each one is counted in.
-- [multi-step-trees-and-backward-induction](../04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md): working a tree backwards from expiry, here with two coordinates.
-- [bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): the second road to every Greek, and why the hedges are compared on the same random paths.
+- [Quanto option](02-quanto-option.md): the price, the slowed drift $\mu$, and the house numbers this card differentiates.
+- [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): Greeks in two currencies, and the habit of stating which currency each one is counted in.
+- [Many steps](../04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md): working a tree backwards from expiry, here with two coordinates.
+- [Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): the second road to every Greek, and why the hedges are compared on the same random paths.
 
 ## Where this goes next
 
-- [implied-correlation-from-a-quanto](05-implied-correlation-from-a-quanto.md): runs the price backwards, from a quoted quanto to the correlation that reproduces it, with the existence and uniqueness that the monotone chart above promises.
+- [Correlation from a quanto price](05-implied-correlation-from-a-quanto.md): runs the price backwards, from a quoted quanto to the correlation that reproduces it, with the existence and uniqueness that the monotone chart above promises.
 
 The desk marks its book at a correlation it cannot trade; what remains open is which correlation the market itself is charging, and the price chart's steady fall is what makes that question answerable.
 

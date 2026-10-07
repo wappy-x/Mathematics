@@ -1,28 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Random Variables
-topic: Measuring spread
-item: Variance
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/02-expectation|expectation]]"
-next:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/04-joint-distributions-and-covariance|joint-distributions-and-covariance]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/08-markov-and-chebyshev-inequalities|markov-and-chebyshev-inequalities]]"
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/01-bernoulli-and-binomial|bernoulli-and-binomial]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/06-expectation-as-an-integral|expectation-as-an-integral]]"
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/07-error-propagation-and-sensitivity|error-propagation-and-sensitivity]]"
-  - "[[Cards/14-Applied and computational/08-Scientific Computing Practice/02-catastrophic-cancellation-and-safe-formulas|catastrophic-cancellation-and-safe-formulas]]"
-  - "[[Cards/16-Numerical analysis/01-Floating Point and Error/07-summation-kahan-and-welford|summation-kahan-and-welford]]"
-tags: [mathematics, probability and statistics, variance-and-standard-deviation]
----
-
 # Variance: the average squared distance from the mean, and its square root in the original units
 
-Probability and statistics → Random Variables → Measuring spread → Variance
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Variables](../../../SYLLABUS.md#w09-s02) → Variance
 
 ---
 
@@ -30,7 +8,7 @@ Probability and statistics → Random Variables → Measuring spread → Varianc
 
 A charity raffle sells 100 tickets. One of them wins $100. The rest win nothing. Hold one ticket and its payout is $0 with chance 0.99 and $100 with chance 0.01: 99 times in 100 nothing, once in 100 a hundred dollars.
 
-On average the ticket pays $1. That is its expectation ([expectation](02-expectation.md)): 0.99 × $0 + 0.01 × $100. But no ticket ever pays $1. It pays nothing, or it pays a hundred times the average. A ticket paying exactly $1 every time has the same average, and the average alone cannot tell the two apart.
+On average the ticket pays $1. That is its expectation ([Expectation](02-expectation.md)): 0.99 × $0 + 0.01 × $100. But no ticket ever pays $1. It pays nothing, or it pays a hundred times the average. A ticket paying exactly $1 every time has the same average, and the average alone cannot tell the two apart.
 
 What separates them is spread: how far the payout typically lands from its average. The raffle ticket lands $1 below the average almost every time, and $99 above it once in a hundred. Averaging those distances after squaring them gives the **variance**, 99 square dollars. Its square root, the **standard deviation**, is back in dollars: about $9.95. The steady ticket has variance 0 and standard deviation $0.
 
@@ -98,7 +76,7 @@ $$\mathrm{Var}(aX + b) = a^2 \, \mathrm{Var}(X), \qquad \sigma_{aX+b} = \lvert a
 
 - **The variance is a definition, so it always applies where it exists.** It exists when $E[X^2]$ is finite. Every variable with finitely many values qualifies. One with endlessly many can fail: a payout of 1, 2, 3, … dollars, with chance proportional to one over the payout cubed, has a finite mean, but $E[X^2]$ adds terms proportional to one over the payout, and that sum runs off to infinity.
 - **The shortcut needs $E[X^2]$ finite too.** Without it the right side is infinity minus a number, and no subtraction makes sense.
-- **The rescaling rule needs $a$ and $b$ to be fixed numbers.** If $a$ is itself random, $a$ times $X$ is a product of two random variables and its variance depends on how they move together: [joint-distributions-and-covariance](04-joint-distributions-and-covariance.md).
+- **The rescaling rule needs $a$ and $b$ to be fixed numbers.** If $a$ is itself random, $a$ times $X$ is a product of two random variables and its variance depends on how they move together: [Two variables at once](04-joint-distributions-and-covariance.md).
 - **Variances of a sum do not add in general.** That rule needs independence and belongs to the covariance card just named.
 
 ---
@@ -117,7 +95,7 @@ The distances were squared, so the unit is square dollars. The square root undoe
 
 ### Step 2: the shortcut, from linearity of the average
 
-Expand the square inside the average: $(X - \mu)^2 = X^2 - 2\mu X + \mu^2$. The average of a sum is the sum of the averages, and a fixed number comes out of an average unchanged ([expectation](02-expectation.md)). So the average of the expansion is $E[X^2] - 2\mu \cdot \mu + \mu^2 = E[X^2] - \mu^2$.
+Expand the square inside the average: $(X - \mu)^2 = X^2 - 2\mu X + \mu^2$. The average of a sum is the sum of the averages, and a fixed number comes out of an average unchanged ([Expectation](02-expectation.md)). So the average of the expansion is $E[X^2] - 2\mu \cdot \mu + \mu^2 = E[X^2] - \mu^2$.
 
 On the ticket: $E[X^2]$ = 0.99 × 0 + 0.01 × 10,000 = 100. Minus $1^2$: 99 again.
 
@@ -138,7 +116,7 @@ Let $X$ take the values $x$ with chances $P(X = x)$ summing to 1, and suppose $\
 
 **Zero spread.** Every term $(x - \mu)^2 P(X = x)$ is at least 0. The sum is 0 only if each term is, so every value with positive chance equals $\mu$: $X$ is constant.
 
-For a variable with a density the sums become integrals and every line holds unchanged; the general case, one integral for all of them, is [expectation-as-an-integral](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md).
+For a variable with a density the sums become integrals and every line holds unchanged; the general case, one integral for all of them, is [Expectation as an integral](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md).
 
 </details>
 
@@ -538,7 +516,7 @@ The two outputs match line for line. The simulated variance, 100.08, sits about 
 ## The usual mistake
 
 > [!warning]
-> **Reading the standard deviation as a place the payout lands.** "Mean $1, standard deviation $9.95" does not say the payout sits between −$8.95 and $10.95. The ticket never pays anything in that band except $0, and it pays $100, far outside it, once in a hundred. How much chance lies within a given distance is a separate question, bounded for every variable by [markov-and-chebyshev-inequalities](08-markov-and-chebyshev-inequalities.md).
+> **Reading the standard deviation as a place the payout lands.** "Mean $1, standard deviation $9.95" does not say the payout sits between −$8.95 and $10.95. The ticket never pays anything in that band except $0, and it pays $100, far outside it, once in a hundred. How much chance lies within a given distance is a separate question, bounded for every variable by [Markov and Chebyshev](08-markov-and-chebyshev-inequalities.md).
 >
 > - **Quoting variance in the payout's units.** The ticket's variance is 99 square dollars, not $99. In cents it becomes 990,000, which looks alarming and means the same thing.
 > - **Scaling the variance by $a$.** A doubled prize has variance 396, not 198. The standard deviation doubles; the variance quadruples.
@@ -551,8 +529,8 @@ The two outputs match line for line. The simulated variance, 100.08, sits about 
 
 - **Lotteries and insurance.** A lottery ticket and a steady coupon can share an expected value; the spread is what a ticket buyer pays for and an insurer is paid to absorb.
 - **Investment risk.** A fund's volatility is the standard deviation of its returns, quoted in percent per year, and the finance wing builds its option prices on it.
-- **Measurement.** A scale that reads a 1 kg weight with standard deviation 2 g is quoted as "1,000 g ± 2 g"; how those errors combine through a formula is [error-propagation-and-sensitivity](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md).
-- **Computing it safely.** The shortcut subtracts two large numbers; with real data in floating point that can lose most of the digits, which is why software uses the two-pass or running method: catastrophic-cancellation-and-safe-formulas and summation-kahan-and-welford.
+- **Measurement.** A scale that reads a 1 kg weight with standard deviation 2 g is quoted as "1,000 g ± 2 g"; how those errors combine through a formula is [Error propagation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md).
+- **Computing it safely.** The shortcut subtracts two large numbers; with real data in floating point that can lose most of the digits, which is why software uses the two-pass or running method: Cancellation and Adding a million numbers without losing the small ones.
 
 > **Say it back**
 > A raffle ticket pays $0 almost always and $100 once in a hundred, so it averages $1 but never pays $1. Variance measures that spread: square each outcome's distance from the mean, weight it by its chance, and add, giving 99 square dollars. The shortcut gets the same 99 as the average of the square minus the square of the average. The square root, about $9.95, is the standard deviation, a typical distance in dollars. Shifting every payout leaves both unchanged; stretching by a factor multiplies the variance by its square and the standard deviation by its size.
@@ -561,19 +539,19 @@ The two outputs match line for line. The simulated variance, 100.08, sits about 
 
 ## What this builds on
 
-- [expectation](02-expectation.md): the mean, and the linearity that turns the definition into the shortcut.
+- [Expectation](02-expectation.md): the mean, and the linearity that turns the definition into the shortcut.
 
 ## Where this goes next
 
-- [joint-distributions-and-covariance](04-joint-distributions-and-covariance.md): the variance of a sum, and the cross term that dependence adds.
-- [markov-and-chebyshev-inequalities](08-markov-and-chebyshev-inequalities.md): how much chance a standard deviation can leave in the tails.
-- [bernoulli-and-binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the $p(1 - p)$ variance of a yes-or-no variable, and $n$ of them.
-- [expectation-as-an-integral](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md): one integral that covers sums and densities alike.
-- [error-propagation-and-sensitivity](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md): the rescaling rule applied to a measured input.
-- catastrophic-cancellation-and-safe-formulas: why the shortcut can fail in floating point.
-- summation-kahan-and-welford: the one-pass variance that stays accurate.
+- [Two variables at once](04-joint-distributions-and-covariance.md): the variance of a sum, and the cross term that dependence adds.
+- [Markov and Chebyshev](08-markov-and-chebyshev-inequalities.md): how much chance a standard deviation can leave in the tails.
+- [Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the $p(1 - p)$ variance of a yes-or-no variable, and $n$ of them.
+- [Expectation as an integral](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md): one integral that covers sums and densities alike.
+- [Error propagation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md): the rescaling rule applied to a measured input.
+- Cancellation: why the shortcut can fail in floating point.
+- Adding a million numbers without losing the small ones: the one-pass variance that stays accurate.
 
-One ticket's spread is now a number; what happens to it when two tickets, from the same raffle or different ones, are held together is the question [joint-distributions-and-covariance](04-joint-distributions-and-covariance.md) answers.
+One ticket's spread is now a number; what happens to it when two tickets, from the same raffle or different ones, are held together is the question [Two variables at once](04-joint-distributions-and-covariance.md) answers.
 
 ---
 

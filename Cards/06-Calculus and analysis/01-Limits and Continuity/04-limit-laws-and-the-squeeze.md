@@ -1,23 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Limits and Continuity
-topic: Algebra of limits
-item: Limit laws and the squeeze
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/01-limits|limits]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/03-sequences-and-limits|sequences-and-limits]]"
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/08-small-angles-and-the-sine-bound|small-angles-and-the-sine-bound]]"
-next: []
-tags: [mathematics, calculus and analysis, limit-laws-and-the-squeeze]
----
-
 # Limit laws and the squeeze: combining limits and trapping an oscillating one
 
-Calculus and analysis → Limits and Continuity → Algebra of limits → Limit laws and the squeeze
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Limits and Continuity](../../../SYLLABUS.md#w06-s01) → Limit laws and the squeeze
 
 ---
 
@@ -52,7 +35,7 @@ Orange: the function where its sine reads exactly −1 or +1. Green: the ceiling
 
 ## The formula
 
-Reminder ([limits](01-limits.md)): $\lim_{x\to a} f(x) = L$ reads "f(x) heads for L as x heads for a".
+Reminder ([Limits](01-limits.md)): $\lim_{x\to a} f(x) = L$ reads "f(x) heads for L as x heads for a".
 
 If $\lim_{x\to a} f(x) = L$ and $\lim_{x\to a} g(x) = M$, both finite, then:
 
@@ -144,7 +127,7 @@ A **limit at infinity** is about the input. $\lim_{x\to\infty} 1/x = 0$ means: n
 
 The two meet here: with t = 1/x, the sine of 1 over x near 0 is sin t far out, and it has no limit there either.
 
-A second road runs on sequences: the outputs along any list of inputs heading for 0 are trapped the same way, and the sequence squeeze in [sequences-and-limits](03-sequences-and-limits.md) gives the same 0.
+A second road runs on sequences: the outputs along any list of inputs heading for 0 are trapped the same way, and the sequence squeeze in [Sequences](03-sequences-and-limits.md) gives the same 0.
 
 ---
 
@@ -370,10 +353,10 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **The rate of change of a wave.** The sine of a small angle over the angle heads for 1, squeezed between the cosine and 1 by the bound in [small-angles-and-the-sine-bound](../../05-Geometry%20and%20trig/03-Trigonometry/08-small-angles-and-the-sine-bound.md).
+- **The rate of change of a wave.** The sine of a small angle over the angle heads for 1, squeezed between the cosine and 1 by the bound in [Small angles](../../05-Geometry%20and%20trig/03-Trigonometry/08-small-angles-and-the-sine-bound.md).
 - **Damped vibrations.** A swing trapped between plus and minus e to the minus t comes to rest as time t runs on, however it oscillates.
 - **Error bounds.** An error whose sign flips unpredictably is controlled by a bound on its size.
-- **Polynomials.** The laws are how [continuity](05-continuity.md) covers every polynomial at once.
+- **Polynomials.** The laws are how [Continuity](05-continuity.md) covers every polynomial at once.
 
 > **Say it back**
 > Limits pass through sums, multiples, products and quotients, when every part has a finite limit and no bottom limit is 0. Each law splits the tolerance between the parts. When a part has no limit, the squeeze traps the function between a floor and a ceiling heading for one number. The sine of 1 over x never settles, but times x squared it is trapped between minus and plus x squared, so it heads for 0. An infinite limit is an output beyond every height; a limit at infinity is an input going far out.
@@ -382,14 +365,14 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [limits](01-limits.md): the tolerance game and the notation this card combines.
-- [sequences-and-limits](03-sequences-and-limits.md): the same laws and squeeze for lists of numbers, and the second road in Step 6.
-- [small-angles-and-the-sine-bound](../../05-Geometry%20and%20trig/03-Trigonometry/08-small-angles-and-the-sine-bound.md): the sine's range and the bound behind the sine's own squeeze.
+- [Limits](01-limits.md): the tolerance game and the notation this card combines.
+- [Sequences](03-sequences-and-limits.md): the same laws and squeeze for lists of numbers, and the second road in Step 6.
+- [Small angles](../../05-Geometry%20and%20trig/03-Trigonometry/08-small-angles-and-the-sine-bound.md): the sine's range and the bound behind the sine's own squeeze.
 
 ## Where this goes next
 
-- [continuity](05-continuity.md): a limit that equals the value; the laws carry it through sums, products and quotients.
-- [intermediate-value-theorem](06-intermediate-value-theorem.md): what that continuity guarantees on a whole interval.
+- [Continuity](05-continuity.md): a limit that equals the value; the laws carry it through sums, products and quotients.
+- [Intermediate value theorem](06-intermediate-value-theorem.md): what that continuity guarantees on a whole interval.
 
 ---
 

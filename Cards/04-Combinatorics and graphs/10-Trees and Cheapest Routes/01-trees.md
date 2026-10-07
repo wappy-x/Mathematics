@@ -1,30 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Trees and Cheapest Routes
-topic: Loop-free and in one piece
-item: Trees
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/03-walks-paths-and-cycles|walks-paths-and-cycles]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/04-connectivity-and-breadth-first-search|connectivity-and-breadth-first-search]]"
-  - "[[Cards/01-Foundations/06-Proof/04-proof-by-induction|proof-by-induction]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/10-Trees and Cheapest Routes/02-rooted-and-binary-trees|rooted-and-binary-trees]]"
-  - "[[Cards/04-Combinatorics and graphs/10-Trees and Cheapest Routes/03-spanning-trees-and-cayleys-formula|spanning-trees-and-cayleys-formula]]"
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/01-planar-graphs-and-eulers-formula|planar-graphs-and-eulers-formula]]"
-  - "[[Cards/24-Computability and complexity/01-Models of Computation/05-context-free-grammars-and-pushdown-automata|context-free-grammars-and-pushdown-automata]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - trees
----
-
 # Trees: connected with no cycles, exactly one fewer edge than vertices, and one route between any two points
 
-Combinatorics and graphs → Trees and Cheapest Routes → Loop-free and in one piece → Trees
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Trees and Cheapest Routes](../../../SYLLABUS.md#w04-s10) → Trees
 
 ---
 
@@ -34,7 +10,7 @@ A village has seven houses, A to G, and six lanes: A-B, B-C, B-D, D-E, D-F and F
 
 Cut one lane and somebody is stranded: lose B-D and A, B, C lose contact with D, E, F, G. Lay one lane and a loop appears: A to G closes the ring A, B, D, F, G. The village has the lanes it needs, not one spare.
 
-Such a map is a **tree**, the name Cayley gave it in 1857: *connected*, meaning some route joins every pair of houses ([connectivity-and-breadth-first-search](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)), and free of any *cycle*, meaning no route leaves a house and comes back to it repeating nothing else on the way ([walks-paths-and-cycles](../09-Graphs%20-%20Dots%20and%20Lines/03-walks-paths-and-cycles.md)). Four descriptions with nothing obvious in common then pick out the same maps, two of them counts that trace no route.
+Such a map is a **tree**, the name Cayley gave it in 1857: *connected*, meaning some route joins every pair of houses ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)), and free of any *cycle*, meaning no route leaves a house and comes back to it repeating nothing else on the way ([Walks, paths and cycles](../09-Graphs%20-%20Dots%20and%20Lines/03-walks-paths-and-cycles.md)). Four descriptions with nothing obvious in common then pick out the same maps, two of them counts that trace no route.
 
 **Connected with no cycle, one route between every pair, and one lane fewer than houses paired with either joined-up or loop-free — all the same maps, and every one of them with two houses or more has at least two houses served by a single lane.**
 
@@ -58,7 +34,7 @@ B and D carry three lanes each, F two; A, C, E and G carry one apiece.
 
 ## The formula
 
-Notation first. A map is its houses and the pairs a lane joins: $V$ the houses, $E$ the lanes, $n$ and $m$ how many of each ([graphs-vertices-and-edges](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). $G$ is any map, $T$ a tree; $c(G)$ counts its pieces and $\deg(v)$ the lanes at house $v$, its **degree** ([degree-and-handshaking](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)). A house of degree 1 is a **leaf**, and the double arrow $\Longleftrightarrow$ reads "exactly when".
+Notation first. A map is its houses and the pairs a lane joins: $V$ the houses, $E$ the lanes, $n$ and $m$ how many of each ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). $G$ is any map, $T$ a tree; $c(G)$ counts its pieces and $\deg(v)$ the lanes at house $v$, its **degree** ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)). A house of degree 1 is a **leaf**, and the double arrow $\Longleftrightarrow$ reads "exactly when".
 
 $$m = n - 1$$
 
@@ -81,7 +57,7 @@ $$m = n - c(G)$$
 ### When it holds
 
 - **Finitely many houses.** A row running on for ever in both directions is joined up and loop-free with no leaf, and leaves $n - 1$ nothing to count.
-- **Lanes both ways, one per pair at most, none from a house to itself.** A second lane between one pair, or a lane looping back on one house, adds no house and breaks the count without making a cycle of three. One-way lanes split each question in two ([directed-graphs-and-topological-order](../09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md)).
+- **Lanes both ways, one per pair at most, none from a house to itself.** A second lane between one pair, or a lane looping back on one house, adds no house and breaks the count without making a cycle of three. One-way lanes split each question in two ([Directed graphs](../09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md)).
 - **The count never travels alone.** Maps neither joined up nor loop-free also spend six lanes on seven houses.
 
 ---
@@ -98,7 +74,7 @@ Connected gives every pair a route; no cycle forbids a second. Exactly one each:
 
 ### Step 2: two houses or more means two leaves or more
 
-Finitely many routes, so one of them is longest. Its first house is a leaf. A second lane there would run to a house $w$: with $w$ off the route, that lane on the front makes a longer route; with $w$ on it, the stretch along to $w$ closes a loop. Neither is allowed, and the far end goes the same way. The village has four leaves, A, C, E and G, its degrees adding to 12 — twice its six lanes ([degree-and-handshaking](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)).
+Finitely many routes, so one of them is longest. Its first house is a leaf. A second lane there would run to a house $w$: with $w$ off the route, that lane on the front makes a longer route; with $w$ on it, the stretch along to $w$ closes a loop. Neither is allowed, and the far end goes the same way. The village has four leaves, A, C, E and G, its degrees adding to 12 — twice its six lanes ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)).
 
 ### Step 3: peel the leaves and the lanes count themselves
 
@@ -114,7 +90,7 @@ flowchart LR
     P2 -->|"peel a leaf"| P1["1 house<br/>0 lanes"]
 ```
 
-Each step drops a house and a lane together, which is all $m = n - 1$ says: one house holds $0 = 1 - 1$ lanes, and a tree on $n$ houses is a tree on one fewer with a house and a lane put back ([proof-by-induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
+Each step drops a house and a lane together, which is all $m = n - 1$ says: one house holds $0 = 1 - 1$ lanes, and a tree on $n$ houses is a tree on one fewer with a house and a lane put back ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
 
 ### Step 4: the count, with one companion, is enough
 
@@ -131,9 +107,9 @@ Call them (1) connected and no cycle, (2) one route between each pair, (3) conne
 
 ### Step 5: every lane a bridge, every missing lane one loop
 
-Each lane is the only route between its own two ends, so losing it leaves none: the pieces go from one to two and the forest law reads off the remainder, $5 = 7 - 2$ lanes. Every lane of a tree is therefore a **bridge**, a lane whose loss raises the piece count ([connectivity-and-breadth-first-search](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)). Adding a lane closes the unique old route between its ends into a ring, and no other: a new cycle must use the new lane, and the route it completes is unique. The check cuts all six lanes and adds all fifteen missing ones.
+Each lane is the only route between its own two ends, so losing it leaves none: the pieces go from one to two and the forest law reads off the remainder, $5 = 7 - 2$ lanes. Every lane of a tree is therefore a **bridge**, a lane whose loss raises the piece count ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)). Adding a lane closes the unique old route between its ends into a ring, and no other: a new cycle must use the new lane, and the route it completes is unique. The check cuts all six lanes and adds all fifteen missing ones.
 
-A second road lists maps instead of arguing: of the 1024 lane maps on five houses, all four descriptions pick the same 125. Counting trees rather than testing them is [spanning-trees-and-cayleys-formula](03-spanning-trees-and-cayleys-formula.md).
+A second road lists maps instead of arguing: of the 1024 lane maps on five houses, all four descriptions pick the same 125. Counting trees rather than testing them is [Spanning trees](03-spanning-trees-and-cayleys-formula.md).
 
 ---
 
@@ -377,9 +353,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Networks with no spare link.** A cable run with every link load-bearing is cheapest to build and worst to lose; the cheapest such skeleton when lanes have prices is [minimum-spanning-trees](04-minimum-spanning-trees.md).
-- **Folders, org charts, family lines.** One route from the top to each item is this property read downward, and naming a top house is what makes a tree rooted: [rooted-and-binary-trees](02-rooted-and-binary-trees.md).
-- **What a search leaves behind.** The lanes a flood keeps as it marks new houses ([connectivity-and-breadth-first-search](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)) form a tree over the piece it reached; so does a sentence broken into phrases within phrases, context-free-grammars-and-pushdown-automata.
+- **Networks with no spare link.** A cable run with every link load-bearing is cheapest to build and worst to lose; the cheapest such skeleton when lanes have prices is [The cheapest skeleton](04-minimum-spanning-trees.md).
+- **Folders, org charts, family lines.** One route from the top to each item is this property read downward, and naming a top house is what makes a tree rooted: [Rooted trees](02-rooted-and-binary-trees.md).
+- **What a search leaves behind.** The lanes a flood keeps as it marks new houses ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)) form a tree over the piece it reached; so does a sentence broken into phrases within phrases, Grammars and a stack.
 
 > **Say it back**
 > A tree is a map that is joined up and carries no loop. Loops and spare routes are the same thing, so exactly one route joins every pair. Peel off a one-lane house again and again — a finite tree always has two to start from — and each peel costs a house and a lane: one lane fewer than houses, six for seven. Cut a lane and the pieces rise; add one and a single loop appears.
@@ -388,18 +364,18 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [walks-paths-and-cycles](../09-Graphs%20-%20Dots%20and%20Lines/03-walks-paths-and-cycles.md): routes that repeat no house, and the cycle this card forbids.
-- [connectivity-and-breadth-first-search](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md): joined up, the pieces a map falls into, and the flood that finds them.
-- [proof-by-induction](../../01-Foundations/06-Proof/04-proof-by-induction.md): the argument behind peeling leaves until one house is left.
+- [Walks, paths and cycles](../09-Graphs%20-%20Dots%20and%20Lines/03-walks-paths-and-cycles.md): routes that repeat no house, and the cycle this card forbids.
+- [Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md): joined up, the pieces a map falls into, and the flood that finds them.
+- [Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md): the argument behind peeling leaves until one house is left.
 
 ## Where this goes next
 
-- [rooted-and-binary-trees](02-rooted-and-binary-trees.md): the same tree with one house named the top, so every other has a parent and a depth.
-- [spanning-trees-and-cayleys-formula](03-spanning-trees-and-cayleys-formula.md): trees inside a larger map, and how many a map holds.
-- [planar-graphs-and-eulers-formula](../12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md): what becomes of $m = n - 1$ when loops are allowed but crossings are not.
-- context-free-grammars-and-pushdown-automata: trees as the record of how a sentence or a program was built.
+- [Rooted trees](02-rooted-and-binary-trees.md): the same tree with one house named the top, so every other has a parent and a depth.
+- [Spanning trees](03-spanning-trees-and-cayleys-formula.md): trees inside a larger map, and how many a map holds.
+- [Planar graphs](../12-Planarity%20and%20Colouring/01-planar-graphs-and-eulers-formula.md): what becomes of $m = n - 1$ when loops are allowed but crossings are not.
+- Grammars and a stack: trees as the record of how a sentence or a program was built.
 
-Nothing here told one lane from another: put a price on each and the cheapest skeleton becomes a question, [minimum-spanning-trees](04-minimum-spanning-trees.md).
+Nothing here told one lane from another: put a price on each and the cheapest skeleton becomes a question, [The cheapest skeleton](04-minimum-spanning-trees.md).
 
 ---
 

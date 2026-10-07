@@ -1,27 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Martingales
-topic: Paths that settle
-item: Martingale convergence
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/03-stopping-times-and-optional-stopping|stopping-times-and-optional-stopping]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/01-borel-cantelli-lemmas|borel-cantelli-lemmas]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/05-doob-inequalities|doob-inequalities]]"
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/07-optimal-stopping-and-snell-envelope|optimal-stopping-and-snell-envelope]]"
-tags:
-  - mathematics
-  - stochastic processes and calculus
-  - martingale-convergence
----
-
 # Martingale convergence: a bounded martingale settles down
 
-Stochastic processes and calculus → Martingales → Paths that settle → Martingale convergence
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Martingales](../../../SYLLABUS.md#w11-s02) → Martingale convergence
 
 ---
 
@@ -56,7 +35,7 @@ Orange, green and dark blue: the first three urns of a seeded simulation (SplitM
 
 ## The formula
 
-Notation first, in words. After n draws the urn holds $R_n$ red balls, and the fraction red is $M_n$. The filtration $\mathcal F_n$ is what is known after n draws: the colours so far ([filtrations-and-martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md)). A martingale is a fair game: the best forecast of tomorrow, given today, is today ([martingales](01-martingales.md)).
+Notation first, in words. After n draws the urn holds $R_n$ red balls, and the fraction red is $M_n$. The filtration $\mathcal F_n$ is what is known after n draws: the colours so far ([Filtrations and martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md)). A martingale is a fair game: the best forecast of tomorrow, given today, is today ([Martingales](01-martingales.md)).
 
 $$M_n = \frac{R_n}{n+2}, \qquad E[M_{n+1} \mid \mathcal F_n] = M_n$$
 
@@ -120,7 +99,7 @@ So $M_n$ is a martingale, and its average stays at 1/2. The code checks this exa
 
 ### Step 2: buy low, sell high
 
-Treat the martingale as a price. Wait until it is at or below a; buy one unit; hold until it is at or above b; sell; repeat. The stake $H_k$ is 1 while holding and 0 while waiting, decided by prices up to step k − 1; the buy and sell moments are stopping times ([stopping-times-and-optional-stopping](03-stopping-times-and-optional-stopping.md)).
+Treat the martingale as a price. Wait until it is at or below a; buy one unit; hold until it is at or above b; sell; repeat. The stake $H_k$ is 1 while holding and 0 while waiting, decided by prices up to step k − 1; the buy and sell moments are stopping times ([Stopping times](03-stopping-times-and-optional-stopping.md)).
 
 Each completed round trip gained at least b − a. A unit still held at time n was bought at a or lower, so it has lost at most $(X_n - a)^-$. So the total gain $G_n$ satisfies
 
@@ -128,7 +107,7 @@ $$G_n \;\ge\; (b - a)\,U_n[a,b] \;-\; (X_n - a)^-.$$
 
 ### Step 3: a fair game gives no profit on average
 
-Stakes fixed in advance, between 0 and 1, applied to a martingale give gains that form a martingale starting at 0 ([predictable-bets-and-the-martingale-transform](02-predictable-bets-and-the-martingale-transform.md)). So $E[G_n] = 0$. Averaging Step 2 gives the upcrossing inequality.
+Stakes fixed in advance, between 0 and 1, applied to a martingale give gains that form a martingale starting at 0 ([Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md)). So $E[G_n] = 0$. Averaging Step 2 gives the upcrossing inequality.
 
 For the urn at draw 16 and the band 0.4 to 0.6, the right side is 0.073203, so the bound on expected upcrossings is 0.366013. The true value, found two ways in the code, is 0.154096. The bound only has to be finite.
 
@@ -149,19 +128,19 @@ Orange: one sample path, the first of 10,000 simulated urns to finish two upcros
 
 ### Step 4: a ceiling on the average size caps the upcrossings
 
-The shortfall below a is at most $|a| + |X_n|$, so the inequality gives an average of at most $(|a| + K)/(b - a)$ upcrossings by every time n. The count only grows with n, so by monotone convergence ([monotone-convergence-theorem](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) the total number ever has the same finite average. A count with a finite average is finite with probability 1, as in the first Borel-Cantelli lemma ([borel-cantelli-lemmas](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md)).
+The shortfall below a is at most $|a| + |X_n|$, so the inequality gives an average of at most $(|a| + K)/(b - a)$ upcrossings by every time n. The count only grows with n, so by monotone convergence ([The monotone convergence theorem](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) the total number ever has the same finite average. A count with a finite average is finite with probability 1, as in the first Borel-Cantelli lemma ([The Borel-Cantelli lemmas](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md)).
 
 For the urn and the band 0.4 to 0.6, the ceiling K = 1/2 caps the average at (0.4 + 0.5)/0.2 = 4.5 upcrossings. The urn's own shortfall does better. It is a bowl-shaped function of a fair game, so by Jensen's inequality its average only rises with n, toward $0.4^2/2$ = 0.08 for the even limit of Step 6. The cap over all time is 0.08/0.2 = 0.4000. The exact average by draw 1,000 is 0.1893; the simulation gives 0.1857 ± 0.0040.
 
 ### Step 5: countably many bands, and a finite limit
 
-A band with rational ends fits between any two different levels, and there are countably many. Each is crossed infinitely often only on a set of probability 0, and countably many such sets together have probability 0. So the path settles with probability 1. Fatou's lemma ([fatous-lemma](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md)) gives $E|X_\infty| \le K$, so the limit is finite with probability 1.
+A band with rational ends fits between any two different levels, and there are countably many. Each is crossed infinitely often only on a set of probability 0, and countably many such sets together have probability 0. So the path settles with probability 1. Fatou's lemma ([Fatou's lemma](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md)) gives $E|X_\infty| \le K$, so the limit is finite with probability 1.
 
 ### Step 6: where the urn settles
 
 The theorem says the urn settles, not where. One order of draws with k reds and n − k blues has chance k!(n − k)!/(n + 1)!, whatever the order: the i-th red drawn meets i reds, the i-th blue meets i blues, and the t-th draw meets t + 1 balls. Times the "n choose k" orders, every count of reds from 0 to n has chance exactly 1/(n + 1): each of the n + 1 levels is equally likely.
 
-The paths converge, so their law converges too ([modes-of-convergence](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)), and evenly spaced levels become the even spread on 0 to 1: the chance that $M_\infty$ lands below a level x is x. Among 10,000 simulated urns, each tenth of the range holds between 0.097 and 0.105 of them at draw 1,000, against an exact 0.100 or 0.101.
+The paths converge, so their law converges too ([Modes of convergence](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)), and evenly spaced levels become the even spread on 0 to 1: the chance that $M_\infty$ lands below a level x is x. Among 10,000 simulated urns, each tenth of the range holds between 0.097 and 0.105 of them at draw 1,000, against an exact 0.100 or 0.101.
 
 ### The picture: where 10,000 urns stand after 1,000 draws
 
@@ -201,7 +180,7 @@ Throughout, $(\Omega, \mathcal{F}, P)$ is a probability space with a filtration 
 
 </details>
 
-A second road avoids martingales: the urn behaves exactly like tosses of a coin whose chance of red was drawn evenly from 0 to 1, and the strong law sends the fraction to that hidden chance (de Finetti's theorem; the updating side is the beta-binomial model, [beta-binomial](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/02-beta-binomial.md)).
+A second road avoids martingales: the urn behaves exactly like tosses of a coin whose chance of red was drawn evenly from 0 to 1, and the strong law sends the fraction to that hidden chance (de Finetti's theorem; the updating side is the beta-binomial model, [Beta-binomial](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/02-beta-binomial.md)).
 
 ---
 
@@ -634,7 +613,7 @@ The two outputs agree line for line.
 ## The usual mistake
 
 > [!warning]
-> **"The martingale converges, so its average converges to the limit's average."** A gambler with $10, no credit and a fair $1 game has a non-negative fortune, so it converges; moving a dollar a round, it can settle only at $0. Yet the average fortune is 10.0000 at rounds 100 and 1,000. After 1,000 rounds the gambler still plays with chance 0.2480, and that shrinking group carries the whole average. Carrying averages to the limit needs the condition in [uniform-integrability-and-unbounded-stopping](06-uniform-integrability-and-unbounded-stopping.md).
+> **"The martingale converges, so its average converges to the limit's average."** A gambler with $10, no credit and a fair $1 game has a non-negative fortune, so it converges; moving a dollar a round, it can settle only at $0. Yet the average fortune is 10.0000 at rounds 100 and 1,000. After 1,000 rounds the gambler still plays with chance 0.2480, and that shrinking group carries the whole average. Carrying averages to the limit needs the condition in [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md).
 >
 > - **Small steps taken for a ceiling.** The fair game with credit moves exactly $1 a round, yet $E|S_n|$ reaches 25.2250 by round 1,000.
 > - **The limit taken as a fixed number.** The urn's limit is random: 0.14 for one urn, 0.54 for another. Only its average is fixed.
@@ -645,10 +624,10 @@ The two outputs agree line for line.
 
 ## Where you meet it in real life
 
-- **Learning from data.** The urn's fraction, (reds drawn + 1)/(draws + 2), is Laplace's rule of succession: the estimate of a coin's unknown chance of heads from a flat starting belief. Such estimates are bounded martingales, so they settle as data arrive ([beta-binomial](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/02-beta-binomial.md)).
+- **Learning from data.** The urn's fraction, (reds drawn + 1)/(draws + 2), is Laplace's rule of succession: the estimate of a coin's unknown chance of heads from a flat starting belief. Such estimates are bounded martingales, so they settle as data arrive ([Beta-binomial](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/02-beta-binomial.md)).
 - **Rich-get-richer growth.** Shares that grow in proportion to their size behave like urns: early luck is locked in.
 - **Branching populations.** A generation's size over its expected size is a non-negative martingale, so it converges; the limit is 0 where the family dies out.
-- **Gambling without credit.** From $10 with no credit, a fair game ends in ruin with probability 1: a non-negative martingale moving by whole dollars can only settle at $0 ([gamblers-ruin](../01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md)).
+- **Gambling without credit.** From $10 with no credit, a fair game ends in ruin with probability 1: a non-negative martingale moving by whole dollars can only settle at $0 ([Gambler's ruin](../01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md)).
 
 > **Say it back**
 > A path that never settles crosses some band from low to high infinitely often. Buying low and selling high turns each crossing into profit, and a fair game allows none on average, so expected crossings are at most the expected shortfall below the band over its width. If the martingale's average size has a ceiling, that shortfall is bounded, the crossings are finite, and the path settles to a finite limit. Pólya's urn stays between 0 and 1, so each urn's fraction of red settles at its own level, spread evenly over 0 to 1.
@@ -657,15 +636,15 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [stopping-times-and-optional-stopping](03-stopping-times-and-optional-stopping.md): the buy and sell moments are stopping times, and a stopped martingale is still a martingale, as for the gambler without credit.
-- [borel-cantelli-lemmas](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md): a count with a finite average is finite with probability 1, and countably many null sets make a null set.
+- [Stopping times](03-stopping-times-and-optional-stopping.md): the buy and sell moments are stopping times, and a stopped martingale is still a martingale, as for the gambler without credit.
+- [The Borel-Cantelli lemmas](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md): a count with a finite average is finite with probability 1, and countably many null sets make a null set.
 
 ## Where this goes next
 
-- [doob-inequalities](05-doob-inequalities.md): the next card; bounds on the largest value a martingale reaches on the way.
-- [optimal-stopping-and-snell-envelope](../08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md): the best stopping rule's value is a supermartingale, whose long run this theorem governs.
+- [Doob's inequalities](05-doob-inequalities.md): the next card; bounds on the largest value a martingale reaches on the way.
+- [Optimal stopping](../08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md): the best stopping rule's value is a supermartingale, whose long run this theorem governs.
 
-The theorem settles each path but can lose the average on the way, as the gambler without credit shows; when the limit keeps the starting average is the question [uniform-integrability-and-unbounded-stopping](06-uniform-integrability-and-unbounded-stopping.md) answers.
+The theorem settles each path but can lose the average on the way, as the gambler without credit shows; when the limit keeps the starting average is the question [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md) answers.
 
 ---
 

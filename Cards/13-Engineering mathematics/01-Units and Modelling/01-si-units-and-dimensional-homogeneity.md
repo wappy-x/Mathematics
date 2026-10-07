@@ -1,24 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Units and Modelling
-topic: Dimension bookkeeping
-item: Units and dimensions
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/09-ratios-and-rates|ratios-and-rates]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/04-scientific-notation|scientific-notation]]"
-next:
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/02-dimensional-analysis-and-buckingham-pi|dimensional-analysis-and-buckingham-pi]]"
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/07-error-propagation-and-sensitivity|error-propagation-and-sensitivity]]"
-tags: [mathematics, engineering mathematics, si-units-and-dimensional-homogeneity]
----
-
 # Units and dimensions: seven base quantities every formula has to balance
 
-Engineering mathematics → Units and Modelling → Dimension bookkeeping → Units and dimensions
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Units and Modelling](../../../SYLLABUS.md#w13-s01) → Units and dimensions
 
 ---
 
@@ -143,7 +125,7 @@ Viscosity is a pressure times a time: (1, -1, -2) + (0, 0, 1) = (1, -1, -1). Flo
 
 Step 1 also forecasts how a wrong formula misbehaves. Its answer is "pressure times L^2". Change to centimetres and its answer, read as a pressure and converted back to pascals, is multiplied by λ^-2 = 10,000. The same tube now "needs" 80.128000 Pa instead of 0.008013 Pa. A real pressure drop cannot depend on the ruler. The code below takes this road as a second, independent test.
 
-The general machinery of exponent lists — which combinations of quantities come out as pure numbers, and how many there are — belongs to [dimensional-analysis-and-buckingham-pi](02-dimensional-analysis-and-buckingham-pi.md).
+The general machinery of exponent lists — which combinations of quantities come out as pure numbers, and how many there are — belongs to [Buckingham Pi](02-dimensional-analysis-and-buckingham-pi.md).
 
 ---
 
@@ -601,8 +583,8 @@ The two outputs are identical, line for line.
 - **Design reviews.** A reviewer reads a quoted formula and checks its powers before checking its numbers. Most transcription slips, a lost square or a swapped symbol, fail on sight.
 - **Handbook recipes in fixed units.** Empirical pipe and channel formulas are often printed for one set of units, with dimensioned constants. Using them in another set is the third row of the table above.
 - **Spacecraft and aircraft.** In 1999 the Mars Climate Orbiter was lost after impulse data in pound-force seconds were read as newton seconds. Both are impulses, with the same dimension, so no dimension check could catch it: only a unit check could.
-- **Wind tunnels and scale models.** Testing a small model only works because the drag depends on the powers balancing into pure numbers: [similarity-and-model-testing](04-similarity-and-model-testing.md).
-- **Simulation codes.** Rewriting a model so every variable is a pure number is [scaling-and-nondimensionalisation](03-scaling-and-nondimensionalisation.md); it starts from the exponent lists built here.
+- **Wind tunnels and scale models.** Testing a small model only works because the drag depends on the powers balancing into pure numbers: [Similarity](04-similarity-and-model-testing.md).
+- **Simulation codes.** Rewriting a model so every variable is a pure number is [Nondimensionalisation](03-scaling-and-nondimensionalisation.md); it starts from the exponent lists built here.
 
 > **Say it back**
 > Every quantity is a number times a unit, and its dimension is a product of powers of seven base quantities. Changing a unit multiplies each number by a power of the change, so a law true in every unit system must have the same powers in every term it adds or equates. Write each quantity's exponent list, add them for products, and compare: a formula that fails is wrong. The quoted 32 μ ℓ Q / D^2 comes out as a force and is rejected; the right formula gives 2,550.55 Pa for the greenhouse tube. A formula that passes may still be wrong, by a pure number or by being used outside its range.
@@ -611,13 +593,13 @@ The two outputs are identical, line for line.
 
 ## What this builds on
 
-- [ratios-and-rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md): a rate is one quantity per unit of another, the first compound unit.
-- [scientific-notation](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/04-scientific-notation.md): the powers of ten in prefixes and in 10^-6 m^3/s.
+- [Ratios and rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md): a rate is one quantity per unit of another, the first compound unit.
+- [Scientific notation](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/04-scientific-notation.md): the powers of ten in prefixes and in 10^-6 m^3/s.
 
 ## Where this goes next
 
-- [dimensional-analysis-and-buckingham-pi](02-dimensional-analysis-and-buckingham-pi.md): the exponent lists become a matrix, and its null space counts the pure-number groups such as the Reynolds number.
-- [error-propagation-and-sensitivity](07-error-propagation-and-sensitivity.md): the powers that balance here also say how an error in the bore grows in the answer.
+- [Buckingham Pi](02-dimensional-analysis-and-buckingham-pi.md): the exponent lists become a matrix, and its null space counts the pure-number groups such as the Reynolds number.
+- [Error propagation](07-error-propagation-and-sensitivity.md): the powers that balance here also say how an error in the bore grows in the answer.
 
 The check says which formulas could be right but not what form a law must take; which combinations of viscosity, flow, length and bore a law is allowed to depend on is the question the Buckingham Pi card answers.
 

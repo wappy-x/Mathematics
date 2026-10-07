@@ -1,31 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Length Done Properly
-topic: Squeezing a set between open and closed
-item: Lebesgue measure
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/02-caratheodory-measurable-sets|caratheodory-measurable-sets]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/06-pi-systems-and-uniqueness|pi-systems-and-uniqueness]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/07-null-sets-and-almost-everywhere|null-sets-and-almost-everywhere]]"
-next:
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/04-translation-invariance-and-the-vitali-set|translation-invariance-and-the-vitali-set]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/07-the-cantor-set|the-cantor-set]]"
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/02-product-measure|product-measure]]"
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/07-infinite-sequences-and-kolmogorov-extension|infinite-sequences-and-kolmogorov-extension]]"
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/02-lebesgue-differentiation-theorem|lebesgue-differentiation-theorem]]"
-  - "[[Cards/20-Harmonic analysis/06-Maximal Functions and Beyond/01-hardy-littlewood-maximal-function|hardy-littlewood-maximal-function]]"
-  - "[[Cards/20-Harmonic analysis/06-Maximal Functions and Beyond/02-calderon-zygmund-decomposition-in-outline|calderon-zygmund-decomposition-in-outline]]"
-  - "[[Cards/20-Harmonic analysis/06-Maximal Functions and Beyond/06-restriction-and-kakeya-in-outline|restriction-and-kakeya-in-outline]]"
-tags: [mathematics, measure and integration, lebesgue-measure]
----
-
 # Lebesgue measure: the length of every Borel set and more, squeezed between open sets outside and closed sets inside
 
-Measure and integration → Length Done Properly → Squeezing a set between open and closed → Lebesgue measure
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Length Done Properly](../../../SYLLABUS.md#w10-s02) → Lebesgue measure
 
 ---
 
@@ -53,7 +28,7 @@ Drawn to scale: 0 km at 20 px, 1 km at 340 px. The ticks are the 21 potholes who
 
 ## The formula
 
-Notation first. $\lambda^*$ is the **outer measure** from [lebesgue-outer-measure](01-lebesgue-outer-measure.md): the cheapest total length of countably many open intervals $(c_k, d_k)$ covering a set. $\mathcal B(\mathbb R)$ is the Borel sets, the smallest sigma-algebra holding every open set (a sigma-algebra: the collection of sets allowed to be measured, closed under complements and countable unions). $\mathcal L$, a script L, is the collection this card calls the **Lebesgue sets**.
+Notation first. $\lambda^*$ is the **outer measure** from [Outer measure](01-lebesgue-outer-measure.md): the cheapest total length of countably many open intervals $(c_k, d_k)$ covering a set. $\mathcal B(\mathbb R)$ is the Borel sets, the smallest sigma-algebra holding every open set (a sigma-algebra: the collection of sets allowed to be measured, closed under complements and countable unions). $\mathcal L$, a script L, is the collection this card calls the **Lebesgue sets**.
 
 $$\lambda^*(E) = \inf\Big\{\sum_{k \ge 1} (d_k - c_k) \;:\; E \subseteq \bigcup_{k \ge 1} (c_k, d_k)\Big\}$$
 
@@ -93,11 +68,11 @@ $$\text{(iv)}\quad \mu\big((a, b]\big) = b - a \text{ for all } a < b \implies \
 
 ### When it holds
 
-- **Intervals as the starting sizes, on the line.** Area and volume come from products of $\lambda$ ([product-measure](../06-Product%20Measures%20and%20Fubini/02-product-measure.md)); other starting sizes give [lebesgue-stieltjes-measures](06-lebesgue-stieltjes-measures.md).
+- **Intervals as the starting sizes, on the line.** Area and volume come from products of $\lambda$ ([Product measure](../06-Product%20Measures%20and%20Fubini/02-product-measure.md)); other starting sizes give [Distribution functions and Lebesgue-Stieltjes measures](06-lebesgue-stieltjes-measures.md).
 - **Countable covers, not finite ones.** With finite covers the potholes cost 1 km from outside; with countable covers they cost nothing.
 - **Slack measured by the leftover, not the total.** On a set of infinite length, "$\lambda(G)$ within $\varepsilon$ of $\lambda(E)$" says nothing; $\lambda(G \setminus E) < \varepsilon$ still does.
 - **Uniqueness needs agreement on a pi-system**, a class closed under overlaps. On four points, two measures agree on {1, 2} and {1, 3} at 0.5 each and give {1} the values 0.25 and 0.5.
-- **Not every subset of the line.** Sets outside $\mathcal L$ exist: [translation-invariance-and-the-vitali-set](04-translation-invariance-and-the-vitali-set.md).
+- **Not every subset of the line.** Sets outside $\mathcal L$ exist: [Translation invariance and the Vitali set](04-translation-invariance-and-the-vitali-set.md).
 
 ---
 
@@ -111,7 +86,7 @@ That is the engine. Lebesgue measure covers from outside, and keeps a set exactl
 
 ### Step 1: assemble the measure
 
-[lebesgue-outer-measure](01-lebesgue-outer-measure.md) defines $\lambda^*$ for every subset of the line, shows it grows with the set and is at most the sum over any countable cover, and proves $\lambda^*([a, b]) = b - a$; a single point costs nothing, so $(a, b]$ has the same outer measure. [caratheodory-measurable-sets](02-caratheodory-measurable-sets.md) proves that the sets splitting every test set cleanly form a sigma-algebra on which the outer measure adds over disjoint pieces. For $\lambda^*$ that sigma-algebra is $\mathcal L$ and the measure is $\lambda$.
+[Outer measure](01-lebesgue-outer-measure.md) defines $\lambda^*$ for every subset of the line, shows it grows with the set and is at most the sum over any countable cover, and proves $\lambda^*([a, b]) = b - a$; a single point costs nothing, so $(a, b]$ has the same outer measure. [Caratheodory's criterion](02-caratheodory-measurable-sets.md) proves that the sets splitting every test set cleanly form a sigma-algebra on which the outer measure adds over disjoint pieces. For $\lambda^*$ that sigma-algebra is $\mathcal L$ and the measure is $\lambda$.
 
 A set $Z$ of outer measure 0 always splits cleanly: for any test set $A$, the piece inside $Z$ costs 0 and the piece outside costs no more than $A$.
 
@@ -170,7 +145,7 @@ On the path, subadditivity bounds the gaps by $\sum_k 0.0005 \times 2^{-k} = 0.0
 
 ### Step 5: Lebesgue sets are Borel sets up to a null set
 
-Squeeze with slack 1, then 1/2, then 1/3, and so on. The open sets meet in a Borel set $H$ and the closed sets join into a Borel set $M$, with $M \subseteq E \subseteq H$ and $H \setminus M$ smaller than every slack, so of length 0. Conversely, a set trapped like that is a Borel set plus a piece of a null set, and null sets split cleanly (Step 1). So $\mathcal L$ is the **completion** of $\mathcal B(\mathbb R)$ under $\lambda$: the Borel sets with every subset of a Borel null set added, as [null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md) defines it. On the path, $H$ is (0, 1) and the difference is the potholes.
+Squeeze with slack 1, then 1/2, then 1/3, and so on. The open sets meet in a Borel set $H$ and the closed sets join into a Borel set $M$, with $M \subseteq E \subseteq H$ and $H \setminus M$ smaller than every slack, so of length 0. Conversely, a set trapped like that is a Borel set plus a piece of a null set, and null sets split cleanly (Step 1). So $\mathcal L$ is the **completion** of $\mathcal B(\mathbb R)$ under $\lambda$: the Borel sets with every subset of a Borel null set added, as [Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md) defines it. On the path, $H$ is (0, 1) and the difference is the potholes.
 
 On four points, with the sets ∅, {1, 2}, {3, 4} and all four, the block {1, 2} of size 0 and {3, 4} of size 2, completion adds the subsets of the null block and nothing else: 4 old sets become 8, and {3} stays out.
 
@@ -187,7 +162,7 @@ On four points, with the sets ∅, {1, 2}, {3, 4} and all four, the block {1, 2}
 
 ### Step 6: no other measure on Borel sets gives intervals their lengths
 
-Suppose $\mu$ on $\mathcal B(\mathbb R)$ gives every (a, b] the length b − a. The half-open intervals, with the empty set, form a pi-system: two of them overlap in another or not at all. They generate the Borel sets. On each stretch (n, n + 1] both measures have total 1 and agree on the pi-system, so they agree on every Borel set there, by [pi-systems-and-uniqueness](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md). The stretches fill the line without overlap, so $\mu = \lambda$.
+Suppose $\mu$ on $\mathcal B(\mathbb R)$ gives every (a, b] the length b − a. The half-open intervals, with the empty set, form a pi-system: two of them overlap in another or not at all. They generate the Borel sets. On each stretch (n, n + 1] both measures have total 1 and agree on the pi-system, so they agree on every Borel set there, by [Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md). The stretches fill the line without overlap, so $\mu = \lambda$.
 
 The overlap rule matters. On four points put 0.25 on each point for $\mu$, and 0.5 on each of 1 and 4 for $\nu$. They agree on {1, 2} and {1, 3}, 0.5 each, and those two sets generate all 16 subsets. On their overlap {1}, $\mu$ gives 0.25 and $\nu$ gives 0.5; they disagree on 10 of the 16.
 
@@ -200,12 +175,12 @@ For every integer n, negative ones included, let $\mu_n(B) = \mu(B \cap (n, n + 
 
 </details>
 
-The same measure also comes from extending lengths off the finite unions of intervals, [caratheodory-extension-theorem](05-caratheodory-extension-theorem.md), or from the distribution function F(x) = x, [lebesgue-stieltjes-measures](06-lebesgue-stieltjes-measures.md); Step 6 says every route lands on this $\lambda$.
+The same measure also comes from extending lengths off the finite unions of intervals, [Caratheodory's extension theorem](05-caratheodory-extension-theorem.md), or from the distribution function F(x) = x, [Distribution functions and Lebesgue-Stieltjes measures](06-lebesgue-stieltjes-measures.md); Step 6 says every route lands on this $\lambda$.
 
 <details>
 <summary>Is every Lebesgue set a Borel set?</summary>
 
-No. The Cantor set is closed, of length 0, and as large as the line, so all its subsets are Lebesgue sets by Step 5. A counting argument, not proved here, shows there are only as many Borel sets as real numbers, far fewer than those subsets. See [the-cantor-set](07-the-cantor-set.md).
+No. The Cantor set is closed, of length 0, and as large as the line, so all its subsets are Lebesgue sets by Step 5. A counting argument, not proved here, shows there are only as many Borel sets as real numbers, far fewer than those subsets. See [The Cantor set](07-the-cantor-set.md).
 
 </details>
 
@@ -608,7 +583,7 @@ The two outputs are identical, byte for byte.
 - **A number drawn uniformly from 0 to 1.** Lebesgue measure on [0, 1] is the uniform law. The chance that the draw is a fraction is the length of the potholes: 0.
 - **Monte Carlo estimates.** Throwing random points and counting hits estimates a length, an area or a probability; here 199809 hits of 200000 estimate 0.99905 km with a standard error of 0.000071.
 - **Pixels and sampled regions.** Up to any slack, a set of finite length is a finite union of intervals: take the open set of Step 3, a countable union of intervals, and keep enough of them. So a measurable region can be drawn in pixels with as small an error as wished.
-- **A coin tossed forever.** The binary digits of a uniform draw from [0, 1] are fair coin tosses, so $\lambda$ on [0, 1] is the law of an infinite coin sequence: [infinite-sequences-and-kolmogorov-extension](../06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md).
+- **A coin tossed forever.** The binary digits of a uniform draw from [0, 1] are fair coin tosses, so $\lambda$ on [0, 1] is the law of an infinite coin sequence: [Infinitely many coin tosses](../06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md).
 
 > **Say it back**
 > Lebesgue measure is the cheapest countable cover by intervals, kept on the sets that split every other set without losing length. An interval cut at a point keeps its length, so half-lines split cleanly and every Borel set is measured. Every measured set sits between an open set and a closed set with as little slack as wished, so it is a Borel set give or take part of a null set. Intervals form a pi-system, so no other measure on Borel sets gives them their lengths. The path with a pothole at every fraction is 1 km, squeezed between 1.001 km and 0.999 km.
@@ -617,22 +592,22 @@ The two outputs are identical, byte for byte.
 
 ## What this builds on
 
-- [caratheodory-measurable-sets](02-caratheodory-measurable-sets.md): the clean-split test, and the proof that the sets passing it form a sigma-algebra on which outer measure adds.
-- [pi-systems-and-uniqueness](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md): two finite measures agreeing on a pi-system agree on what it generates, used in Step 6.
-- [null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md): null sets and the completion of a measure, which Step 5 identifies with the Lebesgue sets.
+- [Caratheodory's criterion](02-caratheodory-measurable-sets.md): the clean-split test, and the proof that the sets passing it form a sigma-algebra on which outer measure adds.
+- [Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md): two finite measures agreeing on a pi-system agree on what it generates, used in Step 6.
+- [Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md): null sets and the completion of a measure, which Step 5 identifies with the Lebesgue sets.
 
 ## Where this goes next
 
-- [translation-invariance-and-the-vitali-set](04-translation-invariance-and-the-vitali-set.md): sliding a set keeps its length, and that forces a set with no length at all.
-- [the-cantor-set](07-the-cantor-set.md): a closed set of length 0 with as many points as the line.
-- [product-measure](../06-Product%20Measures%20and%20Fubini/02-product-measure.md): area and volume as products of $\lambda$.
-- [infinite-sequences-and-kolmogorov-extension](../06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md): $\lambda$ on [0, 1] as a coin tossed forever.
-- [lebesgue-differentiation-theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/02-lebesgue-differentiation-theorem.md): averages over shrinking intervals recover a function at almost every point, with regularity doing the covering.
-- hardy-littlewood-maximal-function: the largest local average, bounded through $\lambda$ of the set where it is big.
-- calderon-zygmund-decomposition-in-outline: splitting a function by cutting the line into intervals measured by $\lambda$.
-- restriction-and-kakeya-in-outline: how small a set can be while holding a segment in every direction, measured by $\lambda$ in the plane.
+- [Translation invariance and the Vitali set](04-translation-invariance-and-the-vitali-set.md): sliding a set keeps its length, and that forces a set with no length at all.
+- [The Cantor set](07-the-cantor-set.md): a closed set of length 0 with as many points as the line.
+- [Product measure](../06-Product%20Measures%20and%20Fubini/02-product-measure.md): area and volume as products of $\lambda$.
+- [Infinitely many coin tosses](../06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md): $\lambda$ on [0, 1] as a coin tossed forever.
+- [The Lebesgue differentiation theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/02-lebesgue-differentiation-theorem.md): averages over shrinking intervals recover a function at almost every point, with regularity doing the covering.
+- The maximal function: the largest local average, bounded through $\lambda$ of the set where it is big.
+- Calderon-Zygmund decomposition: splitting a function by cutting the line into intervals measured by $\lambda$.
+- Restriction and Kakeya in outline: how small a set can be while holding a segment in every direction, measured by $\lambda$ in the plane.
 
-Every Borel set now has a length, and so does everything a null set away from one; whether every subset of the line has one is what [translation-invariance-and-the-vitali-set](04-translation-invariance-and-the-vitali-set.md) settles, and the answer is no.
+Every Borel set now has a length, and so does everything a null set away from one; whether every subset of the line has one is what [Translation invariance and the Vitali set](04-translation-invariance-and-the-vitali-set.md) settles, and the answer is no.
 
 ---
 

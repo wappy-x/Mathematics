@@ -1,24 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Survival, Design and Causality
-topic: Assignment by lottery
-item: Randomised experiments
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/04-power-and-sample-size|power-and-sample-size]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/02-intervals-for-proportions|intervals-for-proportions]]"
-next:
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/05-blocking-and-factorial-designs|blocking-and-factorial-designs]]"
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/06-permutation-tests|permutation-tests]]"
-tags: [mathematics, probability and statistics, randomised-experiments-and-ab-tests]
----
-
 # Randomised experiments: why random assignment lets you say 'because'
 
-Probability and statistics → Survival, Design and Causality → Assignment by lottery → Randomised experiments
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Survival, Design and Causality](../../../SYLLABUS.md#w09-s13) → Randomised experiments
 
 ---
 
@@ -32,7 +14,7 @@ The price is that chance also adds noise. Another lottery on the same 20,000 vis
 
 **Assign by lottery and the difference between the two arms' averages is, over all possible lotteries, exactly the average effect of the treatment; its spread from one lottery to the next is known, so the test can be sized before it runs.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works. The treatment effect it estimates is a definition, and the sizing rule is the method of [power-and-sample-size](../08-Confidence%20Intervals%20and%20Tests/04-power-and-sample-size.md), applied here.
+**What kind of fact this is:** a theorem, proved on this card in Why it works. The treatment effect it estimates is a definition, and the sizing rule is the method of [Power](../08-Confidence%20Intervals%20and%20Tests/04-power-and-sample-size.md), applied here.
 
 ### The picture: 1,000 lotteries on one shop
 
@@ -73,7 +55,7 @@ $$E[\hat\tau] = \tau, \qquad \operatorname{Var}(\hat\tau) = \frac{S_B^2}{n_B} + 
 
 The spreads are the usual variance of a column of numbers, with divisor $N - 1$: $S_A^2$ for the column of $y_i(A)$, $S_B^2$ for $y_i(B)$, and $S_\tau^2$ for the column of individual effects.
 
-Sizing borrows one formula from [power-and-sample-size](../08-Confidence%20Intervals%20and%20Tests/04-power-and-sample-size.md). To detect a lift from buying chance $p_A$ to $p_B$, a gap $\delta = p_B - p_A$, with a false-alarm rate $\alpha$ and power $1 - \beta$, each arm needs
+Sizing borrows one formula from [Power](../08-Confidence%20Intervals%20and%20Tests/04-power-and-sample-size.md). To detect a lift from buying chance $p_A$ to $p_B$, a gap $\delta = p_B - p_A$, with a false-alarm rate $\alpha$ and power $1 - \beta$, each arm needs
 
 $$n = \frac{\bigl(z_{1-\alpha/2}\,\sigma_0 + z_{1-\beta}\,\sigma_1\bigr)^2}{\delta^2}, \qquad \sigma_0 = \sqrt{2\bar p(1-\bar p)}, \quad \sigma_1 = \sqrt{p_A(1-p_A) + p_B(1-p_B)}$$
 
@@ -162,7 +144,7 @@ xychart-beta
 
 The line is the power formula at each size. The shop's 10,000 per arm sit at 0.71; the curve crosses 0.80 between 12,000 and 14,000. Turned round, 10,000 per arm reliably finds a lift from 0.0500 to 0.05899, about 0.9 of a point, and nothing much smaller. A half-point lift, to 0.0550, needs 31,234 per arm.
 
-A second way to judge the gap, one that needs no formula for the variance at all, reshuffles the observed labels and asks how often a gap this large appears by lottery alone: [permutation-tests](06-permutation-tests.md).
+A second way to judge the gap, one that needs no formula for the variance at all, reshuffles the observed labels and asks how often a gap this large appears by lottery alone: [Permutation tests](06-permutation-tests.md).
 
 ---
 
@@ -604,11 +586,11 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Reading a gap between self-selected groups as an effect.** Comparing customers who chose the new page with those who did not, or this month's visitors with last month's, is not an experiment. The groups differ in who they are, and the gap mixes that difference with the page. In the model shop, showing B only to returning customers reports a lift of 17.25 points for a page worth 0.80; showing it only to new ones reports a loss of 15.50. Adjusting afterwards for the differences someone thought to record cannot promise to remove the ones nobody recorded. The lottery balances both kinds, on average, because it never looks at the visitor. The sibling card [confounding-and-simpsons-paradox](07-confounding-and-simpsons-paradox.md) takes that failure apart.
+> **Reading a gap between self-selected groups as an effect.** Comparing customers who chose the new page with those who did not, or this month's visitors with last month's, is not an experiment. The groups differ in who they are, and the gap mixes that difference with the page. In the model shop, showing B only to returning customers reports a lift of 17.25 points for a page worth 0.80; showing it only to new ones reports a loss of 15.50. Adjusting afterwards for the differences someone thought to record cannot promise to remove the ones nobody recorded. The lottery balances both kinds, on average, because it never looks at the visitor. The sibling card [Confounding](07-confounding-and-simpsons-paradox.md) takes that failure apart.
 >
 > - **Unbiased read as accurate.** One lottery can land anywhere in the histogram. Across 1,000 lotteries on a shop with a true lift of 0.80 points, the reported gap ran from −0.11 to 1.76 points. Quote the gap with its standard error, 0.0080 ± 0.0032 here.
 > - **A p-value read as the chance B is no better.** The 0.0123 is the chance of a gap this large if the pages were equal, a statement about the data under an assumption, not about the assumption.
-> - **Stopping when the result looks good.** Checking every day and stopping at the first p-value under 0.05 raises the false-alarm rate far above 5 percent; the sample size is fixed in advance for that reason. Each daily look is one more test in a family, and [multiple-testing](../08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md) shows how a family's false alarms pile up and how Bonferroni's correction bounds them.
+> - **Stopping when the result looks good.** Checking every day and stopping at the first p-value under 0.05 raises the false-alarm rate far above 5 percent; the sample size is fixed in advance for that reason. Each daily look is one more test in a family, and [Many tests](../08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md) shows how a family's false alarms pile up and how Bonferroni's correction bounds them.
 > - **Analysing by what visitors did instead of where they were sent.** Dropping visitors who left B's page before it finished loading keeps only B's patient visitors. Compare the arms as assigned.
 
 ---
@@ -616,7 +598,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Online experiments.** Large sites run thousands of A/B tests a year on layouts, prices and rankings. Before reading any result they check the arms came out the sizes the lottery intended; a split that drifts, a **sample ratio mismatch**, usually means visitors were lost unevenly and the comparison is void.
-- **Clinical trials.** Drug trials randomise patients between the new drug and a placebo for the same reason, and analyse patients in the arm they were assigned to even if they stopped taking the pill: the **intention-to-treat** rule, which keeps the lottery's protection. Patients who leave the trial early are the censoring of [kaplan-meier](02-kaplan-meier.md).
+- **Clinical trials.** Drug trials randomise patients between the new drug and a placebo for the same reason, and analyse patients in the arm they were assigned to even if they stopped taking the pill: the **intention-to-treat** rule, which keeps the lottery's protection. Patients who leave the trial early are the censoring of [Kaplan-Meier](02-kaplan-meier.md).
 - **A/A tests.** Running the same page in both arms checks the whole system: about 5 in 100 such tests should come out significant at 0.05, and no more.
 - **Marketplaces and social networks.** When one user's treatment changes what others see, the no-interference assumption fails; such platforms randomise whole cities or clusters instead of individual users.
 
@@ -627,15 +609,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [power-and-sample-size](../08-Confidence%20Intervals%20and%20Tests/04-power-and-sample-size.md): the sizing formula, its two spreads, and power as a chance fixed before the data.
-- [intervals-for-proportions](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md): the interval for a rate and what its 95 percent promises; here it is built for a difference of two rates.
+- [Power](../08-Confidence%20Intervals%20and%20Tests/04-power-and-sample-size.md): the sizing formula, its two spreads, and power as a chance fixed before the data.
+- [Intervals for a proportion](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md): the interval for a rate and what its 95 percent promises; here it is built for a difference of two rates.
 
 ## Where this goes next
 
-- [blocking-and-factorial-designs](05-blocking-and-factorial-designs.md): running the lottery separately inside groups known in advance, such as returning and new visitors, to shrink the spread; and testing several changes at once.
-- [permutation-tests](06-permutation-tests.md): a test that uses the lottery itself as the yardstick, with no bell curve.
+- [Blocking and factorial designs](05-blocking-and-factorial-designs.md): running the lottery separately inside groups known in advance, such as returning and new visitors, to shrink the spread; and testing several changes at once.
+- [Permutation tests](06-permutation-tests.md): a test that uses the lottery itself as the yardstick, with no bell curve.
 
-A complete lottery balances returning and new visitors only on average, and one draw can still load an arm; whether the design can guarantee that balance, and what it buys in precision, is the question [blocking-and-factorial-designs](05-blocking-and-factorial-designs.md) answers.
+A complete lottery balances returning and new visitors only on average, and one draw can still load an arm; whether the design can guarantee that balance, and what it buys in precision, is the question [Blocking and factorial designs](05-blocking-and-factorial-designs.md) answers.
 
 ---
 

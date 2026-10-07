@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Averages, choosers, compounds and forward-starts
-topic: Options on options
-item: Compound options
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/04-chooser-options|chooser-options]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/05-bivariate-normal-and-conditioning|bivariate-normal-and-conditioning]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/06-newtons-method|newtons-method]]"
-next:
-  - "[[Cards/12-Financial mathematics/18-Many underlyings - exchange, spread, basket and rainbow/04-rainbow-best-of-and-worst-of|rainbow-best-of-and-worst-of]]"
-tags: [mathematics, financial mathematics, compound-options]
----
-
 # Compound options: an option on an option, priced with a two-dimensional bell curve
 
-Financial mathematics → Averages, choosers, compounds and forward-starts → Options on options → Compound options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages, choosers, compounds and forward-starts](../../../SYLLABUS.md#w12-s17) → Compound options
 
 ---
 
@@ -83,7 +65,7 @@ $$a_2 = \frac{\ln(S/S^*) + (r - q - \tfrac12\sigma^2)\,T_1}{\sigma\sqrt{T_1}}, \
 
 $$b_2 = \frac{\ln(S/K_2) + (r - q - \tfrac12\sigma^2)\,T_2}{\sigma\sqrt{T_2}}, \quad b_1 = b_2 + \sigma\sqrt{T_2}$$
 
-In words: $a_2$ counts how far Acme is expected to land above the critical price at the first date, in units of its spread by then. The pair $b_1$, $b_2$ are the house call's own distances from [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+In words: $a_2$ counts how far Acme is expected to land above the critical price at the first date, in units of its spread by then. The pair $b_1$, $b_2$ are the house call's own distances from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
 
 The critical price comes first, from one equation with one unknown:
 
@@ -106,7 +88,7 @@ Three siblings use the same pieces. A **put on a call** is the right to *sell* t
 
 ### Step 0: on the first date, the compound is an ordinary option on a known number
 
-Stand at six months. Acme's price $S_1$ is known, and the Black-Scholes formula turns it into the call's value $C(S_1)$. The compound pays $\max(C(S_1) - K_1, 0)$ that day: a payoff on one date, depending only on that date's share price, like any European option. So today's price is the discounted pretend-world average of that payoff, where the pretend world is the one in which everything grows at the bank rate ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The whole task is to do that average in closed form.
+Stand at six months. Acme's price $S_1$ is known, and the Black-Scholes formula turns it into the call's value $C(S_1)$. The compound pays $\max(C(S_1) - K_1, 0)$ that day: a payoff on one date, depending only on that date's share price, like any European option. So today's price is the discounted pretend-world average of that payoff, where the pretend world is the one in which everything grows at the bank rate ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The whole task is to do that average in closed form.
 
 ### Step 1: the exercise decision is a cutoff on the share price
 
@@ -128,7 +110,7 @@ $$e^{-rT_2}\,\mathbb{E}\big[S_2\,\mathbf{1}\{\text{both}\}\big] \;-\; K_2\,e^{-r
 
 ### Step 3: two dates, one path, so the two readings are correlated
 
-In the pretend world, Acme's log price at any date is a straight line plus $\sigma$ times a Brownian path $W$ ([geometric-brownian-motion-for-prices](../05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md)). The first event depends on $W$ at $T_1$, the second on $W$ at $T_2$. The later value is the earlier one plus an independent piece, so the two share their first half.
+In the pretend world, Acme's log price at any date is a straight line plus $\sigma$ times a Brownian path $W$ ([Prices as geometric Brownian motion](../05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md)). The first event depends on $W$ at $T_1$, the second on $W$ at $T_2$. The later value is the earlier one plus an independent piece, so the two share their first half.
 
 Standardise each by dividing by its own spread; call the results $X$ and $Y$. The covariance of the two path values is $T_1$, the variance they share. Their spreads are $\sqrt{T_1}$ and $\sqrt{T_2}$. The correlation is
 
@@ -175,7 +157,7 @@ Each follows Steps 1 to 4 with the event signs changed. A reading "below" at one
 <details>
 <summary>How a two-dimensional bell-curve area is computed</summary>
 
-Condition on the first reading. If $X = z$, then $Y$ is bell-shaped with centre $\rho z$ and spread $\sqrt{1 - \rho^2}$ ([bivariate-normal-and-conditioning](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)). So
+Condition on the first reading. If $X = z$, then $Y$ is bell-shaped with centre $\rho z$ and spread $\sqrt{1 - \rho^2}$ ([Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)). So
 $$M(a, b; \rho) = \int_{-\infty}^{a} \phi(z)\,N\!\left(\frac{b - \rho z}{\sqrt{1 - \rho^2}}\right) dz.$$
 One dimension of integration, one ordinary $N$ inside. The code does this with Simpson's rule. At $a = b = 0$ there is an exact answer, $\tfrac14 + \arcsin(\rho)/(2\pi)$, which is 0.375 at $\rho = 0.7071$; the code checks its routine against it.
 
@@ -737,7 +719,7 @@ The two outputs match line for line.
 - **Options on caps.** A cap protects a borrower against rising interest rates. A call on a cap, called a **caption**, lets the borrower wait before buying the protection. A floortion does the same for a floor, which protects a lender against falling rates.
 - **Staged investment.** A drug trial or a mine is built in phases. Paying for phase one buys the right to pay for phase two: each payment is a fee for the next option. Real-options analysis starts here.
 - **Shares as options.** Geske's original setting: a company's shares are a call on its assets, with the debt as the strike, so a call on the shares is a call on a call. The share's volatility then rises as its price falls, which plain Black-Scholes misses.
-- **Its neighbours on this shelf.** [chooser-options](04-chooser-options.md) (Chooser options) also has a decision halfway, between a call and a put, and needs no second dimension. [forward-start-options-and-forward-volatility](06-forward-start-options-and-forward-volatility.md) (Forward-start options) fixes a strike on the first date instead of charging a fee.
+- **Its neighbours on this shelf.** [Chooser options](04-chooser-options.md) (Chooser options) also has a decision halfway, between a call and a put, and needs no second dimension. [Forward-start options](06-forward-start-options-and-forward-volatility.md) (Forward-start options) fixes a strike on the first date instead of charging a fee.
 
 > **Say it back**
 > A compound option is an option whose underlying asset is another option. A call on a call pays a fee on the first date only if the call is then worth more than the fee, which happens above one critical share price, found by Newton's method. The price splits into a share leg, a strike leg and a fee leg. The fee leg needs one bell curve; the other two need the chance that Acme clears two bars on two dates, a two-dimensional bell curve with correlation equal to the square root of the first date over the second. For the house call and an $8 fee at six months, the answer is $4.03, confirmed by an integral over the first date and by a tree.
@@ -746,13 +728,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [chooser-options](04-chooser-options.md): pricing a decision taken at an intermediate date, by valuing what the holder will hold then and averaging back.
-- [bivariate-normal-and-conditioning](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): the two-dimensional bell curve, its correlation, and the conditional formula that reduces $M$ to one integral.
-- [newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the root-finder for the critical price, and why it converges from above on a rising, bending-upward curve.
+- [Chooser options](04-chooser-options.md): pricing a decision taken at an intermediate date, by valuing what the holder will hold then and averaging back.
+- [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): the two-dimensional bell curve, its correlation, and the conditional formula that reduces $M$ to one integral.
+- [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the root-finder for the critical price, and why it converges from above on a rising, bending-upward curve.
 
 ## Where this goes next
 
-- [rainbow-best-of-and-worst-of](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/04-rainbow-best-of-and-worst-of.md): the same two-dimensional bell curve, now for two different shares on one date instead of one share on two dates.
+- [Rainbow options](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/04-rainbow-best-of-and-worst-of.md): the same two-dimensional bell curve, now for two different shares on one date instead of one share on two dates.
 
 This card's correlation came free from the calendar; a later card asks what happens when the correlation belongs to the market and must be estimated.
 

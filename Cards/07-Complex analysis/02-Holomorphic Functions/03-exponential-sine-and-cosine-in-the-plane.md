@@ -1,30 +1,12 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Holomorphic Functions
-topic: Waves and cables in one function
-item: The elementary functions
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/04-eulers-formula|eulers-formula]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/02-complex-power-series|complex-power-series]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/07-hyperbolic-functions|hyperbolic-functions]]"
-next:
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/05-laplace-transform|laplace-transform]]"
-tags: [mathematics, complex analysis, exponential-sine-and-cosine-in-the-plane]
----
-
 # The elementary functions: exp, sine and cosine for complex inputs, and the hyperbolic twins are the same functions turned a quarter
 
-Complex analysis → Holomorphic Functions → Waves and cables in one function → The elementary functions
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Holomorphic Functions](../../../SYLLABUS.md#w07-s02) → The elementary functions
 
 ---
 
 ## General Overview
 
-A suspension bridge's main cable, strung between its towers before the deck goes on, hangs under its own weight. Measured from its lowest point in units set by its tension and weight, at distance x it stands cosh x above a fixed level: 1 at the bottom, 1.543081 one unit out, 10.067662 three units out ([hyperbolic-functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)).
+A suspension bridge's main cable, strung between its towers before the deck goes on, hangs under its own weight. Measured from its lowest point in units set by its tension and weight, at distance x it stands cosh x above a fixed level: 1 at the bottom, 1.543081 one unit out, 10.067662 three units out ([Hyperbolic functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)).
 
 Beside it, a wave: height cos x, never outside −1 to 1; 0.540302 one unit along.
 
@@ -54,7 +36,7 @@ Orange: the wave, cos t, with t on the real axis. Green: the cable, cos(it), the
 
 ## The formula
 
-Notation first, in words. "e to the z", written $e^z$, is the exponential series summed at the complex number z. The rate of change d/dz is the limit of the slope (f(z + h) − f(z))/h as the complex step h shrinks to 0 from every direction ([complex-derivative-and-cauchy-riemann](01-complex-derivative-and-cauchy-riemann.md)). A function with that rate everywhere in the plane is called **entire**.
+Notation first, in words. "e to the z", written $e^z$, is the exponential series summed at the complex number z. The rate of change d/dz is the limit of the slope (f(z + h) − f(z))/h as the complex step h shrinks to 0 from every direction ([The complex derivative](01-complex-derivative-and-cauchy-riemann.md)). A function with that rate everywhere in the plane is called **entire**.
 
 $$e^{z} = \sum_{n=0}^{\infty} \frac{z^n}{n!}, \qquad \frac{d}{dz}\,e^{z} = e^{z}$$
 
@@ -86,7 +68,7 @@ Proved below: $|\sin(x+iy)|^2 = \sin^2 x + \sinh^2 y$, so sine is unbounded; $e^
 - **Every complex input.** The series converges for every z, so $e^z$, sin z and cos z are entire.
 - **Identities from adding exponents carry over.** Angle sums and cos^2 z + sin^2 z = 1 hold for all complex z.
 - **Inequalities do not.** |sin x| ≤ 1 is about real x: sin(3i) has size 10.017875. The identity cos^2 z + sin^2 z = 1 survives, but sin(i)^2 = −1.381098 is negative, so cos(i)^2 = 2.381098 exceeds 1.
-- **Undoing needs a choice.** The exponential repeats every 2πi; the choice is made on [complex-logarithm](04-complex-logarithm.md).
+- **Undoing needs a choice.** The exponential repeats every 2πi; the choice is made on [The complex logarithm](04-complex-logarithm.md).
 
 ---
 
@@ -94,7 +76,7 @@ Proved below: $|\sin(x+iy)|^2 = \sin^2 x + \sinh^2 y$, so sine is unbounded; $e^
 
 ### Step 0: one series carries everything
 
-The exponential series converges on the whole plane ([eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). A power series can be differentiated term by term inside its disc of convergence ([complex-power-series](02-complex-power-series.md)), here the plane. Everything below follows from this series and the rule that exponents add.
+The exponential series converges on the whole plane ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). A power series can be differentiated term by term inside its disc of convergence ([Power series in the plane](02-complex-power-series.md)), here the plane. Everything below follows from this series and the rule that exponents add.
 
 ### Step 1: the exponential is its own rate of change
 
@@ -105,7 +87,7 @@ At z = 1 + i the exponential is 1.468694 + 2.287355i. The slope (e^(z + h) − e
 <details>
 <summary>Detailed proof: the rate, without term-by-term differentiation</summary>
 
-Exponents add ([eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md), Step 4), so
+Exponents add ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md), Step 4), so
 
 $$\frac{e^{z+h} - e^{z}}{h} - e^{z} = e^{z}\Big(\frac{e^{h} - 1}{h} - 1\Big) = e^{z} \sum_{n=2}^{\infty} \frac{h^{n-1}}{n!}.$$
 
@@ -147,7 +129,7 @@ Exponents add, so $e^z e^{-z} = e^0 = 1$; the code gets 1.000000 + 0.000000i at 
 
 A full turn returns the arrow: $e^{2\pi i} = 1$, so $e^{z+2\pi i} = e^z$. At 1 + i both are 1.468694 + 2.287355i. Sine and cosine keep their real period 2π; cosh and sinh, turned a quarter, repeat every 2πi.
 
-A second road to the rate: $e^{x+iy} = e^x\cos y + i e^x\sin y$. Its real part u and imaginary part v have partial derivatives $u_x = e^x\cos y = v_y$ and $u_y = -e^x\sin y = -v_x$, continuous everywhere. These are the Cauchy–Riemann equations of [complex-derivative-and-cauchy-riemann](01-complex-derivative-and-cauchy-riemann.md), and the rate $u_x + i v_x$ is $e^z$ again.
+A second road to the rate: $e^{x+iy} = e^x\cos y + i e^x\sin y$. Its real part u and imaginary part v have partial derivatives $u_x = e^x\cos y = v_y$ and $u_y = -e^x\sin y = -v_x$, continuous everywhere. These are the Cauchy–Riemann equations of [The complex derivative](01-complex-derivative-and-cauchy-riemann.md), and the rate $u_x + i v_x$ is $e^z$ again.
 
 ---
 
@@ -398,7 +380,7 @@ The two outputs match line for line.
 - **Hanging cables and arches.** Power lines and a bridge's main cable before its deck is hung take the cosh shape; an arch built as an upside-down hanging chain uses the same curve.
 - **Vibrating beams.** A diving board, clamped at one end, vibrates at frequencies set by cos(βL) cosh(βL) = −1, with L its length and β a wave number: the beam's motion mixes both.
 - **Waves that cannot travel.** Light past total internal reflection has an imaginary wave number, so its cosine becomes real exponentials, and it decays.
-- **Transforms.** A damped swing is one complex exponential in time ([laplace-transform](../08-Transforms%20in%20Outline/05-laplace-transform.md)).
+- **Transforms.** A damped swing is one complex exponential in time ([The Laplace transform](../08-Transforms%20in%20Outline/05-laplace-transform.md)).
 
 > **Say it back**
 > The exponential's series, differentiated term by term, returns itself. Cosine and sine are built from e to the iz and e to the minus iz. Up the imaginary axis they become cosh and i sinh: the cable is a cosine read on the other axis. Off the real line sine is unbounded. The exponential is never 0 and repeats every 2πi.
@@ -407,15 +389,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e to the z by its series, and the addition law.
-- [complex-power-series](02-complex-power-series.md): a power series may be differentiated term by term inside its disc.
-- [hyperbolic-functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md): cosh and sinh on the real line, and the hanging chain.
+- [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e to the z by its series, and the addition law.
+- [Power series in the plane](02-complex-power-series.md): a power series may be differentiated term by term inside its disc.
+- [Hyperbolic functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md): cosh and sinh on the real line, and the hanging chain.
 
 ## Where this goes next
 
-- [laplace-transform](../08-Transforms%20in%20Outline/05-laplace-transform.md): signals weighted by e to the minus st, s complex.
+- [The Laplace transform](../08-Transforms%20in%20Outline/05-laplace-transform.md): signals weighted by e to the minus st, s complex.
 
-The exponential repeats every 2πi, so undoing it needs a choice of copy; that choice is [complex-logarithm](04-complex-logarithm.md).
+The exponential repeats every 2πi, so undoing it needs a choice of copy; that choice is [The complex logarithm](04-complex-logarithm.md).
 
 ---
 

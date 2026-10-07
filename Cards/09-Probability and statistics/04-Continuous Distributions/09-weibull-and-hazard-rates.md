@@ -1,22 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Continuous Distributions
-topic: Failure rates that change with age
-item: Weibull and hazards
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/03-exponential-distribution|exponential-distribution]]"
-next:
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/01-survival-functions-and-hazards|survival-functions-and-hazards]]"
-tags: [mathematics, probability and statistics, weibull-and-hazard-rates]
----
-
 # Weibull and hazards: failure rates that rise or fall with age
 
-Probability and statistics → Continuous Distributions → Failure rates that change with age → Weibull and hazards
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Continuous Distributions](../../../SYLLABUS.md#w09-s04) → Weibull and hazards
 
 ---
 
@@ -24,7 +8,7 @@ Probability and statistics → Continuous Distributions → Failure rates that c
 
 A box of filament bulbs is rated for about 1,000 hours of burning. Two things kill them. A few leave the factory with a flaw, a thin spot in the filament or a leaky seal, and die in the first days. The rest burn fine for months, while the hot tungsten slowly boils off the filament until it snaps. Engineers call the first kind **infant mortality** and the second **wear-out**.
 
-The question that matters to anyone replacing bulbs: does a bulb that has already burned 800 hours become more or less likely to die in the next hour? For wear-out, more. For a flaw, less: a flawed bulb that has survived a long time probably never had the flaw. Neither answer is what the [exponential-distribution](03-exponential-distribution.md) says. Its constant chance per hour makes an 800-hour bulb exactly as good as a new one.
+The question that matters to anyone replacing bulbs: does a bulb that has already burned 800 hours become more or less likely to die in the next hour? For wear-out, more. For a flaw, less: a flawed bulb that has survived a long time probably never had the flaw. Neither answer is what the [Exponential](03-exponential-distribution.md) says. Its constant chance per hour makes an 800-hour bulb exactly as good as a new one.
 
 The tool for this is the **hazard rate**: the chance per hour of dying right now, counted only among bulbs still lit. Let the hazard be a power of age and one law follows, the **Weibull distribution**. Its **shape** number says at a glance whether the hazard falls, holds or rises. For worn-out bulbs with shape 3, a fresh bulb lasts 200 hours with chance 0.9920; an 800-hour bulb lasts 200 more with chance only 0.6139.
 
@@ -61,7 +45,7 @@ The density, how thickly the chance of dying is packed near each age, is hazard 
 
 $$f(t) = h(t)\,S(t), \qquad E[T] = \eta\,\Gamma\!\left(1 + \tfrac{1}{k}\right), \qquad \text{median} = \eta\,(\ln 2)^{1/k}$$
 
-The gamma function $\Gamma$ is the integral $\Gamma(x) = \int_0^\infty y^{x-1} e^{-y}\,dy$; at a whole number $n$ it is the factorial one step down, $\Gamma(n) = (n-1)!$, so $\Gamma(3) = 2$, and between whole numbers it fills in smoothly ([gamma-and-beta-distributions](07-gamma-and-beta-distributions.md)). Writing $T \sim \mathrm{Weibull}(k, \eta)$ reads "$T$ follows the Weibull law with shape $k$ and scale $\eta$".
+The gamma function $\Gamma$ is the integral $\Gamma(x) = \int_0^\infty y^{x-1} e^{-y}\,dy$; at a whole number $n$ it is the factorial one step down, $\Gamma(n) = (n-1)!$, so $\Gamma(3) = 2$, and between whole numbers it fills in smoothly ([Gamma and beta](07-gamma-and-beta-distributions.md)). Writing $T \sim \mathrm{Weibull}(k, \eta)$ reads "$T$ follows the Weibull law with shape $k$ and scale $\eta$".
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -110,7 +94,7 @@ This holds for any lifetime with a density. It is the slice product of Step 0 in
 
 Suppose $T > 0$ has a density $f$ that is continuous on the positive ages, and $S(t) > 0$. For $\Delta > 0$, the chance of dying in $(t, t + \Delta]$ given lit at $t$ is $(S(t) - S(t + \Delta))/S(t)$. Divide by $\Delta$: as $\Delta$ shrinks, the top tends to $-S'(t) = f(t)$, so the limit is $f(t)/S(t)$.
 
-By the chain rule, $\frac{d}{dt}\ln S(t) = S'(t)/S(t) = -h(t)$. Integrate from a small $\varepsilon > 0$ to $t$ and let $\varepsilon \to 0$; since $S$ is continuous with $S(0) = 1$, $\ln S(\varepsilon) \to 0$, and $\ln S(t) = -\int_0^t h(u)\,du$. The integral near 0 is an improper one when the hazard blows up there, as it does for shape below 1 ([improper-integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)).
+By the chain rule, $\frac{d}{dt}\ln S(t) = S'(t)/S(t) = -h(t)$. Integrate from a small $\varepsilon > 0$ to $t$ and let $\varepsilon \to 0$; since $S$ is continuous with $S(0) = 1$, $\ln S(\varepsilon) \to 0$, and $\ln S(t) = -\int_0^t h(u)\,du$. The integral near 0 is an improper one when the hazard blows up there, as it does for shape below 1 ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)).
 
 So the hazard determines $S$ completely: two laws with the same hazard at every age have the same survival curve. Now take $h(t) = c\,t^{k-1}$ with $c > 0$ and $k > 0$. Then $\int_0^t c\,u^{k-1}\,du = c\,t^k/k$, finite because $k > 0$. Name the scale by $c = k/\eta^k$; then $H(t) = (t/\eta)^k$ and $S(t) = e^{-(t/\eta)^k}$. As $t$ grows, $H$ grows without bound, so $S \to 0$: every bulb dies eventually, and the law is a genuine lifetime law. The only law with a power-law hazard is the Weibull.
 
@@ -179,7 +163,7 @@ With $t = \eta\,y^{1/k}$, $dt = (\eta/k)\,y^{1/k - 1}\,dy$, so $\int_0^\infty e^
 
 </details>
 
-The general study of hazards, including lifetimes cut short by the end of a test, is [survival-functions-and-hazards](../13-Survival%2C%20Design%20and%20Causality/01-survival-functions-and-hazards.md).
+The general study of hazards, including lifetimes cut short by the end of a test, is [Survival](../13-Survival%2C%20Design%20and%20Causality/01-survival-functions-and-hazards.md).
 
 ---
 
@@ -621,7 +605,7 @@ The two outputs match line for line.
 - **Burn-in.** Electronics are run before shipping to get past the falling part of the bathtub; for the batch of Step 5, that means the first 177.0 hours.
 - **Material strength.** Ceramic parts and fibres break at their weakest flaw; the weakest-link argument makes their strength Weibull.
 - **Wind energy.** The spread of wind speeds at a site is commonly summarised by a Weibull law, and its shape and scale feed turbine siting.
-- **Credit risk.** A bond's default time is modelled by a hazard rate, the same idea read as a chance per year of default: [hazard-rate-and-survival-probability](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md).
+- **Credit risk.** A bond's default time is modelled by a hazard rate, the same idea read as a chance per year of default: [The hazard rate](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md).
 
 > **Say it back**
 > The hazard is the chance per hour of dying now, among those still alive, and its running total fixes the survival curve as e to the minus that total. A hazard proportional to a power of age gives the Weibull law. Its shape reads the ageing: below 1 the weak die first, at 1 age is irrelevant, above 1 things wear out. Its scale is the age by which 63% have died. Two independent causes add their hazards, which is how flaws and wear make a bathtub.
@@ -630,13 +614,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [exponential-distribution](03-exponential-distribution.md): the constant-hazard case, survival as a run of survived slices, and memorylessness, which the Weibull keeps only at shape 1.
+- [Exponential](03-exponential-distribution.md): the constant-hazard case, survival as a run of survived slices, and memorylessness, which the Weibull keeps only at shape 1.
 
 ## Where this goes next
 
-- [survival-functions-and-hazards](../13-Survival%2C%20Design%20and%20Causality/01-survival-functions-and-hazards.md): hazards for any lifetime, estimated from real records where some bulbs are still burning when the test stops.
+- [Survival](../13-Survival%2C%20Design%20and%20Causality/01-survival-functions-and-hazards.md): hazards for any lifetime, estimated from real records where some bulbs are still burning when the test stops.
 
-Here the hazard was given; what remains open is how to estimate it from a batch whose test ended while some bulbs were still lit, which is what [survival-functions-and-hazards](../13-Survival%2C%20Design%20and%20Causality/01-survival-functions-and-hazards.md) answers.
+Here the hazard was given; what remains open is how to estimate it from a batch whose test ended while some bulbs were still lit, which is what [Survival](../13-Survival%2C%20Design%20and%20Causality/01-survival-functions-and-hazards.md) answers.
 
 ---
 

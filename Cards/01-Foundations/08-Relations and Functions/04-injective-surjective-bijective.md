@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Relations and Functions
-topic: Functions
-item: One-to-one and onto
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/08-Relations and Functions/02-functions|functions]]"
-next:
-  - "[[Cards/01-Foundations/08-Relations and Functions/05-inverse-functions|inverse-functions]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/01-same-size-by-pairing|same-size-by-pairing]]"
-tags:
-  - mathematics
-  - foundations
-  - injective-surjective-bijective
----
-
 # One-to-one and onto: no two inputs share an output, and every output gets hit
 
-Foundations → Relations and Functions → Functions → One-to-one and onto
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Relations and Functions](../../../SYLLABUS.md#w01-s08) → One-to-one and onto
 
 ---
 
@@ -28,7 +8,7 @@ Foundations → Relations and Functions → Functions → One-to-one and onto
 
 It is 13:00. The kitchen clock says 1.
 
-The clock runs a rule: it takes an hour of the day — 0 to 23 — and hands back a dial number, 1 to 12. Every hour gets exactly one answer, so it is a function, in the sense of [functions](02-functions.md).
+The clock runs a rule: it takes an hour of the day — 0 to 23 — and hands back a dial number, 1 to 12. Every hour gets exactly one answer, so it is a function, in the sense of [Functions](02-functions.md).
 
 Two questions are left.
 
@@ -83,7 +63,7 @@ Onto is a claim about the codomain: the outputs you declared, not the ones that 
 
 Eight guests with place cards 1 to 8, eight numbered seats. Guest 1 takes seat 1, guest 2 seat 2, down the row. Arrivals at each seat: 1 1 1 1 1 1 1 1. No seat took two, so it is one-to-one.
 
-Every seat holds exactly one guest, so point at a seat and name the guest: the trip runs backwards — [inverse-functions](05-inverse-functions.md). That needs both tests, not just this one. The clock cannot: 01:00 and 13:00 go in as two different hours and come out as one dial number.
+Every seat holds exactly one guest, so point at a seat and name the guest: the trip runs backwards — [Inverse functions](05-inverse-functions.md). That needs both tests, not just this one. The clock cannot: 01:00 and 13:00 go in as two different hours and come out as one dial number.
 
 ### Onto: nothing gets missed, against what you declared
 
@@ -97,7 +77,7 @@ Equal sizes settle nothing alone. Eight guests, eight seats: two crowd seat 3, s
 
 ### Both at once is a pairing
 
-Back to eight guests in eight seats: exactly 1 arriving everywhere. Each guest a seat, each seat a guest, nothing spare. That is a bijection — and what "the same size" means: you never counted, you paired off — [same-size-by-pairing](../09-Sizes%20of%20Infinity/01-same-size-by-pairing.md).
+Back to eight guests in eight seats: exactly 1 arriving everywhere. Each guest a seat, each seat a guest, nothing spare. That is a bijection — and what "the same size" means: you never counted, you paired off — [Same size means pairable](../09-Sizes%20of%20Infinity/01-same-size-by-pairing.md).
 
 ---
 
@@ -275,12 +255,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [functions](02-functions.md): one output for every input, and the split between the codomain you declare and the range you reach. This card asks the two questions that split leaves open.
+- [Functions](02-functions.md): one output for every input, and the split between the codomain you declare and the range you reach. This card asks the two questions that split leaves open.
 
 ## Where this goes next
 
-- [inverse-functions](05-inverse-functions.md): running the arrows backwards, possible exactly when the function is a bijection.
-- [same-size-by-pairing](../09-Sizes%20of%20Infinity/01-same-size-by-pairing.md): a bijection is what "the same size" means.
+- [Inverse functions](05-inverse-functions.md): running the arrows backwards, possible exactly when the function is a bijection.
+- [Same size means pairable](../09-Sizes%20of%20Infinity/01-same-size-by-pairing.md): a bijection is what "the same size" means.
 
 ---
 

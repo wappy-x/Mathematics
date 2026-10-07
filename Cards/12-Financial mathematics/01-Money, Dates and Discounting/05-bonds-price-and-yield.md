@@ -1,30 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Money, Dates and Discounting
-topic: Pricing a fixed stream
-item: Bond price and yield
-kind: method
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/03-annuities-and-loans|annuities-and-loans]]"
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/02-day-counts-and-dates|day-counts-and-dates]]"
-next:
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/06-duration-and-convexity|duration-and-convexity]]"
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/07-yield-from-price|yield-from-price]]"
-  - "[[Cards/12-Financial mathematics/34-Inflation and Real Rates/01-real-rates-and-the-fisher-equation|real-rates-and-the-fisher-equation]]"
-  - "[[Cards/12-Financial mathematics/35-Mortgages, Callables and Prepayment/01-callable-bonds-and-yield-to-worst|callable-bonds-and-yield-to-worst]]"
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve|pricing-a-defaultable-bond-from-the-survival-curve]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - bonds-price-and-yield
----
-
 # Bond price and yield: coupons and face discounted at one rate
 
-Financial mathematics → Money, Dates and Discounting → Pricing a fixed stream → Bond price and yield
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Money, Dates and Discounting](../../../SYLLABUS.md#w12-s01) → Bond price and yield
 
 ---
 
@@ -54,7 +30,7 @@ xychart-beta
 
 The falling line is the price. The flat line is the $1,000 face. They cross at six percent, where the yield equals the coupon: that crossing is **par**. Left of it the bond sells above face, a **premium**. Right of it, below face, a **discount**. The line only ever falls, which is the one fact about bonds everybody half-remembers: price and yield move opposite ways.
 
-Going the other way — a price is quoted, and the yield has to be dug back out of it — is the inverse job, and it has its own card: [yield-from-price](07-yield-from-price.md).
+Going the other way — a price is quoted, and the yield has to be dug back out of it — is the inverse job, and it has its own card: [Yield from price](07-yield-from-price.md).
 
 ---
 
@@ -62,9 +38,9 @@ Going the other way — a price is quoted, and the yield has to be dug back out 
 
 Two pieces of shorthand first, both in words.
 
-A **discount factor** is what one dollar due later is worth today. Written $D(t)$, read "D of t", where $t$ counts the years until the dollar lands. With one payment a year at a yield $y$, waiting $t$ years divides the value by $(1+y)$ once per year: $D(t) = 1/(1+y)^t$. A dollar due in five years at five percent is worth $0.783526 today. Where that comes from is [compounding-and-discount-factors](01-compounding-and-discount-factors.md).
+A **discount factor** is what one dollar due later is worth today. Written $D(t)$, read "D of t", where $t$ counts the years until the dollar lands. With one payment a year at a yield $y$, waiting $t$ years divides the value by $(1+y)$ once per year: $D(t) = 1/(1+y)^t$. A dollar due in five years at five percent is worth $0.783526 today. Where that comes from is [Discount factors](01-compounding-and-discount-factors.md).
 
-The second is the **annuity factor**, written $a_N(y)$: the value today of one dollar a year for $N$ years, which is just the discount factors added up. The count of payments sits low and to the right, the rate goes in brackets, and $a$ on its own is the short form where only one is in play. It is the closed form proved on [annuities-and-loans](03-annuities-and-loans.md).
+The second is the **annuity factor**, written $a_N(y)$: the value today of one dollar a year for $N$ years, which is just the discount factors added up. The count of payments sits low and to the right, the rate goes in brackets, and $a$ on its own is the short form where only one is in play. It is the closed form proved on [Annuities](03-annuities-and-loans.md).
 
 The price, payment by payment:
 
@@ -94,11 +70,11 @@ The closed form divides by $y$, so it needs a yield that is not zero. At $y = 0$
 
 ### When it holds
 
-- **Every payment arrives in full and on time.** A borrower who can miss one is worth less than this; a chance of default has to be priced with a survival curve, and that is [pricing-a-defaultable-bond-from-the-survival-curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md).
+- **Every payment arrives in full and on time.** A borrower who can miss one is worth less than this; a chance of default has to be priced with a survival curve, and that is [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md).
 - **The same rate does for every date.** Real markets charge a different rate for one-year money than for five-year money. The single $y$ is a summary of the whole set, fitted to this contract; borrow it to price a different bond and the answer is wrong.
 - **The rate is quoted for the period the coupons arrive in.** Annual coupons want an annual yield. The same 6% paid twice a year, discounted at 2.5% a half-year, prices at $1,043.76, not $1,043.29: half of every coupon lands six months early, and 2.5% twice over compounds to 5.0625% a year, which takes part of that back.
-- **Nothing can end the contract early.** An issuer with the right to repay early will use it when rates fall, which caps the price: [callable-bonds-and-yield-to-worst](../35-Mortgages%2C%20Callables%20and%20Prepayment/01-callable-bonds-and-yield-to-worst.md).
-- **The payments sit exactly one period apart.** Between two coupon dates the calendar takes over and a day count decides how much of the next coupon has been earned: [day-counts-and-dates](02-day-counts-and-dates.md).
+- **Nothing can end the contract early.** An issuer with the right to repay early will use it when rates fall, which caps the price: [Callable bonds](../35-Mortgages%2C%20Callables%20and%20Prepayment/01-callable-bonds-and-yield-to-worst.md).
+- **The payments sit exactly one period apart.** Between two coupon dates the calendar takes over and a day count decides how much of the next coupon has been earned: [Day counts](02-day-counts-and-dates.md).
 
 ---
 
@@ -165,7 +141,7 @@ So $1,043.29 in an account and the bond are the same object. Anyone selling the 
 
 The account's balances after each coupon are $1,043.29, $1,035.46, $1,027.23, $1,018.59, $1,009.52 and $1,000.00 — and those are exactly the bond's prices with five, four, three, two, one and no coupons left. The checks compute both lists separately and compare them.
 
-**The other route.** A careful market does not use one rate for all five dates; it uses a different rate per date and discounts each payment on its own. The single $y$ is then whatever flat rate reproduces the same total, which is the same move [net-present-value-and-irr](04-net-present-value-and-irr.md) makes for a project's cash flows. Finding that flat rate from a quoted price is [yield-from-price](07-yield-from-price.md).
+**The other route.** A careful market does not use one rate for all five dates; it uses a different rate per date and discounts each payment on its own. The single $y$ is then whatever flat rate reproduces the same total, which is the same move [NPV and IRR](04-net-present-value-and-irr.md) makes for a project's cash flows. Finding that flat rate from a quoted price is [Yield from price](07-yield-from-price.md).
 
 ---
 
@@ -665,7 +641,7 @@ The two outputs match line for line.
 - **A government auction.** Bids arrive as prices per $100 of face and are converted to yields on the spot; the US Treasury publishes the exact formulas it uses, accrued interest and all.
 - **The screen.** "Trading at 98" is a clean price: 98% of face, a discount, so that bond's yield is above its coupon. The cash actually wired on settlement day is higher, by the accrued interest.
 - **A bond fund's daily price.** Every holding is repriced from the day's yields. A fund can fall on a day nothing defaulted and no payment was missed: rates moved, and every contract in it was discounted harder.
-- **A mortgage, from the lender's side.** The same stream of dated payments, valued the same way — set out from the borrower's side in [annuities-and-loans](03-annuities-and-loans.md).
+- **A mortgage, from the lender's side.** The same stream of dated payments, valued the same way — set out from the borrower's side in [Annuities](03-annuities-and-loans.md).
 - **Company debt.** The same arithmetic with one extra question: whether the payments arrive at all. That gap between a government's yield and a company's is the credit spread.
 
 > **Say it back**
@@ -675,18 +651,18 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [annuities-and-loans](03-annuities-and-loans.md): the annuity factor, 4.329477 here, which is the only reason five coupons can be priced with one multiplication.
-- [day-counts-and-dates](02-day-counts-and-dates.md): what 184 days out of 365 means, and why a market has to agree on the count before it can agree on a price.
+- [Annuities](03-annuities-and-loans.md): the annuity factor, 4.329477 here, which is the only reason five coupons can be priced with one multiplication.
+- [Day counts](02-day-counts-and-dates.md): what 184 days out of 365 means, and why a market has to agree on the count before it can agree on a price.
 
 ## Where this goes next
 
-- [duration-and-convexity](06-duration-and-convexity.md): how far the price falls for a given rise in yield, measured in years, and the bend the straight-line answer misses.
-- [yield-from-price](07-yield-from-price.md): the same equation solved the other way round, with a price given and the yield hunted for.
-- [real-rates-and-the-fisher-equation](../34-Inflation%20and%20Real%20Rates/01-real-rates-and-the-fisher-equation.md): what the 5% is worth once inflation has taken its cut.
-- [callable-bonds-and-yield-to-worst](../35-Mortgages%2C%20Callables%20and%20Prepayment/01-callable-bonds-and-yield-to-worst.md): contracts the issuer can end early, which breaks the fixed-payment assumption on purpose.
-- [pricing-a-defaultable-bond-from-the-survival-curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md): payments that might not arrive, weighted by the chance they do.
+- [Duration and convexity](06-duration-and-convexity.md): how far the price falls for a given rise in yield, measured in years, and the bend the straight-line answer misses.
+- [Yield from price](07-yield-from-price.md): the same equation solved the other way round, with a price given and the yield hunted for.
+- [Real rates](../34-Inflation%20and%20Real%20Rates/01-real-rates-and-the-fisher-equation.md): what the 5% is worth once inflation has taken its cut.
+- [Callable bonds](../35-Mortgages%2C%20Callables%20and%20Prepayment/01-callable-bonds-and-yield-to-worst.md): contracts the issuer can end early, which breaks the fixed-payment assumption on purpose.
+- [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md): payments that might not arrive, weighted by the chance they do.
 
-This card takes the yield as given and hands back a price. Every quoted market does the opposite — the price is what is visible — and whether one yield always comes back out of one price is the question of [yield-from-price](07-yield-from-price.md).
+This card takes the yield as given and hands back a price. Every quoted market does the opposite — the price is what is visible — and whether one yield always comes back out of one price is the question of [Yield from price](07-yield-from-price.md).
 
 ---
 

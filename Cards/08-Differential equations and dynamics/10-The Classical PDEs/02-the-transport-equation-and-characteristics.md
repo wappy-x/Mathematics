@@ -1,26 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: The Classical PDEs
-topic: Carried by the current
-item: The transport equation
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/01-what-a-pde-says|what-a-pde-says]]"
-  - "[[Cards/08-Differential equations and dynamics/02-Existence, Uniqueness and Sensitivity/05-the-flow-of-an-equation|the-flow-of-an-equation]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/03-chain-rule|chain-rule]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/05-the-wave-equation-and-dalemberts-formula|the-wave-equation-and-dalemberts-formula]]"
-  - "[[Cards/16-Numerical analysis/07-PDE Solvers/06-upwind-schemes-and-conservation-laws|upwind-schemes-and-conservation-laws]]"
-  - "[[Cards/19-Partial differential equations/02-First-Order Equations and Characteristics/01-method-of-characteristics|method-of-characteristics]]"
-tags: [mathematics, differential equations and dynamics, the-transport-equation-and-characteristics]
----
-
 # The transport equation: a shape carried along unchanged, and the lines along which a PDE is really an ODE
 
-Differential equations and dynamics → The Classical PDEs → Carried by the current → The transport equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → The transport equation
 
 ---
 
@@ -55,7 +35,7 @@ From left: t = 0 (orange), 1.5 h (green), 3 h (dark blue). Same shape, 2 km furt
 
 ## The formula
 
-Notation first. As on [what-a-pde-says](01-what-a-pde-says.md), a subscript names the variable a partial derivative is taken in: $u_t$ is the rate of change of $u$ in time with place held fixed, and $u_x$ the rate of change along the river with time held fixed.
+Notation first. As on [A partial differential equation](01-what-a-pde-says.md), a subscript names the variable a partial derivative is taken in: $u_t$ is the rate of change of $u$ in time with place held fixed, and $u_x$ the rate of change along the river with time held fixed.
 
 $$u_t + c\,u_x = 0, \qquad u(x, 0) = f(x) \quad\Longrightarrow\quad u(x, t) = f(x - c t)$$
 
@@ -84,9 +64,9 @@ To scale: 18 px per km across, 75 px per hour up. Five parcels start 1 km apart.
 ### When it holds
 
 - **The speed is set by the river, not by the pollutant.** If it depends on the carried value, as in a flood wave where deeper water runs faster, characteristics can cross: for u_t + u u_x = 0 starting from 2 + e^(−x^2) km/h, the check finds a first crossing at 1.1658 h.
-- **No mixing.** Real plumes also spread; that adds a u_xx term, the smoothing of [the-heat-equation](03-the-heat-equation.md). Without it the peak stays at 10 mg/L forever.
+- **No mixing.** Real plumes also spread; that adds a u_xx term, the smoothing of [The heat equation](03-the-heat-equation.md). Without it the peak stays at 10 mg/L forever.
 - **No source or decay.** A pollutant breaking down at rate k per hour gives u_t + c u_x = −ku; along each path the value falls as e^(−kt).
-- **A smooth enough speed.** A bounded slope in c(x) gives one path through each point ([the-flow-of-an-equation](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/05-the-flow-of-an-equation.md)); two paths through one point would demand two values.
+- **A smooth enough speed.** A bounded slope in c(x) gives one path through each point ([The flow](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/05-the-flow-of-an-equation.md)); two paths through one point would demand two values.
 - **No boundary.** On a finite reach, a path traced back far enough hits the upstream end, and the value comes from whatever enters there.
 
 ---
@@ -99,7 +79,7 @@ A station on the bank sees the concentration change. A float drifting with the c
 
 ### Step 1: the chain rule turns the PDE into an ODE along a path
 
-Follow the path X(s) = a + cs. The value seen along it is u(X(s), s), a function of the single variable s. By the [chain-rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md) in two variables,
+Follow the path X(s) = a + cs. The value seen along it is u(X(s), s), a function of the single variable s. By the [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md) in two variables,
 
 $$\frac{d}{ds}\,u\big(X(s), s\big) = u_x\,X'(s) + u_t = c\,u_x + u_t = 0.$$
 
@@ -134,7 +114,7 @@ Where the proof stops: for u_t + u u_x = 0 the speed is the unknown. Paths still
 
 </details>
 
-A second road: chop the river into cells and each time step move a fraction of each cell's contents one cell downstream. That upwind grid is road 2 in the code, and the subject of upwind-schemes-and-conservation-laws.
+A second road: chop the river into cells and each time step move a fraction of each cell's contents one cell downstream. That upwind grid is road 2 in the code, and the subject of Flow problems.
 
 ---
 
@@ -167,7 +147,7 @@ The checks print all four.
 
 ## Code, from first principles, and it actually runs
 
-Two roads to each answer. For the constant speed, road 1 is the formula; road 2 is an upwind grid moving 0.8 of each cell's contents one cell downstream per step, whose error halves with the cell width (order 1). For the varying speed, road 2 steps the characteristic equation backwards by Runge-Kutta 4 (a step that averages four slopes, from [runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) and reads the spill at the label it finds. A search over neighbouring paths confirms the nonlinear crossing time.
+Two roads to each answer. For the constant speed, road 1 is the formula; road 2 is an upwind grid moving 0.8 of each cell's contents one cell downstream per step, whose error halves with the cell width (order 1). For the varying speed, road 2 steps the characteristic equation backwards by Runge-Kutta 4 (a step that averages four slopes, from [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) and reads the spill at the label it finds. A search over neighbouring paths confirms the nonlinear crossing time.
 
 ### Python
 
@@ -382,7 +362,7 @@ The two outputs match line for line.
 
 - **Tracer tests.** Hydrologists time dye arriving downstream to measure a river's speed: before mixing matters, arrival time is distance over speed.
 - **Traffic.** Car density obeys a transport law whose speed depends on density; crossing characteristics are sudden motorway queues.
-- **Waves on a string.** The wave equation splits into two transport equations, one carrying a shape right and one left: [the-wave-equation-and-dalemberts-formula](05-the-wave-equation-and-dalemberts-formula.md)
+- **Waves on a string.** The wave equation splits into two transport equations, one carrying a shape right and one left: [The wave equation](05-the-wave-equation-and-dalemberts-formula.md)
 
 > **Say it back**
 > A pollutant carried by a current without mixing satisfies u_t + c u_x = 0. Along each path the water takes, the chain rule turns that PDE into "the rate of change is zero". So the value at a place and time is the starting value where that water came from: f(x − ct) for a constant speed. A varying speed bends the paths and stretches the plume. A speed that depends on the carried value can make paths cross, and there the smooth solution ends.
@@ -391,17 +371,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [what-a-pde-says](01-what-a-pde-says.md): the subscript notation u_t, u_x and what a solution of a PDE is.
-- [the-flow-of-an-equation](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/05-the-flow-of-an-equation.md): one path through each point, so each point gets one label.
-- [chain-rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): the one computation that turns the PDE into an ODE along a path.
+- [A partial differential equation](01-what-a-pde-says.md): the subscript notation u_t, u_x and what a solution of a PDE is.
+- [The flow](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/05-the-flow-of-an-equation.md): one path through each point, so each point gets one label.
+- [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): the one computation that turns the PDE into an ODE along a path.
 
 ## Where this goes next
 
-- [the-wave-equation-and-dalemberts-formula](05-the-wave-equation-and-dalemberts-formula.md): two transport equations, running in opposite directions, make a wave.
-- upwind-schemes-and-conservation-laws: the grid of road 2, its stability limit and its smearing.
-- method-of-characteristics: characteristics for general first-order PDEs, and what happens after they cross.
+- [The wave equation](05-the-wave-equation-and-dalemberts-formula.md): two transport equations, running in opposite directions, make a wave.
+- Flow problems: the grid of road 2, its stability limit and its smearing.
+- Characteristics: characteristics for general first-order PDEs, and what happens after they cross.
 
-Left open: what the solution does once two paths meet, a moving jump called a shock, answered in method-of-characteristics.
+Left open: what the solution does once two paths meet, a moving jump called a shock, answered in Characteristics.
 
 ---
 

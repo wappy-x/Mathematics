@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Averages, choosers, compounds and forward-starts
-topic: Strips of forward-starts
-item: Cliquets
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/06-forward-start-options-and-forward-volatility|forward-start-options-and-forward-volatility]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/06-stochastic-local-volatility|stochastic-local-volatility]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-next:
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/04-variance-swap-after-inception-and-forward-variance|variance-swap-after-inception-and-forward-variance]]"
-tags: [mathematics, financial mathematics, cliquets-and-ratchets]
----
-
 # Cliquets: a chain of forward-starts with local caps and a global floor, and why the forward smile prices it
 
-Financial mathematics → Averages, choosers, compounds and forward-starts → Strips of forward-starts → Cliquets
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages, choosers, compounds and forward-starts](../../../SYLLABUS.md#w12-s17) → Cliquets
 
 ---
 
@@ -30,7 +12,7 @@ Say Acme rises 8%, falls 3%, rises 2%, then falls 7%. The coupons are +5%, −3%
 
 A contract like this is a **cliquet**, French for the click of a ratchet. Each quarter restarts from wherever Acme stands, the way a ratchet holds its position between clicks. The per-quarter limits are the **local cap** and **local floor**. The zero under the total is the **global floor**. From here on, these are the names.
 
-Take away the caps and floors and the note is four forward-start calls end to end. Each is a call whose strike is set at the start of its quarter, at Acme's price that day ([forward-start-options-and-forward-volatility](06-forward-start-options-and-forward-volatility.md)). That uncapped strip has a closed form: $16.71. The capped note does not. Priced by simulation it is worth $3.50 in the flat Black-Scholes model (one volatility for everything), $4.07 under local volatility (one volatility per price and date) and $4.40 under Heston (a volatility that wanders at random). The last two agree on every one-year option price. They disagree on the cliquet because they disagree about the **smile**, the curve of implied volatilities across strikes, that options will show at the start of each future quarter.
+Take away the caps and floors and the note is four forward-start calls end to end. Each is a call whose strike is set at the start of its quarter, at Acme's price that day ([Forward-start options](06-forward-start-options-and-forward-volatility.md)). That uncapped strip has a closed form: $16.71. The capped note does not. Priced by simulation it is worth $3.50 in the flat Black-Scholes model (one volatility for everything), $4.07 under local volatility (one volatility per price and date) and $4.40 under Heston (a volatility that wanders at random). The last two agree on every one-year option price. They disagree on the cliquet because they disagree about the **smile**, the curve of implied volatilities across strikes, that options will show at the start of each future quarter.
 
 **A cliquet is a sum of forward-start options on quarterly returns, clipped quarter by quarter and floored as a whole; the clipping makes it a bet on the shape of future smiles, so two models that price every vanilla alike can price the same cliquet 33 cents apart.**
 
@@ -58,7 +40,7 @@ $$V = 100\,e^{-rT}\,\mathbb{E}\!\left[\max\!\Big(\sum_{i=1}^{4} c_i,\; 0\Big)\ri
 
 **Read it aloud:** clip each quarter's return to between −5% and +5%, add the four clipped returns, floor the total at zero, and take the average of that payout over the model's paths, discounted from year end to today.
 
-The symbol $\mathbb{E}$ is the average over the paths of the risk-neutral world, where every asset grows at the riskless rate ([monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)). The large sigma sign adds the four quarters.
+The symbol $\mathbb{E}$ is the average over the paths of the risk-neutral world, where every asset grows at the riskless rate ([Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)). The large sigma sign adds the four quarters.
 
 Without the caps and floors the payout is $100\sum_i \max(R_i, 0)$, and that version has a closed form:
 
@@ -141,7 +123,7 @@ In the flat model the four quarters are independent and identical. A single quar
 
 ### Step 4: the forward smile decides the coupons
 
-Heston's variance wanders and leans against the share, with correlation −0.7 ([heston-model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md)). That produces a skew today, and it produces the same kind of skew at every future date, because the variance still wanders then. Local volatility gives Acme one volatility per price and date, fitted to today's smile ([dupire-local-volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md)). Its future smiles are whatever that fixed table implies once the price has moved, and they come out flatter ([pricing-under-local-volatility-and-the-forward-smile](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md)).
+Heston's variance wanders and leans against the share, with correlation −0.7 ([The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md)). That produces a skew today, and it produces the same kind of skew at every future date, because the variance still wanders then. Local volatility gives Acme one volatility per price and date, fitted to today's smile ([Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md)). Its future smiles are whatever that fixed table implies once the price has moved, and they come out flatter ([Pricing with local volatility](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md)).
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -175,7 +157,7 @@ Gyöngy's theorem: for a model without jumps, set the local variance at each pri
 | Heston, one-year implied vol (%) | 20.96 | 20.21 | 19.48 | 18.77 | 18.08 |
 | Local volatility (%) | 20.90 | 20.18 | 19.46 | 18.77 | 18.09 |
 
-Same distribution on each date; different joins between dates. A cliquet's payout depends on four dates at once, so the joins are what it prices. On the same random numbers, Heston minus local volatility is $0.330527 ± 0.004206: far outside simulation error. The general recipe that fits both at once, a leverage function on top of Heston, is on [stochastic-local-volatility](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/06-stochastic-local-volatility.md).
+Same distribution on each date; different joins between dates. A cliquet's payout depends on four dates at once, so the joins are what it prices. On the same random numbers, Heston minus local volatility is $0.330527 ± 0.004206: far outside simulation error. The general recipe that fits both at once, a leverage function on top of Heston, is on [Stochastic-local volatility](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/06-stochastic-local-volatility.md).
 
 ---
 
@@ -659,8 +641,8 @@ All checks passed.
 - **Capital-protected equity notes.** Retail notes that pay "the index's gains, capped each period, with your money back guaranteed" are cliquets with a global floor. Gatheral's book works through a locally capped, globally floored cliquet of this kind.
 - **Indexed annuities.** Insurers credit annual index returns with a cap and a floor of zero on each year, locking in each year's credit: a ratchet, the local-floor-at-zero case in the what-breaks table.
 - **Model validation desks.** Cliquets are a standard test of whether a volatility model's future smiles are believable, because vanilla prices cannot settle it.
-- **Forward-start options.** The uncapped leg is one: [forward-start-options-and-forward-volatility](06-forward-start-options-and-forward-volatility.md).
-- **Other path contracts on this shelf.** An Asian option also reads the path on fixed dates but averages it: [geometric-asian-kemna-vorst](01-geometric-asian-kemna-vorst.md) and [arithmetic-asian-options](02-arithmetic-asian-options.md). A future decision is the subject of [chooser-options](04-chooser-options.md) and [compound-options](05-compound-options.md).
+- **Forward-start options.** The uncapped leg is one: [Forward-start options](06-forward-start-options-and-forward-volatility.md).
+- **Other path contracts on this shelf.** An Asian option also reads the path on fixed dates but averages it: [The geometric Asian call](01-geometric-asian-kemna-vorst.md) and [Arithmetic Asian options](02-arithmetic-asian-options.md). A future decision is the subject of [Chooser options](04-chooser-options.md) and [Compound options](05-compound-options.md).
 
 > **Say it back**
 > A cliquet adds up a chain of quarterly returns, each clipped between a local floor and cap, and floors the total at zero. Without the clipping it is four forward-start calls, worth $16.71 in the house market by a closed form that holds leg by leg. Each clipped coupon is the return plus a put below minus a call above, so its value depends on the skew of the smile at each future reset; the global floor adds a put on the total that ties the quarters together. Heston and local volatility price every vanilla alike but disagree on those future smiles, and so on the cliquet: $4.40 against $4.07, with the flat model at $3.50.
@@ -669,13 +651,13 @@ All checks passed.
 
 ## What this builds on
 
-- [forward-start-options-and-forward-volatility](06-forward-start-options-and-forward-volatility.md): the one leg, and why a strike set at a future date removes the share's level from the price.
-- [stochastic-local-volatility](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/06-stochastic-local-volatility.md): Heston, local volatility, and the average-variance table that makes them agree on vanillas.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): prices as averages over simulated paths, and the standard error on each.
+- [Forward-start options](06-forward-start-options-and-forward-volatility.md): the one leg, and why a strike set at a future date removes the share's level from the price.
+- [Stochastic-local volatility](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/06-stochastic-local-volatility.md): Heston, local volatility, and the average-variance table that makes them agree on vanillas.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): prices as averages over simulated paths, and the standard error on each.
 
 ## Where this goes next
 
-- [variance-swap-after-inception-and-forward-variance](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/04-variance-swap-after-inception-and-forward-variance.md): forward variance traded outright, the quantity a cliquet's forward-starting options lean on.
+- [Marking a variance swap](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/04-variance-swap-after-inception-and-forward-variance.md): forward variance traded outright, the quantity a cliquet's forward-starting options lean on.
 It leaves the model open: once vanilla prices stop settling a value, how future smiles behave must be defended with market prices of forward-starts and cliquets themselves.
 
 ---

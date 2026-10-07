@@ -1,25 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Binomial Coefficients and Identities
-topic: Signs down a row
-item: Alternating sums
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/02-binomial-theorem|binomial-theorem]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/04-Inclusion-Exclusion and Pigeonhole/01-inclusion-exclusion-for-n-sets|inclusion-exclusion-for-n-sets]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - alternating-sums-and-binomial-inversion
----
-
 # Alternating sums: a row added with alternating signs cancels to zero, which lets you undo a binomial sum
 
-Combinatorics and graphs → Binomial Coefficients and Identities → Signs down a row → Alternating sums
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Binomial Coefficients and Identities](../../../SYLLABUS.md#w04-s03) → Alternating sums
 
 ---
 
@@ -29,7 +10,7 @@ The Lantern, a room above a pub, runs a Tuesday showcase. A player turns up with
 
 Five tunes allow 326 setlists, four 65, three 16, two 5, one 2, none 1. Those totals are easy: list them. The harder question is how many of the 326 leave nothing out, using all five. That count is 120.
 
-The easy totals are built out of the hard ones. Every setlist uses one pick of tunes and uses all of it, and a pick of size k can be made in C(5, k) ways — row 5 of Pascal's triangle ([pascals-rule-and-the-triangle](01-pascals-rule-and-the-triangle.md)). So 326 is the row 1 5 10 10 5 1 weighted by the leave-nothing-out counts 1, 1, 2, 6, 24, 120. Running that backwards, one total against six unknowns, looks hopeless.
+The easy totals are built out of the hard ones. Every setlist uses one pick of tunes and uses all of it, and a pick of size k can be made in C(5, k) ways — row 5 of Pascal's triangle ([Pascal's rule](01-pascals-rule-and-the-triangle.md)). So 326 is the row 1 5 10 10 5 1 weighted by the leave-nothing-out counts 1, 1, 2, 6, 24, 120. Running that backwards, one total against six unknowns, looks hopeless.
 
 It is not, and one small fact is why. Add row 5 with the signs flipping: 1 − 5 + 10 − 10 + 5 − 1 = 0. Every row past the top does the same, and that cancellation makes the forward sum reversible.
 
@@ -53,7 +34,7 @@ A perfect pairing: each added pick has one subtracted partner, so the total is 1
 
 ## The formula
 
-Two pieces of shorthand, both already on this shelf. C(n, k) counts the ways to pick k things from n when order is ignored, read "n choose k". The Greek capital sigma, $\sum$, with a starting value under it and a stopping value over it, means "add these as k runs from first to last" ([binomial-theorem](02-binomial-theorem.md)).
+Two pieces of shorthand, both already on this shelf. C(n, k) counts the ways to pick k things from n when order is ignored, read "n choose k". The Greek capital sigma, $\sum$, with a starting value under it and a stopping value over it, means "add these as k runs from first to last" ([The binomial theorem](02-binomial-theorem.md)).
 
 $$\sum_{k=0}^{n} (-1)^k\, C(n,k) \;=\; C(n,0) - C(n,1) + C(n,2) - \cdots \;=\; 0 \qquad (n \ge 1)$$
 
@@ -91,13 +72,13 @@ C(n, k) counts the picks of size k. Alternating signs put the even sizes in a pl
 
 ### Step 1: one item pairs the piles off
 
-Single out Anchor. Toggle it in any pick: Anchor in, take it out; Anchor out, put it in. The size moves by one, so an even pick becomes odd and an odd pick even. Toggling twice returns the original, so no pick is used twice and none left over — a one-for-one matching ([bijection-and-double-counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)). Of the 32 picks, 16 are even-size and 16 odd, so the signed total is 0.
+Single out Anchor. Toggle it in any pick: Anchor in, take it out; Anchor out, put it in. The size moves by one, so an even pick becomes odd and an odd pick even. Toggling twice returns the original, so no pick is used twice and none left over — a one-for-one matching ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)). Of the 32 picks, 16 are even-size and 16 odd, so the signed total is 0.
 
 Nothing about five was used: wherever there is an item to toggle the piles match, and with none there is only the empty pick, no partner, so row 0 comes to 1.
 
 ### Step 2: the same zero from a two-term power
 
-The binomial theorem expands (x + y)^n into terms C(n, k) x^(n−k) y^k added over k ([binomial-theorem](02-binomial-theorem.md)). Set x = 1 and y = −1: every power of 1 is 1, y^k is the alternating sign, and the expansion is the alternating row sum. The left side is (1 − 1)^n — 0 for n ≥ 1, and 1 for n = 0, an empty product.
+The binomial theorem expands (x + y)^n into terms C(n, k) x^(n−k) y^k added over k ([The binomial theorem](02-binomial-theorem.md)). Set x = 1 and y = −1: every power of 1 is 1, y^k is the alternating sign, and the expansion is the alternating row sum. The left side is (1 − 1)^n — 0 for n ≥ 1, and 1 for n = 0, an empty product.
 
 ### Step 3: the forward sum, and what undoing it means
 
@@ -124,7 +105,7 @@ The inner sum is a full row with alternating signs, differing from Step 1's only
 
 </details>
 
-As tables of numbers, the plain and signed rows multiply to 1s down the diagonal and 0s elsewhere: each is the other's inverse. Applied to sets rather than sizes, the same cancellation is the sieve ([inclusion-exclusion-for-n-sets](../04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md)).
+As tables of numbers, the plain and signed rows multiply to 1s down the diagonal and 0s elsewhere: each is the other's inverse. Applied to sets rather than sizes, the same cancellation is the sieve ([Inclusion-exclusion for any number of sets](../04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md)).
 
 ---
 
@@ -365,13 +346,13 @@ The two outputs match line for line.
 >
 > - **Forgetting that row 0 is different.** Its alternating sum is 1, not 0, and that surviving 1 delivers the recovered count. A proof making every row vanish proves too much.
 > - **Inverting with the plain row, or stopping before the last term.** Leaving the signs off gives 872 instead of 120; row 5 cut one term short adds to 1, not 0.
-> - **Confusing a signed row with a diagonal.** Adding a diagonal is a different identity with a different answer ([hockey-stick-identity](04-hockey-stick-identity.md)).
+> - **Confusing a signed row with a diagonal.** Adding a diagonal is a different identity with a different answer ([The hockey stick](04-hockey-stick-identity.md)).
 
 ---
 
 ## Where you meet it in real life
 
-- **Sieve counts.** Counting what dodges several conditions at once means adding, subtracting, adding back — these signs, applied to sets instead of sizes: [inclusion-exclusion-for-n-sets](../04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md).
+- **Sieve counts.** Counting what dodges several conditions at once means adding, subtracting, adding back — these signs, applied to sets instead of sizes: [Inclusion-exclusion for any number of sets](../04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md).
 - **Turning loose records into exact ones.** A log storing only "how many, at any size" still yields exact-size counts, given the loose counts for every smaller pool: 1, 2, 5, 16, 65, 326 give back 1, 1, 2, 6, 24, 120.
 - **Differences of a table.** Subtracting neighbouring entries of a table, again and again, produces exactly these signed weights — the usual way of reading the polynomial behind a column of numbers.
 - **Checks on counting code.** A row of choice counts that fails to cancel has a wrong entry.
@@ -383,13 +364,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [binomial-theorem](02-binomial-theorem.md): the expansion of (x + y)^n, giving the alternating row sum in one line at x = 1, y = −1, and the sigma shorthand.
+- [The binomial theorem](02-binomial-theorem.md): the expansion of (x + y)^n, giving the alternating row sum in one line at x = 1, y = −1, and the sigma shorthand.
 
 ## Where this goes next
 
-- [inclusion-exclusion-for-n-sets](../04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md): the same alternating signs applied to overlapping sets, each size of overlap a term of the row.
+- [Inclusion-exclusion for any number of sets](../04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md): the same alternating signs applied to overlapping sets, each size of overlap a term of the row.
 
-This card cancels a row indexed by size; what happens when the things counted overlap in named ways is [inclusion-exclusion-for-n-sets](../04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md).
+This card cancels a row indexed by size; what happens when the things counted overlap in named ways is [Inclusion-exclusion for any number of sets](../04-Inclusion-Exclusion%20and%20Pigeonhole/01-inclusion-exclusion-for-n-sets.md).
 
 ---
 

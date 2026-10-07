@@ -1,26 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Fourier Series
-topic: Where a series lands
-item: Convergence
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/09-Fourier Series/01-fourier-series-and-orthogonality|fourier-series-and-orthogonality]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/03-sequences-and-limits|sequences-and-limits]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/09-Fourier Series/03-parsevals-identity|parsevals-identity]]"
-  - "[[Cards/13-Engineering mathematics/05-Signals/03-windows-and-spectral-leakage|windows-and-spectral-leakage]]"
-  - "[[Cards/20-Harmonic analysis/01-Fourier Series in Depth/04-pointwise-and-uniform-convergence|pointwise-and-uniform-convergence]]"
-  - "[[Cards/20-Harmonic analysis/01-Fourier Series in Depth/08-gibbs-and-summability|gibbs-and-summability]]"
-tags: [mathematics, differential equations and dynamics, convergence-jumps-and-gibbs]
----
-
 # Convergence: the series lands on the function where it is smooth, on the midpoint at a jump, and overshoots by 9% beside it
 
-Differential equations and dynamics → Fourier Series → Where a series lands → Convergence
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Fourier Series](../../../SYLLABUS.md#w08-s09) → Convergence
 
 ---
 
@@ -28,7 +8,7 @@ Differential equations and dynamics → Fourier Series → Where a series lands 
 
 A synthesiser's square wave sits at +1 volt for half a cycle, then flips to −1 volt. Measure position through the cycle as an angle x in radians, 2π per cycle: +1 for x between 0 and π, −1 between −π and 0, repeating.
 
-The shelf's first card built it from pure tones ([fourier-series-and-orthogonality](01-fourier-series-and-orthogonality.md)): 4/π times sin x + sin 3x/3 + sin 5x/5 and so on, odd harmonics only. A real synthesiser plays finitely many. What does a finite stack do?
+The shelf's first card built it from pure tones ([Fourier series](01-fourier-series-and-orthogonality.md)): 4/π times sin x + sin 3x/3 + sin 5x/5 and so on, odd harmonics only. A real synthesiser plays finitely many. What does a finite stack do?
 
 Mid-top, at x = π/2, it homes in on 1. At the flip, x = 0, every tone is zero, so it gives 0: halfway between −1 and +1. Just beside the flip it rises past the top: with 50 tones, to 1.179013 volts. More tones do not pull that peak back to 1; it settles near 1.179 and squeezes closer to the flip. That overshoot is the **Gibbs phenomenon**.
 
@@ -144,7 +124,7 @@ With m = n + ½ both integrals vanish in the limit: $S_n(x)$ tends to the midpoi
 
 </details>
 
-Another road removes the overshoot instead of measuring it: average the partial sums rather than taking the last. That is Fejér's method, in gibbs-and-summability.
+Another road removes the overshoot instead of measuring it: average the partial sums rather than taking the last. That is Fejér's method, in The Gibbs overshoot and the cure.
 
 ---
 
@@ -386,9 +366,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Synthesisers and audio.** A band-limited digital square wave holds only tones below half the sample rate, so it is a partial sum and rings after each flip. Tapering the top harmonics softens it (windows-and-spectral-leakage).
+- **Synthesisers and audio.** A band-limited digital square wave holds only tones below half the sample rate, so it is a partial sum and rings after each flip. Tapering the top harmonics softens it (Windows).
 - **Images and scans.** Halos beside sharp edges in compressed photographs, and ripples beside tissue boundaries in MRI scans, are Gibbs overshoot.
-- **Heat and strings.** Where a starting temperature or plucked shape jumps, this card says what its Fourier series does; series on half an interval are in [half-range-sine-and-cosine-series](04-half-range-sine-and-cosine-series.md).
+- **Heat and strings.** Where a starting temperature or plucked shape jumps, this card says what its Fourier series does; series on half an interval are in [Half-range series](04-half-range-sine-and-cosine-series.md).
 
 > **Say it back**
 > A partial sum is a weighted average of the function near the point. Where the function is smooth, it settles on the value; at a jump, on the midpoint. Beside a jump it overshoots by 8.95% of the jump, and more terms move the overshoot closer without lowering it. At x = π/2 the square wave gives Leibniz's π/4 = 1 − 1/3 + 1/5 − …
@@ -397,15 +377,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [fourier-series-and-orthogonality](01-fourier-series-and-orthogonality.md): the coefficients of the square wave, 4/π over each odd frequency.
-- [sequences-and-limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md): what "the stack tends to 1" means, and why a limit at each point is weaker than closeness everywhere at once.
+- [Fourier series](01-fourier-series-and-orthogonality.md): the coefficients of the square wave, 4/π over each odd frequency.
+- [Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md): what "the stack tends to 1" means, and why a limit at each point is weaker than closeness everywhere at once.
 
 ## Where this goes next
 
-- [parsevals-identity](03-parsevals-identity.md): the energy in the error, which does shrink to 0 even with a jump.
-- windows-and-spectral-leakage: tapering the top harmonics to tame the ringing.
-- pointwise-and-uniform-convergence: the two kinds of convergence this card contrasts, made exact.
-- gibbs-and-summability: averaging the partial sums, which removes the overshoot entirely.
+- [Parseval's identity](03-parsevals-identity.md): the energy in the error, which does shrink to 0 even with a jump.
+- Windows: tapering the top harmonics to tame the ringing.
+- Dirichlet's theorem: the two kinds of convergence this card contrasts, made exact.
+- The Gibbs overshoot and the cure: averaging the partial sums, which removes the overshoot entirely.
 
 The overshoot never falls toward 0, but it lives in a sliver of width about π/(2N); whether the total error, measured as energy, still goes to zero is what Parseval's identity answers.
 

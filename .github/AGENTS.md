@@ -61,40 +61,14 @@ Copy the shape of these finished cards, and read all three before writing:
 - middle, tier B: [cosets and Lagrange's theorem](../Cards/03-Algebra/08-Groups/04-cosets-and-lagranges-theorem.md)
 - the ceiling, tier C: [the Black–Scholes call](../Cards/12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)
 
-### Frontmatter
+### The layout
 
-```yaml
----
-type: card
-wing: 13-Engineering mathematics
-shelf: State Space and Optimal Control
-topic: Numbers that carry the past
-item: State space
-kind: model
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/02-impulse-response-and-transfer-functions|impulse-response-and-transfer-functions]]"
-next:
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/02-linearisation-about-an-equilibrium|linearisation-about-an-equilibrium]]"
-tags: [mathematics, engineering mathematics, state-space-models-and-the-matrix-exponential]
----
-```
-
-- `topic` is a short phrase of your own, different from both the shelf and the item.
-- `item` is the title's first half.
-- `kind` says what sort of fact this is: `theorem`, `definition`, `model`, `method`, `convention`, `approximation` or `conjecture`.
-- `needs_first` and `next` are the spec's strings, verbatim.
-- `status` stays `draft`. The maintainers set `verified` after their own re-run.
-
-### Body
-
-These headings, in this order, spelled exactly. Sections are separated by `---` and sub-sections use `###`.
+A card starts straight away with its title; there is no frontmatter block. Under the title comes the path line: links back to the syllabus, the wing and the shelf, then the card's short title (the part of its title before the colon). Then come these headings, in this order, spelled exactly. Sections are separated by `---` and sub-sections use `###`.
 
 ```
 # <the spec's title>
 
-<Wing> → <Shelf> → <Topic> → <Item>
+[Syllabus](../../../SYLLABUS.md) → [<Wing>](../../../SYLLABUS.md#w<NN>) → [<Shelf>](../../../SYLLABUS.md#w<NN>-s<MM>) → <short title>
 
 ## General Overview
 ## The formula
@@ -147,9 +121,8 @@ The usual mistake is `> [!warning]` followed by the text. "Say it back" is `> **
 
 ### Links
 
-- **In the body**, link another card with a relative link whose text is its slug, for example `[logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)`, with spaces written `%20` and commas `%2C`.
-- **A card not written yet** is named in plain text, without a link.
-- **In the frontmatter**, use the `"[[Cards/…|slug]]"` strings exactly as the spec gives them.
+- **To a written card**, use a relative link whose text is that card's short title (its title before the colon), for example `[Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)`, with spaces written `%20` and commas `%2C`. The spec gives every link ready-made.
+- **A card not written yet** is named in plain text by its planned short title, without a link.
 - A matrix or nested list written in prose goes in backticks, so `[[2, 1], [1, 1]]` can't be mistaken for a link.
 
 ## Size limits
@@ -219,11 +192,11 @@ rustc --edition 2021 -O checks/<slug>_check.rs -o /tmp/<slug> && /tmp/<slug>
 You are a hostile checker who also fixes what it finds. You did not write this card, so read it cold.
 
 1. **Read it as the reader.** Mark every stall: a symbol used before it is defined, a word without a gloss, a sentence that needs a second read, padding.
-2. **Read it as a mathematician.** Is it correct and complete for this level? Do the overview, the formula, "When it holds", the worked numbers and the code use the same inputs and agree? Look for sign, unit and off-by-one errors and for false claims. Does "What kind of fact this is" match `kind` and the truth?
+2. **Read it as a mathematician.** Is it correct and complete for this level? Do the overview, the formula, "When it holds", the worked numbers and the code use the same inputs and agree? Look for sign, unit and off-by-one errors and for false claims. Is "What kind of fact this is" true?
 3. **Run both checks** in a fresh temporary folder. Confirm the pasted outputs equal your run and the code on the card equals the files.
 4. **Mutation-test.** Copy the Python check, break the maths three different ways, and confirm an assert fails each time. A tautological assert is a blocker.
 5. **Check the sources**: open every link and check every DOI as above. Replace or drop anything that fails.
-6. **Check the links.** The frontmatter strings equal the spec's, and every body link opens an existing card.
+6. **Check the links.** Every link opens an existing card, uses that card's short title, and matches the spec; the path line under the title leads to the right wing and shelf.
 7. **Fix it.** Classify each finding as a blocker (wrong maths, or a claim the checks contradict), major (the reader would be misled or lost) or minor (polish). Fix every blocker and major, and every minor that is a one-line change, keeping the shape, the size limits, the example and the voice.
 8. **Re-run** both checks, re-paste the outputs, re-copy the code, and report what you found and what you changed.
 
@@ -236,8 +209,7 @@ You are a hostile checker who also fixes what it finds. You did not write this c
 - [ ] At least three asserts can fail, and a mutation test made one fail each time.
 - [ ] The card is within its tier's limits.
 - [ ] Every source was opened and confirmed, and every DOI was checked.
-- [ ] Frontmatter links are the spec's strings, body links open existing cards, and unwritten cards are in plain text.
-- [ ] `status: draft`.
+- [ ] Links match the spec: written cards linked by their short titles, planned cards in plain text, and the path line under the title points at the right wing and shelf.
 
 ## Example: the next shelf
 
@@ -255,14 +227,14 @@ At the time of writing, the next shelf in the build is **wing 13, shelf 04: Stat
   "house_example": "A cart balancing an inverted pendulum, watched by one noisy encoder",
   "tier": "C",
   "needs_first": [
-    "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/02-impulse-response-and-transfer-functions|impulse-response-and-transfer-functions]]",
-    "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/03-poles-zeros-and-stability|poles-zeros-and-stability]]",
-    "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/04-the-matrix-exponential|the-matrix-exponential]]",
-    "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/06-forced-systems-and-variation-of-constants|forced-systems-and-variation-of-constants]]"
+    "[Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md)",
+    "[Poles and zeros](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md)",
+    "[The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md)",
+    "[Forced systems](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md)"
   ],
   "next": [
-    "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/02-linearisation-about-an-equilibrium|linearisation-about-an-equilibrium]]",
-    "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/05-hurwitz-schur-and-lyapunov-stability|hurwitz-schur-and-lyapunov-stability]]"
+    "Linearisation (planned)",
+    "Stability of a state-space model (planned)"
   ],
   "siblings": ["the shelf's other nine cards, as links"],
   "common_style": "Wing 13, tier C. An applied wing: each card turns a physical system into equations, solves or simulates them, and reads the answer back as a number an engineer would act on, with units. This card introduces state x, input u, output y and the matrices (A, B, C, D); the Laplace variable s comes from wing 08 and the transfer function G(s) from shelf 02.",

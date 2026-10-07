@@ -1,28 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: The Classical PDEs
-topic: Settled temperature fields
-item: Laplace's equation
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/03-the-heat-equation|the-heat-equation]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/01-double-integrals|double-integrals]]"
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/04-harmonic-functions-and-conjugates|harmonic-functions-and-conjugates]]"
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/05-mean-value-and-maximum-principle-for-harmonic-functions|mean-value-and-maximum-principle-for-harmonic-functions]]"
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/06-poisson-integral-formula|poisson-integral-formula]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/08-laplace-on-a-rectangle|laplace-on-a-rectangle]]"
-  - "[[Cards/19-Partial differential equations/01-Classification and Well-Posedness/08-maximum-principles|maximum-principles]]"
-  - "[[Cards/19-Partial differential equations/04-Laplace, Poisson and Potentials/01-harmonic-functions-and-mean-values|harmonic-functions-and-mean-values]]"
-tags: [mathematics, differential equations and dynamics, laplaces-equation-and-harmonic-functions]
----
-
 # Laplace's equation: what is left when everything has settled, and each point is the average of its neighbours
 
-Differential equations and dynamics → The Classical PDEs → Settled temperature fields → Laplace's equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → Laplace's equation
 
 ---
 
@@ -36,7 +14,7 @@ Both facts come from one rule: with no heater inside, each point's settled tempe
 
 **A settled temperature with no sources inside equals, at every point, the average round any small circle centred there; so it has no hot or cold spot inside, its extremes sit on the edge, and the edge temperatures fix it completely.**
 
-**What kind of fact this is:** a theorem; the maximum principle and uniqueness are proved in Why it works, the circle average on [mean-value-and-maximum-principle-for-harmonic-functions](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md).
+**What kind of fact this is:** a theorem; the maximum principle and uniqueness are proved in Why it works, the circle average on [Mean value and maximum principle](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md).
 
 ### The picture: the plate, its centre and one ring
 
@@ -48,7 +26,7 @@ To scale: 160 units per metre; plate (100, 50) to (260, 210), centre (180, 130),
 
 ## The formula
 
-Reminder from [what-a-pde-says](01-what-a-pde-says.md): $u_{xx}$ is the second derivative of $u$ in $x$ with $y$ held still: its bend across the plate. New here: the sum of the two bends, $u_{xx} + u_{yy}$, is the **Laplacian**, written $\Delta u$.
+Reminder from [A partial differential equation](01-what-a-pde-says.md): $u_{xx}$ is the second derivative of $u$ in $x$ with $y$ held still: its bend across the plate. New here: the sum of the two bends, $u_{xx} + u_{yy}$, is the **Laplacian**, written $\Delta u$.
 
 $$u_{xx} + u_{yy} = 0 \qquad\text{(Laplace: no sources)}$$
 
@@ -75,7 +53,7 @@ $$u(x_0, y_0) = \frac{1}{2\pi}\int_0^{2\pi} u(x_0 + r\cos\theta,\ y_0 + r\sin\th
 
 ### When it holds
 
-- **Settled:** while the plate still warms, $u_t$ is not zero and [the-heat-equation](03-the-heat-equation.md) governs.
+- **Settled:** while the plate still warms, $u_t$ is not zero and [The heat equation](03-the-heat-equation.md) governs.
 - **No sources inside:** with a heater the centre can beat every edge: 7.37 °C against four edges at 0 °C.
 - **A bounded plate, every edge held:** on the endless half-plane above an edge at 0 °C, both $u = y$ and $u = 0$ fit.
 - **Uniform material:** varying conductivity makes each point a weighted average; the maximum principle survives, the circle average does not.
@@ -98,7 +76,7 @@ With no source, each grid point is its neighbours' average. The coarsest grid ha
 
 ### Step 2: the average holds on every circle
 
-The grid rule is the discrete shadow of the circle average. As the radius grows, the ring average changes at the average outward slope of $u$ across the ring. By Green's theorem, that slope summed round the ring is the total of $\Delta u$ over the disc inside: zero. So the average ignores the radius; shrunk to nothing, it is the centre value. The full proof is on [mean-value-and-maximum-principle-for-harmonic-functions](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md). With a source, the ring average falls short of the centre by exactly $f r^2 / 4$.
+The grid rule is the discrete shadow of the circle average. As the radius grows, the ring average changes at the average outward slope of $u$ across the ring. By Green's theorem, that slope summed round the ring is the total of $\Delta u$ over the disc inside: zero. So the average ignores the radius; shrunk to nothing, it is the centre value. The full proof is on [Mean value and maximum principle](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md). With a source, the ring average falls short of the centre by exactly $f r^2 / 4$.
 
 ### Step 3: no hot spot inside
 
@@ -127,7 +105,7 @@ Take the four patterns with the hot edge on top, left, bottom and right. By line
 
 With a heater, the grid rule adds $h^2 f / 4$ to the neighbour average, so a point can sit above all its neighbours. Heat the plate uniformly at $f$ = 100 °C per square metre with all edges at 0 °C: the centre settles at 7.37 °C, hotter than every edge.
 
-Two other roads build the patterns themselves: the Poisson integral formula on a disc ([poisson-integral-formula](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/06-poisson-integral-formula.md)), and a sine series on a rectangle ([laplace-on-a-rectangle](08-laplace-on-a-rectangle.md)), which the code uses as its second road.
+Two other roads build the patterns themselves: the Poisson integral formula on a disc ([The Poisson formula](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/06-poisson-integral-formula.md)), and a sine series on a rectangle ([Laplace on a rectangle](08-laplace-on-a-rectangle.md)), which the code uses as its second road.
 
 ---
 
@@ -172,7 +150,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Two roads solve the plate: a grid of spacing 1/40 m, swept until every point equals its neighbour average (each change over-corrected to settle faster), and the sine series from [laplace-on-a-rectangle](08-laplace-on-a-rectangle.md). The centre has a third, the symmetry value 25. Ring averages use 256 equally spaced points.
+Two roads solve the plate: a grid of spacing 1/40 m, swept until every point equals its neighbour average (each change over-corrected to settle faster), and the sine series from [Laplace on a rectangle](08-laplace-on-a-rectangle.md). The centre has a third, the symmetry value 25. Ring averages use 256 equally spaced points.
 
 ### Python
 
@@ -382,9 +360,9 @@ The outputs agree line for line.
 
 ## Where you meet it in real life
 
-- **Steady heat.** A heat sink, a wall or a hotplate once [the-heat-equation](03-the-heat-equation.md) has run its course.
+- **Steady heat.** A heat sink, a wall or a hotplate once [The heat equation](03-the-heat-equation.md) has run its course.
 - **Electric potential.** Voltage in charge-free space obeys Laplace's equation; charge makes it Poisson's. The maximum principle is why static fields cannot hold a charge in stable balance.
-- **Soap films.** A gently sloped film on a bent wire is harmonic ([mean-value-and-maximum-principle-for-harmonic-functions](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md)).
+- **Soap films.** A gently sloped film on a bent wire is harmonic ([Mean value and maximum principle](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md)).
 
 > **Say it back**
 > Settled heat with no source inside has its two bends cancel: Laplace's equation. Equivalently, each point is the average round any circle centred on it. An average cannot beat its own terms, so no hot or cold spot sits inside, and two patterns with the same edges match. On the plate with one edge at 100 °C, four turns and uniqueness put the centre at 25 °C. A heater makes it Poisson's equation, and the middle can be the hottest place.
@@ -393,19 +371,19 @@ The outputs agree line for line.
 
 ## What this builds on
 
-- [the-heat-equation](03-the-heat-equation.md): the rate law whose settled state this is.
-- [double-integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md): sums over a disc, in the ring-average argument.
-- [harmonic-functions-and-conjugates](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/04-harmonic-functions-and-conjugates.md): harmonic functions as parts of complex functions.
-- [mean-value-and-maximum-principle-for-harmonic-functions](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md): the full proof of the circle average.
-- [poisson-integral-formula](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/06-poisson-integral-formula.md): the settled disc, written from its edge.
+- [The heat equation](03-the-heat-equation.md): the rate law whose settled state this is.
+- [Double integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md): sums over a disc, in the ring-average argument.
+- [Harmonic functions](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/04-harmonic-functions-and-conjugates.md): harmonic functions as parts of complex functions.
+- [Mean value and maximum principle](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md): the full proof of the circle average.
+- [The Poisson formula](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/06-poisson-integral-formula.md): the settled disc, written from its edge.
 
 ## Where this goes next
 
-- [laplace-on-a-rectangle](08-laplace-on-a-rectangle.md): the sine series the code sums, by separation of variables.
-- maximum-principles: the principle for wider families of equations, heat included.
-- harmonic-functions-and-mean-values: harmonic functions in any dimension.
+- [Laplace on a rectangle](08-laplace-on-a-rectangle.md): the sine series the code sums, by separation of variables.
+- Maximum principles: the principle for wider families of equations, heat included.
+- Harmonic functions: harmonic functions in any dimension.
 
-The formula for a rectangle: [laplace-on-a-rectangle](08-laplace-on-a-rectangle.md).
+The formula for a rectangle: [Laplace on a rectangle](08-laplace-on-a-rectangle.md).
 
 ---
 

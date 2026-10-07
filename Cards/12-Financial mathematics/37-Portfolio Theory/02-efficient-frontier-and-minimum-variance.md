@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Portfolio Theory
-topic: Mean-variance optimisation
-item: The efficient frontier
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/01-two-asset-portfolio-risk-and-return|two-asset-portfolio-risk-and-return]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/08-lagrange-multipliers|lagrange-multipliers]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/03-inverse-matrix|inverse-matrix]]"
-next:
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/03-tangency-portfolio-and-the-capital-market-line|tangency-portfolio-and-the-capital-market-line]]"
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/07-estimation-error-and-shrinkage|estimation-error-and-shrinkage]]"
-  - "[[Cards/15-Optimization/06-Conic, Quadratic and Stochastic Programs/01-quadratic-programs-and-markowitz|quadratic-programs-and-markowitz]]"
-  - "[[Cards/15-Optimization/06-Conic, Quadratic and Stochastic Programs/02-multi-objective-trade-offs-and-the-pareto-frontier|multi-objective-trade-offs-and-the-pareto-frontier]]"
-tags: [mathematics, financial-mathematics, efficient-frontier-and-minimum-variance]
----
-
 # The efficient frontier: the least risk for each return, and the portfolio with the least risk of all
 
-Financial mathematics → Portfolio Theory → Mean-variance optimisation → The efficient frontier
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Theory](../../../SYLLABUS.md#w12-s37) → The efficient frontier
 
 ---
 
@@ -55,7 +34,7 @@ Lower line (orange): the minimum-variance curve with all three assets. Upper lin
 
 ## The formula
 
-Notation first, in words. A list of numbers, one per asset, is written as a single letter and called a vector; here each vector has three entries, in the order shares, bonds, gold. A square table of numbers is a matrix. Three lists and one matrix carry the inputs: $w$ holds the weights, $\mu$ the expected returns, $\mathbf{1}$ three ones, and $\Sigma$ (the covariance matrix) every variance and pairwise covariance, detailed in the table below. The raised $\top$ turns a column into a row, so $w^\top \mu$ means "multiply the two lists entry by entry and add", which is the portfolio's expected return; likewise $w^\top\Sigma\,w$ is its variance. $\Sigma^{-1}$ is the inverse matrix of $\Sigma$, the matrix that undoes it ([inverse-matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)).
+Notation first, in words. A list of numbers, one per asset, is written as a single letter and called a vector; here each vector has three entries, in the order shares, bonds, gold. A square table of numbers is a matrix. Three lists and one matrix carry the inputs: $w$ holds the weights, $\mu$ the expected returns, $\mathbf{1}$ three ones, and $\Sigma$ (the covariance matrix) every variance and pairwise covariance, detailed in the table below. The raised $\top$ turns a column into a row, so $w^\top \mu$ means "multiply the two lists entry by entry and add", which is the portfolio's expected return; likewise $w^\top\Sigma\,w$ is its variance. $\Sigma^{-1}$ is the inverse matrix of $\Sigma$, the matrix that undoes it ([The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)).
 
 The problem, for a target return $m$:
 
@@ -90,10 +69,10 @@ Two helper facts. The weights move in a straight line as the target moves: $w(m)
 
 ### When it holds
 
-- **The inputs are known.** The formula treats $\mu$ and $\Sigma$ as exact. They are estimated from history, and small errors in $\mu$ swing the weights hard, because the weights run through $\Sigma^{-1}$. [estimation-error-and-shrinkage](07-estimation-error-and-shrinkage.md) is the repair.
+- **The inputs are known.** The formula treats $\mu$ and $\Sigma$ as exact. They are estimated from history, and small errors in $\mu$ swing the weights hard, because the weights run through $\Sigma^{-1}$. [Estimation error](07-estimation-error-and-shrinkage.md) is the repair.
 - **$\Sigma$ is positive definite:** every non-zero mix has positive variance, so no asset is an exact copy or blend of the others. If one is, $\Sigma$ has no inverse and the formula fails: either some mix is riskless or many weight lists tie for the minimum.
 - **The expected returns are not all equal.** If they are, $\Delta = 0$, every portfolio expects the same return, and only the global minimum-variance portfolio has meaning.
-- **Short selling is free and unlimited.** The formula happily returns negative weights (bonds at −24.98% for an 8% target). If shorts are banned, the formula's answer is infeasible and the problem needs a quadratic program: quadratic-programs-and-markowitz.
+- **Short selling is free and unlimited.** The formula happily returns negative weights (bonds at −24.98% for an 8% target). If shorts are banned, the formula's answer is infeasible and the problem needs a quadratic program: Quadratic programs.
 - **One period, and variance is the risk that matters.** Variance punishes gains and losses alike and ignores fat tails; for skewed payoffs such as options, the "least-variance" portfolio can hide a crash.
 
 ---
@@ -102,7 +81,7 @@ Two helper facts. The weights move in a straight line as the target moves: $w(m)
 
 ### Step 0: a bowl cut by a flat slice
 
-Variance, as a function of the weights, is a bowl: it curves upward in every direction, because $\Sigma$ is positive definite. The two constraints, "invest everything" and "expect $m$", are flat. With three assets, they cut the space of weights down to a single straight line. A bowl sliced along a line is a parabola, and a parabola has exactly one lowest point. At that point the bowl's steepest-uphill direction is at right angles to the line: moving along the line does not change the variance to first order. That right-angle condition is what Lagrange multipliers write down ([lagrange-multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md)).
+Variance, as a function of the weights, is a bowl: it curves upward in every direction, because $\Sigma$ is positive definite. The two constraints, "invest everything" and "expect $m$", are flat. With three assets, they cut the space of weights down to a single straight line. A bowl sliced along a line is a parabola, and a parabola has exactly one lowest point. At that point the bowl's steepest-uphill direction is at right angles to the line: moving along the line does not change the variance to first order. That right-angle condition is what Lagrange multipliers write down ([Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md)).
 
 ### Step 1: write the problem with multipliers
 
@@ -174,7 +153,7 @@ The squared bracket is never negative and $A/\Delta$ is positive, so the smalles
 
 ### The other door: a quadratic program
 
-The same problem, with extra rules such as "no short sales" or "no more than 40% in one asset", has no closed form. A quadratic-programming solver walks the bowl numerically: quadratic-programs-and-markowitz. Road 3 in the code below is a small version of that: it walks the line of feasible weights and finds the bottom with no calculus at all.
+The same problem, with extra rules such as "no short sales" or "no more than 40% in one asset", has no closed form. A quadratic-programming solver walks the bowl numerically: Quadratic programs. Road 3 in the code below is a small version of that: it walks the line of feasible weights and finds the bottom with no calculus at all.
 
 ---
 
@@ -633,7 +612,7 @@ The two outputs are identical line for line. They reach the inverse and the sear
 >
 > Smaller traps:
 > - **Dropping the correlations.** Standard deviations alone give weights 7.20%, 80.00%, 12.80% and a true risk of 5.6673% instead of 5.5618%. On other inputs the gap is much larger.
-> - **Confusing the minimum-variance portfolio with the best reward-to-risk portfolio.** Rescaling $\Sigma^{-1}\mu$ gives the second one (mean 4.5134%, standard deviation 5.7652%). That portfolio belongs to [tangency-portfolio-and-the-capital-market-line](03-tangency-portfolio-and-the-capital-market-line.md).
+> - **Confusing the minimum-variance portfolio with the best reward-to-risk portfolio.** Rescaling $\Sigma^{-1}\mu$ gives the second one (mean 4.5134%, standard deviation 5.7652%). That portfolio belongs to [Adding a riskless asset](03-tangency-portfolio-and-the-capital-market-line.md).
 > - **Clipping negative weights.** The 8% answer shorts bonds. Clipping and rescaling gives a portfolio expecting 7.2006%, which is not the target. Under a long-only rule, 8% is reachable only by holding shares alone, at 20% risk.
 > - **Mixing units.** Standard deviations enter $\Sigma$ squared: 20% becomes 400 in percent squared, or 0.04 in decimals. Putting 20 or 0.20 on the diagonal builds the wrong bowl.
 
@@ -644,8 +623,8 @@ The two outputs are identical line for line. They reach the inverse and the sear
 - **Target-risk and robo-advice portfolios.** A questionnaire picks a point on a frontier; the platform holds the weights that point prescribes, usually with long-only and position limits added.
 - **Minimum-volatility index funds.** Funds tracking "minimum volatility" indices hold an approximation of the global minimum-variance portfolio, under limits, because it needs only covariances.
 - **Pension and endowment allocation.** Asset-liability studies run this calculation across equities, bonds, property and alternatives to choose a policy mix, then argue about the inputs.
-- **Adding a riskless asset.** Once cash pays a fixed rate, the frontier collapses to one straight line through one special portfolio: [tangency-portfolio-and-the-capital-market-line](03-tangency-portfolio-and-the-capital-market-line.md).
-- **Better inputs.** [black-litterman](06-black-litterman.md) replaces raw historical means with views blended into equilibrium returns; [risk-parity-and-alternative-weightings](08-risk-parity-and-alternative-weightings.md) drops expected returns altogether.
+- **Adding a riskless asset.** Once cash pays a fixed rate, the frontier collapses to one straight line through one special portfolio: [Adding a riskless asset](03-tangency-portfolio-and-the-capital-market-line.md).
+- **Better inputs.** [Black-Litterman](06-black-litterman.md) replaces raw historical means with views blended into equilibrium returns; [Risk parity](08-risk-parity-and-alternative-weightings.md) drops expected returns altogether.
 
 > **Say it back**
 > For a chosen target return, many portfolios hit it; the one with the least variance solves a small linear system found by Lagrange multipliers. Its weights are a blend of two fixed portfolios, so they move in straight lines as the target changes. The least variance is a parabola in the target, lowest at the global minimum-variance portfolio, whose weights are the rescaled row sums of the inverse covariance matrix. Above that point is the efficient frontier; below it, nothing is worth holding. The answers are exact for the inputs and only as good as them.
@@ -654,16 +633,16 @@ The two outputs are identical line for line. They reach the inverse and the sear
 
 ## What this builds on
 
-- [two-asset-portfolio-risk-and-return](01-two-asset-portfolio-risk-and-return.md): how two assets' weights, standard deviations and correlation combine into a portfolio's risk. This card does the same for three and asks which mix is best.
-- [lagrange-multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md): the rule that at a constrained minimum the slope is a combination of the constraint directions. Step 1 is that rule.
-- [inverse-matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md): undoing $\Sigma$, and the adjugate-over-determinant recipe used by hand.
+- [Two assets](01-two-asset-portfolio-risk-and-return.md): how two assets' weights, standard deviations and correlation combine into a portfolio's risk. This card does the same for three and asks which mix is best.
+- [Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md): the rule that at a constrained minimum the slope is a combination of the constraint directions. Step 1 is that rule.
+- [The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md): undoing $\Sigma$, and the adjugate-over-determinant recipe used by hand.
 
 ## Where this goes next
 
-- [tangency-portfolio-and-the-capital-market-line](03-tangency-portfolio-and-the-capital-market-line.md): add cash at a fixed rate, and the curve gives way to a straight line touching it at one portfolio.
-- [estimation-error-and-shrinkage](07-estimation-error-and-shrinkage.md): what happens to these weights when $\mu$ and $\Sigma$ are estimated from a few years of data, and how to calm them.
-- quadratic-programs-and-markowitz: the same bowl with inequality constraints, solved numerically.
-- multi-objective-trade-offs-and-the-pareto-frontier: the frontier as one case of a general idea, the set of choices where one goal cannot improve without the other getting worse.
+- [Adding a riskless asset](03-tangency-portfolio-and-the-capital-market-line.md): add cash at a fixed rate, and the curve gives way to a straight line touching it at one portfolio.
+- [Estimation error](07-estimation-error-and-shrinkage.md): what happens to these weights when $\mu$ and $\Sigma$ are estimated from a few years of data, and how to calm them.
+- Quadratic programs: the same bowl with inequality constraints, solved numerically.
+- Two goals at once: the frontier as one case of a general idea, the set of choices where one goal cannot improve without the other getting worse.
 
 The frontier offers a menu of portfolios but no way to choose among them; a riskless asset turns the menu into a single best risky portfolio, and that is the question the tangency card answers.
 

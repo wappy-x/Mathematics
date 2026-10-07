@@ -1,25 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Points, Convexity and Fractals
-topic: Wrapping a scatter of points
-item: Convex sets
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/07-Points, Convexity and Fractals/01-polygon-area-and-orientation|polygon-area-and-orientation]]"
-next:
-  - "[[Cards/05-Geometry and trig/07-Points, Convexity and Fractals/04-voronoi-and-delaunay|voronoi-and-delaunay]]"
-  - "[[Cards/15-Optimization/01-Convexity/02-convex-sets|convex-sets]]"
-  - "[[Cards/18-Functional analysis/01-Normed and Banach Spaces/07-hahn-banach-separation-and-supporting-walls|hahn-banach-separation-and-supporting-walls]]"
-  - "[[Cards/18-Functional analysis/06-Banach Algebras and Fixed Points/06-krein-milman-and-extreme-points|krein-milman-and-extreme-points]]"
-tags: [mathematics, geometry and trig, convex-sets-and-convex-hulls]
----
-
 # Convex sets: no dents, and the rubber band that finds the hull
 
-Geometry and trig → Points, Convexity and Fractals → Wrapping a scatter of points → Convex sets
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Points, Convexity and Fractals](../../../SYLLABUS.md#w05-s07) → Convex sets
 
 ---
 
@@ -45,7 +26,7 @@ Scale 1 m = 12 units, corner post at (40, 216). Dashed: a fence dented in to G.
 
 ## The formula
 
-Points scale and add coordinate by coordinate, as vectors do; ∈ reads "is in"; turn is twice a triangle's signed area, from [polygon-area-and-orientation](01-polygon-area-and-orientation.md).
+Points scale and add coordinate by coordinate, as vectors do; ∈ reads "is in"; turn is twice a triangle's signed area, from [Shoelace formula](01-polygon-area-and-orientation.md).
 
 A region $S$ is convex when
 
@@ -388,8 +369,8 @@ The two outputs match line for line.
 
 - **Wildlife surveys.** A home range is often first estimated as the hull of an animal's sightings.
 - **Collision checks.** Games and robots test hulls first: if two do not overlap, nothing inside them touches.
-- **Optimization.** A linear programme's allowed choices form a convex region; when a best choice exists, one sits at a corner (convex-sets).
-- **Maps from points.** With no three trees in line, the trees whose nearest-tree patches run off without end are the hull's corners ([voronoi-and-delaunay](04-voronoi-and-delaunay.md)). Inside a fence that is not convex, see [point-in-polygon-and-segment-tests](03-point-in-polygon-and-segment-tests.md).
+- **Optimization.** A linear programme's allowed choices form a convex region; when a best choice exists, one sits at a corner (Convex sets).
+- **Maps from points.** With no three trees in line, the trees whose nearest-tree patches run off without end are the hull's corners ([Nearest-neighbour maps](04-voronoi-and-delaunay.md)). Inside a fence that is not convex, see [Inside or outside](03-point-in-polygon-and-segment-tests.md).
 
 > **Say it back**
 > A region is convex when the straight path between any two of its points stays inside, which for a fence means it bends the same way at every corner. The convex hull of some points is the smallest convex region holding them: all their weighted averages. A sweep keeping only left turns finds its corners, and so does gift wrapping. For the eight trees: 53.110 m of fence round 196 square metres, and no fence is shorter.
@@ -398,14 +379,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [polygon-area-and-orientation](01-polygon-area-and-orientation.md): the turn as a signed area, and the shoelace formula.
+- [Shoelace formula](01-polygon-area-and-orientation.md): the turn as a signed area, and the shoelace formula.
 
 ## Where this goes next
 
-- [voronoi-and-delaunay](04-voronoi-and-delaunay.md): the ground nearest each tree, rimmed by the hull.
-- convex-sets: convex regions where minimising a cost is well behaved.
-- hahn-banach-separation-and-supporting-walls: Step 4's string, in any dimension.
-- krein-milman-and-extreme-points: a convex region rebuilt from its corners.
+- [Nearest-neighbour maps](04-voronoi-and-delaunay.md): the ground nearest each tree, rimmed by the hull.
+- Convex sets: convex regions where minimising a cost is well behaved.
+- Separation: Step 4's string, in any dimension.
+- Krein-Milman: a convex region rebuilt from its corners.
 
 ---
 

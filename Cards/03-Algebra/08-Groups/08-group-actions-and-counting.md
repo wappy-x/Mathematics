@@ -1,35 +1,12 @@
----
-type: card
-wing: 03-Algebra
-shelf: Groups
-topic: Orbits and stabilisers
-item: Group actions
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/08-Groups/04-cosets-and-lagranges-theorem|cosets-and-lagranges-theorem]]"
-  - "[[Cards/03-Algebra/08-Groups/03-permutations-and-the-symmetric-group|permutations-and-the-symmetric-group]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/06-equivalence-relations-and-partitions|equivalence-relations-and-partitions]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/04-circular-arrangements|circular-arrangements]]"
-  - "[[Cards/21-Algebraic and analytic number theory/05-Fields and Galois Theory/05-galois-groups-and-the-fundamental-theorem|galois-groups-and-the-fundamental-theorem]]"
-  - "[[Cards/23-Differential geometry and Lie groups/06-Lie Groups/06-homogeneous-spaces-and-group-actions|homogeneous-spaces-and-group-actions]]"
-tags:
-  - mathematics
-  - algebra
-  - group-actions-and-counting
----
-
 # Group actions: a group moving the members of a set, with orbit size times stabiliser size equal to the group's size
 
-Algebra → Groups → Orbits and stabilisers → Group actions
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Groups](../../../SYLLABUS.md#w03-s08) → Group actions
 
 ---
 
 ## General Overview
 
-A square ceramic tile drops into a square recess in a kitchen floor. Number its corners 0, 1, 2, 3 clockwise from the top left. The tile fits eight ways: four turns r0, r1, r2, r3 by quarters, and those four again after a flip, r0f to r3f. Those eight moves are a group ([groups](01-groups.md)).
+A square ceramic tile drops into a square recess in a kitchen floor. Number its corners 0, 1, 2, 3 clockwise from the top left. The tile fits eight ways: four turns r0, r1, r2, r3 by quarters, and those four again after a flip, r0f to r3f. Those eight moves are a group ([Groups](01-groups.md)).
 
 Paint each corner black or white: 16 painted tiles. Many are one tile set down two ways — paint corner 0 black, turn the tile a quarter, and the black corner sits at position 1. Only six are genuinely different.
 
@@ -57,7 +34,7 @@ Six boxes holding 1, 4, 4, 2, 4 and 1 patterns, adding to 16; side-by-side and d
 
 ## The formula
 
-The group takes the letter $G$, the set it moves takes $X$, and combining two moves keeps the star used on the cosets card, $a * b$, the right-hand move going first. The move that changes nothing is $e$ ([cosets-and-lagranges-theorem](04-cosets-and-lagranges-theorem.md)). Moving gets its own mark: a raised dot, move on the left, member of the set on the right, so $a \cdot x$ is "the pattern x after the move a". Patterns run B for black and W for white, corners 0 to 3 in order: BWWW is corner 0 black.
+The group takes the letter $G$, the set it moves takes $X$, and combining two moves keeps the star used on the cosets card, $a * b$, the right-hand move going first. The move that changes nothing is $e$ ([Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md)). Moving gets its own mark: a raised dot, move on the left, member of the set on the right, so $a \cdot x$ is "the pattern x after the move a". Patterns run B for black and W for white, corners 0 to 3 in order: BWWW is corner 0 black.
 
 An action is two promises: doing nothing leaves everything put, and combining two moves before moving is the same as moving twice.
 
@@ -94,15 +71,15 @@ $$\lvert \mathrm{Orb}(x)\rvert \times \lvert \mathrm{Stab}(x)\rvert = \lvert G\r
 
 ### Step 0: a move carries the paint with the corner
 
-A move keeps each corner's number or negates it, then adds a fixed amount, wrapping at 4 ([groups](01-groups.md)). The paint travels with the corner, so a move turns one painted tile into another. Both promises hold: unturned changes nothing, and the flip then a quarter turn gives what r1f gives. The code checks the second on every pair of moves, against every pattern.
+A move keeps each corner's number or negates it, then adds a fixed amount, wrapping at 4 ([Groups](01-groups.md)). The paint travels with the corner, so a move turns one painted tile into another. Both promises hold: unturned changes nothing, and the flip then a quarter turn gives what r1f gives. The code checks the second on every pair of moves, against every pattern.
 
 ### Step 1: orbits cut the set into blocks that never overlap
 
-Call two patterns related when some move carries one to the other. That holds between a pattern and itself, by $e$; it runs both ways, every move having an undo; and it chains, two moves in a row being again one move. Such a relation cuts a set into non-overlapping blocks ([equivalence-relations-and-partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md)) — the orbits. So "how many different tiles" becomes "how many orbits": six, holding 4, 4, 4, 2, 1 and 1 patterns, adding to 16.
+Call two patterns related when some move carries one to the other. That holds between a pattern and itself, by $e$; it runs both ways, every move having an undo; and it chains, two moves in a row being again one move. Such a relation cuts a set into non-overlapping blocks ([Equivalence relations and partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md)) — the orbits. So "how many different tiles" becomes "how many orbits": six, holding 4, 4, 4, 2, 1 and 1 patterns, adding to 16.
 
 ### Step 2: the moves landing a pattern on one spot form one coset
 
-Fix a pattern x. Its stabiliser is a subgroup, since $e$ leaves x put and so do two such moves in a row and their undos. Pick a landing spot in the orbit and a move c reaching it. Anything in the stabiliser first, then c, reaches the same spot, and nothing else does, so the moves reaching that spot are the stabiliser slid by c — one coset ([cosets-and-lagranges-theorem](04-cosets-and-lagranges-theorem.md)).
+Fix a pattern x. Its stabiliser is a subgroup, since $e$ leaves x put and so do two such moves in a row and their undos. Pick a landing spot in the orbit and a move c reaching it. Anything in the stabiliser first, then c, reaches the same spot, and nothing else does, so the moves reaching that spot are the stabiliser slid by c — one coset ([Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md)).
 
 At one black corner: 8 moves, 4 positions reached, 2 reaching each, and Lagrange's theorem counts those blocks: 8 = 4 × 2.
 
@@ -134,7 +111,7 @@ That average is **Burnside's lemma**, from the 1897 book that spread it, though 
 
 </details>
 
-Harder counts track each move's cycles colour by colour: Pólya's method, set out where necklaces are counted ([circular-arrangements](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md)).
+Harder counts track each move's cycles colour by colour: Pólya's method, set out where necklaces are counted ([Round tables and bracelets](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md)).
 
 ---
 
@@ -399,7 +376,7 @@ The two outputs match line for line.
 - **Manufacturing.** A pattern on a square or round object is counted this way before cutting: 16 schemes, 6 products.
 - **Chemistry.** Molecules differing only by a turn of a ring are one substance, so counting compounds is counting orbits.
 - **Search programs.** A solver treating rotated positions as one is working with orbits, and the theorem sizes the saving.
-- **Inside a group.** A group acting on itself by shifting becomes a group of rearrangements ([permutations-and-the-symmetric-group](03-permutations-and-the-symmetric-group.md)).
+- **Inside a group.** A group acting on itself by shifting becomes a group of rearrangements ([Permutations](03-permutations-and-the-symmetric-group.md)).
 
 > **Say it back**
 > A group acts on a set when its members carry that set's members around: doing nothing changes nothing, and two moves combined do what the two do in turn. What a member can be carried to is its orbit; the moves leaving it put are its stabiliser. Orbit size times stabiliser size is the group's size, because the moves landing a member on one spot form one coset of the stabiliser. Orbits never overlap, so counting different things means counting orbits: 16 painted tiles fall into 6, the average of what each move leaves untouched.
@@ -408,15 +385,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [cosets-and-lagranges-theorem](04-cosets-and-lagranges-theorem.md): the equal blocks, and the count behind the product.
-- [permutations-and-the-symmetric-group](03-permutations-and-the-symmetric-group.md): the rearrangements an action turns a group into.
-- [equivalence-relations-and-partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md): why "carried to by some move" splits a set into blocks.
+- [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md): the equal blocks, and the count behind the product.
+- [Permutations](03-permutations-and-the-symmetric-group.md): the rearrangements an action turns a group into.
+- [Equivalence relations and partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md): why "carried to by some move" splits a set into blocks.
 
 ## Where this goes next
 
-- [circular-arrangements](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md): necklaces and seatings counted with the rotations, the average replacing the list.
-- galois-groups-and-the-fundamental-theorem: a group acting on a polynomial's roots, a root's stabiliser being a field.
-- homogeneous-spaces-and-group-actions: the same promises with a continuous group, an orbit becoming a surface.
+- [Round tables and bracelets](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md): necklaces and seatings counted with the rotations, the average replacing the list.
+- The Galois correspondence: a group acting on a polynomial's roots, a root's stabiliser being a field.
+- Group action and homogeneous space: the same promises with a continuous group, an orbit becoming a surface.
 
 Six orbits came out of 16 patterns listed in full, impossible for twenty beads; a later card asks how far the average alone carries.
 

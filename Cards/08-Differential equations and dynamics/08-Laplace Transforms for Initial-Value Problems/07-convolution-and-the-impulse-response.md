@@ -1,30 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Laplace Transforms for Initial-Value Problems
-topic: Blending an input through a response
-item: Convolution
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/06-impulses-and-the-delta-function|impulses-and-the-delta-function]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/06-forced-systems-and-variation-of-constants|forced-systems-and-variation-of-constants]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/01-double-integrals|double-integrals]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/04-convolution-theorem|convolution-theorem]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/10-the-heat-kernel|the-heat-kernel]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/01-linear-time-invariant-systems-and-convolution|linear-time-invariant-systems-and-convolution]]"
-  - "[[Cards/18-Functional analysis/04-Distributions and Sobolev Spaces/04-fundamental-solutions-and-the-response-to-a-spike|fundamental-solutions-and-the-response-to-a-spike]]"
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/06-duhamels-principle-for-a-forced-evolution|duhamels-principle-for-a-forced-evolution]]"
-  - "[[Cards/19-Partial differential equations/03-The Heat Equation in Depth/03-duhamels-principle|duhamels-principle]]"
-  - "[[Cards/20-Harmonic analysis/03-Convolution and Approximate Identities/02-convolution-theorem-and-impulse-response|convolution-theorem-and-impulse-response]]"
-tags: [mathematics, differential equations and dynamics, convolution-and-the-impulse-response]
----
-
 # Convolution: the response to any input is the impulse response blended with that input
 
-Differential equations and dynamics → Laplace Transforms for Initial-Value Problems → Blending an input through a response → Convolution
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Laplace Transforms for Initial-Value Problems](../../../SYLLABUS.md#w08-s08) → Convolution
 
 ---
 
@@ -32,7 +8,7 @@ Differential equations and dynamics → Laplace Transforms for Initial-Value Pro
 
 A car's body rests at its level height. Tap it once from below, a sharp kick that sets it moving upward at 1 cm/s, and it bobs and settles. Per unit of mass the rate law is y'' + 2y' + 5y = f(t): y is the height above level in cm, t the time in seconds, and f the push from the road in cm/s^2. The motion after that single kick is 0.5 e^(−t) sin 2t cm. It is called the **impulse response**, the word used from here on.
 
-Now push steadily, 10 cm/s^2 from t = 0 on. A steady push is a run of tiny kicks. The car answers each with a copy of the impulse response, started at that kick and scaled by its size. Adding the copies gives the motion: at t = 1 s the body is 1.971672 cm up, as the round trip through the transform says ([solving-an-initial-value-problem-by-transform](04-solving-an-initial-value-problem-by-transform.md)).
+Now push steadily, 10 cm/s^2 from t = 0 on. A steady push is a run of tiny kicks. The car answers each with a copy of the impulse response, started at that kick and scaled by its size. Adding the copies gives the motion: at t = 1 s the body is 1.971672 cm up, as the round trip through the transform says ([The round trip](04-solving-an-initial-value-problem-by-transform.md)).
 
 That adding-up of shifted, scaled copies is **convolution**. Measure the impulse response once, and any other push is an integral away.
 
@@ -98,7 +74,7 @@ Slice time into short intervals of length dτ. Over the slice at τ the push add
 
 ### Step 1: the impulse response is the transform of 1 over P
 
-An impulse $\delta$ at time 0 transforms to 1 ([impulses-and-the-delta-function](06-impulses-and-the-delta-function.md)). With the car at rest, the transformed equation reads (s^2 + 2s + 5)G = 1, so G = 1/((s + 1)^2 + 4). The pair 2/((s + 1)^2 + 4) ↔ e^(−t) sin 2t, halved, inverts it to 0.5 e^(−t) sin 2t. In time, g solves the free equation with g(0) = 0 and g'(0) = 1: the kick leaves the height at 0 and the velocity at 1 cm/s.
+An impulse $\delta$ at time 0 transforms to 1 ([Impulses](06-impulses-and-the-delta-function.md)). With the car at rest, the transformed equation reads (s^2 + 2s + 5)G = 1, so G = 1/((s + 1)^2 + 4). The pair 2/((s + 1)^2 + 4) ↔ e^(−t) sin 2t, halved, inverts it to 0.5 e^(−t) sin 2t. In time, g solves the free equation with g(0) = 0 and g'(0) = 1: the kick leaves the height at 0 and the velocity at 1 cm/s.
 
 ### Step 2: for any push, Y is G times F
 
@@ -106,7 +82,7 @@ At rest, the transformed equation for a push f is P(s)Y = F(s), so Y = G F. G be
 
 ### Step 3: a product of transforms is the transform of a convolution
 
-The convolution theorem says the transform of g * f is G times F ([convolution-theorem](../../07-Complex%20analysis/08-Transforms%20in%20Outline/04-convolution-theorem.md)). Since a transform pins down its signal, y = g * f. The one-sided version follows by swapping the order of integration over a triangle ([double-integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md)).
+The convolution theorem says the transform of g * f is G times F ([Convolution](../../07-Complex%20analysis/08-Transforms%20in%20Outline/04-convolution-theorem.md)). Since a transform pins down its signal, y = g * f. The one-sided version follows by swapping the order of integration over a triangle ([Double integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md)).
 
 <details>
 <summary>Detailed proof</summary>
@@ -117,7 +93,7 @@ $$\int_0^\infty e^{-st}\int_0^t g(t-\tau) f(\tau)\,d\tau\,dt = \int_0^\infty f(\
 
 Both sides cover the region 0 ≤ τ ≤ t. The absolute integrand is at most M^2 e^(−(s − a)t); integrated over τ from 0 to t it is at most M^2 t e^(−(s − a)t), which has a finite integral, so the swap is allowed. Putting u = t − τ turns the inner integral into e^(−sτ) G(s), leaving G(s) times the transform of f.
 
-**The formula solves the equation, with no transform.** Let f be continuous and y = g * f. Differentiating an integral whose limit and integrand both depend on t gives the integrand at τ = t plus the integral of the t-derivative ([differentiating-under-the-integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/05-differentiating-under-the-integral.md)):
+**The formula solves the equation, with no transform.** Let f be continuous and y = g * f. Differentiating an integral whose limit and integrand both depend on t gives the integrand at τ = t plus the integral of the t-derivative ([Differentiating under the integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/05-differentiating-under-the-integral.md)):
 
 y'(t) = g(0) f(t) + ∫ g'(t − τ) f(τ) dτ = ∫ g'(t − τ) f(τ) dτ, since g(0) = 0.
 
@@ -139,7 +115,7 @@ $$y(t) = 2 - e^{-t}\,(2\cos 2t + \sin 2t),$$
 
 the round-trip answer, reached without splitting G F = 10/(s(s^2 + 2s + 5)) into partial fractions.
 
-Another road: variation of constants ([forced-systems-and-variation-of-constants](../04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md)) writes the forced solution of x' = Ax + b f as ∫ e^(A(t − τ)) b f(τ) dτ; for the car as a height-and-velocity system, the height entry of e^(At) b is g.
+Another road: variation of constants ([Forced systems](../04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md)) writes the forced solution of x' = Ax + b f as ∫ e^(A(t − τ)) b f(τ) dτ; for the car as a height-and-velocity system, the height entry of e^(At) b is g.
 
 ---
 
@@ -169,7 +145,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Two roads sharing no step. Road one blends: a midpoint sum (slices, each sampled at its centre) of g(t − τ) f(τ). Road two never mentions g: it steps the equation with Runge-Kutta 4 ([runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md)). The kick is stepped from height 0 and velocity 1; its error falls by about 16 when the step halves, the method's order 4.
+Two roads sharing no step. Road one blends: a midpoint sum (slices, each sampled at its centre) of g(t − τ) f(τ). Road two never mentions g: it steps the equation with Runge-Kutta 4 ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)). The kick is stepped from height 0 and velocity 1; its error falls by about 16 when the step halves, the method's order 4.
 
 ### Python
 
@@ -367,7 +343,7 @@ The two outputs match line for line.
 
 - **Concert-hall acoustics.** A recording of one sharp clap is a hall's impulse response; convolving a dry recording with it places the music in that hall, which audio software calls convolution reverb.
 - **Suspension and building design.** A structure's ringing after one hammer tap, convolved with a recorded road or ground motion, predicts its full response.
-- **Circuits and control.** G(s) is the transfer function of an electrical or mechanical system; [linear-time-invariant-systems-and-convolution](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/01-linear-time-invariant-systems-and-convolution.md) builds the engineering view on it.
+- **Circuits and control.** G(s) is the transfer function of an electrical or mechanical system; [Linear and time-invariant](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/01-linear-time-invariant-systems-and-convolution.md) builds the engineering view on it.
 
 > **Say it back**
 > A linear equation with constant coefficients answers a unit kick with its impulse response g. Any push is a run of small kicks, so from rest the motion is the convolution g * f. Under the transform that becomes the product G F, with G = 1/P(s). For the car, g blended with a steady push of 10 gives the round-trip answer.
@@ -376,21 +352,21 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [impulses-and-the-delta-function](06-impulses-and-the-delta-function.md): the kick δ, its transform 1, and the jump in velocity it leaves.
-- [forced-systems-and-variation-of-constants](../04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md): the same integral, reached through the matrix exponential.
-- [double-integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md): swapping the order of integration over the triangle 0 ≤ τ ≤ t.
-- [convolution-theorem](../../07-Complex%20analysis/08-Transforms%20in%20Outline/04-convolution-theorem.md): the product rule for transforms, proved for the Fourier transform.
+- [Impulses](06-impulses-and-the-delta-function.md): the kick δ, its transform 1, and the jump in velocity it leaves.
+- [Forced systems](../04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md): the same integral, reached through the matrix exponential.
+- [Double integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md): swapping the order of integration over the triangle 0 ≤ τ ≤ t.
+- [Convolution](../../07-Complex%20analysis/08-Transforms%20in%20Outline/04-convolution-theorem.md): the product rule for transforms, proved for the Fourier transform.
 
 ## Where this goes next
 
-- [the-heat-kernel](../10-The%20Classical%20PDEs/10-the-heat-kernel.md): heat flow's impulse response.
-- [linear-time-invariant-systems-and-convolution](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/01-linear-time-invariant-systems-and-convolution.md): systems described by g alone.
-- fundamental-solutions-and-the-response-to-a-spike: the impulse response for any linear operator.
-- duhamels-principle-for-a-forced-evolution: the blend in infinite dimensions.
-- duhamels-principle: a heat source as a stream of starts.
-- convolution-theorem-and-impulse-response: convolution on the whole line.
+- [The heat kernel](../10-The%20Classical%20PDEs/10-the-heat-kernel.md): heat flow's impulse response.
+- [Linear and time-invariant](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/01-linear-time-invariant-systems-and-convolution.md): systems described by g alone.
+- Fundamental solution: the impulse response for any linear operator.
+- Duhamel: the blend in infinite dimensions.
+- Duhamel's principle: a heat source as a stream of starts.
+- The convolution theorem: convolution on the whole line.
 
-One function of time now carries everything the car will do; for a temperature along a rod, that role passes to [the-heat-kernel](../10-The%20Classical%20PDEs/10-the-heat-kernel.md).
+One function of time now carries everything the car will do; for a temperature along a rod, that role passes to [The heat kernel](../10-The%20Classical%20PDEs/10-the-heat-kernel.md).
 
 ---
 

@@ -1,25 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Conformal Maps and Harmonic Functions
-topic: Angles that survive
-item: Conformal maps
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/01-complex-derivative-and-cauchy-riemann|complex-derivative-and-cauchy-riemann]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/04-complex-logarithm|complex-logarithm]]"
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/03-polar-coordinates|polar-coordinates]]"
-next:
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/02-mobius-transformations-and-the-point-at-infinity|mobius-transformations-and-the-point-at-infinity]]"
-  - "[[Cards/21-Algebraic and analytic number theory/07-Diophantine and Modular/07-modular-forms-in-outline|modular-forms-in-outline]]"
-tags: [mathematics, complex analysis, conformal-maps]
----
-
 # Conformal maps: where f' is not zero a holomorphic function turns and stretches every tiny shape, so angles survive
 
-Complex analysis → Conformal Maps and Harmonic Functions → Angles that survive → Conformal maps
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Conformal Maps and Harmonic Functions](../../../SYLLABUS.md#w07-s07) → Conformal maps
 
 ---
 
@@ -45,7 +26,7 @@ To scale: left 80 units per 1, origin (95, 120); right 40 units per 1, origin (2
 
 ## The formula
 
-Reminders: |z| is distance from 0, arg z the angle, in (−π, π] ([polar-form-and-argument](../01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md)); f'(a) is the limit of (f(a + h) − f(a))/h as the complex step h shrinks to 0 from any direction.
+Reminders: |z| is distance from 0, arg z the angle, in (−π, π] ([Polar form](../01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md)); f'(a) is the limit of (f(a + h) − f(a))/h as the complex step h shrinks to 0 from any direction.
 
 $$f(a + h) = f(a) + f'(a)\,h + \varepsilon(h)\,h, \qquad \varepsilon(h) \to 0 \text{ as } h \to 0$$
 
@@ -87,7 +68,7 @@ $$w = -i\,\mathrm{Log}\, z = \lambda + i\,\ln \tan\!\left(\frac{\pi}{4} + \frac{
 
 ### Step 0: multiplying by a complex number is turn and stretch
 
-Multiply r e^(iα) by ρ e^(iθ): lengths multiply and angles add, giving ρr e^(i(α + θ)) ([eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). Arrows at 0 and 45 degrees, times 2 + 2i, land at 45 and 90: still 45 apart.
+Multiply r e^(iα) by ρ e^(iθ): lengths multiply and angles add, giving ρr e^(i(α + θ)) ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). Arrows at 0 and 45 degrees, times 2 + 2i, land at 45 and 90: still 45 apart.
 
 ### Step 1: the derivative makes f look like multiplication
 
@@ -122,27 +103,27 @@ As t → 0, (γ(t) − a)/t → v and γ(t) − a → 0. For every η > 0 there 
 
 ### Step 3: where f' is zero, angles multiply
 
-At 0 the derivative of z^2 is 0, and nothing cancels. With z = s e^(iα), z^2 = s^2 e^(2iα): the angle doubles, so rays at 0 and 45 degrees land at 0 and 90. If f(a + h) − f(a) begins with c h^m, c not zero, angles at a multiply by m and each point near f(a), other than f(a), has m preimages near a, counted by [the-argument-principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md).
+At 0 the derivative of z^2 is 0, and nothing cancels. With z = s e^(iα), z^2 = s^2 e^(2iα): the angle doubles, so rays at 0 and 45 degrees land at 0 and 90. If f(a + h) − f(a) begins with c h^m, c not zero, angles at a multiply by m and each point near f(a), other than f(a), has m preimages near a, counted by [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md).
 
 ### Step 4: a nonzero derivative gives a holomorphic local inverse
 
-As a map of the plane, (x, y) to (u, v), with f'(a) = A + iB, its matrix of partial derivatives is A + iB in real form ([multivariable-chain-rule-and-jacobians](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)):
+As a map of the plane, (x, y) to (u, v), with f'(a) = A + iB, its matrix of partial derivatives is A + iB in real form ([Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)):
 
 $$\begin{pmatrix} A & -B \\ B & A \end{pmatrix}, \qquad \det = A^2 + B^2 = |f'(a)|^2 > 0$$
 
-f' is continuous: holomorphic functions have derivatives of every order ([derivatives-from-the-boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md)). So the nonzero determinant lets the inverse function theorem for maps of the plane ([inverse-and-implicit-function-theorems](../../06-Calculus%20and%20analysis/07-Several%20Variables/07-inverse-and-implicit-function-theorems.md)) supply small discs around a and f(a) with a smooth inverse g between them. Its matrix is the inverse matrix, multiplication by 1/f'(a) in real form, so g'(w) = 1/f'(g(w)). For z^2 near 1 + i, g(2i) = 1 + i and g'(2i) = 1/(2 + 2i) = 0.25 − 0.25i: a turn back by 45 degrees and a shrink by 2.828427. Newton's method in the code agrees. Only locally: −1 − i also squares to 2i.
+f' is continuous: holomorphic functions have derivatives of every order ([Derivatives from the boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md)). So the nonzero determinant lets the inverse function theorem for maps of the plane ([Inverse and implicit function theorems](../../06-Calculus%20and%20analysis/07-Several%20Variables/07-inverse-and-implicit-function-theorems.md)) supply small discs around a and f(a) with a smooth inverse g between them. Its matrix is the inverse matrix, multiplication by 1/f'(a) in real form, so g'(w) = 1/f'(g(w)). For z^2 near 1 + i, g(2i) = 1 + i and g'(2i) = 1/(2 + 2i) = 0.25 − 0.25i: a turn back by 45 degrees and a shrink by 2.828427. Newton's method in the code agrees. Only locally: −1 − i also squares to 2i.
 
 ### Step 5: Mercator's chart is the logarithm of the flat globe
 
 Stereographic projection keeps angles too; Snyder (below) derives it. It puts 72 degrees north at r = 0.158384.
 
-Then −i Log z: the principal logarithm ln|z| + i arg z ([complex-logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)), then a quarter turn clockwise. Its derivative −i/z is never zero, so by Step 2 it keeps angles off the negative real axis, where Log jumps. It gives −i(ln r + iλ) = λ − i ln r, and −ln tan(π/4 − φ/2) = ln tan(π/4 + φ/2) since the tangents are reciprocals: Mercator's formula, 1.842730 at 72 degrees by both roads.
+Then −i Log z: the principal logarithm ln|z| + i arg z ([The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)), then a quarter turn clockwise. Its derivative −i/z is never zero, so by Step 2 it keeps angles off the negative real axis, where Log jumps. It gives −i(ln r + iλ) = λ − i ln r, and −ln tan(π/4 − φ/2) = ln tan(π/4 + φ/2) since the tangents are reciprocals: Mercator's formula, 1.842730 at 72 degrees by both roads.
 
 The stretches multiply: (1 + r^2)/2 for the projection, 1/r for the logarithm. With r = tan β and 2β = π/2 − φ, (1 + r^2)/(2r) = 1/sin 2β = 1/cos φ: 3.236068 at 72 degrees, 1 at the equator.
 
 Meridians become vertical lines, and angles survive, so a 45-degree course crosses every vertical line at 45 degrees: a straight line. The spiral e^((−1 + i)t) becomes (1 + i)t.
 
-[standard-maps-and-composing-them](03-standard-maps-and-composing-them.md) chains such maps into larger ones; which regions a univalent map can carry onto a disc is [riemann-mapping-theorem-and-schwarz-christoffel](08-riemann-mapping-theorem-and-schwarz-christoffel.md).
+[The standard maps](03-standard-maps-and-composing-them.md) chains such maps into larger ones; which regions a univalent map can carry onto a disc is [The Riemann mapping theorem](08-riemann-mapping-theorem-and-schwarz-christoffel.md).
 
 ---
 
@@ -369,7 +350,7 @@ The two outputs match line for line.
 
 - **Navigation.** On Mercator's chart a fixed bearing is a ruler line; lengths stretch by 1/cos φ.
 - **Polar charts.** Stereographic projection is a standard chart of the polar regions, since it keeps small shapes.
-- **Flow, heat and electric fields.** Conformal maps carry solutions from simple regions to hard ones: [harmonic-functions-and-conjugates](04-harmonic-functions-and-conjugates.md) says why, and [solving-boundary-problems-by-mapping](07-solving-boundary-problems-by-mapping.md) does it.
+- **Flow, heat and electric fields.** Conformal maps carry solutions from simple regions to hard ones: [Harmonic functions](04-harmonic-functions-and-conjugates.md) says why, and [Solving by mapping](07-solving-boundary-problems-by-mapping.md) does it.
 
 > **Say it back**
 > Where its derivative is not zero, a holomorphic function multiplies small arrows by it: one turn, one stretch, so crossing angles survive. Where the derivative is zero, angles multiply. A nonzero derivative gives a holomorphic inverse near the point, not across the region. Mercator's chart is the logarithm of the stereographic globe: true bearings, a swollen Greenland.
@@ -378,14 +359,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [complex-derivative-and-cauchy-riemann](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md): the derivative, the same from every direction.
-- [complex-logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md): Log z and its derivative 1/z, the engine of the chart.
-- [polar-coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/03-polar-coordinates.md): distance and angle, how turn and stretch are read.
+- [The complex derivative](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md): the derivative, the same from every direction.
+- [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md): Log z and its derivative 1/z, the engine of the chart.
+- [Polar coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/03-polar-coordinates.md): distance and angle, how turn and stretch are read.
 
 ## Where this goes next
 
-- [mobius-transformations-and-the-point-at-infinity](02-mobius-transformations-and-the-point-at-infinity.md): the conformal maps that are one-to-one on the whole plane with infinity added.
-- modular-forms-in-outline: functions that keep their shape under a whole group of conformal maps of the half plane.
+- [Mobius transformations](02-mobius-transformations-and-the-point-at-infinity.md): the conformal maps that are one-to-one on the whole plane with infinity added.
+- Modular forms: functions that keep their shape under a whole group of conformal maps of the half plane.
 
 ---
 

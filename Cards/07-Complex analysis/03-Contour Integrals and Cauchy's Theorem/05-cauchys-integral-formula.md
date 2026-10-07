@@ -1,24 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Contour Integrals and Cauchy's Theorem
-topic: Reading the inside from the rim
-item: Cauchy's integral formula
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/04-deforming-contours-and-winding-numbers|deforming-contours-and-winding-numbers]]"
-next:
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/06-derivatives-from-the-boundary|derivatives-from-the-boundary]]"
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/05-maximum-modulus-principle|maximum-modulus-principle]]"
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/05-mean-value-and-maximum-principle-for-harmonic-functions|mean-value-and-maximum-principle-for-harmonic-functions]]"
-tags: [mathematics, complex analysis, cauchys-integral-formula]
----
-
 # Cauchy's integral formula: the values on a loop fix every value inside
 
-Complex analysis → Contour Integrals and Cauchy's Theorem → Reading the inside from the rim → Cauchy's integral formula
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Contour Integrals and Cauchy's Theorem](../../../SYLLABUS.md#w07-s03) → Cauchy's integral formula
 
 ---
 
@@ -44,13 +26,13 @@ To scale: 40 units per 1, centre 0 at (150, 120), so the rim has radius 80, the 
 
 ## The formula
 
-Notation first, in words. The loop integral sign $\oint_C$ means: walk once round the loop C, anticlockwise, adding up the function times each small step dz along the way ([contour-integrals](01-contour-integrals.md)).
+Notation first, in words. The loop integral sign $\oint_C$ means: walk once round the loop C, anticlockwise, adding up the function times each small step dz along the way ([Contour integrals](01-contour-integrals.md)).
 
 $$f(a) = \frac{1}{2\pi i}\oint_C \frac{f(z)}{z-a}\,dz$$
 
 **Read it aloud:** the value of f at the inside point a is one over two-pi-i times the loop integral of f of z over z minus a.
 
-On a circle of radius r centred at a itself, write each rim point as $z = a + re^{i\theta}$, with θ the angle ([eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). The formula becomes:
+On a circle of radius r centred at a itself, write each rim point as $z = a + re^{i\theta}$, with θ the angle ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). The formula becomes:
 
 $$f(a) = \frac{1}{2\pi}\int_0^{2\pi} f(a + re^{i\theta})\,d\theta$$
 
@@ -71,7 +53,7 @@ $$f(a) = \frac{1}{2\pi}\int_0^{2\pi} f(a + re^{i\theta})\,d\theta$$
 
 - **f holomorphic on and inside the loop.** Drop it and the formula fails: z-bar has no complex derivative, and the loop returns 0 at the point 0.5, not 0.5.
 - **a strictly inside.** Outside, the recipe returns 0: at 4 it gives 0, not e^4 = 54.598150. On the loop itself the integral does not exist, since z − a hits 0.
-- **One anticlockwise lap.** Run clockwise and the sign flips, −1.648721. For a loop that winds round a several times, the answer is the winding number times f(a) ([deforming-contours-and-winding-numbers](04-deforming-contours-and-winding-numbers.md)).
+- **One anticlockwise lap.** Run clockwise and the sign flips, −1.648721. For a loop that winds round a several times, the answer is the winding number times f(a) ([Deforming a loop](04-deforming-contours-and-winding-numbers.md)).
 - **The average form needs a circle centred at a.** On any other loop only the integral form holds.
 
 ---
@@ -80,11 +62,11 @@ $$f(a) = \frac{1}{2\pi}\int_0^{2\pi} f(a + re^{i\theta})\,d\theta$$
 
 ### Step 0: only one point is bad
 
-The integrand f(z)/(z − a) is holomorphic everywhere on and inside the loop except at z = a, where the denominator is 0. Cauchy's theorem ([cauchys-theorem](03-cauchys-theorem.md)) gives 0 round any loop with no bad point on or inside it. So the whole integral is decided by what happens near a.
+The integrand f(z)/(z − a) is holomorphic everywhere on and inside the loop except at z = a, where the denominator is 0. Cauchy's theorem ([Cauchy's theorem](03-cauchys-theorem.md)) gives 0 round any loop with no bad point on or inside it. So the whole integral is decided by what happens near a.
 
 ### Step 1: shrink the loop onto a small circle
 
-A loop may be deformed without crossing a bad point, and the integral stays the same ([deforming-contours-and-winding-numbers](04-deforming-contours-and-winding-numbers.md)). So the rim |z| = 2 can be replaced by the dashed circle of radius r round a, for any r small enough to stay inside.
+A loop may be deformed without crossing a bad point, and the integral stays the same ([Deforming a loop](04-deforming-contours-and-winding-numbers.md)). So the rim |z| = 2 can be replaced by the dashed circle of radius r round a, for any r small enough to stay inside.
 
 ### Step 2: on that circle, the r cancels
 
@@ -366,8 +348,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Numerical computing.** A function known to be holomorphic can be evaluated from samples on a circle. The trapezoid sum used here converges exponentially fast for such integrands, the reason 16 points already reach 3.6e-9 ([derivatives-from-the-boundary](06-derivatives-from-the-boundary.md) extends it to derivatives).
-- **Steady heat and electrostatics.** The real part of a holomorphic function describes a steady temperature or a voltage with no sources inside. The centre's value is the rim's average ([mean-value-and-maximum-principle-for-harmonic-functions](../07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md)).
+- **Numerical computing.** A function known to be holomorphic can be evaluated from samples on a circle. The trapezoid sum used here converges exponentially fast for such integrands, the reason 16 points already reach 3.6e-9 ([Derivatives from the boundary](06-derivatives-from-the-boundary.md) extends it to derivatives).
+- **Steady heat and electrostatics.** The real part of a holomorphic function describes a steady temperature or a voltage with no sources inside. The centre's value is the rim's average ([Mean value and maximum principle](../07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md)).
 - **Evaluating real integrals.** Many integrals along the real line are turned into loop integrals with one pole inside, then read off in one line as in Step 6.
 
 > **Say it back**
@@ -377,15 +359,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [deforming-contours-and-winding-numbers](04-deforming-contours-and-winding-numbers.md): shrinking the rim onto a small circle without changing the integral, and the winding number for loops that lap more than once.
+- [Deforming a loop](04-deforming-contours-and-winding-numbers.md): shrinking the rim onto a small circle without changing the integral, and the winding number for loops that lap more than once.
 
 ## Where this goes next
 
-- [derivatives-from-the-boundary](06-derivatives-from-the-boundary.md): differentiate under the integral and every derivative of f comes from the rim too.
-- [maximum-modulus-principle](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/05-maximum-modulus-principle.md): the centre is an average, so it cannot be a strict peak of |f|.
-- [mean-value-and-maximum-principle-for-harmonic-functions](../07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md): the rim average for steady temperatures and voltages.
+- [Derivatives from the boundary](06-derivatives-from-the-boundary.md): differentiate under the integral and every derivative of f comes from the rim too.
+- [The maximum modulus principle](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/05-maximum-modulus-principle.md): the centre is an average, so it cannot be a strict peak of |f|.
+- [Mean value and maximum principle](../07-Conformal%20Maps%20and%20Harmonic%20Functions/05-mean-value-and-maximum-principle-for-harmonic-functions.md): the rim average for steady temperatures and voltages.
 
-The rim fixes f(a); whether it also fixes f′(a), f″(a) and every higher derivative, so that one complex derivative forces infinitely many, is the question [derivatives-from-the-boundary](06-derivatives-from-the-boundary.md) answers.
+The rim fixes f(a); whether it also fixes f′(a), f″(a) and every higher derivative, so that one complex derivative forces infinitely many, is the question [Derivatives from the boundary](06-derivatives-from-the-boundary.md) answers.
 
 ---
 

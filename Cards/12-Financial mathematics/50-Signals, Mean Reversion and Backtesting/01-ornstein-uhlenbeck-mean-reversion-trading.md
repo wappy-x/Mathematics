@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Signals, Mean Reversion and Backtesting
-topic: Fitting and trading a spread
-item: Mean reversion
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/05-ornstein-uhlenbeck-and-cir-processes|ornstein-uhlenbeck-and-cir-processes]]"
-  - "[[Cards/09-Probability and statistics/12-Time Series/02-ar-models|ar-models]]"
-next:
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/02-pairs-trading-and-cointegration|pairs-trading-and-cointegration]]"
-tags: [mathematics, financial mathematics, ornstein-uhlenbeck-mean-reversion-trading]
----
-
 # Mean reversion: fitting an Ornstein-Uhlenbeck spread and trading its z-score
 
-Financial mathematics → Signals, Mean Reversion and Backtesting → Fitting and trading a spread → Mean reversion
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Signals, Mean Reversion and Backtesting](../../../SYLLABUS.md#w12-s50) → Mean reversion
 
 ---
 
@@ -52,7 +35,7 @@ Middle line (teal): the expected spread. It falls from $14 to $12 at day 12 and 
 
 ## The formula
 
-Notation first, in words. The model is written as a stochastic differential equation ([ornstein-uhlenbeck-and-cir-processes](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)): $\mathrm{d}X_t$ is the spread's change over a sliver of time $\mathrm{d}t$, and $\mathrm{d}W_t$ is a random kick from Brownian motion over that sliver. Time runs in trading days. A hat over a letter marks a value fitted from data. "sd" is standard deviation.
+Notation first, in words. The model is written as a stochastic differential equation ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)): $\mathrm{d}X_t$ is the spread's change over a sliver of time $\mathrm{d}t$, and $\mathrm{d}W_t$ is a random kick from Brownian motion over that sliver. Time runs in trading days. A hat over a letter marks a value fitted from data. "sd" is standard deviation.
 
 $$\mathrm{d}X_t = \kappa\,(\theta - X_t)\,\mathrm{d}t + \sigma\,\mathrm{d}W_t$$
 
@@ -91,11 +74,11 @@ One helper fact: $\ln 2 = 0.693147$, so the half-life is 0.693147 divided by the
 
 ### When it holds
 
-- **The spread has a fixed level to return to.** If North and South stop being alike (one is bought out, one loses its refinery contract), the level moves or vanishes, and the fit keeps reporting a half-life for a relationship that no longer exists. Whether a pair has a level at all is tested on [pairs-trading-and-cointegration](02-pairs-trading-and-cointegration.md).
+- **The spread has a fixed level to return to.** If North and South stop being alike (one is bought out, one loses its refinery contract), the level moves or vanishes, and the fit keeps reporting a half-life for a relationship that no longer exists. Whether a pair has a level at all is tested on [Pairs trading](02-pairs-trading-and-cointegration.md).
 - **The pull is proportional to the gap and its speed is constant.** If the pull weakens in a crisis, the half-life fitted in calm years is too short and positions are held far longer than planned.
 - **The noise is bell-shaped with a steady size.** Fat tails or bursts of volatility make a z of 2 far more common than the bell curve's 4.55% of days, so entries fire more often and some of them never come back.
-- **The spread's recipe is fixed.** This card takes one North share against one South share. A drifting hedge ratio changes the spread itself: [kalman-filter-for-dynamic-hedge-ratios](07-kalman-filter-for-dynamic-hedge-ratios.md).
-- **The fit uses only the past.** Parameters fitted on the same days that are traded make the rule look better than it is: [backtesting-pitfalls](05-backtesting-pitfalls.md).
+- **The spread's recipe is fixed.** This card takes one North share against one South share. A drifting hedge ratio changes the spread itself: [A moving hedge ratio](07-kalman-filter-for-dynamic-hedge-ratios.md).
+- **The fit uses only the past.** Parameters fitted on the same days that are traded make the rule look better than it is: [Backtesting](05-backtesting-pitfalls.md).
 
 ---
 
@@ -107,11 +90,11 @@ Ignore the noise for a moment. If the spread is $4 above its level and the pull 
 
 ### Step 1: sampled daily, the OU process is exactly a line plus noise
 
-The OU card solves the equation ([ornstein-uhlenbeck-and-cir-processes](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)). One day after any reading, the spread is
+The OU card solves the equation ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)). One day after any reading, the spread is
 
 $$X_{t+1} = \theta + e^{-\kappa}(X_t - \theta) + \varepsilon_{t+1},$$
 
-where $\varepsilon$ is bell-shaped, centred on zero, independent of everything before, with variance $\sigma^2(1 - e^{-2\kappa})/(2\kappa)$. Multiply out: the slope is $\beta = e^{-\kappa}$ and the intercept is $\alpha = (1-\beta)\theta$. This is a first-order autoregression, AR(1), a series where each value is a fixed share of the last plus fresh noise ([ar-models](../../09-Probability%20and%20statistics/12-Time%20Series/02-ar-models.md)). It is exact, not an approximation: no small-time-step shortcut was taken.
+where $\varepsilon$ is bell-shaped, centred on zero, independent of everything before, with variance $\sigma^2(1 - e^{-2\kappa})/(2\kappa)$. Multiply out: the slope is $\beta = e^{-\kappa}$ and the intercept is $\alpha = (1-\beta)\theta$. This is a first-order autoregression, AR(1), a series where each value is a fixed share of the last plus fresh noise ([Autoregression](../../09-Probability%20and%20statistics/12-Time%20Series/02-ar-models.md)). It is exact, not an approximation: no small-time-step shortcut was taken.
 
 ### Step 2: least squares recovers the line, and the line maps back to the model
 
@@ -629,17 +612,17 @@ The two outputs match line for line. Roads 1 and 2 give 12.51 and 10.95 days bec
 >
 > - **The differencing shortcut.** Regressing the day's *change* on yesterday's level gives slope $\beta - 1$, and $\ln 2/(1-\beta)$ is the common shortcut. It reports 12.35 days for a true 12, and the error grows as the pull strengthens.
 > - **The wrong yardstick.** Dividing the gap by the daily noise, 0.6606, instead of the long-run scatter, $2, makes a z of 2 read 6.06: every ordinary day looks like a signal.
-> - **Fitting on the days being traded.** The level and scatter must come from earlier data. Fitting on the whole record, then trading it, uses tomorrow's prices to decide today: [backtesting-pitfalls](05-backtesting-pitfalls.md).
+> - **Fitting on the days being traded.** The level and scatter must come from earlier data. Fitting on the whole record, then trading it, uses tomorrow's prices to decide today: [Backtesting](05-backtesting-pitfalls.md).
 > - **Trusting one half-life.** Five years of daily data put the fitted half-life anywhere from 8.89 to 14.82 days for a true 12. Quote a range, and treat a fitted slope near 1 as "no reversion found".
 
 ---
 
 ## Where you meet it in real life
 
-- **Pairs trading desks.** The classic rule of Gatev, Goetzmann and Rouwenhorst opens a pair when the normalised price gap passes two standard deviations and closes it when prices cross: this card's rule, with the pair chosen as on [pairs-trading-and-cointegration](02-pairs-trading-and-cointegration.md).
+- **Pairs trading desks.** The classic rule of Gatev, Goetzmann and Rouwenhorst opens a pair when the normalised price gap passes two standard deviations and closes it when prices cross: this card's rule, with the pair chosen as on [Pairs trading](02-pairs-trading-and-cointegration.md).
 - **Refining margins.** The crack spread, petrol and diesel prices minus the crude oil they are made from, is pulled back by refiners switching output on and off. Traders fit its half-life the same way.
 - **Interest rates.** The Vasicek short-rate model is the same equation, with the rate pulled toward a long-run level. Fitting it on daily data is Step 2.
-- **The opposite bet.** A signal that expects moves to continue rather than reverse lives on [momentum-and-factor-signals](03-momentum-and-factor-signals.md). Trying many thresholds and keeping the best one inflates the result: [deflated-sharpe-and-multiple-testing](06-deflated-sharpe-and-multiple-testing.md).
+- **The opposite bet.** A signal that expects moves to continue rather than reverse lives on [Momentum and factor signals](03-momentum-and-factor-signals.md). Trying many thresholds and keeping the best one inflates the result: [Trying many strategies](06-deflated-sharpe-and-multiple-testing.md).
 
 > **Say it back**
 > A mean-reverting spread is modelled as an OU process: pulled toward a level in proportion to its gap, kicked by steady noise. Sampled daily, it is exactly a straight line of tomorrow on today, so least squares fits it. The slope gives the pull speed and the half-life, log 2 over that speed; the intercept gives the level; the leftover noise, stretched by one over the root of one minus the slope squared, gives the long-run scatter. The z-score measures today's gap in scatters, and the rule enters at 2 and exits at 0. The half-life is how fast the average gap shrinks, not how long a trade lasts: from z = 2 the wait averages about two half-lives.
@@ -648,12 +631,12 @@ The two outputs match line for line. Roads 1 and 2 give 12.51 and 10.95 days bec
 
 ## What this builds on
 
-- [ornstein-uhlenbeck-and-cir-processes](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): the OU equation, its exact solution and its steady bell curve. Step 1 samples that solution once a day.
-- [ar-models](../../09-Probability%20and%20statistics/12-Time%20Series/02-ar-models.md): the first-order autoregression, and why a slope strictly between 0 and 1 means a series with a steady level and scatter.
+- [Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): the OU equation, its exact solution and its steady bell curve. Step 1 samples that solution once a day.
+- [Autoregression](../../09-Probability%20and%20statistics/12-Time%20Series/02-ar-models.md): the first-order autoregression, and why a slope strictly between 0 and 1 means a series with a steady level and scatter.
 
 ## Where this goes next
 
-- [pairs-trading-and-cointegration](02-pairs-trading-and-cointegration.md): how to choose the pair, estimate the hedge ratio, and test whether the spread has a level at all.
+- [Pairs trading](02-pairs-trading-and-cointegration.md): how to choose the pair, estimate the hedge ratio, and test whether the spread has a level at all.
 
 This card took North minus South as given and fitted its pull; whether a spread of two prices deserves an OU fit in the first place is the question that card answers.
 

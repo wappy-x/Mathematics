@@ -1,22 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Vectors in Space
-topic: Volume from three edges
-item: Triple product
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/05-Vectors in Space/02-lines-and-planes-in-space|lines-and-planes-in-space]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/04-determinants|determinants]]"
-next: []
-tags: [mathematics, geometry and trig, triple-product-and-volume]
----
-
 # Triple product: the volume of a slanted box and a test for four points in one plane
 
-Geometry and trig → Vectors in Space → Volume from three edges → Triple product
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Vectors in Space](../../../SYLLABUS.md#w05-s05) → Triple product
 
 ---
 
@@ -42,13 +26,13 @@ Scale 1 dm = 7 units across and up; depth at half scale on a 30° slant. Dashed 
 
 ## The formula
 
-Notation first, in words. An edge is a vector, a list of three numbers: how far it runs sideways, back and up. Its entries are $a_1$, $a_2$, $a_3$, position labels, not powers. The dot · is the dot product: pair the entries, multiply, add. The cross × is the cross product of [cross-product-and-oriented-area](01-cross-product-and-oriented-area.md): $a \times b$ is an arrow square to both edges whose length is the area of the parallelogram they span.
+Notation first, in words. An edge is a vector, a list of three numbers: how far it runs sideways, back and up. Its entries are $a_1$, $a_2$, $a_3$, position labels, not powers. The dot · is the dot product: pair the entries, multiply, add. The cross × is the cross product of [Cross product](01-cross-product-and-oriented-area.md): $a \times b$ is an arrow square to both edges whose length is the area of the parallelogram they span.
 
 $$V = (a \times b) \cdot c$$
 
 **Read it aloud:** cross the two floor edges to get the floor as an arrow, then dot that arrow with the third edge.
 
-Entry by entry, it is the determinant of $M$, the 3 by 3 matrix whose rows are the edges ([determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)):
+Entry by entry, it is the determinant of $M$, the 3 by 3 matrix whose rows are the edges ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)):
 
 $$V = \det M = a_1(b_2 c_3 - b_3 c_2) - a_2(b_1 c_3 - b_3 c_1) + a_3(b_1 c_2 - b_2 c_1)$$
 
@@ -81,7 +65,7 @@ $$\big((Q - P) \times (R - P)\big) \cdot (S - P) = 0$$
 
 ### Step 0: a leaning box holds floor area times height
 
-Slice the crate into thin horizontal layers. Each is a copy of the floor, slid sideways by the lean, so the crate holds what an upright crate on the same floor and height holds: floor area times height. Euclid proves it for boxes (*Elements* XI.31), as does [prisms-and-cylinders](../02-Circles%20and%20Solids/04-prisms-and-cylinders.md). The task is to get both from the edges.
+Slice the crate into thin horizontal layers. Each is a copy of the floor, slid sideways by the lean, so the crate holds what an upright crate on the same floor and height holds: floor area times height. Euclid proves it for boxes (*Elements* XI.31), as does [Prisms and cylinders](../02-Circles%20and%20Solids/04-prisms-and-cylinders.md). The task is to get both from the edges.
 
 ### Step 1: the cross product delivers the floor
 
@@ -118,7 +102,7 @@ The triple product is zero exactly when the box has no height: c lies in the pla
 
 Let S sag to height 11.5. The third edge becomes (25, 15, −0.5) and the triple product −150. Divided by the lid's area, 300, that is −0.5 dm: S sits 5 cm below the plane of the other three.
 
-A road with no cross product: count small cubes inside the crate, as the code does. Another reads the determinant as the volume scale of the rows' matrix ([determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)).
+A road with no cross product: count small cubes inside the crate, as the code does. Another reads the determinant as the volume scale of the rows' matrix ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)).
 
 ---
 
@@ -382,12 +366,12 @@ The outputs agree line for line. The cube count is exact here: every row of cube
 
 ## What this builds on
 
-- [lines-and-planes-in-space](02-lines-and-planes-in-space.md): the plane through three points and its square-on arrow, reused by the four-point test.
-- [determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): the 3 by 3 determinant and its meaning as a volume scale.
+- [Lines and planes](02-lines-and-planes-in-space.md): the plane through three points and its square-on arrow, reused by the four-point test.
+- [Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): the 3 by 3 determinant and its meaning as a volume scale.
 
 ## Where this goes next
 
-The triple product measures one box; what a matrix does to every box at once, scaling all volumes by one factor, is [transformations-with-matrices](04-transformations-with-matrices.md).
+The triple product measures one box; what a matrix does to every box at once, scaling all volumes by one factor, is [Moving shapes with matrices](04-transformations-with-matrices.md).
 
 ---
 

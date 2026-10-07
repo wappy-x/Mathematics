@@ -1,23 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Beyond Euclid
-topic: Constructible lengths
-item: Ruler and compass
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/01-Angles, Triangles and Congruence/01-angles-and-parallel-lines|angles-and-parallel-lines]]"
-  - "[[Cards/03-Algebra/09-Rings and Fields/02-fields|fields]]"
-next:
-  - "[[Cards/21-Algebraic and analytic number theory/05-Fields and Galois Theory/10-constructibility-and-the-classical-problems|constructibility-and-the-classical-problems]]"
-tags: [mathematics, geometry and trig, ruler-and-compass-constructions]
----
-
 # Ruler and compass: what can be built, and the three ancient problems that cannot
 
-Geometry and trig → Beyond Euclid → Constructible lengths → Ruler and compass
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Beyond Euclid](../../../SYLLABUS.md#w05-s06) → Ruler and compass
 
 ---
 
@@ -43,7 +26,7 @@ To scale, 1 = 100 units. The arc at O marks 360°/17. The foot of P1 lies 0.9325
 
 ## The formula
 
-Write $n$ for the number of sides and $c$ for the cosine of 360°/n: on a circle of radius 1, the distance from the centre to the foot of the first corner. Drawing $c$ is the whole job: the perpendicular there meets the circle at the first corner, and the compass steps off the rest. A **field** is a set of numbers closed under adding, subtracting, multiplying and dividing by anything but zero ([fields](../../03-Algebra/09-Rings%20and%20Fields/02-fields.md)); $F$ is the field of numbers built so far, starting with the fractions.
+Write $n$ for the number of sides and $c$ for the cosine of 360°/n: on a circle of radius 1, the distance from the centre to the foot of the first corner. Drawing $c$ is the whole job: the perpendicular there meets the circle at the first corner, and the compass steps off the rest. A **field** is a set of numbers closed under adding, subtracting, multiplying and dividing by anything but zero ([Fields](../../03-Algebra/09-Rings%20and%20Fields/02-fields.md)); $F$ is the field of numbers built so far, starting with the fractions.
 
 One construction step can only do this:
 
@@ -81,13 +64,13 @@ The full test, from Gauss and Wantzel: an n-gon can be built exactly when n is a
 
 ### Step 0: every step solves a quadratic at worst
 
-Put the page on a grid, known points at coordinates in $F$; lines and circles through them have equations with coefficients in $F$. Two lines cross where two linear equations agree, inside $F$. A line meets a circle where a quadratic is zero, and the quadratic formula ([quadratic-formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)) gives $p + q\sqrt{k}$. Subtracting two circles' equations cancels the squared terms and leaves a line, so two circles are the line-and-circle case again.
+Put the page on a grid, known points at coordinates in $F$; lines and circles through them have equations with coefficients in $F$. Two lines cross where two linear equations agree, inside $F$. A line meets a circle where a quadratic is zero, and the quadratic formula ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)) gives $p + q\sqrt{k}$. Subtracting two circles' equations cancels the squared terms and leaves a line, so two circles are the line-and-circle case again.
 
 ### Step 1: the tools reach every field operation and every square root
 
-Adding is laying lengths end to end. Multiplying uses parallel lines ([angles-and-parallel-lines](../01-Angles%2C%20Triangles%20and%20Congruence/01-angles-and-parallel-lines.md)): mark 1 and b on one arm of an angle and a on the other, join 1 to a, and the parallel through b meets the second arm at ab, by similar triangles ([similar-triangles-and-scale](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)).
+Adding is laying lengths end to end. Multiplying uses parallel lines ([Angles](../01-Angles%2C%20Triangles%20and%20Congruence/01-angles-and-parallel-lines.md)): mark 1 and b on one arm of an angle and a on the other, join 1 to a, and the parallel through b meets the second arm at ab, by similar triangles ([Similar triangles](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)).
 
-For a square root, lay 1 and 17 end to end, draw the half-circle on the whole 18, and raise a perpendicular at the join. Its top sees the diameter at a right angle ([angles-in-a-circle](../02-Circles%20and%20Solids/03-angles-in-a-circle.md)), so the two small triangles are similar and the height h has h × h = 1 × 17.
+For a square root, lay 1 and 17 end to end, draw the half-circle on the whole 18, and raise a perpendicular at the join. Its top sees the diameter at a right angle ([Angles at a circle](../02-Circles%20and%20Solids/03-angles-in-a-circle.md)), so the two small triangles are similar and the height h has h × h = 1 × 17.
 
 <p align="center"><img src="../figures/ruler-and-compass-constructions-2.svg" alt="Building the square root of 17: a half-circle on a base of 1 plus 17, and the perpendicular raised where the two pieces meet has height 4.123" width="420"></p>
 
@@ -102,7 +85,7 @@ Write c1 to c8 for the cosines of 1, 2, …, 8 times 360°/17. For any odd n, th
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-Let t = 360°/n. By 2 sin(t/2) cos(jt) = sin((j + 1/2)t) − sin((j − 1/2)t) ([trig-identities](../03-Trigonometry/03-trig-identities.md)), the sum over j = 1 to (n − 1)/2 collapses to sin(nt/2) − sin(t/2) = sin 180° − sin(t/2). Divide by 2 sin(t/2): −1/2.
+Let t = 360°/n. By 2 sin(t/2) cos(jt) = sin((j + 1/2)t) − sin((j − 1/2)t) ([Trig identities](../03-Trigonometry/03-trig-identities.md)), the sum over j = 1 to (n − 1)/2 collapses to sin(nt/2) − sin(t/2) = sin 180° − sin(t/2). Divide by 2 sin(t/2): −1/2.
 
 </details>
 
@@ -116,7 +99,7 @@ Halve again. A1 = 2(c1 + c4) and its partner 2(c2 + c8) add to A and multiply to
 
 8c^3 + 4c^2 − 4c − 1 = 0.
 
-If a fraction p/q in lowest terms were a root, multiplying through by q^3 shows p divides 1 and q divides 8 ([roots-and-the-factor-theorem](../../03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem.md)). The candidates ±1, ±1/2, ±1/4, ±1/8 all fail. And a cubic with fraction coefficients and no fraction root has no root that square roots reach.
+If a fraction p/q in lowest terms were a root, multiplying through by q^3 shows p divides 1 and q divides 8 ([Roots and factors](../../03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem.md)). The candidates ±1, ±1/2, ±1/4, ±1/8 all fail. And a cubic with fraction coefficients and no fraction root has no root that square roots reach.
 
 <details>
 <summary>Detailed proof: square roots never reach a root of such a cubic</summary>
@@ -133,7 +116,7 @@ Then $p - q\sqrt{k}$ gives X − Y√k = 0: a second root. A cubic's three roots
 - **Doubling the cube.** The side x of a cube of volume 2 solves x^3 − 2 = 0; ±1 and ±2 fail. The side, 1.259921, is out of reach.
 - **Squaring the circle.** A unit circle has area π, so the square needs side √π = 1.772454. Lindemann proved in 1882 that π solves no polynomial with fraction coefficients at all.
 
-Every built length solves such a polynomial, found by squaring away its roots one at a time, so √π cannot be built. The route by field degrees, which proves the full n-gon test, is constructibility-and-the-classical-problems.
+Every built length solves such a polynomial, found by squaring away its roots one at a time, so √π cannot be built. The route by field degrees, which proves the full n-gon test, is Straightedge and compass.
 
 ---
 
@@ -381,7 +364,7 @@ The outputs match line for line.
 ## Where you meet it in real life
 
 - **Drafting.** Hexagons, octagons and 12-gons are set out exactly with compass and straightedge; a seven-sided outline, such as the UK 50p coin's, needs computed coordinates.
-- **Tilings.** Which regular polygons tile a floor is on [symmetry-and-tilings](04-symmetry-and-tilings.md).
+- **Tilings.** Which regular polygons tile a floor is on [Symmetry](04-symmetry-and-tilings.md).
 - **Impossibility proofs.** Find what every allowed move preserves and show the target lacks it; the proof that no root formula solves every degree-5 equation works the same way.
 
 > **Say it back**
@@ -391,12 +374,12 @@ The outputs match line for line.
 
 ## What this builds on
 
-- [angles-and-parallel-lines](../01-Angles%2C%20Triangles%20and%20Congruence/01-angles-and-parallel-lines.md): the parallel lines that multiply and divide lengths.
-- [fields](../../03-Algebra/09-Rings%20and%20Fields/02-fields.md): the closed set of numbers each step extends.
+- [Angles](../01-Angles%2C%20Triangles%20and%20Congruence/01-angles-and-parallel-lines.md): the parallel lines that multiply and divide lengths.
+- [Fields](../../03-Algebra/09-Rings%20and%20Fields/02-fields.md): the closed set of numbers each step extends.
 
 ## Where this goes next
 
-- constructibility-and-the-classical-problems: field degrees, the full n-gon test, and π out of reach.
+- Straightedge and compass: field degrees, the full n-gon test, and π out of reach.
 
 The cubic argument settles 7 but not why Fermat primes always work; field degrees answer that next.
 

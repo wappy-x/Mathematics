@@ -1,28 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Partitions
-topic: Three questions
-item: The twelvefold way
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/02-strings-and-powers|strings-and-powers]]"
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/04-ordered-picks|ordered-picks]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/02-stars-and-bars|stars-and-bars]]"
-  - "[[Cards/04-Combinatorics and graphs/08-Partitions/04-stirling-numbers-second-kind|stirling-numbers-second-kind]]"
-  - "[[Cards/04-Combinatorics and graphs/08-Partitions/01-integer-partitions|integer-partitions]]"
-next: []
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - twelvefold-way
----
-
 # The twelvefold way: every 'put n things into k boxes' question in one table
 
-Combinatorics and graphs → Partitions → Three questions → The twelvefold way
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Partitions](../../../SYLLABUS.md#w04-s08) → The twelvefold way
 
 ---
 
@@ -59,9 +37,9 @@ The holding rule picks a column; the middle one is impossible here.
 
 ## The formula
 
-Write $n$ for the things and $k$ for the boxes: here n = 5, k = 3. Three shorthands come from earlier cards: $C(m, r)$, "m choose r", the ways of picking r things out of m with order ignored ([n-choose-k](../01-Counting%20Principles/05-n-choose-k.md)); $k!$, "k factorial", k × (k − 1) × … × 1 ([factorial](../01-Counting%20Principles/03-factorial.md)); and $S(n, k)$, the splits of n different things into k unnamed groups, none empty ([stirling-numbers-second-kind](04-stirling-numbers-second-kind.md)).
+Write $n$ for the things and $k$ for the boxes: here n = 5, k = 3. Three shorthands come from earlier cards: $C(m, r)$, "m choose r", the ways of picking r things out of m with order ignored ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)); $k!$, "k factorial", k × (k − 1) × … × 1 ([Factorials](../01-Counting%20Principles/03-factorial.md)); and $S(n, k)$, the splits of n different things into k unnamed groups, none empty ([Stirling numbers of the second kind](04-stirling-numbers-second-kind.md)).
 
-The fourth is new, in words first: $p_k(n)$ counts the ways of writing n as a sum of exactly k positive parts, order ignored, and $p_{\le k}(n)$ allows fewer, written $R_k(n)$ on the partitions card; 5 = 3 + 1 + 1 is one of the two counted by $p_3(5)$ ([integer-partitions](01-integer-partitions.md)).
+The fourth is new, in words first: $p_k(n)$ counts the ways of writing n as a sum of exactly k positive parts, order ignored, and $p_{\le k}(n)$ allows fewer, written $R_k(n)$ on the partitions card; 5 = 3 + 1 + 1 is one of the two counted by $p_3(5)$ ([Integer partitions](01-integer-partitions.md)).
 
 | Parcels, vans | Any number | At most one each | At least one each |
 | --- | --- | --- | --- |
@@ -100,9 +78,9 @@ $$k(k-1)(k-2)\cdots(k-n+1)$$
 
 ### Step 0: a loading is a note written on every parcel
 
-Number the parcels 1 to 5, the vans 1 to 3, and write each parcel's van number on it. A loading becomes a list of five numbers from 1 to 3, such as (2, 1, 1, 3, 2). Every loading writes one list and every list reads back as one, so counting loadings is counting lists: 3 × 3 × 3 × 3 × 3 = 243 ([strings-and-powers](../01-Counting%20Principles/02-strings-and-powers.md)).
+Number the parcels 1 to 5, the vans 1 to 3, and write each parcel's van number on it. A loading becomes a list of five numbers from 1 to 3, such as (2, 1, 1, 3, 2). Every loading writes one list and every list reads back as one, so counting loadings is counting lists: 3 × 3 × 3 × 3 × 3 = 243 ([Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md)).
 
-The holding rule is a condition on the list: no number repeats, or all three show up. That is the top row — 243 in all, 0 with no repeat, 150 using all three ([counting-surjections](../04-Inclusion-Exclusion%20and%20Pigeonhole/03-counting-surjections.md)).
+The holding rule is a condition on the list: no number repeats, or all three show up. That is the top row — 243 in all, 0 with no repeat, 150 using all three ([Onto functions](../04-Inclusion-Exclusion%20and%20Pigeonhole/03-counting-surjections.md)).
 
 ### Step 1: taking the names off the vans, and when dividing is allowed
 
@@ -123,7 +101,7 @@ A block is short only if some renaming leaves a loading unchanged, putting each 
 
 ### Step 2: taking the labels off the parcels, then off both
 
-Plates back on, and the parcels become identical sacks of gravel. A loading is three counts adding to five, such as (2, 0, 3). Five sacks and two dividers in a row of seven places give C(7, 2) = 21; with no van empty, dividers go in the four gaps between sacks, C(4, 2) = 6 ([stars-and-bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md)).
+Plates back on, and the parcels become identical sacks of gravel. A loading is three counts adding to five, such as (2, 0, 3). Five sacks and two dividers in a row of seven places give C(7, 2) = 21; with no van empty, dividers go in the four gaps between sacks, C(4, 2) = 6 ([Stars and bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md)).
 
 Strip the van names too and only the sizes survive, biggest first: 5, 4 + 1, 3 + 2, 3 + 1 + 1, 2 + 2 + 1 — five ways, two with exactly three parts. A list, a grouping, a list of sizes: each step drops what the question ignores.
 
@@ -131,7 +109,7 @@ Strip the van names too and only the sizes survive, biggest first: 5, 4 + 1, 3 +
 
 At most one parcel a van needs a van per parcel, so the column reads 0 here. Send two parcels and it wakes up: 6, 1, 3, 1.
 
-With both labels on, the first parcel picks one of three vans and the second one of the two left, 3 × 2 = 6 ([ordered-picks](../01-Counting%20Principles/04-ordered-picks.md)). Sacks into named vans: which two are used, C(3, 2) = 3. Unnamed vans give 1 either way, nothing telling two such loadings apart.
+With both labels on, the first parcel picks one of three vans and the second one of the two left, 3 × 2 = 6 ([Ordered picks](../01-Counting%20Principles/04-ordered-picks.md)). Sacks into named vans: which two are used, C(3, 2) = 3. Unnamed vans give 1 either way, nothing telling two such loadings apart.
 
 Two more routes cross-check the grid. A loading that leaves vans empty fills fewer, so each "any" cell is its row's "at least one" cell added over how many vans are used, times the choice of which when they are named: 243 = 3 + 90 + 150, 41 = 1 + 15 + 25, 21 = 3 + 12 + 6, 5 = 1 + 2 + 2. And the alike-van rows grow one thing at a time, by $S(n, k) = k\,S(n-1, k) + S(n-1, k-1)$ and $p_k(n) = p_{k-1}(n-1) + p_k(n-k)$, both run by the code.
 
@@ -391,19 +369,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [strings-and-powers](../01-Counting%20Principles/02-strings-and-powers.md): the 243 lists.
-- [ordered-picks](../01-Counting%20Principles/04-ordered-picks.md): counting down from k for n steps.
-- [stars-and-bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md): the identical-parcels row, 21 and 6.
-- [stirling-numbers-second-kind](04-stirling-numbers-second-kind.md): S(5, 3) = 25 and the groups rule.
-- [integer-partitions](01-integer-partitions.md): 5 written as a sum of sizes.
+- [Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md): the 243 lists.
+- [Ordered picks](../01-Counting%20Principles/04-ordered-picks.md): counting down from k for n steps.
+- [Stars and bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md): the identical-parcels row, 21 and 6.
+- [Stirling numbers of the second kind](04-stirling-numbers-second-kind.md): S(5, 3) = 25 and the groups rule.
+- [Integer partitions](01-integer-partitions.md): 5 written as a sum of sizes.
 
 ## Where this goes next
 
-This card closes the Partitions shelf, beside [set-partitions-and-bell-numbers](03-set-partitions-and-bell-numbers.md), [partitions-generating-function](02-partitions-generating-function.md) and [permutations-by-cycles](05-permutations-by-cycles.md).
+This card closes the Partitions shelf, beside [Set partitions and Bell numbers](03-set-partitions-and-bell-numbers.md), [Euler's product](02-partitions-generating-function.md) and [Counting shuffles by their loops](05-permutations-by-cycles.md).
 
-- [vertex-colouring-and-chromatic-number](../12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md): colouring a graph sorts its points into colour groups, and the label questions decide when two colourings are one answer.
+- [Colouring](../12-Planarity%20and%20Colouring/03-vertex-colouring-and-chromatic-number.md): colouring a graph sorts its points into colour groups, and the label questions decide when two colourings are one answer.
 
-Only three holding rules: a van that may take at most two parcels is none of the twelve, which is the job of the product built in [counting-with-generating-functions](../07-Generating%20Functions/02-counting-with-generating-functions.md).
+Only three holding rules: a van that may take at most two parcels is none of the twelve, which is the job of the product built in [Counting by multiplying series](../07-Generating%20Functions/02-counting-with-generating-functions.md).
 
 ---
 

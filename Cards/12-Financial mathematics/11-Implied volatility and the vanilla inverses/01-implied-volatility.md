@@ -1,33 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Implied volatility and the vanilla inverses
-topic: Reading a price as a volatility
-item: Implied volatility
-kind: definition
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/03-vega|vega]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/06-intermediate-value-theorem|intermediate-value-theorem]]"
-next:
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/02-implied-volatility-by-newton-and-bisection|implied-volatility-by-newton-and-bisection]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/03-strike-from-delta|strike-from-delta]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/05-implied-forward-and-dividend-from-parity|implied-forward-and-dividend-from-parity]]"
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/01-volatility-smile-and-skew|volatility-smile-and-skew]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/01-heston-model|heston-model]]"
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/07-barrier-inverses-level-and-volatility|barrier-inverses-level-and-volatility]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/07-fx-implied-volatility|fx-implied-volatility]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/03-commodity-implied-vol-and-the-call-skew|commodity-implied-vol-and-the-call-skew]]"
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/09-rate-option-inverses|rate-option-inverses]]"
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/05-cds-option-and-implied-spread-volatility|cds-option-and-implied-spread-volatility]]"
-tags: [mathematics, financial mathematics, implied-volatility]
----
-
 # Implied volatility: the one volatility that makes the formula match the quote
 
-Financial mathematics → Implied volatility and the vanilla inverses → Reading a price as a volatility → Implied volatility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Implied volatility and the vanilla inverses](../../../SYLLABUS.md#w12-s11) → Implied volatility
 
 ---
 
@@ -91,7 +64,7 @@ For a put, the right to sell at the strike, the range is $\max(B - A, 0) < P_{\t
 | $N(x)$, $\varphi(x)$ | bell-curve area left of $x$, and the bell curve's height at $x$ | $\varphi(0.25) = 0.386668$ | |
 | $\nu$ | vega: how many dollars the price gains per unit of $\sigma$ | 37.901158 | |
 
-The two helpers, as on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
+The two helpers, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
 
 $$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}.$$
 
@@ -116,7 +89,7 @@ Implied volatility is a definition, so it is never wrong; it is either available
 
 ### Step 0: a curve with no gaps that only climbs hits every level once
 
-Picture the price as a road that climbs as the volatility dial turns. If the road has no jumps (it is continuous) and never levels off or dips (it is strictly increasing), then every height between its lowest and highest points is reached, and reached at one place only. The first half is the [intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md). The second half is what "strictly increasing" means. So three facts settle the whole question: where the road starts, where it heads, and that it always climbs.
+Picture the price as a road that climbs as the volatility dial turns. If the road has no jumps (it is continuous) and never levels off or dips (it is strictly increasing), then every height between its lowest and highest points is reached, and reached at one place only. The first half is the [Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md). The second half is what "strictly increasing" means. So three facts settle the whole question: where the road starts, where it heads, and that it always climbs.
 
 ### Step 1: the floor, when nothing is random
 
@@ -180,7 +153,7 @@ The put's price has the same vega, so the same argument works on its range, $0$ 
 
 Outside the range, no volatility exists because no sane market trades there. A call at $2.80 is below the floor: buy it, sell short enough shares to owe exactly one at expiry, raising $98.02, and lend $95.12 for a year. Whatever Acme does, the position ends at zero or better, and it took in $0.096925 on day one. A call at $99 is above the ceiling: sell it and buy the prepaid share for $98.02; the share covers any exercise, and $0.980133 is kept. The boundaries of the formula are the boundaries of arbitrage, trades that make money with no risk.
 
-**The other door.** Halving is slow but cannot fail inside the range. Newton's method, which steps along the slope using vega, is far faster and can fail near the ends, where vega collapses. Both, and when to use which, are on [implied-volatility-by-newton-and-bisection](02-implied-volatility-by-newton-and-bisection.md).
+**The other door.** Halving is slow but cannot fail inside the range. Newton's method, which steps along the slope using vega, is far faster and can fail near the ends, where vega collapses. Both, and when to use which, are on [Solving for implied volatility](02-implied-volatility-by-newton-and-bisection.md).
 
 ---
 
@@ -614,9 +587,9 @@ The two outputs agree line for line. They build the bell-curve area differently,
 ## Where you meet it in real life
 
 - **Option screens.** Brokers and exchanges show an implied volatility next to each price. Traders compare options across strikes, expiries and even different shares in vol points, because dollars are not comparable across them.
-- **Currency desks.** FX options are traded as volatilities first and converted to money on the trade ticket: [fx-implied-volatility](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/07-fx-implied-volatility.md).
-- **The smile.** Read implied vol at every strike of one expiry. If the model were exact, all would equal one number. They do not, and the curve they trace is [volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md).
-- **The other inverses on this shelf.** Fix the volatility and solve for something else instead: the strike with a given delta, [strike-from-delta](03-strike-from-delta.md); the strike or spot that hits a target premium, [strike-or-spot-from-a-target-premium](04-strike-or-spot-from-a-target-premium.md); the forward and dividend from a call and put pair, [implied-forward-and-dividend-from-parity](05-implied-forward-and-dividend-from-parity.md).
+- **Currency desks.** FX options are traded as volatilities first and converted to money on the trade ticket: [Implied vol for a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/07-fx-implied-volatility.md).
+- **The smile.** Read implied vol at every strike of one expiry. If the model were exact, all would equal one number. They do not, and the curve they trace is [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md).
+- **The other inverses on this shelf.** Fix the volatility and solve for something else instead: the strike with a given delta, [Strike from delta](03-strike-from-delta.md); the strike or spot that hits a target premium, [Strike or spot from a target premium](04-strike-or-spot-from-a-target-premium.md); the forward and dividend from a call and put pair, [Implied forward and dividend from parity](05-implied-forward-and-dividend-from-parity.md).
 - **Historical volatility, the number it is compared with.** Take a year of daily closing prices, the natural log of each day's ratio to the day before, their standard deviation, and scale it by the square root of the number of trading days in a year. That is how much the share did swing. Implied volatility is what the options charge for it to swing. The gap between them is what volatility traders bet on.
 
 > **Say it back**
@@ -626,22 +599,22 @@ The two outputs agree line for line. They build the bell-curve area differently,
 
 ## What this builds on
 
-- [vega](../09-The%20Greeks%2C%20one%20each/03-vega.md): the slope of price against volatility, positive everywhere, which makes the answer unique.
-- [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the formula being run backwards, and the house example's $9.227006.
-- [intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): a continuous function takes every value between two it reaches, which makes the answer exist.
+- [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md): the slope of price against volatility, positive everywhere, which makes the answer unique.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the formula being run backwards, and the house example's $9.227006.
+- [Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): a continuous function takes every value between two it reaches, which makes the answer exist.
 
 ## Where this goes next
 
-- [implied-volatility-by-newton-and-bisection](02-implied-volatility-by-newton-and-bisection.md): finding the root fast and safely, including near the ends where vega vanishes.
-- [strike-from-delta](03-strike-from-delta.md): the same run-it-backwards move, solving for the strike.
-- [implied-forward-and-dividend-from-parity](05-implied-forward-and-dividend-from-parity.md): reading the inputs this card held fixed out of a call and put pair.
-- [volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): implied vol read across strikes, and why it is not flat.
-- [heston-model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): a model where volatility itself moves, built to reproduce the smile.
-- [barrier-inverses-level-and-volatility](../16-Barriers%2C%20touches%20and%20lookbacks/07-barrier-inverses-level-and-volatility.md): the inverse for barrier options, where the price need not climb with volatility and the answer can be two or none.
-- [fx-implied-volatility](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/07-fx-implied-volatility.md): the same inverse with a foreign rate in place of the dividend.
-- [commodity-implied-vol-and-the-call-skew](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md): implied vol on futures options, where the skew often leans the other way.
-- [rate-option-inverses](../29-Caps%2C%20Floors%20and%20Swaptions/09-rate-option-inverses.md): interest-rate options quoted as volatilities.
-- [cds-option-and-implied-spread-volatility](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/05-cds-option-and-implied-spread-volatility.md): the same idea applied to credit spreads.
+- [Solving for implied volatility](02-implied-volatility-by-newton-and-bisection.md): finding the root fast and safely, including near the ends where vega vanishes.
+- [Strike from delta](03-strike-from-delta.md): the same run-it-backwards move, solving for the strike.
+- [Implied forward and dividend from parity](05-implied-forward-and-dividend-from-parity.md): reading the inputs this card held fixed out of a call and put pair.
+- [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): implied vol read across strikes, and why it is not flat.
+- [The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): a model where volatility itself moves, built to reproduce the smile.
+- [Barrier inverses](../16-Barriers%2C%20touches%20and%20lookbacks/07-barrier-inverses-level-and-volatility.md): the inverse for barrier options, where the price need not climb with volatility and the answer can be two or none.
+- [Implied vol for a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/07-fx-implied-volatility.md): the same inverse with a foreign rate in place of the dividend.
+- [Implied vol on a futures option and the commodity smile](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md): implied vol on futures options, where the skew often leans the other way.
+- [Solving rate options backwards](../29-Caps%2C%20Floors%20and%20Swaptions/09-rate-option-inverses.md): interest-rate options quoted as volatilities.
+- [Options on a CDS](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/05-cds-option-and-implied-spread-volatility.md): the same idea applied to credit spreads.
 
 This card guarantees one answer for each quote and finds it by halving; how to find it in three steps instead of sixty, without falling off either end, is the next card's question.
 

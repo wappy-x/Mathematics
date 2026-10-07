@@ -1,29 +1,12 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Rate Equations
-topic: Changing the unknown
-item: Bernoulli and Riccati equations
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/05-integrating-factor|integrating-factor]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/07-logistic-growth|logistic-growth]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/08-the-hjb-equation-and-the-linear-quadratic-regulator|the-hjb-equation-and-the-linear-quadratic-regulator]]"
-tags: [mathematics, differential equations and dynamics, bernoulli-and-riccati-substitutions]
----
-
 # Bernoulli and Riccati equations: one substitution turns a nonlinear equation into a linear one
 
-Differential equations and dynamics → Rate Equations → Changing the unknown → Bernoulli and Riccati equations
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Rate Equations](../../../SYLLABUS.md#w08-s01) → Bernoulli and Riccati equations
 
 ---
 
 ## General Overview
 
-A rumour starts with 10 pupils in a school of 1000. Each pupil who knows it passes it on at 0.8 per day, but only to the fraction still in the dark: new knowers per day = 0.8 × P × (1 − P/1000), where P counts those who know. That is the logistic law of [logistic-growth](07-logistic-growth.md), which solved it by separating and partial fractions.
+A rumour starts with 10 pupils in a school of 1000. Each pupil who knows it passes it on at 0.8 per day, but only to the fraction still in the dark: new knowers per day = 0.8 × P × (1 − P/1000), where P counts those who know. That is the logistic law of [Logistic growth](07-logistic-growth.md), which solved it by separating and partial fractions.
 
 The law contains P^2, so it is **nonlinear**: the unknown appears squared. Track v = 1/P instead, and the new unknown obeys a linear law. Solve it, flip back, and the same answer arrives: 355 pupils know by day 5, half the school by day 5.74.
 
@@ -51,7 +34,7 @@ Orange: the Bernoulli answer, P = 1000/(1 + 99e^(−0.8t)). Teal: the same subst
 
 ## The formula
 
-Reminder: y' is the rate of y at time t. A **linear** equation, y' + p(t) y = q(t), is solved by the [integrating-factor](05-integrating-factor.md).
+Reminder: y' is the rate of y at time t. A **linear** equation, y' + p(t) y = q(t), is solved by the [The integrating factor](05-integrating-factor.md).
 
 A Bernoulli equation adds one power $n$ of the unknown on the right. The new unknown $v = y^{1-n}$ obeys a linear law:
 
@@ -92,7 +75,7 @@ The rumour, P' − 0.8P = −0.0008P^2, is Bernoulli with n = 2, so v = 1/P.
 
 ### Step 0: the power is the rate of something
 
-Divide by the troublesome y^n. The left then starts with y^(−n) y', which by the [chain-rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md) is the rate of y^(1−n) divided by 1 − n. The equation is already linear in y^(1−n); the substitution names it.
+Divide by the troublesome y^n. The left then starts with y^(−n) y', which by the [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md) is the rate of y^(1−n) divided by 1 − n. The equation is already linear in y^(1−n); the substitution names it.
 
 ### Step 1: the Bernoulli equation becomes linear
 
@@ -108,9 +91,9 @@ With 1 − n = −1, p = −0.8 and q = −0.0008, the linear law is v' + 0.8v =
 
 P = 1/(0.001 + 0.099 e^(−0.8t)) = 1000/(1 + 99 e^(−0.8t)),
 
-the answer [logistic-growth](07-logistic-growth.md) reached by separation.
+the answer [Logistic growth](07-logistic-growth.md) reached by separation.
 
-The gap 1/P − 1/1000 shrinks by the factor e^(−0.8t), as the coffee's gap above room temperature shrinks in [exponential-growth-decay-and-cooling](04-exponential-growth-decay-and-cooling.md). The rumour is a cooling law seen through a reciprocal.
+The gap 1/P − 1/1000 shrinks by the factor e^(−0.8t), as the coffee's gap above room temperature shrinks in [Growth, decay and cooling](04-exponential-growth-decay-and-cooling.md). The rumour is a cooling law seen through a reciprocal.
 
 ### Step 3: a Riccati equation is a Bernoulli equation one step removed
 
@@ -141,7 +124,7 @@ Riccati, with a, b, c continuous. For a solution y other than y1, u = y − y1 o
 
 </details>
 
-A second road needs no algebra: Euler's rule, new value = old value + step × rate ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)). The code takes it.
+A second road needs no algebra: Euler's rule, new value = old value + step × rate ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)). The code takes it.
 
 ---
 
@@ -367,7 +350,7 @@ The two outputs match line for line. Euler on P lands below the formula and Eule
 
 - **Spread with a ceiling.** Rumours, epidemics, a product's adopters: every logistic law is Bernoulli with n = 2.
 - **Falling with drag.** Skydivers and raindrops obey the square-drag Riccati law; terminal speed is its constant solution.
-- **Control and filtering.** Optimal steering at a quadratic cost and the Kalman filter's error both obey Riccati equations with a matrix unknown: [the-hjb-equation-and-the-linear-quadratic-regulator](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/08-the-hjb-equation-and-the-linear-quadratic-regulator.md).
+- **Control and filtering.** Optimal steering at a quadratic cost and the Kalman filter's error both obey Riccati equations with a matrix unknown: [The HJB equation](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/08-the-hjb-equation-and-the-linear-quadratic-regulator.md).
 
 > **Say it back**
 > A Bernoulli equation is linear except for one power y^n. The chain rule makes v = y^(1−n) obey a linear law, coefficients scaled by 1 − n. The rumour's 1/P settles to 1/1000 like cooling coffee, and flipping back gives the logistic curve. A Riccati equation adds a square; one known solution and y = y1 + 1/w make it linear.
@@ -376,12 +359,12 @@ The two outputs match line for line. Euler on P lands below the formula and Eule
 
 ## What this builds on
 
-- [integrating-factor](05-integrating-factor.md): solves every linear law the substitutions produce.
-- [logistic-growth](07-logistic-growth.md): the rumour, solved there by separation.
+- [The integrating factor](05-integrating-factor.md): solves every linear law the substitutions produce.
+- [Logistic growth](07-logistic-growth.md): the rumour, solved there by separation.
 
 ## Where this goes next
 
-- [the-hjb-equation-and-the-linear-quadratic-regulator](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/08-the-hjb-equation-and-the-linear-quadratic-regulator.md): a matrix Riccati equation, run backwards from a deadline, gives the best feedback for steering a system.
+- [The HJB equation](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/08-the-hjb-equation-and-the-linear-quadratic-regulator.md): a matrix Riccati equation, run backwards from a deadline, gives the best feedback for steering a system.
 
 ---
 

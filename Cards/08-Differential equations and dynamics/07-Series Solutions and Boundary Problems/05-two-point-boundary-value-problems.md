@@ -1,34 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Series Solutions and Boundary Problems
-topic: Conditions at both ends
-item: Boundary value problems
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/02-the-characteristic-equation|the-characteristic-equation]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/06-the-shooting-method|the-shooting-method]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/07-finite-differences-for-boundary-problems|finite-differences-for-boundary-problems]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/08-eigenvalues-and-eigenfunctions|eigenvalues-and-eigenfunctions]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/10-greens-function-for-a-boundary-problem|greens-function-for-a-boundary-problem]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/01-what-a-pde-says|what-a-pde-says]]"
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/01-functionals-and-the-euler-lagrange-equation|functionals-and-the-euler-lagrange-equation]]"
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/06-boundary-layers-and-singular-perturbation|boundary-layers-and-singular-perturbation]]"
-  - "[[Cards/13-Engineering mathematics/07-Mechanics and Structures/07-stress-strain-and-beam-bending|stress-strain-and-beam-bending]]"
-  - "[[Cards/13-Engineering mathematics/08-Fluids and Heat/02-viscosity-and-pipe-flow|viscosity-and-pipe-flow]]"
-  - "[[Cards/18-Functional analysis/02-Hilbert Spaces/07-lax-milgram-theorem|lax-milgram-theorem]]"
-  - "[[Cards/18-Functional analysis/04-Distributions and Sobolev Spaces/08-weak-solutions-of-differential-equations|weak-solutions-of-differential-equations]]"
-  - "[[Cards/19-Partial differential equations/01-Classification and Well-Posedness/03-boundary-conditions-dirichlet-neumann-and-robin|boundary-conditions-dirichlet-neumann-and-robin]]"
-  - "[[Cards/23-Differential geometry and Lie groups/05-Riemannian Geometry/09-jacobi-fields-and-comparison-theorems|jacobi-fields-and-comparison-theorems]]"
-tags: [mathematics, differential equations and dynamics, two-point-boundary-value-problems]
----
-
 # Boundary value problems: conditions at both ends instead of one start, so there may be one answer, none or infinitely many
 
-Differential equations and dynamics → Series Solutions and Boundary Problems → Conditions at both ends → Boundary value problems
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Series Solutions and Boundary Problems](../../../SYLLABUS.md#w08-s07) → Boundary value problems
 
 ---
 
@@ -92,7 +64,7 @@ $$D = \sin L.$$
 - **A linear equation:** y and its rates never squared or multiplied. The large-bend strut law is not, and past buckling it has three shapes: straight, bent left, bent right.
 - **Linear end conditions.** Squaring one on the 1 m strut, y(1)^2 = 1, gives exactly two answers.
 - **A genuine condition at each end:** α and β not both 0, or that end reads 0 = target and says nothing.
-- **A regular equation on a finite interval:** coefficients continuous, the one on y'' never 0; singular points are different ([frobenius-and-regular-singular-points](02-frobenius-and-regular-singular-points.md)).
+- **A regular equation on a finite interval:** coefficients continuous, the one on y'' never 0; singular points are different ([Frobenius](02-frobenius-and-regular-singular-points.md)).
 
 ---
 
@@ -104,7 +76,7 @@ The general solution has two free amounts. Linear end conditions make two linear
 
 ### Step 1: the strut's general solution
 
-The characteristic equation of y'' + y = 0 is r^2 + 1 = 0 ([the-characteristic-equation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md)), roots ±i, whose real solutions are cos x and sin x ([complex-roots-and-damped-oscillation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md)). A solution is fixed by its value and slope at 0, and A cos x + B sin x matches any pair, so every solution has this form.
+The characteristic equation of y'' + y = 0 is r^2 + 1 = 0 ([The characteristic equation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md)), roots ±i, whose real solutions are cos x and sin x ([Complex roots](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md)). A solution is fixed by its value and slope at 0, and A cos x + B sin x matches any pair, so every solution has this form.
 
 ### Step 2: the 1 m strut has one shape
 
@@ -133,7 +105,7 @@ If det M is not 0, c = M^(−1) d is the one answer. If det M = 0, the nonzero f
 
 Neumann ends on the π m strut, y'(0) = y'(π) = 0: the slope −A sin x + B cos x gives B = 0 and −B = 0, so A is free and every C cos x works. A Neumann top on the 1 m strut, y'(1) = 1, gives B cos 1 = 1, one answer B = 1.850816. A Robin top, y(1) + (1 m) y'(1) = 1 cm, gives B (sin 1 + cos 1) = 1, so B = 0.723708. The kind sets a row; the determinant decides.
 
-[the-shooting-method](06-the-shooting-method.md) and [finite-differences-for-boundary-problems](07-finite-differences-for-boundary-problems.md) reach the same answers numerically. Stretched onto [0, 1] as −y'' = lambda y, the π m strut is lambda = π^2 = 9.869604, the first special value of [eigenvalues-and-eigenfunctions](08-eigenvalues-and-eigenfunctions.md).
+[Shooting](06-the-shooting-method.md) and [Finite differences](07-finite-differences-for-boundary-problems.md) reach the same answers numerically. Stretched onto [0, 1] as −y'' = lambda y, the π m strut is lambda = π^2 = 9.869604, the first special value of [Eigenvalue problems](08-eigenvalues-and-eigenfunctions.md).
 
 ---
 
@@ -166,7 +138,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Two roads to every answer. Road one fits A and B with sin and cos. Road two never calls them: Runge-Kutta 4 ([runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md)), sampling the slope four times per step, carries v to the far end, and B is the target over what v gives there. Halving the step h cuts the error about 16 times: fourth order.
+Two roads to every answer. Road one fits A and B with sin and cos. Road two never calls them: Runge-Kutta 4 ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)), sampling the slope four times per step, carries v to the far end, and B is the target over what v gives there. Halving the step h cuts the error about 16 times: fourth order.
 
 ### Python
 
@@ -353,9 +325,9 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Buckling columns.** A pinned strut of length L buckles at π^2 times its stiffness over L^2, where the zero-end problem gains bent answers (stress-strain-and-beam-bending).
-- **Heat in a rod.** Set end temperature: Dirichlet. Insulated end: Neumann. End cooling into air: Robin (boundary-conditions-dirichlet-neumann-and-robin).
-- **Flow in a pipe.** Fluid at the wall does not slip, a Dirichlet condition of zero speed (viscosity-and-pipe-flow).
+- **Buckling columns.** A pinned strut of length L buckles at π^2 times its stiffness over L^2, where the zero-end problem gains bent answers (Stress, strain and bending).
+- **Heat in a rod.** Set end temperature: Dirichlet. Insulated end: Neumann. End cooling into air: Robin (Boundary conditions).
+- **Flow in a pipe.** Fluid at the wall does not slip, a Dirichlet condition of zero speed (Viscosity).
 
 > **Say it back**
 > A boundary value problem sets one condition at each end instead of two at the start. Linear conditions become two linear equations for the two free amounts. A nonzero determinant gives one answer; a zero one gives none or infinitely many. For y'' + y = 0 it is sin L: the 1 m strut has one shape, the π m strut a family or nothing. Dirichlet, Neumann and Robin name what an end fixes, not how many answers there are.
@@ -364,23 +336,23 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [the-characteristic-equation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md): the general solution with two free amounts, found from r^2 + 1 = 0.
+- [The characteristic equation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md): the general solution with two free amounts, found from r^2 + 1 = 0.
 
 ## Where this goes next
 
-- [the-shooting-method](06-the-shooting-method.md): aim the missing slope when no formula exists.
-- [finite-differences-for-boundary-problems](07-finite-differences-for-boundary-problems.md): grid values and one linear system.
-- [eigenvalues-and-eigenfunctions](08-eigenvalues-and-eigenfunctions.md): the special lengths where D = 0.
-- [greens-function-for-a-boundary-problem](10-greens-function-for-a-boundary-problem.md): the one answer as an integral.
-- [what-a-pde-says](../10-The%20Classical%20PDEs/01-what-a-pde-says.md): conditions on the edge of a region.
-- [functionals-and-the-euler-lagrange-equation](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/01-functionals-and-the-euler-lagrange-equation.md): best paths between two fixed ends.
-- [boundary-layers-and-singular-perturbation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/06-boundary-layers-and-singular-perturbation.md): a tiny coefficient on y'' makes a thin end layer.
-- stress-strain-and-beam-bending: the beam law behind the strut.
-- viscosity-and-pipe-flow: flow fixed at two walls.
-- lax-milgram-theorem: one answer from an energy argument.
-- weak-solutions-of-differential-equations: answers without a second derivative.
-- boundary-conditions-dirichlet-neumann-and-robin: the three types on a surface.
-- jacobi-fields-and-comparison-theorems: zero-end solutions on curved surfaces.
+- [Shooting](06-the-shooting-method.md): aim the missing slope when no formula exists.
+- [Finite differences](07-finite-differences-for-boundary-problems.md): grid values and one linear system.
+- [Eigenvalue problems](08-eigenvalues-and-eigenfunctions.md): the special lengths where D = 0.
+- [Green's function](10-greens-function-for-a-boundary-problem.md): the one answer as an integral.
+- [A partial differential equation](../10-The%20Classical%20PDEs/01-what-a-pde-says.md): conditions on the edge of a region.
+- [The Euler-Lagrange equation](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/01-functionals-and-the-euler-lagrange-equation.md): best paths between two fixed ends.
+- [Boundary layers](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/06-boundary-layers-and-singular-perturbation.md): a tiny coefficient on y'' makes a thin end layer.
+- Stress, strain and bending: the beam law behind the strut.
+- Viscosity: flow fixed at two walls.
+- Lax-Milgram: one answer from an energy argument.
+- Weak solutions: answers without a second derivative.
+- Boundary conditions: the three types on a surface.
+- Jacobi field: zero-end solutions on curved surfaces.
 
 ---
 

@@ -1,28 +1,12 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Transformations and Joint Laws
-topic: Slicing a joint law
-item: Conditional densities
-kind: definition
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/02-joint-densities-and-marginals|joint-densities-and-marginals]]"
-next:
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/05-bivariate-normal-and-conditioning|bivariate-normal-and-conditioning]]"
-tags: [mathematics, probability and statistics, conditional-densities]
----
-
 # Conditional densities: the slice of the surface at a known value
 
-Probability and statistics → Transformations and Joint Laws → Slicing a joint law → Conditional densities
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Transformations and Joint Laws](../../../SYLLABUS.md#w09-s05) → Conditional densities
 
 ---
 
 ## General Overview
 
-A clinic weighs and measures adults. Height averages 175 cm with a typical spread of 7 cm. Weight averages 78 kg with a spread of 12 kg. Taller people tend to be heavier, and the correlation (the strength of that straight-line tendency, from −1 to 1) is 0.5. The pair follows the tilted bell of [joint-densities-and-marginals](02-joint-densities-and-marginals.md): a surface over the height–weight plane whose volume above any region is the chance of landing there.
+A clinic weighs and measures adults. Height averages 175 cm with a typical spread of 7 cm. Weight averages 78 kg with a spread of 12 kg. Taller people tend to be heavier, and the correlation (the strength of that straight-line tendency, from −1 to 1) is 0.5. The pair follows the tilted bell of [Joint densities](02-joint-densities-and-marginals.md): a surface over the height–weight plane whose volume above any region is the chance of landing there.
 
 A new patient walks in, 180 cm tall. What weight should the clinic expect, and how likely is over 90 kg? Among all adults, over 90 kg is about 1 in 6. At 180 cm it is about 23 percent, nearly 1 in 4. The expected weight is 82.3 kg.
 
@@ -42,7 +26,7 @@ Drawn to scale from the `figure,` lines both checks print: 6 screen units per cm
 
 ## The formula
 
-Notation first, in words. As on [joint-densities-and-marginals](02-joint-densities-and-marginals.md), $f(h, w)$ is the joint density, chance per cm per kg near height $h$ and weight $w$, and $f_H(h)$ is the density of height alone, the area of the surface's cross-section at $h$. A vertical bar inside a density reads "given", as in $P(A \mid B)$: $f_{W\mid H}(w \mid h)$ is read "the density of weight at $w$, given height $h$".
+Notation first, in words. As on [Joint densities](02-joint-densities-and-marginals.md), $f(h, w)$ is the joint density, chance per cm per kg near height $h$ and weight $w$, and $f_H(h)$ is the density of height alone, the area of the surface's cross-section at $h$. A vertical bar inside a density reads "given", as in $P(A \mid B)$: $f_{W\mid H}(w \mid h)$ is read "the density of weight at $w$, given height $h$".
 
 $$f_{W\mid H}(w \mid h) \;=\; \frac{f(h,w)}{f_H(h)}, \qquad f_H(h) \;=\; \int_{-\infty}^{\infty} f(h,w)\,dw$$
 
@@ -94,7 +78,7 @@ In words: the surface is highest at the centre and falls away in tilted rings; t
 
 ### Step 0: the idea — condition on a thin band, then shrink it
 
-Height is continuous, so the chance that a patient is exactly 180.000… cm is zero. The rule $P(A \mid B) = P(A \text{ and } B)/P(B)$ from [conditional-probability](../01-Chance%20and%20Events/05-conditional-probability.md) divides by $P(B)$, and zero will not do. So take instead the band $B_\delta$: height between 180 and $180 + \delta$ cm. It has positive chance, so ordinary conditioning works. Then let the band shrink. Whatever the answer settles to is the conditional law at 180, and the formula is what it settles to.
+Height is continuous, so the chance that a patient is exactly 180.000… cm is zero. The rule $P(A \mid B) = P(A \text{ and } B)/P(B)$ from [Conditional probability](../01-Chance%20and%20Events/05-conditional-probability.md) divides by $P(B)$, and zero will not do. So take instead the band $B_\delta$: height between 180 and $180 + \delta$ cm. It has positive chance, so ordinary conditioning works. Then let the band shrink. Whatever the answer settles to is the conditional law at 180, and the formula is what it settles to.
 
 ### Step 1: the band's chance is the slice area times the width
 
@@ -119,7 +103,7 @@ The approximation becomes exact as $\delta$ shrinks to 0. So the slice divided b
 <details>
 <summary>Detailed proof</summary>
 
-Assume $f$ is continuous near the line $h = 180$, that $f_H(180) > 0$, and that near that line $f(t, w)$ stays below one integrable function of $w$ (true for the tilted bell). For a weight range $R$ put $g_R(t) = \int_R f(t, w)\,dw$, the area of the part of the slice at height $t$ that lies over $R$. The bound lets continuity pass through the integral, so $g_R$ is continuous at 180. For the tilted bell no bound is needed: by Step 3, $g_R(t)$ is the height bell at t times a difference of Φ values whose arguments move in step with t, so it is continuous on sight. For a general surface this step is the dominated convergence theorem, proved with measure in wing 10 on [dominated-convergence-theorem](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md).
+Assume $f$ is continuous near the line $h = 180$, that $f_H(180) > 0$, and that near that line $f(t, w)$ stays below one integrable function of $w$ (true for the tilted bell). For a weight range $R$ put $g_R(t) = \int_R f(t, w)\,dw$, the area of the part of the slice at height $t$ that lies over $R$. The bound lets continuity pass through the integral, so $g_R$ is continuous at 180. For the tilted bell no bound is needed: by Step 3, $g_R(t)$ is the height bell at t times a difference of Φ values whose arguments move in step with t, so it is continuous on sight. For a general surface this step is the dominated convergence theorem, proved with measure in wing 10 on [Dominated convergence](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md).
 
 The chance of weight in $R$ and height in $[180, 180+\delta]$ is a double integral, done height last:
 $$P(W \in R,\ 180 \le H \le 180+\delta) = \int_{180}^{180+\delta} g_R(t)\,dt.$$
@@ -146,7 +130,7 @@ So weight given height 180 cm is a bell centred at 82.3 kg with spread 10.39 kg:
 
 ### Step 4: the line of averages, and why it is shallower
 
-The same completed square works at any height: the slice at $z_h$ spreads is a bell centred at $\rho\, z_h$ spreads. In kilograms the conditional mean is $78 + (6/7)(h - 175)$. The checks confirm it by slicing at 161, 168, 175, 180, 182 and 189 cm. The general version, for any tilted bell and any number of variables, is on [bivariate-normal-and-conditioning](05-bivariate-normal-and-conditioning.md).
+The same completed square works at any height: the slice at $z_h$ spreads is a bell centred at $\rho\, z_h$ spreads. In kilograms the conditional mean is $78 + (6/7)(h - 175)$. The checks confirm it by slicing at 161, 168, 175, 180, 182 and 189 cm. The general version, for any tilted bell and any number of variables, is on [Bivariate normal](05-bivariate-normal-and-conditioning.md).
 
 Why only half as many spreads? Think of each adult's weight, in spreads, as two parts: a part that goes with height, half the height's spread count, and a part that goes with everything else (build, diet, muscle) and averages zero at every height. Fixing the height fixes the first part. The second part still averages zero. So the slice's mean sits half as far out as the height does. That is **regression toward the mean**: the best guess for one quantity sits closer to its average, counted in spreads, than the known quantity sits to its own.
 
@@ -158,7 +142,7 @@ Rearrange the definition: $f(h,w) = f_H(h)\, f_{W\mid H}(w \mid h)$. The joint d
 
 $$f_W(w) \;=\; \int f_{W\mid H}(w \mid h)\, f_H(h)\,dh$$
 
-Multiply by $w$ and integrate over weights as well. Swapping the order of the double integral gives the tower rule of [conditional-expectation-in-tables](../02-Random%20Variables/05-conditional-expectation-in-tables.md), with integrals in place of sums:
+Multiply by $w$ and integrate over weights as well. Swapping the order of the double integral gives the tower rule of [Conditional expectation](../02-Random%20Variables/05-conditional-expectation-in-tables.md), with integrals in place of sums:
 
 $$\int E[W \mid H = h]\, f_H(h)\,dh \;=\; \int\!\!\int w\, f(h,w)\,dw\,dh \;=\; E[W]$$
 
@@ -651,7 +635,7 @@ Orange: the rescaled slice at 180 cm, centred at 82.3 kg, taller and narrower. G
 - **Galton's heights.** Francis Galton found in 1886 that the children of tall parents were tall, but less so, and called it regression toward mediocrity. It is Step 4 on a table of families.
 - **Prediction from a measurement.** Any "expected value given what was measured" — a part's lifetime given a test reading, tomorrow's rainfall given today's pressure — is a conditional mean, and regression toward the mean follows whenever the correlation is below 1.
 - **Sports and exams.** The season's top scorer usually scores less the next season. Picking the extreme value picks some luck, and the luck averages out on the next slice.
-- **Noisy measurements.** A quantity read through noise is best estimated by the conditional mean given the reading; for the tilted bell that estimate is the reading shrunk toward the average along a straight line, set out in general on [bivariate-normal-and-conditioning](05-bivariate-normal-and-conditioning.md).
+- **Noisy measurements.** A quantity read through noise is best estimated by the conditional mean given the reading; for the tilted bell that estimate is the reading shrunk toward the average along a straight line, set out in general on [Bivariate normal](05-bivariate-normal-and-conditioning.md).
 
 > **Say it back**
 > A joint density is a surface over pairs of values. Knowing one value exactly means standing on one slice of it. The slice's shape says which values of the other quantity are common there, and dividing by its area makes it a density; that is the limit of ordinary conditioning on a thin band. For height and weight with correlation 0.5, the slice at 180 cm is a bell centred at 82.3 kg. Height 5/7 of a spread up gives weight only half as many spreads up: regression toward the mean.
@@ -660,13 +644,13 @@ Orange: the rescaled slice at 180 cm, centred at 82.3 kg, taller and narrower. G
 
 ## What this builds on
 
-- [joint-densities-and-marginals](02-joint-densities-and-marginals.md): the joint density as a surface, the tilted bell for height and weight, and the marginal as a cross-section's area.
+- [Joint densities](02-joint-densities-and-marginals.md): the joint density as a surface, the tilted bell for height and weight, and the marginal as a cross-section's area.
 
 ## Where this goes next
 
-- [bivariate-normal-and-conditioning](05-bivariate-normal-and-conditioning.md): every slice of every tilted bell is a bell, with its centre on a straight line and one spread for all slices, proved in general.
+- [Bivariate normal](05-bivariate-normal-and-conditioning.md): every slice of every tilted bell is a bell, with its centre on a straight line and one spread for all slices, proved in general.
 
-This card derived the line of averages for one tilted bell, correlation 0.5 with spreads 7 cm and 12 kg; why every tilted bell, whatever its centres, spreads and correlation, slices into bells whose centres lie on a straight line and share one spread is the question [bivariate-normal-and-conditioning](05-bivariate-normal-and-conditioning.md) answers.
+This card derived the line of averages for one tilted bell, correlation 0.5 with spreads 7 cm and 12 kg; why every tilted bell, whatever its centres, spreads and correlation, slices into bells whose centres lie on a straight line and share one spread is the question [Bivariate normal](05-bivariate-normal-and-conditioning.md) answers.
 
 ---
 

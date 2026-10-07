@@ -1,28 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Caps, Floors and Swaptions
-topic: Risk of a rates option
-item: Swaption Greeks
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/05-the-annuity-measure|the-annuity-measure]]"
-next:
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/09-rate-option-inverses|rate-option-inverses]]"
-tags: [mathematics, financial mathematics, swaption-greeks-and-hedging]
----
-
 # Swaption Greeks: delta in swaps, vega in the cube, and the annuity's own sensitivity
 
-Financial mathematics → Caps, Floors and Swaptions → Risk of a rates option → Swaption Greeks
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Caps, Floors and Swaptions](../../../SYLLABUS.md#w12-s29) → Swaption Greeks
 
 ---
 
 ## General Overview
 
-A pension fund has bought a one-year option from a bank. In one year the fund may enter a five-year swap on 10 million dollars in which it pays a fixed 4.35 percent a year and receives the floating rate. That contract is a **payer swaption**: the right, not the duty, to become the fixed payer ([swaptions-payer-and-receiver](04-swaptions-payer-and-receiver.md)). The rate a swap starting in one year would carry if agreed today, the **forward swap rate**, is 4.40 percent. At 30 percent volatility the bank charged 230,666.45 dollars, about 2.31 percent of the notional (the face amount the payments are computed on).
+A pension fund has bought a one-year option from a bank. In one year the fund may enter a five-year swap on 10 million dollars in which it pays a fixed 4.35 percent a year and receives the floating rate. That contract is a **payer swaption**: the right, not the duty, to become the fixed payer ([Swaptions](04-swaptions-payer-and-receiver.md)). The rate a swap starting in one year would carry if agreed today, the **forward swap rate**, is 4.40 percent. At 30 percent volatility the bank charged 230,666.45 dollars, about 2.31 percent of the notional (the face amount the payments are computed on).
 
 The bank now holds a short option and does not want a view on rates. Rates up means the fund's right is worth more, and the bank loses. So the bank takes the opposite exposure in the plain contract: it enters a forward swap in which it pays fixed 4.40 percent, starting in one year, on 5.54 million dollars. That is **0.55 of a forward swap per swaption**. After a small move in rates, either way, the swaption and the swap change by nearly the same amount.
 
@@ -52,7 +36,7 @@ Steep line: the swaption alone, which gains when rates rise and loses when they 
 
 ## The formula
 
-Notation first, in words. Black's formula for a swaption prices it as the **annuity**, the value today of 1 dollar of fixed rate paid on each of the swap's dates, times a call on the forward swap rate ([the-annuity-measure](05-the-annuity-measure.md)). A small number set low, as in $d_1$, is a label. A prime, as in A′, means the slope: how fast a quantity changes as the curve's rate moves.
+Notation first, in words. Black's formula for a swaption prices it as the **annuity**, the value today of 1 dollar of fixed rate paid on each of the swap's dates, times a call on the forward swap rate ([The annuity measure](05-the-annuity-measure.md)). A small number set low, as in $d_1$, is a label. A prime, as in A′, means the slope: how fast a quantity changes as the curve's rate moves.
 
 $$V = M\,A\,\big[F\,N(d_1) - K\,N(d_2)\big], \qquad d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \quad d_2 = d_1 - \sigma\sqrt{T}$$
 
@@ -91,7 +75,7 @@ The formula for $d_1$ in words: the log distance from strike to forward, plus ha
 
 - **The forward swap rate is lognormal with constant volatility.** If volatility moves, value changes by about vega times the move: 7,271.99 dollars per point here, unhedged by any swap.
 - **Rates move in parallel.** The 0.554091 is for the whole curve shifting together. A twist, in which one-year rates rise and six-year rates fall, moves the annuity and the forward by different amounts, and the ratio changes.
-- **The volatility does not move with the rate.** On a real smile it does, and the delta then picks up vega times the smile's slope ([sabr-for-rates-and-the-volatility-cube](07-sabr-for-rates-and-the-volatility-cube.md)).
+- **The volatility does not move with the rate.** On a real smile it does, and the delta then picks up vega times the smile's slope ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)).
 - **Hedging is continuous.** Rebalanced once a week, the hedge misses the payoff with a standard deviation of 25,906.98 dollars; the code measures it.
 - **One curve both forecasts and discounts.** With separate curves, forward and annuity respond to different moves, and each gets its own delta.
 
@@ -105,7 +89,7 @@ The formula for $d_1$ in words: the log distance from strike to forward, plus ha
 
 The swaption is $M\,A$ times a Black call on $F$. An at-market forward swap, paying fixed $F_0$ from year one, is worth $M\,A\,(F - F_0)$: the difference in rates, paid on each date, discounted, which is the annuity times the difference. Both carry the same factor $M\,A$.
 
-Divide both by $M\,A$. Counted in these units the swaption is a call on the forward rate, and the swap is just $F - F_0$: one unit per unit of rate. The annuity measure makes $F$ driftless in those units, so the whole of Black–Scholes hedging applies with zero interest rate ([the-annuity-measure](05-the-annuity-measure.md)). The hedge ratio in those units is the call's slope, $N(d_1)$ = 0.574599.
+Divide both by $M\,A$. Counted in these units the swaption is a call on the forward rate, and the swap is just $F - F_0$: one unit per unit of rate. The annuity measure makes $F$ driftless in those units, so the whole of Black–Scholes hedging applies with zero interest rate ([The annuity measure](05-the-annuity-measure.md)). The hedge ratio in those units is the call's slope, $N(d_1)$ = 0.574599.
 
 ### Step 1: the call's slope is N(d1)
 
@@ -144,7 +128,7 @@ $N(d_1)$ rises as $F$ rises. Its slope, $\varphi(d_1)/(F\sigma\sqrt{T})$, is 0.0
 
 Vega is $M A F \varphi(d_1)\sqrt{T}$: 7,271.99 dollars for one percentage point of volatility. No swap hedges it, because a swap has no volatility in it. Only another option does.
 
-Swaption volatilities are quoted on a grid with three sides: option expiry, the length of the swap underneath, and the strike. That grid is the **volatility cube** ([sabr-for-rates-and-the-volatility-cube](07-sabr-for-rates-and-the-volatility-cube.md)). This swaption's vega sits in one cell: 1-year expiry, 5-year swap, strike 4.35 percent. A 2-into-5 swaption hedges it only as far as those two cells move together. Desks report vega cell by cell for that reason.
+Swaption volatilities are quoted on a grid with three sides: option expiry, the length of the swap underneath, and the strike. That grid is the **volatility cube** ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)). This swaption's vega sits in one cell: 1-year expiry, 5-year swap, strike 4.35 percent. A 2-into-5 swaption hedges it only as far as those two cells move together. Desks report vega cell by cell for that reason.
 
 ### Step 5: theta is decay less carry, and it pays for gamma
 
@@ -159,7 +143,7 @@ Desks do both. The swaption's DV01, its value change per basis point, is 2,336.4
 
 </details>
 
-The other route runs through normal volatility: price with Bachelier's formula, where the rate moves by basis points rather than percentages, and delta becomes $N$ of a different $d$. The annuity correction is the same. That route is [normal-and-shifted-volatilities-for-rates](06-normal-and-shifted-volatilities-for-rates.md).
+The other route runs through normal volatility: price with Bachelier's formula, where the rate moves by basis points rather than percentages, and delta becomes $N$ of a different $d$. The annuity correction is the same. That route is [Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md).
 
 ---
 
@@ -701,8 +685,8 @@ The two outputs are identical. The simulated hedging errors average −286.84 do
 - **Swaption desks.** Every morning the book's delta is summed in swap DV01 by maturity, and hedged with swaps and futures. Each swaption contributes its dollar delta, annuity term included.
 - **Mortgage portfolios.** A home loan can be repaid early when rates fall, so a mortgage holder is short a receiver swaption. Mortgage investors buy swaptions and rebalance swap hedges daily, and in a sharp rally that rebalancing moves the swap market itself.
 - **Callable bonds.** An issuer who may repay a bond early owns a swaption. Its treasury hedges the bond with swaps and needs the swaption's delta to size them.
-- **Vega reports.** Risk systems report vega on the volatility cube, cell by cell, because a swaption's vega is hedged only by options in nearby cells ([sabr-for-rates-and-the-volatility-cube](07-sabr-for-rates-and-the-volatility-cube.md)).
-- **Caps.** A cap is a strip of caplets, each an option on one rate with its own discount factor. The same product rule applies to each caplet ([caplets-and-floorlets](01-caplets-and-floorlets.md), [caps-floors-and-parity](02-caps-floors-and-parity.md)).
+- **Vega reports.** Risk systems report vega on the volatility cube, cell by cell, because a swaption's vega is hedged only by options in nearby cells ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)).
+- **Caps.** A cap is a strip of caplets, each an option on one rate with its own discount factor. The same product rule applies to each caplet ([Caplets and floorlets](01-caplets-and-floorlets.md), [Caps and floors](02-caps-floors-and-parity.md)).
 
 > **Say it back**
 > A swaption is the notional times the annuity times a Black call on the forward swap rate. Counted in annuity units, its delta is N(d1) forward swaps. Counted in dollars, a rise in rates also shrinks the annuity, which the swaption's price carries and an at-market swap does not, so the hedge is N(d1) plus the annuity's percentage slope times the option's value per unit of annuity: 0.55 here, not 0.57. Gamma says how fast that ratio goes stale, vega is hedged only by other options in the same cell of the cube, and theta is the option's decay less the annuity's carry. Hedged often enough, the swap position costs exactly the premium.
@@ -711,11 +695,11 @@ The two outputs are identical. The simulated hedging errors average −286.84 do
 
 ## What this builds on
 
-- [the-annuity-measure](05-the-annuity-measure.md): why the forward swap rate has no drift when counted in annuity units, which makes the swaption a plain Black call there and its delta N(d1).
+- [The annuity measure](05-the-annuity-measure.md): why the forward swap rate has no drift when counted in annuity units, which makes the swaption a plain Black call there and its delta N(d1).
 
 ## Where this goes next
 
-- [rate-option-inverses](09-rate-option-inverses.md): running the formulas backwards, from a quoted price to the volatility and from a target delta to the strike, with existence and uniqueness first.
+- [Solving rate options backwards](09-rate-option-inverses.md): running the formulas backwards, from a quoted price to the volatility and from a target delta to the strike, with existence and uniqueness first.
 
 ---
 

@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Averages - commodity swaps and Asian options
-topic: Swapping an average for a fixed price
-item: Commodity swap
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/04-contango-backwardation-and-roll-yield|contango-backwardation-and-roll-yield]]"
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/04-fx-forward-value-after-inception|fx-forward-value-after-inception]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/04-forward-value-after-inception|forward-value-after-inception]]"
-  - "[[Cards/12-Financial mathematics/02-Curves/01-spot-forward-and-par-rates|spot-forward-and-par-rates]]"
-next: []
-tags: [mathematics, financial mathematics, commodity-swap-and-average-price-forward]
----
-
 # Commodity swap: a fixed price against the monthly average, priced as a strip of forwards with no option in it
 
-Financial mathematics → Averages - commodity swaps and Asian options → Swapping an average for a fixed price → Commodity swap
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages - commodity swaps and Asian options](../../../SYLLABUS.md#w12-s27) → Commodity swap
 
 ---
 
@@ -87,11 +69,11 @@ $$V = Q\sum_{i=1}^{n} D(t_i)\,\big(F'_i - K\big) = Q\,\big(K' - K\big)\,A.$$
 
 ### When it holds
 
-- **Rates known today.** The discount factors are fixed numbers. If rates move with the fuel price and the hedge is a daily-margined futures contract, a small convexity gap opens ([futures-margining-and-the-forward-futures-difference](../03-Contracts%20and%20No-Arbitrage/05-futures-margining-and-the-forward-futures-difference.md)); for a one-year fuel swap it is small.
+- **Rates known today.** The discount factors are fixed numbers. If rates move with the fuel price and the hedge is a daily-margined futures contract, a small convexity gap opens ([Futures](../03-Contracts%20and%20No-Arbitrage/05-futures-margining-and-the-forward-futures-difference.md)); for a one-year fuel swap it is small.
 - **The strip quotes the same index.** The formula prices the average the strip quotes. An airline that hedges jet fuel with heating oil prices carries **basis risk**, the gap between two related prices, and no formula on this card removes it.
 - **No default.** Each side is assumed to pay. The chance that one side fails is priced separately, as a charge on the value $V$.
 - **Dates fixed in advance.** Pricing days and payment dates are set by the contract and do not depend on the price.
-- **A straight-line payoff.** Add a cap, a floor or a right to extend, and volatility returns: that is the Asian option of [arithmetic-asian-option](03-arithmetic-asian-option.md).
+- **A straight-line payoff.** Add a cap, a floor or a right to extend, and volatility returns: that is the Asian option of [The Asian option desks trade](03-arithmetic-asian-option.md).
 
 Conventions on this card: each month settles on its last calendar day, with 22 pricing days a month. Real contracts often pay a few business days after the last pricing day, which moves each discount factor by a hair and does not change the method. Conventions verified 2026-09-28.
 
@@ -138,7 +120,7 @@ A second road gives the same number with no sum over gaps. Enter a new swap in t
 
 Part-way through month 1, $k$ of its $m$ prices are published. Those are banked: they are numbers, not prices to hedge. The month's expected average becomes $(k \times \text{banked average} + (m - k) \times F'_1)/m$, and only the $(m - k)/m$ share still moves with the market. Everything else is Step 4 with discount factors counted from the new date.
 
-The same weighted average appears on interest-rate curves: the fixed rate on a par swap is the discount-weighted average of the forward rates ([spot-forward-and-par-rates](../02-Curves/01-spot-forward-and-par-rates.md)). A commodity swap is that construction with fuel prices where the forward rates were.
+The same weighted average appears on interest-rate curves: the fixed rate on a par swap is the discount-weighted average of the forward rates ([Spot, forward and par rates](../02-Curves/01-spot-forward-and-par-rates.md)). A commodity swap is that construction with fuel prices where the forward rates were.
 
 ---
 
@@ -681,7 +663,7 @@ The two outputs match line for line. Bisection lands on the weighted strip to si
 - **Producers selling forward.** A mine or an oil producer takes the other side: it receives the fixed price and pays the average, which locks in revenue on steady output.
 - **Cleared average-price contracts.** Exchanges list monthly average-price contracts that are these single-month legs, margined daily; a strip of twelve is a cleared commodity swap.
 - **Daily risk reports.** Each open swap is revalued every evening as the discounted sum of its gaps against that day's strip: Step 4.
-- **Options on the average.** Put a floor under one month and the price needs volatility: [kemna-vorst-geometric-asian](02-kemna-vorst-geometric-asian.md) for the exact geometric case, [arithmetic-asian-option](03-arithmetic-asian-option.md) for the one desks trade.
+- **Options on the average.** Put a floor under one month and the price needs volatility: [Kemna-Vorst](02-kemna-vorst-geometric-asian.md) for the exact geometric case, [The Asian option desks trade](03-arithmetic-asian-option.md) for the one desks trade.
 
 > **Say it back**
 > A commodity swap exchanges a fixed price for each month's average price on a set number of barrels. Each month is an average-price forward, worth its discount factor times the gap between the strip price and the fixed price. The fair fixed price is the strip averaged with discount factors as weights: $101.98 on a strip from $100 to $104. After the strip moves, the swap is worth the discounted sum of the new gaps, which equals the change in fair fixed price times the annuity. The payoff is a straight line, so volatility never enters.
@@ -690,19 +672,19 @@ The two outputs match line for line. Bisection lands on the weighted strip to si
 
 ## What this builds on
 
-- [contango-backwardation-and-roll-yield](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/04-contango-backwardation-and-roll-yield.md): how to read a strip, and why a rising one pulls the fixed price below the plain average.
-- [fx-forward-value-after-inception](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/04-fx-forward-value-after-inception.md): the discounted-gap mark for a currency forward, with the discount factor taken in the currency the gap is paid in.
-- [forward-value-after-inception](../03-Contracts%20and%20No-Arbitrage/04-forward-value-after-inception.md): one forward's mark as the discounted gap; this card adds twelve of them.
-- [spot-forward-and-par-rates](../02-Curves/01-spot-forward-and-par-rates.md): discount factors, and the par rate as a discount-weighted average of forwards, the same construction as $K^\ast$.
+- [Contango and backwardation](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/04-contango-backwardation-and-roll-yield.md): how to read a strip, and why a rising one pulls the fixed price below the plain average.
+- [Valuing an old currency forward](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/04-fx-forward-value-after-inception.md): the discounted-gap mark for a currency forward, with the discount factor taken in the currency the gap is paid in.
+- [An old forward](../03-Contracts%20and%20No-Arbitrage/04-forward-value-after-inception.md): one forward's mark as the discounted gap; this card adds twelve of them.
+- [Spot, forward and par rates](../02-Curves/01-spot-forward-and-par-rates.md): discount factors, and the par rate as a discount-weighted average of forwards, the same construction as $K^\ast$.
 
 ## Where this goes next
 
-- [kemna-vorst-geometric-asian](02-kemna-vorst-geometric-asian.md): a call on the average, priced exactly when the average is geometric.
-- [arithmetic-asian-option](03-arithmetic-asian-option.md): the call on the arithmetic average this card's swap settles on, the $86,441.65 cap made precise.
-- [asian-greeks-and-the-running-average](04-asian-greeks-and-the-running-average.md): the banked fixings of Step 5, now inside an option, where they move the strike as well as the delta.
-- [asian-implied-volatility](05-asian-implied-volatility.md): reading the volatility back out of a quoted price for an option on the average.
+- [Kemna-Vorst](02-kemna-vorst-geometric-asian.md): a call on the average, priced exactly when the average is geometric.
+- [The Asian option desks trade](03-arithmetic-asian-option.md): the call on the arithmetic average this card's swap settles on, the $86,441.65 cap made precise.
+- [Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md): the banked fixings of Step 5, now inside an option, where they move the strike as well as the delta.
+- [Implied vol from an Asian quote](05-asian-implied-volatility.md): reading the volatility back out of a quoted price for an option on the average.
 
-The swap's price needed no volatility because its payoff is a straight line; bend that line with a floor or a cap and the question becomes what the bend is worth, which [kemna-vorst-geometric-asian](02-kemna-vorst-geometric-asian.md) answers exactly for a geometric average.
+The swap's price needed no volatility because its payoff is a straight line; bend that line with a floor or a cap and the question becomes what the bend is worth, which [Kemna-Vorst](02-kemna-vorst-geometric-asian.md) answers exactly for a geometric average.
 
 ---
 

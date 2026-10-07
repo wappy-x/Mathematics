@@ -1,21 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Hedging, Volatility Forecasts and Stress
-topic: Budgeting a book's risk
-item: Limits
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/40-Hedging, Volatility Forecasts and Stress/05-scenario-grids-and-stress-tests|scenario-grids-and-stress-tests]]"
-next: []
-tags: [mathematics, financial-mathematics, risk-limits-and-risk-appetite]
----
-
 # Limits: notional, sensitivity, VaR and drawdown limits, and the appetite statement behind them
 
-Financial mathematics → Hedging, Volatility Forecasts and Stress → Budgeting a book's risk → Limits
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Hedging, Volatility Forecasts and Stress](../../../SYLLABUS.md#w12-s40) → Limits
 
 ---
 
@@ -66,7 +51,7 @@ $$\mathbb{E}[\tau_L] = \left(\frac{L}{\sigma_d}\right)^2 \quad\text{days}, \qqua
 
 **Read it aloud:** a book with no edge reaches its stop, on average, after the square of the stop counted in daily standard deviations; to wait at least $m$ days, cap one-day VaR at $z$ times the stop divided by the square root of $m$.
 
-Here VaR, **value at risk**, is the one-day loss exceeded on one day in a hundred ([profit-and-loss-distribution-and-var](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md)). For a bell-shaped day it equals $z\,\sigma_d$. Conventions verified 2026-09-28: VaR at 99 percent over one trading day, 252 trading days a year.
+Here VaR, **value at risk**, is the one-day loss exceeded on one day in a hundred ([Value at risk](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md)). For a bell-shaped day it equals $z\,\sigma_d$. Conventions verified 2026-09-28: VaR at 99 percent over one trading day, 252 trading days a year.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -85,7 +70,7 @@ Here VaR, **value at risk**, is the one-day loss exceeded on one day in a hundre
 
 ### When it holds
 
-- **Every gauge scales with size.** Double every position and each reading doubles. True of notional, delta, vega, a fixed-scenario loss and VaR. If the new trade is a different product, the readings do not add, and the whole book must be re-measured: VaR of two books can exceed the sum of their VaRs ([expected-shortfall-and-coherence](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/05-expected-shortfall-and-coherence.md)).
+- **Every gauge scales with size.** Double every position and each reading doubles. True of notional, delta, vega, a fixed-scenario loss and VaR. If the new trade is a different product, the readings do not add, and the whole book must be re-measured: VaR of two books can exceed the sum of their VaRs ([Expected shortfall](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/05-expected-shortfall-and-coherence.md)).
 - **Readings at today's market.** Every $a_j$ is measured now. After a shock the per-unit readings change, and a book that fitted can breach with no trade at all (the shock day below).
 - **No edge, for the square law.** If the desk earns a steady positive return, the stop comes later than $(L/\sigma_d)^2$ days; if it bleeds, sooner. The formula is a yardstick for patience, not a forecast.
 - **A bell-shaped day, for the VaR cap.** VaR equals $z\,\sigma_d$ only when the day's result is close to bell-shaped. With fat tails, VaR$/z$ misstates $\sigma_d$, and one large day can cross the stop at once.
@@ -149,7 +134,7 @@ The firm chooses its patience: a book with no edge should take at least $m$ = 10
 
 The remaining caps are fractions of the stop, each with a stated reason.
 
-- **Stress:** the named disaster (Acme down 20 percent, volatility up 15 points, from [scenario-grids-and-stress-tests](05-scenario-grids-and-stress-tests.md)) may cost at most the whole stop: cap $1,500,000.
+- **Stress:** the named disaster (Acme down 20 percent, volatility up 15 points, from [Stress tests](05-scenario-grids-and-stress-tests.md)) may cost at most the whole stop: cap $1,500,000.
 - **Delta:** Acme's price alone, over the disaster's 20 percent fall, may spend at most half the stop, $750,000. That is $750,000 / 20 = $37,500 per 1 percent move.
 - **Vega:** volatility alone, over the disaster's 15 points, may spend at most half the stop: $750,000 / 15 = $50,000 per volatility point.
 - **Notional:** a cap on size that uses no model at all, so a broken pricing model cannot hide a huge book: 40 percent of capital, $20,000,000 of shares at market plus calls at strike.
@@ -703,9 +688,9 @@ The two outputs agree line for line: both programs use the same random-number ru
 
 - **Bank trading desks.** Every desk runs a limit sheet like the table above: gauge, cap, today's reading, owner. A breach goes to a named risk manager the same day, and the appetite statement says who may raise a cap.
 - **Hedge funds and managed accounts.** Investors often write a drawdown stop into the fund's terms. The fund then sizes positions so its daily risk leaves the stop far away, the square law in practice.
-- **Hedging after a shock.** The delta breach on the shock day is repaired with the tools of [delta-gamma-vega-hedging](02-delta-gamma-vega-hedging.md); the gauges themselves are summed across positions as in [portfolio-greeks-and-taylor-pnl](01-portfolio-greeks-and-taylor-pnl.md).
-- **VaR limits that move with the market.** The VaR gauge more than doubled after the shock because volatility rose. Which volatility forecast feeds it is the subject of [volatility-forecasting-ewma-garch-and-realised](04-volatility-forecasting-ewma-garch-and-realised.md).
-- **Imperfect hedges.** A delta cap met with futures on an index rather than Acme itself leaves basis risk that no Greek limit sees: [hedge-ratios-basis-risk-and-cross-hedging](03-hedge-ratios-basis-risk-and-cross-hedging.md).
+- **Hedging after a shock.** The delta breach on the shock day is repaired with the tools of [Hedging three Greeks at once](02-delta-gamma-vega-hedging.md); the gauges themselves are summed across positions as in [Portfolio Greeks](01-portfolio-greeks-and-taylor-pnl.md).
+- **VaR limits that move with the market.** The VaR gauge more than doubled after the shock because volatility rose. Which volatility forecast feeds it is the subject of [Tomorrow's volatility](04-volatility-forecasting-ewma-garch-and-realised.md).
+- **Imperfect hedges.** A delta cap met with futures on an index rather than Acme itself leaves basis risk that no Greek limit sees: [Imperfect hedges](03-hedge-ratios-basis-risk-and-cross-hedging.md).
 
 > **Say it back**
 > The firm writes one number first: the most a desk may lose from its high before it stops, here 3 percent of capital. Every limit is a fraction of that stop, each guarding a different way to lose it. Because every gauge grows in step with the book, the largest book is the smallest cap-over-usage ratio, and that gauge binds. A stop $n$ daily standard deviations away takes about $n^2$ days to reach by chance, which turns the stop into a cap on daily risk. Limits are read at today's market, so a shock can breach them with no trade, and a stress cap should shrink as the drawdown grows.
@@ -714,14 +699,14 @@ The two outputs agree line for line: both programs use the same random-number ru
 
 ## What this builds on
 
-- [scenario-grids-and-stress-tests](05-scenario-grids-and-stress-tests.md): the named disaster, 20 percent down and 15 volatility points up, and the habit of repricing a book fully in a scenario rather than trusting its Greeks.
+- [Stress tests](05-scenario-grids-and-stress-tests.md): the named disaster, 20 percent down and 15 volatility points up, and the habit of repricing a book fully in a scenario rather than trusting its Greeks.
 
 ## Where this goes next
 
-- [var-decomposition-euler-and-component-var](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/06-var-decomposition-euler-and-component-var.md): splitting one VaR cap among several desks, so that each desk's share adds up to the firm's.
-- [sharpe-information-and-drawdown](../38-Performance%20and%20Multi-Period/01-sharpe-information-and-drawdown.md): drawdown measured on a real track record, with error bars.
-- [kelly-criterion-and-growth](../36-Returns%20and%20Utility/05-kelly-criterion-and-growth.md): sizing a book to grow fastest, and why half that size is safer: sizing from the reward side rather than the loss side.
-- [frtb-and-the-shift-to-expected-shortfall](../48-Regulatory%20Capital%20in%20Outline/04-frtb-and-the-shift-to-expected-shortfall.md): the regulator's version of the VaR limit, and why it moved to the average loss beyond VaR.
+- [Whose risk is it](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/06-var-decomposition-euler-and-component-var.md): splitting one VaR cap among several desks, so that each desk's share adds up to the firm's.
+- [Performance measures](../38-Performance%20and%20Multi-Period/01-sharpe-information-and-drawdown.md): drawdown measured on a real track record, with error bars.
+- [Kelly](../36-Returns%20and%20Utility/05-kelly-criterion-and-growth.md): sizing a book to grow fastest, and why half that size is safer: sizing from the reward side rather than the loss side.
+- [Market-risk capital](../48-Regulatory%20Capital%20in%20Outline/04-frtb-and-the-shift-to-expected-shortfall.md): the regulator's version of the VaR limit, and why it moved to the average loss beyond VaR.
 
 ---
 

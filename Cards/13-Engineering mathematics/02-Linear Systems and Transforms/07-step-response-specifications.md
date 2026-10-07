@@ -1,22 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Linear Systems and Transforms
-topic: Reading a step test
-item: Step response specs
-kind: method
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/06-second-order-systems-damping-and-natural-frequency|second-order-systems-damping-and-natural-frequency]]"
-next:
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/07-pid-control-and-tuning|pid-control-and-tuning]]"
-tags: [mathematics, engineering mathematics, step-response-specifications]
----
-
 # Step response specs: rise time, overshoot, settling time and steady error
 
-Engineering mathematics → Linear Systems and Transforms → Reading a step test → Step response specs
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Linear Systems and Transforms](../../../SYLLABUS.md#w13-s02) → Step response specs
 
 ---
 
@@ -51,7 +35,7 @@ The rising line is the simulated door, sampled every 0.1 s. The two flat lines a
 
 ## The formula
 
-Two reminders. A **pole** is a value of the Laplace variable s at which the transfer function blows up; its real part sets how fast a term dies and its imaginary part how fast it rings ([poles-zeros-and-stability](03-poles-zeros-and-stability.md)). Engineers write j for the square root of −1; the rest of the library writes i. The damping ratio ζ and natural frequency ω_n are from [second-order-systems-damping-and-natural-frequency](06-second-order-systems-damping-and-natural-frequency.md).
+Two reminders. A **pole** is a value of the Laplace variable s at which the transfer function blows up; its real part sets how fast a term dies and its imaginary part how fast it rings ([Poles and zeros](03-poles-zeros-and-stability.md)). Engineers write j for the square root of −1; the rest of the library writes i. The damping ratio ζ and natural frequency ω_n are from [Damping ratio and natural frequency](06-second-order-systems-damping-and-natural-frequency.md).
 
 The door obeys Newton's second law. The drive pushes with K_p times the distance still to go, minus b times the speed (velocity feedback, which also lumps in rail friction); the spring pulls back with k_s times the position:
 
@@ -87,7 +71,7 @@ The function f(ζ) is the 10–90% rise time of a system with ω_n = 1 rad/s. It
 
 - **Two poles and no zeros.** The formulas for t_p and M_p are exact for this equation only. Give the drive's force a 0.1 s lag, which adds a third pole, and the trace overshoots by 9.20% while the formula, fed the same ζ and ω_n, still says 2.84%.
 - **A linear drive.** At the instant of the command the drive asks for K_p r = 432 N. A drive that can deliver only 100 N rises in 0.526 s, which fails the half-second spec the linear model said it met with 0.4575 s.
-- **A response that settles.** Final position and steady error exist only when both poles have negative real part; the final value comes from the transfer function at s = 0 ([final-value-theorem-and-steady-gain](05-final-value-theorem-and-steady-gain.md)).
+- **A response that settles.** Final position and steady error exist only when both poles have negative real part; the final value comes from the transfer function at s = 0 ([Final value and bandwidth](05-final-value-theorem-and-steady-gain.md)).
 - **Agreed conventions.** Rise is 10–90% and settling is 2% here. Some books use 0–100% rise and a 5% band; the numbers change and a spec must say which.
 
 ---
@@ -149,7 +133,7 @@ The spec "rise in 0.5 s" needs ω_n ≥ f(ζ)/0.5: at least 4.1928 rad/s at ζ =
 
 When the door has stopped, speed and acceleration are zero, so (K_p + k_s) x = K_p r and the door stops at 960/1000 × 450 = 432.00 mm. The spring takes a 40/1000 share of the push, which leaves 18.00 mm, 4.00% of travel.
 
-In general the final position is the transfer function at s = 0, which the poles do not fix: a zero or a scaled command changes it and leaves the poles alone. This door has a fixed mass and spring, and k = mω_n^2, so its error is e_ss = r k_s/(m ω_n^2). The 4.5 mm spec needs K_p/(K_p + k_s) ≥ 0.99, so K_p ≥ 3960 N/m, which is ω_n ≥ 10 rad/s: a circle of radius 10 rad/s about the origin. Door A, at 5 rad/s, is inside it. Raising K_p alone moves the poles off the ray: ζ falls to 0.375 and the door overshoots by 28.06%. Meeting both needs b raised as well, to 600 N s/m, and then the drive must push 1782 N at the instant of the command instead of 432 N. That cost is why controllers add integral action, which makes the final position equal the command wherever the poles sit ([pid-control-and-tuning](../03-Feedback%20Control/07-pid-control-and-tuning.md)).
+In general the final position is the transfer function at s = 0, which the poles do not fix: a zero or a scaled command changes it and leaves the poles alone. This door has a fixed mass and spring, and k = mω_n^2, so its error is e_ss = r k_s/(m ω_n^2). The 4.5 mm spec needs K_p/(K_p + k_s) ≥ 0.99, so K_p ≥ 3960 N/m, which is ω_n ≥ 10 rad/s: a circle of radius 10 rad/s about the origin. Door A, at 5 rad/s, is inside it. Raising K_p alone moves the poles off the ray: ζ falls to 0.375 and the door overshoots by 28.06%. Meeting both needs b raised as well, to 600 N s/m, and then the drive must push 1782 N at the instant of the command instead of 432 N. That cost is why controllers add integral action, which makes the final position equal the command wherever the poles sit ([PID control](../03-Feedback%20Control/07-pid-control-and-tuning.md)).
 
 ### Step 6: reading the trace backwards gives the poles
 
@@ -161,7 +145,7 @@ A step test on a real door has no formula attached. Steps 2 and 4 run in reverse
 
 The shaded region is where both poles must sit, drawn to scale at 25 pixels per 1/s on both axes, with the imaginary axis on the right. The two dashed rays leave the origin at 46.36° from the negative real axis: inside them the overshoot is under 5%. The inner curve is the rise edge, from 4.1928 rad/s on the rays to 6.7158 rad/s on the real axis. The dotted vertical line is the settling rule σ = 2.6667 1/s; it lies wholly inside the rise edge, so settling adds no constraint. The outer arc is the error edge, |p| = 10 rad/s, where |p| is a pole's distance from the origin; it lies beyond the rise edge, so it binds. Left of it the rays have run off the frame, so the whole shaded strip is inside them. Door A's poles (×) meet three lines but sit inside the error arc. The poles with b lowered to 200 N s/m (○, upper right) sit outside the rays: ζ = 0.5 overshoots by 16.30%.
 
-A second route to the same specs runs through the frequency response ([frequency-response-and-bode-plots](04-frequency-response-and-bode-plots.md)), whose gain curve is fixed by the same two numbers, ζ and ω_n. Its resonant peak depends on ζ alone, as the overshoot does, and exists only below ζ = 1/√2, so this door at ζ = 0.75 has none ([second-order-systems-damping-and-natural-frequency](06-second-order-systems-damping-and-natural-frequency.md)). Its bandwidth is a number set by ζ times ω_n, so bandwidth times rise time depends on ζ alone ([final-value-theorem-and-steady-gain](05-final-value-theorem-and-steady-gain.md)).
+A second route to the same specs runs through the frequency response ([Bode plots](04-frequency-response-and-bode-plots.md)), whose gain curve is fixed by the same two numbers, ζ and ω_n. Its resonant peak depends on ζ alone, as the overshoot does, and exists only below ζ = 1/√2, so this door at ζ = 0.75 has none ([Damping ratio and natural frequency](06-second-order-systems-damping-and-natural-frequency.md)). Its bandwidth is a number set by ζ times ω_n, so bandwidth times rise time depends on ζ alone ([Final value and bandwidth](05-final-value-theorem-and-steady-gain.md)).
 
 ---
 
@@ -198,7 +182,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The script builds the door from its mass, damping, spring and drive gain and reaches the four numbers by three roads. Road 1 is the closed form: ζ and ω_n from the coefficients, the peak and overshoot formulas, rise time by bisection on the formula, settling by stepping back from 4 s to the last exit and bisecting. Road 2 is a step test: an RK4 simulation ([runge-kutta-four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) with 1 ms steps, read off like a recorded trace with crossings found by straight-line interpolation. Road 3 recovers the poles from the measured overshoot and peak time and compares them with the roots of 40s^2 + 300s + 1000. Then it turns the spec into the pole region, prints the figure's coordinates, and runs each failure and each experiment below.
+The script builds the door from its mass, damping, spring and drive gain and reaches the four numbers by three roads. Road 1 is the closed form: ζ and ω_n from the coefficients, the peak and overshoot formulas, rise time by bisection on the formula, settling by stepping back from 4 s to the last exit and bisecting. Road 2 is a step test: an RK4 simulation ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) with 1 ms steps, read off like a recorded trace with crossings found by straight-line interpolation. Road 3 recovers the poles from the measured overshoot and peak time and compares them with the roots of 40s^2 + 300s + 1000. Then it turns the spec into the pole region, prints the figure's coordinates, and runs each failure and each experiment below.
 
 ### Python
 
@@ -618,10 +602,10 @@ The two outputs are identical line for line.
 
 ## Where you meet it in real life
 
-- **Lift and train doors.** Door controllers are tuned against opening time, overshoot into the end stop and final position; the steady-error line is why most drives add an integral term ([pid-control-and-tuning](../03-Feedback%20Control/07-pid-control-and-tuning.md)).
+- **Lift and train doors.** Door controllers are tuned against opening time, overshoot into the end stop and final position; the steady-error line is why most drives add an integral term ([PID control](../03-Feedback%20Control/07-pid-control-and-tuning.md)).
 - **Disk-drive heads and robot arms.** A head must move between tracks and settle inside a tight band before reading; settling time is the number on the data sheet.
-- **Cruise control and room heating.** The same four numbers describe a car reaching a new set speed or a room reaching a new set temperature; the steady part is the zero-frequency gain of [final-value-theorem-and-steady-gain](05-final-value-theorem-and-steady-gain.md).
-- **Digital controllers.** A design is placed in the s-plane region and then turned into code that runs every sample, which moves the poles and must be checked again ([zero-order-hold-and-tustin-discretisation](09-zero-order-hold-and-tustin-discretisation.md)).
+- **Cruise control and room heating.** The same four numbers describe a car reaching a new set speed or a room reaching a new set temperature; the steady part is the zero-frequency gain of [Final value and bandwidth](05-final-value-theorem-and-steady-gain.md).
+- **Digital controllers.** A design is placed in the s-plane region and then turned into code that runs every sample, which moves the poles and must be checked again ([Discretising a design](09-zero-order-hold-and-tustin-discretisation.md)).
 
 > **Say it back**
 > A step test gives four numbers: 10–90% rise time, overshoot past the final position, the last exit from a 2% band, and the gap between command and final position. For a two-pole system with no zeros, overshoot depends only on the poles' angle, settling on their distance from the imaginary axis and rise time on their distance from the origin. So a written spec becomes a region: inside two rays, beyond a curved rise edge, left of a settling line. The steady error is set by the zero-frequency gain; for this door, with mass and spring fixed, it adds a circle, |p| ≥ 10 rad/s. Extra poles, zeros and drive limits all move the numbers, so the final word is a step test.
@@ -630,11 +614,11 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [second-order-systems-damping-and-natural-frequency](06-second-order-systems-damping-and-natural-frequency.md): the two-pole equation, its step response, and ζ and ω_n as the two numbers that fix it.
+- [Damping ratio and natural frequency](06-second-order-systems-damping-and-natural-frequency.md): the two-pole equation, its step response, and ζ and ω_n as the two numbers that fix it.
 
 ## Where this goes next
 
-- [pid-control-and-tuning](../03-Feedback%20Control/07-pid-control-and-tuning.md): the gains K_p, K_i and K_d chosen to put the poles in a region like this one, with an integral term that removes the steady error.
+- [PID control](../03-Feedback%20Control/07-pid-control-and-tuning.md): the gains K_p, K_i and K_d chosen to put the poles in a region like this one, with an integral term that removes the steady error.
 
 The door here meets three lines of its spec and fails the fourth unless its poles move out to 10 rad/s, which costs 1782 N of drive force instead of 432 N; how an integral term closes that 18.00 mm gap without that cost is what pid-control-and-tuning answers.
 

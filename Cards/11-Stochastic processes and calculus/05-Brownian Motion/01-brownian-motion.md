@@ -1,36 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Brownian Motion
-topic: The walk seen from far away
-item: Brownian motion
-kind: definition
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/02-simple-random-walk|simple-random-walk]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/02-central-limit-theorem|central-limit-theorem]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/04-normal-distribution|normal-distribution]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/02-scaling-and-path-roughness|scaling-and-path-roughness]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/04-reflection-principle-and-running-maximum|reflection-principle-and-running-maximum]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/05-brownian-bridge|brownian-bridge]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/06-brownian-martingales-and-exponential-martingale|brownian-martingales-and-exponential-martingale]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/07-geometric-brownian-motion|geometric-brownian-motion]]"
-  - "[[Cards/11-Stochastic processes and calculus/09-Beyond Brownian/01-levy-processes|levy-processes]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/01-geometric-asian-kemna-vorst|geometric-asian-kemna-vorst]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/02-barrier-options-by-reflection|barrier-options-by-reflection]]"
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/02-kemna-vorst-geometric-asian|kemna-vorst-geometric-asian]]"
-  - "[[Cards/20-Harmonic analysis/03-Convolution and Approximate Identities/07-wiener-khinchin-and-the-power-spectrum|wiener-khinchin-and-the-power-spectrum]]"
-tags:
-  - mathematics
-  - stochastic processes and calculus
-  - brownian-motion
----
-
 # Brownian motion: the random walk with infinitely small steps
 
-Stochastic processes and calculus → Brownian Motion → The walk seen from far away → Brownian motion
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Brownian Motion](../../../SYLLABUS.md#w11-s05) → Brownian motion
 
 ---
 
@@ -67,7 +37,7 @@ Orange: the sampled run, which ends 2.73 μm to the left. Green: plus one spread
 
 ## The formula
 
-Notation first, in words. A process is written $(X_t)$, read "the value at time t" ([processes-and-paths](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md)). Brownian motion gets its own letter, $W_t$, after Norbert Wiener: the grain's position, in μm, t seconds after it was first seen. $N(0, v)$ is the normal law, the bell curve, with mean 0 and variance v ([normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). A **standard Brownian motion** is a process with four properties:
+Notation first, in words. A process is written $(X_t)$, read "the value at time t" ([Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md)). Brownian motion gets its own letter, $W_t$, after Norbert Wiener: the grain's position, in μm, t seconds after it was first seen. $N(0, v)$ is the normal law, the bell curve, with mean 0 and variance v ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). A **standard Brownian motion** is a process with four properties:
 
 $$W_0 = 0, \qquad W_t - W_s \sim N(0,\; t - s) \ \text{ for } s < t,$$
 
@@ -110,7 +80,7 @@ $$P(W_{10} > 5 \mid W_4 = 2) = P\big(N(0, 6) > 3\big) = 0.1103$$
 ### When it holds
 
 - **Independent increments.** The molecules must not remember. If each kick tends to repeat the last one, three times in four, the walk still converges to a bell curve, but with variance 30 at 10 seconds instead of 10 (29.96 at 100 steps a second), and the tail chance is 0.1807, not 0.0569.
-- **Many small kicks with finite variance.** The bell curve comes from the central limit theorem. Kicks with no finite variance, or rare large jumps, give other limits: [levy-processes](../09-Beyond%20Brownian/01-levy-processes.md).
+- **Many small kicks with finite variance.** The bell curve comes from the central limit theorem. Kicks with no finite variance, or rare large jumps, give other limits: [Levy processes](../09-Beyond%20Brownian/01-levy-processes.md).
 - **Steps of one over root n.** Any other scaling makes the limit freeze at zero or blow up; the code prints both.
 - **No drift and a fixed spread rate.** A current in the water adds a straight-line drift, and a different liquid changes $\sigma$; the position is then $\sigma W_t$ plus the drift, and the variance per second is $\sigma$ squared, not 1.
 
@@ -120,11 +90,11 @@ $$P(W_{10} > 5 \mid W_4 = 2) = P\big(N(0, 6) > 3\big) = 0.1103$$
 
 ### Step 0: the bell curve is forced, and so is the square root
 
-A displacement over 10 seconds is a sum of an enormous number of independent kicks. The central limit theorem says such a sum is close to a bell curve, whatever each kick looks like ([central-limit-theorem](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)). Variances of independent pieces add, so the variance grows in proportion to time. Those two facts fix the whole definition. The rest of this section builds the limit from a coin-tossing walk and checks each property.
+A displacement over 10 seconds is a sum of an enormous number of independent kicks. The central limit theorem says such a sum is close to a bell curve, whatever each kick looks like ([Central limit theorem](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)). Variances of independent pieces add, so the variance grows in proportion to time. Those two facts fix the whole definition. The rest of this section builds the limit from a coin-tossing walk and checks each property.
 
 ### Step 1: a walk with n steps a second, each of size one over root n
 
-Start from the simple random walk ([simple-random-walk](../01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md)): steps $\xi_i$ of +1 or −1, fair and independent. Take n steps every second and shrink each to one over root n micrometres. After t seconds the walk has taken nt steps, and its position is
+Start from the simple random walk ([Simple random walk](../01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md)): steps $\xi_i$ of +1 or −1, fair and independent. Take n steps every second and shrink each to one over root n micrometres. After t seconds the walk has taken nt steps, and its position is
 
 $$S^{(n)}_t = \frac{\xi_1 + \xi_2 + \cdots + \xi_{nt}}{\sqrt{n}}$$
 
@@ -198,7 +168,7 @@ Each bar is the exact walk's error with its sign dropped. Each is very nearly ha
 
 The fourth property, continuous paths, is not a statement about finitely many times, and no finite computation checks it. This card states it with sources. Norbert Wiener built a process with all four properties in 1923. A standard modern route (Durrett, section 7.1) first builds the bell curves at every time that is a fraction with a power of 2 below, then uses Kolmogorov's continuity theorem: because $E[(W_t - W_s)^4] = 3(t - s)^2$, the values at those fractions join up into a continuous path almost surely (with probability 1). Donsker's theorem (Durrett, section 8.1) then says the whole scaled walk, joined by straight lines, converges in distribution to Brownian motion as a random curve, not only at finitely many times. This card has proved the convergence at finitely many times and cites the rest.
 
-What the continuity buys and what it does not: the path never jumps, yet with probability 1 it has no slope anywhere. That roughness is [scaling-and-path-roughness](02-scaling-and-path-roughness.md), and the fact that its squared moves add up to elapsed time is [quadratic-variation](03-quadratic-variation.md).
+What the continuity buys and what it does not: the path never jumps, yet with probability 1 it has no slope anywhere. That roughness is [Brownian paths](02-scaling-and-path-roughness.md), and the fact that its squared moves add up to elapsed time is [Quadratic variation](03-quadratic-variation.md).
 
 A second road to the same object starts from the covariance: a process whose values at any finite set of times are jointly normal with mean 0 and covariance $\min(s, t)$, and whose paths are continuous, is a standard Brownian motion. Independent increments follow, because for jointly normal values zero covariance means independence.
 
@@ -670,16 +640,16 @@ The two outputs match line for line: the generator is integer arithmetic, and bo
 > - **Spread proportional to time.** Ten seconds at 1 μm per root second gives spread 3.16 μm, not 10 μm; the wrong spread gives a chance of 0.3085, more than five times too large.
 > - **Scaling the walk's steps with time.** Steps of one over n make the limit freeze: variance 0.1000 at 100 steps a second, and the chance of passing 5 μm is 0.0000.
 > - **Taking a simulated path for the path.** The chart shows one sample on a half-second grid. Between grid points the real path keeps moving, and a different seed gives a different run.
-> - **Continuous means smooth.** The path never jumps but has no slope at any point; ordinary calculus fails on it, and [scaling-and-path-roughness](02-scaling-and-path-roughness.md) shows how badly.
+> - **Continuous means smooth.** The path never jumps but has no slope at any point; ordinary calculus fails on it, and [Brownian paths](02-scaling-and-path-roughness.md) shows how badly.
 
 ---
 
 ## Where you meet it in real life
 
 - **Physics of small particles.** Albert Einstein's 1905 paper predicted that a suspended particle's variance grows in proportion to time, at a rate set by temperature, the liquid's thickness and the particle's size. Jean Perrin's measurements of that rate under a microscope (1908) counted molecules and settled that atoms are real.
-- **Share prices.** The logarithm of a price is modelled as Brownian motion with a drift. That model is [geometric-brownian-motion](07-geometric-brownian-motion.md), and options that knock out at a price level are priced by [barrier-options-by-reflection](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md).
-- **Noise in signals.** Thermal noise in a resistor and the drift of a gyroscope are modelled as the increments of Brownian motion; their power at each frequency is wiener-khinchin-and-the-power-spectrum.
-- **Statistics.** The gap between a sample's cumulative histogram and the true one, scaled by root of the sample size, behaves like a Brownian path pinned to zero at both ends: [brownian-bridge](05-brownian-bridge.md).
+- **Share prices.** The logarithm of a price is modelled as Brownian motion with a drift. That model is [Geometric Brownian motion](07-geometric-brownian-motion.md), and options that knock out at a price level are priced by [Knock-out and knock-in](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md).
+- **Noise in signals.** Thermal noise in a resistor and the drift of a gyroscope are modelled as the increments of Brownian motion; their power at each frequency is Wiener-Khinchin.
+- **Statistics.** The gap between a sample's cumulative histogram and the true one, scaled by root of the sample size, behaves like a Brownian path pinned to zero at both ends: [Brownian bridge](05-brownian-bridge.md).
 
 > **Say it back**
 > Brownian motion starts at zero, never jumps, and moves over separate stretches of time by independent bell curves whose variance is the time elapsed. A fair coin-tossing walk, with n steps a second each of size one over root n, converges to it by the central limit theorem; only the square root keeps the variance equal to time. The grain's position at 10 seconds is a bell curve with spread root 10, so the chance it is more than 5 μm right is 0.0569. Positions at different times share their past, with covariance the earlier time, but the future move forgets the past: given 2 μm at 4 seconds, the chance becomes 0.1103. The existence of continuous paths is a theorem of Wiener's, cited here.
@@ -688,26 +658,26 @@ The two outputs match line for line: the generator is integer arithmetic, and bo
 
 ## What this builds on
 
-- [simple-random-walk](../01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md): the fair ±1 walk, whose variance grows with the number of steps; this card shrinks and speeds it up.
-- [central-limit-theorem](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md): sums of many independent pieces are close to a bell curve, which is why the limit is normal.
-- [normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, its cumulative chance and how to standardise a level into spreads.
+- [Simple random walk](../01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md): the fair ±1 walk, whose variance grows with the number of steps; this card shrinks and speeds it up.
+- [Central limit theorem](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md): sums of many independent pieces are close to a bell curve, which is why the limit is normal.
+- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, its cumulative chance and how to standardise a level into spreads.
 
 ---
 
 ## Where this goes next
 
-- [scaling-and-path-roughness](02-scaling-and-path-roughness.md): speeding time up by c stretches space by root c, and the path has no slope anywhere.
-- [reflection-principle-and-running-maximum](04-reflection-principle-and-running-maximum.md): the chance the grain touches 5 μm at some time before 10 seconds, not only at the end.
-- [brownian-bridge](05-brownian-bridge.md): the path pinned at both ends.
-- [brownian-martingales-and-exponential-martingale](06-brownian-martingales-and-exponential-martingale.md): $W_t$, its square minus t, and an exponential of it are fair games.
-- [geometric-brownian-motion](07-geometric-brownian-motion.md): the exponential of a drifting Brownian motion, the standard model of a share price.
-- [levy-processes](../09-Beyond%20Brownian/01-levy-processes.md): independent increments without the bell curve, allowing jumps.
-- [geometric-asian-kemna-vorst](../../12-Financial%20mathematics/17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/01-geometric-asian-kemna-vorst.md): an average of Brownian positions is still normal, with variance from the min(s, t) covariance.
-- [barrier-options-by-reflection](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md): barrier prices from the reflected Brownian path.
-- [kemna-vorst-geometric-asian](../../12-Financial%20mathematics/27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/02-kemna-vorst-geometric-asian.md): the same covariance, applied to commodity averages.
-- wiener-khinchin-and-the-power-spectrum: how a random signal's correlations become its spectrum.
+- [Brownian paths](02-scaling-and-path-roughness.md): speeding time up by c stretches space by root c, and the path has no slope anywhere.
+- [Reflection principle](04-reflection-principle-and-running-maximum.md): the chance the grain touches 5 μm at some time before 10 seconds, not only at the end.
+- [Brownian bridge](05-brownian-bridge.md): the path pinned at both ends.
+- [Brownian martingales](06-brownian-martingales-and-exponential-martingale.md): $W_t$, its square minus t, and an exponential of it are fair games.
+- [Geometric Brownian motion](07-geometric-brownian-motion.md): the exponential of a drifting Brownian motion, the standard model of a share price.
+- [Levy processes](../09-Beyond%20Brownian/01-levy-processes.md): independent increments without the bell curve, allowing jumps.
+- [The geometric Asian call](../../12-Financial%20mathematics/17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/01-geometric-asian-kemna-vorst.md): an average of Brownian positions is still normal, with variance from the min(s, t) covariance.
+- [Knock-out and knock-in](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md): barrier prices from the reflected Brownian path.
+- [Kemna-Vorst](../../12-Financial%20mathematics/27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/02-kemna-vorst-geometric-asian.md): the same covariance, applied to commodity averages.
+- Wiener-Khinchin: how a random signal's correlations become its spectrum.
 
-The definition fixes the law at any finite set of times; what one path looks like when zoomed in, and why it has a slope nowhere, is what [scaling-and-path-roughness](02-scaling-and-path-roughness.md) answers.
+The definition fixes the law at any finite set of times; what one path looks like when zoomed in, and why it has a slope nowhere, is what [Brownian paths](02-scaling-and-path-roughness.md) answers.
 
 ---
 

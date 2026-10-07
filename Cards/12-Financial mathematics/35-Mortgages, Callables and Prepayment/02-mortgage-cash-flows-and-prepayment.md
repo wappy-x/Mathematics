@@ -1,26 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Mortgages, Callables and Prepayment
-topic: Prepayment speeds and the pool ledger
-item: Mortgage pools
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/35-Mortgages, Callables and Prepayment/01-callable-bonds-and-yield-to-worst|callable-bonds-and-yield-to-worst]]"
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/03-annuities-and-loans|annuities-and-loans]]"
-next:
-  - "[[Cards/12-Financial mathematics/35-Mortgages, Callables and Prepayment/03-negative-convexity|negative-convexity]]"
-tags:
-  - mathematics
-  - financial-mathematics
-  - mortgage-cash-flows-and-prepayment
----
-
 # Mortgage pools: scheduled amortisation plus prepayment, and the cash flows they produce
 
-Financial mathematics → Mortgages, Callables and Prepayment → Prepayment speeds and the pool ledger → Mortgage pools
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Mortgages, Callables and Prepayment](../../../SYLLABUS.md#w12-s35) → Mortgage pools
 
 ---
 
@@ -28,7 +8,7 @@ Financial mathematics → Mortgages, Callables and Prepayment → Prepayment spe
 
 A lender makes a few hundred home loans, all alike: 30 years, 6 percent a year, paid monthly. Together they are owed $1,000,000. The lender sells the right to every payment on them to an investor, who now holds a **mortgage pool**: a bundle of loans whose payments pass straight through to the holder.
 
-If every borrower paid exactly on schedule, the pool would pay $5,995.51 a month for 360 months, and the arithmetic would be the ordinary loan schedule of [annuities-and-loans](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md). They do not. People sell houses, refinance when rates fall, and pay off early. Each time, that loan's whole balance arrives at once and the loan leaves the pool. Early repayment of principal beyond the schedule is **prepayment**.
+If every borrower paid exactly on schedule, the pool would pay $5,995.51 a month for 360 months, and the arithmetic would be the ordinary loan schedule of [Annuities](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md). They do not. People sell houses, refinance when rates fall, and pay off early. Each time, that loan's whole balance arrives at once and the loan leaves the pool. Early repayment of principal beyond the schedule is **prepayment**.
 
 Nobody knows in advance who will prepay. The market handles this with a single speed: a yearly percentage of the pool that is assumed to pay off early. At a speed of 8 percent a year, the first month alone brings the investor $12,912.99, more than twice the scheduled payment. The pool that was scheduled to run 30 years hands back its principal, on average, after 8.96 years.
 
@@ -57,7 +37,7 @@ Top line: no prepayment, the plain loan schedule. Middle line: 8 percent a year 
 
 ## The formula
 
-Notation first, in words. Months are counted $m$ = 1, 2, … up to the term $N$ = 360. The monthly rate $i$ is the yearly note rate divided by 12. The **annuity factor** $a_n(i)$ is today's value of one dollar paid at the end of each of $n$ months, as on [annuities-and-loans](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md). The prepayment speed is quoted as a yearly percentage $c$, the **conditional prepayment rate** or **CPR**. It is used month by month as $s$, the **single monthly mortality** or **SMM**: the fraction of loans still in the pool that pay off early in a given month.
+Notation first, in words. Months are counted $m$ = 1, 2, … up to the term $N$ = 360. The monthly rate $i$ is the yearly note rate divided by 12. The **annuity factor** $a_n(i)$ is today's value of one dollar paid at the end of each of $n$ months, as on [Annuities](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md). The prepayment speed is quoted as a yearly percentage $c$, the **conditional prepayment rate** or **CPR**. It is used month by month as $s$, the **single monthly mortality** or **SMM**: the fraction of loans still in the pool that pay off early in a given month.
 
 $$B_m \;=\; L\,(1-s)^m\,\frac{a_{N-m}(i)}{a_N(i)}, \qquad s \;=\; 1-(1-c)^{1/12}$$
 
@@ -179,7 +159,7 @@ At $M$ = 6% it gives the house 8%. At 5% it gives 12%; at 7%, 4%. The floor stan
 
 When $M$ changes over time, so does the speed: $c_m$ in month $m$, with SMM $s_m = 1-(1-c_m)^{1/12}$. The ledger runs unchanged. In the closed form, $(1-s)^m$ becomes the product $(1-s_1)(1-s_2)\cdots(1-s_m)$, since survival still multiplies month by month. Take a market rate of 7% for ten years, then 4%. The speed is 4% for months 1 to 120 and 16% from month 121. After 10 years the pool still owes $556,370.01, far more than the $363,521.13 at a steady 8%. Then the refinancing wave arrives: after 20 years it owes $62,795.39, less than the $101,901.16 at 8%. Average life is 10.24 years. The code checks the ledger against the product form in every month.
 
-Another road to the same balances takes Step 0 literally: simulate thousands of individual loans, each prepaying whole or not, and count survivors. The code does this with 20,000 loans. Real prepayment models replace the rule above with borrower behaviour fitted to data or derived from optimal refinancing, and feed it with random rate paths; that is the method of [option-adjusted-spread](04-option-adjusted-spread.md).
+Another road to the same balances takes Step 0 literally: simulate thousands of individual loans, each prepaying whole or not, and count survivors. The code does this with 20,000 loans. Real prepayment models replace the rule above with borrower behaviour fitted to data or derived from optimal refinancing, and feed it with random rate paths; that is the method of [Option-adjusted spread](04-option-adjusted-spread.md).
 
 ---
 
@@ -666,8 +646,8 @@ The two outputs are identical line for line. The simulation matches exactly beca
 
 - **Agency pass-throughs.** Pools guaranteed by Fannie Mae, Freddie Mac and Ginnie Mae publish a factor every month: the fraction of the original balance still outstanding, which is this card's $B_m / L$. Traders read the speed off the change in factor.
 - **Quoting speeds.** Pools trade at an assumed CPR or a multiple of the standard ramp: "200 PSA" is twice its speed at every age. The dealer's yield and average life come from running this ledger at that speed.
-- **Refinancing waves.** When mortgage rates fall sharply, speeds on older pools jump and investors get principal back just when it can only be lent out again at lower rates. That is the reinvestment problem [callable-bonds-and-yield-to-worst](01-callable-bonds-and-yield-to-worst.md) met with one issuer; a pool has thousands of borrowers each holding the call.
-- **Slicing the flows.** Collateralised mortgage obligations split one pool's ledger into classes that take principal in turn, so some investors get short, stable flows and others take the long tail: [mortgage-backed-securities-in-outline](05-mortgage-backed-securities-in-outline.md).
+- **Refinancing waves.** When mortgage rates fall sharply, speeds on older pools jump and investors get principal back just when it can only be lent out again at lower rates. That is the reinvestment problem [Callable bonds](01-callable-bonds-and-yield-to-worst.md) met with one issuer; a pool has thousands of borrowers each holding the call.
+- **Slicing the flows.** Collateralised mortgage obligations split one pool's ledger into classes that take principal in turn, so some investors get short, stable flows and others take the long tail: [Mortgage-backed securities in outline](05-mortgage-backed-securities-in-outline.md).
 - **Banks and their deposits.** A bank holding mortgages funds them with deposits. How long the mortgage money stays out is this card's average life, and it is the first number in matching the two.
 
 > **Say it back**
@@ -677,14 +657,14 @@ The two outputs are identical line for line. The simulation matches exactly beca
 
 ## What this builds on
 
-- [callable-bonds-and-yield-to-worst](01-callable-bonds-and-yield-to-worst.md): a borrower who can repay early holds a call, and the lender is short it.
-- [annuities-and-loans](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md): the annuity factor, the level payment and the single-loan schedule this card multiplies by survival.
+- [Callable bonds](01-callable-bonds-and-yield-to-worst.md): a borrower who can repay early holds a call, and the lender is short it.
+- [Annuities](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md): the annuity factor, the level payment and the single-loan schedule this card multiplies by survival.
 
 ## Where this goes next
 
-- [negative-convexity](03-negative-convexity.md): how the pool's price curves when rates move and the speed moves with them.
+- [Negative convexity](03-negative-convexity.md): how the pool's price curves when rates move and the speed moves with them.
 
-The rate table above shows the pool gaining less when rates fall than it loses when they rise; how to measure that bend, and what it costs a holder, is the question [negative-convexity](03-negative-convexity.md) answers.
+The rate table above shows the pool gaining less when rates fall than it loses when they rise; how to measure that bend, and what it costs a holder, is the question [Negative convexity](03-negative-convexity.md) answers.
 
 ---
 

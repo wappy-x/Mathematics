@@ -1,26 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Transforms in Outline
-topic: Smearing and multiplying
-item: Convolution
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/03-fourier-transform|fourier-transform]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/01-double-integrals|double-integrals]]"
-next:
-  - "[[Cards/13-Engineering mathematics/05-Signals/02-discrete-fourier-transform-and-the-fft|discrete-fourier-transform-and-the-fft]]"
-  - "[[Cards/16-Numerical analysis/07-PDE Solvers/09-the-fast-fourier-transform|the-fast-fourier-transform]]"
-  - "[[Cards/18-Functional analysis/04-Distributions and Sobolev Spaces/05-tempered-distributions-and-the-fourier-transform|tempered-distributions-and-the-fourier-transform]]"
-  - "[[Cards/20-Harmonic analysis/03-Convolution and Approximate Identities/02-convolution-theorem-and-impulse-response|convolution-theorem-and-impulse-response]]"
-tags: [mathematics, complex analysis, convolution-theorem]
----
-
 # Convolution: smear one signal with another, and under the transform the smear becomes a multiplication
 
-Complex analysis → Transforms in Outline → Smearing and multiplying → Convolution
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Transforms in Outline](../../../SYLLABUS.md#w07-s08) → Convolution
 
 ---
 
@@ -32,7 +12,7 @@ Blur twice. A sharp point of light becomes, after one pass, a flat bar 1 mm wide
 
 Now take light and dark stripes 2 mm apart. One box blur leaves 0.636620 of their contrast. Two blurs leave 0.405285, which is 0.636620 squared. Each pass multiplies by the same factor.
 
-The smearing is called **convolution**, the word used from here on. The rule the stripes show is the **convolution theorem**: the Fourier transform (a signal's recipe of stripes, one strength per frequency, from [fourier-transform](03-fourier-transform.md)) of a convolution is the product of the two transforms.
+The smearing is called **convolution**, the word used from here on. The rule the stripes show is the **convolution theorem**: the Fourier transform (a signal's recipe of stripes, one strength per frequency, from [The Fourier transform](03-fourier-transform.md)) of a convolution is the product of the two transforms.
 
 **Convolving two signals slides one across the other and adds up the overlap; under the Fourier transform that sliding sum becomes plain multiplication, frequency by frequency.**
 
@@ -106,7 +86,7 @@ Blur the stripe with f, then with g. The first pass multiplies by f-hat(ω), the
 
 ### Step 2: the same fact, straight from the integrals
 
-The transform of f * g is a double integral ([double-integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md)) of f(s) g(t − s) e^(−iωt) over s and t. Swap the order, so s is outside, and put u = t − s. The turning arrow splits: e^(−iωt) = e^(−iωs) e^(−iωu). A shift by s is a turn by ωs. The double integral falls apart into the integral of f(s) e^(−iωs) ds times the integral of g(u) e^(−iωu) du: f-hat(ω) times g-hat(ω).
+The transform of f * g is a double integral ([Double integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md)) of f(s) g(t − s) e^(−iωt) over s and t. Swap the order, so s is outside, and put u = t − s. The turning arrow splits: e^(−iωt) = e^(−iωs) e^(−iωu). A shift by s is a turn by ωs. The double integral falls apart into the integral of f(s) e^(−iωs) ds times the integral of g(u) e^(−iωu) du: f-hat(ω) times g-hat(ω).
 
 <details>
 <summary>Detailed proof</summary>
@@ -121,7 +101,7 @@ Since |e^(−iωt)| = 1, the integrand f(s) g(t − s) e^(−iωt) has absolute 
 
 The one-sided box p on 0 to 1 mm, the shelf's one-second shutter pulse read in millimetres, is the centred box slid by 0.5 mm. The slide multiplies its transform by the turn e^(−iω/2), which is −i at ω = π: p-hat(π) = −0.636620i. Squared, −0.405285. The tent's centre now sits at 1 mm, half a cycle of the 2 mm stripes, so light and dark swap.
 
-For lists of numbers the same theorem holds with sums in place of integrals; see [discrete-fourier-transform](02-discrete-fourier-transform.md).
+For lists of numbers the same theorem holds with sums in place of integrals; see [The discrete Fourier transform](02-discrete-fourier-transform.md).
 
 ---
 
@@ -389,7 +369,7 @@ The two outputs match line for line.
 - **Photo editing.** A 3-pixel box blur applied twice has weights 1, 2, 3, 2, 1 over 9: the discrete tent. Undoing a blur divides by its transform, frequency by frequency, so stripes a blur sent to nearly zero cannot come back.
 - **Sums of two independent quantities.** Two dice make 2 to 12 in 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1 ways out of 36: six equal weights convolved with themselves. The spread of any sum of two independent amounts is the convolution of their spreads.
 - **Transform pricing.** An option's price is its payoff smeared against the spread of possible future prices. Carr and Madan multiply transforms instead and invert with the fast Fourier transform, pricing every strike in one pass.
-- **Engineering systems.** A circuit's output is its input convolved with its response to one sharp kick; under the Laplace transform ([laplace-transform](05-laplace-transform.md)) this becomes a product, which turns a differential equation into algebra.
+- **Engineering systems.** A circuit's output is its input convolved with its response to one sharp kick; under the Laplace transform ([The Laplace transform](05-laplace-transform.md)) this becomes a product, which turns a differential equation into algebra.
 
 > **Say it back**
 > Convolution smears one signal with another: flip the second, slide it to each point, add up the overlap. Two 1 mm box blurs make a tent. A stripe passes through any blur unchanged in shape, multiplied by the blur's transform at its frequency, so two blurs multiply their factors. Swapping the order of a double integral proves it, provided both signals have finite area.
@@ -398,15 +378,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [fourier-transform](03-fourier-transform.md): the transform, its convention, and the box's spectrum sin(ω/2)/(ω/2).
-- [double-integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md): when the order of a double integral may be swapped.
+- [The Fourier transform](03-fourier-transform.md): the transform, its convention, and the box's spectrum sin(ω/2)/(ω/2).
+- [Double integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md): when the order of a double integral may be swapped.
 
 ## Where this goes next
 
-- discrete-fourier-transform-and-the-fft: convolving long sampled signals by multiplying their discrete transforms.
-- the-fast-fourier-transform: the algorithm that makes the multiply-instead route fast.
-- tempered-distributions-and-the-fourier-transform: smearing signals that are not integrable, such as a constant or a single sharp spike.
-- convolution-theorem-and-impulse-response: every steady, linear system is a convolution with its response to one kick.
+- The DFT and the FFT: convolving long sampled signals by multiplying their discrete transforms.
+- The fast Fourier transform: the algorithm that makes the multiply-instead route fast.
+- Tempered distributions: smearing signals that are not integrable, such as a constant or a single sharp spike.
+- The convolution theorem: every steady, linear system is a convolution with its response to one kick.
 
 The theorem needed both signals to have finite area, and f = g = 1 broke it; what a transform and a smear mean for signals that never die away is the question tempered distributions answer.
 

@@ -1,30 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Divisibility and Primes
-topic: Primes
-item: Primes and composites
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/03-multiplying-and-dividing|multiplying-and-dividing]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/01-divides|divides]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/04-division-with-remainder|division-with-remainder]]"
-next:
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/06-sieve-of-eratosthenes|sieve-of-eratosthenes]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/07-prime-factorisation|prime-factorisation]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/06-euclids-lemma|euclids-lemma]]"
-  - "[[Cards/02-Number theory/06-Codes and Secrets/01-one-way-streets|one-way-streets]]"
-tags:
-  - mathematics
-  - number theory
-  - primes-and-composites
----
-
 # Primes and composites: the numbers that will not split into equal rows, and the ones that will
 
-Number theory → Divisibility and Primes → Primes → Primes and composites
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Divisibility and Primes](../../../SYLLABUS.md#w02-s01) → Primes and composites
 
 ---
 
@@ -63,9 +39,9 @@ The test, run on our two numbers:
 
 | Piece | Plain meaning | In our two numbers |
 | --- | --- | --- |
-| a divisor | goes in with nothing left over ([divides](01-divides.md)) | 1, 7, 13, 91 divide 91 |
+| a divisor | goes in with nothing left over ([Divides](01-divides.md)) | 1, 7, 13, 91 divide 91 |
 | a trial divisor | the next number you try | 2 to 9, for 97 |
-| the leftover | chairs still standing ([division-with-remainder](04-division-with-remainder.md)) | 6, from 97 in rows of 7 |
+| the leftover | chairs still standing ([Division with a remainder](04-division-with-remainder.md)) | 6, from 97 in rows of 7 |
 | prime | bigger than 1, no divisor but 1 and itself | 97 |
 | composite | bigger than 1, something else divides it | 91, because 7 does |
 
@@ -87,9 +63,9 @@ The short side cannot be big. If it were 10 or more, the long side would be too,
 
 ### Where 1 and 2 sit
 
-1 is neither: its only divisor is itself. It is left out on purpose — count 1 as prime and you could pad any number with extra 1s, so [prime-factorisation](07-prime-factorisation.md) would lose its single clean answer.
+1 is neither: its only divisor is itself. It is left out on purpose — count 1 as prime and you could pad any number with extra 1s, so [Prime factorisation](07-prime-factorisation.md) would lose its single clean answer.
 
-2 is prime, and the only even prime, since 2 divides every other even number ([even-and-odd](02-even-and-odd.md)). Odd is a different question: 91 is odd and composite.
+2 is prime, and the only even prime, since 2 divides every other even number ([Even and odd](02-even-and-odd.md)). Odd is a different question: 91 is odd and composite.
 
 ---
 
@@ -269,16 +245,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [multiplying-and-dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): rows times chairs per row, and the division that undoes it.
-- [divides](01-divides.md): "goes in with nothing left over", and divisors in pairs.
-- [division-with-remainder](04-division-with-remainder.md): the leftover, always smaller than the row.
+- [Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): rows times chairs per row, and the division that undoes it.
+- [Divides](01-divides.md): "goes in with nothing left over", and divisors in pairs.
+- [Division with a remainder](04-division-with-remainder.md): the leftover, always smaller than the row.
 
 ## Where this goes next
 
-- [sieve-of-eratosthenes](06-sieve-of-eratosthenes.md): the same test on a block of numbers at once, by crossing out multiples.
-- [prime-factorisation](07-prime-factorisation.md): what a composite is made of — 91 breaks into 7 and 13.
-- [euclids-lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): the fact that makes those pieces unique, proved properly.
-- [one-way-streets](../06-Codes%20and%20Secrets/01-one-way-streets.md): multiplying large primes is easy, undoing it is not.
+- [The sieve of Eratosthenes](06-sieve-of-eratosthenes.md): the same test on a block of numbers at once, by crossing out multiples.
+- [Prime factorisation](07-prime-factorisation.md): what a composite is made of — 91 breaks into 7 and 13.
+- [Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): the fact that makes those pieces unique, proved properly.
+- [One-way streets](../06-Codes%20and%20Secrets/01-one-way-streets.md): multiplying large primes is easy, undoing it is not.
 
 ---
 

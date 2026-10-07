@@ -1,28 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Divisibility and Primes
-topic: Divisibility
-item: Divides
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/03-multiplying-and-dividing|multiplying-and-dividing]]"
-next:
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/02-even-and-odd|even-and-odd]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/03-divisibility-rules|divisibility-rules]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/04-division-with-remainder|division-with-remainder]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/05-primes-and-composites|primes-and-composites]]"
-tags:
-  - mathematics
-  - number theory
-  - divides
----
-
 # Divides: when one number goes into another with nothing left over
 
-Number theory → Divisibility and Primes → Divisibility → Divides
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Divisibility and Primes](../../../SYLLABUS.md#w02-s01) → Divides
 
 ---
 
@@ -247,7 +225,7 @@ The two outputs match line for line: whole minutes, nothing to round.
 > [!TIP]
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the hour, so one will fire.
-> - **Make the hour 59 minutes.** The list collapses to 1 and 59; nothing in between works. That is [primes-and-composites](05-primes-and-composites.md).
+> - **Make the hour 59 minutes.** The list collapses to 1 and 59; nothing in between works. That is [Primes and composites](05-primes-and-composites.md).
 > - **Cut the second road short.** Testing 1 to 6 still gives 12, since 7 divides nothing here. Test 1 to 5 and the 6-and-10 pair goes missing: the second assert fires at 10.
 
 ---
@@ -259,7 +237,7 @@ The two outputs match line for line: whole minutes, nothing to round.
 >
 > - The bar in 4 | 60 is a yes-or-no, not a fraction line: read as a fraction it gives one fifteenth instead of True.
 > - Stopping the list where you stopped testing: 6 divisors written, six partners left out.
-> - Rounding a leftover away. 60 ÷ 8 is 7 lessons and 4 minutes over; the 4 is the answer: [division-with-remainder](04-division-with-remainder.md).
+> - Rounding a leftover away. 60 ÷ 8 is 7 lessons and 4 minutes over; the 4 is the answer: [Division with a remainder](04-division-with-remainder.md).
 
 ---
 
@@ -267,7 +245,7 @@ The two outputs match line for line: whole minutes, nothing to round.
 
 - **Splitting a bill or a shift.** Whether a total comes out even is this question: does the head count divide the total?
 - **The clock.** An hour is 60 minutes because 60 splits so many ways: halves, thirds, quarters, fifths, sixths and twelfths are all whole minutes — 30, 20, 15, 12, 10 and 5.
-- **Head-checks.** Whether 2 divides a number is [even-and-odd](02-even-and-odd.md); digit tricks for 3, 4, 5, 6, 8, 9 and 10 are [divisibility-rules](03-divisibility-rules.md).
+- **Head-checks.** Whether 2 divides a number is [Even and odd](02-even-and-odd.md); digit tricks for 3, 4, 5, 6, 8, 9 and 10 are [Divisibility rules](03-divisibility-rules.md).
 
 > **Say it back**
 > One number divides another when it goes in with nothing left over: 4 divides 60, because 60 = 4 × 15. Divisors come in pairs — 4 brings 15 with it — so test upwards and write both ends down, stopping once the ends cross. Sixty has twelve divisors: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60. 1 divides everything, every number divides 0, and "12 divides 60" is a yes-or-no, not a number.
@@ -276,14 +254,14 @@ The two outputs match line for line: whole minutes, nothing to round.
 
 ## What this builds on
 
-- [multiplying-and-dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): multiplying and dividing whole numbers, and what is left over when it does not come out even. This card is that leftover being zero.
+- [Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): multiplying and dividing whole numbers, and what is left over when it does not come out even. This card is that leftover being zero.
 
 ## Where this goes next
 
-- [even-and-odd](02-even-and-odd.md): whether 2 divides a number, and what that does to sums and products.
-- [divisibility-rules](03-divisibility-rules.md): reading the digits to tell whether 2, 3, 4, 5, 6, 8, 9 or 10 divides.
-- [division-with-remainder](04-division-with-remainder.md): the 4 stranded minutes, and why there is only one answer.
-- [primes-and-composites](05-primes-and-composites.md): numbers whose only divisors are 1 and themselves.
+- [Even and odd](02-even-and-odd.md): whether 2 divides a number, and what that does to sums and products.
+- [Divisibility rules](03-divisibility-rules.md): reading the digits to tell whether 2, 3, 4, 5, 6, 8, 9 or 10 divides.
+- [Division with a remainder](04-division-with-remainder.md): the 4 stranded minutes, and why there is only one answer.
+- [Primes and composites](05-primes-and-composites.md): numbers whose only divisors are 1 and themselves.
 
 ---
 

@@ -1,29 +1,12 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Transformations and Joint Laws
-topic: The law of a total
-item: Adding continuous variables
-kind: theorem
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/02-joint-densities-and-marginals|joint-densities-and-marginals]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/07-moment-generating-functions|moment-generating-functions]]"
-next:
-  - "[[Cards/20-Harmonic analysis/03-Convolution and Approximate Identities/08-convolution-of-densities|convolution-of-densities]]"
-tags: [mathematics, probability and statistics, sums-and-convolution]
----
-
 # Adding continuous variables: the convolution integral, and why normal plus normal is normal
 
-Probability and statistics → Transformations and Joint Laws → The law of a total → Adding continuous variables
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Transformations and Joint Laws](../../../SYLLABUS.md#w09-s05) → Adding continuous variables
 
 ---
 
 ## General Overview
 
-A commute has two legs. The bus to the station takes 20 minutes on a typical day, give or take 3. The train into the city takes 35, give or take 4. The two legs belong to different operators on different routes, so a slow bus says nothing about the train. Each leg's time, taken over many days, follows the normal law: the bell curve, fixed by its centre and its spread, the standard deviation ([normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md)).
+A commute has two legs. The bus to the station takes 20 minutes on a typical day, give or take 3. The train into the city takes 35, give or take 4. The two legs belong to different operators on different routes, so a slow bus says nothing about the train. Each leg's time, taken over many days, follows the normal law: the bell curve, fixed by its centre and its spread, the standard deviation ([Normal](../04-Continuous%20Distributions/04-normal-distribution.md)).
 
 The office expects arrival within 60 minutes of leaving home. How often does that happen? The total averages 20 + 35 = 55 minutes, so most days have slack. How many do depends on the total's width and shape, and neither is obvious. Adding the spreads, 3 + 4 = 7 minutes, is the natural guess. It is wrong.
 
@@ -54,7 +37,7 @@ First line (orange): the bus leg, centred on 20 minutes with spread 3. Second li
 
 ## The formula
 
-A reminder of the notation. $X$ and $Y$ are random variables, values written in lower case; a density $f(x)$ gives chance per unit, so area under it is chance ([densities-and-cdfs](../04-Continuous%20Distributions/01-densities-and-cdfs.md)). N(μ, σ^2) is the normal law with centre μ and variance σ^2, and $\Phi$ is the standard bell's area to the left of a point. New on this card: the name $h$ for the density of a sum.
+A reminder of the notation. $X$ and $Y$ are random variables, values written in lower case; a density $f(x)$ gives chance per unit, so area under it is chance ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)). N(μ, σ^2) is the normal law with centre μ and variance σ^2, and $\Phi$ is the standard bell's area to the left of a point. New on this card: the name $h$ for the density of a sum.
 
 $$h(s) \;=\; \int_{-\infty}^{\infty} f(x)\,g(s - x)\,dx \qquad \text{for independent } X, Y \text{ with densities } f, g,\ S = X + Y$$
 
@@ -85,8 +68,8 @@ Two helper formulas carry the numbers. The total's spread is $\sigma = \sqrt{\si
 
 ### When it holds
 
-- **Independence.** The formula multiplies the two densities at each split. If both legs slow down on rainy days, the product is the wrong weight. With legs jointly normal and correlated 0.5 (built as on [bivariate-normal-and-conditioning](05-bivariate-normal-and-conditioning.md)), the true on-time chance is 0.794460; the independent formula still says 0.841345.
-- **Densities for both.** Each quantity must spread its chance continuously. If one leg is a fixed 5-minute walk, it has no density: the total is the other leg's law shifted by 5. If one quantity is a count, the integral becomes a sum ([sums-of-discrete-variables](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md)).
+- **Independence.** The formula multiplies the two densities at each split. If both legs slow down on rainy days, the product is the wrong weight. With legs jointly normal and correlated 0.5 (built as on [Bivariate normal](05-bivariate-normal-and-conditioning.md)), the true on-time chance is 0.794460; the independent formula still says 0.841345.
+- **Densities for both.** Each quantity must spread its chance continuously. If one leg is a fixed 5-minute walk, it has no density: the total is the other leg's law shifted by 5. If one quantity is a count, the integral becomes a sum ([Adding counts](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md)).
 - **Normal in, for normal out.** Convolution works for any pair; closure is special. A bus leg plus a platform wait spread evenly from 0 to 10 minutes has a total that is not a bell, and treating it as one misjudges the late days.
 - **The normal law is a model of journey times.** It puts a sliver of chance on a negative time. For a 20-minute leg with spread 3, zero is more than six spreads below the centre, too rare to matter here; for a 4-minute leg with spread 3, it would matter.
 
@@ -96,11 +79,11 @@ Two helper formulas carry the numbers. The total's spread is $\sigma = \sqrt{\si
 
 ### Step 0: split the total by its first part
 
-A total of 60 minutes is the bus taking some time $x$ and the train taking the rest, $60 - x$. Different splits are different days: they never happen together. So their chances add. With independent legs, each split's chance is a product of two chances already known. That is the whole idea, and it is the same one behind adding counts ([sums-of-discrete-variables](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md)). The one change: time is continuous, so a single split has chance zero, densities replace chances, and an integral replaces the sum.
+A total of 60 minutes is the bus taking some time $x$ and the train taking the rest, $60 - x$. Different splits are different days: they never happen together. So their chances add. With independent legs, each split's chance is a product of two chances already known. That is the whole idea, and it is the same one behind adding counts ([Adding counts](../03-Discrete%20Distributions/06-sums-of-discrete-variables.md)). The one change: time is continuous, so a single split has chance zero, densities replace chances, and an integral replaces the sum.
 
 ### Step 1: the density of a sum
 
-Independence gives the pair of legs a joint density, the product $f(x)\,g(y)$: the chance per square minute that the bus takes about $x$ and the train about $y$ ([joint-densities-and-marginals](02-joint-densities-and-marginals.md)). The chance of arriving by $s$ is the volume under that product over the region where the two times add to $s$ or less:
+Independence gives the pair of legs a joint density, the product $f(x)\,g(y)$: the chance per square minute that the bus takes about $x$ and the train about $y$ ([Joint densities](02-joint-densities-and-marginals.md)). The chance of arriving by $s$ is the volume under that product over the region where the two times add to $s$ or less:
 
 $$P(S \le s) = \int_{-\infty}^{\infty} f(x) \left( \int_{-\infty}^{s - x} g(y)\,dy \right) dx.$$
 
@@ -146,7 +129,7 @@ The coefficient of $u^2$ is $\sigma^2/(\sigma_1^2\sigma_2^2)$, since $\sigma^2 =
 $$\frac{\sigma^2}{\sigma_1^2\sigma_2^2}\left(u - \frac{\sigma_1^2}{\sigma^2}d\right)^2 - \frac{\sigma_1^2 d^2}{\sigma^2\sigma_2^2} + \frac{d^2}{\sigma_2^2}.$$
 The last two terms combine: $\frac{d^2}{\sigma_2^2}\left(1 - \frac{\sigma_1^2}{\sigma^2}\right) = \frac{d^2}{\sigma_2^2}\cdot\frac{\sigma_2^2}{\sigma^2} = \frac{d^2}{\sigma^2}$. And $u - (\sigma_1^2/\sigma^2)d = x - m_s$. That is the identity in Step 3.
 
-Now integrate over $x$. The Gaussian integral gives $\int \exp(-c(x - m)^2/2)\,dx = \sqrt{2\pi/c}$ for any $c > 0$, wherever the bell is centred ([gaussian-integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)). Here $c = \sigma^2/(\sigma_1^2\sigma_2^2)$, so the integral is $\sqrt{2\pi}\,\sigma_1\sigma_2/\sigma$. Then
+Now integrate over $x$. The Gaussian integral gives $\int \exp(-c(x - m)^2/2)\,dx = \sqrt{2\pi/c}$ for any $c > 0$, wherever the bell is centred ([The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)). Here $c = \sigma^2/(\sigma_1^2\sigma_2^2)$, so the integral is $\sqrt{2\pi}\,\sigma_1\sigma_2/\sigma$. Then
 $$h(s) = \frac{1}{2\pi\sigma_1\sigma_2}\cdot\frac{\sqrt{2\pi}\,\sigma_1\sigma_2}{\sigma}\cdot e^{-(s - \mu)^2/(2\sigma^2)} = \frac{1}{\sigma\sqrt{2\pi}}\,e^{-(s - \mu)^2/(2\sigma^2)},$$
 the N(μ, σ^2) density, exactly. The proof identifies the whole density, not just its centre and spread; no limit theorem and no generating function was used. It needs both spreads above zero: a leg with spread 0 is a constant, which shifts the other law instead.
 
@@ -154,15 +137,15 @@ the N(μ, σ^2) density, exactly. The proof identifies the whole density, not ju
 
 ### Step 4: the second road, through moment generating functions
 
-The moment generating function of $X$ is $M_X(t) = E[e^{tX}]$, the long-run average of e raised to $t$ times the quantity ([moment-generating-functions](../02-Random%20Variables/07-moment-generating-functions.md)). For independent quantities, $M_S(t) = M_X(t)\,M_Y(t)$: convolution of densities becomes multiplication of generating functions. A normal law with centre μ and variance σ^2 has generating function $e^{\mu t + \sigma^2 t^2/2}$. Multiply two and the exponents add:
+The moment generating function of $X$ is $M_X(t) = E[e^{tX}]$, the long-run average of e raised to $t$ times the quantity ([Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md)). For independent quantities, $M_S(t) = M_X(t)\,M_Y(t)$: convolution of densities becomes multiplication of generating functions. A normal law with centre μ and variance σ^2 has generating function $e^{\mu t + \sigma^2 t^2/2}$. Multiply two and the exponents add:
 
 $$M_S(t) = e^{\mu_1 t + \sigma_1^2 t^2/2}\, e^{\mu_2 t + \sigma_2^2 t^2/2} = e^{(\mu_1 + \mu_2) t + (\sigma_1^2 + \sigma_2^2) t^2/2}.$$
 
-That is the generating function of N(μ1 + μ2, σ1^2 + σ2^2). A generating function that exists near $t$ = 0 fixes its law (stated on the moment-generating-functions card, proved in [characteristic-functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md)), so the sum is normal a second time. At $t$ = 0.1 the code finds 277.2723 three ways: the product of the two legs' integrals, the integral against the convolved density, and the formula.
+That is the generating function of N(μ1 + μ2, σ1^2 + σ2^2). A generating function that exists near $t$ = 0 fixes its law (stated on the moment-generating-functions card, proved in [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md)), so the sum is normal a second time. At $t$ = 0.1 the code finds 277.2723 three ways: the product of the two legs' integrals, the integral against the convolved density, and the formula.
 
 ### Step 5: what closure adds, and where it stops
 
-Variances of independent quantities always add, bell or not ([variance-and-standard-deviation](../02-Random%20Variables/03-variance-and-standard-deviation.md)). So the 25 was never in doubt. What the normal theorem adds is the shape: without it, a centre of 55 and a spread of 5 do not give a chance for 60 minutes.
+Variances of independent quantities always add, bell or not ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)). So the 25 was never in doubt. What the normal theorem adds is the shape: without it, a centre of 55 and a spread of 5 do not give a chance for 60 minutes.
 
 Replace the train with a platform wait, spread evenly from 0 to 10 minutes. The convolution still works. The wait's density is 1/10 on that stretch, so $h(s)$ is one tenth of the bus's chance of landing between $s - 10$ and $s$:
 
@@ -173,11 +156,11 @@ At 25 minutes this is 0.090442, where a bell with the same centre, 25, and sprea
 <details>
 <summary>Why the bell is the one shape with finite variance that survives adding</summary>
 
-Scale the total back to the width of one leg and the bell is unchanged: adding two independent bells and shrinking by the right factor returns the same bell. Adding many small independent pieces of any reasonable shape pushes the total toward that one fixed shape. That is the central limit theorem ([central-limit-theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)). This card's closure makes the bell a fixed point of adding-and-rescaling; that it is the only such law with finite variance is the central-limit-theorem card's work.
+Scale the total back to the width of one leg and the bell is unchanged: adding two independent bells and shrinking by the right factor returns the same bell. Adding many small independent pieces of any reasonable shape pushes the total toward that one fixed shape. That is the central limit theorem ([Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)). This card's closure makes the bell a fixed point of adding-and-rescaling; that it is the only such law with finite variance is the central-limit-theorem card's work.
 
 </details>
 
-A third road reaches the density: change variables from the pair of legs to the pair (bus time, total), whose stretching factor is 1, then integrate out the bus time ([change-of-variables-and-jacobians](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)). The same integral appears. The harmonic-analysis view, in which convolution becomes multiplication of Fourier transforms, is convolution-of-densities.
+A third road reaches the density: change variables from the pair of legs to the pair (bus time, total), whose stretching factor is 1, then integrate out the bus time ([Change of variables](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)). The same integral appears. The harmonic-analysis view, in which convolution becomes multiplication of Fourier transforms, is Densities add by convolution.
 
 ---
 
@@ -575,7 +558,7 @@ The two outputs match line for line.
 
 - **Project schedules.** Tasks done one after another add their durations. Planning methods add their variances, not their spreads, to put a chance on a delivery date.
 - **Measurement error.** A reading that passes through two independent instruments carries both errors. If each is a bell, so is the total error, with variances added.
-- **Waiting in a queue.** Time in a shop is a wait plus a service time. For exponential or gamma times at one common rate, the convolution stays in the gamma family ([gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)).
+- **Waiting in a queue.** Time in a shop is a wait plus a service time. For exponential or gamma times at one common rate, the convolution stays in the gamma family ([Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)).
 - **Blur and smoothing.** A camera's blur is the true image convolved with the spread of light from one point; two bell-shaped blurs in a row make one wider bell.
 
 > **Say it back**
@@ -585,16 +568,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [joint-densities-and-marginals](02-joint-densities-and-marginals.md): the joint density of two independent quantities is the product of their densities, the starting point of Step 1.
-- [moment-generating-functions](../02-Random%20Variables/07-moment-generating-functions.md): generating functions multiply for independent sums and fix a law, the second road in Step 4.
+- [Joint densities](02-joint-densities-and-marginals.md): the joint density of two independent quantities is the product of their densities, the starting point of Step 1.
+- [Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md): generating functions multiply for independent sums and fix a law, the second road in Step 4.
 
 ## Where this goes next
 
-- convolution-of-densities: convolution as an operation on functions, where Fourier transforms turn it into multiplication and smoothing into approximation.
-- [bivariate-normal-and-conditioning](05-bivariate-normal-and-conditioning.md): the legs taken together, correlated or not, and what one tells about the other.
-- [multivariate-normal](06-multivariate-normal.md): any number of bells, and every weighted total of them normal.
+- Densities add by convolution: convolution as an operation on functions, where Fourier transforms turn it into multiplication and smoothing into approximation.
+- [Bivariate normal](05-bivariate-normal-and-conditioning.md): the legs taken together, correlated or not, and what one tells about the other.
+- [Multivariate normal](06-multivariate-normal.md): any number of bells, and every weighted total of them normal.
 
-Given a one-hour trip, the bus most likely took 21.8 minutes. Why that is also the average bus time on such days is the subject of [bivariate-normal-and-conditioning](05-bivariate-normal-and-conditioning.md).
+Given a one-hour trip, the bus most likely took 21.8 minutes. Why that is also the average bus time on such days is the subject of [Bivariate normal](05-bivariate-normal-and-conditioning.md).
 
 ---
 

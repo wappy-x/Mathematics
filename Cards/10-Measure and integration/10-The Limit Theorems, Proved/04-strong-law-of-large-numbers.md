@@ -1,27 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: The Limit Theorems, Proved
-topic: Averages that settle for good
-item: The strong law of large numbers
-kind: theorem
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/03-weak-law-of-large-numbers|weak-law-of-large-numbers]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/01-borel-cantelli-lemmas|borel-cantelli-lemmas]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/02-kolmogorov-zero-one-law|kolmogorov-zero-one-law]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/01-law-of-large-numbers|law-of-large-numbers]]"
-next:
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/05-convergence-in-distribution|convergence-in-distribution]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/06-characteristic-functions|characteristic-functions]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/07-central-limit-theorem|central-limit-theorem]]"
-tags: [mathematics, measure and integration, strong-law-of-large-numbers]
----
-
 # The strong law of large numbers: the running average converges to the mean on almost every sequence of outcomes
 
-Measure and integration → The Limit Theorems, Proved → Averages that settle for good → The strong law of large numbers
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Limit Theorems, Proved](../../../SYLLABUS.md#w10-s10) → The strong law of large numbers
 
 ---
 
@@ -56,7 +35,7 @@ Orange: the running average of one run, seed 20260929, to two decimals. Green an
 
 ## The formula
 
-Notation first, in words. The space $\Omega$ is the set of all infinite sequences of die faces; one sequence is written $\omega$. The collection $\mathcal{F}$ is the sets of sequences we allow ourselves to measure, and $P$ gives each its probability; the integral against $P$ is the expectation, written $E$. The roll $X_i$ is the face shown at roll i, a measurable function of the sequence. The probability wing states the law of large numbers and checks it by simulation ([law-of-large-numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)); this card proves the strong law.
+Notation first, in words. The space $\Omega$ is the set of all infinite sequences of die faces; one sequence is written $\omega$. The collection $\mathcal{F}$ is the sets of sequences we allow ourselves to measure, and $P$ gives each its probability; the integral against $P$ is the expectation, written $E$. The roll $X_i$ is the face shown at roll i, a measurable function of the sequence. The probability wing states the law of large numbers and checks it by simulation ([Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)); this card proves the strong law.
 
 Write the sum after n rolls and the running average as
 
@@ -99,7 +78,7 @@ $$E\big[(S_n - n\mu)^4\big] = n\,m_4 + 3n(n-1)\,\sigma^4, \qquad P(A_n) \le \fra
 - **Independent rolls.** Copy the first roll into every later roll and the average is the first face forever: P(A_n) = 1 at every n.
 - **One law for every roll.** Without it the average can converge in probability and still fail almost surely: the jump sequence of Step 6.
 - **A finite fourth moment, for this proof.** A die has one. Without it, Kolmogorov's version and Etemadi's proof take over.
-- **A finite mean, for any strong law of this kind.** If $E|X_1| = \infty$ the average is unbounded a.s. The average of standard Cauchy draws has the same law as one draw, so it never settles ([characteristic-functions](06-characteristic-functions.md)).
+- **A finite mean, for any strong law of this kind.** If $E|X_1| = \infty$ the average is unbounded a.s. The average of standard Cauchy draws has the same law as one draw, so it never settles ([Characteristic functions](06-characteristic-functions.md)).
 
 ---
 
@@ -107,9 +86,9 @@ $$E\big[(S_n - n\mu)^4\big] = n\,m_4 + 3n(n-1)\,\sigma^4, \qquad P(A_n) \le \fra
 
 ### Step 0: turn "stays close" into "only finitely many bad rolls"
 
-The average converges to the mean exactly when, for every tolerance, only finitely many rolls are bad. The set of sequences with infinitely many bad rolls is the lim sup of the bad events, read "infinitely many of them happen". The first Borel-Cantelli lemma says that if the probabilities of the bad events have a finite sum, that set has probability zero ([borel-cantelli-lemmas](01-borel-cantelli-lemmas.md)). So the whole task is a bound on $P(A_n)$ that adds up.
+The average converges to the mean exactly when, for every tolerance, only finitely many rolls are bad. The set of sequences with infinitely many bad rolls is the lim sup of the bad events, read "infinitely many of them happen". The first Borel-Cantelli lemma says that if the probabilities of the bad events have a finite sum, that set has probability zero ([The Borel-Cantelli lemmas](01-borel-cantelli-lemmas.md)). So the whole task is a bound on $P(A_n)$ that adds up.
 
-Chebyshev's inequality, the weak law's tool ([weak-law-of-large-numbers](03-weak-law-of-large-numbers.md)), gives $\sigma^2/(n\varepsilon^2)$. That falls like 1/n, whose sum is infinite: for the die its bounds from roll 1,000 add to 671.75 by roll 10,000 and 2014.91 by roll 1,000,000. A higher power of the error falls faster.
+Chebyshev's inequality, the weak law's tool ([The weak law of large numbers](03-weak-law-of-large-numbers.md)), gives $\sigma^2/(n\varepsilon^2)$. That falls like 1/n, whose sum is infinite: for the die its bounds from roll 1,000 add to 671.75 by roll 10,000 and 2014.91 by roll 1,000,000. A higher power of the error falls faster.
 
 ### Step 1: the fourth power of the total error grows like n squared
 
@@ -179,7 +158,7 @@ The fourth moment is a convenience of the proof. Kolmogorov proved in 1933 that 
 
 ### Step 6: strong and weak, told apart by the modes
 
-The strong law is convergence almost surely; the weak law is convergence in probability ([modes-of-convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)). On a probability space the first forces the second, so the strong law contains the weak one. In probability asks that $P(A_n)$ shrink. Almost surely asks that $P(\bigcup_{m \ge n} A_m)$, a bad roll at any later time, shrink.
+The strong law is convergence almost surely; the weak law is convergence in probability ([Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)). On a probability space the first forces the second, so the strong law contains the weak one. In probability asks that $P(A_n)$ shrink. Almost surely asks that $P(\bigcup_{m \ge n} A_m)$, a bad roll at any later time, shrink.
 
 The code counts both on 200 simulated runs of 10,000 rolls. At roll 1,000, 13 runs are outside the band, near the exact 0.0627 × 200; 27 are outside at roll 1,000 or some later roll.
 
@@ -199,7 +178,7 @@ Orange: runs outside the band at roll n, the weak law's count. Green: runs outsi
 
 It does not tend to 0 almost surely. The chances $P(|Z_k| = k) = 1/(k \ln k)$ add to 2.6991 by k = 1,000,000 and grow without bound, like ln ln n. The $Z_k$ are independent, so the second Borel-Cantelli lemma says $|Z_k| = k$ for infinitely many k, a.s. But $Z_k/k = \bar Z_k - \frac{k-1}{k}\bar Z_{k-1}$, so a limit L of the averages would force $Z_k/k \to L - L = 0$. The averages have no finite limit, a.s. Kolmogorov's theorem is not contradicted: the $Z_n$ do not share one law.
 
-**Why probability one and not another number.** Changing finitely many rolls moves $S_n$ by a fixed amount, which division by n removes. So whether $\bar X_n$ converges depends on no finite set of rolls: it is a tail event, of probability 0 or 1 by Kolmogorov's zero-one law ([kolmogorov-zero-one-law](02-kolmogorov-zero-one-law.md)). For the $Z_n$ it is 0; for the die, 1.
+**Why probability one and not another number.** Changing finitely many rolls moves $S_n$ by a fixed amount, which division by n removes. So whether $\bar X_n$ converges depends on no finite set of rolls: it is a tail event, of probability 0 or 1 by Kolmogorov's zero-one law ([Kolmogorov's zero-one law](02-kolmogorov-zero-one-law.md)). For the $Z_n$ it is 0; for the die, 1.
 
 A second road to Kolmogorov's law runs through backward martingales; Williams gives it (Sources).
 
@@ -642,18 +621,18 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [weak-law-of-large-numbers](03-weak-law-of-large-numbers.md): convergence in probability of the average, and Chebyshev's bound that falls like 1/n.
-- [borel-cantelli-lemmas](01-borel-cantelli-lemmas.md): summable chances give finitely many bad events; the second lemma drives the jump sequence and the converse.
-- [kolmogorov-zero-one-law](02-kolmogorov-zero-one-law.md): why the event "the average converges" has probability 0 or 1.
-- [law-of-large-numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): the same die, the law stated and checked by simulation without measure.
+- [The weak law of large numbers](03-weak-law-of-large-numbers.md): convergence in probability of the average, and Chebyshev's bound that falls like 1/n.
+- [The Borel-Cantelli lemmas](01-borel-cantelli-lemmas.md): summable chances give finitely many bad events; the second lemma drives the jump sequence and the converse.
+- [Kolmogorov's zero-one law](02-kolmogorov-zero-one-law.md): why the event "the average converges" has probability 0 or 1.
+- [Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): the same die, the law stated and checked by simulation without measure.
 
 ## Where this goes next
 
-- [convergence-in-distribution](05-convergence-in-distribution.md): the weakest mode, comparing laws only, which the error of the average obeys.
-- [characteristic-functions](06-characteristic-functions.md): the tool behind the Cauchy average and the central limit theorem.
-- [central-limit-theorem](07-central-limit-theorem.md): the size and shape of the error left after the average has settled.
+- [Convergence in distribution](05-convergence-in-distribution.md): the weakest mode, comparing laws only, which the error of the average obeys.
+- [Characteristic functions](06-characteristic-functions.md): the tool behind the Cauchy average and the central limit theorem.
+- [The central limit theorem, proved](07-central-limit-theorem.md): the size and shape of the error left after the average has settled.
 
-The strong law says where the average goes, not how far from 3.5 it typically sits at roll n; that the error shrinks like one over the square root of n and takes the bell shape is the question [central-limit-theorem](07-central-limit-theorem.md) answers.
+The strong law says where the average goes, not how far from 3.5 it typically sits at roll n; that the error shrinks like one over the square root of n and takes the bell shape is the question [The central limit theorem, proved](07-central-limit-theorem.md) answers.
 
 ---
 

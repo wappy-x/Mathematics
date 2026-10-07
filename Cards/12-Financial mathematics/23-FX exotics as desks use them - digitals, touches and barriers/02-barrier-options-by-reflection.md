@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX exotics as desks use them - digitals, touches and barriers
-topic: Barriers by the mirror
-item: Knock-out and knock-in
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/01-garman-kohlhagen|garman-kohlhagen]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/04-reflection-principle-and-running-maximum|reflection-principle-and-running-maximum]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/01-brownian-motion|brownian-motion]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/02-girsanov-theorem|girsanov-theorem]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-next:
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/03-the-eight-barrier-types|the-eight-barrier-types]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/04-fx-one-touch-and-no-touch|fx-one-touch-and-no-touch]]"
-tags: [mathematics, financial mathematics, barrier-options-by-reflection]
----
-
 # Knock-out and knock-in: the plain option minus its mirror image, and knock-in plus knock-out equals the plain option
 
-Financial mathematics → FX exotics as desks use them - digitals, touches and barriers → Barriers by the mirror → Knock-out and knock-in
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX exotics as desks use them - digitals, touches and barriers](../../../SYLLABUS.md#w12-s23) → Knock-out and knock-in
 
 ---
 
@@ -57,7 +36,7 @@ Orange: the payoff if EURUSD never traded at 1.05 during the year, the plain cal
 
 ## The formula
 
-Write $C(x)$ for the Garman–Kohlhagen price of the plain euro call when the spot is $x$ and everything else is unchanged ([garman-kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md)). For a barrier $H$ at or below the strike, with the spot above the barrier:
+Write $C(x)$ for the Garman–Kohlhagen price of the plain euro call when the spot is $x$ and everything else is unchanged ([Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md)). For a barrier $H$ at or below the strike, with the spot above the barrier:
 
 $$C_{do} = C(S) - \left(\frac{H}{S}\right)^{2\lambda} C\!\left(\frac{H^2}{S}\right), \qquad \lambda = \frac{r_d - r_f - \tfrac12\sigma^2}{\sigma^2}$$
 
@@ -90,9 +69,9 @@ In words: move the wall away from spot by about six-tenths of one period's stand
 
 ### When it holds
 
-- **Barrier at or below the strike, spot above the barrier.** With the barrier above the strike, the option can die while in the money and the formula gains extra terms ([the-eight-barrier-types](03-the-eight-barrier-types.md)). With spot at or below the barrier the option is already dead: out 0, in equals the plain call.
+- **Barrier at or below the strike, spot above the barrier.** With the barrier above the strike, the option can die while in the money and the formula gains extra terms ([The eight single barriers in one table](03-the-eight-barrier-types.md)). With spot at or below the barrier the option is already dead: out 0, in equals the plain call.
 - **Continuous monitoring.** The formula counts every touch, however brief. A contract checked once a day is worth more: here by 15.78 pips. The shift above repairs most of that.
-- **Constant volatility and rates, no jumps.** Real FX volatility depends on the strike, and near a barrier that matters more than for a plain option; a jump through the wall gives no warning. [barriers-with-the-smile](07-barriers-with-the-smile.md) measures that error.
+- **Constant volatility and rates, no jumps.** Real FX volatility depends on the strike, and near a barrier that matters more than for a plain option; a jump through the wall gives no warning. [Barriers on a smile](07-barriers-with-the-smile.md) measures that error.
 - **No rebate, same payment date.** In-plus-out equals the plain call only when both legs pay the same thing at the same date and a knock-out pays nothing on the touch.
 
 ---
@@ -113,17 +92,17 @@ No model entered that argument. It holds with any volatility smile, with jumps, 
 
 ### Step 2: on the log scale the wall is a flat line
 
-Measure where EURUSD is by $\ln(S_t/S)$, the log of its ratio to today's rate. In the pricing world of the Garman–Kohlhagen card, that log ratio is a Brownian motion ([brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md)) with drift $\nu = r_d - r_f - \tfrac12\sigma^2$ per year and spread $\sigma$ per root-year. Here $\nu = 0.05 - 0.03 - 0.005 = 0.015$. The wall 1.05 becomes the flat level $b = \ln(1.05/1.10)$, below zero.
+Measure where EURUSD is by $\ln(S_t/S)$, the log of its ratio to today's rate. In the pricing world of the Garman–Kohlhagen card, that log ratio is a Brownian motion ([Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md)) with drift $\nu = r_d - r_f - \tfrac12\sigma^2$ per year and spread $\sigma$ per root-year. Here $\nu = 0.05 - 0.03 - 0.005 = 0.015$. The wall 1.05 becomes the flat level $b = \ln(1.05/1.10)$, below zero.
 
 ### Step 3: without drift, a touching path is paired with a path from the mirror start
 
-Suppose for a moment the drift were zero. Take a path that starts at 0, touches the level $b$, and ends at some point $x$ above it. Flip the part before the first touch, up for down, about $b$. The flipped path starts at $2b$, the mirror of the start, and still ends at $x$. Every path from $2b$ to a point above the wall must cross the wall, so flipping back recovers a touching path: the pairing is one for one. Flipping a driftless Brownian motion keeps every probability ([reflection-principle-and-running-maximum](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)).
+Suppose for a moment the drift were zero. Take a path that starts at 0, touches the level $b$, and ends at some point $x$ above it. Flip the part before the first touch, up for down, about $b$. The flipped path starts at $2b$, the mirror of the start, and still ends at $x$. Every path from $2b$ to a point above the wall must cross the wall, so flipping back recovers a touching path: the pairing is one for one. Flipping a driftless Brownian motion keeps every probability ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)).
 
 So the paths that start at today's rate, touch the wall and finish at $x$ are counted exactly by all paths that start at the mirror point and finish at $x$, with no condition on them at all. On the rate scale the mirror start is $S e^{2b} = S (H/S)^2 = H^2/S$, which is 1.002273.
 
 ### Step 4: put the drift back, and the mirror gets a weight
 
-With drift, up and down are no longer equally likely, so the flip changes probabilities. Girsanov's theorem ([girsanov-theorem](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md)) says how: a drifted path's probability is the driftless one times $e^{\nu \times (\text{end} - \text{start})/\sigma^2}$ and a constant. A path from 0 to $x$ travelled $x$; its partner from $2b$ to $x$ travelled $x - 2b$. So the original's factor is $e^{2\nu b/\sigma^2}$ times its partner's, the same for every $x$. Since $b = \ln(H/S)$, that ratio is $(H/S)^{2\nu/\sigma^2} = (H/S)^{2\lambda}$. Here it is $(1.05/1.10)^3 = 0.869741$.
+With drift, up and down are no longer equally likely, so the flip changes probabilities. Girsanov's theorem ([Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md)) says how: a drifted path's probability is the driftless one times $e^{\nu \times (\text{end} - \text{start})/\sigma^2}$ and a constant. A path from 0 to $x$ travelled $x$; its partner from $2b$ to $x$ travelled $x - 2b$. So the original's factor is $e^{2\nu b/\sigma^2}$ times its partner's, the same for every $x$. Since $b = \ln(H/S)$, that ratio is $(H/S)^{2\nu/\sigma^2} = (H/S)^{2\lambda}$. Here it is $(1.05/1.10)^3 = 0.869741$.
 
 So the density of ending at $x$ without having touched is two bell curves: the ordinary one from today's rate, minus the one from the mirror start, shrunk by the weight.
 
@@ -152,7 +131,7 @@ Broadie, Glasserman and Kou showed that the continuous formula with the wall mov
 
 ### Another road
 
-The same formula falls out of the pricing equation: the knock-out solves the Garman–Kohlhagen equation with value zero on the wall, and the weighted mirror term is itself a solution that cancels the plain call exactly on the wall. That is the method of images from the heat equation. Monte Carlo reaches the answer with no algebra at all ([monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)); the code below does it.
+The same formula falls out of the pricing equation: the knock-out solves the Garman–Kohlhagen equation with value zero on the wall, and the weighted mirror term is itself a solution that cancels the plain call exactly on the wall. That is the method of images from the heat equation. Monte Carlo reaches the answer with no algebra at all ([Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)); the code below does it.
 
 ---
 
@@ -228,7 +207,7 @@ The steep climb is the knock-out's sensitivity to spot, its **delta** (dollars o
 | Down-and-out | 0.804 | 10.10 |
 | Down-and-in | −0.223 | 31.18 |
 
-The knock-out moves more than the plain call with spot, because a rise both adds upside and moves it away from the wall. It gains little from extra volatility, which buys more touches as well as more upside. The knock-in's delta is negative: it is worth more as EURUSD falls toward the wall that creates it. [barrier-and-touch-greeks](06-barrier-and-touch-greeks.md) takes these apart near the wall, where they misbehave.
+The knock-out moves more than the plain call with spot, because a rise both adds upside and moves it away from the wall. It gains little from extra volatility, which buys more touches as well as more upside. The knock-in's delta is negative: it is worth more as EURUSD falls toward the wall that creates it. [Greeks at the wall](06-barrier-and-touch-greeks.md) takes these apart near the wall, where they misbehave.
 
 ---
 
@@ -686,7 +665,7 @@ Fewer looks, fewer knock-outs, a dearer option. The gap closes slowly, like one 
 > - **Using the continuous formula for a contract fixed once a day.** It comes out 15.78 pips too cheap here, always in the same direction. Shift the wall away from spot, to 1.046154 for daily dates.
 > - **Shifting the wall the wrong way.** Moving it toward spot gives 0.039891 against a true 0.043239: worse than not shifting.
 > - **Mixing the two lambdas.** Books write the formula with $\lambda$ as here or with $\lambda + 1$ and a different exponent. Putting one book's lambda into the other's formula gives 0.042717.
-> - **Using this formula with the wall above the strike.** It still returns a number. The number is wrong; the extra terms are on [the-eight-barrier-types](03-the-eight-barrier-types.md).
+> - **Using this formula with the wall above the strike.** It still returns a number. The number is wrong; the extra terms are on [The eight single barriers in one table](03-the-eight-barrier-types.md).
 
 ---
 
@@ -695,9 +674,9 @@ Fewer looks, fewer knock-outs, a dearer option. The gap closes slowly, like one 
 - **Corporate hedging.** Exporters and importers buy knock-out calls and puts to cut premium: 416.61 pips instead of 535.56, in exchange for a level they believe will not trade.
 - **Term sheets.** Interbank FX barriers are commonly watched continuously until the expiry cut; some contracts check a published daily fixing instead. The monitoring clause, not the model, decides which price applies. Conventions as used on this card, dated 27 Sep 2026: premiums in pips of the quote currency per unit of the base currency.
 - **Structured deposits.** A deposit that pays a high coupon unless a rate trades through a level contains a knock-in option sold by the depositor.
-- **Touch products.** Strip the call away and keep only the wall, and the contract pays on the touch itself: [fx-one-touch-and-no-touch](04-fx-one-touch-and-no-touch.md). A payoff that depends only on where the rate ends, not where it has been, is [fx-digitals](01-fx-digitals.md).
-- **Two walls and the smile.** A floor and a ceiling at once is [double-barriers-and-double-no-touch](05-double-barriers-and-double-no-touch.md); a client who names a premium and asks where the wall must go is [barrier-level-from-a-target-premium](08-barrier-level-from-a-target-premium.md).
-- **Shares.** The same formula with a dividend yield in place of the euro rate prices equity knock-outs: [knock-out-and-knock-in-options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md).
+- **Touch products.** Strip the call away and keep only the wall, and the contract pays on the touch itself: [One-touch and no-touch](04-fx-one-touch-and-no-touch.md). A payoff that depends only on where the rate ends, not where it has been, is [Currency digitals](01-fx-digitals.md).
+- **Two walls and the smile.** A floor and a ceiling at once is [Two walls](05-double-barriers-and-double-no-touch.md); a client who names a premium and asks where the wall must go is [Solving for the barrier](08-barrier-level-from-a-target-premium.md).
+- **Shares.** The same formula with a dividend yield in place of the euro rate prices equity knock-outs: [Knock-out and knock-in options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md).
 
 > **Say it back**
 > A knock-out dies the first time the rate touches its wall; a knock-in is born then. Held together they are one plain option on every path, so their prices add to the plain price. The knock-in is the plain call priced from the mirror image of spot in the wall, weighted by $(H/S)^{2\lambda}$ because the upward drift makes a path that dips to the wall less likely than its mirror partner. For the house euro call that is 0.011895, leaving 0.041661 for the knock-out. A contract checked once a day is worth more, and moving the wall away from spot by $0.5826\,\sigma\sqrt{T/n}$ prices it here to within a pip.
@@ -706,16 +685,16 @@ Fewer looks, fewer knock-outs, a dearer option. The gap closes slowly, like one 
 
 ## What this builds on
 
-- [garman-kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): the plain euro call $C(x)$, used twice in the formula, and the pricing world with drift $r_d - r_f$.
-- [reflection-principle-and-running-maximum](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the flip after the first touch, which pairs touching paths with mirror paths.
-- [brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): the model of log EURUSD, and why it restarts afresh at the touch.
-- [girsanov-theorem](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md): how drift reweights paths, which produces the mirror weight.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): the simulation road, and why its answer carries a standard error.
+- [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): the plain euro call $C(x)$, used twice in the formula, and the pricing world with drift $r_d - r_f$.
+- [Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the flip after the first touch, which pairs touching paths with mirror paths.
+- [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): the model of log EURUSD, and why it restarts afresh at the touch.
+- [Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md): how drift reweights paths, which produces the mirror weight.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): the simulation road, and why its answer carries a standard error.
 
 ## Where this goes next
 
-- [the-eight-barrier-types](03-the-eight-barrier-types.md): walls above and below, calls and puts, in and out, including the wall above the strike that this formula excludes.
-- [fx-one-touch-and-no-touch](04-fx-one-touch-and-no-touch.md): the touch itself as the payoff, priced from the same touch probability this card computed.
+- [The eight single barriers in one table](03-the-eight-barrier-types.md): walls above and below, calls and puts, in and out, including the wall above the strike that this formula excludes.
+- [One-touch and no-touch](04-fx-one-touch-and-no-touch.md): the touch itself as the payoff, priced from the same touch probability this card computed.
 
 This card priced one wall below the strike; what a knock-out is worth when the wall sits where it can kill an option already in the money is the question the eight-types table answers.
 

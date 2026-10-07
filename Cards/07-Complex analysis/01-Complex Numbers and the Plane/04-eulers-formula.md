@@ -1,35 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Complex Numbers and the Plane
-topic: Exponentials that turn
-item: Euler's formula
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/03-polar-form-and-argument|polar-form-and-argument]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/05-taylor-series|taylor-series]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/04-compounding-frequency-and-e|compounding-frequency-and-e]]"
-next:
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/05-powers-roots-and-roots-of-unity|powers-roots-and-roots-of-unity]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/06-complex-limits-series-and-regions|complex-limits-series-and-regions]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/03-exponential-sine-and-cosine-in-the-plane|exponential-sine-and-cosine-in-the-plane]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/04-complex-logarithm|complex-logarithm]]"
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/01-contour-integrals|contour-integrals]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/01-fourier-series-in-complex-form|fourier-series-in-complex-form]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/03-complex-roots-and-damped-oscillation|complex-roots-and-damped-oscillation]]"
-  - "[[Cards/08-Differential equations and dynamics/09-Fourier Series/05-complex-fourier-series-and-the-transform-in-outline|complex-fourier-series-and-the-transform-in-outline]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/06-characteristic-functions|characteristic-functions]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/02-heston-pricing-by-characteristic-function|heston-pricing-by-characteristic-function]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/04-frequency-response-and-bode-plots|frequency-response-and-bode-plots]]"
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/02-phasors-and-impedance|phasors-and-impedance]]"
-tags: [mathematics, complex analysis, eulers-formula]
----
-
 # Euler's formula: e to the i-theta is the point at angle theta on the unit circle, so waves and turns are exponentials
 
-Complex analysis → Complex Numbers and the Plane → Exponentials that turn → Euler's formula
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Complex Numbers and the Plane](../../../SYLLABUS.md#w07-s01) → Euler's formula
 
 ---
 
@@ -87,7 +58,7 @@ The tone is $e^{2\pi i f t}$: angle 2π times frequency times time.
 - **Any complex exponent.** The series converges for every z: no exceptions.
 - **Angles in radians.** Feed it 180 meaning degrees and it returns −0.598460 − 0.801153i, not −1.
 - **Exponents add, for all complex z and w:** $e^{z+w} = e^z e^w$. The rule for a power of a power can fail: e to the 2πi is 1, whose usual square root is 1, yet e to the πi is −1.
-- **Going backwards is not unique.** Adding 2πi to the exponent changes nothing, so undoing it needs a choice, made in [complex-logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md).
+- **Going backwards is not unique.** Adding 2πi to the exponent changes nothing, so undoing it needs a choice, made in [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md).
 
 ---
 
@@ -95,11 +66,11 @@ The tone is $e^{2\pi i f t}$: angle 2π times frequency times time.
 
 ### Step 0: the series needs only adding and multiplying
 
-The real exponential equals its power series ([taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). Each term needs only multiplying, dividing by a whole number and adding, which complex numbers do ([complex-numbers](01-complex-numbers.md)). So the series defines $e^z$ for complex z, and leaves the real exponential unchanged.
+The real exponential equals its power series ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). Each term needs only multiplying, dividing by a whole number and adding, which complex numbers do ([Complex numbers](01-complex-numbers.md)). So the series defines $e^z$ for complex z, and leaves the real exponential unchanged.
 
 ### Step 1: the series converges everywhere
 
-The n-th term has size $|z|^n/n!$, with the modulus of [conjugate-and-modulus](02-conjugate-and-modulus.md): each size is the last times |z|/n. Once n passes twice |z|, that factor is below one half, so the sizes shrink faster than halving and add to a finite total: absolute convergence. Such a series gives the same sum however its terms are grouped, which Step 3 needs.
+The n-th term has size $|z|^n/n!$, with the modulus of [Conjugate and modulus](02-conjugate-and-modulus.md): each size is the last times |z|/n. Once n passes twice |z|, that factor is below one half, so the sizes shrink faster than halving and add to a finite total: absolute convergence. Such a series gives the same sum however its terms are grouped, which Step 3 needs.
 
 ### Step 2: each term turns a quarter
 
@@ -121,7 +92,7 @@ Even terms carry no i, odd terms carry one, and each kind alternates in sign. St
 
 $$e^{i\theta} = \Big(1 - \frac{\theta^2}{2!} + \frac{\theta^4}{4!} - \cdots\Big) + i\Big(\theta - \frac{\theta^3}{3!} + \frac{\theta^5}{5!} - \cdots\Big)$$
 
-The brackets are the Taylor series of cos θ and sin θ, proved equal to them on [taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md). That is Euler's formula. Since cos^2 θ + sin^2 θ = 1, the point lies on the unit circle.
+The brackets are the Taylor series of cos θ and sin θ, proved equal to them on [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md). That is Euler's formula. Since cos^2 θ + sin^2 θ = 1, the point lies on the unit circle.
 
 ### Step 4: exponents add, so a real part stretches
 
@@ -148,7 +119,7 @@ So $e^{x+iy} = e^x e^{iy}$: a stretch by e to the x times a unit arrow at angle 
 - **The period 2πi.** A full turn returns the arrow, so $e^{z + 2\pi i} = e^z$ for every z.
 - **Multiplying adds angles.** Expanding both sides of "turn by a, then b, is turn by a + b" gives the angle-sum formulas for cos and sin.
 
-A second road: (1 + iθ/N) multiplied in N times turns about θ/N per step and closes on $e^{i\theta}$ as N grows, as in [compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md); the code runs it. The route through the derivative of $e^z$ belongs to [exponential-sine-and-cosine-in-the-plane](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md).
+A second road: (1 + iθ/N) multiplied in N times turns about θ/N per step and closes on $e^{i\theta}$ as N grows, as in [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md); the code runs it. The route through the derivative of $e^z$ belongs to [The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md).
 
 ---
 
@@ -404,8 +375,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Sound synthesis.** A tone is computed as a spinning arrow and played as its shadow.
-- **AC circuits.** Voltages swinging at one frequency become fixed arrows, called phasors, and impedance, a part's opposition to current, becomes multiplication: phasors-and-impedance.
-- **Frequency analysis.** Fourier series write a repeating signal as a sum of spinning arrows: [fourier-series-in-complex-form](../08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md).
+- **AC circuits.** Voltages swinging at one frequency become fixed arrows, called phasors, and impedance, a part's opposition to current, becomes multiplication: Phasors.
+- **Frequency analysis.** Fourier series write a repeating signal as a sum of spinning arrows: [Fourier series](../08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md).
 
 > **Say it back**
 > The complex exponential is the real one's series, which converges everywhere. At i times an angle each term turns a quarter, so the real terms regroup into cosine and the imaginary ones into sine. So $e^{i\theta}$ is the point at angle θ on the unit circle, and a real part in the exponent stretches it. The A440 tone is an arrow spinning 440 turns a second, and the pressure is its shadow. A half turn gives −1; a full turn changes nothing.
@@ -414,24 +385,24 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [polar-form-and-argument](03-polar-form-and-argument.md): length and angle, and the form r(cos θ + i sin θ) that this card shortens.
-- [taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the series of the exponential, cosine and sine, and why they equal their functions.
-- [compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): the number e as the limit of compounding, the code's third road.
+- [Polar form](03-polar-form-and-argument.md): length and angle, and the form r(cos θ + i sin θ) that this card shortens.
+- [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the series of the exponential, cosine and sine, and why they equal their functions.
+- [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): the number e as the limit of compounding, the code's third road.
 
 ## Where this goes next
 
-- [powers-roots-and-roots-of-unity](05-powers-roots-and-roots-of-unity.md): powers multiply angles.
-- [complex-limits-series-and-regions](06-complex-limits-series-and-regions.md): convergence, made careful.
-- [exponential-sine-and-cosine-in-the-plane](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md): the derivative of $e^z$.
-- [complex-logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md): undoing it, with a choice.
-- [contour-integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md): circles traced as $e^{i\theta}$.
-- [fourier-series-in-complex-form](../08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): signals as arrows.
-- [complex-roots-and-damped-oscillation](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md): a decaying swing.
-- [complex-fourier-series-and-the-transform-in-outline](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/05-complex-fourier-series-and-the-transform-in-outline.md): the transform.
-- [characteristic-functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md): a distribution as an average arrow.
-- [heston-pricing-by-characteristic-function](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md): that average prices options.
-- [frequency-response-and-bode-plots](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md): stretch and turn per frequency.
-- phasors-and-impedance: circuits with fixed arrows.
+- [Powers and roots](05-powers-roots-and-roots-of-unity.md): powers multiply angles.
+- [Limits and regions in the plane](06-complex-limits-series-and-regions.md): convergence, made careful.
+- [The elementary functions](../02-Holomorphic%20Functions/03-exponential-sine-and-cosine-in-the-plane.md): the derivative of $e^z$.
+- [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md): undoing it, with a choice.
+- [Contour integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md): circles traced as $e^{i\theta}$.
+- [Fourier series](../08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): signals as arrows.
+- [Complex roots](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md): a decaying swing.
+- [The complex form](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/05-complex-fourier-series-and-the-transform-in-outline.md): the transform.
+- [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md): a distribution as an average arrow.
+- [Pricing Heston exactly](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md): that average prices options.
+- [Bode plots](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md): stretch and turn per frequency.
+- Phasors: circuits with fixed arrows.
 
 ---
 

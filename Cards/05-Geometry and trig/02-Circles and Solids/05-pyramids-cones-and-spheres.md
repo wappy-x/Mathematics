@@ -1,21 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Circles and Solids
-topic: Solids with shrinking slices
-item: Pyramids, cones and spheres
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/02-Circles and Solids/04-prisms-and-cylinders|prisms-and-cylinders]]"
-next: []
-tags: [mathematics, geometry and trig, pyramids-cones-and-spheres]
----
-
 # Pyramids, cones and spheres: the one-third rule and the sphere's four pi r squared
 
-Geometry and trig → Circles and Solids → Solids with shrinking slices → Pyramids, cones and spheres
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Circles and Solids](../../../SYLLABUS.md#w05-s02) → Pyramids, cones and spheres
 
 ---
 
@@ -41,13 +26,13 @@ Scale 1 m = 50 units. The height runs down the dashed centre line, square to the
 
 ## The formula
 
-$V$ is the volume; $B$ the base's area; $h$ the height, measured square on (at a right angle) from base to tip; $\pi$, as on [circle-circumference-and-area](01-circle-circumference-and-area.md), a circle's circumference over its diameter.
+$V$ is the volume; $B$ the base's area; $h$ the height, measured square on (at a right angle) from base to tip; $\pi$, as on [Circles](01-circle-circumference-and-area.md), a circle's circumference over its diameter.
 
 $$V = \tfrac13\,B\,h$$
 
 **Read it aloud:** a pyramid or cone holds one third of its base area times its height.
 
-A cone on a circle of radius $r$ has $B = \pi r^2$. Its slant $\ell$, rim to tip along the wall, comes from Pythagoras ([pythagoras-and-its-converse](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)); $S$ is the wall's area:
+A cone on a circle of radius $r$ has $B = \pi r^2$. Its slant $\ell$, rim to tip along the wall, comes from Pythagoras ([Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)); $S$ is the wall's area:
 
 $$V = \tfrac13\,\pi r^2 h, \qquad \ell = \sqrt{r^2 + h^2}, \qquad S = \pi r \ell$$
 
@@ -83,7 +68,7 @@ $$V = \tfrac43\,\pi r^3, \qquad S = 4\pi r^2$$
 
 ### Step 0: compare solids slice by slice
 
-**Cavalieri's principle**, from [prisms-and-cylinders](04-prisms-and-cylinders.md): two solids whose level slices have equal areas at every height hold equal volumes, taken here as a starting rule. A second rule: stretching a solid in one direction by a factor multiplies its volume by that factor, as for a box.
+**Cavalieri's principle**, from [Prisms and cylinders](04-prisms-and-cylinders.md): two solids whose level slices have equal areas at every height hold equal volumes, taken here as a starting rule. A second rule: stretching a solid in one direction by a factor multiplies its volume by that factor, as for a box.
 
 ### Step 1: three pyramids fill a cube
 
@@ -112,13 +97,13 @@ Squash the cube to 0.75 m tall: piece 3 becomes a pyramid on a 1 m square, 0.75 
 
 ### Step 3: from a square base to the round rim
 
-At height $z$ above the tip, measured square on, a slice of any pyramid or cone is its base shrunk to $z/h$ in every width ([similar-triangles-and-scale](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)). Its area is $B$ times $(z/h)^2$, one factor for each level direction. The square pyramid and the hopper share $B$ and $h$, so their slices match at every level: by Cavalieri the hopper holds 0.785398 cubic metres. Neither the base's shape nor the tip's position entered, so every pyramid and cone holds $\tfrac13 B h$.
+At height $z$ above the tip, measured square on, a slice of any pyramid or cone is its base shrunk to $z/h$ in every width ([Similar triangles](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)). Its area is $B$ times $(z/h)^2$, one factor for each level direction. The square pyramid and the hopper share $B$ and $h$, so their slices match at every level: by Cavalieri the hopper holds 0.785398 cubic metres. Neither the base's shape nor the tip's position entered, so every pyramid and cone holds $\tfrac13 B h$.
 
 Stacks of thin cylinders inside and outside trap it: 1000 layers give 0.784220 to 0.786577 cubic metres.
 
 ### Step 4: the hopper's steel, unrolled
 
-Cut the wall from rim to tip and lay it flat: a sector, a slice of a disc cut from its centre ([radians-arcs-and-sectors](02-radians-arcs-and-sectors.md)). Its radius is the slant, 1.25 m; its curved edge is the rim, 1/1.25 of the full circle of that radius. So the sector is 0.80 of the disc, 288 degrees: 0.80 × π × 1.25^2 = 3.926991 square metres. In letters, $r/\ell$ of $\pi \ell^2$ is $\pi r \ell$. A pyramid on a many-sided polygon inside the rim agrees: 3.924945 with 96 sides, 3.926990 with 6144.
+Cut the wall from rim to tip and lay it flat: a sector, a slice of a disc cut from its centre ([Radians](02-radians-arcs-and-sectors.md)). Its radius is the slant, 1.25 m; its curved edge is the rim, 1/1.25 of the full circle of that radius. So the sector is 0.80 of the disc, 288 degrees: 0.80 × π × 1.25^2 = 3.926991 square metres. In letters, $r/\ell$ of $\pi \ell^2$ is $\pi r \ell$. A pyramid on a many-sided polygon inside the rim agrees: 3.924945 with 96 sides, 3.926990 with 6144.
 
 ### Step 5: the ball's volume, as a cylinder minus a cone
 
@@ -388,13 +373,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [prisms-and-cylinders](04-prisms-and-cylinders.md): base area times height for a solid whose slice never changes, Cavalieri's principle, and the tank.
+- [Prisms and cylinders](04-prisms-and-cylinders.md): base area times height for a solid whose slice never changes, Cavalieri's principle, and the tank.
 
 ## Where this goes next
 
-- [polyhedra-and-eulers-formula](06-polyhedra-and-eulers-formula.md): flat-faced solids, the cube and pyramids among them, counted by corners, edges and faces.
+- [Polyhedra](06-polyhedra-and-eulers-formula.md): flat-faced solids, the cube and pyramids among them, counted by corners, edges and faces.
 
-Cavalieri's principle and the ball's skin were checked here with ever thinner slabs and bands, not proved; calculus makes "ever thinner" an exact sum, in [volumes-by-slices-and-shells](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md) and [surface-area-of-revolution](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/04-surface-area-of-revolution.md).
+Cavalieri's principle and the ball's skin were checked here with ever thinner slabs and bands, not proved; calculus makes "ever thinner" an exact sum, in [Volumes](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md) and [Surface area](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/04-surface-area-of-revolution.md).
 
 ---
 

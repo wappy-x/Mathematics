@@ -1,25 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Ramsey and Extremal, in Outline
-topic: Forced patterns by size
-item: Ramsey numbers
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/14-Ramsey and Extremal, in Outline/01-friends-and-strangers|friends-and-strangers]]"
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/01-pascals-rule-and-the-triangle|pascals-rule-and-the-triangle]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/14-Ramsey and Extremal, in Outline/03-probabilistic-method-by-counting|probabilistic-method-by-counting]]"
-  - "[[Cards/09-Probability and statistics/14-Random Graphs and the Probabilistic Method/03-probabilistic-method|probabilistic-method]]"
-  - "[[Cards/21-Algebraic and analytic number theory/08-Additive Combinatorics and Probabilistic Number Theory/05-szemeredi-and-green-tao-in-outline|szemeredi-and-green-tao-in-outline]]"
-tags: [mathematics, combinatorics and graphs, ramsey-numbers]
----
-
 # Ramsey numbers: the size at which a pattern is forced, known exactly for only a handful of cases
 
-Combinatorics and graphs → Ramsey and Extremal, in Outline → Forced patterns by size → Ramsey numbers
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Ramsey and Extremal, in Outline](../../../SYLLABUS.md#w04-s14) → Ramsey numbers
 
 ---
 
@@ -29,7 +10,7 @@ Nine towns, A to I, sit in one county. Every pair of towns is joined by one dire
 
 Whatever the county decides, three towns are joined to each other entirely by paved roads, or four entirely by gravel: a **paved trio** or a **gravel foursome**. Eight towns can escape both, or **dodge**; the picture below shows how.
 
-So nine is the threshold for "a paved trio or a gravel foursome". Such thresholds are **Ramsey numbers**, after Frank Ramsey, who proved in 1930 that one always exists. The six-guest party of [friends-and-strangers](01-friends-and-strangers.md) is the smallest case.
+So nine is the threshold for "a paved trio or a gravel foursome". Such thresholds are **Ramsey numbers**, after Frank Ramsey, who proved in 1930 that one always exists. The six-guest party of [Friends and strangers](01-friends-and-strangers.md) is the smallest case.
 
 **Each threshold is at most the sum of the two just below it, so every threshold exists; pinning one down exactly also needs an example that dodges, and only a handful are known.**
 
@@ -59,7 +40,7 @@ Lines are the 12 paved roads: a ring of eight, plus a road from each town straig
 
 ## The formula
 
-Notation first, in words. $R(s,t)$, read "R of s and t", is the fewest towns that force either $s$ towns all joined by paved roads or $t$ towns all joined by gravel, however the roads are surfaced. $C(n, k)$ is "n choose k", the number of ways to pick k things from n ([pascals-rule-and-the-triangle](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md)).
+Notation first, in words. $R(s,t)$, read "R of s and t", is the fewest towns that force either $s$ towns all joined by paved roads or $t$ towns all joined by gravel, however the roads are surfaced. $C(n, k)$ is "n choose k", the number of ways to pick k things from n ([Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md)).
 
 $$R(s,t) \le R(s-1,\,t) + R(s,\,t-1)$$
 
@@ -150,7 +131,7 @@ An exact value needs a ceiling and a dodging county one town short. For $R(4,4) 
 
 Past that, search fails. For $R(5,5)$ the recursion gives 50 and the binomial 70. Geoffrey Exoo found a dodging county one town short of 43 in 1989; Vigleik Angeltveit and Brendan McKay proved the ceiling 46 by computer, posted in 2024. The value lies from 43 to 46.
 
-Floors can also come from counting bad surfacings, without building a county ([probabilistic-method-by-counting](03-probabilistic-method-by-counting.md)).
+Floors can also come from counting bad surfacings, without building a county ([Erdos's counting trick](03-probabilistic-method-by-counting.md)).
 
 ---
 
@@ -411,7 +392,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Computer search at its limit.** Small Ramsey numbers are a standard hard test for search. Nine towns already allow 68719476736 surfacings; the code copes only by dropping failures early.
-- **Forced order in sequences and number patterns.** [erdos-szekeres](04-erdos-szekeres.md) forces a rising or falling run in any long list; [mantel-and-turan](05-mantel-and-turan.md) asks how many roads force a trio when only one surface counts.
+- **Forced order in sequences and number patterns.** [Erdos-Szekeres](04-erdos-szekeres.md) forces a rising or falling run in any long list; [Mantel and Turan](05-mantel-and-turan.md) asks how many roads force a trio when only one surface counts.
 
 > **Say it back**
 > R(s,t) is the fewest towns that force s towns joined all by paved roads or t all by gravel. Splitting one town's roads shows R(s,t) is at most R(s−1,t) plus R(s,t−1), which runs down to C(s+t−2, s−1). For three and four that gives 10; parity cuts it to 9, and a dodging eight-town county shows 9 is exact. Every Ramsey number exists, but R(5,5) is only known to lie from 43 to 46.
@@ -420,14 +401,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [friends-and-strangers](01-friends-and-strangers.md): R(3,3) = 6, the feeder used in Step 1.
-- [pascals-rule-and-the-triangle](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md): the rule that turns the recursion into C(s+t−2, s−1).
+- [Friends and strangers](01-friends-and-strangers.md): R(3,3) = 6, the feeder used in Step 1.
+- [Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md): the rule that turns the recursion into C(s+t−2, s−1).
 
 ## Where this goes next
 
-- [probabilistic-method-by-counting](03-probabilistic-method-by-counting.md): floors for R(k,k) by counting bad surfacings.
-- [probabilistic-method](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md): the same idea with chance made precise.
-- szemeredi-and-green-tao-in-outline: forced patterns among whole numbers.
+- [Erdos's counting trick](03-probabilistic-method-by-counting.md): floors for R(k,k) by counting bad surfacings.
+- [The probabilistic method](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md): the same idea with chance made precise.
+- Long progressions: forced patterns among whole numbers.
 
 Here floors come only from finding a county; how to prove a dodging county exists without finding one is the next card's question.
 

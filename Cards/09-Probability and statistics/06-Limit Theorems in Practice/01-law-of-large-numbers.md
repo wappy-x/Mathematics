@@ -1,30 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Limit Theorems in Practice
-topic: Averages that settle
-item: Law of large numbers
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/08-markov-and-chebyshev-inequalities|markov-and-chebyshev-inequalities]]"
-next:
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/02-central-limit-theorem|central-limit-theorem]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/01-populations-samples-and-estimators|populations-samples-and-estimators]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/03-weak-law-of-large-numbers|weak-law-of-large-numbers]]"
-  - "[[Cards/12-Financial mathematics/36-Returns and Utility/05-kelly-criterion-and-growth|kelly-criterion-and-growth]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/02-one-factor-gaussian-copula|one-factor-gaussian-copula]]"
-  - "[[Cards/14-Applied and computational/03-Information Theory/04-typical-sequences-and-the-aep|typical-sequences-and-the-aep]]"
-  - "[[Cards/15-Optimization/06-Conic, Quadratic and Stochastic Programs/08-stochastic-gradient-and-sample-average-approximation|stochastic-gradient-and-sample-average-approximation]]"
-  - "[[Cards/15-Optimization/07-Dynamic Programming and Learning/05-q-learning-and-temporal-differences|q-learning-and-temporal-differences]]"
-  - "[[Cards/21-Algebraic and analytic number theory/04-Sieves and Prime Gaps/06-large-gaps-and-the-cramer-model|large-gaps-and-the-cramer-model]]"
-tags: [mathematics, probability and statistics, limit-theorems-in-practice, law-of-large-numbers]
----
-
 # Law of large numbers: averages settle down
 
-Probability and statistics → Limit Theorems in Practice → Averages that settle → Law of large numbers
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Limit Theorems in Practice](../../../SYLLABUS.md#w09-s06) → Law of large numbers
 
 ---
 
@@ -98,7 +74,7 @@ $$P\big(\lvert \bar{X}_n - \mu \rvert \ge \varepsilon\big) \to 0 \quad \text{as 
 ### When it holds
 
 - **Independent draws.** Each roll must carry no information about the others. Record one roll and copy it 1,000 times: each copy still has the fair-die law, but the average is that one face, never within 0.1 of 3.5. The chance of a miss is 1 at every $n$.
-- **A finite mean.** There must be a long-run average to settle on. The Cauchy law ([heavy-tails-pareto-and-cauchy](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) has none: the average of 1,000 Cauchy draws lands outside −1 to 1 about half the time, exactly as often as one draw does.
+- **A finite mean.** There must be a long-run average to settle on. The Cauchy law ([Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) has none: the average of 1,000 Cauchy draws lands outside −1 to 1 about half the time, exactly as often as one draw does.
 - **A finite variance, for this proof.** Chebyshev needs $\sigma^2$. The law itself survives with a finite mean alone (Khinchin's weak law), but its proof needs cutting large values off, done with measure in wing 10.
 - **A fixed $n$ and a fixed $\varepsilon$.** The bound speaks about one sample size at a time. It says nothing about every later average staying inside the band together, and nothing about stopping the rolls once the average looks good.
 - **The same mean for every draw.** A die that wears as it rolls has a moving mean; the average then settles on the average of the means, not on 3.5.
@@ -121,7 +97,7 @@ The mean square of a face is $(1 + 4 + 9 + 16 + 25 + 36)/6 = 15.1667$. Subtract 
 
 ### Step 3: the variance of the total grows like n
 
-The variance of a sum is the sum of the variances plus twice the covariance of every pair ([joint-distributions-and-covariance](../02-Random%20Variables/04-joint-distributions-and-covariance.md)). Independent rolls have covariance zero, so every pair term vanishes and $\mathrm{Var}(S_n) = n\sigma^2$. The total's spread is $\sigma\sqrt{n}$: 54.01 for 1,000 rolls.
+The variance of a sum is the sum of the variances plus twice the covariance of every pair ([Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md)). Independent rolls have covariance zero, so every pair term vanishes and $\mathrm{Var}(S_n) = n\sigma^2$. The total's spread is $\sigma\sqrt{n}$: 54.01 for 1,000 rolls.
 
 ### Step 4: the variance of the average shrinks like 1/n
 
@@ -129,7 +105,7 @@ Dividing a random quantity by $n$ divides its variance by $n^2$. So $\mathrm{Var
 
 ### Step 5: Chebyshev turns the spread into a guarantee
 
-Chebyshev's inequality ([markov-and-chebyshev-inequalities](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)) says any random quantity with a finite variance lands at least $\varepsilon$ from its mean with chance at most its variance divided by $\varepsilon^2$. Apply it to the average, whose variance is $\sigma^2 / n$:
+Chebyshev's inequality ([Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)) says any random quantity with a finite variance lands at least $\varepsilon$ from its mean with chance at most its variance divided by $\varepsilon^2$. Apply it to the average, whose variance is $\sigma^2 / n$:
 
 $$P\big(\lvert \bar{X}_{1000} - 3.5 \rvert \ge 0.1\big) \le \frac{2.9167}{1000 \times 0.01} = 0.2917$$
 
@@ -177,7 +153,7 @@ xychart-beta
 
 Orange, top: Chebyshev's ceiling $\sigma^2/(n\varepsilon^2)$, capped at 1; up to 291 rolls it says nothing. Green, bottom: the exact chance of a miss. The exact curve always sits under the ceiling and falls away from it.
 
-The gap costs rolls. To push the miss chance to 5% or less, Chebyshev asks for $n \ge 2.9167 / (0.05 \times 0.01)$, which rounds up to 5,834 rolls: the bound there is 0.049994, and at 5,833 it is 0.050003. The exact law gets under 5% at 1,117 rolls, with a miss chance of 0.0497. It wobbles back above 5% for a few sizes, because the sum can only take whole-number values and the band's edges fall between them differently at each $n$; from 1,131 rolls on it stays below, checked to 1,200. Chebyshev's figure is safe for every law with this variance, and far more cautious than this one needs. Sharper tools recover the gap: the shape of the error ([central-limit-theorem](02-central-limit-theorem.md)) and tails that fall exponentially ([concentration-inequalities-hoeffding-and-chernoff](06-concentration-inequalities-hoeffding-and-chernoff.md)).
+The gap costs rolls. To push the miss chance to 5% or less, Chebyshev asks for $n \ge 2.9167 / (0.05 \times 0.01)$, which rounds up to 5,834 rolls: the bound there is 0.049994, and at 5,833 it is 0.050003. The exact law gets under 5% at 1,117 rolls, with a miss chance of 0.0497. It wobbles back above 5% for a few sizes, because the sum can only take whole-number values and the band's edges fall between them differently at each $n$; from 1,131 rolls on it stays below, checked to 1,200. Chebyshev's figure is safe for every law with this variance, and far more cautious than this one needs. Sharper tools recover the gap: the shape of the error ([Central limit theorem](02-central-limit-theorem.md)) and tails that fall exponentially ([Concentration](06-concentration-inequalities-hoeffding-and-chernoff.md)).
 
 <details>
 <summary>The strong law, stated</summary>
@@ -665,10 +641,10 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Insurance and casinos.** One policy or one bet is a gamble; the average payout over thousands is close to its expected value. The house edge becomes income because of this law.
-- **Polls and samples.** A sample share of voters stands in for the population's share, and its error shrinks as the sample grows ([populations-samples-and-estimators](../07-Sampling%20and%20Estimation/01-populations-samples-and-estimators.md)).
+- **Polls and samples.** A sample share of voters stands in for the population's share, and its error shrinks as the sample grows ([Samples and estimators](../07-Sampling%20and%20Estimation/01-populations-samples-and-estimators.md)).
 - **Simulation.** Every Monte Carlo estimate, including prices in finance, is a sample average trusted because of this law, and quoted with its standard error because of its rate.
-- **Growth of wealth.** Repeated bets compound, so the average of the logarithms of the growth factors settles; that is the idea behind [kelly-criterion-and-growth](../../12-Financial%20mathematics/36-Returns%20and%20Utility/05-kelly-criterion-and-growth.md).
-- **Machine learning.** Training on random batches works because a batch average of errors settles near the full average (stochastic-gradient-and-sample-average-approximation).
+- **Growth of wealth.** Repeated bets compound, so the average of the logarithms of the growth factors settles; that is the idea behind [Kelly](../../12-Financial%20mathematics/36-Returns%20and%20Utility/05-kelly-criterion-and-growth.md).
+- **Machine learning.** Training on random batches works because a batch average of errors settles near the full average (Stochastic gradient).
 
 > **Say it back**
 > The average of many independent draws has the same mean as one draw and one $n$-th of its variance. Chebyshev's inequality turns that small variance into a small chance of missing the mean by any fixed tolerance, and that chance goes to zero as the draws pile up. For 1,000 rolls of a fair die, the average lands within 0.1 of 3.5 with chance at least 0.7083 by the bound, and 0.9346 exactly. The law fails when the draws are copies of each other or have no mean, as with the Cauchy law. It is about the average, never about the total evening out.
@@ -677,21 +653,21 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [markov-and-chebyshev-inequalities](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md): the inequality that turns the average's variance into the guarantee.
+- [Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md): the inequality that turns the average's variance into the guarantee.
 
 ## Where this goes next
 
-- [central-limit-theorem](02-central-limit-theorem.md): the shape of the leftover error, which approximates the 0.9346 without building the full law of the sum.
-- [populations-samples-and-estimators](../07-Sampling%20and%20Estimation/01-populations-samples-and-estimators.md): a sample average used as an estimate, with its standard error.
-- [weak-law-of-large-numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md): the same law proved with measure, with only a finite mean.
-- [kelly-criterion-and-growth](../../12-Financial%20mathematics/36-Returns%20and%20Utility/05-kelly-criterion-and-growth.md): the law applied to the logarithm of wealth.
-- [one-factor-gaussian-copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md): a large loan pool whose defaults share one factor, so the average settles on a random level, not a fixed one.
-- typical-sequences-and-the-aep: the law applied to the log-probability of a message, which is why data compresses.
-- stochastic-gradient-and-sample-average-approximation: optimising a sample average in place of an expectation.
-- q-learning-and-temporal-differences: running averages of rewards that settle on expected values.
-- large-gaps-and-the-cramer-model: primes modelled as random draws, whose counts obey the law.
+- [Central limit theorem](02-central-limit-theorem.md): the shape of the leftover error, which approximates the 0.9346 without building the full law of the sum.
+- [Samples and estimators](../07-Sampling%20and%20Estimation/01-populations-samples-and-estimators.md): a sample average used as an estimate, with its standard error.
+- [The weak law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md): the same law proved with measure, with only a finite mean.
+- [Kelly](../../12-Financial%20mathematics/36-Returns%20and%20Utility/05-kelly-criterion-and-growth.md): the law applied to the logarithm of wealth.
+- [The one-factor Gaussian copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md): a large loan pool whose defaults share one factor, so the average settles on a random level, not a fixed one.
+- Typical sequences: the law applied to the log-probability of a message, which is why data compresses.
+- Stochastic gradient: optimising a sample average in place of an expectation.
+- Q-learning: running averages of rewards that settle on expected values.
+- Large gaps: primes modelled as random draws, whose counts obey the law.
 
-The law says the average lands close; it does not say how the misses are shaped, or why the exact 0.9346 sits so far above the guaranteed 0.7083. The bell curve that answers both is [central-limit-theorem](02-central-limit-theorem.md).
+The law says the average lands close; it does not say how the misses are shaped, or why the exact 0.9346 sits so far above the guaranteed 0.7083. The bell curve that answers both is [Central limit theorem](02-central-limit-theorem.md).
 
 ---
 

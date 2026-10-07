@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Portfolio Theory
-topic: Lending and borrowing beside a risky mix
-item: Adding a riskless asset
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/02-efficient-frontier-and-minimum-variance|efficient-frontier-and-minimum-variance]]"
-next:
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/04-capm-and-beta|capm-and-beta]]"
-tags: [mathematics, financial mathematics, tangency-portfolio-and-the-capital-market-line]
----
-
 # Adding a riskless asset: the tangency portfolio and the line every investor sits on
 
-Financial mathematics → Portfolio Theory → Lending and borrowing beside a risky mix → Adding a riskless asset
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Theory](../../../SYLLABUS.md#w12-s37) → Adding a riskless asset
 
 ---
 
@@ -89,7 +73,7 @@ The frontier's own constants appear once, in Step 5: $a = \mathbf{1}\cdot\Sigma^
 - **One period, fixed weights, one horizon for every asset and the bank.** Over many periods, with rebalancing and changing rates, the problem changes shape.
 - **Investors care only about expected return and standard deviation.** If they also care about crashes or lopsided outcomes, the best mix can differ between them.
 - **No limits on positions.** Here every tangency weight is positive, so a ban on short selling (selling what one does not own) changes nothing; with other inputs it can.
-- **The inputs are known.** In practice $\mu$ and $\Sigma$ are estimates, and small errors in $\mu$ move the weights a lot; see [estimation-error-and-shrinkage](07-estimation-error-and-shrinkage.md).
+- **The inputs are known.** In practice $\mu$ and $\Sigma$ are estimates, and small errors in $\mu$ move the weights a lot; see [Estimation error](07-estimation-error-and-shrinkage.md).
 - **Existence:** $\Sigma$ has an inverse (no mix of the risky assets is riskless), and the bank rate sits below the minimum-variance portfolio's expected return, 4.20 percent here. Step 3 shows what happens otherwise.
 
 ---
@@ -149,7 +133,7 @@ The tangency portfolio is fully invested in the three risky assets, so it lies i
 
 On the frontier, variance at expected return $\mu_p$ is $(a \mu_p^2 - 2 b \mu_p + c)/(ac - b^2)$. The tangency point is at $\mu_p = (c - b\,r_f)/(b - a\,r_f)$, which gives 4.80 percent, and the frontier's slope there equals 0.446, the line's slope. The checks compute both from $a$, $b$ and $c$ alone, with no weights.
 
-One step further: if every investor holds $w_T$ and the market must clear, $w_T$ must be the market portfolio itself. That turns this card into a statement about prices, which is [capm-and-beta](04-capm-and-beta.md).
+One step further: if every investor holds $w_T$ and the market must clear, $w_T$ must be the market portfolio itself. That turns this card into a statement about prices, which is [CAPM](04-capm-and-beta.md).
 
 ---
 
@@ -645,9 +629,9 @@ The two outputs agree line for line.
 
 - **The Sharpe ratio.** Fund reports and manager rankings quote excess return per unit of standard deviation, the slope of this card's lines. Sharpe proposed it in 1966 as a measure of fund performance.
 - **"How much in cash" advice.** Advice that fixes one diversified risky portfolio and varies only the cash or bond share by risk appetite is two-fund separation in plain form.
-- **Leverage on a low-risk mix.** The tangency mix here is mostly bonds; reaching share-like returns means borrowing, the logic behind levered balanced funds: [risk-parity-and-alternative-weightings](08-risk-parity-and-alternative-weightings.md).
-- **Index investing.** If everyone holds the tangency mix, it is the market portfolio, the argument behind [capm-and-beta](04-capm-and-beta.md).
-- **Portfolio construction desks.** The formula is fed estimated returns, so desks blend views with market-implied returns ([black-litterman](06-black-litterman.md)) or shrink the estimates ([estimation-error-and-shrinkage](07-estimation-error-and-shrinkage.md)).
+- **Leverage on a low-risk mix.** The tangency mix here is mostly bonds; reaching share-like returns means borrowing, the logic behind levered balanced funds: [Risk parity](08-risk-parity-and-alternative-weightings.md).
+- **Index investing.** If everyone holds the tangency mix, it is the market portfolio, the argument behind [CAPM](04-capm-and-beta.md).
+- **Portfolio construction desks.** The formula is fed estimated returns, so desks blend views with market-implied returns ([Black-Litterman](06-black-litterman.md)) or shrink the estimates ([Estimation error](07-estimation-error-and-shrinkage.md)).
 
 > **Say it back**
 > Mixing a risky portfolio with a riskless bank account moves along a straight line from the bank rate through that portfolio. The steepest such line is the best, and its slope is the Sharpe ratio. The portfolio that gives it, the tangency portfolio, solves the covariance equations with excess returns on the right, rescaled to add to one: 15.8 percent shares, 67.6 percent bonds, 16.6 percent gold here, with Sharpe ratio 0.446. Every efficient investor holds that one mix plus the bank, lending or borrowing to set the risk. It exists only while the bank rate is below the minimum-variance portfolio's expected return.
@@ -656,16 +640,16 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [efficient-frontier-and-minimum-variance](02-efficient-frontier-and-minimum-variance.md): the frontier curve, the minimum-variance portfolio and the constants $a$, $b$, $c$ that the tangency line touches and uses. Behind it, [two-asset-portfolio-risk-and-return](01-two-asset-portfolio-risk-and-return.md) shows why correlation, not only each asset's risk, sets a mix's risk.
+- [The efficient frontier](02-efficient-frontier-and-minimum-variance.md): the frontier curve, the minimum-variance portfolio and the constants $a$, $b$, $c$ that the tangency line touches and uses. Behind it, [Two assets](01-two-asset-portfolio-risk-and-return.md) shows why correlation, not only each asset's risk, sets a mix's risk.
 
 ---
 
 ## Where this goes next
 
-- [capm-and-beta](04-capm-and-beta.md): if every investor holds the tangency mix, it is the market portfolio, and each asset's expected return is fixed by how it moves with the market.
-- Later on this shelf, [factor-models-and-apt](05-factor-models-and-apt.md) replaces the one market line with several sources of reward.
+- [CAPM](04-capm-and-beta.md): if every investor holds the tangency mix, it is the market portfolio, and each asset's expected return is fixed by how it moves with the market.
+- Later on this shelf, [Factor models](05-factor-models-and-apt.md) replaces the one market line with several sources of reward.
 
-This card finds the best risky mix for given expected returns; the question it leaves open is what those expected returns must be, once everyone holds that mix, and [capm-and-beta](04-capm-and-beta.md) answers it.
+This card finds the best risky mix for given expected returns; the question it leaves open is what those expected returns must be, once everyone holds that mix, and [CAPM](04-capm-and-beta.md) answers it.
 
 ---
 

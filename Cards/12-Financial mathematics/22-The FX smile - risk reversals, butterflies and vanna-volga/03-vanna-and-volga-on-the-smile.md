@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The FX smile - risk reversals, butterflies and vanna-volga
-topic: How vega itself moves
-item: Vanna and volga
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/01-risk-reversal-and-butterfly|risk-reversal-and-butterfly]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/03-garman-kohlhagen-greeks|garman-kohlhagen-greeks]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/06-vanna|vanna]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-next:
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/04-vanna-volga-pricing|vanna-volga-pricing]]"
-tags: [mathematics, financial mathematics, vanna-and-volga-on-the-smile]
----
-
 # Vanna and volga: the two second-order vol Greeks, and why the risk reversal trades vanna and the butterfly trades volga
 
-Financial mathematics → The FX smile - risk reversals, butterflies and vanna-volga → How vega itself moves → Vanna and volga
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The FX smile - risk reversals, butterflies and vanna-volga](../../../SYLLABUS.md#w12-s22) → Vanna and volga
 
 ---
 
@@ -31,7 +12,7 @@ The dealer's risk report shows its **vega**: how much the option's price moves w
 
 The two turns have names. **Vanna** is how fast vega changes when spot moves. **Volga** is how fast vega changes when volatility moves. For the 1.10 call, vanna is −0.562861 and volga is 0.154787. A rising euro takes this call deeper into the money and away from its peak vega; a rise in volatility adds a little vega.
 
-The FX market quotes three things: the at-the-money vol, the 25-delta risk reversal and the 25-delta butterfly ([risk-reversal-and-butterfly](01-risk-reversal-and-butterfly.md)). Each quote is the price of a trade. The straddle is mostly vega. The risk reversal is mostly vanna. The butterfly, scaled to carry no vega, is mostly volga. That match is why the three quotes carry the three numbers a smile needs.
+The FX market quotes three things: the at-the-money vol, the 25-delta risk reversal and the 25-delta butterfly ([Risk reversal and butterfly](01-risk-reversal-and-butterfly.md)). Each quote is the price of a trade. The straddle is mostly vega. The risk reversal is mostly vanna. The butterfly, scaled to carry no vega, is mostly volga. That match is why the three quotes carry the three numbers a smile needs.
 
 **Vanna and volga are the two slopes of vega, one against spot and one against volatility; the straddle, the risk reversal and the vega-neutral butterfly each load mainly on one of vega, vanna and volga.**
 
@@ -62,7 +43,7 @@ $$\mathrm{Va} = \frac{\partial \mathcal{V}}{\partial S} = -\,e^{-r_f T}\,\varphi
 
 **Read it aloud: vanna is minus the discounted bell-curve height at d1, times d2, per unit of vol; volga is vega times d1 times d2, per unit of vol.**
 
-The symbol $\partial$ means a partial derivative: the slope in one input with every other input held fixed ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Both formulas hold for a call and for a put at the same strike.
+The symbol $\partial$ means a partial derivative: the slope in one input with every other input held fixed ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Both formulas hold for a call and for a put at the same strike.
 
 | Symbol | Plain meaning | In our example | Push it up and vanna, volga… |
 | --- | --- | --- | --- |
@@ -79,7 +60,7 @@ The symbol $\partial$ means a partial derivative: the slope in one input with ev
 | $a$, $w$, $\Delta$ | the 25-delta distance, $e^{-r_f T}N(-a) = 0.25$; straddles sold per strangle to cancel vega; delta, the euro hedge per euro of option | 0.650720; 0.803095 | — |
 | $C$, $P$, $\partial$, $dS$, $d\sigma$ | a euro call and a euro put, priced by Garman-Kohlhagen; the partial-derivative sign; a small move in spot, in vol | — | — |
 
-The helper distances, as on [garman-kohlhagen-greeks](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md):
+The helper distances, as on [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md):
 
 $$d_1 = \frac{\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
 
@@ -91,12 +72,12 @@ $$\text{straddle} = C(K_{\text{ATM}}) + P(K_{\text{ATM}}), \quad \text{RR} = C(K
 
 Here $C$ and $P$ are a euro call and a euro put. The risk reversal buys the call wing and sells the put wing. The butterfly buys the strangle (both wings) and sells $w$ straddles, with $w$ chosen so the butterfly carries no vega.
 
-**Conventions verified 2026-09-27:** spot delta with the premium not adjusted, ATM as the delta-neutral straddle, risk reversal as call vol minus put vol, butterfly as a smile strangle. These are the house conventions of [risk-reversal-and-butterfly](01-risk-reversal-and-butterfly.md); the checks rebuild the three pillar strikes from the quotes to six decimals. The broker's butterfly quote is converted on [market-strangle-and-smile-strangle](02-market-strangle-and-smile-strangle.md).
+**Conventions verified 2026-09-27:** spot delta with the premium not adjusted, ATM as the delta-neutral straddle, risk reversal as call vol minus put vol, butterfly as a smile strangle. These are the house conventions of [Risk reversal and butterfly](01-risk-reversal-and-butterfly.md); the checks rebuild the three pillar strikes from the quotes to six decimals. The broker's butterfly quote is converted on [The broker butterfly](02-market-strangle-and-smile-strangle.md).
 
 ### When it holds
 
 - **Garman-Kohlhagen at one vol.** The formulas are slopes of the model price. On a smile each option has its own implied vol, and the Greeks change with the vol chosen: the risk reversal's vega is 0.013526 at the flat 10 percent and exactly zero with each leg at its own vol.
-- **Strike held fixed.** Vanna moves spot and keeps the strike. If the smile is marked by delta instead of strike, spot moving also moves each option's vol, and the true hedge differs; that is [smile-adjusted-delta-and-sticky-delta](06-smile-adjusted-delta-and-sticky-delta.md).
+- **Strike held fixed.** Vanna moves spot and keeps the strike. If the smile is marked by delta instead of strike, spot moving also moves each option's vol, and the true hedge differs; that is [Hedging with the smile](06-smile-adjusted-delta-and-sticky-delta.md).
 - **Small moves.** Vanna and volga are second-order terms of a Taylor expansion (a polynomial stand-in for the price near today's inputs). For a large vol jump the third-order terms matter and the second-order estimate drifts off by roughly those terms.
 - **Away from expiry.** As $T$ shrinks, $\sigma\sqrt{T}$ shrinks, $d_1$ and $d_2$ blow up away from the strike and pile together at it; near expiry both Greeks spike at the strike and vanish elsewhere.
 - **The house delta convention.** The trade Greeks depend on where the 25-delta strikes sit. A premium-adjusted or forward delta moves the strikes and every trade number with them.
@@ -109,7 +90,7 @@ Here $C$ and $P$ are a euro call and a euro put. The risk reversal buys the call
 
 The option's price depends on spot $S$ and vol $\sigma$ (and on the strike, rates and time, which stay fixed here). Vega is the slope of the price in $\sigma$. That slope is itself a function of $S$ and $\sigma$, so it has two slopes of its own: one in $S$ (vanna) and one in $\sigma$ (volga). Nothing more is needed than the chain rule and three small facts.
 
-These are exactly the terms a flat-vol hedge leaves open. Expand a price change to second order in a spot move $dS$ and a vol move $d\sigma$: the three terms with $d\sigma$ in them are $\mathcal{V}\,d\sigma$, $\mathrm{Va}\,dS\,d\sigma$ and $\tfrac12\mathrm{Vo}\,d\sigma^2$. A model that believes vol never moves prices none of them. The same expansion drives [vanna-volga-pricing](04-vanna-volga-pricing.md); this card computes the three numbers it needs.
+These are exactly the terms a flat-vol hedge leaves open. Expand a price change to second order in a spot move $dS$ and a vol move $d\sigma$: the three terms with $d\sigma$ in them are $\mathcal{V}\,d\sigma$, $\mathrm{Va}\,dS\,d\sigma$ and $\tfrac12\mathrm{Vo}\,d\sigma^2$. A model that believes vol never moves prices none of them. The same expansion drives [Vanna-volga pricing](04-vanna-volga-pricing.md); this card computes the three numbers it needs.
 
 ### Step 1: three facts to differentiate with
 
@@ -194,11 +175,11 @@ The market's wing strikes are not built at one vol. The put wing is set at 10.75
 - the vega-neutral butterfly, selling $w$ = 0.803095 straddles per strangle, keeps a vanna of −0.104421;
 - the risk reversal's volga is 0.241148.
 
-The pattern survives. The risk reversal carries 39.497347 times the butterfly's vanna. The butterfly carries 12.381266 times the risk reversal's volga. Each trade still loads mainly on one Greek, and the leaks are what [vanna-volga-pricing](04-vanna-volga-pricing.md) handles by solving for exact weights instead of assuming purity.
+The pattern survives. The risk reversal carries 39.497347 times the butterfly's vanna. The butterfly carries 12.381266 times the risk reversal's volga. Each trade still loads mainly on one Greek, and the leaks are what [Vanna-volga pricing](04-vanna-volga-pricing.md) handles by solving for exact weights instead of assuming purity.
 
 ### Another road: vanna as the slope of delta
 
-Vanna has a second reading. Delta, the euro hedge per euro of option, is $\Delta = e^{-r_f T}N(d_1)$. Its slope in $\sigma$ is $e^{-r_f T}\varphi(d_1)\cdot(-d_2/\sigma)$, which is vanna again. Mixed partial derivatives of a smooth function do not care about order: the slope of vega in spot equals the slope of delta in vol. On a desk this is the more useful reading. A vol move changes the delta hedge by vanna times the move; the single-Greek treatment is on [vanna](../09-The%20Greeks%2C%20one%20each/06-vanna.md).
+Vanna has a second reading. Delta, the euro hedge per euro of option, is $\Delta = e^{-r_f T}N(d_1)$. Its slope in $\sigma$ is $e^{-r_f T}\varphi(d_1)\cdot(-d_2/\sigma)$, which is vanna again. Mixed partial derivatives of a smooth function do not care about order: the slope of vega in spot equals the slope of delta in vol. On a desk this is the more useful reading. A vol move changes the delta hedge by vanna times the move; the single-Greek treatment is on [Vanna](../09-The%20Greeks%2C%20one%20each/06-vanna.md).
 
 ---
 
@@ -686,10 +667,10 @@ The two outputs agree line for line. They reach the bell-curve area by different
 
 - **The FX options risk report.** Books show vega, vanna and volga beside delta and gamma, by expiry. Long risk reversals means long vanna; long butterflies means long volga.
 - **What the quotes are pricing.** A negative risk reversal says the market charges more for options whose vega grows as the euro falls: a view that spot and vol move against each other. A positive butterfly says wing options cost more than one vol implies: a view that vol itself is uncertain. Vanna and volga are the exposures those two views touch.
-- **Pricing anything off the smile.** Match a target's vega, vanna and volga with the three pillars and charge the market's price for each: [vanna-volga-pricing](04-vanna-volga-pricing.md), and the smile it implies, [vanna-volga-smile-curve](05-vanna-volga-smile-curve.md).
-- **The broker's butterfly.** The volga trade on the screen is quoted as a market strangle, converted to the smile's own bow on [market-strangle-and-smile-strangle](02-market-strangle-and-smile-strangle.md).
-- **Hedging on a smile.** When spot moves, vanna is why the delta hedge of a smile-marked option differs from the flat-vol one: [smile-adjusted-delta-and-sticky-delta](06-smile-adjusted-delta-and-sticky-delta.md).
-- **Stock options too.** Read the euro rate as a dividend yield and this is the equity version; volga alone is on [volga](../09-The%20Greeks%2C%20one%20each/07-volga.md).
+- **Pricing anything off the smile.** Match a target's vega, vanna and volga with the three pillars and charge the market's price for each: [Vanna-volga pricing](04-vanna-volga-pricing.md), and the smile it implies, [The vanna-volga smile](05-vanna-volga-smile-curve.md).
+- **The broker's butterfly.** The volga trade on the screen is quoted as a market strangle, converted to the smile's own bow on [The broker butterfly](02-market-strangle-and-smile-strangle.md).
+- **Hedging on a smile.** When spot moves, vanna is why the delta hedge of a smile-marked option differs from the flat-vol one: [Hedging with the smile](06-smile-adjusted-delta-and-sticky-delta.md).
+- **Stock options too.** Read the euro rate as a dividend yield and this is the equity version; volga alone is on [Volga](../09-The%20Greeks%2C%20one%20each/07-volga.md).
 
 > **Say it back**
 > Vega is not fixed: it moves when spot moves and when vol moves. Vanna, $-e^{-r_f T}\varphi(d_1)d_2/\sigma$, is its slope in spot and has the sign of $-d_2$. Volga, $\mathcal{V}d_1d_2/\sigma$, is its slope in vol and has the sign of $d_1 d_2$, zero at the delta-neutral strike. With symmetric wings at one vol, the straddle carries vega, the risk reversal vanna with no vega, and the vega-neutral butterfly volga alone. On the real smile the pattern holds with small leaks, which is why three quotes are enough to price the three risks.
@@ -698,14 +679,14 @@ The two outputs agree line for line. They reach the bell-curve area by different
 
 ## What this builds on
 
-- [risk-reversal-and-butterfly](01-risk-reversal-and-butterfly.md): the three quotes, the three pillar vols and strikes, and the trades named after the quotes.
-- [garman-kohlhagen-greeks](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): delta and vega of a currency option, which this card differentiates once more.
-- [vanna](../09-The%20Greeks%2C%20one%20each/06-vanna.md): the single Greek on a stock option, as the slope of delta in vol.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes in one input with the others held fixed, and why mixed slopes can be taken in either order.
+- [Risk reversal and butterfly](01-risk-reversal-and-butterfly.md): the three quotes, the three pillar vols and strikes, and the trades named after the quotes.
+- [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): delta and vega of a currency option, which this card differentiates once more.
+- [Vanna](../09-The%20Greeks%2C%20one%20each/06-vanna.md): the single Greek on a stock option, as the slope of delta in vol.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes in one input with the others held fixed, and why mixed slopes can be taken in either order.
 
 ## Where this goes next
 
-- [vanna-volga-pricing](04-vanna-volga-pricing.md): solves for the basket of three pillars with a target's exact vega, vanna and volga, leaks included, and charges the market's price for it.
+- [Vanna-volga pricing](04-vanna-volga-pricing.md): solves for the basket of three pillars with a target's exact vega, vanna and volga, leaks included, and charges the market's price for it.
 
 The three trades each carry mainly one risk, and the market prices each trade; what one unit of vanna or volga is worth, and what that makes any other option cost, is the question vanna-volga pricing answers.
 

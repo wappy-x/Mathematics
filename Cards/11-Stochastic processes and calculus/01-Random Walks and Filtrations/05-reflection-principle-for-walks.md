@@ -1,24 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Random Walks and Filtrations
-topic: Mirror paths and the best pile
-item: Reflection principle
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/02-simple-random-walk|simple-random-walk]]"
-  - "[[Cards/04-Combinatorics and graphs/06-Lattice Paths and Catalan Numbers/02-reflection-principle-and-ballot-problem|reflection-principle-and-ballot-problem]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/06-first-passage-and-hitting-times|first-passage-and-hitting-times]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/04-reflection-principle-and-running-maximum|reflection-principle-and-running-maximum]]"
-tags: [mathematics, stochastic processes and calculus, reflection-principle-for-walks]
----
-
 # Reflection principle: counting paths that touch a level
 
-Stochastic processes and calculus → Random Walks and Filtrations → Mirror paths and the best pile → Reflection principle
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Random Walks and Filtrations](../../../SYLLABUS.md#w11-s01) → Reflection principle
 
 ---
 
@@ -53,7 +35,7 @@ Orange: one fixed run of 20 rounds, chosen by hand, not simulated. It first reac
 
 ## The formula
 
-Notation first, in words. The wing writes a process as $X_n$, read "the value at time n" ([processes-and-paths](01-processes-and-paths.md)). Here $X_n$ is the gambler's pile after round $n$, time is counted in rounds, and one session's sequence of piles is a **path**, the run drawn against time. The pile starts at $x_0$ = 10 chips. The target is $\ell$ = 15 chips, a gap of $a$ = 5 above the start. The **best pile so far**, $M_n$, is the largest of $X_0, X_1, \ldots, X_n$; probabilists call it the **running maximum**. Reaching 15 by round $n$ is the same event as $M_n \ge \ell$.
+Notation first, in words. The wing writes a process as $X_n$, read "the value at time n" ([Stochastic processes](01-processes-and-paths.md)). Here $X_n$ is the gambler's pile after round $n$, time is counted in rounds, and one session's sequence of piles is a **path**, the run drawn against time. The pile starts at $x_0$ = 10 chips. The target is $\ell$ = 15 chips, a gap of $a$ = 5 above the start. The **best pile so far**, $M_n$, is the largest of $X_0, X_1, \ldots, X_n$; probabilists call it the **running maximum**. Reaching 15 by round $n$ is the same event as $M_n \ge \ell$.
 
 $$P(M_n \ge \ell) = P(X_n \ge \ell) + P(X_n > \ell), \qquad \ell \ge x_0$$
 
@@ -75,7 +57,7 @@ $$P(\tau = n) = \frac{a}{n}\, P(X_n = \ell), \qquad a \ge 1,\ n \ge 1$$
 
 **Read it aloud:** of all the ways to stand at the target after round n, the share that arrive there for the first time at round n is the gap over the number of rounds.
 
-Every probability here counts paths. Each of the $2^n$ win-loss sequences of n rounds has chance $1/2^n$, and $h$ wins leave the pile at $x_0 + 2h - n$, which happens in $C(n, h)$ of them, read "n choose h" ([simple-random-walk](02-simple-random-walk.md)).
+Every probability here counts paths. Each of the $2^n$ win-loss sequences of n rounds has chance $1/2^n$, and $h$ wins leave the pile at $x_0 + 2h - n$, which happens in $C(n, h)$ of them, read "n choose h" ([Simple random walk](02-simple-random-walk.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -109,7 +91,7 @@ After 20 rounds the pile is even, so nobody ends at exactly 15: the two terms of
 
 The first time the pile stands at 15, what happens next is a new run of fair tosses starting at 15. A fair run and its mirror image, every win swapped for a loss, are equally likely: each sequence of n rounds has chance $1/2^n$. So from the first touch on, ending 3 below 15 and ending 3 above are equally likely. Counting runs that touch 15 becomes counting runs by where they end, and those counts are binomial coefficients.
 
-The counting version of this mirror, with votes instead of chips, is proved on [reflection-principle-and-ballot-problem](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md). This card spends its effort on what the mirror says about the process: its best pile, and when it first arrives.
+The counting version of this mirror, with votes instead of chips, is proved on [The reflection principle](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md). This card spends its effort on what the mirror says about the process: its best pile, and when it first arrives.
 
 ### Step 1: the mirror is a one-for-one pairing
 
@@ -124,7 +106,7 @@ A run touching 15 by round 20 ends either at 15 or above, or below 15. The first
 <details>
 <summary>Detailed proof</summary>
 
-Fix a starting pile $x_0$, a target $\ell > x_0$ and a number of rounds $n$. The sample space is the $2^n$ win-loss sequences, each with probability $2^{-n}$ ([simple-random-walk](02-simple-random-walk.md)).
+Fix a starting pile $x_0$, a target $\ell > x_0$ and a number of rounds $n$. The sample space is the $2^n$ win-loss sequences, each with probability $2^{-n}$ ([Simple random walk](02-simple-random-walk.md)).
 
 **The map.** Let $b < \ell$. Let $A_b$ be the sequences whose path reaches $\ell$ at some round and ends at $b$, and $B_b$ the sequences whose path ends at $2\ell - b$. For a sequence in $A_b$, let $\tau$ be its first round at $\ell$, and flip every step after round $\tau$. The path up to $\tau$ is unchanged. After $\tau$ each step is negated, so the new path at round $j \ge \tau$ is $2\ell - X_j$. It ends at $2\ell - b$: the image lies in $B_b$.
 
@@ -584,9 +566,9 @@ The two outputs agree line for line, the simulation included, because both langu
 
 - **Quit-while-ahead rules.** "Leave when up 5" succeeds about twice as often as "end at least 5 up", and leaves the expected result of a fair game unchanged.
 - **Peeking at a running experiment.** A tally stopped the first time it crosses a line crosses it far more often than one read once at the end; the mirror measures the inflation.
-- **Counting votes.** The chance the winner leads throughout the count is the ballot theorem: [reflection-principle-and-ballot-problem](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md).
-- **Going broke first.** With a floor at 0, a ceiling at 15 and no deadline, the question is the gambler's ruin: [gamblers-ruin](04-gamblers-ruin.md).
-- **Barrier contracts.** The continuous version prices contracts that pay only if a share price touches a level before a date: [reflection-principle-and-running-maximum](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md).
+- **Counting votes.** The chance the winner leads throughout the count is the ballot theorem: [The reflection principle](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md).
+- **Going broke first.** With a floor at 0, a ceiling at 15 and no deadline, the question is the gambler's ruin: [Gambler's ruin](04-gamblers-ruin.md).
+- **Barrier contracts.** The continuous version prices contracts that pay only if a share price touches a level before a date: [Reflection principle](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md).
 
 > **Say it back**
 > Flip a fair walk after its first touch of a level, and a run that fell back becomes one that ends as far above. The flip pairs the two kinds of run, and in a fair game they are equally likely. So touching the level by round n has the chance of ending at or above it plus the chance of ending above it: 0.2632 for 10 chips reaching 15 in 20 rounds. Subtracting gives the law of the best pile and the first-arrival chance, a/n times the chance of standing at the level. It needs fair steps of one and a fixed deadline.
@@ -595,13 +577,13 @@ The two outputs agree line for line, the simulation included, because both langu
 
 ## What this builds on
 
-- [simple-random-walk](02-simple-random-walk.md): the fair walk with steps of one, its $2^n$ equally likely paths, and the binomial law of where it ends.
-- [reflection-principle-and-ballot-problem](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md): the mirror as a counting argument, and the ballot theorem for votes. This card reads both as statements about a process in time.
+- [Simple random walk](02-simple-random-walk.md): the fair walk with steps of one, its $2^n$ equally likely paths, and the binomial law of where it ends.
+- [The reflection principle](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md): the mirror as a counting argument, and the ballot theorem for votes. This card reads both as statements about a process in time.
 
 ## Where this goes next
 
-- [first-passage-and-hitting-times](06-first-passage-and-hitting-times.md): the first-arrival round as a random time in its own right: why it comes for sure without a deadline, why its average is infinite, and the return time to the start.
-- [reflection-principle-and-running-maximum](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the same mirror for Brownian motion, where the ending value can never sit exactly on the level and "twice the tail" becomes exact.
+- [Hitting times](06-first-passage-and-hitting-times.md): the first-arrival round as a random time in its own right: why it comes for sure without a deadline, why its average is infinite, and the return time to the start.
+- [Reflection principle](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the same mirror for Brownian motion, where the ending value can never sit exactly on the level and "twice the tail" becomes exact.
 
 What this card leaves open: once the deadline is gone, the pile reaches 15 for sure, but how many rounds does that take on average?
 

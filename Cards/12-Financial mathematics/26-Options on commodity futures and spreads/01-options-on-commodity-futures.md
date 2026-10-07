@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Options on commodity futures and spreads
-topic: Options written on a futures quote
-item: Options on a futures price
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/04-contango-backwardation-and-roll-yield|contango-backwardation-and-roll-yield]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/06-black-76-and-forward-level-pricing|black-76-and-forward-level-pricing]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/05-futures-margining-and-the-forward-futures-difference|futures-margining-and-the-forward-futures-difference]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/07-bachelier-model|bachelier-model]]"
-next:
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/02-futures-option-greeks|futures-option-greeks]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/04-margrabe-and-kirk-spread-options|margrabe-and-kirk-spread-options]]"
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/02-kemna-vorst-geometric-asian|kemna-vorst-geometric-asian]]"
-tags: [mathematics, financial mathematics, options-on-commodity-futures]
----
-
 # Options on a futures price: Black-76 with the future as underlying, the spot nowhere, and two expiry dates to keep apart
 
-Financial mathematics → Options on commodity futures and spreads → Options written on a futures quote → Options on a futures price
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Options on commodity futures and spreads](../../../SYLLABUS.md#w12-s26) → Options on a futures price
 
 ---
 
@@ -37,7 +16,7 @@ The same formula stops working when the future can go below zero. On 20 April 20
 
 **An option on a commodity future is Black-76 with the futures quote as the underlying, run to the option's own expiry, discounted to the day the cash moves, or not discounted at all when the premium is itself margined.**
 
-**What kind of fact this is:** a model: the futures quote is *taken* to wander lognormally with one volatility, which fits oil well enough between crises and fails at zero. Inside it, two theorems are proved on this card in Why it works: the spot drops out, and the margined quote is the up-front premium divided by the discount factor. The Black-76 formula itself is proved on [black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md).
+**What kind of fact this is:** a model: the futures quote is *taken* to wander lognormally with one volatility, which fits oil well enough between crises and fails at zero. Inside it, two theorems are proved on this card in Why it works: the spot drops out, and the margined quote is the up-front premium divided by the discount factor. The Black-76 formula itself is proved on [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md).
 
 ### The picture: what the option settles for on expiry day
 
@@ -90,10 +69,10 @@ At the money, with $F = K$, the call and the put cost the same: $C - P = D\,(F -
 
 ### When it holds
 
-- **The futures quote wanders lognormally with one volatility.** In practice each strike carries its own volatility, and the oil call wing is often richer than the put wing: [commodity-implied-vol-and-the-call-skew](03-commodity-implied-vol-and-the-call-skew.md). A wrong volatility moves the price by about vega times the error: 0.232549 dollars a barrel per volatility point here.
+- **The futures quote wanders lognormally with one volatility.** In practice each strike carries its own volatility, and the oil call wing is often richer than the put wing: [Implied vol on a futures option and the commodity smile](03-commodity-implied-vol-and-the-call-skew.md). A wrong volatility moves the price by about vega times the error: 0.232549 dollars a barrel per volatility point here.
 - **The futures price stays above zero.** A lognormal quote cannot reach zero. When it did, in April 2020, the formula returned no number, and the check below shows it.
 - **Exercise on expiry day only, or a margined premium.** Brent options on ICE may be exercised any business day. With the premium margined that right is worth nothing extra, as Step 4 proves. With the premium paid up front it is worth 3.4 cents a barrel here, and the formula misses it.
-- **Rates known in advance.** Then futures and forward quotes coincide and one discount factor does. With random rates the two quotes part, as [futures-margining-and-the-forward-futures-difference](../03-Contracts%20and%20No-Arbitrage/05-futures-margining-and-the-forward-futures-difference.md) measures; the futures quote is still the one to use.
+- **Rates known in advance.** Then futures and forward quotes coincide and one discount factor does. With random rates the two quotes part, as [Futures](../03-Contracts%20and%20No-Arbitrage/05-futures-margining-and-the-forward-futures-difference.md) measures; the futures quote is still the one to use.
 
 **Conventions verified 27 Sep 2026:** ICE's Brent Crude American-style option is on 1,000 barrels, American exercise, futures-style margined, and expires three business days before its futures contract stops trading; the future stops on the last business day of the second month before its contract month. Exchanges revise these terms; read the contract page before substituting.
 
@@ -103,7 +82,7 @@ At the money, with $F = K$, the call and the put cost the same: $C - P = D\,(F -
 
 ### Step 0: a future is a fair bet on its own number
 
-Opening a future costs nothing, and daily settlement pays each day's move in cash at once. A position that costs nothing and pays its moves at once can be worth nothing only if its average move is nothing under the pricing rule, the risk-neutral average that prices every trade: otherwise everyone would open a billion of them. So the futures quote drifts nowhere. Everything a barrel costs to carry, earns in convenience, or pays in storage is already inside the number 85. The shape of the curve that produces it is the business of [contango-backwardation-and-roll-yield](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/04-contango-backwardation-and-roll-yield.md).
+Opening a future costs nothing, and daily settlement pays each day's move in cash at once. A position that costs nothing and pays its moves at once can be worth nothing only if its average move is nothing under the pricing rule, the risk-neutral average that prices every trade: otherwise everyone would open a billion of them. So the futures quote drifts nowhere. Everything a barrel costs to carry, earns in convenience, or pays in storage is already inside the number 85. The shape of the curve that produces it is the business of [Contango and backwardation](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/04-contango-backwardation-and-roll-yield.md).
 
 That one sentence is the reason Black-76 fits, and the reason the spot can be left out.
 
@@ -126,7 +105,7 @@ Only the first arrow carries volatility and discounting. The later boxes are the
 
 ### Step 2: price the payoff with Black-76
 
-Step 0 says the quote drifts nowhere; the model adds that its logarithm spreads as a bell curve with width $\sigma\sqrt{T}$. That is exactly the setting of [black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md), which proves the formula: average the payoff over the bell curve, and the strike half gets the chance $N(d_2)$ while the futures half gets the shifted chance $N(d_1)$. The check does that average again here by brute force, Simpson's rule over the bell curve, and lands on 7.002679 to six decimals.
+Step 0 says the quote drifts nowhere; the model adds that its logarithm spreads as a bell curve with width $\sigma\sqrt{T}$. That is exactly the setting of [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md), which proves the formula: average the payoff over the bell curve, and the strike half gets the chance $N(d_2)$ while the futures half gets the shifted chance $N(d_1)$. The check does that average again here by brute force, Simpson's rule over the bell curve, and lands on 7.002679 to six decimals.
 
 ### Step 3: the spot drops out
 
@@ -161,7 +140,7 @@ The margined quote also kills early exercise. Exercising early, with the quote a
 
 ### Step 5: where the model ends
 
-A lognormal quote puts zero weight below zero, at every level. The **normal**, or **Bachelier**, model lets the quote move by dollars rather than percentages ([bachelier-model](../05-Black-Scholes%20from%20the%20Ground%20Up/07-bachelier-model.md)). Matched at 85, a 30 percent volatility is about $\sigma_N = 0.30 \times 85 = 25.50$ dollars a year, and the Bachelier call is 7.015811, 0.013132 above Black-76. The chance of a negative quote at six months is 0.000001. The models only part company when the quote is low. With one month to run and the dollar volatility held at 25.50, as it is when moves stay dollar-sized, the normal model's weight below zero grows as the quote falls:
+A lognormal quote puts zero weight below zero, at every level. The **normal**, or **Bachelier**, model lets the quote move by dollars rather than percentages ([Bachelier](../05-Black-Scholes%20from%20the%20Ground%20Up/07-bachelier-model.md)). Matched at 85, a 30 percent volatility is about $\sigma_N = 0.30 \times 85 = 25.50$ dollars a year, and the Bachelier call is 7.015811, 0.013132 above Black-76. The chance of a negative quote at six months is 0.000001. The models only part company when the quote is low. With one month to run and the dollar volatility held at 25.50, as it is when moves stay dollar-sized, the normal model's weight below zero grows as the quote falls:
 
 ```
 chance the future ends below zero, one month left, normal vol 25.50 USD/bbl/yr (lognormal: none at any level)
@@ -198,7 +177,7 @@ House Brent: $F = 85$, $K = 85$, $\sigma = 30$ percent, $T = 0.5$, $r = 5$ perce
 
 A buyer paying up front hands over 7,002.68 dollars per lot today; a margined buyer on ICE hands over nothing today and is quoted 7.18 a barrel. Both have the same value today.
 
-The option's first-order sensitivities, printed by the check and taken apart properly on [futures-option-greeks](02-futures-option-greeks.md):
+The option's first-order sensitivities, printed by the check and taken apart properly on [Greeks of a futures option](02-futures-option-greeks.md):
 
 | Greek | Formula | Value |
 | --- | --- | --- |
@@ -636,8 +615,8 @@ The two outputs agree line for line.
 - **ICE Brent options.** American exercise, futures-style margined, 1,000 barrels, expiring three business days before the future. The quote is $V$, and by Step 4 early exercise has no value.
 - **Options paid on the trade date.** Where the premium changes hands up front, the price is $C$, and an American contract carries a small early-exercise premium that needs a tree.
 - **April 2020.** With West Texas crude futures near zero and then below it, commodity exchanges temporarily switched their option models from Black-Scholes to Bachelier; CME Clearing's switch took effect on 22 April 2020, two days after the May contract settled at −37.63.
-- **Refining and power margins.** A refiner's margin is an option on the gap between two futures, gasoline and crude: [margrabe-and-kirk-spread-options](04-margrabe-and-kirk-spread-options.md), with its sensitivities on [spread-option-greeks](05-spread-option-greeks.md) and the correlation read back on [implied-correlation-from-a-spread-option](06-implied-correlation-from-a-spread-option.md). Electricity, which cannot be stored, strains Step 0 hardest: [electricity-and-the-spark-spread](07-electricity-and-the-spark-spread.md).
-- **Quoting in volatility.** Desks quote these options by the $\sigma$ that makes the formula match the price, and the numbers differ by strike: [commodity-implied-vol-and-the-call-skew](03-commodity-implied-vol-and-the-call-skew.md).
+- **Refining and power margins.** A refiner's margin is an option on the gap between two futures, gasoline and crude: [Spread options](04-margrabe-and-kirk-spread-options.md), with its sensitivities on [Greeks of a spread option](05-spread-option-greeks.md) and the correlation read back on [Correlation from a spread option](06-implied-correlation-from-a-spread-option.md). Electricity, which cannot be stored, strains Step 0 hardest: [Power that cannot be stored](07-electricity-and-the-spark-spread.md).
+- **Quoting in volatility.** Desks quote these options by the $\sigma$ that makes the formula match the price, and the numbers differ by strike: [Implied vol on a futures option and the commodity smile](03-commodity-implied-vol-and-the-call-skew.md).
 
 > **Say it back**
 > A futures quote costs nothing to hold and settles daily, so it is a fair bet on itself, and every carry cost already sits inside it. An option on it is Black-76 with that quote as the underlying, so the spot never appears. The volatility and the discount run to the option's expiry, not the future's and not the contract month. A premium paid up front is $C$; a margined premium is $C/D$, the same value, and it makes early exercise worthless. At or below zero the lognormal model stops, and the normal model takes over.
@@ -646,16 +625,16 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [contango-backwardation-and-roll-yield](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/04-contango-backwardation-and-roll-yield.md): the futures curve and the convenience yield that Step 3 shows cancelling.
-- [black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md): the formula itself, proved.
-- [futures-margining-and-the-forward-futures-difference](../03-Contracts%20and%20No-Arbitrage/05-futures-margining-and-the-forward-futures-difference.md): daily settlement, and why a margined quote is a fair bet on itself.
-- [bachelier-model](../05-Black-Scholes%20from%20the%20Ground%20Up/07-bachelier-model.md): the normal model that took over when oil went negative.
+- [Contango and backwardation](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/04-contango-backwardation-and-roll-yield.md): the futures curve and the convenience yield that Step 3 shows cancelling.
+- [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md): the formula itself, proved.
+- [Futures](../03-Contracts%20and%20No-Arbitrage/05-futures-margining-and-the-forward-futures-difference.md): daily settlement, and why a margined quote is a fair bet on itself.
+- [Bachelier](../05-Black-Scholes%20from%20the%20Ground%20Up/07-bachelier-model.md): the normal model that took over when oil went negative.
 
 ## Where this goes next
 
-- [futures-option-greeks](02-futures-option-greeks.md): the Greeks table taken apart, including the two meanings of rho.
-- [margrabe-and-kirk-spread-options](04-margrabe-and-kirk-spread-options.md): an option on the gap between two futures.
-- [kemna-vorst-geometric-asian](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/02-kemna-vorst-geometric-asian.md): an option on the average futures price over a month, the way most physical oil is priced.
+- [Greeks of a futures option](02-futures-option-greeks.md): the Greeks table taken apart, including the two meanings of rho.
+- [Spread options](04-margrabe-and-kirk-spread-options.md): an option on the gap between two futures.
+- [Kemna-Vorst](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/02-kemna-vorst-geometric-asian.md): an option on the average futures price over a month, the way most physical oil is priced.
 
 This card prices one future against a fixed strike; the question it leaves open is how to price an option whose strike is itself another moving futures price.
 

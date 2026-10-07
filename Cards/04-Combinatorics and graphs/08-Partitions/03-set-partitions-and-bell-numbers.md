@@ -1,26 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Partitions
-topic: Unnamed groups
-item: Set partitions and Bell numbers
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/01-pascals-rule-and-the-triangle|pascals-rule-and-the-triangle]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/06-equivalence-relations-and-partitions|equivalence-relations-and-partitions]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/08-Partitions/04-stirling-numbers-second-kind|stirling-numbers-second-kind]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - set-partitions-and-bell-numbers
----
-
 # Set partitions and Bell numbers: splitting distinct people into unnamed teams of any sizes
 
-Combinatorics and graphs → Partitions → Unnamed groups → Set partitions and Bell numbers
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Partitions](../../../SYLLABUS.md#w04-s08) → Set partitions and Bell numbers
 
 ---
 
@@ -55,7 +35,7 @@ Dara has one taxi, so every split lands in exactly one branch: 1 + 3 + 6 + 5 = 1
 
 ## The formula
 
-Two pieces of notation carry the card, both written as functions rather than with subscripts. $B(n)$, read "B of n", is the number of splits of n named people: the Bell number. $C(n, k)$, read "n choose k", counts the ways to pick k of n, order ignored ([pascals-rule-and-the-triangle](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md)).
+Two pieces of notation carry the card, both written as functions rather than with subscripts. $B(n)$, read "B of n", is the number of splits of n named people: the Bell number. $C(n, k)$, read "n choose k", counts the ways to pick k of n, order ignored ([Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md)).
 
 $$B(n+1) = C(n,0)\,B(0) + C(n,1)\,B(1) + \cdots + C(n,n)\,B(n)$$
 
@@ -89,7 +69,7 @@ An empty crowd splits exactly one way: into no groups at all.
 
 ### Step 0: one person's company splits the count
 
-Each of the fifteen splits answers "who rides with Dara?" once and only once. A count breaks apart along any such question and the pieces add (as [pascals-rule-and-the-triangle](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md) does with one item in or out).
+Each of the fifteen splits answers "who rides with Dara?" once and only once. A count breaks apart along any such question and the pieces add (as [Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md) does with one item in or out).
 
 ### Step 1: describe the branch by who is left over
 
@@ -372,11 +352,11 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Treating the groups as places rather than as company.** A block is known only by who is in it, so a split and every rearrangement of its blocks are one split. Two numbered cars take the four friends 14 ways, two unnamed cars 7: labelled containers never give a smaller answer, sorted out in [twelvefold-way](06-twelvefold-way.md).
+> **Treating the groups as places rather than as company.** A block is known only by who is in it, so a split and every rearrangement of its blocks are one split. Two numbered cars take the four friends 14 ways, two unnamed cars 7: labelled containers never give a smaller answer, sorted out in [The twelvefold way](06-twelvefold-way.md).
 >
 > - **Reading the recurrence off by one.** C(4,0)B(0) + … + C(4,4)B(4) is 52, which is B(5), not B(4).
 > - **Dropping the empty split.** B(0) = 1, not 0; set it to 0 and every Bell number is 0.
-> - **Keeping the sizes and losing the names.** Four friends then give 5 size patterns, not 15 splits: the count on [integer-partitions](01-integer-partitions.md).
+> - **Keeping the sizes and losing the names.** Four friends then give 5 size patterns, not 15 splits: the count on [Integer partitions](01-integer-partitions.md).
 
 ---
 
@@ -384,7 +364,7 @@ The two outputs match line for line.
 
 - **Clustering.** Sorting readings or customers into groups, with no fixed number of groups. The Bell number is the size of the search: eight items already allow 4,140 groupings, so every clustering method is a shortcut, not a survey.
 - **Rhyme schemes.** A four-line stanza's scheme splits its lines into rhyming groups — AABB, ABAB, ABBA, AAAA and the rest. Fifteen schemes, the same fifteen: the rhymes have no names and the lines do.
-- **Saying which things count as the same.** Declaring an equivalence and cutting a set into blocks are one act ([equivalence-relations-and-partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md)), so B(n) counts those declarations too.
+- **Saying which things count as the same.** Declaring an equivalence and cutting a set into blocks are one act ([Equivalence relations and partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md)), so B(n) counts those declarations too.
 
 > **Say it back**
 > A set partition cuts named people into non-empty groups that have no names, and the number of groups is free. The Bell number B(n) counts them: 1, 1, 2, 5, 15, 52, 203 from n = 0 up. To add one more person, choose who is left out of that person's group, in C(n, k) ways, and split those left out in B(k) ways. Adding over the leftover's size gives B(n + 1), on the floor B(0) = 1. Four friends get home 15 ways; five do it 52 ways.
@@ -393,14 +373,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [pascals-rule-and-the-triangle](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md): C(n, k) itself, and the habit of breaking a count apart by singling out one item.
-- [equivalence-relations-and-partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md): what a partition is, and why its blocks cover everything without overlapping.
+- [Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md): C(n, k) itself, and the habit of breaking a count apart by singling out one item.
+- [Equivalence relations and partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md): what a partition is, and why its blocks cover everything without overlapping.
 
 ## Where this goes next
 
-- [stirling-numbers-second-kind](04-stirling-numbers-second-kind.md): the same splits counted with the number of groups held fixed.
+- [Stirling numbers of the second kind](04-stirling-numbers-second-kind.md): the same splits counted with the number of groups held fixed.
 
-Sorted by how many taxis they use, the fifteen splits fall 1, 7, 6, 1 — and this card never says why, which is the question [stirling-numbers-second-kind](04-stirling-numbers-second-kind.md) answers.
+Sorted by how many taxis they use, the fifteen splits fall 1, 7, 6, 1 — and this card never says why, which is the question [Stirling numbers of the second kind](04-stirling-numbers-second-kind.md) answers.
 
 ---
 

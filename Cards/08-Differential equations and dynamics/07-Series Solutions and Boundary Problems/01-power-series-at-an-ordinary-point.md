@@ -1,27 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Series Solutions and Boundary Problems
-topic: Solving by coefficients
-item: Series solutions
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/01-superposition-and-the-shape-of-linear-solutions|superposition-and-the-shape-of-linear-solutions]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/04-power-series|power-series]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/05-taylor-series|taylor-series]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/02-complex-power-series|complex-power-series]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/02-frobenius-and-regular-singular-points|frobenius-and-regular-singular-points]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/04-legendre-polynomials|legendre-polynomials]]"
-  - "[[Cards/13-Engineering mathematics/09-Quantum Mechanics in Outline/04-quantum-harmonic-oscillator|quantum-harmonic-oscillator]]"
-tags: [mathematics, differential equations and dynamics, power-series-at-an-ordinary-point]
----
-
 # Series solutions: assume the answer is a polynomial that never stops and match the coefficients
 
-Differential equations and dynamics → Series Solutions and Boundary Problems → Solving by coefficients → Series solutions
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Series Solutions and Boundary Problems](../../../SYLLABUS.md#w08-s07) → Series solutions
 
 ---
 
@@ -90,9 +69,9 @@ $$R \;\ge\; \text{distance from } x_0 \text{ to the nearest complex point where 
 
 ### When it holds
 
-- **An ordinary point.** In x^2 y'' + x y' + (x^2 − 1) y = 0, dividing by x^2 leaves 1/x and 1/x^2, which fail at 0; there [frobenius-and-regular-singular-points](02-frobenius-and-regular-singular-points.md) repairs it.
+- **An ordinary point.** In x^2 y'' + x y' + (x^2 − 1) y = 0, dividing by x^2 leaves 1/x and 1/x^2, which fail at 0; there [Frobenius](02-frobenius-and-regular-singular-points.md) repairs it.
 - **A linear equation, for the radius promise.** y' = y^2, y(0) = 1, has no bad coefficient, yet its answer 1/(1 − x) blows up at x = 1.
-- **A floor, not the exact radius.** Legendre's equation fails at ±1, yet some solutions are polynomials ([legendre-polynomials](04-legendre-polynomials.md)).
+- **A floor, not the exact radius.** Legendre's equation fails at ±1, yet some solutions are polynomials ([Legendre's equation](04-legendre-polynomials.md)).
 - **Inside the radius only.** Past R the partial sums swing wildly, as the arctan case shows.
 
 ---
@@ -101,7 +80,7 @@ $$R \;\ge\; \text{distance from } x_0 \text{ to the nearest complex point where 
 
 ### Step 0: a power series can be differentiated term by term
 
-Inside its radius a power series has as its rate the series of its terms' rates ([power-series](../../06-Calculus%20and%20analysis/06-Series/04-power-series.md)). Two power series are equal only when every coefficient matches, so one equation becomes one equation per power of x.
+Inside its radius a power series has as its rate the series of its terms' rates ([Power series](../../06-Calculus%20and%20analysis/06-Series/04-power-series.md)). Two power series are equal only when every coefficient matches, so one equation becomes one equation per power of x.
 
 <details>
 <summary>Where y'' = x y comes from, for the hanging rod</summary>
@@ -116,17 +95,17 @@ With $y = \sum a_n x^n$, $y'' = \sum (n+2)(n+1)\,a_{n+2}\,x^n$ and $x\,y = \sum 
 
 ### Step 2: the two starting values fix the two free coefficients
 
-At x = 0 the series reads a_0 and its rate a_1, so a_0 = 1 and a_1 = 0, silencing the second chain. The first gives y = 1 + x^3/6 + x^6/180 + x^9/12960 + …. Two free coefficients match the two conditions a second-order equation needs: a_0 = 0, a_1 = 1 gives the other basic solution, x + x^4/12 + …, and every solution mixes the two ([superposition-and-the-shape-of-linear-solutions](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/01-superposition-and-the-shape-of-linear-solutions.md)).
+At x = 0 the series reads a_0 and its rate a_1, so a_0 = 1 and a_1 = 0, silencing the second chain. The first gives y = 1 + x^3/6 + x^6/180 + x^9/12960 + …. Two free coefficients match the two conditions a second-order equation needs: a_0 = 0, a_1 = 1 gives the other basic solution, x + x^4/12 + …, and every solution mixes the two ([Superposition](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/01-superposition-and-the-shape-of-linear-solutions.md)).
 
 ### Step 3: the series converges, so it is a real solution
 
-Matching assumed a series existed. Successive terms have ratio x^3 / ((n + 3)(n + 2)), which shrinks to 0 for any x, so by the ratio test the series converges everywhere (a term outgrows the last only while x^3 > (n + 3)(n + 2): x > 10.2 at n = 30, 45.1 at n = 300). Step 0's term-by-term rates are then legitimate, the sum solves y'' = x y, and since only one solution starts at value 1 with rate 0 ([lipschitz-and-the-picard-lindelof-theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md)), it is the rod's tilt.
+Matching assumed a series existed. Successive terms have ratio x^3 / ((n + 3)(n + 2)), which shrinks to 0 for any x, so by the ratio test the series converges everywhere (a term outgrows the last only while x^3 > (n + 3)(n + 2): x > 10.2 at n = 30, 45.1 at n = 300). Step 0's term-by-term rates are then legitimate, the sum solves y'' = x y, and since only one solution starts at value 1 with rate 0 ([The Picard-Lindelof theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md)), it is the rod's tilt.
 
 ### Step 4: the radius is set by the nearest bad point, even an invisible one
 
 Airy's coefficient, x, is fine everywhere. A second case has a limit: (1 + x^2) y'' + 2x y' = 0, y(0) = 0, y'(0) = 1, is solved by arctan x, whose rate is 1/(1 + x^2). Here P = 2x / (1 + x^2), smooth on the whole real line. But 1 + x^2 is zero at ±i, the complex numbers whose square is −1, at distance 1 from 0.
 
-A power series converges on a disc in the complex plane, never past a point where its function fails ([complex-power-series](../../07-Complex%20analysis/02-Holomorphic%20Functions/02-complex-power-series.md)). Matching gives a_{n+2} = −n a_n / (n + 2): x − x^3/3 + x^5/5 − …, radius 1. It converges at x = 0.5 and flies apart at x = 2, where arctan is 1.107149.
+A power series converges on a disc in the complex plane, never past a point where its function fails ([Power series in the plane](../../07-Complex%20analysis/02-Holomorphic%20Functions/02-complex-power-series.md)). Matching gives a_{n+2} = −n a_n / (n + 2): x − x^3/3 + x^5/5 − …, radius 1. It converges at x = 0.5 and flies apart at x = 2, where arctan is 1.107149.
 
 <details>
 <summary>Detailed proof: the series reaches at least as far as P and Q do</summary>
@@ -144,7 +123,7 @@ The first term keeps the ratio above 1/(3r), so the last shrinks to 0 and the ra
 
 </details>
 
-A second road needs no series: step the equation up the rod with Runge-Kutta 4 ([runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md)).
+A second road needs no series: step the equation up the rod with Runge-Kutta 4 ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)).
 
 ---
 
@@ -384,7 +363,7 @@ The two outputs match line for line.
 
 - **Optics.** Airy's function sets the brightness at a rainbow's edge.
 - **Standing columns.** With the sign flipped, it sets the tallest pole that stands under its own weight.
-- **Quantum mechanics.** quantum-harmonic-oscillator runs the same method on another equation.
+- **Quantum mechanics.** The quantum oscillator runs the same method on another equation.
 
 > **Say it back**
 > When a linear equation's coefficients are power series at a point, so are its solutions. Matching each power of x turns the equation into a rule for each coefficient; the starting value and rate fill the first two. For the hanging rod that gives 1 + x^3/6 + x^6/180 + …, a clamp tilt 1.1723 times the tip's. The series reaches at least the nearest complex point where a coefficient fails, which is why arctan's stops at 1.
@@ -393,16 +372,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [superposition-and-the-shape-of-linear-solutions](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/01-superposition-and-the-shape-of-linear-solutions.md): a_0 and a_1 pick the mix of two basic solutions.
-- [power-series](../../06-Calculus%20and%20analysis/06-Series/04-power-series.md): the radius of convergence and term-by-term rates.
-- [taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): why a_0 and a_1 are the starting value and rate.
-- [complex-power-series](../../07-Complex%20analysis/02-Holomorphic%20Functions/02-complex-power-series.md): why a series stops at the nearest complex bad point.
+- [Superposition](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/01-superposition-and-the-shape-of-linear-solutions.md): a_0 and a_1 pick the mix of two basic solutions.
+- [Power series](../../06-Calculus%20and%20analysis/06-Series/04-power-series.md): the radius of convergence and term-by-term rates.
+- [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): why a_0 and a_1 are the starting value and rate.
+- [Power series in the plane](../../07-Complex%20analysis/02-Holomorphic%20Functions/02-complex-power-series.md): why a series stops at the nearest complex bad point.
 
 ## Where this goes next
 
-- [frobenius-and-regular-singular-points](02-frobenius-and-regular-singular-points.md): a series centred at a bad point, times a power of x.
-- [legendre-polynomials](04-legendre-polynomials.md): a recurrence that stops by itself.
-- quantum-harmonic-oscillator: a series forced to stop, so energy comes in steps.
+- [Frobenius](02-frobenius-and-regular-singular-points.md): a series centred at a bad point, times a power of x.
+- [Legendre's equation](04-legendre-polynomials.md): a recurrence that stops by itself.
+- The quantum oscillator: a series forced to stop, so energy comes in steps.
 
 ---
 

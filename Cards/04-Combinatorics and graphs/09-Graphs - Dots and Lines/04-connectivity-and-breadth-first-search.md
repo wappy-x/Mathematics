@@ -1,32 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Graphs - Dots and Lines
-topic: Pieces and distances
-item: Connected or not
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/03-walks-paths-and-cycles|walks-paths-and-cycles]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/05-bipartite-graphs-and-odd-cycles|bipartite-graphs-and-odd-cycles]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/06-directed-graphs-and-topological-order|directed-graphs-and-topological-order]]"
-  - "[[Cards/04-Combinatorics and graphs/10-Trees and Cheapest Routes/01-trees|trees]]"
-  - "[[Cards/04-Combinatorics and graphs/10-Trees and Cheapest Routes/05-dijkstra|dijkstra]]"
-  - "[[Cards/04-Combinatorics and graphs/11-Tours - Euler and Hamilton/01-euler-circuits|euler-circuits]]"
-  - "[[Cards/04-Combinatorics and graphs/13-Matchings and Flows/05-flow-networks-and-ford-fulkerson|flow-networks-and-ford-fulkerson]]"
-  - "[[Cards/09-Probability and statistics/14-Random Graphs and the Probabilistic Method/02-the-giant-component|the-giant-component]]"
-  - "[[Cards/17-Topology/06-Topological Data Analysis/06-mapper-and-reeb-graphs|mapper-and-reeb-graphs]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - connectivity-and-breadth-first-search
----
-
 # Connected or not: breadth-first search explores ring by ring, finds the pieces, and gives shortest routes when every step costs the same
 
-Combinatorics and graphs → Graphs - Dots and Lines → Pieces and distances → Connected or not
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Graphs - Dots and Lines](../../../SYLLABUS.md#w04-s09) → Connected or not
 
 ---
 
@@ -65,7 +39,7 @@ Solid lines are the ten open paths; dotted is the shut bridge.
 
 ## The formula
 
-Notation first, in words. A graph is two lists, its junctions and its joined pairs: $V$ for the junctions, $E$ for the paths, $n$ and $m$ for how many of each ([graphs-vertices-and-edges](01-graphs-vertices-and-edges.md)). A path here is one track; a **route** is a string of them — the walk of [walks-paths-and-cycles](03-walks-paths-and-cycles.md). Write $u \sim v$ when some route joins them, and $d(v)$ for the fewest paths a route from the start $S$ to $v$ can use.
+Notation first, in words. A graph is two lists, its junctions and its joined pairs: $V$ for the junctions, $E$ for the paths, $n$ and $m$ for how many of each ([Graphs](01-graphs-vertices-and-edges.md)). A path here is one track; a **route** is a string of them — the walk of [Walks, paths and cycles](03-walks-paths-and-cycles.md). Write $u \sim v$ when some route joins them, and $d(v)$ for the fewest paths a route from the start $S$ to $v$ can use.
 
 $$u \sim v \quad\text{exactly when}\quad \text{some route in } G \text{ runs from } u \text{ to } v$$
 
@@ -93,8 +67,8 @@ $$r(S) = 0, \qquad r(w) = r(v) + 1 \text{ for the junction } v \text{ that first
 
 ### When it holds
 
-- **Every step costs the same.** The rings count paths, not miles: with lengths on them a three-path route can be the shorter ride, and the map becomes [dijkstra](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md)'s.
-- **Paths run both ways.** That symmetry makes the pieces blocks; one-way paths let a rider reach a junction that cannot reach back ([directed-graphs-and-topological-order](06-directed-graphs-and-topological-order.md)).
+- **Every step costs the same.** The rings count paths, not miles: with lengths on them a three-path route can be the shorter ride, and the map becomes [Dijkstra's algorithm](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md)'s.
+- **Paths run both ways.** That symmetry makes the pieces blocks; one-way paths let a rider reach a junction that cannot reach back ([Directed graphs](06-directed-graphs-and-topological-order.md)).
 - **Finitely many junctions.** Each joins the queue once at most, so it empties and the flood halts.
 
 ---
@@ -107,7 +81,7 @@ A rider who reaches D reaches every neighbour of D: ride to D, take one more pat
 
 ### Step 1: reaching cuts the junctions into blocks
 
-Reaching holds between a junction and itself (a route of no paths), runs both ways (ride it backwards) and carries through (two routes end to end make one). That makes it an equivalence relation, which cuts a set into non-overlapping classes ([equivalence-relations-and-partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md)) — the components. No path runs between two components: a path is a one-step route, and would have put its ends in one class.
+Reaching holds between a junction and itself (a route of no paths), runs both ways (ride it backwards) and carries through (two routes end to end make one). That makes it an equivalence relation, which cuts a set into non-overlapping classes ([Equivalence relations and partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md)) — the components. No path runs between two components: a path is a one-step route, and would have put its ends in one class.
 
 ### Step 2: a queue turns the marks into rings
 
@@ -394,7 +368,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Reading the ring numbers as distances when the paths are not alike.** The flood counts paths ridden, nothing else: where one path is a short hop and another crosses the county, a two-path route can be the longer ride. Lengths make it [dijkstra](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md)'s problem.
+> **Reading the ring numbers as distances when the paths are not alike.** The flood counts paths ridden, nothing else: where one path is a short hop and another crosses the county, a two-path route can be the longer ride. Lengths make it [Dijkstra's algorithm](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md)'s problem.
 >
 > - **Taking one flood for the whole map.** It marks 6 junctions and halts; the map holds 9 in 2 pieces.
 > - **A path at every junction read as connectedness.** F, G and H each still have one, and still sit in their own piece.
@@ -415,20 +389,20 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [walks-paths-and-cycles](03-walks-paths-and-cycles.md): routes, and why one that repeats a junction trims to one that does not — so "some route" and "some route with no repeats" mean the same here.
+- [Walks, paths and cycles](03-walks-paths-and-cycles.md): routes, and why one that repeats a junction trims to one that does not — so "some route" and "some route with no repeats" mean the same here.
 
 ## Where this goes next
 
-- [bipartite-graphs-and-odd-cycles](05-bipartite-graphs-and-odd-cycles.md): ring numbers as two colours.
-- [directed-graphs-and-topological-order](06-directed-graphs-and-topological-order.md): reaching when paths run one way.
-- [trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md): the markers one flood leaves behind span its piece.
-- [dijkstra](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md): the flood rebuilt for paths with lengths.
-- [euler-circuits](../11-Tours%20-%20Euler%20and%20Hamilton/01-euler-circuits.md): connectedness before any touring question.
-- [flow-networks-and-ford-fulkerson](../13-Matchings%20and%20Flows/05-flow-networks-and-ford-fulkerson.md): floods over routes with room left.
-- [the-giant-component](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/02-the-giant-component.md): piece sizes when paths fall at random.
-- mapper-and-reeb-graphs: components of a map built from measurements.
+- [Bipartite graphs](05-bipartite-graphs-and-odd-cycles.md): ring numbers as two colours.
+- [Directed graphs](06-directed-graphs-and-topological-order.md): reaching when paths run one way.
+- [Trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md): the markers one flood leaves behind span its piece.
+- [Dijkstra's algorithm](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md): the flood rebuilt for paths with lengths.
+- [Euler circuits](../11-Tours%20-%20Euler%20and%20Hamilton/01-euler-circuits.md): connectedness before any touring question.
+- [Flows](../13-Matchings%20and%20Flows/05-flow-networks-and-ford-fulkerson.md): floods over routes with room left.
+- [The giant component](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/02-the-giant-component.md): piece sizes when paths fall at random.
+- Mapper and Reeb graphs: components of a map built from measurements.
 
-Every path here counted the same, which let the rings come out in order; the repair when one runs longer — serve the nearest junction, not the earliest — is [dijkstra](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md).
+Every path here counted the same, which let the rings come out in order; the repair when one runs longer — serve the nearest junction, not the earliest — is [Dijkstra's algorithm](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md).
 
 ---
 

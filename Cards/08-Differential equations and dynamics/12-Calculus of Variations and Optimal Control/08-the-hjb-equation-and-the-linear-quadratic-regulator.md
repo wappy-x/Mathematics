@@ -1,28 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Calculus of Variations and Optimal Control
-topic: Best feedback from a value function
-item: The HJB equation
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/07-dynamic-programming-and-the-bellman-equation|dynamic-programming-and-the-bellman-equation]]"
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/06-pontryagins-principle-and-bang-bang-control|pontryagins-principle-and-bang-bang-control]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/09-bernoulli-and-riccati-substitutions|bernoulli-and-riccati-substitutions]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/05-taylor-series|taylor-series]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/09-Beyond Brownian/03-stochastic-control-and-the-hjb-equation|stochastic-control-and-the-hjb-equation]]"
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/06-linear-quadratic-regulator|linear-quadratic-regulator]]"
-  - "[[Cards/19-Partial differential equations/02-First-Order Equations and Characteristics/06-hamilton-jacobi-bellman-and-verification|hamilton-jacobi-bellman-and-verification]]"
-  - "[[Cards/12-Financial mathematics/38-Performance and Multi-Period/03-mertons-portfolio-problem|mertons-portfolio-problem]]"
-tags: [mathematics, differential equations and dynamics, the-hjb-equation-and-the-linear-quadratic-regulator]
----
-
 # The HJB equation: dynamic programming in continuous time, and for linear motion with squared costs the best control is a feedback gain
 
-Differential equations and dynamics → Calculus of Variations and Optimal Control → Best feedback from a value function → The HJB equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Calculus of Variations and Optimal Control](../../../SYLLABUS.md#w08-s12) → The HJB equation
 
 ---
 
@@ -30,7 +8,7 @@ Differential equations and dynamics → Calculus of Variations and Optimal Contr
 
 A car on cruise control leaves a downhill stretch 2 m/s above its set speed. The controller commands an acceleration; drag is ignored. Each second off speed costs the square of the speed error; each second of pushing costs the square of the push, both weighted 1 in these units. Push hard and the error vanishes, expensively. Push gently and it lingers.
 
-Dynamic programming ([dynamic-programming-and-the-bellman-equation](07-dynamic-programming-and-the-bellman-equation.md)) works in stages. The car's clock has none. Shrink a stage to an instant and the Bellman equation becomes a differential equation for the best cost itself: the **Hamilton-Jacobi-Bellman equation**, HJB for short.
+Dynamic programming ([Dynamic programming](07-dynamic-programming-and-the-bellman-equation.md)) works in stages. The car's clock has none. Shrink a stage to an instant and the Bellman equation becomes a differential equation for the best cost itself: the **Hamilton-Jacobi-Bellman equation**, HJB for short.
 
 The answer is a rule, not a plan: decelerate at the speed error, 2 m/s^2 at 2 m/s too fast. The error halves every 0.693 s, and the manoeuvre costs 4 units, the square of the starting error.
 
@@ -104,7 +82,7 @@ Hold the push $u$ for a short time $h$. The stretch costs about $(x^2 + u^2)h$ a
 
 $$V(t, x) = \min_u \Big( (x^2 + u^2)\,h + V(t + h,\; x + u h) \Big).$$
 
-To first order ([taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)), $V(t+h, x+uh) = V + V_t h + V_x u h$. $V$ cancels from both sides. Divide by $h$ and let it shrink to zero:
+To first order ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)), $V(t+h, x+uh) = V + V_t h + V_x u h$. $V$ cancels from both sides. Divide by $h$ and let it shrink to zero:
 
 $$0 = V_t + \min_u \big( x^2 + u^2 + V_x u \big).$$
 
@@ -118,7 +96,7 @@ Doubling the error doubles every sensible push and quadruples every cost. So try
 
 With no deadline, $V_t = 0$ and $1 - P^2 = 0$, the **algebraic Riccati equation**. Its root $P = 1$ gives $u = -x$, so $x' = -x$ and $x = 2e^{-t}$, which halves when $t = \ln 2$ = 0.693 s.
 
-With a deadline, $V = P(t)x^2$ and dividing by $x^2$ leaves the **Riccati differential equation**. In the time left $s$ it reads $dP/ds = 1 - P^2$, with $P = 0$ when no time is left. Its solution ([bernoulli-and-riccati-substitutions](../01-Rate%20Equations/09-bernoulli-and-riccati-substitutions.md)) is $P = \tanh s$: 0.761594 with 1 s left, 0.995055 with 3 s left.
+With a deadline, $V = P(t)x^2$ and dividing by $x^2$ leaves the **Riccati differential equation**. In the time left $s$ it reads $dP/ds = 1 - P^2$, with $P = 0$ when no time is left. Its solution ([Bernoulli and Riccati equations](../01-Rate%20Equations/09-bernoulli-and-riccati-substitutions.md)) is $P = \tanh s$: 0.761594 with 1 s left, 0.995055 with 3 s left.
 
 ### Step 4: no other rule does better
 
@@ -150,7 +128,7 @@ One step costs $h(x^2 + u^2) + P(x + hu)^2$. Its slope in $u$ vanishes at $u = -
 
 The recursion settles at 1.051249 for steps of 0.1 s, 1.005012 for 0.01 s, 1.000500 for 0.001 s: the gap to 1 shrinks with the step.
 
-Pontryagin's principle ([pontryagins-principle-and-bang-bang-control](06-pontryagins-principle-and-bang-bang-control.md)) is a third road: its costate is $V_x$ along the best path. It finds one path from one start; HJB finds the best push from every state.
+Pontryagin's principle ([Pontryagin's principle](06-pontryagins-principle-and-bang-bang-control.md)) is a third road: its costate is $V_x$ along the best path. It finds one path from one start; HJB finds the best push from every state.
 
 ---
 
@@ -412,8 +390,8 @@ The two outputs match line for line. Halving the RK4 step on the Riccati equatio
 
 ## Where you meet it in real life
 
-- **Autopilots and cruise controllers.** The linear-quadratic regulator (LQR), this card's answer with matrices for numbers, sets feedback gains in aircraft, satellites and robots (linear-quadratic-regulator).
-- **Portfolio choice.** Merton's portfolio problem is HJB's best-known use in finance: wealth is the state, the share held in stocks is the control ([mertons-portfolio-problem](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/03-mertons-portfolio-problem.md)).
+- **Autopilots and cruise controllers.** The linear-quadratic regulator (LQR), this card's answer with matrices for numbers, sets feedback gains in aircraft, satellites and robots (The LQR).
+- **Portfolio choice.** Merton's portfolio problem is HJB's best-known use in finance: wealth is the state, the share held in stocks is the control ([Merton's problem](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/03-mertons-portfolio-problem.md)).
 - **Grid solvers.** Where no quadratic guess works, HJB is solved on a grid of states, Step 5's recursion in more dimensions.
 
 > **Say it back**
@@ -423,17 +401,17 @@ The two outputs match line for line. Halving the RK4 step on the Riccati equatio
 
 ## What this builds on
 
-- [dynamic-programming-and-the-bellman-equation](07-dynamic-programming-and-the-bellman-equation.md): the stage-by-stage balance Step 1 shrinks to an instant.
-- [pontryagins-principle-and-bang-bang-control](06-pontryagins-principle-and-bang-bang-control.md): the path-by-path road whose costate is $V_x$.
-- [bernoulli-and-riccati-substitutions](../01-Rate%20Equations/09-bernoulli-and-riccati-substitutions.md): solving $dP/ds = 1 - P^2$.
-- [taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the first-order expansion behind Step 1.
+- [Dynamic programming](07-dynamic-programming-and-the-bellman-equation.md): the stage-by-stage balance Step 1 shrinks to an instant.
+- [Pontryagin's principle](06-pontryagins-principle-and-bang-bang-control.md): the path-by-path road whose costate is $V_x$.
+- [Bernoulli and Riccati equations](../01-Rate%20Equations/09-bernoulli-and-riccati-substitutions.md): solving $dP/ds = 1 - P^2$.
+- [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the first-order expansion behind Step 1.
 
 ## Where this goes next
 
-- [stochastic-control-and-the-hjb-equation](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md): noise adds a second-derivative term; Feynman-Kac ties it to averages.
-- linear-quadratic-regulator: many states, a matrix $P$, the matrix Riccati equation.
-- hamilton-jacobi-bellman-and-verification: value functions with corners.
-- [mertons-portfolio-problem](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/03-mertons-portfolio-problem.md): the stochastic HJB equation choosing a stock holding.
+- [Stochastic control](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md): noise adds a second-derivative term; Feynman-Kac ties it to averages.
+- The LQR: many states, a matrix $P$, the matrix Riccati equation.
+- The HJB equation: value functions with corners.
+- [Merton's problem](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/03-mertons-portfolio-problem.md): the stochastic HJB equation choosing a stock holding.
 
 What the best rule becomes when chance jostles the motion is the question the stochastic-control card answers.
 

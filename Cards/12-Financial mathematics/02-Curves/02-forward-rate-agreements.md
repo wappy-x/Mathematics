@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Curves
-topic: Locking a future rate
-item: Forward rate agreements
-kind: method
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/12-Financial mathematics/02-Curves/01-spot-forward-and-par-rates|spot-forward-and-par-rates]]"
-next:
-  - "[[Cards/12-Financial mathematics/28-Swaps/01-interest-rate-swaps|interest-rate-swaps]]"
-tags:
-  - mathematics
-  - financial-mathematics
-  - forward-rate-agreements
----
-
 # Forward rate agreements: locking a rate for a future period
 
-Financial mathematics → Curves → Locking a future rate → Forward rate agreements
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves](../../../SYLLABUS.md#w12-s02) → Forward rate agreements
 
 ---
 
@@ -55,7 +36,7 @@ The straight line is the interest difference itself, settled at the end of the y
 
 ## The formula
 
-Notation first, in words. The period the contract covers starts at a date written $T_1$, said "T one", and ends at $T_2$. Today's price of one dollar paid on a later date is the **discount factor**, written $D(T)$ with that date in the brackets and said "D of T" ([compounding-and-discount-factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)). The **year fraction** $\alpha$, said "alpha", is how much of a year the period counts as under the day-count rule the contract names ([day-counts-and-dates](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md)); for Kestrel's second year it is 1. Rates are simple: the rate multiplies the year fraction once, and nothing compounds inside the period.
+Notation first, in words. The period the contract covers starts at a date written $T_1$, said "T one", and ends at $T_2$. Today's price of one dollar paid on a later date is the **discount factor**, written $D(T)$ with that date in the brackets and said "D of T" ([Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)). The **year fraction** $\alpha$, said "alpha", is how much of a year the period counts as under the day-count rule the contract names ([Day counts](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md)); for Kestrel's second year it is 1. Rates are simple: the rate multiplies the year fraction once, and nothing compounds inside the period.
 
 The rate the curve already contains, over that period:
 
@@ -173,7 +154,7 @@ At the fixing date itself the same expression, with $D(T_1) = 1$ and $D(T_2) = 1
 
 </details>
 
-A different road reaches the same place. An interest rate swap is a row of these agreements, one per period, and valuing a swap as a strip of FRAs is the standard construction: [interest-rate-swaps](../28-Swaps/01-interest-rate-swaps.md).
+A different road reaches the same place. An interest rate swap is a row of these agreements, one per period, and valuing a swap as a strip of FRAs is the standard construction: [Interest rate swaps](../28-Swaps/01-interest-rate-swaps.md).
 
 ---
 
@@ -676,7 +657,7 @@ The two outputs match line for line.
 
 - **Treasury desks.** A company that knows it will borrow, or roll over a loan, on a known future date locks the rate with an FRA and leaves its banking arrangements alone.
 - **Bank funding.** A bank whose loans reprice on a different date from its deposits has a gap in exactly one period. An FRA closes that period without moving either book.
-- **Building the curve.** The forward rates read off deposits and futures are the raw material the discount curve is bootstrapped from ([bootstrapping-the-discount-curve](04-bootstrapping-the-discount-curve.md)), and money-market instruments supply the short end of it ([money-market-instruments-and-sofr](03-money-market-instruments-and-sofr.md)).
+- **Building the curve.** The forward rates read off deposits and futures are the raw material the discount curve is bootstrapped from ([Bootstrapping](04-bootstrapping-the-discount-curve.md)), and money-market instruments supply the short end of it ([Money markets](03-money-market-instruments-and-sofr.md)).
 - **The statistics.** The Bank for International Settlements counts forward rate agreements as their own instrument in its survey of over-the-counter derivatives, alongside swaps and options, defined there as the rate on a future period determined at contract initiation, which is this card's sentence in their words.
 
 > **Say it back**
@@ -686,11 +667,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [spot-forward-and-par-rates](01-spot-forward-and-par-rates.md): where the forward rate comes from, and how spot, forward and par rates describe one curve.
+- [Spot, forward and par rates](01-spot-forward-and-par-rates.md): where the forward rate comes from, and how spot, forward and par rates describe one curve.
 
 ## Where this goes next
 
-- [interest-rate-swaps](../28-Swaps/01-interest-rate-swaps.md): the same exchange repeated every period for years, valued as a row of these agreements.
+- [Interest rate swaps](../28-Swaps/01-interest-rate-swaps.md): the same exchange repeated every period for years, valued as a row of these agreements.
 
 One agreement fixes one period. A borrower rolling its debt every quarter for ten years would need one for every quarter, all struck at once and all settled separately, which is the problem the swap solves.
 

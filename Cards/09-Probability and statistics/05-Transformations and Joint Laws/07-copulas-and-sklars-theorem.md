@@ -1,24 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Transformations and Joint Laws
-topic: Dependence stripped of the margins
-item: Copulas
-kind: theorem
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/06-multivariate-normal|multivariate-normal]]"
-next:
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/08-order-statistics-and-extremes|order-statistics-and-extremes]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/02-one-factor-gaussian-copula|one-factor-gaussian-copula]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/07-tail-dependence-and-the-t-copula|tail-dependence-and-the-t-copula]]"
-tags: [mathematics, probability and statistics, copulas-and-sklars-theorem]
----
-
 # Copulas: separating what each variable does from how they move together
 
-Probability and statistics → Transformations and Joint Laws → Dependence stripped of the margins → Copulas
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Transformations and Joint Laws](../../../SYLLABUS.md#w09-s05) → Copulas
 
 ---
 
@@ -107,7 +89,7 @@ With $\tau = 0.5$: $\rho = \sin(\pi/4) = 0.7071$ and $\theta = 2$.
 - **Any joint law has a copula.** Existence needs no assumption; only uniqueness needs continuity.
 - **Increasing transformations only.** A copula survives any increasing change to one variable, such as quoting returns in basis points or cubing them. A decreasing change, such as switching both markets from returns to losses, flips the copula: lower tail becomes upper tail.
 - **Tail dependence is a limit.** It describes ever rarer days. At any fixed rarity even the Gaussian gives a positive joint chance, 0.002735 at the worst day in 100.
-- **Two variables here.** Sklar's theorem holds in any number of dimensions; the Gaussian copula then carries a whole correlation matrix ([multivariate-normal](06-multivariate-normal.md)).
+- **Two variables here.** Sklar's theorem holds in any number of dimensions; the Gaussian copula then carries a whole correlation matrix ([Multivariate normal](06-multivariate-normal.md)).
 
 ---
 
@@ -121,7 +103,7 @@ In symbols, for a continuous and increasing $F$, with $U = F(X)$:
 
 $$P(U \le u) = P\big(X \le F^{-1}(u)\big) = F\big(F^{-1}(u)\big) = u$$
 
-That is the probability integral transform: the cumulative-distribution route of [transforming-a-random-variable](01-transforming-a-random-variable.md), applied with $F$ itself as the function. Run backwards, it is how simulations draw from any law ([inverse-transform-sampling](../11-Simulation/02-inverse-transform-sampling.md)). Both markets become uniform. Whatever joint behaviour remains is pure dependence.
+That is the probability integral transform: the cumulative-distribution route of [Transforming a variable](01-transforming-a-random-variable.md), applied with $F$ itself as the function. Run backwards, it is how simulations draw from any law ([Inverse transform](../11-Simulation/02-inverse-transform-sampling.md)). Both markets become uniform. Whatever joint behaviour remains is pure dependence.
 
 ### Step 1: the joint law of the ranks is the copula
 
@@ -148,7 +130,7 @@ Check it on the example. Under Clayton with $\theta = 2$, $F$(−2%) = $\Phi$(�
 
 The converse in the callout is how the code builds its markets. Draw two ranks from any copula. Push A's through $\Phi^{-1}$ times 1.0% and B's through $\Phi^{-1}$ times 1.5%. Out come the bell curves of the opening, joined by the chosen copula.
 
-With the Gaussian copula and bell-curve margins, the result is the bivariate normal ([bivariate-normal-and-conditioning](05-bivariate-normal-and-conditioning.md)). With the Clayton copula and the same margins, the result is a joint law that is not normal at all, though each market alone is. A joint law is not fixed by its margins and a correlation number.
+With the Gaussian copula and bell-curve margins, the result is the bivariate normal ([Bivariate normal](05-bivariate-normal-and-conditioning.md)). With the Clayton copula and the same margins, the result is a joint law that is not normal at all, though each market alone is. A joint law is not fixed by its margins and a correlation number.
 
 ### Step 3: ranks see only the copula
 
@@ -172,7 +154,7 @@ Both negative has the same chance, so agreement has chance $\tfrac12 + \arcsin\r
 
 ### Step 4: the Clayton copula from a shared calm level
 
-Where does a formula like $(u^{-\theta} + v^{-\theta} - 1)^{-1/\theta}$ come from? From one shared cause. Let $W$ be a calm level common to both markets, drawn from the gamma law with shape $1/\theta$ ([gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)). Give each market a private shock, $E_1$ and $E_2$, independent exponential waits with average 1. Set each rank to
+Where does a formula like $(u^{-\theta} + v^{-\theta} - 1)^{-1/\theta}$ come from? From one shared cause. Let $W$ be a calm level common to both markets, drawn from the gamma law with shape $1/\theta$ ([Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)). Give each market a private shock, $E_1$ and $E_2$, independent exponential waits with average 1. Set each rank to
 
 $$U = \left(1 + E_1/W\right)^{-1/\theta}, \qquad V = \left(1 + E_2/W\right)^{-1/\theta}.$$
 
@@ -205,7 +187,7 @@ The squeeze gives $\lambda_L = 0$.
 
 </details>
 
-A second road to tail dependence is the shared scale of the Student t copula, symmetric in both tails; the finance wing works it in [tail-dependence-and-the-t-copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md).
+A second road to tail dependence is the shared scale of the Student t copula, symmetric in both tails; the finance wing works it in [Tail dependence](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md).
 
 ---
 
@@ -653,9 +635,9 @@ The two outputs agree line for line.
 ## Where you meet it in real life
 
 - **Markets in a sell-off.** Longin and Solnik (2001) rejected the normal model for the joint left tail of major equity markets, but not the right tail: correlation rises in bear markets, not in bull markets. That is the lopsided shape the Clayton copula writes down.
-- **Credit portfolios.** Banks join single-name default chances into a joint story with a Gaussian copula driven by one economy factor ([one-factor-gaussian-copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md)); its zero tail dependence is the weakness this card measures.
+- **Credit portfolios.** Banks join single-name default chances into a joint story with a Gaussian copula driven by one economy factor ([The one-factor Gaussian copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md)); its zero tail dependence is the weakness this card measures.
 - **Joint lives.** Clayton built his copula in 1978 to study familial tendency in chronic disease: one relative's illness raising another's risk. The same device models the joint lifetimes of couples in annuity pricing.
-- **Extremes of one sample.** How the largest and smallest of many draws behave is the next card on this shelf, [order-statistics-and-extremes](08-order-statistics-and-extremes.md).
+- **Extremes of one sample.** How the largest and smallest of many draws behave is the next card on this shelf, [Order statistics](08-order-statistics-and-extremes.md).
 
 > **Say it back**
 > Any joint law of continuous variables splits into each variable's own law and a copula, the joint law of their percentile ranks. The split is unique, and any copula can be dressed in any margins. Ranks do not change under increasing transformations, so rank statistics such as Kendall's tau see only the copula, and a Gaussian copula can be fitted from ranks alone. Two copulas with the same tau can still disagree wildly in the corner: the Gaussian's chance of a joint crash thins to zero for ever rarer days, while Clayton's stays at $2^{-1/\theta}$. That corner is tail dependence.
@@ -664,15 +646,15 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [multivariate-normal](06-multivariate-normal.md): the joint bell curve whose dependence, stripped of its margins, is the Gaussian copula.
-- [transforming-a-random-variable](01-transforming-a-random-variable.md): the cumulative-distribution route to the law of a function of a variable, which Step 0 applies to the percentile rank.
-- [joint-densities-and-marginals](02-joint-densities-and-marginals.md): joint laws and their margins, the two things Sklar's theorem separates.
+- [Multivariate normal](06-multivariate-normal.md): the joint bell curve whose dependence, stripped of its margins, is the Gaussian copula.
+- [Transforming a variable](01-transforming-a-random-variable.md): the cumulative-distribution route to the law of a function of a variable, which Step 0 applies to the percentile rank.
+- [Joint densities](02-joint-densities-and-marginals.md): joint laws and their margins, the two things Sklar's theorem separates.
 
 ## Where this goes next
 
-- [order-statistics-and-extremes](08-order-statistics-and-extremes.md): the law of the largest and smallest of a sample, the tail of one variable where this card studied the tail of two.
-- [one-factor-gaussian-copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md): the Gaussian copula put to work on a hundred loans at once.
-- [tail-dependence-and-the-t-copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md): a copula with tail dependence in both corners, and what it does to senior credit risk.
+- [Order statistics](08-order-statistics-and-extremes.md): the law of the largest and smallest of a sample, the tail of one variable where this card studied the tail of two.
+- [The one-factor Gaussian copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md): the Gaussian copula put to work on a hundred loans at once.
+- [Tail dependence](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md): a copula with tail dependence in both corners, and what it does to senior credit risk.
 
 A copula says how often two markets crash together; how bad the worst day of a long run gets, for one market alone, is the question order statistics answer.
 

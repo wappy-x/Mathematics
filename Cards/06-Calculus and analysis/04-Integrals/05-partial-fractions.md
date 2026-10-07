@@ -1,25 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Integrals
-topic: Taking quotients apart
-item: Partial fractions
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/04-Integrals/04-integration-by-parts|integration-by-parts]]"
-  - "[[Cards/03-Algebra/02-Polynomials/04-polynomial-division|polynomial-division]]"
-next:
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/03-rational-functions-and-partial-fractions|rational-functions-and-partial-fractions]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/07-logistic-growth|logistic-growth]]"
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/03-inverting-by-partial-fractions|inverting-by-partial-fractions]]"
-tags: [mathematics, calculus and analysis, partial-fractions]
----
-
 # Partial fractions: splitting a rational function into pieces you can integrate
 
-Calculus and analysis → Integrals → Taking quotients apart → Partial fractions
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Integrals](../../../SYLLABUS.md#w06-s04) → Partial fractions
 
 ---
 
@@ -107,7 +88,7 @@ This holds for every x, 1 and −1 included. Two roads give the constants.
 - **Cover-up.** Set x = 1: the B term vanishes and 1 = 2A, so A = 1/2. Set x = −1: 1 = −2B, so B = −1/2.
 - **Matching coefficients.** Collect terms: (A + B)x + (A − B) = 1. The right side has no x, so A + B = 0 and A − B = 1. Again A = 1/2, B = −1/2.
 
-Setting x = 1 is legitimate here, never in the fractions. Two polynomials that agree at more points than their degree agree everywhere ([polynomial-division](../../03-Algebra/02-Polynomials/04-polynomial-division.md)).
+Setting x = 1 is legitimate here, never in the fractions. Two polynomials that agree at more points than their degree agree everywhere ([Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md)).
 
 ### Step 2: each piece is a log
 
@@ -115,7 +96,7 @@ The rate of ln x is 1/x for positive x; for negative x, ln(−x) has rate (−1)
 
 $$\int \frac{A}{x-r}\,dx = A\ln\lvert x-r\rvert + C.$$
 
-With F(x) = ½ ln|x − 1| − ½ ln|x + 1|, the fundamental theorem ([fundamental-theorem-of-calculus](02-fundamental-theorem-of-calculus.md)) gives the area as F(3) − F(2) = 0.202733, worked in the table below.
+With F(x) = ½ ln|x − 1| − ½ ln|x + 1|, the fundamental theorem ([Fundamental theorem of calculus](02-fundamental-theorem-of-calculus.md)) gives the area as F(3) − F(2) = 0.202733, worked in the table below.
 
 ### Step 3: divide first when the top is too big
 
@@ -143,7 +124,7 @@ Cover-up gives 1/4 and −1/4; x = 0 gives N = −1/2; the x^3 terms give M = 0.
 
 The area is ½ × 0.202733 − ½ (arctan 3 − arctan 2). The tangent subtraction identity makes arctan 3 − arctan 2 = arctan(1/7) = 0.141897. The total is 0.030418.
 
-A nonzero M gives a log of q by [substitution](03-substitution.md); x^2 + 2x + 5 becomes (x + 1)^2 + 4 for [trig-substitution](06-trig-substitution.md).
+A nonzero M gives a log of q by [Substitution](03-substitution.md); x^2 + 2x + 5 becomes (x + 1)^2 + 4 for [Trig substitution](06-trig-substitution.md).
 
 <details>
 <summary>Detailed proof: the split always exists, and only one split works</summary>
@@ -160,7 +141,7 @@ Make each fraction proper by division; the polynomial parts cancel, since R/Q wa
 
 </details>
 
-A second road skips the algebra: Simpson strips under the curve, from [numerical-integration](08-numerical-integration.md).
+A second road skips the algebra: Simpson strips under the curve, from [Numerical integration](08-numerical-integration.md).
 
 ---
 
@@ -368,7 +349,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Carrying the two logs across a root of the bottom.** From 0 to 2 they give −0.549306, a tidy number. But the curve shoots to infinity at x = 1, and the area from 0 to 0.999999 is already −7.254329. The split holds wherever the curve is defined; the logs measure area only on a stretch with no root on it, ends included ([improper-integrals](07-improper-integrals.md)).
+> **Carrying the two logs across a root of the bottom.** From 0 to 2 they give −0.549306, a tidy number. But the curve shoots to infinity at x = 1, and the area from 0 to 0.999999 is already −7.254329. The split holds wherever the curve is defined; the logs measure area only on a stretch with no root on it, ends included ([Improper integrals](07-improper-integrals.md)).
 >
 > A second trap is **dropping the bars**: ln(x + 1) fails below x = −1; ln|x + 1| does not.
 
@@ -376,8 +357,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Population curves.** Logistic growth leads to 1/(y(1 − y)) = 1/y + 1/(1 − y); its two logs give the S-shaped curve ([logistic-growth](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/07-logistic-growth.md)).
-- **Circuits and control.** Engineers split a Laplace transform into partial fractions and read one decaying or oscillating mode off each piece ([inverting-by-partial-fractions](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/03-inverting-by-partial-fractions.md)).
+- **Population curves.** Logistic growth leads to 1/(y(1 − y)) = 1/y + 1/(1 − y); its two logs give the S-shaped curve ([Logistic growth](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/07-logistic-growth.md)).
+- **Circuits and control.** Engineers split a Laplace transform into partial fractions and read one decaying or oscillating mode off each piece ([Inverting](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/03-inverting-by-partial-fractions.md)).
 - **Chemical kinetics.** Two reactants give a rate k(a − x)(b − x), with k a constant. The time to reach x is the integral of 1/(k(a − x)(b − x)): two logs.
 
 > **Say it back**
@@ -387,14 +368,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [integration-by-parts](04-integration-by-parts.md): the technique for products, which leaves quotients of polynomials untouched.
-- [polynomial-division](../../03-Algebra/02-Polynomials/04-polynomial-division.md): dividing first, and why a polynomial identity may be tested at a root.
+- [Integration by parts](04-integration-by-parts.md): the technique for products, which leaves quotients of polynomials untouched.
+- [Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md): dividing first, and why a polynomial identity may be tested at a root.
 
 ## Where this goes next
 
-- [rational-functions-and-partial-fractions](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/03-rational-functions-and-partial-fractions.md): over the complex numbers every quadratic splits, and each cover-up constant is a residue.
-- [logistic-growth](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/07-logistic-growth.md): the split that solves the logistic equation.
-- [inverting-by-partial-fractions](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/03-inverting-by-partial-fractions.md): the same split, turned into a system's response over time.
+- [Rational functions](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/03-rational-functions-and-partial-fractions.md): over the complex numbers every quadratic splits, and each cover-up constant is a residue.
+- [Logistic growth](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/07-logistic-growth.md): the split that solves the logistic equation.
+- [Inverting](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/03-inverting-by-partial-fractions.md): the same split, turned into a system's response over time.
 
 ---
 

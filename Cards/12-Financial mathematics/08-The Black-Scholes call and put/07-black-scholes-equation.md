@@ -1,38 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Black-Scholes call and put
-topic: The hedge as an equation
-item: The Black-Scholes equation
-kind: theorem
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/02-black-scholes-put|black-scholes-put]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/07-geometric-brownian-motion|geometric-brownian-motion]]"
-next:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/09-black-scholes-assumptions-and-failures|black-scholes-assumptions-and-failures]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/10-theta-pays-for-gamma-hedged-pnl|theta-pays-for-gamma-hedged-pnl]]"
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/04-exercise-boundary-and-smooth-pasting|exercise-boundary-and-smooth-pasting]]"
-  - "[[Cards/19-Partial differential equations/03-The Heat Equation in Depth/07-black-scholes-to-the-heat-equation|black-scholes-to-the-heat-equation]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - black-scholes-equation
----
-
 # The Black-Scholes equation: hedge away the randomness and every option price obeys one equation
 
-Financial mathematics → The Black-Scholes call and put → The hedge as an equation → The Black-Scholes equation
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Black-Scholes call and put](../../../SYLLABUS.md#w12-s08) → The Black-Scholes equation
 
 ---
 
 ## General Overview
 
-Somebody holds a call option on Acme shares. Acme trades at $100 today. The option lets its holder buy one share for $100 in a year's time, and the going price for it is $9.23 ([black-scholes-call](01-black-scholes-call.md)).
+Somebody holds a call option on Acme shares. Acme trades at $100 today. The option lets its holder buy one share for $100 in a year's time, and the going price for it is $9.23 ([Black–Scholes call](01-black-scholes-call.md)).
 
 Held on its own, the option is a bet on Acme. To stop it being one, the holder shorts 0.586851 shares — borrows that fraction of a share, sells it, and buys it back later. Pick that number right and, over the next moment, Acme moving up or down leaves the pair — option plus short share — worth the same. The share risk is gone.
 
@@ -69,7 +43,7 @@ The line below zero is the clock: it takes the most, $5.09 a year, when Acme sit
 
 ## The formula
 
-Two slopes and a slope of a slope, so the notation first, in words. Write $V$ for what the option is worth. It depends on two things: the share price $S$ and today's date $t$. Then $\partial V / \partial t$ means *hold the share price still, let the calendar run, and measure how fast the value changes* — a partial derivative, one variable moved at a time ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Next, $\partial V / \partial S$ is the same measurement against the share price, with the date held still. And $\partial^2 V / \partial S^2$ is the slope of that slope: how fast the first slope itself changes as the share price moves.
+Two slopes and a slope of a slope, so the notation first, in words. Write $V$ for what the option is worth. It depends on two things: the share price $S$ and today's date $t$. Then $\partial V / \partial t$ means *hold the share price still, let the calendar run, and measure how fast the value changes* — a partial derivative, one variable moved at a time ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Next, $\partial V / \partial S$ is the same measurement against the share price, with the date held still. And $\partial^2 V / \partial S^2$ is the slope of that slope: how fast the first slope itself changes as the share price moves.
 
 $$\frac{\partial V}{\partial t} \;+\; (r-q)\,S\,\frac{\partial V}{\partial S} \;+\; \tfrac12\,\sigma^2 S^2\,\frac{\partial^2 V}{\partial S^2} \;=\; r\,V$$
 
@@ -79,7 +53,7 @@ Trading desks give the three slopes Greek names and write the same line this way
 
 $$\Theta \;+\; (r-q)\,S\,\Delta \;+\; \tfrac12\,\sigma^2 S^2\,\Gamma \;=\; r\,V$$
 
-$\Theta$, $\Delta$ and $\Gamma$ are those three slopes under shorter names. This card uses them only as names; what each one does in a trading book gets its own shelf, starting at [theta-pays-for-gamma-hedged-pnl](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md).
+$\Theta$, $\Delta$ and $\Gamma$ are those three slopes under shorter names. This card uses them only as names; what each one does in a trading book gets its own shelf, starting at [Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md).
 
 | Symbol | Plain meaning | In our example | Push it up and the left side… |
 | --- | --- | --- | --- |
@@ -100,10 +74,10 @@ Every term is dollars per year, which is a free check on any version written dow
 
 ### When it holds
 
-- **The share wanders as geometric Brownian motion**: a steady percentage drift plus random percentage kicks ([geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). Let it jump instead — a takeover, a profit warning — and the hedge is wrong across the jump by about half of gamma times the square of the jump.
+- **The share wanders as geometric Brownian motion**: a steady percentage drift plus random percentage kicks ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). Let it jump instead — a takeover, a profit warning — and the hedge is wrong across the jump by about half of gamma times the square of the jump.
 - **Volatility, the rate and the dividend yield hold still.** Let volatility move and the equation needs a term for that too; without one, prices are off by the volatility move times the option's sensitivity to it.
 - **Trading is continuous and free.** Real desks re-hedge a few times a day and pay a spread each time, so a real book scatters around the equation instead of sitting on it.
-- **The option may only be used on the expiry day.** An American option, usable any day, turns the equation into an inequality with a moving boundary ([exercise-boundary-and-smooth-pasting](../15-American%20and%20Bermudan%20exercise/04-exercise-boundary-and-smooth-pasting.md)).
+- **The option may only be used on the expiry day.** An American option, usable any day, turns the equation into an inequality with a moving boundary ([The exercise boundary and smooth pasting](../15-American%20and%20Bermudan%20exercise/04-exercise-boundary-and-smooth-pasting.md)).
 - **Strictly before expiry, never at it.** The payoff has a sharp corner at the strike, so the slopes do not exist on expiry day; the equation governs every moment up to it, with the payoff handed in as the ending condition.
 
 ---
@@ -122,7 +96,7 @@ Take the share to follow, over a slice of time written dt,
 
 $$dS \;=\; \mu S\,dt \;+\; \sigma S\,dW$$
 
-where dW is the random kick: average zero, and its size grows with the square root of the time slice. That last fact is the whole difficulty. The square of the kick is not a negligible second-order crumb; over a slice dt it averages $\sigma^2 S^2\,dt$, which is first order. So when the option's value is expanded, the second slope earns a place in the dt line that ordinary calculus would never give it. That is Itô's lemma ([itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)):
+where dW is the random kick: average zero, and its size grows with the square root of the time slice. That last fact is the whole difficulty. The square of the kick is not a negligible second-order crumb; over a slice dt it averages $\sigma^2 S^2\,dt$, which is first order. So when the option's value is expanded, the second slope earns a place in the dt line that ordinary calculus would never give it. That is Itô's lemma ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)):
 
 $$dV \;=\; \left(\frac{\partial V}{\partial t} + \mu S \frac{\partial V}{\partial S} + \tfrac12\,\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2}\right) dt \;+\; \sigma S \frac{\partial V}{\partial S}\,dW$$
 
@@ -169,7 +143,7 @@ Collecting the two share-slope terms on the left gives the claim.
 
 ### The other door into the same room
 
-Any equation of this exact shape — one time slope, two share slopes, minus a multiple of the function itself — has a solution that can be written as an average: take the payoff, average it over where the share could end up in a pretend world where it grows at $r - q$, and discount that average back at $r$. The match between such equations and such averages is the Feynman-Kac formula, and it turns this card's equation into the formulas of [black-scholes-call](01-black-scholes-call.md) and [black-scholes-put](02-black-scholes-put.md). It also explains why the pretend world's drift is the same $r-q$ standing in front of $\partial V/\partial S$ here. That world was never a philosophy; it is this equation, read as an average.
+Any equation of this exact shape — one time slope, two share slopes, minus a multiple of the function itself — has a solution that can be written as an average: take the payoff, average it over where the share could end up in a pretend world where it grows at $r - q$, and discount that average back at $r$. The match between such equations and such averages is the Feynman-Kac formula, and it turns this card's equation into the formulas of [Black–Scholes call](01-black-scholes-call.md) and [Black-Scholes put](02-black-scholes-put.md). It also explains why the pretend world's drift is the same $r-q$ standing in front of $\partial V/\partial S$ here. That world was never a philosophy; it is this equation, read as an average.
 
 ---
 
@@ -720,17 +694,17 @@ The two outputs agree line for line at twelve decimal places: the same arithmeti
 > - **Dropping the half in front of the bend.** The term comes from Itô's lemma, not from a trader's rule of thumb. Drop it and the leftover is $3.790116 a year, which is the bend's whole contribution.
 > - **Mixing up the two clocks.** Calendar time runs forwards; life left to expiry runs backwards. Write one equation with the other's slope and the leftover is $10.178638 a year, twice theta.
 > - **Putting a forecast where $r - q$ belongs.** A 10% view of Acme's growth leaves $4.107958 a year. The hedge deleted the forecast; the equation has no slot for it.
-> - **Dropping the dividend on one side only.** Price with a 2% yield, write the equation without it, and the leftover is $1.173702 a year: precisely the dividend owed on the borrowed shares. This is the same slip that makes a dividend-paying call look too expensive on [known-cash-dividends](08-known-cash-dividends.md).
+> - **Dropping the dividend on one side only.** Price with a 2% yield, write the equation without it, and the leftover is $1.173702 a year: precisely the dividend owed on the borrowed shares. This is the same slip that makes a dividend-paying call look too expensive on [Known cash dividends](08-known-cash-dividends.md).
 
 ---
 
 ## Where you meet it in real life
 
 - **Every pricing system with a grid in it.** Road three of the code is a toy version of what banks run overnight: lay out share prices and dates, put the payoff along the expiry edge, step the equation backwards to today. It works on payoffs no formula can reach.
-- **Options that can be used early.** An American option's value can never sit below its payoff, so the equation becomes an inequality with a moving boundary between "hold" and "exercise": [exercise-boundary-and-smooth-pasting](../15-American%20and%20Bermudan%20exercise/04-exercise-boundary-and-smooth-pasting.md).
-- **The heat equation.** Log of the share price, life left instead of the date, an exponential factor peeled off: three changes of variable turn this into the equation for heat spreading along a bar. Not a second theory of prices, the same one in different clothes (black-scholes-to-the-heat-equation).
+- **Options that can be used early.** An American option's value can never sit below its payoff, so the equation becomes an inequality with a moving boundary between "hold" and "exercise": [The exercise boundary and smooth pasting](../15-American%20and%20Bermudan%20exercise/04-exercise-boundary-and-smooth-pasting.md).
+- **The heat equation.** Log of the share price, life left instead of the date, an exponential factor peeled off: three changes of variable turn this into the equation for heat spreading along a bar. Not a second theory of prices, the same one in different clothes (Black-Scholes is the heat equation after a change of variables).
 - **Barriers and other exotics.** A knock-out option is this equation on a smaller region, with zero written along the barrier. The region changes; the equation does not.
-- **Knowing how it is wrong.** Volatility that moves, shares that jump, hedging that costs money: each breaks one assumption and adds or alters a term ([black-scholes-assumptions-and-failures](09-black-scholes-assumptions-and-failures.md)).
+- **Knowing how it is wrong.** Volatility that moves, shares that jump, hedging that costs money: each breaks one assumption and adds or alters a term ([The Black-Scholes assumptions](09-black-scholes-assumptions-and-failures.md)).
 - **Corporate finance, by analogy.** A company's shares are a call on its assets with the debt as the strike, so the same equation governs that equity.
 
 > **Say it back**
@@ -740,18 +714,18 @@ The two outputs agree line for line at twelve decimal places: the same arithmeti
 
 ## What this builds on
 
-- [black-scholes-call](01-black-scholes-call.md): the $9.23 price and the hedge of 0.586851 shares, and the averaging route this card's equation replaces with a hedge.
-- [black-scholes-put](02-black-scholes-put.md): the second payoff the code checks, at $6.33, and proof that the equation is not about calls.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): measuring a slope with one variable moving and the others held still, which is what all three terms are.
-- [itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): why the second slope earns a place in the dt line. Without it there is no bend term, and no equation.
-- [geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): the model of the share that supplies $\mu$, $\sigma$, and the fact that the kick's square is first order.
+- [Black–Scholes call](01-black-scholes-call.md): the $9.23 price and the hedge of 0.586851 shares, and the averaging route this card's equation replaces with a hedge.
+- [Black-Scholes put](02-black-scholes-put.md): the second payoff the code checks, at $6.33, and proof that the equation is not about calls.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): measuring a slope with one variable moving and the others held still, which is what all three terms are.
+- [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): why the second slope earns a place in the dt line. Without it there is no bend term, and no equation.
+- [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): the model of the share that supplies $\mu$, $\sigma$, and the fact that the kick's square is first order.
 
 ## Where this goes next
 
-- [black-scholes-assumptions-and-failures](09-black-scholes-assumptions-and-failures.md): each assumption in "When it holds" broken on purpose, with the size of the damage.
-- [theta-pays-for-gamma-hedged-pnl](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md): the daily budget above as a trading business, re-hedged move by move.
-- [exercise-boundary-and-smooth-pasting](../15-American%20and%20Bermudan%20exercise/04-exercise-boundary-and-smooth-pasting.md): what happens to the equation when the holder may exercise early.
-- black-scholes-to-the-heat-equation: the change of variables that turns this equation into spreading heat, and hands back the closed formula.
+- [The Black-Scholes assumptions](09-black-scholes-assumptions-and-failures.md): each assumption in "When it holds" broken on purpose, with the size of the damage.
+- [Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md): the daily budget above as a trading business, re-hedged move by move.
+- [The exercise boundary and smooth pasting](../15-American%20and%20Bermudan%20exercise/04-exercise-boundary-and-smooth-pasting.md): what happens to the equation when the holder may exercise early.
+- Black-Scholes is the heat equation after a change of variables: the change of variables that turns this equation into spreading heat, and hands back the closed formula.
 
 The equation pins the price, but not which payoffs have a closed form: most are solved on a grid, to the grid's accuracy. What survives when the assumptions behind the hedge fail is the next question, and the assumptions card answers it.
 

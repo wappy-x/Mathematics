@@ -1,23 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Trigonometry
-topic: Waves in time
-item: Trig graphs
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/02-radians-and-the-unit-circle|radians-and-the-unit-circle]]"
-next:
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/05-inverse-trig-and-solving-equations|inverse-trig-and-solving-equations]]"
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/02-phasors-and-impedance|phasors-and-impedance]]"
-tags: [mathematics, geometry and trig, trig-graphs-amplitude-period-and-phase]
----
-
 # Trig graphs: reading amplitude, period, midline and phase off a wave
 
-Geometry and trig → Trigonometry → Waves in time → Trig graphs
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Trigonometry](../../../SYLLABUS.md#w05-s03) → Trig graphs
 
 ---
 
@@ -34,7 +17,7 @@ A harbour's tide table for one day:
 
 Chart datum is the fixed zero of the harbour's tide gauge. The water swings 3 m, from 0.5 m to 3.5 m, and each high water comes 12.4 hours after the last: 12 hours 24 minutes.
 
-A skipper at 09:00 needs a height the table does not give. Plotted against the clock, the entries fit a sine wave: the height of a point turning steadily round a circle, drawn against time ([radians-and-the-unit-circle](02-radians-and-the-unit-circle.md)).
+A skipper at 09:00 needs a height the table does not give. Plotted against the clock, the entries fit a sine wave: the height of a point turning steadily round a circle, drawn against time ([The unit circle](02-radians-and-the-unit-circle.md)).
 
 Four numbers fix that wave. The **amplitude** is how far the water rises above its middle level, the **midline**. The **period** is the time one cycle takes. The **phase** says when a cycle starts. Read the four off the table and a formula gives the height at any minute; read them off a formula and the curve can be sketched without a calculator.
 
@@ -75,7 +58,7 @@ For this harbour, $y = 1.5\sin(0.5067(t - 1.0)) + 2.0$.
 | $c$ | phase shift: a time the curve rises through its midline | 1.0 h, so 01:00 | slides the curve later |
 | $\theta$ | the angle inside the sine, $b(t - c)$ | a quarter turn at 04:06 | — |
 
-The cosine form, $y = a\cos(b(t - c)) + d$, keeps $a$, $b$ and $d$; its $c$ is a high water, 04:06, because a cosine starts at its peak ([trig-identities](03-trig-identities.md)).
+The cosine form, $y = a\cos(b(t - c)) + d$, keeps $a$, $b$ and $d$; its $c$ is a high water, 04:06, because a cosine starts at its peak ([Trig identities](03-trig-identities.md)).
 
 ### When it holds
 
@@ -124,7 +107,7 @@ To sketch: draw the midline at d and the band from d − a to d + a, mark c, and
 
 The reading is unique once a and b are positive and c is the first rising crossing after midnight. Otherwise c at 13:24 gives the same tide, and so does a = −1.5 with c at 07:12. The code checks both.
 
-Another route: the tide is the height of a point on a wheel of radius 1.5 m, centred 2.0 m above datum, turning once every 12.4 hours. phasors-and-impedance keeps the wheel and drops the wave.
+Another route: the tide is the height of a point on a wheel of radius 1.5 m, centred 2.0 m above datum, turning once every 12.4 hours. Phasors keeps the wheel and drops the wave.
 
 ---
 
@@ -374,7 +357,7 @@ The two outputs match line for line. The figure's curve runs through the `figure
 
 - **Tide tables.** The Moon returns overhead later each day, so the times creep: this model's first high water tomorrow is 04:54, 48 minutes later.
 - **Tide-predicting machines.** William Thomson, later Lord Kelvin, built one in 1873. It added ten cosine waves, each set by its own amplitude, angular speed and phase, and traced the total.
-- **Mains electricity.** Socket voltage is a sine wave in time, read for amplitude and phase as here (phasors-and-impedance).
+- **Mains electricity.** Socket voltage is a sine wave in time, read for amplitude and phase as here (Phasors).
 
 > **Say it back**
 > A steady wave is the plain sine curve moved four ways. The amplitude is half the swing, 1.5 m; the midline is its middle, 2.0 m. The period is high water to high water, 12.4 h, and b = 2π ÷ P. The phase shift c is when the sine rises through its midline, a quarter period before high water: 01:00. With those four, the formula gives the height at any minute.
@@ -383,12 +366,12 @@ The two outputs match line for line. The figure's curve runs through the `figure
 
 ## What this builds on
 
-- [radians-and-the-unit-circle](02-radians-and-the-unit-circle.md): the sine as the height of a point on the unit circle, and the radian, which makes a full turn $2\pi$.
+- [The unit circle](02-radians-and-the-unit-circle.md): the sine as the height of a point on the unit circle, and the radian, which makes a full turn $2\pi$.
 
 ## Where this goes next
 
-- [inverse-trig-and-solving-equations](05-inverse-trig-and-solving-equations.md): the formula run backwards, from a height to the times it happens.
-- phasors-and-impedance: amplitude and phase kept as an arrow, so waves of one period add like arrows.
+- [Inverse trig](05-inverse-trig-and-solving-equations.md): the formula run backwards, from a height to the times it happens.
+- Phasors: amplitude and phase kept as an arrow, so waves of one period add like arrows.
 
 The formula turns a time into a height. A skipper needs the reverse: the times when the water is deep enough.
 

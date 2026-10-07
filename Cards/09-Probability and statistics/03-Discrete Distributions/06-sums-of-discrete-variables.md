@@ -1,28 +1,12 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Discrete Distributions
-topic: Merging independent counts
-item: Adding counts
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/04-poisson|poisson]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/07-moment-generating-functions|moment-generating-functions]]"
-next: []
-tags: [mathematics, probability and statistics, sums-of-discrete-variables]
----
-
 # Adding counts: convolution, and why binomials and Poissons stay in the family
 
-Probability and statistics → Discrete Distributions → Merging independent counts → Adding counts
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Discrete Distributions](../../../SYLLABUS.md#w09-s03) → Adding counts
 
 ---
 
 ## General Overview
 
-A company runs two help desks. The billing desk receives 5 emails an hour on average. The technical desk receives 7. Each desk's hourly count follows the Poisson law, the law of rare events arriving independently at a steady rate ([poisson](04-poisson.md)). Next month the two inboxes merge into one, staffed by one team.
+A company runs two help desks. The billing desk receives 5 emails an hour on average. The technical desk receives 7. Each desk's hourly count follows the Poisson law, the law of rare events arriving independently at a steady rate ([Poisson](04-poisson.md)). Next month the two inboxes merge into one, staffed by one team.
 
 The team lead needs two numbers. What is the chance the merged inbox gets exactly 12 emails in an hour? And what is the chance it gets 16 or more, the point where the team falls behind? Knowing each desk's law is not yet an answer. The merged count is a sum, and the chance of a sum has to be built from the chances of its parts.
 
@@ -145,11 +129,11 @@ and the count above turns the sum into $C(n+m,s)$. This is the binomial mass wit
 
 ### Step 4: the second road, through moment generating functions
 
-The moment generating function of a count is $M_X(t) = E[e^{tX}]$, the long-run average of e raised to $t$ times the count ([moment-generating-functions](../02-Random%20Variables/07-moment-generating-functions.md)). For a sum, $e^{t(X+Y)} = e^{tX}e^{tY}$, and the average of a product of independent quantities is the product of their averages. So
+The moment generating function of a count is $M_X(t) = E[e^{tX}]$, the long-run average of e raised to $t$ times the count ([Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md)). For a sum, $e^{t(X+Y)} = e^{tX}e^{tY}$, and the average of a product of independent quantities is the product of their averages. So
 
 $$M_{X+Y}(t) = M_X(t)\,M_Y(t).$$
 
-Convolution of laws becomes multiplication of generating functions. For a Poisson count, summing the series gives $M_X(t) = e^{\lambda(e^t - 1)}$. Multiply two of them and the exponents add: $e^{(\lambda+\mu)(e^t-1)}$, the Poisson generating function with average $\lambda + \mu$. The binomial generating function is $(1 - p + pe^t)^n$; two with the same $p$ multiply to the power $n + m$. Since a generating function that exists near $t$ = 0 pins down its law (stated on the moment-generating-functions card, proved in [characteristic-functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md)), both closure results follow a second time. At $t$ = 0.5 the code finds 2403.437416 three ways: the product of the two desks' series, the series of the merged law, and the closed form.
+Convolution of laws becomes multiplication of generating functions. For a Poisson count, summing the series gives $M_X(t) = e^{\lambda(e^t - 1)}$. Multiply two of them and the exponents add: $e^{(\lambda+\mu)(e^t-1)}$, the Poisson generating function with average $\lambda + \mu$. The binomial generating function is $(1 - p + pe^t)^n$; two with the same $p$ multiply to the power $n + m$. Since a generating function that exists near $t$ = 0 pins down its law (stated on the moment-generating-functions card, proved in [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md)), both closure results follow a second time. At $t$ = 0.5 the code finds 2403.437416 three ways: the product of the two desks' series, the series of the merged law, and the closed form.
 
 <details>
 <summary>Why most families are not closed</summary>
@@ -610,9 +594,9 @@ The two outputs are identical line for line. The simulation's 0.113500, with sta
 
 - **Call centres and inboxes.** Merging queues, adding a channel, or routing overflow from one team to another: independent Poisson streams merge into one Poisson stream at the summed rate, which is why staffing tables need only the total.
 - **Insurance claim counts.** The number of claims across independent policy groups is a sum of counts, and actuaries convolve their laws. The Poisson case gives the portfolio's claim count in one line.
-- **Quality control across batches.** Defective items in two batches from one process, each item defective with the same chance, form one binomial count over both batches ([bernoulli-and-binomial](01-bernoulli-and-binomial.md)).
-- **Waiting for several successes.** The tries needed for three successes are three independent geometric waits added, which is how the negative binomial law arises ([geometric-and-negative-binomial](02-geometric-and-negative-binomial.md)).
-- **Splitting a stream.** The converse of merging: sort one Poisson stream of emails by topic and the topic counts are independent Poisson counts ([multinomial](05-multinomial.md)).
+- **Quality control across batches.** Defective items in two batches from one process, each item defective with the same chance, form one binomial count over both batches ([Binomial](01-bernoulli-and-binomial.md)).
+- **Waiting for several successes.** The tries needed for three successes are three independent geometric waits added, which is how the negative binomial law arises ([Waiting for a success](02-geometric-and-negative-binomial.md)).
+- **Splitting a stream.** The converse of merging: sort one Poisson stream of emails by topic and the topic counts are independent Poisson counts ([Multinomial](05-multinomial.md)).
 - **Dice games.** Two dice total 7 with chance 6/36: six of the 36 equally likely splits. The same convolution, with a law that is not closed.
 
 > **Say it back**
@@ -622,12 +606,12 @@ The two outputs are identical line for line. The simulation's 0.113500, with sta
 
 ## What this builds on
 
-- [poisson](04-poisson.md): the Poisson law and its mass $e^{-\lambda}\lambda^k/k!$, the building block convolved here.
-- [moment-generating-functions](../02-Random%20Variables/07-moment-generating-functions.md): $M_X(t)$, the product rule for independent sums, and the fact that a generating function pins down its law, which gives the second road in Step 4.
+- [Poisson](04-poisson.md): the Poisson law and its mass $e^{-\lambda}\lambda^k/k!$, the building block convolved here.
+- [Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md): $M_X(t)$, the product rule for independent sums, and the fact that a generating function pins down its law, which gives the second road in Step 4.
 
 ## Where this goes next
 
-- [birthday-and-coupon-collector](07-birthday-and-coupon-collector.md): the coupon collector's total wait is a sum of independent geometric waits with different chances, a sum convolution handles but no family closes over.
+- [Two classics](07-birthday-and-coupon-collector.md): the coupon collector's total wait is a sum of independent geometric waits with different chances, a sum convolution handles but no family closes over.
 
 When the parts are many and belong to no closed family, the sum's law still settles into a recognisable shape as the count grows; that pull toward the bell curve is where the wing's limit theorems start.
 

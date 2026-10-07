@@ -1,32 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Greeks by Numbers and Calibration
-topic: Slopes off the nodes
-item: Greeks from a tree or grid
-kind: method
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/03-multi-step-trees-and-backward-induction|multi-step-trees-and-backward-induction]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/07-finite-differences-for-the-black-scholes-equation|finite-differences-for-the-black-scholes-equation]]"
-next:
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/07-american-greeks-and-implied-volatility|american-greeks-and-implied-volatility]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - greeks-from-a-tree-or-grid
----
-
 # Greeks from a tree or grid: read the slope off the nodes
 
-Financial mathematics → Greeks by Numbers and Calibration → Slopes off the nodes → Greeks from a tree or grid
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Greeks by Numbers and Calibration](../../../SYLLABUS.md#w12-s07) → Greeks from a tree or grid
 
 ---
 
 ## General Overview
 
-Acme trades at $100. A one-year call on it — the right, not the duty, to buy one share for $100 in a year — was priced on [multi-step-trees-and-backward-induction](../04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md) by cutting the year into four quarters and filling in the boxes from the last column backwards. The number at the root was $8.76.
+Acme trades at $100. A one-year call on it — the right, not the duty, to buy one share for $100 in a year — was priced on [Many steps](../04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md) by cutting the year into four quarters and filling in the boxes from the last column backwards. The number at the root was $8.76.
 
 Fifteen boxes went in and one number came out. The other fourteen are not scratch work: each is the price of the same option at a different Acme price on a different date. The tree computed a small map of prices, and the price is one point on it.
 
@@ -174,7 +154,7 @@ At spacing 0.010 the grid reads delta 0.586885 and gamma 0.018946, against the f
 
 ### The other roads to a Greek
 
-Three sibling cards reach the same numbers without reading nodes: [bump-and-revalue-and-common-random-numbers](01-bump-and-revalue-and-common-random-numbers.md) (Bump and revalue), which prices twice and divides, and so works on any pricer at all; [pathwise-and-likelihood-ratio-greeks](02-pathwise-and-likelihood-ratio-greeks.md) (Greeks inside the simulation), which differentiates inside a Monte Carlo run; and [adjoint-differentiation-in-outline](03-adjoint-differentiation-in-outline.md) (Adjoint differentiation), which returns a whole risk ladder in one backward pass. Node reading is the cheap one, and only exists where a lattice or grid is already built.
+Three sibling cards reach the same numbers without reading nodes: [Bump and revalue](01-bump-and-revalue-and-common-random-numbers.md) (Bump and revalue), which prices twice and divides, and so works on any pricer at all; [Greeks inside the simulation](02-pathwise-and-likelihood-ratio-greeks.md) (Greeks inside the simulation), which differentiates inside a Monte Carlo run; and [Adjoint differentiation](03-adjoint-differentiation-in-outline.md) (Adjoint differentiation), which returns a whole risk ladder in one backward pass. Node reading is the cheap one, and only exists where a lattice or grid is already built.
 
 ---
 
@@ -722,10 +702,10 @@ The two outputs agree line for line at six decimals, by different routes to the 
 
 ## Where you meet it in real life
 
-- **American option desks.** Early exercise is priced on trees and grids, since the exercise test is a node-by-node comparison, and the Greeks then come off the same nodes for nothing: [american-greeks-and-implied-volatility](../15-American%20and%20Bermudan%20exercise/07-american-greeks-and-implied-volatility.md).
-- **Finite-difference engines.** One solve gives the price across a whole range of stock levels, so the delta and gamma profiles come out with it. Filling the grid is [finite-differences-for-the-black-scholes-equation](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md); this card only reads it.
-- **Overnight risk runs.** Thousands of positions must report delta and gamma before the open. Bumping every input multiplies the compute; reading nodes costs nothing, which is why it survives beside [bump-and-revalue-and-common-random-numbers](01-bump-and-revalue-and-common-random-numbers.md) (Bump and revalue) on desks that own better methods.
-- **Inverting a quote.** Implied volatility needs a price and a slope at every guess, read this way when the pricer is a tree: [root-finding-for-inverses](05-root-finding-for-inverses.md) (Solving backwards). Fitting many quotes at once wants the same slopes against every parameter: [calibration-as-least-squares](06-calibration-as-least-squares.md) (Calibration), with [model-risk-and-parameter-stability](07-model-risk-and-parameter-stability.md) (Model risk) asking whether they stay put.
+- **American option desks.** Early exercise is priced on trees and grids, since the exercise test is a node-by-node comparison, and the Greeks then come off the same nodes for nothing: [American Greeks and implied volatility](../15-American%20and%20Bermudan%20exercise/07-american-greeks-and-implied-volatility.md).
+- **Finite-difference engines.** One solve gives the price across a whole range of stock levels, so the delta and gamma profiles come out with it. Filling the grid is [Pricing on a grid](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md); this card only reads it.
+- **Overnight risk runs.** Thousands of positions must report delta and gamma before the open. Bumping every input multiplies the compute; reading nodes costs nothing, which is why it survives beside [Bump and revalue](01-bump-and-revalue-and-common-random-numbers.md) (Bump and revalue) on desks that own better methods.
+- **Inverting a quote.** Implied volatility needs a price and a slope at every guess, read this way when the pricer is a tree: [Solving backwards](05-root-finding-for-inverses.md) (Solving backwards). Fitting many quotes at once wants the same slopes against every parameter: [Calibration](06-calibration-as-least-squares.md) (Calibration), with [Model risk](07-model-risk-and-parameter-stability.md) (Model risk) asking whether they stay put.
 - **Model validation.** Reaching one Greek by two methods that share no arithmetic is the standard test before a pricer goes live; the code's four roads are that test in miniature.
 
 > **Say it back**
@@ -735,12 +715,12 @@ The two outputs agree line for line at six decimals, by different routes to the 
 
 ## What this builds on
 
-- [multi-step-trees-and-backward-induction](../04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md): the backward walk that fills the nodes, and the labels this card reads them by.
-- [finite-differences-for-the-black-scholes-equation](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): the grid in $x = \ln(S/100)$, and why a solver works in logs, not dollars.
+- [Many steps](../04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md): the backward walk that fills the nodes, and the labels this card reads them by.
+- [Pricing on a grid](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): the grid in $x = \ln(S/100)$, and why a solver works in logs, not dollars.
 
 ## Where this goes next
 
-- [american-greeks-and-implied-volatility](../15-American%20and%20Bermudan%20exercise/07-american-greeks-and-implied-volatility.md): the same readings on a tree that also decides, at every node, whether to exercise early.
+- [American Greeks and implied volatility](../15-American%20and%20Bermudan%20exercise/07-american-greeks-and-implied-volatility.md): the same readings on a tree that also decides, at every node, whether to exercise early.
 
 Every reading here leaned on smooth ground between the nodes; an American tree carries a kink that moves with the exercise boundary, and a later card must read a slope across ground that is not smooth.
 

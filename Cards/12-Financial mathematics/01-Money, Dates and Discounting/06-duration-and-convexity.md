@@ -1,33 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Money, Dates and Discounting
-topic: Rate sensitivity
-item: Duration and convexity
-kind: approximation
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/05-bonds-price-and-yield|bonds-price-and-yield]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/05-taylors-theorem|taylors-theorem]]"
-next:
-  - "[[Cards/12-Financial mathematics/28-Swaps/03-swap-dv01-and-hedging|swap-dv01-and-hedging]]"
-  - "[[Cards/12-Financial mathematics/35-Mortgages, Callables and Prepayment/03-negative-convexity|negative-convexity]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - duration-and-convexity
----
-
 # Duration and convexity: how a bond price moves when its yield moves
 
-Financial mathematics → Money, Dates and Discounting → Rate sensitivity → Duration and convexity
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Money, Dates and Discounting](../../../SYLLABUS.md#w12-s01) → Duration and convexity
 
 ---
 
 ## General Overview
 
-The house bond pays 60 dollars a year for five years and hands back 1,000 dollars with the last payment. At a market yield of five percent it sells for **$1,043.29** ([bonds-price-and-yield](05-bonds-price-and-yield.md)).
+The house bond pays 60 dollars a year for five years and hands back 1,000 dollars with the last payment. At a market yield of five percent it sells for **$1,043.29** ([Bond price and yield](05-bonds-price-and-yield.md)).
 
 Rates rise. The yield goes to six percent. Price the five payments again, one at a time, and the total comes out at exactly **$1,000.00** — face value, because a six percent yield now matches the six percent coupon.
 
@@ -106,10 +85,10 @@ For the house bond that is $0.444916, a shade under 45 cents per 1,000 dollars o
 ### When it holds
 
 - **One yield moves, and it moves every payment together.** A curve that twists — short rates up, long rates down — is not a move in $y$ at all, and no single duration describes it.
-- **The payments are fixed.** Nothing may cancel, reschedule or repay early. When the payments themselves react to rates, as a callable bond's or a mortgage's do, the bend can turn the other way: [negative-convexity](../35-Mortgages%2C%20Callables%20and%20Prepayment/03-negative-convexity.md).
+- **The payments are fixed.** Nothing may cancel, reschedule or repay early. When the payments themselves react to rates, as a callable bond's or a mortgage's do, the bend can turn the other way: [Negative convexity](../35-Mortgages%2C%20Callables%20and%20Prepayment/03-negative-convexity.md).
 - **The move is modest.** What the two terms leave out grows as the cube of the move. On this bond a one-point move leaves under three cents unaccounted for; a three-point rise leaves 0.680863 dollars unaccounted for, and the two numbers are no longer enough.
 - **The yield stays above minus one hundred percent,** so $(1+y)$ is positive and the discounting means something.
-- **The quote is annual, as here.** Conventions verified 14 September 2026: this card uses one coupon a year discounted at an annual yield. A bond quoted with two coupons a year discounts once per half-year, so with $t$ still in years $(1+y)^t$ becomes $(1+y/2)^{2t}$, modified duration divides by $(1+y/2)$, and convexity weights each year by $t(t+\tfrac12)$. The calendar rule that fixes each $t$ is its own card: [day-counts-and-dates](02-day-counts-and-dates.md).
+- **The quote is annual, as here.** Conventions verified 14 September 2026: this card uses one coupon a year discounted at an annual yield. A bond quoted with two coupons a year discounts once per half-year, so with $t$ still in years $(1+y)^t$ becomes $(1+y/2)^{2t}$, modified duration divides by $(1+y/2)$, and convexity weights each year by $t(t+\tfrac12)$. The calendar rule that fixes each $t$ is its own card: [Day counts](02-day-counts-and-dates.md).
 
 ---
 
@@ -119,11 +98,11 @@ For the house bond that is $0.444916, a shade under 45 cents per 1,000 dollars o
 
 The bond's payments and their dates are printed in the contract. None of them change when the market changes its mind about interest rates. The only thing that moves is the yield.
 
-So the price is a function of one number, and everything known about such functions applies: it has a slope, the slope has a slope, and Taylor's theorem turns those two into a prediction with a stated error ([taylors-theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)). That is the whole card; the rest is working out the two slopes for this particular function.
+So the price is a function of one number, and everything known about such functions applies: it has a slope, the slope has a slope, and Taylor's theorem turns those two into a prediction with a stated error ([Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)). That is the whole card; the rest is working out the two slopes for this particular function.
 
 ### Step 1: differentiate once, and a weighted average time falls out
 
-Each payment contributes $A_t/(1+y)^t$ to the price: the amount, times the discount factor for its year ([compounding-and-discount-factors](01-compounding-and-discount-factors.md)). Nudge the yield up and that term shrinks, and it shrinks faster the further off the payment is, because it is being divided by $(1+y)$ more times. Differentiating one term gives $-t\,A_t/(1+y)^{t+1}$: the extra factor of $t$ is the whole story, and it is why long bonds are dangerous.
+Each payment contributes $A_t/(1+y)^t$ to the price: the amount, times the discount factor for its year ([Discount factors](01-compounding-and-discount-factors.md)). Nudge the yield up and that term shrinks, and it shrinks faster the further off the payment is, because it is being divided by $(1+y)$ more times. Differentiating one term gives $-t\,A_t/(1+y)^{t+1}$: the extra factor of $t$ is the whole story, and it is why long bonds are dangerous.
 
 Add the terms and pull out one factor of $(1+y)$:
 
@@ -290,7 +269,7 @@ The single line is the bond's modified duration, read off at each remaining matu
 
 Now the yield. Hold the maturity at five years and slide the yield instead: duration is 4.37 at a three percent yield, 4.26 at five percent, 4.16 at seven percent. The slide is gentle, and it is the bend showing itself from another angle: a curve with no bend would have the same slope at every yield. The more convexity a bond carries, the faster its duration runs away as rates climb.
 
-So the number a desk hedges with has a shelf life, which is why a rates book is re-measured daily and rebalanced when it drifts. Carrying the arithmetic onto an instrument with two legs is [swap-dv01-and-hedging](../28-Swaps/03-swap-dv01-and-hedging.md).
+So the number a desk hedges with has a shelf life, which is why a rates book is re-measured daily and rebalanced when it drifts. Carrying the arithmetic onto an instrument with two legs is [Swap DV01](../28-Swaps/03-swap-dv01-and-hedging.md).
 
 ---
 
@@ -719,7 +698,7 @@ The two outputs match line for line, from two programs that share no code.
 > - **Using the wrong duration in the price formula.** Macaulay where modified belongs prices the one-point rise at 996.578622 when the answer is 1,000.000000. The two differ by one factor of $(1+y)$, so at a five percent yield the predicted fall comes out five percent too big.
 > - **Feeding in the wrong units.** A hundred basis points is $\Delta y = 0.01$. Typed as 1.0 the formula returns −3,405.861841, a negative price, which at least announces itself. Ten basis points typed as 10 does not.
 > - **Dropping the one-half.** Taylor's second term carries a half. Without it the same rise prices at 1001.249110, past the true price rather than short of it.
-> - **Believing every bond is convex.** Positive payments make the bend positive, and only positive payments. A bond the issuer can repay early, or a pool of mortgages that can be refinanced, has payments that move with rates, and its curve can bend the other way: [negative-convexity](../35-Mortgages%2C%20Callables%20and%20Prepayment/03-negative-convexity.md).
+> - **Believing every bond is convex.** Positive payments make the bend positive, and only positive payments. A bond the issuer can repay early, or a pool of mortgages that can be refinanced, has payments that move with rates, and its curve can bend the other way: [Negative convexity](../35-Mortgages%2C%20Callables%20and%20Prepayment/03-negative-convexity.md).
 
 ---
 
@@ -727,9 +706,9 @@ The two outputs match line for line, from two programs that share no code.
 
 - **A rates desk's risk screen.** Every position shows a DV01, the cash it loses on a one-basis-point rise: 0.444916 dollars per 1,000 of face here. Summed across the book, it is the one number the desk manages all day.
 - **Pension funds and insurers.** A pension promises payments decades out: a very long bond in disguise. Matching the duration of what is owned to the duration of what is owed makes the fund roughly indifferent to a rate move — immunisation, set out by F. M. Redington in 1952.
-- **Comparing loans and projects.** The same arithmetic works on any fixed stream of cash, so a mortgage, a lease or a project appraisal has a duration too: [annuities-and-loans](03-annuities-and-loans.md) and [net-present-value-and-irr](04-net-present-value-and-irr.md).
+- **Comparing loans and projects.** The same arithmetic works on any fixed stream of cash, so a mortgage, a lease or a project appraisal has a duration too: [Annuities](03-annuities-and-loans.md) and [NPV and IRR](04-net-present-value-and-irr.md).
 - **The options desk, under other names.** Delta and gamma are the first and second derivatives of an option's price against the share price: same Taylor expansion, different curve.
-- **Reading a price backwards.** Everything here starts from a yield. Markets quote prices, and getting the yield out of a price takes a search rather than a formula: [yield-from-price](07-yield-from-price.md).
+- **Reading a price backwards.** Everything here starts from a yield. Markets quote prices, and getting the yield out of a price takes a search rather than a formula: [Yield from price](07-yield-from-price.md).
 
 > **Say it back**
 > A bond's price is a curve drawn against its yield: falling, and bending. Duration is the slope of that curve, convexity the bend. Macaulay duration is the average year a dollar comes back, weighted by each payment's share of the price; divide it by one plus the yield to get modified duration, the fraction of the price lost per unit of yield. Convexity weights the same payments by $t(t+1)$ and is positive whenever the payments are, so the curve always sits above its tangent: a rise costs less than duration threatens and a fall pays more than it promises. Together they predict a price move to second order, with a leftover that grows as the cube of the move and can be bounded before the move happens.
@@ -738,13 +717,13 @@ The two outputs match line for line, from two programs that share no code.
 
 ## What this builds on
 
-- [bonds-price-and-yield](05-bonds-price-and-yield.md): the price function itself — five dated payments, one yield, one number — and the discount factors that build it. This card differentiates it twice.
-- [taylors-theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): the rule that a smooth function near a point equals its value, plus slope times step, plus half the bend times step squared, plus a remainder that can be bounded. Duration and convexity are the first two terms; Step 4's certificate is the remainder.
+- [Bond price and yield](05-bonds-price-and-yield.md): the price function itself — five dated payments, one yield, one number — and the discount factors that build it. This card differentiates it twice.
+- [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): the rule that a smooth function near a point equals its value, plus slope times step, plus half the bend times step squared, plus a remainder that can be bounded. Duration and convexity are the first two terms; Step 4's certificate is the remainder.
 
 ## Where this goes next
 
-- [swap-dv01-and-hedging](../28-Swaps/03-swap-dv01-and-hedging.md): DV01 applied to an instrument with two legs, and the trade that sets a book's rate risk to zero.
-- [negative-convexity](../35-Mortgages%2C%20Callables%20and%20Prepayment/03-negative-convexity.md): what happens when the payments themselves react to rates, and the bend turns the wrong way.
+- [Swap DV01](../28-Swaps/03-swap-dv01-and-hedging.md): DV01 applied to an instrument with two legs, and the trade that sets a book's rate risk to zero.
+- [Negative convexity](../35-Mortgages%2C%20Callables%20and%20Prepayment/03-negative-convexity.md): what happens when the payments themselves react to rates, and the bend turns the wrong way.
 
 This card held two things still: the payments were fixed, and the whole yield moved as one block. Let go of the first and convexity can turn negative; let go of the second and one number per bond stops being enough — and those are the two doors later cards go through.
 

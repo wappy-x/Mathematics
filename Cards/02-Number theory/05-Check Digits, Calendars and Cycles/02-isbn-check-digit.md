@@ -1,26 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Check Digits, Calendars and Cycles
-topic: Check digits
-item: ISBN-10 and the prime modulus 11
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/05-Check Digits, Calendars and Cycles/01-barcode-check-digit|barcode-check-digit]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/04-modular-inverse|modular-inverse]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/06-euclids-lemma|euclids-lemma]]"
-next: []
-tags:
-  - mathematics
-  - number theory
-  - isbn-check-digit
----
-
 # ISBN-10 and the prime modulus 11: why a check digit on a prime clock also catches two swapped digits
 
-Number theory → Check Digits, Calendars and Cycles → Check digits → ISBN-10 and the prime modulus 11
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Check Digits, Calendars and Cycles](../../../SYLLABUS.md#w02-s05) → ISBN-10 and the prime modulus 11
 
 ---
 
@@ -48,7 +28,7 @@ flowchart LR
 
 **Read it aloud: each digit times its weight, added up, and the answer is a whole number of 11s.**
 
-The hyphens are spacing. The last weight is 1, so that digit can be picked last. Any other weight would need a modular inverse ([modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)).
+The hyphens are spacing. The last weight is 1, so that digit can be picked last. Any other weight would need a modular inverse ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)).
 
 | Piece | Plain meaning | Here |
 | --- | --- | --- |
@@ -80,13 +60,13 @@ Any swap works this way. One weight gains the digit gap, the other loses it.
 
 Two places are 1 to 9 apart in weight. Two different digits are at most 10 apart, counting X as 10. Neither gap is a multiple of 11: too small.
 
-A prime divides a product only by dividing one of the numbers multiplied ([euclids-lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)). 11 divides neither gap, so it cannot divide the shift. The total moves to a new remainder and the ISBN is rejected — every swap of two different digits, every time.
+A prime divides a product only by dividing one of the numbers multiplied ([Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)). 11 divides neither gap, so it cannot divide the shift. The total moves to a new remainder and the ISBN is rejected — every swap of two different digits, every time.
 
 ### Step 3: a single wrong digit, same argument
 
 A digit typed wrong shifts the total by its weight, 1 to 10, times how far off it is, at most 10. Neither is a multiple of 11, so the shift never is.
 
-On a clock of 10 this dies. 10 = 2 × 5. A weight gap of 2 and a digit gap of 5 shift the total by 10, which leaves 0. The swap passes unseen. That is the barcode rule's price ([barcode-check-digit](01-barcode-check-digit.md)).
+On a clock of 10 this dies. 10 = 2 × 5. A weight gap of 2 and a digit gap of 5 shift the total by 10, which leaves 0. The swap passes unseen. That is the barcode rule's price ([Barcode check digits](01-barcode-check-digit.md)).
 
 ---
 
@@ -242,14 +222,14 @@ The two outputs match line for line.
 > **Treating the 11 as arbitrary, a number the committee liked.** It is the mechanism: a swap shifts the total by one small number times another, and only a prime beats every such product.
 >
 > - Reading the X as a letter, or as a zero. A clock of 11 has eleven leftovers, 0 to 10, but only ten single digits, 0 to 9. The leftover 10 needs its own mark: X.
-> - Expecting a clock of 10 to catch swaps too. It cannot: 10 splits into 2 × 5 ([barcode-check-digit](01-barcode-check-digit.md)).
+> - Expecting a clock of 10 to catch swaps too. It cannot: 10 splits into 2 × 5 ([Barcode check digits](01-barcode-check-digit.md)).
 
 ---
 
 ## Where you meet it in real life
 
 - **Library and bookshop catalogues.** A mistyped ISBN bounces at the box, no database touched.
-- **Every other check digit you scan past.** Bank codes, tax numbers, the milk barcode: same idea, different clock ([barcode-check-digit](01-barcode-check-digit.md)).
+- **Every other check digit you scan past.** Bank codes, tax numbers, the milk barcode: same idea, different clock ([Barcode check digits](01-barcode-check-digit.md)).
 - **ISBN-13, on books since 2007.** Thirteen digits on a clock of 10: no more X, and a few swaps get through.
 
 > **Say it back**
@@ -259,13 +239,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [barcode-check-digit](01-barcode-check-digit.md): the same weighted total on a clock of 10, and the swaps it lets through.
-- [modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md): solving for a check digit when the last weight is not 1.
-- [euclids-lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): a prime divides a product only by dividing one of the numbers multiplied.
+- [Barcode check digits](01-barcode-check-digit.md): the same weighted total on a clock of 10, and the swaps it lets through.
+- [The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md): solving for a check digit when the last weight is not 1.
+- [Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): a prime divides a product only by dividing one of the numbers multiplied.
 
 ## Where this goes next
 
-Nothing depends on this card yet. The shelf carries on with [day-of-the-week](03-day-of-the-week.md).
+Nothing depends on this card yet. The shelf carries on with [Day of the week for any date](03-day-of-the-week.md).
 
 ---
 

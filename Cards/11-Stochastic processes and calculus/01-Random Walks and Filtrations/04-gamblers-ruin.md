@@ -1,24 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Random Walks and Filtrations
-topic: Stopping at two walls
-item: Gambler's ruin
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/02-simple-random-walk|simple-random-walk]]"
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/03-first-order-recurrences-and-loans|first-order-recurrences-and-loans]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/06-first-passage-and-hitting-times|first-passage-and-hitting-times]]"
-  - "[[Cards/14-Applied and computational/07-Network Science and Spectral Graphs/08-random-walks-and-electrical-networks|random-walks-and-electrical-networks]]"
-tags: [mathematics, stochastic processes and calculus, gamblers-ruin]
----
-
 # Gambler's ruin: the chance of reaching the target before the floor
 
-Stochastic processes and calculus → Random Walks and Filtrations → Stopping at two walls → Gambler's ruin
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Random Walks and Filtrations](../../../SYLLABUS.md#w11-s01) → Gambler's ruin
 
 ---
 
@@ -53,7 +35,7 @@ This is one sample: the first of 20000 games the code plays at a fair table, see
 
 ## The formula
 
-Notation first, in words. The chips after round n are written $X_n$, the value of the process at time n, with time counted in rounds ([processes-and-paths](01-processes-and-paths.md)). Between the walls, $X_n$ is a simple random walk ([simple-random-walk](02-simple-random-walk.md)): each round adds 1 with chance $p$ and subtracts 1 with chance $q = 1 - p$, independently of every other round. The game ends at the round $T$, the first round at which the chips reach 0 or the target $L$.
+Notation first, in words. The chips after round n are written $X_n$, the value of the process at time n, with time counted in rounds ([Stochastic processes](01-processes-and-paths.md)). Between the walls, $X_n$ is a simple random walk ([Simple random walk](02-simple-random-walk.md)): each round adds 1 with chance $p$ and subtracts 1 with chance $q = 1 - p$, independently of every other round. The game ends at the round $T$, the first round at which the chips reach 0 or the target $L$.
 
 Start with $k$ chips. Write $h_k$ for the chance of reaching $L$ before 0, and $t_k$ for the expected number of rounds, $E[T]$. Then
 
@@ -131,7 +113,7 @@ Write $d_k = h_k - h_{k-1}$ for the step up in chance from $k - 1$ chips to $k$.
 
 $$p\,(h_{k+1} - h_k) = q\,(h_k - h_{k-1}), \qquad \text{so} \qquad d_{k+1} = r\,d_k.$$
 
-Each step up the ladder of chances is the tilt $r$ times the previous one: a first-order recurrence with no added constant ([first-order-recurrences-and-loans](../../04-Combinatorics%20and%20graphs/05-Recurrences/03-first-order-recurrences-and-loans.md)). So $d_k = r^{k-1} d_1$. The steps from 0 to $L$ add up to $h_L - h_0 = 1$:
+Each step up the ladder of chances is the tilt $r$ times the previous one: a first-order recurrence with no added constant ([First-order recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/03-first-order-recurrences-and-loans.md)). So $d_k = r^{k-1} d_1$. The steps from 0 to $L$ add up to $h_L - h_0 = 1$:
 
 $$d_1\,(1 + r + \dots + r^{L-1}) = 1, \qquad h_k = d_1\,(1 + r + \dots + r^{k-1}).$$
 
@@ -182,7 +164,7 @@ Tilt the table her way instead, 0.51 a round. Then $r = 0.49/0.51 < 1$, $r^L$ va
 
 </details>
 
-**Another road.** At a fair table the chips are a fair game, a martingale in the language of this wing's second shelf: the expected chips after the next round equal the chips now. Stopping a fair game when it leaves a finite range keeps the average, so $10 = 20\,h_{10} + 0$, and $h_{10} = 0.5$ in one line. At a tilted table the same trick works on $r^{X_n}$, de Moivre's choice, and on $X_n + (q - p)n$ for the duration. The martingale cards of that shelf state when stopping keeps the average ([stopping-times-and-optional-stopping](../02-Martingales/03-stopping-times-and-optional-stopping.md)), and show the doubling strategy, where it does not.
+**Another road.** At a fair table the chips are a fair game, a martingale in the language of this wing's second shelf: the expected chips after the next round equal the chips now. Stopping a fair game when it leaves a finite range keeps the average, so $10 = 20\,h_{10} + 0$, and $h_{10} = 0.5$ in one line. At a tilted table the same trick works on $r^{X_n}$, de Moivre's choice, and on $X_n + (q - p)n$ for the duration. The martingale cards of that shelf state when stopping keeps the average ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)), and show the doubling strategy, where it does not.
 
 ---
 
@@ -603,7 +585,7 @@ The two outputs match line for line, including the simulated ones: the generator
 
 - **Casino bankrolls.** A bet on red at an American roulette wheel wins with chance 18/38. From 10 chips to 20, one chip a spin, the chance of doubling is 0.2585, over about 91.76 spins.
 - **Sequential testing.** A test that stops when a running score first crosses one of two thresholds is a walk between two walls; its error rates are chances of hitting the wrong wall first.
-- **Electrical networks.** Hold node 0 at 0 volts and node 20 at 1 volt along a chain of equal resistors: the voltage at node k solves the same averaging equation, so it equals $h_k$ at a fair table (random-walks-and-electrical-networks).
+- **Electrical networks.** Hold node 0 at 0 volts and node 20 at 1 volt along a chain of equal resistors: the voltage at node k solves the same averaging equation, so it equals $h_k$ at a fair table (Random walks as circuits).
 - **Insurance.** An insurer's surplus rising with premiums and falling with claims faces the same question with one wall, ruin, and the tilted-table limit of Step 6 is its first model.
 
 > **Say it back**
@@ -613,13 +595,13 @@ The two outputs match line for line, including the simulated ones: the generator
 
 ## What this builds on
 
-- [simple-random-walk](02-simple-random-walk.md): the walk that moves one step up or down each round, here stopped at two walls.
-- [first-order-recurrences-and-loans](../../04-Combinatorics%20and%20graphs/05-Recurrences/03-first-order-recurrences-and-loans.md): the recurrence $d_{k+1} = r\,d_k$ and its geometric sum.
+- [Simple random walk](02-simple-random-walk.md): the walk that moves one step up or down each round, here stopped at two walls.
+- [First-order recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/03-first-order-recurrences-and-loans.md): the recurrence $d_{k+1} = r\,d_k$ and its geometric sum.
 
 ## Where this goes next
 
-- [first-passage-and-hitting-times](06-first-passage-and-hitting-times.md): the whole law of the first-passage time to one level, why the fair walk returns for sure, and why the mean wait is infinite.
-- random-walks-and-electrical-networks: the chance of hitting one wall first as a voltage, on any graph.
+- [Hitting times](06-first-passage-and-hitting-times.md): the whole law of the first-passage time to one level, why the fair walk returns for sure, and why the mean wait is infinite.
+- Random walks as circuits: the chance of hitting one wall first as a voltage, on any graph.
 
 What this card leaves open: with only one wall, how fast the chance of still waiting shrinks round by round, and whether a fair walk always comes back to where it started.
 

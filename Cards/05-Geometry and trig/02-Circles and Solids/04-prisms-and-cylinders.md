@@ -1,24 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Circles and Solids
-topic: Constant cross-sections
-item: Prisms and cylinders
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/02-Circles and Solids/01-circle-circumference-and-area|circle-circumference-and-area]]"
-next:
-  - "[[Cards/05-Geometry and trig/02-Circles and Solids/05-pyramids-cones-and-spheres|pyramids-cones-and-spheres]]"
-  - "[[Cards/05-Geometry and trig/02-Circles and Solids/06-polyhedra-and-eulers-formula|polyhedra-and-eulers-formula]]"
-  - "[[Cards/06-Calculus and analysis/05-Curves and Solids/03-volumes-by-slices-and-shells|volumes-by-slices-and-shells]]"
-tags: [mathematics, geometry and trig, prisms-and-cylinders]
----
-
 # Prisms and cylinders: volume is cross-section times height
 
-Geometry and trig → Circles and Solids → Constant cross-sections → Prisms and cylinders
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Circles and Solids](../../../SYLLABUS.md#w05-s02) → Prisms and cylinders
 
 ---
 
@@ -50,7 +32,7 @@ $$V = B\,h \qquad L = P\,h \qquad S = P\,h + 2B$$
 
 **Read it aloud:** the volume is one slice's area times the height; the walls are the way round times the height; the surface area adds the two ends.
 
-For a cylinder of radius $r$ (centre to rim), the circle card ([circle-circumference-and-area](01-circle-circumference-and-area.md)) gives $B = \pi r^2$ and $P = 2\pi r$, where $\pi$ (pi) is every circle's circumference divided by its diameter, about 3.141593.
+For a cylinder of radius $r$ (centre to rim), the circle card ([Circles](01-circle-circumference-and-area.md)) gives $B = \pi r^2$ and $P = 2\pi r$, where $\pi$ (pi) is every circle's circumference divided by its diameter, about 3.141593.
 
 $$V = \pi r^2 h \qquad L = 2\pi r\,h \qquad S = 2\pi r\,h + 2\pi r^2$$
 
@@ -69,7 +51,7 @@ $$V = \pi r^2 h \qquad L = 2\pi r\,h \qquad S = 2\pi r\,h + 2\pi r^2$$
 
 ### When it holds
 
-- **Every slice matches.** The cone-shaped hopper under the tank narrows to a point and holds a third of the matching cylinder ([pyramids-cones-and-spheres](05-pyramids-cones-and-spheres.md)).
+- **Every slice matches.** The cone-shaped hopper under the tank narrows to a point and holds a third of the matching cylinder ([Pyramids, cones and spheres](05-pyramids-cones-and-spheres.md)).
 - **Height square on.** A leaning prism still holds $B\,h$ with $h$ its upright height; using the longer sloping edge instead overstates the volume.
 - **Walls square on.** A leaning prism's walls are slanted parallelograms (opposite sides parallel), with more area than $P\,h$.
 - **Inside measurements, flat ends.** Capacity uses the inside width and depth; a domed lid or sloping floor changes the water held.
@@ -99,7 +81,7 @@ Push a stack of coins so it leans: each coin is unchanged, so the stack holds th
 
 Inside columns do not overlap and lie in the solid, so the volume is at least their squares' total area times $h$. Touching columns cover the solid, so it is at most their total area times $h$. As the grid is refined, both areas approach $B$: that is what the base having area $B$ means. A fixed number caught between two quantities that both approach $B\,h$ can only be $B\,h$.
 
-At every height a leaning prism's slice is the upright prism's, shifted sideways, so Cavalieri's principle gives it $B\,h$ too. [volumes-by-slices-and-shells](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md) proves the principle.
+At every height a leaning prism's slice is the upright prism's, shifted sideways, so Cavalieri's principle gives it $B\,h$ too. [Volumes](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md) proves the principle.
 
 </details>
 
@@ -117,11 +99,11 @@ Scale 1 m = 30 units. The shaded wall's left and right edges were the single cut
 
 ### Step 4: a cylinder ends a run of prisms
 
-Put a square inside the tank's circle, corners on the rim, and another outside, sides touching it. Prisms on them hold 6000 and 12000 litres, bracketing the tank. Double the sides again and again: each new corner goes on the rim, halfway between two old ones. Each new side is the long side of a right-angled triangle whose short sides are half the old side and the gap from its middle out to the rim ([pythagoras-and-its-converse](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)), so no π enters.
+Put a square inside the tank's circle, corners on the rim, and another outside, sides touching it. Prisms on them hold 6000 and 12000 litres, bracketing the tank. Double the sides again and again: each new corner goes on the rim, halfway between two old ones. Each new side is the long side of a right-angled triangle whose short sides are half the old side and the gap from its middle out to the rim ([Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)), so no π enters.
 
 At 16 sides the prisms hold 9184.40 to 9547.79 litres; at 4096, 9424.77 to 9424.78. Their walls close in on 18.849556 square metres. Every prism obeys $V = B\,h$ and $L = P\,h$, so the cylinder they close in on does too. Book XII of Euclid's *Elements* doubles the sides of an inside square the same way to compare cylinders.
 
-Solids whose slices change size need the slices added one by one: [volumes-by-slices-and-shells](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md).
+Solids whose slices change size need the slices added one by one: [Volumes](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md).
 
 ---
 
@@ -379,15 +361,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [circle-circumference-and-area](01-circle-circumference-and-area.md): $B = \pi r^2$ and $P = 2\pi r$ for the round slice, and π as circumference divided by diameter.
+- [Circles](01-circle-circumference-and-area.md): $B = \pi r^2$ and $P = 2\pi r$ for the round slice, and π as circumference divided by diameter.
 
 ## Where this goes next
 
-- [pyramids-cones-and-spheres](05-pyramids-cones-and-spheres.md): slices that shrink to a point, and the sphere.
-- [polyhedra-and-eulers-formula](06-polyhedra-and-eulers-formula.md): counting a prism's faces, edges and corners.
-- [volumes-by-slices-and-shells](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md): any solid as a sum of thin slabs, whatever its slices do.
+- [Pyramids, cones and spheres](05-pyramids-cones-and-spheres.md): slices that shrink to a point, and the sphere.
+- [Polyhedra](06-polyhedra-and-eulers-formula.md): counting a prism's faces, edges and corners.
+- [Volumes](../../06-Calculus%20and%20analysis/05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md): any solid as a sum of thin slabs, whatever its slices do.
 
-The hopper beneath the tank tapers to a point; how much a tapering solid holds is the question [pyramids-cones-and-spheres](05-pyramids-cones-and-spheres.md) answers.
+The hopper beneath the tank tapers to a point; how much a tapering solid holds is the question [Pyramids, cones and spheres](05-pyramids-cones-and-spheres.md) answers.
 
 ---
 

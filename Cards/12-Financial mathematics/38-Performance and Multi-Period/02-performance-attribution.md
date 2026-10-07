@@ -1,21 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Performance and Multi-Period
-topic: Explaining active return
-item: Attribution
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/38-Performance and Multi-Period/01-sharpe-information-and-drawdown|sharpe-information-and-drawdown]]"
-next: []
-tags: [mathematics, financial mathematics, performance-attribution]
----
-
 # Attribution: splitting a return into allocation, selection and interaction
 
-Financial mathematics → Performance and Multi-Period → Explaining active return → Attribution
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Performance and Multi-Period](../../../SYLLABUS.md#w12-s38) → Attribution
 
 ---
 
@@ -52,7 +37,7 @@ Each bar is the return after adding one more effect. The first bar is the benchm
 
 Notation first, in words. The fund is cut into **sectors**, here shares and bonds, and the letter $i$ names one sector. Lower-case $w_i$ is the fund's weight in sector $i$: its share of the fund's money at the start of the month. Capital $W_i$ is the benchmark's weight. Lower-case $r_i$ is the fund's return inside the sector; $b_i$ is the benchmark's return inside the same sector. A capital sigma, $\sum_i$, means "add this up over every sector".
 
-The two totals come first. Each is a weighted average of sector returns ([two-asset-portfolio-risk-and-return](../37-Portfolio%20Theory/01-two-asset-portfolio-risk-and-return.md)):
+The two totals come first. Each is a weighted average of sector returns ([Two assets](../37-Portfolio%20Theory/01-two-asset-portfolio-risk-and-return.md)):
 
 $$R = \sum_i w_i\, r_i, \qquad B = \sum_i W_i\, b_i$$
 
@@ -84,7 +69,7 @@ Two helper readings. The bracket $(w_i - W_i)$ is the **weight bet**: positive f
 - **One period, weights fixed at its start.** The identity is exact for one period in which nothing is bought or sold. If the fund trades mid-month, the start weights no longer produce its return, and a residual appears. Daily or transaction-level data fixes this.
 - **The same sectors on both sides.** Each fund sector needs a benchmark return to compare against. A fund-only holding, such as cash when the benchmark holds none, needs a return assigned by rule, or selection in that sector means nothing.
 - **Weights that each add to 1.** The proof below uses $\sum_i w_i = \sum_i W_i = 1$. Leave cash out of the fund's weights and allocation stops summing correctly: the centering by $B$ no longer cancels.
-- **Simple returns, not log returns.** Weighted averages of sector returns give the portfolio return only for simple returns ([returns-simple-log-and-annualised](../36-Returns%20and%20Utility/01-returns-simple-log-and-annualised.md)).
+- **Simple returns, not log returns.** Weighted averages of sector returns give the portfolio return only for simple returns ([Returns](../36-Returns%20and%20Utility/01-returns-simple-log-and-annualised.md)).
 - **Accounting, not cause.** The identity says where the lead arose in this ledger. It does not say the manager was skilful, or that the result will repeat.
 
 ---
@@ -681,7 +666,7 @@ The two outputs are identical line for line.
 ## The usual mistake
 
 > [!warning]
-> **Reading allocation and selection as proof of skill.** They are accounting. A 0.3-point selection effect says the fund's holdings beat the benchmark's inside each sector this month. It does not say the picks were clever rather than lucky, or that they carried no extra risk. One month of a two-sector fund proves nothing; separating skill from luck needs many periods and a risk measure ([sharpe-information-and-drawdown](01-sharpe-information-and-drawdown.md)).
+> **Reading allocation and selection as proof of skill.** They are accounting. A 0.3-point selection effect says the fund's holdings beat the benchmark's inside each sector this month. It does not say the picks were clever rather than lucky, or that they carried no extra risk. One month of a two-sector fund proves nothing; separating skill from luck needs many periods and a risk measure ([Performance measures](01-sharpe-information-and-drawdown.md)).
 >
 > Smaller traps:
 > - **Comparing a two-effect report with a three-effect one.** One manager shows selection 0.4, another 0.3, on identical numbers. The difference is the interaction, 0.1, and where the report put it.
@@ -696,8 +681,8 @@ The two outputs are identical line for line.
 - **Quarterly reports to pension trustees.** Almost every institutional fund report carries an attribution table, sector by sector, with allocation and selection columns. The Brinson papers are the reason the columns have those names.
 - **Deciding who is paid.** Large funds split the job: an asset-allocation committee sets the weights, specialist managers pick the securities. Allocation measures the committee; selection measures the specialists.
 - **Performance standards.** The Global Investment Performance Standards (GIPS) govern how returns are calculated and presented to clients. Attribution is built on returns calculated that way.
-- **Factor attribution.** Instead of sectors, split the fund's exposures by factors such as size, value or momentum ([factor-models-and-apt](../37-Portfolio%20Theory/05-factor-models-and-apt.md)). The bookkeeping is the same: exposure bet times factor return, plus what is left over.
-- **Rebalancing reviews.** Trading mid-period moves weights away from their starting values. The residual it leaves in a monthly attribution is one measure of what trading cost ([rebalancing-and-transaction-costs](04-rebalancing-and-transaction-costs.md)).
+- **Factor attribution.** Instead of sectors, split the fund's exposures by factors such as size, value or momentum ([Factor models](../37-Portfolio%20Theory/05-factor-models-and-apt.md)). The bookkeeping is the same: exposure bet times factor return, plus what is left over.
+- **Rebalancing reviews.** Trading mid-period moves weights away from their starting values. The residual it leaves in a monthly attribution is one measure of what trading cost ([Rebalancing](04-rebalancing-and-transaction-costs.md)).
 
 > **Say it back**
 > A fund's lead over its benchmark comes from two kinds of decision: how much to put in each sector, and what to hold inside it. Four portfolios, the benchmark, the fund and two mixtures, price each decision alone. Allocation is extra weight times how much the sector beat the whole benchmark; selection is benchmark weight times how much the picks beat the sector; interaction is extra weight times the picks' gap. The three add back to the active return exactly, in one period. Over several periods returns compound, so each period's effects are scaled before they are added.
@@ -706,15 +691,15 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [sharpe-information-and-drawdown](01-sharpe-information-and-drawdown.md): active return and the information ratio, the single number this card takes apart.
-- [two-asset-portfolio-risk-and-return](../37-Portfolio%20Theory/01-two-asset-portfolio-risk-and-return.md): a portfolio's return is the weighted average of its parts' returns. Every Q on this card is one.
-- [returns-simple-log-and-annualised](../36-Returns%20and%20Utility/01-returns-simple-log-and-annualised.md): simple returns average across holdings, and compound across time. Across months uses both facts.
+- [Performance measures](01-sharpe-information-and-drawdown.md): active return and the information ratio, the single number this card takes apart.
+- [Two assets](../37-Portfolio%20Theory/01-two-asset-portfolio-risk-and-return.md): a portfolio's return is the weighted average of its parts' returns. Every Q on this card is one.
+- [Returns](../36-Returns%20and%20Utility/01-returns-simple-log-and-annualised.md): simple returns average across holdings, and compound across time. Across months uses both facts.
 
 ## Where this goes next
 
-- [mertons-portfolio-problem](03-mertons-portfolio-problem.md): this card measured an allocation after the fact; Merton's problem asks what the allocation between shares and cash should be in advance.
-- [rebalancing-and-transaction-costs](04-rebalancing-and-transaction-costs.md): weights drift within a period and trading them back costs money, the source of the residual this card assumed away.
-- [life-cycle-and-glide-paths](05-life-cycle-and-glide-paths.md): an allocation that changes on purpose over decades, the long version of the weight bet.
+- [Merton's problem](03-mertons-portfolio-problem.md): this card measured an allocation after the fact; Merton's problem asks what the allocation between shares and cash should be in advance.
+- [Rebalancing](04-rebalancing-and-transaction-costs.md): weights drift within a period and trading them back costs money, the source of the residual this card assumed away.
+- [Investing over a lifetime](05-life-cycle-and-glide-paths.md): an allocation that changes on purpose over decades, the long version of the weight bet.
 
 Attribution says where last month's lead came from; it does not say what the weights should have been, which is the question Merton's problem answers.
 

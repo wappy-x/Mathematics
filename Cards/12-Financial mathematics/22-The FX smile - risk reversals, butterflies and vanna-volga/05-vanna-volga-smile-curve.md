@@ -1,34 +1,16 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The FX smile - risk reversals, butterflies and vanna-volga
-topic: Reading a vol between and beyond the quotes
-item: The vanna-volga smile
-kind: approximation
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/04-vanna-volga-pricing|vanna-volga-pricing]]"
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/03-volatility-surface-and-its-arbitrage-rules|volatility-surface-and-its-arbitrage-rules]]"
-next:
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/06-smile-adjusted-delta-and-sticky-delta|smile-adjusted-delta-and-sticky-delta]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/01-fx-digitals|fx-digitals]]"
-tags: [mathematics, financial mathematics, vanna-volga-smile-curve]
----
-
 # The vanna-volga smile: a closed-form vol at any strike from three pillars, and where it breaks in the wings
 
-Financial mathematics → The FX smile - risk reversals, butterflies and vanna-volga → Reading a vol between and beyond the quotes → The vanna-volga smile
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The FX smile - risk reversals, butterflies and vanna-volga](../../../SYLLABUS.md#w12-s22) → The vanna-volga smile
 
 ---
 
 ## General Overview
 
-The euro trades at 1.10 dollars. A one-year dollar rate is 5%, a one-year euro rate 3%, so the one-year forward rate, the rate a bank locks in today for exchange in a year, is 1.122221. A currency dealer's screen quotes three one-year volatilities for EURUSD: 10.00% at the money, a risk reversal of −1.00% and a butterfly of +0.25%. Unpacked ([risk-reversal-and-butterfly](01-risk-reversal-and-butterfly.md)), that is 10.75% for the 25-delta put and 9.75% for the 25-delta call: the options whose value moves a quarter as much as the exchange rate. Turned into strikes ([fx-strike-from-delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md)), the three quotes sit at 1.052466, 1.127847 and 1.201425. These three points are the **pillars**.
+The euro trades at 1.10 dollars. A one-year dollar rate is 5%, a one-year euro rate 3%, so the one-year forward rate, the rate a bank locks in today for exchange in a year, is 1.122221. A currency dealer's screen quotes three one-year volatilities for EURUSD: 10.00% at the money, a risk reversal of −1.00% and a butterfly of +0.25%. Unpacked ([Risk reversal and butterfly](01-risk-reversal-and-butterfly.md)), that is 10.75% for the 25-delta put and 9.75% for the 25-delta call: the options whose value moves a quarter as much as the exchange rate. Turned into strikes ([Strike from delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md)), the three quotes sit at 1.052466, 1.127847 and 1.201425. These three points are the **pillars**.
 
 A client asks for a call struck at 1.15. No quote exists there. It sits between the at-the-money pillar and the 25-delta call pillar, so its volatility should land between 10.00% and 9.75%. It does: 9.8780%. The same recipe gives a number at 1.40, far past the last pillar. There it says 10.77%, higher than at the money, although every quote on this side of the smile says volatility falls as the strike rises.
 
-This card writes the recipe out. It is a closed form: three pillar vols and a handful of logarithms in, one vol out, with no root finder. It comes from the vanna-volga price ([vanna-volga-pricing](04-vanna-volga-pricing.md)) read back as a volatility. Antonio Castagna and Fabio Mercurio published it in 2006.
+This card writes the recipe out. It is a closed form: three pillar vols and a handful of logarithms in, one vol out, with no root finder. It comes from the vanna-volga price ([Vanna-volga pricing](04-vanna-volga-pricing.md)) read back as a volatility. Antonio Castagna and Fabio Mercurio published it in 2006.
 
 **The vanna-volga smile reads a vol at any strike as a weighted average of the three pillar vols, with weights built from log-strike ratios, plus a small second-order correction; it passes through all three quotes exactly, is excellent between them, and past them it extrapolates a curve no quote supports and guarantees nothing against butterfly or calendar arbitrage.**
 
@@ -84,7 +66,7 @@ $$\sigma(K) = \sigma_2 + \frac{-\sigma_2 + \sqrt{\sigma_2^2 + d_1(K)\,d_2(K)\,\b
 
 The product $d_1(K)\,d_2(K)$ decides how much the correction matters. It is zero at the at-the-money pillar and small near it. It grows like the square of the log-distance from the forward. So the square root does almost nothing between the pillars and a great deal in the wings.
 
-Conventions verified 27 Sep 2026 against the house cards: pillars on spot delta with the premium in dollars; at the money as the delta-neutral straddle; the butterfly read as a smile strangle ([market-strangle-and-smile-strangle](02-market-strangle-and-smile-strangle.md)). A different delta convention moves the pillar strikes and so every number here.
+Conventions verified 27 Sep 2026 against the house cards: pillars on spot delta with the premium in dollars; at the money as the delta-neutral straddle; the butterfly read as a smile strangle ([The broker butterfly](02-market-strangle-and-smile-strangle.md)). A different delta convention moves the pillar strikes and so every number here.
 
 ### When it holds
 
@@ -99,9 +81,9 @@ Conventions verified 27 Sep 2026 against the house cards: pillars on spot delta 
 
 ### Step 0: the idea — price a plain call with vanna-volga, then read the price back as a vol
 
-The vanna-volga price ([vanna-volga-pricing](04-vanna-volga-pricing.md)) values any option as its flat-vol price plus the market cost of a hedge. The hedge is three pillar options, in amounts chosen so the hedge carries the same vega, vanna and volga as the target ([vanna-and-volga-on-the-smile](03-vanna-and-volga-on-the-smile.md)). Vega is the change in value per unit of volatility; vanna is how vega changes with the exchange rate; volga is how vega changes with volatility.
+The vanna-volga price ([Vanna-volga pricing](04-vanna-volga-pricing.md)) values any option as its flat-vol price plus the market cost of a hedge. The hedge is three pillar options, in amounts chosen so the hedge carries the same vega, vanna and volga as the target ([Vanna and volga](03-vanna-and-volga-on-the-smile.md)). Vega is the change in value per unit of volatility; vanna is how vega changes with the exchange rate; volga is how vega changes with volatility.
 
-Apply that price to a plain call at strike $K$. The answer is a dollar price. Every dollar price of a call inside its no-arbitrage bounds has exactly one Black-Scholes volatility that reproduces it (for a currency the formula is Garman-Kohlhagen: [garman-kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md)). Do that at every strike and a smile appears. Castagna and Mercurio's contribution is to skip the price and the root finder: the weights have a closed form, and expanding the price in small vol gaps gives the vol directly.
+Apply that price to a plain call at strike $K$. The answer is a dollar price. Every dollar price of a call inside its no-arbitrage bounds has exactly one Black-Scholes volatility that reproduces it (for a currency the formula is Garman-Kohlhagen: [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md)). Do that at every strike and a smile appears. Castagna and Mercurio's contribution is to skip the price and the root finder: the weights have a closed form, and expanding the price in small vol gaps gives the vol directly.
 
 ### Step 1: the hedge weights are log-strike weights
 
@@ -156,7 +138,7 @@ Its roots are $e = \big(-\sigma_2 \pm \sqrt{\sigma_2^2 + d_1d_2(K)(2\sigma_2D_1 
 
 ### Step 4: why it breaks past the pillars
 
-Between the pillars the weights are modest and the vol gaps small, so the expansions of Steps 2 and 3 are accurate. Outside, two things fail. The weights stop being an average: past $K_3$, $y_2$ turns negative while $y_1$ and $y_3$ grow like the square of the log-distance, so the first-order curve is a parabola in $\ln K$, with one lowest point and a climb after it, and the second-order curve follows it, slightly bent. And $d_1(K)\,d_2(K)$ grows without bound, so if $2\sigma_2D_1 + D_2$ is negative enough the square root's argument crosses zero and the quadratic of Step 3 has no real root. Neither step ever asks whether call prices are convex in strike or whether total variance grows with expiry, the two no-arbitrage tests of [volatility-surface-and-its-arbitrage-rules](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md). The worked numbers below show all three failures.
+Between the pillars the weights are modest and the vol gaps small, so the expansions of Steps 2 and 3 are accurate. Outside, two things fail. The weights stop being an average: past $K_3$, $y_2$ turns negative while $y_1$ and $y_3$ grow like the square of the log-distance, so the first-order curve is a parabola in $\ln K$, with one lowest point and a climb after it, and the second-order curve follows it, slightly bent. And $d_1(K)\,d_2(K)$ grows without bound, so if $2\sigma_2D_1 + D_2$ is negative enough the square root's argument crosses zero and the quadratic of Step 3 has no real root. Neither step ever asks whether call prices are convex in strike or whether total variance grows with expiry, the two no-arbitrage tests of [The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md). The worked numbers below show all three failures.
 
 <details>
 <summary>Why log-strikes and not strikes?</summary>
@@ -165,7 +147,7 @@ Three reasons. The Black-Scholes distances $d_1$ and $d_2$ are straight lines in
 
 </details>
 
-An alternative route to a full smile from quotes is to fit a parametric curve, such as SVI, that is built to pass the butterfly test: [svi-smile-fit](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md). It needs more quotes and a fitter; vanna-volga needs three quotes and a calculator.
+An alternative route to a full smile from quotes is to fit a parametric curve, such as SVI, that is built to pass the butterfly test: [The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md). It needs more quotes and a fitter; vanna-volga needs three quotes and a calculator.
 
 ---
 
@@ -685,9 +667,9 @@ The two outputs agree line for line. They reach the bell-curve area by different
 ## Where you meet it in real life
 
 - **FX option desks.** Screens quote three vols per expiry; the vanna-volga curve is a common first reading of the strikes in between, such as the 1.15 call.
-- **Pricing digitals and barriers.** A digital's value depends on the smile's slope at its strike, read off this curve: [fx-digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md).
-- **Hedging.** When spot moves, the pillars move with it and the vol at a fixed strike changes; how a desk accounts for that is [smile-adjusted-delta-and-sticky-delta](06-smile-adjusted-delta-and-sticky-delta.md).
-- **Risk systems.** A quick, closed-form smile used for marking and sanity checks, with a heavier model such as SVI ([svi-smile-fit](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md)) taking over where arbitrage-free wings matter.
+- **Pricing digitals and barriers.** A digital's value depends on the smile's slope at its strike, read off this curve: [Currency digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md).
+- **Hedging.** When spot moves, the pillars move with it and the vol at a fixed strike changes; how a desk accounts for that is [Hedging with the smile](06-smile-adjusted-delta-and-sticky-delta.md).
+- **Risk systems.** A quick, closed-form smile used for marking and sanity checks, with a heavier model such as SVI ([The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md)) taking over where arbitrage-free wings matter.
 
 > **Say it back**
 > Three quotes give three pillars: a strike and a vol each. The vanna-volga smile reads the vol at any other strike as the pillar vols averaged with log-strike weights, which are exactly the weights of the vanna-volga hedge, and then bends that average with a square-root correction for curvature. It passes through every quote and matches the full vanna-volga price between them. Past the outer pillars it follows a parabola the market never quoted, can end where the square root turns negative, and promises nothing about butterfly or calendar arbitrage. Use it inside the pillars; test it outside.
@@ -696,13 +678,13 @@ The two outputs agree line for line. They reach the bell-curve area by different
 
 ## What this builds on
 
-- [vanna-volga-pricing](04-vanna-volga-pricing.md): the full price with its 3×3 hedge. This card reads that price back as a volatility and finds a closed form for it.
-- [volatility-surface-and-its-arbitrage-rules](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md): the butterfly and calendar tests this card runs on the curve, and the density they rest on.
+- [Vanna-volga pricing](04-vanna-volga-pricing.md): the full price with its 3×3 hedge. This card reads that price back as a volatility and finds a closed form for it.
+- [The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md): the butterfly and calendar tests this card runs on the curve, and the density they rest on.
 
 ## Where this goes next
 
-- [smile-adjusted-delta-and-sticky-delta](06-smile-adjusted-delta-and-sticky-delta.md): what happens to this curve when the exchange rate moves, and what that does to the hedge ratio.
-- [fx-digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md): the first exotic priced off this curve, where its slope at a strike becomes money.
+- [Hedging with the smile](06-smile-adjusted-delta-and-sticky-delta.md): what happens to this curve when the exchange rate moves, and what that does to the hedge ratio.
+- [Currency digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md): the first exotic priced off this curve, where its slope at a strike becomes money.
 
 This card gives a vol at every strike for a fixed exchange rate; the open question is how that curve should move when the rate itself moves, and the answer decides how many euros a desk holds against a smile-priced option.
 

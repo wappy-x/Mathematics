@@ -1,25 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Martingales
-topic: Games with no deadline
-item: Stopping without a bound
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/03-stopping-times-and-optional-stopping|stopping-times-and-optional-stopping]]"
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/05-uniform-integrability|uniform-integrability]]"
-next: []
-tags:
-  - mathematics
-  - stochastic processes and calculus
-  - uniform-integrability-and-unbounded-stopping
----
-
 # Stopping without a bound: the uniform integrability that makes it safe
 
-Stochastic processes and calculus → Martingales → Games with no deadline → Stopping without a bound
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Martingales](../../../SYLLABUS.md#w11-s02) → Stopping without a bound
 
 ---
 
@@ -29,7 +10,7 @@ A gambler walks in with 10 dollars. Each round she stakes 1 dollar on a fair coi
 
 What is the chance she leaves with 30? There is a one-line answer. Her fortune is a fair game, so its average never moves from 10. At the end she holds 30 or 0. The only split of those two amounts that averages 10 is 30 with probability one third. So she reaches 30 about 1 time in 3 and is ruined about 2 times in 3.
 
-That line uses optional stopping: the average of a fair game, read at a time chosen by watching the game, equals its starting value. The theorem on [stopping-times-and-optional-stopping](03-stopping-times-and-optional-stopping.md) proves it only when the stopping time has a fixed ceiling, such as "by round 500 at the latest". This gambler's game has none. And the same line applied to the doubling strategy, where each loss doubles the next stake, gives a wrong answer: the doubler always ends one dollar up, not zero. Something separates the two games. It is **uniform integrability**: the rare, extreme values of the stopped fortune must carry a vanishing share of its average, all at once, however long the game has run.
+That line uses optional stopping: the average of a fair game, read at a time chosen by watching the game, equals its starting value. The theorem on [Stopping times](03-stopping-times-and-optional-stopping.md) proves it only when the stopping time has a fixed ceiling, such as "by round 500 at the latest". This gambler's game has none. And the same line applied to the doubling strategy, where each loss doubles the next stake, gives a wrong answer: the doubler always ends one dollar up, not zero. Something separates the two games. It is **uniform integrability**: the rare, extreme values of the stopped fortune must carry a vanishing share of its average, all at once, however long the game has run.
 
 **Optional stopping holds for a stopping time with no ceiling, provided the game ends with certainty and its stopped values are uniformly integrable; bounded fortunes qualify, so the gambler's ruin odds follow in one line.**
 
@@ -53,7 +34,7 @@ Orange: the chance she is broke by round n. Green: the chance she has reached 30
 
 ## The formula
 
-Notation from earlier cards, in one line each. $X_n$ is her fortune after round n, the process read "the value at time n". $\mathcal{F}_n$ is what is known after round n: the results of the first n tosses. A **martingale** is a process whose best forecast of the next value, given $\mathcal{F}_n$, is today's value ([martingales](01-martingales.md)). A **stopping time** $\tau$ is a round you recognise when it arrives, without seeing the future. New notation: $\tau \wedge n$, read "tau capped at n", is the smaller of $\tau$ and n. The capped process $M_{\tau \wedge n}$ is the game frozen at $\tau$, and read at round n if $\tau$ has not arrived.
+Notation from earlier cards, in one line each. $X_n$ is her fortune after round n, the process read "the value at time n". $\mathcal{F}_n$ is what is known after round n: the results of the first n tosses. A **martingale** is a process whose best forecast of the next value, given $\mathcal{F}_n$, is today's value ([Martingales](01-martingales.md)). A **stopping time** $\tau$ is a round you recognise when it arrives, without seeing the future. New notation: $\tau \wedge n$, read "tau capped at n", is the smaller of $\tau$ and n. The capped process $M_{\tau \wedge n}$ is the game frozen at $\tau$, and read at round n if $\tau$ has not arrived.
 
 The theorem. Let $M_n$ be a martingale and $\tau$ a stopping time with $P(\tau < \infty) = 1$. If the family of capped values is uniformly integrable,
 
@@ -109,9 +90,9 @@ $$P(\text{reach } b) = \frac{(q/p)^a - 1}{(q/p)^b - 1}.$$
 
 ### Step 0: stopping at every cap is already safe; the question is the limit
 
-Cap the game at any round n. The capped fortune is the start plus the steps taken while the game is still on. Step k counts only if $\tau \ge k$, which the first k − 1 tosses decide, and a fair step multiplied by something known before it is taken still averages zero. So the capped fortune averages 10 dollars: the earlier card's theorem, and Lemma 1 below. The code prints that average at every hundredth round up to 1000: 10.000000 each time. Stopping is a betting rule that stakes 1 until $\tau$ and 0 after ([predictable-bets-and-the-martingale-transform](02-predictable-bets-and-the-martingale-transform.md)).
+Cap the game at any round n. The capped fortune is the start plus the steps taken while the game is still on. Step k counts only if $\tau \ge k$, which the first k − 1 tosses decide, and a fair step multiplied by something known before it is taken still averages zero. So the capped fortune averages 10 dollars: the earlier card's theorem, and Lemma 1 below. The code prints that average at every hundredth round up to 1000: 10.000000 each time. Stopping is a betting rule that stakes 1 until $\tau$ and 0 after ([Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md)).
 
-As n grows, the capped fortune becomes the final fortune, run by run. So the whole question is whether an average passes to the limit along with the values. That is exactly what uniform integrability controls ([uniform-integrability](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/05-uniform-integrability.md)).
+As n grows, the capped fortune becomes the final fortune, run by run. So the whole question is whether an average passes to the limit along with the values. That is exactly what uniform integrability controls ([Uniform integrability](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/05-uniform-integrability.md)).
 
 ### Step 1: the game ends, and on average quickly
 
@@ -125,7 +106,7 @@ Once n passes $\tau$, the capped value equals $M_\tau$, so $M_{\tau\wedge n} \to
 
 For the gambler the test is the bounded one. Her fortune never leaves 0 to 30, so above the cutoff K = 30 there is nothing, at every cap. The code prints that tail as 0.
 
-Two earlier cards meet the condition from other sides. A martingale bounded in a power above 1 has a running peak with a finite average, by Doob's inequality ([doob-inequalities](05-doob-inequalities.md)), and that peak is one envelope for every cap. And uniform integrability is what [martingale-convergence](04-martingale-convergence.md) lacked for averages: a uniformly integrable martingale converges in mean as well as run by run, and each of its values is the best forecast of its limit, which is optional stopping at time infinity. This card states the second fact without proof; Williams proves it in chapter 14.
+Two earlier cards meet the condition from other sides. A martingale bounded in a power above 1 has a running peak with a finite average, by Doob's inequality ([Doob's inequalities](05-doob-inequalities.md)), and that peak is one envelope for every cap. And uniform integrability is what [Martingale convergence](04-martingale-convergence.md) lacked for averages: a uniformly integrable martingale converges in mean as well as run by run, and each of its values is the best forecast of its limit, which is optional stopping at time infinity. This card states the second fact without proof; Williams proves it in chapter 14.
 
 ### Step 3: the ruin odds in one line
 
@@ -192,7 +173,7 @@ Orange: the average capped fortune, 10 dollars at every round. Green: the part o
 
 </details>
 
-A second road skips martingales entirely: write down, for each fortune x, the chance h(x) of reaching 30 from there. One round later it is at x + 1 or x − 1, so h(x) = ½ h(x + 1) + ½ h(x − 1), with h(0) = 0 and h(30) = 1. The code solves those equations as a linear system. The martingale is the shortcut; the equations are the check. This road is worked in full, biased coin and average length included, on [gamblers-ruin](../01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md).
+A second road skips martingales entirely: write down, for each fortune x, the chance h(x) of reaching 30 from there. One round later it is at x + 1 or x − 1, so h(x) = ½ h(x + 1) + ½ h(x − 1), with h(0) = 0 and h(30) = 1. The code solves those equations as a linear system. The martingale is the shortcut; the equations are the check. This road is worked in full, biased coin and average length included, on [Gambler's ruin](../01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md).
 
 ---
 
@@ -681,12 +662,12 @@ The two outputs match line for line, simulated digits included, because both lan
 
 ## What this builds on
 
-- [stopping-times-and-optional-stopping](03-stopping-times-and-optional-stopping.md): stopping times, and optional stopping at a time with a ceiling, which Lemma 1 recalls.
-- [uniform-integrability](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/05-uniform-integrability.md): the definition, the dominated-family test, and Vitali's theorem, which passes the average to the limit.
+- [Stopping times](03-stopping-times-and-optional-stopping.md): stopping times, and optional stopping at a time with a ceiling, which Lemma 1 recalls.
+- [Uniform integrability](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/05-uniform-integrability.md): the definition, the dominated-family test, and Vitali's theorem, which passes the average to the limit.
 
 ## Where this goes next
 
-- [martingale-representation-in-discrete-time](07-martingale-representation-in-discrete-time.md): every martingale on coin tosses is a betting strategy on those tosses.
+- [Representing a martingale](07-martingale-representation-in-discrete-time.md): every martingale on coin tosses is a betting strategy on those tosses.
 
 Stopping tells what a fair game is worth at the end; which betting strategy produces a given fair game, toss by toss, is the question that martingale-representation-in-discrete-time answers.
 

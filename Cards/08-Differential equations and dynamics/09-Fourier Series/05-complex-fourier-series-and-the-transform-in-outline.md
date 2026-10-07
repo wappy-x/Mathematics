@@ -1,25 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Fourier Series
-topic: Spinning arrows to a frequency dial
-item: The complex form
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/09-Fourier Series/03-parsevals-identity|parsevals-identity]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/04-eulers-formula|eulers-formula]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/07-improper-integrals|improper-integrals]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/01-fourier-series-in-complex-form|fourier-series-in-complex-form]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/03-fourier-transform|fourier-transform]]"
-next: []
-tags: [mathematics, differential equations and dynamics, complex-fourier-series-and-the-transform-in-outline]
----
-
 # The complex form: one coefficient c_n e^(inx) per frequency, and letting the period grow gives the Fourier transform
 
-Differential equations and dynamics → Fourier Series → Spinning arrows to a frequency dial → The complex form
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Fourier Series](../../../SYLLABUS.md#w08-s09) → The complex form
 
 ---
 
@@ -27,13 +8,13 @@ Differential equations and dynamics → Fourier Series → Spinning arrows to a 
 
 A radar transmitter keys its carrier on for 2 microseconds, then off. Its envelope is a rectangle, height 1 for 2 µs, and the receiver must pass the frequencies it holds. It never repeats, so no Fourier series fits it.
 
-The synthesiser's square wave, +1 for half of each cycle and −1 for the rest, does repeat: (4/π)(sin x + sin 3x/3 + sin 5x/5 + …) ([fourier-series-and-orthogonality](01-fourier-series-and-orthogonality.md)).
+The synthesiser's square wave, +1 for half of each cycle and −1 for the rest, does repeat: (4/π)(sin x + sin 3x/3 + sin 5x/5 + …) ([Fourier series](01-fourier-series-and-orthogonality.md)).
 
 Written as spinning arrows, those sines get one complex coefficient per frequency. Repeat the radar pulse ever further apart and its frequencies close up into a continuous dial: the Fourier transform. On a hot rod, that dial turns the heat equation into one decay law per frequency.
 
 **A sine-and-cosine series is a series of arrows c_n e^(inx) with c_n = (a_n − i b_n)/2; stretch the period without end and the amounts become the Fourier transform, which turns heat flow on an endless rod into one decay per frequency.**
 
-**What kind of fact this is:** a definition (the complex coefficients and the transform). The conversion, the pulse's transform and the rod's solution are proved in Why it works; sum to integral is sketched there, proved in [fourier-transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md).
+**What kind of fact this is:** a definition (the complex coefficients and the transform). The conversion, the pulse's transform and the rod's solution are proved in Why it works; sum to integral is sketched there, proved in [The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md).
 
 ### The picture: the radar pulse's spectrum
 
@@ -52,7 +33,7 @@ The line is F(ω) = 2 sin ω/ω; most of the pulse lives below its first zero, �
 
 ## The formula
 
-Notation first. The arrow e^(inx), a complex exponential, is the point at angle nx on the unit circle ([eulers-formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)), turning n times per cycle, backwards for negative n. A hat, as in û, names a transform. The complex series, from [fourier-series-in-complex-form](../../07-Complex%20analysis/08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md):
+Notation first. The arrow e^(inx), a complex exponential, is the point at angle nx on the unit circle ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)), turning n times per cycle, backwards for negative n. A hat, as in û, names a transform. The complex series, from [Fourier series](../../07-Complex%20analysis/08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md):
 
 $$f(x)=\sum_{n=-\infty}^{\infty} c_n\,e^{inx},\qquad c_n=\frac{1}{2\pi}\int_{-\pi}^{\pi} f(x)\,e^{-inx}\,dx$$
 
@@ -66,7 +47,7 @@ For the square wave, a_n = 0 and b_n = 4/(nπ) on odd n, so
 
 $$c_n=\frac{2}{i\pi n}=-\frac{2i}{\pi n}\quad(n\text{ odd}),\qquad c_n=0\quad(n\text{ even})$$
 
-The transform and its inverse, from [fourier-transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md):
+The transform and its inverse, from [The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md):
 
 $$F(\omega)=\int_{-\infty}^{\infty} f(t)\,e^{-i\omega t}\,dt,\qquad f(t)=\frac{1}{2\pi}\int_{-\infty}^{\infty} F(\omega)\,e^{i\omega t}\,d\omega$$
 
@@ -97,8 +78,8 @@ $$u_t=\kappa\,u_{xx}\quad\Longrightarrow\quad \hat u(\omega,t)=\hat u(\omega,0)\
 
 - **The conversion is exact** whenever the real coefficients exist.
 - **The transform needs finite area under |f|.** A carrier left on for ever has none: its F(0), the integral of cos t from −L to L, reads −1.088042 at L = 10, 1.825891 at L = 20, and never settles.
-- **Inversion gives f where f is continuous, the midpoint at a jump**, as the square wave's series does ([convergence-jumps-and-gibbs](02-convergence-jumps-and-gibbs.md)).
-- **The rod must be endless and cool far away.** Otherwise the end terms dropped in Step 4 stay; a rod with fixed ends takes a sine series ([half-range-sine-and-cosine-series](04-half-range-sine-and-cosine-series.md)).
+- **Inversion gives f where f is continuous, the midpoint at a jump**, as the square wave's series does ([Convergence](02-convergence-jumps-and-gibbs.md)).
+- **The rod must be endless and cool far away.** Otherwise the end terms dropped in Step 4 stay; a rod with fixed ends takes a sine series ([Half-range series](04-half-range-sine-and-cosine-series.md)).
 
 ---
 
@@ -122,7 +103,7 @@ $$c_n=\frac{1}{2\pi}\Big(\int_0^{\pi}e^{-inx}\,dx-\int_{-\pi}^{0}e^{-inx}\,dx\Bi
 
 which is 2/(iπn) on odd n and 0 on even n.
 
-In arrows, Parseval's identity ([parsevals-identity](03-parsevals-identity.md)) says the average of |f|^2 over a cycle, 1 here, is the sum of |c_n|^2. Tone 1's two arrows give 0.810569; up to |n| = 9, 0.959605; up to 99, 0.995947.
+In arrows, Parseval's identity ([Parseval's identity](03-parsevals-identity.md)) says the average of |f|^2 over a cycle, 1 here, is the sum of |c_n|^2. Tone 1's two arrows give 0.810569; up to |n| = 9, 0.959605; up to 99, 0.995947.
 
 ### Step 2: repeat the pulse, then stretch the repeat
 
@@ -139,7 +120,7 @@ The right side is a Riemann sum (strips of width Δω). As T grows it becomes th
 <details>
 <summary>Detailed proof: why the strips become the integral</summary>
 
-The sketch moves a limit through an infinite sum. The clean proof, in [fourier-transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md), takes finite area under |f| and |F|, damps the inverse by e^(−εω^2), swaps the integrals, and lets ε shrink to 0: the damped integral is f averaged over a bell of width about √ε, which tends to f(t) where f is continuous, the midpoint at a jump. The pulse's F shrinks only like 1/ω, so its inverse settles only through cancelling ripples, like the square wave's series.
+The sketch moves a limit through an infinite sum. The clean proof, in [The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md), takes finite area under |f| and |F|, damps the inverse by e^(−εω^2), swaps the integrals, and lets ε shrink to 0: the damped integral is f averaged over a bell of width about √ε, which tends to f(t) where f is continuous, the midpoint at a jump. The pulse's F shrinks only like 1/ω, so its inverse settles only through cancelling ripples, like the square wave's series.
 
 </details>
 
@@ -159,7 +140,7 @@ Transform in x. Two integrations by parts turn u_xx into −ω^2 û, so for each
 
 $$\frac{d\hat u}{dt}=-\kappa\,\omega^2\,\hat u,$$
 
-the decay law of [exponential-growth-decay-and-cooling](../01-Rate%20Equations/04-exponential-growth-decay-and-cooling.md) at rate κω^2, solved by û(ω, 0) e^(−κω^2 t). A wiggle twice as fine fades four times as fast, so edges round off first; at ω = 0 nothing fades, so total heat is kept. Invert, the integrand being even in ω:
+the decay law of [Growth, decay and cooling](../01-Rate%20Equations/04-exponential-growth-decay-and-cooling.md) at rate κω^2, solved by û(ω, 0) e^(−κω^2 t). A wiggle twice as fine fades four times as fast, so edges round off first; at ω = 0 nothing fades, so total heat is kept. Invert, the integrand being even in ω:
 
 $$u(x,t)=\frac{1}{\pi}\int_0^{\infty}100\,\frac{2\sin\omega}{\omega}\,e^{-\kappa\omega^2 t}\cos\omega x\,d\omega.$$
 
@@ -172,7 +153,7 @@ The integral of u_x e^(−iωx) over the rod is [u e^(−iωx)] at the far ends,
 
 </details>
 
-A second road adds spreading bells: 50 [erf((1 − x)/s) + erf((1 + x)/s)], s = 2√(κt), erf being the error function (area under a bell), from [the-heat-kernel](../10-The%20Classical%20PDEs/10-the-heat-kernel.md). The code runs both.
+A second road adds spreading bells: 50 [erf((1 − x)/s) + erf((1 + x)/s)], s = 2√(κt), erf being the error function (area under a bell), from [The heat kernel](../10-The%20Classical%20PDEs/10-the-heat-kernel.md). The code runs both.
 
 ---
 
@@ -434,7 +415,7 @@ The two outputs agree line for line.
 > **Reading c_n as the size of tone n.** Tone n is shared by two arrows, n and −n. The square wave's first tone has height 1.273240; each arrow has length 0.636620. Drop the negative n and every tone halves, and the sum is no longer real.
 >
 > - **Moving the 2π.** Some books put 1/√(2π) on both integrals, or count cycles, not radians. Mixing conventions leaves a stray factor built from 2π; dropping the 1/(2π) gives 327.04 °C, not 52.05 °C.
-> - **The wrong width.** Width 2 gives 2 sin ω/ω; the width-1 flash of [fourier-transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md) gives 2 sin(ω/2)/ω.
+> - **The wrong width.** Width 2 gives 2 sin ω/ω; the width-1 flash of [The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md) gives 2 sin(ω/2)/ω.
 > - **Series or transform.** A repeating signal has arrows at separate frequencies; a one-off pulse needs the whole dial.
 
 ---
@@ -443,7 +424,7 @@ The two outputs agree line for line.
 
 - **Radar receivers.** A 2 µs pulse lives mostly below ω = π radians per µs. Halve the pulse and the first zero moves to 2π: shorter pulses need wider receivers.
 - **Audio.** A spectrum analyser shows |c_n| for a held note, |F(ω)| for a click.
-- **Welding.** A hot band in a long bar flattens as charted, fine detail first; dye spreads the same way in [the-heat-kernel](../10-The%20Classical%20PDEs/10-the-heat-kernel.md).
+- **Welding.** A hot band in a long bar flattens as charted, fine detail first; dye spreads the same way in [The heat kernel](../10-The%20Classical%20PDEs/10-the-heat-kernel.md).
 
 > **Say it back**
 > A sine or cosine is two arrows turning opposite ways, so c_n = (a_n − i b_n)/2; the square wave's are 2/(iπn) on odd n. Repeat a pulse every T and T c_k samples one curve, F; as T grows the series becomes the inverse integral. The width-2 pulse has F(ω) = 2 sin ω/ω. On an endless rod each frequency decays by e^(−κω^2 t): 52.05 °C at the centre after 10 s.
@@ -452,21 +433,21 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [parsevals-identity](03-parsevals-identity.md): the energy count, in sines.
-- [eulers-formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): cosine and sine as two arrows.
-- [improper-integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md): integrals over the whole line.
-- [fourier-series-in-complex-form](../../07-Complex%20analysis/08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): the complex series, derived.
-- [fourier-transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md): the transform and its inversion, proved.
+- [Parseval's identity](03-parsevals-identity.md): the energy count, in sines.
+- [Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): cosine and sine as two arrows.
+- [Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md): integrals over the whole line.
+- [Fourier series](../../07-Complex%20analysis/08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): the complex series, derived.
+- [The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md): the transform and its inversion, proved.
 
 ## Where this goes next
 
-- [what-a-pde-says](../10-The%20Classical%20PDEs/01-what-a-pde-says.md): equations in time and place.
-- [the-heat-equation](../10-The%20Classical%20PDEs/03-the-heat-equation.md): where u_t = κ u_xx comes from.
-- [the-heat-kernel](../10-The%20Classical%20PDEs/10-the-heat-kernel.md): the rod's answer as a blend of bell curves.
-- [convolution-theorem](../../07-Complex%20analysis/08-Transforms%20in%20Outline/04-convolution-theorem.md): why multiplying transforms blends signals.
-- fourier-transform-on-l1-and-riemann-lebesgue: the theory of the transform in full.
+- [A partial differential equation](../10-The%20Classical%20PDEs/01-what-a-pde-says.md): equations in time and place.
+- [The heat equation](../10-The%20Classical%20PDEs/03-the-heat-equation.md): where u_t = κ u_xx comes from.
+- [The heat kernel](../10-The%20Classical%20PDEs/10-the-heat-kernel.md): the rod's answer as a blend of bell curves.
+- [Convolution](../../07-Complex%20analysis/08-Transforms%20in%20Outline/04-convolution-theorem.md): why multiplying transforms blends signals.
+- The Fourier transform of an absolutely integrable signal, and why it fades at infinity: the theory of the transform in full.
 
-The transform solved the rod one frequency at a time; why the same answer is a blend of spreading bells is [the-heat-kernel](../10-The%20Classical%20PDEs/10-the-heat-kernel.md).
+The transform solved the rod one frequency at a time; why the same answer is a blend of spreading bells is [The heat kernel](../10-The%20Classical%20PDEs/10-the-heat-kernel.md).
 
 ---
 

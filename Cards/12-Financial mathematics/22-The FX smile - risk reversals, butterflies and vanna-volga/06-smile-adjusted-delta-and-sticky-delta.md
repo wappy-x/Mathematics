@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The FX smile - risk reversals, butterflies and vanna-volga
-topic: Moving the smile with the rate
-item: Hedging with the smile
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/05-vanna-volga-smile-curve|vanna-volga-smile-curve]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/04-fx-delta-conventions|fx-delta-conventions]]"
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/05-smile-adjusted-delta|smile-adjusted-delta]]"
-next: []
-tags: [mathematics, financial mathematics, smile-adjusted-delta-and-sticky-delta]
----
-
 # Hedging with the smile: sticky delta in FX, and the vega term that corrects the delta
 
-Financial mathematics → The FX smile - risk reversals, butterflies and vanna-volga → Moving the smile with the rate → Hedging with the smile
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The FX smile - risk reversals, butterflies and vanna-volga](../../../SYLLABUS.md#w12-s22) → Hedging with the smile
 
 ---
 
@@ -71,7 +54,7 @@ $$\Delta_{\text{smile}} \;=\; \Delta_{BS} \;+\; \mathcal{V}\,\frac{d\sigma}{dS},
 | $F$, $r_d$, $r_f$, $T$ | forward rate $S\,e^{(r_d - r_f)T}$; dollar and euro interest rates, continuously compounded; years to expiry | 1.122221; 5%, 3%, 1 | the pillar strikes move with $F$ |
 | $d_1$, $d_2$, $N$, $\varphi$ | the Black-Scholes distances to strike, $d_2 = d_1 - \sigma\sqrt{T}$; bell-curve area to the left; bell-curve height | equal and opposite at the two pillars | — |
 
-The helpers are the ones on [fx-delta-conventions](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/04-fx-delta-conventions.md): $\Delta_{BS} = e^{-r_fT}N(d_1)$ for a call and $-e^{-r_fT}N(-d_1)$ for a put, $\mathcal{V} = S\,e^{-r_fT}\varphi(d_1)\sqrt{T}$, with $d_1 = [\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)T]/(\sigma\sqrt{T})$ taken at the strike's own smile vol. The two 25-delta pillars have the same vega because their $d_1$ values are equal and opposite, and $\varphi$ is symmetric.
+The helpers are the ones on [Four deltas for one option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/04-fx-delta-conventions.md): $\Delta_{BS} = e^{-r_fT}N(d_1)$ for a call and $-e^{-r_fT}N(-d_1)$ for a put, $\mathcal{V} = S\,e^{-r_fT}\varphi(d_1)\sqrt{T}$, with $d_1 = [\ln(S/K) + (r_d - r_f + \tfrac12\sigma^2)T]/(\sigma\sqrt{T})$ taken at the strike's own smile vol. The two 25-delta pillars have the same vega because their $d_1$ values are equal and opposite, and $\varphi$ is symmetric.
 
 Under **sticky strike**, $d\sigma/dS = 0$ and the hedge is the Black-Scholes delta.
 
@@ -79,10 +62,10 @@ Conventions verified 27 Sep 2026 against the house cards and Reiswich and Wystup
 
 ### When it holds
 
-- **The quotes stay put when spot moves.** That is the sticky-delta assumption. In a calm market FX smiles behave roughly this way. In a sharp sell-off the risk reversal itself moves, and no rule for sliding a fixed smile captures that; it is a separate risk, carried by the option's sensitivity to the quotes ([vanna-and-volga-on-the-smile](03-vanna-and-volga-on-the-smile.md)).
+- **The quotes stay put when spot moves.** That is the sticky-delta assumption. In a calm market FX smiles behave roughly this way. In a sharp sell-off the risk reversal itself moves, and no rule for sliding a fixed smile captures that; it is a separate risk, carried by the option's sensitivity to the quotes ([Vanna and volga](03-vanna-and-volga-on-the-smile.md)).
 - **Interest rates are fixed over the move.** The smile is pinned to the forward, not to spot. With rates fixed the two move together; a rate change slides the smile without spot moving.
 - **The move is small next to the smile's curvature.** The correction is a first slope. For the 25-delta call, near the curve's lowest point, a 1% move changes the vol by 0.0113 points where the slope predicts 0.0061.
-- **The curve is right between the pillars.** The slope comes from the vanna-volga curve. Past the outer pillars that curve is a parabola's opinion ([vanna-volga-smile-curve](05-vanna-volga-smile-curve.md)), and so is its slope.
+- **The curve is right between the pillars.** The slope comes from the vanna-volga curve. Past the outer pillars that curve is a parabola's opinion ([The vanna-volga smile](05-vanna-volga-smile-curve.md)), and so is its slope.
 
 ---
 
@@ -94,7 +77,7 @@ The desk marks the option at Garman-Kohlhagen with the smile's vol for its strik
 
 $$\frac{dV}{dS} = \frac{\partial V}{\partial S} + \frac{\partial V}{\partial \sigma}\,\frac{d\sigma}{dS} = \Delta_{BS} + \mathcal{V}\,\frac{d\sigma}{dS}.$$
 
-That is the first formula. The general case, with three rules for the smile's motion and the minimum-variance version, is proved on [smile-adjusted-delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md). Everything on this card is about $d\sigma/dS$ for a smile built the way currency desks build it.
+That is the first formula. The general case, with three rules for the smile's motion and the minimum-variance version, is proved on [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md). Everything on this card is about $d\sigma/dS$ for a smile built the way currency desks build it.
 
 ### Step 1: sticky delta pins every pillar strike to the forward
 
@@ -102,11 +85,11 @@ A 25-delta call pillar is the strike where $e^{-r_fT}N(d_1) = 0.25$. Call the $d
 
 $$K_3 = F\,\exp\!\big(-a\,\sigma_3\sqrt{T} + \tfrac12\sigma_3^2T\big),$$
 
-and the same shape for the put pillar and the at-the-money pillar ([fx-delta-conventions](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/04-fx-delta-conventions.md)). Here $\sigma_3$ = 9.75% is the call pillar's quoted vol. The bracket holds quotes and time only. So if the quotes stay put, each pillar strike is the forward times a fixed number. Move spot 1% and every pillar moves 1%. Checked: with spot at 1.111 the 25-delta call strike is 1.213439, 1.010000 times the old one, and its vol is still 9.75%.
+and the same shape for the put pillar and the at-the-money pillar ([Four deltas for one option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/04-fx-delta-conventions.md)). Here $\sigma_3$ = 9.75% is the call pillar's quoted vol. The bracket holds quotes and time only. So if the quotes stay put, each pillar strike is the forward times a fixed number. Move spot 1% and every pillar moves 1%. Checked: with spot at 1.111 the 25-delta call strike is 1.213439, 1.010000 times the old one, and its vol is still 9.75%.
 
 ### Step 2: the whole vanna-volga curve rides with the pillars
 
-The vanna-volga curve fills in the other strikes from the three pillars ([vanna-volga-pricing](04-vanna-volga-pricing.md)). Scale spot and every strike by the same factor and each piece of it scales cleanly: prices scale by the factor, weights do not change, implied vols do not change. So the vol at strike $K$ with spot $S$ depends only on the ratio $K/S$:
+The vanna-volga curve fills in the other strikes from the three pillars ([Vanna-volga pricing](04-vanna-volga-pricing.md)). Scale spot and every strike by the same factor and each piece of it scales cleanly: prices scale by the factor, weights do not change, implied vols do not change. So the vol at strike $K$ with spot $S$ depends only on the ratio $K/S$:
 
 $$\sigma(K; S) = g(K/S)$$
 
@@ -143,14 +126,14 @@ The correction has the same sign for the call and the put: vega is positive for 
 
 ### Step 5: what the Black-Scholes hedge leaves behind
 
-Over a move $\delta S$, with $\delta\sigma$ the vol change it brings, the option's value changes by about $\Delta_{BS}\,\delta S + \tfrac12\Gamma\,\delta S^2 + \mathcal{V}\,\delta\sigma$ ([greeks-together-taylor-pnl](../09-The%20Greeks%2C%20one%20each/09-greeks-together-taylor-pnl.md)). A hedge of $h$ euros leaves the value change minus $h\,\delta S$.
+Over a move $\delta S$, with $\delta\sigma$ the vol change it brings, the option's value changes by about $\Delta_{BS}\,\delta S + \tfrac12\Gamma\,\delta S^2 + \mathcal{V}\,\delta\sigma$ ([The Greeks together](../09-The%20Greeks%2C%20one%20each/09-greeks-together-taylor-pnl.md)). A hedge of $h$ euros leaves the value change minus $h\,\delta S$.
 
 - With $h = \Delta_{BS}$ the leftover is $\tfrac12\Gamma\,\delta S^2 + \mathcal{V}\,\delta\sigma$. The gamma term is the same on an up move and a down move; the vega term flips sign with the move. So the Black-Scholes hedge carries a directional bet.
 - With $h = \Delta_{\text{smile}}$ the vega term is cancelled to first order, since $\delta\sigma \approx (d\sigma/dS)\,\delta S$. What remains is gamma plus the curvature of the vol move.
 
 Sticky strike and sticky delta disagree only through $\delta\sigma$.
 
-A different route asks the market instead of a rule: fit the typical vol move per unit of spot from history and use it in place of $d\sigma/dS$. That is the minimum-variance delta of [smile-adjusted-delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md).
+A different route asks the market instead of a rule: fit the typical vol move per unit of spot from history and use it in place of $d\sigma/dS$. That is the minimum-variance delta of [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md).
 
 ---
 
@@ -644,8 +627,8 @@ The two outputs agree line for line.
 ## Where you meet it in real life
 
 - **FX option desks.** Risk systems report delta two ways, sticky strike and sticky delta, and the gap between them is exactly the vega term of this card. For options on the steep wing it is several percent of notional.
-- **Risk-reversal books.** A position long the 25-delta put and short the 25-delta call, equal notionals, has a smile-adjusted delta 0.043731 − 0.001910 = 0.041821 per euro above its Black-Scholes delta. Desks hedge it in spot accordingly ([risk-reversal-and-butterfly](01-risk-reversal-and-butterfly.md)).
-- **Equity desks, for contrast.** Index smiles are often hedged under sticky strike or the local-volatility rule, which give a zero or opposite correction ([smile-adjusted-delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md)). The formula is shared; the rule is not.
+- **Risk-reversal books.** A position long the 25-delta put and short the 25-delta call, equal notionals, has a smile-adjusted delta 0.043731 − 0.001910 = 0.041821 per euro above its Black-Scholes delta. Desks hedge it in spot accordingly ([Risk reversal and butterfly](01-risk-reversal-and-butterfly.md)).
+- **Equity desks, for contrast.** Index smiles are often hedged under sticky strike or the local-volatility rule, which give a zero or opposite correction ([Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md)). The formula is shared; the rule is not.
 
 > **Say it back**
 > Currency dealers quote volatility by delta, and sticky delta says those quotes stay put when spot moves, so the whole smile slides with the forward. A fixed strike's vol then changes with spot at minus strike over spot times the smile's slope in strike. The hedge is the Black-Scholes delta plus vega times that change. For the house 25-delta call it adds 0.19% of notional, for the 25-delta put 4.37%. Skip it and a hedged long option turns into a vega bet on the direction of the next move.
@@ -654,14 +637,14 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [vanna-volga-smile-curve](05-vanna-volga-smile-curve.md): the curve whose slope in strike this card reads, and whose pillars it rebuilds.
-- [fx-delta-conventions](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/04-fx-delta-conventions.md): the spot delta that labels the pillars and that the hedge starts from.
-- [smile-adjusted-delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md): the chain rule behind the correction, the three rules for how a smile moves, and the minimum-variance delta.
+- [The vanna-volga smile](05-vanna-volga-smile-curve.md): the curve whose slope in strike this card reads, and whose pillars it rebuilds.
+- [Four deltas for one option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/04-fx-delta-conventions.md): the spot delta that labels the pillars and that the hedge starts from.
+- [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md): the chain rule behind the correction, the three rules for how a smile moves, and the minimum-variance delta.
 
 ## Where this goes next
 
-- [fx-digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md): a digital's price depends on the smile's slope at its strike, and its hedge on how that slope moves with spot.
-- [barriers-with-the-smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md): a barrier's value depends on the smile along the whole path, where the rule for its motion matters again.
+- [Currency digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md): a digital's price depends on the smile's slope at its strike, and its hedge on how that slope moves with spot.
+- [Barriers on a smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md): a barrier's value depends on the smile along the whole path, where the rule for its motion matters again.
 
 This card hedges a vanilla option on a smile that slides with spot; the open question is what a sliding smile does to options whose payoff depends on the smile's shape and on where spot travels, which is the business of an FX exotics desk.
 

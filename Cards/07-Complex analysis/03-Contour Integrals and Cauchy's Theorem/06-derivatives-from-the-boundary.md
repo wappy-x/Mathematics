@@ -1,24 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Contour Integrals and Cauchy's Theorem
-topic: Every derivative from the rim
-item: Derivatives from the boundary
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/05-cauchys-integral-formula|cauchys-integral-formula]]"
-next:
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/07-liouville-and-the-fundamental-theorem-of-algebra|liouville-and-the-fundamental-theorem-of-algebra]]"
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/01-taylor-series-in-the-plane|taylor-series-in-the-plane]]"
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/04-harmonic-functions-and-conjugates|harmonic-functions-and-conjugates]]"
-tags: [mathematics, complex analysis, derivatives-from-the-boundary]
----
-
 # Derivatives from the boundary: differentiate under the integral, so holomorphic once means holomorphic forever, with a size limit on every derivative
 
-Complex analysis → Contour Integrals and Cauchy's Theorem → Every derivative from the rim → Derivatives from the boundary
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Contour Integrals and Cauchy's Theorem](../../../SYLLABUS.md#w07-s03) → Derivatives from the boundary
 
 ---
 
@@ -44,13 +26,13 @@ To scale: 80 units per 1, with 0 at (100, 120), so the loop round a = 1 has radi
 
 ## The formula
 
-Notation first, in words. $f^{(n)}$ means f differentiated n times: $f^{(0)}$ is f, $f^{(2)}$ is f″. The factorial n! is 1 × 2 × … × n, with 0! = 1. The loop integral sign $\oint_C$ means: walk once round the loop C anticlockwise, adding the function times each small step dz ([contour-integrals](01-contour-integrals.md)).
+Notation first, in words. $f^{(n)}$ means f differentiated n times: $f^{(0)}$ is f, $f^{(2)}$ is f″. The factorial n! is 1 × 2 × … × n, with 0! = 1. The loop integral sign $\oint_C$ means: walk once round the loop C anticlockwise, adding the function times each small step dz ([Contour integrals](01-contour-integrals.md)).
 
 $$f^{(n)}(a) = \frac{n!}{2\pi i}\oint_C \frac{f(z)}{(z-a)^{n+1}}\,dz$$
 
 **Read it aloud:** the n-th derivative of f at a is n factorial over two-pi-i, times the loop integral of f of z over z minus a to the power n plus one.
 
-With n = 0 this is Cauchy's integral formula ([cauchys-integral-formula](05-cauchys-integral-formula.md)). Two consequences follow.
+With n = 0 this is Cauchy's integral formula ([Cauchy's integral formula](05-cauchys-integral-formula.md)). Two consequences follow.
 
 **Cauchy's estimate.** If C is the circle of radius r round a and $|f(z)| \le M$ on it, then
 
@@ -115,7 +97,7 @@ Put w = z − 1, so w runs once round 0 at radius 1. The integrand for n = 2 is
 
 $$\frac{(1+w)^3}{w^3} = w^{-3} + 3w^{-2} + 3w^{-1} + 1.$$
 
-Once round 0, every whole power of w integrates to 0 except $w^{-1}$, which gives 2πi ([contour-integrals](01-contour-integrals.md)). So the loop integral is 3 × 2πi, and f″(1) = (2!/2πi) × 3 × 2πi = 6. The power rule agrees: f″(z) = 6z.
+Once round 0, every whole power of w integrates to 0 except $w^{-1}$, which gives 2πi ([Contour integrals](01-contour-integrals.md)). So the loop integral is 3 × 2πi, and f″(1) = (2!/2πi) × 3 × 2πi = 6. The power rule agrees: f″(z) = 6z.
 
 ### Step 5: Cauchy's estimate, from the size of an integral
 
@@ -139,11 +121,11 @@ Upper line: the bound 2(1 + r)^3/r^2, lowest at r = 2. Flat lower line: the true
 
 ### Step 6: Morera's theorem, the converse
 
-Suppose f is continuous on a disc and its integral round every triangle there is 0. Fix the disc's centre c and let F(z) be the integral of f along the straight segment from c to z. The triangle condition and the continuity of f make F's difference quotients tend to f, so F′ = f and F is holomorphic ([antiderivatives-and-path-independence](02-antiderivatives-and-path-independence.md)). By Step 3, F′ is holomorphic too. That is f.
+Suppose f is continuous on a disc and its integral round every triangle there is 0. Fix the disc's centre c and let F(z) be the integral of f along the straight segment from c to z. The triangle condition and the continuity of f make F's difference quotients tend to f, so F′ = f and F is holomorphic ([Antiderivatives](02-antiderivatives-and-path-independence.md)). By Step 3, F′ is holomorphic too. That is f.
 
-Round the regatta triangle 0 → 2 → 1 + i, z^3 gives 0 ([cauchys-theorem](03-cauchys-theorem.md)). The conjugate z-bar (z reflected in the real axis) gives 2i: twice the triangle's area, 1, times i. A holomorphic function gives 0 round every triangle, so z-bar is holomorphic on no disc containing the course.
+Round the regatta triangle 0 → 2 → 1 + i, z^3 gives 0 ([Cauchy's theorem](03-cauchys-theorem.md)). The conjugate z-bar (z reflected in the real axis) gives 2i: twice the triangle's area, 1, times i. A holomorphic function gives 0 round every triangle, so z-bar is holomorphic on no disc containing the course.
 
-A second road to all the derivatives at once: expand 1/(z − a) as a geometric series inside the integral, and the Taylor coefficients come out as $f^{(n)}(a)/n!$ ([taylor-series-in-the-plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md)).
+A second road to all the derivatives at once: expand 1/(z − a) as a geometric series inside the integral, and the Taylor coefficients come out as $f^{(n)}(a)/n!$ ([Taylor series in the plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md)).
 
 ---
 
@@ -168,7 +150,7 @@ A second road to all the derivatives at once: expand 1/(z − a) as a geometric 
 | M read at the centre, \|f(1)\| = 1 | bound 2, below the true 6 | M must be the largest size on the circle |
 | z-bar round the regatta triangle | 2i, not 0 | z-bar has no complex derivative; Morera's test fails |
 
-By hand: the loop splits into loops round 1 and round 0 ([deforming-contours-and-winding-numbers](04-deforming-contours-and-winding-numbers.md)); the one round 0 gives 2! × 1/(0 − 1)^3 = −2.
+By hand: the loop splits into loops round 1 and round 0 ([Deforming a loop](04-deforming-contours-and-winding-numbers.md)); the one round 0 gives 2! × 1/(0 − 1)^3 = −2.
 
 ---
 
@@ -389,7 +371,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Numerical derivatives.** Summing samples on a circle gives derivatives without subtracting nearly equal numbers, the step that ruins ordinary difference quotients. For e^z at 0, 12 points give f″(0) to within 2.3e-11.
-- **Proving limits holomorphic.** Triangle integrals pass to a uniform limit, so by Morera the limit of holomorphic functions is holomorphic ([uniform-limits-of-holomorphic-functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)).
+- **Proving limits holomorphic.** Triangle integrals pass to a uniform limit, so by Morera the limit of holomorphic functions is holomorphic ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)).
 
 > **Say it back**
 > In Cauchy's integral formula a sits only in 1/(z − a). Differentiating that n times gives n!/(z − a)^(n+1), so every derivative is a loop integral, and each is again holomorphic. The integral's size gives the cap n! M / r^n. Morera: zero round every triangle means holomorphic.
@@ -398,13 +380,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [cauchys-integral-formula](05-cauchys-integral-formula.md): f(a) as a loop integral, the case n = 0 that this card differentiates.
+- [Cauchy's integral formula](05-cauchys-integral-formula.md): f(a) as a loop integral, the case n = 0 that this card differentiates.
 
 ## Where this goes next
 
-- [liouville-and-the-fundamental-theorem-of-algebra](07-liouville-and-the-fundamental-theorem-of-algebra.md): the estimate |f′(a)| ≤ M/r on ever larger circles forces a bounded function holomorphic on the whole plane to be constant.
-- [taylor-series-in-the-plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md): all the derivatives assembled into a power series that equals f.
-- [harmonic-functions-and-conjugates](../07-Conformal%20Maps%20and%20Harmonic%20Functions/04-harmonic-functions-and-conjugates.md): the real part of f has second derivatives because f″ exists, which is what lets it be harmonic.
+- [Liouville's theorem](07-liouville-and-the-fundamental-theorem-of-algebra.md): the estimate |f′(a)| ≤ M/r on ever larger circles forces a bounded function holomorphic on the whole plane to be constant.
+- [Taylor series in the plane](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/01-taylor-series-in-the-plane.md): all the derivatives assembled into a power series that equals f.
+- [Harmonic functions](../07-Conformal%20Maps%20and%20Harmonic%20Functions/04-harmonic-functions-and-conjugates.md): the real part of f has second derivatives because f″ exists, which is what lets it be harmonic.
 
 ---
 

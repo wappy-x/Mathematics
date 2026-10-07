@@ -1,26 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Sets You Can Measure
-topic: Questions a record can settle
-item: Sigma-algebras
-kind: definition
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/01-Foundations/07-Sets/03-set-operations|set-operations]]"
-  - "[[Cards/01-Foundations/07-Sets/02-subsets-and-power-set|subsets-and-power-set]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/02-countable-sets|countable-sets]]"
-next:
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/03-generated-and-borel-sigma-algebras|generated-and-borel-sigma-algebras]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/04-measures|measures]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/02-caratheodory-measurable-sets|caratheodory-measurable-sets]]"
-tags: [mathematics, measure and integration, sigma-algebras]
----
-
 # Sigma-algebras: the family of sets you are allowed to measure, closed under complements and countable unions
 
-Measure and integration → Sets You Can Measure → Questions a record can settle → Sigma-algebras
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sets You Can Measure](../../../SYLLABUS.md#w10-s01) → Sigma-algebras
 
 ---
 
@@ -28,7 +8,7 @@ Measure and integration → Sets You Can Measure → Questions a record can sett
 
 A weather station on a hill logs one letter a day for three days: R for rain, D for dry. A week's record is a three-letter word such as RDR, rain on day one, dry on day two, rain on day three. There are 2 × 2 × 2 = 8 possible words, from DDD to RRR.
 
-Every yes/no question about the three days picks out the words that answer yes. "Did it rain on day two?" picks out DRD, DRR, RRD and RRR. So a question is a set of words, and a set of words is a question. The 8 words have 256 subsets ([subsets-and-power-set](../../01-Foundations/07-Sets/02-subsets-and-power-set.md)), so the full log can settle 256 questions.
+Every yes/no question about the three days picks out the words that answer yes. "Did it rain on day two?" picks out DRD, DRR, RRD and RRR. So a question is a set of words, and a set of words is a question. The 8 words have 256 subsets ([Subsets and the power set](../../01-Foundations/07-Sets/02-subsets-and-power-set.md)), so the full log can settle 256 questions.
 
 A second station, down in the valley, sends one line a week: "any rain" or "no rain". From that line alone it settles exactly four questions: "no rain all week", "some rain this week", the question that is always yes and the question that is always no. It cannot settle "did it rain on day two?". DDR and DRD both send "any rain", and they disagree about day two.
 
@@ -48,7 +28,7 @@ The weeks are ordered by how many days it rained. Each box is a block: weeks the
 
 ## The formula
 
-Notation first, in words. The space of all outcomes is written $\Omega$ (capital omega), and one outcome in it $\omega$ (small omega). A script letter such as $\mathcal{F}$ names a family of subsets of $\Omega$, read "the collection of sets we allow ourselves to measure". $A^c$, "the complement of A", is every outcome of $\Omega$ not in $A$. A list of sets that can be numbered first, second, third and on without end is a **countable** list ([countable-sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)), written $A_1, A_2, A_3, \dots$ with $A_n$ the one in place $n$.
+Notation first, in words. The space of all outcomes is written $\Omega$ (capital omega), and one outcome in it $\omega$ (small omega). A script letter such as $\mathcal{F}$ names a family of subsets of $\Omega$, read "the collection of sets we allow ourselves to measure". $A^c$, "the complement of A", is every outcome of $\Omega$ not in $A$. A list of sets that can be numbered first, second, third and on without end is a **countable** list ([Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)), written $A_1, A_2, A_3, \dots$ with $A_n$ the one in place $n$.
 
 A family $\mathcal{F}$ of subsets of $\Omega$ is a sigma-algebra when it obeys three rules:
 
@@ -58,7 +38,7 @@ $$\text{(1)}\;\; \Omega \in \mathcal{F} \qquad \text{(2)}\;\; A \in \mathcal{F} 
 
 The pair $(\Omega, \mathcal{F})$ is a **measurable space**: a space together with the sets it allows to be measured. The sets in $\mathcal{F}$ are its **measurable sets**, or in probability its **events**.
 
-Two sigma-algebras live on every space. The smallest is $\{\varnothing, \Omega\}$, where $\varnothing$ is the empty set. The largest is the power set $\mathcal{P}(\Omega)$, every subset ([subsets-and-power-set](../../01-Foundations/07-Sets/02-subsets-and-power-set.md) writes it P; the script letter keeps plain P free for probability). On a finite space, one more formula counts any sigma-algebra: if it cuts $\Omega$ into $k$ blocks, it has $2^k$ members.
+Two sigma-algebras live on every space. The smallest is $\{\varnothing, \Omega\}$, where $\varnothing$ is the empty set. The largest is the power set $\mathcal{P}(\Omega)$, every subset ([Subsets and the power set](../../01-Foundations/07-Sets/02-subsets-and-power-set.md) writes it P; the script letter keeps plain P free for probability). On a finite space, one more formula counts any sigma-algebra: if it cuts $\Omega$ into $k$ blocks, it has $2^k$ members.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -94,7 +74,7 @@ A record settles a question when, whatever the outcome, the record says whether 
 
 ### Step 1: the rules give the other operations for free
 
-Rule 1 puts $\Omega$ in; rule 2 then puts its complement, $\varnothing$, in. A finite union $A \cup B$ is the countable union of the list $A, B, \varnothing, \varnothing, \dots$, so rule 3 covers it. Intersections come from De Morgan's law ([set-operations](../../01-Foundations/07-Sets/03-set-operations.md)): the outcomes in every $A_n$ are the outcomes not in any $A_n^c$, so
+Rule 1 puts $\Omega$ in; rule 2 then puts its complement, $\varnothing$, in. A finite union $A \cup B$ is the countable union of the list $A, B, \varnothing, \varnothing, \dots$, so rule 3 covers it. Intersections come from De Morgan's law ([Set operations](../../01-Foundations/07-Sets/03-set-operations.md)): the outcomes in every $A_n$ are the outcomes not in any $A_n^c$, so
 
 $$\bigcap_{n} A_n = \Big(\bigcup_{n} A_n^c\Big)^c,$$
 
@@ -122,7 +102,7 @@ In the picture, every settled set is a union of whole boxes. That is always so o
 
 The valley station has 2 blocks, so 4 sets. The rain-day count has 4 blocks, so 16. The full log has 8 blocks of one word each, so 256. A family on a finite space whose size is not a power of 2 is never a sigma-algebra.
 
-So on a finite space every sigma-algebra is what some record settles: report which block the outcome is in. On an infinite space that fails. By Step 3's definition, a record's settled sets are the unions of its blocks (the groups of outcomes sharing one message), any number of blocks, not only countably many. So a record that settles every single point settles every subset. The Borel sets of the line ([generated-and-borel-sigma-algebras](03-generated-and-borel-sigma-algebras.md)) hold every single point and are not every subset, so no record settles exactly them. There the record reading is a guide, not a theorem.
+So on a finite space every sigma-algebra is what some record settles: report which block the outcome is in. On an infinite space that fails. By Step 3's definition, a record's settled sets are the unions of its blocks (the groups of outcomes sharing one message), any number of blocks, not only countably many. So a record that settles every single point settles every subset. The Borel sets of the line ([Generated sigma-algebras and Borel sets](03-generated-and-borel-sigma-algebras.md)) hold every single point and are not every subset, so no record settles exactly them. There the record reading is a guide, not a theorem.
 
 <details>
 <summary>Detailed proof: finite sigma-algebras are exactly the ways to cut into blocks</summary>
@@ -151,9 +131,9 @@ Measure needs such questions: a length is reached by covering a set with countab
 
 ### Step 6: why not always take every subset
 
-On a finite space the power set is the natural choice. On the line it is not available: no rule giving intervals their lengths, unchanged by sliding, and adding over countable disjoint lists can give a size to every subset of [0, 1]. The witness is the Vitali set, a set built by a choice rule and described in [translation-invariance-and-the-vitali-set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md); [caratheodory-measurable-sets](../02-Length%20Done%20Properly/02-caratheodory-measurable-sets.md) builds the sigma-algebra that length does fit. That is the reason a measure comes with a sigma-algebra at all: it names the sets the measure promises to size, and says nothing about the rest.
+On a finite space the power set is the natural choice. On the line it is not available: no rule giving intervals their lengths, unchanged by sliding, and adding over countable disjoint lists can give a size to every subset of [0, 1]. The witness is the Vitali set, a set built by a choice rule and described in [Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md); [Caratheodory's criterion](../02-Length%20Done%20Properly/02-caratheodory-measurable-sets.md) builds the sigma-algebra that length does fit. That is the reason a measure comes with a sigma-algebra at all: it names the sets the measure promises to size, and says nothing about the rest.
 
-A second road to the same families starts from a handful of questions and adds whatever the rules force, until nothing new appears. The code takes that road for every station and lands on the same sets; the general construction is [generated-and-borel-sigma-algebras](03-generated-and-borel-sigma-algebras.md).
+A second road to the same families starts from a handful of questions and adds whatever the rules force, until nothing new appears. The code takes that road for every station and lands on the same sets; the general construction is [Generated sigma-algebras and Borel sets](03-generated-and-borel-sigma-algebras.md).
 
 ---
 
@@ -586,10 +566,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Probability.** The events of a probability model are the sets of a sigma-algebra; the rules are why "not A" and "A or B" always have probabilities when A and B do. [measures](04-measures.md) attaches the sizes.
-- **Information arriving over time.** The full log read day by day settles 2, 4, 16 and then 256 questions: a growing chain of sigma-algebras, one per day. Such a chain, called a filtration, is how probability models what is known by a given date; the finance wing prices contracts against it ([american-options-and-early-exercise](../../12-Financial%20mathematics/15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md)).
+- **Probability.** The events of a probability model are the sets of a sigma-algebra; the rules are why "not A" and "A or B" always have probabilities when A and B do. [Measures](04-measures.md) attaches the sizes.
+- **Information arriving over time.** The full log read day by day settles 2, 4, 16 and then 256 questions: a growing chain of sigma-algebras, one per day. Such a chain, called a filtration, is how probability models what is known by a given date; the finance wing prices contracts against it ([American options](../../12-Financial%20mathematics/15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md)).
 - **Published totals.** An agency that releases only totals, like the rain-day count, lets readers settle unions of its blocks and nothing finer: coarsening data is choosing a smaller sigma-algebra.
-- **Lengths, areas and volumes.** The sets that can carry a length on the line form a sigma-algebra far larger than the intervals and smaller than every subset: [caratheodory-measurable-sets](../02-Length%20Done%20Properly/02-caratheodory-measurable-sets.md).
+- **Lengths, areas and volumes.** The sets that can carry a length on the line form a sigma-algebra far larger than the intervals and smaller than every subset: [Caratheodory's criterion](../02-Length%20Done%20Properly/02-caratheodory-measurable-sets.md).
 
 > **Say it back**
 > A sigma-algebra is a family of subsets of a space that holds the whole space, the complement of each member, and the union of any countable list of members. Whatever a record can settle forms one; on a finite space every sigma-algebra arises that way, but on an infinite space the record reading is a guide, not a theorem. The smallest is the empty set with the whole space, the largest is every subset. On a finite space it is a way of cutting the space into blocks, and with $k$ blocks it has $2^k$ members: the valley station's 2 blocks give 4 settled questions out of 256. Countable unions matter only on infinite spaces, where measure needs its limits.
@@ -598,15 +578,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [set-operations](../../01-Foundations/07-Sets/03-set-operations.md): complements, unions, intersections and De Morgan's law, the operations the rules close under.
-- [subsets-and-power-set](../../01-Foundations/07-Sets/02-subsets-and-power-set.md): the power set, the largest sigma-algebra, and why 8 outcomes have 256 subsets.
-- [countable-sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md): what "countable" means in rule 3.
+- [Set operations](../../01-Foundations/07-Sets/03-set-operations.md): complements, unions, intersections and De Morgan's law, the operations the rules close under.
+- [Subsets and the power set](../../01-Foundations/07-Sets/02-subsets-and-power-set.md): the power set, the largest sigma-algebra, and why 8 outcomes have 256 subsets.
+- [Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md): what "countable" means in rule 3.
 
 ## Where this goes next
 
-- [generated-and-borel-sigma-algebras](03-generated-and-borel-sigma-algebras.md): the smallest sigma-algebra holding a chosen list of sets, and the Borel sets of the line built that way from intervals.
-- [measures](04-measures.md): a size for every set in a sigma-algebra, adding up over countable disjoint lists.
-- [caratheodory-measurable-sets](../02-Length%20Done%20Properly/02-caratheodory-measurable-sets.md): the sigma-algebra that length actually lives on.
+- [Generated sigma-algebras and Borel sets](03-generated-and-borel-sigma-algebras.md): the smallest sigma-algebra holding a chosen list of sets, and the Borel sets of the line built that way from intervals.
+- [Measures](04-measures.md): a size for every set in a sigma-algebra, adding up over countable disjoint lists.
+- [Caratheodory's criterion](../02-Length%20Done%20Properly/02-caratheodory-measurable-sets.md): the sigma-algebra that length actually lives on.
 
 This card says which sets may be measured, not how big they are; the measures card gives each allowed set its size and shows why countable unions are exactly what adding sizes needs.
 

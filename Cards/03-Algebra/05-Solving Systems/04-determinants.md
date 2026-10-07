@@ -1,37 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Solving Systems
-topic: Determinants
-item: The determinant
-kind: definition
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/03-Algebra/05-Solving Systems/03-inverse-matrix|inverse-matrix]]"
-  - "[[Cards/03-Algebra/04-Matrices/04-linear-maps-as-matrices|linear-maps-as-matrices]]"
-next:
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/02-eigenvalues-and-eigenvectors|eigenvalues-and-eigenvectors]]"
-  - "[[Cards/04-Combinatorics and graphs/10-Trees and Cheapest Routes/03-spanning-trees-and-cayleys-formula|spanning-trees-and-cayleys-formula]]"
-  - "[[Cards/05-Geometry and trig/05-Vectors in Space/01-cross-product-and-oriented-area|cross-product-and-oriented-area]]"
-  - "[[Cards/05-Geometry and trig/05-Vectors in Space/03-triple-product-and-volume|triple-product-and-volume]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/04-wronskian-and-reduction-of-order|wronskian-and-reduction-of-order]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/05-classifying-equilibria-by-trace-and-determinant|classifying-equilibria-by-trace-and-determinant]]"
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/07-symplectic-steps-for-oscillators|symplectic-steps-for-oscillators]]"
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/04-vanna-volga-pricing|vanna-volga-pricing]]"
-  - "[[Cards/16-Numerical analysis/03-Numerical Linear Algebra/02-lu-decomposition-and-pivoting|lu-decomposition-and-pivoting]]"
-  - "[[Cards/22-Algebraic geometry/01-Polynomial Systems/06-resultants-and-common-roots|resultants-and-common-roots]]"
-  - "[[Cards/23-Differential geometry and Lie groups/04-Differential Forms/01-forms-and-the-wedge-product|forms-and-the-wedge-product]]"
-  - "[[Cards/24-Computability and complexity/05-Algebraic, Interactive and Quantum/03-algebraic-complexity-permanent-versus-determinant|algebraic-complexity-permanent-versus-determinant]]"
-tags:
-  - mathematics
-  - algebra
-  - determinants
----
-
 # Determinants: the one number that says how much a matrix stretches area, and zero means it squashed something flat
 
-Algebra → Solving Systems → Determinants → The determinant
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Solving Systems](../../../SYLLABUS.md#w03-s05) → The determinant
 
 ---
 
@@ -39,7 +8,7 @@ Algebra → Solving Systems → Determinants → The determinant
 
 A game sprite: a square patch of pixels, one unit wide, one unit tall. Area 1.
 
-A matrix is applied to it: a block of numbers written row by row in square brackets, `[[2, 1], [1, 1]]`, sized rows by columns. Applying one moves every corner ([linear-maps-as-matrices](../04-Matrices/04-linear-maps-as-matrices.md)).
+A matrix is applied to it: a block of numbers written row by row in square brackets, `[[2, 1], [1, 1]]`, sized rows by columns. Applying one moves every corner ([Linear maps](../04-Matrices/04-linear-maps-as-matrices.md)).
 
 Three matrices, three fates:
 
@@ -79,7 +48,7 @@ $$\det A = ad - bc$$
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
 | $A$ | the matrix applied, square: rows match columns | the shear `[[1, 1], [0, 1]]` | — |
-| $a$, $b$, $c$, $d$ | its four numbers, row by row (p, q, r, s on [inverse-matrix](03-inverse-matrix.md)) | 1, 1, 0, 1 | raise $a$ and it climbs by $d$, raise $b$ and it drops by $c$ |
+| $a$, $b$, $c$, $d$ | its four numbers, row by row (p, q, r, s on [The inverse matrix](03-inverse-matrix.md)) | 1, 1, 0, 1 | raise $a$ and it climbs by $d$, raise $b$ and it drops by $c$ |
 | $e$, $f$, $g$, $h$, $i$ | a 3 by 3's five further numbers | 1, 1, 1, 0, 4 below | each through its own minor |
 | $\det A$ | what $A$ multiplies every area by | 1 for the shear, 0 for the flattener | more stretch; a minus sign means flipped |
 | $B$ | a second matrix, applied before $A$ in AB | the stretch `[[3, 0], [0, 2]]` | AB's is $\det A$ times $\det B$ |
@@ -94,11 +63,11 @@ Two shortcuts do the work:
 
 $$\det (AB) = \det A \times \det B$$
 
-AB means apply $B$ first, then $A$ ([matrix-multiplication](../04-Matrices/03-matrix-multiplication.md)): area is multiplied twice, so the multipliers multiply. And when every number below the main diagonal is zero — **upper triangular**, a staircase here — the determinant is the diagonal multiplied out.
+AB means apply $B$ first, then $A$ ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)): area is multiplied twice, so the multipliers multiply. And when every number below the main diagonal is zero — **upper triangular**, a staircase here — the determinant is the diagonal multiplied out.
 
 ### When it holds
 
-- **Square only.** A non-square block has no determinant; [rank-nullity](05-rank-nullity.md) counts what survives.
+- **Square only.** A non-square block has no determinant; [Rank and nullity](05-rank-nullity.md) counts what survives.
 - **One unit on both axes.** The sprite is measured the same way before and after, so the multiplier is a bare number.
 - **Zero is exact, small is not.** Scaling a matrix up grows its determinant without changing its shape, so "nearly flat" needs the entries on a sensible scale.
 
@@ -108,7 +77,7 @@ AB means apply $B$ first, then $A$ ([matrix-multiplication](../04-Matrices/03-ma
 
 ### Step 0: a matrix is four numbers saying where two arrows land
 
-The square is built from two arrows out of the corner: one step right, (1, 0), and one up, (0, 1). Applying $A$ sends (1, 0) to ($a$, $c$), its first column read downward, and (0, 1) to ($b$, $d$), the second ([linear-maps-as-matrices](../04-Matrices/04-linear-maps-as-matrices.md)). They span a **parallelogram** — four sides, opposite ones parallel — and area is now a question about that shape.
+The square is built from two arrows out of the corner: one step right, (1, 0), and one up, (0, 1). Applying $A$ sends (1, 0) to ($a$, $c$), its first column read downward, and (0, 1) to ($b$, $d$), the second ([Linear maps](../04-Matrices/04-linear-maps-as-matrices.md)). They span a **parallelogram** — four sides, opposite ones parallel — and area is now a question about that shape.
 
 ### Step 1: the area of that shape is ad − bc
 
@@ -133,7 +102,7 @@ The mirror `[[0, 1], [1, 0]]` sends (1, 0) to (0, 1) and (0, 1) to (1, 0): the a
 
 In the flattener `[[2, 4], [1, 2]]` the second column, (4, 2), is twice the first, (2, 1). Both arrows lie on one line, so every corner lands there: no width, no area, and ad − bc = 2 × 2 − 4 × 1 = 0.
 
-Different sprites flatten onto the same line, so nothing sends it back. "Determinant zero" and "no inverse" are one statement ([inverse-matrix](03-inverse-matrix.md)): the quickest test of whether a square system has one answer ([matrix-equation-ax-b](01-matrix-equation-ax-b.md)).
+Different sprites flatten onto the same line, so nothing sends it back. "Determinant zero" and "no inverse" are one statement ([The inverse matrix](03-inverse-matrix.md)): the quickest test of whether a square system has one answer ([Solving A x = b](01-matrix-equation-ax-b.md)).
 
 ```mermaid
 flowchart LR
@@ -148,7 +117,7 @@ Run the shear (area × 1), then the stretch (area × 6): area × 6. The two as o
 
 Staircases are easy for another reason. Expand along the first column: everything below the top-left number is zero, so only it contributes, and the same happens in the square left behind. Only the diagonal's product survives.
 
-The method at any size: row-move to a staircase ([gaussian-elimination](02-gaussian-elimination.md)) — adding a multiple of one row to another leaves the determinant alone, swapping two rows flips its sign — then multiply the diagonal. That is the code's second road.
+The method at any size: row-move to a staircase ([Gaussian elimination](02-gaussian-elimination.md)) — adding a multiple of one row to another leaves the determinant alone, swapping two rows flips its sign — then multiply the diagonal. That is the code's second road.
 
 <details>
 <summary>The grown-up definition</summary>
@@ -412,8 +381,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Volume in three dimensions.** For a 3 by 3 the number multiplies volume: `[[2, 1, 1], [0, 1, 1], [1, 0, 4]]` takes a unit cube to a box of 8, and a negative one mirrors it ([triple-product-and-volume](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/03-triple-product-and-volume.md)).
-- **Solving systems.** Not zero: one answer and an inverse ([inverse-matrix](03-inverse-matrix.md)). Zero: no answer or a line of them ([matrix-equation-ax-b](01-matrix-equation-ax-b.md)), the count in [rank-nullity](05-rank-nullity.md).
+- **Volume in three dimensions.** For a 3 by 3 the number multiplies volume: `[[2, 1, 1], [0, 1, 1], [1, 0, 4]]` takes a unit cube to a box of 8, and a negative one mirrors it ([Triple product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/03-triple-product-and-volume.md)).
+- **Solving systems.** Not zero: one answer and an inverse ([The inverse matrix](03-inverse-matrix.md)). Zero: no answer or a line of them ([Solving A x = b](01-matrix-equation-ax-b.md)), the count in [Rank and nullity](05-rank-nullity.md).
 - **Statistics packages.** A determinant near zero, on entries of sensible size, warns that a model's inputs are near-copies, so the fitted answer wobbles: the nudged flattener's 0.2 buys an untrustworthy inverse.
 
 > **Say it back**
@@ -423,23 +392,23 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [inverse-matrix](03-inverse-matrix.md): the matrix that undoes another, whose risky step is dividing by this card's number.
-- [linear-maps-as-matrices](../04-Matrices/04-linear-maps-as-matrices.md): why a matrix's columns say where the axis arrows land.
+- [The inverse matrix](03-inverse-matrix.md): the matrix that undoes another, whose risky step is dividing by this card's number.
+- [Linear maps](../04-Matrices/04-linear-maps-as-matrices.md): why a matrix's columns say where the axis arrows land.
 
 ## Where this goes next
 
-- [eigenvalues-and-eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the stretch factors whose product is this number.
-- [spanning-trees-and-cayleys-formula](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/03-spanning-trees-and-cayleys-formula.md): it counts a network's trees.
-- [cross-product-and-oriented-area](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md): the same signed area as an arrow.
-- [triple-product-and-volume](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/03-triple-product-and-volume.md): the 3 by 3 as a box's volume.
-- [wronskian-and-reduction-of-order](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/04-wronskian-and-reduction-of-order.md): it tests whether two solutions are copies.
-- [classifying-equilibria-by-trace-and-determinant](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/05-classifying-equilibria-by-trace-and-determinant.md): it decides how a system settles.
-- [symplectic-steps-for-oscillators](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md): steps built to keep it at 1.
-- [vanna-volga-pricing](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): a 3 by 3 solve behind hedge weights.
-- lu-decomposition-and-pivoting: elimination packaged, row swaps carrying the sign.
-- resultants-and-common-roots: zero exactly when two polynomials share a root.
-- forms-and-the-wedge-product: the alternating rule made an algebra.
-- algebraic-complexity-permanent-versus-determinant: the same sum without minus signs is hard.
+- [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the stretch factors whose product is this number.
+- [Spanning trees](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/03-spanning-trees-and-cayleys-formula.md): it counts a network's trees.
+- [Cross product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md): the same signed area as an arrow.
+- [Triple product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/03-triple-product-and-volume.md): the 3 by 3 as a box's volume.
+- [The Wronskian](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/04-wronskian-and-reduction-of-order.md): it tests whether two solutions are copies.
+- [Trace and determinant](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/05-classifying-equilibria-by-trace-and-determinant.md): it decides how a system settles.
+- [Symplectic steps](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md): steps built to keep it at 1.
+- [Vanna-volga pricing](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): a 3 by 3 solve behind hedge weights.
+- LU with partial pivoting: elimination packaged, row swaps carrying the sign.
+- The resultant: zero exactly when two polynomials share a root.
+- Differential form: the alternating rule made an algebra.
+- Permanent against determinant: the same sum without minus signs is hard.
 
 One number says whether the sprite survived, not which directions stretched or by how much; those come next.
 

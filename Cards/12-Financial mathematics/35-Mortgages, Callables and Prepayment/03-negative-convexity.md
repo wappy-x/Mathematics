@@ -1,26 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Mortgages, Callables and Prepayment
-topic: Effective duration and convexity
-item: Negative convexity
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/35-Mortgages, Callables and Prepayment/02-mortgage-cash-flows-and-prepayment|mortgage-cash-flows-and-prepayment]]"
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/06-duration-and-convexity|duration-and-convexity]]"
-next:
-  - "[[Cards/12-Financial mathematics/35-Mortgages, Callables and Prepayment/04-option-adjusted-spread|option-adjusted-spread]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - negative-convexity
----
-
 # Negative convexity: why a mortgage bond falls faster than it rises
 
-Financial mathematics → Mortgages, Callables and Prepayment → Effective duration and convexity → Negative convexity
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Mortgages, Callables and Prepayment](../../../SYLLABUS.md#w12-s35) → Negative convexity
 
 ---
 
@@ -61,7 +41,7 @@ $$D_{\text{eff}} \;=\; \frac{V_- - V_+}{2\,V_0\,\delta}, \qquad C_{\text{eff}} \
 
 **Read it aloud:** effective duration is the price swing across the two bumps, per unit of price and per unit of yield; effective convexity is how far the two bumped prices together miss twice today's price, per unit of price and per unit of yield squared.
 
-The word **effective** means the payments were allowed to change with the yield. When they cannot change, these two numbers are the modified duration and convexity of [duration-and-convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md), measured by bumping instead of by formula.
+The word **effective** means the payments were allowed to change with the yield. When they cannot change, these two numbers are the modified duration and convexity of [Duration and convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md), measured by bumping instead of by formula.
 
 What makes the payments change is a **prepayment model**: a rule that says how fast borrowers pay off early at each market yield. Speed is quoted as a **CPR**, the conditional prepayment rate: the fraction of remaining loans paid off early over a year. The house rule is a straight line with a floor, where $y$ is the market yield:
 
@@ -84,7 +64,7 @@ $$c(y) \;=\; \max\bigl(2\%,\; 8\% + b\,(6\% - y)\bigr), \qquad b = 2.55$$
 | $B_m$, $m$ | loans still outstanding at the start of month $m$ | $100 in month 1 | — |
 | $F$ | every month's opening balance, discounted to today and added | the whole card's hinge | duration grows in step |
 
-The monthly prepayment fraction is $1-(1-c)^{1/12}$: 0.6924 percent at 6 percent. Compounding it twelve times reproduces the annual CPR. Each month the pool collects interest at $i$ on its balance, a level payment re-set over the months left, and the prepayments on top ([mortgage-cash-flows-and-prepayment](02-mortgage-cash-flows-and-prepayment.md)).
+The monthly prepayment fraction is $1-(1-c)^{1/12}$: 0.6924 percent at 6 percent. Compounding it twelve times reproduces the annual CPR. Each month the pool collects interest at $i$ on its balance, a level payment re-set over the months left, and the prepayments on top ([Mortgage pools](02-mortgage-cash-flows-and-prepayment.md)).
 
 ### When it holds
 
@@ -104,7 +84,7 @@ The fixed-payment convexity formula differentiates each payment's discount facto
 
 ### Step 1: three prices give a slope and a bend
 
-Write the price near today's yield as today's price, plus slope times the move, plus half the bend times the move squared, plus smaller terms ([duration-and-convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md) uses the same expansion). Bump down by $\delta$ and up by $\delta$:
+Write the price near today's yield as today's price, plus slope times the move, plus half the bend times the move squared, plus smaller terms ([Duration and convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md) uses the same expansion). Bump down by $\delta$ and up by $\delta$:
 
 $$V_\pm \;=\; V_0 \;\pm\; V'\,\delta \;+\; \tfrac12\,V''\,\delta^2 \;\pm\; \tfrac16\,V'''\,\delta^3 \;+\;\dots$$
 
@@ -179,7 +159,7 @@ average life, years (one block = 0.5 year)
 
 A pool whose life stretches from 8.96 years to 11.13 on a rise, and shrinks to 7.38 on a fall, is longer exactly when longer hurts.
 
-The alternative route replaces the single flat yield by thousands of random rate paths and the straight-line speed rule by a fitted one; the price and the bumps are then averages over paths, and the spread over the curve that makes them match the market is [option-adjusted-spread](04-option-adjusted-spread.md).
+The alternative route replaces the single flat yield by thousands of random rate paths and the straight-line speed rule by a fitted one; the price and the bumps are then averages over paths, and the spread over the curve that makes them match the market is [Option-adjusted spread](04-option-adjusted-spread.md).
 
 ---
 
@@ -593,11 +573,11 @@ The two outputs agree line for line at the printed precision.
 
 ## Where you meet it in real life
 
-- **Mortgage-backed securities desks.** Effective duration and convexity are the standard risk figures for pass-through pools, and every one is computed by bumping through a prepayment model as here. [mortgage-backed-securities-in-outline](05-mortgage-backed-securities-in-outline.md) shows how pools are packaged.
+- **Mortgage-backed securities desks.** Effective duration and convexity are the standard risk figures for pass-through pools, and every one is computed by bumping through a prepayment model as here. [Mortgage-backed securities in outline](05-mortgage-backed-securities-in-outline.md) shows how pools are packaged.
 - **Hedging a mortgage portfolio.** A negatively convex position must be re-hedged as rates move: sell duration after a rise, buy it back after a fall. Holders who hedge this way trade in the same direction as the move.
-- **Callable bonds.** A company's right to repay its bonds early caps their price the same way refinancing caps the pool's: [callable-bonds-and-yield-to-worst](01-callable-bonds-and-yield-to-worst.md).
+- **Callable bonds.** A company's right to repay its bonds early caps their price the same way refinancing caps the pool's: [Callable bonds](01-callable-bonds-and-yield-to-worst.md).
 - **Homeowners.** Every fixed-rate borrower with a free right to prepay holds an option against the lender. Negative convexity is the lender's side of that option.
-- **Pricing against the market.** The bump method here uses one flat yield and one speed rule. Market prices come from random rate paths and a spread fitted to them: [option-adjusted-spread](04-option-adjusted-spread.md).
+- **Pricing against the market.** The bump method here uses one flat yield and one speed rule. Market prices come from random rate paths and a spread fitted to them: [Option-adjusted spread](04-option-adjusted-spread.md).
 
 > **Say it back**
 > A mortgage pool's payments depend on rates, because borrowers refinance when rates fall and hold on when rates rise. So its price curve bends down: a one-point fall gains $5.52 and a one-point rise loses $6.71 on the $100 house pool. Effective duration and convexity measure this by repricing the pool, prepayment model included, one bump down and one bump up. At par, the price identity splits the bend into a discounting force that makes it positive and a paydown force that makes it negative. For the house pool the paydown force wins, and the convexity is −119 in years squared, −1.2 per hundred.
@@ -606,12 +586,12 @@ The two outputs agree line for line at the printed precision.
 
 ## What this builds on
 
-- [mortgage-cash-flows-and-prepayment](02-mortgage-cash-flows-and-prepayment.md): the monthly ledger of a pool, CPR and its monthly form, and the level payment re-set after each prepayment. Road 1 of the code is that ledger.
-- [duration-and-convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md): slope and bend of a price curve with fixed payments, and the second-order price estimate. This card keeps the definitions and lets the payments move.
+- [Mortgage pools](02-mortgage-cash-flows-and-prepayment.md): the monthly ledger of a pool, CPR and its monthly form, and the level payment re-set after each prepayment. Road 1 of the code is that ledger.
+- [Duration and convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md): slope and bend of a price curve with fixed payments, and the second-order price estimate. This card keeps the definitions and lets the payments move.
 
 ## Where this goes next
 
-- [option-adjusted-spread](04-option-adjusted-spread.md): prices the pool over many random rate paths instead of one flat yield, and fits the spread that matches a market price; its effective duration and convexity are bumped the same way.
+- [Option-adjusted spread](04-option-adjusted-spread.md): prices the pool over many random rate paths instead of one flat yield, and fits the spread that matches a market price; its effective duration and convexity are bumped the same way.
 
 A real pool trades at some spread over the rate curve. Part of that spread pays the investor for the refinancing option sold to borrowers; the option-adjusted spread is what is left once that part is taken out.
 

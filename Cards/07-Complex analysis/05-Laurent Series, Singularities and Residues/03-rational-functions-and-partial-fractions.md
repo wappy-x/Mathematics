@@ -1,26 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Laurent Series, Singularities and Residues
-topic: Splitting a ratio at its poles
-item: Rational functions
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/02-classifying-singularities|classifying-singularities]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/05-partial-fractions|partial-fractions]]"
-  - "[[Cards/03-Algebra/02-Polynomials/04-polynomial-division|polynomial-division]]"
-next:
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/07-inverse-laplace-by-residues|inverse-laplace-by-residues]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/03-poles-zeros-and-stability|poles-zeros-and-stability]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/05-root-locus|root-locus]]"
-tags: [mathematics, complex-analysis, rational-functions-and-partial-fractions]
----
-
 # Rational functions: a ratio of polynomials is the sum of its principal parts, one per pole
 
-Complex analysis → Laurent Series, Singularities and Residues → Splitting a ratio at its poles → Rational functions
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Laurent Series, Singularities and Residues](../../../SYLLABUS.md#w07-s05) → Rational functions
 
 ---
 
@@ -30,9 +10,9 @@ A motor shakes a guitar string steadily. How strongly the string answers is its 
 
 G(s) = 1/((s^2 + 1)(s^2 + 4)).
 
-Steady shaking at angular frequency ω (radians per unit time) is, by the engineers' convention, the point s = iω. At ω = 0.5 the answer has size 0.36; at ω = 0.95, 3.31. At ω = 1 and ω = 2 the bottom is zero and the answer is infinite: two resonances. The four points where the bottom vanishes, i, −i, 2i and −2i, are the **poles** of G: isolated points where it blows up ([classifying-singularities](02-classifying-singularities.md)).
+Steady shaking at angular frequency ω (radians per unit time) is, by the engineers' convention, the point s = iω. At ω = 0.5 the answer has size 0.36; at ω = 0.95, 3.31. At ω = 1 and ω = 2 the bottom is zero and the answer is infinite: two resonances. The four points where the bottom vanishes, i, −i, 2i and −2i, are the **poles** of G: isolated points where it blows up ([Isolated singularities](02-classifying-singularities.md)).
 
-Each pole carries its own blow-up term, the **principal part**: the negative powers of its Laurent series ([laurent-series](01-laurent-series.md)). Add the four and nothing is left over:
+Each pole carries its own blow-up term, the **principal part**: the negative powers of its Laurent series ([Laurent series](01-laurent-series.md)). Add the four and nothing is left over:
 
 G(s) = (−i/6)/(s − i) + (i/6)/(s + i) + (i/12)/(s − 2i) + (−i/12)/(s + 2i) = (1/3)(1/(s^2 + 1) − 1/(s^2 + 4)).
 
@@ -83,7 +63,7 @@ $$c_{-m+j}(p) = \frac{g^{(j)}(p)}{j!}, \qquad j = 0, 1, \dots, m-1$$
 
 ### When it holds
 
-- **Top degree below bottom degree.** Else divide first ([polynomial-division](../../03-Algebra/02-Polynomials/04-polynomial-division.md)). For s^4/Q the principal parts miss the quotient, 1.
+- **Top degree below bottom degree.** Else divide first ([Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md)). For s^4/Q the principal parts miss the quotient, 1.
 - **Common factors cancelled.** (s^2 + 1)/Q has no pole at ±i: near i it is 1/3.
 - **Complex roots allowed.** Every polynomial factors into linear pieces over the complex numbers, so every rational function splits. Over the reals, conjugate poles pair into quadratic pieces.
 
@@ -116,15 +96,15 @@ Let D be f minus all its principal parts. Near a pole p, f minus p's principal p
 
 Let S be the sum of the principal parts of f = P/Q (lowest terms, deg P < deg Q), and D = f − S = A/B in lowest terms. If B had a root b, then A(b) ≠ 0 and |D| would be unbounded near b. Off the roots of Q, f and S are finite; at a root b of Q, f minus its own principal part is g's Taylor tail over (s − b)^m, holomorphic at b, and the other parts are finite. Either way D is bounded near b, a contradiction. So B is constant and D is a polynomial.
 
-Far out, |f(s)| ≤ C/|s| for a constant C and each c/(s − p)^k tends to 0, so D → 0. A nonzero polynomial is a nonzero constant or grows without bound, so D = 0. The split is unique because the Laurent series at each pole is ([laurent-series](01-laurent-series.md)).
+Far out, |f(s)| ≤ C/|s| for a constant C and each c/(s − p)^k tends to 0, so D → 0. A nonzero polynomial is a nonzero constant or grows without bound, so D = 0. The split is unique because the Laurent series at each pole is ([Laurent series](01-laurent-series.md)).
 
 </details>
 
 ### Step 5: conjugate poles pair into real pieces
 
-G has real coefficients, so poles and coefficients come in mirror pairs: −i/6 at i, i/6 at −i. Added, they give (−i/6)(2i)/(s^2 + 1) = (1/3)/(s^2 + 1); the pair at ±2i gives −(1/3)/(s^2 + 4). That is the real split that [partial-fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md) integrates.
+G has real coefficients, so poles and coefficients come in mirror pairs: −i/6 at i, i/6 at −i. Added, they give (−i/6)(2i)/(s^2 + 1) = (1/3)/(s^2 + 1); the pair at ±2i gives −(1/3)/(s^2 + 4). That is the real split that [Partial fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md) integrates.
 
-A second road walks a small loop round the pole: c_{−k} is 1/(2πi) times the loop integral of f(s)(s − p)^(k − 1). The coefficient c_{−1} alone is the subject of [residues](04-residues.md).
+A second road walks a small loop round the pole: c_{−k} is 1/(2πi) times the loop integral of f(s)(s − p)^(k − 1). The coefficient c_{−1} alone is the subject of [Residues](04-residues.md).
 
 ---
 
@@ -393,8 +373,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Vibration and circuits.** A structure or filter with several modes has a rational response; its partial fractions list the modes and their weights. [poles-zeros-and-stability](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md) reads stability off where the poles sit.
-- **Undoing the Laplace transform.** Each piece c/(s − p) becomes the motion c e^(pt): the string's pieces are sine waves at frequencies 1 and 2 ([inverse-laplace-by-residues](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md)).
+- **Vibration and circuits.** A structure or filter with several modes has a rational response; its partial fractions list the modes and their weights. [Poles and zeros](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md) reads stability off where the poles sit.
+- **Undoing the Laplace transform.** Each piece c/(s − p) becomes the motion c e^(pt): the string's pieces are sine waves at frequencies 1 and 2 ([Inverting a Laplace transform](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md)).
 - **Counting.** A sequence whose terms each add the two before has a rational generating function; splitting it gives every term in closed form.
 
 > **Say it back**
@@ -404,17 +384,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [classifying-singularities](02-classifying-singularities.md): what a pole is.
-- [partial-fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md): the real version of the split, for integrals.
-- [polynomial-division](../../03-Algebra/02-Polynomials/04-polynomial-division.md): the division that comes first when the top is too big.
+- [Isolated singularities](02-classifying-singularities.md): what a pole is.
+- [Partial fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md): the real version of the split, for integrals.
+- [Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md): the division that comes first when the top is too big.
 
 ## Where this goes next
 
-- [inverse-laplace-by-residues](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md): each principal part turned back into motion in time.
-- [poles-zeros-and-stability](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md): the side of the imaginary axis a pole sits on decides whether a system settles.
-- [root-locus](../../13-Engineering%20mathematics/03-Feedback%20Control/05-root-locus.md): how the poles move when a feedback gain is turned up.
+- [Inverting a Laplace transform](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md): each principal part turned back into motion in time.
+- [Poles and zeros](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md): the side of the imaginary axis a pole sits on decides whether a system settles.
+- [Root locus](../../13-Engineering%20mathematics/03-Feedback%20Control/05-root-locus.md): how the poles move when a feedback gain is turned up.
 
-Why c_{−1} alone controls every loop integral: [residues](04-residues.md).
+Why c_{−1} alone controls every loop integral: [Residues](04-residues.md).
 
 ---
 

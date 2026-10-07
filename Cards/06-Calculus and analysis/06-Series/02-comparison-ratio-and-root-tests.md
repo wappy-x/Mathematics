@@ -1,26 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Series
-topic: Deciding convergence
-item: Convergence tests
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/06-Series/01-series-convergence|series-convergence]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/07-improper-integrals|improper-integrals]]"
-next:
-  - "[[Cards/06-Calculus and analysis/06-Series/03-alternating-and-conditional-convergence|alternating-and-conditional-convergence]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/04-power-series|power-series]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/06-complex-limits-series-and-regions|complex-limits-series-and-regions]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/01-infinite-products|infinite-products]]"
-tags: [mathematics, calculus-and-analysis, comparison-ratio-and-root-tests]
----
-
 # Convergence tests: comparison, integral, ratio and root, and which to reach for
 
-Calculus and analysis → Series → Deciding convergence → Convergence tests
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Series](../../../SYLLABUS.md#w06-s06) → Convergence tests
 
 ---
 
@@ -55,7 +35,7 @@ Orange: the harmonic total. Green: the floor 1 + k/2 after 2^k terms, proved in 
 
 ## The formula
 
-A reminder from [series-convergence](01-series-convergence.md): $a_n$ is the term in position n, and the sigma sign running to infinity means the limit of the running totals $S_N$, the sum of the first N terms. Every test assumes terms that are never negative, from some position on.
+A reminder from [Infinite series](01-series-convergence.md): $a_n$ is the term in position n, and the sigma sign running to infinity means the limit of the running totals $S_N$, the sum of the first N terms. Every test assumes terms that are never negative, from some position on.
 
 The result this card settles, the **p-series** (one over n to a fixed power p):
 
@@ -87,7 +67,7 @@ $$\int_{1}^{N+1} f(x)\,dx \ \le \ S_N \ \le \ f(1) + \int_{1}^{N} f(x)\,dx$$
 
 ### When it holds
 
-- **Terms never negative, eventually.** Mixed signs: [alternating-and-conditional-convergence](03-alternating-and-conditional-convergence.md).
+- **Terms never negative, eventually.** Mixed signs: [Alternating series](03-alternating-and-conditional-convergence.md).
 - **Comparison in the right direction.** The squares sit below the divergent harmonic series and converge.
 - **A curve falling everywhere, not only at whole numbers.** Spikes between integers can add infinite area.
 - **A limit, not merely ratios below 1.** The harmonic ratios n/(n+1) are all below 1, and it diverges.
@@ -123,7 +103,7 @@ Harmonic. Group the terms in doubling blocks: 1/2; then 1/3 + 1/4; then 1/5 to 1
 
 Let $f$ fall, with $f(n) = a_n$. Between n and n + 1 a width-1 rectangle of height $a_n$ covers the area under the curve, and one of height $a_{n+1}$ fits beneath it. Adding rectangles gives the sandwich.
 
-For 1/x^p the area from 1 to T is (T^(1−p) − 1)/(1 − p), or log T when p = 1, log being the natural logarithm ([improper-integrals](../04-Integrals/07-improper-integrals.md)). It settles to 1/(p − 1) when p > 1 and grows without end otherwise: the p-series.
+For 1/x^p the area from 1 to T is (T^(1−p) − 1)/(1 − p), or log T when p = 1, log being the natural logarithm ([Improper integrals](../04-Integrals/07-improper-integrals.md)). It settles to 1/(p − 1) when p > 1 and grows without end otherwise: the p-series.
 
 The rectangles also bound the tail after N terms: between the areas from N + 1 on and from N on, for the squares 1/(N + 1) and 1/N.
 
@@ -379,7 +359,7 @@ The two outputs agree line for line.
 
 - **Numerical libraries.** A stopping rule: the tail bound 1/N says how many terms buy how many decimals.
 - **Stacking blocks.** Equal blocks of length 1 stacked at a table edge can overhang it by half the harmonic total: with enough blocks, any distance.
-- **Power series.** Ratio and root find the inputs where a series in powers of x converges: [power-series](04-power-series.md).
+- **Power series.** Ratio and root find the inputs where a series in powers of x converges: [Power series](04-power-series.md).
 
 > **Say it back**
 > Terms never negative give rising totals, finite exactly when capped. Comparison borrows a cap from a known series, the integral test from an area. Ratio and root find a geometric cap when the limit is below 1, and are silent at 1. One over n to the p is finite exactly when p > 1.
@@ -388,17 +368,17 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [series-convergence](01-series-convergence.md): the sum as a limit of running totals, the term test, and the geometric series.
-- [improper-integrals](../04-Integrals/07-improper-integrals.md): areas out to infinity, and the power rule for 1/x^p.
+- [Infinite series](01-series-convergence.md): the sum as a limit of running totals, the term test, and the geometric series.
+- [Improper integrals](../04-Integrals/07-improper-integrals.md): areas out to infinity, and the power rule for 1/x^p.
 
 ## Where this goes next
 
-- [alternating-and-conditional-convergence](03-alternating-and-conditional-convergence.md): mixed signs, where cancellation rescues sums these tests reject.
-- [power-series](04-power-series.md): ratio and root turned into a radius of convergence.
-- [complex-limits-series-and-regions](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md): the same tests on the sizes of complex terms.
-- [infinite-products](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md): endless products, judged through sums like these.
+- [Alternating series](03-alternating-and-conditional-convergence.md): mixed signs, where cancellation rescues sums these tests reject.
+- [Power series](04-power-series.md): ratio and root turned into a radius of convergence.
+- [Limits and regions in the plane](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md): the same tests on the sizes of complex terms.
+- [Infinite products](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md): endless products, judged through sums like these.
 
-Every test here needs terms that are never negative; why 1 − 1/2 + 1/3 − … converges though the harmonic series does not is [alternating-and-conditional-convergence](03-alternating-and-conditional-convergence.md).
+Every test here needs terms that are never negative; why 1 − 1/2 + 1/3 − … converges though the harmonic series does not is [Alternating series](03-alternating-and-conditional-convergence.md).
 
 ---
 

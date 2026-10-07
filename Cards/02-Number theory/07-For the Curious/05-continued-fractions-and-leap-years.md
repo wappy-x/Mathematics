@@ -1,26 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: For the Curious
-topic: Approximations
-item: Continued fractions
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/03-euclidean-algorithm|euclidean-algorithm]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/07-fractions|fractions]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/08-decimals|decimals]]"
-next: []
-tags:
-  - mathematics
-  - number theory
-  - continued-fractions-and-leap-years
----
-
 # Continued fractions: Euclid's algorithm read as nested fractions, and why the leap-year rule is 97 in 400
 
-Number theory → For the Curious → Approximations → Continued fractions
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [For the Curious](../../../SYLLABUS.md#w02-s07) → Continued fractions
 
 ---
 
@@ -28,7 +8,7 @@ Number theory → For the Curious → Approximations → Continued fractions
 
 A year is not 365 days. It is 365.2422 days, near enough: 365 whole days and a leftover of 0.2422 of a day. Leap days are how the calendar swallows it. So: what is the cheapest fraction close to 0.2422? Cheap means a small bottom number — how many years until the rule repeats.
 
-Euclid's algorithm answers it ([euclidean-algorithm](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md)). Run it on 0.2422 written as a fraction, 1211/5000, and it returns whole numbers: 0, 4, 7, 1, 3, 4, 1, 1, 1, 2. The leading 0 is step 0 — no whole days in the leftover. Cut the list short after step 1, then 2, 3, 4, and you get 1/4, 7/29, 8/33, 31/128 — each the best fraction of its size. The first, one leap day every four years, is Julius Caesar's rule.
+Euclid's algorithm answers it ([Euclid's algorithm](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md)). Run it on 0.2422 written as a fraction, 1211/5000, and it returns whole numbers: 0, 4, 7, 1, 3, 4, 1, 1, 1, 2. The leading 0 is step 0 — no whole days in the leftover. Cut the list short after step 1, then 2, 3, 4, and you get 1/4, 7/29, 8/33, 31/128 — each the best fraction of its size. The first, one leap day every four years, is Julius Caesar's rule.
 
 **Euclid's algorithm on a fraction returns a list of whole numbers; cutting the list short gives the best cheap approximations, cheapest first.**
 
@@ -86,7 +66,7 @@ Write down a number's whole part. The leftover is under 1, so turn it upside dow
 | 156 by 119 | 1 | 37 |
 | 119 by 37 | 3 | 8 |
 
-The list carries on 4, 1, 1, 1, 2, then a remainder of 0 shuts it down: every ordinary fraction's list stops, because Euclid's algorithm stops ([irrational-numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md) is where they never do).
+The list carries on 4, 1, 1, 1, 2, then a remainder of 0 shuts it down: every ordinary fraction's list stops, because Euclid's algorithm stops ([Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md) is where they never do).
 
 The stops build themselves from the steps: new top number = the step, times the previous top, plus the top before that. Bottoms the same. Start from 0/1, with 1/0 imagined before it. From 7/29 and the step 1: 8 = 1 × 7 + 1, 33 = 1 × 29 + 4.
 
@@ -265,7 +245,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **The calendar you are using now.** 97 leap days in 400 years, century skips included. The cycles it sets up drive [day-of-the-week](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md) and [cycles-that-realign](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/04-cycles-that-realign.md).
+- **The calendar you are using now.** 97 leap days in 400 years, century skips included. The cycles it sets up drive [Day of the week for any date](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/03-day-of-the-week.md) and [When cycles meet again](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/04-cycles-that-realign.md).
 - **Cutting gears, tuning instruments.** The bottom number is teeth to cut or notes in a scale, so you take the cheapest stop that works.
 - **Pi in your head.** The same steps on 3.14159265358979 give 3/1, 22/7, 333/106, 355/113. The last is closer to pi than any fraction its size — the fourth stop.
 
@@ -276,13 +256,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [euclidean-algorithm](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md): the quotients it throws away chasing a gcd are the steps here.
-- [fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): top over bottom, and cutting 2422/10000 down.
-- [decimals](../../01-Foundations/01-Everyday%20Arithmetic/08-decimals.md): reading 365.2422 as whole days plus a leftover.
+- [Euclid's algorithm](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md): the quotients it throws away chasing a gcd are the steps here.
+- [Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): top over bottom, and cutting 2422/10000 down.
+- [Decimals](../../01-Foundations/01-Everyday%20Arithmetic/08-decimals.md): reading 365.2422 as whole days plus a leftover.
 
 ## Where this goes next
 
-Nothing on disk depends on this card yet; wing 03's Pell card will. The rest of the shelf: [pythagorean-triples](01-pythagorean-triples.md), [perfect-numbers-and-mersenne](02-perfect-numbers-and-mersenne.md), [how-primes-thin-out](03-how-primes-thin-out.md), [goldbach-and-open-problems](04-goldbach-and-open-problems.md).
+Nothing on disk depends on this card yet; wing 03's Pell card will. The rest of the shelf: [Pythagorean triples](01-pythagorean-triples.md), [Perfect numbers and Mersenne primes](02-perfect-numbers-and-mersenne.md), [How primes thin out](03-how-primes-thin-out.md), [Goldbach, twin primes and friends](04-goldbach-and-open-problems.md).
 
 ---
 

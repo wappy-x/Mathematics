@@ -1,25 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Logic
-topic: Quantifiers
-item: Negating a quantifier
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/05-Logic/04-quantifiers|quantifiers]]"
-next:
-  - "[[Cards/01-Foundations/05-Logic/06-valid-arguments|valid-arguments]]"
-tags:
-  - mathematics
-  - foundations
-  - negating-quantifiers-and-counterexamples
----
-
 # Negating a quantifier: to disprove 'every', find one; to disprove 'some', check them all
 
-Foundations → Logic → Quantifiers → Negating a quantifier
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Logic](../../../SYLLABUS.md#w01-s05) → Negating a quantifier
 
 ---
 
@@ -87,7 +68,7 @@ That is what "every" means on a group you can list. "Some bag under 7 kg was ref
 
 ### Move the "not" through
 
-De Morgan, from [logical-equivalence-and-de-morgan](03-logical-equivalence-and-de-morgan.md), turns a "not" outside an "and" into an "or":
+De Morgan, from [Logical equivalence and De Morgan](03-logical-equivalence-and-de-morgan.md), turns a "not" outside an "and" into an "or":
 
 not (A and B and C) = (not A) or (not B) or (not C)
 
@@ -268,7 +249,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Warranties.** "Every fault in the first year is covered" is beaten by one covered fault they refused.
-- **Arguments.** "Everyone does it" needs one person who does not; "someone must have known" needs everyone cleared: [valid-arguments](06-valid-arguments.md).
+- **Arguments.** "Everyone does it" needs one person who does not; "someone must have known" needs everyone cleared: [Valid arguments](06-valid-arguments.md).
 - **Testing anything.** One failing case shows a rule is broken. No failing case shows only that you have not found one.
 
 > **Say it back**
@@ -278,11 +259,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [quantifiers](04-quantifiers.md): what "every" and "some" claim, and why their order matters once you stack them.
+- [Quantifiers](04-quantifiers.md): what "every" and "some" claim, and why their order matters once you stack them.
 
 ## Where this goes next
 
-- [valid-arguments](06-valid-arguments.md): what follows from a claim once you know whether it is an "every" or a "some".
+- [Valid arguments](06-valid-arguments.md): what follows from a claim once you know whether it is an "every" or a "some".
 
 ---
 

@@ -1,24 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Ito Calculus
-topic: Correlated noise in two prices
-item: Several Brownian motions
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/06-multivariate-normal|multivariate-normal]]"
-next:
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/01-quanto-forward-and-adjustment|quanto-forward-and-adjustment]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/04-margrabe-and-kirk-spread-options|margrabe-and-kirk-spread-options]]"
-tags: [mathematics, stochastic processes and calculus, multidimensional-ito-and-correlation]
----
-
 # Several Brownian motions: correlated noise and the multidimensional Ito formula
 
-Stochastic processes and calculus → Ito Calculus → Correlated noise in two prices → Several Brownian motions
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Ito Calculus](../../../SYLLABUS.md#w11-s06) → Several Brownian motions
 
 ---
 
@@ -26,7 +8,7 @@ Stochastic processes and calculus → Ito Calculus → Correlated noise in two p
 
 Two shares trade on the same exchange. Share A costs \$100, grows on average 8% a year and has a volatility, the size of its yearly wobble, of 20%. Share B costs \$50, grows 5% a year and wobbles 30%. Time is in years. Some news that moves A also moves B: an interest-rate surprise, a bad day for the whole market. Over any short stretch of time, the random parts of their moves have a correlation of 0.5, or 50%.
 
-Two questions follow. How is such a pair simulated, when a computer only makes independent draws? Share B's noise is built as half the shared news plus 0.866 of news of its own: the Cholesky recipe of [multivariate-normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md), applied to whole paths. And how does a quantity built from both prices move? The example is their product, which is not a curiosity: a foreign share's dollar price is its euro price times the exchange rate.
+Two questions follow. How is such a pair simulated, when a computer only makes independent draws? Share B's noise is built as half the shared news plus 0.866 of news of its own: the Cholesky recipe of [Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md), applied to whole paths. And how does a quantity built from both prices move? The example is their product, which is not a curiosity: a foreign share's dollar price is its euro price times the exchange rate.
 
 Ito's lemma for one noise adds a term for the squared wobble. With two noises it also adds a cross term: the two wobbles multiplied, which add up to the correlation times the elapsed time. So the product of the two prices grows on average 16% a year, not the 13% the two growth rates add to. The extra 3 points are the correlation, 0.5, times the volatilities, 0.20 and 0.30.
 
@@ -52,13 +34,13 @@ Upper line: share A. Lower line: share B. One sample path, read monthly from eac
 
 ## The formula
 
-Notation first. Brownian motion $W_t$ is the random walk seen from far away, with time $t$ in years ([brownian-motion](../05-Brownian%20Motion/01-brownian-motion.md)). Its step $dW_t$ is shorthand for an Ito integral, never a derivative: the path has no slope ([ito-integral](01-ito-integral.md)). The covariation $[X,Y]_t$ is the limit of the summed products of matching small steps of two processes ([ito-product-rule](03-ito-product-rule.md)). New here: several Brownian motions, labelled by a raised number, $W^1_t$ and $W^2_t$. The raised numbers are labels, not powers; a square is written with brackets, $(dW^1_t)^2$.
+Notation first. Brownian motion $W_t$ is the random walk seen from far away, with time $t$ in years ([Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md)). Its step $dW_t$ is shorthand for an Ito integral, never a derivative: the path has no slope ([The Ito integral](01-ito-integral.md)). The covariation $[X,Y]_t$ is the limit of the summed products of matching small steps of two processes ([Ito's product rule](03-ito-product-rule.md)). New here: several Brownian motions, labelled by a raised number, $W^1_t$ and $W^2_t$. The raised numbers are labels, not powers; a square is written with brackets, $(dW^1_t)^2$.
 
 **Correlated Brownian motions, built by Cholesky.** Start from two independent Brownian motions $Z^1_t$ and $Z^2_t$. Set
 
 $$W^1_t = Z^1_t, \qquad W^2_t = \rho\,Z^1_t + \sqrt{1-\rho^2}\;Z^2_t.$$
 
-Both are Brownian motions, with covariation $[W^1, W^2]_t = \rho\,t$. The weights are the rows of the Cholesky factor $L$ of the covariance table $\Sigma$, which has 1 on its diagonal and $\rho$ off it. In the shorthand of [itos-lemma](02-itos-lemma.md) the multiplication table gains one entry:
+Both are Brownian motions, with covariation $[W^1, W^2]_t = \rho\,t$. The weights are the rows of the Cholesky factor $L$ of the covariance table $\Sigma$, which has 1 on its diagonal and $\rho$ off it. In the shorthand of [Ito's lemma](02-itos-lemma.md) the multiplication table gains one entry:
 
 $$dW^1_t\,dW^2_t = \rho\,dt, \qquad (dW^i_t)^2 = dt, \qquad dt\,dW^i_t = 0, \qquad (dt)^2 = 0.$$
 
@@ -92,9 +74,9 @@ The product's own volatility is $v = \sqrt{\sigma_1^2 + \sigma_2^2 + 2\rho\,\sig
 ### When it holds
 
 - **The correlation lies between $-1$ and 1; in more dimensions $\Sigma$ is positive definite** (every mix of the noises has positive variance). At $\rho$ = 1.2 the Cholesky entry is the square root of a negative number, and the construction stops.
-- **The coefficients use only the past and are integrable,** as on [itos-lemma](02-itos-lemma.md). A coefficient that peeks ahead breaks the left-end sums.
+- **The coefficients use only the past and are integrable,** as on [Ito's lemma](02-itos-lemma.md). A coefficient that peeks ahead breaks the left-end sums.
 - **$f$ has continuous second slopes, mixed ones included.** At a kink the formula needs an extra term, as in one dimension.
-- **The paths are continuous.** Jumps add their products to every covariation: [jump-diffusions](../09-Beyond%20Brownian/02-jump-diffusions.md).
+- **The paths are continuous.** Jumps add their products to every covariation: [Jump diffusions](../09-Beyond%20Brownian/02-jump-diffusions.md).
 - **$\rho$ is the correlation of the noises over short steps, not of yearly prices.** Using a yearly price correlation in its place mixes up two numbers that differ: here the yearly prices $A_1$ and $B_1$ have correlation 0.491245 against $\rho$ = 0.5, and the gap grows with the volatilities and the horizon.
 
 ---
@@ -107,7 +89,7 @@ Split share B's noise into two independent parts: the news A hears, and news onl
 
 ### Step 1: the mix is a Brownian motion with the right correlation
 
-Take $W^2_t = \rho Z^1_t + \sqrt{1-\rho^2}\,Z^2_t$. It starts at 0, and its paths are continuous because both parts are. Its step over any stretch is a fixed mix of two independent bell-curve steps, so it is bell-shaped and independent of earlier steps (mixing bell curves keeps them bell-shaped: [multivariate-normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)). Its variance over a time $t$ is $\rho^2 t + (1-\rho^2)t = t$. Those are the defining properties of Brownian motion. And
+Take $W^2_t = \rho Z^1_t + \sqrt{1-\rho^2}\,Z^2_t$. It starts at 0, and its paths are continuous because both parts are. Its step over any stretch is a fixed mix of two independent bell-curve steps, so it is bell-shaped and independent of earlier steps (mixing bell curves keeps them bell-shaped: [Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)). Its variance over a time $t$ is $\rho^2 t + (1-\rho^2)t = t$. Those are the defining properties of Brownian motion. And
 
 $$\operatorname{Cov}(W^1_t, W^2_t) = \operatorname{Cov}(Z^1_t,\;\rho Z^1_t + \sqrt{1-\rho^2}\,Z^2_t) = \rho\,t,$$
 
@@ -146,12 +128,12 @@ Over one slice, a smooth function of two processes changes, to second order, by
 
 $$\Delta f \approx f_t\,\Delta t + f_1\,\Delta X^1 + f_2\,\Delta X^2 + \tfrac12 f_{11}(\Delta X^1)^2 + f_{12}\,\Delta X^1\Delta X^2 + \tfrac12 f_{22}(\Delta X^2)^2.$$
 
-In school calculus the last three terms vanish in the limit. Here each step $\Delta X^i$ is about $\sigma_i \Delta W^i$, of size the square root of $\Delta t$, so a product of two steps has size $\Delta t$, like the drift, and survives. Summed over slices, $(\Delta X^i)^2$ adds up to $\sigma_i^2\,dt$ by quadratic variation ([quadratic-variation](../05-Brownian%20Motion/03-quadratic-variation.md)). The cross product $\Delta X^1 \Delta X^2$ adds up to $\sigma_1\sigma_2\rho\,dt$, by Step 2. In the formula's double sum the mixed slope appears twice, as $f_{12}$ and $f_{21}$, each with a half; together they make the single $f_{12}$ above. Smaller pieces add up to nothing, and the first-order sums, slopes taken at each slice's start, become Ito integrals.
+In school calculus the last three terms vanish in the limit. Here each step $\Delta X^i$ is about $\sigma_i \Delta W^i$, of size the square root of $\Delta t$, so a product of two steps has size $\Delta t$, like the drift, and survives. Summed over slices, $(\Delta X^i)^2$ adds up to $\sigma_i^2\,dt$ by quadratic variation ([Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)). The cross product $\Delta X^1 \Delta X^2$ adds up to $\sigma_1\sigma_2\rho\,dt$, by Step 2. In the formula's double sum the mixed slope appears twice, as $f_{12}$ and $f_{21}$, each with a half; together they make the single $f_{12}$ above. Smaller pieces add up to nothing, and the first-order sums, slopes taken at each slice's start, become Ito integrals.
 
 <details>
 <summary>Detailed proof: what is shown here, and what is cited</summary>
 
-**Shown.** Take $f$ with bounded, continuous first and second slopes, and constant $\mu_i$, $\sigma_i$. On a grid, write the total change of $f$ as the sum of its changes over the slices, and expand each by Taylor's theorem with remainder. The first-order sums $\sum_k f_i(t_k, X_{t_k})\,\Delta X^i_k$ are left-end sums and converge to the Ito integrals $\int f_i\,dX^i$, by the construction on [ito-integral](01-ito-integral.md). For each second-order sum, compare $\sum_k f_{ij}(t_k, X_{t_k})\,\Delta X^i_k\Delta X^j_k$ with $\sum_k f_{ij}(t_k, X_{t_k})\,\sigma_i\sigma_j\rho_{ij}\,\Delta t$. Slice by slice, their difference has an average given the past of order $\Delta t^2$ (from the drift) and a variance of order $\Delta t^2$ (the moment calculation of Step 2), and its centred parts are uncorrelated across slices. Summed over $n$ slices, bias and variance are both of order $\Delta t$ and vanish. The second sum is a Riemann sum and converges to $\int f_{ij}\sigma_i\sigma_j\rho_{ij}\,dt$. Each Taylor remainder is at most the squared step times the largest change of a second slope within the slice; the squared steps add to a finite total, and that largest change shrinks to zero because the second slopes are continuous on the bounded region the path visits. So the remainders sum to zero in probability.
+**Shown.** Take $f$ with bounded, continuous first and second slopes, and constant $\mu_i$, $\sigma_i$. On a grid, write the total change of $f$ as the sum of its changes over the slices, and expand each by Taylor's theorem with remainder. The first-order sums $\sum_k f_i(t_k, X_{t_k})\,\Delta X^i_k$ are left-end sums and converge to the Ito integrals $\int f_i\,dX^i$, by the construction on [The Ito integral](01-ito-integral.md). For each second-order sum, compare $\sum_k f_{ij}(t_k, X_{t_k})\,\Delta X^i_k\Delta X^j_k$ with $\sum_k f_{ij}(t_k, X_{t_k})\,\sigma_i\sigma_j\rho_{ij}\,\Delta t$. Slice by slice, their difference has an average given the past of order $\Delta t^2$ (from the drift) and a variance of order $\Delta t^2$ (the moment calculation of Step 2), and its centred parts are uncorrelated across slices. Summed over $n$ slices, bias and variance are both of order $\Delta t$ and vanish. The second sum is a Riemann sum and converges to $\int f_{ij}\sigma_i\sigma_j\rho_{ij}\,dt$. Each Taylor remainder is at most the squared step times the largest change of a second slope within the slice; the squared steps add to a finite total, and that largest change shrinks to zero because the second slopes are continuous on the bounded region the path visits. So the remainders sum to zero in probability.
 **Cited.** The general case, with coefficients that depend on time and the path and with unbounded $f$, needs localisation: stopping the processes before they leave a bounded region. It is in Øksendal, Chapter 4, and Karatzas and Shreve, Section 3.3 (Sources); this card does not repeat it.
 
 </details>
@@ -162,7 +144,7 @@ Take $f(x_1, x_2) = x_1 x_2$, with $X^1 = A$ and $X^2 = B$. Its slopes: $f_1 = x
 
 $$dP_t = B_t\,dA_t + A_t\,dB_t + \rho\,\sigma_1\sigma_2\,A_t B_t\,dt.$$
 
-This is the product rule of [ito-product-rule](03-ito-product-rule.md), its covariation term now carrying the correlation. Divide by $P_t$ and substitute $dA_t/A_t = \mu_1 dt + \sigma_1 dW^1_t$, and the same for B: the drift is $\mu_1 + \mu_2 + \rho\sigma_1\sigma_2$. The noise $\sigma_1 dW^1_t + \sigma_2 dW^2_t$ has variance per unit of time $\sigma_1^2 + \sigma_2^2 + 2\rho\sigma_1\sigma_2$ by the table, which gives $v$. With a constant relative drift the average grows as e to the drift times the time, which gives $E[P_T]$.
+This is the product rule of [Ito's product rule](03-ito-product-rule.md), its covariation term now carrying the correlation. Divide by $P_t$ and substitute $dA_t/A_t = \mu_1 dt + \sigma_1 dW^1_t$, and the same for B: the drift is $\mu_1 + \mu_2 + \rho\sigma_1\sigma_2$. The noise $\sigma_1 dW^1_t + \sigma_2 dW^2_t$ has variance per unit of time $\sigma_1^2 + \sigma_2^2 + 2\rho\sigma_1\sigma_2$ by the table, which gives $v$. With a constant relative drift the average grows as e to the drift times the time, which gives $E[P_T]$.
 
 ### Step 5: the ratio, a second use
 
@@ -170,11 +152,11 @@ Take $f(x_1, x_2) = x_1 / x_2$, the price of A measured in shares of B. Its slop
 
 $$\frac{dR_t}{R_t} = (\mu_1 - \mu_2 + \sigma_2^2 - \rho\,\sigma_1\sigma_2)\,dt + \sigma_1\,dW^1_t - \sigma_2\,dW^2_t.$$
 
-Correlation now lowers the drift: 0.08 − 0.05 + 0.09 − 0.03 = 0.09, so $E[R_1] = 2e^{0.09}$ = 2.188349. The $\sigma_2^2$ term comes from dividing by a noisy price, and is why an asset measured in units of another changes drift: the step behind [margrabe-and-kirk-spread-options](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md).
+Correlation now lowers the drift: 0.08 − 0.05 + 0.09 − 0.03 = 0.09, so $E[R_1] = 2e^{0.09}$ = 2.188349. The $\sigma_2^2$ term comes from dividing by a noisy price, and is why an asset measured in units of another changes drift: the step behind [Spread options](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md).
 
 ### The other route
 
-Each price solves its own equation by one-dimensional Ito, $A_T = A_0 e^{(\mu_1 - \sigma_1^2/2)T + \sigma_1 W^1_T}$ and the same for B ([geometric-brownian-motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md)). Their product's exponent is bell-shaped with variance $(\sigma_1^2 + \sigma_2^2 + 2\rho\sigma_1\sigma_2)T$. The average of $e$ to a bell-curve quantity is $e$ to its mean plus half its variance, which leaves exactly $\rho\sigma_1\sigma_2$ in the exponent. Road B of the code integrates $A_T B_T$ against the joint bell-curve density, with neither Cholesky nor Ito, and lands on the same 5,867.554355.
+Each price solves its own equation by one-dimensional Ito, $A_T = A_0 e^{(\mu_1 - \sigma_1^2/2)T + \sigma_1 W^1_T}$ and the same for B ([Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md)). Their product's exponent is bell-shaped with variance $(\sigma_1^2 + \sigma_2^2 + 2\rho\sigma_1\sigma_2)T$. The average of $e$ to a bell-curve quantity is $e$ to its mean plus half its variance, which leaves exactly $\rho\sigma_1\sigma_2$ in the exponent. Road B of the code integrates $A_T B_T$ against the joint bell-curve density, with neither Cholesky nor Ito, and lands on the same 5,867.554355.
 
 ---
 
@@ -673,9 +655,9 @@ Upper line: without the cross term; the error levels off near the predicted 173.
 
 ## Where you meet it in real life
 
-- **Foreign shares in dollars.** A euro share's dollar price is the euro price times the exchange rate. Its drift picks up the correlation term of Step 4, and pricing it is [quanto-forward-and-adjustment](../../12-Financial%20mathematics/24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md).
-- **Spread and exchange options.** The right to swap one asset for another is priced in units of the second asset, the ratio of Step 5, whose volatility is $\sqrt{\sigma_1^2 + \sigma_2^2 - 2\rho\sigma_1\sigma_2}$: [margrabe-and-kirk-spread-options](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md).
-- **Simulating a portfolio.** Risk systems that simulate many prices build their noises from independent draws with a Cholesky factor, as in Road D; [correlated-paths-and-cholesky](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md) does it for pricing.
+- **Foreign shares in dollars.** A euro share's dollar price is the euro price times the exchange rate. Its drift picks up the correlation term of Step 4, and pricing it is [The quanto adjustment](../../12-Financial%20mathematics/24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md).
+- **Spread and exchange options.** The right to swap one asset for another is priced in units of the second asset, the ratio of Step 5, whose volatility is $\sqrt{\sigma_1^2 + \sigma_2^2 - 2\rho\sigma_1\sigma_2}$: [Spread options](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md).
+- **Simulating a portfolio.** Risk systems that simulate many prices build their noises from independent draws with a Cholesky factor, as in Road D; [Correlated paths](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md) does it for pricing.
 - **Physics and engineering.** A particle in a plane, or a system with several noisy inputs, is driven by several Brownian motions at once; the formula gives how any smooth function of its state moves.
 
 > **Say it back**
@@ -685,16 +667,16 @@ Upper line: without the cross term; the error levels off near the predicted 173.
 
 ## What this builds on
 
-- [itos-lemma](02-itos-lemma.md): the second-order Taylor argument and the multiplication table, here extended by one entry.
-- [multivariate-normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md): the Cholesky factor and the fact that mixing bell curves keeps them bell-shaped.
-- [quadratic-variation](../05-Brownian%20Motion/03-quadratic-variation.md): why squared Brownian steps add up to the time elapsed, the diagonal of the new table.
-- [ito-product-rule](03-ito-product-rule.md): the covariation term for a product, here given its correlation.
+- [Ito's lemma](02-itos-lemma.md): the second-order Taylor argument and the multiplication table, here extended by one entry.
+- [Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md): the Cholesky factor and the fact that mixing bell curves keeps them bell-shaped.
+- [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md): why squared Brownian steps add up to the time elapsed, the diagonal of the new table.
+- [Ito's product rule](03-ito-product-rule.md): the covariation term for a product, here given its correlation.
 
 ## Where this goes next
 
-- [quanto-forward-and-adjustment](../../12-Financial%20mathematics/24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): the product of a foreign price and an exchange rate, and the drift shift its correlation causes.
-- [margrabe-and-kirk-spread-options](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md): the ratio of two prices, priced as an option to exchange one for the other.
-- [existence-and-uniqueness-for-sdes](07-existence-and-uniqueness-for-sdes.md): when a system of equations like the two shares' has exactly one solution.
+- [The quanto adjustment](../../12-Financial%20mathematics/24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): the product of a foreign price and an exchange rate, and the drift shift its correlation causes.
+- [Spread options](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md): the ratio of two prices, priced as an option to exchange one for the other.
+- [When an SDE has one solution](07-existence-and-uniqueness-for-sdes.md): when a system of equations like the two shares' has exactly one solution.
 
 This card showed how a function of several correlated prices moves; the open question is what a contract on such a function is worth, and the quanto and exchange-option cards answer it for a product and for a ratio.
 

@@ -1,28 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Letters and Equations
-topic: Unknowns
-item: Linear equations
-kind: method
-status: verified
-updated: 2026-09-07
-needs_first:
-  - "[[Cards/03-Algebra/01-Letters and Equations/01-letters-for-numbers|letters-for-numbers]]"
-  - "[[Cards/01-Foundations/02-The Number Line/02-number-line-and-inequalities|number-line-and-inequalities]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/07-fractions|fractions]]"
-next:
-  - "[[Cards/03-Algebra/01-Letters and Equations/03-rearranging-formulas|rearranging-formulas]]"
-  - "[[Cards/03-Algebra/01-Letters and Equations/04-two-equations-two-unknowns|two-equations-two-unknowns]]"
-tags:
-  - mathematics
-  - algebra
-  - linear-equations
----
-
 # Linear equations: undo the story step by step, doing the same thing to both sides
 
-Algebra → Letters and Equations → Unknowns → Linear equations
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Letters and Equations](../../../SYLLABUS.md#w03-s01) → Linear equations
 
 ---
 
@@ -32,7 +10,7 @@ A taxi charges $3 the moment you get in, then $2 for every mile. Ride 6 miles an
 
 Now turn it around. The meter reads $15 and you were not watching the road. How far was the ride?
 
-That question is an equation. The fare recipe is 3 + 2m, where m stands for the miles ([letters-for-numbers](01-letters-for-numbers.md)). Set it against the meter and you get 3 + 2m = 15 — a sentence true for one value of m, false for every other. Finding that value is called solving.
+That question is an equation. The fare recipe is 3 + 2m, where m stands for the miles ([Letters for numbers](01-letters-for-numbers.md)). Set it against the meter and you get 3 + 2m = 15 — a sentence true for one value of m, false for every other. Finding that value is called solving.
 
 The fare was built in two steps: multiply the miles by 2, then add 3. Take it apart in the opposite order. Lift the 3 off both sides and 12 is left, the mileage part. Halve it: 6 miles. One rule protects all of that: whatever you do, do it to both sides.
 
@@ -66,7 +44,7 @@ Undo the two steps in reverse order — subtract $b$ from both sides, then divid
 
 $$x = \frac{c - b}{a}$$
 
-The bar means divide: the top divided by the bottom ([fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md)). It works whenever $a$ is not zero — Step 3 covers the rest.
+The bar means divide: the top divided by the bottom ([Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md)). It works whenever $a$ is not zero — Step 3 covers the rest.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -78,7 +56,7 @@ The bar means divide: the top divided by the bottom ([fractions](../../01-Founda
 
 Our taxi is that shape with $a$ = 2, $b$ = 3, $c$ = 15, and the unknown named $m$ because it counts miles: 2m + 3 = 15. Writing the fare as 3 + 2m or 2m + 3 changes nothing.
 
-One more sign, from [number-line-and-inequalities](../../01-Foundations/02-The%20Number%20Line/02-number-line-and-inequalities.md): < means less than, its small end pointing at the smaller side. So 2m + 3 < 15 says the fare stays under fifteen.
+One more sign, from [The number line and inequalities](../../01-Foundations/02-The%20Number%20Line/02-number-line-and-inequalities.md): < means less than, its small end pointing at the smaller side. So 2m + 3 < 15 says the fare stays under fifteen.
 
 ---
 
@@ -108,7 +86,7 @@ Six miles. Shoes and socks: the shoes went on last, so they come off first.
 
 Solving can go wrong quietly. Checking cannot. Take the 6 back to the recipe: 3 + 2 × 6 = 3 + 12 = 15. That is the meter reading, so 6 is right.
 
-Putting a number where the letter was is called substitution ([letters-for-numbers](01-letters-for-numbers.md)). It is the habit worth keeping: a dropped minus sign shows up in seconds.
+Putting a number where the letter was is called substitution ([Letters for numbers](01-letters-for-numbers.md)). It is the habit worth keeping: a dropped minus sign shows up in seconds.
 
 A 45-dollar fare goes the same way: 45 − 3 = 42, halve, 21 miles. Check: 3 + 2 × 21 = 45.
 
@@ -132,9 +110,9 @@ One thing behaves differently. Multiplying or dividing an inequality by a negati
 
 Trace the change in your pocket. Out of 15 dollars you keep 15 − (3 + 2m), which is 12 − 2m. Keeping anything means 12 − 2m > 0. Take 12 off both sides: −2m > −12. Divide by −2 and flip: m < 6. The same answer, from the other direction.
 
-Why it flips: 4 is bigger than 3, but −4 is smaller than −3. A negative multiply reflects both numbers across zero on the number line ([number-line-and-inequalities](../../01-Foundations/02-The%20Number%20Line/02-number-line-and-inequalities.md)), so whichever was ahead is now behind. Adding and subtracting flip nothing.
+Why it flips: 4 is bigger than 3, but −4 is smaller than −3. A negative multiply reflects both numbers across zero on the number line ([The number line and inequalities](../../01-Foundations/02-The%20Number%20Line/02-number-line-and-inequalities.md)), so whichever was ahead is now behind. Adding and subtracting flip nothing.
 
-Another route to the same 6: rearrange the recipe itself into m = (fare − 3) ÷ 2 — [rearranging-formulas](03-rearranging-formulas.md). When two unknowns turn up at once, one equation cannot pin both down; [two-equations-two-unknowns](04-two-equations-two-unknowns.md) handles that.
+Another route to the same 6: rearrange the recipe itself into m = (fare − 3) ÷ 2 — [Rearranging a formula](03-rearranging-formulas.md). When two unknowns turn up at once, one equation cannot pin both down; [Two equations, two unknowns](04-two-equations-two-unknowns.md) handles that.
 
 ---
 
@@ -367,14 +345,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [letters-for-numbers](01-letters-for-numbers.md): why 3 + 2m is a recipe for the fare, and what substituting into it means.
-- [number-line-and-inequalities](../../01-Foundations/02-The%20Number%20Line/02-number-line-and-inequalities.md): less-than and greater-than, and why crossing zero reverses which is bigger.
-- [fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): dividing both sides, and reading (c − b) ÷ a as a fraction.
+- [Letters for numbers](01-letters-for-numbers.md): why 3 + 2m is a recipe for the fare, and what substituting into it means.
+- [The number line and inequalities](../../01-Foundations/02-The%20Number%20Line/02-number-line-and-inequalities.md): less-than and greater-than, and why crossing zero reverses which is bigger.
+- [Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): dividing both sides, and reading (c − b) ÷ a as a fraction.
 
 ## Where this goes next
 
-- [rearranging-formulas](03-rearranging-formulas.md): solve the fare recipe once for m and every fare is answered in one line.
-- [two-equations-two-unknowns](04-two-equations-two-unknowns.md): what to do when two numbers are unknown at once.
+- [Rearranging a formula](03-rearranging-formulas.md): solve the fare recipe once for m and every fare is answered in one line.
+- [Two equations, two unknowns](04-two-equations-two-unknowns.md): what to do when two numbers are unknown at once.
 
 ---
 

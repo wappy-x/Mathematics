@@ -1,24 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Contour Integrals and Cauchy's Theorem
-topic: Loops with nothing missing inside
-item: Cauchy's theorem
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/02-antiderivatives-and-path-independence|antiderivatives-and-path-independence]]"
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/06-greens-theorem|greens-theorem]]"
-next:
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/04-deforming-contours-and-winding-numbers|deforming-contours-and-winding-numbers]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/06-strips-of-convergence-and-shifting-the-line|strips-of-convergence-and-shifting-the-line]]"
-tags: [mathematics, complex analysis, cauchys-theorem]
----
-
 # Cauchy's theorem: a holomorphic function integrates to zero round any loop with no hole inside
 
-Complex analysis → Contour Integrals and Cauchy's Theorem → Loops with nothing missing inside → Cauchy's theorem
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Contour Integrals and Cauchy's Theorem](../../../SYLLABUS.md#w07-s03) → Cauchy's theorem
 
 ---
 
@@ -26,7 +8,7 @@ Complex analysis → Contour Integrals and Cauchy's Theorem → Loops with nothi
 
 A regatta is sailed anticlockwise round three buoys, in kilometres east and north of the start: 0, then 2, then 1 + i, then home. The course is a triangle of area 1 square kilometre.
 
-Multiply a function's value by each small step of the boat and add: that sum is the contour integral ([contour-integrals](01-contour-integrals.md)). For z^2 the three legs give 2.666667, −3.333333 + 0.666667i and 0.666667 − 0.666667i. They add to 0. For e^z the legs differ and the total is 0 again.
+Multiply a function's value by each small step of the boat and add: that sum is the contour integral ([Contour integrals](01-contour-integrals.md)). For z^2 the three legs give 2.666667, −3.333333 + 0.666667i and 0.666667 − 0.666667i. They add to 0. For e^z the legs differ and the total is 0 again.
 
 Now take 1/z, which has no value at 0, the start buoy. Move the course one kilometre east and the total is 0. Triple it, with corners −2 − i, 4 − i, 1 + 2i, and the total is 2πi, about 6.283185i. Both boats pass only points where 1/z is defined; what changed is the water inside, which now holds 0.
 
@@ -44,7 +26,7 @@ To scale: 50 units per kilometre, 0 at (140, 150). Shaded course: (140, 150), (2
 
 ## The formula
 
-Reminder: $\oint_\gamma f(z)\,dz$ is the contour integral once anticlockwise round the loop γ; holomorphic means having a complex derivative at every point ([complex-derivative-and-cauchy-riemann](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md)). A region is **simply connected** when it is open (each point has a small disc round it inside the region), joined up, and every loop shrinks to a point without leaving it: it has no holes. A disc qualifies; the plane without 0 does not.
+Reminder: $\oint_\gamma f(z)\,dz$ is the contour integral once anticlockwise round the loop γ; holomorphic means having a complex derivative at every point ([The complex derivative](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md)). A region is **simply connected** when it is open (each point has a small disc round it inside the region), joined up, and every loop shrinks to a point without leaving it: it has no holes. A disc qualifies; the plane without 0 does not.
 
 $$\oint_\gamma f(z)\,dz = 0$$
 
@@ -86,7 +68,7 @@ $$F(z) = \int_{z_0}^{z} f(w)\,dw, \qquad F'(z) = f(z)$$
 
 ### Step 0: two line integrals become two vanishing area integrals
 
-A complex loop integral is two real line integrals. Green's theorem turns each into an area integral ([greens-theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md)), and the Cauchy-Riemann equations make both integrands zero.
+A complex loop integral is two real line integrals. Green's theorem turns each into an area integral ([Green's theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md)), and the Cauchy-Riemann equations make both integrands zero.
 
 ### Step 1: split into real and imaginary parts
 
@@ -129,18 +111,18 @@ They share a point z* in T, where $f(z) = f(z^*) + f'(z^*)(z - z^*) + \psi(z)(z 
 
 ### Step 5: from triangles to every loop
 
-A closed polygon that does not cross itself, in a simply connected region, cuts into triangles whose inner edges cancel; smooth loops are limits of polygons. The proof for every loop is on [deforming-contours-and-winding-numbers](04-deforming-contours-and-winding-numbers.md).
+A closed polygon that does not cross itself, in a simply connected region, cuts into triangles whose inner edges cancel; smooth loops are limits of polygons. The proof for every loop is on [Deforming a loop](04-deforming-contours-and-winding-numbers.md).
 
 ### Step 6: an antiderivative on every region with no holes
 
-Let F(z) be the integral from a base point $z_0$ to z along any path in the region. Two paths to z, one reversed, make a loop, so they agree. F(z + h) − F(z) is the integral along a short segment, h f(z) plus something smaller than h, so F' = f, as in [antiderivatives-and-path-independence](02-antiderivatives-and-path-independence.md).
+Let F(z) be the integral from a base point $z_0$ to z along any path in the region. Two paths to z, one reversed, make a loop, so they agree. F(z + h) − F(z) is the integral along a short segment, h f(z) plus something smaller than h, so F' = f, as in [Antiderivatives](02-antiderivatives-and-path-independence.md).
 
 On the course, e^z from 0 to 1 + i gives 0.468694 + 2.287355i straight and via buoy 2: e^(1+i) − 1.
 
 <details>
 <summary>A holomorphic logarithm for a function that is never zero</summary>
 
-If f is holomorphic and never 0 on a simply connected region, f'/f is holomorphic, so it has an antiderivative L, shifted so that $e^{L(z_0)} = f(z_0)$. The derivative of $f e^{-L}$ is $f' e^{-L} - f L' e^{-L} = 0$, so $f e^{-L}$ stays 1 and $f = e^{L}$. For f(z) = z on the plane cut along a ray from 0, this is a branch of [complex-logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md); with only 0 removed it fails, since 1/z round the tripled course gives 2πi.
+If f is holomorphic and never 0 on a simply connected region, f'/f is holomorphic, so it has an antiderivative L, shifted so that $e^{L(z_0)} = f(z_0)$. The derivative of $f e^{-L}$ is $f' e^{-L} - f L' e^{-L} = 0$, so $f e^{-L}$ stays 1 and $f = e^{L}$. For f(z) = z on the plane cut along a ray from 0, this is a branch of [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md); with only 0 removed it fails, since 1/z round the tripled course gives 2πi.
 
 </details>
 
@@ -390,9 +372,9 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Evaluating real integrals.** Contour methods close a real line into a loop; pieces enclosing no singularity give 0, and the rest is counted by [the-residue-theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md).
+- **Evaluating real integrals.** Contour methods close a real line into a loop; pieces enclosing no singularity give 0, and the rest is counted by [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md).
 - **Two-dimensional flow.** In steady ideal flow the conjugate velocity is holomorphic away from sources and vortices; its loop integral is circulation plus i times net outflow, so both vanish round a loop enclosing neither.
-- **Inverse transforms.** Sliding an inverse transform's vertical line across a strip with no singularities leaves it unchanged: this theorem on the rectangle between the lines ([strips-of-convergence-and-shifting-the-line](../08-Transforms%20in%20Outline/06-strips-of-convergence-and-shifting-the-line.md)).
+- **Inverse transforms.** Sliding an inverse transform's vertical line across a strip with no singularities leaves it unchanged: this theorem on the rectangle between the lines ([Where a transform lives](../08-Transforms%20in%20Outline/06-strips-of-convergence-and-shifting-the-line.md)).
 
 > **Say it back**
 > A complex loop integral is two real line integrals. Green turns them into area integrals, and Cauchy-Riemann makes both integrands zero. Goursat gets the same zero without a continuous derivative. So in a region with no holes, a holomorphic function integrates to 0 round every loop and has an antiderivative. A hole, like 0 for 1/z, can leave 2πi.
@@ -401,16 +383,16 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [antiderivatives-and-path-independence](02-antiderivatives-and-path-independence.md): zero loop integrals and path independence are the same fact.
-- [greens-theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md): turning a loop integral into an area integral.
-- [complex-derivative-and-cauchy-riemann](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md): the equations that make the area integrands vanish.
-- [contour-integrals](01-contour-integrals.md): the integral along a parametrised path.
+- [Antiderivatives](02-antiderivatives-and-path-independence.md): zero loop integrals and path independence are the same fact.
+- [Green's theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md): turning a loop integral into an area integral.
+- [The complex derivative](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md): the equations that make the area integrands vanish.
+- [Contour integrals](01-contour-integrals.md): the integral along a parametrised path.
 
 ## Where this goes next
 
-- [deforming-contours-and-winding-numbers](04-deforming-contours-and-winding-numbers.md): sliding loops, and counting turns round a hole.
-- [strips-of-convergence-and-shifting-the-line](../08-Transforms%20in%20Outline/06-strips-of-convergence-and-shifting-the-line.md): moving a transform's line of integration.
-- [cauchys-integral-formula](05-cauchys-integral-formula.md): a loop round one hole recovers the function's value there.
+- [Deforming a loop](04-deforming-contours-and-winding-numbers.md): sliding loops, and counting turns round a hole.
+- [Where a transform lives](../08-Transforms%20in%20Outline/06-strips-of-convergence-and-shifting-the-line.md): moving a transform's line of integration.
+- [Cauchy's integral formula](05-cauchys-integral-formula.md): a loop round one hole recovers the function's value there.
 
 ---
 

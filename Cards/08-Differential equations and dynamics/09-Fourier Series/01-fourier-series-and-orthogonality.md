@@ -1,35 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Fourier Series
-topic: Harmonics by projection
-item: Fourier series
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/09-sturm-liouville-and-orthogonality|sturm-liouville-and-orthogonality]]"
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/03-trig-identities|trig-identities]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/02-orthogonal-projection|orthogonal-projection]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/01-fourier-series-in-complex-form|fourier-series-in-complex-form]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/09-Fourier Series/02-convergence-jumps-and-gibbs|convergence-jumps-and-gibbs]]"
-  - "[[Cards/08-Differential equations and dynamics/09-Fourier Series/04-half-range-sine-and-cosine-series|half-range-sine-and-cosine-series]]"
-  - "[[Cards/13-Engineering mathematics/05-Signals/01-sampling-and-the-nyquist-theorem|sampling-and-the-nyquist-theorem]]"
-  - "[[Cards/13-Engineering mathematics/05-Signals/08-wavelets-and-multiresolution|wavelets-and-multiresolution]]"
-  - "[[Cards/16-Numerical analysis/07-PDE Solvers/03-von-neumann-analysis-and-the-cfl-condition|von-neumann-analysis-and-the-cfl-condition]]"
-  - "[[Cards/18-Functional analysis/02-Hilbert Spaces/03-orthonormal-bases-and-parseval|orthonormal-bases-and-parseval]]"
-  - "[[Cards/18-Functional analysis/02-Hilbert Spaces/04-completeness-of-the-trigonometric-system|completeness-of-the-trigonometric-system]]"
-  - "[[Cards/20-Harmonic analysis/01-Fourier Series in Depth/01-fourier-coefficients-and-orthogonality|fourier-coefficients-and-orthogonality]]"
-tags:
-  - mathematics
-  - differential equations and dynamics
-  - fourier-series-and-orthogonality
----
-
 # Fourier series: any repeating signal is a sum of sines and cosines, and orthogonality hands you each coefficient
 
-Differential equations and dynamics → Fourier Series → Harmonics by projection → Fourier series
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Fourier Series](../../../SYLLABUS.md#w08-s09) → Fourier series
 
 ---
 
@@ -43,7 +14,7 @@ The trick is geometry's. Along perpendicular axes, a point's position on one axi
 
 **A signal that repeats is a sum of sines and cosines at whole multiples of its frequency, and because those waves are orthogonal over one cycle, each amount is a single integral of the signal against that one wave.**
 
-**What kind of fact this is:** a theorem. Orthogonality and the coefficient formulas are proved in Why it works; that the full sum returns the signal is proved in [convergence-jumps-and-gibbs](02-convergence-jumps-and-gibbs.md).
+**What kind of fact this is:** a theorem. Orthogonality and the coefficient formulas are proved in Why it works; that the full sum returns the signal is proved in [Convergence](02-convergence-jumps-and-gibbs.md).
 
 ### The picture: one harmonic, then three
 
@@ -97,7 +68,7 @@ The half in $a_0/2$ lets one formula serve every $a_n$, including n = 0.
 - **The signal repeats every 2π in phase.** Any period rescales to 2π, as 4.55 ms does here.
 - **Whole-number frequencies over a full cycle.** Step 1 needs sin(kπ) = 0, true only for whole k. Sines at 1 and 1.5 repeats per cycle give 1.600, not 0, so the amounts leak into each other.
 - **Finite area under the signal's absolute value over a cycle.** Otherwise the integrals need not exist. Any wave with finitely many jumps passes.
-- **The equals sign.** For a signal smooth between finitely many jumps, the sum returns the signal where it is smooth and the midpoint of each jump, 0 here; proved in [convergence-jumps-and-gibbs](02-convergence-jumps-and-gibbs.md).
+- **The equals sign.** For a signal smooth between finitely many jumps, the sum returns the signal where it is smooth and the midpoint of each jump, 0 here; proved in [Convergence](02-convergence-jumps-and-gibbs.md).
 
 ---
 
@@ -105,7 +76,7 @@ The half in $a_0/2$ lets one formula serve every $a_n$, including n = 0.
 
 ### Step 0: an integral over one cycle is a dot product
 
-Sample two signals at many phases, multiply entry by entry, add, and scale by the spacing: a dot product, and in the limit the integral of their product. In [orthogonal-projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md), a vector's component along one of several perpendicular axes is its dot product with that axis over the axis's length squared. The steps below prove the harmonics orthogonal, each with length squared π.
+Sample two signals at many phases, multiply entry by entry, add, and scale by the spacing: a dot product, and in the limit the integral of their product. In [Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md), a vector's component along one of several perpendicular axes is its dot product with that axis over the axis's length squared. The steps below prove the harmonics orthogonal, each with length squared π.
 
 ### Step 1: a whole-number cosine cancels over a cycle
 
@@ -113,7 +84,7 @@ For whole $k$ not 0, the integral of cos kx from −π to π is sin(kπ)/k − s
 
 ### Step 2: a product of two harmonics is two harmonics
 
-The product-to-sum identities of [trig-identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md) turn each product into a sum:
+The product-to-sum identities of [Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md) turn each product into a sum:
 
 $$\sin mx \sin nx = \tfrac12[\cos (m-n)x - \cos (m+n)x]$$
 
@@ -138,11 +109,11 @@ since cos nπ is −1 for odd n and +1 for even n. The square wave is (4/π)(sin
 <details>
 <summary>Detailed proof: why the coefficients are right even where the sum is shaky</summary>
 
-Step 3 swapped an infinite sum with an integral, safe when the largest gap between signal and sum shrinks to 0 (uniform convergence). At a jump it does not. Instead, fix N and ask which amounts $c_1, \ldots, c_N$ make the sum of $c_n \sin nx$ closest to f in mean square: the integral over a cycle of (f minus the sum) squared. By Step 2 the cross terms vanish, so the miss is the integral of f squared plus, for each n, π c_n^2 − 2 c_n times the integral of f sin nx. Each piece is a parabola in c_n, lowest at that integral over π, which is $b_n$. So the Fourier amounts are the best fit at every N. The code's search for N = 1 lands on 1.273240, which is 4/π. That the miss falls to 0 as N grows is completeness, proved in completeness-of-the-trigonometric-system.
+Step 3 swapped an infinite sum with an integral, safe when the largest gap between signal and sum shrinks to 0 (uniform convergence). At a jump it does not. Instead, fix N and ask which amounts $c_1, \ldots, c_N$ make the sum of $c_n \sin nx$ closest to f in mean square: the integral over a cycle of (f minus the sum) squared. By Step 2 the cross terms vanish, so the miss is the integral of f squared plus, for each n, π c_n^2 − 2 c_n times the integral of f sin nx. Each piece is a parabola in c_n, lowest at that integral over π, which is $b_n$. So the Fourier amounts are the best fit at every N. The code's search for N = 1 lands on 1.273240, which is 4/π. That the miss falls to 0 as N grows is completeness, proved in Completeness of sines and cosines.
 
 </details>
 
-Written through e^(inx), both formulas fold into one: [fourier-series-in-complex-form](../../07-Complex%20analysis/08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md), used on this shelf by [complex-fourier-series-and-the-transform-in-outline](05-complex-fourier-series-and-the-transform-in-outline.md). The orthogonality is one case of [sturm-liouville-and-orthogonality](../07-Series%20Solutions%20and%20Boundary%20Problems/09-sturm-liouville-and-orthogonality.md).
+Written through e^(inx), both formulas fold into one: [Fourier series](../../07-Complex%20analysis/08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md), used on this shelf by [The complex form](05-complex-fourier-series-and-the-transform-in-outline.md). The orthogonality is one case of [Sturm-Liouville](../07-Series%20Solutions%20and%20Boundary%20Problems/09-sturm-liouville-and-orthogonality.md).
 
 ---
 
@@ -364,7 +335,7 @@ The two outputs are identical line for line.
 
 > [!TIP]
 > **Try changing**
-> - **Guess first: do 8 slices still give orthogonality?** Set `M = 8`. Yes, π and 0. But the fifth amount reads 0.541196, not 0.254648: eight samples cannot tell the fifth harmonic from the third. That is aliasing: sampling-and-the-nyquist-theorem. The second assert fails.
+> - **Guess first: do 8 slices still give orthogonality?** Set `M = 8`. Yes, π and 0. But the fifth amount reads 0.541196, not 0.254648: eight samples cannot tell the fifth harmonic from the third. That is aliasing: Sampling. The second assert fails.
 > - **Guess first: what does a 0-to-1 volt gate change?** Return `0.0` instead of `-1.0` in `f`. The amounts halve to 0.636620, 0.212207 and 0.127324, and $a_0$ becomes 1.000000. The second assert fails.
 > - **Guess first: where does a search over sin 3x land?** Change both `math.sin(x)` in the search loop to `math.sin(3 * x)`. It lands on 0.424413, the third amount. The third assert fails.
 
@@ -384,8 +355,8 @@ The two outputs are identical line for line.
 
 - **Synthesisers.** Subtractive synthesis filters upper harmonics off a square wave; cutting above 1100 Hz leaves the chart's third line.
 - **Driven oscillators.** A spring pushed by a square-wave force answers each harmonic separately, because its equation is linear and responses add. A spring tuned near 660 Hz rings at the third harmonic, though that harmonic is only 0.424 of the push's height.
-- **Heat in a bar.** Fourier built the series in 1822 for heat flow: each sine term cools at its own rate. The sine-only version for a bar: [half-range-sine-and-cosine-series](04-half-range-sine-and-cosine-series.md).
-- **Power electronics.** A cheap inverter's square-ish 50 Hz wave carries 150 Hz at one third strength. [parsevals-identity](03-parsevals-identity.md) totals such energy.
+- **Heat in a bar.** Fourier built the series in 1822 for heat flow: each sine term cools at its own rate. The sine-only version for a bar: [Half-range series](04-half-range-sine-and-cosine-series.md).
+- **Power electronics.** A cheap inverter's square-ish 50 Hz wave carries 150 Hz at one third strength. [Parseval's identity](03-parsevals-identity.md) totals such energy.
 
 > **Say it back**
 > A repeating signal is a sum of sines and cosines repeating a whole number of times per cycle. Two different such waves multiplied together cancel over a cycle; one times itself leaves π. So integrating the signal against one wave leaves its amount times π. For the square wave the cosines vanish and the sines have amounts 4/(nπ) at odd n: 1.273, 0.424, 0.255. Those amounts are also the best fit at every length of sum.
@@ -394,21 +365,21 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [sturm-liouville-and-orthogonality](../07-Series%20Solutions%20and%20Boundary%20Problems/09-sturm-liouville-and-orthogonality.md): orthogonal eigenfunctions in general.
-- [trig-identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md): product-to-sum, for Step 2.
-- [orthogonal-projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md): the amount as a projection.
-- [fourier-series-in-complex-form](../../07-Complex%20analysis/08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): the same series with e^(inx).
+- [Sturm-Liouville](../07-Series%20Solutions%20and%20Boundary%20Problems/09-sturm-liouville-and-orthogonality.md): orthogonal eigenfunctions in general.
+- [Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md): product-to-sum, for Step 2.
+- [Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md): the amount as a projection.
+- [Fourier series](../../07-Complex%20analysis/08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): the same series with e^(inx).
 
 ## Where this goes next
 
-- [convergence-jumps-and-gibbs](02-convergence-jumps-and-gibbs.md): when the sum returns the signal, and the overshoot at a jump.
-- [half-range-sine-and-cosine-series](04-half-range-sine-and-cosine-series.md): a wave on half a cycle, as sines only or cosines only.
-- sampling-and-the-nyquist-theorem: why sampling faster than twice the top harmonic's frequency captures a signal.
-- wavelets-and-multiresolution: waves confined in time, where sines run for ever.
-- von-neumann-analysis-and-the-cfl-condition: a numerical scheme tested one Fourier mode at a time.
-- orthonormal-bases-and-parseval: orthogonality in any space with a dot product.
-- completeness-of-the-trigonometric-system: why no repeating signal lies outside all harmonics.
-- fourier-coefficients-and-orthogonality: the same amounts, proofs at full strength.
+- [Convergence](02-convergence-jumps-and-gibbs.md): when the sum returns the signal, and the overshoot at a jump.
+- [Half-range series](04-half-range-sine-and-cosine-series.md): a wave on half a cycle, as sines only or cosines only.
+- Sampling: why sampling faster than twice the top harmonic's frequency captures a signal.
+- Wavelets: waves confined in time, where sines run for ever.
+- Von Neumann analysis: a numerical scheme tested one Fourier mode at a time.
+- Orthonormal bases: orthogonality in any space with a dot product.
+- Completeness of sines and cosines: why no repeating signal lies outside all harmonics.
+- Fourier coefficients: the same amounts, proofs at full strength.
 
 ---
 

@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Caps, Floors and Swaptions
-topic: Options on swaps
-item: Swaptions
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/02-caps-floors-and-parity|caps-floors-and-parity]]"
-  - "[[Cards/12-Financial mathematics/28-Swaps/02-par-swap-rate-and-annuity|par-swap-rate-and-annuity]]"
-next:
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/05-the-annuity-measure|the-annuity-measure]]"
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/06-normal-and-shifted-volatilities-for-rates|normal-and-shifted-volatilities-for-rates]]"
-  - "[[Cards/12-Financial mathematics/32-Convexity and Exotics/02-cms-and-the-convexity-adjustment|cms-and-the-convexity-adjustment]]"
-tags: [mathematics, financial mathematics, swaptions-payer-and-receiver]
----
-
 # Swaptions: the right to enter a swap, priced with Black on the forward swap rate
 
-Financial mathematics → Caps, Floors and Swaptions → Options on swaps → Swaptions
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Caps, Floors and Swaptions](../../../SYLLABUS.md#w12-s29) → Swaptions
 
 ---
 
@@ -57,13 +38,13 @@ Rising line: the payer, which pays when the swap rate ends above 4.30 percent. F
 
 ## The formula
 
-Notation first, in words. The underlying swap starts at $T_0$, the option's expiry, and pays fixed on dates $T_1$ to $T_n$; a small letter set low, like the $i$ in $T_i$, names which date. $D(t)$ is the discount factor: today's price of one dollar paid at time $t$. The Greek capital sigma, $\sum$, means "add up the terms for $i = 1$ to $n$". $N(x)$ is the area under the standard bell curve to the left of $x$ (see [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
+Notation first, in words. The underlying swap starts at $T_0$, the option's expiry, and pays fixed on dates $T_1$ to $T_n$; a small letter set low, like the $i$ in $T_i$, names which date. $D(t)$ is the discount factor: today's price of one dollar paid at time $t$. The Greek capital sigma, $\sum$, means "add up the terms for $i = 1$ to $n$". $N(x)$ is the area under the standard bell curve to the left of $x$ (see [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
 
 $$V_{\text{pay}} = L\,A\,\big[F\,N(d_1) - K\,N(d_2)\big], \qquad V_{\text{rec}} = L\,A\,\big[K\,N(-d_2) - F\,N(-d_1)\big]$$
 
 **Read it aloud:** the money value of one unit of rate on this swap, times the rate that might be received minus the rate that might be paid, each weighted by its own chance of exercise.
 
-The two ingredients come from the curve, exactly as on [par-swap-rate-and-annuity](../28-Swaps/02-par-swap-rate-and-annuity.md), only for a swap that starts later:
+The two ingredients come from the curve, exactly as on [The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md), only for a swap that starts later:
 
 $$A = \sum_{i=1}^{n} \alpha_i\, D(T_i), \qquad F = \frac{D(T_0) - D(T_n)}{A}$$
 
@@ -92,14 +73,14 @@ $$V_{\text{pay}} - V_{\text{rec}} = L\,A\,(F - K)$$
 | $N(x)$ | the bell-curve area left of $x$: a probability between 0 and 1 | N(d1) = 0.526538, N(d2) = 0.407713 | — |
 | $d_1$, $d_2$ | the rate-side and strike-side cut-offs, in standard deviations | 0.066569 and −0.233431 | — |
 
-**Conventions verified 28 Sep 2026.** Every accrual here is set by hand to exactly one year and the fixed leg pays annually, so the arithmetic stays visible. Real contracts compute each $\alpha_i$ from calendar dates under a day-count rule named in the contract ([day-counts-and-dates](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md)), and state whether exercise delivers the swap itself (physical settlement, assumed here) or a cash sum computed from a formula annuity (cash settlement). Premiums are quoted three ways: upfront as a percentage of notional (1.91 percent here), as basis points a year of annuity (45.50 here), or as a volatility.
+**Conventions verified 28 Sep 2026.** Every accrual here is set by hand to exactly one year and the fixed leg pays annually, so the arithmetic stays visible. Real contracts compute each $\alpha_i$ from calendar dates under a day-count rule named in the contract ([Day counts](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md)), and state whether exercise delivers the swap itself (physical settlement, assumed here) or a cash sum computed from a formula annuity (cash settlement). Premiums are quoted three ways: upfront as a percentage of notional (1.91 percent here), as basis points a year of annuity (45.50 here), or as a volatility.
 
 ### When it holds
 
-- **The swap rate spreads lognormally with one volatility.** Markets quote a different $\sigma$ at each strike, the smile ([sabr-for-rates-and-the-volatility-cube](07-sabr-for-rates-and-the-volatility-cube.md)). Using the wrong one is off by roughly vega times the error: 7,018.63 dollars per volatility point here.
-- **Rates stay positive.** A lognormal rate can never touch zero, and the formula cannot even be evaluated at a negative forward. Since the 2010s desks quote in normal or shifted volatility instead ([normal-and-shifted-volatilities-for-rates](06-normal-and-shifted-volatilities-for-rates.md)).
+- **The swap rate spreads lognormally with one volatility.** Markets quote a different $\sigma$ at each strike, the smile ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)). Using the wrong one is off by roughly vega times the error: 7,018.63 dollars per volatility point here.
+- **Rates stay positive.** A lognormal rate can never touch zero, and the formula cannot even be evaluated at a negative forward. Since the 2010s desks quote in normal or shifted volatility instead ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)).
 - **One exercise date.** This is a European swaption. A Bermudan swaption, exercisable on several dates, has no closed formula.
-- **One curve, no default.** The shortcut $F = (D(T_0) - D(T_n))/A$ needs the same curve to forecast and discount, and both parties to pay; otherwise the floating leg is summed coupon by coupon on its own curve ([basis-swaps-and-the-multi-curve-framework](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md)).
+- **One curve, no default.** The shortcut $F = (D(T_0) - D(T_n))/A$ needs the same curve to forecast and discount, and both parties to pay; otherwise the floating leg is summed coupon by coupon on its own curve ([Multi-curve](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md)).
 - **Physical settlement.** A cash-settled swaption pays a formula annuity in place of $A_T$, so the random ratio does not cancel: the formula is then an approximation, and payer minus receiver need not equal the forward swap.
 - **Parity needs none of the rest.** It is a statement about payoffs, true for any volatility and any smile.
 
@@ -119,7 +100,7 @@ The holder exercises only when that is positive. So the payer pays $L\,A_T \max(
 
 ### Step 2: price in annuity units, and the random annuity cancels
 
-Any payoff can be priced today by the rule of [state-prices-and-risk-neutral-pricing-in-one-period](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): add up each outcome's payoff times the price today of a dollar in that outcome. Regroup that sum. Divide every payoff by the annuity it will face, and multiply every state price by the same annuity. Nothing has changed, but the new weights are positive and add to exactly one, so they are probabilities. They are called the **annuity measure**. In words, the rule becomes:
+Any payoff can be priced today by the rule of [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): add up each outcome's payoff times the price today of a dollar in that outcome. Regroup that sum. Divide every payoff by the annuity it will face, and multiply every state price by the same annuity. Nothing has changed, but the new weights are positive and add to exactly one, so they are probabilities. They are called the **annuity measure**. In words, the rule becomes:
 
 > **today's value = today's annuity × the average, under the annuity measure, of (payoff ÷ annuity on the expiry date).**
 
@@ -155,11 +136,11 @@ The simulation in the code shows both chances. Of 200,000 simulated swap rates, 
 
 ### Step 5: payer minus receiver is the forward swap, in any model
 
-For any number $x$, $\max(x - K, 0) - \max(K - x, 0) = x - K$. So holding the payer and having sold the receiver delivers $L\,A_T(S_T - K)$ on the expiry date whatever happens: exactly the forward swap paying $K$. Equal payoffs in every outcome force equal prices, or buying the cheap one and selling the dear one makes money for nothing. So $V_{\text{pay}} - V_{\text{rec}} = L\,A\,(F - K)$. No $\sigma$ appears, and no lognormal assumption was used. This is [caps-floors-and-parity](02-caps-floors-and-parity.md) for a swap instead of a strip of caplets.
+For any number $x$, $\max(x - K, 0) - \max(K - x, 0) = x - K$. So holding the payer and having sold the receiver delivers $L\,A_T(S_T - K)$ on the expiry date whatever happens: exactly the forward swap paying $K$. Equal payoffs in every outcome force equal prices, or buying the cheap one and selling the dear one makes money for nothing. So $V_{\text{pay}} - V_{\text{rec}} = L\,A\,(F - K)$. No $\sigma$ appears, and no lognormal assumption was used. This is [Caps and floors](02-caps-floors-and-parity.md) for a swap instead of a strip of caplets.
 
 Here $F$ is 10.63 basis points below the strike, so the forward swap is worth −44,688.80 dollars to the fixed payer: the receiver's extra cost. Struck at $F$ itself, payer and receiver cost the same: 210,237.41 dollars each.
 
-A second route reaches the same formula through the hedge: hold the payer, enter an opposite forward swap sized so small rate moves cancel, and demand the pair earn nothing extra. That route and its daily arithmetic are on [swaption-greeks-and-hedging](08-swaption-greeks-and-hedging.md); the measure behind Step 2 gets its full treatment on [the-annuity-measure](05-the-annuity-measure.md).
+A second route reaches the same formula through the hedge: hold the payer, enter an opposite forward swap sized so small rate moves cancel, and demand the pair earn nothing extra. That route and its daily arithmetic are on [Swaption Greeks](08-swaption-greeks-and-hedging.md); the measure behind Step 2 gets its full treatment on [The annuity measure](05-the-annuity-measure.md).
 
 ---
 
@@ -635,8 +616,8 @@ Falling line: the payer, cheaper as the fixed rate it must pay goes up. Rising l
 - **Borrowers hedging future debt.** A company with a bond to refinance buys a payer swaption: a ceiling on its future fixed rate, paid for up front.
 - **Callable bonds and mortgages.** An issuer who may repay a fixed-rate bond early holds, in effect, a receiver swaption: when rates fall it refinances cheaper. Investors in such bonds and in mortgage pools are short that option.
 - **Pension funds and insurers.** Long promises to pay make them lose when rates fall, so they buy receiver swaptions to protect the rate they can lock in.
-- **The volatility market.** Swaptions are the most traded volatility instrument in rates. Their quoted volatilities, by expiry, swap length and strike, form the grid every rate model is fitted to ([sabr-for-rates-and-the-volatility-cube](07-sabr-for-rates-and-the-volatility-cube.md)).
-- **Caps versus swaptions.** A cap is a strip of options on single forward rates ([caplets-and-floorlets](01-caplets-and-floorlets.md)); a swaption is one option on their weighted average. An option on an average is worth no more than the matching strip of options on its parts, and the gap measures how far the forward rates fail to move together.
+- **The volatility market.** Swaptions are the most traded volatility instrument in rates. Their quoted volatilities, by expiry, swap length and strike, form the grid every rate model is fitted to ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)).
+- **Caps versus swaptions.** A cap is a strip of options on single forward rates ([Caplets and floorlets](01-caplets-and-floorlets.md)); a swaption is one option on their weighted average. An option on an average is worth no more than the matching strip of options on its parts, and the gap measures how far the forward rates fail to move together.
 
 > **Say it back**
 > A swaption is the right to enter a swap on one future date at a fixed rate agreed now: a payer to pay fixed, a receiver to receive it. Exercise delivers a swap worth the annuity on that date times the rate gap. Counting money in annuities cancels that random annuity and leaves the forward swap rate with no drift. Assume it spreads lognormally and Black's formula prices the option, multiplied by today's annuity. Payer minus receiver is the forward swap, in any model.
@@ -645,14 +626,14 @@ Falling line: the payer, cheaper as the fixed rate it must pay goes up. Rising l
 
 ## What this builds on
 
-- [caps-floors-and-parity](02-caps-floors-and-parity.md): Black's formula applied to rates, and the parity argument that option minus mirror option is the underlying swap.
-- [par-swap-rate-and-annuity](../28-Swaps/02-par-swap-rate-and-annuity.md): the par rate as a ratio of floating leg to annuity, and the annuity as the exchange rate between a rate gap and money; this card applies both to a swap that starts later.
+- [Caps and floors](02-caps-floors-and-parity.md): Black's formula applied to rates, and the parity argument that option minus mirror option is the underlying swap.
+- [The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md): the par rate as a ratio of floating leg to annuity, and the annuity as the exchange rate between a rate gap and money; this card applies both to a swap that starts later.
 
 ## Where this goes next
 
-- [the-annuity-measure](05-the-annuity-measure.md): Step 2 in full: why dividing by a traded price makes every other price driftless, and what it changes in the model.
-- [normal-and-shifted-volatilities-for-rates](06-normal-and-shifted-volatilities-for-rates.md): the same swaption priced when rates can be zero or negative, and the conversion between the two volatility quotes.
-- [cms-and-the-convexity-adjustment](../32-Convexity%20and%20Exotics/02-cms-and-the-convexity-adjustment.md): a payment of the swap rate itself on one date, with no annuity attached, priced by a strip of these swaptions.
+- [The annuity measure](05-the-annuity-measure.md): Step 2 in full: why dividing by a traded price makes every other price driftless, and what it changes in the model.
+- [Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md): the same swaption priced when rates can be zero or negative, and the conversion between the two volatility quotes.
+- [Constant-maturity swaps](../32-Convexity%20and%20Exotics/02-cms-and-the-convexity-adjustment.md): a payment of the swap rate itself on one date, with no annuity attached, priced by a strip of these swaptions.
 
 This card used the annuity measure in one step, on a short proof in a world of finitely many outcomes; the-annuity-measure shows why it works for any traded unit in continuous time, and what else it prices.
 

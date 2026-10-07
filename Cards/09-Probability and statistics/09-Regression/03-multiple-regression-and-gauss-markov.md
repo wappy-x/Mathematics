@@ -1,27 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Regression
-topic: Holding the others fixed
-item: Multiple regression
-kind: theorem
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/09-Regression/02-regression-inference|regression-inference]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/04-least-squares|least-squares]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/01-matrix-equation-ax-b|matrix-equation-ax-b]]"
-next:
-  - "[[Cards/09-Probability and statistics/09-Regression/04-diagnostics-and-residuals|diagnostics-and-residuals]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/05-logistic-regression|logistic-regression]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/06-ridge-and-lasso|ridge-and-lasso]]"
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/05-factor-models-and-apt|factor-models-and-apt]]"
-tags: [mathematics, probability-and-statistics, multiple-regression-and-gauss-markov]
----
-
 # Multiple regression: several predictors at once, and why least squares is best among linear unbiased fits
 
-Probability and statistics → Regression → Holding the others fixed → Multiple regression
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Regression](../../../SYLLABUS.md#w09-s09) → Multiple regression
 
 ---
 
@@ -104,11 +83,11 @@ $$\hat\beta_j = \frac{r_j^T y}{r_j^T r_j}, \qquad \operatorname{se}(\hat\beta_j)
 
 ### When it holds
 
-- **The mean is a weighted sum of the columns.** If price bends with area, the coefficients still come out, but they answer a straight-line question the data do not ask; [diagnostics-and-residuals](04-diagnostics-and-residuals.md) shows how to see the bend.
+- **The mean is a weighted sum of the columns.** If price bends with area, the coefficients still come out, but they answer a straight-line question the data do not ask; [Diagnostics](04-diagnostics-and-residuals.md) shows how to see the bend.
 - **No column is a weighted sum of the others.** Add walking minutes at 12 per kilometre beside distance and nothing of the new column is left once the others are removed: $X^T X$ has no inverse and the two coefficients have no single answer.
 - **One common spread, no correlation between errors.** Let the spread grow with distance, 4 thousand dollars per kilometre, and a weighted fit, which counts each sale in proportion to one over its error variance, gives the area coefficient a standard deviation of 0.0907 against least squares' 0.1284. The theorem's conclusion fails.
 - **The columns and the rival's weights are fixed before the prices are seen.** A rule that looks at the prices to choose its weights is outside the comparison.
-- **Normal errors are not needed.** The theorem uses only averages and covariances; the simulation below uses flat, uniform noise. Normality is what the exact t intervals of [regression-inference](02-regression-inference.md) add.
+- **Normal errors are not needed.** The theorem uses only averages and covariances; the simulation below uses flat, uniform noise. Normality is what the exact t intervals of [Regression error bars](02-regression-inference.md) add.
 
 ---
 
@@ -122,11 +101,11 @@ A rival rule that is right on average can differ from least squares only by a pi
 
 ### Step 1: the normal equations
 
-Write the miss as $e = y - X\hat\beta$. The fit makes the sum of squared misses as small as possible. At the minimum no small change of the coefficients helps, which forces the miss to be perpendicular to every column: $X^T e = 0$ ([least-squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md) proves this for a line; the proof never used the number of columns). Expanding gives $X^T X \hat\beta = X^T y$, four equations in four unknowns ([matrix-equation-ax-b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md)). When no column copies the others, $X^T X$ has an inverse, and the solution is $\hat\beta = L y$ with $L = (X^T X)^{-1} X^T$.
+Write the miss as $e = y - X\hat\beta$. The fit makes the sum of squared misses as small as possible. At the minimum no small change of the coefficients helps, which forces the miss to be perpendicular to every column: $X^T e = 0$ ([Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md) proves this for a line; the proof never used the number of columns). Expanding gives $X^T X \hat\beta = X^T y$, four equations in four unknowns ([Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md)). When no column copies the others, $X^T X$ has an inverse, and the solution is $\hat\beta = L y$ with $L = (X^T X)^{-1} X^T$.
 
 Two facts about $L$ carry the rest of the card. First, $L X = (X^T X)^{-1} X^T X = I$. Second, $L L^T = (X^T X)^{-1} X^T X (X^T X)^{-1} = (X^T X)^{-1}$.
 
-The fitted prices are $X\hat\beta = XLy = Hy$, where $H = X(X^T X)^{-1} X^T$ is the **hat matrix**: it puts the hat on the prices. Its diagonal entries are the **leverages**, how far each fitted price follows a change in its own sale's price, which [diagnostics-and-residuals](04-diagnostics-and-residuals.md) reads.
+The fitted prices are $X\hat\beta = XLy = Hy$, where $H = X(X^T X)^{-1} X^T$ is the **hat matrix**: it puts the hat on the prices. Its diagonal entries are the **leverages**, how far each fitted price follows a change in its own sale's price, which [Diagnostics](04-diagnostics-and-residuals.md) reads.
 
 ### Step 2: "holding the others fixed" is a one-column slope on the leftover
 
@@ -146,7 +125,7 @@ For a fixed table of weights $M$, the covariance matrix of $M\varepsilon$ is $M 
 
 Step 2 gives the second helper: $\hat\beta_j$ weights the prices by $r_j / r_j^T r_j$, so its variance is $\sigma^2 / r_j^T r_j$. When the other columns predict area well, little of area is left over, and the area coefficient wobbles.
 
-In practice $\sigma$ is unknown. It is replaced by $s$, from the sum of squared misses divided by $n - p$, not $n$: fitting four coefficients uses up four of the twelve directions the misses could have taken. [regression-inference](02-regression-inference.md) shows why. Over the 20,000 simulated markets below, $s^2$ averages 57.7601 ± 0.1573 against the true $\sigma^2$ = 57.76.
+In practice $\sigma$ is unknown. It is replaced by $s$, from the sum of squared misses divided by $n - p$, not $n$: fitting four coefficients uses up four of the twelve directions the misses could have taken. [Regression error bars](02-regression-inference.md) shows why. Over the 20,000 simulated markets below, $s^2$ averages 57.7601 ± 0.1573 against the true $\sigma^2$ = 57.76.
 
 ### Step 4: every unbiased rival pays extra spread (Gauss–Markov)
 
@@ -201,7 +180,7 @@ $$\text{slope on area alone} = \hat\beta_1 + \hat\beta_{\text{age}} \times \text
 
 Proof: take the area-alone slope of both sides of $y = X\hat\beta + e$. Slope is linear in what it measures; the 1s column has slope 0, area has slope 1, and the miss has slope 0 because it is perpendicular to the 1s and to area. On the numbers, newness pushes the lone slope up and the walk pulls it down by more, landing at 1.768541. The lone slope is not wrong arithmetic. It answers a different question: how price differs between houses of different size, letting age and distance come along as they happen to in this town.
 
-A second road to the fit avoids forming $X^T X$: orthogonalise the columns one by one and back-substitute, the QR route of least-squares-normal-equations-versus-qr. The checks take a close relative of it, Step 2's leftovers, and land on the same coefficients.
+A second road to the fit avoids forming $X^T X$: orthogonalise the columns one by one and back-substitute, the QR route of Least squares two ways. The checks take a close relative of it, Step 2's leftovers, and land on the same coefficients.
 
 ---
 
@@ -646,7 +625,7 @@ The two outputs match line for line, the simulation included, because both draw 
 > **Reading a coefficient as what happens when one thing changes in the world.** The area coefficient compares houses in this data that match on age and distance. It is not the price of building an extension: a bigger house may also have a bigger garden, a quieter street or anything else left out of the table, and each of those rides along with area exactly as distance did on the area-alone line. Correlation, adjusted or not, is not cause.
 >
 > - **Taking the lone slope for the adjusted one.** Area alone gives 1.768541; with age and distance held it is 2.288019. Neither is wrong; they answer different questions.
-> - **"Best" read as best of all.** Gauss–Markov ranks only linear rules that are unbiased for every truth. A rule that accepts a small bias can have a smaller average squared miss: [bias-variance-and-mean-squared-error](../07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md) shows the trade, [ridge-and-lasso](06-ridge-and-lasso.md) applies it here.
+> - **"Best" read as best of all.** Gauss–Markov ranks only linear rules that are unbiased for every truth. A rule that accepts a small bias can have a smaller average squared miss: [Bias and variance](../07-Sampling%20and%20Estimation/06-bias-variance-and-mean-squared-error.md) shows the trade, [Regularisation](06-ridge-and-lasso.md) applies it here.
 > - **Thinking the theorem needs normal errors.** The simulation's flat noise still lands on the formula: 0.119801 against 0.120477.
 
 ---
@@ -656,7 +635,7 @@ The two outputs match line for line, the simulation included, because both draw 
 - **House-price indexes.** Statistics offices regress sale prices on size, age and location to price a standard house over time: this card's fit, many predictors wide.
 - **Pay studies.** A wage gap "holding experience and hours fixed" is a multiple-regression coefficient; Step 5 explains why it differs from the raw gap.
 - **Drug trials.** A patient's starting blood pressure added as a column shrinks the leftover noise and tightens the treatment coefficient's error bar.
-- **Finance.** A share's return regressed on several market factors at once is this card's fit, with the factor loadings as coefficients: [factor-models-and-apt](../../12-Financial%20mathematics/37-Portfolio%20Theory/05-factor-models-and-apt.md).
+- **Finance.** A share's return regressed on several market factors at once is this card's fit, with the factor loadings as coefficients: [Factor models](../../12-Financial%20mathematics/37-Portfolio%20Theory/05-factor-models-and-apt.md).
 
 > **Say it back**
 > Put the predictors in columns, add a column of 1s, and solve the normal equations for all the coefficients at once. Each coefficient is the slope of price on what its column does not share with the others, which is what "holding the others fixed" means in the data. The fit is unbiased and its covariance matrix is the error variance times the inverse of $X^T X$. Any other fixed weighted-sum rule that is right on average differs from least squares by a piece blind to the columns, so it can only add spread: that is Gauss–Markov. The guarantee needs zero-mean errors with one common spread and no correlation, and nothing about normality.
@@ -665,16 +644,16 @@ The two outputs match line for line, the simulation included, because both draw 
 
 ## What this builds on
 
-- [regression-inference](02-regression-inference.md): the standard error of a slope and the $n - 2$ divisor, which becomes $n - p$ here, for four coefficients at once.
-- [least-squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the normal equations and the perpendicular miss.
-- [matrix-equation-ax-b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md): stacking many equations into one matrix equation and solving it.
+- [Regression error bars](02-regression-inference.md): the standard error of a slope and the $n - 2$ divisor, which becomes $n - p$ here, for four coefficients at once.
+- [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the normal equations and the perpendicular miss.
+- [Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md): stacking many equations into one matrix equation and solving it.
 
 ## Where this goes next
 
-- [diagnostics-and-residuals](04-diagnostics-and-residuals.md): checks the assumptions this card needs, reading the misses for bends, unequal spreads and single sales that drag the fit.
-- [logistic-regression](05-logistic-regression.md): the same columns predicting a yes-or-no outcome, where the fit is no longer linear in the data.
-- [ridge-and-lasso](06-ridge-and-lasso.md): step outside the unbiased class on purpose, trading a little bias for less spread.
-- [factor-models-and-apt](../../12-Financial%20mathematics/37-Portfolio%20Theory/05-factor-models-and-apt.md): returns explained by several factors at once.
+- [Diagnostics](04-diagnostics-and-residuals.md): checks the assumptions this card needs, reading the misses for bends, unequal spreads and single sales that drag the fit.
+- [Logistic regression](05-logistic-regression.md): the same columns predicting a yes-or-no outcome, where the fit is no longer linear in the data.
+- [Regularisation](06-ridge-and-lasso.md): step outside the unbiased class on purpose, trading a little bias for less spread.
+- [Factor models](../../12-Financial%20mathematics/37-Portfolio%20Theory/05-factor-models-and-apt.md): returns explained by several factors at once.
 
 Gauss–Markov says least squares is best when its assumptions hold; the open question is how to tell from twelve misses whether they do.
 

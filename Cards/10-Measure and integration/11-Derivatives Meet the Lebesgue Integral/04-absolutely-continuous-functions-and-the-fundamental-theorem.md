@@ -1,28 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Derivatives Meet the Lebesgue Integral
-topic: Recovering a function from its rate
-item: Absolutely continuous functions and the fundamental theorem
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/03-monotone-functions-differentiable-almost-everywhere|monotone-functions-differentiable-almost-everywhere]]"
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/03-radon-nikodym-theorem|radon-nikodym-theorem]]"
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/01-absolutely-continuous-and-singular-measures|absolutely-continuous-and-singular-measures]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/02-fundamental-theorem-of-calculus|fundamental-theorem-of-calculus]]"
-next:
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/05-lebesgue-stieltjes-integral|lebesgue-stieltjes-integral]]"
-tags:
-  - mathematics
-  - measure and integration
-  - absolutely-continuous-functions-and-the-fundamental-theorem
----
-
 # Absolutely continuous functions and the fundamental theorem: F is the integral of its derivative exactly when F moves little over any collection of short intervals
 
-Measure and integration → Derivatives Meet the Lebesgue Integral → Recovering a function from its rate → Absolutely continuous functions and the fundamental theorem
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Derivatives Meet the Lebesgue Integral](../../../SYLLABUS.md#w10-s11) → Absolutely continuous functions and the fundamental theorem
 
 ---
 
@@ -57,7 +35,7 @@ One line: the odometer in km, every 0.1 hours. It curves up as the car pulls awa
 
 ## The formula
 
-Notation first, in words. $F$ is a function on a closed interval of times from $a$ to $b$; here the odometer on the hour from 0 to 1. Lebesgue measure $\lambda$ gives a set of times its total length ([lebesgue-measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)). $L^1$ is the collection of functions whose absolute value has a finite integral against $\lambda$ ([integrable-functions-and-l1](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). "Almost everywhere", a.e., means "except on a set of length zero".
+Notation first, in words. $F$ is a function on a closed interval of times from $a$ to $b$; here the odometer on the hour from 0 to 1. Lebesgue measure $\lambda$ gives a set of times its total length ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)). $L^1$ is the collection of functions whose absolute value has a finite integral against $\lambda$ ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). "Almost everywhere", a.e., means "except on a set of length zero".
 
 **The definition.** $F$ is **absolutely continuous** on $[a, b]$ when for every $\varepsilon > 0$ there is a $\delta > 0$ such that, for every finite collection of non-overlapping intervals $(a_1, b_1), \ldots, (a_n, b_n)$ inside $[a, b]$,
 
@@ -79,7 +57,7 @@ $$F' = f \quad \text{a.e.}, \qquad\text{so}\qquad F(b) - F(a) = \int_{[a,b]} F' 
 
 $$\text{Lipschitz} \;\Longrightarrow\; \text{absolutely continuous} \;\Longrightarrow\; \text{continuous and of bounded variation},$$
 
-and neither arrow reverses: $\sqrt{t}$ is absolutely continuous and not Lipschitz; the Cantor function $c$ is continuous and of bounded variation and not absolutely continuous. Bounded variation means the total up-and-down movement is finite ([functions-of-bounded-variation](01-functions-of-bounded-variation.md)).
+and neither arrow reverses: $\sqrt{t}$ is absolutely continuous and not Lipschitz; the Cantor function $c$ is continuous and of bounded variation and not absolutely continuous. Bounded variation means the total up-and-down movement is finite ([Bounded variation](01-functions-of-bounded-variation.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -109,11 +87,11 @@ and neither arrow reverses: $\sqrt{t}$ is absolutely continuous and not Lipschit
 
 ### Step 0: distance during a set of times is a measure
 
-The whole theorem rests on one move. The odometer gives every set of times a size: the km covered during those times. During the set $A$ in the table the car covers 29.25 km. That assignment of sizes is a measure, $\mu_F$ ([lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)).
+The whole theorem rests on one move. The odometer gives every set of times a size: the km covered during those times. During the set $A$ in the table the car covers 29.25 km. That assignment of sizes is a measure, $\mu_F$ ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)).
 
-Absolute continuity of the function is exactly absolute continuity of that measure against length: a set of times of length zero carries no distance ([absolutely-continuous-and-singular-measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md)). The Radon–Nikodym theorem then hands over a density: a rate $f$ with distance equal to the integral of $f$ ([radon-nikodym-theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md)). The Lebesgue differentiation theorem says that rate is the derivative almost everywhere ([lebesgue-differentiation-theorem](02-lebesgue-differentiation-theorem.md)). Three earlier results, chained.
+Absolute continuity of the function is exactly absolute continuity of that measure against length: a set of times of length zero carries no distance ([Absolutely continuous and singular measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md)). The Radon–Nikodym theorem then hands over a density: a rate $f$ with distance equal to the integral of $f$ ([The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md)). The Lebesgue differentiation theorem says that rate is the derivative almost everywhere ([The Lebesgue differentiation theorem](02-lebesgue-differentiation-theorem.md)). Three earlier results, chained.
 
-The Riemann version ([fundamental-theorem-of-calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md)) needs a derivative at every inside point and a Riemann-integrable rate; this one allows corners, asks only a finite Lebesgue integral, and says exactly which functions arise.
+The Riemann version ([Fundamental theorem of calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md)) needs a derivative at every inside point and a Riemann-integrable rate; this one allows corners, asks only a finite Lebesgue integral, and says exactly which functions arise.
 
 ### Step 1: Lipschitz gives absolute continuity, which gives bounded variation
 
@@ -123,7 +101,7 @@ Absolute continuity bounds the total up-and-down movement. Take $\varepsilon$ = 
 
 ### Step 2: every running integral is absolutely continuous
 
-Suppose $F(x) = F(a) + \int_{[a,x]} f \, d\lambda$ with $f$ in $L^1$. Across a collection of intervals, F moves by at most the integral of $\lvert f \rvert$ over their union. The measure $A \mapsto \int_A \lvert f \rvert \, d\lambda$ is finite and has a density, so it is absolutely continuous against length, and a finite absolutely continuous measure keeps an epsilon-delta promise ([absolutely-continuous-and-singular-measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md), Theorem 2). Sets of length under $\delta$ carry less than $\varepsilon$ of it. That is the definition.
+Suppose $F(x) = F(a) + \int_{[a,x]} f \, d\lambda$ with $f$ in $L^1$. Across a collection of intervals, F moves by at most the integral of $\lvert f \rvert$ over their union. The measure $A \mapsto \int_A \lvert f \rvert \, d\lambda$ is finite and has a density, so it is absolutely continuous against length, and a finite absolutely continuous measure keeps an epsilon-delta promise ([Absolutely continuous and singular measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md), Theorem 2). Sets of length under $\delta$ carry less than $\varepsilon$ of it. That is the definition.
 
 The code draws 2000 random collections of up to eight intervals, skips the few that overlap, and tests the rest on the trip. The largest total movement is 0.0999 km, under $\varepsilon$ = 0.1; the worst case by hand, every interval inside the 90 km/h leg, gives the same 0.0999.
 
@@ -163,23 +141,23 @@ Stein and Shakarchi reach this direction by the Vitali covering lemma instead; t
 
 **Lemma 2 (AC gives BV).** Take $\varepsilon = 1$ and its $\delta$, and points $a = x_0 < \cdots < x_N = b$ with every gap under $\delta$. Adding the $x_j$ to any partition never lowers $\sum \lvert \Delta F \rvert$ (triangle inequality), and the refined sum splits into $N$ sums over collections of total length under $\delta$, each under 1. So the total variation is at most $N$.
 
-**Lemma 3 (the variation function is AC).** Let $V(x)$ be the variation of $F$ on $[a, x]$, finite by Lemma 2; $V(y) - V(x)$ is the variation on $[x, y]$ ([functions-of-bounded-variation](01-functions-of-bounded-variation.md)). Take $\delta$ for $\varepsilon/2$. For intervals $(a_k, b_k)$ of total length under $\delta$, partitions of all the $[a_k, b_k]$ together form one collection of total length under $\delta$, so their $\sum \lvert \Delta F \rvert$ is under $\varepsilon/2$. The supremum over the partitions gives $\sum (V(b_k) - V(a_k)) \le \varepsilon/2 < \varepsilon$. Since $\lvert F(y) - F(x) \rvert \le V(y) - V(x)$, $Q = V - F$ rises, and it is AC as a difference of AC functions.
+**Lemma 3 (the variation function is AC).** Let $V(x)$ be the variation of $F$ on $[a, x]$, finite by Lemma 2; $V(y) - V(x)$ is the variation on $[x, y]$ ([Bounded variation](01-functions-of-bounded-variation.md)). Take $\delta$ for $\varepsilon/2$. For intervals $(a_k, b_k)$ of total length under $\delta$, partitions of all the $[a_k, b_k]$ together form one collection of total length under $\delta$, so their $\sum \lvert \Delta F \rvert$ is under $\varepsilon/2$. The supremum over the partitions gives $\sum (V(b_k) - V(a_k)) \le \varepsilon/2 < \varepsilon$. Since $\lvert F(y) - F(x) \rvert \le V(y) - V(x)$, $Q = V - F$ rises, and it is AC as a difference of AC functions.
 
-**Lemma 4 (a rising AC function has an absolutely continuous measure).** Let $G$ rise and be AC, hence continuous. By [lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md) there is a finite Borel measure $\mu_G$ on $[a, b]$ with $\mu_G((c, d]) = G(d) - G(c)$; continuity of $G$ makes every single point $\mu_G$-null, so open, closed and half-open intervals all get $G(d) - G(c)$. Let $\lambda(E) = 0$, $\varepsilon > 0$, and $\delta$ from the AC of $G$. By [lebesgue-outer-measure](../02-Length%20Done%20Properly/01-lebesgue-outer-measure.md) some open $U \supseteq E$ has $\lambda(U) < \delta$, and $U \cap (a, b)$ is a disjoint union of countably many open intervals $I_j$. Any first $m$ of them form a collection of total length under $\delta$, so $\sum_{j \le m} \mu_G(I_j) < \varepsilon$. Countable additivity, and null endpoints, give $\mu_G(E) \le \varepsilon$ for every $\varepsilon$. So $\mu_G \ll \lambda$.
+**Lemma 4 (a rising AC function has an absolutely continuous measure).** Let $G$ rise and be AC, hence continuous. By [Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md) there is a finite Borel measure $\mu_G$ on $[a, b]$ with $\mu_G((c, d]) = G(d) - G(c)$; continuity of $G$ makes every single point $\mu_G$-null, so open, closed and half-open intervals all get $G(d) - G(c)$. Let $\lambda(E) = 0$, $\varepsilon > 0$, and $\delta$ from the AC of $G$. By [Outer measure](../02-Length%20Done%20Properly/01-lebesgue-outer-measure.md) some open $U \supseteq E$ has $\lambda(U) < \delta$, and $U \cap (a, b)$ is a disjoint union of countably many open intervals $I_j$. Any first $m$ of them form a collection of total length under $\delta$, so $\sum_{j \le m} \mu_G(I_j) < \varepsilon$. Countable additivity, and null endpoints, give $\mu_G(E) \le \varepsilon$ for every $\varepsilon$. So $\mu_G \ll \lambda$.
 
-**Theorem, AC implies integral.** By Lemma 3, $F = V - Q$ with $V$, $Q$ rising and AC. By Lemma 4 and the Radon–Nikodym theorem ([radon-nikodym-theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md); both measures are finite on $[a, b]$) there are measurable $g_V, g_Q \ge 0$ with $\mu_V(A) = \int_A g_V \, d\lambda$ and $\mu_Q(A) = \int_A g_Q \, d\lambda$. Taking $A = (a, x]$: $V(x) - V(a) = \int_{[a,x]} g_V \, d\lambda$ (the point $a$ is $\lambda$-null), and likewise for $Q$. With $A = [a, b]$ both integrals are finite, so $g_V, g_Q \in L^1$. Put $f = g_V - g_Q \in L^1$; subtracting, $F(x) - F(a) = \int_{[a,x]} f \, d\lambda$.
+**Theorem, AC implies integral.** By Lemma 3, $F = V - Q$ with $V$, $Q$ rising and AC. By Lemma 4 and the Radon–Nikodym theorem ([The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md); both measures are finite on $[a, b]$) there are measurable $g_V, g_Q \ge 0$ with $\mu_V(A) = \int_A g_V \, d\lambda$ and $\mu_Q(A) = \int_A g_Q \, d\lambda$. Taking $A = (a, x]$: $V(x) - V(a) = \int_{[a,x]} g_V \, d\lambda$ (the point $a$ is $\lambda$-null), and likewise for $Q$. With $A = [a, b]$ both integrals are finite, so $g_V, g_Q \in L^1$. Put $f = g_V - g_Q \in L^1$; subtracting, $F(x) - F(a) = \int_{[a,x]} f \, d\lambda$.
 
-**Theorem, integral implies AC.** Let $F(x) = F(a) + \int_{[a,x]} f \, d\lambda$ with $f \in L^1$. The set function $\nu(A) = \int_A \lvert f \rvert \, d\lambda$ is a finite measure with $\nu \ll \lambda$ (a density always gives absolute continuity, Theorem 1 of [absolutely-continuous-and-singular-measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md)). By Theorem 2 of the same card, for each $\varepsilon$ there is $\delta$ with $\lambda(E) < \delta \Rightarrow \nu(E) < \varepsilon$. For a collection of total length under $\delta$, let $E$ be the union of the open intervals, so $\lambda(E) < \delta$. Then $\sum \lvert F(b_k) - F(a_k) \rvert = \sum \lvert \int_{(a_k, b_k)} f \, d\lambda \rvert \le \sum \int_{(a_k, b_k)} \lvert f \rvert \, d\lambda = \nu(E) < \varepsilon$.
+**Theorem, integral implies AC.** Let $F(x) = F(a) + \int_{[a,x]} f \, d\lambda$ with $f \in L^1$. The set function $\nu(A) = \int_A \lvert f \rvert \, d\lambda$ is a finite measure with $\nu \ll \lambda$ (a density always gives absolute continuity, Theorem 1 of [Absolutely continuous and singular measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md)). By Theorem 2 of the same card, for each $\varepsilon$ there is $\delta$ with $\lambda(E) < \delta \Rightarrow \nu(E) < \varepsilon$. For a collection of total length under $\delta$, let $E$ be the union of the open intervals, so $\lambda(E) < \delta$. Then $\sum \lvert F(b_k) - F(a_k) \rvert = \sum \lvert \int_{(a_k, b_k)} f \, d\lambda \rvert \le \sum \int_{(a_k, b_k)} \lvert f \rvert \, d\lambda = \nu(E) < \varepsilon$.
 
-**Theorem, the derivative.** With $f \in L^1$ as above, for $h > 0$, $(F(x+h) - F(x))/h = \frac{1}{h}\int_{[x, x+h]} f \, d\lambda$, and for $h < 0$ the same with $[x+h, x]$. By the Lebesgue differentiation theorem ([lebesgue-differentiation-theorem](02-lebesgue-differentiation-theorem.md)), at every Lebesgue point $x$ of $f$ the average $\frac{1}{\lvert h \rvert}\int \lvert f - f(x) \rvert \, d\lambda$ over these intervals tends to 0, so both quotients tend to $f(x)$. Almost every point is a Lebesgue point, so $F' = f$ a.e. If $g$ is another rate for the same $F$, then $g = F' = f$ a.e., which is the uniqueness.
+**Theorem, the derivative.** With $f \in L^1$ as above, for $h > 0$, $(F(x+h) - F(x))/h = \frac{1}{h}\int_{[x, x+h]} f \, d\lambda$, and for $h < 0$ the same with $[x+h, x]$. By the Lebesgue differentiation theorem ([The Lebesgue differentiation theorem](02-lebesgue-differentiation-theorem.md)), at every Lebesgue point $x$ of $f$ the average $\frac{1}{\lvert h \rvert}\int \lvert f - f(x) \rvert \, d\lambda$ over these intervals tends to 0, so both quotients tend to $f(x)$. Almost every point is a Lebesgue point, so $F' = f$ a.e. If $g$ is another rate for the same $F$, then $g = F' = f$ a.e., which is the uniqueness.
 
-**Theorem, the Cantor function is not AC.** At stage $n$ ([the-cantor-set](../02-Length%20Done%20Properly/07-the-cantor-set.md)) the kept set is $2^n$ closed intervals of total length $(2/3)^n$, and $c$ is constant on each removed interval, so telescoping $c(1) - c(0) = 1$ puts the whole rise on the kept intervals. For $\varepsilon = 1/2$ and any $\delta$, choose $(2/3)^n < \delta$: the interiors of the kept intervals form a collection of total length under $\delta$ that moves $c$ by $1 > \varepsilon$. And $c' = 0$ on the removed intervals, of total length 1, so $\int c' \, d\lambda = 0 \ne 1$.
+**Theorem, the Cantor function is not AC.** At stage $n$ ([The Cantor set](../02-Length%20Done%20Properly/07-the-cantor-set.md)) the kept set is $2^n$ closed intervals of total length $(2/3)^n$, and $c$ is constant on each removed interval, so telescoping $c(1) - c(0) = 1$ puts the whole rise on the kept intervals. For $\varepsilon = 1/2$ and any $\delta$, choose $(2/3)^n < \delta$: the interiors of the kept intervals form a collection of total length under $\delta$ that moves $c$ by $1 > \varepsilon$. And $c' = 0$ on the removed intervals, of total length 1, so $\int c' \, d\lambda = 0 \ne 1$.
 
 </details>
 
 ### Step 5: the staircase sits outside the class
 
-The Cantor function $c$ is built on the Cantor set: remove the open middle third of [0, 1], then the middle third of each piece left, for ever ([the-cantor-set](../02-Length%20Done%20Properly/07-the-cantor-set.md)). The counter holds still across every removed third and climbs only on what is kept. At stage $n$ the kept part is $2^n$ intervals of total length $(2/3)^n$.
+The Cantor function $c$ is built on the Cantor set: remove the open middle third of [0, 1], then the middle third of each piece left, for ever ([The Cantor set](../02-Length%20Done%20Properly/07-the-cantor-set.md)). The counter holds still across every removed third and climbs only on what is kept. At stage $n$ the kept part is $2^n$ intervals of total length $(2/3)^n$.
 
 <p align="center"><img src="../figures/absolutely-continuous-functions-and-the-fundamental-theorem.svg" alt="The stage-3 Cantor staircase drawn at 200 units per hour and per km: flat across every removed third, rising 1/8 km across each of the eight kept intervals" width="420"></p>
 
@@ -595,7 +573,7 @@ The two outputs agree line for line.
 ## Where you meet it in real life
 
 - **Odometers, meters and dead reckoning.** Integrating a measured rate to a total, speed to distance or flow to volume, is the step this theorem licenses, jumps included.
-- **Probability densities.** A distribution function has a density exactly when it is absolutely continuous; the density is its derivative almost everywhere ([densities-and-likelihood-ratios](../08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md)). The Cantor function is the distribution function of a law with no density and no atoms.
+- **Probability densities.** A distribution function has a density exactly when it is absolutely continuous; the density is its derivative almost everywhere ([Densities and likelihood ratios](../08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md)). The Cantor function is the distribution function of a law with no density and no atoms.
 - **Differential equations with switching inputs.** A solution driven by a force that jumps, like the gear changes here, is absolutely continuous and satisfies its equation almost everywhere.
 - **Devil's staircases in physics.** Staircases flat almost everywhere that still climb appear in the mode locking of driven oscillators.
 
@@ -606,14 +584,14 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [monotone-functions-differentiable-almost-everywhere](03-monotone-functions-differentiable-almost-everywhere.md): rising functions have derivatives almost everywhere, the setting the Cantor function tests.
-- [radon-nikodym-theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md): the density that becomes the rate in Step 4.
-- [absolutely-continuous-and-singular-measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md): absolute continuity of measures and its epsilon-delta form, used in Steps 2 and 4.
-- [fundamental-theorem-of-calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md): the Riemann version for continuous rates, which this card extends.
+- [Lebesgue's theorem on monotone functions](03-monotone-functions-differentiable-almost-everywhere.md): rising functions have derivatives almost everywhere, the setting the Cantor function tests.
+- [The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md): the density that becomes the rate in Step 4.
+- [Absolutely continuous and singular measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md): absolute continuity of measures and its epsilon-delta form, used in Steps 2 and 4.
+- [Fundamental theorem of calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md): the Riemann version for continuous rates, which this card extends.
 
 ## Where this goes next
 
-- [lebesgue-stieltjes-integral](05-lebesgue-stieltjes-integral.md): integrating against $\mu_F$ itself, so that an absolutely continuous $F$ gives $\int g \, dF = \int g F' \, d\lambda$ and the Cantor function gives an integral no density can express.
+- [The Lebesgue-Stieltjes integral](05-lebesgue-stieltjes-integral.md): integrating against $\mu_F$ itself, so that an absolutely continuous $F$ gives $\int g \, dF = \int g F' \, d\lambda$ and the Cantor function gives an integral no density can express.
 
 ---
 

@@ -1,32 +1,14 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Conformal Maps and Harmonic Functions
-topic: Every hole-free region as a disc
-item: The Riemann mapping theorem
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/07-solving-boundary-problems-by-mapping|solving-boundary-problems-by-mapping]]"
-next: []
-tags:
-  - mathematics
-  - complex-analysis
-  - riemann-mapping-theorem-and-schwarz-christoffel
----
-
 # The Riemann mapping theorem: any region without holes, short of the whole plane, is a disc in disguise, and Schwarz-Christoffel writes the map for polygons
 
-Complex analysis → Conformal Maps and Harmonic Functions → Every hole-free region as a disc → The Riemann mapping theorem
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Conformal Maps and Harmonic Functions](../../../SYLLABUS.md#w07-s07) → The Riemann mapping theorem
 
 ---
 
 ## General Overview
 
-A swimming pool of any outline, kidney or L-shape, can be redrawn as a round pool if it has no island: stretched unevenly, every small angle kept, nothing torn or folded. A map that does this is **conformal**: holomorphic (it has a complex derivative at every point), one-to-one, with nonzero derivative ([conformal-maps](01-conformal-maps.md)). From here on the pool is a **region** (an open set in one piece) and the round pool is the **unit disc**, the points at distance less than 1 from 0.
+A swimming pool of any outline, kidney or L-shape, can be redrawn as a round pool if it has no island: stretched unevenly, every small angle kept, nothing torn or folded. A map that does this is **conformal**: holomorphic (it has a complex derivative at every point), one-to-one, with nonzero derivative ([Conformal maps](01-conformal-maps.md)). From here on the pool is a **region** (an open set in one piece) and the round pool is the **unit disc**, the points at distance less than 1 from 0.
 
-The concrete pool is a half strip: the points z = x + iy with x between −π/2 and π/2 and y above 0. It is a lane of width π, open at the top, with square corners. The function sin z sends it onto the upper half plane, the points with positive imaginary part; the corners land on −1 and 1. The Cayley map $C(w) = (w - i)/(w + i)$, a Möbius map ([mobius-transformations-and-the-point-at-infinity](02-mobius-transformations-and-the-point-at-infinity.md)), then bends the half plane round into the disc, i to 0.
+The concrete pool is a half strip: the points z = x + iy with x between −π/2 and π/2 and y above 0. It is a lane of width π, open at the top, with square corners. The function sin z sends it onto the upper half plane, the points with positive imaginary part; the corners land on −1 and 1. The Cayley map $C(w) = (w - i)/(w + i)$, a Möbius map ([Mobius transformations](02-mobius-transformations-and-the-point-at-infinity.md)), then bends the half plane round into the disc, i to 0.
 
 Riemann's theorem says such a map exists and counts them. The Schwarz-Christoffel formula writes it out for polygons, rebuilding sin z from the lane's two corners.
 
@@ -84,7 +66,7 @@ $$f(w) = \int_0^{w} \frac{dt}{\sqrt{1 - t^2}}, \qquad \sin f(w) = w.$$
 ### When it holds
 
 - **No holes.** In the ring 1 < |z| < 2 a loop round the hole cannot shrink; in the disc every loop can, and a map would carry the shrinking back.
-- **Not the whole plane.** A map of the plane into the disc is bounded and holomorphic everywhere, so constant by Liouville ([liouville-and-the-fundamental-theorem-of-algebra](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md)).
+- **Not the whole plane.** A map of the plane into the disc is bounded and holomorphic everywhere, so constant by Liouville ([Liouville's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md)).
 - **Both normalising conditions.** Drop "real and positive" and every turn of $F$ qualifies.
 - **Schwarz-Christoffel.** Straight edges; three corner points $x_k$ are free, the rest solved numerically.
 
@@ -98,7 +80,7 @@ If $F$ and $G$ both carry D onto the disc, $G$ after the reverse of $F$ carries 
 
 ### Step 1: a Blaschke factor keeps the rim on the rim
 
-On the rim $\lvert u\rvert = 1$, so $\lvert 1 - \bar a u\rvert = \lvert \bar u - \bar a\rvert = \lvert u - a\rvert$: top and bottom are equal in size. Inside, the maximum modulus principle ([maximum-modulus-principle](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/05-maximum-modulus-principle.md)) keeps the modulus below 1. It sends a to 0; the factor built on −a undoes it.
+On the rim $\lvert u\rvert = 1$, so $\lvert 1 - \bar a u\rvert = \lvert \bar u - \bar a\rvert = \lvert u - a\rvert$: top and bottom are equal in size. Inside, the maximum modulus principle ([The maximum modulus principle](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/05-maximum-modulus-principle.md)) keeps the modulus below 1. It sends a to 0; the factor built on −a undoes it.
 
 ### Step 2: every self-map of the disc is a Blaschke factor times a turn
 
@@ -384,7 +366,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Heat and electric fields in odd shapes.** Map to the disc, solve there, carry the answer back ([solving-boundary-problems-by-mapping](07-solving-boundary-problems-by-mapping.md)); the theorem guarantees the first step.
+- **Heat and electric fields in odd shapes.** Map to the disc, solve there, carry the answer back ([Solving by mapping](07-solving-boundary-problems-by-mapping.md)); the theorem guarantees the first step.
 - **Channels and polygons.** Flow past a step in a channel uses a numerical Schwarz-Christoffel map.
 
 > **Say it back**
@@ -394,11 +376,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [solving-boundary-problems-by-mapping](07-solving-boundary-problems-by-mapping.md): why a map onto a simple region is worth having; this card says when one exists.
+- [Solving by mapping](07-solving-boundary-problems-by-mapping.md): why a map onto a simple region is worth having; this card says when one exists.
 
 ## Where this goes next
 
-- [poisson-integral-formula](06-poisson-integral-formula.md): the disc's formula now solves boundary problems on any such region.
+- [The Poisson formula](06-poisson-integral-formula.md): the disc's formula now solves boundary problems on any such region.
 
 Left open: placing the $x_k$ for four or more corners, a numerical problem (Driscoll and Trefethen).
 

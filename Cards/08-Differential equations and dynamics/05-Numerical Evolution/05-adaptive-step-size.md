@@ -1,22 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Numerical Evolution
-topic: Error control
-item: Adaptive steps
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/04-runge-kutta-four|runge-kutta-four]]"
-next:
-  - "[[Cards/16-Numerical analysis/06-ODE Solvers/03-embedded-pairs-and-adaptive-steps|embedded-pairs-and-adaptive-steps]]"
-tags: [mathematics, differential equations and dynamics, adaptive-step-size]
----
-
 # Adaptive steps: two estimates per step disagree by about the error, so let the solver pick its own step
 
-Differential equations and dynamics → Numerical Evolution → Error control → Adaptive steps
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Numerical Evolution](../../../SYLLABUS.md#w08-s05) → Adaptive steps
 
 ---
 
@@ -49,7 +33,7 @@ Orange: each kept step's length, over the time it ends. The labels sit evenly on
 
 ## The formula
 
-Reminder: a step of length h moves the solution from t to t + h, and a method has order p when its error over a fixed time shrinks like h^p ([local-and-global-error-and-order](02-local-and-global-error-and-order.md)).
+Reminder: a step of length h moves the solution from t to t + h, and a method has order p when its error over a fixed time shrinks like h^p ([Order of a method](02-local-and-global-error-and-order.md)).
 
 An **embedded pair** is two step recipes, of orders p + 1 and p, built from the same stage rates. From speed $v$ they give $v_5$ and $v_4$ (orders 5 and 4 for Dormand-Prince). The error estimate, the allowance and the step rule are
 
@@ -79,7 +63,7 @@ $$Y_f - v_{exact} \approx \frac{Y_c - Y_f}{2^p - 1}.$$
 - **The solution is smooth across each step.** The error law, constant times h^5, needs several derivatives. When the parachute opens, drag jumps, the law fails, and the solver shrinks its step to squeeze past.
 - **Steps short enough for the leading term to dominate.** At h = 1 s the estimate, 1.3720e-5, is close to the order-4 answer's true error, 1.2727e-5; far longer steps can break that.
 - **The allowance is per step.** Error carried in is not measured; drag shrinks it here, a growing equation magnifies it.
-- **The equation is not stiff** (stiff: a fast-decaying part forces short steps for stability, not accuracy). Otherwise the controller wastes effort; see [stiff-equations-and-backward-euler](06-stiff-equations-and-backward-euler.md).
+- **The equation is not stiff** (stiff: a fast-decaying part forces short steps for stability, not accuracy). Otherwise the controller wastes effort; see [Stiff equations](06-stiff-equations-and-backward-euler.md).
 
 ---
 
@@ -91,7 +75,7 @@ Write each answer as truth plus error: $v_4$ = truth + e4 and $v_5$ = truth + e5
 
 ### Step 1: the pair shares its work
 
-Dormand-Prince evaluates the rate at seven points in the step, the stages ([runge-kutta-four](04-runge-kutta-four.md) uses four). The last is the rate at the step's end, reused as the next step's first, so a step costs six new evaluations. One set of weights on the seven rates gives order 5, another order 4: the estimate is free.
+Dormand-Prince evaluates the rate at seven points in the step, the stages ([Runge-Kutta four](04-runge-kutta-four.md) uses four). The last is the rate at the step's end, reused as the next step's first, so a step costs six new evaluations. One set of weights on the seven rates gives order 5, another order 4: the estimate is free.
 
 ### Step 2: on the skydiver, every step is a polynomial
 
@@ -120,7 +104,7 @@ Step doubling: the coarse error is $C h^{p+1}$; two half steps add to $2C(h/2)^{
 
 </details>
 
-Step doubling is the second road to an estimate. With Runge-Kutta four and h = 1 s it gives −7.9443e-6 for the fine answer's error; the true error is −7.2681e-6. It costs eleven new rate evaluations per step against the pair's six, so solvers use pairs. How the pair's weights are found is in embedded-pairs-and-adaptive-steps.
+Step doubling is the second road to an estimate. With Runge-Kutta four and h = 1 s it gives −7.9443e-6 for the fine answer's error; the true error is −7.2681e-6. It costs eleven new rate evaluations per step against the pair's six, so solvers use pairs. How the pair's weights are found is in Embedded pairs.
 
 ---
 
@@ -356,8 +340,8 @@ PASS
 
 - **General-purpose solvers.** MATLAB's `ode45` and SciPy's `RK45` run the Dormand-Prince pair with this controller; the user sets tolerances, not a step length.
 - **Orbits.** A comet races near the Sun and crawls far away; the steps shorten at closest approach and stretch in between.
-- **Chemical kinetics.** A reaction that flares then settles is stepped this way until it turns stiff; then [stiff-equations-and-backward-euler](06-stiff-equations-and-backward-euler.md) takes over.
-- **Long runs of oscillators.** Adaptive steps let energy drift over thousands of swings; [symplectic-steps-for-oscillators](07-symplectic-steps-for-oscillators.md) trades that for fixed steps that conserve it.
+- **Chemical kinetics.** A reaction that flares then settles is stepped this way until it turns stiff; then [Stiff equations](06-stiff-equations-and-backward-euler.md) takes over.
+- **Long runs of oscillators.** Adaptive steps let energy drift over thousands of swings; [Symplectic steps](07-symplectic-steps-for-oscillators.md) trades that for fixed steps that conserve it.
 
 > **Say it back**
 > Take each step with two recipes of different order sharing the same rate evaluations. Their answers differ by about the worse one's error, since the better one's error is a power of h smaller. Keep or retry the step by comparing that gap with an allowance, and scale the next step by 0.9 times the fifth root of allowance over gap. The skydiver's steps grow from 0.84 s to 2.48 s as the fall flattens. The allowance governs each step, not the final answer.
@@ -366,11 +350,11 @@ PASS
 
 ## What this builds on
 
-- [runge-kutta-four](04-runge-kutta-four.md): stages, weights and the order-4 step that the pair and step doubling both extend.
+- [Runge-Kutta four](04-runge-kutta-four.md): stages, weights and the order-4 step that the pair and step doubling both extend.
 
 ## Where this goes next
 
-- embedded-pairs-and-adaptive-steps: how the order conditions fix the pair's weights, and controllers that remember past steps.
+- Embedded pairs: how the order conditions fix the pair's weights, and controllers that remember past steps.
 
 This card took the pair's weights on trust; where they come from is what that card works out.
 

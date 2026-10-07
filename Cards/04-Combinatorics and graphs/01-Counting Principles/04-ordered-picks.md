@@ -1,29 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Counting Principles
-topic: Arrangements
-item: Ordered picks
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/02-strings-and-powers|strings-and-powers]]"
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/03-factorial|factorial]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/04-injective-surjective-bijective|injective-surjective-bijective]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/05-n-choose-k|n-choose-k]]"
-  - "[[Cards/04-Combinatorics and graphs/08-Partitions/06-twelvefold-way|twelvefold-way]]"
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/04-equally-likely-outcomes-and-counting|equally-likely-outcomes-and-counting]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - ordered-picks
----
-
 # Ordered picks: choosing k of n in order is the falling factorial n(n-1)...(n-k+1)
 
-Combinatorics and graphs → Counting Principles → Arrangements → Ordered picks
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Counting Principles](../../../SYLLABUS.md#w04-s01) → Ordered picks
 
 ---
 
@@ -63,7 +40,7 @@ Three ways to hand out the gold, two runners left for the silver each time: 3 ×
 
 ## The formula
 
-Two pieces of notation first, in words. The factorial of a whole number, written $n!$ and read "n factorial", is that number times every whole number below it down to 1 ([factorial](03-factorial.md)); 5! is 5 × 4 × 3 × 2 × 1 = 120. This card's count is written $P(n,k)$, read "n permute k": the ways to fill $k$ places, in order, from a pool of $n$ things.
+Two pieces of notation first, in words. The factorial of a whole number, written $n!$ and read "n factorial", is that number times every whole number below it down to 1 ([Factorials](03-factorial.md)); 5! is 5 × 4 × 3 × 2 × 1 = 120. This card's count is written $P(n,k)$, read "n permute k": the ways to fill $k$ places, in order, from a pool of $n$ things.
 
 $$P(n,k) = n(n-1)(n-2)\cdots(n-k+1) = \frac{n!}{(n-k)!}$$
 
@@ -83,8 +60,8 @@ The left-hand product is the **falling factorial**: a factorial stopped early. T
 ### When it holds
 
 - **The things are tellable apart.** If two runners cannot be told apart, podiums the product counts twice are one podium, and 336 is too many.
-- **No repeats.** Every pick leaves the pool. Let one runner take two medals and the count is 8 × 8 × 8 = 512, the strings-with-repetition count ([strings-and-powers](02-strings-and-powers.md)), not 336.
-- **The places differ.** Gold, silver and bronze are different prizes. Swap them for three identical ribbons and each trio is counted 3! = 6 times over; the answer is then 336 ÷ 6 = 56 ([n-choose-k](05-n-choose-k.md)).
+- **No repeats.** Every pick leaves the pool. Let one runner take two medals and the count is 8 × 8 × 8 = 512, the strings-with-repetition count ([Strings with repetition](02-strings-and-powers.md)), not 336.
+- **The places differ.** Gold, silver and bronze are different prizes. Swap them for three identical ribbons and each trio is counted 3! = 6 times over; the answer is then 336 ÷ 6 = 56 ([Combinations, n choose k](05-n-choose-k.md)).
 - **At most as many places as things.** Fill every place and the product runs to the end: the plain factorial, 8! = 40,320. Ask for more places than things and a factor hits zero — the right answer, since no such pick exists.
 
 ---
@@ -93,7 +70,7 @@ The left-hand product is the **falling factorial**: a factorial stopped early. T
 
 ### Step 0: fill one place at a time, and the pool shrinks as it goes
 
-The rule of product: if a first choice goes one number of ways and, for each of those, a second goes a fixed number of ways, the pair goes the product ([rules-of-sum-and-product](01-rules-of-sum-and-product.md)).
+The rule of product: if a first choice goes one number of ways and, for each of those, a second goes a fixed number of ways, the pair goes the product ([The rules of sum and product](01-rules-of-sum-and-product.md)).
 
 The only new thing here is that the second number is smaller. Gold: eight runners. For each of those, silver: seven, since one already holds a medal. For each of those, bronze: six. So 8 × 7 × 6 = 336.
 
@@ -113,9 +90,9 @@ Divide the tail away: 40,320 ÷ 120 = 336, which is $P(n,k) = n!/(n-k)!$. The pr
 
 ### Step 3: an ordered pick is a one-to-one map
 
-Name the places: first medal, second, third. An ordered pick hands each place a runner and repeats none — a one-to-one function from the three places into the eight runners; *injective* is the standard word ([injective-surjective-bijective](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md)).
+Name the places: first medal, second, third. An ordered pick hands each place a runner and repeats none — a one-to-one function from the three places into the eight runners; *injective* is the standard word ([One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md)).
 
-So $P(n,k)$ answers a question with no medals in it: how many one-to-one maps run from a set of $k$ things into a set of $n$. Drop the one-to-one demand and every map counts, the string count 8 × 8 × 8 = 512 ([strings-and-powers](02-strings-and-powers.md)); the gap to 336 is the maps that repeat a runner.
+So $P(n,k)$ answers a question with no medals in it: how many one-to-one maps run from a set of $k$ things into a set of $n$. Drop the one-to-one demand and every map counts, the string count 8 × 8 × 8 = 512 ([Strings with repetition](02-strings-and-powers.md)); the gap to 336 is the maps that repeat a runner.
 
 <details>
 <summary>Detailed proof: induction on the number of places</summary>
@@ -130,7 +107,7 @@ The step is an identity in its own right: $P(n,k) = n \times P(n-1,k-1)$, one pl
 
 </details>
 
-Another route runs the other way round. Settle *which* runners are on the podium, ignoring which medal each gets, then arrange those three: 3! = 6 ways. The 336 podiums fall into groups of 6, one per trio, and there are 56 trios: 56 × 6 = 336. Counting the trios directly is the job of [n-choose-k](05-n-choose-k.md).
+Another route runs the other way round. Settle *which* runners are on the podium, ignoring which medal each gets, then arrange those three: 3! = 6 ways. The 336 podiums fall into groups of 6, one per trio, and there are 56 trios: 56 × 6 = 336. Counting the trios directly is the job of [Combinations, n choose k](05-n-choose-k.md).
 
 ---
 
@@ -384,8 +361,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Sport.** Podium finishes, batting orders, the penalty takers above: the list is the answer, and shuffling it is a different plan.
-- **Codes without repeats.** A lock code barring a repeated character is an ordered pick; allow reuse and the count is a plain power ([strings-and-powers](02-strings-and-powers.md)).
-- **Named roles.** Chair, secretary and treasurer are three different jobs, so counting them is an ordered pick; the same three people with no titles would be [n-choose-k](05-n-choose-k.md).
+- **Codes without repeats.** A lock code barring a repeated character is an ordered pick; allow reuse and the count is a plain power ([Strings with repetition](02-strings-and-powers.md)).
+- **Named roles.** Chair, secretary and treasurer are three different jobs, so counting them is an ordered pick; the same three people with no titles would be [Combinations, n choose k](05-n-choose-k.md).
 
 > **Say it back**
 > An ordered pick fills a run of distinct places from a pool, with nothing used twice. Fill them one at a time and the pool shrinks by one each time, so the count is a falling product: 8 × 7 × 6 = 336 podiums from eight runners. Stopping the factorial early is the same as dividing off the orders of everything left out, so the count is also 8! ÷ 5! = 40,320 ÷ 120. Allowing repeats gives 512; forgetting the order gives 56.
@@ -394,17 +371,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [strings-and-powers](02-strings-and-powers.md): the count when repeats are allowed, 8 × 8 × 8 = 512 — the thing this count is not.
-- [factorial](03-factorial.md): the full product 8! = 40,320, and the convention making a product of no factors 1.
-- [injective-surjective-bijective](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md): one-to-one maps, which an ordered pick becomes once the places are named.
+- [Strings with repetition](02-strings-and-powers.md): the count when repeats are allowed, 8 × 8 × 8 = 512 — the thing this count is not.
+- [Factorials](03-factorial.md): the full product 8! = 40,320, and the convention making a product of no factors 1.
+- [One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md): one-to-one maps, which an ordered pick becomes once the places are named.
 
 ## Where this goes next
 
-- [n-choose-k](05-n-choose-k.md): the same picks with the order thrown away, 336 ÷ 6 = 56.
-- [twelvefold-way](../08-Partitions/06-twelvefold-way.md): the grid sorting every counting question by whether things and places can be told apart; this count is one cell.
-- [equally-likely-outcomes-and-counting](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/04-equally-likely-outcomes-and-counting.md): counts like this turned into chances, favourable over possible.
+- [Combinations, n choose k](05-n-choose-k.md): the same picks with the order thrown away, 336 ÷ 6 = 56.
+- [The twelvefold way](../08-Partitions/06-twelvefold-way.md): the grid sorting every counting question by whether things and places can be told apart; this count is one cell.
+- [Counting chances](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/04-equally-likely-outcomes-and-counting.md): counts like this turned into chances, favourable over possible.
 
-The order of the medals was doing real work in the 336; dividing it back out, to count who is on the podium rather than what each won, is the content of [n-choose-k](05-n-choose-k.md).
+The order of the medals was doing real work in the 336; dividing it back out, to count who is on the podium rather than what each won, is the content of [Combinations, n choose k](05-n-choose-k.md).
 
 ---
 

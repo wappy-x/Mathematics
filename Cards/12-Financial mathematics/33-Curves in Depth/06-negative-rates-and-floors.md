@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Curves in Depth
-topic: Zero-floored coupons
-item: Negative rates
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/33-Curves in Depth/05-carry-and-roll-down|carry-and-roll-down]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/08-shifted-lognormal-and-volatility-conversion|shifted-lognormal-and-volatility-conversion]]"
-next: []
-tags:
-  - mathematics
-  - financial mathematics
-  - negative-rates-and-floors
----
-
 # Negative rates: what breaks, what is floored, and which models survive
 
-Financial mathematics → Curves in Depth → Zero-floored coupons → Negative rates
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves in Depth](../../../SYLLABUS.md#w12-s33) → Negative rates
 
 ---
 
@@ -58,7 +39,7 @@ The line still above zero on the far left is the **normal model**: the rate move
 
 ## The formula
 
-Notation first, in words. The loan has notional $M$, 10 million dollars, and three periods of length $\tau$, one year each. Period $i$ pays on date $t_i$ (years 1, 2, 3) and fixes its rate at $T_i$, one year earlier (years 0, 1, 2). $D$ is the **discount factor**: $D(t_i)$ is what a dollar due at $t_i$ costs today. $F_i$ is the **forward rate** for period $i$, the rate the curve fixes for it today, and $L_i$ is the rate that will actually be fixed, unknown today. $K$ is the floor's strike, here zero. $\sigma_N$ is the **normal volatility**, how many basis points the rate typically moves in a year, and $w_i = \sigma_N\sqrt{T_i}$ is one **wiggle unit** for period $i$: the typical move between today and its fixing, in proper terms the **standard deviation** of $L_i$. $N$ is the standard normal CDF, the bell-curve area to the left of a point, and $\varphi$ its density, the bell curve's height there ([bachelier-model](../05-Black-Scholes%20from%20the%20Ground%20Up/07-bachelier-model.md)).
+Notation first, in words. The loan has notional $M$, 10 million dollars, and three periods of length $\tau$, one year each. Period $i$ pays on date $t_i$ (years 1, 2, 3) and fixes its rate at $T_i$, one year earlier (years 0, 1, 2). $D$ is the **discount factor**: $D(t_i)$ is what a dollar due at $t_i$ costs today. $F_i$ is the **forward rate** for period $i$, the rate the curve fixes for it today, and $L_i$ is the rate that will actually be fixed, unknown today. $K$ is the floor's strike, here zero. $\sigma_N$ is the **normal volatility**, how many basis points the rate typically moves in a year, and $w_i = \sigma_N\sqrt{T_i}$ is one **wiggle unit** for period $i$: the typical move between today and its fixing, in proper terms the **standard deviation** of $L_i$. $N$ is the standard normal CDF, the bell-curve area to the left of a point, and $\varphi$ its density, the bell curve's height there ([Bachelier](../05-Black-Scholes%20from%20the%20Ground%20Up/07-bachelier-model.md)).
 
 The coupon split, true at every outcome:
 
@@ -72,7 +53,7 @@ $$V \;=\; \sum_{i=1}^{3} M\,\tau\,D(t_i)\,\bigl[\,F_i + \mathrm{Fl}_i\,\bigr], \
 
 $d_i$ counts how many wiggle units the strike sits above the forward. For the year-2 fixing it is exactly 1. Year 1 is already fixed, so $w_1 = 0$ and $\mathrm{Fl}_1$ is simply $\max(K - F_1, 0)$.
 
-The shifted model replaces $\mathrm{Fl}_i$ with Black's put on the slid pair $F_i + a$ and $K + a$, at a volatility $\sigma_a$ that is a percentage of the slid rate ([shifted-lognormal-and-volatility-conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md)). To compare it with the normal model, $\sigma_a$ is chosen so both cost the same at the money. That choice exists, and is unique, exactly when
+The shifted model replaces $\mathrm{Fl}_i$ with Black's put on the slid pair $F_i + a$ and $K + a$, at a volatility $\sigma_a$ that is a percentage of the slid rate ([Shifted lognormal and volatility conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md)). To compare it with the normal model, $\sigma_a$ is chosen so both cost the same at the money. That choice exists, and is unique, exactly when
 
 $$a \;>\; -F_i \;+\; \sigma_N\sqrt{\frac{T_i}{2\pi}}$$
 
@@ -112,11 +93,11 @@ At every outcome, $\max(L, 0)$ is $L$ plus the amount by which $L$ fell short of
 
 That shortfall is exactly a floorlet's payoff, $\max(K - L, 0)$ with $K = 0$. So a floored leg is a plain leg plus a strip of floorlets, one per period. The identity holds at every outcome, not on average, so it holds for prices under any model.
 
-There is a second reading of the same payoff. $\max(L, 0)$ is also $\max(L - 0, 0)$: a **caplet** struck at zero, a call on the rate ([caplets-and-floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md)). So the floored leg equals a zero-strike cap. The code prices it that way too, as a separate road, and the two agree to the cent.
+There is a second reading of the same payoff. $\max(L, 0)$ is also $\max(L - 0, 0)$: a **caplet** struck at zero, a call on the rate ([Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md)). So the floored leg equals a zero-strike cap. The code prices it that way too, as a separate road, and the two agree to the cent.
 
 ### Step 1: the plain leg needs no model
 
-The forward $F_i$ is the rate a contract can lock in today at no cost. So a promise to pay $L_i$ at $t_i$ is worth the same as a promise to pay $F_i$ ([carry-and-roll-down](05-carry-and-roll-down.md) reads the forwards off the same curve). With one curve, each forward is read from two discount factors, $F_i = \bigl(D(t_{i-1})/D(t_i) - 1\bigr)/\tau$, so each coupon's value $\tau F_i D(t_i)$ is $D(t_{i-1}) - D(t_i)$. The sum collapses:
+The forward $F_i$ is the rate a contract can lock in today at no cost. So a promise to pay $L_i$ at $t_i$ is worth the same as a promise to pay $F_i$ ([Carry and roll-down](05-carry-and-roll-down.md) reads the forwards off the same curve). With one curve, each forward is read from two discount factors, $F_i = \bigl(D(t_{i-1})/D(t_i) - 1\bigr)/\tau$, so each coupon's value $\tau F_i D(t_i)$ is $D(t_{i-1}) - D(t_i)$. The sum collapses:
 
 $$\sum_{i=1}^{3} M\,\tau\,D(t_i)\,F_i \;=\; M\,\bigl[D(0) - D(3)\bigr] \;=\; -\$151{,}512.59$$
 
@@ -128,12 +109,12 @@ Year 1's rate was fixed this morning at minus 0.50 percent. Its floorlet is no l
 
 ### Step 3: why Black's model cannot price the rest
 
-Black's model says the fixing is today's forward times a random growth factor that is always positive ([black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)). Two things follow.
+Black's model says the fixing is today's forward times a random growth factor that is always positive ([Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)). Two things follow.
 
 - **A negative forward has no place in it.** A growth factor is positive, so the fixing keeps the sign of $F$. The formula makes that literal: it needs $\ln(F/K)$, and with $F = -0.50$ percent and $K = 0$ the code gets a division by zero; with $K$ nudged to plus 0.01 percent, the log of a negative number. No price.
 - **A positive forward gives the wrong price.** Nudge the forward to plus 0.01 percent, and the strike a hair above zero so the formula runs. Now $L$ is always positive, the chance of fixing below zero is exactly nothing, and the zero-strike floorlet is worth $0.00.
 
-That zero breaks a bound no model may cross. A floorlet minus a caplet at the same strike pays $K - L$ at every outcome, which is worth $D\,\tau\,(K - F)$ today, the plain coupon read backwards ([caps-floors-and-parity](../29-Caps%2C%20Floors%20and%20Swaptions/02-caps-floors-and-parity.md)). A caplet is never worth less than nothing. So a floorlet is worth at least $D\,\tau\,\max(K - F, 0)$, its **intrinsic value**. On a minus 0.50 percent forward that is 50 bp a year, $151,512.59 over the loan. A model that prices the floor at nothing prices it below a bound anyone could exploit.
+That zero breaks a bound no model may cross. A floorlet minus a caplet at the same strike pays $K - L$ at every outcome, which is worth $D\,\tau\,(K - F)$ today, the plain coupon read backwards ([Caps and floors](../29-Caps%2C%20Floors%20and%20Swaptions/02-caps-floors-and-parity.md)). A caplet is never worth less than nothing. So a floorlet is worth at least $D\,\tau\,\max(K - F, 0)$, its **intrinsic value**. On a minus 0.50 percent forward that is 50 bp a year, $151,512.59 over the loan. A model that prices the floor at nothing prices it below a bound anyone could exploit.
 
 ### Step 4: the normal model prices it
 
@@ -620,8 +601,8 @@ The two outputs are identical line for line, Monte Carlo included: both use the 
 
 - **Floating-rate loans.** Loan agreements commonly floor the benchmark at zero, so the lender never pays the borrower interest. The borrower has sold that floor, usually without a separate price on it; this card is the price.
 - **Deposits.** Retail deposits are floored at zero in practice, since banks were slow to charge savers. The bank has written a floor it never priced.
-- **Rate volatility quotes.** Once rates went below zero, brokers moved caps, floors and swaptions to normal and shifted quotes, each shifted quote with its shift ([normal-and-shifted-volatilities-for-rates](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)).
-- **Curve moves.** A floored leg does not move one for one with the curve. A level shift of the whole curve ([principal-components-of-the-curve](01-principal-components-of-the-curve.md)) changes the floor's intrinsic part at full speed and its time value at less, so key-rate hedges ([key-rate-durations-and-curve-hedging](02-key-rate-durations-and-curve-hedging.md)) must be recomputed as the curve moves.
+- **Rate volatility quotes.** Once rates went below zero, brokers moved caps, floors and swaptions to normal and shifted quotes, each shifted quote with its shift ([Rate volatilities](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)).
+- **Curve moves.** A floored leg does not move one for one with the curve. A level shift of the whole curve ([Level, slope and curvature](01-principal-components-of-the-curve.md)) changes the floor's intrinsic part at full speed and its time value at less, so key-rate hedges ([Key-rate durations](02-key-rate-durations-and-curve-hedging.md)) must be recomputed as the curve moves.
 
 > **Say it back**
 > A coupon floored at zero is the plain coupon plus a put on the rate struck at zero. The plain leg needs no model; below zero it is worth less than nothing, and the floor's intrinsic value cancels it. Black's lognormal model cannot price the rest: it has no negative rates, so it prices the floor below its own intrinsic value or not at all. The normal model and a shifted lognormal model with a large enough shift both price it. They agree at the money and differ at the zero strike, and that difference is a bet on how rates move near zero.
@@ -630,15 +611,15 @@ The two outputs are identical line for line, Monte Carlo included: both use the 
 
 ## What this builds on
 
-- [carry-and-roll-down](05-carry-and-roll-down.md): reading forwards and discount factors off one curve, the plain leg's whole valuation here.
-- [shifted-lognormal-and-volatility-conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md): the shifted model, its wall at $-a$, and the at-the-money conversion that the minimum shift comes from.
-- [bachelier-model](../05-Black-Scholes%20from%20the%20Ground%20Up/07-bachelier-model.md): the normal model and its formula, proved there in full.
-- [caps-floors-and-parity](../29-Caps%2C%20Floors%20and%20Swaptions/02-caps-floors-and-parity.md): floorlet minus caplet as a fixed payment, the source of the intrinsic-value bound.
+- [Carry and roll-down](05-carry-and-roll-down.md): reading forwards and discount factors off one curve, the plain leg's whole valuation here.
+- [Shifted lognormal and volatility conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md): the shifted model, its wall at $-a$, and the at-the-money conversion that the minimum shift comes from.
+- [Bachelier](../05-Black-Scholes%20from%20the%20Ground%20Up/07-bachelier-model.md): the normal model and its formula, proved there in full.
+- [Caps and floors](../29-Caps%2C%20Floors%20and%20Swaptions/02-caps-floors-and-parity.md): floorlet minus caplet as a fixed payment, the source of the intrinsic-value bound.
 
 ## Where this goes next
 
-- [inflation-options-in-outline](../34-Inflation%20and%20Real%20Rates/05-inflation-options-in-outline.md): inflation floors at zero, where the rate under the floor is a price index's growth and the same choice between normal and shifted models returns.
-- [sabr-for-rates-and-the-volatility-cube](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md): a smile model that sets a different volatility at every strike, the input this card held flat.
+- [Inflation caps and floors in outline](../34-Inflation%20and%20Real%20Rates/05-inflation-options-in-outline.md): inflation floors at zero, where the rate under the floor is a price index's growth and the same choice between normal and shifted models returns.
+- [SABR for rates](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md): a smile model that sets a different volatility at every strike, the input this card held flat.
 
 ---
 

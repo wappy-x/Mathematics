@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Numerical Methods for Pricing
-topic: The exercise floor
-item: American options on a grid
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/07-finite-differences-for-the-black-scholes-equation|finite-differences-for-the-black-scholes-equation]]"
-next:
-  - "[[Cards/19-Partial differential equations/06-Weak Solutions and Free Boundaries/09-american-options-as-a-free-boundary-problem|american-options-as-a-free-boundary-problem]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - american-options-by-psor-and-lcp
----
-
 # American options on a grid: the free boundary as a complementarity problem
 
-Financial mathematics → Numerical Methods for Pricing → The exercise floor → American options on a grid
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Numerical Methods for Pricing](../../../SYLLABUS.md#w12-s06) → American options on a grid
 
 ---
 
@@ -31,7 +12,7 @@ The extra freedom is worth money, and the reason is interest. Exercising pays th
 
 Nobody supplies that line. It is part of the answer, not an input, and it moves every day of the year. That is why its real name is the **free boundary**.
 
-Pricing the European twin on a mesh of prices and dates is one linear system per date, stepped backwards: the job of [finite-differences-for-the-black-scholes-equation](07-finite-differences-for-the-black-scholes-equation.md). The American contract adds a rule the equation has never heard of: the value may never sit below what exercising pays this instant. Where waiting wins the equation holds; where taking the money wins the payoff holds instead. Which nodes are which is unknown until the answer is out, so there is no system to write down in advance.
+Pricing the European twin on a mesh of prices and dates is one linear system per date, stepped backwards: the job of [Pricing on a grid](07-finite-differences-for-the-black-scholes-equation.md). The American contract adds a rule the equation has never heard of: the value may never sit below what exercising pays this instant. Where waiting wins the equation holds; where taking the money wins the payoff holds instead. Which nodes are which is unknown until the answer is out, so there is no system to write down in advance.
 
 The way out is to stop demanding an equation, and demand instead three things that hold together at every node: the value clears the payoff, holding never beats the bank rate, and one of those two is **tight** — it holds exactly, with nothing to spare. That triple is a **linear complementarity problem**, LCP for short, and on a mesh it has exactly one solution. **Projected successive over-relaxation** — PSOR — finds it by sweeping the mesh, solving one node at a time as if its neighbours were already right — that repeated one-node solve is **relaxation** — then pushing the value back up onto the payoff if it fell through.
 
@@ -188,7 +169,7 @@ The two readings need not nest. The exercise region is settled in whole date ste
 
 Two independent bounds keep it honest. A put that never expires has a line in closed form: the strike times the negative root of the quadratic that $\mathcal{L}V = 0$ becomes when $V$ is a power of the price, divided by that root minus one. That is `64.921894` here. Less time to run means less waiting to give up, so a line with an expiry date sits above it. And no line exceeds the strike. Both hold.
 
-The other road skips solvers entirely. A binomial tree takes the better of exercising and holding at each node, which is Step 0 one node at a time ([longstaff-schwartz-least-squares-monte-carlo](06-longstaff-schwartz-least-squares-monte-carlo.md) does it by simulation, which is what survives many underlyings). The tree prices beautifully and reads the line badly: its nodes fan out from today's price, so at first it has none anywhere near $78 to test. A mesh puts a node wherever it likes.
+The other road skips solvers entirely. A binomial tree takes the better of exercising and holding at each node, which is Step 0 one node at a time ([Longstaff-Schwartz](06-longstaff-schwartz-least-squares-monte-carlo.md) does it by simulation, which is what survives many underlyings). The tree prices beautifully and reads the line badly: its nodes fan out from today's price, so at first it has none anywhere near $78 to test. A mesh puts a node wherever it likes.
 
 ---
 
@@ -697,8 +678,8 @@ The two outputs agree line for line, from different code, with the bell-curve ar
 
 - **Every listed single-stock option in the US.** They are American. A desk that must know when the shares will be handed over needs the exercise region, not just the price: a mesh reports it, a plain simulation does not.
 - **Convertible bonds and callable debt.** The holder's conversion right and the issuer's call right are early-exercise decisions on one instrument: two floors, one from each side.
-- **Wherever a solution must rest on something.** When to refinance a mortgage, abandon a well or shut a mine are the same three conditions with a different floor; so is a membrane pushed onto a shape, with no finance in sight: american-options-as-a-free-boundary-problem.
-- **The rest of this shelf.** [monte-carlo-pricing](01-monte-carlo-pricing.md) averages paths, [carr-madan-fft-and-cos-methods](09-carr-madan-fft-and-cos-methods.md) works in frequencies, and [finite-differences-for-the-black-scholes-equation](07-finite-differences-for-the-black-scholes-equation.md) supplies the mesh this card adds a floor to.
+- **Wherever a solution must rest on something.** When to refinance a mortgage, abandon a well or shut a mine are the same three conditions with a different floor; so is a membrane pushed onto a shape, with no finance in sight: An American option.
+- **The rest of this shelf.** [Monte Carlo pricing](01-monte-carlo-pricing.md) averages paths, [Transform pricing](09-carr-madan-fft-and-cos-methods.md) works in frequencies, and [Pricing on a grid](07-finite-differences-for-the-black-scholes-equation.md) supplies the mesh this card adds a floor to.
 
 > **Say it back**
 > An American option may be exercised at any time, so its value can never fall below what exercising pays. On a mesh that turns one linear system per date into three conditions holding together: every value clears its floor, no waiting equation is broken downwards, and a value above its floor solves its equation exactly. Writing each node's condition as a maximum makes the whole thing a fixed point; the map shrinks distances because the diagonal beats its neighbours, so there is one answer and sweeping finds it. PSOR is that sweep: relax, then lift onto the floor, in that order. The nodes left on their floor are the exercise region, and its top edge is the line the contract never told us — $77.9 for the Acme put today, climbing to the strike by expiry.
@@ -707,11 +688,11 @@ The two outputs agree line for line, from different code, with the bell-curve ar
 
 ## What this builds on
 
-- [finite-differences-for-the-black-scholes-equation](07-finite-differences-for-the-black-scholes-equation.md): the mesh, the implicit date step, and the band of three numbers per row that this card adds a floor to, plus the European price the mesh is calibrated against.
+- [Pricing on a grid](07-finite-differences-for-the-black-scholes-equation.md): the mesh, the implicit date step, and the band of three numbers per row that this card adds a floor to, plus the European price the mesh is calibrated against.
 
 ## Where this goes next
 
-- american-options-as-a-free-boundary-problem: the same three conditions as a variational inequality, sought in a space of functions rather than at nodes.
+- An American option: the same three conditions as a variational inequality, sought in a space of functions rather than at nodes.
 
 This card computes a line and checks it against two bounds, but never shows that the line exists, is a single curve, or is smooth; that is what a later card establishes.
 

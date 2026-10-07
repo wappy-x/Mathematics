@@ -1,36 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Dot Products and Best Fits
-topic: Best fit
-item: Least squares
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/02-orthogonal-projection|orthogonal-projection]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/03-inverse-matrix|inverse-matrix]]"
-  - "[[Cards/03-Algebra/04-Matrices/03-matrix-multiplication|matrix-multiplication]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/10-percentages|percentages]]"
-next:
-  - "[[Cards/09-Probability and statistics/09-Regression/01-least-squares-regression|least-squares-regression]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/03-multiple-regression-and-gauss-markov|multiple-regression-and-gauss-markov]]"
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/06-l2-as-a-hilbert-space|l2-as-a-hilbert-space]]"
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/03-conditional-expectation-as-projection|conditional-expectation-as-projection]]"
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/04-svi-smile-fit|svi-smile-fit]]"
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/06-mean-reverting-spot-and-the-futures-curve|mean-reverting-spot-and-the-futures-curve]]"
-  - "[[Cards/13-Engineering mathematics/05-Signals/07-adaptive-and-optimal-filters|adaptive-and-optimal-filters]]"
-  - "[[Cards/16-Numerical analysis/03-Numerical Linear Algebra/06-least-squares-normal-equations-versus-qr|least-squares-normal-equations-versus-qr]]"
-  - "[[Cards/16-Numerical analysis/04-Interpolation and Approximation/07-least-squares-and-orthogonal-polynomials|least-squares-and-orthogonal-polynomials]]"
-tags:
-  - mathematics
-  - algebra
-  - least-squares
----
-
 # Least squares: the best-fit line is a projection, and the normal equations hand it to you in one step
 
-Algebra → Dot Products and Best Fits → Best fit → Least squares
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Dot Products and Best Fits](../../../SYLLABUS.md#w03-s06) → Least squares
 
 ---
 
@@ -70,7 +40,7 @@ Stack the left-hand sides into a matrix, one row per car: the age, then a 1. Cal
 
 `[[1, 1], [2, 1], [3, 1], [4, 1]]`
 
-The first column holds the ages; the second is all ones and carries the intercept, the price at age zero. The unknowns go in $x$ = (slope, intercept), the prices in $b$ = (20, 17, 13, 10). Multiplying $A$ by $x$ ([matrix-multiplication](../04-Matrices/03-matrix-multiplication.md)) rebuilds all four left-hand sides:
+The first column holds the ages; the second is all ones and carries the intercept, the price at age zero. The unknowns go in $x$ = (slope, intercept), the prices in $b$ = (20, 17, 13, 10). Multiplying $A$ by $x$ ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)) rebuilds all four left-hand sides:
 
 $$A x = b$$
 
@@ -92,7 +62,7 @@ $A^T$, said "A transpose", is $A$ with rows and columns swapped: the 4 × 2 beco
 | $A^T b$ | those columns dotted with the prices | (133, 60) | — |
 | $r$ | the leftover: price minus fitted price, the residual | (−0.1, 0.3, −0.3, 0.1) | worse fit; the squares are the score |
 
-Every entry is a dot product ([dot-product](01-dot-product.md)): multiply matching entries, add them up. Out come 30 × slope + 10 × intercept = 133 and 10 × slope + 4 × intercept = 60.
+Every entry is a dot product ([The dot product](01-dot-product.md)): multiply matching entries, add them up. Out come 30 × slope + 10 × intercept = 133 and 10 × slope + 4 × intercept = 60.
 
 ### When it holds
 
@@ -113,7 +83,7 @@ A line's four predictions are slope × (1, 2, 3, 4) + intercept × (1, 1, 1, 1):
 
 ### Step 1: nearest means perpendicular
 
-That is the projection card ([orthogonal-projection](02-orthogonal-projection.md)): the nearest point is the shadow, and the leftover is perpendicular. A leaning leftover would run partly along the sheet, and sliding that way would shorten it. So the fit is the shadow of $b$, and $r$ = $b$ − $A x$ points straight out. Squared lengths add that way, by Pythagoras — which is why the score squares each miss.
+That is the projection card ([Projection](02-orthogonal-projection.md)): the nearest point is the shadow, and the leftover is perpendicular. A leaning leftover would run partly along the sheet, and sliding that way would shorten it. So the fit is the shadow of $b$, and $r$ = $b$ − $A x$ points straight out. Squared lengths add that way, by Pythagoras — which is why the score squares each miss.
 
 ### Step 2: perpendicular to the sheet means perpendicular to both columns
 
@@ -143,7 +113,7 @@ These are the **normal equations**; "normal" is the old word for perpendicular, 
 
 ### Step 4: two equations, two unknowns
 
-$A^T A$ is 2 × 2 however many cars there are: four here, four thousand at a dealership. Its determinant — the number whose vanishing means no unique answer ([inverse-matrix](../05-Solving%20Systems/03-inverse-matrix.md)) — is 30 × 4 − 10 × 10 = 20. Working code solves the pair rather than inverting.
+$A^T A$ is 2 × 2 however many cars there are: four here, four thousand at a dealership. Its determinant — the number whose vanishing means no unique answer ([The inverse matrix](../05-Solving%20Systems/03-inverse-matrix.md)) — is 30 × 4 − 10 × 10 = 20. Working code solves the pair rather than inverting.
 
 **The other road.** Statistics teaches this line with no matrix: slope = sum of (age − average age) × (price − average price), divided by the sum of (age − average age) squared; intercept = average price − slope × average age. With average age 2.5 and average price 15: −17 ÷ 5 = −3.4, then 15 + 8.5 = 23.5 — the same equations rearranged. The code runs both.
 
@@ -405,7 +375,7 @@ The two outputs match line for line.
 - **Every straight trendline in a spreadsheet.** `SLOPE`, `INTERCEPT` and `LINEST` answer these normal equations, by a steadier route than building the small matrix; any table of ages and prices is a depreciation schedule fitted this way.
 - **Calibrating an instrument.** Weigh known masses on a new scale, fit a line to what it reports, then read it backwards to correct later readings.
 - **More columns, same equation.** Add mileage: $A$ becomes 4 × 3, $A^T A$ becomes 3 × 3, every word above holds. That is "regression" in most reports.
-- **Columns already perpendicular.** Perpendicular unit columns make the small matrix the identity, and the answer is two dot products ([gram-schmidt-and-orthonormal-bases](03-gram-schmidt-and-orthonormal-bases.md)).
+- **Columns already perpendicular.** Perpendicular unit columns make the small matrix the identity, and the answer is two dot products ([Gram-Schmidt](03-gram-schmidt-and-orthonormal-bases.md)).
 
 > **Say it back**
 > No line hits all four prices, so the question becomes which line misses least. Stack the ages and a column of ones into $A$, the slope and intercept into $x$, the prices into $b$: the wish $A x = b$ has no answer. Read the prices as one point in a space with an axis per car, the drawable lines as a flat sheet: the fit is the shadow, so the leftover is perpendicular to both columns. Written down, that is $A^T A x = A^T b$ — price = 23.5 − 3.4 × age, squared miss 0.2.
@@ -414,24 +384,24 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [orthogonal-projection](02-orthogonal-projection.md): the shadow and its perpendicular leftover, here with two columns.
-- [matrix-multiplication](../04-Matrices/03-matrix-multiplication.md): how $A x$ turns two unknowns into four predictions.
-- [inverse-matrix](../05-Solving%20Systems/03-inverse-matrix.md): solving the small square system, and the determinant behind it.
-- [percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): judging a miss. 0.3 on a car worth 13 is small; on a car worth 1 it is not.
+- [Projection](02-orthogonal-projection.md): the shadow and its perpendicular leftover, here with two columns.
+- [Matrix multiplication](../04-Matrices/03-matrix-multiplication.md): how $A x$ turns two unknowns into four predictions.
+- [The inverse matrix](../05-Solving%20Systems/03-inverse-matrix.md): solving the small square system, and the determinant behind it.
+- [Percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): judging a miss. 0.3 on a car worth 13 is small; on a car worth 1 it is not.
 
 ## Where this goes next
 
-- [least-squares-regression](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md): the same line with noise assumed, so the slope gets an error bar.
-- [multiple-regression-and-gauss-markov](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md): many columns, and why no unbiased rival beats this fit.
-- [l2-as-a-hilbert-space](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md): the same geometry with functions as the arrows.
-- [conditional-expectation-as-projection](../../10-Measure%20and%20integration/09-Conditional%20Expectation/03-conditional-expectation-as-projection.md): a forecast as the shadow of a random quantity.
-- [svi-smile-fit](../../12-Financial%20mathematics/12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): squared misses minimised against traded option prices.
-- [mean-reverting-spot-and-the-futures-curve](../../12-Financial%20mathematics/25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md): a pull-back speed fitted from price history.
-- adaptive-and-optimal-filters: these equations re-solved as each reading arrives.
-- least-squares-normal-equations-versus-qr: why software never forms $A^T A$.
-- least-squares-and-orthogonal-polynomials: perpendicular columns, so curves fit without the small matrix.
+- [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md): the same line with noise assumed, so the slope gets an error bar.
+- [Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md): many columns, and why no unbiased rival beats this fit.
+- [L2 as a Hilbert space](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md): the same geometry with functions as the arrows.
+- [Conditional expectation as a projection](../../10-Measure%20and%20integration/09-Conditional%20Expectation/03-conditional-expectation-as-projection.md): a forecast as the shadow of a random quantity.
+- [The SVI smile](../../12-Financial%20mathematics/12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): squared misses minimised against traded option prices.
+- [A spot price that reverts](../../12-Financial%20mathematics/25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md): a pull-back speed fitted from price history.
+- Wiener and LMS: these equations re-solved as each reading arrives.
+- Least squares two ways: why software never forms $A^T A$.
+- Fitting instead of passing through: perpendicular columns, so curves fit without the small matrix.
 
-Nothing here says how far to trust −3.4, and that question opens [least-squares-regression](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md).
+Nothing here says how far to trust −3.4, and that question opens [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md).
 
 ---
 

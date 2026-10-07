@@ -1,27 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Powers on the Clock
-topic: Cycles of powers
-item: The order of a number and primitive roots
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/04-Powers on the Clock/04-eulers-theorem|eulers-theorem]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/08-decimals|decimals]]"
-next:
-  - "[[Cards/02-Number theory/05-Check Digits, Calendars and Cycles/05-perfect-shuffles|perfect-shuffles]]"
-  - "[[Cards/02-Number theory/06-Codes and Secrets/02-diffie-hellman|diffie-hellman]]"
-tags:
-  - mathematics
-  - number theory
-  - order-and-primitive-roots
----
-
 # The order of a number and primitive roots: how many steps until the powers return to 1, and the numbers that visit everything
 
-Number theory → Powers on the Clock → Cycles of powers → The order of a number and primitive roots
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Powers on the Clock](../../../SYLLABUS.md#w02-s04) → The order of a number and primitive roots
 
 ---
 
@@ -31,7 +10,7 @@ Divide 1 by 7 on paper. The answer is 0.142857 142857 142857, forever. Six digit
 
 Divide 1 by 13: 0.076923 076923 076923. Six again. The shared six is not luck.
 
-Long division carries a remainder, and each step multiplies that carry by 10 before dividing again. First carry 10, next 10 × 10, and so on. So the carries are the powers of 10 on the clock ([congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md)), and the digits repeat once a carry returns to 1. On the 7-clock they run 3, 2, 6, 4, 5, 1; on the 13-clock, 10, 9, 12, 3, 4, 1. Six steps home both times: the **order** of 10 is 6.
+Long division carries a remainder, and each step multiplies that carry by 10 before dividing again. First carry 10, next 10 × 10, and so on. So the carries are the powers of 10 on the clock ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)), and the digits repeat once a carry returns to 1. On the 7-clock they run 3, 2, 6, 4, 5, 1; on the 13-clock, 10, 9, 12, 3, 4, 1. Six steps home both times: the **order** of 10 is 6.
 
 On the 7-clock those carries hit all six numbers you can multiply by and get back from — sharing no factor above 1 with 7; on the 13-clock, half of twelve. A number whose powers reach everything is a **primitive root**.
 
@@ -61,7 +40,7 @@ A count, not a sum. On the 7-clock:
 
 **Read it aloud: six tens bring the 7-clock home.**
 
-Six numbers from 1 to 7 share no factor above 1 with 7 — Euler's totient, phi(7) ([eulers-totient](03-eulers-totient.md)). Order and totient match, so 10 is a primitive root here. On the 13-clock the order is 6 but phi(13) is 12.
+Six numbers from 1 to 7 share no factor above 1 with 7 — Euler's totient, phi(7) ([Euler's totient](03-eulers-totient.md)). Order and totient match, so 10 is a primitive root here. On the 13-clock the order is 6 but phi(13) is 12.
 
 | Piece | Plain meaning | Here |
 | --- | --- | --- |
@@ -79,17 +58,17 @@ A clock can have more than one primitive root. The 7-clock has two, 3 and 5; 10 
 
 ### Step 0: the powers cannot wander forever
 
-A clock holds only so many remainders, so multiplying by 10 over and over must revisit one. When 10 and the clock size share no factor above 1, every step can be undone ([modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)), so the first repeat is a return to 1.
+A clock holds only so many remainders, so multiplying by 10 over and over must revisit one. When 10 and the clock size share no factor above 1, every step can be undone ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)), so the first repeat is a return to 1.
 
 Drop the condition and it fails. 10 and 14 are both even: the powers of 10 on the 14-clock go 10, 2, 6, 4, 12, 8 and round again, never touching 1.
 
 ### Step 1: when a run lands on 1
 
-The order of 10 on the 7-clock is 6. Divide any run length by 6 ([division-with-remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)): so many sixes plus a leftover under 6. Each six lands on 1, which changes nothing, so the run ends where the leftover alone would. It reaches 1 exactly when 6 divides the length.
+The order of 10 on the 7-clock is 6. Divide any run length by 6 ([Division with a remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)): so many sixes plus a leftover under 6. Each six lands on 1, which changes nothing, so the run ends where the leftover alone would. It reaches 1 exactly when 6 divides the length.
 
 ### Step 2: the order divides phi(n)
 
-Euler's theorem ([eulers-theorem](04-eulers-theorem.md)) lands a run of phi(n) on 1 for any number sharing no factor with the clock size, so by Step 1 the order divides phi(n). On the 7-clock it divides 6 and is 6; on the 13-clock, 12 and 6.
+Euler's theorem ([Euler's theorem](04-eulers-theorem.md)) lands a run of phi(n) on 1 for any number sharing no factor with the clock size, so by Step 1 the order divides phi(n). On the 7-clock it divides 6 and is 6; on the 13-clock, 12 and 6.
 
 Now let the order be the whole of phi(n). Its first phi(n) powers are all different: two matching would cancel to a shorter run landing on 1, which Step 1 forbids. Only phi(n) remainders share no factor with the clock size, so the powers are all of them: a primitive root.
 
@@ -100,7 +79,7 @@ Not all. Only 1, 2, 4, any power of an odd prime, and twice any power of an odd 
 
 </details>
 
-The decimals are the same fact: the carry in long division is the running power of 10 ([decimals](../../01-Foundations/01-Everyday%20Arithmetic/08-decimals.md)).
+The decimals are the same fact: the carry in long division is the running power of 10 ([Decimals](../../01-Foundations/01-Everyday%20Arithmetic/08-decimals.md)).
 
 ---
 
@@ -253,9 +232,9 @@ Whole numbers throughout: outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Taking phi(n) for the answer rather than the ceiling.** Euler's theorem gets you home in phi(n) steps ([eulers-theorem](04-eulers-theorem.md)), not necessarily first. On the 13-clock phi(13) is 12, but 10 arrives after 6: a 12-digit repeat for 1/13 is double.
+> **Taking phi(n) for the answer rather than the ceiling.** Euler's theorem gets you home in phi(n) steps ([Euler's theorem](04-eulers-theorem.md)), not necessarily first. On the 13-clock phi(13) is 12, but 10 arrives after 6: a 12-digit repeat for 1/13 is double.
 >
-> - **Forgetting the shared factor.** An order needs the number and clock size to share nothing above 1 ([coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)): 10 on the 14-clock never reaches 1.
+> - **Forgetting the shared factor.** An order needs the number and clock size to share nothing above 1 ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)): 10 on the 14-clock never reaches 1.
 > - **Treating "primitive root" as a property of one number.** It belongs to the pair: 10 is one on the 7-clock, not the 13-clock.
 > - **Counting from 0.** The order counts multiplications, so it starts at 1.
 
@@ -263,9 +242,9 @@ Whole numbers throughout: outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Repeating decimals.** The block of 1/n is as long as the order of 10 on the n-clock ([decimals](../../01-Foundations/01-Everyday%20Arithmetic/08-decimals.md)): 142857 for 7, 076923 for 13.
-- **Key exchange.** Diffie-Hellman needs a large prime and a primitive root on it ([diffie-hellman](../06-Codes%20and%20Secrets/02-diffie-hellman.md)).
-- **Card shuffles.** A perfect riffle doubles each position on a clock; the deck returns at the order of 2 ([perfect-shuffles](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/05-perfect-shuffles.md)).
+- **Repeating decimals.** The block of 1/n is as long as the order of 10 on the n-clock ([Decimals](../../01-Foundations/01-Everyday%20Arithmetic/08-decimals.md)): 142857 for 7, 076923 for 13.
+- **Key exchange.** Diffie-Hellman needs a large prime and a primitive root on it ([Diffie-Hellman key exchange](../06-Codes%20and%20Secrets/02-diffie-hellman.md)).
+- **Card shuffles.** A perfect riffle doubles each position on a clock; the deck returns at the order of 2 ([Perfect shuffles](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/05-perfect-shuffles.md)).
 
 > **Say it back**
 > Take a clock and a number sharing no factor with it. Multiply by it over and over: the remainder returns to 1, and that count is the order. It always divides phi(n), the count of remainders you can get back from. Equalling phi(n) makes it a primitive root, touching every one. 10 is one on the 7-clock, so 1/7 repeats every 6 digits.
@@ -274,13 +253,13 @@ Whole numbers throughout: outputs match line for line.
 
 ## What this builds on
 
-- [eulers-theorem](04-eulers-theorem.md): a run of phi(n) multiplications lands on 1, the ceiling this count divides.
-- [decimals](../../01-Foundations/01-Everyday%20Arithmetic/08-decimals.md): long division and the repeating block, what the order measures.
+- [Euler's theorem](04-eulers-theorem.md): a run of phi(n) multiplications lands on 1, the ceiling this count divides.
+- [Decimals](../../01-Foundations/01-Everyday%20Arithmetic/08-decimals.md): long division and the repeating block, what the order measures.
 
 ## Where this goes next
 
-- [perfect-shuffles](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/05-perfect-shuffles.md): the order of 2 on a clock, riffles back to a fresh deck.
-- [diffie-hellman](../06-Codes%20and%20Secrets/02-diffie-hellman.md): why key exchange rests on a primitive root of a large prime.
+- [Perfect shuffles](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/05-perfect-shuffles.md): the order of 2 on a clock, riffles back to a fresh deck.
+- [Diffie-Hellman key exchange](../06-Codes%20and%20Secrets/02-diffie-hellman.md): why key exchange rests on a primitive root of a large prime.
 
 ---
 

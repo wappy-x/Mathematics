@@ -1,29 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Proof
-topic: Indirect proofs
-item: Proof by contradiction
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/06-Proof/02-proof-by-contrapositive|proof-by-contrapositive]]"
-  - "[[Cards/01-Foundations/02-The Number Line/03-irrational-numbers|irrational-numbers]]"
-next:
-  - "[[Cards/01-Foundations/06-Proof/06-choosing-a-proof-strategy|choosing-a-proof-strategy]]"
-  - "[[Cards/01-Foundations/07-Sets/06-russells-paradox|russells-paradox]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/08-pigeonhole-principle|pigeonhole-principle]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/03-cantors-diagonal-argument|cantors-diagonal-argument]]"
-tags:
-  - mathematics
-  - foundations
-  - proof-by-contradiction
----
-
 # Proof by contradiction: assume the opposite and watch it break
 
-Foundations → Proof → Indirect proofs → Proof by contradiction
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Proof](../../../SYLLABUS.md#w01-s06) → Proof by contradiction
 
 ---
 
@@ -70,11 +47,11 @@ flowchart TD
 
 ### Step 0: there is no third box
 
-A claim is either true or false. If assuming it false leads somewhere impossible, the false box is empty and the claim sits in the true one. That two-box rule backs the move ([valid-arguments](../05-Logic/06-valid-arguments.md)).
+A claim is either true or false. If assuming it false leads somewhere impossible, the false box is empty and the claim sits in the true one. That two-box rule backs the move ([Valid arguments](../05-Logic/06-valid-arguments.md)).
 
 ### Step 1: state the opposite exactly
 
-The claim: no arrangement of 31 dominoes covers the clipped board. Its opposite: some arrangement does — one, not all. Flip it wrong and the proof is about the wrong thing ([negating-quantifiers-and-counterexamples](../05-Logic/05-negating-quantifiers-and-counterexamples.md)).
+The claim: no arrangement of 31 dominoes covers the clipped board. Its opposite: some arrangement does — one, not all. Flip it wrong and the proof is about the wrong thing ([Negating a quantifier](../05-Logic/05-negating-quantifiers-and-counterexamples.md)).
 
 ### Step 2: the fact that carries the proof
 
@@ -90,7 +67,7 @@ Nobody laid a domino.
 
 ### The same move, one shelf over
 
-Root 2 is the number whose square is 2. Suppose a fraction, a top number p over a bottom number q in lowest terms — common factors divided out — squares to 2. Then p × p = 2 × q × q, which forces p even (an odd number times itself is odd, and 2 × q × q is even), and then q even too. Both even means a factor of 2 was still in there. Wall. Fractions get close and stay wrong: 99 × 99 is 9801; 2 × 70 × 70, 9800. [irrational-numbers](../02-The%20Number%20Line/03-irrational-numbers.md) runs it properly.
+Root 2 is the number whose square is 2. Suppose a fraction, a top number p over a bottom number q in lowest terms — common factors divided out — squares to 2. Then p × p = 2 × q × q, which forces p even (an odd number times itself is odd, and 2 × q × q is even), and then q even too. Both even means a factor of 2 was still in there. Wall. Fractions get close and stay wrong: 99 × 99 is 9801; 2 × 70 × 70, 9800. [Irrational numbers](../02-The%20Number%20Line/03-irrational-numbers.md) runs it properly.
 
 ---
 
@@ -250,8 +227,8 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Impossibility claims.** "That cannot be scheduled, packed or wired" is often a colour count in disguise: find what every move preserves, then show the target has the wrong amount.
-- **Claims that no such thing exists.** No fraction squares to 2 ([irrational-numbers](../02-The%20Number%20Line/03-irrational-numbers.md)); no list holds every decimal ([cantors-diagonal-argument](../09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md)); no set holds the sets that leave themselves out ([russells-paradox](../07-Sets/06-russells-paradox.md)).
-- **Crowded counting.** More items than boxes means some box holds two ([pigeonhole-principle](../08-Relations%20and%20Functions/08-pigeonhole-principle.md)).
+- **Claims that no such thing exists.** No fraction squares to 2 ([Irrational numbers](../02-The%20Number%20Line/03-irrational-numbers.md)); no list holds every decimal ([Cantor's diagonal](../09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md)); no set holds the sets that leave themselves out ([Russell's paradox](../07-Sets/06-russells-paradox.md)).
+- **Crowded counting.** More items than boxes means some box holds two ([Pigeonhole](../08-Relations%20and%20Functions/08-pigeonhole-principle.md)).
 
 > **Say it back**
 > Assume the opposite. Take only steps you already trust. If that lands on something impossible, the opposite cannot hold, so your claim does. Every domino covers one dark and one light, so 31 dominoes need 31 dark; the clipped board has 30. No amount of trying would have settled it.
@@ -260,15 +237,15 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [proof-by-contrapositive](02-proof-by-contrapositive.md): the other indirect move — prove the flipped statement. Try it first.
-- [irrational-numbers](../02-The%20Number%20Line/03-irrational-numbers.md): root 2 and the fractions it escapes, this argument's classic home.
+- [Proof by contrapositive](02-proof-by-contrapositive.md): the other indirect move — prove the flipped statement. Try it first.
+- [Irrational numbers](../02-The%20Number%20Line/03-irrational-numbers.md): root 2 and the fractions it escapes, this argument's classic home.
 
 ## Where this goes next
 
-- [choosing-a-proof-strategy](06-choosing-a-proof-strategy.md): which move fits a claim, from its shape.
-- [russells-paradox](../07-Sets/06-russells-paradox.md): a collection whose own definition walks into a wall.
-- [pigeonhole-principle](../08-Relations%20and%20Functions/08-pigeonhole-principle.md): suppose the crowding away, watch the total fail.
-- [cantors-diagonal-argument](../09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md): assume every decimal is listed, build one that is not.
+- [Choosing a proof strategy](06-choosing-a-proof-strategy.md): which move fits a claim, from its shape.
+- [Russell's paradox](../07-Sets/06-russells-paradox.md): a collection whose own definition walks into a wall.
+- [Pigeonhole](../08-Relations%20and%20Functions/08-pigeonhole-principle.md): suppose the crowding away, watch the total fail.
+- [Cantor's diagonal](../09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md): assume every decimal is listed, build one that is not.
 
 ---
 

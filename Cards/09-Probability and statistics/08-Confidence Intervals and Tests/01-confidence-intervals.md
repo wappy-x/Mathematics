@@ -1,27 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Confidence Intervals and Tests
-topic: Ranges for an unknown mean
-item: Confidence intervals
-kind: method
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/05-normal-quantile|normal-quantile]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/02-central-limit-theorem|central-limit-theorem]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/03-chi-square-t-and-f-distributions|chi-square-t-and-f-distributions]]"
-next:
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/02-intervals-for-proportions|intervals-for-proportions]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/03-hypothesis-tests-and-p-values|hypothesis-tests-and-p-values]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/02-regression-inference|regression-inference]]"
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/05-credible-intervals-and-decisions|credible-intervals-and-decisions]]"
-tags: [mathematics, probability and statistics, confidence-intervals]
----
-
 # Confidence intervals: a range that traps the truth 95 times in 100
 
-Probability and statistics → Confidence Intervals and Tests → Ranges for an unknown mean → Confidence intervals
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Confidence Intervals and Tests](../../../SYLLABUS.md#w09-s08) → Confidence intervals
 
 ---
 
@@ -37,7 +16,7 @@ A recipe with such a promise is a **confidence interval**, the term used from he
 
 **Measure how far an average misses the truth in units of the average's own wobble; that miss has a known law whatever the truth is, so "the average is within 2.26 wobbles of the truth" flips into "the truth is within 2.26 wobbles of the average", and the flip keeps its 95 percent.**
 
-**What kind of fact this is:** a method. Its promise, that the recipe covers the true mean 95 times in 100 when the readings are independent and normal, is a theorem proved on this card in Why it works, using the t law from [chi-square-t-and-f-distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md).
+**What kind of fact this is:** a method. Its promise, that the recipe covers the true mean 95 times in 100 when the readings are independent and normal, is a theorem proved on this card in Why it works, using the t law from [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md).
 
 ### The picture: twenty wards, twenty intervals
 
@@ -51,7 +30,7 @@ Each row is one simulated ward's interval. The vertical line is the true mean, 1
 
 ## The formula
 
-Notation first, in words. Write $n$ for the number of patients and $x_i$ for the i-th recovery time. A bar means an average: $\bar x$ is the average of the ten. The true mean of every possible patient is $\mu$ (mu). The spread of single recovery times, their standard deviation, is $\sigma$ (sigma) when it is known, and $s$ when it is estimated from the sample. A reminder from [normal-quantile](../04-Continuous%20Distributions/05-normal-quantile.md): Φ is the standard bell's area to the left of a point, and $\Phi^{-1}$ undoes it.
+Notation first, in words. Write $n$ for the number of patients and $x_i$ for the i-th recovery time. A bar means an average: $\bar x$ is the average of the ten. The true mean of every possible patient is $\mu$ (mu). The spread of single recovery times, their standard deviation, is $\sigma$ (sigma) when it is known, and $s$ when it is estimated from the sample. A reminder from [Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md): Φ is the standard bell's area to the left of a point, and $\Phi^{-1}$ undoes it.
 
 The estimated spread divides by $n - 1$, not $n$:
 
@@ -109,9 +88,9 @@ The truth is unknown, so no statement "the truth is probably here" can be comput
 
 ### Step 1: the average's wobble shrinks like one over root n
 
-Ten independent recovery times with spread σ have a sum whose variance is ten times one reading's variance, since variances of independent readings add ([variance-and-standard-deviation](../02-Random%20Variables/03-variance-and-standard-deviation.md)). Dividing the sum by 10 divides the variance by 100. So the average has variance $\sigma^2/n$ and spread $\sigma/\sqrt n$. With σ = 3 days and ten patients, the z interval's half-width is 1.959964 times 3 over the root of 10: 1.8594 days.
+Ten independent recovery times with spread σ have a sum whose variance is ten times one reading's variance, since variances of independent readings add ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)). Dividing the sum by 10 divides the variance by 100. So the average has variance $\sigma^2/n$ and spread $\sigma/\sqrt n$. With σ = 3 days and ten patients, the z interval's half-width is 1.959964 times 3 over the root of 10: 1.8594 days.
 
-A sum of independent normal readings is itself normal ([sums-and-convolution](../05-Transformations%20and%20Joint%20Laws/04-sums-and-convolution.md)). So the standardised miss
+A sum of independent normal readings is itself normal ([Adding continuous variables](../05-Transformations%20and%20Joint%20Laws/04-sums-and-convolution.md)). So the standardised miss
 
 $$Z = \frac{\bar X - \mu}{\sigma/\sqrt n}$$
 
@@ -135,7 +114,7 @@ A registry figure for σ is a luxury. Usually the only spread available is $s$, 
 
 $$T = \frac{\bar X - \mu}{S/\sqrt n}$$
 
-$S$ wobbles too. When it happens to come out small, the ratio is inflated, so $T$ lands far out more often than the bell allows. Its law is Student's t with n − 1 degrees of freedom, proved in [chi-square-t-and-f-distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md). That law still does not involve μ or σ, so $T$ is a pivot. Its tails are heavier, so the cutoff leaving 0.975 to its left is 2.262157 at nine degrees of freedom, not 1.959964.
+$S$ wobbles too. When it happens to come out small, the ratio is inflated, so $T$ lands far out more often than the bell allows. Its law is Student's t with n − 1 degrees of freedom, proved in [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md). That law still does not involve μ or σ, so $T$ is a pivot. Its tails are heavier, so the cutoff leaving 0.975 to its left is 2.262157 at nine degrees of freedom, not 1.959964.
 
 The same flip as Step 2 gives the t interval: 12.4 ± 2.262157 × 0.9214, which is 10.3158 to 14.4842 days.
 
@@ -170,7 +149,7 @@ The half-width is cutoff times standard error. Three dials move it.
 
 Nothing else enters: not the true mean, and not the size of the patient population the ten came from.
 
-A second road to the same interval runs through tests: the t interval is the set of candidate means that a t test at the 5 percent level would not reject. [hypothesis-tests-and-p-values](03-hypothesis-tests-and-p-values.md) sets up tests and shows the same match for the drug trial's gap; [t-tests-and-comparing-means](05-t-tests-and-comparing-means.md) shows it for the t test. A third road treats μ itself as uncertain, with a prior, and returns a credible interval, which does carry "95 percent chance the mean is in here", at the price of the prior: [credible-intervals-and-decisions](../10-Bayesian%20Inference/05-credible-intervals-and-decisions.md).
+A second road to the same interval runs through tests: the t interval is the set of candidate means that a t test at the 5 percent level would not reject. [Hypothesis tests](03-hypothesis-tests-and-p-values.md) sets up tests and shows the same match for the drug trial's gap; [t-tests](05-t-tests-and-comparing-means.md) shows it for the t test. A third road treats μ itself as uncertain, with a prior, and returns a credible interval, which does carry "95 percent chance the mean is in here", at the price of the prior: [Credible intervals and decisions](../10-Bayesian%20Inference/05-credible-intervals-and-decisions.md).
 
 ---
 
@@ -613,23 +592,23 @@ The two outputs match line for line, simulation included: both languages draw th
 ## The usual mistake
 
 > [!warning]
-> **"There is a 95 percent chance the true mean is between 10.3 and 14.5 days."** The true mean is a fixed number, and after the data are in, so is the interval. The 95 is the recipe's hit rate over repeated samples, counted before the data arrive; this interval either contains the truth or does not. In the picture, ward 19's interval looks as ordinary as the rest and holds the truth with chance 0. A statement with a genuine "95 percent chance" needs a prior on the mean: [credible-intervals-and-decisions](../10-Bayesian%20Inference/05-credible-intervals-and-decisions.md).
+> **"There is a 95 percent chance the true mean is between 10.3 and 14.5 days."** The true mean is a fixed number, and after the data are in, so is the interval. The 95 is the recipe's hit rate over repeated samples, counted before the data arrive; this interval either contains the truth or does not. In the picture, ward 19's interval looks as ordinary as the rest and holds the truth with chance 0. A statement with a genuine "95 percent chance" needs a prior on the mean: [Credible intervals and decisions](../10-Bayesian%20Inference/05-credible-intervals-and-decisions.md).
 >
 > - **1.96 with an estimated spread.** At ten patients the half-width shrinks from 2.0842 to 1.8058 days and the coverage falls to 91.84 percent. Use the t cutoff unless σ really is known.
 > - **Reading the interval as where patients fall.** Only 6 of the 10 patients' own recovery times lie inside 10.3158 to 14.4842. A range for one new patient must add that patient's own spread; at ten patients it is √11, about 3.3, times wider.
 > - **Trusting the 95 on skewed data at small n.** Exponential recovery times at ten patients give about 90 percent coverage. Skew needs more patients, or a method built for it.
-> - **Comparing two intervals by overlap.** Two groups' intervals can overlap while the difference between the groups is still clear at the 95 percent level; the difference has its own interval: [t-tests-and-comparing-means](05-t-tests-and-comparing-means.md).
+> - **Comparing two intervals by overlap.** Two groups' intervals can overlap while the difference between the groups is still clear at the 95 percent level; the difference has its own interval: [t-tests](05-t-tests-and-comparing-means.md).
 
 ---
 
 ## Where you meet it in real life
 
 - **Clinical reports.** A trial's result for a mean, such as a drop in blood pressure or days in hospital, is quoted with its 95 percent interval; the t interval is the default for a small sample of measurements.
-- **Polls and proportions.** A poll's "margin of error" is the same idea for a yes-or-no answer, with its own recipes: [intervals-for-proportions](02-intervals-for-proportions.md).
-- **Planning a study.** Choosing how many patients to enrol so the interval comes out narrow enough is the rule in Step 5 of Why it works: 35 patients for ±1 day when σ = 3. Sizing a trial so its test also catches a real effect is [power-and-sample-size](04-power-and-sample-size.md).
+- **Polls and proportions.** A poll's "margin of error" is the same idea for a yes-or-no answer, with its own recipes: [Intervals for a proportion](02-intervals-for-proportions.md).
+- **Planning a study.** Choosing how many patients to enrol so the interval comes out narrow enough is the rule in Step 5 of Why it works: 35 patients for ±1 day when σ = 3. Sizing a trial so its test also catches a real effect is [Power](04-power-and-sample-size.md).
 - **Manufacturing and measurement.** A laboratory reports a batch's mean strength or a gauge's mean reading with an interval; NIST's engineering handbook uses exactly the t recipe.
 - **Simulation.** Every simulated estimate on this card carries a standard error; turning it into an interval is the same recipe with a bell cutoff.
-- **Many intervals at once.** Twenty intervals at 95 percent miss about once between them, as the picture shows; reporting many at a time needs a correction: [multiple-testing](08-multiple-testing.md).
+- **Many intervals at once.** Twenty intervals at 95 percent miss about once between them, as the picture shows; reporting many at a time needs a correction: [Many tests](08-multiple-testing.md).
 
 > **Say it back**
 > A confidence interval is a recipe that turns a sample into a range, and its level is how often the recipe's ranges contain the truth over repeated samples. It works because the average's miss, measured in standard errors, has a law that does not depend on the truth, so a statement about the miss flips into a statement about the truth. With a known spread the cutoff is 1.96; with a spread estimated from ten patients it is 2.262157, the t law's cutoff, giving 12.4 ± 2.1 days. The 95 belongs to the recipe; any one interval simply contains the truth or does not. The promise needs independent readings, a near-normal law or many readings, and choices made in advance.
@@ -638,16 +617,16 @@ The two outputs match line for line, simulation included: both languages draw th
 
 ## What this builds on
 
-- [chi-square-t-and-f-distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md): the t law of the average's miss when the spread is estimated, and its heavier tails.
-- [normal-quantile](../04-Continuous%20Distributions/05-normal-quantile.md): the cutoff $\Phi^{-1}(0.975)$ = 1.959964.
-- [central-limit-theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md): why the recipe survives non-normal readings once there are many.
+- [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md): the t law of the average's miss when the spread is estimated, and its heavier tails.
+- [Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md): the cutoff $\Phi^{-1}(0.975)$ = 1.959964.
+- [Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md): why the recipe survives non-normal readings once there are many.
 
 ## Where this goes next
 
-- [intervals-for-proportions](02-intervals-for-proportions.md): intervals for a rate, where the spread depends on the answer.
-- [hypothesis-tests-and-p-values](03-hypothesis-tests-and-p-values.md): the same pivot read as a test of one candidate mean.
-- [regression-inference](../09-Regression/02-regression-inference.md): t intervals for the slope of a fitted line.
-- [credible-intervals-and-decisions](../10-Bayesian%20Inference/05-credible-intervals-and-decisions.md): an interval that does carry a probability for the mean, bought with a prior.
+- [Intervals for a proportion](02-intervals-for-proportions.md): intervals for a rate, where the spread depends on the answer.
+- [Hypothesis tests](03-hypothesis-tests-and-p-values.md): the same pivot read as a test of one candidate mean.
+- [Regression error bars](../09-Regression/02-regression-inference.md): t intervals for the slope of a fitted line.
+- [Credible intervals and decisions](../10-Bayesian%20Inference/05-credible-intervals-and-decisions.md): an interval that does carry a probability for the mean, bought with a prior.
 
 ---
 

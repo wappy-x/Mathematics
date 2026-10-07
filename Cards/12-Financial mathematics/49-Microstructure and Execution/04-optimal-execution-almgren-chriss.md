@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Microstructure and Execution
-topic: Scheduling a large sell order
-item: Almgren-Chriss
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/49-Microstructure and Execution/03-kyle-model-and-price-impact|kyle-model-and-price-impact]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/08-lagrange-multipliers|lagrange-multipliers]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/02-eigenvalues-and-eigenvectors|eigenvalues-and-eigenvectors]]"
-next:
-  - "[[Cards/12-Financial mathematics/49-Microstructure and Execution/05-market-making-avellaneda-stoikov|market-making-avellaneda-stoikov]]"
-  - "[[Cards/12-Financial mathematics/49-Microstructure and Execution/06-transaction-cost-analysis|transaction-cost-analysis]]"
-tags:
-  - mathematics
-  - financial-mathematics
-  - optimal-execution-almgren-chriss
----
-
 # Almgren-Chriss: trading a large order over time, balancing impact against risk
 
-Financial mathematics → Microstructure and Execution → Scheduling a large sell order → Almgren-Chriss
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Microstructure and Execution](../../../SYLLABUS.md#w12-s49) → Almgren-Chriss
 
 ---
 
@@ -116,8 +94,8 @@ Selling fast pushes the price down while the shares go out: a cost that is certa
 
 Acme starts at $S_0$. In slice $k$ the trader sells $n_k$ shares, a rate of $n_k/\tau$ shares a day. Two things happen to the price.
 
-- **The fill.** The shares go at $S_{k-1} - \epsilon - \eta\,n_k/\tau$: last slice's price, less half the spread, less a temporary discount proportional to the selling rate. The discount is the price of eating through the buyers in the book ([the-limit-order-book](01-the-limit-order-book.md)). It is paid and then forgotten.
-- **The drift of the price.** After the slice, $S_k = S_{k-1} + \sigma\sqrt{\tau}\,\xi_k - \gamma n_k$. The first term is the random wander: over a slice of length $\tau$ its standard deviation is $\sigma\sqrt{\tau}$. The second is the permanent dent: other traders read the selling as information and mark Acme down for good, as in [kyle-model-and-price-impact](03-kyle-model-and-price-impact.md). That card calls its impact slope λ; on this card λ is risk aversion, and the impact slopes are $\gamma$ and $\eta$.
+- **The fill.** The shares go at $S_{k-1} - \epsilon - \eta\,n_k/\tau$: last slice's price, less half the spread, less a temporary discount proportional to the selling rate. The discount is the price of eating through the buyers in the book ([The order book](01-the-limit-order-book.md)). It is paid and then forgotten.
+- **The drift of the price.** After the slice, $S_k = S_{k-1} + \sigma\sqrt{\tau}\,\xi_k - \gamma n_k$. The first term is the random wander: over a slice of length $\tau$ its standard deviation is $\sigma\sqrt{\tau}$. The second is the permanent dent: other traders read the selling as information and mark Acme down for good, as in [Kyle's model](03-kyle-model-and-price-impact.md). That card calls its impact slope λ; on this card λ is risk aversion, and the impact slopes are $\gamma$ and $\eta$.
 
 ### Step 2: the expected cost
 
@@ -146,7 +124,7 @@ The fill in slice $k$ carries the wander $\sigma\sqrt{\tau}\sum_{j<k}\xi_j$. Sum
 
 ### Step 4: why add $\lambda V$, and what $\lambda$ means
 
-The honest question is: for a chosen level of risk, what is the lowest expected cost? That is "minimise $E$ subject to $V$ equal to a target". The method of [lagrange-multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md) turns it into "minimise $E + \lambda V$" with $\lambda$ the multiplier. So $\lambda$ has a second life. Read as a preference, it is how many dollars of expected cost the trader pays to remove one dollar-squared of variance. Read on the frontier, it is minus the slope: $dE/dV = -\lambda$. The check measures that slope at $\lambda = 10^{-5}$ and gets exactly $-\lambda$ to six figures.
+The honest question is: for a chosen level of risk, what is the lowest expected cost? That is "minimise $E$ subject to $V$ equal to a target". The method of [Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md) turns it into "minimise $E + \lambda V$" with $\lambda$ the multiplier. So $\lambda$ has a second life. Read as a preference, it is how many dollars of expected cost the trader pays to remove one dollar-squared of variance. Read on the frontier, it is minus the slope: $dE/dV = -\lambda$. The check measures that slope at $\lambda = 10^{-5}$ and gets exactly $-\lambda$ to six figures.
 
 For this trader the risk charge $\lambda V$ is $21,569.85, on top of $E$ = $31,296.45$, so $U$ = $52,866.30.
 
@@ -169,7 +147,7 @@ $U$ contains $x_k$ in $(\tilde\eta/\tau)\big[(x_{k-1} - x_k)^2 + (x_k - x_{k+1})
 
 ### Step 6: why the answer is the only one
 
-A stationary point could be a maximum or a saddle. It is neither here. The second derivatives of $U$ in the twelve interior holdings form a matrix with $2(2\tilde\eta/\tau + \lambda\sigma^2\tau)$ on the diagonal and $-2\tilde\eta/\tau$ beside it. Its eigenvalues, from [eigenvalues-and-eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md), are $(2\tilde\eta/\tau)(2 - 2\cos(j\pi/N)) + 2\lambda\sigma^2\tau$ for $j = 1, \dots, N-1$. Every one is positive, so $U$ is a bowl with a single bottom. The smallest, at $j = 1$, is $5.452430 \times 10^{-6}$; the check confirms this a second way: every leading minor of the matrix is positive, and the product of the eigenvalues equals its determinant. Even at $\lambda = 0$ the bowl has a bottom, since $2 - 2\cos(j\pi/N) > 0$.
+A stationary point could be a maximum or a saddle. It is neither here. The second derivatives of $U$ in the twelve interior holdings form a matrix with $2(2\tilde\eta/\tau + \lambda\sigma^2\tau)$ on the diagonal and $-2\tilde\eta/\tau$ beside it. Its eigenvalues, from [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md), are $(2\tilde\eta/\tau)(2 - 2\cos(j\pi/N)) + 2\lambda\sigma^2\tau$ for $j = 1, \dots, N-1$. Every one is positive, so $U$ is a bowl with a single bottom. The smallest, at $j = 1$, is $5.452430 \times 10^{-6}$; the check confirms this a second way: every leading minor of the matrix is positive, and the product of the eigenvalues equals its determinant. Even at $\lambda = 0$ the bowl has a bottom, since $2 - 2\cos(j\pi/N) > 0$.
 
 The boundary cases follow. At $\lambda = 0$ the urgency is zero and the schedule is even. As $\lambda$ grows without limit, $\kappa$ does too, and the whole order goes in the first slice: zero variance, $261,000.00 of expected cost.
 
@@ -679,7 +657,7 @@ The Monte Carlo average, $31,387.15, sits within one standard error ($103.73) of
 > - **Mixing time units.** $\sigma$, $\eta$ and $\kappa$ must all use the same clock. Feeding 20% a year into a model counted in days gives $226,017.94 of expected cost instead of $31,296.45.
 > - **Charging risk on shares sold.** Risk sits on the shares still held, $x_k$, not on the trades $n_k$. A schedule that sells little early looks safe if risk is charged on trades, and is the riskiest schedule there is.
 > - **Reading $\lambda$ as a percentage.** It is dollars of cost per dollar-squared of variance, so it depends on the order's size. $10^{-5}$ for 100,000 shares is not the same attitude as $10^{-5}$ for a million.
-> - **Trusting the model's impact numbers without measuring them.** $\gamma$ and $\eta$ are sized here by a rule of thumb: selling a tenth of a day's volume moves the price by one spread for good, and selling at a rate of a hundredth of a day's volume costs one spread on each share. Real desks fit them to their own fills ([transaction-cost-analysis](06-transaction-cost-analysis.md)).
+> - **Trusting the model's impact numbers without measuring them.** $\gamma$ and $\eta$ are sized here by a rule of thumb: selling a tenth of a day's volume moves the price by one spread for good, and selling at a rate of a hundredth of a day's volume costs one spread on each share. Real desks fit them to their own fills ([Measuring execution](06-transaction-cost-analysis.md)).
 
 ---
 
@@ -688,9 +666,9 @@ The Monte Carlo average, $31,387.15, sits within one standard error ($103.73) of
 - **"Implementation shortfall" algorithms.** Broker trading algorithms sold under this name are built on this model or its descendants. Their "urgency" or "aggressiveness" setting is $\lambda$ under another name.
 - **TWAP.** The time-weighted average price algorithm sells evenly through the day: the $\lambda = 0$ end of the frontier.
 - **Index rebalances and fund liquidations.** When a fund must sell a position several times a day's volume, the same trade-off is run over days instead of half-hours.
-- **Pre-trade cost estimates.** Before a large order, desks quote the expected cost and its spread from this kind of model, then measure the real fills against it ([transaction-cost-analysis](06-transaction-cost-analysis.md)).
-- **The other side of the book.** The dealers absorbing the order face the mirror problem: inventory that is risky to hold and costly to unload ([market-making-avellaneda-stoikov](05-market-making-avellaneda-stoikov.md)).
-- **How thin the book is.** Whether $\eta$ is large or small is a question about the stock's liquidity ([liquidity-measures](07-liquidity-measures.md)) and its spread ([bid-ask-spread-and-adverse-selection](02-bid-ask-spread-and-adverse-selection.md)).
+- **Pre-trade cost estimates.** Before a large order, desks quote the expected cost and its spread from this kind of model, then measure the real fills against it ([Measuring execution](06-transaction-cost-analysis.md)).
+- **The other side of the book.** The dealers absorbing the order face the mirror problem: inventory that is risky to hold and costly to unload ([Market making](05-market-making-avellaneda-stoikov.md)).
+- **How thin the book is.** Whether $\eta$ is large or small is a question about the stock's liquidity ([Liquidity](07-liquidity-measures.md)) and its spread ([The spread](02-bid-ask-spread-and-adverse-selection.md)).
 
 > **Say it back**
 > Selling a large order fast costs impact for certain; selling slowly leaves the unsold shares exposed to the price. Almgren and Chriss price both: expected cost is a sum of squared trades, variance a sum of squared holdings. Minimising expected cost plus $\lambda$ times variance gives holdings that decay like a sinh, with urgency the square root of risk aversion times variance over impact. At $\lambda = 0$ the schedule is even; as $\lambda$ grows it front-loads, and the efficient frontier traces cost against risk. That frontier is flat at the even end, so a little front-loading is almost free.
@@ -699,14 +677,14 @@ The Monte Carlo average, $31,387.15, sits within one standard error ($103.73) of
 
 ## What this builds on
 
-- [kyle-model-and-price-impact](03-kyle-model-and-price-impact.md): why selling moves the price for good, and why the move is proportional to the amount sold. That is $\gamma$ here.
-- [lagrange-multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md): turning "cheapest cost at a given risk" into "minimise cost plus $\lambda$ times risk", and why $\lambda$ is then the frontier's slope.
-- [eigenvalues-and-eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the positive eigenvalues that make the objective a bowl with one bottom, so the sinh schedule is the only optimum.
+- [Kyle's model](03-kyle-model-and-price-impact.md): why selling moves the price for good, and why the move is proportional to the amount sold. That is $\gamma$ here.
+- [Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md): turning "cheapest cost at a given risk" into "minimise cost plus $\lambda$ times risk", and why $\lambda$ is then the frontier's slope.
+- [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): the positive eigenvalues that make the objective a bowl with one bottom, so the sinh schedule is the only optimum.
 
 ## Where this goes next
 
-- [market-making-avellaneda-stoikov](05-market-making-avellaneda-stoikov.md): the dealer's side, where the inventory is not chosen but arrives at random, and the dealer sets prices to shed it.
-- [transaction-cost-analysis](06-transaction-cost-analysis.md): measuring the shortfall actually paid, and fitting $\gamma$ and $\eta$ from it.
+- [Market making](05-market-making-avellaneda-stoikov.md): the dealer's side, where the inventory is not chosen but arrives at random, and the dealer sets prices to shed it.
+- [Measuring execution](06-transaction-cost-analysis.md): measuring the shortfall actually paid, and fitting $\gamma$ and $\eta$ from it.
 
 This card chooses the schedule before the first trade; what it leaves open is how to judge, after the close, whether the $31,296.45 it expected is what the order really cost.
 

@@ -1,27 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Linear Systems and Transforms
-topic: Ringing and overshoot
-item: Damping ratio and natural frequency
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/03-poles-zeros-and-stability|poles-zeros-and-stability]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/03-complex-roots-and-damped-oscillation|complex-roots-and-damped-oscillation]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/08-the-rlc-circuit-and-the-spring|the-rlc-circuit-and-the-spring]]"
-next:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/07-step-response-specifications|step-response-specifications]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/05-root-locus|root-locus]]"
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/03-rlc-circuits-and-resonance|rlc-circuits-and-resonance]]"
-  - "[[Cards/13-Engineering mathematics/07-Mechanics and Structures/06-vibration-modes-and-resonance|vibration-modes-and-resonance]]"
-tags: [mathematics, engineering mathematics, second-order-systems-damping-and-natural-frequency]
----
-
 # Damping ratio and natural frequency: two numbers fix a second-order response
 
-Engineering mathematics → Linear Systems and Transforms → Ringing and overshoot → Damping ratio and natural frequency
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Linear Systems and Transforms](../../../SYLLABUS.md#w13-s02) → Damping ratio and natural frequency
 
 ---
 
@@ -130,7 +109,7 @@ The equation m x'' + c x' + k x = F has three physical constants. Dividing by m 
 
 ### Step 1: the poles are the characteristic roots
 
-Try x = e^(st) in the unforced equation. It works when m s^2 + c s + k = 0, the characteristic equation, solved in [complex-roots-and-damped-oscillation](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md). Its roots are the poles of the transfer function ([poles-zeros-and-stability](03-poles-zeros-and-stability.md)). The quadratic formula gives
+Try x = e^(st) in the unforced equation. It works when m s^2 + c s + k = 0, the characteristic equation, solved in [Complex roots](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md). Its roots are the poles of the transfer function ([Poles and zeros](03-poles-zeros-and-stability.md)). The quadratic formula gives
 
 $$s = \frac{-c \pm \sqrt{c^2 - 4mk}}{2m} = -\zeta\omega_n \pm \omega_n\sqrt{\zeta^2 - 1} .$$
 
@@ -167,7 +146,7 @@ From the folded proof, the first peak comes at t_p = π/ω_d, half a ringing per
 
 $$M_p = e^{-\sigma\pi/\omega_d} = e^{-\pi\zeta/\sqrt{1-\zeta^2}} .$$
 
-This is the overshoot [the-rlc-circuit-and-the-spring](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/08-the-rlc-circuit-and-the-spring.md) found from the roots as e^(π × real part / imaginary part); with real part −ζω_n and imaginary part ω_n√(1 − ζ^2) it becomes the formula above. The natural frequency cancelled. A stiff racing suspension and a soft limousine with the same ζ overshoot by the same percentage; the racing car just does it sooner. The curve below is that formula, with the simulation of x'' + 2ζx' + x = 1 printed beside it in the code; they agree to the printed 0.01%.
+This is the overshoot [The RLC circuit](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/08-the-rlc-circuit-and-the-spring.md) found from the roots as e^(π × real part / imaginary part); with real part −ζω_n and imaginary part ω_n√(1 − ζ^2) it becomes the formula above. The natural frequency cancelled. A stiff racing suspension and a soft limousine with the same ζ overshoot by the same percentage; the racing car just does it sooner. The curve below is that formula, with the simulation of x'' + 2ζx' + x = 1 printed beside it in the code; they agree to the printed 0.01%.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -194,7 +173,7 @@ That gives a test-rig method. Shake the corner with a sine force, sweep the freq
 
 The gain has a resonant peak only when ζ is below 1/√2. At ζ = 0.7, just under, the peak is only 1.0002, at 0.8886 rad/s: the gain stays almost exactly 1 until it rolls off. The flattest possible curve comes at ζ = 1/√2 ≈ 0.7071. This is the second reason suspension, instrument and servo designers like ζ near 0.7.
 
-The full treatment of gain and phase curves is on [frequency-response-and-bode-plots](04-frequency-response-and-bode-plots.md).
+The full treatment of gain and phase curves is on [Bode plots](04-frequency-response-and-bode-plots.md).
 
 ---
 
@@ -232,7 +211,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The script builds the corner from mass, frequency and damping ratio, then reaches the two numbers and their consequences by four roads. Road 1 is the formulas. Road 2 solves m s^2 + c s + k = 0 by the quadratic formula and reads ω_n and ζ back off the poles. Road 3 is an RK4 simulation ([runge-kutta-four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) of the load drop: it measures the peak and its time, then inverts the overshoot formula to recover ζ and ω_n from the measured curve, as a test engineer would from a drop test. Road 4 is the frequency domain: bisection on the phase of G(jω), and a simulated sine shaker at ω_n. It also sweeps ζ from 0.1 to 1.0 against simulation, and prints every row of the what-breaks table and the pole-map coordinates.
+The script builds the corner from mass, frequency and damping ratio, then reaches the two numbers and their consequences by four roads. Road 1 is the formulas. Road 2 solves m s^2 + c s + k = 0 by the quadratic formula and reads ω_n and ζ back off the poles. Road 3 is an RK4 simulation ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) of the load drop: it measures the peak and its time, then inverts the overshoot formula to recover ζ and ω_n from the measured curve, as a test engineer would from a drop test. Road 4 is the frequency domain: bisection on the phase of G(jω), and a simulated sine shaker at ω_n. It also sweeps ζ from 0.1 to 1.0 against simulation, and prints every row of the what-breaks table and the pole-map coordinates.
 
 ### Python
 
@@ -647,7 +626,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Applying the overshoot formula to a system with a zero.** The formula e^(−πζ/√(1 − ζ^2)) is for an input that enters as a pure force, with nothing in the numerator of the transfer function. A kerb under the wheel pushes through the spring and the damper, and the damper responds to the kerb's speed. That adds a zero at −4.4880 rad/s, close to the poles, and the body overshoots the kerb by 21.03%, not the 4.60% the formula says. Two numbers fix the response only when the system is exactly second order with no zero; [step-response-specifications](07-step-response-specifications.md) measures what a third pole does.
+> **Applying the overshoot formula to a system with a zero.** The formula e^(−πζ/√(1 − ζ^2)) is for an input that enters as a pure force, with nothing in the numerator of the transfer function. A kerb under the wheel pushes through the spring and the damper, and the damper responds to the kerb's speed. That adds a zero at −4.4880 rad/s, close to the poles, and the body overshoots the kerb by 21.03%, not the 4.60% the formula says. Two numbers fix the response only when the system is exactly second order with no zero; [Step response specs](07-step-response-specifications.md) measures what a third pole does.
 >
 > - **Hertz for radians per second.** "1 Hz" is ω_n = 6.2832 rad/s. Using 1 rad/s gives a spring of 400.0 N/m and a sag of 1.961 m.
 > - **Forgetting the 2 in critical damping.** Critical damping is 2√(km). Without the 2 the damper comes out at 1759.3 N s/m, the real ζ is 0.35, and the corner overshoots by 30.92%.
@@ -660,9 +639,9 @@ The two outputs match line for line.
 
 - **Car suspension.** Engineers quote a ride frequency and a damping ratio for each axle; the shock absorber's valving is chosen to set ζ. A worn damper is a falling ζ, and a corner that bounces twice after the load lands is the 37.23% curve.
 - **Moving-needle instruments and servo drives.** An analogue meter needle, a hard-disk head or a camera gimbal is tuned near ζ = 0.7 so it reaches a new reading fast with only a few percent overshoot.
-- **Feedback loops.** A controller places the closed-loop poles; designers aim for a damping ratio, and the pole angle θ = arccos ζ becomes a line on the pole map. Moving the poles with a gain is [root-locus](../03-Feedback%20Control/05-root-locus.md).
-- **Circuits.** A resistor, inductor and capacitor in series obey the same equation, with ω_n = 1/√(LC); the circuit version is rlc-circuits-and-resonance.
-- **Structures.** Each vibration mode of a footbridge or a building has its own ω_n and a small ζ, which is why they can resonate; see vibration-modes-and-resonance.
+- **Feedback loops.** A controller places the closed-loop poles; designers aim for a damping ratio, and the pole angle θ = arccos ζ becomes a line on the pole map. Moving the poles with a gain is [Root locus](../03-Feedback%20Control/05-root-locus.md).
+- **Circuits.** A resistor, inductor and capacitor in series obey the same equation, with ω_n = 1/√(LC); the circuit version is RLC resonance.
+- **Structures.** Each vibration mode of a footbridge or a building has its own ω_n and a small ζ, which is why they can resonate; see Vibration modes.
 
 > **Say it back**
 > A mass on a spring with a damper has two numbers that fix its whole response. The natural frequency ω_n = √(k/m) sets the clock; the damping ratio ζ = c/(2√(km)) sets the shape. The poles sit on a circle of radius ω_n at an angle whose cosine is ζ. The overshoot after a step is e^(−πζ/√(1 − ζ^2)) and depends on ζ alone: 4.60% at ζ = 0.7, 37.23% at ζ = 0.3. The formula holds for a pure second-order system with no zero; a kerb pushing through the damper overshoots by 21.03%.
@@ -671,16 +650,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [poles-zeros-and-stability](03-poles-zeros-and-stability.md): what a pole is, and why its real part sets decay; this card reads a pole pair in polar form.
-- [complex-roots-and-damped-oscillation](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md): complex characteristic roots give a decaying sine; this card names the two numbers inside them.
-- [the-rlc-circuit-and-the-spring](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/08-the-rlc-circuit-and-the-spring.md): the spring-mass-damper equation itself, its match with the circuit, the damping ratio and the overshoot from the roots; this card rewrites that overshoot in ζ and ω_n.
+- [Poles and zeros](03-poles-zeros-and-stability.md): what a pole is, and why its real part sets decay; this card reads a pole pair in polar form.
+- [Complex roots](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md): complex characteristic roots give a decaying sine; this card names the two numbers inside them.
+- [The RLC circuit](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/08-the-rlc-circuit-and-the-spring.md): the spring-mass-damper equation itself, its match with the circuit, the damping ratio and the overshoot from the roots; this card rewrites that overshoot in ζ and ω_n.
 
 ## Where this goes next
 
-- [step-response-specifications](07-step-response-specifications.md): rise time, peak time, overshoot and settling as written requirements, and what a third pole does to them.
-- [root-locus](../03-Feedback%20Control/05-root-locus.md): how the poles, and so ζ and ω_n, move as a feedback gain is turned up.
-- rlc-circuits-and-resonance: the same two numbers in a circuit, with the quality factor Q = 1/(2ζ).
-- vibration-modes-and-resonance: a structure with many masses has one ω_n and ζ per mode.
+- [Step response specs](07-step-response-specifications.md): rise time, peak time, overshoot and settling as written requirements, and what a third pole does to them.
+- [Root locus](../03-Feedback%20Control/05-root-locus.md): how the poles, and so ζ and ω_n, move as a feedback gain is turned up.
+- RLC resonance: the same two numbers in a circuit, with the quality factor Q = 1/(2ζ).
+- Vibration modes: a structure with many masses has one ω_n and ζ per mode.
 
 The corner meets its 4.60% only if nothing but a force pushes it; when a specification also limits rise time and settling, the question becomes which numbers to write in the requirement, which step-response-specifications answers.
 

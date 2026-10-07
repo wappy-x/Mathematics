@@ -1,27 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Feedback Control
-topic: Winding round minus one
-item: Nyquist and margins
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/04-frequency-response-and-bode-plots|frequency-response-and-bode-plots]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/01-feedback-and-closed-loop-transfer-functions|feedback-and-closed-loop-transfer-functions]]"
-  - "[[Cards/07-Complex analysis/06-Real Integrals and Counting Zeros/06-the-argument-principle|the-argument-principle]]"
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/04-deforming-contours-and-winding-numbers|deforming-contours-and-winding-numbers]]"
-next:
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/09-lead-lag-compensation-and-loop-shaping|lead-lag-compensation-and-loop-shaping]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/10-smith-predictor-and-time-delays|smith-predictor-and-time-delays]]"
-  - "[[Cards/13-Engineering mathematics/10-Robustness and Adaptation/01-model-uncertainty-and-the-small-gain-theorem|model-uncertainty-and-the-small-gain-theorem]]"
-tags: [mathematics, engineering mathematics, feedback control, nyquist-criterion-and-stability-margins]
----
-
 # Nyquist and margins: encirclements decide stability, margins say by how much
 
-Engineering mathematics → Feedback Control → Winding round minus one → Nyquist and margins
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Feedback Control](../../../SYLLABUS.md#w13-s03) → Nyquist and margins
 
 ---
 
@@ -51,7 +30,7 @@ The curve starts at 6.4 on the right: a very slow wobble comes back 6.4 times as
 
 ## The formula
 
-Some notation, reminded or introduced. The **loop gain** $L(s)$ is what one trip round the loop does to each exponential $e^{st}$ ([feedback-and-closed-loop-transfer-functions](01-feedback-and-closed-loop-transfer-functions.md)): thermostat, pipe, radiator and room in series. Engineers write $j$ for the square root of −1; the rest of the library writes i. A **decibel** is $20\log_{10}$ of a gain, so a factor of 2 is 6.02 dB ([frequency-response-and-bode-plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md)). To **encircle** a point is to go once round it; clockwise turns count +1 here and anticlockwise turns −1.
+Some notation, reminded or introduced. The **loop gain** $L(s)$ is what one trip round the loop does to each exponential $e^{st}$ ([Feedback](01-feedback-and-closed-loop-transfer-functions.md)): thermostat, pipe, radiator and room in series. Engineers write $j$ for the square root of −1; the rest of the library writes i. A **decibel** is $20\log_{10}$ of a gain, so a factor of 2 is 6.02 dB ([Bode plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md)). To **encircle** a point is to go once round it; clockwise turns count +1 here and anticlockwise turns −1.
 
 For the room,
 
@@ -63,7 +42,7 @@ $$Z = N + P$$
 
 **Read it aloud:** the closed loop's poles in the right half-plane number the clockwise turns of the curve round −1 plus the open loop's own poles in the right half-plane.
 
-A pole in the right half-plane is a mode that grows ([poles-zeros-and-stability](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md)), so the closed loop is stable exactly when $Z = 0$. For the room, $P = 0$ (a heated room left alone settles) and $N = 0$, so $Z = 0$.
+A pole in the right half-plane is a mode that grows ([Poles and zeros](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md)), so the closed loop is stable exactly when $Z = 0$. For the room, $P = 0$ (a heated room left alone settles) and $N = 0$, so $Z = 0$.
 
 The margins are read at two special frequencies. The **phase crossover** $\omega_{pc}$ is where the curve crosses the negative real axis: its phase is −180°. The **gain crossover** $\omega_{gc}$ is where it crosses the unit circle: its size is 1.
 
@@ -115,7 +94,7 @@ With the loop closed, the room answers its setpoint through $L/(1 + L)$, so the 
 
 ### Step 1: turns count zeros minus poles
 
-The argument principle ([the-argument-principle](../../07-Complex%20analysis/06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md)) says: walk once anticlockwise round a closed curve in the $s$-plane, and the image $F(s)$ turns round 0 as many times as $F$ has zeros inside minus poles inside. Each zero inside drags the image round once; each pole inside drags it back. A turn count is a winding number ([deforming-contours-and-winding-numbers](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md)).
+The argument principle ([The argument principle](../../07-Complex%20analysis/06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md)) says: walk once anticlockwise round a closed curve in the $s$-plane, and the image $F(s)$ turns round 0 as many times as $F$ has zeros inside minus poles inside. Each zero inside drags the image round once; each pole inside drags it back. A turn count is a winding number ([Deforming a loop](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md)).
 
 ### Step 2: fence in the whole right half-plane
 
@@ -150,7 +129,7 @@ Multiply the loop gain by a number $c$, and every point of the curve moves $c$ t
 
 An extra delay $\Delta$ multiplies $L(j\omega)$ by $e^{-j\omega\Delta}$: same size, turned clockwise by $\omega\Delta$ radians. The point on the unit circle, at $\omega_{gc}$, is 39.81° short of −1. Turn it that far and it lands on −1: $\omega_{gc}\Delta$ = 0.6948 rad, so $\Delta$ = 0.6948 / 0.2757 = 2.52 min. A pipe 4.52 min long puts a closed-loop pole at $j\omega_{gc}$, a 22.79 min oscillation. Any lag behaves the same way at that one frequency, which is why the margin is quoted as an angle.
 
-Other routes to the same verdict exist. Routh's table ([routh-hurwitz-criterion](04-routh-hurwitz-criterion.md)) and the root locus ([root-locus](05-root-locus.md)) both need a polynomial, so the pipe's $e^{-\theta s}$ must first be approximated; the Nyquist count takes it exactly. The code below also finds the rightmost closed-loop pole directly, by Newton's method on $1 + L(s) = 0$, as an independent check.
+Other routes to the same verdict exist. Routh's table ([Routh-Hurwitz](04-routh-hurwitz-criterion.md)) and the root locus ([Root locus](05-root-locus.md)) both need a polynomial, so the pipe's $e^{-\theta s}$ must first be approximated; the Nyquist count takes it exactly. The code below also finds the rightmost closed-loop pole directly, by Newton's method on $1 + L(s) = 0$, as an independent check.
 
 ---
 
@@ -173,7 +152,7 @@ The phase crossover, $\omega_{pc}$ = 0.4646 rad/min (found by halving an interva
 | delay margin | 0.6948 / 0.2757 | 2.52 min |
 | **reading** | | **GM 5.99 dB, PM 39.81°, 2.52 min of pipe to spare** |
 
-The factors 9.3462 and 1.3651 are $\sqrt{1 + (\omega T)^2}$ for the room and the radiator. In the room: the thermostat could be set 1.99 times as strong, or the pipe made 2.52 min longer, before the temperature hunts. A 1 °C setpoint step peaks at 1.2376 °C after 10.61 min, settles at 0.8649 °C, and is within 2% of that after 39.72 min. The settled value falls short of 1 °C because a thermostat that only pushes in proportion leaves an offset ([steady-state-error-and-system-type](03-steady-state-error-and-system-type.md)).
+The factors 9.3462 and 1.3651 are $\sqrt{1 + (\omega T)^2}$ for the room and the radiator. In the room: the thermostat could be set 1.99 times as strong, or the pipe made 2.52 min longer, before the temperature hunts. A 1 °C setpoint step peaks at 1.2376 °C after 10.61 min, settles at 0.8649 °C, and is within 2% of that after 39.72 min. The settled value falls short of 1 °C because a thermostat that only pushes in proportion leaves an offset ([Steady-state error](03-steady-state-error-and-system-type.md)).
 
 ### The picture: spending the margins
 
@@ -620,7 +599,7 @@ The two outputs agree line for line at the printed precision.
 > [!warning]
 > **Counting turns round the origin instead of round −1, or forgetting $P$.** Closed-loop poles are where $L = -1$, so −1 is the only point that matters; the origin is where the open loop is silent. And the count is a difference: $N$ turns only say "stable" once the open loop's own unstable poles, $P$, are added. The reactor's curve turns once round −1, anticlockwise, and its loop is stable.
 >
-> - **Two good margins, one bad loop.** GM and PM are read at two points of the curve. The curve's closest approach to −1, here 0.4106, can be smaller than either suggests; it is the reciprocal of the peak sensitivity ([sensitivity-and-the-gang-of-four](02-sensitivity-and-the-gang-of-four.md)).
+> - **Two good margins, one bad loop.** GM and PM are read at two points of the curve. The curve's closest approach to −1, here 0.4106, can be smaller than either suggests; it is the reciprocal of the peak sensitivity ([Sensitivity functions](02-sensitivity-and-the-gang-of-four.md)).
 > - **Folding the phase.** The PM formula needs the lag accumulated from $\omega$ = 0. A phase folded back into (−180°, 180°] hides the turns a delay adds.
 > - **Reading the margins at the wrong frequencies.** The gain margin is read where the phase is −180°, the phase margin where the size is 1. Swapped, each comes out as zero by construction.
 > - **Calling 6 dB "six times".** It is twice: 20 log10 2 = 6.02 dB.
@@ -630,11 +609,11 @@ The two outputs agree line for line at the printed precision.
 
 ## Where you meet it in real life
 
-- **Heating, ventilation and process plants.** Long pipes, ducts and conveyors put delays in loops. The delay margin, 2.52 min here, says how much more transport lag a loop can carry; [smith-predictor-and-time-delays](10-smith-predictor-and-time-delays.md) shows how to control round a delay instead.
-- **Tuning by the ultimate gain.** Raising a P-only gain until the loop just oscillates finds the gain margin's critical gain, 12.7585 here, and its 13.52 min period. Classical tuning rules start from those two numbers ([pid-control-and-tuning](07-pid-control-and-tuning.md)).
+- **Heating, ventilation and process plants.** Long pipes, ducts and conveyors put delays in loops. The delay margin, 2.52 min here, says how much more transport lag a loop can carry; [Time delays](10-smith-predictor-and-time-delays.md) shows how to control round a delay instead.
+- **Tuning by the ultimate gain.** Raising a P-only gain until the loop just oscillates finds the gain margin's critical gain, 12.7585 here, and its 13.52 min period. Classical tuning rules start from those two numbers ([PID control](07-pid-control-and-tuning.md)).
 - **Specifications.** Controller specifications set minimum gain and phase margins, checked against a Bode or Nyquist plot measured on the plant itself.
 - **Feedback amplifiers.** Nyquist's own setting: too much loop gain where the phase reaches −180°, and the amplifier sings.
-- **Multivariable loops.** With several valves and several rooms, $L$ becomes a matrix; the generalised criterion counts turns of a determinant, and its sizes become singular values (model-uncertainty-and-the-small-gain-theorem).
+- **Multivariable loops.** With several valves and several rooms, $L$ becomes a matrix; the generalised criterion counts turns of a determinant, and its sizes become singular values (Writing down model error).
 
 > **Say it back**
 > The closed loop has a pole wherever the loop gain equals −1. The argument principle counts those poles in the right half-plane by how often the open-loop frequency-response curve turns round −1, corrected by the open loop's own unstable poles: Z = N + P. The heated room's curve does not encircle −1, so it settles. Its negative-axis crossing at −0.5016 gives a gain margin of 1.99, or 5.99 dB, and its unit-circle crossing gives 39.81° of phase margin, worth 2.52 min of extra pipe. The margins hold one at a time; spending part of both made the room hunt.
@@ -643,16 +622,16 @@ The two outputs agree line for line at the printed precision.
 
 ## What this builds on
 
-- [frequency-response-and-bode-plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md): $L(j\omega)$ as gain and phase, the decibel, and the delay's lag $\omega\theta$; the Nyquist curve draws the same numbers in one plane.
-- [feedback-and-closed-loop-transfer-functions](01-feedback-and-closed-loop-transfer-functions.md): the loop gain and the closed loop $L/(1 + L)$, whose poles are the zeros of $1 + L$.
-- [the-argument-principle](../../07-Complex%20analysis/06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): turns of the image count zeros minus poles, the engine of Step 1.
-- [deforming-contours-and-winding-numbers](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md): winding numbers, and why a contour may be stretched to infinity or detoured round a pole.
+- [Bode plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md): $L(j\omega)$ as gain and phase, the decibel, and the delay's lag $\omega\theta$; the Nyquist curve draws the same numbers in one plane.
+- [Feedback](01-feedback-and-closed-loop-transfer-functions.md): the loop gain and the closed loop $L/(1 + L)$, whose poles are the zeros of $1 + L$.
+- [The argument principle](../../07-Complex%20analysis/06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): turns of the image count zeros minus poles, the engine of Step 1.
+- [Deforming a loop](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md): winding numbers, and why a contour may be stretched to infinity or detoured round a pole.
 
 ## Where this goes next
 
-- [lead-lag-compensation-and-loop-shaping](09-lead-lag-compensation-and-loop-shaping.md): bending the curve away from −1 on purpose, buying phase margin near the crossover without giving up gain at low frequency.
-- [smith-predictor-and-time-delays](10-smith-predictor-and-time-delays.md): a controller that models the pipe and so removes most of the delay's lag from the loop.
-- model-uncertainty-and-the-small-gain-theorem: replacing two one-at-a-time margins by a guarantee against every model error up to a stated size.
+- [Loop shaping](09-lead-lag-compensation-and-loop-shaping.md): bending the curve away from −1 on purpose, buying phase margin near the crossover without giving up gain at low frequency.
+- [Time delays](10-smith-predictor-and-time-delays.md): a controller that models the pipe and so removes most of the delay's lag from the loop.
+- Writing down model error: replacing two one-at-a-time margins by a guarantee against every model error up to a stated size.
 
 The margins measure how far the curve is from −1; how to reshape the curve so that it keeps that distance while the thermostat works harder is the question loop shaping answers.
 

@@ -1,24 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Feedback Control
-topic: Stability from coefficients
-item: Routh-Hurwitz
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/01-feedback-and-closed-loop-transfer-functions|feedback-and-closed-loop-transfer-functions]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/03-poles-zeros-and-stability|poles-zeros-and-stability]]"
-  - "[[Cards/03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem|roots-and-the-factor-theorem]]"
-next:
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/05-root-locus|root-locus]]"
-tags: [mathematics, engineering mathematics, feedback control, routh-hurwitz-criterion]
----
-
 # Routh-Hurwitz: decide whether every root decays without finding a single root
 
-Engineering mathematics → Feedback Control → Stability from coefficients → Routh-Hurwitz
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Feedback Control](../../../SYLLABUS.md#w13-s03) → Routh-Hurwitz
 
 ---
 
@@ -53,7 +35,7 @@ Orange, gain 4 kW per °C: overshoot to a highest sample of 20.06 °C, then sett
 
 ## The formula
 
-Reminders. The transfer function $G(s)$ says what a system does to each exponential e^(st). A loop is stable when every root of its characteristic polynomial, each a **pole**, has negative real part ([poles-zeros-and-stability](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md)). Closing a loop with gain $K$ around $G(s)$ = N(s)/D(s), a numerator polynomial N over a denominator polynomial D, gives the characteristic polynomial D(s) + K N(s) ([feedback-and-closed-loop-transfer-functions](01-feedback-and-closed-loop-transfer-functions.md)). Engineers write j for the square root of −1; the rest of the library writes i.
+Reminders. The transfer function $G(s)$ says what a system does to each exponential e^(st). A loop is stable when every root of its characteristic polynomial, each a **pole**, has negative real part ([Poles and zeros](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md)). Closing a loop with gain $K$ around $G(s)$ = N(s)/D(s), a numerator polynomial N over a denominator polynomial D, gives the characteristic polynomial D(s) + K N(s) ([Feedback](01-feedback-and-closed-loop-transfer-functions.md)). Engineers write j for the square root of −1; the rest of the library writes i.
 
 For the workshop, time in hours, with s in 1/h:
 
@@ -112,7 +94,7 @@ $$-1.2 < K < 12 \ \text{kW per }^\circ\text{C}, \qquad K_{cr} = 12 \ \text{kW pe
 
 - **Linear loop.** The radiator cannot give negative heat and the boiler has a top rating. Once the demand passes it, growing swings stop at a fixed size, a **limit cycle**. The criterion speaks about the linear model only.
 - **A polynomial characteristic equation.** The array needs a finite list of coefficients. A pipe that carries water with a pure 20 min transport delay gives e^(−s/3), which is no polynomial; with that delay the true critical gain is 6.3060 kW per °C, not 12 (What breaks, below).
-- **Coefficients known exactly.** A slower radiator moves the critical gain; the gain margin 12/4 = 3.0, or 9.54 dB, at K = 4 is the safety factor against such errors ([nyquist-criterion-and-stability-margins](06-nyquist-criterion-and-stability-margins.md)).
+- **Coefficients known exactly.** A slower radiator moves the critical gain; the gain margin 12/4 = 3.0, or 9.54 dB, at K = 4 is the safety factor against such errors ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)).
 - **Real coefficients and no zero entries.** The count is exact when no first-column entry is zero. A zero first entry and a whole zero row each have their own rule, Steps 4 and 5.
 - **Continuous time.** A thermostat that samples the room at fixed intervals is a discrete-time loop, and its test is "every pole inside the unit circle", by a different table (the Jury test).
 
@@ -177,7 +159,7 @@ If only a row's first entry is zero, replace it by a small positive $\varepsilon
 
 Hurwitz (1895) wrote the condition as determinants of the coefficients. For a cubic with a_3 > 0: every coefficient positive, and $\Delta_2$ = a_2 a_1 − a_3 a_0 > 0. For the workshop Δ_2 = 60 − 5K, 6 times the Routh s^1 entry; in general each Hurwitz determinant is a product of Routh first-column entries.
 
-**Another route.** The critical gain is where the phase of G(jω) reaches −180°, taking K = 1/|G(jω)| there: for the workshop at 3.316625 rad/h, where |G| = 0.083333 = 1/12. [nyquist-criterion-and-stability-margins](06-nyquist-criterion-and-stability-margins.md) builds the test on that picture, and it still works with time delays. [root-locus](05-root-locus.md) draws where the poles go as the gain rises, for a faster room (lags 2, 4 and 10 min) whose pair crosses the axis at loop gain 12.6.
+**Another route.** The critical gain is where the phase of G(jω) reaches −180°, taking K = 1/|G(jω)| there: for the workshop at 3.316625 rad/h, where |G| = 0.083333 = 1/12. [Nyquist and margins](06-nyquist-criterion-and-stability-margins.md) builds the test on that picture, and it still works with time delays. [Root locus](05-root-locus.md) draws where the poles go as the gain rises, for a faster room (lags 2, 4 and 10 min) whose pair crosses the axis at loop gain 12.6.
 
 ### The picture: the three poles at three gains, to scale
 
@@ -208,7 +190,7 @@ The Routh array at the working gain K = 4 kW per °C, and then the boundary.
 | Period | 2π/3.316625 h × 60 | 113.67 min |
 | Gain margin at K = 4 | 12/4, and 20 log10 3 | **3.0, or 9.54 dB** |
 
-The thermostat can be turned up to three times its working setting before the room swings without end, at 113.67 min per cycle. At K = 4 the room ends at 19.77 °C, not 20 °C: a gain-only thermostat leaves a steady shortfall of 1/(1 + 4 × 0.8333) of the step, which [steady-state-error-and-system-type](03-steady-state-error-and-system-type.md) treats.
+The thermostat can be turned up to three times its working setting before the room swings without end, at 113.67 min per cycle. At K = 4 the room ends at 19.77 °C, not 20 °C: a gain-only thermostat leaves a steady shortfall of 1/(1 + 4 × 0.8333) of the step, which [Steady-state error](03-steady-state-error-and-system-type.md) treats.
 
 ### What breaks if you drop a piece
 
@@ -644,7 +626,7 @@ The two outputs are identical line for line. The simulated growth at K = 11 and 
 
 ## Where you meet it in real life
 
-- **Heating and process plants.** Raising a gain until the loop swings without end finds the critical gain by experiment; the array finds it from a model first. That gain and its swing period are where the Ziegler-Nichols tuning rules start ([pid-control-and-tuning](07-pid-control-and-tuning.md)).
+- **Heating and process plants.** Raising a gain until the loop swings without end finds the critical gain by experiment; the array finds it from a model first. That gain and its swing period are where the Ziegler-Nichols tuning rules start ([PID control](07-pid-control-and-tuning.md)).
 - **Design with a free parameter.** The array is arithmetic, so a gain or a time constant can stay a letter and the answer is an inequality, as −1.2 < K < 12 here.
 - **Engine governors.** The problem the test was made for. Maxwell's 1868 paper on governors asked when a steam engine's speed regulator hunts; Routh's 1877 essay answered the question for a loop of any degree.
 - **Motor drives.** A current loop with a filter and a motor is a cubic or quartic, and the array gives its gain range before any simulation.
@@ -657,13 +639,13 @@ The two outputs are identical line for line. The simulated growth at K = 11 and 
 
 ## What this builds on
 
-- [feedback-and-closed-loop-transfer-functions](01-feedback-and-closed-loop-transfer-functions.md): closing a loop turns D(s) and N(s) into the characteristic polynomial D(s) + K N(s) that the array tests.
-- [poles-zeros-and-stability](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md): stability means every pole has negative real part, the fact this card decides without finding a pole.
-- [roots-and-the-factor-theorem](../../03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem.md): a polynomial of degree n has n roots, and a factor like s^2 + 11 carries two of them, which is what a zero row exposes.
+- [Feedback](01-feedback-and-closed-loop-transfer-functions.md): closing a loop turns D(s) and N(s) into the characteristic polynomial D(s) + K N(s) that the array tests.
+- [Poles and zeros](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md): stability means every pole has negative real part, the fact this card decides without finding a pole.
+- [Roots and factors](../../03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem.md): a polynomial of degree n has n roots, and a factor like s^2 + 11 carries two of them, which is what a zero row exposes.
 
 ## Where this goes next
 
-- [root-locus](05-root-locus.md): the paths the three poles trace as the gain rises, drawn by rules, for a faster room than this workshop (lags 2, 4 and 10 min), whose pair crosses the axis at loop gain 12.6.
+- [Root locus](05-root-locus.md): the paths the three poles trace as the gain rises, drawn by rules, for a faster room than this workshop (lags 2, 4 and 10 min), whose pair crosses the axis at loop gain 12.6.
 
 The array says for which gains the room settles; how the poles move between those gains, and so how fast the room settles at each one, is what the root locus draws.
 

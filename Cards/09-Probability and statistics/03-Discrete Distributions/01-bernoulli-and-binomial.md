@@ -1,34 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Discrete Distributions
-topic: Counting successes
-item: Binomial
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/04-equally-likely-outcomes-and-counting|equally-likely-outcomes-and-counting]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/03-variance-and-standard-deviation|variance-and-standard-deviation]]"
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/02-binomial-theorem|binomial-theorem]]"
-next:
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/02-geometric-and-negative-binomial|geometric-and-negative-binomial]]"
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/03-hypergeometric|hypergeometric]]"
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/04-poisson|poisson]]"
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/05-multinomial|multinomial]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/03-normal-approximation-to-binomial|normal-approximation-to-binomial]]"
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/02-simple-random-walk|simple-random-walk]]"
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/08-backtesting-var|backtesting-var]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/01-default-correlation-and-joint-default|default-correlation-and-joint-default]]"
-tags:
-  - mathematics
-  - probability and statistics
-  - bernoulli-and-binomial
----
-
 # Binomial: the number of successes in n independent tries
 
-Probability and statistics → Discrete Distributions → Counting successes → Binomial
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Discrete Distributions](../../../SYLLABUS.md#w09-s03) → Binomial
 
 ---
 
@@ -64,7 +36,7 @@ Bars: the fair coin, symmetric about 5 heads. Line: the coin that lands heads 60
 
 ## The formula
 
-Notation first, in words. A random variable is a quantity whose value depends on chance, written as a capital letter; here X is the number of heads, and $P(X = k)$ is read "the chance that X equals k". C(n, k) is the number of ways to choose k items from n, as in [binomial-theorem](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md). This card introduces one more piece: **X ~ Binomial(n, p)**, read "X follows the binomial law with n trials and chance p".
+Notation first, in words. A random variable is a quantity whose value depends on chance, written as a capital letter; here X is the number of heads, and $P(X = k)$ is read "the chance that X equals k". C(n, k) is the number of ways to choose k items from n, as in [The binomial theorem](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md). This card introduces one more piece: **X ~ Binomial(n, p)**, read "X follows the binomial law with n trials and chance p".
 
 $$P(X = k) = C(n, k)\; p^k\,(1-p)^{n-k}, \qquad k = 0, 1, \dots, n$$
 
@@ -101,10 +73,10 @@ A single try, n = 1, is the **Bernoulli law**, Bernoulli(p): X is 1 with chance 
 
 ### When it holds
 
-- **A fixed number of tries.** Flipping until the third head makes n itself random; that count is the [geometric-and-negative-binomial](02-geometric-and-negative-binomial.md) law.
-- **Two outcomes per try.** Three or more outcomes per try, such as a die read as 1, 2 or other, need the [multinomial](05-multinomial.md) law.
+- **A fixed number of tries.** Flipping until the third head makes n itself random; that count is the [Waiting for a success](02-geometric-and-negative-binomial.md) law.
+- **Two outcomes per try.** Three or more outcomes per try, such as a die read as 1, 2 or other, need the [Multinomial](05-multinomial.md) law.
 - **One shared chance p.** If the chance changes from try to try, strings with the same head count stop carrying one shared chance, and Step 0 below fails.
-- **Independent tries.** One flip copied onto all ten keeps each flip fair but makes 7 heads impossible and raises the variance from 2.5 to 25. Drawing cards without putting them back is the milder version: the [hypergeometric](03-hypergeometric.md) law.
+- **Independent tries.** One flip copied onto all ten keeps each flip fair but makes 7 heads impossible and raises the variance from 2.5 to 25. Drawing cards without putting them back is the milder version: the [Hypergeometric](03-hypergeometric.md) law.
 
 ---
 
@@ -138,7 +110,7 @@ Write X as a sum of switches: $X = B_1 + B_2 + \dots + B_n$, where $B_i$ is 1 if
 
 ### Step 5: the variance is np(1 − p)
 
-One switch has variance $E[B_i^2] - p^2$. A switch squared is itself, since 0 squared is 0 and 1 squared is 1, so the variance is $p - p^2 = p(1-p)$. For independent tries, variances add ([variance-and-standard-deviation](../02-Random%20Variables/03-variance-and-standard-deviation.md)), so $\mathrm{Var}(X) = np(1-p)$: 2.5 for the fair coin, 2.4 for the bent one.
+One switch has variance $E[B_i^2] - p^2$. A switch squared is itself, since 0 squared is 0 and 1 squared is 1, so the variance is $p - p^2 = p(1-p)$. For independent tries, variances add ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)), so $\mathrm{Var}(X) = np(1-p)$: 2.5 for the fair coin, 2.4 for the bent one.
 
 This step does use independence. The copied coin has the same average, 5, but variance 25.
 
@@ -166,9 +138,9 @@ The identity $k\,C(n, k) = n\,C(n-1, k-1)$ says: choosing a team of k from n and
 
 ### Step 6: a tail is a sum, and there is no shortcut
 
-The chance of at least 7 heads is the four masses at 7, 8, 9 and 10 added. The binomial tail has no short closed formula. For a thousand tries, adding hundreds of terms still works on a computer, and the [normal-approximation-to-binomial](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md) gives a quick estimate with its error stated.
+The chance of at least 7 heads is the four masses at 7, 8, 9 and 10 added. The binomial tail has no short closed formula. For a thousand tries, adding hundreds of terms still works on a computer, and the [Normal approximation](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md) gives a quick estimate with its error stated.
 
-A second road reaches the whole law without C(n, k): add one flip at a time. After one more flip, k heads can come from k − 1 heads and a head, or from k heads and a tail, so the new chance is p times the old chance at k − 1 plus (1 − p) times the old chance at k. That is Pascal's rule with weights. The code runs it as its third road; adding counts in general is [sums-of-discrete-variables](06-sums-of-discrete-variables.md).
+A second road reaches the whole law without C(n, k): add one flip at a time. After one more flip, k heads can come from k − 1 heads and a head, or from k heads and a tail, so the new chance is p times the old chance at k − 1 plus (1 − p) times the old chance at k. That is Pascal's rule with weights. The code runs it as its third road; adding counts in general is [Adding counts](06-sums-of-discrete-variables.md).
 
 ---
 
@@ -616,9 +588,9 @@ The two outputs are identical. The simulated chance of exactly 7 fair heads, 0.1
 
 - **Quality checks.** A factory tests n parts from a large batch; the count of failures is Binomial(n, p) while parts fail independently, and a count far in the tail flags the batch.
 - **Drug trials and polls.** The count of patients who respond, or of voters who say yes, is binomial when each is drawn independently from a large population; estimating p comes later in this wing.
-- **Risk models checked against days.** A bank's Value at Risk at the 1% level should be broken on about one trading day in a hundred; if the model is right, the count of breaks over a year is binomial, the test in [backtesting-var](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/08-backtesting-var.md).
-- **Loan defaults.** Counting defaults in a pool as binomial assumes independence, which fails exactly when it matters: [default-correlation-and-joint-default](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/01-default-correlation-and-joint-default.md).
-- **Rare events.** Many tries with a small chance each, such as emails arriving at a help desk, one tiny slice of time per try, turn the binomial into the [poisson](04-poisson.md) law.
+- **Risk models checked against days.** A bank's Value at Risk at the 1% level should be broken on about one trading day in a hundred; if the model is right, the count of breaks over a year is binomial, the test in [Backtesting VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/08-backtesting-var.md).
+- **Loan defaults.** Counting defaults in a pool as binomial assumes independence, which fails exactly when it matters: [Default correlation](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/01-default-correlation-and-joint-default.md).
+- **Rare events.** Many tries with a small chance each, such as emails arriving at a help desk, one tiny slice of time per try, turn the binomial into the [Poisson](04-poisson.md) law.
 
 > **Say it back**
 > A binomial count is the number of successes in a fixed number of independent tries sharing one chance of success. Every string with k successes has the same chance, and there are C(n, k) such strings; their product is the chance of exactly k. The average is np because each try adds p on average, and the variance is np(1 − p) because independent spreads add. A tail is the masses added. Ten fair flips give exactly 7 heads with chance 0.117188, and 7 or more with chance 0.171875.
@@ -627,20 +599,20 @@ The two outputs are identical. The simulated chance of exactly 7 fair heads, 0.1
 
 ## What this builds on
 
-- [equally-likely-outcomes-and-counting](../01-Chance%20and%20Events/04-equally-likely-outcomes-and-counting.md): the fair-coin answer as favourable strings over all strings.
-- [variance-and-standard-deviation](../02-Random%20Variables/03-variance-and-standard-deviation.md): variance, and why independent variances add.
-- [binomial-theorem](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md): C(n, k), and the expansion that makes the masses add to one.
+- [Counting chances](../01-Chance%20and%20Events/04-equally-likely-outcomes-and-counting.md): the fair-coin answer as favourable strings over all strings.
+- [Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md): variance, and why independent variances add.
+- [The binomial theorem](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md): C(n, k), and the expansion that makes the masses add to one.
 
 ## Where this goes next
 
-- [geometric-and-negative-binomial](02-geometric-and-negative-binomial.md): fix the successes and count the tries instead.
-- [hypergeometric](03-hypergeometric.md): draws without replacement, where the tries are not independent.
-- [poisson](04-poisson.md): many tries, tiny chance each, and the limit law.
-- [multinomial](05-multinomial.md): more than two outcomes per try.
-- [normal-approximation-to-binomial](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md): the bell curve that approximates a long tail sum.
-- [simple-random-walk](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md): heads minus tails, followed flip by flip.
-- [backtesting-var](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/08-backtesting-var.md): a binomial count of broken days as a test of a risk model.
-- [default-correlation-and-joint-default](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/01-default-correlation-and-joint-default.md): counts of defaults when independence fails.
+- [Waiting for a success](02-geometric-and-negative-binomial.md): fix the successes and count the tries instead.
+- [Hypergeometric](03-hypergeometric.md): draws without replacement, where the tries are not independent.
+- [Poisson](04-poisson.md): many tries, tiny chance each, and the limit law.
+- [Multinomial](05-multinomial.md): more than two outcomes per try.
+- [Normal approximation](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md): the bell curve that approximates a long tail sum.
+- [Simple random walk](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/02-simple-random-walk.md): heads minus tails, followed flip by flip.
+- [Backtesting VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/08-backtesting-var.md): a binomial count of broken days as a test of a risk model.
+- [Default correlation](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/01-default-correlation-and-joint-default.md): counts of defaults when independence fails.
 
 The binomial law fixes the number of tries and asks how many succeed; the geometric law asks the reverse question, how many tries until the first success, and gets a law with no upper limit.
 

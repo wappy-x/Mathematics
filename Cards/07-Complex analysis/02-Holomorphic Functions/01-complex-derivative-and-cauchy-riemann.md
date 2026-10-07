@@ -1,28 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Holomorphic Functions
-topic: Slopes that turn and stretch
-item: The complex derivative
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/06-complex-limits-series-and-regions|complex-limits-series-and-regions]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/01-the-derivative|the-derivative]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-next:
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/02-complex-power-series|complex-power-series]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/04-complex-logarithm|complex-logarithm]]"
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/01-contour-integrals|contour-integrals]]"
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/01-conformal-maps|conformal-maps]]"
-  - "[[Cards/16-Numerical analysis/08-Derivatives by Machine/05-complex-step-and-dual-numbers|complex-step-and-dual-numbers]]"
-tags: [mathematics, complex analysis, complex-derivative-and-cauchy-riemann]
----
-
 # The complex derivative: one limit from every direction, and the Cauchy-Riemann equations that make it possible
 
-Complex analysis → Holomorphic Functions → Slopes that turn and stretch → The complex derivative
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Holomorphic Functions](../../../SYLLABUS.md#w07-s02) → The complex derivative
 
 ---
 
@@ -54,7 +32,7 @@ $$f'(z_0) = \lim_{h \to 0} \frac{f(z_0 + h) - f(z_0)}{h}$$
 
 **Read it aloud:** change over step, with one answer however h shrinks to 0.
 
-Write $z = x + iy$ and split the output into real part $u$ and imaginary part $v$, each a real function of $x$ and $y$. A subscript names a partial derivative: $u_x$ is the rate $u$ changes as $x$ alone moves ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). The **Cauchy-Riemann equations** are
+Write $z = x + iy$ and split the output into real part $u$ and imaginary part $v$, each a real function of $x$ and $y$. A subscript names a partial derivative: $u_x$ is the rate $u$ changes as $x$ alone moves ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). The **Cauchy-Riemann equations** are
 
 $$u_x = v_y, \qquad u_y = -v_x, \qquad f'(z_0) = u_x + i\,v_x$$
 
@@ -62,7 +40,7 @@ $$u_x = v_y, \qquad u_y = -v_x, \qquad f'(z_0) = u_x + i\,v_x$$
 
 Conversely, if the partial derivatives of $u$ and $v$ are continuous near $z_0$ and satisfy the equations at $z_0$, then $f'(z_0)$ exists.
 
-A function is **holomorphic** on an open region, one where every point has a small disc round it still inside, when it has a complex derivative at every point of the region ([complex-limits-series-and-regions](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md)).
+A function is **holomorphic** on an open region, one where every point has a small disc round it still inside, when it has a complex derivative at every point of the region ([Limits and regions in the plane](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -88,7 +66,7 @@ A function is **holomorphic** on an open region, one where every point has a sma
 
 ### Step 0: a derivative is one multiplier
 
-A real derivative is the number that, times a small step, gives the change ([the-derivative](../../06-Calculus%20and%20analysis/02-Derivatives/01-the-derivative.md)). In the plane, multiplying turns and stretches. So a complex derivative asks the function to treat every small step round $z_0$ with one turn-and-stretch, and the quotient must settle on one number from every direction.
+A real derivative is the number that, times a small step, gives the change ([The derivative](../../06-Calculus%20and%20analysis/02-Derivatives/01-the-derivative.md)). In the plane, multiplying turns and stretches. So a complex derivative asks the function to treat every small step round $z_0$ with one turn-and-stretch, and the quotient must settle on one number from every direction.
 
 ### Step 1: the eastward direction gives u_x + i v_x
 
@@ -148,7 +126,7 @@ The tolerance was arbitrary, so the limit is $u_x + i v_x$.
 
 Every disc round 0 holds points where $\lvert z\rvert^2$ has no derivative. Holomorphic asks for a derivative throughout an open region: the square filter is holomorphic on the whole plane, the mirror and $\lvert z\rvert^2$ on no region.
 
-An alternative route reads the equations as geometry, angles kept, on [conformal-maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md).
+An alternative route reads the equations as geometry, angles kept, on [Conformal maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md).
 
 ---
 
@@ -401,8 +379,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Derivatives by machine.** A tiny imaginary step gives a real function's slope to full precision, because its formulas are holomorphic: complex-step-and-dual-numbers.
-- **Map projections.** A holomorphic map with nonzero derivative keeps angles, as the Mercator chart does: [conformal-maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md).
+- **Derivatives by machine.** A tiny imaginary step gives a real function's slope to full precision, because its formulas are holomorphic: Complex steps and dual numbers.
+- **Map projections.** A holomorphic map with nonzero derivative keeps angles, as the Mercator chart does: [Conformal maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md).
 
 > **Say it back**
 > The complex derivative is one turn-and-stretch for every small step. Comparing eastward and northward quotients gives u_x = v_y and u_y = −v_x: necessary, and with continuous partials enough. The square filter passes, 2 + 2i at 1 + i; the mirror fails everywhere; |z|^2 passes at 0 alone, so is holomorphic nowhere.
@@ -411,19 +389,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [complex-limits-series-and-regions](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md): limits in the plane, and open regions.
-- [the-derivative](../../06-Calculus%20and%20analysis/02-Derivatives/01-the-derivative.md): the difference quotient and its limit.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): the rates u_x, u_y, v_x, v_y, and the tangent-plane approximation.
+- [Limits and regions in the plane](../01-Complex%20Numbers%20and%20the%20Plane/06-complex-limits-series-and-regions.md): limits in the plane, and open regions.
+- [The derivative](../../06-Calculus%20and%20analysis/02-Derivatives/01-the-derivative.md): the difference quotient and its limit.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): the rates u_x, u_y, v_x, v_y, and the tangent-plane approximation.
 
 ## Where this goes next
 
-- [complex-power-series](02-complex-power-series.md): power series are holomorphic inside their disc.
-- [complex-logarithm](04-complex-logarithm.md): a function holomorphic only once a cut is made.
-- [contour-integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md): integrating holomorphic functions along paths.
-- [conformal-maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md): turn-and-stretch at every point, read as geometry.
-- complex-step-and-dual-numbers: the imaginary step as a numerical tool.
+- [Power series in the plane](02-complex-power-series.md): power series are holomorphic inside their disc.
+- [The complex logarithm](04-complex-logarithm.md): a function holomorphic only once a cut is made.
+- [Contour integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md): integrating holomorphic functions along paths.
+- [Conformal maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md): turn-and-stretch at every point, read as geometry.
+- Complex steps and dual numbers: the imaginary step as a numerical tool.
 
-The test says which functions are holomorphic, not what they look like; that each is a power series near every point begins on [complex-power-series](02-complex-power-series.md).
+The test says which functions are holomorphic, not what they look like; that each is a power series near every point begins on [Power series in the plane](02-complex-power-series.md).
 
 ---
 

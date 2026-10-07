@@ -1,31 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Transformations and Joint Laws
-topic: Two measurements at once
-item: Bivariate normal
-kind: theorem
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/03-conditional-densities|conditional-densities]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/04-normal-distribution|normal-distribution]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/05-quadratic-forms-and-positive-definite|quadratic-forms-and-positive-definite]]"
-next:
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/06-multivariate-normal|multivariate-normal]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/05-brownian-bridge|brownian-bridge]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/05-compound-options|compound-options]]"
-  - "[[Cards/12-Financial mathematics/18-Many underlyings - exchange, spread, basket and rainbow/04-rainbow-best-of-and-worst-of|rainbow-best-of-and-worst-of]]"
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/01-quanto-forward-and-adjustment|quanto-forward-and-adjustment]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/04-margrabe-and-kirk-spread-options|margrabe-and-kirk-spread-options]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/02-one-factor-gaussian-copula|one-factor-gaussian-copula]]"
-  - "[[Cards/12-Financial mathematics/49-Microstructure and Execution/03-kyle-model-and-price-impact|kyle-model-and-price-impact]]"
-tags: [mathematics, probability and statistics, bivariate-normal-and-conditioning]
----
-
 # Bivariate normal: two correlated bells, and the straight-line conditional mean
 
-Probability and statistics → Transformations and Joint Laws → Two measurements at once → Bivariate normal
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Transformations and Joint Laws](../../../SYLLABUS.md#w09-s05) → Bivariate normal
 
 ---
 
@@ -63,7 +38,7 @@ $$f(h, w) = \frac{1}{2\pi\,\sigma_H\,\sigma_W\sqrt{1-\rho^2}}\; e^{-Q/2}$$
 
 **Read it aloud:** the bell is highest at the average person, and falls off as the tilted distance Q grows; the number in front makes the total volume one.
 
-The theorem, the card's point. Among adults of height h, weight is normal. The bar is read "given": W | H = h is weight among adults of height h. N(centre, spread^2) is the normal law ([normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md)).
+The theorem, the card's point. Among adults of height h, weight is normal. The bar is read "given": W | H = h is weight among adults of height h. N(centre, spread^2) is the normal law ([Normal](../04-Continuous%20Distributions/04-normal-distribution.md)).
 
 $$W \mid H = h \;\sim\; N\!\left(\mu_W + \rho\,\frac{\sigma_W}{\sigma_H}\,(h - \mu_H),\;\; \sigma_W^2\,(1-\rho^2)\right)$$
 
@@ -110,9 +85,9 @@ Variances of independent parts add. Var(y) = ρ^2 + (1 − ρ^2) = 1, so y is a 
 
 ### Step 2: the density of the blend is the formula
 
-The map from (Z₁, Z₂) to (x, y) is linear. A change of variables in a double integral multiplies by how the map stretches area ([change-of-variables-and-jacobians](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md); [transforming-a-random-variable](01-transforming-a-random-variable.md) does it for one variable). Here the stretch factor is √(1 − ρ^2). Undo the blend and square: Z₁^2 + Z₂^2 equals Q exactly. Rescaling to cm and kg divides by σ_H σ_W. Out comes f(h, w). The algebra is in the folded proof below.
+The map from (Z₁, Z₂) to (x, y) is linear. A change of variables in a double integral multiplies by how the map stretches area ([Change of variables](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md); [Transforming a variable](01-transforming-a-random-variable.md) does it for one variable). Here the stretch factor is √(1 − ρ^2). Undo the blend and square: Z₁^2 + Z₂^2 equals Q exactly. Rescaling to cm and kg divides by σ_H σ_W. Out comes f(h, w). The algebra is in the folded proof below.
 
-The tilted distance is a quadratic form, $Q = v^{\mathsf T}\,\Sigma^{-1}\,v$ with v the column of gaps (h − 175, w − 75), $v^{\mathsf T}$ the same gaps written as a row, and $\Sigma^{-1}$ the inverse of the matrix ([quadratic-forms-and-positive-definite](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)), where
+The tilted distance is a quadratic form, $Q = v^{\mathsf T}\,\Sigma^{-1}\,v$ with v the column of gaps (h − 175, w − 75), $v^{\mathsf T}$ the same gaps written as a row, and $\Sigma^{-1}$ the inverse of the matrix ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)), where
 
 $$\Sigma = \begin{pmatrix} \sigma_H^2 & \rho\,\sigma_H\sigma_W \\ \rho\,\sigma_H\sigma_W & \sigma_W^2 \end{pmatrix}.$$
 
@@ -128,11 +103,11 @@ The exponential of a sum is a product. So the density splits into a height facto
 
 $$f(h, w) = \underbrace{\frac{\varphi(x)}{\sigma_H}}_{f_H(h)} \;\times\; \frac{1}{\sigma_W\sqrt{1-\rho^2}}\;\varphi\!\left(\frac{y - \rho x}{\sqrt{1-\rho^2}}\right)$$
 
-The second factor is a normal density in w, so it integrates to 1 over all weights. Integrating out weight leaves the first factor: height alone is normal, N(175, 7^2), as it should be ([joint-densities-and-marginals](02-joint-densities-and-marginals.md)).
+The second factor is a normal density in w, so it integrates to 1 over all weights. Integrating out weight leaves the first factor: height alone is normal, N(175, 7^2), as it should be ([Joint densities](02-joint-densities-and-marginals.md)).
 
 ### Step 4: divide by height's density; what remains is the slice
 
-A conditional density is the joint density divided by the density of what was fixed ([conditional-densities](03-conditional-densities.md)). Divide f by f_H and only the second factor is left. It is a bell in y centred at ρx with spread √(1 − ρ^2). Back in kg: centre μ_W + ρσ_W x, spread σ_W√(1 − ρ^2). At 189 cm, x = 2, so the centre is 75 + 0.5 × 12 × 2 = 87 kg and the spread 12 × 0.866025 = 10.392 kg. The theorem is proved.
+A conditional density is the joint density divided by the density of what was fixed ([Conditional densities](03-conditional-densities.md)). Divide f by f_H and only the second factor is left. It is a bell in y centred at ρx with spread √(1 − ρ^2). Back in kg: centre μ_W + ρσ_W x, spread σ_W√(1 − ρ^2). At 189 cm, x = 2, so the centre is 75 + 0.5 × 12 × 2 = 87 kg and the spread 12 × 0.866025 = 10.392 kg. The theorem is proved.
 
 <details>
 <summary>Detailed proof</summary>
@@ -164,7 +139,7 @@ A correlation is a statement about the straight-line link in the population. It 
 
 The contours of the density are the ellipses Q = constant. The drawn one is Q = 4, and it holds 1 − e^(−2) = 86.5% of adults. The solid line, average weight at each height, passes through the ellipse's leftmost and rightmost points: (161, 63) and (189, 87). The dashed line, average height at each weight, passes through its lowest and highest points: (168, 51) and (182, 99). In each vertical slice the ellipse is centred on the solid line, which is Step 4 seen as geometry.
 
-Another road to the same line is least squares ([least-squares-regression](../09-Regression/01-least-squares-regression.md)): the straight line with the smallest average squared miss in predicting weight from height has exactly this slope.
+Another road to the same line is least squares ([Least squares](../09-Regression/01-least-squares-regression.md)): the straight line with the smallest average squared miss in predicting weight from height has exactly this slope.
 
 ---
 
@@ -211,7 +186,7 @@ Same question, correct answer 0.3864:
 | Full step, ρ ignored | mean 99.0 kg, share 0.8068 | Two spreads tall does not mean two spreads heavy; only ρ × 2 = 1 |
 | Normal parts, not jointly normal (the flip pair) | exactly 99.0 kg at 189 cm; 45.0 kg at 192.5 cm, where the line says 90.0 | The theorem needs the pair jointly normal; normal parts with correlation 0.5 are not enough |
 
-The flip pair drops the one hypothesis that matters. Let weight's standard score equal height's while |x| < c, and minus height's beyond. By the bell's symmetry weight is still exactly N(75, 12^2). Choose the cutoff so the correlation is 0.5: c = 2.026905, found by bisection on an integral. At 189 cm, x = 2 is inside the cutoff, so every such adult weighs exactly 99 kg: the slice is a spike, and the share over 90 kg is 1, not 0.3864. At 192.5 cm the sign flips and every such adult weighs 45 kg. Same parts, same correlation, a different joint law. How parts and joining separate is [copulas-and-sklars-theorem](07-copulas-and-sklars-theorem.md).
+The flip pair drops the one hypothesis that matters. Let weight's standard score equal height's while |x| < c, and minus height's beyond. By the bell's symmetry weight is still exactly N(75, 12^2). Choose the cutoff so the correlation is 0.5: c = 2.026905, found by bisection on an integral. At 189 cm, x = 2 is inside the cutoff, so every such adult weighs exactly 99 kg: the slice is a spike, and the share over 90 kg is 1, not 0.3864. At 192.5 cm the sign flips and every such adult weighs 45 kg. Same parts, same correlation, a different joint law. How parts and joining separate is [Copulas](07-copulas-and-sklars-theorem.md).
 
 ---
 
@@ -646,8 +621,8 @@ The two outputs are identical line for line: the same integer generator draws th
 
 - **Regression toward the mean.** Galton's 1886 study of parents' and children's heights found the children of very tall parents tall, but less extreme. The slope ρ below 1 is the whole explanation, and the same effect makes a rookie's record season look like a slump the next year.
 - **Growth charts and reference ranges.** A child's expected weight for a given height, with a band around it, is a conditional mean and a conditional spread.
-- **Two assets at once.** Options on the better or worse of two stocks price with this law: [rainbow-best-of-and-worst-of](../../12-Financial%20mathematics/18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/04-rainbow-best-of-and-worst-of.md). The both-above-average rule is the seed of the bivariate normal area those formulas use.
-- **Default correlation.** Credit portfolios link each firm's health to one common factor with a correlation, then condition on the factor: [one-factor-gaussian-copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md).
+- **Two assets at once.** Options on the better or worse of two stocks price with this law: [Rainbow options](../../12-Financial%20mathematics/18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/04-rainbow-best-of-and-worst-of.md). The both-above-average rule is the seed of the bivariate normal area those formulas use.
+- **Default correlation.** Credit portfolios link each firm's health to one common factor with a correlation, then condition on the factor: [The one-factor Gaussian copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md).
 - **Filtering a noisy reading.** A sensor reading and the true value form a bivariate normal pair; the best guess of the truth given the reading is this card's straight line, and its uncertainty is this card's shrunk spread.
 
 > **Say it back**
@@ -657,22 +632,22 @@ The two outputs are identical line for line: the same integer generator draws th
 
 ## What this builds on
 
-- [conditional-densities](03-conditional-densities.md): a slice is the joint density divided by the density of what was fixed, the division made in Step 4.
-- [normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md): the one-dimensional bell, standard scores, and the areas Φ used for every share on the card.
-- [quadratic-forms-and-positive-definite](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md): why the tilted distance Q has elliptical level sets, and why |ρ| < 1 is needed.
+- [Conditional densities](03-conditional-densities.md): a slice is the joint density divided by the density of what was fixed, the division made in Step 4.
+- [Normal](../04-Continuous%20Distributions/04-normal-distribution.md): the one-dimensional bell, standard scores, and the areas Φ used for every share on the card.
+- [Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md): why the tilted distance Q has elliptical level sets, and why |ρ| < 1 is needed.
 
 ## Where this goes next
 
-- [multivariate-normal](06-multivariate-normal.md): any number of measurements, one covariance matrix in place of ρ, built from independent draws; Cholesky's pivots are the conditional variances given the earlier readings.
-- [brownian-bridge](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/05-brownian-bridge.md): a random path pinned at its end; its average given the endpoint is this card's straight line.
-- [compound-options](../../12-Financial%20mathematics/17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/05-compound-options.md): an option on an option, priced with the bivariate normal area.
-- [rainbow-best-of-and-worst-of](../../12-Financial%20mathematics/18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/04-rainbow-best-of-and-worst-of.md): the better of two stocks, a two-bell question.
-- [quanto-forward-and-adjustment](../../12-Financial%20mathematics/24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): a stock and an exchange rate, correlated; the covariance term shifts the forward.
-- [margrabe-and-kirk-spread-options](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md): the gap between two correlated prices.
-- [one-factor-gaussian-copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md): many firms, one shared factor, conditioning on it.
-- [kyle-model-and-price-impact](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/03-kyle-model-and-price-impact.md): a market maker's best guess of value given order flow, a straight-line conditional mean.
+- [Multivariate normal](06-multivariate-normal.md): any number of measurements, one covariance matrix in place of ρ, built from independent draws; Cholesky's pivots are the conditional variances given the earlier readings.
+- [Brownian bridge](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/05-brownian-bridge.md): a random path pinned at its end; its average given the endpoint is this card's straight line.
+- [Compound options](../../12-Financial%20mathematics/17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/05-compound-options.md): an option on an option, priced with the bivariate normal area.
+- [Rainbow options](../../12-Financial%20mathematics/18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/04-rainbow-best-of-and-worst-of.md): the better of two stocks, a two-bell question.
+- [The quanto adjustment](../../12-Financial%20mathematics/24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): a stock and an exchange rate, correlated; the covariance term shifts the forward.
+- [Spread options](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md): the gap between two correlated prices.
+- [The one-factor Gaussian copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/02-one-factor-gaussian-copula.md): many firms, one shared factor, conditioning on it.
+- [Kyle's model](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/03-kyle-model-and-price-impact.md): a market maker's best guess of value given order flow, a straight-line conditional mean.
 
-Two measurements need one ρ; three or more need a whole table of covariances, and which tables are possible and how to draw from one is the question [multivariate-normal](06-multivariate-normal.md) answers.
+Two measurements need one ρ; three or more need a whole table of covariances, and which tables are possible and how to draw from one is the question [Multivariate normal](06-multivariate-normal.md) answers.
 
 ---
 

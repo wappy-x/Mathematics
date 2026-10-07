@@ -1,29 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Greatest Common Divisor and Euclid's Algorithm
-topic: Common factors
-item: Greatest common divisor
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/03-multiplying-and-dividing|multiplying-and-dividing]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/01-divides|divides]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/07-prime-factorisation|prime-factorisation]]"
-next:
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/02-lcm|lcm]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/03-euclidean-algorithm|euclidean-algorithm]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/05-coprime-numbers|coprime-numbers]]"
-tags:
-  - mathematics
-  - number theory
-  - gcd
----
-
 # Greatest common divisor: the biggest number that divides both, from factor lists and from prime factorisations
 
-Number theory → Greatest Common Divisor and Euclid's Algorithm → Common factors → Greatest common divisor
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Greatest Common Divisor and Euclid's Algorithm](../../../SYLLABUS.md#w02-s02) → Greatest common divisor
 
 ---
 
@@ -33,7 +10,7 @@ The bathroom floor is 180 cm by 300 cm. You want square tiles, whole ones, no cu
 
 That rules almost every size out: the tile has to go into 180 exactly and into 300 exactly. Twelve sizes survive. The biggest is 60 cm — 3 across, 5 down, 15 tiles, no saw. A 30 cm tile takes 60 of them.
 
-A number that goes into another with nothing left over **divides** it ([divides](../01-Divisibility%20and%20Primes/01-divides.md)). The sizes that work divide 180 and divide 300: the **common divisors**. The biggest is this card.
+A number that goes into another with nothing left over **divides** it ([Divides](../01-Divisibility%20and%20Primes/01-divides.md)). The sizes that work divide 180 and divide 300: the **common divisors**. The biggest is this card.
 
 **The greatest common divisor of two whole numbers bigger than zero is the largest number that divides both: the biggest equal piece both can be cut into.**
 
@@ -66,7 +43,7 @@ Road one, the lists — what divides each wall, kept where they agree:
 
 **shared with 300: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60 — the largest is 60**
 
-Road two, the primes ([prime-factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)) — kept where both hold them:
+Road two, the primes ([Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)) — kept where both hold them:
 
 **180 = 2 × 2 × 3 × 3 × 5 and 300 = 2 × 2 × 3 × 5 × 5, shared: 2 × 2 × 3 × 5 = 60**
 
@@ -83,19 +60,19 @@ Road two, the primes ([prime-factorisation](../01-Divisibility%20and%20Primes/07
 
 ### The list has a biggest member
 
-1 divides everything, so the shared list is never empty, and nothing above 180 divides 180, so it stops. A list of whole numbers that is not empty and has a ceiling has a largest member — that follows from well-ordering, [strong-induction-and-well-ordering](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md).
+1 divides everything, so the shared list is never empty, and nothing above 180 divides 180, so it stops. A list of whole numbers that is not empty and has a ceiling has a largest member — that follows from well-ordering, [Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md).
 
 ### The shared primes settle it
 
 Take 12 = 2 × 2 × 3. Those primes all sit in 180's list (2, 2, 3, 3, 5), so 12 goes into 180. What is left — 3 × 5 = 15 — is what 12 multiplies by: 12 × 15 = 180. Repeats count: 8 = 2 × 2 × 2 fails, because 180 has only two 2s.
 
-So hold the lists side by side. 180 has two 2s, 300 has two: a shared number may use two. 180 has two 3s, 300 has one: one. Both have a 5, 180 only one: one. Anything dividing both is built from those primes and nothing else, so using all of them is as far as you can go — 2 × 2 × 3 × 5 = 60. Both factor routes end at the same primes — proved on [unique-factorisation](07-unique-factorisation.md).
+So hold the lists side by side. 180 has two 2s, 300 has two: a shared number may use two. 180 has two 3s, 300 has one: one. Both have a 5, 180 only one: one. Anything dividing both is built from those primes and nothing else, so using all of them is as far as you can go — 2 × 2 × 3 × 5 = 60. Both factor routes end at the same primes — proved on [Why the factorisation is unique](07-unique-factorisation.md).
 
 ### Every shared number hides inside the gcd
 
 Each common divisor is built from those same primes, so each divides 60. That is why the twelve common divisors of 180 and 300 are exactly the twelve divisors of 60; the code counts both.
 
-Factoring gets slow fast, and there is a way round it: Euclid's — divide, keep the remainder, repeat — reaches the same 60 without meeting a prime: [euclidean-algorithm](03-euclidean-algorithm.md).
+Factoring gets slow fast, and there is a way round it: Euclid's — divide, keep the remainder, repeat — reaches the same 60 without meeting a prime: [Euclid's algorithm](03-euclidean-algorithm.md).
 
 ---
 
@@ -115,7 +92,7 @@ Fifteen whole tiles, no saw.
 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
-| Every prime either side has: 2 × 2 × 3 × 3 × 5 × 5 | 900 | A 900 cm tile in a 180 cm room: that is [lcm](02-lcm.md) |
+| Every prime either side has: 2 × 2 × 3 × 3 × 5 × 5 | 900 | A 900 cm tile in a 180 cm room: that is [Least common multiple](02-lcm.md) |
 | Keeping the spare 5 only 300 has | 300 | 300 does not go into 180 |
 | Stopping at a size that looks big | 30 | It fits, but costs 60 tiles, not 15 |
 
@@ -247,10 +224,10 @@ Whole centimetres throughout: the outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Taking every prime either number has, instead of only the ones they share.** That gives 2 × 2 × 3 × 3 × 5 × 5 = 900 — the smallest number both divide into, the far end from the gcd: [lcm](02-lcm.md).
+> **Taking every prime either number has, instead of only the ones they share.** That gives 2 × 2 × 3 × 3 × 5 × 5 = 900 — the smallest number both divide into, the far end from the gcd: [Least common multiple](02-lcm.md).
 >
 > - Using a prime only one side owns: the spare 5 in 300 gives 300, which does not go into 180.
-> - Mixing the number up with the method. gcd(180, 300) is 60, a number; finding it fast is [euclidean-algorithm](03-euclidean-algorithm.md).
+> - Mixing the number up with the method. gcd(180, 300) is 60, a number; finding it fast is [Euclid's algorithm](03-euclidean-algorithm.md).
 > - Settling for a shared factor that looks big enough. 30 costs 60 tiles, 60 costs 15.
 
 ---
@@ -258,8 +235,8 @@ Whole centimetres throughout: the outputs match line for line.
 ## Where you meet it in real life
 
 - **Cutting one size to fit two lengths.** Tiles, cable drums, shelf runs: the biggest piece wasting nothing is the gcd.
-- **Fractions in lowest terms.** Divide top and bottom by their gcd, done in one move: 180 over 300 becomes 3 over 5 ([fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md)).
-- **Gears.** Two wheels come back into line on a cycle set by what their tooth counts share ([coprime-numbers](05-coprime-numbers.md)).
+- **Fractions in lowest terms.** Divide top and bottom by their gcd, done in one move: 180 over 300 becomes 3 over 5 ([Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md)).
+- **Gears.** Two wheels come back into line on a cycle set by what their tooth counts share ([Coprime numbers](05-coprime-numbers.md)).
 
 > **Say it back**
 > The greatest common divisor is the largest number that goes into both with nothing left over. For a 180 cm by 300 cm floor it is 60: 3 tiles across, 5 down, 15 in all, no cutting. Find it by listing what divides each and taking the largest they share, or by keeping each shared prime as often as the poorer side has it. Everything else they share divides 60.
@@ -268,15 +245,15 @@ Whole centimetres throughout: the outputs match line for line.
 
 ## What this builds on
 
-- [multiplying-and-dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): dividing 180 by 60 and knowing when it comes out whole.
-- [divides](../01-Divisibility%20and%20Primes/01-divides.md): what "nothing left over" means, and that divisors come in pairs.
-- [prime-factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md): a number as a list of primes, what road two compares.
+- [Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): dividing 180 by 60 and knowing when it comes out whole.
+- [Divides](../01-Divisibility%20and%20Primes/01-divides.md): what "nothing left over" means, and that divisors come in pairs.
+- [Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md): a number as a list of primes, what road two compares.
 
 ## Where this goes next
 
-- [lcm](02-lcm.md): the other end — the first number both divide into, and why gcd times lcm is the product.
-- [euclidean-algorithm](03-euclidean-algorithm.md): the same answer by remainders, fast even for numbers nobody can factor.
-- [coprime-numbers](05-coprime-numbers.md): when the gcd is 1 and two numbers share nothing.
+- [Least common multiple](02-lcm.md): the other end — the first number both divide into, and why gcd times lcm is the product.
+- [Euclid's algorithm](03-euclidean-algorithm.md): the same answer by remainders, fast even for numbers nobody can factor.
+- [Coprime numbers](05-coprime-numbers.md): when the gcd is 1 and two numbers share nothing.
 
 ---
 

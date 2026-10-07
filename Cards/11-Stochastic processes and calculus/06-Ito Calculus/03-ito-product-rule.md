@@ -1,22 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Ito Calculus
-topic: Multiplying two moving quantities
-item: Ito's product rule
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/09-Beyond Brownian/05-semimartingales-in-outline|semimartingales-in-outline]]"
-tags: [mathematics, stochastic processes and calculus, ito-product-rule]
----
-
 # Ito's product rule: integration by parts with a covariation term
 
-Stochastic processes and calculus → Ito Calculus → Multiplying two moving quantities → Ito's product rule
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Ito Calculus](../../../SYLLABUS.md#w11-s06) → Ito's product rule
 
 ---
 
@@ -50,7 +34,7 @@ Lower line: drift 5%, equal to the bank rate; the average stays within two stand
 
 ## The formula
 
-Notation first, in words. Brownian motion $W_t$ is the random walk seen from far away ([brownian-motion](../05-Brownian%20Motion/01-brownian-motion.md)). An Ito process moves by a drift part and a noise part, written $dX_t = a\,dt + b\,dW_t$. The symbol $dW_t$ is shorthand for an Ito integral, never a derivative, because a Brownian path has no slope ([ito-integral](01-ito-integral.md)). The new notation on this card is the **covariation** $[X,Y]_t$, read "the covariation of X and Y up to time t": the limit of the sum of products of matching small steps of X and of Y, as the steps shrink. With X and Y the same process it is the quadratic variation $[X]_t$ ([quadratic-variation](../05-Brownian%20Motion/03-quadratic-variation.md)).
+Notation first, in words. Brownian motion $W_t$ is the random walk seen from far away ([Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md)). An Ito process moves by a drift part and a noise part, written $dX_t = a\,dt + b\,dW_t$. The symbol $dW_t$ is shorthand for an Ito integral, never a derivative, because a Brownian path has no slope ([The Ito integral](01-ito-integral.md)). The new notation on this card is the **covariation** $[X,Y]_t$, read "the covariation of X and Y up to time t": the limit of the sum of products of matching small steps of X and of Y, as the steps shrink. With X and Y the same process it is the quadratic variation $[X]_t$ ([Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)).
 
 Take two Ito processes driven by the same Brownian motion:
 
@@ -89,10 +73,10 @@ In words: the discounted share grows at the share's drift minus the bank rate, a
 
 ### When it holds
 
-- **Both factors are Ito processes on the same Brownian motion, with integrands known at the start of each step.** If the integrand peeks at the end of the step, the sums converge to a different integral and the rule changes; on [ito-integral](01-ito-integral.md), that choice moves the average of the integral of W against W from 0 to T.
+- **Both factors are Ito processes on the same Brownian motion, with integrands known at the start of each step.** If the integrand peeks at the end of the step, the sums converge to a different integral and the rule changes; on [The Ito integral](01-ito-integral.md), that choice moves the average of the integral of W against W from 0 to T.
 - **The integrals exist:** the drift parts are integrable in time and the noise parts square-integrable, so every term has a meaning. Without that, the right-hand side is undefined, not wrong.
-- **Several Brownian motions:** if X and Y are driven by two Brownian motions with correlation, the covariation becomes the noise sizes times the correlation; [multidimensional-ito-and-correlation](06-multidimensional-ito-and-correlation.md) does it. With independent drivers the covariation is zero, and using $b\,h$ there invents a term.
-- **No jumps.** A process that jumps adds the products of its jumps to the covariation; [semimartingales-in-outline](../09-Beyond%20Brownian/05-semimartingales-in-outline.md) states that version.
+- **Several Brownian motions:** if X and Y are driven by two Brownian motions with correlation, the covariation becomes the noise sizes times the correlation; [Several Brownian motions](06-multidimensional-ito-and-correlation.md) does it. With independent drivers the covariation is zero, and using $b\,h$ there invents a term.
+- **No jumps.** A process that jumps adds the products of its jumps to the covariation; [Semimartingales](../09-Beyond%20Brownian/05-semimartingales-in-outline.md) states that version.
 - **If one factor has no noise part, the covariation is zero** and the school product rule is exact. The discount factor is such a factor, which is why it is safe to discount a price the school way.
 
 ---
@@ -117,7 +101,7 @@ This holds for every path and every grid. Road B in the code checks it on one si
 
 ### Step 2: the first two sums become Ito integrals
 
-In both sums the factor in front, $X_k$ or $Y_k$, is known at the start of the step, before the step's random change happens. Sums of exactly that shape converge to the Ito integrals of Y against X and of X against Y as the grid shrinks. That is the definition of the Ito integral on [ito-integral](01-ito-integral.md).
+In both sums the factor in front, $X_k$ or $Y_k$, is known at the start of the step, before the step's random change happens. Sums of exactly that shape converge to the Ito integrals of Y against X and of X against Y as the grid shrinks. That is the definition of the Ito integral on [The Ito integral](01-ito-integral.md).
 
 ### Step 3: the third sum becomes the covariation
 
@@ -125,7 +109,7 @@ Expand one corner:
 
 $$\Delta X_k\,\Delta Y_k \approx (a\,\Delta t + b\,\Delta W_k)(g\,\Delta t + h\,\Delta W_k) = a g\,\Delta t^2 + (a h + b g)\,\Delta t\,\Delta W_k + b h\,(\Delta W_k)^2.$$
 
-Sort the pieces by size. A $\Delta t$ squared summed over $n$ steps totals $n\,\Delta t^2 = T\,\Delta t$, which vanishes. A $\Delta t$ times a Brownian step has size $\Delta t$ to the power 1.5; the sum of $n$ of them has standard deviation of order $\Delta t$, which vanishes. The last piece survives. The squared Brownian steps add up to the elapsed time, with a spread that shrinks as the grid gets finer: that is quadratic variation, proved on [quadratic-variation](../05-Brownian%20Motion/03-quadratic-variation.md). So the corners add up to the integral of $b\,h$ over time, which is the covariation:
+Sort the pieces by size. A $\Delta t$ squared summed over $n$ steps totals $n\,\Delta t^2 = T\,\Delta t$, which vanishes. A $\Delta t$ times a Brownian step has size $\Delta t$ to the power 1.5; the sum of $n$ of them has standard deviation of order $\Delta t$, which vanishes. The last piece survives. The squared Brownian steps add up to the elapsed time, with a spread that shrinks as the grid gets finer: that is quadratic variation, proved on [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md). So the corners add up to the integral of $b\,h$ over time, which is the covariation:
 
 $$\sum_k \Delta X_k\,\Delta Y_k \;\to\; [X,Y]_T = \int_0^T b\,h\,dt.$$
 
@@ -133,7 +117,7 @@ Taking the limit of Step 1 term by term gives the product rule.
 
 ### Step 4: a short proof from Ito's lemma
 
-Steps 1 to 3 show where the term comes from. A shorter, complete route uses Ito's lemma for the square, $f(x) = x^2$, from [itos-lemma](02-itos-lemma.md). A product is a difference of two squares divided by four:
+Steps 1 to 3 show where the term comes from. A shorter, complete route uses Ito's lemma for the square, $f(x) = x^2$, from [Ito's lemma](02-itos-lemma.md). A product is a difference of two squares divided by four:
 
 $$X Y = \tfrac14\big((X+Y)^2 - (X-Y)^2\big).$$
 
@@ -151,7 +135,7 @@ The last bracket is $4bh$. For the first two terms, write U and V and their chan
 $$2U\,dU - 2V\,dV = 2(X+Y)(dX+dY) - 2(X-Y)(dX-dY) = 4X\,dY + 4Y\,dX.$$
 So $d(U^2 - V^2) = 4X\,dY + 4Y\,dX + 4bh\,dt$. Since $U^2 - V^2 = 4XY$, dividing by 4 gives
 $$d(XY) = X\,dY + Y\,dX + b\,h\,dt.$$
-This is complete given Ito's lemma, which [itos-lemma](02-itos-lemma.md) derives with its key steps and a named source. The argument used one Brownian motion; with several, the same subtraction leaves the noise parts multiplied and weighted by the correlations.
+This is complete given Ito's lemma, which [Ito's lemma](02-itos-lemma.md) derives with its key steps and a named source. The argument used one Brownian motion; with several, the same subtraction leaves the noise parts multiplied and weighted by the correlations.
 
 </details>
 
@@ -161,15 +145,15 @@ Take X as the share, with $a = \mu S_t$ and $b = \sigma S_t$. Take Y as the disc
 
 $$dD_t = e^{-rt}\,dS_t - r\,S_t e^{-rt}\,dt = D_t\big((\mu - r)\,dt + \sigma\,dW_t\big).$$
 
-With $\mu = r$ the drift part vanishes and $dD_t = \sigma D_t\,dW_t$: the discounted share is an Ito integral and nothing else. An Ito integral of a square-integrable integrand is a martingale, a fair game in which the best forecast of a later value, given everything known now, is the value now ([martingales](../02-Martingales/01-martingales.md)).
+With $\mu = r$ the drift part vanishes and $dD_t = \sigma D_t\,dW_t$: the discounted share is an Ito integral and nothing else. An Ito integral of a square-integrable integrand is a martingale, a fair game in which the best forecast of a later value, given everything known now, is the value now ([Martingales](../02-Martingales/01-martingales.md)).
 
-The same fact can be checked without integrals. Solving the equation gives $D_t = 100\,e^{-\sigma^2 t/2 + \sigma W_t}$ when $\mu = r$ ([geometric-brownian-motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md)). Compare the value at a time t with the value at an earlier time s. The ratio is $e^{-\sigma^2(t-s)/2 + \sigma(W_t - W_s)}$, which depends only on the Brownian step after s. That step is independent of everything known at s, and the average of $e^{\sigma(W_t - W_s)}$ is $e^{\sigma^2(t-s)/2}$, which cancels the first factor exactly. So the best forecast of the later value is the current one. This is the exponential martingale of [brownian-martingales-and-exponential-martingale](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md).
+The same fact can be checked without integrals. Solving the equation gives $D_t = 100\,e^{-\sigma^2 t/2 + \sigma W_t}$ when $\mu = r$ ([Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md)). Compare the value at a time t with the value at an earlier time s. The ratio is $e^{-\sigma^2(t-s)/2 + \sigma(W_t - W_s)}$, which depends only on the Brownian step after s. That step is independent of everything known at s, and the average of $e^{\sigma(W_t - W_s)}$ is $e^{\sigma^2(t-s)/2}$, which cancels the first factor exactly. So the best forecast of the later value is the current one. This is the exponential martingale of [Brownian martingales](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md).
 
-With $\mu = 0.08$ the drift $\mu - r = 0.03$ stays, and the discounted share is not a fair game: on average it gains 3% a year in today's dollars. The real share's drift is not the bank rate. A second probability measure, Q, reweights the paths so that the share's drift becomes 5%; under Q the discounted share is a martingale. Building Q is Girsanov's theorem, on [girsanov-theorem](../07-Changing%20Measure/02-girsanov-theorem.md). This card supplies the other half: the product rule turns "drift equals the bank rate" into "discounted price is a martingale".
+With $\mu = 0.08$ the drift $\mu - r = 0.03$ stays, and the discounted share is not a fair game: on average it gains 3% a year in today's dollars. The real share's drift is not the bank rate. A second probability measure, Q, reweights the paths so that the share's drift becomes 5%; under Q the discounted share is a martingale. Building Q is Girsanov's theorem, on [Girsanov](../07-Changing%20Measure/02-girsanov-theorem.md). This card supplies the other half: the product rule turns "drift equals the bank rate" into "discounted price is a martingale".
 
 ### The other route
 
-Ito's lemma for a function of two variables, $f(x, y) = x y$, gives the rule in one line: the cross second derivative is 1 and multiplies the covariation. That route needs the several-variable lemma, set out on [multidimensional-ito-and-correlation](06-multidimensional-ito-and-correlation.md).
+Ito's lemma for a function of two variables, $f(x, y) = x y$, gives the rule in one line: the cross second derivative is 1 and multiplies the covariation. That route needs the several-variable lemma, set out on [Several Brownian motions](06-multidimensional-ito-and-correlation.md).
 
 ---
 
@@ -636,9 +620,9 @@ Upper line: the school product rule, without the covariation term; the error sta
 
 ## Where you meet it in real life
 
-- **Option pricing.** A price is a martingale in today's dollars under the pricing measure, and the product rule is the step that converts "drift equals the bank rate" into that statement. The Black-Scholes call rests on it: [black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
-- **Changing the unit of account.** Measuring one asset in units of another, a share in units of a bond or of another share, is a product with a reciprocal. When both carry noise, the covariation term appears and shifts the drift; that is the change of numeraire on [change-of-numeraire](../07-Changing%20Measure/05-change-of-numeraire.md).
-- **Solving linear equations with noise.** Multiplying an equation by an integrating factor, as in ordinary differential equations, is a product-rule step. With noise in the factor, the covariation term must be carried. [stochastic-differential-equations](04-stochastic-differential-equations.md) and [ornstein-uhlenbeck-and-cir-processes](05-ornstein-uhlenbeck-and-cir-processes.md) solve their equations this way.
+- **Option pricing.** A price is a martingale in today's dollars under the pricing measure, and the product rule is the step that converts "drift equals the bank rate" into that statement. The Black-Scholes call rests on it: [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+- **Changing the unit of account.** Measuring one asset in units of another, a share in units of a bond or of another share, is a product with a reciprocal. When both carry noise, the covariation term appears and shifts the drift; that is the change of numeraire on [Change of numeraire](../07-Changing%20Measure/05-change-of-numeraire.md).
+- **Solving linear equations with noise.** Multiplying an equation by an integrating factor, as in ordinary differential equations, is a product-rule step. With noise in the factor, the covariation term must be carried. [Stochastic differential equations](04-stochastic-differential-equations.md) and [Mean reversion](05-ornstein-uhlenbeck-and-cir-processes.md) solve their equations this way.
 - **Portfolio accounting.** The value of a holding is shares held times price. When the number held changes with the price, as in a hedge, the change in value splits by the product rule; the self-financing condition says the other two terms, the trades and their covariation with the price, are paid for out of cash.
 - **Simulation code.** A program that steps a product of two noisy quantities forward must include the corner term, or its answers drift away however small the step, as the second picture shows.
 
@@ -649,15 +633,15 @@ Upper line: the school product rule, without the covariation term; the error sta
 
 ## What this builds on
 
-- [itos-lemma](02-itos-lemma.md): the chain rule with its second-derivative term; applied to a square, it proves the product rule in four lines.
-- [ito-integral](01-ito-integral.md): what the two integral terms mean, and why an Ito integral is a fair game.
-- [quadratic-variation](../05-Brownian%20Motion/03-quadratic-variation.md): why squared Brownian steps add up to the elapsed time, the fact behind the corner term.
+- [Ito's lemma](02-itos-lemma.md): the chain rule with its second-derivative term; applied to a square, it proves the product rule in four lines.
+- [The Ito integral](01-ito-integral.md): what the two integral terms mean, and why an Ito integral is a fair game.
+- [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md): why squared Brownian steps add up to the elapsed time, the fact behind the corner term.
 
 ## Where this goes next
 
-- [semimartingales-in-outline](../09-Beyond%20Brownian/05-semimartingales-in-outline.md): the product rule for processes that can jump, where the covariation also collects the products of jumps.
-- [stochastic-differential-equations](04-stochastic-differential-equations.md): equations of the form $dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t$, several of them solved with this rule.
-- [girsanov-theorem](../07-Changing%20Measure/02-girsanov-theorem.md): how to build the measure under which the share's drift is the bank rate.
+- [Semimartingales](../09-Beyond%20Brownian/05-semimartingales-in-outline.md): the product rule for processes that can jump, where the covariation also collects the products of jumps.
+- [Stochastic differential equations](04-stochastic-differential-equations.md): equations of the form $dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t$, several of them solved with this rule.
+- [Girsanov](../07-Changing%20Measure/02-girsanov-theorem.md): how to build the measure under which the share's drift is the bank rate.
 
 This card showed that the discounted share is a fair game exactly when the share's drift equals the bank rate; the open question is how to make that true for a real share whose drift is 8%, and Girsanov's theorem answers it by changing the measure.
 

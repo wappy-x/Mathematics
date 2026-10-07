@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Options on commodity futures and spreads
-topic: Hedging a crack spread
-item: Greeks of a spread option
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/04-margrabe-and-kirk-spread-options|margrabe-and-kirk-spread-options]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/02-futures-option-greeks|futures-option-greeks]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-next:
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/06-implied-correlation-from-a-spread-option|implied-correlation-from-a-spread-option]]"
-tags: [mathematics, financial mathematics, spread-option-greeks]
----
-
 # Greeks of a spread option: a delta for each leg, a cross gamma, two vegas, and the sensitivity to correlation
 
-Financial mathematics → Options on commodity futures and spreads → Hedging a crack spread → Greeks of a spread option
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Options on commodity futures and spreads](../../../SYLLABUS.md#w12-s26) → Greeks of a spread option
 
 ---
 
@@ -54,9 +36,9 @@ The upper line is the zero-strike option, priced by Margrabe's formula. The lowe
 
 ## The formula
 
-Notation first, in words. Subscript 1 means gasoline, subscript 2 crude. $D = e^{-rT}$ is the discount factor, $r$ the riskless rate, $T$ the years to expiry. $N(x)$ is the bell-curve area to the left of $x$ and $n(x)$ the curve's height at $x$. A **partial derivative**, written with a curly d, is the rate the price changes when one input moves and the others are held still ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). **Delta** (Δ) is a first derivative in a price, **gamma** (Γ) a second derivative in two prices, **vega** (ν, "nu") a derivative in a volatility.
+Notation first, in words. Subscript 1 means gasoline, subscript 2 crude. $D = e^{-rT}$ is the discount factor, $r$ the riskless rate, $T$ the years to expiry. $N(x)$ is the bell-curve area to the left of $x$ and $n(x)$ the curve's height at $x$. A **partial derivative**, written with a curly d, is the rate the price changes when one input moves and the others are held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). **Delta** (Δ) is a first derivative in a price, **gamma** (Γ) a second derivative in two prices, **vega** (ν, "nu") a derivative in a volatility.
 
-The price, recalled from [margrabe-and-kirk-spread-options](04-margrabe-and-kirk-spread-options.md):
+The price, recalled from [Spread options](04-margrabe-and-kirk-spread-options.md):
 
 $$V = D\,\bigl[F_1 N(d_1) - F_2 N(d_2)\bigr], \qquad \sigma = \sqrt{\sigma_1^2 + \sigma_2^2 - 2\rho\,\sigma_1\sigma_2}, \qquad v = \sigma\sqrt{T}$$
 
@@ -93,7 +75,7 @@ $$\frac{\partial V}{\partial \rho} \;=\; \sigma_1\sigma_2\,T\,F_1F_2\,\Gamma_{12
 
 ### When it holds
 
-- **Both futures prices are lognormal with fixed volatilities.** If a leg's volatility moves with its level (a smile, on [commodity-implied-vol-and-the-call-skew](03-commodity-implied-vol-and-the-call-skew.md)), the true delta picks up an extra term of vega times the volatility's slope, and the closed-form deltas are off by it.
+- **Both futures prices are lognormal with fixed volatilities.** If a leg's volatility moves with its level (a smile, on [Implied vol on a futures option and the commodity smile](03-commodity-implied-vol-and-the-call-skew.md)), the true delta picks up an extra term of vega times the volatility's slope, and the closed-form deltas are off by it.
 - **Correlation is one fixed number.** Real correlation between crude and its products drifts, and falls sharply in refinery outages. Every dollar of hedged P&L that comes from correlation is then measured by the correlation sensitivity times the change.
 - **Zero strike for the closed forms.** At a positive strike no closed form exists. Kirk's approximation stands in; at a 10-dollar strike its deltas are 0.5248 and −0.4486 against exact values of 0.5250 and −0.4488, and its correlation sensitivity is −6.84 against −6.83.
 - **Hedges are adjusted continuously.** A desk that rebalances 63 times over six months carries a hedging error on every path, but the error averages to zero when correlation behaves as priced.
@@ -161,7 +143,7 @@ That is the algebra. The reason is the hedged seller's profit over a short step,
 
 $$\text{hedged P\&L of the seller} \approx -\tfrac12\bigl(\Gamma_{11}\,dF_1^2 + 2\,\Gamma_{12}\,dF_1\,dF_2 + \Gamma_{22}\,dF_2^2\bigr) + \text{time decay}.$$
 
-The product $dF_1\,dF_2$ averages to $\rho\,\sigma_1\sigma_2F_1F_2$ per unit of time. So correlation reaches the book only through the cross-gamma term, and summed over the option's life its weight is the correlation sensitivity. The time decay pays for the correlation the option was sold at. If realised correlation is lower, $\Gamma_{12}$ being negative, the cross term takes money from the seller, on average, on every step. Futures have no gamma, so no futures position changes this term. The single-asset version of this bookkeeping is [theta-pays-for-gamma-hedged-pnl](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md).
+The product $dF_1\,dF_2$ averages to $\rho\,\sigma_1\sigma_2F_1F_2$ per unit of time. So correlation reaches the book only through the cross-gamma term, and summed over the option's life its weight is the correlation sensitivity. The time decay pays for the correlation the option was sold at. If realised correlation is lower, $\Gamma_{12}$ being negative, the cross term takes money from the seller, on average, on every step. Futures have no gamma, so no futures position changes this term. The single-asset version of this bookkeeping is [Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md).
 
 <details>
 <summary>Detailed proof: the bridge holds for any strike, not only Margrabe's</summary>
@@ -176,7 +158,7 @@ Nothing in the argument used the strike. At a 10-dollar strike the check compute
 
 ### Step 7: positive strikes, by bumping
 
-At a positive strike there is no closed form, and Kirk's approximation is a common market choice. Desks bump it: reprice with one input nudged up and down and divide the difference by the nudge ([bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)). A cross gamma needs four repricings: both prices up, both down, and the two mixed cases.
+At a positive strike there is no closed form, and Kirk's approximation is a common market choice. Desks bump it: reprice with one input nudged up and down and divide the difference by the nudge ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)). A cross gamma needs four repricings: both prices up, both down, and the two mixed cases.
 
 Checking Kirk needs an exact price to bump. Fix crude's random shock at expiry. Crude's price is then known, and gasoline is still lognormal, with volatility cut by the factor $\sqrt{1-\rho^2}$. So the conditional value is Black's formula on gasoline with a known strike, and averaging it over crude's shock with Simpson's rule gives the exact price for any strike. Bumping that integral is the second route to every Greek on this card.
 
@@ -743,9 +725,9 @@ The two outputs are identical line for line, including the simulation, because b
 ## Where you meet it in real life
 
 - **Refinery hedging.** Refiners sell crack spread options or buy them to fix margins. The dealer on the other side runs exactly the two-leg delta hedge on this card, in exchange-traded crude and gasoline futures, and reports its correlation exposure separately.
-- **Power stations.** A gas-fired plant's margin is power minus gas times a heat rate. It is a spread option with a strike, priced and hedged the same way, with the complication that power cannot be stored: [electricity-and-the-spark-spread](07-electricity-and-the-spark-spread.md).
+- **Power stations.** A gas-fired plant's margin is power minus gas times a heat rate. It is a spread option with a strike, priced and hedged the same way, with the complication that power cannot be stored: [Power that cannot be stored](07-electricity-and-the-spark-spread.md).
 - **Risk reports.** A commodity desk's daily report lists delta by leg, a gamma table with cross terms, vega by leg and a correlation bucket. The cross-gamma number is the one that ties the last bucket to the others.
-- **Correlation trading.** Because correlation cannot be hedged with futures, desks read the correlation a spread option's price implies and trade it against their own forecast: [implied-correlation-from-a-spread-option](06-implied-correlation-from-a-spread-option.md). The equity version, with baskets and best-of options, is [correlation-greeks-and-implied-correlation](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/05-correlation-greeks-and-implied-correlation.md).
+- **Correlation trading.** Because correlation cannot be hedged with futures, desks read the correlation a spread option's price implies and trade it against their own forecast: [Correlation from a spread option](06-implied-correlation-from-a-spread-option.md). The equity version, with baskets and best-of options, is [Correlation Greeks and implied correlation](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/05-correlation-greeks-and-implied-correlation.md).
 
 > **Say it back**
 > A spread option has a delta for each leg: a discounted probability in gasoline and minus one in crude, and together they rebuild the price exactly. Its gammas form a two-by-two table whose off-diagonal cross gamma is negative, and the table cannot see moves that scale both prices together. Its two vegas and its correlation sensitivity are one vega in the spread's volatility, split by the chain rule. The correlation sensitivity equals the cross gamma times both volatilities, both prices and the time left. So hedging each leg with futures leaves the correlation exposure untouched, and a seller loses when the two prices decouple.
@@ -754,13 +736,13 @@ The two outputs are identical line for line, including the simulation, because b
 
 ## What this builds on
 
-- [margrabe-and-kirk-spread-options](04-margrabe-and-kirk-spread-options.md): the price this card differentiates, Margrabe's closed form at zero strike and Kirk's approximation above it.
-- [futures-option-greeks](02-futures-option-greeks.md): one-leg delta, gamma and vega on a futures price, including why a futures delta carries a discount.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): derivatives in one input with the others held still, and mixed second derivatives such as the cross gamma.
+- [Spread options](04-margrabe-and-kirk-spread-options.md): the price this card differentiates, Margrabe's closed form at zero strike and Kirk's approximation above it.
+- [Greeks of a futures option](02-futures-option-greeks.md): one-leg delta, gamma and vega on a futures price, including why a futures delta carries a discount.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): derivatives in one input with the others held still, and mixed second derivatives such as the cross gamma.
 
 ## Where this goes next
 
-- [implied-correlation-from-a-spread-option](06-implied-correlation-from-a-spread-option.md): runs the price backwards, from a quoted spread option price to the correlation it implies, with the existence and uniqueness conditions stated.
+- [Correlation from a spread option](06-implied-correlation-from-a-spread-option.md): runs the price backwards, from a quoted spread option price to the correlation it implies, with the existence and uniqueness conditions stated.
 
 The correlation sensitivity says how much a wrong correlation costs; what correlation the market is actually charging is the open question, answered by reading it out of a quoted price.
 

@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Binomial Trees
-topic: Pricing weights
-item: The risk-neutral probability
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/01-one-step-binomial-replication|one-step-binomial-replication]]"
-next:
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/03-multi-step-trees-and-backward-induction|multi-step-trees-and-backward-induction]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - risk-neutral-probability
----
-
 # The risk-neutral probability: q equals (R minus d) over (u minus d), and why it is not a forecast
 
-Financial mathematics → Binomial Trees → Pricing weights → The risk-neutral probability
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Binomial Trees](../../../SYLLABUS.md#w12-s04) → The risk-neutral probability
 
 ---
 
@@ -27,7 +8,7 @@ Financial mathematics → Binomial Trees → Pricing weights → The risk-neutra
 
 Acme trades at $100.00 today. Model the coming year with a single fork: one year from now the share is either $122.14 or $81.87, and nothing in between. Those two prices are 20 percent yearly volatility cut into one step — a multiplier of 1.2214 up, 0.8187 down. Cash in the bank grows at 5 percent a year, compounded continuously, so a dollar becomes $1.0513 by year end. The share pays out 2 percent of its value a year as dividends.
 
-A put is the right to sell one share for a fixed $100.00 in a year. At the upper price it is worthless: nobody sells a $122.14 share for $100.00. At the lower price it pays $18.13, the $100.00 received minus the $81.87 share handed over. The previous card solved, for the call on this same fork, how many shares and how much cash reproduce a contract's two payments: [one-step-binomial-replication](01-one-step-binomial-replication.md). Run that solve for the put's payments and the bill is $8.18, which is the put's price, because anything else is free money for whoever spots the gap.
+A put is the right to sell one share for a fixed $100.00 in a year. At the upper price it is worthless: nobody sells a $122.14 share for $100.00. At the lower price it pays $18.13, the $100.00 received minus the $81.87 share handed over. The previous card solved, for the call on this same fork, how many shares and how much cash reproduce a contract's two payments: [One step](01-one-step-binomial-replication.md). Run that solve for the put's payments and the bill is $8.18, which is the put's price, because anything else is free money for whoever spots the gap.
 
 This card does arithmetic on that bill. Multiply the upper payment by 0.5258, the lower by 0.4742, add, and divide by that 1.0513. Out comes $8.18 again, to the cent and well past it.
 
@@ -91,7 +72,7 @@ In words: the share's price climbs at the bank rate less what leaks out as divid
 
 ### When it holds
 
-- **Two endings and one step.** With three possible prices, two instruments cannot reproduce three payments and a contract's price becomes a range: [trinomial-trees-and-the-grid-connection](06-trinomial-trees-and-the-grid-connection.md).
+- **Two endings and one step.** With three possible prices, two instruments cannot reproduce three payments and a contract's price becomes a range: [Trinomial trees](06-trinomial-trees-and-the-grid-connection.md).
 - **The fork straddles the growth factor: $d < R < u$.** Otherwise $q$ leaves the interval from 0 to 1 and free money is on the table, as Step 3 shows.
 - **Borrowing, lending and shorting at one rate, in any quantity, with no fees.** Charge more to borrow than the bank pays and the single price widens into a band.
 - **The payout is a known proportional yield.** A lump cash dividend is not one: its present value comes off the share price before the fork is built. Treating this share as paying nothing moves the weight to 0.577493.
@@ -174,7 +155,7 @@ The check rebuilds the copy for three views of Acme and prices the put the naive
 
 The right-hand column forecasts what the put will pay, and every row of it is defensible. Only the middle column is a price, and it does not move. The bear cannot buy this put for $12.07 from anyone: a seller assembles the copy for $8.18 and pockets the difference with no risk at all.
 
-A second route reaches the same weights from the other end. Price a dollar paid only in the up ending, and a dollar paid only in the down ending: those two prices are $q$ and $1 - q$ carried back through the bank, and every contract here is those two multiplied by its payments. They are **state prices**: [state-prices-and-risk-neutral-pricing-in-one-period](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md).
+A second route reaches the same weights from the other end. Price a dollar paid only in the up ending, and a dollar paid only in the down ending: those two prices are $q$ and $1 - q$ carried back through the bank, and every contract here is those two multiplied by its payments. They are **state prices**: [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md).
 
 ---
 
@@ -228,7 +209,7 @@ how far the up weight clears a half, one block per 0.001
 
 Nothing about Acme changed down that list; only the bookkeeping interval did. Read as odds it is absurd: a share's chance of rising does not approach a coin flip because the clock is read more often. It is what $(R - d)/(u - d)$ does when top and bottom shrink at different speeds: the fork narrows like the square root of the step, while $R$'s climb above 1 shrinks like the step itself, so $R$ lands ever closer to the middle of the fork.
 
-What a desk does with hundreds of those steps is [multi-step-trees-and-backward-induction](03-multi-step-trees-and-backward-induction.md), and where the answer settles as the steps get finer is [crr-tree-and-convergence](04-crr-tree-and-convergence.md).
+What a desk does with hundreds of those steps is [Many steps](03-multi-step-trees-and-backward-induction.md), and where the answer settles as the steps get finer is [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md).
 
 ---
 
@@ -653,9 +634,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Every tree on a trading desk.** One weight per step, then a walk backwards from the end: [multi-step-trees-and-backward-induction](03-multi-step-trees-and-backward-induction.md). Contracts that can be cashed in early add one comparison per node, in [american-exercise-on-a-tree](05-american-exercise-on-a-tree.md).
-- **The fundamental theorems of asset pricing.** Step 3 for markets of any size: no free money exactly when a pricing weight exists, one price per contract exactly when that weight is unique. Stated in full in [risk-neutral-measure-and-the-fundamental-theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md).
-- **Black-Scholes.** This one weight in continuous time: average the payoff where the share drifts at the bank rate less its dividend yield, then discount. The formula at the end of that road is [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+- **Every tree on a trading desk.** One weight per step, then a walk backwards from the end: [Many steps](03-multi-step-trees-and-backward-induction.md). Contracts that can be cashed in early add one comparison per node, in [Early exercise](05-american-exercise-on-a-tree.md).
+- **The fundamental theorems of asset pricing.** Step 3 for markets of any size: no free money exactly when a pricing weight exists, one price per contract exactly when that weight is unique. Stated in full in [The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md).
+- **Black-Scholes.** This one weight in continuous time: average the payoff where the share drifts at the bank rate less its dividend yield, then discount. The formula at the end of that road is [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
 - **Insurance and prediction markets.** A quoted price is routinely read back as a probability. It is one only when nobody is paid to carry the risk — the assumption this card refuses to make.
 
 > **Say it back**
@@ -665,11 +646,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [one-step-binomial-replication](01-one-step-binomial-replication.md): the copy itself — how many shares, how much cash, and why its bill is the only price the contract can have. This card regroups that bill.
+- [One step](01-one-step-binomial-replication.md): the copy itself — how many shares, how much cash, and why its bill is the only price the contract can have. This card regroups that bill.
 
 ## Where this goes next
 
-- [multi-step-trees-and-backward-induction](03-multi-step-trees-and-backward-induction.md): the same weight applied at every node of a tree, with the copy rebuilt at each step out of the previous one's proceeds.
+- [Many steps](03-multi-step-trees-and-backward-induction.md): the same weight applied at every node of a tree, with the copy rebuilt at each step out of the previous one's proceeds.
 
 One fork is a poor model of a year, so $8.18 prices the model rather than the option; what the same weight does when the year is cut into many forks is the open question.
 

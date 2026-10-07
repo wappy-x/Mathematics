@@ -1,24 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Derivatives Meet the Lebesgue Integral
-topic: Slopes of rising functions
-item: Lebesgue's theorem on monotone functions
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/02-lebesgue-differentiation-theorem|lebesgue-differentiation-theorem]]"
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/05-lebesgue-decomposition|lebesgue-decomposition]]"
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/01-functions-of-bounded-variation|functions-of-bounded-variation]]"
-next:
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem|absolutely-continuous-functions-and-the-fundamental-theorem]]"
-tags: [mathematics, measure and integration, monotone-functions-differentiable-almost-everywhere]
----
-
 # Lebesgue's theorem on monotone functions: an increasing function has a derivative almost everywhere, and integrating that derivative can fall short
 
-Measure and integration → Derivatives Meet the Lebesgue Integral → Slopes of rising functions → Lebesgue's theorem on monotone functions
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Derivatives Meet the Lebesgue Integral](../../../SYLLABUS.md#w10-s11) → Lebesgue's theorem on monotone functions
 
 ---
 
@@ -34,7 +16,7 @@ Henri Lebesgue proved that this is the worst that can happen. A rising function 
 
 **Every increasing function on the line has a finite derivative almost everywhere; its integral over an interval is at most the function's rise there, and the gap is the mass of the singular part of the function's measure.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works, with the averaging step supplied by [lebesgue-differentiation-theorem](02-lebesgue-differentiation-theorem.md).
+**What kind of fact this is:** a theorem, proved on this card in Why it works, with the averaging step supplied by [The Lebesgue differentiation theorem](02-lebesgue-differentiation-theorem.md).
 
 ### The picture: a climb with slope zero almost everywhere
 
@@ -59,7 +41,7 @@ $$F'(x) \text{ exists and is finite for } \lambda\text{-a.e. } x, \qquad \int_a^
 
 **Read it aloud:** a rising function has a slope at almost every point, and the integral of that slope over a stretch is at most how far the function rose across it.
 
-The shortfall has a name. When F is right-continuous (F(x) is the limit of F from the right, as for every distribution function), it has a **Lebesgue-Stieltjes measure** $\mu_F$ with $\mu_F((a, b]) = F(b) - F(a)$ ([lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). That measure splits into a part with a density against length and a **singular** part $\mu_s$ that lives on a set of length zero ([lebesgue-decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md)). The density turns out to be the derivative:
+The shortfall has a name. When F is right-continuous (F(x) is the limit of F from the right, as for every distribution function), it has a **Lebesgue-Stieltjes measure** $\mu_F$ with $\mu_F((a, b]) = F(b) - F(a)$ ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). That measure splits into a part with a density against length and a **singular** part $\mu_s$ that lives on a set of length zero ([Lebesgue decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md)). The density turns out to be the derivative:
 
 $$\mu_F(A) = \int_A F' \, d\lambda + \mu_s(A), \qquad F(b) - F(a) - \int_a^b F' \, d\lambda = \mu_s\big((a, b]\big)$$
 
@@ -82,7 +64,7 @@ $$\mu_F(A) = \int_A F' \, d\lambda + \mu_s(A), \qquad F(b) - F(a) - \int_a^b F' 
 
 ### When it holds
 
-- **F increasing, real-valued, on an interval.** Drop monotonicity and a continuous function can have no derivative anywhere: the Takagi function (What breaks). A difference of two increasing functions is fine, which covers every function of bounded variation ([functions-of-bounded-variation](01-functions-of-bounded-variation.md)).
+- **F increasing, real-valued, on an interval.** Drop monotonicity and a continuous function can have no derivative anywhere: the Takagi function (What breaks). A difference of two increasing functions is fine, which covers every function of bounded variation ([Bounded variation](01-functions-of-bounded-variation.md)).
 - **Almost everywhere, not everywhere.** The claim's F has no derivative at 0; the staircase has none at any point of the Cantor set. A null set of such points is allowed, and it can be uncountable.
 - **The Lebesgue integral.** $F'$ is measurable and never negative, so its integral makes sense; the theorem also shows it is finite on bounded stretches.
 - **Right-continuity, for the exact shortfall.** The inequality holds for every increasing F. The equation with $\mu_s$ needs F right-continuous; otherwise use its right-continuous version $G$, which differs from F at countably many points only.
@@ -97,7 +79,7 @@ The rise of F over (x, x + h] is a mass, $\mu_F((x, x + h])$, and the slope over
 
 ### Step 1: turn F into a measure
 
-Take F right-continuous for now; the general case follows by a squeeze in the Detailed proof. The measure $\mu_F$ gives (a, b] the mass F(b) − F(a) ([lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). For the claim, $\mu_F$ is 0.3 on the point 0 plus mass 0.7 e^(−x) per unit length on x > 0. For the staircase, $\mu_C$ is the **Cantor measure**: all its mass lies on the Cantor set, which has length 0 ([the-cantor-set](../02-Length%20Done%20Properly/07-the-cantor-set.md)).
+Take F right-continuous for now; the general case follows by a squeeze in the Detailed proof. The measure $\mu_F$ gives (a, b] the mass F(b) − F(a) ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). For the claim, $\mu_F$ is 0.3 on the point 0 plus mass 0.7 e^(−x) per unit length on x > 0. For the staircase, $\mu_C$ is the **Cantor measure**: all its mass lies on the Cantor set, which has length 0 ([The Cantor set](../02-Length%20Done%20Properly/07-the-cantor-set.md)).
 
 ### Step 2: split the measure against length
 
@@ -113,7 +95,7 @@ $$\frac{F(x + h) - F(x)}{h} \;=\; \frac{1}{h}\int_x^{x+h} f \, d\lambda \;+\; \f
 
 ### Step 4: the density average tends to the density, almost everywhere
 
-That is the Lebesgue differentiation theorem ([lebesgue-differentiation-theorem](02-lebesgue-differentiation-theorem.md)): for an integrable f, averages over shrinking intervals around x converge to f(x) at almost every x. For the claim, f is continuous away from 0, so ordinary calculus already gives 0.7 e^(−x) at every x > 0.
+That is the Lebesgue differentiation theorem ([The Lebesgue differentiation theorem](02-lebesgue-differentiation-theorem.md)): for an integrable f, averages over shrinking intervals around x converge to f(x) at almost every x. For the claim, f is continuous away from 0, so ordinary calculus already gives 0.7 e^(−x) at every x > 0.
 
 ### Step 5: the singular mass per unit length tends to 0, almost everywhere
 
@@ -167,7 +149,7 @@ Singular mass is never negative, which gives the inequality. Claim on (−1, 5]:
 
 The code computes stage slopes exactly, reads slopes off F at thousands of points, and adds them up for three rising functions. That the slope exists almost everywhere for every increasing function, and that the gap always equals the singular mass, only the proof shows.
 
-A second route to the inequality skips the decomposition: the slopes $k(F(x + 1/k) - F(x))$ are never negative, tend to $F'$ almost everywhere, and integrate over [a, b′], for b′ < b and k large, to at most F(b′ + 1/k) − F(a) ≤ F(b) − F(a), so [fatous-lemma](../05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md) bounds the integral of the limit over [a, b′]; then let b′ rise to b. Riesz's rising-sun lemma gives the derivative without measures (Stein and Shakarchi, below).
+A second route to the inequality skips the decomposition: the slopes $k(F(x + 1/k) - F(x))$ are never negative, tend to $F'$ almost everywhere, and integrate over [a, b′], for b′ < b and k large, to at most F(b′ + 1/k) − F(a) ≤ F(b) − F(a), so [Fatou's lemma](../05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md) bounds the integral of the limit over [a, b′]; then let b′ rise to b. Riesz's rising-sun lemma gives the derivative without measures (Stein and Shakarchi, below).
 
 ---
 
@@ -187,7 +169,7 @@ The claim, on the stretch from −1 to 5 thousand dollars.
 | Staircase on [0, 1] | rise C(1) − C(0) = 1; integral of $C'$ = 0 | shortfall **1** |
 | Three pieces on [−1, 1] | rise 0.816060; integral of slope 0.316060 | shortfall **0.5** = 0.3 + 0.2 |
 
-The integral of the slope accounts for the 70% of policies with a spread-out claim; the 30% with no claim sit on one point, where no slope can see them. The last row mixes all three kinds of mass from the [lebesgue-decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md) card: 0.3 at zero, 0.5 exponential at rate 1, and 0.2 spread by the staircase. The gap is the jump plus the staircase.
+The integral of the slope accounts for the 70% of policies with a spread-out claim; the 30% with no claim sit on one point, where no slope can see them. The last row mixes all three kinds of mass from the [Lebesgue decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md) card: 0.3 at zero, 0.5 exponential at rate 1, and 0.2 spread by the staircase. The gap is the jump plus the staircase.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -553,8 +535,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Insurance claims and rainfall.** A claim amount, like a day's rainfall, is exactly 0 with positive probability and spread out otherwise. Its density is the slope of the distribution function; the atom at 0 is the shortfall and must be modelled separately.
-- **Densities in probability.** A law has a density exactly when its distribution function recovers from its slope; otherwise the slope is only the density of the absolutely continuous part ([lebesgue-decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md)).
-- **Integrating against a rising function.** Integrals against $\mu_F$, written with dF ([lebesgue-stieltjes-integral](05-lebesgue-stieltjes-integral.md)), split into a part with $F'$ and a part on the jumps and staircases.
+- **Densities in probability.** A law has a density exactly when its distribution function recovers from its slope; otherwise the slope is only the density of the absolutely continuous part ([Lebesgue decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md)).
+- **Integrating against a rising function.** Integrals against $\mu_F$, written with dF ([The Lebesgue-Stieltjes integral](05-lebesgue-stieltjes-integral.md)), split into a part with $F'$ and a part on the jumps and staircases.
 - **Devil's staircases in physics.** In systems of coupled oscillators the locked frequency ratio, plotted against a driving parameter, can form a continuous rising staircase that is flat almost everywhere, the same shape as C.
 
 > **Say it back**
@@ -564,13 +546,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [lebesgue-differentiation-theorem](02-lebesgue-differentiation-theorem.md): averages of an integrable function over shrinking intervals return the function almost everywhere, the density half of Step 3.
-- [lebesgue-decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md): the unique split of $\mu_F$ into a density part and a singular part.
-- [functions-of-bounded-variation](01-functions-of-bounded-variation.md): a function of bounded variation is a difference of two increasing ones, so the theorem covers it too.
+- [The Lebesgue differentiation theorem](02-lebesgue-differentiation-theorem.md): averages of an integrable function over shrinking intervals return the function almost everywhere, the density half of Step 3.
+- [Lebesgue decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md): the unique split of $\mu_F$ into a density part and a singular part.
+- [Bounded variation](01-functions-of-bounded-variation.md): a function of bounded variation is a difference of two increasing ones, so the theorem covers it too.
 
 ## Where this goes next
 
-- [absolutely-continuous-functions-and-the-fundamental-theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md): the functions with no singular part, for which the integral of the slope recovers the rise exactly, and how to recognise them without computing a decomposition.
+- [Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md): the functions with no singular part, for which the integral of the slope recovers the rise exactly, and how to recognise them without computing a decomposition.
 
 ---
 

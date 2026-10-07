@@ -1,29 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Generators, Densities and Simulation
-topic: Knowing when to quit
-item: Optimal stopping
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/03-stopping-times-and-optional-stopping|stopping-times-and-optional-stopping]]"
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/04-martingale-convergence|martingale-convergence]]"
-next:
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/05-american-exercise-on-a-tree|american-exercise-on-a-tree]]"
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/01-american-options-and-early-exercise|american-options-and-early-exercise]]"
-  - "[[Cards/15-Optimization/07-Dynamic Programming and Learning/06-optimal-stopping-as-a-dynamic-program|optimal-stopping-as-a-dynamic-program]]"
-  - "[[Cards/19-Partial differential equations/06-Weak Solutions and Free Boundaries/09-american-options-as-a-free-boundary-problem|american-options-as-a-free-boundary-problem]]"
-tags:
-  - mathematics
-  - stochastic processes and calculus
-  - optimal-stopping-and-snell-envelope
----
-
 # Optimal stopping: when to stop a process to maximise an expected reward
 
-Stochastic processes and calculus → Generators, Densities and Simulation → Knowing when to quit → Optimal stopping
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Generators, Densities and Simulation](../../../SYLLABUS.md#w11-s08) → Optimal stopping
 
 ---
 
@@ -49,7 +26,7 @@ Drawn to scale: months across, offers up, heights in proportion to the dollar am
 
 ## The formula
 
-Notation first, in words. Months are numbered n = 1, 2, 3, and the deadline is N = 3. The offer in month n is $X_n$. The **reward** $Z_n$ is what selling in month n leaves the seller: the offer minus the costs paid so far, $Z_n = X_n - c\,n$ with $c$ = $3,000. What is known in month n is $\mathcal{F}_n$, the filtration from the first shelf of this wing: here, the offers of months 1 to n. A **stopping rule** is a stopping time $\tau$ ([stopping-times-and-optional-stopping](../02-Martingales/03-stopping-times-and-optional-stopping.md)): a month to sell that can be recognised when it arrives, from the offers seen so far.
+Notation first, in words. Months are numbered n = 1, 2, 3, and the deadline is N = 3. The offer in month n is $X_n$. The **reward** $Z_n$ is what selling in month n leaves the seller: the offer minus the costs paid so far, $Z_n = X_n - c\,n$ with $c$ = $3,000. What is known in month n is $\mathcal{F}_n$, the filtration from the first shelf of this wing: here, the offers of months 1 to n. A **stopping rule** is a stopping time $\tau$ ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)): a month to sell that can be recognised when it arrives, from the offers seen so far.
 
 The **Snell envelope** $U_n$ is defined backwards from the deadline:
 
@@ -63,7 +40,7 @@ The theorem has three parts.
 
 $$U_0 = \max_{\tau} E[Z_\tau], \qquad \tau^* = \min\{\, n \ge 1 : U_n = Z_n \,\} \text{ attains it},$$
 
-and $U_n$ is the smallest **supermartingale** above the reward: any process $Y_n$ with $Y_n \ge Z_n$ and $E[Y_{n+1} \mid \mathcal{F}_n] \le Y_n$ at every month has $Y_n \ge U_n$ at every month. A supermartingale is a game whose best forecast of tomorrow is today or lower ([martingales](../02-Martingales/01-martingales.md)).
+and $U_n$ is the smallest **supermartingale** above the reward: any process $Y_n$ with $Y_n \ge Z_n$ and $E[Y_{n+1} \mid \mathcal{F}_n] \le Y_n$ at every month has $Y_n \ge U_n$ at every month. A supermartingale is a game whose best forecast of tomorrow is today or lower ([Martingales](../02-Martingales/01-martingales.md)).
 
 **Read it aloud:** the envelope at listing is the best average reward any honest rule (one that decides from the past only) can earn, the rule "sell the first time the reward equals the envelope" earns it, and nothing smaller than the envelope can be fair-or-falling while covering the reward.
 
@@ -140,7 +117,7 @@ Let $\tau^*$ be the first month with $U_n = Z_n$. Before $\tau^*$, the envelope 
 
 ### Another road: try every rule
 
-The tree is small enough to search outright. A rule says, for each month-1 offer, either sell or wait; if wait, it says for each month-2 offer sell or wait; month 3 always sells. That gives 9 choices for each of 3 month-1 offers: 729 stopping rules in all. The code scores every one over all 27 offer paths. The best scores exactly $404,680, and exactly one rule attains it, the envelope's. Each extra month cubes the number of rules (one more than the previous count, cubed), while backward induction grows only linearly in the number of points of the tree; that is why the recursion matters. The same backward step in continuous time becomes a condition on the generator, [infinitesimal-generator](01-infinitesimal-generator.md), inside the region where waiting is right.
+The tree is small enough to search outright. A rule says, for each month-1 offer, either sell or wait; if wait, it says for each month-2 offer sell or wait; month 3 always sells. That gives 9 choices for each of 3 month-1 offers: 729 stopping rules in all. The code scores every one over all 27 offer paths. The best scores exactly $404,680, and exactly one rule attains it, the envelope's. Each extra month cubes the number of rules (one more than the previous count, cubed), while backward induction grows only linearly in the number of points of the tree; that is why the recursion matters. The same backward step in continuous time becomes a condition on the generator, [The generator](01-infinitesimal-generator.md), inside the region where waiting is right.
 
 ---
 
@@ -592,7 +569,7 @@ The two outputs are identical. The simulated mean, $404,737.58 with standard err
 
 ## Where you meet it in real life
 
-- **American options.** The holder may exercise any day before expiry; the discounted price is the Snell envelope of the discounted payoff under the pricing measure, computed backwards on a tree in [american-exercise-on-a-tree](../../12-Financial%20mathematics/04-Binomial%20Trees/05-american-exercise-on-a-tree.md). Being the smallest supermartingale above the discounted payoff is what makes it the cheapest price a seller can hedge.
+- **American options.** The holder may exercise any day before expiry; the discounted price is the Snell envelope of the discounted payoff under the pricing measure, computed backwards on a tree in [Early exercise](../../12-Financial%20mathematics/04-Binomial%20Trees/05-american-exercise-on-a-tree.md). Being the smallest supermartingale above the discounted payoff is what makes it the cheapest price a seller can hedge.
 - **Selling and searching.** House sales, job offers and asset sales without recall are the textbook case, where the bar is called the reservation price.
 - **Hiring.** The secretary problem, interviewing candidates one at a time and choosing on the spot, is a stopping problem with the same backward solution.
 - **Clinical trials and quality control.** A trial stops early for clear benefit or harm; a sequential test stops sampling once the evidence is enough. Both are rules decided from data seen so far.
@@ -604,15 +581,15 @@ The two outputs are identical. The simulated mean, $404,737.58 with standard err
 
 ## What this builds on
 
-- [stopping-times-and-optional-stopping](../02-Martingales/03-stopping-times-and-optional-stopping.md): what an honest rule is, and the optional stopping argument used in Steps 4 and 5.
-- [martingale-convergence](../02-Martingales/04-martingale-convergence.md): a supermartingale bounded below settles to a limit along each path; the general theory of stopping with no deadline rests on this, while this card meets that case only through the fixed point $V = E[\max(X, V)] - c$.
+- [Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md): what an honest rule is, and the optional stopping argument used in Steps 4 and 5.
+- [Martingale convergence](../02-Martingales/04-martingale-convergence.md): a supermartingale bounded below settles to a limit along each path; the general theory of stopping with no deadline rests on this, while this card meets that case only through the fixed point $V = E[\max(X, V)] - c$.
 
 ## Where this goes next
 
-- [american-exercise-on-a-tree](../../12-Financial%20mathematics/04-Binomial%20Trees/05-american-exercise-on-a-tree.md): the same recursion on a share-price tree, priced under the risk-neutral measure.
-- [american-options-and-early-exercise](../../12-Financial%20mathematics/15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md): when early exercise pays, and the exercise boundary.
-- optimal-stopping-as-a-dynamic-program: the recursion as a Bellman equation, with states in place of paths.
-- american-options-as-a-free-boundary-problem: in continuous time the bar becomes a curve found with the solution.
+- [Early exercise](../../12-Financial%20mathematics/04-Binomial%20Trees/05-american-exercise-on-a-tree.md): the same recursion on a share-price tree, priced under the risk-neutral measure.
+- [American options](../../12-Financial%20mathematics/15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md): when early exercise pays, and the exercise boundary.
+- Optimal stopping: the recursion as a Bellman equation, with states in place of paths.
+- An American option: in continuous time the bar becomes a curve found with the solution.
 
 The house has one bar per month because it has three dates and fixed chances; when the reward is a share price that moves at every instant and can be hedged, the bar becomes a boundary in price and time, and the American-option cards find it.
 

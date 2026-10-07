@@ -1,26 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: The Lebesgue Integral
-topic: Integrals from below
-item: The integral of a non-negative function
-kind: definition
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/01-integral-of-a-simple-function|integral-of-a-simple-function]]"
-next:
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/03-monotone-convergence-theorem|monotone-convergence-theorem]]"
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/01-absolutely-continuous-and-singular-measures|absolutely-continuous-and-singular-measures]]"
-tags:
-  - mathematics
-  - measure and integration
-  - integral-of-a-nonnegative-function
----
-
 # The integral of a non-negative function: the best you can do from below with simple functions, infinity allowed
 
-Measure and integration → The Lebesgue Integral → Integrals from below → The integral of a non-negative function
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Lebesgue Integral](../../../SYLLABUS.md#w10-s04) → The integral of a non-negative function
 
 ---
 
@@ -30,7 +10,7 @@ A river runs along a straight 1 km stretch. At x km from the start its depth is 
 
 Round the depth down to the nearest half metre and the answer is easy: 0.5 m wherever the depth reaches 0.5 m, a stretch 0.707 km long, so 0.354 km m. Round down to quarter metres: 0.518. To eighths: 0.596. Rounding down only removes water, so each answer is too small, and finer rounding removes less. The numbers climb toward 2/3.
 
-A rounded-down depth takes finitely many values, each on a piece of known length: a **simple function**, whose integral, value times length of each piece added up, was built on [integral-of-a-simple-function](01-integral-of-a-simple-function.md). The depth's own integral is defined as the best answer any simple function lying under it can give. For some functions that best answer is infinite, and the definition allows it.
+A rounded-down depth takes finitely many values, each on a piece of known length: a **simple function**, whose integral, value times length of each piece added up, was built on [The integral of a simple function](01-integral-of-a-simple-function.md). The depth's own integral is defined as the best answer any simple function lying under it can give. For some functions that best answer is infinite, and the definition allows it.
 
 Three facts follow at once. Changing the depth at one point, even to 1000 m, changes nothing. A function with integral zero is zero except on a set of length zero. And a river of average depth 2/3 m is 0.75 m deep or more along at most 0.889 km: Markov's inequality.
 
@@ -50,7 +30,7 @@ The steps sit where the depth crosses 0.25, 0.5 and 0.75 m. The code prints thei
 
 ## The formula
 
-Notation first, in words. A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the collection of its subsets we allow ourselves to measure, and a measure giving each a size; here, positions along the river, sets including every interval, and length, written $\lambda$. A function $f$ is **non-negative** when its values lie in $[0, \infty]$: zero or more, with $\infty$ allowed. It is **measurable** when every set $\{f \ge t\}$, the points where $f$ is at least $t$, is one of the sets we may measure ([measurable-functions](../03-Measurable%20Functions/01-measurable-functions.md)).
+Notation first, in words. A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the collection of its subsets we allow ourselves to measure, and a measure giving each a size; here, positions along the river, sets including every interval, and length, written $\lambda$. A function $f$ is **non-negative** when its values lie in $[0, \infty]$: zero or more, with $\infty$ allowed. It is **measurable** when every set $\{f \ge t\}$, the points where $f$ is at least $t$, is one of the sets we may measure ([Measurable functions](../03-Measurable%20Functions/01-measurable-functions.md)).
 
 A simple function $s$ takes finitely many values $a_i$ on measurable pieces $A_i$, and its integral is already defined:
 
@@ -72,7 +52,7 @@ $$\mu(\{f \ge t\}) \;\le\; \frac{1}{t}\int f\,d\mu \qquad\text{(Markov's inequal
 
 $$\int f\,d\mu = 0 \iff f = 0 \text{ a.e.}, \qquad\quad f = g \text{ a.e.} \ \Rightarrow\ \int f\,d\mu = \int g\,d\mu$$
 
-**Read them aloud:** a bigger function has a bigger integral; the set where f is at least t has size at most the integral divided by t; the integral is zero exactly when f is zero almost everywhere, written a.e., meaning except on a set of size zero ([null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)); and functions equal a.e. have equal integrals.
+**Read them aloud:** a bigger function has a bigger integral; the set where f is at least t has size at most the integral divided by t; the integral is zero exactly when f is zero almost everywhere, written a.e., meaning except on a set of size zero ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)); and functions equal a.e. have equal integrals.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -91,7 +71,7 @@ $$\int f\,d\mu = 0 \iff f = 0 \text{ a.e.}, \qquad\quad f = g \text{ a.e.} \ \Ri
 
 ### When it holds
 
-- **Non-negative values.** A function +2 on the first half and −2 on the second has parts whose integrals cancel to 0, yet it is zero nowhere, and the length where it is at least 1 is 0.5, above Markov's bound of 0. Signed functions are handled on [integrable-functions-and-l1](04-integrable-functions-and-l1.md).
+- **Non-negative values.** A function +2 on the first half and −2 on the second has parts whose integrals cancel to 0, yet it is zero nowhere, and the length where it is at least 1 is 0.5, above Markov's bound of 0. Signed functions are handled on [Integrable functions](04-integrable-functions-and-l1.md).
 - **Measurable.** If $\{f \ge t\}$ is not in $\mathcal{F}$, it has no size, and Markov's inequality says nothing.
 - **Infinity allowed, never subtracted.** Values and integrals may be ∞, with 0 times ∞ read as 0; ∞ − ∞ never arises.
 - **Any measure.** Counting measure, length on the whole line and probabilities all fit. The a.e. rules use null sets of the same $\mu$.
@@ -114,7 +94,7 @@ Rounding up instead gives a staircase above the depth: one more slab of 1/k over
 
 Every simple $s$ under $d$ lies under the rounded-up staircase, so, by monotonicity of the simple integral, its integral is at most 0.768; the rounded-down staircase is under $d$. So the integral of $d$ lies between 0.518 and 0.768. The gap halves with the step: at 1/256 m the bounds are 0.664663 and 0.668570.
 
-The rounded-down staircases are sums of slab lengths, the square root of 1 − j/k times 1/k for j = 1 to k: a Riemann sum ([riemann-integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md)) for the area under the square root of 1 − t, which is 2/3. So the integral of the depth is 2/3 km m, and the river's average depth over its 1 km is 2/3 m.
+The rounded-down staircases are sums of slab lengths, the square root of 1 − j/k times 1/k for j = 1 to k: a Riemann sum ([The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md)) for the area under the square root of 1 − t, which is 2/3. So the integral of the depth is 2/3 km m, and the river's average depth over its 1 km is 2/3 m.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -129,7 +109,7 @@ xychart-beta
 
 Orange: rounded-down staircases, rising. Green: rounded-up ones, falling. Dark: the integral, 2/3. The definition uses only the orange line; the green one proves the supremum is no larger.
 
-The squeeze needs a bounded function on a finite stretch. In general the proof that the rounded-down staircases $s_n$ always climb all the way to $\int f\,d\mu$ is the monotone convergence theorem, on [monotone-convergence-theorem](03-monotone-convergence-theorem.md).
+The squeeze needs a bounded function on a finite stretch. In general the proof that the rounded-down staircases $s_n$ always climb all the way to $\int f\,d\mu$ is the monotone convergence theorem, on [The monotone convergence theorem](03-monotone-convergence-theorem.md).
 
 ### Step 2: the new integral agrees with the old one, and is monotone
 
@@ -143,7 +123,7 @@ Fix the level 0.75 m. The function $0.75 \cdot \mathbf{1}_A$, with $A = \{d \ge 
 
 The truth is 0.5 km: Markov uses only the average, so it is often loose. It cannot be improved in general. A river 0.75 m deep on the middle half and dry elsewhere holds 0.375 km m, and the bound gives 0.375/0.75 = 0.5, exactly its length.
 
-For a boat moored at a uniformly random point of the stretch, lengths are chances: the chance its depth is at least 0.75 m is at most 0.889 and truly 0.5. The probability version, with Chebyshev's inequality beside it, is [markov-and-chebyshev](07-markov-and-chebyshev.md); the wing-09 statement without measure is on [markov-and-chebyshev-inequalities](../../09-Probability%20and%20statistics/02-Random%20Variables/08-markov-and-chebyshev-inequalities.md).
+For a boat moored at a uniformly random point of the stretch, lengths are chances: the chance its depth is at least 0.75 m is at most 0.889 and truly 0.5. The probability version, with Chebyshev's inequality beside it, is [Markov and Chebyshev](07-markov-and-chebyshev.md); the wing-09 statement without measure is on [Markov and Chebyshev](../../09-Probability%20and%20statistics/02-Random%20Variables/08-markov-and-chebyshev-inequalities.md).
 
 ### Step 4: zero integral means zero almost everywhere
 
@@ -180,7 +160,7 @@ One consequence: if the integral of $f$ is finite, Markov's inequality bounds th
 <details>
 <summary>Detailed proof</summary>
 
-Throughout, $(\Omega, \mathcal{F}, \mu)$ is a measure space, $f$ and $g$ are measurable from $\Omega$ to $[0, \infty]$, and "simple" means a measurable function with finitely many values in $[0, \infty)$. The integral of a simple function, with its independence of representation, linearity and monotonicity, is taken from [integral-of-a-simple-function](01-integral-of-a-simple-function.md). Write $S(f)$ for the set of simple $s$ with $0 \le s \le f$, and $I(f)$ for the supremum of their integrals. $S(f)$ contains the zero function, so $I(f)$ is defined, in $[0, \infty]$.
+Throughout, $(\Omega, \mathcal{F}, \mu)$ is a measure space, $f$ and $g$ are measurable from $\Omega$ to $[0, \infty]$, and "simple" means a measurable function with finitely many values in $[0, \infty)$. The integral of a simple function, with its independence of representation, linearity and monotonicity, is taken from [The integral of a simple function](01-integral-of-a-simple-function.md). Write $S(f)$ for the set of simple $s$ with $0 \le s \le f$, and $I(f)$ for the supremum of their integrals. $S(f)$ contains the zero function, so $I(f)$ is defined, in $[0, \infty]$.
 
 **Theorem 1 (agreement).** If $f$ is simple, $I(f) = \int f\,d\mu$ in the simple sense. *Proof.* $f$ is in $S(f)$, so $I(f) \ge \int f\,d\mu$. For $s$ in $S(f)$, $s \le f$ and simple monotonicity give $\int s\,d\mu \le \int f\,d\mu$; taking the supremum, $I(f) \le \int f\,d\mu$.
 
@@ -188,7 +168,7 @@ Throughout, $(\Omega, \mathcal{F}, \mu)$ is a measure space, $f$ and $g$ are mea
 
 **Theorem 3 (Markov's inequality).** For $t$ in $(0, \infty)$, $\mu(\{f \ge t\}) \le I(f)/t$. *Proof.* $A = \{f \ge t\}$ is in $\mathcal{F}$ because $f$ is measurable. The function $t\mathbf{1}_A$ is simple. On $A$, $t\mathbf{1}_A = t \le f$; off $A$, $t\mathbf{1}_A = 0 \le f$. So $t\mathbf{1}_A$ is in $S(f)$, and $t\,\mu(A) = \int t\mathbf{1}_A\,d\mu \le I(f)$. Divide by $t$. (If $I(f) = \infty$ the claim holds trivially.)
 
-**Theorem 4 (zero integral).** $I(f) = 0$ if and only if $\mu(\{f > 0\}) = 0$. *Proof.* Suppose $I(f) = 0$. For each whole number $m \ge 1$ let $A_m = \{f \ge 1/m\}$. Theorem 3 gives $\mu(A_m) \le m \cdot 0 = 0$. If $f(\omega) > 0$ then $f(\omega) \ge 1/m$ for some $m$ (for $f(\omega) = \infty$ any $m$ will do), so $\{f > 0\}$ is the union of the $A_m$, and countable subadditivity ([continuity-of-measure](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) gives $\mu(\{f > 0\}) \le \sum_m \mu(A_m) = 0$. Conversely, let $N = \{f > 0\}$ be null, and let $s$ be in $S(f)$ with largest value $c$, finite. Off $N$, $0 \le s \le f = 0$, so $s \le c\mathbf{1}_N$ everywhere. Simple monotonicity gives $\int s\,d\mu \le c\,\mu(N) = 0$. So every member of $S(f)$ has integral 0, and $I(f) = 0$.
+**Theorem 4 (zero integral).** $I(f) = 0$ if and only if $\mu(\{f > 0\}) = 0$. *Proof.* Suppose $I(f) = 0$. For each whole number $m \ge 1$ let $A_m = \{f \ge 1/m\}$. Theorem 3 gives $\mu(A_m) \le m \cdot 0 = 0$. If $f(\omega) > 0$ then $f(\omega) \ge 1/m$ for some $m$ (for $f(\omega) = \infty$ any $m$ will do), so $\{f > 0\}$ is the union of the $A_m$, and countable subadditivity ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) gives $\mu(\{f > 0\}) \le \sum_m \mu(A_m) = 0$. Conversely, let $N = \{f > 0\}$ be null, and let $s$ be in $S(f)$ with largest value $c$, finite. Off $N$, $0 \le s \le f = 0$, so $s \le c\mathbf{1}_N$ everywhere. Simple monotonicity gives $\int s\,d\mu \le c\,\mu(N) = 0$. So every member of $S(f)$ has integral 0, and $I(f) = 0$.
 
 **Theorem 5 (a.e.-equal functions).** If $f = g$ off a null set $N$, then $I(f) = I(g)$. *Proof.* Let $s$ be in $S(f)$ and put $s' = s\mathbf{1}_{\Omega \setminus N}$, which is simple because $N$ is measurable. Off $N$, $s' = s \le f = g$; on $N$, $s' = 0 \le g$. So $s'$ is in $S(g)$. Also $s = s' + s\mathbf{1}_N$, and by simple linearity $\int s\,d\mu = \int s'\,d\mu + \int s\mathbf{1}_N\,d\mu$, where the last term is at most $c\,\mu(N) = 0$ for $c$ the largest value of $s$. So $\int s\,d\mu = \int s'\,d\mu \le I(g)$. Taking the supremum over $s$, $I(f) \le I(g)$. Exchanging $f$ and $g$ gives $I(g) \le I(f)$.
 
@@ -200,7 +180,7 @@ Throughout, $(\Omega, \mathcal{F}, \mu)$ is a measure space, $f$ and $g$ are mea
 
 </details>
 
-A second route to the same number counts sizes instead of values: $\int f\,d\mu$ equals the integral over levels t of the size of $\{f > t\}$, the "layer cake" the slabs of Step 1 are a finite version of. It needs Tonelli's theorem and is proved on [layer-cake-and-tail-integrals](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md).
+A second route to the same number counts sizes instead of values: $\int f\,d\mu$ equals the integral over levels t of the size of $\{f > t\}$, the "layer cake" the slabs of Step 1 are a finite version of. It needs Tonelli's theorem and is proved on [The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md).
 
 ---
 
@@ -564,9 +544,9 @@ The two outputs are identical line for line.
 
 ## Where you meet it in real life
 
-- **Expected values.** An average of a non-negative quantity, such as a waiting time, a loss or a rainfall total, is this integral against a probability. The measure version of expectation is [expectation-as-an-integral](06-expectation-as-an-integral.md).
-- **Tail bounds.** Markov's inequality turns an average into a guarantee from the average alone; sharper versions square or exponentiate first ([markov-and-chebyshev](07-markov-and-chebyshev.md)).
-- **Densities and changing odds.** Integrating a non-negative $f$ over each set $A$ builds a new measure that, by Step 4, gives size zero to every null set of the old one; that is what lets a pricing model switch from real-world to risk-neutral odds ([absolutely-continuous-and-singular-measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md)).
+- **Expected values.** An average of a non-negative quantity, such as a waiting time, a loss or a rainfall total, is this integral against a probability. The measure version of expectation is [Expectation as an integral](06-expectation-as-an-integral.md).
+- **Tail bounds.** Markov's inequality turns an average into a guarantee from the average alone; sharper versions square or exponentiate first ([Markov and Chebyshev](07-markov-and-chebyshev.md)).
+- **Densities and changing odds.** Integrating a non-negative $f$ over each set $A$ builds a new measure that, by Step 4, gives size zero to every null set of the old one; that is what lets a pricing model switch from real-world to risk-neutral odds ([Absolutely continuous and singular measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md)).
 
 > **Say it back**
 > The integral of a non-negative function is the best total any simple function under it can give: the supremum of their integrals, which may be infinite. For the river, staircases of 2, 4 and 8 steps give 0.354, 0.518 and 0.596, climbing to 2/3. A bigger function has a bigger integral, because every staircase under the smaller one is under the bigger one. Putting one flat step of height t under the function gives Markov's inequality, and Markov at levels 1/m gives the zero rule: zero integral means zero except on a null set. Changing a function on a null set, even to 1000 m or to ∞, changes nothing.
@@ -575,14 +555,14 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [integral-of-a-simple-function](01-integral-of-a-simple-function.md): the integral of a staircase, value times size of each piece, and its monotonicity and linearity, used in every proof here.
+- [The integral of a simple function](01-integral-of-a-simple-function.md): the integral of a staircase, value times size of each piece, and its monotonicity and linearity, used in every proof here.
 
 ## Where this goes next
 
-- [monotone-convergence-theorem](03-monotone-convergence-theorem.md): integrals of rising functions rise to the integral of the limit.
-- [absolutely-continuous-and-singular-measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md): measures built by integrating a density, which never charge a null set.
+- [The monotone convergence theorem](03-monotone-convergence-theorem.md): integrals of rising functions rise to the integral of the limit.
+- [Absolutely continuous and singular measures](../08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md): measures built by integrating a density, which never charge a null set.
 
-The supremum makes monotonicity free but says nothing about sums: whether the integral of f + g is the sum of the integrals, and whether staircases reach the integral with no rounded-up partner to squeeze them, is answered by [monotone-convergence-theorem](03-monotone-convergence-theorem.md).
+The supremum makes monotonicity free but says nothing about sums: whether the integral of f + g is the sum of the integrals, and whether staircases reach the integral with no rounded-up partner to squeeze them, is answered by [The monotone convergence theorem](03-monotone-convergence-theorem.md).
 
 ---
 

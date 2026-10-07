@@ -1,25 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Relations and Functions
-topic: Functions
-item: Composing functions
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/08-Relations and Functions/02-functions|functions]]"
-next:
-  - "[[Cards/01-Foundations/08-Relations and Functions/05-inverse-functions|inverse-functions]]"
-tags:
-  - mathematics
-  - foundations
-  - composition
----
-
 # Composing functions: do one, then the other
 
-Foundations → Relations and Functions → Functions → Composing functions
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Relations and Functions](../../../SYLLABUS.md#w01-s08) → Composing functions
 
 ---
 
@@ -31,7 +12,7 @@ The cashier takes the 20% off first: $50 becomes $40, and the coupon takes that 
 
 Same jacket, same offers, a dollar apart. Only the order changed.
 
-Each offer is a rule that takes a price and hands back a price: a function, as in [functions](02-functions.md). Feeding one rule's answer into the other is **composition**, and the two steps together are one rule.
+Each offer is a rule that takes a price and hands back a price: a function, as in [Functions](02-functions.md). Feeding one rule's answer into the other is **composition**, and the two steps together are one rule.
 
 **Feeding one function's output into another makes one new function, and the order you feed them in usually changes the answer.**
 
@@ -81,7 +62,7 @@ Each chain collapses into one rule. Step 2 does the working; here is where they 
 
 ### Step 0: the first rule's output must be the second rule's kind of input
 
-Both offers take a price over $5 and hand back a price. That is the only reason they chain, in either order. If the coupon handed back a colour, no price rule could follow. Checking a chain is checking that each rule's outputs are inputs the next accepts: the domain and codomain of [functions](02-functions.md).
+Both offers take a price over $5 and hand back a price. That is the only reason they chain, in either order. If the coupon handed back a colour, no price rule could follow. Checking a chain is checking that each rule's outputs are inputs the next accepts: the domain and codomain of [Functions](02-functions.md).
 
 ### Step 1: run them in order, on the real number
 
@@ -107,7 +88,7 @@ Ring up a rule that leaves the price alone, then take the 20% off: $40, what the
 
 Add a third offer and the queue order is all that matters — which pair you collapse into one rule first changes nothing. That is **associativity**.
 
-Running a chain backwards is [inverse-functions](05-inverse-functions.md).
+Running a chain backwards is [Inverse functions](05-inverse-functions.md).
 
 ---
 
@@ -283,11 +264,11 @@ The two outputs match line for line: whole cents throughout, and the fifths are 
 
 ## What this builds on
 
-- [functions](02-functions.md): one output for every input, and the domain and codomain that decide whether two rules chain.
+- [Functions](02-functions.md): one output for every input, and the domain and codomain that decide whether two rules chain.
 
 ## Where this goes next
 
-- [inverse-functions](05-inverse-functions.md): chaining a rule with the one that undoes it, and when that exists.
+- [Inverse functions](05-inverse-functions.md): chaining a rule with the one that undoes it, and when that exists.
 
 ---
 

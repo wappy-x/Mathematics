@@ -1,23 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Curves and Solids
-topic: Solids spun from a profile
-item: Volumes
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/04-Integrals/02-fundamental-theorem-of-calculus|fundamental-theorem-of-calculus]]"
-  - "[[Cards/05-Geometry and trig/02-Circles and Solids/04-prisms-and-cylinders|prisms-and-cylinders]]"
-next:
-  - "[[Cards/06-Calculus and analysis/05-Curves and Solids/05-centre-of-mass-and-pappus|centre-of-mass-and-pappus]]"
-tags: [mathematics, calculus and analysis, volumes-by-slices-and-shells]
----
-
 # Volumes: slicing a solid into discs, washers or shells
 
-Calculus and analysis → Curves and Solids → Solids spun from a profile → Volumes
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Curves and Solids](../../../SYLLABUS.md#w06-s05) → Volumes
 
 ---
 
@@ -43,7 +26,7 @@ Scale 1 cm = 16 units. Dashed: the axis the wall spins round. Left: the disc fro
 
 ## The formula
 
-Notation first. The **axis** is the line the solid spins round. Height up it is $y$, from $a$ to $b$; the cross-section there is a circle of radius $r(y)$. The integral sign adds thin pieces from $a$ to $b$; the closing dy names the variable they stack along ([fundamental-theorem-of-calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)).
+Notation first. The **axis** is the line the solid spins round. Height up it is $y$, from $a$ to $b$; the cross-section there is a circle of radius $r(y)$. The integral sign adds thin pieces from $a$ to $b$; the closing dy names the variable they stack along ([Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)).
 
 **Discs**, slices across the axis:
 
@@ -89,7 +72,7 @@ For the bowl, the wall is $y = r^2/2$, so a disc at height $y$ has $r(y)^2 = 2y$
 
 ### Step 0: a thin piece is nearly a shape whose volume is known
 
-A cylinder of radius r and height h holds pi r^2 h ([prisms-and-cylinders](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/04-prisms-and-cylinders.md)). A slice of the bowl has a sloping wall, but the bowl widens upward: the cylinder on the slice's bottom radius sits inside it, and the one on its top radius holds it.
+A cylinder of radius r and height h holds pi r^2 h ([Prisms and cylinders](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/04-prisms-and-cylinders.md)). A slice of the bowl has a sloping wall, but the bowl widens upward: the cylinder on the slice's bottom radius sits inside it, and the one on its top radius holds it.
 
 ### Step 1: discs, squeezed
 
@@ -130,7 +113,7 @@ For the glass, washers win: one constant area plus the cap. Shells need two piec
 
 The rule: slice so each piece has one formula over the whole range and no curve needs turning inside out.
 
-A third road, area times the distance the region's balance point travels, is Pappus's theorem: [centre-of-mass-and-pappus](05-centre-of-mass-and-pappus.md).
+A third road, area times the distance the region's balance point travels, is Pappus's theorem: [Centre of mass](05-centre-of-mass-and-pappus.md).
 
 ---
 
@@ -395,7 +378,7 @@ ALL CHECKS PASS
 
 - **Glassware.** A pour line marks the fill height a volume integral of the profile gives, as 150 ml sits at 6.909883 cm here.
 - **Medical imaging.** An organ's volume from a scan is slice areas times slice thickness: discs without the circles.
-- **The same glass's skin and wall.** Its surface is [surface-area-of-revolution](04-surface-area-of-revolution.md); the wall curve's length is [arc-length](02-arc-length.md).
+- **The same glass's skin and wall.** Its surface is [Surface area](04-surface-area-of-revolution.md); the wall curve's length is [Arc length](02-arc-length.md).
 
 > **Say it back**
 > A spun solid can be cut into thin discs across its axis or thin tubes round it. A disc is pi r^2 times its thickness; a tube is circumference times length times thickness. Squeezing each sum between pieces inside and outside the solid proves the integral is the volume. Both cuts give the wine glass 100 pi, 314.16 ml. Choose the cut whose piece has one formula across the range.
@@ -404,12 +387,12 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [fundamental-theorem-of-calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md): turns each sum of slices into an antiderivative evaluated at the ends.
-- [prisms-and-cylinders](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/04-prisms-and-cylinders.md): the cylinder's pi r^2 h, the volume every disc and tube is built from.
+- [Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md): turns each sum of slices into an antiderivative evaluated at the ends.
+- [Prisms and cylinders](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/04-prisms-and-cylinders.md): the cylinder's pi r^2 h, the volume every disc and tube is built from.
 
 ## Where this goes next
 
-- [centre-of-mass-and-pappus](05-centre-of-mass-and-pappus.md): the same volumes from one area and the path of its balance point.
+- [Centre of mass](05-centre-of-mass-and-pappus.md): the same volumes from one area and the path of its balance point.
 
 These slices work because each is a circle; a solid whose slices are any shape at all is added one small box at a time, by the double and triple integrals of this wing.
 

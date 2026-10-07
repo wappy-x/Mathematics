@@ -1,25 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Conditional Expectation
-topic: Calculating with partial information
-item: The rules of conditional expectation
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/02-conditional-expectation-on-a-sigma-algebra|conditional-expectation-on-a-sigma-algebra]]"
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/04-jensens-inequality|jensens-inequality]]"
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/02-dominated-convergence-theorem|dominated-convergence-theorem]]"
-next:
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/05-conditioning-on-a-random-variable|conditioning-on-a-random-variable]]"
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/06-filtrations-and-martingales|filtrations-and-martingales]]"
-tags: [mathematics, measure and integration, rules-of-conditional-expectation]
----
-
 # The rules of conditional expectation: linearity, the tower, taking out what is known, dropping what is independent, and the limit theorems conditioned
 
-Measure and integration → Conditional Expectation → Calculating with partial information → The rules of conditional expectation
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Conditional Expectation](../../../SYLLABUS.md#w10-s09) → The rules of conditional expectation
 
 ---
 
@@ -29,7 +10,7 @@ A rain gauge logs one total per month. The winter months, December to February, 
 
 Knowing the month, the forecast is the month's mean. Knowing only the season, it is the season's mean: 30, 60, 90 and 40 mm. Average the monthly forecasts within a season and the seasonal one comes back: (25 + 30 + 35) / 3 = 30. A shop sells 4 umbrellas per mm of rain in winter; once the season is known, that 4 is known and multiplies the forecast, 4 × 30 = 120 umbrellas. The gauge also errs by −3 or +1 mm, chance one half each, whatever the weather; the month says nothing about it, so its forecast is its plain average, −1 mm.
 
-Those three moves are the tower, taking out what is known, and dropping what is independent. The probability wing computes them in tables ([conditional-expectation-in-tables](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md)). This card proves them, with linearity, conditional Jensen and the conditional limit theorems, for any integrable quantity and any sigma-algebra of information, from the one identity that defines conditional expectation.
+Those three moves are the tower, taking out what is known, and dropping what is independent. The probability wing computes them in tables ([Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md)). This card proves them, with linearity, conditional Jensen and the conditional limit theorems, for any integrable quantity and any sigma-algebra of information, from the one identity that defines conditional expectation.
 
 **Every equation among the rules is proved the same way: write down a candidate, check that the information settles it, check its integral over every event the information can see; the defining identity and its uniqueness do the rest, and the inequalities and limits then follow from those equations.**
 
@@ -57,7 +38,7 @@ Notation, as a reminder. A probability space $(\Omega, \mathcal{F}, P)$ is a set
 
 $$\int_A E[X \mid \mathcal{G}] \, dP \;=\; \int_A X \, dP \qquad \text{for every } A \in \mathcal{G},$$
 
-and any two such quantities agree almost surely, written a.s.: except on a set of probability zero ([conditional-expectation-on-a-sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md)). This is the **defining identity**. The indicator $1_A$ is one on A and zero off it, and $x^+ = \max(x, 0)$ is the positive part.
+and any two such quantities agree almost surely, written a.s.: except on a set of probability zero ([Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md)). This is the **defining identity**. The indicator $1_A$ is one on A and zero off it, and $x^+ = \max(x, 0)$ is the positive part.
 
 On the gauge, $\Omega$ has 48 outcomes: 12 months, dry or wet, gauge error −3 or +1. $P$ gives each 1/48. $\mathcal{M}$ is the information "which month", with 4096 events, every union of months. $\mathcal{S}$ is "which season", with 16 events. Every season is a union of months, so $\mathcal{S} \subseteq \mathcal{M}$.
 
@@ -123,15 +104,15 @@ For a known factor that is the indicator of an event $B$ in $\mathcal{G}$, integ
 
 ### Step 4: dropping what is independent
 
-If $X$ is independent of every event $A$ in $\mathcal{G}$, the integral of $X$ over $A$ splits as $P(A)$ times $E[X]$ ([independence-as-a-product-measure](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)), which is the integral of the constant $E[X]$ over $A$. A constant is settled by any information, so it passes. On the gauge the error forecast is −1 in every month, and by linearity the reading's forecasts are 29, 59, 89, 39.
+If $X$ is independent of every event $A$ in $\mathcal{G}$, the integral of $X$ over $A$ splits as $P(A)$ times $E[X]$ ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)), which is the integral of the constant $E[X]$ over $A$. A constant is settled by any information, so it passes. On the gauge the error forecast is −1 in every month, and by linearity the reading's forecasts are 29, 59, 89, 39.
 
 ### Step 5: conditional Jensen, one line at a time
 
-A convex curve has a supporting line at every point, a straight line through the point that stays on or below the curve ([jensens-inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md)). Order and linearity push each line through the conditional expectation, outside a null set. The unconditional proof used one line, at the mean; here the forecast varies with the outcome, so each outcome needs its own line, and uncountably many null sets can add up to positive probability. So use only the lines at rational points: countably many null sets make a null set, and a continuous convex curve is the highest of those lines everywhere. On the gauge, a flood payout of $(X - 50)^+$: the spring forecast of the payout is 17, the payout at the spring forecast 10. For the square the gap is the spread within the season, 163.33 in winter.
+A convex curve has a supporting line at every point, a straight line through the point that stays on or below the curve ([Jensen's inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md)). Order and linearity push each line through the conditional expectation, outside a null set. The unconditional proof used one line, at the mean; here the forecast varies with the outcome, so each outcome needs its own line, and uncountably many null sets can add up to positive probability. So use only the lines at rational points: countably many null sets make a null set, and a continuous convex curve is the highest of those lines everywhere. On the gauge, a flood payout of $(X - 50)^+$: the spring forecast of the payout is 17, the payout at the spring forecast 10. For the square the gap is the spread within the season, 163.33 in winter.
 
 ### Step 6: conditional monotone convergence
 
-If $0 \le X_n$ rise to $X$, their forecasts rise too, by order, to a limit settled by $\mathcal{G}$. The ordinary monotone convergence theorem ([monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)), applied to both sides of each defining identity, shows the limit passes the test for $X$. On the gauge, a gauge of capacity c mm records $\min(X, c)$; the winter forecast rises 18.83, 28.17, 30.00 and stays, while summer needs a capacity of 140 to reach 90.
+If $0 \le X_n$ rise to $X$, their forecasts rise too, by order, to a limit settled by $\mathcal{G}$. The ordinary monotone convergence theorem ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)), applied to both sides of each defining identity, shows the limit passes the test for $X$. On the gauge, a gauge of capacity c mm records $\min(X, c)$; the winter forecast rises 18.83, 28.17, 30.00 and stays, while summer needs a capacity of 140 to reach 90.
 
 ### Step 7: conditional dominated convergence
 
@@ -156,7 +137,7 @@ Orange is winter, green spring, dark blue summer, gold autumn. Each line rises a
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $\mathcal{H} \subseteq \mathcal{G} \subseteq \mathcal{F}$ are sigma-algebras on a probability space. **Uniqueness**, used throughout: two $\mathcal{G}$-measurable integrable quantities with equal integrals over every $A \in \mathcal{G}$ agree a.s. ([conditional-expectation-on-a-sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md)). Each part names a candidate and checks it.
+**Setting.** $\mathcal{H} \subseteq \mathcal{G} \subseteq \mathcal{F}$ are sigma-algebras on a probability space. **Uniqueness**, used throughout: two $\mathcal{G}$-measurable integrable quantities with equal integrals over every $A \in \mathcal{G}$ agree a.s. ([Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md)). Each part names a candidate and checks it.
 
 **1. Linearity.** $aE[X \mid \mathcal{G}] + bE[Y \mid \mathcal{G}]$ is $\mathcal{G}$-measurable and integrable, with integral $a\int_A X + b\int_A Y = \int_A (aX + bY)$ over each $A \in \mathcal{G}$.
 
@@ -164,19 +145,19 @@ Orange is winter, green spring, dark blue summer, gold autumn. Each line rises a
 
 **3. Tower.** Let $M = E[X \mid \mathcal{G}]$ and $K = E[M \mid \mathcal{H}]$, which is $\mathcal{H}$-measurable and integrable. For $A \in \mathcal{H}$: $\int_A K = \int_A M$ (definition of $K$) $= \int_A X$ (definition of $M$, as $A \in \mathcal{G}$). So $K = E[X \mid \mathcal{H}]$ a.s. The other order: $E[X \mid \mathcal{H}]$ is $\mathcal{G}$-measurable; use part 2's last line.
 
-**4. Taking out what is known.** Let $Z$ be $\mathcal{G}$-measurable with $X$ and $ZX$ integrable; put $M = E[X \mid \mathcal{G}]$. (a) $Z = 1_B$, $B \in \mathcal{G}$: for $A \in \mathcal{G}$, $\int_A 1_B M = \int_{A \cap B} M = \int_{A \cap B} X = \int_A 1_B X$, as $A \cap B \in \mathcal{G}$. (b) $Z$ simple and $\mathcal{G}$-measurable: linearity of the integral over the finitely many indicators. (c) $Z \ge 0$, $X \ge 0$: then $M \ge 0$ a.s. by part 2. Choose simple $\mathcal{G}$-measurable $0 \le Z_k \uparrow Z$ ([simple-functions-and-approximation](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). For $A \in \mathcal{G}$, (b) gives $\int_A Z_k M = \int_A Z_k X$; monotone convergence on each side gives $\int_A ZM = \int_A ZX$, which is finite. So $ZM$ is integrable, $\mathcal{G}$-measurable, and passes the test: $E[ZX \mid \mathcal{G}] = ZM$ a.s. (d) General: write $Z = Z^+ - Z^-$ and $X = X^+ - X^-$. Each product $Z^{\pm}X^{\pm}$ is at most $\lvert ZX \rvert$, hence integrable, and (c) gives $E[Z^{\pm}X^{\pm} \mid \mathcal{G}] = Z^{\pm}E[X^{\pm} \mid \mathcal{G}]$. Add the four with their signs and use parts 1 and $M = E[X^+ \mid \mathcal{G}] - E[X^- \mid \mathcal{G}]$.
+**4. Taking out what is known.** Let $Z$ be $\mathcal{G}$-measurable with $X$ and $ZX$ integrable; put $M = E[X \mid \mathcal{G}]$. (a) $Z = 1_B$, $B \in \mathcal{G}$: for $A \in \mathcal{G}$, $\int_A 1_B M = \int_{A \cap B} M = \int_{A \cap B} X = \int_A 1_B X$, as $A \cap B \in \mathcal{G}$. (b) $Z$ simple and $\mathcal{G}$-measurable: linearity of the integral over the finitely many indicators. (c) $Z \ge 0$, $X \ge 0$: then $M \ge 0$ a.s. by part 2. Choose simple $\mathcal{G}$-measurable $0 \le Z_k \uparrow Z$ ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). For $A \in \mathcal{G}$, (b) gives $\int_A Z_k M = \int_A Z_k X$; monotone convergence on each side gives $\int_A ZM = \int_A ZX$, which is finite. So $ZM$ is integrable, $\mathcal{G}$-measurable, and passes the test: $E[ZX \mid \mathcal{G}] = ZM$ a.s. (d) General: write $Z = Z^+ - Z^-$ and $X = X^+ - X^-$. Each product $Z^{\pm}X^{\pm}$ is at most $\lvert ZX \rvert$, hence integrable, and (c) gives $E[Z^{\pm}X^{\pm} \mid \mathcal{G}] = Z^{\pm}E[X^{\pm} \mid \mathcal{G}]$. Add the four with their signs and use parts 1 and $M = E[X^+ \mid \mathcal{G}] - E[X^- \mid \mathcal{G}]$.
 
-**5. Independence.** Suppose $\sigma(X)$, the events decided by $X$, is independent of $\mathcal{G}$. For $A \in \mathcal{G}$, $1_A$ is a function of an event independent of $X$, so $E[1_A X] = E[1_A]E[X] = P(A)E[X]$ ([independence-as-a-product-measure](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)). The constant $E[X]$ is $\mathcal{G}$-measurable and $\int_A E[X] \, dP = P(A)E[X]$. By uniqueness, $E[X \mid \mathcal{G}] = E[X]$ a.s.
+**5. Independence.** Suppose $\sigma(X)$, the events decided by $X$, is independent of $\mathcal{G}$. For $A \in \mathcal{G}$, $1_A$ is a function of an event independent of $X$, so $E[1_A X] = E[1_A]E[X] = P(A)E[X]$ ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)). The constant $E[X]$ is $\mathcal{G}$-measurable and $\int_A E[X] \, dP = P(A)E[X]$. By uniqueness, $E[X \mid \mathcal{G}] = E[X]$ a.s.
 
-**6. Conditional Jensen.** Let $\varphi : \mathbb{R} \to \mathbb{R}$ be convex, $X$ and $\varphi(X)$ integrable. $\varphi$ is continuous, and at each rational $r$ has a slope $s_r$ with $\varphi(x) \ge \varphi(r) + s_r(x - r)$ for all $x$ ([jensens-inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md), Detailed proof parts 2 and 3). For rationals $r$ in $[x - 1, x + 1]$ the slopes $s_r$ lie between the chord slopes on $[x - 2, x - 1]$ and $[x + 1, x + 2]$, so as $r \to x$, $\varphi(r) + s_r(x - r) \to \varphi(x)$: $\varphi$ is the sup of its rational supporting lines. For each $r$, parts 1 and 2 give $E[\varphi(X) \mid \mathcal{G}] \ge \varphi(r) + s_r(E[X \mid \mathcal{G}] - r)$ outside a null set $N_r$. Outside the null union of the $N_r$, take the sup over $r$. For $\varphi$ convex on an open interval $I$ holding the values of $X$, use rationals in $I$. Part 2 puts $E[X \mid \mathcal{G}]$ in the closure of $I$ a.s.; on $B = \{E[X \mid \mathcal{G}] = e\} \in \mathcal{G}$ for an excluded end $e$, the identity gives $\int_B (X - e) = 0$ with $X - e$ of one sign, so $P(B) = 0$.
+**6. Conditional Jensen.** Let $\varphi : \mathbb{R} \to \mathbb{R}$ be convex, $X$ and $\varphi(X)$ integrable. $\varphi$ is continuous, and at each rational $r$ has a slope $s_r$ with $\varphi(x) \ge \varphi(r) + s_r(x - r)$ for all $x$ ([Jensen's inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md), Detailed proof parts 2 and 3). For rationals $r$ in $[x - 1, x + 1]$ the slopes $s_r$ lie between the chord slopes on $[x - 2, x - 1]$ and $[x + 1, x + 2]$, so as $r \to x$, $\varphi(r) + s_r(x - r) \to \varphi(x)$: $\varphi$ is the sup of its rational supporting lines. For each $r$, parts 1 and 2 give $E[\varphi(X) \mid \mathcal{G}] \ge \varphi(r) + s_r(E[X \mid \mathcal{G}] - r)$ outside a null set $N_r$. Outside the null union of the $N_r$, take the sup over $r$. For $\varphi$ convex on an open interval $I$ holding the values of $X$, use rationals in $I$. Part 2 puts $E[X \mid \mathcal{G}]$ in the closure of $I$ a.s.; on $B = \{E[X \mid \mathcal{G}] = e\} \in \mathcal{G}$ for an excluded end $e$, the identity gives $\int_B (X - e) = 0$ with $X - e$ of one sign, so $P(B) = 0$.
 
-**7. Conditional monotone convergence.** Let $0 \le X_n \uparrow X$ a.s. with $X$ integrable, and $M_n = E[X_n \mid \mathcal{G}]$. By part 2, $0 \le M_1 \le M_2 \le \dots \le E[X \mid \mathcal{G}]$ outside a countable union of null sets. Let $M = \lim M_n$ there and 0 elsewhere; it is $\mathcal{G}$-measurable ([limits-of-measurable-functions](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)) and integrable, being at most $E[X \mid \mathcal{G}]$. For $A \in \mathcal{G}$, the monotone convergence theorem on each side gives $\int_A M = \lim_n \int_A M_n = \lim_n \int_A X_n = \int_A X$. By uniqueness $M = E[X \mid \mathcal{G}]$ a.s.
+**7. Conditional monotone convergence.** Let $0 \le X_n \uparrow X$ a.s. with $X$ integrable, and $M_n = E[X_n \mid \mathcal{G}]$. By part 2, $0 \le M_1 \le M_2 \le \dots \le E[X \mid \mathcal{G}]$ outside a countable union of null sets. Let $M = \lim M_n$ there and 0 elsewhere; it is $\mathcal{G}$-measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)) and integrable, being at most $E[X \mid \mathcal{G}]$. For $A \in \mathcal{G}$, the monotone convergence theorem on each side gives $\int_A M = \lim_n \int_A M_n = \lim_n \int_A X_n = \int_A X$. By uniqueness $M = E[X \mid \mathcal{G}]$ a.s.
 
 **8. Conditional dominated convergence.** Let $X_n \to X$ a.s. and $\lvert X_n \rvert \le W$, $W$ integrable. Put $D_n = \sup_{k \ge n} \lvert X_k - X \rvert$: measurable, $0 \le D_n \le 2W$, $D_n \downarrow 0$ a.s. By parts 1 and 2, $\lvert E[X_n \mid \mathcal{G}] - E[X \mid \mathcal{G}] \rvert \le E[D_n \mid \mathcal{G}]$, which falls a.s. to a limit $L \ge 0$. For every n, $E[L] \le E\big[E[D_n \mid \mathcal{G}]\big] = E[D_n]$ (part 2, and part 3 with trivial $\mathcal{H}$), and $E[D_n] \to 0$ by the dominated convergence theorem. So $L = 0$ a.s.
 
 </details>
 
-A second road to the tower, for square-integrable $X$, sees conditional expectation as the nearest $\mathcal{G}$-measurable quantity in mean square: projecting onto a smaller space after a larger one is projecting onto the smaller one. That road is [conditional-expectation-as-projection](03-conditional-expectation-as-projection.md); the proof above needs only integrability.
+A second road to the tower, for square-integrable $X$, sees conditional expectation as the nearest $\mathcal{G}$-measurable quantity in mean square: projecting onto a smaller space after a larger one is projecting onto the smaller one. That road is [Conditional expectation as a projection](03-conditional-expectation-as-projection.md); the proof above needs only integrability.
 
 ---
 
@@ -625,8 +606,8 @@ The two outputs match line for line.
 - **Seasonal forecasting.** Monthly forecasts average into seasonal ones and seasonal into annual; the tower is why the levels agree on average.
 - **Retail and insurance planning.** A known rate multiplies a forecast of the uncertain driver: umbrellas per mm, or expected claims as a known exposure times the claim forecast for the risk class.
 - **Measurement error.** Independent instrument noise enters a forecast only through its mean, the bias: −1 mm on this gauge.
-- **Pricing on a tree.** Backward induction values an option one step at a time; that this matches the one-shot value is the tower ([multi-step-trees-and-backward-induction](../../12-Financial%20mathematics/04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md)).
-- **Fair games over time.** Forecasts made with growing information form a martingale, by the tower ([filtrations-and-martingales](06-filtrations-and-martingales.md)).
+- **Pricing on a tree.** Backward induction values an option one step at a time; that this matches the one-shot value is the tower ([Many steps](../../12-Financial%20mathematics/04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md)).
+- **Fair games over time.** Forecasts made with growing information form a martingale, by the tower ([Filtrations and martingales](06-filtrations-and-martingales.md)).
 
 > **Say it back**
 > The forecast of X given information G is the quantity G settles whose integral over each event G sees matches X's. Every rule is proved by naming a candidate and checking that identity. Fine then coarse is coarse; a factor G settles comes out; a quantity independent of G becomes its mean. Jensen and both limit theorems survive conditioning, Jensen by using countably many lines. On the gauge the season forecasts are 30, 60, 90 and 40 mm, and the umbrella forecasts 120, 180, 90 and 80.
@@ -635,16 +616,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [conditional-expectation-on-a-sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md): the defining identity, existence, and uniqueness almost surely, which every proof here uses.
-- [jensens-inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md): supporting lines of a convex curve, which conditional Jensen uses countably many of.
-- [dominated-convergence-theorem](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md): the unconditional limit theorem that the conditional one reduces to, and its sliding-mass counterexample.
+- [Conditional expectation on a sigma-algebra](02-conditional-expectation-on-a-sigma-algebra.md): the defining identity, existence, and uniqueness almost surely, which every proof here uses.
+- [Jensen's inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md): supporting lines of a convex curve, which conditional Jensen uses countably many of.
+- [Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md): the unconditional limit theorem that the conditional one reduces to, and its sliding-mass counterexample.
 
 ## Where this goes next
 
-- [conditioning-on-a-random-variable](05-conditioning-on-a-random-variable.md): information given by a random variable's value, where the forecast becomes a function of that value.
-- [filtrations-and-martingales](06-filtrations-and-martingales.md): information that grows month by month, and the tower as the fairness of a game.
+- [Conditioning on a random variable](05-conditioning-on-a-random-variable.md): information given by a random variable's value, where the forecast becomes a function of that value.
+- [Filtrations and martingales](06-filtrations-and-martingales.md): information that grows month by month, and the tower as the fairness of a game.
 
-The rules here take the information as a sigma-algebra; when the information is the value of a random variable, such as a rain reading from a second gauge, whether the forecast can be written as a function of that reading is answered on [conditioning-on-a-random-variable](05-conditioning-on-a-random-variable.md).
+The rules here take the information as a sigma-algebra; when the information is the value of a random variable, such as a rain reading from a second gauge, whether the forecast can be written as a function of that reading is answered on [Conditioning on a random variable](05-conditioning-on-a-random-variable.md).
 
 ---
 

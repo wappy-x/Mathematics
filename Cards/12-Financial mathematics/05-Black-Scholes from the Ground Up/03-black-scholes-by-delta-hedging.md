@@ -1,29 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Black-Scholes from the Ground Up
-topic: The hedged book
-item: Black-Scholes by hedging
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/02-risk-neutral-measure-and-the-fundamental-theorems|risk-neutral-measure-and-the-fundamental-theorems]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/01-what-a-pde-says|what-a-pde-says]]"
-next:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/04-black-scholes-by-risk-neutral-expectation|black-scholes-by-risk-neutral-expectation]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/07-finite-differences-for-the-black-scholes-equation|finite-differences-for-the-black-scholes-equation]]"
-  - "[[Cards/19-Partial differential equations/03-The Heat Equation in Depth/07-black-scholes-to-the-heat-equation|black-scholes-to-the-heat-equation]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - black-scholes-by-delta-hedging
----
-
 # Black-Scholes by hedging: the equation a hedged portfolio must obey
 
-Financial mathematics → Black-Scholes from the Ground Up → The hedged book → Black-Scholes by hedging
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Black-Scholes from the Ground Up](../../../SYLLABUS.md#w12-s05) → Black-Scholes by hedging
 
 ---
 
@@ -59,7 +36,7 @@ The bending line is the option. The straight line is the hedge: 0.586851 shares,
 
 ## The formula
 
-Notation first, in words. The option's worth depends on two things at once: where Acme is and what the date is. A slope taken while the other thing is held still is written as a subscript. The **clock slope** $V_t$ is how the worth changes as the calendar advances with Acme's price nailed down; the **price slope** $V_S$ is how it changes as Acme moves with the calendar nailed down; and $V_{SS}$, the **bend**, is the slope of that slope. A relation among slopes like these is a *partial differential equation*, or PDE — partial because each slope holds the other variable still ([what-a-pde-says](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/01-what-a-pde-says.md)).
+Notation first, in words. The option's worth depends on two things at once: where Acme is and what the date is. A slope taken while the other thing is held still is written as a subscript. The **clock slope** $V_t$ is how the worth changes as the calendar advances with Acme's price nailed down; the **price slope** $V_S$ is how it changes as Acme moves with the calendar nailed down; and $V_{SS}$, the **bend**, is the slope of that slope. A relation among slopes like these is a *partial differential equation*, or PDE — partial because each slope holds the other variable still ([A partial differential equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/01-what-a-pde-says.md)).
 
 $$V_t \;+\; (r-q)\,S\,V_S \;+\; \tfrac12\,\sigma^2 S^2\,V_{SS} \;=\; r\,V$$
 
@@ -85,7 +62,7 @@ $$\Theta \;+\; (r-q)\,S\,\Delta \;+\; \tfrac12\,\sigma^2 S^2\,\Gamma \;=\; r\,V.
 | $N$ | the area under the bell curve to the left of a point | $N(d_1)=0.5987$, $N(d_2)=0.5199$ | — |
 | $d_1$, $d_2$ | the two points the call formula weighs the share and the strike at | 0.25 and 0.05 | — |
 
-The two points come from the call formula on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
+The two points come from the call formula on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
 
 $$d_1=\frac{\ln(S/K)+\left(r-q+\tfrac12\sigma^2\right)\tau}{\sigma\sqrt{\tau}},\qquad d_2=d_1-\sigma\sqrt{\tau}.$$
 
@@ -115,7 +92,7 @@ A bull and a bear will never agree on where Acme is going. They do not have to. 
 
 ### Step 1: write the worth as a surface
 
-Suppose the option's worth is a smooth function of Acme's price and the date, $V(S,t)$: pick a price, pick a date, read off a number. Acme itself is modelled as geometric Brownian motion — a steady drift plus random kicks, both in proportion to the price ([geometric-brownian-motion-for-prices](01-geometric-brownian-motion-for-prices.md)):
+Suppose the option's worth is a smooth function of Acme's price and the date, $V(S,t)$: pick a price, pick a date, read off a number. Acme itself is modelled as geometric Brownian motion — a steady drift plus random kicks, both in proportion to the price ([Prices as geometric Brownian motion](01-geometric-brownian-motion-for-prices.md)):
 
 $$dS = \mu S\,dt + \sigma S\,dW.$$
 
@@ -123,7 +100,7 @@ Read that as: over a tiny slice of time, Acme drifts by $\mu S$ times the length
 
 ### Step 2: Itô adds one term that ordinary calculus throws away
 
-Ordinary calculus would say the option's worth changes by its clock slope times the time step plus its price slope times the price step. That is wrong here, and by a term that matters. Acme's kicks over a slice of time are the square root of that slice in size, so *squared* they are the size of the slice itself — as big as the terms being kept. Itô's lemma keeps them ([itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)):
+Ordinary calculus would say the option's worth changes by its clock slope times the time step plus its price slope times the price step. That is wrong here, and by a term that matters. Acme's kicks over a slice of time are the square root of that slice in size, so *squared* they are the size of the slice itself — as big as the terms being kept. Itô's lemma keeps them ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)):
 
 $$dV = \Big(V_t + \mu S\,V_S + \tfrac12\sigma^2S^2\,V_{SS}\Big)dt \;+\; \sigma S\,V_S\,dW.$$
 
@@ -173,13 +150,13 @@ Three steps above are honest sketches.
 
 </details>
 
-A second door reaches the same equation with no hedging at all. Price the option as an average payoff in a world where every asset is made to drift at the bank rate, then discount: the Feynman–Kac theorem says that average obeys exactly this equation. Two doors, one room. The average is done properly on [black-scholes-by-risk-neutral-expectation](04-black-scholes-by-risk-neutral-expectation.md).
+A second door reaches the same equation with no hedging at all. Price the option as an average payoff in a world where every asset is made to drift at the bank rate, then discount: the Feynman–Kac theorem says that average obeys exactly this equation. Two doors, one room. The average is done properly on [Black-Scholes by expectation](04-black-scholes-by-risk-neutral-expectation.md).
 
 ---
 
 ## Worked numbers, by hand
 
-Acme: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, one year to go. The price and each of the three slopes come from their own separate formulas, built on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+Acme: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, one year to go. The price and each of the three slopes come from their own separate formulas, built on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -710,9 +687,9 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **A trading desk's overnight risk report.** The lines labelled theta and gamma are the two big terms of this equation, quoted per day rather than per year — divided by 252 trading days or by 365 calendar days, a desk convention that has to be stated (verified 19 Sep 2026). A desk long options pays theta and owns gamma; a desk short options collects theta and is short gamma, which is the position that blows up.
-- **Every pricing library, whenever there is no formula.** Most contracts have no closed price, and the grid road above is the production method: chop the equation into steps and march back from the payoff. That is [finite-differences-for-the-black-scholes-equation](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md).
-- **The heat equation.** Change to the logarithm of Acme's price, run the clock backwards from expiry, pull out an exponential factor, and what remains is heat spreading along a line. Physics has had that equation since 1822, which is why option pricing arrived with a century of numerical methods already built. See black-scholes-to-the-heat-equation.
-- **Futures, currencies, and other models.** Reinterpreting $q$ covers an option on a futures price, where it becomes $r$ ([black-76-and-forward-level-pricing](06-black-76-and-forward-level-pricing.md)), and a currency option, where it becomes the foreign interest rate. Change the model instead — let Acme move in dollars rather than percentages — and the same hedging argument returns a different bend term, on [bachelier-model](07-bachelier-model.md). The argument is general; the equation is only as specific as the model fed to it.
+- **Every pricing library, whenever there is no formula.** Most contracts have no closed price, and the grid road above is the production method: chop the equation into steps and march back from the payoff. That is [Pricing on a grid](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md).
+- **The heat equation.** Change to the logarithm of Acme's price, run the clock backwards from expiry, pull out an exponential factor, and what remains is heat spreading along a line. Physics has had that equation since 1822, which is why option pricing arrived with a century of numerical methods already built. See Black-Scholes is the heat equation after a change of variables.
+- **Futures, currencies, and other models.** Reinterpreting $q$ covers an option on a futures price, where it becomes $r$ ([Black-76](06-black-76-and-forward-level-pricing.md)), and a currency option, where it becomes the foreign interest rate. Change the model instead — let Acme move in dollars rather than percentages — and the same hedging argument returns a different bend term, on [Bachelier](07-bachelier-model.md). The argument is general; the equation is only as specific as the model fed to it.
 
 > **Say it back**
 > Hold an option and short its own price slope in shares, and the position stops caring which way the stock goes. What is left is certain, so it must earn the bank rate — and writing that down gives one equation the worth must obey: the clock slope, plus the carry on the shares, plus the bend's income, equals interest on the worth. The stock's real expected return cancels in the same stroke that cancels the risk. The equation is a condition, not a price: cash, the forward, the put and the call all obey it, and only the payoff at expiry says which one is meant.
@@ -721,15 +698,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [risk-neutral-measure-and-the-fundamental-theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md): why "no free money" and "there is a pricing rule" are the same statement, which is what Step 4 leans on.
-- [itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): the extra second-slope term that ordinary calculus throws away, and the reason it survives.
-- [what-a-pde-says](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/01-what-a-pde-says.md): what it means for an unknown function of two variables to obey a relation among its slopes, and why a wall at one end is part of the problem.
+- [The fundamental theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md): why "no free money" and "there is a pricing rule" are the same statement, which is what Step 4 leans on.
+- [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): the extra second-slope term that ordinary calculus throws away, and the reason it survives.
+- [A partial differential equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/01-what-a-pde-says.md): what it means for an unknown function of two variables to obey a relation among its slopes, and why a wall at one end is part of the problem.
 
 ## Where this goes next
 
-- [black-scholes-by-risk-neutral-expectation](04-black-scholes-by-risk-neutral-expectation.md): the other door — the same price as an average payoff, discounted, with no hedge written down at all.
-- [finite-differences-for-the-black-scholes-equation](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): the grid road done properly, with schemes that stay stable on steps this card's explicit march could not take.
-- black-scholes-to-the-heat-equation: three changes of variable that turn this equation into heat spreading along a line.
+- [Black-Scholes by expectation](04-black-scholes-by-risk-neutral-expectation.md): the other door — the same price as an average payoff, discounted, with no hedge written down at all.
+- [Pricing on a grid](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): the grid road done properly, with schemes that stay stable on steps this card's explicit march could not take.
+- Black-Scholes is the heat equation after a change of variables: three changes of variable that turn this equation into heat spreading along a line.
 
 This card produced an equation and checked that the call formula obeys it, but it never derived that formula: the wall at expiry was handed over from a neighbour. Solving the equation from the payoff alone, so that $N(d_1)$ and $N(d_2)$ come out rather than in, is the next card's job.
 

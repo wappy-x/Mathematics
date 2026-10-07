@@ -1,35 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX vanilla options - Garman-Kohlhagen and the desk conventions
-topic: Foreign cash as a dividend share
-item: Garman-Kohlhagen
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/02-covered-interest-parity|covered-interest-parity]]"
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/01-currency-quotes-and-cross-rates|currency-quotes-and-cross-rates]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/02-black-scholes-put|black-scholes-put]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/06-black-76-and-forward-level-pricing|black-76-and-forward-level-pricing]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period|state-prices-and-risk-neutral-pricing-in-one-period]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/03-put-call-parity|put-call-parity]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/04-normal-distribution|normal-distribution]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/06-lognormal-distribution|lognormal-distribution]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/07-geometric-brownian-motion|geometric-brownian-motion]]"
-next:
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/02-premium-currency-and-foreign-domestic-symmetry|premium-currency-and-foreign-domestic-symmetry]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/03-garman-kohlhagen-greeks|garman-kohlhagen-greeks]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/07-fx-implied-volatility|fx-implied-volatility]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/02-barrier-options-by-reflection|barrier-options-by-reflection]]"
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/01-quanto-forward-and-adjustment|quanto-forward-and-adjustment]]"
-tags: [mathematics, financial mathematics, garman-kohlhagen]
----
-
 # Garman-Kohlhagen: pricing a currency option by treating foreign cash as a share that pays the foreign rate
 
-Financial mathematics → FX vanilla options - Garman-Kohlhagen and the desk conventions → Foreign cash as a dividend share → Garman-Kohlhagen
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../../../SYLLABUS.md#w12-s21) → Garman-Kohlhagen
 
 ---
 
@@ -96,7 +67,7 @@ In words: the top of $d_2$ is how far the log of the spot is expected to travel 
 
 ### When it holds
 
-- **Constant volatility.** The market charges a different vol at each strike, the smile; one flat $\sigma$ misprices options away from the money. Desks keep this formula as the quoting language and feed it the smile's vol per strike: [fx-implied-volatility](07-fx-implied-volatility.md).
+- **Constant volatility.** The market charges a different vol at each strike, the smile; one flat $\sigma$ misprices options away from the money. Desks keep this formula as the quoting language and feed it the smile's vol per strike: [Implied vol for a currency option](07-fx-implied-volatility.md).
 - **Constant, known interest rates.** A rate move shifts the forward, and the price follows it. Long-dated currency options need random rates.
 - **No jumps.** A pegged currency that devalues overnight breaks the smooth wandering the bell curve assumes; the formula underprices the crash.
 - **Covered interest parity holds.** The model's forward is $S\,e^{(r_d-r_f)T}$. Since 2008 the traded forward has differed from it by a spread, the cross-currency basis; desks price off the traded forward, which is the Black-76 form of the formula.
@@ -123,11 +94,11 @@ A share with a steady dividend yield $q$, dividends reinvested, behaves the same
 
 In dollars, the euro deposit is worth $S_t\,e^{r_f t}$ at time $t$: the spot rate times the growing pile of euros. It is a traded asset, so in the pricing world its dollar value must grow at $r_d$. The deposit supplies $r_f$ of that growth itself. The spot rate supplies the rest: it drifts at $r_d - r_f$.
 
-With lognormal wandering at volatility $\sigma$ (see [geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)):
+With lognormal wandering at volatility $\sigma$ (see [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)):
 
 $$S_T = S\,\exp\!\Big((r_d - r_f - \tfrac12\sigma^2)\,T + \sigma\sqrt{T}\,Z\Big).$$
 
-The $-\tfrac12\sigma^2$ corrects for the average of a lognormal running ahead of its median. With it, the average of $S_T$ is $S\,e^{(r_d-r_f)T} = F$, which is the forward from covered interest parity ([covered-interest-parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md)). The check computes both: the brute-force average of $S_T$ is 1.122221, and the parity forward is 1.122221. It also averages the deposit's dollar value and discounts it: 1.100000, today's spot, as a fairly priced asset must.
+The $-\tfrac12\sigma^2$ corrects for the average of a lognormal running ahead of its median. With it, the average of $S_T$ is $S\,e^{(r_d-r_f)T} = F$, which is the forward from covered interest parity ([Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md)). The check computes both: the brute-force average of $S_T$ is 1.122221, and the parity forward is 1.122221. It also averages the deposit's dollar value and discounts it: 1.100000, today's spot, as a fairly priced asset must.
 
 Dollar rates at 5 percent, euro rates at 3 percent: the euro drifts up by 2 percent a year in the pricing world. That is no forecast. It is the rate gap, which any deposit arbitrage enforces.
 
@@ -169,11 +140,11 @@ A call bought and a put sold at the same strike pay $S_T - K$ dollars on every p
 
 $$C - P = S\,D_f - K\,D_d.$$
 
-Two discount factors, one per currency: the euro leg at the euro rate, the dollar leg at the dollar rate. For the house example, $1.10 \times 0.970446 - 1.10 \times 0.951229 = 0.021138$, and the call minus an independently averaged put is 0.021138. See [put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md) for the share version.
+Two discount factors, one per currency: the euro leg at the euro rate, the dollar leg at the dollar rate. For the house example, $1.10 \times 0.970446 - 1.10 \times 0.951229 = 0.021138$, and the call minus an independently averaged put is 0.021138. See [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md) for the share version.
 
 ### The other door: Black-76 on the forward
 
-Substitute $S\,D_f = F\,D_d$, which is covered interest parity rewritten. The formula becomes $C = D_d\,[F\,N(d_1) - K\,N(d_2)]$ with $d_1 = (\ln(F/K) + \tfrac12\sigma^2 T)/(\sigma\sqrt{T})$: Black's 1976 formula for an option on a forward, discounted at the domestic rate. The code prices it this way from $F = 1.122221$ and gets 0.053556 again. Desks prefer this form, because the traded forward already carries both rates and the basis: [black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md).
+Substitute $S\,D_f = F\,D_d$, which is covered interest parity rewritten. The formula becomes $C = D_d\,[F\,N(d_1) - K\,N(d_2)]$ with $d_1 = (\ln(F/K) + \tfrac12\sigma^2 T)/(\sigma\sqrt{T})$: Black's 1976 formula for an option on a forward, discounted at the domestic rate. The code prices it this way from $F = 1.122221$ and gets 0.053556 again. Desks prefer this form, because the traded forward already carries both rates and the basis: [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md).
 
 ---
 
@@ -199,7 +170,7 @@ EURUSD: $S = 1.10$, $K = 1.10$, $r_d = 5\%$ (USD), $r_f = 3\%$ (EUR), $\sigma = 
 | on EUR 10 million | $0.053556 \times 10{,}000{,}000$ | USD 535,558 |
 | EUR put / USD call | same legs, $N(-d_2)$ and $N(-d_1)$ | 0.032418 |
 
-So insuring a 10-million-euro bill against a rising euro, for one year, at today's rate, costs about 536 thousand dollars: 5.36 US cents on each euro of cover, or 4.87% of the notional's value. The same quantity has four names on a dealing screen, which is its own card: [premium-currency-and-foreign-domestic-symmetry](02-premium-currency-and-foreign-domestic-symmetry.md).
+So insuring a 10-million-euro bill against a rising euro, for one year, at today's rate, costs about 536 thousand dollars: 5.36 US cents on each euro of cover, or 4.87% of the notional's value. The same quantity has four names on a dealing screen, which is its own card: [One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md).
 
 The call costs more than the put although spot equals the strike. The rate gap pushes the forward to 1.122221, above the strike, so the call is in the money against the forward.
 
@@ -233,7 +204,7 @@ The falling line is the EUR call; the rising line is the EUR put. They cross at 
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the price by **four independent roads**: the formula; a brute-force average of the payoff over the bell curve by Simpson's rule, which uses no $d_1$ or $d_2$; Black-76 on the forward built from covered interest parity; and a 2,000-step coin-flip tree whose steps grow at $r_d - r_f$. Then they price the put by its own average and test parity with two discount factors, check that the average future spot equals the parity forward and that the euro deposit is fairly priced, bump the spot to confirm the spot delta, and reproduce every "what breaks" number and chart point. Two cross-checks tie the card to its neighbours: the house share market, $S = K = 100$, $r_d = 5\%$, $r_f = 2\%$, $\sigma = 20\%$, must give the share call 9.227006 of [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md); and a second currency case, EURUSD 1.20, dollar rate 4%, euro rate 2%, vol 10%, must give 0.059012.
+The scripts reach the price by **four independent roads**: the formula; a brute-force average of the payoff over the bell curve by Simpson's rule, which uses no $d_1$ or $d_2$; Black-76 on the forward built from covered interest parity; and a 2,000-step coin-flip tree whose steps grow at $r_d - r_f$. Then they price the put by its own average and test parity with two discount factors, check that the average future spot equals the parity forward and that the euro deposit is fairly priced, bump the spot to confirm the spot delta, and reproduce every "what breaks" number and chart point. Two cross-checks tie the card to its neighbours: the house share market, $S = K = 100$, $r_d = 5\%$, $r_f = 2\%$, $\sigma = 20\%$, must give the share call 9.227006 of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md); and a second currency case, EURUSD 1.20, dollar rate 4%, euro rate 2%, vol 10%, must give 0.059012.
 
 ### Python
 
@@ -609,9 +580,9 @@ The two outputs agree line for line at the printed precision, from two different
 > **Putting the rates the wrong way round.** The strike is a number of dollars, so it is discounted at the dollar rate. The spot is the price of a euro, and a euro earns euro interest, so it is discounted at the euro rate. Swap them and the house call comes out at 0.032418 instead of 0.053556, about 40% light. With spot at the strike, the swapped call equals the correct put, so a call and put that look reversed point straight at this mistake.
 >
 > Four smaller traps:
-> - **Domestic means the quote currency, not home.** USDJPY is yen per dollar, so the yen is domestic and the dollar is foreign, even for a desk in New York. The currency conventions card: [currency-quotes-and-cross-rates](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/01-currency-quotes-and-cross-rates.md).
-> - **Hedging with $N(d_1)$ euros.** The spot delta is $D_f\,N(d_1) = 0.581012$, not $N(d_1) = 0.598706$. Desks quote four different deltas for one option: [fx-delta-conventions](04-fx-delta-conventions.md).
-> - **Strikes quoted by delta.** An FX screen shows vols at "25 delta", not at 1.1000, so a delta has to become a strike before this formula runs: [fx-strike-from-delta](06-fx-strike-from-delta.md). "At the money" has three meanings too: [at-the-money-conventions](05-at-the-money-conventions.md).
+> - **Domestic means the quote currency, not home.** USDJPY is yen per dollar, so the yen is domestic and the dollar is foreign, even for a desk in New York. The currency conventions card: [Reading a currency quote](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/01-currency-quotes-and-cross-rates.md).
+> - **Hedging with $N(d_1)$ euros.** The spot delta is $D_f\,N(d_1) = 0.581012$, not $N(d_1) = 0.598706$. Desks quote four different deltas for one option: [Four deltas for one option](04-fx-delta-conventions.md).
+> - **Strikes quoted by delta.** An FX screen shows vols at "25 delta", not at 1.1000, so a delta has to become a strike before this formula runs: [Strike from delta](06-fx-strike-from-delta.md). "At the money" has three meanings too: [Three meanings of at-the-money](05-at-the-money-conventions.md).
 > - **Money-market rates fed in raw.** Deposit rates are quoted simple, on a 360- or 365-day year. The formula wants continuously compounded rates for the option's own dates. A mismatch moves the forward, and the forward moves the price.
 
 ---
@@ -621,8 +592,8 @@ The two outputs agree line for line at the printed precision, from two different
 - **Every vanilla currency option on a dealer's screen.** Banks quote FX options as a vol, then convert to a premium through this formula. Conventions verified 2026-09-27: EURUSD is quoted as US dollars per euro, so the dollar is domestic; a pip is 0.0001 of the quote; USD and EUR deposit rates are simple, actual/360.
 - **Corporate hedging.** An importer paying euros buys EUR calls, as the Boston firm did; an exporter receiving euros buys EUR puts. The premium is the price of a worst-case rate.
 - **Reading the rate gap.** When the foreign rate exceeds the domestic one, the forward sits below spot and calls on the foreign currency are cheap. The chart above shows it in pips.
-- **Barriers and touches on currencies.** The drift $r_d - r_f$ and the two discount factors carry straight into the reflection prices of [barrier-options-by-reflection](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md).
-- **Paying in a third currency.** A quanto pays a foreign asset's return in another currency at a fixed rate, and its forward picks up a correlation term on top of this card's drift: [quanto-forward-and-adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md).
+- **Barriers and touches on currencies.** The drift $r_d - r_f$ and the two discount factors carry straight into the reflection prices of [Knock-out and knock-in](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md).
+- **Paying in a third currency.** A quanto pays a foreign asset's return in another currency at a fixed rate, and its forward picks up a correlation term on top of this card's drift: [The quanto adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md).
 
 > **Say it back**
 > A euro on deposit earns euro interest, so the euro is a share whose dividend yield is the euro rate. In the pricing world counted in dollars, spot drifts at the dollar rate minus the euro rate, and its average lands on the interest-parity forward. The call is the euro leg, discounted at the euro rate and weighted by $N(d_1)$, minus the dollar leg, discounted at the dollar rate and weighted by $N(d_2)$. Written from the forward, it is Black-76 discounted at the dollar rate. Swap the two rates and the price is wrong by about 40 percent in the house example.
@@ -631,24 +602,24 @@ The two outputs agree line for line at the printed precision, from two different
 
 ## What this builds on
 
-- [covered-interest-parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md): the forward $S\,e^{(r_d-r_f)T}$ that the pricing world's average must land on.
-- [currency-quotes-and-cross-rates](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/01-currency-quotes-and-cross-rates.md): which currency is the price and which is the thing, and what a pip is.
-- [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the share formula this card relabels, with $q$ becoming $r_f$.
-- [black-scholes-put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the mirror option, here the EUR put / USD call.
-- [black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md): the forward form, and the road desks price on.
-- [state-prices-and-risk-neutral-pricing-in-one-period](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): why averaging in a pretend world and discounting gives a price.
-- [put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): the model-free link between call and put, here with one discount factor per currency.
-- [normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve and its area $N(x)$.
-- [lognormal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md): why the average of $S_T$ needs the $-\tfrac12\sigma^2$ correction.
-- [geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): the wandering exchange rate, a drift plus random kicks in log space.
+- [Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md): the forward $S\,e^{(r_d-r_f)T}$ that the pricing world's average must land on.
+- [Reading a currency quote](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/01-currency-quotes-and-cross-rates.md): which currency is the price and which is the thing, and what a pip is.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the share formula this card relabels, with $q$ becoming $r_f$.
+- [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the mirror option, here the EUR put / USD call.
+- [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md): the forward form, and the road desks price on.
+- [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): why averaging in a pretend world and discounting gives a price.
+- [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): the model-free link between call and put, here with one discount factor per currency.
+- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve and its area $N(x)$.
+- [Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md): why the average of $S_T$ needs the $-\tfrac12\sigma^2$ correction.
+- [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): the wandering exchange rate, a drift plus random kicks in log space.
 
 ## Where this goes next
 
-- [premium-currency-and-foreign-domestic-symmetry](02-premium-currency-and-foreign-domestic-symmetry.md): the same option priced from the euro side, and the four ways its premium is quoted.
-- [garman-kohlhagen-greeks](03-garman-kohlhagen-greeks.md): how this price moves with spot, vol, time and each of the two rates.
-- [fx-implied-volatility](07-fx-implied-volatility.md): the formula run backwards, premium in, vol out.
-- [barrier-options-by-reflection](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md): currency options that die or come alive when spot touches a level.
-- [quanto-forward-and-adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): a third currency, and the correlation it brings into the drift.
+- [One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md): the same option priced from the euro side, and the four ways its premium is quoted.
+- [The Greeks of a currency option](03-garman-kohlhagen-greeks.md): how this price moves with spot, vol, time and each of the two rates.
+- [Implied vol for a currency option](07-fx-implied-volatility.md): the formula run backwards, premium in, vol out.
+- [Knock-out and knock-in](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md): currency options that die or come alive when spot touches a level.
+- [The quanto adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): a third currency, and the correlation it brings into the drift.
 
 The price here is one number in dollars per euro; the question it leaves open is how the same contract looks to a desk that counts in euros, and why its premium can be quoted four ways.
 

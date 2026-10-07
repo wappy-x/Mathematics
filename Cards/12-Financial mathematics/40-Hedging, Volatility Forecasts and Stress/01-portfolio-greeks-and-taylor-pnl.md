@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Hedging, Volatility Forecasts and Stress
-topic: Explaining a book's day
-item: Portfolio Greeks
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/09-greeks-together-taylor-pnl|greeks-together-taylor-pnl]]"
-next:
-  - "[[Cards/12-Financial mathematics/40-Hedging, Volatility Forecasts and Stress/02-delta-gamma-vega-hedging|delta-gamma-vega-hedging]]"
-  - "[[Cards/12-Financial mathematics/40-Hedging, Volatility Forecasts and Stress/04-volatility-forecasting-ewma-garch-and-realised|volatility-forecasting-ewma-garch-and-realised]]"
-tags: [mathematics, financial-mathematics, portfolio-greeks-and-taylor-pnl]
----
-
 # Portfolio Greeks: adding sensitivities across positions and predicting a day's P&L
 
-Financial mathematics → Hedging, Volatility Forecasts and Stress → Explaining a book's day → Portfolio Greeks
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Hedging, Volatility Forecasts and Stress](../../../SYLLABUS.md#w12-s40) → Portfolio Greeks
 
 ---
 
@@ -34,7 +17,7 @@ The next evening Acme closes at $105 and volatility at 21 percent. Repricing eve
 
 The risk report printed the night before holds one short list of numbers for the whole book: its Greeks, the slopes and bends of its value. Multiplying them by the day's moves predicts **$38,037.74**. That is the "explained" P&L: 92.56 percent of the actual. The **$3,058.75** left over is the "unexplained".
 
-Two jobs make that morning report. First, add each Greek across positions, with signs and sizes, into one number per Greek for the book. Second, feed those book Greeks into the second-order expansion from [greeks-together-taylor-pnl](../09-The%20Greeks%2C%20one%20each/09-greeks-together-taylor-pnl.md) and compare the result with the full reprice. The gap tells the desk whether its risk numbers describe its book.
+Two jobs make that morning report. First, add each Greek across positions, with signs and sizes, into one number per Greek for the book. Second, feed those book Greeks into the second-order expansion from [The Greeks together](../09-The%20Greeks%2C%20one%20each/09-greeks-together-taylor-pnl.md) and compare the result with the full reprice. The gap tells the desk whether its risk numbers describe its book.
 
 **A book's Greeks are the signed sums of its positions' Greeks, because the slope of a sum is the sum of the slopes; fed into the second-order expansion, they explain a day's P&L up to a leftover that grows with the cube of the move and must be watched, not ignored.**
 
@@ -92,7 +75,7 @@ The futures price has its own formula. Holding Acme until the future's date cost
 
 $$F = S\,e^{(r-q)T},$$
 
-and a future's Greeks follow from it: delta $e^{(r-q)T}$ (1.007528 here), theta $-(r-q)F$, and no gamma, vega, vanna or volga. The option Greeks are the closed forms derived on the sibling cards, for instance [delta](../09-The%20Greeks%2C%20one%20each/01-delta.md) and [vega](../09-The%20Greeks%2C%20one%20each/03-vega.md).
+and a future's Greeks follow from it: delta $e^{(r-q)T}$ (1.007528 here), theta $-(r-q)F$, and no gamma, vega, vanna or volga. The option Greeks are the closed forms derived on the sibling cards, for instance [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md) and [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md).
 
 ### When it holds
 
@@ -653,9 +636,9 @@ The two outputs agree line for line. The bumped volga uses a five-point nudge (v
 
 - **The morning P&L explain.** Every trading desk's day starts with yesterday's actual P&L split into delta, gamma, vega, theta and an unexplained line. A large unexplained is investigated before new trading begins.
 - **Regulatory capital.** Under the Basel market-risk rules a desk may use its own risk model only if the P&L that model predicts tracks the desk's P&L from last night's positions repriced closely enough: the P&L attribution test.
-- **Hedging.** Book delta is the number of shares or futures a hedger trades to flatten the book; book gamma and vega are the targets for the option hedges on [delta-gamma-vega-hedging](02-delta-gamma-vega-hedging.md). When the hedge is on a different asset, [hedge-ratios-basis-risk-and-cross-hedging](03-hedge-ratios-basis-risk-and-cross-hedging.md) takes over.
-- **Stress tests.** Where the expansion fails, on the −$10 day above, desks reprice in full across a grid of moves: [scenario-grids-and-stress-tests](05-scenario-grids-and-stress-tests.md).
-- **Limits.** Risk managers cap book delta, gamma and vega, not each position's: [risk-limits-and-risk-appetite](06-risk-limits-and-risk-appetite.md).
+- **Hedging.** Book delta is the number of shares or futures a hedger trades to flatten the book; book gamma and vega are the targets for the option hedges on [Hedging three Greeks at once](02-delta-gamma-vega-hedging.md). When the hedge is on a different asset, [Imperfect hedges](03-hedge-ratios-basis-risk-and-cross-hedging.md) takes over.
+- **Stress tests.** Where the expansion fails, on the −$10 day above, desks reprice in full across a grid of moves: [Stress tests](05-scenario-grids-and-stress-tests.md).
+- **Limits.** Risk managers cap book delta, gamma and vega, not each position's: [Limits](06-risk-limits-and-risk-appetite.md).
 
 > **Say it back**
 > A book's Greeks are its positions' Greeks, each times its signed quantity, added up, because the slope of a sum is the sum of the slopes. A future counts with delta $e^{(r-q)T}$ and a theta of its own. Fed into the second-order expansion, the book's Greeks explain a day's P&L: here $38,037.74 of an actual $41,096.48. The unexplained is the Greeks going stale as the market moves, and it grows with the cube of the move. A small unexplained on a quiet day says nothing about a large day.
@@ -664,12 +647,12 @@ The two outputs agree line for line. The bumped volga uses a five-point nudge (v
 
 ## What this builds on
 
-- [greeks-together-taylor-pnl](../09-The%20Greeks%2C%20one%20each/09-greeks-together-taylor-pnl.md): the second-order expansion for one option, with its cube-law error. This card applies it to a book.
+- [The Greeks together](../09-The%20Greeks%2C%20one%20each/09-greeks-together-taylor-pnl.md): the second-order expansion for one option, with its cube-law error. This card applies it to a book.
 
 ## Where this goes next
 
-- [delta-gamma-vega-hedging](02-delta-gamma-vega-hedging.md): the book Greeks become targets. Two listed options and a share position are sized by a small system of equations to set delta, gamma and vega to zero at once.
-- [volatility-forecasting-ewma-garch-and-realised](04-volatility-forecasting-ewma-garch-and-realised.md): the explained P&L needs tomorrow's moves; this card assumed them. Forecasting the size of tomorrow's move turns the report into a forecast.
+- [Hedging three Greeks at once](02-delta-gamma-vega-hedging.md): the book Greeks become targets. Two listed options and a share position are sized by a small system of equations to set delta, gamma and vega to zero at once.
+- [Tomorrow's volatility](04-volatility-forecasting-ewma-garch-and-realised.md): the explained P&L needs tomorrow's moves; this card assumed them. Forecasting the size of tomorrow's move turns the report into a forecast.
 
 This card measured a book's exposure; the question it leaves open is how to remove the exposure the desk does not want, which the hedging card answers.
 

@@ -1,30 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Collateral, Funding and the Rest of the XVAs
-topic: Paying to carry a trade
-item: FVA
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/47-Collateral, Funding and the Rest of the XVAs/01-collateral-and-the-residual-exposure|collateral-and-the-residual-exposure]]"
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/04-dva-and-bilateral-cva|dva-and-bilateral-cva]]"
-  - "[[Cards/12-Financial mathematics/28-Swaps/05-ois-discounting-and-collateral|ois-discounting-and-collateral]]"
-next:
-  - "[[Cards/12-Financial mathematics/47-Collateral, Funding and the Rest of the XVAs/03-mva|mva]]"
-tags: [mathematics, financial mathematics, fva]
----
-
 # FVA: funding the uncollateralised exposure at the bank's own spread, and the adjustment that books the cost
 
-Financial mathematics → Collateral, Funding and the Rest of the XVAs → Paying to carry a trade → FVA
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Collateral, Funding and the Rest of the XVAs](../../../SYLLABUS.md#w12-s47) → FVA
 
 ---
 
 ## General Overview
 
-A bank buys a one-year call option on Acme shares from Northwind. Acme trades at \$100, the strike is \$100, and in the house market the call costs **\$9.23** ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The bank pays that premium today. The \$9.23 has to come from somewhere, and a bank's cash is borrowed. It borrows unsecured, meaning with nothing pledged, at 1 percentage point a year above the rate that cash collateral earns. That extra 1% is the bank's **funding spread**.
+A bank buys a one-year call option on Acme shares from Northwind. Acme trades at \$100, the strike is \$100, and in the house market the call costs **\$9.23** ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The bank pays that premium today. The \$9.23 has to come from somewhere, and a bank's cash is borrowed. It borrows unsecured, meaning with nothing pledged, at 1 percentage point a year above the rate that cash collateral earns. That extra 1% is the bank's **funding spread**.
 
 The \$9.23 price already pays for the money at the collateral rate, 5% in the house market: that rate is the one used to discount the payoff. What the price leaves out is the extra 1%. On \$9.23 held for a year it comes to about 9.2 cents. The bank only carries the loan while the trade lives, and the trade ends early if Northwind fails, so the charge is weighted by Northwind's survival: **9.14 cents**. That charge is the **funding cost adjustment**, FCA, and with its mirror image, the **funding benefit adjustment** FBA, it makes the **funding valuation adjustment**, FVA for short, the term used from here on.
 
@@ -52,13 +34,13 @@ Orange, lower: the running FCA at a 100 basis point funding spread, ending at 9.
 
 ## The formula
 
-Notation first, in words. $V(t)$ is the call's clean value to the bank at date $t$, in years from today: its value if nobody could fail. Its positive part $V^+(t) = \max(V(t), 0)$ is what Northwind owes the bank; its negative part $V^-(t) = \max(-V(t), 0)$ is what the bank owes Northwind. $\mathbb{E}[\,\cdot\,]$ is an average over the pricing world, where every asset grows on average at the collateral rate $r$. The **expected positive exposure** is $\mathrm{EPE}(t) = \mathbb{E}[V^+(t)]$ and the **expected negative exposure** is $\mathrm{ENE}(t) = \mathbb{E}[V^-(t)]$. The discount factor $D(t) = e^{-rt}$ turns a dollar at date $t$ into today's money. Northwind's **hazard** $\lambda_C$ ("lambda C") is its yearly default rate among survivors, and $Q_C(t) = e^{-\lambda_C t}$ is the chance it is still alive at $t$ ([hazard-rate-and-survival-probability](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)). The funding spread is $s_F$.
+Notation first, in words. $V(t)$ is the call's clean value to the bank at date $t$, in years from today: its value if nobody could fail. Its positive part $V^+(t) = \max(V(t), 0)$ is what Northwind owes the bank; its negative part $V^-(t) = \max(-V(t), 0)$ is what the bank owes Northwind. $\mathbb{E}[\,\cdot\,]$ is an average over the pricing world, where every asset grows on average at the collateral rate $r$. The **expected positive exposure** is $\mathrm{EPE}(t) = \mathbb{E}[V^+(t)]$ and the **expected negative exposure** is $\mathrm{ENE}(t) = \mathbb{E}[V^-(t)]$. The discount factor $D(t) = e^{-rt}$ turns a dollar at date $t$ into today's money. Northwind's **hazard** $\lambda_C$ ("lambda C") is its yearly default rate among survivors, and $Q_C(t) = e^{-\lambda_C t}$ is the chance it is still alive at $t$ ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)). The funding spread is $s_F$.
 
 $$\mathrm{FCA} = s_F\int_0^T D(t)\,\mathrm{EPE}(t)\,Q_C(t)\,dt, \qquad \mathrm{FBA} = s_F\int_0^T D(t)\,\mathrm{ENE}(t)\,Q_C(t)\,dt, \qquad \mathrm{FVA} = \mathrm{FCA} - \mathrm{FBA}.$$
 
 **Read it aloud:** the funding cost is the spread, times what the bank is owed at each date in today's money, times the chance the trade is still alive then, added over the trade's life; the funding benefit is the same with what the bank owes; FVA is cost minus benefit, and it comes off the price.
 
-The funded price is the clean price minus FVA. The adjustments for default, CVA and DVA ([dva-and-bilateral-cva](../46-Counterparty%20Risk%20and%20CVA/04-dva-and-bilateral-cva.md)), come off separately.
+The funded price is the clean price minus FVA. The adjustments for default, CVA and DVA ([DVA](../46-Counterparty%20Risk%20and%20CVA/04-dva-and-bilateral-cva.md)), come off separately.
 
 For a bought option, $\mathrm{ENE} = 0$ and the discounted exposure $D(t)\,\mathrm{EPE}(t)$ is flat at today's price $C_0$, so the integral closes:
 
@@ -105,7 +87,7 @@ The collateral agreement fixes the rate on that cash, so the rate that makes the
 
 $$V(0) = \mathbb{E}\bigl[D(T)\,X\bigr], \qquad D(T) = e^{-rT}.$$
 
-The discount rate is the rate paid on collateral. It is why interest rate markets moved from discounting at a bank lending rate to discounting at the overnight rate once collateral became standard ([ois-discounting-and-collateral](../28-Swaps/05-ois-discounting-and-collateral.md)). The checks confirm the discounting: 400,000 simulated payoffs, each discounted at $r$, average 9.217775 with a standard error of 0.021868, within half a standard error of $C_0$. The twin's funding need, trade value minus collateral held, is zero at every date, so its FVA is zero.
+The discount rate is the rate paid on collateral. It is why interest rate markets moved from discounting at a bank lending rate to discounting at the overnight rate once collateral became standard ([Collateral discounting](../28-Swaps/05-ois-discounting-and-collateral.md)). The checks confirm the discounting: 400,000 simulated payoffs, each discounted at $r$, average 9.217775 with a standard error of 0.021868, within half a standard error of $C_0$. The twin's funding need, trade value minus collateral held, is zero at every date, so its FVA is zero.
 
 <details>
 <summary>Detailed proof: the collateral account telescopes</summary>
@@ -130,7 +112,7 @@ The checks compute it by brute force: 52 weekly buckets, each week's discounted 
 
 ### Step 4: a bought option's discounted exposure is flat, so the integral closes
 
-In the pricing world, today's price of a traded claim is the discounted average of its price at any later date. A bought call is never negative, so $D(t)\,\mathrm{EPE}(t) = C_0$ at every date ([expected-exposure-profiles](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md)). Then
+In the pricing world, today's price of a traded claim is the discounted average of its price at any later date. A bought call is never negative, so $D(t)\,\mathrm{EPE}(t) = C_0$ at every date ([Expected exposure over time](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md)). Then
 
 $$\mathrm{FCA} = s_F\,C_0\int_0^T e^{-\lambda_C t}\,dt = s_F\,C_0\,\frac{1-e^{-\lambda_C T}}{\lambda_C} = 0.01 \times 9.227006 \times 0.990066 = 0.091353.$$
 
@@ -140,7 +122,7 @@ The same flat exposure makes the running total in the overview nearly a straight
 
 Turn the trade round. The bank sells the Acme call to Northwind and receives \$9.23 today. Its value to the bank is $-C_0$: all negative exposure. FCA is zero and the FBA is the mirror of the bought call's FCA, **0.091353**. The bank treats the premium as cheap funding.
 
-Why does the bank pay a spread at all? Partly because its lenders might not be repaid. By the credit triangle ([the-credit-triangle](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/03-the-credit-triangle.md)), a firm with hazard $\lambda_O = 1\%$ and recovery $R_O = 40\%$ pays a credit spread of $(1-R_O)\lambda_O = 0.6\%$. The remaining 0.4% is the **liquidity part**: what lenders charge for tying up cash, over and above default. Split the FBA the same way:
+Why does the bank pay a spread at all? Partly because its lenders might not be repaid. By the credit triangle ([The credit triangle](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/03-the-credit-triangle.md)), a firm with hazard $\lambda_O = 1\%$ and recovery $R_O = 40\%$ pays a credit spread of $(1-R_O)\lambda_O = 0.6\%$. The remaining 0.4% is the **liquidity part**: what lenders charge for tying up cash, over and above default. Split the FBA the same way:
 
 ```
 Sold Acme call, bank's view: cents per call
@@ -150,7 +132,7 @@ FBA credit part, bank survival too  ██████████████�
 bank's DVA, simulated               ████████████████████████████  5.46
 ```
 
-The credit part, weighted also by the bank's own survival, is 0.054540. That is exactly the bank's **DVA** on the sold call, the value to the bank of possibly not paying what it owes ([dva-and-bilateral-cva](../46-Counterparty%20Risk%20and%20CVA/04-dva-and-bilateral-cva.md)): the DVA integral is $(1-R_O)\lambda_O$ times the same exposure, times both survivals. The checks confirm it by simulating the bank's own default date, and Northwind's, and paying out 60% of the call's value when the bank fails first: 0.054588, standard error 0.000087.
+The credit part, weighted also by the bank's own survival, is 0.054540. That is exactly the bank's **DVA** on the sold call, the value to the bank of possibly not paying what it owes ([DVA](../46-Counterparty%20Risk%20and%20CVA/04-dva-and-bilateral-cva.md)): the DVA integral is $(1-R_O)\lambda_O$ times the same exposure, times both survivals. The checks confirm it by simulating the bank's own default date, and Northwind's, and paying out 60% of the call's value when the bank fails first: 0.054588, standard error 0.000087.
 
 So the same 5.45 cents appears twice: once as DVA, the gain from the bank's own default, and once inside the FBA, the gain from funding at a spread that exists because of that default. A bank that books both counts it twice and shows a benefit of 0.145893 on the sold call instead of 0.091353.
 
@@ -637,8 +619,8 @@ The two outputs agree line for line. The simulations draw the same numbers in bo
 
 - **Bank results.** Dealers report FVA as a line in their derivative valuations. JPMorgan's first FVA charge, \$1.5 billion, came with its results for the fourth quarter of 2013.
 - **The treasury charge.** A trading desk that writes an uncollateralised trade is charged the FCA by the bank's treasury, which raises the cash. The charge is why corporate clients who cannot post collateral pay more for the same option.
-- **Collateral agreements.** Two-way daily cash collateral removes FVA, as Step 1 proves, and the collateral rate becomes the discount rate. What collateral leaves behind, over the few days a margin call takes, is on [collateral-and-the-residual-exposure](01-collateral-and-the-residual-exposure.md).
-- **Initial margin and capital.** Cleared and margined trades swap FVA for a new funding bill: initial margin must be posted and funded, [mva](03-mva.md). Capital held against the trade has a cost too, [kva](04-kva.md). The whole stack meets on [the-xva-desk-view](05-the-xva-desk-view.md).
+- **Collateral agreements.** Two-way daily cash collateral removes FVA, as Step 1 proves, and the collateral rate becomes the discount rate. What collateral leaves behind, over the few days a margin call takes, is on [Collateral](01-collateral-and-the-residual-exposure.md).
+- **Initial margin and capital.** Cleared and margined trades swap FVA for a new funding bill: initial margin must be posted and funded, [MVA](03-mva.md). Capital held against the trade has a cost too, [KVA](04-kva.md). The whole stack meets on [Putting the adjustments together](05-the-xva-desk-view.md).
 
 > **Say it back**
 > A fully collateralised trade needs none of the bank's cash, so it is discounted at the rate collateral earns. An uncollateralised trade must be borrowed at the bank's own rate, and the spread over the collateral rate is a cost the clean price leaves out. FVA is that spread times the discounted expected exposure times the counterparty's survival chance, added over the trade's life: 0.01 × 9.227 × 0.990, or 9.14 cents, for the Acme call bought from Northwind. Money the bank holds earns the mirror benefit, FBA, but the credit part of that benefit is the bank's DVA again, so a bank books one or the other.
@@ -647,13 +629,13 @@ The two outputs agree line for line. The simulations draw the same numbers in bo
 
 ## What this builds on
 
-- [collateral-and-the-residual-exposure](01-collateral-and-the-residual-exposure.md): how collateral works and what exposure it leaves behind; FVA prices the funding of what is left.
-- [dva-and-bilateral-cva](../46-Counterparty%20Risk%20and%20CVA/04-dva-and-bilateral-cva.md): the bank's own-default adjustment, which the credit part of the FBA repeats.
-- [ois-discounting-and-collateral](../28-Swaps/05-ois-discounting-and-collateral.md): the overnight curve as the collateral rate, and the market's switch to discounting on it.
+- [Collateral](01-collateral-and-the-residual-exposure.md): how collateral works and what exposure it leaves behind; FVA prices the funding of what is left.
+- [DVA](../46-Counterparty%20Risk%20and%20CVA/04-dva-and-bilateral-cva.md): the bank's own-default adjustment, which the credit part of the FBA repeats.
+- [Collateral discounting](../28-Swaps/05-ois-discounting-and-collateral.md): the overnight curve as the collateral rate, and the market's switch to discounting on it.
 
 ## Where this goes next
 
-- [mva](03-mva.md): the funding cost of the initial margin a collateralised trade must post, the bill that replaces FVA once collateral removes it.
+- [MVA](03-mva.md): the funding cost of the initial margin a collateralised trade must post, the bill that replaces FVA once collateral removes it.
 
 ---
 

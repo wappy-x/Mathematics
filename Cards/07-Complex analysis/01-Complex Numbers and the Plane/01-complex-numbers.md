@@ -1,30 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Complex Numbers and the Plane
-topic: Points that multiply
-item: Complex numbers
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product|ordered-pairs-and-cartesian-product]]"
-  - "[[Cards/03-Algebra/02-Polynomials/03-quadratic-formula|quadratic-formula]]"
-  - "[[Cards/03-Algebra/10-For the Curious/01-fundamental-theorem-of-algebra|fundamental-theorem-of-algebra]]"
-next:
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/02-conjugate-and-modulus|conjugate-and-modulus]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/03-complex-eigenvalues-and-spirals|complex-eigenvalues-and-spirals]]"
-  - "[[Cards/22-Algebraic geometry/05-Cohomology and the Hodge Conjecture/04-complex-manifolds-and-kahler-forms|complex-manifolds-and-kahler-forms]]"
-  - "[[Cards/23-Differential geometry and Lie groups/06-Lie Groups/04-rotations-so3-and-quaternions|rotations-so3-and-quaternions]]"
-tags:
-  - mathematics
-  - complex-analysis
-  - complex-numbers
----
-
 # Complex numbers: one new number i with i squared = -1, and every pair of coordinates becomes a number you can multiply
 
-Complex analysis → Complex Numbers and the Plane → Points that multiply → Complex numbers
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Complex Numbers and the Plane](../../../SYLLABUS.md#w07-s01) → Complex numbers
 
 ---
 
@@ -87,7 +63,7 @@ $$i\,(a + bi) = -b + ai$$
 
 ### Step 0: a point is already a pair, so only multiplying is missing
 
-The drone's position is the ordered pair (3, 4) ([ordered-pairs-and-cartesian-product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md)), and pairs already add. The wanted multiplication keeps real numbers as they were and has some number, i, whose square is −1. Keep every ordinary law of arithmetic and the rule is forced.
+The drone's position is the ordered pair (3, 4) ([Ordered pairs and the Cartesian product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md)), and pairs already add. The wanted multiplication keeps real numbers as they were and has some number, i, whose square is −1. Keep every ordinary law of arithmetic and the rule is forced.
 
 ### Step 1: the rule is forced by i squared = −1
 
@@ -113,7 +89,7 @@ Since $w = c + di$, the distributive law gives $zw = c\,z + d\,(iz)$: c copies o
 
 $$zw = 1\,(3 + 4i) + 2\,(-4 + 3i) = -5 + 10i$$
 
-This road uses only adding and the quarter turn, never Step 1's rule, and lands on the same point: the dashed line in the picture. Every product turns and stretches; the turn as an angle is [polar-form-and-argument](03-polar-form-and-argument.md).
+This road uses only adding and the quarter turn, never Step 1's rule, and lands on the same point: the dashed line in the picture. Every product turns and stretches; the turn as an angle is [Polar form](03-polar-form-and-argument.md).
 
 ### Step 4: the usual laws survive
 
@@ -136,11 +112,11 @@ Write $z = (a, b)$, $w = (c, d)$, $u = (e, f)$, with the product $(a, b)(c, d) =
 
 ### Step 5: equations with no real root now have roots
 
-Take $x^2 + 2x + 5 = 0$. The quadratic formula ([quadratic-formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)) needs the square root of the discriminant, $2^2 - 4 \times 5 = -16$, which has none on the real line. In $\mathbb{C}$ it has one, $4i$, since $(4i)^2 = 16\,i^2 = -16$. The roots are $-1 \pm 2i$.
+Take $x^2 + 2x + 5 = 0$. The quadratic formula ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)) needs the square root of the discriminant, $2^2 - 4 \times 5 = -16$, which has none on the real line. In $\mathbb{C}$ it has one, $4i$, since $(4i)^2 = 16\,i^2 = -16$. The roots are $-1 \pm 2i$.
 
-Check −1 + 2i: its square is −3 − 4i, twice it is −2 + 4i, and the three terms sum to 0. Every non-constant polynomial has a complex root: the [fundamental-theorem-of-algebra](../../03-Algebra/10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md). Rafael Bombelli first wrote down rules for adding and multiplying such numbers, in his *Algebra* of 1572.
+Check −1 + 2i: its square is −3 − 4i, twice it is −2 + 4i, and the three terms sum to 0. Every non-constant polynomial has a complex root: the [The fundamental theorem of algebra](../../03-Algebra/10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md). Rafael Bombelli first wrote down rules for adding and multiplying such numbers, in his *Algebra* of 1572.
 
-A second road writes a + bi as the matrix `[[a, -b], [b, a]]`; multiplying matrices then multiplies complex numbers: [complex-vectors-and-matrices](07-complex-vectors-and-matrices.md).
+A second road writes a + bi as the matrix `[[a, -b], [b, a]]`; multiplying matrices then multiplies complex numbers: [Complex vectors and matrices](07-complex-vectors-and-matrices.md).
 
 ---
 
@@ -379,8 +355,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Electrical engineering.** Alternating currents and voltages are complex numbers, and circuit rules become complex arithmetic. Engineers write j for i.
-- **Turning shapes on a screen.** A 2D drawing program turns a point by multiplying by a complex number of length 1, as [eulers-formula](04-eulers-formula.md) makes exact.
-- **Signals and sound.** A pure tone is a point turning round a circle; the equally spaced points of [powers-roots-and-roots-of-unity](05-powers-roots-and-roots-of-unity.md) split sound into pitches.
+- **Turning shapes on a screen.** A 2D drawing program turns a point by multiplying by a complex number of length 1, as [Euler's formula](04-eulers-formula.md) makes exact.
+- **Signals and sound.** A pure tone is a point turning round a circle; the equally spaced points of [Powers and roots](05-powers-roots-and-roots-of-unity.md) split sound into pitches.
 
 > **Say it back**
 > A complex number is a point of the plane, written a + bi, with i the point (0, 1). Adding is adding coordinates. Multiplying follows from ordinary algebra and one rule, i times i is −1. Times i is a quarter turn anticlockwise; two make a half turn, which is why i squared is −1. Multiplying by c + di is c copies of the point plus d copies of its quarter turn.
@@ -389,16 +365,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [ordered-pairs-and-cartesian-product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md): a point as an ordered pair.
-- [quadratic-formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the formula whose negative discriminant first called for i.
-- [fundamental-theorem-of-algebra](../../03-Algebra/10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md): no further numbers are needed for roots.
+- [Ordered pairs and the Cartesian product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md): a point as an ordered pair.
+- [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the formula whose negative discriminant first called for i.
+- [The fundamental theorem of algebra](../../03-Algebra/10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md): no further numbers are needed for roots.
 
 ## Where this goes next
 
-- [conjugate-and-modulus](02-conjugate-and-modulus.md): the mirror image of a point, its distance from 0, and division.
-- [complex-eigenvalues-and-spirals](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/03-complex-eigenvalues-and-spirals.md): complex roots of a system's equation, seen as turning motion.
-- complex-manifolds-and-kahler-forms: spaces that look like the complex plane up close.
-- rotations-so3-and-quaternions: the quaternions, which do for turns in space what i does for the plane.
+- [Conjugate and modulus](02-conjugate-and-modulus.md): the mirror image of a point, its distance from 0, and division.
+- [Complex eigenvalues](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/03-complex-eigenvalues-and-spirals.md): complex roots of a system's equation, seen as turning motion.
+- Complex manifolds and Kahler forms: spaces that look like the complex plane up close.
+- Rotation group: the quaternions, which do for turns in space what i does for the plane.
 
 ---
 

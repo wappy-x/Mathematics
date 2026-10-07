@@ -1,28 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Sets
-topic: Combining sets
-item: Set operations
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/07-Sets/02-subsets-and-power-set|subsets-and-power-set]]"
-  - "[[Cards/01-Foundations/05-Logic/03-logical-equivalence-and-de-morgan|logical-equivalence-and-de-morgan]]"
-next:
-  - "[[Cards/01-Foundations/07-Sets/04-inclusion-exclusion|inclusion-exclusion]]"
-  - "[[Cards/01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product|ordered-pairs-and-cartesian-product]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/06-equivalence-relations-and-partitions|equivalence-relations-and-partitions]]"
-tags:
-  - mathematics
-  - foundations
-  - set-operations
----
-
 # Set operations: union, intersection, difference and complement, four piles from two lists
 
-Foundations → Sets → Combining sets → Set operations
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sets](../../../SYLLABUS.md#w01-s07) → Set operations
 
 ---
 
@@ -32,7 +10,7 @@ Twelve films sit on your watchlist. Six stream on service A. Five stream on serv
 
 Four questions come up. What can I watch tonight without paying for anything new? Which are on both, so the app does not matter? Which are on A but not on B? Which are on neither?
 
-Each takes the two lists — and, for the last one, the whole watchlist — and hands one back. The four moves work on any two sets — [sets-and-membership](01-sets-and-membership.md) for what a set is.
+Each takes the two lists — and, for the last one, the whole watchlist — and hands one back. The four moves work on any two sets — [Sets](01-sets-and-membership.md) for what a set is.
 
 **Combining two sets is one question per thing — or, and, and-not, not-at-all — and keeping everything that answers yes.**
 
@@ -99,7 +77,7 @@ The four moves are those piles glued together: the union is the first three, 9 f
 
 ### Step 1: the union counts the overlap once
 
-Six plus five is 11, but only 9 films stream. Halo and Ivory got counted twice, once on each service, and each is one film. Take the 2 shared off: 6 + 5 − 2 = 9. The general rule: [inclusion-exclusion](04-inclusion-exclusion.md).
+Six plus five is 11, but only 9 films stream. Halo and Ivory got counted twice, once on each service, and each is one film. Take the 2 shared off: 6 + 5 − 2 = 9. The general rule: [Inclusion-exclusion](04-inclusion-exclusion.md).
 
 ### Step 2: De Morgan, not on either is not on A and not on B
 
@@ -109,7 +87,7 @@ Road one, off the union: the 9 streaming films come off the 12, leaving Nectar, 
 
 Road two, one service at a time. Not on A: Kestrel, Lantern, Moth, Nectar, Onyx, Pike — 6. Not on B: Drift, Ember, Fathom, Glint, Nectar, Onyx, Pike — 7. On both lists: Nectar, Onyx, Pike.
 
-Same three films. The "not" moved inside the brackets and flipped or into and — De Morgan's law, on sets: [logical-equivalence-and-de-morgan](../05-Logic/03-logical-equivalence-and-de-morgan.md). The mirror law flips it: not on both services is not on A or not on B — missing from at least one, 10 films.
+Same three films. The "not" moved inside the brackets and flipped or into and — De Morgan's law, on sets: [Logical equivalence and De Morgan](../05-Logic/03-logical-equivalence-and-de-morgan.md). The mirror law flips it: not on both services is not on A or not on B — missing from at least one, 10 films.
 
 ---
 
@@ -275,7 +253,7 @@ ALL CHECKS PASS
 
 - **Search filters.** Two brands ticked is a union; adding a size, an intersection; "hide sold out", a difference.
 - **Spreadsheets.** Stack two query results and drop duplicates: a union. Rows in both: an intersection.
-- **Probability.** "Either happened" is a union, "both happened" an intersection, "it did not happen" a complement. See [inclusion-exclusion](04-inclusion-exclusion.md).
+- **Probability.** "Either happened" is a union, "both happened" an intersection, "it did not happen" a complement. See [Inclusion-exclusion](04-inclusion-exclusion.md).
 
 > **Say it back**
 > Two sets, four moves. The union is everything in one or the other or both, counted once: 6 and 5 with 2 shared gives 9, not 11. The intersection is what is in both, 2 films. A − B is A with anything also in B taken out, 4 films; B − A is another question, 3. The complement is the rest of the universe you named, 3 films on neither; and a "not" outside brackets moves inside and flips or into and.
@@ -284,14 +262,14 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [subsets-and-power-set](02-subsets-and-power-set.md): A and B are subsets of the watchlist, and so is every answer here.
-- [logical-equivalence-and-de-morgan](../05-Logic/03-logical-equivalence-and-de-morgan.md): the same or, and, not, and the same law about moving a "not" inside brackets.
+- [Subsets and the power set](02-subsets-and-power-set.md): A and B are subsets of the watchlist, and so is every answer here.
+- [Logical equivalence and De Morgan](../05-Logic/03-logical-equivalence-and-de-morgan.md): the same or, and, not, and the same law about moving a "not" inside brackets.
 
 ## Where this goes next
 
-- [inclusion-exclusion](04-inclusion-exclusion.md): 6 + 5 − 2 as a rule, working for three sets and more.
-- [ordered-pairs-and-cartesian-product](05-ordered-pairs-and-cartesian-product.md): every member of one set paired with every member of the other.
-- [equivalence-relations-and-partitions](../08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md): cutting a set into piles that do not overlap and leave nothing out.
+- [Inclusion-exclusion](04-inclusion-exclusion.md): 6 + 5 − 2 as a rule, working for three sets and more.
+- [Ordered pairs and the Cartesian product](05-ordered-pairs-and-cartesian-product.md): every member of one set paired with every member of the other.
+- [Equivalence relations and partitions](../08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md): cutting a set into piles that do not overlap and leave nothing out.
 
 ---
 

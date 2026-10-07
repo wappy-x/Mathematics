@@ -1,28 +1,12 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Beyond Brownian
-topic: Integrators with jumps
-item: Semimartingales
-kind: definition
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/09-Beyond Brownian/02-jump-diffusions|jump-diffusions]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/03-ito-product-rule|ito-product-rule]]"
-next: []
-tags: [mathematics, stochastic processes and calculus, semimartingales-in-outline]
----
-
 # Semimartingales: the largest class you can integrate against
 
-Stochastic processes and calculus → Beyond Brownian → Integrators with jumps → Semimartingales
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Beyond Brownian](../../../SYLLABUS.md#w11-s09) → Semimartingales
 
 ---
 
 ## General Overview
 
-A share trades at \$100 today. Time is measured in years. Most days the price wobbles, with a yearly volatility of 20%. About once a year, at a moment nobody can see coming, it crashes by 20% in an instant. Between crashes it climbs steadily, and the climb is just large enough that on average the share grows 5% a year. This is a jump-diffusion price ([jump-diffusions](02-jump-diffusions.md)).
+A share trades at \$100 today. Time is measured in years. Most days the price wobbles, with a yearly volatility of 20%. About once a year, at a moment nobody can see coming, it crashes by 20% in an instant. Between crashes it climbs steadily, and the climb is just large enough that on average the share grows 5% a year. This is a jump-diffusion price ([Jump diffusions](02-jump-diffusions.md)).
 
 A trader's gain over the year is holding times price change, added over short stretches of time. As the stretches shrink, the sum becomes an integral against the price. The Ito integral was built for Brownian motion, which never jumps. This price jumps. Which prices can be integrated against? What replaces Ito's extra term at a jump? And does the answer survive adding prices, multiplying them, applying a smooth function, or changing to a second probability measure?
 
@@ -49,7 +33,7 @@ One sample path, simulated on a grid of 4,096 steps a year with seed 20260930 an
 
 ## The formula
 
-Notation first, in words. A process is written $X_t$, read "the value at time t". Its paths are **càdlàg**: right-continuous with left limits, so at each time the path has a value just before, written $X_{t-}$, and a value at, $X_t$. The **jump** at time t is $\Delta X_t = X_t - X_{t-}$, zero except at the crash instants. A **local martingale** is a process that becomes a fair game (a martingale: best forecast of later is now, [martingales](../02-Martingales/01-martingales.md)) once it is stopped at each of a sequence of stopping times running off to infinity. A path of **finite variation** has finite total up-and-down travel over every bounded stretch of time, like the path of a function with a continuous slope.
+Notation first, in words. A process is written $X_t$, read "the value at time t". Its paths are **càdlàg**: right-continuous with left limits, so at each time the path has a value just before, written $X_{t-}$, and a value at, $X_t$. The **jump** at time t is $\Delta X_t = X_t - X_{t-}$, zero except at the crash instants. A **local martingale** is a process that becomes a fair game (a martingale: best forecast of later is now, [Martingales](../02-Martingales/01-martingales.md)) once it is stopped at each of a sequence of stopping times running off to infinity. A path of **finite variation** has finite total up-and-down travel over every bounded stretch of time, like the path of a function with a continuous slope.
 
 **Definition.** A càdlàg process, adapted (its value at t is known by time t), is a semimartingale when it can be written
 
@@ -98,7 +82,7 @@ The share's own equation, written as a semimartingale:
 
 $$dS_t = S_{t-}\big(\mu\,dt + \sigma\,dW_t + j\,(dN_t - \lambda\,dt)\big).$$
 
-As on [ito-integral](../06-Ito%20Calculus/01-ito-integral.md), $dW_t$ is shorthand for an integral, never a derivative. The finite-variation part is $dA_t = \mu S_{t-}\,dt$. The local martingale part is everything else: the Brownian wobble, and the crash count minus its average, $N_t - \lambda t$, which is a fair game ([poisson-process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md)). Between crashes the price climbs at $\mu - \lambda j = 0.25$ a year; the crashes take that back down to 0.05 on average. Solved, the path is
+As on [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md), $dW_t$ is shorthand for an integral, never a derivative. The finite-variation part is $dA_t = \mu S_{t-}\,dt$. The local martingale part is everything else: the Brownian wobble, and the crash count minus its average, $N_t - \lambda t$, which is a fair game ([Poisson process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md)). Between crashes the price climbs at $\mu - \lambda j = 0.25$ a year; the crashes take that back down to 0.05 on average. Solved, the path is
 
 $$S_t = 100\, e^{G t + \sigma W_t}\,(1 + j)^{N_t}, \qquad G = \mu - \lambda j - \tfrac12\sigma^2 = 0.23.$$
 
@@ -106,7 +90,7 @@ $$S_t = 100\, e^{G t + \sigma W_t}\,(1 + j)^{N_t}, \qquad G = \mu - \lambda j - 
 
 - **The integrand is predictable: decided just before each instant.** That is why every integral above uses $X_{s-}$. Use the value at the instant instead and a crash is known before it is traded: on the path, the by-parts integral moves from 1,841.03 to 2,938.49. That 2,938.49 is $\int S_{s-}\,dS_s$ plus the squared crash, 1,097.46, because the value at an instant differs from the value just before only at a crash. A right-point grid sum peeks further, at every step's wobble too, and adds the whole of $[S]_1$.
 - **The function has two continuous derivatives.** Ito's formula needs the curvature term. A function with a kink, such as a call payoff, needs a further local-time term, which this card does not treat.
-- **The process is a semimartingale.** A price driven by fractional Brownian motion with a Hurst exponent (its roughness index) other than one half is not one; ordinary Ito calculus fails for it ([rough-paths-and-fractional-brownian-motion-in-outline](06-rough-paths-and-fractional-brownian-motion-in-outline.md)).
+- **The process is a semimartingale.** A price driven by fractional Brownian motion with a Hurst exponent (its roughness index) other than one half is not one; ordinary Ito calculus fails for it ([Rougher than Brownian](06-rough-paths-and-fractional-brownian-motion-in-outline.md)).
 
 ---
 
@@ -143,7 +127,7 @@ The opposite direction is deep. **Bichteler–Dellacherie theorem:** an adapted 
 
 ### Step 3: the jumps enter the quadratic variation one square at a time
 
-Cut the year into $n$ steps and add the squared price changes. A step with no crash behaves as on [quadratic-variation](../05-Brownian%20Motion/03-quadratic-variation.md): its squared change is about $\sigma^2 S_t^2$ times the step length, and those add up to the continuous part $\sigma^2 \int_0^1 S_t^2\,dt$. A step containing a crash has a change close to the crash itself, $j\,S_{t-}$. Its square does not shrink as the step shrinks. It stays, one squared jump per crash:
+Cut the year into $n$ steps and add the squared price changes. A step with no crash behaves as on [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md): its squared change is about $\sigma^2 S_t^2$ times the step length, and those add up to the continuous part $\sigma^2 \int_0^1 S_t^2\,dt$. A step containing a crash has a change close to the crash itself, $j\,S_{t-}$. Its square does not shrink as the step shrinks. It stays, one squared jump per crash:
 
 $$[S]_1 = \sigma^2 \int_0^1 S_t^2\,dt + \sum_{\text{crashes}} (j\,S_{t-})^2.$$
 
@@ -155,7 +139,7 @@ Write $f(X_1) - f(X_0)$ as the sum of its changes over the grid steps. On a step
 
 On a step that contains a jump, the change does not shrink, and a second-order Taylor expansion is not accurate. The formula uses the exact change $f(X_s) - f(X_{s-})$ there. The slope term $f'(X_{s-})\,\Delta X_s$ is already inside the integral, so it is subtracted. That gives the jump sum. It converges because each term is at most a constant times $(\Delta X_s)^2$, and those add to a finite total: over any bounded time the squared jumps of a semimartingale add to at most $[X]_t$, automatically from the definition.
 
-The same bound covers infinitely many jumps. Over a bounded time a càdlàg path has only finitely many jumps larger than any fixed size, but it may have infinitely many small ones, as many Lévy processes do ([levy-processes](01-levy-processes.md)). Then the jumps themselves need not add up to anything finite, and neither need the exact changes $f(X_s) - f(X_{s-})$. The bracketed differences still do, which is why the slope term is subtracted inside the sum. The integral $\int f'(X_{s-})\,dX_s$ still exists, because the small jumps can be placed, with their average taken out, inside the fair-game part $M$. The proof treats the finitely many large jumps exactly, as above, and lets the size cut-off shrink to zero.
+The same bound covers infinitely many jumps. Over a bounded time a càdlàg path has only finitely many jumps larger than any fixed size, but it may have infinitely many small ones, as many Lévy processes do ([Levy processes](01-levy-processes.md)). Then the jumps themselves need not add up to anything finite, and neither need the exact changes $f(X_s) - f(X_{s-})$. The bracketed differences still do, which is why the slope term is subtracted inside the sum. The integral $\int f'(X_{s-})\,dX_s$ still exists, because the small jumps can be placed, with their average taken out, inside the fair-game part $M$. The proof treats the finitely many large jumps exactly, as above, and lets the size cut-off shrink to zero.
 
 That is the shape of the proof; the full argument is in Protter, chapter II.
 
@@ -166,13 +150,13 @@ Check it on the path with $f(x) = \ln x$, whose derivatives are $1/x$ and $-1/x^
 Each closure property is one of the facts above, read the right way.
 
 - **Sums.** Fair-game parts add to a fair-game part; finite-travel parts add to a finite-travel part.
-- **Integrals.** $\int H\,dX = \int H\,dM + \int H\,dA$. The first is a local martingale when $H_t$ is predictable and locally bounded, by the martingale transform of [predictable-bets-and-the-martingale-transform](../02-Martingales/02-predictable-bets-and-the-martingale-transform.md) passed to the limit; the second has finite travel. Trading gains in a semimartingale price are semimartingales.
+- **Integrals.** $\int H\,dX = \int H\,dM + \int H\,dA$. The first is a local martingale when $H_t$ is predictable and locally bounded, by the martingale transform of [Betting on a martingale](../02-Martingales/02-predictable-bets-and-the-martingale-transform.md) passed to the limit; the second has finite travel. Trading gains in a semimartingale price are semimartingales.
 - **Smooth functions.** Ito's formula writes $f(X_t)$ as an integral against X (a semimartingale, by the last bullet), plus an integral against $[X]^c$ (increasing, so finite travel), plus a jump sum (absolutely summable, so finite travel). That is a semimartingale decomposition, written out.
 - **Products.** $XY = \tfrac14\big((X+Y)^2 - (X-Y)^2\big)$, a smooth function of two semimartingales. Integration by parts is the decomposition. The covariation is $[X,Y] = \tfrac14\big([X+Y] - [X-Y]\big)$, which is how its jump part comes out as the sum of the products of matched jumps.
 - **Stopping.** A process stopped at a stopping time keeps both parts.
-- **A second probability measure.** Under a measure Q that agrees with P on which events are impossible, a P-semimartingale is still a Q-semimartingale. The split changes, and the class does not. This is the Girsanov–Meyer theorem, stated here and proved in Protter, chapter III; the Brownian case is on [girsanov-theorem](../07-Changing%20Measure/02-girsanov-theorem.md).
+- **A second probability measure.** Under a measure Q that agrees with P on which events are impossible, a P-semimartingale is still a Q-semimartingale. The split changes, and the class does not. This is the Girsanov–Meyer theorem, stated here and proved in Protter, chapter III; the Brownian case is on [Girsanov](../07-Changing%20Measure/02-girsanov-theorem.md).
 
-For continuous processes, [ito-product-rule](../06-Ito%20Calculus/03-ito-product-rule.md) proves integration by parts from Ito's lemma by the same difference of squares. This card adds the jumps, and the left limits that keep the integrands predictable.
+For continuous processes, [Ito's product rule](../06-Ito%20Calculus/03-ito-product-rule.md) proves integration by parts from Ito's lemma by the same difference of squares. This card adds the jumps, and the left limits that keep the integrands predictable.
 
 ---
 
@@ -658,11 +642,11 @@ The two outputs are identical, line for line.
 
 ## Where you meet it in real life
 
-- **Jump models of share prices.** Merton's model is the price on this card with random crash sizes; its pricing rests on the semimartingale Ito formula ([merton-jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md)).
-- **Variance swaps.** Realised variance is a grid sum of squared log returns, and it converges to the quadratic variation, jumps included. The hedged log contract collects each crash too, but as $-2\big(\ln(1+j) - j\big)$, minus twice Step 4's jump term, where realised variance collects $\big(\ln(1+j)\big)^2$; the gap between the two, led by $-\tfrac13\big(\ln(1+j)\big)^3$, is the jump bias ([volatility-swap-and-jump-bias](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md)).
+- **Jump models of share prices.** Merton's model is the price on this card with random crash sizes; its pricing rests on the semimartingale Ito formula ([Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md)).
+- **Variance swaps.** Realised variance is a grid sum of squared log returns, and it converges to the quadratic variation, jumps included. The hedged log contract collects each crash too, but as $-2\big(\ln(1+j) - j\big)$, minus twice Step 4's jump term, where realised variance collects $\big(\ln(1+j)\big)^2$; the gap between the two, led by $-\tfrac13\big(\ln(1+j)\big)^3$, is the jump bias ([The volatility swap and the jump bias](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md)).
 - **No-arbitrage theory.** Delbaen and Schachermayer showed that a locally bounded price process admitting no free lunch with simple trades must be a semimartingale. Prices are modelled as semimartingales because the alternative allows a free lunch with vanishing risk.
-- **Insurance surplus.** Premiums flow in steadily and claims arrive as jumps: a finite-variation drift plus a compensated compound Poisson martingale ([compound-poisson](../04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md)).
-- **Electricity prices with spikes, and filtering.** Spiking prices ([jump-diffusions](02-jump-diffusions.md)), every Lévy process ([levy-processes](01-levy-processes.md)) and the observation process of a filter ([filtering-and-the-kalman-bucy-filter](04-filtering-and-the-kalman-bucy-filter.md)) are all semimartingales.
+- **Insurance surplus.** Premiums flow in steadily and claims arrive as jumps: a finite-variation drift plus a compensated compound Poisson martingale ([Compound Poisson](../04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md)).
+- **Electricity prices with spikes, and filtering.** Spiking prices ([Jump diffusions](02-jump-diffusions.md)), every Lévy process ([Levy processes](01-levy-processes.md)) and the observation process of a filter ([Filtering](04-filtering-and-the-kalman-bucy-filter.md)) are all semimartingales.
 
 > **Say it back**
 > A semimartingale is a fair-game part plus a part whose path travels a finite distance. Those are exactly the processes a trading gain can be integrated against, and no larger class works. Its quadratic variation is the continuous wobble plus the sum of squared jumps. Ito's formula for it adds, at each jump, the exact change minus what the slope already counted, and its integrands use the value just before each instant. Sums, integrals, smooth functions, products, stopping and a change of measure all keep a semimartingale a semimartingale.
@@ -671,15 +655,15 @@ The two outputs are identical, line for line.
 
 ## What this builds on
 
-- [jump-diffusions](02-jump-diffusions.md): the price with wobble and crashes that this card integrates against.
-- [ito-product-rule](../06-Ito%20Calculus/03-ito-product-rule.md): covariation and integration by parts for continuous Ito processes, which this card extends to jumps.
+- [Jump diffusions](02-jump-diffusions.md): the price with wobble and crashes that this card integrates against.
+- [Ito's product rule](../06-Ito%20Calculus/03-ito-product-rule.md): covariation and integration by parts for continuous Ito processes, which this card extends to jumps.
 
 ---
 
 ## Where this goes next
 
-- [rough-paths-and-fractional-brownian-motion-in-outline](06-rough-paths-and-fractional-brownian-motion-in-outline.md): card 06 on this shelf, about paths too rough or too smooth to be semimartingales, and how to integrate against them anyway.
-- [merton-jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): the finance use, pricing options when the share can crash.
+- [Rougher than Brownian](06-rough-paths-and-fractional-brownian-motion-in-outline.md): card 06 on this shelf, about paths too rough or too smooth to be semimartingales, and how to integrate against them anyway.
+- [Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): the finance use, pricing options when the share can crash.
 
 Semimartingales are the largest class with an Ito integral of the usual kind; the open question is what calculus is left for a path outside it, such as fractional Brownian motion, which the rough-paths card answers.
 

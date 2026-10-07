@@ -1,32 +1,12 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Systems and the Matrix Exponential
-topic: Driven linear systems
-item: Forced systems
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/04-the-matrix-exponential|the-matrix-exponential]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/05-integrating-factor|integrating-factor]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/03-inverse-matrix|inverse-matrix]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/07-convolution-and-the-impulse-response|convolution-and-the-impulse-response]]"
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/06-pontryagins-principle-and-bang-bang-control|pontryagins-principle-and-bang-bang-control]]"
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/01-state-space-models-and-the-matrix-exponential|state-space-models-and-the-matrix-exponential]]"
-tags: [mathematics, differential equations and dynamics, forced-systems-and-variation-of-constants]
----
-
 # Forced systems: the response is the start propagated forward plus every past input propagated to now
 
-Differential equations and dynamics → Systems and the Matrix Exponential → Driven linear systems → Forced systems
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Systems and the Matrix Exponential](../../../SYLLABUS.md#w08-s04) → Forced systems
 
 ---
 
 ## General Overview
 
-Two rooms share a wall. Temperatures are counted in C above the outdoor air, and time in hours. With the heating off, each room cools at 2 C per hour for every degree it stands above outdoors, and half of that lost heat passes through the wall into its neighbour. From 30 C and 10 C, the rooms relax to outdoors along two patterns: the average falls like e^(−t), the difference like e^(−3t) ([the-eigenvalue-method](02-the-eigenvalue-method.md)).
+Two rooms share a wall. Temperatures are counted in C above the outdoor air, and time in hours. With the heating off, each room cools at 2 C per hour for every degree it stands above outdoors, and half of that lost heat passes through the wall into its neighbour. From 30 C and 10 C, the rooms relax to outdoors along two patterns: the average falls like e^(−t), the difference like e^(−3t) ([The eigenvalue method](02-the-eigenvalue-method.md)).
 
 Now switch on a heater in room 1. It pours in 15 C per hour: how fast it would warm the room if no heat escaped. Both rooms start at outdoor temperature. After 2 hours room 1 reads 8.98 C and room 2 reads 3.99 C. Given long enough, they settle at 10 C and 5 C.
 
@@ -54,7 +34,7 @@ Orange: room 1, with the heater, heading for 10 C. Teal: room 2, warmed only thr
 
 ## The formula
 
-Reminder: a system is written with a vector unknown, x' = Ax, read "the rate of the state is the matrix A applied to the state"; its solution from a start x0 is e^(At) x0, where e^(At) is the matrix exponential ([the-matrix-exponential](04-the-matrix-exponential.md)). A **forced** system adds an input b(t) that does not depend on the state:
+Reminder: a system is written with a vector unknown, x' = Ax, read "the rate of the state is the matrix A applied to the state"; its solution from a start x0 is e^(At) x0, where e^(At) is the matrix exponential ([The matrix exponential](04-the-matrix-exponential.md)). A **forced** system adds an input b(t) that does not depend on the state:
 
 $$x' = Ax + b(t), \qquad x(0) = x_0$$
 
@@ -94,7 +74,7 @@ The **settled state** x_eq is where Ax + b = 0: the rates stop. The start's gap 
 
 ### Step 0: the integrating factor, with a matrix
 
-For one equation, y' + py = q, multiplying by e^(pt) made the left side one derivative ([integrating-factor](../01-Rate%20Equations/05-integrating-factor.md)). Write the system as x' − Ax = b and use the matrix e^(−At): like the scalar weight, its rate is −A times itself, and it has an inverse, e^(At).
+For one equation, y' + py = q, multiplying by e^(pt) made the left side one derivative ([The integrating factor](../01-Rate%20Equations/05-integrating-factor.md)). Write the system as x' − Ax = b and use the matrix e^(−At): like the scalar weight, its rate is −A times itself, and it has an inverse, e^(At).
 
 ### Step 1: the left side collapses
 
@@ -132,7 +112,7 @@ Every slice put in the same 7.5 C. The newest keeps 4.89 C; the oldest keeps 0.6
 
 ### Step 5: constant input, done by hand
 
-For constant b the integral is ∫ from 0 to t of e^(Aw) b dw, with w = t − s the age of the input. The rate of A^(−1) e^(Aw) is e^(Aw), so the integral is A^(−1)(e^(At) − I) b. Adding e^(At) x0 and regrouping gives x_eq + e^(At)(x0 − x_eq), with x_eq = −A^(−1) b ([inverse-matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)). When every eigenvalue of A has a negative real part, e^(At) shrinks to zero and the state settles at x_eq.
+For constant b the integral is ∫ from 0 to t of e^(Aw) b dw, with w = t − s the age of the input. The rate of A^(−1) e^(Aw) is e^(Aw), so the integral is A^(−1)(e^(At) − I) b. Adding e^(At) x0 and regrouping gives x_eq + e^(At)(x0 − x_eq), with x_eq = −A^(−1) b ([The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)). When every eigenvalue of A has a negative real part, e^(At) shrinks to zero and the state settles at x_eq.
 
 <details>
 <summary>Detailed proof: the formula solves the problem, and nothing else does</summary>
@@ -145,7 +125,7 @@ Uniqueness. If y also solves it, d = x − y has d' = Ad and d(0) = 0. By Step 1
 
 </details>
 
-A second road steps the raw law, new state = old state + step length × rate: Euler's rule ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)). The code does it. Laplace transforms reach the same integral as a convolution in [convolution-and-the-impulse-response](../08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md).
+A second road steps the raw law, new state = old state + step length × rate: Euler's rule ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)). The code does it. Laplace transforms reach the same integral as a convolution in [Convolution](../08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md).
 
 ---
 
@@ -401,7 +381,7 @@ The two outputs match line for line.
 
 - **Buildings.** Thermal models of rooms and heaters are x' = Ax + b; the heating schedule is b(t).
 - **Drug dosing.** A drip feeds the blood, which passes the drug to tissue; each hour's dose is carried forward by a two-compartment exponential.
-- **Control engineering.** A controller chooses b(t), and this formula maps the choice to the resulting state (state-space-models-and-the-matrix-exponential).
+- **Control engineering.** A controller chooses b(t), and this formula maps the choice to the resulting state (State space).
 
 > **Say it back**
 > A forced linear system is x' = Ax + b. Multiplying by e^(−At) makes the left side one derivative; one integration gives the start carried forward plus each past input carried forward from its arrival. For constant input and invertible A, that is the settled state −A^(−1) b plus the start's gap decaying freely. The heated rooms read 8.98 C and 3.99 C after 2 hours, heading for 10 C and 5 C. Recent heat counts most.
@@ -410,15 +390,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [the-matrix-exponential](04-the-matrix-exponential.md): the propagator e^(At), its rate Ae^(At), and the two-room formula.
-- [integrating-factor](../01-Rate%20Equations/05-integrating-factor.md): the one-equation version of Steps 0 to 2.
-- [inverse-matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md): A^(−1), for the settled state.
+- [The matrix exponential](04-the-matrix-exponential.md): the propagator e^(At), its rate Ae^(At), and the two-room formula.
+- [The integrating factor](../01-Rate%20Equations/05-integrating-factor.md): the one-equation version of Steps 0 to 2.
+- [The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md): A^(−1), for the settled state.
 
 ## Where this goes next
 
-- [convolution-and-the-impulse-response](../08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md): the integral here is a convolution, and e^(At) is the response to a single kick.
-- [pontryagins-principle-and-bang-bang-control](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/06-pontryagins-principle-and-bang-bang-control.md): choosing b(t) to reach a target state as fast as possible.
-- state-space-models-and-the-matrix-exponential: the engineer's state-space model, with measured outputs added.
+- [Convolution](../08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md): the integral here is a convolution, and e^(At) is the response to a single kick.
+- [Pontryagin's principle](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/06-pontryagins-principle-and-bang-bang-control.md): choosing b(t) to reach a target state as fast as possible.
+- State space: the engineer's state-space model, with measured outputs added.
 
 ---
 

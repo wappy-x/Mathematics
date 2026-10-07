@@ -1,33 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Digitals and the implied density
-topic: Reading a digital quote backwards
-item: Digital inverses
-kind: method
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/01-cash-or-nothing-digital|cash-or-nothing-digital]]"
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/02-asset-or-nothing-digital|asset-or-nothing-digital]]"
-  - "[[Cards/03-Algebra/02-Polynomials/03-quadratic-formula|quadratic-formula]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/05-normal-quantile|normal-quantile]]"
-next: []
-tags:
-  - mathematics
-  - financial mathematics
-  - digital-inverses-vol-and-strike
----
-
 # Digital inverses: the strike is exact, the volatility can have two answers
 
-Financial mathematics → Digitals and the implied density → Reading a digital quote backwards → Digital inverses
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Digitals and the implied density](../../../SYLLABUS.md#w12-s10) → Digital inverses
 
 ---
 
 ## General Overview
 
-Acme shares trade at $100. A dealer sells a one-year cash digital on Acme: a contract that pays exactly $1 in a year if Acme then trades above $100, and nothing otherwise ([cash-or-nothing-digital](01-cash-or-nothing-digital.md)). The dealer's price is 49.46 cents. The house market sits behind it: riskless rate 5 percent, dividend yield 2 percent, volatility 20 percent.
+Acme shares trade at $100. A dealer sells a one-year cash digital on Acme: a contract that pays exactly $1 in a year if Acme then trades above $100, and nothing otherwise ([Cash-or-nothing digital](01-cash-or-nothing-digital.md)). The dealer's price is 49.46 cents. The house market sits behind it: riskless rate 5 percent, dividend yield 2 percent, volatility 20 percent.
 
 Pricing runs forwards: strike and volatility in, price out. Desks also need it backwards. Given a price and a volatility, which strike does the price name? Given a price and a strike, which volatility does it imply? Volatility here is how jumpy Acme is per year, the one input nobody observes directly.
 
@@ -56,7 +35,7 @@ Orange: strike $100. It falls all the way, so each price on it belongs to one vo
 
 ## The formula
 
-Notation first, in words. $V$ is the quoted price of the cash digital that pays $1 above the strike. $D = e^{-rT}$ is the discount factor, today's value of $1 paid at expiry. $F$ is the forward price, $S e^{(r-q)T}$: the price agreed today for delivery of one share at expiry. $w = \sigma\sqrt{T}$ is the total volatility, the spread of Acme's log-price over the whole life of the contract. $N(x)$ is the area under the standard bell curve left of $x$, and $N^{-1}$ runs it backwards: the point with a given area to its left, the normal quantile ([normal-quantile](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
+Notation first, in words. $V$ is the quoted price of the cash digital that pays $1 above the strike. $D = e^{-rT}$ is the discount factor, today's value of $1 paid at expiry. $F$ is the forward price, $S e^{(r-q)T}$: the price agreed today for delivery of one share at expiry. $w = \sigma\sqrt{T}$ is the total volatility, the spread of Acme's log-price over the whole life of the contract. $N(x)$ is the area under the standard bell curve left of $x$, and $N^{-1}$ runs it backwards: the point with a given area to its left, the normal quantile ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
 
 The price, from the cash-digital card:
 
@@ -107,7 +86,7 @@ Which it is depends on where the strike sits against the forward:
 
 ### When it holds
 
-- **One flat volatility.** The inverse assumes Black-Scholes: Acme's log-price is bell-shaped with one $\sigma$. A market digital is priced off the smile (a different implied volatility at each strike), which adds a slope term ([digital-from-a-call-spread-and-the-skew-term](04-digital-from-a-call-spread-and-the-skew-term.md)). The volatility backed out of a market digital is then a quoting device, not the vanilla implied volatility at that strike.
+- **One flat volatility.** The inverse assumes Black-Scholes: Acme's log-price is bell-shaped with one $\sigma$. A market digital is priced off the smile (a different implied volatility at each strike), which adds a slope term ([A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md)). The volatility backed out of a market digital is then a quoting device, not the vanilla implied volatility at that strike.
 - **A cash payment at expiry, checked once.** The contract pays a fixed dollar amount if Acme is above the strike on the last day. A touch contract, which pays if Acme reaches the level at any time, has a different price formula and a different inverse.
 - **A quote strictly between 0 and $D$.** A quote of 0 or less, or of $D$ or more, has no strike and no finite positive volatility: a digital cannot be worth less than nothing or more than the discounted dollar it might pay.
 - **Every other input known.** The strike inverse needs the volatility; the volatility inverse needs the strike. A quote alone cannot fix both.
@@ -134,7 +113,7 @@ Now hold the strike fixed and ask about $w$. Written with $m = \ln(F/K)$, the eq
 
 $$\frac{m}{w} - \frac{w}{2} = z.$$
 
-Multiply both sides by $w$ and move everything to one side: $w^2 + 2 z w - 2m = 0$. That multiplication is safe only because $w$ is positive; a negative root of the quadratic solves the multiplied equation but is not a volatility. The quadratic formula ([quadratic-formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)) gives $w = -z \pm \sqrt{z^2 + 2m}$.
+Multiply both sides by $w$ and move everything to one side: $w^2 + 2 z w - 2m = 0$. That multiplication is safe only because $w$ is positive; a negative root of the quadratic solves the multiplied equation but is not a volatility. The quadratic formula ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)) gives $w = -z \pm \sqrt{z^2 + 2m}$.
 
 For the house: $z = 0.05$, $m = 0.03$, so $w^2 + 0.1\,w - 0.06 = 0$. The roots are $0.20$ and $-0.30$. Only $0.20$ is a volatility.
 
@@ -171,14 +150,14 @@ Fix $F, K, T > 0$ and let $g(w) = m/w - w/2$ on $w > 0$, with $m = \ln(F/K)$. Th
 
 ### Step 4: why a far strike makes the price turn
 
-The turn at $w = k$ has a plain meaning. Raising volatility does two things to a digital struck above the forward. It widens the spread of outcomes, which puts more weight far up, past the strike. It also pulls the typical outcome down: in the pricing world the average of Acme's final price is fixed at $F$, so a wider spread must drag the middle outcome (the median, $F e^{-w^2/2}$) lower to hold that average. At low volatility the first effect wins and the price rises. At high volatility the second wins and the price falls. The balance point is $w = k$, where $-2m = w^2$, which is the same as $\ln(F/K) + \tfrac12 w^2 = 0$: that is $d_1 = 0$. So a cash digital's sensitivity to volatility changes sign exactly where $d_1$ crosses zero ([digital-greeks-and-pin-risk](03-digital-greeks-and-pin-risk.md)). At 20 percent that happens at $K = F e^{w^2/2} = \$105.13$.
+The turn at $w = k$ has a plain meaning. Raising volatility does two things to a digital struck above the forward. It widens the spread of outcomes, which puts more weight far up, past the strike. It also pulls the typical outcome down: in the pricing world the average of Acme's final price is fixed at $F$, so a wider spread must drag the middle outcome (the median, $F e^{-w^2/2}$) lower to hold that average. At low volatility the first effect wins and the price rises. At high volatility the second wins and the price falls. The balance point is $w = k$, where $-2m = w^2$, which is the same as $\ln(F/K) + \tfrac12 w^2 = 0$: that is $d_1 = 0$. So a cash digital's sensitivity to volatility changes sign exactly where $d_1$ crosses zero ([Digital Greeks and pin risk](03-digital-greeks-and-pin-risk.md)). At 20 percent that happens at $K = F e^{w^2/2} = \$105.13$.
 
-A vanilla call has no such turn. Its price rises with volatility at every strike, so its implied volatility is always unique ([implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md)). The digital loses that because it pays a capped $1: more spread cannot keep adding value when the payout does not grow.
+A vanilla call has no such turn. Its price rises with volatility at every strike, so its implied volatility is always unique ([Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md)). The digital loses that because it pays a capped $1: more spread cannot keep adding value when the payout does not grow.
 
 <details>
 <summary>The asset-or-nothing version</summary>
 
-An asset digital pays one Acme share above the strike ([asset-or-nothing-digital](02-asset-or-nothing-digital.md)). Its price is $S e^{-qT} N(d_1)$, so the normaliser is $S e^{-qT}$, and $d_1 = m/w + w/2$ leads to $w^2 - 2zw + 2m = 0$. The same product-and-sum argument flips the picture: one volatility when the strike is above the forward, two possible when it is below. The strike inverse stays unique: $K = F\exp(-wz + \tfrac12 w^2)$.
+An asset digital pays one Acme share above the strike ([Asset-or-nothing digital](02-asset-or-nothing-digital.md)). Its price is $S e^{-qT} N(d_1)$, so the normaliser is $S e^{-qT}$, and $d_1 = m/w + w/2$ leads to $w^2 - 2zw + 2m = 0$. The same product-and-sum argument flips the picture: one volatility when the strike is above the forward, two possible when it is below. The strike inverse stays unique: $K = F\exp(-wz + \tfrac12 w^2)$.
 
 </details>
 
@@ -683,17 +662,17 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [cash-or-nothing-digital](01-cash-or-nothing-digital.md): the price $D\,N(d_2)$ that this card runs backwards.
-- [asset-or-nothing-digital](02-asset-or-nothing-digital.md): the $d_1$ price whose inverse is the mirror image in the folded tip.
-- [quadratic-formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the roots, and the product-and-sum facts that count them without solving.
-- [normal-quantile](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): the unique $z$ behind every quote strictly between 0 and $D$.
+- [Cash-or-nothing digital](01-cash-or-nothing-digital.md): the price $D\,N(d_2)$ that this card runs backwards.
+- [Asset-or-nothing digital](02-asset-or-nothing-digital.md): the $d_1$ price whose inverse is the mirror image in the folded tip.
+- [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the roots, and the product-and-sum facts that count them without solving.
+- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): the unique $z$ behind every quote strictly between 0 and $D$.
 
 ---
 
 ## Where this goes next
 
-- [implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the vanilla inverse, where rising prices make the implied volatility unique at every strike.
-- [volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): the market's own volatility at each strike, which a single flat-volatility inverse cannot reproduce.
+- [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the vanilla inverse, where rising prices make the implied volatility unique at every strike.
+- [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): the market's own volatility at each strike, which a single flat-volatility inverse cannot reproduce.
 
 The question left open is what a single flat volatility cannot say: once the market prices each strike on its own volatility, a digital quote no longer fixes one $\sigma$, and reading it backwards means reading the whole smile.
 

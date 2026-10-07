@@ -1,24 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Conformal Maps and Harmonic Functions
-topic: The frame decides the film
-item: Mean value and maximum principle
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/04-harmonic-functions-and-conjugates|harmonic-functions-and-conjugates]]"
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/05-cauchys-integral-formula|cauchys-integral-formula]]"
-next:
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/06-poisson-integral-formula|poisson-integral-formula]]"
-  - "[[Cards/19-Partial differential equations/04-Laplace, Poisson and Potentials/10-harnack-and-regularity-in-outline|harnack-and-regularity-in-outline]]"
-tags: [mathematics, complex analysis, mean-value-and-maximum-principle-for-harmonic-functions]
----
-
 # Mean value and maximum principle: a harmonic function at a centre is the average round the circle, so its extremes sit on the boundary and the boundary fixes everything
 
-Complex analysis → Conformal Maps and Harmonic Functions → The frame decides the film → Mean value and maximum principle
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Conformal Maps and Harmonic Functions](../../../SYLLABUS.md#w07-s07) → Mean value and maximum principle
 
 ---
 
@@ -28,7 +10,7 @@ A round wire frame of radius 10 cm is bent to rise 1 mm at east and west and dip
 
 The film settles into a saddle of height x^2 − y^2. At the centre it is 0, and on every circle round the centre its heights average to exactly 0. Nowhere inside does it pass 1 or −1. No other film fits that frame.
 
-Write u(x, y) for the film's height. For a gently sloped film, surface tension makes the two second slopes cancel: u_xx + u_yy = 0, Laplace's equation, where u_xx and u_yy are the second partial derivatives in x and in y. A function obeying it is **harmonic** ([harmonic-functions-and-conjugates](04-harmonic-functions-and-conjugates.md)). From here on the film is the harmonic function u = x^2 − y^2 on the unit disk.
+Write u(x, y) for the film's height. For a gently sloped film, surface tension makes the two second slopes cancel: u_xx + u_yy = 0, Laplace's equation, where u_xx and u_yy are the second partial derivatives in x and in y. A function obeying it is **harmonic** ([Harmonic functions](04-harmonic-functions-and-conjugates.md)). From here on the film is the harmonic function u = x^2 − y^2 on the unit disk.
 
 **A harmonic function's value at any point is its average round any circle centred there, so it can have no peak or pit inside a region; its highest and lowest values sit on the boundary, and two harmonic functions that agree on the whole boundary agree everywhere inside.**
 
@@ -44,7 +26,7 @@ To scale: 80 units per 1, centre 0 at (180, 120), frame radius 80; a = 0.3 + 0.4
 
 ## The formula
 
-Notation first, in words. A point on the circle of radius r round a is $a + re^{i\theta}$, with θ its angle ([eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). The region is $D$ and its boundary, the frame, is $\partial D$, read "the boundary of D".
+Notation first, in words. A point on the circle of radius r round a is $a + re^{i\theta}$, with θ its angle ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). The region is $D$ and its boundary, the frame, is $\partial D$, read "the boundary of D".
 
 $$u(a) = \frac{1}{2\pi}\int_0^{2\pi} u(a + re^{i\theta})\,d\theta$$
 
@@ -81,7 +63,7 @@ $$u_1 = u_2 \text{ on } \partial D \;\Longrightarrow\; u_1 = u_2 \text{ on all o
 
 ### Step 0: a harmonic function is the real part of a holomorphic one
 
-Holomorphic functions equal their average round a circle ([cauchys-integral-formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md)). On a disk, every harmonic u is the real part of a holomorphic F. The real part of an average is the average of the real parts. The rest follows.
+Holomorphic functions equal their average round a circle ([Cauchy's integral formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md)). On a disk, every harmonic u is the real part of a holomorphic F. The real part of an average is the average of the real parts. The rest follows.
 
 ### Step 1: the mean value property
 
@@ -132,7 +114,7 @@ Let u_1 and u_2 be harmonic in bounded D, continuous up to the edge, and equal o
 
 The code checks this on a grid of step 0.1, replacing each inside node, over and over, by its four neighbours' average: the mean value property on a grid. Started from all zeros and from all fives, both runs settle on x^2 − y^2 at every node, the highest inside node at 0.81. Four-neighbour averaging is exact for this film: with grid step s, (x + s)^2 + (x − s)^2 = 2x^2 + 2s^2, and the y terms remove the same 2s^2.
 
-A second road needs no complex numbers: by Green's theorem the average's rate of change in r is the integral of Δu over the disk divided by 2πr, which is 0; as r shrinks to 0 the average tends to u(a), so it equals u(a) at every radius. That road works in any dimension; harnack-and-regularity-in-outline takes it further.
+A second road needs no complex numbers: by Green's theorem the average's rate of change in r is the integral of Δu over the disk divided by 2πr, which is 0; as r shrinks to 0 the average tends to u(a), so it equals u(a) at every radius. That road works in any dimension; Harnack and regularity takes it further.
 
 ---
 
@@ -372,8 +354,8 @@ The two outputs match line for line.
 > [!warning]
 > **Reading a flat point as a peak.** At the centre both slopes are 0, yet on the circle of radius 0.5 the film rises to 0.25 along the real axis and falls to −0.25 along the imaginary one. A harmonic function's flat points are saddles; its peaks are on the frame.
 >
-> - **Taking uniqueness for existence.** A frame allows at most one film; that a round frame has one is [poisson-integral-formula](06-poisson-integral-formula.md).
-> - **Borrowing the modulus rule.** A minimum of |f| needs f free of zeros ([maximum-modulus-principle](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/05-maximum-modulus-principle.md)); a harmonic u needs nothing, since −u is harmonic too.
+> - **Taking uniqueness for existence.** A frame allows at most one film; that a round frame has one is [The Poisson formula](06-poisson-integral-formula.md).
+> - **Borrowing the modulus rule.** A minimum of |f| needs f free of zeros ([The maximum modulus principle](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/05-maximum-modulus-principle.md)); a harmonic u needs nothing, since −u is harmonic too.
 
 ---
 
@@ -381,7 +363,7 @@ The two outputs match line for line.
 
 - **Steady heat in a plate.** A settled temperature is harmonic: the hottest and coldest points sit on the edge, and the edge fixes the rest.
 - **Electrostatics.** In charge-free space the voltage is harmonic, with no inside minimum, so fixed charges alone cannot trap a charge stably: Earnshaw's theorem.
-- **Solving by mapping.** Uniqueness is what lets a film found on the disk be carried to another region and trusted ([solving-boundary-problems-by-mapping](07-solving-boundary-problems-by-mapping.md)).
+- **Solving by mapping.** Uniqueness is what lets a film found on the disk be carried to another region and trusted ([Solving by mapping](07-solving-boundary-problems-by-mapping.md)).
 
 > **Say it back**
 > On a disk a harmonic function is the real part of a holomorphic one, so it equals its average round any circle. An inside peak would exceed its own average unless constant. So the extremes sit on the boundary. Two harmonic functions with the same boundary values differ by one that is 0 there, hence 0 everywhere.
@@ -390,13 +372,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [harmonic-functions-and-conjugates](04-harmonic-functions-and-conjugates.md): Laplace's equation, and the conjugate that makes u the real part of a holomorphic F on a disk.
-- [cauchys-integral-formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md): a holomorphic function equals its average round a circle.
+- [Harmonic functions](04-harmonic-functions-and-conjugates.md): Laplace's equation, and the conjugate that makes u the real part of a holomorphic F on a disk.
+- [Cauchy's integral formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md): a holomorphic function equals its average round a circle.
 
 ## Where this goes next
 
-- [poisson-integral-formula](06-poisson-integral-formula.md): a weighted frame average gives the height at any inside point.
-- harnack-and-regularity-in-outline: mean values in any dimension, bounding how fast a positive harmonic function varies.
+- [The Poisson formula](06-poisson-integral-formula.md): a weighted frame average gives the height at any inside point.
+- Harnack and regularity: mean values in any dimension, bounding how fast a positive harmonic function varies.
 
 ---
 

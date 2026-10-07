@@ -1,28 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Special Functions and the Zeta Function
-topic: Primes from zeta's zeros
-item: Zeta's zeros and the primes
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/08-continuing-zeta-and-the-functional-equation|continuing-zeta-and-the-functional-equation]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/06-dirichlet-series-and-mobius-inversion|dirichlet-series-and-mobius-inversion]]"
-  - "[[Cards/07-Complex analysis/06-Real Integrals and Counting Zeros/06-the-argument-principle|the-argument-principle]]"
-  - "[[Cards/02-Number theory/07-For the Curious/03-how-primes-thin-out|how-primes-thin-out]]"
-next:
-  - "[[Cards/21-Algebraic and analytic number theory/02-The Zeta Function and the Prime Number Theorem/03-the-zero-free-region|the-zero-free-region]]"
-  - "[[Cards/21-Algebraic and analytic number theory/02-The Zeta Function and the Prime Number Theorem/05-prime-number-theorem-proved|prime-number-theorem-proved]]"
-  - "[[Cards/21-Algebraic and analytic number theory/02-The Zeta Function and the Prime Number Theorem/07-the-explicit-formula|the-explicit-formula]]"
-  - "[[Cards/21-Algebraic and analytic number theory/02-The Zeta Function and the Prime Number Theorem/09-riemann-hypothesis-statement-and-equivalents|riemann-hypothesis-statement-and-equivalents]]"
-tags: [mathematics, complex analysis, zeros-of-zeta-and-the-primes]
----
-
 # Zeta's zeros and the primes: the zeros are the frequencies hidden in the prime staircase, and the Riemann hypothesis says where they lie
 
-Complex analysis → Special Functions and the Zeta Function → Primes from zeta's zeros → Zeta's zeros and the primes
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Special Functions and the Zeta Function](../../../SYLLABUS.md#w07-s09) → Zeta's zeros and the primes
 
 ---
 
@@ -31,9 +9,9 @@ Complex analysis → Special Functions and the Zeta Function → Primes from zet
 
 Climb one step at every prime: 25 steps by 100, 78,498 by a million. This is the **prime staircase**. Its height at x is π(x), "pi of x", the number of primes up to x; here π names a count, not the circle constant.
 
-[how-primes-thin-out](../../02-Number%20theory/07-For%20the%20Curious/03-how-primes-thin-out.md) estimated it by x ÷ ln x: 21.71 at 100, 72,382.41 at a million, both low. It promised better: the **logarithmic integral** li(x), the area under 1/ln t from 0 to x, gives 30.13 and 78,627.55, only 129.55 off.
+[How primes thin out](../../02-Number%20theory/07-For%20the%20Curious/03-how-primes-thin-out.md) estimated it by x ÷ ln x: 21.71 at 100, 72,382.41 at a million, both low. It promised better: the **logarithmic integral** li(x), the area under 1/ln t from 0 to x, gives 30.13 and 78,627.55, only 129.55 off.
 
-Why li works, and why its error is small, are questions about zeta on the whole plane ([continuing-zeta-and-the-functional-equation](08-continuing-zeta-and-the-functional-equation.md)). Its pole at 1 makes li. Its zeros make the error: each adds one wave to the staircase, like one note in a chord. The first zero sits at 0.500000 + 14.134725i.
+Why li works, and why its error is small, are questions about zeta on the whole plane ([Continuing zeta](08-continuing-zeta-and-the-functional-equation.md)). Its pole at 1 makes li. Its zeros make the error: each adds one wave to the staircase, like one note in a chord. The first zero sits at 0.500000 + 14.134725i.
 
 **Zeta's logarithmic derivative counts prime powers; a contour integral turns that count into the prime staircase, written as a smooth main term plus one wave for each zero of zeta; the Riemann hypothesis puts every zero on the line of real part 1/2, which would hold the error to about √x.**
 
@@ -99,7 +77,7 @@ $$\pi(x) \sim \operatorname{li}(x) = \int_0^x \frac{dt}{\ln t}, \qquad \text{RH:
 
 ### Step 0: primes are built into zeta, so zeta's zeros are built into the primes
 
-Euler's product writes ζ(s) as a product over primes ([zeta-function-and-euler-product](05-zeta-function-and-euler-product.md)). A logarithm makes it a sum; a contour integral makes the sum a count; moving the contour collects the pole and every zero.
+Euler's product writes ζ(s) as a product over primes ([The zeta function](05-zeta-function-and-euler-product.md)). A logarithm makes it a sum; a contour integral makes the sum a count; moving the contour collects the pole and every zero.
 
 ### Step 1: the logarithmic derivative is a prime-power series
 
@@ -113,16 +91,16 @@ Up a vertical line right of 0, the integral of y^s/s over 2πi is 1 when y > 1 a
 
 $$\psi(x) = \frac{1}{2\pi i}\int_{c - i\infty}^{c + i\infty} \left(-\frac{\zeta'(s)}{\zeta(s)}\right) \frac{x^{s}}{s}\, ds, \qquad c > 1.$$
 
-This is the inversion of [mellin-transform](07-mellin-transform.md) applied to a Dirichlet series ([dirichlet-series-and-mobius-inversion](06-dirichlet-series-and-mobius-inversion.md)).
+This is the inversion of [The Mellin transform](07-mellin-transform.md) applied to a Dirichlet series ([Dirichlet series](06-dirichlet-series-and-mobius-inversion.md)).
 
 ### Step 3: slide the line left and collect residues
 
-By [the-argument-principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md), −ζ′/ζ has residue (coefficient of 1/(s − a)) +1 at zeta's pole and −1 at each simple zero. Slide the line far left, collecting: x at s = 1; −x^ρ/ρ at each zero ρ; −ln 2π at s = 0; and −½ ln(1 − x^(−2)) from the trivial zeros. That is the explicit formula.
+By [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md), −ζ′/ζ has residue (coefficient of 1/(s − a)) +1 at zeta's pole and −1 at each simple zero. Slide the line far left, collecting: x at s = 1; −x^ρ/ρ at each zero ρ; −ln 2π at s = 0; and −½ ln(1 − x^(−2)) from the trivial zeros. That is the explicit formula.
 
 <details>
 <summary>Detailed proof: why the line may be moved</summary>
 
-Cut the line at heights ±T away from zeros; close it into a rectangle with left side Re s = −U, and apply the residue theorem. On the top and bottom |ζ′/ζ| is at most a multiple of (ln T)^2, so they contribute at most a multiple of x (ln T)^2/T. On the left, ζ′/ζ grows like ln |s| while x^s shrinks like x^(−U). The cut line differs from ψ(x) by at most a multiple of x (ln x)^2/T. Let T and U grow. Full estimates: the-explicit-formula.
+Cut the line at heights ±T away from zeros; close it into a rectangle with left side Re s = −U, and apply the residue theorem. On the top and bottom |ζ′/ζ| is at most a multiple of (ln T)^2, so they contribute at most a multiple of x (ln T)^2/T. On the left, ζ′/ζ grows like ln |s| while x^s shrinks like x^(−U). The cut line differs from ψ(x) by at most a multiple of x (ln x)^2/T. Let T and U grow. Full estimates: The explicit formula.
 
 </details>
 
@@ -134,7 +112,7 @@ At 13.5 and 14.5 the staircase reads 12.79 twice; 29 pairs rebuild it as 12.96 a
 
 ### Step 5: from ψ(x) to π(x) and li(x)
 
-ψ(x) is close to x, so primes near t, each weighing ln t, come one in every ln t numbers. Adding that density up to x gives li(x), by summation by parts (the discrete form of integration by parts). π(x)/li(x) tends to 1 when ψ(x)/x does, which needs no zero on Re s = 1, proved in 1896 by Hadamard and de la Vallée Poussin: the-zero-free-region, then prime-number-theorem-proved.
+ψ(x) is close to x, so primes near t, each weighing ln t, come one in every ln t numbers. Adding that density up to x gives li(x), by summation by parts (the discrete form of integration by parts). π(x)/li(x) tends to 1 when ψ(x)/x does, which needs no zero on Re s = 1, proved in 1896 by Hadamard and de la Vallée Poussin: The zero-free region, then The prime number theorem.
 
 li beats x ÷ ln x because it charges each stretch its own density, not the thinnest. Series and direct integration both give 30.13 and 78,627.55.
 
@@ -156,7 +134,7 @@ A zero at β + it with β above 1/2 would add a wave of size x^β. With every ze
 
 $$|\pi(x) - \operatorname{li}(x)| < \frac{\sqrt{x}\,\ln x}{8\pi}.$$
 
-At a million the bound is 549.70; the true gap is 129.55. Von Koch showed in 1901 that such a bound implies the hypothesis back (riemann-hypothesis-statement-and-equivalents).
+At a million the bound is 549.70; the true gap is 129.55. Von Koch showed in 1901 that such a bound implies the hypothesis back (The Riemann hypothesis).
 
 ---
 
@@ -414,17 +392,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [continuing-zeta-and-the-functional-equation](08-continuing-zeta-and-the-functional-equation.md): zeta on the plane; the mirror confining zeros to the strip.
-- [dirichlet-series-and-mobius-inversion](06-dirichlet-series-and-mobius-inversion.md): series of a(n)/n^s.
-- [the-argument-principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): residues of f′/f; the box.
-- [how-primes-thin-out](../../02-Number%20theory/07-For%20the%20Curious/03-how-primes-thin-out.md): the staircase and li's promise.
+- [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md): zeta on the plane; the mirror confining zeros to the strip.
+- [Dirichlet series](06-dirichlet-series-and-mobius-inversion.md): series of a(n)/n^s.
+- [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): residues of f′/f; the box.
+- [How primes thin out](../../02-Number%20theory/07-For%20the%20Curious/03-how-primes-thin-out.md): the staircase and li's promise.
 
 ## Where this goes next
 
-- the-zero-free-region: no zero on Re s = 1.
-- prime-number-theorem-proved: the theorem in full.
-- the-explicit-formula: Step 3's estimates.
-- riemann-hypothesis-statement-and-equivalents: equivalent forms.
+- The zero-free region: no zero on Re s = 1.
+- The prime number theorem: the theorem in full.
+- The explicit formula: Step 3's estimates.
+- The Riemann hypothesis: equivalent forms.
 
 ---
 

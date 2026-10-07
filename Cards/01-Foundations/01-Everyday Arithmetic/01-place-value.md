@@ -1,25 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Everyday Arithmetic
-topic: Whole numbers
-item: Place value
-kind: convention
-status: verified
-updated: 2026-09-06
-needs_first: []
-next:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/02-adding-and-subtracting|adding-and-subtracting]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/08-decimals|decimals]]"
-tags:
-  - mathematics
-  - foundations
-  - place-value
----
-
 # Place value: why 523 means five hundreds, two tens and three ones
 
-Foundations → Everyday Arithmetic → Whole numbers → Place value
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Everyday Arithmetic](../../../SYLLABUS.md#w01-s01) → Place value
 
 ---
 
@@ -269,8 +250,8 @@ The two outputs match line for line: whole cents throughout, nothing to round.
 
 ## Where you meet it in real life
 
-- **Money.** Every till, every price tag. Cents are two more columns right of the ones: [decimals](08-decimals.md).
-- **Carrying.** A column fills at ten and rolls into its neighbour: [adding-and-subtracting](02-adding-and-subtracting.md).
+- **Money.** Every till, every price tag. Cents are two more columns right of the ones: [Decimals](08-decimals.md).
+- **Carrying.** A column fills at ten and rolls into its neighbour: [Adding and subtracting](02-adding-and-subtracting.md).
 - **Odometers.** Place value in gears: the right wheel turns ten times to move its neighbour a notch.
 
 > **Say it back**
@@ -284,8 +265,8 @@ Nothing yet: this is the first card in the Foundations wing. It assumes only tha
 
 ## Where this goes next
 
-- [adding-and-subtracting](02-adding-and-subtracting.md): when a column fills past 9 and rolls over, or runs out and has to borrow.
-- [decimals](08-decimals.md): the same columns continued right of a dot — a tenth, a hundredth — where these cents become dollars.
+- [Adding and subtracting](02-adding-and-subtracting.md): when a column fills past 9 and rolls over, or runs out and has to borrow.
+- [Decimals](08-decimals.md): the same columns continued right of a dot — a tenth, a hundredth — where these cents become dollars.
 
 ---
 

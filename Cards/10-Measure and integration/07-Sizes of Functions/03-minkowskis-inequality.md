@@ -1,23 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Sizes of Functions
-topic: Adding two weeks of wind
-item: Minkowski's inequality
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/02-holders-inequality|holders-inequality]]"
-next:
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/05-completeness-of-lp|completeness-of-lp]]"
-  - "[[Cards/20-Harmonic analysis/03-Convolution and Approximate Identities/01-convolution-and-youngs-inequality|convolution-and-youngs-inequality]]"
-tags: [mathematics, measure and integration, minkowskis-inequality]
----
-
 # Minkowski's inequality: the size of a sum is at most the sum of the sizes, so Lp is a normed space
 
-Measure and integration → Sizes of Functions → Adding two weeks of wind → Minkowski's inequality
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sizes of Functions](../../../SYLLABUS.md#w10-s07) → Minkowski's inequality
 
 ---
 
@@ -27,7 +10,7 @@ Turbine A logs one daily mean wind speed for a week: 3, 5, 8, 2, 6, 4 and 7 m/s.
 
 Each week is a list of seven numbers, so it is a point, or an arrow from the origin, in a space with one direction per day. The usual length of that arrow is the square root of the sum of squares: √203 = 14.2478 for A, √95 = 9.7468 for B, and √500 = 22.3607 for the combined week. The two lengths added make 23.9946. The combined week is shorter than that by 1.6339. Two arrows laid end to end reach no further than the lengths added: this is the triangle inequality of school geometry, now in seven directions.
 
-The [lp-spaces](01-lp-spaces.md) card measures a function with a whole family of sizes, one for each exponent p. The square-root-of-squares length is the case p = 2. This card proves that every size in the family with p at least 1 obeys the same rule, on any measure space, and that this makes each such size a genuine length: a **norm**. Hermann Minkowski used the inequality for sums in his 1896 book on the geometry of numbers.
+The [Lp spaces](01-lp-spaces.md) card measures a function with a whole family of sizes, one for each exponent p. The square-root-of-squares length is the case p = 2. This card proves that every size in the family with p at least 1 obeys the same rule, on any measure space, and that this makes each such size a genuine length: a **norm**. Hermann Minkowski used the inequality for sums in his 1896 book on the geometry of numbers.
 
 **The size of a sum is at most the sum of the sizes, for every exponent p from 1 to infinity; with that, the p-size is a norm and the space of functions of finite p-size is a normed space.**
 
@@ -45,7 +28,7 @@ Caption: the solid arrow from the origin to (3, 5) is A, of length 5.831; the da
 
 ## The formula
 
-Notation first, in words, as a reminder from [lp-spaces](01-lp-spaces.md). A measure space $(\Omega,\mathcal F,\mu)$ is a set of points, the collection of sets we allow ourselves to measure, and a measure giving each such set a size. Here $\Omega$ is the seven days, and $\mu$ is either **counting measure**, which gives each day weight 1, or the **uniform probability**, which gives each day weight 1/7. For a measurable function $f$ and an exponent $p$ with $1 \le p < \infty$, the **p-norm**, which this card also calls the p-size, is
+Notation first, in words, as a reminder from [Lp spaces](01-lp-spaces.md). A measure space $(\Omega,\mathcal F,\mu)$ is a set of points, the collection of sets we allow ourselves to measure, and a measure giving each such set a size. Here $\Omega$ is the seven days, and $\mu$ is either **counting measure**, which gives each day weight 1, or the **uniform probability**, which gives each day weight 1/7. For a measurable function $f$ and an exponent $p$ with $1 \le p < \infty$, the **p-norm**, which this card also calls the p-size, is
 
 $$\|f\|_p = \Big(\int_\Omega |f|^p \, d\mu\Big)^{1/p}.$$
 
@@ -59,7 +42,7 @@ $$\|f+g\|_p \;\le\; \|f\|_p + \|g\|_p .$$
 
 With the sum of the sizes finite, the left side is finite too, so the sum of two functions of finite p-size again has finite p-size.
 
-The proof borrows Hölder's inequality ([holders-inequality](02-holders-inequality.md)): for measurable $u$ and $v$, $1 < p < \infty$ and the **conjugate exponent** $q = p/(p-1)$, the number with $1/p + 1/q = 1$,
+The proof borrows Hölder's inequality ([Holder's inequality](02-holders-inequality.md)): for measurable $u$ and $v$, $1 < p < \infty$ and the **conjugate exponent** $q = p/(p-1)$, the number with $1/p + 1/q = 1$,
 
 $$\int_\Omega |u\,v| \, d\mu \;\le\; \|u\|_p \, \|v\|_q .$$
 
@@ -90,7 +73,7 @@ In words: only the zero function has size zero, once functions that agree almost
 
 - **p at least 1.** Below 1 the inequality fails. At p = 1/2 the turbines give 402.3318 for the sum against 384.2390 for the two sizes added. The proof's tool fails with it: q = p/(p − 1) is negative, and Hölder's inequality needs p ≥ 1; the split in Step 3 uses 1 < p < ∞.
 - **Measurable functions on any measure space.** No finiteness, no continuity, no bound. A size may be infinite; the inequality then holds with ∞ on the right.
-- **Size zero means zero almost everywhere, not everywhere.** A day of weight zero, such as a day with the sensor offline, carries any value at no cost: the function 9 on that day and 0 elsewhere has 2-norm 0.0000. The norm axioms hold only once such functions count as the zero function ([null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)).
+- **Size zero means zero almost everywhere, not everywhere.** A day of weight zero, such as a day with the sensor offline, carries any value at no cost: the function 9 on that day and 0 elsewhere has 2-norm 0.0000. The norm axioms hold only once such functions count as the zero function ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)).
 - **Equality needs the same direction.** For 1 < p < ∞, equality holds exactly when one function is a multiple $t \ge 0$ of the other almost everywhere. Opposite directions do not count: B = −2A gives 14.2478 against 42.7434.
 
 ---
@@ -103,7 +86,7 @@ At every day, the triangle inequality for numbers says |A + B| ≤ |A| + |B|. In
 
 ### Step 1: p = 1, the triangle inequality integrated
 
-At each point, $|f+g| \le |f| + |g|$. The integral respects order and adds ([integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), so the size of the sum is at most the sum of sizes. For the turbines both sides are 58.0000: every reading is positive, so the day-by-day triangle inequality is an equality on every day.
+At each point, $|f+g| \le |f| + |g|$. The integral respects order and adds ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), so the size of the sum is at most the sum of sizes. For the turbines both sides are 58.0000: every reading is positive, so the day-by-day triangle inequality is an equality on every day.
 
 ### Step 2: p = ∞, the largest values
 
@@ -138,9 +121,9 @@ With all three axioms, the functions of finite p-size, with functions equal almo
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega,\mathcal F,\mu)$ is a measure space, $f$ and $g$ are measurable with real values, and $1 \le p \le \infty$. If the right side $\|f\|_p + \|g\|_p$ is infinite there is nothing to prove, so assume both sizes are finite. The sum $f + g$ is measurable, as a sum of measurable functions ([measurable-functions](../03-Measurable%20Functions/01-measurable-functions.md)).
+**Setting.** $(\Omega,\mathcal F,\mu)$ is a measure space, $f$ and $g$ are measurable with real values, and $1 \le p \le \infty$. If the right side $\|f\|_p + \|g\|_p$ is infinite there is nothing to prove, so assume both sizes are finite. The sum $f + g$ is measurable, as a sum of measurable functions ([Measurable functions](../03-Measurable%20Functions/01-measurable-functions.md)).
 
-**Case p = 1.** For every point, $|f+g| \le |f| + |g|$, the triangle inequality for numbers. The integral of functions of zero or more is monotone and additive ([integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), so $\int|f+g|\,d\mu \le \int|f|\,d\mu + \int|g|\,d\mu$.
+**Case p = 1.** For every point, $|f+g| \le |f| + |g|$, the triangle inequality for numbers. The integral of functions of zero or more is monotone and additive ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), so $\int|f+g|\,d\mu \le \int|f|\,d\mu + \int|g|\,d\mu$.
 
 **Case p = ∞.** Let $M = \|f\|_\infty$. The set where $|f| > M$ is the union over n of the sets where $|f| > M + 1/n$; each has measure zero, because $M$ is the greatest lower bound of the almost-everywhere bounds, so some such bound lies below $M + 1/n$; and a countable union of sets of measure zero has measure zero. So $|f| \le M$ off a null set $N_f$. Likewise $|g| \le \|g\|_\infty$ off a null set $N_g$. Off $N_f \cup N_g$, still null, $|f+g| \le \|f\|_\infty + \|g\|_\infty$. The sup-norm of $f + g$ is the smallest bound of this kind, so it is at most $\|f\|_\infty + \|g\|_\infty$.
 
@@ -148,11 +131,11 @@ With all three axioms, the functions of finite p-size, with functions equal almo
 1. *The sum has finite size.* At each point, $|f+g| \le |f| + |g| \le 2\max(|f|,|g|)$, so $|f+g|^p \le 2^p \max(|f|^p, |g|^p) \le 2^p(|f|^p + |g|^p)$. Integrating, $\int|f+g|^p\,d\mu \le 2^p(\|f\|_p^p + \|g\|_p^p) < \infty$.
 2. *Nothing to do at zero.* If $\|f+g\|_p = 0$, the inequality holds, since the right side is zero or more.
 3. *Split.* At each point, $|f+g|^p = |f+g|\cdot|f+g|^{p-1} \le |f|\,|f+g|^{p-1} + |g|\,|f+g|^{p-1}$, by the triangle inequality for numbers times a factor of zero or more.
-4. *Hölder on each piece.* Let $q = p/(p-1)$, so $1/p + 1/q = 1$ and $(p-1)q = p$. Put $v = |f+g|^{p-1}$. Then $\int v^q\,d\mu = \int|f+g|^p\,d\mu$, so $\|v\|_q = \big(\int|f+g|^p\,d\mu\big)^{1/q} = \|f+g\|_p^{p/q} = \|f+g\|_p^{p-1}$, finite by 1. Hölder ([holders-inequality](02-holders-inequality.md)) gives $\int|f|\,v\,d\mu \le \|f\|_p\,\|f+g\|_p^{p-1}$, and the same with $g$ in place of $f$.
+4. *Hölder on each piece.* Let $q = p/(p-1)$, so $1/p + 1/q = 1$ and $(p-1)q = p$. Put $v = |f+g|^{p-1}$. Then $\int v^q\,d\mu = \int|f+g|^p\,d\mu$, so $\|v\|_q = \big(\int|f+g|^p\,d\mu\big)^{1/q} = \|f+g\|_p^{p/q} = \|f+g\|_p^{p-1}$, finite by 1. Hölder ([Holder's inequality](02-holders-inequality.md)) gives $\int|f|\,v\,d\mu \le \|f\|_p\,\|f+g\|_p^{p-1}$, and the same with $g$ in place of $f$.
 5. *Add.* Integrating 3 and using 4, $\|f+g\|_p^p \le (\|f\|_p + \|g\|_p)\,\|f+g\|_p^{p-1}$.
 6. *Divide.* By 1 and 2, $\|f+g\|_p^{p-1}$ is finite and positive. Dividing by it gives $\|f+g\|_p \le \|f\|_p + \|g\|_p$. ∎
 
-**Norm axioms.** Scaling: $\int|cf|^p\,d\mu = |c|^p\int|f|^p\,d\mu$ because the integral pulls out constants; take p-th roots. At p = ∞, $|cf| \le |c|M$ off a null set exactly when $|f| \le M$ there, for $c \ne 0$. Zero: $\int|f|^p\,d\mu = 0$ exactly when $|f|^p = 0$ off a null set, since a function of zero or more with integral zero vanishes almost everywhere (by Markov's bound, $\mu(|f|^p > 1/n) \le n\cdot 0$ for every n, [markov-and-chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)). Identifying functions equal almost everywhere, as [lp-spaces](01-lp-spaces.md) does, makes "size zero" mean "the zero element". Closure: $c\,f$ has finite size by scaling, $f + g$ by the case above. So $L^p$ is a vector space and the p-norm is a norm on it.
+**Norm axioms.** Scaling: $\int|cf|^p\,d\mu = |c|^p\int|f|^p\,d\mu$ because the integral pulls out constants; take p-th roots. At p = ∞, $|cf| \le |c|M$ off a null set exactly when $|f| \le M$ there, for $c \ne 0$. Zero: $\int|f|^p\,d\mu = 0$ exactly when $|f|^p = 0$ off a null set, since a function of zero or more with integral zero vanishes almost everywhere (by Markov's bound, $\mu(|f|^p > 1/n) \le n\cdot 0$ for every n, [Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)). Identifying functions equal almost everywhere, as [Lp spaces](01-lp-spaces.md) does, makes "size zero" mean "the zero element". Closure: $c\,f$ has finite size by scaling, $f + g$ by the case above. So $L^p$ is a vector space and the p-norm is a norm on it.
 
 **Equality, 1 < p < ∞.** If equality holds with $\|f+g\|_p > 0$, both inequalities used must be equalities almost everywhere. Item 3 is an equality exactly where $f$ and $g$ have the same sign, or one of $f$, $g$, $f + g$ is zero. Item 4 is Hölder, whose equality case makes $|f|^p$ a constant multiple of $|f+g|^p$ almost everywhere, and the same for $|g|^p$. Together, $g = t f$ almost everywhere for a constant $t \ge 0$, or $f = 0$. Conversely, if $g = t f$ with $t \ge 0$, both sides equal $(1+t)\|f\|_p$.
 
@@ -162,7 +145,7 @@ With all three axioms, the functions of finite p-size, with functions equal almo
 
 At p = 1/2 the p-th power is the square root, which is bent the wrong way: it rewards spreading a total over several days. The turbines' combined week has 1/2-size 402.3318 against 384.2390 for the two sizes added. In 3000 random pairs of weeks with readings from −9 to 9, the inequality fails 179 times at p = 1/2 and never at p = 1, 1.5, 2, 3 or ∞.
 
-Geometrically, a size obeys the triangle inequality, given scaling, exactly when its **unit ball**, the set of functions of size at most 1, is convex: the segment between any two of its points stays inside ([convex-sets-and-convex-hulls](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/02-convex-sets-and-convex-hulls.md)). In two dimensions the unit balls are a diamond at p = 1, a circle at p = 2 and a square at p = ∞. At p = 1/2 the ball pinches inward between the axes and is not convex.
+Geometrically, a size obeys the triangle inequality, given scaling, exactly when its **unit ball**, the set of functions of size at most 1, is convex: the segment between any two of its points stays inside ([Convex sets](../../05-Geometry%20and%20trig/07-Points%2C%20Convexity%20and%20Fractals/02-convex-sets-and-convex-hulls.md)). In two dimensions the unit balls are a diamond at p = 1, a circle at p = 2 and a square at p = ∞. At p = 1/2 the ball pinches inward between the axes and is not convex.
 
 ### The ratio across exponents
 
@@ -178,7 +161,7 @@ xychart-beta
 
 Caption: the first line is $\|A+B\|_p$ divided by $\|A\|_p + \|B\|_p$ for the turbines under counting measure; the flat second line is 1, where equality would sit. Minkowski says the first line stays at or below the second for p from 1 on. It crosses at p = 1, where every reading being positive makes the two sides equal, and it rises above 1 for p below 1. As p grows the ratio tends to 12/14, the sup-norms' ratio.
 
-Another route to the same inequality runs through convexity of the p-th power alone ([convex-functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)): normalise both functions to size 1, note the unit ball is convex because the p-th power is a convex function for p ≥ 1, and scale back. At p = 2 there is a third route, through the inner product, taken in [l2-as-a-hilbert-space](06-l2-as-a-hilbert-space.md).
+Another route to the same inequality runs through convexity of the p-th power alone ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)): normalise both functions to size 1, note the unit ball is convex because the p-th power is a convex function for p ≥ 1, and scale back. At p = 2 there is a third route, through the inner product, taken in [L2 as a Hilbert space](06-l2-as-a-hilbert-space.md).
 
 ---
 
@@ -574,16 +557,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [holders-inequality](02-holders-inequality.md): the cap on each piece of the split in Step 3.
+- [Holder's inequality](02-holders-inequality.md): the cap on each piece of the split in Step 3.
 
 ## Where this goes next
 
-- [completeness-of-lp](05-completeness-of-lp.md): with a norm in hand, distance between functions makes sense, and the Riesz-Fischer theorem shows no Cauchy sequence escapes the space.
-- convolution-and-youngs-inequality: an integral of shifted copies, bounded by Minkowski applied under the integral sign.
+- [Riesz-Fischer](05-completeness-of-lp.md): with a norm in hand, distance between functions makes sense, and the Riesz-Fischer theorem shows no Cauchy sequence escapes the space.
+- Convolution: an integral of shifted copies, bounded by Minkowski applied under the integral sign.
 
-Also on this shelf: [jensens-inequality](04-jensens-inequality.md) compares sizes at different exponents under a probability.
+Also on this shelf: [Jensen's inequality](04-jensens-inequality.md) compares sizes at different exponents under a probability.
 
-L^p now has a distance, $\|f-g\|_p$; whether a sequence whose members crowd together in that distance always has a limit inside L^p is the question [completeness-of-lp](05-completeness-of-lp.md) answers.
+L^p now has a distance, $\|f-g\|_p$; whether a sequence whose members crowd together in that distance always has a limit inside L^p is the question [Riesz-Fischer](05-completeness-of-lp.md) answers.
 
 ---
 

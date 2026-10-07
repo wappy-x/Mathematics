@@ -1,30 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: American and Bermudan exercise
-topic: Infinite-horizon exercise
-item: The perpetual American put
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/04-exercise-boundary-and-smooth-pasting|exercise-boundary-and-smooth-pasting]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/02-the-characteristic-equation|the-characteristic-equation]]"
-  - "[[Cards/03-Algebra/02-Polynomials/03-quadratic-formula|quadratic-formula]]"
-next:
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/06-barone-adesi-whaley-approximation|barone-adesi-whaley-approximation]]"
-tags: [mathematics, financial mathematics, perpetual-american-put]
----
-
 # The perpetual American put: the one American option with an exact answer, and the boundary it hands you
 
-Financial mathematics → American and Bermudan exercise → Infinite-horizon exercise → The perpetual American put
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [American and Bermudan exercise](../../../SYLLABUS.md#w12-s15) → The perpetual American put
 
 ---
 
 ## General Overview
 
-Acme shares trade at $100. A put option gives its holder the right, not the duty, to sell one Acme share for a fixed $100, the strike. An American put allows that sale on any day up to expiry, not only on the last one ([american-options-and-early-exercise](01-american-options-and-early-exercise.md)). The market is the house one: cash earns 5% a year, Acme pays a 2% dividend yield, and its volatility (how widely its price swings in a year) is 20%.
+Acme shares trade at $100. A put option gives its holder the right, not the duty, to sell one Acme share for a fixed $100, the strike. An American put allows that sale on any day up to expiry, not only on the last one ([American options](01-american-options-and-early-exercise.md)). The market is the house one: cash earns 5% a year, Acme pays a 2% dividend yield, and its volatility (how widely its price swings in a year) is 20%.
 
 Now remove the expiry date. The holder may sell at $100 on any day, for ever. That contract is the **perpetual American put**. It sounds exotic, and few trade under that name. It matters because it is the only American option whose price has an exact formula. A one-year American put needs a tree or a grid; this one needs a quadratic equation.
 
@@ -85,7 +67,7 @@ Delta falls straight out of the power: $\Delta = \lambda P / S$, negative becaus
 
 ### When it holds
 
-- **The share follows geometric Brownian motion with constant volatility** ([geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). If volatility moves, both the trigger and the price move with it: at 30% volatility the trigger is $47.38 and the put $26.85.
+- **The share follows geometric Brownian motion with constant volatility** ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). If volatility moves, both the trigger and the price move with it: at 30% volatility the trigger is $47.38 and the put $26.85.
 - **Constant rate and dividend yield.** Over the decades a perpetual contract spans, neither is constant. The formula prices the contract as if today's rates lasted for ever, which is its biggest weakness in practice.
 - **The rate is positive.** Then the quadratic's two roots have product $-2r/\sigma^2$, which is negative, so exactly one is negative and the formula exists and is unique. At a zero rate the negative root shrinks to zero, the trigger falls to zero, and the put is worth the full strike: waiting costs nothing, so nobody exercises.
 - **No expiry, ever.** A finite-life American put is always worth less: a 30-year one is $15.47 on the tree below, not $15.77.
@@ -101,7 +83,7 @@ An ordinary American put's price depends on two things, the share price and the 
 
 ### Step 1: the pricing equation loses its time term
 
-Every derivative on a share in this model obeys the Black–Scholes equation ([black-scholes-equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)) wherever the holder is still waiting. Written with $\partial P/\partial t$ for the change in price as the clock runs, $P'$ for the slope against $S$ and $P''$ for the slope's slope, it reads
+Every derivative on a share in this model obeys the Black–Scholes equation ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)) wherever the holder is still waiting. Written with $\partial P/\partial t$ for the change in price as the clock runs, $P'$ for the slope against $S$ and $P''$ for the slope's slope, it reads
 
 $$\frac{\partial P}{\partial t} + \tfrac12\sigma^2S^2P'' + (r - q)SP' - rP = 0 .$$
 
@@ -117,7 +99,7 @@ Every term has the same shape: $S^2$ with the second slope, $S$ with the first, 
 
 $$\tfrac12\sigma^2\lambda(\lambda - 1) + (r - q)\lambda - r = 0 .$$
 
-Multiply out and this is the quadratic in The formula. Guessing a trial form and turning a differential equation into a polynomial is the move of [the-characteristic-equation](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md); there the trial is an exponential in time, here a power of the price. The [quadratic-formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md) gives the two roots, $\lambda$ = −1.850781 and $\mu$ = 1.350781.
+Multiply out and this is the quadratic in The formula. Guessing a trial form and turning a differential equation into a polynomial is the move of [The characteristic equation](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md); there the trial is an exponential in time, here a power of the price. The [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md) gives the two roots, $\lambda$ = −1.850781 and $\mu$ = 1.350781.
 
 ### Step 3: throw away the root that grows
 
@@ -134,7 +116,7 @@ Divide the second by the first. $A$ cancels, leaving $\lambda / S^* = -1/(K - S^
 
 $$S^* = \frac{K\lambda}{\lambda - 1} .$$
 
-Then $A = (K - S^*)S^{*-\lambda}$, which gives the formula. Why the slopes must match is the subject of [exercise-boundary-and-smooth-pasting](04-exercise-boundary-and-smooth-pasting.md). This card shows it a second way in Step 5: it is the condition for choosing the best trigger.
+Then $A = (K - S^*)S^{*-\lambda}$, which gives the formula. Why the slopes must match is the subject of [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md). This card shows it a second way in Step 5: it is the condition for choosing the best trigger.
 
 ### Step 5: the same trigger, found by picking the best one
 
@@ -147,7 +129,7 @@ A trigger close to the strike gets paid soon but little. A trigger far below pay
 <details>
 <summary>Detailed proof: why a dollar at the trigger is worth $(S/L)^{\lambda}$ today, and why no other strategy beats $S^*$</summary>
 
-**The discount.** Let $S_t$ be the share price at a later time t in the risk-neutral world ([risk-neutral-measure-and-the-fundamental-theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)), where it grows at $r - q$ on average. By Itô's lemma, the process $e^{-rt}S_t^{\lambda}$ has drift $e^{-rt}S_t^{\lambda}\left[\tfrac12\sigma^2\lambda(\lambda - 1) + (r - q)\lambda - r\right]$, which is zero exactly because $\lambda$ solves the quadratic. A process with no drift is a martingale: its expected future value is its value today. Stop it at the first time the share touches $L$. Before then $S_t$ stays above $L$, and since $\lambda$ is negative, $S_t^{\lambda}$ stays below $L^{\lambda}$, so the process is bounded and optional stopping applies: a bounded martingale stopped at a random time keeps its expected value. On paths that never touch $L$ the factor $e^{-rt}$ drives it to zero. So $S^{\lambda}$ equals $L^{\lambda}$ times the expected discount factor at the hitting time, which is therefore $(S/L)^{\lambda}$.
+**The discount.** Let $S_t$ be the share price at a later time t in the risk-neutral world ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)), where it grows at $r - q$ on average. By Itô's lemma, the process $e^{-rt}S_t^{\lambda}$ has drift $e^{-rt}S_t^{\lambda}\left[\tfrac12\sigma^2\lambda(\lambda - 1) + (r - q)\lambda - r\right]$, which is zero exactly because $\lambda$ solves the quadratic. A process with no drift is a martingale: its expected future value is its value today. Stop it at the first time the share touches $L$. Before then $S_t$ stays above $L$, and since $\lambda$ is negative, $S_t^{\lambda}$ stays below $L^{\lambda}$, so the process is bounded and optional stopping applies: a bounded martingale stopped at a random time keeps its expected value. On paths that never touch $L$ the factor $e^{-rt}$ drives it to zero. So $S^{\lambda}$ equals $L^{\lambda}$ times the expected discount factor at the hitting time, which is therefore $(S/L)^{\lambda}$.
 
 **No strategy beats the trigger.** Call $P$ the formula's value. Three facts hold. First, $P \ge K - S$ everywhere: equal below $S^*$, and above it $P$ is convex (it bends upward) with slope −1 at $S^*$, so it stays on or above the payoff's straight line. Second, above $S^*$ the Black–Scholes operator applied to $P$ is zero by Step 1. Third, below $S^*$, where $P = K - S$, the operator gives $qS - rK$, negative there: holding the share and the put instead of exercising earns the dividend $q\,S$ but forgoes the interest $r\,K$ on the strike, and at the trigger that shortfall is $3.70 a year. With smooth pasting, Itô's lemma applies across $S^*$ (the second slope jumps, but the first does not), so $e^{-rt}P(S_t)$ never drifts upward. For any exercise time the holder chooses, the expected discounted payoff is at most the expected discounted $P$, which is at most $P$ today. The trigger strategy attains $P$. So $P$ is the price.
 
@@ -159,7 +141,7 @@ A third road needs neither the power guess nor the optimisation. Start at a tria
 
 ## Worked numbers, by hand
 
-House market: $S = K = 100$, $r$ = 5%, $q$ = 2%, $\sigma$ = 20%. Write the quadratic as $a\lambda^2 + b\lambda + c = 0$, the letters of the [quadratic-formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md) card: $a = \tfrac12\sigma^2$, $b = r - q - \tfrac12\sigma^2$, $c = -r$.
+House market: $S = K = 100$, $r$ = 5%, $q$ = 2%, $\sigma$ = 20%. Write the quadratic as $a\lambda^2 + b\lambda + c = 0$, the letters of the [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md) card: $a = \tfrac12\sigma^2$, $b = r - q - \tfrac12\sigma^2$, $c = -r$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -193,7 +175,7 @@ Theta is the striking entry. A finite-life option melts as its expiry nears. Thi
 
 ### How long-dated trees climb to the formula
 
-A tree prices a finite-life American put by stepping back from expiry and, at every node, taking the larger of exercising and waiting ([american-options-and-early-exercise](01-american-options-and-early-exercise.md)). Lengthen the life and the American put should rise towards $15.77. The European put, which may only be used at expiry, does something else.
+A tree prices a finite-life American put by stepping back from expiry and, at every node, taking the larger of exercising and waiting ([American options](01-american-options-and-early-exercise.md)). Lengthen the life and the American put should rise towards $15.77. The European put, which may only be used at expiry, does something else.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -635,10 +617,10 @@ The two outputs match line for line. The shooting road and the golden-section ro
 ## Where you meet it in real life
 
 - **The benchmark for American puts.** The perpetual put is the ceiling any finite American put on the same terms approaches from below, and a first test for a new tree or grid.
-- **The engine of the fast approximations.** The power $S^{\lambda}$ with its boundary condition is the correction term in [barone-adesi-whaley-approximation](06-barone-adesi-whaley-approximation.md), applied to finite lives.
+- **The engine of the fast approximations.** The power $S^{\lambda}$ with its boundary condition is the correction term in [Barone-Adesi-Whaley](06-barone-adesi-whaley-approximation.md), applied to finite lives.
 - **Real options.** A company that may abandon a project and sell its assets at a fixed salvage value holds a perpetual put on the project's worth. The trigger is the point at which to walk away.
 - **Credit and default.** In structural credit models, a firm's owners stop paying and default when the firm's value first falls to a level chosen to make their stake worth the most. That choice is this card's Step 5.
-- **Sensitivities.** The delta and gamma above come from one power; the finite-life versions need numerical bumps: [american-greeks-and-implied-volatility](07-american-greeks-and-implied-volatility.md).
+- **Sensitivities.** The delta and gamma above come from one power; the finite-life versions need numerical bumps: [American Greeks and implied volatility](07-american-greeks-and-implied-volatility.md).
 
 > **Say it back**
 > A put that never expires has the same future on every date, so its value depends on the share price alone. Dropping the time term leaves an equation whose solutions are powers of the price. The power must be the negative root of a quadratic, so the value dies away as the share rises. Matching the payoff's height and slope at the trigger gives $S^* = K\lambda/(\lambda - 1)$: for Acme, sell at $64.92, and the put is worth $15.77 at $100. Matching the slope is the same as choosing the best trigger.
@@ -647,13 +629,13 @@ The two outputs match line for line. The shooting road and the golden-section ro
 
 ## What this builds on
 
-- [exercise-boundary-and-smooth-pasting](04-exercise-boundary-and-smooth-pasting.md): why the value curve meets the payoff with the same slope; here both conditions are solved in closed form.
-- [the-characteristic-equation](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md): the move of guessing a trial solution and reading off a polynomial.
-- [quadratic-formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the two roots, and the sign rule that makes one of them negative.
+- [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md): why the value curve meets the payoff with the same slope; here both conditions are solved in closed form.
+- [The characteristic equation](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md): the move of guessing a trial solution and reading off a polynomial.
+- [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the two roots, and the sign rule that makes one of them negative.
 
 ## Where this goes next
 
-- [barone-adesi-whaley-approximation](06-barone-adesi-whaley-approximation.md): the same power solution bolted onto a European price to approximate a finite-life American put.
+- [Barone-Adesi-Whaley](06-barone-adesi-whaley-approximation.md): the same power solution bolted onto a European price to approximate a finite-life American put.
 
 This card prices an option that never expires; how much of the answer survives when the clock is put back, and how to recover the rest cheaply, is what Barone-Adesi–Whaley settles.
 

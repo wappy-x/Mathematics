@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Black-Scholes call and put
-topic: Dated cash payouts
-item: Known cash dividends
-kind: method
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/03-put-call-parity|put-call-parity]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/04-crr-tree-and-convergence|crr-tree-and-convergence]]"
-next:
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/02-mertons-no-early-exercise-theorem|mertons-no-early-exercise-theorem]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - known-cash-dividends
----
-
 # Known cash dividends: escrow the dividend, then price the share that is left
 
-Financial mathematics → The Black-Scholes call and put → Dated cash payouts → Known cash dividends
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Black-Scholes call and put](../../../SYLLABUS.md#w12-s08) → Known cash dividends
 
 ---
 
@@ -88,7 +67,7 @@ More than one payout before expiry: discount each to today and subtract the tota
 | $q$ | a continuous dividend **yield**, the input the other shelf cards take | 2% | falls |
 | $C$, $P$ | the call and put premiums | 9.24 and 6.32 | — |
 
-Put-call parity is restated with the escrow on the call's side, and nothing else changes ([put-call-parity](03-put-call-parity.md)):
+Put-call parity is restated with the escrow on the call's side, and nothing else changes ([Put-call parity](03-put-call-parity.md)):
 
 $$C - P = S - D_0 - K e^{-rT} = S^{*} - K e^{-rT}$$
 
@@ -96,7 +75,7 @@ $$C - P = S - D_0 - K e^{-rT} = S^{*} - K e^{-rT}$$
 
 - **The dividend is known, not forecast.** A declared amount on an announced date is known. Next year's guess is not, and escrowing a guess prices a certainty nobody has.
 - **Only payouts before expiry count.** A cheque that arrives after the option dies is none of its business. Escrow a second $2.00 at eighteen months as well and the premium comes out far too cheap — $8.17 instead of $9.24, in the table below.
-- **No early exercise.** The card prices a European option, exercisable only on the last day. A cash dividend is the main reason an American call holder would exercise early, and that belongs to [mertons-no-early-exercise-theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md).
+- **No early exercise.** The card prices a European option, exercisable only on the last day. A cash dividend is the main reason an American call holder would exercise early, and that belongs to [Merton's theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md).
 - **The dividend never exceeds the share.** $S^{*}$ must stay positive, or there is nothing left to price; in the rival model below the share itself must clear the cheque on the ex-date, or a share is asked to go negative. For Acme the cheque is a fiftieth of the share price, so neither binds here; both bind for a large special dividend.
 - **The volatility sits on $S^{*}$, not on $S$.** This is the modelling choice, not a fact. Costed at eight cents below.
 
@@ -108,7 +87,7 @@ $$C - P = S - D_0 - K e^{-rT} = S^{*} - K e^{-rT}$$
 
 Holding Acme today is holding two different futures at once. One is a cheque: $2.00, six months out, near enough certain. The other is everything after that — a business whose price wanders.
 
-Value them separately. A certain $2.00 in six months is worth $2.00 discounted at the riskless rate, $1.95 today ([compound-interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)). Whatever the $100.00 quote is worth, $1.95 of it is that cheque. The remaining $98.05 is the wandering part.
+Value them separately. A certain $2.00 in six months is worth $2.00 discounted at the riskless rate, $1.95 today ([Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)). Whatever the $100.00 quote is worth, $1.95 of it is that cheque. The remaining $98.05 is the wandering part.
 
 Nothing has been assumed yet. The split is arithmetic on a declared amount and a rate.
 
@@ -118,7 +97,7 @@ Now ask what the call owns. It is the right to buy a share in one year — after
 
 So price the option on the wandering part. That part is worth $98.05 today, and it carries all the jumpiness, because a riskless cheque has none: setting $1.95 aside removes value but no risk.
 
-That is the whole method. The call is a one-year 100-strike call on a thing worth $98.049380 today that pays nothing out along the way — and Black–Scholes with no dividend is exactly the tool for that ([black-scholes-call](01-black-scholes-call.md)). Feed it $S^{*}$ and $q = 0$ and read off $9.244684.
+That is the whole method. The call is a one-year 100-strike call on a thing worth $98.049380 today that pays nothing out along the way — and Black–Scholes with no dividend is exactly the tool for that ([Black–Scholes call](01-black-scholes-call.md)). Feed it $S^{*}$ and $q = 0$ and read off $9.244684.
 
 The name for the set-aside cheque is the **escrow**, and for $S^{*}$ the **escrowed spot**. Those are the terms from here on.
 
@@ -143,7 +122,7 @@ Identical in every future, so identical in cost today. Hence $C + Ke^{-rT} + D_0
 
 ### Step 3: why the tree stops recombining, and how escrow saves it
 
-A binomial tree is cheap because paths meet ([crr-tree-and-convergence](../04-Binomial%20Trees/04-crr-tree-and-convergence.md)). Each step multiplies the price by $u$ going up or by $d = 1/u$ going down, so up-then-down returns to where it started. Two thousand steps over the year need only 2,001 prices in the final layer, not $2^{2000}$ paths.
+A binomial tree is cheap because paths meet ([Cox-Ross-Rubinstein](../04-Binomial%20Trees/04-crr-tree-and-convergence.md)). Each step multiplies the price by $u$ going up or by $d = 1/u$ going down, so up-then-down returns to where it started. Two thousand steps over the year need only 2,001 prices in the final layer, not $2^{2000}$ paths.
 
 Take 2,000 steps, half of them landing on or before the ex-date. In the dividend layer, go up from node 500, or go down from node 501: in a tree with no dividend both paths land on the same price and one number serves both.
 
@@ -726,7 +705,7 @@ The two outputs match byte for byte.
 - **Any option screen on a single share.** Listed options on dividend payers are quoted against escrowed spots, or against a forward built the same way. The dividend assumption is part of the quote whether or not it is shown.
 - **Index options.** An index has hundreds of members paying on scattered dates. Desks escrow the dated dividends out to the near expiries, where the calendar is known, and switch to a yield for the far ones, where it is not.
 - **Implied volatility.** Running the formula backwards to get $\sigma$ from a price depends on the dividend handling. Two desks agreeing on a $9.24 price and disagreeing about the dividend disagree about volatility, and will quote different prices for the next option along.
-- **Early exercise.** A cash dividend is the main reason to exercise an American call before expiry: exercising the day before the share goes ex collects the cash instead of watching the price fall. When that is never worth doing is [mertons-no-early-exercise-theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md).
+- **Early exercise.** A cash dividend is the main reason to exercise an American call before expiry: exercising the day before the share goes ex collects the cash instead of watching the price fall. When that is never worth doing is [Merton's theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md).
 - **Employee options and warrants.** Long-dated claims on dividend-paying shares, valued for company accounts with an escrow or a yield, which is one of the assumptions auditors ask about.
 - **Where it stops working.** Any payoff that watches the whole path rather than the last day's price, any barrier the share can cross on the ex-date, and any dividend large enough to matter against the share price itself. Then the model's choice about where volatility lives stops being a rounding difference.
 
@@ -739,13 +718,13 @@ The two outputs match byte for byte.
 
 ## What this builds on
 
-- [put-call-parity](03-put-call-parity.md): the two-parcel argument this card extends by handing the call parcel a bond worth $D_0$.
-- [black-scholes-call](01-black-scholes-call.md): the formula itself, and what $d_1$, $d_2$ and $N$ mean. This card changes only what is fed into it.
-- [crr-tree-and-convergence](../04-Binomial%20Trees/04-crr-tree-and-convergence.md): why $u$ and $d = 1/u$ make paths meet, which is the property a cash dividend destroys.
+- [Put-call parity](03-put-call-parity.md): the two-parcel argument this card extends by handing the call parcel a bond worth $D_0$.
+- [Black–Scholes call](01-black-scholes-call.md): the formula itself, and what $d_1$, $d_2$ and $N$ mean. This card changes only what is fed into it.
+- [Cox-Ross-Rubinstein](../04-Binomial%20Trees/04-crr-tree-and-convergence.md): why $u$ and $d = 1/u$ make paths meet, which is the property a cash dividend destroys.
 
 ## Where this goes next
 
-- [mertons-no-early-exercise-theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md): with no dividend an American call should never be exercised early, and a known cash dividend is exactly what breaks that.
+- [Merton's theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md): with no dividend an American call should never be exercised early, and a known cash dividend is exactly what breaks that.
 
 This card kept the option sealed until the last day, so the escrow could sit untouched; the moment the holder may exercise early it has to be added back at every node, which is where Merton's early-exercise theorem starts.
 

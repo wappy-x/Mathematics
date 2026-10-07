@@ -1,32 +1,14 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Value at Risk and Expected Shortfall
-topic: Scenario-based risk
-item: Historical and Monte Carlo VaR
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/02-parametric-var-and-delta-normal|parametric-var-and-delta-normal]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/08-bootstrap|bootstrap]]"
-next:
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/04-delta-gamma-var-and-cornish-fisher|delta-gamma-var-and-cornish-fisher]]"
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/08-backtesting-var|backtesting-var]]"
-tags: [mathematics, financial mathematics, historical-and-monte-carlo-var]
----
-
 # Historical and Monte Carlo VaR: replay the past, or simulate the future
 
-Financial mathematics → Value at Risk and Expected Shortfall → Scenario-based risk → Historical and Monte Carlo VaR
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Value at Risk and Expected Shortfall](../../../SYLLABUS.md#w12-s39) → Historical and Monte Carlo VaR
 
 ---
 
 ## General Overview
 
-A trading desk holds three things tonight: 100,000 Acme shares at $100 each, $5 million of a bond, and 1,000 Acme call options, each on 100 shares. The risk manager must report one number by morning: the loss the book should exceed on only one day in a hundred. That number is the book's **value at risk**, or VaR ([profit-and-loss-distribution-and-var](01-profit-and-loss-distribution-and-var.md)).
+A trading desk holds three things tonight: 100,000 Acme shares at $100 each, $5 million of a bond, and 1,000 Acme call options, each on 100 shares. The risk manager must report one number by morning: the loss the book should exceed on only one day in a hundred. That number is the book's **value at risk**, or VaR ([Value at risk](01-profit-and-loss-distribution-and-var.md)).
 
-A bell curve fitted to this card's record of the book gives **$421,043.57**, by the method of [parametric-var-and-delta-normal](02-parametric-var-and-delta-normal.md). This card drops the bell curve and asks for the answer two other ways.
+A bell curve fitted to this card's record of the book gives **$421,043.57**, by the method of [Parametric VaR](02-parametric-var-and-delta-normal.md). This card drops the bell curve and asks for the answer two other ways.
 
 **Replay the past.** Take the last 500 trading days. For each, apply that day's moves in Acme's price and the bond's yield to *today's* book, and revalue everything. That gives 500 possible losses for tomorrow. Sort them. The loss that only five days beat is the answer: **$469,042.43**. This is **historical simulation**.
 
@@ -109,7 +91,7 @@ A **Student-t law** is a bell curve whose width is itself random: divide a bell-
 
 VaR is a property of a probability law: the 99% point of tomorrow's loss. No method sees that law. Each one supplies a stand-in and reads the 99% point off it.
 
-- **Parametric** ([parametric-var-and-delta-normal](02-parametric-var-and-delta-normal.md)): the law is a bell curve with the record's spread, and the 99% point comes from a formula.
+- **Parametric** ([Parametric VaR](02-parametric-var-and-delta-normal.md)): the law is a bell curve with the record's spread, and the 99% point comes from a formula.
 - **Historical**: the law puts equal weight, 1 in 500, on each of the record's days. Its 99% point is read by sorting.
 - **Monte Carlo**: the law is any formula the desk writes down. Its 99% point is estimated by drawing from it and sorting.
 
@@ -171,7 +153,7 @@ Read it in pairs.
 - **Bell-curve law, delta P&L, against the parametric formula.** $416,920.25 against $421,043.57. Same law, same straight-line approximation of the book; the gap is sampling noise, well inside the normal-law error bar of $6,756.75.
 - **Bell-curve law, full revaluation against delta.** Same draws, $404,789.24 against $416,920.25. Long calls lose less than their delta says on a big fall, because their slope flattens as Acme drops. Only revaluation sees it.
 - **Student-t against bell curve.** Fatter tails, higher VaR: $429,435.78.
-- **Resampling the record against replaying it.** Drawing 10,000 days at random from the 500, with replacement, is Monte Carlo under the replay law ([bootstrap](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/08-bootstrap.md)). It lands on $479,232.80, the record's fifth-worst day, one rank from the replay's answer: same law, so the gap is sampling noise. Resampling can never produce a loss the record lacks.
+- **Resampling the record against replaying it.** Drawing 10,000 days at random from the 500, with replacement, is Monte Carlo under the replay law ([Bootstrap](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/08-bootstrap.md)). It lands on $479,232.80, the record's fifth-worst day, one rank from the replay's answer: same law, so the gap is sampling noise. Resampling can never produce a loss the record lacks.
 
 The record was built from a known law, so the truth is on the chart: $451,631.46, estimated from 200,000 draws. The historical replay overshot it, the Student-t and bell curve undershot it, and it sits inside the replay's band from Step 2. On a real desk nobody sees that bar.
 
@@ -669,11 +651,11 @@ The outputs are identical line for line.
 ## Where you meet it in real life
 
 - **Bank trading desks.** Historical simulation over one to two years of days is widely used by banks for daily VaR. It needs no covariance matrix and no bell curve, and every scenario is a day someone lived through.
-- **Regulators.** The Basel rules let banks compute market-risk capital from their own models, historical or Monte Carlo, provided the results survive a count of exceptions: [backtesting-var](08-backtesting-var.md). Basel's 2016 market-risk standard (conventions verified 2026-09-28) replaces VaR with expected shortfall, computed from the same kind of scenarios: [expected-shortfall-and-coherence](05-expected-shortfall-and-coherence.md).
-- **Option books.** Books full of options use full revaluation in every scenario, because delta misses curvature. When repricing is too slow, desks use the quadratic shortcut: [delta-gamma-var-and-cornish-fisher](04-delta-gamma-var-and-cornish-fisher.md).
+- **Regulators.** The Basel rules let banks compute market-risk capital from their own models, historical or Monte Carlo, provided the results survive a count of exceptions: [Backtesting VaR](08-backtesting-var.md). Basel's 2016 market-risk standard (conventions verified 2026-09-28) replaces VaR with expected shortfall, computed from the same kind of scenarios: [Expected shortfall](05-expected-shortfall-and-coherence.md).
+- **Option books.** Books full of options use full revaluation in every scenario, because delta misses curvature. When repricing is too slow, desks use the quadratic shortcut: [Options in the book](04-delta-gamma-var-and-cornish-fisher.md).
 - **Insurers and pension funds.** Long-horizon risk has too few independent historical periods to replay, so Monte Carlo from an economic scenario generator is a common tool.
-- **Tails beyond the record.** When the question is a one-in-a-thousand-day loss, 500 days hold no answer at all. A fitted tail law extends them: [extreme-value-theory-and-tails](07-extreme-value-theory-and-tails.md).
-- **Whose risk it is.** The same scenarios split the VaR across positions: [var-decomposition-euler-and-component-var](06-var-decomposition-euler-and-component-var.md).
+- **Tails beyond the record.** When the question is a one-in-a-thousand-day loss, 500 days hold no answer at all. A fitted tail law extends them: [Extreme value theory](07-extreme-value-theory-and-tails.md).
+- **Whose risk it is.** The same scenarios split the VaR across positions: [Whose risk is it](06-var-decomposition-euler-and-component-var.md).
 
 > **Say it back**
 > Every VaR method picks a law for tomorrow, revalues today's book under it, and reads the 99% point. Historical simulation's law is the last 500 days, each weighted equally; the answer is the 495th smallest loss, $469,042.43 here. Monte Carlo's law is a formula the desk chooses; 10,000 draws from a fat-tailed one gave $429,435.78, and the bell-curve formula gave $421,043.57. Each estimate carries an error bar that shrinks like one over the square root of the number of scenarios. The error bar says how well the law was measured; it says nothing about whether the law was right.
@@ -682,13 +664,13 @@ The outputs are identical line for line.
 
 ## What this builds on
 
-- [parametric-var-and-delta-normal](02-parametric-var-and-delta-normal.md): the bell-curve answer, $421,043.57, that the two scenario methods are compared against, and the book's deltas.
-- [bootstrap](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/08-bootstrap.md): resampling a record with replacement, which is Monte Carlo under the replay law, and why it cannot invent values the record lacks.
+- [Parametric VaR](02-parametric-var-and-delta-normal.md): the bell-curve answer, $421,043.57, that the two scenario methods are compared against, and the book's deltas.
+- [Bootstrap](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/08-bootstrap.md): resampling a record with replacement, which is Monte Carlo under the replay law, and why it cannot invent values the record lacks.
 
 ## Where this goes next
 
-- [delta-gamma-var-and-cornish-fisher](04-delta-gamma-var-and-cornish-fisher.md): the calls' curvature captured by a formula instead of by repricing every scenario.
-- [backtesting-var](08-backtesting-var.md): how to judge which of the three answers was right, by counting the days the book actually lost more.
+- [Options in the book](04-delta-gamma-var-and-cornish-fisher.md): the calls' curvature captured by a formula instead of by repricing every scenario.
+- [Backtesting VaR](08-backtesting-var.md): how to judge which of the three answers was right, by counting the days the book actually lost more.
 
 Three methods gave three answers, and only the truth bar, which no desk ever sees, could say which was closest; the question left open is how to judge a VaR model from the days that follow it.
 

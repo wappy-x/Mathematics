@@ -1,30 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Random Walks and Filtrations
-topic: Waiting for a level
-item: Hitting times
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/04-gamblers-ruin|gamblers-ruin]]"
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/05-reflection-principle-for-walks|reflection-principle-for-walks]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/03-stopping-times-and-optional-stopping|stopping-times-and-optional-stopping]]"
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/06-uniform-integrability-and-unbounded-stopping|uniform-integrability-and-unbounded-stopping]]"
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/03-classifying-states|classifying-states]]"
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/06-absorption-and-first-step-analysis|absorption-and-first-step-analysis]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/04-reflection-principle-and-running-maximum|reflection-principle-and-running-maximum]]"
-tags:
-  - mathematics
-  - stochastic processes and calculus
-  - first-passage-and-hitting-times
----
-
 # Hitting times: when a walk first reaches a level, and why the wait can have infinite mean
 
-Stochastic processes and calculus → Random Walks and Filtrations → Waiting for a level → Hitting times
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Random Walks and Filtrations](../../../SYLLABUS.md#w11-s01) → Hitting times
 
 ---
 
@@ -52,7 +28,7 @@ One sample match from the seeded generator in the code (seed 7, the first match 
 
 ## The formula
 
-Notation first, in words. The score after n rounds is written $S_n$: Ana's total winnings in dollars, the simple random walk of [simple-random-walk](02-simple-random-walk.md). Each round it moves up one dollar with probability $p$ and down one dollar with probability $q = 1 - p$. The Greek letter tau, $\tau_a$, is the first round on which the score equals the level $a$. The return time $T$ is the first round, after round 0, on which the score is level again.
+Notation first, in words. The score after n rounds is written $S_n$: Ana's total winnings in dollars, the simple random walk of [Simple random walk](02-simple-random-walk.md). Each round it moves up one dollar with probability $p$ and down one dollar with probability $q = 1 - p$. The Greek letter tau, $\tau_a$, is the first round on which the score equals the level $a$. The return time $T$ is the first round, after round 0, on which the score is level again.
 
 $$\tau_a = \min\{\,n \ge 1 : S_n = a\,\}, \qquad T = \tau_0, \qquad \tau_a = \infty \text{ if the score never gets there.}$$
 
@@ -103,9 +79,9 @@ The binomial coefficient $\binom{2n}{n}$ counts the ways to choose which n of 2n
 
 ### Step 0: a hitting time is decided by the past, and the game restarts after it
 
-Watching round by round, anyone can say whether the level has been reached yet, without seeing future tosses. Such a time is a stopping time ([stopping-times-and-optional-stopping](../02-Martingales/03-stopping-times-and-optional-stopping.md)); the hitting time is its first example.
+Watching round by round, anyone can say whether the level has been reached yet, without seeing future tosses. Such a time is a stopping time ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)); the hitting time is its first example.
 
-The tosses after a hit are new coins, untouched by it, so the game restarts afresh at every hit. That fresh start turns "does it arrive" into a short equation. A temporary floor, moved further and further down, ties the endless game to the finite one solved in [gamblers-ruin](04-gamblers-ruin.md).
+The tosses after a hit are new coins, untouched by it, so the game restarts afresh at every hit. That fresh start turns "does it arrive" into a short equation. A temporary floor, moved further and further down, ties the endless game to the finite one solved in [Gambler's ruin](04-gamblers-ruin.md).
 
 ### Step 1: the chance of ever climbing one level solves a quadratic
 
@@ -126,7 +102,7 @@ Reaching +a is a climbs of one level in a row, so $P(\tau_a < \infty) = h^a$. At
 
 **Moving floor.** Let E(b) be the event that the score reaches +1 before −b. Steps are ±1, so to reach −(b + 1) the score must first touch −b; hence E(b) is contained in E(b + 1). A match with $\tau_1 = k$ has a lowest score on rounds 0 to k; any floor −b below that puts the match in E(b). So the union of the events E(b) is the event that $\tau_1$ is finite, and continuity of probability along an increasing sequence (wing 10) gives $P(\tau_1 < \infty) = \lim_b P(E(b))$.
 
-**The limit.** [gamblers-ruin](04-gamblers-ruin.md) gives P(E(b)) = b/(b + 1) when p = q, and $(1 - (q/p)^b)/(1 - (q/p)^{b+1})$ otherwise. Fair: the limit is 1. When p > q, q/p is below 1, its powers shrink to 0, and the limit is 1. When p < q, divide top and bottom by $(q/p)^{b+1}$: the limit is p/q. Then $P(\tau_a < \infty) = h^a$, by a fresh climbs in a row.
+**The limit.** [Gambler's ruin](04-gamblers-ruin.md) gives P(E(b)) = b/(b + 1) when p = q, and $(1 - (q/p)^b)/(1 - (q/p)^{b+1})$ otherwise. Fair: the limit is 1. When p > q, q/p is below 1, its powers shrink to 0, and the limit is 1. When p < q, divide top and bottom by $(q/p)^{b+1}$: the limit is p/q. Then $P(\tau_a < \infty) = h^a$, by a fresh climbs in a row.
 
 </details>
 
@@ -142,7 +118,7 @@ Inside walls at +b and −b, the fair score is level again before a wall with ch
 
 ### Step 3: the chance of still waiting after 2n rounds is the chance of a tie at 2n
 
-The reflection principle of [reflection-principle-for-walks](05-reflection-principle-for-walks.md) gives the law. Count the 2n-round matches in which Ana stays strictly ahead. Reflection turns the count into a telescoping sum, which collapses to half the ways to tie at round 2n. Adding the mirror case, Ben ahead, gives $\binom{2n}{n}$ of the $2^{2n}$ matches never level after the start:
+The reflection principle of [Reflection principle](05-reflection-principle-for-walks.md) gives the law. Count the 2n-round matches in which Ana stays strictly ahead. Reflection turns the count into a telescoping sum, which collapses to half the ways to tie at round 2n. Adding the mirror case, Ben ahead, gives $\binom{2n}{n}$ of the $2^{2n}$ matches never level after the start:
 
 $$P(T > 2n) = u_{2n}.$$
 
@@ -159,7 +135,7 @@ xychart-beta
     line [1.00, 0.25, 0.18, 0.14, 0.13, 0.11, 0.10, 0.10, 0.09, 0.08, 0.08]
 ```
 
-The line is the chance of no return yet, at every tenth round, to two places. It drops fast, then crawls: 0.25 at round 10, 0.08 at round 100. By [stirlings-approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md), $u_{2n}$ is close to one over the square root of π n: at round 1,000, so n = 500, that gives 0.025231 against the true 0.025225.
+The line is the chance of no return yet, at every tenth round, to two places. It drops fast, then crawls: 0.25 at round 10, 0.08 at round 100. By [Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md), $u_{2n}$ is close to one over the square root of π n: at round 1,000, so n = 500, that gives 0.025231 against the true 0.025225.
 
 <details>
 <summary>Detailed proof: the reflection count, and the first-return law</summary>
@@ -176,7 +152,7 @@ T is even, so $P(T = 2n) = P(T > 2n - 2) - P(T > 2n) = u_{2n-2} - u_{2n}$. With 
 
 ### Step 4: the average wait is infinite, by two roads
 
-**Road one: a floor only shortens the wait.** Reaching +1 or −b, whichever comes first, never takes longer than reaching +1. By [gamblers-ruin](04-gamblers-ruin.md), a fair game starting 1 below the top and b above the floor lasts 1 × b rounds on average. So the average wait for +1 is at least b, for every b, and $E[\tau_1] = \infty$. The return time is one round plus a wait of this kind, so $E[T] = \infty$ too.
+**Road one: a floor only shortens the wait.** Reaching +1 or −b, whichever comes first, never takes longer than reaching +1. By [Gambler's ruin](04-gamblers-ruin.md), a fair game starting 1 below the top and b above the floor lasts 1 × b rounds on average. So the average wait for +1 is at least b, for every b, and $E[\tau_1] = \infty$. The return time is one round plus a wait of this kind, so $E[T] = \infty$ too.
 
 The house example is b = 10: a gambler with 10 chips who stops at 0 or 11 reaches 11 with chance 0.909091 and plays 10 rounds on average. Without the floor the wait only grows.
 
@@ -691,7 +667,7 @@ The two outputs agree line for line. The simulation lands within about two stand
 > **Reading "probability 1" as "soon on average".** The fair score is level again for sure, half the time within 2 rounds, yet the average wait is infinite. Rare long waits carry the average: 1 match in 40 still waits after 1,000 rounds.
 >
 > - **Counting from round 0.** With n ≥ 0 in the definition the return time would be 0, since the score starts level.
-> - **"Wait until ahead" beats a fair game.** Stopping when Ana is first $1 ahead wins $1 for sure. The stopping time has no bound and needs unlimited credit; [stopping-times-and-optional-stopping](../02-Martingales/03-stopping-times-and-optional-stopping.md) shows where the fair-game theorem stops applying.
+> - **"Wait until ahead" beats a fair game.** Stopping when Ana is first $1 ahead wins $1 for sure. The stopping time has no bound and needs unlimited credit; [Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md) shows where the fair-game theorem stops applying.
 > - **Carrying fair answers to a tilted coin.** At p = 0.4 the chance of ever being $3 ahead is 0.296296, not 1.
 
 ---
@@ -700,9 +676,9 @@ The two outputs agree line for line. The simulation lands within about two stand
 
 - **Waiting to get back to even.** A position held "until it comes back" on a fair random walk gets there for sure in the model, after an infinite average wait and with no bound on the credit needed.
 - **Long leads in fair contests.** The chance of no tie in the first 100 rounds of a fair match is 0.079589, about 1 in 13.
-- **Default as a first passage.** Structural credit models call a firm in default the first time its assets hit a barrier: [black-cox-first-passage-default](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/05-black-cox-first-passage-default.md).
+- **Default as a first passage.** Structural credit models call a firm in default the first time its assets hit a barrier: [Black-Cox](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/05-black-cox-first-passage-default.md).
 - **Wandering particles.** A molecule hopping on a line or a flat grid returns for sure; on a three-dimensional grid it may never return (Pólya).
-- **Any Markov chain.** Recurrent and transient are the words for every chain: [classifying-states](../03-Markov%20Chains/03-classifying-states.md).
+- **Any Markov chain.** Recurrent and transient are the words for every chain: [Classifying states](../03-Markov%20Chains/03-classifying-states.md).
 
 > **Say it back**
 > A hitting time is the first round a walk stands on a chosen level; the return time is the first round back at the start. The chance of ever climbing one level solves a quadratic, and a floor moved away picks the root: 1 when fair, p/q when tilted away. The chance of ever returning is one minus the gap between p and q, so only the fair walk surely comes back. For it, the chance of still waiting after 2n rounds equals the chance of a tie at 2n, shrinking like one over the square root of n. That is too slow for a finite average: return is certain, and the mean wait is infinite.
@@ -711,16 +687,16 @@ The two outputs agree line for line. The simulation lands within about two stand
 
 ## What this builds on
 
-- [gamblers-ruin](04-gamblers-ruin.md): the chance of the top before the floor, and the average duration b × 1, which this card pushes to an infinite floor.
-- [reflection-principle-for-walks](05-reflection-principle-for-walks.md): the path swap that turns "never level" into "level at the end".
+- [Gambler's ruin](04-gamblers-ruin.md): the chance of the top before the floor, and the average duration b × 1, which this card pushes to an infinite floor.
+- [Reflection principle](05-reflection-principle-for-walks.md): the path swap that turns "never level" into "level at the end".
 
 ## Where this goes next
 
-- [stopping-times-and-optional-stopping](../02-Martingales/03-stopping-times-and-optional-stopping.md): the hitting time as the model stopping time, and "wait until ahead" as the unbounded counterexample.
-- [uniform-integrability-and-unbounded-stopping](../02-Martingales/06-uniform-integrability-and-unbounded-stopping.md): the extra condition under which an unbounded hitting time is safe to stop at.
-- [classifying-states](../03-Markov%20Chains/03-classifying-states.md): recurrence and transience for any chain.
-- [absorption-and-first-step-analysis](../03-Markov%20Chains/06-absorption-and-first-step-analysis.md): Step 1's first-step equation, solved on any finite chain.
-- [reflection-principle-and-running-maximum](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the same hitting times for the walk seen from far away, Brownian motion.
+- [Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md): the hitting time as the model stopping time, and "wait until ahead" as the unbounded counterexample.
+- [Stopping without a bound](../02-Martingales/06-uniform-integrability-and-unbounded-stopping.md): the extra condition under which an unbounded hitting time is safe to stop at.
+- [Classifying states](../03-Markov%20Chains/03-classifying-states.md): recurrence and transience for any chain.
+- [Absorption](../03-Markov%20Chains/06-absorption-and-first-step-analysis.md): Step 1's first-step equation, solved on any finite chain.
+- [Reflection principle](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the same hitting times for the walk seen from far away, Brownian motion.
 
 What this card leaves open: when stopping a fair game at such an unbounded time keeps it fair.
 

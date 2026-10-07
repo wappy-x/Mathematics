@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Options on commodity futures and spreads
-topic: Reading correlation off a crack-spread quote
-item: Correlation from a spread option
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/05-spread-option-greeks|spread-option-greeks]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/06-intermediate-value-theorem|intermediate-value-theorem]]"
-next: []
-tags: [mathematics, financial mathematics, implied-correlation-from-a-spread-option]
----
-
 # Correlation from a spread option: the market's number for how two prices move together, and when no number fits
 
-Financial mathematics → Options on commodity futures and spreads → Reading correlation off a crack-spread quote → Correlation from a spread option
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Options on commodity futures and spreads](../../../SYLLABUS.md#w12-s26) → Correlation from a spread option
 
 ---
 
@@ -51,7 +35,7 @@ Falling curve: the option's price at each correlation. Middle flat line: the quo
 
 ## The formula
 
-The option is priced by Margrabe's formula, taught on [margrabe-and-kirk-spread-options](04-margrabe-and-kirk-spread-options.md). It is Black's futures-option formula with gasoline as the asset, crude as the strike, and one volatility for the gap:
+The option is priced by Margrabe's formula, taught on [Spread options](04-margrabe-and-kirk-spread-options.md). It is Black's futures-option formula with gasoline as the asset, crude as the strike, and one volatility for the gap:
 
 $$C(\rho) = D\,\big[F_1\,N(d_1) - F_2\,N(d_2)\big], \qquad \sigma(\rho)^2 = \sigma_1^2 + \sigma_2^2 - 2\rho\,\sigma_1\sigma_2 .$$
 
@@ -99,7 +83,7 @@ $$\hat\rho = \frac{\sum_i (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_i (x_i - \bar
 
 ### Step 0: a price that falls without gaps meets each level once
 
-As the correlation dial turns from −1 to +1, the option's price falls steadily, with no jumps and no flat stretches. It starts at a ceiling and ends at a floor. Every quote between is met exactly once. That is the whole reason a spread price can be read as a correlation. It is the argument of [intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md), applied to a function that only goes down.
+As the correlation dial turns from −1 to +1, the option's price falls steadily, with no jumps and no flat stretches. It starts at a ceiling and ends at a floor. Every quote between is met exactly once. That is the whole reason a spread price can be read as a correlation. It is the argument of [Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md), applied to a function that only goes down.
 
 ### Step 1: correlation reaches the price only through the gap's volatility
 
@@ -107,7 +91,7 @@ The option pays gasoline minus crude when positive. Divide by crude: it pays cru
 
 $$\sigma^2 = \sigma_1^2 + \sigma_2^2 - 2\rho\,\sigma_1\sigma_2.$$
 
-That is the second equation of the formula. Correlation appears nowhere else. When the two move together ($\rho$ near 1), their gap barely moves; when they move against each other ($\rho$ near −1), the gap swings with both at once. The proof that the price is Black's formula on this ratio, by counting in crude barrels instead of dollars, is on [margrabe-and-kirk-spread-options](04-margrabe-and-kirk-spread-options.md).
+That is the second equation of the formula. Correlation appears nowhere else. When the two move together ($\rho$ near 1), their gap barely moves; when they move against each other ($\rho$ near −1), the gap swings with both at once. The proof that the price is Black's formula on this ratio, by counting in crude barrels instead of dollars, is on [Spread options](04-margrabe-and-kirk-spread-options.md).
 
 ### Step 2: the floor and the ceiling
 
@@ -119,7 +103,7 @@ A quote of 20 is not an arbitrage. The model-free limits are wider: the option i
 
 ### Step 3: the price always falls, so the answer is unique
 
-Chain two slopes. The price rises with $\sigma$: its slope in $\sigma$ is vega, $D F_1 \varphi(d_1)\sqrt T$, positive. The gap's volatility falls with $\rho$: its slope is $-\sigma_1\sigma_2/\sigma$, negative. Multiply: the correlation vega, $\partial C/\partial \rho = -D F_1 \varphi(d_1)\sqrt T\,\sigma_1\sigma_2/\sigma$, is negative at every correlation. At 0.50 it is −6.063996 dollars per unit of correlation, as [spread-option-greeks](05-spread-option-greeks.md) computes.
+Chain two slopes. The price rises with $\sigma$: its slope in $\sigma$ is vega, $D F_1 \varphi(d_1)\sqrt T$, positive. The gap's volatility falls with $\rho$: its slope is $-\sigma_1\sigma_2/\sigma$, negative. Multiply: the correlation vega, $\partial C/\partial \rho = -D F_1 \varphi(d_1)\sqrt T\,\sigma_1\sigma_2/\sigma$, is negative at every correlation. At 0.50 it is −6.063996 dollars per unit of correlation, as [Greeks of a spread option](05-spread-option-greeks.md) computes.
 
 <details>
 <summary>Detailed proof: existence, uniqueness and the boundary cases</summary>
@@ -633,10 +617,10 @@ The two outputs agree line for line, including the simulation and the simulated 
 ## Where you meet it in real life
 
 - **Refinery hedging.** A refiner that buys crack-spread options pays for correlation risk. When crude and products decouple, in an outage or a sudden export rule, the gap widens and the option pays.
-- **Spark spreads.** The gap between power and gas prices is the same problem with harder legs, since power cannot be stored: [electricity-and-the-spark-spread](07-electricity-and-the-spark-spread.md).
-- **Dealer risk systems.** A bank's commodity book stores implied correlations by pair and month, beside the vols from [commodity-implied-vol-and-the-call-skew](03-commodity-implied-vol-and-the-call-skew.md). The correlation vega from [spread-option-greeks](05-spread-option-greeks.md) turns a move in correlation into dollars.
+- **Spark spreads.** The gap between power and gas prices is the same problem with harder legs, since power cannot be stored: [Power that cannot be stored](07-electricity-and-the-spark-spread.md).
+- **Dealer risk systems.** A bank's commodity book stores implied correlations by pair and month, beside the vols from [Implied vol on a futures option and the commodity smile](03-commodity-implied-vol-and-the-call-skew.md). The correlation vega from [Greeks of a spread option](05-spread-option-greeks.md) turns a move in correlation into dollars.
 - **Correlation trading.** A desk that believes realised correlation will stay near 0.67 while the market implies 0.50 sells the spread option and hedges both legs. It earns the difference if history holds, and loses when the legs decouple.
-- **Other markets.** The same inversion reads correlation out of currency cross rates and out of quanto prices, as on [implied-correlation-from-a-quanto](../24-Quantos%20and%20composites/05-implied-correlation-from-a-quanto.md).
+- **Other markets.** The same inversion reads correlation out of currency cross rates and out of quanto prices, as on [Correlation from a quanto price](../24-Quantos%20and%20composites/05-implied-correlation-from-a-quanto.md).
 
 > **Say it back**
 > A spread option's price depends on correlation only through the volatility of the gap, which falls as correlation rises. So the price falls steadily from its value at correlation −1 to its value at +1, and any quote between has exactly one implied correlation; the house crack at 13.15 gives 0.50. A quote above the −1 price, such as 20, fits no correlation at these vols. The answer can be found by halving, by Newton, or by reading the gap's vol first and undoing the variance formula. It is only as good as the two vols beside it, and a short history's realised correlation carries a wide band.
@@ -645,12 +629,12 @@ The two outputs agree line for line, including the simulation and the simulated 
 
 ## What this builds on
 
-- [spread-option-greeks](05-spread-option-greeks.md): the correlation vega, negative everywhere, which makes the answer unique and drives Newton.
-- [intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): a continuous function that starts above the quote and ends below it must cross it; that is existence.
+- [Greeks of a spread option](05-spread-option-greeks.md): the correlation vega, negative everywhere, which makes the answer unique and drives Newton.
+- [Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): a continuous function that starts above the quote and ends below it must cross it; that is existence.
 
 ## Where this goes next
 
-- [electricity-and-the-spark-spread](07-electricity-and-the-spark-spread.md): the spread between power and the gas that makes it, where one leg cannot be stored and its vol and correlation behave differently.
+- [Power that cannot be stored](07-electricity-and-the-spark-spread.md): the spread between power and the gas that makes it, where one leg cannot be stored and its vol and correlation behave differently.
 
 This card reads one correlation from one quote with the vols held fixed; what happens to a spread when one leg's price spikes with no storage to smooth it is the question the spark-spread card takes up.
 

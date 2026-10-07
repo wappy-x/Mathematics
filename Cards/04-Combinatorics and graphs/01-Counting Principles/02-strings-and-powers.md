@@ -1,33 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Counting Principles
-topic: Filling slots
-item: Strings with repetition
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/01-rules-of-sum-and-product|rules-of-sum-and-product]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/01-exponents-and-powers|exponents-and-powers]]"
-  - "[[Cards/01-Foundations/07-Sets/02-subsets-and-power-set|subsets-and-power-set]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/02-functions|functions]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/04-ordered-picks|ordered-picks]]"
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/06-complementary-counting|complementary-counting]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/05-bijection-and-double-counting|bijection-and-double-counting]]"
-  - "[[Cards/04-Combinatorics and graphs/04-Inclusion-Exclusion and Pigeonhole/03-counting-surjections|counting-surjections]]"
-  - "[[Cards/04-Combinatorics and graphs/08-Partitions/06-twelvefold-way|twelvefold-way]]"
-  - "[[Cards/04-Combinatorics and graphs/11-Tours - Euler and Hamilton/05-de-bruijn-sequences|de-bruijn-sequences]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - strings-and-powers
----
-
 # Strings with repetition: when every position may reuse the options, the count is a power
 
-Combinatorics and graphs → Counting Principles → Filling slots → Strings with repetition
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Counting Principles](../../../SYLLABUS.md#w04-s01) → Strings with repetition
 
 ---
 
@@ -45,7 +18,7 @@ The same number multiplied in once per position is exactly what a power is.
 
 **When each of k positions is filled from the same n options and repeats are allowed, the number of strings is n multiplied by itself k times: n^k.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works; it is the rule of product ([rules-of-sum-and-product](01-rules-of-sum-and-product.md)) applied once per position.
+**What kind of fact this is:** a theorem, proved on this card in Why it works; it is the rule of product ([The rules of sum and product](01-rules-of-sum-and-product.md)) applied once per position.
 
 ### The picture: a two-position code over three digits
 
@@ -65,7 +38,7 @@ Three branches, then three again from each: 3 × 3 = 9 endings, which are the ni
 
 ## The formula
 
-A raised number counts multiplies: 10^4 means four 10s multiplied together ([exponents-and-powers](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)). The options are the base; the positions say how many multiplies.
+A raised number counts multiplies: 10^4 means four 10s multiplied together ([Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)). The options are the base; the positions say how many multiplies.
 
 $$n^k \;=\; \underbrace{n \times n \times \cdots \times n}_{k \text{ positions}}$$
 
@@ -80,9 +53,9 @@ $$n^k \;=\; \underbrace{n \times n \times \cdots \times n}_{k \text{ positions}}
 ### When it holds
 
 - **The same n options at every position.** Where positions differ the count is a product but not a single power: the plate is 26^3 × 10^3 = 17,576,000, not 36^6 = 2,176,782,336.
-- **Repeats allowed.** Ban them and each pick uses an option up, so the factors fall: 10 × 9 × 8 × 7 = 5,040 PINs with no digit twice. That count is [ordered-picks](04-ordered-picks.md).
+- **Repeats allowed.** Ban them and each pick uses an option up, so the factors fall: 10 × 9 × 8 × 7 = 5,040 PINs with no digit twice. That count is [Ordered picks](04-ordered-picks.md).
 - **The positions carry an identity.** 1234 and 4321 are two strings. Pour the entries into an unlabelled bag and strings differing only by order collapse into one.
-- **Every string is allowed.** A bank forbidding 0000 counts something smaller; the ban is subtracted afterwards ([complementary-counting](06-complementary-counting.md)).
+- **Every string is allowed.** A bank forbidding 0000 counts something smaller; the ban is subtracted afterwards ([Counting the complement](06-complementary-counting.md)).
 
 ---
 
@@ -94,7 +67,7 @@ Spending the digit 7 on the first position does not take it off the menu. Whatev
 
 ### Step 1: one position at a time multiplies
 
-The rule of product says a choice made in stages, each stage offering a fixed number of options whatever came before, has as many outcomes as those numbers multiplied together ([rules-of-sum-and-product](01-rules-of-sum-and-product.md)). Every stage here offers the same n.
+The rule of product says a choice made in stages, each stage offering a fixed number of options whatever came before, has as many outcomes as those numbers multiplied together ([The rules of sum and product](01-rules-of-sum-and-product.md)). Every stage here offers the same n.
 
 So the PIN's stages give 10 × 10 = 100, then 1,000, then 10,000.
 
@@ -117,19 +90,19 @@ Fix a set of n options and write S(k) for the strings of length k drawn from it.
 
 ### Step 3: a string is a function
 
-A function hands each input exactly one output ([functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md)). Take the k positions as the inputs and the n options as the outputs. A string is then a rule giving each position one option, which is a function; and every such function writes out as a string, its output at position 1, then at position 2, and so on.
+A function hands each input exactly one output ([Functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md)). Take the k positions as the inputs and the n options as the outputs. A string is then a rule giving each position one option, which is a function; and every such function writes out as a string, its output at position 1, then at position 2, and so on.
 
 The two collections are one collection described twice, so counting either counts both. **A set of k members has n^k functions into a set of n members.**
 
-Nothing extra is demanded: two positions may receive the same option, which is repetition, and an option may go unused. Insisting every option be used is a harder count with its own card ([counting-surjections](../04-Inclusion-Exclusion%20and%20Pigeonhole/03-counting-surjections.md)).
+Nothing extra is demanded: two positions may receive the same option, which is repetition, and an option may go unused. Insisting every option be used is a harder count with its own card ([Onto functions](../04-Inclusion-Exclusion%20and%20Pigeonhole/03-counting-surjections.md)).
 
 ### Step 4: subsets are strings of yes and no
 
 A 20-player squad must name a travelling party. Each player is in or out, and the ruling on the goalkeeper uses up no ruling on anyone else. Walk the squad in a fixed order and write "in" or "out" for each: a string of length 20 over 2 options. So 2^20 = 1,048,576 possible parties, the empty one and the whole squad included.
 
-That is the count wing 01 reaches for the subsets of a set ([subsets-and-power-set](../../01-Foundations/07-Sets/02-subsets-and-power-set.md)): every subset is a yes-or-no string, and every yes-or-no string a subset.
+That is the count wing 01 reaches for the subsets of a set ([Subsets and the power set](../../01-Foundations/07-Sets/02-subsets-and-power-set.md)): every subset is a yes-or-no string, and every yes-or-no string a subset.
 
-A second road reaches the same total without multiplying. Split the parties by size: nobody, one player, two, out to twenty. Each count is the sum of two from the row above, since a party of a given size either takes the newest player or leaves him behind, so the row is built by addition alone. Totalled for 20 players it lands on 1,048,576. Splitting by size is [n-choose-k](05-n-choose-k.md).
+A second road reaches the same total without multiplying. Split the parties by size: nobody, one player, two, out to twenty. Each count is the sum of two from the row above, since a party of a given size either takes the newest player or leaves him behind, so the row is built by addition alone. Totalled for 20 players it lands on 1,048,576. Splitting by size is [Combinations, n choose k](05-n-choose-k.md).
 
 ---
 
@@ -377,7 +350,7 @@ The two outputs match line for line.
 > **Swapping the options and the positions.** The PIN count is 10^4 = 10,000, not 4^10 = 1,048,576 — over a hundredfold out, and equal to the squad's total only by accident, since 4^10 and 2^20 are both twenty 2s multiplied. The base is what one position may hold; the raised number is how many positions there are. The menu of ten digits is used again at each of four positions, so ten is the base.
 >
 > - **Adding the options.** 10 + 10 + 10 + 10 = 40 counts digit choices, not PINs. Stages of one choice multiply; alternatives that rule each other out add.
-> - **Banning repeats without meaning to.** 10 × 9 × 8 × 7 = 5,040 answers a different question: PINs whose four digits all differ ([ordered-picks](04-ordered-picks.md)).
+> - **Banning repeats without meaning to.** 10 × 9 × 8 × 7 = 5,040 answers a different question: PINs whose four digits all differ ([Ordered picks](04-ordered-picks.md)).
 > - **Melting two alphabets into one.** Six positions over 36 symbols gives 36^6 = 2,176,782,336, counting plates like A1B2C3. Letters and digits are counted apart, then multiplied: 17,576,000.
 > - **Forgetting the empty string.** n^0 is 1, not 0: there is one way to fill no positions, which is why the empty travelling party is one of the 1,048,576.
 
@@ -397,19 +370,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [rules-of-sum-and-product](01-rules-of-sum-and-product.md): the product rule this card applies once per position.
-- [exponents-and-powers](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): what the raised number means, and why n^0 is 1.
-- [subsets-and-power-set](../../01-Foundations/07-Sets/02-subsets-and-power-set.md): the 2^n count of subsets, re-read as yes-or-no strings.
-- [functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md): one output for every input, which is what a string is.
+- [The rules of sum and product](01-rules-of-sum-and-product.md): the product rule this card applies once per position.
+- [Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): what the raised number means, and why n^0 is 1.
+- [Subsets and the power set](../../01-Foundations/07-Sets/02-subsets-and-power-set.md): the 2^n count of subsets, re-read as yes-or-no strings.
+- [Functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md): one output for every input, which is what a string is.
 
 ## Where this goes next
 
-- [ordered-picks](04-ordered-picks.md): when each pick uses an option up, so the factors fall.
-- [complementary-counting](06-complementary-counting.md): counting the unwanted strings and subtracting them.
-- [bijection-and-double-counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md): matching collections to move a count, as Step 3 does.
-- [counting-surjections](../04-Inclusion-Exclusion%20and%20Pigeonhole/03-counting-surjections.md): the strings that leave no option unused.
-- [twelvefold-way](../08-Partitions/06-twelvefold-way.md): which rule applies when positions or options are interchangeable.
-- [de-bruijn-sequences](../11-Tours%20-%20Euler%20and%20Hamilton/05-de-bruijn-sequences.md): one cyclic string carrying every string of a length exactly once.
+- [Ordered picks](04-ordered-picks.md): when each pick uses an option up, so the factors fall.
+- [Counting the complement](06-complementary-counting.md): counting the unwanted strings and subtracting them.
+- [Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md): matching collections to move a count, as Step 3 does.
+- [Onto functions](../04-Inclusion-Exclusion%20and%20Pigeonhole/03-counting-surjections.md): the strings that leave no option unused.
+- [The twelvefold way](../08-Partitions/06-twelvefold-way.md): which rule applies when positions or options are interchangeable.
+- [De Bruijn sequences](../11-Tours%20-%20Euler%20and%20Hamilton/05-de-bruijn-sequences.md): one cyclic string carrying every string of a length exactly once.
 
 n^k counts every string there is, repetitive and wasteful alike, and each card above answers the same next question: how to count only the strings that meet a condition.
 

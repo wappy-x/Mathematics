@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Counterparty Risk and CVA
-topic: Own-default adjustment
-item: DVA
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/03-cva|cva]]"
-next:
-  - "[[Cards/12-Financial mathematics/47-Collateral, Funding and the Rest of the XVAs/02-fva|fva]]"
-tags: [mathematics, financial mathematics, dva-and-bilateral-cva]
----
-
 # DVA: the mirror gain from your own default, and the bilateral adjustment that nets the two
 
-Financial mathematics → Counterparty Risk and CVA → Own-default adjustment → DVA
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Counterparty Risk and CVA](../../../SYLLABUS.md#w12-s46) → DVA
 
 ---
 
@@ -80,15 +64,15 @@ The exposures are averages in the pretend world where every asset grows at the r
 
 $$\text{EPE}(t) = \mathbb{E}\big[D(t)\,V_t^+\big], \qquad \text{ENE}(t) = \mathbb{E}\big[D(t)\,V_t^-\big].$$
 
-The weight $\lambda_C e^{-(\lambda_C+\lambda_O)t}$ is the chance, per unit of time, that the counterparty defaults at date t while the firm is still alive. Set $\lambda_O = 0$ in it and the CVA is the unilateral one of [cva](03-cva.md); set $\lambda_C = 0$ in the DVA's weight and it is the unilateral DVA.
+The weight $\lambda_C e^{-(\lambda_C+\lambda_O)t}$ is the chance, per unit of time, that the counterparty defaults at date t while the firm is still alive. Set $\lambda_O = 0$ in it and the CVA is the unilateral one of [CVA](03-cva.md); set $\lambda_C = 0$ in the DVA's weight and it is the unilateral DVA.
 
 ### When it holds
 
-- **Defaults independent of Acme's price.** The hazard is the same whatever the market does. If Northwind is likelier to fail exactly when it owes the most, the CVA is too low: [wrong-way-risk](05-wrong-way-risk.md).
+- **Defaults independent of Acme's price.** The hazard is the same whatever the market does. If Northwind is likelier to fail exactly when it owes the most, the CVA is too low: [Wrong-way risk](05-wrong-way-risk.md).
 - **Close-out at the riskless value.** At a default the trade is settled at $V_t$ with no credit adjustment in it. Real master agreements let the survivor claim a replacement cost, which can include its own adjustments; the numbers then shift, most for long trades between weak names.
 - **First default ends the trade.** The second party's later default does nothing, because nothing is left to owe. Drop the survival factor and the scenarios where both default before T are counted twice.
 - **Flat hazards and known recoveries.** A hazard curve replaces $\lambda e^{-\lambda t}$ with the curve's default density; a random recovery is replaced by its average when it is independent of everything else.
-- **One uncollateralised trade.** Netting across trades and posted collateral cut both EPE and ENE: [counterparty-exposure-and-netting](01-counterparty-exposure-and-netting.md).
+- **One uncollateralised trade.** Netting across trades and posted collateral cut both EPE and ENE: [Counterparty exposure](01-counterparty-exposure-and-netting.md).
 
 ---
 
@@ -691,9 +675,9 @@ The two outputs are identical line for line. Both use the same random number str
 - **Dealer-to-dealer pricing.** Two banks trading an uncollateralised swap each compute CVA and DVA; the price they settle on sits near the bilateral figure, and the weaker credit pays.
 - **Quarterly results.** Banks report own-credit adjustments as a separate line so that readers can see how much of a period's profit came from their own credit spreads moving.
 - **Capital.** Basel III takes DVA on derivatives out of common equity, which is why capital and accounting figures for the same book differ.
-- **Funding.** The gain from one's own default overlaps with the benefit of cheap funding from owing money; separating the two is the job of [fva](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md).
-- **Hedging desks.** The sensitivity of CVA and DVA to each party's credit spread is what an xVA desk (the desk that manages all these adjustments) trades against: [cva-risk-numbers-and-hedging](06-cva-risk-numbers-and-hedging.md).
-- **Exposure profiles.** The EPE and ENE curves fed into the formula come from [expected-exposure-profiles](02-expected-exposure-profiles.md).
+- **Funding.** The gain from one's own default overlaps with the benefit of cheap funding from owing money; separating the two is the job of [FVA](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md).
+- **Hedging desks.** The sensitivity of CVA and DVA to each party's credit spread is what an xVA desk (the desk that manages all these adjustments) trades against: [CVA risk numbers](06-cva-risk-numbers-and-hedging.md).
+- **Exposure profiles.** The EPE and ENE curves fed into the formula come from [Expected exposure over time](02-expected-exposure-profiles.md).
 
 > **Say it back**
 > A default moves money from the creditor to the debtor, so one firm's CVA is the other's DVA. DVA is the expected saving from not paying in full what one owes, priced like CVA from the negative exposure and one's own hazard. Only the first default counts, so each adjustment is weighted by the other party's survival. The bilateral adjustment, CVA minus DVA, gives both desks the same price. A firm whose credit worsens books a DVA gain it can only collect by defaulting, so capital rules strip it out.
@@ -702,14 +686,14 @@ The two outputs are identical line for line. Both use the same random number str
 
 ## What this builds on
 
-- [cva](03-cva.md): the unilateral charge, loss times default density times exposure, which this card mirrors and nets.
-- [hazard-rate-and-survival-probability](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): the hazard rate and the survival curve $e^{-\lambda t}$ behind every weight here.
-- [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the $9.23 call and the pretend-world average used for every exposure.
+- [CVA](03-cva.md): the unilateral charge, loss times default density times exposure, which this card mirrors and nets.
+- [The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): the hazard rate and the survival curve $e^{-\lambda t}$ behind every weight here.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the $9.23 call and the pretend-world average used for every exposure.
 
 ## Where this goes next
 
-- [fva](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md): the cost and benefit of funding an uncollateralised trade, and how it overlaps with DVA.
-- [wrong-way-risk](05-wrong-way-risk.md): what happens when the independence assumed here fails.
+- [FVA](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md): the cost and benefit of funding an uncollateralised trade, and how it overlaps with DVA.
+- [Wrong-way risk](05-wrong-way-risk.md): what happens when the independence assumed here fails.
 
 DVA is a gain that is not cash, which leaves the question of what an unsecured trade really costs to carry: the answer is the funding adjustment, FVA.
 

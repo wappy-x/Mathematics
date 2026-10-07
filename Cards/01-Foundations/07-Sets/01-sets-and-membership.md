@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Sets
-topic: Membership
-item: Sets and membership
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/05-Logic/04-quantifiers|quantifiers]]"
-next:
-  - "[[Cards/01-Foundations/07-Sets/02-subsets-and-power-set|subsets-and-power-set]]"
-  - "[[Cards/01-Foundations/07-Sets/06-russells-paradox|russells-paradox]]"
-tags:
-  - mathematics
-  - foundations
-  - sets-and-membership
----
-
 # Sets: a collection defined only by what belongs, with the empty set and set-builder shorthand
 
-Foundations → Sets → Membership → Sets and membership
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sets](../../../SYLLABUS.md#w01-s07) → Sets and membership
 
 ---
 
@@ -85,7 +65,7 @@ That is all a set ever is. No order: you never asked who came first. No copies: 
 
 Compare **{Ana, Cleo, Eli}** with the scrambled spelling **{Eli, Ana, Cleo, Ana}**. Run all five office names past both. Ana: on both. Ben: neither. Cleo: both. Dev: neither. Eli: both.
 
-Nothing could tell the two apart. One set, three members, not four. The rule has a name: **extensionality** — a set is fixed by its extension, meaning who is in it. The test is "for every name, on one exactly when on the other", and that "for every" is the for-all **quantifier** — the word for a claim that covers every case — from [quantifiers](../05-Logic/04-quantifiers.md).
+Nothing could tell the two apart. One set, three members, not four. The rule has a name: **extensionality** — a set is fixed by its extension, meaning who is in it. The test is "for every name, on one exactly when on the other", and that "for every" is the for-all **quantifier** — the word for a claim that covers every case — from [Quantifiers](../05-Logic/04-quantifiers.md).
 
 ### The list with nobody on it
 
@@ -263,7 +243,7 @@ The two outputs match.
 >
 > - Counting a repeated name as a second guest: {Eli, Ana, Cleo, Ana} has 3 members, not 4.
 > - Reading the empty set as "no set". It is one particular set, and there is only one.
-> - Confusing "on the list" with "part of the list". Ana is on the guest list. {Ana} is not on the guest list — it is a one-name list you could cut out of it. Two different relations; the second one is [subsets-and-power-set](02-subsets-and-power-set.md).
+> - Confusing "on the list" with "part of the list". Ana is on the guest list. {Ana} is not on the guest list — it is a one-name list you could cut out of it. Two different relations; the second one is [Subsets and the power set](02-subsets-and-power-set.md).
 
 ---
 
@@ -280,12 +260,12 @@ The two outputs match.
 
 ## What this builds on
 
-- [quantifiers](../05-Logic/04-quantifiers.md): "for every" and "there is". Two sets are equal when, for every candidate, being on one matches being on the other.
+- [Quantifiers](../05-Logic/04-quantifiers.md): "for every" and "there is". Two sets are equal when, for every candidate, being on one matches being on the other.
 
 ## Where this goes next
 
-- [subsets-and-power-set](02-subsets-and-power-set.md): a whole set sitting inside another, and how many ways to pick some members.
-- [russells-paradox](06-russells-paradox.md): what goes wrong when a rule picks with no fence around what it picks from.
+- [Subsets and the power set](02-subsets-and-power-set.md): a whole set sitting inside another, and how many ways to pick some members.
+- [Russell's paradox](06-russells-paradox.md): what goes wrong when a rule picks with no fence around what it picks from.
 
 ---
 

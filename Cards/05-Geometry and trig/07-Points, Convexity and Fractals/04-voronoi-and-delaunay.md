@@ -1,22 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Points, Convexity and Fractals
-topic: Dividing a map among sites
-item: Nearest-neighbour maps
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/07-Points, Convexity and Fractals/02-convex-sets-and-convex-hulls|convex-sets-and-convex-hulls]]"
-next:
-  - "[[Cards/17-Topology/06-Topological Data Analysis/02-vietoris-rips-and-cech-complexes|vietoris-rips-and-cech-complexes]]"
-tags: [mathematics, geometry and trig, voronoi-and-delaunay]
----
-
 # Nearest-neighbour maps: Voronoi cells and the Delaunay triangulation behind them
 
-Geometry and trig → Points, Convexity and Fractals → Dividing a map among sites → Nearest-neighbour maps
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Points, Convexity and Fractals](../../../SYLLABUS.md#w05-s07) → Nearest-neighbour maps
 
 ---
 
@@ -86,7 +70,7 @@ A (1, 3) and B (9, 3) are level, so the spots equally far from both lie on x = 5
 
 ### Step 1: a cell is convex
 
-The spots at least as close to P as to Q fill one side of that line, a **half-plane**. P's cell is what all its half-planes share. Half-planes are convex (the segment between two of their points stays inside), and so is what convex sets share ([convex-sets-and-convex-hulls](02-convex-sets-and-convex-hulls.md)). So every cell is convex, with straight sides.
+The spots at least as close to P as to Q fill one side of that line, a **half-plane**. P's cell is what all its half-planes share. Half-planes are convex (the segment between two of their points stays inside), and so is what convex sets share ([Convex sets](02-convex-sets-and-convex-hulls.md)). So every cell is convex, with straight sides.
 
 A cell is open-ended exactly when its hospital is a hull corner. E sits inside the hull, and far enough out in any direction one of A, B, C, D is closer, so E's cell closes.
 
@@ -380,7 +364,7 @@ The outputs match line for line. Counted areas miss shoelace areas by up to 0.10
 
 - **Ambulance and fire-station catchments.** Planners start from nearest-station cells, then check corners and boundary points, where distances peak.
 - **Terrain and engineering meshes.** Spot heights are joined into triangles; Delaunay's choice makes the smallest angle as large as possible, avoiding long thin triangles.
-- **Nearest-neighbour lookup.** Labelling a data point by its nearest known example assigns it by cell. Which cell holds a house is a point-in-polygon test ([point-in-polygon-and-segment-tests](03-point-in-polygon-and-segment-tests.md)); a cell's area is the shoelace formula ([polygon-area-and-orientation](01-polygon-area-and-orientation.md)).
+- **Nearest-neighbour lookup.** Labelling a data point by its nearest known example assigns it by cell. Which cell holds a house is a point-in-polygon test ([Inside or outside](03-point-in-polygon-and-segment-tests.md)); a cell's area is the shoelace formula ([Shoelace formula](01-polygon-area-and-orientation.md)).
 
 > **Say it back**
 > Shading each spot by its nearest hospital splits a map into convex cells. Each edge lies on the perpendicular bisector of two hospitals. A spot equally far from three is a corner exactly when their circle has no hospital inside. Joining hospitals whose cells touch gives the Delaunay triangles, one per corner: 2n − 2 − h of them.
@@ -389,11 +373,11 @@ The outputs match line for line. Counted areas miss shoelace areas by up to 0.10
 
 ## What this builds on
 
-- [convex-sets-and-convex-hulls](02-convex-sets-and-convex-hulls.md): why cells are convex, and which hospitals get open-ended cells.
+- [Convex sets](02-convex-sets-and-convex-hulls.md): why cells are convex, and which hospitals get open-ended cells.
 
 ## Where this goes next
 
-- vietoris-rips-and-cech-complexes: grow a disc round each point and join points whose discs meet.
+- Vietoris-Rips, Cech and alpha complexes: grow a disc round each point and join points whose discs meet.
 
 The map answers who is nearest; what shape a cloud of points has, seen at every scale at once, is the question a later card takes up.
 

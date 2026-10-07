@@ -1,24 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Poisson and Jump Processes
-topic: Chains that jump at random times
-item: Continuous-time chains
-kind: model
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/01-poisson-process|poisson-process]]"
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/04-stationary-distributions|stationary-distributions]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/01-from-one-equation-to-a-system|from-one-equation-to-a-system]]"
-next:
-  - "[[Cards/14-Applied and computational/05-Operations Research/07-queueing-theory-and-littles-law|queueing-theory-and-littles-law]]"
-tags: [mathematics, stochastic processes and calculus, continuous-time-markov-chains-and-queues]
----
-
 # Continuous-time chains: rates instead of probabilities, and the M/M/1 queue
 
-Stochastic processes and calculus → Poisson and Jump Processes → Chains that jump at random times → Continuous-time chains
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Poisson and Jump Processes](../../../SYLLABUS.md#w11-s04) → Continuous-time chains
 
 ---
 
@@ -52,13 +34,13 @@ Bars: the exact long-run share of time with n people in the system, per 100, fro
 
 ## The formula
 
-Notation first, in words. The number of people in the system at time t, counted in hours, is $X_t$, the value of the process at time t ([processes-and-paths](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md)). The **rate matrix** of a continuous-time chain, also called its generator (the Q-matrix in Norris), written $G$ in this wing (the letter Q is kept for a second probability measure), is a square table with one row and one column per state. Its entry $g_{ij}$, for two different states $i$ and $j$, is the rate of jumping from $i$ to $j$: in a short time $h$, the chance of that jump is about $g_{ij}\,h$, with an error that shrinks faster than $h$. Each diagonal entry is minus the total rate of leaving, so every row adds to 0:
+Notation first, in words. The number of people in the system at time t, counted in hours, is $X_t$, the value of the process at time t ([Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md)). The **rate matrix** of a continuous-time chain, also called its generator (the Q-matrix in Norris), written $G$ in this wing (the letter Q is kept for a second probability measure), is a square table with one row and one column per state. Its entry $g_{ij}$, for two different states $i$ and $j$, is the rate of jumping from $i$ to $j$: in a short time $h$, the chance of that jump is about $g_{ij}\,h$, with an error that shrinks faster than $h$. Each diagonal entry is minus the total rate of leaving, so every row adds to 0:
 
 $$g_{ij} \ge 0 \ (i \ne j), \qquad g_{ii} = -q_i, \qquad q_i = \sum_{j \ne i} g_{ij}.$$
 
 **Read it aloud:** off the diagonal, how fast each jump happens; on the diagonal, minus how fast the chain leaves where it is.
 
-The chances at time t sit in a row $p(t)$, with entry $p_i(t)$ the chance of being in state $i$. They obey the **forward equations**, one linear differential equation for the whole row ([from-one-equation-to-a-system](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md)):
+The chances at time t sit in a row $p(t)$, with entry $p_i(t)$ the chance of being in state $i$. They obey the **forward equations**, one linear differential equation for the whole row ([From one equation to a system](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md)):
 
 $$\frac{d}{dt}\,p(t) = p(t)\,G, \qquad p(t) = p(0)\,e^{tG}.$$
 
@@ -99,7 +81,7 @@ Each state is a number of people. Every arrow to the right is an arrival, at rat
 
 ### When it holds
 
-- **Memoryless gaps.** The chance of the next event in the next minute must not depend on how long the chain has sat still. Exponential gaps have it, and they are the only continuous waiting times that do ([exponential-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md)). If every call takes close to the same time, the future depends on how long the current call has run, the number on the line is no longer a Markov chain, and the queue is shorter than M/M/1 says: that is the M/G/1 queue, with general service times, treated in Kleinrock's Chapter 5 (Sources). [renewal-processes-in-outline](06-renewal-processes-in-outline.md) handles arrivals whose gaps are not exponential.
+- **Memoryless gaps.** The chance of the next event in the next minute must not depend on how long the chain has sat still. Exponential gaps have it, and they are the only continuous waiting times that do ([Exponential](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md)). If every call takes close to the same time, the future depends on how long the current call has run, the number on the line is no longer a Markov chain, and the queue is shorter than M/M/1 says: that is the M/G/1 queue, with general service times, treated in Kleinrock's Chapter 5 (Sources). [Renewal processes](06-renewal-processes-in-outline.md) handles arrivals whose gaps are not exponential.
 - **Rates that do not change with the clock.** A lunchtime rush that raises the arrival rate for an hour is a different rate matrix for that hour. The formula for $\pi$ then describes no hour of the day.
 - **Load below 1, for the long-run law.** With $\lambda > \mu$ the line drifts upward without limit; at $\lambda = \mu$ it keeps emptying but never settles. Either way no stationary distribution exists; the forward equations still hold.
 - **Time to settle.** $\pi$ is a long-run statement. From an empty desk at opening, the average number on the line is 3.24 after 8 hours and 3.86 after 24, still short of 4.
@@ -128,7 +110,7 @@ By the Markov property, the move in the next $h$ ignores how the chain reached i
 
 $$\frac{d}{dt}\,p(t) = p(t)\,G.$$
 
-Its only solution from $p(0)$ is $p(0)\,e^{tG}$ ([the-matrix-exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md)).
+Its only solution from $p(0)$ is $p(0)\,e^{tG}$ ([The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md)).
 
 ### Step 3: the desk with no hold line, solved twice
 
@@ -154,7 +136,7 @@ A row $\pi$ of shares is stationary if starting from it keeps it: $\pi\,e^{tG} =
 
 $$\pi_i\,q_i = \sum_{j \ne i} \pi_j\,g_{ji}:$$
 
-the long-run rate of leaving $i$ equals the long-run rate of entering it. This is the balance equation of [stationary-distributions](../03-Markov%20Chains/04-stationary-distributions.md), with rates in place of chances. Stationary does not mean standing still: calls keep arriving and ending, and only the shares stay fixed.
+the long-run rate of leaving $i$ equals the long-run rate of entering it. This is the balance equation of [Stationary distributions](../03-Markov%20Chains/04-stationary-distributions.md), with rates in place of chances. Stationary does not mean standing still: calls keep arriving and ending, and only the shares stay fixed.
 
 For the desk with no hold line: $4\,\pi_0 = 5\,\pi_1$, so $\pi$ = (5/9, 4/9). The agent is busy 4/9 of the time, about 44 percent. Calls arrive at a rate that ignores the state, so callers see the time shares ("Poisson arrivals see time averages"): about 44 percent hang up, and 2.22 calls an hour are served.
 
@@ -178,7 +160,7 @@ $$\pi_i \propto \frac{\nu_i}{q_i}.$$
 
 For the desk with no hold line the jump chain alternates, so each state gets half the visits. Idle spells last longer than busy ones, since the agent leaves idle at rate 4 and busy at rate 5, and weighting by the mean stay turns (1/2, 1/2) into (5/9, 4/9). For M/M/1 the jump chain is idle in only 0.1 of its visits, because each idle spell is followed by a busy period made of many visits; weighted by stays, idle time is 0.2 of the day.
 
-On a chain with bounded rates whose states all reach each other and that has a stationary distribution, the share of time in $i$ up to time $t$ tends to $\pi_i$, on almost every path, from any start. This is the **ergodic theorem** for continuous-time chains. Its proof cuts the path at each return to $i$ and applies the strong law of large numbers, as on [stationary-distributions](../03-Markov%20Chains/04-stationary-distributions.md); for an endless list of states it is stated here, from Norris, Section 3.8. It makes "busy 80 percent of the time" a fact about one long day, not only an average over many desks.
+On a chain with bounded rates whose states all reach each other and that has a stationary distribution, the share of time in $i$ up to time $t$ tends to $\pi_i$, on almost every path, from any start. This is the **ergodic theorem** for continuous-time chains. Its proof cuts the path at each return to $i$ and applies the strong law of large numbers, as on [Stationary distributions](../03-Markov%20Chains/04-stationary-distributions.md); for an endless list of states it is stated here, from Norris, Section 3.8. It makes "busy 80 percent of the time" a fact about one long day, not only an average over many desks.
 
 <details>
 <summary>Detailed proof</summary>
@@ -197,7 +179,7 @@ On a chain with bounded rates whose states all reach each other and that has a s
 
 </details>
 
-**Another road.** Every rate here stays at most 9, so a computer can also step the forward equations forward in time with Euler's method, $p \leftarrow p + h\,p\,G$ ([from-one-equation-to-a-system](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md)). The code does, at five step sizes, and prints the error halving with the step.
+**Another road.** Every rate here stays at most 9, so a computer can also step the forward equations forward in time with Euler's method, $p \leftarrow p + h\,p\,G$ ([From one equation to a system](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md)). The code does, at five step sizes, and prints the error halving with the step.
 
 ---
 
@@ -219,7 +201,7 @@ The desk with a hold line, arrivals 4 and services 5 an hour.
 
 The chance of 5 or more is a sum over every $n$ from 5 up, $(1 - \rho)(\rho^5 + \rho^6 + \dots)$, which the geometric series collapses to $\rho^5$.
 
-A caller spends an hour in the system on average, most of it on hold. The step from $L$ to $W$ is Little's law, $L = \lambda W$, which holds far beyond this queue (queueing-theory-and-littles-law).
+A caller spends an hour in the system on average, most of it on hold. The step from $L$ to $W$ is Little's law, $L = \lambda W$, which holds far beyond this queue (Queues).
 
 The load is the lever. At 4.5, 4.75 and 4.9 arrivals an hour, $\rho$ is 0.90, 0.95 and 0.98, and $L$ is 9.00, 19.00 and 49.00: the line depends on the load through $1/(1 - \rho)$.
 
@@ -658,7 +640,7 @@ The two outputs agree line for line.
 ## Where you meet it in real life
 
 - **Call centres.** Staffing tables come from chains like this one with many agents; the blow-up of $1/(1 - \rho)$ is why centres plan loads well below 1.
-- **Computer systems.** A server with one worker is an M/M/1 queue to a first approximation, and the same load curve sets response times. Merged request streams are Poisson again ([splitting-and-superposition](03-splitting-and-superposition.md)).
+- **Computer systems.** A server with one worker is an M/M/1 queue to a first approximation, and the same load curve sets response times. Merged request streams are Poisson again ([Splitting and merging](03-splitting-and-superposition.md)).
 - **Machines that fail and are repaired.** The two-state chain, with failure and repair rates, gives the share of time a machine is up.
 - **Chemistry.** The Gillespie algorithm simulates reacting molecules as the code here simulates the desk: exponential waits, then a jump chosen in proportion to the rates.
 - **Credit ratings.** Grades that move at rates form a continuous-time chain; the chance of default by time $t$ is an entry of $e^{tG}$.
@@ -670,16 +652,16 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [poisson-process](01-poisson-process.md): exponential gaps, memorylessness and the Poisson count of ticks, which make rates meaningful and drive uniformization.
-- [stationary-distributions](../03-Markov%20Chains/04-stationary-distributions.md): balance equations and long-run time fractions for discrete steps, here rewritten with rates.
-- [from-one-equation-to-a-system](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md): a linear system x' = Ax, which the forward equations are, with the row of chances as the state.
+- [Poisson process](01-poisson-process.md): exponential gaps, memorylessness and the Poisson count of ticks, which make rates meaningful and drive uniformization.
+- [Stationary distributions](../03-Markov%20Chains/04-stationary-distributions.md): balance equations and long-run time fractions for discrete steps, here rewritten with rates.
+- [From one equation to a system](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md): a linear system x' = Ax, which the forward equations are, with the row of chances as the state.
 
 ## Where this goes next
 
-- queueing-theory-and-littles-law: Little's law, $L = \lambda W$, for any queue, and queues with many servers or general service times.
-- [renewal-processes-in-outline](06-renewal-processes-in-outline.md), the next card: what survives when the gaps between events are not exponential.
+- Queues: Little's law, $L = \lambda W$, for any queue, and queues with many servers or general service times.
+- [Renewal processes](06-renewal-processes-in-outline.md), the next card: what survives when the gaps between events are not exponential.
 
-The M/M/1 desk puts a caller in the system for an hour on average, from nothing more than a count of 4 people and an arrival rate of 4 an hour; why that division works for every queue, whatever its gaps, is the question queueing-theory-and-littles-law answers.
+The M/M/1 desk puts a caller in the system for an hour on average, from nothing more than a count of 4 people and an arrival rate of 4 an hour; why that division works for every queue, whatever its gaps, is the question Queues answers.
 
 ---
 

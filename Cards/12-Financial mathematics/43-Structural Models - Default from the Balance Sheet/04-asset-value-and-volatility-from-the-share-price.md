@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Structural Models - Default from the Balance Sheet
-topic: Inverting Merton's model
-item: Backing out the unobservable
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/02-structural-model-sensitivities|structural-model-sensitivities]]"
-  - "[[Cards/03-Algebra/01-Letters and Equations/04-two-equations-two-unknowns|two-equations-two-unknowns]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/06-calibration-as-least-squares|calibration-as-least-squares]]"
-next: []
-tags: [mathematics, financial mathematics, asset-value-and-volatility-from-the-share-price]
----
-
 # Backing out the unobservable: asset value and asset volatility from the share price and its volatility, two equations in two unknowns
 
-Financial mathematics → Structural Models - Default from the Balance Sheet → Inverting Merton's model → Backing out the unobservable
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Structural Models - Default from the Balance Sheet](../../../SYLLABUS.md#w12-s43) → Backing out the unobservable
 
 ---
 
@@ -28,7 +10,7 @@ A lender looks at a firm from the outside. Its shares trade every day, and all o
 
 The lender wants two other numbers: what the firm's assets are worth, and how much that value swings. Those two drive every default measure on this shelf. Neither trades. A factory, a patent and a customer list have no ticker. The balance sheet gives book values, which are months old and measured at cost.
 
-Merton's model says the shares are a call option on the assets, with the debt as the strike ([merton-model-equity-as-a-call](01-merton-model-equity-as-a-call.md)). A call's price and a call's swings are both set by the asset value and the asset volatility. So the two things the market shows, the share value and its volatility, are two equations in the two things it hides. Solve them together and the hidden pair comes out: assets of **$100.0 million**, swinging **20.0%** a year. That is the shelf's house firm, found from the outside in.
+Merton's model says the shares are a call option on the assets, with the debt as the strike ([Merton's model](01-merton-model-equity-as-a-call.md)). A call's price and a call's swings are both set by the asset value and the asset volatility. So the two things the market shows, the share value and its volatility, are two equations in the two things it hides. Solve them together and the hidden pair comes out: assets of **$100.0 million**, swinging **20.0%** a year. That is the shelf's house firm, found from the outside in.
 
 The shares swing almost four times as hard as the assets. That is leverage: the shareholders own the top slice of the assets, and a slice above a fixed debt moves more, in percent, than the whole.
 
@@ -93,7 +75,7 @@ $$\sigma_E = L\,\sigma_V, \qquad L = \frac{V\,N(d_1)}{E} > 1$$
 
 ### When it holds
 
-- **One zero-coupon debt, default only at its due date.** Real firms owe many debts on many dates. If default can come earlier, the equity is a barrier option, not a plain call, and the inferred assets come out too low ([black-cox-first-passage-default](05-black-cox-first-passage-default.md)).
+- **One zero-coupon debt, default only at its due date.** Real firms owe many debts on many dates. If default can come earlier, the equity is a barrier option, not a plain call, and the inferred assets come out too low ([Black-Cox](05-black-cox-first-passage-default.md)).
 - **Assets that wander like a stock, with a constant $\sigma_V$.** If asset volatility shifts through the year, no single $\sigma_V$ fits and the answer is an average of unknown weight.
 - **Positive quotes.** Every positive $E$ and $\sigma_E$ has exactly one answer. Zero equity or zero volatility has none inside the model: the model's outputs are strictly positive.
 - **An instantaneous equity volatility.** The second equation holds moment by moment. A volatility measured over a past year blends days when the firm was more or less levered, and carries sampling noise.
@@ -109,13 +91,13 @@ The assets never trade. A claim on them does. If the model knows how the claim's
 
 ### Step 1: the price equation
 
-At the debt's due date, shareholders receive $\max(V_T - B, 0)$: whatever the assets fetch above the debt, or nothing. That is a call's payoff with strike $B$. Merton's model prices it with the Black-Scholes formula, the dividend yield at zero, which is the first equation. The sibling card derives it: [merton-model-equity-as-a-call](01-merton-model-equity-as-a-call.md).
+At the debt's due date, shareholders receive $\max(V_T - B, 0)$: whatever the assets fetch above the debt, or nothing. That is a call's payoff with strike $B$. Merton's model prices it with the Black-Scholes formula, the dividend yield at zero, which is the first equation. The sibling card derives it: [Merton's model](01-merton-model-equity-as-a-call.md).
 
 ### Step 2: the volatility equation, from Itô's lemma
 
-The equity value is a smooth function of the asset value and the date. Itô's lemma ([itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)) says how a smooth function of a wandering quantity wanders. The random part of the function's move is the random part of the input's move, times the function's slope.
+The equity value is a smooth function of the asset value and the date. Itô's lemma ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)) says how a smooth function of a wandering quantity wanders. The random part of the function's move is the random part of the input's move, times the function's slope.
 
-The assets' random move in a short time is $\sigma_V V$ times a random shock. The equity's slope against assets is the call's delta, $N(d_1)$ ([structural-model-sensitivities](02-structural-model-sensitivities.md)). So the equity's random move is $N(d_1)\,\sigma_V V$ times the same shock. By definition it is also $\sigma_E E$ times that shock. Set them equal: $\sigma_E E = N(d_1)\,\sigma_V V$.
+The assets' random move in a short time is $\sigma_V V$ times a random shock. The equity's slope against assets is the call's delta, $N(d_1)$ ([How the balance-sheet claims move](02-structural-model-sensitivities.md)). So the equity's random move is $N(d_1)\,\sigma_V V$ times the same shock. By definition it is also $\sigma_E E$ times that shock. Set them equal: $\sigma_E E = N(d_1)\,\sigma_V V$.
 
 <details>
 <summary>The algebra behind this</summary>
@@ -176,11 +158,11 @@ With both unknowns free, there is no floor. Equity volatility of 10% on the same
 
 ### Step 6: three ways to solve it
 
-- **Newton's method on the pair.** At the current guess, replace each equation by its tangent (its straight-line approximation), solve the two resulting linear equations ([two-equations-two-unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)), and step there. If a step makes the miss bigger, halve it; that halving is the damping. Near the answer the number of correct digits roughly doubles each step.
-- **The fixed-point iteration.** Guess $\sigma_V$. Solve the price equation for $V$. Update $\sigma_V$ to $\sigma_E E / (V N(d_1))$. Repeat. Slower, but it needs only a one-unknown solver, the same one used for implied volatility ([implied-volatility-by-newton-and-bisection](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md)). Vassalou and Xing, and Bharath and Shumway, run a time-series cousin (Sources): solve the price equation on each day of a year of share prices, then reset $\sigma_V$ to the volatility of the resulting daily asset values, and repeat.
+- **Newton's method on the pair.** At the current guess, replace each equation by its tangent (its straight-line approximation), solve the two resulting linear equations ([Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)), and step there. If a step makes the miss bigger, halve it; that halving is the damping. Near the answer the number of correct digits roughly doubles each step.
+- **The fixed-point iteration.** Guess $\sigma_V$. Solve the price equation for $V$. Update $\sigma_V$ to $\sigma_E E / (V N(d_1))$. Repeat. Slower, but it needs only a one-unknown solver, the same one used for implied volatility ([Solving for implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md)). Vassalou and Xing, and Bharath and Shumway, run a time-series cousin (Sources): solve the price equation on each day of a year of share prices, then reset $\sigma_V$ to the volatility of the resulting daily asset values, and repeat.
 - **Nested bisection.** Step 4's argument, done by halving: an inner search for $V$ at each trial $\sigma_V$, an outer search for the $\sigma_V$ where the dollar swing matches. No slopes at all, so it cannot be fooled by a wrong derivative.
 
-When more than two observations exist (bond prices, option prices, several dates), no pair fits them all exactly, and the job becomes a best fit: [calibration-as-least-squares](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md).
+When more than two observations exist (bond prices, option prices, several dates), no pair fits them all exactly, and the job becomes a best fit: [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md).
 
 ---
 
@@ -212,7 +194,7 @@ Now backwards, from the quotes $24.59m and 75.5%. The first guess treats the deb
 
 **Assets $100.0 million, asset volatility 20.0%.** The quotes were rounded to $24.59m and 75.5%, so the answer is 100.002847 and 0.199891, not exactly 100 and 0.20. Fed the unrounded quotes, the solver returns 100.000000 and 0.200000.
 
-In the world: this firm's assets exceed its debt by a comfortable margin, and they swing a fifth of their value in a typical year. Those are the inputs the distance to default needs ([distance-to-default-and-expected-default-frequency](03-distance-to-default-and-expected-default-frequency.md)).
+In the world: this firm's assets exceed its debt by a comfortable margin, and they swing a fifth of their value in a typical year. Those are the inputs the distance to default needs ([Distance to default](03-distance-to-default-and-expected-default-frequency.md)).
 
 ### When the answer is fragile
 
@@ -690,11 +672,11 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Credit monitoring.** Commercial expected-default-frequency models run that time-series iteration on each listed firm's share prices every day, then convert the result into a distance to default ([distance-to-default-and-expected-default-frequency](03-distance-to-default-and-expected-default-frequency.md)). The debt face is a modelling choice; Bharath and Shumway, following the commercial model, take short-term debt plus half the long-term debt.
+- **Credit monitoring.** Commercial expected-default-frequency models run that time-series iteration on each listed firm's share prices every day, then convert the result into a distance to default ([Distance to default](03-distance-to-default-and-expected-default-frequency.md)). The debt face is a modelling choice; Bharath and Shumway, following the commercial model, take short-term debt plus half the long-term debt.
 - **Academic default research.** Studies of whether default risk is priced in share returns build their default measure by this inversion, firm by firm, month by month.
-- **Pricing a loan to a listed firm.** With $V$ and $\sigma_V$ in hand, the debt's value and credit spread follow from the same model ([structural-model-sensitivities](02-structural-model-sensitivities.md)).
+- **Pricing a loan to a listed firm.** With $V$ and $\sigma_V$ in hand, the debt's value and credit spread follow from the same model ([How the balance-sheet claims move](02-structural-model-sensitivities.md)).
 - **Early warning in a slide.** As a firm's shares fall, $L$ rises and the equity volatility jumps even if the business is no riskier. The inversion separates the two: a rising $\sigma_E$ with a steady $\sigma_V$ is leverage, not new risk.
-- **Where it misleads.** Near zero equity, or for firms whose debt is long and spread over many dates, the answer is fragile or the model is wrong: [where-structural-models-fail](06-where-structural-models-fail.md).
+- **Where it misleads.** Near zero equity, or for firms whose debt is long and spread over many dates, the answer is fragile or the model is wrong: [Where structural models break](06-where-structural-models-fail.md).
 
 > **Say it back**
 > A firm's assets do not trade, but its shares do, and Merton's model says the shares are a call on the assets. The call's price gives one equation, and Itô's lemma gives a second: equity volatility times equity value equals $N(d_1)$ times asset volatility times asset value. Two equations, two unknowns, and for any positive quotes exactly one answer, found by Newton, by the fixed-point iteration or by bisection. Equity volatility is asset volatility scaled up by leverage, so near zero equity small errors in the quotes become large errors in the answer. The result is model-implied, not measured.
@@ -703,16 +685,16 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [structural-model-sensitivities](02-structural-model-sensitivities.md): the equity's slope against assets, $N(d_1)$, and its vega, both used in the volatility equation and the Newton step.
-- [two-equations-two-unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): solving a pair of linear equations, which is each Newton step.
-- [itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): how a function of a wandering quantity wanders, which gives the volatility equation.
-- [calibration-as-least-squares](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): fitting model inputs to market prices; this card is the special case with as many prices as inputs.
+- [How the balance-sheet claims move](02-structural-model-sensitivities.md): the equity's slope against assets, $N(d_1)$, and its vega, both used in the volatility equation and the Newton step.
+- [Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): solving a pair of linear equations, which is each Newton step.
+- [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): how a function of a wandering quantity wanders, which gives the volatility equation.
+- [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): fitting model inputs to market prices; this card is the special case with as many prices as inputs.
 
 ## Where this goes next
 
-- [black-cox-first-passage-default](05-black-cox-first-passage-default.md): default the moment assets cross a barrier, not only at maturity. The same inversion runs with a barrier-option price in place of the call.
-- [where-structural-models-fail](06-where-structural-models-fail.md): what the inferred pair gets wrong in practice, from short-term spreads to firms with hidden liabilities.
-- [distance-to-default-and-expected-default-frequency](03-distance-to-default-and-expected-default-frequency.md): where the inferred pair is spent, turning assets and their volatility into a default score.
+- [Black-Cox](05-black-cox-first-passage-default.md): default the moment assets cross a barrier, not only at maturity. The same inversion runs with a barrier-option price in place of the call.
+- [Where structural models break](06-where-structural-models-fail.md): what the inferred pair gets wrong in practice, from short-term spreads to firms with hidden liabilities.
+- [Distance to default](03-distance-to-default-and-expected-default-frequency.md): where the inferred pair is spent, turning assets and their volatility into a default score.
 
 This card recovers the firm's assets but keeps Merton's rule that default can only happen on the due date; whether earlier default changes the recovered assets is the question Black-Cox answers.
 

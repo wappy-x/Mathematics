@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The FX smile - risk reversals, butterflies and vanna-volga
-topic: Pricing off three quoted vanillas
-item: Vanna-volga pricing
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/03-vanna-and-volga-on-the-smile|vanna-and-volga-on-the-smile]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/06-fx-strike-from-delta|fx-strike-from-delta]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/02-gaussian-elimination|gaussian-elimination]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/03-inverse-matrix|inverse-matrix]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/04-determinants|determinants]]"
-next:
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/05-vanna-volga-smile-curve|vanna-volga-smile-curve]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/07-barriers-with-the-smile|barriers-with-the-smile]]"
-tags: [mathematics, financial mathematics, vanna-volga-pricing]
----
-
 # Vanna-volga pricing: charge for the three vol risks Black-Scholes cannot see, using the three quotes the market gives you
 
-Financial mathematics → The FX smile - risk reversals, butterflies and vanna-volga → Pricing off three quoted vanillas → Vanna-volga pricing
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The FX smile - risk reversals, butterflies and vanna-volga](../../../SYLLABUS.md#w12-s22) → Vanna-volga pricing
 
 ---
 
@@ -82,13 +61,13 @@ $$\begin{pmatrix} \mathcal{V}_1 & \mathcal{V}_2 & \mathcal{V}_3\\ \mathrm{Va}_1 
 | $d_1$, $d_2$, $\varphi$, $N$ | the Black-Scholes distances; bell-curve height and area | as on the Garman-Kohlhagen card | — |
 | $\ell_i$, $\ell_1$, $\ell_2$, $\ell_3$, $z_i$ | the three weights that fit a parabola in log-strike through the pillars; $z_i = \ln K_i$ | 1.15 sits between pillars 2 and 3 | — |
 
-The three Greeks of a call, from [vanna-and-volga-on-the-smile](03-vanna-and-volga-on-the-smile.md), one line each:
+The three Greeks of a call, from [Vanna and volga](03-vanna-and-volga-on-the-smile.md), one line each:
 
 $$\mathcal{V} = S e^{-r_f T}\varphi(d_1)\sqrt{T}, \qquad \mathrm{Va} = -\,\frac{\mathcal{V}\,d_2}{S\,\sigma\sqrt{T}}, \qquad \mathrm{Vo} = \frac{\mathcal{V}\,d_1 d_2}{\sigma}$$
 
 Vega is largest near the money. Vanna has the sign of $-d_2$: positive wherever $d_2 < 0$, which covers the ATM pillar, the call pillar and the 1.15 target; there a rising euro brings the option toward the money and lifts its vega. Volga carries the factor $d_1 d_2$, so it vanishes where $d_1 = 0$, which is the ATM pillar's defining property.
 
-**Conventions verified 2026-09-27:** spot delta with the premium paid in dollars, ATM as the delta-neutral straddle, butterfly read as a smile strangle, risk reversal as call vol minus put vol. These are the house conventions fixed on [fx-strike-from-delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md) and [risk-reversal-and-butterfly](01-risk-reversal-and-butterfly.md); the checks reproduce the house pillar strikes to six decimals. Many pairs quote a broker butterfly instead, which needs the conversion on [market-strangle-and-smile-strangle](02-market-strangle-and-smile-strangle.md) first.
+**Conventions verified 2026-09-27:** spot delta with the premium paid in dollars, ATM as the delta-neutral straddle, butterfly read as a smile strangle, risk reversal as call vol minus put vol. These are the house conventions fixed on [Strike from delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md) and [Risk reversal and butterfly](01-risk-reversal-and-butterfly.md); the checks reproduce the house pillar strikes to six decimals. Many pairs quote a broker butterfly instead, which needs the conversion on [The broker butterfly](02-market-strangle-and-smile-strangle.md) first.
 
 ### When it holds
 
@@ -96,7 +75,7 @@ Vega is largest near the money. Vanna has the sign of $-d_2$: positive wherever 
 - **The three pillars are genuinely different options.** The system needs $\det A \neq 0$. If two pillar strikes merge, two columns of $A$ coincide, the determinant is zero, and the weights do not exist. Here it is 2.619639.
 - **The target sits between or near the pillars.** Outside the 25-delta strikes the overlay extrapolates a curve through three points, and nothing holds it down: at 1.50 it is +1.65 pips on a flat price of 0.66. Nothing in the method rules out arbitrage between strikes.
 - **The Greeks are taken at the flat vol.** Taking each pillar's Greeks at its own market vol loses the exact fit to the pillars (see What breaks).
-- **The target's risk is vol risk of the kind a vanilla has.** For a barrier that can knock out tomorrow, a hedge sized today overstates the vol risk still alive; desks shrink the overlay for that, on [barriers-with-the-smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md).
+- **The target's risk is vol risk of the kind a vanilla has.** For a barrier that can knock out tomorrow, a hedge sized today overstates the vol risk still alive; desks shrink the overlay for that, on [Barriers on a smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md).
 
 ---
 
@@ -118,7 +97,7 @@ Here $\Theta$ (theta) is decay with time, $\Delta$ (delta) and $\Gamma$ (gamma) 
 
 The basket holds $x_1, x_2, x_3$ euros of the three pillar calls. Its vega is $x_1\mathcal{V}_1 + x_2\mathcal{V}_2 + x_3\mathcal{V}_3$, and the same for vanna and volga. Setting each equal to the target's gives $A\,x = g$.
 
-A 3×3 system has exactly one solution when its determinant is not zero ([determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). Here $\det A = 2.619639$. The Python check finds $x$ by elimination ([gaussian-elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md)); the Rust check by Cramer's rule, a ratio of determinants. Both give −0.115838, 0.870240, 0.246905: sell a little of the put pillar, buy most of an ATM, buy a quarter of the call pillar.
+A 3×3 system has exactly one solution when its determinant is not zero ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). Here $\det A = 2.619639$. The Python check finds $x$ by elimination ([Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md)); the Rust check by Cramer's rule, a ratio of determinants. Both give −0.115838, 0.870240, 0.246905: sell a little of the put pillar, buy most of an ATM, buy a quarter of the call pillar.
 
 ### Step 3: charge the hedge's market-minus-model cost
 
@@ -134,7 +113,7 @@ Feed the method one of its own pillars, say pillar 1. Its Greek column $g$ is th
 
 ### Step 5: read the overlay as three market prices of risk
 
-The overlay is $x \cdot \Delta p$, the sum of $x_i\,\Delta p_i$. Since $x = A^{-1} g$ ([inverse-matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)), regroup the same sum around $g$:
+The overlay is $x \cdot \Delta p$, the sum of $x_i\,\Delta p_i$. Since $x = A^{-1} g$ ([The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)), regroup the same sum around $g$:
 
 $$\sum_i x_i\,\Delta p_i = \sum_j g_j\,y_j, \qquad \text{where } A^{\mathsf T} y = \Delta p$$
 
@@ -179,7 +158,7 @@ Each gap is, to first order, vega times the vol difference: $\Delta p_i \approx 
 
 $$\sigma(K) \approx \sum_i \ell_i(\ln K)\,\sigma_i$$
 
-a parabola in log-strike through the three quotes. At 1.15 it gives 9.8788 percent. A call's price rises strictly with vol, from its floor $\max(Se^{-r_fT} - Ke^{-r_dT}, 0)$ toward $Se^{-r_fT}$, so any price strictly between has exactly one implied vol. Bisection finds it for 306.55 pips: 9.8780 percent. The gap is 0.0743 basis points of vol, where a basis point is 0.01 percentage point. The next card, [vanna-volga-smile-curve](05-vanna-volga-smile-curve.md), builds this curve properly, with its second-order correction.
+a parabola in log-strike through the three quotes. At 1.15 it gives 9.8788 percent. A call's price rises strictly with vol, from its floor $\max(Se^{-r_fT} - Ke^{-r_dT}, 0)$ toward $Se^{-r_fT}$, so any price strictly between has exactly one implied vol. Bisection finds it for 306.55 pips: 9.8780 percent. The gap is 0.0743 basis points of vol, where a basis point is 0.01 percentage point. The next card, [The vanna-volga smile](05-vanna-volga-smile-curve.md), builds this curve properly, with its second-order correction.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -203,7 +182,7 @@ EURUSD: $S = 1.10$, $r_d = 5\%$, $r_f = 3\%$, $T = 1$; ATM 10.00%, risk reversal
 | --- | --- | --- |
 | forward $F$ | $1.10 \times e^{0.05 - 0.03}$ | 1.122221 |
 | pillar vols | $10 + 0.25 + 0.5$, $10$, $10 + 0.25 - 0.5$ | 10.75%, 10.00%, 9.75% |
-| pillar strikes | from delta, [fx-strike-from-delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md) | 1.052466, 1.127847, 1.201425 |
+| pillar strikes | from delta, [Strike from delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md) | 1.052466, 1.127847, 1.201425 |
 | pillars at market vols | Garman-Kohlhagen, each at its own vol | 851.76, 400.54, 153.90 |
 | pillars at 10% | Garman-Kohlhagen, all at 10% | 826.26, 400.54, 162.57 |
 | gaps $\Delta p_i$ | market minus flat | +25.51, 0.00, −8.67 |
@@ -620,9 +599,9 @@ The two outputs are identical line for line, from different normal CDFs and diff
 
 ## Where you meet it in real life
 
-- **FX option desks.** Vanilla strikes between the pillars, digitals, touches and barriers are marked this way, because the three quotes are what the broker screen shows. The barrier version is [barriers-with-the-smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md).
-- **Building a smile from three points.** Run the method on vanillas at every strike and back out the vol: a full smile that passes through the three quotes. That curve is [vanna-volga-smile-curve](05-vanna-volga-smile-curve.md).
-- **Hedging after the trade.** The weights are a real hedge: sell 0.115838 of the put pillar, buy 0.870240 of the ATM and 0.246905 of the call pillar per euro. How the hedge's delta changes when the smile moves is [smile-adjusted-delta-and-sticky-delta](06-smile-adjusted-delta-and-sticky-delta.md).
+- **FX option desks.** Vanilla strikes between the pillars, digitals, touches and barriers are marked this way, because the three quotes are what the broker screen shows. The barrier version is [Barriers on a smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md).
+- **Building a smile from three points.** Run the method on vanillas at every strike and back out the vol: a full smile that passes through the three quotes. That curve is [The vanna-volga smile](05-vanna-volga-smile-curve.md).
+- **Hedging after the trade.** The weights are a real hedge: sell 0.115838 of the put pillar, buy 0.870240 of the ATM and 0.246905 of the call pillar per euro. How the hedge's delta changes when the smile moves is [Hedging with the smile](06-smile-adjusted-delta-and-sticky-delta.md).
 
 > **Say it back**
 > A flat-vol model misprices exactly the risks that need volatility to move: vega, vanna and volga. Three quoted options carry those risks in different mixes, so a 3×3 solve finds a basket with the target's three. The target minus the basket is priced right by the flat model, so the target's price is the flat price plus the basket's market-minus-model cost. Fed a pillar, the method returns its market price exactly. The same overlay reads as the target's Greeks times three market prices of risk; for the 1.15 EUR call it takes 311.65 pips down to 306.55.
@@ -631,18 +610,18 @@ The two outputs are identical line for line, from different normal CDFs and diff
 
 ## What this builds on
 
-- [vanna-and-volga-on-the-smile](03-vanna-and-volga-on-the-smile.md): the three Greeks, their closed forms, and why each quote carries one of them.
-- [fx-strike-from-delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md): how 25-delta and ATM quotes become the strikes 1.052466, 1.127847, 1.201425.
-- [gaussian-elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md): the solve for the weights.
-- [inverse-matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md): $x = A^{-1}g$, and the swap to $A^{\mathsf T}y = \Delta p$ that gives the prices of risk.
-- [determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): why $\det A \neq 0$ means one hedge and one price, and Cramer's rule in the Rust check.
+- [Vanna and volga](03-vanna-and-volga-on-the-smile.md): the three Greeks, their closed forms, and why each quote carries one of them.
+- [Strike from delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md): how 25-delta and ATM quotes become the strikes 1.052466, 1.127847, 1.201425.
+- [Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md): the solve for the weights.
+- [The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md): $x = A^{-1}g$, and the swap to $A^{\mathsf T}y = \Delta p$ that gives the prices of risk.
+- [Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): why $\det A \neq 0$ means one hedge and one price, and Cramer's rule in the Rust check.
 
 ## Where this goes next
 
-- [vanna-volga-smile-curve](05-vanna-volga-smile-curve.md): the method run at every strike, turned into an implied-vol curve, with the second-order term that Step 7 dropped.
-- [barriers-with-the-smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md): the same overlay on a barrier, and the weighting desks add because a knocked-out option has no vol risk left.
+- [The vanna-volga smile](05-vanna-volga-smile-curve.md): the method run at every strike, turned into an implied-vol curve, with the second-order term that Step 7 dropped.
+- [Barriers on a smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md): the same overlay on a barrier, and the weighting desks add because a knocked-out option has no vol risk left.
 
-This card prices one option at one strike; what curve of implied vols the method draws across all strikes, and how far it can be trusted, is [vanna-volga-smile-curve](05-vanna-volga-smile-curve.md).
+This card prices one option at one strike; what curve of implied vols the method draws across all strikes, and how far it can be trusted, is [The vanna-volga smile](05-vanna-volga-smile-curve.md).
 
 ---
 

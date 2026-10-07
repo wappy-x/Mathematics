@@ -1,34 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Discrete Distributions
-topic: Counting rare arrivals
-item: Poisson
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/01-bernoulli-and-binomial|bernoulli-and-binomial]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/05-taylor-series|taylor-series]]"
-next:
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/06-sums-of-discrete-variables|sums-of-discrete-variables]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/03-exponential-distribution|exponential-distribution]]"
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/04-gamma-poisson|gamma-poisson]]"
-  - "[[Cards/09-Probability and statistics/14-Random Graphs and the Probabilistic Method/01-random-graphs-erdos-renyi|random-graphs-erdos-renyi]]"
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/01-poisson-process|poisson-process]]"
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/04-merton-jump-diffusion|merton-jump-diffusion]]"
-  - "[[Cards/12-Financial mathematics/49-Microstructure and Execution/01-the-limit-order-book|the-limit-order-book]]"
-  - "[[Cards/14-Applied and computational/05-Operations Research/07-queueing-theory-and-littles-law|queueing-theory-and-littles-law]]"
-  - "[[Cards/20-Harmonic analysis/04-Characteristic Functions and Probability/07-infinitely-divisible-laws-and-levy-khintchine|infinitely-divisible-laws-and-levy-khintchine]]"
-tags:
-  - mathematics
-  - probability and statistics
-  - poisson
----
-
 # Poisson: counts of rare events, and the limit of the binomial that produces it
 
-Probability and statistics → Discrete Distributions → Counting rare arrivals → Poisson
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Discrete Distributions](../../../SYLLABUS.md#w09-s03) → Poisson
 
 ---
 
@@ -38,7 +10,7 @@ A help desk receives emails at an average of 12 an hour. Nobody schedules them. 
 
 The answer is about 1.16% of hours: roughly one hour in 86.
 
-That number comes from one law. Cut the hour into 3600 one-second slots. In each slot an email either arrives or it does not, with a tiny chance, the same in every slot, and the slots do not influence each other. That is the binomial count ([bernoulli-and-binomial](01-bernoulli-and-binomial.md)): many trials, each with a small chance. Now cut finer: tenths of a second, thousandths, while keeping the average at 12. The binomial settles onto a fixed shape that no longer mentions slots at all. Only the average survives. That shape is the **Poisson law**, named after Siméon Denis Poisson.
+That number comes from one law. Cut the hour into 3600 one-second slots. In each slot an email either arrives or it does not, with a tiny chance, the same in every slot, and the slots do not influence each other. That is the binomial count ([Binomial](01-bernoulli-and-binomial.md)): many trials, each with a small chance. Now cut finer: tenths of a second, thousandths, while keeping the average at 12. The binomial settles onto a fixed shape that no longer mentions slots at all. Only the average survives. That shape is the **Poisson law**, named after Siméon Denis Poisson.
 
 The same law counts typos on a page, calls to a switchboard and orders hitting an exchange: events individually rare, many in opportunity, independent of one another.
 
@@ -129,7 +101,7 @@ The first factor is k numbers each close to n, divided by n multiplied k times: 
 
 ### Step 2: the one factor that does not go to 1
 
-$(1 - \lambda/n)^n$ is the chance that every one of n slots stays empty. Each slot is nearly certain to be empty, but there are very many of them, and the two pull in opposite directions. Take the logarithm and use the Taylor series of $\ln(1-u)$, which is $-u - u^2/2 - \ldots$ for small u ([taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)):
+$(1 - \lambda/n)^n$ is the chance that every one of n slots stays empty. Each slot is nearly certain to be empty, but there are very many of them, and the two pull in opposite directions. Take the logarithm and use the Taylor series of $\ln(1-u)$, which is $-u - u^2/2 - \ldots$ for small u ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)):
 
 $$n \ln\!\left(1 - \frac{\lambda}{n}\right) = -\lambda - \frac{\lambda^2}{2n} - \ldots \;\longrightarrow\; -\lambda$$
 
@@ -174,7 +146,7 @@ Moments: the sums in Step 4 have non-negative terms, so reordering and shifting 
 
 The limit does not say how fast. Lucien Le Cam proved a bound: for n independent slots each with chance p, the chance of any event, such as "more than 20", differs between the two laws by at most $n p^2 = \lambda^2/n$, here 144/n. At 3600 slots the bound is 0.0400 and the actual gap 1.29e-04. The gap times n settles near 0.465, so the error shrinks like 1/n, as the bound says, with a far smaller constant.
 
-The limit is one road to the Poisson law. The other builds it from waiting times between arrivals, and proves that the count in any window of a steady random stream is Poisson: that is [poisson-process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md).
+The limit is one road to the Poisson law. The other builds it from waiting times between arrivals, and proves that the count in any window of a steady random stream is Poisson: that is [Poisson process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md).
 
 ---
 
@@ -211,7 +183,7 @@ Every number in the table is printed by both programs below, and the two varianc
 
 ## Code, from first principles, and it actually runs
 
-The programs reach the tail by five roads. Road 1 sums the masses from 0 to 20 by the recurrence and subtracts from 1. Road 2 sums the tail upward from 21, building each mass from logarithms of factorials, never from its neighbour. Road 3 is the geometric bracket. Road 4 is the binomial with the hour cut into 60, 600, 3600 and 36000 slots, computed by its own recurrence, never by the Poisson formula. Road 5 simulates 200,000 hours with a seeded generator, SplitMix64, written out in both languages so both draw the same numbers. The simulation multiplies random numbers between 0 and 1 until the product falls below $e^{-12}$ and counts the multiplications before that; why that count is Poisson belongs to [poisson-process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md), and it uses only $e^{-12}$, not the mass formula. Every simulated number is printed with its standard error. The normal-curve area is built from its own Taylor series.
+The programs reach the tail by five roads. Road 1 sums the masses from 0 to 20 by the recurrence and subtracts from 1. Road 2 sums the tail upward from 21, building each mass from logarithms of factorials, never from its neighbour. Road 3 is the geometric bracket. Road 4 is the binomial with the hour cut into 60, 600, 3600 and 36000 slots, computed by its own recurrence, never by the Poisson formula. Road 5 simulates 200,000 hours with a seeded generator, SplitMix64, written out in both languages so both draw the same numbers. The simulation multiplies random numbers between 0 and 1 until the product falls below $e^{-12}$ and counts the multiplications before that; why that count is Poisson belongs to [Poisson process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md), and it uses only $e^{-12}$, not the mass formula. Every simulated number is printed with its standard error. The normal-curve area is built from its own Taylor series.
 
 ### Python
 
@@ -585,7 +557,7 @@ The two outputs match line for line. The simulated tail, 0.01150 with standard e
 ## The usual mistake
 
 > [!warning]
-> **Treating "rare events, steady average" as proof that counts are Poisson.** The law needs events that come one at a time, at a steady rate, independently. The mean alone cannot tell: a desk whose hours run at 6 or 18 on a coin flip has mean 12, yet more than 20 emails arrive in 0.134641 of its hours, not 0.011598. The quick test is the variance. A Poisson count has variance equal to its mean; counts whose variance runs well above the mean, called overdispersed, are something else, often the negative binomial of [geometric-and-negative-binomial](02-geometric-and-negative-binomial.md). Mean equal to variance is necessary, not sufficient: other laws share it.
+> **Treating "rare events, steady average" as proof that counts are Poisson.** The law needs events that come one at a time, at a steady rate, independently. The mean alone cannot tell: a desk whose hours run at 6 or 18 on a coin flip has mean 12, yet more than 20 emails arrive in 0.134641 of its hours, not 0.011598. The quick test is the variance. A Poisson count has variance equal to its mean; counts whose variance runs well above the mean, called overdispersed, are something else, often the negative binomial of [Waiting for a success](02-geometric-and-negative-binomial.md). Mean equal to variance is necessary, not sufficient: other laws share it.
 >
 > A second trap: **the normal curve in the tail.** With mean 12 and standard deviation 3.4641, the normal area beyond 20 is 0.010461, and beyond 20.5 (the half-step that usually helps) it is 0.007069. The Poisson law leans right, so its far tail is heavier than a symmetric curve's, and here the half-step moves the answer further from 0.011598, not closer.
 
@@ -593,9 +565,9 @@ The two outputs match line for line. The simulated tail, 0.01150 with standard e
 
 ## Where you meet it in real life
 
-- **Staffing a help desk or call centre.** The tail beyond capacity sets how many people to roster; the waiting-line consequences are queueing-theory-and-littles-law.
+- **Staffing a help desk or call centre.** The tail beyond capacity sets how many people to roster; the waiting-line consequences are Queues.
 - **Insurance claims and defects.** Claims per month on a large book of policies, flaws per metre of cable, typos per page: many opportunities, each rarely taken.
-- **Market orders.** Orders arriving at an exchange are often modelled as Poisson counts in short windows ([the-limit-order-book](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/01-the-limit-order-book.md)); sudden price jumps counted the same way drive [merton-jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md).
+- **Market orders.** Orders arriving at an exchange are often modelled as Poisson counts in short windows ([The order book](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/01-the-limit-order-book.md)); sudden price jumps counted the same way drive [Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md).
 - **Radioactive decay and biology.** Clicks of a Geiger counter in a second, mutations along a genome: counts of independent rare events.
 
 > **Say it back**
@@ -605,20 +577,20 @@ The two outputs match line for line. The simulated tail, 0.01150 with standard e
 
 ## What this builds on
 
-- [bernoulli-and-binomial](01-bernoulli-and-binomial.md): the slot model, its mass formula, and its variance $np(1-p)$.
-- [taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the series for $e^x$ that makes the masses add to 1, and the series for $\ln(1-u)$ that turns the empty-hour chance into $e^{-\lambda}$.
+- [Binomial](01-bernoulli-and-binomial.md): the slot model, its mass formula, and its variance $np(1-p)$.
+- [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the series for $e^x$ that makes the masses add to 1, and the series for $\ln(1-u)$ that turns the empty-hour chance into $e^{-\lambda}$.
 
 ## Where this goes next
 
-- [sums-of-discrete-variables](06-sums-of-discrete-variables.md): two independent Poisson counts add to a Poisson count, averages added.
-- [exponential-distribution](../04-Continuous%20Distributions/03-exponential-distribution.md): the wait between two emails, the continuous partner of this count.
-- [gamma-poisson](../10-Bayesian%20Inference/04-gamma-poisson.md): estimating lambda from observed counts, and the rate-mixture that fattened the tail here.
-- [random-graphs-erdos-renyi](../14-Random%20Graphs%20and%20the%20Probabilistic%20Method/01-random-graphs-erdos-renyi.md): the number of friends in a large sparse network is Poisson by this same limit.
-- [poisson-process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md): arrivals through time, with a Poisson count in every window.
-- [merton-jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): a Poisson number of price jumps added to a smooth stock path.
-- [the-limit-order-book](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/01-the-limit-order-book.md): order arrivals as Poisson streams.
-- queueing-theory-and-littles-law: what Poisson arrivals do to a queue.
-- infinitely-divisible-laws-and-levy-khintchine: the Poisson law as a building block of every law that splits into any number of independent equal parts.
+- [Adding counts](06-sums-of-discrete-variables.md): two independent Poisson counts add to a Poisson count, averages added.
+- [Exponential](../04-Continuous%20Distributions/03-exponential-distribution.md): the wait between two emails, the continuous partner of this count.
+- [Gamma-Poisson](../10-Bayesian%20Inference/04-gamma-poisson.md): estimating lambda from observed counts, and the rate-mixture that fattened the tail here.
+- [Random graphs](../14-Random%20Graphs%20and%20the%20Probabilistic%20Method/01-random-graphs-erdos-renyi.md): the number of friends in a large sparse network is Poisson by this same limit.
+- [Poisson process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md): arrivals through time, with a Poisson count in every window.
+- [Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): a Poisson number of price jumps added to a smooth stock path.
+- [The order book](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/01-the-limit-order-book.md): order arrivals as Poisson streams.
+- Queues: what Poisson arrivals do to a queue.
+- Infinitely divisible laws: the Poisson law as a building block of every law that splits into any number of independent equal parts.
 
 ---
 

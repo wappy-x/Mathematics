@@ -1,29 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: The Limit Theorems, Proved
-topic: Laws that settle
-item: Convergence in distribution
-kind: theorem
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/04-modes-of-convergence|modes-of-convergence]]"
-  - "[[Cards/10-Measure and integration/03-Measurable Functions/05-pushforward-and-the-law|pushforward-and-the-law]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/06-lebesgue-stieltjes-measures|lebesgue-stieltjes-measures]]"
-next:
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/06-characteristic-functions|characteristic-functions]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/07-central-limit-theorem|central-limit-theorem]]"
-  - "[[Cards/20-Harmonic analysis/04-Characteristic Functions and Probability/04-levy-continuity-theorem|levy-continuity-theorem]]"
-tags:
-  - mathematics
-  - measure and integration
-  - convergence-in-distribution
----
-
 # Convergence in distribution: laws converge when their distribution functions converge at every continuity point, which is the same as averages of bounded continuous functions converging
 
-Measure and integration → The Limit Theorems, Proved → Laws that settle → Convergence in distribution
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Limit Theorems, Proved](../../../SYLLABUS.md#w10-s10) → Convergence in distribution
 
 ---
 
@@ -58,13 +35,13 @@ Orange: two dice, a staircase sampled at eleven thresholds. Green: ten dice. Dar
 
 ## The formula
 
-Notation first, in words. A random variable X on a probability space $(\Omega, \mathcal{F}, P)$ carries the probability onto the line; the result is its **law** $\mu_X$, and its distribution function is $F_X(t) = P(X \le t)$ ([pushforward-and-the-law](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). A distribution function never falls and may jump. A **continuity point** of $F$ is a threshold $t$ where it does not jump: the limit from the left, written $F(t-)$, equals $F(t)$. For a sequence $X_1, X_2, \dots$ write $F_n$ for the distribution function of $X_n$, $\mu_n$ for its law, and $F$, $\mu$ for those of $X$. The double arrow $\Rightarrow$ is read "converges in distribution to".
+Notation first, in words. A random variable X on a probability space $(\Omega, \mathcal{F}, P)$ carries the probability onto the line; the result is its **law** $\mu_X$, and its distribution function is $F_X(t) = P(X \le t)$ ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). A distribution function never falls and may jump. A **continuity point** of $F$ is a threshold $t$ where it does not jump: the limit from the left, written $F(t-)$, equals $F(t)$. For a sequence $X_1, X_2, \dots$ write $F_n$ for the distribution function of $X_n$, $\mu_n$ for its law, and $F$, $\mu$ for those of $X$. The double arrow $\Rightarrow$ is read "converges in distribution to".
 
 $$X_n \Rightarrow X \quad\text{means}\quad F_n(t) \to F(t) \ \text{ at every continuity point } t \text{ of } F$$
 
 **Read it aloud:** X_n converges in distribution to X when, at every threshold where the limit does not jump, the chance that X_n lands at or below it tends to the chance that X does.
 
-The second form tests laws with functions. A **test function** is a bounded continuous $f$ on the line; its average under a law is $\int f \, d\mu$ ([expectation-as-an-integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)):
+The second form tests laws with functions. A **test function** is a bounded continuous $f$ on the line; its average under a law is $\int f \, d\mu$ ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)):
 
 $$\mu_n \Rightarrow \mu \quad\text{means}\quad \int f \, d\mu_n \to \int f \, d\mu \ \text{ for every bounded continuous } f$$
 
@@ -149,18 +126,18 @@ The fractions can be built this way. Draw U evenly from (0, 1) and round it up t
 
 A constant c has the distribution function that is 0 below c and 1 from c on. Every threshold except c is a continuity point. So $F_n(c - \varepsilon) \to 0$ and $F_n(c + \varepsilon/2) \to 1$, and the third formula sends the chance of missing c by ε to 0.
 
-The running average $A_n = S_n / n$ of die rolls tends to 3.5 in distribution ([weak-law-of-large-numbers](03-weak-law-of-large-numbers.md)). Its chance of missing 3.5 by at least 0.1 is 0.9273 at 10 rolls, 0.5785 at 100 and 0.0654 at 1,000, so the chance of landing within 0.1 at 1,000 rolls is 0.9346, the exact count found in [law-of-large-numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md). Chebyshev's bound gives 0.2917 at 1,000 rolls: true, and loose.
+The running average $A_n = S_n / n$ of die rolls tends to 3.5 in distribution ([The weak law of large numbers](03-weak-law-of-large-numbers.md)). Its chance of missing 3.5 by at least 0.1 is 0.9273 at 10 rolls, 0.5785 at 100 and 0.0654 at 1,000, so the chance of landing within 0.1 at 1,000 rolls is 0.9346, the exact count found in [Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md). Chebyshev's bound gives 0.2917 at 1,000 rolls: true, and loose.
 
 ### Step 5: nothing stronger follows, because only laws are compared
 
 Let D be one die roll and set every $X_n$ equal to 7 − D, the face underneath. It takes the values 1 to 6 with equal chances, so it has the law of D, and $X_n \Rightarrow D$ trivially. Yet $|X_n - D| = |7 - 2D|$ is 5, 3, 1, 1, 3 or 5, never less than 1. Convergence in distribution holds; convergence in probability fails at every n.
 
-On a probability space every other mode forces convergence in probability ([modes-of-convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)), which forces this one by Step 3. Convergence in distribution is the weakest mode.
+On a probability space every other mode forces convergence in probability ([Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)), which forces this one by Step 3. Convergence in distribution is the weakest mode.
 
 <details>
 <summary>Detailed proof</summary>
 
-Laws are Borel probability measures on the line, each determined by its distribution function ([lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)).
+Laws are Borel probability measures on the line, each determined by its distribution function ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)).
 
 **Lemma A (jumps are countable).** Let F be non-decreasing. For a jump at t the open interval $(F(t-), F(t))$ is non-empty; for jumps at s < t the intervals are disjoint, since $F(s) \le F(t-)$. Choosing a rational in each gives a one-to-one map from jumps into the rationals, so the jumps are countable. Every non-empty open interval of thresholds is uncountable, so it contains continuity points: they are dense.
 
@@ -192,7 +169,7 @@ When the limit F is continuous everywhere, as the bell is, convergence at each t
 
 </details>
 
-A second road to all of this runs through the averages of the two test functions $\cos(ux)$ and $\sin(ux)$ for every real u, the characteristic function of a law; Lévy's continuity theorem says their convergence is equivalent to convergence in distribution ([characteristic-functions](06-characteristic-functions.md), levy-continuity-theorem).
+A second road to all of this runs through the averages of the two test functions $\cos(ux)$ and $\sin(ux)$ for every real u, the characteristic function of a law; Lévy's continuity theorem says their convergence is equivalent to convergence in distribution ([Characteristic functions](06-characteristic-functions.md), Levy's continuity theorem).
 
 ---
 
@@ -624,16 +601,16 @@ The two outputs are identical line for line.
 >
 > - **Asking for convergence at the limit's jumps.** $X_n = 1/n$ keeps $F_n(0) = 0$ against F(0) = 1.
 > - **Expecting the chance of every set to converge.** The fractions give the rationals probability 1 at every n, the even law 0. Only sets whose boundary carries no limit mass pass to the limit; the rationals' boundary is the whole line.
-> - **Expecting means to converge.** $X_n = n$ with chance 1/n has mean 1 at every n and limit 0. Means follow only under uniform integrability ([uniform-integrability](../05-Swapping%20Limits%20and%20Integrals/05-uniform-integrability.md)).
+> - **Expecting means to converge.** $X_n = n$ with chance 1/n has mean 1 at every n and limit 0. Means follow only under uniform integrability ([Uniform integrability](../05-Swapping%20Limits%20and%20Integrals/05-uniform-integrability.md)).
 
 ---
 
 ## Where you meet it in real life
 
-- **Normal approximations in statistics.** Every "approximately normal" test statistic and confidence interval rests on this mode, the central limit theorem's ([central-limit-theorem](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)). Continuous functions and sums with constants carry it along, the Slutsky rules ([delta-method-and-slutsky](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md)).
-- **Rare events.** Successes in many trials, each unlikely, converge in distribution to a Poisson count: claims, defects, decays ([poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md)).
+- **Normal approximations in statistics.** Every "approximately normal" test statistic and confidence interval rests on this mode, the central limit theorem's ([Central limit theorem](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)). Continuous functions and sums with constants carry it along, the Slutsky rules ([Delta method](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md)).
+- **Rare events.** Successes in many trials, each unlikely, converge in distribution to a Poisson count: claims, defects, decays ([Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md)).
 - **Goodness-of-fit.** The Kolmogorov-Smirnov test measures the worst gap between two distribution functions, the quantity printed above for the dice.
-- **Option pricing on a tree.** A binomial tree's final log-price converges in distribution to a normal. A put's payoff is bounded and continuous, so the tree's put price converges to the Black-Scholes price; the call follows by parity ([crr-tree-and-convergence](../../12-Financial%20mathematics/04-Binomial%20Trees/04-crr-tree-and-convergence.md)).
+- **Option pricing on a tree.** A binomial tree's final log-price converges in distribution to a normal. A put's payoff is bounded and continuous, so the tree's put price converges to the Black-Scholes price; the call follows by parity ([Cox-Ross-Rubinstein](../../12-Financial%20mathematics/04-Binomial%20Trees/04-crr-tree-and-convergence.md)).
 
 > **Say it back**
 > Convergence in distribution asks that the chance of landing at or below each threshold converge, wherever the limit does not jump. That is the same as the average of every bounded continuous function converging: indicators are squeezed between ramps, and test functions are copied by staircases cut at continuity points. Convergence in probability forces it. It forces nothing back, since a die's underside has the die's law, unless the limit is a constant. The standardised die total reaches the bell in this sense and no stronger one.
@@ -642,17 +619,17 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [modes-of-convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md): the other modes, and the fact that each forces convergence in probability on a probability space.
-- [pushforward-and-the-law](../03-Measurable%20Functions/05-pushforward-and-the-law.md): the law of a random variable and its distribution function, the only things this mode sees.
-- [lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md): a distribution function determines its law, which makes the limit law unique.
+- [Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md): the other modes, and the fact that each forces convergence in probability on a probability space.
+- [The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md): the law of a random variable and its distribution function, the only things this mode sees.
+- [Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md): a distribution function determines its law, which makes the limit law unique.
 
 ## Where this goes next
 
-- [characteristic-functions](06-characteristic-functions.md): one family of test functions, cosines and sines, that identifies a law.
-- [central-limit-theorem](07-central-limit-theorem.md): the proof that the standardised die total, and any sum of independent terms with finite variance, converges in distribution to the bell.
-- levy-continuity-theorem: convergence of characteristic functions is equivalent to convergence in distribution.
+- [Characteristic functions](06-characteristic-functions.md): one family of test functions, cosines and sines, that identifies a law.
+- [The central limit theorem, proved](07-central-limit-theorem.md): the proof that the standardised die total, and any sum of independent terms with finite variance, converges in distribution to the bell.
+- Levy's continuity theorem: convergence of characteristic functions is equivalent to convergence in distribution.
 
-Testing every bounded continuous function is impractical; which small family suffices is the question [characteristic-functions](06-characteristic-functions.md) answers.
+Testing every bounded continuous function is impractical; which small family suffices is the question [Characteristic functions](06-characteristic-functions.md) answers.
 
 ---
 

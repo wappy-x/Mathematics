@@ -1,29 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Holomorphic Functions
-topic: Undoing the exponential
-item: The complex logarithm
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/04-eulers-formula|eulers-formula]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/01-complex-derivative-and-cauchy-riemann|complex-derivative-and-cauchy-riemann]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/05-logarithms|logarithms]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/05-inverse-functions|inverse-functions]]"
-next:
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/05-branch-cuts-and-complex-powers|branch-cuts-and-complex-powers]]"
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/02-antiderivatives-and-path-independence|antiderivatives-and-path-independence]]"
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/01-conformal-maps|conformal-maps]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/01-infinite-products|infinite-products]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/05-zeta-function-and-euler-product|zeta-function-and-euler-product]]"
-tags: [mathematics, complex analysis, complex-logarithm]
----
-
 # The complex logarithm: undo e^z, and find infinitely many answers a floor apart
 
-Complex analysis → Holomorphic Functions → Undoing the exponential → The complex logarithm
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Holomorphic Functions](../../../SYLLABUS.md#w07-s02) → The complex logarithm
 
 ---
 
@@ -31,7 +8,7 @@ Complex analysis → Holomorphic Functions → Undoing the exponential → The c
 
 A car park has a spiral ramp. One full circuit climbs one floor. On the plan, a ground-floor bay and the bay directly above it are the same spot. The plan says where, not which floor.
 
-The complex exponential works the same way. By [eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md), e to the power u + iv is the arrow of length e^u at angle v. Add a full turn, 2π, to the angle and the arrow lands on the same point. So the exponent giving −1 has an answer on every floor: iπ, 3iπ, −iπ, and so on.
+The complex exponential works the same way. By [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md), e to the power u + iv is the arrow of length e^u at angle v. Add a full turn, 2π, to the angle and the arrow lands on the same point. So the exponent giving −1 has an answer on every floor: iπ, 3iπ, −iπ, and so on.
 
 From here on a floor is called a **branch**. The house rule picks one, the **principal branch**, written Log with a capital L, which keeps the angle in (−π, π]. Then Log(−1) = iπ. The price is a wall, the **branch cut**, along the negative real axis, where the answer jumps by 2πi. It breaks a familiar law: Log((−1)(−1)) = Log 1 = 0, yet 2 Log(−1) = 2πi.
 
@@ -86,13 +63,13 @@ $$\operatorname{Log}(zw) = \operatorname{Log} z + \operatorname{Log} w + 2\pi i 
 
 ### Step 0: the exponential forgets full turns
 
-$e^{w + 2\pi i} = e^w$ for every w. A function sending two inputs to one output has no single undo ([inverse-functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md)). So undoing $e^w$ gives a list, and a single-valued logarithm must pick one member.
+$e^{w + 2\pi i} = e^w$ for every w. A function sending two inputs to one output has no single undo ([Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md)). So undoing $e^w$ gives a list, and a single-valued logarithm must pick one member.
 
 ### Step 1: solve e^w = z, length and angle separately
 
 Write w = u + iv, with u and v real. Then $e^w = e^u e^{iv}$: length $e^u$, angle v. Two arrows are equal when lengths match and angles differ by whole turns.
 
-- **Length:** $e^u = \lvert z\rvert$. The real exponential takes each positive value once, so u = ln |z| ([logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
+- **Length:** $e^u = \lvert z\rvert$. The real exponential takes each positive value once, so u = ln |z| ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
 - **Angle:** v is any angle of z: Arg z + 2πk, one for each whole number k.
 
 At z = −1: u = ln 1 = 0 and v = π + 2πk. The floors k = −1, 0, 1 give −iπ, iπ, 3iπ.
@@ -107,7 +84,7 @@ At −1 + 0.001i the angle is 3.140593; at −1 − 0.001i it is −3.140593. Th
 
 Some jump is forced. A continuous angle followed once round 0 gains 2π, so no rule is continuous on any loop round 0. So some line from 0 out to infinity must be removed; the house rule removes the negative real axis.
 
-The ramp shows it. Drive from 1, adding up each small step divided by the current position, as ln x adds up dt/t on the real line. Round the upper half-circle to −1 the total is iπ; round the lower half, −iπ; one and a half turns anticlockwise, 3iπ. Same endpoint, different floors. That total is the integral of 1/z along the path, made careful in [antiderivatives-and-path-independence](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md).
+The ramp shows it. Drive from 1, adding up each small step divided by the current position, as ln x adds up dt/t on the real line. Round the upper half-circle to −1 the total is iπ; round the lower half, −iπ; one and a half turns anticlockwise, 3iπ. Same endpoint, different floors. That total is the integral of 1/z along the path, made careful in [Antiderivatives](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md).
 
 ### The picture: the floors seen from the side
 
@@ -121,7 +98,7 @@ Off the cut, Log is continuous and $e^{\operatorname{Log} z} = z$. With a = Log 
 
 $$\frac{\operatorname{Log}(z+h) - \operatorname{Log} z}{h} = \frac{b - a}{e^b - e^a}.$$
 
-As h shrinks, b tends to a by continuity, and the right side tends to one over the slope of $e^w$ at a. That slope is $e^a$ ([exponential-sine-and-cosine-in-the-plane](03-exponential-sine-and-cosine-in-the-plane.md)), and $e^a = z$. So the slope is 1/z from every direction: Log is **holomorphic** (it has a complex derivative at every point) on the plane with the cut removed.
+As h shrinks, b tends to a by continuity, and the right side tends to one over the slope of $e^w$ at a. That slope is $e^a$ ([The elementary functions](03-exponential-sine-and-cosine-in-the-plane.md)), and $e^a = z$. So the slope is 1/z from every direction: Log is **holomorphic** (it has a complex derivative at every point) on the plane with the cut removed.
 
 At z = i, Log i = 1.570796i, and the slope quotients with a real step and an imaginary step both give −i, which is 1/i.
 
@@ -132,7 +109,7 @@ Off the cut write z = x + iy. Log has real part U = (1/2) ln(x^2 + y^2) and imag
 
 Differentiating: $U_x = x/\lvert z\rvert^2$, $U_y = y/\lvert z\rvert^2$, $V_x = -y/\lvert z\rvert^2$, $V_y = x/\lvert z\rvert^2$.
 
-So $U_x = V_y$ and $U_y = -V_x$: the Cauchy-Riemann equations of [complex-derivative-and-cauchy-riemann](01-complex-derivative-and-cauchy-riemann.md) hold, with all four partial derivatives continuous. The derivative is $U_x + iV_x = (x - iy)/\lvert z\rvert^2$, which is 1/z.
+So $U_x = V_y$ and $U_y = -V_x$: the Cauchy-Riemann equations of [The complex derivative](01-complex-derivative-and-cauchy-riemann.md) hold, with all four partial derivatives continuous. The derivative is $U_x + iV_x = (x - iy)/\lvert z\rvert^2$, which is 1/z.
 
 </details>
 
@@ -380,8 +357,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Phase unwrapping.** Radar, MRI and audio read a signal's angle as the principal argument, which jumps by 2π; unwrapping picks the floor continuously, as the ramp sum does.
-- **Complex powers.** z^a is defined as e^(a log z), so every power inherits the floors and the cut: [branch-cuts-and-complex-powers](05-branch-cuts-and-complex-powers.md).
-- **Products into sums.** Infinite products become sums of logs, with the 2πi slip kept in check: [infinite-products](../09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md).
+- **Complex powers.** z^a is defined as e^(a log z), so every power inherits the floors and the cut: [Branch cuts and complex powers](05-branch-cuts-and-complex-powers.md).
+- **Products into sums.** Infinite products become sums of logs, with the 2πi slip kept in check: [Infinite products](../09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md).
 
 > **Say it back**
 > The exponential forgets full turns, so every nonzero z has infinitely many logarithms: ln of its length plus i times any of its angles. The angle in (−π, π] gives Log z, and Log(−1) = iπ. The price is a cut along the negative real axis, where Log jumps by 2πi. Off the cut, Log has derivative 1/z. Products slip by whole turns: Log 1 = 0, yet 2 Log(−1) = 2πi.
@@ -390,18 +367,18 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e^(u+iv) as length e^u at angle v.
-- [complex-derivative-and-cauchy-riemann](01-complex-derivative-and-cauchy-riemann.md): holomorphic, and the equations the Detailed proof checks.
-- [logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): the real natural log in the real part.
-- [inverse-functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md): why a function that repeats has no single undo.
+- [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e^(u+iv) as length e^u at angle v.
+- [The complex derivative](01-complex-derivative-and-cauchy-riemann.md): holomorphic, and the equations the Detailed proof checks.
+- [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): the real natural log in the real part.
+- [Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md): why a function that repeats has no single undo.
 
 ## Where this goes next
 
-- [branch-cuts-and-complex-powers](05-branch-cuts-and-complex-powers.md): powers and roots built on the log, and cuts in general.
-- [antiderivatives-and-path-independence](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md): the ramp sum as the integral of 1/z.
-- [conformal-maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md): Log unrolls the plane into a strip.
-- [infinite-products](../09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md): products turned into sums of logs.
-- [zeta-function-and-euler-product](../09-Special%20Functions%20and%20the%20Zeta%20Function/05-zeta-function-and-euler-product.md): the log of the zeta function as a sum over primes.
+- [Branch cuts and complex powers](05-branch-cuts-and-complex-powers.md): powers and roots built on the log, and cuts in general.
+- [Antiderivatives](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md): the ramp sum as the integral of 1/z.
+- [Conformal maps](../07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md): Log unrolls the plane into a strip.
+- [Infinite products](../09-Special%20Functions%20and%20the%20Zeta%20Function/01-infinite-products.md): products turned into sums of logs.
+- [The zeta function](../09-Special%20Functions%20and%20the%20Zeta%20Function/05-zeta-function-and-euler-product.md): the log of the zeta function as a sum over primes.
 
 The log now has one value per point, bought with a cut; how many values i^i has, and where its cut goes, is the open question.
 

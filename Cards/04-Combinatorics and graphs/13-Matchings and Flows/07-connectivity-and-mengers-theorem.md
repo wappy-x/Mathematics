@@ -1,24 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Matchings and Flows
-topic: Weak spots in a network
-item: How many cuts break a network
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/13-Matchings and Flows/06-max-flow-min-cut|max-flow-min-cut]]"
-next: []
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - connectivity-and-mengers-theorem
----
-
 # How many cuts break a network: bridges, cut vertices, and Menger's theorem that separate routes equal the blocks needed
 
-Combinatorics and graphs → Matchings and Flows → Weak spots in a network → How many cuts break a network
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Matchings and Flows](../../../SYLLABUS.md#w04-s13) → How many cuts break a network
 
 ---
 
@@ -32,7 +14,7 @@ Stations tell a different story. Every route passes J, so closing J alone splits
 
 **The most routes from one station to another that share no line equals the fewest lines whose closure separates them; the same holds for stations, counting routes that share no station along the way.**
 
-**What kind of fact this is:** a theorem, Menger's theorem, proved in Why it works from [max-flow-min-cut](06-max-flow-min-cut.md); bridge, cut vertex and the two connectivities are definitions.
+**What kind of fact this is:** a theorem, Menger's theorem, proved in Why it works from [Max-flow min-cut](06-max-flow-min-cut.md); bridge, cut vertex and the two connectivities are definitions.
 
 ### The picture: two loops meeting at one junction
 
@@ -55,7 +37,7 @@ Each line runs both ways. S and T are the termini; J is the junction every route
 
 ## The formula
 
-Notation first, in words. A network is a graph $G$: stations are its vertex set $V$, lines its edge set $E$ ([graphs-vertices-and-edges](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). A **route** repeats no station. Routes are **line-disjoint** when they share no line, **station-disjoint** when they share no station but their ends. $c(G)$ counts the separate pieces of $G$ ([connectivity-and-breadth-first-search](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)); $G - e$ is $G$ with line $e$ removed.
+Notation first, in words. A network is a graph $G$: stations are its vertex set $V$, lines its edge set $E$ ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). A **route** repeats no station. Routes are **line-disjoint** when they share no line, **station-disjoint** when they share no station but their ends. $c(G)$ counts the separate pieces of $G$ ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)); $G - e$ is $G$ with line $e$ removed.
 
 The **line connectivity** $\lambda(S,T)$, read "lambda of S T", is the fewest lines whose closure leaves no route from $S$ to $T$. The **station connectivity** $\kappa(S,T)$, read "kappa", is the fewest stations, other than $S$ and $T$, whose closure does the same.
 
@@ -96,7 +78,7 @@ A line $e$ is a **bridge** when $c(G - e) > c(G)$. That happens exactly when $e$
 
 ### Step 0: routes are a flow, closures are a cut
 
-Give every line a capacity of 1 in each direction and send a flow from $S$ to $T$ ([flow-networks-and-ford-fulkerson](05-flow-networks-and-ford-fulkerson.md)). A train is one unit of flow, one per line.
+Give every line a capacity of 1 in each direction and send a flow from $S$ to $T$ ([Flows](05-flow-networks-and-ford-fulkerson.md)). A train is one unit of flow, one per line.
 
 ### Step 1: closures can never be fewer than routes
 
@@ -114,7 +96,7 @@ A cut splits the stations into an $S$ side and a $T$ side; its price is the numb
 
 ### Step 4: glue with max-flow min-cut
 
-Most line-disjoint routes equal the largest flow (Step 2), which equals the cheapest cut ([max-flow-min-cut](06-max-flow-min-cut.md)), which equals $\lambda(S,T)$ (Step 3). That is the line form.
+Most line-disjoint routes equal the largest flow (Step 2), which equals the cheapest cut ([Max-flow min-cut](06-max-flow-min-cut.md)), which equals $\lambda(S,T)$ (Step 3). That is the line form.
 
 ### Step 5: split each station to get the station form
 
@@ -390,7 +372,7 @@ The two outputs match line for line.
 
 - **Rail and road resilience.** A bridge is a line with no diversion, a cut vertex a junction with none: single points of failure.
 - **Computer networks.** Two station-disjoint paths between machines mean no single failed switch isolates them; Menger turns that into a count.
-- **Matching.** Menger's station form on a two-sided network is König's theorem ([konigs-theorem-and-vertex-cover](03-konigs-theorem-and-vertex-cover.md)), and through it Hall's condition ([halls-marriage-theorem](02-halls-marriage-theorem.md)).
+- **Matching.** Menger's station form on a two-sided network is König's theorem ([Konig's theorem](03-konigs-theorem-and-vertex-cover.md)), and through it Hall's condition ([Hall's theorem](02-halls-marriage-theorem.md)).
 
 > **Say it back**
 > A bridge is a line whose loss splits a network; a cut vertex is a station whose loss does. Menger: the most routes sharing no line equal the fewest lines that separate two stations. With capacity 1 per line this is max-flow min-cut, the flow peeled into routes. Split each station into entrance and exit and the same argument handles stations. On the railway: two routes and two lines, but one route and one station, J.
@@ -399,11 +381,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [max-flow-min-cut](06-max-flow-min-cut.md): the largest flow equals the cheapest cut; Menger is its capacity-1 case.
+- [Max-flow min-cut](06-max-flow-min-cut.md): the largest flow equals the cheapest cut; Menger is its capacity-1 case.
 
 ## Where this goes next
 
-- graph-algorithms-in-practice: finding every bridge and cut vertex of a large network in one sweep, Tarjan's method, instead of trying each line and station in turn.
+- Graph algorithms as code: finding every bridge and cut vertex of a large network in one sweep, Tarjan's method, instead of trying each line and station in turn.
 
 Trying every line and station in turn finds the weak spots here, and that stops being affordable long before a national rail map.
 

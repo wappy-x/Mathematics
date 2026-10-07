@@ -1,25 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Vector Calculus
-topic: Work that forgets the route
-item: Conservative fields
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/02-line-integrals|line-integrals]]"
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/03-divergence-and-curl|divergence-and-curl]]"
-next:
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/04-electrostatics-gauss-and-potential|electrostatics-gauss-and-potential]]"
-  - "[[Cards/22-Algebraic geometry/05-Cohomology and the Hodge Conjecture/02-de-rham-cohomology-of-varieties|de-rham-cohomology-of-varieties]]"
-  - "[[Cards/23-Differential geometry and Lie groups/04-Differential Forms/04-closed-and-exact-forms-and-the-poincare-lemma|closed-and-exact-forms-and-the-poincare-lemma]]"
-tags: [mathematics, calculus and analysis, conservative-fields-and-potentials]
----
-
 # Conservative fields: when work depends only on the endpoints
 
-Calculus and analysis → Vector Calculus → Work that forgets the route → Conservative fields
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Vector Calculus](../../../SYLLABUS.md#w06-s09) → Conservative fields
 
 ---
 
@@ -29,7 +10,7 @@ A walker carries a 2 kg water bottle from a trailhead A to a hut B, 400 m furthe
 
 Straight up the slope, gravity does −5880 J of work (work: force along the motion times distance, in joules; negative means the walker supplies it). A curving trail: −5880 J. Three switchbacks: −5880 J. Sideways walking costs nothing: the pull is straight down.
 
-On [line-integrals](02-line-integrals.md) a shearing wind gave four routes four answers. A field whose work depends only on the two ends is **conservative**. A function of position whose change gives that work, here −19.6 N times height, is a **potential**.
+On [Line integrals of a field](02-line-integrals.md) a shearing wind gave four routes four answers. A field whose work depends only on the two ends is **conservative**. A function of position whose change gives that work, here −19.6 N times height, is a **potential**.
 
 <p align="center"><img src="../figures/conservative-fields-and-potentials-1.svg" alt="The hillside to scale: three trails from trailhead A to hut B, and two gravity arrows pointing straight down" width="420"></p>
 
@@ -37,13 +18,13 @@ To scale, 0.6 units per metre; arrows 1 unit per newton. Solid: straight. Dotted
 
 **A field that is the gradient of a potential does work equal to the potential's change, whatever the route; zero curl detects such fields near each point, and a hole can defeat the test.**
 
-**What kind of fact this is:** a theorem, proved in Why it works, except the global step of the no-holes converse, which follows from [greens-theorem](06-greens-theorem.md).
+**What kind of fact this is:** a theorem, proved in Why it works, except the global step of the no-holes converse, which follows from [Green's theorem](06-greens-theorem.md).
 
 ---
 
 ## The formula
 
-Notation first, in words. A field $F$ puts an arrow at every point; $P$ is its east part and $Q$ its upward part. The gradient $\nabla\phi$ of a function $\phi$ is the arrow of its two partial rates, $(\partial\phi/\partial x, \partial\phi/\partial y)$ ([gradient-and-directional-derivatives](../07-Several%20Variables/03-gradient-and-directional-derivatives.md)). A **potential** for $F$ is a function with $\nabla\phi = F$.
+Notation first, in words. A field $F$ puts an arrow at every point; $P$ is its east part and $Q$ its upward part. The gradient $\nabla\phi$ of a function $\phi$ is the arrow of its two partial rates, $(\partial\phi/\partial x, \partial\phi/\partial y)$ ([Gradient](../07-Several%20Variables/03-gradient-and-directional-derivatives.md)). A **potential** for $F$ is a function with $\nabla\phi = F$.
 
 $$W = \int_C F \cdot dr = \phi(B) - \phi(A)$$
 
@@ -53,7 +34,7 @@ The test, for a field with continuous partial rates:
 
 $$\text{a potential exists} \;\Rightarrow\; \frac{\partial Q}{\partial x} = \frac{\partial P}{\partial y}$$
 
-**Read it aloud:** the upward part's rate going east equals the east part's rate going up. Their difference is the curl ([divergence-and-curl](03-divergence-and-curl.md)), so a conservative field has zero curl; the converse needs a region with no holes.
+**Read it aloud:** the upward part's rate going east equals the east part's rate going up. Their difference is the curl ([Divergence and curl](03-divergence-and-curl.md)), so a conservative field has zero curl; the converse needs a region with no holes.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -85,11 +66,11 @@ If a function's rise over each small step equals the field's work on that step, 
 
 ### Step 1: the endpoint formula
 
-Along a route $r(t)$, the chain rule ([multivariable-chain-rule-and-jacobians](../07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)) gives the potential's rate along the route:
+Along a route $r(t)$, the chain rule ([Chain rule in several variables](../07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md)) gives the potential's rate along the route:
 
 $$\frac{d}{dt}\,\phi(r(t)) = \nabla\phi(r(t)) \cdot r'(t) = F(r(t)) \cdot r'(t).$$
 
-The right side is the line integral's integrand, so the integral is the potential's change: $\phi(B) - \phi(A)$, by the fundamental theorem of calculus ([fundamental-theorem-of-calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)).
+The right side is the line integral's integrand, so the integral is the potential's change: $\phi(B) - \phi(A)$, by the fundamental theorem of calculus ([Fundamental theorem of calculus](../04-Integrals/02-fundamental-theorem-of-calculus.md)).
 
 For the bottle, $\phi = -19.6y$ has gradient $(0, -19.6)$, so every trail gives −19.6 × 300 = −5880 J.
 
@@ -112,7 +93,7 @@ P is continuous: for every ε > 0 some δ > 0 keeps |P(q + (u, 0)) − P(q)| < �
 
 ### Step 4: the test, and why a potential passes it
 
-If $\nabla\phi = F$, then $P = \partial\phi/\partial x$ and $Q = \partial\phi/\partial y$. So $\partial P/\partial y$ and $\partial Q/\partial x$ are the two mixed second rates of φ, which agree when they are continuous ([partial-derivatives](../07-Several%20Variables/01-partial-derivatives.md)). Zero curl is necessary.
+If $\nabla\phi = F$, then $P = \partial\phi/\partial x$ and $Q = \partial\phi/\partial y$. So $\partial P/\partial y$ and $\partial Q/\partial x$ are the two mixed second rates of φ, which agree when they are continuous ([Partial derivatives](../07-Several%20Variables/01-partial-derivatives.md)). Zero curl is necessary.
 
 Far from the ground gravity weakens. Per kilogram, a planet pulls toward its centre with strength $k/r^2$; $k = gR^2$ makes it 9.8 N at the surface. As a field, $F = -k\,(x, y)/r^3$. By the quotient rule both cross rates are $3kxy/r^5$, 0.107331 at (1, 2) with k = 1: the test passes.
 
@@ -131,7 +112,7 @@ Let P and Q have continuous partial rates on an open rectangle, with ∂Q/∂x =
 $$\phi(x, y) = \int_a^x P(s, b)\,ds + \int_b^y Q(x, s)\,ds.$$
 The fundamental theorem gives ∂φ/∂y = Q(x, y). Differentiating under the integral sign, allowed as ∂Q/∂x is continuous,
 $$\frac{\partial\phi}{\partial x} = P(x, b) + \int_b^y \frac{\partial Q}{\partial x}(x, s)\,ds = P(x, b) + \int_b^y \frac{\partial P}{\partial y}(x, s)\,ds = P(x, y).$$
-Joining these local potentials into one needs no holes; that step is on [greens-theorem](06-greens-theorem.md).
+Joining these local potentials into one needs no holes; that step is on [Green's theorem](06-greens-theorem.md).
 
 </details>
 
@@ -147,7 +128,7 @@ Near any point, the angle round the drain is a potential. Think of a car park ra
 
 To scale, 20 units per metre; arrows 30 units per m/s, 1.5 m from the drain. Solid: half-side 1 m, round and beside the drain. Dashed: half-side 2 m.
 
-The wind on [line-integrals](02-line-integrals.md) fails the test outright. The whirlpool passes it and fails anyway: the hole decides.
+The wind on [Line integrals of a field](02-line-integrals.md) fails the test outright. The whirlpool passes it and fails anyway: the hole decides.
 
 ---
 
@@ -403,8 +384,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Mechanics.** Gravity and springs are conservative, so energy bookkeeping replaces route integrals: newtons-laws-work-and-energy.
-- **Electric circuits.** A voltage is a potential difference, whatever path the charge takes: electrostatics-gauss-and-potential.
+- **Mechanics.** Gravity and springs are conservative, so energy bookkeeping replaces route integrals: Newton's laws.
+- **Electric circuits.** A voltage is a potential difference, whatever path the charge takes: Electric fields.
 
 > **Say it back**
 > A field is conservative when its work depends only on the route's ends. That happens exactly when it is a potential's gradient, and then work is the potential's change. A potential forces equal cross rates, so zero curl is necessary. Without holes it is also enough; round a hole it is not, as the whirlpool's 2π per lap shows.
@@ -413,14 +394,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [line-integrals](02-line-integrals.md): work along a route, its reversal rule, and a field where routes disagree.
-- [divergence-and-curl](03-divergence-and-curl.md): the curl, the quantity the test sets to zero.
+- [Line integrals of a field](02-line-integrals.md): work along a route, its reversal rule, and a field where routes disagree.
+- [Divergence and curl](03-divergence-and-curl.md): the curl, the quantity the test sets to zero.
 
 ## Where this goes next
 
-- electrostatics-gauss-and-potential: the electric potential, found this way.
-- closed-and-exact-forms-and-the-poincare-lemma: zero curl and having a potential in any dimension, and why they agree without holes.
-- de-rham-cohomology-of-varieties: counting holes with such fields.
+- Electric fields: the electric potential, found this way.
+- Closed and exact forms: zero curl and having a potential in any dimension, and why they agree without holes.
+- De Rham cohomology: counting holes with such fields.
 
 A hole can hide a loop worth 2π; fields that pass the test yet have no potential end up counting holes.
 

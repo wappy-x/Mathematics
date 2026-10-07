@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Signals, Mean Reversion and Backtesting
-topic: Honest backtests
-item: Backtesting
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/04-information-coefficient-and-the-fundamental-law|information-coefficient-and-the-fundamental-law]]"
-next:
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/06-deflated-sharpe-and-multiple-testing|deflated-sharpe-and-multiple-testing]]"
-tags: [mathematics, financial-mathematics, backtesting-pitfalls]
----
-
 # Backtesting: look-ahead, survivorship, costs and regime change, and how each flatters a strategy
 
-Financial mathematics → Signals, Mean Reversion and Backtesting → Honest backtests → Backtesting
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Signals, Mean Reversion and Backtesting](../../../SYLLABUS.md#w12-s50) → Backtesting
 
 ---
 
@@ -57,7 +41,7 @@ $$\mathrm{SR} = \sqrt{252}\;\frac{\bar R}{s}$$
 
 **Read it aloud:** the Sharpe ratio is the average daily return divided by the spread of daily returns, times the square root of 252, the number of trading days in a year.
 
-The model market pays no interest, so $\bar R$ is already the return above cash; with a real cash rate, subtract it first. The square root turns a daily ratio into a yearly one: over a year the average grows 252-fold, the spread only $\sqrt{252}$-fold ([information-coefficient-and-the-fundamental-law](04-information-coefficient-and-the-fundamental-law.md) uses the same scaling for breadth).
+The model market pays no interest, so $\bar R$ is already the return above cash; with a real cash rate, subtract it first. The square root turns a daily ratio into a yearly one: over a year the average grows 252-fold, the spread only $\sqrt{252}$-fold ([The fundamental law](04-information-coefficient-and-the-fundamental-law.md) uses the same scaling for breadth).
 
 A backtest's average is the live average plus whatever the replay credits that trading could not earn. Call each such slice a **phantom gain**, $G$, with a subscript naming the pitfall:
 
@@ -109,7 +93,7 @@ One phantom basis point is invisible in any single day, against a daily spread o
 
 ### Step 1: where the edge comes from
 
-Each company's log price (the natural log of its price, so daily changes are close to percentage returns) is two parts added together. Its **fundamental value** wanders at random, 1.5 percent a day, with no memory. Its **mispricing** keeps half of itself each day, $b = 0.5$, and takes a fresh random shock of 1.2 percent a day. This is the discrete version of the pull-back process on [ornstein-uhlenbeck-mean-reversion-trading](01-ornstein-uhlenbeck-mean-reversion-trading.md).
+Each company's log price (the natural log of its price, so daily changes are close to percentage returns) is two parts added together. Its **fundamental value** wanders at random, 1.5 percent a day, with no memory. Its **mispricing** keeps half of itself each day, $b = 0.5$, and takes a fresh random shock of 1.2 percent a day. This is the discrete version of the pull-back process on [Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md).
 
 A stock that rose over 20 days is, on average, carrying some upward mispricing. The mispricing then decays, so the price tends to fall back. The rule bets on that: short after a rise, long after a fall. The **signal** $S$ is the 20-day change in log price; each bet is minus the sign of $S$, times the return the bet then collects.
 
@@ -652,7 +636,7 @@ The two outputs match line for line: the same generator gives both programs the 
 
 - **Research on stock-return patterns.** Academic databases keep delisted firms and their final returns so that studies are not run on survivors only. Brown, Goetzmann, Ibbotson and Ross (1992) showed that survivorship alone can make fund performance look persistent when it is not.
 - **Short-term reversal.** Jegadeesh (1990) found that US stocks' monthly returns partly reverse the month after. Rules that trade on it turn over much of the book, which is why the cost line decides them, as it does here.
-- **Pairs and factor desks.** The same four pitfalls apply to a pairs trade ([pairs-trading-and-cointegration](02-pairs-trading-and-cointegration.md)) and to momentum and factor scores ([momentum-and-factor-signals](03-momentum-and-factor-signals.md)). A hedge ratio fitted on the whole sample and then traded on it is look-ahead ([kalman-filter-for-dynamic-hedge-ratios](07-kalman-filter-for-dynamic-hedge-ratios.md) estimates it day by day instead).
+- **Pairs and factor desks.** The same four pitfalls apply to a pairs trade ([Pairs trading](02-pairs-trading-and-cointegration.md)) and to momentum and factor scores ([Momentum and factor signals](03-momentum-and-factor-signals.md)). A hedge ratio fitted on the whole sample and then traded on it is look-ahead ([A moving hedge ratio](07-kalman-filter-for-dynamic-hedge-ratios.md) estimates it day by day instead).
 - **Walk-forward testing.** Systematic funds fit on one window, trade the next, and roll forward, so every score comes from data the decision did not see.
 
 > **Say it back**
@@ -662,12 +646,12 @@ The two outputs match line for line: the same generator gives both programs the 
 
 ## What this builds on
 
-- [information-coefficient-and-the-fundamental-law](04-information-coefficient-and-the-fundamental-law.md): a ratio of average return to spread, and why many independent bets scale it by a square root; the Sharpe ratio here is that ratio measured against cash.
-- [ornstein-uhlenbeck-mean-reversion-trading](01-ornstein-uhlenbeck-mean-reversion-trading.md): the pull-back process whose daily version is this card's mispricing.
+- [The fundamental law](04-information-coefficient-and-the-fundamental-law.md): a ratio of average return to spread, and why many independent bets scale it by a square root; the Sharpe ratio here is that ratio measured against cash.
+- [Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md): the pull-back process whose daily version is this card's mispricing.
 
 ## Where this goes next
 
-- [deflated-sharpe-and-multiple-testing](06-deflated-sharpe-and-multiple-testing.md): the fifth pitfall, trying many rules and keeping the best, and how much to discount the winner's Sharpe ratio for it.
+- [Trying many strategies](06-deflated-sharpe-and-multiple-testing.md): the fifth pitfall, trying many rules and keeping the best, and how much to discount the winner's Sharpe ratio for it.
 
 An honest backtest of one rule still carries noise, a standard error of 0.341 on a decade here; what remains open is how far to trust the best of many honest backtests, which is what the deflated Sharpe ratio measures.
 

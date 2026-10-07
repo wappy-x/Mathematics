@@ -1,26 +1,7 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Product Measures and Fubini
-topic: Sequences from one dart
-item: Infinitely many coin tosses
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/04-independence-as-a-product-measure|independence-as-a-product-measure]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/03-lebesgue-measure|lebesgue-measure]]"
-  - "[[Cards/10-Measure and integration/03-Measurable Functions/05-pushforward-and-the-law|pushforward-and-the-law]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/02-countable-sets|countable-sets]]"
-next:
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/02-kolmogorov-zero-one-law|kolmogorov-zero-one-law]]"
-tags: [mathematics, measure and integration, infinite-sequences-and-kolmogorov-extension]
----
-
 # Infinitely many coin tosses: build them from one uniform number, and Kolmogorov's theorem for every other infinite sequence
 
 
-Measure and integration → Product Measures and Fubini → Sequences from one dart → Infinitely many coin tosses
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Product Measures and Fubini](../../../SYLLABUS.md#w10-s06) → Infinitely many coin tosses
 
 ---
 
@@ -46,7 +27,7 @@ Each row is the bottom edge of the board, 0 to 1 m, shaded where one digit equal
 
 ## The formula
 
-Notation first, in words. $\Omega$ is the bottom edge of the board, the interval from 0 up to but not including 1, and $\lambda$ is length on it: Lebesgue measure ([lebesgue-measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)). A uniform dart is a point drawn with probability $\lambda$. The n-th binary digit of a point x is $d_n$: double x n times, keep the whole-number part, and read whether it is odd.
+Notation first, in words. $\Omega$ is the bottom edge of the board, the interval from 0 up to but not including 1, and $\lambda$ is length on it: Lebesgue measure ([Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md)). A uniform dart is a point drawn with probability $\lambda$. The n-th binary digit of a point x is $d_n$: double x n times, keep the whole-number part, and read whether it is odd.
 
 $$d_n(x) = \lfloor 2^n x \rfloor \bmod 2$$
 
@@ -64,7 +45,7 @@ $$U_k = \sum_{j=1}^{\infty} d_{2^{k-1}(2j-1)}\, 2^{-j}, \qquad k = 1, 2, 3, \dot
 
 **Read it aloud:** the k-th new number takes as its j-th digit the old digit in slot (k, j).
 
-Then $U_1, U_2, U_3, \dots$ are independent and each is uniform on the unit interval. For any distribution function $F$ with quantile map $Q(u) = \inf\{t : F(t) \ge u\}$ for 0 < u < 1, the draws $X_k = Q(U_k)$ are independent, each with law $F$ ([pushforward-and-the-law](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). The pairs $(U_1, U_2), (U_3, U_4), \dots$ are independent darts on the board.
+Then $U_1, U_2, U_3, \dots$ are independent and each is uniform on the unit interval. For any distribution function $F$ with quantile map $Q(u) = \inf\{t : F(t) \ge u\}$ for 0 < u < 1, the draws $X_k = Q(U_k)$ are independent, each with law $F$ ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). The pairs $(U_1, U_2), (U_3, U_4), \dots$ are independent darts on the board.
 
 **Kolmogorov's extension theorem.** For every n let $\mu_n$ be a probability on the Borel sets of $\mathbb{R}^n$, the n-long lists of reals. The family is **consistent** when adding a coordinate and asking nothing of it changes nothing:
 
@@ -76,7 +57,7 @@ $$P\{\omega : (\omega_1, \dots, \omega_n) \in A\} = \mu_n(A) \quad \text{for eve
 
 **Read it aloud:** if the laws of the first n terms fit together, one law for the whole infinite sequence has all of them as its pieces.
 
-The product sigma-algebra is the smallest sigma-algebra holding every **cylinder set**: a set that constrains only the first n coordinates, for some n, and leaves the rest free ([product-sigma-algebras](01-product-sigma-algebras.md)).
+The product sigma-algebra is the smallest sigma-algebra holding every **cylinder set**: a set that constrains only the first n coordinates, for some n, and leaves the rest free ([Product sigma-algebras](01-product-sigma-algebras.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -120,23 +101,23 @@ The dart: doubling 0.7236 gives 1.4472, so the first digit is 1; keep 0.4472 and
 
 Fix positions 2, 5 and 7 to 1, 0, 1 and leave the rest free. The four free positions among the first seven each take 0 or 1, so the event is 2^4 = 16 disjoint intervals of length 2^-7: 16/128 = 0.125 = 0.5^3.
 
-In general, r fixed positions, the last at position N, give 2^(N−r) intervals of length 2^-N: chance 2^-r, the product of r halves. A digit's information is the four sets ∅, "digit is 0", "digit is 1" and the whole edge, and the product rule on every finite subfamily of such events is the definition of independence ([independence-as-a-product-measure](04-independence-as-a-product-measure.md)). So $d_1, d_2, d_3, \dots$ are independent fair coins. The code checks all 8,190 patterns of length 1 to 12.
+In general, r fixed positions, the last at position N, give 2^(N−r) intervals of length 2^-N: chance 2^-r, the product of r halves. A digit's information is the four sets ∅, "digit is 0", "digit is 1" and the whole edge, and the product rule on every finite subfamily of such events is the definition of independence ([Independence as a product](04-independence-as-a-product-measure.md)). So $d_1, d_2, d_3, \dots$ are independent fair coins. The code checks all 8,190 patterns of length 1 to 12.
 
 A point such as 0.5 has two binary expansions, 0.1000… and 0.0111…; the rule above always picks the first. Such points are fractions with a power of 2 below the line, countably many, so their total length is 0 and no chance on this card changes.
 
 ### Step 3: deal the digits into infinitely many piles
 
-The slot rule pairs positions with pairs (k, j) one-to-one: strip every factor 2 from n, count them to get k − 1, and the odd number left is 2j − 1. That the pairs of whole numbers can be listed one-to-one against the whole numbers is [countable-sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md). Pile 1 takes the odd positions 1, 3, 5, …; pile 2 takes 2, 6, 10, …; pile 3 takes 4, 12, 20, …; pile 4 takes 8, 24, 40, …
+The slot rule pairs positions with pairs (k, j) one-to-one: strip every factor 2 from n, count them to get k − 1, and the odd number left is 2j − 1. That the pairs of whole numbers can be listed one-to-one against the whole numbers is [Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md). Pile 1 takes the odd positions 1, 3, 5, …; pile 2 takes 2, 6, 10, …; pile 3 takes 4, 12, 20, …; pile 4 takes 8, 24, 40, …
 
 The dart's first sixteen positions go to piles 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5. Twenty digits from each of the first four piles give U_1 = 0.900990, U_2 = 0.107787, U_3 = 0.959763 and U_4 = 0.764359.
 
 ### Step 4: each pile is a uniform number
 
-The digits of pile k are a subsequence of independent fair coins, so any pattern in its first m digits has chance $2^{-m}$. So $U_k$ lands in each interval from $i/2^m$ to $(i+1)/2^m$ with chance equal to its length. These dyadic intervals are nested or disjoint, so with ∅ they form a pi-system, a family closed under overlap, and they generate the Borel sets. Two probabilities that agree on a generating pi-system agree everywhere ([pi-systems-and-uniqueness](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)), so the law of $U_k$ is length.
+The digits of pile k are a subsequence of independent fair coins, so any pattern in its first m digits has chance $2^{-m}$. So $U_k$ lands in each interval from $i/2^m$ to $(i+1)/2^m$ with chance equal to its length. These dyadic intervals are nested or disjoint, so with ∅ they form a pi-system, a family closed under overlap, and they generate the Borel sets. Two probabilities that agree on a generating pi-system agree everywhere ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)), so the law of $U_k$ is length.
 
 ### Step 5: different piles are independent
 
-Events about the first m digits of different piles fix disjoint sets of old digits, so by Step 2 their chances multiply. Such events generate each pile's information, and independence checked on generating pi-systems passes to the whole sigma-algebras ([independence-as-a-product-measure](04-independence-as-a-product-measure.md)).
+Events about the first m digits of different piles fix disjoint sets of old digits, so by Step 2 their chances multiply. Such events generate each pile's information, and independence checked on generating pi-systems passes to the whole sigma-algebras ([Independence as a product](04-independence-as-a-product-measure.md)).
 
 The code checks this at level 12. The first 12 old digits give pile 1 six digits, pile 2 three, pile 3 two and pile 4 one: 64 × 8 × 4 × 2 = 4096 value combinations. The 4096 intervals of length 1/4096 produce every combination exactly once, which is the product law.
 
@@ -145,13 +126,13 @@ The code checks this at level 12. The first 12 old digits give pile 1 six digits
 
 **Setting.** $\lambda$ on the Borel sets of $\Omega$; the $d_n$ are independent fair coins (Step 2); $s(k, j) = 2^{k-1}(2j-1)$ is one-to-one from pairs onto positions.
 
-**1. Each $U_k$ is measurable.** Its partial sums are step functions, and a limit of measurable functions is measurable ([limits-of-measurable-functions](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)).
+**1. Each $U_k$ is measurable.** Its partial sums are step functions, and a limit of measurable functions is measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)).
 
 **2. Each $U_k$ is uniform.** Let $D_m$ be the event that every pile-k digit after the m-th is 1. It lies inside "pile digits m + 1 to r are all 1", of chance $2^{-(r-m)}$ for every r, so it is null, and so is the union over m. Off that null set, $U_k \in [i/2^m, (i+1)/2^m)$ exactly when the first m pile digits spell i, of chance $2^{-m}$ by Step 2. The law of $U_k$ and $\lambda$ agree on the dyadic intervals, a pi-system generating the Borel sets, and both have total 1; the uniqueness theorem makes them equal.
 
-**3. $U_1, \dots, U_r$ are independent.** For each k let the events "the first m digits of pile k spell i", over all m and i, with ∅ and $\Omega$, be the family for pile k. It is closed under overlap and generates the information of pile k's digits, which contains that of $U_k$. Pick $A_k$ from the family for pile k, for k = 1 to r. The overlap of the $A_k$ fixes old digits in distinct slots, so by Step 2 its chance is the product of their chances. Independence on generating pi-systems gives independence of the information of $U_1, \dots, U_r$, by the Dynkin argument of [independence-as-a-product-measure](04-independence-as-a-product-measure.md) applied one family at a time, the other r − 1 events held fixed; an infinite family is independent when every finite part is.
+**3. $U_1, \dots, U_r$ are independent.** For each k let the events "the first m digits of pile k spell i", over all m and i, with ∅ and $\Omega$, be the family for pile k. It is closed under overlap and generates the information of pile k's digits, which contains that of $U_k$. Pick $A_k$ from the family for pile k, for k = 1 to r. The overlap of the $A_k$ fixes old digits in distinct slots, so by Step 2 its chance is the product of their chances. Independence on generating pi-systems gives independence of the information of $U_1, \dots, U_r$, by the Dynkin argument of [Independence as a product](04-independence-as-a-product-measure.md) applied one family at a time, the other r − 1 events held fixed; an infinite family is independent when every finite part is.
 
-**4. Other laws, and darts.** $Q$ is non-decreasing, so measurable, and $Q(U_k)$ has law F ([pushforward-and-the-law](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). The event $Q(U_k) \in B$ is the event $U_k \in Q^{-1}(B)$, so functions of independent variables stay independent. The pairs of uniforms have law length times length on the square ([product-measure](02-product-measure.md)).
+**4. Other laws, and darts.** $Q$ is non-decreasing, so measurable, and $Q(U_k)$ has law F ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). The event $Q(U_k) \in B$ is the event $U_k \in Q^{-1}(B)$, so functions of independent variables stay independent. The pairs of uniforms have law length times length on the square ([Product measure](02-product-measure.md)).
 
 </details>
 
@@ -178,9 +159,9 @@ Full proofs: Billingsley, Section 36; Durrett, Theorem A.3.1.
 
 **3. P is countably additive there.** It suffices that cylinder sets $B_1 \supseteq B_2 \supseteq \dots$ with every $P(B_i) \ge \varepsilon > 0$ share a point. For if disjoint cylinder sets $A_1, A_2, \dots$ have a cylinder set $A$ as their union, the sets $B_i = A \setminus (A_1 \cup \dots \cup A_i)$ decrease and share no point, and finite additivity gives $P(A) = P(A_1) + \dots + P(A_i) + P(B_i)$; so countable additivity is exactly $P(B_i) \to 0$. A probability on $\mathbb{R}^n$ gives each Borel set nearly its full size on a closed, bounded subset (proved in Billingsley). Shrink the base of $B_i$ that way, losing less than $\varepsilon/2^{i+1}$, and intersect the first i shrunken sets to get $C_i$ inside $B_i$ with $P(C_i) > \varepsilon/2$, so $C_i$ holds a point. Each coordinate of these points stays in a closed, bounded set, so a diagonal choice of subsequences, as in Cantor's diagonal argument, makes every coordinate converge. The limit lies in every $C_i$, since the bases are closed, hence in every $B_i$.
 
-**4. Extend** to the product sigma-algebra ([caratheodory-extension-theorem](../02-Length%20Done%20Properly/05-caratheodory-extension-theorem.md)).
+**4. Extend** to the product sigma-algebra ([Caratheodory's extension theorem](../02-Length%20Done%20Properly/05-caratheodory-extension-theorem.md)).
 
-**5. Unique**, since cylinder sets are a generating pi-system ([pi-systems-and-uniqueness](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)).
+**5. Unique**, since cylinder sets are a generating pi-system ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)).
 
 Only item 3 uses real coordinates. For an arbitrary index set $T$ the proof runs on finite parts $J$, since each cylinder set involves finitely many coordinates.
 
@@ -631,7 +612,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Random-number generators.** A 64-bit word from a generator is meant to be 64 fair coin tosses, and one word is routinely cut into several smaller numbers, as the simulation above deals 128 digits into four piles.
-- **Monte Carlo pricing.** A simulation estimate of an option price, such as the call in [black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), averages over thousands of independent normal shocks, each a uniform sent through the normal quantile map.
+- **Monte Carlo pricing.** A simulation estimate of an option price, such as the call in [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), averages over thousands of independent normal shocks, each a uniform sent through the normal quantile map.
 - **Markov chains.** The sticky coin is a two-state Markov chain, whose next term depends only on the last. Queues, credit ratings and weather states are modelled this way, and Kolmogorov's theorem is why such a chain is one probability on whole paths.
 
 > **Say it back**
@@ -641,16 +622,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [independence-as-a-product-measure](04-independence-as-a-product-measure.md): independence as products on every finite subfamily, checked on generating pi-systems.
-- [lebesgue-measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md): length on the unit interval, which measures every digit event.
-- [pushforward-and-the-law](../03-Measurable%20Functions/05-pushforward-and-the-law.md): the quantile map, turning one uniform into a draw of any law.
-- [countable-sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md): pairs of whole numbers listed one-to-one against the whole numbers, which is the slot rule.
+- [Independence as a product](04-independence-as-a-product-measure.md): independence as products on every finite subfamily, checked on generating pi-systems.
+- [Lebesgue measure](../02-Length%20Done%20Properly/03-lebesgue-measure.md): length on the unit interval, which measures every digit event.
+- [The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md): the quantile map, turning one uniform into a draw of any law.
+- [Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md): pairs of whole numbers listed one-to-one against the whole numbers, which is the slot rule.
 
 ## Where this goes next
 
-- [kolmogorov-zero-one-law](../10-The%20Limit%20Theorems%2C%20Proved/02-kolmogorov-zero-one-law.md): on this card's space of independent tosses, every event unaffected by any finite number of tosses has chance 0 or 1.
+- [Kolmogorov's zero-one law](../10-The%20Limit%20Theorems%2C%20Proved/02-kolmogorov-zero-one-law.md): on this card's space of independent tosses, every event unaffected by any finite number of tosses has chance 0 or 1.
 
-This card builds one space that carries a whole independent sequence; which of its events can have a chance strictly between 0 and 1 is the question [kolmogorov-zero-one-law](../10-The%20Limit%20Theorems%2C%20Proved/02-kolmogorov-zero-one-law.md) answers for the events that live far out in the tail.
+This card builds one space that carries a whole independent sequence; which of its events can have a chance strictly between 0 and 1 is the question [Kolmogorov's zero-one law](../10-The%20Limit%20Theorems%2C%20Proved/02-kolmogorov-zero-one-law.md) answers for the events that live far out in the tail.
 
 ---
 

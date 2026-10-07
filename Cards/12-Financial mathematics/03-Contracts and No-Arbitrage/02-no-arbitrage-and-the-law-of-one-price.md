@@ -1,30 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Contracts and No-Arbitrage
-topic: Prices that cannot disagree
-item: No arbitrage
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/01-payoffs-and-positions|payoffs-and-positions]]"
-next:
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/03-forward-price-by-cash-and-carry|forward-price-by-cash-and-carry]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/06-replication-and-self-financing|replication-and-self-financing]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/03-put-call-parity|put-call-parity]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/04-option-price-bounds|option-price-bounds]]"
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/01-currency-quotes-and-cross-rates|currency-quotes-and-cross-rates]]"
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/02-storage-cost-and-the-carry-ceiling|storage-cost-and-the-carry-ceiling]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - no-arbitrage-and-the-law-of-one-price
----
-
 # No arbitrage: you cannot make something from nothing, so same payoff means same price
 
-Financial mathematics → Contracts and No-Arbitrage → Prices that cannot disagree → No arbitrage
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Contracts and No-Arbitrage](../../../SYLLABUS.md#w12-s03) → No arbitrage
 
 ---
 
@@ -64,7 +40,7 @@ Three words first.
 
 A **scenario** is one complete way the year can turn out: Acme finishing high at 130.00, middle at 105.00 or low at 85.00. Write $\omega$, said "omega", for one of them.
 
-A **position** is anything held from today to expiry — a note, a share, a deposit or loan, any bundle of them, long or short ([payoffs-and-positions](01-payoffs-and-positions.md)). Write $p$ for what it costs today, negative if it pays to put on, and $X(\omega)$ for what it is worth at expiry in scenario $\omega$.
+A **position** is anything held from today to expiry — a note, a share, a deposit or loan, any bundle of them, long or short ([Payoffs](01-payoffs-and-positions.md)). Write $p$ for what it costs today, negative if it pays to put on, and $X(\omega)$ for what it is worth at expiry in scenario $\omega$.
 
 An **arbitrage** is a position for which
 
@@ -88,7 +64,7 @@ Two things trade on this card. One is the bank, at 5 percent continuously compou
 
 $$R = e^{rT} = 1.051271, \qquad D = e^{-rT} = 0.951229$$
 
-The other is the note, price $P$ = 98.019867 — less than Acme's 100.00, because Acme pays its holders 2 percent a year and the note's holder collects none of it. That level is settled by [forward-price-by-cash-and-carry](03-forward-price-by-cash-and-carry.md); this card takes it as given and asks what it forces on everything else.
+The other is the note, price $P$ = 98.019867 — less than Acme's 100.00, because Acme pays its holders 2 percent a year and the note's holder collects none of it. That level is settled by [Forward price](03-forward-price-by-cash-and-carry.md); this card takes it as given and asks what it forces on everything else.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -178,7 +154,7 @@ A copy paying **at least** the call everywhere cannot cost less than the call: t
 
 ### The other door
 
-A second route inverts the question: find positive weights on the scenarios that reprice everything already trading. Every payoff is then the weighted sum of its scenario values — equal for equal payoffs, larger for larger — so both rules follow with no trade built. Such weights exist exactly when no arbitrage does: [state-prices-and-risk-neutral-pricing-in-one-period](07-state-prices-and-risk-neutral-pricing-in-one-period.md).
+A second route inverts the question: find positive weights on the scenarios that reprice everything already trading. Every payoff is then the weighted sum of its scenario values — equal for equal payoffs, larger for larger — so both rules follow with no trade built. Such weights exist exactly when no arbitrage does: [State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md).
 
 ---
 
@@ -199,7 +175,7 @@ Acme at 100.00 today, the bank at 5 percent, the note at 98.019867, three scenar
 
 The trade against the two desks pays 2.63 whatever happens. The call is a different kind of answer: nobody has said what it costs, only that it costs between **4.29 and 11.44**. The band is narrow because the scenario list is short; without that list the same two rules give 2.90 and 98.02 — useless, and true in any market at all.
 
-The scenario-free floor, 2.896925, is the shelf's own call price less its own put, 9.227006 less 6.330081 — what [put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md) proves by this card's Step 2. That call price lands inside the narrow band, though nothing here forced it to: it comes from a model with far more endings than three.
+The scenario-free floor, 2.896925, is the shelf's own call price less its own put, 9.227006 less 6.330081 — what [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md) proves by this card's Step 2. That call price lands inside the narrow band, though nothing here forced it to: it comes from a model with far more endings than three.
 
 ### The picture: the call between its two copies
 
@@ -698,9 +674,9 @@ The two outputs match line for line. Search and two-scenario solve find the copy
 ## Where you meet it in real life
 
 - **One company, two listings.** A share quoted in two places, or a share and its depositary receipt (the same share, repackaged to trade in another country), pay the same holder the same dividends. Anyone with both accounts can run the difference trade, so the quotes part by the round-trip cost and no further.
-- **Three currencies in a ring.** Dollars to euros to yen and back must return what went in, or the loop is a difference trade: [currency-quotes-and-cross-rates](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/01-currency-quotes-and-cross-rates.md).
-- **Options quoted against each other.** A call and a put on one strike and date differ by a payoff anyone can build, which pins the gap between their prices: [put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md). The band drawn here around one call is drawn for every strike and date by [option-price-bounds](../08-The%20Black-Scholes%20call%20and%20put/04-option-price-bounds.md).
-- **Anything with a warehouse.** Buying copper and storing it pays what a contract for later delivery pays, so the two cannot separate by more than the storage bill: [storage-cost-and-the-carry-ceiling](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/02-storage-cost-and-the-carry-ceiling.md).
+- **Three currencies in a ring.** Dollars to euros to yen and back must return what went in, or the loop is a difference trade: [Reading a currency quote](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/01-currency-quotes-and-cross-rates.md).
+- **Options quoted against each other.** A call and a put on one strike and date differ by a payoff anyone can build, which pins the gap between their prices: [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md). The band drawn here around one call is drawn for every strike and date by [Option price bounds](../08-The%20Black-Scholes%20call%20and%20put/04-option-price-bounds.md).
+- **Anything with a warehouse.** Buying copper and storing it pays what a contract for later delivery pays, so the two cannot separate by more than the storage bill: [Storage and the carry ceiling](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/02-storage-cost-and-the-carry-ceiling.md).
 - **Where the rule visibly fails.** In a crisis short selling is banned, funding dries up and counterparties are doubted. Gaps open and stay open, because the closing trade cannot be put on.
 
 > **Say it back**
@@ -710,16 +686,16 @@ The two outputs match line for line. Search and two-scenario solve find the copy
 
 ## What this builds on
 
-- [payoffs-and-positions](01-payoffs-and-positions.md): what a payoff is, how long and short reverse each other's signs, and the call payoff used here.
+- [Payoffs](01-payoffs-and-positions.md): what a payoff is, how long and short reverse each other's signs, and the call payoff used here.
 
 ## Where this goes next
 
-- [forward-price-by-cash-and-carry](03-forward-price-by-cash-and-carry.md): the first exact copy, pinning the note's price taken as given here.
-- [replication-and-self-financing](06-replication-and-self-financing.md): copies that match exactly and stay matched as the market moves.
-- [put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): Step 2 on a call and a put, giving the 2.896925 above.
-- [option-price-bounds](../08-The%20Black-Scholes%20call%20and%20put/04-option-price-bounds.md): the squeeze of Step 4, every strike and date at once.
-- [currency-quotes-and-cross-rates](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/01-currency-quotes-and-cross-rates.md): the two rules round a ring of currencies.
-- [storage-cost-and-the-carry-ceiling](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/02-storage-cost-and-the-carry-ceiling.md): what the rules give when holding goods costs money.
+- [Forward price](03-forward-price-by-cash-and-carry.md): the first exact copy, pinning the note's price taken as given here.
+- [Replication](06-replication-and-self-financing.md): copies that match exactly and stay matched as the market moves.
+- [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): Step 2 on a call and a put, giving the 2.896925 above.
+- [Option price bounds](../08-The%20Black-Scholes%20call%20and%20put/04-option-price-bounds.md): the squeeze of Step 4, every strike and date at once.
+- [Reading a currency quote](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/01-currency-quotes-and-cross-rates.md): the two rules round a ring of currencies.
+- [Storage and the carry ceiling](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/02-storage-cost-and-the-carry-ceiling.md): what the rules give when holding goods costs money.
 
 This card says what a price cannot be and stops. The band closes to a point when the copy is exact rather than merely dominating, which is what the next cards build.
 

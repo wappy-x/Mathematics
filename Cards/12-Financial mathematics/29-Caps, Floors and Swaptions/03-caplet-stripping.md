@@ -1,28 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Caps, Floors and Swaptions
-topic: The volatility term structure of caps
-item: Caplet stripping
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/02-caps-floors-and-parity|caps-floors-and-parity]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/05-root-finding-for-inverses|root-finding-for-inverses]]"
-next: []
-tags: [mathematics, financial mathematics, caplet-stripping]
----
-
 # Caplet stripping: recovering each caplet's volatility from cap quotes
 
-Financial mathematics → Caps, Floors and Swaptions → The volatility term structure of caps → Caplet stripping
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Caps, Floors and Swaptions](../../../SYLLABUS.md#w12-s29) → Caplet stripping
 
 ---
 
 ## General Overview
 
-A company borrows $1 million at a floating rate that resets every three months. It buys a cap: insurance that pays, at the end of each quarter, the amount by which that quarter's rate exceeded 5 percent. Each quarter's payment is a small option called a **caplet**. A cap is a bundle of caplets, one per reset ([caplets-and-floorlets](01-caplets-and-floorlets.md)).
+A company borrows $1 million at a floating rate that resets every three months. It buys a cap: insurance that pays, at the end of each quarter, the amount by which that quarter's rate exceeded 5 percent. Each quarter's payment is a small option called a **caplet**. A cap is a bundle of caplets, one per reset ([Caplets and floorlets](01-caplets-and-floorlets.md)).
 
 Brokers do not quote caps in dollars. They quote one volatility per cap, called the **flat volatility**: the single number that, fed into every caplet of that cap, reproduces the cap's price. Volatility here means how widely the future rate may spread, per square root of a year. On one screen sit eight such quotes, for caps holding one caplet, two caplets, and so on up to eight. The 2-year cap, which holds seven caplets, is quoted at 30 percent. The 2.25-year cap, which holds eight, at 29.4 percent.
 
@@ -54,7 +38,7 @@ Orange: the quoted flat volatility of the cap whose last caplet fixes on that da
 
 Notation first, in words. Caplets are numbered 1 to 8 in date order; the letter *i* names one caplet and the letter *k* names the cap made of caplets 1 to *k*. A capital sigma, $\Sigma_k$, is the flat volatility quoted for cap *k*. A small sigma, $\sigma_i$, is the volatility of caplet *i* alone. A summation sign adds a term for each caplet from 1 to *k*.
 
-The price of caplet *i* at a volatility $\sigma$ is Black's formula for rates ([caplets-and-floorlets](01-caplets-and-floorlets.md)):
+The price of caplet *i* at a volatility $\sigma$ is Black's formula for rates ([Caplets and floorlets](01-caplets-and-floorlets.md)):
 
 $$c_i(\sigma) = L\,\tau\,D(T_i+\tau)\,\big[F_i\,N(d_1) - K\,N(d_2)\big], \qquad d_{1,2} = \frac{\ln(F_i/K) \pm \tfrac12\sigma^2 T_i}{\sigma\sqrt{T_i}}$$
 
@@ -92,8 +76,8 @@ The inverse first: when a caplet volatility exists, when it is unique, and what 
 - **Existence.** Caplet *k*'s price must lie strictly between its **floor**, the value at zero volatility, $L\tau D(T_k+\tau)\max(F_k-K,0)$, and its **ceiling**, the value as volatility grows without limit, $L\tau D(T_k+\tau)F_k$. For caplet 8 that window is $2,611.19 to $13,749.78, and the quotes put it at $3,427.96. A difference below the floor has no volatility; exactly at the floor the answer is zero volatility; at or above the ceiling there is none.
 - **Uniqueness.** Each caplet's price rises strictly with its volatility, because vega is positive. A strictly rising curve crosses a level once at most. Cap *k* depends only on caplets 1 to *k*, so the eight equations are solved in order and each has one answer.
 - **Enough quotes.** One cap per caplet date. With quotes only at 1 year and 2 years, eight unknowns face two equations, and an interpolation rule (a choice, not a consequence) fills the gap. Different rules give different caplet volatilities.
-- **One strike across the strip.** All eight caps here are struck at 5%. Market cap quotes are often at-the-money, each struck at its own swap rate; then neighbouring caps hold caplets at different strikes and the difference is no longer one caplet. The strike dimension needs a smile model ([sabr-for-rates-and-the-volatility-cube](07-sabr-for-rates-and-the-volatility-cube.md)).
-- **Lognormal quoting.** Black's formula needs positive forwards and strikes. Where rates sit near or below zero, quotes are in normal or shifted volatility ([normal-and-shifted-volatilities-for-rates](06-normal-and-shifted-volatilities-for-rates.md)). The stripping logic is unchanged; only $c_i$ is swapped.
+- **One strike across the strip.** All eight caps here are struck at 5%. Market cap quotes are often at-the-money, each struck at its own swap rate; then neighbouring caps hold caplets at different strikes and the difference is no longer one caplet. The strike dimension needs a smile model ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)).
+- **Lognormal quoting.** Black's formula needs positive forwards and strikes. Where rates sit near or below zero, quotes are in normal or shifted volatility ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)). The stripping logic is unchanged; only $c_i$ is swapped.
 
 **Conventions, as of 28 Sep 2026.** This card takes each accrual as exactly 0.25 years and uses one curve for forwards and discounting. Market caps count days on the contract's basis, leave out the first period because its rate is already fixed, project forwards and discount on separate curves, and in US dollars now reference SOFR compounded over the period rather than a rate fixed at its start. None of these changes the stripping; each changes the inputs to $c_i$.
 
@@ -103,7 +87,7 @@ The inverse first: when a caplet volatility exists, when it is unique, and what 
 
 ### Step 0: prices add, volatilities do not
 
-A cap pays the sum of its caplets' payments, so its price is the sum of their prices. That is no-arbitrage bookkeeping, true in any model ([caps-floors-and-parity](02-caps-floors-and-parity.md)). Volatilities have no such rule: a caplet's price is a curved function of its volatility, so no average of volatilities is guaranteed to give the right sum of prices. The method therefore works in prices and converts to volatilities only at the last moment.
+A cap pays the sum of its caplets' payments, so its price is the sum of their prices. That is no-arbitrage bookkeeping, true in any model ([Caps and floors](02-caps-floors-and-parity.md)). Volatilities have no such rule: a caplet's price is a curved function of its volatility, so no average of volatilities is guaranteed to give the right sum of prices. The method therefore works in prices and converts to volatilities only at the last moment.
 
 ### Step 1: turn every quote into a price
 
@@ -170,7 +154,7 @@ If flat volatility were a plain average, $8\Sigma_8 - 7\Sigma_7$ would be caplet
 
 </details>
 
-A second road reaches the same eight numbers without differencing: solve each whole cap directly for its last caplet's volatility, holding the earlier ones fixed, pricing every caplet by adding up its payoff over the bell curve instead of by Black's formula. When quotes are missing or noisy, the exact staircase gives way to fitting a smooth curve of caplet volatilities by least squares ([calibration-as-least-squares](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)).
+A second road reaches the same eight numbers without differencing: solve each whole cap directly for its last caplet's volatility, holding the earlier ones fixed, pricing every caplet by adding up its payoff over the bell curve instead of by Black's formula. When quotes are missing or noisy, the exact staircase gives way to fitting a smooth curve of caplet volatilities by least squares ([Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)).
 
 ---
 
@@ -517,9 +501,9 @@ The two outputs agree line for line.
 
 - **Rates desks, every morning.** Broker screens show flat cap volatilities. Pricing systems strip them into caplet volatilities before valuing any cap, floor or single caplet that does not match a quoted contract exactly.
 - **Odd-dated and amortizing caps.** A 1.6-year cap, or a cap on a loan whose notional shrinks each quarter, is a different bag of caplets. Only caplet volatilities price it; no flat quote exists for it.
-- **Volatility risk by bucket.** The sawtooth in Step 4 is how a book's exposure is split by expiry: one quote moves two caplets in opposite directions. Hedging a single caplet needs two neighbouring caps. See [swaption-greeks-and-hedging](08-swaption-greeks-and-hedging.md) for the swaption side of the same bookkeeping.
-- **Calibrating rate models.** Models of the whole curve, such as the LIBOR market model, take caplet volatilities as inputs: one per forward rate. Swaption volatilities add information about how forward rates move together ([swaptions-payer-and-receiver](04-swaptions-payer-and-receiver.md)).
-- **The strike dimension.** Stripping at each strike on the screen gives a grid of caplet volatilities by date and strike, which a smile model then smooths ([sabr-for-rates-and-the-volatility-cube](07-sabr-for-rates-and-the-volatility-cube.md)).
+- **Volatility risk by bucket.** The sawtooth in Step 4 is how a book's exposure is split by expiry: one quote moves two caplets in opposite directions. Hedging a single caplet needs two neighbouring caps. See [Swaption Greeks](08-swaption-greeks-and-hedging.md) for the swaption side of the same bookkeeping.
+- **Calibrating rate models.** Models of the whole curve, such as the LIBOR market model, take caplet volatilities as inputs: one per forward rate. Swaption volatilities add information about how forward rates move together ([Swaptions](04-swaptions-payer-and-receiver.md)).
+- **The strike dimension.** Stripping at each strike on the screen gives a grid of caplet volatilities by date and strike, which a smile model then smooths ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)).
 - **Quote checks.** A falling flat volatility term structure that leaves a caplet window empty is a stale or mistyped quote. Stripping is the test.
 
 > **Say it back**
@@ -529,15 +513,15 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [caps-floors-and-parity](02-caps-floors-and-parity.md): a cap is the sum of its caplets, and its price is the sum of their prices. Step 2 is that fact used as a subtraction.
-- [root-finding-for-inverses](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): bisection, the secant method, and the bracket-first discipline that Step 3 relies on.
+- [Caps and floors](02-caps-floors-and-parity.md): a cap is the sum of its caplets, and its price is the sum of their prices. Step 2 is that fact used as a subtraction.
+- [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): bisection, the secant method, and the bracket-first discipline that Step 3 relies on.
 
 ## Where this goes next
 
-- [swaptions-payer-and-receiver](04-swaptions-payer-and-receiver.md): the other vanilla rates option, one option on a whole swap rather than a strip of small options, so no stripping by subtraction is possible.
-- [normal-and-shifted-volatilities-for-rates](06-normal-and-shifted-volatilities-for-rates.md): the same stripping with the caplet formula swapped for a normal or shifted one, as markets quote today.
-- [sabr-for-rates-and-the-volatility-cube](07-sabr-for-rates-and-the-volatility-cube.md): caplet volatilities at many strikes, smoothed by one model per expiry.
-- [rate-option-inverses](09-rate-option-inverses.md): the full catalogue of solving rate options backwards, with their existence and boundary cases.
+- [Swaptions](04-swaptions-payer-and-receiver.md): the other vanilla rates option, one option on a whole swap rather than a strip of small options, so no stripping by subtraction is possible.
+- [Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md): the same stripping with the caplet formula swapped for a normal or shifted one, as markets quote today.
+- [SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md): caplet volatilities at many strikes, smoothed by one model per expiry.
+- [Solving rate options backwards](09-rate-option-inverses.md): the full catalogue of solving rate options backwards, with their existence and boundary cases.
 
 Stripping gives one volatility per caplet at one strike; what it cannot say is how the volatility changes with the strike, or how the eight forward rates move together, and those are the questions the smile and swaption cards answer.
 

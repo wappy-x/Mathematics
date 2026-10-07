@@ -1,21 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Mortgages, Callables and Prepayment
-topic: Slicing a pool
-item: Mortgage-backed securities in outline
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/35-Mortgages, Callables and Prepayment/04-option-adjusted-spread|option-adjusted-spread]]"
-next: []
-tags: [mathematics, financial mathematics, mortgage-backed-securities-in-outline]
----
-
 # Mortgage-backed securities in outline: pass-throughs, tranches and interest-only strips
 
-Financial mathematics → Mortgages, Callables and Prepayment → Slicing a pool → Mortgage-backed securities in outline
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Mortgages, Callables and Prepayment](../../../SYLLABUS.md#w12-s35) → Mortgage-backed securities in outline
 
 ---
 
@@ -99,7 +84,7 @@ A **tranche** (French for slice) is a bond cut from the pool with its own place 
 | $D_k$, $v$ | discount factor along a path to month $k$; one month's factor on a flat rate | $v = e^{-0.05/12}$ on the flat path | — |
 | $A_k$, $X$, $X_k$ | tranche A's balance; a slice; its cash in month $k$ | $40 at the start | — |
 
-The rate model is the Vasicek model ([vasicek-model](../30-Short-Rate%20Models/02-vasicek-model.md)): the short rate is pulled toward the level $\theta$ at speed $\kappa$ and knocked about by normal shocks of size $\sigma$. The simulation steps it one month at a time with its exact one-month distribution.
+The rate model is the Vasicek model ([Vasicek](../30-Short-Rate%20Models/02-vasicek-model.md)): the short rate is pulled toward the level $\theta$ at speed $\kappa$ and knocked about by normal shocks of size $\sigma$. The simulation steps it one month at a time with its exact one-month distribution.
 
 ### When it holds
 
@@ -123,11 +108,11 @@ In the simulation that is $104.40 three ways. What changes from slice to slice i
 
 ### Step 1: one month of the pool
 
-A level-payment loan pays the same amount each month; the annuity formula fixes it ([annuities-and-loans](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md)). On $100 at 0.005 a month for 360 months it is $0.599551. Of that, $0.50 is interest and $0.099551 is scheduled principal.
+A level-payment loan pays the same amount each month; the annuity formula fixes it ([Annuities](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md)). On $100 at 0.005 a month for 360 months it is $0.599551. Of that, $0.50 is interest and $0.099551 is scheduled principal.
 
 Prepayment then takes a fraction $s$ of what remains after scheduled principal. At 8 percent a year, $s = 1 - 0.92^{1/12} = 0.006924$ a month, so that surviving twelve months leaves 0.92 of the balance. Dividing 8 percent by 12 instead is a common slip, priced in What breaks.
 
-After prepayment the remaining loans recompute a level payment over the months left, so the same formula runs again next month on a smaller balance. The full schedule is the sibling card [mortgage-cash-flows-and-prepayment](02-mortgage-cash-flows-and-prepayment.md).
+After prepayment the remaining loans recompute a level payment over the months left, so the same formula runs again next month on a smaller balance. The full schedule is the sibling card [Mortgage pools](02-mortgage-cash-flows-and-prepayment.md).
 
 ### Step 2: the IO shrinks when prepayment speeds up, and gains when rates rise
 
@@ -187,9 +172,9 @@ The queue also sorts prepayment risk. When prepayment speeds up, A is repaid soo
 
 Prepayment depends on every month's rate so far, so a slice's cash in year ten depends on the whole path of rates to year ten. No formula averages that; the method draws paths. A tree or a grid would have to remember each path's history, which is why simulation is the market's first tool here, not its fallback.
 
-Each path is one possible future for the short rate, drawn from the Vasicek model in the **risk-neutral** world, where every asset is expected to earn the riskless rate, so discounting along each path and averaging gives a price ([monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)). The draws come in mirrored pairs, each path with its reflection, which cancels much of the sampling noise ([variance-reduction-for-pricing](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)).
+Each path is one possible future for the short rate, drawn from the Vasicek model in the **risk-neutral** world, where every asset is expected to earn the riskless rate, so discounting along each path and averaging gives a price ([Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)). The draws come in mirrored pairs, each path with its reflection, which cancels much of the sampling noise ([Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)).
 
-Why not use the single path where rates stay at 5 percent? Because prepayment is lopsided. When rates fall, speed can rise to 50 percent; when they rise, it can fall only to 3. Averaging over paths, prepayment is faster than on the flat path, which is the households' option to refinance being exercised in the futures where it pays them. On the flat path the pass-through is worth $106.36; simulated, $104.40. The $1.96 gap is not the whole option. Simulate with prepayment frozen at 8 percent and the pool is worth $106.81, above the flat path, because the average of discount factors over paths exceeds the discount factor of the average path. Against that, the households' option costs investors $2.41. The option-adjusted spread ([option-adjusted-spread](04-option-adjusted-spread.md)) is what turns such a gap into a spread over the curve.
+Why not use the single path where rates stay at 5 percent? Because prepayment is lopsided. When rates fall, speed can rise to 50 percent; when they rise, it can fall only to 3. Averaging over paths, prepayment is faster than on the flat path, which is the households' option to refinance being exercised in the futures where it pays them. On the flat path the pass-through is worth $106.36; simulated, $104.40. The $1.96 gap is not the whole option. Simulate with prepayment frozen at 8 percent and the pool is worth $106.81, above the flat path, because the average of discount factors over paths exceeds the discount factor of the average path. Against that, the households' option costs investors $2.41. The option-adjusted spread ([Option-adjusted spread](04-option-adjusted-spread.md)) is what turns such a gap into a spread over the curve.
 
 ### Step 5: an identity that checks the machinery
 
@@ -283,7 +268,7 @@ PO value by today's short rate, one block = $2
 
 ### The whole picture as sensitivities
 
-The **effective duration** is the percentage change in value for a one-point fall in rates, measured by repricing up and down one point through the prepayment rule: $(V_{\text{down}} - V_{\text{up}})/(2 \times 0.01 \times V_{\text{today}})$. Negative means the slice gains when rates rise. The full treatment, and the curvature that goes with it, is [negative-convexity](03-negative-convexity.md).
+The **effective duration** is the percentage change in value for a one-point fall in rates, measured by repricing up and down one point through the prepayment rule: $(V_{\text{down}} - V_{\text{up}})/(2 \times 0.01 \times V_{\text{today}})$. Negative means the slice gains when rates rise. The full treatment, and the curvature that goes with it, is [Negative convexity](03-negative-convexity.md).
 
 | Slice | Value today | Effective duration, years | Rates up one point |
 | --- | --- | --- | --- |
@@ -738,10 +723,10 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Agency pass-throughs.** Most US home loans are pooled and sold as pass-throughs guaranteed by government-sponsored agencies, one of the largest bond markets in the world.
-- **Collateralised mortgage obligations.** A CMO is this card's tranching done for real, with variants that shield some tranches from prepayment surprises by pushing them onto others. Credit markets reuse the queue with losses in place of principal: [cdo-tranches-in-outline](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/05-cdo-tranches-in-outline.md).
+- **Collateralised mortgage obligations.** A CMO is this card's tranching done for real, with variants that shield some tranches from prepayment surprises by pushing them onto others. Credit markets reuse the queue with losses in place of principal: [Tranches](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/05-cdo-tranches-in-outline.md).
 - **Mortgage servicing rights.** A servicer collects the payments for a fee proportional to the balance still outstanding. That income is an IO in all but name, and servicers lose money when rates fall and refinancing sweeps their loans away.
 - **Portfolio hedging.** IOs are bought to offset holdings that lose when rates rise; if borrowers refinance faster than modelled, the hedge fails.
-- **Bank risk reports.** A bank holding mortgage securities reports effective duration computed as here, by bumping rates through a prepayment model. The sibling card [negative-convexity](03-negative-convexity.md) follows that number, and [callable-bonds-and-yield-to-worst](01-callable-bonds-and-yield-to-worst.md) is the same borrower's option seen in a corporate bond.
+- **Bank risk reports.** A bank holding mortgage securities reports effective duration computed as here, by bumping rates through a prepayment model. The sibling card [Negative convexity](03-negative-convexity.md) follows that number, and [Callable bonds](01-callable-bonds-and-yield-to-worst.md) is the same borrower's option seen in a corporate bond.
 
 > **Say it back**
 > A mortgage pool pays interest, scheduled principal and prepayments every month, and prepayment speeds up when rates fall. Slices share that cash by fixed rules, so their values always add up to the pool. The IO takes the interest, so it lives only as long as the loans do and gains when rates rise; the PO takes the principal, gets it all back eventually, and gains when it comes early. Sequential tranches queue for principal and turn one long pool into short, medium and long bonds. Because prepayment depends on the whole path of rates, each slice is priced by simulating many rate paths and averaging the discounted cash.
@@ -750,17 +735,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [option-adjusted-spread](04-option-adjusted-spread.md): the spread left after the refinancing option is priced out, and the simulation it runs; this card reuses that engine with zero spread and cuts the cash into slices.
-- [mortgage-cash-flows-and-prepayment](02-mortgage-cash-flows-and-prepayment.md): the pool's month of interest, scheduled principal and prepayment.
-- [annuities-and-loans](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md): the level payment of a loan.
-- [vasicek-model](../30-Short-Rate%20Models/02-vasicek-model.md): the rate model the simulation draws from, and its bond formula used as a check.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): pricing as an average of discounted cash over simulated paths.
+- [Option-adjusted spread](04-option-adjusted-spread.md): the spread left after the refinancing option is priced out, and the simulation it runs; this card reuses that engine with zero spread and cuts the cash into slices.
+- [Mortgage pools](02-mortgage-cash-flows-and-prepayment.md): the pool's month of interest, scheduled principal and prepayment.
+- [Annuities](../01-Money%2C%20Dates%20and%20Discounting/03-annuities-and-loans.md): the level payment of a loan.
+- [Vasicek](../30-Short-Rate%20Models/02-vasicek-model.md): the rate model the simulation draws from, and its bond formula used as a check.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): pricing as an average of discounted cash over simulated paths.
 
 ## Where this goes next
 
-- [cdo-tranches-in-outline](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/05-cdo-tranches-in-outline.md): the same queue, with defaults instead of prepayments deciding who is paid.
-- [hull-white-model](../30-Short-Rate%20Models/04-hull-white-model.md): a rate model that fits today's whole curve exactly, which a desk would use in place of Vasicek here.
-- [variance-reduction-for-pricing](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md): making 1,000 paths do the work of many more.
+- [Tranches](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/05-cdo-tranches-in-outline.md): the same queue, with defaults instead of prepayments deciding who is paid.
+- [Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md): a rate model that fits today's whole curve exactly, which a desk would use in place of Vasicek here.
+- [Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md): making 1,000 paths do the work of many more.
 
 ---
 

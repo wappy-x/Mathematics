@@ -1,28 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Inclusion-Exclusion and Pigeonhole
-topic: Nothing in its own place
-item: Derangements
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/04-Inclusion-Exclusion and Pigeonhole/01-inclusion-exclusion-for-n-sets|inclusion-exclusion-for-n-sets]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/04-compounding-frequency-and-e|compounding-frequency-and-e]]"
-  - "[[Cards/03-Algebra/08-Groups/03-permutations-and-the-symmetric-group|permutations-and-the-symmetric-group]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/08-Partitions/05-permutations-by-cycles|permutations-by-cycles]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/06-binomial-series-and-e|binomial-series-and-e]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - derangements
----
-
 # Derangements: shuffles where nothing lands in its own place, counted by the sieve
 
-Combinatorics and graphs → Inclusion-Exclusion and Pigeonhole → Nothing in its own place → Derangements
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Inclusion-Exclusion and Pigeonhole](../../../SYLLABUS.md#w04-s04) → Derangements
 
 ---
 
@@ -56,7 +34,7 @@ The wobbling line is clean draws per 10,000. The flat line is 3,679, the level i
 
 ## The formula
 
-Three shorthands, all met earlier. $n!$, "n factorial", counts the ways $n$ things line up: 6! = 720 ([factorial](../01-Counting%20Principles/03-factorial.md)). C(6, 2), "six choose two", counts the ways to pick 2 of 6 when order does not matter: 15 ([n-choose-k](../01-Counting%20Principles/05-n-choose-k.md)). The capital sigma sign, with a counter $k$ below and a stopping value above, says to add the term on its right once for each $k$ in that range ([binomial-theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)).
+Three shorthands, all met earlier. $n!$, "n factorial", counts the ways $n$ things line up: 6! = 720 ([Factorials](../01-Counting%20Principles/03-factorial.md)). C(6, 2), "six choose two", counts the ways to pick 2 of 6 when order does not matter: 15 ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)). The capital sigma sign, with a counter $k$ below and a stopping value above, says to add the term on its right once for each $k$ in that range ([The binomial theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)).
 
 One shorthand is new: D(6) is the number of draws among six people with nobody on their own name, D(n) the count among $n$. Elsewhere it is written !n, read "subfactorial n".
 
@@ -94,7 +72,7 @@ Person one has $n-1$ names to draw, and each case leaves a smaller draw of the s
 
 ### Step 0: count the spoilt draws instead
 
-Listing clean draws directly means holding six conditions in the air at once. Every draw is clean or spoilt, so the clean count is 720 minus the spoilt count ([complementary-counting](../01-Counting%20Principles/06-complementary-counting.md)). Spoilt means at least one person holds their own name — and "at least one" is what the sieve was built for.
+Listing clean draws directly means holding six conditions in the air at once. Every draw is clean or spoilt, so the clean count is 720 minus the spoilt count ([Counting the complement](../01-Counting%20Principles/06-complementary-counting.md)). Spoilt means at least one person holds their own name — and "at least one" is what the sieve was built for.
 
 ### Step 1: pin some people and count what is left
 
@@ -104,7 +82,7 @@ Pinning any $k$ people leaves $(n-k)!$ draws, with C(n, k) choices of which $k$:
 
 ### Step 2: the alternating sum repairs the overlaps
 
-Adding the six blocks counts a draw with two people on their own names twice, one with three three times, and so on. Subtracting the pairs over-corrects the other way. Alternating leaves each spoilt draw counted once ([inclusion-exclusion-for-n-sets](01-inclusion-exclusion-for-n-sets.md)). Take that off 720, reading the untouched 720 as the term for $k$ = 0.
+Adding the six blocks counts a draw with two people on their own names twice, one with three three times, and so on. Subtracting the pairs over-corrects the other way. Alternating leaves each spoilt draw counted once ([Inclusion-exclusion for any number of sets](01-inclusion-exclusion-for-n-sets.md)). Take that off 720, reading the untouched 720 as the term for $k$ = 0.
 
 The formula's middle form is the first tidied — the two factors of each term collapse:
 
@@ -137,7 +115,7 @@ Rewriting it as $D(n) - n\,D(n-1) = -\bigl(D(n-1) - (n-1)D(n-2)\bigr)$ gives the
 
 Divide the formula by $n!$ and the clean share is 1 − 1/1! + 1/2! − 1/3! + … ± 1/n!, one term for each step of the sieve. Those terms shrink fast: a seventh colleague moves the share by 0.000198, an eighth by 0.000025.
 
-It closes on 1 divided by $e$, the compounding number the code reaches as 2.718282 ([compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)): 0.367879. Why an endless alternating sum of 1/k! comes to exactly that is settled on [binomial-series-and-e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md); this card checks it twice.
+It closes on 1 divided by $e$, the compounding number the code reaches as 2.718282 ([Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)): 0.367879. Why an endless alternating sum of 1/k! comes to exactly that is settled on [The binomial series and the number e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md); this card checks it twice.
 
 ---
 
@@ -157,7 +135,7 @@ It closes on 1 divided by $e$, the compounding number the code reaches as 2.7182
 | in one step | 6 × 44 + 1 | **265** |
 | the clean share | 265 / 720 | **0.3681** |
 
-265 of the 720 draws leave nobody buying their own gift. The running totals are 720, 0, 360, 240, 270, 264, 265: they overshoot and undershoot by turns, which lets a half-finished sieve serve as a bound, on [union-bound-and-bonferroni](04-union-bound-and-bonferroni.md).
+265 of the 720 draws leave nobody buying their own gift. The running totals are 720, 0, 360, 240, 270, 264, 265: they overshoot and undershoot by turns, which lets a half-finished sieve serve as a bound, on [Stopping the sieve early](04-union-bound-and-bonferroni.md).
 
 ### What breaks if you drop a piece
 
@@ -393,7 +371,7 @@ ALL CHECKS PASS
 
 - **Gift exchanges.** Secret Santa, shifts handed round so nobody keeps their own, exam scripts so nobody marks their own: 265 of the 720 draws work.
 - **Card games.** Montmort set this count out in 1708 for *treize*: a dealer turns cards while counting one to thirteen and wins on any match, so a deal with no match anywhere is the derangement case.
-- **Other sieve counts.** The same machine counts assignments leaving nothing unused, on [counting-surjections](03-counting-surjections.md).
+- **Other sieve counts.** The same machine counts assignments leaving nothing unused, on [Onto functions](03-counting-surjections.md).
 
 > **Say it back**
 > A derangement is a shuffle with nothing in its own place. Counting the spoilt shuffles is easier: pinning k people leaves (n − k)! shuffles, C(n, k) ways choose them, and alternating signs count each spoilt shuffle once. Taking that off n! gives D(n) = n!(1 − 1/1! + 1/2! − …): 265 of the 720 draws among six colleagues. Splitting on whether person one's name came back as a swap gives the same 265, and the share settles on 0.3679, which is 1 divided by the compounding number e.
@@ -402,16 +380,16 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [inclusion-exclusion-for-n-sets](01-inclusion-exclusion-for-n-sets.md): the alternating sum that counts each thing in overlapping blocks once.
-- [compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): the number 2.71828…, and the compounding road the code takes to it.
-- [permutations-and-the-symmetric-group](../../03-Algebra/08-Groups/03-permutations-and-the-symmetric-group.md): shuffles as objects in their own right, and the name "fixed point".
+- [Inclusion-exclusion for any number of sets](01-inclusion-exclusion-for-n-sets.md): the alternating sum that counts each thing in overlapping blocks once.
+- [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): the number 2.71828…, and the compounding road the code takes to it.
+- [Permutations](../../03-Algebra/08-Groups/03-permutations-and-the-symmetric-group.md): shuffles as objects in their own right, and the name "fixed point".
 
 ## Where this goes next
 
-- [permutations-by-cycles](../08-Partitions/05-permutations-by-cycles.md): sorting shuffles by the loops they fall into, where derangements are those with no loop of length one.
-- [binomial-series-and-e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md): why the endless alternating sum of 1/k! comes to 1 divided by $e$.
+- [Counting shuffles by their loops](../08-Partitions/05-permutations-by-cycles.md): sorting shuffles by the loops they fall into, where derangements are those with no loop of length one.
+- [The binomial series and the number e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md): why the endless alternating sum of 1/k! comes to 1 divided by $e$.
 
-This card counts the draws with nobody on their own name; how many leave exactly two, and why those counts add back to 720, is what [permutations-by-cycles](../08-Partitions/05-permutations-by-cycles.md) takes up.
+This card counts the draws with nobody on their own name; how many leave exactly two, and why those counts add back to 720, is what [Counting shuffles by their loops](../08-Partitions/05-permutations-by-cycles.md) takes up.
 
 ---
 

@@ -1,29 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Clock Arithmetic
-topic: Dividing on the clock
-item: Solving a x ≡ b (mod n)
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/01-congruence-mod-n|congruence-mod-n]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/04-modular-inverse|modular-inverse]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/04-bezouts-identity|bezouts-identity]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/05-coprime-numbers|coprime-numbers]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/06-negative-numbers|negative-numbers]]"
-next:
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/06-chinese-remainder-theorem|chinese-remainder-theorem]]"
-tags:
-  - mathematics
-  - number theory
-  - linear-congruences
----
-
 # Solving a x ≡ b (mod n): when it has answers, how many, and how to find them all
 
-Number theory → Clock Arithmetic → Dividing on the clock → Solving a x ≡ b (mod n)
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Clock Arithmetic](../../../SYLLABUS.md#w02-s03) → Solving a x ≡ b (mod n)
 
 ---
 
@@ -37,7 +14,7 @@ Click through. One: 6. Two: 12, reading 2. Three: 18, reading 8. Four: 24, readi
 
 The odd part: the dial never shows 1, 3, 5, 7 or 9. Ask for 3 and you click forever. What rules a target out is 6 and 10 together.
 
-In shorthand: **6x ≡ 4 (mod 10)** — x the clicks, six times them leaving remainder 4 on a 10-dial ([congruence-mod-n](01-congruence-mod-n.md)). That is a **linear congruence**: the unknown multiplied by a fixed number, on a clock. In letters, **a x ≡ b (mod n)**: a the step, b the target, n the dial.
+In shorthand: **6x ≡ 4 (mod 10)** — x the clicks, six times them leaving remainder 4 on a 10-dial ([Congruence](01-congruence-mod-n.md)). That is a **linear congruence**: the unknown multiplied by a fixed number, on a clock. In letters, **a x ≡ b (mod n)**: a the step, b the target, n the dial.
 
 **The gcd of the step and the dial — the biggest number dividing both — decides everything: if it does not divide the target there is no answer at all, and if it does, there are exactly that many answers.**
 
@@ -82,9 +59,9 @@ The rule: take the gcd of step and dial. If it does not divide the target, stop.
 
 ### Step 0: every reading is a mix of step and dial
 
-After x clicks the dial has moved 6x places, less whole turns of 10. The reading is 6x + 10y, with y counting turns thrown away — negative, since they are gone ([negative-numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md)).
+After x clicks the dial has moved 6x places, less whole turns of 10. The reading is 6x + 10y, with y counting turns thrown away — negative, since they are gone ([Negative numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md)).
 
-Every such mix is a multiple of gcd(6, 10) = 2 ([bezouts-identity](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/04-bezouts-identity.md)). So every reading is even: an odd target is out of reach. That is the solvability test.
+Every such mix is a multiple of gcd(6, 10) = 2 ([Bezout's identity](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/04-bezouts-identity.md)). So every reading is even: an odd target is out of reach. That is the solvability test.
 
 ### Step 1: shrink the line by the gcd
 
@@ -100,7 +77,7 @@ which says **3x ≡ 2 (mod 5)**: a 5-position dial, 3 places a click, target 2. 
 
 ### Step 2: solve the small clock, then unfold
 
-3 and 5 share no factor: coprime ([coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)). So 3 has an inverse on the 5-dial, undoing multiplication by 3 ([modular-inverse](04-modular-inverse.md)): 2, since 3 × 2 = 6 = 5 + 1. Multiply both sides:
+3 and 5 share no factor: coprime ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)). So 3 has an inverse on the 5-dial, undoing multiplication by 3 ([The modular inverse](04-modular-inverse.md)): 2, since 3 × 2 = 6 = 5 + 1. Multiply both sides:
 
 x ≡ 2 × 2 ≡ 4 (mod 5)
 
@@ -283,7 +260,7 @@ Both outputs match line for line.
 
 - **Cycles that must line up.** A 6-tooth advance on a 10-position ratchet reaches only the even stops: the gcd of step and cycle is the ceiling.
 - **Cutting stock.** 6- and 10-metre lengths never combine to an odd metre count — the Diophantine costume above.
-- **Several clocks at once.** Each is cut to one answer, then stitched: [chinese-remainder-theorem](06-chinese-remainder-theorem.md).
+- **Several clocks at once.** Each is cut to one answer, then stitched: [The Chinese remainder theorem](06-chinese-remainder-theorem.md).
 
 > **Say it back**
 > A dial of 10, 6 places a click. Take the gcd of step and dial: 2. If it does not divide the target, nothing works: that is why the dial never shows an odd number. If it does, halve all three, solve the smaller clock with one inverse, then unfold: as many answers as the gcd, five apart. Here, 4 and 9.
@@ -292,15 +269,15 @@ Both outputs match line for line.
 
 ## What this builds on
 
-- [congruence-mod-n](01-congruence-mod-n.md): the (mod n) shorthand.
-- [modular-inverse](04-modular-inverse.md): with no shared factor, one multiplication finishes it.
-- [bezouts-identity](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/04-bezouts-identity.md): every mix of step and dial is a multiple of their gcd.
-- [coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md): sharing no factor gives the shrunk clock one answer.
-- [negative-numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md): a thrown-away turn is a negative count.
+- [Congruence](01-congruence-mod-n.md): the (mod n) shorthand.
+- [The modular inverse](04-modular-inverse.md): with no shared factor, one multiplication finishes it.
+- [Bezout's identity](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/04-bezouts-identity.md): every mix of step and dial is a multiple of their gcd.
+- [Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md): sharing no factor gives the shrunk clock one answer.
+- [Negative numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md): a thrown-away turn is a negative count.
 
 ## Where this goes next
 
-- [chinese-remainder-theorem](06-chinese-remainder-theorem.md): each clock is cut to one answer this way, then the answers stitched together.
+- [The Chinese remainder theorem](06-chinese-remainder-theorem.md): each clock is cut to one answer this way, then the answers stitched together.
 
 ---
 

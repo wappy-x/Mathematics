@@ -1,32 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Derivatives
-topic: Rates through a chain
-item: Chain rule
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/02-product-and-quotient-rules|product-and-quotient-rules]]"
-next:
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/04-derivatives-of-trig-functions|derivatives-of-trig-functions]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/05-derivatives-of-exp-and-log|derivatives-of-exp-and-log]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/03-substitution|substitution]]"
-  - "[[Cards/06-Calculus and analysis/05-Curves and Solids/01-parametric-motion|parametric-motion]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/03-separable-equations|separable-equations]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/04-lyapunov-functions|lyapunov-functions]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/02-the-transport-equation-and-characteristics|the-transport-equation-and-characteristics]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/05-the-wave-equation-and-dalemberts-formula|the-wave-equation-and-dalemberts-formula]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/01-delta|delta]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/03-garman-kohlhagen-greeks|garman-kohlhagen-greeks]]"
-  - "[[Cards/16-Numerical analysis/08-Derivatives by Machine/06-forward-mode-automatic-differentiation|forward-mode-automatic-differentiation]]"
-tags: [mathematics, calculus and analysis, chain-rule]
----
-
 # Chain rule: rates multiply when one quantity drives another
 
-Calculus and analysis → Derivatives → Rates through a chain → Chain rule
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Derivatives](../../../SYLLABUS.md#w06-s02) → Chain rule
 
 ---
 
@@ -62,7 +36,7 @@ The curving line is the fuel bill. The straight line is its tangent at one hour:
 
 ## The formula
 
-A reminder from [the-derivative](01-the-derivative.md): $f'(x)$, also written dy/dx, is the rate of y per unit of x at one point.
+A reminder from [The derivative](01-the-derivative.md): $f'(x)$, also written dy/dx, is the rate of y per unit of x at one point.
 
 One new notation, in words first: $f \circ g$, read "f after g", hands an input to $g$ and the result to $f$. So $(f \circ g)(t) = f(g(t))$. Here $g$ is the **inner** function and $f$ the **outer** one.
 
@@ -76,7 +50,7 @@ $$C'(t) = p \cdot G'(s(t)) \cdot s'(t)$$
 
 The units check it: (dollars per litre) × (litres per km) × (km per hour) = dollars per hour. That cancelling is a memory aid, not a proof; Step 1 shows where it breaks.
 
-The example's functions are $s(t) = 60t + 20t^2$ km and $G(s) = 0.05s + 0.0002s^2$ litres. The power rule from [product-and-quotient-rules](02-product-and-quotient-rules.md) gives speed $s'(t) = 60 + 40t$ and burn rate $G'(s) = 0.05 + 0.0004s$.
+The example's functions are $s(t) = 60t + 20t^2$ km and $G(s) = 0.05s + 0.0002s^2$ litres. The power rule from [Product and quotient rules](02-product-and-quotient-rules.md) gives speed $s'(t) = 60 + 40t$ and burn rate $G'(s) = 0.05 + 0.0004s$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -161,7 +135,7 @@ For 0 < |h| < δ, (f(g(t + h)) − f(g(t)))/h = (f'(u) + e(k(h)))(g'(t) + r(h)),
 
 </details>
 
-A longer chain is the two-link rule used twice. A second road is to expand $C(t)$ into powers of $t$ and differentiate term by term; it works here because everything is a polynomial, and the code does it. The chain done mechanically by computer is forward-mode-automatic-differentiation.
+A longer chain is the two-link rule used twice. A second road is to expand $C(t)$ into powers of $t$ and differentiate term by term; it works here because everything is a polynomial, and the code does it. The chain done mechanically by computer is Forward-mode automatic differentiation.
 
 ---
 
@@ -397,7 +371,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Running costs.** A bill set by usage, with usage set by time, grows at price × usage rate × pace: fuel, electricity, computing.
-- **Option hedging.** An option's price moves with the stock's; that rate is [delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md), found through the chain rule.
+- **Option hedging.** An option's price moves with the stock's; that rate is [Delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md), found through the chain rule.
 - **Training neural networks.** A network is a long chain of functions; each setting's effect on the error is a product of rates.
 - **Motion along a track.** Height depends on position along the track, position on time; climbing speed is their chain.
 
@@ -408,23 +382,23 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [product-and-quotient-rules](02-product-and-quotient-rules.md): the power rule used to get the speed and the burn rate, and the product rule this card is kept distinct from.
+- [Product and quotient rules](02-product-and-quotient-rules.md): the power rule used to get the speed and the burn rate, and the product rule this card is kept distinct from.
 
 ## Where this goes next
 
-- [derivatives-of-trig-functions](04-derivatives-of-trig-functions.md): sine and cosine through the chain.
-- [derivatives-of-exp-and-log](05-derivatives-of-exp-and-log.md): growth and logs, chained.
-- [substitution](../04-Integrals/03-substitution.md): the chain rule run backwards.
-- [parametric-motion](../05-Curves%20and%20Solids/01-parametric-motion.md): speed along a curve traced in time.
-- [separable-equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/03-separable-equations.md): rate equations solved through the chain.
-- [lyapunov-functions](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/04-lyapunov-functions.md): an energy's rate along a moving state.
-- [the-transport-equation-and-characteristics](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/02-the-transport-equation-and-characteristics.md): a quantity carried along a moving line.
-- [the-wave-equation-and-dalemberts-formula](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/05-the-wave-equation-and-dalemberts-formula.md): waves as shapes sliding at fixed speed.
-- [delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md): an option's rate per dollar of stock.
-- [garman-kohlhagen-greeks](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): sensitivities chained across currencies.
-- forward-mode-automatic-differentiation: the chain carried out by computer.
+- [Derivatives of sine and cosine](04-derivatives-of-trig-functions.md): sine and cosine through the chain.
+- [Derivatives of exp and log](05-derivatives-of-exp-and-log.md): growth and logs, chained.
+- [Substitution](../04-Integrals/03-substitution.md): the chain rule run backwards.
+- [Parametric motion](../05-Curves%20and%20Solids/01-parametric-motion.md): speed along a curve traced in time.
+- [Separable equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/03-separable-equations.md): rate equations solved through the chain.
+- [Lyapunov functions](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/04-lyapunov-functions.md): an energy's rate along a moving state.
+- [The transport equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/02-the-transport-equation-and-characteristics.md): a quantity carried along a moving line.
+- [The wave equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/05-the-wave-equation-and-dalemberts-formula.md): waves as shapes sliding at fixed speed.
+- [Delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md): an option's rate per dollar of stock.
+- [The Greeks of a currency option](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): sensitivities chained across currencies.
+- Forward-mode automatic differentiation: the chain carried out by computer.
 
-The chain rule needs each link's rate; for sine, cosine and the exponential none is known yet, and [derivatives-of-trig-functions](04-derivatives-of-trig-functions.md) supplies the first of them.
+The chain rule needs each link's rate; for sine, cosine and the exponential none is known yet, and [Derivatives of sine and cosine](04-derivatives-of-trig-functions.md) supplies the first of them.
 
 ---
 

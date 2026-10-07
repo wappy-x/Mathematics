@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Black-Scholes call and put
-topic: Splitting the premium
-item: Intrinsic and time value
-kind: definition
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/03-put-call-parity|put-call-parity]]"
-next: []
-tags:
-  - mathematics
-  - financial mathematics
-  - intrinsic-and-time-value
----
-
 # Intrinsic and time value: what you could cash today, and what you pay for the time left
 
-Financial mathematics → The Black-Scholes call and put → Splitting the premium → Intrinsic and time value
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Black-Scholes call and put](../../../SYLLABUS.md#w12-s08) → Intrinsic and time value
 
 ---
 
@@ -70,7 +52,7 @@ $$\text{a call's time value} = P + \underbrace{K\left(1 - e^{-rT}\right) - S\lef
 
 Out of the money the intrinsic value is zero and the time value is the whole premium.
 
-The premiums come from the cards next door: $C = S e^{-qT} N(d_1) - K e^{-rT} N(d_2)$ ([black-scholes-call](01-black-scholes-call.md)) and $P = K e^{-rT} N(-d_2) - S e^{-qT} N(-d_1)$ ([black-scholes-put](02-black-scholes-put.md)). A screen quote does the same job: the split needs a premium from somewhere, not this model in particular.
+The premiums come from the cards next door: $C = S e^{-qT} N(d_1) - K e^{-rT} N(d_2)$ ([Black–Scholes call](01-black-scholes-call.md)) and $P = K e^{-rT} N(-d_2) - S e^{-qT} N(-d_1)$ ([Black-Scholes put](02-black-scholes-put.md)). A screen quote does the same job: the split needs a premium from somewhere, not this model in particular.
 
 | Symbol | Plain meaning | In our example | Push it up and the time value… |
 | --- | --- | --- | --- |
@@ -106,7 +88,7 @@ The premium answers "what would someone pay today for this contract?" The intrin
 
 A 130-call on a $100 share would lose $30 if exercised, so nobody does it: its intrinsic value is $0, not minus $30. The floor holds because exercising is a right.
 
-It is tempting to conclude that a premium can never sit below its intrinsic value either. For an American contract that is true: anyone could buy it cheap and exercise on the spot. A European contract cannot be exercised today, so nothing forces it. What no-arbitrage does force is a floor in today's dollars — for a put, the discounted strike less the share needed to deliver, $K e^{-rT} - S e^{-qT}$ ([option-price-bounds](04-option-price-bounds.md)). On the 130-put that floor is $123.66 − $98.02 = $25.64, and the premium of $26.97 clears it.
+It is tempting to conclude that a premium can never sit below its intrinsic value either. For an American contract that is true: anyone could buy it cheap and exercise on the spot. A European contract cannot be exercised today, so nothing forces it. What no-arbitrage does force is a floor in today's dollars — for a put, the discounted strike less the share needed to deliver, $K e^{-rT} - S e^{-qT}$ ([Option price bounds](04-option-price-bounds.md)). On the 130-put that floor is $123.66 − $98.02 = $25.64, and the premium of $26.97 clears it.
 
 The puzzle is now visible: the real floor is $25.64, the screen's intrinsic value is $30.00, and the $4.36 between them is what the leftover must absorb.
 
@@ -161,7 +143,7 @@ $$\text{a put's time value, in the money} \ge -\left[K\left(1 - e^{-rT}\right) -
 
 On the 130-put that floor is −$4.36, and the actual −$3.03 sits above it by exactly the partner call's $1.33. The zero-volatility case in Step 3 *is* the floor, reached because a certain world leaves the partner worthless. So this leftover can go negative but not far: never below minus the carry, a year's interest on the strike less the dividends missed.
 
-A second route redraws the same map. Subtract the present-value floor, $\max(S e^{-qT} - K e^{-rT}, 0)$ and its mirror, instead of the screen's intrinsic value. Parity turns both leftovers into whichever premium is the smaller of the two, so they are equal at every strike and never negative — the volatility value with the interest stripped out. It is the better quantity for mathematics and the wrong one for reading a screen, where "intrinsic" means what exercising this minute pays. The premium's own shape across strikes and dates is [strike-and-calendar-shape](05-strike-and-calendar-shape.md).
+A second route redraws the same map. Subtract the present-value floor, $\max(S e^{-qT} - K e^{-rT}, 0)$ and its mirror, instead of the screen's intrinsic value. Parity turns both leftovers into whichever premium is the smaller of the two, so they are equal at every strike and never negative — the volatility value with the interest stripped out. It is the better quantity for mathematics and the wrong one for reading a screen, where "intrinsic" means what exercising this minute pays. The premium's own shape across strikes and dates is [Shape across strikes and expiries](05-strike-and-calendar-shape.md).
 
 ---
 
@@ -678,7 +660,7 @@ The two outputs agree line for line, produced by different code reaching the bel
 - **An option chain.** The column marked "extrinsic" beside the premium is this card's leftover under another name.
 - **Early exercise.** Exercising an American contract early cashes the intrinsic value and throws the value of waiting away, so it pays exactly when that value is negative. Hence deep-in-the-money American puts get exercised early, and a European one cannot escape its −$3.03.
 - **Quoting in volatility.** The market's whole opinion about jumpiness sits in the leftover, so desks read implied volatility near the money, where the leftover is biggest, and distrust it far away, where it is mostly interest.
-- **Price floors.** The $25.64 under the 130-put is the no-arbitrage bound: [option-price-bounds](04-option-price-bounds.md) has it at every strike, and [black-scholes-assumptions-and-failures](09-black-scholes-assumptions-and-failures.md) what happens when the model behind the premium is wrong.
+- **Price floors.** The $25.64 under the 130-put is the no-arbitrage bound: [Option price bounds](04-option-price-bounds.md) has it at every strike, and [The Black-Scholes assumptions](09-black-scholes-assumptions-and-failures.md) what happens when the model behind the premium is wrong.
 
 > **Say it back**
 > A premium splits in two: the intrinsic value, what exercising this minute would pay, floored at zero, and the time value, which is the rest. The rest is the chance of a move plus the interest on money that changes hands later. Put–call parity shows it is the opposite contract at the same strike plus the carry, so far from the strike, where that contract is worthless, it is pure interest. It peaks where the strike meets the share price, which follows from a no-arbitrage bound on neighbouring strikes and needs no model. And because a European contract cannot be exercised today, a deep-in-the-money put's leftover can be negative: −$3.03 on the house 130-put, against a floor of −$4.36.
@@ -687,17 +669,17 @@ The two outputs agree line for line, produced by different code reaching the bel
 
 ## What this builds on
 
-- [put-call-parity](03-put-call-parity.md): the identity that turns each leftover into the other contract plus the carry. Step 2 is one rearrangement of it.
-- [black-scholes-call](01-black-scholes-call.md) and [black-scholes-put](02-black-scholes-put.md): the premiums being split, and $d_1$, $d_2$ and $N(x)$.
-- [option-price-bounds](04-option-price-bounds.md): the present-value floor under a premium, which is the floor the screen's intrinsic value is not.
+- [Put-call parity](03-put-call-parity.md): the identity that turns each leftover into the other contract plus the carry. Step 2 is one rearrangement of it.
+- [Black–Scholes call](01-black-scholes-call.md) and [Black-Scholes put](02-black-scholes-put.md): the premiums being split, and $d_1$, $d_2$ and $N(x)$.
+- [Option price bounds](04-option-price-bounds.md): the present-value floor under a premium, which is the floor the screen's intrinsic value is not.
 
 ## Where this goes next
 
-- [strike-and-calendar-shape](05-strike-and-calendar-shape.md): the premium's own shape across strikes and dates, of which this card's hump is one slice.
-- [black-scholes-equation](07-black-scholes-equation.md): the rate at which the leftover melts, as an equation the premium obeys at every instant.
-- [known-cash-dividends](08-known-cash-dividends.md): the carry rebuilt when the dividend is a known cash amount on a known date.
+- [Shape across strikes and expiries](05-strike-and-calendar-shape.md): the premium's own shape across strikes and dates, of which this card's hump is one slice.
+- [The Black-Scholes equation](07-black-scholes-equation.md): the rate at which the leftover melts, as an equation the premium obeys at every instant.
+- [Known cash dividends](08-known-cash-dividends.md): the carry rebuilt when the dividend is a known cash amount on a known date.
 
-The carry here came from a yield trickling out evenly, which no real company pays; what the split looks like when the money leaves the share in lumps on announced dates is [known-cash-dividends](08-known-cash-dividends.md).
+The carry here came from a yield trickling out evenly, which no real company pays; what the split looks like when the money leaves the share in lumps on announced dates is [Known cash dividends](08-known-cash-dividends.md).
 
 ---
 

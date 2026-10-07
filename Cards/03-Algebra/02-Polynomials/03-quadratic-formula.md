@@ -1,36 +1,12 @@
----
-type: card
-wing: 03-Algebra
-shelf: Polynomials
-topic: Quadratics
-item: The quadratic formula
-kind: theorem
-status: verified
-updated: 2026-09-07
-needs_first:
-  - "[[Cards/03-Algebra/02-Polynomials/02-factoring-quadratics|factoring-quadratics]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/03-roots-and-fractional-exponents|roots-and-fractional-exponents]]"
-  - "[[Cards/01-Foundations/02-The Number Line/03-irrational-numbers|irrational-numbers]]"
-next:
-  - "[[Cards/03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem|roots-and-the-factor-theorem]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/02-eigenvalues-and-eigenvectors|eigenvalues-and-eigenvectors]]"
-  - "[[Cards/03-Algebra/10-For the Curious/01-fundamental-theorem-of-algebra|fundamental-theorem-of-algebra]]"
-  - "[[Cards/03-Algebra/10-For the Curious/02-why-no-quintic-formula|why-no-quintic-formula]]"
-tags:
-  - mathematics
-  - algebra
-  - quadratic-formula
----
-
 # The quadratic formula: complete the square once and every quadratic is solved, and the discriminant says how many answers
 
-Algebra → Polynomials → Quadratics → The quadratic formula
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Polynomials](../../../SYLLABUS.md#w03-s02) → The quadratic formula
 
 ---
 
 ## General Overview
 
-A football is kicked straight up at 20 metres a second. Its height t seconds later is 20t - 5t^2 metres — a polynomial of degree 2 ([polynomials](01-polynomials.md)).
+A football is kicked straight up at 20 metres a second. Its height t seconds later is 20t - 5t^2 metres — a polynomial of degree 2 ([Polynomials](01-polynomials.md)).
 
 Forwards is easy: put t = 2 in and the height is 20 metres.
 
@@ -40,7 +16,7 @@ Set the height to 15 and move everything to one side:
 
 5t^2 - 20t + 15 = 0.
 
-Factoring cracks that one. Divide by 5 to get t^2 - 4t + 3 = 0, which un-multiplies into (t - 1)(t - 3) = 0. A product is zero only when one of its factors is zero ([factoring-quadratics](02-factoring-quadratics.md)). So t = 1 and t = 3.
+Factoring cracks that one. Divide by 5 to get t^2 - 4t + 3 = 0, which un-multiplies into (t - 1)(t - 3) = 0. A product is zero only when one of its factors is zero ([Factoring](02-factoring-quadratics.md)). So t = 1 and t = 3.
 
 Move the height a little and those whole numbers stop being whole; factoring goes quiet.
 
@@ -70,7 +46,7 @@ A **quadratic** is any equation written as a squared term, a plain term and a nu
 
 $$a x^2 + b x + c = 0$$
 
-The letter $x$ is the unknown; here it is the time $t$ in seconds. The numbers $a$, $b$ and $c$ are the coefficients ([polynomials](01-polynomials.md)). Only $a$ has a condition: not zero. A zero $a$ kills the squared term and leaves a straight-line equation ([linear-equations](../01-Letters%20and%20Equations/02-linear-equations.md)).
+The letter $x$ is the unknown; here it is the time $t$ in seconds. The numbers $a$, $b$ and $c$ are the coefficients ([Polynomials](01-polynomials.md)). Only $a$ has a condition: not zero. A zero $a$ kills the squared term and leaves a straight-line equation ([Linear equations](../01-Letters%20and%20Equations/02-linear-equations.md)).
 
 The answers are
 
@@ -109,7 +85,7 @@ flowchart TD
 
 ### Step 0: a square is the one thing that unwinds in a single move
 
-Suppose you reach (t - 2)^2 = 1. That is finished work. Something squared is 1, so that something is 1 or -1, because squaring throws the sign away ([roots-and-fractional-exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)). So t = 3 or t = 1.
+Suppose you reach (t - 2)^2 = 1. That is finished work. Something squared is 1, so that something is 1 or -1, because squaring throws the sign away ([Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)). So t = 3 or t = 1.
 
 Nothing else in algebra opens that cleanly, so the plan is to force every quadratic into that shape: **completing the square**.
 
@@ -170,7 +146,7 @@ Everything there is ordinary arithmetic except the square root, and under it sit
 - Exactly zero: the root is zero, so both signs give the same answer, -b/(2a) — one moment, counted twice.
 - Below zero: nothing on the number line squares to a negative, so there is no root and no answer.
 
-When the discriminant is not a perfect square the root runs on forever without repeating, and the answers are irrational ([irrational-numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md)). Ours is 100, so the root is exactly 10 and the times are whole.
+When the discriminant is not a perfect square the root runs on forever without repeating, and the answers are irrational ([Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md)). Ours is 100, so the root is exactly 10 and the times are whole.
 
 <details>
 <summary>The two answers add and multiply to something you can read off the equation</summary>
@@ -181,7 +157,7 @@ For the ball: -b/a is 20/5 = 4 and c/a is 15/5 = 3, and the answers 1 and 3 add 
 
 </details>
 
-Factoring is quicker when it works: 5t^2 - 20t + 15 is 5(t - 1)(t - 3), read off the brackets ([factoring-quadratics](02-factoring-quadratics.md)). It needs kind numbers; the formula needs nothing.
+Factoring is quicker when it works: 5t^2 - 20t + 15 is 5(t - 1)(t - 3), read off the brackets ([Factoring](02-factoring-quadratics.md)). It needs kind numbers; the formula needs nothing.
 
 ---
 
@@ -419,7 +395,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Reading a negative discriminant as "the question is broken".** It means no answer on the number line, a fact about the world: 5t^2 - 20t + 25 = 0 says a ball kicked at 20 metres a second never reaches 25 metres. On [fundamental-theorem-of-algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md) the number line grows and the missing answers come back.
+> **Reading a negative discriminant as "the question is broken".** It means no answer on the number line, a fact about the world: 5t^2 - 20t + 25 = 0 says a ball kicked at 20 metres a second never reaches 25 metres. On [The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md) the number line grows and the missing answers come back.
 >
 > - **Forgetting that b carries its own sign.** Here b is -20, so minus b is +20. Backwards gives -3.00 and -1.00: times before the kick.
 > - **Dividing only part of the top by two a.** All of minus b, plus or minus the root, goes over 2a.
@@ -432,7 +408,7 @@ The two outputs match line for line.
 
 - **Anything thrown, dropped or fired.** Height under gravity is a quadratic in time. "When does it pass this height" and "when does it land" are one question asked twice: the landing is 20t - 5t^2 = 0, answered at 0 and 4 seconds.
 - **Break-even in a plan.** Sales fall as the price rises, so revenue — price times sales — is a quadratic in price. Set it against costs and the answers are the break-even prices; the discriminant says whether any price pays at all.
-- **Inside bigger machinery.** [eigenvalues-and-eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md) ends on a quadratic, solved by this formula.
+- **Inside bigger machinery.** [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md) ends on a quadratic, solved by this formula.
 
 > **Say it back**
 > A quadratic has a squared unknown, a plain unknown and a number. The one shape that unwinds in a single step is "something squared equals a number", so force the equation into it: halve the middle coefficient, square it, add it, take it back off. Do that once on letters and out drops the quadratic formula. Under its square root sits the discriminant, counting the answers before you find them: above zero two, exactly zero one, below zero none. The ball is 15 metres up at 1 second and again at 3, touches 20 metres at 2 seconds, and never sees 25.
@@ -441,16 +417,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [factoring-quadratics](02-factoring-quadratics.md): un-multiplying a quadratic into two brackets — the lucky road this card replaces with a guaranteed one.
-- [roots-and-fractional-exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): square roots, and why taking one gives a plus and a minus answer.
-- [irrational-numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md): the answers when the discriminant is not a perfect square.
+- [Factoring](02-factoring-quadratics.md): un-multiplying a quadratic into two brackets — the lucky road this card replaces with a guaranteed one.
+- [Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): square roots, and why taking one gives a plus and a minus answer.
+- [Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md): the answers when the discriminant is not a perfect square.
 
 ## Where this goes next
 
-- [roots-and-the-factor-theorem](05-roots-and-the-factor-theorem.md): each answer r becomes a factor x - r, so a squared term gives at most two answers.
-- [fundamental-theorem-of-algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md): where the answers go when the discriminant is negative.
-- [why-no-quintic-formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): degree 3 and 4 have formulas like this one; degree 5 provably has none.
-- [eigenvalues-and-eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): a 2 by 2 matrix hands you a quadratic; this formula finishes it.
+- [Roots and factors](05-roots-and-the-factor-theorem.md): each answer r becomes a factor x - r, so a squared term gives at most two answers.
+- [The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md): where the answers go when the discriminant is negative.
+- [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): degree 3 and 4 have formulas like this one; degree 5 provably has none.
+- [Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): a 2 by 2 matrix hands you a quadratic; this formula finishes it.
 
 ---
 

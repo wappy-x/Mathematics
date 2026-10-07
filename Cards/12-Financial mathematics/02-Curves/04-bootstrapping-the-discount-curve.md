@@ -1,35 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Curves
-topic: Building the curve
-item: Bootstrapping
-kind: method
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/12-Financial mathematics/02-Curves/01-spot-forward-and-par-rates|spot-forward-and-par-rates]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/02-gaussian-elimination|gaussian-elimination]]"
-next:
-  - "[[Cards/12-Financial mathematics/02-Curves/05-curve-interpolation-and-shape|curve-interpolation-and-shape]]"
-  - "[[Cards/12-Financial mathematics/02-Curves/06-z-spread-and-asset-swap-spread|z-spread-and-asset-swap-spread]]"
-  - "[[Cards/12-Financial mathematics/28-Swaps/01-interest-rate-swaps|interest-rate-swaps]]"
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/06-bootstrapping-the-hazard-curve-from-cds-quotes|bootstrapping-the-hazard-curve-from-cds-quotes]]"
-tags:
-  - mathematics
-  - financial-mathematics
-  - bootstrapping-the-discount-curve
----
-
 # Bootstrapping: solving for discount factors one maturity at a time
 
-Financial mathematics → Curves → Building the curve → Bootstrapping
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves](../../../SYLLABUS.md#w12-s02) → Bootstrapping
 
 ---
 
 ## General Overview
 
-At half past eight one morning a screen carries six quotes for lending to the same borrower. Money placed for six months comes back at 4.0000 percent a year. Money placed for twelve months comes back at 4.2000 percent. Then four swap quotes, at two, three, four and five years: 4.4000, 4.5500, 4.6200 and 4.6500 percent a year. Those last four are par swap rates — the fixed coupon that makes a brand-new swap worth nothing to either side on the day it is struck ([spot-forward-and-par-rates](01-spot-forward-and-par-rates.md)).
+At half past eight one morning a screen carries six quotes for lending to the same borrower. Money placed for six months comes back at 4.0000 percent a year. Money placed for twelve months comes back at 4.2000 percent. Then four swap quotes, at two, three, four and five years: 4.4000, 4.5500, 4.6200 and 4.6500 percent a year. Those last four are par swap rates — the fixed coupon that makes a brand-new swap worth nothing to either side on the day it is struck ([Spot, forward and par rates](01-spot-forward-and-par-rates.md)).
 
 A desk cannot value anything with rates in that form. What it needs is the price of a future dollar: what 100 dollars due in six months is worth this morning, and 100 dollars due in five years. Six quotes, six dates, six prices. That list is the **discount curve**, and every bond, loan and swap on the book is valued off it.
 
@@ -58,7 +35,7 @@ The line falls because money arriving later is worth less this morning. Nothing 
 
 ## The formula
 
-Notation first, in words. $D(T)$ is the discount factor for a date: what one dollar paid at time $T$, in years, costs this morning. Every swap here pays once a year, so its dates can be numbered by the year they fall in: $D_n$ is short for $D(n)$, the price of a dollar $n$ years out. A rate quoted for a period becomes money only after it is multiplied by the length of the period, and that length is the **accrual fraction** $\alpha$: half a year is $\alpha = 0.5$, a full year is $\alpha = 1$, and $\alpha_n$ is the fraction for the period ending at year $n$. A deposit's simple rate is $r$. A par swap rate is written $S_n$ — the same kind of number as the bond par rate on [spot-forward-and-par-rates](01-spot-forward-and-par-rates.md).
+Notation first, in words. $D(T)$ is the discount factor for a date: what one dollar paid at time $T$, in years, costs this morning. Every swap here pays once a year, so its dates can be numbered by the year they fall in: $D_n$ is short for $D(n)$, the price of a dollar $n$ years out. A rate quoted for a period becomes money only after it is multiplied by the length of the period, and that length is the **accrual fraction** $\alpha$: half a year is $\alpha = 0.5$, a full year is $\alpha = 1$, and $\alpha_n$ is the fraction for the period ending at year $n$. A deposit's simple rate is $r$. A par swap rate is written $S_n$ — the same kind of number as the bond par rate on [Spot, forward and par rates](01-spot-forward-and-par-rates.md).
 
 A deposit pays once, at its own maturity $T$. One dollar lent grows to $1 + \alpha r$, so the price of a dollar on that date is:
 
@@ -87,9 +64,9 @@ $$\bigl(1 + \alpha_n S_n\bigr) D_n \;=\; 1 - S_n B_n \qquad\Longrightarrow\qquad
 | $z$, $z(T)$ | the zero rate: the single continuously compounded rate with $e^{-z T} = D(T)$ | 4.5577 percent at five years | the rung falls |
 | $f$ | the forward rate: the continuously compounded rate for one period between two dates | 4.6742 percent from year 4 to year 5 | the later rung falls |
 
-Zero rates and forward rates are the same six prices read out loud; converting between the three is [spot-forward-and-par-rates](01-spot-forward-and-par-rates.md).
+Zero rates and forward rates are the same six prices read out loud; converting between the three is [Spot, forward and par rates](01-spot-forward-and-par-rates.md).
 
-**Conventions verified 14 Sep 2026.** The accrual fractions here are fixed by hand at 0.5 and 1 so every number can be checked. Real quotes carry day-count rules that shift them by a day or two of interest, and markets differ in which rules they use; those rules are on [money-market-instruments-and-sofr](03-money-market-instruments-and-sofr.md).
+**Conventions verified 14 Sep 2026.** The accrual fractions here are fixed by hand at 0.5 and 1 so every number can be checked. Real quotes carry day-count rules that shift them by a day or two of interest, and markets differ in which rules they use; those rules are on [Money markets](03-money-market-instruments-and-sofr.md).
 
 ### When it holds
 
@@ -122,7 +99,7 @@ A new swap is struck at the rate that makes it worth nothing to either side, so 
 <details>
 <summary>Why the floating side telescopes</summary>
 
-The forward rate $f$ for the period ending at date $n$ satisfies $\alpha_n f = D_{n-1}/D_n - 1$: lending a dollar across that period must return what buying the two prices returns, or one route is free money ([spot-forward-and-par-rates](01-spot-forward-and-par-rates.md)). The payment arrives at date $n$, so today it is worth $\alpha_n f D_n = D_{n-1} - D_n$. Summing from the first date to the $n$-th leaves one dollar minus $D_n$. The check does not use this shortcut: it builds each floating payment from its forward rate, discounts it, and compares.
+The forward rate $f$ for the period ending at date $n$ satisfies $\alpha_n f = D_{n-1}/D_n - 1$: lending a dollar across that period must return what buying the two prices returns, or one route is free money ([Spot, forward and par rates](01-spot-forward-and-par-rates.md)). The payment arrives at date $n$, so today it is worth $\alpha_n f D_n = D_{n-1} - D_n$. Summing from the first date to the $n$-th leaves one dollar minus $D_n$. The check does not use this shortcut: it builds each floating payment from its forward rate, discounts it, and compares.
 
 </details>
 
@@ -130,7 +107,7 @@ The forward rate $f$ for the period ending at date $n$ satisfies $\alpha_n f = D
 
 Line the six equations up with the six prices as columns and the quotes as rows, shortest first. Each deposit row touches one column. The two-year swap row touches the one-year and two-year columns; the five-year row touches five. Every row's rightmost entry sits one step further right than the row above: the matrix is lower triangular.
 
-A triangular system is the one case needing no elimination. The first row has one unknown; substitute its answer into the second, which then has one unknown, and so on. That staircase is what [gaussian-elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md) spends its first phase manufacturing, and bootstrapping gets it free from the market's habit of quoting nested schedules. The ladder is not a trick standing beside the linear algebra; it is the linear algebra with the hard half already done.
+A triangular system is the one case needing no elimination. The first row has one unknown; substitute its answer into the second, which then has one unknown, and so on. That staircase is what [Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md) spends its first phase manufacturing, and bootstrapping gets it free from the market's habit of quoting nested schedules. The ladder is not a trick standing beside the linear algebra; it is the linear algebra with the hard half already done.
 
 ### Step 4: one rung, one answer, and when there is none
 
@@ -237,7 +214,7 @@ xychart-beta
     bar [3.0090, -3.1483, -0.0011]
 ```
 
-Three bars, one per period whose forward rate changed. The third year's forward rate rises 3.0090 basis points, the fourth year's falls 3.1483, and the fifth barely stirs at -0.0011. A one basis point nudge to a par rate is a three basis point see-saw in the forward rates on either side of that date, because a par rate is an average over a schedule and an average moves only if the pieces move more. This is why desks hedge in forward rates, and why the shape of a curve between its pillars is a subject of its own: [curve-interpolation-and-shape](05-curve-interpolation-and-shape.md).
+Three bars, one per period whose forward rate changed. The third year's forward rate rises 3.0090 basis points, the fourth year's falls 3.1483, and the fifth barely stirs at -0.0011. A one basis point nudge to a par rate is a three basis point see-saw in the forward rates on either side of that date, because a par rate is an average over a schedule and an average moves only if the pieces move more. This is why desks hedge in forward rates, and why the shape of a curve between its pillars is a subject of its own: [Between the pillars](05-curve-interpolation-and-shape.md).
 
 ---
 
@@ -679,10 +656,10 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Every valuation on a fixed-income book.** Bonds, loans, swaps and their collateral are valued by multiplying cash flows by discount factors, and those factors came from a bootstrap run this morning.
-- **The floating side of a swap.** The forward rates this curve implies are the payments a swap is assumed to make, which is why the same six numbers both project and discount: [interest-rate-swaps](../28-Swaps/01-interest-rate-swaps.md).
-- **The short end of the curve.** Deposits, futures and overnight-rate instruments fill the first year or two, each with its own quoting convention: [money-market-instruments-and-sofr](03-money-market-instruments-and-sofr.md). A rate locked in for one future period is a forward rate agreement: [forward-rate-agreements](02-forward-rate-agreements.md).
-- **Measuring a bond against the curve.** The constant spread that makes a bond's own price come out right is its z-spread: [z-spread-and-asset-swap-spread](06-z-spread-and-asset-swap-spread.md).
-- **Credit, with the same ladder.** Credit default swap spreads at one, three, five and ten years are stripped into survival probabilities one maturity at a time, by the same argument: [bootstrapping-the-hazard-curve-from-cds-quotes](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md).
+- **The floating side of a swap.** The forward rates this curve implies are the payments a swap is assumed to make, which is why the same six numbers both project and discount: [Interest rate swaps](../28-Swaps/01-interest-rate-swaps.md).
+- **The short end of the curve.** Deposits, futures and overnight-rate instruments fill the first year or two, each with its own quoting convention: [Money markets](03-money-market-instruments-and-sofr.md). A rate locked in for one future period is a forward rate agreement: [Forward rate agreements](02-forward-rate-agreements.md).
+- **Measuring a bond against the curve.** The constant spread that makes a bond's own price come out right is its z-spread: [Spreads over the curve](06-z-spread-and-asset-swap-spread.md).
+- **Credit, with the same ladder.** Credit default swap spreads at one, three, five and ten years are stripped into survival probabilities one maturity at a time, by the same argument: [Bootstrapping a hazard curve](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md).
 - **Central bank publications.** The zero-coupon curves central banks publish are built from market quotes this way, with a fitted shape where quotes are sparse.
 
 > **Say it back**
@@ -692,17 +669,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [spot-forward-and-par-rates](01-spot-forward-and-par-rates.md): what a par rate is, what a forward rate is, and why one set of prices for future money carries all three.
-- [gaussian-elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md): how a linear system is solved in general, and why a triangular one is already solved.
+- [Spot, forward and par rates](01-spot-forward-and-par-rates.md): what a par rate is, what a forward rate is, and why one set of prices for future money carries all three.
+- [Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md): how a linear system is solved in general, and why a triangular one is already solved.
 
 ## Where this goes next
 
-- [curve-interpolation-and-shape](05-curve-interpolation-and-shape.md): what to put between the pillars, and what a bad choice does to the forward rates.
-- [z-spread-and-asset-swap-spread](06-z-spread-and-asset-swap-spread.md): measuring one bond against the finished curve.
-- [interest-rate-swaps](../28-Swaps/01-interest-rate-swaps.md): the contract whose quotes built the long end, valued away from its start date.
-- [bootstrapping-the-hazard-curve-from-cds-quotes](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md): the same ladder climbed with credit quotes, stripping out the chance of default.
+- [Between the pillars](05-curve-interpolation-and-shape.md): what to put between the pillars, and what a bad choice does to the forward rates.
+- [Spreads over the curve](06-z-spread-and-asset-swap-spread.md): measuring one bond against the finished curve.
+- [Interest rate swaps](../28-Swaps/01-interest-rate-swaps.md): the contract whose quotes built the long end, valued away from its start date.
+- [Bootstrapping a hazard curve](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md): the same ladder climbed with credit quotes, stripping out the chance of default.
 
-This curve is six points and nothing else, while a trade can settle on any date; what fills the gaps, and what that choice does to the forward rates between the pillars, is [curve-interpolation-and-shape](05-curve-interpolation-and-shape.md).
+This curve is six points and nothing else, while a trade can settle on any date; what fills the gaps, and what that choice does to the forward rates between the pillars, is [Between the pillars](05-curve-interpolation-and-shape.md).
 
 ---
 

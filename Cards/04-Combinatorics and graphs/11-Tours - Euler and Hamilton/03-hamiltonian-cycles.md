@@ -1,27 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Tours - Euler and Hamilton
-topic: Every vertex once
-item: Hamiltonian cycles
-kind: theorem
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/11-Tours - Euler and Hamilton/01-euler-circuits|euler-circuits]]"
-  - "[[Cards/01-Foundations/06-Proof/03-proof-by-contradiction|proof-by-contradiction]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/11-Tours - Euler and Hamilton/04-travelling-salesman-in-outline|travelling-salesman-in-outline]]"
-  - "[[Cards/24-Computability and complexity/03-Time Complexity/05-karps-problems-and-hardness-recipes|karps-problems-and-hardness-recipes]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - hamiltonian-cycles
----
-
 # Hamiltonian cycles: visit every vertex once and return, with no quick test, but enough edges guarantee one
 
-Combinatorics and graphs → Tours - Euler and Hamilton → Every vertex once → Hamiltonian cycles
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Tours - Euler and Hamilton](../../../SYLLABUS.md#w04-s11) → Hamiltonian cycles
 
 ---
 
@@ -31,7 +10,7 @@ A distribution warehouse is built as a cube: eight corners, a walkway along each
 
 A courier signs a sheet at every corner, walking only the walkways, signing nowhere twice, finishing where the round began. One round works: 0, 1, 3, 2, 6, 7, 5, 4, back to 0. Six such rounds exist.
 
-A tour like that, every vertex once and then home, is a **Hamiltonian cycle**. The twin question asks for every *edge* once: that is Euler's, and degrees settle it in a line ([euler-circuits](01-euler-circuits.md)). Swapping "edge" for "vertex" changes everything. No quick test is known, and since Karp's 1972 list this has been a standard hard problem.
+A tour like that, every vertex once and then home, is a **Hamiltonian cycle**. The twin question asks for every *edge* once: that is Euler's, and degrees settle it in a line ([Euler circuits](01-euler-circuits.md)). Swapping "edge" for "vertex" changes everything. No quick test is known, and since Karp's 1972 list this has been a standard hard problem.
 
 Enough edges still force a round; that guarantee is this card. No count of edges explains a failure, though: ten depots on fifteen links, three at each — the Petersen network, as well wired per depot as a cube corner — carry no round, which a search over all 274 partial routes confirms.
 
@@ -69,7 +48,7 @@ Twelve walkways: four per floor, four between them. The round above takes three 
 
 ## The formula
 
-Notation first, in words. A network of dots and lines is $G$: dots are vertices, lines edges ([graphs-vertices-and-edges](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). The vertex count is $n$; the edges at one vertex are its degree, $\deg(v)$ ([degree-and-handshaking](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)). A network's smallest degree is $\delta(G)$, the Greek letter delta, read "the minimum degree of G".
+Notation first, in words. A network of dots and lines is $G$: dots are vertices, lines edges ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). The vertex count is $n$; the edges at one vertex are its degree, $\deg(v)$ ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)). A network's smallest degree is $\delta(G)$, the Greek letter delta, read "the minimum degree of G".
 
 A **Hamiltonian cycle** lists every vertex once, an edge joining each to the next and the last back to the first:
 
@@ -102,7 +81,7 @@ $$\text{if } n \ge 3 \text{ and } \delta(G) \ge n/2, \text{ then } G \text{ has 
 
 ### Step 0: improve a route, rather than test the network
 
-The proof never asks whether the network has a round. It takes a longest route and shows that enough degree closes it into a loop with nothing left out. Twice it assumes the opposite and counts until something impossible appears ([proof-by-contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)).
+The proof never asks whether the network has a round. It takes a longest route and shows that enough degree closes it into a loop with nothing left out. Twice it assumes the opposite and counts until something impossible appears ([Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)).
 
 ### Step 1: the ends of a longest route have nowhere new to go
 
@@ -127,9 +106,9 @@ With `x1 x2 ... xk` a longest path, collect `A = { i : x1 joined to xi }` and `B
 
 ### Step 4: why the ten depots have none, and why no degree count says so
 
-Every depot has three links, as every cube corner does: the same pattern, six rounds on one network and none on the other. Degrees alone cannot decide. Two cheap ways to rule a round out do exist: a vertex whose deletion breaks the network into pieces, since deleting one vertex of a round leaves a single path; and a two-sided network whose sides differ in size, since a round alternates sides ([bipartite-graphs-and-odd-cycles](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)). The cube clears both, four corners a side; the depots have no such vertex and no two sides at all, and still no round.
+Every depot has three links, as every cube corner does: the same pattern, six rounds on one network and none on the other. Degrees alone cannot decide. Two cheap ways to rule a round out do exist: a vertex whose deletion breaks the network into pieces, since deleting one vertex of a round leaves a single path; and a two-sided network whose sides differ in size, since a round alternates sides ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)). The cube clears both, four corners a side; the depots have no such vertex and no two sides at all, and still no round.
 
-What settles the depots here is exhaustion: the search opens 274 partial routes and closes none — a verdict on one network, not a test. The general question sits on Karp's 1972 list (karps-problems-and-hardness-recipes).
+What settles the depots here is exhaustion: the search opens 274 partial routes and closes none — a verdict on one network, not a test. The general question sits on Karp's 1972 list (Karp's list).
 
 ```mermaid
 flowchart TB
@@ -381,9 +360,9 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Position encoders.** The round 0, 1, 3, 2, 6, 7, 5, 4 is the reflected binary code: one digit flips per step, so a sensor on three tracks cannot straddle two positions and read a third.
-- **Vehicle routing.** Cost each edge and ask for the cheapest round: this search is the travelling salesman's skeleton ([travelling-salesman-in-outline](04-travelling-salesman-in-outline.md)).
-- **The postman, not the courier.** Covering every street instead has an efficient algorithm ([chinese-postman](02-chinese-postman.md)).
-- **Shortest string holding every code.** A sequence containing each binary block of one length once is a round through every vertex of one network ([de-bruijn-sequences](05-de-bruijn-sequences.md)).
+- **Vehicle routing.** Cost each edge and ask for the cheapest round: this search is the travelling salesman's skeleton ([The travelling salesman](04-travelling-salesman-in-outline.md)).
+- **The postman, not the courier.** Covering every street instead has an efficient algorithm ([The Chinese postman](02-chinese-postman.md)).
+- **Shortest string holding every code.** A sequence containing each binary block of one length once is a round through every vertex of one network ([De Bruijn sequences](05-de-bruijn-sequences.md)).
 
 > **Say it back**
 > A Hamiltonian cycle visits every vertex once and returns home. Euler's twin question, every edge once, has a cheap degree test; this one has none. Dirac's theorem gives a one-way guarantee: three vertices or more, every degree at least half the vertices. Its proof takes a longest route and counts the ends' neighbours until they must collide, closing it. The warehouse has six rounds with the bar unmet; four gangways meet it and lift the count to 72; the ten depots have none.
@@ -392,13 +371,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [euler-circuits](01-euler-circuits.md): the edge-covering twin, and the cheap degree test this question lacks.
-- [proof-by-contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): the shape of Steps 1 and 3.
+- [Euler circuits](01-euler-circuits.md): the edge-covering twin, and the cheap degree test this question lacks.
+- [Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): the shape of Steps 1 and 3.
 
 ## Where this goes next
 
-- [travelling-salesman-in-outline](04-travelling-salesman-in-outline.md): the same round with a cost on every edge, where finding one stops being the hard part.
-- karps-problems-and-hardness-recipes: where "no quick test is known" becomes a precise claim about a family of problems.
+- [The travelling salesman](04-travelling-salesman-in-outline.md): the same round with a cost on every edge, where finding one stops being the hard part.
+- Karp's list: where "no quick test is known" becomes a precise claim about a family of problems.
 
 The search opened 274 partial routes where a blind sift of ten depots faces 181440 orders — encouraging until the depots number a thousand. What to do when the exact answer is out of reach is the next card's business.
 

@@ -1,28 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Oscillators - Second-Order Linear Equations
-topic: Ringing inside a shrinking envelope
-item: Complex roots
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/02-the-characteristic-equation|the-characteristic-equation]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/04-eulers-formula|eulers-formula]]"
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/01-right-triangle-trigonometry|right-triangle-trigonometry]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/05-undetermined-coefficients|undetermined-coefficients]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/08-the-rlc-circuit-and-the-spring|the-rlc-circuit-and-the-spring]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/03-complex-eigenvalues-and-spirals|complex-eigenvalues-and-spirals]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/03-poles-zeros-and-stability|poles-zeros-and-stability]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/06-second-order-systems-damping-and-natural-frequency|second-order-systems-damping-and-natural-frequency]]"
-tags: [mathematics, differential equations and dynamics, complex-roots-and-damped-oscillation]
----
-
 # Complex roots: the exponential of an imaginary number is a rotation, so the solution rings down
 
-Differential equations and dynamics → Oscillators - Second-Order Linear Equations → Ringing inside a shrinking envelope → Complex roots
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Oscillators - Second-Order Linear Equations](../../../SYLLABUS.md#w08-s03) → Complex roots
 
 ---
 
@@ -30,7 +8,7 @@ Differential equations and dynamics → Oscillators - Second-Order Linear Equati
 
 A car goes over a bump and is left 1 cm above its resting height, momentarily still. The spring pulls it back; the shock absorber, a piston in oil, drags against the motion. With a soft damper the body overshoots, dips 0.208 cm below level at 1.571 s, rises again, and fades.
 
-The rate law, per unit of mass: acceleration equals minus 5 times the height, minus 2 times the velocity. Guessing an exponential turns it into a quadratic ([the-characteristic-equation](02-the-characteristic-equation.md)). Its roots are −1 + 2i and −1 − 2i, where i is the number whose square is −1.
+The rate law, per unit of mass: acceleration equals minus 5 times the height, minus 2 times the velocity. Guessing an exponential turns it into a quadratic ([The characteristic equation](02-the-characteristic-equation.md)). Its roots are −1 + 2i and −1 − 2i, where i is the number whose square is −1.
 
 An exponential with an imaginary rate does not grow: it turns, like a point running round a circle. A negative real rate shrinks the circle; seen from the side, the turn is a fading cosine. The real part, −1 per second, sets the fade: the swing halves every 0.693 s. The imaginary part, 2 radians per second, sets the turning: one full swing every 3.142 s.
 
@@ -87,7 +65,7 @@ The height stays inside the envelope $R\,e^{at}$, with $R = \sqrt{C^2 + D^2}$. T
 
 - **Constant p and q.** A damper that stiffens as it warms changes a and b mid-swing.
 - **Linear forces.** Pull proportional to height, drag to velocity. A spring that stiffens when stretched hard makes the period depend on the swing's size.
-- **No outside push.** A road that keeps shaking the car adds a term on the right; see [undetermined-coefficients](05-undetermined-coefficients.md).
+- **No outside push.** A road that keeps shaking the car adds a term on the right; see [Undetermined coefficients](05-undetermined-coefficients.md).
 - **p positive, for "damped".** With p zero or negative the formula holds but the envelope stays level or grows. A complex root alone does not promise decay.
 
 ---
@@ -96,7 +74,7 @@ The height stays inside the envelope $R\,e^{at}$, with $R = \sqrt{C^2 + D^2}$. T
 
 ### Step 0: an imaginary rate turns instead of growing
 
-Euler's formula, $e^{i\theta} = \cos\theta + i\sin\theta$ ([eulers-formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)), puts $e^{i\theta}$ on the circle of radius 1, at angle θ from the positive real axis. So $e^{ibt}$ runs round that circle at b radians per second. Multiplying by $e^{at}$ shrinks the radius as it turns: the point spirals in. The real part of the spiral, its shadow on the horizontal axis, is $e^{at}\cos bt$. That shadow is the fading swing.
+Euler's formula, $e^{i\theta} = \cos\theta + i\sin\theta$ ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)), puts $e^{i\theta}$ on the circle of radius 1, at angle θ from the positive real axis. So $e^{ibt}$ runs round that circle at b radians per second. Multiplying by $e^{at}$ shrinks the radius as it turns: the point spirals in. The real part of the spiral, its shadow on the horizontal axis, is $e^{at}\cos bt$. That shadow is the fading swing.
 
 ### The picture: the root's exponential, drawn in the plane
 
@@ -114,7 +92,7 @@ Write the complex solution as $u + iv$, with $u = e^{at}\cos bt$ and $v = e^{at}
 
 ### Step 3: the start fixes C and D, and nothing is missed
 
-At t = 0, the mix $C u + D v$ has height C and velocity aC + bD. Matching y(0) and y'(0) gives the formula's C and D, for any start, since b is not zero. Two solutions with the same start agree forever ([superposition-and-the-shape-of-linear-solutions](01-superposition-and-the-shape-of-linear-solutions.md)), so this family holds every solution.
+At t = 0, the mix $C u + D v$ has height C and velocity aC + bD. Matching y(0) and y'(0) gives the formula's C and D, for any start, since b is not zero. Two solutions with the same start agree forever ([Superposition](01-superposition-and-the-shape-of-linear-solutions.md)), so this family holds every solution.
 
 <details>
 <summary>Detailed proof: a check with no complex numbers</summary>
@@ -127,13 +105,13 @@ With a = −p/2 the middle coefficient is zero, and a^2 + p a + q = q − p^2/4 
 
 ### Step 4: reading off the envelope, the period and the fade
 
-Treat C and D as the two legs of a right triangle ([right-triangle-trigonometry](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md)). Its long side is $R = \sqrt{C^2 + D^2}$, and with θ the angle whose cosine is C/R and sine D/R, the mix becomes $R\cos(bt - \theta)$. A cosine never exceeds 1, so the height stays inside $\pm R\,e^{at}$. For the car, R = 1.118 cm.
+Treat C and D as the two legs of a right triangle ([Sine, cosine and tangent](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md)). Its long side is $R = \sqrt{C^2 + D^2}$, and with θ the angle whose cosine is C/R and sine D/R, the mix becomes $R\cos(bt - \theta)$. A cosine never exceeds 1, so the height stays inside $\pm R\,e^{at}$. For the car, R = 1.118 cm.
 
 The envelope halves when $e^{at} = 1/2$, after ln 2 / |a| = 0.693 s. The pattern repeats after $T = 2\pi/b$ = 3.142 s, each repeat $e^{aT}$ = 0.043 times the last.
 
 ### Step 5: the three regimes
 
-As p rises toward $2\sqrt{q}$, b shrinks and the ringing slows. At $p = 2\sqrt{q}$, 4.472 per s for the car, the roots meet on the real line: critical damping. Beyond it, two negative real roots give a creep with no ringing, handled on [the-characteristic-equation](02-the-characteristic-equation.md). The sign of $p^2 - 4q$ names the regime: negative rings (underdamped), zero sits on the edge (critical), positive creeps (overdamped). Stepped for 10 s, the car crosses level 6 times at p = 2 and never at 4.472 or 6.
+As p rises toward $2\sqrt{q}$, b shrinks and the ringing slows. At $p = 2\sqrt{q}$, 4.472 per s for the car, the roots meet on the real line: critical damping. Beyond it, two negative real roots give a creep with no ringing, handled on [The characteristic equation](02-the-characteristic-equation.md). The sign of $p^2 - 4q$ names the regime: negative rings (underdamped), zero sits on the edge (critical), positive creeps (overdamped). Stepped for 10 s, the car crosses level 6 times at p = 2 and never at 4.472 or 6.
 
 ---
 
@@ -168,7 +146,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Two roads to the car's motion. Road one is the formula. Road two never calls sin, cos or exp: Euler's rule steps height and velocity forward along their own rates, a step of length h at a time ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)). They must agree on the crossing and the dip, and the gap must halve when h halves. Euler's formula is checked by a limit: 1 + 2i/2^30, squared 30 times, lands on cos 2 + i sin 2. Each regime is stepped for 10 s and its zero crossings counted.
+Two roads to the car's motion. Road one is the formula. Road two never calls sin, cos or exp: Euler's rule steps height and velocity forward along their own rates, a step of length h at a time ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)). They must agree on the crossing and the dip, and the gap must halve when h halves. Euler's formula is checked by a limit: 1 + 2i/2^30, squared 30 times, lands on cos 2 + i sin 2. Each regime is stepped for 10 s and its zero crossings counted.
 
 ### Python
 
@@ -388,7 +366,7 @@ The two outputs match line for line.
 
 - **Car suspension.** The damper sets a: too weak and the car bounces, too strong and every bump is felt.
 - **Buildings and bridges.** A measured period T and the ratio ρ between one peak and the next give b = 2π/T and a = ln ρ / T, Step 4 run backwards.
-- **Electric circuits.** A resistor, coil and capacitor in a loop obey the same equation, with charge in place of height: [the-rlc-circuit-and-the-spring](08-the-rlc-circuit-and-the-spring.md).
+- **Electric circuits.** A resistor, coil and capacitor in a loop obey the same equation, with charge in place of height: [The RLC circuit](08-the-rlc-circuit-and-the-spring.md).
 
 > **Say it back**
 > With no real roots, the characteristic equation has a pair a ± ib. Euler's formula makes e^((a+ib)t) a spiral, turning at b radians per second, fading at rate a. Its real and imaginary parts are two real solutions, mixed to fit the start. The sign of p^2 − 4q says whether the system rings, sits on the edge, or creeps.
@@ -397,19 +375,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [the-characteristic-equation](02-the-characteristic-equation.md): the exponential guess, and the real-root and critical cases.
-- [eulers-formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e^(iθ) = cos θ + i sin θ, the turning in Step 0.
-- [right-triangle-trigonometry](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md): the triangle with legs C and D that gives the envelope.
+- [The characteristic equation](02-the-characteristic-equation.md): the exponential guess, and the real-root and critical cases.
+- [Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e^(iθ) = cos θ + i sin θ, the turning in Step 0.
+- [Sine, cosine and tangent](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md): the triangle with legs C and D that gives the envelope.
 
 ## Where this goes next
 
-- [undetermined-coefficients](05-undetermined-coefficients.md): a road that keeps shaking the car.
-- [the-rlc-circuit-and-the-spring](08-the-rlc-circuit-and-the-spring.md): the same equation from springs, coils and capacitors.
-- [complex-eigenvalues-and-spirals](../04-Systems%20and%20the%20Matrix%20Exponential/03-complex-eigenvalues-and-spirals.md): a ± ib as eigenvalues, spiralling in the plane of height and velocity.
-- [poles-zeros-and-stability](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md): the sign of a as the test of settling.
-- [second-order-systems-damping-and-natural-frequency](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md): a and b recast as damping ratio and natural frequency.
+- [Undetermined coefficients](05-undetermined-coefficients.md): a road that keeps shaking the car.
+- [The RLC circuit](08-the-rlc-circuit-and-the-spring.md): the same equation from springs, coils and capacitors.
+- [Complex eigenvalues](../04-Systems%20and%20the%20Matrix%20Exponential/03-complex-eigenvalues-and-spirals.md): a ± ib as eigenvalues, spiralling in the plane of height and velocity.
+- [Poles and zeros](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md): the sign of a as the test of settling.
+- [Damping ratio and natural frequency](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md): a and b recast as damping ratio and natural frequency.
 
-Here the car is left alone after one bump; what happens when the road keeps pushing, and the push feeds the ringing, is the question [undetermined-coefficients](05-undetermined-coefficients.md) and [resonance-and-beats](06-resonance-and-beats.md) answer.
+Here the car is left alone after one bump; what happens when the road keeps pushing, and the push feeds the ringing, is the question [Undetermined coefficients](05-undetermined-coefficients.md) and [Resonance](06-resonance-and-beats.md) answer.
 
 ---
 

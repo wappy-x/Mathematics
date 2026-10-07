@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Swaps
-topic: Swapping principal across currencies
-item: Cross-currency swaps
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/28-Swaps/05-ois-discounting-and-collateral|ois-discounting-and-collateral]]"
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/02-covered-interest-parity|covered-interest-parity]]"
-next: []
-tags: [mathematics, financial mathematics, cross-currency-swaps-and-basis]
----
-
 # Cross-currency swaps: exchanging notionals and the basis spread the market charges
 
-Financial mathematics → Swaps → Swapping principal across currencies → Cross-currency swaps
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Swaps](../../../SYLLABUS.md#w12-s28) → Cross-currency swaps
 
 ---
 
@@ -83,7 +67,7 @@ One line on each helper. The yearly floating rate from a flat continuous rate is
 
 ### When it holds
 
-- **Dollars are the collateral.** The curve $D_x$ belongs to a market that funds and posts collateral in dollars ([ois-discounting-and-collateral](05-ois-discounting-and-collateral.md)). Collateralise in euros and the euro leg goes back on $P_f$, while the dollar leg is discounted on a dollar curve read through the forward; the same quote calibrates that curve instead.
+- **Dollars are the collateral.** The curve $D_x$ belongs to a market that funds and posts collateral in dollars ([Collateral discounting](05-ois-discounting-and-collateral.md)). Collateralise in euros and the euro leg goes back on $P_f$, while the dollar leg is discounted on a dollar curve read through the forward; the same quote calibrates that curve instead.
 - **Fixed principals.** Both principals stay at €100m and $110m. A variant resets the dollar principal to spot every year, paying the change in cash; that removes most of the currency exposure shown below and needs its own ledger.
 - **Floating rates that fix at their forwards.** The curves here are flat and known. With random rates, a euro payment valued in dollars picks up a small correction from how the exchange rate and euro rates move together; the method stays, the number shifts.
 - **No default and no bid–ask.** The −15 is a mid quote. Dealers charge a few basis points either side, and a counterparty that can fail is worth less than one that cannot.
@@ -118,7 +102,7 @@ With both legs at par on their own curves, the fair basis is zero. The market sa
 
 The dealers on the other side post and fund collateral in dollars: cash each side hands over to cover what it owes, earning the dollar overnight rate. They value every payment in dollars today. A euro paid in year $i$ is worth, to them, whatever dollars it fetches at the FX forward, discounted on the dollar curve: $F(i)\,D_d(i)$ dollars, or $F(i)\,D_d(i)/S$ euros at today's spot. That is $D_x(i)$.
 
-If covered interest parity held ([covered-interest-parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md)), the forward would be $S\,P_f(i)/D_d(i)$ and $D_x$ would equal $P_f$. It does not hold. Since 2007 banks have paid up to borrow dollars through FX swaps, so forwards sit away from parity, and $D_x$ differs from $P_f$. The euro leg's rates still come from the euro curve, because €STR is what gets paid. But its payments are discounted on $D_x$. Projected on one curve, discounted on another: Step 1's telescoping no longer closes.
+If covered interest parity held ([Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md)), the forward would be $S\,P_f(i)/D_d(i)$ and $D_x$ would equal $P_f$. It does not hold. Since 2007 banks have paid up to borrow dollars through FX swaps, so forwards sit away from parity, and $D_x$ differs from $P_f$. The euro leg's rates still come from the euro curve, because €STR is what gets paid. But its payments are discounted on $D_x$. Projected on one curve, discounted on another: Step 1's telescoping no longer closes.
 
 ### Step 3: solve for the spread that restores par
 
@@ -174,7 +158,7 @@ The bank's swap: €100m against $110m, spot 1.10, five annual payments, dollar 
 
 The basis costs the euro lender €689,011.50 in today's money over five years, $757,912.65 at spot. That is what a bank pays to turn euros into dollars through the swap instead of borrowing dollars directly: SOFR plus 15.97 basis points, not SOFR flat. A dealer who struck the same swap at €STR flat would be handing the bank $757,912.65 on day one.
 
-The one-year forward shows the same thing at a shorter horizon: 1.123857 with the basis against 1.122221 at parity. The forward is higher, so buying euros back forward costs more dollars: borrowing dollars through an FX swap is dearer than parity says. That is the one-period reading done on [implied-yield-and-cross-currency-basis](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/05-implied-yield-and-cross-currency-basis.md); the swap stretches it to five years with both principals.
+The one-year forward shows the same thing at a shorter horizon: 1.123857 with the basis against 1.122221 at parity. The forward is higher, so buying euros back forward costs more dollars: borrowing dollars through an FX swap is dearer than parity says. That is the one-period reading done on [The interest rate a forward implies](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/05-implied-yield-and-cross-currency-basis.md); the swap stretches it to five years with both principals.
 
 ### What breaks if you drop a piece
 
@@ -222,7 +206,7 @@ market basis   value of the bank's -15 swap, USD thousands (bars left of | are l
     0 bp    ████████████████████|                      -754.7
 ```
 
-Moving the market from −15 to −20 is worth +$253.0 thousand to the bank: about 5 basis points times the euro annuity times the principal times spot. That sensitivity is the swap's basis risk, the cross-currency cousin of [swap-dv01-and-hedging](03-swap-dv01-and-hedging.md).
+Moving the market from −15 to −20 is worth +$253.0 thousand to the bank: about 5 basis points times the euro annuity times the principal times spot. That sensitivity is the swap's basis risk, the cross-currency cousin of [Swap DV01](03-swap-dv01-and-hedging.md).
 
 ---
 
@@ -671,7 +655,7 @@ The two outputs agree line for line.
 - **Companies issuing bonds abroad.** A European company issues dollar bonds, swaps the proceeds into euros, and pays euro interest. With a negative basis, dollar funders pay extra and the other side gets cheap euros, so issuers compare the swapped cost with borrowing at home.
 - **Investors hedging foreign bonds.** A Japanese pension fund holding US Treasuries hedges the dollars back to yen. The basis eats into the hedged yield, which is why hedged foreign bonds can yield less than home bonds.
 - **Central bank swap lines.** In 2008 and 2020, when the basis blew out, the Federal Reserve lent dollars to other central banks against their currencies, a swap at a set price, and the basis narrowed.
-- **Collateral agreements.** Which currency a swap's collateral is posted in decides which curve discounts it ([ois-discounting-and-collateral](05-ois-discounting-and-collateral.md)); a desk with collateral in several currencies uses cross-currency curves to value all of it.
+- **Collateral agreements.** Which currency a swap's collateral is posted in decides which curve discounts it ([Collateral discounting](05-ois-discounting-and-collateral.md)); a desk with collateral in several currencies uses cross-currency curves to value all of it.
 
 > **Say it back**
 > A cross-currency swap exchanges principals at spot, pays floating interest in each currency, and exchanges the principals back at the same rate. Each leg is worth its principal on its own curve, so without frictions the fair spread is zero. A dollar-funded market values euros through the FX forward, which sits away from parity, and on that curve the euro leg is off par. The basis is the spread that restores par: −15 basis points here, which says euros through the swap earn 14.57 basis points less than euros in the bank, and dollars through the swap cost SOFR plus 15.97. After the trade, the exchange rate moves the value most, through the final principal.
@@ -680,18 +664,18 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [ois-discounting-and-collateral](05-ois-discounting-and-collateral.md): why the collateral currency picks the discount curve. This card applies it with dollars as collateral and euros paid.
-- [covered-interest-parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md): the forward that would hold without frictions, $F = S\,e^{(r_d - r_f)T}$. The basis is the swap market's measure of how far it fails.
-- [interest-rate-swaps](01-interest-rate-swaps.md): the one-currency swap and the floating leg valued at par.
-- [basis-swaps-and-the-multi-curve-framework](04-basis-swaps-and-the-multi-curve-framework.md): projecting on one curve and discounting on another, inside one currency. Here the two curves belong to two currencies.
+- [Collateral discounting](05-ois-discounting-and-collateral.md): why the collateral currency picks the discount curve. This card applies it with dollars as collateral and euros paid.
+- [Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md): the forward that would hold without frictions, $F = S\,e^{(r_d - r_f)T}$. The basis is the swap market's measure of how far it fails.
+- [Interest rate swaps](01-interest-rate-swaps.md): the one-currency swap and the floating leg valued at par.
+- [Multi-curve](04-basis-swaps-and-the-multi-curve-framework.md): projecting on one curve and discounting on another, inside one currency. Here the two curves belong to two currencies.
 
 ---
 
 ## Where this goes next
 
-- [swap-inverses-rate-and-curve-from-price](07-swap-inverses-rate-and-curve-from-price.md): solving a swap backwards for its rate or its curve, of which Step 4's bootstrap is one case.
-- [swap-dv01-and-hedging](03-swap-dv01-and-hedging.md): sensitivities and hedges; the $253.0 thousand per 5 basis points above is a basis DV01.
-- [implied-yield-and-cross-currency-basis](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/05-implied-yield-and-cross-currency-basis.md): the one-period basis read from a single forward, the short end of the curve built here.
+- [Solving a swap backwards](07-swap-inverses-rate-and-curve-from-price.md): solving a swap backwards for its rate or its curve, of which Step 4's bootstrap is one case.
+- [Swap DV01](03-swap-dv01-and-hedging.md): sensitivities and hedges; the $253.0 thousand per 5 basis points above is a basis DV01.
+- [The interest rate a forward implies](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/05-implied-yield-and-cross-currency-basis.md): the one-period basis read from a single forward, the short end of the curve built here.
 
 This card priced the swap on curves it was handed and showed the basis moving its value; what remains open is how to solve backwards from a quoted price for the rate or the whole curve, with the existence and uniqueness that makes the answer trustworthy.
 

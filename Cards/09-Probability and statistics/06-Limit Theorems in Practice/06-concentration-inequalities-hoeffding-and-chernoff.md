@@ -1,26 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Limit Theorems in Practice
-topic: Exponential tail bounds
-item: Concentration
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/08-markov-and-chebyshev-inequalities|markov-and-chebyshev-inequalities]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/07-moment-generating-functions|moment-generating-functions]]"
-next:
-  - "[[Cards/14-Applied and computational/02-Randomised and Approximate Algorithms/02-tail-bounds-and-repeated-trials|tail-bounds-and-repeated-trials]]"
-  - "[[Cards/20-Harmonic analysis/04-Characteristic Functions and Probability/02-moments-and-cumulants-from-the-fingerprint|moments-and-cumulants-from-the-fingerprint]]"
-  - "[[Cards/24-Computability and complexity/04-Beyond Worst Case/03-randomised-complexity-and-bpp|randomised-complexity-and-bpp]]"
-  - "[[Cards/24-Computability and complexity/06-Data, Learning and Fine-Grained Complexity/01-streaming-and-sketching|streaming-and-sketching]]"
-tags: [mathematics, probability and statistics, concentration-inequalities-hoeffding-and-chernoff]
----
-
 # Concentration: exponential tail bounds for sums of bounded variables
 
-Probability and statistics → Limit Theorems in Practice → Exponential tail bounds → Concentration
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Limit Theorems in Practice](../../../SYLLABUS.md#w09-s06) → Concentration
 
 ---
 
@@ -116,7 +96,7 @@ Chebyshev, for comparison, gives $P(\lvert \bar X - \mu \rvert \ge \varepsilon) 
 
 ### Step 0: raise the sum to a power before applying Markov
 
-Markov's inequality caps the chance that something never negative reaches a level by its mean divided by that level ([markov-and-chebyshev-inequalities](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)). Chebyshev applies it to the squared distance from the mean. The exponential is every power at once, and applied to $e^{tS}$ Markov gains two allies. The exponential magnifies a large count enormously against a typical one. And for independent pieces, the average of the exponential of a sum splits into one simple average per flip. The card is those two facts plus a choice of dial.
+Markov's inequality caps the chance that something never negative reaches a level by its mean divided by that level ([Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)). Chebyshev applies it to the squared distance from the mean. The exponential is every power at once, and applied to $e^{tS}$ Markov gains two allies. The exponential magnifies a large count enormously against a typical one. And for independent pieces, the average of the exponential of a sum splits into one simple average per flip. The card is those two facts plus a choice of dial.
 
 ### Step 1: Markov on the exponential
 
@@ -128,7 +108,7 @@ This holds for every positive dial. It is a family of ceilings, one per setting.
 
 ### Step 2: independence turns the sum into a product
 
-$e^{tS} = e^{tX_1} \times e^{tX_2} \times \dots \times e^{tX_n}$. For independent pieces the average of a product is the product of the averages ([moment-generating-functions](../02-Random%20Variables/07-moment-generating-functions.md)), so $E[e^{tS}] = M(t)^n$. One flip has $M(t) = (1 - p) + pe^t$: tails contributes $e^0 = 1$, heads contributes $e^t$. That gives the Chernoff method,
+$e^{tS} = e^{tX_1} \times e^{tX_2} \times \dots \times e^{tX_n}$. For independent pieces the average of a product is the product of the averages ([Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md)), so $E[e^{tS}] = M(t)^n$. One flip has $M(t) = (1 - p) + pe^t$: tails contributes $e^0 = 1$, heads contributes $e^t$. That gives the Chernoff method,
 
 $$P(S \ge nc) \le e^{-tnc}\,\big(1 - p + pe^t\big)^n.$$
 
@@ -204,9 +184,9 @@ For flips scored 0 or 1, compare the two exponents: $D(c\,\|\,p)$ against $2(c -
 
 Chebyshev is Markov on the square, the second power. The square grows slowly, so a large count is not magnified much, and the ceiling falls only like one over $n$. The exponential grows fast, so the ceiling falls like $e^{-2n\varepsilon^2}$. To be 99 percent sure the share stays below 0.55, Chebyshev (whose ceiling covers both sides at once) asks for 10,000 flips and Hoeffding for 922. The exact answer is that every run length from 561 flips on works (checked to 1,200).
 
-Chebyshev keeps one advantage: it uses the true variance, and Hoeffding uses the worst variance a range allows, a quarter of the squared width. The shelf's die, rolled 1,000 times, has a variance of 35/12 per roll, far below the 6.25 its range of 1 to 6 would allow. For an average off by 0.1 or more on either side, Chebyshev allows 0.2917, the figure behind the guarantee in [law-of-large-numbers](01-law-of-large-numbers.md); Hoeffding allows 0.8987. Bounds that use both a range and a variance (Bernstein's inequality) combine the two strengths.
+Chebyshev keeps one advantage: it uses the true variance, and Hoeffding uses the worst variance a range allows, a quarter of the squared width. The shelf's die, rolled 1,000 times, has a variance of 35/12 per roll, far below the 6.25 its range of 1 to 6 would allow. For an average off by 0.1 or more on either side, Chebyshev allows 0.2917, the figure behind the guarantee in [Law of large numbers](01-law-of-large-numbers.md); Hoeffding allows 0.8987. Bounds that use both a range and a variance (Bernstein's inequality) combine the two strengths.
 
-The exact tail has the bell shape of [central-limit-theorem](02-central-limit-theorem.md), read off by [normal-approximation-to-binomial](03-normal-approximation-to-binomial.md): an approximation with an error. These ceilings are guarantees at every $n$.
+The exact tail has the bell shape of [Central limit theorem](02-central-limit-theorem.md), read off by [Normal approximation](03-normal-approximation-to-binomial.md): an approximation with an error. These ceilings are guarantees at every $n$.
 
 ---
 
@@ -690,9 +670,9 @@ The two outputs match line for line. The simulated share, 0.000805 with a standa
 ## Where you meet it in real life
 
 - **Sample sizes with no distribution assumed.** How many trials guarantee a measured success rate within 0.05 of the truth, 99 times in 100, one side? Hoeffding says 922, for any process scored 0 or 1, with no bell curve assumed.
-- **Randomised algorithms.** An algorithm that is right 2 times in 3 is run many times and the majority answer taken. Chernoff shows the majority is wrong with a chance that falls exponentially in the number of runs: tail-bounds-and-repeated-trials.
+- **Randomised algorithms.** An algorithm that is right 2 times in 3 is run many times and the majority answer taken. Chernoff shows the majority is wrong with a chance that falls exponentially in the number of runs: Tail bounds.
 - **Machine learning and Monte Carlo.** A model's error rate on 1,000 held-out examples is an average of 0-or-1 scores; a simulation's draws may lie in a known range. Hoeffding gives each a guaranteed error bar, not only the bell curve's approximate one.
-- **Data streams.** Sketches that count or estimate from a stream too large to store keep several independent copies, and Chernoff says how many: streaming-and-sketching.
+- **Data streams.** Sketches that count or estimate from a stream too large to store keep several independent copies, and Chernoff says how many: Streaming.
 
 > **Say it back**
 > Markov's inequality on the exponential of a sum gives a ceiling for every setting of a dial. Independence splits the exponential's average into one factor per piece. For a coin the factors are known exactly, and the best dial gives Chernoff's bound. For any piece with a known range, Hoeffding's lemma caps each factor, giving e to the minus two n epsilon squared. For 1,000 fair flips reaching a share of 0.55, both ceilings are under 0.7 percent; Chebyshev allows 10 percent, and the truth is 0.087 percent.
@@ -701,17 +681,17 @@ The two outputs match line for line. The simulated share, 0.000805 with a standa
 
 ## What this builds on
 
-- [markov-and-chebyshev-inequalities](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md): Markov's inequality, applied here to an exponential, and Chebyshev's bound, the one this card beats.
-- [moment-generating-functions](../02-Random%20Variables/07-moment-generating-functions.md): the average of $e^{tX}$, and the product rule for independent sums that Step 2 uses.
+- [Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md): Markov's inequality, applied here to an exponential, and Chebyshev's bound, the one this card beats.
+- [Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md): the average of $e^{tX}$, and the product rule for independent sums that Step 2 uses.
 
 ## Where this goes next
 
-- tail-bounds-and-repeated-trials: Chernoff sets how many repeats drive an algorithm's error below any target.
-- moments-and-cumulants-from-the-fingerprint: the logarithm of $M(t)$, minimised over here, as a generator of cumulants.
-- randomised-complexity-and-bpp: why "right 2 times in 3" is as good as "right almost always".
-- streaming-and-sketching: independent copies of a rough estimate, combined, and Chernoff counting the copies.
+- Tail bounds: Chernoff sets how many repeats drive an algorithm's error below any target.
+- Moments and cumulants: the logarithm of $M(t)$, minimised over here, as a generator of cumulants.
+- BPP: why "right 2 times in 3" is as good as "right almost always".
+- Streaming: independent copies of a rough estimate, combined, and Chernoff counting the copies.
 
-The card leaves open how many runs a randomised algorithm needs before its majority answer is almost never wrong; tail-bounds-and-repeated-trials answers it with this card's Chernoff bound.
+The card leaves open how many runs a randomised algorithm needs before its majority answer is almost never wrong; Tail bounds answers it with this card's Chernoff bound.
 
 ---
 

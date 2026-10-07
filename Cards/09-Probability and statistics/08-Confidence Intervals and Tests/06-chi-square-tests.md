@@ -1,22 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Confidence Intervals and Tests
-topic: Counts against a model
-item: Chi-square tests
-kind: method
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/03-hypothesis-tests-and-p-values|hypothesis-tests-and-p-values]]"
-next:
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/07-likelihood-ratio-tests|likelihood-ratio-tests]]"
-tags: [mathematics, probability and statistics, chi-square-tests]
----
-
 # Chi-square tests: does the table fit the model, and are the rows independent
 
-Probability and statistics → Confidence Intervals and Tests → Counts against a model → Chi-square tests
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Confidence Intervals and Tests](../../../SYLLABUS.md#w09-s08) → Chi-square tests
 
 ---
 
@@ -50,7 +34,7 @@ Orange bars: the counts seen. Teal line: the 10 per face a fair die expects. Fac
 
 ## The formula
 
-Notation first. The table has $k$ boxes, here the six faces, and $n$ observations spread among them. $O_j$ is the count observed in box j and $p_j$ is the chance the model gives that box. The **expected count** is $E_j = n p_j$: 60 × 1/6 = 10 for every face. The chi-square law with $\nu$ degrees of freedom, written $\chi^2_\nu$, is the law of a sum of $\nu$ squared independent standard normal draws ([chi-square-t-and-f-distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)).
+Notation first. The table has $k$ boxes, here the six faces, and $n$ observations spread among them. $O_j$ is the count observed in box j and $p_j$ is the chance the model gives that box. The **expected count** is $E_j = n p_j$: 60 × 1/6 = 10 for every face. The chi-square law with $\nu$ degrees of freedom, written $\chi^2_\nu$, is the law of a sum of $\nu$ squared independent standard normal draws ([The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)).
 
 $$Q = \sum_{j=1}^{k} \frac{(O_j - E_j)^2}{E_j}, \qquad \text{p-value} \approx P\big(\chi^2_{\nu} \ge Q\big), \qquad \nu = k - 1 - s$$
 
@@ -91,7 +75,7 @@ $$E_{ij} = \frac{R_i\, C_j}{n}, \qquad Q = \sum_{i,j} \frac{(O_{ij} - E_{ij})^2}
 
 ### Step 0: each gap, measured in its own spread, is roughly a bell-curve draw
 
-The count of sixes in 60 fair rolls follows the binomial law, with average 10 and variance 60 × 1/6 × 5/6 = 8.33. By the central limit theorem ([central-limit-theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)) the gap between count and average, divided by its standard deviation, is close to a standard normal draw. Squaring and adding such draws gives a chi-square law. Pearson's Q is almost that sum. Two details separate "almost" from "exactly": the divisor is $E_j$ rather than the variance, and the gaps are tied, since the counts must add to 60. The steps below show that these two details offset each other and leave one fewer degree of freedom than there are boxes.
+The count of sixes in 60 fair rolls follows the binomial law, with average 10 and variance 60 × 1/6 × 5/6 = 8.33. By the central limit theorem ([Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)) the gap between count and average, divided by its standard deviation, is close to a standard normal draw. Squaring and adding such draws gives a chi-square law. Pearson's Q is almost that sum. Two details separate "almost" from "exactly": the divisor is $E_j$ rather than the variance, and the gaps are tied, since the counts must add to 60. The steps below show that these two details offset each other and leave one fewer degree of freedom than there are boxes.
 
 ### Step 1: dividing by the expected count puts every box on one scale
 
@@ -107,7 +91,7 @@ The reciprocals of the two divisors add up to exactly the reciprocal of the bino
 
 ### Step 3: the exact average of Q is k − 1, for any number of rolls
 
-Each count $O_j$ is binomial on its own ([multinomial](../03-Discrete%20Distributions/05-multinomial.md)), so the average of its squared gap is its variance, $n p_j (1 - p_j)$. Divide by $E_j = n p_j$ and the average of each term is $1 - p_j$. Add over the boxes: the chances add to 1, so
+Each count $O_j$ is binomial on its own ([Multinomial](../03-Discrete%20Distributions/05-multinomial.md)), so the average of its squared gap is its variance, $n p_j (1 - p_j)$. Divide by $E_j = n p_j$ and the average of each term is $1 - p_j$. Add over the boxes: the chances add to 1, so
 
 $$\text{average of } Q = \sum_{j=1}^{k} (1 - p_j) = k - 1.$$
 
@@ -122,7 +106,7 @@ Write each scaled gap as $u_j = (O_j - E_j)/\sqrt{E_j}$, so Q is the squared len
 
 That matrix is a projection: it removes the part of any list pointing along the list of square roots and keeps the rest. Its eigenvalues are 1, repeated k − 1 times, and 0 once, along the list of square roots. The zero is the fixed total: $\sum_j \sqrt{p_j}\, u_j = (\sum_j O_j - n)/\sqrt{n} = 0$ on every outcome.
 
-The central limit theorem, applied to the list of counts as a whole, says that for large n the list of scaled gaps is close to a multivariate normal with this covariance ([multivariate-normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)); that vector form is stated here, not proved. The spectral theorem ([spectral-theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) gives a rotation into the projection's own axes. Rotation keeps lengths, so Q is unchanged. In the new axes the normal list has k − 1 independent standard normal coordinates and one coordinate that is always 0. Its squared length is a sum of k − 1 squared standard normals: a chi-square law with k − 1 degrees of freedom.
+The central limit theorem, applied to the list of counts as a whole, says that for large n the list of scaled gaps is close to a multivariate normal with this covariance ([Multivariate normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)); that vector form is stated here, not proved. The spectral theorem ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) gives a rotation into the projection's own axes. Rotation keeps lengths, so Q is unchanged. In the new axes the normal list has k − 1 independent standard normal coordinates and one coordinate that is always 0. Its squared length is a sum of k − 1 squared standard normals: a chi-square law with k − 1 degrees of freedom.
 
 </details>
 
@@ -150,7 +134,7 @@ The trial table, rows for arms and columns for outcomes:
 | Placebo | 35 | 65 | 100 |
 | Column total | 80 | 120 | 200 |
 
-If recovery ignores the pill, both arms share one recovery rate. The best estimate is the pooled rate, 80 of 200 = 0.40. So each arm of 100 expects 40 recovered and 60 not: that is $R_i C_j / n$, row total times the column's share. The estimate is the maximum-likelihood choice, the one under which the observed table is most probable ([maximum-likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)).
+If recovery ignores the pill, both arms share one recovery rate. The best estimate is the pooled rate, 80 of 200 = 0.40. So each arm of 100 expects 40 recovered and 60 not: that is $R_i C_j / n$, row total times the column's share. The estimate is the maximum-likelihood choice, the one under which the observed table is most probable ([Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)).
 
 Now count the free gaps. The table of gaps, observed minus expected, is `[[5, -5], [-5, 5]]`: every row and every column adds to zero, because the expected counts were built to match the totals. Choose the top-left gap and the other three follow. One free gap, one degree of freedom. In general: rc cells, less 1 for the grand total, less r − 1 for the estimated row shares, less c − 1 for the column shares, leaves (r − 1)(c − 1). When the row totals are fixed by design, as with 100 per arm here, no row shares are estimated: each arm has c − 1 free cells, r(c − 1) in all, less c − 1 for the pooled column shares, which again leaves (r − 1)(c − 1), here 1.
 
@@ -158,7 +142,7 @@ The four squared gaps over expected counts are 25/40, 25/60, 25/40 and 25/60, so
 
 ### Step 5: the 2 × 2 test is the two-proportion z-test, squared
 
-The two-proportion test of [hypothesis-tests-and-p-values](03-hypothesis-tests-and-p-values.md) divides the gap in recovery rates, 0.10, by its standard error at the pooled rate, $\sqrt{0.4 \times 0.6 \times (1/100 + 1/100)}$. That gives z = 1.443376, and z squared is 2.083333, the same as Q. The p-values agree too: twice the normal tail beyond z is 0.148915. This is the "p equals 0.15" of that card, reached through the table.
+The two-proportion test of [Hypothesis tests](03-hypothesis-tests-and-p-values.md) divides the gap in recovery rates, 0.10, by its standard error at the pooled rate, $\sqrt{0.4 \times 0.6 \times (1/100 + 1/100)}$. That gives z = 1.443376, and z squared is 2.083333, the same as Q. The p-values agree too: twice the normal tail beyond z is 0.148915. This is the "p equals 0.15" of that card, reached through the table.
 
 <details>
 <summary>The algebra behind this, if you want it</summary>
@@ -169,7 +153,7 @@ For the trial: 45 × 65 − 55 × 35 = 1,000, so Q = 200 × 1,000,000 / (100 × 
 
 </details>
 
-A second road to the same question avoids squared gaps altogether: the G statistic, twice the sum of observed count times the logarithm of observed over expected, which is the likelihood-ratio test of [likelihood-ratio-tests](07-likelihood-ratio-tests.md) and has the same chi-square limit. For a small 2 × 2 table, Fisher's exact test replaces the approximation with hypergeometric chances ([hypergeometric](../03-Discrete%20Distributions/03-hypergeometric.md)).
+A second road to the same question avoids squared gaps altogether: the G statistic, twice the sum of observed count times the logarithm of observed over expected, which is the likelihood-ratio test of [Likelihood ratio tests](07-likelihood-ratio-tests.md) and has the same chi-square limit. For a small 2 × 2 table, Fisher's exact test replaces the approximation with hypergeometric chances ([Hypergeometric](../03-Discrete%20Distributions/03-hypergeometric.md)).
 
 ---
 
@@ -189,7 +173,7 @@ A second road to the same question avoids squared gaps altogether: the G statist
 | degrees of freedom | (2 − 1)(2 − 1) | 1 |
 | p-value | chi-square tail beyond 2.083333, 1 degree | **0.148915** |
 
-Read back at the club: a fair die rolled 60 times gives unevenness this large or larger in about 6 sessions in 100. That is unusual but not rare; at the conventional 5% cut, 11.0705, the die is not condemned. It is not evidence that the die is fair either, and 0.06 is not the chance the die is fair. Read back in the trial: if the drug did nothing, a 10-point gap or wider would appear in about 15 trials in 100. The trial has not shown an effect; it may simply be too small to see one ([power-and-sample-size](04-power-and-sample-size.md)).
+Read back at the club: a fair die rolled 60 times gives unevenness this large or larger in about 6 sessions in 100. That is unusual but not rare; at the conventional 5% cut, 11.0705, the die is not condemned. It is not evidence that the die is fair either, and 0.06 is not the chance the die is fair. Read back in the trial: if the drug did nothing, a 10-point gap or wider would appear in about 15 trials in 100. The trial has not shown an effect; it may simply be too small to see one ([Power](04-power-and-sample-size.md)).
 
 ### What breaks if you drop a piece
 
@@ -207,7 +191,7 @@ The code prints all five.
 
 ## Code, from first principles, and it actually runs
 
-The scripts build every tail themselves. The chi-square tail is reached twice: by the series for the incomplete gamma function (the chi-square law is a gamma law, [gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)), and by Simpson's rule on the density. The die's exact p-value comes from a third road with no approximation: every tally of 60 rolls, weighted by its multinomial chance. A fourth road simulates 20,000 sessions of 60 rolls from a SplitMix64 generator with seed 20260928, printed with standard errors. The trial's Q is computed three ways (cells, the shortcut, z squared), its tail three ways, and its exact tail by summing over every pair of binomial counts when both arms recover at 0.40.
+The scripts build every tail themselves. The chi-square tail is reached twice: by the series for the incomplete gamma function (the chi-square law is a gamma law, [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)), and by Simpson's rule on the density. The die's exact p-value comes from a third road with no approximation: every tally of 60 rolls, weighted by its multinomial chance. A fourth road simulates 20,000 sessions of 60 rolls from a SplitMix64 generator with seed 20260928, printed with standard errors. The trial's Q is computed three ways (cells, the shortcut, z squared), its tail three ways, and its exact tail by summing over every pair of binomial counts when both arms recover at 0.40.
 
 ### Python
 
@@ -608,7 +592,7 @@ The two outputs match line for line. The simulated chances land within one stand
 ## Where you meet it in real life
 
 - **Dice, lotteries and slot machines.** Gaming regulators test the fairness of physical and electronic games by counting outcomes against their stated chances.
-- **Clinical trials and A/B tests.** A table of outcome by group, recovered or not, clicked or not, is tested for independence exactly as the trial here; the design side is on [randomised-experiments-and-ab-tests](../13-Survival%2C%20Design%20and%20Causality/04-randomised-experiments-and-ab-tests.md).
+- **Clinical trials and A/B tests.** A table of outcome by group, recovered or not, clicked or not, is tested for independence exactly as the trial here; the design side is on [Randomised experiments](../13-Survival%2C%20Design%20and%20Causality/04-randomised-experiments-and-ab-tests.md).
 - **Genetics.** Mendel's ratios, and the Hardy–Weinberg check that gene frequencies match random mating, are goodness-of-fit tests; Hardy–Weinberg estimates an allele frequency and pays one degree of freedom for it.
 - **Surveys.** Whether voting intention depends on age group is a test of independence in a table with several rows and columns.
 
@@ -619,16 +603,16 @@ The two outputs match line for line. The simulated chances land within one stand
 
 ## What this builds on
 
-- [hypothesis-tests-and-p-values](03-hypothesis-tests-and-p-values.md): the null, the test statistic and what a p-value does and does not say; its two-proportion test is the 2 × 2 case here.
-- [multinomial](../03-Discrete%20Distributions/05-multinomial.md): the joint law of the counts, and the covariances behind the lost degree of freedom.
-- [chi-square-t-and-f-distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md): the reference law as a sum of squared normals.
+- [Hypothesis tests](03-hypothesis-tests-and-p-values.md): the null, the test statistic and what a p-value does and does not say; its two-proportion test is the 2 × 2 case here.
+- [Multinomial](../03-Discrete%20Distributions/05-multinomial.md): the joint law of the counts, and the covariances behind the lost degree of freedom.
+- [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md): the reference law as a sum of squared normals.
 
 ## Where this goes next
 
-- [likelihood-ratio-tests](07-likelihood-ratio-tests.md): the G statistic and Wilks' rule, which counts degrees of freedom as parameters freed, for any model, not only tables.
-- [multiple-testing](08-multiple-testing.md): what happens when a club tests every die in the cupboard.
+- [Likelihood ratio tests](07-likelihood-ratio-tests.md): the G statistic and Wilks' rule, which counts degrees of freedom as parameters freed, for any model, not only tables.
+- [Many tests](08-multiple-testing.md): what happens when a club tests every die in the cupboard.
 
-The rule "one degree of freedom per estimated parameter" is stated here for tables; why it holds for any smooth model fitted by maximum likelihood is the question Wilks' theorem answers on [likelihood-ratio-tests](07-likelihood-ratio-tests.md).
+The rule "one degree of freedom per estimated parameter" is stated here for tables; why it holds for any smooth model fitted by maximum likelihood is the question Wilks' theorem answers on [Likelihood ratio tests](07-likelihood-ratio-tests.md).
 
 ---
 

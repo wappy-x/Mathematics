@@ -1,38 +1,14 @@
----
-type: card
-wing: 02-Number theory
-shelf: Powers on the Clock
-topic: Fermat and Euler
-item: Fermat's little theorem
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/01-congruence-mod-n|congruence-mod-n]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/06-euclids-lemma|euclids-lemma]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/04-modular-inverse|modular-inverse]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/01-modular-exponentiation|modular-exponentiation]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/01-exponents-and-powers|exponents-and-powers]]"
-next:
-  - "[[Cards/02-Number theory/04-Powers on the Clock/04-eulers-theorem|eulers-theorem]]"
-  - "[[Cards/02-Number theory/06-Codes and Secrets/04-fermat-test-and-carmichael|fermat-test-and-carmichael]]"
-tags:
-  - mathematics
-  - number theory
-  - fermats-little-theorem
----
-
 # Fermat's little theorem: raise a number the prime dial does not divide to one below the dial size and it reads 1
 
-Number theory → Powers on the Clock → Fermat and Euler → Fermat's little theorem
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Powers on the Clock](../../../SYLLABUS.md#w02-s04) → Fermat's little theorem
 
 ---
 
 ## General Overview
 
-A lock dial with 13 positions, numbered 0 to 12. Set it to 1 and double: 2, 4, 8, then 16, which runs off the end, so the dial comes round to 3 ([congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md)). Keep doubling. After twelve doublings it reads 1 again: 4,096 is 315 whole dials and 1 over.
+A lock dial with 13 positions, numbered 0 to 12. Set it to 1 and double: 2, 4, 8, then 16, which runs off the end, so the dial comes round to 3 ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)). Keep doubling. After twelve doublings it reads 1 again: 4,096 is 315 whole dials and 1 over.
 
-Twelve is one less than 13, and 13 is **prime**: nothing divides it but itself and 1 ([primes-and-composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)). Take any number 13 does not divide, start at 1 and multiply by it twelve times, and the dial reads 1.
+Twelve is one less than 13, and 13 is **prime**: nothing divides it but itself and 1 ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)). Take any number 13 does not divide, start at 1 and multiply by it twelve times, and the dial reads 1.
 
 **On a prime-sized dial, take a number the dial size does not divide, start at 1 and multiply by it one time fewer than there are positions: the reading is 1.**
 
@@ -80,7 +56,7 @@ The live positions are 1 to 12; 0 is stuck, leave it out. Double each and take o
 
 ### Step 1: nothing lands on 0, nothing lands twice
 
-Doubling lands on 0 only if 13 divides twice the position, and 13 is prime, so it would divide the 2 or the position; it divides neither ([euclids-lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)). Nor can two land together: doubling can be undone, and an undoable move cannot merge two things ([modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)).
+Doubling lands on 0 only if 13 divides twice the position, and 13 is prime, so it would divide the 2 or the position; it divides neither ([Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)). Nor can two land together: doubling can be undone, and an undoable move cannot merge two things ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)).
 
 ### Step 2: twelve into twelve means the same twelve
 
@@ -92,11 +68,11 @@ The row multiplied: 1 × 2 × 3 × … × 12 = 479,001,600. The doubled row, bef
 
 ### Step 4: cancel the row
 
-So 4,096 times the row's product reads the same as that product alone. It cancels: every factor, 1 up to 12, is smaller than the prime 13, so 13 cannot divide it ([euclids-lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)), and what 13 does not divide has an undo ([modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)). Multiply both sides by it.
+So 4,096 times the row's product reads the same as that product alone. It cancels: every factor, 1 up to 12, is smaller than the prime 13, so 13 cannot divide it ([Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)), and what 13 does not divide has an undo ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)). Multiply both sides by it.
 
 What is left is 4,096 alone, reading 1. That is the theorem.
 
-The other classical route expands a bracket raised to a power, every middle term carrying a factor of 13. Drop the word prime from the statement and you get [eulers-theorem](04-eulers-theorem.md), the same shuffle over a shorter row.
+The other classical route expands a bracket raised to a power, every middle term carrying a factor of 13. Drop the word prime from the statement and you get [Euler's theorem](04-eulers-theorem.md), the same shuffle over a shorter row.
 
 ---
 
@@ -258,16 +234,16 @@ ALL CHECKS PASS
 > **Cutting the power down by the dial size instead of by one less.** On the 13-dial, split 1000 by **12**, not by 13. Twelve steps is the round trip. Split by 13 and the leftover of 12 answers 1 instead of 3.
 >
 > - **Forgetting the exclusion.** Start from 26 and the reading is 0 forever: multiples of the dial size are stuck.
-> - **A dial that is not prime.** A 15-dial with power 14 reads 4. The fix is a different count: [eulers-theorem](04-eulers-theorem.md).
-> - **Reading it backwards.** A prime dial always gives 1. That only prime dials do is a different claim, and false: [fermat-test-and-carmichael](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md).
+> - **A dial that is not prime.** A 15-dial with power 14 reads 4. The fix is a different count: [Euler's theorem](04-eulers-theorem.md).
+> - **Reading it backwards.** A prime dial always gives 1. That only prime dials do is a different claim, and false: [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md).
 
 ---
 
 ## Where you meet it in real life
 
-- **Dividing on a prime dial.** The dial does not divide 2, so its undo is 2 raised to the power two below the dial size: 2 to the 11 is 7, and 2 × 7 is one dial and 1 over ([modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md), [modular-exponentiation](01-modular-exponentiation.md)).
-- **Screening primes at speed.** Software hunting big primes throws a power at a candidate and reads the dial: failure means composite ([fermat-test-and-carmichael](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md)).
-- **Public-key encryption.** A message decrypts back to itself because of this fact in Euler's wider form: [eulers-theorem](04-eulers-theorem.md), then [rsa-in-outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md).
+- **Dividing on a prime dial.** The dial does not divide 2, so its undo is 2 raised to the power two below the dial size: 2 to the 11 is 7, and 2 × 7 is one dial and 1 over ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md), [Powers on the clock](01-modular-exponentiation.md)).
+- **Screening primes at speed.** Software hunting big primes throws a power at a candidate and reads the dial: failure means composite ([The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md)).
+- **Public-key encryption.** A message decrypts back to itself because of this fact in Euler's wider form: [Euler's theorem](04-eulers-theorem.md), then [RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md).
 
 > **Say it back**
 > Take a prime-sized dial, 13, and a number it does not divide, 2. Twelve multiplications, one less than 13, and it reads 1. Multiplying every position by 2 only deals the same twelve out in a new order, so the row's product is unchanged; cancel it and 1 remains. That is why huge powers shrink: 2 taken a thousand times over reads 3, like 2 taken four times over.
@@ -276,16 +252,16 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md): what a reading on a dial means.
-- [euclids-lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): a prime dividing a product divides a factor, used in Steps 1 and 4.
-- [modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md): undoing a multiplication, used in Steps 1 and 4.
-- [modular-exponentiation](01-modular-exponentiation.md): powers on a clock without the huge number.
-- [exponents-and-powers](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): what "taken twelve times over" means.
+- [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md): what a reading on a dial means.
+- [Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): a prime dividing a product divides a factor, used in Steps 1 and 4.
+- [The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md): undoing a multiplication, used in Steps 1 and 4.
+- [Powers on the clock](01-modular-exponentiation.md): powers on a clock without the huge number.
+- [Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): what "taken twelve times over" means.
 
 ## Where this goes next
 
-- [eulers-theorem](04-eulers-theorem.md): the same statement without the word prime.
-- [fermat-test-and-carmichael](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md): the theorem as a primality test, and the composites that pass anyway.
+- [Euler's theorem](04-eulers-theorem.md): the same statement without the word prime.
+- [The Fermat test](../06-Codes%20and%20Secrets/04-fermat-test-and-carmichael.md): the theorem as a primality test, and the composites that pass anyway.
 
 ---
 

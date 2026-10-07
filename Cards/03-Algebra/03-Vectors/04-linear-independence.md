@@ -1,33 +1,12 @@
----
-type: card
-wing: 03-Algebra
-shelf: Vectors
-topic: Span and independence
-item: Linear independence
-kind: definition
-status: verified
-updated: 2026-09-07
-needs_first:
-  - "[[Cards/03-Algebra/03-Vectors/03-linear-combinations-and-span|linear-combinations-and-span]]"
-  - "[[Cards/01-Foundations/05-Logic/04-quantifiers|quantifiers]]"
-next:
-  - "[[Cards/03-Algebra/03-Vectors/05-basis-and-dimension|basis-and-dimension]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/01-matrix-equation-ax-b|matrix-equation-ax-b]]"
-tags:
-  - mathematics
-  - algebra
-  - linear-independence
----
-
 # Linear independence: no vector in the list is a mix of the others, so nothing is redundant
 
-Algebra → Vectors → Span and independence → Linear independence
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Vectors](../../../SYLLABUS.md#w03-s03) → Linear independence
 
 ---
 
 ## General Overview
 
-The garden centre stocks two fertiliser blends. Bag A holds 10 kg of nitrogen and 5 kg of phosphorus — as a vector, a list of numbers in round brackets ([vectors](01-vectors.md)), A = (10, 5). Bag B holds 2 kg of nitrogen and 8 kg of phosphorus: B = (2, 8).
+The garden centre stocks two fertiliser blends. Bag A holds 10 kg of nitrogen and 5 kg of phosphorus — as a vector, a list of numbers in round brackets ([Vectors](01-vectors.md)), A = (10, 5). Bag B holds 2 kg of nitrogen and 8 kg of phosphorus: B = (2, 8).
 
 A supplier turns up with a third blend, bag C = (12, 13). Worth stocking?
 
@@ -65,7 +44,7 @@ The 0 on the right is the **zero vector**, (0, 0): nothing in either slot. The l
 
 **Read it aloud:** if the only way to mix these bags and end up with an empty barrow is to use none of any of them, then no bag is redundant.
 
-The sentence is a *for every*: for every set of amounts landing on nothing, every amount is zero. One counter-example kills it ([quantifiers](../../01-Foundations/05-Logic/04-quantifiers.md)). Zero of everything always lands on nothing, whatever the list, so that mix proves nothing.
+The sentence is a *for every*: for every set of amounts landing on nothing, every amount is zero. One counter-example kills it ([Quantifiers](../../01-Foundations/05-Logic/04-quantifiers.md)). Zero of everything always lands on nothing, whatever the list, so that mix proves nothing.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -78,7 +57,7 @@ The sentence is a *for every*: for every set of amounts landing on nothing, ever
 | $0$ | the zero vector, (0, 0): nothing in either slot | (0, 0) | — |
 | the cross-number | first slot times the other's second slot, minus the other way round | 70, for A and B | only zero against not-zero matters |
 
-A second wording: a list is dependent exactly when one of its vectors sits in the span of the rest ([linear-combinations-and-span](03-linear-combinations-and-span.md)).
+A second wording: a list is dependent exactly when one of its vectors sits in the span of the rest ([Linear combinations and span](03-linear-combinations-and-span.md)).
 
 $$C = x\,A + y\,B$$
 
@@ -121,7 +100,7 @@ Drop C and the equations lose their z, leaving the cross-number to decide. It is
 
 ### Step 4: three vectors in the plane are always dependent
 
-Two equations cannot pin down three unknowns. Fix two amounts with them and the third is free: choose it to be anything but zero and a relation appears. Any three vectors in the plane are dependent, however carefully picked — here every pair passes the cross-number test, 70, 70 and −70, and the trio fails anyway. The proof of that cap is on [basis-and-dimension](05-basis-and-dimension.md).
+Two equations cannot pin down three unknowns. Fix two amounts with them and the third is free: choose it to be anything but zero and a relation appears. Any three vectors in the plane are dependent, however carefully picked — here every pair passes the cross-number test, 70, 70 and −70, and the trio fails anyway. The proof of that cap is on [Basis and dimension](05-basis-and-dimension.md).
 
 ```mermaid
 flowchart TD
@@ -362,7 +341,7 @@ The two outputs match line for line.
 > Guess first, then run it. An assert is a line that stops the program when a number comes out wrong; these are pinned to the three bags.
 > - **Move the third blend.** Set `C` to `(12, 14)`. It is no longer one A plus one B. The trio stays dependent — three vectors in the plane always are — but the amounts come out 34, 40 and −35, and the first assert stops it.
 > - **Make C two bags of A.** Set `C` to `(20, 10)`. Still dependent, but now A and C are the parallel pair: their cross-number falls to 0 and the relation found is two bags of A against one of C. The first assert stops it.
-> - **Aim somewhere other than nothing.** In `eliminate`, change `r0, r1` to `14 - z * C[0], 21 - z * C[1]`. That solves for a mix hitting (14, 21) — a target question, not an independence one ([linear-combinations-and-span](03-linear-combinations-and-span.md)). The amounts stop being 1 and 1, and the second assert stops it.
+> - **Aim somewhere other than nothing.** In `eliminate`, change `r0, r1` to `14 - z * C[0], 21 - z * C[1]`. That solves for a mix hitting (14, 21) — a target question, not an independence one ([Linear combinations and span](03-linear-combinations-and-span.md)). The amounts stop being 1 and 1, and the second assert stops it.
 
 ---
 
@@ -383,7 +362,7 @@ The two outputs match line for line.
 
 - **Product ranges.** A line that is exactly a blend of two you already carry adds no reach, only shelf space.
 - **Survey questions and sensor readings.** A column that is a fixed mix of two others carries no new information, and methods assuming otherwise misbehave.
-- **Solving equations.** Stack the vectors as the columns of a matrix: dependence is exactly the statement that the equation has a solution other than all zeros ([matrix-equation-ax-b](../05-Solving%20Systems/01-matrix-equation-ax-b.md)).
+- **Solving equations.** Stack the vectors as the columns of a matrix: dependence is exactly the statement that the equation has a solution other than all zeros ([Solving A x = b](../05-Solving%20Systems/01-matrix-equation-ax-b.md)).
 
 > **Say it back**
 > A list of vectors is linearly independent when the only mix landing on the zero vector uses zero of every one. Any other mix landing there means some vector was already a mix of the rest, and the list is dependent. Bag A = (10, 5), bag B = (2, 8), bag C = (12, 13): one A plus one B minus one C leaves an empty barrow, so the three are dependent and C is redundant. Take C away and A and B are independent, cross-number 70. Checking pairs is not enough: three vectors in the plane are always dependent.
@@ -392,13 +371,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [linear-combinations-and-span](03-linear-combinations-and-span.md): what a mix is, what a span reaches, and the cross-number reused here as the two-vector test.
-- [quantifiers](../../01-Foundations/05-Logic/04-quantifiers.md): the "for every mix, every amount is zero" shape of the definition, and why one counter-example settles it.
+- [Linear combinations and span](03-linear-combinations-and-span.md): what a mix is, what a span reaches, and the cross-number reused here as the two-vector test.
+- [Quantifiers](../../01-Foundations/05-Logic/04-quantifiers.md): the "for every mix, every amount is zero" shape of the definition, and why one counter-example settles it.
 
 ## Where this goes next
 
-- [basis-and-dimension](05-basis-and-dimension.md): an independent list that also spans everything, and the proof that the number of slots caps how many independent vectors fit.
-- [matrix-equation-ax-b](../05-Solving%20Systems/01-matrix-equation-ax-b.md): the same test as one matrix equation, where dependence is a solution other than zero.
+- [Basis and dimension](05-basis-and-dimension.md): an independent list that also spans everything, and the proof that the number of slots caps how many independent vectors fit.
+- [Solving A x = b](../05-Solving%20Systems/01-matrix-equation-ax-b.md): the same test as one matrix equation, where dependence is a solution other than zero.
 
 ---
 

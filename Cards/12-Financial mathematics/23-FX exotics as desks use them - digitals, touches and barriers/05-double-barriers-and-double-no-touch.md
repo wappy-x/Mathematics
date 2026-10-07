@@ -1,30 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX exotics as desks use them - digitals, touches and barriers
-topic: Range bets between two walls
-item: Two walls
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/04-fx-one-touch-and-no-touch|fx-one-touch-and-no-touch]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/03-the-eight-barrier-types|the-eight-barrier-types]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/04-reflection-principle-and-running-maximum|reflection-principle-and-running-maximum]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/07-finite-differences-for-the-black-scholes-equation|finite-differences-for-the-black-scholes-equation]]"
-next: []
-tags: [mathematics, financial mathematics, double-barriers-and-double-no-touch]
----
-
 # Two walls: double knock-outs and the double no-touch, priced by a sum of images that converges in a handful of terms
 
-Financial mathematics → FX exotics as desks use them - digitals, touches and barriers → Range bets between two walls → Two walls
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX exotics as desks use them - digitals, touches and barriers](../../../SYLLABUS.md#w12-s23) → Two walls
 
 ---
 
 ## General Overview
 
-The euro trades at 1.10 dollars, written EURUSD 1.10. A fund expects a quiet year. It buys a contract from a bank: *if EURUSD never trades at 1.05 or below, and never at 1.20 or above, in the next year, the bank pays USD 1 million at expiry. One touch of either level and the contract is dead.* That contract is a **double no-touch**. The two levels are its **walls**, the same kind of barrier as on [fx-one-touch-and-no-touch](04-fx-one-touch-and-no-touch.md), now one below spot and one above.
+The euro trades at 1.10 dollars, written EURUSD 1.10. A fund expects a quiet year. It buys a contract from a bank: *if EURUSD never trades at 1.05 or below, and never at 1.20 or above, in the next year, the bank pays USD 1 million at expiry. One touch of either level and the contract is dead.* That contract is a **double no-touch**. The two levels are its **walls**, the same kind of barrier as on [One-touch and no-touch](04-fx-one-touch-and-no-touch.md), now one below spot and one above.
 
 In the house currency market (dollar rate 5%, euro rate 3%, volatility 10%, one year) it costs 0.068977 dollars per dollar of payout, 6.90%: each dollar of premium buys about 14.50 of payout. A single no-touch at 1.20 costs 0.537017 and one at 1.05 costs 0.383822; a bet that EURUSD merely *ends* between the walls costs 0.470917. Demanding that the whole path stay inside is far stricter: the double no-touch is the cheapest range bet the FX market trades.
 
@@ -54,7 +36,7 @@ Orange: one year to expiry, a low hump peaking at 0.0754 near 1.12. Green: the s
 
 ## The formula
 
-Notation first. $S$ is EURUSD today, dollars per euro. $L$ and $U$ are the lower and upper walls, with $L < S < U$. $T$ is the time to expiry in years; $r_d$ and $r_f$ are the dollar and euro rates; $\sigma$ is the volatility. The double no-touch pays one dollar at expiry if the rate stays strictly between the walls until then. The rest follows [fx-one-touch-and-no-touch](04-fx-one-touch-and-no-touch.md): $\nu = r_d - r_f - \tfrac12\sigma^2$ is the drift of log EURUSD in the dollar pricing world, $\lambda = \nu/\sigma^2$ is that drift in units of yearly variance, and $N(x)$ is the bell-curve area left of $x$.
+Notation first. $S$ is EURUSD today, dollars per euro. $L$ and $U$ are the lower and upper walls, with $L < S < U$. $T$ is the time to expiry in years; $r_d$ and $r_f$ are the dollar and euro rates; $\sigma$ is the volatility. The double no-touch pays one dollar at expiry if the rate stays strictly between the walls until then. The rest follows [One-touch and no-touch](04-fx-one-touch-and-no-touch.md): $\nu = r_d - r_f - \tfrac12\sigma^2$ is the drift of log EURUSD in the dollar pricing world, $\lambda = \nu/\sigma^2$ is that drift in units of yearly variance, and $N(x)$ is the bell-curve area left of $x$.
 
 One helper price. Write $G(x)$ for the price, with **no walls at all**, of one dollar paid at expiry if EURUSD ends between $L$ and $U$, when today's rate is $x$:
 
@@ -110,7 +92,7 @@ Orange: the payoff on a path that never touched either wall, climbing to 0.09 at
 ### When it holds
 
 - **Continuous monitoring of both walls.** The formula counts every touch, however brief. Checking once a week and ignoring the gaps gives 0.122999, nearly double.
-- **A lognormal rate with one constant volatility, no jumps.** The double no-touch is a pure volatility bet, so on a real smile the model price is off. Desks correct it; the size of the correction is measured on [barriers-with-the-smile](07-barriers-with-the-smile.md).
+- **A lognormal rate with one constant volatility, no jumps.** The double no-touch is a pure volatility bet, so on a real smile the model price is off. Desks correct it; the size of the correction is measured on [Barriers on a smile](07-barriers-with-the-smile.md).
 - **Known, constant rates in both currencies.** The drift $\nu$ and the discount $D$ both come from them.
 - **Flat walls, spot strictly inside, strike between the walls.** On or outside a wall the contract is dead: price 0. Walls that move with time need Kunitomo and Ikeda's curved form.
 - **No rebate.** A cash sum paid on the touch adds a pay-at-hit double one-touch, not priced here.
@@ -121,9 +103,9 @@ Orange: the payoff on a path that never touched either wall, climbing to 0.09 at
 
 ### Step 0: a price is a discounted chance, and two mirrors make infinitely many
 
-The double no-touch pays one dollar at expiry exactly when the path never leaves the corridor. In the dollar pricing world ([fx-digitals](01-fx-digitals.md)) its price is $D$ times the chance of that event. So everything reduces to one question: how is the rate distributed at expiry, counting only the paths that stayed inside?
+The double no-touch pays one dollar at expiry exactly when the path never leaves the corridor. In the dollar pricing world ([Currency digitals](01-fx-digitals.md)) its price is $D$ times the chance of that event. So everything reduces to one question: how is the rate distributed at expiry, counting only the paths that stayed inside?
 
-One wall answers that with one mirror ([reflection-principle-and-running-maximum](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)). Two walls answer it with a mirror in each, then mirrors of mirrors.
+One wall answers that with one mirror ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)). Two walls answer it with a mirror in each, then mirrors of mirrors.
 
 ### Step 1: work on the log scale, where the walls are flat and the corridor has a width
 
@@ -188,7 +170,7 @@ A double knock-in call, born on the first touch of either wall, completes it: kn
 
 ### Other roads
 
-The double no-touch also solves the Garman–Kohlhagen pricing equation with zero on both walls and one dollar at expiry between them. A finite-difference grid solves that equation directly ([finite-differences-for-the-black-scholes-equation](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md)); a simulation counts surviving paths. The code runs both.
+The double no-touch also solves the Garman–Kohlhagen pricing equation with zero on both walls and one dollar at expiry between them. A finite-difference grid solves that equation directly ([Pricing on a grid](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md)); a simulation counts surviving paths. The code runs both.
 
 ---
 
@@ -255,7 +237,7 @@ So the double no-touch has the opposite gamma, vega and theta to a plain option 
 | vega | $-0.039476$ | $-0.001162$ | value change per volatility point, averaged over 9% and 11% |
 | theta | +0.000537 | +0.000015 | value change over one day, nothing else moving |
 
-Negative vega and positive theta are the signature of selling volatility. The double no-touch's vega per point is more than half its value. Its buyer sells volatility with the loss capped at the premium. The knock-out call shares the signs, despite being a call, because the upper wall caps what a big move could give. How these Greeks jump near a wall is on [barrier-and-touch-greeks](06-barrier-and-touch-greeks.md).
+Negative vega and positive theta are the signature of selling volatility. The double no-touch's vega per point is more than half its value. Its buyer sells volatility with the loss capped at the premium. The knock-out call shares the signs, despite being a call, because the upper wall caps what a big move could give. How these Greeks jump near a wall is on [Greeks at the wall](06-barrier-and-touch-greeks.md).
 
 ---
 
@@ -685,7 +667,7 @@ chart, DKO payoff 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0100 0.0200 0.0300
 ALL CHECKS PASS
 ```
 
-Series and waves agree to ten decimals. The grid lands at 0.068978. The simulation gives the knock-out call 0.001992 against 0.001989, three hundredths of a pip apart with a standard error of 0.14 pips; the double no-touch 0.068829 against 0.068977, under half a standard error (0.000353) away. Moving the upper wall to 100 turns the formula into the down-and-out call of [barrier-options-by-reflection](02-barrier-options-by-reflection.md), 0.041661, and the single no-touch at 1.05, 0.383822; moving the lower wall to 0.01 gives the no-touch at 1.20, 0.537017, whose complement is the house one-touch 0.414213.
+Series and waves agree to ten decimals. The grid lands at 0.068978. The simulation gives the knock-out call 0.001992 against 0.001989, three hundredths of a pip apart with a standard error of 0.14 pips; the double no-touch 0.068829 against 0.068977, under half a standard error (0.000353) away. Moving the upper wall to 100 turns the formula into the down-and-out call of [Knock-out and knock-in](02-barrier-options-by-reflection.md), 0.041661, and the single no-touch at 1.05, 0.383822; moving the lower wall to 0.01 gives the no-touch at 1.20, 0.537017, whose complement is the house one-touch 0.414213.
 
 > [!TIP]
 > **Try changing**
@@ -713,7 +695,7 @@ Series and waves agree to ten decimals. The grid lands at 0.068978. The simulati
 - **FX options desks.** Double no-touches are among the most traded exotic currency options. Clients ask for "the 1.05 / 1.20 DNT" and expect a quote in percent of payout, such as 6.90%.
 - **Range views from funds.** A fund expecting calm buys a double no-touch: a loss-capped way to sell volatility, paying about 14.50 per dollar of premium here.
 - **Structured deposits.** A bank deposit that pays a bonus coupon "if EURUSD stays in a range" contains a double no-touch; the coupon is set from its price.
-- **Choosing the corridor for a budget.** A client with a target premium asks where the walls must sit; the desk runs the formula backwards: [barrier-level-from-a-target-premium](08-barrier-level-from-a-target-premium.md).
+- **Choosing the corridor for a budget.** A client with a target premium asks where the walls must sit; the desk runs the formula backwards: [Solving for the barrier](08-barrier-level-from-a-target-premium.md).
 
 > **Say it back**
 > A double no-touch pays if the rate never touches either of two walls; a double knock-out option dies on either. Its price is a discounted chance of staying inside, counted by a hall of mirrors: the plain bet, minus its image in each wall, plus images of images, each weighted for drift. The images move away by twice the corridor's width each round, so four reflections settle the sum, and a sine-wave series gives the same number. Demanding the whole path stay inside makes it the cheapest range bet, a loss-capped way to sell volatility.
@@ -722,16 +704,16 @@ Series and waves agree to ten decimals. The grid lands at 0.068978. The simulati
 
 ## What this builds on
 
-- [fx-one-touch-and-no-touch](04-fx-one-touch-and-no-touch.md): one wall, one mirror, and the no-touch as a discounted chance; this card's far-wall limits reproduce its numbers.
-- [the-eight-barrier-types](03-the-eight-barrier-types.md): the single barriers, and the in-plus-out identity used here for the double knock-in.
-- [reflection-principle-and-running-maximum](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the flip after a first touch, applied here once per wall and then again.
-- [finite-differences-for-the-black-scholes-equation](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): the grid that serves as road 3.
+- [One-touch and no-touch](04-fx-one-touch-and-no-touch.md): one wall, one mirror, and the no-touch as a discounted chance; this card's far-wall limits reproduce its numbers.
+- [The eight single barriers in one table](03-the-eight-barrier-types.md): the single barriers, and the in-plus-out identity used here for the double knock-in.
+- [Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the flip after a first touch, applied here once per wall and then again.
+- [Pricing on a grid](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): the grid that serves as road 3.
 
 ## Where this goes next
 
-- [barrier-and-touch-greeks](06-barrier-and-touch-greeks.md): the Greeks above near the walls, where they jump.
-- [barriers-with-the-smile](07-barriers-with-the-smile.md): what 6.90% becomes when volatility depends on the level.
-- [barrier-level-from-a-target-premium](08-barrier-level-from-a-target-premium.md): solving for the walls from a price.
+- [Greeks at the wall](06-barrier-and-touch-greeks.md): the Greeks above near the walls, where they jump.
+- [Barriers on a smile](07-barriers-with-the-smile.md): what 6.90% becomes when volatility depends on the level.
+- [Solving for the barrier](08-barrier-level-from-a-target-premium.md): solving for the walls from a price.
 
 This card prices a corridor with one flat volatility; the question it leaves open is how much a double no-touch's price moves when the market's volatility near each wall differs from the 10% used in the middle.
 

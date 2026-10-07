@@ -1,30 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Sizes of Infinity
-topic: Cantor's argument
-item: Cantor's diagonal
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/02-countable-sets|countable-sets]]"
-  - "[[Cards/01-Foundations/06-Proof/03-proof-by-contradiction|proof-by-contradiction]]"
-  - "[[Cards/01-Foundations/02-The Number Line/03-irrational-numbers|irrational-numbers]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/01-same-size-by-pairing|same-size-by-pairing]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/04-injective-surjective-bijective|injective-surjective-bijective]]"
-  - "[[Cards/01-Foundations/07-Sets/02-subsets-and-power-set|subsets-and-power-set]]"
-next:
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/04-comparing-infinities|comparing-infinities]]"
-tags:
-  - mathematics
-  - foundations
-  - cantors-diagonal-argument
----
-
 # Cantor's diagonal: the real numbers cannot be listed
 
-Foundations → Sizes of Infinity → Cantor's argument → Cantor's diagonal
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sizes of Infinity](../../../SYLLABUS.md#w01-s09) → Cantor's diagonal
 
 ---
 
@@ -75,13 +51,13 @@ The rule is the whole thing:
 
 ### Step 0: a list is a promise you can check
 
-Countable means the members deal out as row one, row two, row three, everybody reached by counting: the pairing from [same-size-by-pairing](01-same-size-by-pairing.md), a bijection in [injective-surjective-bijective](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md). Take any such list and find a real it left out.
+Countable means the members deal out as row one, row two, row three, everybody reached by counting: the pairing from [Same size means pairable](01-same-size-by-pairing.md), a bijection in [One-to-one and onto](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md). Take any such list and find a real it left out.
 
 ### Step 1: the diagonal beats each row at its own place
 
-Row one gives its first digit, row two its second, row three its third: every row visited at a different place. Change that digit and what you build disagrees with that row there. Digits that disagree almost always mean different numbers — almost, because a few have two spellings. That is why the rule writes 4s and 5s; Step 2 shows the hole they plug. So what you built is no row at all. That is [proof-by-contradiction](../06-Proof/03-proof-by-contradiction.md): assume the list is complete, produce what it missed.
+Row one gives its first digit, row two its second, row three its third: every row visited at a different place. Change that digit and what you build disagrees with that row there. Digits that disagree almost always mean different numbers — almost, because a few have two spellings. That is why the rule writes 4s and 5s; Step 2 shows the hole they plug. So what you built is no row at all. That is [Proof by contradiction](../06-Proof/03-proof-by-contradiction.md): assume the list is complete, produce what it missed.
 
-And it is an ordinary real, between 0 and 1. Most reals run on with no pattern: [irrational-numbers](../02-The%20Number%20Line/03-irrational-numbers.md).
+And it is an ordinary real, between 0 and 1. Most reals run on with no pattern: [Irrational numbers](../02-The%20Number%20Line/03-irrational-numbers.md).
 
 ### Step 2: the repair the popular version skips
 
@@ -89,7 +65,7 @@ The popular telling says add 1 to every digit, 9 coming round to 0. It leaks. So
 
 Writing 4s and 5s closes it: never a 0, never a 9, and such a string has one spelling only.
 
-The same move, with no decimals at all, shows any set is smaller than its collection of subsets: [comparing-infinities](04-comparing-infinities.md), on the power set from [subsets-and-power-set](../07-Sets/02-subsets-and-power-set.md).
+The same move, with no decimals at all, shows any set is smaller than its collection of subsets: [Comparing infinities](04-comparing-infinities.md), on the power set from [Subsets and the power set](../07-Sets/02-subsets-and-power-set.md).
 
 ---
 
@@ -257,7 +233,7 @@ Whole digits throughout, nothing to round: the outputs match line for line.
 >
 > - **"That new number is too weird to be real."** It is an endless string of digits between 0 and 1, like any other real.
 > - **"A cleverer list would work."** A list is already the most general way to give one room per counting number.
-> - **"Then the fractions are uncountable too."** No, the fractions queue: [countable-sets](02-countable-sets.md).
+> - **"Then the fractions are uncountable too."** No, the fractions queue: [Countable sets](02-countable-sets.md).
 
 ---
 
@@ -265,7 +241,7 @@ Whole digits throughout, nothing to round: the outputs match line for line.
 
 - **Software that cannot be written.** No program can decide whether another halts; the proof is this diagonal, run down a list of programs.
 - **What a computer can name.** A machine picks from a listable supply of patterns, so the reals it can name are a sliver.
-- **The next rung.** Every set is smaller than its collection of subsets, forever: [comparing-infinities](04-comparing-infinities.md).
+- **The next rung.** Every set is smaller than its collection of subsets, forever: [Comparing infinities](04-comparing-infinities.md).
 
 > **Say it back**
 > Someone hands you a list of every real between 0 and 1. Read down the diagonal and change every digit you read: a 4, or a 5 where you read a 4. What you built disagrees with each row at that row's own place, and a string of 4s and 5s has one spelling only, so it is on no row. Every list fails the same way. The reals are uncountable: a strictly bigger infinity than the counting numbers.
@@ -274,13 +250,13 @@ Whole digits throughout, nothing to round: the outputs match line for line.
 
 ## What this builds on
 
-- [countable-sets](02-countable-sets.md): what a list of an infinite set is, and that the fractions have one.
-- [proof-by-contradiction](../06-Proof/03-proof-by-contradiction.md): assume the list is complete, build the guest it missed.
-- [irrational-numbers](../02-The%20Number%20Line/03-irrational-numbers.md): decimals running on with no pattern, as almost every guest is.
+- [Countable sets](02-countable-sets.md): what a list of an infinite set is, and that the fractions have one.
+- [Proof by contradiction](../06-Proof/03-proof-by-contradiction.md): assume the list is complete, build the guest it missed.
+- [Irrational numbers](../02-The%20Number%20Line/03-irrational-numbers.md): decimals running on with no pattern, as almost every guest is.
 
 ## Where this goes next
 
-- [comparing-infinities](04-comparing-infinities.md): fits-both-ways means equal size; every set is smaller than its collection of subsets.
+- [Comparing infinities](04-comparing-infinities.md): fits-both-ways means equal size; every set is smaller than its collection of subsets.
 
 ---
 

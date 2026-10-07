@@ -1,26 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Partitions
-topic: A fixed number of groups
-item: Stirling numbers of the second kind
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/08-Partitions/03-set-partitions-and-bell-numbers|set-partitions-and-bell-numbers]]"
-  - "[[Cards/04-Combinatorics and graphs/04-Inclusion-Exclusion and Pigeonhole/03-counting-surjections|counting-surjections]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/08-Partitions/06-twelvefold-way|twelvefold-way]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - stirling-numbers-second-kind
----
-
 # Stirling numbers of the second kind: distinct items into exactly k unnamed non-empty groups
 
-Combinatorics and graphs → Partitions → A fixed number of groups → Stirling numbers of the second kind
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Partitions](../../../SYLLABUS.md#w04-s08) → Stirling numbers of the second kind
 
 ---
 
@@ -100,7 +80,7 @@ Together the heaps are every split of n items into k groups, so S(n, k) = k S(n�
 
 ### Step 4: name the groups and the same splits count onto maps
 
-Naming the boxes asks for more: a rule sending each tool to a named box. A split into k groups can wear the k name tags in k! ways, each a different rule, and stripping the names returns the split. So the rules leaving no box empty number k! S(n, k) — here 6 × 25 = 150, the onto maps of [counting-surjections](../04-Inclusion-Exclusion%20and%20Pigeonhole/03-counting-surjections.md).
+Naming the boxes asks for more: a rule sending each tool to a named box. A split into k groups can wear the k name tags in k! ways, each a different rule, and stripping the names returns the split. So the rules leaving no box empty number k! S(n, k) — here 6 × 25 = 150, the onto maps of [Onto functions](../04-Inclusion-Exclusion%20and%20Pigeonhole/03-counting-surjections.md).
 
 <details>
 <summary>Detailed proof: every split wears exactly k factorial sets of name tags</summary>
@@ -113,12 +93,12 @@ The edges agree: the empty rule on no items misses nothing, matching S(0, 0) = 1
 
 ### Step 5: add the whole row and every split is counted once
 
-Every split of the five tools has one number of groups and one only, so filing splits by that number puts each in one column and the whole row counts every split: 1 + 15 + 25 + 10 + 1 = 52, the Bell number B(5), reached from the other side on [set-partitions-and-bell-numbers](03-set-partitions-and-bell-numbers.md).
+Every split of the five tools has one number of groups and one only, so filing splits by that number puts each in one column and the whole row counts every split: 1 + 15 + 25 + 10 + 1 = 52, the Bell number B(5), reached from the other side on [Set partitions and Bell numbers](03-set-partitions-and-bell-numbers.md).
 
 <details>
 <summary>The other road: count the named-box rules, then sieve</summary>
 
-There are 3^5 = 243 rules sending five tools to three named boxes, empty ones allowed. Each of the 3 boxes is avoided by 2^5 = 32 rules, so subtract 3 × 32 = 96; the 3 rules piling everything into one box came off twice, so add them back: 243 − 96 + 3 = 150 fill every box. Divide by 3! = 6 for 25 splits. The general alternating count is on [counting-surjections](../04-Inclusion-Exclusion%20and%20Pigeonhole/03-counting-surjections.md).
+There are 3^5 = 243 rules sending five tools to three named boxes, empty ones allowed. Each of the 3 boxes is avoided by 2^5 = 32 rules, so subtract 3 × 32 = 96; the 3 rules piling everything into one box came off twice, so add them back: 243 − 96 + 3 = 150 fill every box. Divide by 3! = 6 for 25 splits. The general alternating count is on [Onto functions](../04-Inclusion-Exclusion%20and%20Pigeonhole/03-counting-surjections.md).
 
 </details>
 
@@ -374,16 +354,16 @@ The two outputs match line for line.
 > - **Adding the cells above, Pascal-style.** 6 + 7 = 13, not 25. The multiplier k is the choice of which standing group the last item joins.
 > - **Letting a named box stay empty.** The count becomes every rule into three boxes, 3^5 = 243, not the 150 onto ones.
 > - **Reaching for C(5, 3) = 10.** Three chosen tools name one group and leave two unsorted. 10 is a Stirling number here, but S(5, 4).
-> - **Mixing up the two kinds.** The first kind counts shuffles by their loops: a different triangle, on [permutations-by-cycles](05-permutations-by-cycles.md).
+> - **Mixing up the two kinds.** The first kind counts shuffles by their loops: a different triangle, on [Counting shuffles by their loops](05-permutations-by-cycles.md).
 
 ---
 
 ## Where you meet it in real life
 
 - **Clustering.** Sorting labelled records into exactly k unnamed clusters: S(n, k) counts the clusterings — 25 for five items into three, and climbing fast, so software searches rather than lists.
-- **Work onto machines.** Where the boxes have names and none may idle, the count is k! S(n, k): 150 for five jobs onto three named machines — [counting-surjections](../04-Inclusion-Exclusion%20and%20Pigeonhole/03-counting-surjections.md).
+- **Work onto machines.** Where the boxes have names and none may idle, the count is k! S(n, k): 150 for five jobs onto three named machines — [Onto functions](../04-Inclusion-Exclusion%20and%20Pigeonhole/03-counting-surjections.md).
 - **Equivalence relations.** A split is an equivalence relation, its groups the classes, so S(n, k) counts the relations with exactly k classes.
-- **Occupancy tables.** Named items into unnamed boxes, none empty, is one question of twelve — [twelvefold-way](06-twelvefold-way.md). Take the names off the items too and it is [integer-partitions](01-integer-partitions.md).
+- **Occupancy tables.** Named items into unnamed boxes, none empty, is one question of twelve — [The twelvefold way](06-twelvefold-way.md). Take the names off the items too and it is [Integer partitions](01-integer-partitions.md).
 
 > **Say it back**
 > S(n, k) counts the splits of n named items into exactly k unnamed non-empty groups. Watch the last item: alone, leaving k−1 groups for the rest, or joining one of k standing groups. So S(n, k) = k S(n−1, k) + S(n−1, k−1), built from S(0, 0) = 1. Five tools fill two unnamed boxes 15 ways and three boxes 25; the row adds to 52. Name the groups, k! ways each, and the same splits count onto maps: 150.
@@ -392,12 +372,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [set-partitions-and-bell-numbers](03-set-partitions-and-bell-numbers.md): what a split of a set is, and the total 52 this row adds up to.
-- [counting-surjections](../04-Inclusion-Exclusion%20and%20Pigeonhole/03-counting-surjections.md): the sieve for rules that fill every box, which 6 × 25 = 150 has to match.
+- [Set partitions and Bell numbers](03-set-partitions-and-bell-numbers.md): what a split of a set is, and the total 52 this row adds up to.
+- [Onto functions](../04-Inclusion-Exclusion%20and%20Pigeonhole/03-counting-surjections.md): the sieve for rules that fill every box, which 6 × 25 = 150 has to match.
 
 ## Where this goes next
 
-- [twelvefold-way](06-twelvefold-way.md): this count as one cell of a table, beside the eleven other ways of naming or not naming items and boxes.
+- [The twelvefold way](06-twelvefold-way.md): this count as one cell of a table, beside the eleven other ways of naming or not naming items and boxes.
 
 Three rules are fixed here: items named, boxes not, none empty. Change one and the count changes — the twelvefold way settles all of them in one table.
 

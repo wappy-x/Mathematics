@@ -1,33 +1,12 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Laplace Transforms for Initial-Value Problems
-topic: Discounting a whole signal
-item: The Laplace transform
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/04-exponential-growth-decay-and-cooling|exponential-growth-decay-and-cooling]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/07-improper-integrals|improper-integrals]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/06-discounting-and-present-value|discounting-and-present-value]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/05-laplace-transform|laplace-transform]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/06-strips-of-convergence-and-shifting-the-line|strips-of-convergence-and-shifting-the-line]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/02-transforms-of-derivatives|transforms-of-derivatives]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/02-impulse-response-and-transfer-functions|impulse-response-and-transfer-functions]]"
-tags: [mathematics, differential equations and dynamics, the-laplace-transform]
----
-
 # The Laplace transform: multiply by a decaying exponential and integrate, and calculus turns into algebra
 
-Differential equations and dynamics → Laplace Transforms for Initial-Value Problems → Discounting a whole signal → The Laplace transform
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Laplace Transforms for Initial-Value Problems](../../../SYLLABUS.md#w08-s08) → The Laplace transform
 
 ---
 
 ## General Overview
 
-A fund pays 1,000 dollars a year forever, as a steady trickle rather than yearly lumps. At a discount rate of 5% a year, compounded continuously, a dollar due in t years is worth e^(−0.05t) dollars now ([discounting-and-present-value](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md)).
+A fund pays 1,000 dollars a year forever, as a steady trickle rather than yearly lumps. At a discount rate of 5% a year, compounded continuously, a dollar due in t years is worth e^(−0.05t) dollars now ([Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md)).
 
 Weigh each instant's payment by that factor and add them up. The stream is worth 1000/0.05 = 20,000 dollars today. Let the payments grow at 3% a year instead, 1,000e^(0.03t) dollars per year, and the same sum gives 50,000 dollars, as long as the discount rate beats the growth rate. At a discount rate of 3% or less the sum never settles.
 
@@ -56,13 +35,13 @@ Orange: the level stream at s = 0.05, levelling off toward 20,000. Teal: the gro
 
 ## The formula
 
-Notation first, in words. A signal f is a function of time t from t = 0 on. A curly L, $\mathcal{L}$, read "the Laplace transform of", turns it into a function of the discount rate s named by the capital letter: $\mathcal{L}[f] = F$. The card [laplace-transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/05-laplace-transform.md) allows complex s; solving equations needs only real s.
+Notation first, in words. A signal f is a function of time t from t = 0 on. A curly L, $\mathcal{L}$, read "the Laplace transform of", turns it into a function of the discount rate s named by the capital letter: $\mathcal{L}[f] = F$. The card [The Laplace transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/05-laplace-transform.md) allows complex s; solving equations needs only real s.
 
 $$F(s)=\int_0^\infty e^{-st}f(t)\,dt$$
 
 **Read it aloud:** F at s is the whole signal from time zero on, each instant discounted at rate s back to time zero, added up.
 
-An integral to infinity means the limit of the integral up to a horizon T as T grows ([improper-integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)); the chart plots those partial integrals.
+An integral to infinity means the limit of the integral up to a horizon T as T grows ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)); the chart plots those partial integrals.
 
 The table an initial-value problem needs, valued at s = 0.05, with one cycle a year, b = 2π:
 
@@ -135,7 +114,7 @@ Integrate the transform of a rate f′ by parts, moving the derivative onto the 
 
 $$\mathcal{L}[f'](s)=sF(s)-f(0)$$
 
-Check it on the growing stream: f = e^(0.03t) rises at f′ = 0.03e^(0.03t), whose transform is 0.03 × 50 = 1.5. The rule gives 0.05 × 50 − 1 = 1.5. The rule turns a differential equation into algebra; the full statement and the second derivative are [transforms-of-derivatives](02-transforms-of-derivatives.md).
+Check it on the growing stream: f = e^(0.03t) rises at f′ = 0.03e^(0.03t), whose transform is 0.03 × 50 = 1.5. The rule gives 0.05 × 50 − 1 = 1.5. The rule turns a differential equation into algebra; the full statement and the second derivative are [Transforming a derivative](02-transforms-of-derivatives.md).
 
 ### Step 7: when the transform exists
 
@@ -148,7 +127,7 @@ Suppose f is integrable on every finite interval and |f(t)| ≤ M e^(at) for all
 
 </details>
 
-Complex s and its half plane of convergence: [strips-of-convergence-and-shifting-the-line](../../07-Complex%20analysis/08-Transforms%20in%20Outline/06-strips-of-convergence-and-shifting-the-line.md).
+Complex s and its half plane of convergence: [Where a transform lives](../../07-Complex%20analysis/08-Transforms%20in%20Outline/06-strips-of-convergence-and-shifting-the-line.md).
 
 ---
 
@@ -390,9 +369,9 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Finance.** The present value of a continuous cash flow at rate s is its Laplace transform: the table is a table of perpetuity prices.
-- **Shock absorbers.** A car's suspension obeys a forced rate law; the transform turns y'' + 2y' + 5y = f(t) into algebra, solved in [solving-an-initial-value-problem-by-transform](04-solving-an-initial-value-problem-by-transform.md).
-- **Circuits and control.** A system is described by output transform over input transform, its transfer function ([impulse-response-and-transfer-functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md)).
-- **Switched and kicked inputs.** A motor switched on at a set time, and a hammer blow: [step-functions-and-delays](05-step-functions-and-delays.md), [impulses-and-the-delta-function](06-impulses-and-the-delta-function.md).
+- **Shock absorbers.** A car's suspension obeys a forced rate law; the transform turns y'' + 2y' + 5y = f(t) into algebra, solved in [The round trip](04-solving-an-initial-value-problem-by-transform.md).
+- **Circuits and control.** A system is described by output transform over input transform, its transfer function ([Transfer functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md)).
+- **Switched and kicked inputs.** A motor switched on at a set time, and a hammer blow: [Step functions](05-step-functions-and-delays.md), [Impulses](06-impulses-and-the-delta-function.md).
 
 > **Say it back**
 > The Laplace transform discounts a signal back to time zero at rate s and adds up every instant. A level stream becomes 1/s, a stream growing at rate a becomes 1/(s − a), and waves follow from a turning exponent. It exists when s beats the signal's exponential growth, and sums transform as sums. Because the discount factor's derivative is itself times −s, a rate transforms to s times the transform, minus the starting value.
@@ -401,18 +380,18 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [exponential-growth-decay-and-cooling](../01-Rate%20Equations/04-exponential-growth-decay-and-cooling.md): e^(at) as the solution of y' = ay, the signal behind row 3.
-- [improper-integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md): what an integral to infinity means, and when it converges.
-- [discounting-and-present-value](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): the discount factor e^(−st) and present value.
-- [laplace-transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/05-laplace-transform.md): the same transform with complex s.
-- [strips-of-convergence-and-shifting-the-line](../../07-Complex%20analysis/08-Transforms%20in%20Outline/06-strips-of-convergence-and-shifting-the-line.md): the region where the integral converges.
+- [Growth, decay and cooling](../01-Rate%20Equations/04-exponential-growth-decay-and-cooling.md): e^(at) as the solution of y' = ay, the signal behind row 3.
+- [Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md): what an integral to infinity means, and when it converges.
+- [Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): the discount factor e^(−st) and present value.
+- [The Laplace transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/05-laplace-transform.md): the same transform with complex s.
+- [Where a transform lives](../../07-Complex%20analysis/08-Transforms%20in%20Outline/06-strips-of-convergence-and-shifting-the-line.md): the region where the integral converges.
 
 ## Where this goes next
 
-- [transforms-of-derivatives](02-transforms-of-derivatives.md): the rate rule in full, with second derivatives and the starting values they carry.
-- [impulse-response-and-transfer-functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md): a whole system summed up as one function of s.
+- [Transforming a derivative](02-transforms-of-derivatives.md): the rate rule in full, with second derivatives and the starting values they carry.
+- [Transfer functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md): a whole system summed up as one function of s.
 
-The table runs from signals to transforms; solving an equation needs the road back, which [inverting-by-partial-fractions](03-inverting-by-partial-fractions.md) builds.
+The table runs from signals to transforms; solving an equation needs the road back, which [Inverting](03-inverting-by-partial-fractions.md) builds.
 
 ---
 

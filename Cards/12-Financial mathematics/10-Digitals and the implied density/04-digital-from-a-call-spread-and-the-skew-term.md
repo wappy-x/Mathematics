@@ -1,32 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Digitals and the implied density
-topic: Static replication off the strike strip
-item: A digital from a call spread
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/03-digital-greeks-and-pin-risk|digital-greeks-and-pin-risk]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/05-strike-and-calendar-shape|strike-and-calendar-shape]]"
-next:
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/05-butterfly-and-the-implied-density|butterfly-and-the-implied-density]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - digital-from-a-call-spread-and-the-skew-term
----
-
 # A digital from a call spread: the limit that prices it, and the extra term the smile adds
 
-Financial mathematics → Digitals and the implied density → Static replication off the strike strip → A digital from a call spread
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Digitals and the implied density](../../../SYLLABUS.md#w12-s10) → A digital from a call spread
 
 ---
 
 ## General Overview
 
-A client asks a bank for a one-year bet on Acme shares, which trade at $100 today. If Acme closes above $100 in a year, the bank pays the client $1. Otherwise it pays nothing. That contract is a **cash-or-nothing digital call**, a digital for short ([cash-or-nothing-digital](01-cash-or-nothing-digital.md)).
+A client asks a bank for a one-year bet on Acme shares, which trade at $100 today. If Acme closes above $100 in a year, the bank pays the client $1. Otherwise it pays nothing. That contract is a **cash-or-nothing digital call**, a digital for short ([Cash-or-nothing digital](01-cash-or-nothing-digital.md)).
 
 The bank cannot buy a digital on an exchange. It can buy ordinary calls, the right to buy one share at a fixed price called the strike. So it builds the digital out of two calls. Buy the call struck at $99, sell the call struck at $101, and hold half of each. At expiry this pair pays nothing below $99, $1 above $101, and climbs in a straight line between. A pair like that is a **call spread**. Its payoff is a ramp; the digital's payoff is a step. Squeeze the two strikes together and the ramp becomes the step.
 
@@ -83,11 +63,11 @@ $$\text{digital}(K) \;=\; e^{-rT}N(d_2) \;-\; \mathcal{V}\,\sigma'(K)$$
 | $e^{-rT}$ | discount factor $D(T)$: today's value of one dollar due at $T$ | 0.951229 | — |
 | $\mathcal{V}$ | vega of the call at $K$: price change per 1.00 of volatility | 37.901158 | bigger skew term |
 
-The helpers are the call card's ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)):
+The helpers are the call card's ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)):
 
 $$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \mathcal{V} = S e^{-qT}\varphi(d_1)\sqrt{T}$$
 
-In words: $d_2$ is how many whole-life swings separate Acme from the strike; $\mathcal{V}$ is how many dollars the call gains per 1.00 of volatility ([vega](../09-The%20Greeks%2C%20one%20each/03-vega.md)).
+In words: $d_2$ is how many whole-life swings separate Acme from the strike; $\mathcal{V}$ is how many dollars the call gains per 1.00 of volatility ([Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md)).
 
 A **volatility point** is one percentage point of volatility, 0.01. A skew of −0.04 points per dollar is $\sigma'(K) = -0.0004$. Desks quote the points; the formula takes the decimal.
 
@@ -137,7 +117,7 @@ For the finite spread: by Taylor's theorem with $f = C$, $f(K-h) - f(K+h) = -2h 
 
 ### Step 3: the market's calls carry their own volatilities
 
-The market does not quote one volatility. It quotes a price at each strike, and the volatility that reproduces that price through Black-Scholes is the **implied volatility** at that strike ([volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)). Drawn against strike, those volatilities form the smile. On this card the smile is a straight line through 0.20 at $100$, falling 0.0004 per dollar: $\sigma(K) = 0.20 - 0.0004\,(K - 100)$.
+The market does not quote one volatility. It quotes a price at each strike, and the volatility that reproduces that price through Black-Scholes is the **implied volatility** at that strike ([The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)). Drawn against strike, those volatilities form the smile. On this card the smile is a straight line through 0.20 at $100$, falling 0.0004 per dollar: $\sigma(K) = 0.20 - 0.0004\,(K - 100)$.
 
 So the market call is Black-Scholes with the strike's own volatility: $C(K) = C_{\text{BS}}(K, \sigma(K))$. Step 2 still holds, because it never used a model: the market digital is minus the slope of this market call curve.
 
@@ -191,7 +171,7 @@ A desk that sells the digital hedges with a one-sided spread it knows pays at le
 | delta | 0.018951 | 0.018943 | dollars gained per $1 rise in Acme |
 | vega | −0.473764 | −0.473644 | dollars per 1.00 of volatility; negative at the money |
 
-The spread's Greeks match the digital's to three decimal places, so hedging the spread's risk hedges the digital's. The large delta near expiry and the pin risk it brings are on [digital-greeks-and-pin-risk](03-digital-greeks-and-pin-risk.md).
+The spread's Greeks match the digital's to three decimal places, so hedging the spread's risk hedges the digital's. The large delta near expiry and the pin risk it brings are on [Digital Greeks and pin risk](03-digital-greeks-and-pin-risk.md).
 
 ### What breaks if you drop a piece
 
@@ -608,12 +588,12 @@ Orange: flat 20% at every strike. Green: each strike's own smile volatility plug
 
 ## What this builds on
 
-- [digital-greeks-and-pin-risk](03-digital-greeks-and-pin-risk.md): the digital's delta and vega, and why a step payoff is hard to hedge near expiry. This card shows the spread carries those Greeks.
-- [strike-and-calendar-shape](../08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md): call prices fall in strike by less than the discounted gap and curve upward. This card turns that fall per dollar into a price.
+- [Digital Greeks and pin risk](03-digital-greeks-and-pin-risk.md): the digital's delta and vega, and why a step payoff is hard to hedge near expiry. This card shows the spread carries those Greeks.
+- [Shape across strikes and expiries](../08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md): call prices fall in strike by less than the discounted gap and curve upward. This card turns that fall per dollar into a price.
 
 ## Where this goes next
 
-- [butterfly-and-the-implied-density](05-butterfly-and-the-implied-density.md): difference the call curve once more, with three strikes, and the pricing density of $S_T$ appears.
+- [The butterfly and the implied density](05-butterfly-and-the-implied-density.md): difference the call curve once more, with three strikes, and the pricing density of $S_T$ appears.
 
 The spread gave the market's chance of finishing above one strike; the open question is the whole distribution of where Acme finishes, and the butterfly answers it.
 

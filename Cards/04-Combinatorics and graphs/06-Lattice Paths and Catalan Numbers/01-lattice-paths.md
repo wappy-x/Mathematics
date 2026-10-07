@@ -1,28 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Lattice Paths and Catalan Numbers
-topic: Routes as choices
-item: Lattice paths
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/05-n-choose-k|n-choose-k]]"
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/01-pascals-rule-and-the-triangle|pascals-rule-and-the-triangle]]"
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/03-vandermonde-identity|vandermonde-identity]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/06-Lattice Paths and Catalan Numbers/02-reflection-principle-and-ballot-problem|reflection-principle-and-ballot-problem]]"
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/03-multi-step-trees-and-backward-induction|multi-step-trees-and-backward-induction]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - lattice-paths
----
-
 # Lattice paths: routes across a grid are choice counts, and Pascal's triangle is the map
 
-Combinatorics and graphs → Lattice Paths and Catalan Numbers → Routes as choices → Lattice paths
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Lattice Paths and Catalan Numbers](../../../SYLLABUS.md#w04-s06) → Lattice paths
 
 ---
 
@@ -53,7 +31,7 @@ flowchart TB
 
 ## The formula
 
-C(n, k), read "n choose k", counts the ways to take k things from n when order is not recorded; it is 0 when k is below 0 or above n ([n-choose-k](../01-Counting%20Principles/05-n-choose-k.md)).
+C(n, k), read "n choose k", counts the ways to take k things from n when order is not recorded; it is 0 when k is below 0 or above n ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
 
 $$C(m+n,\ n) = \frac{(m+n)!}{m!\ n!}$$
 
@@ -89,7 +67,7 @@ Routes clear of that corner are the rest: the total minus the product. The tall 
 
 Stand at the hotel and walk. The only record worth keeping at each corner is which way the next block went.
 
-So a route trades for a row of 11 letters with 7 Es and 4 Ns. Two routes that part at some block give rows differing in that slot, so no row is used twice; and every row gives a route back, since 11 east-or-north steps with 4 Ns land at the museum. Rows and routes are matched in pairs, none left over ([bijection-and-double-counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)): counting rows counts routes.
+So a route trades for a row of 11 letters with 7 Es and 4 Ns. Two routes that part at some block give rows differing in that slot, so no row is used twice; and every row gives a route back, since 11 east-or-north steps with 4 Ns land at the museum. Rows and routes are matched in pairs, none left over ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)): counting rows counts routes.
 
 ### Step 1: choosing the route is choosing which steps go north
 
@@ -107,7 +85,7 @@ Now write on every corner the number of routes from the hotel to it. The bottom 
 | **north 1** | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
 | **north 0** | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
 
-The museum's 330 is 210 from the west plus 120 from the south: Pascal's rule with streets under it ([pascals-rule-and-the-triangle](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md)), an entry's two parents being the corners one block back. Read the map along a slanting line instead and a row of Pascal's triangle appears — 1, 4, 6, 4, 1. The triangle is this map, read along its diagonals.
+The museum's 330 is 210 from the west plus 120 from the south: Pascal's rule with streets under it ([Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md)), an entry's two parents being the corners one block back. Read the map along a slanting line instead and a row of Pascal's triangle appears — 1, 4, 6, 4, 1. The triangle is this map, read along its diagonals.
 
 ### Step 3: through a corner is a multiply, around it is a subtract
 
@@ -121,7 +99,7 @@ If $k$ of the first five steps went north, that corner is 5−k east and k north
 
 $$C(11,\ 4)\ =\ \sum_{k=0}^{4} C(5,\ k)\ C(6,\ 4-k)$$
 
-That is Vandermonde's identity ([vandermonde-identity](../03-Binomial%20Coefficients%20and%20Identities/03-vandermonde-identity.md)) drawn on streets, and the middle group is the cafe's 150: counting through a corner and proving Vandermonde are one piece of work.
+That is Vandermonde's identity ([Vandermonde's identity](../03-Binomial%20Coefficients%20and%20Identities/03-vandermonde-identity.md)) drawn on streets, and the middle group is the cafe's 150: counting through a corner and proving Vandermonde are one piece of work.
 
 Adding groups works along one cut only. Over all 40 corners the through-counts total 3,960, or 12 × 330, since each route stands on 12 corners. A second road reaches 330 with no formula at all: the map above, filled in by addition, and the code below walks it.
 
@@ -381,9 +359,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Option pricing on a tree.** A share price ticking up or down each period traces one of these routes, and the count of routes reaching a node is where a tree price's weights come from ([multi-step-trees-and-backward-induction](../../12-Financial%20mathematics/04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md)).
-- **Coin runs.** Eleven tosses landing four heads can happen 330 ways, heads for north ([random-walk-path-counts](05-random-walk-path-counts.md)).
-- **Vote counting.** Ballots counted one at a time trace a route, and whether a candidate ever fell behind asks which side of a line the route stays on ([reflection-principle-and-ballot-problem](02-reflection-principle-and-ballot-problem.md)).
+- **Option pricing on a tree.** A share price ticking up or down each period traces one of these routes, and the count of routes reaching a node is where a tree price's weights come from ([Many steps](../../12-Financial%20mathematics/04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md)).
+- **Coin runs.** Eleven tosses landing four heads can happen 330 ways, heads for north ([Counting coin-flip paths](05-random-walk-path-counts.md)).
+- **Vote counting.** Ballots counted one at a time trace a route, and whether a candidate ever fell behind asks which side of a line the route stays on ([The reflection principle](02-reflection-principle-and-ballot-problem.md)).
 
 > **Say it back**
 > A route that only goes east or north is nothing but the order of its steps, so it trades for a row of letters and back. Naming which 4 of the 11 steps go north names the route: C(11, 4) = 330 names. Write the count on every corner and each entry is the sum of its west and south neighbours — Pascal's triangle, tilted onto streets. Routes through a corner multiply: 10 to the cafe times 15 onward is 150, leaving 180 that miss it. Cutting every route at one distance and adding the groups is Vandermonde's identity.
@@ -392,14 +370,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [n-choose-k](../01-Counting%20Principles/05-n-choose-k.md): the count C(n, k), and why order inside a pick is divided out.
-- [pascals-rule-and-the-triangle](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md): the rule the map's addition turns out to be, and the zero convention.
-- [vandermonde-identity](../03-Binomial%20Coefficients%20and%20Identities/03-vandermonde-identity.md): the identity Step 4's cut proves, stated and proved there.
+- [Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md): the count C(n, k), and why order inside a pick is divided out.
+- [Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md): the rule the map's addition turns out to be, and the zero convention.
+- [Vandermonde's identity](../03-Binomial%20Coefficients%20and%20Identities/03-vandermonde-identity.md): the identity Step 4's cut proves, stated and proved there.
 
 ## Where this goes next
 
-- [reflection-principle-and-ballot-problem](02-reflection-principle-and-ballot-problem.md): counting the routes that break a rule by mirroring them, turning a forbidden line into an ordinary choose count.
-- [multi-step-trees-and-backward-induction](../../12-Financial%20mathematics/04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md): the same routes carrying money, a payoff at the far corner and a price worked backwards.
+- [The reflection principle](02-reflection-principle-and-ballot-problem.md): counting the routes that break a rule by mirroring them, turning a forbidden line into an ordinary choose count.
+- [Many steps](../../12-Financial%20mathematics/04-Binomial%20Trees/03-multi-step-trees-and-backward-induction.md): the same routes carrying money, a payoff at the far corner and a price worked backwards.
 
 Every route counted here was allowed. The next question is how many stay on one side of a line: of the 252 routes across a square 5-block grid, 42 never cross the diagonal, and the reflection principle explains that 42.
 

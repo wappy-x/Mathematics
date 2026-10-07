@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Structural Models - Default from the Balance Sheet
-topic: The tug-of-war over the firm
-item: How the balance-sheet claims move
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/01-merton-model-equity-as-a-call|merton-model-equity-as-a-call]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/01-delta|delta]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/03-vega|vega]]"
-next:
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/04-asset-value-and-volatility-from-the-share-price|asset-value-and-volatility-from-the-share-price]]"
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/06-where-structural-models-fail|where-structural-models-fail]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - structural-model-sensitivities
----
-
 # How the balance-sheet claims move: volatility helps shareholders and hurts lenders, leverage and time widen the spread
 
-Financial mathematics → Structural Models - Default from the Balance Sheet → The tug-of-war over the firm → How the balance-sheet claims move
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Structural Models - Default from the Balance Sheet](../../../SYLLABUS.md#w12-s43) → How the balance-sheet claims move
 
 ---
 
@@ -30,11 +8,11 @@ Financial mathematics → Structural Models - Default from the Balance Sheet →
 
 A firm owns factories, stock and cash worth $100m today. It owes one debt: a single payment of $80m due in one year, with nothing paid before then. The value of its assets swings by about 20 percent a year. Cash in a riskless account earns 5 percent a year, continuously compounded.
 
-Two groups hold claims on those assets. Lenders are owed the first $80m; shareholders keep the rest, or nothing if the assets fall short. Merton's model prices the shares as a call option on the assets, struck at the debt ([merton-model-equity-as-a-call](01-merton-model-equity-as-a-call.md)): $24.59m for the shares, $75.41m for the debt, $100m together.
+Two groups hold claims on those assets. Lenders are owed the first $80m; shareholders keep the rest, or nothing if the assets fall short. Merton's model prices the shares as a call option on the assets, struck at the debt ([Merton's model](01-merton-model-equity-as-a-call.md)): $24.59m for the shares, $75.41m for the debt, $100m together.
 
 Now the managers swap safe assets for risky ones of the same value, doubling the assets' volatility from 20 to 40 percent. The firm is still worth $100m. Yet the shares rise to $28.98m and the debt falls to $71.02m: $4.39m has moved from lenders to shareholders. The **credit spread**, the extra yield the debt pays over the riskless rate, jumps from 90.71 to 690.15 basis points (hundredths of a percent). If instead the assets fall to $90m, the shares drop to $15.75m, the spread reaches 246.27 bp, and the priced default probability rises from 10.28 to 23.00 percent.
 
-This card measures those moves: the slope of each of five claims (equity, debt, the lenders' implied default insurance, default probability, spread) against each of five inputs (assets, asset volatility, the debt's face value, time, the rate), everything else held still. They are the option Greeks of [delta](../09-The%20Greeks%2C%20one%20each/01-delta.md) and [vega](../09-The%20Greeks%2C%20one%20each/03-vega.md), re-read on a balance sheet.
+This card measures those moves: the slope of each of five claims (equity, debt, the lenders' implied default insurance, default probability, spread) against each of five inputs (assets, asset volatility, the debt's face value, time, the rate), everything else held still. They are the option Greeks of [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md) and [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md), re-read on a balance sheet.
 
 **Equity and debt split a pie of fixed size, so every input except the assets themselves only moves value from one side to the other; more volatility moves it to the shareholders, and more leverage or, for a sound firm, more time widens the spread.**
 
@@ -58,7 +36,7 @@ Lower line: the equity. Upper line: the debt. They always add to $100m, so what 
 
 ## The formula
 
-Notation first, in words. A slope with every other input frozen is a **partial derivative**, written with a curly d: $\partial E/\partial\sigma$ reads "the slope of the equity against volatility" ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). $N(x)$ is the area under the standard bell curve to the left of $x$, and $\varphi(x)$ is the curve's height at $x$; the area grows at the rate of the height.
+Notation first, in words. A slope with every other input frozen is a **partial derivative**, written with a curly d: $\partial E/\partial\sigma$ reads "the slope of the equity against volatility" ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). $N(x)$ is the area under the standard bell curve to the left of $x$, and $\varphi(x)$ is the curve's height at $x$; the area grows at the rate of the height.
 
 The centre of the card is one pair of slopes and one pair of splits:
 
@@ -111,10 +89,10 @@ The same table in numbers, per natural step: \$1m of assets, one volatility poin
 
 ### When it holds
 
-- **Assets that wander like a stock, at one fixed volatility.** If volatility moves, each slope is only a first guess. Short spreads come out near zero (13.94 bp at three months), far below market quotes: [where-structural-models-fail](06-where-structural-models-fail.md).
-- **One zero-coupon debt, default only on its due date.** Default at the first touch of a barrier changes every slope: [black-cox-first-passage-default](05-black-cox-first-passage-default.md).
+- **Assets that wander like a stock, at one fixed volatility.** If volatility moves, each slope is only a first guess. Short spreads come out near zero (13.94 bp at three months), far below market quotes: [Where structural models break](06-where-structural-models-fail.md).
+- **One zero-coupon debt, default only on its due date.** Default at the first touch of a barrier changes every slope: [Black-Cox](05-black-cox-first-passage-default.md).
 - **No cost of going bust.** Then equity plus debt is the whole firm and the tug-of-war is zero-sum. With costs of default, volatility also shrinks the pie.
-- **Pricing-world probabilities.** $Q$ prices the claims; it is not a forecast. With assets expected to grow 8 percent a year, the real-world chance is 7.84 percent: [distance-to-default-and-expected-default-frequency](03-distance-to-default-and-expected-default-frequency.md).
+- **Pricing-world probabilities.** $Q$ prices the claims; it is not a forecast. With assets expected to grow 8 percent a year, the real-world chance is 7.84 percent: [Distance to default](03-distance-to-default-and-expected-default-frequency.md).
 - **Small moves.** A slope is local. Doubling volatility with the slope at 20 percent predicts equity of $27.31m; the full reprice gives $28.98m.
 
 ---
@@ -746,7 +724,7 @@ The two outputs are identical line for line.
 
 - **Risk shifting and covenants.** Managers acting for shareholders gain by swapping safe projects for risky ones of equal value, at the lenders' expense; Jensen and Meckling called this an agency cost of debt, and the vega row measures it. Bond covenants that restrict asset sales, new borrowing and payouts each freeze one dial of the table.
 - **Borrowing to pay a dividend.** The promise grows and the assets do not. The existing lenders see the face column: 11.83 bp more spread per $1m.
-- **Equity and credit move together.** When a firm's share price falls, its spread tends to widen: both are the assets column read in opposite directions. In the model, the ratio of the two asset slopes hedges the bond with the shares. Getting the unobservable assets and volatility from the share price is [asset-value-and-volatility-from-the-share-price](04-asset-value-and-volatility-from-the-share-price.md).
+- **Equity and credit move together.** When a firm's share price falls, its spread tends to widen: both are the assets column read in opposite directions. In the model, the ratio of the two asset slopes hedges the bond with the shares. Getting the unobservable assets and volatility from the share price is [Backing out the unobservable](04-asset-value-and-volatility-from-the-share-price.md).
 
 > **Say it back**
 > Equity and debt together own the firm, so any input that leaves the assets alone only moves value between them. Equity is a call on the assets, so its slopes are a call's Greeks, and the debt's are their mirror. Volatility helps shareholders and hurts lenders by the same amount, the vega. Default probability and spread depend on assets and debt only through leverage, and rise with it. Time widens a sound firm's short spread and narrows a distressed firm's.
@@ -755,14 +733,14 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [merton-model-equity-as-a-call](01-merton-model-equity-as-a-call.md): the five prices this card differentiates, and why equity is a call.
-- [delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): the slope against the underlying, here $N(d_1)$ for the equity.
-- [vega](../09-The%20Greeks%2C%20one%20each/03-vega.md): the slope against volatility, and the identity that makes the cancellations in Step 1 work.
+- [Merton's model](01-merton-model-equity-as-a-call.md): the five prices this card differentiates, and why equity is a call.
+- [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): the slope against the underlying, here $N(d_1)$ for the equity.
+- [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md): the slope against volatility, and the identity that makes the cancellations in Step 1 work.
 
 ## Where this goes next
 
-- [asset-value-and-volatility-from-the-share-price](04-asset-value-and-volatility-from-the-share-price.md): runs the equity's delta backwards to recover the assets and their volatility from the share price.
-- [where-structural-models-fail](06-where-structural-models-fail.md): where these slopes disagree with markets, starting with the near-zero short spreads.
+- [Backing out the unobservable](04-asset-value-and-volatility-from-the-share-price.md): runs the equity's delta backwards to recover the assets and their volatility from the share price.
+- [Where structural models break](06-where-structural-models-fail.md): where these slopes disagree with markets, starting with the near-zero short spreads.
 
 Every slope on this card needs the assets and their volatility, and neither trades; the share price does, and turning one into the other is the next problem.
 

@@ -1,29 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Graphs - Dots and Lines
-topic: Arrows and order
-item: Directed graphs
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/04-connectivity-and-breadth-first-search|connectivity-and-breadth-first-search]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/07-partial-and-total-orders|partial-and-total-orders]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/11-Tours - Euler and Hamilton/05-de-bruijn-sequences|de-bruijn-sequences]]"
-  - "[[Cards/04-Combinatorics and graphs/13-Matchings and Flows/05-flow-networks-and-ford-fulkerson|flow-networks-and-ford-fulkerson]]"
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/03-classifying-states|classifying-states]]"
-  - "[[Cards/14-Applied and computational/05-Operations Research/04-scheduling-and-the-critical-path|scheduling-and-the-critical-path]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - directed-graphs-and-topological-order
----
-
 # Directed graphs: arrows instead of lines, and a graph with no way back can be lined up so every arrow points forward
 
-Combinatorics and graphs → Graphs - Dots and Lines → Arrows and order → Directed graphs
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Graphs - Dots and Lines](../../../SYLLABUS.md#w04-s09) → Directed graphs
 
 ---
 
@@ -63,13 +40,13 @@ Four steps have nothing pointing at them; only baking has nothing pointing out.
 
 ## The formula
 
-Notation first, in words. A directed graph is written $D = (V, A)$: $V$ collects the dots, still **vertices**, $A$ the arrows, called **arcs** ([graphs-vertices-and-edges](01-graphs-vertices-and-edges.md)). An edge is unordered; an arc is an *ordered* pair, written $u \to v$. Write $n$ for the vertex count.
+Notation first, in words. A directed graph is written $D = (V, A)$: $V$ collects the dots, still **vertices**, $A$ the arrows, called **arcs** ([Graphs](01-graphs-vertices-and-edges.md)). An edge is unordered; an arc is an *ordered* pair, written $u \to v$. Write $n$ for the vertex count.
 
 One degree becomes two: the **in-degree** $\mathrm{in}(v)$ counts arrows pointing at a vertex, the **out-degree** $\mathrm{out}(v)$ those leaving. Each arc has one tail, where it starts, and one head, where the arrowhead lands, so both tallies come to the arc count. Bars count members, so $\lvert A\rvert$ is that count:
 
 $$\mathrm{in}(v)\text{ added over every } v \;=\; \lvert A\rvert \;=\; \mathrm{out}(v)\text{ added over every } v$$
 
-Both come to 8 for the recipe, not 16: 16 is the undirected handshake, counting each edge at both ends ([degree-and-handshaking](02-degree-and-handshaking.md)).
+Both come to 8 for the recipe, not 16: 16 is the undirected handshake, counting each edge at both ends ([Degrees and the handshaking lemma](02-degree-and-handshaking.md)).
 
 A **topological order** lists all $n$ vertices, each once, with every arrow's tail earlier than its head. A **directed cycle** is a run of arrows back to its own start — the shortest, an arrow from a vertex to itself. A graph with none is a **DAG**, directed acyclic graph.
 
@@ -133,7 +110,7 @@ Add layer the dish → grate the cheese to the eight arrows. Kahn writes 5 steps
 
 Two neighbours in a valid order with no arrow between them can be swapped: no arc joined them, and every other arc keeps its ends on the same sides. Cook the pasta sheets and grate the cheese are such a pair above.
 
-So an order is unique exactly when every neighbouring pair in it is joined by an arrow, leaving no swap. Reachability decides some pairs, and the 210 valid listings are the ways of deciding the rest ([partial-and-total-orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md)).
+So an order is unique exactly when every neighbouring pair in it is joined by an arrow, leaving no swap. Reachability decides some pairs, and the 210 valid listings are the ways of deciding the rest ([Orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md)).
 
 ### Step 5: a way back makes a strongly connected piece
 
@@ -403,7 +380,7 @@ The two outputs match line for line.
 
 - **Build tools.** `make` and `cargo` peel a graph of "must be built first"; a circular dependency is that jam.
 - **Spreadsheets.** A formula points at the cells it reads, so recalculation walks a topological order and a circular reference is the refused loop.
-- **Task planning.** Prerequisites give a DAG whose orders are the legal plans (scheduling-and-the-critical-path); a commit history is a DAG in the same way.
+- **Task planning.** Prerequisites give a DAG whose orders are the legal plans (Scheduling); a commit history is a DAG in the same way.
 
 > **Say it back**
 > A directed graph joins dots by arrows, so a dot has two counts: arrows in and arrows out, each tally adding to the arrow count. A topological order lists every dot once with every arrow forward, and exists exactly when no run of arrows returns to its start. Kahn's method writes down anything nothing points at, deletes its arrows and repeats, either writing them all or jamming on a leftover that holds a loop. Eight prep steps allow 210 orders; one rule about the cheese, none.
@@ -412,15 +389,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [connectivity-and-breadth-first-search](04-connectivity-and-breadth-first-search.md): getting between vertices along the lines, which becomes reachability once they run one way.
-- [partial-and-total-orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md): an order leaving pairs undecided, and what extending it to decide every pair means.
+- [Connected or not](04-connectivity-and-breadth-first-search.md): getting between vertices along the lines, which becomes reachability once they run one way.
+- [Orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md): an order leaving pairs undecided, and what extending it to decide every pair means.
 
 ## Where this goes next
 
-- [de-bruijn-sequences](../11-Tours%20-%20Euler%20and%20Hamilton/05-de-bruijn-sequences.md): a directed graph whose arcs, not vertices, are toured.
-- [flow-networks-and-ford-fulkerson](../13-Matchings%20and%20Flows/05-flow-networks-and-ford-fulkerson.md): arcs with a capacity, and how much can be pushed along them.
-- [classifying-states](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/03-classifying-states.md): arrows weighted by how often they are taken, the pieces fixing which states are kept.
-- scheduling-and-the-critical-path: durations on the steps, so one of the 210 orders becomes the schedule to beat.
+- [De Bruijn sequences](../11-Tours%20-%20Euler%20and%20Hamilton/05-de-bruijn-sequences.md): a directed graph whose arcs, not vertices, are toured.
+- [Flows](../13-Matchings%20and%20Flows/05-flow-networks-and-ford-fulkerson.md): arcs with a capacity, and how much can be pushed along them.
+- [Classifying states](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/03-classifying-states.md): arrows weighted by how often they are taken, the pieces fixing which states are kept.
+- Scheduling: durations on the steps, so one of the 210 orders becomes the schedule to beat.
 
 Nothing here separates those 210 orders; give each step a duration and one sweep along a topological order finds the longest chain of arrows, fixing the earliest dinner — which is what scheduling asks.
 

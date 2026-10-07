@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Reduced-Form Models - Risky Bonds, Spreads and Random Hazards
-topic: Two markets pricing one default
-item: Implied hazard from a bond price, and why the CDS disagrees
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve|pricing-a-defaultable-bond-from-the-survival-curve]]"
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/04-implied-hazard-from-a-cds-quote|implied-hazard-from-a-cds-quote]]"
-  - "[[Cards/12-Financial mathematics/02-Curves/06-z-spread-and-asset-swap-spread|z-spread-and-asset-swap-spread]]"
-next: []
-tags: [mathematics, financial mathematics, implied-hazard-from-a-bond-price-and-the-cds-bond-basis]
----
-
 # Implied hazard from a bond price, and why the CDS disagrees: the basis
 
-Financial mathematics → Reduced-Form Models - Risky Bonds, Spreads and Random Hazards → Two markets pricing one default → Implied hazard from a bond price, and why the CDS disagrees
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Reduced-Form Models - Risky Bonds, Spreads and Random Hazards](../../../SYLLABUS.md#w12-s44) → Implied hazard from a bond price, and why the CDS disagrees
 
 ---
 
@@ -25,9 +8,9 @@ Financial mathematics → Reduced-Form Models - Risky Bonds, Spreads and Random 
 
 Northwind has a five-year bond. On every 100 dollars of face (the amount repaid at the end) it pays a coupon of 6 dollars a year. If Northwind defaults, the coupons stop and holders recover 40 dollars per 100 of face, paid at the moment of default. Cash in the bank earns 5% a year.
 
-The first card on this shelf priced that bond from a **hazard rate**: the chance of default in the next short stretch of time, per year, given survival so far ([pricing-a-defaultable-bond-from-the-survival-curve](01-pricing-a-defaultable-bond-from-the-survival-curve.md)). A flat 2% hazard gave **98.28 dollars**, against 103.77 for the same promises with no default risk at all.
+The first card on this shelf priced that bond from a **hazard rate**: the chance of default in the next short stretch of time, per year, given survival so far ([A risky bond from the hazard curve](01-pricing-a-defaultable-bond-from-the-survival-curve.md)). A flat 2% hazard gave **98.28 dollars**, against 103.77 for the same promises with no default risk at all.
 
-Markets run the other way: the screen shows a price, and the risk system wants a hazard. Fed 98.28, this card's solver hands back 2.00%. Then, one morning, the bond trades at **97.00** while the five-year **credit default swap** (CDS: a contract that pays the loss if Northwind defaults, in exchange for a yearly premium) still trades at **121.06 basis points** a year. A basis point is a hundredth of a percent. The CDS reads as a 2.00% hazard ([implied-hazard-from-a-cds-quote](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/04-implied-hazard-from-a-cds-quote.md)). The bond at 97 reads as **2.50%**.
+Markets run the other way: the screen shows a price, and the risk system wants a hazard. Fed 98.28, this card's solver hands back 2.00%. Then, one morning, the bond trades at **97.00** while the five-year **credit default swap** (CDS: a contract that pays the loss if Northwind defaults, in exchange for a yearly premium) still trades at **121.06 basis points** a year. A basis point is a hundredth of a percent. The CDS reads as a 2.00% hazard ([Implied hazard from one CDS quote](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/04-implied-hazard-from-a-cds-quote.md)). The bond at 97 reads as **2.50%**.
 
 Two markets, one default, two answers. The **CDS-bond basis** is the CDS spread minus the bond's spread over the riskless rate. Here it is 121.06 minus 150.98, or **−29.92 basis points**. A negative basis means the bond pays more for Northwind's risk than protection costs. A **basis trade** buys the bond and buys protection on it, and pockets the difference.
 
@@ -54,7 +37,7 @@ Orange: the bond's model price at each flat hazard. Green: the house price, 98.2
 
 ## The formula
 
-Notation first. A trial hazard is $\lambda$ ("lambda"); the bond's model price at it is $B(\lambda)$, and the screen price is $B_{\text{mkt}}$. The coupon is $c$ dollars a year, the face $F$, the recovered share of face $R$, the riskless rate $r$; coupons fall at times $t_1, \dots, t_n$ (years 1 to 5), the last at maturity $T$. Survival to time $t$ at a flat hazard is $e^{-\lambda t}$ ([hazard-rate-and-survival-probability](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)); discounting is $e^{-rt}$; the two multiply, so the card writes $u = r + \lambda$ for the combined decay rate.
+Notation first. A trial hazard is $\lambda$ ("lambda"); the bond's model price at it is $B(\lambda)$, and the screen price is $B_{\text{mkt}}$. The coupon is $c$ dollars a year, the face $F$, the recovered share of face $R$, the riskless rate $r$; coupons fall at times $t_1, \dots, t_n$ (years 1 to 5), the last at maturity $T$. Survival to time $t$ at a flat hazard is $e^{-\lambda t}$ ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)); discounting is $e^{-rt}$; the two multiply, so the card writes $u = r + \lambda$ for the combined decay rate.
 
 $$B(\lambda) \;=\; \underbrace{c\sum_{i=1}^{n} e^{-u\,t_i}}_{\text{coupons, if alive}} \;+\; \underbrace{F\,e^{-uT}}_{\text{face, if alive}} \;+\; \underbrace{R\,F\,\frac{\lambda}{u}\bigl(1-e^{-uT}\bigr)}_{\text{recovery, at default}}, \qquad u = r+\lambda$$
 
@@ -66,7 +49,7 @@ The two numbers the basis compares:
 
 $$B_{\text{mkt}} = c\sum_{i=1}^{n} e^{-(r+z)\,t_i} + F\,e^{-(r+z)T} \quad\text{defines } z, \qquad b = s - z$$
 
-In words: the **z-spread** $z$ is the one extra rate that, added to the riskless rate, reprices the bond's promised cash flows at the market price, with no mention of default or recovery ([z-spread-and-asset-swap-spread](../02-Curves/06-z-spread-and-asset-swap-spread.md)). The **basis** $b$ is the CDS spread $s$ minus that bond spread.
+In words: the **z-spread** $z$ is the one extra rate that, added to the riskless rate, reprices the bond's promised cash flows at the market price, with no mention of default or recovery ([Spreads over the curve](../02-Curves/06-z-spread-and-asset-swap-spread.md)). The **basis** $b$ is the CDS spread $s$ minus that bond spread.
 
 | Symbol | Plain meaning | In our example | Push it up and the implied hazard… |
 | --- | --- | --- | --- |
@@ -85,13 +68,13 @@ In words: the **z-spread** $z$ is the one extra rate that, added to the riskless
 
 ### When it holds
 
-- **A flat hazard.** One price pins one number. A real issuer's risk rises or falls across the five years; a curve of hazards needs several bonds or several CDS quotes ([bootstrapping-the-hazard-curve-from-cds-quotes](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md)).
+- **A flat hazard.** One price pins one number. A real issuer's risk rises or falls across the five years; a curve of hazards needs several bonds or several CDS quotes ([Bootstrapping a hazard curve](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md)).
 - **Recovery taken as known, and paid on face.** The price cannot separate hazard from recovery. Assume 25% instead of 40% and the same 97 implies 2.0047% instead of 2.4956%. Recovery is a fraction of face, not of the bond's price just before default.
 - **A flat, known riskless rate.** Any price gap not explained by discounting at 5% is charged to default, including a buyer's higher funding cost. That is the funding driver of the basis, measured in Step 7.
 - **Coupons stop at default, with no accrued coupon paid.** Real claims include accrued interest, a small fraction of a coupon.
 - **The price strictly between 40 and 103.77.** Step 3 shows what happens outside.
 
-**Conventions verified 2026-09-28:** the basis is quoted as the CDS spread minus the bond's spread, so a bond that pays more for the credit risk than protection costs shows a negative basis (source 5). Desks measure the bond side by the z-spread or the asset-swap spread over the swap curve; this card uses the z-spread over a flat 5% curve, and the CDS conventions of [implied-hazard-from-a-cds-quote](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/04-implied-hazard-from-a-cds-quote.md): quarterly premiums, no premium accrued at default, the loss paid at the moment of default. Standard contracts since 2009 trade at a fixed 100 or 500 bp coupon plus an upfront payment; 121.06 bp is the equivalent par spread.
+**Conventions verified 2026-09-28:** the basis is quoted as the CDS spread minus the bond's spread, so a bond that pays more for the credit risk than protection costs shows a negative basis (source 5). Desks measure the bond side by the z-spread or the asset-swap spread over the swap curve; this card uses the z-spread over a flat 5% curve, and the CDS conventions of [Implied hazard from one CDS quote](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/04-implied-hazard-from-a-cds-quote.md): quarterly premiums, no premium accrued at default, the loss paid at the moment of default. Standard contracts since 2009 trade at a fixed 100 or 500 bp coupon plus an upfront payment; 121.06 bp is the equivalent par spread.
 
 ---
 
@@ -99,7 +82,7 @@ In words: the **z-spread** $z$ is the one extra rate that, added to the riskless
 
 ### Step 0: a price is an average over default times, and more hazard moves weight toward the bad ones
 
-Every possible default time gives the bond a value. Default at once: 40 dollars, today. Default after two coupons: two coupons, then 40. No default: all five coupons and the face. The price is the average of those values, weighted by how likely each default time is. A higher hazard shifts the weight toward early defaults, where the holder collects 40 instead of the whole stream. So the price falls as the hazard rises. If it falls strictly, from 103.77 toward 40, every price in between is hit exactly once, and solving backwards is safe ([root-finding-for-inverses](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md)).
+Every possible default time gives the bond a value. Default at once: 40 dollars, today. Default after two coupons: two coupons, then 40. No default: all five coupons and the face. The price is the average of those values, weighted by how likely each default time is. A higher hazard shifts the weight toward early defaults, where the holder collects 40 instead of the whole stream. So the price falls as the hazard rises. If it falls strictly, from 103.77 toward 40, every price in between is hit exactly once, and solving backwards is safe ([Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md)).
 
 ### Step 1: the price in closed form
 
@@ -119,7 +102,7 @@ The first term is the recovery floor. The next two are what surviving adds. The 
 
 The rewrite shows why the fall is not automatic. Raising $u$ shrinks the survival terms, which lowers the price. It also shrinks the waiting-cost term, which raises it. Which wins?
 
-**The claim.** The price falls strictly as long as one year's coupon beats one year's interest on the recovery, grossed up for the year's decay: $c \ge R F r \cdot g(u)$, where $g(u) = (e^{u} - 1)/u$ is the timing factor from [the-credit-triangle](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/03-the-credit-triangle.md), always at least 1. For Northwind, $R F r = 40 \times 0.05 = 2$ dollars a year against a coupon of 6, so the condition is $g(u) \le 3$. It holds for every hazard up to **185.38%** a year, a hazard at which default within the year is far more likely than not; no market quotes a bond there.
+**The claim.** The price falls strictly as long as one year's coupon beats one year's interest on the recovery, grossed up for the year's decay: $c \ge R F r \cdot g(u)$, where $g(u) = (e^{u} - 1)/u$ is the timing factor from [The credit triangle](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/03-the-credit-triangle.md), always at least 1. For Northwind, $R F r = 40 \times 0.05 = 2$ dollars a year against a coupon of 6, so the condition is $g(u) \le 3$. It holds for every hazard up to **185.38%** a year, a hazard at which default within the year is far more likely than not; no market quotes a bond there.
 
 **What the proof gives.** At 185.38% the price is 40.0044. So every price from 40.0044 up to, but not including, 103.77 is reached by exactly one hazard in that range: at least one because the price is continuous and passes from above to below (the intermediate value theorem), at most one because it falls strictly.
 
@@ -150,7 +133,7 @@ A third road checks the answer rather than finding it. Simulate 200,000 default 
 
 ### Step 5: the CDS reads the same company differently
 
-The CDS on Northwind trades at 121.06 bp. Solved backwards with [implied-hazard-from-a-cds-quote](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/04-implied-hazard-from-a-cds-quote.md), that is a 2.0000% hazard. The bond says 2.4956%: half a point apart.
+The CDS on Northwind trades at 121.06 bp. Solved backwards with [Implied hazard from one CDS quote](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/04-implied-hazard-from-a-cds-quote.md), that is a 2.0000% hazard. The bond says 2.4956%: half a point apart.
 
 Desks quote the gap in spread, because spreads are what they trade. The bond's spread is its z-spread: 150.98 bp at 97, found two ways (bisection on the spread, and Newton on the bond's yield minus 5%). The basis is
 
@@ -693,7 +676,7 @@ The two outputs are identical line for line.
 > - **Leaving recovery out of the bond solve.** With $R = 0$ the implied hazard is 1.5098%, which is just the z-spread relabelled. Any hazard compared with a CDS hazard must use the same recovery the CDS uses.
 > - **Comparing a hazard gap with a spread gap.** The hazard gap is −49.56 bp; the basis is −29.92 bp. Multiply by the share lost (60%) before comparing.
 > - **Reading a small basis as a signal.** At the house price, with perfect agreement on 2%, the basis is already −0.51 bp; on a 2-dollar coupon it is +8.98 bp. Conventions and coupon size alone produce single-digit bases.
-> - **Solving outside the bracket.** Above 103.77 there is no hazard; below 40 there is no sensible one. A price near 40 is a recovery bet and belongs to [recovery-assumptions-and-what-they-change](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/05-recovery-assumptions-and-what-they-change.md).
+> - **Solving outside the bracket.** Above 103.77 there is no hazard; below 40 there is no sensible one. A price near 40 is a recovery bet and belongs to [Recovery assumptions](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/05-recovery-assumptions-and-what-they-change.md).
 
 ---
 
@@ -702,7 +685,7 @@ The two outputs are identical line for line.
 - **Negative basis trades.** Banks and hedge funds buy a bond and buy protection on it when the basis is negative, and hold the package to maturity. The trade is a bet that funding stays available long enough for the basis to be collected.
 - **Funding crises.** When short-term borrowing becomes scarce, bonds are the first thing sold and the basis goes sharply negative; the funding driver in Step 7 is then the whole story (source 5 studies these episodes).
 - **Relative value between bond and CDS.** Credit desks run this card's solve on every bond an issuer has outstanding and compare the implied hazards with the CDS curve, looking for bonds that are cheap or dear against protection.
-- **Why a hazard read from a bond is not a real-world default rate.** Both market-implied hazards sit above the default rates rating agencies observe; the gap is the price of bearing the risk. See [market-implied-versus-historical-default-probability](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md).
+- **Why a hazard read from a bond is not a real-world default rate.** Both market-implied hazards sit above the default rates rating agencies observe; the gap is the price of bearing the risk. See [Two default probabilities](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md).
 
 > **Say it back**
 > A bond price, a recovery and a riskless rate fix one flat hazard, because the price falls strictly from the riskless value toward the recovery-only value as the hazard rises; outside that range there is no sensible answer. Northwind at 98.28 reads as 2%; at 97 it reads as 2.4956%, while its CDS still reads 2%. The basis, CDS spread minus the bond's z-spread, puts that gap in spread terms: −29.92 bp. Buying the bond and buying protection captures it on average, not path by path, and only at the buyer's funding rate. Funding, the delivery option, counterparty risk and coupon size all move the basis.
@@ -711,15 +694,15 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [pricing-a-defaultable-bond-from-the-survival-curve](01-pricing-a-defaultable-bond-from-the-survival-curve.md): the forward direction, hazard to price, and the house example 98.28 that this card runs backwards.
-- [implied-hazard-from-a-cds-quote](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/04-implied-hazard-from-a-cds-quote.md): the same backwards solve for a CDS, which supplies the 2.0000% the bond is compared with.
-- [z-spread-and-asset-swap-spread](../02-Curves/06-z-spread-and-asset-swap-spread.md): the bond's spread over the curve, the second half of the basis.
+- [A risky bond from the hazard curve](01-pricing-a-defaultable-bond-from-the-survival-curve.md): the forward direction, hazard to price, and the house example 98.28 that this card runs backwards.
+- [Implied hazard from one CDS quote](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/04-implied-hazard-from-a-cds-quote.md): the same backwards solve for a CDS, which supplies the 2.0000% the bond is compared with.
+- [Spreads over the curve](../02-Curves/06-z-spread-and-asset-swap-spread.md): the bond's spread over the curve, the second half of the basis.
 
 ## Where this goes next
 
-- [stochastic-hazard-cox-process](03-stochastic-hazard-cox-process.md): the hazard stops being a fixed number and wanders at random, which is what a moving basis suggests it does.
-- [forward-cds-and-the-forward-spread](04-forward-cds-and-the-forward-spread.md): protection that starts later, priced off a hazard curve instead of one flat number.
-- [cds-option-and-implied-spread-volatility](05-cds-option-and-implied-spread-volatility.md): once spreads move at random, the right to buy protection later has a price, and its volatility is quoted like any other.
+- [A random hazard](03-stochastic-hazard-cox-process.md): the hazard stops being a fixed number and wanders at random, which is what a moving basis suggests it does.
+- [The forward CDS](04-forward-cds-and-the-forward-spread.md): protection that starts later, priced off a hazard curve instead of one flat number.
+- [Options on a CDS](05-cds-option-and-implied-spread-volatility.md): once spreads move at random, the right to buy protection later has a price, and its volatility is quoted like any other.
 
 This card fitted one fixed hazard to one price; the open question is what bond and CDS prices look like when the hazard itself moves over time, and the random-hazard card answers it.
 

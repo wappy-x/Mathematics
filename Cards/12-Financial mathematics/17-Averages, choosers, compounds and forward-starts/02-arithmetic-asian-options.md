@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Averages, choosers, compounds and forward-starts
-topic: Pricing the plain average
-item: Arithmetic Asian options
-kind: method
-status: verified
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/01-geometric-asian-kemna-vorst|geometric-asian-kemna-vorst]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/02-variance-reduction-for-pricing|variance-reduction-for-pricing]]"
-next:
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/03-asian-greeks-and-implied-volatility|asian-greeks-and-implied-volatility]]"
-tags: [mathematics, financial mathematics, arithmetic-asian-options]
----
-
 # Arithmetic Asian options: the average everyone trades has no formula, so simulate and let the geometric twin steer
 
-Financial mathematics → Averages, choosers, compounds and forward-starts → Pricing the plain average → Arithmetic Asian options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages, choosers, compounds and forward-starts](../../../SYLLABUS.md#w12-s17) → Arithmetic Asian options
 
 ---
 
@@ -25,11 +8,11 @@ Financial mathematics → Averages, choosers, compounds and forward-starts → P
 
 Acme shares trade at $100.00. A one-year contract reads Acme's closing price every Friday, 52 times, adds the 52 prices and divides by 52. At the end of the year it pays that average minus $100.00, or nothing if the average falls short. The first reading is one week out; the last is on the final day.
 
-This is an **Asian call**: an option whose payoff looks at an average of prices over its life, not the price on one day. The ordinary add-and-divide average makes it **arithmetic**, and the fixed $100.00 makes it **fixed-strike**. The dates the price is read are the **fixings**. The same market's ordinary one-year call, which reads only the last day, costs $9.23 ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The Asian costs $5.26, 57 percent of it.
+This is an **Asian call**: an option whose payoff looks at an average of prices over its life, not the price on one day. The ordinary add-and-divide average makes it **arithmetic**, and the fixed $100.00 makes it **fixed-strike**. The dates the price is read are the **fixings**. The same market's ordinary one-year call, which reads only the last day, costs $9.23 ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The Asian costs $5.26, 57 percent of it.
 
 Two things make it cheaper. An average of 52 prices spreads out less than the last price alone, because the early readings have had little time to move. And the average is taken while the expected price is still climbing, so it centres lower. The first effect is the larger.
 
-No formula gives the $5.26. Each price follows a bell curve in its logarithm, a shape called **lognormal**. A sum of lognormal prices is not lognormal, and the Black-Scholes algebra needs it to be. So desks simulate: invent many possible years for Acme, read the payoff on each, discount, average. Plain simulation of 50,000 years gives $5.29 with an error bar of 3.4 cents. A close cousin does have a formula: the **geometric** average, which multiplies the 52 prices and takes the 52nd root ([geometric-asian-kemna-vorst](01-geometric-asian-kemna-vorst.md)). Price it on the same simulated years, see how far the batch missed its known answer, and correct the arithmetic price by that miss. The error bar falls to under a tenth of a cent: 37 times tighter, from the same paths.
+No formula gives the $5.26. Each price follows a bell curve in its logarithm, a shape called **lognormal**. A sum of lognormal prices is not lognormal, and the Black-Scholes algebra needs it to be. So desks simulate: invent many possible years for Acme, read the payoff on each, discount, average. Plain simulation of 50,000 years gives $5.29 with an error bar of 3.4 cents. A close cousin does have a formula: the **geometric** average, which multiplies the 52 prices and takes the 52nd root ([The geometric Asian call](01-geometric-asian-kemna-vorst.md)). Price it on the same simulated years, see how far the batch missed its known answer, and correct the arithmetic price by that miss. The error bar falls to under a tenth of a cent: 37 times tighter, from the same paths.
 
 **The arithmetic Asian has no closed form, so its price is simulated, and the geometric twin, which has one, cancels almost all of the simulation's noise.**
 
@@ -53,7 +36,7 @@ The sloped line is the holder's profit; the flat line is break-even. The shape i
 
 ## The formula
 
-Notation first, in words. A small subscript names a date: $S_{t_i}$ is Acme's price on the $i$-th fixing date $t_i$, counted in years from today. A capital sigma adds up a list, here over the fixings numbered $i = 1$ to $n$. A capital E with square brackets, $E[\;]$, is an average over all possible futures in the risk-neutral world, where every asset grows at the bank rate less its dividend ([geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). $N(x)$ is the bell-curve area left of $x$.
+Notation first, in words. A small subscript names a date: $S_{t_i}$ is Acme's price on the $i$-th fixing date $t_i$, counted in years from today. A capital sigma adds up a list, here over the fixings numbered $i = 1$ to $n$. A capital E with square brackets, $E[\;]$, is an average over all possible futures in the risk-neutral world, where every asset grows at the bank rate less its dividend ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). $N(x)$ is the bell-curve area left of $x$.
 
 The contract and its price:
 
@@ -112,7 +95,7 @@ In words: $v_A$ is the log-spread a bell-curve-in-the-log variable would need to
 - **Constant volatility.** The simulation and both formulas assume Acme's spread is the same at every fixing. With a volatility that changes by date, each pair of dates carries its own variance in $M_2$ and in the paths; keeping 20% everywhere misprices by roughly vega (the price change per volatility point) times the error: 22 cents a point.
 - **Fixings fixed in advance.** The dates are written in the contract. A missed fixing or a holiday rule changes $n$ and the dates; fewer fixings make the option dearer, as the chart in Why it works shows.
 - **Smooth dividends and rates.** A 2% yield paid continuously tilts every forward the same way. A lump dividend inside the window lowers the later fixings' forwards, and $M_1$ must be rebuilt date by date.
-- **No fixings yet.** Once some fixings are known, part of the average is fixed cash. With $k$ of the $n$ fixings in and $m = n - k$ to come, the call is worth $m/n$ of a fresh Asian on the remaining dates, struck at $K^* = (nK - \text{sum of the fixings in})/m$: the level the remaining fixings must average for the whole average to reach $K$. $K^*$ is below $K$ only when the fixings in averaged above $K$, and above it when they averaged below. If $K^*$ is zero or less, the call is sure to pay and is worth a forward: today's value of the expected average minus $K$. Rerunning the formula with a shorter $T$ throws the known fixings away; dropping the $m/n$ weight overprices by $n/m$, double halfway through the fixings. The rewrite is exact: [asian-greeks-and-implied-volatility](03-asian-greeks-and-implied-volatility.md) derives it, and [asian-greeks-and-the-running-average](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/04-asian-greeks-and-the-running-average.md) works it on jet fuel.
+- **No fixings yet.** Once some fixings are known, part of the average is fixed cash. With $k$ of the $n$ fixings in and $m = n - k$ to come, the call is worth $m/n$ of a fresh Asian on the remaining dates, struck at $K^* = (nK - \text{sum of the fixings in})/m$: the level the remaining fixings must average for the whole average to reach $K$. $K^*$ is below $K$ only when the fixings in averaged above $K$, and above it when they averaged below. If $K^*$ is zero or less, the call is sure to pay and is worth a forward: today's value of the expected average minus $K$. Rerunning the formula with a shorter $T$ throws the known fixings away; dropping the $m/n$ weight overprices by $n/m$, double halfway through the fixings. The rewrite is exact: [Asian Greeks and implied volatility](03-asian-greeks-and-implied-volatility.md) derives it, and [Asian Greeks and the average already banked](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/04-asian-greeks-and-the-running-average.md) works it on jet fuel.
 - **A statistical answer.** The simulated price carries an error bar. Two prices that differ by less than about three bars are not different prices.
 
 ---
@@ -121,7 +104,7 @@ In words: $v_A$ is the log-spread a bell-curve-in-the-log variable would need to
 
 ### Step 0: the price is still an average over futures
 
-Nothing about pricing changes. In the risk-neutral world every asset grows at the bank rate less its dividend, and an option is worth its discounted average payoff ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). Only the payoff changed: it now reads 52 prices.
+Nothing about pricing changes. In the risk-neutral world every asset grows at the bank rate less its dividend, and an option is worth its discounted average payoff ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). Only the payoff changed: it now reads 52 prices.
 
 That change is what breaks the formula. On the vanilla card the log of the last price follows a bell curve, and the average over futures closes into $N(d_1)$ and $N(d_2)$. Here the payoff reads a sum. The log of a product is a sum of logs. The logs of the fixings are built from the same Brownian shoves, so their sum is again a bell curve, and the geometric average closes exactly. The log of a sum is not a sum of anything. The arithmetic average's distribution has no name and no formula. So the card attacks it three ways: exact moments, a simulation, and two bounds.
 
@@ -158,7 +141,7 @@ arithmetic Asian, controlled simulation   ████████████�
 geometric twin, exact                     ████████████████████                   $5.06
 ```
 
-The spread dial takes $9.23 to $6.13. The forward dial takes it to $8.39. The spread is most of the story. It is smaller because the early fixings are nearly known: the first reading is one week away and has barely had time to move. Averaging 52 readings, most of them partly known, leaves a number that wanders far less than the last reading alone. In the limit of continuous averaging the variance of the log-average is a third of the last price's; the sibling card works that sum ([geometric-asian-kemna-vorst](01-geometric-asian-kemna-vorst.md)).
+The spread dial takes $9.23 to $6.13. The forward dial takes it to $8.39. The spread is most of the story. It is smaller because the early fixings are nearly known: the first reading is one week away and has barely had time to move. Averaging 52 readings, most of them partly known, leaves a number that wanders far less than the last reading alone. In the limit of continuous averaging the variance of the log-average is a third of the last price's; the sibling card works that sum ([The geometric Asian call](01-geometric-asian-kemna-vorst.md)).
 
 Fewer fixings smooth less. One fixing is the vanilla itself.
 
@@ -182,7 +165,7 @@ Now treat the average as a share whose forward is $M_1$ and whose log-spread ove
 
 ### Step 4: simulate, and read the error bar honestly
 
-In the risk-neutral world, one week of Acme's life multiplies its price by $e^{(r - q - \frac12\sigma^2)\Delta t + \sigma\sqrt{\Delta t}\,Z}$, with $\Delta t$ one week in years and $Z$ a fresh bell-curve draw. That step is exact, not an approximation, so 52 steps build one possible year with no discretisation error ([monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)).
+In the risk-neutral world, one week of Acme's life multiplies its price by $e^{(r - q - \frac12\sigma^2)\Delta t + \sigma\sqrt{\Delta t}\,Z}$, with $\Delta t$ one week in years and $Z$ a fresh bell-curve draw. That step is exact, not an approximation, so 52 steps build one possible year with no discretisation error ([Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)).
 
 Build 50,000 years. On each, average the 52 prices, take the discounted payoff, and average those payoffs. The plain answer is $5.29. Its error bar is the spread of the payoffs over the square root of 50,000: 3.4 cents. The bar shrinks only with the square root of the number of paths, so tightening it by brute force is expensive.
 
@@ -190,7 +173,7 @@ Build 50,000 years. On each, average the 52 prices, take the discounted payoff, 
 
 A **control variate** is a companion quantity with a known price, simulated on the same paths so that its error reveals theirs. On every simulated year, compute the geometric average too, and its discounted payoff. That twin's exact price is known: \$5.06. This batch of years priced it at \$5.09. The batch ran rich. The arithmetic payoff rides the same paths, so it ran rich by nearly the same amount. Subtract a multiple $\beta$ of the twin's miss.
 
-The correction adds nothing on average, for any $\beta$, because the twin's miss averages to zero. So it cannot bias the price. The best $\beta$ is the slope of the arithmetic payoff against the geometric one across the paths, and with that slope the remaining variance is $1 - \rho^2$ of the plain variance, where $\rho$ is their correlation. The proof is on [variance-reduction-for-pricing](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md).
+The correction adds nothing on average, for any $\beta$, because the twin's miss averages to zero. So it cannot bias the price. The best $\beta$ is the slope of the arithmetic payoff against the geometric one across the paths, and with that slope the remaining variance is $1 - \rho^2$ of the plain variance, where $\rho$ is their correlation. The proof is on [Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md).
 
 Here $\rho$ = 0.9996. The two averages differ by little on any path, and their payoffs switch on together. The controlled price is \$5.2577 with an error bar of 0.09 cents. The bar is 37 times tighter, from the same paths.
 
@@ -211,7 +194,7 @@ The gap between the two payoffs is never more than the gap between the averages:
 
 The same 50,000 years price the floating-strike call, which pays $\max(S_T - A, 0)$. Its natural control is the payoff without the floor, $S_T - A$, whose exact value is $e^{-rT}(F - M_1)$. Plain simulation gives \$5.11 with a 3.5-cent bar; controlled, \$5.15 with a 1.5-cent bar. The control helps less: a straight line tracks a kinked payoff worse than the geometric twin tracks its arithmetic sibling.
 
-Other routes exist. A lattice (a tree of possible prices) or a partial differential equation (an equation in rates of change) in two variables, the price and the running average, prices the same contract. Quasi-random points, spread evenly on purpose, cut the error bar further than the control alone ([quasi-monte-carlo-and-brownian-bridge](../06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md)).
+Other routes exist. A lattice (a tree of possible prices) or a partial differential equation (an equation in rates of change) in two variables, the price and the running average, prices the same contract. Quasi-random points, spread evenly on purpose, cut the error bar further than the control alone ([Quasi-Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md)).
 
 ---
 
@@ -237,7 +220,7 @@ The average-price call on Acme is worth $5.26 today, 57 percent of the $9.23 van
 
 ### Greeks, by bumping the formula
 
-Nudge Acme's price by 1% up and down, and the volatility by a hundredth of a point, and reprice by Turnbull-Wakeman. The sibling card treats them properly ([asian-greeks-and-implied-volatility](03-asian-greeks-and-implied-volatility.md)).
+Nudge Acme's price by 1% up and down, and the volatility by a hundredth of a point, and reprice by Turnbull-Wakeman. The sibling card treats them properly ([Asian Greeks and implied volatility](03-asian-greeks-and-implied-volatility.md)).
 
 | Greek | Asian call | Vanilla call | Why they differ |
 | --- | --- | --- | --- |
@@ -720,7 +703,7 @@ The two outputs match line for line: the same generator, the same arithmetic in 
 - **Commodity hedging.** An airline buying jet fuel every week pays the year's average price, not one day's. An average-price call caps that average. It costs less than 52 separate weekly calls, because good and bad weeks net out inside the average.
 - **Currency hedging.** An exporter converting monthly receipts cares about the average exchange rate over the year; an Asian option on it matches the exposure with one contract.
 - **Settlement that resists manipulation.** Pushing one closing price moves a vanilla's payoff fully. It moves an average of 52 by one fifty-second, which is why thin markets settle on averages.
-- **Structured notes.** Many retail notes average the final few months of an index to soften a last-day crash. Related path readers on this shelf: [forward-start-options-and-forward-volatility](06-forward-start-options-and-forward-volatility.md) and [cliquets-and-ratchets](07-cliquets-and-ratchets.md).
+- **Structured notes.** Many retail notes average the final few months of an index to soften a last-day crash. Related path readers on this shelf: [Forward-start options](06-forward-start-options-and-forward-volatility.md) and [Cliquets](07-cliquets-and-ratchets.md).
 
 > **Say it back**
 > An Asian call pays the average of the fixings minus the strike, if positive. It is cheaper than the vanilla mainly because an average of partly known prices spreads less, and partly because it centres on a lower forward. The arithmetic average has no closed-form price, because a sum of lognormal prices is not lognormal. Simulation prices it, and the geometric twin, whose price is exact, corrects each batch's luck and shrinks the error bar 37-fold. Turnbull-Wakeman matches the average's exact first two moments to a lognormal and lands 1.5 cents dear.
@@ -729,12 +712,12 @@ The two outputs match line for line: the same generator, the same arithmetic in 
 
 ## What this builds on
 
-- [geometric-asian-kemna-vorst](01-geometric-asian-kemna-vorst.md): the exact price of the geometric twin, which is the control here.
-- [variance-reduction-for-pricing](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md): why a control variate stays unbiased and shrinks the variance by one minus the squared correlation.
+- [The geometric Asian call](01-geometric-asian-kemna-vorst.md): the exact price of the geometric twin, which is the control here.
+- [Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md): why a control variate stays unbiased and shrinks the variance by one minus the squared correlation.
 
 ## Where this goes next
 
-- [asian-greeks-and-implied-volatility](03-asian-greeks-and-implied-volatility.md): the Asian's sensitivities, and the single volatility that makes a quoted Asian price match.
+- [Asian Greeks and implied volatility](03-asian-greeks-and-implied-volatility.md): the Asian's sensitivities, and the single volatility that makes a quoted Asian price match.
 
 ---
 

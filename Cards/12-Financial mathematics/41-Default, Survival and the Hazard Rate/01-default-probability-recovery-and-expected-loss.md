@@ -1,29 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Default, Survival and the Hazard Rate
-topic: Credit loss arithmetic
-item: Default probability, recovery and expected loss
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/10-percentages|percentages]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/06-discounting-and-present-value|discounting-and-present-value]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/02-expectation|expectation]]"
-next:
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/02-hazard-rate-and-survival-probability|hazard-rate-and-survival-probability]]"
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/01-credit-default-swap-contract|credit-default-swap-contract]]"
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/01-merton-model-equity-as-a-call|merton-model-equity-as-a-call]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/01-default-correlation-and-joint-default|default-correlation-and-joint-default]]"
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/01-counterparty-exposure-and-netting|counterparty-exposure-and-netting]]"
-  - "[[Cards/12-Financial mathematics/48-Regulatory Capital in Outline/01-expected-versus-unexpected-loss|expected-versus-unexpected-loss]]"
-tags: [mathematics, financial-mathematics, default-probability-recovery-and-expected-loss]
----
-
 # Default probability, recovery and expected loss: the three numbers behind every credit loss
 
-Financial mathematics → Default, Survival and the Hazard Rate → Credit loss arithmetic → Default probability, recovery and expected loss
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Default, Survival and the Hazard Rate](../../../SYLLABUS.md#w12-s41) → Default probability, recovery and expected loss
 
 ---
 
@@ -93,9 +70,9 @@ Here $r$ and $y$ are simple annual rates, since the loan lasts exactly one year 
 ### When it holds
 
 - **LGD is the average loss among the loans that default.** Then $\text{EL} = \text{PD} \times \text{LGD} \times \text{EAD}$ is exact, with no further assumption. If LGD is instead averaged over good and bad years alike while bad years bring both more defaults and poorer recoveries, the product understates the loss: $250 instead of $300 in the two-kind-of-year example below.
-- **EAD is one known number.** A term loan fixes it. A credit line the cafe draws down as trouble builds does not: exposure rises just before default, and a fixed EAD taken from a calm month is too low. The exposure path is the business of [counterparty-exposure-and-netting](../46-Counterparty%20Risk%20and%20CVA/01-counterparty-exposure-and-netting.md).
-- **One period.** PD here is the chance of default within the year. Over several years the chance piles up, and when default happens starts to matter for discounting; [hazard-rate-and-survival-probability](02-hazard-rate-and-survival-probability.md) handles that.
-- **The fair-rate step assumes a lender who asks only to break even on average.** Real lenders also charge for the swings around the average, for funding and for costs, so market spreads sit above $\ell$. The swings are the subject of [expected-versus-unexpected-loss](../48-Regulatory%20Capital%20in%20Outline/01-expected-versus-unexpected-loss.md).
+- **EAD is one known number.** A term loan fixes it. A credit line the cafe draws down as trouble builds does not: exposure rises just before default, and a fixed EAD taken from a calm month is too low. The exposure path is the business of [Counterparty exposure](../46-Counterparty%20Risk%20and%20CVA/01-counterparty-exposure-and-netting.md).
+- **One period.** PD here is the chance of default within the year. Over several years the chance piles up, and when default happens starts to matter for discounting; [The hazard rate](02-hazard-rate-and-survival-probability.md) handles that.
+- **The fair-rate step assumes a lender who asks only to break even on average.** Real lenders also charge for the swings around the average, for funding and for costs, so market spreads sit above $\ell$. The swings are the subject of [Expected and unexpected loss](../48-Regulatory%20Capital%20in%20Outline/01-expected-versus-unexpected-loss.md).
 - **Recovery is a fraction of everything owed, interest included.** If recovery applies only to the $10,000 principal, the fair-rate formula shifts slightly; the expected-loss formula does not change.
 
 ---
@@ -170,7 +147,7 @@ Bottom line: default chance 5%. Middle: 10%. Top: 15%. At 40% recovery the three
 
 ### The other route
 
-Here the chance of default is handed over as one number for one year. Markets usually quote it the other way round: a default rate per unit time, the **hazard rate**, from which the chance over any horizon follows. [hazard-rate-and-survival-probability](02-hazard-rate-and-survival-probability.md) builds that, and [simulating-a-default-time](05-simulating-a-default-time.md) draws default times from it.
+Here the chance of default is handed over as one number for one year. Markets usually quote it the other way round: a default rate per unit time, the **hazard rate**, from which the chance over any horizon follows. [The hazard rate](02-hazard-rate-and-survival-probability.md) builds that, and [Simulating a default time](05-simulating-a-default-time.md) draws default times from it.
 
 ---
 
@@ -569,10 +546,10 @@ The two outputs agree line for line, including the simulated loss, because both 
 
 - **Loan pricing.** Banks price business loans, mortgages and card balances by first estimating PD, LGD and EAD, then adding the expected-loss rate, costs and a charge for risk to their funding rate.
 - **Loss provisions.** Accounting rules for expected credit losses (IFRS 9 and the US CECL standard) ask lenders to set money aside in advance for losses computed from PD, LGD and EAD.
-- **Bank capital.** The Basel rules let large banks supply their own PD, LGD and EAD estimates. Expected loss is covered by provisions and pricing; capital covers the swings above it, as [expected-versus-unexpected-loss](../48-Regulatory%20Capital%20in%20Outline/01-expected-versus-unexpected-loss.md) explains.
-- **Bond spreads and default insurance.** A corporate bond yields more than a government bond partly because of its expected loss. A credit default swap, a contract that pays the lost fraction of a bond if its issuer defaults, is priced on exactly PD times LGD, spread over time: [credit-default-swap-contract](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/01-credit-default-swap-contract.md).
+- **Bank capital.** The Basel rules let large banks supply their own PD, LGD and EAD estimates. Expected loss is covered by provisions and pricing; capital covers the swings above it, as [Expected and unexpected loss](../48-Regulatory%20Capital%20in%20Outline/01-expected-versus-unexpected-loss.md) explains.
+- **Bond spreads and default insurance.** A corporate bond yields more than a government bond partly because of its expected loss. A credit default swap, a contract that pays the lost fraction of a bond if its issuer defaults, is priced on exactly PD times LGD, spread over time: [The credit default swap](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/01-credit-default-swap-contract.md).
 - **The shelf's shipping company.** Northwind Lines has $100m of bonds, a five-year default chance of 9.52% and 40% recovery. Its five-year expected loss, before discounting, is $0.0952 \times 0.60 \times \$100\text{m} = \$5.71\text{m}$. Where the 9.52% comes from is the hazard-rate card's job.
-- **Ratings.** Agencies grade borrowers by default risk; [rating-transition-matrix-and-cumulative-default-rates](04-rating-transition-matrix-and-cumulative-default-rates.md) turns grade-to-grade moves into a PD for each horizon.
+- **Ratings.** Agencies grade borrowers by default risk; [Rating transition matrices](04-rating-transition-matrix-and-cumulative-default-rates.md) turns grade-to-grade moves into a PD for each horizon.
 
 > **Say it back**
 > A credit loss has three parts: the chance of default, the fraction lost if it happens, and the money at stake. Their product is the expected loss, exactly, provided the fraction lost is averaged over the defaults themselves. For the $10,000 cafe loan with a 5% default chance and 40% recovery it is $300, a 3% loss rate. A lender who asks only to break even on average charges that rate on top of the riskless rate, a little more in fact: 3.25% here. Because the formula is a product, any one of the three numbers can be recovered from the loss and the other two, as long as the answer lands between 0 and 1.
@@ -581,18 +558,18 @@ The two outputs agree line for line, including the simulated loss, because both 
 
 ## What this builds on
 
-- [percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): a recovery of 40 cents on the dollar, a 5% chance, a 3% rate. Every input on this card is a percentage of something.
-- [discounting-and-present-value](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): why the lender compares the loan's average repayment with $1 + r$, and why the 8% loan is $22.86 short in today's money.
-- [expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md): the probability-weighted average that Step 2 takes of the loss.
+- [Percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): a recovery of 40 cents on the dollar, a 5% chance, a 3% rate. Every input on this card is a percentage of something.
+- [Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): why the lender compares the loan's average repayment with $1 + r$, and why the 8% loan is $22.86 short in today's money.
+- [Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md): the probability-weighted average that Step 2 takes of the loss.
 
 ## Where this goes next
 
-- [hazard-rate-and-survival-probability](02-hazard-rate-and-survival-probability.md): the default chance as a rate per year, so PD over any horizon follows.
-- [credit-default-swap-contract](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/01-credit-default-swap-contract.md): PD times LGD as a traded contract, paid over time.
-- [merton-model-equity-as-a-call](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md): where a PD comes from if default means the assets falling below the debt.
-- [default-correlation-and-joint-default](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/01-default-correlation-and-joint-default.md): many loans at once, when defaults arrive together.
-- [counterparty-exposure-and-netting](../46-Counterparty%20Risk%20and%20CVA/01-counterparty-exposure-and-netting.md): EAD as a path through time rather than one number.
-- [expected-versus-unexpected-loss](../48-Regulatory%20Capital%20in%20Outline/01-expected-versus-unexpected-loss.md): the swings around the $300, and the capital that absorbs them.
+- [The hazard rate](02-hazard-rate-and-survival-probability.md): the default chance as a rate per year, so PD over any horizon follows.
+- [The credit default swap](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/01-credit-default-swap-contract.md): PD times LGD as a traded contract, paid over time.
+- [Merton's model](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md): where a PD comes from if default means the assets falling below the debt.
+- [Default correlation](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/01-default-correlation-and-joint-default.md): many loans at once, when defaults arrive together.
+- [Counterparty exposure](../46-Counterparty%20Risk%20and%20CVA/01-counterparty-exposure-and-netting.md): EAD as a path through time rather than one number.
+- [Expected and unexpected loss](../48-Regulatory%20Capital%20in%20Outline/01-expected-versus-unexpected-loss.md): the swings around the $300, and the capital that absorbs them.
 
 This card takes the one-year default chance as given; the open question is where that chance comes from and how it stretches over five years or thirty, which the hazard rate answers.
 

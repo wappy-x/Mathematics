@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Digitals and the implied density
-topic: Paid in shares
-item: Asset-or-nothing digital
-kind: model
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/01-cash-or-nothing-digital|cash-or-nothing-digital]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/05-change-of-numeraire|change-of-numeraire]]"
-next:
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/03-digital-greeks-and-pin-risk|digital-greeks-and-pin-risk]]"
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/06-digital-inverses-vol-and-strike|digital-inverses-vol-and-strike]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/01-fx-digitals|fx-digitals]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - asset-or-nothing-digital
----
-
 # Asset-or-nothing digital: the share itself if it finishes above the line, and why the call is two digitals
 
-Financial mathematics → Digitals and the implied density → Paid in shares → Asset-or-nothing digital
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Digitals and the implied density](../../../SYLLABUS.md#w12-s10) → Asset-or-nothing digital
 
 ---
 
@@ -32,7 +10,7 @@ Acme shares trade at \$100 today. A contract written on them says: one year from
 
 The prize is the share at its price on that day, not today's \$100. Close at \$101 and the prize is worth \$101. Close at \$150 and it is worth \$150. Close at \$99 and there is no prize at all. This contract is an **asset-or-nothing digital**: "digital" because the switch has only two positions, on or off, and "asset" because what it hands over is the asset itself. The \$100 line is the **strike**, and the day of the test is **expiry**.
 
-Its sibling pays a fixed \$1 instead of the share: the cash-or-nothing digital ([cash-or-nothing-digital](01-cash-or-nothing-digital.md)). In the house market that dollar bet costs \$0.494581. The share bet costs **\$58.69**.
+Its sibling pays a fixed \$1 instead of the share: the cash-or-nothing digital ([Cash-or-nothing digital](01-cash-or-nothing-digital.md)). In the house market that dollar bet costs \$0.494581. The share bet costs **\$58.69**.
 
 Two facts come out of this card. First, the price is not "today's share times the chance of finishing above". That chance is 0.52, and the share bet is worth more than 52% of a share, because the shares it hands over are the expensive ones. Second, an ordinary call option is this contract minus 100 of the dollar bets: \$58.69 − 100 × \$0.49 = \$9.23, the call's price to the cent.
 
@@ -84,7 +62,7 @@ $$C = \underbrace{S\,e^{-qT}N(d_1)}_{\text{asset digital}} \;-\; K \times \under
 | $e^{-qT}$, $e^{-rT}$ | dividend drag, and the discount on a dollar due at $T$ | 0.980199 and 0.951229 | — |
 | $F$ | the forward, $S\,e^{(r-q)T}$: the average share at expiry in the pretend world | \$103.05 | — |
 
-The two distances, as on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
+The two distances, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
 
 $$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
 
@@ -92,7 +70,7 @@ Here $\sigma\sqrt{T}$ is the standard deviation of Acme's log-price at expiry; t
 
 ### When it holds
 
-- **Constant volatility, log-price on a bell curve.** Real markets price a smile: each strike carries its own volatility. Then the formula with the strike's volatility misprices the digital, and the market price is the call minus $K$ times the call's slope in the strike, a skew term included ([digital-from-a-call-spread-and-the-skew-term](04-digital-from-a-call-spread-and-the-skew-term.md)).
+- **Constant volatility, log-price on a bell curve.** Real markets price a smile: each strike carries its own volatility. Then the formula with the strike's volatility misprices the digital, and the market price is the call minus $K$ times the call's slope in the strike, a skew term included ([A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md)).
 - **A steady dividend yield.** $e^{-qT}$ assumes dividends leak out continuously and are reinvested. Lumpy cash dividends need the share price less their present value in place of $S\,e^{-qT}$.
 - **One look, at expiry.** The switch reads Acme once. A contract paying the share the moment Acme first touches the line is a different product at a higher price.
 - **Delivery or its cash value.** Handing over the share or its closing price in cash costs the same. A finish exactly on \$100 has zero chance in the model, so "above" and "at or above" price the same.
@@ -104,7 +82,7 @@ Here $\sigma\sqrt{T}$ is the standard deviation of Acme's log-price at expiry; t
 
 ### Step 0: price is the average payoff in the pretend world, pulled back to today
 
-Pricing uses the pretend world of the call card, the risk-neutral world ([risk-neutral-measure-and-the-fundamental-theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)): every asset, dividends included, grows at the riskless rate, so Acme's price drifts at $r - q$, and a price is the average payoff discounted by $e^{-rT}$. The payoff here is $S_T$ when the switch is on and 0 when it is off. The whole card turns on one fact: that payoff is a product of two things that move together, the switch and the share.
+Pricing uses the pretend world of the call card, the risk-neutral world ([The fundamental theorems](../05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)): every asset, dividends included, grows at the riskless rate, so Acme's price drifts at $r - q$, and a price is the average payoff discounted by $e^{-rT}$. The payoff here is $S_T$ when the switch is on and 0 when it is off. The whole card turns on one fact: that payoff is a product of two things that move together, the switch and the share.
 
 ### Step 1: the average of a product is not the product of averages
 
@@ -118,7 +96,7 @@ The gap between \$50.96 and \$58.69 is the switch and the share moving together.
 
 ### Step 2: fold the dear shares into the chance
 
-Split that same price a second way. Give each future a weight: the share's value there divided by its average, $S_T / F$. The weights average to exactly 1, since the average of $S_T$ is $F$. So they reweight the pretend world's chances into a new set of chances that still add up to 1. This new set counts each future in proportion to what a share is worth in it. It is the **share-weighted chance**, and the change-of-numeraire card calls it the share measure ([change-of-numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md)).
+Split that same price a second way. Give each future a weight: the share's value there divided by its average, $S_T / F$. The weights average to exactly 1, since the average of $S_T$ is $F$. So they reweight the pretend world's chances into a new set of chances that still add up to 1. This new set counts each future in proportion to what a share is worth in it. It is the **share-weighted chance**, and the change-of-numeraire card calls it the share measure ([Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md)).
 
 The price then reads
 
@@ -162,7 +140,7 @@ Put the Black-Scholes prices of the two digitals into this and the call formula 
 
 The two asset digitals, above and below \$100, together always hand over one share. A share delivered for certain at expiry costs $S\,e^{-qT}$ today. So the asset put costs 98.02 − 58.69 = \$39.33, and $N(d_1) + N(-d_1) = 1$ says the same thing in the formula. The same argument on cash gives cash call plus cash put $= e^{-rT} = 0.951229$. And the ordinary put, which pays $K - S_T$ below the line, is $K$ cash puts minus one asset put: 100 × 0.456648 − 39.33 = \$6.33.
 
-A second road runs through the call alone. The call's slope in the strike is minus the cash digital, so $A = C - K \times (\text{slope of } C \text{ in } K)$. A tight call spread measures that slope in the market ([digital-from-a-call-spread-and-the-skew-term](04-digital-from-a-call-spread-and-the-skew-term.md)). The code takes it as road 3.
+A second road runs through the call alone. The call's slope in the strike is minus the cash digital, so $A = C - K \times (\text{slope of } C \text{ in } K)$. A tight call spread measures that slope in the market ([A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md)). The code takes it as road 3.
 
 ---
 
@@ -208,7 +186,7 @@ Orange: the plain chance in the pretend world. Green: the share-weighted chance.
 | delta | dollars gained per \$1 rise in Acme | $e^{-qT}\big(N(d_1) + \varphi(d_1)/(\sigma\sqrt{T})\big)$ | 2.481909 | −1.501710 |
 | vega | dollars per 1.00 rise in volatility | $-S\,e^{-qT}\varphi(d_1)\,d_2/\sigma$ | −9.475289 | +9.475289 |
 
-Delta above 1 looks strange: the contract gains \$2.48 for a \$1 move in a share it only might deliver. Two effects add. The share itself moves, which accounts for $e^{-qT}N(d_1) = 0.586851$ of it. The chance of receiving a prize worth about \$100 also rises, and that is the rest. The put's delta follows from Step 5: the two deltas add to $e^{-qT}$. Vega is small and negative here, −0.094753 per volatility point, because $d_2$ is just above zero; it changes sign where $d_2$ does. The code confirms both by nudging the price. How these grow near expiry is [digital-greeks-and-pin-risk](03-digital-greeks-and-pin-risk.md).
+Delta above 1 looks strange: the contract gains \$2.48 for a \$1 move in a share it only might deliver. Two effects add. The share itself moves, which accounts for $e^{-qT}N(d_1) = 0.586851$ of it. The chance of receiving a prize worth about \$100 also rises, and that is the rest. The put's delta follows from Step 5: the two deltas add to $e^{-qT}$. Vega is small and negative here, −0.094753 per volatility point, because $d_2$ is just above zero; it changes sign where $d_2$ does. The code confirms both by nudging the price. How these grow near expiry is [Digital Greeks and pin risk](03-digital-greeks-and-pin-risk.md).
 
 ### What breaks if you drop a piece
 
@@ -652,11 +630,11 @@ The two outputs agree line for line at the printed precision, though the bell-cu
 
 ## Where you meet it in real life
 
-- **Inside every call price.** The share half of the Black-Scholes call, $S\,e^{-qT}N(d_1)$, is this contract. The call's hedge, $e^{-qT}N(d_1)$ shares worth \$58.69 in total, holds exactly the asset digital's value in stock ([delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)).
+- **Inside every call price.** The share half of the Black-Scholes call, $S\,e^{-qT}N(d_1)$, is this contract. The call's hedge, $e^{-qT}N(d_1)$ shares worth \$58.69 in total, holds exactly the asset digital's value in stock ([Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md)).
 - **Reverse convertibles.** A structured note that repays \$100 cash if a share finishes above a strike, and delivers the share if it finishes below, is 100 cash digitals plus one asset put.
-- **Currency digitals.** In foreign exchange the asset is a unit of foreign currency, $q$ becomes the foreign interest rate, and "paid in the other currency" is an asset digital ([fx-digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md)).
-- **Reading volatility off prices.** Desks run the formula backwards to find the volatility or strike behind a quoted digital, with the non-monotone volatility effect above as the catch ([digital-inverses-vol-and-strike](06-digital-inverses-vol-and-strike.md)).
-- **The market's view of where Acme ends.** Cash digitals across strikes trace the pretend world's chances, and their slope is its density ([butterfly-and-the-implied-density](05-butterfly-and-the-implied-density.md)).
+- **Currency digitals.** In foreign exchange the asset is a unit of foreign currency, $q$ becomes the foreign interest rate, and "paid in the other currency" is an asset digital ([Currency digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md)).
+- **Reading volatility off prices.** Desks run the formula backwards to find the volatility or strike behind a quoted digital, with the non-monotone volatility effect above as the catch ([Digital inverses](06-digital-inverses-vol-and-strike.md)).
+- **The market's view of where Acme ends.** Cash digitals across strikes trace the pretend world's chances, and their slope is its density ([The butterfly and the implied density](05-butterfly-and-the-implied-density.md)).
 
 > **Say it back**
 > An asset-or-nothing digital hands over the share at expiry if it finishes above the strike, and nothing otherwise. Its price is a prepaid share, $S\,e^{-qT}$, times the chance of finishing above, counted with each future weighted by the share's value there. That weighting slides the bell curve one wiggle unit right, so the chance is $N(d_1)$, not the plain $N(d_2)$. An ordinary call pays the same as one asset digital minus $K$ cash digitals in every future, so it costs the same: \$58.69 minus \$49.46 is \$9.23.
@@ -665,14 +643,14 @@ The two outputs agree line for line at the printed precision, though the bell-cu
 
 ## What this builds on
 
-- [cash-or-nothing-digital](01-cash-or-nothing-digital.md): the dollar bet, $e^{-rT}N(d_2)$, which this card subtracts $K$ times to rebuild the call.
-- [change-of-numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md): the rigorous form of Step 2, counting the world's chances in shares instead of dollars.
+- [Cash-or-nothing digital](01-cash-or-nothing-digital.md): the dollar bet, $e^{-rT}N(d_2)$, which this card subtracts $K$ times to rebuild the call.
+- [Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md): the rigorous form of Step 2, counting the world's chances in shares instead of dollars.
 
 ## Where this goes next
 
-- [digital-greeks-and-pin-risk](03-digital-greeks-and-pin-risk.md): the Greeks above as expiry nears, when a hedge must flip across the jump.
-- [digital-inverses-vol-and-strike](06-digital-inverses-vol-and-strike.md): the formula run backwards, with its existence and boundary cases.
-- [fx-digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md): the same contract when the asset is a currency.
+- [Digital Greeks and pin risk](03-digital-greeks-and-pin-risk.md): the Greeks above as expiry nears, when a hedge must flip across the jump.
+- [Digital inverses](06-digital-inverses-vol-and-strike.md): the formula run backwards, with its existence and boundary cases.
+- [Currency digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md): the same contract when the asset is a currency.
 
 The price rests on one volatility for every strike; what a digital is worth when the market quotes a smile is the question the call-spread card answers.
 

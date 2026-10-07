@@ -1,25 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Sizes of Infinity
-topic: For the curious
-item: The axiom of choice
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/04-comparing-infinities|comparing-infinities]]"
-  - "[[Cards/01-Foundations/06-Proof/05-strong-induction-and-well-ordering|strong-induction-and-well-ordering]]"
-next: []
-tags:
-  - mathematics
-  - foundations
-  - axiom-of-choice
----
-
 # The axiom of choice: one pick from each of infinitely many boxes, and why it is debated
 
-Foundations → Sizes of Infinity → For the curious → The axiom of choice
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sizes of Infinity](../../../SYLLABUS.md#w01-s09) → The axiom of choice
 
 ---
 
@@ -56,7 +37,7 @@ The axiom is one sentence:
 
 **Read it aloud:** no box is empty, so a full set of picks exists — all at once, not one after another.
 
-A full set of picks has a proper name: a **choice function**, a function reading one member out of each box ([functions](../08-Relations%20and%20Functions/02-functions.md)). Choice function from here on; the socks stay as the picture.
+A full set of picks has a proper name: a **choice function**, a function reading one member out of each box ([Functions](../08-Relations%20and%20Functions/02-functions.md)). Choice function from here on; the socks stay as the picture.
 
 | Piece | Plain meaning | In the lost property |
 | --- | --- | --- |
@@ -72,7 +53,7 @@ A full set of picks has a proper name: a **choice function**, a function reading
 
 ### Step 0: a rule does the whole job
 
-"Take the left one" answers for every box at once, however many there are. Where a rule exists, the ordinary ways of building sets produce the picks, no axiom spent. Boxes of counting numbers are the same: "take the smallest" ([strong-induction-and-well-ordering](../06-Proof/05-strong-induction-and-well-ordering.md)).
+"Take the left one" answers for every box at once, however many there are. Where a rule exists, the ordinary ways of building sets produce the picks, no axiom spent. Boxes of counting numbers are the same: "take the smallest" ([Strong induction and the least element](../06-Proof/05-strong-induction-and-well-ordering.md)).
 
 ### Step 1: identical socks leave nothing to say
 
@@ -82,9 +63,9 @@ The axiom allows it anyway: the picks exist as one set, with nothing naming them
 
 ### Step 2: two things it buys
 
-The pile can dwarf the hotel: a box for every non-empty set of real numbers is more boxes than there are rooms ([comparing-infinities](04-comparing-infinities.md)). Both claims here need that size.
+The pile can dwarf the hotel: a box for every non-empty set of real numbers is more boxes than there are rooms ([Comparing infinities](04-comparing-infinities.md)). Both claims here need that size.
 
-**Every set can be lined up so that every non-empty part of it has a first member.** That is a well-ordering; the counting numbers are the model ([strong-induction-and-well-ordering](../06-Proof/05-strong-induction-and-well-ordering.md)). You cannot list the real numbers 1st, 2nd, 3rd and reach them all ([cantors-diagonal-argument](03-cantors-diagonal-argument.md)) — yet the axiom says an order exists where every non-empty part has a first member, and nobody can write it down.
+**Every set can be lined up so that every non-empty part of it has a first member.** That is a well-ordering; the counting numbers are the model ([Strong induction and the least element](../06-Proof/05-strong-induction-and-well-ordering.md)). You cannot list the real numbers 1st, 2nd, 3rd and reach them all ([Cantor's diagonal](03-cantors-diagonal-argument.md)) — yet the axiom says an order exists where every non-empty part has a first member, and nobody can write it down.
 
 **Every vector space has a basis.** A vector space is a collection of arrows you can add and stretch; a basis is a small set of them that builds all the rest. In wilder spaces nobody can exhibit a basis; the axiom says there is one.
 
@@ -257,8 +238,8 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **One member for each group.** Sort a set into groups, take one to represent each ([equivalence-relations-and-partitions](../08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md)). Infinitely many groups, nothing to sort on: the axiom.
-- **Running an onto function backwards.** Every output is hit, so pick one input per output and go back ([injective-surjective-bijective](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md)). Over infinitely many outputs, the axiom again.
+- **One member for each group.** Sort a set into groups, take one to represent each ([Equivalence relations and partitions](../08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md)). Infinitely many groups, nothing to sort on: the axiom.
+- **Running an onto function backwards.** Every output is hit, so pick one input per output and go back ([One-to-one and onto](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md)). Over infinitely many outputs, the axiom again.
 - **Existence proofs.** Papers flag a proof that leans on the axiom.
 
 > **Say it back**
@@ -268,12 +249,12 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [comparing-infinities](04-comparing-infinities.md): comparing sets once counting stops; the boxes could be every non-empty subset of a set ([subsets-and-power-set](../07-Sets/02-subsets-and-power-set.md)).
-- [strong-induction-and-well-ordering](../06-Proof/05-strong-induction-and-well-ordering.md): every non-empty set of counting numbers has a smallest — the line-up the axiom claims for all the rest.
+- [Comparing infinities](04-comparing-infinities.md): comparing sets once counting stops; the boxes could be every non-empty subset of a set ([Subsets and the power set](../07-Sets/02-subsets-and-power-set.md)).
+- [Strong induction and the least element](../06-Proof/05-strong-induction-and-well-ordering.md): every non-empty set of counting numbers has a smallest — the line-up the axiom claims for all the rest.
 
 ## Where this goes next
 
-Last card on the shelf. Zorn's lemma, the axiom in working clothes and equivalent to it, waits in the algebra wing. Behind it: [same-size-by-pairing](01-same-size-by-pairing.md), [countable-sets](02-countable-sets.md), [cantors-diagonal-argument](03-cantors-diagonal-argument.md).
+Last card on the shelf. Zorn's lemma, the axiom in working clothes and equivalent to it, waits in the algebra wing. Behind it: [Same size means pairable](01-same-size-by-pairing.md), [Countable sets](02-countable-sets.md), [Cantor's diagonal](03-cantors-diagonal-argument.md).
 
 ---
 

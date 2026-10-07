@@ -1,30 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Random Walks and Filtrations
-topic: A running total of fair bets
-item: Simple random walk
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/01-processes-and-paths|processes-and-paths]]"
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/01-bernoulli-and-binomial|bernoulli-and-binomial]]"
-  - "[[Cards/04-Combinatorics and graphs/06-Lattice Paths and Catalan Numbers/05-random-walk-path-counts|random-walk-path-counts]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/04-gamblers-ruin|gamblers-ruin]]"
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/05-reflection-principle-for-walks|reflection-principle-for-walks]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/01-brownian-motion|brownian-motion]]"
-  - "[[Cards/14-Applied and computational/07-Network Science and Spectral Graphs/08-random-walks-and-electrical-networks|random-walks-and-electrical-networks]]"
-tags:
-  - mathematics
-  - stochastic processes and calculus
-  - simple-random-walk
----
-
 # Simple random walk: plus one or minus one each step
 
-Stochastic processes and calculus → Random Walks and Filtrations → A running total of fair bets → Simple random walk
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Random Walks and Filtrations](../../../SYLLABUS.md#w11-s01) → Simple random walk
 
 ---
 
@@ -36,7 +12,7 @@ That running total, followed round by round, is a **simple random walk**, the na
 
 Three facts describe where the walk stands after 100 rounds. On average it is at $0: the game is fair. Its spread, the square root of its average squared distance from $0, is $10, not $100, because wins and losses cancel. And it ends exactly level only about 8 times in 100. Quadruple the rounds to 400 and the spread only doubles, to $20. That slow growth, with the square root of the number of rounds, is the walk's signature.
 
-The combinatorics wing already counts these coin-toss paths ([random-walk-path-counts](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/05-random-walk-path-counts.md)). This card treats the walk as a process in time: where it stands after each round, how far it spreads, and how often it comes back to zero.
+The combinatorics wing already counts these coin-toss paths ([Counting coin-flip paths](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/05-random-walk-path-counts.md)). This card treats the walk as a process in time: where it stands after each round, how far it spreads, and how often it comes back to zero.
 
 **The position after n rounds is wins minus losses, so its law, the chance of each possible position, is a relabelled binomial count: mean zero for a fair game, variance equal to the number of rounds, and a typical distance that grows like the square root of the rounds.**
 
@@ -63,7 +39,7 @@ Orange: the run, which finishes $4 ahead. Green: plus one spread. Dark blue: min
 
 ## The formula
 
-Notation first, in words. The earlier card wrote a process as $(X_n)$, read "the value at time n" ([processes-and-paths](01-processes-and-paths.md)). This process is a sum, so it is named $(S_n)$: $S_n$ is the net winnings after round n. Each round's result is $\xi_i$ (xi): +1 with probability $p$, −1 otherwise, all rounds independent. The walk is their running sum:
+Notation first, in words. The earlier card wrote a process as $(X_n)$, read "the value at time n" ([Stochastic processes](01-processes-and-paths.md)). This process is a sum, so it is named $(S_n)$: $S_n$ is the net winnings after round n. Each round's result is $\xi_i$ (xi): +1 with probability $p$, −1 otherwise, all rounds independent. The walk is their running sum:
 
 $$S_n = \xi_1 + \xi_2 + \cdots + \xi_n, \qquad S_0 = 0$$
 
@@ -118,7 +94,7 @@ Every bar is an exact probability from the law above. Odd results are missing: a
 
 - **Independent rounds.** If a round tends to repeat the last one (three times in four, say), the covariances between rounds no longer vanish and the variance after 100 rounds is 296, not 100.
 - **The same chance every round.** If the chance drifts, the mean is the sum of each round's 2p − 1 and the binomial law no longer applies.
-- **A number of rounds fixed in advance.** A player who stops at a moment chosen by the walk itself, say on first being $10 down, ends with a different law; that is [gamblers-ruin](04-gamblers-ruin.md).
+- **A number of rounds fixed in advance.** A player who stops at a moment chosen by the walk itself, say on first being $10 down, ends with a different law; that is [Gambler's ruin](04-gamblers-ruin.md).
 - **Steps of one unit.** Stakes of $5 scale the mean by 5 and the variance by 25; the shape is unchanged.
 
 ---
@@ -127,7 +103,7 @@ Every bar is an exact probability from the law above. Odd results are missing: a
 
 ### Step 0: the position is decided by the number of wins
 
-Order does not matter to the final total. W L W W and W W W L both end at +2: three wins, one loss. So the position after n rounds is a relabelling of one count, $j$, the number of wins: $S_n = 2j - n$. Everything about $S_n$ at a fixed round is a fact about $j$, and $j$ is a binomial count, n independent trials each succeeding with chance $p$ ([bernoulli-and-binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md)).
+Order does not matter to the final total. W L W W and W W W L both end at +2: three wins, one loss. So the position after n rounds is a relabelling of one count, $j$, the number of wins: $S_n = 2j - n$. Everything about $S_n$ at a fixed round is a fact about $j$, and $j$ is a binomial count, n independent trials each succeeding with chance $p$ ([Binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md)).
 
 ### Step 1: the law at round n is the binomial law, moved and stretched
 
@@ -141,7 +117,7 @@ One round has mean $1 \cdot p + (-1)(1-p) = 2p - 1$. Averages add over sums, alw
 
 ### Step 3: the variance adds, because the rounds are independent
 
-One round's variance is its average square minus its mean squared: $1 - (2p-1)^2 = 4p(1-p)$. Squared distances do not add in general. Expanding the square of a sum gives every round's own variance plus a covariance for every pair of rounds ([joint-distributions-and-covariance](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). Independent rounds have covariance zero, so only the n variances survive: $\operatorname{Var}(S_n) = 4np(1-p)$. For a fair game, one per round, n in all.
+One round's variance is its average square minus its mean squared: $1 - (2p-1)^2 = 4p(1-p)$. Squared distances do not add in general. Expanding the square of a sum gives every round's own variance plus a covariance for every pair of rounds ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). Independent rounds have covariance zero, so only the n variances survive: $\operatorname{Var}(S_n) = 4np(1-p)$. For a fair game, one per round, n in all.
 
 <details>
 <summary>Detailed proof: mean, variance and shared rounds</summary>
@@ -164,19 +140,19 @@ Each diagonal term is $E[\xi_i^2] - \mu^2 = 1 - \mu^2 = 4p(1-p)$, since $\xi_i^2
 
 Variance grows in proportion to the rounds. Spread is the square root of variance. So spread grows like $\sqrt{n}$: 25 rounds give $5, 100 give $10, 400 give $20, 1,600 give $40. Four times the rounds, twice the spread.
 
-The reason is cancellation. If every round went the same way the walk would travel n. Independent rounds partly undo each other, and what survives grows only like the square root. This is the same arithmetic that makes an average of n measurements accurate to one over root n ([law-of-large-numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)).
+The reason is cancellation. If every round went the same way the walk would travel n. Independent rounds partly undo each other, and what survives grows only like the square root. This is the same arithmetic that makes an average of n measurements accurate to one over root n ([Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)).
 
 With a bias the two growth rates compete. Betting red at European roulette wins with chance 18/37. After 100 spins the mean is −$2.70 and the spread $10.00 (9.9963): luck dominates. After 10,000 spins the mean is −$270.27 and the spread $99.96: the house edge, growing like n, has overtaken luck, growing like root n.
 
 ### Step 5: positions at different rounds share their past
 
-$S_{50}$ and $S_{100}$ are not independent: the first 50 rounds sit inside both. Their covariance counts the shared rounds, 50 for a fair game. Divided by the two spreads, $\sqrt{50}$ and $10$, it gives a correlation of 0.7071. Knowing the halfway position tells a good deal about the finish. Which information is available at each round is the subject of [filtrations-and-information](03-filtrations-and-information.md).
+$S_{50}$ and $S_{100}$ are not independent: the first 50 rounds sit inside both. Their covariance counts the shared rounds, 50 for a fair game. Divided by the two spreads, $\sqrt{50}$ and $10$, it gives a correlation of 0.7071. Knowing the halfway position tells a good deal about the finish. Which information is available at each round is the subject of [Filtrations](03-filtrations-and-information.md).
 
 ### Step 6: returns to zero
 
-The walk can stand at 0 only after an even number of rounds, 2m. The chance is $\binom{2m}{m}/4^m$, which for large m is close to one over the square root of π m ([central-binomial-and-bounds](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/07-central-binomial-and-bounds.md)): 0.0798 against the exact 0.0796 at m = 50.
+The walk can stand at 0 only after an even number of rounds, 2m. The chance is $\binom{2m}{m}/4^m$, which for large m is close to one over the square root of π m ([The middle of the row](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/07-central-binomial-and-bounds.md)): 0.0798 against the exact 0.0796 at m = 50.
 
-Adding these chances over every even round gives the expected number of visits to 0, since the mean of a count is the sum of the chances of its events. The sum has a closed form: the expected number of visits in 2m rounds is (2m + 1) times the chance of standing at 0 at round 2m, minus 1. For 100 rounds, 101 × 0.0796 − 1 = 7.04 visits. The count grows without bound, like the square root of the rounds, and a fair walk returns to 0 with probability 1 (proved in [first-passage-and-hitting-times](06-first-passage-and-hitting-times.md), Step 2). When the first return comes is [first-passage-and-hitting-times](06-first-passage-and-hitting-times.md).
+Adding these chances over every even round gives the expected number of visits to 0, since the mean of a count is the sum of the chances of its events. The sum has a closed form: the expected number of visits in 2m rounds is (2m + 1) times the chance of standing at 0 at round 2m, minus 1. For 100 rounds, 101 × 0.0796 − 1 = 7.04 visits. The count grows without bound, like the square root of the rounds, and a fair walk returns to 0 with probability 1 (proved in [Hitting times](06-first-passage-and-hitting-times.md), Step 2). When the first return comes is [Hitting times](06-first-passage-and-hitting-times.md).
 
 <details>
 <summary>Detailed proof: the count of visits to 0</summary>
@@ -685,11 +661,11 @@ The two outputs match line for line: the generator is integer arithmetic, and th
 
 ## Where you meet it in real life
 
-- **Casino bankrolls.** The drift is the house edge and the spread is luck. Short sessions are luck; long ones are the edge. A player's ruin is [gamblers-ruin](04-gamblers-ruin.md).
+- **Casino bankrolls.** The drift is the house edge and the spread is luck. Short sessions are luck; long ones are the edge. A player's ruin is [Gambler's ruin](04-gamblers-ruin.md).
 - **Diffusion.** A molecule knocked left and right by collisions spreads like the square root of time, which is why a drop of dye crosses a millimetre fast and a metre very slowly. Karl Pearson named the random walk in a 1905 letter to Nature.
 - **Measurement.** Independent errors of ±1 unit in n readings add to about root n units, so the average of n readings errs by about one over root n.
-- **Prices on a grid.** A price moving one tick up or down per trade is a random walk; seen from far away, with small steps and short times, it becomes [brownian-motion](../05-Brownian%20Motion/01-brownian-motion.md).
-- **Networks.** A walker stepping to a random neighbour on a graph visits nodes in a way set by currents in an electrical circuit: random-walks-and-electrical-networks.
+- **Prices on a grid.** A price moving one tick up or down per trade is a random walk; seen from far away, with small steps and short times, it becomes [Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md).
+- **Networks.** A walker stepping to a random neighbour on a graph visits nodes in a way set by currents in an electrical circuit: Random walks as circuits.
 
 > **Say it back**
 > A simple random walk adds +1 or −1 each round, independently. Its position after n rounds is wins minus losses, so its law is the binomial count of wins, moved and stretched. The mean moves by 2p − 1 a round and the variance grows by 4p(1 − p) a round, because independent rounds have no covariance. For a fair game the spread is the square root of the rounds: $10 after 100, $20 after 400. Positions at different rounds share their early rounds, and the walk comes back to 0 about 7 times in 100 rounds.
@@ -698,18 +674,18 @@ The two outputs match line for line: the generator is integer arithmetic, and th
 
 ## What this builds on
 
-- [processes-and-paths](01-processes-and-paths.md): a process as a value at each time, and one run drawn as a sample path.
-- [bernoulli-and-binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the law, mean and variance of a count of independent wins.
-- [random-walk-path-counts](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/05-random-walk-path-counts.md): how many ±1 paths end at each height, counted without chance.
+- [Stochastic processes](01-processes-and-paths.md): a process as a value at each time, and one run drawn as a sample path.
+- [Binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the law, mean and variance of a count of independent wins.
+- [Counting coin-flip paths](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/05-random-walk-path-counts.md): how many ±1 paths end at each height, counted without chance.
 
 ## Where this goes next
 
-- [gamblers-ruin](04-gamblers-ruin.md): the same walk stopped when it hits $0 or a target.
-- [reflection-principle-for-walks](05-reflection-principle-for-walks.md): the chance the walk touches a level on the way, not only at the end.
-- [brownian-motion](../05-Brownian%20Motion/01-brownian-motion.md): the walk with small steps and short rounds, seen from far away.
-- random-walks-and-electrical-networks: walks on graphs, and their hitting chances as voltages.
+- [Gambler's ruin](04-gamblers-ruin.md): the same walk stopped when it hits $0 or a target.
+- [Reflection principle](05-reflection-principle-for-walks.md): the chance the walk touches a level on the way, not only at the end.
+- [Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md): the walk with small steps and short rounds, seen from far away.
+- Random walks as circuits: walks on graphs, and their hitting chances as voltages.
 
-This card fixes where the walk tends to be at a round chosen in advance; it says nothing about when the walk first reaches a level such as $10 down, and that question, with its answer for a gambler holding 10 chips, is [gamblers-ruin](04-gamblers-ruin.md).
+This card fixes where the walk tends to be at a round chosen in advance; it says nothing about when the walk first reaches a level such as $10 down, and that question, with its answer for a gambler holding 10 chips, is [Gambler's ruin](04-gamblers-ruin.md).
 
 ---
 

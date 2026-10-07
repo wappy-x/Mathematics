@@ -1,25 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Everyday Arithmetic
-topic: Fractions, decimals and percentages
-item: Percentages
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/09-ratios-and-rates|ratios-and-rates]]"
-next:
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/01-growth-factors|growth-factors]]"
-tags:
-  - mathematics
-  - foundations
-  - percentages
----
-
 # Percentages: parts per hundred, rises, cuts, and undoing them
 
-Foundations → Everyday Arithmetic → Fractions, decimals and percentages → Percentages
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Everyday Arithmetic](../../../SYLLABUS.md#w01-s01) → Percentages
 
 ---
 
@@ -27,7 +8,7 @@ Foundations → Everyday Arithmetic → Fractions, decimals and percentages → 
 
 A jacket on the rack is $80.00. The sign says 25% off. At the till the state adds 8% sales tax. You pay $64.80. Later, a $46.00 dinner gets a 15% tip.
 
-Percent means *per hundred* — *per cento*, the way Italian merchants wrote it. A percent is a count of hundredths: 25% is twenty-five of them, the fraction 25/100, the decimal 0.25, a quarter ([fractions](07-fractions.md), [decimals](08-decimals.md)). The % sign is shorthand for "divided by 100".
+Percent means *per hundred* — *per cento*, the way Italian merchants wrote it. A percent is a count of hundredths: 25% is twenty-five of them, the fraction 25/100, the decimal 0.25, a quarter ([Fractions](07-fractions.md), [Decimals](08-decimals.md)). The % sign is shorthand for "divided by 100".
 
 **A percent is a count of hundredths: to take a percent of an amount, multiply by the percent, then divide by 100.**
 
@@ -79,7 +60,7 @@ Two fractions compare easily once they share a bottom number. Percents fix it at
 
 ### Step 1: taking a percent of an amount
 
-One hundredth of the $80.00 tag is 80.00 ÷ 100 = $0.80. A percent counts those: 25% is twenty-five of them, 25 × 0.80 = $20.00. Multiplying first is easier by hand, same answer: 80.00 × 25 = 2000, then ÷ 100 = $20.00 ([arithmetic-laws](05-arithmetic-laws.md)).
+One hundredth of the $80.00 tag is 80.00 ÷ 100 = $0.80. A percent counts those: 25% is twenty-five of them, 25 × 0.80 = $20.00. Multiplying first is easier by hand, same answer: 80.00 × 25 = 2000, then ÷ 100 = $20.00 ([The three rearranging laws](05-arithmetic-laws.md)).
 
 ### Step 2: a cut or a rise, in one multiply
 
@@ -260,7 +241,7 @@ The two outputs match line for line, cent for cent.
 
 - **Sale tags and sales tax.** Stacked discounts — "extra 20% off sale prices" — multiply. They never add.
 - **Tips and service charges.** A menu price with service "included" is already a rise on something: ask on what.
-- **Interest, inflation, polls.** All quoted as percents so sizes compare, the job of [ratios-and-rates](09-ratios-and-rates.md). Anything "up 3 points" moved on the rate, not the money.
+- **Interest, inflation, polls.** All quoted as percents so sizes compare, the job of [Ratios and rates](09-ratios-and-rates.md). Anything "up 3 points" moved on the rate, not the money.
 
 > **Say it back**
 > A percent is a count of hundredths: multiply by the percent, divide by 100. A cut multiplies by 100 minus the percent, a rise by 100 plus it. To undo either, divide by what you multiplied by — never add the percent back. Every percent is a percent *of* something.
@@ -269,11 +250,11 @@ The two outputs match line for line, cent for cent.
 
 ## What this builds on
 
-- [ratios-and-rates](09-ratios-and-rates.md): comparing two quantities and scaling them together. A percent is that comparison with the second quantity fixed at 100.
+- [Ratios and rates](09-ratios-and-rates.md): comparing two quantities and scaling them together. A percent is that comparison with the second quantity fixed at 100.
 
 ## Where this goes next
 
-- [growth-factors](../04-Compound%20Growth%20and%20Discounting/01-growth-factors.md): the one-multiply step given its own name, so changes chain — why a 50% fall then a 50% rise does not break even.
+- [Growth factors](../04-Compound%20Growth%20and%20Discounting/01-growth-factors.md): the one-multiply step given its own name, so changes chain — why a 50% fall then a 50% rise does not break even.
 
 ---
 

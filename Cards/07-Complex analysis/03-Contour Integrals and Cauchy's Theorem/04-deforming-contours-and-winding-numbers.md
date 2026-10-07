@@ -1,28 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Contour Integrals and Cauchy's Theorem
-topic: Loops round holes
-item: Deforming a loop
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/03-cauchys-theorem|cauchys-theorem]]"
-next:
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/05-cauchys-integral-formula|cauchys-integral-formula]]"
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/01-laurent-series|laurent-series]]"
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/05-the-residue-theorem|the-residue-theorem]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/06-nyquist-criterion-and-stability-margins|nyquist-criterion-and-stability-margins]]"
-  - "[[Cards/17-Topology/03-Surfaces and Manifolds/05-jordan-curve-theorem|jordan-curve-theorem]]"
-  - "[[Cards/17-Topology/04-Homotopy/04-fundamental-group-of-the-circle|fundamental-group-of-the-circle]]"
-  - "[[Cards/23-Differential geometry and Lie groups/01-Curves/08-turning-number-and-winding-number|turning-number-and-winding-number]]"
-tags: [mathematics, complex analysis, deforming-contours-and-winding-numbers]
----
-
 # Deforming a loop: slide it anywhere without crossing a singularity, and count how many times it winds
 
-Complex analysis → Contour Integrals and Cauchy's Theorem → Loops round holes → Deforming a loop
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Contour Integrals and Cauchy's Theorem](../../../SYLLABUS.md#w07-s03) → Deforming a loop
 
 ---
 
@@ -32,7 +10,7 @@ A car drives an oval roundabout: the lane runs 12 metres east and west of the is
 
 That count has a formula: integrate 1/(z − a) round the loop, where a is the point circled, and divide by 2πi. The result, always a whole number, is called the **winding number** from here on.
 
-It rests on [cauchys-theorem](03-cauchys-theorem.md): a loop round a region with no hole gives 0. So a loop can be slid, stretched and shrunk freely, provided it never crosses a **singularity**, a point where the function has no value: here the island. The oval then gives the same integral as a small circle round the island.
+It rests on [Cauchy's theorem](03-cauchys-theorem.md): a loop round a region with no hole gives 0. So a loop can be slid, stretched and shrunk freely, provided it never crosses a **singularity**, a point where the function has no value: here the island. The oval then gives the same integral as a small circle round the island.
 
 A double roundabout has islands at 5 and −5. A figure-eight lap winds +1 round the east island and −1 round the west: its integral is one small circle per island, counted with sign.
 
@@ -50,7 +28,7 @@ To scale, 9 pixels per metre. The triangle at 12 + 0i shows the car heading nort
 
 ## The formula
 
-Notation first, in words. The loop integral sign $\oint$ means a contour integral once round a closed path ([contour-integrals](01-contour-integrals.md)). This card introduces the **winding number** $n(\gamma, a)$, read "n of gamma and a": the net anticlockwise laps the loop $\gamma$ (gamma) makes round the point $a$.
+Notation first, in words. The loop integral sign $\oint$ means a contour integral once round a closed path ([Contour integrals](01-contour-integrals.md)). This card introduces the **winding number** $n(\gamma, a)$, read "n of gamma and a": the net anticlockwise laps the loop $\gamma$ (gamma) makes round the point $a$.
 
 $$n(\gamma, a) = \frac{1}{2\pi i}\oint_\gamma \frac{dz}{z - a}$$
 
@@ -106,7 +84,7 @@ Cut the ring between the oval and the radius-1 circle along the real axis, east 
 <details>
 <summary>Detailed proof: why Cauchy's theorem applies to each piece</summary>
 
-The upper piece, edges included, avoids the ray running straight down from 0. The plane minus that ray is star-shaped about $i$: the segment from $i$ to any point off the ray stays off it. On a star-shaped region a holomorphic function has an antiderivative ([antiderivatives-and-path-independence](02-antiderivatives-and-path-independence.md)), so every closed path there gives 0; $1/z$ is holomorphic off 0. The lower piece avoids the upward ray and gives 0 the same way. Nothing here used the oval's shape: any two loops joined by cuts into hole-free pieces give equal integrals.
+The upper piece, edges included, avoids the ray running straight down from 0. The plane minus that ray is star-shaped about $i$: the segment from $i$ to any point off the ray stays off it. On a star-shaped region a holomorphic function has an antiderivative ([Antiderivatives](02-antiderivatives-and-path-independence.md)), so every closed path there gives 0; $1/z$ is holomorphic off 0. The lower piece avoids the upward ray and gives 0 the same way. Nothing here used the oval's shape: any two loops joined by cuts into hole-free pieces give equal integrals.
 
 </details>
 
@@ -119,7 +97,7 @@ That is the checks' second road. They follow the arrow in 100000 small steps, ad
 <details>
 <summary>Detailed proof: the integral is 2πi times a whole number</summary>
 
-Let $\gamma(t)$, $0 \le t \le T$, be a closed path avoiding $a$. Define $h(t) = \int_0^t \gamma'(s)/(\gamma(s) - a)\,ds$. The function $(\gamma(t) - a)\,e^{-h(t)}$ has derivative $\gamma' e^{-h} - (\gamma - a)\,h' e^{-h} = 0$, so it is constant. Since $\gamma(T) = \gamma(0)$, this forces $e^{-h(T)} = 1$. The exponential is 1 exactly at whole multiples of $2\pi i$ ([eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)), and $h(T)$ is the loop integral. Moving $a$ without touching the loop changes $h(T)$ continuously, so the whole number stays fixed, and it is 0 for $a$ far away.
+Let $\gamma(t)$, $0 \le t \le T$, be a closed path avoiding $a$. Define $h(t) = \int_0^t \gamma'(s)/(\gamma(s) - a)\,ds$. The function $(\gamma(t) - a)\,e^{-h(t)}$ has derivative $\gamma' e^{-h} - (\gamma - a)\,h' e^{-h} = 0$, so it is constant. Since $\gamma(T) = \gamma(0)$, this forces $e^{-h(T)} = 1$. The exponential is 1 exactly at whole multiples of $2\pi i$ ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)), and $h(T)$ is the loop integral. Moving $a$ without touching the loop changes $h(T)$ continuously, so the whole number stays fixed, and it is 0 for $a$ far away.
 
 </details>
 
@@ -129,7 +107,7 @@ The double roundabout's $f$ splits into $3/(z - 5)$ and $1/(z + 5)$. By the wind
 
 $$\oint_\gamma f\,dz = (+1)(2\pi i \cdot 3) + (-1)(2\pi i \cdot 1) = 4\pi i.$$
 
-For a general $f$, subtract near each hole the part that blows up there ([laurent-series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md)); the remainder gives 0, and so do the powers beyond the first. The full statement is [the-residue-theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md). Topology counts the same laps by deforming loops alone, with no integral: fundamental-group-of-the-circle.
+For a general $f$, subtract near each hole the part that blows up there ([Laurent series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md)); the remainder gives 0, and so do the powers beyond the first. The full statement is [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md). Topology counts the same laps by deforming loops alone, with no integral: The circle's fundamental group is the integers.
 
 ### The picture: the figure-eight round two islands
 
@@ -380,8 +358,8 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Filling shapes on screen.** Vector graphics, SVG included, can fill by the "nonzero rule": a pixel is painted when the outline's winding number round it is not 0.
-- **Feedback stability.** Counting how often a plotted loop winds round −1 decides whether an amplifier or autopilot is stable: [nyquist-criterion-and-stability-margins](../../13-Engineering%20mathematics/03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md).
-- **Counting roots.** Winding a polynomial's value round 0 as its input circles a loop counts the roots inside ([the-residue-theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)).
+- **Feedback stability.** Counting how often a plotted loop winds round −1 decides whether an amplifier or autopilot is stable: [Nyquist and margins](../../13-Engineering%20mathematics/03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md).
+- **Counting roots.** Winding a polynomial's value round 0 as its input circles a loop counts the roots inside ([The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)).
 
 > **Say it back**
 > A loop's integral is unchanged when the loop slides without crossing a hole. So any loop trades for small circles round its holes, each giving 2πi times the hole's strength. The winding number, the integral of dz/(z − a) over 2πi, counts net anticlockwise laps round a and is always whole. Each circle times its winding number, added up, is the loop's integral.
@@ -390,19 +368,19 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [cauchys-theorem](03-cauchys-theorem.md): a loop round a hole-free region gives 0, the one fact every step here applies.
+- [Cauchy's theorem](03-cauchys-theorem.md): a loop round a hole-free region gives 0, the one fact every step here applies.
 
 ## Where this goes next
 
-- [cauchys-integral-formula](05-cauchys-integral-formula.md): a small circle reads off $f$ at its centre.
-- [laurent-series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md): the part that blows up at a hole.
-- [the-residue-theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md): the several-hole sum in general.
-- [nyquist-criterion-and-stability-margins](../../13-Engineering%20mathematics/03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): winding round −1 as a stability test.
-- jordan-curve-theorem: a loop that never crosses itself winds ±1 inside, 0 outside.
-- fundamental-group-of-the-circle: winding without integrals.
-- turning-number-and-winding-number: the turns of a curve's own direction.
+- [Cauchy's integral formula](05-cauchys-integral-formula.md): a small circle reads off $f$ at its centre.
+- [Laurent series](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md): the part that blows up at a hole.
+- [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md): the several-hole sum in general.
+- [Nyquist and margins](../../13-Engineering%20mathematics/03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): winding round −1 as a stability test.
+- Jordan curve theorem: a loop that never crosses itself winds ±1 inside, 0 outside.
+- The circle's fundamental group is the integers: winding without integrals.
+- Turning and winding numbers: the turns of a curve's own direction.
 
-A small circle round a hole gives 2πi times its strength; what the circle gives for $f(z)/(z - a)$, with $f$ holomorphic, is [cauchys-integral-formula](05-cauchys-integral-formula.md).
+A small circle round a hole gives 2πi times its strength; what the circle gives for $f(z)/(z - a)$, with $f$ holomorphic, is [Cauchy's integral formula](05-cauchys-integral-formula.md).
 
 ---
 

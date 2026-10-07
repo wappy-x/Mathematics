@@ -1,28 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Coordinates and Curves
-topic: Range and bearing
-item: Polar coordinates
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/02-radians-and-the-unit-circle|radians-and-the-unit-circle]]"
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/01-distance-and-midpoint|distance-and-midpoint]]"
-next:
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/06-parametric-curves|parametric-curves]]"
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/07-cylindrical-and-spherical-coordinates|cylindrical-and-spherical-coordinates]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/03-polar-form-and-argument|polar-form-and-argument]]"
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/01-conformal-maps|conformal-maps]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/08-limit-cycles-and-van-der-pol|limit-cycles-and-van-der-pol]]"
-  - "[[Cards/13-Engineering mathematics/07-Mechanics and Structures/09-orbital-mechanics-and-the-kepler-problem|orbital-mechanics-and-the-kepler-problem]]"
-tags: [mathematics, geometry and trig, polar-coordinates]
----
-
 # Polar coordinates: a point as range and bearing
 
-Geometry and trig → Coordinates and Curves → Range and bearing → Polar coordinates
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Coordinates and Curves](../../../SYLLABUS.md#w05-s04) → Polar coordinates
 
 ---
 
@@ -90,7 +68,7 @@ $$\theta = 90° - b, \qquad x = r\sin b, \qquad y = r\cos b$$
 
 ### Step 0: a direction is a point on the unit circle
 
-The [radians-and-the-unit-circle](../03-Trigonometry/02-radians-and-the-unit-circle.md) card defines $\cos\theta$ and $\sin\theta$ as the east and north offsets of the point at angle $\theta$ on a circle of radius 1. Every direction has such a point, and its offsets carry the right signs.
+The [The unit circle](../03-Trigonometry/02-radians-and-the-unit-circle.md) card defines $\cos\theta$ and $\sin\theta$ as the east and north offsets of the point at angle $\theta$ on a circle of radius 1. Every direction has such a point, and its offsets carry the right signs.
 
 ### Step 1: scale the direction by the range
 
@@ -98,7 +76,7 @@ Going $r$ km in direction $\theta$ reaches the unit-circle point stretched $r$ t
 
 ### Step 2: the range comes back by Pythagoras
 
-The two offsets are the legs of a right triangle whose long side is the range ([distance-and-midpoint](01-distance-and-midpoint.md)). So $r^2 = x^2 + y^2$, and since $r$ is never negative, $r = \sqrt{x^2 + y^2}$.
+The two offsets are the legs of a right triangle whose long side is the range ([Distance and midpoint](01-distance-and-midpoint.md)). So $r^2 = x^2 + y^2$, and since $r$ is never negative, $r = \sqrt{x^2 + y^2}$.
 
 ### Step 3: the angle needs both signs, not one ratio
 
@@ -373,7 +351,7 @@ The two outputs match line for line.
 - **Radar and sonar.** The sensor measures range and bearing; every map overlay converts to the grid.
 - **Surveying.** A total station records distance and angle to each point, then turns them into eastings and northings.
 - **Microphones and antennas.** A directional microphone's sensitivity pattern is a cardioid, like the coverage curve here.
-- **Complex numbers.** Size and angle are a complex number's polar coordinates ([polar-form-and-argument](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md)).
+- **Complex numbers.** Size and angle are a complex number's polar coordinates ([Polar form](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md)).
 
 > **Say it back**
 > Polar coordinates name a point by its distance from a centre and the angle of its direction. Multiplying the distance by cosine and sine gives the east and north offsets. Pythagoras gives the distance back; the angle comes back only if both offsets' signs are kept. A bearing is the same angle measured from north the other way, so sine and cosine swap. A polar curve is a range for each angle.
@@ -382,17 +360,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [radians-and-the-unit-circle](../03-Trigonometry/02-radians-and-the-unit-circle.md): cosine and sine as the offsets of a point on a circle of radius 1, signs included.
-- [distance-and-midpoint](01-distance-and-midpoint.md): the grid pair and Pythagoras for the distance between two points.
+- [The unit circle](../03-Trigonometry/02-radians-and-the-unit-circle.md): cosine and sine as the offsets of a point on a circle of radius 1, signs included.
+- [Distance and midpoint](01-distance-and-midpoint.md): the grid pair and Pythagoras for the distance between two points.
 
 ## Where this goes next
 
-- [parametric-curves](06-parametric-curves.md): range and angle changing with time trace a path.
-- [cylindrical-and-spherical-coordinates](07-cylindrical-and-spherical-coordinates.md): range and bearing plus height or elevation, for points in space.
-- [polar-form-and-argument](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md): multiplying becomes multiplying sizes, adding angles.
-- [conformal-maps](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md): maps that act simply on range and angle.
-- [limit-cycles-and-van-der-pol](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/08-limit-cycles-and-van-der-pol.md): a range that settles while the angle keeps turning.
-- orbital-mechanics-and-the-kepler-problem: an orbit in one polar line.
+- [Parametric curves](06-parametric-curves.md): range and angle changing with time trace a path.
+- [Cylindrical and spherical coordinates](07-cylindrical-and-spherical-coordinates.md): range and bearing plus height or elevation, for points in space.
+- [Polar form](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md): multiplying becomes multiplying sizes, adding angles.
+- [Conformal maps](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/01-conformal-maps.md): maps that act simply on range and angle.
+- [Limit cycles](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/08-limit-cycles-and-van-der-pol.md): a range that settles while the angle keeps turning.
+- Orbits: an orbit in one polar line.
 
 ---
 

@@ -1,35 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Rings and Fields
-topic: Euclid for polynomials
-item: Polynomials behave like integers
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/02-Polynomials/04-polynomial-division|polynomial-division]]"
-  - "[[Cards/03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem|roots-and-the-factor-theorem]]"
-  - "[[Cards/03-Algebra/09-Rings and Fields/02-fields|fields]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/03-euclidean-algorithm|euclidean-algorithm]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/07-unique-factorisation|unique-factorisation]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/06-euclids-lemma|euclids-lemma]]"
-next:
-  - "[[Cards/03-Algebra/09-Rings and Fields/04-ideals-and-quotient-rings|ideals-and-quotient-rings]]"
-  - "[[Cards/03-Algebra/10-For the Curious/03-gaussian-integers-and-sums-of-two-squares|gaussian-integers-and-sums-of-two-squares]]"
-  - "[[Cards/03-Algebra/10-For the Curious/04-pell-equation-and-root-two|pell-equation-and-root-two]]"
-  - "[[Cards/21-Algebraic and analytic number theory/05-Fields and Galois Theory/01-field-extensions-and-degree|field-extensions-and-degree]]"
-  - "[[Cards/21-Algebraic and analytic number theory/05-Fields and Galois Theory/02-minimal-polynomials-and-conjugates|minimal-polynomials-and-conjugates]]"
-  - "[[Cards/22-Algebraic geometry/06-Schemes and Modern Language/01-integral-domains-pids-and-unique-factorisation|integral-domains-pids-and-unique-factorisation]]"
-tags:
-  - mathematics
-  - algebra
-  - polynomials-behave-like-integers
----
-
 # Polynomials behave like integers: division with remainder, Euclid's algorithm and unique factorisation all work again
 
-Algebra → Rings and Fields → Euclid for polynomials → Polynomials behave like integers
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Rings and Fields](../../../SYLLABUS.md#w03-s09) → Polynomials behave like integers
 
 ---
 
@@ -37,9 +8,9 @@ Algebra → Rings and Fields → Euclid for polynomials → Polynomials behave l
 
 A tank design sheet carries two expressions in the same letter x: x^3 - 6x^2 + 11x - 6 and x^2 - 1. One is divided by the other further down the sheet, so any shared factor should cancel first. Which factor is it?
 
-For whole numbers this is routine: divide and keep the leftover. With 84 and 36: 84 = 2 x 36 + 12, then 36 = 3 x 12 + 0, so they share 12, the last leftover that was not zero — Euclid's algorithm ([euclidean-algorithm](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md)). Guessing the factors of a cubic is not routine.
+For whole numbers this is routine: divide and keep the leftover. With 84 and 36: 84 = 2 x 36 + 12, then 36 = 3 x 12 + 0, so they share 12, the last leftover that was not zero — Euclid's algorithm ([Euclid's algorithm](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md)). Guessing the factors of a cubic is not routine.
 
-That loop never needed whole numbers. It needed division with remainder: a quotient, plus a leftover smaller than the divisor. Polynomials have that when their coefficients come from a field — a system where every nonzero number has a reciprocal, such as the fractions ([fields](02-fields.md)). "Smaller" becomes "of lower degree", the degree being the highest power of x present.
+That loop never needed whole numbers. It needed division with remainder: a quotient, plus a leftover smaller than the divisor. Polynomials have that when their coefficients come from a field — a system where every nonzero number has a reciprocal, such as the fractions ([Fields](02-fields.md)). "Smaller" becomes "of lower degree", the degree being the highest power of x present.
 
 Two rounds settle it: the cubic divided by x^2 - 1 leaves 12x - 12, then x^2 - 1 divided by x - 1 leaves nothing. The shared factor is x - 1.
 
@@ -117,7 +88,7 @@ Zero remainder, so the loop stops at x - 1. No root was found on the way.
 
 A polynomial of degree 1 or more is **irreducible over F** when it is not a product of two polynomials of degree 1 or more with coefficients in F. Nonzero constants are the **units**, the invertible ones; like 1 and -1 among the whole numbers, they are not primes.
 
-Any such polynomial is irreducible or splits into two of lower degree; repeat, and degrees fall until they cannot, so every polynomial of degree 1 or more is a product of irreducibles times a constant. Uniqueness is the content: **the irreducible factors are the same every time, up to order and up to nonzero constants** — proved as for whole numbers ([unique-factorisation](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md)), through the same lemma ([euclids-lemma](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)).
+Any such polynomial is irreducible or splits into two of lower degree; repeat, and degrees fall until they cannot, so every polynomial of degree 1 or more is a product of irreducibles times a constant. Uniqueness is the content: **the irreducible factors are the same every time, up to order and up to nonzero constants** — proved as for whole numbers ([Why the factorisation is unique](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md)), through the same lemma ([Euclid's lemma](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)).
 
 <details>
 <summary>Detailed proof: why the irreducible factors are the same every time</summary>
@@ -130,12 +101,12 @@ Any such polynomial is irreducible or splits into two of lower degree; repeat, a
 
 </details>
 
-**Another route.** Both split completely here — the cubic is (x - 1)(x - 2)(x - 3) — so their roots show the factor ([roots-and-the-factor-theorem](../02-Polynomials/05-roots-and-the-factor-theorem.md)).
+**Another route.** Both split completely here — the cubic is (x - 1)(x - 2)(x - 3) — so their roots show the factor ([Roots and factors](../02-Polynomials/05-roots-and-the-factor-theorem.md)).
 
 <details>
 <summary>The names for what just happened: Euclidean domain, PID, UFD</summary>
 
-A system with a division-with-remainder rule and a size that falls is a **Euclidean domain**: Z with size the absolute value, F[x] with size the degree. Every Euclidean domain is a **principal ideal domain**, a PID, in which every ideal is the multiples of one element ([ideals-and-quotient-rings](04-ideals-and-quotient-rings.md)). Every PID is a **unique factorisation domain**, a UFD. Both arrows go one way: a PID exists with no Euclidean size (Motzkin, 1949), and whole-number-coefficient polynomials are a UFD (Gauss's lemma) that is no PID. Named, not proved, here.
+A system with a division-with-remainder rule and a size that falls is a **Euclidean domain**: Z with size the absolute value, F[x] with size the degree. Every Euclidean domain is a **principal ideal domain**, a PID, in which every ideal is the multiples of one element ([Ideals and quotient rings](04-ideals-and-quotient-rings.md)). Every PID is a **unique factorisation domain**, a UFD. Both arrows go one way: a PID exists with no Euclidean size (Motzkin, 1949), and whole-number-coefficient polynomials are a UFD (Gauss's lemma) that is no PID. Named, not proved, here.
 
 </details>
 
@@ -381,7 +352,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Cancelling an algebraic fraction.** Any system simplifying a ratio of polynomials runs this loop first.
-- **Error-correcting codes.** A QR code's data are coefficients of a polynomial over a finite field, and decoding is division with remainder and gcd work ([finite-fields](05-finite-fields.md)).
+- **Error-correcting codes.** A QR code's data are coefficients of a polynomial over a finite field, and decoding is division with remainder and gcd work ([Finite fields](05-finite-fields.md)).
 
 > **Say it back**
 > Over a field, one polynomial divided by another leaves a quotient and a remainder of lower degree, which is all Euclid's algorithm ever needed. So the loop runs on polynomials: divide, keep the remainder, repeat. Two rounds on the sheet return x - 1, the factor the two expressions share. Each swap keeps every common divisor, so nothing is lost, and the answer is pinned once it is made monic. Irreducible polynomials are the primes here, and a factorisation into them never changes.
@@ -390,21 +361,21 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [polynomial-division](../02-Polynomials/04-polynomial-division.md): the division this card loops.
-- [roots-and-the-factor-theorem](../02-Polynomials/05-roots-and-the-factor-theorem.md): a root at x = c is a factor x - c.
-- [fields](02-fields.md): why nonzero coefficients can be divided by.
-- [euclidean-algorithm](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md): the whole-number loop, copied unchanged.
-- [unique-factorisation](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md): the theorem Step 3 repeats.
-- [euclids-lemma](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): the lemma the folded proof rebuilds.
+- [Polynomial long division](../02-Polynomials/04-polynomial-division.md): the division this card loops.
+- [Roots and factors](../02-Polynomials/05-roots-and-the-factor-theorem.md): a root at x = c is a factor x - c.
+- [Fields](02-fields.md): why nonzero coefficients can be divided by.
+- [Euclid's algorithm](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/03-euclidean-algorithm.md): the whole-number loop, copied unchanged.
+- [Why the factorisation is unique](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md): the theorem Step 3 repeats.
+- [Euclid's lemma](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): the lemma the folded proof rebuilds.
 
 ## Where this goes next
 
-- [ideals-and-quotient-rings](04-ideals-and-quotient-rings.md): keep only remainders, as clock time does after 12, and a number system appears.
-- [gaussian-integers-and-sums-of-two-squares](../10-For%20the%20Curious/03-gaussian-integers-and-sums-of-two-squares.md): the same division with a square root of -1.
-- [pell-equation-and-root-two](../10-For%20the%20Curious/04-pell-equation-and-root-two.md): the loop on numbers built from root 2.
-- field-extensions-and-degree: an irreducible divisor makes a bigger field.
-- minimal-polynomials-and-conjugates: each new number carries one irreducible polynomial.
-- integral-domains-pids-and-unique-factorisation: the folded tip's hierarchy, proved.
+- [Ideals and quotient rings](04-ideals-and-quotient-rings.md): keep only remainders, as clock time does after 12, and a number system appears.
+- [Gaussian integers](../10-For%20the%20Curious/03-gaussian-integers-and-sums-of-two-squares.md): the same division with a square root of -1.
+- [Pell's equation](../10-For%20the%20Curious/04-pell-equation-and-root-two.md): the loop on numbers built from root 2.
+- Field extensions: an irreducible divisor makes a bigger field.
+- Minimal polynomials: each new number carries one irreducible polynomial.
+- Domains, principal ideals and unique factorisation: the folded tip's hierarchy, proved.
 
 The loop returns x - 1 and stops. Treat all polynomials with the same remainder as one object and the remainders become a number system: that is the next card.
 

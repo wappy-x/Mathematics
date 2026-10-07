@@ -1,28 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Codes and Secrets
-topic: Public keys
-item: RSA in outline
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/04-Powers on the Clock/04-eulers-theorem|eulers-theorem]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/04-modular-inverse|modular-inverse]]"
-  - "[[Cards/02-Number theory/06-Codes and Secrets/01-one-way-streets|one-way-streets]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/01-modular-exponentiation|modular-exponentiation]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/03-eulers-totient|eulers-totient]]"
-next: []
-tags:
-  - mathematics
-  - number theory
-  - rsa-in-outline
----
-
 # RSA in outline: lock with e, unlock with d, and Euler's theorem is why the message comes back
 
-Number theory → Codes and Secrets → Public keys → RSA in outline
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Codes and Secrets](../../../SYLLABUS.md#w02-s06) → RSA in outline
 
 ---
 
@@ -30,7 +8,7 @@ Number theory → Codes and Secrets → Public keys → RSA in outline
 
 A stranger wants to send you one number, and everyone is listening.
 
-So you publish a pair: 3233 and 17. To send you 65, the stranger raises 65 to the 17th power and takes off whole 3233s until what is left is under 3233 ([modular-exponentiation](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)). That leaves 2790, and that travels.
+So you publish a pair: 3233 and 17. To send you 65, the stranger raises 65 to the 17th power and takes off whole 3233s until what is left is under 3233 ([Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)). That leaves 2790, and that travels.
 
 You held 2753 back. Raise 2790 to the 2753rd, take the 3233s off, and 65 is back. Everyone saw 3233, 17 and 2790; at real key sizes, none of it helps.
 
@@ -65,10 +43,10 @@ Making the keys:
 | Piece | Plain meaning | Here |
 | --- | --- | --- |
 | the two primes | secret, never published | 61 and 53 |
-| the clock size | published; where counting wraps ([congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md)) | 3233 |
-| the hidden count | the numbers up to 3233 sharing no factor above 1 with it ([eulers-totient](../04-Powers%20on%20the%20Clock/03-eulers-totient.md)) | 3120 |
+| the clock size | published; where counting wraps ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)) | 3233 |
+| the hidden count | the numbers up to 3233 sharing no factor above 1 with it ([Euler's totient](../04-Powers%20on%20the%20Clock/03-eulers-totient.md)) | 3120 |
 | the public exponent | how many copies of the message multiply together | 17 |
-| the private exponent | what undoes 17 on a clock of the hidden count ([modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)) | 2753 |
+| the private exponent | what undoes 17 on a clock of the hidden count ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)) | 2753 |
 | the message | a number below the clock size, and what it becomes | 65, then 2790 |
 
 ---
@@ -77,31 +55,31 @@ Making the keys:
 
 ### Step 0: locking then unlocking is one long power
 
-Multiply 1 by 65 seventeen times, then multiply 1 by that result 2753 times: 65 is used as a factor 17 × 2753 = 46801 times ([modular-exponentiation](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)). The 3233s come off in the middle or at the end, no difference ([modular-addition-and-multiplication](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)).
+Multiply 1 by 65 seventeen times, then multiply 1 by that result 2753 times: 65 is used as a factor 17 × 2753 = 46801 times ([Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)). The 3233s come off in the middle or at the end, no difference ([Adding and multiplying on the clock](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)).
 
 ### Step 1: 46801 is one past a run of 3120s
 
-2753 was chosen to undo 17 on a clock of size 3120 ([modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)). So 46801 is 15 blocks of 3120, then one more.
+2753 was chosen to undo 17 on a clock of size 3120 ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)). So 46801 is 15 blocks of 3120, then one more.
 
 ### Step 2: a block of 3120 lands back on 1
 
-3120 counts the numbers from 1 to 3233 sharing no factor with 3233 ([eulers-totient](../04-Powers%20on%20the%20Clock/03-eulers-totient.md)). Euler's theorem ([eulers-theorem](../04-Powers%20on%20the%20Clock/04-eulers-theorem.md)): any such number, used as a factor that many times with the 3233s off, lands on 1.
+3120 counts the numbers from 1 to 3233 sharing no factor with 3233 ([Euler's totient](../04-Powers%20on%20the%20Clock/03-eulers-totient.md)). Euler's theorem ([Euler's theorem](../04-Powers%20on%20the%20Clock/04-eulers-theorem.md)): any such number, used as a factor that many times with the 3233s off, lands on 1.
 
 65 is one of them. So the long power falls apart in the hand: one 65 times fifteen blocks, every block 1. What is left is 65.
 
 ### Step 3: the hidden count, counted the other way
 
-60 × 52 = 3120 needs 61 and 53. Count the other way: from 1 to 3233, the numbers sharing a factor are the 53 multiples of 61 and the 61 multiples of 53, with 3233 (it is 53 × 61) in both lists, so 3233 − 53 − 61 + 1 = 3120 ([inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md)).
+60 × 52 = 3120 needs 61 and 53. Count the other way: from 1 to 3233, the numbers sharing a factor are the 53 multiples of 61 and the 61 multiples of 53, with 3233 (it is 53 × 61) in both lists, so 3233 − 53 − 61 + 1 = 3120 ([Inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md)).
 
-An eavesdropper has 3233 and 17. To reach 3120 they must split 3233 into 61 × 53, the slow direction ([one-way-streets](01-one-way-streets.md)) — and that is what keeps 2753 private.
+An eavesdropper has 3233 and 17. To reach 3120 they must split 3233 into 61 × 53, the slow direction ([One-way streets](01-one-way-streets.md)) — and that is what keeps 2753 private.
 
-Messages sharing a factor with 3233 sit outside Euler's theorem. They come home too, on a 61 clock and a 53 clock glued back ([chinese-remainder-theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md)).
+Messages sharing a factor with 3233 sit outside Euler's theorem. They come home too, on a 61 clock and a 53 clock glued back ([The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md)).
 
 <details>
 <summary>Two things this outline leaves out</summary>
 
 - **Signatures.** Lock with the private 2753; unlocking with the public 17 then shows who sent it.
-- **The speed-up.** Unlock on a 61 clock and a 53 clock, then glue ([chinese-remainder-theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md)).
+- **The speed-up.** Unlock on a 61 clock and a 53 clock, then glue ([The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md)).
 
 </details>
 
@@ -272,7 +250,7 @@ The two outputs match line for line.
 
 - **An SSH key pair.** The public half is a clock size and an exponent, given to every machine you log in to; the private half never leaves.
 - **Locking a key, not a message.** Messages sit below the clock size, so this carries a short key and a faster cipher carries the rest.
-- **Strangers with no keys at all.** [diffie-hellman](02-diffie-hellman.md), over an open line.
+- **Strangers with no keys at all.** [Diffie-Hellman key exchange](02-diffie-hellman.md), over an open line.
 
 > **Say it back**
 > Two secret primes: 61 × 53 = 3233, published. One off each and multiply: 3120, kept back. Publish 17; keep 2753, what undoes 17 on a 3120 clock. Lock: 65 to the 17th, 3233s off, is 2790. Unlock: 2790 to the 2753rd is 65. It comes home because 17 × 2753 is fifteen blocks of 3120 plus one, and every block lands on 1. It stays secret because 3120 needs the primes.
@@ -281,13 +259,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [eulers-theorem](../04-Powers%20on%20the%20Clock/04-eulers-theorem.md): the block of 3120 that lands on 1.
-- [modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md): how 2753 is found from 17 and 3120.
-- [one-way-streets](01-one-way-streets.md): why splitting 3233 into 61 × 53 is slow.
+- [Euler's theorem](../04-Powers%20on%20the%20Clock/04-eulers-theorem.md): the block of 3120 that lands on 1.
+- [The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md): how 2753 is found from 17 and 3120.
+- [One-way streets](01-one-way-streets.md): why splitting 3233 into 61 × 53 is slow.
 
 ## Where this goes next
 
-Nothing later rests on this card. The rest of the shelf supplies what it assumed: [fermat-test-and-carmichael](04-fermat-test-and-carmichael.md) and [miller-rabin](05-miller-rabin.md) find primes the size real keys need.
+Nothing later rests on this card. The rest of the shelf supplies what it assumed: [The Fermat test](04-fermat-test-and-carmichael.md) and [The Miller-Rabin test](05-miller-rabin.md) find primes the size real keys need.
 
 ---
 

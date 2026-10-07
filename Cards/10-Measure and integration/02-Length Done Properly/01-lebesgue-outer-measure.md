@@ -1,24 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Length Done Properly
-topic: Sizing by covers
-item: Outer measure
-kind: definition
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/07-null-sets-and-almost-everywhere|null-sets-and-almost-everywhere]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/01-series-convergence|series-convergence]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/02-supremum-and-completeness|supremum-and-completeness]]"
-next:
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/02-caratheodory-measurable-sets|caratheodory-measurable-sets]]"
-tags: [mathematics, measure and integration, lebesgue-outer-measure]
----
-
 # Outer measure: cover a set with intervals, take the cheapest total, and every set gets a provisional size
 
-Measure and integration → Length Done Properly → Sizing by covers → Outer measure
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Length Done Properly](../../../SYLLABUS.md#w10-s02) → Outer measure
 
 ---
 
@@ -46,7 +28,7 @@ Drawn to scale, in metres. Open circles mark end points the intervals leave out.
 
 ## The formula
 
-Notation first, in words. An **open interval** $(c, d)$ is every point strictly between $c$ and $d$; its **length** $\ell\big((c, d)\big)$ is $d - c$. A **cover** of a set $A$ is a list $I_1, I_2, I_3, \dots$ of open intervals whose union (the points lying in at least one of them) contains every point of $A$. The symbol $\inf$ is the infimum: the greatest number lying at or below every member of a collection ([supremum-and-completeness](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). A star on lambda, $\lambda^*$, read "lambda star", names outer measure.
+Notation first, in words. An **open interval** $(c, d)$ is every point strictly between $c$ and $d$; its **length** $\ell\big((c, d)\big)$ is $d - c$. A **cover** of a set $A$ is a list $I_1, I_2, I_3, \dots$ of open intervals whose union (the points lying in at least one of them) contains every point of $A$. The symbol $\inf$ is the infimum: the greatest number lying at or below every member of a collection ([No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). A star on lambda, $\lambda^*$, read "lambda star", names outer measure.
 
 $$\lambda^*(A) \;=\; \inf\Big\{\, \sum_{k=1}^{\infty} \ell(I_k) \;:\; I_1, I_2, \dots \text{ open intervals with } A \subseteq \bigcup_{k=1}^{\infty} I_k \Big\}$$
 
@@ -84,7 +66,7 @@ The formula is a definition, so it holds for every set of real numbers by fiat; 
 - **Countably many intervals, not finitely many.** Allow only finite lists and the rationals in [0, 1] get 1, not 0: a finite cover of them must cover all but finitely many points of [0, 1].
 - **Countable unions in subadditivity, not arbitrary ones.** The fence is the union of its uncountably many points, each of outer measure 0; adding those zeros "gives" 0, and the fence is 3.
 - **Closed and bounded for the finite-subcover step.** Step 4 needs [a, b] to include its ends and stop somewhere. The rationals in [0, 1] have a cover totalling 0.01 with no finite part that covers them.
-- **Subadditive, not additive.** Two sets with no point in common can have outer measures summing to more than their union's. No such pair can be written down explicitly; [translation-invariance-and-the-vitali-set](04-translation-invariance-and-the-vitali-set.md) argues that one exists. Sets on which additivity does hold are the subject of [caratheodory-measurable-sets](02-caratheodory-measurable-sets.md).
+- **Subadditive, not additive.** Two sets with no point in common can have outer measures summing to more than their union's. No such pair can be written down explicitly; [Translation invariance and the Vitali set](04-translation-invariance-and-the-vitali-set.md) argues that one exists. Sets on which additivity does hold are the subject of [Caratheodory's criterion](02-caratheodory-measurable-sets.md).
 
 ---
 
@@ -100,7 +82,7 @@ A single rust spot at $x$ sits inside the interval from $x - \varepsilon/2$ to $
 
 All 100 spots: give each an interval of length $\varepsilon/100$. The total is $\varepsilon$, so again the outer measure is 0. With $\varepsilon$ = 0.01 m, each interval is 0.0001 m long.
 
-The rationals in [0, 1] can be listed: by denominator, 0, 1, 1/2, 1/3, 2/3, 1/4, 3/4, 1/5, … . Give the $k$-th rational $q_k$ an interval of length $\varepsilon/2^k$. The lengths are $\varepsilon/2 + \varepsilon/4 + \varepsilon/8 + \cdots$, a geometric series summing to $\varepsilon$ ([series-convergence](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)). With $\varepsilon$ = 0.01, every rational in [0, 1] lies inside intervals totalling 0.01, and the argument works for every $\varepsilon$, so $\lambda^*(\mathbb{Q} \cap [0, 1]) = 0$. A set of outer measure 0 is a null set ([null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)); this card supplies the length that sentence was measured with.
+The rationals in [0, 1] can be listed: by denominator, 0, 1, 1/2, 1/3, 2/3, 1/4, 3/4, 1/5, … . Give the $k$-th rational $q_k$ an interval of length $\varepsilon/2^k$. The lengths are $\varepsilon/2 + \varepsilon/4 + \varepsilon/8 + \cdots$, a geometric series summing to $\varepsilon$ ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)). With $\varepsilon$ = 0.01, every rational in [0, 1] lies inside intervals totalling 0.01, and the argument works for every $\varepsilon$, so $\lambda^*(\mathbb{Q} \cap [0, 1]) = 0$. A set of outer measure 0 is a null set ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)); this card supplies the length that sentence was measured with.
 
 ### Step 2: a bigger set is never smaller
 
@@ -123,7 +105,7 @@ For each $n$, the number $\lambda^*(A_n) + \varepsilon/2^n$ is above the infimum
 
 The intervals $I_{n,k}$, over all $n$ and $k$, can be put in one list by walking the diagonals $n + k = 2, 3, 4, \dots$; each interval appears once. Any point of the union lies in some $A_n$, so in some $I_{n,k}$: the list covers the union.
 
-Its total is a series of non-negative terms. Any first stretch of the list uses finitely many of the $I_{n,k}$, drawn from finitely many of the covers. The intervals it takes from any one cover total at most that cover's whole total, so the stretch totals at most $\sum_n \big(\lambda^*(A_n) + \varepsilon/2^n\big) = \sum_n \lambda^*(A_n) + \varepsilon$. The partial sums never pass that bound, so neither does their limit, the series' sum ([series-convergence](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)).
+Its total is a series of non-negative terms. Any first stretch of the list uses finitely many of the $I_{n,k}$, drawn from finitely many of the covers. The intervals it takes from any one cover total at most that cover's whole total, so the stretch totals at most $\sum_n \big(\lambda^*(A_n) + \varepsilon/2^n\big) = \sum_n \lambda^*(A_n) + \varepsilon$. The partial sums never pass that bound, so neither does their limit, the series' sum ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)).
 
 So $\lambda^*$ of the union is at most $\sum_n \lambda^*(A_n) + \varepsilon$ for every $\varepsilon > 0$, hence at most $\sum_n \lambda^*(A_n)$.
 
@@ -145,7 +127,7 @@ In the picture the chain is (−0.2, 1.1), (0.8, 1.9), (1.5, 2.6), (2.4, 3.3), t
 <details>
 <summary>Detailed proof: the finite-subcover step</summary>
 
-Let $I_1, I_2, \dots$ be open intervals covering $[a, b]$. Call a point $x$ of $[a, b]$ *reachable* if $[a, x]$ is covered by finitely many of the $I_k$. The point $a$ is reachable: it lies in some $I_k$. Reachable points are bounded above by $b$, so they have a supremum $s$, with $a \le s \le b$ (completeness, [supremum-and-completeness](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)).
+Let $I_1, I_2, \dots$ be open intervals covering $[a, b]$. Call a point $x$ of $[a, b]$ *reachable* if $[a, x]$ is covered by finitely many of the $I_k$. The point $a$ is reachable: it lies in some $I_k$. Reachable points are bounded above by $b$, so they have a supremum $s$, with $a \le s \le b$ (completeness, [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)).
 
 The point $s$ lies in $[a, b]$, so in one of the intervals, say $(c, d)$, with $c < s < d$. Since $s$ is the least upper bound, some reachable $x$ has $c < x \le s$. Finitely many intervals cover $[a, x]$; add $(c, d)$ and they cover $[a, y]$ for every $y$ in $[a, b]$ with $y < d$.
 
@@ -166,7 +148,7 @@ Suppose it holds for every cover by $n - 1$ intervals, and let $n$ open interval
 
 The code checks instances: the covers above, and 1,292 random covers of the fence, each totalling more than 3. Only the proof reaches every cover, endless lists included.
 
-A second road to the same outer measure starts from length on half-open intervals and extends it by a general theorem; that is [caratheodory-extension-theorem](05-caratheodory-extension-theorem.md). Using closed or half-open intervals in the cover, in place of open ones, gives the same numbers: each can be swapped for a slightly longer open interval at a cost of $\varepsilon/2^k$.
+A second road to the same outer measure starts from length on half-open intervals and extends it by a general theorem; that is [Caratheodory's extension theorem](05-caratheodory-extension-theorem.md). Using closed or half-open intervals in the cover, in place of open ones, gives the same numbers: each can be swapped for a slightly longer open interval at a cost of $\varepsilon/2^k$.
 
 ---
 
@@ -582,10 +564,10 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Reading outer measure as a measure.** It is defined for every set and it is subadditive, but it is not additive: two sets with no common point can have outer measures summing to more than their union's. The sets where it does add up are picked out on [caratheodory-measurable-sets](02-caratheodory-measurable-sets.md), and on them it becomes Lebesgue measure $\lambda$.
+> **Reading outer measure as a measure.** It is defined for every set and it is subadditive, but it is not additive: two sets with no common point can have outer measures summing to more than their union's. The sets where it does add up are picked out on [Caratheodory's criterion](02-caratheodory-measurable-sets.md), and on them it becomes Lebesgue measure $\lambda$.
 >
 > - **Finite covers only.** That is an older notion, Jordan content, and it gives the rationals in [0, 1] size 1, not 0.
-> - **Size 0 means few points.** Outer measure 0 is about length, not count. Countable sets have it, but so do some uncountable sets: [the-cantor-set](07-the-cantor-set.md).
+> - **Size 0 means few points.** Outer measure 0 is about length, not count. Countable sets have it, but so do some uncountable sets: [The Cantor set](07-the-cantor-set.md).
 > - **No stretch inside, so size 0.** The irrationals in [0, 1] contain no interval, yet their outer measure is 1: 1 ≤ λ\*(irrationals) + 0.
 > - **The cheapest cover exists.** The infimum need not be reached. No cover of the fence totals exactly 3; every one totals more.
 
@@ -593,9 +575,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Probability of an exact value.** A dart landing uniformly on [0, 1] hits a rational with probability 0, the outer measure of the rationals there. Why that sentence is allowed is [null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md).
-- **Lebesgue measure itself.** Restricted to the well-behaved sets, outer measure is Lebesgue measure: [lebesgue-measure](03-lebesgue-measure.md).
-- **Weighted lengths.** Replace an interval's length by the rise of a distribution function across it and the same cheapest-cover recipe builds probability laws on the line: [lebesgue-stieltjes-measures](06-lebesgue-stieltjes-measures.md).
+- **Probability of an exact value.** A dart landing uniformly on [0, 1] hits a rational with probability 0, the outer measure of the rationals there. Why that sentence is allowed is [Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md).
+- **Lebesgue measure itself.** Restricted to the well-behaved sets, outer measure is Lebesgue measure: [Lebesgue measure](03-lebesgue-measure.md).
+- **Weighted lengths.** Replace an interval's length by the rise of a distribution function across it and the same cheapest-cover recipe builds probability laws on the line: [Distribution functions and Lebesgue-Stieltjes measures](06-lebesgue-stieltjes-measures.md).
 - **Fractal size.** Covering by small pieces and taking the cheapest total, with each piece's length raised to a power, is how the dimension of a coastline or the Cantor set is defined.
 
 > **Say it back**
@@ -605,15 +587,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md): the idea of a set of size zero, which this card makes precise on the line.
-- [series-convergence](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md): the geometric series behind every $\varepsilon/2^k$ cover, and a series' sum as the limit of its partial sums.
-- [supremum-and-completeness](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md): the infimum in the definition, and the supremum in the finite-subcover proof.
+- [Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md): the idea of a set of size zero, which this card makes precise on the line.
+- [Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md): the geometric series behind every $\varepsilon/2^k$ cover, and a series' sum as the limit of its partial sums.
+- [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md): the infimum in the definition, and the supremum in the finite-subcover proof.
 
 ## Where this goes next
 
-- [caratheodory-measurable-sets](02-caratheodory-measurable-sets.md): the test that picks out the sets on which outer measure adds up.
+- [Caratheodory's criterion](02-caratheodory-measurable-sets.md): the test that picks out the sets on which outer measure adds up.
 
-Outer measure does not add up on every pair of sets with no common point; which sets it does add up on is the question [caratheodory-measurable-sets](02-caratheodory-measurable-sets.md) answers.
+Outer measure does not add up on every pair of sets with no common point; which sets it does add up on is the question [Caratheodory's criterion](02-caratheodory-measurable-sets.md) answers.
 
 ---
 

@@ -1,25 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Nonlinear Dynamics in the Plane
-topic: Conserved energy
-item: The pendulum
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/02-linearisation-and-the-jacobian|linearisation-and-the-jacobian]]"
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/01-right-triangle-trigonometry|right-triangle-trigonometry]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/05-lasalle-and-the-damped-pendulum|lasalle-and-the-damped-pendulum]]"
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/04-lagrangian-mechanics|lagrangian-mechanics]]"
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/05-regular-perturbation|regular-perturbation]]"
-tags: [mathematics, differential equations and dynamics, the-nonlinear-pendulum]
----
-
 # The pendulum: swinging and spinning over live in one picture, separated by the energy of standing on end
 
-Differential equations and dynamics → Nonlinear Dynamics in the Plane → Conserved energy → The pendulum
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → The pendulum
 
 ---
 
@@ -57,7 +38,7 @@ $$E(\theta, \omega) = \tfrac12\,\omega^2 + 1 - \cos\theta$$
 
 **Read it aloud:** half the square of the speed, for motion, plus one minus the cosine of the angle, for height.
 
-The height term is the bob's height in rod lengths: 0 hanging, 1 horizontal, 2 upside down ([right-triangle-trigonometry](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md)). A swing below energy 2 turns back at $\theta_{\max}$, where $\cos\theta_{\max} = 1 - E$. Its period, one full swing there and back, is:
+The height term is the bob's height in rod lengths: 0 hanging, 1 horizontal, 2 upside down ([Sine, cosine and tangent](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md)). A swing below energy 2 turns back at $\theta_{\max}$, where $\cos\theta_{\max} = 1 - E$. Its period, one full swing there and back, is:
 
 $$T = 4\int_0^{\pi/2}\frac{d\varphi}{\sqrt{1 - k^2\sin^2\varphi}}, \qquad k = \sin\tfrac{\theta_{\max}}{2}, \quad k^2 = \tfrac{E}{2}$$
 
@@ -87,7 +68,7 @@ $$T = 4\int_0^{\pi/2}\frac{d\varphi}{\sqrt{1 - k^2\sin^2\varphi}}, \qquad k = \s
 
 ### Step 0: one quantity that the motion cannot change
 
-A law with two unknowns fills a plane, the phase plane of [phase-portraits-and-nullclines](01-phase-portraits-and-nullclines.md). A conserved quantity, a function of the state fixed along every solution, traps each solution on one level curve, and level curves can be drawn without solving anything.
+A law with two unknowns fills a plane, the phase plane of [Phase portraits and nullclines](01-phase-portraits-and-nullclines.md). A conserved quantity, a function of the state fixed along every solution, traps each solution on one level curve, and level curves can be drawn without solving anything.
 
 ### Step 1: the energy is conserved
 
@@ -114,7 +95,7 @@ If $E > 2$, then $E - 1 + \cos\theta \ge E - 2 > 0$ at every angle. The speed ne
 
 ### Step 4: at energy 2, the separatrix
 
-At $E = 2$ the curve is $\omega = \pm 2\cos(\theta/2)$, reaching zero speed exactly upside down. This is the separatrix: it separates the loops inside from the wavy lines outside. The Jacobian, the table of slopes of each rate against each unknown ([linearisation-and-the-jacobian](02-linearisation-and-the-jacobian.md)), is `[[0, 1], [-cos θ, 0]]`, so its eigenvalues satisfy $\lambda^2 = -\cos\theta$. Hanging, $\lambda = \pm i$: a centre, which linearisation alone cannot trust; the energy settles it, since its level curves around its minimum are closed. Upside down, $\lambda = \pm 1$: a saddle, with one direction in and one out, of slopes ±1, exactly the separatrix's slopes there. Near the top the gap shrinks like $e^{-t}$, so a swing on the separatrix creeps toward standing on end and never arrives.
+At $E = 2$ the curve is $\omega = \pm 2\cos(\theta/2)$, reaching zero speed exactly upside down. This is the separatrix: it separates the loops inside from the wavy lines outside. The Jacobian, the table of slopes of each rate against each unknown ([Linearisation](02-linearisation-and-the-jacobian.md)), is `[[0, 1], [-cos θ, 0]]`, so its eigenvalues satisfy $\lambda^2 = -\cos\theta$. Hanging, $\lambda = \pm i$: a centre, which linearisation alone cannot trust; the energy settles it, since its level curves around its minimum are closed. Upside down, $\lambda = \pm 1$: a saddle, with one direction in and one out, of slopes ±1, exactly the separatrix's slopes there. Near the top the gap shrinks like $e^{-t}$, so a swing on the separatrix creeps toward standing on end and never arrives.
 
 ### Step 5: the period, and why it grows
 
@@ -398,7 +379,7 @@ The two outputs match line for line.
 - **Looping swing rides.** A fairground swing that goes over the top rides a wavy line on a rigid arm.
 - **Pendulum clocks.** A clock that swings wider runs slow, so clockmakers keep the swing small and steady.
 - **Balancing upright.** Standing on end is a saddle: a small error grows like $e^{t}$, which a Segway steers against.
-- **Other closed loops.** Predator and prey counts circle for the same reason: [predator-prey](06-predator-prey.md). A lone loop with none is a limit cycle: [limit-cycles-and-van-der-pol](08-limit-cycles-and-van-der-pol.md).
+- **Other closed loops.** Predator and prey counts circle for the same reason: [Predator and prey](06-predator-prey.md). A lone loop with none is a limit cycle: [Limit cycles](08-limit-cycles-and-van-der-pol.md).
 
 > **Say it back**
 > Without friction the pendulum's energy stays fixed, so every motion runs along one level curve. Below energy 2, the energy of standing on end, the curve is a closed loop: a swing, slower the wider it goes. Above 2 the speed never reaches zero and the swing turns over and over. At exactly 2 lies the separatrix, which creeps toward the top forever.
@@ -407,14 +388,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [linearisation-and-the-jacobian](02-linearisation-and-the-jacobian.md): the Jacobian's eigenvalues, a centre that linearisation cannot trust, and a saddle it can.
-- [right-triangle-trigonometry](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md): the bob's height, $l(1 - \cos\theta)$, read off the right triangle under the rod.
+- [Linearisation](02-linearisation-and-the-jacobian.md): the Jacobian's eigenvalues, a centre that linearisation cannot trust, and a saddle it can.
+- [Sine, cosine and tangent](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md): the bob's height, $l(1 - \cos\theta)$, read off the right triangle under the rod.
 
 ## Where this goes next
 
-- [lasalle-and-the-damped-pendulum](05-lasalle-and-the-damped-pendulum.md): the same energy with friction, which only falls.
-- [lagrangian-mechanics](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/04-lagrangian-mechanics.md): where the law and its conserved energy come from.
-- [regular-perturbation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/05-regular-perturbation.md): the period's growth as a series in the amplitude.
+- [LaSalle's principle](05-lasalle-and-the-damped-pendulum.md): the same energy with friction, which only falls.
+- [Lagrangian mechanics](../12-Calculus%20of%20Variations%20and%20Optimal%20Control/04-lagrangian-mechanics.md): where the law and its conserved energy come from.
+- [Regular perturbation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/05-regular-perturbation.md): the period's growth as a series in the amplitude.
 
 ---
 

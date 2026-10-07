@@ -1,26 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Markov Chains
-topic: One-step memory
-item: Markov chains
-kind: definition
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/01-processes-and-paths|processes-and-paths]]"
-  - "[[Cards/03-Algebra/04-Matrices/03-matrix-multiplication|matrix-multiplication]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/02-multi-step-transitions|multi-step-transitions]]"
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/08-hidden-markov-models|hidden-markov-models]]"
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/04-rating-transition-matrix-and-cumulative-default-rates|rating-transition-matrix-and-cumulative-default-rates]]"
-  - "[[Cards/15-Optimization/07-Dynamic Programming and Learning/02-markov-decision-processes|markov-decision-processes]]"
-tags: [mathematics, stochastic processes and calculus, markov-chains]
----
-
 # Markov chains: the future depends on the present only
 
-Stochastic processes and calculus → Markov Chains → One-step memory → Markov chains
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Markov Chains](../../../SYLLABUS.md#w11-s03) → Markov chains
 
 ---
 
@@ -50,7 +30,7 @@ Rain turns straight to sun with chance 0.2, sun straight to rain with chance 0.1
 
 ## The formula
 
-Notation first, in words. As on [processes-and-paths](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md), $X_n$ is the value at time $n$: here the weather on day $n$, with day 0 today. The states get letters: S, C, R. The chance of moving from state $i$ today to state $j$ tomorrow is written $p_{ij}$, read "p from i to j". Laid out with one row per today and one column per tomorrow, the $p_{ij}$ form a square table $P$, the transition matrix. $P$ alone is the matrix; $P$ followed by brackets is a probability, as in wing 09.
+Notation first, in words. As on [Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md), $X_n$ is the value at time $n$: here the weather on day $n$, with day 0 today. The states get letters: S, C, R. The chance of moving from state $i$ today to state $j$ tomorrow is written $p_{ij}$, read "p from i to j". Laid out with one row per today and one column per tomorrow, the $p_{ij}$ form a square table $P$, the transition matrix. $P$ alone is the matrix; $P$ followed by brackets is a probability, as in wing 09.
 
 `P = [[0.6, 0.3, 0.1], [0.3, 0.4, 0.3], [0.2, 0.4, 0.4]]`, rows and columns in the order S, C, R.
 
@@ -146,13 +126,13 @@ From sunny today to rainy the day after tomorrow, the path passes through some s
 
 $$P(X_2 = R \mid X_0 = S) = p_{SS}\, p_{SR} + p_{SC}\, p_{CR} + p_{SR}\, p_{RR} = 0.06 + 0.09 + 0.04 = 0.19$$
 
-Row times column, summed, is how [matrix-multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md) defines a product, so all nine two-day chances are the entries of $P^2$. The general form, $n$ days as $P^n$, and the splitting rule behind it (Chapman-Kolmogorov) are proved on [multi-step-transitions](02-multi-step-transitions.md).
+Row times column, summed, is how [Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md) defines a product, so all nine two-day chances are the entries of $P^2$. The general form, $n$ days as $P^n$, and the splitting rule behind it (Chapman-Kolmogorov) are proved on [n-step transitions](02-multi-step-transitions.md).
 
 ### Step 5: every matrix and start law has a chain
 
-Any stochastic matrix and start law have a chain, built from uniform draws. Cut the numbers from 0 to 1 into pieces as long as the entries of today's row, draw a uniform number $U$, and move to the state whose piece it hits. On a sunny day, draws below 0.6 give sunny, 0.6 to 0.9 cloudy, above 0.9 rainy. Each day takes a fresh, independent draw, so the Markov property holds by construction. The code uses a random digit 0 to 9 for $U$, since every entry is whole tenths. A chain that runs forever needs its endless draws on one probability space: Kolmogorov's extension theorem, stated on [processes-and-paths](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md) and proved in Durrett's text. This card uses it and does not prove it.
+Any stochastic matrix and start law have a chain, built from uniform draws. Cut the numbers from 0 to 1 into pieces as long as the entries of today's row, draw a uniform number $U$, and move to the state whose piece it hits. On a sunny day, draws below 0.6 give sunny, 0.6 to 0.9 cloudy, above 0.9 rainy. Each day takes a fresh, independent draw, so the Markov property holds by construction. The code uses a random digit 0 to 9 for $U$, since every entry is whole tenths. A chain that runs forever needs its endless draws on one probability space: Kolmogorov's extension theorem, stated on [Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md) and proved in Durrett's text. This card uses it and does not prove it.
 
-A random walk on a graph, from wing 09 ([random-walks-on-graphs-and-mixing](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md)), is one such chain: each row spreads its chance evenly over a node's neighbours. Which states a chain can reach and return to is sorted out on [classifying-states](03-classifying-states.md).
+A random walk on a graph, from wing 09 ([Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md)), is one such chain: each row spreads its chance evenly over a node's neighbours. Which states a chain can reach and return to is sorted out on [Classifying states](03-classifying-states.md).
 
 ---
 
@@ -170,7 +150,7 @@ Today is sunny. What are the chances for the day after tomorrow?
 | cloudy on day 2 | 0.6 × 0.3 + 0.3 × 0.4 + 0.1 × 0.4 | **0.34** |
 | the whole of $P^2$, row by row | same sums from C and from R | S: 0.47, 0.34, 0.19; C: 0.36, 0.37, 0.27; R: 0.32, 0.38, 0.30 |
 
-After a sunny day, the day after tomorrow is rainy about one time in five, nearly twice the one-day chance of 0.1: the middle day gives the weather time to turn. The same matrix every day does not mean the same chances every day; where they end up is [stationary-distributions](04-stationary-distributions.md).
+After a sunny day, the day after tomorrow is rainy about one time in five, nearly twice the one-day chance of 0.1: the middle day gives the weather time to turn. The same matrix every day does not mean the same chances every day; where they end up is [Stationary distributions](04-stationary-distributions.md).
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #264653, #2a9d8f"}}}}%%
@@ -588,11 +568,11 @@ The two outputs match line for line, simulated digits included, since both draw 
 ## Where you meet it in real life
 
 - **Weather generators.** Hydrologists simulate wet and dry days as a two-state chain, then attach rainfall to the wet days, to test reservoirs against droughts not yet seen.
-- **Credit ratings.** Agencies publish one-year tables of the chance that a bond rated A today is rated A, BBB or in default next year: transition matrices, whose powers give multi-year default chances ([rating-transition-matrix-and-cumulative-default-rates](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md)).
+- **Credit ratings.** Agencies publish one-year tables of the chance that a bond rated A today is rated A, BBB or in default next year: transition matrices, whose powers give multi-year default chances ([Rating transition matrices](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md)).
 - **Text.** Markov's first chain was letters, vowel or consonant. Predicting a word from the last few words is a chain whose state is those words together.
-- **Board games.** Each snakes-and-ladders square is a state and the die gives its row; the average length of a game is [absorption-and-first-step-analysis](06-absorption-and-first-step-analysis.md).
-- **Sampling.** Statisticians build a chain whose long-run visits follow a distribution they cannot sample directly ([markov-chain-monte-carlo](07-markov-chain-monte-carlo.md)).
-- **Hidden states.** When only umbrellas are seen, the weather chain sits under noisy observations ([hidden-markov-models](08-hidden-markov-models.md)).
+- **Board games.** Each snakes-and-ladders square is a state and the die gives its row; the average length of a game is [Absorption](06-absorption-and-first-step-analysis.md).
+- **Sampling.** Statisticians build a chain whose long-run visits follow a distribution they cannot sample directly ([MCMC](07-markov-chain-monte-carlo.md)).
+- **Hidden states.** When only umbrellas are seen, the weather chain sits under noisy observations ([Hidden Markov models](08-hidden-markov-models.md)).
 
 > **Say it back**
 > A Markov chain moves between states, and the chances for the next step depend only on the current state. Those chances form a transition matrix whose rows each add to 1. The chance of a whole path is the start chance times one matrix entry per step, and that product rule is the same statement as the next-step rule. Chances two days out come from summing over the middle day, which is multiplying the matrix by itself. When the state leaves out memory that matters, the product rule fails and the state has to grow.
@@ -601,17 +581,17 @@ The two outputs match line for line, simulated digits included, since both draw 
 
 ## What this builds on
 
-- [processes-and-paths](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md): a process as one random value per time, a sample path, and the law as chances over whole paths, which the factorisation writes down for a chain.
-- [matrix-multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md): row times column, summed; here it turns out to be the sum over the middle day.
+- [Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md): a process as one random value per time, a sample path, and the law as chances over whole paths, which the factorisation writes down for a chain.
+- [Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md): row times column, summed; here it turns out to be the sum over the middle day.
 
 ## Where this goes next
 
-- [multi-step-transitions](02-multi-step-transitions.md): the law on day n as the start law times $P^n$.
-- [hidden-markov-models](08-hidden-markov-models.md): a chain that is never seen directly, only through noisy signals.
-- [rating-transition-matrix-and-cumulative-default-rates](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md): ratings as states, default as a state never left.
-- markov-decision-processes: a chain whose matrix is chosen by a decision each step.
+- [n-step transitions](02-multi-step-transitions.md): the law on day n as the start law times $P^n$.
+- [Hidden Markov models](08-hidden-markov-models.md): a chain that is never seen directly, only through noisy signals.
+- [Rating transition matrices](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md): ratings as states, default as a state never left.
+- Markov decision processes: a chain whose matrix is chosen by a decision each step.
 
-Two days was one matrix product, $P^2$; a week ahead is the seventh power, and [multi-step-transitions](02-multi-step-transitions.md) shows why powers give the chances for any number of days.
+Two days was one matrix product, $P^2$; a week ahead is the seventh power, and [n-step transitions](02-multi-step-transitions.md) shows why powers give the chances for any number of days.
 
 ---
 

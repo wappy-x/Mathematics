@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Signals, Mean Reversion and Backtesting
-topic: Tethered prices
-item: Pairs trading
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/01-ornstein-uhlenbeck-mean-reversion-trading|ornstein-uhlenbeck-mean-reversion-trading]]"
-  - "[[Cards/09-Probability and statistics/12-Time Series/07-cointegration-in-outline|cointegration-in-outline]]"
-  - "[[Cards/09-Probability and statistics/12-Time Series/04-differencing-and-unit-roots|differencing-and-unit-roots]]"
-next:
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/03-momentum-and-factor-signals|momentum-and-factor-signals]]"
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/07-kalman-filter-for-dynamic-hedge-ratios|kalman-filter-for-dynamic-hedge-ratios]]"
-tags: [mathematics, financial-mathematics, pairs-trading-and-cointegration]
----
-
 # Pairs trading: two prices tied by cointegration, and the hedge ratio between them
 
-Financial mathematics → Signals, Mean Reversion and Backtesting → Tethered prices → Pairs trading
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Signals, Mean Reversion and Backtesting](../../../SYLLABUS.md#w12-s50) → Pairs trading
 
 ---
 
@@ -100,8 +81,8 @@ $$\text{value}_t = N_A A_t - N_B B_t = N_A\,(s_t + \hat c), \qquad \text{profit 
 
 ### When it holds
 
-- **Each price wanders on its own.** The test is built for two prices with unit roots: each price's daily change is steady noise, but its level drifts without a home ([differencing-and-unit-roots](../../09-Probability%20and%20statistics/12-Time%20Series/04-differencing-and-unit-roots.md)). If one price is already steady, the regression pairs a walker with a post and the cutoffs no longer apply.
-- **The tie is fixed over the window.** One ratio, one level. If a merger or a new business line changes the ratio mid-window, the fitted 1.3 is an average of two different truths and the spread inherits a wander. A ratio that moves is a different model: [kalman-filter-for-dynamic-hedge-ratios](07-kalman-filter-for-dynamic-hedge-ratios.md).
+- **Each price wanders on its own.** The test is built for two prices with unit roots: each price's daily change is steady noise, but its level drifts without a home ([Unit roots](../../09-Probability%20and%20statistics/12-Time%20Series/04-differencing-and-unit-roots.md)). If one price is already steady, the regression pairs a walker with a post and the cutoffs no longer apply.
+- **The tie is fixed over the window.** One ratio, one level. If a merger or a new business line changes the ratio mid-window, the fitted 1.3 is an average of two different truths and the spread inherits a wander. A ratio that moves is a different model: [A moving hedge ratio](07-kalman-filter-for-dynamic-hedge-ratios.md).
 - **The cutoff matches the recipe.** −3.36 is for two prices, an intercept in step one, no extra lags in step two, and about 250 days. Use the one-series cutoff instead and about 14% of unrelated pairs pass, not 5%.
 - **The spread's daily noise has no pattern of its own.** If today's noise echoes yesterday's, step two needs extra lagged changes (the augmented version) and a matching cutoff.
 - **B can be shorted cheaply.** Borrowing fees, dividends owed on the short shares and trading costs are left out; any of them can eat a spread that returns by a dollar.
@@ -144,7 +125,7 @@ For any numbers, $\sum_{i<j} (B_i - B_j)(A_i - A_j) = n \sum_t (B_t - \bar B)(A_
 
 A steady spread is pulled back towards its level. If the spread is $2 above its level today, tomorrow's change is, on average, a fall. So regress each day's change on the day before's spread. A tie shows up as a negative slope $\rho$: a fraction of each gap is closed each day. No tie shows up as $\rho$ near zero: yesterday's gap tells nothing about today's change.
 
-The simulated year was built with $\phi$ = 0.9, so 10% of each gap closes each day, and $\rho$ = −0.1. The fit returns $\hat\rho$ = −0.105, so $\phi$ = 0.895. A gap then halves in about 6.26 days, against 6.58 days if $\phi$ were exactly 0.9. The half-life is the natural clock for a trade, and the mean-reversion card turns it into entry and exit rules ([ornstein-uhlenbeck-mean-reversion-trading](01-ornstein-uhlenbeck-mean-reversion-trading.md)).
+The simulated year was built with $\phi$ = 0.9, so 10% of each gap closes each day, and $\rho$ = −0.1. The fit returns $\hat\rho$ = −0.105, so $\phi$ = 0.895. A gap then halves in about 6.26 days, against 6.58 days if $\phi$ were exactly 0.9. The half-life is the natural clock for a trade, and the mean-reversion card turns it into entry and exit rules ([Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md)).
 
 Size is judged against noise. The statistic $\tau$ divides $\hat\rho$ by its standard error. For the year, $\tau$ = −3.71.
 
@@ -187,7 +168,7 @@ Buy $N_A$ A shares, short $\hat\beta N_A$ B shares. The common wander cancels in
 
 Forcing equal dollars by shorting fewer B shares breaks the hedge: the position then carries a slice of the common wander the pair was built to remove.
 
-A second road is the Johansen procedure, which tests several prices at once, needs no price chosen as the left-hand side, and counts the independent ties. It uses matrix tools; [cointegration-in-outline](../../09-Probability%20and%20statistics/12-Time%20Series/07-cointegration-in-outline.md) places it.
+A second road is the Johansen procedure, which tests several prices at once, needs no price chosen as the left-hand side, and counts the independent ties. It uses matrix tools; [Cointegration](../../09-Probability%20and%20statistics/12-Time%20Series/07-cointegration-in-outline.md) places it.
 
 ---
 
@@ -672,8 +653,8 @@ The two outputs agree line for line. Same seeds and the same integer generator g
 > - **The ordinary cutoff.** Judging a fitted spread by the one-series Dickey–Fuller cutoff (−2.87 published, −2.92 simulated) passes about 14% of unrelated pairs instead of 5%. Use the Engle–Granger cutoff, −3.36 for two prices and about 250 days.
 > - **Regressing the wrong way.** Regressing B on A and inverting gives 2.14 on the six-date table instead of 1.3. With plenty of data the two directions draw closer, but they are different estimates. Pick one and keep it for the test and the trade.
 > - **Log prices.** A regression of log A on log B gives a slope that is an elasticity (percent moves in A per percent move in B), not a count of shares. It prescribes 1.3 shares only by coincidence.
-> - **Searching many pairs.** Test 100 unrelated pairs at 5% and about five pass by luck. The cutoff needs the correction for many trials in [deflated-sharpe-and-multiple-testing](06-deflated-sharpe-and-multiple-testing.md).
-> - **Fitting and trading on the same days.** A ratio fitted on the whole history, then used to trade that history, knows the future. Fit on one window, trade the next: [backtesting-pitfalls](05-backtesting-pitfalls.md).
+> - **Searching many pairs.** Test 100 unrelated pairs at 5% and about five pass by luck. The cutoff needs the correction for many trials in [Trying many strategies](06-deflated-sharpe-and-multiple-testing.md).
+> - **Fitting and trading on the same days.** A ratio fitted on the whole history, then used to trade that history, knows the future. Fit on one window, trade the next: [Backtesting](05-backtesting-pitfalls.md).
 
 ---
 
@@ -683,8 +664,8 @@ The two outputs agree line for line. Same seeds and the same integer generator g
 - **Share classes and dual listings.** One company's two share classes are tied almost exactly; the spread is small, returns fast, and the trade is crowded.
 - **Commodities and their producers.** Gold against gold miners: a looser tie that breaks when a producer hedges or has a bad year.
 - **Economics.** Cointegration was built for economic series: household spending tied to income, short interest rates tied to long ones. Granger's share of the 2003 Nobel memorial prize in economics was awarded for it.
-- **Trading rules on the spread.** Once the test passes, the spread is modelled as a mean-reverting process and traded when it strays: [ornstein-uhlenbeck-mean-reversion-trading](01-ornstein-uhlenbeck-mean-reversion-trading.md).
-- **Judging a pairs book.** How much skill a book of many pairs needs to pay: [information-coefficient-and-the-fundamental-law](04-information-coefficient-and-the-fundamental-law.md).
+- **Trading rules on the spread.** Once the test passes, the spread is modelled as a mean-reverting process and traded when it strays: [Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md).
+- **Judging a pairs book.** How much skill a book of many pairs needs to pay: [The fundamental law](04-information-coefficient-and-the-fundamental-law.md).
 
 > **Say it back**
 > Two prices that each wander can still be tied, if one fixed mix of them stops wandering; that is cointegration. Least squares finds the mixing ratio, because every wrong ratio leaves a wander whose squares pile up. The Engle–Granger test then asks whether the leftover spread is pulled back, and judges the answer against cutoffs built for fitted spreads, since fitting alone makes unrelated pairs look tidy. The trade holds the shares in the fitted ratio, 130 B against 100 A, so its profit is the number of A shares times the spread's change and nothing else.
@@ -693,14 +674,14 @@ The two outputs agree line for line. Same seeds and the same integer generator g
 
 ## What this builds on
 
-- [ornstein-uhlenbeck-mean-reversion-trading](01-ornstein-uhlenbeck-mean-reversion-trading.md): the model of a quantity pulled back to a level, its half-life, and trading rules for it; this card supplies the spread to feed it.
-- [cointegration-in-outline](../../09-Probability%20and%20statistics/12-Time%20Series/07-cointegration-in-outline.md): the definition in general, for many series, and the error-correction form that says which price does the returning.
-- [differencing-and-unit-roots](../../09-Probability%20and%20statistics/12-Time%20Series/04-differencing-and-unit-roots.md): what it means for a price to wander, and the Dickey–Fuller regression reused here in step two.
+- [Mean reversion](01-ornstein-uhlenbeck-mean-reversion-trading.md): the model of a quantity pulled back to a level, its half-life, and trading rules for it; this card supplies the spread to feed it.
+- [Cointegration](../../09-Probability%20and%20statistics/12-Time%20Series/07-cointegration-in-outline.md): the definition in general, for many series, and the error-correction form that says which price does the returning.
+- [Unit roots](../../09-Probability%20and%20statistics/12-Time%20Series/04-differencing-and-unit-roots.md): what it means for a price to wander, and the Dickey–Fuller regression reused here in step two.
 
 ## Where this goes next
 
-- [momentum-and-factor-signals](03-momentum-and-factor-signals.md): the opposite bet. Pairs trading bets a gap closes; momentum bets a move continues.
-- [kalman-filter-for-dynamic-hedge-ratios](07-kalman-filter-for-dynamic-hedge-ratios.md): lets the 1.3 drift from day to day and re-estimates it as each price arrives.
+- [Momentum and factor signals](03-momentum-and-factor-signals.md): the opposite bet. Pairs trading bets a gap closes; momentum bets a move continues.
+- [A moving hedge ratio](07-kalman-filter-for-dynamic-hedge-ratios.md): lets the 1.3 drift from day to day and re-estimates it as each price arrives.
 
 ---
 

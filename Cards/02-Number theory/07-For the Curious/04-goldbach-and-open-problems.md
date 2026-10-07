@@ -1,27 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: For the Curious
-topic: The primes at large
-item: Goldbach, twin primes and friends
-kind: conjecture
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/06-sieve-of-eratosthenes|sieve-of-eratosthenes]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/08-infinitude-of-primes|infinitude-of-primes]]"
-  - "[[Cards/01-Foundations/05-Logic/04-quantifiers|quantifiers]]"
-  - "[[Cards/01-Foundations/05-Logic/05-negating-quantifiers-and-counterexamples|negating-quantifiers-and-counterexamples]]"
-next: []
-tags:
-  - mathematics
-  - number theory
-  - goldbach-and-open-problems
----
-
 # Goldbach, twin primes and friends: the simple questions nobody has answered
 
-Number theory → For the Curious → The primes at large → Goldbach, twin primes and friends
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [For the Curious](../../../SYLLABUS.md#w02-s07) → Goldbach, twin primes and friends
 
 ---
 
@@ -89,7 +68,7 @@ The other direction is quick. One even number with no pair, and Goldbach is dead
 
 ### Step 2: the twin claim cannot be checked at all
 
-Goldbach checking does honest work: every even number cleared is a candidate counterexample gone. The twin claim gets no case cleared. Finding 101 and 103 says nothing about further out, and its counterexample would be a number beyond which twins never appear again — which no search can reach. Primes thin out as they climb ([how-primes-thin-out](03-how-primes-thin-out.md)); the tight pairs seem to keep coming.
+Goldbach checking does honest work: every even number cleared is a candidate counterexample gone. The twin claim gets no case cleared. Finding 101 and 103 says nothing about further out, and its counterexample would be a number beyond which twins never appear again — which no search can reach. Primes thin out as they climb ([How primes thin out](03-how-primes-thin-out.md)); the tight pairs seem to keep coming.
 
 ### Step 3: what has been proved
 
@@ -265,8 +244,8 @@ The two outputs match line for line: whole numbers, nothing to round.
 ## Where you meet it in real life
 
 - **Long silences.** A question a child can state has swallowed careers. That is why these are famous.
-- **Any claim with "every" in it.** A drug trial, code that must never crash: one counterexample settles it, a thousand clean runs do not — [negating-quantifiers-and-counterexamples](../../01-Foundations/05-Logic/05-negating-quantifiers-and-counterexamples.md).
-- **Prime hunting.** Checking Goldbach runs the machinery of [sieve-of-eratosthenes](../01-Divisibility%20and%20Primes/06-sieve-of-eratosthenes.md); the record hunt in [perfect-numbers-and-mersenne](02-perfect-numbers-and-mersenne.md) is open at its far end too.
+- **Any claim with "every" in it.** A drug trial, code that must never crash: one counterexample settles it, a thousand clean runs do not — [Negating a quantifier](../../01-Foundations/05-Logic/05-negating-quantifiers-and-counterexamples.md).
+- **Prime hunting.** Checking Goldbach runs the machinery of [The sieve of Eratosthenes](../01-Divisibility%20and%20Primes/06-sieve-of-eratosthenes.md); the record hunt in [Perfect numbers and Mersenne primes](02-perfect-numbers-and-mersenne.md) is open at its far end too.
 
 > **Say it back**
 > 100 is two primes added six ways: 3 + 97, 11 + 89, 17 + 83, 29 + 71, 41 + 59, 47 + 53. Goldbach's guess is that every even number from 4 up can do that, and computers have checked to 4,000,000,000,000,000,000 without a miss. That proves nothing, because the claim covers every even number and a check covers finitely many. One even number with no pair would end it in a second.
@@ -275,14 +254,14 @@ The two outputs match line for line: whole numbers, nothing to round.
 
 ## What this builds on
 
-- [sieve-of-eratosthenes](../01-Divisibility%20and%20Primes/06-sieve-of-eratosthenes.md): every prime below a limit, so the code knows what is prime.
-- [infinitude-of-primes](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md): the primes never run out — a big prime question that was settled.
-- [quantifiers](../../01-Foundations/05-Logic/04-quantifiers.md): what a sentence starting "every" claims.
-- [negating-quantifiers-and-counterexamples](../../01-Foundations/05-Logic/05-negating-quantifiers-and-counterexamples.md): one counterexample kills it.
+- [The sieve of Eratosthenes](../01-Divisibility%20and%20Primes/06-sieve-of-eratosthenes.md): every prime below a limit, so the code knows what is prime.
+- [There are infinitely many primes](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md): the primes never run out — a big prime question that was settled.
+- [Quantifiers](../../01-Foundations/05-Logic/04-quantifiers.md): what a sentence starting "every" claims.
+- [Negating a quantifier](../../01-Foundations/05-Logic/05-negating-quantifiers-and-counterexamples.md): one counterexample kills it.
 
 ## Where this goes next
 
-This shelf is a detour from the main line. The neighbours are [how-primes-thin-out](03-how-primes-thin-out.md) and [continued-fractions-and-leap-years](05-continued-fractions-and-leap-years.md), which ends the shelf on a question that has an answer.
+This shelf is a detour from the main line. The neighbours are [How primes thin out](03-how-primes-thin-out.md) and [Continued fractions](05-continued-fractions-and-leap-years.md), which ends the shelf on a question that has an answer.
 
 ---
 

@@ -1,25 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Series Solutions and Boundary Problems
-topic: Series that stop
-item: Legendre's equation
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/01-power-series-at-an-ordinary-point|power-series-at-an-ordinary-point]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/02-orthogonal-projection|orthogonal-projection]]"
-next:
-  - "[[Cards/13-Engineering mathematics/09-Quantum Mechanics in Outline/07-the-hydrogen-atom-in-outline|the-hydrogen-atom-in-outline]]"
-  - "[[Cards/18-Functional analysis/02-Hilbert Spaces/05-orthogonal-polynomials-from-gram-schmidt|orthogonal-polynomials-from-gram-schmidt]]"
-  - "[[Cards/19-Partial differential equations/04-Laplace, Poisson and Potentials/07-laplacian-in-polar-and-spherical-coordinates|laplacian-in-polar-and-spherical-coordinates]]"
-tags: [mathematics, differential equations and dynamics, legendre-polynomials]
----
-
 # Legendre's equation: for whole-number parameters the series stops, giving a family of polynomials
 
-Differential equations and dynamics → Series Solutions and Boundary Problems → Series that stop → Legendre's equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Series Solutions and Boundary Problems](../../../SYLLABUS.md#w08-s07) → Legendre's equation
 
 ---
 
@@ -91,7 +72,7 @@ $$\int_{-1}^{1} P_m(x)\,P_n(x)\,dx = 0, \qquad \int_{-1}^{1} P_n(x)^2\,dx = \fra
 - **n whole.** For n = 0.5 no series stops, and at x = 1 the partial sums run 0.2167, −0.4464, −1.1242 up to x^10, x^100, x^1000: no finite pole value.
 - **Finite at both poles.** The other series solves the equation too but blows up at x = ±1. A cone that leaves out the south pole asks for one finite pole only, and non-whole n return.
 - **Weight 1 on −1 to 1.** With weight 1 − x^2 inside the integral, P0 and P2 give −0.2667, not 0.
-- **Latitude only.** A voltage that also changes with longitude needs the associated Legendre functions (laplacian-in-polar-and-spherical-coordinates).
+- **Latitude only.** A voltage that also changes with longitude needs the associated Legendre functions (The Laplacian in round coordinates, and the modes it splits into).
 
 ---
 
@@ -99,7 +80,7 @@ $$\int_{-1}^{1} P_m(x)\,P_n(x)\,dx = 0, \qquad \int_{-1}^{1} P_n(x)^2\,dx = \fra
 
 ### Step 0: x = 0 is an ordinary point, so a power series works
 
-Near x = 0 the coefficient 1 − x^2 is not zero, so a power series solves the equation for any a_0 and a_1 ([power-series-at-an-ordinary-point](01-power-series-at-an-ordinary-point.md)). It is promised only up to the poles x = ±1, where 1 − x^2 is zero; whether it survives there decides everything.
+Near x = 0 the coefficient 1 − x^2 is not zero, so a power series solves the equation for any a_0 and a_1 ([Series solutions](01-power-series-at-an-ordinary-point.md)). It is promised only up to the poles x = ±1, where 1 − x^2 is zero; whether it survives there decides everything.
 
 ### Step 1: matching powers gives the two-step rule
 
@@ -139,7 +120,7 @@ P_n ((1 − x^2) P_m')' − P_m ((1 − x^2) P_n')' is the rate of (1 − x^2)(P
 
 </details>
 
-The right side is zero: 1 − x^2 vanishes at both ends, where the polynomials are finite. For m ≠ n the bracket on the left is not zero, so the integral is. The same argument for every equation of this shape is [sturm-liouville-and-orthogonality](09-sturm-liouville-and-orthogonality.md).
+The right side is zero: 1 − x^2 vanishes at both ends, where the polynomials are finite. For m ≠ n the bracket on the left is not zero, so the integral is. The same argument for every equation of this shape is [Sturm-Liouville](09-sturm-liouville-and-orthogonality.md).
 
 The squared integrals are 2, 0.6667, 0.4000, 0.2857, 0.2222 for n = 0 to 4, matching 2/(2n + 1), proved in the DLMF (Sources).
 
@@ -149,9 +130,9 @@ If a surface voltage f(x) is c_0 P_0 + c_1 P_1 + c_2 P_2 + …, multiply by P_n 
 
 $$c_n=\frac{2n+1}{2}\int_{-1}^{1}f(x)\,P_n(x)\,dx.$$
 
-This is projection onto one direction ([orthogonal-projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)), with the integral as the dot product. For f = 30x^2: c_0 = 10 V, c_2 = 20 V, the rest 0, so 30x^2 = 10 + 20 P2(x).
+This is projection onto one direction ([Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)), with the integral as the dot product. For f = 30x^2: c_0 = 10 V, c_2 = 20 V, the rest 0, so 30x^2 = 10 + 20 P2(x).
 
-Inside, each P_n is multiplied by (r/R)^n, so V = c_0 + c_2 (r/R)^2 P2(cos θ); that radial factor is derived in laplacian-in-polar-and-spherical-coordinates.
+Inside, each P_n is multiplied by (r/R)^n, so V = c_0 + c_2 (r/R)^2 P2(cos θ); that radial factor is derived in The Laplacian in round coordinates, and the modes it splits into.
 
 A second road to the polynomials, with no series, is Bonnet's rule, started from P0 = 1 and P1 = x:
 
@@ -187,7 +168,7 @@ The centre sits at 10 V, the surface voltage averaged over the sphere; halfway o
 
 ## Code, from first principles, and it actually runs
 
-Two roads each: the polynomials by the stopped series and by Bonnet's rule; orthogonality exactly from coefficients (x^k integrates to 2/(k+1) for even k, 0 for odd) and by Simpson's rule, a weighted sum of samples. Euler's rule, adding step length times rate ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)), solves the n = 2 equation with no polynomial; its error halves with the step. The centre voltage is checked against the surface average over θ.
+Two roads each: the polynomials by the stopped series and by Bonnet's rule; orthogonality exactly from coefficients (x^k integrates to 2/(k+1) for even k, 0 for odd) and by Simpson's rule, a weighted sum of samples. Euler's rule, adding step length times rate ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)), solves the n = 2 equation with no polynomial; its error halves with the step. The centre voltage is checked against the surface average over θ.
 
 ### Python
 
@@ -408,7 +389,7 @@ The two outputs match line for line.
 
 - **Electrostatics.** A charge set off the centre has a voltage that is a sum of P_n terms, the multipole expansion.
 - **Geodesy.** The Earth's gravity is a sum of P_n of the sine of latitude; P2 carries the equatorial bulge.
-- **Atoms.** Electron states' angular shapes are built on P_n (the-hydrogen-atom-in-outline).
+- **Atoms.** Electron states' angular shapes are built on P_n (Hydrogen in outline).
 - **Quadrature.** Gauss-Legendre integration samples a function at the zeros of P_n.
 
 > **Say it back**
@@ -418,16 +399,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [power-series-at-an-ordinary-point](01-power-series-at-an-ordinary-point.md): the substitution, the matching of powers, and the radius the series is promised.
-- [orthogonal-projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md): reading off an amount along one direction when the directions are at right angles.
+- [Series solutions](01-power-series-at-an-ordinary-point.md): the substitution, the matching of powers, and the radius the series is promised.
+- [Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md): reading off an amount along one direction when the directions are at right angles.
 
 ## Where this goes next
 
-- the-hydrogen-atom-in-outline: P_n in the shapes of electron states.
-- orthogonal-polynomials-from-gram-schmidt: the same polynomials from 1, x, x^2, … with no equation.
-- laplacian-in-polar-and-spherical-coordinates: the equation's origin and the factor (r/R)^n.
+- Hydrogen in outline: P_n in the shapes of electron states.
+- Orthogonal polynomials: the same polynomials from 1, x, x^2, … with no equation.
+- The Laplacian in round coordinates, and the modes it splits into: the equation's origin and the factor (r/R)^n.
 
-Orthogonality came from the equation's shape; [sturm-liouville-and-orthogonality](09-sturm-liouville-and-orthogonality.md) says which equations share it, so their solutions can always be read off one at a time.
+Orthogonality came from the equation's shape; [Sturm-Liouville](09-sturm-liouville-and-orthogonality.md) says which equations share it, so their solutions can always be read off one at a time.
 
 ---
 

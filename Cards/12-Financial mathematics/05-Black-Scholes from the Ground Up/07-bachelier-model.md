@@ -1,26 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Black-Scholes from the Ground Up
-topic: Absolute moves
-item: Bachelier
-kind: model
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/06-black-76-and-forward-level-pricing|black-76-and-forward-level-pricing]]"
-next:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/08-shifted-lognormal-and-volatility-conversion|shifted-lognormal-and-volatility-conversion]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/01-options-on-commodity-futures|options-on-commodity-futures]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - bachelier-model
----
-
 # Bachelier: the normal model for a level that can go negative
 
-Financial mathematics → Black-Scholes from the Ground Up → Absolute moves → Bachelier
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Black-Scholes from the Ground Up](../../../SYLLABUS.md#w12-s05) → Bachelier
 
 ---
 
@@ -30,7 +10,7 @@ A bank quotes an interest rate this morning for a year-long stretch starting a y
 
 A contract written on it pays, on expiry day one year from today, whatever the rate exceeds **0.75 percent** by, and nothing if it falls short: at 1.00 percent on the day it pays 25 basis points, a basis point being one hundredth of one percent. Rates desks call it a caplet. Every figure below is for one unit of notional and one year of accrual; a real contract scales by both. A safe deposit earns 0.50 percent a year, the rate is expected to wander by about **60 basis points** over the year, and the contract is worth **13.42 basis points** today.
 
-Everything difficult about that number sits in the word "wander". The Black-Scholes family measures wander as a percentage of the level ([black-76-and-forward-level-pricing](06-black-76-and-forward-level-pricing.md)): 20 percent volatility moves a level of 0.50 percent by ten basis points a year, and a level of 5 percent by a hundred. A level that only ever gets multiplied can approach zero but never reach or cross it, and the machinery makes that literal: it runs on the logarithm of the level divided by the strike, which has no value at zero or below.
+Everything difficult about that number sits in the word "wander". The Black-Scholes family measures wander as a percentage of the level ([Black-76](06-black-76-and-forward-level-pricing.md)): 20 percent volatility moves a level of 0.50 percent by ten basis points a year, and a level of 5 percent by a hundred. A level that only ever gets multiplied can approach zero but never reach or cross it, and the machinery makes that literal: it runs on the logarithm of the level divided by the strike, which has no value at zero or below.
 
 Rates crossed zero anyway. The European Central Bank's deposit rate went below zero in June 2014, Swiss rates followed, and a barrel of oil for May delivery settled below zero on 20 April 2020. On those days the percentage models did not return a bad price; they returned no price.
 
@@ -94,10 +74,10 @@ Here that is −24.875312 basis points, with no volatility in it anywhere. And t
 
 ### When it holds
 
-- **The wander is the same absolute size wherever the level sits, and constant for the whole life.** Real rates wander a little less when very low; the repair is a floor put somewhere other than zero: [shifted-lognormal-and-volatility-conversion](08-shifted-lognormal-and-volatility-conversion.md).
+- **The wander is the same absolute size wherever the level sits, and constant for the whole life.** Real rates wander a little less when very low; the repair is a floor put somewhere other than zero: [Shifted lognormal and volatility conversion](08-shifted-lognormal-and-volatility-conversion.md).
 - **A bell curve has no floor, so the model gives real weight to negative levels.** Here 20.2 percent of its weight sits below zero: honest for a rate at 0.50 percent, not for a share price.
 - **One volatility for one strike.** Matched on today's level, this model prices the 75 basis point strike at 13.42 where the percentage model says 17.02. Neither is wrong.
-- **One known bank rate, and one date.** Volatility runs to expiry, the discount to the day the cash arrives; here they are the same day, but a caplet usually fixes its rate months before it pays. The underlying of a rate option is itself a rate, so discounting and payment move together: the honest discount is the market's own zero-coupon bond price, a change of yardstick handled in [change-of-numeraire-in-pricing](05-change-of-numeraire-in-pricing.md).
+- **One known bank rate, and one date.** Volatility runs to expiry, the discount to the day the cash arrives; here they are the same day, but a caplet usually fixes its rate months before it pays. The underlying of a rate option is itself a rate, so discounting and payment move together: the honest discount is the market's own zero-coupon bond price, a change of yardstick handled in [Changing the unit of account](05-change-of-numeraire-in-pricing.md).
 
 **Conventions verified 19 Sep 2026:** normal volatility is quoted in basis points per square root of a year, and the rate here is continuously compounded with $T$ in calendar years. Live quotes carry day-count and compounding conventions that differ by market and do get changed; convert before substituting.
 
@@ -107,7 +87,7 @@ Here that is −24.875312 basis points, with no volatility in it anywhere. And t
 
 ### Step 0: a forward that costs nothing to sign cannot drift
 
-Signing a forward takes no money today, so any pricing rule the market obeys must give a position that cost nothing an average gain of nothing, or anyone could sign a billion and stand back ([risk-neutral-measure-and-the-fundamental-theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)). In the world used for pricing, then, the average of the level on expiry day is the level quoted today. The forward goes nowhere on average; it only spreads.
+Signing a forward takes no money today, so any pricing rule the market obeys must give a position that cost nothing an average gain of nothing, or anyone could sign a billion and stand back ([The fundamental theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)). In the world used for pricing, then, the average of the level on expiry day is the level quoted today. The forward goes nowhere on average; it only spreads.
 
 The model then makes one further assumption: that spread is a plain bell curve of width $s = \sigma_N\sqrt{T}$, centred on today's quote. Nothing multiplies the level, which is what keeps zero from being special.
 
@@ -182,11 +162,11 @@ A desk raised on the percentage models thinks in a volatility of 20 percent, not
 
 $$\sigma_N \approx \sigma \, F$$
 
-where $\sigma$ is the percentage volatility. A percentage move applied to a level is an absolute move of that size times the level, the only quantity either formula measures at the money. Matched that way, the normal price sits above the percentage one by a *fraction* — not an amount of money — of about the percentage volatility squared times the years, divided by 24. The next section measures it; the next card converts properly, in both directions and away from the money: [shifted-lognormal-and-volatility-conversion](08-shifted-lognormal-and-volatility-conversion.md).
+where $\sigma$ is the percentage volatility. A percentage move applied to a level is an absolute move of that size times the level, the only quantity either formula measures at the money. Matched that way, the normal price sits above the percentage one by a *fraction* — not an amount of money — of about the percentage volatility squared times the years, divided by 24. The next section measures it; the next card converts properly, in both directions and away from the money: [Shifted lognormal and volatility conversion](08-shifted-lognormal-and-volatility-conversion.md).
 
 ### The other door: the hedge, written as an equation
 
-The other route is the one Black and Scholes took: hold the contract, sell enough forwards that a small move cancels, and demand that the riskless position left over earn the bank rate ([black-scholes-by-delta-hedging](03-black-scholes-by-delta-hedging.md)). Out comes an equation the premium must obey:
+The other route is the one Black and Scholes took: hold the contract, sell enough forwards that a small move cancels, and demand that the riskless position left over earn the bank rate ([Black-Scholes by hedging](03-black-scholes-by-delta-hedging.md)). Out comes an equation the premium must obey:
 
 $$\frac{\partial V}{\partial t} + \tfrac12\sigma_N^2\,\frac{\partial^2 V}{\partial F^2} - rV = 0$$
 
@@ -713,8 +693,8 @@ The two outputs match line for line.
 
 - **Caps, floors and swaptions.** When euro and Swiss rates fell through zero from 2014, percentage volatility stopped being quotable: there is no percentage volatility of a negative number. The interbank market moved to normal volatility and has quoted rate options that way since. Every floor struck at zero is a Bachelier put, and two desks agreeing on 60 basis points have agreed the price.
 - **Negative oil.** On 20 April 2020 the expiring West Texas Intermediate contract settled below zero. Exchanges switched the affected energy options to this model within days: nothing else standard would return a number.
-- **Spread options.** A difference between two prices — a refinery margin, a location basis, a calendar spread — is often negative, so a normal model is the honest default: [options-on-commodity-futures](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md).
-- **The middle ground.** A share needs a floor and a rate does not, so most desks keep a floor but move it below zero by a chosen amount: [shifted-lognormal-and-volatility-conversion](08-shifted-lognormal-and-volatility-conversion.md).
+- **Spread options.** A difference between two prices — a refinery margin, a location basis, a calendar spread — is often negative, so a normal model is the honest default: [Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md).
+- **The middle ground.** A share needs a floor and a rate does not, so most desks keep a floor but move it below zero by a chosen amount: [Shifted lognormal and volatility conversion](08-shifted-lognormal-and-volatility-conversion.md).
 
 > **Say it back**
 > Bachelier's level moves by absolute amounts rather than percentages, so it can sit at zero, cross it, and keep going. The premium is the head start times the chance of still being ahead, plus a payment for the wander, discounted once. Out of the money the head start is negative and the wander pays for everything: 13.42 basis points here, 21.95 wander and −8.46 head start. At the money the premium is about 0.4 times the volatility times the square root of the wait. The volatility carries the level's own units, and that unit is the most dangerous thing on the card.
@@ -723,14 +703,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [black-76-and-forward-level-pricing](06-black-76-and-forward-level-pricing.md): the forward as the thing bet on, the discount factor outside the brackets, and the two-probability shape replaced here by a head start and a wander.
-- [risk-neutral-measure-and-the-fundamental-theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md): why a contract that costs nothing to sign has an average gain of nothing, leaving the forward drifting nowhere in Step 0.
-- [geometric-brownian-motion-for-prices](01-geometric-brownian-motion-for-prices.md): the percentage-moves engine and its floor at zero, swapped here for one line of addition.
+- [Black-76](06-black-76-and-forward-level-pricing.md): the forward as the thing bet on, the discount factor outside the brackets, and the two-probability shape replaced here by a head start and a wander.
+- [The fundamental theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md): why a contract that costs nothing to sign has an average gain of nothing, leaving the forward drifting nowhere in Step 0.
+- [Prices as geometric Brownian motion](01-geometric-brownian-motion-for-prices.md): the percentage-moves engine and its floor at zero, swapped here for one line of addition.
 
 ## Where this goes next
 
-- [shifted-lognormal-and-volatility-conversion](08-shifted-lognormal-and-volatility-conversion.md): a floor put somewhere other than zero, and the conversion done properly in both directions.
-- [options-on-commodity-futures](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md): this model on barrels and spreads, where the level went negative in public.
+- [Shifted lognormal and volatility conversion](08-shifted-lognormal-and-volatility-conversion.md): a floor put somewhere other than zero, and the conversion done properly in both directions.
+- [Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md): this model on barrels and spreads, where the level went negative in public.
 
 This card removed the floor at zero altogether, right for a rate and wrong for a share: the next asks where the floor should sit, and prices what it costs to put it there.
 

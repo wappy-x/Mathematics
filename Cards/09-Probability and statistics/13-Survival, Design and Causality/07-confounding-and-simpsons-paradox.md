@@ -1,24 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Survival, Design and Causality
-topic: Observational comparisons
-item: Confounding
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/07-independence|independence]]"
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/05-conditional-probability|conditional-probability]]"
-next:
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/06-densities-and-likelihood-ratios|densities-and-likelihood-ratios]]"
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/01-conditioning-on-a-partition|conditioning-on-a-partition]]"
-tags: [mathematics, probability and statistics, confounding-and-simpsons-paradox]
----
-
 # Confounding: the hidden variable that reverses a conclusion
 
-Probability and statistics → Survival, Design and Causality → Observational comparisons → Confounding
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Survival, Design and Causality](../../../SYLLABUS.md#w09-s13) → Confounding
 
 ---
 
@@ -32,7 +14,7 @@ Nothing is wrong with the arithmetic. Women applied mostly to the selective depa
 
 **A pooled rate is an average of the stratum rates weighted by each group's own mix, so a confounder, a variable linked both to the group and to the outcome, can create, hide or reverse a gap; comparing the groups on a common mix removes the confounders that were recorded, and only random assignment removes the ones that were not.**
 
-**What kind of fact this is:** a theorem about weighted averages, proved on this card in Why it works, with the reversal itself proved on [independence](../01-Chance%20and%20Events/07-independence.md). Reading any adjusted gap as a cause rests on an assumption about how the data arose, which the table cannot check.
+**What kind of fact this is:** a theorem about weighted averages, proved on this card in Why it works, with the reversal itself proved on [Independence](../01-Chance%20and%20Events/07-independence.md). Reading any adjusted gap as a cause rests on an assumption about how the data arose, which the table cannot check.
 
 ### The picture: ahead in both groups, behind overall
 
@@ -51,7 +33,7 @@ Six bars, read in pairs. In the open departments women lead, 79.7 against 62.5 p
 
 ## The formula
 
-Notation first, in words. $A$ is the event "admitted". A letter $g$ names a group of applicants: W for women, M for men. A letter $d$ names a department, or a kind of department: O for open, S for selective. $P(A \mid g)$, read "the chance of A given g", is the admission rate within group $g$ ([conditional-probability](../01-Chance%20and%20Events/05-conditional-probability.md)). Three shorthands carry the card:
+Notation first, in words. $A$ is the event "admitted". A letter $g$ names a group of applicants: W for women, M for men. A letter $d$ names a department, or a kind of department: O for open, S for selective. $P(A \mid g)$, read "the chance of A given g", is the admission rate within group $g$ ([Conditional probability](../01-Chance%20and%20Events/05-conditional-probability.md)). Three shorthands carry the card:
 
 - $r_{g,d} = P(A \mid g, d)$, the admission rate of group $g$ inside department $d$;
 - $w_{g,d} = P(d \mid g)$, the share of group $g$'s applications that went to $d$, its **mix**;
@@ -131,7 +113,7 @@ The checks build that world. SplitMix64, a small random number generator written
 
 ### Step 3: the real gap, split in two
 
-The real rates differ by sex inside departments, so the pooled gap has two parts. The split is proved on [independence](../01-Chance%20and%20Events/07-independence.md): add and subtract the men's rates weighted by the women's mix.
+The real rates differ by sex inside departments, so the pooled gap has two parts. The split is proved on [Independence](../01-Chance%20and%20Events/07-independence.md): add and subtract the men's rates weighted by the women's mix.
 
 $$p_W - p_M = \underbrace{\sum_d w_{W,d}\,\big(r_{W,d} - r_{M,d}\big)}_{\text{inside departments}} + \underbrace{\sum_d \big(w_{W,d} - w_{M,d}\big)\, r_{M,d}}_{\text{different mix}}$$
 
@@ -172,7 +154,7 @@ Data recorded as it happened, with no one assigning the groups, is **observation
 
 **The table does not say which way the arrows point.** At Berkeley, sex came first and department choice after. Holding department fixed answers one question: did the departments' decisions favour men? On these counts, no: on the pool's mix women were admitted 4.3 points more often (SE 1.8), though the table cannot rule out differences among the applicants themselves. It does not answer another: did being a woman lower the chance of admission to Berkeley by any route? Choice of department is one such route, and the pooled −14.2 includes it. Which comparison is right depends on the question, and the counts cannot choose.
 
-Random assignment of the thing being compared removes all three. Sex cannot be assigned, but a drug or a web page can. If a lottery decides who gets it, both arms have the same mix of every variable, recorded or not, up to chance, so the mix term in Step 3 vanishes. The checks run the department half of this: departments drawn by lottery with the pool's shares, sex ignored in admission, and the pooled gap is −0.05 points (SE 0.22). Designing such comparisons is [randomised-experiments-and-ab-tests](04-randomised-experiments-and-ab-tests.md).
+Random assignment of the thing being compared removes all three. Sex cannot be assigned, but a drug or a web page can. If a lottery decides who gets it, both arms have the same mix of every variable, recorded or not, up to chance, so the mix term in Step 3 vanishes. The checks run the department half of this: departments drawn by lottery with the pool's shares, sex ignored in admission, and the pooled gap is −0.05 points (SE 0.22). Designing such comparisons is [Randomised experiments](04-randomised-experiments-and-ab-tests.md).
 
 The same comparison can be made with least squares, fitting admission (1 or 0) on sex and department together. With department entered as a category, it reaches a weighted within-department gap like this one, with weights the fit chooses rather than the pool's mix.
 
@@ -615,8 +597,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Hospital league tables.** A hospital that takes the sickest patients can have the worst death rate and the best results for each kind of patient. Published comparisons standardise on case mix: the same weighting as Step 4.
-- **Website A/B tests with a changing audience.** If one version of a page happens to receive more mobile visitors, who buy less, the pooled conversion rate mixes device with design. Random assignment of each visitor is the protection, [randomised-experiments-and-ab-tests](04-randomised-experiments-and-ab-tests.md); splitting by device before assigning is [blocking-and-factorial-designs](05-blocking-and-factorial-designs.md).
-- **Clinical trials with dropouts.** Patients who leave a trial early are often sicker. Comparing only those who stayed is a comparison on a mix the treatment itself may have changed. Survival methods, starting with [survival-functions-and-hazards](01-survival-functions-and-hazards.md), use every patient's time under watch, but only when leaving is unrelated to the outcome. Sicker patients leaving is **informative censoring**, dropout linked to the outcome: a confounding problem those methods do not remove; [kaplan-meier](02-kaplan-meier.md) shows it making the curve too optimistic.
+- **Website A/B tests with a changing audience.** If one version of a page happens to receive more mobile visitors, who buy less, the pooled conversion rate mixes device with design. Random assignment of each visitor is the protection, [Randomised experiments](04-randomised-experiments-and-ab-tests.md); splitting by device before assigning is [Blocking and factorial designs](05-blocking-and-factorial-designs.md).
+- **Clinical trials with dropouts.** Patients who leave a trial early are often sicker. Comparing only those who stayed is a comparison on a mix the treatment itself may have changed. Survival methods, starting with [Survival](01-survival-functions-and-hazards.md), use every patient's time under watch, but only when leaving is unrelated to the outcome. Sicker patients leaving is **informative censoring**, dropout linked to the outcome: a confounding problem those methods do not remove; [Kaplan-Meier](02-kaplan-meier.md) shows it making the curve too optimistic.
 - **Pay-gap and admission audits.** Any claim of discrimination or its absence rests on which variables are held fixed. Holding fixed job grade, or department, removes the route that runs through who gets which grade.
 
 > **Say it back**
@@ -626,17 +608,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [independence](../01-Chance%20and%20Events/07-independence.md): the split of a pooled gap into an inside part and a mix part, and the proof that equal mixes cannot reverse.
-- [conditional-probability](../01-Chance%20and%20Events/05-conditional-probability.md): rates given a group and a department, the multiplication rule and the law of total probability.
+- [Independence](../01-Chance%20and%20Events/07-independence.md): the split of a pooled gap into an inside part and a mix part, and the proof that equal mixes cannot reverse.
+- [Conditional probability](../01-Chance%20and%20Events/05-conditional-probability.md): rates given a group and a department, the multiplication rule and the law of total probability.
 
 ## Where this goes next
 
-- [conditioning-on-a-partition](../../10-Measure%20and%20integration/09-Conditional%20Expectation/01-conditioning-on-a-partition.md): the departments are the cells of a partition, and each stratum rate is a cell average; the measure wing rebuilds that conditioning so it reaches a confounder measured on a scale, such as a grade, whose every exact value has chance zero.
-- [densities-and-likelihood-ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): Step 4's applicant weights $w_d / w_{g,d}$ are a ratio of two mixes; there the same reweighting turns an average under one model into an average under another.
+- [Conditioning on a partition](../../10-Measure%20and%20integration/09-Conditional%20Expectation/01-conditioning-on-a-partition.md): the departments are the cells of a partition, and each stratum rate is a cell average; the measure wing rebuilds that conditioning so it reaches a confounder measured on a scale, such as a grade, whose every exact value has chance zero.
+- [Densities and likelihood ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): Step 4's applicant weights $w_d / w_{g,d}$ are a ratio of two mixes; there the same reweighting turns an average under one model into an average under another.
 
-The design answers sit earlier on this shelf: [randomised-experiments-and-ab-tests](04-randomised-experiments-and-ab-tests.md) equalises every mix at once by lottery, [blocking-and-factorial-designs](05-blocking-and-factorial-designs.md) fixes a known confounder by randomising within each stratum, and [permutation-tests](06-permutation-tests.md) tests a gap by reshuffling the labels, valid exactly when a lottery assigned them.
+The design answers sit earlier on this shelf: [Randomised experiments](04-randomised-experiments-and-ab-tests.md) equalises every mix at once by lottery, [Blocking and factorial designs](05-blocking-and-factorial-designs.md) fixes a known confounder by randomising within each stratum, and [Permutation tests](06-permutation-tests.md) tests a gap by reshuffling the labels, valid exactly when a lottery assigned them.
 
-Splitting by department worked because each department is a cell with many applicants in it; holding fixed a confounder with no such cells, such as an exact grade, is the question [conditioning-on-a-partition](../../10-Measure%20and%20integration/09-Conditional%20Expectation/01-conditioning-on-a-partition.md) and the cards after it answer.
+Splitting by department worked because each department is a cell with many applicants in it; holding fixed a confounder with no such cells, such as an exact grade, is the question [Conditioning on a partition](../../10-Measure%20and%20integration/09-Conditional%20Expectation/01-conditioning-on-a-partition.md) and the cards after it answer.
 
 ---
 

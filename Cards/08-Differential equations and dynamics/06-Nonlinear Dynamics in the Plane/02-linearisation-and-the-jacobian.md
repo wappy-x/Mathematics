@@ -1,28 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Nonlinear Dynamics in the Plane
-topic: Reading a rest up close
-item: Linearisation
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/01-phase-portraits-and-nullclines|phase-portraits-and-nullclines]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/05-classifying-equilibria-by-trace-and-determinant|classifying-equilibria-by-trace-and-determinant]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/03-the-nonlinear-pendulum|the-nonlinear-pendulum]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/04-lyapunov-functions|lyapunov-functions]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/06-predator-prey|predator-prey]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/08-limit-cycles-and-van-der-pol|limit-cycles-and-van-der-pol]]"
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/02-linearisation-about-an-equilibrium|linearisation-about-an-equilibrium]]"
-tags: [mathematics, differential equations and dynamics, linearisation-and-the-jacobian]
----
-
 # Linearisation: near an equilibrium the system looks like its matrix of slopes, and usually that is enough
 
-Differential equations and dynamics → Nonlinear Dynamics in the Plane → Reading a rest up close → Linearisation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → Linearisation
 
 ---
 
@@ -30,7 +8,7 @@ Differential equations and dynamics → Nonlinear Dynamics in the Plane → Read
 
 A playground swing can rest in two places. Hanging straight down, a push dies away in a few shrinking swings. Balanced straight up on rigid rods, the smallest breath of wind tips it over.
 
-Gravity pulls with the sine of the angle: the law is not linear and has no formula solution. Close to either rest the sine curve is almost a straight line, and straight-line laws are solved in full ([classifying-equilibria-by-trace-and-determinant](../04-Systems%20and%20the%20Matrix%20Exponential/05-classifying-equilibria-by-trace-and-determinant.md)).
+Gravity pulls with the sine of the angle: the law is not linear and has no formula solution. Close to either rest the sine curve is almost a straight line, and straight-line laws are solved in full ([Trace and determinant](../04-Systems%20and%20the%20Matrix%20Exponential/05-classifying-equilibria-by-trace-and-determinant.md)).
 
 So near a rest, replace each rate by its straight-line version. The rates' slopes, in a two-by-two table, form the **Jacobian matrix**, after Carl Jacobi; the swap is **linearisation**. At the hanging rest the matrix says "spiral in"; at the upright rest, "saddle": one way in, one way out. Both verdicts are right.
 
@@ -52,7 +30,7 @@ The angle from hanging is $\theta$ (theta), in radians; the angular speed is $\o
 
 $$\theta' = f(\theta, \omega) = \omega, \qquad \omega' = g(\theta, \omega) = -\sin\theta - 0.5\,\omega$$
 
-Both rates are zero at the **rests**, hanging (0, 0) and inverted (π, 0). Call the rest's angle $\theta_e$ and the offsets from it $u = \theta - \theta_e$ and $v = \omega$. ∂f/∂θ is the slope of f when only θ moves ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)).
+Both rates are zero at the **rests**, hanging (0, 0) and inverted (π, 0). Call the rest's angle $\theta_e$ and the offsets from it $u = \theta - \theta_e$ and $v = \omega$. ∂f/∂θ is the slope of f when only θ moves ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)).
 
 $$J = \begin{pmatrix} \partial f/\partial\theta & \partial f/\partial\omega \\ \partial g/\partial\theta & \partial g/\partial\omega \end{pmatrix}_{\text{at the rest}}, \qquad \begin{pmatrix} u \\ v \end{pmatrix}' = J\begin{pmatrix} u \\ v \end{pmatrix} + r$$
 
@@ -110,11 +88,11 @@ At the hanging rest every linear motion shrinks like $e^{-0.25t}$. The leftover,
 
 Write x for the offset (u, v), |x| for its length. Then x' = Jx + r(x) with |r(x)| at most |u|^3/6, so at most (δ^2/6)|x| while |x| is below δ.
 
-By variation of constants ([forced-systems-and-variation-of-constants](../04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md)): x(t) = e^(Jt) x(0) + the integral from 0 to t of e^(J(t − s)) r(x(s)) ds.
+By variation of constants ([Forced systems](../04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md)): x(t) = e^(Jt) x(0) + the integral from 0 to t of e^(J(t − s)) r(x(s)) ds.
 
 Both eigenvalues have real part −0.25, so some constant M gives |e^(Jt) y| at most M e^(−0.25t) |y| for all vectors y and all t from 0 on.
 
-Put φ(t) = e^(0.25t)|x(t)|. While |x| is below δ, φ(t) is at most M|x(0)| + (Mδ^2/6) times the integral of φ from 0 to t. Gronwall's inequality ([gronwall-and-continuous-dependence](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/04-gronwall-and-continuous-dependence.md)) turns that into φ(t) at most M|x(0)| e^((Mδ^2/6)t), so
+Put φ(t) = e^(0.25t)|x(t)|. While |x| is below δ, φ(t) is at most M|x(0)| + (Mδ^2/6) times the integral of φ from 0 to t. Gronwall's inequality ([Gronwall's inequality](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/04-gronwall-and-continuous-dependence.md)) turns that into φ(t) at most M|x(0)| e^((Mδ^2/6)t), so
 
 |x(t)| at most M|x(0)| e^(−(0.25 − Mδ^2/6)t).
 
@@ -132,7 +110,7 @@ The **Hartman–Grobman theorem** (Grobman 1959, Hartman 1960): at a hyperbolic 
 
 Replace friction by air drag, growing with speed squared: $\omega' = -\sin\theta - k\,\omega|\omega|$. Drag has slope 0 at ω = 0, so the hanging Jacobian is `[[0, 1], [-1, 0]]`: τ = 0, Δ = 1, a centre, for every k.
 
-The energy is $E = \omega^2/2 + 1 - \cos\theta$, and the chain rule gives $E' = \omega\omega' + \sin\theta\,\theta' = -k|\omega|^3$. With k = 0 energy is fixed and the swing swings for ever ([the-nonlinear-pendulum](03-the-nonlinear-pendulum.md)). With k above 0 energy falls whenever the swing moves: it spirals in. With k below 0, a child pumping, it spirals out. One matrix, three truths.
+The energy is $E = \omega^2/2 + 1 - \cos\theta$, and the chain rule gives $E' = \omega\omega' + \sin\theta\,\theta' = -k|\omega|^3$. With k = 0 energy is fixed and the swing swings for ever ([The pendulum](03-the-nonlinear-pendulum.md)). With k above 0 energy falls whenever the swing moves: it spirals in. With k below 0, a child pumping, it spirals out. One matrix, three truths.
 
 Released at 0.5 rad, energy 0.122417. At t = 60 the drag-free swing still holds 0.122417; with k = 0.5, 0.002308. Averaging the loss over each swing gives amplitude A(t) = A(0)/(1 + 4kA(0)t/(3π)), shrinking like one over time, not exponentially: energy 0.002303.
 
@@ -169,7 +147,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Road one: the Jacobian by hand, then its eigenvalues. Road two: the Jacobian by nudging each variable, and the true swing stepped by Runge–Kutta 4 ([runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md)), step 0.01. Four asserts tie the roads together.
+Road one: the Jacobian by hand, then its eigenvalues. Road two: the Jacobian by nudging each variable, and the true swing stepped by Runge–Kutta 4 ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)), step 0.01. Four asserts tie the roads together.
 
 ### Python
 
@@ -368,15 +346,15 @@ The two outputs match line for line.
 >
 > - **Slopes before the rest.** At (π/2, 0) the rates are 0 and −1; the matrix there says nothing about stillness.
 > - **A dropped sign.** The slope of −sin θ at π is +1. Reading it as −1 gives a spiral at the top, not the saddle.
-> - **Stretching the verdict.** "Stable spiral" is local. That the swing released at 2 rad settles needs [lasalle-and-the-damped-pendulum](05-lasalle-and-the-damped-pendulum.md), not the matrix.
+> - **Stretching the verdict.** "Stable spiral" is local. That the swing released at 2 rad settles needs [LaSalle's principle](05-lasalle-and-the-damped-pendulum.md), not the matrix.
 
 ---
 
 ## Where you meet it in real life
 
-- **Balancing machines.** A self-balancing scooter is an inverted pendulum; feedback designed on its linearisation pushes the out-eigenvalue below zero (linearisation-about-an-equilibrium).
-- **Populations.** Predator and prey numbers rest where births balance deaths, at a linear centre the matrix cannot settle ([predator-prey](06-predator-prey.md)).
-- **Epidemics.** An outbreak takes off when one eigenvalue at the disease-free rest is positive ([the-sir-epidemic-model](07-the-sir-epidemic-model.md)).
+- **Balancing machines.** A self-balancing scooter is an inverted pendulum; feedback designed on its linearisation pushes the out-eigenvalue below zero (Linearisation).
+- **Populations.** Predator and prey numbers rest where births balance deaths, at a linear centre the matrix cannot settle ([Predator and prey](06-predator-prey.md)).
+- **Epidemics.** An outbreak takes off when one eigenvalue at the disease-free rest is positive ([The SIR model](07-the-sir-epidemic-model.md)).
 
 > **Say it back**
 > Near a rest, each rate is slopes times offsets plus a leftover that shrinks faster. The slopes form the Jacobian; its eigenvalues sort the rest. With no real part zero, the leftover cannot change the verdict: the hanging swing is a stable spiral, the balanced one a saddle. At a centre the matrix is silent: drag or a pump decides.
@@ -385,17 +363,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [phase-portraits-and-nullclines](01-phase-portraits-and-nullclines.md): rests, and the phase plane.
-- [classifying-equilibria-by-trace-and-determinant](../04-Systems%20and%20the%20Matrix%20Exponential/05-classifying-equilibria-by-trace-and-determinant.md): sorting a linear system by trace and determinant.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes with one variable held.
+- [Phase portraits and nullclines](01-phase-portraits-and-nullclines.md): rests, and the phase plane.
+- [Trace and determinant](../04-Systems%20and%20the%20Matrix%20Exponential/05-classifying-equilibria-by-trace-and-determinant.md): sorting a linear system by trace and determinant.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes with one variable held.
 
 ## Where this goes next
 
-- [the-nonlinear-pendulum](03-the-nonlinear-pendulum.md): the whole swing, far from its rests.
-- [lyapunov-functions](04-lyapunov-functions.md): verdicts where the matrix is silent.
-- [predator-prey](06-predator-prey.md): a linear centre that truly is one.
-- [limit-cycles-and-van-der-pol](08-limit-cycles-and-van-der-pol.md): an unstable rest whose paths settle on a loop.
-- linearisation-about-an-equilibrium: the same step with a control input.
+- [The pendulum](03-the-nonlinear-pendulum.md): the whole swing, far from its rests.
+- [Lyapunov functions](04-lyapunov-functions.md): verdicts where the matrix is silent.
+- [Predator and prey](06-predator-prey.md): a linear centre that truly is one.
+- [Limit cycles](08-limit-cycles-and-van-der-pol.md): an unstable rest whose paths settle on a loop.
+- Linearisation: the same step with a control input.
 
 ---
 

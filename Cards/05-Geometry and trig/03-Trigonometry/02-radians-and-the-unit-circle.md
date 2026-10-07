@@ -1,32 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Trigonometry
-topic: Angles all the way round
-item: The unit circle
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/01-right-triangle-trigonometry|right-triangle-trigonometry]]"
-  - "[[Cards/05-Geometry and trig/02-Circles and Solids/02-radians-arcs-and-sectors|radians-arcs-and-sectors]]"
-next:
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/03-trig-identities|trig-identities]]"
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/04-trig-graphs-amplitude-period-and-phase|trig-graphs-amplitude-period-and-phase]]"
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/08-small-angles-and-the-sine-bound|small-angles-and-the-sine-bound]]"
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/03-polar-coordinates|polar-coordinates]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/03-polar-form-and-argument|polar-form-and-argument]]"
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/09-power-and-three-phase|power-and-three-phase]]"
-  - "[[Cards/16-Numerical analysis/04-Interpolation and Approximation/04-runge-phenomenon-and-chebyshev-nodes|runge-phenomenon-and-chebyshev-nodes]]"
-tags:
-  - mathematics
-  - geometry and trig
-  - radians-and-the-unit-circle
----
-
 # The unit circle: sine and cosine for every angle, including the ones no triangle has
 
-Geometry and trig → Trigonometry → Angles all the way round → The unit circle
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Trigonometry](../../../SYLLABUS.md#w05-s03) → The unit circle
 
 ---
 
@@ -34,7 +8,7 @@ Geometry and trig → Trigonometry → Angles all the way round → The unit cir
 
 A tower crane's 30 m jib, the horizontal arm the hook runs along, turns on the mast, the crane's tower. A lift starts with the jib due east and the hook at its tip. The operator swings it anticlockwise, seen from above, through 210°: past north and west to 30° south of west. The load comes down 25.98 m west and 15.00 m south of the mast.
 
-No right triangle has a 210° corner, so sine and cosine as side ratios ([right-triangle-trigonometry](01-right-triangle-trigonometry.md)) cannot give those two offsets. A circle can: shrink the jib to length 1 and read where its tip ends.
+No right triangle has a 210° corner, so sine and cosine as side ratios ([Sine, cosine and tangent](01-right-triangle-trigonometry.md)) cannot give those two offsets. A circle can: shrink the jib to length 1 and read where its tip ends.
 
 **Turn an arm of length 1 from due east through any angle: the cosine is how far east its tip ends and the sine how far north, positions that exist at every angle and carry a sign.**
 
@@ -50,7 +24,7 @@ Drawn at 1 m = 3.2 units, north up. Long arc: the 210° swing. Short arc: the 30
 
 ## The formula
 
-Notation first, in words. A position on the plan is a pair (x, y): x is how far east of the mast, y how far north, with west and south negative. The Greek letter theta, $\theta$, names the angle turned. Reminder: a radian is the angle whose arc equals the radius, so 210° is 7π/6 radians ([radians-arcs-and-sectors](../02-Circles%20and%20Solids/02-radians-arcs-and-sectors.md)).
+Notation first, in words. A position on the plan is a pair (x, y): x is how far east of the mast, y how far north, with west and south negative. The Greek letter theta, $\theta$, names the angle turned. Reminder: a radian is the angle whose arc equals the radius, so 210° is 7π/6 radians ([Radians](../02-Circles%20and%20Solids/02-radians-arcs-and-sectors.md)).
 
 The **unit circle** has radius 1 and centre (0, 0), the mast; on it, distances are counted in radii. Start at (1, 0) and turn through $\theta$, anticlockwise positive and clockwise negative, to end at (x, y).
 
@@ -103,7 +77,7 @@ A half turn about the mast carries the 30° arm onto the 210° arm and sends (x,
 
 Let the arm at $\alpha$ end at P = (x, y) in quadrant I, mast O. Drop P square to the east–west line at F: OP = 1, OF = x, FP = y.
 
-Extend PO beyond O by its own length to P′ and drop P′ to the line at F′. Angles FOP and F′OP′ are vertical angles, so equal ([angles-and-parallel-lines](../01-Angles%2C%20Triangles%20and%20Congruence/01-angles-and-parallel-lines.md)). Triangles OFP and OF′P′ each have a right angle, an angle $\alpha$ and hypotenuse 1, so they are congruent by AAS ([congruent-triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)): OF′ = x, F′P′ = y. P′ is west and south of O: (−x, −y), at 180° + $\alpha$.
+Extend PO beyond O by its own length to P′ and drop P′ to the line at F′. Angles FOP and F′OP′ are vertical angles, so equal ([Angles](../01-Angles%2C%20Triangles%20and%20Congruence/01-angles-and-parallel-lines.md)). Triangles OFP and OF′P′ each have a right angle, an angle $\alpha$ and hypotenuse 1, so they are congruent by AAS ([Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)): OF′ = x, F′P′ = y. P′ is west and south of O: (−x, −y), at 180° + $\alpha$.
 
 Reflecting P in either axis gives a congruent triangle across it: (−x, y) at 180° − $\alpha$, or (x, −y) at −$\alpha$, the same point as 360° − $\alpha$. Every $\theta$ strictly inside quadrant II, III or IV is one of these for one $\alpha$ strictly between 0° and 90°, where Step 1 applies. Other angles first shed whole turns (Step 3).
 
@@ -125,7 +99,7 @@ The north–south line through (1, 0), where every point has $x$ = 1, touches th
 
 Drawn at radius 1 = 90 units. Dashed: the jib's line, extended back through the mast to the tangent line. 210° shares that line with 30°, so tan 210° = tan 30°: tangent repeats every half turn. The meeting point lies beyond the mast from the hook, so sec 210° = −1.154701.
 
-Co- means "of the complement", the angle making up 90° ([angles-and-parallel-lines](../01-Angles%2C%20Triangles%20and%20Congruence/01-angles-and-parallel-lines.md)): an angle's cosine is its complement's sine. Cotangent and cosecant repeat the construction on the east–west line through (0, 1): cot 210° = √3 = 1.732051, csc 210° = −2. At 90° the jib's line is parallel to the tangent line and never meets it, so tan 90° and sec 90° do not exist; cot 90° is 0.
+Co- means "of the complement", the angle making up 90° ([Angles](../01-Angles%2C%20Triangles%20and%20Congruence/01-angles-and-parallel-lines.md)): an angle's cosine is its complement's sine. Cotangent and cosecant repeat the construction on the east–west line through (0, 1): cot 210° = √3 = 1.732051, csc 210° = −2. At 90° the jib's line is parallel to the tangent line and never meets it, so tan 90° and sec 90° do not exist; cot 90° is 0.
 
 ---
 
@@ -373,15 +347,15 @@ The two outputs match line for line.
 >
 > - **Degrees into a radian-mode sine.** A calculator in radian mode, and most programming languages, read sin(210) as 210 radians: 0.4677, not −0.5.
 > - **A bearing read as the angle.** The hook's compass bearing, clockwise from north, is 240°; fed in as the angle, it gives (−15.00, −25.98).
-> - **One over the sine read as undoing it.** csc 210° = −2 is 1 ÷ sin 210°, not an angle; getting the angle back from a sine is [inverse-trig-and-solving-equations](05-inverse-trig-and-solving-equations.md).
+> - **One over the sine read as undoing it.** csc 210° = −2 is 1 ÷ sin 210°, not an angle; getting the angle back from a sine is [Inverse trig](05-inverse-trig-and-solving-equations.md).
 
 ---
 
 ## Where you meet it in real life
 
 - **Cranes and robot arms.** Controllers turn a joint angle into offsets as (r cos θ, r sin θ) at every angle, with no quadrant cases.
-- **Triangles with an angle over 90°.** The law of cosines needs that angle's negative cosine ([law-of-cosines](06-law-of-cosines.md)).
-- **Waves.** A point circling steadily has a north position that rises and falls: a sine wave ([trig-graphs-amplitude-period-and-phase](04-trig-graphs-amplitude-period-and-phase.md)).
+- **Triangles with an angle over 90°.** The law of cosines needs that angle's negative cosine ([Law of cosines](06-law-of-cosines.md)).
+- **Waves.** A point circling steadily has a north position that rises and falls: a sine wave ([Trig graphs](04-trig-graphs-amplitude-period-and-phase.md)).
 
 > **Say it back**
 > Turn an arm of length 1 from due east, anticlockwise positive. Cosine is how far east its tip ends, sine how far north. The reference angle gives the sizes, the quadrant the signs: a 30 m jib swung 210° puts the hook 25.98 m west and 15.00 m south. Tangent, secant, cosecant and cotangent are y/x, 1/x, 1/y and x/y, missing where the denominator is zero.
@@ -390,20 +364,20 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [right-triangle-trigonometry](01-right-triangle-trigonometry.md): the side ratios the circle keeps below 90°.
-- [radians-arcs-and-sectors](../02-Circles%20and%20Solids/02-radians-arcs-and-sectors.md): the radian, an angle as a distance walked.
+- [Sine, cosine and tangent](01-right-triangle-trigonometry.md): the side ratios the circle keeps below 90°.
+- [Radians](../02-Circles%20and%20Solids/02-radians-arcs-and-sectors.md): the radian, an angle as a distance walked.
 
 ## Where this goes next
 
-- [trig-identities](03-trig-identities.md): $x^2 + y^2 = 1$, and two turns in a row.
-- [trig-graphs-amplitude-period-and-phase](04-trig-graphs-amplitude-period-and-phase.md): sine plotted against the angle.
-- [small-angles-and-the-sine-bound](08-small-angles-and-the-sine-bound.md): a short arc against its height.
-- [polar-coordinates](../04-Coordinates%20and%20Curves/03-polar-coordinates.md): from a point back to its angle.
-- [polar-form-and-argument](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md): the circle's points as numbers.
-- power-and-three-phase: three points a third of a turn apart.
-- runge-phenomenon-and-chebyshev-nodes: circle points dropped onto a diameter.
+- [Trig identities](03-trig-identities.md): $x^2 + y^2 = 1$, and two turns in a row.
+- [Trig graphs](04-trig-graphs-amplitude-period-and-phase.md): sine plotted against the angle.
+- [Small angles](08-small-angles-and-the-sine-bound.md): a short arc against its height.
+- [Polar coordinates](../04-Coordinates%20and%20Curves/03-polar-coordinates.md): from a point back to its angle.
+- [Polar form](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md): the circle's points as numbers.
+- AC power: three points a third of a turn apart.
+- Runge's phenomenon: circle points dropped onto a diameter.
 
-The circle says where one swing lands; where a jib hinged on a jib lands, one angle added to another, is the addition formula of [trig-identities](03-trig-identities.md).
+The circle says where one swing lands; where a jib hinged on a jib lands, one angle added to another, is the addition formula of [Trig identities](03-trig-identities.md).
 
 ---
 

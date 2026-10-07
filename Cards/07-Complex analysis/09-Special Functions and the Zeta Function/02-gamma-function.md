@@ -1,30 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Special Functions and the Zeta Function
-topic: Factorials past the whole numbers
-item: The gamma function
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/02-uniform-limits-of-holomorphic-functions|uniform-limits-of-holomorphic-functions]]"
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/04-analytic-continuation|analytic-continuation]]"
-  - "[[Cards/07-Complex analysis/06-Real Integrals and Counting Zeros/05-keyhole-contours|keyhole-contours]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/07-improper-integrals|improper-integrals]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/04-integration-by-parts|integration-by-parts]]"
-next:
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/03-beta-function|beta-function]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/04-stirlings-formula|stirlings-formula]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/07-mellin-transform|mellin-transform]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/08-continuing-zeta-and-the-functional-equation|continuing-zeta-and-the-functional-equation]]"
-  - "[[Cards/21-Algebraic and analytic number theory/02-The Zeta Function and the Prime Number Theorem/02-functional-equation-proved|functional-equation-proved]]"
-tags: [mathematics, complex analysis, gamma-function]
----
-
 # The gamma function: the factorial for every number, defined by an integral and stretched to the whole plane by its own recurrence
 
-Complex analysis → Special Functions and the Zeta Function → Factorials past the whole numbers → The gamma function
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Special Functions and the Zeta Function](../../../SYLLABUS.md#w07-s09) → The gamma function
 
 ---
 
@@ -99,13 +75,13 @@ $$\Gamma(z)\,\Gamma(1-z) = \frac{\pi}{\sin \pi z}, \qquad V_n = \frac{\pi^{n/2}}
 
 ### Step 0: integration by parts shifts a power into a factor
 
-The factorial rule is n! = n × (n − 1)!. Differentiating $t^z$ brings down a factor z and lowers the power by one, and integration by parts ([integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)) turns that into the same rule.
+The factorial rule is n! = n × (n − 1)!. Differentiating $t^z$ brings down a factor z and lowers the power by one, and integration by parts ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)) turns that into the same rule.
 
 ### Step 1: the integral converges and is holomorphic for Re z > 0
 
-Write σ for Re z. The integrand has size $t^{\sigma-1}e^{-t}$. On (0, 1] its area is at most 1/σ; on [1, ∞) the factor e^(−t) beats any power of t. So the improper integral ([improper-integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)) converges.
+Write σ for Re z. The integrand has size $t^{\sigma-1}e^{-t}$. On (0, 1] its area is at most 1/σ; on [1, ∞) the factor e^(−t) beats any power of t. So the improper integral ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)) converges.
 
-Cut the integral off to run from 1/k to k; each cut-off is holomorphic (has a complex derivative) in z. On any strip a ≤ Re z ≤ b with a > 0, the discarded tails have bounds free of z, so the cut-offs approach Γ uniformly. A uniform limit of holomorphic functions is holomorphic ([uniform-limits-of-holomorphic-functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)).
+Cut the integral off to run from 1/k to k; each cut-off is holomorphic (has a complex derivative) in z. On any strip a ≤ Re z ≤ b with a > 0, the discarded tails have bounds free of z, so the cut-offs approach Γ uniformly. A uniform limit of holomorphic functions is holomorphic ([Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md)).
 
 <details>
 <summary>Detailed proof: the tail bounds</summary>
@@ -130,13 +106,13 @@ At z = 1/2, substitute t = u^2, so dt = 2u du and t^(−1/2) = 1/u:
 
 $$\Gamma\!\left(\tfrac12\right) = \int_0^\infty \frac{e^{-u^2}}{u}\,2u\,du = 2\int_0^\infty e^{-u^2}\,du = \sqrt{\pi}.$$
 
-The last step is the Gaussian integral ([gaussian-integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)): the full bell's area is √π, half of it √π/2. The recurrence then climbs: Γ(3/2) = √π/2 = 0.886227, Γ(5/2) = (3/2)(√π/2) = 1.329340, the football's (3/2)!.
+The last step is the Gaussian integral ([The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)): the full bell's area is √π, half of it √π/2. The recurrence then climbs: Γ(3/2) = √π/2 = 0.886227, Γ(5/2) = (3/2)(√π/2) = 1.329340, the football's (3/2)!.
 
 ### Step 4: continue leftward, one strip at a time
 
 Divide the recurrence by z: Γ(z) = Γ(z + 1)/z. The right side is defined for Re z > −1 except at 0, one strip further left. Applying it m times gives the continuation formula, valid on Re z > −m.
 
-Two such formulas agree where both apply, since the recurrence holds where they overlap. By uniqueness of analytic continuation ([analytic-continuation](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/04-analytic-continuation.md)), there is one continued gamma, and any other holomorphic extension of the integral equals it.
+Two such formulas agree where both apply, since the recurrence holds where they overlap. By uniqueness of analytic continuation ([Analytic continuation](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/04-analytic-continuation.md)), there is one continued gamma, and any other holomorphic extension of the integral equals it.
 
 One step reaches the example: Γ(−1/2) = Γ(1/2)/(−1/2) = −2√π = −3.544908.
 
@@ -152,15 +128,15 @@ Near z = −n use m = n + 1:
 
 $$\Gamma(z) = \frac{1}{z+n}\cdot\frac{\Gamma(z+n+1)}{z(z+1)\cdots(z+n-1)}.$$
 
-The second factor is holomorphic near −n and at −n equals Γ(1)/((−n)(−n + 1)⋯(−1)) = (−1)^n/n!, not zero. So Γ has a simple pole at −n, with residue ([residues](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/04-residues.md)) (−1)^n/n!: 1, −1, 1/2, −1/6 at 0, −1, −2, −3. The code prints ε Γ(−n + ε) at ε = 10^−6: 0.999999, −1.000000, 0.500000, −0.166667.
+The second factor is holomorphic near −n and at −n equals Γ(1)/((−n)(−n + 1)⋯(−1)) = (−1)^n/n!, not zero. So Γ has a simple pole at −n, with residue ([Residues](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/04-residues.md)) (−1)^n/n!: 1, −1, 1/2, −1/6 at 0, −1, −2, −3. The code prints ε Γ(−n + ε) at ε = 10^−6: 0.999999, −1.000000, 0.500000, −0.166667.
 
 ### Step 6: the reflection formula
 
-For real 0 < a < 1, [beta-function](03-beta-function.md) rewrites Γ(a)Γ(1 − a) as the area under x^(a−1)/(1 + x) from 0 to infinity, and [keyhole-contours](../06-Real%20Integrals%20and%20Counting%20Zeros/05-keyhole-contours.md) evaluates that area as π/sin(πa). Both sides are holomorphic off the whole numbers and agree on the segment from 0 to 1, so by [zeros-and-the-identity-theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/03-zeros-and-the-identity-theorem.md) they agree everywhere off the whole numbers. The right side is never 0, so Γ has no zeros.
+For real 0 < a < 1, [The beta function](03-beta-function.md) rewrites Γ(a)Γ(1 − a) as the area under x^(a−1)/(1 + x) from 0 to infinity, and [The keyhole contour](../06-Real%20Integrals%20and%20Counting%20Zeros/05-keyhole-contours.md) evaluates that area as π/sin(πa). Both sides are holomorphic off the whole numbers and agree on the segment from 0 to 1, so by [Zeros and the identity theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/03-zeros-and-the-identity-theorem.md) they agree everywhere off the whole numbers. The right side is never 0, so Γ has no zeros.
 
 The code checks it at 1/4: 3.625610 × 1.225417 = 4.442883 = π/sin(π/4); and at −1/2: Γ(−1/2)Γ(3/2) = −3.141593 = π/sin(−π/2).
 
-A second road to gamma itself needs no integral: Gauss's product, Γ(z) = the limit of n! n^z / (z(z + 1)⋯(z + n)) as n grows, defined everywhere but the poles ([infinite-products](01-infinite-products.md)). The code uses it.
+A second road to gamma itself needs no integral: Gauss's product, Γ(z) = the limit of n! n^z / (z(z + 1)⋯(z + n)) as n grows, defined everywhere but the poles ([Infinite products](01-infinite-products.md)). The code uses it.
 
 ---
 
@@ -415,8 +391,8 @@ The outputs match line for line.
 ## Where you meet it in real life
 
 - **Volumes in many dimensions.** Statistics and machine learning measure balls in dozens of dimensions with π^(n/2)/Γ(n/2 + 1). The ball's share of the cube of side 2 around it, V_n/2^n, is 0.52 at n = 3 and 0.0025 at n = 10, which is why random points in a high-dimensional cube sit mostly in the corners.
-- **Integrals of powers against decay.** They are gamma values or close relatives; [mellin-transform](07-mellin-transform.md) makes that a transform.
-- **The zeta function.** Gamma is the factor that makes zeta's functional equation symmetric, in [continuing-zeta-and-the-functional-equation](08-continuing-zeta-and-the-functional-equation.md).
+- **Integrals of powers against decay.** They are gamma values or close relatives; [The Mellin transform](07-mellin-transform.md) makes that a transform.
+- **The zeta function.** Gamma is the factor that makes zeta's functional equation symmetric, in [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md).
 
 > **Say it back**
 > Gamma is Euler's integral of t^(z−1) e^(−t), for Re z > 0. Integration by parts gives Γ(z + 1) = z Γ(z), so Γ(n + 1) = n! and Γ(5) = 24. Substituting t = u^2 makes Γ(1/2) the Gaussian integral, √π, which puts 3√π/4 into the football's 4π/3. Dividing the recurrence by z carries gamma left: Γ(−1/2) = −2√π, with simple poles at 0, −1, −2, …. Reflection, Γ(z)Γ(1 − z) = π/sin πz, ties the two halves together.
@@ -425,19 +401,19 @@ The outputs match line for line.
 
 ## What this builds on
 
-- [uniform-limits-of-holomorphic-functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md): why the integral is holomorphic.
-- [analytic-continuation](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/04-analytic-continuation.md): why the recurrence's extension is the only one.
-- [keyhole-contours](../06-Real%20Integrals%20and%20Counting%20Zeros/05-keyhole-contours.md): the value π/sin(πa) behind reflection.
-- [improper-integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md): when an integral to infinity, or with a spike at 0, has finite area.
-- [integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): the step that becomes the factorial rule.
+- [Limits of holomorphic functions](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md): why the integral is holomorphic.
+- [Analytic continuation](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/04-analytic-continuation.md): why the recurrence's extension is the only one.
+- [The keyhole contour](../06-Real%20Integrals%20and%20Counting%20Zeros/05-keyhole-contours.md): the value π/sin(πa) behind reflection.
+- [Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md): when an integral to infinity, or with a spike at 0, has finite area.
+- [Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): the step that becomes the factorial rule.
 
 ## Where this goes next
 
-- [beta-function](03-beta-function.md): products of gammas as one integral, and the missing link in the reflection proof.
-- [stirlings-formula](04-stirlings-formula.md): how fast gamma grows, to a stated error, and so how fast the ball volumes fall.
-- [mellin-transform](07-mellin-transform.md): Euler's integral with e^(−t) replaced by any function.
-- [continuing-zeta-and-the-functional-equation](08-continuing-zeta-and-the-functional-equation.md): gamma as the factor in zeta's symmetry.
-- functional-equation-proved: that symmetry proved in full.
+- [The beta function](03-beta-function.md): products of gammas as one integral, and the missing link in the reflection proof.
+- [Stirling's formula](04-stirlings-formula.md): how fast gamma grows, to a stated error, and so how fast the ball volumes fall.
+- [The Mellin transform](07-mellin-transform.md): Euler's integral with e^(−t) replaced by any function.
+- [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md): gamma as the factor in zeta's symmetry.
+- The functional equation: that symmetry proved in full.
 
 ---
 

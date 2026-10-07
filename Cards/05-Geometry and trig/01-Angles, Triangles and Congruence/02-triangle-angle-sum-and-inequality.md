@@ -1,22 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Angles, Triangles and Congruence
-topic: Closing three sides
-item: Triangles
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/05-Geometry and trig/01-Angles, Triangles and Congruence/01-angles-and-parallel-lines|angles-and-parallel-lines]]"
-next:
-  - "[[Cards/05-Geometry and trig/01-Angles, Triangles and Congruence/03-congruent-triangles|congruent-triangles]]"
-tags: [mathematics, geometry and trig, triangle-angle-sum-and-inequality]
----
-
 # Triangles: why the angles add to 180 and why two sides must beat the third
 
-Geometry and trig → Angles, Triangles and Congruence → Closing three sides → Triangles
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Angles, Triangles and Congruence](../../../SYLLABUS.md#w05-s01) → Triangles
 
 ---
 
@@ -40,7 +24,7 @@ Drawn to scale, 1 m = 40 units. The short panels, hinged at A and B, really lie 
 
 ## The formula
 
-The degree sign ° counts turning, 360° to a full turn, as on [angles-and-parallel-lines](01-angles-and-parallel-lines.md). New here, the naming used for every triangle from now on: corners are A, B and C, each letter also naming the angle there, and each side takes the small letter of the corner it faces: side $a$ lies opposite corner $A$.
+The degree sign ° counts turning, 360° to a full turn, as on [Angles](01-angles-and-parallel-lines.md). New here, the naming used for every triangle from now on: corners are A, B and C, each letter also naming the angle there, and each side takes the small letter of the corner it faces: side $a$ lies opposite corner $A$.
 
 In the 5 m bed, A and B are the ends of the 5 m panel and C is where the other two meet, so $c$ = 5 m, $b$ = 3 m and $a$ = 4 m.
 
@@ -79,7 +63,7 @@ Turned round, a third panel works with the 3 m and 4 m ones when it is shorter t
 
 ### Step 0: a straight line is a half-turn, and parallel lines copy angles
 
-Two facts from [angles-and-parallel-lines](01-angles-and-parallel-lines.md) carry the angle sum. Angles side by side along a straight line add to 180°. And when a line crosses two parallels, the angles on opposite sides of it, between the parallels, are equal: **alternate angles**. The proof moves the three corners until they sit side by side on one line.
+Two facts from [Angles](01-angles-and-parallel-lines.md) carry the angle sum. Angles side by side along a straight line add to 180°. And when a line crosses two parallels, the angles on opposite sides of it, between the parallels, are equal: **alternate angles**. The proof moves the three corners until they sit side by side on one line.
 
 ### Step 1: carry corners A and B up to corner C
 
@@ -372,9 +356,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Frames and trusses.** A roof truss of two rafters and a tie is a triangle; its cut list must pass the test before timber is ordered. Why fixed sides make it rigid is [congruent-triangles](03-congruent-triangles.md).
+- **Frames and trusses.** A roof truss of two rafters and a tie is a triangle; its cut list must pass the test before timber is ordered. Why fixed sides make it rigid is [Congruent triangles](03-congruent-triangles.md).
 - **Surveying.** Measure two angles of a small triangular plot and the third is computed; measure all three and the amount their sum misses 180° is the instrument error.
-- **Right angles.** When the corner at C is 90°, the sides obey a tighter rule: [pythagoras-and-its-converse](05-pythagoras-and-its-converse.md).
+- **Right angles.** When the corner at C is 90°, the sides obey a tighter rule: [Pythagoras](05-pythagoras-and-its-converse.md).
 
 > **Say it back**
 > Three lengths make a triangle when the two shorter together are strictly longer than the longest. Panels of 3 m, 4 m and 8 m fail by 1 m; a third panel between 1 m and 7 m would close the bed. In a flat triangle the angles add to 180°, because a parallel through one corner collects all three on a straight line. So a missing angle is 180° minus the other two: 53.13° in the 3, 4, 5 m bed.
@@ -383,11 +367,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [angles-and-parallel-lines](01-angles-and-parallel-lines.md): degrees, angles on a straight line, and the alternate angles that parallel lines copy.
+- [Angles](01-angles-and-parallel-lines.md): degrees, angles on a straight line, and the alternate angles that parallel lines copy.
 
 ## Where this goes next
 
-- [congruent-triangles](03-congruent-triangles.md): when two triangles with some matching sides and angles must match everywhere.
+- [Congruent triangles](03-congruent-triangles.md): when two triangles with some matching sides and angles must match everywhere.
 
 This card says when three panels close, not whether they can close in more than one shape; that question is congruence.
 

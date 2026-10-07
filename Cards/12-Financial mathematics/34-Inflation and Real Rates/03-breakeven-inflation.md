@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Inflation and Real Rates
-topic: Reading inflation from bond yields
-item: Breakeven inflation
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/34-Inflation and Real Rates/02-inflation-linked-bonds|inflation-linked-bonds]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/05-root-finding-for-inverses|root-finding-for-inverses]]"
-next:
-  - "[[Cards/12-Financial mathematics/34-Inflation and Real Rates/04-zero-coupon-inflation-swaps|zero-coupon-inflation-swaps]]"
-tags: [mathematics, financial mathematics, breakeven-inflation]
----
-
 # Breakeven inflation: the inflation rate at which a linker and a nominal bond tie
 
-Financial mathematics → Inflation and Real Rates → Reading inflation from bond yields → Breakeven inflation
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Inflation and Real Rates](../../../SYLLABUS.md#w12-s34) → Breakeven inflation
 
 ---
 
@@ -27,7 +10,7 @@ Two ten-year government bonds are on sale today, and $1,000 goes into each.
 
 The first is an ordinary **nominal bond**: it pays fixed dollars. Bought at its yield of 3.525 percent a year, the $1,000 grows to **$1,414.01** in ten years, whatever prices do in the meantime.
 
-The second is an **inflation-linked bond**, a "linker" for short: its payments are scaled up by a price index, so they keep their buying power ([inflation-linked-bonds](02-inflation-linked-bonds.md)). It yields 1 percent a year in **real** terms, meaning in units of buying power. Its $1,000 grows to $1,104.62 of today's buying power, then gets multiplied by however much prices rose.
+The second is an **inflation-linked bond**, a "linker" for short: its payments are scaled up by a price index, so they keep their buying power ([Inflation-linked bonds](02-inflation-linked-bonds.md)). It yields 1 percent a year in **real** terms, meaning in units of buying power. Its $1,000 grows to $1,104.62 of today's buying power, then gets multiplied by however much prices rose.
 
 Which is the better buy? It depends on inflation. If prices rise 2 percent a year, the linker ends at $1,346.53 and the nominal bond wins. At 3 percent the linker ends at $1,484.52 and wins. Somewhere between, the two pay exactly the same dollars. That rate is the **breakeven inflation rate**. Here it is **2.5 percent a year**.
 
@@ -94,7 +77,7 @@ $$s = n - r, \qquad s - b = r\,b$$
 
 ### Solving it as an inverse: existence, uniqueness, the boundary
 
-The breakeven is an inverse: it runs a payoff backwards to the rate that produces it ([root-finding-for-inverses](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md)). Three questions come before solving.
+The breakeven is an inverse: it runs a payoff backwards to the rate that produces it ([Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md)). Three questions come before solving.
 
 - **Does one exist?** Yes, whenever both yields are above −100 percent. The linker's year-$T$ dollars, $(1+r)^T(1+\pi)^T$, run from zero (as $\pi$ falls to −1) to as large as needed, passing every value on the way. So they hit the nominal bond's dollars somewhere.
 - **Is it unique?** Yes. Higher inflation always means more linker dollars, so the linker line in the picture only climbs. A climbing line crosses a flat one once.
@@ -136,7 +119,7 @@ Real linkers pay coupons. The 1 percent linker pays 1 percent of its face each y
 
 $$P = \sum_{t=1}^{T} \frac{c\,(1+\pi)^t}{(1+n)^t} + \frac{(1+\pi)^T}{(1+n)^T}$$
 
-The sign $\sum_{t=1}^{T}$ means: add up the term after it for $t = 1, 2, \ldots, T$. Now look at one term. It has $(1+\pi)^t$ on top and $(1+n)^t$ below, so it equals $c / \big((1+n)/(1+\pi)\big)^t$. That is the payment discounted at a single rate, $(1+n)/(1+\pi) - 1$. The linker's price, by definition of its real yield, is its real payments discounted at $r$ ([bonds-price-and-yield](../01-Money%2C%20Dates%20and%20Discounting/05-bonds-price-and-yield.md)). So the equation holds exactly when $(1+n)/(1+\pi) = 1+r$: the same formula as Step 2.
+The sign $\sum_{t=1}^{T}$ means: add up the term after it for $t = 1, 2, \ldots, T$. Now look at one term. It has $(1+\pi)^t$ on top and $(1+n)^t$ below, so it equals $c / \big((1+n)/(1+\pi)\big)^t$. That is the payment discounted at a single rate, $(1+n)/(1+\pi) - 1$. The linker's price, by definition of its real yield, is its real payments discounted at $r$ ([Bond price and yield](../01-Money%2C%20Dates%20and%20Discounting/05-bonds-price-and-yield.md)). So the equation holds exactly when $(1+n)/(1+\pi) = 1+r$: the same formula as Step 2.
 
 The coupon never entered. The code checks it on two linkers, one with a 1 percent coupon priced at $1,000 and one with a 0.125 percent coupon priced at $917.13. Both give 2.5 percent.
 
@@ -161,7 +144,7 @@ Quoted with **continuous compounding**, rates add exactly: the breakeven is $\ln
 
 ### Step 5: read it against the inflation swap
 
-A zero-coupon inflation swap is a contract on the same question with no bonds at all: at year $T$, one side pays the index's total rise $J$ on a notional amount, the other pays a fixed growth $(1+k)^T$ ([zero-coupon-inflation-swaps](04-zero-coupon-inflation-swaps.md)). Its fixed rate $k$ is a second, independent quote for the price of inflation.
+A zero-coupon inflation swap is a contract on the same question with no bonds at all: at year $T$, one side pays the index's total rise $J$ on a notional amount, the other pays a fixed growth $(1+k)^T$ ([Inflation swaps](04-zero-coupon-inflation-swaps.md)). Its fixed rate $k$ is a second, independent quote for the price of inflation.
 
 The two quotes can be set side by side as trades.
 
@@ -592,8 +575,8 @@ ALL CHECKS PASS
 - **Central banks.** The US Federal Reserve and others watch ten-year and five-year breakevens daily as a fast, market-made reading of inflation compensation, alongside surveys. Staff research splits it into expectations, risk premium and liquidity premium with term-structure models.
 - **Treasury auctions of inflation-protected securities.** A US linker's real yield is set at auction; the nominal Treasury yield of the same maturity is known that day, so every auction prints a breakeven.
 - **Portfolio choice.** A pension fund owing inflation-linked payouts compares the breakeven with its own view of inflation. If its view is above the breakeven, linkers are the cheaper way to cover the liability.
-- **Relative-value desks.** Traders compare the bond breakeven with the swap rate for the same maturity, as in Step 5, and trade the gap when funding and balance-sheet costs allow ([zero-coupon-inflation-swaps](04-zero-coupon-inflation-swaps.md)).
-- **Real rates.** The exact relation between nominal yield, real yield and inflation used here is the Fisher equation, read in reverse ([real-rates-and-the-fisher-equation](01-real-rates-and-the-fisher-equation.md)).
+- **Relative-value desks.** Traders compare the bond breakeven with the swap rate for the same maturity, as in Step 5, and trade the gap when funding and balance-sheet costs allow ([Inflation swaps](04-zero-coupon-inflation-swaps.md)).
+- **Real rates.** The exact relation between nominal yield, real yield and inflation used here is the Fisher equation, read in reverse ([Real rates](01-real-rates-and-the-fisher-equation.md)).
 
 Conventions verified 2026-09-28: a US inflation-protected Treasury pays interest twice a year on its index-scaled principal; its reference index for the first day of a month is the consumer price index of the third preceding month; at maturity it repays the greater of the scaled principal and the original principal (TreasuryDirect; 31 CFR Part 356, Appendix B).
 
@@ -604,14 +587,14 @@ Conventions verified 2026-09-28: a US inflation-protected Treasury pays interest
 
 ## What this builds on
 
-- [inflation-linked-bonds](02-inflation-linked-bonds.md): how a linker's coupons and principal scale with the index, what its real yield means, and the deflation floor.
-- [root-finding-for-inverses](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): bisection and Newton's method, and the habit of settling existence and uniqueness before solving.
+- [Inflation-linked bonds](02-inflation-linked-bonds.md): how a linker's coupons and principal scale with the index, what its real yield means, and the deflation floor.
+- [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): bisection and Newton's method, and the habit of settling existence and uniqueness before solving.
 
 ---
 
 ## Where this goes next
 
-- [zero-coupon-inflation-swaps](04-zero-coupon-inflation-swaps.md): prices the swap whose fixed rate this card set beside the bond breakeven, and builds a curve of those rates by maturity.
+- [Inflation swaps](04-zero-coupon-inflation-swaps.md): prices the swap whose fixed rate this card set beside the bond breakeven, and builds a curve of those rates by maturity.
 
 This card read the price of inflation from two bonds and found a second quote in the swap; what sets the swap's fixed rate, and why it can sit 10 basis points away, is the question the swap card answers.
 

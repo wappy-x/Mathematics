@@ -1,30 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Barriers, touches and lookbacks
-topic: Checks at the close
-item: Daily monitoring
-kind: approximation
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/02-reiner-rubinstein-barrier-formulas|reiner-rubinstein-barrier-formulas]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/04-crr-tree-and-convergence|crr-tree-and-convergence]]"
-next:
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/04-barrier-greeks-at-the-wall|barrier-greeks-at-the-wall]]"
-tags: [mathematics, financial mathematics, discrete-monitoring-correction]
----
-
 # Daily monitoring: a barrier checked once a day is worth more than the continuous formula says, and the fix is a shifted barrier
 
-Financial mathematics → Barriers, touches and lookbacks → Checks at the close → Daily monitoring
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Barriers, touches and lookbacks](../../../SYLLABUS.md#w12-s16) → Daily monitoring
 
 ---
 
 ## General Overview
 
-Acme shares trade at $100. A one-year call on them, strike $100, costs $9.23 in the house market. Now add a tripwire at $80: if Acme falls to $80, the call dies and pays nothing. That is a **down-and-out call** ([knock-out-and-knock-in-options](01-knock-out-and-knock-in-options.md)). The closed-form price is $9.13 ([reiner-rubinstein-barrier-formulas](02-reiner-rubinstein-barrier-formulas.md)).
+Acme shares trade at $100. A one-year call on them, strike $100, costs $9.23 in the house market. Now add a tripwire at $80: if Acme falls to $80, the call dies and pays nothing. That is a **down-and-out call** ([Knock-out and knock-in options](01-knock-out-and-knock-in-options.md)). The closed-form price is $9.13 ([The eight barrier formulas](02-reiner-rubinstein-barrier-formulas.md)).
 
 That formula assumes someone watches the price every instant. Many real contracts do not. They check once a day, against the official closing price. Picture a guard who looks at the door at 4 pm and at no other time. Acme closes at $81 on Monday and at $81 again on Tuesday. In between it may have dipped to $80 and bounced; for that pair of closes the chance is 0.143070. If it did, a watched-every-instant contract is dead. The checked-at-the-close contract never saw the dip and lives on.
 
@@ -143,7 +125,7 @@ Work in log price: $x_t = \ln(S_t/S)$, barrier $b = \ln(H/S) < 0$. Under the pri
 
 ### The other doors
 
-A daily contract can be priced directly, without the shift. A trinomial tree ([trinomial-trees-and-the-grid-connection](../04-Binomial%20Trees/06-trinomial-trees-and-the-grid-connection.md)) checks the barrier only on the layers that fall on a close. A simulation ([monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)) walks from close to close and kills a path whose close is at or below $80. Both are slower than one formula call, which is why desks use the shift, and both are in the code below as independent checks.
+A daily contract can be priced directly, without the shift. A trinomial tree ([Trinomial trees](../04-Binomial%20Trees/06-trinomial-trees-and-the-grid-connection.md)) checks the barrier only on the layers that fall on a close. A simulation ([Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)) walks from close to close and kills a path whose close is at or below $80. Both are slower than one formula call, which is why desks use the shift, and both are in the code below as independent checks.
 
 ---
 
@@ -184,7 +166,7 @@ The scripts reach the daily price three independent ways. **Road 1** is the shif
 
 Two more checks keep the roads honest. The same tree, checked at every step with the barrier on a node layer, must land on the continuous formula. And β is built twice, from the zeta series and from Siegmund's integral.
 
-A note on the tree. A daily check makes the option's value jump at the barrier, from nothing to something. A tree layer sitting exactly on the jump is misread. So the daily tree places $80 halfway between two layers. The every-step tree is the opposite case: there the barrier belongs on a layer, as on [trinomial-trees-and-the-grid-connection](../04-Binomial%20Trees/06-trinomial-trees-and-the-grid-connection.md).
+A note on the tree. A daily check makes the option's value jump at the barrier, from nothing to something. A tree layer sitting exactly on the jump is misread. So the daily tree places $80 halfway between two layers. The every-step tree is the opposite case: there the barrier belongs on a layer, as on [Trinomial trees](../04-Binomial%20Trees/06-trinomial-trees-and-the-grid-connection.md).
 
 ### Python
 
@@ -630,7 +612,7 @@ The two outputs match line for line, simulation included: both programs draw the
 > - **Shifting the wrong way.** The barrier always moves away from the spot: down for a down barrier, up for an up barrier. Toward the spot gives 9.111362, worse than no shift at all.
 > - **Using the life instead of the gap.** The shift uses $\sigma\sqrt{\Delta t}$, one period's wiggle. Using $\sigma\sqrt{T}$ gives 9.225207, nearly the plain call.
 > - **Mixing clocks.** Δt must be measured on the same clock as σ. If volatility is quoted per trading year of 252 days, one close is 1/252; counting 1/365 with the same σ understates the shift.
-> - **Trusting a raw simulation.** With 200,000 paths the raw average carries a standard error of 0.023282, larger than the effect. Use a control variate ([variance-reduction-for-pricing](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)). A simulation checked only at the closes prices the daily contract; pricing the continuous one by simulation needs the bridge dip chance of Step 1 ([quasi-monte-carlo-and-brownian-bridge](../06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md)).
+> - **Trusting a raw simulation.** With 200,000 paths the raw average carries a standard error of 0.023282, larger than the effect. Use a control variate ([Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)). A simulation checked only at the closes prices the daily contract; pricing the continuous one by simulation needs the bridge dip chance of Step 1 ([Quasi-Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md)).
 
 ---
 
@@ -638,10 +620,10 @@ The two outputs match line for line, simulation included: both programs draw the
 
 - **Term sheets.** A barrier product states how the barrier is observed: at each close, at a fixing time, or at any moment. The pricing follows the term sheet, and the shift converts one into the other.
 - **Pricing systems.** Continuous barrier formulas are fast and exact. The shift lets a system price a daily-checked contract with one formula call instead of a tree or a simulation.
-- **Touch bets.** A one-touch checked at closes is less likely to pay than one watched continuously: the touch chances above, 0.250014 against 0.235765. The same shift applies ([one-touch-and-no-touch](05-one-touch-and-no-touch.md)).
-- **Lookbacks.** A lookback paid on the highest daily close sees a lower maximum than the continuous path. Broadie, Glasserman and Kou's 1999 paper extends the shift to that case ([lookback-options](06-lookback-options.md)).
-- **Hedging near the barrier.** Close to the wall, the daily and continuous contracts differ most, and so do their deltas. That is where the Greeks misbehave ([barrier-greeks-at-the-wall](04-barrier-greeks-at-the-wall.md)).
-- **Solving for a barrier.** Finding the barrier that gives a target price runs the same formula backwards; for a daily contract, solve for the shifted barrier and move it back ([barrier-inverses-level-and-volatility](07-barrier-inverses-level-and-volatility.md)).
+- **Touch bets.** A one-touch checked at closes is less likely to pay than one watched continuously: the touch chances above, 0.250014 against 0.235765. The same shift applies ([One-touch and no-touch](05-one-touch-and-no-touch.md)).
+- **Lookbacks.** A lookback paid on the highest daily close sees a lower maximum than the continuous path. Broadie, Glasserman and Kou's 1999 paper extends the shift to that case ([Lookback options](06-lookback-options.md)).
+- **Hedging near the barrier.** Close to the wall, the daily and continuous contracts differ most, and so do their deltas. That is where the Greeks misbehave ([Barrier Greeks](04-barrier-greeks-at-the-wall.md)).
+- **Solving for a barrier.** Finding the barrier that gives a target price runs the same formula backwards; for a daily contract, solve for the shifted barrier and move it back ([Barrier inverses](07-barrier-inverses-level-and-volatility.md)).
 
 > **Say it back**
 > A barrier checked only at the close misses the dips that recover before the close, so a daily knock-out dies less often and is worth more than the continuous formula says. A daily walk that crosses the barrier overshoots it by 0.5826 of one day's typical move on average, so daily checks at H act like continuous watching at a barrier moved that far away from the spot. Feed the continuous formula the moved barrier and it prices the daily contract: $9.15 for the house knock-out at $80, against $9.13 continuous. A daily tree and a daily simulation agree. Move the barrier away from the spot, by one period's wiggle, never the whole life's.
@@ -650,13 +632,13 @@ The two outputs match line for line, simulation included: both programs draw the
 
 ## What this builds on
 
-- [reiner-rubinstein-barrier-formulas](02-reiner-rubinstein-barrier-formulas.md): the continuous down-and-out formula this card feeds with a shifted barrier.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): pricing as an average over simulated paths, road 3 here.
-- [crr-tree-and-convergence](../04-Binomial%20Trees/04-crr-tree-and-convergence.md): trees, backward induction and why step placement matters, road 2 here.
+- [The eight barrier formulas](02-reiner-rubinstein-barrier-formulas.md): the continuous down-and-out formula this card feeds with a shifted barrier.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): pricing as an average over simulated paths, road 3 here.
+- [Cox-Ross-Rubinstein](../04-Binomial%20Trees/04-crr-tree-and-convergence.md): trees, backward induction and why step placement matters, road 2 here.
 
 ## Where this goes next
 
-- [barrier-greeks-at-the-wall](04-barrier-greeks-at-the-wall.md): how the price of a barrier option moves with the spot and with time as the price nears the wall, where hedges are hardest to hold.
+- [Barrier Greeks](04-barrier-greeks-at-the-wall.md): how the price of a barrier option moves with the spot and with time as the price nears the wall, where hedges are hardest to hold.
 
 The price is now right for the check schedule the contract actually has; what remains open is how that price swings as Acme drifts toward $80, which decides whether the option can be hedged at all.
 

@@ -1,29 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: The Number Line
-topic: Irrationals
-item: Irrational numbers
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/02-The Number Line/02-number-line-and-inequalities|number-line-and-inequalities]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/08-decimals|decimals]]"
-next:
-  - "[[Cards/01-Foundations/02-The Number Line/04-real-numbers-no-gaps|real-numbers-no-gaps]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/03-roots-and-fractional-exponents|roots-and-fractional-exponents]]"
-  - "[[Cards/01-Foundations/06-Proof/03-proof-by-contradiction|proof-by-contradiction]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/03-cantors-diagonal-argument|cantors-diagonal-argument]]"
-tags:
-  - mathematics
-  - foundations
-  - irrational-numbers
----
-
 # Irrational numbers: decimals that never repeat, and why root 2 is not a fraction
 
-Foundations → The Number Line → Irrationals → Irrational numbers
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [The Number Line](../../../SYLLABUS.md#w01-s02) → Irrational numbers
 
 ---
 
@@ -85,7 +62,7 @@ The block is two digits long, so shifting two places moves it by exactly one blo
 
 Suppose it were: some whole number over another, in **lowest terms** — nothing left that divides both. Multiplied by itself it gives 2, so the top times the top equals 2 times the bottom times the bottom.
 
-Two times anything is even, so the top times the top is even. An odd number times itself is odd, so the top is even. Even means the top is twice something. Then the top times the top is four times that something times itself, and that equals 2 times the bottom times the bottom. Halve each side: the bottom times the bottom is 2 times that something times itself. Even again, so the bottom is even too. Both even — but everything shared was cancelled. The assumption breaks itself: no such fraction exists. Walking an assumption into a wall is [proof-by-contradiction](../06-Proof/03-proof-by-contradiction.md).
+Two times anything is even, so the top times the top is even. An odd number times itself is odd, so the top is even. Even means the top is twice something. Then the top times the top is four times that something times itself, and that equals 2 times the bottom times the bottom. Halve each side: the bottom times the bottom is 2 times that something times itself. Even again, so the bottom is even too. Both even — but everything shared was cancelled. The assumption breaks itself: no such fraction exists. Walking an assumption into a wall is [Proof by contradiction](../06-Proof/03-proof-by-contradiction.md).
 
 The near misses agree. 7/5: 7 × 7 is 49, 2 × 5 × 5 is 50, off by one. 99/70: 9801 against 9800, off by one again, and the gap never closes.
 
@@ -247,7 +224,7 @@ The outputs match line for line: whole numbers and digit strings, nothing to rou
 > **Thinking "irrational" means "the decimal goes on forever".** Five elevenths goes on forever — 0.45454545… — and it is a plain fraction. Forever is not the test; a block that comes back is.
 >
 > - Shifting by the wrong number of places. The block 45 is two digits, so the shift is two places; shift by one and the tails do not line up.
-> - Treating irrationals as rare. Nearly every point on the tape is one, in a sense the next cards make exact: [real-numbers-no-gaps](04-real-numbers-no-gaps.md).
+> - Treating irrationals as rare. Nearly every point on the tape is one, in a sense the next cards make exact: [The real numbers have no gaps](04-real-numbers-no-gaps.md).
 
 ---
 
@@ -264,15 +241,15 @@ The outputs match line for line: whole numbers and digit strings, nothing to rou
 
 ## What this builds on
 
-- [number-line-and-inequalities](02-number-line-and-inequalities.md): the tape, and which point sits further left.
-- [decimals](../01-Everyday%20Arithmetic/08-decimals.md): the columns right of the dot.
+- [The number line and inequalities](02-number-line-and-inequalities.md): the tape, and which point sits further left.
+- [Decimals](../01-Everyday%20Arithmetic/08-decimals.md): the columns right of the dot.
 
 ## Where this goes next
 
-- [real-numbers-no-gaps](04-real-numbers-no-gaps.md): fractions and irrationals together, no holes.
-- [roots-and-fractional-exponents](../03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): root 2 as one of a family.
-- [proof-by-contradiction](../06-Proof/03-proof-by-contradiction.md): the move used here, properly.
-- [cantors-diagonal-argument](../09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md): irrationals outnumber fractions.
+- [The real numbers have no gaps](04-real-numbers-no-gaps.md): fractions and irrationals together, no holes.
+- [Roots](../03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): root 2 as one of a family.
+- [Proof by contradiction](../06-Proof/03-proof-by-contradiction.md): the move used here, properly.
+- [Cantor's diagonal](../09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md): irrationals outnumber fractions.
 
 ---
 

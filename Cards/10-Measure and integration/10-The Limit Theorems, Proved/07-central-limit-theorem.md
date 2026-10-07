@@ -1,28 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: The Limit Theorems, Proved
-topic: The bell curve as a limit
-item: The central limit theorem, proved
-kind: theorem
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/06-characteristic-functions|characteristic-functions]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/05-convergence-in-distribution|convergence-in-distribution]]"
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/04-independence-as-a-product-measure|independence-as-a-product-measure]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/05-taylors-theorem|taylors-theorem]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/02-central-limit-theorem|central-limit-theorem]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/04-normal-distribution|normal-distribution]]"
-next:
-  - "[[Cards/20-Harmonic analysis/04-Characteristic Functions and Probability/05-central-limit-theorem-by-characteristic-functions|central-limit-theorem-by-characteristic-functions]]"
-  - "[[Cards/20-Harmonic analysis/04-Characteristic Functions and Probability/06-berry-esseen-and-the-rate|berry-esseen-and-the-rate]]"
-tags: [mathematics, measure and integration, central-limit-theorem]
----
-
 # The central limit theorem, proved: standardised sums of independent copies with finite variance converge to the normal law, by swapping one summand at a time
 
-Measure and integration → The Limit Theorems, Proved → The bell curve as a limit → The central limit theorem, proved
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Limit Theorems, Proved](../../../SYLLABUS.md#w10-s10) → The central limit theorem, proved
 
 ---
 
@@ -32,7 +10,7 @@ A fair die is rolled 100 times and the faces are added. The total lands somewher
 
 The exact answer weighs every one of the 6^100 possible roll sequences. Adding one roll at a time and keeping the full table of totals, a step called convolution, gives 0.126948. The bell curve with the same centre and spread gives 0.120783 in one line of arithmetic, and 0.126768 when the cut is placed halfway between 330 and 331. The central limit theorem is the reason the bell curve may stand in for the count.
 
-The probability wing states the theorem and checks it by simulation ([central-limit-theorem](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)). This card proves it for any law with a finite variance, by Jarl Lindeberg's argument of 1922: trade the rolls for bell-curve variables one at a time. A roll and its replacement share mean and variance, so each trade moves a smooth average very little. A second proof, by characteristic functions, and a rate, the Berry–Esseen theorem, follow.
+The probability wing states the theorem and checks it by simulation ([Central limit theorem](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md)). This card proves it for any law with a finite variance, by Jarl Lindeberg's argument of 1922: trade the rolls for bell-curve variables one at a time. A roll and its replacement share mean and variance, so each trade moves a smooth average very little. A second proof, by characteristic functions, and a rate, the Berry–Esseen theorem, follow.
 
 **Centre a sum of n independent copies of one law with finite positive variance, divide by its standard deviation, and the chance that it lands at or below any level tends to the bell-curve chance; the proof trades the copies for normal variables one at a time, each trade costing an amount that shrinks faster than 1/n.**
 
@@ -56,7 +34,7 @@ Orange is the exact chance of each total, from the convolution, in thousandths. 
 
 ## The formula
 
-Notation, as a reminder. $(\Omega, \mathcal{F}, P)$ is a probability space: outcomes, the sets we allow ourselves to measure, and a measure of total size 1. A random variable X is a measurable function on $\Omega$; its law is $P \circ X^{-1}$. Random variables are **independent** when their joint law is the product of their laws ([independence-as-a-product-measure](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)). **Convergence in distribution** means the distribution functions converge at every level where the limit is continuous ([convergence-in-distribution](05-convergence-in-distribution.md)). i.i.d. means independent, each with the same law.
+Notation, as a reminder. $(\Omega, \mathcal{F}, P)$ is a probability space: outcomes, the sets we allow ourselves to measure, and a measure of total size 1. A random variable X is a measurable function on $\Omega$; its law is $P \circ X^{-1}$. Random variables are **independent** when their joint law is the product of their laws ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)). **Convergence in distribution** means the distribution functions converge at every level where the limit is continuous ([Convergence in distribution](05-convergence-in-distribution.md)). i.i.d. means independent, each with the same law.
 
 Let $X_1, X_2, \dots$ be i.i.d. with mean $\mu$ and variance $\sigma^2$, where $0 < \sigma^2 < \infty$. Write
 
@@ -68,7 +46,7 @@ $$P(Z_n \le x) \;\longrightarrow\; \Phi(x) \quad \text{as } n \to \infty.$$
 
 **Read it aloud:** subtract the expected total, divide by the total's standard deviation, and the chance of landing at or below any level tends to the bell-curve chance.
 
-In measure language: the laws $P \circ Z_n^{-1}$ converge in distribution to the standard normal law, with density $e^{-y^2/2}/\sqrt{2\pi}$ against Lebesgue measure ([normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)).
+In measure language: the laws $P \circ Z_n^{-1}$ converge in distribution to the standard normal law, with density $e^{-y^2/2}/\sqrt{2\pi}$ against Lebesgue measure ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)).
 
 Take a test function h whose third derivative is bounded, $\lVert h''' \rVert$ being its largest size, and a standard normal variable G. With a finite third moment $\rho = E\lvert X_1 - \mu \rvert^3$, the proof gives:
 
@@ -112,7 +90,7 @@ $$\sup_{x} \big\lvert P(Z_n \le x) - \Phi(x) \big\rvert \;\le\; \frac{C\,\rho}{\
 
 ### Step 0: two variables with the same mean and variance look alike to a smooth function
 
-Expand a smooth function around a point, as in [taylors-theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): $h(u + y) = h(u) + h'(u)\,y + \tfrac12 h''(u)\,y^2 + R$, with the remainder $R$ at most $\lVert h''' \rVert\,\lvert y \rvert^3/6$ in size. Average over a small random step y. The first two terms depend on the step only through its mean and its mean square. A standardized roll, (face − 3.5)/1.7078, and a standard normal variable, both scaled down by the square root of n, share both. So they differ only in the remainder, of order $n^{-3/2}$. Swap all n rolls one at a time and the total cost is of order $n \cdot n^{-3/2} = n^{-1/2}$.
+Expand a smooth function around a point, as in [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): $h(u + y) = h(u) + h'(u)\,y + \tfrac12 h''(u)\,y^2 + R$, with the remainder $R$ at most $\lVert h''' \rVert\,\lvert y \rvert^3/6$ in size. Average over a small random step y. The first two terms depend on the step only through its mean and its mean square. A standardized roll, (face − 3.5)/1.7078, and a standard normal variable, both scaled down by the square root of n, share both. So they differ only in the remainder, of order $n^{-3/2}$. Swap all n rolls one at a time and the total cost is of order $n \cdot n^{-3/2} = n^{-1/2}$.
 
 ### Step 1: test with smooth functions, not with a cut
 
@@ -120,11 +98,11 @@ The event "total at most 330" is an indicator: one below the cut, zero above. It
 
 ### Step 2: the swap, one summand at a time
 
-Put independent standard normals $G_1, \dots, G_n$ beside the copies on one space, by a product measure ([independence-as-a-product-measure](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)). Let $W_k$ be the sum, divided by the square root of n, of the first k standardized copies and the last n − k normals:
+Put independent standard normals $G_1, \dots, G_n$ beside the copies on one space, by a product measure ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)). Let $W_k$ be the sum, divided by the square root of n, of the first k standardized copies and the last n − k normals:
 
 $$W_k = \frac{Y_1 + \dots + Y_k + G_{k+1} + \dots + G_n}{\sqrt{n}}.$$
 
-At k = n this is $Z_n$. At k = 0 it is a sum of independent normals divided by the square root of n, which is exactly standard normal ([convolution-and-sums](../06-Product%20Measures%20and%20Fubini/05-convolution-and-sums.md)). Neighbours $W_k$ and $W_{k-1}$ differ in one place only: slot k holds $Y_k$ in one and $G_k$ in the other. Everything else is a shared part $U_k$, independent of both.
+At k = n this is $Z_n$. At k = 0 it is a sum of independent normals divided by the square root of n, which is exactly standard normal ([Convolution](../06-Product%20Measures%20and%20Fubini/05-convolution-and-sums.md)). Neighbours $W_k$ and $W_{k-1}$ differ in one place only: slot k holds $Y_k$ in one and $G_k$ in the other. Everything else is a shared part $U_k$, independent of both.
 
 ### Step 3: each swap costs a third-order remainder
 
@@ -149,20 +127,20 @@ Without a third moment, split each copy at a level $\varepsilon$ times the squar
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $X_1, X_2, \dots$ are i.i.d. on $(\Omega, \mathcal{F}, P)$ with $E X_1^2 < \infty$ and $\sigma^2 > 0$; $Y_i = (X_i - \mu)/\sigma$ has $E Y_i = 0$, $E Y_i^2 = 1$, and $Z_n = (Y_1 + \dots + Y_n)/\sqrt{n}$. For each n, take the product of $(\Omega, \mathcal{F}, P)$ with $\mathbb{R}^n$ under the standard normal law in each coordinate; the coordinates $G_1, \dots, G_n$ are then standard normal, independent of each other and of the $X_i$, and the joint law of the $X_i$ is unchanged ([independence-as-a-product-measure](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)).
+**Setting.** $X_1, X_2, \dots$ are i.i.d. on $(\Omega, \mathcal{F}, P)$ with $E X_1^2 < \infty$ and $\sigma^2 > 0$; $Y_i = (X_i - \mu)/\sigma$ has $E Y_i = 0$, $E Y_i^2 = 1$, and $Z_n = (Y_1 + \dots + Y_n)/\sqrt{n}$. For each n, take the product of $(\Omega, \mathcal{F}, P)$ with $\mathbb{R}^n$ under the standard normal law in each coordinate; the coordinates $G_1, \dots, G_n$ are then standard normal, independent of each other and of the $X_i$, and the joint law of the $X_i$ is unchanged ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)).
 
-**1. Taylor with two remainder bounds.** Let h have bounded derivatives up to order 3, with $M_2 = \sup \lvert h'' \rvert$ and $M_3 = \sup \lvert h''' \rvert$. For real u and y put $R(u, y) = h(u + y) - h(u) - h'(u) y - \tfrac12 h''(u) y^2$. The Lagrange remainder of order 3 gives $R = h'''(\xi) y^3/6$ for some $\xi$, so $\lvert R \rvert \le M_3 \lvert y \rvert^3/6$. The Lagrange remainder of order 2 gives $h(u + y) = h(u) + h'(u) y + \tfrac12 h''(\eta) y^2$, so $R = \tfrac12 (h''(\eta) - h''(u)) y^2$ and $\lvert R \rvert \le M_2 y^2$ ([taylors-theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)). Hence $\lvert R(u, y) \rvert \le \min(M_2 y^2, M_3 \lvert y \rvert^3/6)$.
+**1. Taylor with two remainder bounds.** Let h have bounded derivatives up to order 3, with $M_2 = \sup \lvert h'' \rvert$ and $M_3 = \sup \lvert h''' \rvert$. For real u and y put $R(u, y) = h(u + y) - h(u) - h'(u) y - \tfrac12 h''(u) y^2$. The Lagrange remainder of order 3 gives $R = h'''(\xi) y^3/6$ for some $\xi$, so $\lvert R \rvert \le M_3 \lvert y \rvert^3/6$. The Lagrange remainder of order 2 gives $h(u + y) = h(u) + h'(u) y + \tfrac12 h''(\eta) y^2$, so $R = \tfrac12 (h''(\eta) - h''(u)) y^2$ and $\lvert R \rvert \le M_2 y^2$ ([Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)). Hence $\lvert R(u, y) \rvert \le \min(M_2 y^2, M_3 \lvert y \rvert^3/6)$.
 
 **2. One swap.** For $1 \le k \le n$ let $U_k = (Y_1 + \dots + Y_{k-1} + G_{k+1} + \dots + G_n)/\sqrt{n}$, so $W_k = U_k + Y_k/\sqrt{n}$ and $W_{k-1} = U_k + G_k/\sqrt{n}$. $U_k$ is a measurable function of variables other than $Y_k$ and $G_k$, so it is independent of each; h, h', h'' are bounded, so every term below is integrable, and independence factors averages of products:
 $E\,h(W_k) = E\,h(U_k) + E\,h'(U_k)\,E Y_k/\sqrt{n} + \tfrac12 E\,h''(U_k)\,E Y_k^2/n + E\,R(U_k, Y_k/\sqrt{n})$,
 and the same with $G_k$ in place of $Y_k$. Since $E Y_k = E G_k = 0$ and $E Y_k^2 = E G_k^2 = 1$, the first three terms agree, and
 $\lvert E\,h(W_k) - E\,h(W_{k-1}) \rvert \le E\lvert R(U_k, Y_k/\sqrt{n}) \rvert + E\lvert R(U_k, G_k/\sqrt{n}) \rvert$.
 
-**3. The third-moment case.** If $E \lvert Y_1 \rvert^3 < \infty$, part 1 bounds the two remainders by $M_3 E\lvert Y_1 \rvert^3/(6 n^{3/2})$ and $M_3 E\lvert G \rvert^3/(6 n^{3/2})$, for every k. $W_n = Z_n$, and $W_0 = (G_1 + \dots + G_n)/\sqrt{n}$ is standard normal, since a sum of independent normals is normal with the summed variance ([convolution-and-sums](../06-Product%20Measures%20and%20Fubini/05-convolution-and-sums.md)). Summing part 2 over k by the triangle inequality gives $\lvert E\,h(Z_n) - E\,h(G) \rvert \le M_3 (E\lvert Y_1 \rvert^3 + E\lvert G \rvert^3)/(6\sqrt{n})$, which is the displayed bound since $E\lvert Y_1 \rvert^3 = \rho/\sigma^3$.
+**3. The third-moment case.** If $E \lvert Y_1 \rvert^3 < \infty$, part 1 bounds the two remainders by $M_3 E\lvert Y_1 \rvert^3/(6 n^{3/2})$ and $M_3 E\lvert G \rvert^3/(6 n^{3/2})$, for every k. $W_n = Z_n$, and $W_0 = (G_1 + \dots + G_n)/\sqrt{n}$ is standard normal, since a sum of independent normals is normal with the summed variance ([Convolution](../06-Product%20Measures%20and%20Fubini/05-convolution-and-sums.md)). Summing part 2 over k by the triangle inequality gives $\lvert E\,h(Z_n) - E\,h(G) \rvert \le M_3 (E\lvert Y_1 \rvert^3 + E\lvert G \rvert^3)/(6\sqrt{n})$, which is the displayed bound since $E\lvert Y_1 \rvert^3 = \rho/\sigma^3$.
 
 **4. Finite variance only.** Fix $\varepsilon > 0$. On the set where $\lvert Y_k \rvert \le \varepsilon \sqrt{n}$, part 1 gives $\lvert R(U_k, Y_k/\sqrt{n}) \rvert \le M_3 \lvert Y_k \rvert^3/(6 n^{3/2}) \le M_3\,\varepsilon\,Y_k^2/(6n)$. Off it, $\lvert R \rvert \le M_2 Y_k^2/n$. Taking expectations, with the $Y_k$ sharing one law,
 $n\,E\lvert R(U_k, Y_k/\sqrt{n}) \rvert \le M_3 \varepsilon/6 + M_2\,E[Y_1^2\,1_{\{\lvert Y_1 \rvert > \varepsilon\sqrt{n}\}}]$.
-The functions $Y_1^2\,1_{\{\lvert Y_1 \rvert > \varepsilon\sqrt{n}\}}$ are dominated by the integrable $Y_1^2$ and tend to 0 at every point, since $Y_1$ is finite; by dominated convergence their integrals tend to 0 ([dominated-convergence-theorem](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)). The normal remainders sum to at most $M_3 E\lvert G \rvert^3/(6\sqrt{n})$. Summing part 2 over k, $\limsup_n \lvert E\,h(Z_n) - E\,h(G) \rvert \le M_3 \varepsilon/6$ for every $\varepsilon > 0$, so $E\,h(Z_n) \to E\,h(G)$.
+The functions $Y_1^2\,1_{\{\lvert Y_1 \rvert > \varepsilon\sqrt{n}\}}$ are dominated by the integrable $Y_1^2$ and tend to 0 at every point, since $Y_1$ is finite; by dominated convergence their integrals tend to 0 ([Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)). The normal remainders sum to at most $M_3 E\lvert G \rvert^3/(6\sqrt{n})$. Summing part 2 over k, $\limsup_n \lvert E\,h(Z_n) - E\,h(G) \rvert \le M_3 \varepsilon/6$ for every $\varepsilon > 0$, so $E\,h(Z_n) \to E\,h(G)$.
 
 **5. A smooth ramp.** Let $q(t) = 35t^4 - 84t^5 + 70t^6 - 20t^7$. Then $q(0) = 0$, $q(1) = 1$ and $q'(t) = 140\,t^3 (1 - t)^3$, so the first three derivatives of q vanish at 0 and at 1. Define $\psi(t) = 1$ for $t \le 0$, $\psi(t) = 1 - q(t)$ on $[0, 1]$, $\psi(t) = 0$ for $t \ge 1$. The pieces meet with matching derivatives, so $\psi$ has bounded derivatives up to order 3.
 
@@ -188,12 +166,12 @@ xychart-beta
 
 Orange is the largest gap in thousandths, taken at every jump of the true distribution function. Green is the Berry–Esseen bound with constant 0.4748, in the same units. Both fall like one over the square root of n: the gap times the square root of n settles at 0.1169.
 
-For whole-number totals the gap cannot fall faster. The distribution function jumps, the tallest jump, at 350, is 23.32 thousandths, and a continuous curve misses one side of a jump of height J by at least J/2 ([convergence-in-distribution](05-convergence-in-distribution.md)): about 0.0117, the gap in the chart. The half-step cut works for this reason: it aims the bell curve at the middle of a jump.
+For whole-number totals the gap cannot fall faster. The distribution function jumps, the tallest jump, at 350, is 23.32 thousandths, and a continuous curve misses one side of a jump of height J by at least J/2 ([Convergence in distribution](05-convergence-in-distribution.md)): about 0.0117, the gap in the chart. The half-step cut works for this reason: it aims the bell curve at the middle of a jump.
 
 <details>
 <summary>The second road: characteristic functions</summary>
 
-The characteristic function of Y is $\varphi_Y(s) = E\,e^{isY}$ ([characteristic-functions](06-characteristic-functions.md)). For real y, $\lvert e^{iy} - (1 + iy - y^2/2) \rvert \le \min(\lvert y \rvert^3/6,\, y^2)$, by Taylor's theorem with the remainder in integral form, applied to $e^{iy}$. With $E Y = 0$, $E Y^2 = 1$, this gives $\lvert \varphi_Y(s) - (1 - s^2/2) \rvert \le s^2\,E \min(\lvert s \rvert\,\lvert Y \rvert^3/6,\, Y^2)$, and the last expectation tends to 0 as s → 0 by dominated convergence, with $Y^2$ as the bound.
+The characteristic function of Y is $\varphi_Y(s) = E\,e^{isY}$ ([Characteristic functions](06-characteristic-functions.md)). For real y, $\lvert e^{iy} - (1 + iy - y^2/2) \rvert \le \min(\lvert y \rvert^3/6,\, y^2)$, by Taylor's theorem with the remainder in integral form, applied to $e^{iy}$. With $E Y = 0$, $E Y^2 = 1$, this gives $\lvert \varphi_Y(s) - (1 - s^2/2) \rvert \le s^2\,E \min(\lvert s \rvert\,\lvert Y \rvert^3/6,\, Y^2)$, and the last expectation tends to 0 as s → 0 by dominated convergence, with $Y^2$ as the bound.
 
 Independence turns the characteristic function of a sum into a product, so $\varphi_{Z_n}(t) = \varphi_Y(t/\sqrt{n})^n$. For complex a and b of size at most 1, $\lvert a^n - b^n \rvert \le n \lvert a - b \rvert$, by writing $a^n - b^n$ as a telescoping sum of n terms. Take $a = \varphi_Y(t/\sqrt{n})$ and $b = 1 - t^2/(2n)$, which lies in $[0, 1]$ once n is at least $t^2/2$. Then $\lvert \varphi_{Z_n}(t) - b^n \rvert \le n \cdot (t^2/n) \cdot o(1) \to 0$, and $b^n \to e^{-t^2/2}$, the characteristic function of the standard normal law. Lévy's continuity theorem, from the same card, turns convergence of characteristic functions at every t into convergence in distribution.
 
@@ -201,7 +179,7 @@ For the die the code prints $\varphi_{Z_n}(1)$ = 0.567548, 0.603269, 0.606210, 0
 
 </details>
 
-The characteristic-function road is shorter once Lévy's continuity theorem is in hand; Lindeberg's swap needs no Fourier analysis and gives a rate for smooth functions. The Fourier road is laid out in full on central-limit-theorem-by-characteristic-functions.
+The characteristic-function road is shorter once Lévy's continuity theorem is in hand; Lindeberg's swap needs no Fourier analysis and gives a rate for smooth functions. The Fourier road is laid out in full on The central limit theorem in four lines, once you have fingerprints.
 
 ---
 
@@ -233,7 +211,7 @@ About one hundred-roll session in eight ends at 330 or below. The bell curve mis
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Rolls not independent: one roll copied 100 times | chance of 330 or less = P(one roll ≤ 3) = 1/2, against 0.126948 | $Z_n$ is one standardized roll for every n |
-| Infinite variance: Cauchy steps, divided by the square root of n | characteristic function at t = 1: 0.3679, 0.1353, 0.000045 at n = 1, 4, 100, falling to 0 instead of 0.606531 | A Cauchy sum divided by n is again Cauchy, so divided by the square root of n it spreads without limit ([heavy-tails-pareto-and-cauchy](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) |
+| Infinite variance: Cauchy steps, divided by the square root of n | characteristic function at t = 1: 0.3679, 0.1353, 0.000045 at n = 1, 4, 100, falling to 0 instead of 0.606531 | A Cauchy sum divided by n is again Cauchy, so divided by the square root of n it spreads without limit ([Heavy tails](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) |
 | Standard deviation of the total taken as 100 × 1.7078 | 170.78, and a normal chance of 0.4534 | Variances add, not standard deviations |
 | Treating the limit as a guarantee at n = 100: rare event, p = 1/10000 | chance the count is at most its mean = chance of no event = 0.9900, against $\Phi(0)$ = 0.5 | The theorem fixes the law and lets n grow; with successes this rare the moment ratio is enormous and Berry–Esseen gives no useful bound |
 
@@ -643,7 +621,7 @@ The two outputs match line for line.
 - **Margins of error.** A poll's error bar is a normal quantile times the standard deviation of an average; the theorem is why the normal quantile is the right multiplier.
 - **Tolerance stacking.** An assembly of many parts, each off by a small independent amount, is off in total by a nearly normal amount with spread the square root of the summed variances.
 - **Counting successes.** A binomial count is a sum of independent 0-or-1 trials; its normal approximation, with the half-step correction, is de Moivre and Laplace's first case of this theorem.
-- **Averages converge, then fluctuate.** [weak-law-of-large-numbers](03-weak-law-of-large-numbers.md) and [strong-law-of-large-numbers](04-strong-law-of-large-numbers.md) say the average of the rolls settles at 3.5; this theorem says the size and shape of what is left over, on the scale of one over the square root of n.
+- **Averages converge, then fluctuate.** [The weak law of large numbers](03-weak-law-of-large-numbers.md) and [The strong law of large numbers](04-strong-law-of-large-numbers.md) say the average of the rolls settles at 3.5; this theorem says the size and shape of what is left over, on the scale of one over the square root of n.
 
 > **Say it back**
 > Centre a sum of n independent copies of a law with finite positive variance and divide by its standard deviation; its distribution function tends to the bell curve at every level. The proof swaps the copies for normal variables one at a time; each swap changes a smooth average only through a third-order remainder, because the two share mean and variance. n swaps of size $n^{-3/2}$ cost $n^{-1/2}$, truncation removes the need for a third moment, and smooth ramps squeezed around a cut turn averages back into chances. Berry–Esseen bounds the gap by a constant times the third-moment ratio over the square root of n. For 100 die rolls the chance of 330 or less is 0.126948 exactly, 0.120783 from the bell curve, with an allowance of 0.0608.
@@ -652,19 +630,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [characteristic-functions](06-characteristic-functions.md): the characteristic function of a sum as a product, and Lévy's continuity theorem, used by the second road.
-- [convergence-in-distribution](05-convergence-in-distribution.md): what "the laws converge" means, tested at the levels where the limit is continuous.
-- [independence-as-a-product-measure](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md): the product space that carries the copies and their normal replacements, and the factoring of averages of products.
-- [taylors-theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): the remainder bounds that measure the cost of one swap.
-- [central-limit-theorem](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md): the same statement, used and checked by simulation, without the proof.
-- [normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, its distribution function, and why a sum of independent normals stays normal.
+- [Characteristic functions](06-characteristic-functions.md): the characteristic function of a sum as a product, and Lévy's continuity theorem, used by the second road.
+- [Convergence in distribution](05-convergence-in-distribution.md): what "the laws converge" means, tested at the levels where the limit is continuous.
+- [Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md): the product space that carries the copies and their normal replacements, and the factoring of averages of products.
+- [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): the remainder bounds that measure the cost of one swap.
+- [Central limit theorem](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md): the same statement, used and checked by simulation, without the proof.
+- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, its distribution function, and why a sum of independent normals stays normal.
 
 ## Where this goes next
 
-- central-limit-theorem-by-characteristic-functions: the Fourier proof in four lines.
-- berry-esseen-and-the-rate: the Berry–Esseen bound in use, and a skewness correction.
+- The central limit theorem in four lines, once you have fingerprints: the Fourier proof in four lines.
+- How big must n be: the Berry–Esseen bound in use, and a skewness correction.
 
-This card proves the limit and only states the rate; how big n must be in practice is answered on berry-esseen-and-the-rate.
+This card proves the limit and only states the rate; how big n must be in practice is answered on How big must n be.
 
 ---
 

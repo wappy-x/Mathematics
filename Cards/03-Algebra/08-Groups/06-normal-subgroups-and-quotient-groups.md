@@ -1,33 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Groups
-topic: Collapsing a group
-item: Normal subgroups and quotient groups
-kind: definition
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/08-Groups/05-homomorphisms-and-isomorphisms|homomorphisms-and-isomorphisms]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/01-congruence-mod-n|congruence-mod-n]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/03-residue-classes|residue-classes]]"
-next:
-  - "[[Cards/03-Algebra/09-Rings and Fields/04-ideals-and-quotient-rings|ideals-and-quotient-rings]]"
-  - "[[Cards/03-Algebra/10-For the Curious/02-why-no-quintic-formula|why-no-quintic-formula]]"
-  - "[[Cards/17-Topology/04-Homotopy/06-van-kampens-theorem|van-kampens-theorem]]"
-  - "[[Cards/17-Topology/05-Homology/02-homology-groups|homology-groups]]"
-  - "[[Cards/21-Algebraic and analytic number theory/05-Fields and Galois Theory/05-galois-groups-and-the-fundamental-theorem|galois-groups-and-the-fundamental-theorem]]"
-  - "[[Cards/21-Algebraic and analytic number theory/06-Algebraic Numbers/05-class-groups-and-the-minkowski-bound|class-groups-and-the-minkowski-bound]]"
-  - "[[Cards/22-Algebraic geometry/06-Schemes and Modern Language/05-modules-and-the-structure-theorem|modules-and-the-structure-theorem]]"
-tags:
-  - mathematics
-  - algebra
-  - normal-subgroups-and-quotient-groups
----
-
 # Normal subgroups and quotient groups: collapsing a group by a subgroup, and Z mod n is the model
 
-Algebra → Groups → Collapsing a group → Normal subgroups and quotient groups
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Groups](../../../SYLLABUS.md#w03-s08) → Normal subgroups and quotient groups
 
 ---
 
@@ -58,7 +31,7 @@ Every integer lands in one pile, and the piles add.
 
 ## The formula
 
-A **coset** is a pile: apply a member $g$ of the group $G$ in front of every member of the subgroup $N$, giving $gN$ — $g + N$ under addition. Cosets cut a group into equal piles: [cosets-and-lagranges-theorem](04-cosets-and-lagranges-theorem.md).
+A **coset** is a pile: apply a member $g$ of the group $G$ in front of every member of the subgroup $N$, giving $gN$ — $g + N$ under addition. Cosets cut a group into equal piles: [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md).
 
 The **conjugate** of a move by $g$ is three steps: undo $g$, do the move, do $g$ again — $g^{-1}$ is the undo of $g$, rightmost factor first. Conjugate every move of $N$ and the set $gNg^{-1}$ comes out: $N$ seen from another position. $N$ is **normal** in $G$ when that set is $N$ again:
 
@@ -72,7 +45,7 @@ $$(gN)(kN) = (gk)N$$
 
 These piles are the **quotient group** $G/N$, said "G over N", with $N$ as identity; a finite $G$ gives as many piles as its size divided by that of $N$.
 
-A homomorphism $\varphi$ maps one group to another, respecting the operation ([homomorphisms-and-isomorphisms](05-homomorphisms-and-isomorphisms.md)). Its **kernel** is all it sends to the identity, its **image** all it reaches. Then:
+A homomorphism $\varphi$ maps one group to another, respecting the operation ([Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md)). Its **kernel** is all it sends to the identity, its **image** all it reaches. Then:
 
 $$G/\ker\varphi \;\cong\; \operatorname{im}\varphi$$
 
@@ -108,7 +81,7 @@ The middle bracket is $h$ conjugated by the undo of $k$. Normality returns it to
 
 ### Step 1: the clock passes for free, the tile does not
 
-Adding integers ignores order, so a conjugate is the original addition and every subgroup of the integers is normal. Its 12 piles are the remainder buckets of [residue-classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md), built twice in the check: from differences, and from remainders.
+Adding integers ignores order, so a conjugate is the original addition and every subgroup of the integers is normal. Its 12 piles are the remainder buckets of [Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md), built twice in the check: from differences, and from remainders.
 
 The tile does not commute, so the test bites. A turn conjugated by a turn is a turn, and by a flip the reversed turn, still a turn: all 32 conjugates of the 4 turns stay turns. So 8 moves collapse to 2 piles, and two flips make a turn — the 2-clock, Z mod 2. A second road never names a pile: take each move as where it sends the 4 corners. Those maps rebuild all 64 products, and a flip is the corners running backwards, a count adding mod 2. Quicker still, any subgroup leaving exactly 2 piles is normal, the other pile being the leftovers.
 
@@ -378,8 +351,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Clock and calendar arithmetic.** Every "mod 12" or "mod 7" is this construction on the integers ([congruence-mod-n](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md)).
-- **Parity reports.** Any "even or odd" rule is a quotient by a subgroup with 2 piles: turn-or-flip, or the sign of a permutation ([permutations-and-the-symmetric-group](03-permutations-and-the-symmetric-group.md)).
+- **Clock and calendar arithmetic.** Every "mod 12" or "mod 7" is this construction on the integers ([Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md)).
+- **Parity reports.** Any "even or odd" rule is a quotient by a subgroup with 2 piles: turn-or-flip, or the sign of a permutation ([Permutations](03-permutations-and-the-symmetric-group.md)).
 - **Ignoring detail on purpose.** A sensor reporting that a part was flipped but not how far it turned builds a quotient group, usable because the ignored moves are normal.
 
 > **Say it back**
@@ -389,19 +362,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [homomorphisms-and-isomorphisms](05-homomorphisms-and-isomorphisms.md): operation-respecting maps, kernels, images.
-- [congruence-mod-n](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md): what "differ by a multiple of 12" means, and why it acts like equality.
-- [residue-classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md): the 12 remainder buckets, here a quotient.
+- [Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md): operation-respecting maps, kernels, images.
+- [Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md): what "differ by a multiple of 12" means, and why it acts like equality.
+- [Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md): the 12 remainder buckets, here a quotient.
 
 ## Where this goes next
 
-- [ideals-and-quotient-rings](../09-Rings%20and%20Fields/04-ideals-and-quotient-rings.md): the same collapse, two operations.
-- [why-no-quintic-formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): chains of normal subgroups, and where they end.
-- van-kampens-theorem: quotients gluing two pieces' loop groups.
-- homology-groups: holes as one quotient per dimension.
-- galois-groups-and-the-fundamental-theorem: normal subgroups matched with fields between roots and rationals.
-- class-groups-and-the-minkowski-bound: a quotient measuring how badly factorisation fails.
-- modules-and-the-structure-theorem: the same machinery, ring multiplication allowed.
+- [Ideals and quotient rings](../09-Rings%20and%20Fields/04-ideals-and-quotient-rings.md): the same collapse, two operations.
+- [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): chains of normal subgroups, and where they end.
+- Van Kampen's theorem: quotients gluing two pieces' loop groups.
+- Homology groups: holes as one quotient per dimension.
+- The Galois correspondence: normal subgroups matched with fields between roots and rationals.
+- Class groups: a quotient measuring how badly factorisation fails.
+- Modules: the same machinery, ring multiplication allowed.
 
 Both collapses here run on one operation; what a subgroup must satisfy when a second one appears is the next question.
 

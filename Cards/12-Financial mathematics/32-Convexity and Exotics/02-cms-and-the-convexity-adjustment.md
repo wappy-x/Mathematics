@@ -1,30 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Convexity and Exotics
-topic: Swap rates paid as coupons
-item: Constant-maturity swaps
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/32-Convexity and Exotics/01-futures-forward-convexity|futures-forward-convexity]]"
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/04-swaptions-payer-and-receiver|swaptions-payer-and-receiver]]"
-next:
-  - "[[Cards/12-Financial mathematics/32-Convexity and Exotics/03-timing-and-in-arrears-adjustments|timing-and-in-arrears-adjustments]]"
-  - "[[Cards/12-Financial mathematics/32-Convexity and Exotics/05-callable-and-cancellable-swaps|callable-and-cancellable-swaps]]"
-tags: [mathematics, financial mathematics, cms-and-the-convexity-adjustment]
----
-
 # Constant-maturity swaps: paying a swap rate on the wrong date, and the replication that prices it
 
-Financial mathematics → Convexity and Exotics → Swap rates paid as coupons → Constant-maturity swaps
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Convexity and Exotics](../../../SYLLABUS.md#w12-s32) → Constant-maturity swaps
 
 ---
 
 ## General Overview
 
-A pension fund agrees to receive, every year, whatever the 10-year swap rate happens to be that year, on 10 million dollars. The 10-year swap rate is the fixed rate at which, on that day, the market will swap fixed payments for floating ones for ten years ([par-swap-rate-and-annuity](../28-Swaps/02-par-swap-rate-and-annuity.md)). A contract that pays a swap rate of fixed length as its coupon, year after year, is a **constant-maturity swap**, CMS for short: the maturity of the rate it pays stays at ten years while the calendar moves on.
+A pension fund agrees to receive, every year, whatever the 10-year swap rate happens to be that year, on 10 million dollars. The 10-year swap rate is the fixed rate at which, on that day, the market will swap fixed payments for floating ones for ten years ([The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)). A contract that pays a swap rate of fixed length as its coupon, year after year, is a **constant-maturity swap**, CMS for short: the maturity of the rate it pays stays at ten years while the calendar moves on.
 
 Take one of its coupons. In five years the 10-year rate is read off the screen. One year after that, the fund receives that rate times 10 million dollars. Today's curve is flat at 4.5 percent a year, so the forward 10-year rate for that date, the fair fixed rate today for a 10-year swap starting in five years, is 4.5 percent.
 
@@ -56,7 +38,7 @@ Straight line: the rate the coupon pays. Curved line: the same payoff counted in
 
 ## The formula
 
-Notation first, in words. Times are in years from today. $T$ is the fixing date, five years out. $U$ is the payment date, $T + 1$. $S_T$ is the 10-year swap rate observed at $T$, unknown today. $D(t)$ is today's price of one dollar paid at time $t$, the discount factor; on the flat curve $D(t) = 1.045^{-t}$. $A_T$ is the swap's **annuity** at $T$: the value then of one dollar paid at the end of each of the swap's ten years. $A_0$ is its value today. $\mathbb{E}^A[\,\cdot\,]$ is an average taken with the weights of the **annuity measure** ([the-annuity-measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md)): the weights under which the forward swap rate $F$ has no drift, $\mathbb{E}^A[S_T] = F$.
+Notation first, in words. Times are in years from today. $T$ is the fixing date, five years out. $U$ is the payment date, $T + 1$. $S_T$ is the 10-year swap rate observed at $T$, unknown today. $D(t)$ is today's price of one dollar paid at time $t$, the discount factor; on the flat curve $D(t) = 1.045^{-t}$. $A_T$ is the swap's **annuity** at $T$: the value then of one dollar paid at the end of each of the swap's ten years. $A_0$ is its value today. $\mathbb{E}^A[\,\cdot\,]$ is an average taken with the weights of the **annuity measure** ([The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md)): the weights under which the forward swap rate $F$ has no drift, $\mathbb{E}^A[S_T] = F$.
 
 The fair rate of a CMS coupon, the fixed rate that makes it worth the same as the floating coupon, is, with $h$ defined two displays below,
 
@@ -91,7 +73,7 @@ In words: buy receiver swaptions at every strike below the forward and payer swa
 | $K_{\text{CMS}}$ | the CMS coupon's fair rate | 4.6796% | — |
 | $Q$, $B$, $X$ | in the proof only: the risk-neutral measure, the bank account, any positive traded asset used as the unit | — | — |
 
-$R$ and $P$ are Black's swaption formulas from [swaptions-payer-and-receiver](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md), with the annuity factor left off: $P(k) = F\,N(d_1) - k\,N(d_2)$, $R(k) = k\,N(-d_2) - F\,N(-d_1)$, where $N$ is the bell-curve area to the left and $d_{1,2} = \big(\ln(F/k) \pm \sigma^2 T/2\big)/(\sigma\sqrt{T})$.
+$R$ and $P$ are Black's swaption formulas from [Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md), with the annuity factor left off: $P(k) = F\,N(d_1) - k\,N(d_2)$, $R(k) = k\,N(-d_2) - F\,N(-d_1)$, where $N$ is the bell-curve area to the left and $d_{1,2} = \big(\ln(F/k) \pm \sigma^2 T/2\big)/(\sigma\sqrt{T})$.
 
 A quick formula, exact when $w$ is a straight line, gives most of the answer by hand:
 
@@ -103,7 +85,7 @@ In words: the variance of the rate under the annuity measure, times how steeply 
 
 - **Swaption prices are known at every strike.** Here a flat 20 percent Black volatility supplies them. Real markets have a smile (volatility that differs by strike), and the strip must use the market's price strike by strike; using one at-the-money volatility for all strikes misprices the wings.
 - **The whole curve moves with the 10-year rate.** The weight $w$ assumes a flat curve at $S_T$. If the curve twists, two scenarios with the same 10-year rate have different weights, and no strip of swaptions on one rate can see the difference. The error is small for mild twists, but it is a model error, not a rounding error.
-- **Rates stay positive.** The lognormal Black model and the lower limit 0 in the receiver integral both assume it. Negative rates need shifted or normal volatilities ([normal-and-shifted-volatilities-for-rates](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)) and a receiver integral that starts below zero.
+- **Rates stay positive.** The lognormal Black model and the lower limit 0 in the receiver integral both assume it. Negative rates need shifted or normal volatilities ([Rate volatilities](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)) and a receiver integral that starts below zero.
 - **The payer wing is thin enough.** The payer integral runs to infinity, and its weights $h''(k)$ stay between 0.86 and 1.03 for every strike up to 30 percent. If the smile makes high-strike payers expensive, the integral, and the CMS price, grow sharply. That is Hagan's warning: CMS prices are hostage to the far upside of the smile.
 - **The payment lag is the one stated.** The weight depends on when the coupon is paid. Paid on the fixing date the adjustment is 22.77 bp; paid at the swap's end it is −19.55 bp.
 - **Conventions verified 2026-09-28.** The example pays annually with accrual fraction 1 on a flat annually compounded curve. Real USD swaps on SOFR pay the fixed leg annually on Act/360, and swaption volatilities are mostly quoted as normal (basis-point) volatilities; convert those to Black before using this card's formulas.
@@ -124,7 +106,7 @@ $$K_{\text{CMS}} = \frac{\mathbb{E}^A[\,S_T\, W_T\,]}{\mathbb{E}^A[\,W_T\,]}.$$
 
 This is exact. It uses nothing but the absence of free money.
 
-If $W_T$ were a constant, it would cancel and $K_{\text{CMS}}$ would be $F$. It is not constant, and it rises with the rate: at 4.5 percent the ratio is 0.120937, and its slope is 3.959847 times its own size per unit of rate. So futures with high rates count extra, and the average moves above $F$. This is the same mechanism as the gap between futures and forwards on [futures-forward-convexity](01-futures-forward-convexity.md): a payment made in the wrong unit, averaged under the wrong weights.
+If $W_T$ were a constant, it would cancel and $K_{\text{CMS}}$ would be $F$. It is not constant, and it rises with the rate: at 4.5 percent the ratio is 0.120937, and its slope is 3.959847 times its own size per unit of rate. So futures with high rates count extra, and the average moves above $F$. This is the same mechanism as the gap between futures and forwards on [Futures against forwards](01-futures-forward-convexity.md): a payment made in the wrong unit, averaged under the wrong weights.
 
 <details>
 <summary>Detailed proof: the change of unit</summary>
@@ -164,7 +146,7 @@ Why $h$ and not $s\,w(s)$ directly: $s\,w(s) = F\,w(F) + w(F)(s - F) + F\big(w(s
 
 The strip's weights are $h''(k) = 2w'(k) + (k - F)\,w''(k)$. With the coupon paid one year after the fixing, $w$ rises with the rate and bends only gently, so the weights are positive and every option in the strip is bought, not sold. A positive-weighted strip of options costs something, so the adjustment is positive. For the example the receivers below 4.5 percent contribute 5.7096 bp and the payers above contribute 12.2507 bp: 17.9603 bp in all. The payers carry two thirds of it, because a lognormal rate has a long right tail.
 
-A second road, the quick formula, replaces $w$ by its tangent line at $F$: $w(s) \approx w(F) + w'(F)(s - F)$. Then the covariance of Step 1 is the slope times the variance of $S_T$, which for a lognormal rate is $F^2(e^{\sigma^2 T} - 1)$, and the denominator is $w(F)$. It gives 17.7536 bp, 1.2 percent low, because it drops the bend of $w$. The coupon paid at a different point in time follows the same derivation with a different $w$: [timing-and-in-arrears-adjustments](03-timing-and-in-arrears-adjustments.md).
+A second road, the quick formula, replaces $w$ by its tangent line at $F$: $w(s) \approx w(F) + w'(F)(s - F)$. Then the covariance of Step 1 is the slope times the variance of $S_T$, which for a lognormal rate is $F^2(e^{\sigma^2 T} - 1)$, and the denominator is $w(F)$. It gives 17.7536 bp, 1.2 percent low, because it drops the bend of $w$. The coupon paid at a different point in time follows the same derivation with a different $w$: [Timing adjustments](03-timing-and-in-arrears-adjustments.md).
 
 ---
 
@@ -614,10 +596,10 @@ all checks passed
 ## Where you meet it in real life
 
 - **CMS swaps and CMS legs.** Insurers and pension funds receive CMS rates to match liabilities tied to long rates. Every coupon is priced as a forward plus its adjustment, one strip per fixing date.
-- **CMS spread notes.** Notes paying the gap between the 10-year and 2-year rates, the "steepeners", need two adjusted rates and how they move together: [structured-notes-in-outline](06-structured-notes-in-outline.md).
+- **CMS spread notes.** Notes paying the gap between the 10-year and 2-year rates, the "steepeners", need two adjusted rates and how they move together: [Structured rate notes](06-structured-notes-in-outline.md).
 - **CMS caps and floors.** An option on a CMS rate is the same replication with a different $h$: weights start at the strike instead of at the forward.
-- **Rates paid in another currency.** A CMS rate paid in a second currency adds a correlation term on top: [quanto-adjustments-for-rates](04-quanto-adjustments-for-rates.md).
-- **Smile calibration at the wings.** Because CMS prices depend on far out-of-the-money payers, dealers use quoted CMS spreads to pin down the upper wing of the swaption smile ([sabr-for-rates-and-the-volatility-cube](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md)).
+- **Rates paid in another currency.** A CMS rate paid in a second currency adds a correlation term on top: [Quanto rates](04-quanto-adjustments-for-rates.md).
+- **Smile calibration at the wings.** Because CMS prices depend on far out-of-the-money payers, dealers use quoted CMS spreads to pin down the upper wing of the swaption smile ([SABR for rates](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md)).
 
 > **Say it back**
 > A CMS coupon pays a swap rate once, a year after it is read, instead of across the swap's ten years. The forward swap rate is the fair average only when counted in the swap's annuity. Counted in the coupon's own payment-date dollar, high-rate scenarios weigh more, so the fair rate is higher: 4.6796 percent instead of 4.5 on this coupon. Writing the weight as a function of the rate and expanding it as a strip of receivers below the forward and payers above it prices the difference exactly from swaption prices. The sign and size come from the payment date and the smile's far wing.
@@ -626,13 +608,13 @@ all checks passed
 
 ## What this builds on
 
-- [futures-forward-convexity](01-futures-forward-convexity.md): the first case of an average taken under the wrong weights; the same covariance appears there.
-- [swaptions-payer-and-receiver](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md): the payer and receiver prices the strip is built from, and the annuity they are counted in.
+- [Futures against forwards](01-futures-forward-convexity.md): the first case of an average taken under the wrong weights; the same covariance appears there.
+- [Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md): the payer and receiver prices the strip is built from, and the annuity they are counted in.
 
 ## Where this goes next
 
-- [timing-and-in-arrears-adjustments](03-timing-and-in-arrears-adjustments.md): a rate paid on a date other than its natural one, for the simpler case of a single floating rate; the payment lag that set the sign here becomes the whole subject.
-- [callable-and-cancellable-swaps](05-callable-and-cancellable-swaps.md): swaps with an option to walk away, priced from the same swaptions with the exercise decision added.
+- [Timing adjustments](03-timing-and-in-arrears-adjustments.md): a rate paid on a date other than its natural one, for the simpler case of a single floating rate; the payment lag that set the sign here becomes the whole subject.
+- [Callable and cancellable swaps](05-callable-and-cancellable-swaps.md): swaps with an option to walk away, priced from the same swaptions with the exercise decision added.
 
 ---
 

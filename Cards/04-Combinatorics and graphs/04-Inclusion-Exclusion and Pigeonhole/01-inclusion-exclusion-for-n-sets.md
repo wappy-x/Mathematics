@@ -1,32 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Inclusion-Exclusion and Pigeonhole
-topic: The sieve
-item: Inclusion-exclusion for any number of sets
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/06-alternating-sums-and-binomial-inversion|alternating-sums-and-binomial-inversion]]"
-  - "[[Cards/01-Foundations/07-Sets/04-inclusion-exclusion|inclusion-exclusion]]"
-  - "[[Cards/01-Foundations/07-Sets/03-set-operations|set-operations]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/03-eulers-totient|eulers-totient]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/04-Inclusion-Exclusion and Pigeonhole/02-derangements|derangements]]"
-  - "[[Cards/04-Combinatorics and graphs/04-Inclusion-Exclusion and Pigeonhole/03-counting-surjections|counting-surjections]]"
-  - "[[Cards/04-Combinatorics and graphs/04-Inclusion-Exclusion and Pigeonhole/04-union-bound-and-bonferroni|union-bound-and-bonferroni]]"
-  - "[[Cards/21-Algebraic and analytic number theory/04-Sieves and Prime Gaps/01-the-legendre-sieve-and-the-parity-problem|the-legendre-sieve-and-the-parity-problem]]"
-  - "[[Cards/21-Algebraic and analytic number theory/08-Additive Combinatorics and Probabilistic Number Theory/06-sum-product-and-additive-energy|sum-product-and-additive-energy]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - inclusion-exclusion-for-n-sets
----
-
 # Inclusion-exclusion for any number of sets: add, subtract the pairs, add the triples, and every element ends up counted once
 
-Combinatorics and graphs → Inclusion-Exclusion and Pigeonhole → The sieve → Inclusion-exclusion for any number of sets
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Inclusion-Exclusion and Pigeonhole](../../../SYLLABUS.md#w04-s04) → Inclusion-exclusion for any number of sets
 
 ---
 
@@ -38,7 +12,7 @@ Adding the lines gives 120 in a hotel of 100. Impossible: a guest who took break
 
 The overlaps are on record: 20 took breakfast and parking, 15 breakfast and spa, 10 parking and spa, 5 took all three. Subtracting the pairs gives 75 — too low, since the 5 who took everything came off once too often. Add them back: 80 bought something, 20 bought nothing.
 
-Two sets and three were settled earlier ([inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md)); this card takes any number.
+Two sets and three were settled earlier ([Inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md)); this card takes any number.
 
 **Add the sets, subtract every pair, add every triple, flipping the sign to the last overlap: each member of at least one set then contributes exactly 1, each member of none 0.**
 
@@ -60,7 +34,7 @@ Each arrow names the damage the next box repairs.
 
 ## The formula
 
-Notation first. Bars count members: $\lvert A\rvert$ is the size of a set A. The cup ∪ means "in at least one", the cap ∩ "in all" ([set-operations](../../01-Foundations/07-Sets/03-set-operations.md)). Sigma is the add-up sign, and C(n, j), "n choose j", counts the ways to pick j from n.
+Notation first. Bars count members: $\lvert A\rvert$ is the size of a set A. The cup ∪ means "in at least one", the cap ∩ "in all" ([Set operations](../../01-Foundations/07-Sets/03-set-operations.md)). Sigma is the add-up sign, and C(n, j), "n choose j", counts the ways to pick j from n.
 
 Call the sets $A_i$, numbered 1 up to $n$: breakfast, parking, spa, so $n$ is 3. Layer j takes the sets j at a time and adds up those overlaps' sizes.
 
@@ -88,7 +62,7 @@ What lies in *none* of them is the pool of 100 minus that union: 20 guests.
 
 - **Finite sets.** Every layer must be a whole number; subtracting one infinite count from another settles nothing.
 - **Sets, not tallies.** Nine breakfasts make one member of the breakfast set; repeated rows break layer 1 before the repairs begin.
-- **Every overlap knowable.** It asks for $2^n - 1$ counts: 7 for three sets, 15 for four, doubling after. Out of reach, the sum is cut short and becomes a bound ([union-bound-and-bonferroni](04-union-bound-and-bonferroni.md)).
+- **Every overlap knowable.** It asks for $2^n - 1$ counts: 7 for three sets, 15 for four, doubling after. Out of reach, the sum is cut short and becomes a bound ([Stopping the sieve early](04-union-bound-and-bonferroni.md)).
 
 ---
 
@@ -112,7 +86,7 @@ A member in k sets therefore contributes
 
 $$C(k, 1) - C(k, 2) + C(k, 3) - \cdots + (-1)^{k+1} C(k, k)$$
 
-which comes to 1 for every $k$ of 1 or more. Off Pascal's triangle: 1; 2 − 1 = 1; 3 − 3 + 1 = 1; 4 − 6 + 4 − 1 = 1. The code runs it to $k$ = 8. The binomial theorem is the reason ([alternating-sums-and-binomial-inversion](../03-Binomial%20Coefficients%20and%20Identities/06-alternating-sums-and-binomial-inversion.md)).
+which comes to 1 for every $k$ of 1 or more. Off Pascal's triangle: 1; 2 − 1 = 1; 3 − 3 + 1 = 1; 4 − 6 + 4 − 1 = 1. The code runs it to $k$ = 8. The binomial theorem is the reason ([Alternating sums](../03-Binomial%20Coefficients%20and%20Identities/06-alternating-sums-and-binomial-inversion.md)).
 
 <details>
 <summary>Detailed proof: why the alternating sum collapses</summary>
@@ -136,7 +110,7 @@ If $k$ is 0 the member lies in no set, so in no overlap, so in no layer: it cont
 <details>
 <summary>Euler's totient is this sieve on the divisors</summary>
 
-Sieve the first 30 numbers by 2, 3 and 5: 8 escape, the 8 the code prints. That count is the totient, written with the Greek letter phi: phi(30) = 8 ([eulers-totient](../../02-Number%20theory/04-Powers%20on%20the%20Clock/03-eulers-totient.md)). Its usual form, 30 × (1 − 1/2) × (1 − 1/3) × (1 − 1/5) = 8, is one bracket per divisor; multiplying out gives the signed sum term for term.
+Sieve the first 30 numbers by 2, 3 and 5: 8 escape, the 8 the code prints. That count is the totient, written with the Greek letter phi: phi(30) = 8 ([Euler's totient](../../02-Number%20theory/04-Powers%20on%20the%20Clock/03-eulers-totient.md)). Its usual form, 30 × (1 − 1/2) × (1 − 1/3) × (1 − 1/5) = 8, is one bracket per divisor; multiplying out gives the signed sum term for term.
 
 </details>
 
@@ -404,8 +378,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Audits and database counts.** "Matching at least one of these flags" is this sum; five flags means thirty-one overlaps, which is why query tools walk the rows instead.
-- **Number sieves.** What survives division by a list of primes is the same sum: 266 of the first thousand dodge 2, 3 and 5. Run over every prime below a bound, it is analytic number theory's oldest tool (the-legendre-sieve-and-the-parity-problem).
-- **Shuffles that put nothing back in place.** Arrangements with no item in its own slot are counted by this sieve, one property per slot ([derangements](02-derangements.md)).
+- **Number sieves.** What survives division by a list of primes is the same sum: 266 of the first thousand dodge 2, 3 and 5. Run over every prime below a bound, it is analytic number theory's oldest tool (Sieving by inclusion-exclusion).
+- **Shuffles that put nothing back in place.** Arrangements with no item in its own slot are counted by this sieve, one property per slot ([Derangements](02-derangements.md)).
 
 > **Say it back**
 > Overlapping groups cannot be added: shared members land on more than one line. The fix is a run of repairs — add the groups, subtract every pair, add every triple, flipping the sign to the last overlap. It works one member at a time: a member in k groups is counted C(k, 1) − C(k, 2) + C(k, 3) − … times, which is 1 for every k of 1 or more. At the hotel, 120 − 45 + 5 = 80.
@@ -414,20 +388,20 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [alternating-sums-and-binomial-inversion](../03-Binomial%20Coefficients%20and%20Identities/06-alternating-sums-and-binomial-inversion.md): the identity collapsing each member's repairs to 1.
-- [inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md): the two-set and three-set rules this card generalises.
-- [set-operations](../../01-Foundations/07-Sets/03-set-operations.md): union, intersection, and the size of a set.
-- [eulers-totient](../../02-Number%20theory/04-Powers%20on%20the%20Clock/03-eulers-totient.md): the count the divisor sieve reproduces.
+- [Alternating sums](../03-Binomial%20Coefficients%20and%20Identities/06-alternating-sums-and-binomial-inversion.md): the identity collapsing each member's repairs to 1.
+- [Inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md): the two-set and three-set rules this card generalises.
+- [Set operations](../../01-Foundations/07-Sets/03-set-operations.md): union, intersection, and the size of a set.
+- [Euler's totient](../../02-Number%20theory/04-Powers%20on%20the%20Clock/03-eulers-totient.md): the count the divisor sieve reproduces.
 
 ## Where this goes next
 
-- [derangements](02-derangements.md): the sieve's flagship count.
-- [counting-surjections](03-counting-surjections.md): the same layers, on onto functions.
-- [union-bound-and-bonferroni](04-union-bound-and-bonferroni.md): what a truncated sum is worth.
-- the-legendre-sieve-and-the-parity-problem: the sieve run over the primes, and where it stalls.
-- sum-product-and-additive-energy: counting overlaps far too many to list.
+- [Derangements](02-derangements.md): the sieve's flagship count.
+- [Onto functions](03-counting-surjections.md): the same layers, on onto functions.
+- [Stopping the sieve early](04-union-bound-and-bonferroni.md): what a truncated sum is worth.
+- Sieving by inclusion-exclusion: the sieve run over the primes, and where it stalls.
+- Sum-product: counting overlaps far too many to list.
 
-The formula is exact but doubles in length with each property added; what a partial sum is worth is the next question ([union-bound-and-bonferroni](04-union-bound-and-bonferroni.md)).
+The formula is exact but doubles in length with each property added; what a partial sum is worth is the next question ([Stopping the sieve early](04-union-bound-and-bonferroni.md)).
 
 ---
 

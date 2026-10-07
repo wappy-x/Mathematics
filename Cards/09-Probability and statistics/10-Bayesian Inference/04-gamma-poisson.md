@@ -1,25 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Bayesian Inference
-topic: Learning a rate from counts
-item: Gamma-Poisson
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/02-beta-binomial|beta-binomial]]"
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/04-poisson|poisson]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/07-gamma-and-beta-distributions|gamma-and-beta-distributions]]"
-next:
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/05-credible-intervals-and-decisions|credible-intervals-and-decisions]]"
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/06-markov-chain-monte-carlo-in-outline|markov-chain-monte-carlo-in-outline]]"
-tags: [mathematics, probability and statistics, gamma-poisson]
----
-
 # Gamma-Poisson: updating a rate from counts and hours, then predicting the next hour
 
-Probability and statistics → Bayesian Inference → Learning a rate from counts → Gamma-Poisson
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Bayesian Inference](../../../SYLLABUS.md#w09-s10) → Gamma-Poisson
 
 ---
 
@@ -31,7 +12,7 @@ Then the desk is watched. From 9:00 to 11:00, 28 emails arrive. From 14:00 to 15
 
 The updated belief puts the rate at 13.8 emails an hour, give or take 1.66. It sits between the old guess of 12 and the record's 15, closer to the record because three hours of watching outweigh the prior. And the question the desk manager asks is about the next hour: one person clears 20 emails an hour, so how often does an hour overflow? The answer is 0.058132, about 1 hour in 17. Treating 13.8 as the known rate gives 0.042431, about 1 in 24. The difference is the uncertainty still left in the rate.
 
-The rule that produces these numbers is the gamma-Poisson update. The belief about the rate is a gamma law ([gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)). Each window's count is a Poisson count ([poisson](../03-Discrete%20Distributions/04-poisson.md)). Together they give a gamma law again, with two additions, and the forecast for a new hour is the negative binomial law.
+The rule that produces these numbers is the gamma-Poisson update. The belief about the rate is a gamma law ([Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)). Each window's count is a Poisson count ([Poisson](../03-Discrete%20Distributions/04-poisson.md)). Together they give a gamma law again, with two additions, and the forecast for a new hour is the negative binomial law.
 
 **Emails seen add to the gamma's shape, hours watched add to its rate, and the next hour's count follows a negative binomial law that is wider than a Poisson because the rate is still uncertain.**
 
@@ -110,7 +91,7 @@ The vertical bar ∣ is read "given", as in the conditional-probability cards: "
 
 ### Step 0: the prior and the evidence have the same shape in λ
 
-Written as a function of λ, a gamma density is a power of λ times an exponential, $\lambda^{\alpha-1}e^{-\beta\lambda}$. A Poisson mass, read as a function of λ with the count held fixed, is also a power of λ times an exponential, $\lambda^{y}e^{-t\lambda}$. Bayes' rule multiplies them. Powers of the same thing multiply by adding exponents, and so do exponentials. So the product has the gamma shape again, and the update is two additions. The gamma prior is called **conjugate** to the Poisson: prior and posterior belong to the same family. The beta prior plays the same part for the binomial ([beta-binomial](02-beta-binomial.md)).
+Written as a function of λ, a gamma density is a power of λ times an exponential, $\lambda^{\alpha-1}e^{-\beta\lambda}$. A Poisson mass, read as a function of λ with the count held fixed, is also a power of λ times an exponential, $\lambda^{y}e^{-t\lambda}$. Bayes' rule multiplies them. Powers of the same thing multiply by adding exponents, and so do exponentials. So the product has the gamma shape again, and the update is two additions. The gamma prior is called **conjugate** to the Poisson: prior and posterior belong to the same family. The beta prior plays the same part for the binomial ([Beta-binomial](02-beta-binomial.md)).
 
 ### Step 1: the record's evidence depends only on total emails and total hours
 
@@ -122,7 +103,7 @@ The first factor does not involve λ, so it cannot move belief about λ. What re
 
 ### Step 2: multiply, then make the area 1
 
-Bayes' rule for densities says the posterior is the prior times the likelihood, divided by whatever makes the total area 1 ([priors-posteriors-and-updating](01-priors-posteriors-and-updating.md)). Dropping every factor free of λ:
+Bayes' rule for densities says the posterior is the prior times the likelihood, divided by whatever makes the total area 1 ([Bayesian updating](01-priors-posteriors-and-updating.md)). Dropping every factor free of λ:
 
 $$f(\lambda \mid \text{record}) \;\propto\; \lambda^{\alpha-1}e^{-\beta\lambda}\cdot\lambda^{K}e^{-H\lambda} = \lambda^{(\alpha+K)-1}\,e^{-(\beta+H)\lambda}$$
 
@@ -148,11 +129,11 @@ If λ were known, the next t hours would bring a Poisson count with mean tλ. It
 
 $$P(N = k \mid \text{record}) = \int_0^\infty e^{-t\lambda}\frac{(t\lambda)^k}{k!}\cdot\frac{B^A\lambda^{A-1}e^{-B\lambda}}{\Gamma(A)}\,d\lambda$$
 
-The integrand is again a power of λ times an exponential, $\lambda^{A+k-1}e^{-(B+t)\lambda}$. The same gamma integral evaluates it, and the negative binomial formula falls out. For a whole-number shape it is the law of the number of failures before the A-th success, each trial succeeding with chance p = B/(B + t) ([geometric-and-negative-binomial](../03-Discrete%20Distributions/02-geometric-and-negative-binomial.md) counts trials, which is failures plus A). The formula holds for any positive shape, where the story of successes no longer applies.
+The integrand is again a power of λ times an exponential, $\lambda^{A+k-1}e^{-(B+t)\lambda}$. The same gamma integral evaluates it, and the negative binomial formula falls out. For a whole-number shape it is the law of the number of failures before the A-th success, each trial succeeding with chance p = B/(B + t) ([Waiting for a success](../03-Discrete%20Distributions/02-geometric-and-negative-binomial.md) counts trials, which is failures plus A). The formula holds for any positive shape, where the story of successes no longer applies.
 
 ### Step 6: two sources of spread
 
-The variance of the forecast splits in two, by the rule that total variance is the average of the variance given λ plus the variance of the average given λ ([conditional-expectation-in-tables](../02-Random%20Variables/05-conditional-expectation-in-tables.md)):
+The variance of the forecast splits in two, by the rule that total variance is the average of the variance given λ plus the variance of the average given λ ([Conditional expectation](../02-Random%20Variables/05-conditional-expectation-in-tables.md)):
 
 $$\mathrm{Var}(N) = E[\,t\lambda\,] + \mathrm{Var}(t\lambda) = \frac{tA}{B} + \frac{t^2A}{B^2}$$
 
@@ -175,7 +156,7 @@ The recurrence Γ(a + 1) = aΓ(a) turns the ratio into $A(A+1)\cdots(A+k-1)/k!$,
 
 </details>
 
-Without conjugacy the same answer needs numerical work: multiply prior by likelihood on a grid of rates and add up areas, which is road 2 in the code, or draw from the posterior by a chain of random steps, which is [markov-chain-monte-carlo-in-outline](06-markov-chain-monte-carlo-in-outline.md). Conjugacy replaces both with two additions.
+Without conjugacy the same answer needs numerical work: multiply prior by likelihood on a grid of rates and add up areas, which is road 2 in the code, or draw from the posterior by a chain of random steps, which is [MCMC in outline](06-markov-chain-monte-carlo-in-outline.md). Conjugacy replaces both with two additions.
 
 ---
 
@@ -198,7 +179,7 @@ Without conjugacy the same answer needs numerical work: multiply prior by likeli
 | chance of exactly 14 | negative binomial mass at k = 14 | 0.096502 |
 | **chance of more than 20** | 1 − (masses 0 to 20) | **0.058132** |
 
-In the world: the rate is 13.8 emails an hour, with a posterior standard deviation of 1.66, and with posterior probability 0.95 it lies between 10.74 and 17.24 an hour. The one-person desk overflows in about 1 hour in 17. The interval's ends come from the gamma card's Poisson sum: the rate is at most a mark with the same chance that a Poisson count with mean 5 times the mark is 69 or more, and halving the search range finds the two marks. The method, and choosing an action by its average cost, is worked on a coin in [credible-intervals-and-decisions](05-credible-intervals-and-decisions.md).
+In the world: the rate is 13.8 emails an hour, with a posterior standard deviation of 1.66, and with posterior probability 0.95 it lies between 10.74 and 17.24 an hour. The one-person desk overflows in about 1 hour in 17. The interval's ends come from the gamma card's Poisson sum: the rate is at most a mark with the same chance that a Poisson count with mean 5 times the mark is 69 or more, and halving the search range finds the two marks. The method, and choosing an action by its average cost, is worked on a coin in [Credible intervals and decisions](05-credible-intervals-and-decisions.md).
 
 ### The picture: next hour's forecast against a Poisson that forgets the doubt
 
@@ -695,14 +676,14 @@ The two outputs agree line for line, including the simulation, since both langua
 
 ## What this builds on
 
-- [beta-binomial](02-beta-binomial.md): the same move for a chance instead of a rate: a conjugate prior, counts added to its parameters, and a predictive law that averages over the posterior.
-- [poisson](../03-Discrete%20Distributions/04-poisson.md): the count in each window, its mass formula, and its variance equal to its mean.
-- [gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md): the gamma density, the gamma integral, its moments α/β and α/β^2, and the Poisson sum for its cumulative area.
+- [Beta-binomial](02-beta-binomial.md): the same move for a chance instead of a rate: a conjugate prior, counts added to its parameters, and a predictive law that averages over the posterior.
+- [Poisson](../03-Discrete%20Distributions/04-poisson.md): the count in each window, its mass formula, and its variance equal to its mean.
+- [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md): the gamma density, the gamma integral, its moments α/β and α/β^2, and the Poisson sum for its cumulative area.
 
 ## Where this goes next
 
-- [credible-intervals-and-decisions](05-credible-intervals-and-decisions.md): credible intervals and choosing an action by its average loss over the posterior, taught on a coin; the same steps apply to Gamma(69, 5) and the desk's overflow chance.
-- [markov-chain-monte-carlo-in-outline](06-markov-chain-monte-carlo-in-outline.md): what to do when the prior is not conjugate and no two additions will do.
+- [Credible intervals and decisions](05-credible-intervals-and-decisions.md): credible intervals and choosing an action by its average loss over the posterior, taught on a coin; the same steps apply to Gamma(69, 5) and the desk's overflow chance.
+- [MCMC in outline](06-markov-chain-monte-carlo-in-outline.md): what to do when the prior is not conjugate and no two additions will do.
 
 Here a conjugate pair made the posterior two additions; what it leaves open is how to report a posterior and act on it, and how to compute one when no such pair exists, which the two cards above answer.
 

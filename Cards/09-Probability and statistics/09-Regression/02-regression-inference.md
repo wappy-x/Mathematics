@@ -1,23 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Regression
-topic: How sure a fitted line is
-item: Regression error bars
-kind: theorem
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/09-Regression/01-least-squares-regression|least-squares-regression]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/01-confidence-intervals|confidence-intervals]]"
-next:
-  - "[[Cards/09-Probability and statistics/09-Regression/03-multiple-regression-and-gauss-markov|multiple-regression-and-gauss-markov]]"
-tags: [mathematics, probability-and-statistics, regression-inference]
----
-
 # Regression error bars: standard errors, t-tests and prediction intervals for a fitted line
 
-Probability and statistics → Regression → How sure a fitted line is → Regression error bars
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Regression](../../../SYLLABUS.md#w09-s09) → Regression error bars
 
 ---
 
@@ -29,7 +12,7 @@ A café logged two numbers on ten summer days: the midday temperature and the ic
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Iced coffees sold | 37 | 33 | 34 | 31 | 35 | 49 | 40 | 53 | 50 | 38 |
 
-The least-squares line through these points ([least-squares-regression](01-least-squares-regression.md)) says sales are 20 coffees plus 0.8 for every degree. The owner asks the plain question: is the slope different from zero, or could a flat line have produced these ten days by luck?
+The least-squares line through these points ([Least squares](01-least-squares-regression.md)) says sales are 20 coffees plus 0.8 for every degree. The owner asks the plain question: is the slope different from zero, or could a flat line have produced these ten days by luck?
 
 Ten other days would give a different line. The slope is an estimate, and it needs an error bar. Here the error bar is 0.36 coffees per degree, the slope's standard error: the typical distance between a fitted slope and the true one. The slope sits 2.22 standard errors above zero. With only ten days that is not quite enough: the 95 percent interval for the slope runs from −0.03 to 1.63, and it contains zero. The p-value is 0.057. That is not the chance that heat does nothing. It says a truly flat café would produce a slope this far from zero, either way, about 1 time in 17.
 
@@ -102,7 +85,7 @@ The intercept is the line's height at 0 °C, so its standard error is the mean-s
 
 ### Step 0: the slope is a weighted sum of noise
 
-The fitted slope is fixed arithmetic on the ten sales figures, and each figure is the true line plus noise. So the fitted slope is the true slope plus a weighted sum of the ten noises. The spread of a weighted sum of independent noises is known exactly: each weight enters squared ([variance-and-standard-deviation](../02-Random%20Variables/03-variance-and-standard-deviation.md)), and independent variances add ([joint-distributions-and-covariance](../02-Random%20Variables/04-joint-distributions-and-covariance.md)). Everything on this card is that one observation, worked out.
+The fitted slope is fixed arithmetic on the ten sales figures, and each figure is the true line plus noise. So the fitted slope is the true slope plus a weighted sum of the ten noises. The spread of a weighted sum of independent noises is known exactly: each weight enters squared ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)), and independent variances add ([Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md)). Everything on this card is that one observation, worked out.
 
 ### Step 1: the slope's weights
 
@@ -122,14 +105,14 @@ The noise spread is unknown. The leftovers estimate it. Fitting two numbers, an 
 
 ### Step 4: the ratio is Student's t
 
-The slope is a weighted sum of normals, so it is normal: $(\hat\beta_1 - \beta_1)/(\sigma/\sqrt{S_{xx}})$ is standard normal. The leftovers' sum of squares over $\sigma^2$ is a chi-square variable with n − 2 degrees of freedom, and it is independent of the slope. A standard normal divided by the root of an independent chi-square over its degrees is Student's t by definition ([chi-square-t-and-f-distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)). The unknown σ cancels between top and bottom. What is left uses only data: that is t. The same argument with $\hat y_0$ or $Y_0 - \hat y_0$ on top gives the two forecast intervals.
+The slope is a weighted sum of normals, so it is normal: $(\hat\beta_1 - \beta_1)/(\sigma/\sqrt{S_{xx}})$ is standard normal. The leftovers' sum of squares over $\sigma^2$ is a chi-square variable with n − 2 degrees of freedom, and it is independent of the slope. A standard normal divided by the root of an independent chi-square over its degrees is Student's t by definition ([The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)). The unknown σ cancels between top and bottom. What is left uses only data: that is t. The same argument with $\hat y_0$ or $Y_0 - \hat y_0$ on top gives the two forecast intervals.
 
 <details>
 <summary>Detailed proof</summary>
 
 **The expected SSE.** The leftovers satisfy $\mathrm{SSE} = S_{yy} - \hat\beta_1^2 S_{xx}$, where $S_{yy} = \sum (Y_i - \bar Y)^2$: the flat line's squared leftovers, minus what the slope removes. Under the model, $Y_i - \bar Y = \beta_1(x_i - \bar x) + (\varepsilon_i - \bar\varepsilon)$, so $E[S_{yy}] = \beta_1^2 S_{xx} + (n-1)\sigma^2$, using the sample-variance fact $E\big[\sum(\varepsilon_i - \bar\varepsilon)^2\big] = (n-1)\sigma^2$. And $E[\hat\beta_1^2] = \mathrm{Var}(\hat\beta_1) + \beta_1^2 = \sigma^2/S_{xx} + \beta_1^2$. Subtract: $E[\mathrm{SSE}] = (n-2)\sigma^2$.
 
-**Chi-square, and independent of the slope.** Write the ten days as a list of ten numbers, a vector. Take $u_1 = (1, \dots, 1)/\sqrt n$ and $u_2 = (x_1 - \bar x, \dots, x_n - \bar x)/\sqrt{S_{xx}}$. They have length one and are at right angles, since the deviations add to zero. Complete them with $u_3, \dots, u_n$ to a set of n mutually perpendicular unit vectors. Set $Z_k = (u_k \cdot \varepsilon)/\sigma$. A rotation of independent standard normals is again independent standard normals ([multivariate-normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)), so $Z_1, \dots, Z_n$ are independent standard normals.
+**Chi-square, and independent of the slope.** Write the ten days as a list of ten numbers, a vector. Take $u_1 = (1, \dots, 1)/\sqrt n$ and $u_2 = (x_1 - \bar x, \dots, x_n - \bar x)/\sqrt{S_{xx}}$. They have length one and are at right angles, since the deviations add to zero. Complete them with $u_3, \dots, u_n$ to a set of n mutually perpendicular unit vectors. Set $Z_k = (u_k \cdot \varepsilon)/\sigma$. A rotation of independent standard normals is again independent standard normals ([Multivariate normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)), so $Z_1, \dots, Z_n$ are independent standard normals.
 
 The fitted values are the projection of the data onto the plane spanned by the first two unit vectors; that is what least squares does. The true line $\beta_0 + \beta_1 x$ already lies in that plane, so the leftovers are the part of the noise off the plane: $e = \sigma \sum_{k \ge 3} Z_k u_k$. Hence $\mathrm{SSE}/\sigma^2 = Z_3^2 + \dots + Z_n^2$, a chi-square with n − 2 degrees. Meanwhile $\hat\beta_1 - \beta_1 = \sigma Z_2/\sqrt{S_{xx}}$ and $\bar Y = \beta_0 + \beta_1 \bar x + \sigma Z_1/\sqrt n$ use only the first two coordinates. Different independent coordinates: independent. A new day's noise is independent of all n of them, which covers the prediction interval.
 
@@ -139,7 +122,7 @@ The fitted values are the projection of the data onto the plane spanned by the f
 
 "Zero lies outside $\hat\beta_1 \pm t_*\mathrm{SE}$" and "$\left|\hat\beta_1\right|/\mathrm{SE} > t_*$" are the same inequality rearranged. So the test at 5 percent and the 95 percent interval always agree. Here t = 2.220 falls short of 2.306, and zero sits just inside the interval.
 
-A second road reaches the same t. Drop the slope and fit a flat line at 40 coffees: its squared leftovers are $S_{yy} = 554$. The slope removes 554 − 342.8 = 211.2 of that. Divided by $s^2$ = 42.85, the removal is 4.929, the F ratio. It equals $t^2$ exactly, because the removal is $\hat\beta_1^2 S_{xx}$ and $s^2/S_{xx}$ is $\mathrm{SE}^2$. The matrix form of the same variances, $\sigma^2$ times the inverse of a 2 × 2 table of sums, is the route [multiple-regression-and-gauss-markov](03-multiple-regression-and-gauss-markov.md) takes to many predictors; the checks compute it as a third road.
+A second road reaches the same t. Drop the slope and fit a flat line at 40 coffees: its squared leftovers are $S_{yy} = 554$. The slope removes 554 − 342.8 = 211.2 of that. Divided by $s^2$ = 42.85, the removal is 4.929, the F ratio. It equals $t^2$ exactly, because the removal is $\hat\beta_1^2 S_{xx}$ and $s^2/S_{xx}$ is $\mathrm{SE}^2$. The matrix form of the same variances, $\sigma^2$ times the inverse of a 2 × 2 table of sums, is the route [Multiple regression](03-multiple-regression-and-gauss-markov.md) takes to many predictors; the checks compute it as a third road.
 
 ---
 
@@ -578,7 +561,7 @@ The two outputs match line for line, simulation included, because both draw the 
 > Guess first, then run it.
 > - **Make the days independent again.** In the second simulation, change `cafes(0.0, 0.8)` to `cafes(0.0, 0.0)`. The false-alarm rate falls from 0.4001 to 0.0497, the promised 5 percent, and the last assert stops the run because nothing is broken any more.
 > - **Forecast a 40 °C day.** Set `X0` to 40, beyond every recorded day. The forecast is 52 coffees; the mean interval widens to 38.65 to 65.35 and one day to 31.85 to 72.15, because h grows to 0.7818. The mean-sales interval now holds a new day 83 percent of the time, and all checks still pass: the formula knows how far out it is, though not whether the line still holds at 40 °C.
-> - **Give the hottest day a strong 58 coffees instead of 38.** Change the last sales figure. The slope rises to 1.3455, t to 4.4941, p to 0.0020, and the interval, 0.6551 to 2.0358, clears zero. The assert pinned to the hand table's 0.8 stops the run. One day moved the verdict: see [diagnostics-and-residuals](04-diagnostics-and-residuals.md).
+> - **Give the hottest day a strong 58 coffees instead of 38.** Change the last sales figure. The slope rises to 1.3455, t to 4.4941, p to 0.0020, and the interval, 0.6551 to 2.0358, clears zero. The assert pinned to the hand table's 0.8 stops the run. One day moved the verdict: see [Diagnostics](04-diagnostics-and-residuals.md).
 
 ---
 
@@ -600,7 +583,7 @@ The two outputs match line for line, simulation included, because both draw the 
 - **Calibration in a laboratory.** A machine's reading is fitted against known standards, and the prediction interval says how far an unknown sample's reading can be trusted.
 - **Stock planning.** Stock is ordered for one particular day, so the forecast needs the prediction interval.
 - **Finance.** A stock's beta is a regression slope, and its standard error says how much of it is noise; the finance wing uses this card's formulas there.
-- **Checking the assumptions.** The leftovers themselves test the model: [diagnostics-and-residuals](04-diagnostics-and-residuals.md).
+- **Checking the assumptions.** The leftovers themselves test the model: [Diagnostics](04-diagnostics-and-residuals.md).
 
 > **Say it back**
 > The fitted slope is the true slope plus a weighted sum of the days' noise, so its variance is the noise variance over the temperatures' spread. The noise is estimated from the leftovers, dividing by n − 2 because the line used two of them. The slope divided by its standard error follows Student's t with n − 2 degrees, which gives both the test and the interval. A forecast for the mean at a new temperature carries the line's uncertainty; a forecast for one day adds that day's own noise. For the café, 0.8 ± 0.83 coffees per degree: ten days cannot yet rule out zero.
@@ -609,12 +592,12 @@ The two outputs match line for line, simulation included, because both draw the 
 
 ## What this builds on
 
-- [least-squares-regression](01-least-squares-regression.md): the fitted line, its slope as a cross sum over $S_{xx}$, and the leftovers that add to zero.
-- [confidence-intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md): the t interval for one mean, and what "95 percent" promises; this card runs the same recipe on a slope.
+- [Least squares](01-least-squares-regression.md): the fitted line, its slope as a cross sum over $S_{xx}$, and the leftovers that add to zero.
+- [Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md): the t interval for one mean, and what "95 percent" promises; this card runs the same recipe on a slope.
 
 ## Where this goes next
 
-- [multiple-regression-and-gauss-markov](03-multiple-regression-and-gauss-markov.md): several predictors at once, the matrix form of these variances, and why least squares has the smallest ones among unbiased linear fits. It shows how a slope changes once other predictors enter the fit: there, a house's floor area once its age and distance to the station are held fixed.
+- [Multiple regression](03-multiple-regression-and-gauss-markov.md): several predictors at once, the matrix form of these variances, and why least squares has the smallest ones among unbiased linear fits. It shows how a slope changes once other predictors enter the fit: there, a house's floor area once its age and distance to the station are held fixed.
 
 ---
 

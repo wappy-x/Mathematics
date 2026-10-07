@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Greeks, one each
-topic: Time decay
-item: Theta
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/02-gamma|gamma]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-next:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/08-charm|charm]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/10-theta-pays-for-gamma-hedged-pnl|theta-pays-for-gamma-hedged-pnl]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/03-garman-kohlhagen-greeks|garman-kohlhagen-greeks]]"
-tags: [mathematics, financial mathematics, theta]
----
-
 # Theta: what a day costs, and why it is rent rather than a fee
 
-Financial mathematics → The Greeks, one each → Time decay → Theta
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Greeks, one each](../../../SYLLABUS.md#w12-s09) → Theta
 
 ---
 
@@ -58,7 +39,7 @@ Orange line: the call. Green line: the put. Dark line: zero. Both are most negat
 
 ## The formula
 
-Notation first. A **partial derivative** measures how one quantity changes when a single input moves and all the others stay fixed; it is written with a curly $\partial V/\partial t$ ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Theta is the partial derivative of the option price with respect to today's date:
+Notation first. A **partial derivative** measures how one quantity changes when a single input moves and all the others stay fixed; it is written with a curly $\partial V/\partial t$ ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Theta is the partial derivative of the option price with respect to today's date:
 
 $$\Theta = \frac{\partial V}{\partial t} = -\frac{\partial V}{\partial T}$$
 
@@ -91,7 +72,7 @@ The three terms, in plain words:
 | $\Delta$, $\Gamma$ | delta, the price's slope against $S$; gamma, the slope of delta | 0.586851 and 0.018951 | larger $\Gamma$, larger rent |
 | $e^{-rT}$, $e^{-qT}$ | the discount on cash due at expiry; the share's dividend drag | 0.951229 and 0.980199 | — |
 
-The helpers, as on the pilot [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
+The helpers, as on the pilot [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
 
 $$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \phi(x) = \frac{e^{-x^2/2}}{\sqrt{2\pi}}$$
 
@@ -103,8 +84,8 @@ Theta comes out per year, because $T$ is in years. Dividing by 365 gives the cal
 
 ### When it holds
 
-- **The Black-Scholes world: constant volatility, rate and dividend yield.** If implied volatility (the $\sigma$ the market prices) drifts as expiry nears, the overnight change is theta plus vega times the volatility move ([vega](03-vega.md)).
-- **The share price frozen.** Theta is one partial derivative. A real day also moves $S$, and the full change needs delta and gamma as well ([greeks-together-taylor-pnl](09-greeks-together-taylor-pnl.md)).
+- **The Black-Scholes world: constant volatility, rate and dividend yield.** If implied volatility (the $\sigma$ the market prices) drifts as expiry nears, the overnight change is theta plus vega times the volatility move ([Vega](03-vega.md)).
+- **The share price frozen.** Theta is one partial derivative. A real day also moves $S$, and the full change needs delta and gamma as well ([The Greeks together](09-greeks-together-taylor-pnl.md)).
 - **European exercise.** The positive theta of a deep put relies on the holder being unable to exercise early. Where early exercise is optimal, an American put is worth $K - S$ whatever the date, so its theta is zero.
 - **A continuous dividend yield.** A share paying lumpy cash dividends makes the dividend term jump around the ex-dividend dates instead of accruing smoothly.
 - **A small step.** Theta is a slope. Over one day the slope and the actual repricing differ by under a thousandth of a cent at the house market (−0.013943 against −0.013952); over a month near expiry they do not agree.
@@ -166,13 +147,13 @@ The call's mirror case needs a high-yield share. A call struck at $80 on a share
 
 ### Step 5: net of carry, theta is the rent on gamma
 
-The Black-Scholes equation ([black-scholes-equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)) ties theta to delta and gamma for any option in the model:
+The Black-Scholes equation ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)) ties theta to delta and gamma for any option in the model:
 
 $$\Theta + (r-q)S\,\Delta + \tfrac12\sigma^2 S^2\,\Gamma = rV$$
 
 Rearranged, $\Theta = \big[\,rV - (r-q)S\Delta\,\big] - \tfrac12\sigma^2 S^2\Gamma$. The bracket is carry: the interest on the money tied up in the option, less the net carry on the hedge's shares. For the house call it is 0.461350 − 1.760553. What is left, $-\tfrac12\sigma^2S^2\Gamma$, is −3.790116 per year, exactly the volatility term of Step 3 found another way.
 
-Here is the rent reading. A holder who hedges away delta is left owning gamma. A move of *m* dollars in the share earns about $\tfrac12\Gamma m^2$, whichever way it goes. The rent for one day is 3.790116 / 365 = 0.010384. Setting that gain equal to that rent gives a breakeven daily move of $1.046848, which is $\sigma S\sqrt{1/365}$: one day's standard move at 20 percent volatility. A share that moves more than that pays the rent and more. A quiet share does not. Theta is not a fee lost for nothing; it is the market price of the gamma, set so that a share moving exactly at volatility $\sigma$ breaks even. The accounting over many days belongs to [theta-pays-for-gamma-hedged-pnl](10-theta-pays-for-gamma-hedged-pnl.md).
+Here is the rent reading. A holder who hedges away delta is left owning gamma. A move of *m* dollars in the share earns about $\tfrac12\Gamma m^2$, whichever way it goes. The rent for one day is 3.790116 / 365 = 0.010384. Setting that gain equal to that rent gives a breakeven daily move of $1.046848, which is $\sigma S\sqrt{1/365}$: one day's standard move at 20 percent volatility. A share that moves more than that pays the rent and more. A quiet share does not. Theta is not a fee lost for nothing; it is the market price of the gamma, set so that a share moving exactly at volatility $\sigma$ breaks even. The accounting over many days belongs to [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md).
 
 A second route to theta avoids the formula entirely: reprice the option at slightly longer and shorter lives and take the slope. The code does that, and also reads theta off a binomial tree (a lattice in which the share moves one notch up or down per step), where two steps forward at the middle node return the share to today's price.
 
@@ -663,8 +644,8 @@ The two outputs agree line for line. The tree lands about 0.15 cents a year off 
 - **The last week before expiry.** Short-dated options at the strike lose value fastest: the house call's daily cost rises from 1.39 cents with a year left to 21.29 cents on its last day.
 - **Weekends and holidays.** Markets close but calendar days pass. Whether a desk spreads theta over 365 or 252 days changes the quote, not the option.
 - **Early exercise of American puts.** A deep European put with positive theta shows why its American cousin is exercised early: the holder would rather have the $130 now and earn interest on it.
-- **Currency options.** For an option on a currency the foreign interest rate plays the role of $q$, and theta carries two interest-rate terms ([garman-kohlhagen-greeks](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md)).
-- **The daily profit-and-loss explain.** A risk report splits an option book's overnight change into delta, gamma, vega and theta pieces ([greeks-together-taylor-pnl](09-greeks-together-taylor-pnl.md)); the other Greeks on this shelf are [delta](01-delta.md) and [rho-and-dividend-rho](05-rho-and-dividend-rho.md), among others.
+- **Currency options.** For an option on a currency the foreign interest rate plays the role of $q$, and theta carries two interest-rate terms ([The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md)).
+- **The daily profit-and-loss explain.** A risk report splits an option book's overnight change into delta, gamma, vega and theta pieces ([The Greeks together](09-greeks-together-taylor-pnl.md)); the other Greeks on this shelf are [Delta](01-delta.md) and [Rho and dividend rho](05-rho-and-dividend-rho.md), among others.
 
 > **Say it back**
 > Theta is how an option's price changes as the calendar moves, with the share price and everything else held still. It has three parts: a volatility term that always costs the holder, and dividend and interest terms that can go either way. The Acme call's theta is −5.089319 a year, 1.4 cents a day; a deep put or a call on a high-yield share can gain. Net of carry, theta equals minus one half of $\sigma^2 S^2 \Gamma$: the rent on gamma. A share moving about $1.05 a day earns that rent back.
@@ -673,16 +654,16 @@ The two outputs agree line for line. The tree lands about 0.15 cents a year off 
 
 ## What this builds on
 
-- [gamma](02-gamma.md): the curvature of the price against the share. Theta, net of carry, is its rent.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): the slope in one input with every other input frozen, which is what theta is.
+- [Gamma](02-gamma.md): the curvature of the price against the share. Theta, net of carry, is its rent.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): the slope in one input with every other input frozen, which is what theta is.
 
 ## Where this goes next
 
-- [charm](08-charm.md): how delta itself drifts as the calendar moves, the cross term between delta and theta.
-- [theta-pays-for-gamma-hedged-pnl](10-theta-pays-for-gamma-hedged-pnl.md): the hedged book day by day, where the rent on this card is paid and earned back.
-- [garman-kohlhagen-greeks](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the same theta for currency options, with two interest rates and the desk's day-count habits.
+- [Charm](08-charm.md): how delta itself drifts as the calendar moves, the cross term between delta and theta.
+- [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md): the hedged book day by day, where the rent on this card is paid and earned back.
+- [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the same theta for currency options, with two interest rates and the desk's day-count habits.
 
-This card prices a single day of gamma; whether a hedged holder actually comes out ahead over many days, when realised moves differ from $\sigma$, is the question [theta-pays-for-gamma-hedged-pnl](10-theta-pays-for-gamma-hedged-pnl.md) answers.
+This card prices a single day of gamma; whether a hedged holder actually comes out ahead over many days, when realised moves differ from $\sigma$, is the question [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md) answers.
 
 ---
 

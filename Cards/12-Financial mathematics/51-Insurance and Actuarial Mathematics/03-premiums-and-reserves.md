@@ -1,21 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Insurance and Actuarial Mathematics
-topic: Level premiums over rising risk
-item: Premiums and reserves
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/02-life-annuities-and-insurance-values|life-annuities-and-insurance-values]]"
-next: []
-tags: [mathematics, financial-mathematics, premiums-and-reserves]
----
-
 # Premiums and reserves: the equivalence principle and the money set aside as a policy ages
 
-Financial mathematics → Insurance and Actuarial Mathematics → Level premiums over rising risk → Premiums and reserves
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Insurance and Actuarial Mathematics](../../../SYLLABUS.md#w12-s51) → Premiums and reserves
 
 ---
 
@@ -51,7 +36,7 @@ Flat line (orange): the level premium, $112.06. Rising line (green): the cost of
 
 ## The formula
 
-Notation first, in words. The sibling card [life-annuities-and-insurance-values](02-life-annuities-and-insurance-values.md) builds two prices. $A_{x:n}$ is today's value of $1 paid at the end of the year of death, if death comes within $n$ years of age $x$. $\ddot a_{x:n}$, read "a double-dot", is today's value of $1 paid at the start of each year while alive, at most $n$ payments. Both are per dollar, so a benefit of $S$ dollars (the **sum insured**, here $100,000) is worth $S\,A_{x:n}$.
+Notation first, in words. The sibling card [Life annuities and insurance](02-life-annuities-and-insurance-values.md) builds two prices. $A_{x:n}$ is today's value of $1 paid at the end of the year of death, if death comes within $n$ years of age $x$. $\ddot a_{x:n}$, read "a double-dot", is today's value of $1 paid at the start of each year while alive, at most $n$ payments. Both are per dollar, so a benefit of $S$ dollars (the **sum insured**, here $100,000) is worth $S\,A_{x:n}$.
 
 The premium, by equivalence:
 
@@ -225,7 +210,7 @@ A term policy's reserve is a hump. A policy that always pays out, such as whole-
 
 ### One office, one real decade
 
-The reserve is an average. The check also simulates one office of 10,000 lives aged 40, one random draw each. In that run 78 died in the first ten years, against 76.7 expected. The fund per survivor at year 10 came to $526.73, a little under the $552.43 reserve. A death or two more than expected cost the office money that the pool, not the reserve, has to absorb. How large those swings get is the business of [collective-risk-and-compound-poisson](04-collective-risk-and-compound-poisson.md) and [ruin-theory-and-lundberg](06-ruin-theory-and-lundberg.md).
+The reserve is an average. The check also simulates one office of 10,000 lives aged 40, one random draw each. In that run 78 died in the first ten years, against 76.7 expected. The fund per survivor at year 10 came to $526.73, a little under the $552.43 reserve. A death or two more than expected cost the office money that the pool, not the reserve, has to absorb. How large those swings get is the business of [Aggregate claims](04-collective-risk-and-compound-poisson.md) and [Ruin](06-ruin-theory-and-lundberg.md).
 
 ---
 
@@ -643,9 +628,9 @@ The two outputs are identical line for line. The simulation agrees with the rese
 - **Life insurers' balance sheets.** Policy reserves are usually the largest liability a life office reports. Regulators set the bases (death rates, interest) that must be used, and an actuary signs off the total.
 - **Level-premium term cover.** Every quote for fixed monthly premiums over 10, 20 or 30 years is a level premium over a rising risk, and carries this hump-shaped reserve behind it.
 - **Lapse-supported pricing.** Some products were priced expecting many policyholders to stop paying and leave their reserves behind. When fewer lapsed than planned, insurers lost money: the "Many independent policies" and "Everyone pays" assumptions failing in public.
-- **The other "reserve".** A motor or home insurer's reserves are money held for claims already incurred but not yet settled, estimated from claim triangles: [reserving-chain-ladder-and-bornhuetter-ferguson](07-reserving-chain-ladder-and-bornhuetter-ferguson.md). Same word, different quantity.
-- **Blending experience with the table.** When an office's own deaths run above or below the table, it adjusts the rates it prices with: [credibility-and-reinsurance](08-credibility-and-reinsurance.md).
-- **Where the death rates come from.** Every $q$ on this card is a row of a life table: [survival-life-tables-and-force-of-mortality](01-survival-life-tables-and-force-of-mortality.md).
+- **The other "reserve".** A motor or home insurer's reserves are money held for claims already incurred but not yet settled, estimated from claim triangles: [Reserving](07-reserving-chain-ladder-and-bornhuetter-ferguson.md). Same word, different quantity.
+- **Blending experience with the table.** When an office's own deaths run above or below the table, it adjusts the rates it prices with: [Credibility and reinsurance](08-credibility-and-reinsurance.md).
+- **Where the death rates come from.** Every $q$ on this card is a row of a life table: [Life tables](01-survival-life-tables-and-force-of-mortality.md).
 
 > **Say it back**
 > A net premium is set by equivalence: expected present value in equals expected present value out, which is fair because a large pool pays close to the average. A level premium over a rising risk overpays early and underpays late. The reserve is the difference between the value of the remaining cover and the value of the remaining premiums, $552.43 at year 10 on the $100,000 policy. It obeys a one-year recursion, reserve plus premium grown at interest equals deaths paid plus the next reserve, run back from zero at expiry. The same recursion, run forward, is the pool's saved fund, and equivalence makes the two agree.
@@ -654,12 +639,12 @@ The two outputs are identical line for line. The simulation agrees with the rese
 
 ## What this builds on
 
-- [life-annuities-and-insurance-values](02-life-annuities-and-insurance-values.md): the two prices, $A_{x:n}$ and $\ddot a_{x:n}$, and the one-year split that the recursion's proof uses.
+- [Life annuities and insurance](02-life-annuities-and-insurance-values.md): the two prices, $A_{x:n}$ and $\ddot a_{x:n}$, and the one-year split that the recursion's proof uses.
 
 ## Where this goes next
 
-- [collective-risk-and-compound-poisson](04-collective-risk-and-compound-poisson.md): drops the average and models the whole spread of a portfolio's total claims.
-- [ruin-theory-and-lundberg](06-ruin-theory-and-lundberg.md): whether a fund that holds the average can survive the swings around it.
+- [Aggregate claims](04-collective-risk-and-compound-poisson.md): drops the average and models the whole spread of a portfolio's total claims.
+- [Ruin](06-ruin-theory-and-lundberg.md): whether a fund that holds the average can survive the swings around it.
 
 The reserve covers the expected future loss; the question left open is how far the real loss can stray from it, and how much capital that takes.
 

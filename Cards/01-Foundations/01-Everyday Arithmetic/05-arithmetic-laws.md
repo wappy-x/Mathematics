@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Everyday Arithmetic
-topic: Whole numbers
-item: The three rearranging laws
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/03-multiplying-and-dividing|multiplying-and-dividing]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/04-order-of-operations|order-of-operations]]"
-next:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/06-negative-numbers|negative-numbers]]"
-tags:
-  - mathematics
-  - foundations
-  - arithmetic-laws
----
-
 # The three rearranging laws: swapping, regrouping, and spreading multiplication over addition
 
-Foundations → Everyday Arithmetic → Whole numbers → The three rearranging laws
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Everyday Arithmetic](../../../SYLLABUS.md#w01-s01) → The three rearranging laws
 
 ---
 
@@ -246,7 +226,7 @@ Identical, line for line.
 >
 > Two smaller ones:
 > - **Spreading to only the first piece.** 12 × (70 + 5) written as 12 × 70 + 5 gives 845, not 900. The multiplier is outside the bracket, so it applies to everything in it.
-> - **Confusing these laws with order of operations.** [order-of-operations](04-order-of-operations.md) tells you what an expression means; these three tell you which rewrites keep its value. One is reading, the other is moving.
+> - **Confusing these laws with order of operations.** [Order of operations](04-order-of-operations.md) tells you what an expression means; these three tell you which rewrites keep its value. One is reading, the other is moving.
 
 ---
 
@@ -263,12 +243,12 @@ Identical, line for line.
 
 ## What this builds on
 
-- [order-of-operations](04-order-of-operations.md): what an expression means before you touch it. That card sets the reading, this one the legal rewrites.
-- [multiplying-and-dividing](03-multiplying-and-dividing.md): the grid picture of a product, here turned a quarter turn and cut in two.
+- [Order of operations](04-order-of-operations.md): what an expression means before you touch it. That card sets the reading, this one the legal rewrites.
+- [Multiplying and dividing](03-multiplying-and-dividing.md): the grid picture of a product, here turned a quarter turn and cut in two.
 
 ## Where this goes next
 
-- [negative-numbers](06-negative-numbers.md): where subtraction stops being a fourth operation. Once minus numbers exist, $a - b$ is $a + (-b)$, an addition in disguise, and swapping and regrouping cover it after all.
+- [Negative numbers](06-negative-numbers.md): where subtraction stops being a fourth operation. Once minus numbers exist, $a - b$ is $a + (-b)$, an addition in disguise, and swapping and regrouping cover it after all.
 
 ---
 

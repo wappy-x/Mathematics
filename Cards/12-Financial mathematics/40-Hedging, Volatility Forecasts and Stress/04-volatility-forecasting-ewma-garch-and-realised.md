@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Hedging, Volatility Forecasts and Stress
-topic: Forecasting variance
-item: Tomorrow's volatility
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/40-Hedging, Volatility Forecasts and Stress/01-portfolio-greeks-and-taylor-pnl|portfolio-greeks-and-taylor-pnl]]"
-  - "[[Cards/09-Probability and statistics/12-Time Series/06-garch-and-volatility-clustering|garch-and-volatility-clustering]]"
-next: []
-tags: [mathematics, financial-mathematics, volatility-forecasting-ewma-garch-and-realised]
----
-
 # Tomorrow's volatility: EWMA, GARCH and realised measures compared
 
-Financial mathematics → Hedging, Volatility Forecasts and Stress → Forecasting variance → Tomorrow's volatility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Hedging, Volatility Forecasts and Stress](../../../SYLLABUS.md#w12-s40) → Tomorrow's volatility
 
 ---
 
@@ -192,7 +176,7 @@ The noise term on the right is the same for every forecast. So, averaged over ma
 
 MSE counts a miss in variance units, so one wild day such as day 5 dominates it. QLIKE looks at the ratio of measured to forecast variance. Forecast half of what came, and the day's penalty is 0.3069. Forecast double, and it is 0.1931. Under-forecasting costs more, and for a risk desk it is the costlier failure. The code checks that the QLIKE gap between GARCH and EWMA equals the gap in $\ln f + RV/f$: 0.024210 both ways.
 
-On this card the weights are fixed in advance. In practice GARCH's $\omega$, $\alpha$ and $\beta$ are chosen by maximum likelihood on earlier data, the route [garch-and-volatility-clustering](../../09-Probability%20and%20statistics/12-Time%20Series/06-garch-and-volatility-clustering.md) follows.
+On this card the weights are fixed in advance. In practice GARCH's $\omega$, $\alpha$ and $\beta$ are chosen by maximum likelihood on earlier data, the route [GARCH](../../09-Probability%20and%20statistics/12-Time%20Series/06-garch-and-volatility-clustering.md) follows.
 
 ---
 
@@ -742,10 +726,10 @@ The two outputs match line for line, simulations included: both run the same gen
 
 ## Where you meet it in real life
 
-- **Value at risk.** RiskMetrics' EWMA with $\lambda$ = 0.94 was widely adopted as the volatility input to banks' value-at-risk systems; a book's one-day value at risk scales with the forecast's square root ([parametric-var-and-delta-normal](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/02-parametric-var-and-delta-normal.md)).
-- **Option desks.** A forecast of realised variance, set against the market's implied volatility ([implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md)), is the case for buying or selling options. The book's vega, its dollars per volatility point ([portfolio-greeks-and-taylor-pnl](01-portfolio-greeks-and-taylor-pnl.md)) turns a forecast miss into dollars.
-- **Hedging.** How much gamma (the rate at which a hedge ratio drifts as the price moves) to carry overnight depends on how big tomorrow's move is likely to be; the hedge itself is built in [delta-gamma-vega-hedging](02-delta-gamma-vega-hedging.md).
-- **Variance swaps.** These contracts pay realised variance measured from daily closes, the one-piece version of this card's yardstick ([realised-variance-from-daily-prices](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md)).
+- **Value at risk.** RiskMetrics' EWMA with $\lambda$ = 0.94 was widely adopted as the volatility input to banks' value-at-risk systems; a book's one-day value at risk scales with the forecast's square root ([Parametric VaR](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/02-parametric-var-and-delta-normal.md)).
+- **Option desks.** A forecast of realised variance, set against the market's implied volatility ([Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md)), is the case for buying or selling options. The book's vega, its dollars per volatility point ([Portfolio Greeks](01-portfolio-greeks-and-taylor-pnl.md)) turns a forecast miss into dollars.
+- **Hedging.** How much gamma (the rate at which a hedge ratio drifts as the price moves) to carry overnight depends on how big tomorrow's move is likely to be; the hedge itself is built in [Hedging three Greeks at once](02-delta-gamma-vega-hedging.md).
+- **Variance swaps.** These contracts pay realised variance measured from daily closes, the one-piece version of this card's yardstick ([Realised variance](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md)).
 
 > **Say it back**
 > Tomorrow's variance has to be forecast from what is known at today's close. EWMA blends today's squared move into yesterday's forecast; GARCH does the same with a floor that pulls it toward a long-run level; the realised rule reuses today's intraday measurement. After the day ends, each forecast is scored against realised variance, a noisy but unbiased measurement. With MSE or QLIKE the noise adds the same amount to every rule, so averages over many days rank the rules fairly. Eight days rank nothing.
@@ -754,13 +738,13 @@ The two outputs match line for line, simulations included: both run the same gen
 
 ## What this builds on
 
-- [portfolio-greeks-and-taylor-pnl](01-portfolio-greeks-and-taylor-pnl.md): the book's sensitivities, which turn a volatility forecast into a dollar risk.
-- [garch-and-volatility-clustering](../../09-Probability%20and%20statistics/12-Time%20Series/06-garch-and-volatility-clustering.md): volatility clustering, the GARCH model and how its weights are fitted.
+- [Portfolio Greeks](01-portfolio-greeks-and-taylor-pnl.md): the book's sensitivities, which turn a volatility forecast into a dollar risk.
+- [GARCH](../../09-Probability%20and%20statistics/12-Time%20Series/06-garch-and-volatility-clustering.md): volatility clustering, the GARCH model and how its weights are fitted.
 
 ## Where this goes next
 
-- [scenario-grids-and-stress-tests](05-scenario-grids-and-stress-tests.md): replaces one forecast number with a grid of explicit moves in price and volatility.
-- [risk-limits-and-risk-appetite](06-risk-limits-and-risk-appetite.md): sets how much forecast risk a desk may carry.
+- [Stress tests](05-scenario-grids-and-stress-tests.md): replaces one forecast number with a grid of explicit moves in price and volatility.
+- [Limits](06-risk-limits-and-risk-appetite.md): sets how much forecast risk a desk may carry.
 
 A forecast says how big a normal tomorrow is; the open question is what the book loses on an abnormal one, which a stress grid answers.
 

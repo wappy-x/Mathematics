@@ -1,22 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Discrete Distributions
-topic: Waiting times
-item: Waiting for a success
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/01-bernoulli-and-binomial|bernoulli-and-binomial]]"
-next:
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/07-birthday-and-coupon-collector|birthday-and-coupon-collector]]"
-tags: [mathematics, probability and statistics, geometric-and-negative-binomial]
----
-
 # Waiting for a success: how many tries until the first, and until the r-th
 
-Probability and statistics → Discrete Distributions → Waiting times → Waiting for a success
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Discrete Distributions](../../../SYLLABUS.md#w09-s03) → Waiting for a success
 
 ---
 
@@ -52,7 +36,7 @@ Bars: the first six (geometric); each bar is five sixths of the one before. Line
 
 ## The formula
 
-Notation first, in words. $p$ is the chance of a six on one roll, here 1/6, and $q = 1 - p$ the chance of a miss. As on the [bernoulli-and-binomial](01-bernoulli-and-binomial.md) card, a capital letter is a random count and $P(X = k)$ is the chance it takes the value $k$. $P(A \mid B)$ is the chance of A given B. $E[X]$ is the average value of $X$ in the long run, and $\operatorname{Var}(X)$ its variance: the average squared distance from that mean. "$X \sim \text{Geometric}(p)$" is read "X follows the geometric law with chance p".
+Notation first, in words. $p$ is the chance of a six on one roll, here 1/6, and $q = 1 - p$ the chance of a miss. As on the [Binomial](01-bernoulli-and-binomial.md) card, a capital letter is a random count and $P(X = k)$ is the chance it takes the value $k$. $P(A \mid B)$ is the chance of A given B. $E[X]$ is the average value of $X$ in the long run, and $\operatorname{Var}(X)$ its variance: the average squared distance from that mean. "$X \sim \text{Geometric}(p)$" is read "X follows the geometric law with chance p".
 
 The first six. Let $X$ be the roll on which it lands.
 
@@ -151,7 +135,7 @@ After four misses, the chance of three more is 0.578704, the same as from a stan
 
 ### Step 5: the negative binomial mass
 
-The r-th six lands on roll k exactly when two things happen together. Roll k is a six. And the first k − 1 rolls hold exactly r − 1 sixes. The second event is a binomial count (the [bernoulli-and-binomial](01-bernoulli-and-binomial.md) card): its chance is $\binom{k-1}{r-1} p^{r-1} q^{k-r}$. The two involve different rolls, so they multiply:
+The r-th six lands on roll k exactly when two things happen together. Roll k is a six. And the first k − 1 rolls hold exactly r − 1 sixes. The second event is a binomial count (the [Binomial](01-bernoulli-and-binomial.md) card): its chance is $\binom{k-1}{r-1} p^{r-1} q^{k-r}$. The two involve different rolls, so they multiply:
 
 $$P(T_r = k) = \binom{k-1}{r-1}\,p^{\,r-1} q^{\,k-r} \times p = \binom{k-1}{r-1}\,p^{\,r}\,q^{\,k-r}.$$
 
@@ -161,7 +145,7 @@ Cut the wait for the third six at each six. $G_1$ rolls to the first six, then $
 
 $$T_3 = G_1 + G_2 + G_3.$$
 
-By Step 0, the rolls after a six start a fresh wait, so each gap is geometric with the same p, and the gaps are independent: each uses its own rolls. Averages add, so $E[T_3] = 3 \times 6 = 18$. For independent counts variances also add (the [sums-of-discrete-variables](06-sums-of-discrete-variables.md) card), so $\operatorname{Var}(T_3) = 3 \times 30 = 90$.
+By Step 0, the rolls after a six start a fresh wait, so each gap is geometric with the same p, and the gaps are independent: each uses its own rolls. Averages add, so $E[T_3] = 3 \times 6 = 18$. For independent counts variances also add (the [Adding counts](06-sums-of-discrete-variables.md) card), so $\operatorname{Var}(T_3) = 3 \times 30 = 90$.
 
 The negative binomial is not memoryless. After two rolls, both may already be sixes, and then one more six ends the wait. So $P(T_3 > 3 \mid T_3 > 2) = 1 - p^3 = 0.995370$, while from scratch $P(T_3 > 1) = 1$. The wait remembers progress.
 
@@ -190,7 +174,7 @@ For p = 1/6: $(5/6) \times 36 = 30$. The restart step is legitimate because $E[X
 
 </details>
 
-When a wait can end at any instant, not only at whole tries, it becomes the exponential law, reached through the [poisson](04-poisson.md) card's arrivals.
+When a wait can end at any instant, not only at whole tries, it becomes the exponential law, reached through the [Poisson](04-poisson.md) card's arrivals.
 
 ---
 
@@ -689,7 +673,7 @@ The outputs agree byte for byte. Counting gives the formula's 0.080376 and 0.019
 
 - **Retrying a connection.** With a fixed loss chance per try, the number of sends until a packet gets through is geometric; past failures say nothing about the next try.
 - **Screening.** A clinic screening patients until r qualify waits a negative binomial number of screenings; r/p sets the budget.
-- **Counts that spread more than a Poisson.** Ecologists and insurers fit the negative binomial to counts whose variance exceeds their mean, where the [poisson](04-poisson.md) law would force the two to be equal.
+- **Counts that spread more than a Poisson.** Ecologists and insurers fit the negative binomial to counts whose variance exceeds their mean, where the [Poisson](04-poisson.md) law would force the two to be equal.
 
 > **Say it back**
 > With independent tries at chance p, the first success lands on try k with chance q^(k−1) p. The wait ends for sure, averages 1/p tries and has variance q/p^2. After any run of failures the remaining wait has the same law as a fresh one; no other law in whole tries does that. The r-th success is r such waits end to end: mean r/p, variance r q/p^2. For a die, 6 rolls for the first six and 18 for the third.
@@ -698,11 +682,11 @@ The outputs agree byte for byte. Counting gives the formula's 0.080376 and 0.019
 
 ## What this builds on
 
-- [bernoulli-and-binomial](01-bernoulli-and-binomial.md): the single try with chance p, and the count of successes in n tries that places the earlier r − 1 sixes and gives the tail of Step 7.
+- [Binomial](01-bernoulli-and-binomial.md): the single try with chance p, and the count of successes in n tries that places the earlier r − 1 sixes and gives the tail of Step 7.
 
 ## Where this goes next
 
-- [birthday-and-coupon-collector](07-birthday-and-coupon-collector.md): the wait until every face of the die has shown is a sum of six geometric waits whose chances fall from 6/6 to 1/6.
+- [Two classics](07-birthday-and-coupon-collector.md): the wait until every face of the die has shown is a sum of six geometric waits whose chances fall from 6/6 to 1/6.
 
 ---
 

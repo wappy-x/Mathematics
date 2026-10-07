@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Many underlyings - exchange, spread, basket and rainbow
-topic: Swapping one share for another
-item: The exchange option
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/05-change-of-numeraire|change-of-numeraire]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/04-correlated-paths-and-cholesky|correlated-paths-and-cholesky]]"
-next:
-  - "[[Cards/12-Financial mathematics/18-Many underlyings - exchange, spread, basket and rainbow/02-spread-options-and-kirk|spread-options-and-kirk]]"
-tags: [mathematics, financial mathematics, exchange-option-margrabe]
----
-
 # The exchange option: the right to swap one share for another, priced with no interest rate at all
 
-Financial mathematics → Many underlyings - exchange, spread, basket and rainbow → Swapping one share for another → The exchange option
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Many underlyings - exchange, spread, basket and rainbow](../../../SYLLABUS.md#w12-s18) → The exchange option
 
 ---
 
@@ -54,7 +36,7 @@ First line: Birch ends at $100, so the kink sits at $100 and the picture is a va
 
 ## The formula
 
-Notation first, in words. A subscript 1 marks Acme, the share received; a subscript 2 marks Birch, the share handed over. $S_1(T)$ is Acme's price at the expiry date T. The Greek letter $\rho$ (rho) is the correlation between the two shares' random moves. $q_1$ and $q_2$ are dividend yields, $\sigma_1$ and $\sigma_2$ (sigma) volatilities, and $N(x)$ is the bell-curve area to the left of x, as on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md). The table lists every symbol.
+Notation first, in words. A subscript 1 marks Acme, the share received; a subscript 2 marks Birch, the share handed over. $S_1(T)$ is Acme's price at the expiry date T. The Greek letter $\rho$ (rho) is the correlation between the two shares' random moves. $q_1$ and $q_2$ are dividend yields, $\sigma_1$ and $\sigma_2$ (sigma) volatilities, and $N(x)$ is the bell-curve area to the left of x, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md). The table lists every symbol.
 
 $$V = S_1 e^{-q_1 T} N(d_1) \;-\; S_2 e^{-q_2 T} N(d_2)$$
 
@@ -98,7 +80,7 @@ A price in dollars is a count of dollars. Nothing forces that unit. The payoff a
 
 $$\max\big(S_1(T) - S_2(T),\,0\big) = S_2(T)\,\max(R_T - 1,\,0).$$
 
-Read in Birch shares, the payoff is $\max(R_T - 1, 0)$ Birch shares: a call on the ratio, struck at 1. The unit of account, here a Birch share, is called the **numeraire**, the word used from here on ([change-of-numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md)).
+Read in Birch shares, the payoff is $\max(R_T - 1, 0)$ Birch shares: a call on the ratio, struck at 1. The unit of account, here a Birch share, is called the **numeraire**, the word used from here on ([Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md)).
 
 In dollars, a call is priced against a bank account that grows at r. In Birch shares, the "bank account" is a Birch share itself, dividends reinvested, and measured in Birch shares it earns nothing but those dividends. The bank rate has no job left to do. What remains is a zero-interest call on the ratio. Steps 1 and 2 find the ratio's spread and its centre; Step 3 prices it.
 
@@ -119,7 +101,7 @@ xychart-beta
     line [15.54, 14.55, 13.48, 12.31, 11.02, 9.55, 7.81, 5.53, 0.00]
 ```
 
-The one line is the Margrabe price at each correlation, everything else held at the house values. It falls from $15.54 at −1 to $11.02 at zero, $7.81 at 0.5, and exactly zero at +1. The fall steepens near +1, because the effective volatility is a square root of a quantity running down to zero. How that slope is traded and read back from prices is [correlation-greeks-and-implied-correlation](05-correlation-greeks-and-implied-correlation.md).
+The one line is the Margrabe price at each correlation, everything else held at the house values. It falls from $15.54 at −1 to $11.02 at zero, $7.81 at 0.5, and exactly zero at +1. The fall steepens near +1, because the effective volatility is a square root of a quantity running down to zero. How that slope is traded and read back from prices is [Correlation Greeks and implied correlation](05-correlation-greeks-and-implied-correlation.md).
 
 ### Step 2: the ratio's centre, counted in Birch
 
@@ -129,7 +111,7 @@ So the expected ratio at T is $R\,e^{(q_2 - q_1)T}$: today's ratio, pushed by th
 
 ### Step 3: price the ratio call, then convert back to dollars
 
-The ratio is lognormal with centre $R\,e^{(q_2 - q_1)T}$ and volatility $\sigma$, and the call on it has strike 1 and zero interest. That is the Black-Scholes call from [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), with the rate set to zero. In Birch shares at expiry, its value is
+The ratio is lognormal with centre $R\,e^{(q_2 - q_1)T}$ and volatility $\sigma$, and the call on it has strike 1 and zero interest. That is the Black-Scholes call from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), with the rate set to zero. In Birch shares at expiry, its value is
 
 $$R\,e^{(q_2 - q_1)T} N(d_1) - N(d_2).$$
 
@@ -142,7 +124,7 @@ $$V = S_1 e^{-q_1 T} N(d_1) - S_2 e^{-q_2 T} N(d_2).$$
 
 In the dollar pretend world (risk-neutral), $\ln S_i(T) = \ln S_i + (r - q_i - \tfrac12\sigma_i^2)T + \sigma_i\sqrt{T}Z_i$ for i = 1, 2, where $Z_1$ and $Z_2$ are standard normal with correlation $\rho$. The price is $e^{-rT}$ times the average of $S_2(T)\max(R_T - 1, 0)$.
 
-Write $S_2(T) = S_2 e^{(r - q_2)T} \cdot e^{\sigma_2\sqrt{T}Z_2 - \frac12\sigma_2^2 T}$. The first factor is a constant; times $e^{-rT}$ it is $S_2 e^{-q_2 T}$, and r is gone. The second factor has average 1 and reweights the bell curve. As on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), completing the square shows the reweighted $Z_2$ is a normal centred at $\sigma_2\sqrt{T}$ instead of 0. Since $Z_1 = \rho Z_2 + \sqrt{1-\rho^2}\,Z_\perp$ with $Z_\perp$ independent, $Z_1$ is centred at $\rho\sigma_2\sqrt{T}$.
+Write $S_2(T) = S_2 e^{(r - q_2)T} \cdot e^{\sigma_2\sqrt{T}Z_2 - \frac12\sigma_2^2 T}$. The first factor is a constant; times $e^{-rT}$ it is $S_2 e^{-q_2 T}$, and r is gone. The second factor has average 1 and reweights the bell curve. As on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), completing the square shows the reweighted $Z_2$ is a normal centred at $\sigma_2\sqrt{T}$ instead of 0. Since $Z_1 = \rho Z_2 + \sqrt{1-\rho^2}\,Z_\perp$ with $Z_\perp$ independent, $Z_1$ is centred at $\rho\sigma_2\sqrt{T}$.
 
 Under the reweighting, $\ln R_T = \ln R + (q_2 - q_1)T - \tfrac12(\sigma_1^2 - \sigma_2^2)T + \sigma_1\sqrt{T}Z_1 - \sigma_2\sqrt{T}Z_2$ has centre shifted by $\rho\sigma_1\sigma_2 T - \sigma_2^2 T$, giving $\ln R + (q_2 - q_1)T - \tfrac12(\sigma_1^2 + \sigma_2^2 - 2\rho\sigma_1\sigma_2)T = \ln R + (q_2 - q_1)T - \tfrac12\sigma^2 T$. The reweighting shifts centres, not spreads, so its variance is still $\sigma_1^2 T + \sigma_2^2 T - 2\rho\sigma_1\sigma_2 T = \sigma^2 T$.
 
@@ -164,7 +146,7 @@ Replace Birch with a bond that pays $100 at expiry. Its price today is 100 × e^
 
 Put $S_2 = K e^{-rT}$, $q_2 = 0$ and $\sigma_2 = 0$ into the formula. The effective volatility becomes $\sigma_1$, $S_2 e^{-q_2T}$ becomes $K e^{-rT}$, and the result is the Black-Scholes call, $9.227006, the house vanilla. The bank rate returns only because the second asset is now a bond whose price contains it.
 
-Two other roads reach the exchange price, and the code takes both. Fix Birch's shock; Acme is then lognormal with a known centre and spread, the inner average is a closed Black-Scholes-type expression, and one integral over Birch's shock finishes the job, with r written in. Or simulate the two shares together, correlating their shocks as on [correlated-paths-and-cholesky](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md), and average the discounted payoff.
+Two other roads reach the exchange price, and the code takes both. Fix Birch's shock; Acme is then lognormal with a known centre and spread, the inner average is a closed Black-Scholes-type expression, and one integral over Birch's shock finishes the job, with r written in. Or simulate the two shares together, correlating their shocks as on [Correlated paths](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md), and average the discounted payoff.
 
 ---
 
@@ -626,9 +608,9 @@ The two outputs agree line for line, the simulated price included, because both 
 
 - **Share-for-share takeovers.** A bid that offers the acquirer's shares for the target's contains exchange options: a holder who may accept or decline the swap holds the right to exchange one share for another.
 - **Outperformance options.** A fund manager's bonus that pays if one index beats another is an exchange option on the two indices, and its price depends on their correlation more than on either index alone.
-- **Spread options on commodities.** Refiners and power producers hold options on the gap between two prices. With no fixed strike, that is this card; with one, it needs an approximation: [spread-options-and-kirk](02-spread-options-and-kirk.md).
-- **Best-of and worst-of contracts.** The larger of two prices is Birch plus the right to swap Birch for Acme, so a best-of pays one share and one exchange option: [rainbow-best-of-and-worst-of](04-rainbow-best-of-and-worst-of.md).
-- **Options on a basket.** Sums of lognormal prices have no exact formula; the exchange option has one because a ratio of lognormals is lognormal: [basket-options](03-basket-options.md).
+- **Spread options on commodities.** Refiners and power producers hold options on the gap between two prices. With no fixed strike, that is this card; with one, it needs an approximation: [Spread options](02-spread-options-and-kirk.md).
+- **Best-of and worst-of contracts.** The larger of two prices is Birch plus the right to swap Birch for Acme, so a best-of pays one share and one exchange option: [Rainbow options](04-rainbow-best-of-and-worst-of.md).
+- **Options on a basket.** Sums of lognormal prices have no exact formula; the exchange option has one because a ratio of lognormals is lognormal: [Basket options](03-basket-options.md).
 
 > **Say it back**
 > An exchange option is the right to hand over one share and receive another at expiry. Counted in units of the share handed over, it is a call on the ratio of the two prices with a strike of one, and in that unit no interest is earned, so the bank rate drops out. The ratio's volatility is each share's variance added, less twice the shared part. For two house shares at correlation 0.5 the price is $7.81; at correlation 1 it is zero. Replace the second share with a bond and the formula becomes the Black-Scholes call.
@@ -637,13 +619,13 @@ The two outputs agree line for line, the simulated price included, because both 
 
 ## What this builds on
 
-- [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the call formula this card reuses at a zero rate, and the slide of the bell curve behind the reweighting.
-- [change-of-numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md): why prices counted in any traded asset are fair games under that asset's own probabilities.
-- [correlated-paths-and-cholesky](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md): how to draw two correlated shocks from two independent ones, the third road in the code.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the call formula this card reuses at a zero rate, and the slide of the bell curve behind the reweighting.
+- [Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md): why prices counted in any traded asset are fair games under that asset's own probabilities.
+- [Correlated paths](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md): how to draw two correlated shocks from two independent ones, the third road in the code.
 
 ## Where this goes next
 
-- [spread-options-and-kirk](02-spread-options-and-kirk.md): the swap with a cash strike added, paying Acme minus Birch minus a fixed amount.
+- [Spread options](02-spread-options-and-kirk.md): the swap with a cash strike added, paying Acme minus Birch minus a fixed amount.
 
 The ratio trick works because the payoff has no cash in it; add a fixed strike to the swap and the payoff is no longer a function of the ratio alone, and how to price it anyway is the next card's question.
 

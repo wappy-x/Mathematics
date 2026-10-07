@@ -1,25 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Coordinates and Curves
-topic: Addresses in space
-item: Cylindrical and spherical coordinates
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/03-polar-coordinates|polar-coordinates]]"
-next:
-  - "[[Cards/05-Geometry and trig/06-Beyond Euclid/01-triangles-on-a-sphere|triangles-on-a-sphere]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/02-triple-integrals|triple-integrals]]"
-  - "[[Cards/13-Engineering mathematics/09-Quantum Mechanics in Outline/07-the-hydrogen-atom-in-outline|the-hydrogen-atom-in-outline]]"
-  - "[[Cards/19-Partial differential equations/04-Laplace, Poisson and Potentials/07-laplacian-in-polar-and-spherical-coordinates|laplacian-in-polar-and-spherical-coordinates]]"
-tags: [mathematics, geometry and trig, cylindrical-and-spherical-coordinates]
----
-
 # Cylindrical and spherical coordinates: two angles and a radius in space
 
-Geometry and trig → Coordinates and Curves → Addresses in space → Cylindrical and spherical coordinates
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Coordinates and Curves](../../../SYLLABUS.md#w05-s04) → Cylindrical and spherical coordinates
 
 ---
 
@@ -29,7 +10,7 @@ Tokyo sits at 35.68° north, 139.69° east: an address on the globe. A GPS recei
 
 Treat the Earth as a ball 6371 km in radius, its mean size. The first axis points from the centre to where the equator meets the Greenwich meridian (a meridian is a half-circle from pole to pole; Greenwich's has longitude zero), the second to 90° east, the third to the North Pole. Tokyo is then (−3946.3, 3347.9, 3715.9), in kilometres: 3715.9 km above the equator's plane and 5175.1 km from the spin axis.
 
-A radius and two angles name the same point: **spherical coordinates**. A distance from the axis, one angle and a height name it too: **cylindrical coordinates**. Both are built from the plane's polar coordinates ([polar-coordinates](03-polar-coordinates.md)): cylindrical uses them once, spherical twice. The difficulty is bookkeeping: latitude opens up from the equator, the mathematician's angle opens down from the pole, and one letter means different angles in different books.
+A radius and two angles name the same point: **spherical coordinates**. A distance from the axis, one angle and a height name it too: **cylindrical coordinates**. Both are built from the plane's polar coordinates ([Polar coordinates](03-polar-coordinates.md)): cylindrical uses them once, spherical twice. The difficulty is bookkeeping: latitude opens up from the equator, the mathematician's angle opens down from the pole, and one letter means different angles in different books.
 
 **Drop a point straight down to the equator's plane: its shadow is a polar-coordinate problem and its height is one number, so a point in space is a radius and two angles, or a distance from the axis, one angle and a height.**
 
@@ -96,9 +77,9 @@ The shadow lies at distance r from the centre, at angle θ from the Greenwich di
 
 ### Step 2: the meridian triangle gives r and z
 
-Join the centre O, Tokyo, and Tokyo's shadow. The shadow-to-Tokyo line is vertical and the O-to-shadow line flat, so the right angle is at the shadow and the long side is ρ. The angle at O between ρ and the vertical axis is the colatitude φ. Sine and cosine in a right triangle ([right-triangle-trigonometry](../03-Trigonometry/01-right-triangle-trigonometry.md)) give the side next to φ as z = ρ cos φ and the side facing it as r = ρ sin φ.
+Join the centre O, Tokyo, and Tokyo's shadow. The shadow-to-Tokyo line is vertical and the O-to-shadow line flat, so the right angle is at the shadow and the long side is ρ. The angle at O between ρ and the vertical axis is the colatitude φ. Sine and cosine in a right triangle ([Sine, cosine and tangent](../03-Trigonometry/01-right-triangle-trigonometry.md)) give the side next to φ as z = ρ cos φ and the side facing it as r = ρ sin φ.
 
-South of the equator the colatitude passes 90°: Rio de Janeiro, at 22.91° south, has 112.91°. The cosine past 90° is negative ([radians-and-the-unit-circle](../03-Trigonometry/02-radians-and-the-unit-circle.md)), so z = −2480.1 km: below the equator, with no separate rule needed. The sine stays positive up to 180°, so r stays a distance.
+South of the equator the colatitude passes 90°: Rio de Janeiro, at 22.91° south, has 112.91°. The cosine past 90° is negative ([The unit circle](../03-Trigonometry/02-radians-and-the-unit-circle.md)), so z = −2480.1 km: below the equator, with no separate rule needed. The sine stays positive up to 180°, so r stays a distance.
 
 ### Step 3: substitute
 
@@ -363,14 +344,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [polar-coordinates](03-polar-coordinates.md): the radius-and-angle address in a plane, used here once for the shadow and once for the meridian triangle.
+- [Polar coordinates](03-polar-coordinates.md): the radius-and-angle address in a plane, used here once for the shadow and once for the meridian triangle.
 
 ## Where this goes next
 
-- [triangles-on-a-sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md): distances along the surface, not through it, from the same two angles.
-- [triple-integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/02-triple-integrals.md): volumes of balls and cylinders, summed slice by slice in these coordinates.
-- the-hydrogen-atom-in-outline: an atom's electron shapes, written in a radius and two angles.
-- laplacian-in-polar-and-spherical-coordinates: the equations of heat and gravity rewritten for round problems.
+- [Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md): distances along the surface, not through it, from the same two angles.
+- [Triple integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/02-triple-integrals.md): volumes of balls and cylinders, summed slice by slice in these coordinates.
+- Hydrogen in outline: an atom's electron shapes, written in a radius and two angles.
+- The Laplacian in round coordinates, and the modes it splits into: the equations of heat and gravity rewritten for round problems.
 
 ---
 

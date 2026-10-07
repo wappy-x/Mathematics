@@ -1,29 +1,12 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Markov Chains
-topic: Forecasting many days ahead
-item: n-step transitions
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/01-markov-chains|markov-chains]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/03-diagonalisation-and-matrix-powers|diagonalisation-and-matrix-powers]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/03-classifying-states|classifying-states]]"
-tags: [mathematics, stochastic processes and calculus, multi-step-transitions]
----
-
 # n-step transitions: matrix powers and Chapman-Kolmogorov
 
-Stochastic processes and calculus → Markov Chains → Forecasting many days ahead → n-step transitions
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Markov Chains](../../../SYLLABUS.md#w11-s03) → n-step transitions
 
 ---
 
 ## General Overview
 
-A town's weather is sunny, cloudy or rainy each day, and its records give a rule for tomorrow that looks only at today. After a sunny day: sunny 6 times in 10, cloudy 3, rainy 1. After a cloudy day: 3, 4, 3. After a rainy day: 2, 4, 4. This is the chain of [markov-chains](01-markov-chains.md), which found rain two days after a sunny day by adding three routes: 0.19.
+A town's weather is sunny, cloudy or rainy each day, and its records give a rule for tomorrow that looks only at today. After a sunny day: sunny 6 times in 10, cloudy 3, rainy 1. After a cloudy day: 3, 4, 3. After a rainy day: 2, 4, 4. This is the chain of [Markov chains](01-markov-chains.md), which found rain two days after a sunny day by adding three routes: 0.19.
 
 Today is sunny. What is the chance of rain a week from today? The weather can reach rain on day 7 by thousands of routes, each with its own chance. There are 2187 seven-day paths from a sunny start, and adding them all by hand is hopeless. The answer is 0.2454961, about 1 in 4.
 
@@ -52,7 +35,7 @@ Orange: sunny. Green: cloudy. Dark blue: rainy. On day 0 all the chance sits on 
 
 ## The formula
 
-Notation first, in words. As on [markov-chains](01-markov-chains.md), $X_n$ is the weather on day $n$, with day 0 today; $P$ is the transition matrix, whose entry $p_{ij}$ is the chance of state $j$ tomorrow after state $i$ today; and $\alpha$ is the start law, the chances for day 0. With the states in the order sunny, cloudy, rainy:
+Notation first, in words. As on [Markov chains](01-markov-chains.md), $X_n$ is the weather on day $n$, with day 0 today; $P$ is the transition matrix, whose entry $p_{ij}$ is the chance of state $j$ tomorrow after state $i$ today; and $\alpha$ is the start law, the chances for day 0. With the states in the order sunny, cloudy, rainy:
 
 $$P = \begin{pmatrix} 0.6 & 0.3 & 0.1 \\ 0.3 & 0.4 & 0.3 \\ 0.2 & 0.4 & 0.4 \end{pmatrix}, \qquad \alpha = (1,\ 0,\ 0).$$
 
@@ -94,7 +77,7 @@ The third is the **Chapman-Kolmogorov equation**. In matrix form it reads $P^{m+
 
 ### Step 0: split the event by its route
 
-"Rain on day 7" is one event, but it happens along many routes. Two different routes cannot both happen, so their chances add. Along one route the Markov property makes the chance a product, one entry of $P$ per day, as [markov-chains](01-markov-chains.md) proved. So every n-day chance is a sum of products. A matrix product is exactly a sum of products: row i of the first matrix against column j of the second. That is why powers of $P$ appear.
+"Rain on day 7" is one event, but it happens along many routes. Two different routes cannot both happen, so their chances add. Along one route the Markov property makes the chance a product, one entry of $P$ per day, as [Markov chains](01-markov-chains.md) proved. So every n-day chance is a sum of products. A matrix product is exactly a sum of products: row i of the first matrix against column j of the second. That is why powers of $P$ appear.
 
 ### Step 1: one more day at a time
 
@@ -126,7 +109,7 @@ The law is a row and multiplies from the left. With $\alpha$ = (1, 0, 0), $\mu_n
 
 ### Step 4: what the powers settle to
 
-Powers of a matrix are read most easily through its eigenvalues ([diagonalisation-and-matrix-powers](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md)). The law multiplies from the left, so the useful eigenvectors are rows $v$ with $vP = \lambda v$: one day scales them by $\lambda$ and leaves their shape alone.
+Powers of a matrix are read most easily through its eigenvalues ([Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md)). The law multiplies from the left, so the useful eigenvectors are rows $v$ with $vP = \lambda v$: one day scales them by $\lambda$ and leaves their shape alone.
 
 Every row of $P$ adds to 1, so the eigenvalue 1 is always there. Its row is the long-run mix $\pi$ = (24, 22, 15)/61, and the code checks $\pi P = \pi$ in whole numbers. The other two eigenvalues are the roots of $\lambda^2 - 0.4\lambda + 0.01 = 0$, because the three eigenvalues add to the diagonal sum of $P$, 1.4, and multiply to its determinant, 0.01. The roots are 0.3732051 and 0.0267949.
 
@@ -134,7 +117,7 @@ Today's law splits into three pieces, one along each eigenvector. Each day multi
 
 $$\mu_n(\text{rainy}) = 0.2459016 - 0.4021612 \times 0.3732051^n + 0.1562596 \times 0.0267949^n.$$
 
-At n = 0 the three terms cancel to 0; as n grows, the last two die away. The gap to the long-run value shrinks by the factor 0.3732051 each day: 0.0010866 on day 6, 0.0004055 on day 7, a ratio of 0.3732. That is why the chart flattens by day 4. Whether every chain settles like this, and how fast, belongs to [stationary-distributions](04-stationary-distributions.md) and [convergence-to-equilibrium](05-convergence-to-equilibrium.md).
+At n = 0 the three terms cancel to 0; as n grows, the last two die away. The gap to the long-run value shrinks by the factor 0.3732051 each day: 0.0010866 on day 6, 0.0004055 on day 7, a ratio of 0.3732. That is why the chart flattens by day 4. Whether every chain settles like this, and how fast, belongs to [Stationary distributions](04-stationary-distributions.md) and [Convergence to equilibrium](05-convergence-to-equilibrium.md).
 
 <details>
 <summary>Detailed proof</summary>
@@ -161,7 +144,7 @@ The day $m$ is fixed. At a random day the same statement needs that day to be a 
 
 </details>
 
-**Another road.** A road with no algebra at all is to simulate many weeks and count; the code does that, with a standard error. A chain in continuous time obeys the same Chapman-Kolmogorov identity with one matrix for every length of time; that version belongs to [continuous-time-markov-chains-and-queues](../04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md).
+**Another road.** A road with no algebra at all is to simulate many weeks and count; the code does that, with a standard error. A chain in continuous time obeys the same Chapman-Kolmogorov identity with one matrix for every length of time; that version belongs to [Continuous-time chains](../04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md).
 
 ---
 
@@ -615,11 +598,11 @@ The simulation is one run: rain on day 7 at 0.2465 ± 0.0014, within one standar
 
 ## Where you meet it in real life
 
-- **Credit ratings.** Rating agencies publish one-year tables of how often a company moves between grades. Multi-year default chances are read off powers of that table, under exactly the time-homogeneous Markov assumption named in When it holds ([rating-transition-matrix-and-cumulative-default-rates](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md)).
-- **Web ranking.** PageRank is the law of a random surfer after many clicks, computed as $\alpha P^n$ for large n; the powers settle toward the long-run mix of [stationary-distributions](04-stationary-distributions.md).
-- **Board games.** The chance of standing on each square after n turns is a row of $P^n$; the expected length of the game needs [absorption-and-first-step-analysis](06-absorption-and-first-step-analysis.md).
-- **Speech and DNA.** The forward pass of [hidden-markov-models](08-hidden-markov-models.md) is one day's step $\mu_n P$, corrected by each observation.
-- **Sampling.** [markov-chain-monte-carlo](07-markov-chain-monte-carlo.md) runs a chain for many steps so that the law of $X_n$ is close to the target.
+- **Credit ratings.** Rating agencies publish one-year tables of how often a company moves between grades. Multi-year default chances are read off powers of that table, under exactly the time-homogeneous Markov assumption named in When it holds ([Rating transition matrices](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md)).
+- **Web ranking.** PageRank is the law of a random surfer after many clicks, computed as $\alpha P^n$ for large n; the powers settle toward the long-run mix of [Stationary distributions](04-stationary-distributions.md).
+- **Board games.** The chance of standing on each square after n turns is a row of $P^n$; the expected length of the game needs [Absorption](06-absorption-and-first-step-analysis.md).
+- **Speech and DNA.** The forward pass of [Hidden Markov models](08-hidden-markov-models.md) is one day's step $\mu_n P$, corrected by each observation.
+- **Sampling.** [MCMC](07-markov-chain-monte-carlo.md) runs a chain for many steps so that the law of $X_n$ is close to the target.
 
 > **Say it back**
 > A chance over several days is a sum over routes, and each route's chance is a product of one-day chances. A matrix product is exactly that sum of products, so the n-day table is the n-th power of the one-day table, and the law on day n is the start law times it. Chapman-Kolmogorov says a trip can be split at any fixed day by summing over where the weather is on that day. From a sunny day, rain a week out has chance 0.2454961 by every road. The eigenvalues say how fast the forecast forgets today.
@@ -628,15 +611,15 @@ The simulation is one run: rain on day 7 at 0.2465 ± 0.0014, within one standar
 
 ## What this builds on
 
-- [markov-chains](01-markov-chains.md): the transition matrix, the start law, and the path formula every sum here starts from.
-- [diagonalisation-and-matrix-powers](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md): powers through eigenvalues, used in Step 4 for the closed form.
+- [Markov chains](01-markov-chains.md): the transition matrix, the start law, and the path formula every sum here starts from.
+- [Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md): powers through eigenvalues, used in Step 4 for the closed form.
 
 ## Where this goes next
 
-- [classifying-states](03-classifying-states.md): which entries of $P^n$ are ever positive, read as which states can reach which, and the periods that stop the powers settling.
-- [stationary-distributions](04-stationary-distributions.md) and [convergence-to-equilibrium](05-convergence-to-equilibrium.md): the long-run mix $\pi$, and when $\alpha P^n$ reaches it from any start.
+- [Classifying states](03-classifying-states.md): which entries of $P^n$ are ever positive, read as which states can reach which, and the periods that stop the powers settling.
+- [Stationary distributions](04-stationary-distributions.md) and [Convergence to equilibrium](05-convergence-to-equilibrium.md): the long-run mix $\pi$, and when $\alpha P^n$ reaches it from any start.
 
-Here the powers settled, with a gap shrinking by 0.3732051 a day; whether they settle for every chain depends first on which states can reach which, and that is [classifying-states](03-classifying-states.md).
+Here the powers settled, with a gap shrinking by 0.3732051 a day; whether they settle for every chain depends first on which states can reach which, and that is [Classifying states](03-classifying-states.md).
 
 ---
 

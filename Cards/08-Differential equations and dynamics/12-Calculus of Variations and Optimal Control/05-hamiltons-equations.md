@@ -1,29 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Calculus of Variations and Optimal Control
-topic: Motion in position and momentum
-item: Hamilton's equations
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/04-lagrangian-mechanics|lagrangian-mechanics]]"
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/07-symplectic-steps-for-oscillators|symplectic-steps-for-oscillators]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/06-pontryagins-principle-and-bang-bang-control|pontryagins-principle-and-bang-bang-control]]"
-  - "[[Cards/13-Engineering mathematics/07-Mechanics and Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers|lagrangian-and-hamiltonian-mechanics-for-engineers]]"
-  - "[[Cards/13-Engineering mathematics/09-Quantum Mechanics in Outline/08-symmetry-and-conserved-quantities|symmetry-and-conserved-quantities]]"
-  - "[[Cards/16-Numerical analysis/06-ODE Solvers/06-symplectic-integrators|symplectic-integrators]]"
-  - "[[Cards/19-Partial differential equations/02-First-Order Equations and Characteristics/05-hamilton-jacobi-equations|hamilton-jacobi-equations]]"
-  - "[[Cards/23-Differential geometry and Lie groups/04-Differential Forms/10-symplectic-form-and-hamiltonian-flow|symplectic-form-and-hamiltonian-flow]]"
-  - "[[Cards/23-Differential geometry and Lie groups/07-Geometric Analysis and Physics/02-einstein-equations-in-outline|einstein-equations-in-outline]]"
-tags: [mathematics, differential equations and dynamics, hamiltons-equations]
----
-
 # Hamilton's equations: trade velocity for momentum and the motion becomes a pair of first-order equations that conserve energy
 
-Differential equations and dynamics → Calculus of Variations and Optimal Control → Motion in position and momentum → Hamilton's equations
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Calculus of Variations and Optimal Control](../../../SYLLABUS.md#w08-s12) → Hamilton's equations
 
 ---
 
@@ -31,9 +8,9 @@ Differential equations and dynamics → Calculus of Variations and Optimal Contr
 
 A 20 kg child sits on a playground swing hung from rigid 2 m rods. A parent pulls the seat back to 60 degrees and lets go. The seat passes the bottom at 4.43 m/s and one full swing, there and back, takes 3.045 s.
 
-The Lagrangian route ([lagrangian-mechanics](04-lagrangian-mechanics.md)) gives one second-order equation for the angle. William Rowan Hamilton, in 1834, kept the angle as one unknown and took the swing's **momentum**, its mass-weighted turning speed, as the second. Then one function, the energy written in angle and momentum, drives both rates, and it cannot change while the swing moves.
+The Lagrangian route ([Lagrangian mechanics](04-lagrangian-mechanics.md)) gives one second-order equation for the angle. William Rowan Hamilton, in 1834, kept the angle as one unknown and took the swing's **momentum**, its mass-weighted turning speed, as the second. Then one function, the energy written in angle and momentum, drives both rates, and it cannot change while the swing moves.
 
-Every motion becomes a level curve of that function, so the whole portrait is drawn without solving anything. And the motion keeps areas in the angle–momentum plane, which is why the steps of [symplectic-steps-for-oscillators](../05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md) hold a swing's energy for thousands of steps.
+Every motion becomes a level curve of that function, so the whole portrait is drawn without solving anything. And the motion keeps areas in the angle–momentum plane, which is why the steps of [Symplectic steps](../05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md) hold a swing's energy for thousands of steps.
 
 **Write the energy as a function of position and momentum, the Hamiltonian; the position then changes at its slope in the momentum, the momentum at minus its slope in the position, and the Hamiltonian stays constant along the motion.**
 
@@ -80,7 +57,7 @@ Potential energy is zero with the rods horizontal, −392.4 J hanging.
 
 - **The Lagrangian curves upward in the velocity.** Here its second slope (the slope of its slope) is $m l^2$ = 80, so each momentum names one speed. A Lagrangian that is a straight line in the velocity has no Legendre transform.
 - **No clock inside the Hamiltonian.** A child who stands and squats changes $l$; $H$ then changes, which is how pumping works.
-- **Forces from a potential.** Friction is not one; with it $H$ drains away, as on [lasalle-and-the-damped-pendulum](../06-Nonlinear%20Dynamics%20in%20the%20Plane/05-lasalle-and-the-damped-pendulum.md).
+- **Forces from a potential.** Friction is not one; with it $H$ drains away, as on [LaSalle's principle](../06-Nonlinear%20Dynamics%20in%20the%20Plane/05-lasalle-and-the-damped-pendulum.md).
 - **Any coordinate works.** Each position coordinate gets its own **conjugate momentum** by the same slope rule.
 
 ---
@@ -89,7 +66,7 @@ Potential energy is zero with the rods horizontal, −392.4 J hanging.
 
 ### Step 0: choose the second unknown so one function drives both rates
 
-A second-order equation becomes two first-order ones with a second unknown ([from-one-equation-to-a-system](../04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md)). Choosing the momentum, not the velocity, makes the two rates the two slopes of one function, with a sign between them.
+A second-order equation becomes two first-order ones with a second unknown ([From one equation to a system](../04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md)). Choosing the momentum, not the velocity, makes the two rates the two slopes of one function, with a sign between them.
 
 ### Step 1: the momentum
 
@@ -126,15 +103,15 @@ The sign between the two equations makes the terms cancel, so $H$ keeps its rele
 
 ### Step 5: the level curves are the pendulum's portrait
 
-Each motion keeps to one curve, $p = \pm\sqrt{2 m l^2\,(H + m g l\cos\theta)}$. Below 392.4 J the square root limits the angle: a closed loop. At 392.4 J the momentum reaches zero exactly upside down: the separatrix. Above it the momentum never vanishes: the seat goes over the top. This is the portrait of [the-nonlinear-pendulum](../06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md) with momentum on the vertical axis; that card's quarter-swing integral, scaled by $\sqrt{l/g}$ to 2 m rods, gives 0.761156138 s.
+Each motion keeps to one curve, $p = \pm\sqrt{2 m l^2\,(H + m g l\cos\theta)}$. Below 392.4 J the square root limits the angle: a closed loop. At 392.4 J the momentum reaches zero exactly upside down: the separatrix. Above it the momentum never vanishes: the seat goes over the top. This is the portrait of [The pendulum](../06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md) with momentum on the vertical axis; that card's quarter-swing integral, scaled by $\sqrt{l/g}$ to 2 m rods, gives 0.761156138 s.
 
 ### Step 6: the motion keeps area, and so should the steps
 
 A small patch of starting states changes area at the divergence of the rates, $\partial\theta'/\partial\theta + \partial p'/\partial p = \partial^2 H/\partial\theta\,\partial p - \partial^2 H/\partial p\,\partial\theta = 0$. Areas never change: Liouville's theorem. A map that keeps this area is **symplectic**.
 
-Euler's rule, a straight step along the current slope ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)), stretches area by $1 + h^2 (g/l)\cos\theta$: 1.01226250 per step at the bottom with $h$ = 0.05 s. Leapfrog (half a kick to $p$, a drift of $\theta$, half a kick) is three shears, each keeping area exactly. Over 100 s Euler's swing spins over the top; leapfrog's $H$ stays within 0.55 J.
+Euler's rule, a straight step along the current slope ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)), stretches area by $1 + h^2 (g/l)\cos\theta$: 1.01226250 per step at the bottom with $h$ = 0.05 s. Leapfrog (half a kick to $p$, a drift of $\theta$, half a kick) is three shears, each keeping area exactly. Over 100 s Euler's swing spins over the top; leapfrog's $H$ stays within 0.55 J.
 
-Another road: the equations are the Euler–Lagrange equations of $\int (p\,\theta' - H)\,dt$, with angle and momentum varied independently, the start of hamilton-jacobi-equations.
+Another road: the equations are the Euler–Lagrange equations of $\int (p\,\theta' - H)\,dt$, with angle and momentum varied independently, the start of Hamilton-Jacobi.
 
 ---
 
@@ -389,18 +366,18 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [lagrangian-mechanics](04-lagrangian-mechanics.md): the Lagrangian and its Euler–Lagrange equation, which Step 3 rewrites.
-- [symplectic-steps-for-oscillators](../05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md): leapfrog and its kept area, which Step 6 explains.
+- [Lagrangian mechanics](04-lagrangian-mechanics.md): the Lagrangian and its Euler–Lagrange equation, which Step 3 rewrites.
+- [Symplectic steps](../05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md): leapfrog and its kept area, which Step 6 explains.
 
 ## Where this goes next
 
-- [pontryagins-principle-and-bang-bang-control](06-pontryagins-principle-and-bang-bang-control.md): the same pair of equations with a control to choose.
-- lagrangian-and-hamiltonian-mechanics-for-engineers: machines with several coordinates.
-- symmetry-and-conserved-quantities: a coordinate missing from $H$ has a conserved momentum.
-- symplectic-integrators: why kept area bounds the energy error.
-- hamilton-jacobi-equations: a function whose slopes are the momenta.
-- symplectic-form-and-hamiltonian-flow: the kept area as a geometric object.
-- einstein-equations-in-outline: variational field equations on curved spacetime.
+- [Pontryagin's principle](06-pontryagins-principle-and-bang-bang-control.md): the same pair of equations with a control to choose.
+- Lagrangian and Hamiltonian mechanics: machines with several coordinates.
+- Symmetry and conservation: a coordinate missing from $H$ has a conserved momentum.
+- Symplectic steps: why kept area bounds the energy error.
+- Hamilton-Jacobi: a function whose slopes are the momenta.
+- Symplectic form: the kept area as a geometric object.
+- Einstein equations: variational field equations on curved spacetime.
 
 ---
 

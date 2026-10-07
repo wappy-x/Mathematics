@@ -1,28 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Linear Systems and Transforms
-topic: Sampled loops in the z-plane
-item: The z-transform
-kind: method
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/02-impulse-response-and-transfer-functions|impulse-response-and-transfer-functions]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/03-poles-zeros-and-stability|poles-zeros-and-stability]]"
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/01-laurent-series|laurent-series]]"
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/03-first-order-recurrences-and-loans|first-order-recurrences-and-loans]]"
-  - "[[Cards/04-Combinatorics and graphs/07-Generating Functions/01-ordinary-generating-functions|ordinary-generating-functions]]"
-next:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/09-zero-order-hold-and-tustin-discretisation|zero-order-hold-and-tustin-discretisation]]"
-  - "[[Cards/13-Engineering mathematics/05-Signals/01-sampling-and-the-nyquist-theorem|sampling-and-the-nyquist-theorem]]"
-  - "[[Cards/13-Engineering mathematics/05-Signals/04-digital-filters-fir-and-iir|digital-filters-fir-and-iir]]"
-tags: [mathematics, engineering mathematics, z-transform-and-discrete-time-systems]
----
-
 # The z-transform: difference equations become algebra in the z-plane
 
-Engineering mathematics → Linear Systems and Transforms → Sampled loops in the z-plane → The z-transform
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Linear Systems and Transforms](../../../SYLLABUS.md#w13-s02) → The z-transform
 
 ---
 
@@ -62,7 +40,7 @@ $$Y(z) = \sum_{n=0}^{\infty} y[n]\, z^{-n} = y[0] + \frac{y[1]}{z} + \frac{y[2]}
 
 **Read it aloud:** hang each sample on a power of one over z, the power counting how many ticks have passed, and add them up.
 
-This card introduces two pieces of notation the rest of the wing uses. The letter z is the transform's variable, a complex number. Its reciprocal z^(-1) is read "one-tick delay": a sequence delayed by one tick has the transform z^(-1) Y(z). Replace z by 1/x and Y(z) is the ordinary generating function of the sequence, the power series y[0] + y[1] x + y[2] x^2 + … of [ordinary-generating-functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/01-ordinary-generating-functions.md).
+This card introduces two pieces of notation the rest of the wing uses. The letter z is the transform's variable, a complex number. Its reciprocal z^(-1) is read "one-tick delay": a sequence delayed by one tick has the transform z^(-1) Y(z). Replace z by 1/x and Y(z) is the ordinary generating function of the sequence, the power series y[0] + y[1] x + y[2] x^2 + … of [Generating functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/01-ordinary-generating-functions.md).
 
 **The thermostat as two difference equations.** Write y[n] for the tip's temperature rise above where it started, in °C, at tick n, and u[n] for the extra heater power during that tick, in W, on top of the 16.5 W that holds it. Over one tick the tip keeps a share $a$ of its rise and gains $b$ degrees per watt. The thermostat acts on the reading taken one tick earlier, since reading and filtering take a tick:
 
@@ -103,7 +81,7 @@ $$y[\infty] = H(1)\,r = \frac{bK}{1 - a + bK}\, r = 4.98008\ ^\circ\text{C}.$$
 - **Time-invariant.** The same a, b and K every tick. A tip swapped mid-job for one with half the heat capacity doubles b and puts the poles on the unit circle.
 - **Causal and starting at rest.** The one-sided sum starts at n = 0, and the transfer function assumes every earlier value is zero. A non-zero start adds terms, worked out in Step 2.
 - **A lumped tip.** One temperature for the whole tip. A real lag between heater and point adds a pole and lowers the stable gain.
-- **The update rule is a model of the physics.** a = 0.998000 and b = 0.040000 are the one-step Euler values; a heater held constant over each tick gives exactly 0.998002 and 0.039960 ([zero-order-hold-and-tustin-discretisation](09-zero-order-hold-and-tustin-discretisation.md)). With those, |p| = 0.70675, the peak 6.23004 °C, overshoot 25.1 % and the gain limit 25.025 W/°C, against 0.70711, 6.23501 °C, 25.2 % and 25 W/°C; the settling value is unchanged.
+- **The update rule is a model of the physics.** a = 0.998000 and b = 0.040000 are the one-step Euler values; a heater held constant over each tick gives exactly 0.998002 and 0.039960 ([Discretising a design](09-zero-order-hold-and-tustin-discretisation.md)). With those, |p| = 0.70675, the peak 6.23004 °C, overshoot 25.1 % and the gain limit 25.025 W/°C, against 0.70711, 6.23501 °C, 25.2 % and 25 W/°C; the settling value is unchanged.
 
 ---
 
@@ -111,7 +89,7 @@ $$y[\infty] = H(1)\,r = \frac{bK}{1 - a + bK}\, r = 4.98008\ ^\circ\text{C}.$$
 
 ### Step 0: a delay is the only memory a sampled system has
 
-A continuous system remembers through its derivatives; the Laplace transform ([the-laplace-transform](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md)) turns each derivative into a factor of s. A sampled system remembers through earlier samples, y[n − 1], y[n − 2]. If one operation can turn "one tick earlier" into a multiplication, a difference equation of any length becomes a polynomial equation, solvable by algebra. Multiplying by z^(-1) is that operation.
+A continuous system remembers through its derivatives; the Laplace transform ([The Laplace transform](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md)) turns each derivative into a factor of s. A sampled system remembers through earlier samples, y[n − 1], y[n − 2]. If one operation can turn "one tick earlier" into a multiplication, a difference equation of any length becomes a polynomial equation, solvable by algebra. Multiplying by z^(-1) is that operation.
 
 ### Step 1: the transform of a geometric sequence, and where it exists
 
@@ -121,7 +99,7 @@ $$\sum_{n=0}^{\infty} p^n z^{-n} = \frac{1}{1 - p/z} = \frac{z}{z - p}, \qquad \
 
 The sum converges only outside the circle of radius |p|. That set is the region of convergence. It matters because the same fraction z/(z − p) is also the transform of a different sequence, one that is −p^n for negative n and zero after. Its sum, −Σ p^n z^(−n) over n = −1, −2, …, converges only inside the circle, |z| < |p|. For p = 0.998 at z = 0.5 it gives −1.004016, the value of z/(z − p) there. A fraction alone does not fix a sequence; the fraction plus its region does. For a sequence that starts at n = 0 the region is always the outside of the largest pole's circle.
 
-In the terms of [laurent-series](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md), Y(z) is a Laurent series with only non-positive powers of z.
+In the terms of [Laurent series](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md), Y(z) is a Laurent series with only non-positive powers of z.
 
 ### Step 2: the shift rule turns the difference equation into algebra
 
@@ -139,7 +117,7 @@ That is H(z). No step of it needed the numbers; the numbers enter only at the en
 
 ### Step 3: partial fractions show each pole as a motion
 
-The denominator z^2 − a z + bK has two roots p1 and p2. Splitting Y(z)/z into simple fractions, as in [poles-zeros-and-stability](03-poles-zeros-and-stability.md) and with Step 1 read backwards, gives the whole response in closed form:
+The denominator z^2 − a z + bK has two roots p1 and p2. Splitting Y(z)/z into simple fractions, as in [Poles and zeros](03-poles-zeros-and-stability.md) and with Step 1 read backwards, gives the whole response in closed form:
 
 $$y[n] = H(1)\,r \;+\; c_1\,p_1^{\,n} \;+\; c_2\,p_2^{\,n}, \qquad c_1 = \frac{bK\,r\,p_1}{(p_1 - 1)(p_1 - p_2)},$$
 
@@ -164,13 +142,13 @@ Every term of the response is a constant times p^n (times a power of n for a rep
 <details>
 <summary>Detailed proof: bounded in, bounded out exactly when every pole is inside</summary>
 
-A system is BIBO stable (bounded input, bounded output) when every input that stays below some bound M produces an output that stays below some bound too. The output is the convolution y[n] = Σ_k h[k] u[n − k] of the impulse response h with the input ([impulse-response-and-transfer-functions](02-impulse-response-and-transfer-functions.md)).
+A system is BIBO stable (bounded input, bounded output) when every input that stays below some bound M produces an output that stays below some bound too. The output is the convolution y[n] = Σ_k h[k] u[n − k] of the impulse response h with the input ([Transfer functions](02-impulse-response-and-transfer-functions.md)).
 
 *Sufficient.* If Σ|h[k]| = S is finite, then |y[n]| ≤ Σ|h[k]| |u[n − k]| ≤ M S for every n.
 
 *Necessary.* If Σ|h[k]| is infinite, pick the bounded input u[N − k] = sign of h[k] for k = 0 … N. Then y[N] = Σ_{k≤N} |h[k]|, which grows without bound as N grows. That input changes with N; one fixed input is needed. A unit pulse is one if h is unbounded. If every |h[k]| ≤ B, join the blocks end to end: earlier blocks add at most B times their length to y at a new block's end, so a long enough new block pushes y past any bound.
 
-*Poles.* For a rational H(z) with no pole cancelled by a zero, partial fractions write h[n], for n past the numerator's degree, as a sum of terms c n^m p^n, one group per pole p, with m below the pole's multiplicity. If every |p| < 1, each term is summable, because n^m |p|^n shrinks faster than any geometric series with ratio between |p| and 1. If some |p| ≥ 1, the terms of the largest such |p| do not shrink, and sequences with different ratios cannot cancel them for every n ([poles-zeros-and-stability](03-poles-zeros-and-stability.md), with n for t), so the sum of |h[n]| is infinite. Hence BIBO stable exactly when every pole satisfies |p| < 1. ∎
+*Poles.* For a rational H(z) with no pole cancelled by a zero, partial fractions write h[n], for n past the numerator's degree, as a sum of terms c n^m p^n, one group per pole p, with m below the pole's multiplicity. If every |p| < 1, each term is summable, because n^m |p|^n shrinks faster than any geometric series with ratio between |p| and 1. If some |p| ≥ 1, the terms of the largest such |p| do not shrink, and sequences with different ratios cannot cancel them for every n ([Poles and zeros](03-poles-zeros-and-stability.md), with n for t), so the sum of |h[n]| is infinite. Hence BIBO stable exactly when every pole satisfies |p| < 1. ∎
 
 </details>
 
@@ -186,11 +164,11 @@ Drawn to scale, 90 px per unit. The crosses are the closed-loop pole pairs: insi
 
 Sampling e^(st) every T seconds gives the sequence (e^(sT))^n, so a continuous pole at s becomes a discrete pole at z = e^(sT). The left half of the s-plane, Re s < 0, lands inside the unit circle, because |e^(sT)| = e^(T Re s) < 1. The tip alone has a = 0.998, which maps back to s = ln(a)/T = −0.020020 1/s, close to −1/(R_th C_th) = −0.020000 1/s. The closed-loop pair maps back to s = −3.4657 ± 7.8740j rad/s.
 
-The unit circle itself is the imaginary axis of the s-plane: z = e^(jθ) with θ = 2πfT, the angle the wobble turns through per tick. Evaluating H on the circle gives the frequency response, the discrete-time Fourier transform. A setpoint wobbling ±1 °C at 1 Hz makes the tip swing ±1.3719 °C; the code gets that number both from |H| and from running the loop. The response peaks at 1.4114 at 1.154 Hz, near the ringing frequency. The sampling rate is f_s = 1/T = 10 Hz. The point z = −1 is half of it, f_s/2 = 5.0 Hz, the fastest wobble a 0.1 s tick can represent (sampling-and-the-nyquist-theorem).
+The unit circle itself is the imaginary axis of the s-plane: z = e^(jθ) with θ = 2πfT, the angle the wobble turns through per tick. Evaluating H on the circle gives the frequency response, the discrete-time Fourier transform. A setpoint wobbling ±1 °C at 1 Hz makes the tip swing ±1.3719 °C; the code gets that number both from |H| and from running the loop. The response peaks at 1.4114 at 1.154 Hz, near the ringing frequency. The sampling rate is f_s = 1/T = 10 Hz. The point z = −1 is half of it, f_s/2 = 5.0 Hz, the fastest wobble a 0.1 s tick can represent (Sampling).
 
 ### Step 7: the settling value is H at z = 1
 
-A step's transform carries the pole z = 1. In Step 3 that pole's term is H(1) r, while every other term dies when the poles are inside. So y[∞] = H(1) r = 0.5 / 0.502 × 5 = 4.98008 °C. It is the discrete final value theorem ([final-value-theorem-and-steady-gain](05-final-value-theorem-and-steady-gain.md)), with z → 1 in place of s → 0. A proportional thermostat leaves a droop of 0.01992 °C; a joint that draws 20 W from the tip leaves it 1.5936 °C low, where the bare tip with the thermostat off would sag R_th d = 400 °C, more than it has above room temperature.
+A step's transform carries the pole z = 1. In Step 3 that pole's term is H(1) r, while every other term dies when the poles are inside. So y[∞] = H(1) r = 0.5 / 0.502 × 5 = 4.98008 °C. It is the discrete final value theorem ([Final value and bandwidth](05-final-value-theorem-and-steady-gain.md)), with z → 1 in place of s → 0. A proportional thermostat leaves a droop of 0.01992 °C; a joint that draws 20 W from the tip leaves it 1.5936 °C low, where the bare tip with the thermostat off would sag R_th d = 400 °C, more than it has above room temperature.
 
 ---
 
@@ -682,9 +660,9 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Digital temperature control.** Soldering stations, 3D-printer hot ends and laboratory baths run loops like this one. The z-plane says how much gain the firmware can carry and what a sensor delay costs.
-- **Digital filters.** A filter is a difference equation run on samples: audio equalisers, the smoothing on a thermocouple reading, the anti-hum notch on a medical monitor. Its poles and zeros are placed in the z-plane by design, in digital-filters-fir-and-iir.
-- **Turning an analogue design into code.** A controller drawn in the s-plane is moved to the z-plane, and the choice of map decides what survives, in [zero-order-hold-and-tustin-discretisation](09-zero-order-hold-and-tustin-discretisation.md).
-- **Steady errors of digital loops.** The droop under a 20 W load is H at z = 1; the cure, an integrator with its pole at z = 1, is the subject of [steady-state-error-and-system-type](../03-Feedback%20Control/03-steady-state-error-and-system-type.md).
+- **Digital filters.** A filter is a difference equation run on samples: audio equalisers, the smoothing on a thermocouple reading, the anti-hum notch on a medical monitor. Its poles and zeros are placed in the z-plane by design, in Digital filters.
+- **Turning an analogue design into code.** A controller drawn in the s-plane is moved to the z-plane, and the choice of map decides what survives, in [Discretising a design](09-zero-order-hold-and-tustin-discretisation.md).
+- **Steady errors of digital loops.** The droop under a 20 W load is H at z = 1; the cure, an integrator with its pole at z = 1, is the subject of [Steady-state error](../03-Feedback%20Control/03-steady-state-error-and-system-type.md).
 
 > **Say it back**
 > The z-transform hangs each sample on a power of 1/z, so a one-tick delay becomes a factor of z^(-1) and a difference equation becomes a fraction in z. Each root of the denominator, a pole, is the per-tick growth factor of one natural motion. The system settles exactly when every pole lies inside the unit circle. For the soldering-iron thermostat the poles sit at distance 0.70711, the tip overshoots 25.2 % and settles in 1.0 s, and the loop goes unstable at twice the gain. The settling value is the fraction at z = 1, and the frequency response is the fraction on the unit circle.
@@ -693,17 +671,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [impulse-response-and-transfer-functions](02-impulse-response-and-transfer-functions.md): the transfer function as output transform over input transform, and the impulse response whose sum decides BIBO stability.
-- [poles-zeros-and-stability](03-poles-zeros-and-stability.md): poles, zeros and the partial-fraction reading of a response, in the s-plane this card maps across.
-- [laurent-series](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md): Y(z) is a Laurent series; its region of convergence and the contour integral for its coefficients.
-- [first-order-recurrences-and-loans](../../04-Combinatorics%20and%20graphs/05-Recurrences/03-first-order-recurrences-and-loans.md): the tip's own update, y[n + 1] = a y[n] + b u[n], is a first-order recurrence.
-- [ordinary-generating-functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/01-ordinary-generating-functions.md): the same object with z replaced by 1/x.
+- [Transfer functions](02-impulse-response-and-transfer-functions.md): the transfer function as output transform over input transform, and the impulse response whose sum decides BIBO stability.
+- [Poles and zeros](03-poles-zeros-and-stability.md): poles, zeros and the partial-fraction reading of a response, in the s-plane this card maps across.
+- [Laurent series](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/01-laurent-series.md): Y(z) is a Laurent series; its region of convergence and the contour integral for its coefficients.
+- [First-order recurrences](../../04-Combinatorics%20and%20graphs/05-Recurrences/03-first-order-recurrences-and-loans.md): the tip's own update, y[n + 1] = a y[n] + b u[n], is a first-order recurrence.
+- [Generating functions](../../04-Combinatorics%20and%20graphs/07-Generating%20Functions/01-ordinary-generating-functions.md): the same object with z replaced by 1/x.
 
 ## Where this goes next
 
-- [zero-order-hold-and-tustin-discretisation](09-zero-order-hold-and-tustin-discretisation.md): the exact a and b for a heater held over each tick, and how an s-plane controller becomes a z-plane one.
-- sampling-and-the-nyquist-theorem: why the point z = −1, half the sampling rate, is the fastest wobble a sampled system can see, and what happens to faster ones.
-- digital-filters-fir-and-iir: difference equations designed on purpose, with poles and zeros placed to pass some frequencies and stop others.
+- [Discretising a design](09-zero-order-hold-and-tustin-discretisation.md): the exact a and b for a heater held over each tick, and how an s-plane controller becomes a z-plane one.
+- Sampling: why the point z = −1, half the sampling rate, is the fastest wobble a sampled system can see, and what happens to faster ones.
+- Digital filters: difference equations designed on purpose, with poles and zeros placed to pass some frequencies and stop others.
 
 This card took the update rule a = 0.998, b = 0.04 as given; where those numbers come from when a continuous tip is sampled every 0.1 s, and how much the choice of sampling map changes the poles, is what zero-order-hold-and-tustin-discretisation answers.
 

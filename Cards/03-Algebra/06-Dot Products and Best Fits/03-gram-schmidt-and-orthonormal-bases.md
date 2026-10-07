@@ -1,43 +1,16 @@
----
-type: card
-wing: 03-Algebra
-shelf: Dot Products and Best Fits
-topic: Orthonormal bases
-item: Gram-Schmidt
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/02-orthogonal-projection|orthogonal-projection]]"
-  - "[[Cards/03-Algebra/03-Vectors/05-basis-and-dimension|basis-and-dimension]]"
-next:
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/04-spectral-theorem|spectral-theorem]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/09-sturm-liouville-and-orthogonality|sturm-liouville-and-orthogonality]]"
-  - "[[Cards/13-Engineering mathematics/05-Signals/08-wavelets-and-multiresolution|wavelets-and-multiresolution]]"
-  - "[[Cards/14-Applied and computational/04-Cryptography/09-lattices-and-post-quantum-cryptography|lattices-and-post-quantum-cryptography]]"
-  - "[[Cards/16-Numerical analysis/03-Numerical Linear Algebra/05-qr-householder-and-gram-schmidt|qr-householder-and-gram-schmidt]]"
-  - "[[Cards/18-Functional analysis/02-Hilbert Spaces/03-orthonormal-bases-and-parseval|orthonormal-bases-and-parseval]]"
-  - "[[Cards/18-Functional analysis/02-Hilbert Spaces/05-orthogonal-polynomials-from-gram-schmidt|orthogonal-polynomials-from-gram-schmidt]]"
-  - "[[Cards/20-Harmonic analysis/05-Wavelets and Time-Frequency/03-haar-wavelet-and-multiresolution|haar-wavelet-and-multiresolution]]"
-tags:
-  - mathematics
-  - algebra
-  - gram-schmidt-and-orthonormal-bases
----
-
 # Gram-Schmidt: straighten a skewed basis into perpendicular unit directions, and coordinates become dot products
 
-Algebra → Dot Products and Best Fits → Orthonormal bases → Gram-Schmidt
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Dot Products and Best Fits](../../../SYLLABUS.md#w03-s06) → Gram-Schmidt
 
 ---
 
 ## General Overview
 
-A surveyor pegs two lines from the corner of a building site: 3 metres east and 1 north, the vector (3, 1); and 2 east and 2 north, (2, 2). Every point on the site is so much along each, which makes the pair a **basis** ([basis-and-dimension](../03-Vectors/05-basis-and-dimension.md)).
+A surveyor pegs two lines from the corner of a building site: 3 metres east and 1 north, the vector (3, 1); and 2 east and 2 north, (2, 2). Every point on the site is so much along each, which makes the pair a **basis** ([Basis and dimension](../03-Vectors/05-basis-and-dimension.md)).
 
 A bad basis, though: not square to each other, neither a tidy length, so "how much along each" means two equations solved at once, once per peg.
 
-Gram-Schmidt fixes the directions rather than the points. Keep the first line, shrunk to length 1. From the second, subtract the part already running along the first — its **projection** on that direction, the shadow of [orthogonal-projection](02-orthogonal-projection.md). What is left sticks out at a right angle. Shrink it too.
+Gram-Schmidt fixes the directions rather than the points. Keep the first line, shrunk to length 1. From the second, subtract the part already running along the first — its **projection** on that direction, the shadow of [Projection](02-orthogonal-projection.md). What is left sticks out at a right angle. Shrink it too.
 
 Out come (3, 1) and (-1, 3), each over the square root of 10, about 3.162278: exactly perpendicular, exactly one unit long. Every decimal here is rounded. Such a set is **orthonormal** — *ortho* for right angles, *normal* for unit lengths.
 
@@ -63,7 +36,7 @@ The loop re-aims the lines; an independent list reaches the same points.
 
 ## The formula
 
-Write the survey lines $a_1$ and $a_2$, the straightened pair $q_1$ and $q_2$. The bars $\lVert \cdot \rVert$ mean length: the square root of a vector dotted with itself ([dot-product](01-dot-product.md)).
+Write the survey lines $a_1$ and $a_2$, the straightened pair $q_1$ and $q_2$. The bars $\lVert \cdot \rVert$ mean length: the square root of a vector dotted with itself ([The dot product](01-dot-product.md)).
 
 $$q_1 = \frac{a_1}{\lVert a_1 \rVert}$$
 
@@ -103,7 +76,7 @@ $$b = (b \cdot q_1)\, q_1 + (b \cdot q_2)\, q_2$$
 
 ### Step 0: subtracting a shadow leaves a right angle
 
-Subtract a vector's shadow on a direction and the leftover is perpendicular to that direction — [orthogonal-projection](02-orthogonal-projection.md) proves it. Gram-Schmidt runs that move down a list.
+Subtract a vector's shadow on a direction and the leftover is perpendicular to that direction — [Projection](02-orthogonal-projection.md) proves it. Gram-Schmidt runs that move down a list.
 
 ### Step 1: the first direction only needs shrinking
 
@@ -131,7 +104,7 @@ The second direction contributes nothing, being perpendicular, so $c_1$ is $b \c
 
 ### Step 4: same site, and a zero leftover
 
-Each straightened direction is built from the original lines, and each original line rebuilds from them: both reach the same points. A zero leftover means that line was already a mix of the earlier ones: not a basis ([basis-and-dimension](../03-Vectors/05-basis-and-dimension.md)).
+Each straightened direction is built from the original lines, and each original line rebuilds from them: both reach the same points. A zero leftover means that line was already a mix of the earlier ones: not a basis ([Basis and dimension](../03-Vectors/05-basis-and-dimension.md)).
 
 ### Step 5: the orthogonal matrix
 
@@ -141,9 +114,9 @@ $$Q^{\mathsf T}Q = I$$
 
 A square matrix with that property is **orthogonal** — a poor name, since the columns must be unit length too. Its inverse is its transpose. And multiplying two points by $Q$ before dotting them sends their entries through $Q^{\mathsf T}Q$, which is $I$: the dot product is unchanged, so lengths and angles survive.
 
-So it cannot stretch or squash; it turns the plane or flips it. Ours has determinant ([determinants](../05-Solving%20Systems/04-determinants.md)) 1.000000, a turn, like the quarter turn with columns (0, 1) and (-1, 0). The flip with columns (1, 0) and (0, -1) has determinant -1.000000, the mirror. Determinant 1 alone is not enough: doubling one axis and halving the other gives it.
+So it cannot stretch or squash; it turns the plane or flips it. Ours has determinant ([Determinants](../05-Solving%20Systems/04-determinants.md)) 1.000000, a turn, like the quarter turn with columns (0, 1) and (-1, 0). The flip with columns (1, 0) and (0, -1) has determinant -1.000000, the mirror. Determinant 1 alone is not enough: doubling one axis and halving the other gives it.
 
-Two doors, named and left alone: $Q$ beside the mixing numbers that rebuild the original lines is the **QR factorisation** (qr-householder-and-gram-schmidt); the complex twin of an orthogonal matrix is **unitary**. And the code takes each shadow's size from the running leftover, **modified** Gram-Schmidt, not from the original line, **classical**: equal exactly, but modified holds the right angles better in floating point.
+Two doors, named and left alone: $Q$ beside the mixing numbers that rebuild the original lines is the **QR factorisation** (QR); the complex twin of an orthogonal matrix is **unitary**. And the code takes each shadow's size from the running leftover, **modified** Gram-Schmidt, not from the original line, **classical**: equal exactly, but modified holds the right angles better in floating point.
 
 ---
 
@@ -409,9 +382,9 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Surveying and construction.** Rough site lines turned into a square, unit grid, each peg located one direction at a time.
-- **Best-fit lines.** Least squares projects data onto the space spanned by a matrix's columns, and orthonormal columns keep that arithmetic honest ([least-squares](04-least-squares.md)).
+- **Best-fit lines.** Least squares projects data onto the space spanned by a matrix's columns, and orthonormal columns keep that arithmetic honest ([Least squares](04-least-squares.md)).
 - **Computer graphics.** A camera or a robot arm carries three axes that must stay square and unit length; rounding drifts them, and Gram-Schmidt straightens the frame.
-- **Symmetric matrices.** The spectral theorem hands a symmetric matrix its own perpendicular directions, and needs an orthonormal basis to say so ([spectral-theorem](../07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)).
+- **Symmetric matrices.** The spectral theorem hands a symmetric matrix its own perpendicular directions, and needs an orthonormal basis to say so ([The spectral theorem](../07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)).
 
 > **Say it back**
 > Two survey lines, (3, 1) and (2, 2), are a skewed basis, so locating a peg means solving equations. Gram-Schmidt keeps the first, shrunk to length 1, then subtracts from the second the shadow it casts on the first; shrinking that leftover, (-0.400000, 1.200000), gives the second direction. The stake at (4, 2) sits 4.427189 along one and 0.632456 along the other: two dot products, no equations. Stacked as columns they give $Q^{\mathsf T}Q = I$.
@@ -420,19 +393,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [orthogonal-projection](02-orthogonal-projection.md): the shadow of one vector on another, and the perpendicular leftover.
-- [basis-and-dimension](../03-Vectors/05-basis-and-dimension.md): directions that reach everything without redundancy, and why a zero leftover means the list was not one.
+- [Projection](02-orthogonal-projection.md): the shadow of one vector on another, and the perpendicular leftover.
+- [Basis and dimension](../03-Vectors/05-basis-and-dimension.md): directions that reach everything without redundancy, and why a zero leftover means the list was not one.
 
 ## Where this goes next
 
-- [spectral-theorem](../07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): symmetric matrices carry their own perpendicular directions.
-- [sturm-liouville-and-orthogonality](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/09-sturm-liouville-and-orthogonality.md): solutions of a differential equation, perpendicular under an integral.
-- wavelets-and-multiresolution: perpendicular unit directions, one per band of frequencies.
-- lattices-and-post-quantum-cryptography: a skewed basis as the secret, straightening it as the attack.
-- qr-householder-and-gram-schmidt: the same factorisation from reflections, steady at machine size.
-- orthonormal-bases-and-parseval: endlessly many such directions, squared length still a sum of squares.
-- orthogonal-polynomials-from-gram-schmidt: this loop on 1, x, x^2, with an integral as the dot product.
-- haar-wavelet-and-multiresolution: the plainest one, built by halving an interval.
+- [The spectral theorem](../07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): symmetric matrices carry their own perpendicular directions.
+- [Sturm-Liouville](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/09-sturm-liouville-and-orthogonality.md): solutions of a differential equation, perpendicular under an integral.
+- Wavelets: perpendicular unit directions, one per band of frequencies.
+- Lattices: a skewed basis as the secret, straightening it as the attack.
+- QR: the same factorisation from reflections, steady at machine size.
+- Orthonormal bases: endlessly many such directions, squared length still a sum of squares.
+- Orthogonal polynomials: this loop on 1, x, x^2, with an integral as the dot product.
+- The Haar wavelet: the plainest one, built by halving an interval.
 
 Gram-Schmidt builds its directions from whatever lines it is handed; which matrices arrive with such a basis already fitted is the spectral theorem's answer.
 

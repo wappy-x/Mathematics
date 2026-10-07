@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Options on commodity futures and spreads
-topic: Spark spreads and plant value
-item: Power that cannot be stored
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/04-margrabe-and-kirk-spread-options|margrabe-and-kirk-spread-options]]"
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/05-seasonality-and-the-gas-curve|seasonality-and-the-gas-curve]]"
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/04-merton-jump-diffusion|merton-jump-diffusion]]"
-next: []
-tags: [mathematics, financial mathematics, electricity-and-the-spark-spread]
----
-
 # Power that cannot be stored: why carry fails, hourly shapes and spikes, and the spark spread as an option on a power plant
 
-Financial mathematics → Options on commodity futures and spreads → Spark spreads and plant value → Power that cannot be stored
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Options on commodity futures and spreads](../../../SYLLABUS.md#w12-s26) → Power that cannot be stored
 
 ---
 
@@ -86,7 +69,7 @@ In words: fuel plus cost is treated as one lognormal price, and its volatility i
 
 $$d_1 = \frac{\ln\!\big(F_P/(H F_G + K)\big) + \tfrac12\sigma_K^2 T}{\sigma_K\sqrt{T}}, \qquad d_2 = d_1 - \sigma_K\sqrt{T}.$$
 
-These are the Black-76 distances from [options-on-commodity-futures](01-options-on-commodity-futures.md), with fuel-plus-cost as the strike.
+These are the Black-76 distances from [Options on a futures price](01-options-on-commodity-futures.md), with fuel-plus-cost as the strike.
 
 ### When it holds
 
@@ -107,7 +90,7 @@ A plant owner never has to run. Each month, or each hour, the plant burns gas on
 
 ### Step 1: why cash-and-carry fails for electricity
 
-For gold, oil or gas, a forward is pinned by a trade: buy today at spot, store it, deliver it later ([seasonality-and-the-gas-curve](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/05-seasonality-and-the-gas-curve.md) shows storage capping the gas curve). If the forward sits above spot plus interest and storage, the trade prints money.
+For gold, oil or gas, a forward is pinned by a trade: buy today at spot, store it, deliver it later ([Seasonal curves](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/05-seasonality-and-the-gas-curve.md) shows storage capping the gas curve). If the forward sits above spot plus interest and storage, the trade prints money.
 
 Power cannot be stored in bulk: the grid must balance supply and demand every second. Batteries and pumped hydro hold a little, with losses, nothing like a gas or oil stock. On 1 January spot power might trade at $30. Carry arithmetic says July should cost 30 × e^(0.05 × 0.5) = **$30.76**. July actually trades at $50. No one can buy January power, keep it, and sell it in July, so nothing closes the gap between $30.76 and $50. January and July power are different goods.
 
@@ -136,7 +119,7 @@ The code finds the weekday of 1 July 2027 by Sakamoto's rule and counts the peak
 
 ### Step 3: spikes, drawn as jumps
 
-On most days power clears near the running cost of the last plant needed. On a few days a heat wave or an outage leaves the grid short, and the price jumps many times over for a day or two before falling back. [merton-jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md) adds jumps to a stock; power adds jumps to a price that is also pulled back fast.
+On most days power clears near the running cost of the last plant needed. On a few days a heat wave or an outage leaves the grid short, and the price jumps many times over for a day or two before falling back. [Merton jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md) adds jumps to a stock; power adds jumps to a price that is also pulled back fast.
 
 A sketch in words. Take a day's price as a calm level times e raised to a deviation. Each day the deviation halves, gets a small random shove (8% spread), and with a 4% chance jumps by ln 5, which multiplies the price by five. The average of e to the deviation can be computed exactly, day by day, because each past shove's effect has halved once per day since. Choose the calm level so that July averages $50.
 
@@ -157,7 +140,7 @@ Two consequences. The forward sits well above a typical day's price, and that is
 
 ### Step 4: the plant's month as a spread option
 
-Set the hourly detail aside and let the plant decide once for July. It pays $S_T - H\,F_G(T) - K$ if positive: power minus 7.5 times gas minus $5. That is a call on the difference of two prices, a **spread option**. [margrabe-and-kirk-spread-options](04-margrabe-and-kirk-spread-options.md) prices it; this card uses the result.
+Set the hourly detail aside and let the plant decide once for July. It pays $S_T - H\,F_G(T) - K$ if positive: power minus 7.5 times gas minus $5. That is a call on the difference of two prices, a **spread option**. [Spread options](04-margrabe-and-kirk-spread-options.md) prices it; this card uses the result.
 
 With a zero strike, Margrabe's exchange formula is exact: measure power in units of fuel, and only the volatility of their ratio matters. With a positive strike, fuel plus cost is no longer lognormal, and Kirk's move is to pretend it is, with volatility $\sigma_K$. The weight $b$ says how much of that lump moves with gas: here 22.50 of 27.50, or 0.8182. At zero strike $b$ is 1 and Kirk equals Margrabe exactly: the code gets $26.8230 both ways.
 
@@ -204,7 +187,7 @@ July 2027, valued 1 January: power $50, gas $3.00, heat rate 7.5, cost $5, volat
 
 The plant's July is worth $21.97 for each MWh it could make. $21.94 of that is the discounted margin the forwards already lock in; $0.0276 is the value of being allowed to stay off.
 
-The house cross-check, with the same code on [margrabe-and-kirk-spread-options](04-margrabe-and-kirk-spread-options.md)'s crack spread (gasoline 100, crude 90), gives Margrabe 13.1531 at zero strike and Kirk 7.4286 at strike 10: the shelf's 13.15 and 7.43.
+The house cross-check, with the same code on [Spread options](04-margrabe-and-kirk-spread-options.md)'s crack spread (gasoline 100, crude 90), gives Margrabe 13.1531 at zero strike and Kirk 7.4286 at strike 10: the shelf's 13.15 and 7.43.
 
 ### The whole year as a strip
 
@@ -668,7 +651,7 @@ The two outputs match line for line, simulations included: both languages use th
 
 ### Greeks of the July option
 
-Each Greek is bumped on both roads; they agree to the third decimal. [spread-option-greeks](05-spread-option-greeks.md) derives them.
+Each Greek is bumped on both roads; they agree to the third decimal. [Greeks of a spread option](05-spread-option-greeks.md) derives them.
 
 | Greek, per MWh of capacity | Kirk | Exact | Meaning for the owner |
 | --- | --- | --- | --- |
@@ -704,7 +687,7 @@ Each Greek is bumped on both roads; they agree to the third decimal. [spread-opt
 - **Buying and selling plants.** Bidders value a gas plant as a strip of spark spread options plus capacity payments, then subtract start-up and maintenance costs that the simple strip ignores.
 - **Hedging a generator.** Owners sell power forward and buy gas forward in the delta amounts, about 0.97 MWh and 7.22 MMBtu per MWh of July capacity here, and rebalance as prices move.
 - **Clean spark and dark spreads.** Where carbon is priced, a clean spark spread subtracts the plant's emissions per MWh times the carbon price as a third leg. A coal plant's margin is the dark spread. Same option, different fuel.
-- **Correlation trading.** Spark spread options quoted by brokers let traders back out the power-gas correlation, as in [implied-correlation-from-a-spread-option](06-implied-correlation-from-a-spread-option.md).
+- **Correlation trading.** Spark spread options quoted by brokers let traders back out the power-gas correlation, as in [Correlation from a spread option](06-implied-correlation-from-a-spread-option.md).
 
 > **Say it back**
 > Electricity cannot be stored, so its forward is not spot plus carry; it is the average future spot price under the pricing weights, spikes included. Power is quoted in blocks, and a baseload price is the hour-weighted average of peak and off-peak. A gas plant turns heat rate times gas into power, so its month is a call on power minus fuel, struck at its running cost, priced by Kirk and checked by an exact integral. The plant is the sum of those calls, and finer choices only add to it.
@@ -713,14 +696,14 @@ Each Greek is bumped on both roads; they agree to the third decimal. [spread-opt
 
 ## What this builds on
 
-- [margrabe-and-kirk-spread-options](04-margrabe-and-kirk-spread-options.md): the exchange formula and Kirk's approximation, used here with fuel plus cost as the second leg.
-- [seasonality-and-the-gas-curve](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/05-seasonality-and-the-gas-curve.md): storage bounding a seasonal curve, the mechanism power lacks.
-- [merton-jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): jumps added to a price, here pulled back within days.
+- [Spread options](04-margrabe-and-kirk-spread-options.md): the exchange formula and Kirk's approximation, used here with fuel plus cost as the second leg.
+- [Seasonal curves](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/05-seasonality-and-the-gas-curve.md): storage bounding a seasonal curve, the mechanism power lacks.
+- [Merton jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): jumps added to a price, here pulled back within days.
 
 ## Where this goes next
 
-- [spread-option-greeks](05-spread-option-greeks.md): the power and gas deltas behind a generator's hedge.
-- [implied-correlation-from-a-spread-option](06-implied-correlation-from-a-spread-option.md): where the 0.70 correlation comes from in a market.
+- [Greeks of a spread option](05-spread-option-greeks.md): the power and gas deltas behind a generator's hedge.
+- [Correlation from a spread option](06-implied-correlation-from-a-spread-option.md): where the 0.70 correlation comes from in a market.
 - Plants with start-up costs, gas storage and swing contracts, where each choice changes the next, need dynamic programming, held for a later shelf.
 
 A monthly strip prices a plant that decides once a month; the open question is what a plant that decides every hour, and pays to start, is worth.

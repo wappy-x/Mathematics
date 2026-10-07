@@ -1,26 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX spot, forwards and interest parity
-topic: Which side is the money
-item: Reading a currency quote
-kind: convention
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/09-ratios-and-rates|ratios-and-rates]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/08-decimals|decimals]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/10-percentages|percentages]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price|no-arbitrage-and-the-law-of-one-price]]"
-next:
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/02-covered-interest-parity|covered-interest-parity]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/01-garman-kohlhagen|garman-kohlhagen]]"
-tags: [mathematics, financial mathematics, currency-quotes-and-cross-rates]
----
-
 # Reading a currency quote: which currency is the price, which is the thing, and how to flip and cross it
 
-Financial mathematics → FX spot, forwards and interest parity → Which side is the money → Reading a currency quote
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX spot, forwards and interest parity](../../../SYLLABUS.md#w12-s20) → Reading a currency quote
 
 ---
 
@@ -88,7 +68,7 @@ In words: the dealer who sells euros at 1.1001 dollars is, from the other side, 
 
 ### When it holds
 
-- **One settlement date for every leg.** A spot trade settles a day or two after it is agreed, depending on the pair. Mix a spot leg with a leg for a later date and the product is off by the interest earned in between, which is the whole subject of [covered-interest-parity](02-covered-interest-parity.md).
+- **One settlement date for every leg.** A spot trade settles a day or two after it is agreed, depending on the pair. Mix a spot leg with a leg for a later date and the product is off by the interest earned in between, which is the whole subject of [Covered interest parity](02-covered-interest-parity.md).
 - **Prices you can deal at, both ways.** The product rule holds exactly for mid prices, the average of bid and ask. With bid and ask the cross has its own bid and ask, and a loop only pays when the quoted cross lies outside that band. With two-pip spreads on both legs (EURUSD 1.0999/1.1001, USDJPY 149.99/150.01), the example's 0.3030% edge shrinks to 0.2872%.
 - **All legs at the same instant.** Quotes move many times a second. A loop that pays on a stale screen may not pay by the time the third order arrives.
 - **Money that moves freely.** Where a government limits conversion, two prices for one currency can sit side by side for years. The rule says a loop would pay; the law says it cannot be run.
@@ -99,7 +79,7 @@ In words: the dealer who sells euros at 1.1001 dollars is, from the other side, 
 
 ### Step 0: two roads to the same euro must cost the same
 
-The idea that makes every rule on this card work is the law of one price ([no-arbitrage-and-the-law-of-one-price](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)): two ways of getting the same thing at the same moment must cost the same, or a trader buys the cheap way, sells the dear way, and keeps the difference. A euro bought with yen directly and a euro bought with yen via dollars are the same euro. So their prices must match.
+The idea that makes every rule on this card work is the law of one price ([No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)): two ways of getting the same thing at the same moment must cost the same, or a trader buys the cheap way, sells the dear way, and keeps the difference. A euro bought with yen directly and a euro bought with yen via dollars are the same euro. So their prices must match.
 
 ### Step 1: a quote is a price tag, and the money is always the second currency
 
@@ -582,7 +562,7 @@ The two outputs agree line for line.
 > Smaller traps:
 > - **Percent moves are not symmetric.** EURUSD rising from 1.10 to 1.12 is a 1.8182% gain for the euro but a 1.7857% loss for the dollar, because the dollar's price is the flipped quote.
 > - **Pip size depends on the pair.** 0.0001 for most pairs, 0.01 when the yen is the quote currency. Many platforms also show a fifth decimal, a tenth of a pip, which looks like a pip if the decimals are not counted.
-> - **"Domestic" is not where you live.** In EURUSD the dollar is domestic for everyone, including a dealer in Frankfurt. The option-pricing formulas in [garman-kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md) discount with the domestic currency's interest rate, so swapping the two words swaps the two rates.
+> - **"Domestic" is not where you live.** In EURUSD the dollar is domestic for everyone, including a dealer in Frankfurt. The option-pricing formulas in [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md) discount with the domestic currency's interest rate, so swapping the two words swaps the two rates.
 > - **A loop on the screen is not a loop in the account.** Spreads, fees and the time between orders eat the edge. The 0.3030% becomes 0.2872% after two-pip spreads, and nothing once the broker is back inside the band.
 
 ---
@@ -594,7 +574,7 @@ The two outputs agree line for line.
 - **Central bank reference rates.** The European Central Bank publishes daily reference rates as units of each currency per one euro, so every ECB rate has the euro as base. The Federal Reserve's H.10 release lists most currencies per dollar, with the euro, pound, Australian and New Zealand dollars the other way round.
 - **Why the dollar sits in the middle.** Most currency trading has the dollar on one side, as the BIS survey of currency markets documents every three years. Pairs without the dollar are often priced as crosses through it, which is why EURJPY is built from EURUSD and USDJPY and not the other way round.
 - **Arbitrage programs.** Banks run code that watches every triangle of pairs and trades the instant a product round a loop leaves the bid–ask band. Their speed is why a quote like 165.50 against a built 165.00 would last milliseconds on a real screen.
-- **Forwards and options on currencies.** Every later card on this shelf reads a forward or an option through the quote's direction: the forward in [covered-interest-parity](02-covered-interest-parity.md), its points in [forward-points-and-fx-swaps](03-forward-points-and-fx-swaps.md), its value later in [fx-forward-value-after-inception](04-fx-forward-value-after-inception.md), and the rate it implies in [implied-yield-and-cross-currency-basis](05-implied-yield-and-cross-currency-basis.md).
+- **Forwards and options on currencies.** Every later card on this shelf reads a forward or an option through the quote's direction: the forward in [Covered interest parity](02-covered-interest-parity.md), its points in [Forward points and the FX swap](03-forward-points-and-fx-swaps.md), its value later in [Valuing an old currency forward](04-fx-forward-value-after-inception.md), and the rate it implies in [The interest rate a forward implies](05-implied-yield-and-cross-currency-basis.md).
 
 > **Say it back**
 > A currency pair is a price tag: the first currency is the thing, the second is the money, whoever reads it. Flipping a quote gives one over it, and flipping a dealer's bid and ask also swaps them. A cross chains two quotes, the middle currency cancelling, so EURUSD 1.1000 and USDJPY 150.00 make EURJPY 165.00. A quote of 165.50 is 50 pips rich, and the loop through all three currencies keeps 0.30 percent without any view. With spreads, the cross has its own bid and ask, and only a quote outside that band pays.
@@ -603,15 +583,15 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [ratios-and-rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md): a quote is a rate, "dollars per euro", and chaining rates cancels the unit in the middle.
-- [decimals](../../01-Foundations/01-Everyday%20Arithmetic/08-decimals.md): pips are the fourth or second decimal place, and counting them is counting decimal places.
-- [percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): the edge of a loop, and why a rise in one currency is not the same percent fall in the other.
-- [no-arbitrage-and-the-law-of-one-price](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md): the rule that two routes to the same thing must cost the same, which is the whole proof of the cross formula.
+- [Ratios and rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md): a quote is a rate, "dollars per euro", and chaining rates cancels the unit in the middle.
+- [Decimals](../../01-Foundations/01-Everyday%20Arithmetic/08-decimals.md): pips are the fourth or second decimal place, and counting them is counting decimal places.
+- [Percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): the edge of a loop, and why a rise in one currency is not the same percent fall in the other.
+- [No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md): the rule that two routes to the same thing must cost the same, which is the whole proof of the cross formula.
 
 ## Where this goes next
 
-- [covered-interest-parity](02-covered-interest-parity.md): the same triangle with time as the third corner. Dollars today, euros today and euros in a year must close a loop, and the interest rates set the forward price.
-- [garman-kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): an option on EURUSD, priced with the domestic and foreign rates this card names.
+- [Covered interest parity](02-covered-interest-parity.md): the same triangle with time as the third corner. Dollars today, euros today and euros in a year must close a loop, and the interest rates set the forward price.
+- [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): an option on EURUSD, priced with the domestic and foreign rates this card names.
 
 Every quote on this card is for delivery now; what a euro for delivery in a year should cost in dollars is the question covered interest parity answers.
 

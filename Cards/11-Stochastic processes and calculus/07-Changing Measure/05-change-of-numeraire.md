@@ -1,27 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Changing Measure
-topic: Counting value in a different unit
-item: Change of numeraire
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/02-girsanov-theorem|girsanov-theorem]]"
-next:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/05-change-of-numeraire-in-pricing|change-of-numeraire-in-pricing]]"
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/02-asset-or-nothing-digital|asset-or-nothing-digital]]"
-  - "[[Cards/12-Financial mathematics/18-Many underlyings - exchange, spread, basket and rainbow/01-exchange-option-margrabe|exchange-option-margrabe]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/04-margrabe-and-kirk-spread-options|margrabe-and-kirk-spread-options]]"
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/05-the-annuity-measure|the-annuity-measure]]"
-  - "[[Cards/12-Financial mathematics/31-Forward-Rate Models/02-forward-measures-for-rates|forward-measures-for-rates]]"
-tags: [mathematics, stochastic processes and calculus, change-of-numeraire]
----
-
 # Change of numeraire: measuring value in shares, bonds or annuities
 
-Stochastic processes and calculus → Changing Measure → Counting value in a different unit → Change of numeraire
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Changing Measure](../../../SYLLABUS.md#w11-s07) → Change of numeraire
 
 ---
 
@@ -57,7 +36,7 @@ Orange: the bank-account measure Q. Green: the share measure Q^S. The green curv
 
 ## The formula
 
-Three sets of odds act on the same futures. **P** is the real-world measure: the share drifts at 8 percent. **Q** is the bank-account measure, the second measure of [change-of-measure-and-density-processes](01-change-of-measure-and-density-processes.md), built for this share on [girsanov-theorem](02-girsanov-theorem.md): the share drifts at the bank rate, and every price divided by the bank account is a martingale (a fair game: the best forecast of its future value is its value now). **Q^S** is the share measure, built on this card. $E^Q$ and $E^S$ are averages under Q and Q^S.
+Three sets of odds act on the same futures. **P** is the real-world measure: the share drifts at 8 percent. **Q** is the bank-account measure, the second measure of [Changing the measure](01-change-of-measure-and-density-processes.md), built for this share on [Girsanov](02-girsanov-theorem.md): the share drifts at the bank rate, and every price divided by the bank account is a martingale (a fair game: the best forecast of its future value is its value now). **Q^S** is the share measure, built on this card. $E^Q$ and $E^S$ are averages under Q and Q^S.
 
 Write $B_t = e^{rt}$ for the bank account and $U_t$ for the price of the new numeraire. The density that turns Q into the new measure, written Q^U, is
 
@@ -106,7 +85,7 @@ In words: $d_2$ is how many spreads the share's expected log price under Q sits 
 - **The numeraire is a traded asset with a strictly positive price.** A zero price makes the density divide by zero; a non-traded index (a temperature, an inflation print that nobody can hold) gives a density with no reason to average to one.
 - **It pays nothing out, or its payouts are reinvested.** A share paying a 2 percent dividend, used as the unit without reinvesting, gives a density averaging 0.980199, not 1: about 2 percent of the probability goes missing. Reinvest the dividends ($U_t = S_t e^{qt}$) and the density is a true one again.
 - **There is a measure Q under which prices over the bank account are martingales.** That is the no-arbitrage assumption; without it there is no starting point to reweight.
-- **The density is a true martingale, not a local one.** For the share in this model it is; in general the check is [novikov-condition](03-novikov-condition.md). A density that leaks mass has weights adding to less than one: the pricing rule then fails for the numeraire itself, and renormalising the weights makes every price too high.
+- **The density is a true martingale, not a local one.** For the share in this model it is; in general the check is [Novikov](03-novikov-condition.md). A density that leaks mass has weights adding to less than one: the pricing rule then fails for the numeraire itself, and renormalising the weights makes every price too high.
 - **The payoff over the numeraire has a finite average.** $E^U[|V_T|/U_T]$ must exist; for bounded payoffs over a positive unit it always does.
 
 ---
@@ -123,13 +102,13 @@ Under Q, the share over the bank account, $S_t/B_t$, is a martingale. So the rat
 
 $$Z_t = \frac{S_t / S_0}{B_t / B_0} = \frac{S_t e^{-rt}}{S_0}$$
 
-is a martingale with $Z_0 = 1$, and it is positive. Its average is therefore 1 at every date. A positive variable with average 1 is exactly what is needed to define a new measure: $Q^S(H) = E^Q[Z_T \mathbf{1}_H]$ for every event $H$ ([change-of-measure-and-density-processes](01-change-of-measure-and-density-processes.md)). The code integrates $Z_T$ against Q's bell curve and gets 1.000000.
+is a martingale with $Z_0 = 1$, and it is positive. Its average is therefore 1 at every date. A positive variable with average 1 is exactly what is needed to define a new measure: $Q^S(H) = E^Q[Z_T \mathbf{1}_H]$ for every event $H$ ([Changing the measure](01-change-of-measure-and-density-processes.md)). The code integrates $Z_T$ against Q's bell curve and gets 1.000000.
 
 In the model, $S_t = S_0 \exp((r - \tfrac12\sigma^2)t + \sigma W_t)$ under Q, so
 
 $$Z_t = \exp\!\left(\sigma W_t - \tfrac12\sigma^2 t\right).$$
 
-That is the exponential martingale of [girsanov-theorem](02-girsanov-theorem.md), written there as $\exp(-\theta W_t - \tfrac12\theta^2 t)$, with constant tilt $\theta = -\sigma = -0.2$.
+That is the exponential martingale of [Girsanov](02-girsanov-theorem.md), written there as $\exp(-\theta W_t - \tfrac12\theta^2 t)$, with constant tilt $\theta = -\sigma = -0.2$.
 
 ### Step 2: under the new odds, prices in the new unit are fair games
 
@@ -166,7 +145,7 @@ is a Brownian motion under Q^S. Substitute $W_t = W^S_t + \sigma t$ into the sha
 
 $$dS_t = r S_t\,dt + \sigma S_t\,dW_t = (r + \sigma^2) S_t\,dt + \sigma S_t\,dW^S_t.$$
 
-As always in this wing, $dW_t$ is shorthand for an Ito integral, not a derivative. Under the share measure the share drifts at $0.05 + 0.2^2 = 0.09$ a year, volatility unchanged. Its log, by [itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md), drifts at $r + \tfrac12\sigma^2 = 0.07$. Under Q the log drifts at 0.03, under P at 0.06.
+As always in this wing, $dW_t$ is shorthand for an Ito integral, not a derivative. Under the share measure the share drifts at $0.05 + 0.2^2 = 0.09$ a year, volatility unchanged. Its log, by [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md), drifts at $r + \tfrac12\sigma^2 = 0.07$. Under Q the log drifts at 0.03, under P at 0.06.
 
 ### Step 4: read off N(d1)
 
@@ -187,9 +166,9 @@ Under Q, write $S_T = S_0 \exp(0.03 + 0.2 z)$ with $z$ a standard normal draw. T
 
 The proof in Step 2 never used the share. Other numeraires give other measures.
 
-- **A zero-coupon bond** paying $1 at date T. Its measure is the T-forward measure. With a constant bank rate, as here, the bond grows exactly like the bank and the density is 1: the forward measure equals Q. It differs only when rates are random, where it turns $E^Q[e^{-\int r}\,\text{payoff}]$ into bond price times a plain average ([forward-measures-for-rates](../../12-Financial%20mathematics/31-Forward-Rate%20Models/02-forward-measures-for-rates.md)).
-- **An annuity**, a strip of bonds paying on each date of a swap. Its measure makes the swap rate a martingale, which is what prices a swaption ([the-annuity-measure](../../12-Financial%20mathematics/29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md)).
-- **A second share.** Counting one share in units of another removes one source of randomness, which is how the exchange option is priced ([exchange-option-margrabe](../../12-Financial%20mathematics/18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/01-exchange-option-margrabe.md)).
+- **A zero-coupon bond** paying $1 at date T. Its measure is the T-forward measure. With a constant bank rate, as here, the bond grows exactly like the bank and the density is 1: the forward measure equals Q. It differs only when rates are random, where it turns $E^Q[e^{-\int r}\,\text{payoff}]$ into bond price times a plain average ([Forward measures](../../12-Financial%20mathematics/31-Forward-Rate%20Models/02-forward-measures-for-rates.md)).
+- **An annuity**, a strip of bonds paying on each date of a swap. Its measure makes the swap rate a martingale, which is what prices a swaption ([The annuity measure](../../12-Financial%20mathematics/29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md)).
+- **A second share.** Counting one share in units of another removes one source of randomness, which is how the exchange option is priced ([The exchange option](../../12-Financial%20mathematics/18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/01-exchange-option-margrabe.md)).
 
 A second road to the same structure is the binomial tree. One step of a year: the share goes up by $u = 1.221403$ or down by $d = 0.818731$. The bank-account chance of up is $p = 0.577493$. The share-measure chance multiplies it by the step's density, $u/e^{r}$, giving $0.670951$. Over many steps the share-measure chance of finishing above $100 converges to $N(d_1)$, and at every step count it equals the dollar price of the share leg divided by $S_0$ exactly. That is the theorem in discrete time, with nothing continuous assumed.
 
@@ -662,9 +641,9 @@ The two outputs agree line for line.
 
 ## Where you meet it in real life
 
-- **Every Black-Scholes call.** Its first term, $S_0 N(d_1)$, is the share leg priced under the share measure; its second, $K e^{-rT} N(d_2)$, is the cash leg under Q ([black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), which uses a 2 percent dividend and so the reinvested share as its unit).
-- **Asset-or-nothing digitals.** The contract on this card, sold on its own ([asset-or-nothing-digital](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/02-asset-or-nothing-digital.md)).
-- **Exchange and spread options.** The right to swap one share for another is priced by counting in the second share ([margrabe-and-kirk-spread-options](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md)).
+- **Every Black-Scholes call.** Its first term, $S_0 N(d_1)$, is the share leg priced under the share measure; its second, $K e^{-rT} N(d_2)$, is the cash leg under Q ([Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), which uses a 2 percent dividend and so the reinvested share as its unit).
+- **Asset-or-nothing digitals.** The contract on this card, sold on its own ([Asset-or-nothing digital](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/02-asset-or-nothing-digital.md)).
+- **Exchange and spread options.** The right to swap one share for another is priced by counting in the second share ([Spread options](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md)).
 - **Interest-rate desks.** Caplets are priced under bond measures and swaptions under the annuity measure, because each makes its own rate a martingale.
 - **Currency options.** Counting in the foreign bank account instead of the domestic one switches between the two countries' pricing measures.
 
@@ -675,16 +654,16 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [girsanov-theorem](02-girsanov-theorem.md): the exponential density $\exp(\sigma W_T - \tfrac12\sigma^2 T)$ shifts Brownian motion by $\sigma t$; this card supplies the density and Girsanov moves the drift.
+- [Girsanov](02-girsanov-theorem.md): the exponential density $\exp(\sigma W_T - \tfrac12\sigma^2 T)$ shifts Brownian motion by $\sigma t$; this card supplies the density and Girsanov moves the drift.
 
 ## Where this goes next
 
-- [change-of-numeraire-in-pricing](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/05-change-of-numeraire-in-pricing.md): the theorem put to work on the finance shelf's market, with dividends and three units side by side.
-- [asset-or-nothing-digital](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/02-asset-or-nothing-digital.md): this card's contract as a traded product, with its hedge.
-- [exchange-option-margrabe](../../12-Financial%20mathematics/18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/01-exchange-option-margrabe.md): one share as the numeraire for another, turning a two-share problem into a one-share one.
-- [margrabe-and-kirk-spread-options](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md): the same trick for spreads, and the approximation needed when the strike is not zero.
-- [the-annuity-measure](../../12-Financial%20mathematics/29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md): the annuity as numeraire, under which a swap rate is a martingale.
-- [forward-measures-for-rates](../../12-Financial%20mathematics/31-Forward-Rate%20Models/02-forward-measures-for-rates.md): bond numeraires when rates are random, where the forward measure finally differs from Q.
+- [Changing the unit of account](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/05-change-of-numeraire-in-pricing.md): the theorem put to work on the finance shelf's market, with dividends and three units side by side.
+- [Asset-or-nothing digital](../../12-Financial%20mathematics/10-Digitals%20and%20the%20implied%20density/02-asset-or-nothing-digital.md): this card's contract as a traded product, with its hedge.
+- [The exchange option](../../12-Financial%20mathematics/18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/01-exchange-option-margrabe.md): one share as the numeraire for another, turning a two-share problem into a one-share one.
+- [Spread options](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md): the same trick for spreads, and the approximation needed when the strike is not zero.
+- [The annuity measure](../../12-Financial%20mathematics/29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md): the annuity as numeraire, under which a swap rate is a martingale.
+- [Forward measures](../../12-Financial%20mathematics/31-Forward-Rate%20Models/02-forward-measures-for-rates.md): bond numeraires when rates are random, where the forward measure finally differs from Q.
 
 This card shows that any positive traded asset can be the unit; the question it leaves is which unit makes a given contract easy, and the finance cards above answer it one product at a time.
 

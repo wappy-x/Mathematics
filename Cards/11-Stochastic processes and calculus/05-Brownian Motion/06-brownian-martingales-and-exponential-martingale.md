@@ -1,24 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Brownian Motion
-topic: Leaving an interval
-item: Brownian martingales
-kind: theorem
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/01-brownian-motion|brownian-motion]]"
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/01-martingales|martingales]]"
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/03-stopping-times-and-optional-stopping|stopping-times-and-optional-stopping]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/01-change-of-measure-and-density-processes|change-of-measure-and-density-processes]]"
-tags: [mathematics, stochastic processes and calculus, brownian-martingales-and-exponential-martingale]
----
-
 # Brownian martingales: W, W squared minus t, and the exponential martingale
 
-Stochastic processes and calculus → Brownian Motion → Leaving an interval → Brownian martingales
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Brownian Motion](../../../SYLLABUS.md#w11-s05) → Brownian martingales
 
 ---
 
@@ -53,7 +35,7 @@ The wandering line is one sample path from the code's seeded simulation (seed 20
 
 ## The formula
 
-Notation first, with one-line reminders. $W_t$ is the grain's position at time $t$, Brownian motion as [brownian-motion](01-brownian-motion.md) built it: it starts at 0, and its move over any later stretch of length $t - s$ is a normal draw with mean 0 and variance $t - s$, independent of the past. The filtration $\mathcal{F}_s$ is what is known by time $s$: the path up to then. A martingale satisfies $E[X_t \mid \mathcal{F}_s] = X_s$ for every $s < t$ ([martingales](../02-Martingales/01-martingales.md)).
+Notation first, with one-line reminders. $W_t$ is the grain's position at time $t$, Brownian motion as [Brownian motion](01-brownian-motion.md) built it: it starts at 0, and its move over any later stretch of length $t - s$ is a normal draw with mean 0 and variance $t - s$, independent of the past. The filtration $\mathcal{F}_s$ is what is known by time $s$: the path up to then. A martingale satisfies $E[X_t \mid \mathcal{F}_s] = X_s$ for every $s < t$ ([Martingales](../02-Martingales/01-martingales.md)).
 
 The three martingales:
 
@@ -115,7 +97,7 @@ The average of the known part is itself; the fresh draw averages 0. Each $W_t$ a
 
 $$W_t^2 = W_s^2 + 2W_sD + D^2, \qquad E[W_t^2 \mid \mathcal{F}_s] = W_s^2 + 0 + (t - s).$$
 
-The middle term averages 0 because $W_s$ is known and $D$ averages 0. The last term averages its variance, $t - s$. So the square climbs by exactly the elapsed time, on average. Take the clock off both sides and $E[W_t^2 - t \mid \mathcal{F}_s] = W_s^2 - s$. The same $t$ is the quadratic variation $[W]_t$ of [quadratic-variation](03-quadratic-variation.md): the sum of squared moves along the path, which piles up at rate 1 per second.
+The middle term averages 0 because $W_s$ is known and $D$ averages 0. The last term averages its variance, $t - s$. So the square climbs by exactly the elapsed time, on average. Take the clock off both sides and $E[W_t^2 - t \mid \mathcal{F}_s] = W_s^2 - s$. The same $t$ is the quadratic variation $[W]_t$ of [Quadratic variation](03-quadratic-variation.md): the sum of squared moves along the path, which piles up at rate 1 per second.
 
 ### Step 3: the exponential creeps up, so discount the creep
 
@@ -138,7 +120,7 @@ Multiply both sides by $e^{-\theta^2 t/2}$ and $E[M_t \mid \mathcal{F}_s] = M_s$
 
 ### Step 4: stopping a fair game at a bounded time keeps it fair
 
-[stopping-times-and-optional-stopping](../02-Martingales/03-stopping-times-and-optional-stopping.md) proved, for games in whole rounds, that a martingale stopped at a stopping time no later than a fixed round N keeps its starting average. The same holds in continuous time for a continuous martingale and a stopping time no later than a fixed time n: $E[X_{\tau \wedge n}] = E[X_0]$, where $\tau \wedge n$ means whichever of $\tau$ and n comes first. The proof is in the callout.
+[Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md) proved, for games in whole rounds, that a martingale stopped at a stopping time no later than a fixed round N keeps its starting average. The same holds in continuous time for a continuous martingale and a stopping time no later than a fixed time n: $E[X_{\tau \wedge n}] = E[X_0]$, where $\tau \wedge n$ means whichever of $\tau$ and n comes first. The proof is in the callout.
 
 <details>
 <summary>Detailed proof</summary>
@@ -196,7 +178,7 @@ For small λ this is about $1 - \lambda E[\tau]$, so $(1 - E[e^{-\lambda\tau}])/
 
 ### The other door
 
-The reflection principle of [reflection-principle-and-running-maximum](04-reflection-principle-and-running-maximum.md) gives the law of $\tau_b$ directly, as the density $b\,e^{-b^2/(2u)}/\sqrt{2\pi u^3}$ at time u. Averaging $e^{-\lambda u}$ against it is an integral, with no martingale in sight. The code does it by Simpson's rule and lands on 0.548812 again.
+The reflection principle of [Reflection principle](04-reflection-principle-and-running-maximum.md) gives the law of $\tau_b$ directly, as the density $b\,e^{-b^2/(2u)}/\sqrt{2\pi u^3}$ at time u. Averaging $e^{-\lambda u}$ against it is an integral, with no martingale in sight. The code does it by Simpson's rule and lands on 0.548812 again.
 
 ---
 
@@ -647,7 +629,7 @@ The two outputs agree line for line, simulation included: the same generator, th
 - **Barrier and one-touch options.** The value $e^{-b\sqrt{2\lambda}}$ is the core of a contract paying 1 dollar when a price first touches a level; with drift and volatility added it becomes the closed-form one-touch price.
 - **Sequential testing.** Wald's test stops sampling when evidence crosses an upper or lower boundary; its error rates and expected sample size come from the same two identities, side and time, applied to a random walk.
 - **Discrete monitoring.** Barrier contracts checked once a day overshoot like the simulation's grid; Broadie, Glasserman and Kou correct for it by shifting the barrier by a multiple of the step's square root.
-- **Gambler's ruin.** The coin-flip version, with chance a/(a+b) and mean duration a × b rounds, is the lattice road of this card at step 1: [gamblers-ruin](../01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md).
+- **Gambler's ruin.** The coin-flip version, with chance a/(a+b) and mean duration a × b rounds, is the lattice road of this card at step 1: [Gambler's ruin](../01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md).
 
 > **Say it back**
 > A Brownian grain's next move is a fresh normal draw with mean 0 and variance equal to the elapsed time. From that alone, three processes are fair: the position, the squared position minus the clock, and the exponential of θ times the position minus half θ squared times the clock. Stopping each at the exit from an interval gives the side (left distance over width, 0.4), the mean time (the product of the distances, 6 seconds) and the discounted exit value. With one level and no floor, the position stops being usable, but the bounded exponential still prices the crossing at $e^{-b\sqrt{2\lambda}}$, 0.548812 here.
@@ -656,16 +638,16 @@ The two outputs agree line for line, simulation included: the same generator, th
 
 ## What this builds on
 
-- [brownian-motion](01-brownian-motion.md): the process itself, and the one fact used on every line: independent normal moves with variance equal to elapsed time.
-- [martingales](../02-Martingales/01-martingales.md): what a fair game is, conditional on the past, and why its average never moves.
-- [stopping-times-and-optional-stopping](../02-Martingales/03-stopping-times-and-optional-stopping.md): optional stopping in whole rounds, which Step 4 carries over to continuous time.
+- [Brownian motion](01-brownian-motion.md): the process itself, and the one fact used on every line: independent normal moves with variance equal to elapsed time.
+- [Martingales](../02-Martingales/01-martingales.md): what a fair game is, conditional on the past, and why its average never moves.
+- [Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md): optional stopping in whole rounds, which Step 4 carries over to continuous time.
 
 ## Where this goes next
 
-- [change-of-measure-and-density-processes](../07-Changing%20Measure/01-change-of-measure-and-density-processes.md): $M_T$ is positive with average 1, so it can reweight every path; under the new weights the grain acquires a drift of θ per second.
-- [geometric-brownian-motion](07-geometric-brownian-motion.md): the exponential martingale times a steady growth factor is the standard model of a share price.
+- [Changing the measure](../07-Changing%20Measure/01-change-of-measure-and-density-processes.md): $M_T$ is positive with average 1, so it can reweight every path; under the new weights the grain acquires a drift of θ per second.
+- [Geometric Brownian motion](07-geometric-brownian-motion.md): the exponential martingale times a steady growth factor is the standard model of a share price.
 
-Every fair game here was built from a grain with no drift; what a positive martingale with average 1 does when it is used to reweight the paths, and why the reweighted grain drifts, is the question [change-of-measure-and-density-processes](../07-Changing%20Measure/01-change-of-measure-and-density-processes.md) answers.
+Every fair game here was built from a grain with no drift; what a positive martingale with average 1 does when it is used to reweight the paths, and why the reweighted grain drifts, is the question [Changing the measure](../07-Changing%20Measure/01-change-of-measure-and-density-processes.md) answers.
 
 ---
 

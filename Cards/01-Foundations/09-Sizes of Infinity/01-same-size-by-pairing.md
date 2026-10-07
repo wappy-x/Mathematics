@@ -1,28 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Sizes of Infinity
-topic: Pairing
-item: Same size means pairable
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/08-Relations and Functions/04-injective-surjective-bijective|injective-surjective-bijective]]"
-next:
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/02-countable-sets|countable-sets]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/03-cantors-diagonal-argument|cantors-diagonal-argument]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/04-comparing-infinities|comparing-infinities]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/05-axiom-of-choice|axiom-of-choice]]"
-tags:
-  - mathematics
-  - foundations
-  - same-size-by-pairing
----
-
 # Same size means pairable: comparing sets without counting
 
-Foundations → Sizes of Infinity → Pairing → Same size means pairable
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sizes of Infinity](../../../SYLLABUS.md#w01-s09) → Same size means pairable
 
 ---
 
@@ -64,7 +42,7 @@ Write **n** for a room number, any counting number:
 
 **Read it aloud:** double the room number, and that is where that guest goes.
 
-It is a real pairing — a **bijection** — exactly when it passes both tests from [injective-surjective-bijective](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md).
+It is a real pairing — a **bijection** — exactly when it passes both tests from [One-to-one and onto](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md).
 
 | Piece | Plain meaning | In our example |
 | --- | --- | --- |
@@ -98,7 +76,7 @@ Both tests pass, so this is a bijection. **The even numbers are the same size as
 
 8 rooms, 8 guests. Move everyone up one and the guest from room 8 has no room 9: 7 housed, 1 outside. Even rooms only leaves rooms 2, 4, 6, 8: 4 housed, 4 outside.
 
-Turn that around and you have Dedekind's test: with the usual set-theory assumptions ([axiom-of-choice](05-axiom-of-choice.md)), a set is infinite exactly when it pairs with a part of itself that leaves something out. Infinite does not mean enormous. It means pairable with a piece of yourself. Same size then behaves like equality — reflexive, symmetric, transitive: [equivalence-relations-and-partitions](../08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md).
+Turn that around and you have Dedekind's test: with the usual set-theory assumptions ([The axiom of choice](05-axiom-of-choice.md)), a set is infinite exactly when it pairs with a part of itself that leaves something out. Infinite does not mean enormous. It means pairable with a piece of yourself. Same size then behaves like equality — reflexive, symmetric, transitive: [Equivalence relations and partitions](../08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md).
 
 ---
 
@@ -262,9 +240,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Seats and tickets.** A full theatre needs no headcount. One ticket per seat, none spare, none missing: [functions](../08-Relations%20and%20Functions/02-functions.md) as a measuring tool.
-- **Barcodes.** A record for every item and an item for every record is one-to-one and onto: [injective-surjective-bijective](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md). Count one side and you have counted both.
-- **Streaming a list.** Anything handed to you one item at a time, forever, is paired with the counting numbers: [countable-sets](02-countable-sets.md).
+- **Seats and tickets.** A full theatre needs no headcount. One ticket per seat, none spare, none missing: [Functions](../08-Relations%20and%20Functions/02-functions.md) as a measuring tool.
+- **Barcodes.** A record for every item and an item for every record is one-to-one and onto: [One-to-one and onto](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md). Count one side and you have counted both.
+- **Streaming a list.** Anything handed to you one item at a time, forever, is paired with the counting numbers: [Countable sets](02-countable-sets.md).
 
 > **Say it back**
 > Two sets are the same size when you can pair them off with nothing left over on either side. No counting, so the test survives sets that never end. Moving everyone up one frees room 1 and loses nobody. Doubling each room number fits the whole hotel into the even rooms, so the even numbers are the same size as the counting numbers. A hotel of 8 rooms can do neither.
@@ -273,14 +251,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [injective-surjective-bijective](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md): one-to-one, onto, and the word bijection for a rule that is both. This card runs that test where the sets never end.
+- [One-to-one and onto](../08-Relations%20and%20Functions/04-injective-surjective-bijective.md): one-to-one, onto, and the word bijection for a rule that is both. This card runs that test where the sets never end.
 
 ## Where this goes next
 
-- [countable-sets](02-countable-sets.md): everything that pairs with the counting numbers, fractions included.
-- [cantors-diagonal-argument](03-cantors-diagonal-argument.md): a set that cannot be paired with them, however you try.
-- [comparing-infinities](04-comparing-infinities.md): fitting both ways means equal, and every set loses to its own power set, from [subsets-and-power-set](../07-Sets/02-subsets-and-power-set.md).
-- [axiom-of-choice](05-axiom-of-choice.md): what it takes to make infinitely many picks at once.
+- [Countable sets](02-countable-sets.md): everything that pairs with the counting numbers, fractions included.
+- [Cantor's diagonal](03-cantors-diagonal-argument.md): a set that cannot be paired with them, however you try.
+- [Comparing infinities](04-comparing-infinities.md): fitting both ways means equal, and every set loses to its own power set, from [Subsets and the power set](../07-Sets/02-subsets-and-power-set.md).
+- [The axiom of choice](05-axiom-of-choice.md): what it takes to make infinitely many picks at once.
 
 ---
 

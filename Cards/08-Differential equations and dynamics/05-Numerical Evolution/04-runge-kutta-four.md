@@ -1,27 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Numerical Evolution
-topic: Four-slope stepping
-item: Runge-Kutta four
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/03-midpoint-and-heun-methods|midpoint-and-heun-methods]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/05-adaptive-step-size|adaptive-step-size]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/08-limit-cycles-and-van-der-pol|limit-cycles-and-van-der-pol]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/06-the-shooting-method|the-shooting-method]]"
-  - "[[Cards/08-Differential equations and dynamics/11-Discrete Dynamics and Chaos/06-the-lorenz-system-and-strange-attractors|the-lorenz-system-and-strange-attractors]]"
-  - "[[Cards/16-Numerical analysis/06-ODE Solvers/01-runge-kutta-and-butcher-tableaux|runge-kutta-and-butcher-tableaux]]"
-  - "[[Cards/23-Differential geometry and Lie groups/05-Riemannian Geometry/04-geodesics-and-the-exponential-map|geodesics-and-the-exponential-map]]"
-tags: [mathematics, differential equations and dynamics, runge-kutta-four]
----
-
 # Runge-Kutta four: four slopes per step, weighted 1-2-2-1, and the error shrinks sixteen-fold per halving
 
-Differential equations and dynamics → Numerical Evolution → Four-slope stepping → Runge-Kutta four
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Numerical Evolution](../../../SYLLABUS.md#w08-s05) → Runge-Kutta four
 
 
 ---
@@ -30,7 +9,7 @@ Differential equations and dynamics → Numerical Evolution → Four-slope stepp
 
 A skydiver leaves the plane. Gravity adds 9.8 m/s of speed each second; drag removes 0.2 m/s per second for each 1 m/s of speed. The exact speed after 10 s is known, 42.368571 m/s, so the fall is a test bench for stepping methods. The rate law is v' = 9.8 − 0.2v, with v in m/s, t in s and v(0) = 0.
 
-Euler's method walks one slope per step ([eulers-method](01-eulers-method.md)); with 2-second steps it reports 45.19 m/s at 10 s. Midpoint and Heun read two slopes.
+Euler's method walks one slope per step ([Euler's method](01-eulers-method.md)); with 2-second steps it reports 45.19 m/s at 10 s. Midpoint and Heun read two slopes.
 
 The classical Runge-Kutta method, RK4 for short, reads four, called k1 to k4: one at the start of the step, two at the middle, one at the end. It averages them with weights 1, 2, 2, 1. With the same steps it reports 42.364615 m/s, off by 0.0040. Carl Runge (1895) and Wilhelm Kutta (1901) built it.
 
@@ -77,8 +56,8 @@ The weights over 6 add to 1, so a constant slope moves the value by exactly h ti
 
 - **The law is smooth.** Fourth order needs four continuous derivatives of the rate law. A parachute snapping open mid-step drops the order.
 - **The step is inside the stability edge.** A gap decaying at rate λ (lambda, per second) is multiplied each step by R(hλ), below 1 in size only for hλ between −2.7853 and 0. With λ = −0.2 per s, h must stay under 13.93 s; at 15 s the speed at 60 s is −126.15 m/s.
-- **The equation is not stiff.** Stiff: one part of the solution dies far faster than the part tracked, so the edge forces tiny steps. The cure is [stiff-equations-and-backward-euler](06-stiff-equations-and-backward-euler.md), not RK4.
-- **No error estimate comes free.** A fixed-step run never reports its own error. Over long runs an oscillator's energy drifts, which [symplectic-steps-for-oscillators](07-symplectic-steps-for-oscillators.md) fixes.
+- **The equation is not stiff.** Stiff: one part of the solution dies far faster than the part tracked, so the edge forces tiny steps. The cure is [Stiff equations](06-stiff-equations-and-backward-euler.md), not RK4.
+- **No error estimate comes free.** A fixed-step run never reports its own error. Over long runs an oscillator's energy drifts, which [Symplectic steps](07-symplectic-steps-for-oscillators.md) fixes.
 
 ---
 
@@ -103,7 +82,7 @@ With g the gap at the start: k1 = λg. k2 = λ(g + (h/2)k1) = λg(1 + z/2). k3 =
 
 ### Step 2: that polynomial is e^z cut after the fourth power
 
-The exact solution multiplies the gap by e^z over one step, and e^z = 1 + z + z^2/2 + z^3/6 + z^4/24 + z^5/120 + …. RK4 matches it term for term and stops. The first missed term is z^5/120, so one step errs in proportion to h^5: the **local error**, from a correct start ([local-and-global-error-and-order](02-local-and-global-error-and-order.md)).
+The exact solution multiplies the gap by e^z over one step, and e^z = 1 + z + z^2/2 + z^3/6 + z^4/24 + z^5/120 + …. RK4 matches it term for term and stops. The first missed term is z^5/120, so one step errs in proportion to h^5: the **local error**, from a correct start ([Order of a method](02-local-and-global-error-and-order.md)).
 
 ### Step 3: adding up the steps costs one power of h
 
@@ -119,7 +98,7 @@ The school rumour, P' = 0.8P(1 − P/1000) with P the pupils who have heard it, 
 Write b = (1/6, 1/3, 1/3, 1/6) for the weights, c = (0, 1/2, 1/2, 1) for where each slope is read, and A for the links (stage 2 uses 1/2 of k1, stage 3 uses 1/2 of k2, stage 4 all of k3). Expand the exact y(t + h) in powers of h using y' = f, y'' = f_t + f f_y and so on; expand the RK4 step by Taylor-expanding f at each trial point. Equating coefficients through h^4, one per nesting of derivatives of f:
 the sums of b, bc, bc^2, b(Ac), bc^3, bc(Ac), b(Ac^2) and b(AAc) must be 1, 1/2, 1/3, 1/6, 1/4, 1/8, 1/12 and 1/24.
 
-One over each sum prints as 1 2 3 4 6 8 12 24 in the checks. So the local error is at most C h^5, C bounding f's derivatives to fourth order. If the rate changes by at most L times any change in y (a Lipschitz constant), summing the steps bounds the global error at time T by C h^4 (e^(LT) − 1)/L; given ε > 0 (epsilon, a tolerance), any h making that below ε meets it. The nestings, drawn as trees, are runge-kutta-and-butcher-tableaux.
+One over each sum prints as 1 2 3 4 6 8 12 24 in the checks. So the local error is at most C h^5, C bounding f's derivatives to fourth order. If the rate changes by at most L times any change in y (a Lipschitz constant), summing the steps bounds the global error at time T by C h^4 (e^(LT) − 1)/L; given ε > 0 (epsilon, a tolerance), any h making that below ε meets it. The nestings, drawn as trees, are Runge-Kutta.
 
 </details>
 
@@ -144,7 +123,7 @@ One step of 2 s for the skydiver, from 0 m/s at the door, with f = 9.8 − 0.2v.
 
 Five such steps give 42.364615 m/s at 10 s against the exact 42.368571: right to 4 mm/s.
 
-For the rumour, the closed form 1000/(1 + 99e^(−0.8t)) gives 967.8567 pupils at day 10 ([logistic-growth](../01-Rate%20Equations/07-logistic-growth.md)); RK4 with half-day steps gives 967.8312, four figures agreeing.
+For the rumour, the closed form 1000/(1 + 99e^(−0.8t)) gives 967.8567 pupils at day 10 ([Logistic growth](../01-Rate%20Equations/07-logistic-growth.md)); RK4 with half-day steps gives 967.8312, four figures agreeing.
 
 ### What breaks if you drop a piece
 
@@ -382,8 +361,8 @@ Orange: exact. Green: Euler, 2-second steps. Dark: RK4, same steps, on the exact
 
 ## Where you meet it in real life
 
-- **Trajectories.** Rocket and satellite tracks are commonly stepped with Runge-Kutta rules, as is the weather model of [the-lorenz-system-and-strange-attractors](../11-Discrete%20Dynamics%20and%20Chaos/06-the-lorenz-system-and-strange-attractors.md).
-- **Library solvers.** Solvers default to Runge-Kutta pairs with automatic step control: [adaptive-step-size](05-adaptive-step-size.md).
+- **Trajectories.** Rocket and satellite tracks are commonly stepped with Runge-Kutta rules, as is the weather model of [The Lorenz system](../11-Discrete%20Dynamics%20and%20Chaos/06-the-lorenz-system-and-strange-attractors.md).
+- **Library solvers.** Solvers default to Runge-Kutta pairs with automatic step control: [Adaptive steps](05-adaptive-step-size.md).
 
 > **Say it back**
 > RK4 reads the slope four times per step: start, middle twice, end. It moves along their average weighted 1, 2, 2, 1 over 6. On a decaying law one step multiplies the gap by e^z cut after the fourth power, so each step errs by h^5 and the run by h^4; halving the step divides the error by about 16. Past the stability edge the run explodes, and stiffness needs a different method.
@@ -392,16 +371,16 @@ Orange: exact. Green: Euler, 2-second steps. Dark: RK4, same steps, on the exact
 
 ## What this builds on
 
-- [midpoint-and-heun-methods](03-midpoint-and-heun-methods.md): the trial half-step and the averaged slope, with two readings instead of four.
+- [Midpoint and Heun](03-midpoint-and-heun-methods.md): the trial half-step and the averaged slope, with two readings instead of four.
 
 ## Where this goes next
 
-- [adaptive-step-size](05-adaptive-step-size.md): a step's error estimated, h chosen from it.
-- [limit-cycles-and-van-der-pol](../06-Nonlinear%20Dynamics%20in%20the%20Plane/08-limit-cycles-and-van-der-pol.md): RK4 tracing a closed loop in the plane.
-- [the-shooting-method](../07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md): RK4 inside a root finder.
-- [the-lorenz-system-and-strange-attractors](../11-Discrete%20Dynamics%20and%20Chaos/06-the-lorenz-system-and-strange-attractors.md): errors that grow.
-- runge-kutta-and-butcher-tableaux: the whole family and its order conditions.
-- geodesics-and-the-exponential-map: shortest paths on curved surfaces, stepped.
+- [Adaptive steps](05-adaptive-step-size.md): a step's error estimated, h chosen from it.
+- [Limit cycles](../06-Nonlinear%20Dynamics%20in%20the%20Plane/08-limit-cycles-and-van-der-pol.md): RK4 tracing a closed loop in the plane.
+- [Shooting](../07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md): RK4 inside a root finder.
+- [The Lorenz system](../11-Discrete%20Dynamics%20and%20Chaos/06-the-lorenz-system-and-strange-attractors.md): errors that grow.
+- Runge-Kutta: the whole family and its order conditions.
+- Geodesic and exponential map: shortest paths on curved surfaces, stepped.
 
 ---
 

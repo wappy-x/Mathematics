@@ -1,31 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Value at Risk and Expected Shortfall
-topic: Risk attribution
-item: Whose risk is it
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/02-parametric-var-and-delta-normal|parametric-var-and-delta-normal]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/03-gradient-and-directional-derivatives|gradient-and-directional-derivatives]]"
-next: []
-tags:
-  - mathematics
-  - financial mathematics
-  - var-decomposition-euler-and-component-var
----
-
 # Whose risk is it: marginal, incremental and component VaR by Euler's rule
 
-Financial mathematics → Value at Risk and Expected Shortfall → Risk attribution → Whose risk is it
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Value at Risk and Expected Shortfall](../../../SYLLABUS.md#w12-s39) → Whose risk is it
 
 ---
 
 ## General Overview
 
-A trading book holds three things: $10 million of shares, $5 million of bonds, and 1,000 Acme call contracts, each on 100 Acme shares. Its one-day 99 percent value at risk, the loss it should exceed on only one day in a hundred, is **$421.74k** (k means thousands of dollars throughout). That number was built from the whole book at once ([parametric-var-and-delta-normal](02-parametric-var-and-delta-normal.md)).
+A trading book holds three things: $10 million of shares, $5 million of bonds, and 1,000 Acme call contracts, each on 100 Acme shares. Its one-day 99 percent value at risk, the loss it should exceed on only one day in a hundred, is **$421.74k** (k means thousands of dollars throughout). That number was built from the whole book at once ([Parametric VaR](02-parametric-var-and-delta-normal.md)).
 
 The head of the desk now asks a different question: **whose risk is it?** Which line should be cut, and which is quietly helping? The obvious answer is to measure each line alone and compare. Alone, the shares have a VaR of $314.06k, the bonds $34.90k, the calls $172.00k. Those add to $520.95k, which is more than the book's $421.74k. Standalone numbers ignore the fact that the lines partly cancel each other, so they cannot be pieces of the total.
 
@@ -59,7 +40,7 @@ $$C_i \;=\; x_i\,M_i \;=\; x_i\,\frac{\partial V}{\partial x_i} \;=\; z\,\frac{x
 
 **Read it aloud:** a line's share of the book's VaR is its size times the rate at which VaR climbs as that line grows, and the shares add up to the whole.
 
-The notation, in words first. The book has lines numbered 1, 2, 3 (shares, bonds, calls). A letter with a small i under it means "the one for line i". The curly ∂ means a slope with every other line held fixed ([gradient-and-directional-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md)). $(\Sigma x)_i$ is entry i of the covariance table multiplied into the list of positions.
+The notation, in words first. The book has lines numbered 1, 2, 3 (shares, bonds, calls). A letter with a small i under it means "the one for line i". The curly ∂ means a slope with every other line held fixed ([Gradient](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md)). $(\Sigma x)_i$ is entry i of the covariance table multiplied into the list of positions.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -80,13 +61,13 @@ The helpers, each in one line:
 
 $$\sigma_p = \sqrt{\textstyle\sum_{i,j} x_i\,\Sigma_{ij}\,x_j}, \qquad V = z\,\sigma_p, \qquad M_i = z\,\frac{(\Sigma x)_i}{\sigma_p}.$$
 
-The first is the book's spread from the covariance table, the second turns spread into a 99 percent loss, the third is the slope of the second. The same split works for expected shortfall, the average loss on the worst 1 percent of days ([expected-shortfall-and-coherence](05-expected-shortfall-and-coherence.md)): replace $z$ by $k$ and the pieces add to the book's expected shortfall of $483.18k.
+The first is the book's spread from the covariance table, the second turns spread into a 99 percent loss, the third is the slope of the second. The same split works for expected shortfall, the average loss on the worst 1 percent of days ([Expected shortfall](05-expected-shortfall-and-coherence.md)): replace $z$ by $k$ and the pieces add to the book's expected shortfall of $483.18k.
 
 ### When it holds
 
 - **The risk measure scales with the book.** Double every position and VaR doubles. That holds when prices do not react to the book's own trades. For a position too large to sell in a day, doubling it more than doubles the real risk, and the pieces stop adding to anything meaningful.
 - **The measure has a slope at this book.** The normal formula needs $\sigma_p > 0$. A VaR read off a finite list of simulated days jumps from one day to the next as positions change, so its slopes are noisy; smoothing, or using expected shortfall, fixes that.
-- **The delta mapping of the calls.** The calls enter as $5,868.51k of Acme shares. That ignores their curvature (gamma), so their component is the delta-normal one; the curvature correction is [delta-gamma-var-and-cornish-fisher](04-delta-gamma-var-and-cornish-fisher.md).
+- **The delta mapping of the calls.** The calls enter as $5,868.51k of Acme shares. That ignores their curvature (gamma), so their component is the delta-normal one; the curvature correction is [Options in the book](04-delta-gamma-var-and-cornish-fisher.md).
 - **One fixed model of tomorrow.** Components answer "under these volatilities and correlations". Change the correlation of shares and Acme from 0.5 to 0.9 and the shares' share of VaR falls from 69.40 to 65.61 percent without a single trade.
 
 ---
@@ -160,13 +141,13 @@ That last fact is general. $\sigma_p$ is a length, and a length bends upward alo
 
 For small trades the tangent is excellent. Buying $100k more shares raises VaR by $2,928.63; marginal VaR times $100k predicts $2,927.11.
 
-The same split for expected shortfall is Tasche's Euler principle, and its tail-average reading is on [expected-shortfall-and-coherence](05-expected-shortfall-and-coherence.md), which also explains why expected shortfall, unlike VaR, never rewards splitting a book.
+The same split for expected shortfall is Tasche's Euler principle, and its tail-average reading is on [Expected shortfall](05-expected-shortfall-and-coherence.md), which also explains why expected shortfall, unlike VaR, never rewards splitting a book.
 
 ---
 
 ## Worked numbers, by hand
 
-The book is the one on [parametric-var-and-delta-normal](02-parametric-var-and-delta-normal.md). Shares: $10,000k with daily volatility 1.35 percent. Bonds: $5,000k. Their price moves 5 percent for each percentage point the five-year yield moves, and the yield's daily volatility is 6 basis points (hundredths of a percent), so the bonds' daily volatility is 5 × 0.06 = 0.30 percent. A bond's price falls when its yield rises, so the yield's correlations there (0.2 with shares, 0.1 with Acme) become −0.2 and −0.1 here. Calls: on Acme, whose daily volatility is the house 20 percent divided by √252 trading days.
+The book is the one on [Parametric VaR](02-parametric-var-and-delta-normal.md). Shares: $10,000k with daily volatility 1.35 percent. Bonds: $5,000k. Their price moves 5 percent for each percentage point the five-year yield moves, and the yield's daily volatility is 6 basis points (hundredths of a percent), so the bonds' daily volatility is 5 × 0.06 = 0.30 percent. A bond's price falls when its yield rises, so the yield's correlations there (0.2 with shares, 0.1 with Acme) become −0.2 and −0.1 here. Calls: on Acme, whose daily volatility is the house 20 percent divided by √252 trading days.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -570,7 +551,7 @@ The two outputs match line for line, simulated rows included, because both run t
 - **Capital allocation.** The capital a bank holds is charged back to business lines by Euler's rule, so each line's return can be measured against the capital its risk actually consumes.
 - **Hot spots and hedges.** A component list sorted by size shows where risk sits; a negative marginal shows which positions would hedge the book if added to. Litterman's 1996 paper named the practice.
 - **Risk parity.** Funds that promise "equal risk from each asset class" size positions until the components are equal, which is a stronger demand than equal standalone risk.
-- **Checking the model.** Components summed across a book must equal the book's VaR. A risk system whose pieces do not add up has a bug or an unstated approximation. Historical and simulated VaRs ([historical-and-monte-carlo-var](03-historical-and-monte-carlo-var.md)) use the tail-average reading of Step 3.
+- **Checking the model.** Components summed across a book must equal the book's VaR. A risk system whose pieces do not add up has a bug or an unstated approximation. Historical and simulated VaRs ([Historical and Monte Carlo VaR](03-historical-and-monte-carlo-var.md)) use the tail-average reading of Step 3.
 
 > **Say it back**
 > Standalone VaRs cannot be pieces of a book's VaR, because the lines partly cancel. Marginal VaR is the slope of the book's VaR in one position; multiplied by that position it gives the component. Because VaR doubles when the book doubles, Euler's rule makes the components add up to the total exactly. A component is also what the line lost, on average, on the days the book lost its VaR. It is not what selling the line would save; that is incremental VaR, and on a convex curve it is never more than the component.
@@ -579,13 +560,13 @@ The two outputs match line for line, simulated rows included, because both run t
 
 ## What this builds on
 
-- [parametric-var-and-delta-normal](02-parametric-var-and-delta-normal.md): VaR as $z$ times a spread built from a covariance table, and the delta mapping of the calls into Acme dollars.
-- [gradient-and-directional-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md): slopes in one direction with the others held fixed, and the chain rule along a straight path used in Euler's rule.
+- [Parametric VaR](02-parametric-var-and-delta-normal.md): VaR as $z$ times a spread built from a covariance table, and the delta mapping of the calls into Acme dollars.
+- [Gradient](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md): slopes in one direction with the others held fixed, and the chain rule along a straight path used in Euler's rule.
 
 ## Where this goes next
 
-- [extreme-value-theory-and-tails](07-extreme-value-theory-and-tails.md): models of the far tail, where the bell curve's split of the worst days stops being trustworthy.
-- [backtesting-var](08-backtesting-var.md): counting the days the book actually lost more than its VaR, which tests the total the components divide.
+- [Extreme value theory](07-extreme-value-theory-and-tails.md): models of the far tail, where the bell curve's split of the worst days stops being trustworthy.
+- [Backtesting VaR](08-backtesting-var.md): counting the days the book actually lost more than its VaR, which tests the total the components divide.
 
 The components divide a VaR that the model asserts; whether the model's bad days look like the market's is the question the tail and backtesting cards answer.
 

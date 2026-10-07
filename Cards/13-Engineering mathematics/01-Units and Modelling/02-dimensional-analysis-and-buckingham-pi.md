@@ -1,23 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Units and Modelling
-topic: Counting the groups
-item: Buckingham Pi
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/01-si-units-and-dimensional-homogeneity|si-units-and-dimensional-homogeneity]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/05-rank-nullity|rank-nullity]]"
-next:
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/03-scaling-and-nondimensionalisation|scaling-and-nondimensionalisation]]"
-tags: [mathematics, engineering mathematics, dimensional-analysis-and-buckingham-pi]
----
-
 # Buckingham Pi: count the variables, subtract the dimensions, get the groups
 
-Engineering mathematics → Units and Modelling → Counting the groups → Buckingham Pi
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Units and Modelling](../../../SYLLABUS.md#w13-s01) → Buckingham Pi
 
 ---
 
@@ -54,7 +37,7 @@ Top line: full-size rider, 0.40 m^2, at sea level. Middle line: the same rider a
 
 ## The formula
 
-Notation first, in words. Square brackets give a quantity's dimension, as on [si-units-and-dimensional-homogeneity](01-si-units-and-dimensional-homogeneity.md): [M] mass, [L] length, [T] time. A **dimensionless group** is a product of the quantities, each raised to some power, whose units all cancel. This wing writes such a group with the capital Greek letter Π, "pi", and names it where it has a name.
+Notation first, in words. Square brackets give a quantity's dimension, as on [Units and dimensions](01-si-units-and-dimensional-homogeneity.md): [M] mass, [L] length, [T] time. A **dimensionless group** is a product of the quantities, each raised to some power, whose units all cancel. This wing writes such a group with the capital Greek letter Π, "pi", and names it where it has a name.
 
 Suppose the drag is fixed by the other four:
 
@@ -125,7 +108,7 @@ A product $\rho^a V^b A^c F^d \mu^e$ has M-exponent $a + d + e$, and so on down 
 
 ### Step 2: rank–nullity counts them
 
-The matrix has rank 3: its first three columns, $\rho$, $V$ and $A$, are independent. Rank–nullity ([rank-nullity](../../03-Algebra/05-Solving%20Systems/05-rank-nullity.md)) says the null space has dimension columns minus rank: 5 − 3 = 2. Every dimensionless product is a product of powers of two basic ones. Pick the exponent of $F$ to be 1 and of $\mu$ to be 0, solve, and $\Pi_F$ comes out. Swap, and $\Pi_\mu$ comes out.
+The matrix has rank 3: its first three columns, $\rho$, $V$ and $A$, are independent. Rank–nullity ([Rank and nullity](../../03-Algebra/05-Solving%20Systems/05-rank-nullity.md)) says the null space has dimension columns minus rank: 5 − 3 = 2. Every dimensionless product is a product of powers of two basic ones. Pick the exponent of $F$ to be 1 and of $\mu$ to be 0, solve, and $\Pi_F$ comes out. Swap, and $\Pi_\mu$ comes out.
 
 ### Step 3: choose units that make three quantities equal to 1
 
@@ -150,7 +133,7 @@ Write the law as $\Phi(Q_1, \dots, Q_n) = 0$ (capital phi), assumed to hold in e
 
 It gives the arguments of the curve: one group against one group. It does not give the curve $\varphi$. That has to be measured, or computed from the flow equations. A rider tested at many speeds, sizes and altitudes traces one curve of $C_D$ against $\mathrm{Re}$, and that curve is all the data needed.
 
-A second road to the same groups is to write the governing equations and divide out their scales. That is [scaling-and-nondimensionalisation](03-scaling-and-nondimensionalisation.md); it finds the groups and also says which terms are small.
+A second road to the same groups is to write the governing equations and divide out their scales. That is [Nondimensionalisation](03-scaling-and-nondimensionalisation.md); it finds the groups and also says which terms are small.
 
 ---
 
@@ -634,12 +617,12 @@ The falling line is $C_D$ against Re; all nine setups sit on it, with a spread b
 
 ## Where you meet it in real life
 
-- **Wind tunnels.** A model is useful only at the same groups as the real thing; matching Re for a half-scale model means doubling the speed, 24 m/s for the rider's 12 m/s. The full method is [similarity-and-model-testing](04-similarity-and-model-testing.md).
+- **Wind tunnels.** A model is useful only at the same groups as the real thing; matching Re for a half-scale model means doubling the speed, 24 m/s for the rider's 12 m/s. The full method is [Similarity](04-similarity-and-model-testing.md).
 - **Cycling at altitude.** At 4,000 m the rider's drag at 12 m/s falls to 16.68 N in the stand-in law, because $\rho$ falls. Several hour records have been set on high-altitude tracks for this reason.
 - **Pipes and ducts.** The friction factor, a dimensionless pressure drop, depends on Re and the wall roughness divided by the diameter: three groups, one chart of curves (the Moody chart).
 - **Ships.** A towed hull model must match the Froude number, speed over the square root of gravity times length, as well as Re; both cannot be matched in water at once, which is why ship testing splits the drag into parts.
 - **Heat exchangers.** Convection coefficients are tabulated as a Nusselt number against Reynolds and Prandtl numbers, again a count of groups set by Buckingham's theorem.
-- **Checking a derivation.** A derived formula that is not a function of the groups is wrong somewhere; [error-propagation-and-sensitivity](07-error-propagation-and-sensitivity.md) goes on to ask how errors in the measured groups spread.
+- **Checking a derivation.** A derived formula that is not a function of the groups is wrong somewhere; [Error propagation](07-error-propagation-and-sensitivity.md) goes on to ask how errors in the measured groups spread.
 
 > **Say it back**
 > List the quantities a law depends on: drag, speed, area, density, viscosity. Write each one's units as a column of exponents and find the rank of that matrix: three. Five minus three leaves two dimensionless groups, the drag coefficient and the Reynolds number. Because a law cannot depend on the choice of units, it is a relation between those two groups, one curve instead of a family. The theorem gives the count and the groups; the shape of the curve still has to be measured.
@@ -648,12 +631,12 @@ The falling line is $C_D$ against Re; all nine setups sit on it, with a spread b
 
 ## What this builds on
 
-- [si-units-and-dimensional-homogeneity](01-si-units-and-dimensional-homogeneity.md): the dimension brackets and the rule that every term of a law carries the same units, which is what makes the exponent columns meaningful.
-- [rank-nullity](../../03-Algebra/05-Solving%20Systems/05-rank-nullity.md): the null space of an m-by-n matrix has dimension n minus the rank, the whole of the count in Step 2.
+- [Units and dimensions](01-si-units-and-dimensional-homogeneity.md): the dimension brackets and the rule that every term of a law carries the same units, which is what makes the exponent columns meaningful.
+- [Rank and nullity](../../03-Algebra/05-Solving%20Systems/05-rank-nullity.md): the null space of an m-by-n matrix has dimension n minus the rank, the whole of the count in Step 2.
 
 ## Where this goes next
 
-- [scaling-and-nondimensionalisation](03-scaling-and-nondimensionalisation.md): the groups found from the equations of motion instead of the variable list, and the size of each term read from them.
+- [Nondimensionalisation](03-scaling-and-nondimensionalisation.md): the groups found from the equations of motion instead of the variable list, and the size of each term read from them.
 
 This card finds which groups the drag can depend on; it cannot say which of them is small enough to drop, and that is the question scaling answers.
 

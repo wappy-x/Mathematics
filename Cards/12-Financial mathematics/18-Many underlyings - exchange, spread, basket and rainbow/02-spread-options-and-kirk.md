@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Many underlyings - exchange, spread, basket and rainbow
-topic: Folding the strike into the second asset
-item: Spread options
-kind: approximation
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/18-Many underlyings - exchange, spread, basket and rainbow/01-exchange-option-margrabe|exchange-option-margrabe]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/04-correlated-paths-and-cholesky|correlated-paths-and-cholesky]]"
-next:
-  - "[[Cards/12-Financial mathematics/18-Many underlyings - exchange, spread, basket and rainbow/03-basket-options|basket-options]]"
-tags: [mathematics, financial mathematics, spread-options-and-kirk]
----
-
 # Spread options: an option on the difference of two prices, with Kirk's shortcut and a simulation to keep it honest
 
-Financial mathematics → Many underlyings - exchange, spread, basket and rainbow → Folding the strike into the second asset → Spread options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Many underlyings - exchange, spread, basket and rainbow](../../../SYLLABUS.md#w12-s18) → Spread options
 
 ---
 
@@ -27,7 +10,7 @@ Two shares trade at $100 each. Both jump around by about 20 percent a year, both
 
 A contract reads both closing prices one year from today. It pays the first price minus the second, minus $5, if that is positive, and nothing otherwise. The gap between two prices is a **spread**, so this is a **spread call**, and the $5 is its **strike**. It pays only if the first share beats the second by more than $5.
 
-With the strike at zero the contract is the exchange option: hand over share 2, receive share 1. Its price has a closed form, Margrabe's formula, worth $7.81 here ([exchange-option-margrabe](01-exchange-option-margrabe.md)). Add the $5 and no closed form is known. The trick that made Margrabe work, measuring everything in units of share 2, breaks: the thing handed over is now share 2 *plus* $5, and that sum does not wander the way a share does.
+With the strike at zero the contract is the exchange option: hand over share 2, receive share 1. Its price has a closed form, Margrabe's formula, worth $7.81 here ([The exchange option](01-exchange-option-margrabe.md)). Add the $5 and no closed form is known. The trick that made Margrabe work, measuring everything in units of share 2, breaks: the thing handed over is now share 2 *plus* $5, and that sum does not wander the way a share does.
 
 Kirk's 1995 shortcut pretends that it does. It folds the $5 into share 2, treats "share 2 plus $5" as a new asset, and reuses Margrabe's formula with an adjusted volatility. It gives $5.67. An exact price, by one integral, is also $5.67: the two differ by a fifth of a cent. A million simulated years give $5.69, give or take one cent, and agree with both.
 
@@ -53,7 +36,7 @@ The sloped line is the holder's profit; the flat line is break-even. Left of a $
 
 ## The formula
 
-Notation first, in words. A subscript 1 or 2 says which share a letter belongs to. A share's **forward**, $F_1$ or $F_2$, is the price agreed today for delivery in a year: today's price grown at the bank rate less the dividend. $N(x)$ is the bell-curve area left of $x$ ([normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)).
+Notation first, in words. A subscript 1 or 2 says which share a letter belongs to. A share's **forward**, $F_1$ or $F_2$, is the price agreed today for delivery in a year: today's price grown at the bank rate less the dividend. $N(x)$ is the bell-curve area left of $x$ ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)).
 
 The contract:
 
@@ -73,7 +56,7 @@ In words: $w$ is the share of the folded asset that actually moves. Of $108.05, 
 
 $$d_1 = \frac{\ln\!\big(F_1/(F_2+K)\big) + \tfrac12\sigma_K^2\,T}{\sigma_K\sqrt{T}}, \qquad d_2 = d_1 - \sigma_K\sqrt{T}$$
 
-In words: $d_2$ counts how many "wiggle units" of the ratio stand between the two forwards, as on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md); $d_1$ is one wiggle unit more.
+In words: $d_2$ counts how many "wiggle units" of the ratio stand between the two forwards, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md); $d_1$ is one wiggle unit more.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -92,7 +75,7 @@ In words: $d_2$ counts how many "wiggle units" of the ratio stand between the tw
 
 ### When it holds
 
-- **Both shares follow geometric Brownian motion with fixed volatilities and correlation** ([geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). If correlation itself moves, the price is off by roughly the correlation sensitivity, 7.5 cents per 0.01 here, times the move.
+- **Both shares follow geometric Brownian motion with fixed volatilities and correlation** ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). If correlation itself moves, the price is off by roughly the correlation sensitivity, 7.5 cents per 0.01 here, times the move.
 - **A strike small next to the second forward.** Kirk freezes $w$ at today's value. At $K = 5$ the error is 0.04 percent of the price; at $K = 30$ with correlation 0 it is 1.70 percent.
 - **Correlation not near +1 with a large strike.** There the price itself is pennies and Kirk's relative error jumps: 6.42 percent of a one-cent price at correlation 0.9 and $K = 30$.
 - **A folded asset $F_2 + K$ well above zero.** Kirk is built for $K \ge 0$. A negative strike pushes $w$ above 1, and once $F_2 + K \le 0$ the logarithm in $d_1$ is undefined.
@@ -104,7 +87,7 @@ In words: $d_2$ counts how many "wiggle units" of the ratio stand between the tw
 
 ### Step 0: at a zero strike, count in units of share 2
 
-Margrabe's insight, proved on [exchange-option-margrabe](01-exchange-option-margrabe.md): measure every price in shares of asset 2 instead of dollars. Then asset 2 is worth exactly 1 forever, and the exchange option becomes an ordinary call on the ratio $S_1/S_2$ with strike 1. The ratio of two lognormal prices is lognormal (a price whose logarithm follows a bell curve), with volatility $\sqrt{\sigma_1^2 - 2\rho\sigma_1\sigma_2 + \sigma_2^2}$. Black-Scholes does the rest. Here that volatility is 0.20 and the price is $7.81.
+Margrabe's insight, proved on [The exchange option](01-exchange-option-margrabe.md): measure every price in shares of asset 2 instead of dollars. Then asset 2 is worth exactly 1 forever, and the exchange option becomes an ordinary call on the ratio $S_1/S_2$ with strike 1. The ratio of two lognormal prices is lognormal (a price whose logarithm follows a bell curve), with volatility $\sqrt{\sigma_1^2 - 2\rho\sigma_1\sigma_2 + \sigma_2^2}$. Black-Scholes does the rest. Here that volatility is 0.20 and the price is $7.81.
 
 Everything on this card tries to keep that trick alive once the strike is not zero.
 
@@ -142,7 +125,7 @@ Here $G(z)$ is share 1's forward given $z$ and $\mathrm{BS}$ is the undiscounted
 <details>
 <summary>The algebra behind the conditional step</summary>
 
-Write share 1's draw as $Z_1 = \rho z + \sqrt{1-\rho^2}\,W$, the draw in the last term independent of $z$ (the Cholesky step of [correlated-paths-and-cholesky](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md)). Then $S_1(T) = F_1 \exp(-\tfrac12\sigma_1^2 T + \sigma_1\sqrt{T}\rho z)\cdot\exp(-\tfrac12\sigma_1^2(1-\rho^2)T + \sigma_1\sqrt{T}\sqrt{1-\rho^2}\,W)$. The second factor has mean 1, so the first factor, $G(z) = F_1\exp(\sigma_1\sqrt{T}\rho z - \tfrac12\sigma_1^2\rho^2 T)$, is share 1's forward given $z$. Share 2 at expiry is $F_2\exp(-\tfrac12\sigma_2^2 T + \sigma_2\sqrt{T} z)$. The call given $z$ is Black's formula with forward $G(z)$, strike $X(z)$ and log-spread $\sigma_1\sqrt{T}\sqrt{1-\rho^2}$. The same step with the put payoff gives the put independently, which is how the code tests parity.
+Write share 1's draw as $Z_1 = \rho z + \sqrt{1-\rho^2}\,W$, the draw in the last term independent of $z$ (the Cholesky step of [Correlated paths](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md)). Then $S_1(T) = F_1 \exp(-\tfrac12\sigma_1^2 T + \sigma_1\sqrt{T}\rho z)\cdot\exp(-\tfrac12\sigma_1^2(1-\rho^2)T + \sigma_1\sqrt{T}\sqrt{1-\rho^2}\,W)$. The second factor has mean 1, so the first factor, $G(z) = F_1\exp(\sigma_1\sqrt{T}\rho z - \tfrac12\sigma_1^2\rho^2 T)$, is share 1's forward given $z$. Share 2 at expiry is $F_2\exp(-\tfrac12\sigma_2^2 T + \sigma_2\sqrt{T} z)$. The call given $z$ is Black's formula with forward $G(z)$, strike $X(z)$ and log-spread $\sigma_1\sqrt{T}\sqrt{1-\rho^2}$. The same step with the put payoff gives the put independently, which is how the code tests parity.
 
 </details>
 
@@ -224,7 +207,7 @@ Each sensitivity is found by nudging one input up and down, in both Kirk's formu
 | delta, share 2 | −0.3580 | −0.3584 | dollars lost per $1 rise in share 2 |
 | correlation, per 0.01 | −0.0755 | −0.0755 | dollars lost when correlation rises by 0.01 |
 
-The two deltas do not cancel, and Margrabe's do not either. At equal prices, adding $1 to both shares scales both by 1 percent, which scales the dollar swings of the gap, so the price rises. A hedger holds 0.43 of share 1 and is short 0.36 of share 2. Correlation sensitivity has a card of its own: [correlation-greeks-and-implied-correlation](05-correlation-greeks-and-implied-correlation.md).
+The two deltas do not cancel, and Margrabe's do not either. At equal prices, adding $1 to both shares scales both by 1 percent, which scales the dollar swings of the gap, so the price rises. A hedger holds 0.43 of share 1 and is short 0.36 of share 2. Correlation sensitivity has a card of its own: [Correlation Greeks and implied correlation](05-correlation-greeks-and-implied-correlation.md).
 
 ### What breaks if you drop a piece
 
@@ -669,7 +652,7 @@ The two outputs agree to every printed digit: the same series, the same slices a
 - **Power generation: the spark spread.** A gas-fired plant earns the power price minus the gas it burns. The plant is a strip of spread calls, one per hour it could run; the strike is the running cost.
 - **Pairs and relative-value trades in shares.** A call on one share outperforming another by a fixed amount is exactly this card's contract.
 - **Calendar and location spreads.** The same product on two dates, or in two places: a call on the difference prices the value of storage or of a pipeline.
-- **Neighbours on this shelf.** The zero-strike case is [exchange-option-margrabe](01-exchange-option-margrabe.md); the sum instead of the difference is [basket-options](03-basket-options.md); the better or worse of the two is [rainbow-best-of-and-worst-of](04-rainbow-best-of-and-worst-of.md).
+- **Neighbours on this shelf.** The zero-strike case is [The exchange option](01-exchange-option-margrabe.md); the sum instead of the difference is [Basket options](03-basket-options.md); the better or worse of the two is [Rainbow options](04-rainbow-best-of-and-worst-of.md).
 
 > **Say it back**
 > A spread call pays the first price minus the second minus a strike, if positive. At a zero strike Margrabe's formula prices it exactly by counting in units of the second share. A nonzero strike bends the exercise boundary and no closed form is known. Kirk folds the strike into the second share, damps its volatility by the weight $w$, and reuses Margrabe; the house price is $5.67, a fifth of a cent above the exact integral and within a simulation's error bar. Kirk's error grows with the strike and with falling correlation, and is largest relative to cheap, far-out contracts.
@@ -678,12 +661,12 @@ The two outputs agree to every printed digit: the same series, the same slices a
 
 ## What this builds on
 
-- [exchange-option-margrabe](01-exchange-option-margrabe.md): the zero-strike price and the change of unit that Kirk reuses.
-- [correlated-paths-and-cholesky](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md): how two independent draws become two correlated ones, used by the simulation and by the exact integral.
+- [The exchange option](01-exchange-option-margrabe.md): the zero-strike price and the change of unit that Kirk reuses.
+- [Correlated paths](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md): how two independent draws become two correlated ones, used by the simulation and by the exact integral.
 
 ## Where this goes next
 
-- [basket-options](03-basket-options.md): an option on a weighted sum of shares, where a sum of lognormals again has no closed form and a moment-matched lognormal takes Kirk's place.
+- [Basket options](03-basket-options.md): an option on a weighted sum of shares, where a sum of lognormals again has no closed form and a moment-matched lognormal takes Kirk's place.
 
 This card leaves a sum of lognormal prices unpriced in closed form; the next card prices the most common such sum, a basket, by matching its first two moments.
 

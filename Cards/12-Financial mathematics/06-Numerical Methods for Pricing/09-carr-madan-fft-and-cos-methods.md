@@ -1,29 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Numerical Methods for Pricing
-topic: One transform, many strikes
-item: Transform pricing
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/04-black-scholes-by-risk-neutral-expectation|black-scholes-by-risk-neutral-expectation]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/03-fourier-transform|fourier-transform]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/02-discrete-fourier-transform|discrete-fourier-transform]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/04-characteristic-functions-and-inversion|characteristic-functions-and-inversion]]"
-next:
-  - "[[Cards/16-Numerical analysis/07-PDE Solvers/10-spectral-methods-and-the-fft|spectral-methods-and-the-fft]]"
-  - "[[Cards/20-Harmonic analysis/04-Characteristic Functions and Probability/09-carr-madan-and-fourier-pricing|carr-madan-and-fourier-pricing]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - carr-madan-fft-and-cos-methods
----
-
 # Transform pricing: prices from a characteristic function by FFT or cosine series
 
-Financial mathematics → Numerical Methods for Pricing → One transform, many strikes → Transform pricing
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Numerical Methods for Pricing](../../../SYLLABUS.md#w12-s06) → Transform pricing
 
 ---
 
@@ -78,7 +55,7 @@ A call struck at $K$ is worth, in these coordinates,
 
 $$C(k) = S\,e^{-rT}\,E\!\left[\left(e^{Y} - e^{k}\right)^{+}\right]$$
 
-with $r$ the riskless rate, $T$ the years to expiry, $e^{-rT}$ the discount to today, and the superscript plus meaning "or zero, whichever is larger" — the ordinary risk-neutral average ([black-scholes-by-risk-neutral-expectation](../05-Black-Scholes%20from%20the%20Ground%20Up/04-black-scholes-by-risk-neutral-expectation.md)) rewritten in logs.
+with $r$ the riskless rate, $T$ the years to expiry, $e^{-rT}$ the discount to today, and the superscript plus meaning "or zero, whichever is larger" — the ordinary risk-neutral average ([Black-Scholes by expectation](../05-Black-Scholes%20from%20the%20Ground%20Up/04-black-scholes-by-risk-neutral-expectation.md)) rewritten in logs.
 
 ### Carr–Madan: damp, transform, invert
 
@@ -98,7 +75,7 @@ Now the grids. Sample frequencies at panel midpoints — the middle of each freq
 
 $$u_j = \left(j + \tfrac{1}{2}\right)\eta, \qquad k_\ell = -\frac{\pi}{\eta} + \ell\lambda, \qquad \lambda\eta = \frac{2\pi}{N}$$
 
-with $\eta$ the frequency step, $\lambda$ the log-strike step, $N$ the number of points, and both indices running from 0 to $N - 1$. With those choices the finite approximation is a discrete Fourier transform ([discrete-fourier-transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md)) and nothing more, the hat marking what the finite sum gives for the price at $k_\ell$:
+with $\eta$ the frequency step, $\lambda$ the log-strike step, $N$ the number of points, and both indices running from 0 to $N - 1$. With those choices the finite approximation is a discrete Fourier transform ([The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md)) and nothing more, the hat marking what the finite sum gives for the price at $k_\ell$:
 
 $$\widehat{C}_\ell = \frac{\eta\,e^{-\alpha k_\ell}}{\pi}\,\mathrm{Re}\!\left[e^{-i\pi\ell/N}\sum_{j=0}^{N-1} i(-1)^{j}\,\psi(u_j)\,e^{-2\pi i j\ell/N}\right]$$
 
@@ -208,7 +185,7 @@ Why the put? Its payoff never exceeds the strike, so dropping the far tails cost
 
 ### The other door
 
-The same identity can be used one strike at a time by any numerical integration rule, often better when only three strikes are wanted; the code does that as a cross-check. A model with neither a transform nor a formula must be simulated ([monte-carlo-pricing](01-monte-carlo-pricing.md)) or solved on a grid ([finite-differences-for-the-black-scholes-equation](07-finite-differences-for-the-black-scholes-equation.md)).
+The same identity can be used one strike at a time by any numerical integration rule, often better when only three strikes are wanted; the code does that as a cross-check. A model with neither a transform nor a formula must be simulated ([Monte Carlo pricing](01-monte-carlo-pricing.md)) or solved on a grid ([Pricing on a grid](07-finite-differences-for-the-black-scholes-equation.md)).
 
 ---
 
@@ -712,7 +689,7 @@ ALL CHECKS PASS
 - **Calibrating a model to the screen.** Fitting Heston's five parameters to a hundred quoted prices means pricing those options a few thousand times while a search routine moves the parameters. One transform per parameter set makes that an afternoon's work.
 - **The volatility surface.** A desk's quotes are a grid of implied volatilities across strike and maturity, and the sloping line above is one row of such a surface.
 - **Any model with a transform but no density.** Variance gamma, the CGMY family, Merton's jump diffusion, Heston and its cousins all publish a characteristic function and none publishes a density. This machinery is why they are usable.
-- **Where it stops.** Early exercise needs the expansion repeated at every monitoring date, which is where a grid solver competes ([american-options-by-psor-and-lcp](08-american-options-by-psor-and-lcp.md)). A path-dependent payoff, or a basket of twenty correlated shares, offers no one-dimensional transform at all: simulation's territory ([monte-carlo-pricing](01-monte-carlo-pricing.md), [correlated-paths-and-cholesky](04-correlated-paths-and-cholesky.md)).
+- **Where it stops.** Early exercise needs the expansion repeated at every monitoring date, which is where a grid solver competes ([American options on a grid](08-american-options-by-psor-and-lcp.md)). A path-dependent payoff, or a basket of twenty correlated shares, offers no one-dimensional transform at all: simulation's territory ([Monte Carlo pricing](01-monte-carlo-pricing.md), [Correlated paths](04-correlated-paths-and-cholesky.md)).
 
 > **Say it back**
 > A model may have no formula for the distribution of the future share price and still have one for that distribution's Fourier transform, the characteristic function. That transform is enough to price options. Carr and Madan damp the call price so it has a transform of its own, write that transform as one line of the characteristic function, and invert over positive frequencies; grids tied by $\lambda\eta = 2\pi/N$ turn the whole family of sums into one FFT, so a row of strikes costs what one strike costs. Fang and Oosterlee instead expand the distribution in cosine modes on a window and multiply each mode's weight by the put payoff's. On Acme both land on 9.227006, which Black–Scholes confirms; on Heston both land on 9.059507, which nothing else can confirm, and their agreement to nine decimals is the whole assurance available.
@@ -721,15 +698,15 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [black-scholes-by-risk-neutral-expectation](../05-Black-Scholes%20from%20the%20Ground%20Up/04-black-scholes-by-risk-neutral-expectation.md): the price as a discounted average of the payoff — the average this card computes without ever seeing the density.
-- [fourier-transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md): what a transform is, and the inversion formula Step 3 folds onto half the line.
-- [discrete-fourier-transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): the finite sum the grid lock produces, and the radix-two algorithm that evaluates it in $N\log_2 N$ steps.
-- [characteristic-functions-and-inversion](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): why a distribution's transform determines it, which licenses reading a price off $\Phi$ alone.
+- [Black-Scholes by expectation](../05-Black-Scholes%20from%20the%20Ground%20Up/04-black-scholes-by-risk-neutral-expectation.md): the price as a discounted average of the payoff — the average this card computes without ever seeing the density.
+- [The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md): what a transform is, and the inversion formula Step 3 folds onto half the line.
+- [The discrete Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/02-discrete-fourier-transform.md): the finite sum the grid lock produces, and the radix-two algorithm that evaluates it in $N\log_2 N$ steps.
+- [Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): why a distribution's transform determines it, which licenses reading a price off $\Phi$ alone.
 
 ## Where this goes next
 
-- spectral-methods-and-the-fft: the same transform used to solve differential equations, where a cosine expansion becomes a way of differentiating.
-- carr-madan-and-fourier-pricing: the same identity as harmonic analysis, with the integrability conditions proved rather than assumed.
+- Spectral methods: the same transform used to solve differential equations, where a cosine expansion becomes a way of differentiating.
+- Pricing by transform: the same identity as harmonic analysis, with the integrability conditions proved rather than assumed.
 
 Both machines were handed a model whose parameters were already chosen. Turning that around — starting from quoted prices and searching for the parameters that reproduce them — is calibration, and it is why anyone needs prices this fast.
 

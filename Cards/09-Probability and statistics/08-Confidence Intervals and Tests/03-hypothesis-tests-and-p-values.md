@@ -1,26 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Confidence Intervals and Tests
-topic: Weighing evidence against a claim
-item: Hypothesis tests
-kind: method
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/01-confidence-intervals|confidence-intervals]]"
-next:
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/04-power-and-sample-size|power-and-sample-size]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/05-t-tests-and-comparing-means|t-tests-and-comparing-means]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/06-chi-square-tests|chi-square-tests]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/08-multiple-testing|multiple-testing]]"
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/08-backtesting-var|backtesting-var]]"
-tags: [mathematics, probability and statistics, hypothesis-tests-and-p-values]
----
-
 # Hypothesis tests: a null, a statistic, and the p-value that measures surprise
 
-Probability and statistics → Confidence Intervals and Tests → Weighing evidence against a claim → Hypothesis tests
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Confidence Intervals and Tests](../../../SYLLABUS.md#w09-s08) → Hypothesis tests
 
 ---
 
@@ -48,7 +28,7 @@ The curve is the chance law of the gap, measured in standard errors, in a world 
 
 ## The formula
 
-Notation first, in words. The claim being tested, "the drug does nothing", is the **null hypothesis**, written $H_0$ and read "H nought". The rival claim, "the drug changes the recovery rate", is the **alternative**, $H_1$. The true recovery rates are $r_D$ on the drug and $r_P$ on placebo; a hat marks an estimate from the trial, so $\hat r_D$ = 45/100 = 0.45 and $\hat r_P$ = 0.35. Each group has $n$ = 100 patients. Under $H_0$ both groups share one rate, estimated by pooling them: $\bar r$ = 80/200 = 0.40. A reminder from [normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md): $\Phi(x)$ is the standard bell's area to the left of x.
+Notation first, in words. The claim being tested, "the drug does nothing", is the **null hypothesis**, written $H_0$ and read "H nought". The rival claim, "the drug changes the recovery rate", is the **alternative**, $H_1$. The true recovery rates are $r_D$ on the drug and $r_P$ on placebo; a hat marks an estimate from the trial, so $\hat r_D$ = 45/100 = 0.45 and $\hat r_P$ = 0.35. Each group has $n$ = 100 patients. Under $H_0$ both groups share one rate, estimated by pooling them: $\bar r$ = 80/200 = 0.40. A reminder from [Normal](../04-Continuous%20Distributions/04-normal-distribution.md): $\Phi(x)$ is the standard bell's area to the left of x.
 
 The **test statistic** turns the trial into one number, the gap in units of its standard error:
 
@@ -84,7 +64,7 @@ A **test at level** $\alpha$ is the rule "reject $H_0$ when $p \le \alpha$", wit
 - **Patients independent, groups assigned by chance.** The standard error assumes each patient is a separate draw. If the drug group was picked by the doctor, a gap can come from who was picked, and no p-value separates that from the drug.
 - **Enough patients for the bell.** The formula swaps the exact count law for the normal bell. At 100 per group the exact tail is 0.151939 against the bell's 0.148915; with small groups, use the exact count of Step 3 instead.
 - **Test, direction and level fixed in advance.** Choosing a one-sided test after seeing the drug ahead halves the p-value to 0.074457. Checking after every 20 patients and stopping at the first p below 0.05 raises the false-alarm rate from 0.0514 to about 0.1439 (simulated, ± 0.0025).
-- **One test, not many.** The 5 percent false-alarm rate belongs to one test. Twenty tests of useless drugs will usually flag at least one: [multiple-testing](08-multiple-testing.md).
+- **One test, not many.** The 5 percent false-alarm rate belongs to one test. Twenty tests of useless drugs will usually flag at least one: [Many tests](08-multiple-testing.md).
 
 ---
 
@@ -96,7 +76,7 @@ No calculation can say directly whether the drug works: the true rates are unkno
 
 ### Step 1: build the world where the drug does nothing
 
-If the drug does nothing, drug and placebo patients recover at one shared rate. Its best estimate pools all 200 patients: 80 recovered, so 0.40. In that world each group's recoveries are a count out of 100 at chance 0.40, the binomial law of [bernoulli-and-binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md).
+If the drug does nothing, drug and placebo patients recover at one shared rate. Its best estimate pools all 200 patients: 80 recovered, so 0.40. In that world each group's recoveries are a count out of 100 at chance 0.40, the binomial law of [Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md).
 
 That is a choice with a cost. The null says only that the two rates are equal, not what they equal. Plugging in 0.40 fixes the missing piece from the data. Step 5 meets a test that avoids the plug-in and gets a different answer.
 
@@ -108,7 +88,7 @@ The observed gap, 0.10, is 0.10 / 0.069282 = 1.443376 standard errors. That is t
 
 ### Step 3: the tail beyond the observed point
 
-By the normal approximation to the binomial ([normal-approximation-to-binomial](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md)), a gap in standard errors from groups this large follows the standard bell closely when $H_0$ is true. So the chance of landing 1.443376 or more to the right is the bell's right tail, 0.074457. The null says nothing about which group should win, so a gap of 1.443376 the other way is equally surprising, and the two-sided p-value adds both tails: 0.148915.
+By the normal approximation to the binomial ([Normal approximation](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md)), a gap in standard errors from groups this large follows the standard bell closely when $H_0$ is true. So the chance of landing 1.443376 or more to the right is the bell's right tail, 0.074457. The null says nothing about which group should win, so a gap of 1.443376 the other way is equally surprising, and the two-sided p-value adds both tails: 0.148915.
 
 The bell is an approximation, so two more roads check it. Enumerating all 10,201 pairs of counts (0 to 100 recoveries in each group) at the shared rate 0.40, and adding the exact chances of every pair whose statistic is at least 1.443376 from zero, gives 0.151939. Simulating 20,000 useless-drug trials gives 0.1541, give or take 0.0026. All three agree: luck alone produces a gap at least 1.44 standard errors out, either way, about 15 times in 100.
 
@@ -147,13 +127,13 @@ Bars: the drug does nothing, both groups at 0.40. Line: the drug lifts recovery 
 
 ### Step 5: from p-value to decision, and the two ways to be wrong
 
-A decision at level 0.05 can go wrong two ways. Rejecting a true $H_0$ is a **false alarm**, also called a Type I error; Step 4 holds its chance near the level: 0.0514 here. Keeping a false $H_0$ is a **miss**, a Type II error. The chance of avoiding a miss is the test's **power**, the subject of [power-and-sample-size](04-power-and-sample-size.md).
+A decision at level 0.05 can go wrong two ways. Rejecting a true $H_0$ is a **false alarm**, also called a Type I error; Step 4 holds its chance near the level: 0.0514 here. Keeping a false $H_0$ is a **miss**, a Type II error. The chance of avoiding a miss is the test's **power**, the subject of [Power](04-power-and-sample-size.md).
 
 Here the miss is the bigger danger. Suppose the drug truly lifts recovery from 0.35 to 0.45, exactly what was observed. Enumerating every outcome, a trial of 100 per group reaches p ≤ 0.05 with chance 0.3078. Simulation agrees: 0.3080, give or take 0.0033. So at this size, a real 10-point benefit goes undetected in most trials. A p-value of 0.15 is weak evidence against $H_0$; it is not evidence for it.
 
-The same point shows in the confidence interval for the gap. It is the z recipe of [confidence-intervals](01-confidence-intervals.md), the estimate plus or minus 1.959964 standard errors, with each group's own rate in the standard error: the square root of 0.45 × 0.55 / 100 + 0.35 × 0.65 / 100 is 0.068920. The 95 percent interval is 0.10 ± 1.959964 × 0.068920 = 0.10 ± 0.1351, from −0.0351 to 0.2351. It contains 0, which is why the test at 0.05 does not reject, and it also contains a benefit as large as 0.2351. The two tools are one idea read two ways: a level-0.05 test rejects a proposed gap exactly when the 95 percent interval leaves it out. Here the interval uses each group's own spread rather than the pooled 0.40, so the match between the two is close rather than exact.
+The same point shows in the confidence interval for the gap. It is the z recipe of [Confidence intervals](01-confidence-intervals.md), the estimate plus or minus 1.959964 standard errors, with each group's own rate in the standard error: the square root of 0.45 × 0.55 / 100 + 0.35 × 0.65 / 100 is 0.068920. The 95 percent interval is 0.10 ± 1.959964 × 0.068920 = 0.10 ± 0.1351, from −0.0351 to 0.2351. It contains 0, which is why the test at 0.05 does not reject, and it also contains a benefit as large as 0.2351. The two tools are one idea read two ways: a level-0.05 test rejects a proposed gap exactly when the 95 percent interval leaves it out. Here the interval uses each group's own spread rather than the pooled 0.40, so the match between the two is close rather than exact.
 
-A different road to a p-value keeps the 80 recoveries fixed and asks how often shuffling the 200 patients at random between the groups puts 45 or more, or 35 or fewer, in the drug group. That is the permutation test, also called Fisher's exact test, built on the law of [hypergeometric](../03-Discrete%20Distributions/03-hypergeometric.md). It gives 0.1938. It asks a slightly different question, so it gives a different number; which test to use is decided before the data arrive. The same gap squared is the statistic of [chi-square-tests](06-chi-square-tests.md), and [likelihood-ratio-tests](07-likelihood-ratio-tests.md) shows where good statistics come from.
+A different road to a p-value keeps the 80 recoveries fixed and asks how often shuffling the 200 patients at random between the groups puts 45 or more, or 35 or fewer, in the drug group. That is the permutation test, also called Fisher's exact test, built on the law of [Hypergeometric](../03-Discrete%20Distributions/03-hypergeometric.md). It gives 0.1938. It asks a slightly different question, so it gives a different number; which test to use is decided before the data arrive. The same gap squared is the statistic of [Chi-square tests](06-chi-square-tests.md), and [Likelihood ratio tests](07-likelihood-ratio-tests.md) shows where good statistics come from.
 
 ---
 
@@ -570,7 +550,7 @@ The two outputs match line for line, simulation included: both languages draw th
 ## The usual mistake
 
 > [!warning]
-> **"p = 0.15, so there is a 15 percent chance the drug does nothing."** The p-value is computed by assuming the drug does nothing; it cannot also be the chance of that assumption. It is a chance about data given the null, and the reverse, the chance of the null given the data, needs Bayes' rule and a prior share of drugs that work ([bayes-rule](../01-Chance%20and%20Events/06-bayes-rule.md)). The two can be far apart. If half of all tested drugs work as well as this one appears to, 0.1432 of results with p ≤ 0.05 come from useless drugs. If 1 in 10 work, 0.6006 do: most "significant" results are false alarms, even though each test kept its 5 percent promise.
+> **"p = 0.15, so there is a 15 percent chance the drug does nothing."** The p-value is computed by assuming the drug does nothing; it cannot also be the chance of that assumption. It is a chance about data given the null, and the reverse, the chance of the null given the data, needs Bayes' rule and a prior share of drugs that work ([Bayes' rule](../01-Chance%20and%20Events/06-bayes-rule.md)). The two can be far apart. If half of all tested drugs work as well as this one appears to, 0.1432 of results with p ≤ 0.05 come from useless drugs. If 1 in 10 work, 0.6006 do: most "significant" results are false alarms, even though each test kept its 5 percent promise.
 >
 > - **"Not significant, so the drug has no effect."** With 100 per group this test catches a real 10-point gain only 0.3078 of the time. The interval, −0.0351 to 0.2351, still allows a large benefit.
 > - **Peeking.** Looking after every 20 patients per group and stopping at the first p ≤ 0.05 turns a 0.0514 false-alarm rate into 0.1439.
@@ -584,8 +564,8 @@ The two outputs match line for line, simulation included: both languages draw th
 - **Drug and vaccine trials.** Regulators ask for a pre-registered test, a fixed level and a fixed plan for interim looks; the peeking problem is why trials that look early use stricter cutoffs.
 - **A/B tests on websites.** Two versions of a page, two conversion rates, the same two-group test. Dashboards that update live invite exactly the peeking that inflated false alarms here to 0.1439.
 - **Quality control.** A factory tests whether two machines turn out the same share of faulty parts; NIST's engineering handbook works this two-proportion test.
-- **Many comparisons at once.** A study that tests twenty outcomes needs [multiple-testing](08-multiple-testing.md).
-- **Risk models in finance.** A bank checks whether its loss forecasts are breached more often than promised with a test of this kind: [backtesting-var](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/08-backtesting-var.md).
+- **Many comparisons at once.** A study that tests twenty outcomes needs [Many tests](08-multiple-testing.md).
+- **Risk models in finance.** A bank checks whether its loss forecasts are breached more often than promised with a test of this kind: [Backtesting VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/08-backtesting-var.md).
 
 > **Say it back**
 > A test assumes the dull explanation, here that the drug does nothing, and asks how often that world alone would produce data at least as extreme as what was seen. The gap of 0.10 is 1.44 standard errors, and a useless drug produces a gap that far out, in either direction, about 15 trials in 100: p = 0.15. Under a true null the p-value is spread evenly, or nearly so for counts, so rejecting when p ≤ 0.05 raises false alarms 5 times in 100, provided the test, direction, level and stopping rule were fixed in advance. A p-value is not the chance the null is true, and a large one is not proof of no effect: this trial had only about 31 chances in 100 of detecting a real 10-point gain.
@@ -594,19 +574,19 @@ The two outputs match line for line, simulation included: both languages draw th
 
 ## What this builds on
 
-- [confidence-intervals](01-confidence-intervals.md): the standard error, the pivot, and the idea that a guarantee belongs to the method; a test is the same pivot read at one proposed value.
-- [bernoulli-and-binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the count law behind each group and the exact enumeration.
-- [normal-approximation-to-binomial](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md): why the bell's tail stands in for the exact count.
+- [Confidence intervals](01-confidence-intervals.md): the standard error, the pivot, and the idea that a guarantee belongs to the method; a test is the same pivot read at one proposed value.
+- [Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the count law behind each group and the exact enumeration.
+- [Normal approximation](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md): why the bell's tail stands in for the exact count.
 
 ## Where this goes next
 
-- [power-and-sample-size](04-power-and-sample-size.md): the miss rate, and how many patients a trial needs to catch a given gain.
-- [t-tests-and-comparing-means](05-t-tests-and-comparing-means.md): the same logic for averages, with a spread estimated from the data.
-- [chi-square-tests](06-chi-square-tests.md): tests on whole tables of counts, of which this trial is the two-by-two case.
-- [multiple-testing](08-multiple-testing.md): keeping the false-alarm promise when many tests run at once.
-- [backtesting-var](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/08-backtesting-var.md): a bank's risk forecast put on trial by the same method.
+- [Power](04-power-and-sample-size.md): the miss rate, and how many patients a trial needs to catch a given gain.
+- [t-tests](05-t-tests-and-comparing-means.md): the same logic for averages, with a spread estimated from the data.
+- [Chi-square tests](06-chi-square-tests.md): tests on whole tables of counts, of which this trial is the two-by-two case.
+- [Many tests](08-multiple-testing.md): keeping the false-alarm promise when many tests run at once.
+- [Backtesting VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/08-backtesting-var.md): a bank's risk forecast put on trial by the same method.
 
-This trial could not tell a 10-point benefit from luck, and the test says nothing about how many patients would have been enough; that question is [power-and-sample-size](04-power-and-sample-size.md).
+This trial could not tell a 10-point benefit from luck, and the test says nothing about how many patients would have been enough; that question is [Power](04-power-and-sample-size.md).
 
 ---
 

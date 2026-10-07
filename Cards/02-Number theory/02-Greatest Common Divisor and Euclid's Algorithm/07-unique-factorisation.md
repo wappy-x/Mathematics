@@ -1,27 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Greatest Common Divisor and Euclid's Algorithm
-topic: Why factorisation is unique
-item: The fundamental theorem of arithmetic
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/06-Proof/03-proof-by-contradiction|proof-by-contradiction]]"
-  - "[[Cards/01-Foundations/06-Proof/05-strong-induction-and-well-ordering|strong-induction-and-well-ordering]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/07-prime-factorisation|prime-factorisation]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/06-euclids-lemma|euclids-lemma]]"
-next: []
-tags:
-  - mathematics
-  - number theory
-  - unique-factorisation
----
-
 # Why the factorisation is unique: Euclid's lemma turns the factor tree into the fundamental theorem of arithmetic
 
-Number theory → Greatest Common Divisor and Euclid's Algorithm → Why factorisation is unique → The fundamental theorem of arithmetic
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Greatest Common Divisor and Euclid's Algorithm](../../../SYLLABUS.md#w02-s02) → The fundamental theorem of arithmetic
 
 ---
 
@@ -29,11 +8,11 @@ Number theory → Greatest Common Divisor and Euclid's Algorithm → Why factori
 
 A day is 86,400 seconds: 24 hours of 3,600 seconds, or 1,440 minutes of 60 seconds.
 
-Take 24 and 3,600 down to primes — numbers above 1 that will not split ([primes-and-composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)). 24 gives 2, 2, 2, 3; 3,600 gives 2, 2, 2, 2, 3, 3, 5, 5. Pooled: seven 2s, three 3s, two 5s.
+Take 24 and 3,600 down to primes — numbers above 1 that will not split ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)). 24 gives 2, 2, 2, 3; 3,600 gives 2, 2, 2, 2, 3, 3, 5, 5. Pooled: seven 2s, three 3s, two 5s.
 
 The other pair: 1,440 gives 2, 2, 2, 2, 2, 3, 3, 5; 60 gives 2, 2, 3, 5. Pooled: seven 2s, three 3s, two 5s. The same twelve.
 
-Different trees ([prime-factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)), same leaves. Every number, every time.
+Different trees ([Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)), same leaves. Every number, every time.
 
 **Every whole number above 1 is a product of primes in exactly one way: the order can change, the primes and their counts cannot.**
 
@@ -61,10 +40,10 @@ On our number:
 
 | Piece | Plain meaning | In our day |
 | --- | --- | --- |
-| a prime | divides by nothing but 1 and itself ([primes-and-composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)) | 2, 3, 5 |
-| a factor tree | split until every piece is prime ([prime-factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)) | 24 × 3,600 |
+| a prime | divides by nothing but 1 and itself ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)) | 2, 3, 5 |
+| a factor tree | split until every piece is prime ([Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)) | 24 × 3,600 |
 | the leaves | the primes at the ends of a tree | seven 2s, three 3s, two 5s |
-| Euclid's lemma | a prime dividing a product divides one factor ([euclids-lemma](06-euclids-lemma.md)) | 3 divides 86,400, so 3 divides 24 or 3,600 |
+| Euclid's lemma | a prime dividing a product divides one factor ([Euclid's lemma](06-euclids-lemma.md)) | 3 divides 86,400, so 3 divides 24 or 3,600 |
 
 ---
 
@@ -72,11 +51,11 @@ On our number:
 
 ### Step 0: the trees finish
 
-Every split makes the pieces smaller, and whole numbers cannot shrink forever, so splitting stops at primes. A list always exists — [prime-factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md) does that half. The hard half: never a second.
+Every split makes the pieces smaller, and whole numbers cannot shrink forever, so splitting stops at primes. A list always exists — [Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md) does that half. The hard half: never a second.
 
 ### Step 1: a smallest failure
 
-Suppose some number above 1 has two genuinely different prime lists. Any collection of whole numbers with something in it has a smallest member ([strong-induction-and-well-ordering](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md)), so there is a smallest such number. Call it the offender; its lists, List One and List Two. Now squeeze until two facts collide — proof by contradiction ([proof-by-contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)).
+Suppose some number above 1 has two genuinely different prime lists. Any collection of whole numbers with something in it has a smallest member ([Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md)), so there is a smallest such number. Call it the offender; its lists, List One and List Two. Now squeeze until two facts collide — proof by contradiction ([Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)).
 
 ### Step 2: no prime is on both lists
 
@@ -84,7 +63,7 @@ Suppose one is. Cancel a copy from each list. What remains is the offender divid
 
 ### Step 3: Euclid's lemma puts a prime on both
 
-Take the first prime on List One. List One multiplies to the offender, so our prime divides the offender. List Two multiplies to the offender too, so our prime divides that product. Euclid's lemma ([euclids-lemma](06-euclids-lemma.md)): a prime dividing a product divides one of the things multiplied. Run it along List Two, and our prime divides one of List Two's primes — which, being prime, it can only equal.
+Take the first prime on List One. List One multiplies to the offender, so our prime divides the offender. List Two multiplies to the offender too, so our prime divides that product. Euclid's lemma ([Euclid's lemma](06-euclids-lemma.md)): a prime dividing a product divides one of the things multiplied. Run it along List Two, and our prime divides one of List Two's primes — which, being prime, it can only equal.
 
 ### Step 4: the collision
 
@@ -267,7 +246,7 @@ Both outputs match line for line.
 ## Where you meet it in real life
 
 - **Clocks.** Those seven 2s, three 3s and two 5s are why a day cuts into whole halves, thirds, quarters and fifths. A decimal day carries only 2s and 5s, and loses thirds.
-- **gcd and lcm.** Off two lists, the smaller count of each prime gives the greatest common divisor, the bigger count the least common multiple ([gcd](01-gcd.md), [lcm](02-lcm.md)) — which works only because each number has one list.
+- **gcd and lcm.** Off two lists, the smaller count of each prime gives the greatest common divisor, the bigger count the least common multiple ([Greatest common divisor](01-gcd.md), [Least common multiple](02-lcm.md)) — which works only because each number has one list.
 - **Public-key cryptography.** RSA leans on both halves at once: a big number has exactly one prime list, and nobody can find it in time.
 
 > **Say it back**
@@ -277,14 +256,14 @@ Both outputs match line for line.
 
 ## What this builds on
 
-- [proof-by-contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): assume it fails, squeeze until two facts collide.
-- [strong-induction-and-well-ordering](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md): any collection of whole numbers with something in it has a smallest member — that names the offender.
-- [prime-factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md): the factor tree, and the easy half.
-- [euclids-lemma](06-euclids-lemma.md): the one line the proof turns on.
+- [Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): assume it fails, squeeze until two facts collide.
+- [Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md): any collection of whole numbers with something in it has a smallest member — that names the offender.
+- [Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md): the factor tree, and the easy half.
+- [Euclid's lemma](06-euclids-lemma.md): the one line the proof turns on.
 
 ## Where this goes next
 
-Next door on this shelf is [infinitude-of-primes](08-infinitude-of-primes.md): multiply the primes you have, add one, and a new prime must exist. Anything read off a prime list — [counting-divisors](../01-Divisibility%20and%20Primes/08-counting-divisors.md), [gcd](01-gcd.md), [lcm](02-lcm.md) — stands on this card.
+Next door on this shelf is [There are infinitely many primes](08-infinitude-of-primes.md): multiply the primes you have, add one, and a new prime must exist. Anything read off a prime list — [Counting divisors](../01-Divisibility%20and%20Primes/08-counting-divisors.md), [Greatest common divisor](01-gcd.md), [Least common multiple](02-lcm.md) — stands on this card.
 
 ---
 

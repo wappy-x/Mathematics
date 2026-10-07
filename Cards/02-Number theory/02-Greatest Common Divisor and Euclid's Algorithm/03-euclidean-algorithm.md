@@ -1,28 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Greatest Common Divisor and Euclid's Algorithm
-topic: Euclid's algorithm
-item: Running the algorithm
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/03-multiplying-and-dividing|multiplying-and-dividing]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/04-division-with-remainder|division-with-remainder]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/01-gcd|gcd]]"
-next:
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/04-bezouts-identity|bezouts-identity]]"
-  - "[[Cards/02-Number theory/07-For the Curious/05-continued-fractions-and-leap-years|continued-fractions-and-leap-years]]"
-tags:
-  - mathematics
-  - number theory
-  - euclidean-algorithm
----
-
 # Euclid's algorithm: divide, keep the remainder, repeat, and the last non-zero remainder is the gcd
 
-Number theory → Greatest Common Divisor and Euclid's Algorithm → Euclid's algorithm → Running the algorithm
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Greatest Common Divisor and Euclid's Algorithm](../../../SYLLABUS.md#w02-s02) → Running the algorithm
 
 ---
 
@@ -30,7 +8,7 @@ Number theory → Greatest Common Divisor and Euclid's Algorithm → Euclid's al
 
 Two cable drums in a van: 1071 m on one, 462 m on the other. The job needs equal lengths, every piece the same, no scrap on either drum. How long can a piece be?
 
-The biggest length dividing both evenly is the **greatest common divisor**, or **gcd**: the largest number going into both with nothing left over. Listing what divides each and comparing finds it ([gcd](01-gcd.md)), slowly.
+The biggest length dividing both evenly is the **greatest common divisor**, or **gcd**: the largest number going into both with nothing left over. Listing what divides each and comparing finds it ([Greatest common divisor](01-gcd.md)), slowly.
 
 Euclid's way takes three divisions. Divide the bigger by the smaller, keep the remainder — the bit left over — throw the bigger away, and repeat with the smaller and that remainder. Stop when a remainder is zero.
 
@@ -70,7 +48,7 @@ The run is the formula:
 | the remainder | what is left over | 147, 21, 0 |
 | the gcd | biggest number dividing both | 21 |
 
-The quotients do no work here, but they are not junk: [bezouts-identity](04-bezouts-identity.md) uses them, and [continued-fractions-and-leap-years](../07-For%20the%20Curious/05-continued-fractions-and-leap-years.md) reads them as a number.
+The quotients do no work here, but they are not junk: [Bezout's identity](04-bezouts-identity.md) uses them, and [Continued fractions](../07-For%20the%20Curious/05-continued-fractions-and-leap-years.md) reads them as a number.
 
 ---
 
@@ -84,7 +62,7 @@ Now the reverse: any number dividing 462 and 147 divides 2 × 462 + 147, which i
 
 ### Step 1: it stops, and the last line is easy
 
-A remainder is always smaller than what you divided by: 147 under 462, 21 under 147, 0 under 21. Whole numbers falling every step and never going below zero cannot fall for ever, so a remainder hits zero. That is well-ordering: [strong-induction-and-well-ordering](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md).
+A remainder is always smaller than what you divided by: 147 under 462, 21 under 147, 0 under 21. Whole numbers falling every step and never going below zero cannot fall for ever, so a remainder hits zero. That is well-ordering: [Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md).
 
 That last line says 21 divides 147, and nothing bigger than 21 divides 21, so 21 is the biggest dividing both. Walk it back up: 21 is also the gcd of 462 and 147, and of 1071 and 462. In general the stop says gcd(n, 0) = n: n divides itself, and divides 0 too.
 
@@ -95,7 +73,7 @@ The slowest pairs are Fibonacci neighbours, each number the sum of the two befor
 
 </details>
 
-The other road is on [gcd](01-gcd.md): split both into primes, multiply the shared ones. Same answer, but finding the factorisations is the expensive part.
+The other road is on [Greatest common divisor](01-gcd.md): split both into primes, multiply the shared ones. Same answer, but finding the factorisations is the expensive part.
 
 ---
 
@@ -242,7 +220,7 @@ Both outputs match line for line: whole metres, nothing to round.
 > **Try changing**
 > Guess first, then run it. The asserts are pinned to the drums, so one will fire.
 > - **Swap the drums.** Start from `euclid(462, 1071)`: the first division gives 0 with 462 over, which flips the pair into order. Still 21.
-> - **Make the drums share nothing.** Change the 462 in `euclid(1071, 462)` to 460, and in the brute-force line beneath it. The last non-zero remainder is 1, so only 1 m pieces empty both: the drums are **coprime** ([coprime-numbers](05-coprime-numbers.md)).
+> - **Make the drums share nothing.** Change the 462 in `euclid(1071, 462)` to 460, and in the brute-force line beneath it. The last non-zero remainder is 1, so only 1 m pieces empty both: the drums are **coprime** ([Coprime numbers](05-coprime-numbers.md)).
 
 ---
 
@@ -258,8 +236,8 @@ Both outputs match line for line: whole metres, nothing to round.
 
 ## Where you meet it in real life
 
-- **Fractions in lowest terms.** Reducing a fraction divides top and bottom by their gcd, found this way: [fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md).
-- **Keys and codes.** Bank logins lean on the gap between the two roads here: gcd is cheap, factoring is not. Two columns wider, the same loop builds a key: [bezouts-identity](04-bezouts-identity.md).
+- **Fractions in lowest terms.** Reducing a fraction divides top and bottom by their gcd, found this way: [Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md).
+- **Keys and codes.** Bank logins lean on the gap between the two roads here: gcd is cheap, factoring is not. Two columns wider, the same loop builds a key: [Bezout's identity](04-bezouts-identity.md).
 - **Cutting stock.** Timber, tape, sheet metal: two supplies cut to one size with no offcut, at their gcd.
 
 > **Say it back**
@@ -269,14 +247,14 @@ Both outputs match line for line: whole metres, nothing to round.
 
 ## What this builds on
 
-- [multiplying-and-dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): dividing one whole number by another, which every line here is.
-- [division-with-remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md): the quotient-and-remainder split, and why a remainder is always the smaller.
-- [gcd](01-gcd.md): what the gcd is, and the factor-list route this replaces.
+- [Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): dividing one whole number by another, which every line here is.
+- [Division with a remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md): the quotient-and-remainder split, and why a remainder is always the smaller.
+- [Greatest common divisor](01-gcd.md): what the gcd is, and the factor-list route this replaces.
 
 ## Where this goes next
 
-- [bezouts-identity](04-bezouts-identity.md): run the same divisions backwards and the gcd comes out as whole-number helpings of the two starting numbers.
-- [continued-fractions-and-leap-years](../07-For%20the%20Curious/05-continued-fractions-and-leap-years.md): the discarded quotients, in order, give the best simple fractions near a ratio — how calendars pick leap years.
+- [Bezout's identity](04-bezouts-identity.md): run the same divisions backwards and the gcd comes out as whole-number helpings of the two starting numbers.
+- [Continued fractions](../07-For%20the%20Curious/05-continued-fractions-and-leap-years.md): the discarded quotients, in order, give the best simple fractions near a ratio — how calendars pick leap years.
 
 ---
 

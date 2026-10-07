@@ -1,25 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Tours - Euler and Hamilton
-topic: Covering every street
-item: The Chinese postman
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/11-Tours - Euler and Hamilton/01-euler-circuits|euler-circuits]]"
-  - "[[Cards/04-Combinatorics and graphs/10-Trees and Cheapest Routes/05-dijkstra|dijkstra]]"
-next: []
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - chinese-postman
----
-
 # The Chinese postman: when no Euler circuit exists, pair up the odd vertices as cheaply as possible and walk those streets twice
 
-Combinatorics and graphs → Tours - Euler and Hamilton → Covering every street → The Chinese postman
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Tours - Euler and Hamilton](../../../SYLLABUS.md#w04-s11) → The Chinese postman
 
 ---
 
@@ -27,7 +8,7 @@ Combinatorics and graphs → Tours - Euler and Hamilton → Covering every stree
 
 A postman parks the van at junction A of a small estate: nine junctions in a 3 by 3 grid, lettered A to I across the rows, joined by twelve streets of 100 m. Every street needs a delivery, and the round must end back at the van. That is 1,200 m of street; the shortest round is 1,600 m.
 
-The extra 400 m is forced. A round walking every street exactly once and ending where it began exists only when every junction meets an even number of streets ([euler-circuits](01-euler-circuits.md)). Four junctions here meet three: B, D, F and H, the middles of the sides. So some streets must be walked twice — which, and how few metres?
+The extra 400 m is forced. A round walking every street exactly once and ending where it began exists only when every junction meets an even number of streets ([Euler circuits](01-euler-circuits.md)). Four junctions here meet three: B, D, F and H, the middles of the sides. So some streets must be walked twice — which, and how few metres?
 
 One move answers it. Take the junctions an odd number of streets meet — **odd junctions** from here on — and pair them up; for each pair, walk the shortest route between its two a second time. Doubling a street adds one at each end, and a junction passed through gains two, so only the pair's counts flip. Every junction is then even, and one round covers the lot.
 
@@ -61,7 +42,7 @@ deg counts the streets at a junction. The corners A, C, G and I are on two, the 
 
 ## The formula
 
-Symbols first. $w(e)$ is the length of the street named in the brackets, 100 m across this estate. $d(u,v)$ is the length of the shortest walk between two junctions ([dijkstra](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md)). The odd junctions are collected as $O$, and a **pairing** $M$ splits $O$ into pairs, every odd junction in one. A capital sigma says "add one term per item listed underneath"; "min over $M$" says "work the sum out for every pairing, keep the smallest".
+Symbols first. $w(e)$ is the length of the street named in the brackets, 100 m across this estate. $d(u,v)$ is the length of the shortest walk between two junctions ([Dijkstra's algorithm](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md)). The odd junctions are collected as $O$, and a **pairing** $M$ splits $O$ into pairs, every odd junction in one. A capital sigma says "add one term per item listed underneath"; "min over $M$" says "work the sum out for every pairing, keep the smallest".
 
 $$L = \sum_{e \in E} w(e) \;+\; \min_{M} \sum_{\{u,v\} \in M} d(u,v)$$
 
@@ -77,7 +58,7 @@ $$L = \sum_{e \in E} w(e) \;+\; \min_{M} \sum_{\{u,v\} \in M} d(u,v)$$
 | $M$ | one pairing of $O$ | B with F, D with H | — |
 | $L$ | the shortest closed round | 1,600 m | — |
 
-The pairings are easy to count. Write 2k for the number of odd junctions, a count the handshaking sum forces to be even ([degree-and-handshaking](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)): the first takes any of the other 2k − 1, the rest pair the same way, so there are
+The pairings are easy to count. Write 2k for the number of odd junctions, a count the handshaking sum forces to be even ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)): the first takes any of the other 2k − 1, the rest pair the same way, so there are
 
 $$1 \times 3 \times 5 \times \cdots \times (2k-1)$$
 
@@ -85,7 +66,7 @@ of them: three for four odd junctions, 945 for ten.
 
 ### When it holds
 
-- **Every street covered, the map in one piece.** Split the estate and no round reaches both halves ([connectivity-and-breadth-first-search](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)).
+- **Every street covered, the map in one piece.** Split the estate and no round reaches both halves ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)).
 - **Lengths positive, a street the same price either way.** One-way streets need flows, not pairings.
 - **A second pass allowed anywhere, at full price.** A street barred from repeats, or free the second time, changes the sum.
 
@@ -95,7 +76,7 @@ of them: three for four odd junctions, 945 for ten.
 
 ### Step 0: repeating a street is the same as drawing it twice
 
-A round that walks B-C twice walks every street once on a map where B-C appears twice. Add a copy per repeat and the round is an Euler circuit of that fuller map: every copy used once, ending where it started. The route question has become a map question — which copies to add ([euler-circuits](01-euler-circuits.md)).
+A round that walks B-C twice walks every street once on a map where B-C appears twice. Add a copy per repeat and the round is an Euler circuit of that fuller map: every copy used once, ending where it started. The route question has become a map question — which copies to add ([Euler circuits](01-euler-circuits.md)).
 
 ### Step 1: the added copies must be odd exactly where the map is odd
 
@@ -178,7 +159,7 @@ The code prints all three of those.
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported, and the round is reached three ways. Road one is this card's method: count the streets at each junction, get every shortest walk by Floyd's method — each junction tried in turn as a stepping stone ([dijkstra](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md)) — then list the pairings and keep the cheapest. Road two mentions neither pairings nor shortest walks: all 4,096 sets of the twelve streets, keeping the smallest whose odd junctions match the map's. Road three walks the answer, taking any unused street at the junction under foot: Hierholzer's method.
+Nothing is imported, and the round is reached three ways. Road one is this card's method: count the streets at each junction, get every shortest walk by Floyd's method — each junction tried in turn as a stepping stone ([Dijkstra's algorithm](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md)) — then list the pairings and keep the cheapest. Road two mentions neither pairings nor shortest walks: all 4,096 sets of the twelve streets, keeping the smallest whose odd junctions match the map's. Road three walks the answer, taking any unused street at the junction under foot: Hierholzer's method.
 
 ### Python
 
@@ -393,7 +374,7 @@ The two outputs match line for line.
 >
 > - **Walking every street twice to be safe.** 2,400 m here, 800 m more than needed.
 > - **Expecting a pair to be joined by one street.** No two of B, D, F and H are neighbours, and each pair still costs 200 m: a pair is charged a walk, and every street on it is doubled.
-> - **Reading it as the travelling salesman.** Covering every street is this card, settled quickly; visiting every junction once is the other problem, with no quick method known ([travelling-salesman-in-outline](04-travelling-salesman-in-outline.md)).
+> - **Reading it as the travelling salesman.** Covering every street is this card, settled quickly; visiting every junction once is the other problem, with no quick method known ([The travelling salesman](04-travelling-salesman-in-outline.md)).
 
 ---
 
@@ -410,16 +391,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [euler-circuits](01-euler-circuits.md): why a round using every street once needs every junction even, and how to walk one.
-- [dijkstra](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md): the shortest walk between two junctions, the price of a pair.
+- [Euler circuits](01-euler-circuits.md): why a round using every street once needs every junction even, and how to walk one.
+- [Dijkstra's algorithm](../10-Trees%20and%20Cheapest%20Routes/05-dijkstra.md): the shortest walk between two junctions, the price of a pair.
 
 ## Where this goes next
 
-- [hamiltonian-cycles](03-hamiltonian-cycles.md): a tour through every junction once, which no parity test decides.
-- [travelling-salesman-in-outline](04-travelling-salesman-in-outline.md): the cheapest such tour, and why it resists the methods that settle this card.
-- [de-bruijn-sequences](05-de-bruijn-sequences.md): an Euler circuit building the shortest string holding every block of symbols.
+- [Hamiltonian cycles](03-hamiltonian-cycles.md): a tour through every junction once, which no parity test decides.
+- [The travelling salesman](04-travelling-salesman-in-outline.md): the cheapest such tour, and why it resists the methods that settle this card.
+- [De Bruijn sequences](05-de-bruijn-sequences.md): an Euler circuit building the shortest string holding every block of symbols.
 
-Parity settled the street-covering round cheaply. Ask for a round visiting every junction once and parity has nothing to say, which is where [hamiltonian-cycles](03-hamiltonian-cycles.md) begins.
+Parity settled the street-covering round cheaply. Ask for a round visiting every junction once and parity has nothing to say, which is where [Hamiltonian cycles](03-hamiltonian-cycles.md) begins.
 
 ---
 

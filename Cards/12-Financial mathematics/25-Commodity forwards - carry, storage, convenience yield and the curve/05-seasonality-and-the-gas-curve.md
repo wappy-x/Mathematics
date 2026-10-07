@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Commodity forwards - carry, storage, convenience yield and the curve
-topic: Gas storage spreads
-item: Seasonal curves
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/04-contango-backwardation-and-roll-yield|contango-backwardation-and-roll-yield]]"
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/02-storage-cost-and-the-carry-ceiling|storage-cost-and-the-carry-ceiling]]"
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/01-right-triangle-trigonometry|right-triangle-trigonometry]]"
-next:
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/07-electricity-and-the-spark-spread|electricity-and-the-spark-spread]]"
-tags: [mathematics, financial mathematics, seasonality-and-the-gas-curve]
----
-
 # Seasonal curves: natural gas forwards that hump every winter, and the storage trade that keeps summer-to-winter spreads bounded
 
-Financial mathematics → Commodity forwards - carry, storage, convenience yield and the curve → Gas storage spreads → Seasonal curves
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Commodity forwards - carry, storage, convenience yield and the curve](../../../SYLLABUS.md#w12-s25) → Seasonal curves
 
 ---
 
@@ -87,7 +69,7 @@ $$F_w - F_s \;\le\; c + F_s\,(e^{r\tau} - 1)$$
 | $\tau$ | time from summer to winter delivery. Say "tau". | 0.5 years | the cap rises |
 | $e^{r\tau}$ | what $1 borrowed in July has grown to by January | 1.0253 | — |
 
-The pair $A$, $B$ and the pair $\beta$, $2\pi t_0$ are the same information in two forms. $A$ and $B$ are the two legs of a right triangle, $\beta$ is its hypotenuse and $2\pi t_0$ is its angle ([right-triangle-trigonometry](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md)). The legs are easy to fit. The hypotenuse and angle are easy to read.
+The pair $A$, $B$ and the pair $\beta$, $2\pi t_0$ are the same information in two forms. $A$ and $B$ are the two legs of a right triangle, $\beta$ is its hypotenuse and $2\pi t_0$ is its angle ([Sine, cosine and tangent](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md)). The legs are easy to fit. The hypotenuse and angle are easy to read.
 
 ### When it holds
 
@@ -127,15 +109,15 @@ The second road to the same number makes no rearrangement. It values the trade's
 
 ### Step 3: why the bound does not run backwards
 
-A $0.30 spread puts January at $2.80. The storage trade then loses $0.3633 in January, so no one runs it. The mirror trade would sell July gas, buy January gas, and pocket the $0.60 fee plus interest that storage would have cost. That mirror trade needs gas in July to sell. Someone without gas would have to borrow it, and no deep market lends gas for six months the way banks lend gold; pipeline park-and-loan services are small and short ([gold-forward-and-the-lease-rate](01-gold-forward-and-the-lease-rate.md)). Only someone already holding gas in store can run it, and that inventory runs out.
+A $0.30 spread puts January at $2.80. The storage trade then loses $0.3633 in January, so no one runs it. The mirror trade would sell July gas, buy January gas, and pocket the $0.60 fee plus interest that storage would have cost. That mirror trade needs gas in July to sell. Someone without gas would have to borrow it, and no deep market lends gas for six months the way banks lend gold; pipeline park-and-loan services are small and short ([Gold forward](01-gold-forward-and-the-lease-rate.md)). Only someone already holding gas in store can run it, and that inventory runs out.
 
-So nothing pins the spread from below. It can sit at $0.30, at zero, or below zero, when gas held in July is worth more than gas promised for January. That extra worth of holding the physical gas is the convenience yield ([convenience-yield-implied-by-the-forward](03-convenience-yield-implied-by-the-forward.md)). The same one-sided ceiling appears for any storable good ([storage-cost-and-the-carry-ceiling](02-storage-cost-and-the-carry-ceiling.md)); gas makes it seasonal.
+So nothing pins the spread from below. It can sit at $0.30, at zero, or below zero, when gas held in July is worth more than gas promised for January. That extra worth of holding the physical gas is the convenience yield ([Convenience yield](03-convenience-yield-implied-by-the-forward.md)). The same one-sided ceiling appears for any storable good ([Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md)); gas makes it seasonal.
 
 ### Step 4: why a level times a shape
 
 Seasonal premiums scale with price. When gas is $5, the winter premium is a larger number of dollars than when gas is $2.50, because the same cold snap bids up a dearer fuel. A multiplicative shape captures that: every month is the level times a factor that depends only on the calendar. Logs turn the product into a sum, $\ln F = \ln L + \beta\cos(2\pi(t - t_0))$.
 
-The cosine of a difference splits into two pieces ([trig-identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)):
+The cosine of a difference splits into two pieces ([Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)):
 
 $$\beta\cos(2\pi t - 2\pi t_0) = \underbrace{\beta\cos(2\pi t_0)}_{A}\cos(2\pi t) + \underbrace{\beta\sin(2\pi t_0)}_{B}\sin(2\pi t).$$
 
@@ -166,7 +148,7 @@ With these, the least-squares equations have off-diagonal entries of zero and di
 
 A cold forecast lifts the whole strip. In this model, that is a change in $L$ with $\beta$ and $t_0$ fixed. The spread is then $L$ times the gap between the winter and summer factors, so it grows in proportion to the level. The cap does not: $c$ is a fee in dollars, and only the interest term grows with the July price. Lift the level by 20% and the $1.00 spread becomes $1.20 while the cap moves from $0.6633 to only $0.6759; the locked profit rises from $0.3367 to $0.5241. High prices make storage worth more.
 
-The alternative road to a curve's shape starts from the spot price instead: a spot that is pulled back toward a seasonal mean produces a forward curve with the same hump, damped at long dates ([mean-reverting-spot-and-the-futures-curve](06-mean-reverting-spot-and-the-futures-curve.md)).
+The alternative road to a curve's shape starts from the spot price instead: a spot that is pulled back toward a seasonal mean produces a forward curve with the same hump, damped at long dates ([A spot price that reverts](06-mean-reverting-spot-and-the-futures-curve.md)).
 
 ---
 
@@ -620,7 +602,7 @@ Orange: the storage trade's January profit if run regardless. Green: its value t
 >
 > Smaller traps:
 > - **Leaving out interest.** The cap comes out at $0.60 instead of $0.6633; every spread between the two looks like free money and is not.
-> - **Reading the hump as contango.** A curve that rises from July to January and falls again by April is seasonal, not a sign of rising prices. Roll returns on a seasonal curve repeat each year ([contango-backwardation-and-roll-yield](04-contango-backwardation-and-roll-yield.md)).
+> - **Reading the hump as contango.** A curve that rises from July to January and falls again by April is seasonal, not a sign of rising prices. Roll returns on a seasonal curve repeat each year ([Contango and backwardation](04-contango-backwardation-and-roll-yield.md)).
 > - **Trading the fit's misses.** The one-cosine curve misses April and October by 13 cents. That is the model's shape error, not a price error.
 > - **Using storage cost per month as all-in.** Space is leased for a season and pumping costs are charged each way; add them all before comparing.
 
@@ -630,8 +612,8 @@ Orange: the storage trade's January profit if run regardless. Green: its value t
 
 - **Gas storage operators.** Owners of salt caverns and depleted fields sell space for the season. The first number they quote is the spread this card computes: the summer-to-winter gap less costs, locked with forwards on the day the space is sold.
 - **Winter strips.** Utilities buy the November-to-March gas strip in summer to lock heating costs; its premium over summer is the hump fitted here.
-- **Power.** Electricity cannot be stored at scale, so it has no cap of this kind, and its seasonal spikes are much sharper: [electricity-and-the-spark-spread](../26-Options%20on%20commodity%20futures%20and%20spreads/07-electricity-and-the-spark-spread.md).
-- **Grain.** Wheat is cheapest at harvest and rises through the year by roughly the cost of storing it: the same ceiling, with an annual cycle driven by supply instead of demand ([storage-cost-and-the-carry-ceiling](02-storage-cost-and-the-carry-ceiling.md)).
+- **Power.** Electricity cannot be stored at scale, so it has no cap of this kind, and its seasonal spikes are much sharper: [Power that cannot be stored](../26-Options%20on%20commodity%20futures%20and%20spreads/07-electricity-and-the-spark-spread.md).
+- **Grain.** Wheat is cheapest at harvest and rises through the year by roughly the cost of storing it: the same ceiling, with an annual cycle driven by supply instead of demand ([Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md)).
 - **Petrol and heating oil.** Summer-grade petrol and winter heating oil carry their own humps, bounded by tank storage in the same one-sided way.
 
 > **Say it back**
@@ -641,13 +623,13 @@ Orange: the storage trade's January profit if run regardless. Green: its value t
 
 ## What this builds on
 
-- [contango-backwardation-and-roll-yield](04-contango-backwardation-and-roll-yield.md): the words for a curve that rises or falls with delivery date, which this card bends into a yearly hump.
-- [storage-cost-and-the-carry-ceiling](02-storage-cost-and-the-carry-ceiling.md): the one-sided ceiling that storage puts on a forward, here applied between two future dates.
-- [right-triangle-trigonometry](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md): cosine, sine and the triangle whose legs are $A$ and $B$ and whose hypotenuse is $\beta$.
+- [Contango and backwardation](04-contango-backwardation-and-roll-yield.md): the words for a curve that rises or falls with delivery date, which this card bends into a yearly hump.
+- [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md): the one-sided ceiling that storage puts on a forward, here applied between two future dates.
+- [Sine, cosine and tangent](../../05-Geometry%20and%20trig/03-Trigonometry/01-right-triangle-trigonometry.md): cosine, sine and the triangle whose legs are $A$ and $B$ and whose hypotenuse is $\beta$.
 
 ## Where this goes next
 
-- [electricity-and-the-spark-spread](../26-Options%20on%20commodity%20futures%20and%20spreads/07-electricity-and-the-spark-spread.md): a commodity that cannot be stored, so the cap vanishes, and the spread between power and the gas that makes it becomes the traded object.
+- [Power that cannot be stored](../26-Options%20on%20commodity%20futures%20and%20spreads/07-electricity-and-the-spark-spread.md): a commodity that cannot be stored, so the cap vanishes, and the spread between power and the gas that makes it becomes the traded object.
 
 Storage made the spread's ceiling a fixed cost; the open question is what a spread is worth when nothing can carry the commodity from one date to another, and that is where electricity starts.
 

@@ -1,37 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Counting Principles
-topic: Unordered selection
-item: Combinations, n choose k
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/04-ordered-picks|ordered-picks]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/07-fractions|fractions]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/06-complementary-counting|complementary-counting]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/01-multiset-permutations|multiset-permutations]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/02-stars-and-bars|stars-and-bars]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/04-circular-arrangements|circular-arrangements]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/05-bijection-and-double-counting|bijection-and-double-counting]]"
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/01-pascals-rule-and-the-triangle|pascals-rule-and-the-triangle]]"
-  - "[[Cards/04-Combinatorics and graphs/06-Lattice Paths and Catalan Numbers/01-lattice-paths|lattice-paths]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/01-graphs-vertices-and-edges|graphs-vertices-and-edges]]"
-  - "[[Cards/04-Combinatorics and graphs/14-Ramsey and Extremal, in Outline/05-mantel-and-turan|mantel-and-turan]]"
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/04-equally-likely-outcomes-and-counting|equally-likely-outcomes-and-counting]]"
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/03-hypergeometric|hypergeometric]]"
-  - "[[Cards/24-Computability and complexity/05-Algebraic, Interactive and Quantum/02-counting-solutions-and-sharp-p|counting-solutions-and-sharp-p]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - n-choose-k
----
-
 # Combinations, n choose k: unordered picks are ordered picks divided by k!, the workhorse of counting
 
-Combinatorics and graphs → Counting Principles → Unordered selection → Combinations, n choose k
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Counting Principles](../../../SYLLABUS.md#w04-s01) → Combinations, n choose k
 
 ---
 
@@ -39,7 +8,7 @@ Combinatorics and graphs → Counting Principles → Unordered selection → Com
 
 A lottery machine holds 49 numbered balls and draws six. A ticket carries six numbers. The order the balls leave the drum changes nothing: 4, 11, 23, 28, 39 and 46 is one ticket however those six come out.
 
-Counting the draws in order is the easy part. The first ball can be any of the 49, the second any of the 48 still in the drum, down to 44 for the sixth: 49 × 48 × 47 × 46 × 45 × 44 = 10,068,347,520 ordered draws ([ordered-picks](04-ordered-picks.md)).
+Counting the draws in order is the easy part. The first ball can be any of the 49, the second any of the 48 still in the drum, down to 44 for the sixth: 49 × 48 × 47 × 46 × 45 × 44 = 10,068,347,520 ordered draws ([Ordered picks](04-ordered-picks.md)).
 
 Ten billion is far too many: it counts each ticket over and over. Those six numbers can leave the drum in 720 different orders, and all 720 are the same ticket. Divide the repeats out: 10,068,347,520 ÷ 720 = 13,983,816 tickets.
 
@@ -62,7 +31,7 @@ flowchart TB
 
 ## The formula
 
-Notation first, in words. The count of picks with the order thrown away is written C(n, k) and read "n choose k": the ways to take k things out of n when no order is recorded. Books often stack the two numbers in a tall bracket; this library writes C(n, k). The factorial n! — the orders of n different things, n × (n−1) × … × 1 — comes from [factorial](03-factorial.md).
+Notation first, in words. The count of picks with the order thrown away is written C(n, k) and read "n choose k": the ways to take k things out of n when no order is recorded. Books often stack the two numbers in a tall bracket; this library writes C(n, k). The factorial n! — the orders of n different things, n × (n−1) × … × 1 — comes from [Factorials](03-factorial.md).
 
 $$C(n, k) = \frac{n!}{k!\,(n-k)!}$$
 
@@ -84,13 +53,13 @@ That is the form used by hand and by the code: six factors over 720, never the f
 | $C(n,k)$ | the count of picks, order thrown away | C(49,6) = 13,983,816 | — |
 | $P(n,k)$ | ordered picks: the same k in order | 10,068,347,520 | — |
 
-The helper is one card back: ordered picks, $P(n, k) = n!/(n-k)!$, the same k things counted with their order kept ([ordered-picks](04-ordered-picks.md)). C(n, k) is that divided by k!.
+The helper is one card back: ordered picks, $P(n, k) = n!/(n-k)!$, the same k things counted with their order kept ([Ordered picks](04-ordered-picks.md)). C(n, k) is that divided by k!.
 
 ### When it holds
 
 - **Whole numbers, with $k$ between 0 and $n$.** Outside that range nothing exists to count and the answer is zero; no factorial of a negative number is ever asked for.
 - **The things are all different.** Two balls stamped 17 would merge some tickets, dropping the true count below 13,983,816.
-- **Nothing is taken twice.** The balls are not returned. Put each one back and keep the order and the count is 49^6 = 13,841,287,201 ([strings-and-powers](02-strings-and-powers.md)); put each back and drop the order and it is a third count again ([stars-and-bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md)).
+- **Nothing is taken twice.** The balls are not returned. Put each one back and keep the order and the count is 49^6 = 13,841,287,201 ([Strings with repetition](02-strings-and-powers.md)); put each back and drop the order and it is a third count again ([Stars and bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md)).
 - **The order is genuinely thrown away.** If the six balls filled six different prizes, order pays and the answer is 10,068,347,520.
 
 ---
@@ -105,11 +74,11 @@ Counting ordered things is easy; counting unordered things is not. So count the 
 
 ### Step 1: the ordered draws are a product
 
-49 choices, then 48, 47, 46, 45, 44: multiplied, 10,068,347,520 ordered draws ([rules-of-sum-and-product](01-rules-of-sum-and-product.md)).
+49 choices, then 48, 47, 46, 45, 44: multiplied, 10,068,347,520 ordered draws ([The rules of sum and product](01-rules-of-sum-and-product.md)).
 
 ### Step 2: every ticket was counted 6! times, exactly
 
-Fix one ticket: 4, 11, 23, 28, 39, 46. Which ordered draws produce it? The orderings of those six numbers, 6 × 5 × 4 × 3 × 2 × 1 = 720 of them ([factorial](03-factorial.md)).
+Fix one ticket: 4, 11, 23, 28, 39, 46. Which ordered draws produce it? The orderings of those six numbers, 6 × 5 × 4 × 3 × 2 × 1 = 720 of them ([Factorials](03-factorial.md)).
 
 Nothing about that ticket was special: any six different numbers have 720 orderings. So the ordered draws fall into piles, one per ticket, every pile 720 deep, no draw in two piles.
 
@@ -149,7 +118,7 @@ flowchart LR
 
 Two names for one decision.
 
-Another road: mark one player — every eleven either uses that player or does not, and counting the two cases apart gives each entry of Pascal's triangle as the sum of the two above it, by addition alone. That is the second road the code takes, proved on [pascals-rule-and-the-triangle](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md).
+Another road: mark one player — every eleven either uses that player or does not, and counting the two cases apart gives each entry of Pascal's triangle as the sum of the two above it, by addition alone. That is the second road the code takes, proved on [Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md).
 
 ---
 
@@ -397,7 +366,7 @@ The two outputs match line for line.
 >
 > - **Dividing by k instead of k!.** That leaves 1,678,057,920: the orders of the other five balls were never cancelled. The divisor is the number of orders, 720, not the number of balls, 6.
 > - **Assuming a bigger pick is always more ways.** Eleven from 20 gives 167,960, and so does nine from 20; counts climb to the middle of a row, then fall back.
-> - **Letting a thing be taken twice.** With each ball returned the count is 13,841,287,201, a different question ([strings-and-powers](02-strings-and-powers.md)).
+> - **Letting a thing be taken twice.** With each ball returned the count is 13,841,287,201, a different question ([Strings with repetition](02-strings-and-powers.md)).
 > - **Naming positions without meaning to.** "Pick eleven players" and "fill eleven numbered shirts" are different counts: 167,960 against 6,704,425,728,000.
 
 ---
@@ -406,9 +375,9 @@ The two outputs match line for line.
 
 - **Draws and lotteries.** Six balls from 49 make 13,983,816 tickets; every lottery's headline odds are a count like this one.
 - **Team sheets and rotas.** 167,960 starting elevens from a squad of 20; the manager who picks the nine to rest counts the same thing.
-- **Testing a batch.** How many samples of a fixed size a delivery holds is a choose; which of them hold a stated number of faulty units is [hypergeometric](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/03-hypergeometric.md).
+- **Testing a batch.** How many samples of a fixed size a delivery holds is a choose; which of them hold a stated number of faulty units is [Hypergeometric](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/03-hypergeometric.md).
 - **Computing.** A pick of k out of n is a pattern of on-and-off bits, which is how the code lists all 1,048,576 line-ups of the squad.
-- **Counting what is left out.** When the unwanted cases are the smaller pile, count those and subtract: [complementary-counting](06-complementary-counting.md).
+- **Counting what is left out.** When the unwanted cases are the smaller pile, count those and subtract: [Counting the complement](06-complementary-counting.md).
 
 > **Say it back**
 > A combination is a pick with the order thrown away. Count in order first, since that is a plain product: 10,068,347,520 ordered lottery draws. Every ticket shows up once for each of its 720 orders, and every ticket has the same 720, so dividing is allowed: 13,983,816 tickets. Written out, C(n, k) = n!/(k!(n−k)!); in practice, k factors on top over k!. Picking eleven from twenty also picks the nine who sit out: C(20, 11) = C(20, 9) = 167,960.
@@ -417,25 +386,25 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [ordered-picks](04-ordered-picks.md): the count 10,068,347,520 this card divides, and the notation P(n, k).
-- [fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): dividing a count into equal piles, and why the answer is a whole number of them.
+- [Ordered picks](04-ordered-picks.md): the count 10,068,347,520 this card divides, and the notation P(n, k).
+- [Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): dividing a count into equal piles, and why the answer is a whole number of them.
 
 ## Where this goes next
 
-- [complementary-counting](06-complementary-counting.md): count the unwanted cases and subtract, when that pile is smaller.
-- [multiset-permutations](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md): arrangements when some things are identical, dividing once per repeated group.
-- [stars-and-bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md): picks where a thing may be taken more than once.
-- [circular-arrangements](../02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md): seats round a table, where the repeats divided out are rotations.
-- [bijection-and-double-counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md): the pairing of Step 4 as a general method.
-- [pascals-rule-and-the-triangle](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md): the addition road, proved, and the triangle it builds.
-- [lattice-paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md): the same count as routes across a grid.
-- [graphs-vertices-and-edges](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md): picks of two counting the possible lines between dots.
-- [mantel-and-turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/05-mantel-and-turan.md): how many such lines a network holds before a triangle is forced.
-- [equally-likely-outcomes-and-counting](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/04-equally-likely-outcomes-and-counting.md): favourable picks over possible picks, where lottery odds come from.
-- [hypergeometric](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/03-hypergeometric.md): counting the picks holding a stated number of winners.
-- counting-solutions-and-sharp-p: counting when no formula like this one exists.
+- [Counting the complement](06-complementary-counting.md): count the unwanted cases and subtract, when that pile is smaller.
+- [Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md): arrangements when some things are identical, dividing once per repeated group.
+- [Stars and bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md): picks where a thing may be taken more than once.
+- [Round tables and bracelets](../02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md): seats round a table, where the repeats divided out are rotations.
+- [Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md): the pairing of Step 4 as a general method.
+- [Pascal's rule](../03-Binomial%20Coefficients%20and%20Identities/01-pascals-rule-and-the-triangle.md): the addition road, proved, and the triangle it builds.
+- [Lattice paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md): the same count as routes across a grid.
+- [Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md): picks of two counting the possible lines between dots.
+- [Mantel and Turan](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/05-mantel-and-turan.md): how many such lines a network holds before a triangle is forced.
+- [Counting chances](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/04-equally-likely-outcomes-and-counting.md): favourable picks over possible picks, where lottery odds come from.
+- [Hypergeometric](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/03-hypergeometric.md): counting the picks holding a stated number of winners.
+- Counting: counting when no formula like this one exists.
 
-Every count here assumed 49 different numbers, each taken once; what to do when some things are identical is [multiset-permutations](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md).
+Every count here assumed 49 different numbers, each taken once; what to do when some things are identical is [Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md).
 
 ---
 

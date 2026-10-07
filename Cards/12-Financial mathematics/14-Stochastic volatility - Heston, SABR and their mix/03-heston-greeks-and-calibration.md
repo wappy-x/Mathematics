@@ -1,36 +1,14 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Stochastic volatility - Heston, SABR and their mix
-topic: Differentiating and inverting the model
-item: Heston Greeks and calibration
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/02-heston-pricing-by-characteristic-function|heston-pricing-by-characteristic-function]]"
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/04-svi-smile-fit|svi-smile-fit]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/06-calibration-as-least-squares|calibration-as-least-squares]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/01-bump-and-revalue-and-common-random-numbers|bump-and-revalue-and-common-random-numbers]]"
-next:
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/06-stochastic-local-volatility|stochastic-local-volatility]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - heston-greeks-and-calibration
----
-
 # Heston Greeks and calibration: sensitivities from the integral, and five parameters from a surface
 
-Financial mathematics → Stochastic volatility - Heston, SABR and their mix → Differentiating and inverting the model → Heston Greeks and calibration
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Stochastic volatility - Heston, SABR and their mix](../../../SYLLABUS.md#w12-s14) → Heston Greeks and calibration
 
 ---
 
 ## General Overview
 
-At the close, the Acme options desk holds 21 quotes: calls at 3 months, 6 months and 1 year, each at seven strikes from $80 to $120. Each is quoted as an implied volatility, the one volatility that makes Black-Scholes return that call's price. Acme trades at $100, cash earns 5% and the dividend yield is 2%. The 3-month $80 call is quoted at 28.61%, the 3-month $120 call at 12.69%. This is the house surface of [volatility-surface-and-its-arbitrage-rules](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md), at seven of its nine strikes.
+At the close, the Acme options desk holds 21 quotes: calls at 3 months, 6 months and 1 year, each at seven strikes from $80 to $120. Each is quoted as an implied volatility, the one volatility that makes Black-Scholes return that call's price. Acme trades at $100, cash earns 5% and the dividend yield is 2%. The 3-month $80 call is quoted at 28.61%, the 3-month $120 call at 12.69%. This is the house surface of [The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md), at seven of its nine strikes.
 
-The desk prices with the Heston model ([heston-model](01-heston-model.md)), where Acme's variance wanders and is pulled back toward a long-run level. Five dials set it, and one integral turns them into a price ([heston-pricing-by-characteristic-function](02-heston-pricing-by-characteristic-function.md)). Two jobs are left.
+The desk prices with the Heston model ([The Heston model](01-heston-model.md)), where Acme's variance wanders and is pulled back toward a long-run level. Five dials set it, and one integral turns them into a price ([Pricing Heston exactly](02-heston-pricing-by-characteristic-function.md)). Two jobs are left.
 
 The first is risk: how fast a held option's price moves when the share or a dial moves, its **Greeks**. They come from differentiating inside the pricing integral, and again from nudging an input and repricing. Both give the one-year $100 call a delta, the shares that hedge it, of 0.6427. Black-Scholes, at the one volatility that gives the same price, says 0.5873.
 
@@ -59,13 +37,13 @@ From 0.5 to 2 the best miss barely moves, 0.7429 to 0.7330 and back to 0.7406; a
 
 ## The formula
 
-Notation first, in words. Acme's price is $S$ today and $S_T$ at expiry, $T$ years away; $K$ is the strike, $r$ the bank rate and $q$ the dividend yield, both continuously compounded. The five dials, at the anchor values of [heston-model](01-heston-model.md): today's variance $v_0$ (0.04), the pull speed $\kappa$ ("kappa", 2 a year), the long-run variance $\theta$ ("theta", 0.04), the vol of vol $\xi$ ("xi", 0.3), which sets how hard variance wanders, and the correlation $\rho$ ("rho", −0.7) between the share's random kicks and variance's. The forward $F = S e^{(r-q)T}$ is the price agreed today for Acme at expiry, and $k = \ln(K/F)$ is the strike's log distance from it. $i$ is the imaginary unit, $i^2 = -1$, and Re takes a complex number's real part.
+Notation first, in words. Acme's price is $S$ today and $S_T$ at expiry, $T$ years away; $K$ is the strike, $r$ the bank rate and $q$ the dividend yield, both continuously compounded. The five dials, at the anchor values of [The Heston model](01-heston-model.md): today's variance $v_0$ (0.04), the pull speed $\kappa$ ("kappa", 2 a year), the long-run variance $\theta$ ("theta", 0.04), the vol of vol $\xi$ ("xi", 0.3), which sets how hard variance wanders, and the correlation $\rho$ ("rho", −0.7) between the share's random kicks and variance's. The forward $F = S e^{(r-q)T}$ is the price agreed today for Acme at expiry, and $k = \ln(K/F)$ is the strike's log distance from it. $i$ is the imaginary unit, $i^2 = -1$, and Re takes a complex number's real part.
 
 The model's fingerprint, its **characteristic function** at a frequency $z$, has a log that is a straight line in $v_0$ and in $\theta$:
 
 $$\varphi(z) = \mathbb{E}\!\left[e^{\,iz\ln(S_T/F)}\right] = e^{\,\theta H(z) + v_0 B(z)}$$
 
-$H$ and $B$ depend on $\kappa$, $\xi$, $\rho$, the expiry and $z$ only. $B$ is the $B$ of [heston-pricing-by-characteristic-function](02-heston-pricing-by-characteristic-function.md), and $\theta H$ is its $A(u)$ less the drift, since the log price here is measured from the forward. The price is that card's Lewis integral over real frequencies $u$:
+$H$ and $B$ depend on $\kappa$, $\xi$, $\rho$, the expiry and $z$ only. $B$ is the $B$ of [Pricing Heston exactly](02-heston-pricing-by-characteristic-function.md), and $\theta H$ is its $A(u)$ less the drift, since the log price here is measured from the forward. The price is that card's Lewis integral over real frequencies $u$:
 
 $$C = S e^{-qT} - \frac{\sqrt{FK}\,e^{-rT}}{\pi}\int_0^\infty \mathrm{Re}\!\left[\frac{e^{-iuk}\,\varphi(u - \tfrac{i}{2})}{u^2 + \tfrac14}\right] du$$
 
@@ -114,7 +92,7 @@ The root-mean-square miss is $\sqrt{\sum e_j^2/21}$, over the quotes only. Fits 
 - **Uniqueness.** Barely. The profile shows one lowest point near $\kappa = 1.22$: fit B stops at 1.2247 and fit A, run to a far finer tolerance, at 1.2187, with the other four dials within 0.001 of each other. But from $\kappa = 1$ to 1.5 the best miss moves only in the fourth decimal, 0.7330 to 0.7334.
 - **The edges.** As $\xi \to 0$ variance stops wandering, $\rho$ drops out of every price, and Heston becomes Black-Scholes at the average variance: with $\xi = 0.0001$, $v_0 = 0.02$ and $\theta = 0.06$, 9.479339 against 9.479325. As $\kappa \to 0$ variance is never pulled home and $\theta$ drops out. As $\kappa$ grows without bound variance sits at $\theta$ at once and $v_0$ drops out. Near each edge one dial is invisible to the quotes.
 
-Conventions verified 24 Sep 2026 against [volatility-surface-and-its-arbitrage-rules](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md): quotes are Black-Scholes implied volatilities of European calls in percent, rates continuously compounded; each vega is taken at its quote's own volatility.
+Conventions verified 24 Sep 2026 against [The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md): quotes are Black-Scholes implied volatilities of European calls in percent, rates continuously compounded; each vega is taken at its quote's own volatility.
 
 ---
 
@@ -151,7 +129,7 @@ The split is the model speaking. A change in today's variance fades at speed $\k
 
 ### Step 3: the other three dials, by bumps on a fixed grid
 
-The pull speed, vol of vol and correlation sit inside a square root and a logarithm, so the chain rule is long. Bumping is short: move the dial 0.0001 each way, reprice, divide by 0.0002. The frequency grid is the same both times, so its small error cancels in the difference, the integral's version of reusing random numbers ([bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)). The Lewis and Gil-Pelaez roads agree to every printed digit: $\partial C/\partial\kappa = 0.082013$, $\partial C/\partial\xi = -1.241130$, $\partial C/\partial\rho = 0.026929$. The exact road differentiates $H$ and $B$ through $\beta$, $d$ and $g$ by the chain rule, by hand or by machine ([adjoint-differentiation-in-outline](../07-Greeks%20by%20Numbers%20and%20Calibration/03-adjoint-differentiation-in-outline.md)).
+The pull speed, vol of vol and correlation sit inside a square root and a logarithm, so the chain rule is long. Bumping is short: move the dial 0.0001 each way, reprice, divide by 0.0002. The frequency grid is the same both times, so its small error cancels in the difference, the integral's version of reusing random numbers ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)). The Lewis and Gil-Pelaez roads agree to every printed digit: $\partial C/\partial\kappa = 0.082013$, $\partial C/\partial\xi = -1.241130$, $\partial C/\partial\rho = 0.026929$. The exact road differentiates $H$ and $B$ through $\beta$, $d$ and $g$ by the chain rule, by hand or by machine ([Adjoint differentiation](../07-Greeks%20by%20Numbers%20and%20Calibration/03-adjoint-differentiation-in-outline.md)).
 
 The signs have reasons. An at-the-money call is nearly a straight line in volatility, so it bends downward in variance, and spreading variance out lowers the average of anything that bends down: more vol of vol, lower price. A faster pull damps the spreading. The correlation tilts the smile about a point near the money, so it barely moves this call.
 
@@ -160,7 +138,7 @@ The signs have reasons. An at-the-money call is nearly a straight line in volati
 
 With $\beta = \kappa - \rho\xi\,iz$, $d = \sqrt{\beta^2 + \xi^2(iz + z^2)}$ with real part not negative, and $g = (\beta - d)/(\beta + d)$:
 $$B(z) = \frac{\beta - d}{\xi^2}\cdot\frac{1 - e^{-dT}}{1 - g\,e^{-dT}}, \qquad H(z) = \frac{\kappa}{\xi^2}\left[(\beta - d)T - 2\ln\frac{1 - g\,e^{-dT}}{1 - g}\right]$$
-This choice of root keeps the logarithm off its cut; Heston's 1993 layout takes the other root, the trap on [heston-pricing-by-characteristic-function](02-heston-pricing-by-characteristic-function.md).
+This choice of root keeps the logarithm off its cut; Heston's 1993 layout takes the other root, the trap on [Pricing Heston exactly](02-heston-pricing-by-characteristic-function.md).
 
 </details>
 
@@ -170,11 +148,11 @@ By the doubling rule, a Heston implied volatility depends on the strike only thr
 
 $$\Delta_{\mathrm{Heston}} = \Delta_{\mathrm{BS}} - \frac{K}{S}\,\mathrm{vega}\,\frac{\partial \sigma}{\partial K}$$
 
-With vega $37.89 and the anchor's slope, −0.001461 per dollar of strike (about 0.15 vol points per dollar), the correction is +0.055370, and 0.587298 + 0.055370 = 0.642668, the integral's delta. This is the sticky-moneyness rule of [smile-adjusted-delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md), which Heston obeys exactly.
+With vega $37.89 and the anchor's slope, −0.001461 per dollar of strike (about 0.15 vol points per dollar), the correction is +0.055370, and 0.587298 + 0.055370 = 0.642668, the integral's delta. This is the sticky-moneyness rule of [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md), which Heston obeys exactly.
 
 ### Step 5: calibration is 21 Greeks at once
 
-The fit walks the dials downhill by Levenberg-Marquardt ([calibration-as-least-squares](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)): the step that would minimise the squared misses if prices were straight lines in the dials, shortened by a damping that grows after a refused step. Its slope table has one row per quote and one column per dial, the sensitivities of Steps 2 and 3 at 21 options, taken by one-sided bumps of 0.0001. It stops when a step lowers $\sqrt{L/21}$ by less than 0.001 vol points.
+The fit walks the dials downhill by Levenberg-Marquardt ([Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)): the step that would minimise the squared misses if prices were straight lines in the dials, shortened by a damping that grows after a refused step. Its slope table has one row per quote and one column per dial, the sensitivities of Steps 2 and 3 at 21 options, taken by one-sided bumps of 0.0001. It stops when a step lowers $\sqrt{L/21}$ by less than 0.001 vol points.
 
 ### Step 6: why the fit is ill-posed
 
@@ -700,16 +678,16 @@ The outputs agree line for line. The fits are the fragile part: with slope-table
 >
 > - **Taking $\partial C/\partial v_0$ as vega.** It prices a fading move: $0.1597 per vol point where a surface move is $0.3755.
 > - **Quoting a fit without its rules.** Tolerance, vega scales and prior are part of the answer.
-> - **Ignoring the Feller condition.** Fit B has $2\kappa\theta$ = 0.2174 below $\xi^2$ = 0.4498, so its variance can touch zero ([heston-model](01-heston-model.md)). The integral does not care; a simulation of fit B must handle variance at zero.
+> - **Ignoring the Feller condition.** Fit B has $2\kappa\theta$ = 0.2174 below $\xi^2$ = 0.4498, so its variance can touch zero ([The Heston model](01-heston-model.md)). The integral does not care; a simulation of fit B must handle variance at zero.
 
 ---
 
 ## Where you meet it in real life
 
-- **Equity index desks.** Heston, or Heston with jumps, is refitted to the listed surface daily, often with a penalty toward yesterday's dials so hedges do not jump as the fit slides along its valley ([model-risk-and-parameter-stability](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md)).
+- **Equity index desks.** Heston, or Heston with jumps, is refitted to the listed surface daily, often with a penalty toward yesterday's dials so hedges do not jump as the fit slides along its valley ([Model risk](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md)).
 - **Short-dated skew.** Heston's 3-month miss, 27.00% against 28.61% at $80, is the kind of gap Bates closed by adding jumps in the share price to Heston's variance.
 - **Pricing past the quotes.** The $0.92 gap on the three-year call is model risk, the kind a reserve is sized from.
-- **Rates and currencies.** The same fit, with a closed-form approximation instead of an integral: [sabr-model-and-hagan-formula](04-sabr-model-and-hagan-formula.md) and [sabr-calibration-from-three-quotes](05-sabr-calibration-from-three-quotes.md).
+- **Rates and currencies.** The same fit, with a closed-form approximation instead of an integral: [SABR and Hagan's formula](04-sabr-model-and-hagan-formula.md) and [SABR from three quotes](05-sabr-calibration-from-three-quotes.md).
 
 > **Say it back**
 > Heston's price is one integral of its fingerprint, and each Greek is the same integral with one more factor inside: exact for the share price, today's variance and the long-run level, and bumped on a fixed grid for the other dials. Its delta exceeds Black-Scholes delta by vega times the smile's downward slope, because its smile moves with the share. Calibration minimises squared misses in vol points. The pull speed, vol of vol and long-run level trade off along a flat valley, so two starts can stop far apart with the same fit and different prices beyond the quotes. A stated stopping rule and a prior make the answer definite.
@@ -718,14 +696,14 @@ The outputs agree line for line. The fits are the fragile part: with slope-table
 
 ## What this builds on
 
-- [heston-pricing-by-characteristic-function](02-heston-pricing-by-characteristic-function.md): the fingerprint and the integral this card differentiates.
-- [svi-smile-fit](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): five numbers fitted to one smile; here five dials fitted to three.
-- [calibration-as-least-squares](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): the vega-scaled objective and the damped step.
-- [bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): bump sizes, and why both prices of a bump share one grid.
+- [Pricing Heston exactly](02-heston-pricing-by-characteristic-function.md): the fingerprint and the integral this card differentiates.
+- [The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md): five numbers fitted to one smile; here five dials fitted to three.
+- [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): the vega-scaled objective and the damped step.
+- [Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): bump sizes, and why both prices of a bump share one grid.
 
 ## Where this goes next
 
-- [stochastic-local-volatility](06-stochastic-local-volatility.md): keeps Heston's wandering variance and multiplies it by a function of share price and time chosen so every quote is repriced exactly.
+- [Stochastic-local volatility](06-stochastic-local-volatility.md): keeps Heston's wandering variance and multiplies it by a function of share price and time chosen so every quote is repriced exactly.
 
 Even the best fit here misses the 3-month $80 call by more than a vol point; a later card asks how to keep Heston's dynamics and still hit every quote.
 

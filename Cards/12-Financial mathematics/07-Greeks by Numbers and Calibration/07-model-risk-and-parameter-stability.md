@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Greeks by Numbers and Calibration
-topic: Limits of a fit
-item: Model risk
-kind: method
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/06-calibration-as-least-squares|calibration-as-least-squares]]"
-next: []
-tags:
-  - mathematics
-  - financial mathematics
-  - model-risk-and-parameter-stability
----
-
 # Model risk: two models that fit today's quotes and disagree tomorrow
 
-Financial mathematics → Greeks by Numbers and Calibration → Limits of a fit → Model risk
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Greeks by Numbers and Calibration](../../../SYLLABUS.md#w12-s07) → Model risk
 
 ---
 
@@ -26,7 +8,7 @@ Financial mathematics → Greeks by Numbers and Calibration → Limits of a fit 
 
 Acme shares trade at $100. Five one-year calls on Acme are quoted in the market — the right to buy one share at a fixed price on one day next year — struck at $90, $95, $100, $105 and $110, at $15.12, $11.94, $9.23, $6.99 and $5.19, to the cent here and at full precision in the check.
 
-Two desks fit a model to those five prices. Desk A's model gives Acme one volatility, one number for how hard the share swings, for the whole year; the fit picks 20%. Desk B's model lets that number change at mid-year; its solver stops at 10% for the first six months, and 26.4575% for the second follows from the first. Both reproduce all five quotes to the last printed digit. Neither fit is a compromise: the leftover error is zero for both, and the fitting score that [calibration-as-least-squares](06-calibration-as-least-squares.md) minimises reads 0.000000 either way.
+Two desks fit a model to those five prices. Desk A's model gives Acme one volatility, one number for how hard the share swings, for the whole year; the fit picks 20%. Desk B's model lets that number change at mid-year; its solver stops at 10% for the first six months, and 26.4575% for the second follows from the first. Both reproduce all five quotes to the last printed digit. Neither fit is a compromise: the leftover error is zero for both, and the fitting score that [Calibration](06-calibration-as-least-squares.md) minimises reads 0.000000 either way.
 
 A client then asks for a different ticket: the same call struck at $100, cancelled outright the moment Acme touches $120. That contract is an **up-and-out call**, the name used from here on. Desk A prices it at $1.13, desk B at $1.08: a gap of 5.02% of desk B's price. Nothing quoted in this market says which desk is right.
 
@@ -180,7 +162,7 @@ Every number in both tables is printed by the code below.
 
 The five one-year quotes did not move a cent from Monday to Friday. Over the same week the fitted second-half volatility fell from 13.25% to 3.96% and then stopped existing, and the ticket went from $1.20 to $1.31 and then had no price at all. One extra quote did all of that: the six-month $100 call, which climbed from $7.68 to $8.73.
 
-A second expiry pins the split. The six-month quote fixes the first half's volatility on its own, inverted from the price by the bisection of [root-finding-for-inverses](05-root-finding-for-inverses.md), and the year's variance then leaves the second half no choice: desk B's model is suddenly identified. Desk A's model has no room for the second quote at all, and prices the six-month call at $6.31 every day of the week whatever the market says.
+A second expiry pins the split. The six-month quote fixes the first half's volatility on its own, inverted from the price by the bisection of [Solving backwards](05-root-finding-for-inverses.md), and the year's variance then leaves the second half no choice: desk B's model is suddenly identified. Desk A's model has no room for the second quote at all, and prices the six-month call at $6.31 every day of the week whatever the market says.
 
 | Day | Six-month quote | First half | Second half | Desk A's ticket | Desk B's ticket | Desk A's six-month miss |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -676,7 +658,7 @@ The two outputs match line for line, from different code taking different routes
 - **Model reserves on a bank's books.** A barrier or callable book is marked with one model and carries a reserve for the others, sized as the reserve is sized here: a real line in the accounts, released when a quote narrows the range. Part of the bid-offer a dealer shows on an up-and-out call is that same spread.
 - **Choosing what to quote, not only what to price.** When an exotic's value hangs on the path, the fix is a traded instrument that sees the path: a second expiry, a forward-starting option, a variance contract. Model risk is measured in prices and cured with market data.
 - **Calibration monitors.** Desks track fitted parameters day by day as the table above does, and alarm on a jump: a parameter jumping in a still market means the model is absorbing something it cannot represent.
-- **Recomputing the reserve overnight.** The ticket's sensitivity to the split is a bump-and-revalue on a calibrated parameter, run as in [bump-and-revalue-and-common-random-numbers](01-bump-and-revalue-and-common-random-numbers.md); on a lattice with the barrier on a node it is [greeks-from-a-tree-or-grid](04-greeks-from-a-tree-or-grid.md) instead.
+- **Recomputing the reserve overnight.** The ticket's sensitivity to the split is a bump-and-revalue on a calibrated parameter, run as in [Bump and revalue](01-bump-and-revalue-and-common-random-numbers.md); on a lattice with the barrier on a node it is [Greeks from a tree or grid](04-greeks-from-a-tree-or-grid.md) instead.
 
 > **Say it back**
 > Two models can match every quoted price and still disagree about an unquoted one. One gives Acme a single volatility for the year; the other splits the year into halves with the same total variance. A one-year call sees only where Acme finishes, so both fit all five quotes exactly. An up-and-out call also sees whether Acme ever touched $120, so the two price it $1.13 against $1.08, a gap of 5.02% of the cheaper, with nine such splits spanning 13.31%. That width is the model reserve. A second expiry pins the split and falsifies the single-volatility model, at the cost of a fitted second-half volatility that falls from 13.25% to 3.96% in four days and then does not exist.
@@ -685,13 +667,13 @@ The two outputs match line for line, from different code taking different routes
 
 ## What this builds on
 
-- [calibration-as-least-squares](06-calibration-as-least-squares.md): the fit itself, and the score being minimised. This card supplies the score's flat floor, where the minimum is reached by infinitely many parameter sets and the solver's answer is its starting point.
+- [Calibration](06-calibration-as-least-squares.md): the fit itself, and the score being minimised. This card supplies the score's flat floor, where the minimum is reached by infinitely many parameter sets and the solver's answer is its starting point.
 
 ## Where this goes next
 
-- [dupire-local-volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): one volatility per price and date, read off a whole surface of quotes, so the split this card could not pin is fitted everywhere at once.
-- [heston-model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): volatility that moves at random, the second family a desk prices the same ticket in.
-- [forward-start-options-and-forward-volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/06-forward-start-options-and-forward-volatility.md): a traded contract that sees the second half's volatility, the kind of quote that narrows the reserve.
+- [Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): one volatility per price and date, read off a whole surface of quotes, so the split this card could not pin is fitted everywhere at once.
+- [The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): volatility that moves at random, the second family a desk prices the same ticket in.
+- [Forward-start options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/06-forward-start-options-and-forward-volatility.md): a traded contract that sees the second half's volatility, the kind of quote that narrows the reserve.
 
 A reserve says how far apart defensible models are; it does not say where inside the range to trade. That needs a view on how Acme moves between now and expiry rather than only on where it lands.
 

@@ -1,27 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Trees and Cheapest Routes
-topic: Counting skeletons
-item: Spanning trees
-kind: theorem
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/10-Trees and Cheapest Routes/01-trees|trees]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/05-bijection-and-double-counting|bijection-and-double-counting]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/04-determinants|determinants]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/10-Trees and Cheapest Routes/04-minimum-spanning-trees|minimum-spanning-trees]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - spanning-trees-and-cayleys-formula
----
-
 # Spanning trees: a loop-free skeleton reaching every vertex, and K(n) has n^(n-2) of them
 
-Combinatorics and graphs → Trees and Cheapest Routes → Counting skeletons → Spanning trees
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Trees and Cheapest Routes](../../../SYLLABUS.md#w04-s10) → Spanning trees
 
 ---
 
@@ -31,7 +10,7 @@ Four villages — Ayle, Brook, Crag and Dale — are to be joined by new roads, 
 
 How many plans? Sixteen. Only two look different: a star, one village joined to the other three, and a line of four. But villages have names: a star centred on Ayle is a different budget from one centred on Dale. Four stars, one per centre, and twelve lines — two shapes, sixteen plans.
 
-Roads that reach every village and never close a loop are a **spanning tree** of the map ([trees](01-trees.md)): *spanning* because they touch every village, *tree* because they hold no loop. Add a fifth village, Ember, cost all ten roads, and the count jumps to 125.
+Roads that reach every village and never close a loop are a **spanning tree** of the map ([Trees](01-trees.md)): *spanning* because they touch every village, *tree* because they hold no loop. Add a fifth village, Ember, cost all ten roads, and the count jumps to 125.
 
 **Strip a map until no loop is left and every place is still reachable: that is a spanning tree, and where all n named places can be joined there are n to the power n − 2.**
 
@@ -55,7 +34,7 @@ One of the sixteen plans; each dotted road would close a loop.
 
 ## The formula
 
-Notation first. A map is two lists: $V$ its places, $E$ its joined pairs, with $n$ and $m$ counting each ([graphs-vertices-and-edges](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). The map is $G$. Some places with some of the roads between them make a **subgraph**; one using every place **spans** the map. Write $T$ for a spanning subgraph with no loop: it always holds $n - 1$ roads.
+Notation first. A map is two lists: $V$ its places, $E$ its joined pairs, with $n$ and $m$ counting each ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). The map is $G$. Some places with some of the roads between them make a **subgraph**; one using every place **spans** the map. Write $T$ for a spanning subgraph with no loop: it always holds $n - 1$ roads.
 
 The map with every pair joined is the **complete map** $K_n$, so the six costed roads are $K_4$. Write $\tau(G)$, "tau of G", for the spanning trees $G$ has. Arthur Cayley, 1889:
 
@@ -89,7 +68,7 @@ Take a map in one piece. If some roads form a loop, remove any one of them: the 
 
 ### Step 1: one flood builds a spanning tree in a single pass
 
-Hunting for loops is slow; flooding is fast. Mark the start, then every place one road from a marked place, keeping the road that marked it and ignoring roads landing on a mark. Stop when a round marks nothing: breadth-first search ([connectivity-and-breadth-first-search](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)).
+Hunting for loops is slow; flooding is fast. Mark the start, then every place one road from a marked place, keeping the road that marked it and ignoring roads landing on a mark. Stop when a round marks nothing: breadth-first search ([Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)).
 
 On a sparser five-village map, where only Ayle-Brook, Ayle-Crag, Brook-Crag, Brook-Dale, Crag-Dale and Dale-Ember can be built, flooding from Ayle marks in rings — 0 Ayle, 1 Brook and Crag, 2 Dale, 3 Ember — keeping Ayle-Brook, Ayle-Crag, Brook-Dale, Dale-Ember: four roads for five villages.
 
@@ -97,7 +76,7 @@ Every place but the start keeps one road, so the count is always $n - 1$, and no
 
 ### Step 2: counting by listing, and where listing gives out
 
-Six roads, three to a plan: test all 20 choices of 3 from 6 ([n-choose-k](../01-Counting%20Principles/05-n-choose-k.md)). Sixteen pass; the failures are triangles, with a village stranded. Five villages: 210 choices, 125 pass. But 16 is 4 × 4 and 125 is 5 × 5 × 5 — a pattern that wants a reason.
+Six roads, three to a plan: test all 20 choices of 3 from 6 ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)). Sixteen pass; the failures are triangles, with a village stranded. Five villages: 210 choices, 125 pass. But 16 is 4 × 4 and 125 is 5 × 5 × 5 — a pattern that wants a reason.
 
 ### Step 3: every layout is a short word
 
@@ -111,12 +90,12 @@ Each removal writes one letter and they stop two places short, so the word holds
 
 Run it backwards. A place's road count is one more than the times its name appears, so a place never named is a dead end. Then, letter by letter: take the place first in the alphabet still owed just one road, join it to that letter's place, knock one off both. At the end, join the two places still owed a road. Brook Crag returns the line it came from.
 
-Decoding undoes encoding step for step, so layouts and words pair off one for one: a bijection ([bijection-and-double-counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)). Words are easy — $n - 2$ slots, any of $n$ names each — so $n^{\,n-2}$ words, and that many layouts.
+Decoding undoes encoding step for step, so layouts and words pair off one for one: a bijection ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)). Words are easy — $n - 2$ slots, any of $n$ names each — so $n^{\,n-2}$ words, and that many layouts.
 
 <details>
 <summary>Detailed proof: decoding never sticks, and the two directions undo each other</summary>
 
-**Encoding always works.** Every tree on two or more places has at least two dead ends ([trees](01-trees.md)), so there is always one to remove.
+**Encoding always works.** Every tree on two or more places has at least two dead ends ([Trees](01-trees.md)), so there is always one to remove.
 
 **The word has the right length.** A place's last road is never written, so a place met by k roads appears k − 1 times, a dead end never. Those counts add to 2(n − 1) − n = n − 2.
 
@@ -137,11 +116,11 @@ Build a square table, one row and column per place: on the diagonal how many roa
 -1  -1   3
 ```
 
-whose determinant ([determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)) is 3(9 − 1) + 1(−3 − 1) − 1(1 + 3) = 24 − 4 − 4 = 16, the layout count, whichever row is cut: the **matrix-tree theorem**, proved in Godsil and Royle under Sources, not here.
+whose determinant ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)) is 3(9 − 1) + 1(−3 − 1) − 1(1 + 3) = 24 − 4 − 4 = 16, the layout count, whichever row is cut: the **matrix-tree theorem**, proved in Godsil and Royle under Sources, not here.
 
 </details>
 
-Both roads count layouts as though every road cost the same; pricing them asks which is cheapest: [minimum-spanning-trees](04-minimum-spanning-trees.md).
+Both roads count layouts as though every road cost the same; pricing them asks which is cheapest: [The cheapest skeleton](04-minimum-spanning-trees.md).
 
 ---
 
@@ -380,10 +359,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Anything cabled or piped once.** Reaching every building with no redundant run is this; priced runs make it [minimum-spanning-trees](04-minimum-spanning-trees.md).
+- **Anything cabled or piped once.** Reaching every building with no redundant run is this; priced runs make it [The cheapest skeleton](04-minimum-spanning-trees.md).
 - **Ethernet.** Switches agree on a loop-free skeleton of the cabling and switch the rest off: one loop makes broadcast traffic circulate until the network drowns.
 - **Electrical circuits.** The determinant in the callout above is Kirchhoff's, from solving currents in wire networks.
-- **Other trees on this shelf.** Least distance from one place gives another tree, [dijkstra](05-dijkstra.md); hanging a skeleton from one place makes it rooted, [rooted-and-binary-trees](02-rooted-and-binary-trees.md).
+- **Other trees on this shelf.** Least distance from one place gives another tree, [Dijkstra's algorithm](05-dijkstra.md); hanging a skeleton from one place makes it rooted, [Rooted trees](02-rooted-and-binary-trees.md).
 
 > **Say it back**
 > A spanning tree reaches every place on a map and holds no loop, so it carries one road fewer than there are places. Every map in one piece has one: flood outward, keeping the road that first reaches each place. Where every pair can be joined, Cayley's formula counts them as n to the power n − 2: 16 plans on four villages, 125 on five. Tearing off dead ends alphabetically turns a layout into a word, and every word comes back as one layout.
@@ -392,13 +371,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [trees](01-trees.md): what a tree is, that it holds n − 1 roads, and that it has dead ends.
-- [bijection-and-double-counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md): why pairing two collections one for one proves the counts equal.
-- [determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): working out the callout's determinant.
+- [Trees](01-trees.md): what a tree is, that it holds n − 1 roads, and that it has dead ends.
+- [Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md): why pairing two collections one for one proves the counts equal.
+- [Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): working out the callout's determinant.
 
 ## Where this goes next
 
-- [minimum-spanning-trees](04-minimum-spanning-trees.md): the same skeletons priced, and a greedy rule that finds the cheapest.
+- [The cheapest skeleton](04-minimum-spanning-trees.md): the same skeletons priced, and a greedy rule that finds the cheapest.
 
 The costs in the opening never entered the count: all 16 plans were counted alike. Which of them is cheapest, found without listing all 16, is the next card.
 

@@ -1,32 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Caps, Floors and Swaptions
-topic: Three quoting languages
-item: Rate volatilities
-kind: convention
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/04-swaptions-payer-and-receiver|swaptions-payer-and-receiver]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/08-shifted-lognormal-and-volatility-conversion|shifted-lognormal-and-volatility-conversion]]"
-next:
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/07-sabr-for-rates-and-the-volatility-cube|sabr-for-rates-and-the-volatility-cube]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - normal-and-shifted-volatilities-for-rates
----
-
 # Rate volatilities: lognormal, normal and shifted, and converting between them
 
-Financial mathematics → Caps, Floors and Swaptions → Three quoting languages → Rate volatilities
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Caps, Floors and Swaptions](../../../SYLLABUS.md#w12-s29) → Rate volatilities
 
 ---
 
 ## General Overview
 
-A pension fund buys a **payer swaption** on $10 million: the right, one year from today, to enter a five-year swap in which it pays a fixed 4.40 percent a year and receives the floating rate ([swaptions-payer-and-receiver](04-swaptions-payer-and-receiver.md)). Today's forward swap rate for that start date is also 4.40 percent, so the option is struck **at the money**: strike equal to the forward. The fund pays $221,223.24.
+A pension fund buys a **payer swaption** on $10 million: the right, one year from today, to enter a five-year swap in which it pays a fixed 4.40 percent a year and receives the floating rate ([Swaptions](04-swaptions-payer-and-receiver.md)). Today's forward swap rate for that start date is also 4.40 percent, so the option is struck **at the money**: strike equal to the forward. The fund pays $221,223.24.
 
 Three dealers quote that premium, and none of them says the dollar figure. The first says "30 percent". The second says "131.5". The third says "20.58, shift 2 percent". All three mean the same $221,223.24. Each has run the price backwards through a different pricing model and read off that model's volatility dial. Volatility here is a language for a price, not a price.
 
@@ -122,7 +102,7 @@ Translation between languages is therefore exact by construction: price in one m
 
 ### Step 1: the three models share everything except the spread
 
-In units of the annuity, the forward swap rate is a fair bet on its own future value: its average, taken that way, is today's $F$ ([the-annuity-measure](05-the-annuity-measure.md)). Every model therefore centres its spread of possible rates on the same 4.40 percent, and multiplies its average payoff by the same $M A$.
+In units of the annuity, the forward swap rate is a fair bet on its own future value: its average, taken that way, is today's $F$ ([The annuity measure](05-the-annuity-measure.md)). Every model therefore centres its spread of possible rates on the same 4.40 percent, and multiplies its average payoff by the same $M A$.
 
 What is left is the shape of the spread:
 
@@ -142,7 +122,7 @@ The Bachelier formula collapses too: $d = 0$, $N(0) = \tfrac12$, the first term 
 
 $$p = \sigma_N\,\sqrt{T/(2\pi)}.$$
 
-Two expressions for one premium. Set them equal and solve for $\sigma_N$: that is the exact conversion in The formula. For the shifted model the same collapse gives $(F + a)\bigl[2N(w_a/2) - 1\bigr]$ with $w_a = \sigma_a\sqrt{T}$; set it equal to the Black premium and solve for $\sigma_a$ by the root finder, since $N$ has no closed-form reverse. The prerequisite card proves the same at-the-money identity for a floorlet ([shifted-lognormal-and-volatility-conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md)); here it runs on a swaption, where the annuity replaces the discount factor.
+Two expressions for one premium. Set them equal and solve for $\sigma_N$: that is the exact conversion in The formula. For the shifted model the same collapse gives $(F + a)\bigl[2N(w_a/2) - 1\bigr]$ with $w_a = \sigma_a\sqrt{T}$; set it equal to the Black premium and solve for $\sigma_a$ by the root finder, since $N$ has no closed-form reverse. The prerequisite card proves the same at-the-money identity for a floorlet ([Shifted lognormal and volatility conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md)); here it runs on a swaption, where the annuity replaces the discount factor.
 
 <details>
 <summary>Detailed proof: the shrink factor 1 − w^2/24</summary>
@@ -191,7 +171,7 @@ xychart-beta
 
 The falling line is the lognormal volatility that reproduces a flat 131.51 bp normal premium at each strike: 40.12 percent at 2.40 percent, 24.70 percent at 6.40 percent. The flat line is 30 percent. So part of any quoted skew (volatility changing with strike) is the language, not the market. Before reading a smile as a view on rates, translate it into the language in which the model under test would be flat.
 
-The other road to the whole smile is a model with a dial between the two languages. SABR has one, a power that runs from normal at 0 to lognormal at 1, and its formula prices every strike at once ([sabr-for-rates-and-the-volatility-cube](07-sabr-for-rates-and-the-volatility-cube.md)).
+The other road to the whole smile is a model with a dial between the two languages. SABR has one, a power that runs from normal at 0 to lognormal at 1, and its formula prices every strike at once ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)).
 
 ---
 
@@ -647,10 +627,10 @@ The two outputs agree line for line.
 ## Where you meet it in real life
 
 - **Swaption screens.** Dollar and euro swaption volatility is widely shown in normal terms, in basis points, with lognormal or shifted lognormal alongside; converting between them is a daily desk task.
-- **Negative rates.** When euro and Swiss franc rates went below zero, the lognormal language stopped working for those markets, since it needs a positive rate. Shifted and normal quotes carried on ([shifted-lognormal-and-volatility-conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md)).
-- **Caps and floors.** Caplet volatilities come in the same three languages, and stripping them from cap prices has to fix one language first ([caplet-stripping](03-caplet-stripping.md)).
-- **Risk reports.** Vega, the premium's response to a one-unit change of volatility, depends on the unit: per basis point of normal volatility or per percentage point of lognormal ([swaption-greeks-and-hedging](08-swaption-greeks-and-hedging.md)).
-- **Model validation.** Converting a quoted smile into the language of a candidate model shows whether that model can fit it flat, before any calibration is run ([rate-option-inverses](09-rate-option-inverses.md)).
+- **Negative rates.** When euro and Swiss franc rates went below zero, the lognormal language stopped working for those markets, since it needs a positive rate. Shifted and normal quotes carried on ([Shifted lognormal and volatility conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md)).
+- **Caps and floors.** Caplet volatilities come in the same three languages, and stripping them from cap prices has to fix one language first ([Caplet stripping](03-caplet-stripping.md)).
+- **Risk reports.** Vega, the premium's response to a one-unit change of volatility, depends on the unit: per basis point of normal volatility or per percentage point of lognormal ([Swaption Greeks](08-swaption-greeks-and-hedging.md)).
+- **Model validation.** Converting a quoted smile into the language of a candidate model shows whether that model can fit it flat, before any calibration is run ([Solving rate options backwards](09-rate-option-inverses.md)).
 
 > **Say it back**
 > A volatility quote is the premium run backwards through a model, so one swaption has one price and several volatilities. Lognormal counts the wobble as a percentage of the rate, normal counts it in basis points, shifted counts it as a percentage of the rate plus a slide. At the money the exact link is through the rate's level: 30 percent of 4.40 percent is 131.51 bp after a small shrink. Away from the money the link runs through the logarithmic mean of rate and strike, because the wobble that matters is the average along the road to the strike. So a smile flat in one language is sloped in another, and every conversion has to be redone when rates move.
@@ -659,14 +639,14 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [swaptions-payer-and-receiver](04-swaptions-payer-and-receiver.md): the contract, its payoff and the annuity that turns rate into dollars.
-- [shifted-lognormal-and-volatility-conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md): the shifted model and the exact at-the-money conversion, which this card reuses on a swaption and extends to other strikes.
+- [Swaptions](04-swaptions-payer-and-receiver.md): the contract, its payoff and the annuity that turns rate into dollars.
+- [Shifted lognormal and volatility conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md): the shifted model and the exact at-the-money conversion, which this card reuses on a swaption and extends to other strikes.
 
 ---
 
 ## Where this goes next
 
-- [sabr-for-rates-and-the-volatility-cube](07-sabr-for-rates-and-the-volatility-cube.md): one model whose dial runs between the normal and lognormal languages, fitted to every strike and expiry at once.
+- [SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md): one model whose dial runs between the normal and lognormal languages, fitted to every strike and expiry at once.
 
 This card translates a single quote; which language, or which blend of them, makes the market's whole smile flat and keeps it stable when rates move is the question SABR answers.
 

@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Black-Scholes call and put
-topic: What a quote sheet must obey
-item: Shape across strikes and expiries
-kind: theorem
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/04-option-price-bounds|option-price-bounds]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/09-convex-functions|convex-functions]]"
-next:
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/04-digital-from-a-call-spread-and-the-skew-term|digital-from-a-call-spread-and-the-skew-term]]"
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/02-term-structure-and-forward-volatility|term-structure-and-forward-volatility]]"
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/02-carr-madan-spanning-and-the-log-contract|carr-madan-spanning-and-the-log-contract]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - strike-and-calendar-shape
----
-
 # Shape across strikes and expiries: calls fall and curve the right way in strike, and total variance never falls in time
 
-Financial mathematics → The Black-Scholes call and put → What a quote sheet must obey → Shape across strikes and expiries
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Black-Scholes call and put](../../../SYLLABUS.md#w12-s08) → Shape across strikes and expiries
 
 ---
 
@@ -103,7 +81,7 @@ $$C(K_2,T_2) \;\ge\; w\;C(K_1,T_1), \qquad w = e^{-q\tau}$$
 
 - **European exercise, held to expiry.** Every proof below sets a position up and never touches it. A short American leg can be exercised early, which knocks the discount out of the cap and leaves only the raw gap $K_2 - K_1$.
 - **Both quotes tradeable, both ways, at the same moment.** Each proof sells one option and buys another. A stale mid-quote, a strike nobody will sell, a share nobody will lend: then the screen breaks a rule with no trade behind it, which on an illiquid strike happens daily.
-- **The right forward.** $F(T)$ must be that expiry's own forward. Known cash dividends replace $S\,e^{(r-q)T}$ with a lumpier one ([known-cash-dividends](08-known-cash-dividends.md)), and a wrong forward moves the matched strike, inventing a violation worth a few cents.
+- **The right forward.** $F(T)$ must be that expiry's own forward. Known cash dividends replace $S\,e^{(r-q)T}$ with a lumpier one ([Known cash dividends](08-known-cash-dividends.md)), and a wrong forward moves the matched strike, inventing a violation worth a few cents.
 - **A traded discount factor.** $D(T)$ is the price of a dollar at $T$, read off the curve, not a guess. Treating the cap as the undiscounted gap lets 0.487706 per spread through as free money.
 - **The strike rules inside one expiry, the calendar rule at one moneyness.** A 90-strike call at one date against a 100-strike call at another says nothing at all.
 
@@ -144,7 +122,7 @@ Unequal spacing changes the weights, not the argument: the two gaps in proportio
 <details>
 <summary>Detailed proof: both strike rules from one convexity</summary>
 
-Fix Acme's finishing price and look at a call's payoff as a function of its strike: $K \mapsto (\text{finish} - K)^+$, which is the finish minus $K$ while that is positive and zero after. That function falls as $K$ rises, never by more than one dollar per dollar of strike, and it is convex, meaning it lies at or below the straight line joining any two of its points ([convex-functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)). Both strike rules are those three properties, priced.
+Fix Acme's finishing price and look at a call's payoff as a function of its strike: $K \mapsto (\text{finish} - K)^+$, which is the finish minus $K$ while that is positive and zero after. That function falls as $K$ rises, never by more than one dollar per dollar of strike, and it is convex, meaning it lies at or below the straight line joining any two of its points ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)). Both strike rules are those three properties, priced.
 
 Falling by at most a dollar per dollar: at every finish, $0 \le (\text{finish}-K_1)^+ - (\text{finish}-K_2)^+ \le K_2 - K_1$. The middle term is the call spread's payoff, squeezed between nothing at all and a fixed $K_2 - K_1$ due at $T$; pricing all three by Step 0, twice, gives $0 \le C(K_1,T) - C(K_2,T) \le D(T)(K_2-K_1)$.
 
@@ -158,7 +136,7 @@ So the portfolio holding those two fractions of the outer calls while short the 
 
 Two expiries now: the half-year 100-call and a one-year call. Which one-year strike should be set against the half-year 100-strike? Not 100.
 
-Here is why. Write $S_1$ for wherever Acme lands at the near expiry. There the half-year call is finished: it pays $S_1$ minus 100 if that is positive, nothing otherwise. The one-year call is still alive, with half a year to run, and a live call is worth at least zero and at least its forward intrinsic, $S_1\,e^{-q\tau} - K\,e^{-r\tau}$ ([option-price-bounds](04-option-price-bounds.md)). Pick the far strike so that this floor is a fixed multiple of what the near call pays, and the far leg covers the near leg in every outcome at once.
+Here is why. Write $S_1$ for wherever Acme lands at the near expiry. There the half-year call is finished: it pays $S_1$ minus 100 if that is positive, nothing otherwise. The one-year call is still alive, with half a year to run, and a live call is worth at least zero and at least its forward intrinsic, $S_1\,e^{-q\tau} - K\,e^{-r\tau}$ ([Option price bounds](04-option-price-bounds.md)). Pick the far strike so that this floor is a fixed multiple of what the near call pays, and the far leg covers the near leg in every outcome at once.
 
 That strike is the near strike grown by the ratio of the two forwards:
 
@@ -703,9 +681,9 @@ The two outputs match line for line, produced by different code taking different
 ## Where you meet it in real life
 
 - **The exchange's own quote checks.** A call cheaper than a higher strike, a negative butterfly: venues screen for these before a price reaches a screen, because the first person to see one takes the money.
-- **Fitting a volatility surface.** A fitted surface that breaks any of the three prices an arbitrage into every book that uses it, and hedges chase a payoff that is not there. Keeping total variance rising is the calendar half of that fit: [term-structure-and-forward-volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md).
-- **Reading the market's own probabilities.** Divide the three-strike combination by the square of the strike spacing and the market's own probability density for Acme's finish appears, discounted. It is a density only because the combination cannot go negative: [digital-from-a-call-spread-and-the-skew-term](../10-Digitals%20and%20the%20implied%20density/04-digital-from-a-call-spread-and-the-skew-term.md).
-- **Building any payoff out of calls.** A strip of calls replicates almost anything, with these combinations as the weights: [carr-madan-spanning-and-the-log-contract](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md).
+- **Fitting a volatility surface.** A fitted surface that breaks any of the three prices an arbitrage into every book that uses it, and hedges chase a payoff that is not there. Keeping total variance rising is the calendar half of that fit: [Term structure and forward volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md).
+- **Reading the market's own probabilities.** Divide the three-strike combination by the square of the strike spacing and the market's own probability density for Acme's finish appears, discounted. It is a density only because the combination cannot go negative: [A digital from a call spread](../10-Digitals%20and%20the%20implied%20density/04-digital-from-a-call-spread-and-the-skew-term.md).
+- **Building any payoff out of calls.** A strip of calls replicates almost anything, with these combinations as the weights: [Any payoff from a strip of options](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md).
 - **Auditing a pricer.** Run the three rules across a new model's output grid before anything else. A model that breaks them is not inaccurate, it is wrong, and it will be traded against.
 
 > **Say it back**
@@ -715,16 +693,16 @@ The two outputs match line for line, produced by different code taking different
 
 ## What this builds on
 
-- [option-price-bounds](04-option-price-bounds.md): that a live call is worth at least zero and at least its forward intrinsic. Step 3 uses exactly that, one expiry early, and the normalized bounds give the inverse for total variance its existence and uniqueness.
-- [convex-functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md): a function lying below the straight line joining any two of its points. A call's payoff, read as a function of its strike, is one — which is both strike rules.
+- [Option price bounds](04-option-price-bounds.md): that a live call is worth at least zero and at least its forward intrinsic. Step 3 uses exactly that, one expiry early, and the normalized bounds give the inverse for total variance its existence and uniqueness.
+- [Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md): a function lying below the straight line joining any two of its points. A call's payoff, read as a function of its strike, is one — which is both strike rules.
 
 ## Where this goes next
 
-- [digital-from-a-call-spread-and-the-skew-term](../10-Digitals%20and%20the%20implied%20density/04-digital-from-a-call-spread-and-the-skew-term.md): the call spread and the butterfly taken to their limits, where they become a probability and a density.
-- [term-structure-and-forward-volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md): the calendar rule as a working constraint on a fitted surface, and what rising total variance leaves for each forward stretch.
-- [carr-madan-spanning-and-the-log-contract](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md): a whole strip of strikes at once, weighted so the calls add up to a contract on the logarithm of Acme's price.
+- [A digital from a call spread](../10-Digitals%20and%20the%20implied%20density/04-digital-from-a-call-spread-and-the-skew-term.md): the call spread and the butterfly taken to their limits, where they become a probability and a density.
+- [Term structure and forward volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md): the calendar rule as a working constraint on a fitted surface, and what rising total variance leaves for each forward stretch.
+- [Any payoff from a strip of options](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md): a whole strip of strikes at once, weighted so the calls add up to a contract on the logarithm of Acme's price.
 
-These rules say what a screen may not do, and nothing about which of the many permitted screens the market picked; reading the market's own probabilities off the quotes is how that is answered, on [digital-from-a-call-spread-and-the-skew-term](../10-Digitals%20and%20the%20implied%20density/04-digital-from-a-call-spread-and-the-skew-term.md).
+These rules say what a screen may not do, and nothing about which of the many permitted screens the market picked; reading the market's own probabilities off the quotes is how that is answered, on [A digital from a call spread](../10-Digitals%20and%20the%20implied%20density/04-digital-from-a-call-spread-and-the-skew-term.md).
 
 ---
 

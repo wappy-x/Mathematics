@@ -1,27 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Counting Principles
-topic: Total minus unwanted
-item: Counting the complement
-kind: method
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/02-strings-and-powers|strings-and-powers]]"
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/05-n-choose-k|n-choose-k]]"
-  - "[[Cards/01-Foundations/07-Sets/03-set-operations|set-operations]]"
-next:
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/07-birthday-and-coupon-collector|birthday-and-coupon-collector]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - complementary-counting
----
-
 # Counting the complement: when 'at least one' is hard, count 'none' and subtract from everything
 
-Combinatorics and graphs → Counting Principles → Total minus unwanted → Counting the complement
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Counting Principles](../../../SYLLABUS.md#w04-s01) → Counting the complement
 
 ---
 
@@ -52,7 +31,7 @@ The branches share no password and together hold every one, so either is the top
 
 ## The formula
 
-Notation first, in words. A capital letter names a collection of objects; bars around it count them, so $\lvert S\rvert$ reads "how many objects are in S". A bar over a letter means "not": everything in the surrounding collection that the named set leaves out. That leftover set is the **complement** ([set-operations](../../01-Foundations/07-Sets/03-set-operations.md)), the word used from here on.
+Notation first, in words. A capital letter names a collection of objects; bars around it count them, so $\lvert S\rvert$ reads "how many objects are in S". A bar over a letter means "not": everything in the surrounding collection that the named set leaves out. That leftover set is the **complement** ([Set operations](../../01-Foundations/07-Sets/03-set-operations.md)), the word used from here on.
 
 $$\lvert A\rvert = \lvert S\rvert - \lvert \overline{A}\rvert$$
 
@@ -67,11 +46,11 @@ $$\lvert A\rvert = \lvert S\rvert - \lvert \overline{A}\rvert$$
 | $n$ | symbols allowed in one slot | 36 in all, 26 of them letters | an extra letter raises both counts, an extra digit only the total |
 | $k$ | slots to fill | 6 | one more slot multiplies the total by 36, the complement by 26 |
 
-Both counts on the right are strings with repetition ([strings-and-powers](02-strings-and-powers.md)), one factor of $n$ per slot:
+Both counts on the right are strings with repetition ([Strings with repetition](02-strings-and-powers.md)), one factor of $n$ per slot:
 
 $$\lvert S\rvert = n^k = 36^6, \qquad \lvert \overline{A}\rvert = 26^6$$
 
-The squad example below uses C(n, k), read "n choose k": the ways to take k things from n when order does not matter ([n-choose-k](05-n-choose-k.md)).
+The squad example below uses C(n, k), read "n choose k": the ways to take k things from n when order does not matter ([Combinations, n choose k](05-n-choose-k.md)).
 
 ### When it holds
 
@@ -90,7 +69,7 @@ Take one password, `mk4tzp`, and hold it against the rule. It carries a digit or
 
 ### Step 1: two piles that do not overlap add to the whole
 
-When a collection splits into groups that cannot overlap, the group sizes add — the rule of sum ([rules-of-sum-and-product](01-rules-of-sum-and-product.md)). Step 0 makes the allowed and refused piles such a split, so
+When a collection splits into groups that cannot overlap, the group sizes add — the rule of sum ([The rules of sum and product](01-rules-of-sum-and-product.md)). Step 0 makes the allowed and refused piles such a split, so
 
 $$\lvert A\rvert + \lvert \overline{A}\rvert = \lvert S\rvert$$
 
@@ -137,7 +116,7 @@ A football squad holds 20 players, two of them goalkeepers. How many starting el
 
 Every eleven that can be picked from 20 players: C(20, 11) = 167,960. The refused pile is the elevens with no goalkeeper, all 11 taken from the 18 outfield players: C(18, 11) = 31,824. Subtract: 136,136. Counted directly it would be two counts, exactly one goalkeeper and exactly two, then an addition.
 
-When two features are forbidden at once, the refused piles can share objects, and subtracting each in turn removes the shared ones twice. The repair adds the overlap back, then takes out the triple overlaps, and so on: the alternating sum called inclusion and exclusion ([inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md)). This card is the one-feature case, where there is nothing to add back.
+When two features are forbidden at once, the refused piles can share objects, and subtracting each in turn removes the shared ones twice. The repair adds the overlap back, then takes out the triple overlaps, and so on: the alternating sum called inclusion and exclusion ([Inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md)). This card is the one-feature case, where there is nothing to add back.
 
 ---
 
@@ -390,7 +369,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Password rules.** "Must contain a digit", "must contain a symbol": the space a rule leaves is sized by counting the strings it refuses and subtracting.
-- **Team and committee selection.** The squad question above, and every "the panel must include at least one X". The piles subtracted are the ordinary picks of this shelf, [ordered-picks](04-ordered-picks.md) and [n-choose-k](05-n-choose-k.md).
+- **Team and committee selection.** The squad question above, and every "the panel must include at least one X". The piles subtracted are the ordinary picks of this shelf, [Ordered picks](04-ordered-picks.md) and [Combinations, n choose k](05-n-choose-k.md).
 - **Backups and spare parts.** "At least one of four drives survives the week" is counted by counting the ways all four fail and subtracting.
 
 > **Say it back**
@@ -400,13 +379,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [strings-and-powers](02-strings-and-powers.md): the counts 36^6 and 26^6, one factor per slot.
-- [n-choose-k](05-n-choose-k.md): C(20,11) and C(18,11), the squad picks that get subtracted.
-- [set-operations](../../01-Foundations/07-Sets/03-set-operations.md): the complement of a set, and why a set and its complement share nothing and cover everything.
+- [Strings with repetition](02-strings-and-powers.md): the counts 36^6 and 26^6, one factor per slot.
+- [Combinations, n choose k](05-n-choose-k.md): C(20,11) and C(18,11), the squad picks that get subtracted.
+- [Set operations](../../01-Foundations/07-Sets/03-set-operations.md): the complement of a set, and why a set and its complement share nothing and cover everything.
 
 ## Where this goes next
 
-- [birthday-and-coupon-collector](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/07-birthday-and-coupon-collector.md): "at least two people share a birthday" counted as everything minus the arrangements where all the birthdays differ.
+- [Two classics](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/07-birthday-and-coupon-collector.md): "at least two people share a birthday" counted as everything minus the arrangements where all the birthdays differ.
 
 This card handles one forbidden feature, where the refused pile is a single clean set; what it leaves open is what to subtract when two forbidden features overlap and the objects caught by both would come off twice.
 

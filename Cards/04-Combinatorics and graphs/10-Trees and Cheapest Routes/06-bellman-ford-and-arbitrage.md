@@ -1,26 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Trees and Cheapest Routes
-topic: Rounds and negative loops
-item: Bellman-Ford
-kind: method
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/10-Trees and Cheapest Routes/05-dijkstra|dijkstra]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/05-logarithms|logarithms]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/06-log-laws-and-log-scales|log-laws-and-log-scales]]"
-next: []
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - bellman-ford-and-arbitrage
----
-
 # Bellman-Ford: relax every edge n - 1 times, negative costs allowed, and a loop that still improves is a money machine
 
-Combinatorics and graphs → Trees and Cheapest Routes → Rounds and negative loops → Bellman-Ford
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Trees and Cheapest Routes](../../../SYLLABUS.md#w04-s10) → Bellman-Ford
 
 ---
 
@@ -32,7 +12,7 @@ Multiply the three: 0.90 × 0.85 × 1.32 = 1.0098. A dollar sent round the loop 
 
 Three currencies can be checked by hand. Hundreds cannot, and the paying loop may run through any five of them. So change what the arrows carry: each leg's **cost** is minus the logarithm of its rate. Multiplying rates becomes adding costs, and a loop that multiplies money above 1 becomes one whose costs add below 0 — free money as a cheapest route with negative costs.
 
-Negative costs are what the greedy method cannot take: it settles the nearest dot and never reconsiders it ([dijkstra](05-dijkstra.md)). Lester Ford in 1956 and Richard Bellman in 1958 set out a method that locks nothing.
+Negative costs are what the greedy method cannot take: it settles the nearest dot and never reconsiders it ([Dijkstra's algorithm](05-dijkstra.md)). Lester Ford in 1956 and Richard Bellman in 1958 set out a method that locks nothing.
 
 **Relaxing every edge n − 1 times finds every cheapest route whenever no loop pays, since a cheapest route has at most n − 1 legs; an n-th round that still improves proves a loop pays — an arbitrage.**
 
@@ -53,7 +33,7 @@ Each rate is one arrow. Round the loop they multiply to 1.0098.
 
 ## The formula
 
-Notation first, in words. The market is a directed graph: a dot per currency, an arrow per quoted rate, $n$ of the first and $m$ of the second. On the arrow from $u$ to $v$, the rate $r(u \to v)$ is how much of $v$ one unit of $u$ buys; its cost is minus that rate's natural logarithm, written $\ln$ ([logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)):
+Notation first, in words. The market is a directed graph: a dot per currency, an arrow per quoted rate, $n$ of the first and $m$ of the second. On the arrow from $u$ to $v$, the rate $r(u \to v)$ is how much of $v$ one unit of $u$ buys; its cost is minus that rate's natural logarithm, written $\ln$ ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)):
 
 $$w(u \to v) \;=\; -\ln r(u \to v)$$
 
@@ -91,7 +71,7 @@ $$r_1 r_2 \cdots r_k > 1 \quad\Longleftrightarrow\quad w_1 + w_2 + \cdots + w_k 
 
 ### Step 0: a logarithm turns multiplying into adding
 
-Profit round a loop means the rates multiply above 1. The logarithm rises with its input, so taking logs keeps that inequality, and the log of a product is the sum of the logs ([log-laws-and-log-scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md)). Negate every log and "above 1" becomes "below 0" — a route-finder on a trading screen.
+Profit round a loop means the rates multiply above 1. The logarithm rises with its input, so taking logs keeps that inequality, and the log of a product is the sum of the logs ([Log laws and log scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md)). Negate every log and "above 1" becomes "below 0" — a route-finder on a trading screen.
 
 ```mermaid
 flowchart LR
@@ -134,7 +114,7 @@ The outer loop is *which* currencies may be stepping-stones, not *how many* legs
 
 </details>
 
-With no negative cost the greedy method is faster ([dijkstra](05-dijkstra.md)); the cheapest set of links holding a network together is another question ([minimum-spanning-trees](04-minimum-spanning-trees.md)).
+With no negative cost the greedy method is faster ([Dijkstra's algorithm](05-dijkstra.md)); the cheapest set of links holding a network together is another question ([The cheapest skeleton](04-minimum-spanning-trees.md)).
 
 ---
 
@@ -402,13 +382,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [dijkstra](05-dijkstra.md): cheapest routes, the relax step, and the lock that negative costs break.
-- [logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): what a logarithm is, and that it rises with its input.
-- [log-laws-and-log-scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md): the log of a product is the sum of the logs, the hinge of the card.
+- [Dijkstra's algorithm](05-dijkstra.md): cheapest routes, the relax step, and the lock that negative costs break.
+- [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): what a logarithm is, and that it rises with its input.
+- [Log laws and log scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md): the log of a product is the sum of the logs, the hinge of the card.
 
 ## Where this goes next
 
-- [no-arbitrage-and-the-law-of-one-price](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md): the same test, no loop that pays, turned from a detector into the rule that prices a contract.
+- [No arbitrage](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md): the same test, no loop that pays, turned from a detector into the rule that prices a contract.
 
 This card says whether a loop pays, not how much it will take before the rates move to close it: sizing the trade needs prices that answer back, where no-arbitrage pricing begins.
 

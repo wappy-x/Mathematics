@@ -1,24 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Regression
-topic: Checking the fit
-item: Diagnostics
-kind: method
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/09-Regression/03-multiple-regression-and-gauss-markov|multiple-regression-and-gauss-markov]]"
-next:
-  - "[[Cards/09-Probability and statistics/09-Regression/05-logistic-regression|logistic-regression]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/06-ridge-and-lasso|ridge-and-lasso]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/08-cross-validation-and-overfitting|cross-validation-and-overfitting]]"
-tags: [mathematics, probability and statistics, diagnostics-and-residuals]
----
-
 # Diagnostics: residual plots, leverage, and the assumptions a regression quietly makes
 
-Probability and statistics → Regression → Checking the fit → Diagnostics
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Regression](../../../SYLLABUS.md#w09-s09) → Diagnostics
 
 ---
 
@@ -26,7 +8,7 @@ Probability and statistics → Regression → Checking the fit → Diagnostics
 
 Nine houses sold on one street last spring. Eight are ordinary: 80 to 190 square metres, $350,000 to $650,000. The ninth is a mansion of 600 square metres that sold for $1,400,000. Prices on this card are in thousands of dollars, so 1,400 means $1,400,000.
 
-Fit one straight line through all nine by least squares ([least-squares-regression](01-least-squares-regression.md)). It says each extra square metre adds $1,978 (standard error $77). Fit the eight ordinary houses alone and it says $2,827 (standard error $149). One sale moved the answer that far. Yet the mansion sits almost on the nine-house line: it misses by only $17,400, the seventh-largest miss of the nine.
+Fit one straight line through all nine by least squares ([Least squares](01-least-squares-regression.md)). It says each extra square metre adds $1,978 (standard error $77). Fit the eight ordinary houses alone and it says $2,827 (standard error $149). One sale moved the answer that far. Yet the mansion sits almost on the nine-house line: it misses by only $17,400, the seventh-largest miss of the nine.
 
 That is the trap diagnostics exist for. A **residual** is what the line missed for one sale: the sale price minus the line's price. Residuals are the only evidence a fit leaves about its own assumptions. Read the right way, they show a line that bends, a spread that grows, and a sale that steers. Read the wrong way, the mansion looks like the best-behaved house on the street, because it pulled the line onto itself.
 
@@ -94,7 +76,7 @@ These are the assumptions a least squares line quietly makes, each with the resi
 - **The spread is the same everywhere.** If it changes with size, the residual plot fans out like a funnel. The slope stays right on average, but its textbook standard error is wrong: too small when the largest spreads sit at the sales far from the average area, which carry the most weight in the slope, too large when they sit near it. Step 5's funnel is the first kind, and a "95 percent" interval covers the truth about 90 percent of the time.
 - **No single sale steers the fit.** A sale with high leverage can hold the line to itself. Its residual looks small; Cook's distance and the external studentized residual expose it.
 - **The errors are independent.** Sales on one street in one month share shocks. Correlated errors leave residuals in runs, and the standard errors are again too small; the cure is the funnel's cure (Step 5) in its clustered form, which lets errors within a group of sales move together.
-- **For small samples, bell-shaped errors.** The t-based intervals of [regression-inference](02-regression-inference.md) use it. A normal quantile plot checks it: the sorted residuals against $\Phi^{-1}$, the normal quantile of shelf 04, of evenly spaced chances lie on a straight line if the errors are bell-shaped; with fifty or more sales it matters much less.
+- **For small samples, bell-shaped errors.** The t-based intervals of [Regression error bars](02-regression-inference.md) use it. A normal quantile plot checks it: the sorted residuals against $\Phi^{-1}$, the normal quantile of shelf 04, of evenly spaced chances lie on a straight line if the errors are bell-shaped; with fifty or more sales it matters much less.
 
 ---
 
@@ -119,7 +101,7 @@ The residual is the price minus a fitted price that already contains fraction $h
 <details>
 <summary>Detailed proof: the residual's variance</summary>
 
-Stack the prices into a column y. The fitted prices are $\hat y = Hy$, where $H = X(X^{\top}X)^{-1}X^{\top}$ is the **hat matrix** of [multiple-regression-and-gauss-markov](03-multiple-regression-and-gauss-markov.md): it turns prices into fitted prices. X has a column of 1s and a column of areas. Its diagonal entries are the leverages: the i-th is the change in $\hat y_i$ per unit change in $y_i$, which is Step 1's $h_i$.
+Stack the prices into a column y. The fitted prices are $\hat y = Hy$, where $H = X(X^{\top}X)^{-1}X^{\top}$ is the **hat matrix** of [Multiple regression](03-multiple-regression-and-gauss-markov.md): it turns prices into fitted prices. X has a column of 1s and a column of areas. Its diagonal entries are the leverages: the i-th is the change in $\hat y_i$ per unit change in $y_i$, which is Step 1's $h_i$.
 
 H is symmetric, and $HH = H$, because fitting a line to prices already on the line changes nothing. The residuals are $e = (I - H)y$. Write $y = X\beta + \varepsilon$, with the errors ε independent, mean 0 and variance $\sigma^2$. Since $HX = X$, the line part cancels and $e = (I - H)\varepsilon$. So the variance matrix of e is $(I - H)\,\sigma^2 I\,(I - H)^{\top} = \sigma^2 (I - H)$, using symmetry and $HH = H$ once. Its diagonal entry is $\operatorname{Var}(e_i) = \sigma^2(1 - h_i)$.
 
@@ -626,13 +608,13 @@ The two outputs match line for line. The formula columns and the refit columns a
 
 ## What this builds on
 
-- [multiple-regression-and-gauss-markov](03-multiple-regression-and-gauss-markov.md): least squares in matrix form, the fit as a projection, the hat matrix whose diagonal holds the leverages, and the assumptions under which least squares is best.
+- [Multiple regression](03-multiple-regression-and-gauss-markov.md): least squares in matrix form, the fit as a projection, the hat matrix whose diagonal holds the leverages, and the assumptions under which least squares is best.
 
 ## Where this goes next
 
-- [logistic-regression](05-logistic-regression.md): a yes-or-no outcome, where the spread is uneven by design, widest where the chance is one half, and least squares gives way to maximum likelihood.
-- [ridge-and-lasso](06-ridge-and-lasso.md): a fit that trades a little bias for stability when predictors move together.
-- [cross-validation-and-overfitting](08-cross-validation-and-overfitting.md): pricing each sale from a fit that never saw it, for which Step 3's $e_i/(1 - h_i)$ is the one-fit shortcut.
+- [Logistic regression](05-logistic-regression.md): a yes-or-no outcome, where the spread is uneven by design, widest where the chance is one half, and least squares gives way to maximum likelihood.
+- [Regularisation](06-ridge-and-lasso.md): a fit that trades a little bias for stability when predictors move together.
+- [Overfitting](08-cross-validation-and-overfitting.md): pricing each sale from a fit that never saw it, for which Step 3's $e_i/(1 - h_i)$ is the one-fit shortcut.
 
 Every check on this card reads a line against the sales it was fitted to; how well a fit prices a sale it has never seen is the question cross-validation answers.
 

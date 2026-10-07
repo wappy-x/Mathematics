@@ -1,33 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Counting Principles
-topic: Orderings
-item: Factorials
-kind: definition
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/01-rules-of-sum-and-product|rules-of-sum-and-product]]"
-  - "[[Cards/01-Foundations/06-Proof/04-proof-by-induction|proof-by-induction]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/02-linear-vs-exponential-growth|linear-vs-exponential-growth]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/04-compounding-frequency-and-e|compounding-frequency-and-e]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/04-ordered-picks|ordered-picks]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/01-multiset-permutations|multiset-permutations]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/04-circular-arrangements|circular-arrangements]]"
-  - "[[Cards/04-Combinatorics and graphs/08-Partitions/05-permutations-by-cycles|permutations-by-cycles]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/09-stirlings-approximation|stirlings-approximation]]"
-  - "[[Cards/14-Applied and computational/01-Algorithms and Growth/05-sorting-and-searching|sorting-and-searching]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - factorial
----
-
 # Factorials: the number of ways to line things up, and how fast it explodes
 
-Combinatorics and graphs → Counting Principles → Orderings → Factorials
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Counting Principles](../../../SYLLABUS.md#w04-s01) → Factorials
 
 ---
 
@@ -35,7 +8,7 @@ Combinatorics and graphs → Counting Principles → Orderings → Factorials
 
 A playlist holds ten songs. Play them in a different order and the evening sounds different, so order is part of the playlist. How many orders are there?
 
-The picks come in stages, and stage sizes multiply ([rules-of-sum-and-product](01-rules-of-sum-and-product.md)). The first slot offers ten songs, the second the nine left, the third eight. The last has one song and no choice at all. So the count is 10 x 9 x 8 x 7 x 6 x 5 x 4 x 3 x 2 x 1 = 3,628,800.
+The picks come in stages, and stage sizes multiply ([The rules of sum and product](01-rules-of-sum-and-product.md)). The first slot offers ten songs, the second the nine left, the third eight. The last has one song and no choice at all. So the count is 10 x 9 x 8 x 7 x 6 x 5 x 4 x 3 x 2 x 1 = 3,628,800.
 
 Over three and a half million orders, out of ten songs. Eight runners cross a finish line in 40,320 orders. Twenty songs give 2,432,902,008,176,640,000.
 
@@ -91,9 +64,9 @@ Take n divided by $e$, use it as a factor n times over, then scale by the square
 
 ### When it holds
 
-- **The things are all different.** Two copies of one song and the count doubles up: the truth is 1,814,400, half of 3,628,800 ([multiset-permutations](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md)).
-- **All of them are used, and order counts.** Line up only some and the countdown stops early ([ordered-picks](04-ordered-picks.md)).
-- **The line has a first place and a last.** Seat the same things round a table with no head and rotations collapse together ([circular-arrangements](../02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md)).
+- **The things are all different.** Two copies of one song and the count doubles up: the truth is 1,814,400, half of 3,628,800 ([Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md)).
+- **All of them are used, and order counts.** Line up only some and the countdown stops early ([Ordered picks](04-ordered-picks.md)).
+- **The line has a first place and a last.** Seat the same things round a table with no head and rotations collapse together ([Round tables and bracelets](../02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md)).
 - **Stirling's estimate controls the ratio, never the difference.** At n = 20 it is 0.416 percent low, and the gap left over is 0.010115 million million million orderings. Compare sizes with it; never subtract.
 
 ---
@@ -102,7 +75,7 @@ Take n divided by $e$, use it as a factor n times over, then scale by the square
 
 ### Step 0: a line is filled one place at a time
 
-No new idea is needed. A line is built by stages, and no pick spoils the next: whatever goes first, every remaining song is still free for second place. Stage sizes multiply, so the count is a product ([rules-of-sum-and-product](01-rules-of-sum-and-product.md)).
+No new idea is needed. A line is built by stages, and no pick spoils the next: whatever goes first, every remaining song is still free for second place. Stage sizes multiply, so the count is a product ([The rules of sum and product](01-rules-of-sum-and-product.md)).
 
 ### Step 1: the stage sizes run down to one
 
@@ -129,7 +102,7 @@ Setting 0! = 0 knocks the bottom out: 1! becomes 0, then 2! = 2 x 0 = 0, and eve
 <details>
 <summary>Detailed proof: the product counts the orderings, for every n</summary>
 
-Write L(n) for the number of orderings of n distinct things. The claim: L(n) = n! for every whole n at least 0, with n! fixed by 0! = 1 and n! = n x (n-1)!. The method is induction ([proof-by-induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
+Write L(n) for the number of orderings of n distinct things. The claim: L(n) = n! for every whole n at least 0, with n! fixed by 0! = 1 and n! = n x (n-1)!. The method is induction ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
 
 **Base case.** With nothing to line up there is one ordering, the empty one: L(0) = 1 = 0!.
 
@@ -141,11 +114,11 @@ The claim holds at 0 and passes from n-1 to n, so it holds for every n. The chec
 
 ### Step 4: why it leaves doubling behind
 
-Nine songs to ten multiplies the count by 10; ten to eleven, by 11. The multiplier itself grows. Doubling never does: 2^n gains a factor of 2 at every step, for ever, and squaring is weaker still ([linear-vs-exponential-growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md)). So the factorial starts behind, 6 against 8 at three things, crosses at four, 24 against 16, and never falls back.
+Nine songs to ten multiplies the count by 10; ten to eleven, by 11. The multiplier itself grows. Doubling never does: 2^n gains a factor of 2 at every step, for ever, and squaring is weaker still ([Linear versus exponential growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md)). So the factorial starts behind, 6 against 8 at three things, crosses at four, 24 against 16, and never falls back.
 
 ### Step 5: an estimate that skips the multiplying
 
-Twenty multiplications are cheap; a factorial of a million cannot be written out. Stirling's estimate replaces the product with one short expression. At n = 20 it gives 2.422787 against the true 2.432902, both in units of a million million million: dividing, 0.995842, low by 0.416 percent, and the percentage shrinks as n grows. Where the square root and the $2\pi$ come from is answered on [stirlings-approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md).
+Twenty multiplications are cheap; a factorial of a million cannot be written out. Stirling's estimate replaces the product with one short expression. At n = 20 it gives 2.422787 against the true 2.432902, both in units of a million million million: dividing, 0.995842, low by 0.416 percent, and the percentage shrinks as n grows. Where the square root and the $2\pi$ come from is answered on [Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md).
 
 A second road reaches the same counts without multiplying: tally the orderings of every subset of the ten songs, each tally built by asking which song comes last and adding the tallies of the smaller subsets. The full set tallies 3,628,800.
 
@@ -178,7 +151,7 @@ Ten songs on shuffle come out 3,628,800 ways, which is why a shuffle rarely repe
 | Letting songs repeat: ten slots, any of ten songs in each | 10,000,000,000 | that counts lists with repeats, a different question |
 | Two copies of one song treated as different | 3,628,800, where the truth is 1,814,400 | swapping the copies makes no new playlist, so each is counted twice |
 
-The code prints all three; lists with repeats are counted on [strings-and-powers](02-strings-and-powers.md).
+The code prints all three; lists with repeats are counted on [Strings with repetition](02-strings-and-powers.md).
 
 ---
 
@@ -401,7 +374,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Shuffle.** A shuffle button picks one of the n! orders — for ten tracks, one of 3,628,800.
-- **Delivery rounds.** Twenty stops can be visited in 2,432,902,008,176,640,000 orders, so no route planner tries them all (sorting-and-searching).
+- **Delivery rounds.** Twenty stops can be visited in 2,432,902,008,176,640,000 orders, so no route planner tries them all (Sorting and searching).
 - **Sorting.** A method that compares pairs must tell n! orders apart, and that count sets the floor on sorting's cost.
 
 > **Say it back**
@@ -411,21 +384,21 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [rules-of-sum-and-product](01-rules-of-sum-and-product.md): picks made in stages multiply — the rule the countdown rests on.
-- [proof-by-induction](../../01-Foundations/06-Proof/04-proof-by-induction.md): turns the one-step recurrence into a claim about every n.
-- [linear-vs-exponential-growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md): the doubling curve the factorial overtakes at four.
-- [compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): where e comes from, the number inside Stirling's estimate.
+- [The rules of sum and product](01-rules-of-sum-and-product.md): picks made in stages multiply — the rule the countdown rests on.
+- [Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md): turns the one-step recurrence into a claim about every n.
+- [Linear versus exponential growth](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/02-linear-vs-exponential-growth.md): the doubling curve the factorial overtakes at four.
+- [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): where e comes from, the number inside Stirling's estimate.
 
 ## Where this goes next
 
-- [ordered-picks](04-ordered-picks.md): the count when only some of the things go in the line.
-- [multiset-permutations](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md): the count when some things are identical: 1,814,400.
-- [circular-arrangements](../02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md): the same things round a table, no place first.
-- [permutations-by-cycles](../08-Partitions/05-permutations-by-cycles.md): the n! orderings sorted by the loops they make.
-- [stirlings-approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md): where the square root and the 2 pi come from.
-- sorting-and-searching: n! as the number of orders a sorting method must separate.
+- [Ordered picks](04-ordered-picks.md): the count when only some of the things go in the line.
+- [Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md): the count when some things are identical: 1,814,400.
+- [Round tables and bracelets](../02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md): the same things round a table, no place first.
+- [Counting shuffles by their loops](../08-Partitions/05-permutations-by-cycles.md): the n! orderings sorted by the loops they make.
+- [Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md): where the square root and the 2 pi come from.
+- Sorting and searching: n! as the number of orders a sorting method must separate.
 
-Ten songs into ten slots is settled; open still is the count when only five of the ten make the disc, which [ordered-picks](04-ordered-picks.md) answers.
+Ten songs into ten slots is settled; open still is the count when only five of the ten make the disc, which [Ordered picks](04-ordered-picks.md) answers.
 
 ---
 

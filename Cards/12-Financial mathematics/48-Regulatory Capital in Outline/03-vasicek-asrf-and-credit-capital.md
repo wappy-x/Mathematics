@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Regulatory Capital in Outline
-topic: Risk weights from a bad year
-item: The Basel credit formula
-kind: convention
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/48-Regulatory Capital in Outline/02-basel-capital-and-risk-weighted-assets|basel-capital-and-risk-weighted-assets]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/03-vasicek-loss-distribution-and-basel-capital|vasicek-loss-distribution-and-basel-capital]]"
-next:
-  - "[[Cards/12-Financial mathematics/48-Regulatory Capital in Outline/04-frtb-and-the-shift-to-expected-shortfall|frtb-and-the-shift-to-expected-shortfall]]"
-tags: [mathematics, financial mathematics, vasicek-asrf-and-credit-capital]
----
-
 # The Basel credit formula: one-factor Vasicek behind the risk weights
 
-Financial mathematics → Regulatory Capital in Outline → Risk weights from a bad year → The Basel credit formula
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Regulatory Capital in Outline](../../../SYLLABUS.md#w12-s48) → The Basel credit formula
 
 ---
 
@@ -54,7 +37,7 @@ The home loan and the small company land on nearly the same weight by different 
 
 ## The formula
 
-Notation first, in words. $N(x)$ is the bell-curve area to the left of $x$: the chance a standard normal draw comes out below $x$ ([normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). $N^{-1}(u)$ runs it backwards: the point with area $u$ to its left ([normal-quantile](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)). $\ln$ is the natural logarithm.
+Notation first, in words. $N(x)$ is the bell-curve area to the left of $x$: the chance a standard normal draw comes out below $x$ ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). $N^{-1}(u)$ runs it backwards: the point with area $u$ to its left ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)). $\ln$ is the natural logarithm.
 
 The capital requirement per dollar lent, $K$:
 
@@ -128,7 +111,7 @@ The one-factor model gives each borrower a health score, a bell-curve draw that 
 
 $$q(m) = N\!\left(\frac{N^{-1}(\mathrm{PD}) - \sqrt{R}\,m}{\sqrt{1-R}}\right).$$
 
-The derivation lives on [vasicek-loss-distribution-and-basel-capital](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md), which also shows that the pool's worst 0.1% of years are its worst 0.1% of economies. The one-in-a-thousand economy is $m = -N^{-1}(0.999) = -3.0902$. Put it in and the minus sign turns into the plus sign of the Basel formula. For the home loan the bad-year default rate is 17.63%.
+The derivation lives on [Vasicek's large-pool loss curve](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md), which also shows that the pool's worst 0.1% of years are its worst 0.1% of economies. The one-in-a-thousand economy is $m = -N^{-1}(0.999) = -3.0902$. Put it in and the minus sign turns into the plus sign of the Basel formula. For the home loan the bad-year default rate is 17.63%.
 
 ### Step 2: the book's bad year is the sum of the loans' bad years
 
@@ -179,7 +162,7 @@ Three properties were built in. It equals 1 at one year, so a one-year loan gets
 
 ### Step 7: 12.5 turns capital into a risk weight
 
-The headline rule is capital of at least 8% of risk-weighted assets ([basel-capital-and-risk-weighted-assets](02-basel-capital-and-risk-weighted-assets.md)). If a loan needs capital $K \times \mathrm{EAD}$, its risk-weighted assets must be $K \times \mathrm{EAD} / 0.08 = 12.5 \times K \times \mathrm{EAD}$. The factor 12.5 is only 1 divided by 8%. It lets credit risk, market risk and operational risk share one denominator.
+The headline rule is capital of at least 8% of risk-weighted assets ([Basel capital](02-basel-capital-and-risk-weighted-assets.md)). If a loan needs capital $K \times \mathrm{EAD}$, its risk-weighted assets must be $K \times \mathrm{EAD} / 0.08 = 12.5 \times K \times \mathrm{EAD}$. The factor 12.5 is only 1 divided by 8%. It lets credit risk, market risk and operational risk share one denominator.
 
 So the bank estimates PD for every loan, and under the advanced approach LGD and EAD too. The rules fix the confidence level, the correlations, the maturity factor, the 12.5, and floors under the bank's estimates: the numbers that move capital most and are easiest to shade.
 
@@ -654,9 +637,9 @@ The two outputs agree line for line at the printed precision, from two different
 
 - **Bank annual reports.** The credit-risk tables in the Pillar 3 disclosures list exposures by PD band with average PD, average LGD and average risk weight. Each row is this formula applied and summed.
 - **Mortgage pricing.** The capital a home loan ties up is set by this weight, so two loans at the same interest rate can earn very different returns on capital.
-- **Expected and unexpected loss.** The subtraction in Step 3 is the split taught on [expected-versus-unexpected-loss](01-expected-versus-unexpected-loss.md).
+- **Expected and unexpected loss.** The subtraction in Step 3 is the split taught on [Expected and unexpected loss](01-expected-versus-unexpected-loss.md).
 - **The output floor.** Since the 2017 reforms, a bank's modelled risk-weighted assets cannot fall below a fixed share of what the standardised tables give, so a low PD can only cut capital so far.
-- **Market risk and the leverage backstop.** Trading books are charged differently, on [frtb-and-the-shift-to-expected-shortfall](04-frtb-and-the-shift-to-expected-shortfall.md); a crude ratio with no risk weights at all sits beside both, on [liquidity-and-leverage-ratios](05-liquidity-and-leverage-ratios.md).
+- **Market risk and the leverage backstop.** Trading books are charged differently, on [Market-risk capital](04-frtb-and-the-shift-to-expected-shortfall.md); a crude ratio with no risk weights at all sits beside both, on [Liquidity and leverage](05-liquidity-and-leverage-ratios.md).
 
 > **Say it back**
 > The Basel credit formula charges each loan its loss in the one-in-a-thousand economy minus its average loss. The bad-year default rate comes from Vasicek's one-factor model, with the economy set to its 99.9% worst. Because one shared economy drives every loan, these charges add up exactly to the book's capital, which is what lets a regulator set capital loan by loan. The bank supplies PD and LGD; the rules fix the confidence level, the correlation, the maturity factor and the 12.5 that turns capital into risk-weighted assets. A $200,000 home loan with a 2% PD and 40% LGD comes out at 78.16%, $12,506.32 of capital.
@@ -665,12 +648,12 @@ The two outputs agree line for line at the printed precision, from two different
 
 ## What this builds on
 
-- [basel-capital-and-risk-weighted-assets](02-basel-capital-and-risk-weighted-assets.md): risk-weighted assets and the 8% minimum ratio that the 12.5 converts into.
-- [vasicek-loss-distribution-and-basel-capital](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md): the one-factor loss curve, the large-pool limit, and the 99.9% default rate that sits inside the square bracket.
+- [Basel capital](02-basel-capital-and-risk-weighted-assets.md): risk-weighted assets and the 8% minimum ratio that the 12.5 converts into.
+- [Vasicek's large-pool loss curve](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md): the one-factor loss curve, the large-pool limit, and the 99.9% default rate that sits inside the square bracket.
 
 ## Where this goes next
 
-- [frtb-and-the-shift-to-expected-shortfall](04-frtb-and-the-shift-to-expected-shortfall.md): capital for the trading book, where Basel moved from a single quantile to the average loss beyond it.
+- [Market-risk capital](04-frtb-and-the-shift-to-expected-shortfall.md): capital for the trading book, where Basel moved from a single quantile to the average loss beyond it.
 
 This card measured credit risk at one point of the loss curve, the 99.9% quantile; the trading book asks whether one point is enough, and what the tail beyond it should cost.
 

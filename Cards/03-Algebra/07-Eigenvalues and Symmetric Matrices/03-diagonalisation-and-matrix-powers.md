@@ -1,35 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Eigenvalues and Symmetric Matrices
-topic: Matrix powers
-item: Diagonalisation
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/02-eigenvalues-and-eigenvectors|eigenvalues-and-eigenvectors]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/01-change-of-basis|change-of-basis]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/01-exponents-and-powers|exponents-and-powers]]"
-next:
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/04-spectral-theorem|spectral-theorem]]"
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/06-recurrences-as-matrix-powers|recurrences-as-matrix-powers]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/02-the-eigenvalue-method|the-eigenvalue-method]]"
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/02-multi-step-transitions|multi-step-transitions]]"
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/04-rating-transition-matrix-and-cumulative-default-rates|rating-transition-matrix-and-cumulative-default-rates]]"
-  - "[[Cards/14-Applied and computational/07-Network Science and Spectral Graphs/02-power-iteration-and-the-damping-factor|power-iteration-and-the-damping-factor]]"
-  - "[[Cards/16-Numerical analysis/03-Numerical Linear Algebra/07-eigenvalues-power-iteration-and-the-qr-algorithm|eigenvalues-power-iteration-and-the-qr-algorithm]]"
-  - "[[Cards/18-Functional analysis/03-Bounded Operators/10-spectral-theorem-for-bounded-self-adjoint-operators|spectral-theorem-for-bounded-self-adjoint-operators]]"
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/04-strongly-continuous-semigroups|strongly-continuous-semigroups]]"
-tags:
-  - mathematics
-  - algebra
-  - diagonalisation-and-matrix-powers
----
-
 # Diagonalisation: in the eigenvector basis a matrix only stretches, so A^n is three easy multiplications
 
-Algebra → Eigenvalues and Symmetric Matrices → Matrix powers → Diagonalisation
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Eigenvalues and Symmetric Matrices](../../../SYLLABUS.md#w03-s07) → Diagonalisation
 
 ---
 
@@ -63,7 +34,7 @@ The falling line is city A, the rising line city B. Each month closes half the r
 
 ## The formula
 
-An eigenvector is a direction a matrix does not turn, only stretches; its eigenvalue is the stretch ([eigenvalues-and-eigenvectors](02-eigenvalues-and-eigenvectors.md)). For the fleet matrix they are (3, 2), stretched by 1, and (1, −1), stretched by 0.5. Write them as the columns of a matrix P, and their stretches on the diagonal of a second matrix — the top-left to bottom-right line, zeros elsewhere — called D. A matrix like that is **diagonal**, which is where diagonalisation gets its name.
+An eigenvector is a direction a matrix does not turn, only stretches; its eigenvalue is the stretch ([Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md)). For the fleet matrix they are (3, 2), stretched by 1, and (1, −1), stretched by 0.5. Write them as the columns of a matrix P, and their stretches on the diagonal of a second matrix — the top-left to bottom-right line, zeros elsewhere — called D. A matrix like that is **diagonal**, which is where diagonalisation gets its name.
 
 $$A = PDP^{-1}, \qquad A^n = PD^nP^{-1}$$
 
@@ -106,7 +77,7 @@ With P and D as above, multiplying by P on the right works one column at a time,
 
 $$AP = PD$$
 
-The columns point different ways, so P has an inverse ([change-of-basis](01-change-of-basis.md)); multiply on the right by it and $A = PDP^{-1}$. Backwards, AP = PD says each column of P is an eigenvector, so this factorisation exists exactly when enough independent eigenvectors do.
+The columns point different ways, so P has an inverse ([Change of basis](01-change-of-basis.md)); multiply on the right by it and $A = PDP^{-1}$. Backwards, AP = PD says each column of P is an eigenvector, so this factorisation exists exactly when enough independent eigenvectors do.
 
 ### Step 2: the middle cancels, so the power lands on D alone
 
@@ -118,7 +89,7 @@ The inner $P^{-1}$ and $P$ are neighbours, and a matrix beside its inverse is th
 
 $$A^n = PD^nP^{-1}$$
 
-$D^n$ costs nothing: a diagonal matrix never mixes the coordinates, so multiplying it by itself multiplies each diagonal entry by itself, leaving `[[1, 0], [0, 0.5^n]]` ([exponents-and-powers](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)). One trap: $A^n$ is the matrix applied n times, not each entry to the power. For $D$ they agree from the first power up.
+$D^n$ costs nothing: a diagonal matrix never mixes the coordinates, so multiplying it by itself multiplies each diagonal entry by itself, leaving `[[1, 0], [0, 0.5^n]]` ([Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)). One trap: $A^n$ is the matrix applied n times, not each entry to the power. For $D$ they agree from the first power up.
 
 <details>
 <summary>Detailed proof</summary>
@@ -402,8 +373,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Transition models.** Customers between tariffs, machines between working and broken, cars between depots: one matrix per period, powers for the long run, as in [multi-step-transitions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/02-multi-step-transitions.md).
-- **Sequences built from their own past.** "Each term is the sum of the two before it" is a matrix applied over and over, and its eigenvalues give a formula: [recurrences-as-matrix-powers](../../04-Combinatorics%20and%20graphs/05-Recurrences/06-recurrences-as-matrix-powers.md).
+- **Transition models.** Customers between tariffs, machines between working and broken, cars between depots: one matrix per period, powers for the long run, as in [n-step transitions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/02-multi-step-transitions.md).
+- **Sequences built from their own past.** "Each term is the sum of the two before it" is a matrix applied over and over, and its eigenvalues give a formula: [A recurrence is a matrix](../../04-Combinatorics%20and%20graphs/05-Recurrences/06-recurrences-as-matrix-powers.md).
 - **Page ranking, and masses on springs.** A link matrix applied over and over lands on the largest stretch's direction; coupled springs come apart into independent motions.
 
 > **Say it back**
@@ -413,21 +384,21 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [eigenvalues-and-eigenvectors](02-eigenvalues-and-eigenvectors.md): the directions a matrix only stretches, and the equation that finds them.
-- [change-of-basis](01-change-of-basis.md): why independent columns give an inverse, and how P translates between two descriptions of a fleet.
-- [exponents-and-powers](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): what 0.5^12 means, and why halving forever shrinks to nothing.
+- [Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md): the directions a matrix only stretches, and the equation that finds them.
+- [Change of basis](01-change-of-basis.md): why independent columns give an inverse, and how P translates between two descriptions of a fleet.
+- [Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): what 0.5^12 means, and why halving forever shrinks to nothing.
 
 ## Where this goes next
 
-- [spectral-theorem](04-spectral-theorem.md): eigenvectors always, and at right angles, so P's inverse is free.
-- [recurrences-as-matrix-powers](../../04-Combinatorics%20and%20graphs/05-Recurrences/06-recurrences-as-matrix-powers.md): a sequence rule as a matrix.
-- [the-eigenvalue-method](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/02-the-eigenvalue-method.md): the same split in continuous time.
-- [multi-step-transitions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/02-multi-step-transitions.md): eigenvalue 1 among probabilities.
-- [rating-transition-matrix-and-cumulative-default-rates](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md): these powers on credit ratings.
-- power-iteration-and-the-damping-factor: why repetition finds one direction.
-- eigenvalues-power-iteration-and-the-qr-algorithm: eigenvalues for a thousand rows.
-- spectral-theorem-for-bounded-self-adjoint-operators: infinitely many directions.
-- strongly-continuous-semigroups: with time as the power.
+- [The spectral theorem](04-spectral-theorem.md): eigenvectors always, and at right angles, so P's inverse is free.
+- [A recurrence is a matrix](../../04-Combinatorics%20and%20graphs/05-Recurrences/06-recurrences-as-matrix-powers.md): a sequence rule as a matrix.
+- [The eigenvalue method](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/02-the-eigenvalue-method.md): the same split in continuous time.
+- [n-step transitions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/02-multi-step-transitions.md): eigenvalue 1 among probabilities.
+- [Rating transition matrices](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md): these powers on credit ratings.
+- PageRank by power iteration: why repetition finds one direction.
+- Eigenvalues by iteration: eigenvalues for a thousand rows.
+- Bounded and symmetric: infinitely many directions.
+- Semigroups: with time as the power.
 
 This card was handed its eigenvectors and got lucky; the next names a family where that luck is guaranteed and the eigenvectors arrive at right angles.
 

@@ -1,27 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: The Number Line
-topic: Order
-item: The number line and inequalities
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/02-The Number Line/01-number-families|number-families]]"
-next:
-  - "[[Cards/01-Foundations/02-The Number Line/03-irrational-numbers|irrational-numbers]]"
-  - "[[Cards/01-Foundations/02-The Number Line/05-absolute-value-and-distance|absolute-value-and-distance]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/07-partial-and-total-orders|partial-and-total-orders]]"
-tags:
-  - mathematics
-  - foundations
-  - number-line-and-inequalities
----
-
 # The number line and inequalities: left is smaller, and what flips when you multiply by a negative
 
-Foundations → The Number Line → Order → The number line and inequalities
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [The Number Line](../../../SYLLABUS.md#w01-s02) → The number line and inequalities
 
 ---
 
@@ -116,7 +95,7 @@ Halfway between 18 and 22 is 20. Between 18 and 20, 19. Between 18 and 19, 37/2,
 
 It never leaves the fractions either. Adding two fractions gives a fraction; halving one doubles its bottom number. So between any two fractions, however close, sits another fraction.
 
-Crowding every gap is still not filling the line: no fraction lands on the number whose square is 2, written root 2. That is [irrational-numbers](03-irrational-numbers.md).
+Crowding every gap is still not filling the line: no fraction lands on the number whose square is 2, written root 2. That is [Irrational numbers](03-irrational-numbers.md).
 
 ---
 
@@ -292,13 +271,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [number-families](01-number-families.md): where the negatives and fractions on this line came from, and what each one fixed.
+- [The number families](01-number-families.md): where the negatives and fractions on this line came from, and what each one fixed.
 
 ## Where this goes next
 
-- [irrational-numbers](03-irrational-numbers.md): spots on the line no fraction lands on, however far you halve.
-- [absolute-value-and-distance](05-absolute-value-and-distance.md): how far apart two spots are, rather than which is left.
-- [partial-and-total-orders](../08-Relations%20and%20Functions/07-partial-and-total-orders.md): when things cannot all be laid on one line, and some pairs do not compare.
+- [Irrational numbers](03-irrational-numbers.md): spots on the line no fraction lands on, however far you halve.
+- [Absolute value](05-absolute-value-and-distance.md): how far apart two spots are, rather than which is left.
+- [Orders](../08-Relations%20and%20Functions/07-partial-and-total-orders.md): when things cannot all be laid on one line, and some pairs do not compare.
 
 ---
 

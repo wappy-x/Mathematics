@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Forward-Rate Models
-topic: Early exercise on a moving curve
-item: Bermudan swaptions
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/31-Forward-Rate Models/03-libor-and-sofr-market-models|libor-and-sofr-market-models]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/06-longstaff-schwartz-least-squares-monte-carlo|longstaff-schwartz-least-squares-monte-carlo]]"
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/06-hull-white-trinomial-tree|hull-white-trinomial-tree]]"
-next:
-  - "[[Cards/12-Financial mathematics/32-Convexity and Exotics/05-callable-and-cancellable-swaps|callable-and-cancellable-swaps]]"
-tags: [mathematics, financial mathematics, bermudan-swaptions-by-regression]
----
-
 # Bermudan swaptions: many exercise dates, priced by regression on simulated curves
 
-Financial mathematics → Forward-Rate Models → Early exercise on a moving curve → Bermudan swaptions
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Forward-Rate Models](../../../SYLLABUS.md#w12-s31) → Bermudan swaptions
 
 ---
 
@@ -93,7 +75,7 @@ Two helper facts carry the rest. The floating side of a swap is worth $1 - P(e,6
 
 ### When it holds
 
-- **The model is right.** Six lognormal forward rates (each one's log is normal), one shock, flat 20% volatility, one step a year. One shock moves every forward together; real forwards do not, and a Bermudan's price depends on that co-movement more than on the pricing method. A desk calibrates volatilities and correlations to quoted swaptions ([calibrating-a-market-model](04-calibrating-a-market-model.md)); the bounds are bounds on the model, not on the market.
+- **The model is right.** Six lognormal forward rates (each one's log is normal), one shock, flat 20% volatility, one step a year. One shock moves every forward together; real forwards do not, and a Bermudan's price depends on that co-movement more than on the pricing method. A desk calibrates volatilities and correlations to quoted swaptions ([Calibrating a market model](04-calibrating-a-market-model.md)); the bounds are bounds on the model, not on the market.
 - **The rule looks only at the present.** A rule that peeks at later curves is not legal, and its average is not a lower bound. The perfect-foresight rule averages 2.77%, not 2.35%.
 - **The fair-game correction is really fair.** Its expected increments must be zero. They are estimated by inner simulations, whose noise biases the upper bound upward; the bound stays valid in expectation, with a standard error.
 - **The regression inputs describe the state.** With one shock the swap rate nearly pins the curve. With several shocks, one input misses part of the curve, the rule gets worse, and the gap between the bounds widens: the gap is the warning light.
@@ -112,13 +94,13 @@ A good fair game comes from a good rule: its value, updated as the curve moves. 
 
 ### Step 1: count everything in year-6 bonds
 
-A dollar at year 2 and a dollar at year 5 are different things today. So count everything in one unit, the bond that pays 1 dollar at year 6: divide every value by that bond's price at the same moment. In the matching pricing world, every traded value counted this way is a fair game ([forward-measures-for-rates](02-forward-measures-for-rates.md)).
+A dollar at year 2 and a dollar at year 5 are different things today. So count everything in one unit, the bond that pays 1 dollar at year 6: divide every value by that bond's price at the same moment. In the matching pricing world, every traded value counted this way is a fair game ([Forward measures](02-forward-measures-for-rates.md)).
 
 The payoff at any year then compares directly with the payoff at any other year. No discounting runs between exercise dates. The price is $P(0,6)$ times the average of $h_e$ at the chosen year.
 
 ### Step 2: simulate the curve in that world
 
-In the year-6 bond's world the last forward, for year 5 to 6, has no drift. Each earlier forward has a drift fixed by no-arbitrage, from the forwards after it ([libor-and-sofr-market-models](03-libor-and-sofr-market-models.md)):
+In the year-6 bond's world the last forward, for year 5 to 6, has no drift. Each earlier forward has a drift fixed by no-arbitrage, from the forwards after it ([Market models](03-libor-and-sofr-market-models.md)):
 
 $$\frac{dL_i}{L_i} = -\sigma^2 \sum_{j=i+1}^{5} \frac{L_j}{1 + L_j}\,dt \;+\; \sigma\,dW.$$
 
@@ -139,7 +121,7 @@ Take one payment year, from $m-1$ to $m$ with $m$ between $e+1$ and 6. Its float
 
 Work backward. At year 5 no choice is left: switch if the swap is worth something. At year 4, take the paths where switching pays something. On each, record the swap-rate spread $x_e$ and the cash that path went on to collect, counted in year-6 bonds. Fit $C_e \approx \beta_0 + \beta_1 x_e + \beta_2 x_e^2$ by least squares, with $e = 4$. Switch on a path where $h_e$ beats the fitted $C_e$. Repeat at years 3, 2 and 1.
 
-A least-squares fit estimates an average given what is known; that is why it stands in for the hold value ([longstaff-schwartz-least-squares-monte-carlo](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md)). Only paths where switching pays something (in the money) enter the fit: elsewhere there is no decision to make. The coefficients are then frozen.
+A least-squares fit estimates an average given what is known; that is why it stands in for the hold value ([Longstaff-Schwartz](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md)). Only paths where switching pays something (in the money) enter the fit: elsewhere there is no decision to make. The coefficients are then frozen.
 
 ### Step 5: the lower bound
 
@@ -176,11 +158,11 @@ The gap is small because the rule is good: where the rule is close to the best, 
 
 ### Step 8: a third road, the tree
 
-With one shock, every forward at year $e$ depends on the path only through the drift. Freeze the drifts at today's values and every forward becomes a function of the total shock $W$ so far: $L_i = L_i(0)\exp\big((\mu_i - \tfrac12\sigma^2)e + \sigma W\big)$, with $\mu_i$ the frozen drift. $W$ lives on a recombining binomial tree: 200 up-or-down steps a year, each of size $1/\sqrt{200}$. At each exercise year, the value at a node is the larger of $h_e$ and the average of its two children, rolled back step by step. This is the backward induction of [hull-white-trinomial-tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md), run on the market model's own shock instead of a short rate. No regression and no simulation enter.
+With one shock, every forward at year $e$ depends on the path only through the drift. Freeze the drifts at today's values and every forward becomes a function of the total shock $W$ so far: $L_i = L_i(0)\exp\big((\mu_i - \tfrac12\sigma^2)e + \sigma W\big)$, with $\mu_i$ the frozen drift. $W$ lives on a recombining binomial tree: 200 up-or-down steps a year, each of size $1/\sqrt{200}$. At each exercise year, the value at a node is the larger of $h_e$ and the average of its two children, rolled back step by step. This is the backward induction of [The Hull-White tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md), run on the market model's own shock instead of a short rate. No regression and no simulation enter.
 
 The tree gives 2.350191%, inside the simulated bracket's noise. Its European is 1.646175% against Black's 1.642226%. That small excess is the price of freezing the drift, and the size of the tree's own bias.
 
-The other door: model the swap rates themselves as the random objects, one per exercise date ([swap-market-model-in-outline](05-swap-market-model-in-outline.md)). Each European piece is then exactly lognormal, which suits calibration; the regression and dual steps are unchanged.
+The other door: model the swap rates themselves as the random objects, one per exercise date ([Swap market model](05-swap-market-model-in-outline.md)). Each European piece is then exactly lognormal, which suits calibration; the regression and dual steps are unchanged.
 
 ```mermaid
 flowchart TB
@@ -686,10 +668,10 @@ The two outputs are identical line for line: same random numbers, same order of 
 
 ## Where you meet it in real life
 
-- **Callable bonds and loans.** A borrower's right to repay a fixed-rate bond at par on coupon dates is a Bermudan receiver swaption (a right to receive fixed and pay floating) held by the borrower. The issuer's funding desk prices that right this way ([callable-and-cancellable-swaps](../32-Convexity%20and%20Exotics/05-callable-and-cancellable-swaps.md)).
+- **Callable bonds and loans.** A borrower's right to repay a fixed-rate bond at par on coupon dates is a Bermudan receiver swaption (a right to receive fixed and pay floating) held by the borrower. The issuer's funding desk prices that right this way ([Callable and cancellable swaps](../32-Convexity%20and%20Exotics/05-callable-and-cancellable-swaps.md)).
 - **Mortgage hedging.** Home-loan borrowers can refinance on many dates. Banks that hold mortgages hedge that prepayment right with Bermudan swaptions, and value both with simulated curves.
 - **Model validation.** A validation team checks a desk's Bermudan price by the width of its primal-dual bracket. A wide gap means the exercise rule, not the model, needs work.
-- **Whole-curve models.** In the Heath-Jarrow-Morton framework ([hjm-framework-and-the-drift-condition](01-hjm-framework-and-the-drift-condition.md)) with several shocks, no small tree exists. Regression plus the dual is how such models price anything with early exercise.
+- **Whole-curve models.** In the Heath-Jarrow-Morton framework ([Heath-Jarrow-Morton](01-hjm-framework-and-the-drift-condition.md)) with several shocks, no small tree exists. Regression plus the dual is how such models price anything with early exercise.
 
 > **Say it back**
 > A Bermudan swaption is the right to enter a swap on any one of several dates. Counting every value in year-6 bonds lets payoffs on different dates be compared directly. A rule fitted by regression on simulated curves and then frozen, run on fresh curves, can only do worse than the best rule, so its average is a lower bound. Subtracting a fair game built from that rule's own values, and taking each path's best remaining value, gives an upper bound. Here the two sit 0.003043% apart at about 2.35% of the loan, and a tree in the single shock agrees.
@@ -698,13 +680,13 @@ The two outputs are identical line for line: same random numbers, same order of 
 
 ## What this builds on
 
-- [libor-and-sofr-market-models](03-libor-and-sofr-market-models.md): the lognormal forward rates, and the drift each one needs in the year-6 bond's world. This card simulates exactly that model.
-- [longstaff-schwartz-least-squares-monte-carlo](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md): the backward regression that learns the hold value, and why a least-squares fit estimates an average given what is known.
-- [hull-white-trinomial-tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md): backward induction with an exercise check at each node. Road 3 runs it on the market model's shock.
+- [Market models](03-libor-and-sofr-market-models.md): the lognormal forward rates, and the drift each one needs in the year-6 bond's world. This card simulates exactly that model.
+- [Longstaff-Schwartz](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md): the backward regression that learns the hold value, and why a least-squares fit estimates an average given what is known.
+- [The Hull-White tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md): backward induction with an exercise check at each node. Road 3 runs it on the market model's shock.
 
 ## Where this goes next
 
-- [callable-and-cancellable-swaps](../32-Convexity%20and%20Exotics/05-callable-and-cancellable-swaps.md): a swap that one side may cancel on coupon dates is an ordinary swap plus a Bermudan swaption. The machinery here prices the cancellation right.
+- [Callable and cancellable swaps](../32-Convexity%20and%20Exotics/05-callable-and-cancellable-swaps.md): a swap that one side may cancel on coupon dates is an ordinary swap plus a Bermudan swaption. The machinery here prices the cancellation right.
 
 This card prices a right to enter a swap; the question it leaves open is how that right hides inside everyday contracts, a callable bond or a cancellable swap, and how to strip it out and price it there.
 

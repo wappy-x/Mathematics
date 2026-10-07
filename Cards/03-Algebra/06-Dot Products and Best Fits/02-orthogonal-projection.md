@@ -1,33 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Dot Products and Best Fits
-topic: Projection
-item: Orthogonal projection
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/01-dot-product|dot-product]]"
-next:
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/03-gram-schmidt-and-orthonormal-bases|gram-schmidt-and-orthonormal-bases]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/04-least-squares|least-squares]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/04-legendre-polynomials|legendre-polynomials]]"
-  - "[[Cards/08-Differential equations and dynamics/09-Fourier Series/01-fourier-series-and-orthogonality|fourier-series-and-orthogonality]]"
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/06-l2-as-a-hilbert-space|l2-as-a-hilbert-space]]"
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/03-conditional-expectation-as-projection|conditional-expectation-as-projection]]"
-  - "[[Cards/18-Functional analysis/02-Hilbert Spaces/02-projection-theorem-and-orthogonal-complements|projection-theorem-and-orthogonal-complements]]"
-  - "[[Cards/20-Harmonic analysis/01-Fourier Series in Depth/02-best-approximation-and-bessels-inequality|best-approximation-and-bessels-inequality]]"
-  - "[[Cards/24-Computability and complexity/06-Data, Learning and Fine-Grained Complexity/02-dimension-reduction-and-random-projection|dimension-reduction-and-random-projection]]"
-tags:
-  - mathematics
-  - algebra
-  - orthogonal-projection
----
-
 # Projection: the shadow of one vector on another, and the leftover that is always perpendicular
 
-Algebra → Dot Products and Best Fits → Projection → Orthogonal projection
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Dot Products and Best Fits](../../../SYLLABUS.md#w03-s06) → Orthogonal projection
 
 ---
 
@@ -39,7 +12,7 @@ The boat moves along the line it points down and nowhere else: northeast, say, a
 
 So the pull splits: (4, 4) runs along the heading and drives the boat, (2, -2) shoves the bow sideways and drives nothing; the two add back to (6, 2).
 
-Those parts sit at right angles. Multiply matching entries and add: 4 times 2 is 8, 4 times -2 is -8, total 0. A zero dot product means perpendicular ([dot-product](01-dot-product.md)).
+Those parts sit at right angles. Multiply matching entries and add: 4 times 2 is 8, 4 times -2 is -8, total 0. A zero dot product means perpendicular ([The dot product](01-dot-product.md)).
 
 **A vector splits, one way only, into a piece along a chosen direction and a leftover at right angles to it — and that piece is the closest the direction can get.**
 
@@ -90,7 +63,7 @@ The same formula twice, summed.
 
 - **The heading is not the zero vector.** Its dot product with itself sits underneath: a zero there leaves nothing to divide by.
 - **A whole line or plane through the origin.** On a segment the nearest point can be an end; for a line missing the origin, subtract a point of it, project, add the point back.
-- **The two plane directions are perpendicular.** Skewed ones share a part, each shadow counts it, and the sum overshoots; straighten them first, [gram-schmidt-and-orthonormal-bases](03-gram-schmidt-and-orthonormal-bases.md).
+- **The two plane directions are perpendicular.** Skewed ones share a part, each shadow counts it, and the sum overshoots; straighten them first, [Gram-Schmidt](03-gram-schmidt-and-orthonormal-bases.md).
 - **The miss is plain squared distance.** Stretch one axis and a different point comes out closest.
 
 ---
@@ -123,7 +96,7 @@ Every point on it is t copies of (1, 1), so the gap from the pull is (6 - t, 2 -
 
 $$(6-t)^2 + (2-t)^2 \;=\; 2t^2 - 16t + 40.$$
 
-Complete the square, as on [quadratic-formula](../02-Polynomials/03-quadratic-formula.md):
+Complete the square, as on [The quadratic formula](../02-Polynomials/03-quadratic-formula.md):
 
 $$2t^2 - 16t + 40 \;=\; 2(t-4)^2 + 8.$$
 
@@ -174,7 +147,7 @@ Perpendicular matters: each shadow is invisible to the other direction, so neith
 
 Stack the directions as the columns of a matrix A, none a mix of the others. Any vector b then has shadow P b on the space they span, with
 $$P = A\,(A^{T} A)^{-1} A^{T}.$$
-Raised T means rows and columns swapped; raised -1 means the inverse, the matrix that undoes it, which exists exactly because no column is a mix of the others. For our line A is the single column (1, 1), the bracket holds only v dotted with itself, 2, and (6, 2) through P returns (4, 4). Projecting twice adds nothing: P P = P. It is the object [least-squares](04-least-squares.md) solves for.
+Raised T means rows and columns swapped; raised -1 means the inverse, the matrix that undoes it, which exists exactly because no column is a mix of the others. For our line A is the single column (1, 1), the bracket holds only v dotted with itself, 2, and (6, 2) through P returns (4, 4). Projecting twice adds nothing: P P = P. It is the object [Least squares](04-least-squares.md) solves for.
 
 </details>
 
@@ -430,9 +403,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Best-fit lines through data.** Points on no straight line still have a closest line; finding it is one projection, the residuals perpendicular to everything the fit could reach — [least-squares](04-least-squares.md).
+- **Best-fit lines through data.** Points on no straight line still have a closest line; finding it is one projection, the residuals perpendicular to everything the fit could reach — [Least squares](04-least-squares.md).
 - **Stripping a known effect out of measurements.** Project onto a pattern known to be in the data, drop the shadow, keep the leftover: what remains dots to zero against it.
-- **Coordinates in new axes.** Against perpendicular directions one unit long, a vector's coordinates are its dot products with them, each one a projection: [gram-schmidt-and-orthonormal-bases](03-gram-schmidt-and-orthonormal-bases.md).
+- **Coordinates in new axes.** Against perpendicular directions one unit long, a vector's coordinates are its dot products with them, each one a projection: [Gram-Schmidt](03-gram-schmidt-and-orthonormal-bases.md).
 
 > **Say it back**
 > A vector splits into a piece along a chosen direction and a perpendicular leftover: projection and residual. Dot the vector with the direction, divide by that direction's dot product with itself, lay down that many copies. The rower's (6, 2) on a heading of (1, 1) gives (4, 4) useful and (2, -2) wasted, dotting to 0. Perpendicular and closest are one point, which is why projection is what "best fit" means.
@@ -441,21 +414,21 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [dot-product](01-dot-product.md): multiplying matching entries and adding — the one number that gives length, tests perpendicularity at zero, and measures how much of one vector runs along another.
+- [The dot product](01-dot-product.md): multiplying matching entries and adding — the one number that gives length, tests perpendicularity at zero, and measures how much of one vector runs along another.
 
 ## Where this goes next
 
-- [gram-schmidt-and-orthonormal-bases](03-gram-schmidt-and-orthonormal-bases.md): skewed directions made perpendicular, so any plane works.
-- [least-squares](04-least-squares.md): the closest point of step 2, fitted to data no line fits.
-- [legendre-polynomials](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/04-legendre-polynomials.md): projection where the vectors are polynomials.
-- [fourier-series-and-orthogonality](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/01-fourier-series-and-orthogonality.md): a signal projected onto waves, one coefficient each.
-- [l2-as-a-hilbert-space](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md): functions as vectors, their dot product an integral.
-- [conditional-expectation-as-projection](../../10-Measure%20and%20integration/09-Conditional%20Expectation/03-conditional-expectation-as-projection.md): a forecast as the projection of a random quantity.
-- projection-theorem-and-orthogonal-complements: this proof where the directions never run out.
-- best-approximation-and-bessels-inequality: how much a few waves capture, and the miss left.
-- dimension-reduction-and-random-projection: random directions that shrink data, keeping distances.
+- [Gram-Schmidt](03-gram-schmidt-and-orthonormal-bases.md): skewed directions made perpendicular, so any plane works.
+- [Least squares](04-least-squares.md): the closest point of step 2, fitted to data no line fits.
+- [Legendre's equation](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/04-legendre-polynomials.md): projection where the vectors are polynomials.
+- [Fourier series](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/01-fourier-series-and-orthogonality.md): a signal projected onto waves, one coefficient each.
+- [L2 as a Hilbert space](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/06-l2-as-a-hilbert-space.md): functions as vectors, their dot product an integral.
+- [Conditional expectation as a projection](../../10-Measure%20and%20integration/09-Conditional%20Expectation/03-conditional-expectation-as-projection.md): a forecast as the projection of a random quantity.
+- Projection: this proof where the directions never run out.
+- Partial sums are the best fit: how much a few waves capture, and the miss left.
+- Random projection: random directions that shrink data, keeping distances.
 
-Each adds shadows onto several directions at once, which step 4 allows only while they stay perpendicular; [gram-schmidt-and-orthonormal-bases](03-gram-schmidt-and-orthonormal-bases.md) makes them so.
+Each adds shadows onto several directions at once, which step 4 allows only while they stay perpendicular; [Gram-Schmidt](03-gram-schmidt-and-orthonormal-bases.md) makes them so.
 
 ---
 

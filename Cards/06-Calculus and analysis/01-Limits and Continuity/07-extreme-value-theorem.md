@@ -1,26 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Limits and Continuity
-topic: Guaranteed highs and lows
-item: Extreme value theorem
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/06-intermediate-value-theorem|intermediate-value-theorem]]"
-next:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/08-uniform-continuity-and-lipschitz|uniform-continuity-and-lipschitz]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/02-mean-value-theorem|mean-value-theorem]]"
-  - "[[Cards/17-Topology/02-Topological Spaces/08-images-of-compact-and-connected-sets|images-of-compact-and-connected-sets]]"
-  - "[[Cards/18-Functional analysis/01-Normed and Banach Spaces/04-equivalence-of-norms-in-finite-dimensions|equivalence-of-norms-in-finite-dimensions]]"
-  - "[[Cards/23-Differential geometry and Lie groups/05-Riemannian Geometry/10-hopf-rinow-and-completeness|hopf-rinow-and-completeness]]"
-tags: [mathematics, calculus and analysis, extreme-value-theorem]
----
-
 # Extreme value theorem: a continuous function on a closed interval hits a highest and a lowest value
 
-Calculus and analysis → Limits and Continuity → Guaranteed highs and lows → Extreme value theorem
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Limits and Continuity](../../../SYLLABUS.md#w06-s01) → Extreme value theorem
 
 ---
 
@@ -30,7 +10,7 @@ A gardener has 2 metres of edging for a rectangular bed. Two neighbouring sides 
 
 Now forbid the flat beds and ask for the longest side a bed can have. A side of 0.9 metres is beaten by 0.95, which is beaten by 0.995. No side wins; the lengths creep toward 1 and never arrive.
 
-The difference is whether the allowed inputs include their ends. The extreme value theorem says when a best and a worst input must exist, for a **continuous** function: one where nearby inputs give nearby outputs, with no jumps ([continuity](05-continuity.md)).
+The difference is whether the allowed inputs include their ends. The extreme value theorem says when a best and a worst input must exist, for a **continuous** function: one where nearby inputs give nearby outputs, with no jumps ([Continuity](05-continuity.md)).
 
 **A function that is continuous on a closed interval, both ends included and both finite, takes a largest value and a smallest value at inputs in that interval, ends allowed.**
 
@@ -53,7 +33,7 @@ The line is the area x(1 − x), sampled every 0.1 metres, peaking at 0.25 over 
 
 ## The formula
 
-Notation first. Square brackets, as in $[a,b]$, mean an interval including both ends; round brackets, as in (0, 1), leave the ends out. $\sup$ is the least upper bound of a set of numbers ([supremum-and-completeness](02-supremum-and-completeness.md)): the smallest number nothing in the set exceeds, not always a member.
+Notation first. Square brackets, as in $[a,b]$, mean an interval including both ends; round brackets, as in (0, 1), leave the ends out. $\sup$ is the least upper bound of a set of numbers ([No gaps](02-supremum-and-completeness.md)): the smallest number nothing in the set exceeds, not always a member.
 
 If $f$ is continuous at every point of $[a,b]$ (at an end, judged from inside only), with $a$ and $b$ finite and $a \le b$, then there are inputs $c$ and $d$ in $[a,b]$ with
 
@@ -65,7 +45,7 @@ The top is $M = f(c)$, the bottom $m = f(d)$: actual outputs, not bounds only ap
 
 $$f(x) = x(1-x) = \tfrac14 - \left(x - \tfrac12\right)^2, \qquad 0 \le x \le 1.$$
 
-The proof uses a sequence $x_n$, a list of inputs with $n$ as its clock ([sequences-and-limits](03-sequences-and-limits.md)). A **subsequence** keeps infinitely many terms, in order, and drops the rest; its k-th kept term is $x_{n_k}$, where $n_k$ is its position in the original list.
+The proof uses a sequence $x_n$, a list of inputs with $n$ as its clock ([Sequences](03-sequences-and-limits.md)). A **subsequence** keeps infinitely many terms, in order, and drops the rest; its k-th kept term is $x_{n_k}$, where $n_k$ is its position in the original list.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -132,7 +112,7 @@ Let $f$ be continuous on $[a,b]$, with $a < b$ finite; if $a = b$ the one output
 
 The theorem says a top exists, not where. For the bed, algebra finds it: $x(1-x) = \tfrac14 - (x - \tfrac12)^2$, and a square is never negative, so the area is at most 0.25, reached only at x = 0.5. Both factors are at least 0, so the bottom is 0, at the ends.
 
-The same proof works on any **compact** set, one where every list has a subsequence settling inside it; continuous images of compact sets are compact (images-of-compact-and-connected-sets).
+The same proof works on any **compact** set, one where every list has a subsequence settling inside it; continuous images of compact sets are compact (What compactness and connectedness buy).
 
 ---
 
@@ -339,7 +319,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Numerical optimisation.** A refining search closes in only on a top that exists; on the bed, grids climb from 0.222222 to 0.249996.
-- **Later calculus.** The mean value theorem starts from a guaranteed highest point ([mean-value-theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)).
+- **Later calculus.** The mean value theorem starts from a guaranteed highest point ([Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)).
 - **Design limits.** A cost that varies continuously over a closed range of settings has a cheapest setting, so a search for it is not chasing something absent.
 
 > **Say it back**
@@ -349,17 +329,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [intermediate-value-theorem](06-intermediate-value-theorem.md): the same halving argument, used on a continuous function over a closed interval.
+- [Intermediate value theorem](06-intermediate-value-theorem.md): the same halving argument, used on a continuous function over a closed interval.
 
 ## Where this goes next
 
-- [uniform-continuity-and-lipschitz](08-uniform-continuity-and-lipschitz.md): uses the same subsequence argument.
-- [mean-value-theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md): a guaranteed top, combined with slopes.
-- images-of-compact-and-connected-sets: the theorem for compact sets.
-- equivalence-of-norms-in-finite-dimensions: a minimum on a sphere that must exist.
-- hopf-rinow-and-completeness: shortest paths that must exist.
+- [Uniform continuity](08-uniform-continuity-and-lipschitz.md): uses the same subsequence argument.
+- [Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md): a guaranteed top, combined with slopes.
+- What compactness and connectedness buy: the theorem for compact sets.
+- Equivalent norms: a minimum on a sphere that must exist.
+- Hopf-Rinow: shortest paths that must exist.
 
-Continuity gives each point its own input distance for a tolerance; whether one distance serves the whole interval at once is [uniform-continuity-and-lipschitz](08-uniform-continuity-and-lipschitz.md).
+Continuity gives each point its own input distance for a tolerance; whether one distance serves the whole interval at once is [Uniform continuity](08-uniform-continuity-and-lipschitz.md).
 
 ---
 

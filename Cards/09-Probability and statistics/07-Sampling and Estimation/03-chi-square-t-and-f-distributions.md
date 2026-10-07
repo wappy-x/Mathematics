@@ -1,25 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Sampling and Estimation
-topic: Laws for the statistics of a normal sample
-item: The reference distributions
-kind: theorem
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/02-sample-mean-and-standard-error|sample-mean-and-standard-error]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/07-gamma-and-beta-distributions|gamma-and-beta-distributions]]"
-next:
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/01-confidence-intervals|confidence-intervals]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/05-t-tests-and-comparing-means|t-tests-and-comparing-means]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/07-tail-dependence-and-the-t-copula|tail-dependence-and-the-t-copula]]"
-tags: [mathematics, probability and statistics, chi-square-t-and-f-distributions]
----
-
 # The reference distributions: chi-square, t and F, and where each comes from
 
-Probability and statistics → Sampling and Estimation → Laws for the statistics of a normal sample → The reference distributions
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Sampling and Estimation](../../../SYLLABUS.md#w09-s07) → The reference distributions
 
 ---
 
@@ -27,7 +8,7 @@ Probability and statistics → Sampling and Estimation → Laws for the statisti
 
 A machine fills bags of flour labelled 500 grams. An inspector pulls ten bags off the line and weighs them: 507, 498, 505, 500, 503, 502, 501, 497, 505 and 502 grams. The average is 502. Is the machine overfilling, or are two extra grams the luck of ten bags?
 
-If the machine's spread were known, the answer would come from the standard error ([sample-mean-and-standard-error](02-sample-mean-and-standard-error.md)). Nobody knows it. The same ten bags must supply the spread as well as the average. Their sample standard deviation is 3.162 grams, so the standard error is 3.162/√10 = 1.000 gram, and the average sits 2.000 standard errors above the label.
+If the machine's spread were known, the answer would come from the standard error ([Standard error](02-sample-mean-and-standard-error.md)). Nobody knows it. The same ten bags must supply the spread as well as the average. Their sample standard deviation is 3.162 grams, so the standard error is 3.162/√10 = 1.000 gram, and the average sits 2.000 standard errors above the label.
 
 Read 2.000 against the normal curve and a gap that large, either way, turns up 4.55 percent of the time when the label is right. That treats 3.162 as the true spread. It is a guess from ten bags, and a guess that comes out low makes every gap look big. The honest reference is **Student's t distribution with 9 degrees of freedom** (ten bags, less one used up by the average): 7.66 percent, about 1 time in 13.
 
@@ -56,7 +37,7 @@ Orange: the standard normal, right when the spread is known. Green: t with 9 deg
 
 ## The formula
 
-Notation first, in words. $Z$ is a standard normal, N(0, 1). Several of them, Z_1 to Z_k, are independent. The Greek letter chi is written χ and read "kai". $\chi^2_k$ is read "chi-square with k degrees of freedom", and $\nu$ (nu) is the usual letter for a count of degrees of freedom. Γ is the gamma integral of [gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md), with Γ(1/2) = √π.
+Notation first, in words. $Z$ is a standard normal, N(0, 1). Several of them, Z_1 to Z_k, are independent. The Greek letter chi is written χ and read "kai". $\chi^2_k$ is read "chi-square with k degrees of freedom", and $\nu$ (nu) is the usual letter for a count of degrees of freedom. Γ is the gamma integral of [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md), with Γ(1/2) = √π.
 
 **Chi-square: a sum of squares.**
 
@@ -135,7 +116,7 @@ $Z^2$ is at most v exactly when Z lies between −√v and √v. Both signs land
 
 $$P(Z^2 \le v) = \Phi(\sqrt v) - \Phi(-\sqrt v) = 2\,\Phi(\sqrt v) - 1.$$
 
-Here Φ is the standard normal's cumulative area ([normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md)). Differentiating, by the chain rule of [transforming-a-random-variable](../05-Transformations%20and%20Joint%20Laws/01-transforming-a-random-variable.md):
+Here Φ is the standard normal's cumulative area ([Normal](../04-Continuous%20Distributions/04-normal-distribution.md)). Differentiating, by the chain rule of [Transforming a variable](../05-Transformations%20and%20Joint%20Laws/01-transforming-a-random-variable.md):
 
 $$f_{Z^2}(v) = 2\,\varphi(\sqrt v)\cdot\frac{1}{2\sqrt v} = \frac{v^{-1/2}\,e^{-v/2}}{\sqrt{2\pi}}.$$
 
@@ -145,7 +126,7 @@ Here φ is the normal density. This is the gamma density with shape 1/2 and rate
 
 Two independent gamma variables at the same rate add to a gamma variable whose shape is the sum of the two shapes. The proof is in the gamma card's Step 4, at rate 1: the joint density of shapes a and b splits into a part in the total u and a part in the share, and the total's part, u^(a+b−1)e^(−u)/Γ(a + b), is the gamma density with shape a + b. Nothing there needs whole-number shapes, and a change of units moves the rate without touching the shapes, so it covers squares of shape 1/2 at rate 1/2. Adding k squared normals, each of shape 1/2, gives shape k/2 at rate 1/2. That is the chi-square density in The formula. Averages and variances add: mean k, variance 2k. For 9 degrees of freedom: mean 9, variance 18.
 
-A second road: the moment generating function of one square is (1 − 2s)^(−1/2) for s below 1/2, where s is the function's argument. Independent terms multiply their generating functions, giving (1 − 2s)^(−k/2), the gamma law's own ([moment-generating-functions](../02-Random%20Variables/07-moment-generating-functions.md)).
+A second road: the moment generating function of one square is (1 − 2s)^(−1/2) for s below 1/2, where s is the function's argument. Independent terms multiply their generating functions, giving (1 − 2s)^(−k/2), the gamma law's own ([Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md)).
 
 ### Step 3: a normal sample's spread is chi-square with n − 1
 
@@ -154,7 +135,7 @@ Write each bag as μ + σZ_i. Then the residual X_i − X̄ is σ(Z_i − Z̄): 
 <details>
 <summary>Detailed proof: the rotation that splits off the mean</summary>
 
-The joint density of $Z_1, \dots, Z_n$ is $(2\pi)^{-n/2} e^{-(z_1^2 + \dots + z_n^2)/2}$. It depends only on the point's distance from the origin. A rotation keeps distances and volumes, so rotated coordinates $W_1, \dots, W_n$ have the same density: independent standard normals again ([multivariate-normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)).
+The joint density of $Z_1, \dots, Z_n$ is $(2\pi)^{-n/2} e^{-(z_1^2 + \dots + z_n^2)/2}$. It depends only on the point's distance from the origin. A rotation keeps distances and volumes, so rotated coordinates $W_1, \dots, W_n$ have the same density: independent standard normals again ([Multivariate normal](../05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)).
 
 Choose the rotation whose first new axis points along `(1, 1, ..., 1)/√n`. Then $W_1 = (Z_1 + \dots + Z_n)/\sqrt n = \sqrt n\,\bar Z$. Distances are kept, so
 $$Z_1^2 + \dots + Z_n^2 = W_1^2 + W_2^2 + \dots + W_n^2.$$
@@ -174,7 +155,7 @@ $$\frac{\bar X - \mu}{S/\sqrt n} = \frac{(\bar X - \mu)/(\sigma/\sqrt n)}{\sqrt{
 
 σ cancels. The top is a standard normal. The bottom is the square root of a chi-square per degree of freedom, and Step 3 made it independent of the top. That is the t construction with ν = n − 1.
 
-Why the tails are heavier: V/ν averages 1, but in some samples it is small, and a small denominator throws the ratio far out. V/ν has variance 2/ν, so as ν grows it settles at 1 ([law-of-large-numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)) and t becomes the normal. At ν = 1 the denominator is |Z'| for a second normal Z', and t is the Cauchy law of [heavy-tails-pareto-and-cauchy](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md): a gap beyond 2 has chance 0.2952 there.
+Why the tails are heavier: V/ν averages 1, but in some samples it is small, and a small denominator throws the ratio far out. V/ν has variance 2/ν, so as ν grows it settles at 1 ([Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)) and t becomes the normal. At ν = 1 the denominator is |Z'| for a second normal Z', and t is the Cauchy law of [Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md): a gap beyond 2 has chance 0.2952 there.
 
 The variance: E[T^2] = ν · E[Z^2] · E[1/V], and the gamma integral gives E[1/V] = 1/(ν − 2). For ten bags, 9/7 = 1.2857. Below three degrees of freedom the variance is infinite.
 
@@ -215,7 +196,7 @@ The mean: E[F] = (ν2/ν1) E[U] E[1/V] = (ν2/ν1) · ν1 · 1/(ν2 − 2) = ν2
 
 Two links close the family. A squared standard normal is chi-square with 1 degree, so T^2 = Z^2/(V/ν) is F(1, ν): a two-sided t question is a one-sided F question. And ν1 F(ν1, ν2) becomes chi-square on ν1 as ν2 grows, since the denominator settles at 1.
 
-The same laws can be reached with no density at all: draw normal samples, compute the statistics, and count, as the check does. [bootstrap](08-bootstrap.md) runs that idea on the data themselves when no normal model is trusted.
+The same laws can be reached with no density at all: draw normal samples, compute the statistics, and count, as the check does. [Bootstrap](08-bootstrap.md) runs that idea on the data themselves when no normal model is trusted.
 
 ---
 
@@ -657,10 +638,10 @@ The two outputs match line for line, the simulation included, since both languag
 
 ## Where you meet it in real life
 
-- **Quality control.** A sample from a production line, a t ratio against the label, and a decision: [t-tests-and-comparing-means](../08-Confidence%20Intervals%20and%20Tests/05-t-tests-and-comparing-means.md).
-- **Laboratory measurement.** Five or ten repeat readings of one quantity give an interval of average ± t cutoff × S/√n: [confidence-intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md).
+- **Quality control.** A sample from a production line, a t ratio against the label, and a decision: [t-tests](../08-Confidence%20Intervals%20and%20Tests/05-t-tests-and-comparing-means.md).
+- **Laboratory measurement.** Five or ten repeat readings of one quantity give an interval of average ± t cutoff × S/√n: [Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md).
 - **Comparing spreads and groups.** Two instruments' precision, or several fertilisers' yields, are compared by F ratios; analysis of variance is built on them.
-- **Finance.** Returns with heavy tails are often modelled with the t law, and dependence between defaults with the t copula: [tail-dependence-and-the-t-copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md).
+- **Finance.** Returns with heavy tails are often modelled with the t law, and dependence between defaults with the t copula: [Tail dependence](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md).
 
 > **Say it back**
 > Chi-square is a sum of independent squared standard normals, the gamma law with shape half the count. For a normal sample the squared residuals over σ^2 are chi-square with n − 1 degrees, and independent of the average. Dividing the standardised gap by the estimated spread cancels σ and gives Student's t, whose tails are heavier because the estimate wobbles. Dividing two independent sample variances gives F, a beta variable in disguise. Ten bags 2 standard errors from the label: 0.0766 by t, not 0.0455 by the normal.
@@ -669,16 +650,16 @@ The two outputs match line for line, the simulation included, since both languag
 
 ## What this builds on
 
-- [sample-mean-and-standard-error](02-sample-mean-and-standard-error.md): the standard error σ/√n, and the sample standard deviation that replaces σ.
-- [gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md): the gamma law and integral, Γ(1/2) = √π, gamma totals adding shapes, and the beta share behind F.
+- [Standard error](02-sample-mean-and-standard-error.md): the standard error σ/√n, and the sample standard deviation that replaces σ.
+- [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md): the gamma law and integral, Γ(1/2) = √π, gamma totals adding shapes, and the beta share behind F.
 
 ## Where this goes next
 
-- [confidence-intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md): turning the t law into an interval for the machine's mean, and saying what 95 percent is a statement about.
-- [t-tests-and-comparing-means](../08-Confidence%20Intervals%20and%20Tests/05-t-tests-and-comparing-means.md): the t ratio as a test, for one sample, two samples and paired data.
-- [tail-dependence-and-the-t-copula](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md): the t law's heavy tails used to make joint crashes more likely than a normal model allows.
+- [Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md): turning the t law into an interval for the machine's mean, and saying what 95 percent is a statement about.
+- [t-tests](../08-Confidence%20Intervals%20and%20Tests/05-t-tests-and-comparing-means.md): the t ratio as a test, for one sample, two samples and paired data.
+- [Tail dependence](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/07-tail-dependence-and-the-t-copula.md): the t law's heavy tails used to make joint crashes more likely than a normal model allows.
 
-These laws say how far a statistic strays when the model is true; how to turn that into a statement about the unknown mean, with a stated rate of being wrong, is [confidence-intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md).
+These laws say how far a statistic strays when the model is true; how to turn that into a statement about the unknown mean, with a stated rate of being wrong, is [Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md).
 
 ---
 

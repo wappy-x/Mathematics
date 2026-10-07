@@ -1,34 +1,12 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Complex Numbers and the Plane
-topic: Mirror and length
-item: Conjugate and modulus
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/01-complex-numbers|complex-numbers]]"
-  - "[[Cards/01-Foundations/02-The Number Line/05-absolute-value-and-distance|absolute-value-and-distance]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/03-roots-and-fractional-exponents|roots-and-fractional-exponents]]"
-next:
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/03-polar-form-and-argument|polar-form-and-argument]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/07-complex-vectors-and-matrices|complex-vectors-and-matrices]]"
-tags:
-  - mathematics
-  - complex-analysis
-  - conjugate-and-modulus
----
-
 # Conjugate and modulus: flip across the axis, measure the distance, and division falls out
 
-Complex analysis → Complex Numbers and the Plane → Mirror and length → Conjugate and modulus
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Complex Numbers and the Plane](../../../SYLLABUS.md#w07-s01) → Conjugate and modulus
 
 ---
 
 ## General Overview
 
-A delivery drone hovers 3 km east and 4 km north of its depot. In the complex plane it is the point 3 + 4i, east along the real axis and north up the imaginary axis, where i is the number whose square is −1 ([complex-numbers](01-complex-numbers.md)). Pythagoras puts it 5 km out, since 3 × 3 + 4 × 4 = 25.
+A delivery drone hovers 3 km east and 4 km north of its depot. In the complex plane it is the point 3 + 4i, east along the real axis and north up the imaginary axis, where i is the number whose square is −1 ([Complex numbers](01-complex-numbers.md)). Pythagoras puts it 5 km out, since 3 × 3 + 4 × 4 = 25.
 
 Reflect the drone in the east-west line and it lands at 3 − 4i, also 5 km out. That mirror image is the **conjugate**. Multiply the drone by its mirror: (3 + 4i)(3 − 4i) = 25, a real number, the squared distance.
 
@@ -90,7 +68,7 @@ Expand, using $i^2 = -1$. The middle terms cancel and the last turns positive:
 
 $$z\,\bar z = (a + bi)(a - bi) = a^2 - abi + abi - b^2 i^2 = a^2 + b^2$$
 
-For the drone, 9 − 12i + 12i + 16 = 25. By Pythagoras, $a^2 + b^2$ is the squared distance from 0 to $(a, b)$ ([absolute-value-and-distance](../../01-Foundations/02-The%20Number%20Line/05-absolute-value-and-distance.md)). So $\lvert z\rvert = \sqrt{z\,\bar z}$, and the modulus is 5 km. The root is the non-negative one ([roots-and-fractional-exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)). For a real number, $b = 0$ and the modulus is the ordinary absolute value.
+For the drone, 9 − 12i + 12i + 16 = 25. By Pythagoras, $a^2 + b^2$ is the squared distance from 0 to $(a, b)$ ([Absolute value](../../01-Foundations/02-The%20Number%20Line/05-absolute-value-and-distance.md)). So $\lvert z\rvert = \sqrt{z\,\bar z}$, and the modulus is 5 km. The root is the non-negative one ([Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)). For a real number, $b = 0$ and the modulus is the ordinary absolute value.
 
 ### Step 2: the mirror respects adding and multiplying
 
@@ -116,7 +94,7 @@ Step 1 on the product, then Step 2:
 
 $$\lvert z w\rvert^2 = (z w)\,\overline{z w} = z\,\bar z\,w\,\bar w = \lvert z\rvert^2\,\lvert w\rvert^2$$
 
-Square roots of non-negative numbers agree, so $\lvert zw\rvert = \lvert z\rvert\,\lvert w\rvert$. With the beacon: (3 + 4i)(1 + 2i) = −5 + 10i has length 11.180340, and 5 × $\sqrt 5$ is the same 11.180340. Multiplying by $w$ stretches every length by $\lvert w\rvert$; the turn is for [polar-form-and-argument](03-polar-form-and-argument.md).
+Square roots of non-negative numbers agree, so $\lvert zw\rvert = \lvert z\rvert\,\lvert w\rvert$. With the beacon: (3 + 4i)(1 + 2i) = −5 + 10i has length 11.180340, and 5 × $\sqrt 5$ is the same 11.180340. Multiplying by $w$ stretches every length by $\lvert w\rvert$; the turn is for [Polar form](03-polar-form-and-argument.md).
 
 ### Step 5: a detour is never shorter
 
@@ -383,7 +361,7 @@ The two outputs match line for line.
 
 - **Navigation and mapping.** Planar positions stored as complex numbers are compared by $\lvert w - z\rvert$, the drone arithmetic here.
 - **Electrical engineering.** An alternating current is written as a complex number whose modulus is its amplitude; dividing a voltage by a complex impedance uses Step 3's conjugate trick.
-- **Complex vectors.** The squared length of a list of complex numbers adds $z\bar z$ over the entries, the starting point of [complex-vectors-and-matrices](07-complex-vectors-and-matrices.md).
+- **Complex vectors.** The squared length of a list of complex numbers adds $z\bar z$ over the entries, the starting point of [Complex vectors and matrices](07-complex-vectors-and-matrices.md).
 
 > **Say it back**
 > The conjugate flips a point across the real axis. A point times its flip is its squared distance from 0, a real number; its square root is the modulus. Multiplying top and bottom by the conjugate turns any division into division by a real number. Lengths multiply, but a sum is never longer than its parts. The distance between two points is the modulus of their difference.
@@ -392,14 +370,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [complex-numbers](01-complex-numbers.md): the point a + bi, the rule $i^2 = -1$, and multiplication of pairs.
-- [absolute-value-and-distance](../../01-Foundations/02-The%20Number%20Line/05-absolute-value-and-distance.md): distance on a line as the absolute value of a difference, which the modulus extends to the plane.
-- [roots-and-fractional-exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): the non-negative square root that turns 25 into 5.
+- [Complex numbers](01-complex-numbers.md): the point a + bi, the rule $i^2 = -1$, and multiplication of pairs.
+- [Absolute value](../../01-Foundations/02-The%20Number%20Line/05-absolute-value-and-distance.md): distance on a line as the absolute value of a difference, which the modulus extends to the plane.
+- [Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): the non-negative square root that turns 25 into 5.
 
 ## Where this goes next
 
-- [polar-form-and-argument](03-polar-form-and-argument.md): the modulus becomes the r of polar form, joined by an angle.
-- [complex-vectors-and-matrices](07-complex-vectors-and-matrices.md): the conjugate gives a complex vector its length.
+- [Polar form](03-polar-form-and-argument.md): the modulus becomes the r of polar form, joined by an angle.
+- [Complex vectors and matrices](07-complex-vectors-and-matrices.md): the conjugate gives a complex vector its length.
 
 ---
 

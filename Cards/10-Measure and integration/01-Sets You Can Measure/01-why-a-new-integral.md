@@ -1,29 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Sets You Can Measure
-topic: Adding by value
-item: Why a new integral
-kind: method
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/06-Calculus and analysis/04-Integrals/01-riemann-integral|riemann-integral]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/02-countable-sets|countable-sets]]"
-next:
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/02-sigma-algebras|sigma-algebras]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/03-generated-and-borel-sigma-algebras|generated-and-borel-sigma-algebras]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/04-measures|measures]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/05-continuity-of-measure|continuity-of-measure]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/06-pi-systems-and-uniqueness|pi-systems-and-uniqueness]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/07-null-sets-and-almost-everywhere|null-sets-and-almost-everywhere]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/05-riemann-meets-lebesgue|riemann-meets-lebesgue]]"
-tags: [mathematics, measure and integration, why-a-new-integral]
----
-
 # Why a new integral: sort by value instead of position, and limits stop breaking
 
-Measure and integration → Sets You Can Measure → Adding by value → Why a new integral
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sets You Can Measure](../../../SYLLABUS.md#w10-s01) → Why a new integral
 
 ---
 
@@ -33,7 +10,7 @@ A laundromat closes for the night. Its change till holds 37 coins: twenty $1 coi
 
 Pick the coins up in the order they went in and keep a running total: $5.01 after ten coins, $10.58 after twenty, $17.20 after thirty, $23.45 at the end. Or tip the till out, sort the coins into heaps by denomination, count each heap and multiply by its face value: 20 × $1 is $20.00, 5 × 50c is $2.50, and the twelve smaller coins make $0.95. The total is $23.45 again.
 
-For coins the choice is taste. For functions it is not. Riemann's integral ([riemann-integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md)) is the first way: cut the time axis into slices, in order, and add height times width. Henri Lebesgue's integral, published in 1902, is the second: group the times by the value the function takes there, find how much time sits at each value, multiply, and add.
+For coins the choice is taste. For functions it is not. Riemann's integral ([The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md)) is the first way: cut the time axis into slices, in order, and add height times width. Henri Lebesgue's integral, published in 1902, is the second: group the times by the value the function takes there, find how much time sits at each value, multiply, and add.
 
 A meter shows where the difference bites. It logs one hour, minute 0 to minute 60, and reads 1 whenever the minute count is a rational number (a fraction of whole numbers, such as 2 or 1/2), 0 otherwise. Every slice of the hour, however thin, holds both readings, so Riemann's integral does not exist. Sorted by value there are two heaps: the rational times, reading 1, and the rest, reading 0. The rational times can be covered by intervals of total length as small as anyone names, so the first heap has size zero and the integral is 1 × 0 + 0 × 60 = 0.
 
@@ -92,10 +69,10 @@ The backslash in $[0,60] \setminus R$ means "take away": the times in the hour t
 
 This is a method, and it is as good as the sizes it is fed.
 
-- **Every value-set needs a size.** Sorting by value asks for the length of sets like $R$, which are not intervals. Not every set of times can be given a length that behaves: Giuseppe Vitali described one in 1905 that cannot ([translation-invariance-and-the-vitali-set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)). So the method needs a declared collection of sets that do have sizes.
+- **Every value-set needs a size.** Sorting by value asks for the length of sets like $R$, which are not intervals. Not every set of times can be given a length that behaves: Giuseppe Vitali described one in 1905 that cannot ([Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)). So the method needs a declared collection of sets that do have sizes.
 - **Sizes must add up over a queue of pieces.** The argument for $R$ covers it with a queue of intervals and adds their lengths. A size that only adds up over finitely many pieces cannot see that $R$ is negligible.
 - **No mixed signs, or absolute convergence.** For finitely many terms, or terms that are never negative, order never matters. With infinitely many terms of both signs it can: 1 − 1/2 + 1/3 − … is 0.6931 in order and 1.0397 with two positive terms taken per negative one.
-- **Finitely many values here.** A function with infinitely many values is handled by narrow value bands, approximated from below ([integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)).
+- **Finitely many values here.** A function with infinitely many values is handled by narrow value bands, approximated from below ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)).
 
 ---
 
@@ -119,13 +96,13 @@ So for step functions the two integrals agree.
 
 ### Step 3: position fails the rational-minute reading
 
-Cut the hour into $n$ equal slices. Every slice holds a rational time, its midpoint for one, and an irrational time as well: [riemann-integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md) proves this for its fraction rule, and the argument is the same here. So the highest reading on every slice is 1 and the lowest is 0. The upper sum, each slice's highest reading times its width, added, is 60 and the lower sum is 0, at every $n$. The gap never closes, and $r$ has no Riemann integral.
+Cut the hour into $n$ equal slices. Every slice holds a rational time, its midpoint for one, and an irrational time as well: [The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md) proves this for its fraction rule, and the argument is the same here. So the highest reading on every slice is 1 and the lowest is 0. The upper sum, each slice's highest reading times its width, added, is 60 and the lower sum is 0, at every $n$. The gap never closes, and $r$ has no Riemann integral.
 
 Sampling hides the failure. A Riemann sum tagged at each slice's midpoint gives 60.0000 at 6, 60 and 600 slices, because every midpoint is a fraction.
 
 ### Step 4: the reading-1 heap has size zero
 
-The rational times can be queued ([countable-sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)). Take the whole minutes first, then the halves, then thirds, skipping repeats: the whole minutes fill places 1 to 61, and place 62 is 1/2. Call the time in place $j$ by the name $q_j$.
+The rational times can be queued ([Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)). Take the whole minutes first, then the halves, then thirds, skipping repeats: the whole minutes fill places 1 to 61, and place 62 is 1/2. Call the time in place $j$ by the name $q_j$.
 
 Fix any positive length $\varepsilon$. Put an interval of length $\varepsilon/2$ round the first time in the queue, $\varepsilon/4$ round the second, $\varepsilon/8$ round the third, halving each time. Every rational time is covered, and the lengths add to less than $\varepsilon$: the first $N$ add to $\varepsilon$ times $1 - 1/2^N$. With $\varepsilon$ one minute, the first 10,000 widths add to 1.0000 minute at most, and because the first interval sticks out past minute 0, the part inside the hour is only 0.7500. With $\varepsilon$ at 0.01 the widths add to 0.01000000; at 0.0001, to 0.00010000.
 
@@ -136,7 +113,7 @@ A length that deserves the name should give the rational times no more than the 
 
 Assume only three things about the length $\lambda$: (a) an interval's length is its right end minus its left end; (b) a set inside another is no longer than it; (c) the length of a union of a queue of sets is at most the sum of their lengths. The measures card on this shelf makes these precise.
 
-1. $R$ is countable ([countable-sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)), so its members can be listed $q_1, q_2, q_3, \dots$ with each rational time appearing at some place $j$.
+1. $R$ is countable ([Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)), so its members can be listed $q_1, q_2, q_3, \dots$ with each rational time appearing at some place $j$.
 2. Fix $\varepsilon > 0$. Let $I_j$ be the interval centred on $q_j$ of length $\varepsilon/2^j$. By (a), $\lambda(I_j) = \varepsilon/2^j$.
 3. Each point of $R$ is some $q_j$, which lies in $I_j$. So $R$ sits inside the union of all the $I_j$, and by (b) and (c), $\lambda(R) \le \sum_j \varepsilon/2^j$.
 4. The partial sums of that series are $\varepsilon(1 - 2^{-N})$, by the geometric-series formula; they rise to $\varepsilon$ and never pass it. So $\lambda(R) \le \varepsilon$.
@@ -152,17 +129,17 @@ Steps 1 to 5 use nothing about the rational times except that they can be queued
 
 Let $r_N$ read 1 at the first $N$ rational times in the queue and 0 elsewhere. Finitely many points are harmless to Riemann: each one touches at most two slices, so the upper sum on $n$ slices is at most $2 \times N \times 60/n$. For $N$ = 100 the upper sums at 600, 6,000, 60,000 and 600,000 slices are 19.8000, 1.9800, 0.1980 and 0.0198, under the bounds 20.0000, 2.0000, 0.2000 and 0.0200. So every $r_N$ has Riemann integral 0.
 
-As $N$ grows, each time's reading only ever rises, and every rational time is switched on eventually, so the readings $r_N$ climb to $r$. The integrals are 0, 0, 0, …, and their limit is 0. Riemann has no integral for $r$ to compare. Lebesgue's gives 0, the limit of the integrals. That is the monotone convergence theorem in miniature ([monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)): for readings that only rise, the integral of the limit is the limit of the integrals. Riemann's integral cannot promise this, because its limit may not be integrable at all.
+As $N$ grows, each time's reading only ever rises, and every rational time is switched on eventually, so the readings $r_N$ climb to $r$. The integrals are 0, 0, 0, …, and their limit is 0. Riemann has no integral for $r$ to compare. Lebesgue's gives 0, the limit of the integrals. That is the monotone convergence theorem in miniature ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)): for readings that only rise, the integral of the limit is the limit of the integrals. Riemann's integral cannot promise this, because its limit may not be integrable at all.
 
 ### Step 6: what the wing has to build
 
 Steps 4 and 5 leaned on three things the wing builds.
 
-1. **Which sets have a size.** Vitali's set shows that no length can be given to every set of times while matching (a), adding up exactly over a queue of disjoint pieces, and staying the same when a set slides along the line. So a size is promised only to a declared collection of sets, closed under the operations the arguments use: complements (everything outside a set) and unions of a queue of sets. That collection is a sigma-algebra: [sigma-algebras](02-sigma-algebras.md), with the everyday one, the Borel sets, in [generated-and-borel-sigma-algebras](03-generated-and-borel-sigma-algebras.md).
-2. **What the size is.** A rule giving each allowed set a size, never negative, adding up over a queue of disjoint pieces: a measure ([measures](04-measures.md)). Property (c) above follows from it ([continuity-of-measure](05-continuity-of-measure.md)). Sets of size zero, such as $R$, get their own card ([null-sets-and-almost-everywhere](07-null-sets-and-almost-everywhere.md)).
-3. **How to add a function up against it.** Value times size for functions with finitely many values ([integral-of-a-simple-function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md)), then limits from below for the rest ([integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)).
+1. **Which sets have a size.** Vitali's set shows that no length can be given to every set of times while matching (a), adding up exactly over a queue of disjoint pieces, and staying the same when a set slides along the line. So a size is promised only to a declared collection of sets, closed under the operations the arguments use: complements (everything outside a set) and unions of a queue of sets. That collection is a sigma-algebra: [Sigma-algebras](02-sigma-algebras.md), with the everyday one, the Borel sets, in [Generated sigma-algebras and Borel sets](03-generated-and-borel-sigma-algebras.md).
+2. **What the size is.** A rule giving each allowed set a size, never negative, adding up over a queue of disjoint pieces: a measure ([Measures](04-measures.md)). Property (c) above follows from it ([Continuity and subadditivity](05-continuity-of-measure.md)). Sets of size zero, such as $R$, get their own card ([Null sets and almost everywhere](07-null-sets-and-almost-everywhere.md)).
+3. **How to add a function up against it.** Value times size for functions with finitely many values ([The integral of a simple function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md)), then limits from below for the rest ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)).
 
-The other road to Lebesgue's integral runs the other way: prove that it gives Riemann's answer whenever Riemann's exists, so nothing is lost. That is [riemann-meets-lebesgue](../04-The%20Lebesgue%20Integral/05-riemann-meets-lebesgue.md).
+The other road to Lebesgue's integral runs the other way: prove that it gives Riemann's answer whenever Riemann's exists, so nothing is lost. That is [Riemann meets Lebesgue](../04-The%20Lebesgue%20Integral/05-riemann-meets-lebesgue.md).
 
 ---
 
@@ -575,8 +552,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Counting cash.** Banks and tills count by denomination, heap by heap, for the reason in Step 0: the count per denomination is all the total needs.
-- **Expected value.** Adding each possible payout times its probability is sorting by value: probability plays the part of length. The measure version is [expectation-as-an-integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md).
-- **Pricing under changed odds.** Finance averages a payoff against probabilities other than the real ones ([risk-neutral-probability](../../12-Financial%20mathematics/04-Binomial%20Trees/02-risk-neutral-probability.md)); that needs integrals taken against a measure.
+- **Expected value.** Adding each possible payout times its probability is sorting by value: probability plays the part of length. The measure version is [Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md).
+- **Pricing under changed odds.** Finance averages a payoff against probabilities other than the real ones ([The risk-neutral probability](../../12-Financial%20mathematics/04-Binomial%20Trees/02-risk-neutral-probability.md)); that needs integrals taken against a measure.
 
 > **Say it back**
 > Riemann adds a function slice by slice along the line; Lebesgue sorts the line by the value the function takes and adds each value times the size of the set that takes it. For a till the two agree: $23.45 either way. For the meter reading 1 at rational minutes they part: every slice holds both readings, so Riemann's sums never settle, while the rational times can be covered by intervals of total length as small as wished, so the value-sorted integral is 0. The same sorting makes the integral of a rising limit equal the limit of the integrals. To make it work the wing must build which sets have a size, what the size is, and how to add a function up against it.
@@ -585,18 +562,18 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [riemann-integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md): upper and lower sums, and the fraction rule that has none.
-- [countable-sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md): why the rational times fit in one queue.
+- [The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md): upper and lower sums, and the fraction rule that has none.
+- [Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md): why the rational times fit in one queue.
 
 ## Where this goes next
 
-- [sigma-algebras](02-sigma-algebras.md): the collection of sets allowed a size.
-- [generated-and-borel-sigma-algebras](03-generated-and-borel-sigma-algebras.md): the Borel sets, built from intervals.
-- [measures](04-measures.md): the size itself, adding up over a queue of pieces.
-- [continuity-of-measure](05-continuity-of-measure.md): the covering bound of Step 4, proved from the definition.
-- [pi-systems-and-uniqueness](06-pi-systems-and-uniqueness.md): why fixing the length of intervals fixes the length of every Borel set.
-- [null-sets-and-almost-everywhere](07-null-sets-and-almost-everywhere.md): sets of size zero, and why the reading is 0 almost everywhere.
-- [riemann-meets-lebesgue](../04-The%20Lebesgue%20Integral/05-riemann-meets-lebesgue.md): Lebesgue's integral agrees with Riemann's wherever Riemann's exists.
+- [Sigma-algebras](02-sigma-algebras.md): the collection of sets allowed a size.
+- [Generated sigma-algebras and Borel sets](03-generated-and-borel-sigma-algebras.md): the Borel sets, built from intervals.
+- [Measures](04-measures.md): the size itself, adding up over a queue of pieces.
+- [Continuity and subadditivity](05-continuity-of-measure.md): the covering bound of Step 4, proved from the definition.
+- [Pi-systems and Dynkin's theorem](06-pi-systems-and-uniqueness.md): why fixing the length of intervals fixes the length of every Borel set.
+- [Null sets and almost everywhere](07-null-sets-and-almost-everywhere.md): sets of size zero, and why the reading is 0 almost everywhere.
+- [Riemann meets Lebesgue](../04-The%20Lebesgue%20Integral/05-riemann-meets-lebesgue.md): Lebesgue's integral agrees with Riemann's wherever Riemann's exists.
 
 Adding by value needs a size for sets like the rational times, and not every set can be given one; which sets may is what the next card, sigma-algebras, settles.
 

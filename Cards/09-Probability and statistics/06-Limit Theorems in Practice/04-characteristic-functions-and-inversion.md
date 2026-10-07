@@ -1,28 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Limit Theorems in Practice
-topic: Probability read by frequencies
-item: Characteristic functions
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/07-moment-generating-functions|moment-generating-functions]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/03-fourier-transform|fourier-transform]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/09-Beyond Brownian/01-levy-processes|levy-processes]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/09-carr-madan-fft-and-cos-methods|carr-madan-fft-and-cos-methods]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/02-heston-pricing-by-characteristic-function|heston-pricing-by-characteristic-function]]"
-  - "[[Cards/20-Harmonic analysis/04-Characteristic Functions and Probability/01-characteristic-functions-in-depth|characteristic-functions-in-depth]]"
-  - "[[Cards/20-Harmonic analysis/04-Characteristic Functions and Probability/03-levy-inversion-and-uniqueness|levy-inversion-and-uniqueness]]"
-  - "[[Cards/20-Harmonic analysis/04-Characteristic Functions and Probability/04-levy-continuity-theorem|levy-continuity-theorem]]"
-tags: [mathematics, probability and statistics, characteristic-functions-and-inversion]
----
-
 # Characteristic functions: the Fourier transform of a distribution, and how to get the distribution back
 
-Probability and statistics → Limit Theorems in Practice → Probability read by frequencies → Characteristic functions
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Limit Theorems in Practice](../../../SYLLABUS.md#w09-s06) → Characteristic functions
 
 ---
 
@@ -36,7 +14,7 @@ The scale's characteristic function is a bell too. Its values fall from 1 at rat
 
 **The characteristic function of a random quantity is the average of a point on the unit circle turned by t times the quantity; for a normal error it is again a bell, independent errors multiply it, and an inversion integral recovers the distribution from it, so it identifies the law completely.**
 
-**What kind of fact this is:** a definition with three theorems about it. The normal's characteristic function and the density inversion formula are proved on this card in Why it works. Lévy's general inversion formula is stated here and proved in levy-inversion-and-uniqueness. The uniqueness theorem follows from it in Step 5, and is proved for every law, by another route, in [characteristic-functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md).
+**What kind of fact this is:** a definition with three theorems about it. The normal's characteristic function and the density inversion formula are proved on this card in Why it works. Lévy's general inversion formula is stated here and proved in Levy's inversion formula. The uniqueness theorem follows from it in Step 5, and is proved for every law, by another route, in [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md).
 
 ### The picture: the scale's error, as a bell in grams
 
@@ -69,7 +47,7 @@ Orange: an error with standard deviation 1 g. Green: the kitchen scale, standard
 
 ## The formula
 
-Notation first, in words. The wing writes E[X] for the long-run average of X ([expectation](../02-Random%20Variables/02-expectation.md)). The letter $i$ is the imaginary unit, the number whose square is −1. By Euler's formula, $e^{itX}$ is the point at angle t times X on the circle of radius 1: its across-coordinate is cos(tX) and its up-coordinate is sin(tX) ([eulers-formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). The characteristic function is written $\varphi_X(t)$, read "phi of X at t". The subscript keeps it apart from the bell's height, which the normal card also calls phi.
+Notation first, in words. The wing writes E[X] for the long-run average of X ([Expectation](../02-Random%20Variables/02-expectation.md)). The letter $i$ is the imaginary unit, the number whose square is −1. By Euler's formula, $e^{itX}$ is the point at angle t times X on the circle of radius 1: its across-coordinate is cos(tX) and its up-coordinate is sin(tX) ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)). The characteristic function is written $\varphi_X(t)$, read "phi of X at t". The subscript keeps it apart from the bell's height, which the normal card also calls phi.
 
 $$\varphi_X(t) = E\!\left[e^{itX}\right] = E[\cos(tX)] + i\,E[\sin(tX)]$$
 
@@ -115,11 +93,11 @@ $$P(a < X < b) = \lim_{T\to\infty}\frac{1}{2\pi}\int_{-T}^{T} \frac{e^{-ita} - e
 | $\varepsilon$ | the spread of the tiny normal blur in Step 3's proof | shrinks to 0 | the blurred density smears wider |
 | $k$, $j$ | whole numbers: faces of the die in Step 6; in Step 2, k numbers the terms of the series | face 3 | — |
 
-The characteristic function is the Fourier transform of the density with the probe reversed: the Fourier card writes the transform with e^(−iωt), ω being its frequency, and this card averages e^(+itX), so the characteristic function at t is the transform at −t ([fourier-transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md)). The inversion formula above is that card's inversion with the same sign flip.
+The characteristic function is the Fourier transform of the density with the probe reversed: the Fourier card writes the transform with e^(−iωt), ω being its frequency, and this card averages e^(+itX), so the characteristic function at t is the transform at −t ([The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md)). The inversion formula above is that card's inversion with the same sign flip.
 
 ### When it holds
 
-- **Existence: always.** Every point sits on a circle of radius 1, so the average exists for every law, even one with no mean. The moment generating function can fail: a Cauchy error ([heavy-tails-pareto-and-cauchy](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) has none, yet its characteristic function is e^(−|t|).
+- **Existence: always.** Every point sits on a circle of radius 1, so the average exists for every law, even one with no mean. The moment generating function can fail: a Cauchy error ([Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) has none, yet its characteristic function is e^(−|t|).
 - **Density inversion: needs a characteristic function of finite total size.** A die has no density, its characteristic function never dies out, and the density formula at face 3 climbs with the cut-off: 0.5038, 1.1920, 2.1587 at cut-offs 10, 20, 40.
 - **Lévy's formula: ends that carry no probability.** At an end that carries probability, the integral counts half of it. For the scale, every single point has chance zero, so any ends work.
 - **Uniqueness: every t.** Agreement at a few rates proves nothing: a die and a die shifted up by 4 agree at t = 0, π/2, π, 3π/2 and 2π, and differ by 0.089218 at t = 1.
@@ -139,7 +117,7 @@ The second idea is Fourier's. For an error with a density, the average is an int
 
 If the scale reads a fixed amount c too heavy, every turned point gains a fixed extra turn tc, so the average gains the factor e^(itc). If the error is multiplied by a fixed number s, the rate t acts as rate st: the characteristic function of sX + c is e^(itc) times the characteristic function of X at st.
 
-For two independent errors X and Y, e^(it(X+Y)) is e^(itX) times e^(itY), and the average of a product of independent quantities is the product of their averages. So the characteristic function of X + Y is the product of the two. The density of a sum is a convolution integral ([sums-and-convolution](../05-Transformations%20and%20Joint%20Laws/04-sums-and-convolution.md)); its characteristic function is one multiplication. This is why the tool exists.
+For two independent errors X and Y, e^(it(X+Y)) is e^(itX) times e^(itY), and the average of a product of independent quantities is the product of their averages. So the characteristic function of X + Y is the product of the two. The density of a sum is a convolution integral ([Adding continuous variables](../05-Transformations%20and%20Joint%20Laws/04-sums-and-convolution.md)); its characteristic function is one multiplication. This is why the tool exists.
 
 ### Step 2: the normal's characteristic function is a bell
 
@@ -156,7 +134,7 @@ A shortcut replaces t by it in the moment generating function: e^(t^2/2) becomes
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-The 2k-th moment of the standard normal is 1 × 3 × 5 × … × (2k − 1), because integration by parts gives each moment as (2k − 1) times the one before. Write z^(2k) times the bell's height as z^(2k − 1) times z e^(−z^2/2)/√(2π); the second factor is minus the slope of the bell's height, so parts give E[Z^(2k)] = (2k − 1) E[Z^(2k − 2)]. The normal card takes the same step for the variance ([normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md)). Divide by (2k)! = 1 × 2 × 3 × … × 2k. The odd factors cancel, leaving 1 over 2 × 4 × … × 2k, which is 2^k times k!. So the k-th term is (−1)^k t^(2k) / (2^k k!) = (−t^2/2)^k / k!.
+The 2k-th moment of the standard normal is 1 × 3 × 5 × … × (2k − 1), because integration by parts gives each moment as (2k − 1) times the one before. Write z^(2k) times the bell's height as z^(2k − 1) times z e^(−z^2/2)/√(2π); the second factor is minus the slope of the bell's height, so parts give E[Z^(2k)] = (2k − 1) E[Z^(2k − 2)]. The normal card takes the same step for the variance ([Normal](../04-Continuous%20Distributions/04-normal-distribution.md)). Divide by (2k)! = 1 × 2 × 3 × … × 2k. The odd factors cancel, leaving 1 over 2 × 4 × … × 2k, which is 2^k times k!. So the k-th term is (−1)^k t^(2k) / (2^k k!) = (−t^2/2)^k / k!.
 
 Averaging term by term is allowed because the absolute values add to a finite total: the sum of |tX|^j / j! is e^(|tX|), and the normal's average of e^(|tX|) is finite.
 
@@ -183,11 +161,11 @@ Let ε shrink. Right side: where f is continuous at x, split the y-integral at a
 
 Integrate the density formula over x from a to b. The x-integral of e^(−itx) is (e^(−ita) − e^(−itb))/(it), which is the weight in Lévy's formula. For the scale and the interval −2 g to 2 g the weight is 2 sin(2t)/t, and the integral gives 0.682689: the chance of a reading within one standard deviation.
 
-Lévy's formula also holds with no density at all. That proof needs the measure-theoretic integral and is in levy-inversion-and-uniqueness. Uniqueness for every law has a second proof, which blurs both laws with a narrow normal and then removes the blur, in [characteristic-functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md).
+Lévy's formula also holds with no density at all. That proof needs the measure-theoretic integral and is in Levy's inversion formula. Uniqueness for every law has a second proof, which blurs both laws with a narrow normal and then removes the blur, in [Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md).
 
 ### Step 5: uniqueness follows
 
-If two laws share a characteristic function, Lévy's formula gives them the same chance for every interval whose ends carry no probability. Such ends are all but countably many points, so, letting a run down to −∞, the two cumulative distributions agree everywhere ([densities-and-cdfs](../04-Continuous%20Distributions/01-densities-and-cdfs.md)), and a cumulative distribution fixes the law.
+If two laws share a characteristic function, Lévy's formula gives them the same chance for every interval whose ends carry no probability. Such ends are all but countably many points, so, letting a run down to −∞, the two cumulative distributions agree everywhere ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)), and a cumulative distribution fixes the law.
 
 ### Step 6: whole-number laws invert over one turn
 
@@ -651,11 +629,11 @@ The two outputs agree line for line, including the simulated averages, because b
 
 ## Where you meet it in real life
 
-- **Why averages become bells.** For 1,000 rolls of a fair die, standardised, the characteristic function at t = 1 is 0.606499, against the bell's 0.606531; the average's spread is 0.054006. The central limit theorem for every law with a finite spread is proved by multiplying characteristic functions in this way and then applying Lévy's continuity theorem (levy-continuity-theorem, central-limit-theorem-by-characteristic-functions); the theorem itself is stated on [central-limit-theorem](02-central-limit-theorem.md).
+- **Why averages become bells.** For 1,000 rolls of a fair die, standardised, the characteristic function at t = 1 is 0.606499, against the bell's 0.606531; the average's spread is 0.054006. The central limit theorem for every law with a finite spread is proved by multiplying characteristic functions in this way and then applying Lévy's continuity theorem (Levy's continuity theorem, The central limit theorem in four lines, once you have fingerprints); the theorem itself is stated on [Central limit theorem](02-central-limit-theorem.md).
 - **Measurement chains.** Independent errors from a scale, a thermometer and a timer add; their characteristic functions multiply, and inversion gives the combined error's density without computing a convolution.
-- **Heavy tails.** A Cauchy error has no mean and no moment generating function, but its characteristic function e^(−|t|) shows at once that averages of Cauchy errors never settle. By Step 1, the average of n independent ones has characteristic function (e^(−|t|/n))^n = e^(−|t|): the same law as a single error ([heavy-tails-pareto-and-cauchy](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)).
-- **Option pricing.** Models such as Heston give a stock's characteristic function in closed form but no usable density; prices come from an inversion integral: [heston-pricing-by-characteristic-function](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md).
-- **Processes with jumps.** A process built from independent pieces is described by one characteristic function per unit of time: [levy-processes](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/01-levy-processes.md).
+- **Heavy tails.** A Cauchy error has no mean and no moment generating function, but its characteristic function e^(−|t|) shows at once that averages of Cauchy errors never settle. By Step 1, the average of n independent ones has characteristic function (e^(−|t|/n))^n = e^(−|t|): the same law as a single error ([Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)).
+- **Option pricing.** Models such as Heston give a stock's characteristic function in closed form but no usable density; prices come from an inversion integral: [Pricing Heston exactly](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md).
+- **Processes with jumps.** A process built from independent pieces is described by one characteristic function per unit of time: [Levy processes](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/01-levy-processes.md).
 
 > **Say it back**
 > The characteristic function averages a point on the unit circle turned by t times the random quantity, so it exists for every law. For a normal error it is again a bell, e^(iμt − σ^2 t^2/2): wide in the quantity means narrow in t. Independent quantities add, and their characteristic functions multiply. An inversion integral with 1/(2π) in front returns the density, or, by Lévy's formula, the chance of any interval. So the characteristic function at every t fixes the law, and a few values do not.
@@ -664,19 +642,19 @@ The two outputs agree line for line, including the simulated averages, because b
 
 ## What this builds on
 
-- [moment-generating-functions](../02-Random%20Variables/07-moment-generating-functions.md): the same idea with e^(tX) in place of the turned point, and the product rule for independent sums.
-- [fourier-transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md): the transform, the Gaussian as its own transform, and the inversion integral this card applies to densities.
+- [Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md): the same idea with e^(tX) in place of the turned point, and the product rule for independent sums.
+- [The Fourier transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/03-fourier-transform.md): the transform, the Gaussian as its own transform, and the inversion integral this card applies to densities.
 
 ## Where this goes next
 
-- levy-inversion-and-uniqueness: Lévy's formula and uniqueness proved for every law, with or without a density.
-- levy-continuity-theorem: characteristic functions that converge give laws that converge, the engine of the central limit theorem.
-- characteristic-functions-in-depth: smoothness, moments from derivatives at zero, and which functions can be characteristic functions.
-- [levy-processes](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/01-levy-processes.md): random motions whose increments are described by one characteristic function.
-- [heston-pricing-by-characteristic-function](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md): an option price computed by inverting a characteristic function.
-- [carr-madan-fft-and-cos-methods](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md): the inversion integral done fast, for thousands of strikes at once.
+- Levy's inversion formula: Lévy's formula and uniqueness proved for every law, with or without a density.
+- Levy's continuity theorem: characteristic functions that converge give laws that converge, the engine of the central limit theorem.
+- Characteristic functions: smoothness, moments from derivatives at zero, and which functions can be characteristic functions.
+- [Levy processes](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/01-levy-processes.md): random motions whose increments are described by one characteristic function.
+- [Pricing Heston exactly](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md): an option price computed by inverting a characteristic function.
+- [Transform pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md): the inversion integral done fast, for thousands of strikes at once.
 
-The card leaves open why characteristic functions that converge belong to laws that converge, the step that turns a product of characteristic functions into the central limit theorem; levy-continuity-theorem answers it.
+The card leaves open why characteristic functions that converge belong to laws that converge, the step that turns a product of characteristic functions into the central limit theorem; Levy's continuity theorem answers it.
 
 ---
 

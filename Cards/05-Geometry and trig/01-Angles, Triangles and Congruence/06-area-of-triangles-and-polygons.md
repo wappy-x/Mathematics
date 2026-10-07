@@ -1,23 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Angles, Triangles and Congruence
-topic: Measuring flat regions
-item: Area
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/05-Geometry and trig/01-Angles, Triangles and Congruence/05-pythagoras-and-its-converse|pythagoras-and-its-converse]]"
-next:
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/08-small-angles-and-the-sine-bound|small-angles-and-the-sine-bound]]"
-  - "[[Cards/05-Geometry and trig/07-Points, Convexity and Fractals/01-polygon-area-and-orientation|polygon-area-and-orientation]]"
-tags: [mathematics, geometry and trig, area-of-triangles-and-polygons]
----
-
 # Area: half base times height, and why cutting and rearranging never changes it
 
-Geometry and trig → Angles, Triangles and Congruence → Measuring flat regions → Area
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Angles, Triangles and Congruence](../../../SYLLABUS.md#w05-s01) → Area
 
 ---
 
@@ -74,7 +57,7 @@ $$s = \frac{a + b + c}{2}, \qquad K = \sqrt{s\,(s - a)(s - b)(s - c)}$$
 
 - **Flat ground.** On a curved surface, such as a large patch of the Earth, other rules apply.
 - **Height means square on.** A sloping side is not a height: the 8 m side gives 36 square metres, not 26.83.
-- **The sides can close.** Each side must be shorter than the other two together ([triangle-angle-sum-and-inequality](02-triangle-angle-sum-and-inequality.md)). For 2, 3 and 6 m, Heron's product comes out at −24.0625, which has no square root: there is no such triangle. At exact equality, as in 2, 3 and 5 m, the triangle lies flat and the area is 0.
+- **The sides can close.** Each side must be shorter than the other two together ([Triangles](02-triangle-angle-sum-and-inequality.md)). For 2, 3 and 6 m, Heron's product comes out at −24.0625, which has no square root: there is no such triangle. At exact equality, as in 2, 3 and 5 m, the triangle lies flat and the area is 0.
 - **Pieces cover once.** A polygon's area is the sum of its pieces only when they do not overlap and leave no gaps.
 - **Measured sides carry error.** In a very thin triangle one of s − a, s − b, s − c is a small gap between large measured numbers, so a small tape error moves the answer a lot.
 
@@ -86,7 +69,7 @@ $$s = \frac{a + b + c}{2}, \qquad K = \sqrt{s\,(s - a)(s - b)(s - c)}$$
 
 A rectangle 3 m by 2 m holds six one-metre squares: width times height. For lengths that are not whole metres, finer squares count, and the rule stands.
 
-Two rules carry the rest. Shapes that match exactly when one is laid on the other ([congruent-triangles](03-congruent-triangles.md)) have equal area. Pieces that do not overlap add. So cutting a shape up and sliding or turning the pieces keeps the total.
+Two rules carry the rest. Shapes that match exactly when one is laid on the other ([Congruent triangles](03-congruent-triangles.md)) have equal area. Pieces that do not overlap add. So cutting a shape up and sliding or turning the pieces keeps the total.
 
 ### Step 1: a parallelogram is a rectangle with one piece moved
 
@@ -108,13 +91,13 @@ Any side can be the base, with its own height: 7.666519 m to side a, 6.708204 m 
 
 Two copies of any trapezoid, one turned half a turn, make a parallelogram with base $u + v$ and height $h$. Halve it: $K = \tfrac12 (u + v)\,h$.
 
-Run a hedge across the bed halfway up, parallel to the 9 m side; by [similar-triangles-and-scale](04-similar-triangles-and-scale.md) it is 4.5 m long. The trapezoid below holds 20.124612 square metres, the triangle above 6.708204. Together, 26.832816: the whole bed, as Step 0 demands.
+Run a hedge across the bed halfway up, parallel to the 9 m side; by [Similar triangles](04-similar-triangles-and-scale.md) it is 4.5 m long. The trapezoid below holds 20.124612 square metres, the triangle above 6.708204. Together, 26.832816: the whole bed, as Step 0 demands.
 
 Any straight-edged plot splits the same way: draw lines between corners that stay inside it, cutting it into triangles, and add their areas.
 
 ### Step 4: the height, from the three sides
 
-Lay side c along the ground with A at the start. Call the foot of the height $x$ metres from A. Two right-angled triangles stand either side of the height, and [pythagoras-and-its-converse](05-pythagoras-and-its-converse.md) gives one equation for each:
+Lay side c along the ground with A at the start. Call the foot of the height $x$ metres from A. Two right-angled triangles stand either side of the height, and [Pythagoras](05-pythagoras-and-its-converse.md) gives one equation for each:
 
 b^2 = x^2 + h^2 and a^2 = (c − x)^2 + h^2.
 
@@ -407,12 +390,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [pythagoras-and-its-converse](05-pythagoras-and-its-converse.md): the two right-angled triangles that give the height from the sides.
+- [Pythagoras](05-pythagoras-and-its-converse.md): the two right-angled triangles that give the height from the sides.
 
 ## Where this goes next
 
-- [small-angles-and-the-sine-bound](../03-Trigonometry/08-small-angles-and-the-sine-bound.md): compares a triangle's area with a circular slice to pin down how a small angle behaves.
-- [polygon-area-and-orientation](../07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md): the area of any polygon straight from its corners' grid positions, the shoelace formula.
+- [Small angles](../03-Trigonometry/08-small-angles-and-the-sine-bound.md): compares a triangle's area with a circular slice to pin down how a small angle behaves.
+- [Shoelace formula](../07-Points%2C%20Convexity%20and%20Fractals/01-polygon-area-and-orientation.md): the area of any polygon straight from its corners' grid positions, the shoelace formula.
 
 ---
 

@@ -1,23 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Chance and Events
-topic: The product rule for chances
-item: Independence
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/05-conditional-probability|conditional-probability]]"
-next:
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/07-confounding-and-simpsons-paradox|confounding-and-simpsons-paradox]]"
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/04-independence-as-a-product-measure|independence-as-a-product-measure]]"
-tags: [mathematics, probability and statistics, independence]
----
-
 # Independence: when knowing one event says nothing about another
 
-Probability and statistics → Chance and Events → The product rule for chances → Independence
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Chance and Events](../../../SYLLABUS.md#w09-s01) → Independence
 
 ---
 
@@ -45,7 +28,7 @@ The dime's strip cuts the quarter's half in the same proportion as it cuts the w
 
 ## The formula
 
-Two pieces of notation from earlier on this shelf. $P(A)$ is the chance of the event A, read "the chance of A" ([sample-spaces-and-events](02-sample-spaces-and-events.md)). $P(A \mid B)$ is the chance of A once B is known to have happened, read "the chance of A given B" ([conditional-probability](05-conditional-probability.md)). The cap sign $A \cap B$ means "both A and B happen".
+Two pieces of notation from earlier on this shelf. $P(A)$ is the chance of the event A, read "the chance of A" ([Sample spaces and events](02-sample-spaces-and-events.md)). $P(A \mid B)$ is the chance of A once B is known to have happened, read "the chance of A given B" ([Conditional probability](05-conditional-probability.md)). The cap sign $A \cap B$ means "both A and B happen".
 
 $$P(A \cap B) = P(A)\,P(B)$$
 
@@ -115,7 +98,7 @@ If A and B are independent, so are A and "not B". The event A splits into the pa
 
 $$P(A \cap B^c) = P(A) - P(A \cap B) = P(A) - P(A)P(B) = P(A)\,(1 - P(B)) = P(A)\,P(B^c)$$
 
-The last step uses the complement rule, $P(B^c) = 1 - P(B)$ ([probability-rules-and-complements](03-probability-rules-and-complements.md)). On the coins: quarter heads and dime tails has chance 0.25, and 0.5 × 0.5 = 0.25. Swapping roles gives "not A" with B, and doing it twice gives "not A" with "not B".
+The last step uses the complement rule, $P(B^c) = 1 - P(B)$ ([The rules](03-probability-rules-and-complements.md)). On the coins: quarter heads and dime tails has chance 0.25, and 0.5 × 0.5 = 0.25. Swapping roles gives "not A" with B, and doing it twice gives "not A" with "not B".
 
 ### Step 3: a coin and its own outcome
 
@@ -139,7 +122,7 @@ Conditional independence and plain independence do not imply each other. Each di
 
 $$P(H_1) = 0.5 \times 0.5 + 0.5 \times 0.9 = 0.7 \qquad P(H_1 \cap H_2) = 0.5 \times 0.25 + 0.5 \times 0.81 = 0.53$$
 
-The product would be $0.7 \times 0.7 = 0.49$, not 0.53. A first head is evidence that the bent coin came out, so it raises the chance of a second head from 0.7 to 0.53 / 0.7, about 0.7571. The tosses share a hidden cause, the coin drawn: fixing it makes them independent, averaging over it makes them dependent. The update is Bayes' rule ([bayes-rule](06-bayes-rule.md)).
+The product would be $0.7 \times 0.7 = 0.49$, not 0.53. A first head is evidence that the bent coin came out, so it raises the chance of a second head from 0.7 to 0.53 / 0.7, about 0.7571. The tosses share a hidden cause, the coin drawn: fixing it makes them independent, averaging over it makes them dependent. The update is Bayes' rule ([Bayes' rule](06-bayes-rule.md)).
 
 ### Step 6: a Simpson reversal
 
@@ -167,7 +150,7 @@ Check it on the mints: $0.2 \times 0.05 + 0.8 \times 0.025 = 0.03$, and $(0.2 - 
 
 </details>
 
-The proof above is a finite count. The version for chances spread over a continuum, where independence becomes a product of whole distributions, is [independence-as-a-product-measure](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md).
+The proof above is a finite count. The version for chances spread over a continuum, where independence becomes a product of whole distributions, is [Independence as a product](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md).
 
 ---
 
@@ -576,7 +559,7 @@ The two outputs are identical line for line.
 - **Courtrooms.** At Sally Clark's 1999 trial for the deaths of her two infant sons, the jury heard that one cot death in such a family had chance 1 in 8,543, and so two had 1 in 8,543 squared: 1 in 72,982,849, about 1 in 73 million. Squaring assumed the two deaths independent, ignoring genetic and household causes the brothers shared. The conviction was quashed in 2003; Hill's 2004 study of family data found a second death far more likely after a first than the squared figure allowed.
 - **Backup systems.** Two rarely failing pumps fail together far more rarely only if they fail independently. On one shared power supply that fails more often than either pump, a joint failure is about as common as a single one.
 - **University admissions.** In Berkeley's 1973 graduate admissions, men had the higher pooled rate, yet department by department the gap mostly vanished or reversed: women had applied more to departments that admitted few of anyone. That is the mint table with applicants for coins.
-- **Spam filters.** A simple filter treats an email's words as conditionally independent given "spam" or "not spam" and multiplies their chances through [bayes-rule](06-bayes-rule.md). The assumption is false; the filter works because it only needs the ranking right.
+- **Spam filters.** A simple filter treats an email's words as conditionally independent given "spam" or "not spam" and multiplies their chances through [Bayes' rule](06-bayes-rule.md). The assumption is false; the filter works because it only needs the ranking right.
 
 > **Say it back**
 > Two events are independent when the chance of both is the product of their chances; then learning one leaves the other's chance unchanged. Two separate coins are independent; a coin and its own record, or its own opposite face, are not. Every pair of three events can pass while the three together fail, so mutual independence checks every sub-list. Learning a fact can create a link or remove one: a hidden shared cause makes tosses of one bag coin dependent. When the mix of groups depends on what is compared, a pooled rate can reverse the comparison made inside every group.
@@ -585,12 +568,12 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [conditional-probability](05-conditional-probability.md): the chance of A given B, the ratio this card sets equal to the plain chance of A.
+- [Conditional probability](05-conditional-probability.md): the chance of A given B, the ratio this card sets equal to the plain chance of A.
 
 ## Where this goes next
 
-- [confounding-and-simpsons-paradox](../13-Survival%2C%20Design%20and%20Causality/07-confounding-and-simpsons-paradox.md): when the group mix is itself caused by the thing compared, and which of the pooled or the within-group comparison answers a question about cause.
-- [independence-as-a-product-measure](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md): the product rule for chances spread over a continuum, the rectangle picture made exact.
+- [Confounding](../13-Survival%2C%20Design%20and%20Causality/07-confounding-and-simpsons-paradox.md): when the group mix is itself caused by the thing compared, and which of the pooled or the within-group comparison answers a question about cause.
+- [Independence as a product](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md): the product rule for chances spread over a continuum, the rectangle picture made exact.
 
 ---
 

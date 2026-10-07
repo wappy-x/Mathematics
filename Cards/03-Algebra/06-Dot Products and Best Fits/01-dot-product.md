@@ -1,44 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Dot Products and Best Fits
-topic: Dot product
-item: The dot product
-kind: definition
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/03-Algebra/03-Vectors/01-vectors|vectors]]"
-  - "[[Cards/03-Algebra/04-Matrices/02-matrix-times-vector|matrix-times-vector]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/03-roots-and-fractional-exponents|roots-and-fractional-exponents]]"
-  - "[[Cards/02-Number theory/07-For the Curious/01-pythagorean-triples|pythagorean-triples]]"
-next:
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/02-orthogonal-projection|orthogonal-projection]]"
-  - "[[Cards/05-Geometry and trig/05-Vectors in Space/02-lines-and-planes-in-space|lines-and-planes-in-space]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/02-differentiability-and-tangent-planes|differentiability-and-tangent-planes]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/03-gradient-and-directional-derivatives|gradient-and-directional-derivatives]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/07-complex-vectors-and-matrices|complex-vectors-and-matrices]]"
-  - "[[Cards/08-Differential equations and dynamics/09-Fourier Series/03-parsevals-identity|parsevals-identity]]"
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/02-holders-inequality|holders-inequality]]"
-  - "[[Cards/13-Engineering mathematics/09-Quantum Mechanics in Outline/02-state-vectors-operators-and-measurement|state-vectors-operators-and-measurement]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/06-k-means-and-clustering|k-means-and-clustering]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/09-kernels-and-support-vector-machines|kernels-and-support-vector-machines]]"
-  - "[[Cards/15-Optimization/01-Convexity/06-separating-hyperplanes|separating-hyperplanes]]"
-  - "[[Cards/16-Numerical analysis/03-Numerical Linear Algebra/05-qr-householder-and-gram-schmidt|qr-householder-and-gram-schmidt]]"
-  - "[[Cards/17-Topology/01-Metric Spaces/02-distances-on-vectors-and-functions|distances-on-vectors-and-functions]]"
-  - "[[Cards/18-Functional analysis/02-Hilbert Spaces/01-inner-products-and-hilbert-spaces|inner-products-and-hilbert-spaces]]"
-  - "[[Cards/18-Functional analysis/02-Hilbert Spaces/06-riesz-representation-theorem|riesz-representation-theorem]]"
-  - "[[Cards/23-Differential geometry and Lie groups/02-Surfaces/02-first-fundamental-form|first-fundamental-form]]"
-  - "[[Cards/23-Differential geometry and Lie groups/03-Manifolds/05-covectors-and-tensor-fields|covectors-and-tensor-fields]]"
-tags:
-  - mathematics
-  - algebra
-  - dot-product
----
-
 # The dot product: multiply matching entries and add, and one number gives length, perpendicularity and alignment
 
-Algebra → Dot Products and Best Fits → Dot product → The dot product
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Dot Products and Best Fits](../../../SYLLABUS.md#w03-s06) → The dot product
 
 ---
 
@@ -48,7 +10,7 @@ A weekly shop: 2 loaves, 3 milks, 1 dozen eggs. The prices, listed in the same o
 
 Totalling that is not new. Bread is 2 × 3 = $6. Milk, 3 × 2 = $6. Eggs, 1 × 4 = $4. Add the three lines and the bill is **$16**.
 
-Multiply matching entries, add the results. That operation is the **dot product**, written with a dot between the lists: (2, 3, 1) · (3, 2, 4) = 16. A list in round brackets is a vector, from [vectors](../03-Vectors/01-vectors.md).
+Multiply matching entries, add the results. That operation is the **dot product**, written with a dot between the lists: (2, 3, 1) · (3, 2, 4) = 16. A list in round brackets is a vector, from [Vectors](../03-Vectors/01-vectors.md).
 
 Run the same arithmetic on two arrows drawn on a map and it becomes geometry: lengths, right angles, and how nearly two arrows agree.
 
@@ -89,7 +51,7 @@ The small numbers are position labels, not powers: $u_1$ is the first entry of $
 
 Three readings come out of that one number.
 
-- **Length.** A vector dotted with itself, square-rooted ([roots-and-fractional-exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)): $|u| = \sqrt{u \cdot u}$.
+- **Length.** A vector dotted with itself, square-rooted ([Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)): $|u| = \sqrt{u \cdot u}$.
 - **Right angle.** For two vectors that are not all zeros, $u \cdot v = 0$ exactly when they point at right angles — **orthogonal**, meaning perpendicular. A list of zeros counts as orthogonal to everything, by convention.
 - **Alignment.** Divide by both lengths and the sizes cancel, leaving direction alone:
 
@@ -116,7 +78,7 @@ Quantity times price, line by line, added. Every reading below is that bill, on 
 
 A cyclist rides 3 km east, then 4 km north. As a vector: (3, 4). Dot it with itself: 3 × 3 = 9, and 4 × 4 = 16, added, **25**.
 
-Those are the two legs squared and added, which is Pythagoras ([pythagorean-triples](../../02-Number%20theory/07-For%20the%20Curious/01-pythagorean-triples.md)): 25 is the squared straight-line distance from start to finish, and the distance is its square root, **5 km**.
+Those are the two legs squared and added, which is Pythagoras ([Pythagorean triples](../../02-Number%20theory/07-For%20the%20Curious/01-pythagorean-triples.md)): 25 is the squared straight-line distance from start to finish, and the distance is its square root, **5 km**.
 
 ### Step 2: a zero means a right angle
 
@@ -168,11 +130,11 @@ Take $v$ with some entry not zero, pick any number x, and take x copies of $v$ a
 <details>
 <summary>The same arithmetic on functions</summary>
 
-Replace a list of entries by a function's values across an interval. There are infinitely many, so the sum of paired products becomes an integral of the product, $\int f(x)\,g(x)\,dx$. Length, right angles and the −1 to 1 bound survive the swap. Two functions whose integral comes out zero are called orthogonal — not the same as carrying unrelated information, which is independence, a wing 09 idea. The door into inner-products-and-hilbert-spaces.
+Replace a list of entries by a function's values across an interval. There are infinitely many, so the sum of paired products becomes an integral of the product, $\int f(x)\,g(x)\,dx$. Length, right angles and the −1 to 1 bound survive the swap. Two functions whose integral comes out zero are called orthogonal — not the same as carrying unrelated information, which is independence, a wing 09 idea. The door into Inner products.
 
 </details>
 
-A second road never multiplies a quantity by a price: add the two vectors, square-length the sum, subtract the two squared lengths, halve what is left. The plus-sign version of the same expansion leaves twice the dot product — it was hiding inside lengths all along. [orthogonal-projection](02-orthogonal-projection.md) takes it into shadows.
+A second road never multiplies a quantity by a price: add the two vectors, square-length the sum, subtract the two squared lengths, halve what is left. The plus-sign version of the same expansion leaves twice the dot product — it was hiding inside lengths all along. [Projection](02-orthogonal-projection.md) takes it into shadows.
 
 ---
 
@@ -430,7 +392,7 @@ The two outputs match line for line.
 - **Any itemised bill.** A till receipt, a payroll run, an invoice: quantities in one list, rates in the other, one dot product.
 - **Recommendations and search.** Documents, songs and users become long lists of numbers, and the alignment score ranks them.
 - **Maps and games.** Whether a surface faces a light: a sign check on one dot product.
-- **Fitting a line to data.** The shadow of one vector on another, then the best-fit line, are this again ([orthogonal-projection](02-orthogonal-projection.md), [least-squares](04-least-squares.md)).
+- **Fitting a line to data.** The shadow of one vector on another, then the best-fit line, are this again ([Projection](02-orthogonal-projection.md), [Least squares](04-least-squares.md)).
 
 > **Say it back**
 > Multiply matching entries, add the results: the dot product, and for the weekly shop the $16 bill. A vector dotted with itself gives its length squared, so the square root is the length: (3, 4) is 5 long. Between two arrows that go somewhere, a zero means a right angle, as for (3, 4) and (4, −3). Divided by both lengths it becomes an alignment score between −1 and 1: (3, 4) and (6, 8) score 1.
@@ -439,30 +401,30 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [vectors](../03-Vectors/01-vectors.md): what a list in round brackets is, and how to scale one.
-- [matrix-times-vector](../04-Matrices/02-matrix-times-vector.md): a matrix times a vector is a stack of these, one per row.
-- [roots-and-fractional-exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): the square root that turns 25 into 5.
-- [pythagorean-triples](../../02-Number%20theory/07-For%20the%20Curious/01-pythagorean-triples.md): 3, 4, 5 and the squared-legs rule the length formula rests on.
+- [Vectors](../03-Vectors/01-vectors.md): what a list in round brackets is, and how to scale one.
+- [Matrix times vector](../04-Matrices/02-matrix-times-vector.md): a matrix times a vector is a stack of these, one per row.
+- [Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): the square root that turns 25 into 5.
+- [Pythagorean triples](../../02-Number%20theory/07-For%20the%20Curious/01-pythagorean-triples.md): 3, 4, 5 and the squared-legs rule the length formula rests on.
 
 ## Where this goes next
 
-- [orthogonal-projection](02-orthogonal-projection.md): shadow and leftover.
-- [lines-and-planes-in-space](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/02-lines-and-planes-in-space.md): planes from perpendiculars.
-- [differentiability-and-tangent-planes](../../06-Calculus%20and%20analysis/07-Several%20Variables/02-differentiability-and-tangent-planes.md): flat up close.
-- [gradient-and-directional-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md): steepest uphill.
-- [complex-vectors-and-matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): one slot flipped.
-- [parsevals-identity](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/03-parsevals-identity.md): energy across waves.
-- [holders-inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/02-holders-inequality.md): the bound widened.
-- state-vectors-operators-and-measurement: alignment as probability.
-- k-means-and-clustering: grouping by distance.
-- kernels-and-support-vector-machines: dot products left implicit.
-- separating-hyperplanes: one sign decides.
-- qr-householder-and-gram-schmidt: perpendicular directions, safely.
-- distances-on-vectors-and-functions: distance without dot products.
-- inner-products-and-hilbert-spaces: the same rules, endlessly.
-- riesz-representation-theorem: every linear reading is a dot product.
-- first-fundamental-form: lengths on curved surfaces.
-- covectors-and-tensor-fields: the second list as a machine.
+- [Projection](02-orthogonal-projection.md): shadow and leftover.
+- [Lines and planes](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/02-lines-and-planes-in-space.md): planes from perpendiculars.
+- [Tangent planes](../../06-Calculus%20and%20analysis/07-Several%20Variables/02-differentiability-and-tangent-planes.md): flat up close.
+- [Gradient](../../06-Calculus%20and%20analysis/07-Several%20Variables/03-gradient-and-directional-derivatives.md): steepest uphill.
+- [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): one slot flipped.
+- [Parseval's identity](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/03-parsevals-identity.md): energy across waves.
+- [Holder's inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/02-holders-inequality.md): the bound widened.
+- States as vectors: alignment as probability.
+- k-means: grouping by distance.
+- Support vector machines: dot products left implicit.
+- Separating hyperplanes: one sign decides.
+- QR: perpendicular directions, safely.
+- The distance menu: distance without dot products.
+- Inner products: the same rules, endlessly.
+- Riesz representation: every linear reading is a dot product.
+- First fundamental form: lengths on curved surfaces.
+- Covectors and tensor fields: the second list as a machine.
 
 Nothing here splits a vector into a part along another and a part square to it; that split, and the shadow it names, comes next.
 

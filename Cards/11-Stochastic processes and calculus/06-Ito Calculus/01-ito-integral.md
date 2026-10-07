@@ -1,27 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Ito Calculus
-topic: Gains from continuous trading
-item: The Ito integral
-kind: definition
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/03-quadratic-variation|quadratic-variation]]"
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/02-predictable-bets-and-the-martingale-transform|predictable-bets-and-the-martingale-transform]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/01-riemann-integral|riemann-integral]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/06-riemann-stieltjes-integral|riemann-stieltjes-integral]]"
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/05-lebesgue-stieltjes-integral|lebesgue-stieltjes-integral]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/04-martingale-representation-theorem|martingale-representation-theorem]]"
-tags: [mathematics, stochastic processes and calculus, ito-integral]
----
-
 # The Ito integral: integrating a strategy against Brownian motion
 
-Stochastic processes and calculus → Ito Calculus → Gains from continuous trading → The Ito integral
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Ito Calculus](../../../SYLLABUS.md#w11-s06) → The Ito integral
 
 ---
 
@@ -29,7 +8,7 @@ Stochastic processes and calculus → Ito Calculus → Gains from continuous tra
 
 A share trades at $100 today. Over the next year its price wanders with no drift; a year from now its standard deviation is $20. A trader holds some number of shares at each moment, changes the holding whenever she likes, and wants one thing: the total gain.
 
-Over a short stretch of time the gain is the holding times the price change. Two shares and a $1.50 rise make $3. Over the year the gain is the sum of those pieces. With trades once a day this is a sum of 252 products, and the [predictable-bets-and-the-martingale-transform](../02-Martingales/02-predictable-bets-and-the-martingale-transform.md) card already knows its main property: if each holding is fixed before the price moves, the average gain is zero. Trade more and more often, and the sum should settle on a limit. That limit is the **Ito integral** of the strategy against the price.
+Over a short stretch of time the gain is the holding times the price change. Two shares and a $1.50 rise make $3. Over the year the gain is the sum of those pieces. With trades once a day this is a sum of 252 products, and the [Betting on a martingale](../02-Martingales/02-predictable-bets-and-the-martingale-transform.md) card already knows its main property: if each holding is fixed before the price moves, the average gain is zero. Trade more and more often, and the sum should settle on a limit. That limit is the **Ito integral** of the strategy against the price.
 
 Ordinary calculus has an integral for this, the Stieltjes integral, and it fails here. A wandering price travels an infinite distance in a year, so that theory does not apply, and the sums depend on whether the holding is read at the start or the end of each stretch. For the strategy "hold one share for every $20 the price stands above $100, and go short below", the start gives an average gain of $0 and the end gives $20. Kiyosi Ito chose the start, the reading that matches trading: the holding is chosen first, then the price moves.
 
@@ -119,11 +98,11 @@ At time $t_k$ the holding $H_k$ is already decided. The move that follows, $W_{t
 
 ### Step 1: why the ordinary integral fails for a Brownian path
 
-The [riemann-stieltjes-integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/06-riemann-stieltjes-integral.md) card integrates against a function whose total variation is finite: the distance it travels, the sizes of its moves added up, stays bounded as the grid is refined. Then every choice of evaluation point gives the same limit. The [lebesgue-stieltjes-integral](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md) card needs the same thing: a measure built from a monotone function, or a difference of two.
+The [Stieltjes integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/06-riemann-stieltjes-integral.md) card integrates against a function whose total variation is finite: the distance it travels, the sizes of its moves added up, stays bounded as the grid is refined. Then every choice of evaluation point gives the same limit. The [The Lebesgue-Stieltjes integral](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md) card needs the same thing: a measure built from a monotone function, or a difference of two.
 
-A Brownian path fails both. Its distance travelled, $\sum \lvert W_{t_{k+1}} - W_{t_k} \rvert$, grows without bound as the grid is refined: the [quadratic-variation](../05-Brownian%20Motion/03-quadratic-variation.md) card proves the total variation infinite (its Theorem 3) and shows that the evaluation point then changes the answer (its Step 5). On one path the code measures 2.86 at 10 steps, 7.65 at 100, 24.51 at 1,000 and 79.24 at 10,000, against the average $\sqrt{2n/\pi}$.
+A Brownian path fails both. Its distance travelled, $\sum \lvert W_{t_{k+1}} - W_{t_k} \rvert$, grows without bound as the grid is refined: the [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md) card proves the total variation infinite (its Theorem 3) and shows that the evaluation point then changes the answer (its Step 5). On one path the code measures 2.86 at 10 steps, 7.65 at 100, 24.51 at 1,000 and 79.24 at 10,000, against the average $\sqrt{2n/\pi}$.
 
-The squares behave differently. The [quadratic-variation](../05-Brownian%20Motion/03-quadratic-variation.md) card shows $\sum (W_{t_{k+1}} - W_{t_k})^2 \to T$; on the same path it reads 1.2141, 0.9014, 0.9492 and 0.9808. That finite, nonzero sum is what splits the evaluation points. The right-end sum minus the left-end sum is
+The squares behave differently. The [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md) card shows $\sum (W_{t_{k+1}} - W_{t_k})^2 \to T$; on the same path it reads 1.2141, 0.9014, 0.9492 and 0.9808. That finite, nonzero sum is what splits the evaluation points. The right-end sum minus the left-end sum is
 
 $$\sum_k \left( W_{t_{k+1}} - W_{t_k} \right) \left( W_{t_{k+1}} - W_{t_k} \right) = \sum_k \left( W_{t_{k+1}} - W_{t_k} \right)^2 \to T.$$
 
@@ -131,7 +110,7 @@ For $H = W$ the two readings differ by a year's quadratic variation, $20 \times 
 
 ### Step 2: the simple integral is a fair game
 
-Take a bounded simple strategy and an earlier time $s$. Insert $s$ into the list of trading times; splitting a stretch in two and holding the same shares on both halves changes no sum. Now every stretch after $s$ has the form $H_k (W_{t_{k+1}} - W_{t_k})$ with $t_k \ge s$. Given $\mathcal F_{t_k}$, the holding is known and comes outside the average, by "taking out what is known" ([rules-of-conditional-expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md)):
+Take a bounded simple strategy and an earlier time $s$. Insert $s$ into the list of trading times; splitting a stretch in two and holding the same shares on both halves changes no sum. Now every stretch after $s$ has the form $H_k (W_{t_{k+1}} - W_{t_k})$ with $t_k \ge s$. Given $\mathcal F_{t_k}$, the holding is known and comes outside the average, by "taking out what is known" ([The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md)):
 
 $$E\left[ H_k (W_{t_{k+1}} - W_{t_k}) \mid \mathcal F_{t_k} \right] = H_k \, E\left[ W_{t_{k+1}} - W_{t_k} \right] = 0.$$
 
@@ -177,7 +156,7 @@ The isometry is a ruler: the root-mean-square gap between two integrals equals t
 3. **Limit.** Random variables with a finite mean square form a complete space (the measure wing's $L^2$), so a crowding sequence converges; the limit is the Ito integral. Another approximating sequence gives the same limit, by the same ruler.
 4. **Keep the theorems.** Mean squares and conditional averages are continuous in mean square. The isometry and the martingale property pass from each $H^{(m)}$ to the limit.
 
-One more step, which uses [doob-inequalities](../02-Martingales/05-doob-inequalities.md), makes $t \mapsto I_t$ a continuous path rather than a separate limit for each $t$: Doob's maximal inequality controls the largest gap along the whole year by the gap at the end.
+One more step, which uses [Doob's inequalities](../02-Martingales/05-doob-inequalities.md), makes $t \mapsto I_t$ a continuous path rather than a separate limit for each $t$: Doob's maximal inequality controls the largest gap along the whole year by the gap at the end.
 
 ### Step 5: the integral of $W$ against itself
 
@@ -195,7 +174,7 @@ A second road checks the isometry. $W_T$ is normal with variance $T$, so $E[W_T^
 
 $$E\left[ \left( \tfrac{W_T^2 - T}{2} \right)^2 \right] = \tfrac14 \left( 3T^2 - 2T^2 + T^2 \right) = \tfrac{T^2}{2} = \int_0^T E[W_t^2]\,dt = \int_0^T t\,dt.$$
 
-The ordinary chain rule would give $\tfrac12 W_T^2$ and drop the $-\tfrac12 T$. That term is the price of the path's roughness, and [itos-lemma](02-itos-lemma.md) turns it into a rule for every smooth function of $W$.
+The ordinary chain rule would give $\tfrac12 W_T^2$ and drop the $-\tfrac12 T$. That term is the price of the path's roughness, and [Ito's lemma](02-itos-lemma.md) turns it into a rule for every smooth function of $W$.
 
 ---
 
@@ -658,8 +637,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Trading gains.** A portfolio's profit from continuous trading is an Ito integral of the holding against the price. Pricing an option by replication, [replication-and-self-financing](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/06-replication-and-self-financing.md), is a search for the holding whose integral equals the payoff.
-- **Noise in a physical system.** A particle buffeted by molecules, or a circuit with thermal noise, is written as a [stochastic-differential-equations](04-stochastic-differential-equations.md) equation; its noise term is an Ito integral.
+- **Trading gains.** A portfolio's profit from continuous trading is an Ito integral of the holding against the price. Pricing an option by replication, [Replication](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/06-replication-and-self-financing.md), is a search for the holding whose integral equals the payoff.
+- **Noise in a physical system.** A particle buffeted by molecules, or a circuit with thermal noise, is written as a [Stochastic differential equations](04-stochastic-differential-equations.md) equation; its noise term is an Ito integral.
 
 > **Say it back**
 > A strategy's gain is holding times price move, added up, with each holding fixed before its move. The Ito integral is that sum's limit as trading gets finer. A Brownian path has infinite variation, so the ordinary Stieltjes integral does not exist, and the left-end reading is a choice that matches trading. For finitely many trades the gain is a fair game, and its variance is the average squared holding added over time: the isometry. That identity carries the integral, and both theorems, to every strategy with a finite mean square, and it shows why $\int W\,dW$ is $\tfrac12(W_T^2 - T)$.
@@ -668,16 +647,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [quadratic-variation](../05-Brownian%20Motion/03-quadratic-variation.md): the squared moves of $W$ add up to $t$; that is the $-\tfrac12 T$ and the left-right gap.
-- [predictable-bets-and-the-martingale-transform](../02-Martingales/02-predictable-bets-and-the-martingale-transform.md): stakes fixed before a fair round keep the game fair; the simple Ito integral is that sum with Brownian moves.
-- [riemann-integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md): an integral as the limit of sums over finer grids.
-- [riemann-stieltjes-integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/06-riemann-stieltjes-integral.md): integrating against a function of bounded variation, the integral that fails for $W$.
-- [lebesgue-stieltjes-integral](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md): integrating against a measure built from a monotone function, which a Brownian path is not.
+- [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md): the squared moves of $W$ add up to $t$; that is the $-\tfrac12 T$ and the left-right gap.
+- [Betting on a martingale](../02-Martingales/02-predictable-bets-and-the-martingale-transform.md): stakes fixed before a fair round keep the game fair; the simple Ito integral is that sum with Brownian moves.
+- [The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md): an integral as the limit of sums over finer grids.
+- [Stieltjes integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/06-riemann-stieltjes-integral.md): integrating against a function of bounded variation, the integral that fails for $W$.
+- [The Lebesgue-Stieltjes integral](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md): integrating against a measure built from a monotone function, which a Brownian path is not.
 
 ## Where this goes next
 
-- [itos-lemma](02-itos-lemma.md): the chain rule for a smooth function of $W$, with the extra half-second-derivative term that Step 5 found for $W^2$.
-- [martingale-representation-theorem](../07-Changing%20Measure/04-martingale-representation-theorem.md): the converse. Every fair game with a finite mean square, built on one Brownian motion's information, is a constant plus the Ito integral of some strategy.
+- [Ito's lemma](02-itos-lemma.md): the chain rule for a smooth function of $W$, with the extra half-second-derivative term that Step 5 found for $W^2$.
+- [Martingale representation](../07-Changing%20Measure/04-martingale-representation-theorem.md): the converse. Every fair game with a finite mean square, built on one Brownian motion's information, is a constant plus the Ito integral of some strategy.
 
 The integral adds up a strategy's gains; what it leaves open is how a smooth function of the price itself changes, and Ito's lemma answers that with one extra term.
 

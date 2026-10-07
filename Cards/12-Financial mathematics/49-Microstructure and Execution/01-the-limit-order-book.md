@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Microstructure and Execution
-topic: Matching resting orders
-item: The order book
-kind: convention
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/04-poisson|poisson]]"
-next:
-  - "[[Cards/12-Financial mathematics/49-Microstructure and Execution/02-bid-ask-spread-and-adverse-selection|bid-ask-spread-and-adverse-selection]]"
-tags: [mathematics, financial mathematics, the-limit-order-book]
----
-
 # The order book: bids, asks, queues and the matching rule
 
-Financial mathematics → Microstructure and Execution → Matching resting orders → The order book
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Microstructure and Execution](../../../SYLLABUS.md#w12-s49) → The order book
 
 ---
 
@@ -667,10 +651,10 @@ The two outputs are identical line for line: both languages run the same integer
 ## Where you meet it in real life
 
 - **A brokerage "depth of market" screen.** It shows the ladder in the overview picture: prices, shares at each, bids below, asks above.
-- **A market order walking the book.** In the Try changing case, a market buy of 450 took all of $100.01 and part of $100.02. An order to sell 100,000 shares of a stock that trades 1 million a day is a tenth of the day's volume, far more than any visible book holds, so it must be sliced over time; how to slice it is [optimal-execution-almgren-chriss](04-optimal-execution-almgren-chriss.md), and how much each slice moves the price is [kyle-model-and-price-impact](03-kyle-model-and-price-impact.md).
-- **Market makers.** Firms that post both a bid and an ask and earn the spread when both fill. Where to set the two quotes is [market-making-avellaneda-stoikov](05-market-making-avellaneda-stoikov.md).
+- **A market order walking the book.** In the Try changing case, a market buy of 450 took all of $100.01 and part of $100.02. An order to sell 100,000 shares of a stock that trades 1 million a day is a tenth of the day's volume, far more than any visible book holds, so it must be sliced over time; how to slice it is [Almgren-Chriss](04-optimal-execution-almgren-chriss.md), and how much each slice moves the price is [Kyle's model](03-kyle-model-and-price-impact.md).
+- **Market makers.** Firms that post both a bid and an ask and earn the spread when both fill. Where to set the two quotes is [Market making](05-market-making-avellaneda-stoikov.md).
 - **The race for the front of the queue.** Under price-time priority, arriving first at a price is worth money: it is order 3's fill and order 5's miss. Much of the speed race in trading is a race for queue position, and imbalance and OFI are standard inputs to the models that predict the next tick.
-- **Grading a trade afterwards.** The mid at the moment an order is sent is the usual yardstick for what the fill cost: [transaction-cost-analysis](06-transaction-cost-analysis.md). Spread and depth are two of the measures on [liquidity-measures](07-liquidity-measures.md).
+- **Grading a trade afterwards.** The mid at the moment an order is sent is the usual yardstick for what the fill cost: [Measuring execution](06-transaction-cost-analysis.md). Spread and depth are two of the measures on [Liquidity](07-liquidity-measures.md).
 
 > **Say it back**
 > An order book is two queues of waiting limit orders, bids below and asks above, each sorted by price and then by arrival time. A new order trades against the front of the opposite queue while prices cross, always at the waiting order's price, and whatever is left of it waits in line. The spread is best ask minus best bid, the mid is halfway, depth counts shares near the top, and imbalance says which top queue is bigger. The rule guarantees the book never crosses, and two very different engines running it print the same trades. Order flow imbalance adds up, order by order, what was added to or taken from the best queues, and the mid tends to move with it.
@@ -679,13 +663,13 @@ The two outputs are identical line for line: both languages run the same integer
 
 ## What this builds on
 
-- [poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md): the standard model for how many orders arrive in a second. The random test on this card draws its order counts from it, and its signature, mean equal to variance, shows in the output.
+- [Poisson](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/04-poisson.md): the standard model for how many orders arrive in a second. The random test on this card draws its order counts from it, and its signature, mean equal to variance, shows in the output.
 
 ## Where this goes next
 
-- [bid-ask-spread-and-adverse-selection](02-bid-ask-spread-and-adverse-selection.md): why the spread exists at all, and why it widens when some traders know more than others.
-- [kyle-model-and-price-impact](03-kyle-model-and-price-impact.md): how much an order moves the price, when the market cannot tell informed traders from the rest.
-- [market-making-avellaneda-stoikov](05-market-making-avellaneda-stoikov.md): the traders who fill the book's two sides, and how they choose their prices.
+- [The spread](02-bid-ask-spread-and-adverse-selection.md): why the spread exists at all, and why it widens when some traders know more than others.
+- [Kyle's model](03-kyle-model-and-price-impact.md): how much an order moves the price, when the market cannot tell informed traders from the rest.
+- [Market making](05-market-making-avellaneda-stoikov.md): the traders who fill the book's two sides, and how they choose their prices.
 
 This card reads a spread of one cent off the book; it does not say why anyone posts a bid and an ask a gap apart, or what sets the size of the gap. The spread card answers that.
 

@@ -1,27 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Inclusion-Exclusion and Pigeonhole
-topic: Nobody left out
-item: Onto functions
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/04-Inclusion-Exclusion and Pigeonhole/01-inclusion-exclusion-for-n-sets|inclusion-exclusion-for-n-sets]]"
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/02-strings-and-powers|strings-and-powers]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/04-injective-surjective-bijective|injective-surjective-bijective]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/08-Partitions/04-stirling-numbers-second-kind|stirling-numbers-second-kind]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - counting-surjections
----
-
 # Onto functions: hand out every item so nobody is left empty-handed, counted by the sieve
 
-Combinatorics and graphs → Inclusion-Exclusion and Pigeonhole → Nobody left out → Onto functions
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Inclusion-Exclusion and Pigeonhole](../../../SYLLABUS.md#w04-s04) → Onto functions
 
 ---
 
@@ -29,11 +8,11 @@ Combinatorics and graphs → Inclusion-Exclusion and Pigeonhole → Nobody left 
 
 A garage opens on Monday with five different repair jobs on the board: brakes, clutch, exhaust, gearbox and headlight. Three mechanics are in: Ada, Ben and Cleo. Each job goes to one mechanic, and the foreman wants all three working.
 
-Drop that last rule and the count is quick. Each job picks one of three mechanics, so there are 3 × 3 × 3 × 3 × 3 = 243 handouts ([strings-and-powers](../01-Counting%20Principles/02-strings-and-powers.md)). Keep the rule and some of those 243 are out: all five jobs to Ada, and every other handout leaving somebody idle.
+Drop that last rule and the count is quick. Each job picks one of three mechanics, so there are 3 × 3 × 3 × 3 × 3 = 243 handouts ([Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md)). Keep the rule and some of those 243 are out: all five jobs to Ada, and every other handout leaving somebody idle.
 
-The answer is 150. "Everybody gets something" is a condition on the whole handout, not on any one job, so counting the good handouts head-on is awkward. Counting the bad ones is easy: "Ada gets nothing" leaves the five jobs to Ben and Cleo, 2 × 2 × 2 × 2 × 2 = 32 handouts. Take those off, the same for Ben and Cleo, then repair the over-subtraction as the sieve always does — sieve being the short name for inclusion-exclusion ([inclusion-exclusion-for-n-sets](01-inclusion-exclusion-for-n-sets.md)).
+The answer is 150. "Everybody gets something" is a condition on the whole handout, not on any one job, so counting the good handouts head-on is awkward. Counting the bad ones is easy: "Ada gets nothing" leaves the five jobs to Ben and Cleo, 2 × 2 × 2 × 2 × 2 = 32 handouts. Take those off, the same for Ben and Cleo, then repair the over-subtraction as the sieve always does — sieve being the short name for inclusion-exclusion ([Inclusion-exclusion for any number of sets](01-inclusion-exclusion-for-n-sets.md)).
 
-A handout leaving nobody out is an **onto** function, or **surjection**: every recipient used at least once ([injective-surjective-bijective](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md)). Those are the working terms from here on.
+A handout leaving nobody out is an **onto** function, or **surjection**: every recipient used at least once ([One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md)). Those are the working terms from here on.
 
 **Count every handout, take off the ones leaving a named recipient empty, add back what was taken off twice, and what survives reaches everybody.**
 
@@ -90,7 +69,7 @@ $$3^5 - 3 \times 2^5 + 3 \times 1^5 - 1 \times 0^5 \;=\; 243 - 96 + 3 - 0 \;=\; 
 
 ### Step 0: count the bad handouts, not the good ones
 
-"Every mechanic gets something" cannot be checked job by job, but its opposite can: somebody is idle. So count the handouts leaving Ada idle, or Ben, or Cleo, and take that off 243. Those three sets overlap, which is what the sieve is for ([inclusion-exclusion-for-n-sets](01-inclusion-exclusion-for-n-sets.md)).
+"Every mechanic gets something" cannot be checked job by job, but its opposite can: somebody is idle. So count the handouts leaving Ada idle, or Ben, or Cleo, and take that off 243. Those three sets overlap, which is what the sieve is for ([Inclusion-exclusion for any number of sets](01-inclusion-exclusion-for-n-sets.md)).
 
 ### Step 1: one named mechanic idle
 
@@ -119,7 +98,7 @@ In the garage: one idle mechanic means counted once, then off once; two idle mea
 
 ### Step 4: a second road, group first and name afterwards
 
-Forget the names. Split the five jobs into three piles, none empty: brakes with clutch, exhaust with headlight, gearbox alone. There are 25 such splits, written $S(5, 3)$ ([stirling-numbers-second-kind](../08-Partitions/04-stirling-numbers-second-kind.md)). Now hand the piles over: three piles to three named mechanics is 3! = 6 orders, where 3! means 3 × 2 × 1. Every onto handout is one split with one order, so 6 × 25 = 150. The roads share no arithmetic and agree.
+Forget the names. Split the five jobs into three piles, none empty: brakes with clutch, exhaust with headlight, gearbox alone. There are 25 such splits, written $S(5, 3)$ ([Stirling numbers of the second kind](../08-Partitions/04-stirling-numbers-second-kind.md)). Now hand the piles over: three piles to three named mechanics is 3! = 6 orders, where 3! means 3 × 2 × 1. Every onto handout is one split with one order, so 6 × 25 = 150. The roads share no arithmetic and agree.
 
 ---
 
@@ -376,11 +355,11 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Taking off the idle-mechanic handouts and stopping there.** 243 − 96 = 147 looks finished and is not. The 96 counts "all five jobs to Cleo" twice, under idle Ada and again under idle Ben, so 147 is only a floor. Where a floor is enough, stopping early is a decision rather than an error ([union-bound-and-bonferroni](04-union-bound-and-bonferroni.md)).
+> **Taking off the idle-mechanic handouts and stopping there.** 243 − 96 = 147 looks finished and is not. The 96 counts "all five jobs to Cleo" twice, under idle Ada and again under idle Ben, so 147 is only a floor. Where a floor is enough, stopping early is a decision rather than an error ([Stopping the sieve early](04-union-bound-and-bonferroni.md)).
 >
 > - **Naming the empty recipients but not counting the namings.** Each layer carries its $C(k, j)$: the second layer is 3 pairs × 1 handout = 3, not 1.
 > - **Treating the mechanics as alike.** That answers a different question, 25; multiplying by 3! = 6 names the piles, 150.
-> - **Reading "at least one each" as "one each".** Five jobs among three mechanics means somebody takes two or more ([pigeonhole-extended](05-pigeonhole-extended.md)).
+> - **Reading "at least one each" as "one each".** Five jobs among three mechanics means somebody takes two or more ([Pigeonhole, extended](05-pigeonhole-extended.md)).
 
 ---
 
@@ -389,7 +368,7 @@ The two outputs match line for line.
 - **Work allocation.** Distinct tasks, named people, nobody left standing about: the count says how much room a scheduler has. Sorting distinct keys into named buckets, none empty, is the same sum.
 - **Test suites against code paths.** The ways a batch of test cases can cover every branch is this sum, branches as recipients.
 - **Collecting the full set.** Of the 729 ways six jobs can go out, 540 reach all three mechanics: favourable over possible, the reckoning behind how long a full set takes to collect.
-- **The same sieve, a different ban.** Forbid each item's own place instead of an empty recipient and the same sum counts derangements ([derangements](02-derangements.md)).
+- **The same sieve, a different ban.** Forbid each item's own place instead of an empty recipient and the same sum counts derangements ([Derangements](02-derangements.md)).
 
 > **Say it back**
 > Counting handouts that reach everybody is hard head-on and easy backwards. Start from every handout: 3^5 = 243 for five jobs and three mechanics. Take off the ones leaving a named mechanic idle, 3 × 2^5 = 96. That removes some twice, so add back the 3 leaving two idle, and keep flipping the sign. The answer is 150 — the same 150 as 25 splits into three piles, each nameable 6 ways.
@@ -398,13 +377,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [inclusion-exclusion-for-n-sets](01-inclusion-exclusion-for-n-sets.md): the alternating repair, aimed here at three overlapping "somebody is idle" sets.
-- [strings-and-powers](../01-Counting%20Principles/02-strings-and-powers.md): why n free choices from k options come to k^n, every layer of the sum.
-- [injective-surjective-bijective](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md): what onto means, and how it differs from one-to-one.
+- [Inclusion-exclusion for any number of sets](01-inclusion-exclusion-for-n-sets.md): the alternating repair, aimed here at three overlapping "somebody is idle" sets.
+- [Strings with repetition](../01-Counting%20Principles/02-strings-and-powers.md): why n free choices from k options come to k^n, every layer of the sum.
+- [One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md): what onto means, and how it differs from one-to-one.
 
 ## Where this goes next
 
-- [stirling-numbers-second-kind](../08-Partitions/04-stirling-numbers-second-kind.md): the 25 splits in their own right, the recurrence that builds them, and the identity 150 = 3! × S(5, 3).
+- [Stirling numbers of the second kind](../08-Partitions/04-stirling-numbers-second-kind.md): the 25 splits in their own right, the recurrence that builds them, and the identity 150 = 3! × S(5, 3).
 
 This card counts handouts to named recipients; strip the names and 150 collapses to 25, the count a later card takes on directly.
 

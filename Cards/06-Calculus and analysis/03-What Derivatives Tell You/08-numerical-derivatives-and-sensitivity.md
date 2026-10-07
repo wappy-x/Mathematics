@@ -1,26 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: What Derivatives Tell You
-topic: Bumping a price
-item: Numerical derivatives
-kind: approximation
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/05-taylors-theorem|taylors-theorem]]"
-next:
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/01-bump-and-revalue-and-common-random-numbers|bump-and-revalue-and-common-random-numbers]]"
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/07-error-propagation-and-sensitivity|error-propagation-and-sensitivity]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/04-backpropagation|backpropagation]]"
-  - "[[Cards/16-Numerical analysis/08-Derivatives by Machine/01-forward-backward-and-central-differences|forward-backward-and-central-differences]]"
-  - "[[Cards/16-Numerical analysis/08-Derivatives by Machine/04-choosing-the-step-truncation-against-rounding|choosing-the-step-truncation-against-rounding]]"
-tags: [mathematics, calculus and analysis, numerical-derivatives-and-sensitivity]
----
-
 # Numerical derivatives: forward and central differences, and why the step cannot be too small
 
-Calculus and analysis → What Derivatives Tell You → Bumping a price → Numerical derivatives
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [What Derivatives Tell You](../../../SYLLABUS.md#w06-s03) → Numerical derivatives
 
 ---
 
@@ -94,7 +74,7 @@ $$h^\ast_+ = 2\sqrt{\eta / M_2}, \qquad h^\ast_0 = \left(3\eta / M_3\right)^{1/3
 ### When it holds
 
 - **Smooth across the bumped range.** The laws need $C''$ (forward) or $C'''$ (central) continuous from $S - h$ to $S + h$. At a kink there is no derivative to find: the option's value on expiry day, $\max(S - 100, 0)$, has a corner at 100, where forward gives 1 and central 0.5 at every step.
-- **Bounded noise.** Double precision gives $\eta$ near $\varepsilon$ times the price; cent quotes give $\eta$ = 0.005. Simulated prices carry random noise instead, the business of [bump-and-revalue-and-common-random-numbers](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md).
+- **Bounded noise.** Double precision gives $\eta$ near $\varepsilon$ times the price; cent quotes give $\eta$ = 0.005. Simulated prices carry random noise instead, the business of [Bump and revalue](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md).
 - **Rough inputs to the best step.** $M_2$, $M_3$ and $\eta$ are guesses; a factor of ten wrong moves the best step only by the square or cube root of ten, and the error is flat near its minimum.
 
 ---
@@ -103,7 +83,7 @@ $$h^\ast_+ = 2\sqrt{\eta / M_2}, \qquad h^\ast_0 = \left(3\eta / M_3\right)^{1/3
 
 ### Step 0: a secant slope is a tangent slope plus a correction
 
-A difference quotient is a chord's slope; the derivative is the tangent's. Taylor's theorem ([taylors-theorem](05-taylors-theorem.md)) says how far the curve bends from its tangent over a step, so it says how far the two slopes differ.
+A difference quotient is a chord's slope; the derivative is the tangent's. Taylor's theorem ([Taylor's theorem](05-taylors-theorem.md)) says how far the curve bends from its tangent over a step, so it says how far the two slopes differ.
 
 ### Step 1: the forward error is proportional to the step
 
@@ -131,11 +111,11 @@ A computer stores each price to a fixed number of binary digits, so each carries
 
 ### Step 4: the best step balances the two
 
-The central bound is a rising term, $h^2 M_3/6$, plus a falling one, $\eta/h$. Its rate of change with $h$ is $h M_3/3 - \eta/h^2$. That is zero where $h^3 = 3\eta/M_3$, and the bound is smallest there ([monotonicity-and-optimisation](03-monotonicity-and-optimisation.md)). The forward bound, $hM_2/2 + 2\eta/h$, has rate $M_2/2 - 2\eta/h^2$, zero at $h = 2\sqrt{\eta/M_2}$.
+The central bound is a rising term, $h^2 M_3/6$, plus a falling one, $\eta/h$. Its rate of change with $h$ is $h M_3/3 - \eta/h^2$. That is zero where $h^3 = 3\eta/M_3$, and the bound is smallest there ([Optimisation](03-monotonicity-and-optimisation.md)). The forward bound, $hM_2/2 + 2\eta/h$, has rate $M_2/2 - 2\eta/h^2$, zero at $h = 2\sqrt{\eta/M_2}$.
 
 In full precision, $\eta$ = 2.05e-15 dollars, giving best bumps of 0.00000066 (forward) and 0.00024 (central). The run's best rows are 1e-6 and 1e-4: within a decade, as much as a rule built on bounds can promise.
 
-Combining central differences at $h$ and $2h$ cancels the $h^2$ term, called Richardson extrapolation; forward-backward-and-central-differences builds it.
+Combining central differences at $h$ and $2h$ cancels the $h^2$ term, called Richardson extrapolation; Forward, backward and central differences builds it.
 
 ---
 
@@ -368,10 +348,10 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Risk systems.** Banks compute Greeks, the price's sensitivities such as delta, by bump-and-revalue, often with a bump of 1% of the stock price; [bump-and-revalue-and-common-random-numbers](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md) adds simulation noise.
-- **Engineering.** A bridge's sag per unit of steel stiffness comes from bumping a model; [error-propagation-and-sensitivity](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md) carries it through.
-- **Gradient checks in machine learning.** A network's coded gradient is tested against central differences before training; backpropagation computes the gradient exactly.
-- **Root finders.** A solver with no slope formula bumps; a bad bump slows [newtons-method](06-newtons-method.md) or stalls it.
+- **Risk systems.** Banks compute Greeks, the price's sensitivities such as delta, by bump-and-revalue, often with a bump of 1% of the stock price; [Bump and revalue](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md) adds simulation noise.
+- **Engineering.** A bridge's sag per unit of steel stiffness comes from bumping a model; [Error propagation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md) carries it through.
+- **Gradient checks in machine learning.** A network's coded gradient is tested against central differences before training; Backpropagation computes the gradient exactly.
+- **Root finders.** A solver with no slope formula bumps; a bad bump slows [Newton's method](06-newtons-method.md) or stalls it.
 
 > **Say it back**
 > A price change divided by the bump estimates a derivative. Taylor's theorem puts the forward error at half the step times the second derivative, the central at a sixth of the step squared times the third. Noise in the prices is divided by the step, so it grows as the step shrinks. The best step balances the two, near the square root of the noise for forward and the cube root for central. On cent quotes that step is dollars, not cents.
@@ -380,15 +360,15 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [taylors-theorem](05-taylors-theorem.md): the remainder term that turns each truncation error into an exact formula.
+- [Taylor's theorem](05-taylors-theorem.md): the remainder term that turns each truncation error into an exact formula.
 
 ## Where this goes next
 
-- [bump-and-revalue-and-common-random-numbers](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): bumping a simulated price, whose noise is random.
-- [error-propagation-and-sensitivity](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md): input errors carried through a model by derivatives.
-- backpropagation: exact derivatives by the chain rule, no step.
-- forward-backward-and-central-differences: higher-order formulas and Richardson extrapolation.
-- choosing-the-step-truncation-against-rounding: the step rule in floating-point detail.
+- [Bump and revalue](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): bumping a simulated price, whose noise is random.
+- [Error propagation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md): input errors carried through a model by derivatives.
+- Backpropagation: exact derivatives by the chain rule, no step.
+- Forward, backward and central differences: higher-order formulas and Richardson extrapolation.
+- Choosing the step: the step rule in floating-point detail.
 
 ---
 

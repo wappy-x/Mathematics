@@ -1,25 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Beyond Brownian
-topic: Paths that wobble and leap
-item: Jump diffusions
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/09-Beyond Brownian/01-levy-processes|levy-processes]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/09-Beyond Brownian/05-semimartingales-in-outline|semimartingales-in-outline]]"
-  - "[[Cards/19-Partial differential equations/07-Nonlinear PDE and Fluids/09-partial-integro-differential-equations-for-jumps|partial-integro-differential-equations-for-jumps]]"
-  - "[[Cards/20-Harmonic analysis/04-Characteristic Functions and Probability/08-stable-laws-and-heavy-tails|stable-laws-and-heavy-tails]]"
-tags: [mathematics, stochastic processes and calculus, jump-diffusions]
----
-
 # Jump diffusions: Ito's lemma with a jump term
 
-Stochastic processes and calculus → Beyond Brownian → Paths that wobble and leap → Jump diffusions
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Beyond Brownian](../../../SYLLABUS.md#w11-s09) → Jump diffusions
 
 ---
 
@@ -52,7 +33,7 @@ One line: the price, one sample path (one run of the process drawn against time)
 
 ## The formula
 
-Reminders first. Time $t$ is in days. $W_t$ is Brownian motion, "the random walk seen from far away", and $dW_t$ is shorthand for an Ito integral, never a derivative, because the path has no slope. $N_t$ counts the spikes by day $t$: a Poisson process at rate $\lambda$ per day ([poisson-process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md)). Its step $dN_t$ is 1 at a spike instant and 0 otherwise.
+Reminders first. Time $t$ is in days. $W_t$ is Brownian motion, "the random walk seen from far away", and $dW_t$ is shorthand for an Ito integral, never a derivative, because the path has no slope. $N_t$ counts the spikes by day $t$: a Poisson process at rate $\lambda$ per day ([Poisson process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md)). Its step $dN_t$ is 1 at a spike instant and 0 otherwise.
 
 New notation, in words. $S_{t-}$ is the price just before day $t$: the value the path was approaching from the left. At a spike instant $S_t$ is the price after the spike and $S_{t-}$ the price before. Away from spikes the two agree. The jump of a process $X$ at a spike is $\Delta X = X_t - X_{t-}$.
 
@@ -97,11 +78,11 @@ $$E\big[\log(S_T/S_0)\big] = cT + \lambda T \mu_J, \qquad \mathrm{Var}\,\log(S_T
 
 ### When it holds
 
-- **Finitely many jumps in any finite time.** A Poisson stream has that. A Lévy process with infinitely many tiny jumps ([levy-processes](01-levy-processes.md)) can make the sum of jump terms diverge, as it does for the measure in that card's Step 6, and then the small jumps must be compensated first; the general statement is on [semimartingales-in-outline](05-semimartingales-in-outline.md).
+- **Finitely many jumps in any finite time.** A Poisson stream has that. A Lévy process with infinitely many tiny jumps ([Levy processes](01-levy-processes.md)) can make the sum of jump terms diverge, as it does for the measure in that card's Step 6, and then the small jumps must be compensated first; the general statement is on [Semimartingales](05-semimartingales-in-outline.md).
 - **The coefficients use the price just before.** The drift, kick and spike all multiply $S_{t-}$. A spike sized by the price after itself would be defined in a circle.
-- **$f$ has a continuous curvature.** At a kink, such as a payoff $\max(x - 60, 0)$, the wobble part needs local time, as on [itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md). The jump term needs no smoothness at all: it is a plain difference.
+- **$f$ has a continuous curvature.** At a kink, such as a payoff $\max(x - 60, 0)$, the wobble part needs local time, as on [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md). The jump term needs no smoothness at all: it is a plain difference.
 - **Spike sizes independent of the arrivals and the wobble.** If bigger spikes came in clusters, the averaged formulas fail; the path-by-path formula still holds.
-- **Merton's spikes are permanent.** Each leap stays in the price for good; the drift lowers the whole price, not the leap alone. Real electricity spikes fade within hours or days. A model that pulls the log back to a level, as on [ornstein-uhlenbeck-and-cir-processes](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md), with jumps added, fits better. The formula on this card applies to it unchanged.
+- **Merton's spikes are permanent.** Each leap stays in the price for good; the drift lowers the whole price, not the leap alone. Real electricity spikes fade within hours or days. A model that pulls the log back to a level, as on [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md), with jumps added, fits better. The formula on this card applies to it unchanged.
 
 ---
 
@@ -142,7 +123,7 @@ Setting. $(\Omega, \mathcal F, \mathcal F_t, P)$ carries a Brownian motion $W$, 
 
 **Pieces are Ito processes.** For each i define $Z^{(i)}_t = X_{\tau_i} + \int_{\tau_i}^{t}\alpha_s\,ds + \int_{\tau_i}^{t}\beta_s\,dW_s$ for $t \ge \tau_i$. Because $\tau_i$ is a stopping time, the integrands $\alpha_s 1_{s > \tau_i}$ and $\beta_s 1_{s > \tau_i}$ are adapted, so $Z^{(i)}$ is a continuous Ito process. On $[\tau_i, \tau_{i+1})$, $X = Z^{(i)}$, and by continuity $Z^{(i)}_{\tau_{i+1}} = X_{\tau_{i+1}-}$.
 
-**Ito on each piece.** Apply Ito's lemma for continuous Ito processes ([itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md)) to $f(Z^{(i)})$ between the stopping times $\tau_i \wedge T$ and $\tau_{i+1} \wedge T$: $f(Z^{(i)}_{\tau_{i+1}\wedge T}) - f(X_{\tau_i \wedge T}) = \int f'(Z^{(i)}_s)(\alpha_s\,ds + \beta_s\,dW_s) + \tfrac12\int f''(Z^{(i)}_s)\beta_s^2\,ds$, both integrals over $(\tau_i \wedge T, \tau_{i+1} \wedge T]$. On that whole interval $Z^{(i)}_s = X_{s-}$, its right end included.
+**Ito on each piece.** Apply Ito's lemma for continuous Ito processes ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)) to $f(Z^{(i)})$ between the stopping times $\tau_i \wedge T$ and $\tau_{i+1} \wedge T$: $f(Z^{(i)}_{\tau_{i+1}\wedge T}) - f(X_{\tau_i \wedge T}) = \int f'(Z^{(i)}_s)(\alpha_s\,ds + \beta_s\,dW_s) + \tfrac12\int f''(Z^{(i)}_s)\beta_s^2\,ds$, both integrals over $(\tau_i \wedge T, \tau_{i+1} \wedge T]$. On that whole interval $Z^{(i)}_s = X_{s-}$, its right end included.
 
 **Jumps.** If $\tau_{i+1} \le T$, add $f(X_{\tau_{i+1}}) - f(X_{\tau_{i+1}-})$; this takes the value from $f(Z^{(i)}_{\tau_{i+1}})$ to $f(X_{\tau_{i+1}})$, the start of the next piece.
 
@@ -172,7 +153,7 @@ with $E[Y^2] = e^{2\mu_J + 2\delta^2}$. Ordinary Ito would supply the $\sigma^2$
 
 ### Step 7: a second road, conditioning on the spike count
 
-Condition on the number of spikes, $n$. Given $n$, $\log(S_T/S_0)$ is a sum of independent normals: $cT + \sigma W_T$ plus $n$ spike logs. So it is normal with mean $m_n = cT + n\mu_J$ and variance $v_n = \sigma^2 T + n\delta^2$. Weight each case by its Poisson chance $p_n = e^{-\lambda T}(\lambda T)^n/n!$ and add. The code does this for n from 0 to 39 and matches every average above to the printed digits. It also gives the chance the month ends above $50: $\sum p_n\,\Phi(m_n/\sqrt{v_n})$ = 0.3433, where $\Phi$ is the bell-curve area to the left. The Merton option price on [merton-jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md) is this same split, applied to a payoff.
+Condition on the number of spikes, $n$. Given $n$, $\log(S_T/S_0)$ is a sum of independent normals: $cT + \sigma W_T$ plus $n$ spike logs. So it is normal with mean $m_n = cT + n\mu_J$ and variance $v_n = \sigma^2 T + n\delta^2$. Weight each case by its Poisson chance $p_n = e^{-\lambda T}(\lambda T)^n/n!$ and add. The code does this for n from 0 to 39 and matches every average above to the printed digits. It also gives the chance the month ends above $50: $\sum p_n\,\Phi(m_n/\sqrt{v_n})$ = 0.3433, where $\Phi$ is the bell-curve area to the left. The Merton option price on [Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md) is this same split, applied to a payoff.
 
 This road is not free of Ito. It uses the log formula above, and $c$ carries Ito's $-\tfrac12\sigma^2$. What it never uses is the jump term's average, the rate of Step 6. So its agreement with Step 6 on $E[S_T]$ and $E[S_T^2]$ is a real test. Its agreement on the log's mean and variance only checks the Poisson averaging. The test of the formula itself, path by path, is the simulation in the code.
 
@@ -651,9 +632,9 @@ The upper line is the slope rule, $\log S_0 + cT + \sigma W_T + \sum(Y_i - 1)$: 
 ## Where you meet it in real life
 
 - **Electricity and gas trading.** Spot power prices spike when supply fails. Desks model the log price as a mean-reverting process plus jumps, and value contracts with this card's formula, extended by a pull towards a level.
-- **Option prices with jumps.** Merton's model prices a call as Black-Scholes averaged over the jump count: [merton-jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md).
-- **Insurance surplus.** An insurer's capital grows with premiums and falls at each claim; with investment returns added it is a jump diffusion whose jumps are the claims of [compound-poisson](../04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md).
-- **Control with jumps.** Choosing actions when the state can leap, such as stocking a warehouse against sudden demand, uses this formula inside the equation of [stochastic-control-and-the-hjb-equation](03-stochastic-control-and-the-hjb-equation.md).
+- **Option prices with jumps.** Merton's model prices a call as Black-Scholes averaged over the jump count: [Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md).
+- **Insurance surplus.** An insurer's capital grows with premiums and falls at each claim; with investment returns added it is a jump diffusion whose jumps are the claims of [Compound Poisson](../04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md).
+- **Control with jumps.** Choosing actions when the state can leap, such as stocking a warehouse against sudden demand, uses this formula inside the equation of [Stochastic control](03-stochastic-control-and-the-hjb-equation.md).
 
 > **Say it back**
 > A jump diffusion wobbles like Brownian motion and leaps at Poisson times. Between leaps, Ito's lemma applies unchanged. At a leap, a function moves by exactly its value after minus its value before, with no Taylor expansion, because a leap is not small. For the log of Merton's price that gives the wobble's log drift plus the sum of the spike logs. Averaging the jump term at rate $\lambda$ gives the compensator, the drift that keeps the average price flat.
@@ -662,16 +643,16 @@ The upper line is the slope rule, $\log S_0 + cT + \sigma W_T + \sum(Y_i - 1)$: 
 
 ## What this builds on
 
-- [levy-processes](01-levy-processes.md): Brownian motion plus a Poisson stream of jumps as one process with independent, stationary steps; this card puts a rule on top of it.
-- [itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md): the continuous formula, used unchanged on every stretch between jumps.
+- [Levy processes](01-levy-processes.md): Brownian motion plus a Poisson stream of jumps as one process with independent, stationary steps; this card puts a rule on top of it.
+- [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md): the continuous formula, used unchanged on every stretch between jumps.
 
 ## Where this goes next
 
-- [semimartingales-in-outline](05-semimartingales-in-outline.md): the one class of processes on which Ito's formula holds, jumps of every size and number included.
-- partial-integro-differential-equations-for-jumps: the averaged rate of Step 6, with its $E[f(xY)] - f(x)$ term, as an equation for prices and expectations.
-- stable-laws-and-heavy-tails: jump laws with tails so heavy that the variance on this card is infinite.
+- [Semimartingales](05-semimartingales-in-outline.md): the one class of processes on which Ito's formula holds, jumps of every size and number included.
+- When prices jump: the averaged rate of Step 6, with its $E[f(xY)] - f(x)$ term, as an equation for prices and expectations.
+- Stable laws: jump laws with tails so heavy that the variance on this card is infinite.
 
-This card handles finitely many jumps, cut out one at a time; what Ito's formula becomes when infinitely many small jumps arrive in every second, and what a stochastic integral against such a path means, is the question [semimartingales-in-outline](05-semimartingales-in-outline.md) answers.
+This card handles finitely many jumps, cut out one at a time; what Ito's formula becomes when infinitely many small jumps arrive in every second, and what a stochastic integral against such a path means, is the question [Semimartingales](05-semimartingales-in-outline.md) answers.
 
 ---
 

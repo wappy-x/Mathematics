@@ -1,26 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Taylor Series, Zeros and Rigidity
-topic: No interior peaks
-item: The maximum modulus principle
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/05-cauchys-integral-formula|cauchys-integral-formula]]"
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/03-zeros-and-the-identity-theorem|zeros-and-the-identity-theorem]]"
-next:
-  - "[[Cards/20-Harmonic analysis/06-Maximal Functions and Beyond/04-interpolation-riesz-thorin-and-marcinkiewicz|interpolation-riesz-thorin-and-marcinkiewicz]]"
-tags:
-  - mathematics
-  - complex-analysis
-  - maximum-modulus-principle
----
-
 # The maximum modulus principle: |f| has no interior peak, so its largest value sits on the boundary
 
-Complex analysis → Taylor Series, Zeros and Rigidity → No interior peaks → The maximum modulus principle
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Taylor Series, Zeros and Rigidity](../../../SYLLABUS.md#w07-s04) → The maximum modulus principle
 
 ---
 
@@ -81,7 +61,7 @@ $$f(a) = \frac{1}{2\pi}\int_0^{2\pi} f\!\left(a + r e^{it}\right)dt$$
 
 ### Step 1: the centre value is the circle average
 
-Cauchy's integral formula ([cauchys-integral-formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md)), round a circle about a:
+Cauchy's integral formula ([Cauchy's integral formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md)), round a circle about a:
 
 $$f(a) = \frac{1}{2\pi i}\oint \frac{f(\zeta)}{\zeta - a}\,d\zeta.$$
 
@@ -116,7 +96,7 @@ The bracket is continuous and never negative, since a real part never exceeds th
 
 ### Step 4: constant near one point means constant everywhere
 
-f − f(a) is holomorphic and zero on a whole disc, so its zeros are not isolated; by [zeros-and-the-identity-theorem](03-zeros-and-the-identity-theorem.md) it is zero on all of D, since D is in one piece. This is the local form of the principle: **a holomorphic function whose modulus has a local maximum inside a region is constant there.**
+f − f(a) is holomorphic and zero on a whole disc, so its zeros are not isolated; by [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md) it is zero on all of D, since D is in one piece. This is the local form of the principle: **a holomorphic function whose modulus has a local maximum inside a region is constant there.**
 
 ### Step 5: on a bounded region the maximum sits on the edge
 
@@ -133,7 +113,7 @@ If f has no zeros on the closure, 1/f is holomorphic inside and continuous up to
 
 **Statement.** Let s be holomorphic on the open unit disc, with |s(z)| < 1 and s(0) = 0. Then |s(z)| ≤ |z| everywhere and |s'(0)| ≤ 1. Equality at one point other than 0, or |s'(0)| = 1, makes s a rotation, s(z) = cz with |c| = 1.
 
-**Proof.** s(z)/z fills its hole at 0 with s'(0), since the Taylor series of s starts s'(0)z ([taylor-series-in-the-plane](01-taylor-series-in-the-plane.md)). On the circle of radius r < 1 its modulus is below 1/r, so by Step 5 it is below 1/r inside. Let r rise to 1: |s(z)/z| ≤ 1. Equality inside is an interior maximum, so Step 4 makes the quotient constant.
+**Proof.** s(z)/z fills its hole at 0 with s'(0), since the Taylor series of s starts s'(0)z ([Taylor series in the plane](01-taylor-series-in-the-plane.md)). On the circle of radius r < 1 its modulus is below 1/r, so by Step 5 it is below 1/r inside. Let r rise to 1: |s(z)/z| ≤ 1. Equality inside is an interior maximum, so Step 4 makes the quotient constant.
 
 **Example.** $s(z) = (e^z - 1)/(e - 1)$ maps the disc into itself, as the series of e^z − 1 shows. Its s'(0) = 1/(e − 1) = 0.581977, and |s(0.5)| = 0.377541 ≤ 0.5.
 
@@ -387,7 +367,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Error bounds.** The error of a polynomial approximation to a holomorphic function is itself holomorphic, so its worst case over a disc is on the rim.
-- **Uniqueness from the boundary.** Two holomorphic functions, continuous up to a bounded region's edge and equal there, differ by a function with largest modulus 0, so agree inside; compare [analytic-continuation](04-analytic-continuation.md).
+- **Uniqueness from the boundary.** Two holomorphic functions, continuous up to a bounded region's edge and equal there, differ by a function with largest modulus 0, so agree inside; compare [Analytic continuation](04-analytic-continuation.md).
 
 > **Say it back**
 > A holomorphic function's value at a point is the average of its values round any small circle about it. So its modulus there cannot beat every modulus on the circle, and a tie forces the function to be constant nearby, then everywhere. On a bounded region the largest modulus sits on the edge: e for e^z on the unit disc, at z = 1. With no zeros the smallest does too: 1/e at z = −1.
@@ -396,12 +376,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [cauchys-integral-formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md): the centre value as a contour integral, which becomes the circle average.
-- [zeros-and-the-identity-theorem](03-zeros-and-the-identity-theorem.md): zero on a disc means zero everywhere, which spreads local constancy.
+- [Cauchy's integral formula](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/05-cauchys-integral-formula.md): the centre value as a contour integral, which becomes the circle average.
+- [Zeros and the identity theorem](03-zeros-and-the-identity-theorem.md): zero on a disc means zero everywhere, which spreads local constancy.
 
 ## Where this goes next
 
-- interpolation-riesz-thorin-and-marcinkiewicz: the principle on a strip becomes the three-lines bound that proves Riesz–Thorin.
+- Interpolation: the principle on a strip becomes the three-lines bound that proves Riesz–Thorin.
 
 On an unbounded region the plain statement fails, as e^z on the half-plane showed; how two edges and a limit on growth restore control is the three-lines bound on that card.
 

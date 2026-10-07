@@ -1,28 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Limits and Continuity
-topic: Values that match their neighbours
-item: Continuity
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/01-limits|limits]]"
-next:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/06-intermediate-value-theorem|intermediate-value-theorem]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/01-the-derivative|the-derivative]]"
-  - "[[Cards/10-Measure and integration/03-Measurable Functions/01-measurable-functions|measurable-functions]]"
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/01-functions-of-bounded-variation|functions-of-bounded-variation]]"
-  - "[[Cards/17-Topology/01-Metric Spaces/04-convergence-and-continuity-in-metric-spaces|convergence-and-continuity-in-metric-spaces]]"
-  - "[[Cards/17-Topology/02-Topological Spaces/03-continuity-and-homeomorphism|continuity-and-homeomorphism]]"
-  - "[[Cards/17-Topology/04-Homotopy/01-homotopy-and-homotopy-equivalence|homotopy-and-homotopy-equivalence]]"
-tags: [mathematics, calculus and analysis, continuity]
----
-
 # Continuity: no jumps, no holes, and the limit is the value
 
-Calculus and analysis → Limits and Continuity → Values that match their neighbours → Continuity
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Limits and Continuity](../../../SYLLABUS.md#w06-s01) → Continuity
 
 ---
 
@@ -48,7 +26,7 @@ To scale: 80 pixels per kilometre, 16 pixels per dollar. Steps S are the stepped
 
 ## The formula
 
-A reminder from [limits](01-limits.md): $\lim_{d \to a} f(d) = L$ says "f(d) heads for L as d heads for a", and the value at a plays no part. Two new marks, in words first: a small minus sign above the a, $\lim_{d \to a^-}$, means approach from below only; a small plus sign, $\lim_{d \to a^+}$, from above only. These are the **one-sided limits**.
+A reminder from [Limits](01-limits.md): $\lim_{d \to a} f(d) = L$ says "f(d) heads for L as d heads for a", and the value at a plays no part. Two new marks, in words first: a small minus sign above the a, $\lim_{d \to a^-}$, means approach from below only; a small plus sign, $\lim_{d \to a^+}$, from above only. These are the **one-sided limits**.
 
 $$f \text{ is continuous at } a \quad\text{when}\quad \lim_{d \to a} f(d) = f(a)$$
 
@@ -90,7 +68,7 @@ Continuity is a definition. The theorem needs:
 
 - **Both parts continuous at the point.** Add anything continuous to the stepped fare and its steps survive.
 - **For a chain, the outer function continuous where the inner one lands.** Distance over time fed into the stepped fare gives $7 at 4 minutes, $9 a moment later.
-- **For a quotient, a nonzero denominator.** Price per kilometre blows up at the kerb; elsewhere the quotient law holds ([limit-laws-and-the-squeeze](04-limit-laws-and-the-squeeze.md)).
+- **For a quotient, a nonzero denominator.** Price per kilometre blows up at the kerb; elsewhere the quotient law holds ([Limit laws and the squeeze](04-limit-laws-and-the-squeeze.md)).
 
 ---
 
@@ -139,7 +117,7 @@ Write ε (epsilon) for the output tolerance and δ (delta) for the input window,
 
 </details>
 
-A second road: f is continuous at a exactly when it sends every sequence heading for a to one heading for f(a), so the rules follow from those for sequences ([sequences-and-limits](03-sequences-and-limits.md)).
+A second road: f is continuous at a exactly when it sends every sequence heading for a to one heading for f(a), so the rules follow from those for sequences ([Sequences](03-sequences-and-limits.md)).
 
 ---
 
@@ -385,8 +363,8 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Tariffs.** Postage by weight band and parking by the started hour are step functions like the fare: continuous inside each band, jumping at each edge.
-- **Root-finding.** A continuous function below zero at one end and above at the other crosses zero between ([intermediate-value-theorem](06-intermediate-value-theorem.md)). The stepped fare goes from $5 to $7 and never shows $6.
-- **Best and worst cases.** On a closed interval a continuous function reaches a largest and smallest value ([extreme-value-theorem](07-extreme-value-theorem.md)).
+- **Root-finding.** A continuous function below zero at one end and above at the other crosses zero between ([Intermediate value theorem](06-intermediate-value-theorem.md)). The stepped fare goes from $5 to $7 and never shows $6.
+- **Best and worst cases.** On a closed interval a continuous function reaches a largest and smallest value ([Extreme value theorem](07-extreme-value-theorem.md)).
 
 > **Say it back**
 > A function is continuous at a point when nearby values head for exactly its value there. It fails as a hole, a jump, a blow-up or an endless swing. Windows for the parts build a window for a sum, product or chain, so every polynomial is continuous.
@@ -395,17 +373,17 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [limits](01-limits.md): the limit, its notation and the tolerance game continuity is built from.
+- [Limits](01-limits.md): the limit, its notation and the tolerance game continuity is built from.
 
 ## Where this goes next
 
-- [intermediate-value-theorem](06-intermediate-value-theorem.md): a continuous function takes every value between its end values.
-- [the-derivative](../02-Derivatives/01-the-derivative.md): a rate of change, existing only where the function is continuous.
-- [measurable-functions](../../10-Measure%20and%20integration/03-Measurable%20Functions/01-measurable-functions.md): a looser class that holds the stepped fare.
-- [functions-of-bounded-variation](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/01-functions-of-bounded-variation.md): finite total up-and-down movement, jumps included.
-- convergence-and-continuity-in-metric-spaces: the same game with any notion of distance.
-- continuity-and-homeomorphism: continuity with no distances at all.
-- homotopy-and-homotopy-equivalence: continuous deformations of one map into another.
+- [Intermediate value theorem](06-intermediate-value-theorem.md): a continuous function takes every value between its end values.
+- [The derivative](../02-Derivatives/01-the-derivative.md): a rate of change, existing only where the function is continuous.
+- [Measurable functions](../../10-Measure%20and%20integration/03-Measurable%20Functions/01-measurable-functions.md): a looser class that holds the stepped fare.
+- [Bounded variation](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/01-functions-of-bounded-variation.md): finite total up-and-down movement, jumps included.
+- Limits and continuity with distances: the same game with any notion of distance.
+- Continuity by pre-images, and homeomorphism: continuity with no distances at all.
+- Homotopy: continuous deformations of one map into another.
 
 ---
 

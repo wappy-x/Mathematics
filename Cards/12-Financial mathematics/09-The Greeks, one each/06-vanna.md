@@ -1,29 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Greeks, one each
-topic: Spot-volatility cross slope
-item: Vanna
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/03-vega|vega]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/01-delta|delta]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-next:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/09-greeks-together-taylor-pnl|greeks-together-taylor-pnl]]"
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/05-smile-adjusted-delta|smile-adjusted-delta]]"
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/03-vanna-and-volga-on-the-smile|vanna-and-volga-on-the-smile]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - vanna
----
-
 # Vanna: how delta shifts when volatility moves, and how vega shifts when spot moves
 
-Financial mathematics → The Greeks, one each → Spot-volatility cross slope → Vanna
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Greeks, one each](../../../SYLLABUS.md#w12-s09) → Vanna
 
 ---
 
@@ -57,7 +34,7 @@ Orange: delta at 20 percent volatility. Green: delta at 30 percent. Below about 
 
 ## The formula
 
-Notation first, in words. A partial derivative, written with a curly ∂, is the slope in one input while every other input is held still ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). A 2 raised on the top curly d means two slopes taken one after the other, one per input named underneath. Vega, the slope of the price in volatility, is written $\mathcal{V}$.
+Notation first, in words. A partial derivative, written with a curly ∂, is the slope in one input while every other input is held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). A 2 raised on the top curly d means two slopes taken one after the other, one per input named underneath. Vega, the slope of the price in volatility, is written $\mathcal{V}$.
 
 $$\text{vanna} \;=\; \frac{\partial \Delta}{\partial \sigma} \;=\; \frac{\partial \mathcal{V}}{\partial S} \;=\; \frac{\partial^2 C}{\partial S\,\partial \sigma} \;=\; -\,e^{-qT}\,\varphi(d_1)\,\frac{d_2}{\sigma}$$
 
@@ -78,7 +55,7 @@ $$\text{vanna} \;=\; \frac{\partial \Delta}{\partial \sigma} \;=\; \frac{\partia
 | $\Gamma$ | gamma: how fast delta moves per dollar of share price | 0.018951 | — |
 | $a$, $b$ | small steps in price and in volatility, for the four-corner difference | 0.05 and 0.0005 (road 4) | — |
 
-The two distances, as on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
+The two distances, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
 
 $$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
 
@@ -86,9 +63,9 @@ In words: $d_2$ counts how many units of $\sigma\sqrt{T}$ the forward price, $F 
 
 ### When it holds
 
-- **The Black-Scholes model, one volatility per option.** Real markets quote a different volatility at each strike (the smile, or skew). Vanna from this formula is the model's slope; what a desk sees also depends on how the smile moves when Acme moves, the subject of [smile-adjusted-delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md).
+- **The Black-Scholes model, one volatility per option.** Real markets quote a different volatility at each strike (the smile, or skew). Vanna from this formula is the model's slope; what a desk sees also depends on how the smile moves when Acme moves, the subject of [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md).
 - **European exercise.** A call that may be exercised early has no closed formula; vanna must then be bumped on a tree or grid.
-- **A continuous dividend yield.** Cash dividends on fixed dates are priced on the share net of their present value ([known-cash-dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md)); vanna then comes from that price, not this formula.
+- **A continuous dividend yield.** Cash dividends on fixed dates are priced on the share net of their present value ([Known cash dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md)); vanna then comes from that price, not this formula.
 - **Small moves.** Vanna is a slope. Over a full volatility point, 20 to 21 percent, delta actually moved −0.000812, not −0.000948, because vanna itself changed on the way.
 - **Some time left.** Near expiry vanna crowds into a narrow band around the strike, swinging from strongly positive to strongly negative within a few dollars of spot.
 
@@ -121,7 +98,7 @@ A quantity with volatility only underneath has slope minus itself over $\sigma$.
 
 ### Step 2: the first reading, delta moved by volatility
 
-Delta is $e^{-qT}N(d_1)$ ([delta](01-delta.md)). Volatility enters only through $d_1$. The slope of $N$ is $\varphi$, so the chain rule gives
+Delta is $e^{-qT}N(d_1)$ ([Delta](01-delta.md)). Volatility enters only through $d_1$. The slope of $N$ is $\varphi$, so the chain rule gives
 
 $$\frac{\partial \Delta}{\partial\sigma} = e^{-qT}\,\varphi(d_1)\,\frac{\partial d_1}{\partial \sigma} = -\,e^{-qT}\,\varphi(d_1)\,\frac{d_2}{\sigma}.$$
 
@@ -129,7 +106,7 @@ For Acme: $-0.980199 \times 0.386668 \times 0.05/0.20 = -0.094753$. Measured ins
 
 ### Step 3: the second reading, vega moved by the share price
 
-Vega is $S e^{-qT}\varphi(d_1)\sqrt{T}$ ([vega](03-vega.md)). Now $S$ appears twice: in front, and inside $d_1$. The product rule takes each in turn:
+Vega is $S e^{-qT}\varphi(d_1)\sqrt{T}$ ([Vega](03-vega.md)). Now $S$ appears twice: in front, and inside $d_1$. The product rule takes each in turn:
 
 $$\frac{\partial \mathcal{V}}{\partial S} = e^{-qT}\varphi(d_1)\sqrt{T} \;+\; S e^{-qT}\sqrt{T}\,\bigl(-d_1\varphi(d_1)\bigr)\frac{1}{S\sigma\sqrt{T}} = e^{-qT}\varphi(d_1)\Bigl(\sqrt{T} - \frac{d_1}{\sigma}\Bigr).$$
 
@@ -157,7 +134,7 @@ $$\text{crossover price} = K\,e^{-(r - q - \frac12\sigma^2)T} = 100\,e^{-0.01} =
 
 The crossover is not the strike. Carry, the $r - q$ drift, and the volatility drag in $d_2$ move it; here to $99.00.
 
-The put's vanna is the same number. Put-call parity, $C - P = S e^{-qT} - K e^{-rT}$ ([put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)), has no $\sigma$ in its right side, so any slope taken in volatility is identical for the two. Bumping the put's delta in volatility gives −0.094753.
+The put's vanna is the same number. Put-call parity, $C - P = S e^{-qT} - K e^{-rT}$ ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)), has no $\sigma$ in its right side, so any slope taken in volatility is identical for the two. Bumping the put's delta in volatility gives −0.094753.
 
 <details>
 <summary>Detailed proof: why the order of the two slopes does not matter</summary>
@@ -172,7 +149,7 @@ Divide by $a \times b$ and shrink the rectangle. Both points close in on $(S, \s
 
 </details>
 
-A third route skips the calculus: bump the price in both inputs and difference it, as road 4 does, or bump a tree ([bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)).
+A third route skips the calculus: bump the price in both inputs and difference it, as road 4 does, or bump a tree ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)).
 
 ---
 
@@ -227,13 +204,13 @@ The largest vanna sits well away from the strike, near $80 and $120 for the one-
 
 ### Two forces together: the skew ties volatility to price
 
-The **skew** is the pattern of implied volatility (the volatility that reproduces a quoted price) across strikes. In equity markets it slopes down: low strikes trade at higher volatility, because falls come with fear. A steep skew goes with volatility that moves strongly as the price moves. How strongly, for one fixed option, depends on the model of the smile; [smile-adjusted-delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md) works that out. Here take a round, steep assumption: **each $1 rise in Acme lowers every option's volatility by 0.5 points**, a rate of −0.005 per dollar.
+The **skew** is the pattern of implied volatility (the volatility that reproduces a quoted price) across strikes. In equity markets it slopes down: low strikes trade at higher volatility, because falls come with fear. A steep skew goes with volatility that moves strongly as the price moves. How strongly, for one fixed option, depends on the model of the smile; [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md) works that out. Here take a round, steep assumption: **each $1 rise in Acme lowers every option's volatility by 0.5 points**, a rate of −0.005 per dollar.
 
 Once volatility is a function of the price, delta changes through two doors. Straight d's, as in $d\Delta/dS$, mark a total slope: everything that moves with the price is allowed to move. The chain rule adds the doors:
 
 $$\frac{d\Delta}{dS} = \Gamma + \text{vanna} \times \frac{d\sigma}{dS}.$$
 
-In words: the delta change per dollar is gamma, the direct door, plus vanna times the volatility change per dollar, the side door. Gamma is the same for call and put ([gamma](02-gamma.md)), and so is vanna, so the put rows below use the call formulas. Three options on Acme at $100, one year, 20 percent:
+In words: the delta change per dollar is gamma, the direct door, plus vanna times the volatility change per dollar, the side door. Gamma is the same for call and put ([Gamma](02-gamma.md)), and so is vanna, so the put rows below use the call formulas. Three options on Acme at $100, one year, 20 percent:
 
 | Option | Gamma | Vanna | Vanna × (−0.005) | Side door as a share of gamma |
 | --- | --- | --- | --- | --- |
@@ -253,7 +230,7 @@ Take the 120 call. Acme rises $5, to $105, and under the assumption its volatili
 | Gamma alone: $5 \times 0.015709$ | +0.078544 |
 | Gamma and vanna: $5 \times (0.015709 - 0.006767)$ | +0.044707 |
 
-Gamma alone buys half again as many shares as the move needed. Adding vanna lands much closer. What remains comes from the slopes of gamma and vanna themselves over a $5 move, the terms [greeks-together-taylor-pnl](09-greeks-together-taylor-pnl.md) adds up. With no skew, $d\sigma/dS = 0$, the side door shuts and gamma is the whole story; the steeper the skew, the wider the door. That is why vanna is the hedge that matters in a steep skew.
+Gamma alone buys half again as many shares as the move needed. Adding vanna lands much closer. What remains comes from the slopes of gamma and vanna themselves over a $5 move, the terms [The Greeks together](09-greeks-together-taylor-pnl.md) adds up. With no skew, $d\sigma/dS = 0$, the side door shuts and gamma is the whole story; the steeper the skew, the wider the door. That is why vanna is the hedge that matters in a steep skew.
 
 ---
 
@@ -650,8 +627,8 @@ The two outputs match line for line.
 
 - **Equity index desks.** Falls come with rising volatility. The delta of a downside put grows through gamma and again through vanna; the 80 put above moved 58 percent faster than gamma alone says. Hedges placed with gamma alone lag the market.
 - **Vega hedges that drift.** A book flat to volatility at $100 is not flat at $95. Vanna is the rate at which the vega hedge goes stale as the price moves; the call's vega moved −0.094606 over one dollar.
-- **Currency options.** A risk reversal, a call above the price paired against a put below it, is close to pure vanna, and its quoted price is how the currency market prices the skew: [vanna-and-volga-on-the-smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/03-vanna-and-volga-on-the-smile.md).
-- **Profit and loss explain.** A desk's daily report splits the day's result into delta, gamma, vega and the cross term; vanna fills that line: [greeks-together-taylor-pnl](09-greeks-together-taylor-pnl.md). Its companions in the second-order row are [volga](07-volga.md), vega's slope in volatility, and [charm](08-charm.md), delta's slope in time.
+- **Currency options.** A risk reversal, a call above the price paired against a put below it, is close to pure vanna, and its quoted price is how the currency market prices the skew: [Vanna and volga](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/03-vanna-and-volga-on-the-smile.md).
+- **Profit and loss explain.** A desk's daily report splits the day's result into delta, gamma, vega and the cross term; vanna fills that line: [The Greeks together](09-greeks-together-taylor-pnl.md). Its companions in the second-order row are [Volga](07-volga.md), vega's slope in volatility, and [Charm](08-charm.md), delta's slope in time.
 
 > **Say it back**
 > Vanna is the cross slope of an option's price in the share price and volatility. Because the order of two slopes does not matter for a smooth price, it answers two questions at once: how delta moves when volatility moves, and how vega moves when the price moves. For a Black-Scholes call or put it is minus the dividend drag times the bell-curve height at d1 times d2 over volatility: −0.094753 for the house call. Its sign is the opposite of d2's, so it is negative above $99.00 and positive below. When volatility falls as prices rise, vanna adds a side door to gamma, and off the money that door is comparable to gamma itself.
@@ -660,15 +637,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [vega](03-vega.md): the slope in volatility, $S e^{-qT}\varphi(d_1)\sqrt{T}$; vanna is its slope in price.
-- [delta](01-delta.md): the slope in price, $e^{-qT}N(d_1)$; vanna is its slope in volatility.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes in one input with the others held still, and why the order of two such slopes can be swapped.
+- [Vega](03-vega.md): the slope in volatility, $S e^{-qT}\varphi(d_1)\sqrt{T}$; vanna is its slope in price.
+- [Delta](01-delta.md): the slope in price, $e^{-qT}N(d_1)$; vanna is its slope in volatility.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes in one input with the others held still, and why the order of two such slopes can be swapped.
 
 ## Where this goes next
 
-- [greeks-together-taylor-pnl](09-greeks-together-taylor-pnl.md): every Greek on the shelf, vanna's cross term included, added into one forecast of a day's profit and loss.
-- [smile-adjusted-delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md): how fast volatility actually follows the price under a skew, replacing this card's round assumption, and the hedge ratio that results.
-- [vanna-and-volga-on-the-smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/03-vanna-and-volga-on-the-smile.md): vanna and volga read off the currency market's quoted smile.
+- [The Greeks together](09-greeks-together-taylor-pnl.md): every Greek on the shelf, vanna's cross term included, added into one forecast of a day's profit and loss.
+- [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md): how fast volatility actually follows the price under a skew, replacing this card's round assumption, and the hedge ratio that results.
+- [Vanna and volga](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/03-vanna-and-volga-on-the-smile.md): vanna and volga read off the currency market's quoted smile.
 
 This card assumed volatility follows the price at a fixed rate; the open question is what that rate really is, and the smile-adjusted delta answers it.
 

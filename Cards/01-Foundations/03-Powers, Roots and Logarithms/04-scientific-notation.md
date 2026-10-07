@@ -1,27 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Powers, Roots and Logarithms
-topic: Powers of ten
-item: Scientific notation
-kind: convention
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/01-exponents-and-powers|exponents-and-powers]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/08-decimals|decimals]]"
-next:
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/05-logarithms|logarithms]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/06-log-laws-and-log-scales|log-laws-and-log-scales]]"
-tags:
-  - mathematics
-  - foundations
-  - scientific-notation
----
-
 # Scientific notation: very big and very small numbers as a number times a power of ten
 
-Foundations → Powers, Roots and Logarithms → Powers of ten → Scientific notation
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Powers, Roots and Logarithms](../../../SYLLABUS.md#w01-s03) → Scientific notation
 
 ---
 
@@ -66,7 +45,7 @@ Each number, written out then split:
 | a negative power | dot left, number small | 7 x 10^-6 is 0.000007 |
 | the two together | front number on that power | the number, no zeros counted |
 
-The minus in 10^-6 does not make the number negative. It says *divide* by ten six times: still positive, only small ([exponents-and-powers](01-exponents-and-powers.md)).
+The minus in 10^-6 does not make the number negative. It says *divide* by ten six times: still positive, only small ([Exponents](01-exponents-and-powers.md)).
 
 ---
 
@@ -74,7 +53,7 @@ The minus in 10^-6 does not make the number negative. It says *divide* by ten si
 
 ### Step 0: sliding the dot is multiplying by ten
 
-Each column of a written number is worth ten times the column on its right. Slide the dot one place right and the number is multiplied by ten; one place left, divided by ten — [decimals](../01-Everyday%20Arithmetic/08-decimals.md) read from the other end. Nothing is lost: slide back the same distance and the original is there.
+Each column of a written number is worth ten times the column on its right. Slide the dot one place right and the number is multiplied by ten; one place left, divided by ten — [Decimals](../01-Everyday%20Arithmetic/08-decimals.md) read from the other end. Nothing is lost: slide back the same distance and the original is there.
 
 ### Step 1: slide until one digit stands in front
 
@@ -94,7 +73,7 @@ How many blood cells wide is the distance to the Sun? Divide 1.5 x 10^11 m by 7 
 
 That is 0.2142857 x 10^17, not yet standard form: the front number must sit between 1 and 10. Slide the dot one place right, drop the power by one. **2.142857 x 10^16.**
 
-The power alone is the number's **order of magnitude**: its size to the nearest ten-fold step. Which power a number sits on is [logarithms](05-logarithms.md).
+The power alone is the number's **order of magnitude**: its size to the nearest ten-fold step. Which power a number sits on is [Logarithms](05-logarithms.md).
 
 ---
 
@@ -272,13 +251,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [exponents-and-powers](01-exponents-and-powers.md): what a power is, why a power of zero is 1, why a negative power divides.
-- [decimals](../01-Everyday%20Arithmetic/08-decimals.md): the columns right of the dot, where the small number lives.
+- [Exponents](01-exponents-and-powers.md): what a power is, why a power of zero is 1, why a negative power divides.
+- [Decimals](../01-Everyday%20Arithmetic/08-decimals.md): the columns right of the dot, where the small number lives.
 
 ## Where this goes next
 
-- [logarithms](05-logarithms.md): "what power got me here?", when the power is not a whole number.
-- [log-laws-and-log-scales](06-log-laws-and-log-scales.md): an axis marked 1, 10, 100 instead of 1, 2, 3 — this card's picture as a ruler.
+- [Logarithms](05-logarithms.md): "what power got me here?", when the power is not a whole number.
+- [Log laws and log scales](06-log-laws-and-log-scales.md): an axis marked 1, 10, 100 instead of 1, 2, 3 — this card's picture as a ruler.
 
 ---
 

@@ -1,23 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Sampling and Estimation
-topic: From data to a guess
-item: Samples and estimators
-kind: definition
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/01-law-of-large-numbers|law-of-large-numbers]]"
-next:
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/02-sample-mean-and-standard-error|sample-mean-and-standard-error]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/04-maximum-likelihood|maximum-likelihood]]"
-tags: [mathematics, probability and statistics, populations-samples-and-estimators]
----
-
 # Samples and estimators: a rule that turns data into a guess, and what makes a guess good
 
-Probability and statistics → Sampling and Estimation → From data to a guess → Samples and estimators
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Sampling and Estimation](../../../SYLLABUS.md#w09-s07) → Samples and estimators
 
 ---
 
@@ -75,7 +58,7 @@ $$\mathrm{bias}(\hat\theta) = E[\hat\theta] - \theta, \qquad \mathrm{noise} = \m
 
 **Read it aloud:** the bias is how far the rule's average guess sits from the truth; the noise is how far a single guess typically strays from the rule's own average.
 
-A rule with zero bias for every possible value of $\theta$ is called **unbiased**. The noise of an estimator has a name of its own, its **standard error**; estimating it from the data alone is the job of [sample-mean-and-standard-error](02-sample-mean-and-standard-error.md). For the poll's share under random sampling, both numbers come out in closed form:
+A rule with zero bias for every possible value of $\theta$ is called **unbiased**. The noise of an estimator has a name of its own, its **standard error**; estimating it from the data alone is the job of [Standard error](02-sample-mean-and-standard-error.md). For the poll's share under random sampling, both numbers come out in closed form:
 
 $$E[\hat p] = p, \qquad \mathrm{SD}(\hat p) = \sqrt{\frac{p(1-p)}{n}}$$
 
@@ -120,15 +103,15 @@ The idea that makes estimation a subject is a change of viewpoint. After the pol
 
 ### Step 1: random sampling produces the iid model
 
-Choose one voter from the electorate at random, every voter equally likely. The chance that the chosen voter says yes is the fraction of yes voters: $p$. That is the whole link between the sample and the population. It says each $X_i$ is 1 with chance $p$ and 0 with chance $1 - p$: the Bernoulli law ([bernoulli-and-binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). If each call is a fresh random choice from the whole electorate, the calls are independent too. The count $K$ then follows the binomial law, written $K \sim \mathrm{Binomial}(n, p)$ and read "K follows the binomial law with n trials and chance p".
+Choose one voter from the electorate at random, every voter equally likely. The chance that the chosen voter says yes is the fraction of yes voters: $p$. That is the whole link between the sample and the population. It says each $X_i$ is 1 with chance $p$ and 0 with chance $1 - p$: the Bernoulli law ([Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). If each call is a fresh random choice from the whole electorate, the calls are independent too. The count $K$ then follows the binomial law, written $K \sim \mathrm{Binomial}(n, p)$ and read "K follows the binomial law with n trials and chance p".
 
 ### Step 2: the sample share aims at the truth
 
-Expectation adds up ([expectation](../02-Random%20Variables/02-expectation.md)). One answer has expectation $0 \times (1 - p) + 1 \times p = p$. So $E[K] = np$, and dividing by $n$ gives $E[\hat p] = p$. The share has no bias, whatever the true $p$. This step needs identical laws but not independence.
+Expectation adds up ([Expectation](../02-Random%20Variables/02-expectation.md)). One answer has expectation $0 \times (1 - p) + 1 \times p = p$. So $E[K] = np$, and dividing by $n$ gives $E[\hat p] = p$. The share has no bias, whatever the true $p$. This step needs identical laws but not independence.
 
 ### Step 3: its noise shrinks like one over the square root of n
 
-One answer has variance $p(1-p)$: here 0.52 × 0.48 = 0.2496. Independent answers have no covariance, so the variances of the $X_i$ add ([variance-and-standard-deviation](../02-Random%20Variables/03-variance-and-standard-deviation.md)): $\mathrm{Var}(K) = np(1-p)$. Dividing $K$ by $n$ divides its variance by $n^2$:
+One answer has variance $p(1-p)$: here 0.52 × 0.48 = 0.2496. Independent answers have no covariance, so the variances of the $X_i$ add ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)): $\mathrm{Var}(K) = np(1-p)$. Dividing $K$ by $n$ divides its variance by $n^2$:
 
 $$\mathrm{Var}(\hat p) = \frac{p(1-p)}{n}$$
 
@@ -142,7 +125,7 @@ The poll is still an honest count of the people it reaches. Steps 2 and 3 now ap
 
 ### Step 5: without replacement, still unbiased and a little less noisy
 
-A real poll never calls the same voter twice, so the draws are not quite independent: once a yes voter is used up, the next call is slightly more likely to reach a no. Take a town of $N = 25$ voters, 13 of them yes (a share of 0.52), and poll 5 without replacement. The checks list all 53,130 possible samples. Every voter appears in exactly 1 sample in 5, so the share still averages 0.52. Its variance is 0.0416 against 0.0499 for independent draws: smaller by the factor $(N - n)/(N - 1)$, which is 20/24 here and 0.999001 for a million voters. The law of the count is the hypergeometric law ([hypergeometric](../03-Discrete%20Distributions/03-hypergeometric.md)).
+A real poll never calls the same voter twice, so the draws are not quite independent: once a yes voter is used up, the next call is slightly more likely to reach a no. Take a town of $N = 25$ voters, 13 of them yes (a share of 0.52), and poll 5 without replacement. The checks list all 53,130 possible samples. Every voter appears in exactly 1 sample in 5, so the share still averages 0.52. Its variance is 0.0416 against 0.0499 for independent draws: smaller by the factor $(N - n)/(N - 1)$, which is 20/24 here and 0.999001 for a million voters. The law of the count is the hypergeometric law ([Hypergeometric](../03-Discrete%20Distributions/03-hypergeometric.md)).
 
 <details>
 <summary>Detailed proof: sampling without replacement</summary>
@@ -163,7 +146,7 @@ With $N = 25$, $n = 5$, $p = 0.52$: 0.2496 / 5 × 20/24 = 0.0416, the number the
 
 ### Step 6: the honest share settles on the truth
 
-As $n$ grows, the noise $\sqrt{p(1-p)/n}$ goes to zero and the bias is already zero. By the law of large numbers ([law-of-large-numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)), the chance that $\hat p$ misses $p$ by any fixed amount goes to zero. An estimator with this property is called **consistent**. The self-selected poll also settles down, but on 0.4745: it is not consistent for $p$.
+As $n$ grows, the noise $\sqrt{p(1-p)/n}$ goes to zero and the bias is already zero. By the law of large numbers ([Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)), the chance that $\hat p$ misses $p$ by any fixed amount goes to zero. An estimator with this property is called **consistent**. The self-selected poll also settles down, but on 0.4745: it is not consistent for $p$.
 
 ### The rate: noise falls, bias stays
 
@@ -179,7 +162,7 @@ xychart-beta
 
 Orange: the noise, $\sqrt{p(1-p)/n}$, the same for the honest and the self-selected poll. Green: the size of the self-selected poll's bias, 0.0455 at every $n$. At 100 voters the noise is still the larger error; by 200 the bias has overtaken it, and from there on more calls buy almost nothing.
 
-The share is not the only road to $\hat p$. Asking which value of $p$ makes 520 yeses in 1,000 most probable gives the same 0.52; that road, which works for any model, is [maximum-likelihood](04-maximum-likelihood.md).
+The share is not the only road to $\hat p$. Asking which value of $p$ makes 520 yeses in 1,000 most probable gives the same 0.52; that road, which works for any model, is [Maximum likelihood](04-maximum-likelihood.md).
 
 ---
 
@@ -212,7 +195,7 @@ Any rule is an estimator, good or bad. The checks run four rules, and the self-s
 | $(K + 1)/(n + 2)$ | 0.519960 | −0.00004 | 0.01577 | yes |
 | the self-selected poll's share | 0.474453 | −0.0455 | 0.0158 | no: it settles on 0.4745 |
 
-The first voter's answer is unbiased, and useless: a single 0 or 1. The constant has no noise, and learns nothing. The rule $(K+1)/(n+2)$, which adds one imaginary yes and one imaginary no, is slightly biased and slightly less noisy than the share. Whether that trade is worth it is the subject of [bias-variance-and-mean-squared-error](06-bias-variance-and-mean-squared-error.md).
+The first voter's answer is unbiased, and useless: a single 0 or 1. The constant has no noise, and learns nothing. The rule $(K+1)/(n+2)$, which adds one imaginary yes and one imaginary no, is slightly biased and slightly less noisy than the share. Whether that trade is worth it is the subject of [Bias and variance](06-bias-variance-and-mean-squared-error.md).
 
 ### What breaks if you drop a piece
 
@@ -699,7 +682,7 @@ The two outputs match line for line.
 - **Election polls.** The *Literary Digest* poll of 1936 mailed millions of ballots drawn largely from car and telephone lists, got enormous numbers back, and called the election for the loser; the lesson is Step 4, a precise count of the wrong population.
 - **Quality control.** A factory tests a sample of a day's output for defects and uses the defect share as an estimate for the whole day; the sample must be drawn across the whole shift, not from the last hour.
 - **Clinical trials.** Patients are assigned to treatment at random so that the difference in recovery rates estimates the effect without bias; volunteers who pick their own arm would bias it, as the self-selected poll does.
-- **Simulation.** A Monte Carlo price in finance is a sample share or sample average used as an estimator, quoted with its standard error ([bootstrap](08-bootstrap.md) resamples the data itself to find that error).
+- **Simulation.** A Monte Carlo price in finance is a sample share or sample average used as an estimator, quoted with its standard error ([Bootstrap](08-bootstrap.md) resamples the data itself to find that error).
 
 > **Say it back**
 > A population number, like the electorate's yes share, is fixed and unknown; a sample is a random selection from the population; an estimator is a rule that turns the sample into a guess. Because the sample is random, the guess is a random variable, judged by where it centres and how much it scatters. The bias is the gap between its average guess and the truth; the noise, or standard error, is its typical stray from that average. Under random sampling the poll's share has no bias and noise $\sqrt{p(1-p)/n}$: 0.0158 for 1,000 voters. A larger sample shrinks the noise but never the bias, which comes from how the sample was drawn.
@@ -708,14 +691,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [law-of-large-numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): why a sample average settles on its target, which makes an unbiased share consistent.
+- [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): why a sample average settles on its target, which makes an unbiased share consistent.
 
 ## Where this goes next
 
-- [sample-mean-and-standard-error](02-sample-mean-and-standard-error.md): the noise of any sample average, and how to estimate it from the sample when $p$ is unknown.
-- [maximum-likelihood](04-maximum-likelihood.md): a general recipe for building estimators, which returns the share for the poll.
+- [Standard error](02-sample-mean-and-standard-error.md): the noise of any sample average, and how to estimate it from the sample when $p$ is unknown.
+- [Maximum likelihood](04-maximum-likelihood.md): a general recipe for building estimators, which returns the share for the poll.
 
-This card judged the share with the true $p$ in hand; a real pollster has only the 520 yeses. How to put an honest error bar on 0.52 using the sample alone is [sample-mean-and-standard-error](02-sample-mean-and-standard-error.md).
+This card judged the share with the true $p$ in hand; a real pollster has only the 520 yeses. How to put an honest error bar on 0.52 using the sample alone is [Standard error](02-sample-mean-and-standard-error.md).
 
 ---
 

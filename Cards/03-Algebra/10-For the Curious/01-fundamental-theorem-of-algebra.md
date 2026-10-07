@@ -1,31 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: For the Curious
-topic: Roots off the real line
-item: The fundamental theorem of algebra
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/02-Polynomials/03-quadratic-formula|quadratic-formula]]"
-  - "[[Cards/03-Algebra/02-Polynomials/05-roots-and-the-factor-theorem|roots-and-the-factor-theorem]]"
-  - "[[Cards/01-Foundations/02-The Number Line/03-irrational-numbers|irrational-numbers]]"
-next:
-  - "[[Cards/03-Algebra/10-For the Curious/03-gaussian-integers-and-sums-of-two-squares|gaussian-integers-and-sums-of-two-squares]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/01-complex-numbers|complex-numbers]]"
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/07-liouville-and-the-fundamental-theorem-of-algebra|liouville-and-the-fundamental-theorem-of-algebra]]"
-  - "[[Cards/17-Topology/05-Homology/07-homology-of-spheres-and-degree|homology-of-spheres-and-degree]]"
-  - "[[Cards/21-Algebraic and analytic number theory/05-Fields and Galois Theory/03-splitting-fields-and-algebraic-closure|splitting-fields-and-algebraic-closure]]"
-tags:
-  - mathematics
-  - algebra
-  - fundamental-theorem-of-algebra
----
-
 # The fundamental theorem of algebra: allow one new number whose square is -1 and every degree-n polynomial has exactly n roots
 
-Algebra → For the Curious → Roots off the real line → The fundamental theorem of algebra
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [For the Curious](../../../SYLLABUS.md#w03-s10) → The fundamental theorem of algebra
 
 ---
 
@@ -33,15 +8,15 @@ Algebra → For the Curious → Roots off the real line → The fundamental theo
 
 A football is kicked straight up at 20 metres a second. Its height t seconds later is 20t - 5t^2 metres, peaking at 20.00 metres two seconds in.
 
-Ask when it is 25 metres up. Set the height to 25: 5t^2 - 20t + 25 = 0. The quadratic formula starts with the discriminant, the number under the square root sign ([quadratic-formula](../02-Polynomials/03-quadratic-formula.md)): (-20)^2 - 4 × 5 × 25, or -100. Nothing ordinary squares to a negative, so the formula stops, rightly: the ball never gets there.
+Ask when it is 25 metres up. Set the height to 25: 5t^2 - 20t + 25 = 0. The quadratic formula starts with the discriminant, the number under the square root sign ([The quadratic formula](../02-Polynomials/03-quadratic-formula.md)): (-20)^2 - 4 × 5 × 25, or -100. Nothing ordinary squares to a negative, so the formula stops, rightly: the ball never gets there.
 
 Now allow one new number, written i, with one rule: i multiplied by itself is -1. The square root of -100 becomes 10i, the formula finishes, and two answers appear: 2 + i and 2 - i. No clock shows those readings: the algebra is completing a factorisation, not naming a moment. Multiply (t - 2 - i)(t - 2 + i) and every i cancels, leaving t^2 - 4t + 5.
 
-The reach is the surprise. The factor theorem gave a ceiling: degree n allows at most n roots, one bracket each ([roots-and-the-factor-theorem](../02-Polynomials/05-roots-and-the-factor-theorem.md)). Admit i and the ceiling becomes the count.
+The reach is the surprise. The factor theorem gave a ceiling: degree n allows at most n roots, one bracket each ([Roots and factors](../02-Polynomials/05-roots-and-the-factor-theorem.md)). Admit i and the ceiling becomes the count.
 
 **Allow one number whose square is -1 and no polynomial of degree 1 or more lacks roots again: degree n gives exactly n roots, counted with repeats, and n brackets, one per root.**
 
-**What kind of fact this is:** a theorem. The step from one root to the full factorisation is proved below; the existence of that first root is stated here and proved on [liouville-and-the-fundamental-theorem-of-algebra](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md).
+**What kind of fact this is:** a theorem. The step from one root to the full factorisation is proved below; the existence of that first root is stated here and proved on [Liouville's theorem](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md).
 
 ### The picture: the arc and the 25 metre line
 
@@ -89,7 +64,7 @@ $$P(x) = a_n (x - r_1)(x - r_2) \ldots (x - r_n)$$
 - **Degree at least 1.** A constant such as 7 is never 0, so it has no root.
 - **Complex roots allowed.** On the real line 5t^2 - 20t + 25 has none; the check scans 41 candidate times, lowest value 5.00.
 - **Repeats counted.** x^2 - 2x + 1 is (x - 1)(x - 1): two brackets, one distinct root, of **multiplicity** 2.
-- **No recipe.** Existence is all that is promised, and past degree 4 no formula built from the coefficients with arithmetic and roots exists: [why-no-quintic-formula](02-why-no-quintic-formula.md).
+- **No recipe.** Existence is all that is promised, and past degree 4 no formula built from the coefficients with arithmetic and roots exists: [Why there is no quintic formula](02-why-no-quintic-formula.md).
 
 ---
 
@@ -101,11 +76,11 @@ The hard content is one sentence: **every polynomial of degree at least 1 with c
 
 The shape of one argument, with a + bi drawn as the point (a, b) on a plane: on a large circle of inputs the outputs trace a loop that wraps around zero n times, since the highest power dominates; shrink the circle and the loop shrinks to the constant term, wrapping none. Going from n wraps to none means crossing zero, so some input is a root.
 
-That count is made exact on homology-of-spheres-and-degree; the shorter route is [liouville-and-the-fundamental-theorem-of-algebra](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md). Granted, the rest is bookkeeping.
+That count is made exact on Homology of spheres, and degree; the shorter route is [Liouville's theorem](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md). Granted, the rest is bookkeeping.
 
 ### Step 1: one root buys one bracket
 
-If r is a root, x - r divides the polynomial exactly and leaves a degree one lower ([roots-and-the-factor-theorem](../02-Polynomials/05-roots-and-the-factor-theorem.md)). Pure algebra: division runs the same whether the coefficients carry an i or not.
+If r is a root, x - r divides the polynomial exactly and leaves a degree one lower ([Roots and factors](../02-Polynomials/05-roots-and-the-factor-theorem.md)). Pure algebra: division runs the same whether the coefficients carry an i or not.
 
 ### Step 2: peel until nothing is left
 
@@ -126,7 +101,7 @@ Induction on the degree, one root granted.
 
 ### Step 3: why "exactly n" and not "at most n"
 
-The factor theorem gives at most n: every root is on the list. Step 0 gives at least n: the list is as long as the degree. And roots that look real were complex all along: the cubic x^3 - 6x^2 + 11x - 6 has 1, 2 and 3, three numbers whose b is 0, in three brackets ([roots-and-the-factor-theorem](../02-Polynomials/05-roots-and-the-factor-theorem.md)).
+The factor theorem gives at most n: every root is on the list. Step 0 gives at least n: the list is as long as the degree. And roots that look real were complex all along: the cubic x^3 - 6x^2 + 11x - 6 has 1, 2 and 3, three numbers whose b is 0, in three brackets ([Roots and factors](../02-Polynomials/05-roots-and-the-factor-theorem.md)).
 
 ### Step 4: the ball, all the way through
 
@@ -398,8 +373,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Control engineering.** Whether a circuit or a cruise control settles or oscillates is read off the roots of a polynomial: a non-zero i part means oscillation.
-- **Eigenvalues.** The eigenvalues of an n by n matrix are the roots of a degree-n polynomial ([eigenvalues-and-eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)): n of them, counted with repeats.
-- **Whole-number questions.** Which whole numbers are a sum of two squares is settled by factoring inside the complex numbers: [gaussian-integers-and-sums-of-two-squares](03-gaussian-integers-and-sums-of-two-squares.md).
+- **Eigenvalues.** The eigenvalues of an n by n matrix are the roots of a degree-n polynomial ([Eigenvalues and eigenvectors](../07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)): n of them, counted with repeats.
+- **Whole-number questions.** Which whole numbers are a sum of two squares is settled by factoring inside the complex numbers: [Gaussian integers](03-gaussian-integers-and-sums-of-two-squares.md).
 
 > **Say it back**
 > A football kicked at 20 metres a second never reaches 25, so 5t^2 - 20t + 25 = 0 has no answer on a stopwatch: its discriminant is -100. Admit i, whose square is -1, and the answers are 2 + i and 2 - i; multiply their brackets back and the i cancels. This always happens: one complex root exists, and peeling one bracket per root leaves exactly n brackets, repeats included.
@@ -408,19 +383,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [quadratic-formula](../02-Polynomials/03-quadratic-formula.md): the discriminant, and the completed square giving (t - 2)^2 = -1.
-- [roots-and-the-factor-theorem](../02-Polynomials/05-roots-and-the-factor-theorem.md): one root gives one bracket, so degree n allows at most n roots.
-- [irrational-numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md): the earlier time the number system had to grow.
+- [The quadratic formula](../02-Polynomials/03-quadratic-formula.md): the discriminant, and the completed square giving (t - 2)^2 = -1.
+- [Roots and factors](../02-Polynomials/05-roots-and-the-factor-theorem.md): one root gives one bracket, so degree n allows at most n roots.
+- [Irrational numbers](../../01-Foundations/02-The%20Number%20Line/03-irrational-numbers.md): the earlier time the number system had to grow.
 
 ## Where this goes next
 
-- [gaussian-integers-and-sums-of-two-squares](03-gaussian-integers-and-sums-of-two-squares.md): whole numbers a + bi, with their own primes.
-- [complex-numbers](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/01-complex-numbers.md): a + bi as a point on a plane.
-- [liouville-and-the-fundamental-theorem-of-algebra](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md): the missing existence proof.
-- homology-of-spheres-and-degree: the wrap count of Step 0, made into a tool.
-- splitting-fields-and-algebraic-closure: the property stated above has a name there, **algebraically closed**.
+- [Gaussian integers](03-gaussian-integers-and-sums-of-two-squares.md): whole numbers a + bi, with their own primes.
+- [Complex numbers](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/01-complex-numbers.md): a + bi as a point on a plane.
+- [Liouville's theorem](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md): the missing existence proof.
+- Homology of spheres, and degree: the wrap count of Step 0, made into a tool.
+- Splitting fields: the property stated above has a name there, **algebraically closed**.
 
-The n roots exist; finding them is another matter — [why-no-quintic-formula](02-why-no-quintic-formula.md).
+The n roots exist; finding them is another matter — [Why there is no quintic formula](02-why-no-quintic-formula.md).
 
 ---
 

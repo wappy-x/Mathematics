@@ -1,26 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Generators, Densities and Simulation
-topic: Averaging back from the payoff
-item: Kolmogorov backward equation
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/01-infinitesimal-generator|infinitesimal-generator]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/06-feynman-kac-formula|feynman-kac-formula]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/03-the-heat-equation|the-heat-equation]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/03-fokker-planck-forward-equation|fokker-planck-forward-equation]]"
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/08-feller-semigroups-and-markov-processes|feller-semigroups-and-markov-processes]]"
-  - "[[Cards/19-Partial differential equations/03-The Heat Equation in Depth/08-feynman-kac-and-the-kolmogorov-equations|feynman-kac-and-the-kolmogorov-equations]]"
-tags: [mathematics, stochastic processes and calculus, kolmogorov-backward-equation]
----
-
 # Kolmogorov backward equation: how an expectation depends on the starting point
 
-Stochastic processes and calculus → Generators, Densities and Simulation → Averaging back from the payoff → Kolmogorov backward equation
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Generators, Densities and Simulation](../../../SYLLABUS.md#w11-s08) → Kolmogorov backward equation
 
 ---
 
@@ -55,7 +35,7 @@ Orange: one year to go. Green: a quarter of a year to go. Dark blue: the payoff 
 
 ## The formula
 
-Notation first, in words. Time is in years. The share price at time $t$ is $X_t$, a stochastic process (the value at time t, one run of it a sample path). $W_t$ is Brownian motion, the random walk seen from far away. In $dX_t = \mu\,dt + \sigma\,dW_t$ the last piece is shorthand for an Ito integral, never a derivative, because the path has none. The generator $L$ is the process's instantaneous average rate of change ([infinitesimal-generator](01-infinitesimal-generator.md)): for this process it sends a smooth function $g$ to $\mu\, g' + \tfrac12 \sigma^2 g''$. A partial derivative such as $\partial_t u$ is the rate of change of $u$ as $t$ moves with the price held still; $\partial_{xx} u$ is the bend of $u$ in the price.
+Notation first, in words. Time is in years. The share price at time $t$ is $X_t$, a stochastic process (the value at time t, one run of it a sample path). $W_t$ is Brownian motion, the random walk seen from far away. In $dX_t = \mu\,dt + \sigma\,dW_t$ the last piece is shorthand for an Ito integral, never a derivative, because the path has none. The generator $L$ is the process's instantaneous average rate of change ([The generator](01-infinitesimal-generator.md)): for this process it sends a smooth function $g$ to $\mu\, g' + \tfrac12 \sigma^2 g''$. A partial derivative such as $\partial_t u$ is the rate of change of $u$ as $t$ moves with the price held still; $\partial_{xx} u$ is the bend of $u$ in the price.
 
 The payoff rule is $f$, paid on the payment date $T$; here $f(y) = \max(y - K, 0)$ with strike $K$ = $100. The quantity on this card is the expected payoff seen from price $x$ at time $t$:
 
@@ -141,7 +121,7 @@ Move $u(t + h, x)$ across and divide by $h$: minus the clock rate equals $L u$. 
 
 ### Step 3: the same fact, read as a martingale
 
-The process $M_t = u(t, X_t)$ is the best forecast of the payoff given what is known at time $t$: $M_t = E[f(X_T) \mid F_t]$, conditioning on everything known by time $t$. By the tower rule it is a martingale, a fair game whose best forecast of tomorrow is today. Ito's lemma ([itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md)) writes its change as
+The process $M_t = u(t, X_t)$ is the best forecast of the payoff given what is known at time $t$: $M_t = E[f(X_T) \mid F_t]$, conditioning on everything known by time $t$. By the tower rule it is a martingale, a fair game whose best forecast of tomorrow is today. Ito's lemma ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)) writes its change as
 
 $$dM_t = \big(\partial_t u + L u\big)(t, X_t)\,dt + \sigma\,\partial_x u(t, X_t)\,dW_t .$$
 
@@ -149,7 +129,7 @@ A martingale cannot carry a steady drift in time, so the bracket must vanish whe
 
 ### Step 4: solve it for Brownian motion
 
-In time to go, with $\mu = 0$, the equation reads $\partial_\tau u = \tfrac12\sigma^2\,\partial_{xx} u$. That is the heat equation ([the-heat-equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md)) with diffusivity $\tfrac12\sigma^2$, 200 square dollars per year here. Its solution from an initial profile $f$ is the average of $f$ over a bell curve of spread $\sigma\sqrt{\tau}$ centred on $x$. That is exactly $E[f(x + \sigma W_\tau)]$, since $W_\tau$ is normal with variance $\tau$. The heat equation and Brownian expectation are one object written two ways.
+In time to go, with $\mu = 0$, the equation reads $\partial_\tau u = \tfrac12\sigma^2\,\partial_{xx} u$. That is the heat equation ([The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md)) with diffusivity $\tfrac12\sigma^2$, 200 square dollars per year here. Its solution from an initial profile $f$ is the average of $f$ over a bell curve of spread $\sigma\sqrt{\tau}$ centred on $x$. That is exactly $E[f(x + \sigma W_\tau)]$, since $W_\tau$ is normal with variance $\tau$. The heat equation and Brownian expectation are one object written two ways.
 
 For the call, split the payoff into the part above the strike and evaluate the two halves.
 
@@ -164,7 +144,7 @@ The first piece uses the bell curve's symmetry: the area to the right of $-d$ is
 
 ### Step 5: any diffusion, the house rate
 
-The shelf's house example is the interest rate $r_t$ of [ornstein-uhlenbeck-and-cir-processes](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md), pulled toward 0.04 at speed 0.5 per year with noise 0.02. Its generator is $L g = \kappa(\theta - x)\, g' + \tfrac12\sigma^2 g''$. The backward equation in time to go is $\partial_\tau u = \kappa(\theta - x)\,\partial_x u + \tfrac12\sigma^2\,\partial_{xx} u$.
+The shelf's house example is the interest rate $r_t$ of [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md), pulled toward 0.04 at speed 0.5 per year with noise 0.02. Its generator is $L g = \kappa(\theta - x)\, g' + \tfrac12\sigma^2 g''$. The backward equation in time to go is $\partial_\tau u = \kappa(\theta - x)\,\partial_x u + \tfrac12\sigma^2\,\partial_{xx} u$.
 
 Try $u(\tau, x) = \theta + (x - \theta)e^{-\kappa\tau}$, the expected rate. Its $\tau$-rate is $-\kappa(x - \theta)e^{-\kappa\tau}$. Its slope in $x$ is $e^{-\kappa\tau}$, so the drift term gives $\kappa(\theta - x)e^{-\kappa\tau}$: the same. Its bend is zero. It solves the equation, and from 0.06 with a year to go it gives 0.052131, about 5.21 percent.
 
@@ -183,7 +163,7 @@ The expected square of the rate brings the noise term in. It is the expected rat
 
 </details>
 
-The equation has a forward twin. The backward one fixes the payoff and lets the start vary. The forward one fixes the start and asks how the density of the price spreads: [fokker-planck-forward-equation](03-fokker-planck-forward-equation.md). Adding discounting or a running reward to the backward equation gives [feynman-kac-formula](../07-Changing%20Measure/06-feynman-kac-formula.md); this card is the case with no discounting.
+The equation has a forward twin. The backward one fixes the payoff and lets the start vary. The forward one fixes the start and asks how the density of the price spreads: [Fokker-Planck](03-fokker-planck-forward-equation.md). Adding discounting or a running reward to the backward equation gives [Feynman-Kac](../07-Changing%20Measure/06-feynman-kac-formula.md); this card is the case with no discounting.
 
 ---
 
@@ -216,7 +196,7 @@ Does the formula solve the equation? Both checks measure the two sides at $100 w
 | Drift sign flipped | $5.726894 (right: $10.726894) | The backward equation carries $+\mu\,\partial_x u$. Its forward twin has the sign the other way, and borrowing it runs the drift backward. |
 | A knock-out at $80 ignored | $7.978846 (right: $7.809032) | A contract cancelled if the share touches $80 has a payoff that depends on the path, not only on the final price; the share itself is still Markov. It needs the boundary condition $u = 0$ at $80; by the reflection principle the right value is $7.978846 minus the value from $60. |
 
-The last row is the dropped-hypothesis case. Both checks reach $7.809032 by the reflection formula ([reflection-principle-and-running-maximum](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)), and the tree with the $80 level made absorbing gives 7.808179 at 1600 steps and 7.808818 at 6400.
+The last row is the dropped-hypothesis case. Both checks reach $7.809032 by the reflection formula ([Reflection principle](../05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)), and the tree with the $80 level made absorbing gives 7.808179 at 1600 steps and 7.808818 at 6400.
 
 ---
 
@@ -593,9 +573,9 @@ The two outputs are identical line for line.
 ## Where you meet it in real life
 
 - **Bachelier's option price.** Louis Bachelier priced options in 1900 with exactly this solution: a price moving as Brownian motion in dollars, not in percent. Desks use the same formula when prices can go negative, as oil futures did in April 2020, and for interest-rate options quoted in "normal" volatility.
-- **Pricing equations in finance.** The Black-Scholes equation is a backward equation with discounting, for a share whose noise is proportional to its price: [black-scholes-equation](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md).
-- **Hitting probabilities.** The chance that a process reaches one level before another solves the backward equation with no clock term, $L u = 0$, with $u$ = 1 at one boundary and 0 at the other: the continuous gambler's ruin, worked for the house rate on [infinitesimal-generator](01-infinitesimal-generator.md).
-- **Value functions.** With a decision added at each instant, the backward equation becomes the dynamic-programming equation of control and reinforcement learning. Stopping at the best moment is the version on [optimal-stopping-and-snell-envelope](07-optimal-stopping-and-snell-envelope.md).
+- **Pricing equations in finance.** The Black-Scholes equation is a backward equation with discounting, for a share whose noise is proportional to its price: [The Black-Scholes equation](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md).
+- **Hitting probabilities.** The chance that a process reaches one level before another solves the backward equation with no clock term, $L u = 0$, with $u$ = 1 at one boundary and 0 at the other: the continuous gambler's ruin, worked for the house rate on [The generator](01-infinitesimal-generator.md).
+- **Value functions.** With a decision added at each instant, the backward equation becomes the dynamic-programming equation of control and reinforcement learning. Stopping at the best moment is the version on [Optimal stopping](07-optimal-stopping-and-snell-envelope.md).
 
 > **Say it back**
 > The expected payoff of a contract depends on where the process starts and how long is left. Today's expectation is the average of the next instant's, and expanding that average with the generator gives a differential equation: clock rate plus generator is zero, with the payoff as the end condition. For Brownian motion it is the heat equation in time to go, solved by averaging the payoff over a bell curve. A share at $100 with $20 of spread a year and a $100 strike is expected to pay $7.98. Drop the Ito term, the one half, or the boundary a barrier needs, and the number is wrong.
@@ -604,15 +584,15 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [infinitesimal-generator](01-infinitesimal-generator.md): the generator $L$, the small-time average rate of change, that Step 2 expands.
-- [feynman-kac-formula](../07-Changing%20Measure/06-feynman-kac-formula.md): the expectation-equals-PDE link with discounting; this card is its undiscounted core, derived from the generator.
-- [the-heat-equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md): the equation and its smoothing; Step 4 shows it is the backward equation of Brownian motion.
+- [The generator](01-infinitesimal-generator.md): the generator $L$, the small-time average rate of change, that Step 2 expands.
+- [Feynman-Kac](../07-Changing%20Measure/06-feynman-kac-formula.md): the expectation-equals-PDE link with discounting; this card is its undiscounted core, derived from the generator.
+- [The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md): the equation and its smoothing; Step 4 shows it is the backward equation of Brownian motion.
 
 ## Where this goes next
 
-- [fokker-planck-forward-equation](03-fokker-planck-forward-equation.md): the forward twin, for the density of the price instead of the expected payoff, with the generator replaced by its adjoint.
-- feller-semigroups-and-markov-processes: the map from payoff to expected payoff as an operator semigroup, with the generator as its derivative.
-- feynman-kac-and-the-kolmogorov-equations: existence, regularity and uniqueness for both Kolmogorov equations, proved with PDE tools.
+- [Fokker-Planck](03-fokker-planck-forward-equation.md): the forward twin, for the density of the price instead of the expected payoff, with the generator replaced by its adjoint.
+- Feller semigroups: the map from payoff to expected payoff as an operator semigroup, with the generator as its derivative.
+- Feynman-Kac: existence, regularity and uniqueness for both Kolmogorov equations, proved with PDE tools.
 
 The backward equation fixes the payoff and lets the start vary; the question left open is how the law of the price itself spreads from a fixed start, which the forward equation answers.
 

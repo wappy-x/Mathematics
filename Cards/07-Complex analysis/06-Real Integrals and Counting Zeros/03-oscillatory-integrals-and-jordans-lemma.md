@@ -1,23 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Real Integrals and Counting Zeros
-topic: Integrals that oscillate
-item: Jordan's lemma
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/06-Real Integrals and Counting Zeros/01-semicircle-contours|semicircle-contours]]"
-next:
-  - "[[Cards/07-Complex analysis/06-Real Integrals and Counting Zeros/04-indented-contours-and-principal-values|indented-contours-and-principal-values]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/03-fourier-transform|fourier-transform]]"
-tags: [mathematics, complex analysis, oscillatory-integrals-and-jordans-lemma]
----
-
 # Jordan's lemma: with an e to the iax factor the big arc still vanishes, so cosine integrals fall to residues
 
-Complex analysis → Real Integrals and Counting Zeros → Integrals that oscillate → Jordan's lemma
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Real Integrals and Counting Zeros](../../../SYLLABUS.md#w07-s06) → Jordan's lemma
 
 ---
 
@@ -25,7 +8,7 @@ Complex analysis → Real Integrals and Counting Zeros → Integrals that oscill
 
 A radio receiver meets a click: a voltage pulse shaped like 1/(1 + x^2), with x the time in microseconds from the peak. A filter tuned to frequency a, in radians per microsecond, measures how much of that tone the click holds: the integral of the pulse times cos(ax) over all time.
 
-At a = 1 that integral is 1.155727. At a = 0 it is π, the area under the pulse, found on [semicircle-contours](01-semicircle-contours.md). In general it is π e^(−|a|): the click's content falls off exponentially with frequency, the same on both sides of zero.
+At a = 1 that integral is 1.155727. At a = 0 it is π, the area under the pulse, found on [The semicircle contour](01-semicircle-contours.md). In general it is π e^(−|a|): the click's content falls off exponentially with frequency, the same on both sides of zero.
 
 Two obstacles block the semicircle method. First, cos z is huge off the real line. The fix is to write cos(ax) as the real part of e^(iax), a wave that shrinks as it rises into the upper half-plane. Second, for a slower-falling partner such as x/(1 + x^2), the length-times-maximum bound no longer kills the arc. Jordan's lemma does: the wave's decay over most of the arc is worth a whole factor of R.
 
@@ -50,7 +33,7 @@ One line: π e^(−|a|), to two decimals. The peak at a = 0 is π, the pulse's a
 
 ## The formula
 
-A reminder from [eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e^(iθ) = cos θ + i sin θ, so on the real line cos(ax) is the real part of e^(iax). Off the line, at z = x + iy, the size of e^(iaz) is e^(−ay): for a > 0 it shrinks as y grows.
+A reminder from [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e^(iθ) = cos θ + i sin θ, so on the real line cos(ax) is the real part of e^(iax). Off the line, at z = x + iy, the size of e^(iaz) is e^(−ay): for a > 0 it shrinks as y grows.
 
 **Jordan's lemma.** Let $a > 0$. Let $C_R$ be the upper half-circle of radius R about 0, and let $M_R$ be the largest size on it of a continuous function g. Then
 
@@ -82,7 +65,7 @@ $$\int_{-\infty}^{\infty} \frac{\cos ax}{1 + x^2}\,dx = \operatorname{Re}\left[2
 - **a > 0, arc above.** For a < 0 the wave grows upward: at a = −1 the upper arc at R = 8 carries 7.354818. Close below, clockwise.
 - **g shrinks on the arc, at any rate.** With g = 1 the arc is −2 sin(aR)/a, which swings for ever: −1.978717 at R = 8, 0.575807 at R = 16.
 - **e^(iax) in the loop, never cos(az).** Take the real part after integrating; this is valid because g is real on the real line.
-- **No pole on the real line.** Otherwise see [indented-contours-and-principal-values](04-indented-contours-and-principal-values.md).
+- **No pole on the real line.** Otherwise see [Poles on the path](04-indented-contours-and-principal-values.md).
 
 ---
 
@@ -94,7 +77,7 @@ cos z = (e^(iz) + e^(−iz))/2. At z = iy the second term is e^(y)/2, enormous f
 
 ### Step 1: close the loop and price it
 
-Close the segment from −R to R with the upper arc, as on [semicircle-contours](01-semicircle-contours.md). For the click, e^(iaz)/(1 + z^2) = e^(iaz)/((z − i)(z + i)). The residue at i is the rest evaluated at i: e^(ia·i)/(2i) = e^(−a)/(2i). At a = 1 that is −0.183940i. The loop is worth 2πi e^(−a)/(2i) = π e^(−a) = 1.155727, for every R > 1.
+Close the segment from −R to R with the upper arc, as on [The semicircle contour](01-semicircle-contours.md). For the click, e^(iaz)/(1 + z^2) = e^(iaz)/((z − i)(z + i)). The residue at i is the rest evaluated at i: e^(ia·i)/(2i) = e^(−a)/(2i). At a = 1 that is −0.183940i. The loop is worth 2πi e^(−a)/(2i) = π e^(−a) = 1.155727, for every R > 1.
 
 ### Step 2: bound the arc, point by point
 
@@ -390,8 +373,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Spectral lines and filters.** A damped oscillation decaying like e^(−|t|) has the bell 1/(1 + x^2) as its spectrum, the Lorentzian line shape of atomic physics. This card runs the pair backwards: a bell-shaped click has exponential content in frequency.
-- **The Fourier transform.** The integral of f(x) e^(iax), for every a at once, is [fourier-transform](../08-Transforms%20in%20Outline/03-fourier-transform.md); Jordan's lemma fills its tables.
-- **sin x / x.** The integral of sin x / x needs this lemma plus a detour round the pole at 0: [indented-contours-and-principal-values](04-indented-contours-and-principal-values.md).
+- **The Fourier transform.** The integral of f(x) e^(iax), for every a at once, is [The Fourier transform](../08-Transforms%20in%20Outline/03-fourier-transform.md); Jordan's lemma fills its tables.
+- **sin x / x.** The integral of sin x / x needs this lemma plus a detour round the pole at 0: [Poles on the path](04-indented-contours-and-principal-values.md).
 
 > **Say it back**
 > The cosine blows up off the real line, so write cos(ax) as the real part of e^(iax), which decays upward when a > 0. Close the real line with the upper arc and price the loop by its residues. Since sin t ≥ 2t/π, the arc is at most π/a times g's largest size there, so any g that shrinks at all loses its arc. For the click 1/(1 + x^2), the content at frequency a is π e^(−|a|), 1.155727 at a = 1.
@@ -400,12 +383,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [semicircle-contours](01-semicircle-contours.md): closing the real line with an upper arc, the ML bound, and the area π under 1/(1 + x^2).
+- [The semicircle contour](01-semicircle-contours.md): closing the real line with an upper arc, the ML bound, and the area π under 1/(1 + x^2).
 
 ## Where this goes next
 
-- [indented-contours-and-principal-values](04-indented-contours-and-principal-values.md): a pole on the real line, as in sin x / x, dodged by a small half-circle.
-- [fourier-transform](../08-Transforms%20in%20Outline/03-fourier-transform.md): the same integral for every frequency, as one function.
+- [Poles on the path](04-indented-contours-and-principal-values.md): a pole on the real line, as in sin x / x, dodged by a small half-circle.
+- [The Fourier transform](../08-Transforms%20in%20Outline/03-fourier-transform.md): the same integral for every frequency, as one function.
 
 For sin x / x the partner e^(iz)/z has its pole at 0, on the path itself; what a contour does then is the open question.
 

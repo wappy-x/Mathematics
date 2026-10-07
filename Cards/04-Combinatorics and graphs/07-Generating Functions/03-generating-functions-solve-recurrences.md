@@ -1,27 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Generating Functions
-topic: From step rule to fraction
-item: Solving a recurrence with a generating function
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/07-Generating Functions/01-ordinary-generating-functions|ordinary-generating-functions]]"
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/04-characteristic-equation-and-binet|characteristic-equation-and-binet]]"
-  - "[[Cards/03-Algebra/02-Polynomials/04-polynomial-division|polynomial-division]]"
-  - "[[Cards/03-Algebra/01-Letters and Equations/04-two-equations-two-unknowns|two-equations-two-unknowns]]"
-next: []
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - generating-functions-solve-recurrences
----
-
 # Solving a recurrence with a generating function: the step rule becomes an equation for the series, and a ratio of polynomials falls out
 
-Combinatorics and graphs → Generating Functions → From step rule to fraction → Solving a recurrence with a generating function
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Generating Functions](../../../SYLLABUS.md#w04-s07) → Solving a recurrence with a generating function
 
 ---
 
@@ -31,7 +10,7 @@ A drum machine holds a bar of 12 beats. Every note is worth one beat or two, and
 
 Nobody counts those by hand. The first note takes one beat, leaving an 11-beat bar, or two, leaving a 10-beat bar. Nothing else can happen, so 12's count is 11's plus 10's — the Fibonacci rule.
 
-A step rule answers one step at a time: asked for position 12 it wants 11 and 10, and those want more. Hang the counts on powers of one letter instead — a generating function ([ordinary-generating-functions](01-ordinary-generating-functions.md)) — and the rule becomes one equation whose only unknown is the series. Solving it gives x / (1 − x − x^2), the Fibonacci series, which holds every count at once: the 12-beat bar's 233 sits on x^13, since Fibonacci opens with a 0 that counts no bar.
+A step rule answers one step at a time: asked for position 12 it wants 11 and 10, and those want more. Hang the counts on powers of one letter instead — a generating function ([Generating functions](01-ordinary-generating-functions.md)) — and the rule becomes one equation whose only unknown is the series. Solving it gives x / (1 − x − x^2), the Fibonacci series, which holds every count at once: the 12-beat bar's 233 sits on x^13, since Fibonacci opens with a 0 that counts no bar.
 
 **Multiply a fixed-weight step rule by the letter raised to the step number, add over every step, and the series solves out as one polynomial over another; splitting that fraction reads off a formula for any term.**
 
@@ -55,7 +34,7 @@ Only the first arrow is new.
 
 ## The formula
 
-One reminder first. A **generating function** hangs the number at position n on x raised to the power n and adds the lot ([ordinary-generating-functions](01-ordinary-generating-functions.md)); the letter takes no value, and "the coefficient of x^n" is the number sitting there. Write the Fibonacci series as $G(x)$, keeping $F$ for its numbers:
+One reminder first. A **generating function** hangs the number at position n on x raised to the power n and adds the lot ([Generating functions](01-ordinary-generating-functions.md)); the letter takes no value, and "the coefficient of x^n" is the number sitting there. Write the Fibonacci series as $G(x)$, keeping $F$ for its numbers:
 
 $$G(x) = F(0) + F(1)x + F(2)x^2 + \cdots = \sum_{n\ge 0} F(n)\,x^n$$
 
@@ -87,12 +66,12 @@ $$1 - x - x^2 = (1 - \varphi x)(1 - \psi x), \qquad \varphi = \frac{1 + \sqrt{5}
 
 $$\frac{x}{(1 - \varphi x)(1 - \psi x)} = \frac{A}{1 - \varphi x} + \frac{B}{1 - \psi x}$$
 
-The two amounts come from matching coefficients: two equations, two unknowns ([two-equations-two-unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
+The two amounts come from matching coefficients: two equations, two unknowns ([Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
 
 ### When it holds
 
 - **Fixed weights, nothing added.** In a(n) = n × a(n−1) the weight changes with the step, so no single equation in the series comes out. Something added each step brings its own series, and the answer stays a ratio only if that series is one.
-- **A bottom starting at 1.** That division never stalls ([polynomial-division](../../03-Algebra/02-Polynomials/04-polynomial-division.md)); a constant term of 0 divides by zero at once.
+- **A bottom starting at 1.** That division never stalls ([Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md)); a constant term of 0 divides by zero at once.
 - **Two different brackets.** 1 − 4x + 4x^2 is one bracket squared, and needs a piece carrying that square: wing 06's work.
 
 ---
@@ -128,7 +107,7 @@ So b(0) = a(0) and b(1) = a(1), and from position 2 on, N contributes nothing an
 
 ### Step 3: factor the bottom
 
-Guess the bottom is (1 − phi·x)(1 − psi·x). Multiplying out gives 1 − (phi + psi)x + (phi × psi)x^2, so the guess needs phi + psi = 1 and phi × psi = −1. A pair with a known sum and product are the roots of r^2 − r − 1 = 0, the same rule's characteristic equation ([characteristic-equation-and-binet](../05-Recurrences/04-characteristic-equation-and-binet.md)): the golden ratio 1.6180339887, and −0.6180339887.
+Guess the bottom is (1 − phi·x)(1 − psi·x). Multiplying out gives 1 − (phi + psi)x + (phi × psi)x^2, so the guess needs phi + psi = 1 and phi × psi = −1. A pair with a known sum and product are the roots of r^2 − r − 1 = 0, the same rule's characteristic equation ([The characteristic equation](../05-Recurrences/04-characteristic-equation-and-binet.md)): the golden ratio 1.6180339887, and −0.6180339887.
 
 ### Step 4: split the fraction
 
@@ -144,7 +123,7 @@ Multiply the right-hand side by 1 − cx: every term is cancelled by the next, l
 
 $$F(n) = A\,\varphi^n + B\,\psi^n = \frac{\varphi^n - \psi^n}{\sqrt{5}}$$
 
-Binet's formula, which [characteristic-equation-and-binet](../05-Recurrences/04-characteristic-equation-and-binet.md) also reaches by guessing geometric sequences. The fraction earns its keep when a rule adds something at each step, or when a sequence arrives as a product of series ([counting-with-generating-functions](02-counting-with-generating-functions.md)).
+Binet's formula, which [The characteristic equation](../05-Recurrences/04-characteristic-equation-and-binet.md) also reaches by guessing geometric sequences. The fraction earns its keep when a rule adds something at each step, or when a sequence arrives as a product of series ([Counting by multiplying series](02-counting-with-generating-functions.md)).
 
 ---
 
@@ -409,17 +388,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [ordinary-generating-functions](01-ordinary-generating-functions.md): what such a series is, and what its coefficients mean.
-- [characteristic-equation-and-binet](../05-Recurrences/04-characteristic-equation-and-binet.md): the same closed form from geometric guesses; its roots are the bracketed rates.
-- [polynomial-division](../../03-Algebra/02-Polynomials/04-polynomial-division.md): why dividing by a polynomial starting at 1 never stalls.
-- [two-equations-two-unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): finding the split's two amounts.
+- [Generating functions](01-ordinary-generating-functions.md): what such a series is, and what its coefficients mean.
+- [The characteristic equation](../05-Recurrences/04-characteristic-equation-and-binet.md): the same closed form from geometric guesses; its roots are the bracketed rates.
+- [Polynomial long division](../../03-Algebra/02-Polynomials/04-polynomial-division.md): why dividing by a polynomial starting at 1 never stalls.
+- [Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): finding the split's two amounts.
 
 ## Where this goes next
 
 The shelf carries on:
 
-- [exponential-generating-functions](04-exponential-generating-functions.md): the same bookkeeping with each term over a factorial, as arrangements need.
-- [catalan-generating-function](05-catalan-generating-function.md): a rule fed by every earlier term, so its equation is quadratic and no such ratio answers it.
+- [Exponential generating functions](04-exponential-generating-functions.md): the same bookkeeping with each term over a factorial, as arrangements need.
+- [The Catalan generating function](05-catalan-generating-function.md): a rule fed by every earlier term, so its equation is quadratic and no such ratio answers it.
 
 Every rule here reached a fixed number of steps back; one that feeds on every earlier term breaks that shape, and the Catalan card answers it.
 

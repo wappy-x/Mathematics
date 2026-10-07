@@ -1,21 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Real Integrals and Counting Zeros
-topic: Comparing on the boundary
-item: Rouche's theorem
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/06-Real Integrals and Counting Zeros/06-the-argument-principle|the-argument-principle]]"
-next: []
-tags: [mathematics, complex analysis, rouches-theorem]
----
-
 # Rouche's theorem: a dog on a short lead circles the post as often as its owner, so small changes never change the root count
 
-Complex analysis → Real Integrals and Counting Zeros → Comparing on the boundary → Rouche's theorem
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Real Integrals and Counting Zeros](../../../SYLLABUS.md#w07-s06) → Rouche's theorem
 
 ---
 
@@ -41,7 +26,7 @@ To scale: 50 units per 1, with 0 at (180, 120); the root inside sits at (163.40,
 
 ## The formula
 
-Reminders. Holomorphic means having a complex derivative at every point of a region. A closed path's winding number round 0 counts its net anticlockwise turns about 0 ([deforming-contours-and-winding-numbers](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md)). The argument principle: a function holomorphic on and inside a loop, with no zero on it, has as many zeros inside as its image of the loop winds round 0 ([the-argument-principle](06-the-argument-principle.md)).
+Reminders. Holomorphic means having a complex derivative at every point of a region. A closed path's winding number round 0 counts its net anticlockwise turns about 0 ([Deforming a loop](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md)). The argument principle: a function holomorphic on and inside a loop, with no zero on it, has as many zeros inside as its image of the loop winds round 0 ([The argument principle](06-the-argument-principle.md)).
 
 Let $f$ and $g$ be holomorphic on and inside a simple closed loop $C$, walked once anticlockwise. Write $N$ for the number of zeros inside $C$, each counted as often as its multiplicity (z^3 has one zero, at 0, counted three times). Then
 
@@ -84,7 +69,7 @@ On the loop |f| > |g| ≥ 0, so f is never 0 there. The reverse triangle inequal
 
 ### Step 2: split the dog into owner times helper
 
-Since f is not 0 on the loop, f + g = f · h there. Multiplying complex numbers adds their angles ([polar-form-and-argument](../01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md)), so round the loop the dog's turns are the owner's turns plus the helper's.
+Since f is not 0 on the loop, f + g = f · h there. Multiplying complex numbers adds their angles ([Polar form](../01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md)), so round the loop the dog's turns are the owner's turns plus the helper's.
 
 ### Step 3: the helper never goes round 0
 
@@ -101,7 +86,7 @@ Let $f$ and $g$ be holomorphic on an open set containing $C$ and its inside, wit
 
 $$\frac{(f+g)'}{f+g} = \frac{f'}{f} + \frac{h'}{h}.$$
 
-On $C$, and by continuity on a thinner neighbourhood of it, $h$ takes values in the right half-plane. There the principal logarithm Log, built from ln|w| and the principal argument, is holomorphic with derivative 1/w, so Log h has derivative h'/h near $C$. A derivative integrates to 0 round a closed loop ([antiderivatives-and-path-independence](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md)), so the h'/h term contributes 0. Dividing by 2πi, the argument principle's integral gives N(f + g) = N(f) + 0.
+On $C$, and by continuity on a thinner neighbourhood of it, $h$ takes values in the right half-plane. There the principal logarithm Log, built from ln|w| and the principal argument, is holomorphic with derivative 1/w, so Log h has derivative h'/h near $C$. A derivative integrates to 0 round a closed loop ([Antiderivatives](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md)), so the h'/h term contributes 0. Dividing by 2πi, the argument principle's integral gives N(f + g) = N(f) + 0.
 
 </details>
 
@@ -115,7 +100,7 @@ On radius 2, take f = z^5 and g = 3z + 1: |g| ≤ 7 < 32 = |f|. The owner has fi
 
 Let $p$ be z^n + a_(n−1) z^(n−1) + … + a_0, with the coefficients $a_k$, and let A be the sum of their sizes |a_k|. On a circle of radius $R$ greater than both 1 and A, the lower terms have size at most A R^(n−1) < R^n = |z^n|. So $p$ has as many zeros inside as z^n: all $n$ of them.
 
-For the quintic A = 4, so radius 5 suffices; Step 5 did better. [liouville-and-the-fundamental-theorem-of-algebra](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md) proves a root exists by another road; Rouché adds the count and a disc holding them.
+For the quintic A = 4, so radius 5 suffices; Step 5 did better. [Liouville's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/07-liouville-and-the-fundamental-theorem-of-algebra.md) proves a root exists by another road; Rouché adds the count and a disc holding them.
 
 A second proof deforms instead of dividing: f + t g, for t from 0 to 1, never vanishes on the loop, so its zero count varies continuously with t, and a whole number that varies continuously cannot move.
 
@@ -373,7 +358,7 @@ The two outputs match line for line.
 
 - **Control systems.** A feedback loop is stable when its characteristic polynomial has no roots in the right half-plane; Rouché shows small gain changes keep that count, and the Nyquist criterion is the argument principle at work.
 - **Numerical root finding.** Before the hunt, a comparison on a circle says how many roots to seek and where: all five of z^5 + 3z + 1 within radius 2.
-- **Inverse transforms.** The poles of a Laplace transform decide whether a response dies away; [inverse-laplace-by-residues](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md) reads each one as an exponential.
+- **Inverse transforms.** The poles of a Laplace transform decide whether a response dies away; [Inverting a Laplace transform](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md) reads each one as an exponential.
 
 > **Say it back**
 > A dog on a lead shorter than its owner's distance to a post goes round the post as often as she does. If |g| < |f| at every point of a loop, the ratio 1 + g/f stays in the right half-plane and never turns round 0. So f + g winds round 0 as often as f, and by the argument principle has as many zeros inside. So z^5 + 3z + 1 has one root inside the unit circle and all five inside radius 2.
@@ -382,12 +367,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [the-argument-principle](06-the-argument-principle.md): zeros inside a loop equal the image's winding number.
+- [The argument principle](06-the-argument-principle.md): zeros inside a loop equal the image's winding number.
 
 ## Where this goes next
 
-- [inverse-laplace-by-residues](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md): where poles lie decides whether a system settles, the question root counts answer.
-- [zeros-of-zeta-and-the-primes](../09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md): counting zeros in a region, for a function with infinitely many.
+- [Inverting a Laplace transform](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md): where poles lie decides whether a system settles, the question root counts answer.
+- [Zeta's zeros and the primes](../09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md): counting zeros in a region, for a function with infinitely many.
 
 ---
 

@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Signals, Mean Reversion and Backtesting
-topic: Grading a stock forecast
-item: The fundamental law
-kind: approximation
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/03-momentum-and-factor-signals|momentum-and-factor-signals]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/04-joint-distributions-and-covariance|joint-distributions-and-covariance]]"
-next:
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/05-backtesting-pitfalls|backtesting-pitfalls]]"
-tags: [mathematics, financial-mathematics, information-coefficient-and-the-fundamental-law]
----
-
 # The fundamental law: skill times breadth, and the information coefficient that measures skill
 
-Financial mathematics → Signals, Mean Reversion and Backtesting → Grading a stock forecast → The fundamental law
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Signals, Mean Reversion and Backtesting](../../../SYLLABUS.md#w12-s50) → The fundamental law
 
 ---
 
@@ -86,7 +69,7 @@ $$\mathrm{IR} \;=\; \frac{\mathrm{E}[A]}{\sigma_A}$$
 | $h_i$ | active weight: the fund's weight in stock i minus the index's | in proportion to $\alpha_i$ | — |
 | $A$, $\sigma_A$ | active return, and its standard deviation (active risk) | 4.47% expected at 4% risk | — |
 | $\mathrm{TC}$ | transfer coefficient: how faithfully the weights follow the forecasts | 1 unconstrained, 0.80 for a half-and-half sort | IR rises in proportion |
-| $\mathrm{E}[\cdot]$, $\mathrm{Var}(\cdot)$ | expected value and variance, as on [joint-distributions-and-covariance](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md) | — | — |
+| $\mathrm{E}[\cdot]$, $\mathrm{Var}(\cdot)$ | expected value and variance, as on [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md) | — | — |
 
 ### When it holds
 
@@ -106,7 +89,7 @@ Take 500 bets. Each has a small expected gain and a lot of noise. Put the same s
 
 ### Step 1: turn a score into a forecast
 
-A score says "better" or "worse". A portfolio needs a forecast in percent. The best straight-line forecast of one quantity from another has slope covariance over variance (the regression slope; covariance is on [joint-distributions-and-covariance](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)).
+A score says "better" or "worse". A portfolio needs a forecast in percent. The best straight-line forecast of one quantity from another has slope covariance over variance (the regression slope; covariance is on [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)).
 
 A correlation is a covariance divided by both standard deviations. So the covariance of score and residual return is IC × 1 × ω, the score's spread being 1. The score's variance is 1. The slope is IC × ω, and the forecast is
 
@@ -163,7 +146,7 @@ Nothing above used a bell curve. To see that, rebuild the model from coins. Each
 
 With weights equal to the scores, the active return is IC × 500 plus $\sqrt{1-\mathrm{IC}^2}$ times a sum of 500 fair coins. That sum takes 501 possible values, with binomial chances. The check adds up all 501, exactly, and lands on 1.119434, the exact model value. It also counts the chance that the active return comes out negative: 13.2 percent. A fund with this skill loses to its index in about 13 years out of 100.
 
-Grinold's own route, and its extensions to many factors and to skill that changes over time, are in the sources. What the law hides when IC itself is estimated from a backtest is the job of [backtesting-pitfalls](05-backtesting-pitfalls.md) and [deflated-sharpe-and-multiple-testing](06-deflated-sharpe-and-multiple-testing.md).
+Grinold's own route, and its extensions to many factors and to skill that changes over time, are in the sources. What the law hides when IC itself is estimated from a backtest is the job of [Backtesting](05-backtesting-pitfalls.md) and [Trying many strategies](06-deflated-sharpe-and-multiple-testing.md).
 
 ---
 
@@ -627,9 +610,9 @@ The two outputs agree line for line, the simulated rows included, since both pro
 
 ## Where you meet it in real life
 
-- **Quantitative equity funds.** Research teams report a candidate signal's IC month by month, and its average and spread, before anyone asks about returns. The IC of a momentum score is the first number reported on [momentum-and-factor-signals](03-momentum-and-factor-signals.md).
+- **Quantitative equity funds.** Research teams report a candidate signal's IC month by month, and its average and spread, before anyone asks about returns. The IC of a momentum score is the first number reported on [Momentum and factor signals](03-momentum-and-factor-signals.md).
 - **Hiring and firing managers.** Consultants and funds of funds rank managers by realised information ratio. The law explains why a stock picker with a few concentrated positions needs far more skill than a quant with 500 small ones to reach the same IR.
-- **Statistical arbitrage.** Pairs desks run hundreds of small, roughly independent trades, each with a thin edge, and rely on breadth to smooth the result: [pairs-trading-and-cointegration](02-pairs-trading-and-cointegration.md).
+- **Statistical arbitrage.** Pairs desks run hundreds of small, roughly independent trades, each with a thin edge, and rely on breadth to smooth the result: [Pairs trading](02-pairs-trading-and-cointegration.md).
 - **Long-only mandates.** A fund barred from shorting cannot underweight a stock by more than its index weight, so most negative forecasts go unused. The transfer coefficient measures the loss; for many long-only funds it sits well below 1.
 - **Market timing.** One call a year on whether the whole market rises has breadth 1. To match IR 1.118 the law asks for IC 1.118, more than any correlation can be. The exact form asks for IC 0.75: a direction call right about three times in four. That arithmetic is the argument for picking many stocks over timing one market.
 
@@ -640,12 +623,12 @@ The two outputs agree line for line, the simulated rows included, since both pro
 
 ## What this builds on
 
-- [momentum-and-factor-signals](03-momentum-and-factor-signals.md): what a cross-sectional score is and how a signal ranks stocks; this card grades such a score.
-- [joint-distributions-and-covariance](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md): covariance, correlation, and why independent variances add, which is Step 0 and Step 3.
+- [Momentum and factor signals](03-momentum-and-factor-signals.md): what a cross-sectional score is and how a signal ranks stocks; this card grades such a score.
+- [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md): covariance, correlation, and why independent variances add, which is Step 0 and Step 3.
 
 ## Where this goes next
 
-- [backtesting-pitfalls](05-backtesting-pitfalls.md): how an IC measured on history gets inflated by look-ahead, survivorship and costs, before the law is ever applied.
+- [Backtesting](05-backtesting-pitfalls.md): how an IC measured on history gets inflated by look-ahead, survivorship and costs, before the law is ever applied.
 
 The law turns an IC into a ratio, but it takes the IC as given; what remains open is whether an IC measured on past data is real, which is the question backtesting has to answer.
 

@@ -1,25 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Systems and the Matrix Exponential
-topic: Sorting resting states
-item: Trace and determinant
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/03-complex-eigenvalues-and-spirals|complex-eigenvalues-and-spirals]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/04-determinants|determinants]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/02-linearisation-and-the-jacobian|linearisation-and-the-jacobian]]"
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/05-hurwitz-schur-and-lyapunov-stability|hurwitz-schur-and-lyapunov-stability]]"
-  - "[[Cards/13-Engineering mathematics/07-Mechanics and Structures/05-vehicle-equations-of-motion|vehicle-equations-of-motion]]"
-tags: [mathematics, differential equations and dynamics, classifying-equilibria-by-trace-and-determinant]
----
-
 # Trace and determinant: two numbers sort every planar linear system into node, saddle, spiral or centre
 
-Differential equations and dynamics → Systems and the Matrix Exponential → Sorting resting states → Trace and determinant
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Systems and the Matrix Exponential](../../../SYLLABUS.md#w08-s04) → Trace and determinant
 
 ---
 
@@ -45,7 +26,7 @@ To scale: 30 units across per unit of trace, 24 up per unit of determinant. The 
 
 ## The formula
 
-Reminder: x' = Ax says "the rate of the state x is the matrix A times the state" ([from-one-equation-to-a-system](01-from-one-equation-to-a-system.md)). Here A has entries `[[a, b], [c, d]]`, row by row. The Greek letter $\tau$ (tau) names the trace, $\Delta$ (capital delta) the determinant.
+Reminder: x' = Ax says "the rate of the state x is the matrix A times the state" ([From one equation to a system](01-from-one-equation-to-a-system.md)). Here A has entries `[[a, b], [c, d]]`, row by row. The Greek letter $\tau$ (tau) names the trace, $\Delta$ (capital delta) the determinant.
 
 $$\tau = a + d, \qquad \Delta = ad - bc, \qquad \lambda^2 - \tau\lambda + \Delta = 0$$
 
@@ -71,9 +52,9 @@ The chart reads: Δ < 0, a **saddle**, unstable. Δ > 0 with a discriminant of a
 ### When it holds
 
 - **Constant entries.** With time-varying ones, frozen-time eigenvalues can all be negative while the motion grows.
-- **Two variables.** With three or more, the Routh–Hurwitz test in hurwitz-schur-and-lyapunov-stability takes over.
+- **Two variables.** With three or more, the Routh–Hurwitz test in Stability of a state-space model takes over.
 - **Off the boundary lines.** On Δ = 0 a whole line of states sits still; on the parabola the eigenvalues repeat and the portrait changes shape.
-- **Nonlinear systems** borrow the verdict from their linear part, except at a centre ([linearisation-and-the-jacobian](../06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md)).
+- **Nonlinear systems** borrow the verdict from their linear part, except at a centre ([Linearisation](../06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md)).
 
 ---
 
@@ -81,7 +62,7 @@ The chart reads: Δ < 0, a **saddle**, unstable. Δ > 0 with a discriminant of a
 
 ### Step 0: eigenvalues decide the motion, and two numbers decide the eigenvalues
 
-Every solution of x' = Ax is built from special motions changing like e^(λt), one per eigenvalue ([the-eigenvalue-method](02-the-eigenvalue-method.md)). A negative real part dies out, a positive one grows, an imaginary part turns. A pair of numbers is fixed by its sum and product.
+Every solution of x' = Ax is built from special motions changing like e^(λt), one per eigenvalue ([The eigenvalue method](02-the-eigenvalue-method.md)). A negative real part dies out, a positive one grows, an imaginary part turns. A pair of numbers is fixed by its sum and product.
 
 ### Step 1: the sum is the trace, the product is the determinant
 
@@ -95,7 +76,7 @@ It also factors as (λ − λ1)(λ − λ2) = λ^2 − (λ1 + λ2)λ + λ1λ2, s
 
 - **Δ < 0.** A negative product needs real roots of opposite sign; complex roots come as a pair p ± iq whose product p^2 + q^2 is never negative. One motion grows, one dies: a saddle.
 - **Δ > 0, real roots.** One sign for both, shown by their sum τ: a stable node if negative, unstable if positive.
-- **Δ > 0, complex roots.** The roots are p ± iq with p = τ/2 and q = √(4Δ − τ^2)/2. Each motion is e^(pt) times a rotation at q radians per unit time ([complex-eigenvalues-and-spirals](03-complex-eigenvalues-and-spirals.md)). τ < 0: an inward spiral. τ > 0: outward. τ = 0: closed loops, a centre.
+- **Δ > 0, complex roots.** The roots are p ± iq with p = τ/2 and q = √(4Δ − τ^2)/2. Each motion is e^(pt) times a rotation at q radians per unit time ([Complex eigenvalues](03-complex-eigenvalues-and-spirals.md)). τ < 0: an inward spiral. τ > 0: outward. τ = 0: closed loops, a centre.
 
 Real and complex roots meet where τ^2 − 4Δ = 0: the parabola on the chart.
 
@@ -134,7 +115,7 @@ A repeated eigenvalue λ adds the motion t e^(λt), which still tends to 0 when 
 
 </details>
 
-A second route skips eigenvalues: compute e^(At) and watch its size ([the-matrix-exponential](04-the-matrix-exponential.md)).
+A second route skips eigenvalues: compute e^(At) and watch its size ([The matrix exponential](04-the-matrix-exponential.md)).
 
 ---
 
@@ -402,9 +383,9 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Car suspension.** A stiffer damper moves the point down toward the parabola; on it, the body settles fastest without overshoot for a given spring (vehicle-equations-of-motion).
-- **Control engineering.** A two-variable feedback loop is tuned to negative trace and positive determinant (hurwitz-schur-and-lyapunov-stability).
-- **Predators and prey, pendulums.** Near each equilibrium the linear part goes on the chart ([linearisation-and-the-jacobian](../06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md)).
+- **Car suspension.** A stiffer damper moves the point down toward the parabola; on it, the body settles fastest without overshoot for a given spring (Equations of motion of a vehicle).
+- **Control engineering.** A two-variable feedback loop is tuned to negative trace and positive determinant (Stability of a state-space model).
+- **Predators and prey, pendulums.** Near each equilibrium the linear part goes on the chart ([Linearisation](../06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md)).
 
 > **Say it back**
 > A two-variable linear system's eigenvalues add to the trace and multiply to the determinant. A negative determinant means a saddle. A positive determinant with a negative trace attracts; with a positive trace, repels. Trace squared minus four times the determinant splits nodes from spirals. Zero trace with positive determinant is a centre: stable, never returning.
@@ -413,16 +394,16 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [complex-eigenvalues-and-spirals](03-complex-eigenvalues-and-spirals.md): complex eigenvalues p ± iq as rotation times growth or decay.
-- [determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): ad − bc, and why a zero determinant means a squashed direction.
+- [Complex eigenvalues](03-complex-eigenvalues-and-spirals.md): complex eigenvalues p ± iq as rotation times growth or decay.
+- [Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): ad − bc, and why a zero determinant means a squashed direction.
 
 ## Where this goes next
 
-- [linearisation-and-the-jacobian](../06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md): the chart applied to the linear part of a curved rule, and where a centre fails to survive.
-- hurwitz-schur-and-lyapunov-stability: the same verdict in any number of variables, without solving for eigenvalues.
-- vehicle-equations-of-motion: the absorber's trace and determinant from mass, spring and damper.
+- [Linearisation](../06-Nonlinear%20Dynamics%20in%20the%20Plane/02-linearisation-and-the-jacobian.md): the chart applied to the linear part of a curved rule, and where a centre fails to survive.
+- Stability of a state-space model: the same verdict in any number of variables, without solving for eigenvalues.
+- Equations of motion of a vehicle: the absorber's trace and determinant from mass, spring and damper.
 
-The chart judges a system left alone; what the rooms do when a heater switches on, a steady push added to x' = Ax, is [forced-systems-and-variation-of-constants](06-forced-systems-and-variation-of-constants.md).
+The chart judges a system left alone; what the rooms do when a heater switches on, a steady push added to x' = Ax, is [Forced systems](06-forced-systems-and-variation-of-constants.md).
 
 ---
 

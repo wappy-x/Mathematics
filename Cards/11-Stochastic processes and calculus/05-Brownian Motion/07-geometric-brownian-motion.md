@@ -1,28 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Brownian Motion
-topic: Noise that multiplies
-item: Geometric Brownian motion
-kind: model
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/01-brownian-motion|brownian-motion]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/06-lognormal-distribution|lognormal-distribution]]"
-next:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/01-geometric-brownian-motion-for-prices|geometric-brownian-motion-for-prices]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/07-black-scholes-equation|black-scholes-equation]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/09-black-scholes-assumptions-and-failures|black-scholes-assumptions-and-failures]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/01-garman-kohlhagen|garman-kohlhagen]]"
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/03-distance-to-default-and-expected-default-frequency|distance-to-default-and-expected-default-frequency]]"
-tags: [mathematics, stochastic processes and calculus, geometric-brownian-motion]
----
-
 # Geometric Brownian motion: a price whose log is Brownian
 
-Stochastic processes and calculus → Brownian Motion → Noise that multiplies → Geometric Brownian motion
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Brownian Motion](../../../SYLLABUS.md#w11-s05) → Geometric Brownian motion
 
 ---
 
@@ -30,7 +8,7 @@ Stochastic processes and calculus → Brownian Motion → Noise that multiplies 
 
 A share trades at $100 today. Each trading day its price is multiplied by a number close to 1: up a little one day, down a little the next. Two dials set those daily multipliers. The **drift**, 5 percent a year, is their steady part. The **volatility**, 20 percent a year, sets the size of the random part. Time is counted in years throughout.
 
-A Brownian path, the random walk seen from far away ([brownian-motion](01-brownian-motion.md)), moves by adding. A price moves by multiplying. Taking logarithms turns the multiplying into adding, so the natural model makes the log of the price a Brownian motion with a straight-line trend. That model is **geometric Brownian motion**, GBM from here on.
+A Brownian path, the random walk seen from far away ([Brownian motion](01-brownian-motion.md)), moves by adding. A price moves by multiplying. Taking logarithms turns the multiplying into adding, so the natural model makes the log of the price a Brownian motion with a straight-line trend. That model is **geometric Brownian motion**, GBM from here on.
 
 Follow every way the year can go and two answers to "where does the share end up" come apart. The average ending price is $105.13: 5 percent growth, as the drift promises. The middle ending price, with half the years above it and half below, is $103.05: only 3 percent. About 54 years in 100 end below the average. Stretch the horizon to 30 years and the average is $448.17 while the middle is $245.96; 71 years in 100 then end below the average.
 
@@ -85,12 +63,12 @@ $$E[S_t] = S_0\, e^{\mu t}, \qquad \operatorname{median}(S_t) = S_0\, e^{(\mu - 
 
 The term $\frac12\sigma^2$ is 0.02 here. It is called the **volatility drag**. It is not charged to the average; it is the gap between the average's growth rate and the middle's.
 
-The spread of the price itself comes from the lognormal variance ([lognormal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)): its standard deviation is $E[S_t]\sqrt{e^{\sigma^2 t} - 1}$, $21.24 after one year.
+The spread of the price itself comes from the lognormal variance ([Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)): its standard deviation is $E[S_t]\sqrt{e^{\sigma^2 t} - 1}$, $21.24 after one year.
 
 ### When it holds
 
 - **Percentage moves with one fixed spread.** If the volatility itself wanders, the year's log return is a blend of normals with fatter tails, and the median and the chance of a loss both shift.
-- **Paths are continuous.** A crash of 20 percent in one morning is a jump; GBM gives it almost no chance, and [black-scholes-assumptions-and-failures](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/09-black-scholes-assumptions-and-failures.md) counts what that costs.
+- **Paths are continuous.** A crash of 20 percent in one morning is a jump; GBM gives it almost no chance, and [The Black-Scholes assumptions](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/09-black-scholes-assumptions-and-failures.md) counts what that costs.
 - **Drift and volatility are constants.** With changing values, replace $\mu t$ and $\sigma^2 t$ by their totals over the period; the shape of every formula survives.
 - **The price starts above zero.** GBM never reaches zero in finite time, so it cannot model a default by itself.
 
@@ -100,13 +78,13 @@ The spread of the price itself comes from the lognormal variance ([lognormal-dis
 
 ### Step 0: logs turn multiplying into adding, and the squares of the steps do not vanish
 
-A price is a product of many small multipliers. Its log is a sum, which is where Brownian motion lives. The surprise is in the log of one multiplier: $\ln(1 + x)$ is $x - x^2/2$ plus a much smaller remainder. Over a year the $x$ terms add up to the trend plus the noise. The $x^2/2$ terms add up to something that does not shrink as the steps get smaller: the squared Brownian steps add up to the elapsed time, [quadratic-variation](03-quadratic-variation.md). That leftover is the $-\frac12\sigma^2 t$.
+A price is a product of many small multipliers. Its log is a sum, which is where Brownian motion lives. The surprise is in the log of one multiplier: $\ln(1 + x)$ is $x - x^2/2$ plus a much smaller remainder. Over a year the $x$ terms add up to the trend plus the noise. The $x^2/2$ terms add up to something that does not shrink as the steps get smaller: the squared Brownian steps add up to the elapsed time, [Quadratic variation](03-quadratic-variation.md). That leftover is the $-\frac12\sigma^2 t$.
 
 ### Step 1: the model on a grid
 
 Cut the year into $n$ steps of length $\Delta t = 1/n$. Over each step the price is multiplied by $1 + \mu\Delta t + \sigma\Delta W$, where $\Delta W$ is the Brownian motion's change over that step: normal, mean 0, variance $\Delta t$, independent of every other step. With 252 steps a year that is a tiny steady creep plus a random daily kick many times larger.
 
-That is the whole model. Its limit as the steps shrink is written on shelf 06 of this wing as an equation in dS and dW ([stochastic-differential-equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md)); there dW is shorthand for an integral, never a derivative, because a Brownian path has no slope ([scaling-and-path-roughness](02-scaling-and-path-roughness.md)). This card works with the grid and its limit directly.
+That is the whole model. Its limit as the steps shrink is written on shelf 06 of this wing as an equation in dS and dW ([Stochastic differential equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md)); there dW is shorthand for an integral, never a derivative, because a Brownian path has no slope ([Brownian paths](02-scaling-and-path-roughness.md)). This card works with the grid and its limit directly.
 
 ### Step 2: the product converges to the formula
 
@@ -134,7 +112,7 @@ On $A_n$, Taylor's theorem with remainder gives $\ln(1 + x) = x - x^2/2 + r(x)$ 
 - $\sum x_i^2 - \sigma^2 t = \sigma^2\big(\sum \Delta W_i^2 - t\big) + 2\mu\sigma\Delta t\, W_t + \mu^2 t\,\Delta t$. The first bracket has mean 0 and variance $2t\Delta t$ (each $\Delta W_i^2$ has variance $2\Delta t^2$, and they are independent). The other two terms carry a factor $\Delta t$. So the difference tends to 0 in mean square, hence in probability.
 - $E\sum \lvert x_i\rvert^3 \le n\,C\,\Delta t^{3/2} = C\,t\sqrt{\Delta t}$ for a constant $C$, so the remainder tends to 0 in mean, hence in probability (Markov's inequality).
 
-Together, $\ln(S^{(n)}_t / S_0) \to (\mu - \frac12\sigma^2)t + \sigma W_t$ in probability, and since the exponential is continuous, $S^{(n)}_t \to S_t$ in probability. This card proves that convergence. That the limit solves the stochastic differential equation in Itô's sense needs Itô's formula, done on shelf 06 of this wing ([itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md)); Øksendal proves the formula in chapter 4 and solves this equation with it in chapter 5.
+Together, $\ln(S^{(n)}_t / S_0) \to (\mu - \frac12\sigma^2)t + \sigma W_t$ in probability, and since the exponential is continuous, $S^{(n)}_t \to S_t$ in probability. This card proves that convergence. That the limit solves the stochastic differential equation in Itô's sense needs Itô's formula, done on shelf 06 of this wing ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)); Øksendal proves the formula in chapter 4 and solves this equation with it in chapter 5.
 
 </details>
 
@@ -144,7 +122,7 @@ Two independent roads.
 
 **From the grid.** The steps are independent and each multiplier has mean $1 + \mu\Delta t$, since $\Delta W$ has mean 0. The mean of a product of independent factors is the product of their means, so the grid price has mean $S_0(1 + \mu\Delta t)^n = S_0(1 + \mu t/n)^n$, which tends to $S_0 e^{\mu t}$, the compound-interest limit.
 
-**From the formula.** $W_t$ is normal with variance $t$, and completing the square gives $E[e^{\sigma W_t}] = e^{\frac12\sigma^2 t}$, the lognormal card's mean. Equivalently, $e^{\sigma W_t - \frac12\sigma^2 t}$ has mean 1 at every time, [brownian-martingales-and-exponential-martingale](06-brownian-martingales-and-exponential-martingale.md). Multiply by $S_0 e^{\mu t}$ and the drag cancels: $E[S_t] = S_0 e^{\mu t}$.
+**From the formula.** $W_t$ is normal with variance $t$, and completing the square gives $E[e^{\sigma W_t}] = e^{\frac12\sigma^2 t}$, the lognormal card's mean. Equivalently, $e^{\sigma W_t - \frac12\sigma^2 t}$ has mean 1 at every time, [Brownian martingales](06-brownian-martingales-and-exponential-martingale.md). Multiply by $S_0 e^{\mu t}$ and the drag cancels: $E[S_t] = S_0 e^{\mu t}$.
 
 For the share: $100 \times e^{0.05} = \$105.13$.
 
@@ -169,7 +147,7 @@ The last term tends to 0 with probability one, so each path's long-run growth ra
 <details>
 <summary>Detailed proof: $W_t/t \to 0$ with probability one</summary>
 
-At whole years, $W_n$ is the sum of $n$ independent standard normal increments, so $W_n/n \to 0$ with probability one by the strong law of large numbers (wing 10). Between whole years, let $M_n$ be the largest value of $\lvert W_s - W_n\rvert$ over times s in $[n, n+1]$. By the reflection principle, [reflection-principle-and-running-maximum](04-reflection-principle-and-running-maximum.md), applied to each sign, $P(M_n > \varepsilon n) \le 4\,P(W_1 > \varepsilon n)$ for any $\varepsilon > 0$. These chances fall faster than any power of $n$, so their sum is finite, and by Borel–Cantelli only finitely many $M_n$ exceed $\varepsilon n$. Hence $M_n/n \to 0$, and for $t$ in $[n, n+1]$, $\lvert W_t\rvert/t \le (\lvert W_n\rvert + M_n)/n \to 0$.
+At whole years, $W_n$ is the sum of $n$ independent standard normal increments, so $W_n/n \to 0$ with probability one by the strong law of large numbers (wing 10). Between whole years, let $M_n$ be the largest value of $\lvert W_s - W_n\rvert$ over times s in $[n, n+1]$. By the reflection principle, [Reflection principle](04-reflection-principle-and-running-maximum.md), applied to each sign, $P(M_n > \varepsilon n) \le 4\,P(W_1 > \varepsilon n)$ for any $\varepsilon > 0$. These chances fall faster than any power of $n$, so their sum is finite, and by Borel–Cantelli only finitely many $M_n$ exceed $\varepsilon n$. Hence $M_n/n \to 0$, and for $t$ in $[n, n+1]$, $\lvert W_t\rvert/t \le (\lvert W_n\rvert + M_n)/n \to 0$.
 
 </details>
 
@@ -688,9 +666,9 @@ The two outputs agree byte for byte: the same generator, the same seed, and the 
 
 ## Where you meet it in real life
 
-- **Option pricing.** The Black–Scholes call takes this card's price model with the drift replaced by the bank rate less the dividend yield: [black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
-- **Currencies.** An exchange rate modelled as GBM, with the foreign interest rate in the drift, gives [garman-kohlhagen](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md).
-- **Credit.** A firm's assets modelled as GBM, with default when they fall below the debt, gives the distance to default: [distance-to-default-and-expected-default-frequency](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/03-distance-to-default-and-expected-default-frequency.md).
+- **Option pricing.** The Black–Scholes call takes this card's price model with the drift replaced by the bank rate less the dividend yield: [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+- **Currencies.** An exchange rate modelled as GBM, with the foreign interest rate in the drift, gives [Garman-Kohlhagen](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md).
+- **Credit.** A firm's assets modelled as GBM, with default when they fall below the debt, gives the distance to default: [Distance to default](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/03-distance-to-default-and-expected-default-frequency.md).
 - **Investment growth.** A fund's long-run compound return is close to its average yearly return less half the variance; the gap between the mean and the median is why a volatile fund can beat on average and still leave most investors behind.
 - **Population and biology.** A population growing at a random rate each season follows the same model; its long-run growth rate is the median's, which can be negative while the mean grows.
 
@@ -701,19 +679,19 @@ The two outputs agree byte for byte: the same generator, the same seed, and the 
 
 ## What this builds on
 
-- [brownian-motion](01-brownian-motion.md): the process in the exponent, with independent normal increments of variance equal to elapsed time.
-- [lognormal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md): the law of e raised to a normal, with its mean, median, mode and variance proved.
+- [Brownian motion](01-brownian-motion.md): the process in the exponent, with independent normal increments of variance equal to elapsed time.
+- [Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md): the law of e raised to a normal, with its mean, median, mode and variance proved.
 
 ## Where this goes next
 
-- [geometric-brownian-motion-for-prices](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md): the model fitted to share prices, with drift and volatility estimated from data.
-- [black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the price of a call when the share follows this model and the drift is replaced by the bank rate.
-- [black-scholes-equation](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md): the hedge argument, written as an equation the option price obeys under this model.
-- [black-scholes-assumptions-and-failures](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/09-black-scholes-assumptions-and-failures.md): where real prices break the assumptions listed under When it holds.
-- [garman-kohlhagen](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): the same model for an exchange rate.
-- [distance-to-default-and-expected-default-frequency](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/03-distance-to-default-and-expected-default-frequency.md): the same model for a firm's assets, and the chance they fall below its debt.
+- [Prices as geometric Brownian motion](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md): the model fitted to share prices, with drift and volatility estimated from data.
+- [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the price of a call when the share follows this model and the drift is replaced by the bank rate.
+- [The Black-Scholes equation](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md): the hedge argument, written as an equation the option price obeys under this model.
+- [The Black-Scholes assumptions](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/09-black-scholes-assumptions-and-failures.md): where real prices break the assumptions listed under When it holds.
+- [Garman-Kohlhagen](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): the same model for an exchange rate.
+- [Distance to default](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/03-distance-to-default-and-expected-default-frequency.md): the same model for a firm's assets, and the chance they fall below its debt.
 
-This card gives the model's law at a fixed time under the real-world drift; what a claim on the share is worth today, when the drift cannot be observed and must not matter, is the question [black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) answers.
+This card gives the model's law at a fixed time under the real-world drift; what a claim on the share is worth today, when the drift cannot be observed and must not matter, is the question [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) answers.
 
 ---
 

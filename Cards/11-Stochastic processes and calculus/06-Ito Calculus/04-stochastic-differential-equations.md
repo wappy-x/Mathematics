@@ -1,27 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Ito Calculus
-topic: Equations driven by noise
-item: Stochastic differential equations
-kind: definition
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/01-what-a-differential-equation-says|what-a-differential-equation-says]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/07-geometric-brownian-motion|geometric-brownian-motion]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/05-ornstein-uhlenbeck-and-cir-processes|ornstein-uhlenbeck-and-cir-processes]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/07-existence-and-uniqueness-for-sdes|existence-and-uniqueness-for-sdes]]"
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/04-euler-maruyama-scheme|euler-maruyama-scheme]]"
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/03-stochastic-hazard-cox-process|stochastic-hazard-cox-process]]"
-tags: [mathematics, stochastic processes and calculus, stochastic-differential-equations]
----
-
 # Stochastic differential equations: a drift, a noise size, and a solution path
 
-Stochastic processes and calculus → Ito Calculus → Equations driven by noise → Stochastic differential equations
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Ito Calculus](../../../SYLLABUS.md#w11-s06) → Stochastic differential equations
 
 ---
 
@@ -56,11 +35,11 @@ Orange: the exact solution, read every 4 weeks from one Brownian path drawn in w
 
 ## The formula
 
-Notation first, in words. Time $t$ is in years. $W_t$ is Brownian motion, the random walk seen from far away ([brownian-motion](../05-Brownian%20Motion/01-brownian-motion.md)): it starts at 0, and its change over any stretch of time is a normal draw with mean 0 and variance equal to the stretch's length in years. A general SDE for a quantity $X_t$ is written
+Notation first, in words. Time $t$ is in years. $W_t$ is Brownian motion, the random walk seen from far away ([Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md)): it starts at 0, and its change over any stretch of time is a normal draw with mean 0 and variance equal to the stretch's length in years. A general SDE for a quantity $X_t$ is written
 
 $$dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t .$$
 
-The $dW_t$ is shorthand for an Ito integral, never a derivative: a Brownian path has no slope at any point ([ito-integral](01-ito-integral.md)). The equation is a short way to write the integral equation
+The $dW_t$ is shorthand for an Ito integral, never a derivative: a Brownian path has no slope at any point ([The Ito integral](01-ito-integral.md)). The equation is a short way to write the integral equation
 
 $$X_t = X_0 + \int_0^t \mu(X_s, s)\,ds + \int_0^t \sigma(X_s, s)\,dW_s .$$
 
@@ -91,7 +70,7 @@ $$dS_t = \mu S_t\,dt + \sigma S_t\,dW_t, \qquad S_t = S_0 \exp\!\Big(\big(\mu - 
 ### When it holds
 
 - **The Ito reading of the noise.** The noise size is read at the start of each step. Read it at the midpoint instead, called the Stratonovich reading, and the same symbols describe a different share: its solution is $S_0 e^{\mu t + \sigma W_t}$, with a median of $105.13 instead of $103.05. The code shows each formula failing the other reading's integral equation.
-- **Well-behaved coefficients.** A drift and noise size that grow at most in proportion to $x$, and change by at most a fixed multiple of any change in $x$ (the Lipschitz condition), guarantee exactly one solution. Drop that, and an SDE can explode in finite time or have two solutions from one start; [existence-and-uniqueness-for-sdes](07-existence-and-uniqueness-for-sdes.md) shows both. The share's coefficients pass.
+- **Well-behaved coefficients.** A drift and noise size that grow at most in proportion to $x$, and change by at most a fixed multiple of any change in $x$ (the Lipschitz condition), guarantee exactly one solution. Drop that, and an SDE can explode in finite time or have two solutions from one start; [When an SDE has one solution](07-existence-and-uniqueness-for-sdes.md) shows both. The share's coefficients pass.
 - **Built from the past only.** A solution at time $t$ may use the noise path up to $t$ and nothing later; in the wing's terms it is adapted to the filtration $F_t$, what is known by time $t$. A formula that used $W_1$ to set the price at half a year would not be a solution, whatever its algebra.
 - **Constant $\mu$ and $\sigma$.** The closed form is for this SDE. Most SDEs, including the share with a volatility that moves, have no closed form. They are solved by simulation, which this card also does.
 
@@ -101,7 +80,7 @@ $$dS_t = \mu S_t\,dt + \sigma S_t\,dW_t, \qquad S_t = S_0 \exp\!\Big(\big(\mu - 
 
 ### Step 0: a solution is judged by its increments
 
-An ordinary differential equation $dx/dt = 0.05x$ is checked by differentiating a candidate and comparing slopes ([what-a-differential-equation-says](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md)). A Brownian path has no slope, so that test is unavailable. What is left is the integral equation: a candidate solves the SDE if, with probability 1, its total change from 0 to $t$ equals the time integral of the drift plus the Ito integral of the noise size. Ito's lemma is the tool that computes a candidate's change in exactly that form.
+An ordinary differential equation $dx/dt = 0.05x$ is checked by differentiating a candidate and comparing slopes ([A differential equation](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md)). A Brownian path has no slope, so that test is unavailable. What is left is the integral equation: a candidate solves the SDE if, with probability 1, its total change from 0 to $t$ equals the time integral of the drift plus the Ito integral of the noise size. Ito's lemma is the tool that computes a candidate's change in exactly that form.
 
 ### Step 1: read the rule before solving it
 
@@ -111,7 +90,7 @@ Over $t$ years the drift's total grows like $\mu t$ and the noise's spread like 
 
 ### Step 2: find the candidate by taking logarithms
 
-Prices multiply, so try the logarithm $Y_t = \ln S_t$. Ito's lemma for a function $g$ of $S_t$ says $dg = g'(S)\,dS + \tfrac12 g''(S)\,(dS)^2$, where $(dS)^2 = \sigma^2 S^2\,dt$ because $(dW_t)^2 = dt$ ([itos-lemma](02-itos-lemma.md)). With $g = \ln$, $g' = 1/S$ and $g'' = -1/S^2$:
+Prices multiply, so try the logarithm $Y_t = \ln S_t$. Ito's lemma for a function $g$ of $S_t$ says $dg = g'(S)\,dS + \tfrac12 g''(S)\,(dS)^2$, where $(dS)^2 = \sigma^2 S^2\,dt$ because $(dW_t)^2 = dt$ ([Ito's lemma](02-itos-lemma.md)). With $g = \ln$, $g' = 1/S$ and $g'' = -1/S^2$:
 
 $$dY_t = \frac{1}{S_t}\big(\mu S_t\,dt + \sigma S_t\,dW_t\big) - \frac{1}{2}\frac{1}{S_t^2}\,\sigma^2 S_t^2\,dt = \big(\mu - \tfrac12\sigma^2\big)dt + \sigma\,dW_t .$$
 
@@ -138,9 +117,9 @@ The code repeats this with no algebra: it measures $f_t$, $f_w$ and $f_{ww}$ by 
 $S_t - S_0 = \int_0^t (f_t + \tfrac12 f_{ww})(s, W_s)\,ds + \int_0^t f_w(s, W_s)\,dW_s = \int_0^t \mu S_s\,ds + \int_0^t \sigma S_s\,dW_s.$
 The Ito integral is defined because $\sigma S_s$ is adapted and $E\int_0^t S_s^2\,ds = \int_0^t S_0^2 e^{(2\mu + \sigma^2)s}\,ds < \infty$, using $E[e^{cW_s}] = e^{c^2 s/2}$.
 
-**2. It is the only one.** $S$ is positive, so $R_t = 1/S_t = S_0^{-1}\exp(-at - \sigma W_t)$ is defined, and Ito's formula gives $dR = (-a + \tfrac12\sigma^2)R\,dt - \sigma R\,dW = (-\mu + \sigma^2)R\,dt - \sigma R\,dW$. Let $X$ be any solution. By the product rule ([ito-product-rule](03-ito-product-rule.md)), $d(XR) = X\,dR + R\,dX + d[X, R]$, where the cross term is $d[X,R] = (\sigma X)(-\sigma R)\,dt$. Collecting,
+**2. It is the only one.** $S$ is positive, so $R_t = 1/S_t = S_0^{-1}\exp(-at - \sigma W_t)$ is defined, and Ito's formula gives $dR = (-a + \tfrac12\sigma^2)R\,dt - \sigma R\,dW = (-\mu + \sigma^2)R\,dt - \sigma R\,dW$. Let $X$ be any solution. By the product rule ([Ito's product rule](03-ito-product-rule.md)), $d(XR) = X\,dR + R\,dX + d[X, R]$, where the cross term is $d[X,R] = (\sigma X)(-\sigma R)\,dt$. Collecting,
 $d(XR) = XR\big[(-\mu + \sigma^2)\,dt - \sigma\,dW + \mu\,dt + \sigma\,dW - \sigma^2\,dt\big] = 0.$
-So $X_t R_t = X_0 R_0 = 1$ for all $t$, almost surely, and $X_t = S_t$. The Lipschitz theorem of [existence-and-uniqueness-for-sdes](07-existence-and-uniqueness-for-sdes.md) gives the same conclusion for every SDE with well-behaved coefficients, by Picard iteration.
+So $X_t R_t = X_0 R_0 = 1$ for all $t$, almost surely, and $X_t = S_t$. The Lipschitz theorem of [When an SDE has one solution](07-existence-and-uniqueness-for-sdes.md) gives the same conclusion for every SDE with well-behaved coefficients, by Picard iteration.
 
 </details>
 
@@ -169,17 +148,17 @@ xychart-beta
     line [1.16, 0.60, 0.30, 0.15]
 ```
 
-One line: the average of |Euler − exact| at year end, $1.1638, $0.5995, $0.3038 and $0.1486, each with a standard error below 2 cents. Each fourfold refinement halves the gap. From 4 to 256 steps, 64 times as many, the gap falls by a factor of 7.83, close to the square root of 64. An error that falls like the square root of the step is called strong order one half; [euler-maruyama-scheme](../08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md) proves it.
+One line: the average of |Euler − exact| at year end, $1.1638, $0.5995, $0.3038 and $0.1486, each with a standard error below 2 cents. Each fourfold refinement halves the gap. From 4 to 256 steps, 64 times as many, the gap falls by a factor of 7.83, close to the square root of 64. An error that falls like the square root of the step is called strong order one half; [Euler-Maruyama](../08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md) proves it.
 
 The same 4000 years check the solution's law. The exact formula gives a mean of $105.1271 and a variance of 451.03. The simulation gives $105.6213 ± 0.3363 and 452.33 ± 12.52, both inside the 4 standard errors the asserts allow. The mean of $\ln(S_1/S_0)$ comes out at 0.0350 ± 0.0031, against 0.03. The share of years ending below $100 is 0.4308 ± 0.0078, against 0.4404 from the formula. That sample is too small to rule out 0.4013, the chance the ordinary-calculus guess gives, so the code also draws 20000 one-step years of the exact solution: 0.4394 ± 0.0035, 11 standard errors from 0.4013.
 
-**Another road.** Steps 2 and 3 can be run in the opposite order for any SDE whose coefficients become constant after a change of variable. Taking logarithms turned the share into Brownian motion with drift; the mean-reverting equations of [ornstein-uhlenbeck-and-cir-processes](05-ornstein-uhlenbeck-and-cir-processes.md) are solved by multiplying by an exponential instead, the stochastic version of an integrating factor.
+**Another road.** Steps 2 and 3 can be run in the opposite order for any SDE whose coefficients become constant after a change of variable. Taking logarithms turned the share into Brownian motion with drift; the mean-reverting equations of [Mean reversion](05-ornstein-uhlenbeck-and-cir-processes.md) are solved by multiplying by an exponential instead, the stochastic version of an integrating factor.
 
 ---
 
 ## Worked numbers, by hand
 
-The share: $S_0$ = $100, $\mu$ = 0.05, $\sigma$ = 0.20 a year, one year ahead. The last four rows, and the first row of What breaks, are the numbers [geometric-brownian-motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md) derives from this solution's law; they are repeated here to read the solution back.
+The share: $S_0$ = $100, $\mu$ = 0.05, $\sigma$ = 0.20 a year, one year ahead. The last four rows, and the first row of What breaks, are the numbers [Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md) derives from this solution's law; they are repeated here to read the solution back.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -624,9 +603,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Share prices.** The share's SDE is the model under Black–Scholes; [geometric-brownian-motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md) studies its solution's mean and median in detail.
-- **Interest rates.** A rate pulled toward a long-run level is an SDE with a drift toward that level ([ornstein-uhlenbeck-and-cir-processes](05-ornstein-uhlenbeck-and-cir-processes.md)).
-- **Credit risk.** A company's chance of default per year can itself follow an SDE, and the default time is then driven by it ([stochastic-hazard-cox-process](../../12-Financial%20mathematics/44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md)).
+- **Share prices.** The share's SDE is the model under Black–Scholes; [Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md) studies its solution's mean and median in detail.
+- **Interest rates.** A rate pulled toward a long-run level is an SDE with a drift toward that level ([Mean reversion](05-ornstein-uhlenbeck-and-cir-processes.md)).
+- **Credit risk.** A company's chance of default per year can itself follow an SDE, and the default time is then driven by it ([A random hazard](../../12-Financial%20mathematics/44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md)).
 - **Physics and biology.** A pollen grain in water and a population with random good and bad years are each modelled as a drift plus a noise times a Brownian step.
 
 > **Say it back**
@@ -636,18 +615,18 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [itos-lemma](02-itos-lemma.md): the chain rule with the second-derivative term, used to find the candidate and to verify it.
-- [what-a-differential-equation-says](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md): an equation for a rate of change, and what it means to solve one; this card replaces the slope by an integral.
-- [geometric-brownian-motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md): the same share's solution and its mean, median, spread and chance of a loss, which the worked numbers repeat.
+- [Ito's lemma](02-itos-lemma.md): the chain rule with the second-derivative term, used to find the candidate and to verify it.
+- [A differential equation](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md): an equation for a rate of change, and what it means to solve one; this card replaces the slope by an integral.
+- [Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md): the same share's solution and its mean, median, spread and chance of a loss, which the worked numbers repeat.
 
 ## Where this goes next
 
-- [ornstein-uhlenbeck-and-cir-processes](05-ornstein-uhlenbeck-and-cir-processes.md): two SDEs with a pull toward a level, one solved exactly and one with a square-root noise size.
-- [existence-and-uniqueness-for-sdes](07-existence-and-uniqueness-for-sdes.md): when an SDE has exactly one solution, by Picard iteration, and one that explodes.
-- [euler-maruyama-scheme](../08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): the simulation loop of Step 5, with its order of convergence proved.
-- [stochastic-hazard-cox-process](../../12-Financial%20mathematics/44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md): an SDE for a default rate, priced into a risky bond.
+- [Mean reversion](05-ornstein-uhlenbeck-and-cir-processes.md): two SDEs with a pull toward a level, one solved exactly and one with a square-root noise size.
+- [When an SDE has one solution](07-existence-and-uniqueness-for-sdes.md): when an SDE has exactly one solution, by Picard iteration, and one that explodes.
+- [Euler-Maruyama](../08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): the simulation loop of Step 5, with its order of convergence proved.
+- [A random hazard](../../12-Financial%20mathematics/44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md): an SDE for a default rate, priced into a risky bond.
 
-The share's SDE had one solution because its coefficients were tame; which SDEs have exactly one solution, and which explode or split, is the question [existence-and-uniqueness-for-sdes](07-existence-and-uniqueness-for-sdes.md) answers.
+The share's SDE had one solution because its coefficients were tame; which SDEs have exactly one solution, and which explode or split, is the question [When an SDE has one solution](07-existence-and-uniqueness-for-sdes.md) answers.
 
 ---
 

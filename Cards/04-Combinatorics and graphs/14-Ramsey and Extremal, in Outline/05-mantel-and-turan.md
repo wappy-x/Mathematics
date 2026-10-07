@@ -1,26 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Ramsey and Extremal, in Outline
-topic: The densest network with no clique
-item: Mantel and Turan
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/02-degree-and-handshaking|degree-and-handshaking]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/05-bipartite-graphs-and-odd-cycles|bipartite-graphs-and-odd-cycles]]"
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/05-n-choose-k|n-choose-k]]"
-next: []
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - mantel-and-turan
----
-
 # Mantel and Turan: more than n^2/4 edges force a triangle, and the balanced multipartite graph is the most you can have without a clique
 
-Combinatorics and graphs → Ramsey and Extremal, in Outline → The densest network with no clique → Mantel and Turan
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Ramsey and Extremal, in Outline](../../../SYLLABUS.md#w04-s14) → Mantel and Turan
 
 ---
 
@@ -164,7 +144,7 @@ Take one point from each group of $T(n, r)$: they form a $K(r)$ with $C(r, 2)$ l
 
 </details>
 
-A different road to a forced triangle is [friends-and-strangers](01-friends-and-strangers.md), which labels every pair of six guests; Mantel counts only the links present.
+A different road to a forced triangle is [Friends and strangers](01-friends-and-strangers.md), which labels every pair of six guests; Mantel counts only the links present.
 
 ---
 
@@ -414,7 +394,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Social networks.** More than n^2/4 friendships among n people guarantee three mutual friends.
-- **Extremal combinatorics.** The most links avoiding a shape is the field's founding question; [probabilistic-method-by-counting](03-probabilistic-method-by-counting.md) proves shape-avoiding networks exist without building them.
+- **Extremal combinatorics.** The most links avoiding a shape is the field's founding question; [Erdos's counting trick](03-probabilistic-method-by-counting.md) proves shape-avoiding networks exist without building them.
 
 > **Say it back**
 > With no triangle, a link's two ends share no neighbour, so their degrees add to at most n. Summed over links, that caps the links at n squared over four. Ten servers take 25, as two groups of five cross-linked; a 26th closes five triangles. To avoid r + 1 all linked, cut into r equal groups: 4, 3 and 3 give 33.
@@ -423,14 +403,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [degree-and-handshaking](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md): degrees add to twice the links, used in Step 2.
-- [bipartite-graphs-and-odd-cycles](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md): two-sided networks have only even loops, so no triangle.
-- [n-choose-k](../01-Counting%20Principles/05-n-choose-k.md): C(10, 2) = 45 possible links.
+- [Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md): degrees add to twice the links, used in Step 2.
+- [Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md): two-sided networks have only even loops, so no triangle.
+- [Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md): C(10, 2) = 45 possible links.
 
 ## Where this goes next
 
-- erdos-problems-selected: Erdős's open extremal questions, including the densest network with no ring of four.
-- [probabilistic-method](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md): networks that avoid a shape, shown to exist by chance and averages rather than built.
+- Erdos problems: Erdős's open extremal questions, including the densest network with no ring of four.
+- [The probabilistic method](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md): networks that avoid a shape, shown to exist by chance and averages rather than built.
 
 Turán settles every full clique; for a shape that is not one, such as a ring of four, the densest count is known only roughly, and that open ground is where Erdős-style extremal problems begin.
 

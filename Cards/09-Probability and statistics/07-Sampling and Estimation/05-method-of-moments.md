@@ -1,21 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Sampling and Estimation
-topic: Fitting a law by its averages
-item: Method of moments
-kind: method
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/04-maximum-likelihood|maximum-likelihood]]"
-next: []
-tags: [mathematics, probability and statistics, method-of-moments]
----
-
 # Method of moments: match the sample's averages to the model's
 
-Probability and statistics → Sampling and Estimation → Fitting a law by its averages → Method of moments
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Sampling and Estimation](../../../SYLLABUS.md#w09-s07) → Method of moments
 
 ---
 
@@ -23,7 +8,7 @@ Probability and statistics → Sampling and Estimation → Fitting a law by its 
 
 A small insurer pays ten claims on a line of phone-and-laptop cover in one month. In dollars they are $500, $1,000, $1,000, $2,000, $2,500, $3,000, $3,500, $3,500, $5,000 and $8,000. Most are modest; one is large. The pricing team wants a smooth law for claim size, so it can answer questions the ten numbers cannot: how often will a claim pass $10,000?
 
-The gamma law is the usual first choice for sizes like these ([gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)). It is positive, it has a hump and a long right tail, and it has two dials. The **shape** sets how skewed it is. The **rate** sets the scale in dollars. The data have to choose both dials.
+The gamma law is the usual first choice for sizes like these ([Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)). It is positive, it has a hump and a long right tail, and it has two dials. The **shape** sets how skewed it is. The **rate** sets the scale in dollars. The data have to choose both dials.
 
 The method of moments chooses them in the plainest way. A **moment** is an average of a power: the average claim is the first moment, the average squared claim the second. The ten claims have a first and a second moment. So does every gamma law. Turn the two dials until the law's two moments equal the sample's. Here the claims average $3,000 with a variance of 4.5 (thousand dollars) squared, and exactly one gamma law matches: shape 2, rate 0.667 per $1,000. It puts about 1 claim in 100 above $10,000.
 
@@ -87,7 +72,7 @@ $$\mathrm{SE}(\hat\alpha) \approx \sqrt{\frac{2\alpha(\alpha+1)}{n}}$$
 ### When it holds
 
 - **Independent claims from one law.** Ten claims from one storm are one event counted ten times; the averages then settle slowly or not at all, and the standard error above is too small.
-- **The moments used exist.** The fit needs a finite variance; its standard error needs a finite fourth moment. A Pareto tail with index 2 or below has no variance, and the sample variance jumps each time a large claim arrives ([heavy-tails-pareto-and-cauchy](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)).
+- **The moments used exist.** The fit needs a finite variance; its standard error needs a finite fourth moment. A Pareto tail with index 2 or below has no variance, and the sample variance jumps each time a large claim arrives ([Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)).
 - **The equations have a solution inside the law's range.** If all ten claims were $3,000, then $v = 0$ and no gamma matches; for other families the solution can land outside the allowed values, such as a negative shape.
 - **The family is right.** The moment equations fit a gamma to any positive data with $v > 0$. They never test whether a gamma is sensible.
 - **Enough data for the error formula.** The standard error is a large-sample result; at $n = 10$ it is a rough guide, not a guarantee.
@@ -98,7 +83,7 @@ $$\mathrm{SE}(\hat\alpha) \approx \sqrt{\frac{2\alpha(\alpha+1)}{n}}$$
 
 ### Step 0: sample averages settle on the model's averages
 
-The law of large numbers says an average of many independent draws settles on the long-run average ([law-of-large-numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)). That holds for the claims, for their squares and for any other function of them. So the sample's moments are estimates of the model's moments. The model's moments are formulas in the unknown dials. Setting the two equal gives equations whose unknowns are the dials. That is the whole method; the steps below make it exact and measure its error.
+The law of large numbers says an average of many independent draws settles on the long-run average ([Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)). That holds for the claims, for their squares and for any other function of them. So the sample's moments are estimates of the model's moments. The model's moments are formulas in the unknown dials. Setting the two equal gives equations whose unknowns are the dials. That is the whole method; the steps below make it exact and measure its error.
 
 ### Step 1: the gamma law's moments as formulas in its dials
 
@@ -118,11 +103,11 @@ One check is worth doing. The fitted law must return the sample's moments exactl
 
 ### Step 3: the estimate settles on the truth
 
-As $n$ grows, $\bar{x}$ settles on $\alpha/\lambda$ and $m_2$ on $\alpha(\alpha+1)/\lambda^2$ (Step 0). The estimates are smooth functions of those two averages, and smooth functions do not jump: a small change in the inputs makes a small change in the output, as long as the variance in the denominator stays away from 0. So $\hat\alpha$ settles on $\bar{x}^2/v$ evaluated at the true moments, which Step 2 showed is $\alpha$. An estimator that settles on the truth is consistent, the word from [populations-samples-and-estimators](01-populations-samples-and-estimators.md).
+As $n$ grows, $\bar{x}$ settles on $\alpha/\lambda$ and $m_2$ on $\alpha(\alpha+1)/\lambda^2$ (Step 0). The estimates are smooth functions of those two averages, and smooth functions do not jump: a small change in the inputs makes a small change in the output, as long as the variance in the denominator stays away from 0. So $\hat\alpha$ settles on $\bar{x}^2/v$ evaluated at the true moments, which Step 2 showed is $\alpha$. An estimator that settles on the truth is consistent, the word from [Samples and estimators](01-populations-samples-and-estimators.md).
 
 ### Step 4: how far off, by the slopes of the solution
 
-Consistency says the error shrinks. The size of the error at a given $n$ comes from slopes. Near the truth, $\hat\alpha$ moves by (its slope in $\bar{x}$) times the error in $\bar{x}$, plus (its slope in $m_2$) times the error in $m_2$; this first-order Taylor step is the delta method of [delta-method-and-slutsky](../06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md). The two averages err together, since a big claim raises both, so the variance of $\hat\alpha$ collects both errors and their covariance. For the gamma law the terms collapse to
+Consistency says the error shrinks. The size of the error at a given $n$ comes from slopes. Near the truth, $\hat\alpha$ moves by (its slope in $\bar{x}$) times the error in $\bar{x}$, plus (its slope in $m_2$) times the error in $m_2$; this first-order Taylor step is the delta method of [Delta method](../06-Limit%20Theorems%20in%20Practice/05-delta-method-and-slutsky.md). The two averages err together, since a big claim raises both, so the variance of $\hat\alpha$ collects both errors and their covariance. For the gamma law the terms collapse to
 
 $$n\,\mathrm{Var}(\hat\alpha) \approx 2\alpha(\alpha+1) = 12 \text{ at shape } 2.$$
 
@@ -143,7 +128,7 @@ The neglected second-order terms shrink like $1/n$ against these, so the approxi
 
 ### Step 5: maximum likelihood is also moment matching, with a better moment
 
-Write the gamma log-likelihood of the claims ([maximum-likelihood](04-maximum-likelihood.md)), divided by $n$; $\overline{\ln x}$ is the average of the claims' natural logs:
+Write the gamma log-likelihood of the claims ([Maximum likelihood](04-maximum-likelihood.md)), divided by $n$; $\overline{\ln x}$ is the average of the claims' natural logs:
 
 $$\frac{1}{n}\ell(\alpha, \lambda) = \alpha \ln\lambda - \ln\Gamma(\alpha) + (\alpha - 1)\,\overline{\ln x} - \lambda\,\bar{x}.$$
 
@@ -151,7 +136,7 @@ Set its slope in $\lambda$ to zero: $\alpha/\lambda = \bar{x}$. That is the firs
 
 $$\ln\hat\alpha - \psi(\hat\alpha) = \ln\bar{x} - \overline{\ln x}.$$
 
-So both methods match the mean. They differ in the second average. Moments match the average square; likelihood matches the average log. Squares give the largest claim enormous weight: the $8,000 claim is 64 of the 135 in $\sum x_i^2$, almost half. Logs tame it. That is why likelihood wastes less of the data. Its variance comes from the Fisher information ([fisher-information-and-cramer-rao](07-fisher-information-and-cramer-rao.md)), which for two dials is a two-by-two table; the folded note below works it out. With $\psi'$, the trigamma function (the slope of $\psi$), it is
+So both methods match the mean. They differ in the second average. Moments match the average square; likelihood matches the average log. Squares give the largest claim enormous weight: the $8,000 claim is 64 of the 135 in $\sum x_i^2$, almost half. Logs tame it. That is why likelihood wastes less of the data. Its variance comes from the Fisher information ([Fisher information](07-fisher-information-and-cramer-rao.md)), which for two dials is a two-by-two table; the folded note below works it out. With $\psi'$, the trigamma function (the slope of $\psi$), it is
 
 $$n\,\mathrm{Var}(\hat\alpha_{\mathrm{ML}}) \approx \frac{\alpha}{\alpha\,\psi'(\alpha) - 1} = 6.8997 \text{ at shape } 2,$$
 
@@ -199,7 +184,7 @@ At shape 0.5 the moment method is as good as likelihood on 22.72 percent of the 
 
 ### The other road: more moments than dials
 
-With more moment equations than dials, no setting matches them all. The **generalized method of moments** then minimises a weighted distance between the model's and the sample's averages; with the best weights it can reach the likelihood's precision. Resampling the ten claims gives a standard error without Step 4's algebra: [bootstrap](08-bootstrap.md).
+With more moment equations than dials, no setting matches them all. The **generalized method of moments** then minimises a weighted distance between the model's and the sample's averages; with the best weights it can reach the likelihood's precision. Resampling the ten claims gives a standard error without Step 4's algebra: [Bootstrap](08-bootstrap.md).
 
 ---
 
@@ -419,7 +404,7 @@ efficiency, MLE/MoM var, %   22.72  38.76  57.50  67.64  78.16  87.98  93.68  97
 all checks passed
 ```
 
-The moment fit reproduces the hand arithmetic exactly. The two likelihood roads agree to four decimals. The simulated spreads, 11.9801 and 7.0584, sit close to theory's 12.0000 and 6.8997. The simulated means, 2.0426 (SE 0.0055) and 2.0278 (SE 0.0042), sit above 2: both estimators run slightly high at 200 claims, a bias of the kind defined on [bias-variance-and-mean-squared-error](06-bias-variance-and-mean-squared-error.md).
+The moment fit reproduces the hand arithmetic exactly. The two likelihood roads agree to four decimals. The simulated spreads, 11.9801 and 7.0584, sit close to theory's 12.0000 and 6.8997. The simulated means, 2.0426 (SE 0.0055) and 2.0278 (SE 0.0042), sit above 2: both estimators run slightly high at 200 claims, a bias of the kind defined on [Bias and variance](06-bias-variance-and-mean-squared-error.md).
 
 ### Rust
 
@@ -666,17 +651,17 @@ all checks passed
 
 ## What this builds on
 
-- [maximum-likelihood](04-maximum-likelihood.md): the method this card compares against, and the likelihood equations of Step 5.
+- [Maximum likelihood](04-maximum-likelihood.md): the method this card compares against, and the likelihood equations of Step 5.
 
-The gamma law's moments come from [gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md); why averages settle, from [law-of-large-numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md).
+The gamma law's moments come from [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md); why averages settle, from [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md).
 
 ## Where this goes next
 
-- [bias-variance-and-mean-squared-error](06-bias-variance-and-mean-squared-error.md): the card after this one, which scores an estimator by its bias and spread together; both shape estimates here run slightly high.
-- [fisher-information-and-cramer-rao](07-fisher-information-and-cramer-rao.md): the floor on the variance of any unbiased (right on average) estimator, proved there for one dial; the folded note in Step 5 applies its two-dial form to the gamma shape, where the floor is 6.8997 over n.
-- [bootstrap](08-bootstrap.md): a standard error for any estimator, moments included, by resampling the claims.
+- [Bias and variance](06-bias-variance-and-mean-squared-error.md): the card after this one, which scores an estimator by its bias and spread together; both shape estimates here run slightly high.
+- [Fisher information](07-fisher-information-and-cramer-rao.md): the floor on the variance of any unbiased (right on average) estimator, proved there for one dial; the folded note in Step 5 applies its two-dial form to the gamma shape, where the floor is 6.8997 over n.
+- [Bootstrap](08-bootstrap.md): a standard error for any estimator, moments included, by resampling the claims.
 
-At shape 2 the moment method keeps only 57.50 percent of the data's worth, in exchange for its simplicity; why no unbiased estimator can beat likelihood is the question [fisher-information-and-cramer-rao](07-fisher-information-and-cramer-rao.md) answers for one dial, and Step 5's folded note carries that answer to the shape's 6.8997.
+At shape 2 the moment method keeps only 57.50 percent of the data's worth, in exchange for its simplicity; why no unbiased estimator can beat likelihood is the question [Fisher information](07-fisher-information-and-cramer-rao.md) answers for one dial, and Step 5's folded note carries that answer to the shape's 6.8997.
 
 ---
 

@@ -1,34 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Implied volatility and the vanilla inverses
-topic: Newton, bisection and the bid-ask
-item: Solving for implied volatility
-kind: method
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/01-implied-volatility|implied-volatility]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/06-newtons-method|newtons-method]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/06-intermediate-value-theorem|intermediate-value-theorem]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/05-root-finding-for-inverses|root-finding-for-inverses]]"
-next:
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/07-american-greeks-and-implied-volatility|american-greeks-and-implied-volatility]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - implied-volatility-by-newton-and-bisection
----
-
 # Solving for implied volatility: Newton steered by vega, bisection as the safety net, and when the answer is fuzzy
 
-Financial mathematics → Implied volatility and the vanilla inverses → Newton, bisection and the bid-ask → Solving for implied volatility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Implied volatility and the vanilla inverses](../../../SYLLABUS.md#w12-s11) → Solving for implied volatility
 
 ---
 
 ## General Overview
 
-A screen shows the one-year Acme call at $9.23; to the full precision the shelf checks against, 9.227005508154. Acme's shares stand at $100, the strike is $100, cash earns 5 percent a year and the shares pay a 2 percent dividend yield. The one number missing is the volatility: how jumpy the market takes Acme's shares to be. The volatility that makes the Black–Scholes price equal the quote is the **implied volatility** ([implied-volatility](01-implied-volatility.md)). No algebra pulls it out of the formula. It has to be searched for.
+A screen shows the one-year Acme call at $9.23; to the full precision the shelf checks against, 9.227005508154. Acme's shares stand at $100, the strike is $100, cash earns 5 percent a year and the shares pay a 2 percent dividend yield. The one number missing is the volatility: how jumpy the market takes Acme's shares to be. The volatility that makes the Black–Scholes price equal the quote is the **implied volatility** ([Implied volatility](01-implied-volatility.md)). No algebra pulls it out of the formula. It has to be searched for.
 
 **Vega** is the dollars the option gains per unit of volatility (a unit is 1.00, a hundred percentage points). Dividing the dollar gap between a guess's price and the quote by vega converts it into a volatility step. That is Newton's method, and from a guess of 50 percent it lands on 20.000 percent in four trips through the pricer. Where vega is nearly flat — options far from the money, options about to expire — the same division throws the guess into nonsense. A one-week call far out of the money, at a 5 percent guess, has a vega of 0.000000001569 dollars per unit, and one Newton step sends the guess to a volatility of 36549384.536295. So a real solver keeps a **bracket**: a low and a high guess known to straddle the answer. Any step that leaves the bracket is replaced by halving it, which is **bisection**.
 
@@ -93,12 +71,12 @@ The helpers, written with the forward so the log-distance $\ln(F/K)$ stands alon
 
 $$d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \varphi(z) = \frac{e^{-z^2/2}}{\sqrt{2\pi}}$$
 
-In words: $d_1$ and $d_2$ are the pilot's distances from the strike measured in units of total volatility $\sigma\sqrt{T}$ ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)), and $\varphi$ is the height of the standard bell curve.
+In words: $d_1$ and $d_2$ are the pilot's distances from the strike measured in units of total volatility $\sigma\sqrt{T}$ ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)), and $\varphi$ is the height of the standard bell curve.
 
 ### When it holds
 
 - **The quote lies strictly between the call's floor and ceiling.** Here that is between $2.896924880604 and $98.019867330676. A quote outside has no volatility behind it; bisection on a quote of $2.80 walks to the bottom of its bracket and reports 0.010000000000.
-- **The option is European and the inputs match the market's.** Rates, dividends and the forward must be the ones the quote was made with ([implied-forward-and-dividend-from-parity](05-implied-forward-and-dividend-from-parity.md)). An American put carries early-exercise value, and inverting it with this formula books that value as volatility.
+- **The option is European and the inputs match the market's.** Rates, dividends and the forward must be the ones the quote was made with ([Implied forward and dividend from parity](05-implied-forward-and-dividend-from-parity.md)). An American put carries early-exercise value, and inverting it with this formula books that value as volatility.
 - **Vega has not underflowed.** Newton divides by it. At a 5 percent guess on the one-week 5-delta call it is 0.000000001569; far enough out it is exactly zero in the standard 64-bit arithmetic computers use, and the division fails outright. The bracket is the cure.
 - **The width is small against the price's curvature.** The division $w/\mathcal{V}$ uses the tangent line. At the money it matches the exact bid and ask volatilities to four decimals; on the one-week 5-delta call it says 3.4962 points where the exact answer is 3.6117.
 
@@ -110,7 +88,7 @@ In words: $d_1$ and $d_2$ are the pilot's distances from the strike measured in 
 
 The call's price strictly climbs with volatility, because vega is a share price times a bell-curve height times a square root, all positive. A strictly climbing curve meets a level at most once: uniqueness.
 
-For existence, look at the ends. As volatility shrinks to zero the share stops wandering and the call is worth what it pays on the forward, discounted: $S e^{-qT} - K e^{-rT}$, or zero if that is negative. For Acme, $2.896924880604. As volatility grows without bound, almost every outcome is a near-worthless share or a huge one, the strike stops mattering, and the call is worth the share it may deliver: $S e^{-qT}$, here $98.019867330676. The price moves continuously between these two, so every quote strictly inside is met exactly once ([intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)). A quote on or outside an edge is rejected, not solved.
+For existence, look at the ends. As volatility shrinks to zero the share stops wandering and the call is worth what it pays on the forward, discounted: $S e^{-qT} - K e^{-rT}$, or zero if that is negative. For Acme, $2.896924880604. As volatility grows without bound, almost every outcome is a near-worthless share or a huge one, the strike stops mattering, and the call is worth the share it may deliver: $S e^{-qT}$, here $98.019867330676. The price moves continuously between these two, so every quote strictly inside is met exactly once ([Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)). A quote on or outside an edge is rejected, not solved.
 
 The put needs no separate theory. Put–call parity ties its price to the call's by a term that has no volatility in it, so both have the same vega and the same implied volatility. The code inverts the house put, $6.330080627550, and gets 0.200000000000.
 
@@ -118,7 +96,7 @@ The put needs no separate theory. Put–call parity ties its price to the call's
 
 The quote is in dollars; the answer is in volatility. Vega is the exchange rate. Start at 0.50. The price there is $11.319467764849 too high. Vega at 0.50 is $37.269737 per unit, so the step down is 11.319467764849 / 37.269737 of a unit, landing at 0.196282594886. The price there is $0.140876951526 too low; one more conversion lands at 0.200000465889, and the next at 0.200000000000. Four prices computed, three steps taken.
 
-Read the guesses 0.196282594886, 0.200000465889, 0.200000000000: the count of correct digits roughly doubles each step, because each step roughly squares the error, as the Newton card proves ([newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)).
+Read the guesses 0.196282594886, 0.200000465889, 0.200000000000: the count of correct digits roughly doubles each step, because each step roughly squares the error, as the Newton card proves ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)).
 
 ### Step 2: vega has a peak, and the price curve bends around it
 
@@ -170,7 +148,7 @@ Manaster and Koehler gave this start in 1982, and it is still the textbook fix. 
 
 Now start at 5 percent: a plausible guess for a quiet stock. On the one-year house quote nothing goes wrong: at the money a year out, even a low volatility leaves the price responsive, and Newton arrives in 5 trips.
 
-On a one-week option the picture of vega above explains the rest. One week is taken as $T = 1/52$ year. Take the one-week **20-delta** call: the strike whose call delta — the share-equivalent the call carries — is 0.20, found as on [strike-from-delta](03-strike-from-delta.md). It is $102.459385, priced at $0.305628 at 20 percent volatility. At a 5 percent guess the price is $0.305572 too low and vega is 0.016098190330 dollars per unit. The step is the gap over the slope: it lands at 19.031778, a volatility of over nineteen hundred percent. There the call is worth nearly the whole share, the gap is +$80.744298, vega is 2.342809335938, and the next step lands at −15.432955. A negative volatility is not a poor answer; it is not an answer.
+On a one-week option the picture of vega above explains the rest. One week is taken as $T = 1/52$ year. Take the one-week **20-delta** call: the strike whose call delta — the share-equivalent the call carries — is 0.20, found as on [Strike from delta](03-strike-from-delta.md). It is $102.459385, priced at $0.305628 at 20 percent volatility. At a 5 percent guess the price is $0.305572 too low and vega is 0.016098190330 dollars per unit. The step is the gap over the slope: it lands at 19.031778, a volatility of over nineteen hundred percent. There the call is worth nearly the whole share, the gap is +$80.744298, vega is 2.342809335938, and the next step lands at −15.432955. A negative volatility is not a poor answer; it is not an answer.
 
 The one-week **5-delta** call, strike $104.767812, fares worse. At the 5 percent guess vega is 0.000000001569. One step lands at 36549384.536295.
 
@@ -196,7 +174,7 @@ flowchart TB
 
 One guarded loop. Bisection needs only the signs of the price gaps, so a flat or zero vega can cost a step but never the answer.
 
-From the same careless 5 percent start, the guarded solver solves the one-week 20-delta call in 7 trips with 1 fallback to the midpoint, and the 5-delta in 9 trips with 1 fallback. Plain bisection on the same bracket always arrives too, but needs 43 halvings to pin the answer to twelve decimals, because it gains one binary digit per trip whatever the curve looks like. The general machinery, including Brent's refinement of this idea, is on [root-finding-for-inverses](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md).
+From the same careless 5 percent start, the guarded solver solves the one-week 20-delta call in 7 trips with 1 fallback to the midpoint, and the 5-delta in 9 trips with 1 fallback. Plain bisection on the same bracket always arrives too, but needs 43 halvings to pin the answer to twelve decimals, because it gains one binary digit per trip whatever the curve looks like. The general machinery, including Brent's refinement of this idea, is on [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md).
 
 ### Step 6: the answer is only as sharp as the quote
 
@@ -696,9 +674,9 @@ The two outputs agree line for line at every printed digit.
 
 - **Every option screen's volatility column.** Each quote is inverted as it arrives, usually three times: bid, mid and ask. The spread between the bid and ask volatilities is the width on this card.
 - **Weekly and same-day options.** With days or hours left, vega collapses away from the money, so a quoted wing volatility can move several points on a one-tick price change. Risk systems filter or down-weight those quotes rather than trust them.
-- **Smile fitting.** A model fitted to many volatilities weights each by how sharp it is; dividing by the bid-ask volatility width is a common choice. The fitting itself is [calibration-as-least-squares](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md).
-- **The other inverses on this shelf.** A strike from a target delta, [strike-from-delta](03-strike-from-delta.md); a strike or spot from a target premium, [strike-or-spot-from-a-target-premium](04-strike-or-spot-from-a-target-premium.md); the forward and dividend from a call and a put, [implied-forward-and-dividend-from-parity](05-implied-forward-and-dividend-from-parity.md). Each one is a bracket and a slope.
-- **Listed American options.** Most single-stock options can be exercised early. Their implied volatility needs an American pricer inside the same guarded loop: [american-greeks-and-implied-volatility](../15-American%20and%20Bermudan%20exercise/07-american-greeks-and-implied-volatility.md).
+- **Smile fitting.** A model fitted to many volatilities weights each by how sharp it is; dividing by the bid-ask volatility width is a common choice. The fitting itself is [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md).
+- **The other inverses on this shelf.** A strike from a target delta, [Strike from delta](03-strike-from-delta.md); a strike or spot from a target premium, [Strike or spot from a target premium](04-strike-or-spot-from-a-target-premium.md); the forward and dividend from a call and a put, [Implied forward and dividend from parity](05-implied-forward-and-dividend-from-parity.md). Each one is a bracket and a slope.
+- **Listed American options.** Most single-stock options can be exercised early. Their implied volatility needs an American pricer inside the same guarded loop: [American Greeks and implied volatility](../15-American%20and%20Bermudan%20exercise/07-american-greeks-and-implied-volatility.md).
 
 > **Say it back**
 > Implied volatility is found by search, because the price formula cannot be solved for it. Newton divides the price gap by vega to get a volatility step, and from the start where vega peaks it never overshoots. Where vega is flat — short expiry, far from the money — a careless start sends Newton to absurd or negative volatilities, so a bracket catches any step that leaves it and halves instead. A bid-ask width divided by vega is the width of the answer: 0.13 of a point on the one-year Acme call, 3.61 points on a one-week wing. The answer is only as sharp as the quote.
@@ -707,14 +685,14 @@ The two outputs agree line for line at every printed digit.
 
 ## What this builds on
 
-- [implied-volatility](01-implied-volatility.md): what the number is and why desks quote it; this card finds it.
-- [newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the tangent-line step and why it squares the error near the answer.
-- [intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): why a bracket whose ends straddle the quote must contain the answer.
-- [root-finding-for-inverses](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): bisection, Newton and Brent for any inverse, and the residual-over-slope accuracy rule used in Step 6.
+- [Implied volatility](01-implied-volatility.md): what the number is and why desks quote it; this card finds it.
+- [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the tangent-line step and why it squares the error near the answer.
+- [Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): why a bracket whose ends straddle the quote must contain the answer.
+- [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): bisection, Newton and Brent for any inverse, and the residual-over-slope accuracy rule used in Step 6.
 
 ## Where this goes next
 
-- [american-greeks-and-implied-volatility](../15-American%20and%20Bermudan%20exercise/07-american-greeks-and-implied-volatility.md): the same guarded loop wrapped around a pricer with no formula, where vega itself must be computed numerically.
+- [American Greeks and implied volatility](../15-American%20and%20Bermudan%20exercise/07-american-greeks-and-implied-volatility.md): the same guarded loop wrapped around a pricer with no formula, where vega itself must be computed numerically.
 
 This card inverted a European price whose vega comes free in closed form; most listed single-stock options are American, and how to find their implied volatility when both the price and its slope come from a lattice is a later card's question.
 

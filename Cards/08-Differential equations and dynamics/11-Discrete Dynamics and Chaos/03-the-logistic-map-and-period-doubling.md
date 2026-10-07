@@ -1,23 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Discrete Dynamics and Chaos
-topic: Routes to chaos
-item: The logistic map
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/11-Discrete Dynamics and Chaos/02-fixed-points-of-a-map|fixed-points-of-a-map]]"
-  - "[[Cards/03-Algebra/02-Polynomials/03-quadratic-formula|quadratic-formula]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/11-Discrete Dynamics and Chaos/04-chaos-and-the-lyapunov-exponent|chaos-and-the-lyapunov-exponent]]"
-tags: [mathematics, differential equations and dynamics, the-logistic-map-and-period-doubling]
----
-
 # The logistic map: turn one dial and a settling population starts alternating, then doubles again and again toward chaos
 
-Differential equations and dynamics → Discrete Dynamics and Chaos → Routes to chaos → The logistic map
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Discrete Dynamics and Chaos](../../../SYLLABUS.md#w08-s11) → The logistic map
 
 ---
 
@@ -43,7 +26,7 @@ To scale: 250 px per unit of dial, 180 px per unit of share. Each column is one 
 
 ## The formula
 
-A map $x_{n+1} = g(x_n)$ turns this summer's value into next summer's ([iteration-and-cobweb-plots](01-iteration-and-cobweb-plots.md)). The logistic map is
+A map $x_{n+1} = g(x_n)$ turns this summer's value into next summer's ([Iteration](01-iteration-and-cobweb-plots.md)). The logistic map is
 
 $$x_{n+1} = f(x_n) = r\,x_n\,(1 - x_n).$$
 
@@ -84,7 +67,7 @@ $$\delta = \lim_{k \to \infty} \frac{r_k - r_{k-1}}{r_{k+1} - r_k} = 4.669\ldots
 - **A dial above 3 for the 2-cycle to exist.** At 2.8, (r + 1)(r − 3) is −0.76: no real cycle, and the share settles on 0.642857.
 - **A dial below 3.449490 for it to hold.** At 3.5 the formula gives 0.428571 and 0.857143, but $m$ = −1.25, so the share moves on to four values.
 - **One smooth hump with a rounded top, for 4.669.** A flatter top doubles at a different ratio.
-- **Separate generations.** The continuous law of [logistic-growth](../01-Rate%20Equations/07-logistic-growth.md) never oscillates: a flow on a line cannot overshoot a rest point.
+- **Separate generations.** The continuous law of [Logistic growth](../01-Rate%20Equations/07-logistic-growth.md) never oscillates: a flow on a line cannot overshoot a rest point.
 
 ---
 
@@ -92,7 +75,7 @@ $$\delta = \lim_{k \to \infty} \frac{r_k - r_{k-1}}{r_{k+1} - r_k} = 4.669\ldots
 
 ### Step 0: a 2-cycle is a fixed point of the map applied twice
 
-A share that returns every second summer solves $f(f(x)) = x$. That is the question of [fixed-points-of-a-map](02-fixed-points-of-a-map.md), asked of the map applied twice, with its test: a fixed point attracts when the slope there lies between −1 and 1.
+A share that returns every second summer solves $f(f(x)) = x$. That is the question of [Fixed points of a map](02-fixed-points-of-a-map.md), asked of the map applied twice, with its test: a fixed point attracts when the slope there lies between −1 and 1.
 
 ### Step 1: the steady share stops attracting at 3
 
@@ -104,7 +87,7 @@ $f(f(x)) = x$ has degree 4. Both fixed points solve it, so dividing them out lea
 
 $$r^2 x^2 - r(r+1)\,x + (r + 1) = 0,$$
 
-whose roots add to $(r+1)/r$ and multiply to $(r+1)/r^2$. The [quadratic-formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md) gives $x_\pm$.
+whose roots add to $(r+1)/r$ and multiply to $(r+1)/r^2$. The [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md) gives $x_\pm$.
 
 <details>
 <summary>The algebra behind this</summary>
@@ -399,7 +382,7 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Insects with one breeding season.** Robert May's 1976 survey showed that crowding alone, in separate generations, gives boom-bust cycles and erratic counts.
-- **A stepping method pushed too far.** Euler's rule ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)) on the continuous logistic law is, after rescaling the share, a logistic map with dial 1 + kh, where k is the growth rate and h the step; past 3 the computed curve alternates though the true one never does.
+- **A stepping method pushed too far.** Euler's rule ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)) on the continuous logistic law is, after rescaling the share, a logistic map with dial 1 + kh, where k is the growth rate and h the step; past 3 the computed curve alternates though the true one never does.
 - **Fluids and circuits.** Heated fluid layers and driven circuits double their period in the same cascade.
 
 > **Say it back**
@@ -409,12 +392,12 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [fixed-points-of-a-map](02-fixed-points-of-a-map.md): the slope test, used here on the map applied twice.
-- [quadratic-formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the cycle points, and the sum and product of roots.
+- [Fixed points of a map](02-fixed-points-of-a-map.md): the slope test, used here on the map applied twice.
+- [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the cycle points, and the sum and product of roots.
 
 ## Where this goes next
 
-- [chaos-and-the-lyapunov-exponent](04-chaos-and-the-lyapunov-exponent.md): the average log-slope along an orbit, negative while a cycle attracts, positive in chaos.
+- [The Lyapunov exponent](04-chaos-and-the-lyapunov-exponent.md): the average log-slope along an orbit, negative while a cycle attracts, positive in chaos.
 
 Past 3.569946, telling chaos from a very long cycle needs a measure of whether nearby shares drift apart: the Lyapunov exponent.
 

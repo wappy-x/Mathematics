@@ -1,28 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Matchings and Flows
-topic: Shipping under capacity
-item: Flows
-kind: method
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/06-directed-graphs-and-topological-order|directed-graphs-and-topological-order]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/04-connectivity-and-breadth-first-search|connectivity-and-breadth-first-search]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/13-Matchings and Flows/06-max-flow-min-cut|max-flow-min-cut]]"
-  - "[[Cards/14-Applied and computational/01-Algorithms and Growth/09-graph-algorithms-in-practice|graph-algorithms-in-practice]]"
-  - "[[Cards/15-Optimization/04-Linear Programming/06-network-flows-as-linear-programs|network-flows-as-linear-programs]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - flow-networks-and-ford-fulkerson
----
-
 # Flows: pipes with capacities from a source to a sink, and pushing along leftover routes, including undoing an earlier choice
 
-Combinatorics and graphs → Matchings and Flows → Shipping under capacity → Flows
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Matchings and Flows](../../../SYLLABUS.md#w04-s13) → Flows
 
 ---
 
@@ -36,7 +14,7 @@ The plant is the **source**, the port the **sink**, and each road's limit its **
 
 **Ford-Fulkerson raises a flow's value by pushing loads along any route that still has room, where room includes cancelling loads already sent the other way.**
 
-**What kind of fact this is:** a method, resting on two definitions, the flow and the cut. That it stops and can be certified is proved here; that its answer always equals the cheapest cut is the theorem on [max-flow-min-cut](06-max-flow-min-cut.md).
+**What kind of fact this is:** a method, resting on two definitions, the flow and the cut. That it stops and can be certified is proved here; that its answer always equals the cheapest cut is the theorem on [Max-flow min-cut](06-max-flow-min-cut.md).
 
 ### The picture: four junctions, five one-way roads
 
@@ -134,13 +112,13 @@ Collect the same sum road by road. A road inside $S$ counts once as output and o
 
 With whole-number capacities every push raises the value by at least 1, and Step 2 caps it at 6, the price of {s}. So at most six pushes happen before no augmenting route remains. Every load stays a whole number, and the method ends at a best plan (Step 4), so whole-number capacities always have a best plan in whole loads: the **integrality theorem**, which lets flows count matchings.
 
-That bound grows with the capacities. The Edmonds-Karp rule bounds the pushes by the numbers of junctions and roads alone; that count is on graph-algorithms-in-practice.
+That bound grows with the capacities. The Edmonds-Karp rule bounds the pushes by the numbers of junctions and roads alone; that count is on Graph algorithms as code.
 
 ### Step 4: the diamond ends at 6, with its certificate beside it
 
 Edmonds-Karp reaches 6 in two pushes; the cross-first run takes four, the last riding the stub B → A. Step 2 caps every plan at the cheapest split's 6, so 6 is the most this network can ship.
 
-That pairing is not luck. When no augmenting route is left, let $S$ be the junctions still reachable from the source on leftover. Every road leaving $S$ is full and every road entering it empty, or its far end would be reachable, so that split's price equals the value. The theorem for every network is [max-flow-min-cut](06-max-flow-min-cut.md).
+That pairing is not luck. When no augmenting route is left, let $S$ be the junctions still reachable from the source on leftover. Every road leaving $S$ is full and every road entering it empty, or its far end would be reachable, so that split's price equals the value. The theorem for every network is [Max-flow min-cut](06-max-flow-min-cut.md).
 
 ---
 
@@ -411,7 +389,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Rail haulage.** Ford and Fulkerson's 1956 paper opens with a rail network between two cities and asks for the largest steady shipment.
-- **Matching people to jobs.** Roads of capacity 1 run from a source to each applicant, from applicants to posts they fit, and from posts to a sink; the value counts filled posts, and an augmenting route is the alternating path of [matchings-and-augmenting-paths](01-matchings-and-augmenting-paths.md).
+- **Matching people to jobs.** Roads of capacity 1 run from a source to each applicant, from applicants to posts they fit, and from posts to a sink; the value counts filled posts, and an augmenting route is the alternating path of [Matchings](01-matchings-and-augmenting-paths.md).
 - **Finding the bottleneck.** A road is worth widening only if it crosses every cheapest split. On the diamond no single road crosses all three, so widening any one road alone buys nothing.
 
 > **Say it back**
@@ -421,16 +399,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [directed-graphs-and-topological-order](../09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md): one-way arrows and the notation for them.
-- [connectivity-and-breadth-first-search](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md): the search that finds a route with the fewest steps, and the reachable set of Step 4.
+- [Directed graphs](../09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md): one-way arrows and the notation for them.
+- [Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md): the search that finds a route with the fewest steps, and the reachable set of Step 4.
 
 ## Where this goes next
 
-- [max-flow-min-cut](06-max-flow-min-cut.md): the best plan and the cheapest split are always the same number.
-- graph-algorithms-in-practice: what the shortest-route rule costs, and faster methods.
-- network-flows-as-linear-programs: the same problem as a linear program, with the cut as its dual.
+- [Max-flow min-cut](06-max-flow-min-cut.md): the best plan and the cheapest split are always the same number.
+- Graph algorithms as code: what the shortest-route rule costs, and faster methods.
+- Network flows: the same problem as a linear program, with the cut as its dual.
 
-A plan worth 6 sits beside a split priced 6. Whether the two must always meet is [max-flow-min-cut](06-max-flow-min-cut.md).
+A plan worth 6 sits beside a split priced 6. Whether the two must always meet is [Max-flow min-cut](06-max-flow-min-cut.md).
 
 ---
 

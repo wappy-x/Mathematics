@@ -1,28 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Systems and the Matrix Exponential
-topic: Running a linear system forward
-item: The matrix exponential
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/02-the-eigenvalue-method|the-eigenvalue-method]]"
-  - "[[Cards/03-Algebra/04-Matrices/03-matrix-multiplication|matrix-multiplication]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/05-taylor-series|taylor-series]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/06-forced-systems-and-variation-of-constants|forced-systems-and-variation-of-constants]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/09-zero-order-hold-and-tustin-discretisation|zero-order-hold-and-tustin-discretisation]]"
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/01-state-space-models-and-the-matrix-exponential|state-space-models-and-the-matrix-exponential]]"
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/03-the-abstract-cauchy-problem-and-the-operator-exponential|the-abstract-cauchy-problem-and-the-operator-exponential]]"
-  - "[[Cards/23-Differential geometry and Lie groups/06-Lie Groups/02-lie-algebras-and-the-exponential-map|lie-algebras-and-the-exponential-map]]"
-tags: [mathematics, differential equations and dynamics, the-matrix-exponential]
----
-
 # The matrix exponential: e^(At) moves any starting state forward, even when eigenvectors run out
 
-Differential equations and dynamics → Systems and the Matrix Exponential → Running a linear system forward → The matrix exponential
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Systems and the Matrix Exponential](../../../SYLLABUS.md#w08-s04) → The matrix exponential
 
 ---
 
@@ -54,7 +32,7 @@ Orange: room 1. Teal: room 2. Room 2 first warms: at the start its rate is 30 �
 
 ## The formula
 
-Reminder: x' = Ax reads "the rate of the state x is the matrix A times the state" ([from-one-equation-to-a-system](01-from-one-equation-to-a-system.md)). For the rooms, with rates per hour:
+Reminder: x' = Ax reads "the rate of the state x is the matrix A times the state" ([From one equation to a system](01-from-one-equation-to-a-system.md)). For the rooms, with rates per hour:
 
 $$T_1' = -2T_1 + T_2, \qquad T_2' = T_1 - 2T_2, \qquad A = \begin{pmatrix} -2 & 1 \\ 1 & -2 \end{pmatrix}$$
 
@@ -94,7 +72,7 @@ $$e^{At} = \tfrac12\begin{pmatrix} e^{-t} + e^{-3t} & e^{-t} - e^{-3t} \\ e^{-t}
 
 ### Step 0: the series needs only multiplying and adding
 
-For one room, e^(ct) has rate c times itself, and its power series, 1 + ct + (ct)^2/2! + …, uses only multiplying and adding ([taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). Matrices can be multiplied and added ([matrix-multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md)), so the same series makes sense with At in place of ct.
+For one room, e^(ct) has rate c times itself, and its power series, 1 + ct + (ct)^2/2! + …, uses only multiplying and adding ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). Matrices can be multiplied and added ([Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md)), so the same series makes sense with At in place of ct.
 
 ### Step 1: the series solves x' = Ax
 
@@ -102,7 +80,7 @@ Term by term, A^k t^k/k! has rate A^k t^(k−1)/(k−1)!: A times the previous t
 
 ### Step 2: when A has enough eigenvectors, the series sums to exponentials
 
-An eigenvector is a direction the matrix only stretches, by its eigenvalue λ ([the-eigenvalue-method](02-the-eigenvalue-method.md)). For the rooms, (1, 1), rooms equal, shrinks at λ = −1 per hour; (1, −1), rooms opposite, at λ = −3. Along an eigenvector v, A^k v = λ^k v, so the series acts as a number and sums to e^(λt) v.
+An eigenvector is a direction the matrix only stretches, by its eigenvalue λ ([The eigenvalue method](02-the-eigenvalue-method.md)). For the rooms, (1, 1), rooms equal, shrinks at λ = −1 per hour; (1, −1), rooms opposite, at λ = −3. Along an eigenvector v, A^k v = λ^k v, so the series acts as a number and sums to e^(λt) v.
 
 Split the start: (30, 10) = 20(1, 1) + 10(1, −1), so x(t) = 20e^(−t)(1, 1) + 10e^(−3t)(1, −1). The starts (1, 0) and (0, 1) give the closed form's two columns. A matrix whose columns are solutions from independent starts is a fundamental matrix; e^(At), the one equal to I at t = 0, is also called the state-transition matrix. In matrix language, A = V D V^(−1), eigenvectors as the columns of V, eigenvalues on the diagonal of D, and e^(At) = V e^(Dt) V^(−1).
 
@@ -140,7 +118,7 @@ Half an hour of cooling, then an hour, must match an hour and a half: e^(A(s+t))
 
 **Convergence.** Let ‖M‖ be the largest row total of the entries' sizes. No entry exceeds ‖M‖, and ‖MN‖ ≤ ‖M‖ ‖N‖, so ‖(At)^k/k!‖ ≤ (‖A‖t)^k/k!. These bounds sum to the finite e^(‖A‖t), so every entry converges absolutely for every t.
 
-**The rate.** Each entry is a power series in t with infinite radius, so it may be differentiated term by term ([taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)): the rate is Σ A^k t^(k−1)/(k−1)! = A e^(At) = e^(At) A.
+**The rate.** Each entry is a power series in t with infinite radius, so it may be differentiated term by term ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)): the rate is Σ A^k t^(k−1)/(k−1)! = A e^(At) = e^(At) A.
 
 **The product rule.** For commuting B and C, (B + C)^m expands by the binomial theorem. Absolutely convergent series may be multiplied and regrouped, so e^B e^C = Σ (B + C)^m/m! = e^(B+C). Take B = As, C = At; then s = −t gives e^(−At) e^(At) = I.
 
@@ -148,7 +126,7 @@ Half an hour of cooling, then an hour, must match an hour and a half: e^(A(s+t))
 
 </details>
 
-A third road needs no series: step forward with new state = old state + step length × rate (Euler's rule, [eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)). Its error halves as the step halves.
+A third road needs no series: step forward with new state = old state + step length × rate (Euler's rule, [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)). Its error halves as the step halves.
 
 ---
 
@@ -399,9 +377,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Digital control.** A controller sampling every h seconds steps the state by e^(Ah): [zero-order-hold-and-tustin-discretisation](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md).
+- **Digital control.** A controller sampling every h seconds steps the state by e^(Ah): [Discretising a design](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md).
 - **Drugs in linked compartments.** A dose moving from gut to blood at the rate the blood clears it follows the heater's 10te^(−t): rise, peak, fade.
-- **Rotations and oscillations.** The exponential of an angle times `[[0, -1], [1, 0]]` is the rotation by that angle; see [complex-eigenvalues-and-spirals](03-complex-eigenvalues-and-spirals.md) and [coupled-oscillators-and-normal-modes](07-coupled-oscillators-and-normal-modes.md).
+- **Rotations and oscillations.** The exponential of an angle times `[[0, -1], [1, 0]]` is the rotation by that angle; see [Complex eigenvalues](03-complex-eigenvalues-and-spirals.md) and [Normal modes](07-coupled-oscillators-and-normal-modes.md).
 
 > **Say it back**
 > x' = Ax is solved by x(t) = e^(At) x0, with e^(At) the exponential's power series fed the matrix At. It converges for every square matrix, and its rate is A times itself. A full set of eigenvectors sums it to one exponential per eigenvector; a missing one brings a factor t. The rooms sit 7.86 °C and 6.86 °C above outside after an hour.
@@ -410,19 +388,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [the-eigenvalue-method](02-the-eigenvalue-method.md): eigenvectors split the rooms into two patterns, each shrinking at its own rate.
-- [matrix-multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md): the products every term of the series is made of.
-- [taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the series for e^x, and the licence to differentiate it term by term.
+- [The eigenvalue method](02-the-eigenvalue-method.md): eigenvectors split the rooms into two patterns, each shrinking at its own rate.
+- [Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md): the products every term of the series is made of.
+- [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the series for e^x, and the licence to differentiate it term by term.
 
 ## Where this goes next
 
-- [forced-systems-and-variation-of-constants](06-forced-systems-and-variation-of-constants.md): the heating back on, with e^(A(t−s)) inside an integral.
-- [zero-order-hold-and-tustin-discretisation](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md): e^(Ah) as the exact step of a sampled system.
-- state-space-models-and-the-matrix-exponential: the same object with inputs and outputs attached.
-- the-abstract-cauchy-problem-and-the-operator-exponential: e^(A(s+t)) = e^(As) e^(At) kept when A acts on functions and the series fails.
-- lie-algebras-and-the-exponential-map: from rates to rotations.
+- [Forced systems](06-forced-systems-and-variation-of-constants.md): the heating back on, with e^(A(t−s)) inside an integral.
+- [Discretising a design](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/09-zero-order-hold-and-tustin-discretisation.md): e^(Ah) as the exact step of a sampled system.
+- State space: the same object with inputs and outputs attached.
+- Evolution as an equation: e^(A(s+t)) = e^(As) e^(At) kept when A acts on functions and the series fails.
+- Lie algebra: from rates to rotations.
 
-The long-run shape read from A alone is [classifying-equilibria-by-trace-and-determinant](05-classifying-equilibria-by-trace-and-determinant.md).
+The long-run shape read from A alone is [Trace and determinant](05-classifying-equilibria-by-trace-and-determinant.md).
 
 ---
 

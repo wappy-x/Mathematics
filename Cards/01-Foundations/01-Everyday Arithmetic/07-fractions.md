@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Everyday Arithmetic
-topic: Fractions, decimals and percentages
-item: Fractions
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/03-multiplying-and-dividing|multiplying-and-dividing]]"
-next:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/08-decimals|decimals]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/09-ratios-and-rates|ratios-and-rates]]"
-tags:
-  - mathematics
-  - foundations
-  - fractions
----
-
 # Fractions: parts of a whole, and how to add, multiply and divide them
 
-Foundations → Everyday Arithmetic → Fractions, decimals and percentages → Fractions
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Everyday Arithmetic](../../../SYLLABUS.md#w01-s01) → Fractions
 
 ---
 
@@ -74,7 +54,7 @@ Nothing to memorise. Three worked statements:
 
 ### Step 0: a fraction is a division nobody finished
 
-Share 8 slices between 3 people. From [multiplying-and-dividing](03-multiplying-and-dividing.md): 2 each, 2 over. Cut those two into thirds and everyone holds 2 slices and 2/3 of a slice.
+Share 8 slices between 3 people. From [Multiplying and dividing](03-multiplying-and-dividing.md): 2 each, 2 over. Cut those two into thirds and everyone holds 2 slices and 2/3 of a slice.
 
 Write that share in one mark: **8/3** — the pile on top, the number sharing underneath. The fraction is the division, parked rather than done. The bottom is never 0: you cannot cut a pizza into no pieces.
 
@@ -258,7 +238,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Cooking.** Half batches, double batches, a cup marked in quarters and thirds. Scaling a recipe: [ratios-and-rates](09-ratios-and-rates.md).
+- **Cooking.** Half batches, double batches, a cup marked in quarters and thirds. Scaling a recipe: [Ratios and rates](09-ratios-and-rates.md).
 - **Money and time.** A quarter past, half an hour, half price — small bottoms, easy in your head.
 - **Anything sold in a fixed cut.** Spanners in sixteenths of an inch, music in quarter and eighth notes.
 
@@ -269,12 +249,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [multiplying-and-dividing](03-multiplying-and-dividing.md): sharing a pile that does not come out even. This card cuts the leftover up and names it.
+- [Multiplying and dividing](03-multiplying-and-dividing.md): sharing a pile that does not come out even. This card cuts the leftover up and names it.
 
 ## Where this goes next
 
-- [decimals](08-decimals.md): fractions whose bottom is ten, a hundred, a thousand.
-- [ratios-and-rates](09-ratios-and-rates.md): comparing two amounts and scaling both.
+- [Decimals](08-decimals.md): fractions whose bottom is ten, a hundred, a thousand.
+- [Ratios and rates](09-ratios-and-rates.md): comparing two amounts and scaling both.
 
 ---
 

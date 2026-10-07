@@ -1,29 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: The Limit Theorems, Proved
-topic: Events that keep happening
-item: The Borel-Cantelli lemmas
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/05-continuity-of-measure|continuity-of-measure]]"
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/04-independence-as-a-product-measure|independence-as-a-product-measure]]"
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/04-modes-of-convergence|modes-of-convergence]]"
-next:
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/02-kolmogorov-zero-one-law|kolmogorov-zero-one-law]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/04-strong-law-of-large-numbers|strong-law-of-large-numbers]]"
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/04-martingale-convergence|martingale-convergence]]"
-tags:
-  - mathematics
-  - measure and integration
-  - borel-cantelli-lemmas
----
-
 # The Borel-Cantelli lemmas: summable probabilities mean an event happens finitely often, and for independent events the converse holds
 
-Measure and integration → The Limit Theorems, Proved → Events that keep happening → The Borel-Cantelli lemmas
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Limit Theorems, Proved](../../../SYLLABUS.md#w10-s10) → The Borel-Cantelli lemmas
 
 ---
 
@@ -61,7 +38,7 @@ Orange: a six at roll N or later, chance 1 for every N (within the 60 rolls afte
 
 ## The formula
 
-Notation first, in words. A probability space $(\Omega, \mathcal{F}, P)$ is a set of outcomes, the collection of sets we allow ourselves to measure, and a probability on them. Here one outcome $\omega$ is one endless record of rolls. The probability is the product law that makes the rolls independent fair dice ([infinite-sequences-and-kolmogorov-extension](../06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md)). An event is a measurable set of outcomes: $A_n$ is "roll n is a six", $B_n$ is "rolls n to 2n − 1 are all sixes". $A_n^c$, the complement, is "$A_n$ does not happen".
+Notation first, in words. A probability space $(\Omega, \mathcal{F}, P)$ is a set of outcomes, the collection of sets we allow ourselves to measure, and a probability on them. Here one outcome $\omega$ is one endless record of rolls. The probability is the product law that makes the rolls independent fair dice ([Infinitely many coin tosses](../06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md)). An event is a measurable set of outcomes: $A_n$ is "roll n is a six", $B_n$ is "rolls n to 2n − 1 are all sixes". $A_n^c$, the complement, is "$A_n$ does not happen".
 
 **Infinitely often**, written i.o., is a new set built from the events: the outcomes that land in infinitely many of them. It is also called the **lim sup of the sets**, read "infinitely many of them happen".
 
@@ -116,7 +93,7 @@ $$1 - x \le e^{-x} \quad \text{for every real } x$$
 - **The first lemma needs nothing else.** No independence. It holds for any measure, not only probabilities: the run-starts overlap and depend on each other, and the lemma still applies.
 - **The second lemma needs independence.** Drop it and a divergent sum proves nothing. Glue every event to "roll 1 is a six": the chances add to infinity, yet the chance of infinitely many is 1/6. Pairwise independence is enough, by a longer proof in Durrett's §2.3.
 - **Summable means the full infinite sum is finite.** Chances that shrink to zero are not enough: the sum of 1/n shrinks term by term and still diverges.
-- **The corollary gives a subsequence, not the whole sequence.** The typewriter sequence converges in probability and settles at no point ([modes-of-convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)).
+- **The corollary gives a subsequence, not the whole sequence.** The typewriter sequence converges in probability and settles at no point ([Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)).
 
 ---
 
@@ -124,7 +101,7 @@ $$1 - x \le e^{-x} \quad \text{for every real } x$$
 
 ### Step 0: "infinitely often" is the end of a shrinking list of tails
 
-Write $T_N$ for the event from N on, "some event at N or later happens". Moving the cut-off later can only remove candidates, so $T_1 \supseteq T_2 \supseteq T_3 \dots$ The lim sup is what all the tails share. Continuity from above ([continuity-of-measure](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) says the chances of shrinking sets fall to the chance of what they share, when the first chance is finite, which a probability always is. So
+Write $T_N$ for the event from N on, "some event at N or later happens". Moving the cut-off later can only remove candidates, so $T_1 \supseteq T_2 \supseteq T_3 \dots$ The lim sup is what all the tails share. Continuity from above ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) says the chances of shrinking sets fall to the chance of what they share, when the first chance is finite, which a probability always is. So
 
 $$P\big(\limsup_{n\to\infty} A_n\big) \;=\; \lim_{N\to\infty} P\Big(\bigcup_{n=N}^{\infty} A_n\Big)$$
 
@@ -152,7 +129,7 @@ On the die: the run-start chances from N = 3 on add to 1/216 + 1/1296 + … = 0.
 
 "Finitely often" is not "never". The chance of at least one run-start, ever, lies between 0.193667 and 0.193671, and the rest see none.
 
-A second road counts. Let $S$ be the number of events that happen. Monotone convergence ([monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) lets the mean pass through the infinite sum of indicators, so the mean count is the sum of the chances: 0.2 for run-starts, against 0.1981 simulated. A count with a finite mean is finite with probability 1.
+A second road counts. Let $S$ be the number of events that happen. Monotone convergence ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) lets the mean pass through the infinite sum of indicators, so the mean count is the sum of the chances: 0.2 for run-starts, against 0.1981 simulated. A count with a finite mean is finite with probability 1.
 
 ### Step 3: the second lemma, independent misses multiply and the product dies
 
@@ -175,7 +152,7 @@ The curve $y = e^{-x}$ bends upward everywhere: its slope $-e^{-x}$ is always in
 
 ### Step 4: together, a sharp test for independent events
 
-For independent events the two lemmas cover every case: a finite sum gives chance 0, an infinite sum chance 1. That is no accident. "Infinitely many sixes" does not depend on any finite set of rolls, and for independent rolls every such event has chance 0 or 1: [kolmogorov-zero-one-law](02-kolmogorov-zero-one-law.md). Borel-Cantelli says which of the two.
+For independent events the two lemmas cover every case: a finite sum gives chance 0, an infinite sum chance 1. That is no accident. "Infinitely many sixes" does not depend on any finite set of rolls, and for independent rolls every such event has chance 0 or 1: [Kolmogorov's zero-one law](02-kolmogorov-zero-one-law.md). Borel-Cantelli says which of the two.
 
 ### Step 5: from in probability to almost surely, along a subsequence
 
@@ -183,11 +160,11 @@ Converging **in probability** means that for every tolerance $\varepsilon$, the 
 
 Pick indices $n_k$, rising, where the chance of missing by more than $2^{-k}$ at step $n_k$ is at most $2^{-k}$. These chances add up to at most 1. By the first lemma, only finitely many of those misses happen, with probability 1, so $X_{n_k}$ converges to $X$ on almost every record. The modes card proved this as Riesz's theorem; here it is the first lemma at work.
 
-On the die, let $X_n$ be the share of sixes in the first n rolls. Chebyshev's inequality bounds the chance of missing 1/6 by more than 0.05 by 500/(9n). The weak law is this bound going to 0 ([weak-law-of-large-numbers](03-weak-law-of-large-numbers.md)).
+On the die, let $X_n$ be the share of sixes in the first n rolls. Chebyshev's inequality bounds the chance of missing 1/6 by more than 0.05 by 500/(9n). The weak law is this bound going to 0 ([The weak law of large numbers](03-weak-law-of-large-numbers.md)).
 
 Summed over every n, the bounds diverge like the harmonic series: 543.7559 by n = 10000, and growing. The first lemma is silent. Summed over the squares, n = k^2, they converge: the part beyond k = K is at most 500/(9K), which is 0.5556 at K = 100 and 0.0556 at K = 1000. So along the squares, misses by more than 0.05 happen only finitely often, with probability 1. Doing this for the tolerances 1, 1/2, 1/3, …, countably many, gives $X_{k^2} \to 1/6$ almost surely. On the simulated record the misses stop at k = 12; to k = 100 there are none after it.
 
-Summable bounds along a sparse subsequence, then filling the gaps, is the shape of Etemadi's proof on [strong-law-of-large-numbers](04-strong-law-of-large-numbers.md), with geometric checkpoints in place of the squares. Its main proof makes the bounds summable over every n with a fourth moment.
+Summable bounds along a sparse subsequence, then filling the gaps, is the shape of Etemadi's proof on [The strong law of large numbers](04-strong-law-of-large-numbers.md), with geometric checkpoints in place of the squares. Its main proof makes the bounds summable over every n with a fourth moment.
 
 <details>
 <summary>Detailed proof</summary>
@@ -200,7 +177,7 @@ Throughout, $(\Omega, \mathcal{F}, P)$ is a probability space and $A_1, A_2, \do
 
 **Lemma 2 (the inequality).** Let $f(x) = e^{-x} - (1 - x)$. Then $f(0) = 0$ and $f'(x) = 1 - e^{-x}$, which is negative for $x < 0$ and positive for $x > 0$. So f falls to its value at 0 and rises after it: f is never negative, that is, $1 - x \le e^{-x}$.
 
-**Lemma 3 (complements stay independent).** Events are independent when for every finite set I of indices, $P(\bigcap_{i \in I} A_i) = \prod_{i \in I} P(A_i)$. Replace one event $A_i$ in the list by its complement, and let C be the intersection of the others. Then $P(A_i^c \cap C) = P(C) - P(A_i \cap C) = P(C)\,(1 - P(A_i))$, and P(C) is itself a product, so the product rule holds again. Repeating this one index at a time replaces any number of events by complements. Equivalently, the sigma-algebras $\{\emptyset, A_n, A_n^c, \Omega\}$ are independent ([independence-as-a-product-measure](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)).
+**Lemma 3 (complements stay independent).** Events are independent when for every finite set I of indices, $P(\bigcap_{i \in I} A_i) = \prod_{i \in I} P(A_i)$. Replace one event $A_i$ in the list by its complement, and let C be the intersection of the others. Then $P(A_i^c \cap C) = P(C) - P(A_i \cap C) = P(C)\,(1 - P(A_i))$, and P(C) is itself a product, so the product rule holds again. Repeating this one index at a time replaces any number of events by complements. Equivalently, the sigma-algebras $\{\emptyset, A_n, A_n^c, \Omega\}$ are independent ([Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md)).
 
 **Theorem 4 (second lemma).** Suppose the $A_n$ are independent and $\sum_n P(A_n) = \infty$. Fix N and put $D_{N,K} = \bigcap_{n=N}^{K} A_n^c$ for $K \ge N$. By Lemma 3, $P(D_{N,K}) = \prod_{n=N}^{K} (1 - P(A_n))$. Each factor lies in [0, 1] and by Lemma 2 is at most $e^{-P(A_n)}$; multiplying inequalities between non-negative numbers keeps them, so $P(D_{N,K}) \le \exp(-\sum_{n=N}^{K} P(A_n))$. The first N − 1 terms of the series add to at most N − 1, so $\sum_{n=N}^{K} P(A_n) \to \infty$ as $K \to \infty$ and the bound tends to 0. The set $D_N = \bigcap_{n \ge N} A_n^c$ lies inside every $D_{N,K}$, so $P(D_N) = 0$. By Lemma 0 the complement of the lim sup is $\bigcup_N D_N$, whose chance is at most $\sum_N P(D_N) = 0$ by countable subadditivity. Hence $P(\limsup A_n) = 1$.
 
@@ -642,7 +619,7 @@ The two outputs match line for line.
 > **Running the second lemma without independence.** A divergent sum of chances proves nothing on its own. Copy one event onto every index, "roll 1 is a six" each time: the chances add to infinity and the chance of infinitely many is 1/6, not 1.
 >
 > - **Adding independence to the first lemma.** It needs none. The run-starts overlap and it still applies.
-> - **Reading chances that shrink to 0 as finitely often.** The chances must add to a finite number. The typewriter's lit strip has a chance shrinking to 0 and lights every point infinitely often ([modes-of-convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)).
+> - **Reading chances that shrink to 0 as finitely often.** The chances must add to a finite number. The typewriter's lit strip has a chance shrinking to 0 and lights every point infinitely often ([Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)).
 > - **Reading finitely often as never.** A run-start happens with chance about 0.19367.
 > - **Reading "infinitely often" as "at least once".** At least once looks at one union; infinitely often looks at the union after every cut-off.
 
@@ -650,7 +627,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **The strong law of large numbers.** Every standard proof passes through the first lemma: miss chances that add up, over every n under a fourth moment, or along sparse checkpoints with the gaps filled ([strong-law-of-large-numbers](04-strong-law-of-large-numbers.md)). The practical law in [law-of-large-numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md) checks it by simulation.
+- **The strong law of large numbers.** Every standard proof passes through the first lemma: miss chances that add up, over every n under a fourth moment, or along sparse checkpoints with the gaps filled ([The strong law of large numbers](04-strong-law-of-large-numbers.md)). The practical law in [Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md) checks it by simulation.
 - **Normal numbers.** Borel's 1909 paper, where the first lemma began, showed that almost every number in [0, 1] has each decimal digit with long-run share one tenth.
 - **Repeated checks of a system.** Summable failure bounds mean finitely many failures, and the sum from N on bounds any failure after N.
 - **Patterns in random text.** A fixed word typed by random keys: disjoint blocks of keys are independent with a fixed chance each, so the word appears infinitely often.
@@ -662,17 +639,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [continuity-of-measure](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md): subadditivity for the first lemma, continuity from above for the tail picture.
-- [independence-as-a-product-measure](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md): independence as the product rule, and why complements inherit it.
-- [modes-of-convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md): convergence in probability and almost surely, and the typewriter that separates them.
+- [Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md): subadditivity for the first lemma, continuity from above for the tail picture.
+- [Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md): independence as the product rule, and why complements inherit it.
+- [Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md): convergence in probability and almost surely, and the typewriter that separates them.
 
 ## Where this goes next
 
-- [kolmogorov-zero-one-law](02-kolmogorov-zero-one-law.md): why "infinitely often" for independent events could only ever have chance 0 or 1.
-- [strong-law-of-large-numbers](04-strong-law-of-large-numbers.md): the first lemma applied to the averages themselves, with miss chances summable over every n under a fourth moment, and Etemadi's sparse checkpoints with the gaps filled for any finite mean.
-- [martingale-convergence](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/04-martingale-convergence.md): the counting road of Step 2, where a finite average number of upcrossings means finitely many upcrossings, with probability 1.
+- [Kolmogorov's zero-one law](02-kolmogorov-zero-one-law.md): why "infinitely often" for independent events could only ever have chance 0 or 1.
+- [The strong law of large numbers](04-strong-law-of-large-numbers.md): the first lemma applied to the averages themselves, with miss chances summable over every n under a fourth moment, and Etemadi's sparse checkpoints with the gaps filled for any finite mean.
+- [Martingale convergence](../../11-Stochastic%20processes%20and%20calculus/02-Martingales/04-martingale-convergence.md): the counting road of Step 2, where a finite average number of upcrossings means finitely many upcrossings, with probability 1.
 
-The lemmas decide "infinitely often" only when the sum is finite or the events are independent; why, for independent events, no answer other than 0 or 1 was ever possible is [kolmogorov-zero-one-law](02-kolmogorov-zero-one-law.md).
+The lemmas decide "infinitely often" only when the sum is finite or the events are independent; why, for independent events, no answer other than 0 or 1 was ever possible is [Kolmogorov's zero-one law](02-kolmogorov-zero-one-law.md).
 
 ---
 

@@ -1,24 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Poisson and Jump Processes
-topic: Waiting at the stop
-item: Renewal processes
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/01-poisson-process|poisson-process]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/04-strong-law-of-large-numbers|strong-law-of-large-numbers]]"
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/03-stopping-times-and-optional-stopping|stopping-times-and-optional-stopping]]"
-next:
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/03-discrete-monitoring-correction|discrete-monitoring-correction]]"
-tags: [mathematics, stochastic processes and calculus, renewal-processes-in-outline]
----
-
 # Renewal processes: arrivals with any gap distribution
 
-Stochastic processes and calculus → Poisson and Jump Processes → Waiting at the stop → Renewal processes
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Poisson and Jump Processes](../../../SYLLABUS.md#w11-s04) → Renewal processes
 
 ---
 
@@ -28,7 +10,7 @@ A bus stop is served by one route. After each bus leaves, the next one comes eit
 
 A passenger who turns up without a timetable waits for the next bus. The natural guess is half the average gap, 5 minutes. The true average is 6.25. A passenger is three times as likely to walk into a 15-minute gap as a 5-minute one, because long gaps cover three quarters of the clock.
 
-Arrivals whose gaps are independent and share one law, any law, form a **renewal process**: each arrival renews the stop, and the future then looks as it did at the start. The Poisson process ([poisson-process](01-poisson-process.md)) is the case with exponential gaps. Two facts hold for every gap law. The **elementary renewal theorem**: in the long run, arrivals come at one per mean gap. The **inspection paradox**: a random moment tends to fall in a long gap, so the wait is at least half the mean gap, and more whenever the gaps vary.
+Arrivals whose gaps are independent and share one law, any law, form a **renewal process**: each arrival renews the stop, and the future then looks as it did at the start. The Poisson process ([Poisson process](01-poisson-process.md)) is the case with exponential gaps. Two facts hold for every gap law. The **elementary renewal theorem**: in the long run, arrivals come at one per mean gap. The **inspection paradox**: a random moment tends to fall in a long gap, so the wait is at least half the mean gap, and more whenever the gaps vary.
 
 **Over a long time, arrivals come at one per mean gap; but a moment picked at random lands in gaps in proportion to their length, so the average wait is the mean square gap over twice the mean gap.**
 
@@ -91,7 +73,7 @@ For gaps with a density instead of a list of values, replace the chance $P(X = x
 
 ### Step 0: each bus restarts the clock
 
-After bus $n$ leaves, the gaps still to come are $X_{n+1}, X_{n+2}, \dots$. They are independent of everything before, with the same law as the original gaps. So the stop, watched from time $S_n$, is a fresh copy of the stop watched from time 0. Every argument below rests on this, together with the strong law of large numbers ([strong-law-of-large-numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md)): the average of the first $n$ gaps tends to $\mu$ on almost every run.
+After bus $n$ leaves, the gaps still to come are $X_{n+1}, X_{n+2}, \dots$. They are independent of everything before, with the same law as the original gaps. So the stop, watched from time $S_n$, is a fresh copy of the stop watched from time 0. Every argument below rests on this, together with the strong law of large numbers ([The strong law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md)): the average of the first $n$ gaps tends to $\mu$ on almost every run.
 
 ### Step 1: the count is squeezed between two bus times
 
@@ -109,7 +91,7 @@ Divide the squeeze by $N(t)$. The left side, $S_{N(t)}/N(t)$, is the average of 
 
 Almost-sure convergence does not by itself carry over to averages, so $m(t)/t$ needs its own argument.
 
-The index $N(t)+1$ is a **stopping time** ([stopping-times-and-optional-stopping](../02-Martingales/03-stopping-times-and-optional-stopping.md)): whether bus $n$ is the first after $t$ is known from the first $n$ gaps. For such an index, **Wald's identity** says the average total of the gaps is the average number of gaps times the mean gap:
+The index $N(t)+1$ is a **stopping time** ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)): whether bus $n$ is the first after $t$ is known from the first $n$ gaps. For such an index, **Wald's identity** says the average total of the gaps is the average number of gaps times the mean gap:
 
 $$E[S_{N(t)+1}] = \mu \,\big(m(t) + 1\big).$$
 
@@ -159,7 +141,7 @@ Write $E[X^2] = \mu^2 + \sigma^2$. Then $E[X^2]/(2\mu) = \mu/2 + \sigma^2/(2\mu)
 
 ### The other door: the Poisson case
 
-With exponential gaps of mean $\mu$, $E[X^2] = 2\mu^2$ and the formula gives a wait of $\mu$: the full mean gap, not half. That is the memoryless property of [poisson-process](01-poisson-process.md). At the shelf's switchboard, with calls at 4 an hour, an operator who looks up at a random moment waits 15 minutes on average for the next call, not 7.5.
+With exponential gaps of mean $\mu$, $E[X^2] = 2\mu^2$ and the formula gives a wait of $\mu$: the full mean gap, not half. That is the memoryless property of [Poisson process](01-poisson-process.md). At the shelf's switchboard, with calls at 4 an hour, an operator who looks up at a random moment waits 15 minutes on average for the next call, not 7.5.
 
 ---
 
@@ -651,8 +633,8 @@ The two outputs are identical line for line.
 - **Waiting for buses, trains and lifts.** Transit agencies report "excess wait time": the passengers' average wait minus half the scheduled gap. When buses keep the scheduled average spacing, that excess is the $\sigma^2/(2\mu)$ term, and bunching raises it.
 - **Class sizes.** The average class size per class is smaller than the average class size per student, because large classes hold more students: length bias, with size for length.
 - **Replacing parts.** Bulbs replaced on failure form a renewal process: bulbs bought per year is one over the mean life, whatever the spread, and the bulb found burning at a random inspection is on average longer-lived than a typical one.
-- **Queues and chains.** The times a continuous-time chain returns to a state are renewal times, and the long-run share of time spent there is the mean stay over the mean return time: [continuous-time-markov-chains-and-queues](05-continuous-time-markov-chains-and-queues.md).
-- **Claims on an insurer.** A claims process with non-exponential gaps between claims is a renewal process; the total paid is then a sum over a renewal count, the non-Poisson cousin of [compound-poisson](04-compound-poisson.md).
+- **Queues and chains.** The times a continuous-time chain returns to a state are renewal times, and the long-run share of time spent there is the mean stay over the mean return time: [Continuous-time chains](05-continuous-time-markov-chains-and-queues.md).
+- **Claims on an insurer.** A claims process with non-exponential gaps between claims is a renewal process; the total paid is then a sum over a renewal count, the non-Poisson cousin of [Compound Poisson](04-compound-poisson.md).
 
 > **Say it back**
 > A renewal process is a stream of arrivals with independent gaps sharing one law; each arrival starts it afresh. In the long run arrivals come at one per mean gap, because the count is squeezed between two sums of gaps and the strong law pins both. A random moment lands in a gap with chance proportional to its length, so the wait averages the mean square gap over twice the mean gap. For buses 5 or 15 minutes apart that is 6.25 minutes, not 5; for Poisson arrivals it is the whole mean gap.
@@ -661,15 +643,15 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [poisson-process](01-poisson-process.md): the counting process $N(t)$ and the exponential gaps whose memorylessness gives the Poisson case of the paradox.
-- [strong-law-of-large-numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md): pins the average gap and the average squared gap on almost every run.
-- [stopping-times-and-optional-stopping](../02-Martingales/03-stopping-times-and-optional-stopping.md): why the index of the first bus after $t$ is a stopping time, the hypothesis Wald's identity needs.
+- [Poisson process](01-poisson-process.md): the counting process $N(t)$ and the exponential gaps whose memorylessness gives the Poisson case of the paradox.
+- [The strong law of large numbers](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/04-strong-law-of-large-numbers.md): pins the average gap and the average squared gap on almost every run.
+- [Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md): why the index of the first bus after $t$ is a stopping time, the hypothesis Wald's identity needs.
 
 ## Where this goes next
 
-- [discrete-monitoring-correction](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md): a barrier option checked once a day; its correction rests on this card's mean wait, $E[X^2]/(2\mu)$, read as the mean overshoot of the daily price walk past a far barrier, with the amounts by which the walk beats its previous record as the gaps.
+- [Daily monitoring](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md): a barrier option checked once a day; its correction rests on this card's mean wait, $E[X^2]/(2\mu)$, read as the mean overshoot of the daily price walk past a far barrier, with the amounts by which the walk beats its previous record as the gaps.
 
-A passenger's wait past a random moment averages $E[X^2]/(2\mu)$; how far a price checked only at the daily close has overshot a barrier when a close is first seen beyond it, and how far that moves the option's price, is the question [discrete-monitoring-correction](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md) answers.
+A passenger's wait past a random moment averages $E[X^2]/(2\mu)$; how far a price checked only at the daily close has overshot a barrier when a close is first seen beyond it, and how far that moves the option's price, is the question [Daily monitoring](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md) answers.
 
 ---
 

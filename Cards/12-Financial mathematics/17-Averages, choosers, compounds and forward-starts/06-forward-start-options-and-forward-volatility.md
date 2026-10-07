@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Averages, choosers, compounds and forward-starts
-topic: Strikes set later
-item: Forward-start options
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/02-term-structure-and-forward-volatility|term-structure-and-forward-volatility]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/05-conditional-expectation-in-tables|conditional-expectation-in-tables]]"
-next:
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/07-cliquets-and-ratchets|cliquets-and-ratchets]]"
-tags: [mathematics, financial mathematics, forward-start-options-and-forward-volatility]
----
-
 # Forward-start options: a strike fixed later, so the price is shares times a unit option, and it pays on the forward vol
 
-Financial mathematics → Averages, choosers, compounds and forward-starts → Strikes set later → Forward-start options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages, choosers, compounds and forward-starts](../../../SYLLABUS.md#w12-s17) → Forward-start options
 
 ---
 
@@ -65,13 +47,13 @@ $$d_1 = \frac{-\ln\alpha + \left(r - q + \tfrac12\sigma^2\right)\tau}{\sigma\sqr
 
 **Read it aloud: price an ordinary call on a share worth one dollar, struck at the multiple, over the life left after the reset; that is how many shares the contract is worth on the reset date; buy that many shares today, less the dividends they will earn on the way.**
 
-In words, $c$ is the Black-Scholes call of [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) with the share set to 1 and the strike to $\alpha$, so $\ln(S/K)$ becomes $-\ln\alpha$, which is zero at the money. $d_2$ counts how far the strike sits below the expected finish, in units of the spread $\sigma\sqrt{\tau}$; $d_1$ is one spread further.
+In words, $c$ is the Black-Scholes call of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) with the share set to 1 and the strike to $\alpha$, so $\ln(S/K)$ becomes $-\ln\alpha$, which is zero at the money. $d_2$ counts how far the strike sits below the expected finish, in units of the spread $\sigma\sqrt{\tau}$; $d_1$ is one spread further.
 
 The forward volatility comes from two quoted implied volatilities, $\sigma_1$ to the reset and $\sigma_2$ to expiry, through their total variances $w_1 = \sigma_1^2 t_1$ and $w_2 = \sigma_2^2 T$:
 
 $$\sigma_f = \sqrt{\frac{w_2 - w_1}{T - t_1}}$$
 
-In words: the variance the far quote carries beyond the near one, spread over the years between them ([term-structure-and-forward-volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md) proves it). The forward-start formula takes $\sigma = \sigma_f$.
+In words: the variance the far quote carries beyond the near one, spread over the years between them ([Term structure and forward volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md) proves it). The forward-start formula takes $\sigma = \sigma_f$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -111,7 +93,7 @@ So an at-the-money call on a share at $S_{t_1}$ is worth $S_{t_1}$ times the sam
 
 ### Step 2: a known number of shares on the reset date costs shares today
 
-On the reset date the contract is worth $c$ shares. That is certain; only the share price is not. The price today of anything paid on the reset date is the discounted average of it in the pricing world. Averaging in two stages is legitimate: first average over the second half-year with the reset price held fixed, then average over the reset price. That is the tower rule of [conditional-expectation-in-tables](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md). The inner average is Step 1's answer, $S_{t_1}\,c$. The outer average asks the price of $c$ shares delivered at $t_1$.
+On the reset date the contract is worth $c$ shares. That is certain; only the share price is not. The price today of anything paid on the reset date is the discounted average of it in the pricing world. Averaging in two stages is legitimate: first average over the second half-year with the reset price held fixed, then average over the reset price. That is the tower rule of [Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md). The inner average is Step 1's answer, $S_{t_1}\,c$. The outer average asks the price of $c$ shares delivered at $t_1$.
 
 A share delivered at $t_1$ costs $S\,e^{-q t_1}$ today: buy $e^{-q t_1}$ of a share, reinvest every dividend, and it grows into exactly one share by $t_1$. So
 
@@ -690,8 +672,8 @@ The two outputs agree line for line at six decimals, including the simulation, w
 
 - **Employee option grants.** A plan that promises options next year, struck at next year's price, has granted forward-start calls today. This formula is their value today.
 - **Forward volatility trading.** A desk that wants to trade the volatility of the second half-year buys forward-start at-the-money calls or straddles. Their quote, inverted as in Step 4, is the market's forward volatility.
-- **Cliquets.** A chain of forward-start options, each resetting where the last one ended, paying the share's gain period by period. Each link is priced by this card: [cliquets-and-ratchets](07-cliquets-and-ratchets.md).
-- **Other contracts that decide later.** A chooser lets its holder decide at a later date between a call and a put: [chooser-options](04-chooser-options.md). A compound option is an option to buy an option later: [compound-options](05-compound-options.md). All three use the same two-stage average.
+- **Cliquets.** A chain of forward-start options, each resetting where the last one ended, paying the share's gain period by period. Each link is priced by this card: [Cliquets](07-cliquets-and-ratchets.md).
+- **Other contracts that decide later.** A chooser lets its holder decide at a later date between a call and a put: [Chooser options](04-chooser-options.md). A compound option is an option to buy an option later: [Compound options](05-compound-options.md). All three use the same two-stage average.
 - **Structured notes.** A note that pays "the market's rise over each year, starting from wherever the year starts" is a strip of forward-start calls.
 
 > **Say it back**
@@ -701,13 +683,13 @@ The two outputs agree line for line at six decimals, including the simulation, w
 
 ## What this builds on
 
-- [term-structure-and-forward-volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md): total variances add, so two quotes give the volatility between their expiries, 21.82 percent here.
-- [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the ordinary call the contract becomes on the reset date, and the unit call $c$.
-- [conditional-expectation-in-tables](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md): averaging in two stages, first over the second half-year and then over the reset price.
+- [Term structure and forward volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md): total variances add, so two quotes give the volatility between their expiries, 21.82 percent here.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the ordinary call the contract becomes on the reset date, and the unit call $c$.
+- [Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md): averaging in two stages, first over the second half-year and then over the reset price.
 
 ## Where this goes next
 
-- [cliquets-and-ratchets](07-cliquets-and-ratchets.md): chains of forward-start options, with caps and floors on each period's gain.
+- [Cliquets](07-cliquets-and-ratchets.md): chains of forward-start options, with caps and floors on each period's gain.
 
 One forward-start buys one period's volatility; what a string of them is worth once each period's gain is capped, floored and summed is the question the cliquet card answers.
 

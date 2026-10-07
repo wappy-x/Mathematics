@@ -1,24 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Swapping Limits and Integrals
-topic: A rate inside an average
-item: Differentiating under the integral sign
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/02-dominated-convergence-theorem|dominated-convergence-theorem]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/02-mean-value-theorem|mean-value-theorem]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/05-differentiating-under-the-integral|differentiating-under-the-integral]]"
-next:
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/06-characteristic-functions|characteristic-functions]]"
-tags: [mathematics, measure and integration, differentiating-under-the-integral]
----
-
 # Differentiating under the integral sign: when the derivative of an average is the average of the derivative
 
-Measure and integration → Swapping Limits and Integrals → A rate inside an average → Differentiating under the integral sign
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Swapping Limits and Integrals](../../../SYLLABUS.md#w10-s05) → Differentiating under the integral sign
 
 ---
 
@@ -28,7 +10,7 @@ A bakery sells sourdough at £3 a loaf. Each loaf costs £1 to make. How many se
 
 There are two ways to get it. One: work out the average profit as a formula in the price, then differentiate. Two: on each kind of day, work out how fast that day's profit moves with the price, then average those rates. The second is often far easier, and it works unchanged when the average has no formula and must be simulated. Both give **£16 a day per £1 of price** here. They do not always agree. In a shop where each customer buys one loaf only if the price is at most a personal limit, the second road gives £0.60 per customer per £1 of price; the right answer, from the first, is £0.20.
 
-The swap works when one fixed function, with a finite integral, caps every day's rate for all prices near £3. Then [dominated-convergence-theorem](02-dominated-convergence-theorem.md) does all the work. The calculus wing proves a Riemann version with continuous integrands on a closed rectangle ([differentiating-under-the-integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/05-differentiating-under-the-integral.md)). This card gives the dominated-convergence version: any measure, infinite ranges, rates that exist only almost everywhere in the averaging variable.
+The swap works when one fixed function, with a finite integral, caps every day's rate for all prices near £3. Then [Dominated convergence](02-dominated-convergence-theorem.md) does all the work. The calculus wing proves a Riemann version with continuous integrands on a closed rectangle ([Differentiating under the integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/05-differentiating-under-the-integral.md)). This card gives the dominated-convergence version: any measure, infinite ranges, rates that exist only almost everywhere in the averaging variable.
 
 **If each integrand is differentiable in the parameter and one integrable function bounds every one of those rates on an interval of parameters, then the integral is differentiable there and its derivative is the integral of the rates.**
 
@@ -52,7 +34,7 @@ Orange: average daily profit, £ per day. Teal: marginal profit, £ per day for 
 
 ## The formula
 
-Notation first. A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$ (omega), the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ (mu) giving each such set a size. The integral $\int f\,d\mu$ is read "the integral of f against mu" ([integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). "For almost every x", written a.e., means "except on a set of size zero". The curly $\partial f/\partial t$ is a partial derivative: the rate of change in $t$ with $x$ held still.
+Notation first. A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$ (omega), the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ (mu) giving each such set a size. The integral $\int f\,d\mu$ is read "the integral of f against mu" ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). "For almost every x", written a.e., means "except on a set of size zero". The curly $\partial f/\partial t$ is a partial derivative: the rate of change in $t$ with $x$ held still.
 
 Now the setting. A function $f(t,x)$ has two inputs: a **parameter** $t$, a dial that ranges over an open interval $I$, and a point $x$ of $\Omega$ that the integral averages over. The integral depends on the parameter alone:
 
@@ -69,7 +51,7 @@ $$F'(t)=\frac{d}{dt}\int_\Omega f(t,x)\,d\mu(x)=\int_\Omega \frac{\partial f}{\p
 
 **Read it aloud:** if one integrable function caps every rate, the rate of the average is the average of the rates.
 
-On the bakery, $\Omega$ is the range of possible sensitivities $z\ge 0$, and $\mu$ is the probability law of the day's sensitivity, with density $4z\,e^{-2z}$: a sum of two independent exponential waits of mean 0.5 ([gamma-and-beta-distributions](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)). A day with sensitivity $z$ sells $N e^{-zp}$ loaves at price $p$. That day's profit and the average profit are
+On the bakery, $\Omega$ is the range of possible sensitivities $z\ge 0$, and $\mu$ is the probability law of the day's sensitivity, with density $4z\,e^{-2z}$: a sum of two independent exponential waits of mean 0.5 ([Gamma and beta](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)). A day with sensitivity $z$ sells $N e^{-zp}$ loaves at price $p$. That day's profit and the average profit are
 
 $$y(p,z)=(p-c)\,N e^{-zp},\qquad \Pi(p)=\int_0^\infty y(p,z)\,4z\,e^{-2z}\,dz .$$
 
@@ -112,7 +94,7 @@ The derivative of $F$ at $t$ is the limit of difference quotients $(F(t+h)-F(t))
 
 $$\frac{F(t+h)-F(t)}{h}=\int_\Omega \frac{f(t+h,x)-f(t,x)}{h}\,d\mu(x).$$
 
-Nothing has been swapped yet: this is linearity, exact for every $h$. The swap is the next move: letting $h\to 0$ inside the integral. That is a limit passing through an integral, the exact job of [dominated-convergence-theorem](02-dominated-convergence-theorem.md). Its two demands are pointwise convergence and one integrable cap.
+Nothing has been swapped yet: this is linearity, exact for every $h$. The swap is the next move: letting $h\to 0$ inside the integral. That is a limit passing through an integral, the exact job of [Dominated convergence](02-dominated-convergence-theorem.md). Its two demands are pointwise convergence and one integrable cap.
 
 ### Step 1: the quotients converge, point by point
 
@@ -120,7 +102,7 @@ Take any sequence of steps $h_n\to 0$, none equal to 0, with $t+h_n$ in $I$. Wri
 
 ### Step 2: the mean value theorem turns a cap on the rate into a cap on every quotient
 
-For a fixed $x$ off the null set, $f(\cdot,x)$ is differentiable on the segment from $t$ to $t+h_n$. By [mean-value-theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md), the quotient equals the rate at some point s between them: $q_n(x)=\partial f/\partial t\,(s,x)$. That point lies in $I$, so hypothesis 3 gives $|q_n(x)|\le g(x)$. This is where a single cap for all parameters matters: nobody knows in advance which s the theorem picks.
+For a fixed $x$ off the null set, $f(\cdot,x)$ is differentiable on the segment from $t$ to $t+h_n$. By [Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md), the quotient equals the rate at some point s between them: $q_n(x)=\partial f/\partial t\,(s,x)$. That point lies in $I$, so hypothesis 3 gives $|q_n(x)|\le g(x)$. This is where a single cap for all parameters matters: nobody knows in advance which s the theorem picks.
 
 ### Step 3: dominated convergence finishes
 
@@ -129,12 +111,12 @@ The quotients converge almost everywhere and are all capped by the integrable $g
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega,\mathcal F,\mu)$ is a measure space, $I$ an open interval, $f: I\times\Omega\to\mathbb R$, with hypotheses 1 to 3 of The formula. Let B be the null set of hypothesis 2 joined with the null set of hypothesis 3; a union of two null sets is null ([null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). Fix $t\in I$.
+**Setting.** $(\Omega,\mathcal F,\mu)$ is a measure space, $I$ an open interval, $f: I\times\Omega\to\mathbb R$, with hypotheses 1 to 3 of The formula. Let B be the null set of hypothesis 2 joined with the null set of hypothesis 3; a union of two null sets is null ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). Fix $t\in I$.
 
-**1. The quotients are measurable and integrable.** Let $h_n\to0$, $h_n\ne0$, $t+h_n\in I$. Then $q_n=(f(t+h_n,\cdot)-f(t,\cdot))/h_n$ is a difference of two measurable functions with finite integrals, scaled by a constant, so it is measurable with finite integral, and by linearity of the integral ([integrable-functions-and-l1](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md))
+**1. The quotients are measurable and integrable.** Let $h_n\to0$, $h_n\ne0$, $t+h_n\in I$. Then $q_n=(f(t+h_n,\cdot)-f(t,\cdot))/h_n$ is a difference of two measurable functions with finite integrals, scaled by a constant, so it is measurable with finite integral, and by linearity of the integral ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md))
 $$\int q_n\,d\mu=\frac{F(t+h_n)-F(t)}{h_n}.$$
 
-**2. Pointwise limit.** For $x\notin B$, the function $f(\cdot,x)$ is differentiable at $t$, so by the definition of the derivative along the sequence $h_n$, $q_n(x)\to\partial f/\partial t\,(t,x)$. Define $D(x)=\limsup_n q_n(x)$ for all $x$; a lim sup of measurable functions is measurable ([limits-of-measurable-functions](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)), and $D=\partial f/\partial t\,(t,\cdot)$ off B. So the rate agrees a.e. with a measurable function, which is all an integral needs.
+**2. Pointwise limit.** For $x\notin B$, the function $f(\cdot,x)$ is differentiable at $t$, so by the definition of the derivative along the sequence $h_n$, $q_n(x)\to\partial f/\partial t\,(t,x)$. Define $D(x)=\limsup_n q_n(x)$ for all $x$; a lim sup of measurable functions is measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)), and $D=\partial f/\partial t\,(t,\cdot)$ off B. So the rate agrees a.e. with a measurable function, which is all an integral needs.
 
 **3. Domination.** For $x\notin B$, $f(\cdot,x)$ is differentiable, hence continuous, on the closed segment between $t$ and $t+h_n$, which lies inside $I$ because $I$ is an interval. The mean value theorem gives $s_n(x)$ strictly between them with $q_n(x)=\partial f/\partial t\,(s_n(x),x)$. Since $s_n(x)\in I$ and $x\notin B$, hypothesis 3 gives $|q_n(x)|\le g(x)$. So $|q_n|\le g$ a.e., for every n.
 
@@ -156,7 +138,7 @@ Its average against the sensitivity law is 312.5: finite. The code checks the ca
 
 ### Step 5: the Gaussian moment trick
 
-The Gaussian integral is $G(t)=\int_{-\infty}^{\infty}e^{-tx^2}\,d\lambda(x)=\sqrt{\pi/t}$, where $\lambda$ is length on the line ([gaussian-integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)). At $t=1$ it is $\sqrt\pi=1.772454$. The rate of the integrand in $t$ is $-x^2e^{-tx^2}$. For all $t$ above a fixed $t_0>0$ it is capped by $x^2e^{-t_0x^2}$, which has a finite integral. So the theorem applies:
+The Gaussian integral is $G(t)=\int_{-\infty}^{\infty}e^{-tx^2}\,d\lambda(x)=\sqrt{\pi/t}$, where $\lambda$ is length on the line ([The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)). At $t=1$ it is $\sqrt\pi=1.772454$. The rate of the integrand in $t$ is $-x^2e^{-tx^2}$. For all $t$ above a fixed $t_0>0$ it is capped by $x^2e^{-t_0x^2}$, which has a finite integral. So the theorem applies:
 
 $$\int_{-\infty}^{\infty}x^2e^{-x^2}\,dx=-G'(1)=\tfrac12\sqrt\pi=0.886227 .$$
 
@@ -164,7 +146,7 @@ Once more, with cap $x^4e^{-t_0x^2}$: $\int x^4e^{-x^2}\,dx=G''(1)=\tfrac34\sqrt
 
 ### Another road
 
-When the rate is also continuous in the parameter, write $F(t)-F(t_0)=\int_\Omega\int_{t_0}^{t}\partial f/\partial t\,(s,x)\,ds\,d\mu(x)$, swap the two integrals by [tonelli-and-fubini](../06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md) (the cap $g$ keeps the double integral finite), and differentiate the outer integral in $t$. Dominated convergence, with the same cap, makes $t\mapsto\int\partial f/\partial t\,d\mu$ continuous, so the fundamental theorem of calculus applies. Without that continuity this route gives the formula only for almost every $t$, measured by length on $I$; the route above gives it at every $t$.
+When the rate is also continuous in the parameter, write $F(t)-F(t_0)=\int_\Omega\int_{t_0}^{t}\partial f/\partial t\,(s,x)\,ds\,d\mu(x)$, swap the two integrals by [Tonelli and Fubini](../06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md) (the cap $g$ keeps the double integral finite), and differentiate the outer integral in $t$. Dominated convergence, with the same cap, makes $t\mapsto\int\partial f/\partial t\,d\mu$ continuous, so the fundamental theorem of calculus applies. Without that continuity this route gives the formula only for almost every $t$, measured by length on $I$; the route above gives it at every $t$.
 
 ---
 
@@ -588,9 +570,9 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Pricing and revenue management.** Marginal revenue under uncertain demand is computed as the average of per-scenario rates, often over simulated scenarios, as road four does for the bakery.
-- **Moments from generating functions.** Differentiating $E[e^{sX}]$ at $s=0$ under the integral gives the mean, then the second moment ([moment-generating-functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md)); the Gaussian trick above is the same move.
-- **Statistics: the score has mean zero.** Differentiating $\int p_\theta\,dx=1$ in the parameter under the integral gives the facts behind Fisher information ([fisher-information-and-cramer-rao](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md)).
-- **Option sensitivities by simulation.** A pathwise estimate of an option's delta averages each path's rate of payoff in the spot price; the theorem says when that is right, and a digital option's jump is the threshold buyer again ([delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md)).
+- **Moments from generating functions.** Differentiating $E[e^{sX}]$ at $s=0$ under the integral gives the mean, then the second moment ([Moment generating functions](../../09-Probability%20and%20statistics/02-Random%20Variables/07-moment-generating-functions.md)); the Gaussian trick above is the same move.
+- **Statistics: the score has mean zero.** Differentiating $\int p_\theta\,dx=1$ in the parameter under the integral gives the facts behind Fisher information ([Fisher information](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md)).
+- **Option sensitivities by simulation.** A pathwise estimate of an option's delta averages each path's rate of payoff in the spot price; the theorem says when that is right, and a digital option's jump is the threshold buyer again ([Delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md)).
 
 > **Say it back**
 > A derivative is a limit of difference quotients, and the quotient of an average is the average of the quotients. So differentiating an average is a limit passing through an integral. The mean value theorem turns one integrable cap on the rates into a cap on every quotient, and dominated convergence then lets the limit through. The bakery's marginal profit at £3 is £16 a day per pound both ways. When the integrand jumps, or no integrable cap exists, the swap fails: 0.6 against 0.2, and 0 against 1.
@@ -599,15 +581,15 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [dominated-convergence-theorem](02-dominated-convergence-theorem.md): the limit-through-the-integral theorem that the whole proof reduces to.
-- [mean-value-theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md): turns a cap on the rate into a cap on each difference quotient.
-- [differentiating-under-the-integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/05-differentiating-under-the-integral.md): the Riemann version with continuous integrands on a closed rectangle, and the moving-endpoint terms this card does not need.
+- [Dominated convergence](02-dominated-convergence-theorem.md): the limit-through-the-integral theorem that the whole proof reduces to.
+- [Mean value theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md): turns a cap on the rate into a cap on each difference quotient.
+- [Differentiating under the integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/05-differentiating-under-the-integral.md): the Riemann version with continuous integrands on a closed rectangle, and the moving-endpoint terms this card does not need.
 
 ## Where this goes next
 
-- [characteristic-functions](../10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md): differentiates $E[e^{iuX}]$ in $u$ under the integral, capped by $|X|$, integrable when $E|X|$ is finite, to read moments off the characteristic function.
+- [Characteristic functions](../10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md): differentiates $E[e^{iuX}]$ in $u$ under the integral, capped by $|X|$, integrable when $E|X|$ is finite, to read moments off the characteristic function.
 
-This card differentiates an average whose integrand is capped; what the average of $e^{iuX}$ reveals about a whole distribution, and how its derivatives at 0 give the moments, is the question [characteristic-functions](../10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md) answers.
+This card differentiates an average whose integrand is capped; what the average of $e^{iuX}$ reveals about a whole distribution, and how its derivatives at 0 give the moments, is the question [Characteristic functions](../10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md) answers.
 
 ---
 

@@ -1,25 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Proof
-topic: Induction
-item: Strong induction and the least element
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/06-Proof/04-proof-by-induction|proof-by-induction]]"
-next:
-  - "[[Cards/01-Foundations/06-Proof/06-choosing-a-proof-strategy|choosing-a-proof-strategy]]"
-tags:
-  - mathematics
-  - foundations
-  - strong-induction-and-well-ordering
----
-
 # Strong induction and the least element: assume every earlier case, or pick the smallest counterexample
 
-Foundations → Proof → Induction → Strong induction and the least element
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Proof](../../../SYLLABUS.md#w01-s06) → Strong induction and the least element
 
 ---
 
@@ -90,9 +71,9 @@ Take 11. Assume every amount from 8 up to 10 is payable — the **strong hypothe
 
 Suppose some amount of 8 cents or more cannot be paid. Collect them all. The collection is non-empty, so well-ordering hands you its smallest member: the least bad amount.
 
-It is not 8, 9 or 10, paid by hand. So it is 11 or more, and it minus 3 is at least 8 — smaller, so not bad, so payable. Add a 3-cent stamp: the least bad amount is paid. Bad and not bad, so nothing was bad — [proof-by-contradiction](03-proof-by-contradiction.md), aimed at the first failure.
+It is not 8, 9 or 10, paid by hand. So it is 11 or more, and it minus 3 is at least 8 — smaller, so not bad, so payable. Add a 3-cent stamp: the least bad amount is paid. Bad and not bad, so nothing was bad — [Proof by contradiction](03-proof-by-contradiction.md), aimed at the first failure.
 
-Both run on the same fact. Strong induction pushes up from the bottom; well-ordering points at the first failure. Choosing between them is taste — [choosing-a-proof-strategy](06-choosing-a-proof-strategy.md).
+Both run on the same fact. Strong induction pushes up from the bottom; well-ordering points at the first failure. Choosing between them is taste — [Choosing a proof strategy](06-choosing-a-proof-strategy.md).
 
 <details>
 <summary>Why counting numbers</summary>
@@ -282,11 +263,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [proof-by-induction](04-proof-by-induction.md): base case and step; strong induction changes only what the step may assume.
+- [Induction](04-proof-by-induction.md): base case and step; strong induction changes only what the step may assume.
 
 ## Where this goes next
 
-- [choosing-a-proof-strategy](06-choosing-a-proof-strategy.md): which move fits which claim.
+- [Choosing a proof strategy](06-choosing-a-proof-strategy.md): which move fits which claim.
 
 ---
 

@@ -1,33 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: The Lebesgue Integral
-topic: Signed integrals
-item: Integrable functions
-kind: definition
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/03-monotone-convergence-theorem|monotone-convergence-theorem]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/02-integral-of-a-nonnegative-function|integral-of-a-nonnegative-function]]"
-  - "[[Cards/10-Measure and integration/03-Measurable Functions/02-limits-of-measurable-functions|limits-of-measurable-functions]]"
-next:
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/05-riemann-meets-lebesgue|riemann-meets-lebesgue]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/06-expectation-as-an-integral|expectation-as-an-integral]]"
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/02-dominated-convergence-theorem|dominated-convergence-theorem]]"
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/05-uniform-integrability|uniform-integrability]]"
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/01-lp-spaces|lp-spaces]]"
-  - "[[Cards/18-Functional analysis/04-Distributions and Sobolev Spaces/01-test-functions-and-distributions|test-functions-and-distributions]]"
-  - "[[Cards/20-Harmonic analysis/02-The Fourier Transform/01-fourier-transform-on-l1-and-riemann-lebesgue|fourier-transform-on-l1-and-riemann-lebesgue]]"
-tags:
-  - mathematics
-  - measure and integration
-  - integrable-functions-and-l1
----
-
 # Integrable functions: split into positive and negative parts, integrate each, and the difference behaves like arithmetic
 
-Measure and integration → The Lebesgue Integral → Signed integrals → Integrable functions
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Lebesgue Integral](../../../SYLLABUS.md#w10-s04) → Integrable functions
 
 ---
 
@@ -53,7 +26,7 @@ To scale: 300 pixels per km along the river, 160 per metre of depth downward. Th
 
 ## The formula
 
-Notation first. A measure space $(\Omega, \mathcal F, \mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). On the river $\Omega$ is the stretch from 0 to 1 km and the measure is length, $\lambda$. For a non-negative measurable function, $\int u\,d\mu$, read "the integral of u against mu", is the best lower staircase total, a number from 0 up to infinity ([integral-of-a-nonnegative-function](02-integral-of-a-nonnegative-function.md)). The **positive part** $f^+ = \max(f, 0)$ keeps f where it is above zero and is 0 elsewhere; the **negative part** $f^- = \max(-f, 0)$ is the depth of f below zero, itself never negative ([simple-functions-and-approximation](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). At every point
+Notation first. A measure space $(\Omega, \mathcal F, \mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). On the river $\Omega$ is the stretch from 0 to 1 km and the measure is length, $\lambda$. For a non-negative measurable function, $\int u\,d\mu$, read "the integral of u against mu", is the best lower staircase total, a number from 0 up to infinity ([The integral of a non-negative function](02-integral-of-a-nonnegative-function.md)). The **positive part** $f^+ = \max(f, 0)$ keeps f where it is above zero and is 0 elsewhere; the **negative part** $f^- = \max(-f, 0)$ is the depth of f below zero, itself never negative ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). At every point
 
 $$f = f^+ - f^-, \qquad \lvert f\rvert = f^+ + f^-.$$
 
@@ -111,7 +84,7 @@ Integrability is a definition; the theorems need:
 
 ### Step 0: only ever add non-negative things
 
-For non-negative functions the integral is already built, and it adds, scales and keeps order ([integral-of-a-nonnegative-function](02-integral-of-a-nonnegative-function.md), with additivity delivered by [monotone-convergence-theorem](03-monotone-convergence-theorem.md)). Every proof below moves the terms of an equation until each side is a sum of non-negative functions, integrates both sides, and subtracts only numbers already known to be finite.
+For non-negative functions the integral is already built, and it adds, scales and keeps order ([The integral of a non-negative function](02-integral-of-a-nonnegative-function.md), with additivity delivered by [The monotone convergence theorem](03-monotone-convergence-theorem.md)). Every proof below moves the terms of an equation until each side is a sum of non-negative functions, integrates both sides, and subtracts only numbers already known to be finite.
 
 ### Step 1: integrable means both parts are finite
 
@@ -156,7 +129,7 @@ Count the same pieces two pools, then one bar, and the running total settles on 
 <details>
 <summary>Detailed proof</summary>
 
-Throughout, $(\Omega, \mathcal F, \mu)$ is a measure space and $f$, $g$ are measurable with real values. Facts used: **(N1)** for non-negative measurable $u$, $u'$ and $c \ge 0$, $\int (u + u') = \int u + \int u'$ and $\int cu = c\int u$ ([monotone-convergence-theorem](03-monotone-convergence-theorem.md), by rising simple approximations); **(N2)** $0 \le u \le v$ implies $\int u \le \int v$ ([integral-of-a-nonnegative-function](02-integral-of-a-nonnegative-function.md): the supremum is over a larger family); **(N3)** the monotone convergence theorem; **(N4)** sums, constant multiples, max and min of measurable functions are measurable ([limits-of-measurable-functions](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)).
+Throughout, $(\Omega, \mathcal F, \mu)$ is a measure space and $f$, $g$ are measurable with real values. Facts used: **(N1)** for non-negative measurable $u$, $u'$ and $c \ge 0$, $\int (u + u') = \int u + \int u'$ and $\int cu = c\int u$ ([The monotone convergence theorem](03-monotone-convergence-theorem.md), by rising simple approximations); **(N2)** $0 \le u \le v$ implies $\int u \le \int v$ ([The integral of a non-negative function](02-integral-of-a-nonnegative-function.md): the supremum is over a larger family); **(N3)** the monotone convergence theorem; **(N4)** sums, constant multiples, max and min of measurable functions are measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)).
 
 **1. The parts.** By (N4) $f^+$, $f^-$ and $\lvert f\rvert = f^+ + f^-$ are measurable and non-negative, and $f = f^+ - f^-$. By (N1) $\int \lvert f\rvert = \int f^+ + \int f^-$, so $\int \lvert f\rvert < \infty$ exactly when both $\int f^\pm < \infty$, and the definition subtracts finite numbers.
 
@@ -174,7 +147,7 @@ Throughout, $(\Omega, \mathcal F, \mu)$ is a measure space and $f$, $g$ are meas
 
 </details>
 
-Riemann's road, chopping the x axis into thin strips, reaches the same numbers for continuous functions on a closed interval; the code takes it as a check, and [riemann-meets-lebesgue](05-riemann-meets-lebesgue.md) proves the two integrals agree wherever the proper Riemann integral exists (a bounded function on a closed interval).
+Riemann's road, chopping the x axis into thin strips, reaches the same numbers for continuous functions on a closed interval; the code takes it as a check, and [Riemann meets Lebesgue](05-riemann-meets-lebesgue.md) proves the two integrals agree wherever the proper Riemann integral exists (a bounded function on a closed interval).
 
 ---
 
@@ -655,9 +628,9 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Cut and fill in earthworks.** Engineers compute the volume to cut and the volume to fill separately, then the net haul: the split into positive and negative parts.
-- **Expected values.** A signed quantity has an expectation only when its expected size is finite; the Cauchy distribution fails, both halves infinite. See [expectation-as-an-integral](06-expectation-as-an-integral.md).
+- **Expected values.** A signed quantity has an expectation only when its expected size is finite; the Cauchy distribution fails, both halves infinite. See [Expectation as an integral](06-expectation-as-an-integral.md).
 - **Stable filters.** A linear filter turns every bounded input into a bounded output exactly when its impulse response, its output after one sharp tap, is integrable.
-- **Fourier analysis.** The Fourier transform's defining integral exists at every frequency for an integrable function: fourier-transform-on-l1-and-riemann-lebesgue.
+- **Fourier analysis.** The Fourier transform's defining integral exists at every frequency for an integrable function: The Fourier transform of an absolutely integrable signal, and why it fades at infinity.
 
 > **Say it back**
 > A signed function is split into the part above zero and the depth below zero, both non-negative, and each is integrated on its own. The function is integrable when both integrals are finite, which is the same as the integral of its absolute value being finite; its integral is the difference. Any split into two non-negative integrable pieces gives the same difference, and from that the integral adds, scales, keeps order, and is at most the integral of the size. Capping an integrable function shows that small sets carry small integrals. When both parts are infinite, the order of adding decides the answer, so no integral is defined.
@@ -666,21 +639,21 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [monotone-convergence-theorem](03-monotone-convergence-theorem.md): additivity of the integral for non-negative functions, and the rising caps behind small sets carrying small integrals.
-- [integral-of-a-nonnegative-function](02-integral-of-a-nonnegative-function.md): the integral of each part, and its monotonicity.
-- [limits-of-measurable-functions](../03-Measurable%20Functions/02-limits-of-measurable-functions.md): why the parts, sums and caps are measurable.
+- [The monotone convergence theorem](03-monotone-convergence-theorem.md): additivity of the integral for non-negative functions, and the rising caps behind small sets carrying small integrals.
+- [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md): the integral of each part, and its monotonicity.
+- [Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md): why the parts, sums and caps are measurable.
 
 ## Where this goes next
 
-- [riemann-meets-lebesgue](05-riemann-meets-lebesgue.md): the Riemann and Lebesgue integrals agree wherever the proper Riemann integral exists, a bounded function on a closed interval, as the midpoint road here suggests.
-- [expectation-as-an-integral](06-expectation-as-an-integral.md): integrable random quantities, and linearity of expectation with no independence needed.
-- [dominated-convergence-theorem](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md): limits pass through the integral when one integrable function sits above every term.
-- [uniform-integrability](../05-Swapping%20Limits%20and%20Integrals/05-uniform-integrability.md): small sets carrying small integrals, uniformly across a whole family of functions.
-- [lp-spaces](../07-Sizes%20of%20Functions/01-lp-spaces.md): the integral of the absolute value becomes a distance between functions, and L^1 one of a family of spaces.
-- test-functions-and-distributions: functions integrable on bounded sets, used as generalised functions.
-- fourier-transform-on-l1-and-riemann-lebesgue: the Fourier transform on integrable functions, and why it fades at high frequencies.
+- [Riemann meets Lebesgue](05-riemann-meets-lebesgue.md): the Riemann and Lebesgue integrals agree wherever the proper Riemann integral exists, a bounded function on a closed interval, as the midpoint road here suggests.
+- [Expectation as an integral](06-expectation-as-an-integral.md): integrable random quantities, and linearity of expectation with no independence needed.
+- [Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md): limits pass through the integral when one integrable function sits above every term.
+- [Uniform integrability](../05-Swapping%20Limits%20and%20Integrals/05-uniform-integrability.md): small sets carrying small integrals, uniformly across a whole family of functions.
+- [Lp spaces](../07-Sizes%20of%20Functions/01-lp-spaces.md): the integral of the absolute value becomes a distance between functions, and L^1 one of a family of spaces.
+- Distributions: functions integrable on bounded sets, used as generalised functions.
+- The Fourier transform of an absolutely integrable signal, and why it fades at infinity: the Fourier transform on integrable functions, and why it fades at high frequencies.
 
-A bump that slides away keeps its integral while vanishing at every point, so integrals of a sequence need not follow its limit; when they do is the question [dominated-convergence-theorem](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md) answers.
+A bump that slides away keeps its integral while vanishing at every point, so integrals of a sequence need not follow its limit; when they do is the question [Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md) answers.
 
 ---
 

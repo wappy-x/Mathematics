@@ -1,31 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: The Lebesgue Integral
-topic: Rising limits under the integral
-item: The monotone convergence theorem
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/02-integral-of-a-nonnegative-function|integral-of-a-nonnegative-function]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/05-continuity-of-measure|continuity-of-measure]]"
-  - "[[Cards/10-Measure and integration/03-Measurable Functions/02-limits-of-measurable-functions|limits-of-measurable-functions]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/01-series-convergence|series-convergence]]"
-next:
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/04-integrable-functions-and-l1|integrable-functions-and-l1]]"
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/01-fatous-lemma|fatous-lemma]]"
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/02-product-measure|product-measure]]"
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/03-radon-nikodym-theorem|radon-nikodym-theorem]]"
-tags:
-  - mathematics
-  - measure and integration
-  - monotone-convergence-theorem
----
-
 # The monotone convergence theorem: if functions rise to a limit, their integrals rise to the limit's integral, so sums and integrals swap for free
 
-Measure and integration → The Lebesgue Integral → Rising limits under the integral → The monotone convergence theorem
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Lebesgue Integral](../../../SYLLABUS.md#w10-s04) → The monotone convergence theorem
 
 ---
 
@@ -53,7 +28,7 @@ Drawn to scale: 300 pixels to the km along the river, 160 pixels to the metre of
 
 ## The formula
 
-Notation first. From [integral-of-a-nonnegative-function](02-integral-of-a-nonnegative-function.md): a measure space $(\Omega, \mathcal{F}, \mu)$ is a whole space $\Omega$, a sigma-algebra $\mathcal{F}$ (the collection of sets we allow ourselves to measure) and a measure $\mu$. For measurable f with values in $[0, \infty]$, the integral $\int_\Omega f\,d\mu$, read "the integral of f against μ", is the supremum of the integrals of simple s with $0 \le s \le f$. On the river, $\Omega$ is the stretch $[0, 1]$ in km and $\mu$ is Lebesgue measure $\lambda$, which is length. One new piece of notation: $f_n \uparrow f$, read "f_n rises to f", means $f_1(x) \le f_2(x) \le \cdots$ and $f_n(x) \to f(x)$ at every point x. Infinity is allowed as a value throughout.
+Notation first. From [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md): a measure space $(\Omega, \mathcal{F}, \mu)$ is a whole space $\Omega$, a sigma-algebra $\mathcal{F}$ (the collection of sets we allow ourselves to measure) and a measure $\mu$. For measurable f with values in $[0, \infty]$, the integral $\int_\Omega f\,d\mu$, read "the integral of f against μ", is the supremum of the integrals of simple s with $0 \le s \le f$. On the river, $\Omega$ is the stretch $[0, 1]$ in km and $\mu$ is Lebesgue measure $\lambda$, which is length. One new piece of notation: $f_n \uparrow f$, read "f_n rises to f", means $f_1(x) \le f_2(x) \le \cdots$ and $f_n(x) \to f(x)$ at every point x. Infinity is allowed as a value throughout.
 
 $$0 \le f_1 \le f_2 \le \cdots, \quad f_n \uparrow f \quad\Longrightarrow\quad \int_\Omega f\,d\mu = \lim_{n\to\infty} \int_\Omega f_n\,d\mu$$
 
@@ -91,8 +66,8 @@ On the river, $4x(1-x) \ge t$ exactly when x lies within $\sqrt{1-t}/2$ of the m
 ### When it holds
 
 - **Rising at every point.** The spike of height n on (0, 1/n) converges to 0 everywhere, yet each spike has integral 1: at x = 0.3 its values go 1, 2, 3, then 0 from n = 4 on. Rising almost everywhere (a.e., except on a set of size zero) is enough, since a null set changes no integral.
-- **Non-negative.** On the real line, the function −1 on [n, ∞) rises to 0, yet each has an infinite negative part and no integral. Both signs wait for [integrable-functions-and-l1](04-integrable-functions-and-l1.md).
-- **Measurable, with respect to $\mathcal{F}$.** Each $f_n$ must be measurable; the limit then is too, by [limits-of-measurable-functions](../03-Measurable%20Functions/02-limits-of-measurable-functions.md).
+- **Non-negative.** On the real line, the function −1 on [n, ∞) rises to 0, yet each has an infinite negative part and no integral. Both signs wait for [Integrable functions](04-integrable-functions-and-l1.md).
+- **Measurable, with respect to $\mathcal{F}$.** Each $f_n$ must be measurable; the limit then is too, by [Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md).
 - **Nothing else.** No bound on the functions, no finite total, no uniform convergence (every point getting close at the same rate). Infinite integrals are allowed on both sides.
 - **Rising, not falling.** The function 1 on [n, ∞) falls to 0 with infinite length at every n.
 
@@ -124,13 +99,13 @@ Let $f_n$ be $(1 - 1/n)$ times the quarter-metre staircase; these rise to that s
 
 ### Step 4: the staircase formula
 
-The staircase at stage n is $2^{-n}$ times the number of marks the function reaches, so it is simple and its integral is the sum in the formula. Halving the gap between marks can only keep or raise the last mark below a depth, so the staircases rise. Where f is finite they come within $2^{-n}$ of it once n passes f; where f is infinite they equal n. Both facts are proved on [simple-functions-and-approximation](../03-Measurable%20Functions/03-simple-functions-and-approximation.md). They rise to f, and the theorem gives the formula. On the river, stage 10 is within 1/1024 m of the depth everywhere and misses 0.000495 of the integral.
+The staircase at stage n is $2^{-n}$ times the number of marks the function reaches, so it is simple and its integral is the sum in the formula. Halving the gap between marks can only keep or raise the last mark below a depth, so the staircases rise. Where f is finite they come within $2^{-n}$ of it once n passes f; where f is infinite they equal n. Both facts are proved on [Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md). They rise to f, and the theorem gives the formula. On the river, stage 10 is within 1/1024 m of the depth everywhere and misses 0.000495 of the integral.
 
 The second crew's step functions rise too, since splitting a cell can only raise the shallowest depth on each half, and they approach the continuous depth at every point. The theorem says both sequences reach the same number: 2/3.
 
 ### Step 5: additivity
 
-Simple integrals add ([integral-of-a-simple-function](01-integral-of-a-simple-function.md)), and the staircases of f and r add to simple functions rising to f + r. The theorem, applied three times, gives additivity. The supremum definition alone does not: a simple function under f + r need not split into one under f plus one under r.
+Simple integrals add ([The integral of a simple function](01-integral-of-a-simple-function.md)), and the staircases of f and r add to simple functions rising to f + r. The theorem, applied three times, gives additivity. The supremum definition alone does not: a simple function under f + r need not split into one under f plus one under r.
 
 A flood adds x/2 m of water at x km, so r has integral 1/4 and the flooded river has integral 11/12 = 0.9167. At n = 2 the staircase of the flooded depth has integral 0.7937, while the two separate staircases add to 0.6433. Different sequences, one limit: 11/12.
 
@@ -138,30 +113,30 @@ A flood adds x/2 m of water at x km, so r has integral 1/4 and the flooded river
 
 The partial sums of non-negative terms rise, additivity integrates each one, and the theorem moves the limit inside.
 
-On [0, 1/2] the geometric series $1 + x + x^2 + \cdots$ sums to 1/(1 − x), every term non-negative. The integral of $x^k$ over [0, 1/2] is $(1/2)^{k+1}/(k+1)$, the calculus value, as the two integrals agree for continuous functions on a closed interval ([riemann-meets-lebesgue](05-riemann-meets-lebesgue.md); that later card uses this theorem, but only this example leans on it, never the proof above). With m = k + 1 the terms are 1/(m 2^m): 1/2, 1/8, 1/24, 1/64, 1/160. The integral of 1/(1 − x) over [0, 1/2] is ln 2, so the sum is ln 2.
+On [0, 1/2] the geometric series $1 + x + x^2 + \cdots$ sums to 1/(1 − x), every term non-negative. The integral of $x^k$ over [0, 1/2] is $(1/2)^{k+1}/(k+1)$, the calculus value, as the two integrals agree for continuous functions on a closed interval ([Riemann meets Lebesgue](05-riemann-meets-lebesgue.md); that later card uses this theorem, but only this example leans on it, never the proof above). With m = k + 1 the terms are 1/(m 2^m): 1/2, 1/8, 1/24, 1/64, 1/160. The integral of 1/(1 − x) over [0, 1/2] is ln 2, so the sum is ln 2.
 
-No uniform convergence is needed. On [0, 1) the leftover after N terms, $x^{N+1}/(1 - x)$, is unbounded near 1, yet the swap holds: the integrals 1/(k + 1) form the harmonic series, which diverges ([series-convergence](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)), so the integral of 1/(1 − x) over [0, 1) is infinite.
+No uniform convergence is needed. On [0, 1) the leftover after N terms, $x^{N+1}/(1 - x)$, is unbounded near 1, yet the swap holds: the integrals 1/(k + 1) form the harmonic series, which diverges ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)), so the integral of 1/(1 − x) over [0, 1) is infinite.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal{F}, \mu)$ is a measure space. Each $f_n$ maps $\Omega$ to $[0, \infty]$, is measurable with respect to $\mathcal{F}$, and $f_n(x) \le f_{n+1}(x)$ at every x. Arithmetic in $[0, \infty]$ uses $a + \infty = \infty$ and $0 \cdot \infty = 0$. From [integral-of-a-nonnegative-function](02-integral-of-a-nonnegative-function.md): a simple $s = \sum_j a_j 1_{A_j}$ with disjoint sets $A_j \in \mathcal{F}$ and levels $a_j \ge 0$ has $\int s\,d\mu = \sum_j a_j \mu(A_j)$; the integral of f is the supremum of $\int s\,d\mu$ over simple $0 \le s \le f$; and if $f \le g$ pointwise then $\int f\,d\mu \le \int g\,d\mu$, because every simple function under f is under g.
+**Setting.** $(\Omega, \mathcal{F}, \mu)$ is a measure space. Each $f_n$ maps $\Omega$ to $[0, \infty]$, is measurable with respect to $\mathcal{F}$, and $f_n(x) \le f_{n+1}(x)$ at every x. Arithmetic in $[0, \infty]$ uses $a + \infty = \infty$ and $0 \cdot \infty = 0$. From [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md): a simple $s = \sum_j a_j 1_{A_j}$ with disjoint sets $A_j \in \mathcal{F}$ and levels $a_j \ge 0$ has $\int s\,d\mu = \sum_j a_j \mu(A_j)$; the integral of f is the supremum of $\int s\,d\mu$ over simple $0 \le s \le f$; and if $f \le g$ pointwise then $\int f\,d\mu \le \int g\,d\mu$, because every simple function under f is under g.
 
-**1. The limit is measurable.** Each list $f_n(x)$ never falls, so it converges in $[0, \infty]$ to its supremum f(x). For real a, $\{f > a\} = \bigcup_n \{f_n > a\}$, since f(x) > a exactly when a is not an upper bound of the list. A countable union of sets in $\mathcal{F}$ is in $\mathcal{F}$, so f is measurable ([limits-of-measurable-functions](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)).
+**1. The limit is measurable.** Each list $f_n(x)$ never falls, so it converges in $[0, \infty]$ to its supremum f(x). For real a, $\{f > a\} = \bigcup_n \{f_n > a\}$, since f(x) > a exactly when a is not an upper bound of the list. A countable union of sets in $\mathcal{F}$ is in $\mathcal{F}$, so f is measurable ([Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)).
 
 **2. The easy inequality.** From $f_n \le f_{n+1} \le f$ and monotonicity of the integral, $\int f_n\,d\mu \le \int f_{n+1}\,d\mu \le \int f\,d\mu$. A list in $[0, \infty]$ that never falls converges to its supremum, so $\lim_n \int f_n\,d\mu$ exists and is at most $\int f\,d\mu$.
 
-**3. The hard inequality.** Fix a simple $s = \sum_{j=1}^{J} a_j 1_{A_j}$ with $0 \le s \le f$ and $A_1, \dots, A_J$ disjoint and covering $\Omega$, and fix $0 < c < 1$. Put $E_n = \{x : f_n(x) \ge c\,s(x)\} = \bigcup_j \big(A_j \cap \{f_n \ge c\,a_j\}\big)$, a finite union of sets in $\mathcal{F}$. Since $f_n \le f_{n+1}$, $E_n \subseteq E_{n+1}$. Their union is $\Omega$: if s(x) = 0 then x is in every $E_n$; if s(x) > 0 then $f(x) \ge s(x) > c\,s(x)$, and since $f_n(x)$ converges to f(x), or grows without bound when f(x) is infinite, some $f_n(x)$ exceeds $c\,s(x)$. The function $\sum_j c\,a_j 1_{A_j \cap E_n}$ is simple and at most $f_n$, so $\int f_n\,d\mu \ge c \sum_j a_j\, \mu(A_j \cap E_n)$. For each j the sets $A_j \cap E_n$ rise with union $A_j$, so $\mu(A_j \cap E_n) \to \mu(A_j)$ by continuity from below ([continuity-of-measure](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)). A finite sum of rising lists in $[0, \infty]$ converges to the sum of their limits, so $\lim_n \int f_n\,d\mu \ge c \int s\,d\mu$. If $\int s\,d\mu$ is infinite, c = 1/2 already makes the left side infinite. Otherwise the inequality for every c below 1 gives $\lim_n \int f_n\,d\mu \ge \int s\,d\mu$. Taking the supremum over s gives $\lim_n \int f_n\,d\mu \ge \int f\,d\mu$, and with step 2 the two are equal.
+**3. The hard inequality.** Fix a simple $s = \sum_{j=1}^{J} a_j 1_{A_j}$ with $0 \le s \le f$ and $A_1, \dots, A_J$ disjoint and covering $\Omega$, and fix $0 < c < 1$. Put $E_n = \{x : f_n(x) \ge c\,s(x)\} = \bigcup_j \big(A_j \cap \{f_n \ge c\,a_j\}\big)$, a finite union of sets in $\mathcal{F}$. Since $f_n \le f_{n+1}$, $E_n \subseteq E_{n+1}$. Their union is $\Omega$: if s(x) = 0 then x is in every $E_n$; if s(x) > 0 then $f(x) \ge s(x) > c\,s(x)$, and since $f_n(x)$ converges to f(x), or grows without bound when f(x) is infinite, some $f_n(x)$ exceeds $c\,s(x)$. The function $\sum_j c\,a_j 1_{A_j \cap E_n}$ is simple and at most $f_n$, so $\int f_n\,d\mu \ge c \sum_j a_j\, \mu(A_j \cap E_n)$. For each j the sets $A_j \cap E_n$ rise with union $A_j$, so $\mu(A_j \cap E_n) \to \mu(A_j)$ by continuity from below ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)). A finite sum of rising lists in $[0, \infty]$ converges to the sum of their limits, so $\lim_n \int f_n\,d\mu \ge c \int s\,d\mu$. If $\int s\,d\mu$ is infinite, c = 1/2 already makes the left side infinite. Otherwise the inequality for every c below 1 gives $\lim_n \int f_n\,d\mu \ge \int s\,d\mu$. Taking the supremum over s gives $\lim_n \int f_n\,d\mu \ge \int f\,d\mu$, and with step 2 the two are equal.
 
-**4. The staircase formula.** Put $\varphi_n(x) = \min(n, \lfloor 2^n f(x) \rfloor / 2^n)$, and $\varphi_n(x) = n$ where f(x) is infinite. The number of k from 1 to $n 2^n$ with $k/2^n \le f(x)$ is $\min(n 2^n, \lfloor 2^n f(x) \rfloor)$, so $\varphi_n = \sum_{k=1}^{n 2^n} 2^{-n} 1_{\{f \ge k/2^n\}}$. Each set $\{f \ge k/2^n\}$ is in $\mathcal{F}$, so $\varphi_n$ is simple, and linearity of the simple integral ([integral-of-a-simple-function](01-integral-of-a-simple-function.md)) gives $\int \varphi_n\,d\mu = \sum_{k=1}^{n 2^n} 2^{-n} \mu(\{f \ge k/2^n\})$. They rise, as Lemma 2 and part (b) on [simple-functions-and-approximation](../03-Measurable%20Functions/03-simple-functions-and-approximation.md) prove: $\lfloor 2y \rfloor \ge 2 \lfloor y \rfloor$ for real y, and the cap grows. They converge to f, by parts (c) and (d) there: where f(x) < n, $0 \le f(x) - \varphi_n(x) < 2^{-n}$; where f(x) is infinite, $\varphi_n(x) = n$. Steps 1 to 3 applied to $\varphi_n \uparrow f$ give the formula.
+**4. The staircase formula.** Put $\varphi_n(x) = \min(n, \lfloor 2^n f(x) \rfloor / 2^n)$, and $\varphi_n(x) = n$ where f(x) is infinite. The number of k from 1 to $n 2^n$ with $k/2^n \le f(x)$ is $\min(n 2^n, \lfloor 2^n f(x) \rfloor)$, so $\varphi_n = \sum_{k=1}^{n 2^n} 2^{-n} 1_{\{f \ge k/2^n\}}$. Each set $\{f \ge k/2^n\}$ is in $\mathcal{F}$, so $\varphi_n$ is simple, and linearity of the simple integral ([The integral of a simple function](01-integral-of-a-simple-function.md)) gives $\int \varphi_n\,d\mu = \sum_{k=1}^{n 2^n} 2^{-n} \mu(\{f \ge k/2^n\})$. They rise, as Lemma 2 and part (b) on [Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md) prove: $\lfloor 2y \rfloor \ge 2 \lfloor y \rfloor$ for real y, and the cap grows. They converge to f, by parts (c) and (d) there: where f(x) < n, $0 \le f(x) - \varphi_n(x) < 2^{-n}$; where f(x) is infinite, $\varphi_n(x) = n$. Steps 1 to 3 applied to $\varphi_n \uparrow f$ give the formula.
 
 **5. Additivity.** Let f and r be non-negative and measurable, with staircases $\varphi_n$ and $\psi_n$. The sums $\varphi_n + \psi_n$ are simple, rise, and converge to f + r at every point, so f + r is measurable by step 1. Simple integrals add, so $\int (\varphi_n + \psi_n)\,d\mu = \int \varphi_n\,d\mu + \int \psi_n\,d\mu$. Apply the theorem to all three sequences; in $[0, \infty]$ the limit of a sum of two rising lists is the sum of their limits. The same argument with $a\varphi_n \uparrow a f$ gives $\int a f\,d\mu = a \int f\,d\mu$ for a number $a \ge 0$.
 
-**6. Term by term.** Let each $g_k$ be non-negative and measurable. The partial sums $S_N = \sum_{k=0}^{N} g_k$ are measurable, and step 5 with induction on N gives $\int S_N\,d\mu = \sum_{k=0}^{N} \int g_k\,d\mu$. The partial sums rise, and at each x they converge in $[0, \infty]$ to $\sum_k g_k(x)$, a series of non-negative terms ([series-convergence](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)). The theorem gives $\int \sum_k g_k\,d\mu = \lim_N \int S_N\,d\mu = \sum_k \int g_k\,d\mu$.
+**6. Term by term.** Let each $g_k$ be non-negative and measurable. The partial sums $S_N = \sum_{k=0}^{N} g_k$ are measurable, and step 5 with induction on N gives $\int S_N\,d\mu = \sum_{k=0}^{N} \int g_k\,d\mu$. The partial sums rise, and at each x they converge in $[0, \infty]$ to $\sum_k g_k(x)$, a series of non-negative terms ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)). The theorem gives $\int \sum_k g_k\,d\mu = \lim_N \int S_N\,d\mu = \sum_k \int g_k\,d\mu$.
 
 </details>
 
-Some texts prove Fatou's lemma first and deduce this theorem from it; this library runs the other way, and [fatous-lemma](../05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md) is proved from the theorem on this card.
+Some texts prove Fatou's lemma first and deduce this theorem from it; this library runs the other way, and [Fatou's lemma](../05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md) is proved from the theorem on this card.
 
 ---
 
@@ -610,7 +585,7 @@ The two outputs match line for line.
 > [!warning]
 > **Believing that convergence at every point is enough.** The spike of height n on (0, 1/n) goes to 0 at every point and keeps integral 1. The theorem needs the functions to rise, so no area can leave: whatever is under $f_n$ stays under $f_{n+1}$.
 >
-> - **Applying it to falling functions.** The function 1 on [n, ∞) falls to 0 with infinite length at every n. Falling needs a finite first integral and the tools of [fatous-lemma](../05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md).
+> - **Applying it to falling functions.** The function 1 on [n, ∞) falls to 0 with infinite length at every n. Falling needs a finite first integral and the tools of [Fatou's lemma](../05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md).
 > - **Treating the staircase as the definition.** The definition is the supremum over all simple functions below; the staircase formula is a theorem, and the shallowest-per-cell record, 0.375 at four cells, is another rising sequence with the same limit.
 > - **Asking for uniform convergence.** On [0, 1) the geometric series is not uniformly convergent, and the swap still holds, both sides infinite.
 > - **Confusing it with the theorem for numbers.** A rising list of numbers with a ceiling converges; that fact from wing 06 is used inside this proof.
@@ -619,9 +594,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Expected values.** The average of a quantity that is never negative, such as an insurance claim or a waiting time, is the limit of the averages of its staircases; [expectation-as-an-integral](06-expectation-as-an-integral.md) builds expectation this way.
+- **Expected values.** The average of a quantity that is never negative, such as an insurance claim or a waiting time, is the limit of the averages of its staircases; [Expectation as an integral](06-expectation-as-an-integral.md) builds expectation this way.
 - **Tail sums.** A whole-number count is the number of k it reaches, a sum of indicators, so term-by-term integration gives its expected value as the sum of the chances that it is at least k. Queue and reliability models use this form.
-- **Double sums in either order.** Rainfall totals over infinitely many months and infinitely many stations, summed by month then by station or the other way round, agree when every entry is non-negative; a finite table agrees in either order whatever the signs. This theorem is the engine of [product-measure](../06-Product%20Measures%20and%20Fubini/02-product-measure.md).
+- **Double sums in either order.** Rainfall totals over infinitely many months and infinitely many stations, summed by month then by station or the other way round, agree when every entry is non-negative; a finite table agrees in either order whatever the signs. This theorem is the engine of [Product measure](../06-Product%20Measures%20and%20Fubini/02-product-measure.md).
 - **Closed forms for sums.** Integrating a non-negative series term by term, as with ln 2 here, turns many sums into integrals with known values.
 
 > **Say it back**
@@ -631,19 +606,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [integral-of-a-nonnegative-function](02-integral-of-a-nonnegative-function.md): the integral as a supremum over simple functions, and its monotonicity.
-- [continuity-of-measure](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md): rising sets have sizes rising to the size of their union, the step the whole proof rests on.
-- [limits-of-measurable-functions](../03-Measurable%20Functions/02-limits-of-measurable-functions.md): the limit of measurable functions is measurable, so its integral is defined.
-- [series-convergence](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md): a series of non-negative terms is the limit of its partial sums, which rise.
+- [The integral of a non-negative function](02-integral-of-a-nonnegative-function.md): the integral as a supremum over simple functions, and its monotonicity.
+- [Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md): rising sets have sizes rising to the size of their union, the step the whole proof rests on.
+- [Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md): the limit of measurable functions is measurable, so its integral is defined.
+- [Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md): a series of non-negative terms is the limit of its partial sums, which rise.
 
 ## Where this goes next
 
-- [integrable-functions-and-l1](04-integrable-functions-and-l1.md): functions of both signs, integrated as a positive part minus a negative part, using the additivity proved here.
-- [fatous-lemma](../05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md): this theorem applied to running minimums, giving an inequality for sequences that do not rise.
-- [product-measure](../06-Product%20Measures%20and%20Fubini/02-product-measure.md): areas of sets in a plane built slice by slice, with this theorem swapping sums and integrals.
-- [radon-nikodym-theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md): a density found as the limit of a rising sequence, its integrals controlled by this theorem.
+- [Integrable functions](04-integrable-functions-and-l1.md): functions of both signs, integrated as a positive part minus a negative part, using the additivity proved here.
+- [Fatou's lemma](../05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md): this theorem applied to running minimums, giving an inequality for sequences that do not rise.
+- [Product measure](../06-Product%20Measures%20and%20Fubini/02-product-measure.md): areas of sets in a plane built slice by slice, with this theorem swapping sums and integrals.
+- [The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md): a density found as the limit of a rising sequence, its integrals controlled by this theorem.
 
-Only non-negative functions have an integral so far, so the river's height above a datum, positive in the pools and negative over the shoals, has none; [integrable-functions-and-l1](04-integrable-functions-and-l1.md) gives it one, and the additivity proved here is what makes that integral consistent.
+Only non-negative functions have an integral so far, so the river's height above a datum, positive in the pools and negative over the shoals, has none; [Integrable functions](04-integrable-functions-and-l1.md) gives it one, and the additivity proved here is what makes that integral consistent.
 
 ---
 

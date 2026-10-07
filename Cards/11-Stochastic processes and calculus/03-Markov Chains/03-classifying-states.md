@@ -1,24 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Markov Chains
-topic: The shape of a chain
-item: Classifying states
-kind: definition
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/02-multi-step-transitions|multi-step-transitions]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/06-directed-graphs-and-topological-order|directed-graphs-and-topological-order]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/04-stationary-distributions|stationary-distributions]]"
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/06-absorption-and-first-step-analysis|absorption-and-first-step-analysis]]"
-tags: [mathematics, stochastic processes and calculus, classifying-states]
----
-
 # Classifying states: which states talk to which, which are trapped, and which repeat with a period
 
-Stochastic processes and calculus → Markov Chains → The shape of a chain → Classifying states
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Markov Chains](../../../SYLLABUS.md#w11-s03) → Classifying states
 
 ---
 
@@ -44,7 +26,7 @@ Each circle is a square the token can stand on after a turn, and each arrow carr
 
 ## The formula
 
-Notation first, in words. The square after turn n is $X_n$, with time counted in turns. The chance of moving from square i to square j in one turn is $p_{ij}$; the table of them is the transition matrix $P$ ([markov-chains](01-markov-chains.md)), and $(P^n)_{ij}$ is the chance of going from i to j in exactly n turns ([multi-step-transitions](02-multi-step-transitions.md)). A chance or an average for a token started on i is written $P_i$ or $E_i$. Four definitions follow, each bringing its own notation.
+Notation first, in words. The square after turn n is $X_n$, with time counted in turns. The chance of moving from square i to square j in one turn is $p_{ij}$; the table of them is the transition matrix $P$ ([Markov chains](01-markov-chains.md)), and $(P^n)_{ij}$ is the chance of going from i to j in exactly n turns ([n-step transitions](02-multi-step-transitions.md)). A chance or an average for a token started on i is written $P_i$ or $E_i$. Four definitions follow, each bringing its own notation.
 
 $$i \to j \iff (P^n)_{ij} > 0 \text{ for some } n \ge 0, \qquad i \leftrightarrow j \iff i \to j \text{ and } j \to i.$$
 
@@ -82,7 +64,7 @@ The theorems, for a chain with finitely many states: **all states of a class sha
 
 ### When it holds
 
-- **Finitely many states.** On an unbounded board "closed means recurrent" fails: a walk on all the whole numbers tilted one way is one class with no exit, yet returns to its start with chance below 1 ([gamblers-ruin](../01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md) computes the chance of never coming back down).
+- **Finitely many states.** On an unbounded board "closed means recurrent" fails: a walk on all the whole numbers tilted one way is one class with no exit, yet returns to its start with chance below 1 ([Gambler's ruin](../01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md) computes the chance of never coming back down).
 - **The same chances every turn, and nothing remembered but the square.** Monopoly also frees a prisoner who has waited long enough; that rule needs the jail split into one state per turn served, and the bigger chain is classified the same way.
 - **Only the arrows count, not their sizes,** for classes, closed sets, periods and, in a finite chain, recurrence. Sizes matter for the return chance of a transient state and for waiting times.
 - **Period needs a return.** A state that can never come back has no period, not period 0.
@@ -97,7 +79,7 @@ Replace every positive chance by an arrow and forget the numbers. Whether i lead
 
 ### Step 1: communicating splits the states into classes
 
-A positive entry of $(P^n)_{ij}$ is a route of n arrows from i to j, each with positive chance ([multi-step-transitions](02-multi-step-transitions.md)). Routes join end to end, so if i leads to j and j to k, then i leads to k. Every state leads to itself in zero turns. So communicating is an equivalence relation (every state to itself, both ways round, and passed along a chain), and such a relation splits the states into classes that do not overlap. They are the strongly connected pieces of the arrow diagram ([directed-graphs-and-topological-order](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md)).
+A positive entry of $(P^n)_{ij}$ is a route of n arrows from i to j, each with positive chance ([n-step transitions](02-multi-step-transitions.md)). Routes join end to end, so if i leads to j and j to k, then i leads to k. Every state leads to itself in zero turns. So communicating is an equivalence relation (every state to itself, both ways round, and passed along a chain), and such a relation splits the states into classes that do not overlap. They are the strongly connected pieces of the arrow diagram ([Directed graphs](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md)).
 
 On the board, A → B → C → J → A is a round trip, so A, B, C and J communicate. S leads to A, but no arrow points into S except its own loop: S is a class by itself. The chain has two classes and is not irreducible.
 
@@ -132,7 +114,7 @@ Round trips give every state of a class the same period (Detailed proof, part 2)
 <details>
 <summary>A second road to the period, used by the code</summary>
 
-Fix a state o of the class and give each state its level: the fewest arrows from o to it. For each arrow u → v inside the class take level(u) + 1 − level(v). Summed along any return route these amounts telescope to the route's length, so their greatest common divisor divides every return length. Conversely, going from o to u, across the arrow to v and back to o, and going from o to v and back the same way, are two returns to o whose lengths differ by exactly that amount, so the period divides it. Each number divides the other: they are equal. On the at-once board every amount is even, the colouring above in arithmetic, and the test for a graph with two sides ([bipartite-graphs-and-odd-cycles](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)).
+Fix a state o of the class and give each state its level: the fewest arrows from o to it. For each arrow u → v inside the class take level(u) + 1 − level(v). Summed along any return route these amounts telescope to the route's length, so their greatest common divisor divides every return length. Conversely, going from o to u, across the arrow to v and back to o, and going from o to v and back the same way, are two returns to o whose lengths differ by exactly that amount, so the period divides it. Each number divides the other: they are equal. On the at-once board every amount is even, the colouring above in arithmetic, and the test for a graph with two sides ([Bipartite graphs](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)).
 
 </details>
 
@@ -640,9 +622,9 @@ Every recurrent state's simulated return share is 1.0000 with standard error 0.0
 
 - **Board games.** A full Monopoly board is a chain of this kind, with the jail split by turns served. It has one closed class, so long-run landing frequencies are well defined; that class is also aperiodic, so the chance of standing on a square at turn n settles to that frequency.
 - **Credit ratings.** Migration tables move a firm between grades each year. Default is a closed state that every grade can reach, so in that model every other grade is transient, however rarely a top-rated firm defaults.
-- **Web search ranking.** The PageRank random surfer follows links; dead ends and link cycles make the chain reducible or periodic. A small chance of jumping to a random page each step makes it irreducible and aperiodic ([convergence-to-equilibrium](05-convergence-to-equilibrium.md)).
-- **Sampling by simulation.** A Markov chain Monte Carlo sampler must be irreducible, or whole regions go unvisited, and is usually made aperiodic so the law of its current state settles ([markov-chain-monte-carlo](07-markov-chain-monte-carlo.md)).
-- **Population genetics.** When a gene variant can die out or take over, those two outcomes are closed states and every mixed state is transient ([absorption-and-first-step-analysis](06-absorption-and-first-step-analysis.md)).
+- **Web search ranking.** The PageRank random surfer follows links; dead ends and link cycles make the chain reducible or periodic. A small chance of jumping to a random page each step makes it irreducible and aperiodic ([Convergence to equilibrium](05-convergence-to-equilibrium.md)).
+- **Sampling by simulation.** A Markov chain Monte Carlo sampler must be irreducible, or whole regions go unvisited, and is usually made aperiodic so the law of its current state settles ([MCMC](07-markov-chain-monte-carlo.md)).
+- **Population genetics.** When a gene variant can die out or take over, those two outcomes are closed states and every mixed state is transient ([Absorption](06-absorption-and-first-step-analysis.md)).
 
 > **Say it back**
 > Draw the chain as arrows and forget the chances. States that can each reach the other form a class, and the classes split the states. A class with no arrow out is closed, a trap; in a finite chain the closed classes are exactly the recurrent ones, revisited for ever, and every other state is transient, visited 1/(1 − f) times on average and then never. The period is the greatest common divisor of the possible return lengths, shared by a whole class, and a single self-loop makes it 1. On the board, the start square is transient, the ring and jail are one closed aperiodic class, and the jail is sticky, not a trap.
@@ -651,15 +633,15 @@ Every recurrent state's simulated return share is 1.0000 with standard error 0.0
 
 ## What this builds on
 
-- [multi-step-transitions](02-multi-step-transitions.md): a positive entry of a matrix power is a route of positive arrows.
-- [directed-graphs-and-topological-order](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md): mutual reachability and strongly connected pieces, the communicating classes seen as a graph.
+- [n-step transitions](02-multi-step-transitions.md): a positive entry of a matrix power is a route of positive arrows.
+- [Directed graphs](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/06-directed-graphs-and-topological-order.md): mutual reachability and strongly connected pieces, the communicating classes seen as a graph.
 
 ## Where this goes next
 
-- [stationary-distributions](04-stationary-distributions.md): the long-run share of turns on each square of a closed class, such as the 0.6667 in jail.
-- [absorption-and-first-step-analysis](06-absorption-and-first-step-analysis.md): which closed class a token ends in, and how long it takes, from first-step equations like the ones behind $f_A = 1/3$.
+- [Stationary distributions](04-stationary-distributions.md): the long-run share of turns on each square of a closed class, such as the 0.6667 in jail.
+- [Absorption](06-absorption-and-first-step-analysis.md): which closed class a token ends in, and how long it takes, from first-step equations like the ones behind $f_A = 1/3$.
 
-The next question, how often a recurrent state is visited in the long run, has a number for an answer: after 200 turns the token stands in jail with chance 0.6667. That number, and why it exists, is [stationary-distributions](04-stationary-distributions.md).
+The next question, how often a recurrent state is visited in the long run, has a number for an answer: after 200 turns the token stands in jail with chance 0.6667. That number, and why it exists, is [Stationary distributions](04-stationary-distributions.md).
 
 ---
 

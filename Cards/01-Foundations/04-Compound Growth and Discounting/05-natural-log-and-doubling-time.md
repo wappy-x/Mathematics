@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Compound Growth and Discounting
-topic: Continuous growth
-item: Natural log and doubling time
-kind: approximation
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/05-logarithms|logarithms]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/04-compounding-frequency-and-e|compounding-frequency-and-e]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/06-log-laws-and-log-scales|log-laws-and-log-scales]]"
-next: []
-tags:
-  - mathematics
-  - foundations
-  - natural-log-and-doubling-time
----
-
 # Natural log and doubling time: how long until the money doubles, and the rule of 72
 
-Foundations → Compound Growth and Discounting → Continuous growth → Natural log and doubling time
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Compound Growth and Discounting](../../../SYLLABUS.md#w01-s04) → Natural log and doubling time
 
 ---
 
@@ -30,9 +10,9 @@ A fund returns 8% a year. You put money in and leave it. How long until there is
 
 Most people guess twelve and a half years: 8 goes into 100 that many times. The answer is just over nine.
 
-Each year's 8% lands on a bigger balance than the last — compounding, from [compound-interest](03-compound-interest.md). Nine years is not nine slices of 8%; it is 1.08 multiplied by itself nine times. How many multiplies by 1.08 reach a double? Counting multiplies is what a logarithm does ([logarithms](../03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
+Each year's 8% lands on a bigger balance than the last — compounding, from [Compound interest](03-compound-interest.md). Nine years is not nine slices of 8%; it is 1.08 multiplied by itself nine times. How many multiplies by 1.08 reach a double? Counting multiplies is what a logarithm does ([Logarithms](../03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
 
-The log used here is the **natural log**, written **ln**: the log whose base is e, from [compounding-frequency-and-e](04-compounding-frequency-and-e.md). Any base would do; ln is the one finance uses. The count runs in fractions: 2 is 0.693 of the way to e, 1.08 only 0.077 of the way.
+The log used here is the **natural log**, written **ln**: the log whose base is e, from [Compounding more often, and the number e](04-compounding-frequency-and-e.md). Any base would do; ln is the one finance uses. The count runs in fractions: 2 is 0.693 of the way to e, 1.08 only 0.077 of the way.
 
 **Doubling time is ln 2 divided by the log of the growth factor, and 72 divided by the rate is close enough to say out loud.**
 
@@ -77,11 +57,11 @@ The shortcut, in your head:
 
 ### Step 0: doubling does not care how much money there is
 
-$100 and $100,000 take the same time to double at the same rate: doubling is about the multiplier, not the pile. One year multiplies the balance by 1.08 ([growth-factors](01-growth-factors.md)), so doubled means a run of those multiplies comes to 2.
+$100 and $100,000 take the same time to double at the same rate: doubling is about the multiplier, not the pile. One year multiplies the balance by 1.08 ([Growth factors](01-growth-factors.md)), so doubled means a run of those multiplies comes to 2.
 
 ### Step 1: a log pulls the unknown out to the front
 
-The unknown is buried in the count of multiplies. Log both sides and it comes out front: the log of a repeated multiply is the count times the log of what is multiplied ([log-laws-and-log-scales](../03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md)). That leaves the count times ln 1.08 against ln 2. Divide: 0.693147 ÷ 0.076961 = 9.006.
+The unknown is buried in the count of multiplies. Log both sides and it comes out front: the log of a repeated multiply is the count times the log of what is multiplied ([Log laws and log scales](../03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md)). That leaves the count times ln 1.08 against ln 2. Divide: 0.693147 ÷ 0.076961 = 9.006.
 
 ### Step 2: check it without logs
 
@@ -93,13 +73,13 @@ For a modest rate, ln of the growth factor is nearly the rate as a decimal: ln 1
 
 69.3147 is horrible to divide by in your head. 72 breaks into whole halves, thirds, quarters, sixths, eighths and ninths. Rounding up helps too. A smaller number underneath means more years, so the truth sits above 69.3147 over the rate. 72 covers it.
 
-Continuous compounding makes that swap exact: ln 2 over the rate ([compounding-frequency-and-e](04-compounding-frequency-and-e.md)).
+Continuous compounding makes that swap exact: ln 2 over the rate ([Compounding more often, and the number e](04-compounding-frequency-and-e.md)).
 
 ---
 
 ## Worked numbers, by hand
 
-The fund at 8%, then the $100 at 5% from [compound-interest](03-compound-interest.md). Money to the cent.
+The fund at 8%, then the $100 at 5% from [Compound interest](03-compound-interest.md). Money to the cent.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -264,7 +244,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Anything with a rate on it.** A savings account, a fund, an inflation figure: 72 over the rate turns a percentage into years. [compound-interest](03-compound-interest.md)
+- **Anything with a rate on it.** A savings account, a fund, an inflation figure: 72 over the rate turns a percentage into years. [Compound interest](03-compound-interest.md)
 - **Growth in the news.** Users, prices, a waiting list, a disease: anything climbing by a steady percentage has a doubling time.
 - **Half-life, turned around.** A thing losing 10% a year halves in ln 0.5 ÷ ln 0.9 = 6.58 years: ln of a half over ln of the shrink factor.
 
@@ -275,13 +255,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [logarithms](../03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): what a log is, a count of multiplies.
-- [compounding-frequency-and-e](04-compounding-frequency-and-e.md): where e comes from, and so ln.
-- [log-laws-and-log-scales](../03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md): the law that drags the count of multiplies to the front — the move this card turns on.
+- [Logarithms](../03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): what a log is, a count of multiplies.
+- [Compounding more often, and the number e](04-compounding-frequency-and-e.md): where e comes from, and so ln.
+- [Log laws and log scales](../03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md): the law that drags the count of multiplies to the front — the move this card turns on.
 
 ## Where this goes next
 
-- [discounting-and-present-value](06-discounting-and-present-value.md): the same growth factor run backwards, money next year priced in today's dollars.
+- [Discounting](06-discounting-and-present-value.md): the same growth factor run backwards, money next year priced in today's dollars.
 
 ---
 

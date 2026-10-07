@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Digitals and the implied density
-topic: Binary payoffs
-item: Cash-or-nothing digital
-kind: model
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/04-normal-distribution|normal-distribution]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-next:
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/02-asset-or-nothing-digital|asset-or-nothing-digital]]"
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/06-digital-inverses-vol-and-strike|digital-inverses-vol-and-strike]]"
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/05-one-touch-and-no-touch|one-touch-and-no-touch]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/01-fx-digitals|fx-digitals]]"
-  - "[[Cards/12-Financial mathematics/32-Convexity and Exotics/06-structured-notes-in-outline|structured-notes-in-outline]]"
-tags: [mathematics, financial mathematics, cash-or-nothing-digital]
----
-
 # Cash-or-nothing digital: one dollar if the share finishes above the line
 
-Financial mathematics → Digitals and the implied density → Binary payoffs → Cash-or-nothing digital
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Digitals and the implied density](../../../SYLLABUS.md#w12-s10) → Cash-or-nothing digital
 
 ---
 
@@ -53,7 +31,7 @@ xychart-beta
     line [0.00, 0.00, 0.03, 0.19, 0.50, 0.80, 0.95, 0.99, 1.00]
 ```
 
-The bars are the payoff on expiry day: nothing at or below $100, one dollar above. The gentle curve is the contract's value with twelve months left, plotted against Acme's price that day. The steep curve is its value with one month left. As expiry nears, the curve squeezes onto the step, and all the change happens in a narrow band around the strike. That squeeze is the trouble a seller faces, taken up on [digital-greeks-and-pin-risk](03-digital-greeks-and-pin-risk.md).
+The bars are the payoff on expiry day: nothing at or below $100, one dollar above. The gentle curve is the contract's value with twelve months left, plotted against Acme's price that day. The steep curve is its value with one month left. As expiry nears, the curve squeezes onto the step, and all the change happens in a narrow band around the strike. That squeeze is the trouble a seller faces, taken up on [Digital Greeks and pin risk](03-digital-greeks-and-pin-risk.md).
 
 ---
 
@@ -90,14 +68,14 @@ The helper $d_2$ is the pilot card's: its top line is where Acme's logarithm is 
 | theta | change per year of passing time | $r\,\text{call} - e^{-rT}\varphi(d_2)\,\partial d_2/\partial T$ | 0.015254 |
 | rho | change per 1.00 of rate | $-T\,\text{call} + e^{-rT}\varphi(d_2)\sqrt{T}/\sigma$ | 1.400477 |
 
-Here $\partial d_2/\partial T = \big((r - q - \tfrac12\sigma^2)T - \ln(S/K)\big) / (2\sigma T^{3/2})$: how fast $d_2$ changes as the time to expiry grows. Delta is nearly two cents per dollar of Acme at the money. Vega and gamma are negative here, the opposite sign to an ordinary call: an ordinary call gains from a wider spread of outcomes, but this contract's payoff stops growing at $1, so a wider spread only drags the typical finish down. Why the Greeks behave this way, and how they explode near expiry, is [digital-greeks-and-pin-risk](03-digital-greeks-and-pin-risk.md).
+Here $\partial d_2/\partial T = \big((r - q - \tfrac12\sigma^2)T - \ln(S/K)\big) / (2\sigma T^{3/2})$: how fast $d_2$ changes as the time to expiry grows. Delta is nearly two cents per dollar of Acme at the money. Vega and gamma are negative here, the opposite sign to an ordinary call: an ordinary call gains from a wider spread of outcomes, but this contract's payoff stops growing at $1, so a wider spread only drags the typical finish down. Why the Greeks behave this way, and how they explode near expiry, is [Digital Greeks and pin risk](03-digital-greeks-and-pin-risk.md).
 
 ### When it holds
 
-- **Acme's price follows the Black–Scholes model: logarithm bell-shaped, one fixed volatility.** Real markets quote a different volatility at each strike (the skew). A digital is the product the skew moves most; the correction term is on [digital-from-a-call-spread-and-the-skew-term](04-digital-from-a-call-spread-and-the-skew-term.md). Price with one volatility in a skewed market and the answer is off by that term.
+- **Acme's price follows the Black–Scholes model: logarithm bell-shaped, one fixed volatility.** Real markets quote a different volatility at each strike (the skew). A digital is the product the skew moves most; the correction term is on [A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md). Price with one volatility in a skewed market and the answer is off by that term.
 - **No jumps.** A share that can gap overnight puts real weight in the tails the bell curve thins out, and the chance above the line moves with it.
 - **A single riskless rate to expiry.** With a curve of rates, replace $e^{-rT}$ by the discount factor $D(T)$ read off the curve for the payment date.
-- **Paid on expiry day, judged on the closing price only.** A contract paying the moment the line is first touched is a different product, [one-touch-and-no-touch](../16-Barriers%2C%20touches%20and%20lookbacks/05-one-touch-and-no-touch.md), and costs more.
+- **Paid on expiry day, judged on the closing price only.** A contract paying the moment the line is first touched is a different product, [One-touch and no-touch](../16-Barriers%2C%20touches%20and%20lookbacks/05-one-touch-and-no-touch.md), and costs more.
 - **A hedge that can be adjusted continuously.** The price is the cost of a copy made by trading. Near expiry, with Acme close to $100, the copy needs huge, fast trades, and the model price stops being a cost anyone can achieve.
 
 ---
@@ -106,13 +84,13 @@ Here $\partial d_2/\partial T = \big((r - q - \tfrac12\sigma^2)T - \ln(S/K)\big)
 
 ### Step 0: a price is a discounted average, and the average of a yes-or-no is a chance
 
-The pilot card [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) showed that any payoff on Acme at expiry is priced by one recipe. Pretend every asset grows at the bank rate. Average the payoff over where Acme could end up in that pretend world, called the **risk-neutral** world. Discount the average back to today.
+The pilot card [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) showed that any payoff on Acme at expiry is priced by one recipe. Pretend every asset grows at the bank rate. Average the payoff over where Acme could end up in that pretend world, called the **risk-neutral** world. Discount the average back to today.
 
 This contract pays 1 when Acme finishes above $100 and 0 otherwise. The average of a quantity that is 1 when something happens and 0 when it does not is the chance that it happens. So the price is the discount factor times one chance. The rest of the proof finds that chance.
 
 ### Step 1: where Acme can finish
 
-In the risk-neutral world, Acme's logarithm on expiry day is bell-shaped ([normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)):
+In the risk-neutral world, Acme's logarithm on expiry day is bell-shaped ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)):
 
 $$\ln S_T = \ln S + (r - q - \tfrac12\sigma^2)\,T + \sigma\sqrt{T}\,Z.$$
 
@@ -163,7 +141,7 @@ The drift in Step 1 is the bank rate, not the rate investors expect Acme to grow
 
 ### The other doors
 
-Two other routes reach the same number. The call price falls as the strike rises, and the rate of fall is the digital: a tight spread of two calls, one struck just below $100 and one just above, pays a ramp that shrinks to this step. The code does it with strikes 99.99 and 100.01 and lands on 0.494581; the method, and what it adds when volatility depends on the strike, is [digital-from-a-call-spread-and-the-skew-term](04-digital-from-a-call-spread-and-the-skew-term.md). And the ordinary call is a share-paying digital minus $K$ cash-paying digitals: 58.685115 − 100 × 0.494581 = 9.227006, the pilot's price. The share-paying half is [asset-or-nothing-digital](02-asset-or-nothing-digital.md).
+Two other routes reach the same number. The call price falls as the strike rises, and the rate of fall is the digital: a tight spread of two calls, one struck just below $100 and one just above, pays a ramp that shrinks to this step. The code does it with strikes 99.99 and 100.01 and lands on 0.494581; the method, and what it adds when volatility depends on the strike, is [A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md). And the ordinary call is a share-paying digital minus $K$ cash-paying digitals: 58.685115 − 100 × 0.494581 = 9.227006, the pilot's price. The share-paying half is [Asset-or-nothing digital](02-asset-or-nothing-digital.md).
 
 ---
 
@@ -204,7 +182,7 @@ The code prints every row.
 
 ## Code, from first principles, and it actually runs
 
-The scripts reach the call digital by four roads. The formula uses a bell-curve area built by Simpson's rule (adding thin slices under the curve). The second road never mentions $d_2$: it adds up the risk-neutral density of Acme's price, the chance per dollar of finishing at each price, from $100 upward. The third is a 200,000-path Monte Carlo simulation ([monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)) that counts the finishes above $100, driven by a whole-number recurrence both languages compute exactly. The fourth is a tight call spread. The put is priced separately, by the density summed below $100, and call plus put is checked against the discount factor. Each Greek is checked by nudging its input. Every number on the card, the chart points included, is printed.
+The scripts reach the call digital by four roads. The formula uses a bell-curve area built by Simpson's rule (adding thin slices under the curve). The second road never mentions $d_2$: it adds up the risk-neutral density of Acme's price, the chance per dollar of finishing at each price, from $100 upward. The third is a 200,000-path Monte Carlo simulation ([Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)) that counts the finishes above $100, driven by a whole-number recurrence both languages compute exactly. The fourth is a tight call spread. The put is priced separately, by the density summed below $100, and call plus put is checked against the discount factor. Each Greek is checked by nudging its input. Every number on the card, the chart points included, is printed.
 
 ### Python
 
@@ -604,12 +582,12 @@ The two outputs match line for line, the simulation included: the random numbers
 
 ## Where you meet it in real life
 
-- **The cash half of every call.** A call pays the share and hands over the strike when Acme finishes above $100. The handed-over cash is 100 cash digitals: 100 × 0.494581 = 49.458109, the cash half on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
-- **Currency desks.** Digitals on exchange rates are among the most traded exotic options; the rate pair, the payout currency and the quoting conventions are on [fx-digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md).
-- **Structured notes.** A note that pays a fixed coupon only if an index ends above a level is a bond plus a strip of cash digitals: [structured-notes-in-outline](../32-Convexity%20and%20Exotics/06-structured-notes-in-outline.md).
-- **Touch contracts.** Pay the dollar the first moment Acme touches the line, instead of at the close: [one-touch-and-no-touch](../16-Barriers%2C%20touches%20and%20lookbacks/05-one-touch-and-no-touch.md).
-- **Reading the market's chances.** Digital prices across many strikes, divided by the discount, give the priced-in chance of finishing above each one. The change from one strike to the next is the priced-in density of Acme's price: [butterfly-and-the-implied-density](05-butterfly-and-the-implied-density.md).
-- **Backing out volatility or strike.** A quoted digital price can be turned back into the volatility or strike that produces it: [digital-inverses-vol-and-strike](06-digital-inverses-vol-and-strike.md).
+- **The cash half of every call.** A call pays the share and hands over the strike when Acme finishes above $100. The handed-over cash is 100 cash digitals: 100 × 0.494581 = 49.458109, the cash half on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+- **Currency desks.** Digitals on exchange rates are among the most traded exotic options; the rate pair, the payout currency and the quoting conventions are on [Currency digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md).
+- **Structured notes.** A note that pays a fixed coupon only if an index ends above a level is a bond plus a strip of cash digitals: [Structured rate notes](../32-Convexity%20and%20Exotics/06-structured-notes-in-outline.md).
+- **Touch contracts.** Pay the dollar the first moment Acme touches the line, instead of at the close: [One-touch and no-touch](../16-Barriers%2C%20touches%20and%20lookbacks/05-one-touch-and-no-touch.md).
+- **Reading the market's chances.** Digital prices across many strikes, divided by the discount, give the priced-in chance of finishing above each one. The change from one strike to the next is the priced-in density of Acme's price: [The butterfly and the implied density](05-butterfly-and-the-implied-density.md).
+- **Backing out volatility or strike.** A quoted digital price can be turned back into the volatility or strike that produces it: [Digital inverses](06-digital-inverses-vol-and-strike.md).
 
 > **Say it back**
 > A cash-or-nothing digital pays a fixed dollar if the share finishes above the strike, and nothing otherwise. Its price is the discount factor times the chance of finishing above, $e^{-rT}N(d_2)$, and the put is the same with $N(-d_2)$. Holding both guarantees the dollar, so they sum to the discount factor in any model. The chance inside is priced in, taken in a world where the share grows at the bank rate, and it is not a forecast. For Acme the call costs 0.494581 and the put 0.456648.
@@ -618,19 +596,19 @@ The two outputs match line for line, the simulation included: the random numbers
 
 ## What this builds on
 
-- [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the pretend-world recipe, $d_2$, and the call split into a share half and a cash half; this card is the cash half sold alone.
-- [normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, its area $N(x)$ and its mirror symmetry, which turns "above $-d_2$" into $N(d_2)$.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): pricing by simulating many finishes and averaging the payoff, with an error bar; here the average is a count.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the pretend-world recipe, $d_2$, and the call split into a share half and a cash half; this card is the cash half sold alone.
+- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, its area $N(x)$ and its mirror symmetry, which turns "above $-d_2$" into $N(d_2)$.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): pricing by simulating many finishes and averaging the payoff, with an error bar; here the average is a count.
 
 ## Where this goes next
 
-- [asset-or-nothing-digital](02-asset-or-nothing-digital.md): the share-paying twin, priced with $N(d_1)$, and the call rebuilt from the two.
-- [digital-inverses-vol-and-strike](06-digital-inverses-vol-and-strike.md): the formula run backwards, with its existence and uniqueness cases.
-- [one-touch-and-no-touch](../16-Barriers%2C%20touches%20and%20lookbacks/05-one-touch-and-no-touch.md): the dollar paid on touching the line, any time before expiry.
-- [fx-digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md): the same contract on a currency pair, as desks quote it.
-- [structured-notes-in-outline](../32-Convexity%20and%20Exotics/06-structured-notes-in-outline.md): digitals packaged inside notes sold to investors.
+- [Asset-or-nothing digital](02-asset-or-nothing-digital.md): the share-paying twin, priced with $N(d_1)$, and the call rebuilt from the two.
+- [Digital inverses](06-digital-inverses-vol-and-strike.md): the formula run backwards, with its existence and uniqueness cases.
+- [One-touch and no-touch](../16-Barriers%2C%20touches%20and%20lookbacks/05-one-touch-and-no-touch.md): the dollar paid on touching the line, any time before expiry.
+- [Currency digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md): the same contract on a currency pair, as desks quote it.
+- [Structured rate notes](../32-Convexity%20and%20Exotics/06-structured-notes-in-outline.md): digitals packaged inside notes sold to investors.
 
-This card priced a payout of cash; what changes when the payout is the share itself, worth most in exactly the outcomes where it is paid, is [asset-or-nothing-digital](02-asset-or-nothing-digital.md).
+This card priced a payout of cash; what changes when the payout is the share itself, worth most in exactly the outcomes where it is paid, is [Asset-or-nothing digital](02-asset-or-nothing-digital.md).
 
 ---
 

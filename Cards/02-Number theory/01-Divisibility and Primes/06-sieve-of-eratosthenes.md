@@ -1,27 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Divisibility and Primes
-topic: Primes
-item: The sieve of Eratosthenes
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/03-multiplying-and-dividing|multiplying-and-dividing]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/05-primes-and-composites|primes-and-composites]]"
-next:
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/07-prime-factorisation|prime-factorisation]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/08-counting-divisors|counting-divisors]]"
-tags:
-  - mathematics
-  - number theory
-  - sieve-of-eratosthenes
----
-
 # The sieve of Eratosthenes: cross out every multiple and the primes are what is left standing
 
-Number theory → Divisibility and Primes → Primes → The sieve of Eratosthenes
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Divisibility and Primes](../../../SYLLABUS.md#w02-s01) → The sieve of Eratosthenes
 
 ---
 
@@ -31,7 +10,7 @@ A school corridor. 100 lockers, numbered 1 to 100, every door open.
 
 Shut locker 1. Leave locker 2 open, but slam every second locker after it: 4, 6, 8, on to 100. The next door still open is 3. Leave it, slam every third locker after it — 6 and 12 are shut already, so the slams land on 9, 15, 21, on to 99. Next open is 5: same again, and the slams land on 25, 35, 55, 65, 85, 95. Next is 7: leave it, slam 49, 77, 91.
 
-Count what is still open: 25 doors — exactly the primes up to 100 ([primes-and-composites](05-primes-and-composites.md)).
+Count what is still open: 25 doors — exactly the primes up to 100 ([Primes and composites](05-primes-and-composites.md)).
 
 You never asked whether a number was prime. You slammed multiples of numbers you had already kept. That is a **sieve**: the composites fall through, the primes stay in the mesh. Its name is the sieve of Eratosthenes, from around 240 BC, and still how computers build prime lists.
 
@@ -73,7 +52,7 @@ The corridor is the method:
 
 ### A slam is a divisor
 
-Every door a pass slams is a multiple of the kept number — that number goes in with nothing left over ([divides](01-divides.md)). So a slammed door has a divisor besides 1 and itself: composite. A prime door is never slammed, then — not by its own pass, not by any later one.
+Every door a pass slams is a multiple of the kept number — that number goes in with nothing left over ([Divides](01-divides.md)). So a slammed door has a divisor besides 1 and itself: composite. A prime door is never slammed, then — not by its own pass, not by any later one.
 
 ### Every composite gets slammed
 
@@ -121,7 +100,7 @@ Those 25 doors: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported. The corridor is walked the plain way, one pass per open door. The second road never sieves: it tests each locker by trial division ([primes-and-composites](05-primes-and-composites.md)), and the two lists must match. Then the three mistakes.
+Nothing is imported. The corridor is walked the plain way, one pass per open door. The second road never sieves: it tests each locker by trial division ([Primes and composites](05-primes-and-composites.md)), and the two lists must match. Then the three mistakes.
 
 ### Python
 
@@ -260,7 +239,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Programs wanting many small primes.** Breaking a number into factors starts with a prime list, built faster by a sieve than by testing candidates: [prime-factorisation](07-prime-factorisation.md).
+- **Programs wanting many small primes.** Breaking a number into factors starts with a prime list, built faster by a sieve than by testing candidates: [Prime factorisation](07-prime-factorisation.md).
 - **The locks on bank and browser traffic.** Those keys are built from very large primes. Sieving out the small factors first means the costly test runs only on survivors.
 - **Rotas and clashes.** Weeks divisible by 2, 3 or 5 are booked: cross those out, and the free weeks are what is left standing.
 
@@ -271,13 +250,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [multiplying-and-dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): a pass is counting in multiples.
-- [primes-and-composites](05-primes-and-composites.md): what open and slammed mean, and why a composite's smaller factor is small.
+- [Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): a pass is counting in multiples.
+- [Primes and composites](05-primes-and-composites.md): what open and slammed mean, and why a composite's smaller factor is small.
 
 ## Where this goes next
 
-- [prime-factorisation](07-prime-factorisation.md): every composite splits into the primes the sieve just handed you.
-- [counting-divisors](08-counting-divisors.md): how many divisors a number has, read straight off that split.
+- [Prime factorisation](07-prime-factorisation.md): every composite splits into the primes the sieve just handed you.
+- [Counting divisors](08-counting-divisors.md): how many divisors a number has, read straight off that split.
 
 ---
 

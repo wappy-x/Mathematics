@@ -1,26 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Counterparty Risk and CVA
-topic: Future exposure measures
-item: Expected exposure over time
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/01-counterparty-exposure-and-netting|counterparty-exposure-and-netting]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/05-normal-quantile|normal-quantile]]"
-next:
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/03-cva|cva]]"
-  - "[[Cards/12-Financial mathematics/47-Collateral, Funding and the Rest of the XVAs/01-collateral-and-the-residual-exposure|collateral-and-the-residual-exposure]]"
-tags: [mathematics, financial mathematics, expected-exposure-profiles]
----
-
 # Expected exposure over time: what you are likely to be owed at each future date, and the tail (PFE) above it
 
-Financial mathematics → Counterparty Risk and CVA → Future exposure measures → Expected exposure over time
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Counterparty Risk and CVA](../../../SYLLABUS.md#w12-s46) → Expected exposure over time
 
 ---
 
@@ -30,7 +10,7 @@ A bank buys the one-year Acme call from Northwind for \$9.23. Acme trades at \$1
 
 Suppose Northwind fails in six months. The bank loses what the call is worth on that day, less whatever the bankruptcy court returns. That amount is unknown today: it depends on where Acme trades in six months. If Acme has crashed, the call is worth little and the loss is small. If Acme has soared, the loss is large. The amount at stake on a future date is a random number, not a fixed one.
 
-The earlier card [counterparty-exposure-and-netting](01-counterparty-exposure-and-netting.md) named this amount the **exposure**: the replacement value of the trade if it is positive to the bank, and zero if not. A weather forecast gives two numbers for each day ahead: the average rainfall, and the level only a one-in-twenty storm exceeds. Risk managers do the same for exposure, date by date. From here on the average is called **expected exposure** (EE) and the storm level **potential future exposure** (PFE). Drawn across all future dates, each becomes a **profile**.
+The earlier card [Counterparty exposure](01-counterparty-exposure-and-netting.md) named this amount the **exposure**: the replacement value of the trade if it is positive to the bank, and zero if not. A weather forecast gives two numbers for each day ahead: the average rainfall, and the level only a one-in-twenty storm exceeds. Risk managers do the same for exposure, date by date. From here on the average is called **expected exposure** (EE) and the storm level **potential future exposure** (PFE). Drawn across all future dates, each becomes a **profile**.
 
 For the Acme call the average climbs gently, from \$9.23 today to \$9.46 at six months and \$9.70 just before expiry. The 95% level climbs fast: \$28.26 at six months, \$40.35 at expiry. A five-year interest-rate swap tells a different story: its exposure starts at zero, humps in the middle years and dies at maturity.
 
@@ -57,7 +37,7 @@ Top line (orange): the 95% potential future exposure. Middle line (green): expec
 
 ## The formula
 
-Notation first, in words. The letter $u$ is a future date, in years from today. $V(u)$ is the trade's value to the bank on that date, before any thought of default; it may be negative. The exposure on that date is $\max(V(u), 0)$: the value if the bank is owed, zero if the bank owes. $\mathbb{E}[\,\cdot\,]$ is an average over all the ways the market could move, weighted by their chances (see [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)).
+Notation first, in words. The letter $u$ is a future date, in years from today. $V(u)$ is the trade's value to the bank on that date, before any thought of default; it may be negative. The exposure on that date is $\max(V(u), 0)$: the value if the bank is owed, zero if the bank owes. $\mathbb{E}[\,\cdot\,]$ is an average over all the ways the market could move, weighted by their chances (see [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)).
 
 $$\mathrm{EE}(u) = \mathbb{E}\big[\max(V(u),\,0)\big]$$
 
@@ -92,7 +72,7 @@ $$e^{-ru}\,\mathrm{EE}(u) = C_0, \qquad \mathrm{PFE}_\alpha(u) = c\Big(u,\; S_0\
 | $\mathrm{EPE}$ | expected exposure averaged over a window of dates | \$9.46 over year one | |
 | $N(x)$, $d_1$, $d_2$ | bell-curve area left of $x$; the call's two bell-curve distances | 1.857, 1.716 at the six-month PFE | |
 
-$c(u,s)$ is the Black-Scholes call with $T - u$ years left ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). $z_\alpha$ is the normal quantile: the point with area $\alpha$ to its left ([normal-quantile](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
+$c(u,s)$ is the Black-Scholes call with $T - u$ years left ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). $z_\alpha$ is the normal quantile: the point with area $\alpha$ to its left ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
 
 ### When it holds
 
@@ -100,8 +80,8 @@ EE and PFE are definitions and hold for any trade. The call's two closed forms r
 
 - **Paths from the pricing world.** Acme drifts at $r - q$, the bank rate less the dividend. Simulate with a real-world expected return of 8% instead and the average exposure no longer equals $C_0$ grown at the bank rate; the six-month PFE moves from \$28.26 to \$30.10.
 - **Nothing paid before expiry.** The call pays once, at the end, and cannot be exercised early. A trade that pays coupons or can be cut short loses the flat line: each payment steps the profile down.
-- **Exposure and default unrelated.** The profile ignores whether Northwind is likelier to fail when Acme soars. When the two move together, the average exposure given default differs from EE; that is [wrong-way-risk](05-wrong-way-risk.md).
-- **No collateral, one trade.** Collateral posted by Northwind or netting against other trades changes $V(u)$ before the floor; the profile is then of the residual ([collateral-and-the-residual-exposure](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md)).
+- **Exposure and default unrelated.** The profile ignores whether Northwind is likelier to fail when Acme soars. When the two move together, the average exposure given default differs from EE; that is [Wrong-way risk](05-wrong-way-risk.md).
+- **No collateral, one trade.** Collateral posted by Northwind or netting against other trades changes $V(u)$ before the floor; the profile is then of the residual ([Collateral](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md)).
 - **One model for paths and prices.** Simulating Acme with one volatility and revaluing the call with another breaks the flat line by the mismatch.
 
 ---
@@ -120,7 +100,7 @@ Exposure on a date six months away has a whole distribution: small in most scena
 4. Floor each value at zero.
 5. On each date, average the floored values for EE; sort them and read the 95th percentile for PFE.
 
-The sorted percentile is the smallest simulated value with 95% of all values at or below it: with 40,000 paths, the 38,000th. Step 3 is the expensive part. A call has a formula; a trade without one needs a price inside the simulation, and the standard tool regresses future values on today's state along the paths ([longstaff-schwartz-least-squares-monte-carlo](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md)).
+The sorted percentile is the smallest simulated value with 95% of all values at or below it: with 40,000 paths, the 38,000th. Step 3 is the expensive part. A call has a formula; a trade without one needs a price inside the simulation, and the standard tool regresses future values on today's state along the paths ([Longstaff-Schwartz](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md)).
 
 ### Step 2: floor first, then average
 
@@ -134,7 +114,7 @@ The gap is large when the trade can go either way. The swap below is worth close
 
 A bought call is never worth less than zero, so its exposure is its value: $\max(c, 0) = c$. The floor does nothing.
 
-Now the pricing world's defining property ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)): any traded thing that pays nothing along the way, shrunk by the bank rate, has an average future value equal to its value today. The call qualifies. On date $u$ its value is the shrunk average of its final payoff given what is known then; averaging again over what might be known then gives the shrunk average of the final payoff, which is $C_0$. So
+Now the pricing world's defining property ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)): any traded thing that pays nothing along the way, shrunk by the bank rate, has an average future value equal to its value today. The call qualifies. On date $u$ its value is the shrunk average of its final payoff given what is known then; averaging again over what might be known then gives the shrunk average of the final payoff, which is $C_0$. So
 
 $$e^{-ru}\,\mathrm{EE}(u) = C_0 \quad\text{for every } u \text{ up to expiry.}$$
 
@@ -196,7 +176,7 @@ The Acme call at six months: $S_0$ = \$100, $K$ = \$100, $r$ = 5%, $q$ = 2%, $\s
 
 If Northwind fails in six months, the bank expects to be owed about \$9.46, and in one scenario in twenty it is owed more than \$28.26. The average prices the risk; the tail sizes the limit a credit officer sets on Northwind.
 
-For the house cross-check: with Northwind's hazard of 2% a year and 40% recovery, the flat \$9.23 in today's dollars gives a credit charge of 0.6 × \$9.23 × (1 − $e^{-0.02}$) = \$0.1096, and a risky price of \$9.12. That computation belongs to [cva](03-cva.md); it appears here only to show the profile feeding it.
+For the house cross-check: with Northwind's hazard of 2% a year and 40% recovery, the flat \$9.23 in today's dollars gives a credit charge of 0.6 × \$9.23 × (1 − $e^{-0.02}$) = \$0.1096, and a risky price of \$9.12. That computation belongs to [CVA](03-cva.md); it appears here only to show the profile feeding it.
 
 ### What breaks if you drop a piece
 
@@ -216,7 +196,7 @@ The standard deviation of the six-month call value is \$9.25; the average plus 1
 
 The call's profile rises and stops at expiry. A swap's profile rises, peaks and falls to zero. The difference is what each trade still owes.
 
-The trade: a five-year swap with Northwind on \$100 of notional. The bank receives a fixed 5.13% each year and pays the floating rate, reset annually ([interest-rate-swaps](../28-Swaps/01-interest-rate-swaps.md)). At a flat 5% rate, 5.13% is the par coupon ([par-swap-rate-and-annuity](../28-Swaps/02-par-swap-rate-and-annuity.md)), so the swap is worth zero today and exposure starts at zero. In the sketch model the whole curve moves up or down together by a bell-curve amount with a spread of 1% a year times the square root of the years elapsed. When rates fall, the bank's fixed receipts are worth more and Northwind owes; when rates rise, the bank owes. Values are read just after each annual payment.
+The trade: a five-year swap with Northwind on \$100 of notional. The bank receives a fixed 5.13% each year and pays the floating rate, reset annually ([Interest rate swaps](../28-Swaps/01-interest-rate-swaps.md)). At a flat 5% rate, 5.13% is the par coupon ([The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)), so the swap is worth zero today and exposure starts at zero. In the sketch model the whole curve moves up or down together by a bell-curve amount with a spread of 1% a year times the square root of the years elapsed. When rates fall, the bank's fixed receipts are worth more and Northwind owes; when rates rise, the bank owes. Values are read just after each annual payment.
 
 Two forces meet. **Uncertainty grows**: by year two the rate's spread is 1.41%, and the 5% tail sits at 2.67%. **Payments run out**: at year two three remain, at year four one, at year five none. Exposure is roughly the rate move times the payments left, so it rises then falls.
 
@@ -687,10 +667,10 @@ The two outputs agree line for line at four decimals, including the simulated co
 ## Where you meet it in real life
 
 - **Credit limits.** A bank's credit officers cap each counterparty's PFE profile at a limit. A new trade with Northwind is approved only if the combined profile, with the new trade netted in, stays under the limit on every date.
-- **The CVA desk.** The expected-exposure profile in today's dollars, weighted by the chance Northwind fails in each period and by the loss if it does, is the credit charge: [cva](03-cva.md). Its sensitivities are hedged: [cva-risk-numbers-and-hedging](06-cva-risk-numbers-and-hedging.md).
+- **The CVA desk.** The expected-exposure profile in today's dollars, weighted by the chance Northwind fails in each period and by the loss if it does, is the credit charge: [CVA](03-cva.md). Its sensitivities are hedged: [CVA risk numbers](06-cva-risk-numbers-and-hedging.md).
 - **Capital rules.** The Basel counterparty rules define EE, effective EE and effective EPE, and banks with approved models set capital from them.
-- **The other side of the trade.** Northwind runs the same profile on what it owes the bank. The bank's own view of that, the negative side of $V(u)$, drives the charge for the bank's own default: [dva-and-bilateral-cva](04-dva-and-bilateral-cva.md).
-- **Margin.** Collateral cuts exposure to what can build up between margin calls; the residual profile is the same machinery on a short window: [collateral-and-the-residual-exposure](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md).
+- **The other side of the trade.** Northwind runs the same profile on what it owes the bank. The bank's own view of that, the negative side of $V(u)$, drives the charge for the bank's own default: [DVA](04-dva-and-bilateral-cva.md).
+- **Margin.** Collateral cuts exposure to what can build up between margin calls; the residual profile is the same machinery on a short window: [Collateral](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md).
 
 > **Say it back**
 > Exposure on a future date is what the counterparty would owe if it failed then, and it is random. Expected exposure averages it after flooring each scenario at zero; potential future exposure reads a high percentile of it. Both are built by simulating the market, revaluing the trade on each date, flooring, then averaging or sorting. A bought call's expected exposure, shrunk to today, equals its price on every date; its PFE is the call revalued at the percentile stock price. A swap's profile humps, because uncertainty grows while payments run out.
@@ -699,15 +679,15 @@ The two outputs agree line for line at four decimals, including the simulated co
 
 ## What this builds on
 
-- [counterparty-exposure-and-netting](01-counterparty-exposure-and-netting.md): exposure on one date, the floor at zero, and which trades may be netted before it.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): simulating paths and averaging, with the error shrinking like one over the square root of the path count.
-- [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the revaluation formula on every date, and the pricing world whose averaging property gives the flat line.
-- [normal-quantile](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): the 1.645 that places the 95th percentile.
+- [Counterparty exposure](01-counterparty-exposure-and-netting.md): exposure on one date, the floor at zero, and which trades may be netted before it.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): simulating paths and averaging, with the error shrinking like one over the square root of the path count.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the revaluation formula on every date, and the pricing world whose averaging property gives the flat line.
+- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): the 1.645 that places the 95th percentile.
 
 ## Where this goes next
 
-- [cva](03-cva.md): the discounted EE profile, weighted by Northwind's chance of failing in each period and by the loss given default, becomes the \$0.1096 credit charge on the Acme call.
-- [collateral-and-the-residual-exposure](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md): what remains of these profiles once Northwind posts collateral.
+- [CVA](03-cva.md): the discounted EE profile, weighted by Northwind's chance of failing in each period and by the loss given default, becomes the \$0.1096 credit charge on the Acme call.
+- [Collateral](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/01-collateral-and-the-residual-exposure.md): what remains of these profiles once Northwind posts collateral.
 
 The profile says how much is at stake on each date; it does not yet say what that stake is worth, which needs Northwind's chance of failing and the pricing that turns both into dollars today.
 

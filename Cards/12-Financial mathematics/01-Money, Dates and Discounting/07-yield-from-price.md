@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Money, Dates and Discounting
-topic: Inverting a price
-item: Yield from price
-kind: method
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/05-bonds-price-and-yield|bonds-price-and-yield]]"
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/04-net-present-value-and-irr|net-present-value-and-irr]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/07-fixed-point-iteration-and-the-contraction-principle|fixed-point-iteration-and-the-contraction-principle]]"
-next:
-  - "[[Cards/12-Financial mathematics/02-Curves/06-z-spread-and-asset-swap-spread|z-spread-and-asset-swap-spread]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/05-root-finding-for-inverses|root-finding-for-inverses]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - yield-from-price
----
-
 # Yield from price: the first inverse problem, and when it has exactly one answer
 
-Financial mathematics → Money, Dates and Discounting → Inverting a price → Yield from price
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Money, Dates and Discounting](../../../SYLLABUS.md#w12-s01) → Yield from price
 
 ---
 
@@ -30,7 +8,7 @@ Financial mathematics → Money, Dates and Discounting → Inverting a price →
 
 A screen quotes the five-year government bond at 1,043.29 dollars. The contract itself prints two numbers and neither of them is the one a lender wants: it promises 60 dollars a year for five years and 1,000 dollars back at the end. What the buyer actually earns at that price is nowhere on the paper. It has to be dug out of the price.
 
-Going the other way is arithmetic: pick a rate, discount the five payments, add them up. That is the job of [bonds-price-and-yield](05-bonds-price-and-yield.md). Going backwards has no such recipe. The price is built from five powers of one unknown rate, and fifth-degree equations have no general formula in ordinary roots — a fact proved once and for all by Abel and Galois. The rate can only be hunted.
+Going the other way is arithmetic: pick a rate, discount the five payments, add them up. That is the job of [Bond price and yield](05-bonds-price-and-yield.md). Going backwards has no such recipe. The price is built from five powers of one unknown rate, and fifth-degree equations have no general formula in ordinary roots — a fact proved once and for all by Abel and Galois. The rate can only be hunted.
 
 Hunting is fine, so long as two questions are settled before the hunt starts. Does an answer exist? Is there only one? For this bond both answers are yes, and the price quoted, 1,043.29, comes back as a yield of **5.000 percent**. For a stream that pays out as well as in, both answers can be no — and that failure is the most useful thing on this card.
 
@@ -96,7 +74,7 @@ $$\lvert y_k - y_*\rvert \;\le\; \frac{\lvert P(y_k) - p\rvert}{m}, \qquad m \;=
 
 - **Every payment is positive, and the price is paid once, at the start.** One change of sign in the whole stream is what buys a single answer. Two sign changes can give two yields, and Step 5 shows a stream with exactly that.
 - **The quoted price is positive.** A price of zero is only ever approached, as the yield runs off to infinity, so a quote of zero names no rate. A quote above the undiscounted total of 1,300.00 is legal and gives a negative yield.
-- **The payments are fixed, known, and a whole period apart.** A coupon that resets, or a settlement date part-way through a period, changes the equation being solved before any search begins: [day-counts-and-dates](02-day-counts-and-dates.md).
+- **The payments are fixed, known, and a whole period apart.** A coupon that resets, or a settlement date part-way through a period, changes the equation being solved before any search begins: [Day counts](02-day-counts-and-dates.md).
 - **Bisection needs a genuine bracket; Newton needs a slope.** Two ends on the same side of the quote and bisection converges to nothing useful. A tangent taken where the curve is nearly flat throws the next guess into the distance, which is what happens at the end of Step 5.
 - **The answer arrives with a precision, not exactly.** Forty halvings pin the yield to about a trillionth. Anything less has to be defended with the bound above.
 
@@ -145,13 +123,13 @@ Bisection ignores everything the price curve says except which side of the quote
 
 At a trial rate, the curve is replaced by its tangent — the straight line touching it there — and the next guess is where that line crosses the quoted price. The step is the price still missing, divided by the slope.
 
-That slope is not an abstraction. $-P'(y)$ is the money the bond loses per unit of yield, known on a desk as dollar duration; divided by the price it is the percentage loss, and the rest of that story is [duration-and-convexity](06-duration-and-convexity.md). Here it is 4,449.156608 dollars per unit of yield at the answer, so one basis point of yield is 0.444916 dollars of price.
+That slope is not an abstraction. $-P'(y)$ is the money the bond loses per unit of yield, known on a desk as dollar duration; divided by the price it is the percentage loss, and the rest of that story is [Duration and convexity](06-duration-and-convexity.md). Here it is 4,449.156608 dollars per unit of yield at the answer, so one basis point of yield is 0.444916 dollars of price.
 
 Starting from the 6 percent coupon rate — the natural first guess, since it is the right answer whenever a bond trades at its face — the bond prices at 1,000.00, which is 43.294767 too cheap. The slope there is −4,212.363786. One step:
 
 $$0.06 - \frac{-43.294767}{-4212.363786} = 0.049722.$$
 
-The next step reaches 4.9999788 percent, and the one after that is right to seven places. Each step roughly doubles the number of correct digits, because the error left after a step is proportional to the square of the error before it — the general statement lives on [fixed-point-iteration-and-the-contraction-principle](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md).
+The next step reaches 4.9999788 percent, and the one after that is right to seven places. Each step roughly doubles the number of correct digits, because the error left after a step is proportional to the square of the error before it — the general statement lives on [Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md).
 
 <details>
 <summary>Why the tangent is worth two guesses</summary>
@@ -188,9 +166,9 @@ xychart-beta
     line [0, 0, 0, 0, 0, 0, 0]
 ```
 
-The curved line is the quarry's value; the flat line is break-even. They meet at nought percent and at a hundred percent. Nothing in between is wrong, and nothing outside is a near miss. A count of sign changes is the general rule: written in $z = 1+y$, the price equation is a polynomial, and Descartes' rule of signs says it has no more positive roots — no more rates above −100 percent — than the payments have changes of sign. One change of sign, at most one answer, and Step 1 says exactly one. The project side of this, and what a single rate can and cannot be asked to mean, is [net-present-value-and-irr](04-net-present-value-and-irr.md).
+The curved line is the quarry's value; the flat line is break-even. They meet at nought percent and at a hundred percent. Nothing in between is wrong, and nothing outside is a near miss. A count of sign changes is the general rule: written in $z = 1+y$, the price equation is a polynomial, and Descartes' rule of signs says it has no more positive roots — no more rates above −100 percent — than the payments have changes of sign. One change of sign, at most one answer, and Step 1 says exactly one. The project side of this, and what a single rate can and cannot be asked to mean, is [NPV and IRR](04-net-present-value-and-irr.md).
 
-**The other route.** A yield is a single rate stretched over every date. A market that keeps a different rate for each date does not invert a price for one rate at all; it asks what fixed extra spread, added to every rate on the curve, reproduces the quote. Same search, different unknown: [z-spread-and-asset-swap-spread](../02-Curves/06-z-spread-and-asset-swap-spread.md).
+**The other route.** A yield is a single rate stretched over every date. A market that keeps a different rate for each date does not invert a price for one rate at all; it asks what fixed extra spread, added to every rate on the curve, reproduces the quote. Same search, different unknown: [Spreads over the curve](../02-Curves/06-z-spread-and-asset-swap-spread.md).
 
 ---
 
@@ -691,9 +669,9 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Every bond screen and every auction.** Dealers quote a price and the yield beside it is this search, run in microseconds. A government auction takes bids as prices and publishes the yields it filled at.
-- **A loan's stated rate.** The advertised rate on a loan is the yield of its own payment schedule, fees and all: the rate that makes the payments worth exactly the cash handed over. The payment side of that is [annuities-and-loans](03-annuities-and-loans.md).
-- **Project appraisal.** The internal rate of return is this same inversion applied to a project's cash flows, and quarries are not rare: any stream with clean-up costs at the end can carry two answers. [net-present-value-and-irr](04-net-present-value-and-irr.md).
-- **Option desks.** An option's price is quoted and the volatility that reproduces it is hunted the same way. The forward machine is different, the inverse problem is identical: [root-finding-for-inverses](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md).
+- **A loan's stated rate.** The advertised rate on a loan is the yield of its own payment schedule, fees and all: the rate that makes the payments worth exactly the cash handed over. The payment side of that is [Annuities](03-annuities-and-loans.md).
+- **Project appraisal.** The internal rate of return is this same inversion applied to a project's cash flows, and quarries are not rare: any stream with clean-up costs at the end can carry two answers. [NPV and IRR](04-net-present-value-and-irr.md).
+- **Option desks.** An option's price is quoted and the volatility that reproduces it is hunted the same way. The forward machine is different, the inverse problem is identical: [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md).
 - **Spreadsheets.** The built-in yield and rate functions run this same search behind a single cell. They return one number and say nothing about how many there were.
 
 > **Say it back**
@@ -703,14 +681,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [bonds-price-and-yield](05-bonds-price-and-yield.md): the machine this card runs backwards — the price of a fixed stream at a given yield, and the 1,043.29 quoted here.
-- [net-present-value-and-irr](04-net-present-value-and-irr.md): the same equation set to zero for a project's cash flows, where a single rate is asked to stand in for a whole decision.
-- [fixed-point-iteration-and-the-contraction-principle](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md): why repeating a step closes in on an answer at all, and what has to be true for it to keep closing.
+- [Bond price and yield](05-bonds-price-and-yield.md): the machine this card runs backwards — the price of a fixed stream at a given yield, and the 1,043.29 quoted here.
+- [NPV and IRR](04-net-present-value-and-irr.md): the same equation set to zero for a project's cash flows, where a single rate is asked to stand in for a whole decision.
+- [Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md): why repeating a step closes in on an answer at all, and what has to be true for it to keep closing.
 
 ## Where this goes next
 
-- [z-spread-and-asset-swap-spread](../02-Curves/06-z-spread-and-asset-swap-spread.md): the same search with a better unknown — not one flat rate, but the constant extra spread over a whole curve of dated rates.
-- [root-finding-for-inverses](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): the machinery on its own, bracketing and tangents combined, aimed at every other quoted price that hides a parameter.
+- [Spreads over the curve](../02-Curves/06-z-spread-and-asset-swap-spread.md): the same search with a better unknown — not one flat rate, but the constant extra spread over a whole curve of dated rates.
+- [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): the machinery on its own, bracketing and tangents combined, aimed at every other quoted price that hides a parameter.
 
 This card assumed one rate could stand for every date, because one contract was being inverted; the moment two bonds with different dates are priced together, that assumption has to go, and a later card replaces it with a curve.
 

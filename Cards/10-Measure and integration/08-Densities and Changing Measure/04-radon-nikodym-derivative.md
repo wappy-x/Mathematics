@@ -1,25 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Densities and Changing Measure
-topic: Exchange rates between measures
-item: The Radon-Nikodym derivative
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/03-radon-nikodym-theorem|radon-nikodym-theorem]]"
-next:
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/06-densities-and-likelihood-ratios|densities-and-likelihood-ratios]]"
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/05-conditioning-on-a-random-variable|conditioning-on-a-random-variable]]"
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/06-filtrations-and-martingales|filtrations-and-martingales]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/01-change-of-measure-and-density-processes|change-of-measure-and-density-processes]]"
-tags: [mathematics, measure and integration, radon-nikodym-derivative]
----
-
 # The Radon-Nikodym derivative: an exchange rate between measures, with a chain rule and a rule for changing measure under an integral
 
-Measure and integration → Densities and Changing Measure → Exchange rates between measures → The Radon-Nikodym derivative
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Densities and Changing Measure](../../../SYLLABUS.md#w10-s08) → The Radon-Nikodym derivative
 
 ---
 
@@ -31,7 +12,7 @@ That 4.4 can be reached without ever rolling the loaded die. Give each face a we
 
 Think of an exchange rate. A price list in one currency becomes a price list in another when each price is multiplied by the rate. Here the "currency" is probability: the weight at each face converts fair-die probability into loaded-die probability. From here on that weight has its proper name, the **Radon-Nikodym derivative** of the loaded die against the fair one, also called the **density** of one measure against the other.
 
-The [radon-nikodym-theorem](03-radon-nikodym-theorem.md) says such a weight exists whenever one measure never gives weight where the other gives none. This card proves what the weight does. It moves any integral from one measure to the other. It chains through a third measure by multiplying. It turns round by taking the reciprocal. In probability, it turns an average under one set of odds into an average under another. Converting through a third die gives the same 4.4; converting back gives the fair 3.5.
+The [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md) says such a weight exists whenever one measure never gives weight where the other gives none. This card proves what the weight does. It moves any integral from one measure to the other. It chains through a third measure by multiplying. It turns round by taking the reciprocal. In probability, it turns an average under one set of odds into an average under another. Converting through a third die gives the same 4.4; converting back gives the fair 3.5.
 
 **The Radon-Nikodym derivative is an exchange rate between two measures: multiply by it inside an integral to switch measures, multiply two of them to pass through a third, and invert it to go back.**
 
@@ -57,7 +38,7 @@ The bars are the exchange rate at each face. The flat line at 1 is the fair die 
 
 Notation first, in words. $\Omega$ (omega) is the space of outcomes, here the six faces. $\mathcal F$ is the collection of sets we allow ourselves to measure; on a die it is all 64 sets of faces. A **measure** gives each such set a size; $\mu$ (mu), $\nu$ (nu) and $\rho$ (rho) name three of them. $P$ is the fair die, $Q$ the loaded die and $R$ a third die, loaded towards the low faces: 0.25, 0.25, 0.2, 0.1, 0.1, 0.1. $\int g\,d\mu$ is the integral of a function $g$ against $\mu$. $\nu \ll \mu$, read "$\nu$ is absolutely continuous with respect to $\mu$", means every set of $\mu$-size zero also has $\nu$-size zero. Two measures that are each absolutely continuous with respect to the other are **equivalent**.
 
-The derivative itself, from the [radon-nikodym-theorem](03-radon-nikodym-theorem.md), read "the density of $\nu$ against $\mu$": the measurable function $f = \frac{d\nu}{d\mu} \ge 0$ with
+The derivative itself, from the [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md), read "the density of $\nu$ against $\mu$": the measurable function $f = \frac{d\nu}{d\mu} \ge 0$ with
 
 $$\nu(A) = \int_A \frac{d\nu}{d\mu}\,d\mu \quad\text{for every } A \in \mathcal F .$$
 
@@ -124,17 +105,17 @@ Take $g = \mathbf 1_A$, one on A and zero off it. Then $\int \mathbf 1_A\,d\nu =
 
 ### Step 1: simple functions, by adding up
 
-A **simple function** takes finitely many values, each on a measurable set: $s = \sum_k c_k \mathbf 1_{A_k}$ with $c_k \ge 0$ ([integral-of-a-simple-function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md)). Both sides of the rule are linear in $g$: the integral of a sum is the sum of the integrals. Step 0 holds for each indicator, so it holds for every simple function.
+A **simple function** takes finitely many values, each on a measurable set: $s = \sum_k c_k \mathbf 1_{A_k}$ with $c_k \ge 0$ ([The integral of a simple function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md)). Both sides of the rule are linear in $g$: the integral of a sum is the sum of the integrals. Step 0 holds for each indicator, so it holds for every simple function.
 
 On the die every function is simple, and the code checks the indicator case on all 64 sets of faces: $Q(A)$ equals the sum over A of Z times $P$, every time.
 
 ### Step 2: non-negative functions, by monotone convergence
 
-Any measurable $g \ge 0$ is the rising limit of simple functions $s_1 \le s_2 \le \dots$. Then $s_n \frac{d\nu}{d\mu}$ also rises, to $g\frac{d\nu}{d\mu}$, because the density is non-negative. The monotone convergence theorem ([monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) lets the limit pass inside both integrals. Step 1's equality at each stage survives the limit, the value +∞ included.
+Any measurable $g \ge 0$ is the rising limit of simple functions $s_1 \le s_2 \le \dots$. Then $s_n \frac{d\nu}{d\mu}$ also rises, to $g\frac{d\nu}{d\mu}$, because the density is non-negative. The monotone convergence theorem ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) lets the limit pass inside both integrals. Step 1's equality at each stage survives the limit, the value +∞ included.
 
 ### Step 3: signed functions, by splitting
 
-Write $g = g^+ - g^-$, its positive and negative parts. Step 2 applies to each, and gives $\int \lvert g\rvert\,d\nu = \int \lvert g\rvert \frac{d\nu}{d\mu}\,d\mu$. So $g$ is integrable against $\nu$ exactly when $g\frac{d\nu}{d\mu}$ is integrable against $\mu$ ([integrable-functions-and-l1](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). Subtract the two finite equalities. That is rule 1.
+Write $g = g^+ - g^-$, its positive and negative parts. Step 2 applies to each, and gives $\int \lvert g\rvert\,d\nu = \int \lvert g\rvert \frac{d\nu}{d\mu}\,d\mu$. So $g$ is integrable against $\nu$ exactly when $g\frac{d\nu}{d\mu}$ is integrable against $\mu$ ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). Subtract the two finite equalities. That is rule 1.
 
 ### Step 4: the chain rule, from uniqueness
 
@@ -156,14 +137,14 @@ The left side is 1, since $\mu(A) = \int_A 1\,d\mu$. A product equal to 1 has ne
 
 ### Step 6: probability is the special case
 
-Put $\mu = P$, $\nu = Q$, $g = X$. Rule 1 reads $E_Q[X] = E_P[XZ]$. With $X = 1$ it gives $E_P[Z] = Q(\Omega) = 1$: an exchange rate between probabilities averages 1 under the old odds. Averages are integrals ([expectation-as-an-integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)), so nothing new is needed.
+Put $\mu = P$, $\nu = Q$, $g = X$. Rule 1 reads $E_Q[X] = E_P[XZ]$. With $X = 1$ it gives $E_P[Z] = Q(\Omega) = 1$: an exchange rate between probabilities averages 1 under the old odds. Averages are integrals ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)), so nothing new is needed.
 
 The same holds with a density on the line. Bus waits T, in minutes, are exponential at rate 1 under P and at rate 2 under Q. The densities are $e^{-t}$ and $2e^{-2t}$, so $Z(t) = 2e^{-t}$. Rule 4 gives $E_Q[T] = \int_0^\infty t \cdot 2e^{-t}\cdot e^{-t}\,dt$, which is 0.5, the mean wait at rate 2.
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal F)$ a measurable space; $\mu$, $\nu$, $\rho$ measures on it, all σ-finite; $\nu \ll \mu$, and $f = \frac{d\nu}{d\mu}$ a non-negative measurable function with $\nu(A) = \int_A f\,d\mu$ for all $A \in \mathcal F$. Existence and uniqueness a.e. of such $f$ are the [radon-nikodym-theorem](03-radon-nikodym-theorem.md).
+**Setting.** $(\Omega, \mathcal F)$ a measurable space; $\mu$, $\nu$, $\rho$ measures on it, all σ-finite; $\nu \ll \mu$, and $f = \frac{d\nu}{d\mu}$ a non-negative measurable function with $\nu(A) = \int_A f\,d\mu$ for all $A \in \mathcal F$. Existence and uniqueness a.e. of such $f$ are the [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md).
 
 **Rule 1, indicators.** For $A \in \mathcal F$: $\int \mathbf 1_A\,d\nu = \nu(A) = \int_A f\,d\mu = \int \mathbf 1_A f\,d\mu$. The first equality is the integral of an indicator; the second is the definition of $f$; the third is what an integral over A means.
 
@@ -183,7 +164,7 @@ The same holds with a density on the line. Bus waits T, in minutes, are exponent
 
 </details>
 
-On a finite space all four rules have a shorter road: every measure is a list of weights and each derivative is a ratio of weights, so rule 1 is a rearranged sum and rule 2 is cancelling a fraction. The proof above is what survives on a line, where single points carry no weight to divide. Densities against length, and the ratio of two of them, are [densities-and-likelihood-ratios](06-densities-and-likelihood-ratios.md).
+On a finite space all four rules have a shorter road: every measure is a list of weights and each derivative is a ratio of weights, so rule 1 is a rearranged sum and rule 2 is cancelling a fraction. The proof above is what survives on a line, where single points carry no weight to divide. Densities against length, and the ratio of two of them, are [Densities and likelihood ratios](06-densities-and-likelihood-ratios.md).
 
 ---
 
@@ -628,9 +609,9 @@ The two outputs match line for line, the random draws included.
 ## Where you meet it in real life
 
 - **Simulating rare events.** Importance sampling draws from convenient odds and reweights each draw by the exchange rate to the odds of interest, exactly as the code's weighted fair rolls do. It is how rare losses and rare failures are estimated without waiting for them.
-- **Statistics.** The ratio of two models' densities at the observed data is the likelihood ratio, the basis of the strongest tests: [densities-and-likelihood-ratios](06-densities-and-likelihood-ratios.md).
-- **Conditional averages.** An average given partial information is defined as a Radon-Nikodym derivative of one measure on the coarser sets against another: [conditional-expectation-on-a-sigma-algebra](../09-Conditional%20Expectation/02-conditional-expectation-on-a-sigma-algebra.md). Switching such an average to new odds reweights it by Z (abstract Bayes): [conditioning-on-a-random-variable](../09-Conditional%20Expectation/05-conditioning-on-a-random-variable.md).
-- **Pricing.** A price is one average taken under odds chosen for pricing, reached from real-world odds by an exchange rate: [change-of-measure-and-density-processes](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/01-change-of-measure-and-density-processes.md).
+- **Statistics.** The ratio of two models' densities at the observed data is the likelihood ratio, the basis of the strongest tests: [Densities and likelihood ratios](06-densities-and-likelihood-ratios.md).
+- **Conditional averages.** An average given partial information is defined as a Radon-Nikodym derivative of one measure on the coarser sets against another: [Conditional expectation on a sigma-algebra](../09-Conditional%20Expectation/02-conditional-expectation-on-a-sigma-algebra.md). Switching such an average to new odds reweights it by Z (abstract Bayes): [Conditioning on a random variable](../09-Conditional%20Expectation/05-conditioning-on-a-random-variable.md).
+- **Pricing.** A price is one average taken under odds chosen for pricing, reached from real-world odds by an exchange rate: [Changing the measure](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/01-change-of-measure-and-density-processes.md).
 
 > **Say it back**
 > When one measure gives no weight where another gives none, there is a function that converts the second into the first, set by set. Multiplying by it inside an integral changes the measure the integral is taken against. Converting through a middle measure multiplies two such rates, and converting back takes the reciprocal, provided both directions have no weight where the other has none. For probabilities, the rate averages 1 under the old odds, and any average under the new odds is the old average of the quantity times the rate. On the dice, 4.4 comes out every way it is computed.
@@ -639,16 +620,16 @@ The two outputs match line for line, the random draws included.
 
 ## What this builds on
 
-- [radon-nikodym-theorem](03-radon-nikodym-theorem.md): the derivative exists when ν ≪ μ with μ σ-finite, and is unique almost everywhere; every rule here rests on those two facts.
+- [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md): the derivative exists when ν ≪ μ with μ σ-finite, and is unique almost everywhere; every rule here rests on those two facts.
 
 ## Where this goes next
 
-- [densities-and-likelihood-ratios](06-densities-and-likelihood-ratios.md): densities against length, and the ratio of two as a likelihood ratio.
-- [conditioning-on-a-random-variable](../09-Conditional%20Expectation/05-conditioning-on-a-random-variable.md): abstract Bayes, a conditional average under new odds as the old conditional average of X times Z, divided by that of Z.
-- [filtrations-and-martingales](../09-Conditional%20Expectation/06-filtrations-and-martingales.md): the exchange rate restricted to growing information, a martingale.
-- [change-of-measure-and-density-processes](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/01-change-of-measure-and-density-processes.md): exchange rates that evolve in continuous time.
+- [Densities and likelihood ratios](06-densities-and-likelihood-ratios.md): densities against length, and the ratio of two as a likelihood ratio.
+- [Conditioning on a random variable](../09-Conditional%20Expectation/05-conditioning-on-a-random-variable.md): abstract Bayes, a conditional average under new odds as the old conditional average of X times Z, divided by that of Z.
+- [Filtrations and martingales](../09-Conditional%20Expectation/06-filtrations-and-martingales.md): the exchange rate restricted to growing information, a martingale.
+- [Changing the measure](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/01-change-of-measure-and-density-processes.md): exchange rates that evolve in continuous time.
 
-Every rule here assumes one measure gives no weight where the other gives none; what can be said of a measure that breaks that, split into a part with a density and a part with none, is [lebesgue-decomposition](05-lebesgue-decomposition.md).
+Every rule here assumes one measure gives no weight where the other gives none; what can be said of a measure that breaks that, split into a part with a density and a part with none, is [Lebesgue decomposition](05-lebesgue-decomposition.md).
 
 ---
 

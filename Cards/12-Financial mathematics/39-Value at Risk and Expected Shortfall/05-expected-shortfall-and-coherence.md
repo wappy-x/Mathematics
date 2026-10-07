@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Value at Risk and Expected Shortfall
-topic: Averaging the bad days
-item: Expected shortfall
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/01-profit-and-loss-distribution-and-var|profit-and-loss-distribution-and-var]]"
-next:
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/07-extreme-value-theory-and-tails|extreme-value-theory-and-tails]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/03-vasicek-loss-distribution-and-basel-capital|vasicek-loss-distribution-and-basel-capital]]"
-  - "[[Cards/12-Financial mathematics/48-Regulatory Capital in Outline/04-frtb-and-the-shift-to-expected-shortfall|frtb-and-the-shift-to-expected-shortfall]]"
-  - "[[Cards/15-Optimization/04-Linear Programming/07-piecewise-linear-and-minimax-objectives-as-lps|piecewise-linear-and-minimax-objectives-as-lps]]"
-tags: [mathematics, financial mathematics, expected-shortfall-and-coherence]
----
-
 # Expected shortfall: the average loss beyond VaR, and why it adds up when VaR does not
 
-Financial mathematics → Value at Risk and Expected Shortfall → Averaging the bad days → Expected shortfall
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Value at Risk and Expected Shortfall](../../../SYLLABUS.md#w12-s39) → Expected shortfall
 
 ---
 
@@ -27,7 +8,7 @@ Financial mathematics → Value at Risk and Expected Shortfall → Averaging the
 
 A desk holds two bonds from two unrelated companies. Each bond is $100 of exposure. Tomorrow each company either pays in full or defaults, and a default loses the whole $100, with nothing recovered. Each default has a 1% chance, and the two companies know nothing of each other: the defaults are independent.
 
-Ask each bond alone for its one-day value at risk at 99%: the smallest loss that tomorrow's loss stays at or below with at least 99% chance ([profit-and-loss-distribution-and-var](01-profit-and-loss-distribution-and-var.md)). The bond pays in full 99% of the time, so its value at risk is **$0**. The same holds for the other bond. Now ask the pair. The chance that neither defaults is 99% of 99%, which is 98.01%: short of 99%. So the pair's value at risk is **$100**.
+Ask each bond alone for its one-day value at risk at 99%: the smallest loss that tomorrow's loss stays at or below with at least 99% chance ([Value at risk](01-profit-and-loss-distribution-and-var.md)). The bond pays in full 99% of the time, so its value at risk is **$0**. The same holds for the other bond. Now ask the pair. The chance that neither defaults is 99% of 99%, which is 98.01%: short of 99%. So the pair's value at risk is **$100**.
 
 Two positions that each report no risk report $100 of risk together. Split the desk in two and the risk number vanishes. A measure that rewards splitting a book is a measure a bank can game, and a regulator cannot add up.
 
@@ -96,7 +77,7 @@ Subadditivity is an inequality. It does not promise that merging reduces risk, o
 ### When it holds
 
 - **One loss law for everything.** $L$, $M$ and $L + M$ must come from the same scenarios, horizon and currency. Add expected shortfalls computed under two different models and the inequality compares two different worlds.
-- **A finite average loss.** The formula needs $E[L]$ to exist. A tail heavy enough to have no average leaves expected shortfall infinite while value at risk stays finite; measuring such tails is [extreme-value-theory-and-tails](07-extreme-value-theory-and-tails.md).
+- **A finite average loss.** The formula needs $E[L]$ to exist. A tail heavy enough to have no average leaves expected shortfall infinite while value at risk stays finite; measuring such tails is [Extreme value theory](07-extreme-value-theory-and-tails.md).
 - **The slice is exactly $t$.** Averaging only the losses strictly above value at risk breaks the rule whenever outcomes tie at the line: for the pair it gives $200, not $101.
 - **Coherence is about the arithmetic, not the model.** A wrong default probability gives a coherent, wrong number.
 
@@ -163,7 +144,7 @@ The set of allowed weights depends only on $t$, not on the book. So:
 
 Value at risk passes the first three and fails only the fourth, which is the one Step 1 broke.
 
-A second route reaches the same number: average the value at risk over every confidence level from $\alpha$ up to 1. That is the quantile average of Acerbi and Tasche (2002). The minimum over $s$ in the proof is the route of Rockafellar and Uryasev (2000): it turns "choose a portfolio with the smallest expected shortfall" into a linear programme, piecewise-linear-and-minimax-objectives-as-lps.
+A second route reaches the same number: average the value at risk over every confidence level from $\alpha$ up to 1. That is the quantile average of Acerbi and Tasche (2002). The minimum over $s$ in the proof is the route of Rockafellar and Uryasev (2000): it turns "choose a portfolio with the smallest expected shortfall" into a linear programme, Modelling tricks.
 
 ---
 
@@ -214,7 +195,7 @@ For a desk whose one-day loss is a bell curve with average zero and spread $\sig
 | value at risk, 97.5% | $z = 1.959964$ | $1.96 million |
 | expected shortfall, 97.5% | $\varphi(1.959964)/0.025$ | $2.34 million |
 
-For a bell curve, expected shortfall at 97.5% is almost exactly value at risk at 99%. That near-match is why the Basel market-risk rules could swap one for the other in 2016 without moving capital much for books whose losses are close to a bell curve ([frtb-and-the-shift-to-expected-shortfall](../48-Regulatory%20Capital%20in%20Outline/04-frtb-and-the-shift-to-expected-shortfall.md)). For books with fat tails or jumps, like the bonds, the two differ widely. The bell-curve value at risk itself is [parametric-var-and-delta-normal](02-parametric-var-and-delta-normal.md).
+For a bell curve, expected shortfall at 97.5% is almost exactly value at risk at 99%. That near-match is why the Basel market-risk rules could swap one for the other in 2016 without moving capital much for books whose losses are close to a bell curve ([Market-risk capital](../48-Regulatory%20Capital%20in%20Outline/04-frtb-and-the-shift-to-expected-shortfall.md)). For books with fat tails or jumps, like the bonds, the two differ widely. The bell-curve value at risk itself is [Parametric VaR](02-parametric-var-and-delta-normal.md).
 
 ### What breaks if you drop a piece
 
@@ -672,12 +653,12 @@ The simulation saw 109 double-default days in a million, against 100 expected, a
 
 ## Where you meet it in real life
 
-- **Bank trading capital.** The Basel Committee's Fundamental Review of the Trading Book replaced 99% value at risk with 97.5% expected shortfall as the market-risk capital measure: [frtb-and-the-shift-to-expected-shortfall](../48-Regulatory%20Capital%20in%20Outline/04-frtb-and-the-shift-to-expected-shortfall.md).
-- **Credit portfolios.** Loans that default rarely are exactly the two-bond problem at scale. The Vasicek model gives the loss curve and Basel's credit capital reads a quantile off it: [vasicek-loss-distribution-and-basel-capital](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md).
-- **Portfolio construction.** Minimising expected shortfall over portfolio weights is a linear programme by the Rockafellar–Uryasev formula, used in asset allocation and index tracking: piecewise-linear-and-minimax-objectives-as-lps.
-- **Splitting the bill among desks.** Because shortfall is subadditive and scales with the book, each desk's share can be read off by Euler's rule and the shares add to the total: [var-decomposition-euler-and-component-var](06-var-decomposition-euler-and-component-var.md).
-- **Checking the number against history.** Value at risk is checked by counting breaches. Shortfall is harder to test, since it averages outcomes that barely happen: [backtesting-var](08-backtesting-var.md).
-- **Estimating it from data.** Historical and simulated scenarios feed the same filling recipe: [historical-and-monte-carlo-var](03-historical-and-monte-carlo-var.md). Books with options bend the loss curve before any of this starts: [delta-gamma-var-and-cornish-fisher](04-delta-gamma-var-and-cornish-fisher.md).
+- **Bank trading capital.** The Basel Committee's Fundamental Review of the Trading Book replaced 99% value at risk with 97.5% expected shortfall as the market-risk capital measure: [Market-risk capital](../48-Regulatory%20Capital%20in%20Outline/04-frtb-and-the-shift-to-expected-shortfall.md).
+- **Credit portfolios.** Loans that default rarely are exactly the two-bond problem at scale. The Vasicek model gives the loss curve and Basel's credit capital reads a quantile off it: [Vasicek's large-pool loss curve](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md).
+- **Portfolio construction.** Minimising expected shortfall over portfolio weights is a linear programme by the Rockafellar–Uryasev formula, used in asset allocation and index tracking: Modelling tricks.
+- **Splitting the bill among desks.** Because shortfall is subadditive and scales with the book, each desk's share can be read off by Euler's rule and the shares add to the total: [Whose risk is it](06-var-decomposition-euler-and-component-var.md).
+- **Checking the number against history.** Value at risk is checked by counting breaches. Shortfall is harder to test, since it averages outcomes that barely happen: [Backtesting VaR](08-backtesting-var.md).
+- **Estimating it from data.** Historical and simulated scenarios feed the same filling recipe: [Historical and Monte Carlo VaR](03-historical-and-monte-carlo-var.md). Books with options bend the loss curve before any of this starts: [Options in the book](04-delta-gamma-var-and-cornish-fisher.md).
 
 > **Say it back**
 > Value at risk is the line where the worst 1% of days begins. For two bonds that each default 1% of the time, each reports $0, while the pair reports $100, because together a default is more than 1% likely. Expected shortfall averages the worst 1% itself, filling it exactly from the top: $100 per bond, $101 for the pair. It is the worst average over any slice of that size, and a slice that is worst for the pair is merely one slice for each bond, so it never exceeds the sum. That, with three easier rules, makes it coherent.
@@ -686,14 +667,14 @@ The simulation saw 109 double-default days in a million, against 100 expected, a
 
 ## What this builds on
 
-- [profit-and-loss-distribution-and-var](01-profit-and-loss-distribution-and-var.md): the loss curve, its sign convention, and value at risk as its lowest quantile, including how ties at the line are read.
+- [Value at risk](01-profit-and-loss-distribution-and-var.md): the loss curve, its sign convention, and value at risk as its lowest quantile, including how ties at the line are read.
 
 ## Where this goes next
 
-- [extreme-value-theory-and-tails](07-extreme-value-theory-and-tails.md): how to estimate the far tail that expected shortfall averages, beyond where the data run out.
-- [vasicek-loss-distribution-and-basel-capital](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md): the two bonds grown into a loan book with one common driver of defaults.
-- [frtb-and-the-shift-to-expected-shortfall](../48-Regulatory%20Capital%20in%20Outline/04-frtb-and-the-shift-to-expected-shortfall.md): the rule change that made 97.5% expected shortfall the capital number.
-- piecewise-linear-and-minimax-objectives-as-lps: the minimum over trial lines, written as a linear programme a solver can run.
+- [Extreme value theory](07-extreme-value-theory-and-tails.md): how to estimate the far tail that expected shortfall averages, beyond where the data run out.
+- [Vasicek's large-pool loss curve](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md): the two bonds grown into a loan book with one common driver of defaults.
+- [Market-risk capital](../48-Regulatory%20Capital%20in%20Outline/04-frtb-and-the-shift-to-expected-shortfall.md): the rule change that made 97.5% expected shortfall the capital number.
+- Modelling tricks: the minimum over trial lines, written as a linear programme a solver can run.
 
 Coherence makes the arithmetic safe, but the average is only as good as the tail it averages; how to know that tail when history holds only a handful of such days is the question extreme value theory takes up.
 

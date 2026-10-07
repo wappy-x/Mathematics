@@ -1,29 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Repeats, Groups and Double Counting
-topic: Identical copies
-item: Arranging with repeats
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/03-factorial|factorial]]"
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/05-n-choose-k|n-choose-k]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/02-stars-and-bars|stars-and-bars]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/03-splitting-into-groups|splitting-into-groups]]"
-  - "[[Cards/04-Combinatorics and graphs/07-Generating Functions/04-exponential-generating-functions|exponential-generating-functions]]"
-  - "[[Cards/14-Applied and computational/02-Randomised and Approximate Algorithms/03-shuffling-and-reservoir-sampling|shuffling-and-reservoir-sampling]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - multiset-permutations
----
-
 # Arranging with repeats: divide out the orderings of the identical copies
 
-Combinatorics and graphs → Repeats, Groups and Double Counting → Identical copies → Arranging with repeats
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Repeats, Groups and Double Counting](../../../SYLLABUS.md#w04-s02) → Arranging with repeats
 
 ---
 
@@ -31,7 +8,7 @@ Combinatorics and graphs → Repeats, Groups and Double Counting → Identical c
 
 A drum machine holds one bar of six slots. The kit is three kicks, two snares and one hat: six hits, every slot filled. How many different bars can that kit play?
 
-Six things in a row make 6 × 5 × 4 × 3 × 2 × 1 = 720 orderings, the factorial of six ([factorial](../01-Counting%20Principles/03-factorial.md)). That is the wrong answer here: swap the first kick with the third and the bar sounds as it did, so 720 counts each real bar several times over.
+Six things in a row make 6 × 5 × 4 × 3 × 2 × 1 = 720 orderings, the factorial of six ([Factorials](../01-Counting%20Principles/03-factorial.md)). That is the wrong answer here: swap the first kick with the third and the bar sounds as it did, so 720 counts each real bar several times over.
 
 How many times? Once for each way of shuffling the three kicks among their own slots, 6 ways, times each way of shuffling the two snares, 2 ways, times the one way of placing the hat: 6 × 2 × 1 = 12. Twelve orderings per bar, so 720 orderings are 60 bars.
 
@@ -57,7 +34,7 @@ Rubbing out the numbers sends 720 orderings onto 60 bars, twelve onto each.
 
 ## The formula
 
-Two pieces of notation, both from the shelf before. The factorial $n!$ means $n$ × ($n$ − 1) × … × 1, the number of orderings of $n$ distinct things ([factorial](../01-Counting%20Principles/03-factorial.md)). The binomial coefficient $C(n, k)$, read "n choose k", counts the ways of picking k positions out of $n$, order ignored ([n-choose-k](../01-Counting%20Principles/05-n-choose-k.md)).
+Two pieces of notation, both from the shelf before. The factorial $n!$ means $n$ × ($n$ − 1) × … × 1, the number of orderings of $n$ distinct things ([Factorials](../01-Counting%20Principles/03-factorial.md)). The binomial coefficient $C(n, k)$, read "n choose k", counts the ways of picking k positions out of $n$, order ignored ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
 
 Let the line hold $n$ items of $m$ kinds: $a_1$ copies of the first kind, $a_2$ of the second, and so on to $a_m$ of the last, the copies together filling the line, so that $a_1$ + $a_2$ + … + $a_m$ = $n$.
 
@@ -80,7 +57,7 @@ Books call this number the multinomial coefficient.
 
 - **The copies in a block are interchangeable.** Number every letter, so that swapping two P's makes a new word, and the count goes back to 39,916,800.
 - **The counts fill the line exactly:** 1 + 4 + 4 + 2 = 11. Leave slots empty and the empties are a kind of their own: count them in, or the answer is for a shorter line.
-- **The positions are distinguishable**, eleven places in a row, each its own. Bend the line into a loop and rotations become the same arrangement, a smaller count: [circular-arrangements](04-circular-arrangements.md).
+- **The positions are distinguishable**, eleven places in a row, each its own. Bend the line into a loop and rotations become the same arrangement, a smaller count: [Round tables and bracelets](04-circular-arrangements.md).
 - **Order along the line is what is counted.** If two lines count as the same thing whenever they use the same letters, there is nothing to count and the answer is 1.
 
 ---
@@ -108,7 +85,7 @@ Six kick numberings times two snare numberings times the one hat: 6 × 2 × 1 = 
 
 ### Step 3: equal groups can be divided
 
-Sort the 720 numbered orderings into groups, one per bar. Every group holds exactly 12, nothing sits in two groups, nothing is left over. So the groups number 720 / 12 = 60. Cutting a set into equal blocks and dividing is the move this shelf is built on ([bijection-and-double-counting](05-bijection-and-double-counting.md)).
+Sort the 720 numbered orderings into groups, one per bar. Every group holds exactly 12, nothing sits in two groups, nothing is left over. So the groups number 720 / 12 = 60. Cutting a set into equal blocks and dividing is the move this shelf is built on ([Bijections and double counting](05-bijection-and-double-counting.md)).
 
 For MISSISSIPPI the group size is 4! × 4! × 2! = 1,152, and 39,916,800 / 1,152 = 34,650.
 
@@ -133,7 +110,7 @@ Each numerator cancels the denominator before it, the last leftover being 0! = 1
 
 </details>
 
-A third road runs through algebra. Multiply (K + S + H) by itself six times and collect terms: the number in front of the term carrying three K's, two S's and one H is 60, since that term is built once per bar. Reading counts off a product is what [exponential-generating-functions](../07-Generating%20Functions/04-exponential-generating-functions.md) are built for.
+A third road runs through algebra. Multiply (K + S + H) by itself six times and collect terms: the number in front of the term carrying three K's, two S's and one H is 60, since that term is built once per bar. Reading counts off a product is what [Exponential generating functions](../07-Generating%20Functions/04-exponential-generating-functions.md) are built for.
 
 ---
 
@@ -391,8 +368,8 @@ The two outputs match line for line.
 - **Drum machines and rhythm.** Three kicks, two snares and a hat in a six-slot bar give 60 patterns — a space small enough to hear end to end.
 - **Anagrams and word puzzles.** The distinct rearrangements of a word are this count: 34,650 for MISSISSIPPI, against 39,916,800 were every letter unique.
 - **Routes across a street grid.** Five blocks east and three north: every shortest route is a line of five E's and three N's, so 8! / (5! 3!) = 56 routes. Positions, not letters, the same division.
-- **Shuffling a deck with identical cards.** The different-looking shuffles are this count; drawing one at random is shuffling-and-reservoir-sampling.
-- **Dealing into named piles.** Handing 11 tasks to 4 people in fixed numbers is the same arithmetic from the pile side: [splitting-into-groups](03-splitting-into-groups.md).
+- **Shuffling a deck with identical cards.** The different-looking shuffles are this count; drawing one at random is Fair choices from a list you cannot hold.
+- **Dealing into named piles.** Handing 11 tasks to 4 people in fixed numbers is the same arithmetic from the pile side: [Splitting into groups](03-splitting-into-groups.md).
 
 > **Say it back**
 > Identical copies make a plain factorial count too big. Number the copies, count the numbered lines, then rub the numbers out: each real arrangement answers to one group of numbered lines, and every group is the same size — the orderings inside each block, multiplied together. Equal groups can be divided, so the count is the factorial of the line divided by the factorial of each block. Three kicks, two snares and a hat give 720 / 12 = 60 bars; MISSISSIPPI gives 39,916,800 / 1,152 = 34,650 words. Choosing positions one kind at a time returns the same two numbers.
@@ -401,17 +378,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [factorial](../01-Counting%20Principles/03-factorial.md): the count of orderings when everything is distinct — the number this card divides.
-- [n-choose-k](../01-Counting%20Principles/05-n-choose-k.md): choosing positions for one kind, which is the second road to the same answer.
+- [Factorials](../01-Counting%20Principles/03-factorial.md): the count of orderings when everything is distinct — the number this card divides.
+- [Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md): choosing positions for one kind, which is the second road to the same answer.
 
 ## Where this goes next
 
-- [stars-and-bars](02-stars-and-bars.md): counts how many ways the block sizes themselves can be chosen.
-- [splitting-into-groups](03-splitting-into-groups.md): the same division applied to piles rather than a line, and what changes when the piles have no names.
-- [exponential-generating-functions](../07-Generating%20Functions/04-exponential-generating-functions.md): the same counts read off a product instead of assembled by hand.
-- shuffling-and-reservoir-sampling: drawing one arrangement at random, all of them equally likely.
+- [Stars and bars](02-stars-and-bars.md): counts how many ways the block sizes themselves can be chosen.
+- [Splitting into groups](03-splitting-into-groups.md): the same division applied to piles rather than a line, and what changes when the piles have no names.
+- [Exponential generating functions](../07-Generating%20Functions/04-exponential-generating-functions.md): the same counts read off a product instead of assembled by hand.
+- Fair choices from a list you cannot hold: drawing one arrangement at random, all of them equally likely.
 
-Every count here started from block sizes handed over in advance: three kicks, two snares, one hat. How many ways those sizes could have been chosen is [stars-and-bars](02-stars-and-bars.md).
+Every count here started from block sizes handed over in advance: three kicks, two snares, one hat. How many ways those sizes could have been chosen is [Stars and bars](02-stars-and-bars.md).
 
 ---
 

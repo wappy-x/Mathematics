@@ -1,25 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Binomial Coefficients and Identities
-topic: Choosing in two orders
-item: Committee and chair
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/01-pascals-rule-and-the-triangle|pascals-rule-and-the-triangle]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/05-bijection-and-double-counting|bijection-and-double-counting]]"
-next: []
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - committee-chair-identity
----
-
 # Committee and chair: k C(n,k) = n C(n-1,k-1), so the weighted row sum is n 2^(n-1)
 
-Combinatorics and graphs → Binomial Coefficients and Identities → Choosing in two orders → Committee and chair
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Binomial Coefficients and Identities](../../../SYLLABUS.md#w04-s03) → Committee and chair
 
 ---
 
@@ -52,13 +33,13 @@ Four of the ten are few enough to list every pair by hand, and the run below doe
 
 ## The formula
 
-C(n, k) counts the ways to choose k items from n, order ignored, read "n choose k" ([pascals-rule-and-the-triangle](01-pascals-rule-and-the-triangle.md)). A count of something impossible is zero, so C(n, k) = 0 when k is below 0 or above n.
+C(n, k) counts the ways to choose k items from n, order ignored, read "n choose k" ([Pascal's rule](01-pascals-rule-and-the-triangle.md)). A count of something impossible is zero, so C(n, k) = 0 when k is below 0 or above n.
 
 $$k \cdot C(n, k) = n \cdot C(n-1, k-1)$$
 
 **Read it aloud:** committees of that size times the members each may promote is the same number as chairs times the ways to fill the seats left over.
 
-Add that across every size and the left becomes every pair in the office. The capital Greek sigma is shorthand for "add these up as k runs through the listed values" ([binomial-theorem](02-binomial-theorem.md)):
+Add that across every size and the left becomes every pair in the office. The capital Greek sigma is shorthand for "add these up as k runs through the listed values" ([The binomial theorem](02-binomial-theorem.md)):
 
 $$\sum_{k=0}^{n} k \cdot C(n, k) \;=\; n \cdot 2^{\,n-1}$$
 
@@ -87,7 +68,7 @@ $$\sum_{k=0}^{n} k \cdot C(n, k) \;=\; n \cdot 2^{\,n-1}$$
 
 ### Step 0: name one collection, then count it twice
 
-Fix the collection first: every pair made of a committee and one of its own members marked as chair. One collection counted two ways gives an equation — double counting ([bijection-and-double-counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)).
+Fix the collection first: every pair made of a committee and one of its own members marked as chair. One collection counted two ways gives an equation — double counting ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)).
 
 ### Step 1: committee first
 
@@ -118,7 +99,7 @@ At k = 0 the left is 0 × C(n, 0) = 0 and the right n × C(n − 1, −1) = 0 by
 
 ### Step 4: add the identity across the row
 
-Add every size, k from 0 to n. On the left the sizes account for every committee-and-chair pair in the office. On the right the n comes out in front, leaving C(n − 1, 0) + C(n − 1, 1) + … + C(n − 1, n − 1) — a full row of the triangle, adding to 2 multiplied in n − 1 times ([pascals-rule-and-the-triangle](01-pascals-rule-and-the-triangle.md)). So the weighted row sum is n 2^(n−1): for the office of ten, 10 × 512 = 5,120.
+Add every size, k from 0 to n. On the left the sizes account for every committee-and-chair pair in the office. On the right the n comes out in front, leaving C(n − 1, 0) + C(n − 1, 1) + … + C(n − 1, n − 1) — a full row of the triangle, adding to 2 multiplied in n − 1 times ([Pascal's rule](01-pascals-rule-and-the-triangle.md)). So the weighted row sum is n 2^(n−1): for the office of ten, 10 × 512 = 5,120.
 
 ### The other door: pair each committee with its opposite
 
@@ -400,15 +381,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [pascals-rule-and-the-triangle](01-pascals-rule-and-the-triangle.md): row 10, and the fact that a full row adds to 2 multiplied in n times — the step that collapses the right-hand sum.
-- [bijection-and-double-counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md): why two honest counts of one collection may be set equal.
+- [Pascal's rule](01-pascals-rule-and-the-triangle.md): row 10, and the fact that a full row adds to 2 multiplied in n times — the step that collapses the right-hand sum.
+- [Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md): why two honest counts of one collection may be set equal.
 
 ## Where this goes next
 
-- [alternating-sums-and-binomial-inversion](06-alternating-sums-and-binomial-inversion.md): the same row weighted by a switching sign, not by size.
-- [central-binomial-and-bounds](07-central-binomial-and-bounds.md): how large a single term gets, once the row's total is known.
+- [Alternating sums](06-alternating-sums-and-binomial-inversion.md): the same row weighted by a switching sign, not by size.
+- [The middle of the row](07-central-binomial-and-bounds.md): how large a single term gets, once the row's total is known.
 
-Weighting each term by its size gave a clean total; weighting by a sign that flips at every step cancels the row to nothing instead, which is [alternating-sums-and-binomial-inversion](06-alternating-sums-and-binomial-inversion.md).
+Weighting each term by its size gave a clean total; weighting by a sign that flips at every step cancels the row to nothing instead, which is [Alternating sums](06-alternating-sums-and-binomial-inversion.md).
 
 ---
 

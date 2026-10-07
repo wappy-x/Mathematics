@@ -1,28 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Vectors
-topic: Vectors as lists
-item: Vectors
-kind: definition
-status: verified
-updated: 2026-09-07
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/06-negative-numbers|negative-numbers]]"
-  - "[[Cards/01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product|ordered-pairs-and-cartesian-product]]"
-next:
-  - "[[Cards/03-Algebra/03-Vectors/02-vector-spaces-and-subspaces|vector-spaces-and-subspaces]]"
-  - "[[Cards/03-Algebra/04-Matrices/01-matrices-and-the-matrix-zoo|matrices-and-the-matrix-zoo]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/01-dot-product|dot-product]]"
-tags:
-  - mathematics
-  - algebra
-  - vectors
----
-
 # Vectors: a list of numbers that is also an arrow, and the two things you can do to it
 
-Algebra → Vectors → Vectors as lists → Vectors
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Vectors](../../../SYLLABUS.md#w03-s03) → Vectors
 
 ---
 
@@ -111,7 +89,7 @@ Scaling by a whole number is repeated adding, but the rule works for any number.
 
 Scale any vector by 0 and every slot goes to zero. That is the zero vector: (3, 4) scaled by 0 is (0, 0), the ride that never happened. Add it to (3, 4) and (3, 4) comes back.
 
-Scale by -1 and add: (3, 4) + (-3, -4) = (0, 0). Every vector has an opposite that cancels it exactly. A do-nothing vector, and an undo for each one: those two facts are what turn a pile of lists into a structure with rules, which is the next card ([vector-spaces-and-subspaces](02-vector-spaces-and-subspaces.md)).
+Scale by -1 and add: (3, 4) + (-3, -4) = (0, 0). Every vector has an opposite that cancels it exactly. A do-nothing vector, and an undo for each one: those two facts are what turn a pile of lists into a structure with rules, which is the next card ([Vector spaces and subspaces](02-vector-spaces-and-subspaces.md)).
 
 The subject can be built from the other end: start with arrows on a page, define adding as head-to-tail and scaling as stretching, then pin each arrow to coordinates and the arithmetic above falls out. The list route is used here because it survives into R^4, where there is nothing left to draw.
 
@@ -154,7 +132,7 @@ The first two bars are the numbers in (3, 4). The last two are (6, 8), the same 
 | Mistake | Comes out at | What went wrong |
 | --- | --- | --- |
 | Adding all four numbers into one total | 8 | East was added to north; 8 is not a place |
-| Multiplying slot by slot, (3 × 2, 4 × (-1)) | (6, -4) | Multiplying two vectors is a different operation ([dot-product](../06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)) |
+| Multiplying slot by slot, (3 × 2, 4 × (-1)) | (6, -4) | Multiplying two vectors is a different operation ([The dot product](../06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)) |
 | Doubling only the first number | (6, 4) | Scaling touches every slot or it is not scaling |
 
 The code prints all three.
@@ -341,7 +319,7 @@ The two outputs match line for line.
 > **Adding a vector's own numbers together.** (3, 4) is not 7. Those two numbers are different quantities — kilometres east and kilometres north — and squashing them into one throws the direction away. Do it to both legs of the ride and you get 8, which is not a place on any map.
 >
 > - Scaling means every slot. Doubling (3, 4) into (6, 4) has doubled nothing.
-> - (3, 4) × (2, -1) is not (6, -4). Multiplying two vectors is a separate operation, and the usual one hands back a single number ([dot-product](../06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)).
+> - (3, 4) × (2, -1) is not (6, -4). Multiplying two vectors is a separate operation, and the usual one hands back a single number ([The dot product](../06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)).
 > - Vectors of different lengths do not add. (3, 4) + (1, 2, 5) has no answer; there is no third slot for the 5 to land in.
 > - The zero vector (0, 0) and the plain number 0 behave alike but are not the same kind of thing: one is a list, one is a scalar.
 
@@ -361,14 +339,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [negative-numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md): why 1 km south is -1 km north, and how the north tally reaches 3 by adding a negative.
-- [ordered-pairs-and-cartesian-product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md): why (3, 4) and (4, 3) differ — order is part of the object.
+- [Negative numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md): why 1 km south is -1 km north, and how the north tally reaches 3 by adding a negative.
+- [Ordered pairs and the Cartesian product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md): why (3, 4) and (4, 3) differ — order is part of the object.
 
 ## Where this goes next
 
-- [vector-spaces-and-subspaces](02-vector-spaces-and-subspaces.md): the rules adding and scaling obey, written out, so anything obeying them inherits the whole subject.
-- [matrices-and-the-matrix-zoo](../04-Matrices/01-matrices-and-the-matrix-zoo.md): the grid of numbers that takes a vector in and hands a different vector back.
-- [dot-product](../06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): multiplying two vectors into a single number, and where the length of an arrow finally comes from.
+- [Vector spaces and subspaces](02-vector-spaces-and-subspaces.md): the rules adding and scaling obey, written out, so anything obeying them inherits the whole subject.
+- [Matrices](../04-Matrices/01-matrices-and-the-matrix-zoo.md): the grid of numbers that takes a vector in and hands a different vector back.
+- [The dot product](../06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): multiplying two vectors into a single number, and where the length of an arrow finally comes from.
 
 ---
 

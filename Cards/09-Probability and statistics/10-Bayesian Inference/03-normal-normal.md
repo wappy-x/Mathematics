@@ -1,26 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Bayesian Inference
-topic: Blending a guess with readings
-item: Normal-normal
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/01-priors-posteriors-and-updating|priors-posteriors-and-updating]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/04-normal-distribution|normal-distribution]]"
-next:
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/06-black-litterman|black-litterman]]"
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/07-kalman-filter-for-dynamic-hedge-ratios|kalman-filter-for-dynamic-hedge-ratios]]"
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/08-credibility-and-reinsurance|credibility-and-reinsurance]]"
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/07-kalman-filter|kalman-filter]]"
-tags: [mathematics, probability and statistics, normal-normal]
----
-
 # Normal-normal: updating a mean with precision weights
 
-Probability and statistics → Bayesian Inference → Blending a guess with readings → Normal-normal
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Bayesian Inference](../../../SYLLABUS.md#w09-s10) → Normal-normal
 
 ---
 
@@ -48,7 +28,7 @@ The beam is the temperature scale, 112 units to the degree. The blocks' heights 
 
 ## The formula
 
-Notation first, in words. The Greek letter $\theta$ (theta) is the room's true temperature, the unknown. A reminder from [normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md): N(m, v) is the normal law with centre m and variance v, the variance in the second slot. A reminder from [priors-posteriors-and-updating](01-priors-posteriors-and-updating.md): the **prior** is the belief before the readings, the **posterior** the belief after, and a vertical bar reads "given". The model is two lines:
+Notation first, in words. The Greek letter $\theta$ (theta) is the room's true temperature, the unknown. A reminder from [Normal](../04-Continuous%20Distributions/04-normal-distribution.md): N(m, v) is the normal law with centre m and variance v, the variance in the second slot. A reminder from [Bayesian updating](01-priors-posteriors-and-updating.md): the **prior** is the belief before the readings, the **posterior** the belief after, and a vertical bar reads "given". The model is two lines:
 
 $$\theta \sim N(m_0,\, v_0), \qquad y_i \mid \theta \sim N(\theta,\, s^2) \text{ independently, for } i = 1, \dots, n.$$
 
@@ -88,7 +68,7 @@ The readings' precision is n/s^2, not 1/s^2, because it belongs to their average
 
 ### When it holds
 
-- **The noise variance is known.** If $s^2$ is estimated from the same five readings, the honest law of the next reading is wider, with heavier tails (a Student t, [chi-square-t-and-f-distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)), and these formulas understate the spread.
+- **The noise variance is known.** If $s^2$ is estimated from the same five readings, the honest law of the next reading is wider, with heavier tails (a Student t, [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)), and these formulas understate the spread.
 - **Readings are independent given the true temperature.** If the sensor shares an error across readings, a drift or a warm spot, five readings carry less than five readings' worth of information. With errors correlated 0.5 the formula still claims a spread of 0.3333 while the real error spread is 0.4843 (What breaks, below).
 - **Both laws are normal.** A normal prior allows any temperature, however unlikely; a sensor with occasional wild readings (heavy tails) drags the average and the normal update follows it blindly.
 - **The prior is proper and honest.** A prior variance of zero is certainty and ignores every reading; the formulas need $v_0 > 0$. A prior centre copied from the readings counts them twice.
@@ -159,7 +139,7 @@ Feed the readings in one by one, each posterior serving as the next prior. Each 
 | 4 | 20.9 | 20.5125 | 0.3536 |
 | 5 | 21.4 | 20.6111 | 0.3333 |
 
-The last row is the batch answer. Order does not matter: addition does not care. A running update that also lets the true value drift between readings is the Kalman filter, kalman-filter.
+The last row is the batch answer. Order does not matter: addition does not care. A running update that also lets the true value drift between readings is the Kalman filter, The Kalman filter.
 
 ---
 
@@ -181,9 +161,9 @@ The log: centre 20.0 °C, variance 0.25. The sensor: noise variance 1.0. Five re
 | predictive variance | 0.1111 + 1.0 | 1.1111 |
 | **predictive spread** | √1.1111 | **1.0541** |
 
-The room is most likely at 20.61 °C, give or take a third of a degree: 95 percent of the posterior lies between 19.958 and 21.264 °C (1.96 spreads each side, the standard normal's 97.5 percent point from [normal-quantile](../04-Continuous%20Distributions/05-normal-quantile.md); [credible-intervals-and-decisions](05-credible-intervals-and-decisions.md) treats such intervals properly). The next reading is a different quantity: 95 percent of next readings land between 18.545 and 22.677 °C. About 1 reading in 20 falls outside that wider band.
+The room is most likely at 20.61 °C, give or take a third of a degree: 95 percent of the posterior lies between 19.958 and 21.264 °C (1.96 spreads each side, the standard normal's 97.5 percent point from [Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md); [Credible intervals and decisions](05-credible-intervals-and-decisions.md) treats such intervals properly). The next reading is a different quantity: 95 percent of next readings land between 18.545 and 22.677 °C. About 1 reading in 20 falls outside that wider band.
 
-A prior precision of 4 is worth four readings of this sensor. The log counts as four readings that averaged 20.0, pooled with five that averaged 21.1; that is the centre row above. The same pseudo-count reading appears for chances in [beta-binomial](02-beta-binomial.md).
+A prior precision of 4 is worth four readings of this sensor. The log counts as four readings that averaged 20.0, pooled with five that averaged 21.1; that is the centre row above. The same pseudo-count reading appears for chances in [Beta-binomial](02-beta-binomial.md).
 
 ### What breaks if you drop a piece
 
@@ -648,10 +628,10 @@ The first line (orange) is the posterior for the true temperature, spread 0.3333
 
 ## Where you meet it in real life
 
-- **Sensor fusion.** A phone's navigation blends its GPS fix with the position predicted from its motion sensors by these weights, reading after reading; the running form is kalman-filter.
+- **Sensor fusion.** A phone's navigation blends its GPS fix with the position predicted from its motion sensors by these weights, reading after reading; the running form is The Kalman filter.
 - **Combining studies.** A meta-analysis pools estimates from several trials by inverse-variance weights, the precisions of this card.
-- **Insurance pricing.** A premium blends a policyholder's own claims with the class average; the weight on the policyholder's own claims, 5/9 here, is the credibility factor of [credibility-and-reinsurance](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/08-credibility-and-reinsurance.md).
-- **Portfolio views.** Black-Litterman blends market-implied returns with an investor's views by precision: [black-litterman](../../12-Financial%20mathematics/37-Portfolio%20Theory/06-black-litterman.md).
+- **Insurance pricing.** A premium blends a policyholder's own claims with the class average; the weight on the policyholder's own claims, 5/9 here, is the credibility factor of [Credibility and reinsurance](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/08-credibility-and-reinsurance.md).
+- **Portfolio views.** Black-Litterman blends market-implied returns with an investor's views by precision: [Black-Litterman](../../12-Financial%20mathematics/37-Portfolio%20Theory/06-black-litterman.md).
 - **Averaging polls.** Poll aggregators often weight each poll by its sample size, which is its precision up to a constant.
 
 > **Say it back**
@@ -661,17 +641,17 @@ The first line (orange) is the posterior for the true temperature, spread 0.3333
 
 ## What this builds on
 
-- [priors-posteriors-and-updating](01-priors-posteriors-and-updating.md): Bayes' rule as posterior proportional to prior times likelihood, the starting line of Step 0.
-- [normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md): the normal density, N(m, v) notation, the standard normal area Φ, and the Gaussian integral that fixes the constant.
+- [Bayesian updating](01-priors-posteriors-and-updating.md): Bayes' rule as posterior proportional to prior times likelihood, the starting line of Step 0.
+- [Normal](../04-Continuous%20Distributions/04-normal-distribution.md): the normal density, N(m, v) notation, the standard normal area Φ, and the Gaussian integral that fixes the constant.
 
 ## Where this goes next
 
-- [black-litterman](../../12-Financial%20mathematics/37-Portfolio%20Theory/06-black-litterman.md): the same blend with a vector of returns and a matrix of precisions.
-- [kalman-filter-for-dynamic-hedge-ratios](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/07-kalman-filter-for-dynamic-hedge-ratios.md): the one-reading-at-a-time update tracking a hedge ratio that drifts.
-- [credibility-and-reinsurance](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/08-credibility-and-reinsurance.md): the weight on the data, renamed the credibility factor, setting premiums.
-- kalman-filter: the update in a loop, with a prediction step that widens the belief between readings.
+- [Black-Litterman](../../12-Financial%20mathematics/37-Portfolio%20Theory/06-black-litterman.md): the same blend with a vector of returns and a matrix of precisions.
+- [A moving hedge ratio](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/07-kalman-filter-for-dynamic-hedge-ratios.md): the one-reading-at-a-time update tracking a hedge ratio that drifts.
+- [Credibility and reinsurance](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/08-credibility-and-reinsurance.md): the weight on the data, renamed the credibility factor, setting premiums.
+- The Kalman filter: the update in a loop, with a prediction step that widens the belief between readings.
 
-The rate of a count, such as server alarms per hour, needs a different conjugate pair: [gamma-poisson](04-gamma-poisson.md).
+The rate of a count, such as server alarms per hour, needs a different conjugate pair: [Gamma-Poisson](04-gamma-poisson.md).
 
 ---
 

@@ -1,27 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Transformations and Joint Laws
-topic: Squared errors and folded maps
-item: Transforming a variable
-kind: theorem
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/01-densities-and-cdfs|densities-and-cdfs]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/03-substitution|substitution]]"
-next:
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/02-joint-densities-and-marginals|joint-densities-and-marginals]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/04-sums-and-convolution|sums-and-convolution]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/08-order-statistics-and-extremes|order-statistics-and-extremes]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/03-chi-square-t-and-f-distributions|chi-square-t-and-f-distributions]]"
-  - "[[Cards/10-Measure and integration/03-Measurable Functions/05-pushforward-and-the-law|pushforward-and-the-law]]"
-tags: [mathematics, probability and statistics, transforming-a-random-variable]
----
-
 # Transforming a variable: the density of a function of X
 
-Probability and statistics → Transformations and Joint Laws → Squared errors and folded maps → Transforming a variable
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Transformations and Joint Laws](../../../SYLLABUS.md#w09-s05) → Transforming a variable
 
 ---
 
@@ -49,7 +28,7 @@ To scale, from the `figure,` line both checks print. The horizontal band holds s
 
 ## The formula
 
-Notation first, in words. $X$ is the fill error in ml and $x$ one value of it; $Y$ is the squared error in ml squared and $y$ one value. As on [densities-and-cdfs](../04-Continuous%20Distributions/01-densities-and-cdfs.md), a density is written f and a cumulative distribution (CDF) F; here a small letter after it says whose it is, so $f_X$ is the density of X and $F_Y$ the CDF of Y. X ~ N(0, σ^2) says X follows the normal law with centre 0 and spread σ; $\varphi$ is the standard bell's height and $\Phi$ its area to the left, as on [normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md). The map applied to X is $g$, here squaring. A **branch** is a stretch of inputs on which g only rises or only falls; on branch number $j$, g can be run backwards, and $h_j$ is that backwards map, from an output y to the one input on that branch that lands on it.
+Notation first, in words. $X$ is the fill error in ml and $x$ one value of it; $Y$ is the squared error in ml squared and $y$ one value. As on [Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md), a density is written f and a cumulative distribution (CDF) F; here a small letter after it says whose it is, so $f_X$ is the density of X and $F_Y$ the CDF of Y. X ~ N(0, σ^2) says X follows the normal law with centre 0 and spread σ; $\varphi$ is the standard bell's height and $\Phi$ its area to the left, as on [Normal](../04-Continuous%20Distributions/04-normal-distribution.md). The map applied to X is $g$, here squaring. A **branch** is a stretch of inputs on which g only rises or only falls; on branch number $j$, g can be run backwards, and $h_j$ is that backwards map, from an output y to the one input on that branch that lands on it.
 
 $$f_Y(y) = \sum_{j} f_X\big(h_j(y)\big)\,\big\lvert h_j'(y)\big\rvert$$
 
@@ -110,7 +89,7 @@ The same rewriting proves the **probability integral transform**: feed X through
 
 ### Step 2: differentiate, and the stretch factor appears
 
-A density is the slope of its CDF ([densities-and-cdfs](../04-Continuous%20Distributions/01-densities-and-cdfs.md)). Differentiate F_X(√y) with the chain rule: the outer slope is f_X(√y), the inner slope of √y is 1/(2√y). Differentiate −F_X(−√y): the outer slope is f_X(−√y), the inner slope of −√y is −1/(2√y), and the two minus signs cancel. Add:
+A density is the slope of its CDF ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)). Differentiate F_X(√y) with the chain rule: the outer slope is f_X(√y), the inner slope of √y is 1/(2√y). Differentiate −F_X(−√y): the outer slope is f_X(−√y), the inner slope of −√y is −1/(2√y), and the two minus signs cancel. Add:
 
 f_Y(y) = f_X(√y)/(2√y) + f_X(−√y)/(2√y).
 
@@ -133,7 +112,7 @@ Let the inputs be cut into non-overlapping open intervals $I_j$ whose union hold
 
 Fix any interval B of outputs. The event that Y lands in B splits over the pieces:
 $$P(Y \in B) = \sum_j P\big(X \in I_j,\ g(X) \in B\big) = \sum_j \int_{\{x \in I_j:\ g(x) \in B\}} f_X(x)\,dx.$$
-In the j-th integral substitute $x = h_j(y)$, so $dx = h_j'(y)\,dy$ ([substitution](../../06-Calculus%20and%20analysis/04-Integrals/03-substitution.md)). On a falling branch the limits swap as well as the sign of $h_j'$, and the two cancel into the size $\lvert h_j'(y)\rvert$. The x-range becomes the y-range $B \cap g(I_j)$:
+In the j-th integral substitute $x = h_j(y)$, so $dx = h_j'(y)\,dy$ ([Substitution](../../06-Calculus%20and%20analysis/04-Integrals/03-substitution.md)). On a falling branch the limits swap as well as the sign of $h_j'$, and the two cancel into the size $\lvert h_j'(y)\rvert$. The x-range becomes the y-range $B \cap g(I_j)$:
 $$P(Y \in B) = \sum_j \int_{B \cap g(I_j)} f_X\big(h_j(y)\big)\,\lvert h_j'(y)\rvert\,dy = \int_B \sum_j f_X\big(h_j(y)\big)\,\lvert h_j'(y)\rvert\,dy,$$
 where a branch contributes zero at any y outside its image. The chance of every interval of outputs is the area under the branch sum over that interval, which is what it means to be a density of Y. Taking B to be all outputs gives total area 1. No continuity of $f_X$ was needed, only that the pieces hold all the chance.
 
@@ -149,9 +128,9 @@ The average squared error is the variance of the error, E[Y] = σ^2 = 4, because
 
 The median sits far below the mean. Half the squared errors are below the m that solves 2Φ(√m / σ) − 1 = 0.5, and bisection finds m = 1.8197 ml^2: a miss of 1.34898 ml either way. The mean, 4, is dragged up by the long right tail of large squared misses.
 
-This law has a name. With σ = 1 it is the **chi-square law with one degree of freedom**; it is also the gamma law with shape 1/2 and rate 1/2 from [gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md). Adding several independent squared normals gives chi-square laws with more degrees of freedom: [chi-square-t-and-f-distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md).
+This law has a name. With σ = 1 it is the **chi-square law with one degree of freedom**; it is also the gamma law with shape 1/2 and rate 1/2 from [Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md). Adding several independent squared normals gives chi-square laws with more degrees of freedom: [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md).
 
-A second route to the same answers skips the density entirely: the average of any g(X) is the area under g(x) f_X(x), taken over x, proved for every law on [expectation-as-an-integral](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md). The check uses it for the average of |X|. The density of Y is needed when the question is about chances of Y, not only its average.
+A second route to the same answers skips the density entirely: the average of any g(X) is the area under g(x) f_X(x), taken over x, proved for every law on [Expectation as an integral](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md). The check uses it for the average of |X|. The density of Y is needed when the question is about chances of Y, not only its average.
 
 ---
 
@@ -606,10 +585,10 @@ Orange: the branch-sum formula, in percent per ml^2, falling steeply from the sp
 ## Where you meet it in real life
 
 - **Quality control.** A quadratic loss charges each unit in proportion to its squared miss; its law, not the law of the miss, sets how often the loss exceeds a budget.
-- **Testing a variance.** The squared normal is the building block of the chi-square law, which drives tests and intervals for a spread: [chi-square-t-and-f-distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md).
+- **Testing a variance.** The squared normal is the building block of the chi-square law, which drives tests and intervals for a spread: [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md).
 - **Gas molecules.** One velocity component of a molecule is normal; its kinetic energy is a constant times its square, so the energy in one direction follows this card's law.
-- **Simulation.** Running the CDF route backwards turns uniform random numbers into draws from any law: [inverse-transform-sampling](../11-Simulation/02-inverse-transform-sampling.md).
-- **Extremes.** The CDF route finds the law of the largest of several readings in one line, since the largest is below y only when every reading is: [order-statistics-and-extremes](08-order-statistics-and-extremes.md).
+- **Simulation.** Running the CDF route backwards turns uniform random numbers into draws from any law: [Inverse transform](../11-Simulation/02-inverse-transform-sampling.md).
+- **Extremes.** The CDF route finds the law of the largest of several readings in one line, since the largest is below y only when every reading is: [Order statistics](08-order-statistics-and-extremes.md).
 
 > **Say it back**
 > Squaring a random error keeps each bottle's chance but folds the line and changes widths. The CDF route rewrites "Y at most y" as an event about X and reads off its chance. Differentiating it gives the change-of-variables formula: the old density at each input that lands on y, times the rate that input moves as y moves, added over every such input. For a normal fill error with spread 2 ml, the squared error exceeds 4 in 0.3173 of bottles, has median 1.8197 and mean 4. Drop a branch and half the chance vanishes; drop the stretch factor and the area is wrong; a flat stretch makes a lump the formula cannot see.
@@ -618,18 +597,18 @@ Orange: the branch-sum formula, in percent per ml^2, falling steeply from the sp
 
 ## What this builds on
 
-- [densities-and-cdfs](../04-Continuous%20Distributions/01-densities-and-cdfs.md): area as chance, and the density as the slope of the CDF, which Step 2 differentiates.
-- [substitution](../../06-Calculus%20and%20analysis/04-Integrals/03-substitution.md): changing the variable inside an integral, which is the Detailed proof in one move.
+- [Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md): area as chance, and the density as the slope of the CDF, which Step 2 differentiates.
+- [Substitution](../../06-Calculus%20and%20analysis/04-Integrals/03-substitution.md): changing the variable inside an integral, which is the Detailed proof in one move.
 
 ## Where this goes next
 
-- [joint-densities-and-marginals](02-joint-densities-and-marginals.md): two readings at once, with one density over a plane.
-- [sums-and-convolution](04-sums-and-convolution.md): the law of X + Y, a map of two variables built by the same bookkeeping.
-- [order-statistics-and-extremes](08-order-statistics-and-extremes.md): the CDF route applied to the largest and smallest of a sample.
-- [chi-square-t-and-f-distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md): sums of squared normals, starting from this card's law.
-- [pushforward-and-the-law](../../10-Measure%20and%20integration/03-Measurable%20Functions/05-pushforward-and-the-law.md): the CDF route stated for any map, lumps and all.
+- [Joint densities](02-joint-densities-and-marginals.md): two readings at once, with one density over a plane.
+- [Adding continuous variables](04-sums-and-convolution.md): the law of X + Y, a map of two variables built by the same bookkeeping.
+- [Order statistics](08-order-statistics-and-extremes.md): the CDF route applied to the largest and smallest of a sample.
+- [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md): sums of squared normals, starting from this card's law.
+- [The law of a random variable](../../10-Measure%20and%20integration/03-Measurable%20Functions/05-pushforward-and-the-law.md): the CDF route stated for any map, lumps and all.
 
-This card moves one variable through one map; when two readings are transformed together, the stretch factor becomes an area factor, the Jacobian of [change-of-variables-and-jacobians](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md), and [bivariate-normal-and-conditioning](05-bivariate-normal-and-conditioning.md) uses it to build the tilted bell from two independent bells.
+This card moves one variable through one map; when two readings are transformed together, the stretch factor becomes an area factor, the Jacobian of [Change of variables](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md), and [Bivariate normal](05-bivariate-normal-and-conditioning.md) uses it to build the tilted bell from two independent bells.
 
 ---
 

@@ -1,29 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Money, Dates and Discounting
-topic: Repeating payments
-item: Annuities
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/01-compounding-and-discount-factors|compounding-and-discount-factors]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/01-series-convergence|series-convergence]]"
-next:
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/04-net-present-value-and-irr|net-present-value-and-irr]]"
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/05-bonds-price-and-yield|bonds-price-and-yield]]"
-  - "[[Cards/12-Financial mathematics/35-Mortgages, Callables and Prepayment/02-mortgage-cash-flows-and-prepayment|mortgage-cash-flows-and-prepayment]]"
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/02-life-annuities-and-insurance-values|life-annuities-and-insurance-values]]"
-tags:
-  - mathematics
-  - financial-mathematics
-  - annuities-and-loans
----
-
 # Annuities: a level stream of payments as one closed form, and the loan schedule it implies
 
-Financial mathematics → Money, Dates and Discounting → Repeating payments → Annuities
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Money, Dates and Discounting](../../../SYLLABUS.md#w12-s01) → Annuities
 
 ---
 
@@ -33,7 +10,7 @@ A bank lends $200,000 to buy a house. The loan runs 25 years, quoted at 5 percen
 
 That number has work to do. It has to cover the interest charged on whatever is still owed, which falls a little every month, and land the balance on zero at the three hundredth payment, not a month sooner or later.
 
-The way in is to stop looking at the loan and look at the payments. Each payment is a separate promise to hand over $1,169.18 on a fixed date. A promise due later is worth less today, and the fraction of face value it keeps is its **discount factor** ([compounding-and-discount-factors](01-compounding-and-discount-factors.md)). Adding three hundred of those factors one at a time would work, and is unnecessary: each factor is the one before it divided by the same number, and a chain built that way collapses into a single short fraction. That fraction is the **annuity factor**, the term used from here on.
+The way in is to stop looking at the loan and look at the payments. Each payment is a separate promise to hand over $1,169.18 on a fixed date. A promise due later is worth less today, and the fraction of face value it keeps is its **discount factor** ([Discount factors](01-compounding-and-discount-factors.md)). Adding three hundred of those factors one at a time would work, and is unnecessary: each factor is the one before it divided by the same number, and a chain built that way collapses into a single short fraction. That fraction is the **annuity factor**, the term used from here on.
 
 One factor then does three jobs. It turns a loan into a payment. It turns a stream of payments into a price. Run month by month, it splits each payment into interest and repayment. Over the 25 years the borrower hands over $350,754.02, of which $150,754.02 is interest — three quarters of the sum borrowed, handed over again.
 
@@ -111,10 +88,10 @@ In plain words: interest is charged on last period's balance, and whatever is le
 - **Equal periods, one payment at the end of each.** Move every payment to the start of its month and each one arrives a period earlier: the same loan then needs $1,164.33 a month, $4.85 less.
 - **One rate for the whole run.** A rate that resets makes the factor right only up to the reset; after it, a fresh factor is worked out on the balance owing then. Rates fixed for a whole 25-year term are ordinary in some markets and unavailable in others.
 - **The rate must match the period.** $i$ is per payment period, never per year unless the payments are yearly. Price the loan as 25 year-end payments and split each by twelve and it comes to $1,182.54: wrong, and close enough to look right.
-- **Payments as written, nothing else charged.** Fees, arrears, default and early repayment all sit outside the formula. The schedule is the contract's arithmetic, not a forecast of what a household will do ([mortgage-cash-flows-and-prepayment](../35-Mortgages%2C%20Callables%20and%20Prepayment/02-mortgage-cash-flows-and-prepayment.md)).
+- **Payments as written, nothing else charged.** Fees, arrears, default and early repayment all sit outside the formula. The schedule is the contract's arithmetic, not a forecast of what a household will do ([Mortgage pools](../35-Mortgages%2C%20Callables%20and%20Prepayment/02-mortgage-cash-flows-and-prepayment.md)).
 - **A perpetuity needs a rate above zero.** At zero or below, the discounted payments stop shrinking and the total runs away. $A/i$ would still print a number; it would not be a value.
 
-**Conventions verified 14 Sep 2026:** the 5 percent here is a nominal yearly rate charged as one twelfth of itself each month, which is how United States mortgages are quoted and disclosed (Regulation Z, cited below). Canadian mortgage law makes the lender state a rate "calculated yearly or half-yearly, not in advance", so the identical quoted number produces a different monthly charge there. Check the quoting rule before feeding a rate into the factor; day counts and payment dates are the sibling card [day-counts-and-dates](02-day-counts-and-dates.md).
+**Conventions verified 14 Sep 2026:** the 5 percent here is a nominal yearly rate charged as one twelfth of itself each month, which is how United States mortgages are quoted and disclosed (Regulation Z, cited below). Canadian mortgage law makes the lender state a rate "calculated yearly or half-yearly, not in advance", so the identical quoted number produces a different monthly charge there. Check the quoting rule before feeding a rate into the factor; day counts and payment dates are the sibling card [Day counts](02-day-counts-and-dates.md).
 
 ---
 
@@ -126,7 +103,7 @@ There is no way to value a whole loan in one stroke. There is an easy way to val
 
 ### Step 1: the terms form a chain with a fixed ratio
 
-The first term is $1/(1+i)$. The second is that divided by $1+i$ again. Every term is the one before it divided by the same number, three hundred rungs down. A chain with a constant ratio like this is a geometric series ([series-convergence](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)), and geometric chains are the one kind that can be added in closed form.
+The first term is $1/(1+i)$. The second is that divided by $1+i$ again. Every term is the one before it divided by the same number, three hundred rungs down. A chain with a constant ratio like this is a geometric series ([Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md)), and geometric chains are the one kind that can be added in closed form.
 
 ### Step 2: shift the chain and subtract it from itself
 
@@ -173,7 +150,7 @@ As $n$ grows, $(1+i)^{-n}$ shrinks toward nothing whenever $i > 0$, so the facto
 
 The same limit measures what the 25-year contract leaves on the table: everything past the three hundredth payment is worth $80,603.22 today. A mortgage is a perpetuity with its tail sold off.
 
-A different route reaches the same factor from the other end: a bond's coupons are a level stream, so a bond price is an annuity plus one lump at maturity. That route is [bonds-price-and-yield](05-bonds-price-and-yield.md); the cross-check below shows the two agreeing.
+A different route reaches the same factor from the other end: a bond's coupons are a level stream, so a bond price is an annuity plus one lump at maturity. That route is [Bond price and yield](05-bonds-price-and-yield.md); the cross-check below shows the two agreeing.
 
 ---
 
@@ -685,11 +662,11 @@ The two outputs match line for line. The balance after the final payment prints 
 ## Where you meet it in real life
 
 - **Mortgages, car loans and student loans.** Any debt with a fixed rate and a level payment is this formula and this ledger; the statement that arrives each month is one row of it.
-- **Bonds.** A coupon stream is an annuity and the face value is one discounted lump, which is why the house bond comes out at $1,043.29 both ways above. See [bonds-price-and-yield](05-bonds-price-and-yield.md).
-- **Pensions and insurance.** A pension in payment is an annuity whose length is a lifetime rather than a term, so the factor picks up survival chances: [life-annuities-and-insurance-values](../51-Insurance%20and%20Actuarial%20Mathematics/02-life-annuities-and-insurance-values.md).
+- **Bonds.** A coupon stream is an annuity and the face value is one discounted lump, which is why the house bond comes out at $1,043.29 both ways above. See [Bond price and yield](05-bonds-price-and-yield.md).
+- **Pensions and insurance.** A pension in payment is an annuity whose length is a lifetime rather than a term, so the factor picks up survival chances: [Life annuities and insurance](../51-Insurance%20and%20Actuarial%20Mathematics/02-life-annuities-and-insurance-values.md).
 - **Leases, licences and subscriptions.** Any level charge over a fixed term has a capital value, and it is this one; that is how a lease turns into a balance-sheet number.
 - **Perpetuities in the wild.** Ground rents and the old British consols paid forever, and were valued at payment divided by rate — the $833.33 line, taken seriously.
-- **Project appraisal.** Turning a lumpy project into an equivalent level cost per year uses the factor backwards, which is the door to [net-present-value-and-irr](04-net-present-value-and-irr.md).
+- **Project appraisal.** Turning a lumpy project into an equivalent level cost per year uses the factor backwards, which is the door to [NPV and IRR](04-net-present-value-and-irr.md).
 
 > **Say it back**
 > A level stream of payments is worth the sum of their discount factors, and those factors form a chain where each is the one before divided by the same number. Shifting the chain by one rung and subtracting collapses it to a single fraction, the annuity factor. Divide a loan by that factor and the result is the payment that clears it exactly: $1,169.18 a month on $200,000.00 over 25 years at 5 percent. Interest is charged on the balance, so the split inside that fixed payment moves every month, from $833.33 of interest in month 1 to $4.85 in month 300. Let the payments run forever and the factor settles at one divided by the rate, which values a perpetuity at $833.33 a month here.
@@ -698,15 +675,15 @@ The two outputs match line for line. The balance after the final payment prints 
 
 ## What this builds on
 
-- [compounding-and-discount-factors](01-compounding-and-discount-factors.md): the value today of one dollar due later, which is the single term this card adds up three hundred times.
-- [series-convergence](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md): why a chain with a constant ratio below one adds to a finite total, and what fails when the ratio reaches one.
+- [Discount factors](01-compounding-and-discount-factors.md): the value today of one dollar due later, which is the single term this card adds up three hundred times.
+- [Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md): why a chain with a constant ratio below one adds to a finite total, and what fails when the ratio reaches one.
 
 ## Where this goes next
 
-- [net-present-value-and-irr](04-net-present-value-and-irr.md): streams that are not level, and the rate that makes a stream worth zero.
-- [bonds-price-and-yield](05-bonds-price-and-yield.md): this factor plus one lump at maturity, which is every fixed-rate bond.
-- [mortgage-cash-flows-and-prepayment](../35-Mortgages%2C%20Callables%20and%20Prepayment/02-mortgage-cash-flows-and-prepayment.md): what happens when borrowers repay early and the schedule stops being the cash flow.
-- [life-annuities-and-insurance-values](../51-Insurance%20and%20Actuarial%20Mathematics/02-life-annuities-and-insurance-values.md): the same factor when the number of payments is a lifetime rather than a term.
+- [NPV and IRR](04-net-present-value-and-irr.md): streams that are not level, and the rate that makes a stream worth zero.
+- [Bond price and yield](05-bonds-price-and-yield.md): this factor plus one lump at maturity, which is every fixed-rate bond.
+- [Mortgage pools](../35-Mortgages%2C%20Callables%20and%20Prepayment/02-mortgage-cash-flows-and-prepayment.md): what happens when borrowers repay early and the schedule stops being the cash flow.
+- [Life annuities and insurance](../51-Insurance%20and%20Actuarial%20Mathematics/02-life-annuities-and-insurance-values.md): the same factor when the number of payments is a lifetime rather than a term.
 
 Every payment here was certain and every rate was fixed in advance, which is exactly what a real borrower is not: the next card asks what a stream is worth when the amounts vary, and what a single rate can still be made to mean.
 

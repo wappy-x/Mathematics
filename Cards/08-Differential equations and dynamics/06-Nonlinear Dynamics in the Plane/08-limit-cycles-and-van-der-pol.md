@@ -1,25 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Nonlinear Dynamics in the Plane
-topic: Self-sustained oscillation
-item: Limit cycles
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/02-linearisation-and-the-jacobian|linearisation-and-the-jacobian]]"
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/04-runge-kutta-four|runge-kutta-four]]"
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/03-polar-coordinates|polar-coordinates]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/09-poincare-bendixson-and-bendixsons-criterion|poincare-bendixson-and-bendixsons-criterion]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/10-bifurcations-of-equilibria|bifurcations-of-equilibria]]"
-tags: [mathematics, differential equations and dynamics, limit-cycles-and-van-der-pol]
----
-
 # Limit cycles: a self-sustaining rhythm that nearby states spiral onto, unlike the fragile circles of a centre
 
-Differential equations and dynamics → Nonlinear Dynamics in the Plane → Self-sustained oscillation → Limit cycles
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → Limit cycles
 
 ---
 
@@ -103,7 +84,7 @@ Put $u = 1/r^2$. The chain rule gives $u' = -2r'/r^3 = -2(1 - r^2)/r^2 = -2u + 2
 
 Take the spring's energy $E = (x^2 + v^2)/2$. Along a path its rate is $xv + v(\mu(1 - x^2)v - x) = \mu(1 - x^2)v^2$. Where $x$ lies between −1 and 1 that rate is positive: energy flows in. Outside, it drains. Small motions gain each lap, large ones lose.
 
-Linearisation confirms the first half. At the origin the Jacobian (the table of the law's rates of change) has trace 1 and determinant 1, so eigenvalues $(1 \pm \sqrt{1 - 4})/2$ = 0.500 ± 0.866i: a spiral outward ([linearisation-and-the-jacobian](02-linearisation-and-the-jacobian.md)).
+Linearisation confirms the first half. At the origin the Jacobian (the table of the law's rates of change) has trace 1 and determinant 1, so eigenvalues $(1 \pm \sqrt{1 - 4})/2$ = 0.500 ± 0.866i: a spiral outward ([Linearisation](02-linearisation-and-the-jacobian.md)).
 
 ### Step 4: one lap as a map
 
@@ -124,7 +105,7 @@ $F$ is negative for $x$ between 0 and $\sqrt{3}$ and positive beyond, so $-xF(x)
 
 </details>
 
-Another route to existence, with no formula at all, traps the path in a ring it cannot leave: [poincare-bendixson-and-bendixsons-criterion](09-poincare-bendixson-and-bendixsons-criterion.md).
+Another route to existence, with no formula at all, traps the path in a ring it cannot leave: [Poincare-Bendixson](09-poincare-bendixson-and-bendixsons-criterion.md).
 
 ---
 
@@ -156,7 +137,7 @@ By $t$ = 5 both polar starts sit within a quarter of a percent of the unit circl
 
 ## Code, from first principles, and it actually runs
 
-Both scripts step with Runge-Kutta 4 ([runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md)). Road one steps the polar model in $x$ and $v$, $x' = x(1 - r^2) - v$, $v' = v(1 - r^2) + x$, and meets its closed form; halving the step cuts the error by 16.2, the fourth-order rate. Road two settles van der Pol from both starts, finds the loop again by bisection on the return map, and measures the pull per lap by the map's slope and by the trace integral.
+Both scripts step with Runge-Kutta 4 ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)). Road one steps the polar model in $x$ and $v$, $x' = x(1 - r^2) - v$, $v' = v(1 - r^2) + x$, and meets its closed form; halving the step cuts the error by 16.2, the fourth-order rate. Road two settles van der Pol from both starts, finds the loop again by bisection on the return map, and measures the pull per lap by the map's slope and by the trace integral.
 
 ### Python
 
@@ -360,7 +341,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Calling every closed loop a limit cycle.** The loops of [predator-prey](06-predator-prey.md) and a frictionless pendulum's swings are closed, but each has neighbours on loops of their own, so a nudge changes the rhythm for good. A limit cycle is isolated, and nudges die out.
+> **Calling every closed loop a limit cycle.** The loops of [Predator and prey](06-predator-prey.md) and a frictionless pendulum's swings are closed, but each has neighbours on loops of their own, so a nudge changes the rhythm for good. A limit cycle is isolated, and nudges die out.
 >
 > - **Trusting the rest point's spiral.** The linear law spirals out without end, 1363 by $t$ = 20; the drag far out stops the real one.
 > - **Using the spring's period.** 2π = 6.2832 undercounts the loop's 6.6633 by 5.7%, a heart rate of 79.6 instead of 75.0.
@@ -372,7 +353,7 @@ The two outputs match line for line.
 
 - **The heart and nerves.** Pacemaker-cell and nerve-impulse models descend from this one.
 - **Electronic oscillators.** A circuit that feeds back more than it loses at low level and less at high level settles at one amplitude, as a radio transmitter does.
-- **Clocks.** An escapement tops up each swing, turning the damped pendulum of [lasalle-and-the-damped-pendulum](05-lasalle-and-the-damped-pendulum.md) into a limit cycle.
+- **Clocks.** An escapement tops up each swing, turning the damped pendulum of [LaSalle's principle](05-lasalle-and-the-damped-pendulum.md) into a limit cycle.
 
 > **Say it back**
 > A limit cycle is a closed loop that stands alone: nearby starts spiral onto it. It arises where a law pumps energy in near rest and drains it far out. The polar model shows this exactly, gaps fading like $e^{-2t}$. Van der Pol's heart model settles from 0.1 and from 4 onto one loop, peak 2.0086, period 6.6633. A return map finds the same loop, and each lap cuts a gap to under a thousandth.
@@ -381,14 +362,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [linearisation-and-the-jacobian](02-linearisation-and-the-jacobian.md): the Jacobian's trace and determinant that make the rest point a source.
-- [runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md): the stepping rule both scripts write out, and its fourth-order error.
-- [polar-coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/03-polar-coordinates.md): distance and angle, which split the warm-up model into two separate laws.
+- [Linearisation](02-linearisation-and-the-jacobian.md): the Jacobian's trace and determinant that make the rest point a source.
+- [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md): the stepping rule both scripts write out, and its fourth-order error.
+- [Polar coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/03-polar-coordinates.md): distance and angle, which split the warm-up model into two separate laws.
 
 ## Where this goes next
 
-- [poincare-bendixson-and-bendixsons-criterion](09-poincare-bendixson-and-bendixsons-criterion.md): when a trapped path must end on a loop, and when no loop can exist.
-- [bifurcations-of-equilibria](10-bifurcations-of-equilibria.md): how a loop is born from a rest point as a strength like $\mu$ crosses zero.
+- [Poincare-Bendixson](09-poincare-bendixson-and-bendixsons-criterion.md): when a trapped path must end on a loop, and when no loop can exist.
+- [Bifurcations](10-bifurcations-of-equilibria.md): how a loop is born from a rest point as a strength like $\mu$ crosses zero.
 
 ---
 

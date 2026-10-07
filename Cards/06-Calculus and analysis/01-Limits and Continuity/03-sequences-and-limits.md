@@ -1,34 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Limits and Continuity
-topic: Lists that settle
-item: Sequences
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/02-supremum-and-completeness|supremum-and-completeness]]"
-  - "[[Cards/01-Foundations/06-Proof/04-proof-by-induction|proof-by-induction]]"
-next:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/04-limit-laws-and-the-squeeze|limit-laws-and-the-squeeze]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/01-riemann-integral|riemann-integral]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/01-series-convergence|series-convergence]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/07-uniform-convergence|uniform-convergence]]"
-  - "[[Cards/08-Differential equations and dynamics/02-Existence, Uniqueness and Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem|lipschitz-and-the-picard-lindelof-theorem]]"
-  - "[[Cards/08-Differential equations and dynamics/09-Fourier Series/02-convergence-jumps-and-gibbs|convergence-jumps-and-gibbs]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/03-generated-and-borel-sigma-algebras|generated-and-borel-sigma-algebras]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/05-continuity-of-measure|continuity-of-measure]]"
-  - "[[Cards/10-Measure and integration/03-Measurable Functions/02-limits-of-measurable-functions|limits-of-measurable-functions]]"
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/05-completeness-of-lp|completeness-of-lp]]"
-  - "[[Cards/17-Topology/01-Metric Spaces/04-convergence-and-continuity-in-metric-spaces|convergence-and-continuity-in-metric-spaces]]"
-  - "[[Cards/17-Topology/01-Metric Spaces/06-compactness-in-metric-spaces|compactness-in-metric-spaces]]"
-tags: [mathematics, calculus and analysis, sequences-and-limits]
----
-
 # Sequences: limits with a whole number as the clock, and the monotone convergence theorem
 
-Calculus and analysis → Limits and Continuity → Lists that settle → Sequences
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Limits and Continuity](../../../SYLLABUS.md#w06-s01) → Sequences
 
 ---
 
@@ -87,7 +59,7 @@ The mirror image holds for a list that never steps up and never drops below a fl
 | $N$ | the cutoff, a count: past it every term is within t | 10 | — |
 | $B$ | a ceiling no term passes | 2 for the climb below | the limit is unchanged |
 | $c_n$ | the climb: each term the square root of 2 plus the last | 0, 1.414214, 1.847759… | — |
-| $\sup$ | least upper bound, the lowest ceiling ([supremum-and-completeness](02-supremum-and-completeness.md)) | 2 for the climb | — |
+| $\sup$ | least upper bound, the lowest ceiling ([No gaps](02-supremum-and-completeness.md)) | 2 for the climb | — |
 
 ### When it holds
 
@@ -103,9 +75,9 @@ The mirror image holds for a list that never steps up and never drops below a fl
 
 With tolerance 0.1, the share 1/n is below 0.1 exactly when n is above 10, so 10 is the smallest cutoff.
 
-For any tolerance t, a whole number at least 1/t is a cutoff. One always exists, because the whole numbers have no ceiling (the Archimedean property, proved in [supremum-and-completeness](02-supremum-and-completeness.md)). No share ever equals 0: a limit need not be reached.
+For any tolerance t, a whole number at least 1/t is a cutoff. One always exists, because the whole numbers have no ceiling (the Archimedean property, proved in [No gaps](02-supremum-and-completeness.md)). No share ever equals 0: a limit need not be reached.
 
-Sequences also test function limits ([limits](01-limits.md)). Feed the shelf's fraction (x squared minus 1) over (x minus 1) the inputs x = 1 + 1/n. At n = 11 it gives 2.090909, off 2 by 0.090909, which is 1/11: the outputs reach 2 on the shares' schedule.
+Sequences also test function limits ([Limits](01-limits.md)). Feed the shelf's fraction (x squared minus 1) over (x minus 1) the inputs x = 1 + 1/n. At n = 11 it gives 2.090909, off 2 by 0.090909, which is 1/11: the outputs reach 2 on the shares' schedule.
 
 ### Step 2: a list that settles stays in a box
 
@@ -133,9 +105,9 @@ xychart-beta
 
 The rising line is the climb; the flat line is the ceiling 2.
 
-Two facts, by induction ([proof-by-induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)). **Below 2:** a term below 2 gives a next term below the square root of 4. **Never steps down:** for a term c at least 0 and below 2, the next term beats c exactly when (2 − c)(1 + c) is positive, which it is.
+Two facts, by induction ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)). **Below 2:** a term below 2 gives a next term below the square root of 4. **Never steps down:** for a term c at least 0 and below 2, the next term beats c exactly when (2 − c)(1 + c) is positive, which it is.
 
-So the climb has a limit L. The limit laws ([limit-laws-and-the-squeeze](04-limit-laws-and-the-squeeze.md)) pass "next squared equals 2 plus last" to the limit: L times L equals 2 + L, roots 2 and −1. No term is negative, so L is 2.
+So the climb has a limit L. The limit laws ([Limit laws and the squeeze](04-limit-laws-and-the-squeeze.md)) pass "next squared equals 2 plus last" to the limit: L times L equals 2 + L, roots 2 and −1. No term is negative, so L is 2.
 
 Prove the limit exists before solving for it: doubling from 1 "solves" L = 2L to L = 0, yet its twentieth term is 524,288.
 
@@ -392,7 +364,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Calculators.** A square-root routine repeats one step until the answer stops moving; a proved gap bound, like the climb's, fixes how many steps suffice.
-- **Infinite sums.** A never-ending sum is the limit of its running totals, in [series-convergence](../06-Series/01-series-convergence.md).
+- **Infinite sums.** A never-ending sum is the limit of its running totals, in [Infinite series](../06-Series/01-series-convergence.md).
 
 > **Say it back**
 > A sequence heads for L when every tolerance has a cutoff past which every term is within that tolerance of L; for 1/n and 0.1 the cutoff is 10. Settling implies bounded, not the reverse. A list that never steps down, under a ceiling, heads for its least upper bound; on the real line, a crowding list settles.
@@ -401,23 +373,23 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [supremum-and-completeness](02-supremum-and-completeness.md): the least upper bound, and the Archimedean property behind every cutoff.
-- [proof-by-induction](../../01-Foundations/06-Proof/04-proof-by-induction.md): the climb stays below 2 and never steps down, at every place.
+- [No gaps](02-supremum-and-completeness.md): the least upper bound, and the Archimedean property behind every cutoff.
+- [Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md): the climb stays below 2 and never steps down, at every place.
 
 ## Where this goes next
 
-- [limit-laws-and-the-squeeze](04-limit-laws-and-the-squeeze.md): limits of sums, products and quotients.
-- [riemann-integral](../04-Integrals/01-riemann-integral.md): area as a limit of rectangle sums.
-- [series-convergence](../06-Series/01-series-convergence.md): sums as limits of running totals.
-- [uniform-convergence](../06-Series/07-uniform-convergence.md): one cutoff for a whole family of functions.
-- [lipschitz-and-the-picard-lindelof-theorem](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md): solutions as limits of repeated guesses.
-- [convergence-jumps-and-gibbs](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/02-convergence-jumps-and-gibbs.md): wave sums that settle except at jumps.
-- [generated-and-borel-sigma-algebras](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md): sets built by endless lists of operations.
-- [continuity-of-measure](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md): monotone convergence for growing sets.
-- [limits-of-measurable-functions](../../10-Measure%20and%20integration/03-Measurable%20Functions/02-limits-of-measurable-functions.md): function sequences, point by point.
-- [completeness-of-lp](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/05-completeness-of-lp.md): Cauchy lists of functions settle.
-- convergence-and-continuity-in-metric-spaces: the tolerance game with any distance.
-- compactness-in-metric-spaces: every list has a settling sub-list.
+- [Limit laws and the squeeze](04-limit-laws-and-the-squeeze.md): limits of sums, products and quotients.
+- [The integral](../04-Integrals/01-riemann-integral.md): area as a limit of rectangle sums.
+- [Infinite series](../06-Series/01-series-convergence.md): sums as limits of running totals.
+- [Uniform convergence](../06-Series/07-uniform-convergence.md): one cutoff for a whole family of functions.
+- [The Picard-Lindelof theorem](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md): solutions as limits of repeated guesses.
+- [Convergence](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/02-convergence-jumps-and-gibbs.md): wave sums that settle except at jumps.
+- [Generated sigma-algebras and Borel sets](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md): sets built by endless lists of operations.
+- [Continuity and subadditivity](../../10-Measure%20and%20integration/01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md): monotone convergence for growing sets.
+- [Sums, products, sups and limits](../../10-Measure%20and%20integration/03-Measurable%20Functions/02-limits-of-measurable-functions.md): function sequences, point by point.
+- [Riesz-Fischer](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/05-completeness-of-lp.md): Cauchy lists of functions settle.
+- Limits and continuity with distances: the tolerance game with any distance.
+- Compactness three ways: every list has a settling sub-list.
 
 ---
 

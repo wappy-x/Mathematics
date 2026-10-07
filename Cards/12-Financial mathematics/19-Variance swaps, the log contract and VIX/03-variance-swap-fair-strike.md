@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Variance swaps, the log contract and VIX
-topic: Pricing a bet on how much a price moves
-item: The variance swap
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/02-carr-madan-spanning-and-the-log-contract|carr-madan-spanning-and-the-log-contract]]"
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/01-realised-variance-from-daily-prices|realised-variance-from-daily-prices]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-next:
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/04-variance-swap-after-inception-and-forward-variance|variance-swap-after-inception-and-forward-variance]]"
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/06-vix-index|vix-index]]"
-tags: [mathematics, financial mathematics, variance-swap-fair-strike]
----
-
 # The variance swap: pay realised variance, receive a fixed strike, and the strike comes from the option strip with no model
 
-Financial mathematics → Variance swaps, the log contract and VIX → Pricing a bet on how much a price moves → The variance swap
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Variance swaps, the log contract and VIX](../../../SYLLABUS.md#w12-s19) → The variance swap
 
 ---
 
@@ -27,7 +8,7 @@ Financial mathematics → Variance swaps, the log contract and VIX → Pricing a
 
 Acme shares trade at $100. Its options are all priced at the same 20 percent volatility, the house market of this wing: rates 5 percent, dividends 2 percent, one year to run. Two firms want to bet on how much Acme will move over that year, not on which way.
 
-They sign a contract. In a year, count how much Acme actually moved: take each trading day's log return (the natural log of today's close over yesterday's), square it, add the 252 squares up. That total, per year, is **realised variance**, measured exactly as on [realised-variance-from-daily-prices](01-realised-variance-from-daily-prices.md). Its square root is realised volatility. One side pays realised variance; the other pays a fixed number agreed today, the **strike**. Only the difference changes hands. The contract is a **variance swap**, the name used from here on.
+They sign a contract. In a year, count how much Acme actually moved: take each trading day's log return (the natural log of today's close over yesterday's), square it, add the 252 squares up. That total, per year, is **realised variance**, measured exactly as on [Realised variance](01-realised-variance-from-daily-prices.md). Its square root is realised volatility. One side pays realised variance; the other pays a fixed number agreed today, the **strike**. Only the difference changes hands. The contract is a **variance swap**, the name used from here on.
 
 Sized at $100,000 per volatility point and struck at 20, the swap pays its buyer $562,500 if Acme moves 25 percent, and costs the buyer $437,500 if Acme moves 15 percent. Nobody pays anything on day one. So the strike must be the number that makes the bet fair today.
 
@@ -57,7 +38,7 @@ Orange: the variance swap, $2,500 per variance point. Green: a straight line pay
 
 ## The formula
 
-Notation first, in words. Volatility is quoted in **vol points**: 20 percent is 20. Variance is quoted in **variance points**, vol points squared: 20 squared is 400. In the maths, the same numbers appear as decimals: 0.20 and 0.04. $P(K)$ and $C(K)$ are today's prices of a put and a call on Acme struck at $K$ and expiring at $T$. The integral sign sums over every strike, as on [carr-madan-spanning-and-the-log-contract](02-carr-madan-spanning-and-the-log-contract.md).
+Notation first, in words. Volatility is quoted in **vol points**: 20 percent is 20. Variance is quoted in **variance points**, vol points squared: 20 squared is 400. In the maths, the same numbers appear as decimals: 0.20 and 0.04. $P(K)$ and $C(K)$ are today's prices of a put and a call on Acme struck at $K$ and expiring at $T$. The integral sign sums over every strike, as on [Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md).
 
 The contract pays the buyer, at expiry,
 
@@ -90,7 +71,7 @@ Conventions verified 27 Sep 2026: strike quoted in vol points; variance notional
 
 ### When it holds
 
-- **Acme moves without jumps.** The proof needs a continuous path. Across a jump the hedged log contract earns a different amount from the squared jump that realised variance records: less for a fall, more for a rise, so the strip misprices the fair strike; [volatility-swap-and-jump-bias](05-volatility-swap-and-jump-bias.md) sizes that gap.
+- **Acme moves without jumps.** The proof needs a continuous path. Across a jump the hedged log contract earns a different amount from the squared jump that realised variance records: less for a fall, more for a rise, so the strip misprices the fair strike; [The volatility swap and the jump bias](05-volatility-swap-and-jump-bias.md) sizes that gap.
 - **Options at every strike.** A real book stops somewhere and has gaps. Two strikes, 90 and 120, give 0.033017; strikes every $5 from 50 to 200 give 0.039827.
 - **Realised variance sampled often, hedge rebalanced often.** The proof is for continuous time. Daily sampling and daily rebalancing leave a small gap: across 4,000 simulated years the worst path was off by 0.000121.
 - **Known rates.** The hedge trades futures, whose daily margin earns interest until expiry; with a known rate the position is scaled to offset it, and a random rate breaks that.
@@ -119,7 +100,7 @@ The strip holds 1.90 everywhere, which is $2e^{-rT}/T$ = 1.902459. The calls cou
 
 ### Step 1: the hedged log contract earns realised variance, path by path
 
-Work with the forward $F$ rather than the share, so interest and dividends drop out: a forward moves only when the share's outlook moves. Itô's lemma ([itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)) compares the forward's log with its percentage change over a small time step dt, when the forward moves with a volatility that may itself change from moment to moment, written with a subscript t:
+Work with the forward $F$ rather than the share, so interest and dividends drop out: a forward moves only when the share's outlook moves. Itô's lemma ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)) compares the forward's log with its percentage change over a small time step dt, when the forward moves with a volatility that may itself change from moment to moment, written with a subscript t:
 
 $$d(\ln F_t) = \frac{dF_t}{F_t} - \tfrac12\,\sigma_t^2\,dt$$
 
@@ -141,7 +122,7 @@ Here $\mathbb{E}$ is the average in that pricing world. Grow a price to expiry b
 
 ### Step 3: the log contract is a strip of options
 
-Nobody lists a log contract, but a strip of options builds one. The spanning result on [carr-madan-spanning-and-the-log-contract](02-carr-madan-spanning-and-the-log-contract.md) says any smooth payoff is a bond, a forward and options, each option weighted by the payoff's curvature at its strike. The curvature of the negative log at $K$ is $1/K^2$. Cut at the forward:
+Nobody lists a log contract, but a strip of options builds one. The spanning result on [Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md) says any smooth payoff is a bond, a forward and options, each option weighted by the payoff's curvature at its strike. The curvature of the negative log at $K$ is $1/K^2$. Cut at the forward:
 
 $$-\ln\frac{S_T}{F} = -\frac{S_T - F}{F} + \int_0^F \frac{(K - S_T)^+}{K^2}\,dK + \int_F^\infty \frac{(S_T - K)^+}{K^2}\,dK$$
 
@@ -160,7 +141,7 @@ Add the forward's payoff $-(S_T - F)/F = 1 - S_T/F$. The sum is $\ln(F/S_T)$, th
 
 ### Step 4: a flat surface returns its own variance
 
-If every option is priced at one volatility $\sigma$, then $\ln(S_T/F)$ is bell-shaped with average $-\tfrac12\sigma^2T$ in the pricing world (the drift correction of [itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md) once more). Step 2 then gives $(2/T)\cdot\tfrac12\sigma^2T = \sigma^2$. For Acme: 0.04. The code gets there three ways: the strip, the log contract averaged against the bell curve with no options at all, and the simulated hedge.
+If every option is priced at one volatility $\sigma$, then $\ln(S_T/F)$ is bell-shaped with average $-\tfrac12\sigma^2T$ in the pricing world (the drift correction of [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md) once more). Step 2 then gives $(2/T)\cdot\tfrac12\sigma^2T = \sigma^2$. For Acme: 0.04. The code gets there three ways: the strip, the log contract averaged against the bell curve with no options at all, and the simulated hedge.
 
 The strip does not need the surface to be flat. If options are priced as though volatility were 10 percent for half a year and 30 percent for the other half, their average variance is 0.05, and the strip returns 0.050000. Simulating that world, realised variance averaged 0.050395, about two standard errors (0.000183) away: simulation noise. When the surface is not flat, the strip reads whatever the options say.
 
@@ -168,7 +149,7 @@ The strip does not need the surface to be flat. If options are priced as though 
 
 Near the strike, a small change in volatility changes variance by twice the volatility times the change: the slope of a square. So one vol point near the strike is worth about twice the strike in variance points. A desk that wants $100,000 per vol point near a strike of 20 divides by twice 20 and buys $2,500 per variance point. At 20.5 the swap pays $50,625 against the straight line's $50,000. Close, and the gap grows with distance, as the chart in the overview shows.
 
-The alternative route to the fair strike is the continuous one: average realised variance directly in a model of the price. It gives the same answer in every model without jumps, because Step 1 is a path-by-path identity; the strip is simply the version that needs no model. [vix-index](06-vix-index.md) turns the same strip into a published index with a finite list of strikes.
+The alternative route to the fair strike is the continuous one: average realised variance directly in a model of the price. It gives the same answer in every model without jumps, because Step 1 is a path-by-path identity; the strip is simply the version that needs no model. [The VIX](06-vix-index.md) turns the same strip into a published index with a finite list of strikes.
 
 ---
 
@@ -219,7 +200,7 @@ The rule of thumb from Demeterfi and co-authors for that skew, $0.04 \times (1 +
 | Delta | dollars gained per $1 move in Acme, fair strike re-read from the strip | 0.000000 on a flat surface |
 | Vega | dollars gained per vol point rise in implied volatility, by re-pricing the strip at 21% and 19% | $95,122.94, which is $e^{-rT}$ × $100,000 |
 | Dollar gamma of the hedge strip | the strip's share price squared times gamma, per unit of decimal variance notional | 1.902459 at every spot |
-| Theta | how the value drifts as days pass | set by the variance already realised; see [variance-swap-after-inception-and-forward-variance](04-variance-swap-after-inception-and-forward-variance.md) |
+| Theta | how the value drifts as days pass | set by the variance already realised; see [Marking a variance swap](04-variance-swap-after-inception-and-forward-variance.md) |
 
 The vega is the vega notional, discounted: the notional was built to mean exactly that.
 
@@ -670,9 +651,9 @@ The two outputs are identical to the printed precision.
 
 - **Index variance swaps.** Dealers quote variance swaps on the S&P 500 and the Euro Stoxx 50, struck off the listed option strip and hedged by holding that strip and trading futures daily.
 - **The variance risk premium.** Over long samples of index options, the strip has averaged more than the variance later realised. Sellers of variance swaps earn that gap most years and lose heavily in crashes. Carr and Wu measured it across stock indices and individual shares.
-- **The VIX.** The published "fear index" is this strip, computed from listed S&P 500 options with a 30-day horizon and a finite set of strikes: [vix-index](06-vix-index.md).
-- **Volatility swaps.** A contract paying realised volatility rather than variance has no static strip and sits below the variance strike's root; [volatility-swap-and-jump-bias](05-volatility-swap-and-jump-bias.md).
-- **Marking a live swap.** Midway through the year, the value mixes variance already realised with the strip for the time left: [variance-swap-after-inception-and-forward-variance](04-variance-swap-after-inception-and-forward-variance.md).
+- **The VIX.** The published "fear index" is this strip, computed from listed S&P 500 options with a 30-day horizon and a finite set of strikes: [The VIX](06-vix-index.md).
+- **Volatility swaps.** A contract paying realised volatility rather than variance has no static strip and sits below the variance strike's root; [The volatility swap and the jump bias](05-volatility-swap-and-jump-bias.md).
+- **Marking a live swap.** Midway through the year, the value mixes variance already realised with the strip for the time left: [Marking a variance swap](04-variance-swap-after-inception-and-forward-variance.md).
 
 > **Say it back**
 > A variance swap pays realised variance minus a strike agreed today, sized in variance notional, which is vega notional over twice the strike. Holding the forward in a quantity of two over T divided by its price, and selling two over T log contracts, earns realised variance on every path without jumps. A log contract is a strip of puts below the forward and calls above, each weighted one over strike squared. So the fair strike is that strip's cost, grown to expiry, times two over T. On Acme's flat 20 percent surface it is 0.04; on a skewed surface it is more than at-the-money volatility squared.
@@ -681,14 +662,14 @@ The two outputs are identical to the printed precision.
 
 ## What this builds on
 
-- [carr-madan-spanning-and-the-log-contract](02-carr-madan-spanning-and-the-log-contract.md): any payoff as a strip of options weighted by its curvature; here it builds the log contract.
-- [realised-variance-from-daily-prices](01-realised-variance-from-daily-prices.md): the exact number the swap pays, computed from daily closes.
-- [itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): the extra half-variance term that separates a log change from a percentage change, the whole of Step 1.
+- [Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md): any payoff as a strip of options weighted by its curvature; here it builds the log contract.
+- [Realised variance](01-realised-variance-from-daily-prices.md): the exact number the swap pays, computed from daily closes.
+- [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): the extra half-variance term that separates a log change from a percentage change, the whole of Step 1.
 
 ## Where this goes next
 
-- [variance-swap-after-inception-and-forward-variance](04-variance-swap-after-inception-and-forward-variance.md): valuing the swap once some variance has already been realised, and the variance between two future dates.
-- [vix-index](06-vix-index.md): the same strip with listed strikes, a 30-day horizon and a published recipe.
+- [Marking a variance swap](04-variance-swap-after-inception-and-forward-variance.md): valuing the swap once some variance has already been realised, and the variance between two future dates.
+- [The VIX](06-vix-index.md): the same strip with listed strikes, a 30-day horizon and a published recipe.
 
 A variance swap is fair on the day it is struck; the open question is what it is worth a month later, when some of the year's variance is already in the books and the strip covers only what remains.
 

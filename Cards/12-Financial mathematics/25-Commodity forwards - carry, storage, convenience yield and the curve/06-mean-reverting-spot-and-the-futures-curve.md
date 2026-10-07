@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Commodity forwards - carry, storage, convenience yield and the curve
-topic: Modelled futures curves
-item: A spot price that reverts
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/04-contango-backwardation-and-roll-yield|contango-backwardation-and-roll-yield]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/05-ornstein-uhlenbeck-and-cir-processes|ornstein-uhlenbeck-and-cir-processes]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/04-least-squares|least-squares]]"
-next:
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/03-commodity-implied-vol-and-the-call-skew|commodity-implied-vol-and-the-call-skew]]"
-tags: [mathematics, financial mathematics, mean-reverting-spot-and-the-futures-curve]
----
-
 # A spot price that reverts: the Schwartz one-factor model, its futures formula, and why long-dated futures barely move
 
-Financial mathematics → Commodity forwards - carry, storage, convenience yield and the curve → Modelled futures curves → A spot price that reverts
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Commodity forwards - carry, storage, convenience yield and the curve](../../../SYLLABUS.md#w12-s25) → A spot price that reverts
 
 ---
 
@@ -29,7 +10,7 @@ Crude oil trades at $80 a barrel today. Over recent years it has tended to settl
 
 A weight hanging on a spring behaves like this. Pull it down and it heads back toward rest, fast when far away, slowly when close. Markets call the pull **mean reversion**: a price drawn back toward a long-run level. From here on that target is called the **level**, and the strength of the pull the **speed**.
 
-The carry cards priced a forward from spot plus the cost of holding the barrel ([contango-backwardation-and-roll-yield](04-contango-backwardation-and-roll-yield.md)). That pins the curve only when barrels can be stored and lent freely. When they cannot, the curve needs a model of spot itself. Eduardo Schwartz's 1997 one-factor model is the simplest one that reverts. The logarithm of the price wanders with 30 percent volatility, while a pull of speed 1 per year draws it toward the logarithm of $75.
+The carry cards priced a forward from spot plus the cost of holding the barrel ([Contango and backwardation](04-contango-backwardation-and-roll-yield.md)). That pins the curve only when barrels can be stored and lent freely. When they cannot, the curve needs a model of spot itself. Eduardo Schwartz's 1997 one-factor model is the simplest one that reverts. The logarithm of the price wanders with 30 percent volatility, while a pull of speed 1 per year draws it toward the logarithm of $75.
 
 Out comes a futures price for every delivery date: $78.31 for one year, $76.74 for five. The curve starts at spot, bends toward the level and flattens, and its long end barely moves. If spot falls 12.50 percent, the one-year future falls 4.79 percent and the five-year future 0.09 percent. That damping of volatility with maturity is called the **Samuelson effect**, after Paul Samuelson, who predicted it in 1965.
 
@@ -55,7 +36,7 @@ Upper line: spot at $80, a falling curve (backwardation). Lower line: spot at $7
 
 ## The formula
 
-Notation first. The model is written in the shorthand of Itô calculus ([itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)). $dX_t$ is the change in $X_t$ over a short step of time $dt$. $dW_t$ is a random shock over that step, with average zero and variance $dt$. The model for the log of spot, $X_t = \ln S_t$, is an Ornstein-Uhlenbeck process: a random walk with a pull toward a level ([ornstein-uhlenbeck-and-cir-processes](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)).
+Notation first. The model is written in the shorthand of Itô calculus ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)). $dX_t$ is the change in $X_t$ over a short step of time $dt$. $dW_t$ is a random shock over that step, with average zero and variance $dt$. The model for the log of spot, $X_t = \ln S_t$, is an Ornstein-Uhlenbeck process: a random walk with a pull toward a level ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)).
 
 $$dX_t = \kappa\,(a - X_t)\,dt + \sigma\,dW_t$$
 
@@ -128,7 +109,7 @@ The first two terms are fixed today. The last is a weighted sum of normal kicks,
 
 For $Y_t = e^{\kappa t}X_t$, the product rule gives $dY_t = \kappa e^{\kappa t}X_t\,dt + e^{\kappa t}\,dX_t$. The factor $e^{\kappa t}$ has no random part, so there is no extra Itô term. Substituting $dX_t = \kappa(a - X_t)\,dt + \sigma\,dW_t$, the $\kappa e^{\kappa t}X_t\,dt$ terms cancel, leaving $dY_t = \kappa a e^{\kappa t}dt + \sigma e^{\kappa t}dW_t$. Integrating, $Y_T - Y_0 = a(e^{\kappa T} - 1) + \sigma\int_0^T e^{\kappa s}dW_s$. Divide by $e^{\kappa T}$ for $X_T$.
 
-The integral of a fixed function against $dW_s$ is normal with average zero. Its variance is the integral of the function squared (Itô's isometry, [ornstein-uhlenbeck-and-cir-processes](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)):
+The integral of a fixed function against $dW_s$ is normal with average zero. Its variance is the integral of the function squared (Itô's isometry, [Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)):
 $$v(T) = \sigma^2\int_0^T e^{-2\kappa(T-s)}\,ds = \frac{\sigma^2}{2\kappa}\big(1 - e^{-2\kappa T}\big).$$
 Then $F(T) = E[e^{X_T}] = e^{m(T) + v(T)/2}$, and $v/2$ is the $\sigma^2(1 - e^{-2\kappa T})/4\kappa$ term.
 
@@ -160,7 +141,7 @@ Tomorrow, the same formula prices the same contract with one day less to run and
 
 ### Step 6: reading the speed and the level off a strip
 
-A market quotes a strip of futures. The model has two numbers to find, $\kappa$ and $a$, with $\sigma$ taken from option prices. The fit chooses them to make the model's log prices as close as possible to the quoted log prices, in the sense of least squares ([least-squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md)):
+A market quotes a strip of futures. The model has two numbers to find, $\kappa$ and $a$, with $\sigma$ taken from option prices. The fit chooses them to make the model's log prices as close as possible to the quoted log prices, in the sense of least squares ([Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md)):
 
 $$\min_{\kappa,\,a}\ \sum_i \big(\ln F_i - \ln F(T_i)\big)^2 .$$
 
@@ -169,13 +150,13 @@ Before solving, what the problem can and cannot do.
 - **Existence.** For any fixed speed, the model's log price is a straight line in $a$ with slope $1 - e^{-\kappa T_i}$. A straight-line least-squares problem always has an answer, and it is unique as long as one maturity is above zero. So the best level exists for every speed, in closed form.
 - **Uniqueness in the speed.** What is left is a search over one number, $\kappa$. Nothing guarantees a single minimum for every strip. For a strip that bends steadily toward one level there is one in practice. The check confirms it by two methods that share no steps and start from different places.
 - **Boundary cases.** A strip that is flat at spot does not pin the speed: the fit keeps improving as $\kappa$ runs off to zero or to infinity. As $\kappa$ goes to zero the pull vanishes and the level stops mattering, so it cannot be found. As $\kappa$ grows without limit the curve jumps to its long-run value at once, and only $a + \sigma^2/4\kappa$ can be found. At least three maturities that bend are needed to pin two numbers and test the fit.
-- **Why $\sigma$ is not fitted too.** At the long end $\sigma$ and $a$ enter only through $a + \sigma^2/4\kappa$. A strip alone can barely tell a higher level from more volatility. Options on the futures can ([commodity-implied-vol-and-the-call-skew](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md)).
+- **Why $\sigma$ is not fitted too.** At the long end $\sigma$ and $a$ enter only through $a + \sigma^2/4\kappa$. A strip alone can barely tell a higher level from more volatility. Options on the futures can ([Implied vol on a futures option and the commodity smile](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md)).
 
 The first method computes the best level in closed form for each trial speed, then narrows the interval of speeds by the golden ratio each round. The second, Gauss-Newton, moves both numbers at once along the direction a straight-line approximation of the model says will cut the error, halving the step whenever the error rises. On the strip below, both find a speed of 0.9979 and a level of $74.99, close to the 1 and $75 the strip was built from, a few cents of noise away.
 
 ### The other road: a second factor
 
-Gibson and Schwartz (1990) let the convenience yield, the benefit of holding the physical barrel ([convenience-yield-implied-by-the-forward](03-convenience-yield-implied-by-the-forward.md)), follow its own mean-reverting process. The one-factor model is the special case where that yield is tied to the price: in carry language it says the convenience yield is high when spot is high, which is what pulls the curve down. With a second factor the long end gets its own random moves. That model is named here and not built.
+Gibson and Schwartz (1990) let the convenience yield, the benefit of holding the physical barrel ([Convenience yield](03-convenience-yield-implied-by-the-forward.md)), follow its own mean-reverting process. The one-factor model is the special case where that yield is tied to the price: in carry language it says the convenience yield is high when spot is high, which is what pulls the curve down. With a second factor the long end gets its own random moves. That model is named here and not built.
 
 ---
 
@@ -679,8 +660,8 @@ The two outputs match line for line, the simulation included, since both run the
 
 - **Producer hedging.** Output sold five years forward is priced off a future that barely responds to today's spot, so hedge ratios follow the $e^{-\kappa T}$ weight, not one for one.
 - **Valuing a mine or a field.** Schwartz built the model to value natural-resource projects. A project whose cash flows lie mostly in years five to twenty is priced off the flat long end, not off today's spot.
-- **Gas and power curves.** Both revert fast, because inventories are thin or impossible. The seasonal pattern sits on top of the reversion ([seasonality-and-the-gas-curve](05-seasonality-and-the-gas-curve.md)).
-- **When carry stops pinning the curve.** Storage puts a ceiling on contango ([storage-cost-and-the-carry-ceiling](02-storage-cost-and-the-carry-ceiling.md)), but nothing puts a floor under backwardation. A reverting spot model fills that gap with a shape.
+- **Gas and power curves.** Both revert fast, because inventories are thin or impossible. The seasonal pattern sits on top of the reversion ([Seasonal curves](05-seasonality-and-the-gas-curve.md)).
+- **When carry stops pinning the curve.** Storage puts a ceiling on contango ([Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md)), but nothing puts a floor under backwardation. A reverting spot model fills that gap with a shape.
 - **Interest rates.** The same process drives Vasicek's short rate. There the level is a long-run interest rate and the same $e^{-\kappa T}$ weight shapes the yield curve.
 
 > **Say it back**
@@ -690,14 +671,14 @@ The two outputs match line for line, the simulation included, since both run the
 
 ## What this builds on
 
-- [contango-backwardation-and-roll-yield](04-contango-backwardation-and-roll-yield.md): the two curve shapes this model produces from one formula, depending on which side of the level spot sits.
-- [ornstein-uhlenbeck-and-cir-processes](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): the pulled random walk itself, its solution and its variance.
-- [itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): the product rule used in Step 1, and the notation $dX_t$, $dW_t$.
-- [least-squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the straight-line fit that finds the level in closed form for each speed.
+- [Contango and backwardation](04-contango-backwardation-and-roll-yield.md): the two curve shapes this model produces from one formula, depending on which side of the level spot sits.
+- [Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): the pulled random walk itself, its solution and its variance.
+- [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): the product rule used in Step 1, and the notation $dX_t$, $dW_t$.
+- [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the straight-line fit that finds the level in closed form for each speed.
 
 ## Where this goes next
 
-- [commodity-implied-vol-and-the-call-skew](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md): options on these futures, where the fading volatility $\sigma e^{-\kappa T}$ becomes an implied volatility that depends on the contract, and the call skew appears.
+- [Implied vol on a futures option and the commodity smile](../26-Options%20on%20commodity%20futures%20and%20spreads/03-commodity-implied-vol-and-the-call-skew.md): options on these futures, where the fading volatility $\sigma e^{-\kappa T}$ becomes an implied volatility that depends on the contract, and the call skew appears.
 
 A strip pins the speed and the level but not the volatility; what option prices on the futures reveal about $\sigma$, and why they disagree across strikes, is the question left open here.
 

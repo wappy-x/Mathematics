@@ -1,23 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Calculus of Variations and Optimal Control
-topic: Steering at the limits
-item: Pontryagin's principle
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/05-hamiltons-equations|hamiltons-equations]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/06-forced-systems-and-variation-of-constants|forced-systems-and-variation-of-constants]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/08-the-hjb-equation-and-the-linear-quadratic-regulator|the-hjb-equation-and-the-linear-quadratic-regulator]]"
-tags: [mathematics, differential equations and dynamics, pontryagins-principle-and-bang-bang-control]
----
-
 # Pontryagin's principle: the best control maximises a Hamiltonian at every instant, and often that means full throttle or full brake
 
-Differential equations and dynamics → Calculus of Variations and Optimal Control → Steering at the limits → Pontryagin's principle
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Calculus of Variations and Optimal Control](../../../SYLLABUS.md#w08-s12) → Pontryagin's principle
 
 ---
 
@@ -90,7 +73,7 @@ The **switching function** $\sigma$, the coefficient of u in H, picks the pedal 
 
 - **The rate law is smooth in the state.** The mirror rule differentiates f and L; a kink such as dry friction needs a generalised version.
 - **A best control exists.** Drop the cap and none does: a = 200 m/s^2 parks in 1.41 s, and larger caps are faster still.
-- **Necessary, not sufficient.** The conditions name candidates; one must still be shown best, by a direct bound (Step 5), convexity, or the value function of [the-hjb-equation-and-the-linear-quadratic-regulator](08-the-hjb-equation-and-the-linear-quadratic-regulator.md).
+- **Necessary, not sufficient.** The conditions name candidates; one must still be shown best, by a direct bound (Step 5), convexity, or the value function of [The HJB equation](08-the-hjb-equation-and-the-linear-quadratic-regulator.md).
 - **The switching function has isolated zeros.** If $\sigma$ stays zero for a stretch, a **singular arc**, every setting ties and extra conditions decide.
 
 ---
@@ -103,7 +86,7 @@ A small head start, a metre closer or an extra m/s, saves some seconds. Those ex
 
 ### Step 1: the prices run by the mirror rule
 
-A head start δx, a small change of state, travels forward by the linearised law, δx' = (∂f/∂x) δx: extra speed becomes extra metres. Its worth cannot depend on when it is counted, so p · δx stays constant. Differentiating, with L's own dependence on x, gives p' = −∂H/∂x, the mirror rule of [hamiltons-equations](05-hamiltons-equations.md). For the car, ∂H/∂x_1 = 0 and ∂H/∂x_2 = p_1, so
+A head start δx, a small change of state, travels forward by the linearised law, δx' = (∂f/∂x) δx: extra speed becomes extra metres. Its worth cannot depend on when it is counted, so p · δx stays constant. Differentiating, with L's own dependence on x, gives p' = −∂H/∂x, the mirror rule of [Hamilton's equations](05-hamiltons-equations.md). For the car, ∂H/∂x_1 = 0 and ∂H/∂x_2 = p_1, so
 
 $$p_1' = 0, \qquad p_2' = -p_1 .$$
 
@@ -142,7 +125,7 @@ To scale: 2.8 px per metre across, 8 px per m/s up. Full throttle traces speed^2
 
 The principle describes a best plan only if one exists. A direct bound settles it. From rest, the speed at time t is at most 2t; to stop by T it is also at most 2(T − t). So speed lies under a tent of base T and height T, area T^2/2. Distance is the area under the speed, so 100 ≤ T^2/2 and T ≥ √200 = 14.14 s. The bang-bang plan rides the tent's roof, so it is best, and the only plan reaching the bound.
 
-A grid search over five pedal settings per step finds 14.20, 14.16 and 14.15 s on steps of 0.1, 0.04 and 0.01 s, never below 14.14 s; search by stages is [dynamic-programming-and-the-bellman-equation](07-dynamic-programming-and-the-bellman-equation.md).
+A grid search over five pedal settings per step finds 14.20, 14.16 and 14.15 s on steps of 0.1, 0.04 and 0.01 s, never below 14.14 s; search by stages is [Dynamic programming](07-dynamic-programming-and-the-bellman-equation.md).
 
 ---
 
@@ -172,7 +155,7 @@ Floor it to the 50 m mark, then brake hard: parked at 14.14 s.
 
 ## Code, from first principles, and it actually runs
 
-Three roads: the maximum principle; a grid search over five pedal settings per step, blind to Pontryagin; and the costate as a price, by finite differences (small nudges) of the best-time formula. Euler's rule, new state = old state + step × rate ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)), drives the car by the sign of σ alone. Its error at the switch halves with the step; braking then cancels it exactly.
+Three roads: the maximum principle; a grid search over five pedal settings per step, blind to Pontryagin; and the costate as a price, by finite differences (small nudges) of the best-time formula. Euler's rule, new state = old state + step × rate ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)), drives the car by the sign of σ alone. Its error at the switch halves with the step; braking then cancels it exactly.
 
 ### Python
 
@@ -392,7 +375,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Spacecraft.** On-off thrusters are bang-bang by construction; the boundary-value problem is solved by guessing the starting prices and correcting, as in [the-shooting-method](../07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md).
+- **Spacecraft.** On-off thrusters are bang-bang by construction; the boundary-value problem is solved by guessing the starting prices and correcting, as in [Shooting](../07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md).
 - **Disk heads and cranes.** A seek accelerates and brakes flat out.
 - **Economics.** Growth models price capital with a costate.
 
@@ -403,12 +386,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [hamiltons-equations](05-hamiltons-equations.md): the pair x' = ∂H/∂p, p' = −∂H/∂x, and why H is constant when it has no t.
-- [forced-systems-and-variation-of-constants](../04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md): a linear system driven by an input, here the pedal.
+- [Hamilton's equations](05-hamiltons-equations.md): the pair x' = ∂H/∂p, p' = −∂H/∂x, and why H is constant when it has no t.
+- [Forced systems](../04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md): a linear system driven by an input, here the pedal.
 
 ## Where this goes next
 
-- [the-hjb-equation-and-the-linear-quadratic-regulator](08-the-hjb-equation-and-the-linear-quadratic-regulator.md): the best cost from every start, whose slopes are these prices; with squared costs the best control is smooth feedback.
+- [The HJB equation](08-the-hjb-equation-and-the-linear-quadratic-regulator.md): the best cost from every start, whose slopes are these prices; with squared costs the best control is smooth feedback.
 
 ---
 

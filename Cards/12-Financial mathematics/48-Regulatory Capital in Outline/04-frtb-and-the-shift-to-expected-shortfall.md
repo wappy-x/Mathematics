@@ -1,30 +1,14 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Regulatory Capital in Outline
-topic: Trading-book tail measures
-item: Market-risk capital
-kind: convention
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/48-Regulatory Capital in Outline/03-vasicek-asrf-and-credit-capital|vasicek-asrf-and-credit-capital]]"
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/05-expected-shortfall-and-coherence|expected-shortfall-and-coherence]]"
-next: []
-tags: [mathematics, financial mathematics, frtb-and-the-shift-to-expected-shortfall]
----
-
 # Market-risk capital: from 99 percent VaR to 97.5 percent expected shortfall, and liquidity horizons
 
-Financial mathematics → Regulatory Capital in Outline → Trading-book tail measures → Market-risk capital
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Regulatory Capital in Outline](../../../SYLLABUS.md#w12-s48) → Market-risk capital
 
 ---
 
 ## General Overview
 
-A bank holds $1 billion of loans and a $100 million trading book: shares, corporate bonds and credit positions it buys and sells from day to day. The loans are charged capital by the credit formula ([vasicek-asrf-and-credit-capital](03-vasicek-asrf-and-credit-capital.md)). The trading book is charged separately, for **market risk**: the risk that prices move against it before it can sell or hedge.
+A bank holds $1 billion of loans and a $100 million trading book: shares, corporate bonds and credit positions it buys and sells from day to day. The loans are charged capital by the credit formula ([The Basel credit formula](03-vasicek-asrf-and-credit-capital.md)). The trading book is charged separately, for **market risk**: the risk that prices move against it before it can sell or hedge.
 
-For two decades the charge rested on **value at risk** (VaR): the loss over ten trading days that is exceeded only one time in a hundred. Its one number is a line on the loss axis. It says nothing about how far past the line the bad outcomes run. In 2016 the Basel Committee, the body that writes the world's bank capital standards, replaced it in its **Fundamental Review of the Trading Book** (FRTB), in force in the Basel standards from 2023, with **expected shortfall** (ES) at 97.5 percent: the average loss over the worst 2.5 percent of outcomes ([expected-shortfall-and-coherence](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/05-expected-shortfall-and-coherence.md)).
+For two decades the charge rested on **value at risk** (VaR): the loss over ten trading days that is exceeded only one time in a hundred. Its one number is a line on the loss axis. It says nothing about how far past the line the bad outcomes run. In 2016 the Basel Committee, the body that writes the world's bank capital standards, replaced it in its **Fundamental Review of the Trading Book** (FRTB), in force in the Basel standards from 2023, with **expected shortfall** (ES) at 97.5 percent: the average loss over the worst 2.5 percent of outcomes ([Expected shortfall](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/05-expected-shortfall-and-coherence.md)).
 
 Take the $100 million book with a ten-day loss whose typical swing, the standard deviation, is $3 million. If the loss follows the bell curve, the old measure gives $6.98 million and the new one $7.01 million: the same capital, to half a percent. Give the same book fat tails, where rare large losses are more common than the bell curve allows, and the old measure gives $7.87 million while the new one gives $8.73 million, 11 percent more. Push the worst 1 percent of losses twice as far out and the old measure does not move at all; the new one jumps to $13.58 million.
 
@@ -166,7 +150,7 @@ The inner sum telescopes: it adds the day gaps from $LH_1=10$ up to $h_i$, which
 
 The same answer comes from simulation: draw each factor over its own horizon 200,000 times and average the worst 2.5 percent. The code does all three.
 
-Two further FRTB pieces sit outside this card's arithmetic. The ES must be calibrated to a period of stress, using a reduced set of risk factors scaled up by the ratio of full to reduced ES in current data. Risk factors with too few real price observations are charged separately by stress scenarios. [extreme-value-theory-and-tails](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md) models the tail shape that Step 3 took as a t distribution.
+Two further FRTB pieces sit outside this card's arithmetic. The ES must be calibrated to a period of stress, using a reduced set of risk factors scaled up by the ratio of full to reduced ES in current data. Risk factors with too few real price observations are charged separately by stress scenarios. [Extreme value theory](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md) models the tail shape that Step 3 took as a t distribution.
 
 ---
 
@@ -673,10 +657,10 @@ The two outputs match line for line; the Monte Carlo rows agree too, because bot
 
 ## Where you meet it in real life
 
-- **The daily capital figure.** A bank using internal models computes ES every day for each trading desk. The capital figure is the larger of yesterday's number and 1.5 times a 60-day average, with the stress-scenario charges for thinly traded risk factors added; the old rule used at least 3 times the 60-day averages of VaR and of stressed VaR (VaR measured on a year of crisis data). Capital is converted to risk-weighted assets by multiplying by 12.5, the bridge to the ratio on [basel-capital-and-risk-weighted-assets](02-basel-capital-and-risk-weighted-assets.md).
+- **The daily capital figure.** A bank using internal models computes ES every day for each trading desk. The capital figure is the larger of yesterday's number and 1.5 times a 60-day average, with the stress-scenario charges for thinly traded risk factors added; the old rule used at least 3 times the 60-day averages of VaR and of stressed VaR (VaR measured on a year of crisis data). Capital is converted to risk-weighted assets by multiplying by 12.5, the bridge to the ratio on [Basel capital](02-basel-capital-and-risk-weighted-assets.md).
 - **Selling options for small premiums.** A desk short deep out-of-the-money options has the shape of Step 1: calm 99 days in 100, a large loss on the hundredth. ES charges for the size of that loss; 99 percent VaR did not.
-- **Desk-level backtesting.** Each desk's one-day VaR at 97.5 and 99 percent is compared with its actual profit and loss; too many breaches and the desk loses its model approval ([backtesting-var](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/08-backtesting-var.md)).
-- **Credit capital beside it.** The same bank's $1 billion of loans is charged by a one-year 99.9 percent quantile ([vasicek-asrf-and-credit-capital](03-vasicek-asrf-and-credit-capital.md)), and both charges sit on top of expected losses the bank prices in ([expected-versus-unexpected-loss](01-expected-versus-unexpected-loss.md)).
+- **Desk-level backtesting.** Each desk's one-day VaR at 97.5 and 99 percent is compared with its actual profit and loss; too many breaches and the desk loses its model approval ([Backtesting VaR](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/08-backtesting-var.md)).
+- **Credit capital beside it.** The same bank's $1 billion of loans is charged by a one-year 99.9 percent quantile ([The Basel credit formula](03-vasicek-asrf-and-credit-capital.md)), and both charges sit on top of expected losses the bank prices in ([Expected and unexpected loss](01-expected-versus-unexpected-loss.md)).
 
 > **Say it back**
 > Value at risk is a line on the loss axis and cannot see how far the losses beyond it run. Expected shortfall averages those losses. On a bell curve, 97.5 percent ES and 99 percent VaR differ by half a percent, which is why Basel chose 97.5 percent: ordinary books keep their capital. Fat-tailed books, and books whose worst days get worse, pay more. The ten-day ES is then stretched, risk factor by risk factor, to the 10 to 120 days it takes to exit each one.
@@ -685,15 +669,15 @@ The two outputs match line for line; the Monte Carlo rows agree too, because bot
 
 ## What this builds on
 
-- [vasicek-asrf-and-credit-capital](03-vasicek-asrf-and-credit-capital.md): the credit charge on the same bank's loans, a quantile at 99.9 percent, which this card sets beside the market-risk charge.
-- [expected-shortfall-and-coherence](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/05-expected-shortfall-and-coherence.md): the definition of expected shortfall, its handling of ties at the line, and the proof that it never penalises merging books.
+- [The Basel credit formula](03-vasicek-asrf-and-credit-capital.md): the credit charge on the same bank's loans, a quantile at 99.9 percent, which this card sets beside the market-risk charge.
+- [Expected shortfall](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/05-expected-shortfall-and-coherence.md): the definition of expected shortfall, its handling of ties at the line, and the proof that it never penalises merging books.
 
 ## Where this goes next
 
-- [liquidity-and-leverage-ratios](05-liquidity-and-leverage-ratios.md): liquidity in the funding sense, cash to survive outflows, and a capital floor that ignores risk weights.
-- [extreme-value-theory-and-tails](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md): estimating the tail shape that decides how far ES sits above VaR.
+- [Liquidity and leverage](05-liquidity-and-leverage-ratios.md): liquidity in the funding sense, cash to survive outflows, and a capital floor that ignores risk weights.
+- [Extreme value theory](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md): estimating the tail shape that decides how far ES sits above VaR.
 
-This card sized the capital for prices moving against the book; a bank with ample capital can still fail when depositors and lenders withdraw cash faster than assets can be sold, and [liquidity-and-leverage-ratios](05-liquidity-and-leverage-ratios.md) measures that.
+This card sized the capital for prices moving against the book; a bank with ample capital can still fail when depositors and lenders withdraw cash faster than assets can be sold, and [Liquidity and leverage](05-liquidity-and-leverage-ratios.md) measures that.
 
 ---
 

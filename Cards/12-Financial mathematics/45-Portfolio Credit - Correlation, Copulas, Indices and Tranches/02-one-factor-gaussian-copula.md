@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Portfolio Credit - Correlation, Copulas, Indices and Tranches
-topic: Factor models of joint default
-item: The one-factor Gaussian copula
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/01-default-correlation-and-joint-default|default-correlation-and-joint-default]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/04-normal-distribution|normal-distribution]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/05-bivariate-normal-and-conditioning|bivariate-normal-and-conditioning]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/01-law-of-large-numbers|law-of-large-numbers]]"
-next:
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/03-vasicek-loss-distribution-and-basel-capital|vasicek-loss-distribution-and-basel-capital]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/07-tail-dependence-and-the-t-copula|tail-dependence-and-the-t-copula]]"
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/05-wrong-way-risk|wrong-way-risk]]"
-tags: [mathematics, financial-mathematics, one-factor-gaussian-copula]
----
-
 # The one-factor Gaussian copula: one shared economy dial plus private luck, gluing single-name default chances into a joint story
 
-Financial mathematics → Portfolio Credit - Correlation, Copulas, Indices and Tranches → Factor models of joint default → The one-factor Gaussian copula
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Credit - Correlation, Copulas, Indices and Tranches](../../../SYLLABUS.md#w12-s45) → The one-factor Gaussian copula
 
 ---
 
@@ -59,7 +38,7 @@ Falling curve: the default chance of each firm at 20% asset correlation, once th
 
 ## The formula
 
-Notation first, in words. The economy score is $M$, a bell-curve draw with average 0 and spread 1; a particular value of it is $m$. Firm number $i$ has private noise $\varepsilon_i$, another independent bell-curve draw. $N(x)$ is the bell-curve area to the left of $x$, as on [normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md), and $N^{-1}$ runs it backwards: the point with a given area to its left. $\varphi(x)$ is the bell-curve height at $x$. The default chance of one firm is $p$ (5% here), the asset correlation is $\rho$ (20% here), and the default cutoff is $a$.
+Notation first, in words. The economy score is $M$, a bell-curve draw with average 0 and spread 1; a particular value of it is $m$. Firm number $i$ has private noise $\varepsilon_i$, another independent bell-curve draw. $N(x)$ is the bell-curve area to the left of $x$, as on [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md), and $N^{-1}$ runs it backwards: the point with a given area to its left. $\varphi(x)$ is the bell-curve height at $x$. The default chance of one firm is $p$ (5% here), the asset correlation is $\rho$ (20% here), and the default cutoff is $a$.
 
 $$X_i = \sqrt{\rho}\,M + \sqrt{1-\rho}\,\varepsilon_i, \qquad \text{firm } i \text{ defaults when } X_i < a, \qquad a = N^{-1}(p)$$
 
@@ -97,7 +76,7 @@ Two consequences follow in one line each. The **default correlation** (correlati
 ### When it holds
 
 - **One shared driver.** All clustering comes through one factor. If a sector shock hits only retailers, one factor spreads it to everyone and misprices both the retailers and the rest.
-- **Bell-curve scores.** The factor and the noise are bell-curve draws. Real crises are fatter-tailed; the Gaussian version gives joint extreme defaults too little weight, which [tail-dependence-and-the-t-copula](07-tail-dependence-and-the-t-copula.md) measures.
+- **Bell-curve scores.** The factor and the noise are bell-curve draws. Real crises are fatter-tailed; the Gaussian version gives joint extreme defaults too little weight, which [Tail dependence](07-tail-dependence-and-the-t-copula.md) measures.
 - **One horizon.** The 5% and the cutoff belong to one fixed five-year window. Mixing a one-year default chance with a five-year one gives cutoffs that mean different things.
 - **Fixed recoveries.** The 40% recovery is the same in good and bad economies. In real downturns recoveries fall too, so losses in the bad scenarios are larger than this model says.
 - **Correlation from 0 to below 1.** At $\rho = 1$ the private noise vanishes and $q(m)$ divides by zero; there every firm defaults exactly when the economy score itself is below −1.645.
@@ -182,9 +161,9 @@ The single-name default chances plug in as $u_1$ and $u_2$, and the dependence c
 
 For each of 20,000 imagined pools: draw one economy score, then 100 private noises; form the 100 scores; count those below −1.645. Across pools, the default fraction estimates 5%, the fraction of pairs that both default estimates $J$, and the share of pools with ten or more defaults estimates the pool tail.
 
-The [law-of-large-numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md) works at two levels here. Across many independent pools, averages settle on the unconditional answers: 5%, 0.5245%. Within one pool, adding firms does **not** drive the default fraction to 5%: it drives it to $q(M)$ for that pool's economy. In the simulated pools whose economy landed near −2, the default rate was 19.53%. A shared shock does not diversify away. That fact, pushed to an infinite pool, is [vasicek-loss-distribution-and-basel-capital](03-vasicek-loss-distribution-and-basel-capital.md).
+The [Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md) works at two levels here. Across many independent pools, averages settle on the unconditional answers: 5%, 0.5245%. Within one pool, adding firms does **not** drive the default fraction to 5%: it drives it to $q(M)$ for that pool's economy. In the simulated pools whose economy landed near −2, the default rate was 19.53%. A shared shock does not diversify away. That fact, pushed to an infinite pool, is [Vasicek's large-pool loss curve](03-vasicek-loss-distribution-and-basel-capital.md).
 
-The joint chances of a pair taken alone, and the table of feasible default correlations, are on [default-correlation-and-joint-default](01-default-correlation-and-joint-default.md); this card supplies a model that produces them.
+The joint chances of a pair taken alone, and the table of feasible default correlations, are on [Default correlation](01-default-correlation-and-joint-default.md); this card supplies a model that produces them.
 
 ---
 
@@ -658,16 +637,16 @@ The two outputs agree line for line. The bell-curve areas were reached by differ
 > - **Expecting a big pool to diversify the economy away.** Private noise averages out; the shared factor does not. A pool of a million firms in a −2 economy still sees about 20% defaults, not 5%.
 > - **Changing the correlation and the cutoff together.** The cutoff depends only on $p$. Re-deriving it from $\rho$, or leaving out the $\sqrt{1-\rho}$ weight, breaks the single-name chance: 6.66% instead of 5% in the what-breaks table.
 > - **Mixing horizons.** A 5% five-year chance and a 1% one-year chance give cutoffs that answer different questions. Put every firm on the same horizon first.
-> - **Treating the Gaussian copula as a description of crises.** It fits the middle of the distribution. Its joint extremes are thinner than markets have shown; see [tail-dependence-and-the-t-copula](07-tail-dependence-and-the-t-copula.md).
+> - **Treating the Gaussian copula as a description of crises.** It fits the middle of the distribution. Its joint extremes are thinner than markets have shown; see [Tail dependence](07-tail-dependence-and-the-t-copula.md).
 
 ---
 
 ## Where you meet it in real life
 
-- **Bank capital.** The regulatory formula for the capital behind a corporate loan is this model pushed to an infinite pool and read at a one-in-a-thousand economy: [vasicek-loss-distribution-and-basel-capital](03-vasicek-loss-distribution-and-basel-capital.md).
-- **Tranche pricing.** Slices of a loan pool that absorb losses in order were priced with this model from the early 2000s, one correlation number per slice: [cdo-tranches-in-outline](05-cdo-tranches-in-outline.md).
-- **Quoted correlation.** Tranche prices on the traded indices are turned back into the correlation this model needs to match them: [implied-and-base-correlation](06-implied-and-base-correlation.md), on pools such as [credit-indices](04-credit-indices.md).
-- **Counterparty risk.** When a trading partner's default and the size of what it owes rise together, a shared factor links them: [wrong-way-risk](../46-Counterparty%20Risk%20and%20CVA/05-wrong-way-risk.md).
+- **Bank capital.** The regulatory formula for the capital behind a corporate loan is this model pushed to an infinite pool and read at a one-in-a-thousand economy: [Vasicek's large-pool loss curve](03-vasicek-loss-distribution-and-basel-capital.md).
+- **Tranche pricing.** Slices of a loan pool that absorb losses in order were priced with this model from the early 2000s, one correlation number per slice: [Tranches](05-cdo-tranches-in-outline.md).
+- **Quoted correlation.** Tranche prices on the traded indices are turned back into the correlation this model needs to match them: [Implied correlation](06-implied-and-base-correlation.md), on pools such as [Credit indices (CDX and iTraxx in outline)](04-credit-indices.md).
+- **Counterparty risk.** When a trading partner's default and the size of what it owes rise together, a shared factor links them: [Wrong-way risk](../46-Counterparty%20Risk%20and%20CVA/05-wrong-way-risk.md).
 - **The 2008 criticism.** Tranches rated as safe under this model lost heavily when house prices fell nationwide at once. The single Gaussian factor, and the correlations fed into it, gave that scenario too little weight.
 
 > **Say it back**
@@ -677,16 +656,16 @@ The two outputs agree line for line. The bell-curve areas were reached by differ
 
 ## What this builds on
 
-- [default-correlation-and-joint-default](01-default-correlation-and-joint-default.md): the joint default chance, default correlation, and why single-name chances do not fix them. This card gives a model that does.
-- [normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, $N(x)$ and its inverse, used for every cutoff and every conditional chance.
-- [bivariate-normal-and-conditioning](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): correlated bell-curve pairs and how one behaves once the other is known; the correlation road in Step 4 is built on it.
-- [law-of-large-numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): why averages over many simulated pools settle, and why the average within one pool settles on $q(M)$ rather than 5%.
+- [Default correlation](01-default-correlation-and-joint-default.md): the joint default chance, default correlation, and why single-name chances do not fix them. This card gives a model that does.
+- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, $N(x)$ and its inverse, used for every cutoff and every conditional chance.
+- [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): correlated bell-curve pairs and how one behaves once the other is known; the correlation road in Step 4 is built on it.
+- [Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): why averages over many simulated pools settle, and why the average within one pool settles on $q(M)$ rather than 5%.
 
 ## Where this goes next
 
-- [vasicek-loss-distribution-and-basel-capital](03-vasicek-loss-distribution-and-basel-capital.md): let the pool grow without limit; the loss fraction becomes $q(M)$ itself, with a closed-form law and the regulator's 99.9% point.
-- [tail-dependence-and-the-t-copula](07-tail-dependence-and-the-t-copula.md): keep the single-name chances, swap the Gaussian copula for one with fatter joint extremes, and measure the difference.
-- [wrong-way-risk](../46-Counterparty%20Risk%20and%20CVA/05-wrong-way-risk.md): the same shared-factor idea linking a counterparty's default to the exposure it leaves behind.
+- [Vasicek's large-pool loss curve](03-vasicek-loss-distribution-and-basel-capital.md): let the pool grow without limit; the loss fraction becomes $q(M)$ itself, with a closed-form law and the regulator's 99.9% point.
+- [Tail dependence](07-tail-dependence-and-the-t-copula.md): keep the single-name chances, swap the Gaussian copula for one with fatter joint extremes, and measure the difference.
+- [Wrong-way risk](../46-Counterparty%20Risk%20and%20CVA/05-wrong-way-risk.md): the same shared-factor idea linking a counterparty's default to the exposure it leaves behind.
 
 This card left the pool at 100 firms and counted defaults by mixing binomials; what the loss curve looks like when the pool is so large that only the economy is left to be random is the question the Vasicek card answers.
 

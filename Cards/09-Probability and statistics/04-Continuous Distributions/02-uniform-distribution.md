@@ -1,23 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Continuous Distributions
-topic: Flat densities
-item: Uniform
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/01-densities-and-cdfs|densities-and-cdfs]]"
-next:
-  - "[[Cards/09-Probability and statistics/11-Simulation/01-pseudo-random-numbers|pseudo-random-numbers]]"
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/05-simulating-a-default-time|simulating-a-default-time]]"
-tags: [mathematics, probability and statistics, uniform-distribution]
----
-
 # Uniform: every value in an interval equally likely
 
-Probability and statistics → Continuous Distributions → Flat densities → Uniform
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Continuous Distributions](../../../SYLLABUS.md#w09-s04) → Uniform
 
 ---
 
@@ -51,7 +34,7 @@ Bars: the share of 100,000 simulated waits landing in each one-minute slot, prin
 
 ## The formula
 
-Notation first. $X$ is the wait in minutes, a random variable: a number fixed only when the bus comes. The window runs from $a$ to $b$. The shorthand $X \sim \mathrm{Uniform}(a, b)$, read "X is uniform between a and b", names the law. The density $f(x)$ and the cumulative chance $F(x)$ are the ones from [densities-and-cdfs](01-densities-and-cdfs.md): chance per minute, and chance of waiting at most $x$ minutes.
+Notation first. $X$ is the wait in minutes, a random variable: a number fixed only when the bus comes. The window runs from $a$ to $b$. The shorthand $X \sim \mathrm{Uniform}(a, b)$, read "X is uniform between a and b", names the law. The density $f(x)$ and the cumulative chance $F(x)$ are the ones from [Densities](01-densities-and-cdfs.md): chance per minute, and chance of waiting at most $x$ minutes.
 
 $$f(x) = \frac{1}{b-a} \text{ for } a \le x \le b, \qquad F(x) = \frac{x-a}{b-a} \text{ for } a \le x \le b$$
 
@@ -137,7 +120,7 @@ $$P\big(G^{-1}(U) \le x\big) = P\big(U \le G(x)\big) = G(x).$$
 
 The draw $G^{-1}(U)$ has cumulative chance $G$: it follows the target law. Step 4 is the special case where $G$ is the bus's own ramp, which is why a program makes bus waits as $10 \times U$.
 
-The exponential law, with its own card at [exponential-distribution](03-exponential-distribution.md), is the standard test. With mean 5 minutes its cumulative chance is $G(x) = 1 - e^{-x/5}$ and its quantile is $G^{-1}(u) = -5\ln(1-u)$. The picture reads the rule off the curve.
+The exponential law, with its own card at [Exponential](03-exponential-distribution.md), is the standard test. With mean 5 minutes its cumulative chance is $G(x) = 1 - e^{-x/5}$ and its quantile is $G^{-1}(u) = -5\ln(1-u)$. The picture reads the rule off the curve.
 
 ### The picture: one uniform draw becomes one exponential wait
 
@@ -521,9 +504,9 @@ The two outputs are identical line for line.
 
 - **Random number generators.** Every simulation starts from uniform draws between 0 and 1; the draws in the checks are 53-bit whole numbers divided by $2^{53}$.
 - **Rounding.** A reading rounded to the nearest whole unit carries an error roughly uniform between −0.5 and 0.5, so by Step 3 its variance is 0.0833 of a unit squared, whatever the unit.
-- **Normal draws.** Pushing uniform draws through the normal quantile of [normal-quantile](05-normal-quantile.md) makes bell-curve samples by Step 5.
-- **Waiting and lifetimes.** Uniform waits leave less to wait as time passes; exponential ones do not, which is the contrast [exponential-distribution](03-exponential-distribution.md) draws. The same contrast shapes the hazard rates of [weibull-and-hazard-rates](09-weibull-and-hazard-rates.md).
-- **Credit risk.** A bank simulating when a borrower defaults draws a uniform number and inverts a survival curve: [simulating-a-default-time](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md).
+- **Normal draws.** Pushing uniform draws through the normal quantile of [Normal quantiles](05-normal-quantile.md) makes bell-curve samples by Step 5.
+- **Waiting and lifetimes.** Uniform waits leave less to wait as time passes; exponential ones do not, which is the contrast [Exponential](03-exponential-distribution.md) draws. The same contrast shapes the hazard rates of [Weibull and hazards](09-weibull-and-hazard-rates.md).
+- **Credit risk.** A bank simulating when a borrower defaults draws a uniform number and inverts a survival curve: [Simulating a default time](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md).
 
 > **Say it back**
 > A uniform law on a window gives every stretch a chance equal to its length over the window's length. Its mean is the midpoint and its variance is the width squared over 12, so the bus due between 8:00 and 8:10 comes after 5 minutes on average, give or take 2.9. Its quantile is a straight line, so nine mornings in ten the bus is there by 8:09. Pushing uniform draws through any law's quantile produces draws from that law, which is the standard way a simulation turns a random number generator into the randomness it needs.
@@ -532,14 +515,14 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [densities-and-cdfs](01-densities-and-cdfs.md): density as chance per unit, cumulative chance as area, and the properties of a cumulative chance function used in the Detailed proof.
+- [Densities](01-densities-and-cdfs.md): density as chance per unit, cumulative chance as area, and the properties of a cumulative chance function used in the Detailed proof.
 
 ## Where this goes next
 
-- [pseudo-random-numbers](../11-Simulation/01-pseudo-random-numbers.md): how a deterministic program such as SplitMix64 makes numbers that pass for uniform draws, and how to test that they do.
-- [simulating-a-default-time](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md): the inverse-transform rule applied to a survival curve to draw the date a borrower defaults.
+- [Random numbers from a computer](../11-Simulation/01-pseudo-random-numbers.md): how a deterministic program such as SplitMix64 makes numbers that pass for uniform draws, and how to test that they do.
+- [Simulating a default time](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md): the inverse-transform rule applied to a survival curve to draw the date a borrower defaults.
 
-Everything on this card assumed a supply of genuinely uniform draws; whether a machine that follows fixed rules can supply them is the question [pseudo-random-numbers](../11-Simulation/01-pseudo-random-numbers.md) answers.
+Everything on this card assumed a supply of genuinely uniform draws; whether a machine that follows fixed rules can supply them is the question [Random numbers from a computer](../11-Simulation/01-pseudo-random-numbers.md) answers.
 
 ---
 

@@ -1,30 +1,12 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Series
-topic: Sizing a factorial
-item: Stirling's approximation
-kind: approximation
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/04-Integrals/08-numerical-integration|numerical-integration]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/05-taylor-series|taylor-series]]"
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/03-factorial|factorial]]"
-next:
-  - "[[Cards/14-Applied and computational/01-Algorithms and Growth/05-sorting-and-searching|sorting-and-searching]]"
-tags: [mathematics, calculus and analysis, stirlings-approximation]
----
-
 # Stirling's approximation: how big n factorial is, proved with integrals only
 
-Calculus and analysis → Series → Sizing a factorial → Stirling's approximation
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Series](../../../SYLLABUS.md#w06-s06) → Stirling's approximation
 
 ---
 
 ## General Overview
 
-Twenty runners can finish a race in 20 × 19 × 18 × … × 2 × 1 orders. That product is 20 factorial, written 20!, and multiplied out it is 2432902008176640000, about 2.4329 × 10^18 ([factorial](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/03-factorial.md)).
+Twenty runners can finish a race in 20 × 19 × 18 × … × 2 × 1 orders. That product is 20 factorial, written 20!, and multiplied out it is 2432902008176640000, about 2.4329 × 10^18 ([Factorials](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/03-factorial.md)).
 
 A number that size cannot be simplified inside a formula, and it hides how fast n! grows. Divide 20 by e, the base of natural logs, to get 7.357589. Raise that to the 20th power: 2.1613 × 10^17. Multiply by the square root of 2π × 20, which is 11.209982. The result, 2.4228 × 10^18, is 20! to within a ratio of 0.995842.
 
@@ -107,7 +89,7 @@ At n = 20: 40.914645 ≤ 42.335616 ≤ 43.934971. So 20! lies between 5.8750 × 
 
 ### Step 2: the trapezoid rule and a Taylor series show the leftover settles
 
-Slanted strip tops, the trapezoid rule ([numerical-integration](../04-Integrals/08-numerical-integration.md)), sum under ln x to ln n! − ½ ln n. That sum minus the antiderivative's value at n, n ln n − n, is the leftover to watch:
+Slanted strip tops, the trapezoid rule ([Numerical integration](../04-Integrals/08-numerical-integration.md)), sum under ln x to ln n! − ½ ln n. That sum minus the antiderivative's value at n, n ln n − n, is the leftover to watch:
 
 $$d_n = \ln n! - \left(n + \tfrac{1}{2}\right)\ln n + n$$
 
@@ -115,7 +97,7 @@ From n to n + 1 the leftover changes by
 
 $$d_n - d_{n+1} = \left(n + \tfrac12\right)\ln\frac{n+1}{n} - 1$$
 
-Now name $t = 1/(2n+1)$. Then (n + 1)/n = (1 + t)/(1 − t) and n + ½ = 1/(2t). The Taylor series of ln(1 + t) minus that of ln(1 − t) ([taylor-series](05-taylor-series.md)) keeps only the odd powers, doubled:
+Now name $t = 1/(2n+1)$. Then (n + 1)/n = (1 + t)/(1 − t) and n + ½ = 1/(2t). The Taylor series of ln(1 + t) minus that of ln(1 − t) ([Taylor series](05-taylor-series.md)) keeps only the odd powers, doubled:
 
 $$\ln\frac{1+t}{1-t} = 2\left(t + \frac{t^3}{3} + \frac{t^5}{5} + \cdots\right)$$
 
@@ -127,7 +109,7 @@ Every term is positive, so the leftover falls at every step. Each term is also a
 
 $$d_n - d_{n+1} < \frac{1}{12n(n+1)} = \frac{1}{12n} - \frac{1}{12(n+1)}$$
 
-Rearranged: d_n − 1/(12n) rises at every step. A falling sequence sits above a rising one with a gap of 1/(12n) that shrinks to nothing, so the real numbers having no gaps force both onto one number, called C ([supremum-and-completeness](../01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). So C < d_n < C + 1/(12n), which unpacks to
+Rearranged: d_n − 1/(12n) rises at every step. A falling sequence sits above a rising one with a gap of 1/(12n) that shrinks to nothing, so the real numbers having no gaps force both onto one number, called C ([No gaps](../01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). So C < d_n < C + 1/(12n), which unpacks to
 
 $$n! = e^{C}\sqrt{n}\left(\frac{n}{e}\right)^{n} e^{\theta_n}, \qquad 0 < \theta_n < \frac{1}{12n}$$
 
@@ -135,7 +117,7 @@ At n = 100 the squeeze pins C between 0.91893853 and 0.91977186. Numbers alone n
 
 ### Step 3: Wallis's integrals pin π/2 between two products of factorials
 
-Let $W_k$ be the area under sin x to the kth power, from 0 to π/2. Integration by parts ([integration-by-parts](../04-Integrals/04-integration-by-parts.md)) gives the rule W_k = (k − 1)/k × W_(k−2), starting from W_0 = π/2 and W_1 = 1.
+Let $W_k$ be the area under sin x to the kth power, from 0 to π/2. Integration by parts ([Integration by parts](../04-Integrals/04-integration-by-parts.md)) gives the rule W_k = (k − 1)/k × W_(k−2), starting from W_0 = π/2 and W_1 = 1.
 
 Between 0 and π/2, sin x lies between 0 and 1, so a higher power is never larger: W_(2m+1) ≤ W_(2m) ≤ W_(2m−1). The rule makes the outer two differ only by the factor (2m + 1)/(2m). Writing the products as factorials, with m standing for half an even k:
 
@@ -166,7 +148,7 @@ Step 2's settling: d_n falls and stays above d_1 − 1/12, so it converges to it
 
 </details>
 
-Another route measures n! as the area under t^n e^(−t), one bump, using the bell-curve integral: see [stirlings-formula](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/04-stirlings-formula.md).
+Another route measures n! as the area under t^n e^(−t), one bump, using the bell-curve integral: see [Stirling's formula](../../07-Complex%20analysis/09-Special%20Functions%20and%20the%20Zeta%20Function/04-stirlings-formula.md).
 
 ---
 
@@ -419,7 +401,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Sorting.** Sorting by comparing pairs must tell all n! orders apart, so it needs at least log2 n! comparisons (log to base 2: each comparison halves the choices). Stirling makes that roughly n log2 n, the floor in sorting-and-searching.
+- **Sorting.** Sorting by comparing pairs must tell all n! orders apart, so it needs at least log2 n! comparisons (log to base 2: each comparison halves the choices). Stirling makes that roughly n log2 n, the floor in Sorting and searching.
 - **Physics and information.** Arrangements of many particles or symbols are ratios of factorials; the log form n ln n − n turns them into entropy.
 - **Software.** Scientific libraries return ln n! through a log-gamma function, because n! overflows; for large n they use Stirling's series.
 
@@ -430,15 +412,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [numerical-integration](../04-Integrals/08-numerical-integration.md): the trapezoid and Simpson rules behind Step 2 and the W_20 check.
-- [taylor-series](05-taylor-series.md): the series for ln(1 + t) that proves the leftover falls.
-- [factorial](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/03-factorial.md): what n! counts, and why it grows so fast.
+- [Numerical integration](../04-Integrals/08-numerical-integration.md): the trapezoid and Simpson rules behind Step 2 and the W_20 check.
+- [Taylor series](05-taylor-series.md): the series for ln(1 + t) that proves the leftover falls.
+- [Factorials](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/03-factorial.md): what n! counts, and why it grows so fast.
 
 ## Where this goes next
 
-- sorting-and-searching: log2 n! comparisons, read through Stirling, as the floor on sorting.
+- Sorting and searching: log2 n! comparisons, read through Stirling, as the floor on sorting.
 
-The formula sizes n!; how that size becomes a speed limit on sorting n items is the question sorting-and-searching answers.
+The formula sizes n!; how that size becomes a speed limit on sorting n items is the question Sorting and searching answers.
 
 ---
 

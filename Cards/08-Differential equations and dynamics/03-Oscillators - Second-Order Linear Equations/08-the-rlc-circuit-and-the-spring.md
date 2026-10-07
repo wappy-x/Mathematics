@@ -1,24 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Oscillators - Second-Order Linear Equations
-topic: Circuits as oscillators
-item: The RLC circuit
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/03-complex-roots-and-damped-oscillation|complex-roots-and-damped-oscillation]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/05-undetermined-coefficients|undetermined-coefficients]]"
-next:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/06-second-order-systems-damping-and-natural-frequency|second-order-systems-damping-and-natural-frequency]]"
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/03-rlc-circuits-and-resonance|rlc-circuits-and-resonance]]"
-tags: [mathematics, differential equations and dynamics, the-rlc-circuit-and-the-spring]
----
-
 # The RLC circuit: the same equation as a spring, with charge in the place of position
 
-Differential equations and dynamics → Oscillators - Second-Order Linear Equations → Circuits as oscillators → The RLC circuit
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Oscillators - Second-Order Linear Equations](../../../SYLLABUS.md#w08-s03) → The RLC circuit
 
 ---
 
@@ -122,11 +104,11 @@ This is m x'' + c x' + k x = F, letter for letter, so the solutions are shared: 
 
 ### Step 3: the unforced part rings like the shock absorber
 
-With L = 1, R = 2, C = 0.2 the law is q'' + 2q' + 5q = 10. The characteristic equation r^2 + 2r + 5 = 0 has roots −1 ± 2i, where i is the square root of −1, not the current ([complex-roots-and-damped-oscillation](03-complex-roots-and-damped-oscillation.md)). The unforced solutions are e^(−t)(A cos 2t + B sin 2t).
+With L = 1, R = 2, C = 0.2 the law is q'' + 2q' + 5q = 10. The characteristic equation r^2 + 2r + 5 = 0 has roots −1 ± 2i, where i is the square root of −1, not the current ([Complex roots](03-complex-roots-and-damped-oscillation.md)). The unforced solutions are e^(−t)(A cos 2t + B sin 2t).
 
 ### Step 4: the battery adds a constant, and the start fixes the rest
 
-A constant push takes a constant trial, q = K ([undetermined-coefficients](05-undetermined-coefficients.md)): 5K = 10, so K = 2 = CV, and
+A constant push takes a constant trial, q = K ([Undetermined coefficients](05-undetermined-coefficients.md)): 5K = 10, so K = 2 = CV, and
 
 q(t) = 2 + e^(−t)(A cos 2t + B sin 2t).
 
@@ -159,7 +141,7 @@ Integrate until the ringing dies. The battery's work is V · CV = 20 joules; the
 
 </details>
 
-The Laplace transform solves it in one pass ([solving-an-initial-value-problem-by-transform](../08-Laplace%20Transforms%20for%20Initial-Value%20Problems/04-solving-an-initial-value-problem-by-transform.md)). As two first-order laws, q' = i and L i' = V − R i − q/C, it is a system ([from-one-equation-to-a-system](../04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md)), the form the code steps.
+The Laplace transform solves it in one pass ([The round trip](../08-Laplace%20Transforms%20for%20Initial-Value%20Problems/04-solving-an-initial-value-problem-by-transform.md)). As two first-order laws, q' = i and L i' = V − R i − q/C, it is a system ([From one equation to a system](../04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md)), the form the code steps.
 
 ---
 
@@ -191,7 +173,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Three roads. One: the closed form, checked against the shock absorber scaled by CV. Two: Euler's rule, new value = old value + step × rate ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)), on Kirchhoff's two first-order laws; its error halves with the step. Three: the heat R i^2 summed step by step, against the energy count.
+Three roads. One: the closed form, checked against the shock absorber scaled by CV. Two: Euler's rule, new value = old value + step × rate ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)), on Kirchhoff's two first-order laws; its error halves with the step. Three: the heat R i^2 summed step by step, against the energy count.
 
 ### Python
 
@@ -404,7 +386,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Switching on a power supply.** A filter capacitor behind a coil rings this way; at ζ = 0.4472 it swings 0.2079 of its final charge beyond it, so designers rate parts above the supply and add damping.
-- **Radio tuning.** A coil and capacitor ring near 1/√(LC); a tuner varies C to pick one station (rlc-circuits-and-resonance).
+- **Radio tuning.** A coil and capacitor ring near 1/√(LC); a tuner varies C to pick one station (RLC resonance).
 - **Analogue computers.** Engineers once read a suspension's motion off a circuit with matched L, R and C.
 
 > **Say it back**
@@ -414,13 +396,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [complex-roots-and-damped-oscillation](03-complex-roots-and-damped-oscillation.md): the roots −1 ± 2i and the ringing solution e^(−t)(A cos 2t + B sin 2t).
-- [undetermined-coefficients](05-undetermined-coefficients.md): the constant trial that gives the final charge CV.
+- [Complex roots](03-complex-roots-and-damped-oscillation.md): the roots −1 ± 2i and the ringing solution e^(−t)(A cos 2t + B sin 2t).
+- [Undetermined coefficients](05-undetermined-coefficients.md): the constant trial that gives the final charge CV.
 
 ## Where this goes next
 
-- [second-order-systems-damping-and-natural-frequency](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md): ω0 and ζ as the two numbers that describe any such system, circuit or spring.
-- rlc-circuits-and-resonance: the same circuit driven by an alternating voltage.
+- [Damping ratio and natural frequency](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md): ω0 and ζ as the two numbers that describe any such system, circuit or spring.
+- RLC resonance: the same circuit driven by an alternating voltage.
 
 ---
 

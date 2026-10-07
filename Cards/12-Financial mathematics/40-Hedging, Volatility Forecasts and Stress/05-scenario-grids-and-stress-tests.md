@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Hedging, Volatility Forecasts and Stress
-topic: What-if revaluation
-item: Stress tests
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/40-Hedging, Volatility Forecasts and Stress/02-delta-gamma-vega-hedging|delta-gamma-vega-hedging]]"
-next:
-  - "[[Cards/12-Financial mathematics/40-Hedging, Volatility Forecasts and Stress/06-risk-limits-and-risk-appetite|risk-limits-and-risk-appetite]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - scenario-grids-and-stress-tests
----
-
 # Stress tests: spot-and-volatility grids, historical replays and hypothetical shocks
 
-Financial mathematics → Hedging, Volatility Forecasts and Stress → What-if revaluation → Stress tests
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Hedging, Volatility Forecasts and Stress](../../../SYLLABUS.md#w12-s40) → Stress tests
 
 ---
 
@@ -87,7 +68,7 @@ $$\Pr\big[\,L(s,v) \le -\$3\text{ million}\,\big] \;\le\; e^{-d_*^2/2}.$$
 | $\rho$ | the correlation between monthly spot moves and volatility moves | −0.7: falls usually come with volatility rises | makes "fall plus vol spike" more ordinary |
 | $d$, $d_*$ | distance in typical months; the smallest distance that reaches the loss limit | 3.93 for the headline; 5.10 for the \$3 million limit | a larger $d_*$ means the limit is harder to reach |
 
-The Greeks' estimate, which the card uses only to show where it fails, is the second-order Taylor sum from the book's sensitivities (see [portfolio-greeks-and-taylor-pnl](01-portfolio-greeks-and-taylor-pnl.md)):
+The Greeks' estimate, which the card uses only to show where it fails, is the second-order Taylor sum from the book's sensitivities (see [Portfolio Greeks](01-portfolio-greeks-and-taylor-pnl.md)):
 
 $$L \;\approx\; \Delta\,(S - S_0) \;+\; \tfrac12\,\Gamma\,(S - S_0)^2 \;+\; \nu\,v.$$
 
@@ -111,7 +92,7 @@ The check confirms both halves. For a move of −0.05 percent and +0.01 vol poin
 
 ### Step 1: reprice each position
 
-The shares move one for one: 18,715 sold shares gain $20 each when Acme falls from $100 to $80, a gain of $374,300. Each put is priced again with the Black-Scholes put formula ([black-scholes-put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md)) at Acme $80 and volatility 35 percent. The one-year $90 put rises from $2.7145 to $15.3433. The three-month $100 put rises from $3.5924 to $19.9691. Multiply by the counts and add. Worked numbers, by hand, lays out the arithmetic.
+The shares move one for one: 18,715 sold shares gain $20 each when Acme falls from $100 to $80, a gain of $374,300. Each put is priced again with the Black-Scholes put formula ([Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md)) at Acme $80 and volatility 35 percent. The one-year $90 put rises from $2.7145 to $15.3433. The three-month $100 put rises from $3.5924 to $19.9691. Multiply by the counts and add. Worked numbers, by hand, lays out the arithmetic.
 
 The check takes a second, independent road to every stressed price. It skips the formula and averages the put's payoff directly over the bell curve of Acme's log price, by Simpson's rule (a weighted sum over thin slices). Both roads give −$2,131,895.76 for the headline cell, to the cent.
 
@@ -130,9 +111,9 @@ Repeat Step 1 over a table of spot moves and volatility moves. Each cell is the 
 
 Read down the "vol +0" column: spot alone barely hurts until the fall passes 10 percent. Read along the "+0%" row: volatility alone costs $1.40 million at +15 points. Add the two single-factor losses for the headline, $0.49 million plus $1.40 million, and the total is $1.89 million. The joint cell is $2.13 million. The extra $0.24 million is the **interaction**: what the two shocks do together that neither does alone.
 
-Its source is visible in the book's vega after the fall. At Acme $100 the book loses $82,324 per vol point. At Acme $80, volatility still 20 percent, it loses $109,824 per point. The three-month $100 puts, which carried the book's long vega, have gone deep into the money. A deep in-the-money option behaves almost like a short share, with little left of the "maybe" that volatility prices, so their vega nearly vanishes. The short one-year $90 puts keep theirs. The hedge's vega disappears at the very moment volatility rises. The rate at which vega changes as spot moves has its own name, vanna: [vanna](../09-The%20Greeks%2C%20one%20each/06-vanna.md).
+Its source is visible in the book's vega after the fall. At Acme $100 the book loses $82,324 per vol point. At Acme $80, volatility still 20 percent, it loses $109,824 per point. The three-month $100 puts, which carried the book's long vega, have gone deep into the money. A deep in-the-money option behaves almost like a short share, with little left of the "maybe" that volatility prices, so their vega nearly vanishes. The short one-year $90 puts keep theirs. The hedge's vega disappears at the very moment volatility rises. The rate at which vega changes as spot moves has its own name, vanna: [Vanna](../09-The%20Greeks%2C%20one%20each/06-vanna.md).
 
-Volatility alone costs $1.40 million, more than $82,324 times 15, which is $1.23 million, because vega itself grows as volatility rises for the out-of-the-money $90 puts: [volga](../09-The%20Greeks%2C%20one%20each/07-volga.md).
+Volatility alone costs $1.40 million, more than $82,324 times 15, which is $1.23 million, because vega itself grows as volatility rises for the out-of-the-money $90 puts: [Volga](../09-The%20Greeks%2C%20one%20each/07-volga.md).
 
 ### Step 3: historical replay turns dated closes into a scenario
 
@@ -162,7 +143,7 @@ The headline scenario, −20 percent with +15 vol points, happened on no particu
 
 ### Step 5: the reverse test searches for the least far-fetched way to lose $3 million
 
-Fix the unacceptable loss at \$3 million. Many scenarios produce it; the useful one asks the least of the market, measured by $d$. The card takes a typical month as a 5.7735 percent spot move (20 percent volatility scaled to one month by the square root of 1/12) and a 4-point volatility move, with correlation −0.7. The last two are assumptions of this card; the volatility forecasting card estimates such numbers from data ([volatility-forecasting-ewma-garch-and-realised](04-volatility-forecasting-ewma-garch-and-realised.md)).
+Fix the unacceptable loss at \$3 million. Many scenarios produce it; the useful one asks the least of the market, measured by $d$. The card takes a typical month as a 5.7735 percent spot move (20 percent volatility scaled to one month by the square root of 1/12) and a 4-point volatility move, with correlation −0.7. The last two are assumptions of this card; the volatility forecasting card estimates such numbers from data ([Tomorrow's volatility](04-volatility-forecasting-ewma-garch-and-realised.md)).
 
 The negative correlation makes a fall with a volatility spike an ordinary combination, so $d$ counts it as closer than a fall with volatility steady. Two roads find the answer.
 
@@ -192,11 +173,11 @@ Every scenario with $L(s,v) \le -\$3$ million has $d \ge d_*$ by the definition 
 
 </details>
 
-The same yardstick scores the replays. The 2008 window sits at distance 11.875 and the 2020 window at 12.549. Their chance bounds are 10 to the power −30.62 and −34.20: the bell-curve yardstick calls both impossible. Both happened within twelve years. So $d$ is useful for **ranking** scenarios, and for finding the cheapest route to a given loss, but its chance bound is not the chance. Real monthly moves have far fatter tails than a bell curve; the tail cards treat this properly ([extreme-value-theory-and-tails](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md)).
+The same yardstick scores the replays. The 2008 window sits at distance 11.875 and the 2020 window at 12.549. Their chance bounds are 10 to the power −30.62 and −34.20: the bell-curve yardstick calls both impossible. Both happened within twelve years. So $d$ is useful for **ranking** scenarios, and for finding the cheapest route to a given loss, but its chance bound is not the chance. Real monthly moves have far fatter tails than a bell curve; the tail cards treat this properly ([Extreme value theory](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md)).
 
 ### The other door
 
-Breuer and Csiszár replace the distance with a relative entropy, a measure of how far one probability law sits from another, which handles non-bell-shaped moves. Value at Risk runs the idea from the other end: it fixes a probability and reads off a loss ([profit-and-loss-distribution-and-var](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md)).
+Breuer and Csiszár replace the distance with a relative entropy, a measure of how far one probability law sits from another, which handles non-bell-shaped moves. Value at Risk runs the idea from the other end: it fixes a probability and reads off a loss ([Value at risk](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md)).
 
 ---
 
@@ -667,8 +648,8 @@ The two outputs agree line for line.
 - **The desk's morning grid.** Options desks print a spot-by-volatility table like Step 2's next to the Greeks, because it catches what slopes miss.
 - **Exchange margin.** Futures and options clearing houses have long set margin by repricing each account over a fixed set of price and volatility scenarios and charging the worst: a scenario grid run as a business rule.
 - **Supervisors' bank stress tests.** Regulators require banks to revalue their books under severe designed scenarios and to run reverse stress tests; the Basel Committee's principles set the governance and documentation around them.
-- **Risk limits.** A desk's limit on its worst grid cell or worst replay turns this card's numbers into a rule: [risk-limits-and-risk-appetite](06-risk-limits-and-risk-appetite.md).
-- **Choosing the hedge.** The grid shows which cell a hedge fails in. Flattening three Greeks at once ([delta-gamma-vega-hedging](02-delta-gamma-vega-hedging.md)) fixes today's slopes; the grid tests whether the fix survives a large move. A hedge with a related but different instrument brings its own gap: [hedge-ratios-basis-risk-and-cross-hedging](03-hedge-ratios-basis-risk-and-cross-hedging.md).
+- **Risk limits.** A desk's limit on its worst grid cell or worst replay turns this card's numbers into a rule: [Limits](06-risk-limits-and-risk-appetite.md).
+- **Choosing the hedge.** The grid shows which cell a hedge fails in. Flattening three Greeks at once ([Hedging three Greeks at once](02-delta-gamma-vega-hedging.md)) fixes today's slopes; the grid tests whether the fix survives a large move. A hedge with a related but different instrument brings its own gap: [Imperfect hedges](03-hedge-ratios-basis-risk-and-cross-hedging.md).
 
 > **Say it back**
 > A stress test moves the market inputs to a chosen bad state and reprices every position in full, instead of extrapolating from the Greeks. A grid sweeps spot against volatility, a replay borrows the moves of a dated crisis, and a hypothetical shock is designed by hand. Joint shocks can cost more than their parts, because the book's sensitivities themselves change as the market moves. A reverse test fixes the unacceptable loss and finds the nearest scenario that reaches it, measuring "nearest" in typical months. The bell-curve chance attached to that distance ranks scenarios; it does not tell how often crises come.
@@ -677,11 +658,11 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [delta-gamma-vega-hedging](02-delta-gamma-vega-hedging.md): how a book like this one is flattened in delta, gamma and vega with listed options and shares. This card asks what that flat book does when the move is large.
+- [Hedging three Greeks at once](02-delta-gamma-vega-hedging.md): how a book like this one is flattened in delta, gamma and vega with listed options and shares. This card asks what that flat book does when the move is large.
 
 ## Where this goes next
 
-- [risk-limits-and-risk-appetite](06-risk-limits-and-risk-appetite.md): turns stress losses, sensitivities and VaR into limits a desk must stay inside, and ties them to the capital the firm is willing to lose.
+- [Limits](06-risk-limits-and-risk-appetite.md): turns stress losses, sensitivities and VaR into limits a desk must stay inside, and ties them to the capital the firm is willing to lose.
 
 The grid, the replays and the reverse test each produce a number: $2.13 million, $5.88 million, a distance of 5.10. What they do not say is how large a loss is acceptable, and who decides; the limits card answers that.
 

@@ -1,21 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Collateral, Funding and the Rest of the XVAs
-topic: Pricing the whole trade
-item: Putting the adjustments together
-kind: convention
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/47-Collateral, Funding and the Rest of the XVAs/04-kva|kva]]"
-next: []
-tags: [mathematics, financial mathematics, the-xva-desk-view]
----
-
 # Putting the adjustments together: clean price minus CVA plus DVA minus FVA, MVA and KVA, what overlaps, and who charges whom
 
-Financial mathematics → Collateral, Funding and the Rest of the XVAs → Pricing the whole trade → Putting the adjustments together
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Collateral, Funding and the Rest of the XVAs](../../../SYLLABUS.md#w12-s47) → Putting the adjustments together
 
 ---
 
@@ -23,7 +8,7 @@ Financial mathematics → Collateral, Funding and the Rest of the XVAs → Prici
 
 A bank buys a one-year call option on Acme shares from Northwind, a company that can fail. Acme trades at \$100 and the strike is \$100. In the house market the call is worth **\$9.23** if the seller is certain to pay and nothing about the trade costs the bank money to carry. That number is the **clean price**.
 
-Three earlier cards each took a slice off it. Northwind might fail before paying: the credit charge is about 11 cents ([cva](../46-Counterparty%20Risk%20and%20CVA/03-cva.md)). The bank borrows the \$9.23 premium at its own unsecured rate, above the rate the clean price assumes: the funding charge is about 9 cents ([fva](02-fva.md)). Regulators make the bank hold shareholders' money against the trade, and shareholders want a return on it: the capital charge is about 10 cents ([kva](04-kva.md)). Put together, the bank should pay no more than **\$8.92**.
+Three earlier cards each took a slice off it. Northwind might fail before paying: the credit charge is about 11 cents ([CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md)). The bank borrows the \$9.23 premium at its own unsecured rate, above the rate the clean price assumes: the funding charge is about 9 cents ([FVA](02-fva.md)). Regulators make the bank hold shareholders' money against the trade, and shareholders want a return on it: the capital charge is about 10 cents ([KVA](04-kva.md)). Put together, the bank should pay no more than **\$8.92**.
 
 This card does the assembly. It lines the pieces up in one formula, finds the two places where pieces count the same money twice, and prices the same call a second way: facing a clearing house instead of Northwind. There, the credit and funding charges all but vanish, and two new ones take their place: the cost of margin posted up front, and a contribution to the clearing house's shared loss fund. The cleared call costs the bank 8 cents in charges; the bilateral one costs 30.
 
@@ -92,9 +77,9 @@ In words: how far the call's value could fall in ten trading days, 99 times out 
 ### When it holds
 
 - **The pieces add.** The stack treats each cost as separate. Where two pieces price the same money, adding them double counts; Step 3 finds the two places this happens and says which one to drop.
-- **Defaults independent of Acme.** Every charge multiplies average exposure by a default or survival chance. If Northwind tends to fail when the call is worth most, CVA is larger ([wrong-way-risk](../46-Counterparty%20Risk%20and%20CVA/05-wrong-way-risk.md)).
+- **Defaults independent of Acme.** Every charge multiplies average exposure by a default or survival chance. If Northwind tends to fail when the call is worth most, CVA is larger ([Wrong-way risk](../46-Counterparty%20Risk%20and%20CVA/05-wrong-way-risk.md)).
 - **Flat rates and a simple capital rule.** Hazard, spreads and hurdle are constants and capital is proportional to exposure. Real capital rules have floors, netting and a separate charge for CVA swings; the stack keeps its shape, the numbers move.
-- **Margin fixed at its opening size.** The cleared MVA holds initial margin at \$5.44 for the whole year. In fact it shrinks and grows with the call's delta; [mva](03-mva.md) prices the full profile.
+- **Margin fixed at its opening size.** The cleared MVA holds initial margin at \$5.44 for the whole year. In fact it shrinks and grows with the call's delta; [MVA](03-mva.md) prices the full profile.
 
 ---
 
@@ -108,7 +93,7 @@ Black–Scholes prices the call as if the seller always pays, the bank borrows a
 
 Every bilateral charge accrues on the amount at stake while the trade is alive. Credit loss accrues at rate $(1-R)\lambda$ on what Northwind owes. Funding costs $s_F$ a year on the premium borrowed, which is the call's value. Capital costs $h$ a year on $k$ times the exposure. Each is a rate times the same running amount, weighted by survival and discounted. That weighted, discounted sum is $A_E$.
 
-For a bought call, $D(t)\,\mathrm{EE}(t)$ does not change with $t$: the average value of the call at any date, discounted back, is today's price, because the pricing world makes discounted prices drift neither up nor down ([cva](../46-Counterparty%20Risk%20and%20CVA/03-cva.md), Step 3). So
+For a bought call, $D(t)\,\mathrm{EE}(t)$ does not change with $t$: the average value of the call at any date, discounted back, is today's price, because the pricing world makes discounted prices drift neither up nor down ([CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md), Step 3). So
 
 $$A_E = C_0\int_0^T e^{-\lambda t}\,dt = C_0\,\frac{1-e^{-\lambda T}}{\lambda} = 9.135348.$$
 
@@ -126,7 +111,7 @@ Credit costs 1.2% a year on the amount at stake, funding 1%, capital 1.12%. Thre
 
 **DVA against the funding benefit.** Turn the trade round: Northwind buys the call and the bank sells it. The bank now owes, and takes in \$9.23 of premium that it need not borrow. Two adjustments claim that position.
 
-- **DVA**: the bank may fail and pay only 40 cents in the dollar of what it owes. Priced like a CVA from the other side, it is worth $(1-R)\,\lambda_B\,A_E^B$, where $A_E^B$ uses the bank's own survival ([dva-and-bilateral-cva](../46-Counterparty%20Risk%20and%20CVA/04-dva-and-bilateral-cva.md)).
+- **DVA**: the bank may fail and pay only 40 cents in the dollar of what it owes. Priced like a CVA from the other side, it is worth $(1-R)\,\lambda_B\,A_E^B$, where $A_E^B$ uses the bank's own survival ([DVA](../46-Counterparty%20Risk%20and%20CVA/04-dva-and-bilateral-cva.md)).
 - **FBA**: the premium replaces borrowing at spread $s_F$, a saving of $s_F\,A_E^B$.
 
 The bank's unsecured spread is the market's price of its default: lenders charge $s_F = (1-R)\lambda_B$ to be paid for the chance of losing $1-R$. With $s_F = 1\%$ and $R = 40\%$ that makes $\lambda_B = 1/60$ a year, and the two formulas are the same number:
@@ -148,7 +133,7 @@ Both integrals are the same annuity $A_E^B$, times $(1-R)\lambda_B$ and $s_F$. A
 
 The fix in practice: count the bank's own spread once. Accounting fair value keeps DVA; a desk that also books a funding benefit takes it net of the own-credit part.
 
-**KVA against CVA capital.** Capital comes in two layers. One covers Northwind defaulting outright: that is the $k$ on this card. The other covers the CVA itself swinging in value as Northwind's credit spread moves, a separate regulatory charge (the basic and standardised approaches, BA-CVA and SA-CVA, [cva-risk-numbers-and-hedging](../46-Counterparty%20Risk%20and%20CVA/06-cva-risk-numbers-and-hedging.md)). When the CVA desk buys credit protection on Northwind to hedge its CVA, that second layer shrinks. The overlap has two edges:
+**KVA against CVA capital.** Capital comes in two layers. One covers Northwind defaulting outright: that is the $k$ on this card. The other covers the CVA itself swinging in value as Northwind's credit spread moves, a separate regulatory charge (the basic and standardised approaches, BA-CVA and SA-CVA, [CVA risk numbers](../46-Counterparty%20Risk%20and%20CVA/06-cva-risk-numbers-and-hedging.md)). When the CVA desk buys credit protection on Northwind to hedge its CVA, that second layer shrinks. The overlap has two edges:
 
 - The CVA desk pays for the hedge, and that payment is inside what it charges as CVA. KVA must then be charged on capital *after* the hedge. Charging KVA on unhedged CVA capital and also paying for the hedge prices the same risk twice.
 - CVA already books the expected default loss. Capital is for the unexpected part. Basel's default-risk rules let a bank reduce the exposure it holds capital against by CVA already written off, so the same dollar is not both reserved and capitalised.
@@ -158,7 +143,7 @@ The fix in practice: count the bank's own spread once. Accounting fair value kee
 Now the same call faces a **clearing house** (a central counterparty, CCP: an institution that stands between the two sides of every trade, buying from each seller and selling to each buyer). Three things change.
 
 - **Variation margin** moves every day by the change in the call's value, so the clearing house never owes the bank more than a day's move. Under futures-style margining, no premium changes hands at the start either: the call's value arrives as margin. So there is almost nothing to lose in a default, and nothing to fund. CVA and FVA go to near zero.
-- **Initial margin** is posted by the bank and held against a ten-day adverse move. The bank must borrow it: $\mathrm{MVA} = 0.005 \times 5.439166 = 0.027196$. The clearing house is treated as unable to fail, so no survival weight applies; facing Northwind, [mva](03-mva.md) weights the same margin by survival and gets 0.026926.
+- **Initial margin** is posted by the bank and held against a ten-day adverse move. The bank must borrow it: $\mathrm{MVA} = 0.005 \times 5.439166 = 0.027196$. The clearing house is treated as unable to fail, so no survival weight applies; facing Northwind, [MVA](03-mva.md) weights the same margin by survival and gets 0.026926.
 - **Default-fund contribution**: every member pays into a shared pool that absorbs losses beyond a defaulter's own margin. The bank's share here is taken as 10% of its initial margin, \$0.543917, and is charged at the hurdle rate because it is capital at risk: $\mathrm{DFC} = 0.054392$.
 
 The pool sits in a fixed order of who loses first, the **default waterfall**:
@@ -634,8 +619,8 @@ The two outputs agree line for line, including the simulated margin: both langua
 - **Treasury's funding curve.** The bank's treasury lends to trading desks at its unsecured rate and charges the spread, which is where FVA and MVA end up.
 - **Clearing mandates.** Standard interest-rate swaps and index credit swaps between banks must be cleared in the major markets. The bilateral-versus-cleared comparison above is the one each bank runs when it chooses where a trade goes.
 - **Annual reports.** Valuation-adjustment notes list CVA, DVA and FVA reserves and their yearly change. Step 5 reads them.
-- **Margin for uncleared trades.** Between large banks, even bilateral trades now carry initial margin computed by an industry model, so MVA appears outside clearing too ([mva](03-mva.md)).
-- **Collateral agreements.** A threshold and a margin period shrink CVA without removing it ([collateral-and-the-residual-exposure](01-collateral-and-the-residual-exposure.md)).
+- **Margin for uncleared trades.** Between large banks, even bilateral trades now carry initial margin computed by an industry model, so MVA appears outside clearing too ([MVA](03-mva.md)).
+- **Collateral agreements.** A threshold and a margin period shrink CVA without removing it ([Collateral](01-collateral-and-the-residual-exposure.md)).
 
 > **Say it back**
 > The clean price assumes the seller always pays, the bank borrows at the riskless rate and no capital is used. Each false assumption has a price: CVA, FVA and KVA for the Acme call bought from Northwind, together 30 cents, each a rate times the same exposure annuity. The bank's own spread appears twice, as DVA and as a funding benefit, and must be counted once; capital for CVA swings must be charged after the CVA hedge, not before. Cleared, the credit and funding charges fall away and margin funding plus a default-fund contribution take their place, 8 cents here. The desk price is the clean price less each real cost, charged once, by the part of the bank that bears it.
@@ -644,12 +629,12 @@ The two outputs agree line for line, including the simulated margin: both langua
 
 ## What this builds on
 
-- [kva](04-kva.md): the last piece of the stack, capital held against the trade and charged at a hurdle rate; this card adds it to the others and marks where it overlaps CVA.
+- [KVA](04-kva.md): the last piece of the stack, capital held against the trade and charged at a hurdle rate; this card adds it to the others and marks where it overlaps CVA.
 
 ## Where this goes next
 
-- [cva-risk-numbers-and-hedging](../46-Counterparty%20Risk%20and%20CVA/06-cva-risk-numbers-and-hedging.md): how the CVA desk hedges with credit protection, which is what cuts the CVA capital the KVA charges on.
-- [parametric-var-and-delta-normal](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/02-parametric-var-and-delta-normal.md): the initial margin here is a ten-day 99% value at risk, and this card shows why the delta shortcut and full revaluation disagree.
+- [CVA risk numbers](../46-Counterparty%20Risk%20and%20CVA/06-cva-risk-numbers-and-hedging.md): how the CVA desk hedges with credit protection, which is what cuts the CVA capital the KVA charges on.
+- [Parametric VaR](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/02-parametric-var-and-delta-normal.md): the initial margin here is a ten-day 99% value at risk, and this card shows why the delta shortcut and full revaluation disagree.
 
 The stack assumes each piece is a constant rate on a known exposure; what a desk still has to settle is how the whole stack moves when Northwind's spread, the bank's own spread and Acme move together, which is a question of hedging the adjustments, not pricing them.
 

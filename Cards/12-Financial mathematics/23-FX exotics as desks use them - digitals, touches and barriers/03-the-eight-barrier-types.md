@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX exotics as desks use them - digitals, touches and barriers
-topic: Barrier recipes from six blocks
-item: The eight single barriers in one table
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/02-barrier-options-by-reflection|barrier-options-by-reflection]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/02-premium-currency-and-foreign-domestic-symmetry|premium-currency-and-foreign-domestic-symmetry]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/04-reflection-principle-and-running-maximum|reflection-principle-and-running-maximum]]"
-next:
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/05-double-barriers-and-double-no-touch|double-barriers-and-double-no-touch]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/06-barrier-and-touch-greeks|barrier-and-touch-greeks]]"
-tags: [mathematics, financial mathematics, the-eight-barrier-types]
----
-
 # The eight single barriers in one table: up or down, in or out, call or put, with rebates, from six building blocks
 
-Financial mathematics → FX exotics as desks use them - digitals, touches and barriers → Barrier recipes from six blocks → The eight single barriers in one table
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX exotics as desks use them - digitals, touches and barriers](../../../SYLLABUS.md#w12-s23) → The eight single barriers in one table
 
 ---
 
@@ -107,7 +88,7 @@ Each row pair adds to A, the plain option. That is in-plus-out parity, built int
 ### When it holds
 
 - **Continuous monitoring.** Every touch counts, however brief. A contract fixed once a day is worth a different amount; barrier-options-by-reflection measures the gap and the shift that repairs it.
-- **Constant volatility and rates, no jumps.** Real FX volatility varies with strike, and the reverse knock-out is the type most exposed to it, because its value sits in a narrow band just under the wall. [barriers-with-the-smile](07-barriers-with-the-smile.md) measures that error.
+- **Constant volatility and rates, no jumps.** Real FX volatility varies with strike, and the reverse knock-out is the type most exposed to it, because its value sits in a narrow band just under the wall. [Barriers on a smile](07-barriers-with-the-smile.md) measures that error.
 - **Spot on the live side of the wall.** With EURUSD already at or past the wall, a knock-out is dead (worth its rebate paid now) and a knock-in is the plain option.
 - **Rebates as stated.** F pays at the touch; E pays at expiry. A rebate paid at expiry after a touch is a one-touch, not block F, and in-plus-out parity then needs the rebates added on both sides.
 
@@ -119,7 +100,7 @@ Each row pair adds to A, the plain option. That is in-plus-out parity, built int
 
 ### Step 0: every barrier is a cut of the plain payoff, minus its mirror
 
-A knock-out pays the plain payoff on the paths that never touch the wall. Barrier-options-by-reflection ([barrier-options-by-reflection](02-barrier-options-by-reflection.md)) proved that the density of those paths, on the side of the wall where the option is still alive, is the ordinary bell curve minus a weighted bell curve started from the mirror spot. So any knock-out is an integral of its payoff against two curves over one stretch of expiry rates. The eight types differ only in which stretch.
+A knock-out pays the plain payoff on the paths that never touch the wall. Barrier-options-by-reflection ([Knock-out and knock-in](02-barrier-options-by-reflection.md)) proved that the density of those paths, on the side of the wall where the option is still alive, is the ordinary bell curve minus a weighted bell curve started from the mirror spot. So any knock-out is an integral of its payoff against two curves over one stretch of expiry rates. The eight types differ only in which stretch.
 
 ### Step 1: in plus out is the plain option
 
@@ -144,7 +125,7 @@ The puts are the same four cases seen upside down, and Step 1 hands over the fou
 
 ### Step 5: the two rebates
 
-A rebate paid at expiry when a knock-in never came alive is the rebate times the chance of no touch, discounted from expiry: the no-touch of [fx-one-touch-and-no-touch](04-fx-one-touch-and-no-touch.md). Integrating the survival density over the whole live side gives exactly block E. A rebate paid at the touch is the pay-at-hit one-touch of the same card: each touching path is discounted from its own touch date. Discounting at rate $r_d$ is the same as raising the drift from $\mu$ to $\lambda$ in variance units, which is where $\lambda = \sqrt{\mu^2 + 2r_d/\sigma^2}$ comes from; the proof is on that card. Block F is that price times the rebate.
+A rebate paid at expiry when a knock-in never came alive is the rebate times the chance of no touch, discounted from expiry: the no-touch of [One-touch and no-touch](04-fx-one-touch-and-no-touch.md). Integrating the survival density over the whole live side gives exactly block E. A rebate paid at the touch is the pay-at-hit one-touch of the same card: each touching path is discounted from its own touch date. Discounting at rate $r_d$ is the same as raising the drift from $\mu$ to $\lambda$ in variance units, which is where $\lambda = \sqrt{\mu^2 + 2r_d/\sigma^2}$ comes from; the proof is on that card. Block F is that price times the rebate.
 
 <details>
 <summary>Detailed proof</summary>
@@ -266,7 +247,7 @@ Delta (price change per unit move in EURUSD, by a one-pip bump) and vega (price 
 | up-and-out put | −0.4203 | 0.003323 |
 | up-and-in put | 0.0309 | 0.000804 |
 
-Two signs surprise. The up-and-out call has negative delta: a higher euro brings the wall closer. Both reverse knock-outs have negative vega: more volatility means more touches, which outweighs the extra upside. How these behave right at the wall is [barrier-and-touch-greeks](06-barrier-and-touch-greeks.md).
+Two signs surprise. The up-and-out call has negative delta: a higher euro brings the wall closer. Both reverse knock-outs have negative vega: more volatility means more touches, which outweighs the extra upside. How these behave right at the wall is [Greeks at the wall](06-barrier-and-touch-greeks.md).
 
 ---
 
@@ -718,9 +699,9 @@ The two outputs are identical, byte for byte, including the Monte Carlo rows: bo
 ## Where you meet it in real life
 
 - **Corporate hedging desks.** Reverse knock-outs and knock-ins are sold to importers and exporters as cheaper forms of protection. The up-and-in call is the protection that arrives only after a big move; the up-and-out call the protection that leaves before one.
-- **Structured products.** A barrier with a rebate is a building block of accumulators and target-redemption forwards; the rebate is a one-touch or no-touch folded inside ([fx-one-touch-and-no-touch](04-fx-one-touch-and-no-touch.md)).
-- **Quoting in the other currency.** The same table prices the euro-premium version after the change of numeraire on [premium-currency-and-foreign-domestic-symmetry](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/02-premium-currency-and-foreign-domestic-symmetry.md): a EUR call with a wall above becomes a USD put with a wall below.
-- **Choosing the wall.** Desks invert this table to find the barrier that hits a target premium: [barrier-level-from-a-target-premium](08-barrier-level-from-a-target-premium.md). The payout at the wall itself is the digital of [fx-digitals](01-fx-digitals.md).
+- **Structured products.** A barrier with a rebate is a building block of accumulators and target-redemption forwards; the rebate is a one-touch or no-touch folded inside ([One-touch and no-touch](04-fx-one-touch-and-no-touch.md)).
+- **Quoting in the other currency.** The same table prices the euro-premium version after the change of numeraire on [One option, two currencies](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/02-premium-currency-and-foreign-domestic-symmetry.md): a EUR call with a wall above becomes a USD put with a wall below.
+- **Choosing the wall.** Desks invert this table to find the barrier that hits a target premium: [Solving for the barrier](08-barrier-level-from-a-target-premium.md). The payout at the wall itself is the digital of [Currency digitals](01-fx-digitals.md).
 
 > **Say it back**
 > A single barrier has three switches: up or down, in or out, call or put. Every knock-out is the plain payoff over the stretch of expiry rates that can survive, minus the mirror image of that stretch. Blocks A and B cut the plain payoff; C and D are their mirrors; E and F are the two rebates. Each knock-in is the plain option minus its knock-out. The reverse knock-out, with its wall inside the paying region, is cheap because it dies when it would pay most.
@@ -729,16 +710,16 @@ The two outputs are identical, byte for byte, including the Monte Carlo rows: bo
 
 ## What this builds on
 
-- [barrier-options-by-reflection](02-barrier-options-by-reflection.md): the mirror density, the in-plus-out argument, and the regular down-and-out call this card generalises.
-- [premium-currency-and-foreign-domestic-symmetry](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/02-premium-currency-and-foreign-domestic-symmetry.md): which currency the premium is paid in, and why a call on one currency is a put on the other.
-- [reflection-principle-and-running-maximum](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the flip at the first touch that makes the mirror density exact.
+- [Knock-out and knock-in](02-barrier-options-by-reflection.md): the mirror density, the in-plus-out argument, and the regular down-and-out call this card generalises.
+- [One option, two currencies](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/02-premium-currency-and-foreign-domestic-symmetry.md): which currency the premium is paid in, and why a call on one currency is a put on the other.
+- [Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the flip at the first touch that makes the mirror density exact.
 
 ---
 
 ## Where this goes next
 
-- [double-barriers-and-double-no-touch](05-double-barriers-and-double-no-touch.md): two walls at once, where one mirror becomes an infinite row of them.
-- [barrier-and-touch-greeks](06-barrier-and-touch-greeks.md): delta and gamma as the rate approaches the wall, where the reverse knock-out's hedge flips sign and blows up.
+- [Two walls](05-double-barriers-and-double-no-touch.md): two walls at once, where one mirror becomes an infinite row of them.
+- [Greeks at the wall](06-barrier-and-touch-greeks.md): delta and gamma as the rate approaches the wall, where the reverse knock-out's hedge flips sign and blows up.
 
 The table prices each option with one wall; the open question is what happens when a contract has a wall on each side, and a touch of either one decides it.
 

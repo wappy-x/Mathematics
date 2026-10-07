@@ -1,30 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It
-topic: Sensitivities of a protection position
-item: CDS risk numbers
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/07-marking-a-cds-to-market-and-the-upfront|marking-a-cds-to-market-and-the-upfront]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/01-bump-and-revalue-and-common-random-numbers|bump-and-revalue-and-common-random-numbers]]"
-next:
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/04-credit-indices|credit-indices]]"
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/06-cva-risk-numbers-and-hedging|cva-risk-numbers-and-hedging]]"
-tags: [mathematics, financial mathematics, cds-risk-numbers]
----
-
 # CDS risk numbers: CS01, jump-to-default, recovery and rate sensitivity, and the carry of a position
 
-Financial mathematics → Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It → Sensitivities of a protection position → CDS risk numbers
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../../../SYLLABUS.md#w12-s42) → CDS risk numbers
 
 ---
 
 ## General Overview
 
-A fund buys five years of protection on Northwind, a borrowing company, for $10 million of Northwind's debt. The contract is a credit default swap ([credit-default-swap-contract](01-credit-default-swap-contract.md)): the fund pays a premium every quarter while Northwind survives, and if Northwind defaults, the seller pays the fund the lost part of the $10 million. The fund bought at par, the premium rate that makes the trade worth nothing on day one: 121.06 basis points a year. A basis point, "bp", is a hundredth of a percent, so the premium is 1.2106% of $10 million a year, about $30,264 a quarter.
+A fund buys five years of protection on Northwind, a borrowing company, for $10 million of Northwind's debt. The contract is a credit default swap ([The credit default swap](01-credit-default-swap-contract.md)): the fund pays a premium every quarter while Northwind survives, and if Northwind defaults, the seller pays the fund the lost part of the $10 million. The fund bought at par, the premium rate that makes the trade worth nothing on day one: 121.06 basis points a year. A basis point, "bp", is a hundredth of a percent, so the premium is 1.2106% of $10 million a year, about $30,264 a quarter.
 
 The trade is worth zero today. It will not stay there: Northwind's credit can worsen, it can default, the recovery assumption can be revised, rates can move, and the calendar moves every day. A risk desk wants one dollar figure for each, before the market moves rather than after.
 
@@ -56,7 +38,7 @@ The first line (orange) is the true value, repriced at each spread. The second (
 
 ## The formula
 
-Notation first, in words. $N$ is the notional. $s_0$ is the spread written into the contract; $s$ is the par spread the market quotes today for the same remaining term. $A$ and $P$ are the two legs per dollar of notional, as priced in [cds-legs-risky-annuity-and-par-spread](02-cds-legs-risky-annuity-and-par-spread.md). Inside them, $\delta$ is a quarter, $D$ discounts, $Q$ is the chance Northwind survives, $\lambda$ is the hazard and $R$ the recovery; the table below gives each. The sum adds the premium dates one by one; the integral adds the chance of default over every instant.
+Notation first, in words. $N$ is the notional. $s_0$ is the spread written into the contract; $s$ is the par spread the market quotes today for the same remaining term. $A$ and $P$ are the two legs per dollar of notional, as priced in [Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md). Inside them, $\delta$ is a quarter, $D$ discounts, $Q$ is the chance Northwind survives, $\lambda$ is the hazard and $R$ the recovery; the table below gives each. The sum adds the premium dates one by one; the integral adds the chance of default over every instant.
 
 $$V = N\,(P - s_0\,A), \qquad A = \sum_{j=1}^{n} \delta\,D(t_j)\,Q(t_j), \qquad P = (1-R)\int_0^T D(t)\,\lambda\,Q(t)\,dt$$
 
@@ -93,13 +75,13 @@ The five risk numbers are defined by moving one input and repricing, with the ma
 
 ### When it holds
 
-- **One flat hazard, re-implied at every bump.** The desk turns each quote into a hazard with a root finder ([implied-hazard-from-a-cds-quote](04-implied-hazard-from-a-cds-quote.md)). With a full curve of quotes the same definitions apply tenor by tenor ([bootstrapping-the-hazard-curve-from-cds-quotes](06-bootstrapping-the-hazard-curve-from-cds-quotes.md)); the zero recovery and rate numbers at par stay exact while the contract's maturity is a quoted tenor, and become small but not zero between tenors.
+- **One flat hazard, re-implied at every bump.** The desk turns each quote into a hazard with a root finder ([Implied hazard from one CDS quote](04-implied-hazard-from-a-cds-quote.md)). With a full curve of quotes the same definitions apply tenor by tenor ([Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md)); the zero recovery and rate numbers at par stay exact while the contract's maturity is a quoted tenor, and become small but not zero between tenors.
 - **Recovery fixed in advance.** A default settles at an auction price, not at 40%. If the auction lands at 30%, jump-to-default is $100,000 bigger for each point below 40.
 - **Default independent of rates.** If Northwind tends to default when rates rise, IR01 picks up a cross term this model does not have.
 - **No accrued premium at default.** On day one nothing has accrued. Mid-quarter, jump-to-default also owes the seller the premium accrued since the last date.
 - **Small moves.** CS01 is a slope. For a widening to 200 bp the straight line in the chart says $330,138.06 against a true $319,729.45.
 
-Conventions verified 28 Sep 2026: single-name contracts now trade with a fixed coupon and an upfront payment, and the ISDA CDS Standard Model converts between upfront and spread quotes ([marking-a-cds-to-market-and-the-upfront](07-marking-a-cds-to-market-and-the-upfront.md)). This card bumps the quoted spread and reprices through its own flat-hazard pricer, the same idea on a smaller model.
+Conventions verified 28 Sep 2026: single-name contracts now trade with a fixed coupon and an upfront payment, and the ISDA CDS Standard Model converts between upfront and spread quotes ([Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md)). This card bumps the quoted spread and reprices through its own flat-hazard pricer, the same idea on a smaller model.
 
 ---
 
@@ -111,7 +93,7 @@ Every premium the fund owes is $s_0$ a year, paid while Northwind survives, so t
 
 $$V = N(sA - s_0A) = N\,A\,(s - s_0).$$
 
-This is the mark-to-market identity of [marking-a-cds-to-market-and-the-upfront](07-marking-a-cds-to-market-and-the-upfront.md). It holds for any hazard and any rates. Each risk number moves one factor: CS01 moves $s$; recovery and rates move $A$ while $s$ is held; the calendar shortens $A$ and slides $s$ along the curve; default ends the contract.
+This is the mark-to-market identity of [Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md). It holds for any hazard and any rates. Each risk number moves one factor: CS01 moves $s$; recovery and rates move $A$ while $s$ is held; the calendar shortens $A$ and slides $s$ along the curve; default ends the contract.
 
 ### Step 1: CS01 at par is the notional times the annuity
 
@@ -179,7 +161,7 @@ With a flat hazard, $A = \delta\,e^{-k\delta}(1 - e^{-kT})/(1 - e^{-k\delta})$ a
 
 </details>
 
-The bump road is the general one: it needs only a pricer, so it works unchanged on a bootstrapped curve or a simulated pricer, where no derivative formula is written down ([bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)).
+The bump road is the general one: it needs only a pricer, so it works unchanged on a bootstrapped curve or a simulated pricer, where no derivative formula is written down ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)).
 
 ---
 
@@ -705,9 +687,9 @@ The two outputs agree line for line. The only visible gap between roads is Rec01
 
 - **The risk report of a credit desk.** CS01 and jump-to-default by borrower, summed across every bond, loan and swap on the same name, head the page.
 - **Hedging a bond with protection.** A bond holder sizes protection so its CS01 offsets the bond's loss per basis point of widening; jump-to-default then says how well the pair survives an actual default.
-- **Fixed-coupon trading.** Contracts trade at a standard coupon with an upfront payment ([marking-a-cds-to-market-and-the-upfront](07-marking-a-cds-to-market-and-the-upfront.md)), so a new trade is rarely at par, and its Rec01 and IR01 are small but not zero.
-- **Recovery disputes.** A recovery revision barely moves a par trade but moves jump-to-default $100,000 per point on $10m; the assumption itself is examined in [recovery-assumptions-and-what-they-change](05-recovery-assumptions-and-what-they-change.md).
-- **The quick estimate.** CS01 is often guessed as notional times years left times a basis point; the risky annuity, 4.18 rather than 5, corrects that guess for discounting and default. The spread-to-hazard link behind it is [the-credit-triangle](03-the-credit-triangle.md).
+- **Fixed-coupon trading.** Contracts trade at a standard coupon with an upfront payment ([Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md)), so a new trade is rarely at par, and its Rec01 and IR01 are small but not zero.
+- **Recovery disputes.** A recovery revision barely moves a par trade but moves jump-to-default $100,000 per point on $10m; the assumption itself is examined in [Recovery assumptions](05-recovery-assumptions-and-what-they-change.md).
+- **The quick estimate.** CS01 is often guessed as notional times years left times a basis point; the risky annuity, 4.18 rather than 5, corrects that guess for discounting and default. The spread-to-hazard link behind it is [The credit triangle](03-the-credit-triangle.md).
 
 > **Say it back**
 > A protection position is worth notional times risky annuity times the gap between today's spread and the contract's. CS01 moves the spread, and at par it is notional times annuity, about $4,180 a basis point on $10m of Northwind. Jump-to-default is the payout, $6 million, minus the value already held. Recovery and rate bumps hold the quote and move only the annuity, so at par they are zero. Each quarter the buyer pays the premium as carry, and on a rising curve loses roll-down too.
@@ -716,14 +698,14 @@ The two outputs agree line for line. The only visible gap between roads is Rec01
 
 ## What this builds on
 
-- [marking-a-cds-to-market-and-the-upfront](07-marking-a-cds-to-market-and-the-upfront.md): the value $NA(s - s_0)$ that every risk number on this card differentiates.
-- [bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): shift an input, reprice, divide; and why a central bump beats a one-sided one.
+- [Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md): the value $NA(s - s_0)$ that every risk number on this card differentiates.
+- [Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): shift an input, reprice, divide; and why a central bump beats a one-sided one.
 
 ## Where this goes next
 
-- [credit-indices](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/04-credit-indices.md): the same CS01 and jump-to-default summed over a basket of names traded as one contract.
-- [cva-risk-numbers-and-hedging](../46-Counterparty%20Risk%20and%20CVA/06-cva-risk-numbers-and-hedging.md): the credit risk of the protection seller itself, hedged with the CS01 of this card.
-- [market-implied-versus-historical-default-probability](09-market-implied-versus-historical-default-probability.md): why the 2% hazard behind every number here is not the rate at which companies like Northwind actually default.
+- [Credit indices (CDX and iTraxx in outline)](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/04-credit-indices.md): the same CS01 and jump-to-default summed over a basket of names traded as one contract.
+- [CVA risk numbers](../46-Counterparty%20Risk%20and%20CVA/06-cva-risk-numbers-and-hedging.md): the credit risk of the protection seller itself, hedged with the CS01 of this card.
+- [Two default probabilities](09-market-implied-versus-historical-default-probability.md): why the 2% hazard behind every number here is not the rate at which companies like Northwind actually default.
 
 ---
 

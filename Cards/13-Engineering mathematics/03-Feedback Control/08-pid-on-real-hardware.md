@@ -1,21 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Feedback Control
-topic: Actuator limits and loop structure
-item: PID in practice
-kind: method
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/07-pid-control-and-tuning|pid-control-and-tuning]]"
-next: []
-tags: [mathematics, engineering mathematics, pid-on-real-hardware]
----
-
 # PID in practice: saturation, noisy derivatives, nested loops and feedforward
 
-Engineering mathematics → Feedback Control → Actuator limits and loop structure → PID in practice
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Feedback Control](../../../SYLLABUS.md#w13-s03) → PID in practice
 
 ---
 
@@ -23,7 +8,7 @@ Engineering mathematics → Feedback Control → Actuator limits and loop struct
 
 A living room sits at 15 °C overnight. Outside it is −5 °C. At 06:00 the thermostat asks for 21 °C. One radiator heats the room through a slow pipe: open its valve and the heat arrives over about 4 minutes. Wide open, the radiator gives 6 kW. Holding 15 °C took 4 kW, a valve two-thirds open. Holding 21 °C will take 5.2 kW.
 
-The thermostat runs a PI controller (proportional plus integral, from [pid-control-and-tuning](07-pid-control-and-tuning.md)). At 06:00 it asks for a valve 1.4167 times wide open. The valve stops at wide open. So the room heats at full power, and the controller's running total of past error, its integral term, keeps growing as if its requests were being met. The total reaches 1.4406, a request for 1.4406 times wide open, by the time the room passes 21 °C at 31.778 min. The valve then stays pinned wide open until 52.475 min while that total drains. The room peaks at 23.21 °C and takes 85.2 minutes to settle within 0.2 °C. This is **integral windup**: the integral term winding up like a spring while the actuator (the part that acts, here the valve) is stuck at its limit.
+The thermostat runs a PI controller (proportional plus integral, from [PID control](07-pid-control-and-tuning.md)). At 06:00 it asks for a valve 1.4167 times wide open. The valve stops at wide open. So the room heats at full power, and the controller's running total of past error, its integral term, keeps growing as if its requests were being met. The total reaches 1.4406, a request for 1.4406 times wide open, by the time the room passes 21 °C at 31.778 min. The valve then stays pinned wide open until 52.475 min while that total drains. The room peaks at 23.21 °C and takes 85.2 minutes to settle within 0.2 °C. This is **integral windup**: the integral term winding up like a spring while the actuator (the part that acts, here the valve) is stuck at its limit.
 
 Four repairs, each with a number. **Anti-windup** stops the integral growing while the valve is pinned: the same morning then peaks at 21.00 °C and settles in 36.6 minutes. **A filtered derivative** lets a derivative term act without the valve chattering on thermometer noise. **Cascade control** nests a fast loop on the radiator's heat output inside the slow room loop, to catch a cooling of the boiler's water. **Feedforward** acts on a cold front the moment an outdoor sensor sees it.
 
@@ -50,9 +35,9 @@ Orange: the design on paper, a valve with no limit; it peaks at 22.26 °C after 
 
 ## The formula
 
-Reminder: a PI controller's output is a proportional part $K_p e$ plus an integral part $x_I$ that grows at rate $K_i e$, where $e$ is the error, setpoint minus measurement ([pid-control-and-tuning](07-pid-control-and-tuning.md)). Time on this card is in minutes, the natural scale of a room.
+Reminder: a PI controller's output is a proportional part $K_p e$ plus an integral part $x_I$ that grows at rate $K_i e$, where $e$ is the error, setpoint minus measurement ([PID control](07-pid-control-and-tuning.md)). Time on this card is in minutes, the natural scale of a room.
 
-This is a larger room than the one on [pid-control-and-tuning](07-pid-control-and-tuning.md), and its pipe lags rather than delays. So here $\theta$ is the room temperature, not a delay, and $C$ is the room's heat capacity, not a controller. The room and its radiator, with $\theta$ the room temperature, $Q$ the radiator's heat output and $u$ the valve opening from 0 (shut) to 1 (wide open):
+This is a larger room than the one on [PID control](07-pid-control-and-tuning.md), and its pipe lags rather than delays. So here $\theta$ is the room temperature, not a delay, and $C$ is the room's heat capacity, not a controller. The room and its radiator, with $\theta$ the room temperature, $Q$ the radiator's heat output and $u$ the valve opening from 0 (shut) to 1 (wide open):
 
 $$\tau_q \frac{dQ}{dt} = Q_{\max}\,u - Q, \qquad C\,\frac{d\theta}{dt} = Q - UA\,(\theta - \theta_o).$$
 
@@ -158,7 +143,7 @@ Write the filter as D_k = a D_(k−1) + b(n_k − n_(k−1)) on noise readings n
 
 </details>
 
-With K_d = 0.25 valve per (°C/min) (a derivative time of 2 min), σ = 0.05 °C and a reading every 0.1 min (6 s), the raw derivative jitters the valve by 0.1768 of its full travel, all the time. A filter with T_f = 0.2 min (a tenth of the derivative time) gives a = 0.6667, b = 0.8333 and a jitter of 0.0456. Sample ten times faster, every 0.6 s, and the raw jitter becomes 1.7678: the valve would be slammed end to end. The filtered one moves only to 0.0602. A common rule samples 10 to 20 times per closed-loop rise time; 6 s is already well inside it, so faster sampling buys only noise. What the derivative buys is margin ([nyquist-criterion-and-stability-margins](06-nyquist-criterion-and-stability-margins.md)): with the valve unlimited, PI has 50.50° of phase margin at 0.1231 rad/min, and K_d = 0.25 lifts it to 62.20°. The filter's cost is a 0.2 min lag inside a 4 min pipe lag: the margin becomes 62.30°, almost unchanged.
+With K_d = 0.25 valve per (°C/min) (a derivative time of 2 min), σ = 0.05 °C and a reading every 0.1 min (6 s), the raw derivative jitters the valve by 0.1768 of its full travel, all the time. A filter with T_f = 0.2 min (a tenth of the derivative time) gives a = 0.6667, b = 0.8333 and a jitter of 0.0456. Sample ten times faster, every 0.6 s, and the raw jitter becomes 1.7678: the valve would be slammed end to end. The filtered one moves only to 0.0602. A common rule samples 10 to 20 times per closed-loop rise time; 6 s is already well inside it, so faster sampling buys only noise. What the derivative buys is margin ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)): with the valve unlimited, PI has 50.50° of phase margin at 0.1231 rad/min, and K_d = 0.25 lifts it to 62.20°. The filter's cost is a 0.2 min lag inside a 4 min pipe lag: the margin becomes 62.30°, almost unchanged.
 
 ### Step 6: feedforward, and why it cannot be perfect
 
@@ -193,7 +178,7 @@ With the room loop held still, the inner loop's answer to the 1.2 kW loss is
 
 $$Q(t) - Q_0 = -\frac{1.2}{7}\left(e^{-t/4} - e^{-8t/4}\right) \text{ kW},$$
 
-because the inner loop's sensitivity (its leftover share of a disturbance, from [sensitivity-and-the-gang-of-four](02-sensitivity-and-the-gang-of-four.md)) is τ_q s/(τ_q s + 8), and the loss enters through the pipe's 1/(τ_q s + 1). The dip is deepest at (4 ln 8)/7 = 1.188 min, at −0.1114 kW, and is gone within a few minutes. The room hardly notices: it bottoms at 20.9547 °C. The cascade works because the inner loop is much faster than the outer one, here 0.50 min against the room's 30 min; with the two similar in speed the loops fight.
+because the inner loop's sensitivity (its leftover share of a disturbance, from [Sensitivity functions](02-sensitivity-and-the-gang-of-four.md)) is τ_q s/(τ_q s + 8), and the loss enters through the pipe's 1/(τ_q s + 1). The dip is deepest at (4 ln 8)/7 = 1.188 min, at −0.1114 kW, and is gone within a few minutes. The room hardly notices: it bottoms at 20.9547 °C. The cascade works because the inner loop is much faster than the outer one, here 0.50 min against the room's 30 min; with the two similar in speed the loops fight.
 
 ### The picture: the finished controller, schematic
 
@@ -201,7 +186,7 @@ because the inner loop's sensitivity (its leftover share of a disturbance, from 
 
 Schematic, not to scale. The outer loop closes through the thermometer, the inner one through the heat meter. Feedforward adds the outdoor sensor's heat request at the inner summing point. Clamps sit inside both PI blocks; a derivative, when used, sits in the room PI and reads the thermometer.
 
-**Another route.** Anti-windup, filtering and feedforward can all be read in the frequency domain, as changes to the loop gain and to what the disturbance sees; [lead-lag-compensation-and-loop-shaping](09-lead-lag-compensation-and-loop-shaping.md) designs a controller that way. When the slow part of a loop is a pure delay rather than a lag, [smith-predictor-and-time-delays](10-smith-predictor-and-time-delays.md) adds a model of the delay inside the controller.
+**Another route.** Anti-windup, filtering and feedforward can all be read in the frequency domain, as changes to the loop gain and to what the disturbance sees; [Loop shaping](09-lead-lag-compensation-and-loop-shaping.md) designs a controller that way. When the slow part of a loop is a pure delay rather than a lag, [Time delays](10-smith-predictor-and-time-delays.md) adds a model of the delay inside the controller.
 
 ---
 
@@ -676,12 +661,12 @@ The two outputs are identical.
 
 ## What this builds on
 
-- [pid-control-and-tuning](07-pid-control-and-tuning.md): the three PID terms, their gains, and how to tune them on a linear model, which this card puts on hardware with limits and noise.
+- [PID control](07-pid-control-and-tuning.md): the three PID terms, their gains, and how to tune them on a linear model, which this card puts on hardware with limits and noise.
 
 ## Where this goes next
 
-- [lead-lag-compensation-and-loop-shaping](09-lead-lag-compensation-and-loop-shaping.md): designing the controller in the frequency domain, where the derivative filter and the inner loop appear as reshaping of the loop gain.
-- [smith-predictor-and-time-delays](10-smith-predictor-and-time-delays.md): when the slow pipe is a true delay, so that no inner loop can be closed around it.
+- [Loop shaping](09-lead-lag-compensation-and-loop-shaping.md): designing the controller in the frequency domain, where the derivative filter and the inner loop appear as reshaping of the loop gain.
+- [Time delays](10-smith-predictor-and-time-delays.md): when the slow pipe is a true delay, so that no inner loop can be closed around it.
 
 The controller now survives limits, noise and disturbances; how to shape its frequency response so that a margin is chosen, not discovered, is what loop shaping answers.
 

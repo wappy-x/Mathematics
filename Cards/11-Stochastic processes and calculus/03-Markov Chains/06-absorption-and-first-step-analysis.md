@@ -1,25 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Markov Chains
-topic: Traps and waiting times
-item: Absorption
-kind: theorem
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/03-classifying-states|classifying-states]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/03-inverse-matrix|inverse-matrix]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/07-markov-chain-monte-carlo|markov-chain-monte-carlo]]"
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/05-continuous-time-markov-chains-and-queues|continuous-time-markov-chains-and-queues]]"
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/02-kolmogorov-backward-equation|kolmogorov-backward-equation]]"
-tags: [mathematics, stochastic processes and calculus, absorption-and-first-step-analysis]
----
-
 # Absorption: the chance of ending in each trap, and how long it takes
 
-Stochastic processes and calculus → Markov Chains → Traps and waiting times → Absorption
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Markov Chains](../../../SYLLABUS.md#w11-s03) → Absorption
 
 ---
 
@@ -47,13 +28,13 @@ Squares are 32 units wide, so the ladder runs from 116 to 244 and the snake from
 
 ## The formula
 
-Notation first, in words. $X_n$ is the square after turn $n$, with time counted in turns ([processes-and-paths](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md)). The transition matrix $P$ holds $p_{ij}$, the chance that one turn moves square $i$ to square $j$ ([markov-chains](01-markov-chains.md)). A climb or slide happens inside the turn, so a turn never ends on 3 or 8: the chain lives on the eight **resting squares** 0, 1, 2, 4, 5, 6, 7 and 9, plus the finish.
+Notation first, in words. $X_n$ is the square after turn $n$, with time counted in turns ([Stochastic processes](../01-Random%20Walks%20and%20Filtrations/01-processes-and-paths.md)). The transition matrix $P$ holds $p_{ij}$, the chance that one turn moves square $i$ to square $j$ ([Markov chains](01-markov-chains.md)). A climb or slide happens inside the turn, so a turn never ends on 3 or 8: the chain lives on the eight **resting squares** 0, 1, 2, 4, 5, 6, 7 and 9, plus the finish.
 
-An absorbing state $a$ has $p_{aa} = 1$. The resting squares are **transient**: left for good sooner or later ([classifying-states](03-classifying-states.md)). List them first and the absorbing states last, and $P$ splits into four blocks:
+An absorbing state $a$ has $p_{aa} = 1$. The resting squares are **transient**: left for good sooner or later ([Classifying states](03-classifying-states.md)). List them first and the absorbing states last, and $P$ splits into four blocks:
 
 $$P = \begin{pmatrix} Q & R \\ 0 & I \end{pmatrix}$$
 
-$Q$ holds moves between transient squares, with entries $q_{ij}$. $R$ holds moves from a transient square straight into an absorbing state. The zero block says a trap is never left, and the identity block $I$ keeps each trap put. ($Q$ is the standard letter for this block; it is unrelated to the second probability measure $Q$ met later in this wing.) The game ends at turn $\tau$, the first turn in an absorbing state: a stopping time, recognised when it arrives without seeing the future ([stopping-times-and-optional-stopping](../02-Martingales/03-stopping-times-and-optional-stopping.md)).
+$Q$ holds moves between transient squares, with entries $q_{ij}$. $R$ holds moves from a transient square straight into an absorbing state. The zero block says a trap is never left, and the identity block $I$ keeps each trap put. ($Q$ is the standard letter for this block; it is unrelated to the second probability measure $Q$ met later in this wing.) The game ends at turn $\tau$, the first turn in an absorbing state: a stopping time, recognised when it arrives without seeing the future ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)).
 
 Write $t_i$ for the expected number of turns until the game ends, starting from transient square $i$. Fix one trap; $h_i$ is the chance of ending there from $i$, and $r_i$ the chance that one turn steps straight into it. The first-step equations, one per transient square $i$, summing over transient squares $j$:
 
@@ -116,7 +97,7 @@ In matrix form, $(I - Q)\,t = \mathbf{1}$ and $(I - Q')\,h = r$: the matrix chan
 
 ### Step 3: powers of Q count the survivors, and N counts visits
 
-Row $i$ of $Q^n$ gives, for each transient square $j$, the chance that the game is still running after $n$ turns and sits on $j$. Summing over turns counts visits: $N_{ij} = \sum_n (Q^n)_{ij}$. From 0 the game visits 7 on 0.5738 turns on average and 2 on 0.5499, mostly after a slide. Every turn starts on some transient square, so a row sum of $N$ is the expected number of turns, $t = N\,\mathbf{1}$. Step 1 makes the series converge, and $(I - Q)(I + Q + \dots + Q^k) = I - Q^{k+1}$ tends to $I$: the series is the inverse ([inverse-matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)).
+Row $i$ of $Q^n$ gives, for each transient square $j$, the chance that the game is still running after $n$ turns and sits on $j$. Summing over turns counts visits: $N_{ij} = \sum_n (Q^n)_{ij}$. From 0 the game visits 7 on 0.5738 turns on average and 2 on 0.5499, mostly after a slide. Every turn starts on some transient square, so a row sum of $N$ is the expected number of turns, $t = N\,\mathbf{1}$. Step 1 makes the series converge, and $(I - Q)(I + Q + \dots + Q^k) = I - Q^{k+1}$ tends to $I$: the series is the inverse ([The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)).
 
 The same mass pushed forward one turn at a time gives the whole law of $\tau$:
 
@@ -146,7 +127,7 @@ The chance of ending in each trap comes from the second chain's own fundamental 
 
 Setting: a finite set of transient squares T, a non-empty set of absorbing states A, transition matrix $P$ constant in time, and from every square in T a path of positive-chance moves into A. Let $\tau$ be the first turn with $X_n$ in A.
 
-**The wait has a geometric tail.** Pick one positive-chance path into A from each square in T; let $m$ be the longest and $\eta$ the smallest path chance. From any square in T, the next $m$ turns reach A with chance at least $\eta$. By the Markov property at the fixed time $k \cdot m$, summed over the finitely many squares the game may occupy then, $P(\tau > (k+1)m) \le (1-\eta)\,P(\tau > km)$. Iterating, $P(\tau > km) \le (1-\eta)^k$. Since $\tau = \sum_{n \ge 0} \mathbf{1}\{\tau > n\}$, monotone convergence (for non-negative terms increasing to a limit, the average of the limit is the limit of the averages; [monotone-convergence-theorem](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) gives $E[\tau] = \sum_n P(\tau > n) \le m/\eta$, finite. In particular $\tau$ is finite almost surely.
+**The wait has a geometric tail.** Pick one positive-chance path into A from each square in T; let $m$ be the longest and $\eta$ the smallest path chance. From any square in T, the next $m$ turns reach A with chance at least $\eta$. By the Markov property at the fixed time $k \cdot m$, summed over the finitely many squares the game may occupy then, $P(\tau > (k+1)m) \le (1-\eta)\,P(\tau > km)$. Iterating, $P(\tau > km) \le (1-\eta)^k$. Since $\tau = \sum_{n \ge 0} \mathbf{1}\{\tau > n\}$, monotone convergence (for non-negative terms increasing to a limit, the average of the limit is the limit of the averages; [The monotone convergence theorem](../../10-Measure%20and%20integration/04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) gives $E[\tau] = \sum_n P(\tau > n) \le m/\eta$, finite. In particular $\tau$ is finite almost surely.
 
 **The series is the inverse.** By induction on paths, $(Q^n)_{ij}$ is the chance of being at $j$ at turn $n$ with $\tau > n$, so row sums of $Q^n$ are $P_i(\tau > n)$ and the non-negative series $N = \sum_n Q^n$ has row sums $E_i[\tau]$, finite. Every entry is therefore finite. $QN = NQ = N - I$ by shifting the index of a convergent non-negative series, so $(I - Q)N = N(I - Q) = I$. The expected number of turns spent on $j$ is $E_i \sum_n \mathbf{1}\{X_n = j, \tau > n\} = N_{ij}$, again by monotone convergence.
 
@@ -158,7 +139,7 @@ Setting: a finite set of transient squares T, a non-empty set of absorbing state
 
 </details>
 
-A second road runs through martingales: $h(X_n)$ stopped at $\tau$ is a bounded martingale by the first-step equation, and $\tau$ is finite, so optional stopping gives $h_0 = E[h(X_\tau)]$, the chance of stopping at the snake ([stopping-times-and-optional-stopping](../02-Martingales/03-stopping-times-and-optional-stopping.md)). The two-wall version, where the equations become a recurrence with a closed form, is [gamblers-ruin](../01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md).
+A second road runs through martingales: $h(X_n)$ stopped at $\tau$ is a bounded martingale by the first-step equation, and $\tau$ is finite, so optional stopping gives $h_0 = E[h(X_\tau)]$, the chance of stopping at the snake ([Stopping times](../02-Martingales/03-stopping-times-and-optional-stopping.md)). The two-wall version, where the equations become a recurrence with a closed form, is [Gambler's ruin](../01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md).
 
 ---
 
@@ -644,7 +625,7 @@ The outputs match line for line. Road 2 lands on road 1 to six decimals, with 1.
 ## Where you meet it in real life
 
 - **Board games.** Althoen, King and Schilling treated the full commercial board as an absorbing chain to find its expected playing time (Sources). Any game with a finish and a die with no memory is one.
-- **Gambling and ruin.** A gambler's chips are a chain absorbed at zero or at the target; [gamblers-ruin](../01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md) solves the same two equations in closed form.
+- **Gambling and ruin.** A gambler's chips are a chain absorbed at zero or at the target; [Gambler's ruin](../01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md) solves the same two equations in closed form.
 - **Credit and reliability.** A bond's rating moves between grades until default; a machine between working states until failure. $N$ gives the expected time to the end, and $B$ the chance of each ending.
 - **Population genetics.** A gene variant drifts until it disappears or takes over: two absorbing states, each reached with a chance computed as on this card.
 
@@ -655,14 +636,14 @@ The outputs match line for line. Road 2 lands on road 1 to six decimals, with 1.
 
 ## What this builds on
 
-- [classifying-states](03-classifying-states.md): absorbing and transient states, and why a finite chain leaves its transient squares for good.
-- [inverse-matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md): what $(I - Q)^{-1}$ means, and when a square matrix has one.
+- [Classifying states](03-classifying-states.md): absorbing and transient states, and why a finite chain leaves its transient squares for good.
+- [The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md): what $(I - Q)^{-1}$ means, and when a square matrix has one.
 
 ## Where this goes next
 
-- [markov-chain-monte-carlo](07-markov-chain-monte-carlo.md): designs a chain on purpose so that where it spends its time is a distribution worth sampling.
-- [continuous-time-markov-chains-and-queues](../04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md): the same first-step equations when moves come at random times, with rates in place of chances.
-- [kolmogorov-backward-equation](../08-Generators%2C%20Densities%20and%20Simulation/02-kolmogorov-backward-equation.md): first-step analysis for a continuous path, where "one step, then average" becomes an equation in the starting point.
+- [MCMC](07-markov-chain-monte-carlo.md): designs a chain on purpose so that where it spends its time is a distribution worth sampling.
+- [Continuous-time chains](../04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md): the same first-step equations when moves come at random times, with rates in place of chances.
+- [Kolmogorov backward equation](../08-Generators%2C%20Densities%20and%20Simulation/02-kolmogorov-backward-equation.md): first-step analysis for a continuous path, where "one step, then average" becomes an equation in the starting point.
 
 Here every move takes one turn of a die; the question this card leaves open is what the same two equations become when moves come at random times, or when there are no steps at all.
 

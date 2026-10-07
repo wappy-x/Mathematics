@@ -1,22 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Vector Calculus
-topic: Weighing along a curve
-item: Line integrals of a function
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/05-Curves and Solids/02-arc-length|arc-length]]"
-next:
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/02-line-integrals|line-integrals]]"
-tags: [mathematics, calculus and analysis, scalar-line-integrals]
----
-
 # Line integrals of a function: mass of a wire from its density
 
-Calculus and analysis → Vector Calculus → Weighing along a curve → Line integrals of a function
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Vector Calculus](../../../SYLLABUS.md#w06-s09) → Line integrals of a function
 
 ---
 
@@ -46,7 +30,7 @@ $$M = \int_C \rho\, ds = \int_a^b \rho\big(x(t), y(t)\big)\,\sqrt{x'(t)^2 + y'(t
 
 **Read it aloud:** the mass adds density times length along the wire; with a clock t, that is density at the point reached, times the speed there, added over the clock.
 
-The square root is the clock's **speed**: metres of wire per unit of clock, as on [arc-length](../05-Curves%20and%20Solids/02-arc-length.md). It turns a step of clock into a length of wire.
+The square root is the clock's **speed**: metres of wire per unit of clock, as on [Arc length](../05-Curves%20and%20Solids/02-arc-length.md). It turns a step of clock into a length of wire.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -78,7 +62,7 @@ Cut the wire into n pieces. Take the density at a point of each piece, multiply 
 
 ### Step 1: a piece's length is its speed times its clock time
 
-From [arc-length](../05-Curves%20and%20Solids/02-arc-length.md), the length of wire covered while the clock runs from one tick to the next is the integral of speed over that stretch of clock. So the piece total is a sum of density times an integral of speed.
+From [Arc length](../05-Curves%20and%20Solids/02-arc-length.md), the length of wire covered while the clock runs from one tick to the next is the integral of speed over that stretch of clock. So the piece total is a sum of density times an integral of speed.
 
 ### Step 2: pieces become one integral
 
@@ -114,7 +98,7 @@ As substitution, a backwards clock brings two minus signs, one from taking the r
 <details>
 <summary>Why this is different for a force</summary>
 
-Work done by a force uses its component along the direction of travel, so reversing the path flips its sign. Density has no direction, so mass cannot flip. The field version is [line-integrals](02-line-integrals.md).
+Work done by a force uses its component along the direction of travel, so reversing the path flips its sign. Density has no direction, so mass cannot flip. The field version is [Line integrals of a field](02-line-integrals.md).
 
 </details>
 
@@ -355,7 +339,7 @@ ALL CHECKS PASS
 
 - **Cables and pipes.** A cable whose gauge changes along a route, or a pipe coated more heavily on a bend, is weighed this way before it is lifted.
 - **Averages along a route.** Dividing by length gives a length-weighted average: 4.6141 kg/m here. Average pollution along a road is the same integral with pollution in place of density.
-- **Surfaces.** The same pieces-times-size idea over a patch of surface gives [surface-integrals-and-flux](05-surface-integrals-and-flux.md).
+- **Surfaces.** The same pieces-times-size idea over a patch of surface gives [Surface integrals](05-surface-integrals-and-flux.md).
 
 > **Say it back**
 > The mass of a wire is the limit of density times piece length as the pieces shrink. With a clock along the wire, each length is speed times clock time, so the mass is the integral of density times speed. Any clock that runs the wire once gives the same answer, and running backwards cannot flip it, because speed is never negative. The bent wire with density 3x from x = 1 to 2 m weighs 8.351913 kg.
@@ -364,11 +348,11 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [arc-length](../05-Curves%20and%20Solids/02-arc-length.md): length as the integral of speed; this card weights each length by a density.
+- [Arc length](../05-Curves%20and%20Solids/02-arc-length.md): length as the integral of speed; this card weights each length by a density.
 
 ## Where this goes next
 
-- [line-integrals](02-line-integrals.md): adds a force's push along the direction of travel, and there direction matters.
+- [Line integrals of a field](02-line-integrals.md): adds a force's push along the direction of travel, and there direction matters.
 
 ---
 

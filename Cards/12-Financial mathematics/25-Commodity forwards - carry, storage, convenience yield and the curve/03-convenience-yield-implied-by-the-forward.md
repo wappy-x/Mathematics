@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Commodity forwards - carry, storage, convenience yield and the curve
-topic: Scarcity read from the forward
-item: Convenience yield
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/02-storage-cost-and-the-carry-ceiling|storage-cost-and-the-carry-ceiling]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/05-logarithms|logarithms]]"
-  - "[[Cards/03-Algebra/01-Letters and Equations/03-rearranging-formulas|rearranging-formulas]]"
-next:
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/04-contango-backwardation-and-roll-yield|contango-backwardation-and-roll-yield]]"
-tags: [mathematics, financial mathematics, convenience-yield-implied-by-the-forward]
----
-
 # Convenience yield: the number that makes the carry formula hit the market forward, and what it says about scarcity
 
-Financial mathematics → Commodity forwards - carry, storage, convenience yield and the curve → Scarcity read from the forward → Convenience yield
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Commodity forwards - carry, storage, convenience yield and the curve](../../../SYLLABUS.md#w12-s25) → Convenience yield
 
 ---
 
@@ -53,7 +35,7 @@ $$y \;=\; r + u - \frac{\ln(F/S)}{T}$$
 
 **Read it aloud:** the convenience yield is interest plus storage, minus the growth the market forward actually shows over spot, measured per year.
 
-It is the carry formula from [storage-cost-and-the-carry-ceiling](02-storage-cost-and-the-carry-ceiling.md), $F = S\,e^{(r+u-y)T}$, solved for the one letter nobody quotes.
+It is the carry formula from [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md), $F = S\,e^{(r+u-y)T}$, solved for the one letter nobody quotes.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -88,7 +70,7 @@ Two trades police a forward price. The first, **cash-and-carry**, buys spot, sto
 
 ### Step 1: the ceiling
 
-The storage card builds $C = S\,e^{(r+u)T}$ by financing and storing one barrel: [storage-cost-and-the-carry-ceiling](02-storage-cost-and-the-carry-ceiling.md). Here $80\,e^{0.07} = 85.80$. A forward above that would be free money for anyone with a tank.
+The storage card builds $C = S\,e^{(r+u)T}$ by financing and storing one barrel: [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md). Here $80\,e^{0.07} = 85.80$. A forward above that would be free money for anyone with a tank.
 
 ### Step 2: write the gap as a rate
 
@@ -100,7 +82,7 @@ This is the definition of $y$. Nothing new has been assumed. Before solving, the
 
 ### Step 3: solve for it
 
-Divide both sides by $S$: $F/S = e^{(r+u-y)T}$. Take the natural log of both sides ([logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)): $\ln(F/S) = (r+u-y)T$. Divide by $T$ and move $y$ to the left ([rearranging-formulas](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md)):
+Divide both sides by $S$: $F/S = e^{(r+u-y)T}$. Take the natural log of both sides ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)): $\ln(F/S) = (r+u-y)T$. Divide by $T$ and move $y$ to the left ([Rearranging a formula](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md)):
 
 $$y = r + u - \frac{\ln(F/S)}{T}.$$
 
@@ -211,7 +193,7 @@ xychart-beta
     line [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ```
 
-The falling line is the implied yield; the flat line is zero. The falling line crosses 7.00% at a forward of $80, where the forward equals spot, and crosses zero just below $86, at the ceiling of $85.80. Everything left of $80 is a forward below spot: backwardation (a curve that slopes down), the subject of [contango-backwardation-and-roll-yield](04-contango-backwardation-and-roll-yield.md). The line bends slightly upward: each dollar off the forward adds a little more yield than the last, because $dy/dF = -1/(FT)$ grows as $F$ shrinks.
+The falling line is the implied yield; the flat line is zero. The falling line crosses 7.00% at a forward of $80, where the forward equals spot, and crosses zero just below $86, at the ceiling of $85.80. Everything left of $80 is a forward below spot: backwardation (a curve that slopes down), the subject of [Contango and backwardation](04-contango-backwardation-and-roll-yield.md). The line bends slightly upward: each dollar off the forward adds a little more yield than the last, because $dy/dF = -1/(FT)$ grows as $F$ shrinks.
 
 ---
 
@@ -358,7 +340,7 @@ chart, y %       12.13  10.82   9.53   8.26   7.00   5.76   4.53   3.32   2.12  
 ALL CHECKS PASS
 ```
 
-Three roads, one yield, agreeing to twelve decimals. The first term of the series alone, $G/C$, gives 2.10%: a quick estimate that is good while the gap is small. The gold row runs the same formula on the gold forward with no storage and recovers the 1% lease rate: see [gold-forward-and-the-lease-rate](01-gold-forward-and-the-lease-rate.md). The ceiling row prints −0.000000: zero, landed on from a hair below by rounding in the last binary digit.
+Three roads, one yield, agreeing to twelve decimals. The first term of the series alone, $G/C$, gives 2.10%: a quick estimate that is good while the gap is small. The gold row runs the same formula on the gold forward with no storage and recovers the 1% lease rate: see [Gold forward](01-gold-forward-and-the-lease-rate.md). The ceiling row prints −0.000000: zero, landed on from a hair below by rounding in the last binary digit.
 
 ### Rust
 
@@ -527,7 +509,7 @@ The two outputs agree byte for byte.
 >
 > Four smaller traps:
 > - **Leaving storage out.** $r - \ln(F/S)/T$ gives 0.12%, which is the convenience yield net of storage. Both numbers are used in practice; say which one is quoted.
-> - **One yield for every delivery date.** Each forward gives its own $y$. A six-month quote at 82 gives 2.06%, not 2.12%. The yields across dates form a curve of their own, and seasonal commodities bend it hard: [seasonality-and-the-gas-curve](05-seasonality-and-the-gas-curve.md).
+> - **One yield for every delivery date.** Each forward gives its own $y$. A six-month quote at 82 gives 2.06%, not 2.12%. The yields across dates form a curve of their own, and seasonal commodities bend it hard: [Seasonal curves](05-seasonality-and-the-gas-curve.md).
 > - **Reading a short-dated yield too precisely.** At one month, a one-cent error in the quote moves $y$ by 0.15 points. Front-month yields jump around for this reason alone.
 > - **Taking a negative yield at face value.** Below zero, the forward is above the carry ceiling. That means the storage number is wrong, usually because tanks are full. In April 2020 the expiring US crude future at Cushing, Oklahoma settled below zero dollars, largely because storage at the delivery point was close to full.
 
@@ -536,9 +518,9 @@ The two outputs agree byte for byte.
 ## Where you meet it in real life
 
 - **Oil desks.** A trader reading the one-year spread (the forward minus spot) is reading the convenience yield with $r$ and $u$ held in their head. A falling forward against a steady spot is the market reporting that stocks are drawing down.
-- **Metals and the lease rate.** For gold, holding is cheap and the lease market is deep, so the convenience yield equals the rate at which gold can be lent out: [gold-forward-and-the-lease-rate](01-gold-forward-and-the-lease-rate.md).
-- **Grain after harvest.** Right after harvest the bins are full and the implied yield is small; before the next harvest it rises. The yield carries the seasons: [seasonality-and-the-gas-curve](05-seasonality-and-the-gas-curve.md).
-- **Commodity pricing models.** Eduardo Schwartz and Rajna Gibson in 1990 made the convenience yield a random quantity of its own, pulled back toward an average, alongside a random spot price. The pull-back idea is the subject of [mean-reverting-spot-and-the-futures-curve](06-mean-reverting-spot-and-the-futures-curve.md).
+- **Metals and the lease rate.** For gold, holding is cheap and the lease market is deep, so the convenience yield equals the rate at which gold can be lent out: [Gold forward](01-gold-forward-and-the-lease-rate.md).
+- **Grain after harvest.** Right after harvest the bins are full and the implied yield is small; before the next harvest it rises. The yield carries the seasons: [Seasonal curves](05-seasonality-and-the-gas-curve.md).
+- **Commodity pricing models.** Eduardo Schwartz and Rajna Gibson in 1990 made the convenience yield a random quantity of its own, pulled back toward an average, alongside a random spot price. The pull-back idea is the subject of [A spot price that reverts](06-mean-reverting-spot-and-the-futures-curve.md).
 - **Inventory policy.** A refiner deciding whether to hold extra crude compares its own value of having it with the market's $y$. If its own value is lower, the reverse trade is worth doing.
 
 > **Say it back**
@@ -548,13 +530,13 @@ The two outputs agree byte for byte.
 
 ## What this builds on
 
-- [storage-cost-and-the-carry-ceiling](02-storage-cost-and-the-carry-ceiling.md): the ceiling $S\,e^{(r+u)T}$ and the cash-and-carry trade that enforces it. This card measures how far below it the market sits.
-- [logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): the natural log undoes $e^z$, which is what turns the carry formula inside out.
-- [rearranging-formulas](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md): moving $y$ to one side, the whole of Step 3.
+- [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md): the ceiling $S\,e^{(r+u)T}$ and the cash-and-carry trade that enforces it. This card measures how far below it the market sits.
+- [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): the natural log undoes $e^z$, which is what turns the carry formula inside out.
+- [Rearranging a formula](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md): moving $y$ to one side, the whole of Step 3.
 
 ## Where this goes next
 
-- [contango-backwardation-and-roll-yield](04-contango-backwardation-and-roll-yield.md): what the curve's slope means for someone who holds futures and rolls them month to month, and why a high convenience yield turns into a positive roll return.
+- [Contango and backwardation](04-contango-backwardation-and-roll-yield.md): what the curve's slope means for someone who holds futures and rolls them month to month, and why a high convenience yield turns into a positive roll return.
 
 A convenience yield read from one forward is one point; a curve of forwards gives one at every date, and the next question is what an investor earns by riding that curve.
 

@@ -1,27 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Logic
-topic: Quantifiers
-item: Everyone and someone
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/05-Logic/03-logical-equivalence-and-de-morgan|logical-equivalence-and-de-morgan]]"
-next:
-  - "[[Cards/01-Foundations/05-Logic/05-negating-quantifiers-and-counterexamples|negating-quantifiers-and-counterexamples]]"
-  - "[[Cards/01-Foundations/06-Proof/04-proof-by-induction|proof-by-induction]]"
-  - "[[Cards/01-Foundations/07-Sets/01-sets-and-membership|sets-and-membership]]"
-tags:
-  - mathematics
-  - foundations
-  - quantifiers
----
-
 # Quantifiers: 'everyone' and 'someone', and why their order matters
 
-Foundations → Logic → Quantifiers → Everyone and someone
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Logic](../../../SYLLABUS.md#w01-s05) → Everyone and someone
 
 ---
 
@@ -91,7 +70,7 @@ There is one key everyone has: front works **or** store **or** server. Three ors
 
 Each piece hides the other word: "Ana has one" is an or over three keys, "front works" an and over six.
 
-Same and and or as [statements-and-connectives](01-statements-and-connectives.md), stretched over a group.
+Same and and or as [Statements and connectives](01-statements-and-connectives.md), stretched over a group.
 
 ### Step 2: the order decides whether the key may change
 
@@ -105,7 +84,7 @@ Same and and or as [statements-and-connectives](01-statements-and-connectives.md
 
 Hand out a master key and everyone has a key, so ∃ then ∀ gives ∀ then ∃ for free. The reverse fails, and this office is the proof: everyone has a key, no master key.
 
-To knock down a "for every" claim, hunt the one case that breaks it: [negating-quantifiers-and-counterexamples](05-negating-quantifiers-and-counterexamples.md).
+To knock down a "for every" claim, hunt the one case that breaks it: [Negating a quantifier](05-negating-quantifiers-and-counterexamples.md).
 
 ---
 
@@ -289,13 +268,13 @@ The two outputs match line for line: counts, nothing to round.
 
 ## What this builds on
 
-- [logical-equivalence-and-de-morgan](03-logical-equivalence-and-de-morgan.md): how a "not" moves through an and or an or — the two words a quantifier stretches over a group.
+- [Logical equivalence and De Morgan](03-logical-equivalence-and-de-morgan.md): how a "not" moves through an and or an or — the two words a quantifier stretches over a group.
 
 ## Where this goes next
 
-- [negating-quantifiers-and-counterexamples](05-negating-quantifiers-and-counterexamples.md): disproving each claim, and why one counterexample settles "every".
-- [proof-by-induction](../06-Proof/04-proof-by-induction.md): proving a "for every" claim about an endless list, one rung at a time.
-- [sets-and-membership](../07-Sets/01-sets-and-membership.md): writing the domain down as a set, so it never goes unsaid.
+- [Negating a quantifier](05-negating-quantifiers-and-counterexamples.md): disproving each claim, and why one counterexample settles "every".
+- [Induction](../06-Proof/04-proof-by-induction.md): proving a "for every" claim about an endless list, one rung at a time.
+- [Sets](../07-Sets/01-sets-and-membership.md): writing the domain down as a set, so it never goes unsaid.
 
 ---
 

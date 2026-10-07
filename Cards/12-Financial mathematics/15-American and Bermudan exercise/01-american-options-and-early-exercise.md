@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: American and Bermudan exercise
-topic: Choosing the day
-item: American options
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/02-black-scholes-put|black-scholes-put]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/03-put-call-parity|put-call-parity]]"
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/04-crr-tree-and-convergence|crr-tree-and-convergence]]"
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/07-optimal-stopping-and-snell-envelope|optimal-stopping-and-snell-envelope]]"
-next:
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/02-mertons-no-early-exercise-theorem|mertons-no-early-exercise-theorem]]"
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/03-bermudan-options|bermudan-options]]"
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/07-american-greeks-and-implied-volatility|american-greeks-and-implied-volatility]]"
-  - "[[Cards/15-Optimization/07-Dynamic Programming and Learning/06-optimal-stopping-as-a-dynamic-program|optimal-stopping-as-a-dynamic-program]]"
-tags: [mathematics, financial mathematics, american-options-and-early-exercise]
----
-
 # American options: exercise any day, so the price is the best stopping rule, found by working backwards
 
-Financial mathematics → American and Bermudan exercise → Choosing the day → American options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [American and Bermudan exercise](../../../SYLLABUS.md#w12-s15) → American options
 
 ---
 
@@ -55,13 +33,13 @@ sell as soon as the put pays       ██                                  $0.43
 best rule: compare at every node   ███████████████████████████████████ $6.6602
 ```
 
-Each bar is the price of one plan. A low level waits too long. A high level sells too eagerly and throws away the chance of a bigger fall. The best whole-dollar level, $82, reaches $6.61 and still falls short of $6.66. The best rule does not stick to one level: it sells at a level that rises as expiry approaches ([exercise-boundary-and-smooth-pasting](04-exercise-boundary-and-smooth-pasting.md)).
+Each bar is the price of one plan. A low level waits too long. A high level sells too eagerly and throws away the chance of a bigger fall. The best whole-dollar level, $82, reaches $6.61 and still falls short of $6.66. The best rule does not stick to one level: it sells at a level that rises as expiry approaches ([The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md)).
 
 ---
 
 ## The formula
 
-Notation first, in words. A stopping rule picks a date, and the date depends on how Acme moves, so it is a random date; its letter is $\tau$, said "tau". $\mathbb{E}^{\mathbb{Q}}$ is the **risk-neutral average**: the average over Acme's futures in the pricing world where every asset grows at the riskless rate, as on [black-scholes-put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md). The word $\sup$, "supremum", means the best value over a whole family, here every stopping rule; it equals the largest value when a largest exists.
+Notation first, in words. A stopping rule picks a date, and the date depends on how Acme moves, so it is a random date; its letter is $\tau$, said "tau". $\mathbb{E}^{\mathbb{Q}}$ is the **risk-neutral average**: the average over Acme's futures in the pricing world where every asset grows at the riskless rate, as on [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md). The word $\sup$, "supremum", means the best value over a whole family, here every stopping rule; it equals the largest value when a largest exists.
 
 $$V_0 \;=\; \sup_{\tau\ \text{a stopping rule},\ 0 \le \tau \le T}\; \mathbb{E}^{\mathbb{Q}}\!\left[\,e^{-r\tau}\,g(S_\tau)\,\right]$$
 
@@ -69,7 +47,7 @@ $$V_0 \;=\; \sup_{\tau\ \text{a stopping rule},\ 0 \le \tau \le T}\; \mathbb{E}^
 
 For the put the payoff is $g(S) = \max(K - S,\,0)$: the strike minus the share price when that is positive, zero otherwise. For the call it is $\max(S - K,\,0)$.
 
-On a tree of $N$ steps the supremum becomes a backward walk, the method of [american-exercise-on-a-tree](../04-Binomial%20Trees/05-american-exercise-on-a-tree.md):
+On a tree of $N$ steps the supremum becomes a backward walk, the method of [Early exercise](../04-Binomial%20Trees/05-american-exercise-on-a-tree.md):
 
 $$V_{\text{node}} \;=\; \max\Big(\,g(S_{\text{node}}),\;\; e^{-r\Delta t}\big[\,p\,V_{\text{up}} + (1-p)\,V_{\text{down}}\,\big]\Big)$$
 
@@ -102,7 +80,7 @@ $$P_A - P_E \;\le\; K\,(1 - e^{-rT})$$
 | $V_0$, $V_n$, $W_n$, $\sup$ | the price today; the backward-walk value and the best-rule value on date $n$; the best value over all rules | 6.660226 | — |
 | $P_A$, $C_A$, $P_E$, $C_E$ | American put and call; European put and call | 6.660226, 9.226034; 6.330081, 9.227006 | — |
 
-$\Delta t = T/N$, $u = e^{\sigma\sqrt{\Delta t}}$, down factor $1/u$, and $p = (e^{(r-q)\Delta t} - 1/u)/(u - 1/u)$ are the Cox–Ross–Rubinstein settings of [crr-tree-and-convergence](../04-Binomial%20Trees/04-crr-tree-and-convergence.md), used unchanged.
+$\Delta t = T/N$, $u = e^{\sigma\sqrt{\Delta t}}$, down factor $1/u$, and $p = (e^{(r-q)\Delta t} - 1/u)/(u - 1/u)$ are the Cox–Ross–Rubinstein settings of [Cox-Ross-Rubinstein](../04-Binomial%20Trees/04-crr-tree-and-convergence.md), used unchanged.
 
 ### When it holds
 
@@ -124,7 +102,7 @@ From below: the holder may use any stopping rule. Whatever rule the holder picks
 
 From above: a seller who takes in the supremum can hedge, trading shares and cash so that the account covers the payoff on whatever day the holder exercises. The account never runs short, because at every moment it holds at least what exercising pays and at least what waiting is worth. A seller charging more could be undercut by a rival who charges the supremum, hedges, and never runs short.
 
-The object that does this, the smallest process that sits above the payoff and, once discounted, never drifts upward in the pricing world, is the **Snell envelope**. Its construction and the proof that it equals the supremum are on [optimal-stopping-and-snell-envelope](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md). This card uses the result.
+The object that does this, the smallest process that sits above the payoff and, once discounted, never drifts upward in the pricing world, is the **Snell envelope**. Its construction and the proof that it equals the supremum are on [Optimal stopping](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md). This card uses the result.
 
 ### Step 1: on a tree, the rules can be listed
 
@@ -157,11 +135,11 @@ The rule "stop at $n$ if $g(S_n)$ is the larger, otherwise follow the best rule 
 
 Push Acme toward zero. The put then pays almost the full strike, whichever day it is exercised. Exercise now and the $100.00 goes into the bank and earns 5% for the rest of the year. Wait, and the same $100.00 arrives later. Deep enough, the interest beats the small chance of a further fall. That is the whole premium, and it is an interest-rate story: at a zero rate there is nothing to collect by hurrying, and the American and European prices agree exactly, 8.912076 both on a 500-step tree.
 
-For a call the logic runs the other way: exercising pays the strike early and gives up its interest. With no dividend the American call is never exercised early, which is [mertons-no-early-exercise-theorem](02-mertons-no-early-exercise-theorem.md). With Acme's 2% yield the right is worth something, but only in futures far above today's price: the tree prices it at 0.034101 millionths of a dollar. To every printed digit, the American call equals its European twin.
+For a call the logic runs the other way: exercising pays the strike early and gives up its interest. With no dividend the American call is never exercised early, which is [Merton's theorem](02-mertons-no-early-exercise-theorem.md). With Acme's 2% yield the right is worth something, but only in futures far above today's price: the tree prices it at 0.034101 millionths of a dollar. To every printed digit, the American call equals its European twin.
 
 ### Step 5: the parity band
 
-Put–call parity, $C_E - P_E = S e^{-qT} - K e^{-rT}$, is an equation for European options ([put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)). Its proof holds both options to the end. Once either side may exercise early, the proof fails and only a band survives.
+Put–call parity, $C_E - P_E = S e^{-qT} - K e^{-rT}$, is an equation for European options ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)). Its proof holds both options to the end. Once either side may exercise early, the proof fails and only a band survives.
 
 Each half compares two portfolios, one never worth less than the other on whatever day an exercise happens: an American put plus a share against an American call plus discounted cash for the upper half, a European call plus the full strike in cash against an American put plus a dividend-shrunk share for the lower. The folded proof runs both.
 
@@ -180,7 +158,7 @@ The lower half, rearranged with parity for the European options, says $P_A - P_E
 
 ### Step 6: more steps, more rules, a higher price
 
-A tree of $N$ steps lets the holder exercise on $N + 1$ dates, not on any day. That makes it a Bermudan option ([bermudan-options](03-bermudan-options.md)). Doubling the steps keeps every old date and adds new ones, so every old rule is still available and the best can only improve. The tree also refines its picture of Acme at the same time, which wiggles the price by the tree's own error. On the sequence 50, 100, 200, 500, 1,000, 2,000 steps the American price climbs every time: 6.641549 to 6.660226.
+A tree of $N$ steps lets the holder exercise on $N + 1$ dates, not on any day. That makes it a Bermudan option ([Bermudan options](03-bermudan-options.md)). Doubling the steps keeps every old date and adds new ones, so every old rule is still available and the best can only improve. The tree also refines its picture of Acme at the same time, which wiggles the price by the tree's own error. On the sequence 50, 100, 200, 500, 1,000, 2,000 steps the American price climbs every time: 6.641549 to 6.660226.
 
 The climb has a limit, and two roads estimate it. The tree's error for the European put halves each time the steps double, so twice the 2,000-step price minus the 1,000-step price cancels most of it: 6.330081 for the European, the closed form to six decimals, and 6.660692 for the American. A second machine, a grid that solves the Black–Scholes equation with the payoff as a floor, gives 6.660608. The two roads agree to a hundredth of a cent. The 2,000-step tree sits about four hundredths of a cent below the limit.
 
@@ -648,10 +626,10 @@ The two outputs are byte-identical.
 ## Where you meet it in real life
 
 - **Listed options on US shares.** Options on single US stocks and exchange-traded funds are American-style; options on the S&P 500 index, SPX and the mini XSP, are European-style. Conventions verified 24 Sep 2026 on Cboe's product pages.
-- **Early assignment before a dividend.** A seller of an American call on a stock about to pay a large dividend can be assigned the day before, because the dividend is the one thing that makes early call exercise worth it: [mertons-no-early-exercise-theorem](02-mertons-no-early-exercise-theorem.md).
+- **Early assignment before a dividend.** A seller of an American call on a stock about to pay a large dividend can be assigned the day before, because the dividend is the one thing that makes early call exercise worth it: [Merton's theorem](02-mertons-no-early-exercise-theorem.md).
 - **Mortgages and callable bonds.** A borrower who may repay any day holds an American option on the loan, and uses it when rates fall.
-- **Swaptions with a schedule.** Many interest-rate options may be exercised only on coupon dates: [bermudan-options](03-bermudan-options.md).
-- **Quick prices on a desk.** A tree is slow; an analytic approximation gets within cents in microseconds: [barone-adesi-whaley-approximation](06-barone-adesi-whaley-approximation.md). With no expiry at all there is an exact formula: [perpetual-american-put](05-perpetual-american-put.md).
+- **Swaptions with a schedule.** Many interest-rate options may be exercised only on coupon dates: [Bermudan options](03-bermudan-options.md).
+- **Quick prices on a desk.** A tree is slow; an analytic approximation gets within cents in microseconds: [Barone-Adesi-Whaley](06-barone-adesi-whaley-approximation.md). With no expiry at all there is an exact formula: [The perpetual American put](05-perpetual-american-put.md).
 
 > **Say it back**
 > An American option can be exercised on any day, using only what is known on that day. Every plan for choosing the day has a price, and the American option is worth the best of them. The best plan is found by walking backwards and, at every point, keeping the larger of exercising now and waiting. The house put comes out at $6.66 against $6.33 for the European, a premium of 33 cents, capped by a year's interest on the strike. American calls and puts obey a parity band instead of an equation.
@@ -660,19 +638,19 @@ The two outputs are byte-identical.
 
 ## What this builds on
 
-- [black-scholes-put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the European put, $6.33, the floor the American price is measured from, and the risk-neutral average.
-- [put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): the European equation that becomes a band once exercise can come early.
-- [crr-tree-and-convergence](../04-Binomial%20Trees/04-crr-tree-and-convergence.md): the tree's up factor, weight and error, used unchanged in Road 1.
-- [optimal-stopping-and-snell-envelope](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md): why the best stopping rule is a fair price, through the Snell envelope.
+- [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the European put, $6.33, the floor the American price is measured from, and the risk-neutral average.
+- [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): the European equation that becomes a band once exercise can come early.
+- [Cox-Ross-Rubinstein](../04-Binomial%20Trees/04-crr-tree-and-convergence.md): the tree's up factor, weight and error, used unchanged in Road 1.
+- [Optimal stopping](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md): why the best stopping rule is a fair price, through the Snell envelope.
 
 ## Where this goes next
 
-- [mertons-no-early-exercise-theorem](02-mertons-no-early-exercise-theorem.md): why an American call on a share that pays nothing is never exercised early, and what a dividend changes.
-- [bermudan-options](03-bermudan-options.md): exercise on a schedule of dates, between European and American.
-- [american-greeks-and-implied-volatility](07-american-greeks-and-implied-volatility.md): how the American price moves with its inputs, and running it backwards for volatility.
-- optimal-stopping-as-a-dynamic-program: the backward walk as a general method for any decision of when to stop.
+- [Merton's theorem](02-mertons-no-early-exercise-theorem.md): why an American call on a share that pays nothing is never exercised early, and what a dividend changes.
+- [Bermudan options](03-bermudan-options.md): exercise on a schedule of dates, between European and American.
+- [American Greeks and implied volatility](07-american-greeks-and-implied-volatility.md): how the American price moves with its inputs, and running it backwards for volatility.
+- Optimal stopping: the backward walk as a general method for any decision of when to stop.
 
-This card finds the price but not the rule's shape: the level at which the best holder sells, and how it rises toward the strike as expiry nears, is the next question, answered on [exercise-boundary-and-smooth-pasting](04-exercise-boundary-and-smooth-pasting.md).
+This card finds the price but not the rule's shape: the level at which the best holder sells, and how it rises toward the strike as expiry nears, is the next question, answered on [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md).
 
 ---
 

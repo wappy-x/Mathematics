@@ -1,25 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Powers, Roots and Logarithms
-topic: Powers
-item: Linear versus exponential growth
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/01-exponents-and-powers|exponents-and-powers]]"
-next:
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/02-simple-interest|simple-interest]]"
-tags:
-  - mathematics
-  - foundations
-  - linear-vs-exponential-growth
----
-
 # Linear versus exponential growth: adding a fixed amount against multiplying by a fixed factor
 
-Foundations → Powers, Roots and Logarithms → Powers → Linear versus exponential growth
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Powers, Roots and Logarithms](../../../SYLLABUS.md#w01-s03) → Linear versus exponential growth
 
 ---
 
@@ -59,7 +40,7 @@ Start with the pads on day 0. Then do the day's move, twenty times:
 
 **doubling pond on day 20 = 1 × 2 × 2 × 2 … twenty 2s in all … = 1,048,576 pads**
 
-Twenty 2s multiplied together is written 2^20 — the shorthand from [exponents-and-powers](01-exponents-and-powers.md).
+Twenty 2s multiplied together is written 2^20 — the shorthand from [Exponents](01-exponents-and-powers.md).
 
 In general: linear = starting amount + step × days; exponential = starting amount, multiplied by the factor once per day, for as many days as have passed.
 
@@ -257,9 +238,9 @@ The two outputs match line for line: whole pads throughout, nothing to round.
 
 ## Where you meet it in real life
 
-- **Money left in an account.** Interest paid on the balance is a factor, not a lump: last year's interest earns too. The flat version is [simple-interest](../04-Compound%20Growth%20and%20Discounting/02-simple-interest.md).
+- **Money left in an account.** Interest paid on the balance is a factor, not a lump: last year's interest earns too. The flat version is [Simple interest](../04-Compound%20Growth%20and%20Discounting/02-simple-interest.md).
 - **Anything that spreads.** A rumour, a virus, a video: each carrier makes more carriers, so the step grows with the size. The jump that looks sudden is only the last doubling.
-- **Charts that look flat, then explode.** Squash exponential numbers onto an ordinary axis and everything before the last few steps reads as zero. A log scale fixes that: [log-laws-and-log-scales](06-log-laws-and-log-scales.md).
+- **Charts that look flat, then explode.** Squash exponential numbers onto an ordinary axis and everything before the last few steps reads as zero. A log scale fixes that: [Log laws and log scales](06-log-laws-and-log-scales.md).
 
 > **Say it back**
 > Linear growth adds the same fixed amount every step: a straight line. Exponential growth multiplies by the same fixed factor every step. Double, and each step is as big as everything before it. Two ponds from one lily pad: one pad a day reaches 21 by day 20, doubling reaches 1,048,576. A million pads covers a pond, so one is covered on day 20 and the other on day 999,999 — 2,739 years. The early days look alike. That is the trap.
@@ -268,11 +249,11 @@ The two outputs match line for line: whole pads throughout, nothing to round.
 
 ## What this builds on
 
-- [exponents-and-powers](01-exponents-and-powers.md): what it means to multiply a number by itself twenty times, and the shorthand for it.
+- [Exponents](01-exponents-and-powers.md): what it means to multiply a number by itself twenty times, and the shorthand for it.
 
 ## Where this goes next
 
-- [simple-interest](../04-Compound%20Growth%20and%20Discounting/02-simple-interest.md): the gardener's pond in money — a fixed amount added each period, never earning on itself.
+- [Simple interest](../04-Compound%20Growth%20and%20Discounting/02-simple-interest.md): the gardener's pond in money — a fixed amount added each period, never earning on itself.
 
 ---
 

@@ -1,28 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Angles, Triangles and Congruence
-topic: Right triangles
-item: Pythagoras
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/05-Geometry and trig/01-Angles, Triangles and Congruence/04-similar-triangles-and-scale|similar-triangles-and-scale]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/03-roots-and-fractional-exponents|roots-and-fractional-exponents]]"
-next:
-  - "[[Cards/05-Geometry and trig/01-Angles, Triangles and Congruence/06-area-of-triangles-and-polygons|area-of-triangles-and-polygons]]"
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/01-distance-and-midpoint|distance-and-midpoint]]"
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/06-law-of-cosines|law-of-cosines]]"
-tags:
-  - mathematics
-  - geometry and trig
-  - pythagoras-and-its-converse
----
-
 # Pythagoras: the rule that fixes a right triangle, and the test that detects one
 
-Geometry and trig → Angles, Triangles and Congruence → Right triangles → Pythagoras
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Angles, Triangles and Congruence](../../../SYLLABUS.md#w05-s01) → Pythagoras
 
 ---
 
@@ -48,13 +26,13 @@ Drawn at 1 m = 60 units. The ridge C sits 3.2 m along the tie beam from A and 2.
 
 ## The formula
 
-Reminder: corners are A, B, C, and each side carries the lower-case letter of the corner opposite it ([angles-and-parallel-lines](01-angles-and-parallel-lines.md)). Put the right angle at C. The sides meeting there, $a$ and $b$, are the **legs**; the side opposite, $c$, is the **hypotenuse**, always the longest.
+Reminder: corners are A, B, C, and each side carries the lower-case letter of the corner opposite it ([Angles](01-angles-and-parallel-lines.md)). Put the right angle at C. The sides meeting there, $a$ and $b$, are the **legs**; the side opposite, $c$, is the **hypotenuse**, always the longest.
 
 $$a^2 + b^2 = c^2$$
 
 **Read it aloud:** the square on one leg plus the square on the other leg equals the square on the hypotenuse.
 
-$a^2$ is $a$ times $a$: the area of a square with side $a$. For the truss, 9 + 16 = 25 m^2. The positive square root gives a length back ([roots-and-fractional-exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)):
+$a^2$ is $a$ times $a$: the area of a square with side $a$. For the truss, 9 + 16 = 25 m^2. The positive square root gives a length back ([Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)):
 
 $$c = \sqrt{a^2 + b^2}, \qquad b = \sqrt{c^2 - a^2}$$
 
@@ -99,7 +77,7 @@ Put a copy of the truss triangle in each corner of a square of side $a + b$, 7 m
 
 ### Step 2: the middle is a square
 
-Four equal sides alone make only a diamond; the corners must be right angles too. Where two hypotenuses meet the outer edge, three angles sit along a straight line, so they add to 180°. Two are the triangle's two sharp angles, one from each copy, and they add to 90°, since a triangle's angles total 180° and the right angle has used 90° ([triangle-angle-sum-and-inequality](02-triangle-angle-sum-and-inequality.md)). The third, the middle's corner, is 90°. So the middle is a square of area $c^2$.
+Four equal sides alone make only a diamond; the corners must be right angles too. Where two hypotenuses meet the outer edge, three angles sit along a straight line, so they add to 180°. Two are the triangle's two sharp angles, one from each copy, and they add to 90°, since a triangle's angles total 180° and the right angle has used 90° ([Triangles](02-triangle-angle-sum-and-inequality.md)). The third, the middle's corner, is 90°. So the middle is a square of area $c^2$.
 
 ### Step 3: subtract
 
@@ -113,7 +91,7 @@ The mixed $2ab$ terms cancel. Nothing used 3 and 4, so the rule holds for every 
 
 Now start from three lengths $a$, $b$, $c$ with $a^2 + b^2 = c^2$, and no angle known. Build a separate triangle with a right angle between legs $a$ and $b$; call its hypotenuse $d$. Steps 1 to 3 give $d^2 = a^2 + b^2 = c^2$. Two positive lengths with equal squares are equal, so $d = c$.
 
-The two triangles now match side for side, and three matching sides force matching angles (the side-side-side test, [congruent-triangles](03-congruent-triangles.md)). The built triangle is right-angled between $a$ and $b$, so the original is too. That is the carpenter's 3-4-5 check, proved.
+The two triangles now match side for side, and three matching sides force matching angles (the side-side-side test, [Congruent triangles](03-congruent-triangles.md)). The built triangle is right-angled between $a$ and $b$, so the original is too. That is the carpenter's 3-4-5 check, proved.
 
 <details>
 <summary>Detailed proof: the points the steps pass over</summary>
@@ -122,11 +100,11 @@ The two triangles now match side for side, and three matching sides force matchi
 
 **Equal squares give equal lengths.** If $d$ were longer than $c$, then $d^2$ would exceed $c^2$; if shorter, fall short. Only $d = c$ fits.
 
-**No distance formula.** The grid distance formula is built from this theorem ([distance-and-midpoint](../04-Coordinates%20and%20Curves/01-distance-and-midpoint.md)), so proving the theorem with it would argue in a circle.
+**No distance formula.** The grid distance formula is built from this theorem ([Distance and midpoint](../04-Coordinates%20and%20Curves/01-distance-and-midpoint.md)), so proving the theorem with it would argue in a circle.
 
 </details>
 
-A second road: drop a line from the ridge square onto the tie beam. It cuts the truss into two smaller right triangles, each the same shape as the whole. Matching side ratios make $a^2$ and $b^2$ the hypotenuse times each piece it was cut into; added, they give $c$ times $c$. The ratios are the work of [similar-triangles-and-scale](04-similar-triangles-and-scale.md). For the truss the pieces are 1.8 m and 3.2 m: 5 × 1.8 = 9 and 5 × 3.2 = 16.
+A second road: drop a line from the ridge square onto the tie beam. It cuts the truss into two smaller right triangles, each the same shape as the whole. Matching side ratios make $a^2$ and $b^2$ the hypotenuse times each piece it was cut into; added, they give $c$ times $c$. The ratios are the work of [Similar triangles](04-similar-triangles-and-scale.md). For the truss the pieces are 1.8 m and 3.2 m: 5 × 1.8 = 9 and 5 × 3.2 = 16.
 
 ---
 
@@ -375,7 +353,7 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Setting out foundations.** Builders peg 3 m and 4 m from a corner, or 6 m and 8 m, and adjust until the diagonal reads 5 m or 10 m. The converse is why that works.
-- **Distance on a map grid.** Walk 3 km east and 4 km north and the straight line back is 5 km; the grid version is [distance-and-midpoint](../04-Coordinates%20and%20Curves/01-distance-and-midpoint.md).
+- **Distance on a map grid.** Walk 3 km east and 4 km north and the straight line back is 5 km; the grid version is [Distance and midpoint](../04-Coordinates%20and%20Curves/01-distance-and-midpoint.md).
 - **Old tablets.** Babylonian scribes listed lengths obeying the equation more than a thousand years before Pythagoras. The first proof is often credited to him, but no record of it survives.
 
 > **Say it back**
@@ -385,14 +363,14 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [similar-triangles-and-scale](04-similar-triangles-and-scale.md): the same-shape ratios behind the second proof.
-- [roots-and-fractional-exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): the positive square root that turns 25 m^2 back into 5 m.
+- [Similar triangles](04-similar-triangles-and-scale.md): the same-shape ratios behind the second proof.
+- [Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md): the positive square root that turns 25 m^2 back into 5 m.
 
 ## Where this goes next
 
-- [area-of-triangles-and-polygons](06-area-of-triangles-and-polygons.md): the half-rectangle area used in Step 3, extended to any triangle and polygon.
-- [distance-and-midpoint](../04-Coordinates%20and%20Curves/01-distance-and-midpoint.md): the rule turned into the distance between two points on a grid.
-- [law-of-cosines](../03-Trigonometry/06-law-of-cosines.md): what a wider ridge does to the span, and why a negative residual means an opened corner, once angles have a number.
+- [Area](06-area-of-triangles-and-polygons.md): the half-rectangle area used in Step 3, extended to any triangle and polygon.
+- [Distance and midpoint](../04-Coordinates%20and%20Curves/01-distance-and-midpoint.md): the rule turned into the distance between two points on a grid.
+- [Law of cosines](../03-Trigonometry/06-law-of-cosines.md): what a wider ridge does to the span, and why a negative residual means an opened corner, once angles have a number.
 
 ---
 

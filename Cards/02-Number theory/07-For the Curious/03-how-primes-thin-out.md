@@ -1,41 +1,20 @@
----
-type: card
-wing: 02-Number theory
-shelf: For the Curious
-topic: The primes at large
-item: How primes thin out
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/06-sieve-of-eratosthenes|sieve-of-eratosthenes]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/08-infinitude-of-primes|infinitude-of-primes]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/05-logarithms|logarithms]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/06-log-laws-and-log-scales|log-laws-and-log-scales]]"
-next: []
-tags:
-  - mathematics
-  - number theory
-  - how-primes-thin-out
----
-
 # How primes thin out: the prime counting function and the n over log n rule
 
-Number theory → For the Curious → The primes at large → How primes thin out
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [For the Curious](../../../SYLLABUS.md#w02-s07) → How primes thin out
 
 ---
 
 ## General Overview
 
-The corridor of lockers from [sieve-of-eratosthenes](../01-Divisibility%20and%20Primes/06-sieve-of-eratosthenes.md). A hundred doors, sieved: 25 left open, one in four.
+The corridor of lockers from [The sieve of Eratosthenes](../01-Divisibility%20and%20Primes/06-sieve-of-eratosthenes.md). A hundred doors, sieved: 25 left open, one in four.
 
 A thousand doors long: 168 open. A million long: 78,498 open, about one in thirteen.
 
-The primes never run out — [infinitude-of-primes](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md) settles that — but they spread out.
+The primes never run out — [There are infinitely many primes](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md) settles that — but they spread out.
 
 That count has a shorthand. **pi(x)**, said "pi of x", is how many primes there are up to x (1 is not one of them) — nothing to do with circles. So pi(100) = 25, pi(1,000) = 168, pi(1,000,000) = 78,498.
 
-And there is a rule for it, built out of a logarithm ([logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
+And there is a rule for it, built out of a logarithm ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
 
 **Divide x by the natural log of x and you have roughly how many primes lie below x — and the further you walk, the better "roughly" does.**
 
@@ -60,7 +39,7 @@ At a million:
 
 **pi(1,000,000) = 78,498, while 1,000,000 ÷ ln 1,000,000 = 1,000,000 ÷ 13.8155 = 72,382**
 
-**ln x** is the natural log of x: the question [logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md) asks, with e (about 2.718) as the base, not 10 ([natural-log-and-doubling-time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)) — ln 1,000,000 = 13.8155 means e reaches a million after 13.8155 multiplies. It climbs painfully slowly, which is the point.
+**ln x** is the natural log of x: the question [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md) asks, with e (about 2.718) as the base, not 10 ([Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md)) — ln 1,000,000 = 13.8155 means e reaches a million after 13.8155 multiplies. It climbs painfully slowly, which is the point.
 
 | Piece | Plain meaning | In our corridor | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -122,7 +101,7 @@ At 100 the miss is 3 and the ratio 1.151; at 1,000, 23 and 1.161. Those ratios d
 
 ## Code, from first principles, and it actually runs
 
-Nothing is imported but the log. The corridor of a million is sieved and the open doors counted, then counted again by a slower road: dividing every number by everything up to its own square root ([roots-and-fractional-exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)), at both ends of the corridor. Both counts are set against x ÷ ln x.
+Nothing is imported but the log. The corridor of a million is sieved and the open doors counted, then counted again by a slower road: dividing every number by everything up to its own square root ([Roots](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/03-roots-and-fractional-exponents.md)), at both ends of the corridor. Both counts are set against x ÷ ln x.
 
 ### Python
 
@@ -250,15 +229,15 @@ Both outputs match line for line.
 >
 > - **pi(x) is not the x-th prime.** pi(1,000) = 168; the 1,000th prime is 7,919.
 > - **The log is the natural one.** Base 10 predicts 166,667 below a million, against 78,498.
-> - **Thinning is not stopping.** However far you walk there are more primes ahead ([infinitude-of-primes](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md)).
+> - **Thinning is not stopping.** However far you walk there are more primes ahead ([There are infinitely many primes](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md)).
 
 ---
 
 ## Where you meet it in real life
 
-- **Making keys.** RSA needs large random primes ([rsa-in-outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md)). About one number in ln x is prime near x, so a random search takes a few hundred tries at key sizes, not billions. The tries themselves are [miller-rabin](../06-Codes%20and%20Secrets/05-miller-rabin.md).
+- **Making keys.** RSA needs large random primes ([RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md)). About one number in ln x is prime near x, so a random search takes a few hundred tries at key sizes, not billions. The tries themselves are [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md).
 - **Answering without counting.** "How many primes below a billion?" One log gets within a few percent, no sieve.
-- **The open questions.** Twin primes and Goldbach ([goldbach-and-open-problems](04-goldbach-and-open-problems.md)) ask about the pockets and pairs inside this thinning, and stay hard while the average is settled.
+- **The open questions.** Twin primes and Goldbach ([Goldbach, twin primes and friends](04-goldbach-and-open-problems.md)) ask about the pockets and pairs inside this thinning, and stay hard while the average is settled.
 
 > **Say it back**
 > pi(x) counts the primes up to x: 25 up to 100, 168 up to 1,000, 78,498 up to a million. They thin out as you walk: ever more smaller primes to catch a number. Near x about one number in ln x is prime, so below x there are about x ÷ ln x in all. The estimate lands low and its miss keeps growing, but the ratio of truth to estimate slides to 1 — the prime number theorem.
@@ -267,14 +246,14 @@ Both outputs match line for line.
 
 ## What this builds on
 
-- [sieve-of-eratosthenes](../01-Divisibility%20and%20Primes/06-sieve-of-eratosthenes.md): builds the corridor and the honest counts.
-- [infinitude-of-primes](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md): the thinning never reaches zero, so a rule for the count is worth having.
-- [logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): a log is a count of multiplies, all ln x means here.
-- [log-laws-and-log-scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md): why a log climbs so slowly.
+- [The sieve of Eratosthenes](../01-Divisibility%20and%20Primes/06-sieve-of-eratosthenes.md): builds the corridor and the honest counts.
+- [There are infinitely many primes](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md): the thinning never reaches zero, so a rule for the count is worth having.
+- [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): a log is a count of multiplies, all ln x means here.
+- [Log laws and log scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md): why a log climbs so slowly.
 
 ## Where this goes next
 
-Nothing later needs this card; shelf 7 is detours. Sideways: [goldbach-and-open-problems](04-goldbach-and-open-problems.md) asks what this average cannot answer, and [perfect-numbers-and-mersenne](02-perfect-numbers-and-mersenne.md) hunts single primes far past any corridor.
+Nothing later needs this card; shelf 7 is detours. Sideways: [Goldbach, twin primes and friends](04-goldbach-and-open-problems.md) asks what this average cannot answer, and [Perfect numbers and Mersenne primes](02-perfect-numbers-and-mersenne.md) hunts single primes far past any corridor.
 
 ---
 

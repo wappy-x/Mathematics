@@ -1,33 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Greeks, one each
-topic: Delta's clock drift
-item: Charm
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/01-delta|delta]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/04-theta|theta]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-next:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/09-greeks-together-taylor-pnl|greeks-together-taylor-pnl]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - charm
----
-
 # Charm: how delta drifts as the clock runs, with nothing else moving
 
-Financial mathematics → The Greeks, one each → Delta's clock drift → Charm
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Greeks, one each](../../../SYLLABUS.md#w12-s09) → Charm
 
 ---
 
 ## General Overview
 
-A desk has sold 10,000 one-year calls on Acme. Acme trades at $100, the strike is $100, cash earns 5 percent, Acme pays a 2 percent dividend yield and moves with 20 percent volatility. To stay neutral, the desk holds 5,868.51 Acme shares: 0.586851 shares per call, the call's **delta** (the number of shares that moves like one call for a small move in Acme; see [delta](01-delta.md)).
+A desk has sold 10,000 one-year calls on Acme. Acme trades at $100, the strike is $100, cash earns 5 percent, Acme pays a 2 percent dividend yield and moves with 20 percent volatility. To stay neutral, the desk holds 5,868.51 Acme shares: 0.586851 shares per call, the call's **delta** (the number of shares that moves like one call for a small move in Acme; see [Delta](01-delta.md)).
 
 The market closes. Overnight Acme does not trade, volatility does not change, rates do not change. One thing moves: the calendar. By morning the option has one day less to live.
 
@@ -60,7 +39,7 @@ Top line (orange): Acme frozen at $105, $5 above the strike. Middle line (green)
 
 ## The formula
 
-Notation first, in words. $T$ is time left to expiry, in years. $t$ is the calendar, in years. When $t$ moves forward one day, $T$ moves back one day. A **partial derivative** (the rate of change in one input with all the others held still; see [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)) is written with a curly d, so $\partial\Delta/\partial t$ reads "how fast delta changes as the calendar advances, with Acme, volatility and rates held still". Charm is that rate, written $\chi$ (the Greek letter chi):
+Notation first, in words. $T$ is time left to expiry, in years. $t$ is the calendar, in years. When $t$ moves forward one day, $T$ moves back one day. A **partial derivative** (the rate of change in one input with all the others held still; see [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)) is written with a curly d, so $\partial\Delta/\partial t$ reads "how fast delta changes as the calendar advances, with Acme, volatility and rates held still". Charm is that rate, written $\chi$ (the Greek letter chi):
 
 $$\chi = \frac{\partial \Delta}{\partial t} = -\frac{\partial \Delta}{\partial T}$$
 
@@ -91,7 +70,7 @@ $$\chi_P = \chi_C - q\,e^{-qT}$$
 | $d_1$, $d_2$ | how far Acme sits from the strike, in units of $\sigma\sqrt{T}$ | 0.25 and 0.05 | |
 | $e^{-qT}$ | the dividend drag: the share fraction bought today that grows to one share by expiry | 0.980199 | |
 
-The helpers, as on the [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card:
+The helpers, as on the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card:
 
 $$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)\,T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
 
@@ -102,7 +81,7 @@ Units. Charm here is per year, like the theta card's figures. Per calendar day i
 ### When it holds
 
 - **Nothing else moves.** Charm is only the clock's share of delta's change. Acme moving adds gamma times the move, and that usually dwarfs charm (see The usual mistake).
-- **Volatility is constant as time passes.** On a real desk, a shorter option is often quoted at a different volatility. Then delta also changes by vanna (see [vanna](06-vanna.md)) times that volatility change, which charm leaves out.
+- **Volatility is constant as time passes.** On a real desk, a shorter option is often quoted at a different volatility. Then delta also changes by vanna (see [Vanna](06-vanna.md)) times that volatility change, which charm leaves out.
 - **Dividends are a smooth yield.** A real dividend is paid on one date. Across that date delta jumps rather than drifts, and charm misses the jump.
 - **The time step is small next to the time left.** Charm is a slope. With a year left, one night is tiny and the slope is exact to a hundredth of a share. With two days left, one night is half the remaining life, and one dollar above the strike the slope misses by a third (How a hedge ages overnight).
 - **European exercise.** The formula differentiates the European delta. An option that can be exercised early has a different delta and a different charm.
@@ -170,7 +149,7 @@ Move Acme off the strike and the distance part of $d_1$ takes over, since it is 
 
 ### Another door: charm is also theta's slope in the stock price
 
-Charm is a mixed partial derivative of the price: once in Acme's price, once in the calendar. For a smooth function, the order of two partial derivatives does not matter ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). So charm is equally the rate at which theta (the price's calendar slope; see [theta](04-theta.md)) changes as Acme moves. The code takes that door: it nudges the theta card's formula in Acme's price and lands on −0.035639 again.
+Charm is a mixed partial derivative of the price: once in Acme's price, once in the calendar. For a smooth function, the order of two partial derivatives does not matter ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). So charm is equally the rate at which theta (the price's calendar slope; see [Theta](04-theta.md)) changes as Acme moves. The code takes that door: it nudges the theta card's formula in Acme's price and lands on −0.035639 again.
 
 ---
 
@@ -626,8 +605,8 @@ The two outputs agree line for line at the printed precision, from different rou
 
 - **Friday afternoon on a derivatives desk.** A book is hedged for three days of clock at once. Charm tells the desk how many shares the weekend will cost it before Monday's open.
 - **Risk reports.** Many desks list "delta decay" or "delta bleed" next to theta: charm, per day, summed over the book. It is what the hedge will need tomorrow if nothing else changes.
-- **Expiry week.** Near the strike, charm grows large, so dealers' hedges shift on their own each day. Market commentary about option-driven flows into monthly expiries points at this effect, together with vanna ([vanna](06-vanna.md)).
-- **The rest of the shelf.** Charm is one of three second-order Greeks here, with [vanna](06-vanna.md) (delta's slope in volatility) and [volga](07-volga.md) (vega's slope in volatility). Delta's slope in Acme's price is [gamma](02-gamma.md).
+- **Expiry week.** Near the strike, charm grows large, so dealers' hedges shift on their own each day. Market commentary about option-driven flows into monthly expiries points at this effect, together with vanna ([Vanna](06-vanna.md)).
+- **The rest of the shelf.** Charm is one of three second-order Greeks here, with [Vanna](06-vanna.md) (delta's slope in volatility) and [Volga](07-volga.md) (vega's slope in volatility). Delta's slope in Acme's price is [Gamma](02-gamma.md).
 
 > **Say it back**
 > Charm is how fast an option's delta changes as the calendar advances, with the stock and everything else held still. For a call it has two pieces: a small gain as the dividends still to come run out, and a larger change as the bell-curve chance behind delta slides with the time left. The put's charm is the call's minus the dividend drag's slope. At the strike, delta drifts toward one half; off it, toward a full share or nothing, and charm near expiry grows so large that a slope no longer ages the hedge well. With time to spare, charm times the days passed tells a desk how many shares to trade without repricing anything.
@@ -636,13 +615,13 @@ The two outputs agree line for line at the printed precision, from different rou
 
 ## What this builds on
 
-- [delta](01-delta.md): the call's delta $e^{-qT}N(d_1)$, and delta parity with the put. Charm is its slope along the calendar.
-- [theta](04-theta.md): the price's slope along the calendar, the same clock with the sign turned round, and the formula the code nudges in Acme's price.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes in one input with the others frozen, and why the order of two partial derivatives does not matter.
+- [Delta](01-delta.md): the call's delta $e^{-qT}N(d_1)$, and delta parity with the put. Charm is its slope along the calendar.
+- [Theta](04-theta.md): the price's slope along the calendar, the same clock with the sign turned round, and the formula the code nudges in Acme's price.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes in one input with the others frozen, and why the order of two partial derivatives does not matter.
 
 ## Where this goes next
 
-- [greeks-together-taylor-pnl](09-greeks-together-taylor-pnl.md): every Greek on the shelf in one expansion, where charm is the cross term between a stock move and a day passing.
+- [The Greeks together](09-greeks-together-taylor-pnl.md): every Greek on the shelf in one expansion, where charm is the cross term between a stock move and a day passing.
 
 Charm ages a hedge while the stock stands still; the next card asks what one day of profit and loss looks like when the stock, the clock and volatility all move at once.
 

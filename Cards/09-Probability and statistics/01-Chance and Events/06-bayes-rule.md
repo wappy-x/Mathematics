@@ -1,26 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Chance and Events
-topic: Updating on evidence
-item: Bayes' rule
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/05-conditional-probability|conditional-probability]]"
-next:
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/01-priors-posteriors-and-updating|priors-posteriors-and-updating]]"
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/05-conditioning-on-a-random-variable|conditioning-on-a-random-variable]]"
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/08-hidden-markov-models|hidden-markov-models]]"
-  - "[[Cards/12-Financial mathematics/49-Microstructure and Execution/02-bid-ask-spread-and-adverse-selection|bid-ask-spread-and-adverse-selection]]"
-  - "[[Cards/14-Applied and computational/05-Operations Research/08-decision-theory-and-the-value-of-information|decision-theory-and-the-value-of-information]]"
-tags: [mathematics, probability and statistics, bayes-rule]
----
-
 # Bayes' rule: turning the evidence round
 
-Probability and statistics → Chance and Events → Updating on evidence → Bayes' rule
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Chance and Events](../../../SYLLABUS.md#w09-s01) → Bayes' rule
 
 ---
 
@@ -57,7 +37,7 @@ The two boxes that say "positive" hold 198 people. Only the left one, 99 people,
 
 ## The formula
 
-Notation from earlier cards, one line each. $P(A)$ is read "the chance of A". $P(A \mid B)$ is read "the chance of A given B": the chance of A counted only among the cases where B happened ([conditional-probability](05-conditional-probability.md)). $A^c$ is read "not A": every case where A fails ([probability-rules-and-complements](03-probability-rules-and-complements.md)).
+Notation from earlier cards, one line each. $P(A)$ is read "the chance of A". $P(A \mid B)$ is read "the chance of A given B": the chance of A counted only among the cases where B happened ([Conditional probability](05-conditional-probability.md)). $A^c$ is read "not A": every case where A fails ([The rules](03-probability-rules-and-complements.md)).
 
 Name the two events. $H$ is the claim under test: "this person carries the condition". $E$ is the evidence: "this person tested positive".
 
@@ -142,7 +122,7 @@ This makes the base rate's weight visible. A likelihood ratio of 99 is strong ev
 
 Suppose the person takes a second, separate test with the same error rates, and it too is positive. The odds after the first result become the odds before the second. If the two tests err independently of each other once the person's true state is fixed, the second result multiplies by 99 again: odds of 1 to 1 become 99 to 1, a chance of 99 percent.
 
-The code checks this by counting all 1,000,000 equally likely cases: 9,900 have two positives, and 9,801 of those are carriers. The independence condition is not automatic. A retest of the same sample copies the first result's error, adds nothing, and leaves the answer at 50 percent. When events carry fresh information and when they do not is the subject of [independence](07-independence.md).
+The code checks this by counting all 1,000,000 equally likely cases: 9,900 have two positives, and 9,801 of those are carriers. The independence condition is not automatic. A retest of the same sample copies the first result's error, adds nothing, and leaves the answer at 50 percent. When events carry fresh information and when they do not is the subject of [Independence](07-independence.md).
 
 <details>
 <summary>Detailed proof</summary>
@@ -159,7 +139,7 @@ and these answers add up to 1.
 
 </details>
 
-**The other road: count, do not divide.** The tree in the overview is Bayes' rule written in whole people. Take a round number of cases, split them by the base rate, split each branch by the test's rates, and read off the share of positives that sit under $H$. Psychologists call these counts **natural frequencies**; people given them solve problems like this one far more often than people given percentages. The same counting sits behind [conditional-probability](05-conditional-probability.md).
+**The other road: count, do not divide.** The tree in the overview is Bayes' rule written in whole people. Take a round number of cases, split them by the base rate, split each branch by the test's rates, and read off the share of positives that sit under $H$. Psychologists call these counts **natural frequencies**; people given them solve problems like this one far more often than people given percentages. The same counting sits behind [Conditional probability](05-conditional-probability.md).
 
 ---
 
@@ -639,7 +619,7 @@ The simulation found 8,011 positives among 400,000 people, 4,020 of them carrier
 - **Medical screening.** Screening programmes for rare conditions follow a positive with a second, different test, because a single positive at a low base rate is often a false alarm. The second test multiplies the odds again.
 - **Spam filters.** A filter scores each word by how much more often it appears in spam than in normal mail, a likelihood ratio, and multiplies the odds word by word. The multiplication assumes words are independent given the class; they are not quite, and the filter works well in practice anyway.
 - **Courtrooms.** Forensic guidelines in several countries ask experts to report a likelihood ratio ("this match is 10,000 times more likely if the suspect was present") and leave the base rate to the court.
-- **Trading.** A market maker who fills an order updates the chance that the other side knows something: [bid-ask-spread-and-adverse-selection](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/02-bid-ask-spread-and-adverse-selection.md).
+- **Trading.** A market maker who fills an order updates the chance that the other side knows something: [The spread](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/02-bid-ask-spread-and-adverse-selection.md).
 
 > **Say it back**
 > The chance of the evidence given a cause and the chance of the cause given the evidence are different numbers. Bayes' rule connects them: multiply the first by the base rate, then divide by the total chance of the evidence. In odds, the rule is a single multiplication: the odds after equal the odds before times the likelihood ratio. A 99 percent test on a 1 percent condition moves odds of 1 to 99 to odds of 1 to 1, so a positive means 50 percent. A second independent positive multiplies by 99 again; a repeat of the same reading does not.
@@ -648,17 +628,17 @@ The simulation found 8,011 positives among 400,000 people, 4,020 of them carrier
 
 ## What this builds on
 
-- [conditional-probability](05-conditional-probability.md): the definition of the chance of A given B, the multiplication rule used in Step 1, and the law of total probability used in Step 3.
+- [Conditional probability](05-conditional-probability.md): the definition of the chance of A given B, the multiplication rule used in Step 1, and the law of total probability used in Step 3.
 
 ## Where this goes next
 
-- [priors-posteriors-and-updating](../10-Bayesian%20Inference/01-priors-posteriors-and-updating.md): the base rate becomes a whole distribution of beliefs about an unknown number, updated by data.
-- [conditioning-on-a-random-variable](../../10-Measure%20and%20integration/09-Conditional%20Expectation/05-conditioning-on-a-random-variable.md): conditioning on evidence that has chance zero, such as an exact measurement, where the division here breaks.
-- [hidden-markov-models](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/08-hidden-markov-models.md): Bayes' rule applied step after step to a hidden state that changes over time.
-- [bid-ask-spread-and-adverse-selection](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/02-bid-ask-spread-and-adverse-selection.md): a dealer's quote as the answer to a Bayes update on who is trading.
-- decision-theory-and-the-value-of-information: what a test is worth before it is run, priced by the decisions its result would change.
+- [Bayesian updating](../10-Bayesian%20Inference/01-priors-posteriors-and-updating.md): the base rate becomes a whole distribution of beliefs about an unknown number, updated by data.
+- [Conditioning on a random variable](../../10-Measure%20and%20integration/09-Conditional%20Expectation/05-conditioning-on-a-random-variable.md): conditioning on evidence that has chance zero, such as an exact measurement, where the division here breaks.
+- [Hidden Markov models](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/08-hidden-markov-models.md): Bayes' rule applied step after step to a hidden state that changes over time.
+- [The spread](../../12-Financial%20mathematics/49-Microstructure%20and%20Execution/02-bid-ask-spread-and-adverse-selection.md): a dealer's quote as the answer to a Bayes update on who is trading.
+- Deciding under uncertainty: what a test is worth before it is run, priced by the decisions its result would change.
 
-[independence](07-independence.md) answers the question Step 5 left open: when does a second piece of evidence carry fresh information, so that its likelihood ratio may be multiplied in?
+[Independence](07-independence.md) answers the question Step 5 left open: when does a second piece of evidence carry fresh information, so that its likelihood ratio may be multiplied in?
 
 ---
 

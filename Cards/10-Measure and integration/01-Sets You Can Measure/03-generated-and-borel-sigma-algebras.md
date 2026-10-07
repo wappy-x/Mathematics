@@ -1,27 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Sets You Can Measure
-topic: Families built from questions
-item: Generated sigma-algebras and Borel sets
-kind: definition
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/02-sigma-algebras|sigma-algebras]]"
-  - "[[Cards/01-Foundations/02-The Number Line/02-number-line-and-inequalities|number-line-and-inequalities]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/02-countable-sets|countable-sets]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/03-sequences-and-limits|sequences-and-limits]]"
-next:
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/06-pi-systems-and-uniqueness|pi-systems-and-uniqueness]]"
-  - "[[Cards/10-Measure and integration/03-Measurable Functions/01-measurable-functions|measurable-functions]]"
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/01-product-sigma-algebras|product-sigma-algebras]]"
-tags: [mathematics, measure and integration, generated-and-borel-sigma-algebras]
----
-
 # Generated sigma-algebras and Borel sets: the smallest family containing your chosen sets, and the default family on the real line
 
-Measure and integration → Sets You Can Measure → Families built from questions → Generated sigma-algebras and Borel sets
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sets You Can Measure](../../../SYLLABUS.md#w10-s01) → Generated sigma-algebras and Borel sets
 
 ---
 
@@ -31,7 +10,7 @@ A thermometer answers one kind of question: "is the temperature below t degrees?
 
 Yet it settles far more. "Is it exactly 20 degrees?" Ask "below 20 + 1/n?" for n = 1, 2, 4, 10, and so on. A reading of 20.3 fails the question from n = 4 on; a reading of 20.0007 fails from n = 1429 on. Only a reading of 20 or less passes every time. Remove the readings below 20, one more question, and exactly 20 remains. "Between 18 and 20?" is "below 20?" with "at most 18?" removed. A region made of open bands, however many, is a countable pile of bands with fractional edges.
 
-A **sigma-algebra** is a family of sets that holds the whole space and is closed under complements and countable unions, so it holds the empty set too ([sigma-algebras](02-sigma-algebras.md)); read it as the list of yes/no questions that can be settled. Start from any chosen sets. The smallest sigma-algebra that holds them all is the **generated sigma-algebra**: everything the rules force. Start from the thermometer's questions on the real line and what comes out is the family of **Borel sets**, named after Émile Borel. Every interval, every exact reading, every countable list of readings and every open set is in it.
+A **sigma-algebra** is a family of sets that holds the whole space and is closed under complements and countable unions, so it holds the empty set too ([Sigma-algebras](02-sigma-algebras.md)); read it as the list of yes/no questions that can be settled. Start from any chosen sets. The smallest sigma-algebra that holds them all is the **generated sigma-algebra**: everything the rules force. Start from the thermometer's questions on the real line and what comes out is the family of **Borel sets**, named after Émile Borel. Every interval, every exact reading, every countable list of readings and every open set is in it.
 
 **The generated sigma-algebra is everything the rules force once the chosen sets are in; the Borel sets are what the rules force from "below t?" alone, and the same family comes from open intervals, closed intervals or open sets.**
 
@@ -93,7 +72,7 @@ The first equality is the definition. The other three are the theorem.
 ### When it holds
 
 - **The generators are sets in one space.** $\sigma(\mathcal{C})$ exists for any family of subsets of $\Omega$, however strange; nothing else is assumed.
-- **Countable operations only.** The rules allow countable unions. Allow any union at all and every set becomes a union of single points, so the family collapses to all subsets. Taken as a record of all its answers at once, the thermometer tells any two readings apart, so in the sense of [sigma-algebras](02-sigma-algebras.md) Step 4 it settles every subset; on this card, a question the thermometer settles means one the rules force from its answers, and those stop at the Borel sets.
+- **Countable operations only.** The rules allow countable unions. Allow any union at all and every set becomes a union of single points, so the family collapses to all subsets. Taken as a record of all its answers at once, the thermometer tells any two readings apart, so in the sense of [Sigma-algebras](02-sigma-algebras.md) Step 4 it settles every subset; on this card, a question the thermometer settles means one the rules force from its answers, and those stop at the Borel sets.
 - **Every threshold, or at least a dense set of them.** Rays at every rational $t$ already generate the Borel sets. Rays at whole degrees only do not: they can never settle "below 20.5?".
 - **Rational points everywhere on the line.** The step from intervals to open sets uses that every open set is a countable union of intervals with rational ends. That holds on the line, in the plane and in higher dimensions; general spaces are wing 17's business.
 
@@ -137,7 +116,7 @@ Half-open intervals such as $[18, 20)$ come the same way. The code tests all thr
 
 ### Step 4: every open set from countably many intervals
 
-The rules allow only countable unions, and an open set is naturally a union of uncountably many intervals. The rationals fix this: they can be listed one after another ([countable-sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)), so the intervals with rational ends can be too. Each point of an open set $U$ has room around it, and a rational lies between any two numbers, so each point sits in a rational-end interval inside $U$. Those intervals, countably many, make up all of $U$.
+The rules allow only countable unions, and an open set is naturally a union of uncountably many intervals. The rationals fix this: they can be listed one after another ([Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)), so the intervals with rational ends can be too. Each point of an open set $U$ has room around it, and a rational lies between any two numbers, so each point sits in a rational-end interval inside $U$. Those intervals, countably many, make up all of $U$.
 
 The band $U = (0, \sqrt 2)$ has an irrational right edge, the square root of 2, 1.414214 by bisection. Using fractions with denominator $q$, the intervals $(0, p/q)$ inside $U$ reach up to the largest $p$ with $(p/q)^2 < 2$. At $q = 100$ that is $p = 141$, since 141 × 141 = 19881 is below 20000 and 142 × 142 = 20164 is above. The part of $U$ still uncovered shrinks from 0.414214 at $q = 1$ to 0.014214, 0.004214 and 0.000214 at $q$ = 10, 100 and 1000. Every point of $U$ is covered at some stage, and there are countably many stages.
 
@@ -172,7 +151,7 @@ The rationals are neither open nor closed. Borel sets reach far beyond both.
 
 </details>
 
-Two variants, used by the pi-systems card: rays of the form $(-\infty, t]$ also generate the Borel sets, since each is Borel (the complement of the open set $(t, \infty)$) and $(-\infty, t) = \bigcup_n (-\infty, t - 1/n]$ by Claim 3's argument, so Step 1's comparison rule gives both inclusions; and so do rays at rational thresholds only, since $(-\infty, t)$ is the union of the rays at the rational thresholds below $t$ ([pi-systems-and-uniqueness](06-pi-systems-and-uniqueness.md)).
+Two variants, used by the pi-systems card: rays of the form $(-\infty, t]$ also generate the Borel sets, since each is Borel (the complement of the open set $(t, \infty)$) and $(-\infty, t) = \bigcup_n (-\infty, t - 1/n]$ by Claim 3's argument, so Step 1's comparison rule gives both inclusions; and so do rays at rational thresholds only, since $(-\infty, t)$ is the union of the rays at the rational thresholds below $t$ ([Pi-systems and Dynkin's theorem](06-pi-systems-and-uniqueness.md)).
 
 ---
 
@@ -197,7 +176,7 @@ A thermometer that only ever answers "below t?" settles whether the reading is e
 | Finitely many unions and complements only | slivers $[20, 20 + 1/n)$ of length 1, 0.1, 0.01, 0.001, never one point | $\{20\}$ needs a countable intersection |
 | Too few thresholds: the gauge at 18 and 20 | 8 sets, not 16; "exactly 19?" not settled | the generators must separate the readings |
 | One round of complements and unions from the rays | 8 sets after one round, not 16 | the rules must be applied until nothing changes: rounds 5, 8, 11, 14, 16 |
-| Any union allowed, however large | every subset of the line | the family is then too big to carry a length ([translation-invariance-and-the-vitali-set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)) |
+| Any union allowed, however large | every subset of the line | the family is then too big to carry a length ([Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)) |
 
 The code prints the first three. The fourth is an argument about uncountably many sets, and no code builds it.
 
@@ -586,10 +565,10 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Distribution functions.** A reading's chance of being at most $t$, for every $t$, pins down its chance of landing in every Borel set, because rays generate the Borel sets: [pi-systems-and-uniqueness](06-pi-systems-and-uniqueness.md).
-- **Checking a function is measurable.** Only the questions "is the value below a?" need checking, for the same reason: [measurable-functions](../03-Measurable%20Functions/01-measurable-functions.md).
-- **What a measurement tells.** The questions a quantity answers generate a sigma-algebra, its information: the gauge's 8 sets against the rays' 16. [random-variables-and-their-information](../03-Measurable%20Functions/04-random-variables-and-their-information.md).
-- **Two or more readings at once.** Rectangles generate the sets of the plane, the same construction one dimension up: [product-sigma-algebras](../06-Product%20Measures%20and%20Fubini/01-product-sigma-algebras.md).
+- **Distribution functions.** A reading's chance of being at most $t$, for every $t$, pins down its chance of landing in every Borel set, because rays generate the Borel sets: [Pi-systems and Dynkin's theorem](06-pi-systems-and-uniqueness.md).
+- **Checking a function is measurable.** Only the questions "is the value below a?" need checking, for the same reason: [Measurable functions](../03-Measurable%20Functions/01-measurable-functions.md).
+- **What a measurement tells.** The questions a quantity answers generate a sigma-algebra, its information: the gauge's 8 sets against the rays' 16. [Random variables as measurable maps](../03-Measurable%20Functions/04-random-variables-and-their-information.md).
+- **Two or more readings at once.** Rectangles generate the sets of the plane, the same construction one dimension up: [Product sigma-algebras](../06-Product%20Measures%20and%20Fubini/01-product-sigma-algebras.md).
 
 > **Say it back**
 > The sigma-algebra generated by chosen sets is everything complements and countable unions force from them: the common part of every sigma-algebra that holds them. On the line, the questions "below t?" generate the Borel sets. Countable intersections turn "below" into "at most", differences give exact readings and intervals, and rational ends give every open set. Open intervals, closed intervals and open sets generate the same family. Singletons, countable, open and closed sets are Borel; not every set is.
@@ -598,18 +577,18 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [sigma-algebras](02-sigma-algebras.md): the three rules, and a sigma-algebra read as the questions it settles.
-- [number-line-and-inequalities](../../01-Foundations/02-The%20Number%20Line/02-number-line-and-inequalities.md): intervals and their ends, and a fraction between any two fractions; Claim 5 puts one between any two numbers.
-- [countable-sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md): the rationals, and pairs of them, fit in one queue, so the rational-end intervals are countably many.
-- [sequences-and-limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md): $1/n$ dropping below any positive gap, which closes the ray in Step 2.
+- [Sigma-algebras](02-sigma-algebras.md): the three rules, and a sigma-algebra read as the questions it settles.
+- [The number line and inequalities](../../01-Foundations/02-The%20Number%20Line/02-number-line-and-inequalities.md): intervals and their ends, and a fraction between any two fractions; Claim 5 puts one between any two numbers.
+- [Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md): the rationals, and pairs of them, fit in one queue, so the rational-end intervals are countably many.
+- [Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md): $1/n$ dropping below any positive gap, which closes the ray in Step 2.
 
 ## Where this goes next
 
-- [pi-systems-and-uniqueness](06-pi-systems-and-uniqueness.md): two measures that agree on the rays agree on every Borel set.
-- [measurable-functions](../03-Measurable%20Functions/01-measurable-functions.md): the single test "below a?" for measurability, inherited from this card's generation theorem.
-- [product-sigma-algebras](../06-Product%20Measures%20and%20Fubini/01-product-sigma-algebras.md): families generated by rectangles on a product of spaces.
+- [Pi-systems and Dynkin's theorem](06-pi-systems-and-uniqueness.md): two measures that agree on the rays agree on every Borel set.
+- [Measurable functions](../03-Measurable%20Functions/01-measurable-functions.md): the single test "below a?" for measurability, inherited from this card's generation theorem.
+- [Product sigma-algebras](../06-Product%20Measures%20and%20Fubini/01-product-sigma-algebras.md): families generated by rectangles on a product of spaces.
 
-The family of sets is now fixed; what size to give each Borel set, and the rules that size must obey, is [measures](04-measures.md).
+The family of sets is now fixed; what size to give each Borel set, and the rules that size must obey, is [Measures](04-measures.md).
 
 ---
 

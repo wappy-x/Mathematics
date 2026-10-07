@@ -1,30 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Calculus of Variations and Optimal Control
-topic: The first variation
-item: The Euler-Lagrange equation
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/05-two-point-boundary-value-problems|two-point-boundary-value-problems]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/04-integration-by-parts|integration-by-parts]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/03-monotonicity-and-optimisation|monotonicity-and-optimisation]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/02-the-brachistochrone-and-the-beltrami-identity|the-brachistochrone-and-the-beltrami-identity]]"
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/04-lagrangian-mechanics|lagrangian-mechanics]]"
-  - "[[Cards/19-Partial differential equations/04-Laplace, Poisson and Potentials/06-dirichlet-principle-and-variational-form|dirichlet-principle-and-variational-form]]"
-  - "[[Cards/23-Differential geometry and Lie groups/02-Surfaces/07-minimal-surfaces-and-soap-films|minimal-surfaces-and-soap-films]]"
-  - "[[Cards/23-Differential geometry and Lie groups/05-Riemannian Geometry/04-geodesics-and-the-exponential-map|geodesics-and-the-exponential-map]]"
-  - "[[Cards/23-Differential geometry and Lie groups/06-Lie Groups/08-noethers-theorem|noethers-theorem]]"
-tags: [mathematics, differential-equations-and-dynamics, functionals-and-the-euler-lagrange-equation]
----
-
 # The Euler-Lagrange equation: to find the best curve, nudge it, and the nudge must change the cost by nothing
 
-Differential equations and dynamics → Calculus of Variations and Optimal Control → The first variation → The Euler-Lagrange equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Calculus of Variations and Optimal Control](../../../SYLLABUS.md#w08-s12) → The Euler-Lagrange equation
 
 ---
 
@@ -91,7 +67,7 @@ $$F_y\big(x, y, y'\big) - \frac{d}{dx}\,F_p\big(x, y, y'\big) = 0 \qquad \text{f
 
 ### Step 0: a nudge turns a curve problem into a one-number problem
 
-Fix a nudge's shape $\eta$ and vary its size $\varepsilon$. The cost becomes a function of one number, smallest at $\varepsilon = 0$ if $y$ is best, so its derivative there is zero ([monotonicity-and-optimisation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md)). This holds for every shape.
+Fix a nudge's shape $\eta$ and vary its size $\varepsilon$. The cost becomes a function of one number, smallest at $\varepsilon = 0$ if $y$ is best, so its derivative there is zero ([Optimisation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md)). This holds for every shape.
 
 The chart takes the straight cable and a 40 m bulge at its middle, $\eta = 40\sin(\pi x/400)$ metres, zero at both pylons.
 
@@ -108,11 +84,11 @@ The cable's length is level at size 0 and rises alike on both sides.
 
 ### Step 1: differentiate under the integral
 
-The nudged route has height $y + \varepsilon\eta$ and slope $y' + \varepsilon\eta'$. By the chain rule $\varepsilon$ reaches $F$ through two slots, giving $F_y\,\eta + F_p\,\eta'$ per stretch ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Summing the stretches gives the first-variation formula.
+The nudged route has height $y + \varepsilon\eta$ and slope $y' + \varepsilon\eta'$. By the chain rule $\varepsilon$ reaches $F$ through two slots, giving $F_y\,\eta + F_p\,\eta'$ per stretch ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). Summing the stretches gives the first-variation formula.
 
 ### Step 2: move the derivative off the nudge
 
-Integration by parts ([integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)) gives
+Integration by parts ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)) gives
 
 $$\int_a^b F_p\,\eta'\,dx = \Big[F_p\,\eta\Big]_a^b - \int_a^b \frac{dF_p}{dx}\,\eta\,dx$$
 
@@ -135,7 +111,7 @@ Call the bracket $G$. If $G$ were positive somewhere, it would stay positive on 
 
 ### Step 4: the flat field gives a straight line
 
-With one price, drop it: $F = \sqrt{1 + p^2}$ is metres of cable per metre east. No $y$ slot, so $F_y = 0$ and $F_p = p/\sqrt{1 + p^2}$ is constant along the route. Differentiating, $y''/(1 + y'^2)^{3/2} = 0$, so $y'' = 0$. The pylons fix the two constants ([two-point-boundary-value-problems](../07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md)): $y = 0.75x$, 500 m long.
+With one price, drop it: $F = \sqrt{1 + p^2}$ is metres of cable per metre east. No $y$ slot, so $F_y = 0$ and $F_p = p/\sqrt{1 + p^2}$ is constant along the route. Differentiating, $y''/(1 + y'^2)^{3/2} = 0$, so $y'' = 0$. The pylons fix the two constants ([Boundary value problems](../07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md)): $y = 0.75x$, 500 m long.
 
 ### Step 5: the rocky field gives a bend
 
@@ -145,7 +121,7 @@ $$80\,\sin\theta_{\text{grass}} = 160\,\sin\theta_{\text{rock}}$$
 
 Crossing $s$ metres north of A, the grass leg has sine $s/\sqrt{200^2 + s^2}$ and the rock leg $(300 - s)/\sqrt{200^2 + (300 - s)^2}$. Solving gives $s = 220.30$ m, sines 0.7404 and 0.3702. This is Snell's law, by which light bends entering water.
 
-A second road skips the equation: chop the route into ten straight pieces, joint at the border, and move joints until the cost stops falling. The code shows this direct method landing on the same crossing. The case of an $F$ with no $x$ slot is [the-brachistochrone-and-the-beltrami-identity](02-the-brachistochrone-and-the-beltrami-identity.md).
+A second road skips the equation: chop the route into ten straight pieces, joint at the border, and move joints until the cost stops falling. The code shows this direct method landing on the same crossing. The case of an $F$ with no $x$ slot is [The brachistochrone](02-the-brachistochrone-and-the-beltrami-identity.md).
 
 ---
 
@@ -177,7 +153,7 @@ The code prints every row.
 
 ## Code, from first principles, and it actually runs
 
-The script integrates by Simpson's rule ([numerical-integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md)) and checks the first-variation formula against a nudge-both-ways difference quotient. Then two roads to each best route: the Euler-Lagrange road solves the sine rule by bisection; the direct road slides ten joints until the cost stops falling.
+The script integrates by Simpson's rule ([Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md)) and checks the first-variation formula against a nudge-both-ways difference quotient. Then two roads to each best route: the Euler-Lagrange road solves the sine rule by bisection; the direct road slides ten joints until the cost stops falling.
 
 ### Python
 
@@ -389,8 +365,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Routing cables, pipes and roads.** Price each kind of ground; seek the least-cost route.
-- **Mechanics.** A moving body makes a time integral of kinetic minus potential energy stationary, and the Euler-Lagrange equation becomes Newton's second law ([lagrangian-mechanics](04-lagrangian-mechanics.md)).
-- **Hanging cables.** A cable strung between pylons sags into the shape of least potential energy for its fixed length ([constrained-paths-and-the-hanging-chain](03-constrained-paths-and-the-hanging-chain.md)).
+- **Mechanics.** A moving body makes a time integral of kinetic minus potential energy stationary, and the Euler-Lagrange equation becomes Newton's second law ([Lagrangian mechanics](04-lagrangian-mechanics.md)).
+- **Hanging cables.** A cable strung between pylons sags into the shape of least potential energy for its fixed length ([Paths with a budget](03-constrained-paths-and-the-hanging-chain.md)).
 
 > **Say it back**
 > A functional turns a whole curve into one number. Nudge the curve by a small multiple of a shape that is zero at both ends. At the best curve the cost's rate of change, the first variation, is zero for every shape. Integration by parts and the fundamental lemma turn that into the Euler-Lagrange equation. It makes the flat-field cable straight and bends it at the rock.
@@ -399,19 +375,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [two-point-boundary-value-problems](../07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md): the Euler-Lagrange equation comes with conditions at both ends, not a starting slope.
-- [integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): moves the derivative off the nudge in Step 2 and produces the endpoint term.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): $F_y$ and $F_p$, with the other slots held still.
-- [monotonicity-and-optimisation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md): a smooth function has zero derivative at an interior minimum, used in Step 0.
+- [Boundary value problems](../07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md): the Euler-Lagrange equation comes with conditions at both ends, not a starting slope.
+- [Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): moves the derivative off the nudge in Step 2 and produces the endpoint term.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): $F_y$ and $F_p$, with the other slots held still.
+- [Optimisation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md): a smooth function has zero derivative at an interior minimum, used in Step 0.
 
 ## Where this goes next
 
-- [the-brachistochrone-and-the-beltrami-identity](02-the-brachistochrone-and-the-beltrami-identity.md): a shortcut when $F$ has no $x$ slot, and the curve of fastest descent.
-- [lagrangian-mechanics](04-lagrangian-mechanics.md): time in place of distance, and the laws of motion.
-- dirichlet-principle-and-variational-form: a surface as the unknown, and Laplace's equation.
-- minimal-surfaces-and-soap-films: least area spanning a wire loop.
-- geodesics-and-the-exponential-map: shortest routes on curved ground.
-- noethers-theorem: why a missing slot, as in Step 5, gives a conserved quantity.
+- [The brachistochrone](02-the-brachistochrone-and-the-beltrami-identity.md): a shortcut when $F$ has no $x$ slot, and the curve of fastest descent.
+- [Lagrangian mechanics](04-lagrangian-mechanics.md): time in place of distance, and the laws of motion.
+- Dirichlet's principle: a surface as the unknown, and Laplace's equation.
+- Minimal surface: least area spanning a wire loop.
+- Geodesic and exponential map: shortest routes on curved ground.
+- Noether: why a missing slot, as in Step 5, gives a conserved quantity.
 
 ---
 

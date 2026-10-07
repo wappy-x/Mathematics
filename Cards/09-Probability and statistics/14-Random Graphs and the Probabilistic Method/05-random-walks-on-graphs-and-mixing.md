@@ -1,26 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Random Graphs and the Probabilistic Method
-topic: The wandering surfer
-item: Random walks on a graph
-kind: theorem
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/09-Probability and statistics/14-Random Graphs and the Probabilistic Method/01-random-graphs-erdos-renyi|random-graphs-erdos-renyi]]"
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/05-conditional-probability|conditional-probability]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/07-adjacency-matrix-and-walk-counting|adjacency-matrix-and-walk-counting]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/04-stationary-distributions|stationary-distributions]]"
-  - "[[Cards/14-Applied and computational/07-Network Science and Spectral Graphs/01-centrality-and-pagerank|centrality-and-pagerank]]"
-  - "[[Cards/14-Applied and computational/07-Network Science and Spectral Graphs/07-expanders-and-mixing|expanders-and-mixing]]"
-tags: [mathematics, probability and statistics, random-walks-on-graphs-and-mixing]
----
-
 # Random walks on a graph: where a wanderer ends up, and how fast
 
-Probability and statistics → Random Graphs and the Probabilistic Method → The wandering surfer → Random walks on a graph
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Graphs and the Probabilistic Method](../../../SYLLABUS.md#w09-s14) → Random walks on a graph
 
 ---
 
@@ -36,7 +16,7 @@ The same walk, with one change, is PageRank, the ranking Google was founded on. 
 
 **On a connected two-way network a random walk spends a share of time on each dot equal to its number of links over twice the number of links, whatever the start; if the network also has a loop of odd length, the chance of being on each dot settles to those same shares, and how many steps that takes is the mixing time, set by the walk's second-largest eigenvalue size.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works; the mixing time is a definition, and the bound on it is proved in a folded Detailed proof. The return-time rule in Step 4 is checked by simulation here and proved on [stationary-distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md).
+**What kind of fact this is:** a theorem, proved on this card in Why it works; the mixing time is a definition, and the bound on it is proved in a folded Detailed proof. The return-time rule in Step 4 is checked by simulation here and proved on [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md).
 
 ### The picture: the six-page site
 
@@ -58,7 +38,7 @@ Home, Blog and Shop form a triangle, a loop of three links. That odd loop matter
 
 ## The formula
 
-Notation first, in words. Number the pages; $i$ and $j$ name two of them. The **degree** of page $i$, written deg(i), is its number of links. A table $P$ holds the click chances: the entry in row $i$ and column $j$, written $P_{ij}$, is the chance the next click goes to $j$ given the surfer is on $i$, a conditional probability ([conditional-probability](../01-Chance%20and%20Events/05-conditional-probability.md)). The walk is a **Markov chain**: the next page depends on the current page only, not on the path that led there. Each row of $P$ adds to 1.
+Notation first, in words. Number the pages; $i$ and $j$ name two of them. The **degree** of page $i$, written deg(i), is its number of links. A table $P$ holds the click chances: the entry in row $i$ and column $j$, written $P_{ij}$, is the chance the next click goes to $j$ given the surfer is on $i$, a conditional probability ([Conditional probability](../01-Chance%20and%20Events/05-conditional-probability.md)). The walk is a **Markov chain**: the next page depends on the current page only, not on the path that led there. Each row of $P$ adds to 1.
 
 $$P_{ij} = \frac{1}{\deg(i)} \text{ if } i \text{ and } j \text{ are linked, else } 0, \qquad \pi(i) = \frac{\deg(i)}{2m}$$
 
@@ -116,9 +96,9 @@ For Home: About, Blog, Shop and Contact each send 1/16, and 4/16 = 0.25 is Home'
 
 ### Step 2: the start is forgotten, if the site is connected and has an odd loop
 
-Step 1 shows $\pi$ is *a* resting point. The theorem says more: from any start, $p_t$ approaches $\pi$. The tool is the eigenvalues of $P$ ([eigenvalues-and-eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)): the stretch factors of the directions a table only stretches, never turns ([adjacency-matrix-and-walk-counting](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/07-adjacency-matrix-and-walk-counting.md) reads walks off powers of a matrix; here each power carries chances instead of counts).
+Step 1 shows $\pi$ is *a* resting point. The theorem says more: from any start, $p_t$ approaches $\pi$. The tool is the eigenvalues of $P$ ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)): the stretch factors of the directions a table only stretches, never turns ([The adjacency matrix](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/07-adjacency-matrix-and-walk-counting.md) reads walks off powers of a matrix; here each power carries chances instead of counts).
 
-$P$ is not symmetric: from About to Home is 1, from Home to About 1/4. But rescaling each row by the square root of its page's degree and each column by the inverse gives a symmetric table $S$, with entries $1/\sqrt{\deg(i)\deg(j)}$ on each link. $S$ and $P$ share their eigenvalues: $S = D^{1/2} P D^{-1/2}$, with $D$ the diagonal table of degrees, so $S f = \lambda f$ exactly when $P (D^{-1/2} f) = \lambda D^{-1/2} f$. The spectral theorem ([spectral-theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): a symmetric table has real eigenvalues and perpendicular eigenvector directions) applies to $S$. For this site they are
+$P$ is not symmetric: from About to Home is 1, from Home to About 1/4. But rescaling each row by the square root of its page's degree and each column by the inverse gives a symmetric table $S$, with entries $1/\sqrt{\deg(i)\deg(j)}$ on each link. $S$ and $P$ share their eigenvalues: $S = D^{1/2} P D^{-1/2}$, with $D$ the diagonal table of degrees, so $S f = \lambda f$ exactly when $P (D^{-1/2} f) = \lambda D^{-1/2} f$. The spectral theorem ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): a symmetric table has real eigenvalues and perpendicular eigenvector directions) applies to $S$. For this site they are
 
 1.0000, 0.4193, 0.1094, −0.3210, −0.5000, −0.7077.
 
@@ -148,11 +128,11 @@ $$\operatorname{TV}(p_t, \pi) \le \tfrac12\,\lambda_*^t \sqrt{\frac{1}{\pi(x)} -
 
 The worst start on this site is About, the page with one link: the surfer is certain to be on Home after one click, and the six chances stay lopsided for a few more. The distance from About's start falls 0.9375, 0.7500, 0.3750, 0.2917, 0.1979: under a quarter at 4 clicks, so $t_{\text{mix}}$ = 4.
 
-The bound from Step 2, starting at About where $\pi$ = 0.0625, is $\tfrac12 \cdot 0.7077^t \sqrt{15}$. It is 1.9365 at the start, useless there, and first falls below a quarter at 6 clicks, 0.2433. A bound is a guarantee, not a forecast: it promises 6 clicks, the truth is 4, and on a site of a million pages, where the table cannot be powered by hand, the guarantee is what is available. How big $1 - \lambda_*$ (the **spectral gap**) can be kept on large, sparse sites is the subject of expanders-and-mixing.
+The bound from Step 2, starting at About where $\pi$ = 0.0625, is $\tfrac12 \cdot 0.7077^t \sqrt{15}$. It is 1.9365 at the start, useless there, and first falls below a quarter at 6 clicks, 0.2433. A bound is a guarantee, not a forecast: it promises 6 clicks, the truth is 4, and on a site of a million pages, where the table cannot be powered by hand, the guarantee is what is available. How big $1 - \lambda_*$ (the **spectral gap**) can be kept on large, sparse sites is the subject of Expanders.
 
 ### Step 4: time on a page is the flip side of the wait to return
 
-If the surfer spends a quarter of the clicks on Home, visits to Home are on average 4 clicks apart. In general the average number of clicks to return to page $i$, having left it, is $1/\pi(i)$ = 2m/deg(i), a result known as Kac's lemma, proved on [stationary-distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md). For About that is 16 clicks. Starting at About, the surfer goes to Home, wanders, and on average makes 16 clicks before About comes round again. The simulation in the code measures 16.01 with standard error 0.12.
+If the surfer spends a quarter of the clicks on Home, visits to Home are on average 4 clicks apart. In general the average number of clicks to return to page $i$, having left it, is $1/\pi(i)$ = 2m/deg(i), a result known as Kac's lemma, proved on [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md). For About that is 16 clicks. Starting at About, the surfer goes to Home, wanders, and on average makes 16 clicks before About comes round again. The simulation in the code measures 16.01 with standard error 0.12.
 
 ### Step 5: PageRank is the same walk with a restart
 
@@ -176,7 +156,7 @@ xychart-beta
     line [0.2475, 0.0776, 0.1821, 0.2376, 0.1281, 0.1271]
 ```
 
-Orange bars: the plain walk, degree over 16. Teal line: PageRank with $d$ = 0.85. The jumps pull every share towards the even 1/6: About rises from 0.0625 to 0.0776, Home falls from 0.2500 to 0.2475. Home now edges out Shop, though both have 4 links: About's rank, lifted by the jumps, all flows to Home. With $d$ = 1 PageRank on a two-way site is exactly the degree shares. How PageRank is computed at the scale of the web and read as a ranking is centrality-and-pagerank.
+Orange bars: the plain walk, degree over 16. Teal line: PageRank with $d$ = 0.85. The jumps pull every share towards the even 1/6: About rises from 0.0625 to 0.0776, Home falls from 0.2500 to 0.2475. Home now edges out Shop, though both have 4 links: About's rank, lifted by the jumps, all flows to Home. With $d$ = 1 PageRank on a two-way site is exactly the degree shares. How PageRank is computed at the scale of the web and read as a ranking is Centrality.
 
 A second road to the stationary distribution skips the degrees: write $\pi P = \pi$ as six equations, replace one by "the shares add to 1", and solve. The code does that, and gets the same six numbers.
 
@@ -664,10 +644,10 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Search ranking.** PageRank is the stationary distribution of the surfer with jumps, computed over billions of pages by repeating one click on all of them at once (centrality-and-pagerank).
-- **Sampling a huge network.** To pick a user of a social network at random without the full list, walk friend to friend and correct for degree: a walk lands on people in proportion to their friend counts. On a random network ([random-graphs-erdos-renyi](01-random-graphs-erdos-renyi.md)) the walk only reaches its own piece, which is why [the-giant-component](02-the-giant-component.md) matters.
+- **Search ranking.** PageRank is the stationary distribution of the surfer with jumps, computed over billions of pages by repeating one click on all of them at once (Centrality).
+- **Sampling a huge network.** To pick a user of a social network at random without the full list, walk friend to friend and correct for degree: a walk lands on people in proportion to their friend counts. On a random network ([Random graphs](01-random-graphs-erdos-renyi.md)) the walk only reaches its own piece, which is why [The giant component](02-the-giant-component.md) matters.
 - **Shuffling and simulation.** A shuffle of a deck is a random walk on the orderings of the deck; its mixing time is how many shuffles make the order random. Markov chain Monte Carlo draws samples by running a walk past its mixing time.
-- **Mixing in networks.** Well-connected networks with few links, expanders, mix in a number of steps that grows only with the logarithm of their size (expanders-and-mixing).
+- **Mixing in networks.** Well-connected networks with few links, expanders, mix in a number of steps that grows only with the logarithm of their size (Expanders).
 
 > **Say it back**
 > A random walk on a graph moves from a dot to a randomly chosen neighbour at each step. Each link then carries the same traffic both ways, 1 over twice the number of links, so each dot's long-run share of time is its degree over twice the number of links. If the graph is connected and has an odd loop, the walk forgets its start; the mixing time counts the steps until it is within a quarter of the long-run shares, and the second-largest eigenvalue size bounds how fast that happens. PageRank is the same walk with a chance of jumping anywhere, which makes the answer unique on any web.
@@ -676,17 +656,17 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [random-graphs-erdos-renyi](01-random-graphs-erdos-renyi.md): graphs as dots and links drawn by chance, on which walks run.
-- [conditional-probability](../01-Chance%20and%20Events/05-conditional-probability.md): each click chance is a chance given the current page.
-- [adjacency-matrix-and-walk-counting](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/07-adjacency-matrix-and-walk-counting.md): the table of links, and walks read off its powers.
+- [Random graphs](01-random-graphs-erdos-renyi.md): graphs as dots and links drawn by chance, on which walks run.
+- [Conditional probability](../01-Chance%20and%20Events/05-conditional-probability.md): each click chance is a chance given the current page.
+- [The adjacency matrix](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/07-adjacency-matrix-and-walk-counting.md): the table of links, and walks read off its powers.
 
 ## Where this goes next
 
-- [stationary-distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md): Markov chains in general, with Kac's return-time rule proved.
-- centrality-and-pagerank: PageRank at web scale, and other ways to rank the dots of a network.
-- expanders-and-mixing: sparse networks whose spectral gap stays large, so walks on them mix in a few steps.
+- [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md): Markov chains in general, with Kac's return-time rule proved.
+- Centrality: PageRank at web scale, and other ways to rank the dots of a network.
+- Expanders: sparse networks whose spectral gap stays large, so walks on them mix in a few steps.
 
-The six-page site mixes in 4 clicks, but nothing here says how the mixing time grows as a network grows; which networks keep it small is the question expanders-and-mixing answers.
+The six-page site mixes in 4 clicks, but nothing here says how the mixing time grows as a network grows; which networks keep it small is the question Expanders answers.
 
 ---
 

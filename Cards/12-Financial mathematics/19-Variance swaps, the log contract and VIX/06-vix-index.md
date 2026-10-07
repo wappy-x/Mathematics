@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Variance swaps, the log contract and VIX
-topic: Model-free implied volatility
-item: The VIX
-kind: convention
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/03-variance-swap-fair-strike|variance-swap-fair-strike]]"
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/03-volatility-surface-and-its-arbitrage-rules|volatility-surface-and-its-arbitrage-rules]]"
-next: []
-tags: [mathematics, financial mathematics, vix-index]
----
-
 # The VIX: the published recipe that turns listed index options into a thirty-day volatility number
 
-Financial mathematics → Variance swaps, the log contract and VIX → Model-free implied volatility → The VIX
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Variance swaps, the log contract and VIX](../../../SYLLABUS.md#w12-s19) → The VIX
 
 ---
 
@@ -26,11 +10,11 @@ An index stands at 100. Two sets of options on it are listed: one set expires in
 
 The Cboe Volatility Index, the VIX, is the exchange's answer. It is a recipe, published and followed to the letter: take the out-of-the-money options at each expiry (puts below the forward price, calls above it; the forward is the price agreed today for delivery at expiry), weight each price by one over its strike squared, add them up, and blend the two expiries to exactly 30 days. The answer is quoted in volatility points. On the S&P 500 it is the number the news calls "the fear gauge".
 
-The recipe needs no model. It never asks what volatility is; it reads the price of the strip of options that replicates a variance swap ([variance-swap-fair-strike](03-variance-swap-fair-strike.md)), then takes the square root. On an index whose options all price at 20% volatility, the recipe prints **20.00**. On an index whose options show a skew (puts below the money priced at higher volatility than calls above it), with the at-the-money volatility (the implied vol of the option struck at the forward) still exactly 20%, it prints **21.18**. The VIX is not the at-the-money volatility; it is a weighted average across every strike, and the weights lean toward the puts.
+The recipe needs no model. It never asks what volatility is; it reads the price of the strip of options that replicates a variance swap ([The variance swap](03-variance-swap-fair-strike.md)), then takes the square root. On an index whose options all price at 20% volatility, the recipe prints **20.00**. On an index whose options show a skew (puts below the money priced at higher volatility than calls above it), with the at-the-money volatility (the implied vol of the option struck at the forward) still exactly 20%, it prints **21.18**. The VIX is not the at-the-money volatility; it is a weighted average across every strike, and the weights lean toward the puts.
 
 **The VIX is the square root of the price of thirty days of variance, read off a discrete strip of listed options by a fixed recipe, then multiplied by 100.**
 
-**What kind of fact this is:** a convention: the exchange defines the number by its recipe. That the recipe prices expected variance is a theorem, proved on [variance-swap-fair-strike](03-variance-swap-fair-strike.md); this card proves the recipe's two corrections (the forward switch and the blend) in Why it works.
+**What kind of fact this is:** a convention: the exchange defines the number by its recipe. That the recipe prices expected variance is a theorem, proved on [The variance swap](03-variance-swap-fair-strike.md); this card proves the recipe's two corrections (the forward switch and the blend) in Why it works.
 
 ### The picture: one at-the-money vol, two very different strips
 
@@ -81,7 +65,7 @@ The skewed surface is one formula, quoted in annual variance by log-moneyness:
 
 $$\sigma(k)^2 = 0.0325 + 0.15\left(-0.7\,k + \sqrt{k^2 + 0.0025}\right)$$
 
-In words: at the forward ($k$ = 0) it gives 0.0325 + 0.15 × 0.05 = 0.04, a 20% vol; to the left it rises, to the right it dips and then lifts. The shape is the raw SVI curve ([svi-smile-fit](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md)), applied here to annual variance rather than total variance, and used at both expiries.
+In words: at the forward ($k$ = 0) it gives 0.0325 + 0.15 × 0.05 = 0.04, a 20% vol; to the left it rises, to the right it dips and then lifts. The shape is the raw SVI curve ([The SVI smile](../12-The%20smile%20and%20the%20surface/04-svi-smile-fit.md)), applied here to annual variance rather than total variance, and used at both expiries.
 
 **Conventions verified 27 Sep 2026** against Cboe's VIX Index Methodology (version 6.0) and Volatility Index Mathematics Methodology (version 5.0), both last revised 26 Feb 2026: time counted in minutes over 525,600; the near expiry is the last one on or before 30 days out and the next expiry the first after (the "bracket method"); the forward read from the strike where call and put mid prices are closest; $K_0$ the strike at or just below it; strikes walked outward from $K_0$ until two consecutive zero bids (or zero asks); separate Treasury-spline rates per expiry. The exchange could change any of these; the maths below does not depend on which.
 
@@ -89,7 +73,7 @@ In words: at the forward ($k$ = 0) it gives 0.0325 + 0.15 × 0.05 = 0.04, a 20% 
 
 The VIX is a definition, so it always equals its recipe. What can fail is reading it as the market's price of 30-day variance:
 
-- **Prices move without gaps.** The strip prices variance exactly only when the index moves continuously. With jumps, the strip and expected variance differ by a third-moment term ([volatility-swap-and-jump-bias](05-volatility-swap-and-jump-bias.md)).
+- **Prices move without gaps.** The strip prices variance exactly only when the index moves continuously. With jumps, the strip and expected variance differ by a third-moment term ([The volatility swap and the jump bias](05-volatility-swap-and-jump-bias.md)).
 - **Strikes fine enough.** With $0.10 spacing the flat surface prints 20.00; with $5 spacing it prints 21.23. Coarse grids overstate.
 - **Strikes wide enough.** The zero-bid rule cuts the tails. On the skewed surface keeping every strike moves the VIX from 21.1750 to 21.1791: small here, larger when puts far below the money carry real value.
 - **Mid prices mean something.** The recipe uses the middle of bid and ask. Wide quotes in a panic feed noise straight into the number. The exchange therefore holds back any fall of 0.50 points or more for up to two minutes.
@@ -105,7 +89,7 @@ The VIX is an inverse: prices in, a volatility out. Existence: every out-of-the-
 
 ### Step 0: the price of variance is a strip of options
 
-A variance swap pays the realised variance of the index over a period, against a fixed strike. Its fair strike needs no model: it is the price of a strip of out-of-the-money options, each weighted by one over its strike squared ([variance-swap-fair-strike](03-variance-swap-fair-strike.md), built on [carr-madan-spanning-and-the-log-contract](02-carr-madan-spanning-and-the-log-contract.md)):
+A variance swap pays the realised variance of the index over a period, against a fixed strike. Its fair strike needs no model: it is the price of a strip of out-of-the-money options, each weighted by one over its strike squared ([The variance swap](03-variance-swap-fair-strike.md), built on [Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md)):
 
 $$\sigma^2_{\text{fair}} = \frac{2\,e^{rT}}{T}\left(\int_0^{F} \frac{P(K)}{K^2}\,dK + \int_F^{\infty} \frac{C(K)}{K^2}\,dK\right)$$
 
@@ -146,7 +130,7 @@ Write $x = F/K_0 - 1$, a small number when strikes are fine. Then $x - \ln(1+x) 
 
 ### Step 3: blend the two expiries in total variance
 
-Variance adds over time: the variance for 37 days is the variance for the first 23 days plus the forward variance from day 23 to day 37 ([variance-swap-after-inception-and-forward-variance](04-variance-swap-after-inception-and-forward-variance.md)). So the quantity that grows in a straight line with time is total variance, $\sigma^2 T$, not volatility. The recipe interpolates total variance linearly in days to day 30: weight $w_1 = (37 - 30)/(37 - 23)$ = 0.50 on the near expiry, 0.50 on the next. That gives total variance for 30 days; multiplying by 365/30 turns it back into a per-year rate. The square root is the volatility, and the exchange multiplies by 100 so that 20% prints as 20.
+Variance adds over time: the variance for 37 days is the variance for the first 23 days plus the forward variance from day 23 to day 37 ([Marking a variance swap](04-variance-swap-after-inception-and-forward-variance.md)). So the quantity that grows in a straight line with time is total variance, $\sigma^2 T$, not volatility. The recipe interpolates total variance linearly in days to day 30: weight $w_1 = (37 - 30)/(37 - 23)$ = 0.50 on the near expiry, 0.50 on the next. That gives total variance for 30 days; multiplying by 365/30 turns it back into a per-year rate. The square root is the volatility, and the exchange multiplies by 100 so that 20% prints as 20.
 
 Blending volatilities instead of variances gives a slightly different number, 21.1192 on the skewed surface instead of 21.1750. The gap is small here because the two expiries are close in variance; it grows when the term structure is steep.
 
@@ -156,7 +140,7 @@ Every term in the strip is positive, and each one grows with its option's price.
 
 ### The other door: read the density, then average the log payoff
 
-The same variance can be reached without the strip. Call prices, differentiated twice in the strike, give the market's risk-neutral density of the index at expiry ([butterfly-and-the-implied-density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)). The fair variance is then $\tfrac{2}{T}$ times the average of $S_T/F - 1 - \ln(S_T/F)$ under that density, where $S_T$ is the index at expiry. Integrating by parts twice turns this into the strip formula, which is how the two roads meet. The code takes both, numerically, and they agree to six decimals.
+The same variance can be reached without the strip. Call prices, differentiated twice in the strike, give the market's risk-neutral density of the index at expiry ([The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)). The fair variance is then $\tfrac{2}{T}$ times the average of $S_T/F - 1 - \ln(S_T/F)$ under that density, where $S_T$ is the index at expiry. Integrating by parts twice turns this into the strip formula, which is how the two roads meet. The code takes both, numerically, and they agree to six decimals.
 
 ---
 
@@ -638,17 +622,17 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [variance-swap-fair-strike](03-variance-swap-fair-strike.md): the $1/K^2$ strip that prices variance with no model. The VIX is that strip on listed strikes.
-- [volatility-surface-and-its-arbitrage-rules](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md): what a surface of implied vols is, and the no-butterfly rule the skewed surface is checked against.
-- [carr-madan-spanning-and-the-log-contract](02-carr-madan-spanning-and-the-log-contract.md): why a strip of options can rebuild the log payoff at all.
-- [variance-swap-after-inception-and-forward-variance](04-variance-swap-after-inception-and-forward-variance.md): why total variance adds over time, the reason the blend is linear in variance.
+- [The variance swap](03-variance-swap-fair-strike.md): the $1/K^2$ strip that prices variance with no model. The VIX is that strip on listed strikes.
+- [The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md): what a surface of implied vols is, and the no-butterfly rule the skewed surface is checked against.
+- [Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md): why a strip of options can rebuild the log payoff at all.
+- [Marking a variance swap](04-variance-swap-after-inception-and-forward-variance.md): why total variance adds over time, the reason the blend is linear in variance.
 
 ## Where this goes next
 
-- [volatility-swap-and-jump-bias](05-volatility-swap-and-jump-bias.md): why the square root of a variance price overstates a fair price for volatility, and how gaps in the index break the strip.
-- [heston-model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): a model in which variance itself moves, the setting for pricing futures and options on the VIX.
+- [The volatility swap and the jump bias](05-volatility-swap-and-jump-bias.md): why the square root of a variance price overstates a fair price for volatility, and how gaps in the index break the strip.
+- [The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): a model in which variance itself moves, the setting for pricing futures and options on the VIX.
 
-The VIX prices today's view of the next 30 days; what the market will pay today for the VIX a month from now needs a model of how variance itself moves, which is where [heston-model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md) begins.
+The VIX prices today's view of the next 30 days; what the market will pay today for the VIX a month from now needs a model of how variance itself moves, which is where [The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md) begins.
 
 ---
 

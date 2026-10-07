@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Returns and Utility
-topic: Choosing under risk
-item: Expected utility
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/36-Returns and Utility/01-returns-simple-log-and-annualised|returns-simple-log-and-annualised]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/06-jensens-inequality|jensens-inequality]]"
-next:
-  - "[[Cards/12-Financial mathematics/36-Returns and Utility/03-certainty-equivalent-and-risk-premium|certainty-equivalent-and-risk-premium]]"
-  - "[[Cards/12-Financial mathematics/36-Returns and Utility/04-stochastic-dominance|stochastic-dominance]]"
-  - "[[Cards/14-Applied and computational/05-Operations Research/08-decision-theory-and-the-value-of-information|decision-theory-and-the-value-of-information]]"
-tags: [mathematics, financial mathematics, expected-utility-and-risk-aversion]
----
-
 # Expected utility: why a sure 4 percent can beat a risky 8, and the number that says how much you mind risk
 
-Financial mathematics → Returns and Utility → Choosing under risk → Expected utility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Returns and Utility](../../../SYLLABUS.md#w12-s36) → Expected utility
 
 ---
 
@@ -105,10 +86,10 @@ $$u(w) = \frac{w^{1-\gamma}}{1-\gamma} \ \ (\gamma \ne 1), \qquad u(w) = \ln w \
 
 ### When it holds
 
-- **Consistent choices.** The representation needs four rules, listed in Why it works. People break the fourth, independence, in the Allais experiments; then no single score fits their choices, and [prospect-theory-in-outline](06-prospect-theory-in-outline.md) takes over.
+- **Consistent choices.** The representation needs four rules, listed in Why it works. People break the fourth, independence, in the Allais experiments; then no single score fits their choices, and [Prospect theory in outline](06-prospect-theory-in-outline.md) takes over.
 - **Known probabilities.** The coin is fair and everyone agrees. If the odds themselves are unknown, the average needs a belief about them first, and the answer moves with that belief.
 - **Scores for final wealth, not for gains and losses.** Here $9,300 is scored as a level of wealth. People often score it as "lost $700" from where they stood; that reference point is outside this model.
-- **One decision, one period.** The saver chooses once and waits a year. Repeated bets with reinvestment bring in growth rates: [kelly-criterion-and-growth](05-kelly-criterion-and-growth.md).
+- **One decision, one period.** The saver chooses once and waits a year. Repeated bets with reinvestment bring in growth rates: [Kelly](05-kelly-criterion-and-growth.md).
 - **Averages that exist.** Log and power scores need wealth above zero. A fund that can wipe the saver out scores minus infinity for log utility, and the ranking says never, at any mean.
 
 ---
@@ -145,7 +126,7 @@ That last line matters for Step 4. A score can be doubled or shifted and every c
 
 ### Step 2: minding risk means the score bends down
 
-Call a saver **risk averse** when a sure $E[W]$ is never worse than the gamble $W$. For a score curve that bends down (concave: every chord lies below the curve), [jensens-inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md) gives exactly that:
+Call a saver **risk averse** when a sure $E[W]$ is never worse than the gamble $W$. For a score curve that bends down (concave: every chord lies below the curve), [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md) gives exactly that:
 
 $$E[u(W)] \le u(E[W])$$
 
@@ -215,7 +196,7 @@ A smoother fund with the same 8 percent mean and 15 percent spread has a log ret
 
 </details>
 
-The other road to a risk measure is the whole distribution rather than one number: [stochastic-dominance](04-stochastic-dominance.md) asks when every risk-averse saver agrees, whatever the score.
+The other road to a risk measure is the whole distribution rather than one number: [Stochastic dominance](04-stochastic-dominance.md) asks when every risk-averse saver agrees, whatever the score.
 
 ---
 
@@ -652,9 +633,9 @@ The outputs agree line for line, the simulated rows included: both programs run 
 
 - **Robo-adviser questionnaires.** The "how would you feel if the portfolio fell by a fifth" questions are estimating a relative risk aversion. The answer sets the split between a deposit-like asset and a fund.
 - **Portfolio choice.** With power utility, the best share of wealth in the risky asset is about the excess return divided by $\gamma$ times the return's variance.
-- **Insurance.** A household pays more than the expected loss to insure a house because its score bends: the premium above the expected loss is a risk premium, $\pi$. Why both sides can gain from the trade is the business of [certainty-equivalent-and-risk-premium](03-certainty-equivalent-and-risk-premium.md).
+- **Insurance.** A household pays more than the expected loss to insure a house because its score bends: the premium above the expected loss is a risk premium, $\pi$. Why both sides can gain from the trade is the business of [Risk premium](03-certainty-equivalent-and-risk-premium.md).
 - **The equity premium puzzle.** Stocks have historically beaten safe bonds by several percent a year. Fitting that gap with power utility needs a $\gamma$ far above what most economists find believable: a famous misfit of this model.
-- **Growth-optimal betting.** Log utility is also the score that maximises long-run growth when a bet is repeated: [kelly-criterion-and-growth](05-kelly-criterion-and-growth.md).
+- **Growth-optimal betting.** Log utility is also the score that maximises long-run growth when a bet is repeated: [Kelly](05-kelly-criterion-and-growth.md).
 
 > **Say it back**
 > A saver ranks risky choices by averaging a personal score for final wealth, and von Neumann and Morgenstern proved that any consistent chooser acts this way. If the score bends down, a gamble is worth less than its average, and the sure amount it is worth is the certainty equivalent. The bend matters only relative to the slope, which gives the Arrow-Pratt number $A = -u''/u'$, and its per-percent version $\rho = w A$. For small risks the risk premium is about half of $A$ times the variance. The saver with $10,000 and log utility values the coin-toss fund at $10,695.33 and takes it over a sure $10,400; above a relative risk aversion of about 3.95, the deposit wins.
@@ -663,16 +644,16 @@ The outputs agree line for line, the simulated rows included: both programs run 
 
 ## What this builds on
 
-- [returns-simple-log-and-annualised](01-returns-simple-log-and-annualised.md): the 8 percent, the 15 percent spread and the log of a growth factor; the log saver's score is the log return plus a constant.
-- [jensens-inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md): the average of a concave function lies below the function of the average, which is Step 2 in one line.
+- [Returns](01-returns-simple-log-and-annualised.md): the 8 percent, the 15 percent spread and the log of a growth factor; the log saver's score is the log return plus a constant.
+- [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md): the average of a concave function lies below the function of the average, which is Step 2 in one line.
 
 ## Where this goes next
 
-- [certainty-equivalent-and-risk-premium](03-certainty-equivalent-and-risk-premium.md): the certainty equivalent and risk premium studied on their own, for insurance, pricing and comparisons between people.
-- [stochastic-dominance](04-stochastic-dominance.md): when every risk-averse saver agrees on a ranking, without choosing a score.
-- decision-theory-and-the-value-of-information: expected utility as a general decision rule, and what a better forecast is worth before it is bought.
+- [Risk premium](03-certainty-equivalent-and-risk-premium.md): the certainty equivalent and risk premium studied on their own, for insurance, pricing and comparisons between people.
+- [Stochastic dominance](04-stochastic-dominance.md): when every risk-averse saver agrees on a ranking, without choosing a score.
+- Deciding under uncertainty: expected utility as a general decision rule, and what a better forecast is worth before it is bought.
 
-This card ranks two choices for one saver with a known score; the open question is how much of the fund a saver should give up to avoid its risk, and how that sure-money price compares across savers, which [certainty-equivalent-and-risk-premium](03-certainty-equivalent-and-risk-premium.md) answers.
+This card ranks two choices for one saver with a known score; the open question is how much of the fund a saver should give up to avoid its risk, and how that sure-money price compares across savers, which [Risk premium](03-certainty-equivalent-and-risk-premium.md) answers.
 
 ---
 

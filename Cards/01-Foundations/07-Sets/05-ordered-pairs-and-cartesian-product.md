@@ -1,25 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Sets
-topic: Pairs
-item: Ordered pairs and the Cartesian product
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/07-Sets/03-set-operations|set-operations]]"
-next:
-  - "[[Cards/01-Foundations/08-Relations and Functions/01-relations|relations]]"
-tags:
-  - mathematics
-  - foundations
-  - ordered-pairs-and-cartesian-product
----
-
 # Ordered pairs and the Cartesian product: the deck is suits times ranks
 
-Foundations → Sets → Pairs → Ordered pairs and the Cartesian product
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sets](../../../SYLLABUS.md#w01-s07) → Ordered pairs and the Cartesian product
 
 ---
 
@@ -49,7 +30,7 @@ Two picks, one card.
 
 ## The formula
 
-Call the four suits **A** and the thirteen ranks **B**, two sets in the sense of [sets-and-membership](01-sets-and-membership.md). The deck is **A × B**, said "A cross B" — the same cross as in 4 × 13, put on sets instead of numbers.
+Call the four suits **A** and the thirteen ranks **B**, two sets in the sense of [Sets](01-sets-and-membership.md). The deck is **A × B**, said "A cross B" — the same cross as in 4 × 13, put on sets instead of numbers.
 
 **A × B = every ordered pair (a, b) where a is a member of A and b is a member of B**
 
@@ -73,13 +54,13 @@ No listing needed:
 
 ### The slots are jobs, not just positions
 
-A set forgets order: {hearts, king} and {king, hearts} are one set, from [sets-and-membership](01-sets-and-membership.md). Braces cannot say which came first.
+A set forgets order: {hearts, king} and {king, hearts} are one set, from [Sets](01-sets-and-membership.md). Braces cannot say which came first.
 
 A pair has to. The convention is suit first, rank second, for the whole deck. So (king, hearts) claims a suit called king and a rank called hearts. No such card: same two words, other order, and only one order names a card.
 
 The rule in full: **two ordered pairs are the same exactly when their first slots match and their seconds match.** So (a, b) and (b, a) differ whenever a and b differ.
 
-Flip every card and you get a second set, B × A: 13 × 4 = 52 pairs of the form (rank, suit). Same size, no member shared with the deck — their intersection is empty, from [set-operations](03-set-operations.md). Nothing is shared here because no suit is a rank; sets that overlap do share pairs.
+Flip every card and you get a second set, B × A: 13 × 4 = 52 pairs of the form (rank, suit). Same size, no member shared with the deck — their intersection is empty, from [Set operations](03-set-operations.md). Nothing is shared here because no suit is a rank; sets that overlap do share pairs.
 
 ### Why the sizes multiply instead of adding
 
@@ -278,11 +259,11 @@ The two outputs match line for line: whole counts, nothing to round.
 
 ## What this builds on
 
-- [set-operations](03-set-operations.md): union, intersection and difference. The deck and the flipped deck are two sets of pairs whose intersection is empty.
+- [Set operations](03-set-operations.md): union, intersection and difference. The deck and the flipped deck are two sets of pairs whose intersection is empty.
 
 ## Where this goes next
 
-- [relations](../08-Relations%20and%20Functions/01-relations.md): keep only some of the pairs in A × B — a subset, in the sense of [subsets-and-power-set](02-subsets-and-power-set.md) — and you have a relation: a rule saying which things go with which.
+- [Relations](../08-Relations%20and%20Functions/01-relations.md): keep only some of the pairs in A × B — a subset, in the sense of [Subsets and the power set](02-subsets-and-power-set.md) — and you have a relation: a rule saying which things go with which.
 
 ---
 

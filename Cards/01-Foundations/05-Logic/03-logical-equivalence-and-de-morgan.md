@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Logic
-topic: Statements
-item: Logical equivalence and De Morgan
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/05-Logic/02-if-then|if-then]]"
-next:
-  - "[[Cards/01-Foundations/05-Logic/04-quantifiers|quantifiers]]"
-  - "[[Cards/01-Foundations/07-Sets/03-set-operations|set-operations]]"
-tags:
-  - mathematics
-  - foundations
-  - logical-equivalence-and-de-morgan
----
-
 # Logical equivalence and De Morgan: when two sentences say the same thing, and how 'not' moves through and/or
 
-Foundations → Logic → Statements → Logical equivalence and De Morgan
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Logic](../../../SYLLABUS.md#w01-s05) → Logical equivalence and De Morgan
 
 ---
 
@@ -283,12 +263,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [if-then](02-if-then.md): the truth table that settles an argument, and the habit of testing every case.
+- [If-then](02-if-then.md): the truth table that settles an argument, and the habit of testing every case.
 
 ## Where this goes next
 
-- [quantifiers](04-quantifiers.md): "everyone" and "someone" are an "and" and an "or" stretched over a crowd; this flip waits there.
-- [set-operations](../07-Sets/03-set-operations.md): the same laws, with groups of things instead of sentences.
+- [Quantifiers](04-quantifiers.md): "everyone" and "someone" are an "and" and an "or" stretched over a crowd; this flip waits there.
+- [Set operations](../07-Sets/03-set-operations.md): the same laws, with groups of things instead of sentences.
 
 ---
 

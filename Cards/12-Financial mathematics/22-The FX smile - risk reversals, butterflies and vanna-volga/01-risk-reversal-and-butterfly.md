@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The FX smile - risk reversals, butterflies and vanna-volga
-topic: Tilt and curvature quotes
-item: Risk reversal and butterfly
-kind: convention
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/06-fx-strike-from-delta|fx-strike-from-delta]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/07-fx-implied-volatility|fx-implied-volatility]]"
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/01-volatility-smile-and-skew|volatility-smile-and-skew]]"
-next:
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/02-market-strangle-and-smile-strangle|market-strangle-and-smile-strangle]]"
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/03-vanna-and-volga-on-the-smile|vanna-and-volga-on-the-smile]]"
-tags: [mathematics, financial mathematics, risk-reversal-and-butterfly]
----
-
 # Risk reversal and butterfly: quoting a smile as its tilt and its curvature, and turning the quotes back into three vols
 
-Financial mathematics → The FX smile - risk reversals, butterflies and vanna-volga → Tilt and curvature quotes → Risk reversal and butterfly
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The FX smile - risk reversals, butterflies and vanna-volga](../../../SYLLABUS.md#w12-s22) → Risk reversal and butterfly
 
 ---
 
@@ -27,7 +8,7 @@ Financial mathematics → The FX smile - risk reversals, butterflies and vanna-v
 
 A broker's screen for one-year euro-dollar options (EURUSD, dollars per euro, spot 1.1000) shows three numbers and no prices: **ATM 10.00, 25-delta risk reversal −1.00, 25-delta butterfly +0.25**. All three are in vol points: one vol point is one percentage point of implied volatility. Nothing on the screen names a strike, and nothing is in dollars.
 
-A dealer asked to sell a euro put struck below the market needs a volatility for it, then a price. The screen gives neither directly. It gives the market's **smile** (the pattern of implied vols across strikes, from [volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)) in a compressed form.
+A dealer asked to sell a euro put struck below the market needs a volatility for it, then a price. The screen gives neither directly. It gives the market's **smile** (the pattern of implied vols across strikes, from [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)) in a compressed form.
 
 Picture a plank resting on three posts. Three numbers pin it down: how high it sits in the middle, how much it tips from left to right, and how much it sags or bows between the ends. From here on the real names take over. The height is the **at-the-money vol** (ATM), the vol of the option struck in the middle. The tip is the **risk reversal**: the vol of a euro call minus the vol of a euro put, at matched distances from the middle. The bow is the **butterfly**: how far the average of those two wing vols sits above the middle one.
 
@@ -86,7 +67,7 @@ The risk reversal trade buys the 25-delta call and sells the 25-delta put. The b
 | $d_1$ | $\ln(F/K)/(\sigma\sqrt{T}) + \tfrac12\sigma\sqrt{T}$: how far the forward sits above the strike, in units of $\sigma\sqrt{T}$, plus a half-unit shift | — | — |
 | $\mathcal{V}$ | vega: dollars per euro gained per one vol point, $S\,e^{-r_f T}\varphi(d_1)\sqrt{T}/100$ | 0.003446 at each wing | — |
 
-The strikes come from the deltas, each at its own vol ([fx-strike-from-delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md) derives them):
+The strikes come from the deltas, each at its own vol ([Strike from delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md) derives them):
 
 $$K_{25} = F\exp\!\big(-d_1\,\sigma\sqrt{T} + \tfrac12\sigma^2 T\big), \qquad K_{\text{ATM}} = F\,e^{\sigma_{\text{ATM}}^2 T/2}$$
 
@@ -97,7 +78,7 @@ In words: a 25-delta strike is the forward moved by the $d_1$ that makes the hed
 The two quote definitions are conventions: they hold because the market uses them. What can break is how they are read and priced.
 
 - **The right delta.** For EURUSD up to one year, the 25-delta strikes are set on spot delta with the premium not adjusted. A different delta convention lands the same "25" on strikes tens of pips away (a pip is 0.0001 dollars per euro), and every price moves with it.
-- **The butterfly as a smile strangle.** This card reads BF as the bow of the smile itself. Brokers quote a *market* strangle, priced at one vol, $\sigma_{\text{ATM}} + \text{BF}$, for both wings; its smile bow differs by a fraction of a vol point, as [market-strangle-and-smile-strangle](02-market-strangle-and-smile-strangle.md) shows.
+- **The butterfly as a smile strangle.** This card reads BF as the bow of the smile itself. Brokers quote a *market* strangle, priced at one vol, $\sigma_{\text{ATM}} + \text{BF}$, for both wings; its smile bow differs by a fraction of a vol point, as [The broker butterfly](02-market-strangle-and-smile-strangle.md) shows.
 - **Positive wings.** Both recovered vols must be positive: $\sigma_{\text{ATM}} + \text{BF} > \tfrac12|\text{RR}|$. A quote that breaks this has no smile behind it.
 - **Three points, not a curve.** The quotes fix the smile at three strikes only. A vol for any other strike needs an interpolation rule, and each rule gives a different answer.
 
@@ -156,7 +137,7 @@ $$\text{strangle} - \text{strangle at one vol} \approx \mathcal{V}\,(\sigma_{25c
 
 Exact: 0.001684 dollars per euro. Estimate: 0.001723. The tilt cancels; only the bow is left.
 
-One euro of strangle against one euro of straddle is not vega-flat: the straddle's vega, 0.008517, exceeds the two wings' 0.003446 each, so the unit trade is short 0.001625 of vega. Desks scale the strangle up until vega cancels; what is left then is exposure to vol moving vol, which [vanna-and-volga-on-the-smile](03-vanna-and-volga-on-the-smile.md) measures.
+One euro of strangle against one euro of straddle is not vega-flat: the straddle's vega, 0.008517, exceeds the two wings' 0.003446 each, so the unit trade is short 0.001625 of vega. Desks scale the strangle up until vega cancels; what is left then is exposure to vol moving vol, which [Vanna and volga](03-vanna-and-volga-on-the-smile.md) measures.
 
 ### Step 5: reading the signs
 
@@ -164,7 +145,7 @@ A negative risk reversal says the put wing is dearer than the call wing. Buyers 
 
 ### The other door
 
-A dealer can start from option prices instead: price the three pillar options on a broker's run, back out each one's implied vol with a root finder, and form RR and BF from the vols. The check does exactly that from the brute-force prices and gets −1.000000 and 0.250000 back. Backing out the vols is [fx-implied-volatility](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/07-fx-implied-volatility.md).
+A dealer can start from option prices instead: price the three pillar options on a broker's run, back out each one's implied vol with a root finder, and form RR and BF from the vols. The check does exactly that from the brute-force prices and gets −1.000000 and 0.250000 back. Backing out the vols is [Implied vol for a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/07-fx-implied-volatility.md).
 
 ---
 
@@ -177,7 +158,7 @@ House market: EURUSD 1.1000, dollar rate 5 percent, euro rate 3 percent, one yea
 | forward $F$ | $1.10\,e^{0.05 - 0.03}$ | 1.122221 |
 | call vol | $10.00 + 0.25 - 0.50$ | 9.75% |
 | put vol | $10.00 + 0.25 + 0.50$ | 10.75% |
-| put strike, 25 delta at 10.75% | from [fx-strike-from-delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md) | 1.052466 |
+| put strike, 25 delta at 10.75% | from [Strike from delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md) | 1.052466 |
 | ATM strike | $1.122221 \times e^{0.01/2}$ | 1.127847 |
 | call strike, 25 delta at 9.75% | same card | 1.201425 |
 | 25-delta call at 9.75% | Garman-Kohlhagen | 0.015390 |
@@ -617,7 +598,7 @@ The first line is the risk reversal: a loss below the put strike 1.052466, flat 
 > - **Pricing the wings at the ATM vol.** Each wing has its own vol. Price the house legs at 10 percent instead and the risk reversal comes out at −0.15 pips instead of −34.33.
 > - **Getting the sign backwards.** RR is call vol minus put vol. Read it as put minus call and the trade prices at −0.96 pips: the dealer quotes the market's fear upside down.
 > - **Forgetting the risk reversal has delta.** A 25-delta risk reversal is 0.50 euros long per euro. Booking it as a pure smile trade leaves half the notional unhedged against a spot move.
-> - **Reading the broker's BF as the smile's bow.** The broker quote is a market strangle, priced at one vol; the smile's own bow is a different number, as [market-strangle-and-smile-strangle](02-market-strangle-and-smile-strangle.md) shows.
+> - **Reading the broker's BF as the smile's bow.** The broker quote is a market strangle, priced at one vol; the smile's own bow is a different number, as [The broker butterfly](02-market-strangle-and-smile-strangle.md) shows.
 
 ---
 
@@ -626,8 +607,8 @@ The first line is the risk reversal: a loss below the put strike 1.052466, flat 
 - **The broker's vol run.** For each expiry a currency pair's screen shows ATM, 25-delta and 10-delta risk reversals and butterflies. The whole smile is traded in those numbers; strikes and prices are worked out afterwards.
 - **Market commentary.** "Risk reversals moved further in favour of puts" means RR fell: the market paid up for downside protection. It is read as a gauge of fear in that currency.
 - **Corporate hedging.** An exporter paid in euros buys a euro put and sells a euro call to pay for it: a risk reversal from the other side, often called a collar. With a negative RR the call it sells is worth less than the put it buys, so it must sell the call closer in, giving up more upside.
-- **Smile models.** The three unpacked vols and strikes are the input to vanna-volga pricing, which fills in a vol for every other strike: [vanna-volga-pricing](04-vanna-volga-pricing.md) and [vanna-volga-smile-curve](05-vanna-volga-smile-curve.md).
-- **Hedging a book.** When spot moves, the strike of "25 delta" moves with it, and so does the vol a strike is marked at: [smile-adjusted-delta-and-sticky-delta](06-smile-adjusted-delta-and-sticky-delta.md).
+- **Smile models.** The three unpacked vols and strikes are the input to vanna-volga pricing, which fills in a vol for every other strike: [Vanna-volga pricing](04-vanna-volga-pricing.md) and [The vanna-volga smile](05-vanna-volga-smile-curve.md).
+- **Hedging a book.** When spot moves, the strike of "25 delta" moves with it, and so does the vol a strike is marked at: [Hedging with the smile](06-smile-adjusted-delta-and-sticky-delta.md).
 
 > **Say it back**
 > FX brokers quote a smile as three numbers: the ATM vol, the risk reversal (call vol minus put vol) and the butterfly (the wings' average above ATM). Each wing's vol is ATM plus BF plus or minus half the RR, and the map can always be undone. With the vols in hand, each 25-delta strike is found at its own vol and each leg is priced by Garman-Kohlhagen. The risk reversal trade has delta 0.50 and no vega, and costs about vega times RR more than it would at one vol; the butterfly trade's wings cost about twice vega times BF extra. A negative RR means the put wing is dearer: the market fears a fall.
@@ -636,16 +617,16 @@ The first line is the risk reversal: a loss below the put strike 1.052466, flat 
 
 ## What this builds on
 
-- [fx-strike-from-delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md): turns a 25-delta label and a vol into a strike, the step every wing here needs.
-- [fx-implied-volatility](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/07-fx-implied-volatility.md): turns a price into a vol, the road the check uses to rebuild the quotes.
-- [volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): why implied vol differs by strike at all, which these quotes compress into three numbers.
+- [Strike from delta](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/06-fx-strike-from-delta.md): turns a 25-delta label and a vol into a strike, the step every wing here needs.
+- [Implied vol for a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/07-fx-implied-volatility.md): turns a price into a vol, the road the check uses to rebuild the quotes.
+- [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): why implied vol differs by strike at all, which these quotes compress into three numbers.
 
 ## Where this goes next
 
-- [market-strangle-and-smile-strangle](02-market-strangle-and-smile-strangle.md): the broker's butterfly is a market strangle priced at one vol; solving for the smile bow that reprices it.
-- [vanna-and-volga-on-the-smile](03-vanna-and-volga-on-the-smile.md): why the risk reversal is the trade that carries vanna and the butterfly the one that carries volga.
+- [The broker butterfly](02-market-strangle-and-smile-strangle.md): the broker's butterfly is a market strangle priced at one vol; solving for the smile bow that reprices it.
+- [Vanna and volga](03-vanna-and-volga-on-the-smile.md): why the risk reversal is the trade that carries vanna and the butterfly the one that carries volga.
 
-The quotes fix the smile at three strikes, and the broker's butterfly is not quite the bow used here; how far apart the two readings sit is what [market-strangle-and-smile-strangle](02-market-strangle-and-smile-strangle.md) settles.
+The quotes fix the smile at three strikes, and the broker's butterfly is not quite the bow used here; how far apart the two readings sit is what [The broker butterfly](02-market-strangle-and-smile-strangle.md) settles.
 
 ---
 

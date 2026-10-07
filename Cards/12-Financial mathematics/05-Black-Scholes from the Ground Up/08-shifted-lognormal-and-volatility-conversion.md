@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Black-Scholes from the Ground Up
-topic: Rates below zero
-item: Shifted lognormal and volatility conversion
-kind: model
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/07-bachelier-model|bachelier-model]]"
-next:
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/06-normal-and-shifted-volatilities-for-rates|normal-and-shifted-volatilities-for-rates]]"
-  - "[[Cards/12-Financial mathematics/33-Curves in Depth/06-negative-rates-and-floors|negative-rates-and-floors]]"
-  - "[[Cards/12-Financial mathematics/34-Inflation and Real Rates/05-inflation-options-in-outline|inflation-options-in-outline]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - shifted-lognormal-and-volatility-conversion
----
-
 # Shifted lognormal and volatility conversion: a floor moved below zero, and comparing normal with lognormal volatility
 
-Financial mathematics → Black-Scholes from the Ground Up → Rates below zero → Shifted lognormal and volatility conversion
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Black-Scholes from the Ground Up](../../../SYLLABUS.md#w12-s05) → Shifted lognormal and volatility conversion
 
 ---
 
@@ -31,7 +10,7 @@ One interest rate, quoted this morning at 0.50 percent for a period starting in 
 
 A pension fund wants insurance against that rate going below zero. The contract is one period of a **floor**, a floorlet: on ten million dollars, for a half-year interest period, every basis point the rate fixes below 0.00 percent pays five hundred dollars. Floors struck at zero traded in size after euro and Swiss franc rates went below zero in 2014 and stayed there for years.
 
-Hand that contract to Black-76 and the answer is exactly nothing ([black-76-and-forward-level-pricing](06-black-76-and-forward-level-pricing.md)). Black's rate moves in percentage steps, and multiplying a positive number by positive numbers keeps it positive, so the rate can creep towards zero for ever and never arrive. Insurance against arriving is then worthless. Desks were paying real money for it.
+Hand that contract to Black-76 and the answer is exactly nothing ([Black-76](06-black-76-and-forward-level-pricing.md)). Black's rate moves in percentage steps, and multiplying a positive number by positive numbers keeps it positive, so the rate can creep towards zero for ever and never arrive. Insurance against arriving is then worthless. Desks were paying real money for it.
 
 The repair is a slide. Pick an amount: 2 percent, 200 bp, here. Add it to the rate and add it to the strike. The contract pays only the gap between the two, and adding the same amount to both leaves every gap alone, so the contract is untouched. Both numbers are now positive, and Black's machinery runs. The floor at zero comes out at **8.79 bp, or 4,395.95 dollars**.
 
@@ -54,7 +33,7 @@ xychart-beta
     line [0.00, 0.00, 0.00, 0.00, 5.93, 49.82, 99.50]
 ```
 
-Three models, one rate. Highest on the right is this card's shifted model, 30 percent volatility with the floor at −200 bp. Highest on the left is the **normal** model, where the rate itself is bell-curved and negative rates are ordinary ([bachelier-model](07-bachelier-model.md)). The two are matched at the money, where both read 29.66 bp, and part company elsewhere: at the zero strike the normal model charges 11.19 bp, the shifted model 8.79 bp. The flat line is Black-76 with no slide, nothing for every strike at or below zero.
+Three models, one rate. Highest on the right is this card's shifted model, 30 percent volatility with the floor at −200 bp. Highest on the left is the **normal** model, where the rate itself is bell-curved and negative rates are ordinary ([Bachelier](07-bachelier-model.md)). The two are matched at the money, where both read 29.66 bp, and part company elsewhere: at the zero strike the normal model charges 11.19 bp, the shifted model 8.79 bp. The flat line is Black-76 with no slide, nothing for every strike at or below zero.
 
 ---
 
@@ -124,13 +103,13 @@ The relabelling is free; the modelling is not, because the assumption is about t
 
 $$\mathrm{d}F_t = \sigma\,(F_t + a)\,\mathrm{d}W_t$$
 
-Read that as: over a short instant the rate gets a random nudge, whose typical size is $\sigma$ times the distance above the floor, and $\mathrm{d}W_t$ is the random kick of the wandering engine this shelf opens with ([geometric-brownian-motion-for-prices](01-geometric-brownian-motion-for-prices.md)). Three things fall out.
+Read that as: over a short instant the rate gets a random nudge, whose typical size is $\sigma$ times the distance above the floor, and $\mathrm{d}W_t$ is the random kick of the wandering engine this shelf opens with ([Prices as geometric Brownian motion](01-geometric-brownian-motion-for-prices.md)). Three things fall out.
 
 - At $F_t = -a$ the nudge is zero, so the rate stops moving: $-a$ is a wall the model cannot cross.
 - At $F_t = 0$ nothing special happens: the nudge is $\sigma a$, an ordinary number. Zero has stopped being a boundary, which was the point.
 - The shift is a dial. At $a = 0$ the rule is Black's; as $a$ grows with $\sigma(F+a)$ held fixed, the nudge stops depending on the rate, which is the normal model.
 
-The rule has no drift, and the Black-76 card says why: a contract that costs nothing to sign cannot be expected to make money, so the quoted rate is a fair bet on its own fixing ([risk-neutral-measure-and-the-fundamental-theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)). Sliding by a constant leaves that alone: if the rate averages out at $F$, the slid rate averages out at $G$.
+The rule has no drift, and the Black-76 card says why: a contract that costs nothing to sign cannot be expected to make money, so the quoted rate is a fair bet on its own fixing ([The fundamental theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)). Sliding by a constant leaves that alone: if the rate averages out at $F$, the slid rate averages out at $G$.
 
 ### Step 2: the slid pair goes into Black-76 unchanged
 
@@ -138,7 +117,7 @@ A drift-free lognormal quantity with average $G$ ends up at
 
 $$F_T + a \;=\; G\,\exp\!\left(-\tfrac12 w^2 + w Z\right), \qquad Z \ \text{a standard bell-curve draw}$$
 
-and the $-\tfrac12 w^2$ is the drag that keeps the average at $G$: wiggling costs a quantity that multiplies, since up 50 percent then down 50 percent leaves the total down 25 percent. Average the payoff $\max(F_T - K, 0) = \max(G\,e^{-w^2/2 + wZ} - L, 0)$ over the bell curve, discount once, and out comes the formula ([black-scholes-by-risk-neutral-expectation](04-black-scholes-by-risk-neutral-expectation.md) does that average in full on the unslid version). The premium is 29.660174 bp, and the code reaches it by averaging the payoff with no $d_1$ and no $d_2$ in that road.
+and the $-\tfrac12 w^2$ is the drag that keeps the average at $G$: wiggling costs a quantity that multiplies, since up 50 percent then down 50 percent leaves the total down 25 percent. Average the payoff $\max(F_T - K, 0) = \max(G\,e^{-w^2/2 + wZ} - L, 0)$ over the bell curve, discount once, and out comes the formula ([Black-Scholes by expectation](04-black-scholes-by-risk-neutral-expectation.md) does that average in full on the unslid version). The premium is 29.660174 bp, and the code reaches it by averaging the payoff with no $d_1$ and no $d_2$ in that road.
 
 <details>
 <summary>Detailed proof: the two integrals, and what the shift cannot move</summary>
@@ -210,7 +189,7 @@ Read backwards, the same bracket gives the lognormal volatility from a normal qu
 
 </details>
 
-The check also walks to the far end of the dial: with the absolute wobble held at 74.719697 bp, a 10000 bp shift misses the normal premium by 0.000068 bp and a 100000 bp shift by 0.000001 bp. One dial, Black at one end, Bachelier at the other ([bachelier-model](07-bachelier-model.md)).
+The check also walks to the far end of the dial: with the absolute wobble held at 74.719697 bp, a 10000 bp shift misses the normal premium by 0.000068 bp and a 100000 bp shift by 0.000001 bp. One dial, Black at one end, Bachelier at the other ([Bachelier](07-bachelier-model.md)).
 
 ---
 
@@ -714,11 +693,11 @@ The two outputs match line for line, from different code taking different routes
 
 ## Where you meet it in real life
 
-- **Caps, floors and swaptions in the negative-rate years.** From the middle of the 2010s the euro, Swiss franc, Swedish krona and Danish krone markets quoted these with shifts that differed by provider and by year: [normal-and-shifted-volatilities-for-rates](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md) takes the quoting apart. A swaption takes the same slide, with the forward swap rate for the rate and the annuity for the discount factor ([change-of-numeraire-in-pricing](05-change-of-numeraire-in-pricing.md)).
+- **Caps, floors and swaptions in the negative-rate years.** From the middle of the 2010s the euro, Swiss franc, Swedish krona and Danish krone markets quoted these with shifts that differed by provider and by year: [Rate volatilities](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md) takes the quoting apart. A swaption takes the same slide, with the forward swap rate for the rate and the annuity for the discount factor ([Changing the unit of account](05-change-of-numeraire-in-pricing.md)).
 - **The market's standard smile model, shifted.** SABR has a lognormal core, and those years produced a shifted SABR by exactly this slide, carrying the same warning on its volatility parameter.
 - **Equity skew, under an older name.** Mark Rubinstein published the same construction in 1983 as **displaced diffusion**, where the shift bends the smile rather than allowing negatives: a positive shift makes volatility fall as the strike rises.
 - **Risk numbers.** Delta and vega are computed on the slid quantities, so a vega reported at a 100 bp shift is not the same measurement as one reported at 200 bp for the identical trade. Compare hedges in money, not in volatility points.
-- **Inflation and real rates**, where the underlying number goes negative often enough that the same choice arrives: [inflation-options-in-outline](../34-Inflation%20and%20Real%20Rates/05-inflation-options-in-outline.md).
+- **Inflation and real rates**, where the underlying number goes negative often enough that the same choice arrives: [Inflation caps and floors in outline](../34-Inflation%20and%20Real%20Rates/05-inflation-options-in-outline.md).
 
 > **Say it back**
 > Rates went below zero and Black-76 could not take the logarithm, so it priced a floor struck at zero at nothing while desks were paying for one. Slide the rate and the strike up by the same chosen amount and price with Black-76 on the slid pair: the contract is untouched, because it only ever pays the gap between the two. The model now has a hard floor at minus the shift, and zero stops being special. The volatility quoted afterwards is a translation through that shift, while the absolute wobble it stands for stays near 75 bp whatever shift is chosen. At the money the two quoting languages convert exactly, and multiplying the slid rate by the percentage volatility is right to within a known whisker.
@@ -727,13 +706,13 @@ The two outputs match line for line, from different code taking different routes
 
 ## What this builds on
 
-- [bachelier-model](07-bachelier-model.md): the normal model, its at-the-money premium of one term, and normal volatility measured in basis points — the far end of this card's dial and the other half of the conversion.
+- [Bachelier](07-bachelier-model.md): the normal model, its at-the-money premium of one term, and normal volatility measured in basis points — the far end of this card's dial and the other half of the conversion.
 
 ## Where this goes next
 
-- [normal-and-shifted-volatilities-for-rates](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md): the quoting conventions themselves, strike by strike and market by market.
-- [negative-rates-and-floors](../33-Curves%20in%20Depth/06-negative-rates-and-floors.md): where negative rates come from in a curve, and what a floor does to the curve it sits on.
-- [inflation-options-in-outline](../34-Inflation%20and%20Real%20Rates/05-inflation-options-in-outline.md): the same choice on a number that goes negative by nature.
+- [Rate volatilities](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md): the quoting conventions themselves, strike by strike and market by market.
+- [Negative rates](../33-Curves%20in%20Depth/06-negative-rates-and-floors.md): where negative rates come from in a curve, and what a floor does to the curve it sits on.
+- [Inflation caps and floors in outline](../34-Inflation%20and%20Real%20Rates/05-inflation-options-in-outline.md): the same choice on a number that goes negative by nature.
 
 One quote leaves the shift undetermined and a row of strikes settles it; how a whole row is read as one shape, and what shape the shifted model can and cannot make, is the smile.
 

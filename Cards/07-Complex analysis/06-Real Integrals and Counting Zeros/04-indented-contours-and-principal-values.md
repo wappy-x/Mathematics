@@ -1,22 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Real Integrals and Counting Zeros
-topic: Stepping round a pole
-item: Poles on the path
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/06-Real Integrals and Counting Zeros/03-oscillatory-integrals-and-jordans-lemma|oscillatory-integrals-and-jordans-lemma]]"
-next:
-  - "[[Cards/20-Harmonic analysis/02-The Fourier Transform/09-hilbert-transform-and-analytic-signals|hilbert-transform-and-analytic-signals]]"
-tags: [mathematics, complex analysis, indented-contours-and-principal-values]
----
-
 # Poles on the path: dent the contour round them and collect half a residue, and the principal value is what is left
 
-Complex analysis → Real Integrals and Counting Zeros → Stepping round a pole → Poles on the path
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Real Integrals and Counting Zeros](../../../SYLLABUS.md#w07-s06) → Poles on the path
 
 ---
 
@@ -26,7 +10,7 @@ A camera shutter opens for a fixed moment and shuts. The light it passes is a sq
 
 Its total signed area, lobes above minus lobes below, is π. Rebuilding the pulse divides that area by π, so the waves added back at the pulse's middle give brightness 1: fully open.
 
-The contour method of [oscillatory-integrals-and-jordans-lemma](03-oscillatory-integrals-and-jordans-lemma.md) trades sin x/x for e^(iz)/z, which has a pole at 0, right on the path. The fix is a tiny half-circle round it: a dent. The dent does not shrink to nothing; it keeps half the pole's residue. What the rest of the path measures is the principal value: the integral with equal gaps cut out either side of the pole. For 1/(x(1 + x^2)) the pieces left and right of 0 are each infinite, yet the principal value is 0.
+The contour method of [Jordan's lemma](03-oscillatory-integrals-and-jordans-lemma.md) trades sin x/x for e^(iz)/z, which has a pole at 0, right on the path. The fix is a tiny half-circle round it: a dent. The dent does not shrink to nothing; it keeps half the pole's residue. What the rest of the path measures is the principal value: the integral with equal gaps cut out either side of the pole. For 1/(x(1 + x^2)) the pieces left and right of 0 are each infinite, yet the principal value is 0.
 
 **A tiny half-circle round a simple pole on the path contributes −iπ times the residue, so the principal value of a real integral is 2πi times the residues above the axis plus iπ times the residues on it.**
 
@@ -42,7 +26,7 @@ To scale: 60 units per 1, 0 at (180, 170), R = 2, ε = 0.25. Segments (60.00, 17
 
 ## The formula
 
-A reminder: the residue $\operatorname{Res}(f, a)$ is the coefficient of 1/(z − a) in f's expansion near a pole a, and a loop integral is 2πi times the residues inside ([the-residue-theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)). At a **simple pole** f behaves like c/(z − a), nothing worse.
+A reminder: the residue $\operatorname{Res}(f, a)$ is the coefficient of 1/(z − a) in f's expansion near a pole a, and a loop integral is 2πi times the residues inside ([The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)). At a **simple pole** f behaves like c/(z − a), nothing worse.
 
 The definition: cut a gap of half-width ε either side of the pole a, integrate the rest, then shrink the gap and widen the ends:
 
@@ -77,7 +61,7 @@ $$\operatorname{PV}\int_{-\infty}^{\infty} f(x)\,dx = 2\pi i \sum_{\operatorname
 
 - **A simple pole on the path.** At a double pole the dent blows up: for 1/z^2 it is −2/ε, −200 at ε = 0.01, though the residue is 0.
 - **Equal gaps.** Take the left gap twice the right and the second example tends to ln 2 = 0.693147, not 0.
-- **The big arc fades.** A degree gap of 2 ([semicircle-contours](01-semicircle-contours.md)) or a factor e^(iz) does it.
+- **The big arc fades.** A degree gap of 2 ([The semicircle contour](01-semicircle-contours.md)) or a factor e^(iz) does it.
 - **Not the ordinary integral.** When each side converges on its own, the two agree; for 1/(x(1 + x^2)) only the principal value exists.
 
 ---
@@ -100,7 +84,7 @@ For e^(iz)/z, c = 1 and g(z) = (e^(iz) − 1)/z. Its series gives |g| ≤ (e^ε 
 
 ### Step 2: close the dented loop for sin x/x
 
-Walk from −R to −ε, over the dent to ε, on to R, and back along the big arc. The pole at 0 is dented out, so nothing is inside and Cauchy's theorem makes the loop 0 ([cauchys-theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md)).
+Walk from −R to −ε, over the dent to ε, on to R, and back along the big arc. The pole at 0 is dented out, so nothing is inside and Cauchy's theorem makes the loop 0 ([Cauchy's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md)).
 
 At x and −x, e^(ix)/x adds to 2i sin x/x: the cosine parts cancel. So the segments give 2i times the area under sin x/x from ε to R. At ε = 0.1, R = 10 the pieces are 3.116806i, −2.941704i and −0.175103i, summing to 0. Jordan's lemma bounds the big arc by π/R. Let ε shrink and R grow:
 
@@ -133,7 +117,7 @@ F(x) = ln|x| − ½ ln(1 + x^2) has derivative 1/x − x/(1 + x^2) = f(x). So th
 
 </details>
 
-A second road needs no complex numbers: add the humps of sin x/x between multiples of π, then average neighbouring running totals until they settle. Pushing the pole off the line by a small iδ instead of denting gives the principal value plus or minus iπ times the residue; that split drives hilbert-transform-and-analytic-signals.
+A second road needs no complex numbers: add the humps of sin x/x between multiples of π, then average neighbouring running totals until they settle. Pushing the pole off the line by a small iδ instead of denting gives the principal value plus or minus iπ times the residue; that split drives The Hilbert transform.
 
 ---
 
@@ -398,7 +382,7 @@ The two outputs match line for line.
 - **Optics and cameras.** A slit or a shutter has a sin x/x profile; its area π fixes the rebuilt pulse's height.
 - **Signal processing.** An ideal low-pass filter, keeping frequencies below a cut-off, smooths with a sin x/x kernel.
 - **Physics.** Poles on the real frequency axis are pushed off by a small iδ: a principal value plus or minus iπ times a residue.
-- **Analytic signals.** The principal value against 1/(x − t) is the Hilbert transform: hilbert-transform-and-analytic-signals.
+- **Analytic signals.** The principal value against 1/(x − t) is the Hilbert transform: The Hilbert transform.
 
 > **Say it back**
 > A pole on the path is stepped round on a tiny half-circle. At a simple pole that half-circle keeps −iπ times the residue. The real line then carries the principal value: equal gaps cut round the pole. For e^(ix)/x nothing is inside, so the area under sin x/x is π. For 1/(x(1 + x^2)) each side is infinite, but the principal value is 0.
@@ -407,11 +391,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [oscillatory-integrals-and-jordans-lemma](03-oscillatory-integrals-and-jordans-lemma.md): the factor e^(iz) and the bound π/R that makes the big arc fade.
+- [Jordan's lemma](03-oscillatory-integrals-and-jordans-lemma.md): the factor e^(iz) and the bound π/R that makes the big arc fade.
 
 ## Where this goes next
 
-- hilbert-transform-and-analytic-signals: the principal value against 1/(x − t) as a transform in its own right.
+- The Hilbert transform: the principal value against 1/(x − t) as a transform in its own right.
 
 A dent handles one pole; taking the principal value against 1/(x − t) at every t at once is an operation on whole signals, and what it does to a wave is the Hilbert transform.
 

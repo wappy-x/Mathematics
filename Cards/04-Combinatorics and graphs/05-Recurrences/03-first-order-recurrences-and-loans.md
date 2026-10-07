@@ -1,30 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Recurrences
-topic: The fixed point
-item: First-order recurrences
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/01-recurrences-and-fibonacci|recurrences-and-fibonacci]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/03-compound-interest|compound-interest]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/06-discounting-and-present-value|discounting-and-present-value]]"
-  - "[[Cards/03-Algebra/01-Letters and Equations/03-rearranging-formulas|rearranging-formulas]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/04-characteristic-equation-and-binet|characteristic-equation-and-binet]]"
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/04-gamblers-ruin|gamblers-ruin]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/08-z-transform-and-discrete-time-systems|z-transform-and-discrete-time-systems]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - first-order-recurrences-and-loans
----
-
 # First-order recurrences: multiply by a factor and add a constant, the fixed point is the anchor, and a loan is the model
 
-Combinatorics and graphs → Recurrences → The fixed point → First-order recurrences
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Recurrences](../../../SYLLABUS.md#w04-s05) → First-order recurrences
 
 ---
 
@@ -58,13 +34,13 @@ The bowed line is the balance; the straight line shares the debt evenly, $416.67
 
 ## The formula
 
-A recurrence builds each value from the ones before it, and $a(n)$ names the value at step n ([recurrences-and-fibonacci](01-recurrences-and-fibonacci.md)). **First-order** means a step looks back exactly one step. The rule holds two fixed numbers: a factor, and an amount added after it.
+A recurrence builds each value from the ones before it, and $a(n)$ names the value at step n ([Recurrences](01-recurrences-and-fibonacci.md)). **First-order** means a step looks back exactly one step. The rule holds two fixed numbers: a factor, and an amount added after it.
 
 $$a(n) = r\,a(n-1) + c$$
 
 **Read it aloud:** each step multiplies the value before it by a fixed factor, then adds a fixed amount.
 
-One value is special: the one a step hands back unchanged. Call it the **fixed point**, written $a^*$ and said "a-star". Demand that the rule return what it was given, gather terms on one side ([rearranging-formulas](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md)), and the solution follows:
+One value is special: the one a step hands back unchanged. Call it the **fixed point**, written $a^*$ and said "a-star". Demand that the rule return what it was given, gather terms on one side ([Rearranging a formula](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md)), and the solution follows:
 
 $$a^* = \frac{c}{1-r}, \qquad a(n) = r^n\left(a(0) - a^*\right) + a^*$$
 
@@ -86,7 +62,7 @@ $$P = B_0\,\frac{(r-1)\,r^n}{r^n - 1}$$
 
 ### When it holds
 
-- **The factor is not 1.** The fixed point divides by $1-r$, so a factor of 1 has none: that rule just adds, and draws a straight line — the territory of [finite-differences-and-telescoping-sums](02-finite-differences-and-telescoping-sums.md).
+- **The factor is not 1.** The fixed point divides by $1-r$, so a factor of 1 has none: that rule just adds, and draws a straight line — the territory of [Finite differences](02-finite-differences-and-telescoping-sums.md).
 - **The factor and the amount hold still.** A rate that moves breaks the closed form; each change restarts from that day's balance.
 - **One step is one interest period, and nothing is rounded part-way.** Half a percent a month is not six percent a year charged once. The formula's payment is $469.7006, billed as $469.70, the cents settled at the end.
 
@@ -110,7 +86,7 @@ The gap at step n is the factor times the gap at step n−1. Nothing is added.
 
 ### Step 2: a pure multiply is a power
 
-Multiplying by $r$ n times is $r^n$ ([compound-interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)), so the gap after n steps is $r^n$ times the starting gap. Add the fixed point back for the closed form.
+Multiplying by $r$ n times is $r^n$ ([Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)), so the gap after n steps is $r^n$ times the starting gap. Add the fixed point back for the closed form.
 
 This loan's gap starts negative: $20,000.00 minus $93,940.12 is minus $73,940.12. The balance sits below the fixed point and the gap stretches by 1.005 a month, further below by more each time. That accelerating fall is the chart's bow.
 
@@ -143,7 +119,7 @@ Pay $469.70 a month into an account starting at zero, at half a percent. Its fix
 
 After 48 months it holds $25,409.78, exactly what the debt would have grown to unpaid: 20,000.00 × 1.270489 is $25,409.78. The payment clearing a loan is the deposit matching the loan left alone — a road to the payment with no fixed point in it.
 
-A third route divides the rule through by $r^n$, turning the left side into a difference that collapses when added up — telescoping, handled on [finite-differences-and-telescoping-sums](02-finite-differences-and-telescoping-sums.md).
+A third route divides the rule through by $r^n$, turning the left side into a difference that collapses when added up — telescoping, handled on [Finite differences](02-finite-differences-and-telescoping-sums.md).
 
 ---
 
@@ -417,7 +393,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Mortgages, car loans and student loans.** The schedule a lender prints is this rule stepped a month at a time, its payment is Step 3, and lending law fixes that arithmetic.
-- **Regular saving.** Turn the payment's sign around and the rule is a savings plan; read from the other end it prices a stream of payments ([discounting-and-present-value](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md)).
+- **Regular saving.** Turn the payment's sign around and the rule is a savings plan; read from the other end it prices a stream of payments ([Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md)).
 - **Anything topped up and drained by a fixed share.** A drug dose with a fixed fraction cleared between doses: same rule, and with the factor below 1 the level heads for its fixed point.
 
 > **Say it back**
@@ -427,18 +403,18 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [recurrences-and-fibonacci](01-recurrences-and-fibonacci.md): what a recurrence is, and its step notation.
-- [compound-interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md): one month is one multiply, 48 months that factor 48 times.
-- [discounting-and-present-value](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): the payment formula read as a stream worth the sum borrowed.
-- [rearranging-formulas](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md): gathering the fixed point onto one side, and freeing the payment.
+- [Recurrences](01-recurrences-and-fibonacci.md): what a recurrence is, and its step notation.
+- [Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md): one month is one multiply, 48 months that factor 48 times.
+- [Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): the payment formula read as a stream worth the sum borrowed.
+- [Rearranging a formula](../../03-Algebra/01-Letters%20and%20Equations/03-rearranging-formulas.md): gathering the fixed point onto one side, and freeing the payment.
 
 ## Where this goes next
 
-- [characteristic-equation-and-binet](04-characteristic-equation-and-binet.md): rules looking back two steps, the factor solved for rather than read off.
-- [gamblers-ruin](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md): the same machinery across a gambler's fortunes, giving the chance of ruin.
-- [z-transform-and-discrete-time-systems](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md): the fixed point as a steady state, the factor deciding whether a system settles.
+- [The characteristic equation](04-characteristic-equation-and-binet.md): rules looking back two steps, the factor solved for rather than read off.
+- [Gambler's ruin](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/04-gamblers-ruin.md): the same machinery across a gambler's fortunes, giving the chance of ruin.
+- [The z-transform](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/08-z-transform-and-discrete-time-systems.md): the fixed point as a steady state, the factor deciding whether a system settles.
 
-One factor was enough because a step looked back one month. When a step depends on the two before it, no single number subtracts the problem away and the factor must be found: [characteristic-equation-and-binet](04-characteristic-equation-and-binet.md).
+One factor was enough because a step looked back one month. When a step depends on the two before it, no single number subtracts the problem away and the factor must be found: [The characteristic equation](04-characteristic-equation-and-binet.md).
 
 ---
 

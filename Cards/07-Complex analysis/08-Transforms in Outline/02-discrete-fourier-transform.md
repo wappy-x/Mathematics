@@ -1,34 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Transforms in Outline
-topic: Sampled signals
-item: The discrete Fourier transform
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/05-powers-roots-and-roots-of-unity|powers-roots-and-roots-of-unity]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/07-complex-vectors-and-matrices|complex-vectors-and-matrices]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/01-fourier-series-in-complex-form|fourier-series-in-complex-form]]"
-  - "[[Cards/03-Algebra/04-Matrices/02-matrix-times-vector|matrix-times-vector]]"
-next:
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/09-carr-madan-fft-and-cos-methods|carr-madan-fft-and-cos-methods]]"
-  - "[[Cards/13-Engineering mathematics/05-Signals/02-discrete-fourier-transform-and-the-fft|discrete-fourier-transform-and-the-fft]]"
-  - "[[Cards/16-Numerical analysis/07-PDE Solvers/03-von-neumann-analysis-and-the-cfl-condition|von-neumann-analysis-and-the-cfl-condition]]"
-  - "[[Cards/16-Numerical analysis/07-PDE Solvers/09-the-fast-fourier-transform|the-fast-fourier-transform]]"
-  - "[[Cards/18-Functional analysis/04-Distributions and Sobolev Spaces/06-sampling-the-dirac-comb-and-nyquist|sampling-the-dirac-comb-and-nyquist]]"
-  - "[[Cards/21-Algebraic and analytic number theory/04-Sieves and Prime Gaps/03-the-large-sieve|the-large-sieve]]"
-  - "[[Cards/24-Computability and complexity/05-Algebraic, Interactive and Quantum/07-shors-and-grovers-algorithms|shors-and-grovers-algorithms]]"
-tags:
-  - mathematics
-  - complex-analysis
-  - discrete-fourier-transform
----
-
 # The discrete Fourier transform: N samples become N frequencies through the N-th roots of unity, and the matrix is unitary
 
-Complex analysis → Transforms in Outline → Sampled signals → The discrete Fourier transform
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Transforms in Outline](../../../SYLLABUS.md#w07-s08) → The discrete Fourier transform
 
 ---
 
@@ -62,19 +34,19 @@ Bars: the readings. Line: the mean plus the one cosine wave the k = 1 output des
 
 ## The formula
 
-Notation first, in words. The N samples are $x_n$, with $n$ counting slots from 0 to N − 1. The N outputs are $X_k$, with $k$ counting frequency in whole cycles per record. A bar over a number is its conjugate ([conjugate-and-modulus](../01-Complex%20Numbers%20and%20the%20Plane/02-conjugate-and-modulus.md)). The sigma sign adds over the counter under it.
+Notation first, in words. The N samples are $x_n$, with $n$ counting slots from 0 to N − 1. The N outputs are $X_k$, with $k$ counting frequency in whole cycles per record. A bar over a number is its conjugate ([Conjugate and modulus](../01-Complex%20Numbers%20and%20the%20Plane/02-conjugate-and-modulus.md)). The sigma sign adds over the counter under it.
 
 $$w = e^{-2\pi i/N}, \qquad X_k = \sum_{n=0}^{N-1} x_n\, w^{kn}, \qquad x_n = \frac{1}{N}\sum_{k=0}^{N-1} X_k\, \overline{w}^{\,kn}$$
 
 **Read it aloud:** to get frequency k, turn sample n clockwise by k times n steps of one N-th of a circle and add; to get the samples back, turn the other way, add, and divide by N.
 
-As a matrix ([matrix-times-vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md)): $F$ has $w^{kn}$ in row k, column n, and the outputs are $F$ times the samples. Scale it to $U = F/\sqrt{N}$. Then
+As a matrix ([Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md)): $F$ has $w^{kn}$ in row k, column n, and the outputs are $F$ times the samples. Scale it to $U = F/\sqrt{N}$. Then
 
 $$\overline{U}^{\,T} U = I, \qquad \sum_{n=0}^{N-1} \lvert x_n\rvert^2 = \frac{1}{N}\sum_{k=0}^{N-1} \lvert X_k\rvert^2$$
 
 **Read it aloud:** the conjugate transpose of U undoes U, which is what unitary means; so the samples' energy equals the outputs' energy divided by N.
 
-T is the transpose, rows swapped with columns, and I the identity matrix ([complex-vectors-and-matrices](../01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md)). For real samples, outputs k and N − k are conjugate twins that together make one cosine wave, $A\cos(2\pi kn/N + \varphi)$, with amplitude $A = 2\lvert X_k\rvert/N$ and phase $\varphi = \arg X_k$.
+T is the transpose, rows swapped with columns, and I the identity matrix ([Complex vectors and matrices](../01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md)). For real samples, outputs k and N − k are conjugate twins that together make one cosine wave, $A\cos(2\pi kn/N + \varphi)$, with amplitude $A = 2\lvert X_k\rvert/N$ and phase $\varphi = \arg X_k$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -101,7 +73,7 @@ T is the transpose, rows swapped with columns, and I the identity matrix ([compl
 
 ### Step 0: powers of a root of unity cancel round the circle
 
-The number w is an 8th root of unity, a turn of one eighth of a circle ([powers-roots-and-roots-of-unity](../01-Complex%20Numbers%20and%20the%20Plane/05-powers-roots-and-roots-of-unity.md)). Its eight powers sit evenly round the unit circle and add to zero. So do the powers of w^m whenever m is not a multiple of 8. When m is a multiple of 8, every power is 1 and the sum is 8. Everything below is this one fact.
+The number w is an 8th root of unity, a turn of one eighth of a circle ([Powers and roots](../01-Complex%20Numbers%20and%20the%20Plane/05-powers-roots-and-roots-of-unity.md)). Its eight powers sit evenly round the unit circle and add to zero. So do the powers of w^m whenever m is not a multiple of 8. When m is a multiple of 8, every power is 1 and the sum is 8. Everything below is this one fact.
 
 ### Step 1: each output is a walk of turned samples
 
@@ -138,7 +110,7 @@ Real samples make $X_{N-k}$ the conjugate of $X_k$: here $X_7$ = −18.899495 �
 
 ### Step 5: the fast route
 
-The matrix costs N × N = 64 complex multiplications. Splitting even slots from odd gives two 4-point transforms, stitched by one turn per output pair; repeating the split is the fast Fourier transform, FFT: 12 multiplications for N = 8. the-fast-fourier-transform builds it properly; the code uses it as the second road.
+The matrix costs N × N = 64 complex multiplications. Splitting even slots from odd gives two 4-point transforms, stitched by one turn per output pair; repeating the split is the fast Fourier transform, FFT: 12 multiplications for N = 8. The fast Fourier transform builds it properly; the code uses it as the second road.
 
 ---
 
@@ -389,7 +361,7 @@ The two outputs match line for line.
 
 - **Weather and climate records.** Daily and yearly cycles are read off one output each.
 - **Audio and images.** Spectrum displays and compression run on the FFT.
-- **Filtering.** Multiplying outputs frequency by frequency is a sliding weighted sum of the samples: [convolution-theorem](04-convolution-theorem.md).
+- **Filtering.** Multiplying outputs frequency by frequency is a sliding weighted sum of the samples: [Convolution](04-convolution-theorem.md).
 
 > **Say it back**
 > The discrete Fourier transform turns N samples into N outputs by turning sample n through k times n steps of one N-th of a circle and adding. Output k measures k cycles per record; for eight temperatures, output 1 gives a daily swing of 6.436837 degrees peaking near 15:00. Powers of a root of unity cancel, so the conjugate matrix divided by N undoes the transform and energy is kept up to that factor. The FFT gets the same outputs with far fewer multiplications.
@@ -398,22 +370,22 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [powers-roots-and-roots-of-unity](../01-Complex%20Numbers%20and%20the%20Plane/05-powers-roots-and-roots-of-unity.md): the roots of unity and their zero sum.
-- [complex-vectors-and-matrices](../01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): the conjugate transpose and what unitary means.
-- [fourier-series-in-complex-form](01-fourier-series-in-complex-form.md): the same idea with an integral in place of a finite sum.
-- [matrix-times-vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md): the transform as rows times a column.
+- [Powers and roots](../01-Complex%20Numbers%20and%20the%20Plane/05-powers-roots-and-roots-of-unity.md): the roots of unity and their zero sum.
+- [Complex vectors and matrices](../01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): the conjugate transpose and what unitary means.
+- [Fourier series](01-fourier-series-in-complex-form.md): the same idea with an integral in place of a finite sum.
+- [Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md): the transform as rows times a column.
 
 ## Where this goes next
 
-- [carr-madan-fft-and-cos-methods](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md): option prices for many strikes from one FFT.
-- discrete-fourier-transform-and-the-fft: windows, leakage and spectra of real signals.
-- von-neumann-analysis-and-the-cfl-condition: each grid frequency tested for growth.
-- the-fast-fourier-transform: the even-odd split built and costed.
-- sampling-the-dirac-comb-and-nyquist: why k past N/2 is a mirror.
-- the-large-sieve: Parseval-type bounds used to count primes.
-- shors-and-grovers-algorithms: the transform as a quantum circuit that finds periods.
+- [Transform pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md): option prices for many strikes from one FFT.
+- The DFT and the FFT: windows, leakage and spectra of real signals.
+- Von Neumann analysis: each grid frequency tested for growth.
+- The fast Fourier transform: the even-odd split built and costed.
+- Sampling: why k past N/2 is a mirror.
+- The large sieve: Parseval-type bounds used to count primes.
+- Shor and Grover: the transform as a quantum circuit that finds periods.
 
-Eight readings give eight frequencies; what the spectrum becomes as readings grow dense and the record long is the question [fourier-transform](03-fourier-transform.md) answers.
+Eight readings give eight frequencies; what the spectrum becomes as readings grow dense and the record long is the question [The Fourier transform](03-fourier-transform.md) answers.
 
 ---
 

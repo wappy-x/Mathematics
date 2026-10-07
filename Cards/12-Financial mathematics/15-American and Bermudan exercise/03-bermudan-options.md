@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: American and Bermudan exercise
-topic: Exercise on a calendar
-item: Bermudan options
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/01-american-options-and-early-exercise|american-options-and-early-exercise]]"
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/04-crr-tree-and-convergence|crr-tree-and-convergence]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/06-longstaff-schwartz-least-squares-monte-carlo|longstaff-schwartz-least-squares-monte-carlo]]"
-next:
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/04-exercise-boundary-and-smooth-pasting|exercise-boundary-and-smooth-pasting]]"
-tags: [mathematics, financial mathematics, bermudan-options]
----
-
 # Bermudan options: exercise on listed dates only, sitting between European and American
 
-Financial mathematics → American and Bermudan exercise → Exercise on a calendar → Bermudan options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [American and Bermudan exercise](../../../SYLLABUS.md#w12-s15) → Bermudan options
 
 ---
 
@@ -90,7 +72,7 @@ $$P_E \;\le\; P_B(D) \;\le\; P_B(D') \;\le\; P_A$$
 - **The holder exercises well.** The seller must be funded for the best rule the holder could follow, so the price assumes that rule. A holder who exercises badly gets less; the seller still charged for the best.
 - **The model behind the averages.** The numbers here assume Acme follows geometric Brownian motion (a log-price that drifts steadily and wiggles like a bell curve) with constant $r$, $q$ and $\sigma$. The recursion itself holds in any model; the numbers change with the model.
 - **Listed dates fall on steps of the tree.** A date between two steps gets rounded, which prices a slightly different contract. Each tree here is sized so every date lands on a step.
-- **A reason to exercise early.** For a call on a share paying no dividend, no listed date is ever used, and the Bermudan equals the European ([mertons-no-early-exercise-theorem](02-mertons-no-early-exercise-theorem.md)).
+- **A reason to exercise early.** For a call on a share paying no dividend, no listed date is ever used, and the Bermudan equals the European ([Merton's theorem](02-mertons-no-early-exercise-theorem.md)).
 
 ---
 
@@ -112,13 +94,13 @@ On a day not on the list the holder can only hold. From one listed date to the n
 
 ### Step 3: on a listed date, keep the larger number
 
-On a listed date the holder faces two sums: $g(s)$ in hand, or the holding value from Step 2. A rational holder takes the larger. A seller holding the larger sum is covered either way; charging less would leave some rule the seller cannot pay. The general statement, that the price of a right to stop is the smallest process lying above the payoff whose discounted average never rises, is the Snell envelope ([optimal-stopping-and-snell-envelope](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md)); a Bermudan applies it to a list of dates.
+On a listed date the holder faces two sums: $g(s)$ in hand, or the holding value from Step 2. A rational holder takes the larger. A seller holding the larger sum is covered either way; charging less would leave some rule the seller cannot pay. The general statement, that the price of a right to stop is the smallest process lying above the payoff whose discounted average never rises, is the Snell envelope ([Optimal stopping](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md)); a Bermudan applies it to a list of dates.
 
 The comparison draws a line. On each listed date there is a highest price at which exercising wins; below it the holder sells, above it the holder waits. For the quarterly put that **exercise boundary** stands at $83.62 after three months, $85.89 after six and $89.82 after nine (the highest tree node where exercise wins; the true line lies less than one node, 0.9 percent, above), then at the strike, $100.00, on the last day. It rises as expiry nears, because less time is left for Acme to recover.
 
 ### Step 4: one date returns the European price exactly
 
-Put $m = 1$: the only listed date is expiry. There is no earlier $\max$, and the recursion reads $P_B = e^{-rT}\,\mathbb{E}[g(S_T)]$. That is the definition of the European put, term for term. On the tree the gate never opens, and the walk is the European walk: 6.329109. The closed form gives 6.330081, and the code's price grid, which adds up bell-curve weights and knows nothing of trees, gives 6.330017. The tree's shortfall of a tenth of a cent is its step error, the same in every row of the card ([crr-tree-and-convergence](../04-Binomial%20Trees/04-crr-tree-and-convergence.md)).
+Put $m = 1$: the only listed date is expiry. There is no earlier $\max$, and the recursion reads $P_B = e^{-rT}\,\mathbb{E}[g(S_T)]$. That is the definition of the European put, term for term. On the tree the gate never opens, and the walk is the European walk: 6.329109. The closed form gives 6.330081, and the code's price grid, which adds up bell-curve weights and knows nothing of trees, gives 6.330017. The tree's shortfall of a tenth of a cent is its step error, the same in every row of the card ([Cox-Ross-Rubinstein](../04-Binomial%20Trees/04-crr-tree-and-convergence.md)).
 
 ### Step 5: more dates never cost less
 
@@ -159,7 +141,7 @@ share of the gap from European to American captured, percent
 
 As the list fills in, the Bermudan approaches the American: weekly dates give 6.652468 against 6.660226 with every step listed. Delaying any American exercise to the next listed date loses only what Acme can do in one gap, and that shrinks as the gaps do. This card shows the limit numerically; how the boundary behaves once exercise is continuous is the next card's subject.
 
-A tree needs one dimension of state; a contract on three assets, or one whose payoff remembers its path, will not fit. Then the tool is **least-squares Monte Carlo**: simulate many paths, and on each listed date estimate the holding value by fitting a curve to what paths from nearby prices went on to collect ([longstaff-schwartz-least-squares-monte-carlo](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md)). A Bermudan suits it exactly, since the fit is needed only on the listed dates. On the quarterly put, a rule fitted on 40,000 simulated paths and run on 100,000 fresh ones gives 6.540195, with a standard error (the typical size of the sampling miss) of 0.025652. A fitted rule can be no better than the best rule, so this estimate leans low.
+A tree needs one dimension of state; a contract on three assets, or one whose payoff remembers its path, will not fit. Then the tool is **least-squares Monte Carlo**: simulate many paths, and on each listed date estimate the holding value by fitting a curve to what paths from nearby prices went on to collect ([Longstaff-Schwartz](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md)). A Bermudan suits it exactly, since the fit is needed only on the listed dates. On the quarterly put, a rule fitted on 40,000 simulated paths and run on 100,000 fresh ones gives 6.540195, with a standard error (the typical size of the sampling miss) of 0.025652. A fitted rule can be no better than the best rule, so this estimate leans low.
 
 ---
 
@@ -631,7 +613,7 @@ The two outputs agree line for line, the simulation included, because both use t
 - **Bermudan swaptions.** The right to enter an interest-rate swap on any of a list of reset dates: the most traded Bermudan contract. It is priced with the same gated recursion on a model of rates rather than a share.
 - **Employee share options.** Many can be exercised only in windows after results are published, which makes them Bermudan, not American.
 - **Contracts too big for a tree.** A Bermudan on a basket of shares is priced by least-squares Monte Carlo, run on the listed dates only.
-- **The American limit and its shortcuts.** A dense list approaches the American put ([american-options-and-early-exercise](01-american-options-and-early-exercise.md)); the formula-based estimate of that limit is [barone-adesi-whaley-approximation](06-barone-adesi-whaley-approximation.md), and its sensitivities are on [american-greeks-and-implied-volatility](07-american-greeks-and-implied-volatility.md). With no expiry at all the boundary stops moving: [perpetual-american-put](05-perpetual-american-put.md).
+- **The American limit and its shortcuts.** A dense list approaches the American put ([American options](01-american-options-and-early-exercise.md)); the formula-based estimate of that limit is [Barone-Adesi-Whaley](06-barone-adesi-whaley-approximation.md), and its sensitivities are on [American Greeks and implied volatility](07-american-greeks-and-implied-volatility.md). With no expiry at all the boundary stops moving: [The perpetual American put](05-perpetual-american-put.md).
 
 > **Say it back**
 > A Bermudan option may be exercised only on dates listed in the contract. Its price comes from walking back from expiry, taking the better of exercising and holding on each listed date and simply holding in between. With expiry as the only date that walk is the European one, so the price is the European price. Every added date is a right that can be refused, so the price never falls and climbs toward the American, by less with each date. When the state is too big for a tree, least-squares Monte Carlo does the same comparison on the listed dates.
@@ -640,13 +622,13 @@ The two outputs agree line for line, the simulation included, because both use t
 
 ## What this builds on
 
-- [american-options-and-early-exercise](01-american-options-and-early-exercise.md): why a put can be worth exercising early at all, and the American price this card climbs toward.
-- [crr-tree-and-convergence](../04-Binomial%20Trees/04-crr-tree-and-convergence.md): the tree used as the main road, and why its price sits a tenth of a cent under the true one.
-- [longstaff-schwartz-least-squares-monte-carlo](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md): the simulation road, the tool when a tree will not fit.
+- [American options](01-american-options-and-early-exercise.md): why a put can be worth exercising early at all, and the American price this card climbs toward.
+- [Cox-Ross-Rubinstein](../04-Binomial%20Trees/04-crr-tree-and-convergence.md): the tree used as the main road, and why its price sits a tenth of a cent under the true one.
+- [Longstaff-Schwartz](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md): the simulation road, the tool when a tree will not fit.
 
 ## Where this goes next
 
-- [exercise-boundary-and-smooth-pasting](04-exercise-boundary-and-smooth-pasting.md): the exercise line once every instant is listed, and the condition that fixes where it sits.
+- [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md): the exercise line once every instant is listed, and the condition that fixes where it sits.
 
 The quarterly boundary stood at $83.62, $85.89 and $89.82: as the dates crowd into a continuum, what curve do those points become, and how does the option's value meet the payoff along it?
 

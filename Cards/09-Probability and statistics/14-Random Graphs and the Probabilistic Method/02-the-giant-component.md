@@ -1,23 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Random Graphs and the Probabilistic Method
-topic: Islands and a continent
-item: The giant component
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/09-Probability and statistics/14-Random Graphs and the Probabilistic Method/01-random-graphs-erdos-renyi|random-graphs-erdos-renyi]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/04-connectivity-and-breadth-first-search|connectivity-and-breadth-first-search]]"
-next:
-  - "[[Cards/25-Frontier/05-Analysis and Dynamics/06-dying-percolation-and-critical-phenomena|dying-percolation-and-critical-phenomena]]"
-tags: [mathematics, probability and statistics, the-giant-component]
----
-
 # The giant component: a sudden switch when the average degree passes one
 
-Probability and statistics → Random Graphs and the Probabilistic Method → Islands and a continent → The giant component
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Graphs and the Probabilistic Method](../../../SYLLABUS.md#w09-s14) → The giant component
 
 ---
 
@@ -27,7 +10,7 @@ Take 1,000 people and make friendships at random. Every one of the 499,500 possi
 
 At first the network is an archipelago. With half a friend per person on average, the biggest island in a simulated network holds about a dozen people. Push the average to 1.5 friends and the picture has changed in kind: one island holds about 583 people, and the next largest about 13. In a large network the change is squeezed into a narrow band of averages, and the band tightens as the network grows. The switch sits at one friend per person.
 
-The islands have a proper name: a **component** is a group of people all joined to one another by chains of friendships, with no friendship leaving the group ([connectivity-and-breadth-first-search](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)). The one big island is the **giant component**, the term used from here on. The random network is the Erdős–Rényi graph of [random-graphs-erdos-renyi](01-random-graphs-erdos-renyi.md).
+The islands have a proper name: a **component** is a group of people all joined to one another by chains of friendships, with no friendship leaving the group ([Connected or not](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md)). The one big island is the **giant component**, the term used from here on. The random network is the Erdős–Rényi graph of [Random graphs](01-random-graphs-erdos-renyi.md).
 
 The reason is a family tree. Explore outward from one person: friends, then their new friends, and so on. Each person found brings on average as many new people as the average number of friends. Below one, the tree dies out; above one, it can run on for ever, and every runaway tree lands in the same giant.
 
@@ -69,7 +52,7 @@ The number zero always solves it. The theorem is about the other root:
 - **Above the switch,** $c$ > 1: there is exactly one root $\zeta$ between 0 and 1. The largest component holds about $\zeta$ n people; every other component holds at most a constant times ln n.
 - **At the switch,** $c$ = 1: the largest component holds roughly $n^{2/3}$ people, a count between the two.
 
-The same share arrives from a family tree. Write $q$ for the chance that a family line dies out when every member has a Poisson number of children with average $c$ (X ~ Poisson(c), read "X follows the Poisson law with mean c", from [poisson](../03-Discrete%20Distributions/04-poisson.md)). Then
+The same share arrives from a family tree. Write $q$ for the chance that a family line dies out when every member has a Poisson number of children with average $c$ (X ~ Poisson(c), read "X follows the Poisson law with mean c", from [Poisson](../03-Discrete%20Distributions/04-poisson.md)). Then
 
 $$q = e^{c\,(q - 1)}, \qquad \zeta = 1 - q.$$
 
@@ -120,7 +103,7 @@ flowchart TB
 
 An explored person has 999 possible partners, minus those already found. Each is a friend with chance $p$, independently. So the count of new friends, $X$, is binomial with just under 999 trials and chance $p$, and its average is at most (n − 1)p, which is $c$.
 
-Many trials each with a small chance give the Poisson law with the same average: $X$ is close to Poisson(c) ([poisson](../03-Discrete%20Distributions/04-poisson.md)). At c = 1.5, $p$ is 0.001502.
+Many trials each with a small chance give the Poisson law with the same average: $X$ is close to Poisson(c) ([Poisson](../03-Discrete%20Distributions/04-poisson.md)). At c = 1.5, $p$ is 0.001502.
 
 ### Step 2: the dying-out chance obeys one equation
 
@@ -139,7 +122,7 @@ For Poisson(c), $P(X = j) = e^{-c} c^j / j!$. So the sum is $e^{-c} \sum_j (cq)^
 
 Let $q_k$ be the chance the line is dead by generation k. By the same argument, $q_k = f(q_{k-1})$, starting from zero at generation 0. At c = 1.5 the values are 0.2231, 0.3118, 0.3562, 0.3807, 0.3950, climbing to 0.4172.
 
-The sequence climbs and can never pass a root of q = f(q): f is increasing, so if $q_{k-1}$ sits below a root r, then $q_k = f(q_{k-1})$ sits below f(r) = r. It therefore settles on the smallest root in 0 to 1 ([fixed-point-iteration-and-the-contraction-principle](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md)).
+The sequence climbs and can never pass a root of q = f(q): f is increasing, so if $q_{k-1}$ sits below a root r, then $q_k = f(q_{k-1})$ sits below f(r) = r. It therefore settles on the smallest root in 0 to 1 ([Fixed points](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md)).
 
 Now the shape of f. It passes through (1, 1), since $e^0 = 1$. Its slope there is $c$. It curves upward everywhere, since its second derivative, $c^2 e^{c(s-1)}$, is positive.
 
@@ -165,7 +148,7 @@ An average of 2 still allows one big island somewhere among 1,000 people. Ruling
 
 If the island of $v$ holds more than k people, the search is still running after exploring k people. They have then found at least k new people between them, besides $v$. Each exploration draws from fresh pairs, each a friendship with chance $p$, and at most n − 1 pairs per explored person. So the total found is at most a binomial count, call it B, with k(n − 1) trials and chance $p$, whose average is kc.
 
-Chernoff's trick bounds P(B ≥ k). For any t > 0, Markov's inequality applied to $e^{tB}$ gives $P(B \ge k) \le e^{-tk}\, E[e^{tB}]$ ([markov-and-chebyshev-inequalities](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)). The moment generating function of the binomial is $(1 - p + pe^t)^{k(n-1)}$, which is at most $e^{kc(e^t - 1)}$ since $1 + x \le e^x$ ([moment-generating-functions](../02-Random%20Variables/07-moment-generating-functions.md)). So
+Chernoff's trick bounds P(B ≥ k). For any t > 0, Markov's inequality applied to $e^{tB}$ gives $P(B \ge k) \le e^{-tk}\, E[e^{tB}]$ ([Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md)). The moment generating function of the binomial is $(1 - p + pe^t)^{k(n-1)}$, which is at most $e^{kc(e^t - 1)}$ since $1 + x \le e^x$ ([Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md)). So
 
 $$P(\lvert C(v)\rvert > k) \le e^{\,k\,(c(e^t - 1) - t)}.$$
 
@@ -183,7 +166,7 @@ The family tree predicts that a share $\zeta$ of people start searches that do n
 2. **Survivors grow large.** A search that has not died by then keeps finding people at a rate above one per explored person, and reaches a size of order $n^{2/3}$ with chance close to 1.
 3. **Large searches meet.** Two groups of that size have about $n^{4/3}$ pairs between them, each a friendship with chance c / (n − 1). The chance that none is a friendship is about $e^{-c\,n^{1/3}}$, which vanishes. So all large searches belong to one component.
 
-Every person whose search survives is in the giant, so its size is about ζ n. The second moment method of [first-and-second-moment-methods](04-first-and-second-moment-methods.md), applied to the count of people in small components rather than to triangles, shows that count is concentrated near its average, so the giant's size is too. The full proof is in the evolution chapters of Frieze and Karoński and of van der Hofstad, listed under Sources.
+Every person whose search survives is in the giant, so its size is about ζ n. The second moment method of [First and second moments](04-first-and-second-moment-methods.md), applied to the count of people in small components rather than to triangles, shows that count is concentrated near its average, so the giant's size is too. The full proof is in the evolution chapters of Frieze and Karoński and of van der Hofstad, listed under Sources.
 
 <details>
 <summary>The same equation without a tree</summary>
@@ -192,7 +175,7 @@ A person is outside the giant when none of their friends is inside it. Each of t
 
 </details>
 
-A second route follows the search as a walk. Keep a count of people found but not yet explored. Each step explores one: the count rises by the new friends and falls by one. The component ends when the count hits zero. The walk drifts upward exactly when c > 1. Karp (1990) made this exact, and it is the road the critical window at c = 1 is studied by (dying-percolation-and-critical-phenomena).
+A second route follows the search as a walk. Keep a count of people found but not yet explored. Each step explores one: the count rises by the new friends and falls by one. The component ends when the count hits zero. The walk drifts upward exactly when c > 1. Karp (1990) made this exact, and it is the road the critical window at c = 1 is studied by (Percolation).
 
 ---
 
@@ -229,7 +212,7 @@ The code prints every one of these.
 
 ## Code, from first principles, and it actually runs
 
-Only math primitives are imported; every random draw comes from a SplitMix64 generator with seed 2026, written out in both languages ([pseudo-random-numbers](../11-Simulation/01-pseudo-random-numbers.md)). The giant's share at c = 1.5 is reached four ways: bisection on $\zeta = 1 - e^{-c\zeta}$; the dying-out chance generation by generation; 10,000 simulated family lines with Poisson children; and 40 simulated networks of 1,000 people, with components found by merging friends into groups (union-find). Networks are built by jumping from one friendship to the next with geometric gaps, never testing all 499,500 pairs one by one. Below the switch, the code checks the two proven bounds. The three breaks are built and measured.
+Only math primitives are imported; every random draw comes from a SplitMix64 generator with seed 2026, written out in both languages ([Random numbers from a computer](../11-Simulation/01-pseudo-random-numbers.md)). The giant's share at c = 1.5 is reached four ways: bisection on $\zeta = 1 - e^{-c\zeta}$; the dying-out chance generation by generation; 10,000 simulated family lines with Poisson children; and 40 simulated networks of 1,000 people, with components found by merging friends into groups (union-find). Networks are built by jumping from one friendship to the next with geometric gaps, never testing all 499,500 pairs one by one. Below the switch, the code checks the two proven bounds. The three breaks are built and measured.
 
 ### Python
 
@@ -627,10 +610,10 @@ The two outputs are identical: both languages draw the same numbers from the sam
 
 ## Where you meet it in real life
 
-- **Epidemics.** Each case infects on average R0 others, the reproduction number. Below 1 an outbreak fizzles; above it, a share of the population is infected that solves the same equation, $z = 1 - e^{-R_0 z}$, with R0 in place of c ([the-sir-epidemic-model](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/07-the-sir-epidemic-model.md)). Vaccination aims to push the average below one.
+- **Epidemics.** Each case infects on average R0 others, the reproduction number. Below 1 an outbreak fizzles; above it, a share of the population is infected that solves the same equation, $z = 1 - e^{-R_0 z}$, with R0 in place of c ([The SIR model](../../08-Differential%20equations%20and%20dynamics/06-Nonlinear%20Dynamics%20in%20the%20Plane/07-the-sir-epidemic-model.md)). Vaccination aims to push the average below one.
 - **Nuclear chain reactions.** Each fission releases neutrons that cause, on average, a number of further fissions. At 1 the reaction is critical; above, it runs away. The family tree of Step 0 is the reactor engineer's model.
 - **Polymer gels.** Small molecules with several bonding sites link at random. When each bond leads on average to more than one further bond, one molecule spans the container and the liquid sets into a gel: the setting of glue or jelly.
-- **Networks under attack.** Remove routers from a communications network at random. The network holds together while each surviving router links to more than one further router on average, and breaks into islands below. That breaking is percolation (dying-percolation-and-critical-phenomena).
+- **Networks under attack.** Remove routers from a communications network at random. The network holds together while each surviving router links to more than one further router on average, and breaks into islands below. That breaking is percolation (Percolation).
 
 > **Say it back**
 > In a random network with a fixed average number of friends, a person's component is found by exploring friends generation by generation, and that search behaves like a family tree with Poisson-many children. A family tree whose members average at most one child dies out, so below one friend each every island is small: a dozen or so people in a network of 1,000. Above one, a tree survives with chance ζ, the positive root of $\zeta = 1 - e^{-c\zeta}$. All surviving searches meet, so one giant component holds about ζ n people. At 1.5 friends each, that is about 583 of 1,000.
@@ -639,16 +622,16 @@ The two outputs are identical: both languages draw the same numbers from the sam
 
 ## What this builds on
 
-- [random-graphs-erdos-renyi](01-random-graphs-erdos-renyi.md): the model itself, n people and each pair a friendship with chance p, independently.
-- [connectivity-and-breadth-first-search](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md): components, and the generation-by-generation search that turns an island into a family tree.
+- [Random graphs](01-random-graphs-erdos-renyi.md): the model itself, n people and each pair a friendship with chance p, independently.
+- [Connected or not](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md): components, and the generation-by-generation search that turns an island into a family tree.
 
 ---
 
 ## Where this goes next
 
-- dying-percolation-and-critical-phenomena: the same switch on grids and real networks, and what happens exactly at the threshold, where the largest component grows like $n^{2/3}$ and sizes follow power laws.
+- Percolation: the same switch on grids and real networks, and what happens exactly at the threshold, where the largest component grows like $n^{2/3}$ and sizes follow power laws.
 
-This card settles both sides of one friend each; what happens exactly at one, and on grids, where each person can befriend only near neighbours, is the question dying-percolation-and-critical-phenomena takes up.
+This card settles both sides of one friend each; what happens exactly at one, and on grids, where each person can befriend only near neighbours, is the question Percolation takes up.
 
 ---
 

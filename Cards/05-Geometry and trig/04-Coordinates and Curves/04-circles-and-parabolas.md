@@ -1,29 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Coordinates and Curves
-topic: Curves from a distance rule
-item: Circles and parabolas
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/01-distance-and-midpoint|distance-and-midpoint]]"
-  - "[[Cards/03-Algebra/02-Polynomials/02-factoring-quadratics|factoring-quadratics]]"
-next:
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/05-ellipses-and-hyperbolas|ellipses-and-hyperbolas]]"
-  - "[[Cards/05-Geometry and trig/06-Beyond Euclid/05-elliptic-curves-and-point-addition|elliptic-curves-and-point-addition]]"
-  - "[[Cards/22-Algebraic geometry/03-Plane Curves/01-conics-and-rational-parametrisation|conics-and-rational-parametrisation]]"
-  - "[[Cards/23-Differential geometry and Lie groups/01-Curves/03-osculating-circle|osculating-circle]]"
-tags:
-  - mathematics
-  - geometry and trig
-  - circles-and-parabolas
----
-
 # Circles and parabolas: curves defined by a distance rule
 
-Geometry and trig → Coordinates and Curves → Curves from a distance rule → Circles and parabolas
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Coordinates and Curves](../../../SYLLABUS.md#w05-s04) → Circles and parabolas
 
 ---
 
@@ -49,7 +26,7 @@ Drawn at 1 cm = 2.2 units, y measured up the axis from the dish's centre V, the 
 
 ## The formula
 
-A point (x, y) is x cm across and y cm up from the vertex. Two points' distance is the square root of the across-gap squared plus the up-gap squared ([distance-and-midpoint](01-distance-and-midpoint.md)).
+A point (x, y) is x cm across and y cm up from the vertex. Two points' distance is the square root of the across-gap squared plus the up-gap squared ([Distance and midpoint](01-distance-and-midpoint.md)).
 
 The circle with centre $(h, k)$ and radius $r$:
 
@@ -77,7 +54,7 @@ With the vertex moved to $(h, k)$ it is $(x-h)^2 = 4p(y-k)$: focus $(h, k+p)$, d
 ### When it holds
 
 - **Flat, square grid.** The distance formula is Pythagoras: same unit on both axes, meeting at a right angle.
-- **Axis along a grid line.** A tilted parabola has an extra term in xy, handled in conics-and-rational-parametrisation.
+- **Axis along a grid line.** A tilted parabola has an extra term in xy, handled in Conics.
 - **A positive radius, a nonzero focal length.** A tidied circle equation with 0 on the right is one point; with a negative number, no point. With $p = 0$ the focus lies on the directrix and there is no parabola.
 - **Rays parallel to the axis.** Rays arriving at a slant do not meet at one point; they blur beside F, which is why the dish is aimed.
 
@@ -105,11 +82,11 @@ Expand both brackets. Each side carries $y^2$ and $p^2$; they cancel. What is le
 
 The maker knows width and depth, not focus. The rim at (40, 10) must satisfy $x^2 = 4py$: 1600 = 4p × 10, so 4p = 160, the equation is $x^2 = 160y$, and p = 40 cm.
 
-A circle given in expanded form is read by **completing the square**, adding the number that turns $y^2 - 80y$ into a perfect square ([quadratic-formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)). Take $x^2 + y^2 - 80y - 900 = 0$. Since $(y - 40)^2 = y^2 - 80y + 1600$, add 1600 to both sides: $x^2 + (y-40)^2 = 2500$. The centre is (0, 40), the receiver; the radius is the square root of 2500, 50 cm. Both rim points lie on it.
+A circle given in expanded form is read by **completing the square**, adding the number that turns $y^2 - 80y$ into a perfect square ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)). Take $x^2 + y^2 - 80y - 900 = 0$. Since $(y - 40)^2 = y^2 - 80y + 1600$, add 1600 to both sides: $x^2 + (y-40)^2 = 2500$. The centre is (0, 40), the receiver; the radius is the square root of 2500, 50 cm. Both rim points lie on it.
 
 ### Step 4: why every ray reaches the focus
 
-The **tangent** at P is the straight line touching the curve there without crossing it. It is the line at right angles to FD through its midpoint (20, 0), with slope 0.5: rising 0.5 cm per cm across. Put it into $x^2 = 160y$ to get $x^2 - 80x + 1600 = 0$, which factors as $(x - 40)^2 = 0$: one repeated root, so the line meets the curve at P alone ([factoring-quadratics](../../03-Algebra/02-Polynomials/02-factoring-quadratics.md)).
+The **tangent** at P is the straight line touching the curve there without crossing it. It is the line at right angles to FD through its midpoint (20, 0), with slope 0.5: rising 0.5 cm per cm across. Put it into $x^2 = 160y$ to get $x^2 - 80x + 1600 = 0$, which factors as $(x - 40)^2 = 0$: one repeated root, so the line meets the curve at P alone ([Factoring](../../03-Algebra/02-Polynomials/02-factoring-quadratics.md)).
 
 The tangent also halves the angle FPD. A mirror returns light at the angle it arrived, and the falling signal continues the line DP, so it leaves along PF. Every point has its own D, so every ray parallel to the axis reaches F.
 
@@ -158,7 +135,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The focus comes from the equation and from four bounced rays. The rim tangent comes from the bisector of F and D and from a very short chord; a **discriminant** $b^2 - 4c$ of 0 in $x^2 + bx + c = 0$ means one repeated root. The circle's centre and radius come from completing the square and from three points on the circle, by solving two straight-line equations for the point equally far from all three ([two-equations-two-unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
+The focus comes from the equation and from four bounced rays. The rim tangent comes from the bisector of F and D and from a very short chord; a **discriminant** $b^2 - 4c$ of 0 in $x^2 + bx + c = 0$ means one repeated root. The circle's centre and radius come from completing the square and from three points on the circle, by solving two straight-line equations for the point equally far from all three ([Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)).
 
 ### Python
 
@@ -381,15 +358,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [distance-and-midpoint](01-distance-and-midpoint.md): the distance formula that turns each rule into an equation.
-- [factoring-quadratics](../../03-Algebra/02-Polynomials/02-factoring-quadratics.md): the repeated root that shows the tangent touches once.
+- [Distance and midpoint](01-distance-and-midpoint.md): the distance formula that turns each rule into an equation.
+- [Factoring](../../03-Algebra/02-Polynomials/02-factoring-quadratics.md): the repeated root that shows the tangent touches once.
 
 ## Where this goes next
 
-- [ellipses-and-hyperbolas](05-ellipses-and-hyperbolas.md): two foci, with a fixed sum or a fixed difference of distances.
-- [elliptic-curves-and-point-addition](../06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): a cubic curve where a line through two points meets a third.
-- conics-and-rational-parametrisation: every curve of degree two, tilted or not, and its points listed by one parameter.
-- osculating-circle: the circle that hugs a curve best at a point; at the dish's vertex its radius is 2p.
+- [Ellipses and hyperbolas](05-ellipses-and-hyperbolas.md): two foci, with a fixed sum or a fixed difference of distances.
+- [Elliptic curves](../06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): a cubic curve where a line through two points meets a third.
+- Conics: every curve of degree two, tilted or not, and its points listed by one parameter.
+- Osculating circle: the circle that hugs a curve best at a point; at the dish's vertex its radius is 2p.
 
 A parabola has one focus and a line; a curve kept a fixed total distance from two foci closes up into an oval, and the next card finds its equation.
 

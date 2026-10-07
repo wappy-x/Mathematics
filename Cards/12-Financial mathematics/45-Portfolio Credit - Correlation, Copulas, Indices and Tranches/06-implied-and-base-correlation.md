@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Portfolio Credit - Correlation, Copulas, Indices and Tranches
-topic: Correlation read from tranche quotes
-item: Implied correlation
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/05-cdo-tranches-in-outline|cdo-tranches-in-outline]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/05-root-finding-for-inverses|root-finding-for-inverses]]"
-  - "[[Cards/12-Financial mathematics/18-Many underlyings - exchange, spread, basket and rainbow/05-correlation-greeks-and-implied-correlation|correlation-greeks-and-implied-correlation]]"
-next: []
-tags: [mathematics, financial mathematics, implied-and-base-correlation]
----
-
 # Implied correlation: the correlation that reprices a tranche, why a mezzanine quote can have two answers or none, and base correlation's fix
 
-Financial mathematics → Portfolio Credit - Correlation, Copulas, Indices and Tranches → Correlation read from tranche quotes → Implied correlation
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Credit - Correlation, Copulas, Indices and Tranches](../../../SYLLABUS.md#w12-s45) → Implied correlation
 
 ---
 
@@ -25,9 +8,9 @@ Financial mathematics → Portfolio Credit - Correlation, Copulas, Indices and T
 
 A $1 billion pool holds 100 loans of $10 million each. Each loan has a 5 percent chance of defaulting over the pool's five-year life. A defaulted loan returns 40 percent of what it owed, so it loses 60 percent. On average the pool loses 3 percent of its size.
 
-The pool's losses are cut into slices called **tranches** ([cdo-tranches-in-outline](05-cdo-tranches-in-outline.md)). The 0–3% tranche, the **equity**, takes the first 3 percent of pool losses. The 3–7% tranche, the **mezzanine**, takes the next 4 percent: it loses nothing until the pool has lost 3 percent, and is wiped out once the pool has lost 7 percent. Each slice has a market price. On this card a price is quoted as the slice's **expected loss**: the average share of its own size it will lose over the five years.
+The pool's losses are cut into slices called **tranches** ([Tranches](05-cdo-tranches-in-outline.md)). The 0–3% tranche, the **equity**, takes the first 3 percent of pool losses. The 3–7% tranche, the **mezzanine**, takes the next 4 percent: it loses nothing until the pool has lost 3 percent, and is wiped out once the pool has lost 7 percent. Each slice has a market price. On this card a price is quoted as the slice's **expected loss**: the average share of its own size it will lose over the five years.
 
-The pricing model here is the one-factor Gaussian copula ([one-factor-gaussian-copula](02-one-factor-gaussian-copula.md)). It turns one unknown into a price. That unknown is the **asset correlation**: how strongly the loans share one fate. Run the model backwards, from a quoted price to the correlation that reproduces it, and the answer is the tranche's **implied correlation**, the credit twin of implied volatility. The options version lives on [correlation-greeks-and-implied-correlation](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/05-correlation-greeks-and-implied-correlation.md); this card is about tranches.
+The pricing model here is the one-factor Gaussian copula ([The one-factor Gaussian copula](02-one-factor-gaussian-copula.md)). It turns one unknown into a price. That unknown is the **asset correlation**: how strongly the loans share one fate. Run the model backwards, from a quoted price to the correlation that reproduces it, and the answer is the tranche's **implied correlation**, the credit twin of implied volatility. The options version lives on [Correlation Greeks and implied correlation](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/05-correlation-greeks-and-implied-correlation.md); this card is about tranches.
 
 For the equity the inverse behaves. A quote of 62.8 percent has exactly one answer: 19.97 percent correlation. The mezzanine does not behave. Its expected loss rises with correlation, peaks at 19.68 percent when correlation is 25.65 percent, then falls. A quote of 19.5 percent has two answers, 20.41 and 31.84 percent. A quote of 21 percent has none.
 
@@ -56,9 +39,9 @@ The hump is the mezzanine's expected loss. The lower flat line, a quote of 19.5 
 
 ## The formula
 
-Notation first, in words. $p$ is one loan's default chance, 5 percent. $g$ is the share of a loan lost at default, 60 percent. $\rho$ (say "rho") is the asset correlation. The **market factor** $M$ is one bell-curve draw shared by every loan: low means a bad five years. $N$ is the bell-curve area to the left of a point and $N^{-1}$ its inverse, as on [one-factor-gaussian-copula](02-one-factor-gaussian-copula.md). $\mathbb{E}$ is an average over all values of $M$. All amounts are fractions of the pool.
+Notation first, in words. $p$ is one loan's default chance, 5 percent. $g$ is the share of a loan lost at default, 60 percent. $\rho$ (say "rho") is the asset correlation. The **market factor** $M$ is one bell-curve draw shared by every loan: low means a bad five years. $N$ is the bell-curve area to the left of a point and $N^{-1}$ its inverse, as on [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md). $\mathbb{E}$ is an average over all values of $M$. All amounts are fractions of the pool.
 
-In a pool of very many loans, the loss once the market factor is known is one number, not a random amount ([vasicek-loss-distribution-and-basel-capital](03-vasicek-loss-distribution-and-basel-capital.md)):
+In a pool of very many loans, the loss once the market factor is known is one number, not a random amount ([Vasicek's large-pool loss curve](03-vasicek-loss-distribution-and-basel-capital.md)):
 
 $$L = g\,N\!\left(\frac{c-\sqrt{\rho}\,M}{\sqrt{1-\rho}}\right), \qquad c = N^{-1}(p).$$
 
@@ -106,7 +89,7 @@ Pool loss exceeds $K$ exactly when $M < z_K$: a worse economy than that.
 ### When it holds
 
 - **A very large pool of identical loans.** The formula for $L$ is the limit of many loans. With 100 real loans the losses come in steps of 0.6 percent, and the equity's expected loss at 20 percent correlation is 59.60, not 62.77. The inverse then returns a different correlation for the same quote.
-- **One bell-curve factor.** The Gaussian copula thins out joint disasters too fast; a tail-heavier copula moves every number here ([tail-dependence-and-the-t-copula](07-tail-dependence-and-the-t-copula.md)).
+- **One bell-curve factor.** The Gaussian copula thins out joint disasters too fast; a tail-heavier copula moves every number here ([Tail dependence](07-tail-dependence-and-the-t-copula.md)).
 - **Quotes as expected losses.** Markets quote spreads or upfront payments; turning those into expected losses needs default timing, discounting and the premium schedule from the tranche card. This card starts after that step.
 - **One pool, one date, one recovery.** Base correlation bootstraps across tranches, so every quote must describe the same pool, maturity and 40 percent recovery. Change the recovery and every base correlation moves.
 - **Interpolation is a convention.** Two different correlations in one price do not describe any single loss distribution, so nothing guarantees an interpolated slice a loss between zero and its width. Conventions verified 28 Sep 2026 against McGinty and Ahluwalia (2004): the bootstrap adds each tranche's expected loss onto the one below, in the large-pool Gaussian model.
@@ -202,7 +185,7 @@ The quote 19.5 percent sits in the third row: 20.41 and 31.84 percent.
 
 ### Step 4: solve each branch separately
 
-Inverting means finding where $\mathrm{EL}_{A,B}(\rho) - Q$ crosses zero ([root-finding-for-inverses](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md)). Bisection needs a bracket whose two ends give opposite signs. Over the whole range 0 to 1 the 19.5 percent quote fails that test: the curve is below 19.5 at both ends. Plain bisection run anyway walks to 100 percent correlation, where the mezzanine loses 5.00 percent, nowhere near the quote.
+Inverting means finding where $\mathrm{EL}_{A,B}(\rho) - Q$ crosses zero ([Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md)). Bisection needs a bracket whose two ends give opposite signs. Over the whole range 0 to 1 the 19.5 percent quote fails that test: the curve is below 19.5 at both ends. Plain bisection run anyway walks to 100 percent correlation, where the mezzanine loses 5.00 percent, nowhere near the quote.
 
 The fix is to split at $\rho^*$. On $(0, \rho^*)$ the curve only rises; on $(\rho^*, 1)$ it only falls. Each piece has a proper bracket or none, and each yields at most one root. The code finds each root twice: by bisection, and by Newton's method using the slope formula from Step 2. The two agree to eight decimals.
 
@@ -239,7 +222,7 @@ Two cautions. The price mixes two correlations, so no single loss distribution s
 
 ### The other door
 
-Base correlation fixes the inverse, not the model. The rising skew says one Gaussian correlation cannot fit all tranches at once. The other road is to change the model so one set of parameters fits every tranche: a copula with heavier joint tails, random recovery, or random correlation. The first of these is [tail-dependence-and-the-t-copula](07-tail-dependence-and-the-t-copula.md).
+Base correlation fixes the inverse, not the model. The rising skew says one Gaussian correlation cannot fit all tranches at once. The other road is to change the model so one set of parameters fits every tranche: a copula with heavier joint tails, random recovery, or random correlation. The first of these is [Tail dependence](07-tail-dependence-and-the-t-copula.md).
 
 ---
 
@@ -703,17 +686,17 @@ The two outputs agree line for line.
 >
 > Three smaller traps:
 > - **Reading a base correlation as the tranche's correlation.** The 25 percent at 7% belongs to the 0–7% slice. Pricing the 3–7% tranche at 25 percent alone gives the wrong answer; it needs 20 at the bottom and 25 at the top.
-> - **Confusing asset correlation with default correlation.** $\rho$ is the correlation of the hidden scores. The correlation of the default events themselves is far smaller ([default-correlation-and-joint-default](01-default-correlation-and-joint-default.md)).
+> - **Confusing asset correlation with default correlation.** $\rho$ is the correlation of the hidden scores. The correlation of the default events themselves is far smaller ([Default correlation](01-default-correlation-and-joint-default.md)).
 > - **Trusting an interpolated slice without checking it.** A bent base-correlation curve can make a thin slice's expected loss negative or bigger than its width. Check that its expected loss lies between 0 and its width every time.
 
 ---
 
 ## Where you meet it in real life
 
-- **Index tranche quotes.** Tranches on the credit indices ([credit-indices](04-credit-indices.md)) were quoted by implied correlation as well as by price. In 2004 JPMorgan's strategists showed that the 3–6% tranche of the TRAC-X Europe index, at its traded spread of 227 basis points (2.27 percent a year), had two compound correlations, around 10 and around 80 percent, and that no correlation reached a spread above 335 basis points.
+- **Index tranche quotes.** Tranches on the credit indices ([Credit indices (CDX and iTraxx in outline)](04-credit-indices.md)) were quoted by implied correlation as well as by price. In 2004 JPMorgan's strategists showed that the 3–6% tranche of the TRAC-X Europe index, at its traded spread of 227 basis points (2.27 percent a year), had two compound correlations, around 10 and around 80 percent, and that no correlation reached a spread above 335 basis points.
 - **Base correlation as the quoting standard.** The same note proposed base correlations from the large-pool Gaussian model as the fix, and base correlation became the market's usual way to quote the correlation skew.
 - **Off-the-run tranches.** A tranche with non-standard boundaries on a quoted index, like this card's 5–10%, is priced by interpolating base correlations, as in Step 6.
-- **The skew as a model test.** A base correlation that rises with detachment is the market saying that one Gaussian correlation cannot fit the whole capital structure. That observation drives the tail-heavier copulas on [tail-dependence-and-the-t-copula](07-tail-dependence-and-the-t-copula.md).
+- **The skew as a model test.** A base correlation that rises with detachment is the market saying that one Gaussian correlation cannot fit the whole capital structure. That observation drives the tail-heavier copulas on [Tail dependence](07-tail-dependence-and-the-t-copula.md).
 
 > **Say it back**
 > A tranche's implied correlation is the model input that reproduces its quote. Correlation only lowers the expected loss of a slice starting at zero, so the equity's inverse is unique. The mezzanine is the difference of two such slices; its expected loss rises from zero to a single peak and falls to the default chance, so a quote below the peak but above that floor has two correlations and a quote above the peak has none. Base correlation stacks the tranche quotes into first-loss quotes, inverts each one uniquely, and prices any other slice as the difference of two first-loss slices at their own correlations. It is a convention that fixes the inverse, not the model.
@@ -722,13 +705,13 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [cdo-tranches-in-outline](05-cdo-tranches-in-outline.md): the tranche itself, its attachment and detachment, and how a spread quote becomes an expected loss.
-- [root-finding-for-inverses](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): bisection, Newton, and why a bracket must change sign; Step 4 applies them branch by branch.
-- [correlation-greeks-and-implied-correlation](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/05-correlation-greeks-and-implied-correlation.md): implied correlation for an index option, where the inverse is unique; this card is the tranche version, where it need not be.
+- [Tranches](05-cdo-tranches-in-outline.md): the tranche itself, its attachment and detachment, and how a spread quote becomes an expected loss.
+- [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md): bisection, Newton, and why a bracket must change sign; Step 4 applies them branch by branch.
+- [Correlation Greeks and implied correlation](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/05-correlation-greeks-and-implied-correlation.md): implied correlation for an index option, where the inverse is unique; this card is the tranche version, where it need not be.
 
 ## Where this goes next
 
-- [tail-dependence-and-the-t-copula](07-tail-dependence-and-the-t-copula.md): follows this card on the shelf. It replaces the bell-curve copula with one whose joint disasters are fatter, the model-side answer to the skew.
+- [Tail dependence](07-tail-dependence-and-the-t-copula.md): follows this card on the shelf. It replaces the bell-curve copula with one whose joint disasters are fatter, the model-side answer to the skew.
 
 The base-correlation skew fits every quote only by giving each slice its own correlation; the open question is whether a different copula can price every tranche with one set of parameters.
 

@@ -1,27 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Relations and Functions
-topic: Sameness and blocks
-item: Equivalence relations and partitions
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/08-Relations and Functions/01-relations|relations]]"
-  - "[[Cards/01-Foundations/07-Sets/03-set-operations|set-operations]]"
-next:
-  - "[[Cards/01-Foundations/08-Relations and Functions/07-partial-and-total-orders|partial-and-total-orders]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/03-residue-classes|residue-classes]]"
-tags:
-  - mathematics
-  - foundations
-  - equivalence-relations-and-partitions
----
-
 # Equivalence relations and partitions: a sameness rule cuts a set into blocks, and the blocks give the rule back
 
-Foundations → Relations and Functions → Sameness and blocks → Equivalence relations and partitions
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Relations and Functions](../../../SYLLABUS.md#w01-s08) → Equivalence relations and partitions
 
 ---
 
@@ -29,7 +8,7 @@ Foundations → Relations and Functions → Sameness and blocks → Equivalence 
 
 A day has 24 hours, numbered 0 to 23. The kitchen clock has 12 readings, taking the 12 on its face as 0: at hour 15 the dial shows 3, at hour 23 it shows 11, at hour 3 it shows 3 again.
 
-Take this rule: two hours count as the same when the dial shows the same for both. That is a relation on the 24 hours — a set of ordered pairs, [relations](01-relations.md) — and 48 of the 24 × 24 = 576 pairs are in it.
+Take this rule: two hours count as the same when the dial shows the same for both. That is a relation on the 24 hours — a set of ordered pairs, [Relations](01-relations.md) — and 48 of the 24 × 24 = 576 pairs are in it.
 
 The rule sorts the day: 0 with 12, 1 with 13, 2 with 14, up to 11 with 23. Twelve piles of two, every hour in exactly one, none left over. A split like that is a **partition**, and each pile is a **block**.
 
@@ -57,7 +36,7 @@ The rule is the object:
 
 **same reading on a 12-hour dial: hour a and hour b are linked when the dial shows the same number for both**
 
-Here a and b are any two of the 24 hours, possibly the same. Three of the four tests from [relations](01-relations.md) settle it:
+Here a and b are any two of the 24 hours, possibly the same. Three of the four tests from [Relations](01-relations.md) settle it:
 
 - **Reflexive:** every hour is linked to itself.
 - **Symmetric:** if a is linked to b, then b is linked to a.
@@ -263,7 +242,7 @@ The two outputs match line for line: all counting.
 ## Where you meet it in real life
 
 - **Group by.** A pivot table, or GROUP BY in SQL, drops rows into piles by one column: "same value there" is the rule, the piles its blocks.
-- **Clock arithmetic.** Any number in place of 12, and the blocks get names and an arithmetic of their own: [residue-classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md).
+- **Clock arithmetic.** Any number in place of 12, and the blocks get names and an arithmetic of their own: [Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md).
 - **Sorting anything.** Recycling bins, laundry, a deck split by suit: every item in one place.
 
 > **Say it back**
@@ -273,13 +252,13 @@ The two outputs match line for line: all counting.
 
 ## What this builds on
 
-- [relations](01-relations.md): a relation as the set of ordered pairs where a link holds, and three of its four tests.
-- [set-operations](../07-Sets/03-set-operations.md): overlap and cover, all a partition asks about.
+- [Relations](01-relations.md): a relation as the set of ordered pairs where a link holds, and three of its four tests.
+- [Set operations](../07-Sets/03-set-operations.md): overlap and cover, all a partition asks about.
 
 ## Where this goes next
 
-- [partial-and-total-orders](07-partial-and-total-orders.md): swap symmetric for antisymmetric and the same kind of list becomes a ranking, not piles.
-- [residue-classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md): each block collapsed to one new thing — the quotient — that you can add and multiply.
+- [Orders](07-partial-and-total-orders.md): swap symmetric for antisymmetric and the same kind of list becomes a ranking, not piles.
+- [Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md): each block collapsed to one new thing — the quotient — that you can add and multiply.
 
 ---
 

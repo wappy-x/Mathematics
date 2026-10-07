@@ -1,23 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Linear Systems and Transforms
-topic: Superposition and a fixed clock
-item: Linear and time-invariant
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/07-convolution-and-the-impulse-response|convolution-and-the-impulse-response]]"
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/06-impulses-and-the-delta-function|impulses-and-the-delta-function]]"
-next:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/02-impulse-response-and-transfer-functions|impulse-response-and-transfer-functions]]"
-tags: [mathematics, engineering mathematics, linear-time-invariant-systems-and-convolution]
----
-
 # Linear and time-invariant: superposition plus a fixed clock gives convolution
 
-Engineering mathematics → Linear Systems and Transforms → Superposition and a fixed clock → Linear and time-invariant
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Linear Systems and Transforms](../../../SYLLABUS.md#w13-s02) → Linear and time-invariant
 
 ---
 
@@ -25,7 +8,7 @@ Engineering mathematics → Linear Systems and Transforms → Superposition and 
 
 A 1,500 kg car cruises on a flat motorway at 25 m/s with the throttle at 17.25 % open. An engineer is about to design its cruise control. First she needs a model of the car itself: given any history of throttle movements, what will the road speed do?
 
-She could derive the physics. Instead she pokes the car. The throttle opens 1 % more for one second, then returns. The speed rises by 0.016542 m/s in that second, then fades back over several minutes: 10.71 mm/s above cruise after 30 s, 0.19 mm/s after 300 s. That record is the car's **pulse response**, the name used from here on. Its continuous-time cousin is the impulse response of [convolution-and-the-impulse-response](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md), where a linear equation was solved by exactly this kind of blend.
+She could derive the physics. Instead she pokes the car. The throttle opens 1 % more for one second, then returns. The speed rises by 0.016542 m/s in that second, then fades back over several minutes: 10.71 mm/s above cruise after 30 s, 0.19 mm/s after 300 s. That record is the car's **pulse response**, the name used from here on. Its continuous-time cousin is the impulse response of [Convolution](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md), where a linear equation was solved by exactly this kind of blend.
 
 Two properties make the one record enough. **Linear**: twice the throttle move gives twice the speed change, and two moves together give the sum of their separate effects. **Time-invariant**: the same move made now or 40 s later gives the same response, only 40 s later. Grant both, and any throttle history can be cut into one-second pulses. Each pulse produces a scaled, delayed copy of the record, and the copies add. That adding is **convolution**. For an overtaking manoeuvre, +10 % for 15 s then −5 % for 15 s, it predicts 2.2386 m/s above cruise at 15 s, and the car agrees to within 0.0145 m/s all the way.
 
@@ -52,7 +35,7 @@ One line: the measured pulse response h, at 1 s and then every 20 s. At 0 s it i
 
 ## The formula
 
-Notation first, in words. Square brackets after a signal's name hold a whole-number time: u[n] is the throttle in second n. (Around a single capital, as in [T], the wing's square brackets mean a dimension; the two never meet.) A system S is a rule that takes a whole input record and returns a whole output record. The **unit pulse** δ[n] is 1 at n = 0 and 0 at every other n: the sampled form of the impulse in [impulses-and-the-delta-function](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/06-impulses-and-the-delta-function.md). A star between two records means convolution.
+Notation first, in words. Square brackets after a signal's name hold a whole-number time: u[n] is the throttle in second n. (Around a single capital, as in [T], the wing's square brackets mean a dimension; the two never meet.) A system S is a rule that takes a whole input record and returns a whole output record. The **unit pulse** δ[n] is 1 at n = 0 and 0 at every other n: the sampled form of the impulse in [Impulses](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/06-impulses-and-the-delta-function.md). A star between two records means convolution.
 
 The two properties, as tests a system can pass or fail:
 
@@ -103,7 +86,7 @@ in words: the first second's push leaves K(1 − a) = 0.016542 m/s, and each lat
 - **Time-invariant, so nothing about the car or its air changes.** Tucked behind a lorry from t = 50 s, the car's drag area falls to 0.60 m^2. The same pulse then leaves 10.71 mm/s after 30 s when applied at t = 0, and 11.42 mm/s when applied at t = 100 s: no single pulse response exists.
 - **Starting at rest, and causal.** Here rest means cruising at 25 m/s. A car still 1 m/s fast from an earlier move carries that fading 1 m/s on top of the convolution. Causal means no response before the push; without it the sum would run over future inputs too, not stop at k = n.
 - **Throttle held through each second.** The sampled sum covers inputs that change only on the second. A finer clock, or the continuous blend of the wing 08 card, covers the rest.
-- **Bounded inputs give bounded outputs only for a fading pulse response.** A record that starts at 0 gives a finite sum at every n, even if it never stops. Every bounded throttle keeps the speed bounded exactly when the |h[k]| add to a finite total, here K. When they do not is the subject of [poles-zeros-and-stability](03-poles-zeros-and-stability.md).
+- **Bounded inputs give bounded outputs only for a fading pulse response.** A record that starts at 0 gives a finite sum at every n, even if it never stops. Every bounded throttle keeps the speed bounded exactly when the |h[k]| add to a finite total, here K. When they do not is the subject of [Poles and zeros](03-poles-zeros-and-stability.md).
 
 ---
 
@@ -164,7 +147,7 @@ Any rule of the form y = h * u is linear, since each output is a weighted sum of
 
 Steps 1 to 3 use the two properties for every input; a test runs a few. So a test can refute linearity, never prove it. The car's scaling ratio of 1.9985 refutes exact linearity and shows only that the error is small at that input size. Engineers test at the sizes and speeds the system will meet, and quote the model's range.
 
-The continuous version, $y(t) = \int_0^t g(\lambda)\,u(t - \lambda)\,d\lambda$ with g the impulse response, is proved for linear constant-coefficient equations in [convolution-and-the-impulse-response](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md); the argument above is its sampled form, needing no equation at all. Turning the sum into a single multiplication per frequency is the work of [impulse-response-and-transfer-functions](02-impulse-response-and-transfer-functions.md).
+The continuous version, $y(t) = \int_0^t g(\lambda)\,u(t - \lambda)\,d\lambda$ with g the impulse response, is proved for linear constant-coefficient equations in [Convolution](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md); the argument above is its sampled form, needing no equation at all. Turning the sum into a single multiplication per frequency is the work of [Transfer functions](02-impulse-response-and-transfer-functions.md).
 
 ---
 
@@ -240,7 +223,7 @@ Orange: the linear model. Teal: the car. They agree for the first 10 s, while th
 
 ## Code, from first principles, and it actually runs
 
-The car is a black box: the equation above, stepped ten times a second with Runge-Kutta 4 ([runge-kutta-four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)). The pulse response is measured from it, not derived. Three roads reach the overtaking answer: the measured h convolved with the throttle record; the box run on the same record; and the linearised car solved exactly second by second, y[n + 1] = a y[n] + K(1 − a) u[n], which uses no sum over the past. The scripts also run the four tests and print every number on the card. Eight asserts can fail: scaling within 1 %, adding within 0.01 m/s, exact shifting in clean air and a visible change behind the lorry, measured h within 1 % of its formula, convolution within 0.05 m/s of the box, the formula pulse response convolved with the input matching the exact linear solution to 1e-9 m/s, and a linear model more than 5 m/s off far from cruise.
+The car is a black box: the equation above, stepped ten times a second with Runge-Kutta 4 ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)). The pulse response is measured from it, not derived. Three roads reach the overtaking answer: the measured h convolved with the throttle record; the box run on the same record; and the linearised car solved exactly second by second, y[n + 1] = a y[n] + K(1 − a) u[n], which uses no sum over the past. The scripts also run the four tests and print every number on the card. Eight asserts can fail: scaling within 1 %, adding within 0.01 m/s, exact shifting in clean air and a visible change behind the lorry, measured h within 1 % of its formula, convolution within 0.05 m/s of the box, the formula pulse response convolved with the input matching the exact linear solution to 1e-9 m/s, and a linear model more than 5 m/s off far from cruise.
 
 ### Python
 
@@ -629,9 +612,9 @@ The two outputs are identical.
 
 ## Where you meet it in real life
 
-- **Cruise and engine control.** Calibration engineers log the speed or torque response to small throttle steps and pulses around each operating point, then design the controller on that linear model; [step-response-specifications](07-step-response-specifications.md) reads such records as numbers to meet.
+- **Cruise and engine control.** Calibration engineers log the speed or torque response to small throttle steps and pulses around each operating point, then design the controller on that linear model; [Step response specs](07-step-response-specifications.md) reads such records as numbers to meet.
 - **Room and concert-hall acoustics.** A recorded hand clap or balloon pop is a room's impulse response; convolving a dry recording with it places the music in that room.
-- **Digital filters.** A moving average of recent readings is a convolution with equal weights. Every finite-length digital filter is a list of h values; [z-transform-and-discrete-time-systems](08-z-transform-and-discrete-time-systems.md) gives them their algebra.
+- **Digital filters.** A moving average of recent readings is a convolution with equal weights. Every finite-length digital filter is a list of h values; [The z-transform](08-z-transform-and-discrete-time-systems.md) gives them their algebra.
 - **Earthquake engineering.** A building's response to a short ground pulse, convolved with a recorded ground motion, predicts its sway, as long as the frame stays elastic; once it yields, linearity is gone.
 - **Drug dosing.** Blood concentration after a dose follows a pulse response in many drugs; repeated doses add, which is convolution, until the body's clearance saturates.
 
@@ -642,14 +625,14 @@ The two outputs are identical.
 
 ## What this builds on
 
-- [convolution-and-the-impulse-response](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md): the continuous blend of an input with an impulse response, proved for a linear equation with constant coefficients; this card gets the same sum from the two properties alone.
-- [impulses-and-the-delta-function](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/06-impulses-and-the-delta-function.md): the kick of total size 1 at an instant, whose sampled form is the unit pulse δ[n].
+- [Convolution](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md): the continuous blend of an input with an impulse response, proved for a linear equation with constant coefficients; this card gets the same sum from the two properties alone.
+- [Impulses](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/06-impulses-and-the-delta-function.md): the kick of total size 1 at an instant, whose sampled form is the unit pulse δ[n].
 
 ## Where this goes next
 
-- [impulse-response-and-transfer-functions](02-impulse-response-and-transfer-functions.md): the continuous impulse response turned into a transfer function, what the system does to each exponential, where convolution becomes multiplication. The sampled h[k] gets its transform on the z-transform card below.
-- [poles-zeros-and-stability](03-poles-zeros-and-stability.md): when a pulse response fades and bounded inputs give bounded outputs.
-- [z-transform-and-discrete-time-systems](08-z-transform-and-discrete-time-systems.md): the second-by-second recurrence used as road three, written as an algebra of delays.
+- [Transfer functions](02-impulse-response-and-transfer-functions.md): the continuous impulse response turned into a transfer function, what the system does to each exponential, where convolution becomes multiplication. The sampled h[k] gets its transform on the z-transform card below.
+- [Poles and zeros](03-poles-zeros-and-stability.md): when a pulse response fades and bounded inputs give bounded outputs.
+- [The z-transform](08-z-transform-and-discrete-time-systems.md): the second-by-second recurrence used as road three, written as an algebra of delays.
 
 Convolution needs the whole pulse response and a fresh sum of every past second for each new output; the transfer function replaces that sum with one multiplication per frequency, and that is what makes a cruise controller designable by hand.
 

@@ -1,26 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Planarity and Colouring
-topic: Timetabling
-item: Edge colouring
-kind: theorem
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/03-vertex-colouring-and-chromatic-number|vertex-colouring-and-chromatic-number]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/02-degree-and-handshaking|degree-and-handshaking]]"
-next:
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/05-blocking-and-factorial-designs|blocking-and-factorial-designs]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - edge-colouring-and-round-robin
----
-
 # Edge colouring: colour the edges so no two at a vertex match, and a league fixture list is exactly this
 
-Combinatorics and graphs → Planarity and Colouring → Timetabling → Edge colouring
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Planarity and Colouring](../../../SYLLABUS.md#w04-s12) → Edge colouring
 
 ---
 
@@ -30,7 +10,7 @@ Six clubs in a league: A, B, C, D, E, F. Everyone plays everyone once — 15 mat
 
 Five. Each club has five opponents and plays one a weekend, and six clubs make at most three matches at a time: 15 matches need five weekends of three.
 
-Strip the league to dots and lines: a dot per club, a line per match ([graphs-vertices-and-edges](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). Paint each match with its weekend's colour, and "no club plays twice a weekend" reads: no two lines of one colour meet at a dot. That is an **edge colouring**; the fewest colours that work is the **chromatic index**. ([vertex-colouring-and-chromatic-number](03-vertex-colouring-and-chromatic-number.md) does the same for dots.)
+Strip the league to dots and lines: a dot per club, a line per match ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)). Paint each match with its weekend's colour, and "no club plays twice a weekend" reads: no two lines of one colour meet at a dot. That is an **edge colouring**; the fewest colours that work is the **chromatic index**. ([Colouring](03-vertex-colouring-and-chromatic-number.md) does the same for dots.)
 
 **The lines of a network need as many colours as the busiest dot has lines, or exactly one more; a league with an even number of clubs needs only that count, built by pinning one club and rotating the rest.**
 
@@ -51,7 +31,7 @@ The season's first weekend, built below; four more of this shape finish it.
 
 ## The formula
 
-Notation first. A capital Greek delta before a network's name, $\Delta(G)$, is its largest degree: the busiest dot's line count, read "delta of G" ([degree-and-handshaking](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)). The chromatic index is a primed chi, $\chi'(G)$, read "chi prime of G": the fewest colours in a **proper** edge colouring, where no two lines of a colour meet at a dot. Plain chi is the dot version. And $K_n$ is the **complete network**: all $n$ dots pairwise joined.
+Notation first. A capital Greek delta before a network's name, $\Delta(G)$, is its largest degree: the busiest dot's line count, read "delta of G" ([Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md)). The chromatic index is a primed chi, $\chi'(G)$, read "chi prime of G": the fewest colours in a **proper** edge colouring, where no two lines of a colour meet at a dot. Plain chi is the dot version. And $K_n$ is the **complete network**: all $n$ dots pairwise joined.
 
 Vizing's theorem, 1964:
 
@@ -59,7 +39,7 @@ $$\Delta(G) \;\le\; \chi'(G) \;\le\; \Delta(G) + 1$$
 
 **Read it aloud:** the lines need as many colours as the busiest dot has lines, or one more, and nothing else.
 
-Two exact answers sit inside it. A **bipartite** network splits its dots into two sides with every line crossing between them — teachers one side, classes the other ([bipartite-graphs-and-odd-cycles](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)). There the lower end always holds: König, 1916.
+Two exact answers sit inside it. A **bipartite** network splits its dots into two sides with every line crossing between them — teachers one side, classes the other ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)). There the lower end always holds: König, 1916.
 
 $$\chi'(G) = \Delta(G) \quad \text{for bipartite } G, \qquad \chi'(K_n) = n - 1 \ \text{ for even } n, \qquad \chi'(K_n) = n \ \text{ for odd } n \ge 3$$
 
@@ -380,7 +360,7 @@ The two outputs match line for line.
 >
 > - **Assuming the busiest count is enough.** Five clubs need 5 weekends on a busiest count of 4.
 > - **Rotating every club.** All six on the wheel schedules only 6 of the 15 matches.
-> - **Colouring the dots instead.** A different question with a different answer ([vertex-colouring-and-chromatic-number](03-vertex-colouring-and-chromatic-number.md)); in print the prime on the chi is all that separates them.
+> - **Colouring the dots instead.** A different question with a different answer ([Colouring](03-vertex-colouring-and-chromatic-number.md)); in print the prime on the chi is all that separates them.
 
 ---
 
@@ -388,7 +368,7 @@ The two outputs match line for line.
 
 - **Sports fixture lists.** This rotation is the circle method; real seasons add home-and-away balance, shared venues and television slots (Sources).
 - **Timetables and switches.** A lesson list is bipartite, so Step 5 gives the exact number of periods. A data switch joining inputs to outputs in time slots is the same, a colour per slot.
-- **Balanced experiment layouts.** The fixture grid is a Latin square, and Latin squares keep two nuisance differences — order and location, say — out of a comparison ([blocking-and-factorial-designs](../../09-Probability%20and%20statistics/13-Survival%2C%20Design%20and%20Causality/05-blocking-and-factorial-designs.md)).
+- **Balanced experiment layouts.** The fixture grid is a Latin square, and Latin squares keep two nuisance differences — order and location, say — out of a comparison ([Blocking and factorial designs](../../09-Probability%20and%20statistics/13-Survival%2C%20Design%20and%20Causality/05-blocking-and-factorial-designs.md)).
 
 > **Say it back**
 > An edge colouring paints the lines so no two of one colour meet at a dot; the fewest colours is the chromatic index. The busiest dot's line count is a floor, since its lines all touch each other, and Vizing proved one spare colour is always enough — bipartite networks need none. Six clubs playing everyone once need five weekends of three: pin one club, label the other five round a circle, pair the labels summing to twice the weekend number.
@@ -397,14 +377,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [vertex-colouring-and-chromatic-number](03-vertex-colouring-and-chromatic-number.md): colours on the dots, and the word chromatic; this card moves it onto the lines.
-- [degree-and-handshaking](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md): the degree, and why the busiest one is what the answer hangs on.
+- [Colouring](03-vertex-colouring-and-chromatic-number.md): colours on the dots, and the word chromatic; this card moves it onto the lines.
+- [Degrees and the handshaking lemma](../09-Graphs%20-%20Dots%20and%20Lines/02-degree-and-handshaking.md): the degree, and why the busiest one is what the answer hangs on.
 
 ## Where this goes next
 
-- [blocking-and-factorial-designs](../../09-Probability%20and%20statistics/13-Survival%2C%20Design%20and%20Causality/05-blocking-and-factorial-designs.md): the same balanced grids laying out an experiment rather than a season.
+- [Blocking and factorial designs](../../09-Probability%20and%20statistics/13-Survival%2C%20Design%20and%20Causality/05-blocking-and-factorial-designs.md): the same balanced grids laying out an experiment rather than a season.
 
-The rotation hands over a balanced grid and says nothing about what the rounds are for; putting that balance to work in an experiment is [blocking-and-factorial-designs](../../09-Probability%20and%20statistics/13-Survival%2C%20Design%20and%20Causality/05-blocking-and-factorial-designs.md).
+The rotation hands over a balanced grid and says nothing about what the rounds are for; putting that balance to work in an experiment is [Blocking and factorial designs](../../09-Probability%20and%20statistics/13-Survival%2C%20Design%20and%20Causality/05-blocking-and-factorial-designs.md).
 
 ---
 

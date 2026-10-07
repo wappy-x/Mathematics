@@ -1,29 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Microstructure and Execution
-topic: Quotes under hidden information
-item: The spread
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/49-Microstructure and Execution/01-the-limit-order-book|the-limit-order-book]]"
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/06-bayes-rule|bayes-rule]]"
-next:
-  - "[[Cards/12-Financial mathematics/49-Microstructure and Execution/03-kyle-model-and-price-impact|kyle-model-and-price-impact]]"
-tags: [mathematics, financial mathematics, bid-ask-spread-and-adverse-selection]
----
-
 # The spread: what it costs to trade now, and why informed traders make it wider
 
-Financial mathematics → Microstructure and Execution → Quotes under hidden information → The spread
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Microstructure and Execution](../../../SYLLABUS.md#w12-s49) → The spread
 
 ---
 
 ## General Overview
 
-Acme, the library's house stock, trades at about $100. A dealer stands ready to trade one share with anyone, right now. The dealer posts two prices. The **bid** is what the dealer pays a seller: $99.98. The **ask** is what the dealer charges a buyer: $100.02. The gap between them, 4 cents, is the **bid-ask spread**. Buy and sell back at once and those 4 cents are lost. It is the price of trading immediately instead of waiting for someone on the other side ([the-limit-order-book](01-the-limit-order-book.md) shows where these quotes sit in the book).
+Acme, the library's house stock, trades at about $100. A dealer stands ready to trade one share with anyone, right now. The dealer posts two prices. The **bid** is what the dealer pays a seller: $99.98. The **ask** is what the dealer charges a buyer: $100.02. The gap between them, 4 cents, is the **bid-ask spread**. Buy and sell back at once and those 4 cents are lost. It is the price of trading immediately instead of waiting for someone on the other side ([The order book](01-the-limit-order-book.md) shows where these quotes sit in the book).
 
 Why 4 cents and not zero? Tomorrow morning Acme reports earnings. After the report the share will be worth $99.80 or $100.20, equally likely as far as the dealer can tell. One trader in ten has already worked out which. These **informed traders** buy when the news is good and sell when it is bad. The other nine trade for their own reasons, such as paying a bill, and are as likely to buy as to sell. The dealer cannot tell the two kinds apart.
 
@@ -55,7 +38,7 @@ Orange, the straight line: good and bad news equally likely. The spread is the i
 
 ## The formula
 
-Notation first. $E[V \mid \text{buy}]$ is the average of the value over the situations in which a buy arrives, each weighted by how likely it is; read "the expected value given a buy" ([bayes-rule](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/06-bayes-rule.md) supplies the conditioning).
+Notation first. $E[V \mid \text{buy}]$ is the average of the value over the situations in which a buy arrives, each weighted by how likely it is; read "the expected value given a buy" ([Bayes' rule](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/06-bayes-rule.md) supplies the conditioning).
 
 $$A = E[V \mid \text{buy}] = v_L + \Delta\,h_B, \qquad B = E[V \mid \text{sell}] = v_L + \Delta\,h_S$$
 
@@ -91,8 +74,8 @@ $$\gamma_1 = \operatorname{Cov}(R_t, R_{t-1}) = -c^2, \qquad s = 2c = 2\sqrt{-\g
 
 ### When it holds
 
-- **A competitive dealer, neutral to risk.** Rivals drive expected profit to zero. A dealer with market power, or one who dislikes holding stock, quotes wider; the inventory side is [market-making-avellaneda-stoikov](05-market-making-avellaneda-stoikov.md).
-- **One share per order.** When informed traders can choose their size, the question becomes price impact: [kyle-model-and-price-impact](03-kyle-model-and-price-impact.md).
+- **A competitive dealer, neutral to risk.** Rivals drive expected profit to zero. A dealer with market power, or one who dislikes holding stock, quotes wider; the inventory side is [Market making](05-market-making-avellaneda-stoikov.md).
+- **One share per order.** When informed traders can choose their size, the question becomes price impact: [Kyle's model](03-kyle-model-and-price-impact.md).
 - **Uninformed traders who ignore the price.** If a wide spread scares them off, the informed share rises and the spread widens again; at the extreme the market shuts.
 - **No fee, cost or tick.** Real spreads add costs and round to a tick, the minimum price step set by exchange and regulator rules.
 - **For Roll: trade sides unrelated to news.** If orders carry news, as in Glosten-Milgrom, Roll misses that part of the spread (Step 7).
@@ -193,7 +176,7 @@ Roll's covariance comes from the part of the spread that reverses. In Glosten-Mi
 
 So Roll measures the **transitory** part of a spread, the bounce that pays for costs and inventory. Glosten-Milgrom explains the **permanent** part, the move an order causes because it carries news. A real spread holds both.
 
-The other road to informed trading lets the informed trader pick the order's size and hide it in the noise; price then moves with total order flow. That is [kyle-model-and-price-impact](03-kyle-model-and-price-impact.md).
+The other road to informed trading lets the informed trader pick the order's size and hide it in the noise; price then moves with total order flow. That is [Kyle's model](03-kyle-model-and-price-impact.md).
 
 ---
 
@@ -729,8 +712,8 @@ The two outputs agree byte for byte: the same generator and seed drive the same 
 - **Before earnings and other scheduled news.** Market makers widen quotes ahead of announcements, when the next order is likeliest to know something and the gap between outcomes is largest.
 - **Payment for order flow.** Wholesale market makers pay brokers for small retail orders, which rarely know the next few seconds' news. This card says why that flow can be filled inside the posted spread at a profit.
 - **Stocks with little coverage.** Small companies followed by few analysts tend to carry wider spreads: an order is likelier to come from someone who has worked out the news.
-- **Estimating spreads without quotes.** Studies with only trade prices use Roll's estimator and its descendants: [liquidity-measures](07-liquidity-measures.md).
-- **Measuring what a trade cost.** The effective spread, twice the distance from midpoint to fill, opens any execution report: [transaction-cost-analysis](06-transaction-cost-analysis.md).
+- **Estimating spreads without quotes.** Studies with only trade prices use Roll's estimator and its descendants: [Liquidity](07-liquidity-measures.md).
+- **Measuring what a trade cost.** The effective spread, twice the distance from midpoint to fill, opens any execution report: [Measuring execution](06-transaction-cost-analysis.md).
 
 > **Say it back**
 > The spread is the cost of trading at once: buy at the ask, sell at the bid. A dealer who may be trading against someone better informed must set each quote to the value implied by the order that hits it. Bayes' rule turns the informed share and the news gap into those two values; with even odds the spread is the informed share times the gap, 4 cents for Acme. Uninformed traders pay it and informed traders collect it, and each trade teaches the dealer, so the spread narrows as the news gets into the price. Roll's covariance reads the bouncing part of a spread from trade prices, but it cannot see the part that comes from news.
@@ -739,14 +722,14 @@ The two outputs agree byte for byte: the same generator and seed drive the same 
 
 ## What this builds on
 
-- [the-limit-order-book](01-the-limit-order-book.md): where the bid and the ask sit, and what trading at them means.
-- [bayes-rule](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/06-bayes-rule.md): turning an observed order into new odds, the engine of every quote on this card.
+- [The order book](01-the-limit-order-book.md): where the bid and the ask sit, and what trading at them means.
+- [Bayes' rule](../../09-Probability%20and%20statistics/01-Chance%20and%20Events/06-bayes-rule.md): turning an observed order into new odds, the engine of every quote on this card.
 
 ## Where this goes next
 
-- [kyle-model-and-price-impact](03-kyle-model-and-price-impact.md): the informed trader chooses how much to trade and hides in the noise; price moves in proportion to order flow.
-- [market-making-avellaneda-stoikov](05-market-making-avellaneda-stoikov.md): the dealer's other worry, holding too much stock, and how it tilts the quotes.
-- [liquidity-measures](07-liquidity-measures.md): Roll's estimator among other ways to measure how costly a market is to trade.
+- [Kyle's model](03-kyle-model-and-price-impact.md): the informed trader chooses how much to trade and hides in the noise; price moves in proportion to order flow.
+- [Market making](05-market-making-avellaneda-stoikov.md): the dealer's other worry, holding too much stock, and how it tilts the quotes.
+- [Liquidity](07-liquidity-measures.md): Roll's estimator among other ways to measure how costly a market is to trade.
 
 This card priced one share at a time; what happens when an informed trader can choose the size of the order, and spread it out so the dealer learns slowly, is the question Kyle's model answers.
 

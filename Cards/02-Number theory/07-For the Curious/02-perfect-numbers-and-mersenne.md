@@ -1,26 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: For the Curious
-topic: Special numbers
-item: Perfect numbers and Mersenne primes
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/08-counting-divisors|counting-divisors]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/07-prime-factorisation|prime-factorisation]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/01-exponents-and-powers|exponents-and-powers]]"
-next: []
-tags:
-  - mathematics
-  - number theory
-  - perfect-numbers-and-mersenne
----
-
 # Perfect numbers and Mersenne primes: 6, 28, 496 and the record-prime hunt
 
-Number theory → For the Curious → Special numbers → Perfect numbers and Mersenne primes
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [For the Curious](../../../SYLLABUS.md#w02-s07) → Perfect numbers and Mersenne primes
 
 ---
 
@@ -30,7 +10,7 @@ A double-six domino set has 28 tiles. Deal them into equal piles, every tile use
 
 Ignore that last one and add the rest: 1 + 2 + 4 + 7 + 14 = 28. The pile sizes rebuild the set.
 
-Each of those goes into 28 with nothing left over — a **divisor** ([divides](../01-Divisibility%20and%20Primes/01-divides.md)). Every divisor but 28 itself is a **proper divisor**.
+Each of those goes into 28 with nothing left over — a **divisor** ([Divides](../01-Divisibility%20and%20Primes/01-divides.md)). Every divisor but 28 itself is a **proper divisor**.
 
 **A number is perfect when its proper divisors — everything that goes into it, except itself — add back up to it.**
 
@@ -55,9 +35,9 @@ Three moves:
 
 | Piece | Plain meaning | In our 28 |
 | --- | --- | --- |
-| the doubling run | 1, doubled again and again ([exponents-and-powers](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)) | 1, 2, 4 — the next doubling is 8 |
+| the doubling run | 1, doubled again and again ([Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)) | 1, 2, 4 — the next doubling is 8 |
 | a Mersenne number | one less than a doubling, after Marin Mersenne, a French friar of the 1600s | 8 − 1 = 7 |
-| a Mersenne prime | that number when prime: no divisor but 1 and itself ([primes-and-composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)) | 7 |
+| a Mersenne prime | that number when prime: no divisor but 1 and itself ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)) | 7 |
 | the perfect number | the Mersenne prime times the doubling below it | 4 × 7 = 28 |
 
 ---
@@ -70,7 +50,7 @@ Three moves:
 
 ### Step 1: with 7 prime, 28 has six divisors
 
-28 is 2 × 2 × 7 and nothing else ([prime-factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)). A divisor takes some of the twos — 1, 2 or 4 — and either the 7 or not ([counting-divisors](../01-Divisibility%20and%20Primes/08-counting-divisors.md)). That is the grid above.
+28 is 2 × 2 × 7 and nothing else ([Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)). A divisor takes some of the twos — 1, 2 or 4 — and either the 7 or not ([Counting divisors](../01-Divisibility%20and%20Primes/08-counting-divisors.md)). That is the grid above.
 
 ### Step 2: add the two rows, and a 2 falls out
 
@@ -250,7 +230,7 @@ Both outputs match line for line: whole numbers, nothing to round.
 ## Where you meet it in real life
 
 - **A record-prime headline.** On 21 October 2024 the Great Internet Mersenne Prime Search announced the largest known prime: 136,279,841 twos multiplied together, then 1 taken off — 41,024,320 digits, only the 52nd Mersenne prime found. Euclid's recipe turns it into the 52nd known perfect number, 82,048,640 digits long.
-- **The machines hunting it.** Volunteers run Lucas–Lehmer, a test built for this shape: start at 4, square and take 2 off, two fewer times than the count of doublings, on a clock the size of the Mersenne number ([modular-exponentiation](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)). Land on 0 and it is prime.
+- **The machines hunting it.** Volunteers run Lucas–Lehmer, a test built for this shape: start at 4, square and take 2 off, two fewer times than the count of doublings, on a clock the size of the Mersenne number ([Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)). Land on 0 and it is prime.
 - **Sorting numbers by their divisors.** Overshoot and a number is abundant, fall short and it is deficient; perfect is the knife edge.
 
 > **Say it back**
@@ -260,13 +240,13 @@ Both outputs match line for line: whole numbers, nothing to round.
 
 ## What this builds on
 
-- [counting-divisors](../01-Divisibility%20and%20Primes/08-counting-divisors.md): why 28 has six divisors and where to find them.
-- [prime-factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md): that 28 is 2 × 2 × 7 and nothing else, which closes the grid.
-- [exponents-and-powers](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): the doubling run, written short.
+- [Counting divisors](../01-Divisibility%20and%20Primes/08-counting-divisors.md): why 28 has six divisors and where to find them.
+- [Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md): that 28 is 2 × 2 × 7 and nothing else, which closes the grid.
+- [Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): the doubling run, written short.
 
 ## Where this goes next
 
-Nothing depends on this card; shelf 7 is detours. Its neighbours: [pythagorean-triples](01-pythagorean-triples.md), [how-primes-thin-out](03-how-primes-thin-out.md), [goldbach-and-open-problems](04-goldbach-and-open-problems.md) — where the odd perfect number's unproven cousins live — and [continued-fractions-and-leap-years](05-continued-fractions-and-leap-years.md).
+Nothing depends on this card; shelf 7 is detours. Its neighbours: [Pythagorean triples](01-pythagorean-triples.md), [How primes thin out](03-how-primes-thin-out.md), [Goldbach, twin primes and friends](04-goldbach-and-open-problems.md) — where the odd perfect number's unproven cousins live — and [Continued fractions](05-continued-fractions-and-leap-years.md).
 
 ---
 

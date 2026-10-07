@@ -1,31 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Barriers, touches and lookbacks
-topic: Hedging beside a knock-out level
-item: Barrier Greeks
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/03-discrete-monitoring-correction|discrete-monitoring-correction]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/03-vega|vega]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/02-gamma|gamma]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/01-bump-and-revalue-and-common-random-numbers|bump-and-revalue-and-common-random-numbers]]"
-next:
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/07-barrier-inverses-level-and-volatility|barrier-inverses-level-and-volatility]]"
-tags: [mathematics, financial mathematics, barrier-greeks-at-the-wall]
----
-
 # Barrier Greeks: a delta that explodes at the wall and a vega that changes sign
 
-Financial mathematics → Barriers, touches and lookbacks → Hedging beside a knock-out level → Barrier Greeks
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Barriers, touches and lookbacks](../../../SYLLABUS.md#w12-s16) → Barrier Greeks
 
 ---
 
 ## General Overview
 
-Acme shares trade at $100. A bank sells a one-year call on Acme with strike $100, with one extra clause: if Acme ever trades at $80 or lower, the call dies on the spot and pays nothing. This is the house **down-and-out call**, a knock-out option: an option that is cancelled the moment the share touches a set price, the **barrier**. Its sibling card prices it at $9.13, against $9.23 for the plain call ([knock-out-and-knock-in-options](01-knock-out-and-knock-in-options.md)).
+Acme shares trade at $100. A bank sells a one-year call on Acme with strike $100, with one extra clause: if Acme ever trades at $80 or lower, the call dies on the spot and pays nothing. This is the house **down-and-out call**, a knock-out option: an option that is cancelled the moment the share touches a set price, the **barrier**. Its sibling card prices it at $9.13, against $9.23 for the plain call ([Knock-out and knock-in options](01-knock-out-and-knock-in-options.md)).
 
 The bank does not keep the risk. It hedges: it holds shares so that the option and the shares move against each other. The number of shares is the option's **delta**, the change in its price per $1 move in Acme. With the plain call the hedge is calm. Near $80 the knock-out's hedge is not. Acme at $80.10: the option is worth 4 cents, yet its hedge is 0.39 shares, about $31 of stock. One more dime down and the option is gone, so those shares must be sold in the same instant, at whatever price the market gives.
 
@@ -53,13 +34,13 @@ Orange (upper) line: the down-and-out call with its barrier at $80. Green (lower
 
 ## The formula
 
-The sibling card [reiner-rubinstein-barrier-formulas](02-reiner-rubinstein-barrier-formulas.md) proves the price. For a down-and-out call whose strike sits at or above the barrier it is the plain call minus a mirror-image call:
+The sibling card [The eight barrier formulas](02-reiner-rubinstein-barrier-formulas.md) proves the price. For a down-and-out call whose strike sits at or above the barrier it is the plain call minus a mirror-image call:
 
 $$V(S) = C(S) - \left(\frac{B}{S}\right)^{a} C\!\left(\frac{B^2}{S}\right), \qquad a = \frac{2(r-q)}{\sigma^2} - 1.$$
 
 **Read it aloud:** the knock-out is worth the plain call, minus a plain call on a mirror-image share priced at the barrier squared over today's price, scaled by a weight that corrects for drift.
 
-Differentiating once in $S$ gives the delta; this card writes a prime for "rate of change as Acme's price moves" ([gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md) is the second one):
+Differentiating once in $S$ gives the delta; this card writes a prime for "rate of change as Acme's price moves" ([Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md) is the second one):
 
 $$V'(S) = \Delta(S) + \left(\frac{B}{S}\right)^{a}\left[\frac{a}{S}\,C(x) + \frac{x}{S}\,\Delta(x)\right], \qquad x = \frac{B^2}{S}.$$
 
@@ -86,11 +67,11 @@ $$V'(B) = 2\,\Delta(B) + \frac{a\,C(B)}{B}, \qquad V''(B) = -\,\frac{1+a}{B}\,V'
 | $C$ | the plain Black-Scholes call's price at a given spot | $9.23 at 100 | — |
 | $\Delta$, $\Gamma$, $\nu$ | the plain call's delta, gamma and vega at a given spot | 0.587, 0.019, 37.9 at 100 | — |
 
-The plain call's Greeks come from the [vega](../09-The%20Greeks%2C%20one%20each/03-vega.md) shelf: delta $e^{-qT}N(d_1)$, gamma $e^{-qT}\varphi(d_1)/(S\sigma\sqrt T)$ and vega $S e^{-qT}\varphi(d_1)\sqrt T$, where N is the bell-curve area to the left and φ its height. Vega here is per unit of $\sigma$: 37.9 means $0.379 per volatility point.
+The plain call's Greeks come from the [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md) shelf: delta $e^{-qT}N(d_1)$, gamma $e^{-qT}\varphi(d_1)/(S\sigma\sqrt T)$ and vega $S e^{-qT}\varphi(d_1)\sqrt T$, where N is the bell-curve area to the left and φ its height. Vega here is per unit of $\sigma$: 37.9 means $0.379 per volatility point.
 
 ### When it holds
 
-- **The barrier is watched continuously.** Real contracts check it once a day; the effective wall then sits slightly further away ([discrete-monitoring-correction](03-discrete-monitoring-correction.md)), and every Greek near the wall moves with it.
+- **The barrier is watched continuously.** Real contracts check it once a day; the effective wall then sits slightly further away ([Daily monitoring](03-discrete-monitoring-correction.md)), and every Greek near the wall moves with it.
 - **Volatility is one constant number.** With a volatility smile the vega near the wall depends on which part of the smile is bumped; the numbers here are for a parallel bump.
 - **Acme moves without gaps.** The formula assumes the hedge can be sold at exactly $80. A gap through the wall turns the delta jump into a loss of shares times the gap.
 - **Strike at or above the barrier, no rebate.** A strike below the barrier, or a cash rebate paid on touch, uses a different one of the eight formulas and different wall values.
@@ -167,7 +148,7 @@ At $S = B$ the logarithm is zero and $p = 1$, $x = B$, so $\partial M/\partial\s
 
 ### Step 6: what desks do about it
 
-**Barrier shift.** The seller prices and hedges the contract as if the wall were further away: for the reverse knock-out, at $122 instead of $120. With a month left that costs the buyer a little: $2.41 instead of $2.39. The payoff comes at the real wall. When Acme touches $120 the real contract dies, but the shifted one on the seller's books is still worth $2.99. The seller holds a hedge of 1.45 shares against it, so that reserve covers buying the shares back at up to $2.06 each above the wall. The delta jump is still there. It has been moved to a price the contract never reaches, and paid for in advance. The daily-monitoring shift on [discrete-monitoring-correction](03-discrete-monitoring-correction.md) is the same device used for a different reason.
+**Barrier shift.** The seller prices and hedges the contract as if the wall were further away: for the reverse knock-out, at $122 instead of $120. With a month left that costs the buyer a little: $2.41 instead of $2.39. The payoff comes at the real wall. When Acme touches $120 the real contract dies, but the shifted one on the seller's books is still worth $2.99. The seller holds a hedge of 1.45 shares against it, so that reserve covers buying the shares back at up to $2.06 each above the wall. The delta jump is still there. It has been moved to a price the contract never reaches, and paid for in advance. The daily-monitoring shift on [Daily monitoring](03-discrete-monitoring-correction.md) is the same device used for a different reason.
 
 **Static replication, in outline.** Replace the share hedge with options that are worth the same as the knock-out on the wall. In the special market where $r = q$, the mirror term is exactly $K/B$ puts struck at $B^2/K$: for the house option, 1.25 puts struck at $64. The package "one call at $100 minus 1.25 puts at $64" pays the call if the wall is never touched, since the puts expire worthless above $80. At the wall the call alone and the 1.25 puts together are both worth $1.16, so the package can be closed for nothing. No shares to dump. With $r \neq q$ the mirror weight is not constant and the replication needs a strip of puts or options of several maturities, which is what Derman, Ergener and Kani and Carr, Ellis and Gupta work out.
 
@@ -223,7 +204,7 @@ Delta and gamma across the approach, with vega at the two ends:
 
 ## Code, from first principles, and it actually runs
 
-The script prices the house down-and-out call and reaches every Greek by three independent roads: the formula differentiated by hand, bump-and-revalue on the formula ([bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)), and a Crank-Nicolson grid (a mesh of prices stepped back through time, with the price held at zero on the wall) that never sees the formula. The reverse knock-out is priced by its mirror formula and checked against its own grid. A fourth road, static replication with $r = q$, checks the mirror term against real puts. Asserts compare formula against grid, the two-line wall formulas against the general ones, and the replication at the wall; mutating the drift exponent, the gamma algebra or the vega's dependence on $a$ each makes an assert fail.
+The script prices the house down-and-out call and reaches every Greek by three independent roads: the formula differentiated by hand, bump-and-revalue on the formula ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)), and a Crank-Nicolson grid (a mesh of prices stepped back through time, with the price held at zero on the wall) that never sees the formula. The reverse knock-out is priced by its mirror formula and checked against its own grid. A fourth road, static replication with $r = q$, checks the mirror term against real puts. Asserts compare formula against grid, the two-line wall formulas against the general ones, and the replication at the wall; mutating the drift exponent, the gamma algebra or the vega's dependence on $a$ each makes an assert fail.
 
 ### Python
 
@@ -673,8 +654,8 @@ The two outputs are identical line for line, from two different normal CDFs and 
 - **Currency option desks.** Reverse knock-outs, calls that die above their strike, are cheap and popular with corporate hedgers. The desks selling them carry exactly the Step 5 delta near popular round-number levels.
 - **Barrier defence.** When much knock-out risk sits at one level, sellers' hedging flows cluster there, and traders talk of a barrier being "defended" or "broken". The flows are the delta jump of Step 2, summed over a market.
 - **Structured notes.** Many retail notes contain a down-and-in put: the investor loses capital only if the index touches a level. The issuer's hedge near that level has the same shape as this card's, mirrored.
-- **Touch products.** A one-touch pays cash at the wall instead of dying there, and its delta peaks at the wall: [one-touch-and-no-touch](05-one-touch-and-no-touch.md).
-- **Lookbacks.** An option on the running minimum has no wall and no jump; comparing its Greeks with these shows what the wall adds: [lookback-options](06-lookback-options.md).
+- **Touch products.** A one-touch pays cash at the wall instead of dying there, and its delta peaks at the wall: [One-touch and no-touch](05-one-touch-and-no-touch.md).
+- **Lookbacks.** An option on the running minimum has no wall and no jump; comparing its Greeks with these shows what the wall adds: [Lookback options](06-lookback-options.md).
 
 > **Say it back**
 > A knock-out's price is a plain call minus a mirror term, so its Greeks are plain Greeks minus the mirror's. At the wall the price is zero but the delta is not: about twice the plain delta, 0.389 shares for the house option, and it falls to nothing the instant the wall is touched. Gamma turns negative just before the wall, and vega is zero on it. For a knock-out that is deep in the money at its wall, delta grows without limit as expiry nears and vega turns negative. Desks move the wall on paper and charge for it, or hedge with options that are worth the same as the knock-out on the wall.
@@ -683,14 +664,14 @@ The two outputs are identical line for line, from two different normal CDFs and 
 
 ## What this builds on
 
-- [discrete-monitoring-correction](03-discrete-monitoring-correction.md): real barriers are checked daily; the shifted wall used there is the same device desks use here for safety.
-- [vega](../09-The%20Greeks%2C%20one%20each/03-vega.md): the plain call's vega, 37.9 for the house option, which the mirror term eats near the wall.
-- [gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md): the second derivative, and why a short-gamma hedger pays when the market moves.
-- [bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): bumping by hand, and why a bump must not straddle a kink or a wall.
+- [Daily monitoring](03-discrete-monitoring-correction.md): real barriers are checked daily; the shifted wall used there is the same device desks use here for safety.
+- [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md): the plain call's vega, 37.9 for the house option, which the mirror term eats near the wall.
+- [Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md): the second derivative, and why a short-gamma hedger pays when the market moves.
+- [Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): bumping by hand, and why a bump must not straddle a kink or a wall.
 
 ## Where this goes next
 
-- [barrier-inverses-level-and-volatility](07-barrier-inverses-level-and-volatility.md): running the formula backwards, from a price to the barrier or the volatility. Because vega can change sign, one price can match two volatilities, and that card states when.
+- [Barrier inverses](07-barrier-inverses-level-and-volatility.md): running the formula backwards, from a price to the barrier or the volatility. Because vega can change sign, one price can match two volatilities, and that card states when.
 
 This card leaves one question open: given a knock-out's market price, which volatility does it imply, and is that volatility unique when vega can be zero or negative?
 

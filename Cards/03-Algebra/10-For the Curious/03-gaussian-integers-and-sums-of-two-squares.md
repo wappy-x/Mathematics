@@ -1,28 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: For the Curious
-topic: Splitting primes
-item: Gaussian integers
-kind: definition
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/09-Rings and Fields/03-polynomials-behave-like-integers|polynomials-behave-like-integers]]"
-  - "[[Cards/03-Algebra/10-For the Curious/01-fundamental-theorem-of-algebra|fundamental-theorem-of-algebra]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/01-congruence-mod-n|congruence-mod-n]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/07-prime-factorisation|prime-factorisation]]"
-next:
-  - "[[Cards/21-Algebraic and analytic number theory/07-Diophantine and Modular/02-sums-of-squares-and-gaussian-integers|sums-of-squares-and-gaussian-integers]]"
-tags:
-  - mathematics
-  - algebra
-  - gaussian-integers-and-sums-of-two-squares
----
-
 # Gaussian integers: whole numbers a + bi, where 5 is no longer prime, and which numbers are a sum of two squares
 
-Algebra → For the Curious → Splitting primes → Gaussian integers
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [For the Curious](../../../SYLLABUS.md#w03-s10) → Gaussian integers
 
 ---
 
@@ -32,13 +10,13 @@ A courtyard is paved in square tiles, a metre to a side. Pin a wire from one til
 
 Which whole numbers can be a squared length? 5 can, 13 can (9 + 4), and 21 cannot: no two of 0, 1, 4, 9 and 16 add to 21.
 
-Among whole numbers 5 is prime: 1 and 5 are its only divisors. Now allow i, ruled only by i × i = -1 ([fundamental-theorem-of-algebra](01-fundamental-theorem-of-algebra.md) admitted it two cards ago). Then 5 = (2 + i)(2 - i): expanding, the middle terms cancel, -i × i is +1, and 4 + 1 = 5. Likewise 13 = (3 + 2i)(3 - 2i) = 9 + 4. A factorisation and a sum of two squares are one fact in two costumes.
+Among whole numbers 5 is prime: 1 and 5 are its only divisors. Now allow i, ruled only by i × i = -1 ([The fundamental theorem of algebra](01-fundamental-theorem-of-algebra.md) admitted it two cards ago). Then 5 = (2 + i)(2 - i): expanding, the middle terms cancel, -i × i is +1, and 4 + 1 = 5. Likewise 13 = (3 + 2i)(3 - 2i) = 9 + 4. A factorisation and a sum of two squares are one fact in two costumes.
 
 A point a across and b up is written a + bi. These are the **Gaussian integers** from here on, and the squared length of one is its **norm**.
 
 **A whole number is a sum of two squares exactly when it splits into a Gaussian integer times its mirror image, and which numbers split is settled by their ordinary prime factors.**
 
-**What kind of fact this is:** a definition — the Gaussian integers and their norm — carrying two theorems. That norms multiply is proved below. Fermat's rule is stated here and proved on sums-of-squares-and-gaussian-integers.
+**What kind of fact this is:** a definition — the Gaussian integers and their norm — carrying two theorems. That norms multiply is proved below. Fermat's rule is stated here and proved on Two squares.
 
 ### The picture: norms in one corner of the grid
 
@@ -121,7 +99,7 @@ So c + di divides a + bi exactly when c^2 + d^2 divides both coordinates of the 
 <details>
 <summary>Dividing with a remainder, and why factorisation here is unique</summary>
 
-Round each coordinate of the exact quotient to the nearest whole number: each is off by at most a half, so the leftover's norm is at most half the divisor's. Shrinking leftovers are what Euclid's algorithm needs, so common divisors and unique factorisation into Gaussian primes follow, as for polynomials ([polynomials-behave-like-integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md)).
+Round each coordinate of the exact quotient to the nearest whole number: each is off by at most a half, so the leftover's norm is at most half the divisor's. Shrinking leftovers are what Euclid's algorithm needs, so common divisors and unique factorisation into Gaussian primes follow, as for polynomials ([Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md)).
 
 </details>
 
@@ -131,12 +109,12 @@ Round each coordinate of the exact quotient to the nearest whole number: each is
 
 So 5 = 2^2 + 1^2 and 13 = 3^2 + 2^2, both remainder 1, while 3 and 7 leave remainder 3 and have none. A remainder-1 prime splits into a point times its mirror; a remainder-3 prime stays prime; and 2 = (1 + i)(1 - i).
 
-The callout proves half. The hard half, that every remainder-1 prime splits, is proved on sums-of-squares-and-gaussian-integers.
+The callout proves half. The hard half, that every remainder-1 prime splits, is proved on Two squares.
 
 <details>
 <summary>Detailed proof: no number leaving remainder 3 on division by 4 is a sum of two squares</summary>
 
-What can one square leave on division by 4 ([congruence-mod-n](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md))?
+What can one square leave on division by 4 ([Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md))?
 - **Even.** Twice a whole number, squared, is four times a square. Remainder 0.
 - **Odd.** Twice a whole number plus 1, squared, is four times a square, plus four times that number, plus 1. Remainder 1.
 
@@ -144,7 +122,7 @@ So one square leaves 0 or 1, and two leave 0 + 0, 0 + 1 or 1 + 1: never 3. Every
 
 </details>
 
-**The rule for every whole number.** A positive whole number is a sum of two squares exactly when every remainder-3 prime appears in its factorisation to an even power ([prime-factorisation](../../02-Number%20theory/01-Divisibility%20and%20Primes/07-prime-factorisation.md)).
+**The rule for every whole number.** A positive whole number is a sum of two squares exactly when every remainder-3 prime appears in its factorisation to an even power ([Prime factorisation](../../02-Number%20theory/01-Divisibility%20and%20Primes/07-prime-factorisation.md)).
 
 ```mermaid
 flowchart TD
@@ -156,7 +134,7 @@ flowchart TD
 
 One more: 65 = 5 × 13, both remainder-1 primes, so 65 is in twice over, as 1^2 + 8^2 and as 4^2 + 7^2.
 
-An even power is a perfect square, itself a sum of two squares with a zero coordinate, so Step 1 multiplies the pieces together. The reverse direction needs one more fact, proved on sums-of-squares-and-gaussian-integers.
+An even power is a perfect square, itself a sum of two squares with a zero coordinate, so Step 1 multiplies the pieces together. The reverse direction needs one more fact, proved on Two squares.
 
 ---
 
@@ -413,7 +391,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Square grids.** Squared distances between corners of a tiled floor or a pixel grid are exactly the sums of two squares: 5 and 13 occur, 21 never does.
-- **An old question in a bigger system.** [pell-equation-and-root-two](04-pell-equation-and-root-two.md) makes the same move with another new number.
+- **An old question in a bigger system.** [Pell's equation](04-pell-equation-and-root-two.md) makes the same move with another new number.
 
 > **Say it back**
 > A Gaussian integer is a grid point a + bi with whole coordinates, where i × i = -1, and its norm is a^2 + b^2. A point times its mirror image is its norm, so a whole number is a sum of two squares exactly when it splits that way: 5 = (2 + i)(2 - i), 13 = (3 + 2i)(3 - 2i). Norms multiply, so those two combine into 65 = 4^2 + 7^2, leaving only the primes to settle. Fermat's rule settles them: 2 and the remainder-1 primes qualify, the rest do not. For a composite, every remainder-3 prime must appear an even number of times — why 45 qualifies and 21 does not.
@@ -422,14 +400,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [polynomials-behave-like-integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): factors, units, what "prime" means in a new system.
-- [fundamental-theorem-of-algebra](01-fundamental-theorem-of-algebra.md): admits i on one rule; its pair 2 + i and 2 - i multiplies to 5 here.
-- [congruence-mod-n](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md): remainders on division by 4.
-- [prime-factorisation](../../02-Number%20theory/01-Divisibility%20and%20Primes/07-prime-factorisation.md): the exponents the rule reads.
+- [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): factors, units, what "prime" means in a new system.
+- [The fundamental theorem of algebra](01-fundamental-theorem-of-algebra.md): admits i on one rule; its pair 2 + i and 2 - i multiplies to 5 here.
+- [Congruence](../../02-Number%20theory/03-Clock%20Arithmetic/01-congruence-mod-n.md): remainders on division by 4.
+- [Prime factorisation](../../02-Number%20theory/01-Divisibility%20and%20Primes/07-prime-factorisation.md): the exponents the rule reads.
 
 ## Where this goes next
 
-- sums-of-squares-and-gaussian-integers: proves the half stated here, and counts representations.
+- Two squares: proves the half stated here, and counts representations.
 
 This card says which whole numbers are sums of two squares; it cannot say why remainder 1 suffices, nor why 65 has two representations and 45 one.
 

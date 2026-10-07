@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Forward-Rate Models
-topic: Moving the whole curve
-item: Heath-Jarrow-Morton
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/04-hull-white-model|hull-white-model]]"
-next:
-  - "[[Cards/12-Financial mathematics/31-Forward-Rate Models/02-forward-measures-for-rates|forward-measures-for-rates]]"
-tags: [mathematics, financial mathematics, hjm-framework-and-the-drift-condition]
----
-
 # Heath-Jarrow-Morton: model the forward curve and let no-arbitrage fix the drift
 
-Financial mathematics → Forward-Rate Models → Moving the whole curve → Heath-Jarrow-Morton
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Forward-Rate Models](../../../SYLLABUS.md#w12-s31) → Heath-Jarrow-Morton
 
 ---
 
@@ -102,7 +85,7 @@ The single line is $\alpha(0,T)$. It is zero at the front, where there is no vol
 
 ### When it holds
 
-- **Prices are taken in the pricing world.** The formula is the drift under the risk-neutral pricing rule (the world where every asset, discounted at the short rate, is a fair bet; see [hull-white-model](../30-Short-Rate%20Models/04-hull-white-model.md) for the same rule applied to one rate). Real-world drifts add a risk premium; use the formula for a forecast and it will be wrong by that premium.
+- **Prices are taken in the pricing world.** The formula is the drift under the risk-neutral pricing rule (the world where every asset, discounted at the short rate, is a fair bet; see [Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md) for the same rule applied to one rate). Real-world drifts add a risk premium; use the formula for a forecast and it will be wrong by that premium.
 - **The shocks are continuous.** Brownian kicks, no jumps. A curve that can jump by 25 bp on a central-bank day needs extra drift terms for the jumps.
 - **The volatility is well behaved.** Here it is fixed in advance, so every rate is a bell curve and the discounted bond is a genuine fair bet. A bell curve has no floor: rates can go negative, here with small probability. Make volatility proportional to the rate itself and the forced drift grows like the rate squared: HJM proved such rates blow up in finite time.
 - **One curve prices everything.** Bonds, the bank account and the forwards all come from one curve. Since 2008 desks discount on one curve and project coupons on another; each extra curve carries its own drift condition.
@@ -134,7 +117,7 @@ The shock term collects $\int_t^T \sigma(t,u)\,du$, which is why $A(t,T)$ is the
 
 ### Step 3: Itô's correction when un-logging
 
-The bond is e raised to its log. When a quantity shakes, its exponential gains an extra half-variance of drift: Itô's lemma ([itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)) adds $\tfrac12 A^2\,dt$. So
+The bond is e raised to its log. When a quantity shakes, its exponential gains an extra half-variance of drift: Itô's lemma ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)) adds $\tfrac12 A^2\,dt$. So
 
 $$\frac{dP(t,T)}{P(t,T)} = \Big(r(t) - \int_t^T \alpha(t,u)\,du + \tfrac12 A(t,T)^2\Big)dt \;-\; A(t,T)\,dW(t).$$
 
@@ -177,7 +160,7 @@ Differentiating $r(t)$ in time and replacing the state by $r(t)$ gives
 
 $$dr(t) = \big(\theta(t) - a\,r(t)\big)dt + \sigma\,dW(t), \qquad \theta(t) = \frac{\partial f(0,t)}{\partial t} + a\,f(0,t) + \frac{\sigma^2}{2a}\left(1 - e^{-2at}\right).$$
 
-That is the Hull-White model, with the $\theta(t)$ that fits today's curve exactly ([hull-white-model](../30-Short-Rate%20Models/04-hull-white-model.md)). HJM did not choose $a$ or $\sigma$; it took them as the volatility shape and returned the short-rate model.
+That is the Hull-White model, with the $\theta(t)$ that fits today's curve exactly ([Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md)). HJM did not choose $a$ or $\sigma$; it took them as the volatility shape and returned the short-rate model.
 
 <details>
 <summary>The algebra behind Step 6</summary>
@@ -186,7 +169,7 @@ Write $c(t) = \frac{\sigma^2}{2a^2}(1 - e^{-at})^2$ and let $S(t) = \sigma\int_0
 
 </details>
 
-Setting $a$ toward zero gives constant volatility, drift $\sigma^2(T-t)$, and the Ho-Lee model. Discrete versions of the same argument, with forward rates over accrual periods instead of instants, give the market models on [libor-and-sofr-market-models](03-libor-and-sofr-market-models.md).
+Setting $a$ toward zero gives constant volatility, drift $\sigma^2(T-t)$, and the Ho-Lee model. Discrete versions of the same argument, with forward rates over accrual periods instead of instants, give the market models on [Market models](03-libor-and-sofr-market-models.md).
 
 ---
 
@@ -660,11 +643,11 @@ The two outputs agree line for line. The Monte Carlo lines agree too, because bo
 
 ## Where you meet it in real life
 
-- **Every Gaussian rates model on a desk.** Hull-White, and its two-factor cousin G2++, are HJM models with exponential volatilities. Desks calibrate $a$ and $\sigma$, and the drift comes from this card's formula. See [hull-white-model](../30-Short-Rate%20Models/04-hull-white-model.md).
+- **Every Gaussian rates model on a desk.** Hull-White, and its two-factor cousin G2++, are HJM models with exponential volatilities. Desks calibrate $a$ and $\sigma$, and the drift comes from this card's formula. See [Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md).
 - **Simulating curves for risk.** Counterparty-exposure engines simulate whole forward curves thousands of times. A missing or wrong drift puts a slow leak of value into every simulated swap, and the leak compounds over thirty-year trades.
-- **Market models.** The LIBOR and SOFR market models are HJM on a grid of accrual periods: pick the volatilities of the quoted forward rates and no-arbitrage sets their drifts. See [libor-and-sofr-market-models](03-libor-and-sofr-market-models.md) and [swap-market-model-in-outline](05-swap-market-model-in-outline.md).
-- **Calibration.** Because the drift is not a free parameter, fitting a forward-rate model to caps and swaptions means fitting volatilities only: [calibrating-a-market-model](04-calibrating-a-market-model.md).
-- **Callable products.** Pricing a Bermudan swaption means simulating curves with the right drifts, then deciding when to exercise: [bermudan-swaptions-by-regression](06-bermudan-swaptions-by-regression.md).
+- **Market models.** The LIBOR and SOFR market models are HJM on a grid of accrual periods: pick the volatilities of the quoted forward rates and no-arbitrage sets their drifts. See [Market models](03-libor-and-sofr-market-models.md) and [Swap market model](05-swap-market-model-in-outline.md).
+- **Calibration.** Because the drift is not a free parameter, fitting a forward-rate model to caps and swaptions means fitting volatilities only: [Calibrating a market model](04-calibrating-a-market-model.md).
+- **Callable products.** Pricing a Bermudan swaption means simulating curves with the right drifts, then deciding when to exercise: [Bermudan swaptions](06-bermudan-swaptions-by-regression.md).
 
 > **Say it back**
 > HJM models the whole forward curve at once: each forward rate gets a drift and a volatility. The modeller chooses the volatilities. No-arbitrage demands that a bond bought with borrowed money be a fair bet, and that forces each drift to equal the forward's volatility times the volatility area between now and its date. Choose any other drift and the bond hands out free money: $243.27 per million on the five-year bond if the drift is zero. With an exponentially fading volatility the whole curve is a function of the short rate, and the model is Hull-White.
@@ -673,12 +656,12 @@ The two outputs agree line for line. The Monte Carlo lines agree too, because bo
 
 ## What this builds on
 
-- [itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): the half-variance correction in Step 3, the whole reason the drift is not zero.
-- [hull-white-model](../30-Short-Rate%20Models/04-hull-white-model.md): the short-rate model this card recovers in Step 6, with its $\theta(t)$ fitted to today's curve.
+- [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): the half-variance correction in Step 3, the whole reason the drift is not zero.
+- [Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md): the short-rate model this card recovers in Step 6, with its $\theta(t)$ fitted to today's curve.
 
 ## Where this goes next
 
-- [forward-measures-for-rates](02-forward-measures-for-rates.md): counting value in units of a bond instead of the bank account. Under that choice the forward rate for the bond's date loses its drift altogether.
+- [Forward measures](02-forward-measures-for-rates.md): counting value in units of a bond instead of the bank account. Under that choice the forward rate for the bond's date loses its drift altogether.
 
 This card fixes the drift under the bank account's pricing rule; the open question is which unit of account makes a given forward rate drift-free, so that a caplet on it prices with a Black-style formula.
 

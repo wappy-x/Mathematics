@@ -1,30 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Sets You Can Measure
-topic: Sizes in the limit
-item: Continuity and subadditivity
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/04-measures|measures]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/03-sequences-and-limits|sequences-and-limits]]"
-next:
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/07-null-sets-and-almost-everywhere|null-sets-and-almost-everywhere]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/06-lebesgue-stieltjes-measures|lebesgue-stieltjes-measures]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/03-monotone-convergence-theorem|monotone-convergence-theorem]]"
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/02-signed-measures-and-hahn-jordan|signed-measures-and-hahn-jordan]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/01-borel-cantelli-lemmas|borel-cantelli-lemmas]]"
-tags:
-  - mathematics
-  - measure and integration
-  - continuity-of-measure
----
-
 # Continuity and subadditivity: bigger sets are bigger, a countable pile weighs at most the sum, and rising or shrinking sets have limiting sizes
 
-Measure and integration → Sets You Can Measure → Sizes in the limit → Continuity and subadditivity
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sets You Can Measure](../../../SYLLABUS.md#w10-s01) → Continuity and subadditivity
 
 ---
 
@@ -50,7 +26,7 @@ Drawn to scale, 60 pixels to the km. The bottom edge is the river bank; each sha
 
 ## The formula
 
-Notation first. From [measures](04-measures.md): a measure space $(\Omega, \mathcal{F}, \mu)$ is a whole space $\Omega$, a sigma-algebra $\mathcal{F}$ (the collection of sets we allow ourselves to measure), and a measure $\mu$, which gives each set in $\mathcal{F}$ a size from 0 up to infinity, gives the empty set size 0, and is **countably additive**: the sizes of countably many sets that pairwise share no point add up to the size of their union. Here $\Omega$ is the valley floor and $\mu$ is area in sq km, built properly on shelf 02. From the sets wing: $B \setminus A$, read "B minus A", is the points of B not in A; $\bigcup_{n=1}^{\infty} E_n$ is the points lying in at least one of the sets; $\bigcap_{n=1}^{\infty} F_n$ is the points lying in all of them.
+Notation first. From [Measures](04-measures.md): a measure space $(\Omega, \mathcal{F}, \mu)$ is a whole space $\Omega$, a sigma-algebra $\mathcal{F}$ (the collection of sets we allow ourselves to measure), and a measure $\mu$, which gives each set in $\mathcal{F}$ a size from 0 up to infinity, gives the empty set size 0, and is **countably additive**: the sizes of countably many sets that pairwise share no point add up to the size of their union. Here $\Omega$ is the valley floor and $\mu$ is area in sq km, built properly on shelf 02. From the sets wing: $B \setminus A$, read "B minus A", is the points of B not in A; $\bigcup_{n=1}^{\infty} E_n$ is the points lying in at least one of the sets; $\bigcap_{n=1}^{\infty} F_n$ is the points lying in all of them.
 
 Every set below belongs to $\mathcal{F}$. Four results:
 
@@ -87,7 +63,7 @@ $$F_1 \supseteq F_2 \supseteq F_3 \supseteq \cdots \text{ and } \mu(F_1) < \inft
 | $\nu$ | counting measure: the number of points in a set | the numbers from n onward: infinitely many | — |
 | $T_n$ | the tail from n: the whole numbers n, n + 1, n + 2, … | infinitely many members for every n | later n, a smaller tail, still infinite |
 
-The limits exist before anyone computes them. Sizes that never fall either have a ceiling, and settle by the monotone convergence theorem of [sequences-and-limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md), or pass every number, and the limit is infinity. Sizes that never rise are held up by 0 and settle too.
+The limits exist before anyone computes them. Sizes that never fall either have a ceiling, and settle by the monotone convergence theorem of [Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md), or pass every number, and the limit is infinity. Sizes that never rise are held up by 0 and settle too.
 
 ### When it holds
 
@@ -142,7 +118,7 @@ One finite set anywhere in the list is enough: start the list there. A probabili
 <details>
 <summary>Detailed proof</summary>
 
-Throughout, sizes lie in $[0, \infty]$, with $a + \infty = \infty$; a series of non-negative terms is the limit of its partial sums, which never fall, so it exists in $[0, \infty]$ (monotone convergence for sequences, from [sequences-and-limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md), plus the convention that an unbounded rising list has limit infinity). Every set named is in $\mathcal{F}$: differences, finite unions and countable unions of sets in $\mathcal{F}$ are again in it ([sigma-algebras](02-sigma-algebras.md)).
+Throughout, sizes lie in $[0, \infty]$, with $a + \infty = \infty$; a series of non-negative terms is the limit of its partial sums, which never fall, so it exists in $[0, \infty]$ (monotone convergence for sequences, from [Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md), plus the convention that an unbounded rising list has limit infinity). Every set named is in $\mathcal{F}$: differences, finite unions and countable unions of sets in $\mathcal{F}$ are again in it ([Sigma-algebras](02-sigma-algebras.md)).
 
 **Finite additivity.** For disjoint $A$ and $B$, take the list $A, B, \emptyset, \emptyset, \dots$; the sets are pairwise disjoint, so countable additivity and $\mu(\emptyset) = 0$ give $\mu(A \cup B) = \mu(A) + \mu(B)$.
 
@@ -551,10 +527,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Distribution functions.** The chance that a rainfall total is at most x millimetres is continuous from the right in x, because the events "at most x + 1/n" shrink to "at most x" inside a space of size 1. Every such function builds a measure: [lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md).
-- **Union bounds in risk and reliability.** The chance that any of many failures happens is at most the sum of their chances, with no independence assumed. Countable subadditivity extends the finite bound of [union-bound-and-bonferroni](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md) to endless lists.
-- **Sets of size zero.** Countably many sets of size zero have union of size zero, by subadditivity; the rationals in [0, 1] have length 0 for this reason. See [null-sets-and-almost-everywhere](07-null-sets-and-almost-everywhere.md).
-- **Events that happen infinitely often.** If the chances of a list of events add to a finite number, only finitely many of them happen, with probability 1: subadditivity on the tail events, then continuity from above. See [borel-cantelli-lemmas](../10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md).
+- **Distribution functions.** The chance that a rainfall total is at most x millimetres is continuous from the right in x, because the events "at most x + 1/n" shrink to "at most x" inside a space of size 1. Every such function builds a measure: [Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md).
+- **Union bounds in risk and reliability.** The chance that any of many failures happens is at most the sum of their chances, with no independence assumed. Countable subadditivity extends the finite bound of [Stopping the sieve early](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md) to endless lists.
+- **Sets of size zero.** Countably many sets of size zero have union of size zero, by subadditivity; the rationals in [0, 1] have length 0 for this reason. See [Null sets and almost everywhere](07-null-sets-and-almost-everywhere.md).
+- **Events that happen infinitely often.** If the chances of a list of events add to a finite number, only finitely many of them happen, with probability 1: subadditivity on the tail events, then continuity from above. See [The Borel-Cantelli lemmas](../10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md).
 
 > **Say it back**
 > A measure never gives a smaller set a bigger size, since the bigger set is the smaller plus a disjoint remainder. Adding the sizes of overlapping sets overcounts: cut each to its new piece and the pieces add exactly to the union. Rising sets have sizes that approach the size of their union, because those sizes are the partial sums of disjoint layers. Shrinking sets do the same towards their intersection, but only if one of them has finite size, since the proof subtracts from it. The tails of the whole numbers, each infinite and with nothing in common, show the condition cannot go.
@@ -563,18 +539,18 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [measures](04-measures.md): the measure space, and countable additivity, from which every result here follows.
-- [sequences-and-limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md): why a list that never falls and has a ceiling settles, so the limits on this card exist.
+- [Measures](04-measures.md): the measure space, and countable additivity, from which every result here follows.
+- [Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md): why a list that never falls and has a ceiling settles, so the limits on this card exist.
 
 ## Where this goes next
 
-- [null-sets-and-almost-everywhere](07-null-sets-and-almost-everywhere.md): subadditivity makes countable unions of size-zero sets size zero, which is what "almost everywhere" relies on.
-- [lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md): continuity from above is why a distribution function is continuous from the right.
-- [monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md): continuity from below, promoted from sets to functions that rise.
-- [signed-measures-and-hahn-jordan](../08-Densities%20and%20Changing%20Measure/02-signed-measures-and-hahn-jordan.md): sizes that may be negative, where continuity survives and monotonicity does not.
-- [borel-cantelli-lemmas](../10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md): subadditivity and continuity from above, combined to show which events happen only finitely often.
+- [Null sets and almost everywhere](07-null-sets-and-almost-everywhere.md): subadditivity makes countable unions of size-zero sets size zero, which is what "almost everywhere" relies on.
+- [Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md): continuity from above is why a distribution function is continuous from the right.
+- [The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md): continuity from below, promoted from sets to functions that rise.
+- [Signed measures](../08-Densities%20and%20Changing%20Measure/02-signed-measures-and-hahn-jordan.md): sizes that may be negative, where continuity survives and monotonicity does not.
+- [The Borel-Cantelli lemmas](../10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md): subadditivity and continuity from above, combined to show which events happen only finitely often.
 
-This card leaves open whether two measures that agree on a simple family of sets, such as intervals, must agree on every set; [pi-systems-and-uniqueness](06-pi-systems-and-uniqueness.md) proves they must, when their totals are equal and finite, using continuity from below.
+This card leaves open whether two measures that agree on a simple family of sets, such as intervals, must agree on every set; [Pi-systems and Dynkin's theorem](06-pi-systems-and-uniqueness.md) proves they must, when their totals are equal and finite, using continuity from below.
 
 ---
 

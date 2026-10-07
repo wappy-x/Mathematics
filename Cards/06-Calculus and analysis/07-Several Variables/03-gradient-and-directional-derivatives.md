@@ -1,29 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Several Variables
-topic: Rates in every direction
-item: Gradient
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/02-differentiability-and-tangent-planes|differentiability-and-tangent-planes]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/01-dot-product|dot-product]]"
-next:
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/04-multivariable-chain-rule-and-jacobians|multivariable-chain-rule-and-jacobians]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/08-lagrange-multipliers|lagrange-multipliers]]"
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/02-line-integrals|line-integrals]]"
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/06-var-decomposition-euler-and-component-var|var-decomposition-euler-and-component-var]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/02-gradient-descent-and-stochastic-gradient|gradient-descent-and-stochastic-gradient]]"
-  - "[[Cards/15-Optimization/02-Unconstrained Methods/02-gradient-descent-and-its-rate|gradient-descent-and-its-rate]]"
-  - "[[Cards/23-Differential geometry and Lie groups/03-Manifolds/05-covectors-and-tensor-fields|covectors-and-tensor-fields]]"
-tags: [mathematics, calculus-and-analysis, gradient-and-directional-derivatives]
----
-
 # Gradient: the direction of steepest climb and the rate in any direction
 
-Calculus and analysis → Several Variables → Rates in every direction → Gradient
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Several Variables](../../../SYLLABUS.md#w06-s07) → Gradient
 
 ---
 
@@ -49,7 +26,7 @@ To scale: 1.5 px per metre in both directions, summit at the bottom-left corner.
 
 ## The formula
 
-Notation first, in words. The curly-d partial derivative $\partial h/\partial x$ is the rate of h per metre east with y held fixed ([partial-derivatives](01-partial-derivatives.md)). The gradient is written $\nabla h$, read "grad h"; the upside-down triangle is called nabla. It is the pair of partial derivatives, taken at one point:
+Notation first, in words. The curly-d partial derivative $\partial h/\partial x$ is the rate of h per metre east with y held fixed ([Partial derivatives](01-partial-derivatives.md)). The gradient is written $\nabla h$, read "grad h"; the upside-down triangle is called nabla. It is the pair of partial derivatives, taken at one point:
 
 $$\nabla h(p)=\left(\frac{\partial h}{\partial x}(p),\ \frac{\partial h}{\partial y}(p)\right)$$
 
@@ -80,11 +57,11 @@ Rates are in metres of height per metre of ground.
 
 ### When it holds
 
-- **A tangent plane at p** ([differentiability-and-tangent-planes](02-differentiability-and-tangent-planes.md)). Partial derivatives alone are not enough: the crease in What breaks has both partials 0, yet its diagonal rate is 0.353553.
+- **A tangent plane at p** ([Tangent planes](02-differentiability-and-tangent-planes.md)). Partial derivatives alone are not enough: the crease in What breaks has both partials 0, yet its diagonal rate is 0.353553.
 - **A direction of length 1.** A longer arrow scales the rate: (1, 1) gives −0.7, steeper than the true steepest.
 - **Both inputs in one unit, at right angles.** "Steepest" assumes a metre east counts as a metre north. With wall thickness and window area, the shelf's house-heating inputs, the steepest heading changes when a unit changes.
 - **A non-zero gradient.** At the summit the gradient is (0, 0): every rate is 0 and there is no fall line.
-- **A smooth contour through p, for the right angle.** Continuous partial derivatives and a non-zero gradient guarantee one ([inverse-and-implicit-function-theorems](07-inverse-and-implicit-function-theorems.md)).
+- **A smooth contour through p, for the right angle.** Continuous partial derivatives and a non-zero gradient guarantee one ([Inverse and implicit function theorems](07-inverse-and-implicit-function-theorems.md)).
 
 ---
 
@@ -102,7 +79,7 @@ On the ski slope the error can be written out exactly. Along the fall line h(p +
 
 ### Step 2: the steepest direction is along the gradient
 
-A dot product is the two lengths multiplied, times the cosine of the angle between the arrows ([dot-product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)). The direction has length 1, so the rate is the gradient's length times cos θ. A cosine is 1 only at angle 0 and −1 only at 180°. So the steepest climb runs along the gradient, the steepest descent straight against it, each at the gradient's length. Here the gradient (−0.3, −0.4) has length 0.5: the fall line is (0.6, 0.8), at 0.5 m per metre.
+A dot product is the two lengths multiplied, times the cosine of the angle between the arrows ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)). The direction has length 1, so the rate is the gradient's length times cos θ. A cosine is 1 only at angle 0 and −1 only at 180°. So the steepest climb runs along the gradient, the steepest descent straight against it, each at the gradient's length. Here the gradient (−0.3, −0.4) has length 0.5: the fall line is (0.6, 0.8), at 0.5 m per metre.
 
 A blind search agrees. Trying 3,600 headings a tenth of a degree apart, by difference quotients of h alone, the steepest is 53.1° from east, direction (0.600420, 0.799685), rate −0.500000.
 
@@ -112,7 +89,7 @@ A contour is a level set: all points at one height, here 466 m. Along it the hei
 
 The check tests this without the gradient. It fixes x at 120 ± d, finds by halving an interval the y back on 466 m, and measures the chord. Its slope is −0.756362 at d = 10, −0.750062 at d = 1, −0.750000 at d = 0.01; the gradient predicts −(∂h/∂x)/(∂h/∂y) = −0.750000. The gradient's dot product with the unit chord falls from 0.002030 to 0.000020 to 0.000000.
 
-The zero rate holds only at p itself. A straight 20 m traverse along the level direction (−0.8, 0.6) ends 0.68 m lower, because the contour curves away from the straight line; that curving is measured on [hessian-and-second-order-approximation](05-hessian-and-second-order-approximation.md).
+The zero rate holds only at p itself. A straight 20 m traverse along the level direction (−0.8, 0.6) ends 0.68 m lower, because the contour curves away from the straight line; that curving is measured on [Hessian](05-hessian-and-second-order-approximation.md).
 
 <details>
 <summary>Detailed proof</summary>
@@ -127,7 +104,7 @@ Let $h$ be differentiable at $p$, with gradient $g=\nabla h(p)$: for every $\var
 
 </details>
 
-The chain rule reaches Step 3 in one line, differentiating the constant height along the contour: [multivariable-chain-rule-and-jacobians](04-multivariable-chain-rule-and-jacobians.md).
+The chain rule reaches Step 3 in one line, differentiating the constant height along the contour: [Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md).
 
 ---
 
@@ -370,8 +347,8 @@ The two outputs agree line for line.
 
 - **Runoff and avalanches.** Water and a released slab start down the fall line. Terrain software traces flow by the steepest drop between neighbouring grid cells.
 - **Weather maps.** Isobars are pressure contours; the pressure gradient crosses them at right angles, and air is pushed against it, from high toward low.
-- **Training models.** Gradient descent steps against an error's gradient: gradient-descent-and-stochastic-gradient.
-- **Portfolio risk.** Risk's gradient in the position sizes splits it among holdings: [var-decomposition-euler-and-component-var](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/06-var-decomposition-euler-and-component-var.md).
+- **Training models.** Gradient descent steps against an error's gradient: Gradient descent.
+- **Portfolio risk.** Risk's gradient in the position sizes splits it among holdings: [Whose risk is it](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/06-var-decomposition-euler-and-component-var.md).
 
 > **Say it back**
 > The gradient is the east and north rates as one arrow. With a tangent plane, the rate along any direction of length 1 is the gradient dotted with it. That is the gradient's length times a cosine, so it peaks along the gradient and bottoms out against it. Along a contour the rate is zero, so the gradient crosses contours at right angles. On the slope the gradient is (−0.3, −0.4), and the fall line drops 0.5 m per metre along (0.6, 0.8).
@@ -380,18 +357,18 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [differentiability-and-tangent-planes](02-differentiability-and-tangent-planes.md): the tangent plane whose tilt the gradient records.
-- [dot-product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): lengths times cosine, and the Cauchy–Schwarz bound behind the maximum.
+- [Tangent planes](02-differentiability-and-tangent-planes.md): the tangent plane whose tilt the gradient records.
+- [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): lengths times cosine, and the Cauchy–Schwarz bound behind the maximum.
 
 ## Where this goes next
 
-- [multivariable-chain-rule-and-jacobians](04-multivariable-chain-rule-and-jacobians.md): rates along curving paths.
-- [lagrange-multipliers](08-lagrange-multipliers.md): at a constrained best point, two gradients line up.
-- [line-integrals](../09-Vector%20Calculus/02-line-integrals.md): the gradient summed along a path returns the height change.
-- [var-decomposition-euler-and-component-var](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/06-var-decomposition-euler-and-component-var.md): risk's gradient, shared among positions.
-- gradient-descent-and-stochastic-gradient: small steps down an error's fall line.
-- gradient-descent-and-its-rate: how fast they reach the bottom.
-- covectors-and-tensor-fields: the gradient as a rule turning a direction into a rate.
+- [Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md): rates along curving paths.
+- [Lagrange multipliers](08-lagrange-multipliers.md): at a constrained best point, two gradients line up.
+- [Line integrals of a field](../09-Vector%20Calculus/02-line-integrals.md): the gradient summed along a path returns the height change.
+- [Whose risk is it](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/06-var-decomposition-euler-and-component-var.md): risk's gradient, shared among positions.
+- Gradient descent: small steps down an error's fall line.
+- Gradient descent: how fast they reach the bottom.
+- Covectors and tensor fields: the gradient as a rule turning a direction into a rate.
 
 ---
 

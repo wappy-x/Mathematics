@@ -1,33 +1,17 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Survival, Design and Causality
-topic: Testing by relabelling
-item: Permutation tests
-kind: method
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/04-randomised-experiments-and-ab-tests|randomised-experiments-and-ab-tests]]"
-next:
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/07-confounding-and-simpsons-paradox|confounding-and-simpsons-paradox]]"
-tags: [mathematics, probability and statistics, permutation-tests]
----
-
 # Permutation tests: shuffle the labels to get the null distribution
 
-Probability and statistics → Survival, Design and Causality → Testing by relabelling → Permutation tests
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Survival, Design and Causality](../../../SYLLABUS.md#w09-s13) → Permutation tests
 
 ---
 
 ## General Overview
 
-A small online shop tries a new product page for one afternoon. Sixteen visitors arrive. A lottery sends exactly 8 of them to the old page and 8 to the new one, as in [randomised-experiments-and-ab-tests](04-randomised-experiments-and-ab-tests.md). The shop sells an $8 item, a $12 item, a $22 item, a $27 item and a $95 bundle, so spending comes in lumps:
+A small online shop tries a new product page for one afternoon. Sixteen visitors arrive. A lottery sends exactly 8 of them to the old page and 8 to the new one, as in [Randomised experiments](04-randomised-experiments-and-ab-tests.md). The shop sells an $8 item, a $12 item, a $22 item, a $27 item and a $95 bundle, so spending comes in lumps:
 
 - **Old page:** $0, $8, $0, $12, $0, $8, $0, $8. Average **$4.50**.
 - **New page:** $22, $0, $95, $0, $22, $27, $0, $22. Average **$23.50**.
 
-The new page is ahead by **$19.00** a visitor, with a standard error of $11.15. Is that the page, or the luck of the lottery? The usual formula, the t-test of [t-tests-and-comparing-means](../08-Confidence%20Intervals%20and%20Tests/05-t-tests-and-comparing-means.md), assumes spending follows a bell curve. This spending is mostly zeros and one $95 bundle. The t-test returns a p-value of 0.1105 anyway. This card does not reuse the checkout test of [randomised-experiments-and-ab-tests](04-randomised-experiments-and-ab-tests.md): with 10,000 visitors a page, each buying or not, that gap follows a bell curve closely, and a shuffle gives nearly the formula's p-value. A small test with lumpy spending is where the two part company.
+The new page is ahead by **$19.00** a visitor, with a standard error of $11.15. Is that the page, or the luck of the lottery? The usual formula, the t-test of [t-tests](../08-Confidence%20Intervals%20and%20Tests/05-t-tests-and-comparing-means.md), assumes spending follows a bell curve. This spending is mostly zeros and one $95 bundle. The t-test returns a p-value of 0.1105 anyway. This card does not reuse the checkout test of [Randomised experiments](04-randomised-experiments-and-ab-tests.md): with 10,000 visitors a page, each buying or not, that gap follows a bell curve closely, and a shuffle gives nearly the formula's p-value. A small test with lumpy spending is where the two part company.
 
 There is a way to ask without any curve. Suppose the page changed nothing: each visitor would have spent the same on either page. Then every other way the lottery could have fallen is known in full. Write "old" and "new" on sixteen cards, shuffle them, deal one to each visitor, and recompute the gap. There are 12,870 possible deals. Only 548 of them give a gap of $19.00 or more in either direction, so the p-value is 548 in 12,870, **0.0426**: about 1 lottery in 23. Shuffling the labels is the whole method. From here on it is called a **permutation test**, since each deal is a rearrangement (a permutation) of the labels.
 
@@ -95,11 +79,11 @@ with the observed assignment counted as one more shuffle, so the estimate is nev
 
 ### When it holds
 
-- **The labels were handed out by a lottery.** The test's probability is the lottery's. Where visitors chose their own page, no lottery exists to rerun, and shuffling proves nothing about cause; see [confounding-and-simpsons-paradox](07-confounding-and-simpsons-paradox.md).
-- **The shuffle copies the lottery actually run.** A design that paired or blocked visitors, as in [blocking-and-factorial-designs](05-blocking-and-factorial-designs.md), is shuffled within its blocks only. Shuffling across them tests a lottery nobody ran.
+- **The labels were handed out by a lottery.** The test's probability is the lottery's. Where visitors chose their own page, no lottery exists to rerun, and shuffling proves nothing about cause; see [Confounding](07-confounding-and-simpsons-paradox.md).
+- **The shuffle copies the lottery actually run.** A design that paired or blocked visitors, as in [Blocking and factorial designs](05-blocking-and-factorial-designs.md), is shuffled within its blocks only. Shuffling across them tests a lottery nobody ran.
 - **The null is "no visitor's spending changed", not "the averages are equal".** Two groups with the same average but different spread are not interchangeable. Shuffle them anyway and, in the simulation under What breaks, a 5% test raises false alarms 28.9% of the time.
 - **Ties count as extreme.** Use "at least as far", never "further". Dropping the ties breaks the guarantee: on this data a 5% test then fires 7.2% of the time.
-- **The gap was chosen before the data were seen.** Trying several statistics and keeping the smallest p-value is the problem of [multiple-testing](../08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md).
+- **The gap was chosen before the data were seen.** Trying several statistics and keeping the smallest p-value is the problem of [Many tests](../08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md).
 
 ---
 
@@ -111,7 +95,7 @@ The sixteen amounts spent are not random in this argument. The visitors arrived,
 
 ### Step 1: the null fills in the missing column
 
-Each visitor carries two potential outcomes, as in [randomised-experiments-and-ab-tests](04-randomised-experiments-and-ab-tests.md): a spend on the old page and a spend on the new. The shop sees only one. The visitor who spent $95 on the new page might have spent $0 on the old one; the data cannot say.
+Each visitor carries two potential outcomes, as in [Randomised experiments](04-randomised-experiments-and-ab-tests.md): a spend on the old page and a spend on the new. The shop sees only one. The visitor who spent $95 on the new page might have spent $0 on the old one; the data cannot say.
 
 The null hypothesis of a permutation test says the two are equal for every visitor. That claim is strong, and it is called the **sharp null**. It supplies every missing number: under it, the visitor who spent $95 would have spent $95 on either page. With both columns filled, the gap under any other assignment is plain arithmetic.
 
@@ -578,7 +562,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Reading the p-value as the chance the new page does nothing.** 0.0426 is how often a lottery would produce a gap this large *if* the page did nothing. Whether it did nothing needs a prior belief as well ([hypothesis-tests-and-p-values](../08-Confidence%20Intervals%20and%20Tests/03-hypothesis-tests-and-p-values.md)).
+> **Reading the p-value as the chance the new page does nothing.** 0.0426 is how often a lottery would produce a gap this large *if* the page did nothing. Whether it did nothing needs a prior belief as well ([Hypothesis tests](../08-Confidence%20Intervals%20and%20Tests/03-hypothesis-tests-and-p-values.md)).
 >
 > - **Shuffling data no lottery produced.** Visitors who picked their own page carry their reasons with them. A shuffle then tests a lottery that never happened.
 > - **Treating "no effect" as "equal averages".** The test's guarantee is for the sharp null. Equal averages with unequal spread give a 5% test that fires 28.9% of the time.
@@ -590,9 +574,9 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Website experiments.** Revenue per visitor is mostly zeros with a few large orders. A permutation test gives a p-value that does not lean on a bell curve.
-- **Clinical trials.** Fisher's exact test for a two-by-two table of treated or not against recovered or not is a permutation test: it counts relabellings of patients. A trial with dropouts needs survival methods first, as in [kaplan-meier](02-kaplan-meier.md).
-- **Genomics.** Thousands of genes are tested at once; shuffling the sample labels gives a null for each gene, and the shuffles feed the corrections of [multiple-testing](../08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md).
-- **Resampling in general.** The bootstrap of [bootstrap](../07-Sampling%20and%20Estimation/08-bootstrap.md) redraws the data to measure an estimate's wobble. A permutation test reruns the lottery to test a null. The two are often confused and answer different questions.
+- **Clinical trials.** Fisher's exact test for a two-by-two table of treated or not against recovered or not is a permutation test: it counts relabellings of patients. A trial with dropouts needs survival methods first, as in [Kaplan-Meier](02-kaplan-meier.md).
+- **Genomics.** Thousands of genes are tested at once; shuffling the sample labels gives a null for each gene, and the shuffles feed the corrections of [Many tests](../08-Confidence%20Intervals%20and%20Tests/08-multiple-testing.md).
+- **Resampling in general.** The bootstrap of [Bootstrap](../07-Sampling%20and%20Estimation/08-bootstrap.md) redraws the data to measure an estimate's wobble. A permutation test reruns the lottery to test a null. The two are often confused and answer different questions.
 
 > **Say it back**
 > In a randomised test, the lottery is the only thing that varied. If the treatment changed nobody's outcome, every other lottery outcome is known, so the gap can be recomputed under all of them. The p-value is the share at least as extreme as the one seen, ties included. That share is a valid p-value whatever the data look like, because a random draw lands in the top 5% of a list at most 5% of the time. On the shop's lumpy spending it gives 0.0426 where the t-test gives 0.1105.
@@ -601,11 +585,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [randomised-experiments-and-ab-tests](04-randomised-experiments-and-ab-tests.md): the lottery that assigns visitors, and the two possible outcomes of each visitor, which this card reruns under the sharp null.
+- [Randomised experiments](04-randomised-experiments-and-ab-tests.md): the lottery that assigns visitors, and the two possible outcomes of each visitor, which this card reruns under the sharp null.
 
 ## Where this goes next
 
-- [confounding-and-simpsons-paradox](07-confounding-and-simpsons-paradox.md): what goes wrong when no lottery assigned the groups, and why the comparison can then reverse.
+- [Confounding](07-confounding-and-simpsons-paradox.md): what goes wrong when no lottery assigned the groups, and why the comparison can then reverse.
 
 A permutation test earns its guarantee from the lottery; what a comparison is worth when there was no lottery at all is the question confounding answers.
 

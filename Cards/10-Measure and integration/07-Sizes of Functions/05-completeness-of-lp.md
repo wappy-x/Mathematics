@@ -1,31 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Sizes of Functions
-topic: Spaces with no holes
-item: Riesz-Fischer
-kind: theorem
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/03-minkowskis-inequality|minkowskis-inequality]]"
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/04-modes-of-convergence|modes-of-convergence]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/03-sequences-and-limits|sequences-and-limits]]"
-next:
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/06-l2-as-a-hilbert-space|l2-as-a-hilbert-space]]"
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/02-lebesgue-differentiation-theorem|lebesgue-differentiation-theorem]]"
-  - "[[Cards/18-Functional analysis/01-Normed and Banach Spaces/03-function-spaces-c-and-lp|function-spaces-c-and-lp]]"
-  - "[[Cards/20-Harmonic analysis/01-Fourier Series in Depth/05-l2-convergence-and-riesz-fischer|l2-convergence-and-riesz-fischer]]"
-  - "[[Cards/20-Harmonic analysis/02-The Fourier Transform/05-plancherel-and-l2|plancherel-and-l2]]"
-tags:
-  - mathematics
-  - measure and integration
-  - completeness-of-lp
----
-
 # Riesz-Fischer: Lp is complete, so approximating sequences have limits inside the space, and simple functions get arbitrarily close
 
-Measure and integration → Sizes of Functions → Spaces with no holes → Riesz-Fischer
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sizes of Functions](../../../SYLLABUS.md#w10-s07) → Riesz-Fischer
 
 ---
 
@@ -59,13 +34,13 @@ Orange: the distance from the whole list to the list cut after N entries. Green:
 
 ## The formula
 
-Notation first, in words. A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the collection of sets we allow ourselves to measure, and a measure giving each such set a size. For a power $p$ of 1 or more, the $p$-norm of a function is ([lp-spaces](01-lp-spaces.md)):
+Notation first, in words. A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the collection of sets we allow ourselves to measure, and a measure giving each such set a size. For a power $p$ of 1 or more, the $p$-norm of a function is ([Lp spaces](01-lp-spaces.md)):
 
 $$\|f\|_p = \Big(\int |f|^p \, d\mu\Big)^{1/p}$$
 
 $L^p(\mu)$ is the set of measurable functions with a finite $p$-norm, where two functions equal almost everywhere (a.e., except on a set of size zero) count as one. The distance between $f$ and $h$ is $\|f - h\|_p$. With $\Omega$ the whole numbers 1, 2, 3, ... and $\mu$ counting measure, which gives each point size 1, the integral is a sum, and $L^2$ is written $\ell^2$: the lists whose squares add to a finite total.
 
-A sequence $f_n$ is **Cauchy** when its terms crowd together: for every tolerance $\varepsilon > 0$ there is a step $N$ past which any two terms are within $\varepsilon$ of each other ([sequences-and-limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md)).
+A sequence $f_n$ is **Cauchy** when its terms crowd together: for every tolerance $\varepsilon > 0$ there is a step $N$ past which any two terms are within $\varepsilon$ of each other ([Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md)).
 
 **Riesz-Fischer.** For $1 \le p < \infty$ and any measure space,
 
@@ -126,29 +101,29 @@ In the example the distance between $t_m$ and $t_N$, for m past N, never exceeds
 
 ### Step 2: the total of the steps has a finite norm
 
-Let $g_K$ be $|f_{n_1}|$ plus the absolute values of the first K steps. Minkowski's inequality, the triangle inequality for $p$-norms ([minkowskis-inequality](03-minkowskis-inequality.md)), bounds its norm by $\|f_{n_1}\|_p + 1/2 + 1/4 + \dots < \|f_{n_1}\|_p + 1$. The $g_K$ rise to a limit $g$. The monotone convergence theorem carries the bound to the limit ([monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)). A function with finite integral of $g^p$ is infinite only on a null set.
+Let $g_K$ be $|f_{n_1}|$ plus the absolute values of the first K steps. Minkowski's inequality, the triangle inequality for $p$-norms ([Minkowski's inequality](03-minkowskis-inequality.md)), bounds its norm by $\|f_{n_1}\|_p + 1/2 + 1/4 + \dots < \|f_{n_1}\|_p + 1$. The $g_K$ rise to a limit $g$. The monotone convergence theorem carries the bound to the limit ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)). A function with finite integral of $g^p$ is infinite only on a null set.
 
 In the example every entry of every step is positive and the steps sit on separate entries, so $g$ is $t$ itself. The bound reads 1.2825 ≤ $\|t_4\|_2$ + 1 = 2.1932.
 
 ### Step 3: a limit at almost every point
 
-Where $g$ is finite, the steps add up absolutely at that point, so the running sums converge by the completeness of the real numbers ([supremum-and-completeness](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). The running sums are the $f_{n_k}$ themselves. Define $f$ as their limit there, and 0 on the null set. Every $|f_{n_k}|$ is at most $g$, so $|f| \le g$ and $f$ is in $L^p$.
+Where $g$ is finite, the steps add up absolutely at that point, so the running sums converge by the completeness of the real numbers ([No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). The running sums are the $f_{n_k}$ themselves. Define $f$ as their limit there, and 0 on the null set. Every $|f_{n_k}|$ is at most $g$, so $|f| \le g$ and $f$ is in $L^p$.
 
 ### Step 4: from a limit at points to a limit in norm
 
-The gap $|f_{n_k} - f|^p$ goes to 0 almost everywhere and never exceeds $(2g)^p$, which has finite integral. The dominated convergence theorem ([dominated-convergence-theorem](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)) gives $\|f_{n_k} - f\|_p \to 0$. A Cauchy sequence with one convergent subsequence converges in full: $\|f_n - f\|_p \le \|f_n - f_{n_k}\|_p + \|f_{n_k} - f\|_p$, and both terms are small once $n$ and $n_k$ are late.
+The gap $|f_{n_k} - f|^p$ goes to 0 almost everywhere and never exceeds $(2g)^p$, which has finite integral. The dominated convergence theorem ([Dominated convergence](../05-Swapping%20Limits%20and%20Integrals/02-dominated-convergence-theorem.md)) gives $\|f_{n_k} - f\|_p \to 0$. A Cauchy sequence with one convergent subsequence converges in full: $\|f_n - f\|_p \le \|f_n - f_{n_k}\|_p + \|f_{n_k} - f\|_p$, and both terms are small once $n$ and $n_k$ are late.
 
-The corollary comes free. A sequence converging in $L^p$ is Cauchy, so Steps 1 to 3 give a subsequence converging at almost every point. Its pointwise limit and the norm limit agree a.e., since two norm limits are at distance 0. The whole sequence need not converge anywhere: the typewriter sequence converges in $L^1$ and settles at no point ([modes-of-convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)). In $\ell^2$ the subsequence is not needed, because each entry has size 1 under counting measure and so no entry can differ by more than the whole distance.
+The corollary comes free. A sequence converging in $L^p$ is Cauchy, so Steps 1 to 3 give a subsequence converging at almost every point. Its pointwise limit and the norm limit agree a.e., since two norm limits are at distance 0. The whole sequence need not converge anywhere: the typewriter sequence converges in $L^1$ and settles at no point ([Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md)). In $\ell^2$ the subsequence is not needed, because each entry has size 1 under counting measure and so no entry can differ by more than the whole distance.
 
 ### Step 5: simple functions come arbitrarily close
 
-For $f \ge 0$ the staircase $\varphi_k$ rounds $f$ down to a multiple of $2^{-k}$ and caps it at k ([simple-functions-and-approximation](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). It rises to $f$, and the gap $|f - \varphi_k|^p$ never exceeds $f^p$, so dominated convergence sends $\|f - \varphi_k\|_p$ to 0. The staircase is zero where $f$ is below $2^{-k}$. By Markov's inequality ([markov-and-chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) the rest has finite size. A signed $f$ is its positive part ($f$ where $f > 0$, else 0) minus its negative part (the same for $-f$).
+For $f \ge 0$ the staircase $\varphi_k$ rounds $f$ down to a multiple of $2^{-k}$ and caps it at k ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). It rises to $f$, and the gap $|f - \varphi_k|^p$ never exceeds $f^p$, so dominated convergence sends $\|f - \varphi_k\|_p$ to 0. The staircase is zero where $f$ is below $2^{-k}$. By Markov's inequality ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) the rest has finite size. A signed $f$ is its positive part ($f$ where $f > 0$, else 0) minus its negative part (the same for $-f$).
 
 On the list $t$, the staircase is $\varphi_k(n) = \lfloor 2^k/n \rfloor / 2^k$ (the floor $\lfloor x \rfloor$ is $x$ rounded down), zero past entry $2^k$. At k = 8 it uses 32 values and sits 0.0695 from $t$. Each rounding is under $2^{-k}$ on the first $2^k$ entries, and the tail beyond has squared norm under $2^{-k}$, so the distance stays under $\sqrt{2}\, 2^{-k/2}$, here 0.0884.
 
 ### Step 6: continuous functions come arbitrarily close, on the line
 
-Under Lebesgue measure, an indicator of a set of finite length is close in $p$-norm to the indicator of an open set around it, which is a union of disjoint open intervals ([lebesgue-outer-measure](../02-Length%20Done%20Properly/01-lebesgue-outer-measure.md)). Finitely many of those intervals carry nearly all the length. Each interval's indicator is close to a trapezoid: 0 outside, 1 inside, sloped over a short stretch at each end. Minkowski's inequality assembles the pieces.
+Under Lebesgue measure, an indicator of a set of finite length is close in $p$-norm to the indicator of an open set around it, which is a union of disjoint open intervals ([Outer measure](../02-Length%20Done%20Properly/01-lebesgue-outer-measure.md)). Finitely many of those intervals carry nearly all the length. Each interval's indicator is close to a trapezoid: 0 outside, 1 inside, sloped over a short stretch at each end. Minkowski's inequality assembles the pieces.
 
 The ramps show the last move. The ramp $r_n$ is 0 left of $1/2 - 1/(2n)$, 1 right of $1/2 + 1/(2n)$, straight between. Its 1-norm distance to the step $\mathbf{1}_{[1/2, 1]}$ is two triangles, $1/(4n)$: 1/4, 1/8, 1/16, 1/32, 1/64 for n = 1, 2, 4, 8, 16. The ramps are Cauchy in the 1-norm, $\|r_n - r_{2n}\|_1 = 1/(8n)$, and their limit is the step, which is not continuous. So the continuous functions on [0, 1] under the 1-norm are not complete, and $L^1$ is what fills their holes.
 
@@ -171,7 +146,7 @@ Throughout, $(\Omega, \mathcal{F}, \mu)$ is a measure space, $1 \le p < \infty$,
 
 **Lemma A (a Cauchy sequence with a convergent subsequence converges).** If $(f_n)$ is Cauchy and $\|f_{n_k} - f\|_p \to 0$, then given $\varepsilon$ pick $N$ with $\|f_n - f_m\|_p < \varepsilon/2$ for $n, m \ge N$, and $k$ with $n_k \ge N$ and $\|f_{n_k} - f\|_p < \varepsilon/2$. Minkowski gives $\|f_n - f\|_p < \varepsilon$ for all $n \ge N$.
 
-**Theorem 1 (Riesz-Fischer).** Let $(f_n)$ be Cauchy in $L^p$. Choose $n_1 < n_2 < \dots$ with $\|f_n - f_m\|_p < 2^{-k}$ for all $n, m \ge n_k$; in particular $\|f_{n_{k+1}} - f_{n_k}\|_p < 2^{-k}$. Put $g_K = |f_{n_1}| + \sum_{k=1}^{K} |f_{n_{k+1}} - f_{n_k}|$. By Minkowski, $\|g_K\|_p < \|f_{n_1}\|_p + 1 =: C$. The $g_K$ are non-negative, measurable and increasing, with limit $g$ valued in $[0, \infty]$; $g_K^p$ increases to $g^p$, so by monotone convergence $\int g^p d\mu = \lim \int g_K^p d\mu \le C^p$. Hence the set $Z = \{g = \infty\}$ has $\mu(Z) = 0$: on it $g^p$ is infinite, and a set of positive size would make the integral infinite. For $x \notin Z$ the series $f_{n_1}(x) + \sum_k (f_{n_{k+1}}(x) - f_{n_k}(x))$ converges absolutely, so it converges, since the reals are complete; its K-th partial sum is $f_{n_{K+1}}(x)$. Set $f(x) = \lim_k f_{n_k}(x)$ off $Z$ and $f = 0$ on $Z$; $f$ is measurable as a limit of measurable functions (the card [limits-of-measurable-functions](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)). Each $|f_{n_k}| \le g$, so $|f| \le g$ and $\int |f|^p d\mu \le C^p$: $f \in L^p$. Next, $|f_{n_k} - f|^p \le (|f_{n_k}| + |f|)^p \le 2^p g^p$, an integrable bound, and $|f_{n_k} - f|^p \to 0$ off $Z$; dominated convergence gives $\|f_{n_k} - f\|_p \to 0$. Lemma A finishes.
+**Theorem 1 (Riesz-Fischer).** Let $(f_n)$ be Cauchy in $L^p$. Choose $n_1 < n_2 < \dots$ with $\|f_n - f_m\|_p < 2^{-k}$ for all $n, m \ge n_k$; in particular $\|f_{n_{k+1}} - f_{n_k}\|_p < 2^{-k}$. Put $g_K = |f_{n_1}| + \sum_{k=1}^{K} |f_{n_{k+1}} - f_{n_k}|$. By Minkowski, $\|g_K\|_p < \|f_{n_1}\|_p + 1 =: C$. The $g_K$ are non-negative, measurable and increasing, with limit $g$ valued in $[0, \infty]$; $g_K^p$ increases to $g^p$, so by monotone convergence $\int g^p d\mu = \lim \int g_K^p d\mu \le C^p$. Hence the set $Z = \{g = \infty\}$ has $\mu(Z) = 0$: on it $g^p$ is infinite, and a set of positive size would make the integral infinite. For $x \notin Z$ the series $f_{n_1}(x) + \sum_k (f_{n_{k+1}}(x) - f_{n_k}(x))$ converges absolutely, so it converges, since the reals are complete; its K-th partial sum is $f_{n_{K+1}}(x)$. Set $f(x) = \lim_k f_{n_k}(x)$ off $Z$ and $f = 0$ on $Z$; $f$ is measurable as a limit of measurable functions (the card [Sums, products, sups and limits](../03-Measurable%20Functions/02-limits-of-measurable-functions.md)). Each $|f_{n_k}| \le g$, so $|f| \le g$ and $\int |f|^p d\mu \le C^p$: $f \in L^p$. Next, $|f_{n_k} - f|^p \le (|f_{n_k}| + |f|)^p \le 2^p g^p$, an integrable bound, and $|f_{n_k} - f|^p \to 0$ off $Z$; dominated convergence gives $\|f_{n_k} - f\|_p \to 0$. Lemma A finishes.
 
 **Corollary (a.e. subsequence).** If $\|f_n - f\|_p \to 0$ then $(f_n)$ is Cauchy by Minkowski, so Theorem 1's construction gives $n_k$ and $\tilde f$ with $f_{n_k} \to \tilde f$ a.e. and in norm. Then $\|f - \tilde f\|_p \le \|f - f_{n_k}\|_p + \|f_{n_k} - \tilde f\|_p \to 0$, so $\int |f - \tilde f|^p d\mu = 0$ and $f = \tilde f$ a.e.
 
@@ -183,7 +158,7 @@ Throughout, $(\Omega, \mathcal{F}, \mu)$ is a measure space, $1 \le p < \infty$,
 
 </details>
 
-A second road to completeness of $\ell^2$ goes entry by entry: each entry of a Cauchy sequence of lists is a Cauchy sequence of reals, and Fatou's lemma ([fatous-lemma](../05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md)) shows the entrywise limit is the norm limit. It works because each point has size 1; the general case needs the fast subsequence.
+A second road to completeness of $\ell^2$ goes entry by entry: each entry of a Cauchy sequence of lists is a Cauchy sequence of reals, and Fatou's lemma ([Fatou's lemma](../05-Swapping%20Limits%20and%20Integrals/01-fatous-lemma.md)) shows the entrywise limit is the norm limit. It works because each point has size 1; the general case needs the fast subsequence.
 
 ---
 
@@ -595,9 +570,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Fourier series.** A list of coefficients whose squares add to a finite total is the coefficient list of some square-integrable function, because the partial sums are Cauchy and $L^2$ is complete. That is the form Riesz and Fischer proved in 1907 (l2-convergence-and-riesz-fischer).
-- **Signal processing.** Energy-preserving transforms of sound and images are defined first on nice signals and extended to all finite-energy signals by density and completeness (plancherel-and-l2).
-- **Least squares and forecasting.** The best approximation of a quantity from a closed subspace of predictors exists because $L^2$ is complete; that projection is the subject of [l2-as-a-hilbert-space](06-l2-as-a-hilbert-space.md).
+- **Fourier series.** A list of coefficients whose squares add to a finite total is the coefficient list of some square-integrable function, because the partial sums are Cauchy and $L^2$ is complete. That is the form Riesz and Fischer proved in 1907 (Convergence in energy).
+- **Signal processing.** Energy-preserving transforms of sound and images are defined first on nice signals and extended to all finite-energy signals by density and completeness (Plancherel).
+- **Least squares and forecasting.** The best approximation of a quantity from a closed subspace of predictors exists because $L^2$ is complete; that projection is the subject of [L2 as a Hilbert space](06-l2-as-a-hilbert-space.md).
 
 > **Say it back**
 > A sequence in $L^p$ whose terms crowd together always has a limit that is itself in $L^p$, for p from 1 up. The proof picks a subsequence whose steps add to a finite total, adds up the steps' absolute values into one integrable function, and uses monotone and dominated convergence. The same subsequence converges at almost every point. Simple functions, and on the line continuous ones, come as close as desired to any member. The cut lists of (1, 1/2, 1/3, ...) converge in $\ell^2$ to a whole list of length 1.2825, while ramps converge in the 1-norm to a step that is not continuous.
@@ -606,19 +581,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [minkowskis-inequality](03-minkowskis-inequality.md): the triangle inequality that bounds the total of the steps.
-- [modes-of-convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md): convergence in $L^p$ against a.e., and the typewriter that separates them.
-- [sequences-and-limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md): Cauchy sequences of numbers and why they converge on the real line.
+- [Minkowski's inequality](03-minkowskis-inequality.md): the triangle inequality that bounds the total of the steps.
+- [Modes of convergence](../05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md): convergence in $L^p$ against a.e., and the typewriter that separates them.
+- [Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md): Cauchy sequences of numbers and why they converge on the real line.
 
 ## Where this goes next
 
-- [l2-as-a-hilbert-space](06-l2-as-a-hilbert-space.md): completeness plus an inner product, giving orthogonal projection.
-- [lebesgue-differentiation-theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/02-lebesgue-differentiation-theorem.md): density of continuous functions, used to prove that averages over shrinking intervals recover a function.
-- function-spaces-c-and-lp: $L^p$ and the continuous functions side by side as Banach spaces.
-- l2-convergence-and-riesz-fischer: the 1907 form, square-summable coefficients matched to square-integrable functions.
-- plancherel-and-l2: a transform extended from nice functions to all of $L^2$ by density and completeness.
+- [L2 as a Hilbert space](06-l2-as-a-hilbert-space.md): completeness plus an inner product, giving orthogonal projection.
+- [The Lebesgue differentiation theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/02-lebesgue-differentiation-theorem.md): density of continuous functions, used to prove that averages over shrinking intervals recover a function.
+- Function spaces C and Lp: $L^p$ and the continuous functions side by side as Banach spaces.
+- Convergence in energy: the 1907 form, square-summable coefficients matched to square-integrable functions.
+- Plancherel: a transform extended from nice functions to all of $L^2$ by density and completeness.
 
-Completeness guarantees limits exist, but says nothing about the nearest point of a subspace; in $L^2$, where lengths come with angles, that nearest point exists and is found by dropping a perpendicular, which is [l2-as-a-hilbert-space](06-l2-as-a-hilbert-space.md).
+Completeness guarantees limits exist, but says nothing about the nearest point of a subspace; in $L^2$, where lengths come with angles, that nearest point exists and is found by dropping a perpendicular, which is [L2 as a Hilbert space](06-l2-as-a-hilbert-space.md).
 
 ---
 

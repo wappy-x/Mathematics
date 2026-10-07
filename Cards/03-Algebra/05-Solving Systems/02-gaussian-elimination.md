@@ -1,35 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Solving Systems
-topic: Systems
-item: Gaussian elimination
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/03-Algebra/05-Solving Systems/01-matrix-equation-ax-b|matrix-equation-ax-b]]"
-next:
-  - "[[Cards/03-Algebra/05-Solving Systems/03-inverse-matrix|inverse-matrix]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/05-rank-nullity|rank-nullity]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/07-finite-differences-for-boundary-problems|finite-differences-for-boundary-problems]]"
-  - "[[Cards/12-Financial mathematics/02-Curves/04-bootstrapping-the-discount-curve|bootstrapping-the-discount-curve]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/07-finite-differences-for-the-black-scholes-equation|finite-differences-for-the-black-scholes-equation]]"
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/04-vanna-volga-pricing|vanna-volga-pricing]]"
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/01-kirchhoffs-laws-and-equivalent-circuits|kirchhoffs-laws-and-equivalent-circuits]]"
-  - "[[Cards/16-Numerical analysis/03-Numerical Linear Algebra/02-lu-decomposition-and-pivoting|lu-decomposition-and-pivoting]]"
-  - "[[Cards/17-Topology/05-Homology/03-computing-homology-by-smith-normal-form|computing-homology-by-smith-normal-form]]"
-  - "[[Cards/17-Topology/06-Topological Data Analysis/03-the-persistence-algorithm|the-persistence-algorithm]]"
-  - "[[Cards/22-Algebraic geometry/06-Schemes and Modern Language/06-smith-normal-form-and-canonical-forms|smith-normal-form-and-canonical-forms]]"
-tags:
-  - mathematics
-  - algebra
-  - gaussian-elimination
----
-
 # Gaussian elimination: three legal row moves turn any system into a staircase you can read off from the bottom
 
-Algebra → Solving Systems → Systems → Gaussian elimination
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Solving Systems](../../../SYLLABUS.md#w03-s05) → Gaussian elimination
 
 ---
 
@@ -91,7 +62,7 @@ Column by column, that builds the staircase, whose real name is **row echelon fo
 | $A$, $b$, $x$ | the counts, a row per day (3 × 3); the totals; the prices as a column | `[[2, 1, 1], [1, 1, 0], [1, 2, 2]]`, (17, 7, 22), (4, 3, 6) | all three totals doubled, and the prices double |
 | $m$ | the multiplier for one row move | 0.5, then 0.5, then 3 | wrong, and the entry aimed at survives |
 
-Counts $A$ times prices $x$ give totals $b$, the matrix equation of [matrix-equation-ax-b](01-matrix-equation-ax-b.md). Elimination works on both: the money rides on the end of every row.
+Counts $A$ times prices $x$ give totals $b$, the matrix equation of [Solving A x = b](01-matrix-equation-ax-b.md). Elimination works on both: the money rides on the end of every row.
 
 ### When it holds
 
@@ -128,7 +99,7 @@ Ignore the top row; it has done its job. The middle now has 0.5 pastries and the
 <details>
 <summary>What if the pivot is zero?</summary>
 
-Nothing can be divided by it. Swap that row with one below that has a number in that spot — move one, at no cost. Solvers swap even for a small pivot, since dividing by a tiny number turns small rounding errors large; the column's biggest entry in the pivot seat is **partial pivoting**. Stored and reused, this is LU factorisation: lu-decomposition-and-pivoting.
+Nothing can be divided by it. Swap that row with one below that has a number in that spot — move one, at no cost. Solvers swap even for a small pivot, since dividing by a tiny number turns small rounding errors large; the column's biggest entry in the pivot seat is **partial pivoting**. Stored and reused, this is LU factorisation: LU with partial pivoting.
 
 </details>
 
@@ -151,7 +122,7 @@ flowchart TD
 
 The left branch is a row like `[0, 0, 0 | 1]`: nothing times any price is $1. The right leaves a price column with no pivot, here through `[0, 0, 0 | 0]`, one day being a combination of the others. One such column gives a line of price lists, two a plane.
 
-The count of pivots is the **rank**, which [rank-nullity](05-rank-nullity.md) is built on. A second route builds the matrix that undoes $A$: [inverse-matrix](03-inverse-matrix.md).
+The count of pivots is the **rank**, which [Rank and nullity](05-rank-nullity.md) is built on. A second route builds the matrix that undoes $A$: [The inverse matrix](03-inverse-matrix.md).
 
 ---
 
@@ -403,10 +374,10 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Numerical libraries.** Dense solvers run these moves, packaged for reuse on many sets of totals (lu-decomposition-and-pivoting).
-- **Circuits.** One equation per loop of wire, one unknown current per branch (kirchhoffs-laws-and-equivalent-circuits).
+- **Numerical libraries.** Dense solvers run these moves, packaged for reuse on many sets of totals (LU with partial pivoting).
+- **Circuits.** One equation per loop of wire, one unknown current per branch (Kirchhoff's laws).
 - **Balancing a chemical equation.** One equation per element, one unknown per compound, usually with one left free.
-- **Deciding whether data says anything.** A row of zeros means one measurement repeated another — the verdict starting [rank-nullity](05-rank-nullity.md).
+- **Deciding whether data says anything.** A row of zeros means one measurement repeated another — the verdict starting [Rank and nullity](05-rank-nullity.md).
 
 > **Say it back**
 > Three days of till slips give three equations and three unknown prices. Take multiples of one row from another until a price disappears from the rows below, one column at a time. Nothing is lost or gained, since every move can be undone. The bottom step then holds one unknown: 3 sandwiches for $18, a sandwich $6. Fed up the staircase, it gives $3 for the pastry and $4 for the coffee.
@@ -415,23 +386,23 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [matrix-equation-ax-b](01-matrix-equation-ax-b.md): the system as one equation, and the three possible outcomes.
+- [Solving A x = b](01-matrix-equation-ax-b.md): the system as one equation, and the three possible outcomes.
 
 ## Where this goes next
 
-- [inverse-matrix](03-inverse-matrix.md): these same moves build the counts' undo.
-- [rank-nullity](05-rank-nullity.md): the pivot count as rank, the rest free directions.
-- [finite-differences-for-boundary-problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/07-finite-differences-for-boundary-problems.md): a curve's values as one system.
-- [bootstrapping-the-discount-curve](../../12-Financial%20mathematics/02-Curves/04-bootstrapping-the-discount-curve.md): bond prices, one maturity at a time.
-- [finite-differences-for-the-black-scholes-equation](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): option prices on a grid.
-- [vanna-volga-pricing](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): three quotes, three weights.
-- kirchhoffs-laws-and-equivalent-circuits: currents in a circuit.
-- lu-decomposition-and-pivoting: the multipliers kept and reused.
-- computing-homology-by-smith-normal-form: the moves over whole numbers.
-- the-persistence-algorithm: elimination on shapes.
-- smith-normal-form-and-canonical-forms: one canonical staircase.
+- [The inverse matrix](03-inverse-matrix.md): these same moves build the counts' undo.
+- [Rank and nullity](05-rank-nullity.md): the pivot count as rank, the rest free directions.
+- [Finite differences](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/07-finite-differences-for-boundary-problems.md): a curve's values as one system.
+- [Bootstrapping](../../12-Financial%20mathematics/02-Curves/04-bootstrapping-the-discount-curve.md): bond prices, one maturity at a time.
+- [Pricing on a grid](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): option prices on a grid.
+- [Vanna-volga pricing](../../12-Financial%20mathematics/22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): three quotes, three weights.
+- Kirchhoff's laws: currents in a circuit.
+- LU with partial pivoting: the multipliers kept and reused.
+- Smith normal form: the moves over whole numbers.
+- The persistence algorithm: elimination on shapes.
+- Smith normal form: one canonical staircase.
 
-The staircase is thrown away once these days are answered; keeping the moves, so tomorrow's takings cost one multiplication, is [inverse-matrix](03-inverse-matrix.md).
+The staircase is thrown away once these days are answered; keeping the moves, so tomorrow's takings cost one multiplication, is [The inverse matrix](03-inverse-matrix.md).
 
 ---
 

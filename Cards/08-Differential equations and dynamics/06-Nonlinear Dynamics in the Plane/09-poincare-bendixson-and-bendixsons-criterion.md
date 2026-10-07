@@ -1,23 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Nonlinear Dynamics in the Plane
-topic: Proving a loop exists, or cannot
-item: Poincare-Bendixson
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/08-limit-cycles-and-van-der-pol|limit-cycles-and-van-der-pol]]"
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/06-greens-theorem|greens-theorem]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/11-Discrete Dynamics and Chaos/06-the-lorenz-system-and-strange-attractors|the-lorenz-system-and-strange-attractors]]"
-tags: [mathematics, differential equations and dynamics, poincare-bendixson-and-bendixsons-criterion]
----
-
 # Poincare-Bendixson: in the plane a trapped path that cannot rest must loop, and a divergence test rules loops out
 
-Differential equations and dynamics → Nonlinear Dynamics in the Plane → Proving a loop exists, or cannot → Poincare-Bendixson
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → Poincare-Bendixson
 
 ---
 
@@ -43,7 +26,7 @@ Scale: 50 units per volt, origin at the centre. Dashed: the rims; thick: the loo
 
 ## The formula
 
-Notation from [phase-portraits-and-nullclines](01-phase-portraits-and-nullclines.md): a planar system $x' = f(x, y)$, $y' = g(x, y)$ puts an arrow $F = (f, g)$ at every point, the vector field; a path is one solution traced in the plane.
+Notation from [Phase portraits and nullclines](01-phase-portraits-and-nullclines.md): a planar system $x' = f(x, y)$, $y' = g(x, y)$ puts an arrow $F = (f, g)$ at every point, the vector field; a path is one solution traced in the plane.
 
 The oscillator, with voltages in volts and time in milliseconds, all constants set to 1:
 
@@ -112,11 +95,11 @@ Let γ be trapped in the compact, rest-free region R, with limit set L: the poin
 
 </details>
 
-The theorem gives a loop, not how many. The polar form shows exactly one, at $r = 1$, where $r' = 0$; a path on it returns to its start after $2\pi$ = 6.283185 ms. For the Van der Pol circuit, whose loop has no formula, the trap is the proof ([limit-cycles-and-van-der-pol](08-limit-cycles-and-van-der-pol.md)).
+The theorem gives a loop, not how many. The polar form shows exactly one, at $r = 1$, where $r' = 0$; a path on it returns to its start after $2\pi$ = 6.283185 ms. For the Van der Pol circuit, whose loop has no formula, the trap is the proof ([Limit cycles](08-limit-cycles-and-van-der-pol.md)).
 
 ### Step 4: Bendixson, by Green's theorem
 
-Suppose a closed loop $C$ lay in $D$, enclosing the patch $A$. Green's theorem ([greens-theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md)) turns the divergence over the patch into a sum round its edge:
+Suppose a closed loop $C$ lay in $D$, enclosing the patch $A$. Green's theorem ([Green's theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md)) turns the divergence over the patch into a sum round its edge:
 
 $$\iint_A (f_x + g_y)\,dA = \oint_C (f\,dy - g\,dx).$$
 
@@ -126,7 +109,7 @@ For the shock absorber the left side is −2 times the area. Round the energy el
 
 ### Step 5: why chaos needs a third dimension
 
-Steps 0 and 3 used the fence. In three dimensions a curve fences nothing: a path can pass round it. So a bounded path in space can wander forever without resting or repeating, the room chaos needs. The Lorenz system does it with three variables ([the-lorenz-system-and-strange-attractors](../11-Discrete%20Dynamics%20and%20Chaos/06-the-lorenz-system-and-strange-attractors.md)).
+Steps 0 and 3 used the fence. In three dimensions a curve fences nothing: a path can pass round it. So a bounded path in space can wander forever without resting or repeating, the room chaos needs. The Lorenz system does it with three variables ([The Lorenz system](../11-Discrete%20Dynamics%20and%20Chaos/06-the-lorenz-system-and-strange-attractors.md)).
 
 <details>
 <summary>Divergence as shrinkage, seen directly</summary>
@@ -162,7 +145,7 @@ The alarm settles to a 1-volt swing repeating every 6.283185 ms; the shock absor
 
 ## Code, from first principles, and it actually runs
 
-Road one is the closed form for the swing; road two steps the $x, y$ system by Runge-Kutta 4 (four slope samples per step, [runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) and never uses polar form. Halving the step cuts the error about 16-fold: fourth order. For Bendixson, divergence by differences meets a flowed triangle's area ratio, and Green's edge sum meets its area sum.
+Road one is the closed form for the swing; road two steps the $x, y$ system by Runge-Kutta 4 (four slope samples per step, [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) and never uses polar form. Halving the step cuts the error about 16-fold: fourth order. For Bendixson, divergence by differences meets a flowed triangle's area ratio, and Green's edge sum meets its area sum.
 
 ### Python
 
@@ -375,8 +358,8 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Oscillator circuits.** Tone generators and radio transmitters feed small swings and damp large ones: a trap, so a steady tone ([limit-cycles-and-van-der-pol](08-limit-cycles-and-van-der-pol.md)).
-- **Damped machines.** Shock absorbers and door closers shrink area, so cannot oscillate forever; the energy view is [lyapunov-functions](04-lyapunov-functions.md).
+- **Oscillator circuits.** Tone generators and radio transmitters feed small swings and damp large ones: a trap, so a steady tone ([Limit cycles](08-limit-cycles-and-van-der-pol.md)).
+- **Damped machines.** Shock absorbers and door closers shrink area, so cannot oscillate forever; the energy view is [Lyapunov functions](04-lyapunov-functions.md).
 
 > **Say it back**
 > In the plane a closed curve is a fence, and paths cannot cross. So a path trapped in a bounded region with no resting point must approach a closed loop. The oscillator's ring from 0.5 to 2 volts traps every path and holds no rest, so it holds the loop at 1 volt. A divergence of one sign on a region without holes makes a loop impossible, by Green's theorem: the shock absorber, at −2 per second, has none. In three dimensions the fence is gone, and chaos becomes possible.
@@ -385,13 +368,13 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [limit-cycles-and-van-der-pol](08-limit-cycles-and-van-der-pol.md): what a limit cycle is, and the circuit whose loop has no formula.
-- [greens-theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md): the edge sum equals the area sum, which is all Bendixson needs.
+- [Limit cycles](08-limit-cycles-and-van-der-pol.md): what a limit cycle is, and the circuit whose loop has no formula.
+- [Green's theorem](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/06-greens-theorem.md): the edge sum equals the area sum, which is all Bendixson needs.
 
 ## Where this goes next
 
-- [the-lorenz-system-and-strange-attractors](../11-Discrete%20Dynamics%20and%20Chaos/06-the-lorenz-system-and-strange-attractors.md): three variables, a bounded restless path that never closes.
-- [bifurcations-of-equilibria](10-bifurcations-of-equilibria.md): how a loop like the oscillator's is born from a resting point as a setting is turned.
+- [The Lorenz system](../11-Discrete%20Dynamics%20and%20Chaos/06-the-lorenz-system-and-strange-attractors.md): three variables, a bounded restless path that never closes.
+- [Bifurcations](10-bifurcations-of-equilibria.md): how a loop like the oscillator's is born from a resting point as a setting is turned.
 
 In the plane a trapped path ends at a rest, a loop, or a cycle of rests joined by paths; the Lorenz system shows what else a third variable allows.
 

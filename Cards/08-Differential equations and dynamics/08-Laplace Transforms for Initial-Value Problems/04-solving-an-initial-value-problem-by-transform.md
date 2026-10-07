@@ -1,23 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Laplace Transforms for Initial-Value Problems
-topic: Forced motion from rest
-item: The round trip
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/03-inverting-by-partial-fractions|inverting-by-partial-fractions]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/05-undetermined-coefficients|undetermined-coefficients]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/05-step-functions-and-delays|step-functions-and-delays]]"
-tags: [mathematics, differential equations and dynamics, solving-an-initial-value-problem-by-transform]
----
-
 # The round trip: transform, solve the algebra, invert, and the forced oscillator falls out in one pass
 
-Differential equations and dynamics → Laplace Transforms for Initial-Value Problems → Forced motion from rest → The round trip
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Laplace Transforms for Initial-Value Problems](../../../SYLLABUS.md#w08-s08) → The round trip
 
 ---
 
@@ -51,7 +34,7 @@ Orange: the travel y, every half second. Teal: the resting point under the push,
 
 ## The formula
 
-Reminders: a curly L, $\mathcal{L}$, reads "the Laplace transform of", and a capital names the result, so $Y = \mathcal{L}[y]$ ([the-laplace-transform](01-the-laplace-transform.md)). Acceleration transforms to s^2 Y − s y(0) − y'(0), velocity to sY − y(0) ([transforms-of-derivatives](02-transforms-of-derivatives.md)). From rest, both starting values are 0.
+Reminders: a curly L, $\mathcal{L}$, reads "the Laplace transform of", and a capital names the result, so $Y = \mathcal{L}[y]$ ([The Laplace transform](01-the-laplace-transform.md)). Acceleration transforms to s^2 Y − s y(0) − y'(0), velocity to sY − y(0) ([Transforming a derivative](02-transforms-of-derivatives.md)). From rest, both starting values are 0.
 
 The method for y'' + b y' + k y = f(t), in three moves:
 
@@ -81,7 +64,7 @@ $$Y(s) = \frac{10}{s\,(s^2 + 2s + 5)} = \frac{2}{s} - \frac{2s + 4}{s^2 + 2s + 5
 - **Linear, with constant coefficients.** Then each term becomes a multiple of Y. A term such as t·y becomes minus the derivative of Y: another differential equation, not algebra.
 - **The push has a transform.** It grows no faster than an exponential; a push of e^(t^2) newtons has none, and the first move fails.
 - **The starting values sit at t = 0.** Given at t = 3 s, shift the clock first.
-- **No infinite spike in the push.** Jumps are fine, best written with step functions ([step-functions-and-delays](05-step-functions-and-delays.md)); a hammer blow needs [impulses-and-the-delta-function](06-impulses-and-the-delta-function.md).
+- **No infinite spike in the push.** Jumps are fine, best written with step functions ([Step functions](05-step-functions-and-delays.md)); a hammer blow needs [Impulses](06-impulses-and-the-delta-function.md).
 
 ---
 
@@ -107,7 +90,7 @@ $$s^2 Y + 2sY + 5Y = \frac{10}{s}$$
 
 ### Step 2: solve the algebra
 
-Collect: (s^2 + 2s + 5) Y = 10/s. The bracket is the characteristic polynomial, the same one whose roots −1 ± 2i gave the free oscillation ([complex-roots-and-damped-oscillation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md)). Divide:
+Collect: (s^2 + 2s + 5) Y = 10/s. The bracket is the characteristic polynomial, the same one whose roots −1 ± 2i gave the free oscillation ([Complex roots](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md)). Divide:
 
 $$Y(s) = \frac{10}{s\,(s^2 + 2s + 5)}$$
 
@@ -115,7 +98,7 @@ Each factor below the line becomes one piece of the motion: s, from the push, gi
 
 ### Step 3: split into table entries
 
-The quadratic has no real roots, so its piece takes a first-degree numerator ([inverting-by-partial-fractions](03-inverting-by-partial-fractions.md)):
+The quadratic has no real roots, so its piece takes a first-degree numerator ([Inverting](03-inverting-by-partial-fractions.md)):
 
 $$\frac{10}{s\,(s^2 + 2s + 5)} = \frac{A}{s} + \frac{Cs + D}{s^2 + 2s + 5}$$
 
@@ -136,9 +119,9 @@ At t = 0, y = 2 − 2 = 0. Its velocity y' = 5e^(−t) sin 2t is 0 at t = 0: it 
 <details>
 <summary>Detailed proof: the round trip's answer is the only solution</summary>
 
-The rate law is linear with a continuous push, so exactly one solution y starts from rest ([lipschitz-and-the-picard-lindelof-theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md)).
+The rate law is linear with a continuous push, so exactly one solution y starts from rest ([The Picard-Lindelof theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md)).
 
-It has a transform: travel and velocity stay below a multiple of e^(Lt) for some constant L ([gronwall-and-continuous-dependence](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/04-gronwall-and-continuous-dependence.md)). The rate law then bounds y'' the same way, so the derivative rules of [transforms-of-derivatives](02-transforms-of-derivatives.md) apply for every s > L.
+It has a transform: travel and velocity stay below a multiple of e^(Lt) for some constant L ([Gronwall's inequality](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/04-gronwall-and-continuous-dependence.md)). The rate law then bounds y'' the same way, so the derivative rules of [Transforming a derivative](02-transforms-of-derivatives.md) apply for every s > L.
 
 So for s > L its transform satisfies Step 1's equation and equals 10/(s(s^2 + 2s + 5)). By Step 4, y* = 2 − e^(−t)(2 cos 2t + sin 2t) has that transform too. Two continuous signals whose transforms agree for all large s are equal for every t ≥ 0 (Lerch's theorem). Hence y = y*.
 
@@ -146,7 +129,7 @@ Substitution confirms it directly: y*' = 5e^(−t) sin 2t and y*'' = 5e^(−t)(2
 
 </details>
 
-The other route is undetermined coefficients ([undetermined-coefficients](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/05-undetermined-coefficients.md)). Guess a constant for the push's response: 5K = 10, so K = 2. Add the free oscillation e^(−t)(c1 cos 2t + c2 sin 2t), with constants c1 and c2. Starting at 0 forces c1 = −2; starting still forces −c1 + 2c2 = 0, so c2 = −1. Same motion, in three stages.
+The other route is undetermined coefficients ([Undetermined coefficients](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/05-undetermined-coefficients.md)). Guess a constant for the push's response: 5K = 10, so K = 2. Add the free oscillation e^(−t)(c1 cos 2t + c2 sin 2t), with constants c1 and c2. Starting at 0 forces c1 = −2; starting still forces −c1 + 2c2 = 0, so c2 = −1. Same motion, in three stages.
 
 ---
 
@@ -163,7 +146,7 @@ The other route is undetermined coefficients ([undetermined-coefficients](../03-
 
 The ram drives the mass 42 cm past its resting point before the damper wins: a 20.8% overshoot.
 
-An oscillating push goes the same way. With the swing's 10 cos t from [undetermined-coefficients](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/05-undetermined-coefficients.md), F = 10s/(s^2 + 1). Partial fractions give (2s + 1)/(s^2 + 1) + (−2s − 5)/(s^2 + 2s + 5), so y = 2 cos t + sin t − e^(−t)(2 cos 2t + 1.5 sin 2t). At t = 1 s this is 1.73 dm, the swing card's value, steady swing and dying start in one division.
+An oscillating push goes the same way. With the swing's 10 cos t from [Undetermined coefficients](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/05-undetermined-coefficients.md), F = 10s/(s^2 + 1). Partial fractions give (2s + 1)/(s^2 + 1) + (−2s − 5)/(s^2 + 2s + 5), so y = 2 cos t + sin t − e^(−t)(2 cos 2t + 1.5 sin 2t). At t = 1 s this is 1.73 dm, the swing card's value, steady swing and dying start in one division.
 
 ### What breaks if you drop a piece
 
@@ -177,7 +160,7 @@ An oscillating push goes the same way. With the swing's 10 cos t from [undetermi
 
 ## Code, from first principles, and it actually runs
 
-Three roads, on two pushes: the steady 10 and the swing's 10 cos t. Road one is the transform, its partial fractions solved by elimination. Road two is undetermined coefficients. Road three steps the motion with Runge-Kutta 4 (four slope samples per step, averaged; [runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md)); halving $h$ cuts its error about 16 times, the method's order 4. The peak comes from scanning road three's path.
+Three roads, on two pushes: the steady 10 and the swing's 10 cos t. Road one is the transform, its partial fractions solved by elimination. Road two is undetermined coefficients. Road three steps the motion with Runge-Kutta 4 (four slope samples per step, averaged; [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)); halving $h$ cuts its error about 16 times, the method's order 4. The peak comes from scanning road three's path.
 
 ### Python
 
@@ -389,15 +372,15 @@ The outputs match line for line.
 >
 > - **Losing the ½ on the sine.** 2/((s + 1)^2 + 4) inverts to one e^(−t) sin 2t; the table entry already carries the 2. Doubling it starts the mass at −2.0 m/s.
 > - **Completing the square with the wrong sign.** Writing (s − 1)^2 + 4 turns e^(−t) into e^(+t): 493.3 m at 5 s.
-> - **Forgetting non-zero starting values.** Released from 1 m, the right side gains (s + 2)·1, as [transforms-of-derivatives](02-transforms-of-derivatives.md) shows.
+> - **Forgetting non-zero starting values.** Released from 1 m, the right side gains (s + 2)·1, as [Transforming a derivative](02-transforms-of-derivatives.md) shows.
 
 ---
 
 ## Where you meet it in real life
 
 - **Suspension and machine testing.** A step load on a rig is this problem; its overshoot is a specification.
-- **Switched circuits.** Closing a switch on a battery drives a resistor, coil and capacitor in series by the same equation ([the-rlc-circuit-and-the-spring](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/08-the-rlc-circuit-and-the-spring.md)).
-- **Control engineering.** One over the characteristic polynomial, the transfer function, describes the machine apart from any push ([impulse-response-and-transfer-functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md)). Any push's response is then a convolution ([convolution-and-the-impulse-response](07-convolution-and-the-impulse-response.md)).
+- **Switched circuits.** Closing a switch on a battery drives a resistor, coil and capacitor in series by the same equation ([The RLC circuit](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/08-the-rlc-circuit-and-the-spring.md)).
+- **Control engineering.** One over the characteristic polynomial, the transfer function, describes the machine apart from any push ([Transfer functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md)). Any push's response is then a convolution ([Convolution](07-convolution-and-the-impulse-response.md)).
 
 > **Say it back**
 > Transforming turns derivatives into powers of s and a steady push into 10/s, starting values included. Dividing by the characteristic polynomial gives the answer's transform. Partial fractions and a completed square split it into table entries. Read backwards, they give y = 2 − e^(−t)(2 cos 2t + sin 2t): up to 2.42 m at 1.571 s, settling at 2 m. Two other roads agree.
@@ -406,12 +389,12 @@ The outputs match line for line.
 
 ## What this builds on
 
-- [inverting-by-partial-fractions](03-inverting-by-partial-fractions.md): splitting a ratio of polynomials into table entries, including the completed square.
-- [undetermined-coefficients](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/05-undetermined-coefficients.md): the road the transform is checked against.
+- [Inverting](03-inverting-by-partial-fractions.md): splitting a ratio of polynomials into table entries, including the completed square.
+- [Undetermined coefficients](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/05-undetermined-coefficients.md): the road the transform is checked against.
 
 ## Where this goes next
 
-- [step-functions-and-delays](05-step-functions-and-delays.md): a push that switches on late, or off, by the same round trip.
+- [Step functions](05-step-functions-and-delays.md): a push that switches on late, or off, by the same round trip.
 
 ---
 

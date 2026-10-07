@@ -1,23 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Special Functions and the Zeta Function
-topic: Sizing the gamma integral
-item: Stirling's formula
-kind: approximation
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/02-gamma-function|gamma-function]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/05-taylor-series|taylor-series]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/09-stirlings-approximation|stirlings-approximation]]"
-next: []
-tags: [mathematics, complex analysis, stirlings-formula]
----
-
 # Stirling's formula: n! is about sqrt(2 pi n) times (n/e) to the n, from the peak of the gamma integral
 
-Complex analysis → Special Functions and the Zeta Function → Sizing the gamma integral → Stirling's formula
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Special Functions and the Zeta Function](../../../SYLLABUS.md#w07-s09) → Stirling's formula
 
 ---
 
@@ -25,7 +8,7 @@ Complex analysis → Special Functions and the Zeta Function → Sizing the gamm
 
 A deck of 52 cards can be shuffled into 52! orders: 52 × 51 × … × 2 × 1, which is 8.065818 × 10^67. The formula on this card gives 8.052902 × 10^67 from three logarithms, 0.1601 percent low. For 10 cards the truth is 3,628,800 and the formula gives 3,598,696, 0.8296 percent low.
 
-The calculus wing proves this for whole numbers ([stirlings-approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md)). This card writes n! as an area, the gamma integral: one tall bump. Near its top the bump looks like a bell curve, whose area is known exactly. Fitting a bell at the peak of an integrand is **Laplace's method**, and it needs no whole numbers: it sizes 4.5!, 0.5! and the factorial of 10i.
+The calculus wing proves this for whole numbers ([Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md)). This card writes n! as an area, the gamma integral: one tall bump. Near its top the bump looks like a bell curve, whose area is known exactly. Fitting a bell at the peak of an integrand is **Laplace's method**, and it needs no whole numbers: it sizes 4.5!, 0.5! and the factorial of 10i.
 
 **The factorial of s, Γ(s + 1), is about √(2πs) times (s/e) to the s: the gamma integral is one bump at t = s, and a bell of height (s/e) to the s and width √s has that area, short by a factor near 1 + 1/(12s).**
 
@@ -49,7 +32,7 @@ Orange: t^10 e^(−t), area exactly 3,628,800. Green: the bell with the same pea
 
 ## The formula
 
-Reminder: the gamma function extends the factorial, Γ(s + 1) = s! ([gamma-function](02-gamma-function.md)):
+Reminder: the gamma function extends the factorial, Γ(s + 1) = s! ([The gamma function](02-gamma-function.md)):
 
 $$\Gamma(s+1) = \int_0^\infty t^{s}\,e^{-t}\,dt, \qquad \text{Re}\, s > -1.$$
 
@@ -89,7 +72,7 @@ $$\int e^{M g(u)}\,du \;\sim\; e^{M g(u_0)}\sqrt{\frac{2\pi}{M\,|g''(u_0)|}}$$
 
 ### Step 0: the integrand is one bump, and near its top a bump is a bell
 
-The integrand t^s e^(−t) is a rising power times a falling exponential: zero at t = 0, one peak, then decay. Near the peak its logarithm is a downward parabola, since a smooth function looks like its Taylor polynomial close up ([taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). The exponential of a downward parabola is a bell, whose area is known exactly.
+The integrand t^s e^(−t) is a rising power times a falling exponential: zero at t = 0, one peak, then decay. Near the peak its logarithm is a downward parabola, since a smooth function looks like its Taylor polynomial close up ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). The exponential of a downward parabola is a bell, whose area is known exactly.
 
 ### Step 1: find the peak
 
@@ -398,9 +381,9 @@ The two outputs match line for line.
 
 - **Shuffling.** The orders of a deck, 8.065818 × 10^67, sized without multiplying 52 numbers.
 - **Numerical libraries.** Log-gamma routines step the argument up by Γ(s + 1) = s Γ(s), then apply Stirling's series with a few correction terms after 1/(12s).
-- **The beta function.** Γ(a)Γ(b)/Γ(a + b) is sized for large a and b by three Stirlings ([beta-function](03-beta-function.md)).
-- **The zeta function.** Its functional equation carries a gamma factor, which Stirling shows shrinking exponentially up a vertical line ([continuing-zeta-and-the-functional-equation](08-continuing-zeta-and-the-functional-equation.md)).
-- **Counting zeta's zeros.** The count up to a height uses Γ's angle on a vertical line, read off Stirling ([zeros-of-zeta-and-the-primes](09-zeros-of-zeta-and-the-primes.md)).
+- **The beta function.** Γ(a)Γ(b)/Γ(a + b) is sized for large a and b by three Stirlings ([The beta function](03-beta-function.md)).
+- **The zeta function.** Its functional equation carries a gamma factor, which Stirling shows shrinking exponentially up a vertical line ([Continuing zeta](08-continuing-zeta-and-the-functional-equation.md)).
+- **Counting zeta's zeros.** The count up to a height uses Γ's angle on a vertical line, read off Stirling ([Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md)).
 
 > **Say it back**
 > The factorial of s is the area under t^s e^(−t), one bump peaked at t = s with height (s/e)^s. Near the peak its log is a downward parabola, so the bump is nearly a bell of width √s, with area √(2πs) times the height. Scaling shows the fit improving as s grows: Laplace's method. Truth over formula is 1 + 1/(12s) for whole, fractional and complex s, away from the negative axis.
@@ -409,16 +392,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [gamma-function](02-gamma-function.md): the integral for Γ, its recurrence, Γ(1/2) = √π, and |Γ(1 + iy)|^2.
-- [taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the parabola at the peak, and the terms behind 1/(12s).
-- [stirlings-approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md): for whole n, n! ~ √(2πn)(n/e)^n, with the truth between 1 and e^(1/(12n)) times the estimate, proved by real integrals.
+- [The gamma function](02-gamma-function.md): the integral for Γ, its recurrence, Γ(1/2) = √π, and |Γ(1 + iy)|^2.
+- [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the parabola at the peak, and the terms behind 1/(12s).
+- [Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md): for whole n, n! ~ √(2πn)(n/e)^n, with the truth between 1 and e^(1/(12n)) times the estimate, proved by real integrals.
 
 ## Where this goes next
 
-- [beta-function](03-beta-function.md): gamma ratios, sized by this card.
-- [zeta-function-and-euler-product](05-zeta-function-and-euler-product.md): the shelf's other special function.
-- [continuing-zeta-and-the-functional-equation](08-continuing-zeta-and-the-functional-equation.md): the gamma factor sized here.
-- [zeros-of-zeta-and-the-primes](09-zeros-of-zeta-and-the-primes.md): Stirling's angle term in the zero count.
+- [The beta function](03-beta-function.md): gamma ratios, sized by this card.
+- [The zeta function](05-zeta-function-and-euler-product.md): the shelf's other special function.
+- [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md): the gamma factor sized here.
+- [Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md): Stirling's angle term in the zero count.
 
 The complex case is checked here, not proved; its proof, the method of steepest descent, comes in a later wing.
 

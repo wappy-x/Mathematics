@@ -1,31 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Tours - Euler and Hamilton
-topic: Cheapest round trips
-item: The travelling salesman
-kind: method
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/11-Tours - Euler and Hamilton/03-hamiltonian-cycles|hamiltonian-cycles]]"
-  - "[[Cards/04-Combinatorics and graphs/10-Trees and Cheapest Routes/04-minimum-spanning-trees|minimum-spanning-trees]]"
-next:
-  - "[[Cards/14-Applied and computational/01-Algorithms and Growth/03-polynomial-versus-exponential-time|polynomial-versus-exponential-time]]"
-  - "[[Cards/14-Applied and computational/02-Randomised and Approximate Algorithms/06-approximation-algorithms|approximation-algorithms]]"
-  - "[[Cards/14-Applied and computational/05-Operations Research/03-integer-programming-and-branch-and-bound|integer-programming-and-branch-and-bound]]"
-  - "[[Cards/15-Optimization/05-Integer and Combinatorial Optimisation/06-classic-integer-models-knapsack-assignment-and-covering|classic-integer-models-knapsack-assignment-and-covering]]"
-  - "[[Cards/15-Optimization/05-Integer and Combinatorial Optimisation/08-heuristics-and-approximation-guarantees|heuristics-and-approximation-guarantees]]"
-  - "[[Cards/24-Computability and complexity/03-Time Complexity/05-karps-problems-and-hardness-recipes|karps-problems-and-hardness-recipes]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - travelling-salesman-in-outline
----
-
 # The travelling salesman: the cheapest Hamiltonian cycle, brute force for a few cities, and why nobody has a fast method
 
-Combinatorics and graphs → Tours - Euler and Hamilton → Cheapest round trips → The travelling salesman
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Tours - Euler and Hamilton](../../../SYLLABUS.md#w04-s11) → The travelling salesman
 
 ---
 
@@ -73,7 +48,7 @@ E   28  26  14  44   0  42
 F   19  35  54  25  42   0
 ```
 
-A round calling at every town once and returning home is a **tour**: a Hamiltonian cycle ([hamiltonian-cycles](03-hamiltonian-cycles.md)) priced leg by leg. Write it as the order it calls in, $t$, with $t_1$ home and $t_k$ the k-th town called at.
+A round calling at every town once and returning home is a **tour**: a Hamiltonian cycle ([Hamiltonian cycles](03-hamiltonian-cycles.md)) priced leg by leg. Write it as the order it calls in, $t$, with $t_1$ home and $t_k$ the k-th town called at.
 
 $$\text{cost}(t) = d(t_1, t_2) + d(t_2, t_3) + \cdots + d(t_5, t_6) + d(t_6, t_1)$$
 
@@ -83,9 +58,9 @@ The smallest cost any tour can have is written $L$: 148 miles here. With $n$ tow
 
 $$\text{tours} = \frac{(n-1)!}{2}$$
 
-Here $n!$ is the factorial: $n$ times every whole number below it ([factorial](../01-Counting%20Principles/03-factorial.md)). **Read it aloud:** hold home still, order the other towns every way, then halve, since a round driven backwards is the same round.
+Here $n!$ is the factorial: $n$ times every whole number below it ([Factorials](../01-Counting%20Principles/03-factorial.md)). **Read it aloud:** hold home still, order the other towns every way, then halve, since a round driven backwards is the same round.
 
-One more quantity is needed below: the **cheapest connecting tree**, joining all six towns with five legs and no loop for the least miles ([minimum-spanning-trees](../10-Trees%20and%20Cheapest%20Routes/04-minimum-spanning-trees.md)). Write $T$ for it, 105 here.
+One more quantity is needed below: the **cheapest connecting tree**, joining all six towns with five legs and no loop for the least miles ([The cheapest skeleton](../10-Trees%20and%20Cheapest%20Routes/04-minimum-spanning-trees.md)). Write $T$ for it, 105 here.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -111,7 +86,7 @@ Each tour has a cost, the tours can be listed, and a finite list of numbers has 
 
 ### Step 1: sixty tours to check, and then a wall
 
-Six towns line up in 6! = 720 orders, most naming the same round. Fixing home first strips a factor of six: 720 over 6 is 120, the orders of the other five towns. Each round still appears twice, clockwise and anticlockwise, so halving gives 60 — the bracelet count, with towns for beads ([circular-arrangements](../02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md)).
+Six towns line up in 6! = 720 orders, most naming the same round. Fixing home first strips a factor of six: 720 over 6 is 120, the orders of the other five towns. Each round still appears twice, clockwise and anticlockwise, so halving gives 60 — the bracelet count, with towns for beads ([Round tables and bracelets](../02-Repeats%2C%20Groups%20and%20Double%20Counting/04-circular-arrangements.md)).
 
 Each town added multiplies the count by the number of towns already there: a seventh town takes 60 rounds to 360, ten towns to 181,440, fifteen to 43,589,145,600, twenty to 60,822,550,204,416,000. That is no large constant; it is a wall.
 
@@ -131,15 +106,15 @@ The floor: delete one leg from any tour and five legs remain, still connected an
 
 The ceiling: walk the cheapest tree from A, each leg once out and once back. That is 210 miles and calls at every town, but towns repeat, so it is no tour. Repair it in one pass: wherever the walk would return to a town already called on, drive straight to the next town not yet called on. Each skip trades a chain of legs for one direct road, no dearer since no detour beats a direct road. The repaired round calls once at each town for at most 210 miles, so $L$ is at most 210 too.
 
-Sharper floors than the tree exist, and inside a search that prunes they solve real instances (integer-programming-and-branch-and-bound).
+Sharper floors than the tree exist, and inside a search that prunes they solve real instances (Integer programs).
 
 ### Step 4: why nobody has a fast method
 
 Held and Karp published a better exact method in 1962: for every set of towns already called on and every town in it, keep only the cheapest way to leave A, call at that set and stop there, each record built from the records one town shorter. Six towns need 80 records against 60 tours, no saving; twenty need 4,980,736. That count doubles with each town added, so it too runs out.
 
-Karp's 1972 list of problems with no known fast method holds the bare question of whether a Hamiltonian cycle exists at all. Price a map's roads at one mile each and its missing roads at two: a round costing one mile per town exists exactly when a Hamiltonian cycle does. So asking whether a round comes in under a given number of miles is at least as hard as anything on that list — a family now thousands strong, each problem rewritable as any other in steps growing like a power of the input size (karps-problems-and-hardness-recipes). One method quick on every chart would make all of them quick; none is known, and whether one can exist is the open P versus NP question. Charts of tens of thousands of towns are still solved exactly: the guarantee is what is missing, not the answers.
+Karp's 1972 list of problems with no known fast method holds the bare question of whether a Hamiltonian cycle exists at all. Price a map's roads at one mile each and its missing roads at two: a round costing one mile per town exists exactly when a Hamiltonian cycle does. So asking whether a round comes in under a given number of miles is at least as hard as anything on that list — a family now thousands strong, each problem rewritable as any other in steps growing like a power of the input size (Karp's list). One method quick on every chart would make all of them quick; none is known, and whether one can exist is the open P versus NP question. Charts of tens of thousands of towns are still solved exactly: the guarantee is what is missing, not the answers.
 
-Degrees settle whether a route using every road once exists ([euler-circuits](01-euler-circuits.md)), and matching settles the cheapest road-covering route ([chinese-postman](02-chinese-postman.md)); no such test is known once towns replace roads.
+Degrees settle whether a route using every road once exists ([Euler circuits](01-euler-circuits.md)), and matching settles the cheapest road-covering route ([The Chinese postman](02-chinese-postman.md)); no such test is known once towns replace roads.
 
 ---
 
@@ -410,7 +385,7 @@ The two outputs match line for line.
 
 - **Delivery rounds.** One van, a list of drops, back to the depot, with time windows on top.
 - **Drilling circuit boards.** Thousands of holes, and the drill head's route is a tour: a percent off it is a percent off the day.
-- **Genome assembly.** Overlapping DNA fragments stitched into the shortest string holding them all pose a shortest-tour question, next door to [de-bruijn-sequences](05-de-bruijn-sequences.md).
+- **Genome assembly.** Overlapping DNA fragments stitched into the shortest string holding them all pose a shortest-tour question, next door to [De Bruijn sequences](05-de-bruijn-sequences.md).
 
 > **Say it back**
 > A tour calls at every town once and comes home, and its cost is the sum of its legs. Six towns hold 60 tours: half of the 5! = 120 orders of the towns after home, since a loop reversed is the same loop. All 60 can be costed — 148 miles at best, 267 at worst — while greed returns 160, never choosing the leg home. The cheapest tree floors the answer at 105 and, doubled, caps it at 210; each town added multiplies the tours, and no method stays quick on every chart.
@@ -419,19 +394,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [hamiltonian-cycles](03-hamiltonian-cycles.md): the object being priced, and why finding one is already hard.
-- [minimum-spanning-trees](../10-Trees%20and%20Cheapest%20Routes/04-minimum-spanning-trees.md): the cheapest connecting tree, which gives both ends of the bracket.
+- [Hamiltonian cycles](03-hamiltonian-cycles.md): the object being priced, and why finding one is already hard.
+- [The cheapest skeleton](../10-Trees%20and%20Cheapest%20Routes/04-minimum-spanning-trees.md): the cheapest connecting tree, which gives both ends of the bracket.
 
 ## Where this goes next
 
-- polynomial-versus-exponential-time: what separates 4,980,736 records from 60,822,550,204,416,000 tours, and both from "fast".
-- approximation-algorithms: heuristics with a guaranteed ratio.
-- integer-programming-and-branch-and-bound: floors and pruning made into an exact method.
-- classic-integer-models-knapsack-assignment-and-covering: the tour as whole-number variables and constraints.
-- heuristics-and-approximation-guarantees: how close a quick method can be promised to get.
-- karps-problems-and-hardness-recipes: the family this problem joins, and how membership is proved.
+- Polynomial or exponential: what separates 4,980,736 records from 60,822,550,204,416,000 tours, and both from "fast".
+- Approximation: heuristics with a guaranteed ratio.
+- Integer programs: floors and pruning made into an exact method.
+- Four classic models: the tour as whole-number variables and constraints.
+- Heuristics with a promise: how close a quick method can be promised to get.
+- Karp's list: the family this problem joins, and how membership is proved.
 
-This card costs all 60 tours and shrugs at the twenty-town count; what "quick" means precisely is polynomial-versus-exponential-time.
+This card costs all 60 tours and shrugs at the twenty-town count; what "quick" means precisely is Polynomial or exponential.
 
 ---
 

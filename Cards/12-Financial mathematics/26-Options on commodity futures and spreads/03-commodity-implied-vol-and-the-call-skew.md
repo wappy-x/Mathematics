@@ -1,26 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Options on commodity futures and spreads
-topic: Reading vol off an oil option
-item: Implied vol on a futures option and the commodity smile
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/02-futures-option-greeks|futures-option-greeks]]"
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/06-mean-reverting-spot-and-the-futures-curve|mean-reverting-spot-and-the-futures-curve]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/01-implied-volatility|implied-volatility]]"
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/01-volatility-smile-and-skew|volatility-smile-and-skew]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/06-newtons-method|newtons-method]]"
-next:
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/05-asian-implied-volatility|asian-implied-volatility]]"
-tags: [mathematics, financial mathematics, commodity-implied-vol-and-the-call-skew]
----
-
 # Implied vol on a futures option and the commodity smile: an upward skew for oil and gas, and vol that fades with maturity
 
-Financial mathematics → Options on commodity futures and spreads → Reading vol off an oil option → Implied vol on a futures option and the commodity smile
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Options on commodity futures and spreads](../../../SYLLABUS.md#w12-s26) → Implied vol on a futures option and the commodity smile
 
 ---
 
@@ -48,13 +28,13 @@ xychart-beta
     line [30.00, 30.00, 30.00, 30.00, 30.00, 30.00, 30.00, 30.00, 30.00]
 ```
 
-Rising curve: the implied volatility read off each strike's quote, from the 10-delta put on the left to the 10-delta call on the right. Flat line: the 30 percent at the money. The curve climbs to the right. That is the call skew. An equity strip, as on [volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md), leans the other way.
+Rising curve: the implied volatility read off each strike's quote, from the 10-delta put on the left to the 10-delta call on the right. Flat line: the 30 percent at the money. The curve climbs to the right. That is the call skew. An equity strip, as on [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md), leans the other way.
 
 ---
 
 ## The formula
 
-The option is priced by Black's 1976 formula for options on futures, Black-76, taught on [options-on-commodity-futures](01-options-on-commodity-futures.md):
+The option is priced by Black's 1976 formula for options on futures, Black-76, taught on [Options on a futures price](01-options-on-commodity-futures.md):
 
 $$C(\sigma) = D\,\big[F\,N(d_1) - K\,N(d_2)\big], \qquad P(\sigma) = D\,\big[K\,N(-d_2) - F\,N(-d_1)\big], \qquad D = e^{-rT}.$$
 
@@ -113,7 +93,7 @@ In words: $d_2$ counts how many standard swings the strike sits below the future
 
 ### Step 0: a price that climbs without gaps meets each level once
 
-As the volatility dial turns from zero to endless, the option's price rises steadily, with no jumps and no dips. It starts at a floor and approaches a ceiling without touching either. Every quote strictly between is met once. That is the whole reason a price can be read as a volatility, and it is the argument of [implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md), with the futures price in place of the share.
+As the volatility dial turns from zero to endless, the option's price rises steadily, with no jumps and no dips. It starts at a floor and approaches a ceiling without touching either. Every quote strictly between is met once. That is the whole reason a price can be read as a volatility, and it is the argument of [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md), with the futures price in place of the share.
 
 ### Step 1: the floor and the ceiling for a futures option
 
@@ -125,7 +105,7 @@ A quote of 83.00 lies above the ceiling. No volatility produces it. Sell the cal
 
 ### Step 2: the price always climbs, so the answer is unique
 
-Vega is $\nu = D\,F\,\varphi(d_1)\sqrt T$. A discount factor, a price, a bell-curve height and a square root are all positive. So vega is positive at every volatility, and two different volatilities never give the same price. At 30 percent it is 23.254860 dollars per unit of $\sigma$, as [futures-option-greeks](02-futures-option-greeks.md) computes.
+Vega is $\nu = D\,F\,\varphi(d_1)\sqrt T$. A discount factor, a price, a bell-curve height and a square root are all positive. So vega is positive at every volatility, and two different volatilities never give the same price. At 30 percent it is 23.254860 dollars per unit of $\sigma$, as [Greeks of a futures option](02-futures-option-greeks.md) computes.
 
 <details>
 <summary>Detailed proof: vega is positive, the limits are the floor and ceiling, the root is unique</summary>
@@ -146,7 +126,7 @@ Write $w = \sigma\sqrt T > 0$ and $m = \ln(F/K)$. Then $d_1 = m/w + w/2$, $d_2 =
 
 Halving always works inside the range. Start with volatilities from almost zero to 1,000 percent. Price the midpoint, keep the half whose prices still straddle the quote, repeat. Sixty halvings land on 0.300000.
 
-Newton's method is faster. It steps along the slope: new guess = old guess minus (price minus quote) divided by vega. That is [newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md) with vega as the derivative. From a start of 0.5 it reaches 0.300000 in 4 steps. It can fail near the floor or ceiling, where vega is tiny and the step is huge; halving cannot.
+Newton's method is faster. It steps along the slope: new guess = old guess minus (price minus quote) divided by vega. That is [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md) with vega as the derivative. From a start of 0.5 it reaches 0.300000 in 4 steps. It can fail near the floor or ceiling, where vega is tiny and the step is huge; halving cannot.
 
 ### Step 4: read every strike, and the strip leans up
 
@@ -159,14 +139,14 @@ The risk reversal is $34 - 28 = +6.0000$ vol points (percentage points of volati
 Why do calls carry the premium? Three reasons, each about the oil market rather than the formula.
 
 - **Supply shocks move the price up.** A pipeline outage, a hurricane or an export ban cuts supply at once, and demand cannot adjust fast. Prices jump up; they rarely jump down by the same amount.
-- **Scarcity raises volatility.** When stocks in storage run low, there is no buffer, so each piece of news moves the price more. High prices and high volatility arrive together. In equities the pairing runs the other way: falling prices come with rising volatility, and the skew leans to puts. The inventory side of this is on [mean-reverting-spot-and-the-futures-curve](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md).
+- **Scarcity raises volatility.** When stocks in storage run low, there is no buffer, so each piece of news moves the price more. High prices and high volatility arrive together. In equities the pairing runs the other way: falling prices come with rising volatility, and the skew leans to puts. The inventory side of this is on [A spot price that reverts](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md).
 - **Consumers buy calls.** Airlines and refiners protect themselves against a price spike by buying calls. Producers, who fear a fall, often hedge with futures or sell calls to pay for puts. Net demand sits on the upside.
 
 Natural gas and power show the same lean, often more steeply, because they are harder to store.
 
 ### Step 5: why far contracts move less
 
-On a mean-reverting spot, a shock to the price today is expected to fade. The model, from [mean-reverting-spot-and-the-futures-curve](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md), says the log spot is pulled toward a normal level at speed $\kappa$ a year: a fraction $e^{-\kappa u}$ of any shock is still there $u$ years later. A futures price is the expected spot at delivery. So a shock at time $t$ moves the contract delivering at $T$ by only $e^{-\kappa(T - t)}$ of what it does to the spot. Its volatility at time $t$ is $\sigma_S\,e^{-\kappa(T - t)}$.
+On a mean-reverting spot, a shock to the price today is expected to fade. The model, from [A spot price that reverts](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md), says the log spot is pulled toward a normal level at speed $\kappa$ a year: a fraction $e^{-\kappa u}$ of any shock is still there $u$ years later. A futures price is the expected spot at delivery. So a shock at time $t$ moves the contract delivering at $T$ by only $e^{-\kappa(T - t)}$ of what it does to the spot. Its volatility at time $t$ is $\sigma_S\,e^{-\kappa(T - t)}$.
 
 The option's implied variance is the average of that squared volatility over the option's life:
 
@@ -650,8 +630,8 @@ The two outputs agree line for line, including the simulation: both use the same
 
 - **Oil options screens.** Brent and WTI options on futures are quoted in volatility across strikes and contract months. When supply is the worry the call wing trades above the put wing; in a demand collapse crude's skew can tip toward puts. The front months carry the highest vols.
 - **Hedging programs.** An airline buying calls to cap its fuel bill pays the call skew. A producer buying puts pays less for its protection, and often sells calls to fund it, a collar that sells the skew back.
-- **Spread options.** The two legs of a crack spread each carry their own vol, read off their own strips; the next step is [margrabe-and-kirk-spread-options](04-margrabe-and-kirk-spread-options.md), and the correlation between legs is read out of a price the same way on [implied-correlation-from-a-spread-option](06-implied-correlation-from-a-spread-option.md).
-- **Power and gas.** Electricity cannot be stored, so its spikes are sharper and its front-month vols much higher: [electricity-and-the-spark-spread](07-electricity-and-the-spark-spread.md).
+- **Spread options.** The two legs of a crack spread each carry their own vol, read off their own strips; the next step is [Spread options](04-margrabe-and-kirk-spread-options.md), and the correlation between legs is read out of a price the same way on [Correlation from a spread option](06-implied-correlation-from-a-spread-option.md).
+- **Power and gas.** Electricity cannot be stored, so its spikes are sharper and its front-month vols much higher: [Power that cannot be stored](07-electricity-and-the-spark-spread.md).
 - **Risk systems.** A bank's commodity book stores a vol surface indexed by contract month and delta. The Samuelson shape is the first thing checked when a long-dated vol looks wrong.
 
 > **Say it back**
@@ -661,16 +641,16 @@ The two outputs agree line for line, including the simulation: both use the same
 
 ## What this builds on
 
-- [futures-option-greeks](02-futures-option-greeks.md): vega for a futures option, the slope that makes the answer unique and drives Newton.
-- [mean-reverting-spot-and-the-futures-curve](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md): the pull-back model whose shocks fade at speed $\kappa$.
-- [implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the inverse for a share option, with the same floor-ceiling proof.
-- [volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): reading one volatility per strike, and why the curve is not flat.
-- [newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the fast root finder used as the second road.
+- [Greeks of a futures option](02-futures-option-greeks.md): vega for a futures option, the slope that makes the answer unique and drives Newton.
+- [A spot price that reverts](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/06-mean-reverting-spot-and-the-futures-curve.md): the pull-back model whose shocks fade at speed $\kappa$.
+- [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the inverse for a share option, with the same floor-ceiling proof.
+- [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): reading one volatility per strike, and why the curve is not flat.
+- [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the fast root finder used as the second road.
 
 ## Where this goes next
 
-- [asian-implied-volatility](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/05-asian-implied-volatility.md): the same inverse for options on an average price, where the answer depends on which model turns price into vol.
-- [margrabe-and-kirk-spread-options](04-margrabe-and-kirk-spread-options.md): two futures, two vols from two strips, one option on their difference.
+- [Implied vol from an Asian quote](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/05-asian-implied-volatility.md): the same inverse for options on an average price, where the answer depends on which model turns price into vol.
+- [Spread options](04-margrabe-and-kirk-spread-options.md): two futures, two vols from two strips, one option on their difference.
 
 This card reads one volatility per strike and per month; what an option on a month's average price implies, when the vols of many contract months blend into one, is the question the Asian card answers.
 

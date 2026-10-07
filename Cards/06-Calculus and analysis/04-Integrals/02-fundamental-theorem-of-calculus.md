@@ -1,35 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Integrals
-topic: Totals from rates
-item: Fundamental theorem of calculus
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/04-Integrals/01-riemann-integral|riemann-integral]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/02-mean-value-theorem|mean-value-theorem]]"
-next:
-  - "[[Cards/06-Calculus and analysis/04-Integrals/03-substitution|substitution]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/04-integration-by-parts|integration-by-parts]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/07-improper-integrals|improper-integrals]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/09-average-value-mass-and-work|average-value-mass-and-work]]"
-  - "[[Cards/06-Calculus and analysis/05-Curves and Solids/03-volumes-by-slices-and-shells|volumes-by-slices-and-shells]]"
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/02-antiderivatives-and-path-independence|antiderivatives-and-path-independence]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/03-separable-equations|separable-equations]]"
-  - "[[Cards/08-Differential equations and dynamics/02-Existence, Uniqueness and Sensitivity/01-picard-iteration|picard-iteration]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/01-densities-and-cdfs|densities-and-cdfs]]"
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem|absolutely-continuous-functions-and-the-fundamental-theorem]]"
-tags:
-  - mathematics
-  - calculus and analysis
-  - fundamental-theorem-of-calculus
----
-
 # Fundamental theorem of calculus: accumulation and rate are inverse operations
 
-Calculus and analysis → Integrals → Totals from rates → Fundamental theorem of calculus
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Integrals](../../../SYLLABUS.md#w06-s04) → Fundamental theorem of calculus
 
 ---
 
@@ -37,7 +8,7 @@ Calculus and analysis → Integrals → Totals from rates → Fundamental theore
 
 An empty tank fills from a tap. The water starts at 3 litres a minute and the flow rises by 2 litres a minute every minute: 11 at minute 4, 23 at minute 10. How much water is in after 10 minutes?
 
-Rectangles answer it ([riemann-integral](01-riemann-integral.md)). Ten strips put it between 120 and 140 litres; a thousand, between 129.9 and 130.1. The sums close in on 130 without reaching it.
+Rectangles answer it ([The integral](01-riemann-integral.md)). Ten strips put it between 120 and 140 litres; a thousand, between 129.9 and 130.1. The sums close in on 130 without reaching it.
 
 A one-line route exists. The formula 3t + t^2, with t in minutes, grows at 3 + 2t litres a minute: the tap's own rate. Read it at minute 10 and minute 0 and subtract: 130 − 0 = 130 litres, exactly.
 
@@ -86,7 +57,7 @@ Units: the running total is in litres, so its rate is litres per minute, the sam
 ### When it holds
 
 - **The rate is continuous.** A valve snapping open at minute 5, from 0 to 4 litres a minute, leaves a total with slope 0 just before and 4 just after: a corner, no derivative. (The second half needs only that the rate has an integral.)
-- **The rate stays finite on a closed interval.** 1/t^2 on −1 to 1 is never negative, yet the formula gives −2 while the sums climb past 4,900: [improper-integrals](07-improper-integrals.md).
+- **The rate stays finite on a closed interval.** 1/t^2 on −1 to 1 is never negative, yet the formula gives −2 while the sums climb past 4,900: [Improper integrals](07-improper-integrals.md).
 - **G has rate f at every inside point, with no break.** −1/t has rate 1/t^2 everywhere except 0; that gap produced the −2.
 - **The total is signed.** A draining tank's water counts negative; swapping a and b flips the sign.
 
@@ -110,7 +81,7 @@ For any continuous rate, the slice's lowest and highest rates both head for f(x)
 
 Cut the ten minutes at each whole minute. G's change over the run is the sum of its ten one-minute changes; every middle value appears once with a plus and once with a minus, and cancels. A sum that collapses like this is **telescoping**.
 
-The [mean-value-theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md) says each one-minute change equals G's rate at some inside point, times one minute. G's rate is f, so each change is one rectangle. For the tank that point is the half minute: over minute k, G changes by 2k + 2, and f(k − 0.5) = 2k + 2. The ten changes, 4, 6, up to 22, add to 130.
+The [Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md) says each one-minute change equals G's rate at some inside point, times one minute. G's rate is f, so each change is one rectangle. For the tank that point is the half minute: over minute k, G changes by 2k + 2, and f(k − 0.5) = 2k + 2. The ten changes, 4, 6, up to 22, add to 130.
 
 So $G(b) - G(a)$ is a rectangle sum for every cut of the interval. It therefore sits between the lower and upper sums for every cut, and the integral is the only number that does.
 
@@ -133,7 +104,7 @@ Step 1 builds an antiderivative for every continuous rate, the running total A, 
 
 A second case: sin has antiderivative −cos, so one arch of sin, from 0 to pi, holds −cos(pi) + cos(0) = 2. A thousand midpoint strips give 2.000001.
 
-When no antiderivative can be written down, the sums remain the road: [numerical-integration](08-numerical-integration.md).
+When no antiderivative can be written down, the sums remain the road: [Numerical integration](08-numerical-integration.md).
 
 ---
 
@@ -368,8 +339,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Meters.** A water or electricity meter adds up a flow; the flow on its display is the reading's rate. Odometer and speedometer are the same pair.
-- **Probability.** A density is the rate of the chance of falling below a value: [densities-and-cdfs](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md).
-- **Physics.** Work and mass are integrals evaluated by antiderivatives: [average-value-mass-and-work](09-average-value-mass-and-work.md).
+- **Probability.** A density is the rate of the chance of falling below a value: [Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md).
+- **Physics.** Work and mass are integrals evaluated by antiderivatives: [Averages, mass and work](09-average-value-mass-and-work.md).
 
 > **Say it back**
 > The running total of a continuous rate grows at that rate, because a short slice's average is trapped between rates that close on the rate at the point. Any function with that rate, read at the ends and subtracted, gives the total, because its changes telescope into a rectangle sum for every cut. The tank's flow of 3 + 2t has antiderivative 3t + t^2, so ten minutes bring 130 litres. The answer is a change, not a level. A jump in the rate or a break in the antiderivative spoils it.
@@ -378,23 +349,23 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [riemann-integral](01-riemann-integral.md): the integral as the one number between every lower and upper sum.
-- [mean-value-theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md): a change equals some inside rate times the length.
+- [The integral](01-riemann-integral.md): the integral as the one number between every lower and upper sum.
+- [Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md): a change equals some inside rate times the length.
 
 ## Where this goes next
 
-- [substitution](03-substitution.md): the chain rule run backwards.
-- [integration-by-parts](04-integration-by-parts.md): the product rule run backwards.
-- [improper-integrals](07-improper-integrals.md): endless intervals and rates that blow up.
-- [average-value-mass-and-work](09-average-value-mass-and-work.md): totals in physics.
-- [volumes-by-slices-and-shells](../05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md): volume as accumulated slices.
-- [antiderivatives-and-path-independence](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md): the second half along complex curves.
-- [separable-equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/03-separable-equations.md): rate laws solved by integrating.
-- [picard-iteration](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/01-picard-iteration.md): a rate law as a running total, repeated.
-- [densities-and-cdfs](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md): a density and its running total.
-- [absolutely-continuous-functions-and-the-fundamental-theorem](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem.md): the theorem for far rougher rates.
+- [Substitution](03-substitution.md): the chain rule run backwards.
+- [Integration by parts](04-integration-by-parts.md): the product rule run backwards.
+- [Improper integrals](07-improper-integrals.md): endless intervals and rates that blow up.
+- [Averages, mass and work](09-average-value-mass-and-work.md): totals in physics.
+- [Volumes](../05-Curves%20and%20Solids/03-volumes-by-slices-and-shells.md): volume as accumulated slices.
+- [Antiderivatives](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md): the second half along complex curves.
+- [Separable equations](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/03-separable-equations.md): rate laws solved by integrating.
+- [Picard iteration](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/01-picard-iteration.md): a rate law as a running total, repeated.
+- [Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md): a density and its running total.
+- [Absolutely continuous functions and the fundamental theorem](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem.md): the theorem for far rougher rates.
 
-The antiderivative here was guessed; finding one when guessing fails, by running the chain rule backwards, is [substitution](03-substitution.md).
+The antiderivative here was guessed; finding one when guessing fails, by running the chain rule backwards, is [Substitution](03-substitution.md).
 
 ---
 

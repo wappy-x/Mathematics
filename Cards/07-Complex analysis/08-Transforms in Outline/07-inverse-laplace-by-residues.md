@@ -1,24 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Transforms in Outline
-topic: Poles to signals
-item: Inverting a Laplace transform
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/06-strips-of-convergence-and-shifting-the-line|strips-of-convergence-and-shifting-the-line]]"
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/05-the-residue-theorem|the-residue-theorem]]"
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/03-rational-functions-and-partial-fractions|rational-functions-and-partial-fractions]]"
-next:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/02-impulse-response-and-transfer-functions|impulse-response-and-transfer-functions]]"
-tags: [mathematics, complex analysis, inverse-laplace-by-residues]
----
-
 # Inverting a Laplace transform: integrate up a vertical line, close it to the left, and every pole hands back an exponential
 
-Complex analysis → Transforms in Outline → Poles to signals → Inverting a Laplace transform
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Transforms in Outline](../../../SYLLABUS.md#w07-s08) → Inverting a Laplace transform
 
 ---
 
@@ -26,9 +8,9 @@ Complex analysis → Transforms in Outline → Poles to signals → Inverting a 
 
 A capacitor charges through a resistor from a 1-volt supply, starting empty at time 0; resistance times capacitance is half a second. Its voltage t seconds in is v(t) = 1 − e^(−2t): 0.6321 volts after half a second, 0.8647 after one, never quite 1.
 
-The Laplace transform ([laplace-transform](05-laplace-transform.md)) turns that curve into a function of a complex number s: V(s) = 2/(s(s + 2)). Circuit laws become algebra there, so engineers work with V(s), then need the curve back. This card is that return trip.
+The Laplace transform ([The Laplace transform](05-laplace-transform.md)) turns that curve into a function of a complex number s: V(s) = 2/(s(s + 2)). Circuit laws become algebra there, so engineers work with V(s), then need the curve back. This card is that return trip.
 
-V(s) blows up at s = 0 and s = −2. Think of each as a tuning fork: its place sets how fast its tone dies, one number sets how loud. From here on the forks are **poles** and the loudness is the **residue** ([residues](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/04-residues.md)). The pole at 0 hands back 1, the pole at −2 hands back −e^(−2t), and their sum is the charging curve.
+V(s) blows up at s = 0 and s = −2. Think of each as a tuning fork: its place sets how fast its tone dies, one number sets how loud. From here on the forks are **poles** and the loudness is the **residue** ([Residues](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/04-residues.md)). The pole at 0 hands back 1, the pole at −2 hands back −e^(−2t), and their sum is the charging curve.
 
 **To invert a Laplace transform, integrate V(s)e^(st) up a vertical line to the right of every pole, close the line with a large half circle to the left, and the residue theorem turns the integral into a sum: each pole a hands back its residue, a number times e^(at).**
 
@@ -67,7 +49,7 @@ $$\operatorname{Res}\bigl(V(s)e^{st}, a\bigr) = \lim_{s \to a}\,(s - a)\,V(s)\,e
 
 ### When it holds
 
-- **The line sits right of every pole.** Here c > 0. Up Re s = −1, between the poles, the integral gives −0.135335 at t = 1: the signal whose transform lives on the strip between −2 and 0 ([strips-of-convergence-and-shifting-the-line](06-strips-of-convergence-and-shifting-the-line.md)).
+- **The line sits right of every pole.** Here c > 0. Up Re s = −1, between the poles, the integral gives −0.135335 at t = 1: the signal whose transform lives on the strip between −2 and 0 ([Where a transform lives](06-strips-of-convergence-and-shifting-the-line.md)).
 - **V fades on the big half circle.** Here it falls like 2 over R squared. The shelf's one-second pulse, (1 − e^(−s))/s, does not: e^(−s) grows to the left. It has no poles, so its residue sum is 0 at t = 0.5; the line integral gives 1.001, near the pulse's true value 1.
 - **t > 0 to close left.** For t < 0, e^(st) explodes on the left, so close right: no poles, v = 0 before the switch. At t = −1 the line integral gives 0.000000.
 - **Finitely many poles.** Infinitely many give an infinite sum, which needs its own convergence proof.
@@ -78,7 +60,7 @@ $$\operatorname{Res}\bigl(V(s)e^{st}, a\bigr) = \lim_{s \to a}\,(s - a)\,V(s)\,e
 
 ### Step 0: the Laplace transform is a Fourier transform in disguise
 
-Multiply the signal by e^(−ct) and take its Fourier transform ([fourier-transform](03-fourier-transform.md)). At frequency ω the result is V(c + iω): the Laplace transform read along the vertical line Re s = c, at height ω.
+Multiply the signal by e^(−ct) and take its Fourier transform ([The Fourier transform](03-fourier-transform.md)). At frequency ω the result is V(c + iω): the Laplace transform read along the vertical line Re s = c, at height ω.
 
 ### Step 1: the Bromwich integral recovers the signal
 
@@ -86,7 +68,7 @@ Fourier inversion gives v(t)e^(−ct) as 1/(2π) times the integral of V(c + iω
 
 ### Step 2: close the line, and the residue theorem takes over
 
-Cut the line at heights −R and R and join the ends with a half circle to the left: a closed loop, run anticlockwise, with both poles inside once R is big enough. By the residue theorem ([the-residue-theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)), line piece plus arc share is exactly 1 − e^(−2t). At R = 10 they are 0.876204 and −0.011540, adding to 0.864664, the residue sum to within a millionth.
+Cut the line at heights −R and R and join the ends with a half circle to the left: a closed loop, run anticlockwise, with both poles inside once R is big enough. By the residue theorem ([The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)), line piece plus arc share is exactly 1 − e^(−2t). At R = 10 they are 0.876204 and −0.011540, adding to 0.864664, the residue sum to within a millionth.
 
 ### Step 3: the half circle's share vanishes
 
@@ -96,14 +78,14 @@ At t = 1 the code measures −0.011540, −0.000085 and 0.000001 for R = 10, 100
 
 ### Step 4: partial fractions are the same computation
 
-Split V into partial fractions ([rational-functions-and-partial-fractions](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/03-rational-functions-and-partial-fractions.md)): 2/(s(s + 2)) = A/s + B/(s + 2). The term A/(s − a) is the transform of A e^(at), and its residue with e^(st) attached is also A e^(at). So each coefficient is a residue at t = 0, and inverting term by term is summing residues. The code finds A and B away from the poles, matching both sides at s = 1 and s = 3: A = 1.000000, B = −1.000000.
+Split V into partial fractions ([Rational functions](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/03-rational-functions-and-partial-fractions.md)): 2/(s(s + 2)) = A/s + B/(s + 2). The term A/(s − a) is the transform of A e^(at), and its residue with e^(st) attached is also A e^(at). So each coefficient is a residue at t = 0, and inverting term by term is summing residues. The code finds A and B away from the poles, matching both sides at s = 1 and s = 3: A = 1.000000, B = −1.000000.
 
 <details>
 <summary>Detailed proof</summary>
 
 **Inversion.** Let v be zero for t < 0, piecewise smooth, with |v(t)| ≤ M e^(bt), and take c > b. Then g(t) = v(t)e^(−ct) is absolutely integrable, with Fourier transform V(c + iω). Where v is continuous, Fourier inversion gives g(t) as the limit, as W → ∞, of (1/2π) times the integral from −W to W of V(c + iω)e^(iωt) dω; multiply by e^(ct) and put s = c + iω. At a jump the limit is the average of the two sides.
 
-**Closing.** Let V be holomorphic (complex-differentiable) except at finitely many poles, all with real part below c, with |V(s)| ≤ K/|s|^2 for large |s|. The segment from c − iR to c + iR plus the half circle s = c + Re^(iθ), θ from π/2 to 3π/2, is a loop, and the residue theorem gives its integral over 2πi as the residue sum. On the half circle Re s ≤ c, so for t > 0 the arc integral is at most πR K e^(ct)/(R − |c|)^2, which tends to 0. If V only falls like 1/|s|, Jordan's lemma ([oscillatory-integrals-and-jordans-lemma](../06-Real%20Integrals%20and%20Counting%20Zeros/03-oscillatory-integrals-and-jordans-lemma.md)) gives the same limit. For t < 0 close right: no poles, v = 0.
+**Closing.** Let V be holomorphic (complex-differentiable) except at finitely many poles, all with real part below c, with |V(s)| ≤ K/|s|^2 for large |s|. The segment from c − iR to c + iR plus the half circle s = c + Re^(iθ), θ from π/2 to 3π/2, is a loop, and the residue theorem gives its integral over 2πi as the residue sum. On the half circle Re s ≤ c, so for t > 0 the arc integral is at most πR K e^(ct)/(R − |c|)^2, which tends to 0. If V only falls like 1/|s|, Jordan's lemma ([Jordan's lemma](../06-Real%20Integrals%20and%20Counting%20Zeros/03-oscillatory-integrals-and-jordans-lemma.md)) gives the same limit. For t < 0 close right: no poles, v = 0.
 
 </details>
 
@@ -372,7 +354,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Circuit analysis.** A linear circuit driven by a step or a sine has a rational transform, and its response is a sum of exponentials, one per pole.
-- **Control engineering.** A system is stable when every pole sits in the left half plane, since each then hands back a decaying exponential: [impulse-response-and-transfer-functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md).
+- **Control engineering.** A system is stable when every pole sits in the left half plane, since each then hands back a decaying exponential: [Transfer functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md).
 - **Delayed inputs.** A factor e^(−s) delays a signal by one second and blocks closing left. Split it off, invert the rest, then shift the answer.
 
 > **Say it back**
@@ -382,13 +364,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [strips-of-convergence-and-shifting-the-line](06-strips-of-convergence-and-shifting-the-line.md): why the line must sit right of every pole, and what a line between poles inverts instead.
-- [the-residue-theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md): the closed loop's integral as 2πi times the residues inside.
-- [rational-functions-and-partial-fractions](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/03-rational-functions-and-partial-fractions.md): splitting V into A/s + B/(s + 2).
+- [Where a transform lives](06-strips-of-convergence-and-shifting-the-line.md): why the line must sit right of every pole, and what a line between poles inverts instead.
+- [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md): the closed loop's integral as 2πi times the residues inside.
+- [Rational functions](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/03-rational-functions-and-partial-fractions.md): splitting V into A/s + B/(s + 2).
 
 ## Where this goes next
 
-- [impulse-response-and-transfer-functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md): a system's poles as its fingerprint, and its response to any input.
+- [Transfer functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md): a system's poles as its fingerprint, and its response to any input.
 
 The same poles predict a circuit's output for every input, and whether it stays bounded.
 

@@ -1,30 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Length Done Properly
-topic: Sets with no length
-item: Translation invariance and the Vitali set
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/03-lebesgue-measure|lebesgue-measure]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/05-axiom-of-choice|axiom-of-choice]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/06-equivalence-relations-and-partitions|equivalence-relations-and-partitions]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/02-countable-sets|countable-sets]]"
-next:
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/05-caratheodory-extension-theorem|caratheodory-extension-theorem]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/06-lebesgue-stieltjes-measures|lebesgue-stieltjes-measures]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/07-the-cantor-set|the-cantor-set]]"
-tags:
-  - mathematics
-  - measure and integration
-  - translation-invariance-and-the-vitali-set
----
-
 # Translation invariance and the Vitali set: sliding never changes length, and that rule alone forces some set to have no length at all
 
-Measure and integration → Length Done Properly → Sets with no length → Translation invariance and the Vitali set
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Length Done Properly](../../../SYLLABUS.md#w10-s02) → Translation invariance and the Vitali set
 
 ---
 
@@ -36,7 +12,7 @@ Sliding a set never changes its length. That rule is called **translation invari
 
 Can every set of points on the rim get a length that obeys the sliding rule and adds up over infinitely many separate pieces? Giuseppe Vitali showed in 1905 that it cannot. Put two points in the same group when the gap between them is a fraction (a rational number, such as 1/4 or 3/7). Choose one point from every group. Turn the chosen set by every fraction from 0 up to 1. The copies are countably many (they can be listed one after another), never overlap, and cover the rim exactly once. The rim has length 1. Copies of length 0 add to 0; copies of any positive length add to infinity. No number works.
 
-So Lebesgue measure cannot be defined on every set of points. It lives on a restricted collection, a sigma-algebra (the collection of sets we allow ourselves to measure): the measurable sets of [caratheodory-measurable-sets](02-caratheodory-measurable-sets.md). That restriction is forced, not fussy.
+So Lebesgue measure cannot be defined on every set of points. It lives on a restricted collection, a sigma-algebra (the collection of sets we allow ourselves to measure): the measurable sets of [Caratheodory's criterion](02-caratheodory-measurable-sets.md). That restriction is forced, not fussy.
 
 **Length that ignores sliding and adds up over countably many pieces cannot be given to every set: a set chosen one point per group of rational rotations tiles the wheel with countably many equal copies, and no length fits.**
 
@@ -52,7 +28,7 @@ The faint circle is the rim, drawn to scale; positions run clockwise from the ti
 
 ## The formula
 
-Notation first, in words. $\lambda$ is Lebesgue measure: the length of a Lebesgue-measurable set ([lebesgue-measure](03-lebesgue-measure.md)). $\lambda^*$ is outer measure: the smallest total length of countably many intervals that cover a set, defined for every set ([lebesgue-outer-measure](01-lebesgue-outer-measure.md)). For a set $E$ and a number $t$, $E + t$ is every point of $E$ moved $t$ to the right: "E slid by t". For a number $c$, $cE$ is every point of $E$ multiplied by $c$: "E stretched by c".
+Notation first, in words. $\lambda$ is Lebesgue measure: the length of a Lebesgue-measurable set ([Lebesgue measure](03-lebesgue-measure.md)). $\lambda^*$ is outer measure: the smallest total length of countably many intervals that cover a set, defined for every set ([Outer measure](01-lebesgue-outer-measure.md)). For a set $E$ and a number $t$, $E + t$ is every point of $E$ moved $t$ to the right: "E slid by t". For a number $c$, $cE$ is every point of $E$ multiplied by $c$: "E stretched by c".
 
 $$\lambda(E + t) = \lambda(E), \qquad \lambda(cE) = |c|\,\lambda(E)$$
 
@@ -112,11 +88,11 @@ Turning by $q$ is a slide with one cut. The part of $E$ before position $1 - q$ 
 
 ### Step 4: the groups
 
-The relation $x \sim y$ is reflexive ($x - x = 0$), symmetric and transitive (a sum of two fractions is a fraction). So the groups partition the wheel ([equivalence-relations-and-partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md)). The group of $x$ is $x$ turned by every rational amount, so each group is countable. The wheel is uncountable, and countably many countable groups would make it countable ([countable-sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)). So there are uncountably many groups.
+The relation $x \sim y$ is reflexive ($x - x = 0$), symmetric and transitive (a sum of two fractions is a fraction). So the groups partition the wheel ([Equivalence relations and partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md)). The group of $x$ is $x$ turned by every rational amount, so each group is countable. The wheel is uncountable, and countably many countable groups would make it countable ([Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md)). So there are uncountably many groups.
 
 ### Step 5: choose one point per group, then turn
 
-The axiom of choice supplies a set $V$ with exactly one point from each group ([axiom-of-choice](../../01-Foundations/09-Sizes%20of%20Infinity/05-axiom-of-choice.md)); no formula names the points. Turn $V$ by each rational $q$ in $[0, 1)$. Every point of the wheel lands in some copy: its group's chosen point differs from it by a fraction. No point lands in two copies: two chosen points reaching it would differ by a fraction, so share a group, so be the same point.
+The axiom of choice supplies a set $V$ with exactly one point from each group ([The axiom of choice](../../01-Foundations/09-Sizes%20of%20Infinity/05-axiom-of-choice.md)); no formula names the points. Turn $V$ by each rational $q$ in $[0, 1)$. Every point of the wheel lands in some copy: its group's chosen point differs from it by a fraction. No point lands in two copies: two chosen points reaching it would differ by a fraction, so share a group, so be the same point.
 
 ### Step 6: no length fits
 
@@ -151,7 +127,7 @@ A second road to $\lambda(V) = 0$, the one the code prints: the fractions in $[0
 <details>
 <summary>Why length is the only slide-proof candidate</summary>
 
-Suppose a measure $\mu$ on the Borel sets ignores slides and gives $[0,1)$ the value 1. The interval $[0,1)$ is $n$ slid copies of $[0, 1/n)$ laid end to end, so $\mu([0,1/n)) = 1/n$. Then $m$ copies give $\mu([0, m/n)) = m/n$, and any interval $[a, b)$ is squeezed between intervals with rational ends, so $\mu([a,b)) = b - a$. The line is countably many slid copies of $[0,1)$, each of size 1. On each copy, $\mu$ and $\lambda$ have the same finite total and agree on the half-open intervals inside it, a family closed under overlaps, so they agree on every Borel set in that copy ([pi-systems-and-uniqueness](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)); adding over the copies, they agree on every Borel set. So the sliding rule does not merely hold for length; it pins length down.
+Suppose a measure $\mu$ on the Borel sets ignores slides and gives $[0,1)$ the value 1. The interval $[0,1)$ is $n$ slid copies of $[0, 1/n)$ laid end to end, so $\mu([0,1/n)) = 1/n$. Then $m$ copies give $\mu([0, m/n)) = m/n$, and any interval $[a, b)$ is squeezed between intervals with rational ends, so $\mu([a,b)) = b - a$. The line is countably many slid copies of $[0,1)$, each of size 1. On each copy, $\mu$ and $\lambda$ have the same finite total and agree on the half-open intervals inside it, a family closed under overlaps, so they agree on every Borel set in that copy ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)); adding over the copies, they agree on every Borel set. So the sliding rule does not merely hold for length; it pins length down.
 
 </details>
 
@@ -498,7 +474,7 @@ The one line is $K(n)$, the number of distinct fractions in [0, 1) with denomina
 ## The usual mistake
 
 > [!warning]
-> **Reading "not measurable" as "length zero".** $V$ is not a thin set. Its outer measure is positive (Step 6), and yet no single number can serve as its length. Countable additivity breaks on its copies: their outer measures add to infinity while their union has length 1. The Cantor set ([the-cantor-set](07-the-cantor-set.md)) is the opposite case: uncountable, measurable, length 0.
+> **Reading "not measurable" as "length zero".** $V$ is not a thin set. Its outer measure is positive (Step 6), and yet no single number can serve as its length. Countable additivity breaks on its copies: their outer measures add to infinity while their union has length 1. The Cantor set ([The Cantor set](07-the-cantor-set.md)) is the opposite case: uncountable, measurable, length 0.
 >
 > - **Blaming the rationals.** The fractions in [0, 1) form a measurable set of length 0. The trouble is the chosen set, not the fractions used to turn it.
 > - **Expecting to compute $V$.** No program lists it and no formula defines it; the axiom of choice guarantees it exists and says nothing more.
@@ -509,7 +485,7 @@ The one line is $K(n)$, the number of distinct fractions in [0, 1) with denomina
 
 ## Where you meet it in real life
 
-- **Probability on a spinner.** A fair spin of the wheel is Lebesgue measure on [0, 1). The event "the spin stops in $V$" has no probability, which is why every probability model states which events it measures: a sigma-algebra, the collection of sets it allows itself to measure ([caratheodory-measurable-sets](02-caratheodory-measurable-sets.md)).
+- **Probability on a spinner.** A fair spin of the wheel is Lebesgue measure on [0, 1). The event "the spin stops in $V$" has no probability, which is why every probability model states which events it measures: a sigma-algebra, the collection of sets it allows itself to measure ([Caratheodory's criterion](02-caratheodory-measurable-sets.md)).
 - **The Banach–Tarski paradox.** A solid ball can be cut into five pieces and reassembled, by rotations and slides alone, into two balls of the original size. The pieces are chosen with the axiom of choice and have no volume, exactly as $V$ has no length.
 - **Foundations of mathematics.** Analysts keep the axiom of choice and pay with sets like $V$; in Solovay's model, without full choice, every set of reals is measurable.
 
@@ -520,18 +496,18 @@ The one line is $K(n)$, the number of distinct fractions in [0, 1) with denomina
 
 ## What this builds on
 
-- [lebesgue-measure](03-lebesgue-measure.md): the measure whose slide rule this card proves, and its countable additivity.
-- [axiom-of-choice](../../01-Foundations/09-Sizes%20of%20Infinity/05-axiom-of-choice.md): the axiom that picks one point per group.
-- [equivalence-relations-and-partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md): why the groups cover the wheel without overlapping.
-- [countable-sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md): the fractions can be listed; the groups cannot.
+- [Lebesgue measure](03-lebesgue-measure.md): the measure whose slide rule this card proves, and its countable additivity.
+- [The axiom of choice](../../01-Foundations/09-Sizes%20of%20Infinity/05-axiom-of-choice.md): the axiom that picks one point per group.
+- [Equivalence relations and partitions](../../01-Foundations/08-Relations%20and%20Functions/06-equivalence-relations-and-partitions.md): why the groups cover the wheel without overlapping.
+- [Countable sets](../../01-Foundations/09-Sizes%20of%20Infinity/02-countable-sets.md): the fractions can be listed; the groups cannot.
 
 ## Where this goes next
 
-- [caratheodory-extension-theorem](05-caratheodory-extension-theorem.md): builds a measure from its values on intervals, on the sigma-algebra this card shows is needed.
-- [lebesgue-stieltjes-measures](06-lebesgue-stieltjes-measures.md): lengths that do change under sliding, weighted by a distribution function.
-- [the-cantor-set](07-the-cantor-set.md): an uncountable set that is measurable and has length 0.
+- [Caratheodory's extension theorem](05-caratheodory-extension-theorem.md): builds a measure from its values on intervals, on the sigma-algebra this card shows is needed.
+- [Distribution functions and Lebesgue-Stieltjes measures](06-lebesgue-stieltjes-measures.md): lengths that do change under sliding, weighted by a distribution function.
+- [The Cantor set](07-the-cantor-set.md): an uncountable set that is measurable and has length 0.
 
-Once some sets must go unmeasured, the question is how to build a measure on the sets that remain from nothing more than the lengths of intervals, and [caratheodory-extension-theorem](05-caratheodory-extension-theorem.md) answers it.
+Once some sets must go unmeasured, the question is how to build a measure on the sets that remain from nothing more than the lengths of intervals, and [Caratheodory's extension theorem](05-caratheodory-extension-theorem.md) answers it.
 
 ---
 

@@ -1,23 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Conformal Maps and Harmonic Functions
-topic: Region-to-region maps
-item: The standard maps
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/02-mobius-transformations-and-the-point-at-infinity|mobius-transformations-and-the-point-at-infinity]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/05-branch-cuts-and-complex-powers|branch-cuts-and-complex-powers]]"
-next:
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/07-solving-boundary-problems-by-mapping|solving-boundary-problems-by-mapping]]"
-tags: [mathematics, complex analysis, standard-maps-and-composing-them]
----
-
 # The standard maps: z squared, e to the z, log and z to the a turn wedges, strips and half planes into one another, and you chain them to reach the shape you need
 
-Complex analysis → Conformal Maps and Harmonic Functions → Region-to-region maps → The standard maps
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Conformal Maps and Harmonic Functions](../../../SYLLABUS.md#w07-s07) → The standard maps
 
 ---
 
@@ -27,7 +10,7 @@ A corner lot is bounded by two streets meeting at a right angle. Put the corner 
 
 Square every point. 1 + 2i goes to −3 + 4i. The right angle at the corner opens flat, and the lot fills the **upper half plane**: every point with positive imaginary part, each covered once.
 
-The exponential lays a corridor, the band of heights between 0 and π, onto the same half plane; the logarithm rolls it back. A fourth power opens a 45-degree wedge flat. One Möbius map ([mobius-transformations-and-the-point-at-infinity](02-mobius-transformations-and-the-point-at-infinity.md)) folds the half plane into the unit disc, the points at distance less than 1 from 0. Chained, they carry each of these shapes onto any other.
+The exponential lays a corridor, the band of heights between 0 and π, onto the same half plane; the logarithm rolls it back. A fourth power opens a 45-degree wedge flat. One Möbius map ([Mobius transformations](02-mobius-transformations-and-the-point-at-infinity.md)) folds the half plane into the unit disc, the points at distance less than 1 from 0. Chained, they carry each of these shapes onto any other.
 
 **Powers open wedges because they multiply angles; the exponential and logarithm trade bands for wedges because they swap height and angle; a chain ending in one Möbius map reaches the disc.**
 
@@ -43,7 +26,7 @@ To scale: 30 units per 1 on the left, 16 on the right, 0 where each panel's axes
 
 ## The formula
 
-A map sends each point $z$ of a starting region to a point $w$ of a target region; "C after squaring" means square first, then apply C. Reminder: $e^{i\theta}$ is the point at distance 1 and angle θ ([eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)); Arg is the principal argument, the angle in (−π, π].
+A map sends each point $z$ of a starting region to a point $w$ of a target region; "C after squaring" means square first, then apply C. Reminder: $e^{i\theta}$ is the point at distance 1 and angle θ ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)); Arg is the principal argument, the angle in (−π, π].
 
 $$z = r e^{i\theta} \;\mapsto\; z^{a} = r^{a} e^{ia\theta}, \qquad a = \frac{\pi}{\alpha}$$
 
@@ -70,8 +53,8 @@ $$C(w) = \frac{w - i}{w + i}$$
 ### When it holds
 
 - **One-to-one needs room.** A power a is one-to-one on a wedge only while a times α stays at most 2π; the exponential only on bands no taller than 2π. Overshoot and points collide.
-- **Corners open only at 0.** There the power's derivative is 0 (or, for a < 1, undefined) and angles are multiplied by a; elsewhere it is **conformal** (keeps angles: [conformal-maps](01-conformal-maps.md)).
-- **Fractional powers and the log need a branch.** Here they are the principal branches, holomorphic (differentiable in the complex sense) off the negative real axis ([branch-cuts-and-complex-powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md)), a cut every region here avoids.
+- **Corners open only at 0.** There the power's derivative is 0 (or, for a < 1, undefined) and angles are multiplied by a; elsewhere it is **conformal** (keeps angles: [Conformal maps](01-conformal-maps.md)).
+- **Fractional powers and the log need a branch.** Here they are the principal branches, holomorphic (differentiable in the complex sense) off the negative real axis ([Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md)), a cut every region here avoids.
 - **The Cayley map needs the upper half.** Points below the axis land outside the disc.
 
 ---
@@ -136,7 +119,7 @@ Every arrow is one-to-one and onto; inverses walk back.
 
 </details>
 
-That some such map exists for almost any region without holes, and how to build one for a polygon, is the subject of [riemann-mapping-theorem-and-schwarz-christoffel](08-riemann-mapping-theorem-and-schwarz-christoffel.md).
+That some such map exists for almost any region without holes, and how to build one for a polygon, is the subject of [The Riemann mapping theorem](08-riemann-mapping-theorem-and-schwarz-christoffel.md).
 
 ---
 
@@ -381,10 +364,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Heat and electric potential near a corner.** A room's corner or a right-angled conductor is the lot; squaring flattens it so the flat-wall answer can be carried back ([solving-boundary-problems-by-mapping](07-solving-boundary-problems-by-mapping.md)).
+- **Heat and electric potential near a corner.** A room's corner or a right-angled conductor is the lot; squaring flattens it so the flat-wall answer can be carried back ([Solving by mapping](07-solving-boundary-problems-by-mapping.md)).
 - **Flow in a channel.** A straight channel is the corridor; the exponential opens it to a half plane where the flow is one formula.
 - **Map-making.** The Mercator projection is a logarithm: it unrolls the globe's polar view into a strip, keeping angles.
-- **Harmonic functions.** A holomorphic chain carries solutions of Laplace's equation along ([harmonic-functions-and-conjugates](04-harmonic-functions-and-conjugates.md)); on the disc, [poisson-integral-formula](06-poisson-integral-formula.md) finishes the job.
+- **Harmonic functions.** A holomorphic chain carries solutions of Laplace's equation along ([Harmonic functions](04-harmonic-functions-and-conjugates.md)); on the disc, [The Poisson formula](06-poisson-integral-formula.md) finishes the job.
 
 > **Say it back**
 > A power multiplies angles, so the power π/α opens a wedge of angle α into the upper half plane. The exponential turns height into angle, laying the corridor on it; the logarithm rolls it back. The Cayley map (w − i)/(w + i) closes the half plane into the disc. Chained, they carry 1 + 2i to −3 + 4i and then to 24/34 + (6/34)i.
@@ -393,12 +376,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [mobius-transformations-and-the-point-at-infinity](02-mobius-transformations-and-the-point-at-infinity.md): the Cayley map as a Möbius map, one-to-one onto the disc.
-- [branch-cuts-and-complex-powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md): z^a as e^(a Log z), and the cut every region here avoids.
+- [Mobius transformations](02-mobius-transformations-and-the-point-at-infinity.md): the Cayley map as a Möbius map, one-to-one onto the disc.
+- [Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md): z^a as e^(a Log z), and the cut every region here avoids.
 
 ## Where this goes next
 
-- [solving-boundary-problems-by-mapping](07-solving-boundary-problems-by-mapping.md): these chains carry a temperature or potential problem to the disc and back.
+- [Solving by mapping](07-solving-boundary-problems-by-mapping.md): these chains carry a temperature or potential problem to the disc and back.
 
 ---
 

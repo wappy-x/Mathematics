@@ -1,37 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Matrices
-topic: Multiplying matrices
-item: Matrix multiplication
-kind: definition
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/03-Algebra/04-Matrices/02-matrix-times-vector|matrix-times-vector]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/03-composition|composition]]"
-next:
-  - "[[Cards/03-Algebra/04-Matrices/04-linear-maps-as-matrices|linear-maps-as-matrices]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/03-inverse-matrix|inverse-matrix]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/04-least-squares|least-squares]]"
-  - "[[Cards/03-Algebra/09-Rings and Fields/01-rings|rings]]"
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/06-recurrences-as-matrix-powers|recurrences-as-matrix-powers]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/07-adjacency-matrix-and-walk-counting|adjacency-matrix-and-walk-counting]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/04-multivariable-chain-rule-and-jacobians|multivariable-chain-rule-and-jacobians]]"
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/02-mobius-transformations-and-the-point-at-infinity|mobius-transformations-and-the-point-at-infinity]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/04-the-matrix-exponential|the-matrix-exponential]]"
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/01-markov-chains|markov-chains]]"
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/04-rating-transition-matrix-and-cumulative-default-rates|rating-transition-matrix-and-cumulative-default-rates]]"
-  - "[[Cards/23-Differential geometry and Lie groups/05-Riemannian Geometry/06-riemann-curvature-tensor|riemann-curvature-tensor]]"
-tags:
-  - mathematics
-  - algebra
-  - matrix-multiplication
----
-
 # Matrix multiplication: row by column, because it is 'do this, then that', and why the order matters
 
-Algebra → Matrices → Multiplying matrices → Matrix multiplication
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Matrices](../../../SYLLABUS.md#w03-s04) → Matrix multiplication
 
 ---
 
@@ -68,7 +37,7 @@ $$(AB)_{ij} = A_{i1}B_{1j} + A_{i2}B_{2j} + \dots + A_{in}B_{nj}$$
 
 **Read it aloud:** slide a finger across row $i$ of the left matrix and down column $j$ of the right at the same speed, multiply each pair, add the results.
 
-That is the dot product of [matrix-times-vector](02-matrix-times-vector.md), once per row-and-column pairing.
+That is the dot product of [Matrix times vector](02-matrix-times-vector.md), once per row-and-column pairing.
 
 | Symbol | Plain meaning | In our example | Change it and… |
 | --- | --- | --- | --- |
@@ -94,9 +63,9 @@ That is the dot product of [matrix-times-vector](02-matrix-times-vector.md), onc
 
 ### Step 0: a matrix is a machine, not a spreadsheet
 
-A matrix takes a list of numbers in and hands a list back ([matrix-times-vector](02-matrix-times-vector.md)): feed the schedule matrix a day, get products; feed the recipe matrix products, get grams.
+A matrix takes a list of numbers in and hands a list back ([Matrix times vector](02-matrix-times-vector.md)): feed the schedule matrix a day, get products; feed the recipe matrix products, get grams.
 
-Two machines in a row is composition, one function inside another ([composition](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md)), whose order is baked in: the inner one first.
+Two machines in a row is composition, one function inside another ([Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md)), whose order is baked in: the inner one first.
 
 ### Step 1: run Monday through both machines
 
@@ -116,7 +85,7 @@ Pairing a row with a column entry by entry needs equal lengths: a row is as long
 
 Recipes times schedule asks: for each ingredient and each day, how many grams? Flipped, the schedule matrix has to eat ingredients and the recipe matrix days. Nothing lines up.
 
-Both matrices here happen to be 2 × 2, so the flipped arithmetic still runs, giving `[[40, 60], [20, 60]]` beside `[[40, 20], [60, 60]]`: same matrices, different answer. Under the same labels the flipped table claims 60 g of beans on Tuesday, against a true 20 g. Some pairs do agree either way — a square matrix and the do-nothing matrix of [matrices-and-the-matrix-zoo](01-matrices-and-the-matrix-zoo.md) — but nothing makes that the rule, and at other sizes only one order runs.
+Both matrices here happen to be 2 × 2, so the flipped arithmetic still runs, giving `[[40, 60], [20, 60]]` beside `[[40, 20], [60, 60]]`: same matrices, different answer. Under the same labels the flipped table claims 60 g of beans on Tuesday, against a true 20 g. Some pairs do agree either way — a square matrix and the do-nothing matrix of [Matrices](01-matrices-and-the-matrix-zoo.md) — but nothing makes that the rule, and at other sizes only one order runs.
 
 ### Step 5: brackets do not carry meaning
 
@@ -143,7 +112,7 @@ Column 2 of $A$ against row 2 of $B$ gives the loaves, `[[0, 0], [60, 60]]`; add
 
 </details>
 
-A second route reaches the recipe from the other end: compose two rules that keep lines straight and read off the table, the job of [linear-maps-as-matrices](04-linear-maps-as-matrices.md).
+A second route reaches the recipe from the other end: compose two rules that keep lines straight and read off the table, the job of [Linear maps](04-linear-maps-as-matrices.md).
 
 ---
 
@@ -421,25 +390,25 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [matrix-times-vector](02-matrix-times-vector.md): one matrix acting on one list of numbers, done here once per column of the second matrix.
-- [composition](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md): one function inside another, inner first. That order is where $AB$ against $BA$ comes from.
+- [Matrix times vector](02-matrix-times-vector.md): one matrix acting on one list of numbers, done here once per column of the second matrix.
+- [Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md): one function inside another, inner first. That order is where $AB$ against $BA$ comes from.
 
 ## Where this goes next
 
-- [linear-maps-as-matrices](04-linear-maps-as-matrices.md): why keeping lines straight forces this recipe.
-- [inverse-matrix](../05-Solving%20Systems/03-inverse-matrix.md): the matrix undoing another, defined through this product.
-- [least-squares](../06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): a best-fit line, from a matrix times a rearranged copy.
-- [rings](../09-Rings%20and%20Fields/01-rings.md): multiplication that need not answer the same either way.
-- [recurrences-as-matrix-powers](../../04-Combinatorics%20and%20graphs/05-Recurrences/06-recurrences-as-matrix-powers.md): a growth rule as one matrix multiplied by itself.
-- [adjacency-matrix-and-walk-counting](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/07-adjacency-matrix-and-walk-counting.md): powers of a table of links count routes.
-- [multivariable-chain-rule-and-jacobians](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md): chained rates of change, a product per link.
-- [mobius-transformations-and-the-point-at-infinity](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/02-mobius-transformations-and-the-point-at-infinity.md): maps of the plane chained as 2 × 2 products.
-- [the-matrix-exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md): matrix powers added up to move a system in time.
-- [markov-chains](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/01-markov-chains.md): a table of chances multiplied per step.
-- [rating-transition-matrix-and-cumulative-default-rates](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md): a year of rating moves multiplied out.
-- riemann-curvature-tensor: products of tables of rates, measuring how space bends.
+- [Linear maps](04-linear-maps-as-matrices.md): why keeping lines straight forces this recipe.
+- [The inverse matrix](../05-Solving%20Systems/03-inverse-matrix.md): the matrix undoing another, defined through this product.
+- [Least squares](../06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): a best-fit line, from a matrix times a rearranged copy.
+- [Rings](../09-Rings%20and%20Fields/01-rings.md): multiplication that need not answer the same either way.
+- [A recurrence is a matrix](../../04-Combinatorics%20and%20graphs/05-Recurrences/06-recurrences-as-matrix-powers.md): a growth rule as one matrix multiplied by itself.
+- [The adjacency matrix](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/07-adjacency-matrix-and-walk-counting.md): powers of a table of links count routes.
+- [Chain rule in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/04-multivariable-chain-rule-and-jacobians.md): chained rates of change, a product per link.
+- [Mobius transformations](../../07-Complex%20analysis/07-Conformal%20Maps%20and%20Harmonic%20Functions/02-mobius-transformations-and-the-point-at-infinity.md): maps of the plane chained as 2 × 2 products.
+- [The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md): matrix powers added up to move a system in time.
+- [Markov chains](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/01-markov-chains.md): a table of chances multiplied per step.
+- [Rating transition matrices](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md): a year of rating moves multiplied out.
+- Riemann curvature tensor: products of tables of rates, measuring how space bends.
 
-Nothing here says which matrix, if any, undoes a step once taken: that is [inverse-matrix](../05-Solving%20Systems/03-inverse-matrix.md).
+Nothing here says which matrix, if any, undoes a step once taken: that is [The inverse matrix](../05-Solving%20Systems/03-inverse-matrix.md).
 
 ---
 

@@ -1,31 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Polynomials
-topic: Roots
-item: Roots and factors
-kind: theorem
-status: verified
-updated: 2026-09-07
-needs_first:
-  - "[[Cards/03-Algebra/02-Polynomials/01-polynomials|polynomials]]"
-  - "[[Cards/03-Algebra/02-Polynomials/04-polynomial-division|polynomial-division]]"
-  - "[[Cards/03-Algebra/02-Polynomials/03-quadratic-formula|quadratic-formula]]"
-  - "[[Cards/01-Foundations/06-Proof/01-direct-proof|direct-proof]]"
-  - "[[Cards/03-Algebra/02-Polynomials/02-factoring-quadratics|factoring-quadratics]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/01-divides|divides]]"
-next:
-  - "[[Cards/03-Algebra/09-Rings and Fields/03-polynomials-behave-like-integers|polynomials-behave-like-integers]]"
-  - "[[Cards/03-Algebra/10-For the Curious/01-fundamental-theorem-of-algebra|fundamental-theorem-of-algebra]]"
-tags:
-  - mathematics
-  - algebra
-  - roots-and-the-factor-theorem
----
-
 # Roots and factors: a root r means a factor x - r, so a degree-n polynomial has at most n roots
 
-Algebra → Polynomials → Roots → Roots and factors
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Polynomials](../../../SYLLABUS.md#w03-s02) → Roots and factors
 
 ---
 
@@ -39,9 +14,9 @@ Call one edge x. Those three measurements collapse into one polynomial:
 
 **x^3 - 6x^2 + 11x - 6 = 0**
 
-That comes straight from the measurements. Multiply out (x - first)(x - second)(x - third) for any three numbers and you get x^3, minus their sum times x^2, plus their pairwise products times x, minus their product. Take that on trust here; the two-number version is the sum-and-product check on [quadratic-formula](03-quadratic-formula.md).
+That comes straight from the measurements. Multiply out (x - first)(x - second)(x - third) for any three numbers and you get x^3, minus their sum times x^2, plus their pairwise products times x, minus their product. Take that on trust here; the two-number version is the sum-and-product check on [The quadratic formula](03-quadratic-formula.md).
 
-So the edges are the inputs that make the cubic come out zero — its roots ([polynomials](01-polynomials.md)). Try 1: that is 1 - 6 + 11 - 6, which is 0. A hit, and a hit buys more than one answer. Because 1 is a root, the bracket x - 1 divides the cubic exactly, leaving x^2 - 5x + 6 = (x - 2)(x - 3) ([factoring-quadratics](02-factoring-quadratics.md)). The tank is 1 metre by 2 metres by 3 metres.
+So the edges are the inputs that make the cubic come out zero — its roots ([Polynomials](01-polynomials.md)). Try 1: that is 1 - 6 + 11 - 6, which is 0. A hit, and a hit buys more than one answer. Because 1 is a root, the bracket x - 1 divides the cubic exactly, leaving x^2 - 5x + 6 = (x - 2)(x - 3) ([Factoring](02-factoring-quadratics.md)). The tank is 1 metre by 2 metres by 3 metres.
 
 **A root and a factor are one fact in two costumes: the polynomial comes out zero at r exactly when x - r divides it, and since every root uses up one bracket and a polynomial whose highest power is n has only n brackets to give, n is the ceiling on how many different roots it can have.**
 
@@ -89,7 +64,7 @@ $$\text{a polynomial of degree } n \text{, not the flat zero, has at most } n \t
 
 ### Step 0: dividing by x - r always leaves a plain number
 
-Polynomial long division ([polynomial-division](04-polynomial-division.md)) hands you a quotient and a remainder whose degree sits below the divisor's. The bracket x - r has degree 1, so the remainder has degree 0: a plain number, no x in it. Call it $c$.
+Polynomial long division ([Polynomial long division](04-polynomial-division.md)) hands you a quotient and a remainder whose degree sits below the divisor's. The bracket x - r has degree 1, so the remainder has degree 0: a plain number, no x in it. Call it $c$.
 
 $$p(x) = (x - r)\,q(x) + c$$
 
@@ -111,11 +86,11 @@ The tank, twice through: the cubic at 1 is 1 - 6 + 11 - 6 = 0, so x - 1 is a fac
 
 ### Step 2: each root eats one degree, so the degree is the ceiling
 
-This is a direct proof ([direct-proof](../../01-Foundations/06-Proof/01-direct-proof.md)), and it is peeling.
+This is a direct proof ([Direct proof](../../01-Foundations/06-Proof/01-direct-proof.md)), and it is peeling.
 
 Take a polynomial $p$ of degree $n$. If it has no root at all, 0 is under the ceiling and there is nothing to argue. If it has a root r, peel: $p(x) = (x - r)q(x)$, and $q$ has degree n - 1, because degrees add when brackets are multiplied.
 
-Now take any other root s, a different number from r. Then $0 = p(s) = (s - r)\,q(s)$. The first bracket is not zero, because s and r differ. A product is zero only when one factor is zero ([factoring-quadratics](02-factoring-quadratics.md)), so $q(s) = 0$. Every remaining root of $p$ is a root of the shorter $q$.
+Now take any other root s, a different number from r. Then $0 = p(s) = (s - r)\,q(s)$. The first bracket is not zero, because s and r differ. A product is zero only when one factor is zero ([Factoring](02-factoring-quadratics.md)), so $q(s) = 0$. Every remaining root of $p$ is a root of the shorter $q$.
 
 Repeat. Each peel costs one root and one degree. After n peels you hold a plain number that is not zero, and so nothing is left to be a root. At most n roots.
 
@@ -128,17 +103,17 @@ flowchart LR
 
 Three peels, three roots, and the cubic is spent.
 
-Note the wording: **at most** n, not exactly n. Change the tank's volume from 6 to 12 and the cubic becomes x^3 - 6x^2 + 11x - 12, zero at 4 and nowhere else — one root, degree 3, no such tank. Exactly-n needs numbers this wing has not built yet: [fundamental-theorem-of-algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md).
+Note the wording: **at most** n, not exactly n. Change the tank's volume from 6 to 12 and the cubic becomes x^3 - 6x^2 + 11x - 12, zero at 4 and nowhere else — one root, degree 3, no such tank. Exactly-n needs numbers this wing has not built yet: [The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md).
 
 <details>
 <summary>Where to look for the first root</summary>
 
-Peeling needs a first root, and guessing is slow. If a whole number r is a root of the tank's cubic, then r^3 - 6r^2 + 11r = 6, and the left side is r times a whole number, so r divides 6 ([divides](../../02-Number%20theory/01-Divisibility%20and%20Primes/01-divides.md)). Eight candidates instead of infinitely many: -6, -3, -2, -1, 1, 2, 3, 6. The cubic at those is -504, -120, -60, -24, 0, 0, 0 and 60. Three hits, and they are the whole answer.
+Peeling needs a first root, and guessing is slow. If a whole number r is a root of the tank's cubic, then r^3 - 6r^2 + 11r = 6, and the left side is r times a whole number, so r divides 6 ([Divides](../../02-Number%20theory/01-Divisibility%20and%20Primes/01-divides.md)). Eight candidates instead of infinitely many: -6, -3, -2, -1, 1, 2, 3, 6. The cubic at those is -504, -120, -60, -24, 0, 0, 0 and 60. Three hits, and they are the whole answer.
 This is the rational-root test, stripped to the case where the highest power has a plain 1 in front of it. The full version: a fraction in lowest terms can only be a root if its top divides the constant term and its bottom divides the number in front of the highest power.
 
 </details>
 
-For a quadratic none of this is needed: the quadratic formula hands you both roots at once ([quadratic-formula](03-quadratic-formula.md)). Peeling earns its keep from degree 3 up, where no formula is coming.
+For a quadratic none of this is needed: the quadratic formula hands you both roots at once ([The quadratic formula](03-quadratic-formula.md)). Peeling earns its keep from degree 3 up, where no formula is coming.
 
 ---
 
@@ -399,17 +374,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [polynomial-division](04-polynomial-division.md): the quotient-and-remainder machinery, and the remainder theorem Step 0 leans on entirely.
-- [quadratic-formula](03-quadratic-formula.md): finishes the job once peeling has cut the cubic to a quadratic, and carries the sum-and-product fact behind the tank's cubic.
-- [direct-proof](../../01-Foundations/06-Proof/01-direct-proof.md): the shape of Step 2 — assume a root, follow the consequences, arrive at the ceiling.
-- [divides](../../02-Number%20theory/01-Divisibility%20and%20Primes/01-divides.md): what "r divides 6" means, which shortens the root hunt to eight candidates.
-- [polynomials](01-polynomials.md): degree, coefficients and what a root is.
-- [factoring-quadratics](02-factoring-quadratics.md): the zero-product fact Step 2 turns on.
+- [Polynomial long division](04-polynomial-division.md): the quotient-and-remainder machinery, and the remainder theorem Step 0 leans on entirely.
+- [The quadratic formula](03-quadratic-formula.md): finishes the job once peeling has cut the cubic to a quadratic, and carries the sum-and-product fact behind the tank's cubic.
+- [Direct proof](../../01-Foundations/06-Proof/01-direct-proof.md): the shape of Step 2 — assume a root, follow the consequences, arrive at the ceiling.
+- [Divides](../../02-Number%20theory/01-Divisibility%20and%20Primes/01-divides.md): what "r divides 6" means, which shortens the root hunt to eight candidates.
+- [Polynomials](01-polynomials.md): degree, coefficients and what a root is.
+- [Factoring](02-factoring-quadratics.md): the zero-product fact Step 2 turns on.
 
 ## Where this goes next
 
-- [polynomials-behave-like-integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): peeling factors off a polynomial is the same move as pulling primes out of a whole number.
-- [fundamental-theorem-of-algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md): what it takes to turn "at most n" into "exactly n".
+- [Polynomials behave like integers](../09-Rings%20and%20Fields/03-polynomials-behave-like-integers.md): peeling factors off a polynomial is the same move as pulling primes out of a whole number.
+- [The fundamental theorem of algebra](../10-For%20the%20Curious/01-fundamental-theorem-of-algebra.md): what it takes to turn "at most n" into "exactly n".
 
 ---
 

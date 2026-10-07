@@ -1,39 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Eigenvalues and Symmetric Matrices
-topic: Definiteness
-item: Quadratic forms
-kind: definition
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/04-spectral-theorem|spectral-theorem]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/10-percentages|percentages]]"
-next:
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/05-hessian-and-second-order-approximation|hessian-and-second-order-approximation]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/07-coupled-oscillators-and-normal-modes|coupled-oscillators-and-normal-modes]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/05-bivariate-normal-and-conditioning|bivariate-normal-and-conditioning]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/04-correlated-paths-and-cholesky|correlated-paths-and-cholesky]]"
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/05-hurwitz-schur-and-lyapunov-stability|hurwitz-schur-and-lyapunov-stability]]"
-  - "[[Cards/15-Optimization/01-Convexity/03-convex-functions-and-their-tests|convex-functions-and-their-tests]]"
-  - "[[Cards/15-Optimization/02-Unconstrained Methods/03-rates-of-convergence-and-conditioning|rates-of-convergence-and-conditioning]]"
-  - "[[Cards/15-Optimization/06-Conic, Quadratic and Stochastic Programs/05-semidefinite-programs-and-relaxations|semidefinite-programs-and-relaxations]]"
-  - "[[Cards/16-Numerical analysis/03-Numerical Linear Algebra/04-cholesky-decomposition|cholesky-decomposition]]"
-  - "[[Cards/16-Numerical analysis/03-Numerical Linear Algebra/09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient|iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient]]"
-  - "[[Cards/19-Partial differential equations/01-Classification and Well-Posedness/04-classification-elliptic-parabolic-hyperbolic|classification-elliptic-parabolic-hyperbolic]]"
-  - "[[Cards/23-Differential geometry and Lie groups/02-Surfaces/06-classification-of-surface-points|classification-of-surface-points]]"
-  - "[[Cards/23-Differential geometry and Lie groups/05-Riemannian Geometry/01-riemannian-metrics|riemannian-metrics]]"
-  - "[[Cards/23-Differential geometry and Lie groups/07-Geometric Analysis and Physics/07-the-manifold-of-covariance-matrices|the-manifold-of-covariance-matrices]]"
-tags:
-  - mathematics
-  - algebra
-  - quadratic-forms-and-positive-definite
----
-
 # Quadratic forms: x^T A x as the risk of a mix, and positive definite means every mix has positive risk
 
-Algebra → Eigenvalues and Symmetric Matrices → Definiteness → Quadratic forms
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Eigenvalues and Symmetric Matrices](../../../SYLLABUS.md#w03-s07) → Quadratic forms
 
 ---
 
@@ -120,7 +87,7 @@ Each month's blended departure is $x_1$ times the first plus $x_2$ times the sec
 
 ### Step 3: the eigenvalue test, by measuring along the matrix's own directions
 
-The [spectral-theorem](04-spectral-theorem.md) gives a symmetric matrix two perpendicular directions of its own, each one unit long, along which it only stretches, by an eigenvalue ([eigenvalues-and-eigenvectors](02-eigenvalues-and-eigenvectors.md)). Measure the mix along them rather than asset by asset ([change-of-basis](01-change-of-basis.md)), as readings $y_1$ and $y_2$. The cross term disappears:
+The [The spectral theorem](04-spectral-theorem.md) gives a symmetric matrix two perpendicular directions of its own, each one unit long, along which it only stretches, by an eigenvalue ([Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md)). Measure the mix along them rather than asset by asset ([Change of basis](01-change-of-basis.md)), as readings $y_1$ and $y_2$. The cross term disappears:
 
 $$f = \lambda_1 y_1^2 + \lambda_2 y_2^2.$$
 
@@ -174,7 +141,7 @@ No mix escapes risk, so which comes closest? Force the weights to add to 1 and c
 
 $$11 w^2 - 16 w + 9 = 11 \left( w - \frac{8}{11} \right)^2 + \frac{35}{11}.$$
 
-A square is never negative, so the score never falls below 35/11, which is 3.181818, and only $w = 8/11$, or 0.727273, reaches it: 8 parts to 3. A proof, not a search, though the code scans 10001 mixes and finds nothing lower. Calculus finds the same weight ([hessian-and-second-order-approximation](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)).
+A square is never negative, so the score never falls below 35/11, which is 3.181818, and only $w = 8/11$, or 0.727273, reaches it: 8 parts to 3. A proof, not a search, though the code scans 10001 mixes and finds nothing lower. Calculus finds the same weight ([Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md)).
 
 ---
 
@@ -429,7 +396,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Portfolio risk.** A fund's variance is a quadratic form in its weights; its covariance matrix must be semidefinite at least, or the arithmetic returns a negative variance.
-- **The bottom of a hill.** The second derivatives of a smooth function make a quadratic form; positive definite at a flat point means a minimum, not a saddle: [hessian-and-second-order-approximation](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md).
+- **The bottom of a hill.** The second derivatives of a smooth function make a quadratic form; positive definite at a flat point means a minimum, not a saddle: [Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md).
 
 > **Say it back**
 > A quadratic form feeds one list of weights into a symmetric matrix from both sides and hands back one number: each weight squared times its own entry, plus twice each pair of weights times the entry they share. For variances 4 and 9 and covariance 1 it is the mix's variance, 3.750000 for half and half. Positive definite means it stays above zero for every mix but all zeros, and three tests agree: the score, the two eigenvalues, the first entry with the determinant. Completing the square finds the calmest mix, 8 parts to 3, at 3.181818.
@@ -438,25 +405,25 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [spectral-theorem](04-spectral-theorem.md): perpendicular directions with a stretch along each, turning the form into two squares.
-- [percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): weights as fractions, scores in percent squared.
+- [The spectral theorem](04-spectral-theorem.md): perpendicular directions with a stretch along each, turning the form into two squares.
+- [Percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): weights as fractions, scores in percent squared.
 
 ## Where this goes next
 
-- [hessian-and-second-order-approximation](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md): second derivatives.
-- [coupled-oscillators-and-normal-modes](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md): vibration modes.
-- [bivariate-normal-and-conditioning](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): bell shapes.
-- [correlated-paths-and-cholesky](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md): linked returns.
-- hurwitz-schur-and-lyapunov-stability: falling energy.
-- convex-functions-and-their-tests: convexity.
-- rates-of-convergence-and-conditioning: eigenvalue spread.
-- semidefinite-programs-and-relaxations: optimising over them.
-- cholesky-decomposition: the fastest test.
-- iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient: solving downhill.
-- classification-elliptic-parabolic-hyperbolic: naming equations.
-- classification-of-surface-points: bowl, dome, saddle.
-- riemannian-metrics: measuring length.
-- the-manifold-of-covariance-matrices: their own space.
+- [Hessian](../../06-Calculus%20and%20analysis/07-Several%20Variables/05-hessian-and-second-order-approximation.md): second derivatives.
+- [Normal modes](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md): vibration modes.
+- [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): bell shapes.
+- [Correlated paths](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md): linked returns.
+- Stability of a state-space model: falling energy.
+- Convex functions: convexity.
+- Convergence rates: eigenvalue spread.
+- Semidefinite programs: optimising over them.
+- Cholesky: the fastest test.
+- Iterating instead of factoring: solving downhill.
+- Elliptic, parabolic, hyperbolic: naming equations.
+- Point types: bowl, dome, saddle.
+- Riemannian metric: measuring length.
+- Covariance matrices: their own space.
 
 This card leaves open where the matrix comes from when a surface is measured rather than a mix: second derivatives, a later card's business.
 

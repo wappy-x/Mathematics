@@ -1,24 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Taylor Series, Zeros and Rigidity
-topic: Where a function vanishes
-item: Zeros and the identity theorem
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/01-taylor-series-in-the-plane|taylor-series-in-the-plane]]"
-next:
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/04-analytic-continuation|analytic-continuation]]"
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/05-maximum-modulus-principle|maximum-modulus-principle]]"
-  - "[[Cards/07-Complex analysis/06-Real Integrals and Counting Zeros/06-the-argument-principle|the-argument-principle]]"
-tags: [mathematics, complex analysis, zeros-and-the-identity-theorem]
----
-
 # Zeros and the identity theorem: zeros come singly, so a function known on a tiny stretch is known everywhere
 
-Complex analysis → Taylor Series, Zeros and Rigidity → Where a function vanishes → Zeros and the identity theorem
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Taylor Series, Zeros and Rigidity](../../../SYLLABUS.md#w07-s04) → Zeros and the identity theorem
 
 ---
 
@@ -44,7 +26,7 @@ To scale: 35 units per unit, origin at (180, 120). Sine's zeros sit at x = 70.04
 
 ## The formula
 
-Notation first, in words. The letter $a$ names a zero, a point with f(a) = 0. The Taylor coefficients $c_k$ are the numbers in f(z) = c_0 + c_1(z − a) + c_2(z − a)^2 + …, with c_k = f^(k)(a)/k!, the k-th derivative at a over k factorial ([taylor-series-in-the-plane](01-taylor-series-in-the-plane.md)). A **domain** $D$ is open and connected: any two of its points join by a path inside it.
+Notation first, in words. The letter $a$ names a zero, a point with f(a) = 0. The Taylor coefficients $c_k$ are the numbers in f(z) = c_0 + c_1(z − a) + c_2(z − a)^2 + …, with c_k = f^(k)(a)/k!, the k-th derivative at a over k factorial ([Taylor series in the plane](01-taylor-series-in-the-plane.md)). A **domain** $D$ is open and connected: any two of its points join by a path inside it.
 
 $$f(z) = (z - a)^m\, g(z), \qquad g(a) = c_m \neq 0$$
 
@@ -78,7 +60,7 @@ $$f_1(z_n) = f_2(z_n) \text{ for all } n,\quad z_n \in D,\quad z_n \neq a,\quad 
 
 ### Step 0: near each point, the function is its own Taylor series
 
-A holomorphic function equals its Taylor series on every disc round a inside D ([taylor-series-in-the-plane](01-taylor-series-in-the-plane.md)). So every question here becomes: is some coefficient at a not zero?
+A holomorphic function equals its Taylor series on every disc round a inside D ([Taylor series in the plane](01-taylor-series-in-the-plane.md)). So every question here becomes: is some coefficient at a not zero?
 
 ### Step 1: a zero of finite order factors out
 
@@ -115,7 +97,7 @@ Join a to any point b of D by a path inside D. The path stays a fixed distance f
 
 Let h(z) = sin^2 z + cos^2 z − 1. Sums and products of power series are power series, so h is holomorphic on the whole plane, which is connected. It is zero at every real number, including every 1/n, and 1/n closes in on 0. By Steps 3 and 4, h is zero everywhere. At 1 + 2i the two squares are 6.182117 + 12.407326i and −5.182117 − 12.407326i, and they add to 1, though sine there, 3.165779 + 1.959601i, lies far outside the unit circle: the identity is algebra between power series, not the unit circle.
 
-A direct road for this one identity: sin^2 z + cos^2 z = e^(iz) e^(−iz) = 1, from [eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md).
+A direct road for this one identity: sin^2 z + cos^2 z = e^(iz) e^(−iz) = 1, from [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md).
 
 ---
 
@@ -364,8 +346,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Extending formulas.** Real identities such as sin 2z = 2 sin z cos z hold for complex z with no new proof.
-- **Special functions.** Gamma and zeta, the special functions of shelf 09, are defined on part of the plane, then extended; the identity theorem makes the extension unique ([analytic-continuation](04-analytic-continuation.md)).
-- **Counting roots.** Isolated zeros with whole-number orders can be counted inside a loop ([the-argument-principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md)).
+- **Special functions.** Gamma and zeta, the special functions of shelf 09, are defined on part of the plane, then extended; the identity theorem makes the extension unique ([Analytic continuation](04-analytic-continuation.md)).
+- **Counting roots.** Isolated zeros with whole-number orders can be counted inside a loop ([The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md)).
 - **Signal processing.** A signal built from a finite band of frequencies is holomorphic in complex time, so it cannot fall silent for an interval without being silent always.
 
 > **Say it back**
@@ -375,13 +357,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [taylor-series-in-the-plane](01-taylor-series-in-the-plane.md): a holomorphic function equals its Taylor series on every disc inside its domain, with coefficients from the Cauchy integral.
+- [Taylor series in the plane](01-taylor-series-in-the-plane.md): a holomorphic function equals its Taylor series on every disc inside its domain, with coefficients from the Cauchy integral.
 
 ## Where this goes next
 
-- [analytic-continuation](04-analytic-continuation.md): uniqueness used to push a function past the disc where its series converges.
-- [maximum-modulus-principle](05-maximum-modulus-principle.md): a second rigidity, no peak of the modulus inside the domain.
-- [the-argument-principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): a contour integral that counts zeros with their orders.
+- [Analytic continuation](04-analytic-continuation.md): uniqueness used to push a function past the disc where its series converges.
+- [The maximum modulus principle](05-maximum-modulus-principle.md): a second rigidity, no peak of the modulus inside the domain.
+- [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): a contour integral that counts zeros with their orders.
 
 A small piece now fixes the function, but only inside the domain it came with; whether the piece can be carried further, and whether the route matters, is what analytic-continuation settles.
 

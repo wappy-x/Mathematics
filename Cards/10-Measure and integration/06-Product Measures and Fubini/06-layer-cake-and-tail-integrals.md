@@ -1,23 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Product Measures and Fubini
-topic: Averages from tails
-item: The layer-cake formula
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/03-tonelli-and-fubini|tonelli-and-fubini]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/06-expectation-as-an-integral|expectation-as-an-integral]]"
-next:
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/05-lebesgue-stieltjes-integral|lebesgue-stieltjes-integral]]"
-tags: [mathematics, measure and integration, layer-cake-and-tail-integrals]
----
-
 # The layer-cake formula: an integral is the area under the tail sizes, so averages become statements about probabilities
 
-Measure and integration → Product Measures and Fubini → Averages from tails → The layer-cake formula
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Product Measures and Fubini](../../../SYLLABUS.md#w10-s06) → The layer-cake formula
 
 ---
 
@@ -27,7 +10,7 @@ A dart lands uniformly at random on a square board 1 m on a side. Its position i
 
 The direct road averages it over the board, split along the diagonal: the larger coordinate is x on one half and y on the other. A second road asks, at every height t, for the chance that the larger coordinate exceeds t. At t = 0.5 m the dart must miss the lower-left quarter of the board, so the chance is 0.75. At general t it is 1 − t^2. Add those chances up over every height from 0 to 1, as an area under a curve, and the answer is 2/3 m. The direct road gives 2/3 m too.
 
-This is not luck. A non-negative quantity is a stack of thin horizontal layers, one for each height it reaches, and each layer adds its thickness times the chance of reaching it. The picture is a layer cake: slice it horizontally instead of vertically and the volume is unchanged. The real tool behind the picture is Tonelli's theorem ([tonelli-and-fubini](03-tonelli-and-fubini.md)): a non-negative double integral can be done in either order.
+This is not luck. A non-negative quantity is a stack of thin horizontal layers, one for each height it reaches, and each layer adds its thickness times the chance of reaching it. The picture is a layer cake: slice it horizontally instead of vertically and the volume is unchanged. The real tool behind the picture is Tonelli's theorem ([Tonelli and Fubini](03-tonelli-and-fubini.md)): a non-negative double integral can be done in either order.
 
 **The integral of a non-negative function equals the integral, over every height t, of the size of the set where the function exceeds t; for a random quantity, its average is the area under its tail probabilities, and its p-th power's average is the same area with a weight p t^(p−1).**
 
@@ -51,7 +34,7 @@ $$\int_\Omega f\,d\mu \;=\; \int_0^\infty \mu(f > t)\,dt .$$
 
 **Read it aloud:** the integral of f equals the area under the curve that gives, at each height, the size of the set where f is above that height.
 
-For a non-negative random variable $X$ on a probability space, with probability $P$ and expectation $E$ (the integral against P, [expectation-as-an-integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)), this is the **tail formula**. Its weighted form, for the average of $X^p$ (the **p-th moment**), is the **moment formula**, for every power $p > 0$:
+For a non-negative random variable $X$ on a probability space, with probability $P$ and expectation $E$ (the integral against P, [Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)), this is the **tail formula**. Its weighted form, for the average of $X^p$ (the **p-th moment**), is the **moment formula**, for every power $p > 0$:
 
 $$E[X] = \int_0^\infty P(X > t)\,dt, \qquad E[X^p] = \int_0^\infty p\,t^{p-1}\,P(X > t)\,dt .$$
 
@@ -103,7 +86,7 @@ where $\mathbf 1\{\cdot\}$ is 1 when the condition holds and 0 when it fails. In
 
 ### Step 1: the region under the graph is measurable
 
-The region under the graph is $H = \{(\omega, t) : 0 \le t < f(\omega)\}$, a subset of the space times the half-line. Tonelli needs $H$ measurable for the product sigma-algebra ([product-sigma-algebras](01-product-sigma-algebras.md)). Whenever t < f(ω), some rational number r sits strictly between them, so $H$ is the union, over positive rationals r, of the rectangles $\{f > r\} \times [0, r)$: countably many measurable rectangles, so a measurable set. On the board, $H$ is a solid over the square of height max(x, y); both orders compute its volume under the product of area and length ([product-measure](02-product-measure.md)).
+The region under the graph is $H = \{(\omega, t) : 0 \le t < f(\omega)\}$, a subset of the space times the half-line. Tonelli needs $H$ measurable for the product sigma-algebra ([Product sigma-algebras](01-product-sigma-algebras.md)). Whenever t < f(ω), some rational number r sits strictly between them, so $H$ is the union, over positive rationals r, of the rectangles $\{f > r\} \times [0, r)$: countably many measurable rectangles, so a measurable set. On the board, $H$ is a solid over the square of height max(x, y); both orders compute its volume under the product of area and length ([Product measure](02-product-measure.md)).
 
 ### Step 2: slice vertically, slice horizontally
 
@@ -147,7 +130,7 @@ A signed X is its positive part minus its negative part, X = X^+ − X^−. Each
 
 ### Step 6: reading moments off tails
 
-Two readings of the formula are used constantly. First, a tail bound limits the mean. The tail is non-increasing, so the rectangle of width t and height $P(X > t)$ fits under it: $t\,P(X > t) \le E[X]$. That is Markov's inequality ([markov-and-chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) read as a picture. On the board, 0.5 × 0.75 = 3/8, below 2/3.
+Two readings of the formula are used constantly. First, a tail bound limits the mean. The tail is non-increasing, so the rectangle of width t and height $P(X > t)$ fits under it: $t\,P(X > t) \le E[X]$. That is Markov's inequality ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) read as a picture. On the board, 0.5 × 0.75 = 3/8, below 2/3.
 
 Second, the speed at which a tail dies decides which moments are finite. If $P(X > t)$ falls like $t^{-a}$ for large t, then the weighted tail $p\,t^{p-1} t^{-a}$ has finite area exactly when p < a. Y = 1/x has a = 1: its tail area up to height T is 1 + ln T, which passes every bound, so E[Y] is infinite.
 
@@ -156,19 +139,19 @@ Second, the speed at which a tail dies decides which moments are finite. If $P(X
 
 Setting: $(\Omega, \mathcal F, \mu)$ a measure space, $f : \Omega \to [0, \infty]$ measurable, $\lambda$ Lebesgue measure on the Borel sets of $[0, \infty)$.
 
-**Claim 1: the region is measurable.** Let $H = \{(\omega, t) : 0 \le t < f(\omega)\}$. If $t < f(\omega)$, the rationals are dense, so some rational $r > t$ has $r < f(\omega)$ (also when $f(\omega) = \infty$). Hence $H = \bigcup_{r \in \mathbb Q,\, r > 0} \{f > r\} \times [0, r)$. Each $\{f > r\}$ is in $\mathcal F$ because f is measurable, and each $[0, r)$ is Borel, so each term is a measurable rectangle and the countable union is in the product sigma-algebra ([product-sigma-algebras](01-product-sigma-algebras.md)). The same holds for $H' = \{(\omega, t) : 0 \le t \le f(\omega)\} = \bigcap_{k \ge 1} \{(\omega, t) : 0 \le t < f(\omega) + 1/k\}$, each term measurable by the same argument for the measurable function $f + 1/k$.
+**Claim 1: the region is measurable.** Let $H = \{(\omega, t) : 0 \le t < f(\omega)\}$. If $t < f(\omega)$, the rationals are dense, so some rational $r > t$ has $r < f(\omega)$ (also when $f(\omega) = \infty$). Hence $H = \bigcup_{r \in \mathbb Q,\, r > 0} \{f > r\} \times [0, r)$. Each $\{f > r\}$ is in $\mathcal F$ because f is measurable, and each $[0, r)$ is Borel, so each term is a measurable rectangle and the countable union is in the product sigma-algebra ([Product sigma-algebras](01-product-sigma-algebras.md)). The same holds for $H' = \{(\omega, t) : 0 \le t \le f(\omega)\} = \bigcap_{k \ge 1} \{(\omega, t) : 0 \le t < f(\omega) + 1/k\}$, each term measurable by the same argument for the measurable function $f + 1/k$.
 
-**Claim 2: the formula, for σ-finite $\mu$.** $\lambda$ on $[0, \infty)$ is σ-finite. Tonelli's theorem ([tonelli-and-fubini](03-tonelli-and-fubini.md)) applies to the non-negative measurable function $\mathbf 1_H$ and gives
+**Claim 2: the formula, for σ-finite $\mu$.** $\lambda$ on $[0, \infty)$ is σ-finite. Tonelli's theorem ([Tonelli and Fubini](03-tonelli-and-fubini.md)) applies to the non-negative measurable function $\mathbf 1_H$ and gives
 $$\int_\Omega \left(\int_0^\infty \mathbf 1_H(\omega, t)\,dt\right) d\mu(\omega) = \int_0^\infty \left(\int_\Omega \mathbf 1_H(\omega, t)\,d\mu(\omega)\right) dt .$$
 The inner integral on the left is $\lambda([0, f(\omega))) = f(\omega)$. The inner integral on the right is $\mu(\{\omega : f(\omega) > t\})$. This is the formula, with $+\infty$ allowed on both sides. The same computation with $H'$ gives $\lambda([0, f(\omega)]) = f(\omega)$ on the left and $\mu(f \ge t)$ on the right, so $\int_0^\infty \mu(f \ge t)\,dt = \int f\,d\mu$ as well.
 
-**Claim 3: the formula, for any measure.** First let $s$ be a non-negative simple function taking distinct values $0 < b_1 < \dots < b_m$ on disjoint sets $B_1, \dots, B_m$ in $\mathcal F$ and 0 elsewhere. For each t, $\mu(s > t) = \sum_{j : b_j > t} \mu(B_j) = \sum_j \mu(B_j)\,\mathbf 1\{t < b_j\}$, a finite sum of non-negative functions of t. Integrating term by term, $\int_0^\infty \mu(s > t)\,dt = \sum_j \mu(B_j)\,b_j = \int s\,d\mu$ ([integral-of-a-simple-function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md)). For general f take simple $s_n \uparrow f$ pointwise ([simple-functions-and-approximation](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). Each $t \mapsto \mu(s_n > t)$ and $t \mapsto \mu(f > t)$ is non-increasing, hence Borel measurable. For fixed t, the sets $\{s_n > t\}$ increase, and their union is $\{f > t\}$: if $f(\omega) > t$ then $s_n(\omega) > t$ for large n. Continuity of measure from below ([continuity-of-measure](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) gives $\mu(s_n > t) \uparrow \mu(f > t)$ for every t. The monotone convergence theorem ([monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)), once on $[0, \infty)$ and once on $\Omega$, gives $\int_0^\infty \mu(f > t)\,dt = \lim_n \int_0^\infty \mu(s_n > t)\,dt = \lim_n \int s_n\,d\mu = \int f\,d\mu$.
+**Claim 3: the formula, for any measure.** First let $s$ be a non-negative simple function taking distinct values $0 < b_1 < \dots < b_m$ on disjoint sets $B_1, \dots, B_m$ in $\mathcal F$ and 0 elsewhere. For each t, $\mu(s > t) = \sum_{j : b_j > t} \mu(B_j) = \sum_j \mu(B_j)\,\mathbf 1\{t < b_j\}$, a finite sum of non-negative functions of t. Integrating term by term, $\int_0^\infty \mu(s > t)\,dt = \sum_j \mu(B_j)\,b_j = \int s\,d\mu$ ([The integral of a simple function](../04-The%20Lebesgue%20Integral/01-integral-of-a-simple-function.md)). For general f take simple $s_n \uparrow f$ pointwise ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). Each $t \mapsto \mu(s_n > t)$ and $t \mapsto \mu(f > t)$ is non-increasing, hence Borel measurable. For fixed t, the sets $\{s_n > t\}$ increase, and their union is $\{f > t\}$: if $f(\omega) > t$ then $s_n(\omega) > t$ for large n. Continuity of measure from below ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) gives $\mu(s_n > t) \uparrow \mu(f > t)$ for every t. The monotone convergence theorem ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)), once on $[0, \infty)$ and once on $\Omega$, gives $\int_0^\infty \mu(f > t)\,dt = \lim_n \int_0^\infty \mu(s_n > t)\,dt = \lim_n \int s_n\,d\mu = \int f\,d\mu$.
 
 **Claim 4: moments.** Let $p > 0$. For $a \in [0, \infty]$, $a^p = \int_0^\infty p\,t^{p-1}\,\mathbf 1\{t < a\}\,dt$ by the fundamental theorem of calculus on $[0, a)$ (and monotone convergence when $a = \infty$). The measure $p\,t^{p-1}\,dt$ on $[0, \infty)$ is σ-finite. Claim 1 and Tonelli with it in place of $\lambda$ give $\int f^p\,d\mu = \int_0^\infty p\,t^{p-1}\,\mu(f > t)\,dt$ for σ-finite $\mu$; for a general measure, apply Claim 3 to $f^p$, use $\{f^p > u\} = \{f > u^{1/p}\}$, and substitute $u = t^p$.
 
 **Claim 5: shift.** For real K and $a \in [-\infty, \infty]$, $(a - K)^+ = \lambda([K, \infty) \cap [K, a)) = \int_K^\infty \mathbf 1\{t < a\}\,dt$. The region $\{(\omega, t) : K \le t < X(\omega)\}$ is the union over rationals $r > K$ of $\{X > r\} \times [K, r)$. Tonelli gives $E[(X - K)^+] = \int_K^\infty P(X > t)\,dt$.
 
-**Claim 6: signed X.** Write $X = X^+ - X^-$ with $X^+ = \max(X, 0)$, $X^- = \max(-X, 0)$. For $t \ge 0$, $\{X^+ > t\} = \{X > t\}$ and $\{X^- > t\} = \{X < -t\}$. Claim 2 for each part gives $E[X^+] = \int_0^\infty P(X > t)\,dt$ and $E[X^-] = \int_0^\infty P(X < -t)\,dt$. When at least one is finite, $E[X] = E[X^+] - E[X^-]$ by the definition of the integral of a signed function ([integrable-functions-and-l1](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)).
+**Claim 6: signed X.** Write $X = X^+ - X^-$ with $X^+ = \max(X, 0)$, $X^- = \max(-X, 0)$. For $t \ge 0$, $\{X^+ > t\} = \{X > t\}$ and $\{X^- > t\} = \{X < -t\}$. Claim 2 for each part gives $E[X^+] = \int_0^\infty P(X > t)\,dt$ and $E[X^-] = \int_0^\infty P(X < -t)\,dt$. When at least one is finite, $E[X] = E[X^+] - E[X^-]$ by the definition of the integral of a signed function ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)).
 
 **Claim 7: the board.** $\{M \le t\} = [0, t]^2$ for $0 \le t \le 1$, so $P(M > t) = 1 - t^2$ there and 0 beyond. Claim 4 gives $E[M^p] = 1 - \frac{p}{p+2} = \frac{2}{p+2}$; Tonelli on the triangle $\{y < x\}$, doubled by symmetry (the diagonal has area 0), gives $2\int_0^1 x^{p+1}\,dx$, the same.
 
@@ -569,8 +552,8 @@ The two outputs match line for line. The simulated E[M], 0.6664, is within one s
 - **Reliability and survival.** A component's expected lifetime is the area under its survival curve, the probability it still works at time t; no density is needed.
 - **Stop-loss insurance.** A reinsurer pays the part of a loss above a retention K; its expected payment is the tail area from K on, the shifted formula.
 - **Heavy tails.** Claim sizes and file sizes have tails falling like a power of t; the exponent decides which moments exist.
-- **Inequalities.** Markov's inequality is the rectangle under the tail curve ([markov-and-chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)); in harmonic analysis the size of a function in $L^p$ is computed from its tail sizes by the moment formula.
-- **Maxima of independent readings.** P(M ≤ t) = t × t because the coordinates are independent ([independence-as-a-product-measure](04-independence-as-a-product-measure.md)); the tail of a sum x + y comes from [convolution-and-sums](05-convolution-and-sums.md).
+- **Inequalities.** Markov's inequality is the rectangle under the tail curve ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)); in harmonic analysis the size of a function in $L^p$ is computed from its tail sizes by the moment formula.
+- **Maxima of independent readings.** P(M ≤ t) = t × t because the coordinates are independent ([Independence as a product](04-independence-as-a-product-measure.md)); the tail of a sum x + y comes from [Convolution](05-convolution-and-sums.md).
 
 > **Say it back**
 > A non-negative height is the length of the stack of levels below it. Integrating over the space and swapping the order by Tonelli turns the integral of f into the area under its tail sizes. The mean of a random quantity is the area under P(X > t); the p-th moment weights each level by p t^(p−1). The dart's larger coordinate has tail 1 − t^2, mean 2/3 m and mean square 1/2. A signed quantity needs its lower tail subtracted.
@@ -579,14 +562,14 @@ The two outputs match line for line. The simulated E[M], 0.6664, is within one s
 
 ## What this builds on
 
-- [tonelli-and-fubini](03-tonelli-and-fubini.md): the swap of the two integrals, for non-negative functions on a product of σ-finite spaces.
-- [expectation-as-an-integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md): expectation as the integral against P, so the tail formula is a statement about the integral.
+- [Tonelli and Fubini](03-tonelli-and-fubini.md): the swap of the two integrals, for non-negative functions on a product of σ-finite spaces.
+- [Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md): expectation as the integral against P, so the tail formula is a statement about the integral.
 
 ## Where this goes next
 
-- [lebesgue-stieltjes-integral](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md): integrals against a distribution function, where the tail formula becomes integration by parts.
+- [The Lebesgue-Stieltjes integral](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md): integrals against a distribution function, where the tail formula becomes integration by parts.
 
-This card integrates tail chances against length on the height axis; how to integrate against the distribution function itself, even when the law has jumps, as a die roll does, is the question [lebesgue-stieltjes-integral](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md) answers.
+This card integrates tail chances against length on the height axis; how to integrate against the distribution function itself, even when the law has jumps, as a die roll does, is the question [The Lebesgue-Stieltjes integral](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/05-lebesgue-stieltjes-integral.md) answers.
 
 ---
 

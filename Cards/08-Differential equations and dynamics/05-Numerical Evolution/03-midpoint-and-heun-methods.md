@@ -1,22 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Numerical Evolution
-topic: Two slopes per step
-item: Midpoint and Heun
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/02-local-and-global-error-and-order|local-and-global-error-and-order]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/04-runge-kutta-four|runge-kutta-four]]"
-tags: [mathematics, differential equations and dynamics, midpoint-and-heun-methods]
----
-
 # Midpoint and Heun: sample the slope twice per step and the error shrinks four times faster
 
-Differential equations and dynamics → Numerical Evolution → Two slopes per step → Midpoint and Heun
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Numerical Evolution](../../../SYLLABUS.md#w08-s05) → Midpoint and Heun
 
 ---
 
@@ -24,7 +8,7 @@ Differential equations and dynamics → Numerical Evolution → Two slopes per s
 
 A skydiver leaves the plane at rest. Gravity adds 9.8 m/s of speed each second; drag removes a fifth of the current speed each second. The speed climbs towards 49 m/s, where the two balance, and at ten seconds is 42.37 m/s.
 
-Euler's rule ([eulers-method](01-eulers-method.md)) steps forward using the slope at the start of each step. With two-second steps it reads 45.19 m/s at ten seconds, 2.82 too fast: drag grows with speed, so the slope falls during every step, and Euler uses its steepest point.
+Euler's rule ([Euler's method](01-eulers-method.md)) steps forward using the slope at the start of each step. With two-second steps it reads 45.19 m/s at ten seconds, 2.82 too fast: drag grows with speed, so the slope falls during every step, and Euler uses its steepest point.
 
 Two repairs read the slope a second time inside the step. The **midpoint method** walks half a step on the first slope and reads the slope there. **Heun's method**, or improved Euler, walks a whole step, reads the slope at the far end and averages the two. With the same steps both read 41.88 m/s. Halve the step and Euler's error halves; Heun's falls to a quarter.
 
@@ -73,7 +57,7 @@ $$v_{n+1} = v_n + h\,(b_1 k_1 + b_2 k_2), \qquad k_2 = f(t_n + c\,h,\ v_n + c\,h
 
 - **A smooth rule.** The derivation uses the rule's second rates of change. If the rule jumps, say a parachute opening mid-step, that one step errs in proportion to $h$, and the error at 10 s shrinks only as fast as Euler's.
 - **A fixed end time, small steps.** "Second order" describes the error at a fixed time as $h$ shrinks; at large steps the pattern has not set in.
-- **A step short against the rule's time scale.** One skydiver step multiplies the gap to 49 m/s by $q$; past $h$ = 10 s, $q$ exceeds 1 and the speed runs away. Very fast rules need [stiff-equations-and-backward-euler](06-stiff-equations-and-backward-euler.md).
+- **A step short against the rule's time scale.** One skydiver step multiplies the gap to 49 m/s by $q$; past $h$ = 10 s, $q$ exceeds 1 and the speed runs away. Very fast rules need [Stiff equations](06-stiff-equations-and-backward-euler.md).
 
 ---
 
@@ -121,7 +105,7 @@ the first three terms of the series for $e^{-x}$. At $h$ = 2 s, $q$ = 0.6800 aga
 
 ### Step 5: local $h^3$ becomes global $h^2$
 
-Reaching ten seconds takes $10/h$ steps. Each adds an error proportional to $h^3$, and earlier errors are carried along, grown by at most a fixed factor. The total is about $10/h$ times $h^3$: proportional to $h^2$. That is what "order 2" means ([local-and-global-error-and-order](02-local-and-global-error-and-order.md)): halving the step quarters the error.
+Reaching ten seconds takes $10/h$ steps. Each adds an error proportional to $h^3$, and earlier errors are carried along, grown by at most a fixed factor. The total is about $10/h$ times $h^3$: proportional to $h^2$. That is what "order 2" means ([Order of a method](02-local-and-global-error-and-order.md)): halving the step quarters the error.
 
 <details>
 <summary>Detailed proof: from local error to global error</summary>
@@ -136,7 +120,7 @@ So $e_{n+1} \le e^{Lh}\,e_n + C h^3$ with $e_0 = 0$, and after $N$ steps $e_N \l
 
 </details>
 
-A second road needs no exact solution: compare answers at $h$, $h/2$ and $h/4$ and read the order from the ratio of successive differences. Built into each step, it becomes [adaptive-step-size](05-adaptive-step-size.md).
+A second road needs no exact solution: compare answers at $h$, $h/2$ and $h/4$ and read the order from the ratio of successive differences. Built into each step, it becomes [Adaptive steps](05-adaptive-step-size.md).
 
 ---
 
@@ -400,8 +384,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Integrating a plain function.** When the rule ignores the unknown, $f$ depends on $t$ alone and Heun's step is the trapezoidal rule for areas, while the midpoint step is the midpoint rule: both from [numerical-integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md).
-- **Adaptive solvers.** Euler and Heun share their first sample, so running both gives a free estimate of Euler's error: the idea behind [adaptive-step-size](05-adaptive-step-size.md).
+- **Integrating a plain function.** When the rule ignores the unknown, $f$ depends on $t$ alone and Heun's step is the trapezoidal rule for areas, while the midpoint step is the midpoint rule: both from [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md).
+- **Adaptive solvers.** Euler and Heun share their first sample, so running both gives a free estimate of Euler's error: the idea behind [Adaptive steps](05-adaptive-step-size.md).
 
 > **Say it back**
 > Euler steps on the starting slope and misses the curve's bend. A second sample, read halfway (midpoint) or at the predicted far end and averaged (Heun), matches the true curve through the step-squared term. The error at a fixed time then goes as the step squared. On the skydiver with 2 s steps Heun reads 41.88 m/s at ten seconds against the true 42.37; halving the step quarters the error.
@@ -410,11 +394,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [local-and-global-error-and-order](02-local-and-global-error-and-order.md): what local and global error are, and why a step-cubed local error gives a step-squared global one.
+- [Order of a method](02-local-and-global-error-and-order.md): what local and global error are, and why a step-cubed local error gives a step-squared global one.
 
 ## Where this goes next
 
-- [runge-kutta-four](04-runge-kutta-four.md): four samples per step, matching the true curve through the fourth power of the step.
+- [Runge-Kutta four](04-runge-kutta-four.md): four samples per step, matching the true curve through the fourth power of the step.
 
 ---
 

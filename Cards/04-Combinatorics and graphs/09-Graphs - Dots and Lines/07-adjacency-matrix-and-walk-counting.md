@@ -1,29 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Graphs - Dots and Lines
-topic: The graph as a table
-item: The adjacency matrix
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/03-walks-paths-and-cycles|walks-paths-and-cycles]]"
-  - "[[Cards/03-Algebra/04-Matrices/03-matrix-multiplication|matrix-multiplication]]"
-  - "[[Cards/03-Algebra/04-Matrices/01-matrices-and-the-matrix-zoo|matrices-and-the-matrix-zoo]]"
-next:
-  - "[[Cards/09-Probability and statistics/14-Random Graphs and the Probabilistic Method/05-random-walks-on-graphs-and-mixing|random-walks-on-graphs-and-mixing]]"
-  - "[[Cards/14-Applied and computational/07-Network Science and Spectral Graphs/01-centrality-and-pagerank|centrality-and-pagerank]]"
-  - "[[Cards/16-Numerical analysis/03-Numerical Linear Algebra/10-sparse-matrices-and-krylov-methods|sparse-matrices-and-krylov-methods]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - adjacency-matrix-and-walk-counting
----
-
 # The adjacency matrix: a grid of ones and zeros, and its powers count walks of each length
 
-Combinatorics and graphs → Graphs - Dots and Lines → The graph as a table → The adjacency matrix
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Graphs - Dots and Lines](../../../SYLLABUS.md#w04-s09) → The adjacency matrix
 
 ---
 
@@ -33,7 +10,7 @@ A city metro runs six stations, A to F, joined by eight lines: A-B, B-C, C-D, D-
 
 Three lines is short enough to list, and the answer is six: A-B-A-F, A-B-C-F, A-B-E-F, A-F-A-F, A-F-C-F, A-F-E-F. Ask for nine lines, or ask on four hundred stations, and listing stops being possible.
 
-So stop drawing and start tabulating. Lay the stations out as the rows of a square grid and again as its columns, with a 1 where a line joins two of them. Multiply that grid by itself and the cells count two-line routes; multiply again, three-line routes. Matrix multiplication ([matrix-multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md)) is the bookkeeping route counting needs.
+So stop drawing and start tabulating. Lay the stations out as the rows of a square grid and again as its columns, with a 1 where a line joins two of them. Multiply that grid by itself and the cells count two-line routes; multiply again, three-line routes. Matrix multiplication ([Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md)) is the bookkeeping route counting needs.
 
 **Write the map as a square table of ones and zeros; multiply it into itself k times and each cell counts the routes of exactly k lines between its two stations.**
 
@@ -63,15 +40,15 @@ $$A_{ij} \;=\; 1 \text{ when a line joins } i \text{ and } j, \text{ otherwise }
 
 **Read it aloud:** one row and one column per station, and a 1 wherever a line lands.
 
-Row A reads 0 1 0 0 0 1: lines to B and to F, nothing else. A line joins A and B both ways, so tipping the table over changes nothing: $A$ equals its transpose $A^{T}$ ([matrices-and-the-matrix-zoo](../../03-Algebra/04-Matrices/01-matrices-and-the-matrix-zoo.md)). Each row adds up to its station's **degree** ([degree-and-handshaking](02-degree-and-handshaking.md)): 2, 3, 3, 2, 3, 3.
+Row A reads 0 1 0 0 0 1: lines to B and to F, nothing else. A line joins A and B both ways, so tipping the table over changes nothing: $A$ equals its transpose $A^{T}$ ([Matrices](../../03-Algebra/04-Matrices/01-matrices-and-the-matrix-zoo.md)). Each row adds up to its station's **degree** ([Degrees and the handshaking lemma](02-degree-and-handshaking.md)): 2, 3, 3, 2, 3, 3.
 
-A **walk** of length $k$ is a ride along $k$ lines in turn, stations and lines free to repeat ([walks-paths-and-cycles](03-walks-paths-and-cycles.md)). The result the card exists for:
+A **walk** of length $k$ is a ride along $k$ lines in turn, stations and lines free to repeat ([Walks, paths and cycles](03-walks-paths-and-cycles.md)). The result the card exists for:
 
 $$\bigl(A^{k}\bigr)_{ij} \;=\; \text{walks of length } k \text{ from } i \text{ to } j$$
 
 **Read it aloud:** multiply the table into itself k times and every cell counts the k-line routes from its row's station to its column's.
 
-The **trace** is the sum of a square table's diagonal. The **incidence matrix** $M$ is the same map line-by-station: eight rows, six columns, a 1 where a line touches a station — the grid of ends on [degree-and-handshaking](02-degree-and-handshaking.md), tipped over.
+The **trace** is the sum of a square table's diagonal. The **incidence matrix** $M$ is the same map line-by-station: eight rows, six columns, a 1 where a line touches a station — the grid of ends on [Degrees and the handshaking lemma](02-degree-and-handshaking.md), tipped over.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -111,7 +88,7 @@ The Greek capital sigma says "add this up as u runs over all six stations". The 
 <details>
 <summary>The same count on one-way lines</summary>
 
-No step used the fact that a line runs both ways: read $A_{ij}$ as "an arc leads from i to j" and the induction is unchanged, so powers of a one-way table count one-way routes ([directed-graphs-and-topological-order](06-directed-graphs-and-topological-order.md)).
+No step used the fact that a line runs both ways: read $A_{ij}$ as "an arc leads from i to j" and the induction is unchanged, so powers of a one-way table count one-way routes ([Directed graphs](06-directed-graphs-and-topological-order.md)).
 
 </details>
 
@@ -119,7 +96,7 @@ No step used the fact that a line runs both ways: read $A_{ij}$ as "an arc leads
 
 A walk that finishes where it began lands on the diagonal. At length 2 such a ride is "take a line, take it back", so the squared diagonal reads 2 3 3 2 3 3 — the degrees — and its trace is 16, twice the eight lines. Off the diagonal the square counts shared neighbours: the 2 at row A, column C counts B and F, each joined to both.
 
-With no loops, three lines can only come home by visiting three different stations, which is a triangle, and each triangle supplies six closed rides: three starting points, two directions. So the cubed trace is six times the triangles. Here it is 0, so the map holds none, agreeing with the count on [graphs-vertices-and-edges](01-graphs-vertices-and-edges.md). Add the line A-C and two triangles appear, A-B-C and A-C-F: that map's cubed trace reads 12, and 12 over 6 is 2.
+With no loops, three lines can only come home by visiting three different stations, which is a triangle, and each triangle supplies six closed rides: three starting points, two directions. So the cubed trace is six times the triangles. Here it is 0, so the map holds none, agreeing with the count on [Graphs](01-graphs-vertices-and-edges.md). Add the line A-C and two triangles appear, A-B-C and A-C-F: that map's cubed trace reads 12, and 12 over 6 is 2.
 
 ### Step 3: the line-by-station table gives the same map back
 
@@ -150,7 +127,7 @@ E                     0
 F  ██████             6
 ```
 
-A, C and E stay blank: every line crosses between the groups A, C, E and B, D, F ([bipartite-graphs-and-odd-cycles](05-bipartite-graphs-and-odd-cycles.md)), so odd lengths finish across the split.
+A, C and E stay blank: every line crosses between the groups A, C, E and B, D, F ([Bipartite graphs](05-bipartite-graphs-and-odd-cycles.md)), so odd lengths finish across the split.
 
 ### What breaks if you drop a piece
 
@@ -392,8 +369,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Route planning.** A network is held as neighbour lists; routes of a given length come from powers, shortest routes from a sweep outward ([connectivity-and-breadth-first-search](04-connectivity-and-breadth-first-search.md)).
-- **Ranking web pages.** Links are one-way, so the table is not symmetric; divide each row by its links out and multiplying repeatedly spreads weight until it settles (centrality-and-pagerank).
+- **Route planning.** A network is held as neighbour lists; routes of a given length come from powers, shortest routes from a sweep outward ([Connected or not](04-connectivity-and-breadth-first-search.md)).
+- **Ranking web pages.** Links are one-way, so the table is not symmetric; divide each row by its links out and multiplying repeatedly spreads weight until it settles (Centrality).
 - **Citation networks.** The cubed trace over six counts triangles, a measure of how tightly a field cites itself.
 
 > **Say it back**
@@ -403,15 +380,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [walks-paths-and-cycles](03-walks-paths-and-cycles.md): what a walk is, and why it is not a path.
-- [matrix-multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md): the row-against-column rule, reread as gluing one line onto a walk.
-- [matrices-and-the-matrix-zoo](../../03-Algebra/04-Matrices/01-matrices-and-the-matrix-zoo.md): the identity table, the transpose, symmetry, the trace.
+- [Walks, paths and cycles](03-walks-paths-and-cycles.md): what a walk is, and why it is not a path.
+- [Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md): the row-against-column rule, reread as gluing one line onto a walk.
+- [Matrices](../../03-Algebra/04-Matrices/01-matrices-and-the-matrix-zoo.md): the identity table, the transpose, symmetry, the trace.
 
 ## Where this goes next
 
-- [random-walks-on-graphs-and-mixing](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md): divide each row by its degree and the counts become chances for a wandering train.
-- centrality-and-pagerank: multiplying by the table over and over to rank pages by the traffic reaching them.
-- sparse-matrices-and-krylov-methods: multiplying a table of mostly zeros on a network of millions.
+- [Random walks on a graph](../../09-Probability%20and%20statistics/14-Random%20Graphs%20and%20the%20Probabilistic%20Method/05-random-walks-on-graphs-and-mixing.md): divide each row by its degree and the counts become chances for a wandering train.
+- Centrality: multiplying by the table over and over to rank pages by the traffic reaching them.
+- Sparse storage and Krylov methods: multiplying a table of mostly zeros on a network of millions.
 
 Each further power costs another full multiply; the escape is that a symmetric table splits into a handful of eigenvalues and their directions, and every walk count follows from those.
 

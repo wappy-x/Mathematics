@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Swaps
-topic: Pricing a new swap
-item: The par swap rate
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/28-Swaps/01-interest-rate-swaps|interest-rate-swaps]]"
-next:
-  - "[[Cards/12-Financial mathematics/28-Swaps/03-swap-dv01-and-hedging|swap-dv01-and-hedging]]"
-  - "[[Cards/12-Financial mathematics/28-Swaps/07-swap-inverses-rate-and-curve-from-price|swap-inverses-rate-and-curve-from-price]]"
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/04-swaptions-payer-and-receiver|swaptions-payer-and-receiver]]"
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/04-forward-cds-and-the-forward-spread|forward-cds-and-the-forward-spread]]"
-tags: [mathematics, financial mathematics, par-swap-rate-and-annuity]
----
-
 # The par swap rate: the fixed rate that makes a new swap worth zero, and the annuity it divides by
 
-Financial mathematics → Swaps → Pricing a new swap → The par swap rate
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Swaps](../../../SYLLABUS.md#w12-s28) → The par swap rate
 
 ---
 
@@ -27,7 +8,7 @@ Financial mathematics → Swaps → Pricing a new swap → The par swap rate
 
 A company has borrowed 10 million dollars for five years at a floating rate: each year it pays whatever the one-year rate turns out to be. It wants a fixed bill instead. A bank will swap: the company pays the bank a fixed rate on 10 million each year, and the bank pays the company the floating rate, which the company passes to its lender. The company's cost is now fixed.
 
-Nobody pays anything up front, so the fixed rate has to be fair on the day the swap is signed. On this card's curve, where rates are expected to fall, the fair rate is **4.42 percent**. (The shelf's other cards use a rising curve, on which the par rate is 4.65 percent: [interest-rate-swaps](01-interest-rate-swaps.md).) At that rate the fixed payments and the floating payments are worth exactly the same today: 1,936,740.46 dollars each. The fair rate for a new swap is called the **par swap rate**, or simply the swap rate. It is the number quoted on every rates screen.
+Nobody pays anything up front, so the fixed rate has to be fair on the day the swap is signed. On this card's curve, where rates are expected to fall, the fair rate is **4.42 percent**. (The shelf's other cards use a rising curve, on which the par rate is 4.65 percent: [Interest rate swaps](01-interest-rate-swaps.md).) At that rate the fixed payments and the floating payments are worth exactly the same today: 1,936,740.46 dollars each. The fair rate for a new swap is called the **par swap rate**, or simply the swap rate. It is the number quoted on every rates screen.
 
 The par rate comes out of one division. The top is what the floating payments are worth. The bottom is what one unit of fixed rate, paid on every date of the swap, is worth: about 4.38 here (4.380745), called the **annuity**. Rewritten, the same division is an average of the market's forward rates (the rates fixed today for each future year), weighted by how much a dollar on each date is worth today.
 
@@ -86,12 +67,12 @@ $$V = N \, A \, (S - K)$$
 | $K$ | the fixed rate written into a particular swap | 4.50 percent for the house swap | the value to the fixed payer falls by $N A$ per unit |
 | $V$ | the value today of a swap paying $K$ fixed and receiving floating | −34,594.64 dollars at 4.50 percent | — |
 
-**Conventions verified 27 Sep 2026.** Every accrual here is set by hand to exactly one year, and both legs pay on the same dates, so the arithmetic stays visible. Real swaps compute each $\alpha_i$ from calendar dates under a day-count rule named in the contract, and the fixed and floating legs often use different rules and different frequencies; those rules are on [day-counts-and-dates](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md). The formula does not change: $A$ always runs over the fixed leg's own dates and accruals.
+**Conventions verified 27 Sep 2026.** Every accrual here is set by hand to exactly one year, and both legs pay on the same dates, so the arithmetic stays visible. Real swaps compute each $\alpha_i$ from calendar dates under a day-count rule named in the contract, and the fixed and floating legs often use different rules and different frequencies; those rules are on [Day counts](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md). The formula does not change: $A$ always runs over the fixed leg's own dates and accruals.
 
 ### When it holds
 
-- **One curve forecasts and discounts.** The floating leg collapses to D(0) − D(5) only if the rate the floating leg pays is the rate the discount factors are built from. Since 2008 the two are separate curves, the collapse fails, and the floating leg must be summed coupon by coupon: [basis-swaps-and-the-multi-curve-framework](04-basis-swaps-and-the-multi-curve-framework.md).
-- **No default.** Both sides are assumed to pay. A counterparty that can fail makes each leg worth less by its own credit charge, and collateral changes which rate discounts: [ois-discounting-and-collateral](05-ois-discounting-and-collateral.md).
+- **One curve forecasts and discounts.** The floating leg collapses to D(0) − D(5) only if the rate the floating leg pays is the rate the discount factors are built from. Since 2008 the two are separate curves, the collapse fails, and the floating leg must be summed coupon by coupon: [Multi-curve](04-basis-swaps-and-the-multi-curve-framework.md).
+- **No default.** Both sides are assumed to pay. A counterparty that can fail makes each leg worth less by its own credit charge, and collateral changes which rate discounts: [Collateral discounting](05-ois-discounting-and-collateral.md).
 - **The floating rate is set at the start of each period and paid at its end.** A rate set late, paid early, or averaged over the period needs a small adjustment to its forward.
 - **A new swap starts today.** For a swap starting later, $D(T_0)$ is below one and the same formula gives the forward swap rate.
 
@@ -122,7 +103,7 @@ Set the legs equal: $N K A = N(1 - D(5))$. The par rate is $S = (1 - D(5))/A$ = 
 
 Hold a deposit of one dollar from $T_{i-1}$ to $T_i$. At $T_{i-1}$ the rate $L_i$ is set, and at $T_i$ the deposit returns $1 + \alpha_i L_i$. Its value at $T_{i-1}$ is one dollar, so its value today is $D(T_{i-1})$. The one dollar returned at $T_i$ is worth $D(T_i)$ today. So the coupon $\alpha_i L_i$ paid at $T_i$ is worth $D(T_{i-1}) - D(T_i)$ today, whatever $L_i$ turns out to be.
 
-Write that value as $\alpha_i F_i D(T_i)$: this defines $F_i$ as the fixed rate that, paid in place of $L_i$, has the same value today. Solving gives $F_i = (D(T_{i-1})/D(T_i) - 1)/\alpha_i$, the forward rate of [forward-rate-agreements](../02-Curves/02-forward-rate-agreements.md).
+Write that value as $\alpha_i F_i D(T_i)$: this defines $F_i$ as the fixed rate that, paid in place of $L_i$, has the same value today. Solving gives $F_i = (D(T_{i-1})/D(T_i) - 1)/\alpha_i$, the forward rate of [Forward rate agreements](../02-Curves/02-forward-rate-agreements.md).
 
 Add the five coupons. The middle terms cancel in pairs: $(D(T_0) - D(T_1)) + (D(T_1) - D(T_2)) + \dots + (D(T_4) - D(T_5)) = D(T_0) - D(T_5)$. A sum whose middle cancels like this is called telescoping. The fixed leg is $K A$ per dollar. Equal values give $K = (D(T_0) - D(T_n))/A$, and there is exactly one such $K$, because $A$ is positive: the fixed leg grows in a straight line with $K$ while the floating leg does not depend on it.
 
@@ -151,7 +132,7 @@ The weights fall because a dollar paid later is worth less today. The early forw
 
 A swap written last month at $K$ = 4.50 percent is no longer at par. Its fixed leg is $N K A$; its floating leg is still $N S A$, since that is what par means. The difference, to the fixed payer, is $V = N A (S - K)$.
 
-Take the house swap's terms: 4.50 percent fixed on 10 million. That is 7.8970 basis points above today's par. Each basis point of fixed rate is worth $N A$ times one basis point: 4,380.74 dollars. So the fixed payer is down 34,594.64 dollars. On the curve of [interest-rate-swaps](01-interest-rate-swaps.md) the same contract is worth +65,736.36 dollars: there par is 4.65 percent and $A$ is 4.382424. Same terms, different curve, opposite sign. The annuity is the exchange rate between a rate gap and money, and it is also the slope of the swap's value against its fixed rate.
+Take the house swap's terms: 4.50 percent fixed on 10 million. That is 7.8970 basis points above today's par. Each basis point of fixed rate is worth $N A$ times one basis point: 4,380.74 dollars. So the fixed payer is down 34,594.64 dollars. On the curve of [Interest rate swaps](01-interest-rate-swaps.md) the same contract is worth +65,736.36 dollars: there par is 4.65 percent and $A$ is 4.382424. Same terms, different curve, opposite sign. The annuity is the exchange rate between a rate gap and money, and it is also the slope of the swap's value against its fixed rate.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -167,11 +148,11 @@ One line: the swap's value to the side paying fixed, by the fixed rate written i
 <details>
 <summary>The par bond view</summary>
 
-Add the notional to both legs at the end. The floating side becomes the deposit plan of Step 2, worth exactly one dollar today. The fixed side becomes a bond paying coupon $K$ each year and one dollar at maturity. A new swap is worth zero, so this bond must be worth one dollar: it trades at par, its face value. The par swap rate is the coupon of a par bond on the same curve, the par rate of [spot-forward-and-par-rates](../02-Curves/01-spot-forward-and-par-rates.md). The code's third road solves for that coupon directly.
+Add the notional to both legs at the end. The floating side becomes the deposit plan of Step 2, worth exactly one dollar today. The fixed side becomes a bond paying coupon $K$ each year and one dollar at maturity. A new swap is worth zero, so this bond must be worth one dollar: it trades at par, its face value. The par swap rate is the coupon of a par bond on the same curve, the par rate of [Spot, forward and par rates](../02-Curves/01-spot-forward-and-par-rates.md). The code's third road solves for that coupon directly.
 
 </details>
 
-A different route to the same ratio values everything in units of the annuity itself rather than in dollars. The par rate is then the price of one traded portfolio (a dollar now less a dollar at the end) measured in another (the annuity), and in those units its expected change is zero: it has no drift. That is the route to option prices on the swap rate: [swaptions-payer-and-receiver](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md).
+A different route to the same ratio values everything in units of the annuity itself rather than in dollars. The par rate is then the price of one traded portfolio (a dollar now less a dollar at the end) measured in another (the annuity), and in those units its expected change is zero: it has no drift. That is the route to option prices on the swap rate: [Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md).
 
 ---
 
@@ -613,10 +594,10 @@ The two outputs agree line for line.
 ## Where you meet it in real life
 
 - **Every rates screen.** Swap dealers quote par rates for each maturity; the five-year swap rate is the fixed rate on a new five-year swap. A hedge is priced by reading it off.
-- **Building the curve.** Par swap rates are the long-end inputs from which discount factors are solved one maturity at a time: [bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md). That is this card's formula run backwards.
-- **Marking a swap already on the books.** The value is the notional times the annuity times the gap between today's par rate and the swap's own rate: [interest-rate-swaps](01-interest-rate-swaps.md).
-- **Risk per basis point.** $N A$ times one basis point is the first estimate of how much a swap moves when rates move one basis point, 4,380.74 dollars here: [swap-dv01-and-hedging](03-swap-dv01-and-hedging.md).
-- **Credit default swaps.** The fair spread on a credit default swap is the same shape: the value of the protection leg divided by a risky annuity, whose discount factors include the chance the borrower survives: [forward-cds-and-the-forward-spread](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/04-forward-cds-and-the-forward-spread.md).
+- **Building the curve.** Par swap rates are the long-end inputs from which discount factors are solved one maturity at a time: [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md). That is this card's formula run backwards.
+- **Marking a swap already on the books.** The value is the notional times the annuity times the gap between today's par rate and the swap's own rate: [Interest rate swaps](01-interest-rate-swaps.md).
+- **Risk per basis point.** $N A$ times one basis point is the first estimate of how much a swap moves when rates move one basis point, 4,380.74 dollars here: [Swap DV01](03-swap-dv01-and-hedging.md).
+- **Credit default swaps.** The fair spread on a credit default swap is the same shape: the value of the protection leg divided by a risky annuity, whose discount factors include the chance the borrower survives: [The forward CDS](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/04-forward-cds-and-the-forward-spread.md).
 
 > **Say it back**
 > A new swap costs nothing, so its fixed leg and its floating leg are worth the same. The fixed leg is the fixed rate times the annuity, the price of one unit of rate paid on every date. The floating leg is a dollar today less a dollar at the end, because rolling a deposit produces exactly those payments. Dividing gives the par rate, 4.42 percent here, and splitting the floating leg into its payments shows the same number is an average of the forward rates weighted by discount factors. A swap at any other fixed rate is worth the notional times the annuity times the gap.
@@ -625,18 +606,18 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [interest-rate-swaps](01-interest-rate-swaps.md): what a swap is, its two legs, and why the floating leg is worth par at a reset date.
-- [spot-forward-and-par-rates](../02-Curves/01-spot-forward-and-par-rates.md): discount factors, forward rates, and the par rate of a bond, which is this card's rate in another guise.
-- [forward-rate-agreements](../02-Curves/02-forward-rate-agreements.md): why a single floating payment is worth its forward rate, paid for certain.
+- [Interest rate swaps](01-interest-rate-swaps.md): what a swap is, its two legs, and why the floating leg is worth par at a reset date.
+- [Spot, forward and par rates](../02-Curves/01-spot-forward-and-par-rates.md): discount factors, forward rates, and the par rate of a bond, which is this card's rate in another guise.
+- [Forward rate agreements](../02-Curves/02-forward-rate-agreements.md): why a single floating payment is worth its forward rate, paid for certain.
 
 ## Where this goes next
 
-- [swap-dv01-and-hedging](03-swap-dv01-and-hedging.md): how much the swap's value moves when the whole curve moves one basis point, and hedging one swap with another.
-- [swap-inverses-rate-and-curve-from-price](07-swap-inverses-rate-and-curve-from-price.md): the fixed rate from a given value, and a discount factor from a given par quote.
-- [swaptions-payer-and-receiver](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md): options on the par rate, priced with the annuity as the unit of account.
-- [forward-cds-and-the-forward-spread](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/04-forward-cds-and-the-forward-spread.md): the same ratio with a risky annuity, for credit.
+- [Swap DV01](03-swap-dv01-and-hedging.md): how much the swap's value moves when the whole curve moves one basis point, and hedging one swap with another.
+- [Solving a swap backwards](07-swap-inverses-rate-and-curve-from-price.md): the fixed rate from a given value, and a discount factor from a given par quote.
+- [Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md): options on the par rate, priced with the annuity as the unit of account.
+- [The forward CDS](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/04-forward-cds-and-the-forward-spread.md): the same ratio with a risky annuity, for credit.
 
-The annuity here converts a change in the fixed rate into money, but a move in the curve changes the discount factors too, top and bottom of the ratio at once; how much the swap moves then, and how to hedge it, is [swap-dv01-and-hedging](03-swap-dv01-and-hedging.md).
+The annuity here converts a change in the fixed rate into money, but a move in the curve changes the discount factors too, top and bottom of the ratio at once; how much the swap moves then, and how to hedge it, is [Swap DV01](03-swap-dv01-and-hedging.md).
 
 ---
 

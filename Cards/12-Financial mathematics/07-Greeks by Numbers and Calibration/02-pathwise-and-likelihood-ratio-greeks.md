@@ -1,26 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Greeks by Numbers and Calibration
-topic: Differentiating inside the average
-item: Greeks inside the simulation
-kind: method
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/01-bump-and-revalue-and-common-random-numbers|bump-and-revalue-and-common-random-numbers]]"
-next:
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/03-adjoint-differentiation-in-outline|adjoint-differentiation-in-outline]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/03-asian-greeks-and-implied-volatility|asian-greeks-and-implied-volatility]]"
-tags:
-  - mathematics
-  - financial-mathematics
-  - pathwise-and-likelihood-ratio-greeks
----
-
 # Greeks inside the simulation: differentiate the payoff, or differentiate the density
 
-Financial mathematics → Greeks by Numbers and Calibration → Differentiating inside the average → Greeks inside the simulation
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Greeks by Numbers and Calibration](../../../SYLLABUS.md#w12-s07) → Greeks inside the simulation
 
 ---
 
@@ -30,7 +10,7 @@ Acme trades at $100. A desk holds two one-year contracts on it. The first is an 
 
 The desk needs each contract's gain when Acme rises by a dollar — its delta, which for hedging matters more than the price.
 
-A simulation reaches the price easily: draw many endings for Acme, pay each contract off, average, discount. Delta is harder. The obvious route nudges Acme's price, runs the simulation again and differences the answers — bump and revalue, done properly in [bump-and-revalue-and-common-random-numbers](01-bump-and-revalue-and-common-random-numbers.md). Two runs, two doses of noise, one bump size to get wrong.
+A simulation reaches the price easily: draw many endings for Acme, pay each contract off, average, discount. Delta is harder. The obvious route nudges Acme's price, runs the simulation again and differences the answers — bump and revalue, done properly in [Bump and revalue](01-bump-and-revalue-and-common-random-numbers.md). Two runs, two doses of noise, one bump size to get wrong.
 
 Delta can instead come out of a single run, two ways, working in opposite directions.
 
@@ -105,7 +85,7 @@ The call's slope is 1 above the strike and 0 below. The digital's slope is 0 abo
 | $d_2$, $d_1$ | Acme's room above the strike in wiggle units, and that plus one unit | 0.05 and 0.25 | — |
 | $E$ | the average over all draws | — | — |
 
-The two distances, as on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
+The two distances, as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md):
 
 $$d_2 = \frac{\ln(S/K) + (r - q - \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_1 = d_2 + \sigma\sqrt{T}$$
 
@@ -215,7 +195,7 @@ The expensive one: the score estimator is a payment times pure noise, so the sig
 
 ### The other doors
 
-Malliavin integration by parts generalises the score idea, shifting the derivative off the payment by integrating by parts along the path, which yields weights for payments depending on the whole path. Where a book has many inputs, the pathwise derivative can instead be propagated backwards through the pricing calculation once — [adjoint-differentiation-in-outline](03-adjoint-differentiation-in-outline.md).
+Malliavin integration by parts generalises the score idea, shifting the derivative off the payment by integrating by parts along the path, which yields weights for payments depending on the whole path. Where a book has many inputs, the pathwise derivative can instead be propagated backwards through the pricing calculation once — [Adjoint differentiation](03-adjoint-differentiation-in-outline.md).
 
 ---
 
@@ -725,7 +705,7 @@ The two outputs are identical line for line, down to the last digit of every spr
 - **Exotic and structured desks.** A book of a few thousand trades against a few hundred inputs needs Greeks continuously. Bumping costs a full revaluation per input; differentiating inside the simulation adds no revaluation at all.
 - **Digital and barrier risk.** Threshold payments are where the pathwise route quietly returns zeros, and also where the risk is largest, delta spiking near the barrier. The score estimator, or integrating the last step by hand, is standard there.
 - **Machine learning, under two other names.** Differentiating through the draw itself is the reparameterisation trick, which trains generative models; weighting a sampled reward by a score is REINFORCE, which trains agents. Same choice, same trade-off.
-- **Calibration.** Fitting a model to quoted prices is least squares, and the solver wants derivatives of the fitted prices in the parameters — these estimators, inside the loop. See [calibration-as-least-squares](06-calibration-as-least-squares.md).
+- **Calibration.** Fitting a model to quoted prices is least squares, and the solver wants derivatives of the fitted prices in the parameters — these estimators, inside the loop. See [Calibration](06-calibration-as-least-squares.md).
 
 > **Say it back**
 > A price is an average of payments over a spread of possible endings. Its slope in any input can be taken in either of two places: inside the payment, holding the draw fixed, or inside the spread, holding the payment fixed. The first is pathwise differentiation — for Acme, the payment's own slope times $S_T/S$ — cheap, but it needs the payment not to jump. The second multiplies the payment by a score, the derivative of the log density in the input, here the draw over twenty for delta; it works for any payment, at several times the paths. On a call both give 0.586851; on a one-dollar digital the pathwise route gives 0.000000 and the score route 0.018951, the right answer.
@@ -734,12 +714,12 @@ The two outputs are identical line for line, down to the last digit of every spr
 
 ## What this builds on
 
-- [bump-and-revalue-and-common-random-numbers](01-bump-and-revalue-and-common-random-numbers.md): the estimator this card replaces, and the reason to want to. It also supplies the habit of reusing one set of draws, which this card's simulation does across all six estimators.
+- [Bump and revalue](01-bump-and-revalue-and-common-random-numbers.md): the estimator this card replaces, and the reason to want to. It also supplies the habit of reusing one set of draws, which this card's simulation does across all six estimators.
 
 ## Where this goes next
 
-- [adjoint-differentiation-in-outline](03-adjoint-differentiation-in-outline.md): the pathwise derivative propagated backwards through the pricing calculation, so one pass yields every input's sensitivity.
-- [asian-greeks-and-implied-volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/03-asian-greeks-and-implied-volatility.md): the same two estimators where the payment depends on the whole path, not only its ending.
+- [Adjoint differentiation](03-adjoint-differentiation-in-outline.md): the pathwise derivative propagated backwards through the pricing calculation, so one pass yields every input's sensitivity.
+- [Asian Greeks and implied volatility](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/03-asian-greeks-and-implied-volatility.md): the same two estimators where the payment depends on the whole path, not only its ending.
 
 Both estimators handle one input at a time, so a book with two hundred inputs needs two hundred passes over the same paths; the next card is how one backward pass delivers them all.
 

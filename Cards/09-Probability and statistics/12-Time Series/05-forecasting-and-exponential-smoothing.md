@@ -1,23 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Time Series
-topic: Smoothing forecasts
-item: Forecasting
-kind: method
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/12-Time Series/03-ma-and-arma|ma-and-arma]]"
-next:
-  - "[[Cards/09-Probability and statistics/12-Time Series/06-garch-and-volatility-clustering|garch-and-volatility-clustering]]"
-  - "[[Cards/09-Probability and statistics/12-Time Series/07-cointegration-in-outline|cointegration-in-outline]]"
-tags: [mathematics, probability-and-statistics, forecasting-and-exponential-smoothing]
----
-
 # Forecasting: exponential smoothing, Holt-Winters and honest forecast intervals
 
-Probability and statistics → Time Series → Smoothing forecasts → Forecasting
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Time Series](../../../SYLLABUS.md#w09-s12) → Forecasting
 
 ---
 
@@ -76,7 +59,7 @@ $$\hat y_{t+h|t} \;\pm\; 1.96\,\sigma\sqrt{v_h}, \qquad v_h = 1 + \sum_{j=1}^{h-
 
 **Read it aloud:** the range is the forecast plus or minus 1.96 typical one-month misses, stretched by a factor that grows with how many unseen months lie between now and the target.
 
-Raising e to both ends turns the log range into passengers. The number 1.96 is the point that leaves 2.5% of a standard normal law in each tail, from [normal-quantile](../04-Continuous%20Distributions/05-normal-quantile.md).
+Raising e to both ends turns the log range into passengers. The number 1.96 is the point that leaves 2.5% of a standard normal law in each tail, from [Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -103,7 +86,7 @@ $$v_h = 1 + (h-1)\Big[\alpha^2 + \alpha^2\beta\,h + \tfrac16\,\alpha^2\beta^2\,h
 ### When it holds
 
 - **The future moves like the recent past.** Level, trend and season change slowly. A strike, a crash or a holiday that moves between months breaks this: March 1960 fell outside its range when it fell well short of April, as it had in no earlier year.
-- **One-month misses are independent, with a constant spread.** If misses come in runs, the interval is too narrow; the check is the autocorrelation of the misses, from [stationarity-and-autocorrelation](01-stationarity-and-autocorrelation.md).
+- **One-month misses are independent, with a constant spread.** If misses come in runs, the interval is too narrow; the check is the autocorrelation of the misses, from [Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md).
 - **Misses are roughly normal on the log scale.** The 1.96 comes from the normal law. Heavy-tailed misses put more than 5% outside.
 - **The season adds on the log scale.** That is, it multiplies the passenger count by a fixed percentage. A season of fixed size in passengers calls for the same equations on the raw counts.
 - **The weights and $\sigma$ are treated as known.** They are estimated: $\sigma$ = 0.039897 carries a standard error of about 0.002575. The interval ignores that uncertainty, so it runs a little narrow.
@@ -136,7 +119,7 @@ weight on the month j steps back, alpha = 0.33
 
 Each bar is two thirds of the one above. The weights add up to 1 once the starting value's share is counted, so the level is a genuine average. The code runs the one-line update 131 times over the log counts of 1949 to 1959 and also sums the 131 weighted terms directly; both give 6.0305227383.
 
-This is **simple exponential smoothing**, the base of the family. It is also the best forecast for one model from [ma-and-arma](03-ma-and-arma.md). Suppose the monthly changes are MA(1): $y_{t+1} - y_t = \varepsilon_{t+1} + \theta\,\varepsilon_t$, with independent surprises $\varepsilon$ of mean 0. Standing at month $t$, the unseen $\varepsilon_{t+1}$ averages 0, so the best forecast is $\hat y_{t+1} = y_t + \theta\,\varepsilon_t$. The surprise $\varepsilon_t$ is last month's miss, $y_t - \hat y_t$. Substituting, $\hat y_{t+1} = (1+\theta)\,y_t - \theta\,\hat y_t$: simple smoothing with $\alpha = 1 + \theta$. A simple-smoothing $\alpha$ of 0.33 would correspond to $\theta = -0.67$.
+This is **simple exponential smoothing**, the base of the family. It is also the best forecast for one model from [Moving average and ARMA](03-ma-and-arma.md). Suppose the monthly changes are MA(1): $y_{t+1} - y_t = \varepsilon_{t+1} + \theta\,\varepsilon_t$, with independent surprises $\varepsilon$ of mean 0. Standing at month $t$, the unseen $\varepsilon_{t+1}$ averages 0, so the best forecast is $\hat y_{t+1} = y_t + \theta\,\varepsilon_t$. The surprise $\varepsilon_t$ is last month's miss, $y_t - \hat y_t$. Substituting, $\hat y_{t+1} = (1+\theta)\,y_t - \theta\,\hat y_t$: simple smoothing with $\alpha = 1 + \theta$. A simple-smoothing $\alpha$ of 0.33 would correspond to $\theta = -0.67$.
 
 ### Step 2: the same blend, three times
 
@@ -175,9 +158,9 @@ Stand at December 1959 and target month $h$. The error of the forecast $\hat y_{
 
 $$c_j = \alpha + j\,\alpha\beta = \alpha\,(1 + j\beta).$$
 
-So the forecast error at horizon $h$ is the target's miss, weight 1, plus $h-1$ earlier misses with weights $c_1, \dots, c_{h-1}$. Independent pieces add their variances (from [variance-and-standard-deviation](../02-Random%20Variables/03-variance-and-standard-deviation.md)), so the variance is $\sigma^2(1 + c_1^2 + \cdots + c_{h-1}^2) = \sigma^2 v_h$. A sum of independent normals is normal, so 95% of the error lies within $1.96\,\sigma\sqrt{v_h}$.
+So the forecast error at horizon $h$ is the target's miss, weight 1, plus $h-1$ earlier misses with weights $c_1, \dots, c_{h-1}$. Independent pieces add their variances (from [Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)), so the variance is $\sigma^2(1 + c_1^2 + \cdots + c_{h-1}^2) = \sigma^2 v_h$. A sum of independent normals is normal, so 95% of the error lies within $1.96\,\sigma\sqrt{v_h}$.
 
-With $\beta$ = 0, no trend and no season, every $c_j$ is $\alpha$. Set $\alpha$ = 1 as well and the level is always the latest value: the forecast is this month's value, the random-walk forecast of [differencing-and-unit-roots](04-differencing-and-unit-roots.md), and $v_h = 1 + (h-1) = h$, so the band grows as the square root of the horizon.
+With $\beta$ = 0, no trend and no season, every $c_j$ is $\alpha$. Set $\alpha$ = 1 as well and the level is always the latest value: the forecast is this month's value, the random-walk forecast of [Unit roots](04-differencing-and-unit-roots.md), and $v_h = 1 + (h-1) = h$, so the band grows as the square root of the horizon.
 
 <details>
 <summary>Detailed proof: the closed form for the widening factor</summary>
@@ -662,7 +645,7 @@ The two outputs agree line for line, including every simulated number: both prog
 - **Stock and demand planning.** Holt's first work on the method was for inventory control, and weekly or monthly sales forecasts in retail and manufacturing still run on smoothing of this kind, often thousands of products at once.
 - **Airline and hotel capacity.** Seasonal passenger and booking series are the textbook case; this card's data are the Box–Jenkins series of international airline passengers.
 - **Call centres and staffing.** Calls per half-hour carry a daily and a weekly season; smoothing with two seasons sets rotas.
-- **Volatility in finance.** An exponentially weighted average of squared daily returns is simple smoothing applied to risk; its links to the GARCH model are on [garch-and-volatility-clustering](06-garch-and-volatility-clustering.md), and its use by risk desks on [volatility-forecasting-ewma-garch-and-realised](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/04-volatility-forecasting-ewma-garch-and-realised.md).
+- **Volatility in finance.** An exponentially weighted average of squared daily returns is simple smoothing applied to risk; its links to the GARCH model are on [GARCH](06-garch-and-volatility-clustering.md), and its use by risk desks on [Tomorrow's volatility](../../12-Financial%20mathematics/40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/04-volatility-forecasting-ewma-garch-and-realised.md).
 
 > **Say it back**
 > Exponential smoothing keeps a running estimate that moves a fixed share toward each new observation, which makes it a weighted average whose weights fade geometrically. Holt-Winters keeps three such estimates, level, trend and season, and forecasts by adding them. Each update is the old prediction plus a share of the latest miss, so a miss j months before a target moves it by α(1 + jβ), and the forecast variance is the one-month variance times one plus the sum of those squares. On airline passengers it forecast 5914.0 thousand for 1960 with a range of 5512.7 to 6358.6; the actual was 5714, and 11 of 12 months fell inside their ranges. The 95% holds inside the model, with its settings taken as known; outside it, the range is no promise about one year.
@@ -671,12 +654,12 @@ The two outputs agree line for line, including every simulated number: both prog
 
 ## What this builds on
 
-- [ma-and-arma](03-ma-and-arma.md): the MA(1) model, whose best forecast is simple smoothing (Step 1), and the idea that a forecast error is a weighted sum of past surprises (Step 4).
+- [Moving average and ARMA](03-ma-and-arma.md): the MA(1) model, whose best forecast is simple smoothing (Step 1), and the idea that a forecast error is a weighted sum of past surprises (Step 4).
 
 ## Where this goes next
 
-- [garch-and-volatility-clustering](06-garch-and-volatility-clustering.md): when the size of the misses itself changes over time, as in a share's daily returns with calm and wild weeks in clusters, a constant $\sigma$ fails, and the spread gets a forecast of its own.
-- [cointegration-in-outline](07-cointegration-in-outline.md): two trending series that share a trend, and forecasts that use the tie between them.
+- [GARCH](06-garch-and-volatility-clustering.md): when the size of the misses itself changes over time, as in a share's daily returns with calm and wild weeks in clusters, a constant $\sigma$ fails, and the spread gets a forecast of its own.
+- [Cointegration](07-cointegration-in-outline.md): two trending series that share a trend, and forecasts that use the tie between them.
 
 Holt-Winters gives every month the same spread of misses and treats each series alone; whether that spread can itself be forecast, and whether a tie between two series can be put to use, are the questions those two cards answer.
 

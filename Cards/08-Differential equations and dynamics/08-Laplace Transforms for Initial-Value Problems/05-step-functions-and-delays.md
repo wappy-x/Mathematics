@@ -1,29 +1,12 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Laplace Transforms for Initial-Value Problems
-topic: Switches and late starts
-item: Step functions
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/04-solving-an-initial-value-problem-by-transform|solving-an-initial-value-problem-by-transform]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/06-impulses-and-the-delta-function|impulses-and-the-delta-function]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/10-smith-predictor-and-time-delays|smith-predictor-and-time-delays]]"
-tags: [mathematics, differential equations and dynamics, step-functions-and-delays]
----
-
 # Step functions: a switch thrown at time a is e^(-as) in transform space
 
-Differential equations and dynamics → Laplace Transforms for Initial-Value Problems → Switches and late starts → Step functions
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Laplace Transforms for Initial-Value Problems](../../../SYLLABUS.md#w08-s08) → Step functions
 
 ---
 
 ## General Overview
 
-A room sits at 20 C, the same 20 C room the cooling cards used ([exponential-growth-decay-and-cooling](../01-Rate%20Equations/04-exponential-growth-decay-and-cooling.md)). Its walls pull it toward a target temperature, at a rate of 0.5 degrees per hour for every degree of gap: the rate constant is 0.5 per hour. Two hours in, a heater switches on and raises that target by 10 C, to 30 C.
+A room sits at 20 C, the same 20 C room the cooling cards used ([Growth, decay and cooling](../01-Rate%20Equations/04-exponential-growth-decay-and-cooling.md)). Its walls pull it toward a target temperature, at a rate of 0.5 degrees per hour for every degree of gap: the rate constant is 0.5 per hour. Two hours in, a heater switches on and raises that target by 10 C, to 30 C.
 
 After the switch the room climbs toward 30 C: 26.32 C at hour 4, 28.65 C at hour 6. The rate law changes its rule part way through, which is awkward to integrate by hand.
 
@@ -51,7 +34,7 @@ Orange: the temperature the room is pulled toward, 20 C until 2 h, then 30 C. Te
 
 ## The formula
 
-Notation first, in words. The **unit step** $u$ is a switch: it reads 0 before time zero and 1 from time zero on. Shifted, $u(t - a)$ reads 0 before time a and 1 after. A reminder from [the-laplace-transform](01-the-laplace-transform.md): the curly $\mathcal{L}$ reads "the transform of", and the capital letter names the result, $F = \mathcal{L}[f]$.
+Notation first, in words. The **unit step** $u$ is a switch: it reads 0 before time zero and 1 from time zero on. Shifted, $u(t - a)$ reads 0 before time a and 1 after. A reminder from [The Laplace transform](01-the-laplace-transform.md): the curly $\mathcal{L}$ reads "the transform of", and the capital letter names the result, $F = \mathcal{L}[f]$.
 
 The room, with $T$ its temperature in C and $t$ the time in hours:
 
@@ -124,7 +107,7 @@ The room needs it once: the entry 1/s for the constant 1, read at s + 0.5 (so c 
 
 Let f be piecewise continuous on t ≥ 0, with the size of f(t) at most $M$ e^(αt) for all t.
 
-Delay rule. Take a ≥ 0 and s > α. Up to a finite cutoff R > a, the substitution τ = t − a turns the integral of e^(−st) f(t − a) from a to R into e^(−as) times the integral of e^(−sτ) f(τ) from 0 to R − a. That integrand's size is at most M e^(−(s − α)τ), whose integral to infinity is M/(s − α), so the right side converges as R grows ([improper-integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)). The left side equals it at every R, so it has the same limit, e^(−as)F(s).
+Delay rule. Take a ≥ 0 and s > α. Up to a finite cutoff R > a, the substitution τ = t − a turns the integral of e^(−st) f(t − a) from a to R into e^(−as) times the integral of e^(−sτ) f(τ) from 0 to R − a. That integrand's size is at most M e^(−(s − α)τ), whose integral to infinity is M/(s − α), so the right side converges as R grows ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)). The left side equals it at every R, so it has the same limit, e^(−as)F(s).
 
 s-shift rule. Take s with s − c > α. The integrands e^(−st) e^(ct) f(t) and e^(−(s − c)t) f(t) are equal at every t, with size at most M e^(−(s − c − α)t), so both integrals converge to F(s − c).
 
@@ -134,11 +117,11 @@ The step's value at the switch changes one point only and no integral.
 
 ### Step 4: solve the room
 
-Work with the excess over 20 C, x = T − 20, starting at 0: x' = −0.5x + 5u(t − 2). Transform both sides; the rate becomes sX − x(0) = sX ([transforms-of-derivatives](02-transforms-of-derivatives.md)):
+Work with the excess over 20 C, x = T − 20, starting at 0: x' = −0.5x + 5u(t − 2). Transform both sides; the rate becomes sX − x(0) = sX ([Transforming a derivative](02-transforms-of-derivatives.md)):
 
 $$sX = -0.5X + \frac{5e^{-2s}}{s} \quad\Longrightarrow\quad X = e^{-2s}\,\frac{5}{s(s + 0.5)}$$
 
-Leave the factor e^(−2s) aside. Split the rest by partial fractions ([inverting-by-partial-fractions](03-inverting-by-partial-fractions.md)): 5/(s(s + 0.5)) = 10/s − 10/(s + 0.5). The s-shift rule reads 1/(s + 0.5) as e^(−0.5t), so the undelayed answer is 10(1 − e^(−0.5t)), a heater on from the start. The delay rule turns the factor into a two-hour late start:
+Leave the factor e^(−2s) aside. Split the rest by partial fractions ([Inverting](03-inverting-by-partial-fractions.md)): 5/(s(s + 0.5)) = 10/s − 10/(s + 0.5). The s-shift rule reads 1/(s + 0.5) as e^(−0.5t), so the undelayed answer is 10(1 − e^(−0.5t)), a heater on from the start. The delay rule turns the factor into a two-hour late start:
 
 $$x(t) = 10\,\bigl(1 - e^{-0.5(t-2)}\bigr)\,u(t-2)$$
 
@@ -176,7 +159,7 @@ Two hours after the switch the room reads 26.32 C: the share 1 − e^(−1) of t
 
 ## Code, from first principles, and it actually runs
 
-Two roads that share no step. Road one is the transform answer from Step 4. Road two steps the rate law with Runge-Kutta 4 (four slope samples per step, averaged; [runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md)), with the steps landing on t = 2 h and the heater's state fixed within each step. Halving the step cuts the error by about 16, the method's order 4. Midpoint sums check both rules' integrals directly.
+Two roads that share no step. Road one is the transform answer from Step 4. Road two steps the rate law with Runge-Kutta 4 (four slope samples per step, averaged; [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)), with the steps landing on t = 2 h and the heater's state fixed within each step. Halving the step cuts the error by about 16, the method's order 4. Midpoint sums check both rules' integrals directly.
 
 ### Python
 
@@ -372,7 +355,7 @@ The two outputs match line for line.
 
 - **Heating and cooling schedules.** A thermostat timer is a sum of steps, one per switch; each adds a delayed copy of the same reply.
 - **Drug infusion.** A drip started at time a and stopped at time b is a rate times u(t − a) − u(t − b); the blood level replies like the room.
-- **Control with dead time.** A process that answers only after a lag carries e^(−as), which [smith-predictor-and-time-delays](../../13-Engineering%20mathematics/03-Feedback%20Control/10-smith-predictor-and-time-delays.md) works around.
+- **Control with dead time.** A process that answers only after a lag carries e^(−as), which [Time delays](../../13-Engineering%20mathematics/03-Feedback%20Control/10-smith-predictor-and-time-delays.md) works around.
 
 > **Say it back**
 > The unit step is a switch: 0 before time zero, 1 after. Restarting a signal a hours late multiplies its transform by e^(−as), because the weight e^(−st) is e^(−as) times the weight on the restarted clock. Multiplying a signal by e^(ct) turns F(s) into F(s − c). So the room is solved as if the heater had always been on, and e^(−2s) moves the reply two hours later: 26.32 C at hour 4.
@@ -381,12 +364,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [solving-an-initial-value-problem-by-transform](04-solving-an-initial-value-problem-by-transform.md): the round trip (transform, solve, invert) run here with a switched forcing.
+- [The round trip](04-solving-an-initial-value-problem-by-transform.md): the round trip (transform, solve, invert) run here with a switched forcing.
 
 ## Where this goes next
 
-- [impulses-and-the-delta-function](06-impulses-and-the-delta-function.md): a switch on and off in a vanishing moment, the dose held fixed.
-- [smith-predictor-and-time-delays](../../13-Engineering%20mathematics/03-Feedback%20Control/10-smith-predictor-and-time-delays.md): e^(−as) inside a feedback loop, where delay threatens stability.
+- [Impulses](06-impulses-and-the-delta-function.md): a switch on and off in a vanishing moment, the dose held fixed.
+- [Time delays](../../13-Engineering%20mathematics/03-Feedback%20Control/10-smith-predictor-and-time-delays.md): e^(−as) inside a feedback loop, where delay threatens stability.
 
 ---
 

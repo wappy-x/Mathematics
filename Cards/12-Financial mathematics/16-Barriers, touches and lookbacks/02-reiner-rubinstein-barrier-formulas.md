@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Barriers, touches and lookbacks
-topic: Reflection pricing
-item: The eight barrier formulas
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/01-knock-out-and-knock-in-options|knock-out-and-knock-in-options]]"
-next:
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/03-discrete-monitoring-correction|discrete-monitoring-correction]]"
-tags: [mathematics, financial mathematics, reiner-rubinstein-barrier-formulas]
----
-
 # The eight barrier formulas: up or down, in or out, call or put, all from the same six building blocks
 
-Financial mathematics → Barriers, touches and lookbacks → Reflection pricing → The eight barrier formulas
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Barriers, touches and lookbacks](../../../SYLLABUS.md#w12-s16) → The eight barrier formulas
 
 ---
 
@@ -24,7 +8,7 @@ Financial mathematics → Barriers, touches and lookbacks → Reflection pricing
 
 Acme shares trade at $100. A one-year call struck at $100 costs $9.23 in the house market; the matching put costs $6.33. Now draw two lines on the price chart: a floor at $80 and a ceiling at $120.
 
-A **barrier option** is a call or put with one extra clause about one line. A **knock-out** dies the moment Acme touches its line. A **knock-in** is born at that moment and is worthless otherwise. A line below today's price (a **down** barrier) or above it (an **up** barrier), times call or put, times in or out: eight contracts, set out on [knock-out-and-knock-in-options](01-knock-out-and-knock-in-options.md). This card prices all eight.
+A **barrier option** is a call or put with one extra clause about one line. A **knock-out** dies the moment Acme touches its line. A **knock-in** is born at that moment and is worthless otherwise. A line below today's price (a **down** barrier) or above it (an **up** barrier), times call or put, times in or out: eight contracts, set out on [Knock-out and knock-in options](01-knock-out-and-knock-in-options.md). This card prices all eight.
 
 Here are the eight house prices, strike $100, barrier at $80 for the down contracts and $120 for the up ones. The short names read D or U (down, up), O or I (out, in), C or P (call, put): DOC is the down-and-out call.
 
@@ -67,7 +51,7 @@ Orange: the down-and-out call. Green: the down-and-in call. Dark: the plain call
 
 ## The formula
 
-Notation first, in words. Two switches carry the eight cases. $\phi$ (phi) is +1 for a call and −1 for a put. $\eta$ (eta) is +1 for a down barrier and −1 for an up barrier. Multiplying by a switch either leaves a term alone or flips its sign. The bell-curve area $N(x)$ is the chance that a standard bell-curve draw lands below $x$, as on the [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card. $S$ is Acme's price today, $K$ the strike, $H$ the barrier; $r$, $q$, $\sigma$ and $T$ are the bank rate, dividend yield, volatility and years to expiry. The helpers $\mu$, $\lambda$, $x_1$, $x_2$, $y_1$, $y_2$ and $z$ are distances defined just below the blocks.
+Notation first, in words. Two switches carry the eight cases. $\phi$ (phi) is +1 for a call and −1 for a put. $\eta$ (eta) is +1 for a down barrier and −1 for an up barrier. Multiplying by a switch either leaves a term alone or flips its sign. The bell-curve area $N(x)$ is the chance that a standard bell-curve draw lands below $x$, as on the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card. $S$ is Acme's price today, $K$ the strike, $H$ the barrier; $r$, $q$, $\sigma$ and $T$ are the bank rate, dividend yield, volatility and years to expiry. The helpers $\mu$, $\lambda$, $x_1$, $x_2$, $y_1$, $y_2$ and $z$ are distances defined just below the blocks.
 
 The four price blocks:
 
@@ -129,7 +113,7 @@ In words: $x_1$ is the Black-Scholes $d_1$, since $(1+\mu)\sigma^2 = r - q + \tf
 
 ### When it holds
 
-- **Continuous monitoring.** A touch at any instant counts. A contract that checks one price a day is hit less often than the formula assumes; [discrete-monitoring-correction](03-discrete-monitoring-correction.md) fixes that.
+- **Continuous monitoring.** A touch at any instant counts. A contract that checks one price a day is hit less often than the formula assumes; [Daily monitoring](03-discrete-monitoring-correction.md) fixes that.
 - **Continuous paths.** The mirror needs a path that cannot skip over the line. A price that jumps crosses without touching, and the hit chance is wrong.
 - **Constant volatility, rate and dividend yield.** Barrier prices lean on volatility near the barrier. With a volatility smile the flat-volatility price errs by more than a plain option's would.
 - **The barrier not yet touched.** A down barrier needs $S > H$ today, an up barrier $S < H$. Otherwise the out-option is worth its rebate paid now and the in-option is the plain option.
@@ -158,7 +142,7 @@ On the dead side, every path touched: its weight is $f(u)$ in full. For an up ba
 <details>
 <summary>Detailed proof: the mirror's tilt</summary>
 
-Let the log price be $X_t = \nu t + \sigma W_t$, with $\nu = r - q - \tfrac12\sigma^2$ and the last term $\sigma$ times a Brownian motion. Without drift ($\nu = 0$), the reflection principle for Brownian motion says: for $u > b$ and $b < 0$, the chance of touching $b$ and ending near $u$ equals the chance of ending near $2b - u$ ([geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md) has the process). The proof is the path flip of Step 0, which preserves Brownian likelihood because the flipped increments are again independent bell-curve draws.
+Let the log price be $X_t = \nu t + \sigma W_t$, with $\nu = r - q - \tfrac12\sigma^2$ and the last term $\sigma$ times a Brownian motion. Without drift ($\nu = 0$), the reflection principle for Brownian motion says: for $u > b$ and $b < 0$, the chance of touching $b$ and ending near $u$ equals the chance of ending near $2b - u$ ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md) has the process). The proof is the path flip of Step 0, which preserves Brownian likelihood because the flipped increments are again independent bell-curve draws.
 
 Drift reweights each driftless path by $\exp(\nu X_T/\sigma^2 - \nu^2 T/(2\sigma^2))$, a factor depending only on where the path ends. So the drifted density of "touched, ended at $u$" is the driftless density at $2b - u$ times that factor at $u$. Rewrite the driftless density at $2b - u$ as the drifted density $f$ there, divided by the factor at $2b - u$. The two factors leave $\exp(2\nu(u - b)/\sigma^2)$. Finally compare $f(2b - u)$ with $f(u - 2b)$: their exponents differ by $4\nu T(2b - u)/(2\sigma^2 T)$. Multiplying out, every $u$ cancels and what remains is $\exp(2\nu b/\sigma^2) = \exp(2\mu\ln(H/S)) = (H/S)^{2\mu}$.
 
@@ -206,7 +190,7 @@ The first-touch time of a drifting log price has a known density. Multiplying it
 
 Every path touches or does not. A knock-in plus its knock-out, same barrier, same strike, same payoff, holds the plain option on every path: in + out = plain. With rebates, in + out = plain + E + F, since exactly one of the two rebates pays on every path. The table's columns obey this by construction; the code confirms it against plain options computed with no barrier at all.
 
-A second road: solve the Black-Scholes equation ([black-scholes-equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)) on the live side, with the option worth zero, or the rebate, on the barrier. The method of images solves it with the same mirror. A floor and a ceiling together need the mirror applied again and again: Kunitomo and Ikeda's double-barrier formula is an infinite alternating series of images bouncing between the two walls, named here, not derived.
+A second road: solve the Black-Scholes equation ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)) on the live side, with the option worth zero, or the rebate, on the barrier. The method of images solves it with the same mirror. A floor and a ceiling together need the mirror applied again and again: Kunitomo and Ikeda's double-barrier formula is an infinite alternating series of images bouncing between the two walls, named here, not derived.
 
 ---
 
@@ -706,7 +690,7 @@ The two outputs match line for line, simulation included, since both run the sam
 >
 > - **The up-and-out call as a cheap call with the same upside.** It is cheap because it has no big upside: every finish above $120 is a dead path. $1.13 buys a payoff capped near $20, and only for paths that never touch.
 > - **One sign convention for both directions.** Leave $\eta$ at +1 on the up barrier and the up-and-out call comes out at $4.50, four times the truth.
-> - **Daily fixings priced with this card's formula.** The formula counts touches between fixings that the contract ignores. Checking only at twelve month-ends, the simulation puts the down-and-out call at $9.19, not $9.13; see [discrete-monitoring-correction](03-discrete-monitoring-correction.md).
+> - **Daily fixings priced with this card's formula.** The formula counts touches between fixings that the contract ignores. Checking only at twelve month-ends, the simulation puts the down-and-out call at $9.19, not $9.13; see [Daily monitoring](03-discrete-monitoring-correction.md).
 
 ---
 
@@ -715,7 +699,7 @@ The two outputs match line for line, simulation included, since both run the sam
 - **Currency options.** Knock-outs and knock-ins on exchange rates trade in size, with the foreign interest rate in place of $q$. Desks start from this formula and adjust for the smile.
 - **Reverse convertibles.** A high-coupon bank note usually hides a down-and-in put sold by the investor: touch a floor at 60 or 70 percent of today's price and the note repays in shares.
 - **Turbo certificates.** European retail products that are down-and-out calls with the barrier near the strike: the knock-out strips out almost all time value.
-- **The shelf.** Hedging near the barrier is on [barrier-greeks-at-the-wall](04-barrier-greeks-at-the-wall.md). Rebates alone, as contracts, are [one-touch-and-no-touch](05-one-touch-and-no-touch.md). The running maximum is [lookback-options](06-lookback-options.md). Running the formulas backwards to a barrier or a volatility is [barrier-inverses-level-and-volatility](07-barrier-inverses-level-and-volatility.md).
+- **The shelf.** Hedging near the barrier is on [Barrier Greeks](04-barrier-greeks-at-the-wall.md). Rebates alone, as contracts, are [One-touch and no-touch](05-one-touch-and-no-touch.md). The running maximum is [Lookback options](06-lookback-options.md). Running the formulas backwards to a barrier or a volatility is [Barrier inverses](07-barrier-inverses-level-and-volatility.md).
 
 > **Say it back**
 > A barrier option is a call or put that dies, or is born, when the price touches a line. The reflection principle counts touching paths with a mirror-image bell curve tilted by $(H/S)^{2\mu}$, so surviving weight is the bell curve minus its mirror. Share and cash over half-lines of the two curves give blocks A to D; the rebates give E and F. Which blocks a contract uses depends on direction, call or put, in or out, and the strike's side of the barrier. In and out always add back to the plain option.
@@ -724,12 +708,12 @@ The two outputs match line for line, simulation included, since both run the sam
 
 ## What this builds on
 
-- [knock-out-and-knock-in-options](01-knock-out-and-knock-in-options.md): the eight contracts, their payoffs, and in-out parity as a statement about paths.
-- [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): block A itself, and the share-half and cash-half split used for every block.
+- [Knock-out and knock-in options](01-knock-out-and-knock-in-options.md): the eight contracts, their payoffs, and in-out parity as a statement about paths.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): block A itself, and the share-half and cash-half split used for every block.
 
 ## Where this goes next
 
-- [discrete-monitoring-correction](03-discrete-monitoring-correction.md): real barriers are checked once a day, not every instant, and a shifted barrier repairs these formulas for that.
+- [Daily monitoring](03-discrete-monitoring-correction.md): real barriers are checked once a day, not every instant, and a shifted barrier repairs these formulas for that.
 
 ---
 

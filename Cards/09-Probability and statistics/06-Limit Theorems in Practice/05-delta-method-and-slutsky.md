@@ -1,28 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Limit Theorems in Practice
-topic: Carrying error through a formula
-item: Delta method
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/02-central-limit-theorem|central-limit-theorem]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/01-linear-approximation-and-related-rates|linear-approximation-and-related-rates]]"
-next:
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/06-concentration-inequalities-hoeffding-and-chernoff|concentration-inequalities-hoeffding-and-chernoff]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/04-maximum-likelihood|maximum-likelihood]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/08-bootstrap|bootstrap]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/01-confidence-intervals|confidence-intervals]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/02-intervals-for-proportions|intervals-for-proportions]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/05-logistic-regression|logistic-regression]]"
-tags: [mathematics, probability and statistics, delta-method-and-slutsky]
----
-
 # Delta method: the error of a function of an average
 
-Probability and statistics → Limit Theorems in Practice → Carrying error through a formula → Delta method
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Limit Theorems in Practice](../../../SYLLABUS.md#w09-s06) → Delta method
 
 ---
 
@@ -101,7 +79,7 @@ $$\widehat{\mathrm{SE}}\big(\ln \widehat{\mathrm{OR}}\big) = \sqrt{\frac1a + \fr
 - **The average must obey the central limit theorem.** Independent patients with a finite spread, and enough of them. The delta method adds nothing if the input has no bell.
 - **The function must have a slope, and the slope must not be zero.** With no drug effect (both chances 0.25) the squared log odds ratio has slope 0 at the truth, so the delta method predicts a spread of 0. The exact spread at 400 per group is 0.038320. The proof below also assumes a bounded bend near the truth; in general a slope there is enough (van der Vaart, chapter 3).
 - **The misses must be small next to the bend.** The tangent line is good only near the true value. At 25 patients per group, 1.79% of trials have a zero count and no log odds at all, and the exact spread is 0.7847 against the delta method's 0.7260.
-- **The estimated standard error must settle on SE.** Slutsky needs it to converge in probability. The plug-in estimate does, by the law of large numbers ([law-of-large-numbers](01-law-of-large-numbers.md)).
+- **The estimated standard error must settle on SE.** Slutsky needs it to converge in probability. The plug-in estimate does, by the law of large numbers ([Law of large numbers](01-law-of-large-numbers.md)).
 - **The two groups must be independent** for their variances to add. Paired designs, such as one patient measured twice, need a covariance term.
 
 ---
@@ -114,11 +92,11 @@ The error of an average shrinks like 1/√n. At 400 patients the drug share rare
 
 ### Step 1: the share has a bell
 
-Each drug patient is a reading of 1 (care) or 0 (none), with mean 0.15 and variance 0.15 × 0.85, so spread 0.357071. The share $\hat p$ is the average of 400 such readings. By [central-limit-theorem](02-central-limit-theorem.md), its miss is a bell centred at 0 with spread 0.357071/√400 = 0.017854.
+Each drug patient is a reading of 1 (care) or 0 (none), with mean 0.15 and variance 0.15 × 0.85, so spread 0.357071. The share $\hat p$ is the average of 400 such readings. By [Central limit theorem](02-central-limit-theorem.md), its miss is a bell centred at 0 with spread 0.357071/√400 = 0.017854.
 
 ### Step 2: the tangent line stretches the bell by the slope
 
-The log odds is g(p) = ln(p/(1 − p)) = ln p − ln(1 − p). Its slope is 1/p + 1/(1 − p) = 1/(p(1 − p)), which is 7.843137 at 0.15; a central difference computed from g alone gives the same 7.843137. By [linear-approximation-and-related-rates](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md),
+The log odds is g(p) = ln(p/(1 − p)) = ln p − ln(1 − p). Its slope is 1/p + 1/(1 − p) = 1/(p(1 − p)), which is 7.843137 at 0.15; a central difference computed from g alone gives the same 7.843137. By [Linear approximation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md),
 
 $$g(\hat p) \approx g(p) + g'(p)\,(\hat p - p)$$
 
@@ -180,7 +158,7 @@ and the right side is below 2η for large n. So the second term tends to 0 in pr
 
 </details>
 
-A second road to the same standard error avoids derivatives altogether: resample the trial's own patients many times and watch the log odds ratio wobble. That is the bootstrap, [bootstrap](../07-Sampling%20and%20Estimation/08-bootstrap.md).
+A second road to the same standard error avoids derivatives altogether: resample the trial's own patients many times and watch the log odds ratio wobble. That is the bootstrap, [Bootstrap](../07-Sampling%20and%20Estimation/08-bootstrap.md).
 
 ---
 
@@ -681,7 +659,7 @@ Orange: the interval built on the log scale and carried back, as on this card; t
 
 - **Case-control studies.** Barnet Woolf derived the log odds ratio's standard error in 1955 to compare blood groups among patients and controls. Epidemiology still reports odds ratios with his interval.
 - **Meta-analysis.** Pooling trials weights each one's log odds ratio by one over its variance, the quantity of Step 4.
-- **Regression output.** A logistic regression coefficient is a log odds ratio; software reports e to the coefficient plus or minus 1.959964 standard errors, the same move to and from the log scale: [logistic-regression](../09-Regression/05-logistic-regression.md).
+- **Regression output.** A logistic regression coefficient is a log odds ratio; software reports e to the coefficient plus or minus 1.959964 standard errors, the same move to and from the log scale: [Logistic regression](../09-Regression/05-logistic-regression.md).
 - **Laboratory error propagation.** The rule that relative errors of a product add in quadrature is the delta method for the logarithm of a product.
 
 > **Say it back**
@@ -691,18 +669,18 @@ Orange: the interval built on the log scale and carried back, as on this card; t
 
 ## What this builds on
 
-- [central-limit-theorem](02-central-limit-theorem.md): the bell for the average, which this card carries through a function.
-- [linear-approximation-and-related-rates](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md): the tangent line as a stand-in for the curve, with its remainder bounded.
+- [Central limit theorem](02-central-limit-theorem.md): the bell for the average, which this card carries through a function.
+- [Linear approximation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md): the tangent line as a stand-in for the curve, with its remainder bounded.
 
 ## Where this goes next
 
-- [concentration-inequalities-hoeffding-and-chernoff](06-concentration-inequalities-hoeffding-and-chernoff.md): bounds that hold at every sample size, where this card's are limits.
-- [maximum-likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md): the delta method gives the standard error of any smooth function of a likelihood estimate.
-- [bootstrap](../07-Sampling%20and%20Estimation/08-bootstrap.md): the same standard error by resampling, no derivative needed.
-- [intervals-for-proportions](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md): the Wald interval is this card's recipe applied to one share, and where it fails.
-- [logistic-regression](../09-Regression/05-logistic-regression.md): log odds ratios as regression coefficients.
+- [Concentration](06-concentration-inequalities-hoeffding-and-chernoff.md): bounds that hold at every sample size, where this card's are limits.
+- [Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md): the delta method gives the standard error of any smooth function of a likelihood estimate.
+- [Bootstrap](../07-Sampling%20and%20Estimation/08-bootstrap.md): the same standard error by resampling, no derivative needed.
+- [Intervals for a proportion](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md): the Wald interval is this card's recipe applied to one share, and where it fails.
+- [Logistic regression](../09-Regression/05-logistic-regression.md): log odds ratios as regression coefficients.
 
-The card builds a 95% interval and checks its coverage but leaves open what an interval promises in general and how to choose among recipes; that is [confidence-intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md).
+The card builds a 95% interval and checks its coverage but leaves open what an interval promises in general and how to choose among recipes; that is [Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md).
 
 ---
 

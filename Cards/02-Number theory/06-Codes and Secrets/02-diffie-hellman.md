@@ -1,31 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Codes and Secrets
-topic: Shared secrets
-item: Diffie-Hellman key exchange
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/01-congruence-mod-n|congruence-mod-n]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/02-modular-addition-and-multiplication|modular-addition-and-multiplication]]"
-  - "[[Cards/02-Number theory/06-Codes and Secrets/01-one-way-streets|one-way-streets]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/01-modular-exponentiation|modular-exponentiation]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/05-order-and-primitive-roots|order-and-primitive-roots]]"
-next:
-  - "[[Cards/02-Number theory/06-Codes and Secrets/03-rsa-in-outline|rsa-in-outline]]"
-  - "[[Cards/02-Number theory/06-Codes and Secrets/05-miller-rabin|miller-rabin]]"
-tags:
-  - mathematics
-  - number theory
-  - codes and secrets
-  - diffie-hellman
----
-
 # Diffie-Hellman key exchange: two strangers agree a secret over an open line using powers on a clock
 
-Number theory → Codes and Secrets → Shared secrets → Diffie-Hellman key exchange
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Codes and Secrets](../../../SYLLABUS.md#w02-s06) → Diffie-Hellman key exchange
 
 ---
 
@@ -35,7 +10,7 @@ Mia and Ray share a shed. The padlock takes a number. Their only channel is a gr
 
 Paint first. Both start from the same tin of yellow, in plain sight. Mia stirs in her blue, Ray his red, and both jars go on the table. Each then stirs their colour into the other's jar. The jars match; a watcher who copied both cannot unmix them.
 
-From here the paint is a number. The yellow is the **base**, where everyone starts. Stirring is multiplying on a clock: multiply, then take off whole rounds of a fixed size. On a 23 clock, 5 × 5 = 25, one 23 off, reads as 2 ([congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md), [modular-addition-and-multiplication](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md), [modular-exponentiation](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)). Lifting a colour out is the **discrete logarithm** — given the answer, find how many times the base went in ([one-way-streets](01-one-way-streets.md)). Everyone writes the whole exchange **DH**.
+From here the paint is a number. The yellow is the **base**, where everyone starts. Stirring is multiplying on a clock: multiply, then take off whole rounds of a fixed size. On a 23 clock, 5 × 5 = 25, one 23 off, reads as 2 ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md), [Adding and multiplying on the clock](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md), [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)). Lifting a colour out is the **discrete logarithm** — given the answer, find how many times the base went in ([One-way streets](01-one-way-streets.md)). Everyone writes the whole exchange **DH**.
 
 The chat sees clock size 23 and base 5. Mia keeps the count 6 and posts 8, Ray keeps 15 and posts 19. Both arrive at 2, which never crossed the line.
 
@@ -84,15 +59,15 @@ On the 23 clock, whole 23s dropped as you go, both routes land on the shed code:
 
 Mia's posting is six 5s multiplied together. Ray multiplies it out fifteen times: fifteen copies of six 5s, ninety 5s in a row. Ray's posting is fifteen 5s; Mia multiplies it out six times, ninety 5s again. Same pile, different order.
 
-Neither multiplies ninety 5s out in full. They drop whole 23s as they go, and a clock keeps only the remainder ([modular-addition-and-multiplication](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)), so two stacks of one pile land on one slot: 2.
+Neither multiplies ninety 5s out in full. They drop whole 23s as they go, and a clock keeps only the remainder ([Adding and multiplying on the clock](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)), so two stacks of one pile land on one slot: 2.
 
 ### Step 1: the line carries answers, never counts
 
-Everything posted is an answer: 23, 5, 8, 19. Neither count was typed. To copy Mia a listener needs 6, the count behind 8: pulling a count out of an answer is the discrete logarithm, the slow direction ([one-way-streets](01-one-way-streets.md)).
+Everything posted is an answer: 23, 5, 8, 19. Neither count was typed. To copy Mia a listener needs 6, the count behind 8: pulling a count out of an answer is the discrete logarithm, the slow direction ([One-way streets](01-one-way-streets.md)).
 
 ### Step 2: at clock 23 the listener wins
 
-There are 22 counts to try, and the code below finds 6 instantly: these numbers are small so you can follow them, not to hide anything. The gap widens with the clock: multiplying out stays cheap, working backwards does not. Base 5 earns its place too — its powers tour all 22 non-zero slots before repeating, base 2 only 11 ([order-and-primitive-roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md)).
+There are 22 counts to try, and the code below finds 6 instantly: these numbers are small so you can follow them, not to hide anything. The gap widens with the clock: multiplying out stays cheap, working backwards does not. Base 5 earns its place too — its powers tour all 22 non-zero slots before repeating, base 2 only 11 ([The order of a number and primitive roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md)).
 
 <details>
 <summary>What this card leaves out</summary>
@@ -266,7 +241,7 @@ ALL CHECKS PASS
 
 - **Browser connections.** A browser and a server that never met agree a key before any page content moves. TLS 1.3 builds its handshake on this exchange (RFC 8446, 2018), in practice on curve points, not a clock.
 - **Starting from nothing.** No shared password, no private channel, same number at the end.
-- **The rest of this shelf.** [rsa-in-outline](03-rsa-in-outline.md) locks a message with the same arithmetic; [fermat-test-and-carmichael](04-fermat-test-and-carmichael.md) and [miller-rabin](05-miller-rabin.md) supply the primes.
+- **The rest of this shelf.** [RSA in outline](03-rsa-in-outline.md) locks a message with the same arithmetic; [The Fermat test](04-fermat-test-and-carmichael.md) and [The Miller-Rabin test](05-miller-rabin.md) supply the primes.
 
 > **Say it back**
 > Mia and Ray need a number, and every channel is public. Out loud they agree clock size 23 and base 5. Each keeps a count, Mia 6 and Ray 15, and posts the base multiplied out that many times: 8 and 19. Each then multiplies the other's posting out by their own count, and both land on 2, two stacks of ninety 5s. A listener holds 23, 5, 8, 19 and needs a count nobody sent.
@@ -275,16 +250,16 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md): what a clock size does.
-- [modular-addition-and-multiplication](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md): multiplying on a clock.
-- [one-way-streets](01-one-way-streets.md): the quick-forwards, slow-backwards job this sits on.
-- [modular-exponentiation](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): multiplying out on a clock, and square-and-multiply.
-- [order-and-primitive-roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md): why base 5 tours all 22 slots, base 2 only 11.
+- [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md): what a clock size does.
+- [Adding and multiplying on the clock](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md): multiplying on a clock.
+- [One-way streets](01-one-way-streets.md): the quick-forwards, slow-backwards job this sits on.
+- [Powers on the clock](../04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): multiplying out on a clock, and square-and-multiply.
+- [The order of a number and primitive roots](../04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md): why base 5 tours all 22 slots, base 2 only 11.
 
 ## Where this goes next
 
-- [rsa-in-outline](03-rsa-in-outline.md): the same arithmetic, locking a message rather than agreeing a number.
-- [miller-rabin](05-miller-rabin.md): where primes big enough to matter come from.
+- [RSA in outline](03-rsa-in-outline.md): the same arithmetic, locking a message rather than agreeing a number.
+- [The Miller-Rabin test](05-miller-rabin.md): where primes big enough to matter come from.
 
 ---
 

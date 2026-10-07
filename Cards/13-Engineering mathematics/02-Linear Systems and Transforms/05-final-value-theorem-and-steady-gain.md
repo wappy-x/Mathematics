@@ -1,23 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Linear Systems and Transforms
-topic: Zero-frequency gain and the 3 dB point
-item: Final value and bandwidth
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/04-frequency-response-and-bode-plots|frequency-response-and-bode-plots]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/01-limits|limits]]"
-next:
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/03-steady-state-error-and-system-type|steady-state-error-and-system-type]]"
-tags: [mathematics, engineering mathematics, final-value-theorem-and-steady-gain]
----
-
 # Final value and bandwidth: where a response settles and how fast it keeps up
 
-Engineering mathematics → Linear Systems and Transforms → Zero-frequency gain and the 3 dB point → Final value and bandwidth
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Linear Systems and Transforms](../../../SYLLABUS.md#w13-s02) → Final value and bandwidth
 
 ---
 
@@ -51,7 +34,7 @@ The rising line is the simulated speed. The flat line is 20 m/s, the final value
 
 ## The formula
 
-Two reminders first. The Laplace variable $s$ (from [the-laplace-transform](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md)) stands in for "rate of change": a signal growing like e^(st) has derivative s times itself. The transfer function G(s) says what the system does to each such exponential ([impulse-response-and-transfer-functions](02-impulse-response-and-transfer-functions.md)).
+Two reminders first. The Laplace variable $s$ (from [The Laplace transform](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md)) stands in for "rate of change": a signal growing like e^(st) has derivative s times itself. The transfer function G(s) says what the system does to each such exponential ([Transfer functions](02-impulse-response-and-transfer-functions.md)).
 
 The car obeys Newton's second law, mass times acceleration equals push minus drag:
 
@@ -75,7 +58,7 @@ $$\lvert G(j\omega_b)\rvert = \frac{\lvert G(0)\rvert}{\sqrt 2}, \qquad\text{for
 
 **Read it aloud:** the bandwidth is the frequency where the output's swing has shrunk to 0.7071 of the swing a very slow input would give.
 
-On a decibel scale, 20 log10 of a gain (from [frequency-response-and-bode-plots](04-frequency-response-and-bode-plots.md)), the factor 1/√2 is a drop of 3 dB. The squared amplitude, which is proportional to power, has halved, so it is also called the half-power point. In hertz the car's bandwidth is 0.006366 Hz, one cycle every 157.08 s.
+On a decibel scale, 20 log10 of a gain (from [Bode plots](04-frequency-response-and-bode-plots.md)), the factor 1/√2 is a drop of 3 dB. The squared amplitude, which is proportional to power, has halved, so it is also called the half-power point. In hertz the car's bandwidth is 0.006366 Hz, one cycle every 157.08 s.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -94,11 +77,11 @@ On a decibel scale, 20 log10 of a gain (from [frequency-response-and-bode-plots]
 
 ### When it holds
 
-- **Every pole of sY(s) strictly in the left half of the complex plane.** A pole is a value of s where the transform blows up ([poles-zeros-and-stability](03-poles-zeros-and-stability.md)). One on the right means growth: a speed loop wired with the wrong sign, G = 25/(25s − 1), gets −20 m/s from the formula while the simulated car reaches 1071.96 m/s at 100 s.
+- **Every pole of sY(s) strictly in the left half of the complex plane.** A pole is a value of s where the transform blows up ([Poles and zeros](03-poles-zeros-and-stability.md)). One on the right means growth: a speed loop wired with the wrong sign, G = 25/(25s − 1), gets −20 m/s from the formula while the simulated car reaches 1071.96 m/s at 100 s.
 - **No poles on the imaginary axis.** Those mean a lasting oscillation. A throttle wiggling forever gives sY(s) → 0, yet the speed keeps swinging ±1.7678 m/s.
 - **A linear model.** The throttle cannot pass 1. Asking for 30 m/s needs u = 1.20; the real car stops at 25.000 m/s.
 - **Drag linear in speed.** Real drag grows roughly with speed squared. The model replaces it with one straight line, 60 N for every m/s, from rest up to the 25 m/s top speed; the 20 m/s and the 25 s time constant are that line's answers, and a real car's numbers differ as far as its drag curve bends away from that line.
-- **Bandwidth needs a low-pass shape**: a finite, nonzero gain at zero frequency that falls away at high frequency. A resonant system, whose gain rises to a peak before it falls ([second-order-systems-damping-and-natural-frequency](06-second-order-systems-damping-and-natural-frequency.md)), is measured 3 dB down from its zero-frequency gain, not from its peak.
+- **Bandwidth needs a low-pass shape**: a finite, nonzero gain at zero frequency that falls away at high frequency. A resonant system, whose gain rises to a peak before it falls ([Damping ratio and natural frequency](06-second-order-systems-damping-and-natural-frequency.md)), is measured 3 dB down from its zero-frequency gain, not from its peak.
 
 ---
 
@@ -112,7 +95,7 @@ That argument assumes the speed does settle. The theorem says when it does, and 
 
 ### Step 1: split the transform into pieces whose fates are known
 
-For the car, partial fractions ([inverting-by-partial-fractions](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/03-inverting-by-partial-fractions.md)) give
+For the car, partial fractions ([Inverting](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/03-inverting-by-partial-fractions.md)) give
 
 $$Y(s) = \frac{20}{s\,(25 s + 1)} = \frac{20}{s} - \frac{20}{s + 0.04}.$$
 
@@ -131,7 +114,7 @@ The argument used two facts: every pole except the one at zero has negative real
 <details>
 <summary>Detailed proof, for any signal whose derivative is absolutely integrable</summary>
 
-The transform of a derivative is $\int_0^\infty e^{-st}\,y'(t)\,dt = sY(s) - y(0)$ ([transforms-of-derivatives](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/02-transforms-of-derivatives.md)). Suppose $\int_0^\infty \lvert y'(t)\rvert\,dt$ is finite. Then $y(T) = y(0) + \int_0^T y'\,dt$ has a limit as $T \to \infty$, so the final value exists. For real $s > 0$, $\lvert e^{-st} y'(t)\rvert \le \lvert y'(t)\rvert$, so the dominated convergence theorem (a limit may pass inside an integral when one fixed integrable bound holds for every s) lets the limit pass inside the integral: as $s \to 0^+$, the left side tends to $\int_0^\infty y'\,dt = y(\infty) - y(0)$. The $y(0)$ terms cancel and $\lim_{s\to 0^+} sY(s) = y(\infty)$.
+The transform of a derivative is $\int_0^\infty e^{-st}\,y'(t)\,dt = sY(s) - y(0)$ ([Transforming a derivative](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/02-transforms-of-derivatives.md)). Suppose $\int_0^\infty \lvert y'(t)\rvert\,dt$ is finite. Then $y(T) = y(0) + \int_0^T y'\,dt$ has a limit as $T \to \infty$, so the final value exists. For real $s > 0$, $\lvert e^{-st} y'(t)\rvert \le \lvert y'(t)\rvert$, so the dominated convergence theorem (a limit may pass inside an integral when one fixed integrable bound holds for every s) lets the limit pass inside the integral: as $s \to 0^+$, the left side tends to $\int_0^\infty y'\,dt = y(\infty) - y(0)$. The $y(0)$ terms cancel and $\lim_{s\to 0^+} sY(s) = y(\infty)$.
 
 When $Y$ is a ratio of polynomials, the condition on $y'$ holds exactly when every pole of $sY(s)$ has negative real part, since $y'$ is then a sum of decaying exponentials times powers of $t$. The theorem's converse fails: $sY(s)$ can have a limit while $y$ has none, as for a sine wave.
 
@@ -200,7 +183,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The script builds the car's transfer function from its mass, drag and push, with complex arithmetic written out in Rust. It reaches the steady gain by four roads, three of them independent: G(0); s Y(s) at shrinking s, which is G(s) u0 once the s cancels, so it shows the theorem's limit rather than checking it; an RK4 simulation ([runge-kutta-four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) run for 300 s; and the area under the impulse response, by Simpson's rule, since G(0) is that area. It reaches the bandwidth by three: the formula 1/τ; bisection on |G(jω)|; and a simulated sine-wave throttle whose speed swing is measured. Then it repeats the gain and bandwidth with a 2 s actuator lag, and prints each failure in the table above.
+The script builds the car's transfer function from its mass, drag and push, with complex arithmetic written out in Rust. It reaches the steady gain by four roads, three of them independent: G(0); s Y(s) at shrinking s, which is G(s) u0 once the s cancels, so it shows the theorem's limit rather than checking it; an RK4 simulation ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) run for 300 s; and the area under the impulse response, by Simpson's rule, since G(0) is that area. It reaches the bandwidth by three: the formula 1/τ; bisection on |G(jω)|; and a simulated sine-wave throttle whose speed swing is measured. Then it repeats the gain and bandwidth with a 2 s actuator lag, and prints each failure in the table above.
 
 ### Python
 
@@ -587,10 +570,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Cruise control and every set-point loop.** The final speed for a held throttle is G(0) times the throttle, and the steady error of a feedback loop is read the same way, in [steady-state-error-and-system-type](../03-Feedback%20Control/03-steady-state-error-and-system-type.md).
+- **Cruise control and every set-point loop.** The final speed for a held throttle is G(0) times the throttle, and the steady error of a feedback loop is read the same way, in [Steady-state error](../03-Feedback%20Control/03-steady-state-error-and-system-type.md).
 - **Sensor and amplifier data sheets.** A "3 dB bandwidth" printed for an accelerometer or an audio amplifier is this definition: above it, signals come through at less than 1/√2 of their true size.
-- **Response-time specifications.** Rise time and bandwidth trade one for the other; for a first-order lag their product is ln 9. The step-response measures are in [step-response-specifications](07-step-response-specifications.md).
-- **Choosing a sampling rate.** A digital controller must sample well above the bandwidth of the loop it runs; turning a design into code is [zero-order-hold-and-tustin-discretisation](09-zero-order-hold-and-tustin-discretisation.md), and the discrete final value theorem uses z near 1 in [z-transform-and-discrete-time-systems](08-z-transform-and-discrete-time-systems.md).
+- **Response-time specifications.** Rise time and bandwidth trade one for the other; for a first-order lag their product is ln 9. The step-response measures are in [Step response specs](07-step-response-specifications.md).
+- **Choosing a sampling rate.** A digital controller must sample well above the bandwidth of the loop it runs; turning a design into code is [Discretising a design](09-zero-order-hold-and-tustin-discretisation.md), and the discrete final value theorem uses z near 1 in [The z-transform](08-z-transform-and-discrete-time-systems.md).
 
 > **Say it back**
 > Where a stable system settles is s times its output's transform, as s goes to zero. For a step input that is the transfer function at zero, the steady gain, times the step size: 25 × 0.8 = 20 m/s for this car. The theorem needs every pole of sY(s) in the left half-plane, and it gives a wrong answer without warning when that fails. The bandwidth is the frequency where the gain has fallen 3 dB, to 1/√2 of the steady gain: 0.04 rad/s here. Lags change the bandwidth, never the steady gain.
@@ -599,12 +582,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [frequency-response-and-bode-plots](04-frequency-response-and-bode-plots.md): the gain |G(jω)|, the decibel and the low-frequency end of the Bode plot.
-- [limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/01-limits.md): both sides of the theorem are limits, one in time and one in s.
+- [Bode plots](04-frequency-response-and-bode-plots.md): the gain |G(jω)|, the decibel and the low-frequency end of the Bode plot.
+- [Limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/01-limits.md): both sides of the theorem are limits, one in time and one in s.
 
 ## Where this goes next
 
-- [steady-state-error-and-system-type](../03-Feedback%20Control/03-steady-state-error-and-system-type.md): the final value theorem applied to the error of a feedback loop, and why an integrator drives it to zero.
+- [Steady-state error](../03-Feedback%20Control/03-steady-state-error-and-system-type.md): the final value theorem applied to the error of a feedback loop, and why an integrator drives it to zero.
 
 The car settles at 20 m/s only for this exact model; when a controller must hold 20 m/s against hills and a mass it does not know, the question becomes how big the leftover error is, which steady-state-error-and-system-type answers.
 

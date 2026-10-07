@@ -1,27 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Matchings and Flows
-topic: Deferred acceptance
-item: Stable matching
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/13-Matchings and Flows/01-matchings-and-augmenting-paths|matchings-and-augmenting-paths]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/07-partial-and-total-orders|partial-and-total-orders]]"
-next:
-  - "[[Cards/14-Applied and computational/05-Operations Research/10-auctions-and-mechanism-design|auctions-and-mechanism-design]]"
-  - "[[Cards/18-Functional analysis/06-Banach Algebras and Fixed Points/08-minimax-theorem-and-convex-duality|minimax-theorem-and-convex-duality]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - stable-matching-gale-shapley
----
-
 # Stable matching: pair two sides by preference so no two would both rather swap, and the proposers get their best stable deal
 
-Combinatorics and graphs → Matchings and Flows → Deferred acceptance → Stable matching
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Matchings and Flows](../../../SYLLABUS.md#w04-s13) → Stable matching
 
 ---
 
@@ -64,7 +43,7 @@ Solid lines: the doctors' proposing result. Dotted: the hospitals'. Each of the 
 
 ## The formula
 
-Notation in words first. A **matching** is a set of doctor–hospital pairs with nobody in two pairs ([matchings-and-augmenting-paths](01-matchings-and-augmenting-paths.md)); write it $M$, and $M(d)$ for doctor $d$'s hospital, $M(h)$ for hospital $h$'s doctor. Each ranking is a strict total order ([partial-and-total-orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md)): no ties. Write $h \succ_d h'$ for "doctor $d$ prefers hospital $h$ to hospital $h'$", and $\succeq$ for "prefers or is the same".
+Notation in words first. A **matching** is a set of doctor–hospital pairs with nobody in two pairs ([Matchings](01-matchings-and-augmenting-paths.md)); write it $M$, and $M(d)$ for doctor $d$'s hospital, $M(h)$ for hospital $h$'s doctor. Each ranking is a strict total order ([Orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md)): no ties. Write $h \succ_d h'$ for "doctor $d$ prefers hospital $h$ to hospital $h'$", and $\succeq$ for "prefers or is the same".
 
 A doctor and a hospital not paired together form a **blocking pair** when each prefers the other to the partner they have. A matching is **stable** when it has none:
 
@@ -141,7 +120,7 @@ If a stable placement gave some hospital a doctor it likes less than its $M_D$ p
 
 Swap the roles: every hospital asks a different doctor, nobody is turned away, and it stops in one round. Each hospital has its first choice; by Steps 4 and 5 with the sides swapped, each doctor sits at her worst stable partner, here her last choice.
 
-A second road needs no procedure: list all 3! = 6 placements and test the 3 × 3 = 9 pairs in each. Exactly 2 survive, the two above. [halls-marriage-theorem](02-halls-marriage-theorem.md) asks whether a full placement exists; here the question is which.
+A second road needs no procedure: list all 3! = 6 placements and test the 3 × 3 = 9 pairs in each. Exactly 2 survive, the two above. [Hall's theorem](02-halls-marriage-theorem.md) asks whether a full placement exists; here the question is which.
 
 ---
 
@@ -411,15 +390,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [matchings-and-augmenting-paths](01-matchings-and-augmenting-paths.md): what a matching is.
-- [partial-and-total-orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md): a strict ranking is a total order.
+- [Matchings](01-matchings-and-augmenting-paths.md): what a matching is.
+- [Orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md): a strict ranking is a total order.
 
 ## Where this goes next
 
-- auctions-and-mechanism-design: rules under which nobody gains by misreporting.
-- minimax-theorem-and-convex-duality: another existence theorem for two opposed sides.
+- Auctions: rules under which nobody gains by misreporting.
+- Minimax: another existence theorem for two opposed sides.
 
-This card assumed true rankings; whether anyone gains by lying about theirs is auctions-and-mechanism-design.
+This card assumed true rankings; whether anyone gains by lying about theirs is Auctions.
 
 ---
 

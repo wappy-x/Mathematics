@@ -1,28 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Changing Measure
-topic: Reweighting paths to move a drift
-item: Girsanov
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/01-change-of-measure-and-density-processes|change-of-measure-and-density-processes]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/04-radon-nikodym-derivative|radon-nikodym-derivative]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/03-novikov-condition|novikov-condition]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/05-change-of-numeraire|change-of-numeraire]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/02-risk-neutral-measure-and-the-fundamental-theorems|risk-neutral-measure-and-the-fundamental-theorems]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/02-barrier-options-by-reflection|barrier-options-by-reflection]]"
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/01-quanto-forward-and-adjustment|quanto-forward-and-adjustment]]"
-tags: [mathematics, stochastic processes and calculus, girsanov-theorem]
----
-
 # Girsanov: removing a drift by changing the measure
 
-Stochastic processes and calculus → Changing Measure → Reweighting paths to move a drift → Girsanov
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Changing Measure](../../../SYLLABUS.md#w11-s07) → Girsanov
 
 ---
 
@@ -55,7 +33,7 @@ One line. $W_T$ is the random part of a path at the one-year horizon $T$; $Z_T$ 
 
 ## The formula
 
-Notation first, with one-line reminders. $W_t$ is Brownian motion, read "the random walk seen from far away", with time $t$ in years. $P$ is the real-world probability measure and $E$ its average. A second probability measure on the same paths is written $Q$, with $E^Q$ for averages under it ([change-of-measure-and-density-processes](01-change-of-measure-and-density-processes.md)). The rule $dS_t = \mu S_t\,dt + \sigma S_t\,dW_t$ says the share drifts by $\mu S_t$ per unit time and is kicked by $\sigma S_t$ times the Brownian step; $dW_t$ is shorthand for an Ito integral, never a derivative, because the path has none. $\mathbf 1_A$ is 1 on the paths in the event $A$ and 0 elsewhere.
+Notation first, with one-line reminders. $W_t$ is Brownian motion, read "the random walk seen from far away", with time $t$ in years. $P$ is the real-world probability measure and $E$ its average. A second probability measure on the same paths is written $Q$, with $E^Q$ for averages under it ([Changing the measure](01-change-of-measure-and-density-processes.md)). The rule $dS_t = \mu S_t\,dt + \sigma S_t\,dW_t$ says the share drifts by $\mu S_t$ per unit time and is kicked by $\sigma S_t$ times the Brownian step; $dW_t$ is shorthand for an Ito integral, never a derivative, because the path has none. $\mathbf 1_A$ is 1 on the paths in the event $A$ and 0 elsewhere.
 
 For a constant tilt $\theta$ and a horizon $T$:
 
@@ -65,7 +43,7 @@ $$\text{and under } Q, \quad \widetilde W_t = W_t + \theta\,t \quad \text{is a B
 
 **Read it aloud:** weight every path by the exponential of minus the tilt times where it ended, corrected by half the tilt squared times the time; under the weighted odds, the old Brownian motion plus the tilt times the clock is a Brownian motion.
 
-The weight $Z_T$ is the density $dQ/dP$ of the new measure against the old, the Radon-Nikodym derivative of [radon-nikodym-derivative](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md).
+The weight $Z_T$ is the density $dQ/dP$ of the new measure against the old, the Radon-Nikodym derivative of [The Radon-Nikodym derivative](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md).
 
 Read backwards, $W_t = \widetilde W_t - \theta t$: under $Q$ the old Brownian motion has acquired a drift of $-\theta$ a year. Put that into the share's rule:
 
@@ -96,11 +74,11 @@ $$Z_t = \exp\!\Big(-\int_0^t \theta_s\,dW_s - \tfrac12\int_0^t \theta_s^2\,ds\Bi
 
 ### When it holds
 
-- **A finite horizon.** Over 10,000 years the real-world odds put almost all (1.0000 to four places) of their mass on paths with weight below 0.01, and the new odds 0.0000. In the limit the two measures live on different paths (singular, in [absolutely-continuous-and-singular-measures](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md)), and no density connects them.
-- **The weights average exactly 1.** The weight process must be a true martingale, not only a local one (fair only when stopped before it grows too large); a bounded $\theta_t$ guarantees it (proved below). Without the $-\tfrac12\theta^2 T$ the weights average 1.011314. For unbounded tilts the test is [novikov-condition](03-novikov-condition.md).
+- **A finite horizon.** Over 10,000 years the real-world odds put almost all (1.0000 to four places) of their mass on paths with weight below 0.01, and the new odds 0.0000. In the limit the two measures live on different paths (singular, in [Absolutely continuous and singular measures](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/01-absolutely-continuous-and-singular-measures.md)), and no density connects them.
+- **The weights average exactly 1.** The weight process must be a true martingale, not only a local one (fair only when stopped before it grows too large); a bounded $\theta_t$ guarantees it (proved below). Without the $-\tfrac12\theta^2 T$ the weights average 1.011314. For unbounded tilts the test is [Novikov](03-novikov-condition.md).
 - **The tilt uses only the past.** The proof conditions on $\mathcal F_s$ and needs $\theta_s$ fixed before the step it multiplies, as the Ito integral does.
-- **It moves the drift, never the kick size.** A path's squared log-price steps add up to $\sigma^2 T$ on almost every path ([quadratic-variation](../05-Brownian%20Motion/03-quadratic-variation.md)), and no reweighting changes a fact true of every path.
-- **Continuous Brownian noise.** With jumps, the weight may also change how often jumps arrive and how big they are: [jump-diffusions](../09-Beyond%20Brownian/02-jump-diffusions.md).
+- **It moves the drift, never the kick size.** A path's squared log-price steps add up to $\sigma^2 T$ on almost every path ([Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)), and no reweighting changes a fact true of every path.
+- **Continuous Brownian noise.** With jumps, the weight may also change how often jumps arrive and how big they are: [Jump diffusions](../09-Beyond%20Brownian/02-jump-diffusions.md).
 
 ---
 
@@ -136,9 +114,9 @@ So the joint density of the steps under $Q$ is the product of the $P$-densities 
 
 ### Step 4: the paths are still continuous, so it is a Brownian motion
 
-$\widetilde W$ starts at 0. Its paths are continuous under $P$, and an event of $P$-probability 1 has $Q$-probability 1 because the two measures are equivalent. Steps independent and bell-shaped with variance equal to elapsed time, continuous paths, starting at 0: that is the definition of Brownian motion on [brownian-motion](../05-Brownian%20Motion/01-brownian-motion.md). The constant-drift theorem is proved.
+$\widetilde W$ starts at 0. Its paths are continuous under $P$, and an event of $P$-probability 1 has $Q$-probability 1 because the two measures are equivalent. Steps independent and bell-shaped with variance equal to elapsed time, continuous paths, starting at 0: that is the definition of Brownian motion on [Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md). The constant-drift theorem is proved.
 
-For the share: $\log S_T = \log S_0 + (\mu - \tfrac12\sigma^2)T + \sigma W_T$ ([itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md)). Under $Q$ substitute $W_T = \widetilde W_T - \theta T$: the log drift 0.06 becomes 0.06 − 0.20 × 0.15 = 0.03, which is $r - \tfrac12\sigma^2$. So $E^Q[S_T] = 100\,e^{0.05}$ = $105.13 and the discounted average is $100.00.
+For the share: $\log S_T = \log S_0 + (\mu - \tfrac12\sigma^2)T + \sigma W_T$ ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)). Under $Q$ substitute $W_T = \widetilde W_T - \theta T$: the log drift 0.06 becomes 0.06 − 0.20 × 0.15 = 0.03, which is $r - \tfrac12\sigma^2$. So $E^Q[S_T] = 100\,e^{0.05}$ = $105.13 and the discounted average is $100.00.
 
 ### Step 5: a tilt that moves needs Ito, and the half-square is Ito's term
 
@@ -161,7 +139,7 @@ the same kind of weight with the bounded tilt $\theta_s - \lambda$, so a $P$-mar
 
 **Setting.** $W$ is a Brownian motion under $P$ with its filtration $\mathcal F_t$. The tilt $\theta_t$ is known at time $t$ and satisfies $\lvert\theta_t\rvert \le K$. For any such bounded tilt $u_s$ write $\mathcal E(u)_t = \exp\big(\int_0^t u_s\,dW_s - \tfrac12\int_0^t u_s^2\,ds\big)$, so $Z = \mathcal E(-\theta)$.
 
-**(a) $\mathcal E(u)$ is a true martingale with mean 1.** By Ito's lemma, $d\mathcal E(u)_t = u_t\,\mathcal E(u)_t\,dW_t$. Stop it at $\tau_m$, the first time it reaches $m$; the stopped process is a bounded Ito integral, hence a martingale. It is positive, so conditional Fatou as $m \to \infty$ gives $E[\mathcal E(u)_t \mid \mathcal F_s] \le \mathcal E(u)_s$: a supermartingale, with $E[\mathcal E(u)_t] \le 1$. Squaring, $\mathcal E(u)_t^2 = \mathcal E(2u)_t \exp\big(\int_0^t u_s^2\,ds\big) \le \mathcal E(2u)_t\,e^{K^2 t}$, and $2u$ is bounded too, so $E[\mathcal E(u)_t^2] \le e^{K^2 t}$. Then $E\int_0^T u_t^2\,\mathcal E(u)_t^2\,dt \le K^2 T e^{K^2 T} < \infty$, so $\int_0^t u_s\,\mathcal E(u)_s\,dW_s$ is a square-integrable martingale ([ito-integral](../06-Ito%20Calculus/01-ito-integral.md)), and $\mathcal E(u)_t = 1 + \int_0^t u_s\,\mathcal E(u)_s\,dW_s$ is a martingale with mean 1.
+**(a) $\mathcal E(u)$ is a true martingale with mean 1.** By Ito's lemma, $d\mathcal E(u)_t = u_t\,\mathcal E(u)_t\,dW_t$. Stop it at $\tau_m$, the first time it reaches $m$; the stopped process is a bounded Ito integral, hence a martingale. It is positive, so conditional Fatou as $m \to \infty$ gives $E[\mathcal E(u)_t \mid \mathcal F_s] \le \mathcal E(u)_s$: a supermartingale, with $E[\mathcal E(u)_t] \le 1$. Squaring, $\mathcal E(u)_t^2 = \mathcal E(2u)_t \exp\big(\int_0^t u_s^2\,ds\big) \le \mathcal E(2u)_t\,e^{K^2 t}$, and $2u$ is bounded too, so $E[\mathcal E(u)_t^2] \le e^{K^2 t}$. Then $E\int_0^T u_t^2\,\mathcal E(u)_t^2\,dt \le K^2 T e^{K^2 T} < \infty$, so $\int_0^t u_s\,\mathcal E(u)_s\,dW_s$ is a square-integrable martingale ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)), and $\mathcal E(u)_t = 1 + \int_0^t u_s\,\mathcal E(u)_s\,dW_s$ is a martingale with mean 1.
 
 **(b) $Q$ is a probability equivalent to $P$.** Define $Q(A) = E[Z_T \mathbf 1_A]$ for $A$ in $\mathcal F_T$. By (a), $Q$ of everything is 1. $Z_T > 0$, so $Q(A) = 0$ exactly when $P(A) = 0$. For $A$ in $\mathcal F_t$, the martingale property gives $Q(A) = E[Z_t \mathbf 1_A]$: $Z_t$ is the density on what is known by time $t$.
 
@@ -173,7 +151,7 @@ For $Q(A) > 0$, divide by $Q(A)$: under $Q$ given $A$, $D$ has the moment genera
 
 **(e) Conclusion.** Applying (d) at successive times shows the steps of $\widetilde W$ over any partition are independent under $Q$, each bell-shaped with variance equal to its length. $\widetilde W_0 = 0$, and its paths are continuous $P$-almost surely, hence $Q$-almost surely by (b). So $\widetilde W$ is a Brownian motion under $Q$ on $[0, T]$. For a constant tilt this repeats Steps 1 to 4.
 
-**What this card does not prove.** Tilts that are not bounded: $Z$ can then be a local martingale with $E[Z_T] < 1$, and the conclusion fails. Novikov's condition, $E\big[\exp(\tfrac12\int_0^T\theta_s^2\,ds)\big] < \infty$, is a sufficient test, proved on [novikov-condition](03-novikov-condition.md). The several-dimensional version, with one tilt per Brownian motion, has the same proof with vectors; it is in Karatzas and Shreve, Section 3.5, and Øksendal, Section 8.6.
+**What this card does not prove.** Tilts that are not bounded: $Z$ can then be a local martingale with $E[Z_T] < 1$, and the conclusion fails. Novikov's condition, $E\big[\exp(\tfrac12\int_0^T\theta_s^2\,ds)\big] < \infty$, is a sufficient test, proved on [Novikov](03-novikov-condition.md). The several-dimensional version, with one tilt per Brownian motion, has the same proof with vectors; it is in Karatzas and Shreve, Section 3.5, and Øksendal, Section 8.6.
 
 </details>
 
@@ -211,7 +189,7 @@ Under the reweighted odds the share's discounted value is a fair game: its avera
 | Tilt chosen to change the kick size | no such weight; realised variance 0.040048 and 0.040050 | squared steps are a fact of every path, so no density changes them |
 | Let the horizon run to infinity | already nearly singular at 10,000 years: $P$ puts 1.0000 on weights below 0.01, $Q$ puts 0.0000 | $Z_T \to 0$ as $T \to \infty$ while $E[Z_T] = 1$, so no density exists in the limit |
 
-The last row is a density process that is a martingale for every finite time but whose limit is 0 while its average stays 1 ([uniform-integrability-and-unbounded-stopping](../02-Martingales/06-uniform-integrability-and-unbounded-stopping.md)). At 100 years $P$ puts 0.0102 on such paths, at 1000 years 0.9194.
+The last row is a density process that is a martingale for every finite time but whose limit is 0 while its average stays 1 ([Stopping without a bound](../02-Martingales/06-uniform-integrability-and-unbounded-stopping.md)). At 100 years $P$ puts 0.0102 on such paths, at 1000 years 0.9194.
 
 ---
 
@@ -663,11 +641,11 @@ First line (orange): the plain average of the simulated paths, rising at about 3
 
 ## Where you meet it in real life
 
-- **Option pricing.** Every risk-neutral price is an average under this card's $Q$: [risk-neutral-measure-and-the-fundamental-theorems](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md).
-- **Pricing in another unit.** Counting value in shares instead of dollars is a second Girsanov tilt, $\theta = -\sigma$ in this card's sign convention: [change-of-numeraire](05-change-of-numeraire.md).
+- **Option pricing.** Every risk-neutral price is an average under this card's $Q$: [The fundamental theorems](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md).
+- **Pricing in another unit.** Counting value in shares instead of dollars is a second Girsanov tilt, $\theta = -\sigma$ in this card's sign convention: [Change of numeraire](05-change-of-numeraire.md).
 - **Rare-event simulation.** Simulate under a tilted measure where the rare event is common, then multiply each result by the weight back to the original odds.
 - **Estimating a drift.** $Z_T$ is the likelihood ratio between two drifts for an observed path, and it depends on the path only through $W_T$: for a constant drift the end point is all the data says.
-- **The other cards on this shelf.** The density process behind $Z$: [change-of-measure-and-density-processes](01-change-of-measure-and-density-processes.md). Writing a fair game as a hedge: [martingale-representation-theorem](04-martingale-representation-theorem.md). Turning a $Q$-average into an equation for the price: [feynman-kac-formula](06-feynman-kac-formula.md).
+- **The other cards on this shelf.** The density process behind $Z$: [Changing the measure](01-change-of-measure-and-density-processes.md). Writing a fair game as a hedge: [Martingale representation](04-martingale-representation-theorem.md). Turning a $Q$-average into an equation for the price: [Feynman-Kac](06-feynman-kac-formula.md).
 
 > **Say it back**
 > The share's paths stay the same; only the odds on them change. Weight each path by $e^{-\theta W_T - \theta^2 T/2}$, with $\theta = (\mu - r)/\sigma$ = 0.15, and the weights average 1. Under the new odds the bell curve of every step slides by $\theta$ times its length, so $W_t + \theta t$ is again a Brownian motion. The share then drifts at 5 percent and its discounted value is a fair game at $100, while its kick size of 20 percent is untouched. For a bounded tilt that uses only the past the same holds, with the weight built step by step from Ito's lemma.
@@ -676,19 +654,19 @@ First line (orange): the plain average of the simulated paths, rising at about 3
 
 ## What this builds on
 
-- [change-of-measure-and-density-processes](01-change-of-measure-and-density-processes.md): the measure $Q$, the density process $Z_t$, and Bayes' rule for averages under $Q$ given the past.
-- [itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md): the rule $dZ = -\theta Z\,dW$, the origin of the $-\tfrac12\theta^2$, and the share's closed form.
-- [radon-nikodym-derivative](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md): what it means for $Z_T$ to be $dQ/dP$.
+- [Changing the measure](01-change-of-measure-and-density-processes.md): the measure $Q$, the density process $Z_t$, and Bayes' rule for averages under $Q$ given the past.
+- [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md): the rule $dZ = -\theta Z\,dW$, the origin of the $-\tfrac12\theta^2$, and the share's closed form.
+- [The Radon-Nikodym derivative](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md): what it means for $Z_T$ to be $dQ/dP$.
 
 ## Where this goes next
 
-- [novikov-condition](03-novikov-condition.md): the test that lets the tilt be unbounded, and an example where the weight fails to average 1.
-- [change-of-numeraire](05-change-of-numeraire.md): choosing the tilt so that a different asset becomes the unit of account.
-- [risk-neutral-measure-and-the-fundamental-theorems](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md): why pricing under $Q$ is forced by the absence of free money.
-- [barrier-options-by-reflection](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md): Girsanov removes the drift, reflection handles the barrier.
-- [quanto-forward-and-adjustment](../../12-Financial%20mathematics/24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): a tilt in one currency moves the drift of a correlated price in another.
+- [Novikov](03-novikov-condition.md): the test that lets the tilt be unbounded, and an example where the weight fails to average 1.
+- [Change of numeraire](05-change-of-numeraire.md): choosing the tilt so that a different asset becomes the unit of account.
+- [The fundamental theorems](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md): why pricing under $Q$ is forced by the absence of free money.
+- [Knock-out and knock-in](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md): Girsanov removes the drift, reflection handles the barrier.
+- [The quanto adjustment](../../12-Financial%20mathematics/24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): a tilt in one currency moves the drift of a correlated price in another.
 
-Bounded tilts are certified here; the question this card leaves open is which unbounded tilts still give weights that average 1, and [novikov-condition](03-novikov-condition.md) answers it.
+Bounded tilts are certified here; the question this card leaves open is which unbounded tilts still give weights that average 1, and [Novikov](03-novikov-condition.md) answers it.
 
 ---
 

@@ -1,42 +1,18 @@
----
-type: card
-wing: 03-Algebra
-shelf: Rings and Fields
-topic: Prime powers
-item: Finite fields
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/09-Rings and Fields/02-fields|fields]]"
-  - "[[Cards/03-Algebra/09-Rings and Fields/04-ideals-and-quotient-rings|ideals-and-quotient-rings]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/05-order-and-primitive-roots|order-and-primitive-roots]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/07-prime-factorisation|prime-factorisation]]"
-next:
-  - "[[Cards/14-Applied and computational/03-Information Theory/08-error-correcting-codes-hamming-and-reed-solomon|error-correcting-codes-hamming-and-reed-solomon]]"
-  - "[[Cards/14-Applied and computational/04-Cryptography/02-symmetric-ciphers-and-aes|symmetric-ciphers-and-aes]]"
-  - "[[Cards/14-Applied and computational/04-Cryptography/06-elliptic-curve-cryptography|elliptic-curve-cryptography]]"
-  - "[[Cards/21-Algebraic and analytic number theory/03-Characters and L-functions/07-quadratic-reciprocity-via-gauss-sums|quadratic-reciprocity-via-gauss-sums]]"
-  - "[[Cards/21-Algebraic and analytic number theory/05-Fields and Galois Theory/09-finite-fields-and-frobenius|finite-fields-and-frobenius]]"
-  - "[[Cards/22-Algebraic geometry/04-Elliptic Curves/05-reduction-mod-p-and-hasse|reduction-mod-p-and-hasse]]"
-tags: [mathematics, algebra, rings-and-fields, finite-fields]
----
-
 # Finite fields: a clock with a prime number of hours is a field, and a four-hour field exists if you build it from a polynomial
 
-Algebra → Rings and Fields → Prime powers → Finite fields
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Rings and Fields](../../../SYLLABUS.md#w03-s09) → Finite fields
 
 ---
 
 ## General Overview
 
-A QR symbol repairs itself by solving equations in the alphabet it stores, so every nonzero element of that alphabet needs a reciprocal: a partner multiplying with it to give 1. Two bits give four symbols — 00, 01, 10, 11 — and as the hours of a four-hour clock they cannot divide: 2 times 2 wraps to 0, and neither factor of such a zero product has a reciprocal ([rings](01-rings.md)).
+A QR symbol repairs itself by solving equations in the alphabet it stores, so every nonzero element of that alphabet needs a reciprocal: a partner multiplying with it to give 1. Two bits give four symbols — 00, 01, 10, 11 — and as the hours of a four-hour clock they cannot divide: 2 times 2 wraps to 0, and neither factor of such a zero product has a reciprocal ([Rings](01-rings.md)).
 
-Four is not prime, and a clock divides only at a prime number of hours ([fields](02-fields.md)). Yet a field of exactly four elements exists: wrap polynomials rather than numbers, and out come 0, 1, a and a + 1, where a carries one rule, a squared is a + 1. That makes a times a + 1 equal 1, so a and a + 1 are reciprocals and every nonzero element divides.
+Four is not prime, and a clock divides only at a prime number of hours ([Fields](02-fields.md)). Yet a field of exactly four elements exists: wrap polynomials rather than numbers, and out come 0, 1, a and a + 1, where a carries one rule, a squared is a + 1. That makes a times a + 1 equal 1, so a and a + 1 are reciprocals and every nonzero element divides.
 
 **A finite field's size is always a prime raised to a positive whole power: at prime sizes it is the clock, and at every other size it is polynomials wrapped at one that does not factor.**
 
-**What kind of fact this is:** a theorem, proved in Why it works, which also builds the four-element field. Existence at every prime power, sameness after renaming, and one element's powers giving the rest are stated here, proved in finite-fields-and-frobenius.
+**What kind of fact this is:** a theorem, proved in Why it works, which also builds the four-element field. Existence at every prime power, sameness after renaming, and one element's powers giving the rest are stated here, proved in Finite fields.
 
 ### The picture: four symbols, two readings
 
@@ -54,7 +30,7 @@ Same four symbols on both branches; only the arithmetic differs.
 
 ## The formula
 
-A field of a given size is written GF of that size, for Galois field, after Évariste Galois; GF(2) is the two-hour clock, 0 and 1 with 1 + 1 = 0. A polynomial over GF(2) has coefficients 0 and 1 only, its letter $x$ a placeholder, never a number ([polynomials-behave-like-integers](03-polynomials-behave-like-integers.md)), and is **irreducible** when it is not two smaller polynomials multiplied. Discarding every multiple of one chosen polynomial and keeping remainders is written as a division ([ideals-and-quotient-rings](04-ideals-and-quotient-rings.md)), and GF($p$)[$x$] means polynomials in $x$ over GF($p$):
+A field of a given size is written GF of that size, for Galois field, after Évariste Galois; GF(2) is the two-hour clock, 0 and 1 with 1 + 1 = 0. A polynomial over GF(2) has coefficients 0 and 1 only, its letter $x$ a placeholder, never a number ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)), and is **irreducible** when it is not two smaller polynomials multiplied. Discarding every multiple of one chosen polynomial and keeping remainders is written as a division ([Ideals and quotient rings](04-ideals-and-quotient-rings.md)), and GF($p$)[$x$] means polynomials in $x$ over GF($p$):
 
 $$\mathrm{GF}(p^k) = \mathrm{GF}(p)[x] \,/\, (f), \qquad f \text{ irreducible of degree } k$$
 
@@ -87,7 +63,7 @@ Multiplying two elements means multiplying out and then trading every $a^2$ for 
 
 Both halves of this card are one move: divide by a fixed thing, keep the remainder. Division survives only when that thing has no factors, and Euclid's algorithm is the reason — run on two things sharing no factor it ends with one multiple of each adding to 1, and after the wrap the fixed thing's multiple is 0, leaving the other's multiplier as its reciprocal. Should the fixed thing factor, its factors survive as nonzero elements with product 0, and nothing in a zero product divides.
 
-So a prime clock divides — the previous card's theorem ([fields](02-fields.md)) — and that clock, GF($p$), is where the coefficients will live. The check confirms the seven-day week by both roads, 1, 4, 5, 2, 3, 6 each time, and at twelve hours 3 times 4 wraps to 0.
+So a prime clock divides — the previous card's theorem ([Fields](02-fields.md)) — and that clock, GF($p$), is where the coefficients will live. The check confirms the seven-day week by both roads, 1, 4, 5, 2, 3, 6 each time, and at twelve hours 3 times 4 wraps to 0.
 
 ### Step 1: four symbols no clock can supply
 
@@ -110,13 +86,13 @@ Add 1 to itself over and over. A finite field runs out of new elements, so the t
 <details>
 <summary>Detailed proof: why the characteristic cannot be composite</summary>
 
-Call the smallest positive number of 1's adding to 0 the count, and suppose it factors into two numbers, each above 1 and below it. The first many 1's add to one element, the second many to another, neither 0 by minimality — yet their product is the count's worth of 1's, which is 0. Multiplying by the first one's reciprocal forces the second to 0, a contradiction ([prime-factorisation](../../02-Number%20theory/01-Divisibility%20and%20Primes/07-prime-factorisation.md)).
+Call the smallest positive number of 1's adding to 0 the count, and suppose it factors into two numbers, each above 1 and below it. The first many 1's add to one element, the second many to another, neither 0 by minimality — yet their product is the count's worth of 1's, which is 0. Multiplying by the first one's reciprocal forces the second to 0, a contradiction ([Prime factorisation](../../02-Number%20theory/01-Divisibility%20and%20Primes/07-prime-factorisation.md)).
 
 </details>
 
 ### Step 3: three facts stated, proved elsewhere
 
-One field exists for every prime power, and any two of a size are one field after a renaming, both proved in finite-fields-and-frobenius. The third is the one hardware uses: the nonzero elements are the powers of a single one of them, a primitive root, now in a field instead of a clock ([order-and-primitive-roots](../../02-Number%20theory/04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md)).
+One field exists for every prime power, and any two of a size are one field after a renaming, both proved in Finite fields. The third is the one hardware uses: the nonzero elements are the powers of a single one of them, a primitive root, now in a field instead of a clock ([The order of a number and primitive roots](../../02-Number%20theory/04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md)).
 
 ```mermaid
 flowchart LR
@@ -383,8 +359,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **QR symbols and CDs.** Reed–Solomon repair reads a block as a polynomial over a finite field and solves for the lost pieces — exact division, no rounding (error-correcting-codes-hamming-and-reed-solomon).
-- **AES, in every secure web session.** A byte is an element of the 256-element field: eight coefficients wrapping at 2, folded by a degree-eight polynomial, this build at $k$ = 8 (symmetric-ciphers-and-aes).
+- **QR symbols and CDs.** Reed–Solomon repair reads a block as a polynomial over a finite field and solves for the lost pieces — exact division, no rounding (Hamming and Reed-Solomon).
+- **AES, in every secure web session.** A byte is an element of the 256-element field: eight coefficients wrapping at 2, folded by a degree-eight polynomial, this build at $k$ = 8 (AES).
 
 > **Say it back**
 > A finite field has finitely many elements and lets you divide by anything nonzero. At a prime size it is the clock with that many hours; every other size is polynomials over a prime clock, the multiples of one that does not factor discarded. GF(2) and $x^2 + x + 1$ give 0, 1, a and a + 1, with a squared = a + 1, so a times a + 1 = 1. No four-hour clock copies that, and sizes are prime powers only.
@@ -393,19 +369,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [fields](02-fields.md): the rule asked for, met by a clock at prime sizes.
-- [ideals-and-quotient-rings](04-ideals-and-quotient-rings.md): the wrap, here on polynomials.
-- [order-and-primitive-roots](../../02-Number%20theory/04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md): one element's powers giving all.
-- [prime-factorisation](../../02-Number%20theory/01-Divisibility%20and%20Primes/07-prime-factorisation.md): what a prime power is.
+- [Fields](02-fields.md): the rule asked for, met by a clock at prime sizes.
+- [Ideals and quotient rings](04-ideals-and-quotient-rings.md): the wrap, here on polynomials.
+- [The order of a number and primitive roots](../../02-Number%20theory/04-Powers%20on%20the%20Clock/05-order-and-primitive-roots.md): one element's powers giving all.
+- [Prime factorisation](../../02-Number%20theory/01-Divisibility%20and%20Primes/07-prime-factorisation.md): what a prime power is.
 
 ## Where this goes next
 
-- error-correcting-codes-hamming-and-reed-solomon: the codes behind it.
-- symmetric-ciphers-and-aes: the field inside a cipher.
-- elliptic-curve-cryptography: curves over a finite field.
-- quadratic-reciprocity-via-gauss-sums: squares on a prime clock.
-- finite-fields-and-frobenius: existence, uniqueness, symmetry.
-- reduction-mod-p-and-hasse: counting points field by field.
+- Hamming and Reed-Solomon: the codes behind it.
+- AES: the field inside a cipher.
+- Elliptic curves: curves over a finite field.
+- Quadratic reciprocity: squares on a prime clock.
+- Finite fields: existence, uniqueness, symmetry.
+- The curve mod p: counting points field by field.
 
 Degree two over GF(2) was easy by hand; whether an irreducible polynomial of every degree exists is the next question.
 

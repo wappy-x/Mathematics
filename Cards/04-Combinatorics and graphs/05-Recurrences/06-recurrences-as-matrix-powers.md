@@ -1,28 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Recurrences
-topic: Companion matrix
-item: A recurrence is a matrix
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/04-characteristic-equation-and-binet|characteristic-equation-and-binet]]"
-  - "[[Cards/03-Algebra/04-Matrices/03-matrix-multiplication|matrix-multiplication]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/02-eigenvalues-and-eigenvectors|eigenvalues-and-eigenvectors]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/03-diagonalisation-and-matrix-powers|diagonalisation-and-matrix-powers]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/01-modular-exponentiation|modular-exponentiation]]"
-next: []
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - recurrences-as-matrix-powers
----
-
 # A recurrence is a matrix: stack the last two terms, multiply by a fixed matrix, and matrix powers jump far ahead
 
-Combinatorics and graphs → Recurrences → Companion matrix → A recurrence is a matrix
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Recurrences](../../../SYLLABUS.md#w04-s05) → A recurrence is a matrix
 
 ---
 
@@ -30,9 +8,9 @@ Combinatorics and graphs → Recurrences → Companion matrix → A recurrence i
 
 A hallway is two feet wide and ten feet long. Tiles one foot by two feet cover it, standing upright across the width or lying flat along the length. Count the different finished floors: there are 89.
 
-That 89 comes from a step rule. The leftmost foot takes either one upright tile, leaving nine feet, or two flat tiles stacked, leaving eight — so the ten-foot count is the nine-foot count plus the eight-foot count ([recurrences-and-fibonacci](01-recurrences-and-fibonacci.md)). Nine additions carry 1, 1 up to 89.
+That 89 comes from a step rule. The leftmost foot takes either one upright tile, leaving nine feet, or two flat tiles stacked, leaving eight — so the ten-foot count is the nine-foot count plus the eight-foot count ([Recurrences](01-recurrences-and-fibonacci.md)). Nine additions carry 1, 1 up to 89.
 
-Nine additions is nothing. A million is a nuisance, and the rule insists on visiting every foot. Hold both counts as a stacked pair instead. One step is then one multiplication by a fixed block of four numbers — a matrix — and ten steps are ten of those. A matrix power is reached by doubling rather than stepping ([modular-exponentiation](../../02-Number%20theory/04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)), so the millionth term costs 25 multiplications.
+Nine additions is nothing. A million is a nuisance, and the rule insists on visiting every foot. Hold both counts as a stacked pair instead. One step is then one multiplication by a fixed block of four numbers — a matrix — and ten steps are ten of those. A matrix power is reached by doubling rather than stepping ([Powers on the clock](../../02-Number%20theory/04-Powers%20on%20the%20Clock/01-modular-exponentiation.md)), so the millionth term costs 25 multiplications.
 
 **Stack the terms a two-step rule remembers into a column: one step is multiplication by a fixed 2 × 2 matrix, n steps is that matrix to the n-th power, and powers are reached by squaring.**
 
@@ -52,7 +30,7 @@ The same four numbers act at every foot, which is why steps collect into a power
 
 ## The formula
 
-Write $T(n)$ for the tilings of an n-foot hallway. A **stack** is a column of two numbers, newer on top; $v_n$ holds $T(n)$ over $T(n-1)$. A matrix in prose is written by rows in brackets: `[[1, 1], [1, 0]]` has top row 1, 1 and bottom row 1, 0 ([matrix-multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md)).
+Write $T(n)$ for the tilings of an n-foot hallway. A **stack** is a column of two numbers, newer on top; $v_n$ holds $T(n)$ over $T(n-1)$. A matrix in prose is written by rows in brackets: `[[1, 1], [1, 0]]` has top row 1, 1 and bottom row 1, 0 ([Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md)).
 
 $$v_{n+1} = M v_n, \qquad M = \begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}$$
 
@@ -77,8 +55,8 @@ At $n = 10$: 89, 55, 55 and 34, the ten-, nine- and eight-foot counts.
 
 - **Fixed coefficients.** The top row is the same at every foot. Multipliers drifting with n need a fresh matrix each step.
 - **Depth fixes the size.** Two remembered terms, 2 × 2; three, 3 × 3.
-- **Nothing added on the side.** A driving term needs its own extra row ([nonhomogeneous-recurrences](05-nonhomogeneous-recurrences.md)).
-- **Exact in whole numbers.** Integers in, integers out; the eigenvalue route brings in the square root of 5 and with it rounding ([characteristic-equation-and-binet](04-characteristic-equation-and-binet.md)).
+- **Nothing added on the side.** A driving term needs its own extra row ([Recurrences with a driving term](05-nonhomogeneous-recurrences.md)).
+- **Exact in whole numbers.** Integers in, integers out; the eigenvalue route brings in the square root of 5 and with it rounding ([The characteristic equation](04-characteristic-equation-and-binet.md)).
 
 ---
 
@@ -123,9 +101,9 @@ Every entry from $M^2$ on is itself a tiling count.
 
 ### Step 4: the eigenvalues are the characteristic roots
 
-An **eigenvalue** is the stretch along a direction a matrix does not turn ([eigenvalues-and-eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). For $M$ they solve $\lambda^2 - \lambda - 1 = 0$: the rule's own characteristic equation, with $T(n)$ replaced by $\lambda^n$ ([characteristic-equation-and-binet](04-characteristic-equation-and-binet.md)). The roots are 1.618033988750 and −0.618033988750; squaring either and subtracting itself returns 1.000000000000, as that equation demands. Two cross-checks come free: the diagonal entries add to 1 — that sum is the **trace** — and so do the roots; the determinant, 1×0 − 1×1, is −1, which is also the two roots multiplied.
+An **eigenvalue** is the stretch along a direction a matrix does not turn ([Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md)). For $M$ they solve $\lambda^2 - \lambda - 1 = 0$: the rule's own characteristic equation, with $T(n)$ replaced by $\lambda^n$ ([The characteristic equation](04-characteristic-equation-and-binet.md)). The roots are 1.618033988750 and −0.618033988750; squaring either and subtracting itself returns 1.000000000000, as that equation demands. Two cross-checks come free: the diagonal entries add to 1 — that sum is the **trace** — and so do the roots; the determinant, 1×0 − 1×1, is −1, which is also the two roots multiplied.
 
-Closed form and matrix are one object seen twice: split a stack along the two unturned directions and $M^n$ becomes n-th powers of the roots — Binet's formula, by diagonalisation ([diagonalisation-and-matrix-powers](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md)). The hallway counts run one ahead of the Fibonacci numbers, so ten feet is the eleventh of those. Both roots to the eleventh, the second subtracted from the first, over the square root of 5: 89.000000000.
+Closed form and matrix are one object seen twice: split a stack along the two unturned directions and $M^n$ becomes n-th powers of the roots — Binet's formula, by diagonalisation ([Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md)). The hallway counts run one ahead of the Fibonacci numbers, so ten feet is the eleventh of those. Both roots to the eleventh, the second subtracted from the first, over the square root of 5: 89.000000000.
 
 <details>
 <summary>A free identity from the determinant</summary>
@@ -390,15 +368,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [characteristic-equation-and-binet](04-characteristic-equation-and-binet.md): the equation $\lambda^2 - \lambda - 1 = 0$, whose roots return here as eigenvalues.
-- [matrix-multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md): rows against columns, and the rebracketing behind the power.
-- [eigenvalues-and-eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): what a stretch factor is, and how trace and determinant pin it down.
-- [diagonalisation-and-matrix-powers](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md): from a matrix power to powers of eigenvalues.
-- [modular-exponentiation](../../02-Number%20theory/04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): repeated squaring, and why a modulus keeps entries small.
+- [The characteristic equation](04-characteristic-equation-and-binet.md): the equation $\lambda^2 - \lambda - 1 = 0$, whose roots return here as eigenvalues.
+- [Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md): rows against columns, and the rebracketing behind the power.
+- [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): what a stretch factor is, and how trace and determinant pin it down.
+- [Diagonalisation](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/03-diagonalisation-and-matrix-powers.md): from a matrix power to powers of eigenvalues.
+- [Powers on the clock](../../02-Number%20theory/04-Powers%20on%20the%20Clock/01-modular-exponentiation.md): repeated squaring, and why a modulus keeps entries small.
 
 ## Where this goes next
 
-The companion matrix is a tool the shelf hands over; the shelf's last card is [divide-and-conquer-recurrences](07-divide-and-conquer-recurrences.md).
+The companion matrix is a tool the shelf hands over; the shelf's last card is [Divide-and-conquer recurrences](07-divide-and-conquer-recurrences.md).
 
 The ladder needs a rule stepping back a fixed distance with fixed multipliers; what to do when a rule halves its input at every stage is the question that card answers.
 

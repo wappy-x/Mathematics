@@ -1,25 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Random Walks and Filtrations
-topic: Chance unfolding in time
-item: Stochastic processes
-kind: definition
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/01-random-variables-and-distributions|random-variables-and-distributions]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/02-simple-random-walk|simple-random-walk]]"
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/03-filtrations-and-information|filtrations-and-information]]"
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/01-markov-chains|markov-chains]]"
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/01-poisson-process|poisson-process]]"
-tags: [mathematics, stochastic processes and calculus, processes-and-paths]
----
-
 # Stochastic processes: one random variable per time, and a path for each outcome
 
-Stochastic processes and calculus → Random Walks and Filtrations → Chance unfolding in time → Stochastic processes
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Random Walks and Filtrations](../../../SYLLABUS.md#w11-s01) → Stochastic processes
 
 ---
 
@@ -31,7 +12,7 @@ Before the first toss, the whole evening is uncertain. Its full record is 20 res
 
 Now watch one number, the chip count. Three different questions can be asked about it, and they have three different kinds of answer.
 
-- **"How many chips after round 7?"**, asked before the evening starts, has no single answer. It has a table of chances, for instance exactly 7 chips with chance 0.1641. The chip count after round 7 is a **random variable**: a rule turning each outcome into a number ([random-variables-and-distributions](../../09-Probability%20and%20statistics/02-Random%20Variables/01-random-variables-and-distributions.md)).
+- **"How many chips after round 7?"**, asked before the evening starts, has no single answer. It has a table of chances, for instance exactly 7 chips with chance 0.1641. The chip count after round 7 is a **random variable**: a rule turning each outcome into a number ([Random variables](../../09-Probability%20and%20statistics/02-Random%20Variables/01-random-variables-and-distributions.md)).
 - **"What happened on this evening?"**, asked after it ends, has one answer: a list of 21 chip counts, round 0 to round 20. Drawn against time, that list is a **sample path**.
 - **"How likely is each whole evening's story?"** is answered by a table of chances over paths. That table is the **law of the process**.
 
@@ -139,7 +120,7 @@ Let $\Gamma$ be the finite set of paths produced by some outcome. For a set $A$ 
 
 *One-time tables from the law.* The event $X_n = x$ is the event "the path's entry at round $n$ is $x$". So $P(X_n = x) = P_X(\{\text{paths with entry } x \text{ at round } n\})$. The same holds for any finite list of rounds: $P(X_1 = 11, X_2 = 12)$ is the law of the set of paths passing through 11 and then 12.
 
-This is the image of a probability under a map, as in [random-variables-and-distributions](../../09-Probability%20and%20statistics/02-Random%20Variables/01-random-variables-and-distributions.md), with the map returning a list of 21 numbers instead of one.
+This is the image of a probability under a map, as in [Random variables](../../09-Probability%20and%20statistics/02-Random%20Variables/01-random-variables-and-distributions.md), with the map returning a list of 21 numbers instead of one.
 
 </details>
 
@@ -155,7 +136,7 @@ The one-time tables say where the process tends to be at each moment. They say n
 
 With 20 rounds, the law is the joint table of $(X_0, X_1, \dots, X_{20})$, and the tables for smaller lists of rounds are sums over it. These are the **finite-dimensional distributions**: the joint tables for every finite list of times.
 
-For an evening with no last round, there is no single finite table. Kolmogorov's extension theorem says that any family of finite-dimensional tables that agree with each other (summing the table for rounds 1, 2, 3 over round 3 gives the table for rounds 1, 2) comes from one law on endless paths. This card states it and does not prove it; [infinite-sequences-and-kolmogorov-extension](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md) states it precisely and outlines the proof, and Durrett's appendix gives it in full.
+For an evening with no last round, there is no single finite table. Kolmogorov's extension theorem says that any family of finite-dimensional tables that agree with each other (summing the table for rounds 1, 2, 3 over round 3 gives the table for rounds 1, 2) comes from one law on endless paths. This card states it and does not prove it; [Infinitely many coin tosses](../../10-Measure%20and%20integration/06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md) states it precisely and outlines the proof, and Durrett's appendix gives it in full.
 
 The same picture carries to continuous time, with a continuous time, in hours or years, in place of rounds, and to other state spaces (the set of values the process can take): weather types, queue lengths, share prices. A single path is always one sample, and the law is always a table or density over whole paths.
 
@@ -205,7 +186,7 @@ The code prints every one.
 
 ## Code, from first principles, and it actually runs
 
-The code finds the law of the chip count by three roads that share nothing but the house rule. Road one walks through all 1,048,576 outcomes one at a time and builds each path. Road two never looks at an outcome: it carries, round by round, how many evenings sit on each chip count. Road three simulates 100,000 evenings with a SplitMix64 generator written out, seed 20260929, and prints each simulated number with its standard error; the five sample paths are its first five evenings. A fourth count, the reflection count from [reflection-principle-and-ballot-problem](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md), cross-checks the ruin number. Without the stop, the evenings that touch 0 by round 20 are those that end at 0, plus twice those that end below 0: mirroring each path after its first visit to 0 pairs the ones that touch 0 and end above it with the ones that end below. In chances, 0.0148 + 2 × 0.0059 = 0.0266, and the stop turns every one of those evenings into a ruin. The redrawn process of Step 3 is built from road two's tables.
+The code finds the law of the chip count by three roads that share nothing but the house rule. Road one walks through all 1,048,576 outcomes one at a time and builds each path. Road two never looks at an outcome: it carries, round by round, how many evenings sit on each chip count. Road three simulates 100,000 evenings with a SplitMix64 generator written out, seed 20260929, and prints each simulated number with its standard error; the five sample paths are its first five evenings. A fourth count, the reflection count from [The reflection principle](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md), cross-checks the ruin number. Without the stop, the evenings that touch 0 by round 20 are those that end at 0, plus twice those that end below 0: mirroring each path after its first visit to 0 pairs the ones that touch 0 and end above it with the ones that end below. In chances, 0.0148 + 2 × 0.0059 = 0.0266, and the stop turns every one of those evenings into a ruin. The redrawn process of Step 3 is built from road two's tables.
 
 ### Python
 
@@ -571,10 +552,10 @@ The two outputs match line for line. The simulated mean, 9.9908 with standard er
 
 ## Where you meet it in real life
 
-- **Casinos and games.** A player's bankroll, round by round, is this card's process; the chance of going broke is [gamblers-ruin](04-gamblers-ruin.md), and the time it takes is [first-passage-and-hitting-times](06-first-passage-and-hitting-times.md).
+- **Casinos and games.** A player's bankroll, round by round, is this card's process; the chance of going broke is [Gambler's ruin](04-gamblers-ruin.md), and the time it takes is [Hitting times](06-first-passage-and-hitting-times.md).
 - **Weather records.** Each day's weather type is one random variable; a season's record is one path. Forecasting uses the ties between days, the part the one-time tables miss.
 - **Queues.** The number of callers waiting at a switchboard, minute by minute, is a process whose paths jump by whole callers.
-- **Share prices.** A daily closing price in dollars is one path; a model for it is a law over paths, such as [geometric-brownian-motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md).
+- **Share prices.** A daily closing price in dollars is one path; a model for it is a law over paths, such as [Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md).
 - **Simulation.** Every Monte Carlo study draws sample paths and averages over them; each number it reports is an estimate with a standard error, never the law itself.
 
 > **Say it back**
@@ -584,16 +565,16 @@ The two outputs match line for line. The simulated mean, 9.9908 with standard er
 
 ## What this builds on
 
-- [random-variables-and-distributions](../../09-Probability%20and%20statistics/02-Random%20Variables/01-random-variables-and-distributions.md): a random variable as a rule on outcomes, and its table of chances found by pooling outcomes; this card applies both once per round, then once to the whole path.
+- [Random variables](../../09-Probability%20and%20statistics/02-Random%20Variables/01-random-variables-and-distributions.md): a random variable as a rule on outcomes, and its table of chances found by pooling outcomes; this card applies both once per round, then once to the whole path.
 
 ## Where this goes next
 
-- [simple-random-walk](02-simple-random-walk.md): the chip count without the stop, the running total of fair ±1 steps, and its spread over time.
-- [filtrations-and-information](03-filtrations-and-information.md): what the gambler knows after round $n$, and which questions can be settled by then.
-- [markov-chains](../03-Markov%20Chains/01-markov-chains.md): processes whose law is fixed by one-step moves from the current state, as the gambler's is.
-- [poisson-process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md): a process in continuous time, counting calls to a switchboard.
+- [Simple random walk](02-simple-random-walk.md): the chip count without the stop, the running total of fair ±1 steps, and its spread over time.
+- [Filtrations](03-filtrations-and-information.md): what the gambler knows after round $n$, and which questions can be settled by then.
+- [Markov chains](../03-Markov%20Chains/01-markov-chains.md): processes whose law is fixed by one-step moves from the current state, as the gambler's is.
+- [Poisson process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md): a process in continuous time, counting calls to a switchboard.
 
-The law of the gambler's process is fixed, but so far every question about it is asked before the evening starts; what can be said halfway through, knowing the first 10 rounds and nothing after, is [filtrations-and-information](03-filtrations-and-information.md).
+The law of the gambler's process is fixed, but so far every question about it is asked before the evening starts; what can be said halfway through, knowing the first 10 rounds and nothing after, is [Filtrations](03-filtrations-and-information.md).
 
 ---
 

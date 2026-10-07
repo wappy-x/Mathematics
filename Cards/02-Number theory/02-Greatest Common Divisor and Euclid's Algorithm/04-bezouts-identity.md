@@ -1,34 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Greatest Common Divisor and Euclid's Algorithm
-topic: Euclid's algorithm
-item: Bezout's identity
-kind: theorem
-status: verified
-updated: 2026-09-06
-aliases:
-  - "Bézout's identity"
-  - "Bézout coefficients"
-  - "extended Euclidean algorithm"
-needs_first:
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/01-gcd|gcd]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/06-negative-numbers|negative-numbers]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/05-arithmetic-laws|arithmetic-laws]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/03-euclidean-algorithm|euclidean-algorithm]]"
-next:
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/05-coprime-numbers|coprime-numbers]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/06-euclids-lemma|euclids-lemma]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/04-modular-inverse|modular-inverse]]"
-tags:
-  - mathematics
-  - number theory
-  - bezouts-identity
----
-
 # Bezout's identity: the gcd is always a whole-number mix of the two numbers, and running Euclid backwards finds the mix
 
-Number theory → Greatest Common Divisor and Euclid's Algorithm → Euclid's algorithm → Bezout's identity
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Greatest Common Divisor and Euclid's Algorithm](../../../SYLLABUS.md#w02-s02) → Bezout's identity
 
 ---
 
@@ -38,9 +10,9 @@ Two jugs, no markings. One holds 21 litres, one holds 15. A tap, and a tub. Fill
 
 It works. Fill the 15 three times: 45 litres in. Dip the 21 twice and throw both away: 42 gone. Left: 3.
 
-One line holds the session: **21 × (−2) + 15 × 3 = 3**. Pouring in counts up, throwing away counts down, so the minus sign is a real move ([negative-numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md)).
+One line holds the session: **21 × (−2) + 15 × 3 = 3**. Pouring in counts up, throwing away counts down, so the minus sign is a real move ([Negative numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md)).
 
-The 3 is not luck: it is the greatest common divisor — gcd for short — of 21 and 15, the biggest number dividing both ([gcd](01-gcd.md)).
+The 3 is not luck: it is the greatest common divisor — gcd for short — of 21 and 15, the biggest number dividing both ([Greatest common divisor](01-gcd.md)).
 
 **Any whole-number mix of two numbers — copies of one poured in, copies of the other thrown away — lands on a multiple of their gcd, and the gcd itself is always reachable.**
 
@@ -82,11 +54,11 @@ In general: **first number × its count + second number × its count = their gcd
 
 ### Step 0: a mix can only reach multiples of a shared divisor
 
-3 divides 21 and 3 divides 15. Copies of a multiple of 3 stay multiples of 3, and so does their sum ([divides](../01-Divisibility%20and%20Primes/01-divides.md)). So every mix of these jugs is a multiple of 3 — nothing between 0 and 3 is reachable.
+3 divides 21 and 3 divides 15. Copies of a multiple of 3 stay multiples of 3, and so does their sum ([Divides](../01-Divisibility%20and%20Primes/01-divides.md)). So every mix of these jugs is a multiple of 3 — nothing between 0 and 3 is reachable.
 
 ### Step 1: rearrange Euclid's chain
 
-The chain's three lines are in the picture ([euclidean-algorithm](03-euclidean-algorithm.md)). Stand the remainders on their own:
+The chain's three lines are in the picture ([Euclid's algorithm](03-euclidean-algorithm.md)). Stand the remainders on their own:
 
 - 6 = 21 − 1 × 15
 - 3 = 15 − 2 × 6
@@ -97,13 +69,13 @@ The second line mixes 15 and 6, and 6 is not a jug. The first says what 6 is, so
 
 3 = 15 − 2 × (21 − 1 × 15)
 
-Multiply out and gather like pieces ([arithmetic-laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)):
+Multiply out and gather like pieces ([The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)):
 
 3 = 21 × (−2) + 15 × 3
 
 Only the jugs are left: those are the pours.
 
-Nothing here can fail: every chain stops, every line rearranges, and a mix swapped into a mix is still a mix ([euclidean-algorithm](03-euclidean-algorithm.md); careful form on [strong-induction-and-well-ordering](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md)).
+Nothing here can fail: every chain stops, every line rearranges, and a mix swapped into a mix is still a mix ([Euclid's algorithm](03-euclidean-algorithm.md); careful form on [Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md)).
 
 Step 0 rules out everything below the gcd; Step 2 reaches it. So the gcd is the smallest amount above zero the tub can hold: biggest thing dividing both, smallest thing you can build.
 
@@ -274,8 +246,8 @@ Both outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Undoing a multiplication on a clock.** What to multiply by to get back to 1 is exactly this, and needs gcd 1: [modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md).
-- **Sharing no factors.** With gcd 1 the mix lands on 1 itself, the hinge of [coprime-numbers](05-coprime-numbers.md) and [euclids-lemma](06-euclids-lemma.md).
+- **Undoing a multiplication on a clock.** What to multiply by to get back to 1 is exactly this, and needs gcd 1: [The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md).
+- **Sharing no factors.** With gcd 1 the mix lands on 1 itself, the hinge of [Coprime numbers](05-coprime-numbers.md) and [Euclid's lemma](06-euclids-lemma.md).
 - **Measuring puzzles and gear teeth.** A target is reachable exactly when the gcd divides it: 21 and 15 can leave 6 or 9 litres, never 4, and two cogs line up on the multiples of their gcd.
 
 > **Say it back**
@@ -285,16 +257,16 @@ Both outputs match line for line.
 
 ## What this builds on
 
-- [gcd](01-gcd.md): the greatest common divisor, the number every mix is a multiple of.
-- [negative-numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md): a negative count is a jugful thrown away.
-- [arithmetic-laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): multiplying out the bracket, gathering like pieces.
-- [euclidean-algorithm](03-euclidean-algorithm.md): the chain that finds the gcd and, backwards, the counts.
+- [Greatest common divisor](01-gcd.md): the greatest common divisor, the number every mix is a multiple of.
+- [Negative numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md): a negative count is a jugful thrown away.
+- [The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): multiplying out the bracket, gathering like pieces.
+- [Euclid's algorithm](03-euclidean-algorithm.md): the chain that finds the gcd and, backwards, the counts.
 
 ## Where this goes next
 
-- [coprime-numbers](05-coprime-numbers.md): what changes when the gcd is 1 and the mix lands on 1.
-- [euclids-lemma](06-euclids-lemma.md): multiply that mix by another number; a prime dividing a product must divide a factor.
-- [modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md): the same counts, dividing on a clock.
+- [Coprime numbers](05-coprime-numbers.md): what changes when the gcd is 1 and the mix lands on 1.
+- [Euclid's lemma](06-euclids-lemma.md): multiply that mix by another number; a prime dividing a product must divide a factor.
+- [The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md): the same counts, dividing on a clock.
 
 ---
 

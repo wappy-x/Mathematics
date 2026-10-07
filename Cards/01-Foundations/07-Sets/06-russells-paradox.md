@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Sets
-topic: Limits of set-building
-item: Russell's paradox
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/07-Sets/01-sets-and-membership|sets-and-membership]]"
-  - "[[Cards/01-Foundations/07-Sets/02-subsets-and-power-set|subsets-and-power-set]]"
-  - "[[Cards/01-Foundations/06-Proof/03-proof-by-contradiction|proof-by-contradiction]]"
-next: []
-tags:
-  - mathematics
-  - foundations
-  - russells-paradox
----
-
 # Russell's paradox: why 'the set of all sets that do not contain themselves' cannot exist
 
-Foundations → Sets → Limits of set-building → Russell's paradox
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sets](../../../SYLLABUS.md#w01-s07) → Russell's paradox
 
 ---
 
@@ -55,7 +35,7 @@ flowchart TD
 
 ## The formula
 
-The sign, one villager at a time. The letter x stands for one villager, as in set-builder shorthand on [sets-and-membership](01-sets-and-membership.md):
+The sign, one villager at a time. The letter x stands for one villager, as in set-builder shorthand on [Sets](01-sets-and-membership.md):
 
 **Cyd shaves x exactly when x does not shave x.**
 
@@ -90,7 +70,7 @@ The sign says "every villager". Cyd is a villager, so the sign has an opinion ab
 
 ### Step 1: run the promise at the barber
 
-Put Cyd in for x. Both answers are ruled out, so the sentence is false. But the sign promised it. That is [proof-by-contradiction](../06-Proof/03-proof-by-contradiction.md): assume it, reach a wreck, conclude it was never there.
+Put Cyd in for x. Both answers are ruled out, so the sentence is false. But the sign promised it. That is [Proof by contradiction](../06-Proof/03-proof-by-contradiction.md): assume it, reach a wreck, conclude it was never there.
 
 ### Step 2: the same flip, with membership
 
@@ -106,7 +86,7 @@ One hole comes with it. The Russell cut of $A$ is never a member of $A$ — if i
 
 ## Worked numbers, by hand
 
-Cyd holds a list of the people he shaves. A list is any set of villagers, so there are eight lists he could hold ([subsets-and-power-set](02-subsets-and-power-set.md)).
+Cyd holds a list of the people he shaves. A list is any set of villagers, so there are eight lists he could hold ([Subsets and the power set](02-subsets-and-power-set.md)).
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -269,7 +249,7 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **The rules of set theory.** Foundations dodge this flip by making set-builder shorthand always name a set to cut from — the habit set on [sets-and-membership](01-sets-and-membership.md), used on [set-operations](03-set-operations.md).
+- **The rules of set theory.** Foundations dodge this flip by making set-builder shorthand always name a set to cut from — the habit set on [Sets](01-sets-and-membership.md), used on [Set operations](03-set-operations.md).
 - **Programs that read programs.** "Does this program stop?" cannot be answered by a program. Feed the answering program its own description and the answer flips.
 - **Anything that catalogues itself.** A directory of every directory that does not list itself.
 
@@ -280,12 +260,12 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [sets-and-membership](01-sets-and-membership.md): membership, and the set-builder shorthand this card fences in.
-- [proof-by-contradiction](../06-Proof/03-proof-by-contradiction.md): assume it, reach a wreck, conclude it never existed.
+- [Sets](01-sets-and-membership.md): membership, and the set-builder shorthand this card fences in.
+- [Proof by contradiction](../06-Proof/03-proof-by-contradiction.md): assume it, reach a wreck, conclude it never existed.
 
 ## Where this goes next
 
-Last card on the Sets shelf. Its neighbours [inclusion-exclusion](04-inclusion-exclusion.md) and [ordered-pairs-and-cartesian-product](05-ordered-pairs-and-cartesian-product.md) build sets the safe way, from sets already in hand.
+Last card on the Sets shelf. Its neighbours [Inclusion-exclusion](04-inclusion-exclusion.md) and [Ordered pairs and the Cartesian product](05-ordered-pairs-and-cartesian-product.md) build sets the safe way, from sets already in hand.
 
 ---
 

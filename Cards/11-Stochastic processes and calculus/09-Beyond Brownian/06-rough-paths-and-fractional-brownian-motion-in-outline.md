@@ -1,23 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Beyond Brownian
-topic: Memory in the increments
-item: Rougher than Brownian
-kind: definition
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/02-scaling-and-path-roughness|scaling-and-path-roughness]]"
-  - "[[Cards/11-Stochastic processes and calculus/09-Beyond Brownian/05-semimartingales-in-outline|semimartingales-in-outline]]"
-next:
-  - "[[Cards/25-Frontier/07-Physics, Finance and Machines/03-rough-volatility-and-open-finance-questions|rough-volatility-and-open-finance-questions]]"
-tags: [mathematics, stochastic processes and calculus, rough-paths-and-fractional-brownian-motion-in-outline]
----
-
 # Rougher than Brownian: fractional Brownian motion and why rough volatility needs new tools
 
-Stochastic processes and calculus → Beyond Brownian → Memory in the increments → Rougher than Brownian
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Beyond Brownian](../../../SYLLABUS.md#w11-s09) → Rougher than Brownian
 
 ---
 
@@ -25,13 +8,13 @@ Stochastic processes and calculus → Beyond Brownian → Memory in the incremen
 
 A stock index has a volatility: how widely its price swings, quoted as a percentage per year. Say it sits at 20% today. Volatility is never seen directly; it is estimated each day from the many small price moves inside that day. Plot the daily estimates over a few years and the line is jagged. Zoom into one quarter and it is just as jagged. Zoom into one week of intraday estimates and it is jagged again.
 
-That alone sounds like Brownian motion, which also looks the same at every zoom ([scaling-and-path-roughness](../05-Brownian%20Motion/02-scaling-and-path-roughness.md)). The numbers say otherwise. In the example on this card, the log of volatility moves about 0.3 in a day (0.3 is its standard deviation, called the spread from here on): 20% becomes 27.00% or 14.82%. If those daily moves were independent, as Brownian moves are, the typical move over 1,024 trading days, about four years, would be 0.3 times the square root of 1,024: 9.6, a factor of about 15,000. In fact it is 0.6: from 20% a one-spread move reaches only 36.44%. Volatility is wild over a day and tame over years. Its moves are not independent. A rise tends to be followed by a fall.
+That alone sounds like Brownian motion, which also looks the same at every zoom ([Brownian paths](../05-Brownian%20Motion/02-scaling-and-path-roughness.md)). The numbers say otherwise. In the example on this card, the log of volatility moves about 0.3 in a day (0.3 is its standard deviation, called the spread from here on): 20% becomes 27.00% or 14.82%. If those daily moves were independent, as Brownian moves are, the typical move over 1,024 trading days, about four years, would be 0.3 times the square root of 1,024: 9.6, a factor of about 15,000. In fact it is 0.6: from 20% a one-spread move reaches only 36.44%. Volatility is wild over a day and tame over years. Its moves are not independent. A rise tends to be followed by a fall.
 
 Jim Gatheral, Thibault Jaisson and Mathieu Rosenbaum measured this across many stock indices in 2018. The log of volatility scales with an exponent of about 0.1 where Brownian motion has 0.5. The model with an exponent other than one half is **fractional Brownian motion**. Its exponent is the **Hurst exponent**, named after Harold Hurst, who found exponents other than one half in the floods of the Nile.
 
 **Fractional Brownian motion is the Gaussian process (any set of its values is jointly normal) that zooms by the power H of time instead of the square root; for H below one half its increments push against each other, its paths are rougher than Brownian, and the sums Ito calculus is built on blow up, so integrating against it needs rough paths, and a rough volatility's long memory needs non-Markov pricing tools.**
 
-**What kind of fact this is:** a definition. Its covariance, its scaling, the correlation of its increments and the blow-up of its squared moves are proved on this card in Why it works. That it is not a semimartingale is a theorem proved here in a folded Detailed proof, resting on the facts of [semimartingales-in-outline](05-semimartingales-in-outline.md). The rough-path repair is stated with a named source, not proved. Using it for volatility is a model.
+**What kind of fact this is:** a definition. Its covariance, its scaling, the correlation of its increments and the blow-up of its squared moves are proved on this card in Why it works. That it is not a semimartingale is a theorem proved here in a folded Detailed proof, resting on the facts of [Semimartingales](05-semimartingales-in-outline.md). The rough-path repair is stated with a named source, not proved. Using it for volatility is a model.
 
 ### The picture: a rough volatility against a Brownian one with the same quarterly spread
 
@@ -140,7 +123,7 @@ At H = 0.1 a rise tends to be followed by a fall. The best forecast of tomorrow'
 
 A move over a step h has spread h to the power H. For H = 0.1, cutting the step from a day to 1/16 day shrinks the typical move by less than a quarter. Paths of fractional Brownian motion are continuous, and are Hölder continuous (moves bounded by a constant times the step to a power) for every power below H, by Kolmogorov's continuity criterion (Friz and Hairer, Sources). They are rougher than Brownian paths when H is below ½.
 
-Ito calculus rests on one sum: the squared moves over a fine grid, which for Brownian motion settle at the elapsed time, the quadratic variation ([quadratic-variation](../05-Brownian%20Motion/03-quadratic-variation.md)). For fractional Brownian motion, over a horizon T with T/h steps of size h, and ΔX the move of X over one step, the mean of that sum is
+Ito calculus rests on one sum: the squared moves over a fine grid, which for Brownian motion settle at the elapsed time, the quadratic variation ([Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)). For fractional Brownian motion, over a horizon T with T/h steps of size h, and ΔX the move of X over one step, the mean of that sum is
 
 $$E\sum (\Delta X)^2 = \frac{T}{h}\,\nu^2 h^{2H} = \nu^2\,T\,h^{2H-1}.$$
 
@@ -161,18 +144,18 @@ Orange: mean over 1,000 simulated paths of rough log-volatility. Green: the form
 
 ### Step 5: what breaks in Ito calculus
 
-Ito's integral evaluates the integrand at the left end of each step. For Brownian motion, left and right ends give sums that differ by the squared moves, which settle at the elapsed time: a finite, known correction, the dt term in Ito's formula ([itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md)). Take the integral of X against its own moves. Algebra alone gives, path by path,
+Ito's integral evaluates the integrand at the left end of each step. For Brownian motion, left and right ends give sums that differ by the squared moves, which settle at the elapsed time: a finite, known correction, the dt term in Ito's formula ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)). Take the integral of X against its own moves. Algebra alone gives, path by path,
 
 $$\sum X_{\text{left}}\,\Delta X = \tfrac12\Big(X_T^2 - \sum (\Delta X)^2\Big), \qquad \sum X_{\text{right}}\,\Delta X = \tfrac12\Big(X_T^2 + \sum (\Delta X)^2\Big).$$
 
 For rough volatility over 64 days on a 1/16-day grid, the left sum averages −26.32 and the right +26.52, while X at 64 days, squared, averages only 0.2068. The gap is the sum of squared moves, which grows without limit as the grid is refined. The left-point rule has no limit; neither has the right. The Ito integral against fractional Brownian motion with H < ½ does not exist as a limit of these sums.
 
-The general theory of stochastic integrals covers exactly the processes called semimartingales: a local martingale plus a path of finite total movement ([semimartingales-in-outline](05-semimartingales-in-outline.md)). Fractional Brownian motion with H ≠ ½ is not one.
+The general theory of stochastic integrals covers exactly the processes called semimartingales: a local martingale plus a path of finite total movement ([Semimartingales](05-semimartingales-in-outline.md)). Fractional Brownian motion with H ≠ ½ is not one.
 
 <details>
 <summary>Detailed proof: for H ≠ ½, fractional Brownian motion is not a semimartingale</summary>
 
-Two facts about a continuous semimartingale are used. First ([semimartingales-in-outline](05-semimartingales-in-outline.md)): as the grid step shrinks, the sum of squared moves converges in probability to a finite limit. Second: if that limit is 0, the sum of absolute moves stays bounded however fine the grid. Why: the finite-travel part adds nothing to the limit (as on [quadratic-variation](../05-Brownian%20Motion/03-quadratic-variation.md), its terms are at most a largest move times a total travel), so the local martingale part M has quadratic variation 0. Card 05's integration by parts makes M squared a local martingale, never negative, starting at 0, so M is 0, and the finite-travel part's total travel bounds every grid's absolute moves.
+Two facts about a continuous semimartingale are used. First ([Semimartingales](05-semimartingales-in-outline.md)): as the grid step shrinks, the sum of squared moves converges in probability to a finite limit. Second: if that limit is 0, the sum of absolute moves stays bounded however fine the grid. Why: the finite-travel part adds nothing to the limit (as on [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md), its terms are at most a largest move times a total travel), so the local martingale part M has quadratic variation 0. Card 05's integration by parts makes M squared a local martingale, never negative, starting at 0, so M is 0, and the finite-travel part's total travel bounds every grid's absolute moves.
 
 Use unit-free time: horizon 1, m steps of size 1/m, and write each move as m to the power −H times a standard normal number; these numbers have correlations ρ(n) at gap n.
 
@@ -643,10 +626,10 @@ The simulated neighbouring correlation, −0.4245 ± 0.0012, sits one standard e
 
 ## Where you meet it in real life
 
-- **Rough volatility in option pricing.** Models in which the log of volatility is driven by a fractional process with H near 0.1 reproduce how the implied volatility (the volatility that makes the standard option formula match a market price) of short-dated options steepens as expiry approaches, which Brownian volatility models struggle to fit. The open questions are in rough-volatility-and-open-finance-questions.
+- **Rough volatility in option pricing.** Models in which the log of volatility is driven by a fractional process with H near 0.1 reproduce how the implied volatility (the volatility that makes the standard option formula match a market price) of short-dated options steepens as expiry approaches, which Brownian volatility models struggle to fit. The open questions are in Open questions in finance mathematics.
 - **River flows and reservoirs.** Hurst found that the range of cumulative Nile flows grew faster than the square root of the number of years: long runs of wet and dry years, positive correlation, H above ½.
-- **Other ways beyond Brownian.** Jumps rather than memory: [levy-processes](01-levy-processes.md) and [jump-diffusions](02-jump-diffusions.md). The class of processes Ito-style integration covers: [semimartingales-in-outline](05-semimartingales-in-outline.md).
-- **Estimating a hidden state.** Volatility is never observed, only inferred from prices, a filtering problem: [filtering-and-the-kalman-bucy-filter](04-filtering-and-the-kalman-bucy-filter.md).
+- **Other ways beyond Brownian.** Jumps rather than memory: [Levy processes](01-levy-processes.md) and [Jump diffusions](02-jump-diffusions.md). The class of processes Ito-style integration covers: [Semimartingales](05-semimartingales-in-outline.md).
+- **Estimating a hidden state.** Volatility is never observed, only inferred from prices, a filtering problem: [Filtering](04-filtering-and-the-kalman-bucy-filter.md).
 
 > **Say it back**
 > Fractional Brownian motion is the Gaussian process whose move over a gap has spread the gap to the power H; H = ½ is Brownian motion. Scaling and stationary moves force its covariance, and for H below ½ neighbouring moves are negatively correlated, −0.4257 at H = 0.1. Its paths are rougher than Brownian, and the summed squared moves grow without limit as the grid is refined, so left- and right-point sums part company and the Ito integral against it does not exist. It is not a semimartingale. Rough-path theory repairs integration by carrying the path's iterated integrals; rough volatility models keep Ito for the price and put the roughness, with its long memory, in the volatility.
@@ -655,12 +638,12 @@ The simulated neighbouring correlation, −0.4245 ± 0.0012, sits one standard e
 
 ## What this builds on
 
-- [scaling-and-path-roughness](../05-Brownian%20Motion/02-scaling-and-path-roughness.md): the root-t zoom and the missing slope of Brownian motion, the case H = ½ that this card generalises.
-- [semimartingales-in-outline](05-semimartingales-in-outline.md): semimartingales, the class the Detailed proof rests on.
+- [Brownian paths](../05-Brownian%20Motion/02-scaling-and-path-roughness.md): the root-t zoom and the missing slope of Brownian motion, the case H = ½ that this card generalises.
+- [Semimartingales](05-semimartingales-in-outline.md): semimartingales, the class the Detailed proof rests on.
 
 ## Where this goes next
 
-- rough-volatility-and-open-finance-questions: pricing options when volatility is rough, the computational cost of its long memory, and what remains unsettled.
+- Open questions in finance mathematics: pricing options when volatility is rough, the computational cost of its long memory, and what remains unsettled.
 
 Rough paths rescue the integral; pricing when volatility remembers its whole past is that card's question.
 

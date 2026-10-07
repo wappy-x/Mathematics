@@ -1,29 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Limit Theorems in Practice
-topic: The shape of an average's error
-item: Central limit theorem
-kind: theorem
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/01-law-of-large-numbers|law-of-large-numbers]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/04-normal-distribution|normal-distribution]]"
-next:
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/03-normal-approximation-to-binomial|normal-approximation-to-binomial]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/05-delta-method-and-slutsky|delta-method-and-slutsky]]"
-  - "[[Cards/09-Probability and statistics/11-Simulation/04-monte-carlo-estimates-and-error|monte-carlo-estimates-and-error]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/07-central-limit-theorem|central-limit-theorem]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/01-brownian-motion|brownian-motion]]"
-  - "[[Cards/20-Harmonic analysis/04-Characteristic Functions and Probability/05-central-limit-theorem-by-characteristic-functions|central-limit-theorem-by-characteristic-functions]]"
-  - "[[Cards/21-Algebraic and analytic number theory/08-Additive Combinatorics and Probabilistic Number Theory/02-erdos-kac-theorem|erdos-kac-theorem]]"
-tags: [mathematics, probability and statistics, central-limit-theorem]
----
-
 # Central limit theorem: the error of an average is bell-shaped, whatever the ingredients
 
-Probability and statistics → Limit Theorems in Practice → The shape of an average's error → Central limit theorem
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Limit Theorems in Practice](../../../SYLLABUS.md#w09-s06) → Central limit theorem
 
 ---
 
@@ -33,11 +10,11 @@ Roll a fair die 1,000 times and average the faces. The long-run average of one r
 
 One roll is as flat as a law can be: each face has chance 1 in 6, and no face is favoured. Yet the average of 1,000 rolls is not flat at all. Its values pile up round 3.5 in a bell, the same bell that describes measurement errors, heights and polls. The width of that bell is set by two numbers only: the spread of one roll and the number of rolls. Every other feature of the die is forgotten.
 
-That bell answers the question. The average lands within 0.1 of 3.5 in about 93.6 percent of 1,000-roll sessions; the rest, about 6 in 100, land farther out. Counting every possible outcome exactly gives 93.5 percent, the 0.9346 found in [law-of-large-numbers](01-law-of-large-numbers.md), so the bell is off by about one part in a thousand, with no counting at all.
+That bell answers the question. The average lands within 0.1 of 3.5 in about 93.6 percent of 1,000-roll sessions; the rest, about 6 in 100, land farther out. Counting every possible outcome exactly gives 93.5 percent, the 0.9346 found in [Law of large numbers](01-law-of-large-numbers.md), so the bell is off by about one part in a thousand, with no counting at all.
 
 **Average many independent readings of the same kind, and the average's miss from the true mean, measured in its own spreads, follows the standard bell curve: whatever the single reading looked like, provided its spread is finite.**
 
-**What kind of fact this is:** a theorem. This card states it, proves the heart of it for bounded readings such as a die in a folded Detailed proof using moment generating functions, and borrows one last step, a continuity theorem for generating functions (Curtiss, 1942), stated without proof; wing 10 proves the whole theorem by another road ([central-limit-theorem](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md)). Using it at a fixed number of rolls is an approximation, and the card measures its error exactly.
+**What kind of fact this is:** a theorem. This card states it, proves the heart of it for bounded readings such as a die in a folded Detailed proof using moment generating functions, and borrows one last step, a continuity theorem for generating functions (Curtiss, 1942), stated without proof; wing 10 proves the whole theorem by another road ([The central limit theorem, proved](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md)). Using it at a fixed number of rolls is an approximation, and the card measures its error exactly.
 
 ### The picture: ten rolls are already a bell
 
@@ -57,7 +34,7 @@ Bars: the exact chance of each possible 10-roll average, counted over all 6^10 o
 
 ## The formula
 
-Notation first, in words. Write $n$ for the number of rolls and $X_i$ for the i-th roll. A reminder from shelf 02: E[X], the expectation, is the long-run average value of X, and Var(X) is its variance. Here $\mu$ (mu) is E[X] for one roll and $\sigma$ (sigma) is one roll's spread, its standard deviation. A bar over a letter means an average: $\bar X_n$ is the average of the first n rolls. Φ, from [normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md), is the standard bell's area to the left of a point.
+Notation first, in words. Write $n$ for the number of rolls and $X_i$ for the i-th roll. A reminder from shelf 02: E[X], the expectation, is the long-run average value of X, and Var(X) is its variance. Here $\mu$ (mu) is E[X] for one roll and $\sigma$ (sigma) is one roll's spread, its standard deviation. A bar over a letter means an average: $\bar X_n$ is the average of the first n rolls. Φ, from [Normal](../04-Continuous%20Distributions/04-normal-distribution.md), is the standard bell's area to the left of a point.
 
 The average's miss, measured in its own spreads, is the **standardised error**:
 
@@ -97,7 +74,7 @@ $$P\big(|\bar X_n - \mu| \le \varepsilon\big) \;\approx\; 2\,\Phi\!\left(\frac{\
 ### When it holds
 
 - **Independent rolls.** Each roll must carry fresh information. If all 1,000 "rolls" are copies of one roll, the average is that one face, and a single face is never within 0.1 of 3.5: the chance is 0, not 0.9359.
-- **A finite spread.** The spread $\sigma$ must exist. Readings from the standard Cauchy law (a heavy-tailed law with no finite mean or spread, [heavy-tails-pareto-and-cauchy](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) never settle: the average of 1,000 lands within 0.1 of the centre with chance 0.0635, exactly as often as one reading does.
+- **A finite spread.** The spread $\sigma$ must exist. Readings from the standard Cauchy law (a heavy-tailed law with no finite mean or spread, [Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)) never settle: the average of 1,000 lands within 0.1 of the centre with chance 0.0635, exactly as often as one reading does.
 - **The same law each time.** The card's version needs every roll drawn from one law. Lindeberg's version relaxes this to many small, different pieces, none of which dominates; it is proved in wing 10.
 - **A positive spread.** A die that always shows 4 has σ = 0; there is no error to standardise.
 - **Enough rolls, and no universal "enough".** The theorem is a limit. At 10 rolls the plain bell says 14.69 percent for the window and the truth is 7.27 percent; at 1,000 the two agree to 0.0013. A lopsided ingredient, such as a reading that is almost always 0, needs far more rolls than a die. The Berry–Esseen theorem bounds the error at a given n, by a constant times E|Y|^3/√n, where Y = (X − μ)/σ is one roll's own standardised miss.
@@ -112,7 +89,7 @@ The law of large numbers already fixes where the average sits and how tightly: a
 
 ### Step 1: the average's centre and spread
 
-From [law-of-large-numbers](01-law-of-large-numbers.md): E of the average is μ, and Var of the average is σ^2/n, because variances of independent readings add and dividing by n divides the variance by n^2. For one die, μ = 3.5 and E[X^2] = 91/6, so σ^2 = 91/6 − 3.5^2 = 35/12 and σ = 1.707825. The exact law of the sum of 1,000 rolls, built by the code, has mean 3,500 and variance 2,916.666667 = 1,000 × 35/12: the rule, confirmed by counting.
+From [Law of large numbers](01-law-of-large-numbers.md): E of the average is μ, and Var of the average is σ^2/n, because variances of independent readings add and dividing by n divides the variance by n^2. For one die, μ = 3.5 and E[X^2] = 91/6, so σ^2 = 91/6 − 3.5^2 = 35/12 and σ = 1.707825. The exact law of the sum of 1,000 rolls, built by the code, has mean 3,500 and variance 2,916.666667 = 1,000 × 35/12: the rule, confirmed by counting.
 
 ### Step 2: standardise
 
@@ -120,7 +97,7 @@ Subtract μ and divide by σ/√n. The result $Z_n$ has mean 0 and spread 1 for 
 
 ### Step 3: the generating function of the miss tends to the bell's
 
-A reminder from shelf 02 ([moment-generating-functions](../02-Random%20Variables/07-moment-generating-functions.md)): a moment generating function $M(t) = E[e^{tX}]$ packs all of a law's moments into one function, and independent readings multiply their generating functions. Write each roll's own standardised miss as Y = (X − μ)/σ. Then $Z_n$ is the sum of n independent copies of Y, divided by √n, so
+A reminder from shelf 02 ([Moment generating functions](../02-Random%20Variables/07-moment-generating-functions.md)): a moment generating function $M(t) = E[e^{tX}]$ packs all of a law's moments into one function, and independent readings multiply their generating functions. Write each roll's own standardised miss as Y = (X − μ)/σ. Then $Z_n$ is the sum of n independent copies of Y, divided by √n, so
 
 $$M_{Z_n}(t) = \Big[M_Y\big(t/\sqrt{n}\big)\Big]^n$$
 
@@ -143,7 +120,7 @@ And e^(t^2/2) is exactly the standard normal's generating function. Everything a
 
 **The bell's generating function.** $\int e^{tz} e^{-z^2/2}\,dz / \sqrt{2\pi}$: complete the square, tz − z^2/2 = t^2/2 − (z − t)^2/2, and the Gaussian integral of the shifted bell is √(2π). So it equals e^(t^2/2).
 
-**The borrowed step.** Curtiss's continuity theorem (1942): if generating functions converge to a generating function on an interval round 0, the chances P(Z_n ≤ z) converge to those of the limit law at every z where its CDF is continuous, here every z. Its proof needs measure theory, and this card states it without proof. Wing 10 proves the whole theorem by Lindeberg's swap ([central-limit-theorem](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md)) and proves Lévy's continuity theorem, the same step for characteristic functions ([characteristic-functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md)). Readings without a generating function, but with a finite spread, need characteristic functions instead: that proof is the second road on the wing-10 central-limit-theorem card.
+**The borrowed step.** Curtiss's continuity theorem (1942): if generating functions converge to a generating function on an interval round 0, the chances P(Z_n ≤ z) converge to those of the limit law at every z where its CDF is continuous, here every z. Its proof needs measure theory, and this card states it without proof. Wing 10 proves the whole theorem by Lindeberg's swap ([The central limit theorem, proved](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md)) and proves Lévy's continuity theorem, the same step for characteristic functions ([Characteristic functions](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/06-characteristic-functions.md)). Readings without a generating function, but with a finite spread, need characteristic functions instead: that proof is the second road on the wing-10 central-limit-theorem card.
 
 </details>
 
@@ -155,7 +132,7 @@ By Step 3, $Z_n$ behaves like a standard normal Z. The event "average within ε 
 
 Swap the fair die for a lopsided one that shows 1 half the time and each other face one time in ten. Its mean is 2.5 and its spread 1.802776, and its single-roll law looks nothing like a bell. For 1,000 rolls the rule gives 0.9206 for the window of 0.1 round 2.5; the exact count gives 0.9191. Only the spread changed the answer.
 
-Laws with no generating function need the characteristic function, its complex cousin, which exists for every law and gives the theorem for every finite spread: central-limit-theorem-by-characteristic-functions.
+Laws with no generating function need the characteristic function, its complex cousin, which exists for every law and gives the theorem for every finite spread: The central limit theorem in four lines, once you have fingerprints.
 
 ---
 
@@ -191,7 +168,7 @@ xychart-beta
     line [14.69, 25.16, 44.18, 68.95, 93.59]
 ```
 
-Lowest line (orange): the exact chance of a miss under 0.1, counted over every outcome. Top line (green): the same count with the edge averages 3.4 and 3.6 let in. Middle line (dark): the bell's answer. At 10 rolls the average moves in steps of 0.1, so the only average strictly inside the window is 3.5 itself, and each edge holds a lump of chance almost as big as the centre's. The smooth bell splits the difference. By 1,000 rolls the possible averages are 0.001 apart, the lumps are tiny, and all three lines meet. Handling the lumps is the continuity correction of [normal-approximation-to-binomial](03-normal-approximation-to-binomial.md).
+Lowest line (orange): the exact chance of a miss under 0.1, counted over every outcome. Top line (green): the same count with the edge averages 3.4 and 3.6 let in. Middle line (dark): the bell's answer. At 10 rolls the average moves in steps of 0.1, so the only average strictly inside the window is 3.5 itself, and each edge holds a lump of chance almost as big as the centre's. The smooth bell splits the difference. By 1,000 rolls the possible averages are 0.001 apart, the lumps are tiny, and all three lines meet. Handling the lumps is the continuity correction of [Normal approximation](03-normal-approximation-to-binomial.md).
 
 ### What breaks if you drop a piece
 
@@ -642,9 +619,9 @@ The two outputs are identical. The simulated 0.9336 sits within one standard err
 
 - **Polls.** A poll of 1,000 people estimates a proportion by an average of yes-or-no answers. Its margin of error is about two of the average's spreads, a bell statement straight from this card.
 - **Measurement.** A laboratory reports the average of repeated readings with an error bar of σ/√n. The bell is what turns that error bar into a chance.
-- **Simulation.** Every Monte Carlo estimate is an average of random draws, and its error bar is this theorem: [monte-carlo-estimates-and-error](../11-Simulation/04-monte-carlo-estimates-and-error.md). Road 3 above is one.
+- **Simulation.** Every Monte Carlo estimate is an average of random draws, and its error bar is this theorem: [Monte Carlo](../11-Simulation/04-monte-carlo-estimates-and-error.md). Road 3 above is one.
 - **Casinos and insurers.** Each bet or policy is lopsided; the total over thousands is a narrow bell, which is why the house's take is predictable and a single gambler's is not.
-- **Share prices.** A year's log-return is the sum of many daily ones, which is why finance models it with a bell: [black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+- **Share prices.** A year's log-return is the sum of many daily ones, which is why finance models it with a bell: [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
 
 > **Say it back**
 > One die roll is flat, but the average of many independent rolls misses its mean by an amount shaped like the standard bell. The width of that bell is one roll's spread divided by the square root of the number of rolls. For 1,000 rolls that spread is 0.054, so the average lands within 0.1 of 3.5 about 93.6 percent of the time, against 93.5 by exact counting. Everything about the ingredient except its mean and spread fades as the rolls pile up. The theorem needs independent readings and a finite spread; copies or Cauchy readings break it.
@@ -653,20 +630,20 @@ The two outputs are identical. The simulated 0.9336 sits within one standard err
 
 ## What this builds on
 
-- [law-of-large-numbers](01-law-of-large-numbers.md): the average settles at μ, with variance σ^2/n; this card shapes the miss that is left.
-- [normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md): the standard bell, its area Φ, and the series that computes it.
+- [Law of large numbers](01-law-of-large-numbers.md): the average settles at μ, with variance σ^2/n; this card shapes the miss that is left.
+- [Normal](../04-Continuous%20Distributions/04-normal-distribution.md): the standard bell, its area Φ, and the series that computes it.
 
 ## Where this goes next
 
-- [normal-approximation-to-binomial](03-normal-approximation-to-binomial.md): the theorem applied to counts of successes, with the continuity correction that removes the lumps in the second picture.
-- [delta-method-and-slutsky](05-delta-method-and-slutsky.md): the bell passed through a smooth function of the average, and σ replaced by its estimate.
-- [monte-carlo-estimates-and-error](../11-Simulation/04-monte-carlo-estimates-and-error.md): error bars for every simulated number.
-- [central-limit-theorem](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md): the full proof, by Lindeberg's swap and by characteristic functions, and Lindeberg's condition.
-- [brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): the running sum, rescaled, becomes a random path that is normal at every time.
-- central-limit-theorem-by-characteristic-functions: the proof for every finite spread, through Fourier transforms.
-- erdos-kac-theorem: the bell in the count of prime factors of whole numbers.
+- [Normal approximation](03-normal-approximation-to-binomial.md): the theorem applied to counts of successes, with the continuity correction that removes the lumps in the second picture.
+- [Delta method](05-delta-method-and-slutsky.md): the bell passed through a smooth function of the average, and σ replaced by its estimate.
+- [Monte Carlo](../11-Simulation/04-monte-carlo-estimates-and-error.md): error bars for every simulated number.
+- [The central limit theorem, proved](../../10-Measure%20and%20integration/10-The%20Limit%20Theorems%2C%20Proved/07-central-limit-theorem.md): the full proof, by Lindeberg's swap and by characteristic functions, and Lindeberg's condition.
+- [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): the running sum, rescaled, becomes a random path that is normal at every time.
+- The central limit theorem in four lines, once you have fingerprints: the proof for every finite spread, through Fourier transforms.
+- Erdos-Kac: the bell in the count of prime factors of whole numbers.
 
-The theorem says the miss tends to a bell but guarantees nothing at 30 or 1,000 rolls; bounds that hold at every number of rolls, bell or no bell, are [concentration-inequalities-hoeffding-and-chernoff](06-concentration-inequalities-hoeffding-and-chernoff.md).
+The theorem says the miss tends to a bell but guarantees nothing at 30 or 1,000 rolls; bounds that hold at every number of rolls, bell or no bell, are [Concentration](06-concentration-inequalities-hoeffding-and-chernoff.md).
 
 ---
 

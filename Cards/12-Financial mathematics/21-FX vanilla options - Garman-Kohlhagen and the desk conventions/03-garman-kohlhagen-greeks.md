@@ -1,35 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX vanilla options - Garman-Kohlhagen and the desk conventions
-topic: Sensitivities in two currencies
-item: The Greeks of a currency option
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/01-garman-kohlhagen|garman-kohlhagen]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/02-premium-currency-and-foreign-domestic-symmetry|premium-currency-and-foreign-domestic-symmetry]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/03-chain-rule|chain-rule]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/01-delta|delta]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/02-gamma|gamma]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/03-vega|vega]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/04-theta|theta]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/05-rho-and-dividend-rho|rho-and-dividend-rho]]"
-next:
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/04-fx-delta-conventions|fx-delta-conventions]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/07-fx-implied-volatility|fx-implied-volatility]]"
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/03-vanna-and-volga-on-the-smile|vanna-and-volga-on-the-smile]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/01-fx-digitals|fx-digitals]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/06-barrier-and-touch-greeks|barrier-and-touch-greeks]]"
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/03-quanto-greeks-and-hedging|quanto-greeks-and-hedging]]"
-tags: [mathematics, financial mathematics, garman-kohlhagen-greeks]
----
-
 # The Greeks of a currency option: delta in euros, gamma and vega in dollars, and one rho for each currency
 
-Financial mathematics → FX vanilla options - Garman-Kohlhagen and the desk conventions → Sensitivities in two currencies → The Greeks of a currency option
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../../../SYLLABUS.md#w12-s21) → The Greeks of a currency option
 
 ---
 
@@ -37,7 +8,7 @@ Financial mathematics → FX vanilla options - Garman-Kohlhagen and the desk con
 
 A bank has sold a client a one-year option on EUR 10 million. The option gives the client the right to buy those euros in a year at 1.1000 dollars each. Today one euro costs 1.1000 dollars. Dollar cash earns 5 percent a year, euro cash earns 3 percent, and the market prices the exchange rate's volatility (the yearly spread of its swings) at 10 percent. The premium is USD 535,558.
 
-Five things can move under this option: the exchange rate, its volatility, the calendar, the dollar rate and the euro rate. The price change per unit move in one of them, the rest frozen, is a **Greek**; gamma, the change in delta, is the one second-order Greek here. The equity versions are on the Greeks shelf ([delta](../09-The%20Greeks%2C%20one%20each/01-delta.md) onward). A currency option adds two twists.
+Five things can move under this option: the exchange rate, its volatility, the calendar, the dollar rate and the euro rate. The price change per unit move in one of them, the rest frozen, is a **Greek**; gamma, the change in delta, is the one second-order Greek here. The equity versions are on the Greeks shelf ([Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md) onward). A currency option adds two twists.
 
 First, two interest rates pull in opposite directions: a higher dollar rate makes this option dearer, a higher euro rate cheaper. So there are two rhos, one per currency, with opposite signs. Second, each Greek comes out in its own currency. Delta is a number of euros. Vega and theta are dollars. And a bank that counts profit in euros sees one of them change in a way no exchange-rate conversion captures.
 
@@ -67,9 +38,9 @@ The gentle line (orange) is the option with twelve months left. The steep line (
 
 ## The formula
 
-Notation first, in words. The currency pair EURUSD is quoted as dollars per euro, so the euro is the **foreign** currency (the thing being priced) and the dollar is the **domestic** currency (the money doing the pricing). A partial derivative, written with a curly d as in $\partial C/\partial S$, is the slope of the price against one input with every other input frozen ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). $N(x)$ is the area under the standard bell curve to the left of $x$, and $\varphi(x)$ is the curve's height at $x$.
+Notation first, in words. The currency pair EURUSD is quoted as dollars per euro, so the euro is the **foreign** currency (the thing being priced) and the dollar is the **domestic** currency (the money doing the pricing). A partial derivative, written with a curly d as in $\partial C/\partial S$, is the slope of the price against one input with every other input frozen ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). $N(x)$ is the area under the standard bell curve to the left of $x$, and $\varphi(x)$ is the curve's height at $x$.
 
-The price being differentiated is the Garman-Kohlhagen call ([garman-kohlhagen](01-garman-kohlhagen.md)), in dollars per euro of notional:
+The price being differentiated is the Garman-Kohlhagen call ([Garman-Kohlhagen](01-garman-kohlhagen.md)), in dollars per euro of notional:
 
 $$C = S\,e^{-r_f T}N(d_1) - K\,e^{-r_d T}N(d_2)$$
 
@@ -108,10 +79,10 @@ In words: $d_2$ is how many spreads of room the rate has to end above the strike
 
 ### When it holds
 
-- **Constant volatility.** The model uses one $\sigma$ for every strike. Real currency markets price a smile (a different volatility for each strike), so vega here is the slope for a parallel lift of the whole smile, and it misses the risk that the smile tilts; that is [vanna-and-volga-on-the-smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/03-vanna-and-volga-on-the-smile.md).
+- **Constant volatility.** The model uses one $\sigma$ for every strike. Real currency markets price a smile (a different volatility for each strike), so vega here is the slope for a parallel lift of the whole smile, and it misses the risk that the smile tilts; that is [Vanna and volga](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/03-vanna-and-volga-on-the-smile.md).
 - **Flat, constant interest rates.** One $r_d$ and one $r_f$ for the whole year. With a real yield curve, rho spreads across maturities; a single number per currency is the total of those buckets.
 - **Small moves, one at a time.** Each Greek is a slope. A 1 percent move in spot is small; a 5 percent move needs gamma too, and a big move needs a full reprice.
-- **European exercise.** The option pays only at expiry. Barriers break the smooth shape: [barrier-and-touch-greeks](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/06-barrier-and-touch-greeks.md).
+- **European exercise.** The option pays only at expiry. Barriers break the smooth shape: [Greeks at the wall](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/06-barrier-and-touch-greeks.md).
 
 ---
 
@@ -119,7 +90,7 @@ In words: $d_2$ is how many spreads of room the rate has to end above the strike
 
 ### Step 0: every Greek is a slope of one formula
 
-The price is one formula in six inputs. Freeze five, move the sixth a little, and the ratio of the price change to the input change is that input's Greek. The tool is the [chain-rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md). Holding euros earns $r_f$, just as holding a share earns its dividend yield $q$, so every equity result carries over with $r_f$ for $q$ and $r_d$ for $r$. What is new is what two rates and two currencies mean for a desk.
+The price is one formula in six inputs. Freeze five, move the sixth a little, and the ratio of the price change to the input change is that input's Greek. The tool is the [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md). Holding euros earns $r_f$, just as holding a share earns its dividend yield $q$, so every equity result carries over with $r_f$ for $q$ and $r_d$ for $r$. What is new is what two rates and two currencies mean for a desk.
 
 ### Step 1: one identity that makes the messy terms vanish
 
@@ -150,7 +121,7 @@ Differentiate in $\sigma$. Both $d$'s move, by different amounts this time, sinc
 
 ### Step 4: the two rhos, and why their signs differ
 
-Differentiate in $r_d$. The dollar rate enters $d_1$ and $d_2$ equally, so by Step 1 those terms cancel, exactly as on [rho-and-dividend-rho](../09-The%20Greeks%2C%20one%20each/05-rho-and-dividend-rho.md). Only the explicit $e^{-r_d T}$ on the strike is left: $\rho_d = K T e^{-r_d T}N(d_2)$ = 0.585557. The call holder may pay USD 1.10 a year from now. A higher dollar rate makes that future payment cheaper today, so the call gains.
+Differentiate in $r_d$. The dollar rate enters $d_1$ and $d_2$ equally, so by Step 1 those terms cancel, exactly as on [Rho and dividend rho](../09-The%20Greeks%2C%20one%20each/05-rho-and-dividend-rho.md). Only the explicit $e^{-r_d T}$ on the strike is left: $\rho_d = K T e^{-r_d T}N(d_2)$ = 0.585557. The call holder may pay USD 1.10 a year from now. A higher dollar rate makes that future payment cheaper today, so the call gains.
 
 Differentiate in $r_f$. Again only the explicit discount survives, this time on the euros: $\rho_f = -S T e^{-r_f T}N(d_1)$ = −0.639113. The call holder may receive a euro a year from now. A higher euro rate makes that future euro worth less today, so the call loses.
 
@@ -162,13 +133,13 @@ Add them. $\rho_d + \rho_f = T\,(K e^{-r_d T}N(d_2) - S e^{-r_f T}N(d_1)) = -T C
 
 Differentiate in $T$ and flip the sign, since time passing shortens $T$. Three terms survive, each with a meaning:
 
-- $-S e^{-r_f T}\varphi(d_1)\sigma/(2\sqrt{T})$ = −0.020638 per year: the option's "maybe" melting, the same decay as on [theta](../09-The%20Greeks%2C%20one%20each/04-theta.md).
+- $-S e^{-r_f T}\varphi(d_1)\sigma/(2\sqrt{T})$ = −0.020638 per year: the option's "maybe" melting, the same decay as on [Theta](../09-The%20Greeks%2C%20one%20each/04-theta.md).
 - $+r_f S e^{-r_f T}N(d_1)$: the euros the holder may receive are discounted for one day less, so they are worth a little more.
 - $-r_d K e^{-r_d T}N(d_2)$: the dollars the holder may pay are discounted for one day less, so they cost a little more.
 
 Together: −0.030743 per year. Per calendar day, −0.00008423 dollars per euro; on the 10 million, USD −842.
 
-The three terms are not independent of the others. The option price satisfies the pricing equation $\Theta + \tfrac12\sigma^2 S^2\Gamma + (r_d - r_f)S\Delta - r_d C = 0$ ([black-scholes-equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md), with $r_d$ for $r$ and $r_f$ for $q$). The checks rebuild theta from that equation using a delta and gamma found by an independent road, and land on −0.030743 again.
+The three terms are not independent of the others. The option price satisfies the pricing equation $\Theta + \tfrac12\sigma^2 S^2\Gamma + (r_d - r_f)S\Delta - r_d C = 0$ ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md), with $r_d$ for $r$ and $r_f$ for $q$). The checks rebuild theta from that equation using a delta and gamma found by an independent road, and land on −0.030743 again.
 
 <details>
 <summary>Detailed proof: the decay term (the only messy derivative)</summary>
@@ -179,13 +150,13 @@ Write $C = e^{-r_d T}(F N(d_1) - K N(d_2))$ with the forward $F = S e^{(r_d - r_
 
 ### Step 6: the same Greeks, counted in euros
 
-A bank in Frankfurt holds the same contract. For it, the contract is a put on dollars, paid for in euros: the right to hand over USD 1.10 and receive EUR 1. The symmetry card proves the price in euros is $C/S$ ([premium-currency-and-foreign-domestic-symmetry](02-premium-currency-and-foreign-domestic-symmetry.md)): that is the same Garman-Kohlhagen put formula with spot $1/S$, strike $1/K$, domestic rate $r_f$ and foreign rate $r_d$, on USD 1.10 per euro of notional. The checks price it both ways and get 0.048687 euros per euro.
+A bank in Frankfurt holds the same contract. For it, the contract is a put on dollars, paid for in euros: the right to hand over USD 1.10 and receive EUR 1. The symmetry card proves the price in euros is $C/S$ ([One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md)): that is the same Garman-Kohlhagen put formula with spot $1/S$, strike $1/K$, domestic rate $r_f$ and foreign rate $r_d$, on USD 1.10 per euro of notional. The checks price it both ways and get 0.048687 euros per euro.
 
 Now differentiate. Two different things happen.
 
 **Greeks that hold spot still convert at spot.** Vega, theta and both rhos move one input other than $S$, and $S$ is a fixed number while they are taken. So the euro figure is the dollar figure divided by 1.10: vega 0.375240, theta −0.027948, euro-rate rho −0.581012, dollar-rate rho 0.532325. The checks get each three ways: put formula, dollar figure over spot, and bumps of an independent euro-side price. The labels swap (for Frankfurt the euro rate is domestic), but the directions do not: a higher dollar rate still helps the holder and a higher euro rate still hurts, in whichever currency the loss is counted.
 
-**Delta does not convert at spot.** Spot is the thing being moved, and the euro value $C/S$ contains spot twice: once inside $C$ and once in the division. By the quotient rule, $\partial(C/S)/\partial S = \Delta/S - C/S^2$. Setting the Frankfurt bank's total exposure to zero gives a hedge of $\Delta - C/S$ euros per euro of notional: 0.581012 − 0.048687 = 0.532325, or EUR 5,323,248 on the 10 million, against EUR 5,810,119 for the New York bank. The gap is the premium itself, counted in euros: the option's value is a sum of dollars, and a bank counting in euros must hedge that sum too. The same number falls out of the put formula's own delta, $e^{-r_d T}N(d_2)$ scaled by $K/S$. This is the **premium-adjusted delta**, and when each convention is used is [fx-delta-conventions](04-fx-delta-conventions.md).
+**Delta does not convert at spot.** Spot is the thing being moved, and the euro value $C/S$ contains spot twice: once inside $C$ and once in the division. By the quotient rule, $\partial(C/S)/\partial S = \Delta/S - C/S^2$. Setting the Frankfurt bank's total exposure to zero gives a hedge of $\Delta - C/S$ euros per euro of notional: 0.581012 − 0.048687 = 0.532325, or EUR 5,323,248 on the 10 million, against EUR 5,810,119 for the New York bank. The gap is the premium itself, counted in euros: the option's value is a sum of dollars, and a bank counting in euros must hedge that sum too. The same number falls out of the put formula's own delta, $e^{-r_d T}N(d_2)$ scaled by $K/S$. This is the **premium-adjusted delta**, and when each convention is used is [Four deltas for one option](04-fx-delta-conventions.md).
 
 Gamma changes the same way, for the same reason; this card stops at delta.
 
@@ -668,8 +639,8 @@ The two outputs are identical to the printed precision.
 ## Where you meet it in real life
 
 - **An FX options desk's risk sheet.** Every morning each position is summarised as delta in the foreign currency, gamma per 1 percent, vega per vol point, theta per day and a rho per currency, then summed across the book. A pair's two rhos are listed separately because two central banks set them.
-- **Corporate hedging.** A European exporter buying a dollar put to protect its dollar receipts counts in euros. Its bank's quote uses the premium-adjusted delta for exactly the reason of Step 6: [fx-delta-conventions](04-fx-delta-conventions.md).
-- **Volatility trading.** Vega in dollars per point is how a trader sizes a view on implied volatility; turning a price back into a volatility is [fx-implied-volatility](07-fx-implied-volatility.md).
+- **Corporate hedging.** A European exporter buying a dollar put to protect its dollar receipts counts in euros. Its bank's quote uses the premium-adjusted delta for exactly the reason of Step 6: [Four deltas for one option](04-fx-delta-conventions.md).
+- **Volatility trading.** Vega in dollars per point is how a trader sizes a view on implied volatility; turning a price back into a volatility is [Implied vol for a currency option](07-fx-implied-volatility.md).
 
 > **Say it back**
 > Each Greek of a currency option is one slope of the Garman-Kohlhagen price. Delta is a number of euros, and vega and theta are dollar amounts. There are two rhos: the dollar rate helps a EUR call through its discounted strike, the euro rate hurts it through its discounted euros, and together they equal minus the years times the price. Seen from the euro side, every Greek that holds spot still converts at spot. Delta does not: a bank counting in euros hedges with fewer euros, fewer by the premium.
@@ -678,24 +649,24 @@ The two outputs are identical to the printed precision.
 
 ## What this builds on
 
-- [garman-kohlhagen](01-garman-kohlhagen.md): the price this card differentiates.
-- [premium-currency-and-foreign-domestic-symmetry](02-premium-currency-and-foreign-domestic-symmetry.md): the symmetry used in Step 6 to restate the Greeks in euros.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes with every other input frozen.
-- [chain-rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): how each input reaches the price through $d_1$ and $d_2$.
-- [delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): the hedge ratio, derived for a share.
-- [gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md): the slope of delta.
-- [vega](../09-The%20Greeks%2C%20one%20each/03-vega.md): sensitivity to volatility.
-- [theta](../09-The%20Greeks%2C%20one%20each/04-theta.md): sensitivity to the calendar.
-- [rho-and-dividend-rho](../09-The%20Greeks%2C%20one%20each/05-rho-and-dividend-rho.md): the rate and dividend slopes whose FX form is the two rhos.
+- [Garman-Kohlhagen](01-garman-kohlhagen.md): the price this card differentiates.
+- [One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md): the symmetry used in Step 6 to restate the Greeks in euros.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes with every other input frozen.
+- [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): how each input reaches the price through $d_1$ and $d_2$.
+- [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): the hedge ratio, derived for a share.
+- [Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md): the slope of delta.
+- [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md): sensitivity to volatility.
+- [Theta](../09-The%20Greeks%2C%20one%20each/04-theta.md): sensitivity to the calendar.
+- [Rho and dividend rho](../09-The%20Greeks%2C%20one%20each/05-rho-and-dividend-rho.md): the rate and dividend slopes whose FX form is the two rhos.
 
 ## Where this goes next
 
-- [fx-delta-conventions](04-fx-delta-conventions.md): spot, forward and premium-adjusted deltas, and which one a quote means.
-- [fx-implied-volatility](07-fx-implied-volatility.md): solving for volatility, with vega as the step size.
-- [vanna-and-volga-on-the-smile](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/03-vanna-and-volga-on-the-smile.md): the second-order Greeks that price the smile.
-- [fx-digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md): an option whose price is close to a delta, and whose Greeks are sharper.
-- [barrier-and-touch-greeks](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/06-barrier-and-touch-greeks.md): Greeks that jump at a barrier.
-- [quanto-greeks-and-hedging](../24-Quantos%20and%20composites/03-quanto-greeks-and-hedging.md): Greeks when the payoff is paid in a third currency.
+- [Four deltas for one option](04-fx-delta-conventions.md): spot, forward and premium-adjusted deltas, and which one a quote means.
+- [Implied vol for a currency option](07-fx-implied-volatility.md): solving for volatility, with vega as the step size.
+- [Vanna and volga](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/03-vanna-and-volga-on-the-smile.md): the second-order Greeks that price the smile.
+- [Currency digitals](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/01-fx-digitals.md): an option whose price is close to a delta, and whose Greeks are sharper.
+- [Greeks at the wall](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/06-barrier-and-touch-greeks.md): Greeks that jump at a barrier.
+- [Hedging a quanto](../24-Quantos%20and%20composites/03-quanto-greeks-and-hedging.md): Greeks when the payoff is paid in a third currency.
 
 Two banks hedge one option with different amounts of euros; which amount a quoted "25 delta" means, and so which strike it names, is the question the delta conventions answer.
 

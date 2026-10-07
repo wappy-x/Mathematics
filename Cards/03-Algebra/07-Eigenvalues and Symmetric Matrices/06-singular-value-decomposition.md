@@ -1,31 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Eigenvalues and Symmetric Matrices
-topic: Stretch factors
-item: The singular value decomposition
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/04-spectral-theorem|spectral-theorem]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/05-rank-nullity|rank-nullity]]"
-next:
-  - "[[Cards/09-Probability and statistics/09-Regression/07-principal-components|principal-components]]"
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/03-controllability-and-observability|controllability-and-observability]]"
-  - "[[Cards/13-Engineering mathematics/05-Signals/10-compressed-sensing-in-outline|compressed-sensing-in-outline]]"
-  - "[[Cards/13-Engineering mathematics/10-Robustness and Adaptation/01-model-uncertainty-and-the-small-gain-theorem|model-uncertainty-and-the-small-gain-theorem]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/07-principal-components-and-dimension-reduction|principal-components-and-dimension-reduction]]"
-  - "[[Cards/16-Numerical analysis/03-Numerical Linear Algebra/08-svd-and-the-pseudoinverse|svd-and-the-pseudoinverse]]"
-tags:
-  - mathematics
-  - algebra
-  - singular-value-decomposition
----
-
 # The singular value decomposition: every matrix is rotate, stretch the axes, rotate, and the stretch factors are the singular values
 
-Algebra → Eigenvalues and Symmetric Matrices → Stretch factors → The singular value decomposition
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Eigenvalues and Symmetric Matrices](../../../SYLLABUS.md#w03-s07) → The singular value decomposition
 
 ---
 
@@ -84,7 +59,7 @@ $$u_i = \frac{A v_i}{\sigma_i}$$
 
 - **Real entries, any number of rows and columns.** Nothing else is required: rectangular and flattening matrices included. Complex entries have their own version.
 - **Lengths by the dot product, one unit system throughout.** Rescale a coordinate and the factors change, so "large" and "small" wait on the units.
-- **Two sets of axes, not one.** Demand a single set for both sides and most matrices refuse; that stricter demand is [diagonalisation-and-matrix-powers](03-diagonalisation-and-matrix-powers.md).
+- **Two sets of axes, not one.** Demand a single set for both sides and most matrices refuse; that stricter demand is [Diagonalisation](03-diagonalisation-and-matrix-powers.md).
 - **The factors are unique, the axes are not.** Reverse a matched pair $v_1$ and $u_1$ and the same matrix returns. Building $G$ by hand suits small cases only: forming $A^T A$ doubles the digits rounding eats.
 
 ---
@@ -93,17 +68,17 @@ $$u_i = \frac{A v_i}{\sigma_i}$$
 
 ### Step 0: ask about length, not direction
 
-Eigenvectors answer "which inputs come back pointing the same way" ([eigenvalues-and-eigenvectors](02-eigenvalues-and-eigenvectors.md)). For a matrix that is not symmetric there may be too few, and nothing makes them perpendicular: the sprite's eigenvalues are 5.000000 and 3.000000, neither the 6.708204 the rim reached.
+Eigenvectors answer "which inputs come back pointing the same way" ([Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md)). For a matrix that is not symmetric there may be too few, and nothing makes them perpendicular: the sprite's eigenvalues are 5.000000 and 3.000000, neither the 6.708204 the rim reached.
 
 Ask about length instead. Of all inputs of length 1, which comes out longest? Squared length makes that a dot product:
 
 $$|A x|^2 = (A x) \cdot (A x) = x^T A^T A x = x^T G x$$
 
-x is any input, $x^T$ that input as a row, $|A x|$ its output's length, $G$ shorthand for $A^T A$. $G$ is symmetric, and $x^T G x$ is a squared length, never negative ([quadratic-forms-and-positive-definite](05-quadratic-forms-and-positive-definite.md)).
+x is any input, $x^T$ that input as a row, $|A x|$ its output's length, $G$ shorthand for $A^T A$. $G$ is symmetric, and $x^T G x$ is a squared length, never negative ([Quadratic forms](05-quadratic-forms-and-positive-definite.md)).
 
 ### Step 1: the spectral theorem hands over the input axes
 
-A symmetric matrix has a full set of perpendicular unit eigenvectors with real eigenvalues ([spectral-theorem](04-spectral-theorem.md)). Call $G$'s pair $v_1$ and $v_2$, eigenvalues $\lambda_1$ and $\lambda_2$, largest first: the input axes, and $A$ was never asked to be symmetric or square.
+A symmetric matrix has a full set of perpendicular unit eigenvectors with real eigenvalues ([The spectral theorem](04-spectral-theorem.md)). Call $G$'s pair $v_1$ and $v_2$, eigenvalues $\lambda_1$ and $\lambda_2$, largest first: the input axes, and $A$ was never asked to be symmetric or square.
 
 Feed one in: $G v_i$ is $\lambda_i$ times $v_i$, and $v_i$ has length 1, so
 
@@ -157,7 +132,7 @@ $$|\det A| = \sigma_1 \sigma_2$$
 
 Here 6.708204 times 2.236068 is 15.000000, and so is 3 × 5 − 0 × 4 from the entries: the ellipse covers 15.000000 times the coin's area.
 
-Second, the reading that matters for solving systems: the count of factors above zero is the rank, an axis with a zero factor being a direction the matrix flattens ([rank-nullity](../05-Solving%20Systems/05-rank-nullity.md)). The sprite has rank 2; a rectangular matrix, with no determinant to compare, reads the same way. The same non-zero factors come from $A A^T$, smaller when $A$ is wide.
+Second, the reading that matters for solving systems: the count of factors above zero is the rank, an axis with a zero factor being a direction the matrix flattens ([Rank and nullity](../05-Solving%20Systems/05-rank-nullity.md)). The sprite has rank 2; a rectangular matrix, with no determinant to compare, reads the same way. The same non-zero factors come from $A A^T$, smaller when $A$ is wide.
 
 ---
 
@@ -426,17 +401,17 @@ Step 3 writes the matrix as one piece per factor: $\sigma_1$ times the grid made
 
 ## What this builds on
 
-- [spectral-theorem](04-spectral-theorem.md): perpendicular unit eigenvectors for a symmetric matrix, which hands over the input axes.
-- [rank-nullity](../05-Solving%20Systems/05-rank-nullity.md): rank as the directions that survive, nullity as those flattened.
+- [The spectral theorem](04-spectral-theorem.md): perpendicular unit eigenvectors for a symmetric matrix, which hands over the input axes.
+- [Rank and nullity](../05-Solving%20Systems/05-rank-nullity.md): rank as the directions that survive, nullity as those flattened.
 
 ## Where this goes next
 
-- [principal-components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): these axes on centred data.
-- principal-components-and-dimension-reduction: how many axes a wide table needs.
-- svd-and-the-pseudoinverse: the factors without building $A^T A$; best answers to unsolvable systems.
-- controllability-and-observability: rank off the factors, deciding whether a system steers.
-- model-uncertainty-and-the-small-gain-theorem: the largest factor as worst-case gain.
-- compressed-sensing-in-outline: recovery when a matrix flattens most of its input.
+- [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): these axes on centred data.
+- Principal components: how many axes a wide table needs.
+- Singular value decomposition: the factors without building $A^T A$; best answers to unsolvable systems.
+- Can you steer every state, and can you see every state: rank off the factors, deciding whether a system steers.
+- Writing down model error: the largest factor as worst-case gain.
+- Compressed sensing: recovery when a matrix flattens most of its input.
 
 One question stays open, and every application above turns on it: the tip above prices what a dropped factor costs the matrix, never what it costs the answer.
 

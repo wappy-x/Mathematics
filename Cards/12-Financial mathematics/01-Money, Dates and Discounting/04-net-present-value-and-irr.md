@@ -1,26 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Money, Dates and Discounting
-topic: Judging a project
-item: NPV and IRR
-kind: method
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/03-annuities-and-loans|annuities-and-loans]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/06-newtons-method|newtons-method]]"
-next:
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/07-yield-from-price|yield-from-price]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - net-present-value-and-irr
----
-
 # NPV and IRR: is a project worth it, and the rate that makes it break even
 
-Financial mathematics → Money, Dates and Discounting → Judging a project → NPV and IRR
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Money, Dates and Discounting](../../../SYLLABUS.md#w12-s01) → NPV and IRR
 
 ---
 
@@ -28,7 +8,7 @@ Financial mathematics → Money, Dates and Discounting → Judging a project →
 
 A print shop is offered a dust-filter kit for one of its presses. The kit costs $100.00, paid today. It saves $60.00 of wasted ink at the end of the first year and $60.00 at the end of the second, and then it is worn out. The shop's bank both lends and takes deposits at 8 percent a year.
 
-Add the three amounts up as though dates did not matter and the kit looks $20.00 ahead. That answer is wrong, because the savings arrive late, and late money is worth less: a dollar due in a year is worth 1 divided by 1.08 of a dollar now, about 93 cents ([compounding-and-discount-factors](01-compounding-and-discount-factors.md)).
+Add the three amounts up as though dates did not matter and the kit looks $20.00 ahead. That answer is wrong, because the savings arrive late, and late money is worth less: a dollar due in a year is worth 1 divided by 1.08 of a dollar now, about 93 cents ([Discount factors](01-compounding-and-discount-factors.md)).
 
 Shrink each saving to today's money and add: $55.56 for year one, $51.44 for year two, $107.00 in all, against the $100.00 paid now. The kit is worth **$7.00** today. That number is the project's **net present value**, NPV: a dated list of cash turned into one amount of money at one date.
 
@@ -85,14 +65,14 @@ Multiplying the left-hand equation by $z^2$ and dividing by −20 gives the righ
 
 ### When it holds
 
-- **One rate for every date.** The formula uses a single $y$ for the whole life. When money costs more for longer terms, each amount takes its own discount factor from the curve ([compounding-and-discount-factors](01-compounding-and-discount-factors.md)); flattening a sloped curve to one number misprices the far-off amounts most.
+- **One rate for every date.** The formula uses a single $y$ for the whole life. When money costs more for longer terms, each amount takes its own discount factor from the curve ([Discount factors](01-compounding-and-discount-factors.md)); flattening a sloped curve to one number misprices the far-off amounts most.
 - **Cash, dated, and certain.** Amounts are money actually moving, not accounting profit, and they are known. Feed in forecasts and the answer is only as sound as the forecasts.
-- **Whole years here; real calendars need a rule.** Dates on this card are anniversaries. Actual payment dates need a day-count convention to turn them into fractions of a year ([day-counts-and-dates](02-day-counts-and-dates.md)), and choosing the wrong one shifts the answer by a few cents on short trades and more on long ones.
+- **Whole years here; real calendars need a rule.** Dates on this card are anniversaries. Actual payment dates need a day-count convention to turn them into fractions of a year ([Day counts](02-day-counts-and-dates.md)), and choosing the wrong one shifts the answer by a few cents on short trades and more on long ones.
 - **The list is the difference the project makes.** Every amount is what changes if the project goes ahead, against a stated alternative. Money already spent changes nothing and belongs in neither list.
 - **Borrowing and lending at the same rate, without limit.** That is what lets a value today stand in for money later. Under a budget cap, compare only the choices that fit the cap.
 - **For the IRR alone: one change of direction.** Money out first, then nothing but money in, gives exactly one break-even rate (Step 4). Two changes of direction can give two answers, or none (Step 5).
 
-**Conventions verified 14 September 2026:** this card compounds once a year on whole-year anniversaries, and the house bond below pays one coupon a year, which keeps the arithmetic visible. Markets quote otherwise — United States Treasury notes pay twice a year and are quoted on that basis, with the day counts to match ([bonds-price-and-yield](05-bonds-price-and-yield.md) carries the citation). A quoting rule decides which equation is solved; it never changes how solving works.
+**Conventions verified 14 September 2026:** this card compounds once a year on whole-year anniversaries, and the house bond below pays one coupon a year, which keeps the arithmetic visible. Markets quote otherwise — United States Treasury notes pay twice a year and are quoted on that basis, with the day counts to match ([Bond price and yield](05-bonds-price-and-yield.md) carries the citation). A quoting rule decides which equation is solved; it never changes how solving works.
 
 ---
 
@@ -164,7 +144,7 @@ The number of changes of direction is the ceiling, not the count: that is Descar
 
 That is the practical half of the IRR: it exists and is unique for the ordinary shape of a project, and must be handled with care for anything else. Norstrøm's test on the running balances, in the sources, settles more cases; the everyday version is to look at the list, count the changes of direction, and if there is more than one, price the thing at the rate money actually costs instead.
 
-The other route to the same ranking skips the shrinking entirely: run the ledger of Step 2 for each project and carry every balance to one common date. It gives the same order, since the balance at date $n$ is the value today multiplied by $(1+y)^n$ — one positive factor, the same for every project brought to that date. And where the root must be searched for rather than solved, bisection is the safe worker and Newton's method the fast one ([newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)); the bond version of that search, brackets and all, is [yield-from-price](07-yield-from-price.md).
+The other route to the same ranking skips the shrinking entirely: run the ledger of Step 2 for each project and carry every balance to one common date. It gives the same order, since the balance at date $n$ is the value today multiplied by $(1+y)^n$ — one positive factor, the same for every project brought to that date. And where the root must be searched for rather than solved, bisection is the safe worker and Newton's method the fast one ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)); the bond version of that search, brackets and all, is [Yield from price](07-yield-from-price.md).
 
 ---
 
@@ -186,7 +166,7 @@ The kit, at the shop's 8 percent.
 
 Fitting the kit adds $7.00 in today's money, which is the same thing as $8.16 in the bank two years from now, on top of what the $100.00 would have earned sitting in the bank.
 
-The same arithmetic prices the shelf's house bond: $1,000.00 of face value, 6 percent coupons, five years, priced when the market yield is 5 percent, comes to $1,043.29. Pay that price and collect those coupons and the IRR of the resulting list is 5.000000 percent. A bond's yield is nothing but the IRR of its cashflows ([bonds-price-and-yield](05-bonds-price-and-yield.md)).
+The same arithmetic prices the shelf's house bond: $1,000.00 of face value, 6 percent coupons, five years, priced when the market yield is 5 percent, comes to $1,043.29. Pay that price and collect those coupons and the IRR of the resulting list is 5.000000 percent. A bond's yield is nothing but the IRR of its cashflows ([Bond price and yield](05-bonds-price-and-yield.md)).
 
 ### What breaks if you drop a piece
 
@@ -681,8 +661,8 @@ The two outputs match line for line. Both languages build their powers by repeat
 ## Where you meet it in real life
 
 - **Deciding what to buy.** Companies rank equipment, buildings and product launches this way; the discipline is called capital budgeting, and the argument in the room is nearly always about the rate and the forecasts, not the arithmetic.
-- **Bond yields.** The yield quoted on any bond is the IRR of paying its price and collecting its coupons — $1,043.29 in, 5.000000 percent out, on this shelf's house bond ([bonds-price-and-yield](05-bonds-price-and-yield.md)).
-- **Loans and leases.** A quoted loan rate is the IRR of the borrower's own cashflows: cash in now, payments out later ([annuities-and-loans](03-annuities-and-loans.md)). Comparing two offers means comparing two such rates, which is safe only when the amounts and the dates line up.
+- **Bond yields.** The yield quoted on any bond is the IRR of paying its price and collecting its coupons — $1,043.29 in, 5.000000 percent out, on this shelf's house bond ([Bond price and yield](05-bonds-price-and-yield.md)).
+- **Loans and leases.** A quoted loan rate is the IRR of the borrower's own cashflows: cash in now, payments out later ([Annuities](03-annuities-and-loans.md)). Comparing two offers means comparing two such rates, which is safe only when the amounts and the dates line up.
 - **Fund performance.** The money-weighted return an investor actually earns is the IRR of their own deposits and withdrawals. It differs from the fund's published return, which ignores when the money arrived.
 - **Mines, reactors and wind farms.** Anything with a large bill at the end of its life has the sign pattern that breaks the IRR, which is why those industries argue over discount rates instead of over returns.
 
@@ -693,12 +673,12 @@ The two outputs match line for line. Both languages build their powers by repeat
 
 ## What this builds on
 
-- [annuities-and-loans](03-annuities-and-loans.md): the same sum where the amounts repeat, and the closed form for it that prices this card's bond in one line.
-- [newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the slope-following search used here as a second road to the break-even rate, and the reason it needs a sane starting guess.
+- [Annuities](03-annuities-and-loans.md): the same sum where the amounts repeat, and the closed form for it that prices this card's bond in one line.
+- [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the slope-following search used here as a second road to the break-even rate, and the reason it needs a sane starting guess.
 
 ## Where this goes next
 
-- [yield-from-price](07-yield-from-price.md): the same root-finding done properly on a traded price, with brackets that cannot escape and a starting guess that converges.
+- [Yield from price](07-yield-from-price.md): the same root-finding done properly on a traded price, with brackets that cannot escape and a starting guess that converges.
 
 This card finds a break-even rate for a project whose cash is known; a bond's price is quoted every second, and turning that moving price into its rate, quickly and safely, is what comes next.
 

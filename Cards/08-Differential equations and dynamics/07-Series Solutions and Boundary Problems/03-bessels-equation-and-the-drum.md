@@ -1,24 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Series Solutions and Boundary Problems
-topic: The circular drumhead
-item: Bessel's equation
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/02-frobenius-and-regular-singular-points|frobenius-and-regular-singular-points]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/09-sturm-liouville-and-orthogonality|sturm-liouville-and-orthogonality]]"
-  - "[[Cards/13-Engineering mathematics/09-Quantum Mechanics in Outline/01-wave-equation-for-strings-and-membranes|wave-equation-for-strings-and-membranes]]"
-  - "[[Cards/19-Partial differential equations/05-Waves/08-membranes-and-bessel-modes|membranes-and-bessel-modes]]"
-tags: [mathematics, differential equations and dynamics, bessels-equation-and-the-drum]
----
-
 # Bessel's equation: the drum's answer is a new function whose zeros set the drum's notes
 
-Differential equations and dynamics → Series Solutions and Boundary Problems → The circular drumhead → Bessel's equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Series Solutions and Boundary Problems](../../../SYLLABUS.md#w08-s07) → Bessel's equation
 
 ---
 
@@ -53,7 +35,7 @@ Orange: the fundamental, 127.6 Hz. Teal: 292.8 Hz, one still circle inside the r
 
 ## The formula
 
-Reminder: a differential equation links a function to its own rates ([what-a-differential-equation-says](../01-Rate%20Equations/01-what-a-differential-equation-says.md)); here the rates run outward from the centre.
+Reminder: a differential equation links a function to its own rates ([A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md)); here the rates run outward from the centre.
 
 Bessel's equation of order zero, and its solution equal to 1 at the centre:
 
@@ -114,7 +96,7 @@ Measure distance as x = kr, a pure number. Each rate picks up a factor k, cancel
 
 ### Step 2: the centre is a regular singular point, so try Frobenius
 
-Divided by x^2 the equation reads y'' + y'/x + y = 0. The 1/x blows up at the centre, but no faster than 1/x: a regular singular point, where [frobenius-and-regular-singular-points](02-frobenius-and-regular-singular-points.md) tries a power x^s times a power series:
+Divided by x^2 the equation reads y'' + y'/x + y = 0. The 1/x blows up at the centre, but no faster than 1/x: a regular singular point, where [Frobenius](02-frobenius-and-regular-singular-points.md) tries a power x^s times a power series:
 
 $$y = \sum_{n \ge 0} a_n\, x^{n+s}.$$
 
@@ -155,7 +137,7 @@ Not proved here: the phase. J0(x) ≈ √(2/(πx)) cos(x − π/4) for large x (
 
 </details>
 
-A second road uses no series: Runge-Kutta 4 ([runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) steps the equation out from height 1 and slope 0. At x = 0, y'/x is replaced by its limit y''(0), which makes y''(0) = −y(0)/2.
+A second road uses no series: Runge-Kutta 4 ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) steps the equation out from height 1 and slope 0. At x = 0, y'/x is replaced by its limit y''(0), which makes y''(0) = −y(0)/2.
 
 ---
 
@@ -408,7 +390,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Orchestral timpani.** The kettle's air pulls the notes with still diameters, J1 and higher, close to a whole-number ladder, and the round J0 notes fade fast: that is how timpani get a pitch at all.
-- **This shelf.** The notes are eigenvalues of a boundary problem ([eigenvalues-and-eigenfunctions](08-eigenvalues-and-eigenfunctions.md)); aiming from the centre at the rim is [the-shooting-method](06-the-shooting-method.md).
+- **This shelf.** The notes are eigenvalues of a boundary problem ([Eigenvalue problems](08-eigenvalues-and-eigenfunctions.md)); aiming from the centre at the rim is [Shooting](06-the-shooting-method.md).
 
 > **Say it back**
 > Forces on thin rings of a drumhead give Bessel's equation. Frobenius gives J0, a series converging everywhere; the other solution is infinite at the centre, so the shape is J0(kr). A clamped rim puts kR on a zero of J0: 2.404826, 5.520078, 8.653728. These sit near (n − 1/4)π, so the overtones are 2.295 and 3.598 times the fundamental: no clear pitch.
@@ -417,13 +399,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [frobenius-and-regular-singular-points](02-frobenius-and-regular-singular-points.md): the trial x^s times a series, the indicial equation, and the logarithm a double root forces.
+- [Frobenius](02-frobenius-and-regular-singular-points.md): the trial x^s times a series, the indicial equation, and the logarithm a double root forces.
 
 ## Where this goes next
 
-- [sturm-liouville-and-orthogonality](09-sturm-liouville-and-orthogonality.md): why the zeros never run out, and why the shapes are orthogonal.
-- wave-equation-for-strings-and-membranes: the wave equation behind the ring balance.
-- membranes-and-bessel-modes: every mode, including those with still diameters.
+- [Sturm-Liouville](09-sturm-liouville-and-orthogonality.md): why the zeros never run out, and why the shapes are orthogonal.
+- Waves on strings and drums: the wave equation behind the ring balance.
+- Drumheads: every mode, including those with still diameters.
 
 A real strike sounds many notes at once; how much of each it contains is the orthogonality question Sturm-Liouville answers.
 

@@ -1,30 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Oscillators - Second-Order Linear Equations
-topic: Exponential trial solutions
-item: The characteristic equation
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/01-superposition-and-the-shape-of-linear-solutions|superposition-and-the-shape-of-linear-solutions]]"
-  - "[[Cards/03-Algebra/02-Polynomials/03-quadratic-formula|quadratic-formula]]"
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/04-characteristic-equation-and-binet|characteristic-equation-and-binet]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/03-complex-roots-and-damped-oscillation|complex-roots-and-damped-oscillation]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/04-wronskian-and-reduction-of-order|wronskian-and-reduction-of-order]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/09-the-cauchy-euler-equation|the-cauchy-euler-equation]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/01-from-one-equation-to-a-system|from-one-equation-to-a-system]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/05-two-point-boundary-value-problems|two-point-boundary-value-problems]]"
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/05-perpetual-american-put|perpetual-american-put]]"
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/04-pole-placement-and-observers|pole-placement-and-observers]]"
-tags: [mathematics, differential equations and dynamics, the-characteristic-equation]
----
-
 # The characteristic equation: guess an exponential and the differential equation becomes a quadratic
 
-Differential equations and dynamics → Oscillators - Second-Order Linear Equations → Exponential trial solutions → The characteristic equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Oscillators - Second-Order Linear Equations](../../../SYLLABUS.md#w08-s03) → The characteristic equation
 
 ---
 
@@ -58,7 +34,7 @@ Orange: damper 6 per second, roots −1 and −5. Teal: damper 4.472 per second,
 
 ## The formula
 
-Reminder: a differential equation links an unknown function to its own rates; y' is the rate of y, y'' the rate of y' ([what-a-differential-equation-says](../01-Rate%20Equations/01-what-a-differential-equation-says.md)). Here the acceleration y'' equals −5y − b y': the spring's pull minus the damper's drag.
+Reminder: a differential equation links an unknown function to its own rates; y' is the rate of y, y'' the rate of y' ([A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md)). Here the acceleration y'' equals −5y − b y': the spring's pull minus the damper's drag.
 
 $$a\,y'' + b\,y' + c\,y = 0 \qquad\longrightarrow\qquad a\,r^2 + b\,r + c = 0$$
 
@@ -74,7 +50,7 @@ $$\Delta = 0:\quad y = (C_1 + C_2\,t)\,e^{r t}, \qquad r = -\frac{b}{2a}$$
 
 **Read it aloud:** one repeated root gives its exponential times a straight line in t.
 
-For the car, a = 1, c = 5 and b is the damper setting. A negative discriminant gives complex roots, handled on [complex-roots-and-damped-oscillation](03-complex-roots-and-damped-oscillation.md).
+For the car, a = 1, c = 5 and b is the damper setting. A negative discriminant gives complex roots, handled on [Complex roots](03-complex-roots-and-damped-oscillation.md).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -90,8 +66,8 @@ For the car, a = 1, c = 5 and b is the damper setting. A negative discriminant g
 ### When it holds
 
 - **Linear:** y and its rates are never squared or multiplied together. Otherwise a sum of solutions is not a solution, and mixing fails.
-- **Constant coefficients:** for t^2 y'' + t y' − y = 0 the guess e^t leaves 1.00 e^t at t = 1 and 5.00 e^t at t = 2, so no rate r works; see [the-cauchy-euler-equation](09-the-cauchy-euler-equation.md).
-- **Right side zero:** a road that keeps shaking the car adds a term, handled on [undetermined-coefficients](05-undetermined-coefficients.md).
+- **Constant coefficients:** for t^2 y'' + t y' − y = 0 the guess e^t leaves 1.00 e^t at t = 1 and 5.00 e^t at t = 2, so no rate r works; see [The Cauchy-Euler equation](09-the-cauchy-euler-equation.md).
+- **Right side zero:** a road that keeps shaking the car adds a term, handled on [Undetermined coefficients](05-undetermined-coefficients.md).
 - **a not zero:** otherwise the equation is first-order.
 
 ---
@@ -100,7 +76,7 @@ For the car, a = 1, c = 5 and b is the damper setting. A negative discriminant g
 
 ### Step 0: an exponential keeps its shape when differentiated
 
-The rate of e^(rt) is r e^(rt), by the chain rule, and its second rate is r^2 e^(rt). So a y'' + b y' + c y, applied to an exponential, is that exponential times a number, and the equation asks for the number to be zero. The same move, with r^n, solves recurrences on [characteristic-equation-and-binet](../../04-Combinatorics%20and%20graphs/05-Recurrences/04-characteristic-equation-and-binet.md).
+The rate of e^(rt) is r e^(rt), by the chain rule, and its second rate is r^2 e^(rt). So a y'' + b y' + c y, applied to an exponential, is that exponential times a number, and the equation asks for the number to be zero. The same move, with r^n, solves recurrences on [The characteristic equation](../../04-Combinatorics%20and%20graphs/05-Recurrences/04-characteristic-equation-and-binet.md).
 
 ### Step 1: the substitution leaves a quadratic
 
@@ -108,11 +84,11 @@ Put y = e^(rt) in:
 
 $$a\,r^2 e^{rt} + b\,r\,e^{rt} + c\,e^{rt} = (a r^2 + b r + c)\,e^{rt}.$$
 
-An exponential is never zero, so this vanishes for every t exactly when a r^2 + b r + c = 0. For b = 6: r^2 + 6r + 5 = (r + 1)(r + 5), roots −1 and −5, by the [quadratic-formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md) or by bisection, which halves a bracket around each root.
+An exponential is never zero, so this vanishes for every t exactly when a r^2 + b r + c = 0. For b = 6: r^2 + 6r + 5 = (r + 1)(r + 5), roots −1 and −5, by the [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md) or by bisection, which halves a bracket around each root.
 
 ### Step 2: two roots, two shapes, fitted to the start
 
-The equation is linear, so any mix C1 e^(r1 t) + C2 e^(r2 t) solves it ([superposition-and-the-shape-of-linear-solutions](01-superposition-and-the-shape-of-linear-solutions.md)). Two amounts can match two facts: starting height and starting velocity.
+The equation is linear, so any mix C1 e^(r1 t) + C2 e^(r2 t) solves it ([Superposition](01-superposition-and-the-shape-of-linear-solutions.md)). Two amounts can match two facts: starting height and starting velocity.
 
 At t = 0 the height is C1 + C2 and the velocity is r1 C1 + r2 C2. For the car: C1 + C2 = 1 and −C1 − 5C2 = 0. So C2 = −0.25 and C1 = 1.25.
 
@@ -141,9 +117,9 @@ Completeness. At t = 0, (C1 + C2 t)e^(rt) has height C1 and velocity r C1 + C2, 
 
 ### Step 4: a negative discriminant
 
-With b = 2 the discriminant is −16 and the roots −1 ± 2i. The algebra still holds; making the complex exponentials into a real bounce is [complex-roots-and-damped-oscillation](03-complex-roots-and-damped-oscillation.md).
+With b = 2 the discriminant is −16 and the roots −1 ± 2i. The algebra still holds; making the complex exponentials into a real bounce is [Complex roots](03-complex-roots-and-damped-oscillation.md).
 
-A second route treats height and velocity as one pair driven by a 2-by-2 matrix, whose eigenvalues are the roots r: [from-one-equation-to-a-system](../04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md).
+A second route treats height and velocity as one pair driven by a 2-by-2 matrix, whose eigenvalues are the roots r: [From one equation to a system](../04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md).
 
 ---
 
@@ -177,7 +153,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Two roads to the motion: the closed form from the roots, and Euler's rule, which steps height and velocity forward by step length times rate and never calls exp ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)). Its error halves with the step. The roots come from the formula and from bisection; a finite difference, change over a tiny interval divided by its length, confirms each answer obeys the law.
+Two roads to the motion: the closed form from the roots, and Euler's rule, which steps height and velocity forward by step length times rate and never calls exp ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)). Its error halves with the step. The roots come from the formula and from bisection; a finite difference, change over a tiny interval divided by its length, confirms each answer obeys the law.
 
 ### Python
 
@@ -393,9 +369,9 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Car suspension, door closers, gauge needles.** Each is damped near the repeated-root setting to settle fast without bouncing.
-- **Circuits.** A resistor, coil and capacitor in a loop obey the same equation, charge in place of height ([the-rlc-circuit-and-the-spring](08-the-rlc-circuit-and-the-spring.md)).
-- **Control.** Feedback places the characteristic roots where a designer wants them (pole-placement-and-observers).
-- **Finance.** A put option with no expiry is solved by the same kind of guess, a power of the price ([perpetual-american-put](../../12-Financial%20mathematics/15-American%20and%20Bermudan%20exercise/05-perpetual-american-put.md)).
+- **Circuits.** A resistor, coil and capacitor in a loop obey the same equation, charge in place of height ([The RLC circuit](08-the-rlc-circuit-and-the-spring.md)).
+- **Control.** Feedback places the characteristic roots where a designer wants them (Pole placement).
+- **Finance.** A put option with no expiry is solved by the same kind of guess, a power of the price ([The perpetual American put](../../12-Financial%20mathematics/15-American%20and%20Bermudan%20exercise/05-perpetual-american-put.md)).
 
 > **Say it back**
 > For a y'' + b y' + c y = 0, try y = e^(rt); it works exactly when a r^2 + b r + c = 0. Two real roots give two exponentials, mixed to match starting height and velocity. A repeated root gives e^(rt) and t e^(rt), because y = e^(rt) u forces u'' = 0. A solution is fixed by its start, so these mixes are every solution. The car with damper 6 sinks as 1.25e^(−t) − 0.25e^(−5t); at the critical 4.472 it settles sooner, as (1 + 2.236t)e^(−2.236t).
@@ -404,19 +380,19 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [superposition-and-the-shape-of-linear-solutions](01-superposition-and-the-shape-of-linear-solutions.md): mixes of solutions are solutions, and a start fixes the solution.
-- [quadratic-formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the roots and the discriminant.
-- [characteristic-equation-and-binet](../../04-Combinatorics%20and%20graphs/05-Recurrences/04-characteristic-equation-and-binet.md): the same guess on recurrences, where powers play the exponential's part.
+- [Superposition](01-superposition-and-the-shape-of-linear-solutions.md): mixes of solutions are solutions, and a start fixes the solution.
+- [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the roots and the discriminant.
+- [The characteristic equation](../../04-Combinatorics%20and%20graphs/05-Recurrences/04-characteristic-equation-and-binet.md): the same guess on recurrences, where powers play the exponential's part.
 
 ## Where this goes next
 
-- [complex-roots-and-damped-oscillation](03-complex-roots-and-damped-oscillation.md): the bouncing car at b = 2.
-- [wronskian-and-reduction-of-order](04-wronskian-and-reduction-of-order.md): Step 3's y = e^(rt) u as a general method.
-- [the-cauchy-euler-equation](09-the-cauchy-euler-equation.md): coefficients growing with t, solved by a power.
-- [from-one-equation-to-a-system](../04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md): the roots as eigenvalues.
-- [two-point-boundary-value-problems](../07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md): the two shapes fitted to two ends.
-- [perpetual-american-put](../../12-Financial%20mathematics/15-American%20and%20Bermudan%20exercise/05-perpetual-american-put.md): a trial power pricing an option.
-- pole-placement-and-observers: choosing the roots by feedback.
+- [Complex roots](03-complex-roots-and-damped-oscillation.md): the bouncing car at b = 2.
+- [The Wronskian](04-wronskian-and-reduction-of-order.md): Step 3's y = e^(rt) u as a general method.
+- [The Cauchy-Euler equation](09-the-cauchy-euler-equation.md): coefficients growing with t, solved by a power.
+- [From one equation to a system](../04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md): the roots as eigenvalues.
+- [Boundary value problems](../07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md): the two shapes fitted to two ends.
+- [The perpetual American put](../../12-Financial%20mathematics/15-American%20and%20Bermudan%20exercise/05-perpetual-american-put.md): a trial power pricing an option.
+- Pole placement: choosing the roots by feedback.
 
 ---
 

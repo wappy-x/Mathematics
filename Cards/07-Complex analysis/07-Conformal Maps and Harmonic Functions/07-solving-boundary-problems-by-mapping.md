@@ -1,26 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Conformal Maps and Harmonic Functions
-topic: Transplanting harmonic functions
-item: Solving by mapping
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/06-poisson-integral-formula|poisson-integral-formula]]"
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/03-standard-maps-and-composing-them|standard-maps-and-composing-them]]"
-next:
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/08-riemann-mapping-theorem-and-schwarz-christoffel|riemann-mapping-theorem-and-schwarz-christoffel]]"
-tags:
-  - mathematics
-  - complex-analysis
-  - solving-boundary-problems-by-mapping
----
-
 # Solving by mapping: a harmonic function stays harmonic under a conformal map, so solve on the disc or half plane and carry the answer back
 
-Complex analysis → Conformal Maps and Harmonic Functions → Transplanting harmonic functions → Solving by mapping
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Conformal Maps and Harmonic Functions](../../../SYLLABUS.md#w07-s07) → Solving by mapping
 
 ---
 
@@ -28,7 +8,7 @@ Complex analysis → Conformal Maps and Harmonic Functions → Transplanting har
 
 A long corridor has its floor held at 0 degrees and its ceiling at 100. Draw it as the strip of points z = x + iy with y between 0 and π: floor y = 0, ceiling y = π. Once the heat stops moving, what is the temperature at 1 + i?
 
-Steady temperature is **harmonic**: at every inside point it equals the average of its values round any small circle there ([harmonic-functions-and-conjugates](04-harmonic-functions-and-conjugates.md)). Here a guess works: the temperature climbs evenly, 100y/π degrees, so 31.830989 at 1 + i.
+Steady temperature is **harmonic**: at every inside point it equals the average of its values round any small circle there ([Harmonic functions](04-harmonic-functions-and-conjugates.md)). Here a guess works: the temperature climbs evenly, 100y/π degrees, so 31.830989 at 1 + i.
 
 Most regions allow no guess. A conformal map (holomorphic with nonzero derivative, so it keeps angles) bends the corridor onto the upper half plane, where the answer takes one line; it is then carried back point by point. The corridor tests the method against the guess; a quarter plane, with a corner, is the second case.
 
@@ -58,7 +38,7 @@ $$U(w) = \frac{100}{\pi}\arg w,$$
 
 **Read it aloud:** the temperature is the angle of w, measured from the positive real axis, scaled so that the angle π reads 100.
 
-Here arg w lies in (0, π). For a temperature g(t) at each wall point t of the real axis, the half plane's Poisson integral gives the answer at w = a + ib (the disc's formula from [poisson-integral-formula](06-poisson-integral-formula.md), carried over by a Möbius map):
+Here arg w lies in (0, π). For a temperature g(t) at each wall point t of the real axis, the half plane's Poisson integral gives the answer at w = a + ib (the disc's formula from [The Poisson formula](06-poisson-integral-formula.md), carried over by a Möbius map):
 
 $$U(a + ib) = \frac{1}{\pi}\int_{-\infty}^{\infty} \frac{b\,g(t)}{(t - a)^2 + b^2}\,dt$$
 
@@ -88,7 +68,7 @@ $$U(a + ib) = \frac{1}{\pi}\int_{-\infty}^{\infty} \frac{b\,g(t)}{(t - a)^2 + b^
 
 ### Step 0: a conformal map is locally turn and stretch, and the Laplacian ignores turns
 
-Near any point, a holomorphic f moves a small step h to roughly f'(z) times h: turn by the angle of f'(z), stretch by its modulus ([conformal-maps](01-conformal-maps.md)). The Laplacian is the same in every rotated frame, and a stretch by a factor multiplies second derivatives by its square.
+Near any point, a holomorphic f moves a small step h to roughly f'(z) times h: turn by the angle of f'(z), stretch by its modulus ([Conformal maps](01-conformal-maps.md)). The Laplacian is the same in every rotated frame, and a stretch by a factor multiplies second derivatives by its square.
 
 ### Step 1: the chain rule makes Step 0 exact
 
@@ -114,13 +94,13 @@ Cauchy–Riemann gives φ_x ψ_x + φ_y ψ_y = φ_x ψ_x − ψ_x φ_x = 0. It a
 
 ### Step 2: walls ride along with the map
 
-Let f be one-to-one onto the easy region and extend continuously to the edges, walls to walls. Each wall temperature moves to the image point; solve there for a bounded U. Then u = U after f is harmonic by Step 1, and as z nears a wall point, f(z) nears its image, so u nears the right value. Bounded answers are unique: the difference of two is bounded, harmonic and 0 on the walls, and the maximum principle ([mean-value-and-maximum-principle-for-harmonic-functions](05-mean-value-and-maximum-principle-for-harmonic-functions.md)), in its form for bounded functions, forces it to 0.
+Let f be one-to-one onto the easy region and extend continuously to the edges, walls to walls. Each wall temperature moves to the image point; solve there for a bounded U. Then u = U after f is harmonic by Step 1, and as z nears a wall point, f(z) nears its image, so u nears the right value. Bounded answers are unique: the difference of two is bounded, harmonic and 0 on the walls, and the maximum principle ([Mean value and maximum principle](05-mean-value-and-maximum-principle-for-harmonic-functions.md)), in its form for bounded functions, forces it to 0.
 
 ### Step 3: the corridor through e^z
 
-With z = x + iy, e^z = e^x (cos y + i sin y): modulus e^x, angle y ([standard-maps-and-composing-them](03-standard-maps-and-composing-them.md)). For y between 0 and π the angle fills (0, π) exactly once, so the corridor goes one-to-one onto the upper half plane. The floor y = 0 goes to e^x, the positive real axis, at 0 degrees. The ceiling y = π goes to −e^x, the negative real axis, at 100.
+With z = x + iy, e^z = e^x (cos y + i sin y): modulus e^x, angle y ([The standard maps](03-standard-maps-and-composing-them.md)). For y between 0 and π the angle fills (0, π) exactly once, so the corridor goes one-to-one onto the upper half plane. The floor y = 0 goes to e^x, the positive real axis, at 0 degrees. The ceiling y = π goes to −e^x, the negative real axis, at 100.
 
-U(w) = (100/π) arg w is harmonic, since arg w is the imaginary part of the holomorphic logarithm ([complex-logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)). Carried back: u(z) = (100/π) arg e^z = 100y/π, the guess. At 1 + i, e^(1+i) = 1.468694 + 2.287355i, its angle is 1, and u = 31.830989.
+U(w) = (100/π) arg w is harmonic, since arg w is the imaginary part of the holomorphic logarithm ([The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md)). Carried back: u(z) = (100/π) arg e^z = 100y/π, the guess. At 1 + i, e^(1+i) = 1.468694 + 2.287355i, its angle is 1, and u = 31.830989.
 
 ### Step 4: the quarter plane through z^2
 
@@ -130,7 +110,7 @@ $$u(z) = \frac{100}{\pi}\arg(z^2) = \frac{200}{\pi}\arg z.$$
 
 At 1 + 2i: z^2 = −3 + 4i and u = 70.483276. At the corner, f' = 2z = 0, so z^2 is not conformal there. The corner lies on the wall, not inside, so Step 1 still holds inside; but u nears every value from 0 to 100 along different rays into 0.
 
-A second road: U is the real part of G(w) = −(100i/π) log w, and G after f is holomorphic, so its real part is harmonic ([harmonic-functions-and-conjugates](04-harmonic-functions-and-conjugates.md)). For the corridor, log e^z = z, giving 100y/π again.
+A second road: U is the real part of G(w) = −(100i/π) log w, and G after f is holomorphic, so its real part is harmonic ([Harmonic functions](04-harmonic-functions-and-conjugates.md)). For the corridor, log e^z = z, giving 100y/π again.
 
 ---
 
@@ -376,12 +356,12 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [poisson-integral-formula](06-poisson-integral-formula.md): the answer on the disc for any wall temperatures, and so on the half plane.
-- [standard-maps-and-composing-them](03-standard-maps-and-composing-them.md): e^z opening a strip, powers opening a wedge.
+- [The Poisson formula](06-poisson-integral-formula.md): the answer on the disc for any wall temperatures, and so on the half plane.
+- [The standard maps](03-standard-maps-and-composing-them.md): e^z opening a strip, powers opening a wedge.
 
 ## Where this goes next
 
-- [riemann-mapping-theorem-and-schwarz-christoffel](08-riemann-mapping-theorem-and-schwarz-christoffel.md): every simply connected region (one with no holes) except the whole plane maps onto the disc, and polygons have a formula for the map.
+- [The Riemann mapping theorem](08-riemann-mapping-theorem-and-schwarz-christoffel.md): every simply connected region (one with no holes) except the whole plane maps onto the disc, and polygons have a formula for the map.
 
 ---
 

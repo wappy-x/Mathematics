@@ -1,29 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Counterparty Risk and CVA
-topic: Hedging the counterparty charge
-item: CVA risk numbers
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/03-cva|cva]]"
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/08-cds-risk-numbers|cds-risk-numbers]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/01-bump-and-revalue-and-common-random-numbers|bump-and-revalue-and-common-random-numbers]]"
-next: []
-tags: [mathematics, financial mathematics, cva-risk-numbers-and-hedging]
----
-
 # CVA risk numbers: sensitivity to the counterparty's spread, to the underlying, and how a CDS hedges it
 
-Financial mathematics → Counterparty Risk and CVA → Hedging the counterparty charge → CVA risk numbers
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Counterparty Risk and CVA](../../../SYLLABUS.md#w12-s46) → CVA risk numbers
 
 ---
 
 ## General Overview
 
-A bank buys one call option on Acme shares from a company called Northwind. The option lets the bank buy an Acme share for $100 in a year. With Acme at $100 it is worth **$9.23** if Northwind is sure to pay. Northwind is not sure to pay. Its chance of failing is 2% a year, and a failed Northwind would hand back 40 cents in the dollar. So the bank marks the option down by the expected loss, **0.1096 dollars**, about 11 cents, and carries it at **$9.12**. That markdown is the **credit valuation adjustment**, CVA ([cva](03-cva.md)).
+A bank buys one call option on Acme shares from a company called Northwind. The option lets the bank buy an Acme share for $100 in a year. With Acme at $100 it is worth **$9.23** if Northwind is sure to pay. Northwind is not sure to pay. Its chance of failing is 2% a year, and a failed Northwind would hand back 40 cents in the dollar. So the bank marks the option down by the expected loss, **0.1096 dollars**, about 11 cents, and carries it at **$9.12**. That markdown is the **credit valuation adjustment**, CVA ([CVA](03-cva.md)).
 
 CVA is a price, and prices move. If the market starts to doubt Northwind, the cost of insuring Northwind's debt rises, CVA rises, and the bank loses money though nobody has defaulted. If Acme rises, the option is worth more, more money sits with Northwind, and CVA rises again. In the 2007 to 2009 crisis, by the Basel Committee's count, roughly two-thirds of banks' counterparty losses came from CVA moving, and only about a third from actual defaults.
 
@@ -53,7 +36,7 @@ The first line (orange) is CVA repriced at each spread. The second (teal) is str
 
 ## The formula
 
-Notation first, in words. $C$ is the option's value if Northwind were riskless. $\lambda$ ("lambda") is Northwind's **hazard**: its default rate per year while it is still alive. $R$ is the recovery rate. $s$ is Northwind's credit spread, the yearly premium for default insurance on its debt. $E(t)$ is the **discounted expected exposure** at date $t$: the average, over every path Acme might take, of what Northwind would owe the bank at $t$, in today's dollars ([expected-exposure-profiles](02-expected-exposure-profiles.md)). The integral adds a quantity over every instant from today to expiry.
+Notation first, in words. $C$ is the option's value if Northwind were riskless. $\lambda$ ("lambda") is Northwind's **hazard**: its default rate per year while it is still alive. $R$ is the recovery rate. $s$ is Northwind's credit spread, the yearly premium for default insurance on its debt. $E(t)$ is the **discounted expected exposure** at date $t$: the average, over every path Acme might take, of what Northwind would owe the bank at $t$, in today's dollars ([Expected exposure over time](02-expected-exposure-profiles.md)). The integral adds a quantity over every instant from today to expiry.
 
 $$\text{CVA} = (1-R)\int_0^T E(t)\,\lambda e^{-\lambda t}\,dt = (1-R)\,C\,\big(1 - e^{-\lambda T}\big), \qquad \lambda = \frac{s}{1-R}$$
 
@@ -97,8 +80,8 @@ $$M = \frac{\text{CS01}}{A \times 1\text{ bp}}, \qquad A = \frac{1 - e^{-(r+\lam
 
 ### When it holds
 
-- **Exposure independent of default.** The formula multiplies the average exposure by the default chance. If Northwind tends to fail exactly when Acme soars, the two move together and CVA is larger than this; that is [wrong-way-risk](05-wrong-way-risk.md).
-- **One flat hazard, premium paid continuously.** Then spread equals hazard times loss fraction, exactly. A quarterly-paid CDS on a sloping curve needs a root finder and a curve, and CS01 is reported tenor by tenor ([cds-risk-numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md)).
+- **Exposure independent of default.** The formula multiplies the average exposure by the default chance. If Northwind tends to fail exactly when Acme soars, the two move together and CVA is larger than this; that is [Wrong-way risk](05-wrong-way-risk.md).
+- **One flat hazard, premium paid continuously.** Then spread equals hazard times loss fraction, exactly. A quarterly-paid CDS on a sloping curve needs a root finder and a curve, and CS01 is reported tenor by tenor ([CDS risk numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md)).
 - **Small moves.** CS01, delta and vega are slopes. When Acme and Northwind's spread move together, a cross term appears: after Acme +$5 and spread +100 bp, the hedged book is still down $0.0334 per option.
 - **A counterparty with a traded CDS.** Most counterparties have none. Desks then hedge with a CDS index or a similar name, and the gap between the proxy and Northwind is unhedged.
 
@@ -110,15 +93,15 @@ Conventions verified 28 Sep 2026: the Basel Committee's CVA risk framework (targ
 
 ### Step 0: CVA is default insurance the bank has sold, so the hedge is to buy it back
 
-If Northwind fails at some date $\tau$ before expiry, the bank loses the fraction $1 - R$ of whatever Northwind owes it then. That is the payout of a credit default swap, CDS: insurance that pays the lost part of a notional amount if a named company defaults ([cds-risk-numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md)). The notional here is not fixed: it is the option's value on the default date. By trading with Northwind, the bank has in effect written insurance on Northwind with a moving notional, and CVA is that insurance's price.
+If Northwind fails at some date $\tau$ before expiry, the bank loses the fraction $1 - R$ of whatever Northwind owes it then. That is the payout of a credit default swap, CDS: insurance that pays the lost part of a notional amount if a named company defaults ([CDS risk numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md)). The notional here is not fixed: it is the option's value on the default date. By trading with Northwind, the bank has in effect written insurance on Northwind with a moving notional, and CVA is that insurance's price.
 
 Two things move the price of insurance: the chance of the event, here Northwind's spread, and the amount insured, here the option's value. Each risk number moves one; each hedge buys back the matching piece.
 
 ### Step 1: the discounted exposure of a bought option is flat
 
-The bank owns the option. An option's value is never negative, so whatever it is worth, Northwind owes all of it: exposure equals value, with no floor to apply ([counterparty-exposure-and-netting](01-counterparty-exposure-and-netting.md)).
+The bank owns the option. An option's value is never negative, so whatever it is worth, Northwind owes all of it: exposure equals value, with no floor to apply ([Counterparty exposure](01-counterparty-exposure-and-netting.md)).
 
-In the pricing world every asset's discounted value averages to its value today ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). So the average of $e^{-rt}$ times the option's value at $t$ is $C$, at every $t$: $E(t) = C$ = $9.227006.
+In the pricing world every asset's discounted value averages to its value today ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). So the average of $e^{-rt}$ times the option's value at $t$ is $C$, at every $t$: $E(t) = C$ = $9.227006.
 
 The second road in the code checks this without using it. At $t = 0.5$ it averages the Black-Scholes value of the half-year-old option over every Acme price, weighted by the bell curve, and discounts: 9.227006. At $t = 1$ it averages the payoff itself: 9.227006.
 
@@ -142,7 +125,7 @@ $$\frac{\partial\,\text{CVA}}{\partial s} = C\,T\,e^{-\lambda T}.$$
 
 Per basis point: 9.227006 × 1 × 0.980199 × 0.0001 = **0.000904 dollars per option**. The recovery has gone, as the rule of thumb promised.
 
-A CDS bought at today's spread $s_0$ is worth, per dollar of notional, $A \times (s - s_0)$ ([cds-risk-numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md)). At par its CS01 is $A \times$ 1 bp, with $A$ the risky annuity. For a one-year contract with continuous premium, $A = (1 - e^{-0.07})/0.07$ = 0.965803. Setting the CDS's CS01 equal to CVA's:
+A CDS bought at today's spread $s_0$ is worth, per dollar of notional, $A \times (s - s_0)$ ([CDS risk numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md)). At par its CS01 is $A \times$ 1 bp, with $A$ the risky annuity. For a one-year contract with continuous premium, $A = (1 - e^{-0.07})/0.07$ = 0.965803. Setting the CDS's CS01 equal to CVA's:
 
 $$M = \frac{C\,T\,e^{-\lambda T}}{A} = \frac{9.227006 \times 0.980199}{0.965803} = 9.364542.$$
 
@@ -154,7 +137,7 @@ The match holds far from today's spread too. CVA here is a contingent CDS on a f
 
 Hold Northwind's credit fixed. Then $(1-R)(1-e^{-\lambda T})$ is a fixed number, 0.011881, and CVA is that number times $C$. Anything that moves the option moves CVA by 0.011881 times as much:
 
-- **Delta.** The option's delta, $e^{-qT}N(d_1)$, is 0.586851 ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). CVA's is 0.011881 × 0.586851 = 0.006972. When Acme rises $1, CVA rises 0.006972 dollars, a loss to the bank. Buying 0.006972 Acme shares per option offsets it.
+- **Delta.** The option's delta, $e^{-qT}N(d_1)$, is 0.586851 ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). CVA's is 0.011881 × 0.586851 = 0.006972. When Acme rises $1, CVA rises 0.006972 dollars, a loss to the bank. Buying 0.006972 Acme shares per option offsets it.
 - **Vega.** The option gains 0.379012 dollars per volatility point (20% to 21%); CVA gains 0.004503. Shares cannot hedge this. Buying 0.011881 Acme calls per option hedges delta and vega together, since the CVA's market risk is exactly that slice of the option.
 
 The two hedges interact. CS01 is proportional to $C$, so when Acme rises the right CDS notional rises too: at Acme $110 it is 16.199212. Desks call this **cross-gamma** and rebalance for it.
@@ -178,7 +161,7 @@ That is not 9.364542. One CDS cannot match both numbers: bought by CS01 it gains
 
 </details>
 
-The same numbers come out of bump and revalue on the second road ([bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)): move one input up and down, reprice CVA by the double integral, divide. It needs no formula, so it is the road desks use on real books.
+The same numbers come out of bump and revalue on the second road ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)): move one input up and down, reprice CVA by the double integral, divide. It needs no formula, so it is the road desks use on real books.
 
 ---
 
@@ -632,8 +615,8 @@ The two outputs agree line for line, and every bumped sensitivity matches its an
 
 - **A bank's CVA desk.** It is charged the CVA on the bank's uncollateralised trades and runs it as a book: CS01 per counterparty, delta and vega per market, jump-to-default per name.
 - **Regulatory capital.** Under the Basel Committee's CVA framework, banks on the standardised approach, SA-CVA, hold capital against exactly the delta and vega numbers on this card, reduced by eligible hedges such as CDS on the counterparty.
-- **Exposure from a simulation.** A swap's exposure rises and falls over its life ([expected-exposure-profiles](02-expected-exposure-profiles.md)). With no closed form, bump and revalue is the method that survives.
-- **When exposure and default move together.** A bank buying protection from a seller whose health tracks the reference name has CVA that jumps with default risk itself; the independence behind this card fails ([wrong-way-risk](05-wrong-way-risk.md)).
+- **Exposure from a simulation.** A swap's exposure rises and falls over its life ([Expected exposure over time](02-expected-exposure-profiles.md)). With no closed form, bump and revalue is the method that survives.
+- **When exposure and default move together.** A bank buying protection from a seller whose health tracks the reference name has CVA that jumps with default risk itself; the independence behind this card fails ([Wrong-way risk](05-wrong-way-risk.md)).
 
 > **Say it back**
 > CVA is the price of default insurance the bank has effectively sold on its counterparty, with the trade's value as the insured amount. For the Acme option bought from Northwind it is 0.6 × $9.23 × 2% chance of default, about 11 cents. Its spread sensitivity is exposure times life times survival, 0.000904 per basis point, and a one-year CDS of about $9.36 cancels it. Its delta and vega are the option's own, scaled by 0.011881, and are hedged with shares or a sliver of the option. What a CS01 hedge leaves open is default itself, cross-gamma and the drift of exposure, which is why the hedge is rebalanced.
@@ -642,14 +625,14 @@ The two outputs agree line for line, and every bumped sensitivity matches its an
 
 ## What this builds on
 
-- [cva](03-cva.md): the CVA integral and the Acme-from-Northwind number, 0.1096, that this card differentiates.
-- [cds-risk-numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md): the hedge instrument's CS01, notional times risky annuity at par, and its jump-to-default.
-- [bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): move an input, reprice, divide; the method behind road 2 and behind every CVA desk's reports.
+- [CVA](03-cva.md): the CVA integral and the Acme-from-Northwind number, 0.1096, that this card differentiates.
+- [CDS risk numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md): the hedge instrument's CS01, notional times risky annuity at par, and its jump-to-default.
+- [Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): move an input, reprice, divide; the method behind road 2 and behind every CVA desk's reports.
 
 ## Where this goes next
 
-- [wrong-way-risk](05-wrong-way-risk.md): exposure and default moving together, which breaks the independence behind every formula here, so the share hedge and the credit hedge can no longer be set separately.
-- [dva-and-bilateral-cva](04-dva-and-bilateral-cva.md): the mirror term from the bank's own default, whose sensitivity to the bank's own spread cannot be hedged by selling protection on itself.
+- [Wrong-way risk](05-wrong-way-risk.md): exposure and default moving together, which breaks the independence behind every formula here, so the share hedge and the credit hedge can no longer be set separately.
+- [DVA](04-dva-and-bilateral-cva.md): the mirror term from the bank's own default, whose sensitivity to the bank's own spread cannot be hedged by selling protection on itself.
 
 This card hedged CVA one input at a time on the assumption that Northwind's health and Acme's price are unrelated; the open question is what the hedge is worth when they are not.
 

@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Reduced-Form Models - Risky Bonds, Spreads and Random Hazards
-topic: Credit protection that starts later
-item: The forward CDS
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/06-bootstrapping-the-hazard-curve-from-cds-quotes|bootstrapping-the-hazard-curve-from-cds-quotes]]"
-  - "[[Cards/12-Financial mathematics/28-Swaps/02-par-swap-rate-and-annuity|par-swap-rate-and-annuity]]"
-next:
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/05-cds-option-and-implied-spread-volatility|cds-option-and-implied-spread-volatility]]"
-tags: [mathematics, financial mathematics, forward-cds-and-the-forward-spread]
----
-
 # The forward CDS: protection that starts later, its par spread from two annuities, and the knock-out if default comes early
 
-Financial mathematics → Reduced-Form Models - Risky Bonds, Spreads and Random Hazards → Credit protection that starts later → The forward CDS
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Reduced-Form Models - Risky Bonds, Spreads and Random Hazards](../../../SYLLABUS.md#w12-s44) → The forward CDS
 
 ---
 
@@ -25,7 +8,7 @@ Financial mathematics → Reduced-Form Models - Risky Bonds, Spreads and Random 
 
 A lender to Northwind Lines, the shipping company this shelf follows, will take on $10 million of Northwind risk in one year's time and hold it for four years. It wants default insurance for exactly that window: from year 1 to year 5. It wants the price fixed today.
 
-The insurance is a credit default swap, CDS for short: the buyer pays a yearly premium, in quarterly instalments, while Northwind survives, and the seller pays the lost 60% of face value if Northwind defaults, 40% being assumed recovered ([credit-default-swap-contract](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/01-credit-default-swap-contract.md)). A CDS whose protection starts at a later date is a **forward CDS**. The screen quotes Northwind at 120 basis points a year for one year of protection, 200 for three years and 250 for five (a basis point, bp, is a hundredth of a percent). Nobody quotes the window from year 1 to year 5.
+The insurance is a credit default swap, CDS for short: the buyer pays a yearly premium, in quarterly instalments, while Northwind survives, and the seller pays the lost 60% of face value if Northwind defaults, 40% being assumed recovered ([The credit default swap](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/01-credit-default-swap-contract.md)). A CDS whose protection starts at a later date is a **forward CDS**. The screen quotes Northwind at 120 basis points a year for one year of protection, 200 for three years and 250 for five (a basis point, bp, is a hundredth of a percent). Nobody quotes the window from year 1 to year 5.
 
 There is a way to build it. Buy five years of protection and sell one year of protection, both at the same premium. For the first year the two cancel: premiums in equal and opposite, payouts equal and opposite if Northwind defaults. After year 1 only the five-year contract is left. If Northwind defaults before year 1, both contracts pay and cancel, and the whole package is dead. That last feature is the **knock-out**: an early default cancels the forward contract with no payment either way.
 
@@ -54,7 +37,7 @@ Orange: the forward par spread on the bootstrapped Northwind curve, for protecti
 
 ## The formula
 
-Notation first, in words. The forward window runs from $T_1$ to $T_2$, here year 1 to year 5. The spot par spreads to those dates are $s_1$ and $s_2$, decimals a year. For any tenor $T$, the risky annuity $A(T)$ is the value today of one dollar a year paid quarterly while Northwind survives, and the protection leg $P(T)$ is the value today of the payout per dollar covered ([cds-legs-risky-annuity-and-par-spread](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md)). A spot contract at its par spread has matching legs: $P(T) = s\,A(T)$.
+Notation first, in words. The forward window runs from $T_1$ to $T_2$, here year 1 to year 5. The spot par spreads to those dates are $s_1$ and $s_2$, decimals a year. For any tenor $T$, the risky annuity $A(T)$ is the value today of one dollar a year paid quarterly while Northwind survives, and the protection leg $P(T)$ is the value today of the payout per dollar covered ([Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md)). A spot contract at its par spread has matching legs: $P(T) = s\,A(T)$.
 
 The forward legs are the differences:
 
@@ -100,9 +83,9 @@ so the forward spread equals it too.
 ### When it holds
 
 - **Both spot contracts on identical terms.** Same reference name, credit events, premium dates and settlement. The replication then holds default by default, whatever model is used. If the terms differ, the first year no longer cancels exactly.
-- **A known curve to read the annuities from.** $V$ is exact given the two spot contracts' values. $F$ also needs $A_f$, which here comes from a deterministic hazard curve and riskless rate, taken as unrelated. If default and rates move together, the annuities need a joint model; the random-hazard view is [stochastic-hazard-cox-process](03-stochastic-hazard-cox-process.md).
+- **A known curve to read the annuities from.** $V$ is exact given the two spot contracts' values. $F$ also needs $A_f$, which here comes from a deterministic hazard curve and riskless rate, taken as unrelated. If default and rates move together, the annuities need a joint model; the random-hazard view is [A random hazard](03-stochastic-hazard-cox-process.md).
 - **The knock-out.** A default before $T_1$ cancels the contract. A forward that pays for early defaults too carries front-end protection, worth $P(T_1)\,N$ = $114,897.56 more for Northwind: a different product.
-- **A price, not a forecast.** $F$ is the premium that is fair today. Northwind's four-year spread a year from now can land anywhere; what that uncertainty is worth is priced in [cds-option-and-implied-spread-volatility](05-cds-option-and-implied-spread-volatility.md).
+- **A price, not a forecast.** $F$ is the premium that is fair today. Northwind's four-year spread a year from now can land anywhere; what that uncertainty is worth is priced in [Options on a CDS](05-cds-option-and-implied-spread-volatility.md).
 
 **Conventions verified 2026-09-28:** standard CDS contracts trade with a fixed running coupon plus an upfront payment, and the ISDA CDS Standard Model (cdsmodel.com) converts between upfront and spread quotes. This card works in par spreads, with quarterly premiums paid at the end of each quarter survived and no premium accrued between the last payment and default, the conventions of the bootstrapping card. Accrual shifts the numbers slightly, not the method.
 
@@ -140,9 +123,9 @@ Divide by $A(5)$. The left side is $s_2$. The right side is $s_1$ and $F$ with w
 - **Flat curve**, $s_1 = s_2$: $F = s_2$.
 - **Falling curve**, $s_1 > s_2$: $F$ lies below $s_2$.
 
-Solving for $F$ gives $F = s_2 + (s_2 - s_1)\,A(1)/A_f$. For Northwind, $250 + 130 \times 0.311907$ = 290.55 bp. The weight 0.311907 is the one year's premium-years against the window's. This is the same algebra as the forward swap rate built from two par swap rates and their annuities ([par-swap-rate-and-annuity](../28-Swaps/02-par-swap-rate-and-annuity.md)), and as forward interest rates from spot rates ([spot-forward-and-par-rates](../02-Curves/01-spot-forward-and-par-rates.md)).
+Solving for $F$ gives $F = s_2 + (s_2 - s_1)\,A(1)/A_f$. For Northwind, $250 + 130 \times 0.311907$ = 290.55 bp. The weight 0.311907 is the one year's premium-years against the window's. This is the same algebra as the forward swap rate built from two par swap rates and their annuities ([The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)), and as forward interest rates from spot rates ([Spot, forward and par rates](../02-Curves/01-spot-forward-and-par-rates.md)).
 
-A rough reading: the credit triangle (spread ≈ loss × hazard, [the-credit-triangle](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/03-the-credit-triangle.md)) applied to the window's average hazard, 0.048639, gives 0.60 × 0.048639 = 291.83 bp. The forward spread prices the window's own hazards, not the cheap first year.
+A rough reading: the credit triangle (spread ≈ loss × hazard, [The credit triangle](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/03-the-credit-triangle.md)) applied to the window's average hazard, 0.048639, gives 0.60 × 0.048639 = 291.83 bp. The forward spread prices the window's own hazards, not the cheap first year.
 
 ### Step 3: on a flat hazard, every window has the same spread
 
@@ -169,13 +152,13 @@ Seen from year 1, a forward that has not knocked out is a plain four-year contra
 
 The chance of a knock-out is $1 - S(1)$ = 0.0196.
 
-A second route skips the formulas. A **Monte Carlo** run draws random default dates from the curve ([simulating-a-default-time](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md)), pay out and collect premiums path by path inside the window, cancel the paths that default early, and average. It lands on 290.46 bp with a standard error of 1.10 bp; 0.0195 of its paths knock out.
+A second route skips the formulas. A **Monte Carlo** run draws random default dates from the curve ([Simulating a default time](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md)), pay out and collect premiums path by path inside the window, cancel the paths that default early, and average. It lands on 290.46 bp with a standard error of 1.10 bp; 0.0195 of its paths knock out.
 
 ---
 
 ## Worked numbers, by hand
 
-The curve comes from the bootstrapping card: hazards 1.98% for year 1, 4.04% for years 1 to 3, 5.68% after ([bootstrapping-the-hazard-curve-from-cds-quotes](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md)).
+The curve comes from the bootstrapping card: hazards 1.98% for year 1, 4.04% for years 1 to 3, 5.68% after ([Bootstrapping a hazard curve](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md)).
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -649,8 +632,8 @@ For the forward bought at 250 bp on $10 million, each quote is bumped by 1 bp an
 
 ## Where you meet it in real life
 
-- **Options on a CDS.** A payer option gives the right to buy protection at a fixed spread over a future window: an option on a forward CDS. Its price starts from $F$ and $A_f$, the two numbers on this card ([cds-option-and-implied-spread-volatility](05-cds-option-and-implied-spread-volatility.md)).
-- **Curve trades.** Buying five-year protection and selling one-year protection in matched size is the package of Step 0. Desks run it as a bet that the curve will steepen, marked at the forward spread and risked with the table above ([cds-risk-numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md)).
+- **Options on a CDS.** A payer option gives the right to buy protection at a fixed spread over a future window: an option on a forward CDS. Its price starts from $F$ and $A_f$, the two numbers on this card ([Options on a CDS](05-cds-option-and-implied-spread-volatility.md)).
+- **Curve trades.** Buying five-year protection and selling one-year protection in matched size is the package of Step 0. Desks run it as a bet that the curve will steepen, marked at the forward spread and risked with the table above ([CDS risk numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md)).
 - **Hedging exposure that starts later.** A lender committed to fund a loan in a year, or a bank facing a future counterparty exposure, fixes the cost of cover today without paying for a year it does not need.
 
 > **Say it back**
@@ -660,14 +643,14 @@ For the forward bought at 250 bp on $10 million, each quote is bumped by 1 bp an
 
 ## What this builds on
 
-- [bootstrapping-the-hazard-curve-from-cds-quotes](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md): the Northwind hazard curve, its legs and its conventions, all used here unchanged.
-- [par-swap-rate-and-annuity](../28-Swaps/02-par-swap-rate-and-annuity.md): a par rate as floating leg over annuity, and the forward rate as a difference of legs over a difference of annuities; the CDS version swaps the floating leg for protection and the plain annuity for a risky one.
+- [Bootstrapping a hazard curve](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md): the Northwind hazard curve, its legs and its conventions, all used here unchanged.
+- [The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md): a par rate as floating leg over annuity, and the forward rate as a difference of legs over a difference of annuities; the CDS version swaps the floating leg for protection and the plain annuity for a risky one.
 
 ---
 
 ## Where this goes next
 
-- [cds-option-and-implied-spread-volatility](05-cds-option-and-implied-spread-volatility.md): takes the forward spread and the forward annuity from this card, lets the spread at year 1 be uncertain, and prices the right, not the obligation, to enter the forward.
+- [Options on a CDS](05-cds-option-and-implied-spread-volatility.md): takes the forward spread and the forward annuity from this card, lets the spread at year 1 be uncertain, and prices the right, not the obligation, to enter the forward.
 
 ---
 

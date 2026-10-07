@@ -1,26 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Simulation
-topic: Same darts, less noise
-item: Variance reduction
-kind: method
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/11-Simulation/04-monte-carlo-estimates-and-error|monte-carlo-estimates-and-error]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/04-joint-distributions-and-covariance|joint-distributions-and-covariance]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/05-conditional-expectation-in-tables|conditional-expectation-in-tables]]"
-next:
-  - "[[Cards/09-Probability and statistics/11-Simulation/06-importance-sampling|importance-sampling]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/02-variance-reduction-for-pricing|variance-reduction-for-pricing]]"
-  - "[[Cards/14-Applied and computational/02-Randomised and Approximate Algorithms/05-monte-carlo-integration-in-many-dimensions|monte-carlo-integration-in-many-dimensions]]"
-tags: [mathematics, probability and statistics, variance-reduction]
----
-
 # Variance reduction: antithetic, control and stratified draws
 
-Probability and statistics → Simulation → Same darts, less noise → Variance reduction
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Simulation](../../../SYLLABUS.md#w09-s11) → Variance reduction
 
 ---
 
@@ -28,7 +8,7 @@ Probability and statistics → Simulation → Same darts, less noise → Varianc
 
 A square board, one metre on each side, has a quarter circle drawn on it: radius one metre, centred on the lower-left corner. The quarter circle covers π/4 of the board, about 0.7854. Throw darts that land anywhere on the board with equal chance, score 4 for a dart inside the arc and 0 for one outside, and the average score settles on π.
 
-One batch of 100 darts from the checks below averaged 3.2000. Plain sampling has a standard error of 0.1642: batch averages scatter around π by about that much ([monte-carlo-estimates-and-error](04-monte-carlo-estimates-and-error.md)). The error shrinks only with the square root of the number of darts, so every extra digit costs a hundred times the darts.
+One batch of 100 darts from the checks below averaged 3.2000. Plain sampling has a standard error of 0.1642: batch averages scatter around π by about that much ([Monte Carlo](04-monte-carlo-estimates-and-error.md)). The error shrinks only with the square root of the number of darts, so every extra digit costs a hundred times the darts.
 
 The error is the spread of one dart's score over the square root of the count. Shrink the spread per dart and the same 100 darts land closer. Three classic ways do it without moving the average off π:
 
@@ -141,7 +121,7 @@ The error of an average of $N$ independent draws is $\sqrt{\sigma^2 / N}$. More 
 
 The mirror $(1 - U, 1 - V)$ of a uniform dart is again uniform on the board, so $H'$ has mean π and variance $\sigma^2$, and the pair average is on target.
 
-Its variance follows from the rule for sums ([joint-distributions-and-covariance](../02-Random%20Variables/04-joint-distributions-and-covariance.md)): $\mathrm{Var}(H + H') = 2\sigma^2 + 2\,\mathrm{Cov}(H, H')$. Divide by 4 for the pair average, then by the $N/2$ pairs, and the formula above appears.
+Its variance follows from the rule for sums ([Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md)): $\mathrm{Var}(H + H') = 2\sigma^2 + 2\,\mathrm{Cov}(H, H')$. Divide by 4 for the pair average, then by the $N/2$ pairs, and the formula above appears.
 
 The covariance needs $E[H H']$: both darts score only when the dart lies inside both the arc about the lower-left corner and the arc about the upper-right corner. Those two quarter discs together cover the whole board, so by inclusion–exclusion their overlap, a lens, has area $\pi/4 + \pi/4 - 1 = 0.570796$. So $\mathrm{Cov}(H, H') = 16\,(0.570796 - 0.785398^2) = -0.736863$. Negative, as promised: the pair variance is 0.979952 against 1.348383 for two independent darts, and the gain is 1.38.
 
@@ -187,7 +167,7 @@ In one cell, darts drawn uniformly inside it have mean $\mu_j$. Averaging the ce
 
 The cells are sampled independently, so their variances add, each scaled by its weight squared: $\sum_j p_j^2 \sigma_j^2 / n_j$.
 
-The gain comes from the split of variance into spread within groups plus spread between group means ([conditional-expectation-in-tables](../02-Random%20Variables/05-conditional-expectation-in-tables.md)):
+The gain comes from the split of variance into spread within groups plus spread between group means ([Conditional expectation](../02-Random%20Variables/05-conditional-expectation-in-tables.md)):
 
 $$\sigma^2 = \sum_j p_j\,\sigma_j^2 + \sum_j p_j\,(\mu_j - \mu)^2.$$
 
@@ -210,7 +190,7 @@ Why 17? The arc runs from the top-left corner to the bottom-right, always moving
 
 With $k$ cells per side, about $2k$ cells are crossed, each with weight $1/k^2$. The variance is then about a constant times $2k/k^4$, which is a constant over $N^{3/2}$ since $N = k^2$. The error falls like $N^{-3/4}$, not $N^{-1/2}$. The checks print $k$ times the per-dart variance: 2.70, 2.99, 3.32, 3.55, 3.73, 3.84, 3.90 as $k$ runs from 1 to 40, levelling off, as a rate of $1/k$ requires.
 
-The antithetic and control gains are fixed ratios; stratification, in few dimensions, improves the rate. A fourth road changes the law the darts are drawn from and reweights the scores: [importance-sampling](06-importance-sampling.md).
+The antithetic and control gains are fixed ratios; stratification, in few dimensions, improves the rate. A fourth road changes the law the darts are drawn from and reweights the scores: [Importance sampling](06-importance-sampling.md).
 
 ---
 
@@ -252,7 +232,7 @@ The first row breaks the reversal in Step 1: the swap turns neither coordinate a
 
 ## Code, from first principles, and it actually runs
 
-The checks reach every variance by two roads and measure it by a third. Road 1 is the closed forms, which use π. Road 2 never uses π: it adds up thin slices of the board (a midpoint sum) for the hit share, the lens, the distance moments and each cell's area. Road 3 throws the darts: 1,000 batches of 100 darts for each method, from a SplitMix64 generator ([pseudo-random-numbers](01-pseudo-random-numbers.md)) seeded with 20260929, so both languages throw identical darts. The spread of the 1,000 batch averages is the measured standard error, set beside the exact one. The crossed cells are found a fourth way, by whole-number arithmetic on the grid corners. Asserts compare roads, never a road with itself; five deliberate breaks of the maths (a wrong lens, a wrong cell area, a control reading from fresh darts, a wrong control variance, a one-sided mirror) each trip an assert.
+The checks reach every variance by two roads and measure it by a third. Road 1 is the closed forms, which use π. Road 2 never uses π: it adds up thin slices of the board (a midpoint sum) for the hit share, the lens, the distance moments and each cell's area. Road 3 throws the darts: 1,000 batches of 100 darts for each method, from a SplitMix64 generator ([Random numbers from a computer](01-pseudo-random-numbers.md)) seeded with 20260929, so both languages throw identical darts. The spread of the 1,000 batch averages is the measured standard error, set beside the exact one. The crossed cells are found a fourth way, by whole-number arithmetic on the grid corners. Asserts compare roads, never a road with itself; five deliberate breaks of the maths (a wrong lens, a wrong cell area, a control reading from fresh darts, a wrong control variance, a one-sided mirror) each trip an assert.
 
 ### Python
 
@@ -695,7 +675,7 @@ The two outputs agree line for line.
 
 ## Where you meet it in real life
 
-- **Pricing options by simulation.** Mirrored price paths, and a control from a contract with a known formula, are standard: [variance-reduction-for-pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md).
+- **Pricing options by simulation.** Mirrored price paths, and a control from a contract with a known formula, are standard: [Cheaper Monte Carlo](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md).
 - **Opinion polls.** A national poll interviews set numbers in each region and weights by each region's share of voters: stratified sampling, removing the between-region spread.
 - **Rendering images.** A renderer places one random sample inside each sub-square of a pixel. Graphics calls it jittered sampling; it is the dart grid.
 
@@ -706,15 +686,15 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [monte-carlo-estimates-and-error](04-monte-carlo-estimates-and-error.md): the plain estimate, its standard error, and the square-root law this card works against.
-- [joint-distributions-and-covariance](../02-Random%20Variables/04-joint-distributions-and-covariance.md): the variance of a sum with its covariance term, used in Steps 1 and 2.
-- [conditional-expectation-in-tables](../02-Random%20Variables/05-conditional-expectation-in-tables.md): the split of variance into within and between parts, used in Step 3.
+- [Monte Carlo](04-monte-carlo-estimates-and-error.md): the plain estimate, its standard error, and the square-root law this card works against.
+- [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md): the variance of a sum with its covariance term, used in Steps 1 and 2.
+- [Conditional expectation](../02-Random%20Variables/05-conditional-expectation-in-tables.md): the split of variance into within and between parts, used in Step 3.
 
 ## Where this goes next
 
-- [importance-sampling](06-importance-sampling.md): instead of arranging the darts, change where they are likely to land and reweight each score.
-- [variance-reduction-for-pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md): the same three methods on option payoffs, with the Black–Scholes price as a control.
-- monte-carlo-integration-in-many-dimensions: why grids fail in high dimension and what replaces them.
+- [Importance sampling](06-importance-sampling.md): instead of arranging the darts, change where they are likely to land and reweight each score.
+- [Cheaper Monte Carlo](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md): the same three methods on option payoffs, with the Black–Scholes price as a control.
+- Monte Carlo integration: why grids fail in high dimension and what replaces them.
 
 All three methods keep the darts on the board's own law; the open question is what happens when the law itself is changed to send the darts where the score varies most.
 

@@ -1,27 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Matchings and Flows
-topic: Severing a network
-item: Max-flow min-cut
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/13-Matchings and Flows/05-flow-networks-and-ford-fulkerson|flow-networks-and-ford-fulkerson]]"
-  - "[[Cards/04-Combinatorics and graphs/13-Matchings and Flows/02-halls-marriage-theorem|halls-marriage-theorem]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/13-Matchings and Flows/07-connectivity-and-mengers-theorem|connectivity-and-mengers-theorem]]"
-  - "[[Cards/15-Optimization/04-Linear Programming/06-network-flows-as-linear-programs|network-flows-as-linear-programs]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - max-flow-min-cut
----
-
 # Max-flow min-cut: the most you can push equals the cheapest way to sever the network, and matching is a flow
 
-Combinatorics and graphs → Matchings and Flows → Severing a network → Max-flow min-cut
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Matchings and Flows](../../../SYLLABUS.md#w04-s13) → Max-flow min-cut
 
 ---
 
@@ -31,7 +10,7 @@ A bottling plant ships lorry-loads nightly to a port through a north and a south
 
 Ford and Fulkerson proved in 1956 that these two numbers always meet: no shipment plan beats any severing, and the best plan equals the cheapest one.
 
-The same fact settles pairing. The fun run of [matchings-and-augmenting-paths](01-matchings-and-augmenting-paths.md) has five volunteers, Priya, Omar, Lena, Sam and Tomas, for five tasks, one each. As a network with every road of capacity 1, the largest flow is the largest set of pairs, here 5. When a full pairing is impossible, the cheapest cut names a group that can do too few tasks between them: Hall's theorem again.
+The same fact settles pairing. The fun run of [Matchings](01-matchings-and-augmenting-paths.md) has five volunteers, Priya, Omar, Lena, Sam and Tomas, for five tasks, one each. As a network with every road of capacity 1, the largest flow is the largest set of pairs, here 5. When a full pairing is impossible, the cheapest cut names a group that can do too few tasks between them: Hall's theorem again.
 
 **The largest flow equals the cheapest cut, and when no augmenting route is left, the junctions still reachable from the source are one side of such a cut.**
 
@@ -57,13 +36,13 @@ Labels are capacities in loads a night. The box marks the cut the method hands b
 
 ## The formula
 
-Notation from [flow-networks-and-ford-fulkerson](05-flow-networks-and-ford-fulkerson.md): a flow puts $f(u,v)$ loads on the road from junction $u$ to junction $v$, at most its capacity $c(u,v)$, stranding nothing between source $s$ and sink $t$. Its value $\lvert f\rvert$ is the net count leaving $s$. A cut splits the junctions into a side $S$ holding $s$ and a side $T$ holding $t$; its price adds the capacities of roads leaving $S$.
+Notation from [Flows](05-flow-networks-and-ford-fulkerson.md): a flow puts $f(u,v)$ loads on the road from junction $u$ to junction $v$, at most its capacity $c(u,v)$, stranding nothing between source $s$ and sink $t$. Its value $\lvert f\rvert$ is the net count leaving $s$. A cut splits the junctions into a side $S$ holding $s$ and a side $T$ holding $t$; its price adds the capacities of roads leaving $S$.
 
 $$\max_{f}\ \lvert f\rvert \;=\; \min_{(S,T)}\ c(S,T), \qquad c(S,T) = \sum_{u \in S,\ v \in T} c(u,v)$$
 
 **Read it aloud:** the value of the best flow equals the price of the cheapest cut.
 
-For pairing, roads of capacity 1 run from $s$ to each volunteer, from each volunteer to each task that volunteer can do, and from each task to $t$. With $P$ the volunteers, $X$ any group of them and $N(X)$ the tasks the group can do ([halls-marriage-theorem](02-halls-marriage-theorem.md)), a cut whose source side holds exactly the volunteers in $X$ pays at least
+For pairing, roads of capacity 1 run from $s$ to each volunteer, from each volunteer to each task that volunteer can do, and from each task to $t$. With $P$ the volunteers, $X$ any group of them and $N(X)$ the tasks the group can do ([Hall's theorem](02-halls-marriage-theorem.md)), a cut whose source side holds exactly the volunteers in $X$ pays at least
 
 $$c(S,T) \;\ge\; \lvert P\rvert - \lvert X\rvert + \lvert N(X)\rvert .$$
 
@@ -119,7 +98,7 @@ With whole-number capacities the method stops, so Step 2's pair exists, and by S
 
 **Tightness.** For $u$ in $R$ and $v$ outside it, leftover $(c(u,v) - f(u,v)) + f(v,u)$ is 0 with both brackets at least 0, so $f(u,v) = c(u,v)$ and $f(v,u) = 0$.
 
-**Existence.** Whole-number capacities: each push adds at least 1 and the price of {s} caps the value, so pushing stops. Fractions: scale to whole numbers. Real capacities: the Edmonds-Karp rule stops (graph-algorithms-in-practice).
+**Existence.** Whole-number capacities: each push adds at least 1 and the price of {s} caps the value, so pushing stops. Fractions: scale to whole numbers. Real capacities: the Edmonds-Karp rule stops (Graph algorithms as code).
 
 **Hall's bound.** Let $X$ be the volunteers in $S$. Each volunteer outside $X$ gives a priced road from $s$. Each task $j$ reached by $X$ gives one more: its road to $t$ if $j$ is in $S$, a road from $X$ if not. The roads are distinct, which gives the bound in The formula.
 
@@ -133,7 +112,7 @@ Every push moves the smallest leftover on its route. With whole-number capacitie
 
 Every fun-run road has capacity 1, so a whole-number flow puts 0 or 1 on each. A volunteer receives at most 1, so takes at most one task; a task passes at most 1 to $t$, so has at most one volunteer. The roads carrying 1 between them form a matching (pairs sharing nobody) as large as the value, and any matching is such a flow. So the largest matching equals the best flow and the cheapest cut.
 
-An augmenting route here is the alternating path of [matchings-and-augmenting-paths](01-matchings-and-augmenting-paths.md). Greedy leaves Priya on registration, Lena on first aid and Tomas idle. The route s → Tomas → registration, back along the stub to Priya, on to first aid, back to Lena, then timing → t moves Priya and Lena along and gives Tomas registration.
+An augmenting route here is the alternating path of [Matchings](01-matchings-and-augmenting-paths.md). Greedy leaves Priya on registration, Lena on first aid and Tomas idle. The route s → Tomas → registration, back along the stub to Priya, on to first aid, back to Lena, then timing → t moves Priya and Lena along and gives Tomas registration.
 
 ### Step 6: when the pairing falls short, the cut names the crowded group
 
@@ -409,7 +388,7 @@ The two outputs match line for line.
 - **Rail and pipelines.** The 1956 question was a rail network's largest steady shipment; the cheapest cut names the links worth widening.
 - **Staffing.** Nurses to shifts, drivers to routes: a shortfall arrives with the crowded group causing it.
 - **Image editing.** Separating a subject from its background is often a cheapest cut, one junction per pixel.
-- **Guards on a town plan.** The cut of a pairing network gives the fewest guards of [konigs-theorem-and-vertex-cover](03-konigs-theorem-and-vertex-cover.md).
+- **Guards on a town plan.** The cut of a pairing network gives the fewest guards of [Konig's theorem](03-konigs-theorem-and-vertex-cover.md).
 
 > **Say it back**
 > No flow beats any cut. When no augmenting route is left, the side still reachable from the source has every road out full and every road in empty, so its price equals the flow. The best flow therefore equals the cheapest cut: 6 on the diamond. With capacity 1 everywhere, a whole-number flow is a matching. When a full one is impossible, the cheapest cut holds a group reaching too few tasks: Hall's theorem.
@@ -418,13 +397,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [flow-networks-and-ford-fulkerson](05-flow-networks-and-ford-fulkerson.md): flows, cuts, leftover and the pushing method.
-- [halls-marriage-theorem](02-halls-marriage-theorem.md): the condition on groups, proved there by induction.
+- [Flows](05-flow-networks-and-ford-fulkerson.md): flows, cuts, leftover and the pushing method.
+- [Hall's theorem](02-halls-marriage-theorem.md): the condition on groups, proved there by induction.
 
 ## Where this goes next
 
-- [connectivity-and-mengers-theorem](07-connectivity-and-mengers-theorem.md): unit capacities, so flows count separate routes and cuts count breaking links.
-- network-flows-as-linear-programs: the cut as the dual of a linear program.
+- [How many cuts break a network](07-connectivity-and-mengers-theorem.md): unit capacities, so flows count separate routes and cuts count breaking links.
+- Network flows: the cut as the dual of a linear program.
 
 ---
 

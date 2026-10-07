@@ -1,26 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Averages - commodity swaps and Asian options
-topic: Pricing the traded average
-item: The Asian option desks trade
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/02-kemna-vorst-geometric-asian|kemna-vorst-geometric-asian]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/02-variance-reduction-for-pricing|variance-reduction-for-pricing]]"
-  - "[[Cards/09-Probability and statistics/11-Simulation/04-monte-carlo-estimates-and-error|monte-carlo-estimates-and-error]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/02-arithmetic-asian-options|arithmetic-asian-options]]"
-next:
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/04-asian-greeks-and-the-running-average|asian-greeks-and-the-running-average]]"
-tags: [mathematics, financial mathematics, arithmetic-asian-option]
----
-
 # The Asian option desks trade: no exact formula, so match two moments and let the geometric twin steer the simulation
 
-Financial mathematics → Averages - commodity swaps and Asian options → Pricing the traded average → The Asian option desks trade
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages - commodity swaps and Asian options](../../../SYLLABUS.md#w12-s27) → The Asian option desks trade
 
 ---
 
@@ -30,7 +10,7 @@ An airline burns jet fuel every week. Jet fuel costs \$100 a barrel today. The a
 
 The average is the ordinary one, add and divide by 52: the **arithmetic** average, the one fuel contracts use. The plain one-year call on the last week's price costs \$10.45. The call on the average costs \$5.85, 56 percent of it, because an average of 52 readings wanders less than one reading.
 
-No formula gives the \$5.85. A cousin, the call on the **geometric** average (multiply the 52 fixings, take the 52nd root), has an exact price, \$5.64 ([kemna-vorst-geometric-asian](02-kemna-vorst-geometric-asian.md)). The quick route computes the average's exact mean and mean square, pretends the average has the simplest shape with those two numbers, and prices that: \$5.87, the **Turnbull-Wakeman** approximation. The careful route simulates 50,000 possible years, prices the geometric twin on the same years, and uses the twin's known miss to correct the arithmetic price: \$5.854, with an error bar of a tenth of a cent, 36 times tighter than without the correction.
+No formula gives the \$5.85. A cousin, the call on the **geometric** average (multiply the 52 fixings, take the 52nd root), has an exact price, \$5.64 ([Kemna-Vorst](02-kemna-vorst-geometric-asian.md)). The quick route computes the average's exact mean and mean square, pretends the average has the simplest shape with those two numbers, and prices that: \$5.87, the **Turnbull-Wakeman** approximation. The careful route simulates 50,000 possible years, prices the geometric twin on the same years, and uses the twin's known miss to correct the arithmetic price: \$5.854, with an error bar of a tenth of a cent, 36 times tighter than without the correction.
 
 **The arithmetic Asian has no closed form: match its exact first two moments to a lognormal for a quick price, or simulate it with the exact geometric twin as a control, which cancels almost all the simulation's noise.**
 
@@ -54,7 +34,7 @@ First line: profit per barrel, flat at −\$5.85 until the average passes the \$
 
 ## The formula
 
-Notation first, in words. The fixings fall on dates $t_i = iT/n$ for $i$ = 1 to $n$, counted in years from today, the last one on the expiry date $T$. The futures price quoted today for delivery at date $t$ is $F(0,t)$; the list of them, date by date, is the **futures curve**. The fixing on date $t_i$ is $P_i$. A capital sigma adds up a list. $E[\;]$ is an average over all possible price paths in the risk-neutral world, the pricing world in which a futures price has no expected drift ([options-on-commodity-futures](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md)). $N(x)$ is the bell-curve area left of $x$.
+Notation first, in words. The fixings fall on dates $t_i = iT/n$ for $i$ = 1 to $n$, counted in years from today, the last one on the expiry date $T$. The futures price quoted today for delivery at date $t$ is $F(0,t)$; the list of them, date by date, is the **futures curve**. The fixing on date $t_i$ is $P_i$. A capital sigma adds up a list. $E[\;]$ is an average over all possible price paths in the risk-neutral world, the pricing world in which a futures price has no expected drift ([Options on a futures price](../26-Options%20on%20commodity%20futures%20and%20spreads/01-options-on-commodity-futures.md)). $N(x)$ is the bell-curve area left of $x$.
 
 The contract and its price:
 
@@ -119,15 +99,15 @@ In words: $v_A$ is the log-spread a lognormal would need to have both moments; $
 
 ### Step 0: the price is still an average over paths, and the sum is the problem
 
-In the risk-neutral world an option is worth its discounted average payoff; only the payoff changed. The equity card on shelf 17 prices this contract for a share with a dividend yield, \$5.26 by the same two roads ([arithmetic-asian-options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/02-arithmetic-asian-options.md)). This card spends its length on what a commodity changes.
+In the risk-neutral world an option is worth its discounted average payoff; only the payoff changed. The equity card on shelf 17 prices this contract for a share with a dividend yield, \$5.26 by the same two roads ([Arithmetic Asian options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/02-arithmetic-asian-options.md)). This card spends its length on what a commodity changes.
 
 Each fixing is lognormal (its log follows a bell curve). The log of a product is a sum of logs, and bell-curved logs driven by the same shocks sum to a bell curve, so the geometric average is lognormal and has a formula. The log of a sum is not a sum of anything, so the arithmetic average has no formula. The card attacks it with exact moments, a simulation, and two bounds.
 
 ### Step 1: a commodity desk reads the curve, not a spot price
 
-An equity desk feeds a share price and lets it grow at the bank rate less the dividend yield. A fuel desk has a futures curve instead, and each fixing belongs to a different point on it. A futures contract costs nothing to enter, so in the pricing world its price has no expected gain: the fixing on date $t_i$ is expected to equal today's quote $F(0,t_i)$. That is the helper formula for $P_i$, the sibling card's starting point too ([kemna-vorst-geometric-asian](02-kemna-vorst-geometric-asian.md)).
+An equity desk feeds a share price and lets it grow at the bank rate less the dividend yield. A fuel desk has a futures curve instead, and each fixing belongs to a different point on it. A futures contract costs nothing to enter, so in the pricing world its price has no expected gain: the fixing on date $t_i$ is expected to equal today's quote $F(0,t_i)$. That is the helper formula for $P_i$, the sibling card's starting point too ([Kemna-Vorst](02-kemna-vorst-geometric-asian.md)).
 
-In this example the curve rises 5 percent a year, the interest cost of holding fuel, with storage left out: $F(0,t) = 100e^{0.05t}$. The first fixing's forward is \$100.10, the last one's \$105.13. Their plain average is $M_1$ = \$102.59. That number is the price of the average-price swap on the same dates ([commodity-swap-and-average-price-forward](01-commodity-swap-and-average-price-forward.md)): the Asian call is an option on that swap's floating leg.
+In this example the curve rises 5 percent a year, the interest cost of holding fuel, with storage left out: $F(0,t) = 100e^{0.05t}$. The first fixing's forward is \$100.10, the last one's \$105.13. Their plain average is $M_1$ = \$102.59. That number is the price of the average-price swap on the same dates ([Commodity swap](01-commodity-swap-and-average-price-forward.md)): the Asian call is an option on that swap's floating leg.
 
 The equity formula is the special curve $F(0,t) = Se^{(r-q)t}$, where S is the share price and q its dividend yield. A \$100 share with the bank rate less the yield at 3% gives a flatter curve, and Turnbull-Wakeman on it gives \$5.27, the equity card's figure; jet fuel's 5% curve gives \$5.87. A currency's forward curve slopes at the home rate minus the foreign rate, so an average-rate currency option is this card with the foreign rate in the yield's place.
 
@@ -138,7 +118,7 @@ The average has no formula, but its mean and mean square do. The mean is $M_1$, 
 <details>
 <summary>Detailed proof: the two moments</summary>
 
-Write $P_a = F(0,a)\,e^{\sigma W_a - \frac12\sigma^2 a}$, with $W$ Brownian motion: its reading at time $a$ is normal with mean 0 and variance $a$, and readings at two dates $a \le b$ share the variance up to $a$. A normal variable $Z$ with mean 0 and variance $v^2$ has $E[e^Z] = e^{v^2/2}$ ([lognormal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)). Taking $Z = \sigma W_a$ gives $E[P_a] = F(0,a)$; average over the fixings to get $M_1$.
+Write $P_a = F(0,a)\,e^{\sigma W_a - \frac12\sigma^2 a}$, with $W$ Brownian motion: its reading at time $a$ is normal with mean 0 and variance $a$, and readings at two dates $a \le b$ share the variance up to $a$. A normal variable $Z$ with mean 0 and variance $v^2$ has $E[e^Z] = e^{v^2/2}$ ([Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)). Taking $Z = \sigma W_a$ gives $E[P_a] = F(0,a)$; average over the fixings to get $M_1$.
 
 For a pair, $W_a + W_b$ has variance $a + b + 2\min(a,b)$. So
 $$E[P_a P_b] = F(0,a)F(0,b)\,e^{-\frac12\sigma^2(a+b)}\,e^{\frac12\sigma^2(a+b) + \sigma^2\min(a,b)} = F(0,a)F(0,b)\,e^{\sigma^2\min(a,b)}.$$
@@ -156,15 +136,15 @@ Changing one input at a time shows the spread does most of the work: the average
 
 ### Step 4: simulate, and read the error bar honestly
 
-One Brownian path per simulated year, read at the 52 dates, gives 52 fixings by the helper formula. Each weekly step is an exact bell-curve draw, so there is no discretisation error ([monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)). On each year, average the fixings, take the discounted payoff, and average across years.
+One Brownian path per simulated year, read at the 52 dates, gives 52 fixings by the helper formula. Each weekly step is an exact bell-curve draw, so there is no discretisation error ([Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)). On each year, average the fixings, take the discounted payoff, and average across years.
 
-With 50,000 years the plain answer is \$5.91. Its error bar is the spread of the payoffs over the square root of 50,000: 3.6 cents ([monte-carlo-estimates-and-error](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md)). That bar shrinks only with the square root of the number of years, so buying precision by brute force is expensive.
+With 50,000 years the plain answer is \$5.91. Its error bar is the spread of the payoffs over the square root of 50,000: 3.6 cents ([Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md)). That bar shrinks only with the square root of the number of years, so buying precision by brute force is expensive.
 
 ### Step 5: the geometric twin as a control variate
 
 A **control variate** is a companion quantity with a known price, simulated on the same paths so that its error reveals theirs. On every simulated year, compute the geometric payoff $Y$ too. The twin's exact price is \$5.64; this batch priced it at \$5.69. The arithmetic payoff rides the same paths, so it ran rich by nearly the same amount. Subtract a multiple $\beta$ of the twin's miss.
 
-The correction adds nothing on average, for any $\beta$, because the twin's miss averages to zero; it cannot bias the price. The best $\beta$ is the slope of $X$ against $Y$ across the paths. With it, the variance left over is $1 - \rho^2$ of the plain variance, where $\rho$ is their correlation ([variance-reduction-for-pricing](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)).
+The correction adds nothing on average, for any $\beta$, because the twin's miss averages to zero; it cannot bias the price. The best $\beta$ is the slope of $X$ against $Y$ across the paths. With it, the variance left over is $1 - \rho^2$ of the plain variance, where $\rho$ is their correlation ([Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)).
 
 Here $\rho$ = 0.9996: the two averages differ by little on any path, and their payoffs switch on together. The controlled price is \$5.8544 with an error bar of 0.10 cents, 36 times tighter than the plain one from the same paths. Brute force would need about 1,300 times as many paths.
 
@@ -199,9 +179,9 @@ The one line is the quick price's overpricing in cents, each point measured agai
 Two more places it drifts:
 
 - **Long dates.** Stretch the same 52 fixings over five years at 20% volatility: \$15.42 quick against \$15.24 simulated, 18 cents dear.
-- **Averages already in progress.** Halfway through the year, 26 fixings are banked at an average of \$80, and the curve for the next half-year again reads $100e^{0.05t}$. The payoff is half of the remaining average's excess over $K^*$ = 2 × 100 − 80 = \$120. That option is far out of the money. The quick price is 3.76 cents against the simulated 4.11 cents: 91.7 percent of the true price, too cheap. If the banked fixings alone guarantee the average clears the strike, $K^*$ is zero or negative, the log in $e_1$ is undefined, and the option is sure to pay: it is worth half the discounted gap between the remaining average's forward and $K^*$. How price and hedge change as fixings bank is the subject of [asian-greeks-and-the-running-average](04-asian-greeks-and-the-running-average.md).
+- **Averages already in progress.** Halfway through the year, 26 fixings are banked at an average of \$80, and the curve for the next half-year again reads $100e^{0.05t}$. The payoff is half of the remaining average's excess over $K^*$ = 2 × 100 − 80 = \$120. That option is far out of the money. The quick price is 3.76 cents against the simulated 4.11 cents: 91.7 percent of the true price, too cheap. If the banked fixings alone guarantee the average clears the strike, $K^*$ is zero or negative, the log in $e_1$ is undefined, and the option is sure to pay: it is worth half the discounted gap between the remaining average's forward and $K^*$. How price and hedge change as fixings bank is the subject of [Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md).
 
-Other routes exist: a lattice or a partial differential equation in two variables, the price and the running average; and quasi-random points, spread evenly on purpose, which cut the error bar further than the control alone ([quasi-monte-carlo-and-brownian-bridge](../06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md)).
+Other routes exist: a lattice or a partial differential equation in two variables, the price and the running average; and quasi-random points, spread evenly on purpose, which cut the error bar further than the control alone ([Quasi-Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md)).
 
 ---
 
@@ -227,7 +207,7 @@ A year of protection on the airline's weekly average costs \$5.85 a barrel, 56 p
 
 ### Greeks, by bumping the formula
 
-Bump the whole curve by 1 percent (a dollar at the front) and the volatility by a hundredth of a point, and reprice by Turnbull-Wakeman. The sibling card treats them properly ([asian-greeks-and-the-running-average](04-asian-greeks-and-the-running-average.md)).
+Bump the whole curve by 1 percent (a dollar at the front) and the volatility by a hundredth of a point, and reprice by Turnbull-Wakeman. The sibling card treats them properly ([Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md)).
 
 | Greek | Asian call | Plain call | Why they differ |
 | --- | --- | --- | --- |
@@ -716,10 +696,10 @@ The two outputs match line for line: the same generator, the same arithmetic in 
 ## Where you meet it in real life
 
 - **Airline and shipping fuel hedges.** Fuel buyers pay the average over a period, so they hedge with calls on the average, annual or as monthly strips.
-- **Capped average-price swaps.** A swap paying the average, \$102.59 here, with a cap is the swap plus a short call on the same average: [commodity-swap-and-average-price-forward](01-commodity-swap-and-average-price-forward.md).
+- **Capped average-price swaps.** A swap paying the average, \$102.59 here, with a cap is the swap plus a short call on the same average: [Commodity swap](01-commodity-swap-and-average-price-forward.md).
 - **Currency average-rate options.** An exporter converting monthly receipts hedges the average exchange rate; Step 1 says why the card carries over.
 - **Settlement that resists manipulation.** Pushing one price moves an average of 52 by a fifty-second, which is why thin commodity markets settle on averages.
-- **Quoting in volatility.** Desks quote Asians as a volatility; turning a price back into one needs this card's pricer inside a root finder: [asian-implied-volatility](05-asian-implied-volatility.md).
+- **Quoting in volatility.** Desks quote Asians as a volatility; turning a price back into one needs this card's pricer inside a root finder: [Implied vol from an Asian quote](05-asian-implied-volatility.md).
 
 > **Say it back**
 > A commodity Asian call pays the average of the fixings minus the strike, if positive, and each fixing is lognormal around its own point on today's futures curve. The arithmetic average of lognormals is not lognormal, so no formula prices it. Turnbull-Wakeman matches the average's exact mean and mean square to a lognormal and prices that with Black-76: \$5.87 for weekly jet fuel, 1.9 cents dear, and drifting further at high volatility, long dates and half-banked averages. Simulation with the geometric twin as a control gives \$5.854 with a 0.10-cent bar, 36 times tighter than the plain simulation. Averaging nearly halves the \$10.45 plain call.
@@ -728,15 +708,15 @@ The two outputs match line for line: the same generator, the same arithmetic in 
 
 ## What this builds on
 
-- [kemna-vorst-geometric-asian](02-kemna-vorst-geometric-asian.md): the exact price of the geometric twin on the same futures curve, which is the control variate and the floor.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): pricing by simulating the risk-neutral world and averaging discounted payoffs.
-- [variance-reduction-for-pricing](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md): why a control variate stays unbiased and leaves $1 - \rho^2$ of the variance.
-- [monte-carlo-estimates-and-error](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md): the error bar of a simulated average, and why it shrinks only with the square root of the paths.
-- [arithmetic-asian-options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/02-arithmetic-asian-options.md): the same two roads for a share with a dividend yield, \$5.26 on the house market; this card is that result with the futures curve in place of spot and yield.
+- [Kemna-Vorst](02-kemna-vorst-geometric-asian.md): the exact price of the geometric twin on the same futures curve, which is the control variate and the floor.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): pricing by simulating the risk-neutral world and averaging discounted payoffs.
+- [Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md): why a control variate stays unbiased and leaves $1 - \rho^2$ of the variance.
+- [Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md): the error bar of a simulated average, and why it shrinks only with the square root of the paths.
+- [Arithmetic Asian options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/02-arithmetic-asian-options.md): the same two roads for a share with a dividend yield, \$5.26 on the house market; this card is that result with the futures curve in place of spot and yield.
 
 ## Where this goes next
 
-- [asian-greeks-and-the-running-average](04-asian-greeks-and-the-running-average.md): the Asian's hedge ratios, and how price and hedge change as fixings bank and the strike on the rest shifts.
+- [Asian Greeks and the average already banked](04-asian-greeks-and-the-running-average.md): the Asian's hedge ratios, and how price and hedge change as fixings bank and the strike on the rest shifts.
 
 This card prices a fresh average and shows the quick price going wrong once half of it is banked; what a desk holds on day 180, and how it hedges, is the question asian-greeks-and-the-running-average answers.
 

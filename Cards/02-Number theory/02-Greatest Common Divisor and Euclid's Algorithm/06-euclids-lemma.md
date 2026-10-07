@@ -1,31 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Greatest Common Divisor and Euclid's Algorithm
-topic: Why factorisation is unique
-item: Euclid's lemma
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/06-Proof/01-direct-proof|direct-proof]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/05-primes-and-composites|primes-and-composites]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/04-bezouts-identity|bezouts-identity]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/05-coprime-numbers|coprime-numbers]]"
-next:
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/07-unique-factorisation|unique-factorisation]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/06-wilsons-theorem|wilsons-theorem]]"
-  - "[[Cards/02-Number theory/05-Check Digits, Calendars and Cycles/02-isbn-check-digit|isbn-check-digit]]"
-  - "[[Cards/02-Number theory/06-Codes and Secrets/05-miller-rabin|miller-rabin]]"
-tags:
-  - mathematics
-  - number theory
-  - euclids-lemma
----
-
 # Euclid's lemma: if a prime divides a product it divides one of the factors, and composites carry no such promise
 
-Number theory → Greatest Common Divisor and Euclid's Algorithm → Why factorisation is unique → Euclid's lemma
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Greatest Common Divisor and Euclid's Algorithm](../../../SYLLABUS.md#w02-s02) → Euclid's lemma
 
 ---
 
@@ -62,10 +37,10 @@ In this office:
 
 | Piece | Plain meaning | In our office |
 | --- | --- | --- |
-| a prime | above 1, divisible only by 1 and itself ([primes-and-composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)) | 7 |
+| a prime | above 1, divisible only by 1 and itself ([Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md)) | 7 |
 | a composite | above 1, not prime, so it splits into factors | 6 = 2 × 3 |
 | divides | goes in, nothing left over | 84 = 7 × 12 |
-| a mix landing on 1 | copies of one added, copies of the other taken away ([bezouts-identity](04-bezouts-identity.md)) | 4 × 2 + 7 × (−1) |
+| a mix landing on 1 | copies of one added, copies of the other taken away ([Bezout's identity](04-bezouts-identity.md)) | 4 × 2 + 7 × (−1) |
 
 ---
 
@@ -73,11 +48,11 @@ In this office:
 
 ### Step 0: a prime shares nothing with a number it misses
 
-Only 1 and 7 divide 7, so 7 and 4 can share only 1 or 7. But 7 misses the 4: sharing 4 by 7 leaves 4. So the biggest shared number is 1 — they are coprime ([coprime-numbers](05-coprime-numbers.md)).
+Only 1 and 7 divide 7, so 7 and 4 can share only 1 or 7. But 7 misses the 4: sharing 4 by 7 leaves 4. So the biggest shared number is 1 — they are coprime ([Coprime numbers](05-coprime-numbers.md)).
 
 ### Step 1: coprime gives a mix landing on 1
 
-Bezout's identity ([bezouts-identity](04-bezouts-identity.md)): the biggest shared factor is always a mix of the two — copies of one added, copies of the other taken away. Here that factor is 1:
+Bezout's identity ([Bezout's identity](04-bezouts-identity.md)): the biggest shared factor is always a mix of the two — copies of one added, copies of the other taken away. Here that factor is 1:
 
 **4 × 2 + 7 × (−1) = 1**
 
@@ -95,13 +70,13 @@ The 84 is 4 × 21; the 147 is 7 × 21.
 
 **7 × 24 − 7 × 21 = 7 × (24 − 21) = 7 × 3**
 
-The left side is 21, so 21 = 7 × 3: the 7 is in the gift. A direct proof ([direct-proof](../../01-Foundations/06-Proof/01-direct-proof.md)), arithmetic the whole way. Nothing in it needed these numbers — only that the divider is prime and misses one side.
+The left side is 21, so 21 = 7 × 3: the 7 is in the gift. A direct proof ([Direct proof](../../01-Foundations/06-Proof/01-direct-proof.md)), arithmetic the whole way. Nothing in it needed these numbers — only that the divider is prime and misses one side.
 
 ### Step 4: where a composite falls out
 
 6 dies at Step 0. 6 and 4 share the factor 2, so every mix of them is even: nothing lands on 1, no line to multiply. And 6 divides 36 but neither the 4 nor the 9.
 
-The tempting route: 84's primes are 2, 2, 3 and 7, so the 7 lands on one side. But that leans on every number having one fixed list of primes — proved *from* this lemma. [unique-factorisation](07-unique-factorisation.md) runs them in that order.
+The tempting route: 84's primes are 2, 2, 3 and 7, so the 7 lands on one side. But that leans on every number having one fixed list of primes — proved *from* this lemma. [Why the factorisation is unique](07-unique-factorisation.md) runs them in that order.
 
 ---
 
@@ -264,15 +239,15 @@ Both outputs match line for line.
 >
 > - **Expecting the prime in both.** One is all it promises: 4 shared by 7 leaves 4.
 > - **Dropping the "does not divide" half.** Without it you know the prime is in one of the two, but not which. 7 misses the 4, so it is the 21.
-> - **Stretching it to a long product.** It holds one factor at a time, but the repeating needs [strong-induction-and-well-ordering](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md).
+> - **Stretching it to a long product.** It holds one factor at a time, but the repeating needs [Strong induction and the least element](../../01-Foundations/06-Proof/05-strong-induction-and-well-ordering.md).
 
 ---
 
 ## Where you meet it in real life
 
-- **Cancelling a fraction to the end.** A prime on the bottom divides the top or it does not — no partial cancel, so lowest terms is a clean stop ([coprime-numbers](05-coprime-numbers.md)).
-- **Two factor trees agreeing.** Split a number any way you like: the primes at the bottom match, each having gone down one branch ([unique-factorisation](07-unique-factorisation.md)).
-- **Check digits and primality tests.** A check digit against a prime catches two swapped digits ([isbn-check-digit](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/02-isbn-check-digit.md)), and one that squares to 1 on a prime clock must be 1 or −1 — the step [miller-rabin](../06-Codes%20and%20Secrets/05-miller-rabin.md) leans on.
+- **Cancelling a fraction to the end.** A prime on the bottom divides the top or it does not — no partial cancel, so lowest terms is a clean stop ([Coprime numbers](05-coprime-numbers.md)).
+- **Two factor trees agreeing.** Split a number any way you like: the primes at the bottom match, each having gone down one branch ([Why the factorisation is unique](07-unique-factorisation.md)).
+- **Check digits and primality tests.** A check digit against a prime catches two swapped digits ([ISBN-10 and the prime modulus 11](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/02-isbn-check-digit.md)), and one that squares to 1 on a prime clock must be 1 or −1 — the step [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md) leans on.
 
 > **Say it back**
 > 7 divides the $84, raised as 4 gifts of $21. 7 does not divide 4, so the 7 must be inside a gift — and it is: 21 = 7 × 3. Why: 7 and 4 share no factor, so a mix of them lands on 1, and times 21 that mix puts the 7 in both terms on the left. Only primes get this: 6 divides 36 but neither the 4 nor the 9, since 6 is 2 × 3.
@@ -281,17 +256,17 @@ Both outputs match line for line.
 
 ## What this builds on
 
-- [direct-proof](../../01-Foundations/06-Proof/01-direct-proof.md): given to arrived-at, no detours.
-- [primes-and-composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md): what makes 7 prime and 6 composite.
-- [bezouts-identity](04-bezouts-identity.md): the mix landing on 1, and how to find it.
-- [coprime-numbers](05-coprime-numbers.md): sharing no factor but 1, what Step 0 sets up.
+- [Direct proof](../../01-Foundations/06-Proof/01-direct-proof.md): given to arrived-at, no detours.
+- [Primes and composites](../01-Divisibility%20and%20Primes/05-primes-and-composites.md): what makes 7 prime and 6 composite.
+- [Bezout's identity](04-bezouts-identity.md): the mix landing on 1, and how to find it.
+- [Coprime numbers](05-coprime-numbers.md): sharing no factor but 1, what Step 0 sets up.
 
 ## Where this goes next
 
-- [unique-factorisation](07-unique-factorisation.md): apply it over and over; every number has one list of primes.
-- [wilsons-theorem](../04-Powers%20on%20the%20Clock/06-wilsons-theorem.md): pairing each number with the one that undoes it, on a prime clock.
-- [isbn-check-digit](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/02-isbn-check-digit.md): a check digit against a prime, and why a swap cannot slip past.
-- [miller-rabin](../06-Codes%20and%20Secrets/05-miller-rabin.md): the primality test built on a prime dividing one factor.
+- [Why the factorisation is unique](07-unique-factorisation.md): apply it over and over; every number has one list of primes.
+- [Wilson's theorem](../04-Powers%20on%20the%20Clock/06-wilsons-theorem.md): pairing each number with the one that undoes it, on a prime clock.
+- [ISBN-10 and the prime modulus 11](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/02-isbn-check-digit.md): a check digit against a prime, and why a swap cannot slip past.
+- [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md): the primality test built on a prime dividing one factor.
 
 ---
 

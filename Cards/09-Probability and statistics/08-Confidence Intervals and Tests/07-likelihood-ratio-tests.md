@@ -1,25 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Confidence Intervals and Tests
-topic: Nested model comparison
-item: Likelihood ratio tests
-kind: theorem
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/04-maximum-likelihood|maximum-likelihood]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/06-chi-square-tests|chi-square-tests]]"
-next: []
-tags:
-  - mathematics
-  - probability and statistics
-  - likelihood-ratio-tests
----
-
 # Likelihood ratio tests: comparing two fits, and Wilks' chi-square rule
 
-Probability and statistics → Confidence Intervals and Tests → Nested model comparison → Likelihood ratio tests
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Confidence Intervals and Tests](../../../SYLLABUS.md#w09-s08) → Likelihood ratio tests
 
 ---
 
@@ -29,7 +10,7 @@ A drug trial: 45 of 100 patients recover on the drug, 35 of 100 on placebo. Two 
 
 The richer story always fits at least as well. It can set its two rates equal and copy the plain story exactly. So a better fit proves nothing by itself. The real question is whether the second parameter earns its keep: whether it improves the fit by more than chance alone would hand it.
 
-A **likelihood ratio test** answers with one number. Score each story by its best **likelihood**: the chance it gives the data seen, with its parameters set as well as they can be ([maximum-likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)). Divide the plain story's best by the richer story's best: 0.352118. Minus twice its natural log is 2.087576. Samuel Wilks proved in 1938 that, when the plain story is true, this number behaves like a chi-square variable with one degree of freedom per parameter the plain story gives up, here one. A gain of 2.09 or more then turns up in about 15% of trials of a drug that does nothing, about 1 trial in 7. The second parameter has not earned its keep at the usual 5% level.
+A **likelihood ratio test** answers with one number. Score each story by its best **likelihood**: the chance it gives the data seen, with its parameters set as well as they can be ([Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md)). Divide the plain story's best by the richer story's best: 0.352118. Minus twice its natural log is 2.087576. Samuel Wilks proved in 1938 that, when the plain story is true, this number behaves like a chi-square variable with one degree of freedom per parameter the plain story gives up, here one. A gain of 2.09 or more then turns up in about 15% of trials of a drug that does nothing, about 1 trial in 7. The second parameter has not earned its keep at the usual 5% level.
 
 **Fit both models as well as each can, take twice the log of how much better the bigger one fits, and compare that with a chi-square law whose degrees of freedom count the parameters the smaller model gives up.**
 
@@ -53,7 +34,7 @@ Orange line: Wilks' prediction, the chi-square law with one degree of freedom. T
 
 ## The formula
 
-Notation first. A hat marks an estimate: $\hat p_1 = 0.45$ is the observed recovery rate on the drug. The likelihood is written $L$ and its natural logarithm $\ell = \ln L$; logs turn the product of many patients' chances into a sum. A chi-square law with $m$ degrees of freedom, written $\chi^2_m$, is the law of a sum of $m$ squared independent standard bell-curve variables ([chi-square-tests](06-chi-square-tests.md)).
+Notation first. A hat marks an estimate: $\hat p_1 = 0.45$ is the observed recovery rate on the drug. The likelihood is written $L$ and its natural logarithm $\ell = \ln L$; logs turn the product of many patients' chances into a sum. A chi-square law with $m$ degrees of freedom, written $\chi^2_m$, is the law of a sum of $m$ squared independent standard bell-curve variables ([Chi-square tests](06-chi-square-tests.md)).
 
 The likelihood ratio and the test statistic:
 
@@ -117,7 +98,7 @@ The bigger model contains the smaller one, so its best fit is at least as good: 
 
 ### Step 1: fit each model and take the log of the ratio
 
-Each patient recovers or not, so an arm with x recoveries in n patients has log-likelihood $x \ln p + (n - x)\ln(1 - p)$, dropping the count of orderings, which is the same in both models and cancels from the ratio. [maximum-likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md) shows the best rate is the observed fraction. The two-rate model takes 0.45 and 0.35; the one-rate model takes 80/200 = 0.40. The code finds all three again by golden-section search, a method that narrows an interval around the peak without using the formula.
+Each patient recovers or not, so an arm with x recoveries in n patients has log-likelihood $x \ln p + (n - x)\ln(1 - p)$, dropping the count of orderings, which is the same in both models and cancels from the ratio. [Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md) shows the best rate is the observed fraction. The two-rate model takes 0.45 and 0.35; the one-rate model takes 80/200 = 0.40. The code finds all three again by golden-section search, a method that narrows an interval around the peak without using the formula.
 
 Best log-likelihoods: −133.558545 with two rates, −134.602333 with one. The gain is 1.043788, so $W = 2.087576$.
 
@@ -133,7 +114,7 @@ In each arm the two gaps cancel, +5 and −5, because both models put exactly 10
 
 $$W \approx \sum_{\text{4 cells}} \frac{D^2}{E} = 25\Big(\frac1{40} + \frac1{60} + \frac1{40} + \frac1{60}\Big) = 2.083333.$$
 
-That is Pearson's $X^2$, the statistic of [chi-square-tests](06-chi-square-tests.md). It differs from W = 2.087576 by 0.004243, the higher-order terms. With equal arms the cubic terms cancel, so this is mostly the quartic term, in $D^4/E^3$. Pearson's test is the likelihood ratio test with the logarithm replaced by its parabola.
+That is Pearson's $X^2$, the statistic of [Chi-square tests](06-chi-square-tests.md). It differs from W = 2.087576 by 0.004243, the higher-order terms. With equal arms the cubic terms cancel, so this is mostly the quartic term, in $D^4/E^3$. Pearson's test is the likelihood ratio test with the logarithm replaced by its parabola.
 
 ### Step 3: the sum of squares is one squared bell-curve variable
 
@@ -141,7 +122,7 @@ With two arms, the four squared gaps are one number seen four times, so $X^2$ co
 
 $$z = \frac{\hat p_1 - \hat p_2}{\sqrt{\hat p_0(1 - \hat p_0)\,(1/n_1 + 1/n_2)}} = \frac{0.10}{\sqrt{0.24 \times 0.02}} = 1.443376.$$
 
-The top is the gap between the two observed rates. The bottom is that gap's standard deviation when both arms share one rate. When the drug does nothing, the gap averages 0, and by the central limit theorem it is close to a bell curve ([normal-approximation-to-binomial](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md)). So $z$ is close to a standard normal, its square is close to $\chi^2_1$, and W, which differs from $z^2$ only by small higher-order terms, is close to $\chi^2_1$ too. That is Wilks' rule for this trial, with $m = 1$.
+The top is the gap between the two observed rates. The bottom is that gap's standard deviation when both arms share one rate. When the drug does nothing, the gap averages 0, and by the central limit theorem it is close to a bell curve ([Normal approximation](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md)). So $z$ is close to a standard normal, its square is close to $\chi^2_1$, and W, which differs from $z^2$ only by small higher-order terms, is close to $\chi^2_1$ too. That is Wilks' rule for this trial, with $m = 1$.
 
 <details>
 <summary>The algebra behind $X^2 = z^2$</summary>
@@ -162,7 +143,7 @@ The idea is Steps 2 and 3 in any model. Near its peak the log-likelihood is a pa
 
 Take n independent observations from a model with one parameter; call it p as in the trial, though nothing below uses the binomial form. The null pins $p = p_0$, strictly inside the parameter range. Write $\ell(p)$ for the log-likelihood of all n observations and $\hat p$ for its maximiser.
 
-**The score is a sum of independent pieces.** The slope $\ell'(p_0)$ is a sum of n independent terms, one per observation, each the slope of that observation's log-chance. Because the set of possible outcomes does not move with p, each term averages 0 and has variance $I(p_0)$, assumed positive: the Fisher information per observation ([fisher-information-and-cramer-rao](../07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md)). By the central limit theorem, $\ell'(p_0)/\sqrt{nI(p_0)}$ is close to a standard normal $Z$.
+**The score is a sum of independent pieces.** The slope $\ell'(p_0)$ is a sum of n independent terms, one per observation, each the slope of that observation's log-chance. Because the set of possible outcomes does not move with p, each term averages 0 and has variance $I(p_0)$, assumed positive: the Fisher information per observation ([Fisher information](../07-Sampling%20and%20Estimation/07-fisher-information-and-cramer-rao.md)). By the central limit theorem, $\ell'(p_0)/\sqrt{nI(p_0)}$ is close to a standard normal $Z$.
 
 **The curvature settles.** The second derivative $\ell''(p)/n$ is an average of n independent terms. By the law of large numbers, near $p_0$ it is close to its expectation, which at $p_0$ equals $-I(p_0)$; smoothness keeps it close on a small interval around $p_0$.
 
@@ -188,7 +169,7 @@ The first inequality holds because inside $R^*$ each outcome has $L_1 \ge c_{\te
 
 The code checks this by brute force on a smaller trial of 10 patients: the likelihood ratio rule "reject at 7 or more" has false alarms 0.0260 and power 0.1020, and the best power among all 2,048 possible rejection sets with false alarms at most 0.0260 is also 0.1020.
 
-The likelihood ratio test carries this ratio over to hypotheses with free parameters by replacing each likelihood with its best fit. The optimality does not carry over in general; the calibration, Wilks' rule, does. Two other routes agree with it to first order: Pearson's $X^2$ (Step 2) and the two-proportion z test of [hypothesis-tests-and-p-values](03-hypothesis-tests-and-p-values.md), its square root (Step 3).
+The likelihood ratio test carries this ratio over to hypotheses with free parameters by replacing each likelihood with its best fit. The optimality does not carry over in general; the calibration, Wilks' rule, does. Two other routes agree with it to first order: Pearson's $X^2$ (Step 2) and the two-proportion z test of [Hypothesis tests](03-hypothesis-tests-and-p-values.md), its square root (Step 3).
 
 ---
 
@@ -637,10 +618,10 @@ all checks passed
 
 ## Where you meet it in real life
 
-- **Clinical and A/B trials.** Comparing recovery or conversion rates across arms is this test or its parabola, Pearson's $X^2$ on [chi-square-tests](06-chi-square-tests.md); its power at a planned size is the subject of [power-and-sample-size](04-power-and-sample-size.md).
+- **Clinical and A/B trials.** Comparing recovery or conversion rates across arms is this test or its parabola, Pearson's $X^2$ on [Chi-square tests](06-chi-square-tests.md); its power at a planned size is the subject of [Power](04-power-and-sample-size.md).
 - **Building regression models.** Statistical software reports "deviance", which is twice a log-likelihood; the drop in deviance when a variable is added is W, compared with $\chi^2_m$.
 - **Genetics.** A LOD score is the likelihood ratio in base-10 logs; linkage between a gene and a marker is traditionally declared at a LOD of 3.
-- **Bank risk checks.** Kupiec's test of a value-at-risk model counts the days losses broke the limit and is a likelihood ratio test with one degree of freedom ([backtesting-var](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/08-backtesting-var.md)).
+- **Bank risk checks.** Kupiec's test of a value-at-risk model counts the days losses broke the limit and is a likelihood ratio test with one degree of freedom ([Backtesting VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/08-backtesting-var.md)).
 
 > **Say it back**
 > A bigger model always fits at least as well as a smaller one nested inside it. The likelihood ratio test measures the gain as twice the log of the ratio of best fits. Wilks' rule says that, when the smaller model is true, the gain behaves like chi-square with one degree of freedom per pinned parameter, provided the model is smooth and the null value is not on the edge. In the drug trial the gain is 2.09, which chance alone reaches about 15% of the time, so the second rate has not earned its keep. When both hypotheses are exact laws, the likelihood ratio rule is the most powerful test of its size.
@@ -649,14 +630,14 @@ all checks passed
 
 ## What this builds on
 
-- [maximum-likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md): the likelihood, and the best-fitting rates 0.45, 0.35 and 0.40 that both sides of the ratio use.
-- [chi-square-tests](06-chi-square-tests.md): the chi-square law, and Pearson's $X^2$, which is this test's quadratic form.
+- [Maximum likelihood](../07-Sampling%20and%20Estimation/04-maximum-likelihood.md): the likelihood, and the best-fitting rates 0.45, 0.35 and 0.40 that both sides of the ratio use.
+- [Chi-square tests](06-chi-square-tests.md): the chi-square law, and Pearson's $X^2$, which is this test's quadratic form.
 
 ## Where this goes next
 
-- [multiple-testing](08-multiple-testing.md): what happens to the false-alarm rate when many such tests are run.
+- [Many tests](08-multiple-testing.md): what happens to the false-alarm rate when many such tests are run.
 
-One likelihood ratio test is calibrated by Wilks' rule; choosing a model by running many of them in turn is not, and keeping the false-alarm rate honest across many tests is what [multiple-testing](08-multiple-testing.md) answers.
+One likelihood ratio test is calibrated by Wilks' rule; choosing a model by running many of them in turn is not, and keeping the false-alarm rate honest across many tests is what [Many tests](08-multiple-testing.md) answers.
 
 ---
 

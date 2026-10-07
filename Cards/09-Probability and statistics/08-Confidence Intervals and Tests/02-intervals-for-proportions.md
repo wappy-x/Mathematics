@@ -1,27 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Confidence Intervals and Tests
-topic: Margins on a percentage
-item: Intervals for a proportion
-kind: method
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/01-confidence-intervals|confidence-intervals]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/03-normal-approximation-to-binomial|normal-approximation-to-binomial]]"
-next:
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/03-hypothesis-tests-and-p-values|hypothesis-tests-and-p-values]]"
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/04-randomised-experiments-and-ab-tests|randomised-experiments-and-ab-tests]]"
-tags:
-  - mathematics
-  - probability and statistics
-  - intervals-for-proportions
----
-
 # Intervals for a proportion: the Wald interval and the better Wilson one
 
-Probability and statistics → Confidence Intervals and Tests → Margins on a percentage → Intervals for a proportion
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Confidence Intervals and Tests](../../../SYLLABUS.md#w09-s08) → Intervals for a proportion
 
 ---
 
@@ -29,7 +8,7 @@ Probability and statistics → Confidence Intervals and Tests → Margins on a p
 
 A drug trial gives a new treatment to 100 patients, and 45 recover. The headline writes itself: 45 percent recovered, plus or minus 10. The 45 is the count divided by the number treated. The plus or minus 10 is the part that needs a reason.
 
-The reason is the one [confidence-intervals](01-confidence-intervals.md) gives. Run the same trial again on 100 new patients and the count would not be 45 again. A **confidence interval** is a recipe that turns any count into a range, built so that the recipe catches the true recovery rate in 95 of every 100 trials it is used on. The 95 describes the recipe, not this one range.
+The reason is the one [Confidence intervals](01-confidence-intervals.md) gives. Run the same trial again on 100 new patients and the count would not be 45 again. A **confidence interval** is a recipe that turns any count into a range, built so that the recipe catches the true recovery rate in 95 of every 100 trials it is used on. The 95 describes the recipe, not this one range.
 
 For a percentage there are three recipes in common use. The **Wald interval** is the textbook one: the observed rate plus or minus 1.96 of its estimated spreads. Here it gives 35.2% to 54.8%, which is where "plus or minus 10" comes from. The **Wilson interval** keeps the spread honest by using the spread each candidate rate would really have; here it gives 35.6% to 54.8%. The **exact interval**, also called Clopper–Pearson after its authors, uses no bell curve at all; here it gives 35.0% to 55.3%.
 
@@ -119,7 +98,7 @@ If each test rules out a true rate only 5% of the time, then the kept set misses
 
 ### Step 1: Wald measures surprise with the spread at the observed rate
 
-The observed rate $\hat p$ has average $p$ and spread $\sqrt{p(1-p)/n}$, the standard deviation of a count divided by n ([normal-approximation-to-binomial](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md)). With 100 patients it is close to a bell curve. So in about 95% of trials, $\hat p$ lands within $z$ spreads of $p$:
+The observed rate $\hat p$ has average $p$ and spread $\sqrt{p(1-p)/n}$, the standard deviation of a count divided by n ([Normal approximation](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md)). With 100 patients it is close to a bell curve. So in about 95% of trials, $\hat p$ lands within $z$ spreads of $p$:
 
 $$\lvert \hat p - p\rvert \le z\sqrt{\frac{p(1-p)}{n}}.$$
 
@@ -190,7 +169,7 @@ The same sum has a second form, used by the checks as an independent road: $A_k(
 
 Suppose the true rash rate is 2%. A trial of 100 then often sees no rash at all, and every such trial returns Wald's zero-width interval at 0, which misses 0.02. A trial with one rash gives −0.009501 to 0.029501, which does contain 0.02, so nearly all of Wald's misses at this rate are the trials with no rash. The estimated spread is smallest exactly when the count happens to be low, so the low counts are the ones given too little room. Add up the chances and Wald catches 0.02 in 0.8664 of trials. Near 100% the same happens in reverse: at a true rate of 0.98, Wald again catches 0.8664. Wilson's allowance depends on the candidate, not on the count, so it does not shrink when the count is small.
 
-The coverage lines jump up and down because counts are whole numbers: as p moves, whole counts enter or leave the set that covers it. The Wilson interval is also what an inverted score test gives. A score test judges a candidate rate with the spread at that candidate: it rejects $p$ when $\lvert \hat p - p\rvert > z\sqrt{p(1-p)/n}$, which is Step 2's keep rule turned round. Step 0 is that link between tests and intervals in words; [hypothesis-tests-and-p-values](03-hypothesis-tests-and-p-values.md) builds tests and shows the same match for the trial's gap.
+The coverage lines jump up and down because counts are whole numbers: as p moves, whole counts enter or leave the set that covers it. The Wilson interval is also what an inverted score test gives. A score test judges a candidate rate with the spread at that candidate: it rejects $p$ when $\lvert \hat p - p\rvert > z\sqrt{p(1-p)/n}$, which is Step 2's keep rule turned round. Step 0 is that link between tests and intervals in words; [Hypothesis tests](03-hypothesis-tests-and-p-values.md) builds tests and shows the same match for the trial's gap.
 
 <details>
 <summary>A fourth recipe: add two and two</summary>
@@ -221,7 +200,7 @@ Agresti and Coull noticed that adding two recoveries and two non-recoveries, the
 
 Read back in the trial: the recovery rate on the drug is 45%, with a 95% interval of about 35% to 55% by any of the three recipes. That is the headline's "plus or minus 10".
 
-The house example has a placebo arm too: 35 of 100 recovered. Wald gives 0.256516 to 0.443484, Wilson 0.263642 to 0.447456, exact 0.257294 to 0.451849. The drug's and placebo's intervals overlap, which on its own does not settle whether the drug works; comparing two rates is a test of its own, on [hypothesis-tests-and-p-values](03-hypothesis-tests-and-p-values.md), and again as a table of counts on [chi-square-tests](06-chi-square-tests.md).
+The house example has a placebo arm too: 35 of 100 recovered. Wald gives 0.256516 to 0.443484, Wilson 0.263642 to 0.447456, exact 0.257294 to 0.451849. The drug's and placebo's intervals overlap, which on its own does not settle whether the drug works; comparing two rates is a test of its own, on [Hypothesis tests](03-hypothesis-tests-and-p-values.md), and again as a table of counts on [Chi-square tests](06-chi-square-tests.md).
 
 ### What breaks if you drop a piece
 
@@ -696,7 +675,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Reading a 95% interval as a 95% chance that the true rate is inside it.** The true recovery rate is a fixed number; 0.350320 to 0.552720 either contains it or does not. The 95% is the recipe's record over many trials: used on trial after trial, it catches the truth at least 95 times in 100. A statement about where this one rate probably lies needs a prior, the subject of [credible-intervals-and-decisions](../10-Bayesian%20Inference/05-credible-intervals-and-decisions.md).
+> **Reading a 95% interval as a 95% chance that the true rate is inside it.** The true recovery rate is a fixed number; 0.350320 to 0.552720 either contains it or does not. The 95% is the recipe's record over many trials: used on trial after trial, it catches the truth at least 95 times in 100. A statement about where this one rate probably lies needs a prior, the subject of [Credible intervals and decisions](../10-Bayesian%20Inference/05-credible-intervals-and-decisions.md).
 >
 > - **Zero events means zero risk.** 0 rashes in 100 is compatible with a rate up to 0.036217. Wald's 0 to 0 hides that.
 > - **Clipping Wald at 0.** Cutting −0.009501 up to 0 removes the impossible part but does not fix the catch rate, which is still 0.8664 at p = 0.02.
@@ -709,9 +688,9 @@ The two outputs match line for line.
 
 - **Clinical trials.** Recovery rates, response rates and, above all, side-effect rates. For rare events the exact or Wilson interval is standard; 0 to 0 would hide the risk.
 - **Opinion polls.** The quoted margin of error on a poll is usually Wald's margin, often worked out at 50%. With a large sample and a rate near the middle, the approximation is sound.
-- **A/B tests on websites.** Conversion rates are proportions, often small, and 2% is exactly where Wald fails; [randomised-experiments-and-ab-tests](../13-Survival%2C%20Design%20and%20Causality/04-randomised-experiments-and-ab-tests.md) compares two of them.
+- **A/B tests on websites.** Conversion rates are proportions, often small, and 2% is exactly where Wald fails; [Randomised experiments](../13-Survival%2C%20Design%20and%20Causality/04-randomised-experiments-and-ab-tests.md) compares two of them.
 - **Quality control.** A batch inspection that finds no defects reports an upper bound, the exact interval's $U$.
-- **Planning a trial.** How many patients buy a narrower margin is [power-and-sample-size](04-power-and-sample-size.md).
+- **Planning a trial.** How many patients buy a narrower margin is [Power](04-power-and-sample-size.md).
 
 > **Say it back**
 > An interval for a proportion keeps every candidate rate that the observed count does not rule out. Wald judges each candidate with the spread at the observed rate, which vanishes at 0 or 100 percent, so it fails there: 0 rashes in 100 gives 0 to 0. Wilson judges each candidate with its own spread and solves a quadratic, giving 0 to 3.7%. The exact interval uses the binomial tail chances, keeps its 95% promise at every rate, and gives 0 to 3.6%. At 45 recoveries out of 100 all three say about 35% to 55%.
@@ -720,15 +699,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [confidence-intervals](01-confidence-intervals.md): what coverage means, and why the 95% belongs to the method.
-- [normal-approximation-to-binomial](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md): the bell curve behind Wald and Wilson, and when it fits a count.
+- [Confidence intervals](01-confidence-intervals.md): what coverage means, and why the 95% belongs to the method.
+- [Normal approximation](../06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md): the bell curve behind Wald and Wilson, and when it fits a count.
 
 ## Where this goes next
 
-- [randomised-experiments-and-ab-tests](../13-Survival%2C%20Design%20and%20Causality/04-randomised-experiments-and-ab-tests.md): two proportions, a treated group against a control, and why random assignment lets their difference be read as an effect.
-- [hypothesis-tests-and-p-values](03-hypothesis-tests-and-p-values.md): the same keep-or-rule-out test of Step 0, turned into a yes-or-no decision.
+- [Randomised experiments](../13-Survival%2C%20Design%20and%20Causality/04-randomised-experiments-and-ab-tests.md): two proportions, a treated group against a control, and why random assignment lets their difference be read as an effect.
+- [Hypothesis tests](03-hypothesis-tests-and-p-values.md): the same keep-or-rule-out test of Step 0, turned into a yes-or-no decision.
 
-One trial arm now has an honest range; whether 45 of 100 on the drug beats 35 of 100 on placebo by more than chance is the question [hypothesis-tests-and-p-values](03-hypothesis-tests-and-p-values.md) answers by comparing the two proportions.
+One trial arm now has an honest range; whether 45 of 100 on the drug beats 35 of 100 on placebo by more than chance is the question [Hypothesis tests](03-hypothesis-tests-and-p-values.md) answers by comparing the two proportions.
 
 ---
 

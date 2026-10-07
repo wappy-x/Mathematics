@@ -1,32 +1,12 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Derivatives
-topic: Growth that feeds itself
-item: Derivatives of exp and log
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/03-chain-rule|chain-rule]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/04-compounding-frequency-and-e|compounding-frequency-and-e]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/05-natural-log-and-doubling-time|natural-log-and-doubling-time]]"
-next:
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/06-implicit-and-inverse-differentiation|implicit-and-inverse-differentiation]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/07-hyperbolic-functions|hyperbolic-functions]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/01-what-a-differential-equation-says|what-a-differential-equation-says]]"
-tags: [mathematics, calculus and analysis, derivatives-of-exp-and-log]
----
-
 # Derivatives of exp and log: the function that is its own rate, and its inverse
 
-Calculus and analysis → Derivatives → Growth that feeds itself → Derivatives of exp and log
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Derivatives](../../../SYLLABUS.md#w06-s02) → Derivatives of exp and log
 
 ---
 
 ## General Overview
 
-Put $100 in an account paying 5% a year, compounded continuously: interest is added at every instant, not once a year. After ten years it holds 100 × e^0.5 = 164.87 dollars, where e = 2.718282 is the compounding ceiling from [compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md).
+Put $100 in an account paying 5% a year, compounded continuously: interest is added at every instant, not once a year. After ten years it holds 100 × e^0.5 = 164.87 dollars, where e = 2.718282 is the compounding ceiling from [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md).
 
 How fast is the money growing at that moment? At 5% of whatever is there: 0.05 × 164.87 = 8.24 dollars per year. Money that earns interest on its interest grows at a speed set by its own size.
 
@@ -54,13 +34,13 @@ The curving line is the balance. The straight line is its tangent at ten years, 
 
 ## The formula
 
-A reminder from [the-derivative](01-the-derivative.md): f'(x), also written dy/dx, is the rate of y per unit of x. Written in front of an expression, d/dx means "the rate, per unit of x, of what follows".
+A reminder from [The derivative](01-the-derivative.md): f'(x), also written dy/dx, is the rate of y per unit of x. Written in front of an expression, d/dx means "the rate, per unit of x, of what follows".
 
 $$\frac{d}{dx}\,e^x = e^x, \qquad \frac{d}{dx}\,\ln x = \frac{1}{x} \quad (x > 0)$$
 
 **Read it aloud:** e to the x grows at a rate equal to itself; the natural log of x grows at one over x.
 
-The balance after $t$ years is $B$ = 100 e^(rt), with $r$ = 0.05. The chain rule ([chain-rule](03-chain-rule.md)) adds the inner rate r:
+The balance after $t$ years is $B$ = 100 e^(rt), with $r$ = 0.05. The chain rule ([Chain rule](03-chain-rule.md)) adds the inner rate r:
 
 $$\frac{dB}{dt} = r \cdot 100\,e^{rt} = r\,B$$
 
@@ -136,7 +116,7 @@ The chain rule feeds rt into e^x and multiplies by the inner rate r: dB/dt = r �
 
 The log undoes the exponential: y = ln x exactly when e^y = x. Put a log in place of h in the same two inequalities and they trap the log's difference quotient over a step k > 0 between 1/(x + k) and 1/x. Both walls close on 1/x.
 
-In money terms, the years to reach a balance B are $T$ = ln(B/100)/r, with rate 1/(rB) years per dollar. Reaching 200 dollars takes 13.862944 years; each extra dollar of target adds 0.1 year. At 164.87 dollars it costs 0.121306 years, which is 1/8.243606: years per dollar flips dollars per year. The flip for any inverse is [implicit-and-inverse-differentiation](06-implicit-and-inverse-differentiation.md).
+In money terms, the years to reach a balance B are $T$ = ln(B/100)/r, with rate 1/(rB) years per dollar. Reaching 200 dollars takes 13.862944 years; each extra dollar of target adds 0.1 year. At 164.87 dollars it costs 0.121306 years, which is 1/8.243606: years per dollar flips dollars per year. The flip for any inverse is [Implicit and inverse differentiation](06-implicit-and-inverse-differentiation.md).
 
 ### Step 4: any other base goes through e
 
@@ -148,7 +128,7 @@ Logs turn products into sums: ln(np) = ln n + ln p. Differentiate with the chain
 
 $$\frac{V'}{V} = \frac{n'}{n} + \frac{p'}{p}.$$
 
-A fund starts with 100 shares and buys 10 a year, so at ten years $n$ = 200 shares, relative rate 10/200 = 0.05. Each share's price $p$ = 20e^(0.05t) is 32.974425 dollars, relative rate 0.05. The value $V$ = 6594.885083 has relative rate 0.10, so it grows at 659.488508 dollars per year. The product rule from [product-and-quotient-rules](02-product-and-quotient-rules.md) agrees; for long products, logs are shorter.
+A fund starts with 100 shares and buys 10 a year, so at ten years $n$ = 200 shares, relative rate 10/200 = 0.05. Each share's price $p$ = 20e^(0.05t) is 32.974425 dollars, relative rate 0.05. The value $V$ = 6594.885083 has relative rate 0.10, so it grows at 659.488508 dollars per year. The product rule from [Product and quotient rules](02-product-and-quotient-rules.md) agrees; for long products, logs are shorter.
 
 ---
 
@@ -388,17 +368,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [chain-rule](03-chain-rule.md): the inner rates r, ln b and a.
-- [compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): e, and compounding beating simple interest.
-- [natural-log-and-doubling-time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md): ln as the time a balance needs.
+- [Chain rule](03-chain-rule.md): the inner rates r, ln b and a.
+- [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md): e, and compounding beating simple interest.
+- [Natural log and doubling time](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md): ln as the time a balance needs.
 
 ## Where this goes next
 
-- [implicit-and-inverse-differentiation](06-implicit-and-inverse-differentiation.md): the rate of any inverse function.
-- [hyperbolic-functions](07-hyperbolic-functions.md): sinh and cosh, built from e^x and e^(−x).
-- [what-a-differential-equation-says](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md): "rate equals r times amount" as an equation.
+- [Implicit and inverse differentiation](06-implicit-and-inverse-differentiation.md): the rate of any inverse function.
+- [Hyperbolic functions](07-hyperbolic-functions.md): sinh and cosh, built from e^x and e^(−x).
+- [A differential equation](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md): "rate equals r times amount" as an equation.
 
-100e^(rt) grows at r times itself; whether it is the only balance that does is answered in [what-a-differential-equation-says](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md).
+100e^(rt) grows at r times itself; whether it is the only balance that does is answered in [A differential equation](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md).
 
 ---
 

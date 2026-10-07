@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Options on commodity futures and spreads
-topic: Options on the gap between two prices
-item: Spread options
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/01-options-on-commodity-futures|options-on-commodity-futures]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/04-joint-distributions-and-covariance|joint-distributions-and-covariance]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/05-bivariate-normal-and-conditioning|bivariate-normal-and-conditioning]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/05-change-of-numeraire|change-of-numeraire]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/06-multidimensional-ito-and-correlation|multidimensional-ito-and-correlation]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-next:
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/05-spread-option-greeks|spread-option-greeks]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/07-electricity-and-the-spark-spread|electricity-and-the-spark-spread]]"
-tags: [mathematics, financial mathematics, margrabe-and-kirk-spread-options]
----
-
 # Spread options: exchanging one price for another with Margrabe's exact formula, and Kirk's shortcut when there is a strike
 
-Financial mathematics → Options on commodity futures and spreads → Options on the gap between two prices → Spread options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Options on commodity futures and spreads](../../../SYLLABUS.md#w12-s26) → Spread options
 
 ---
 
@@ -69,7 +47,7 @@ $$d_1 = \frac{\ln(F_1/F_2) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d
 
 **Read it aloud:** the gasoline the holder might take minus the crude the holder might hand over, each weighted by its own chance, discounted once; and the only volatility is that of gasoline measured in barrels of crude.
 
-This is the Black-76 call of [options-on-commodity-futures](01-options-on-commodity-futures.md) with crude in the strike's place and the **ratio volatility** $\sigma$ in the volatility's place. The bank rate appears only in the discount $D$. It never enters $d_1$, because both legs are futures that drift nowhere and the rate has nothing to tilt.
+This is the Black-76 call of [Options on a futures price](01-options-on-commodity-futures.md) with crude in the strike's place and the **ratio volatility** $\sigma$ in the volatility's place. The bank rate appears only in the discount $D$. It never enters $d_1$, because both legs are futures that drift nowhere and the rate has nothing to tilt.
 
 With a strike, Kirk's approximation treats "crude plus strike" as one price and reuses the formula:
 
@@ -94,9 +72,9 @@ with $d_1^K$ and $d_2^K$ built as above from $F_1$, $F_2 + K$ and $\sigma_K$.
 | $d_1$, $d_2$ | log lead of gasoline over crude in units of $\sigma\sqrt{T}$, plus and minus half a unit | 0.633657, 0.436807 | — |
 | $V$, $V_K$ | premium paid today with zero strike, and with strike $K$ | 13.15, 7.43 | — |
 
-A **correlation** is a covariance scaled to lie between −1 and +1 ([joint-distributions-and-covariance](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). At +1 the two legs move in lockstep; at 0 they ignore each other; at −1 one rises when the other falls.
+A **correlation** is a covariance scaled to lie between −1 and +1 ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). At +1 the two legs move in lockstep; at 0 they ignore each other; at −1 one rises when the other falls.
 
-The option's sensitivity to each input is the business of [spread-option-greeks](05-spread-option-greeks.md). Three numbers are enough here, computed twice in the check, by formula and by a small nudge:
+The option's sensitivity to each input is the business of [Greeks of a spread option](05-spread-option-greeks.md). Three numbers are enough here, computed twice in the check, by formula and by a small nudge:
 
 | Greek, exchange option | Formula | Value |
 | --- | --- | --- |
@@ -106,10 +84,10 @@ The option's sensitivity to each input is the business of [spread-option-greeks]
 
 ### When it holds
 
-- **Both futures wander lognormally with fixed volatilities.** Each leg has its own smile ([commodity-implied-vol-and-the-call-skew](03-commodity-implied-vol-and-the-call-skew.md)), and a spread option reaches into both wings at once. One volatility per leg misprices by roughly vega times the error.
-- **One fixed correlation.** Refinery outages and crises move gasoline and crude apart, and correlation drops just when the spread matters. Every 0.01 of error costs about 6 cents here. The market's own view of $\rho$ can be read back from a traded spread option: [implied-correlation-from-a-spread-option](06-implied-correlation-from-a-spread-option.md).
+- **Both futures wander lognormally with fixed volatilities.** Each leg has its own smile ([Implied vol on a futures option and the commodity smile](03-commodity-implied-vol-and-the-call-skew.md)), and a spread option reaches into both wings at once. One volatility per leg misprices by roughly vega times the error.
+- **One fixed correlation.** Refinery outages and crises move gasoline and crude apart, and correlation drops just when the spread matters. Every 0.01 of error costs about 6 cents here. The market's own view of $\rho$ can be read back from a traded spread option: [Correlation from a spread option](06-implied-correlation-from-a-spread-option.md).
 - **Both legs in the same unit.** Gasoline futures in New York are quoted per gallon; a barrel holds 42 US gallons, so the quote is multiplied by 42 before it enters (conventions verified 2026-09-28). Mixed units give a gap that means nothing.
-- **Crude plus strike stays positive.** Kirk needs $F_2 + K > 0$. A negative strike is fine as long as that holds. When a leg can itself go below zero, as power prices can, the lognormal model fails and a normal model takes over ([electricity-and-the-spark-spread](07-electricity-and-the-spark-spread.md)).
+- **Crude plus strike stays positive.** Kirk needs $F_2 + K > 0$. A negative strike is fine as long as that holds. When a leg can itself go below zero, as power prices can, the lognormal model fails and a normal model takes over ([Power that cannot be stored](07-electricity-and-the-spark-spread.md)).
 - **European exercise, rates known in advance.** Exercise only on expiry day. Then one discount factor serves both legs.
 
 ---
@@ -124,7 +102,7 @@ $$\max\bigl(F_1(T) - F_2(T),\ 0\bigr) = F_2(T) \times \max\Bigl(\frac{F_1(T)}{F_
 
 The right side is a quantity of crude times a call on the **ratio** $R = F_1/F_2$, gasoline priced in barrels of crude, with strike 1. Measured in barrels of crude, the option is an ordinary call on one number. Two uncertain prices have become one.
 
-Pricing in a unit other than dollars is legitimate. The unit must be something that can be held, and every price divided by it must be a fair bet under the matching pricing rule. That is the change of numeraire ([change-of-numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md)): a **numeraire** is the asset used as the unit of account. Here the unit is "one barrel of crude delivered on expiry day, paid for then": a claim worth $D\,F_2$ today, since a futures quote is a fair bet on its own number.
+Pricing in a unit other than dollars is legitimate. The unit must be something that can be held, and every price divided by it must be a fair bet under the matching pricing rule. That is the change of numeraire ([Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md)): a **numeraire** is the asset used as the unit of account. Here the unit is "one barrel of crude delivered on expiry day, paid for then": a claim worth $D\,F_2$ today, since a futures quote is a fair bet on its own number.
 
 ### Step 1: the ratio's volatility is the volatility of a difference
 
@@ -132,7 +110,7 @@ The log of a ratio is a difference of logs: $\ln R = \ln F_1 - \ln F_2$. Each lo
 
 $$\sigma^2 = \sigma_1^2 + \sigma_2^2 - 2\rho\,\sigma_1\sigma_2.$$
 
-The minus sign carries the whole story. Positive correlation subtracts: the legs move together, the ratio barely moves, the option is cheap. Negative correlation adds: when gasoline rises crude falls, the ratio swings, the option is dear. For the refinery, $\sigma^2 = 0.09 + 0.0625 - 0.075 = 0.0775$, so $\sigma = 0.278388$, about 28 percent. Gasoline alone wiggles 30 percent a year; measured in crude, less. The rule for combining two correlated wanders is [multidimensional-ito-and-correlation](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/06-multidimensional-ito-and-correlation.md).
+The minus sign carries the whole story. Positive correlation subtracts: the legs move together, the ratio barely moves, the option is cheap. Negative correlation adds: when gasoline rises crude falls, the ratio swings, the option is dear. For the refinery, $\sigma^2 = 0.09 + 0.0625 - 0.075 = 0.0775$, so $\sigma = 0.278388$, about 28 percent. Gasoline alone wiggles 30 percent a year; measured in crude, less. The rule for combining two correlated wanders is [Several Brownian motions](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/06-multidimensional-ito-and-correlation.md).
 
 ### Step 2: in crude units the ratio drifts nowhere, so Black-76 applies
 
@@ -145,7 +123,7 @@ Multiply through by the unit's price $D\,F_2$ and Margrabe's formula appears: $V
 <details>
 <summary>Detailed proof: the ratio is a fair bet in crude units, and its volatility is sigma</summary>
 
-Under the ordinary pricing rule, write each futures price on expiry as a fair bet: $F_1(T) = F_1\,e^{-\frac12\sigma_1^2 T + \sigma_1\sqrt{T}\,Z_1}$ and likewise $F_2(T)$ with $\sigma_2$ and $Z_2$, where $Z_1$ and $Z_2$ are standard bell-curve draws with correlation $\rho$ ([bivariate-normal-and-conditioning](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)).
+Under the ordinary pricing rule, write each futures price on expiry as a fair bet: $F_1(T) = F_1\,e^{-\frac12\sigma_1^2 T + \sigma_1\sqrt{T}\,Z_1}$ and likewise $F_2(T)$ with $\sigma_2$ and $Z_2$, where $Z_1$ and $Z_2$ are standard bell-curve draws with correlation $\rho$ ([Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)).
 
 The option's value is $D\,E[\max(F_1(T) - F_2(T), 0)] = D\,F_2\,E[W \max(R(T) - 1, 0)]$ with weight $W = F_2(T)/F_2 = e^{-\frac12\sigma_2^2 T + \sigma_2\sqrt{T}Z_2}$. The weight is positive with average 1, so it defines a new pricing rule: the crude-unit rule. Multiplying a bell curve by $e^{\sigma_2\sqrt{T}Z_2}$ and completing the square slides $Z_2$'s centre to $\sigma_2\sqrt{T}$ and $Z_1$'s centre to $\rho\,\sigma_2\sqrt{T}$, leaving spreads and correlation unchanged.
 
@@ -167,7 +145,7 @@ That is an approximation, frozen at today's crude price. When crude moves, the t
 
 A spread option on two lognormal prices has no closed form with a strike, but it has an exact answer one integral deep. Fix crude's random shock $Z_2$. Crude's expiry price $F_2(T)$ is then a known number. Gasoline, given $Z_2 = z$, is still lognormal: its average shifts to $F_1\,e^{-\frac12\rho^2\sigma_1^2 T + \rho\,\sigma_1\sqrt{T}\,Z_2}$ and its volatility shrinks to $\sigma_1\sqrt{1-\rho^2}$, the part of gasoline's wiggle not explained by crude. So given $z$, the option is a plain Black-76 call with strike $F_2(T) + K$. Average that call over the bell curve in $Z_2$ by Simpson's rule, and discount. This is road 3 in the code. It uses no Kirk volatility and no ratio; at zero strike it lands on Margrabe to six decimals, and at strike 10 it measures Kirk's error.
 
-The fourth road is brute force: simulate 400,000 pairs of correlated expiry prices and average the payoff ([monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)). Correlated draws come from two independent bell-curve draws `g1` and `g2` by the Cholesky recipe, `z2 = rho*g1 + sqrt(1 - rho^2)*g2`: `z2` keeps variance 1 and shares correlation `rho` with `g1`. The simulation needs no formula, and its standard error bounds how far off it can reasonably be.
+The fourth road is brute force: simulate 400,000 pairs of correlated expiry prices and average the payoff ([Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)). Correlated draws come from two independent bell-curve draws `g1` and `g2` by the Cholesky recipe, `z2 = rho*g1 + sqrt(1 - rho^2)*g2`: `z2` keeps variance 1 and shares correlation `rho` with `g1`. The simulation needs no formula, and its standard error bounds how far off it can reasonably be.
 
 ---
 
@@ -685,9 +663,9 @@ The two outputs agree line for line, the simulation included, because both langu
 ## Where you meet it in real life
 
 - **Refinery margins.** A refinery is long the crack spread by its nature. Selling crack-spread calls earns premium against margin it would rather lock in; buying puts on the crack protects against a squeeze.
-- **Power plants.** A gas-fired plant turns gas into electricity; its margin is the spark spread, power minus gas times a heat rate. The plant is a strip of spark-spread options, one per hour it can run: [electricity-and-the-spark-spread](07-electricity-and-the-spark-spread.md).
-- **Correlation desks.** A traded spread option carries one unknown the single-leg options do not: $\rho$. Solving for it from a market price is [implied-correlation-from-a-spread-option](06-implied-correlation-from-a-spread-option.md).
-- **Hedging a spread book.** Margrabe's two deltas, 0.72 barrels of gasoline long and 0.65 of crude short per option, are the hedge; how they and the correlation exposure move is [spread-option-greeks](05-spread-option-greeks.md).
+- **Power plants.** A gas-fired plant turns gas into electricity; its margin is the spark spread, power minus gas times a heat rate. The plant is a strip of spark-spread options, one per hour it can run: [Power that cannot be stored](07-electricity-and-the-spark-spread.md).
+- **Correlation desks.** A traded spread option carries one unknown the single-leg options do not: $\rho$. Solving for it from a market price is [Correlation from a spread option](06-implied-correlation-from-a-spread-option.md).
+- **Hedging a spread book.** Margrabe's two deltas, 0.72 barrels of gasoline long and 0.65 of crude short per option, are the hedge; how they and the correlation exposure move is [Greeks of a spread option](05-spread-option-greeks.md).
 - **Takeovers paid in shares, and outperformance options.** An offer of one share of the bidder for one share of the target is an exchange option between two stocks. Margrabe first wrote the formula for exactly this kind of swap.
 
 > **Say it back**
@@ -697,19 +675,19 @@ The two outputs agree line for line, the simulation included, because both langu
 
 ## What this builds on
 
-- [options-on-commodity-futures](01-options-on-commodity-futures.md): Black-76 on a futures quote, the formula Margrabe and Kirk both reuse.
-- [joint-distributions-and-covariance](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md): covariance and correlation, and the variance of a difference that gives the ratio volatility.
-- [bivariate-normal-and-conditioning](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): two correlated bell curves, and fixing one to leave the other a smaller bell curve, the exact road of Step 4.
-- [change-of-numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md): pricing in units of another asset, the move that turns two prices into one ratio.
-- [multidimensional-ito-and-correlation](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/06-multidimensional-ito-and-correlation.md): how two correlated wandering prices combine, and why the ratio is lognormal.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): averaging simulated payoffs, and the standard error that bounds the simulation.
+- [Options on a futures price](01-options-on-commodity-futures.md): Black-76 on a futures quote, the formula Margrabe and Kirk both reuse.
+- [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md): covariance and correlation, and the variance of a difference that gives the ratio volatility.
+- [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): two correlated bell curves, and fixing one to leave the other a smaller bell curve, the exact road of Step 4.
+- [Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md): pricing in units of another asset, the move that turns two prices into one ratio.
+- [Several Brownian motions](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/06-multidimensional-ito-and-correlation.md): how two correlated wandering prices combine, and why the ratio is lognormal.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): averaging simulated payoffs, and the standard error that bounds the simulation.
 
 ## Where this goes next
 
-- [spread-option-greeks](05-spread-option-greeks.md): the two deltas, the two vegas and the correlation sensitivity, and how to hedge each.
-- [electricity-and-the-spark-spread](07-electricity-and-the-spark-spread.md): spread options on a commodity that cannot be stored and can trade below zero, where Kirk's positive-price assumption is tested hardest.
+- [Greeks of a spread option](05-spread-option-greeks.md): the two deltas, the two vegas and the correlation sensitivity, and how to hedge each.
+- [Power that cannot be stored](07-electricity-and-the-spark-spread.md): spread options on a commodity that cannot be stored and can trade below zero, where Kirk's positive-price assumption is tested hardest.
 
-This card prices the spread given a correlation; how a trading desk hedges the correlation it cannot trade directly is the question [spread-option-greeks](05-spread-option-greeks.md) answers.
+This card prices the spread given a correlation; how a trading desk hedges the correlation it cannot trade directly is the question [Greeks of a spread option](05-spread-option-greeks.md) answers.
 
 ---
 

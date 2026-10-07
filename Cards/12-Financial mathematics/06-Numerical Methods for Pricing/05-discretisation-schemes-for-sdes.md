@@ -1,34 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Numerical Methods for Pricing
-topic: Step size and bias
-item: Stepping an SDE
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/04-euler-maruyama-scheme|euler-maruyama-scheme]]"
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/05-milstein-and-strong-weak-convergence|milstein-and-strong-weak-convergence]]"
-next:
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/06-longstaff-schwartz-least-squares-monte-carlo|longstaff-schwartz-least-squares-monte-carlo]]"
-  - "[[Cards/12-Financial mathematics/31-Forward-Rate Models/03-libor-and-sofr-market-models|libor-and-sofr-market-models]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - discretisation-schemes-for-sdes
----
-
 # Stepping an SDE: Euler, Milstein and Andersen's scheme for Heston
 
-Financial mathematics → Numerical Methods for Pricing → Step size and bias → Stepping an SDE
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Numerical Methods for Pricing](../../../SYLLABUS.md#w12-s06) → Stepping an SDE
 
 ---
 
 ## General Overview
 
-Acme shares trade at $100. A one-year call struck at $100 is worth $9.23 here, by the formula on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md). Pricing that call by simulation instead means inventing many possible years for Acme and averaging what it pays at the end of each ([monte-carlo-pricing](01-monte-carlo-pricing.md)).
+Acme shares trade at $100. A one-year call struck at $100 is worth $9.23 here, by the formula on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md). Pricing that call by simulation instead means inventing many possible years for Acme and averaging what it pays at the end of each ([Monte Carlo pricing](01-monte-carlo-pricing.md)).
 
 An invented year need not be built in one piece. It can be walked in twelve monthly steps, or forty-eight weekly ones. Each step needs a rule: how far Acme drifts over that stretch, and how hard it shakes. The plainest rule — drift times the step's length, plus volatility times the step's random kick — is the **Euler scheme**.
 
@@ -58,7 +36,7 @@ The upper line is Euler, the lower Milstein. Both start badly wrong and climb to
 
 ## The formula
 
-Notation first, in words. An **SDE**, a stochastic differential equation, is a rule for one instant: the drift over the next instant, and the size of the random kick over the same instant. Acme's rule is geometric Brownian motion ([geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)): drift and kick are both proportional to the price. A step of length $h$ years gets one kick, written $\Delta W$, drawn from the bell curve with average zero and spread $\sqrt h$ ([normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). Subscripts count steps: step $k$ turns reading $k$ into reading $k+1$.
+Notation first, in words. An **SDE**, a stochastic differential equation, is a rule for one instant: the drift over the next instant, and the size of the random kick over the same instant. Acme's rule is geometric Brownian motion ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)): drift and kick are both proportional to the price. A step of length $h$ years gets one kick, written $\Delta W$, drawn from the bell curve with average zero and spread $\sqrt h$ ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). Subscripts count steps: step $k$ turns reading $k$ into reading $k+1$.
 
 Three rules for that one step, all fed the same kick:
 
@@ -119,7 +97,7 @@ Step 0 is suggestive, not a derivation, since $\Delta W$ is not smooth enough to
 
 $$\int_{t}^{t+h} \left( W_u - W_t \right) dW_u \;=\; \tfrac12 \left( \Delta W^2 - h \right),$$
 
-which is Itô's rule applied to a square. In general the correction is the diffusion times its own slope times that integral, proved on [milstein-and-strong-weak-convergence](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/05-milstein-and-strong-weak-convergence.md). For Acme the diffusion is $\sigma$ times the price and its slope is $\sigma$, giving $\tfrac12\sigma^2(\Delta W^2 - h)$ times the price.
+which is Itô's rule applied to a square. In general the correction is the diffusion times its own slope times that integral, proved on [Milstein and the two kinds of error](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/05-milstein-and-strong-weak-convergence.md). For Acme the diffusion is $\sigma$ times the price and its slope is $\sigma$, giving $\tfrac12\sigma^2(\Delta W^2 - h)$ times the price.
 
 ### Step 3: a closer path is not a cheaper mistake
 
@@ -722,10 +700,10 @@ The two outputs match line for line: two bell-curve areas, one from `erf` and on
 
 - **Any payoff that watches the path.** A barrier that knocks out, an average that sets the strike, a hedge rebalanced monthly: each reads the whole stepped path, so the bar chart's path gap is the error that matters and Milstein earns its extra line.
 - **Every stochastic-volatility desk.** Heston and its relatives have no cheap exact step, so a variance step must be chosen: QE, or full truncation with small steps.
-- **Rate models.** A rate with a square root in it has a variance's floor problem and the same two repairs: [libor-and-sofr-market-models](../31-Forward-Rate%20Models/03-libor-and-sofr-market-models.md).
-- **Early exercise.** Pricing a Bermudan by simulation needs stepped paths at every exercise date before a rule can be fitted: [longstaff-schwartz-least-squares-monte-carlo](06-longstaff-schwartz-least-squares-monte-carlo.md).
-- **The rest of the error budget.** The wobble of 0.068865 is attacked by [variance-reduction-for-pricing](02-variance-reduction-for-pricing.md) and [quasi-monte-carlo-and-brownian-bridge](03-quasi-monte-carlo-and-brownian-bridge.md); neither moves the bias. Several assets need kicks correlated the right way first: [correlated-paths-and-cholesky](04-correlated-paths-and-cholesky.md).
-- **The roads with no paths.** A grid, [finite-differences-for-the-black-scholes-equation](07-finite-differences-for-the-black-scholes-equation.md) and [american-options-by-psor-and-lcp](08-american-options-by-psor-and-lcp.md), or a transform, [carr-madan-fft-and-cos-methods](09-carr-madan-fft-and-cos-methods.md), carries a discretisation error too, in a grid spacing or a truncated integral. Every numerical price faces one question: how much of it is the model, and how much the mesh.
+- **Rate models.** A rate with a square root in it has a variance's floor problem and the same two repairs: [Market models](../31-Forward-Rate%20Models/03-libor-and-sofr-market-models.md).
+- **Early exercise.** Pricing a Bermudan by simulation needs stepped paths at every exercise date before a rule can be fitted: [Longstaff-Schwartz](06-longstaff-schwartz-least-squares-monte-carlo.md).
+- **The rest of the error budget.** The wobble of 0.068865 is attacked by [Cheaper Monte Carlo](02-variance-reduction-for-pricing.md) and [Quasi-Monte Carlo](03-quasi-monte-carlo-and-brownian-bridge.md); neither moves the bias. Several assets need kicks correlated the right way first: [Correlated paths](04-correlated-paths-and-cholesky.md).
+- **The roads with no paths.** A grid, [Pricing on a grid](07-finite-differences-for-the-black-scholes-equation.md) and [American options on a grid](08-american-options-by-psor-and-lcp.md), or a transform, [Transform pricing](09-carr-madan-fft-and-cos-methods.md), carries a discretisation error too, in a grid spacing or a truncated integral. Every numerical price faces one question: how much of it is the model, and how much the mesh.
 
 > **Say it back**
 > A scheme turns one instant of a model into one step of a simulation. Euler keeps the drift and the kick and freezes them for the step; Milstein adds the term the kick's own square contributes. Milstein's paths land far closer, because the errors it removes average to zero and pile up slowly. It does not price much better: a price is an average, and the error that survives averaging is the one neither scheme removes. Where an exact one-step rule exists, as for Acme, use it and carry no bias. Where a square root sits in the kick, Euler can hand back a negative variance one time in five, and Andersen's scheme swaps the exact law for a non-negative one carrying the same average and spread.
@@ -734,14 +712,14 @@ The two outputs match line for line: two bell-curve areas, one from `erf` and on
 
 ## What this builds on
 
-- [monte-carlo-pricing](01-monte-carlo-pricing.md): the averaging machine this card feeds, and where the sampling wobble comes from.
-- [euler-maruyama-scheme](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): the scheme for a general SDE, with the conditions its error bound needs.
-- [milstein-and-strong-weak-convergence](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/05-milstein-and-strong-weak-convergence.md): the correction in general form, and why path and price accuracy carry different rates.
+- [Monte Carlo pricing](01-monte-carlo-pricing.md): the averaging machine this card feeds, and where the sampling wobble comes from.
+- [Euler-Maruyama](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): the scheme for a general SDE, with the conditions its error bound needs.
+- [Milstein and the two kinds of error](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/05-milstein-and-strong-weak-convergence.md): the correction in general form, and why path and price accuracy carry different rates.
 
 ## Where this goes next
 
-- [longstaff-schwartz-least-squares-monte-carlo](06-longstaff-schwartz-least-squares-monte-carlo.md): stepped paths when the holder may exercise early, so the payoff turns on a decision taken at every step.
-- [libor-and-sofr-market-models](../31-Forward-Rate%20Models/03-libor-and-sofr-market-models.md): many rates stepped together, each one's drift depending on all the others, none with an exact step.
+- [Longstaff-Schwartz](06-longstaff-schwartz-least-squares-monte-carlo.md): stepped paths when the holder may exercise early, so the payoff turns on a decision taken at every step.
+- [Market models](../31-Forward-Rate%20Models/03-libor-and-sofr-market-models.md): many rates stepped together, each one's drift depending on all the others, none with an exact step.
 
 Every bias here was measured against an exact rule that happened to exist; the open question is what to do when none does, answered by refining the step until the answer stops moving, and by pricing on a grid instead.
 

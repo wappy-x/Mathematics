@@ -1,27 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Divisibility and Primes
-topic: Divisibility
-item: Divisibility rules
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/01-place-value|place-value]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/05-arithmetic-laws|arithmetic-laws]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/01-divides|divides]]"
-next:
-  - "[[Cards/02-Number theory/05-Check Digits, Calendars and Cycles/01-barcode-check-digit|barcode-check-digit]]"
-tags:
-  - mathematics
-  - number theory
-  - divisibility-rules
----
-
 # Divisibility rules: reading the digits to see whether 2, 3, 4, 5, 6, 8, 9 or 10 divides a number
 
-Number theory → Divisibility and Primes → Divisibility → Divisibility rules
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Divisibility and Primes](../../../SYLLABUS.md#w02-s01) → Divisibility rules
 
 ---
 
@@ -97,7 +76,7 @@ The 7 test is slower than dividing.
 
 </details>
 
-The alternative is the division itself: [division-with-remainder](04-division-with-remainder.md).
+The alternative is the division itself: [Division with a remainder](04-division-with-remainder.md).
 
 ---
 
@@ -262,9 +241,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Splitting a bill.** Whole dollars a head: does one number divide another? [divides](01-divides.md)
-- **Check digits.** A barcode's last digit makes a weighted total land on a multiple of 10 — a rule run backwards: [barcode-check-digit](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/01-barcode-check-digit.md).
-- **Factoring by hand.** The rules for 2, 3 and 5 strip out the easy primes: [prime-factorisation](07-prime-factorisation.md).
+- **Splitting a bill.** Whole dollars a head: does one number divide another? [Divides](01-divides.md)
+- **Check digits.** A barcode's last digit makes a weighted total land on a multiple of 10 — a rule run backwards: [Barcode check digits](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/01-barcode-check-digit.md).
+- **Factoring by hand.** The rules for 2, 3 and 5 strip out the easy primes: [Prime factorisation](07-prime-factorisation.md).
 
 > **Say it back**
 > A rule reads a small number — a tail, or the digit sum — and bins the rest, which is already a multiple of the number being tested. Last digit for 2, 5 and 10; last two for 4; last three for 8. Digit sum for 3 and 9, since every column is one more than a row of 9s. For 6, pass 2 and 3 both.
@@ -273,13 +252,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [place-value](../../01-Foundations/01-Everyday%20Arithmetic/01-place-value.md): that 1,236 means one thousand, two hundreds, three tens and six ones.
-- [arithmetic-laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): cutting 1,236 into 1200 + 36 without changing it.
-- [divides](01-divides.md): what "divides" means, and that a multiple of 9 is a multiple of 3.
+- [Place value](../../01-Foundations/01-Everyday%20Arithmetic/01-place-value.md): that 1,236 means one thousand, two hundreds, three tens and six ones.
+- [The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): cutting 1,236 into 1200 + 36 without changing it.
+- [Divides](01-divides.md): what "divides" means, and that a multiple of 9 is a multiple of 3.
 
 ## Where this goes next
 
-- [barcode-check-digit](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/01-barcode-check-digit.md): the same digit-reading, used to build a number that must pass a test for 10.
+- [Barcode check digits](../05-Check%20Digits%2C%20Calendars%20and%20Cycles/01-barcode-check-digit.md): the same digit-reading, used to build a number that must pass a test for 10.
 
 ---
 

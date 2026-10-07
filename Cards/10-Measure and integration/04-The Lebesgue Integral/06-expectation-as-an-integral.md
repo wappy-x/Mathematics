@@ -1,32 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: The Lebesgue Integral
-topic: Averaging a random quantity
-item: Expectation as an integral
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/04-integrable-functions-and-l1|integrable-functions-and-l1]]"
-  - "[[Cards/10-Measure and integration/03-Measurable Functions/05-pushforward-and-the-law|pushforward-and-the-law]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/03-variance-and-standard-deviation|variance-and-standard-deviation]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/01-densities-and-cdfs|densities-and-cdfs]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/02-expectation|expectation]]"
-next:
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/07-markov-and-chebyshev|markov-and-chebyshev]]"
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/06-layer-cake-and-tail-integrals|layer-cake-and-tail-integrals]]"
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/04-jensens-inequality|jensens-inequality]]"
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/06-densities-and-likelihood-ratios|densities-and-likelihood-ratios]]"
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/01-conditioning-on-a-partition|conditioning-on-a-partition]]"
-  - "[[Cards/18-Functional analysis/06-Banach Algebras and Fixed Points/04-states-representations-and-the-gns-construction|states-representations-and-the-gns-construction]]"
-  - "[[Cards/20-Harmonic analysis/04-Characteristic Functions and Probability/01-characteristic-functions-in-depth|characteristic-functions-in-depth]]"
-tags: [mathematics, measure and integration, expectation-as-an-integral]
----
-
 # Expectation as an integral: the average of X is the integral of X against the probability, and E[g(X)] can be computed on the line instead
 
-Measure and integration → The Lebesgue Integral → Averaging a random quantity → Expectation as an integral
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [The Lebesgue Integral](../../../SYLLABUS.md#w10-s04) → Expectation as an integral
 
 ---
 
@@ -36,7 +10,7 @@ A river runs for 1 km. Its bed is a smooth trough: at distance x km from the fir
 
 There are two ways to answer. The first walks the river: average the depth over every mooring point, weighting each stretch by its length. That gives 2/3 m. The second asks only how the depth itself is spread: how likely the boat is to sit in less than 0.5 m of water, and so on. That spread is a probability on the depth line, the **law** of the depth. Averaging against it gives 2/3 m too. The same holds for the average of the squared depth, 8/15 m^2, and so for the **variance**, the average squared distance from the mean: 4/45 m^2.
 
-The probability wing already computes averages this way, as sums for counted outcomes and as density integrals for continuous ones ([expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md)). This card makes both one integral, and proves that the two roads always agree, for any quantity computed from the depth.
+The probability wing already computes averages this way, as sums for counted outcomes and as density integrals for continuous ones ([Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md)). This card makes both one integral, and proves that the two roads always agree, for any quantity computed from the depth.
 
 **The expectation of a random quantity is its integral against the probability on the space of outcomes; for any Borel function g, the expectation of g of the quantity equals the integral of g against the quantity's law on the line, and the sum and density formulas are the two commonest cases of that one integral.**
 
@@ -52,13 +26,13 @@ To scale: 280 drawing units per km across (0 km at 40, 1 km at 320) and 160 per 
 
 ## The formula
 
-Notation first, in words. The river is the **outcome space** $\Omega$ (omega), here the interval [0, 1] in km, and a mooring point is $\omega$. The sets we allow ourselves to measure are the Borel sets of [0, 1], written $\mathcal F$. The probability $P$ gives each such set its length, so $P$ of the whole river is 1. The depth under the boat is the function $X(\omega) = 4\omega(1-\omega)$. A **random variable** is a measurable function on $\Omega$, and $X$ is one because it is continuous. A **Borel function** $g$ on the line is one for which every set $\{t : g(t) \in B\}$ with B Borel is itself Borel. $\int X\,dP$ is the integral of X against P, built on this shelf from simple functions ([integral-of-a-nonnegative-function](02-integral-of-a-nonnegative-function.md)). The **law** of X, $\mu_X = P\circ X^{-1}$, is the probability on the depth line that gives a set B of depths the probability that the depth lands in B ([pushforward-and-the-law](../03-Measurable%20Functions/05-pushforward-and-the-law.md)).
+Notation first, in words. The river is the **outcome space** $\Omega$ (omega), here the interval [0, 1] in km, and a mooring point is $\omega$. The sets we allow ourselves to measure are the Borel sets of [0, 1], written $\mathcal F$. The probability $P$ gives each such set its length, so $P$ of the whole river is 1. The depth under the boat is the function $X(\omega) = 4\omega(1-\omega)$. A **random variable** is a measurable function on $\Omega$, and $X$ is one because it is continuous. A **Borel function** $g$ on the line is one for which every set $\{t : g(t) \in B\}$ with B Borel is itself Borel. $\int X\,dP$ is the integral of X against P, built on this shelf from simple functions ([The integral of a non-negative function](02-integral-of-a-nonnegative-function.md)). The **law** of X, $\mu_X = P\circ X^{-1}$, is the probability on the depth line that gives a set B of depths the probability that the depth lands in B ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)).
 
 The definition:
 
 $$E[X] \;=\; \int_\Omega X\,dP ,$$
 
-for $X \ge 0$ (the value $+\infty$ allowed) or for $X$ integrable, meaning $\int_\Omega \lvert X\rvert\,dP < \infty$ ([integrable-functions-and-l1](04-integrable-functions-and-l1.md)).
+for $X \ge 0$ (the value $+\infty$ allowed) or for $X$ integrable, meaning $\int_\Omega \lvert X\rvert\,dP < \infty$ ([Integrable functions](04-integrable-functions-and-l1.md)).
 
 **Read it aloud:** the expected value of X is the integral of X against the probability, over all outcomes.
 
@@ -115,7 +89,7 @@ The whole proof rests on one line. "Is the depth in B?" is a yes-or-no question 
 
 ### Step 1: the expectation on the river
 
-$X$ is continuous and bounded, so it is measurable and integrable. For a continuous function on a closed interval the Lebesgue integral equals the Riemann integral ([riemann-meets-lebesgue](05-riemann-meets-lebesgue.md)), so
+$X$ is continuous and bounded, so it is measurable and integrable. For a continuous function on a closed interval the Lebesgue integral equals the Riemann integral ([Riemann meets Lebesgue](05-riemann-meets-lebesgue.md)), so
 
 $$E[X] = \int_0^1 (4\omega - 4\omega^2)\,d\omega = 2 - \tfrac43 = \tfrac23\ \text{m}.$$
 
@@ -125,17 +99,17 @@ The second moment is the same kind of polynomial integral: $16\int_0^1 \omega^2(
 
 A depth gauge marked only in quarter metres reads the depth rounded down: the reading is $R = g(X)$ with $g(t)$ the largest multiple of 0.25 at most t. This $g$ is simple: finitely many values, each on a Borel set of depths. The reading is 0.75 m exactly when the depth is at least 0.75 m. On the river that is the stretch 0.25 to 0.75 km, of length 0.5. On the line it is $\mu_X([0.75, 1])$, which is 0.5 because the law is defined that way.
 
-Each value of a simple function carries its indicator across, and the integral of a simple function is linear ([integral-of-a-simple-function](01-integral-of-a-simple-function.md)), so the whole reading carries across:
+Each value of a simple function carries its indicator across, and the integral of a simple function is linear ([The integral of a simple function](01-integral-of-a-simple-function.md)), so the whole reading carries across:
 
 $$E[R] = 0 \times 0.1340 + 0.25 \times 0.1589 + 0.5 \times 0.2071 + 0.75 \times 0.5000 = 0.5183\ \text{m}.$$
 
-That line is the probability wing's sum formula. Here it is a theorem about one integral, not a separate definition. It is also the quarter-metre staircase of [integral-of-a-simple-function](01-integral-of-a-simple-function.md), 0.5183, read as an average instead of an area.
+That line is the probability wing's sum formula. Here it is a theorem about one integral, not a separate definition. It is also the quarter-metre staircase of [The integral of a simple function](01-integral-of-a-simple-function.md), 0.5183, read as an average instead of an area.
 
 ### Step 3: non-negative functions, by monotone limits
 
-Refine the gauge: the reading rounded down to $2^{-n}$ m is a simple function $s_n$ of the depth, and it rises to the true depth as n grows, never overshooting and never more than $2^{-n}$ below. The monotone convergence theorem ([monotone-convergence-theorem](03-monotone-convergence-theorem.md)) lets the limit pass through the integral on each side. Each $s_n$ transfers by Step 2, so the limits agree.
+Refine the gauge: the reading rounded down to $2^{-n}$ m is a simple function $s_n$ of the depth, and it rises to the true depth as n grows, never overshooting and never more than $2^{-n}$ below. The monotone convergence theorem ([The monotone convergence theorem](03-monotone-convergence-theorem.md)) lets the limit pass through the integral on each side. Each $s_n$ transfers by Step 2, so the limits agree.
 
-Each mark the depth reaches adds $2^{-n}$ to the reading, so the gauge's average is $2^{-n}$ times the sum, over the marks t, of $P(X \ge t)$. The code finds each $P(X \ge t)$ twice: on the river, by measuring the stretch at least t deep, and on the line, from the law's tail $\sqrt{1-t}$. With infinitely fine marks the sum becomes $\int_0^1 P(X \ge t)\,dt = 2/3$, proved in general in [layer-cake-and-tail-integrals](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md).
+Each mark the depth reaches adds $2^{-n}$ to the reading, so the gauge's average is $2^{-n}$ times the sum, over the marks t, of $P(X \ge t)$. The code finds each $P(X \ge t)$ twice: on the river, by measuring the stretch at least t deep, and on the line, from the law's tail $\sqrt{1-t}$. With infinitely fine marks the sum becomes $\int_0^1 P(X \ge t)\,dt = 2/3$, proved in general in [The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md).
 
 | gauge step | on the river | against the law | short of 2/3 by |
 | --- | --- | --- | --- |
@@ -167,7 +141,7 @@ xychart-beta
 
 Caption: the orange curve is the law's distribution function $1 - \sqrt{1-t}$, plotted to two decimals, which both checks also measure on the river; the green line is what a depth spread evenly over 0 to 1 m would give. The law lies below the line: less probability on shallow water, more on deep.
 
-A density turns the law into length weighted by f. For an indicator that is the definition of a density; the ladder of Steps 2 to 4 carries it to every g. So $E[g(X)] = \int g(t) f(t)\,dt$, the probability wing's density formula ([densities-and-cdfs](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)). On the river, put $u = \sqrt{1-t}$; then $t^k f(t)\,dt$ becomes $(1-u^2)^k\,du$, and
+A density turns the law into length weighted by f. For an indicator that is the definition of a density; the ladder of Steps 2 to 4 carries it to every g. So $E[g(X)] = \int g(t) f(t)\,dt$, the probability wing's density formula ([Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)). On the river, put $u = \sqrt{1-t}$; then $t^k f(t)\,dt$ becomes $(1-u^2)^k\,du$, and
 
 $$E[X] = \int_0^1 (1 - u^2)\,du = \tfrac23, \qquad E[X^2] = \int_0^1 (1-u^2)^2\,du = 1 - \tfrac23 + \tfrac15 = \tfrac{8}{15}.$$
 
@@ -184,21 +158,21 @@ a standard deviation of 0.2981 m. Linearity needs $X^2$ integrable; a bounded de
 <details>
 <summary>Detailed proof</summary>
 
-Setting: $(\Omega, \mathcal F, P)$ a probability space, $X$ an $\mathcal F$-measurable real function, $\mu_X(B) = P(X^{-1}(B))$ for Borel $B$, a probability on $\mathcal B(\mathbb R)$ ([pushforward-and-the-law](../03-Measurable%20Functions/05-pushforward-and-the-law.md)).
+Setting: $(\Omega, \mathcal F, P)$ a probability space, $X$ an $\mathcal F$-measurable real function, $\mu_X(B) = P(X^{-1}(B))$ for Borel $B$, a probability on $\mathcal B(\mathbb R)$ ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)).
 
-**Claim 1: indicators.** For Borel $B$, $\mathbf 1_B(X(\omega)) = 1$ exactly when $\omega \in X^{-1}(B)$, so $\mathbf 1_B \circ X = \mathbf 1_{X^{-1}(B)}$. The integral of an indicator is the measure of its set ([integral-of-a-simple-function](01-integral-of-a-simple-function.md)), so $\int \mathbf 1_B \circ X\,dP = P(X^{-1}(B)) = \mu_X(B) = \int \mathbf 1_B\,d\mu_X$.
+**Claim 1: indicators.** For Borel $B$, $\mathbf 1_B(X(\omega)) = 1$ exactly when $\omega \in X^{-1}(B)$, so $\mathbf 1_B \circ X = \mathbf 1_{X^{-1}(B)}$. The integral of an indicator is the measure of its set ([The integral of a simple function](01-integral-of-a-simple-function.md)), so $\int \mathbf 1_B \circ X\,dP = P(X^{-1}(B)) = \mu_X(B) = \int \mathbf 1_B\,d\mu_X$.
 
 **Claim 2: simple functions.** Let $g = \sum_{i=1}^m a_i \mathbf 1_{B_i}$ with $a_i \ge 0$ and $B_i$ Borel. Then $g \circ X = \sum a_i \mathbf 1_{X^{-1}(B_i)}$, a non-negative simple function on $\Omega$, since each $X^{-1}(B_i)$ is in $\mathcal F$. The integral of a simple function does not depend on how it is written and is linear (same card), so $\int g\circ X\,dP = \sum a_i P(X^{-1}(B_i)) = \sum a_i \mu_X(B_i) = \int g\,d\mu_X$ by Claim 1.
 
-**Claim 3: non-negative Borel g, values in $[0, \infty]$.** Let $s_n = \min\big(n, 2^{-n}\lfloor 2^n g\rfloor\big)$. Each $s_n$ is simple and Borel, and $s_n \uparrow g$ pointwise ([simple-functions-and-approximation](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). Then $s_n \circ X \uparrow g \circ X$ at every $\omega$. By the monotone convergence theorem on $(\Omega, P)$ and again on $(\mathbb R, \mu_X)$ ([monotone-convergence-theorem](03-monotone-convergence-theorem.md)), $\int g\circ X\,dP = \lim_n \int s_n\circ X\,dP = \lim_n \int s_n\,d\mu_X = \int g\,d\mu_X$, the middle equality by Claim 2. Both sides may be $+\infty$, and then both are.
+**Claim 3: non-negative Borel g, values in $[0, \infty]$.** Let $s_n = \min\big(n, 2^{-n}\lfloor 2^n g\rfloor\big)$. Each $s_n$ is simple and Borel, and $s_n \uparrow g$ pointwise ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)). Then $s_n \circ X \uparrow g \circ X$ at every $\omega$. By the monotone convergence theorem on $(\Omega, P)$ and again on $(\mathbb R, \mu_X)$ ([The monotone convergence theorem](03-monotone-convergence-theorem.md)), $\int g\circ X\,dP = \lim_n \int s_n\circ X\,dP = \lim_n \int s_n\,d\mu_X = \int g\,d\mu_X$, the middle equality by Claim 2. Both sides may be $+\infty$, and then both are.
 
-**Claim 4: integrable g.** Claim 3 for $\lvert g\rvert$ gives $\int \lvert g\circ X\rvert\,dP = \int \lvert g\rvert\,d\mu_X$, so one is finite exactly when the other is. Write $g = g^+ - g^-$ with $g^+ = \max(g, 0)$ and $g^- = \max(-g, 0)$; then $(g\circ X)^\pm = g^\pm \circ X$. Claim 3 for each part gives equal finite integrals on both sides, and the integral of an integrable function is the difference of its parts' integrals ([integrable-functions-and-l1](04-integrable-functions-and-l1.md)).
+**Claim 4: integrable g.** Claim 3 for $\lvert g\rvert$ gives $\int \lvert g\circ X\rvert\,dP = \int \lvert g\rvert\,d\mu_X$, so one is finite exactly when the other is. Write $g = g^+ - g^-$ with $g^+ = \max(g, 0)$ and $g^- = \max(-g, 0)$; then $(g\circ X)^\pm = g^\pm \circ X$. Claim 3 for each part gives equal finite integrals on both sides, and the integral of an integrable function is the difference of its parts' integrals ([Integrable functions](04-integrable-functions-and-l1.md)).
 
 **Claim 5: the sum formula.** Suppose $\mu_X(S) = 1$ for a countable set $S = \{x_1, x_2, \ldots\}$, with $p_i = \mu_X(\{x_i\})$. For $g \ge 0$, $g\,\mathbf 1_S = \sum_i g(x_i)\mathbf 1_{\{x_i\}}$, and the partial sums rise to it; Claim 2 and monotone convergence give $\int g\,\mathbf 1_S\,d\mu_X = \sum_i g(x_i)p_i$. Off $S$ the law has measure zero, so the integral of $g\,\mathbf 1_{\mathbb R\setminus S}$ is 0. Signed g follows by Claim 4.
 
 **Claim 6: the density formula.** Suppose $f \ge 0$ is Borel and $\mu_X(B) = \int_B f\,d\lambda$ for every Borel $B$. For $g = \mathbf 1_B$ this is $\int g\,d\mu_X = \int g f\,d\lambda$. Linearity extends it to simple g; for $g \ge 0$, $s_n f \uparrow g f$, so monotone convergence on both sides extends it; Claim 4's splitting handles g with $\int \lvert g\rvert f\,d\lambda < \infty$.
 
-**Claim 7: the river's law has density $f(t) = 1/(2\sqrt{1-t})$ on [0, 1).** For $0 \le t \le 1$, $4\omega(1-\omega) \le t$ iff $4\omega^2 - 4\omega + t \ge 0$ iff $\omega \le a$ or $\omega \ge 1 - a$, with $a = (1 - \sqrt{1-t})/2$ the smaller root. So $F_X(t) = 2a = 1 - \sqrt{1-t}$, with $F_X(t) = 0$ below 0 and 1 above 1. For $t < 1$, $\int_0^t f\,d\lambda = 1 - \sqrt{1-t}$ by the fundamental theorem of calculus, and at $t = 1$ monotone convergence gives 1. So the law and the measure $B \mapsto \int_B f\,d\lambda$ agree on every ray $(-\infty, t]$. The rays form a pi-system generating the Borel sets, and two probabilities agreeing on such a pi-system agree on all Borel sets ([pi-systems-and-uniqueness](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)).
+**Claim 7: the river's law has density $f(t) = 1/(2\sqrt{1-t})$ on [0, 1).** For $0 \le t \le 1$, $4\omega(1-\omega) \le t$ iff $4\omega^2 - 4\omega + t \ge 0$ iff $\omega \le a$ or $\omega \ge 1 - a$, with $a = (1 - \sqrt{1-t})/2$ the smaller root. So $F_X(t) = 2a = 1 - \sqrt{1-t}$, with $F_X(t) = 0$ below 0 and 1 above 1. For $t < 1$, $\int_0^t f\,d\lambda = 1 - \sqrt{1-t}$ by the fundamental theorem of calculus, and at $t = 1$ monotone convergence gives 1. So the law and the measure $B \mapsto \int_B f\,d\lambda$ agree on every ray $(-\infty, t]$. The rays form a pi-system generating the Borel sets, and two probabilities agreeing on such a pi-system agree on all Borel sets ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)).
 
 **Claim 8: the moments on the line.** For $k \ge 1$ and $0 < \varepsilon < 1$, the substitution $u = \sqrt{1-t}$ on $[0, 1-\varepsilon]$ gives $\int_0^{1-\varepsilon} t^k f(t)\,dt = \int_{\sqrt\varepsilon}^1 (1-u^2)^k\,du$, since $dt = -2u\,du$ and $f(t) = 1/(2u)$. The integrand is non-negative, so monotone convergence as $\varepsilon \to 0$ gives $E[X^k] = \int_0^1 (1-u^2)^k\,du$. Expanding by the binomial theorem: $1 - \tfrac13 = \tfrac23$ for $k = 1$ and $1 - \tfrac23 + \tfrac15 = \tfrac8{15}$ for $k = 2$.
 
@@ -592,7 +566,7 @@ The two outputs match line for line. The simulation's mean, 0.6675 m, sits withi
 - **Simulation.** A Monte Carlo estimate averages g of simulated draws; it approximates the integral on the outcome space and needs no formula for the law. 100000 boats gave 0.6675 m.
 - **Hydraulics.** Mean depth times width is the cross-section area: 2/3 m times 1000 m is 666.67 m^2, the same integral with length in place of probability.
 - **Insurance and risk.** An expected loss is computed from the loss distribution, the law, without modelling every state of the world behind it.
-- **Pricing.** A derivative's price is an expectation under a second probability on the same outcomes; the integral against a changed measure is [densities-and-likelihood-ratios](../08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md).
+- **Pricing.** A derivative's price is an expectation under a second probability on the same outcomes; the integral against a changed measure is [Densities and likelihood ratios](../08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md).
 
 > **Say it back**
 > The expectation of a random quantity is its integral against the probability on the outcomes. Its law moves that probability onto the line, and the change of variables formula says any Borel function of the quantity can be averaged there instead. The proof climbs from yes-or-no questions, where the law is defined to agree, through simple functions and monotone limits to signed integrable functions. The sum and density formulas are the two commonest laws; variance and moments are more integrals of the same kind. A boat moored at random on the river sits over 2/3 m of water on average, with variance 4/45 m^2, by either road.
@@ -601,23 +575,23 @@ The two outputs match line for line. The simulation's mean, 0.6675 m, sits withi
 
 ## What this builds on
 
-- [integrable-functions-and-l1](04-integrable-functions-and-l1.md): the integral of a signed function through its positive and negative parts, and when it is finite.
-- [pushforward-and-the-law](../03-Measurable%20Functions/05-pushforward-and-the-law.md): the law of X as a measure on the line.
-- [variance-and-standard-deviation](../../09-Probability%20and%20statistics/02-Random%20Variables/03-variance-and-standard-deviation.md): variance as the average squared distance from the mean, and its shortcut.
-- [densities-and-cdfs](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md): distribution functions and densities, used without measure.
-- [expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md): expectation as a weighted sum and a density integral, the two cases this card unifies.
+- [Integrable functions](04-integrable-functions-and-l1.md): the integral of a signed function through its positive and negative parts, and when it is finite.
+- [The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md): the law of X as a measure on the line.
+- [Variance](../../09-Probability%20and%20statistics/02-Random%20Variables/03-variance-and-standard-deviation.md): variance as the average squared distance from the mean, and its shortcut.
+- [Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md): distribution functions and densities, used without measure.
+- [Expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/02-expectation.md): expectation as a weighted sum and a density integral, the two cases this card unifies.
 
 ## Where this goes next
 
-- [markov-and-chebyshev](07-markov-and-chebyshev.md): an expectation bounds the probability of large values.
-- [layer-cake-and-tail-integrals](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md): the expectation as the integral of the tail probability.
-- [jensens-inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md): why E[X^2] beats (E[X])^2, and every convex function does the same.
-- [densities-and-likelihood-ratios](../08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): when a law has a density, and averaging under a changed probability.
-- [conditioning-on-a-partition](../09-Conditional%20Expectation/01-conditioning-on-a-partition.md): expectations taken separately on each piece of a partition of the outcomes.
-- states-representations-and-the-gns-construction: expectation as a positive linear functional of total 1, a state.
-- characteristic-functions-in-depth: E[e^(iuX)], one integral against the law that determines the law.
+- [Markov and Chebyshev](07-markov-and-chebyshev.md): an expectation bounds the probability of large values.
+- [The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md): the expectation as the integral of the tail probability.
+- [Jensen's inequality](../07-Sizes%20of%20Functions/04-jensens-inequality.md): why E[X^2] beats (E[X])^2, and every convex function does the same.
+- [Densities and likelihood ratios](../08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): when a law has a density, and averaging under a changed probability.
+- [Conditioning on a partition](../09-Conditional%20Expectation/01-conditioning-on-a-partition.md): expectations taken separately on each piece of a partition of the outcomes.
+- States: expectation as a positive linear functional of total 1, a state.
+- Characteristic functions: E[e^(iuX)], one integral against the law that determines the law.
 
-The expectation is one number, 2/3 m; how rarely the depth can stray far from it, and how the variance 4/45 m^2 limits that, is [markov-and-chebyshev](07-markov-and-chebyshev.md).
+The expectation is one number, 2/3 m; how rarely the depth can stray far from it, and how the variance 4/45 m^2 limits that, is [Markov and Chebyshev](07-markov-and-chebyshev.md).
 
 ---
 

@@ -1,26 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Sizes of Functions
-topic: Convex curves under an integral
-item: Jensen's inequality
-kind: theorem
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/01-lp-spaces|lp-spaces]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/06-expectation-as-an-integral|expectation-as-an-integral]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/09-convex-functions|convex-functions]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/06-jensens-inequality|jensens-inequality]]"
-next:
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/06-densities-and-likelihood-ratios|densities-and-likelihood-ratios]]"
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/04-rules-of-conditional-expectation|rules-of-conditional-expectation]]"
-tags: [mathematics, measure and integration, jensens-inequality]
----
-
 # Jensen's inequality: a convex function of an average never exceeds the average of the function, and moments nest on a probability space
 
-Measure and integration → Sizes of Functions → Convex curves under an integral → Jensen's inequality
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sizes of Functions](../../../SYLLABUS.md#w10-s07) → Jensen's inequality
 
 ---
 
@@ -30,7 +10,7 @@ A wind turbine logs one mean speed per day for a week: 3, 5, 8, 2, 6, 4 and 7 me
 
 Feed the average speed into the cube and a steady 5 m/s wind gives 5 × 5 × 5 = 125. Cube each day's speed first and average the seven cubes, and the week gives 185. With air at 1.225 kg per cubic metre, that is 76.56 watts per square metre from the steady wind against 113.31 watts from the real week. A forecast built on the average speed misses 60 of every 185 units. The calm days cannot pay back what the windy days add, because the cube bends upward.
 
-The probability wing proves this for random variables with a list of values or a density ([jensens-inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)). This card proves it for any integrable function on any space of total size 1, reads off three consequences, and shows it failing on a space of total size 7 or of infinite size.
+The probability wing proves this for random variables with a list of values or a density ([Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)). This card proves it for any integrable function on any space of total size 1, reads off three consequences, and shows it failing on a space of total size 7 or of infinite size.
 
 **On a space of total size 1, a function that bends upward, applied after integrating, gives at most what it gives applied before integrating; the one line that proves it uses the total size exactly twice.**
 
@@ -55,7 +35,7 @@ Orange is the cube. Green is the straight line touching it at the mean speed 5, 
 
 ## The formula
 
-Notation, as a reminder. A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the sets we allow ourselves to measure, and a measure giving each a size. A probability measure $P$ has total size $P(\Omega) = 1$. The integral $\int f \, dP$, read "the integral of f against P", is also written $E[f]$, the mean of f ([expectation-as-an-integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)). $L^1(P)$ is the set of measurable functions with $\int \lvert f \rvert \, dP$ finite. A function $\varphi$ on an interval is **convex** when each chord between two points of its graph lies on or above the graph ([convex-functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)); **strictly convex** when the chord lies strictly above except at its ends. $\varphi \circ f$, read "phi after f", is the function that sends a point $\omega$ to $\varphi(f(\omega))$.
+Notation, as a reminder. A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of points, the sets we allow ourselves to measure, and a measure giving each a size. A probability measure $P$ has total size $P(\Omega) = 1$. The integral $\int f \, dP$, read "the integral of f against P", is also written $E[f]$, the mean of f ([Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md)). $L^1(P)$ is the set of measurable functions with $\int \lvert f \rvert \, dP$ finite. A function $\varphi$ on an interval is **convex** when each chord between two points of its graph lies on or above the graph ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)); **strictly convex** when the chord lies strictly above except at its ends. $\varphi \circ f$, read "phi after f", is the function that sends a point $\omega$ to $\varphi(f(\omega))$.
 
 On the turbine, $\Omega$ is the seven days, $\mathcal{F}$ is every subset of them, $P$ gives each day 1/7, and $f$ is the day's speed; its integral is a weighted sum of seven values.
 
@@ -73,7 +53,7 @@ $$\Big(\int f \, dP\Big)^2 \le \int f^2 \, dP, \qquad \exp\Big(\int \ln f \, dP\
 
 **Read them aloud:** the square of the mean is at most the mean of the square; the geometric mean, e raised to the mean logarithm, is at most the ordinary mean; the p-norm grows with p.
 
-The p-norm, from [lp-spaces](01-lp-spaces.md), is $\lVert f \rVert_p = \big(\int \lvert f \rvert^p \, dP\big)^{1/p}$. The third inequality is **Lyapunov's inequality**: on a probability space $L^q(P)$ sits inside $L^p(P)$ whenever $p < q$.
+The p-norm, from [Lp spaces](01-lp-spaces.md), is $\lVert f \rVert_p = \big(\int \lvert f \rvert^p \, dP\big)^{1/p}$. The third inequality is **Lyapunov's inequality**: on a probability space $L^q(P)$ sits inside $L^p(P)$ whenever $p < q$.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -104,7 +84,7 @@ The p-norm, from [lp-spaces](01-lp-spaces.md), is $\lVert f \rVert_p = \big(\int
 
 ### Step 0: a straight line passes through an integral unchanged
 
-For a line $\ell(x) = \alpha + \beta x$, with height $\alpha$ at 0 and slope $\beta$, integrating against $P$ gives $\int (\alpha + \beta f) \, dP = \alpha\,P(\Omega) + \beta \int f \, dP$ by linearity ([integrable-functions-and-l1](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). When $P(\Omega) = 1$, that is $\ell$ of the mean. Only bending breaks the swap. So slide a straight line under the convex curve, touching it at the mean, and let the line do the integrating.
+For a line $\ell(x) = \alpha + \beta x$, with height $\alpha$ at 0 and slope $\beta$, integrating against $P$ gives $\int (\alpha + \beta f) \, dP = \alpha\,P(\Omega) + \beta \int f \, dP$ by linearity ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)). When $P(\Omega) = 1$, that is $\ell$ of the mean. Only bending breaks the swap. So slide a straight line under the convex curve, touching it at the mean, and let the line do the integrating.
 
 ### Step 1: a convex curve has a line under it at the mean
 
@@ -124,7 +104,7 @@ On the week: the line averages to 125, the gaps average to 60, and 125 + 60 = 18
 
 ### Step 3: equality forces the function to sit still
 
-The gap $g = \varphi \circ f - \ell \circ f$ is never negative, and its integral is $\int \varphi \circ f \, dP - \varphi(m)$. If Jensen is an equality with a finite right side, $g$ has integral zero, so $g = 0$ almost surely ([integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). A strictly convex curve meets a supporting line only at $m$, so $f = m$ almost surely. For the cube, the week's gaps are zero only on the day that blew exactly 5 m/s.
+The gap $g = \varphi \circ f - \ell \circ f$ is never negative, and its integral is $\int \varphi \circ f \, dP - \varphi(m)$. If Jensen is an equality with a finite right side, $g$ has integral zero, so $g = 0$ almost surely ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). A strictly convex curve meets a supporting line only at $m$, so $f = m$ almost surely. For the cube, the week's gaps are zero only on the day that blew exactly 5 m/s.
 
 ### Step 4: three corollaries, three choices of curve
 
@@ -144,14 +124,14 @@ xychart-beta
     line [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
 ```
 
-Orange is the p-norm under $P$, with the geometric mean 4.55 at the left: it is the limit of the p-norm as p falls to 0, and the first step, from 4.55 to 5.00, is the arithmetic-geometric mean inequality. Green is the largest speed, 8 m/s, which the norm approaches as p grows ([lp-spaces](01-lp-spaces.md)). Every later step up is Lyapunov's inequality. The axis spaces the powers evenly although they are not (after 4 they jump to 6, 8, 12, 16, 24, 32), so the curve looks straighter than it is against p.
+Orange is the p-norm under $P$, with the geometric mean 4.55 at the left: it is the limit of the p-norm as p falls to 0, and the first step, from 4.55 to 5.00, is the arithmetic-geometric mean inequality. Green is the largest speed, 8 m/s, which the norm approaches as p grows ([Lp spaces](01-lp-spaces.md)). Every later step up is Lyapunov's inequality. The axis spaces the powers evenly although they are not (after 4 they jump to 6, 8, 12, 16, 24, 32), so the curve looks straighter than it is against p.
 
 <details>
 <summary>Detailed proof</summary>
 
 **Setting.** $(\Omega, \mathcal{F}, P)$ is a probability space. $I$ is an interval, $\varphi : I \to \mathbb{R}$ is convex, and $f : \Omega \to I$ is measurable with respect to $\mathcal{F}$ with $\int \lvert f \rvert \, dP < \infty$. Put $m = \int f \, dP$.
 
-**1. The mean lies in $I$.** If $I$ has a lower end $a$, then $f \ge a$, and monotonicity with $P(\Omega) = 1$ gives $m \ge a$. If $a$ is excluded from $I$ and $m = a$, then $f - a \ge 0$ has integral 0, so $f = a$ a.s. ([integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), impossible since $f > a$ everywhere and $P(\Omega) = 1 > 0$. The upper end is the same. If $m$ is an included end, the same argument gives $f = m$ a.s., both sides equal $\varphi(m)$, and the theorem holds. From here $m$ is inside $I$.
+**1. The mean lies in $I$.** If $I$ has a lower end $a$, then $f \ge a$, and monotonicity with $P(\Omega) = 1$ gives $m \ge a$. If $a$ is excluded from $I$ and $m = a$, then $f - a \ge 0$ has integral 0, so $f = a$ a.s. ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), impossible since $f > a$ everywhere and $P(\Omega) = 1 > 0$. The upper end is the same. If $m$ is an included end, the same argument gives $f = m$ a.s., both sides equal $\varphi(m)$, and the theorem holds. From here $m$ is inside $I$.
 
 **2. $\varphi \circ f$ is measurable.** For $x < y < z$ in $I$, writing $y$ as a weighted average of $x$ and $z$ in the chord inequality gives $\frac{\varphi(y) - \varphi(x)}{y - x} \le \frac{\varphi(z) - \varphi(x)}{z - x} \le \frac{\varphi(z) - \varphi(y)}{z - y}$. On a closed interval $[u, v]$ strictly inside $I$, with points $u' < u$ and $v' > v$ of $I$, every slope between two points of $[u, v]$ is therefore at least the slope from $u'$ to $u$ and at most the slope from $v$ to $v'$. So the slopes of $\varphi$ on $[u, v]$ are bounded (it is Lipschitz there), hence $\varphi$ is continuous on the inside of $I$. The set $\{\varphi > t\}$ is then an open subset of the inside of $I$ together with at most the two ends, a Borel set; so $\varphi$ is Borel measurable and $\varphi \circ f$ is measurable with respect to $\mathcal{F}$.
 
@@ -159,7 +139,7 @@ Orange is the p-norm under $P$, with the geometric mean 4.55 at the left: it is 
 
 **4. The integral of $\varphi \circ f$ exists.** $\lvert \ell \circ f \rvert \le \lvert \varphi(m) \rvert + \lvert s \rvert\,\lvert m \rvert + \lvert s \rvert\,\lvert f \rvert$, whose integral is finite because $P(\Omega) = 1$ and $f \in L^1(P)$. Since $\varphi \circ f \ge \ell \circ f$, the negative part of $\varphi \circ f$ is at most $\lvert \ell \circ f \rvert$ and has finite integral. So $\int \varphi \circ f \, dP$ is defined, as a number or $+\infty$.
 
-**5. Jensen.** If the right side is $+\infty$ there is nothing to prove. Otherwise $\varphi \circ f$ and $\ell \circ f$ are both integrable, and monotonicity with linearity ([integrable-functions-and-l1](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)) gives $\int \varphi \circ f \, dP \ge \int \ell \circ f \, dP = \varphi(m) + s(m - m) = \varphi(m)$.
+**5. Jensen.** If the right side is $+\infty$ there is nothing to prove. Otherwise $\varphi \circ f$ and $\ell \circ f$ are both integrable, and monotonicity with linearity ([Integrable functions](../04-The%20Lebesgue%20Integral/04-integrable-functions-and-l1.md)) gives $\int \varphi \circ f \, dP \ge \int \ell \circ f \, dP = \varphi(m) + s(m - m) = \varphi(m)$.
 
 **6. Equality.** Let $\varphi$ be strictly convex. The function $g = \varphi \circ f - \ell \circ f \ge 0$ has integral $\int \varphi \circ f \, dP - \varphi(m)$. If this is 0, then $g = 0$ a.s. If $\varphi(x) = \ell(x)$ at some $x \ne m$, the chord from $m$ to $x$ lies on or above $\varphi$, and $\varphi$ lies on or above $\ell$, which is that chord; so $\varphi$ is straight between $m$ and $x$, against strict convexity. Hence $g(\omega) = 0$ only where $f(\omega) = m$, and $f = m$ a.s. Conversely $f = m$ a.s. makes both sides $\varphi(m)$.
 
@@ -167,7 +147,7 @@ Orange is the p-norm under $P$, with the geometric mean 4.55 at the left: it is 
 
 </details>
 
-A second road to Lyapunov goes through Hölder's inequality with the exponents $q/p$ and $q/(q - p)$, applied to $\lvert f \rvert^p$ times the constant 1: $\int \lvert f \rvert^p \, dP \le \big(\int \lvert f \rvert^q \, dP\big)^{p/q} P(\Omega)^{(q - p)/q}$, and the last factor is 1. Take the p-th root of both sides. It uses $P(\Omega) = 1$ in the same place, through the integral of the constant. The case p = 1 is worked on [holders-inequality](02-holders-inequality.md).
+A second road to Lyapunov goes through Hölder's inequality with the exponents $q/p$ and $q/(q - p)$, applied to $\lvert f \rvert^p$ times the constant 1: $\int \lvert f \rvert^p \, dP \le \big(\int \lvert f \rvert^q \, dP\big)^{p/q} P(\Omega)^{(q - p)/q}$, and the last factor is 1. Take the p-th root of both sides. It uses $P(\Omega) = 1$ in the same place, through the integral of the constant. The case p = 1 is worked on [Holder's inequality](02-holders-inequality.md).
 
 ---
 
@@ -566,8 +546,8 @@ The two outputs match line for line.
 - **Wind resource assessment.** Energy estimates cube each measured speed and then average; the ratio of the two orders, 1.4800 for this week, is what wind engineers call the energy pattern factor.
 - **Variance is never negative.** The square case is $\int f^2 \, dP \ge (\int f \, dP)^2$, and its gap is the variance, 4 on the week.
 - **Growth rates.** A portfolio's long-run growth factor is the geometric mean of its yearly factors, at or below their average.
-- **Moments in probability.** Lyapunov's inequality says a random variable with a finite variance has a finite mean, and with a finite fourth moment a finite variance; it is why $L^2(P) \subseteq L^1(P)$ on every probability space ([lp-spaces](01-lp-spaces.md)).
-- **Comparing two probability measures.** A density between two probability measures has mean 1, and Jensen on its logarithm shows the relative entropy between them is never negative ([densities-and-likelihood-ratios](../08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md)).
+- **Moments in probability.** Lyapunov's inequality says a random variable with a finite variance has a finite mean, and with a finite fourth moment a finite variance; it is why $L^2(P) \subseteq L^1(P)$ on every probability space ([Lp spaces](01-lp-spaces.md)).
+- **Comparing two probability measures.** A density between two probability measures has mean 1, and Jensen on its logarithm shows the relative entropy between them is never negative ([Densities and likelihood ratios](../08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md)).
 
 > **Say it back**
 > On a space of total size 1, a straight line passes through an integral unchanged. A convex curve has a straight line under it touching at the mean, so its integral is at least the line's, which is the curve at the mean. The square gives the variance, the logarithm gives the arithmetic-geometric mean inequality, and powers give Lyapunov's nesting of p-norms. The proof spends total size 1 twice; under counting measure or on the whole line it fails. The week's cube of the mean speed is 125 and its mean cube 185.
@@ -576,15 +556,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [lp-spaces](01-lp-spaces.md): the p-norm and the spaces $L^p$ that Lyapunov nests.
-- [expectation-as-an-integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md): the mean as an integral against a probability measure.
-- [convex-functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md): the chord definition of convexity and the ordering of slopes.
-- [jensens-inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md): the same inequality for random variables with a list of values or a density, with the supporting line built in full.
+- [Lp spaces](01-lp-spaces.md): the p-norm and the spaces $L^p$ that Lyapunov nests.
+- [Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md): the mean as an integral against a probability measure.
+- [Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md): the chord definition of convexity and the ordering of slopes.
+- [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md): the same inequality for random variables with a list of values or a density, with the supporting line built in full.
 
 ## Where this goes next
 
-- [densities-and-likelihood-ratios](../08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): a likelihood ratio has mean 1 under its base measure, so by Jensen its logarithm has mean at most 0.
-- [rules-of-conditional-expectation](../09-Conditional%20Expectation/04-rules-of-conditional-expectation.md): the same inequality with the mean replaced by a conditional mean given partial information.
+- [Densities and likelihood ratios](../08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): a likelihood ratio has mean 1 under its base measure, so by Jensen its logarithm has mean at most 0.
+- [The rules of conditional expectation](../09-Conditional%20Expectation/04-rules-of-conditional-expectation.md): the same inequality with the mean replaced by a conditional mean given partial information.
 
 ---
 

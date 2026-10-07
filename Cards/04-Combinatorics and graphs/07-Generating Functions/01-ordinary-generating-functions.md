@@ -1,30 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Generating Functions
-topic: A list stored in the exponents
-item: Generating functions
-kind: definition
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/02-binomial-theorem|binomial-theorem]]"
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/01-recurrences-and-fibonacci|recurrences-and-fibonacci]]"
-  - "[[Cards/03-Algebra/02-Polynomials/01-polynomials|polynomials]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/07-Generating Functions/02-counting-with-generating-functions|counting-with-generating-functions]]"
-  - "[[Cards/04-Combinatorics and graphs/07-Generating Functions/03-generating-functions-solve-recurrences|generating-functions-solve-recurrences]]"
-  - "[[Cards/04-Combinatorics and graphs/07-Generating Functions/04-exponential-generating-functions|exponential-generating-functions]]"
-  - "[[Cards/04-Combinatorics and graphs/07-Generating Functions/05-catalan-generating-function|catalan-generating-function]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - ordinary-generating-functions
----
-
 # Generating functions: hang a sequence on powers of x, and adding or multiplying series does the counting
 
-Combinatorics and graphs → Generating Functions → A list stored in the exponents → Generating functions
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Generating Functions](../../../SYLLABUS.md#w04-s07) → Generating functions
 
 ---
 
@@ -57,7 +33,7 @@ Each height is the number in front of that power of x in the die series squared.
 
 ## The formula
 
-A sequence is a list of numbers, one slot per whole-number size. Its **ordinary generating function** hangs the size-$n$ count on the $n$-th power of $x$. The sigma sign, met on [binomial-theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md), is shorthand for adding what follows over every size under it.
+A sequence is a list of numbers, one slot per whole-number size. Its **ordinary generating function** hangs the size-$n$ count on the $n$-th power of $x$. The sigma sign, met on [The binomial theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md), is shorthand for adding what follows over every size under it.
 
 $$A(x) = a_0 + a_1 x + a_2 x^2 + a_3 x^3 + \cdots = \sum_{n \ge 0} a_n x^n$$
 
@@ -87,7 +63,7 @@ That sum over splits is the lists' **convolution**, the word used from here on.
 ### When it holds
 
 - **The sizes must add.** Two pieces side by side make a thing of their combined size, one way only; the dice qualify, the faces adding to the total. Size $n$ has only $n + 1$ splits, so each coefficient is a finite sum.
-- **No labels reshuffled.** Pieces carrying labels dealt out among them need a binomial coefficient in the product instead: [exponential-generating-functions](04-exponential-generating-functions.md).
+- **No labels reshuffled.** Pieces carrying labels dealt out among them need a binomial coefficient in the product instead: [Exponential generating functions](04-exponential-generating-functions.md).
 - **A nonzero constant term, to invert.** 1 − x carries a 1 on the zeroth power, so something multiplies it to 1; one die's series starts at x, and nothing does.
 
 ---
@@ -100,7 +76,7 @@ x^3 times x^4 is x^7: three copies of x beside four makes seven. So when the exp
 
 ### Step 1: multiplying two series convolves the two lists
 
-Multiply out the way two polynomials do, every term of the first against every term of the second ([polynomials](../../03-Algebra/02-Polynomials/01-polynomials.md)). Each pair contributes its counts multiplied, on the power got by adding the exponents. Gather what landed on $x^n$: if the first exponent is $k$ the second is $n$ minus $k$, and adding those products gives $c_n$. For the dice at total 7 the first exponent runs 1 through 6, its partner always in range, each product 1 times 1: six splits, so 6. At 13 nothing works, and the series stops at the twelfth power.
+Multiply out the way two polynomials do, every term of the first against every term of the second ([Polynomials](../../03-Algebra/02-Polynomials/01-polynomials.md)). Each pair contributes its counts multiplied, on the power got by adding the exponents. Gather what landed on $x^n$: if the first exponent is $k$ the second is $n$ minus $k$, and adding those products gives $c_n$. For the dice at total 7 the first exponent runs 1 through 6, its partner always in range, each product 1 times 1: six splits, so 6. At 13 nothing works, and the series stops at the twelfth power.
 
 Read the same line as counting. A split with a size-$k$ first piece has $a_k$ times $b_{n-k}$ pairs, by the product rule; the splits are separate cases covering everything, so the sum rule adds them. Multiplying series is those two rules applied to every size at once, in advance.
 
@@ -120,7 +96,7 @@ Squaring the ones is the smallest convolution worth doing: every split of $n$ gi
 
 The dice cross-check a total instead of one coefficient: the eleven coefficients add to 36, and 6 faces times 6 faces is the same 36. Every pair of faces sits in one split, so the roads must agree.
 
-A different route reaches the ones from the other end: the list obeys a(n) = a(n−1) with a(0) = 1, and turning such a rule into an equation is the work of [generating-functions-solve-recurrences](03-generating-functions-solve-recurrences.md).
+A different route reaches the ones from the other end: the list obeys a(n) = a(n−1) with a(0) = 1, and turning such a rule into an equation is the work of [Solving a recurrence with a generating function](03-generating-functions-solve-recurrences.md).
 
 ---
 
@@ -367,9 +343,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Making change.** How many ways to pay 50 cents in pennies, nickels, dimes and quarters is one coefficient of a product of four series, one per coin: [counting-with-generating-functions](02-counting-with-generating-functions.md).
+- **Making change.** How many ways to pay 50 cents in pennies, nickels, dimes and quarters is one coefficient of a product of four series, one per coin: [Counting by multiplying series](02-counting-with-generating-functions.md).
 - **Signal processing and error-correcting codes.** Multiplying two polynomials is the arithmetic of convolving two sequences, which is how a filter combines a signal with its response.
-- **Structures built from copies of themselves.** A tree of smaller trees gets an equation for its series rather than a formula: [catalan-generating-function](05-catalan-generating-function.md).
+- **Structures built from copies of themselves.** A tree of smaller trees gets an equation for its series rather than a formula: [The Catalan generating function](05-catalan-generating-function.md).
 
 > **Say it back**
 > A list of counts can be written along the powers of a placeholder, one count per power; that object is the list's generating function. Adding two of them adds counts of the same size. Multiplying them adds up every way of splitting a size in two — "one piece and then another", in counting. The series of all 1s multiplies 1 − x to give 1, so it is written 1/(1 − x). Two dice are one series squared: a 6 on the seventh power, 36 in all.
@@ -378,16 +354,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [binomial-theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md): (1 + x)^m is already one of these series, with a row of Pascal's triangle as its coefficients; also where sigma notation starts.
-- [recurrences-and-fibonacci](../05-Recurrences/01-recurrences-and-fibonacci.md): sequences fixed by a rule reaching back over earlier terms — what this shelf packs into series.
-- [polynomials](../../03-Algebra/02-Polynomials/01-polynomials.md): collecting every pair of terms, this card's rule with the series cut short.
+- [The binomial theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md): (1 + x)^m is already one of these series, with a row of Pascal's triangle as its coefficients; also where sigma notation starts.
+- [Recurrences](../05-Recurrences/01-recurrences-and-fibonacci.md): sequences fixed by a rule reaching back over earlier terms — what this shelf packs into series.
+- [Polynomials](../../03-Algebra/02-Polynomials/01-polynomials.md): collecting every pair of terms, this card's rule with the series cut short.
 
 ## Where this goes next
 
-- [counting-with-generating-functions](02-counting-with-generating-functions.md): one factor per choice, the answer read off one coefficient.
-- [generating-functions-solve-recurrences](03-generating-functions-solve-recurrences.md): a recurrence turned into one equation for the series, then solved.
-- [exponential-generating-functions](04-exponential-generating-functions.md): the labelled version, a factorial under each count.
-- [catalan-generating-function](05-catalan-generating-function.md): a series pinned down by an equation in itself.
+- [Counting by multiplying series](02-counting-with-generating-functions.md): one factor per choice, the answer read off one coefficient.
+- [Solving a recurrence with a generating function](03-generating-functions-solve-recurrences.md): a recurrence turned into one equation for the series, then solved.
+- [Exponential generating functions](04-exponential-generating-functions.md): the labelled version, a factorial under each count.
+- [The Catalan generating function](05-catalan-generating-function.md): a series pinned down by an equation in itself.
 
 Every count here came off a product written down by hand for two dice; the next card supplies the recipe for choosing the factors, so that paying 50 cents becomes one multiplication.
 

@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Barriers, touches and lookbacks
-topic: Paying for hindsight
-item: Lookback options
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/05-one-touch-and-no-touch|one-touch-and-no-touch]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/04-reflection-principle-and-running-maximum|reflection-principle-and-running-maximum]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-next: []
-tags: [mathematics, financial mathematics, lookback-options]
----
-
 # Lookback options: buy at the lowest, sell at the highest, and what never regretting costs
 
-Financial mathematics → Barriers, touches and lookbacks → Paying for hindsight → Lookback options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Barriers, touches and lookbacks](../../../SYLLABUS.md#w12-s16) → Lookback options
 
 ---
 
@@ -53,7 +36,7 @@ First line: Acme's month-end price. Second line: the lowest price so far, which 
 
 ## The formula
 
-Notation first, in words. $S$ is Acme's price today and $m$ is the lowest price recorded so far; a fresh contract starts with $m = S$. $m_T$ is the lowest price over the whole life, recorded minimum included, and $M_T$ the highest. $E[\,\cdot\,]$ is an average in the pretend world where every asset grows at the bank rate (the risk-neutral world of [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The payoff is $S_T - m_T$, with no "if positive": the final price can never sit below the lowest price.
+Notation first, in words. $S$ is Acme's price today and $m$ is the lowest price recorded so far; a fresh contract starts with $m = S$. $m_T$ is the lowest price over the whole life, recorded minimum included, and $M_T$ the highest. $E[\,\cdot\,]$ is an average in the pretend world where every asset grows at the bank rate (the risk-neutral world of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The payoff is $S_T - m_T$, with no "if positive": the final price can never sit below the lowest price.
 
 $$C_{LB} = S e^{-qT} N(a_1) - m\, e^{-rT} N(a_2) + S e^{-rT}\frac{\sigma^2}{2b}\left[\left(\frac{S}{m}\right)^{-2b/\sigma^2} N(-a_3) - e^{bT} N(-a_1)\right]$$
 
@@ -105,7 +88,7 @@ The first term is the share paid for today and delivered at expiry, less the div
 
 ### Step 1: the chance that the low stays above a level
 
-Pick a level $h$ below today's price, say $90. The low stays above $90 exactly when the path never touches $90. That is a no-touch event, priced on [one-touch-and-no-touch](05-one-touch-and-no-touch.md). Its probability comes from the reflection principle ([reflection-principle-and-running-maximum](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)): every path that touches the level and ends above it is matched with a mirror-image path that ends below it. Subtracting the mirror paths leaves only the paths that never touched. In log terms, with drift $\nu = b - \tfrac12\sigma^2$:
+Pick a level $h$ below today's price, say $90. The low stays above $90 exactly when the path never touches $90. That is a no-touch event, priced on [One-touch and no-touch](05-one-touch-and-no-touch.md). Its probability comes from the reflection principle ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md)): every path that touches the level and ends above it is matched with a mirror-image path that ends below it. Subtracting the mirror paths leaves only the paths that never touched. In log terms, with drift $\nu = b - \tfrac12\sigma^2$:
 
 $$Q(h) = N\!\left(\frac{\ln(S/h) + \nu T}{\sigma\sqrt{T}}\right) - \left(\frac{h}{S}\right)^{2\nu/\sigma^2} N\!\left(\frac{\nu T - \ln(S/h)}{\sigma\sqrt{T}}\right).$$
 
@@ -121,7 +104,7 @@ This is the **layer-cake rule**: slice the minimum into thin horizontal layers a
 
 ### Step 3: two integrals of bell curves give the closed form
 
-Change variable from the level $h$ to its log distance below today, $u = \ln(S/h)$. The integral splits into two pieces: the ending-above term and the mirror term. Each is an exponential times a bell-curve area, integrated along a half-line. Integrating each by parts and completing the square, as [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) does for d1, turns each into bell-curve areas at the distances $a_1$, $a_2$ and $a_3$. Substituting into Step 0 gives the formula.
+Change variable from the level $h$ to its log distance below today, $u = \ln(S/h)$. The integral splits into two pieces: the ending-above term and the mirror term. Each is an exponential times a bell-curve area, integrated along a half-line. Integrating each by parts and completing the square, as [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) does for d1, turns each into bell-curve areas at the distances $a_1$, $a_2$ and $a_3$. Substituting into Step 0 gives the formula.
 
 <details>
 <summary>Detailed proof</summary>
@@ -162,11 +145,11 @@ The lookbacks top the shelf because each pays, on every path, at least what the 
 
 ### Step 5: daily watching sits lower, for the barrier's reason
 
-A minimum over 252 closing prices is never below the minimum over every instant, and usually above it: the true low falls between closes. A higher recorded low means a smaller payoff on every path. So the daily lookback is cheaper. This is the same mechanism as [discrete-monitoring-correction](03-discrete-monitoring-correction.md), turned around: there a missed touch makes a knock-out dearer, here a missed low makes the lookback cheaper.
+A minimum over 252 closing prices is never below the minimum over every instant, and usually above it: the true low falls between closes. A higher recorded low means a smaller payoff on every path. So the daily lookback is cheaper. This is the same mechanism as [Daily monitoring](03-discrete-monitoring-correction.md), turned around: there a missed touch makes a knock-out dearer, here a missed low makes the lookback cheaper.
 
 Broadie, Glasserman and Kou showed that, to first order in $\sqrt{\Delta t}$, the daily low behaves like the continuous low raised by the factor $e^{0.5826\,\sigma\sqrt{\Delta t}}$, with $\Delta t = 1/252$ a trading day. Applied to $E[m_T]$ this gives $15.37, against a simulated $15.38.
 
-The other door is the hedging equation. The Black-Scholes equation holds with the recorded minimum as a second variable; on the line where today's price equals the minimum, the price must not change when the minimum moves by a hair, because the minimum is only just being set. Solving that equation gives the same formula. The simulation road is [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md) with one addition: the exact continuous low of each path is drawn from its known law, not read off a grid.
+The other door is the hedging equation. The Black-Scholes equation holds with the recorded minimum as a second variable; on the line where today's price equals the minimum, the price must not change when the minimum moves by a hair, because the minimum is only just being set. Solving that equation gives the same formula. The simulation road is [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md) with one addition: the exact continuous low of each path is drawn from its known law, not read off a grid.
 
 ---
 
@@ -672,7 +655,7 @@ Top line: the fixed-strike lookback call, strike $100. Middle: the floating-stri
 ## Where you meet it in real life
 
 - **Structured notes.** Retail notes sometimes promise "the best level reached" on an index over a window, which is a fixed-strike lookback on the high, often with the high read monthly.
-- **Neighbours on this shelf.** The survival probability in Step 1 is the no-touch of [one-touch-and-no-touch](05-one-touch-and-no-touch.md). The ranking against the down-and-out uses [knock-out-and-knock-in-options](01-knock-out-and-knock-in-options.md), priced on [reiner-rubinstein-barrier-formulas](02-reiner-rubinstein-barrier-formulas.md). The daily discount is the lookback side of [discrete-monitoring-correction](03-discrete-monitoring-correction.md). A barrier's Greeks jump at the wall, [barrier-greeks-at-the-wall](04-barrier-greeks-at-the-wall.md); the lookback's stay smooth, because nothing is cancelled.
+- **Neighbours on this shelf.** The survival probability in Step 1 is the no-touch of [One-touch and no-touch](05-one-touch-and-no-touch.md). The ranking against the down-and-out uses [Knock-out and knock-in options](01-knock-out-and-knock-in-options.md), priced on [The eight barrier formulas](02-reiner-rubinstein-barrier-formulas.md). The daily discount is the lookback side of [Daily monitoring](03-discrete-monitoring-correction.md). A barrier's Greeks jump at the wall, [Barrier Greeks](04-barrier-greeks-at-the-wall.md); the lookback's stay smooth, because nothing is cancelled.
 
 > **Say it back**
 > A floating-strike lookback call pays the final price minus the lowest price, so it is always paid. Its price is the share, paid for today, minus today's value of the expected low. The reflection principle gives the chance the low stays above each level; adding those chances level by level gives the expected low, and two bell-curve integrals give the closed form: a vanilla struck at the low so far, plus an extra for lower lows to come. For Acme it costs $15.98 against the vanilla's $9.23. Watched once a day, it misses lows between closes and costs about $15.38.
@@ -681,13 +664,13 @@ Top line: the fixed-strike lookback call, strike $100. Middle: the floating-stri
 
 ## What this builds on
 
-- [one-touch-and-no-touch](05-one-touch-and-no-touch.md): the chance that Acme never touches a level. Integrated over every level, it becomes the expected low.
-- [reflection-principle-and-running-maximum](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the law of the running minimum, from mirror-image paths.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): the simulation roads, here with the exact continuous low drawn between points.
+- [One-touch and no-touch](05-one-touch-and-no-touch.md): the chance that Acme never touches a level. Integrated over every level, it becomes the expected low.
+- [Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the law of the running minimum, from mirror-image paths.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): the simulation roads, here with the exact continuous low drawn between points.
 
 ## Where this goes next
 
-The shelf closes with [barrier-inverses-level-and-volatility](07-barrier-inverses-level-and-volatility.md), which runs the barrier formulas backwards, from a quoted price to the level or the volatility that produces it.
+The shelf closes with [Barrier inverses](07-barrier-inverses-level-and-volatility.md), which runs the barrier formulas backwards, from a quoted price to the level or the volatility that produces it.
 
 This card priced a contract whose strike is set by the path; the open question is the reverse one, what input a quoted path-dependent price implies, and whether that input is unique.
 

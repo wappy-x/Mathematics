@@ -1,25 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Calculus of Variations and Optimal Control
-topic: Motion from one energy difference
-item: Lagrangian mechanics
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/01-functionals-and-the-euler-lagrange-equation|functionals-and-the-euler-lagrange-equation]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/03-the-nonlinear-pendulum|the-nonlinear-pendulum]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/05-hamiltons-equations|hamiltons-equations]]"
-  - "[[Cards/13-Engineering mathematics/07-Mechanics and Structures/04-lagrangian-and-hamiltonian-mechanics-for-engineers|lagrangian-and-hamiltonian-mechanics-for-engineers]]"
-  - "[[Cards/23-Differential geometry and Lie groups/06-Lie Groups/08-noethers-theorem|noethers-theorem]]"
-tags: [mathematics, differential equations and dynamics, lagrangian-mechanics]
----
-
 # Lagrangian mechanics: nature makes kinetic minus potential energy stationary, and the equations of motion fall out
 
-Differential equations and dynamics → Calculus of Variations and Optimal Control → Motion from one energy difference → Lagrangian mechanics
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Calculus of Variations and Optimal Control](../../../SYLLABUS.md#w08-s12) → Lagrangian mechanics
 
 ---
 
@@ -27,7 +8,7 @@ Differential equations and dynamics → Calculus of Variations and Optimal Contr
 
 A playground swing hangs from rigid rods 2 m long. Child and seat weigh 30 kg. Pull the seat back 30 degrees and let go. Newton's way to the motion is a force diagram, which must handle the rods' unknown pull.
 
-Lagrange's way skips the diagram. Take the energy of motion minus the energy of height and feed it through the Euler-Lagrange equation of [functionals-and-the-euler-lagrange-equation](01-functionals-and-the-euler-lagrange-equation.md). Out comes the swing's law of motion, with the seat starting back at 2.4525 rad/s^2. The rods' pull never appears.
+Lagrange's way skips the diagram. Take the energy of motion minus the energy of height and feed it through the Euler-Lagrange equation of [The Euler-Lagrange equation](01-functionals-and-the-euler-lagrange-equation.md). Out comes the swing's law of motion, with the seat starting back at 2.4525 rad/s^2. The rods' pull never appears.
 
 The recipe works in any coordinates and reads off conserved quantities. A bead climbs and falls on a hoop spinning freely about its vertical diameter. The hoop's angle is missing from the energy difference, so its angular momentum stays at 1.565499 kg m^2/s while the spin wanders.
 
@@ -96,7 +77,7 @@ The seat moves at $l\theta'$, so $T = \tfrac12 m l^2\theta'^2$. Its height below
 
 $$\frac{\partial L}{\partial \theta'} = m l^2\theta', \qquad \frac{\partial L}{\partial \theta} = -m g l\sin\theta.$$
 
-Euler-Lagrange sets the rate of the first equal to the second: $m l^2\theta'' = -m g l\sin\theta$. Divide by $m l^2$: the pendulum equation of [the-nonlinear-pendulum](../06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md). The mass cancels, and the rods' pull never entered, because $\theta$ already obeys the rod. The force diagram gives the same: gravity's part along the arc, $-m g\sin\theta$, equals $m l\theta''$.
+Euler-Lagrange sets the rate of the first equal to the second: $m l^2\theta'' = -m g l\sin\theta$. Divide by $m l^2$: the pendulum equation of [The pendulum](../06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md). The mass cancels, and the rods' pull never entered, because $\theta$ already obeys the rod. The force diagram gives the same: gravity's part along the arc, $-m g\sin\theta$, equals $m l\theta''$.
 
 ### Step 2: why this is Newton's law in disguise
 
@@ -129,7 +110,7 @@ never changes. As the bead climbs, the bracket grows and the spin falls. A coord
 
 ### Step 5: time missing means energy conserved
 
-Neither Lagrangian contains $t$ itself, so the Beltrami identity of [the-brachistochrone-and-the-beltrami-identity](02-the-brachistochrone-and-the-beltrami-identity.md) keeps $q'\,\partial L/\partial q' - L$, summed over coordinates, fixed; here that is $T + V = E$, the energy. Both laws are cases of Noether's theorem: every continuous symmetry of the action (turning the hoop, shifting the clock) conserves a quantity.
+Neither Lagrangian contains $t$ itself, so the Beltrami identity of [The brachistochrone](02-the-brachistochrone-and-the-beltrami-identity.md) keeps $q'\,\partial L/\partial q' - L$, summed over coordinates, fixed; here that is $T + V = E$, the energy. Both laws are cases of Noether's theorem: every continuous symmetry of the action (turning the hoop, shifting the clock) conserves a quantity.
 ---
 
 ## Worked numbers, by hand
@@ -158,7 +139,7 @@ A child of any weight released from 30 degrees starts back at 2.4525 rad/s^2. On
 
 ## Code, from first principles, and it actually runs
 
-Road one knows only the Lagrangian: at each state it measures the slopes of $L$ numerically and solves Euler-Lagrange for the accelerations. Road two steps the equations derived in Steps 1 and 4. Both use Runge-Kutta 4 ([runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md)). A third check weighs the action on nudged paths against the second-variation integral. Four asserts test these agreements; each fails if the physics in either road is altered. The code also prints the motor-held hoop.
+Road one knows only the Lagrangian: at each state it measures the slopes of $L$ numerically and solves Euler-Lagrange for the accelerations. Road two steps the equations derived in Steps 1 and 4. Both use Runge-Kutta 4 ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)). A third check weighs the action on nudged paths against the second-variation integral. Four asserts test these agreements; each fails if the physics in either road is altered. The code also prints the motor-held hoop.
 
 ### Python
 
@@ -394,14 +375,14 @@ The orange line is the hoop's spin, from road two: 4.53 when the bead is highest
 
 ## What this builds on
 
-- [functionals-and-the-euler-lagrange-equation](01-functionals-and-the-euler-lagrange-equation.md): the functional, the stationary path, and the equation it must satisfy.
-- [the-nonlinear-pendulum](../06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md): the equation this card derives, and what its solutions do.
+- [The Euler-Lagrange equation](01-functionals-and-the-euler-lagrange-equation.md): the functional, the stationary path, and the equation it must satisfy.
+- [The pendulum](../06-Nonlinear%20Dynamics%20in%20the%20Plane/03-the-nonlinear-pendulum.md): the equation this card derives, and what its solutions do.
 
 ## Where this goes next
 
-- [hamiltons-equations](05-hamiltons-equations.md): trade each speed for its momentum and get two first-order equations per coordinate.
-- lagrangian-and-hamiltonian-mechanics-for-engineers: the same recipe for linkages and vibrating structures.
-- noethers-theorem: every continuous symmetry of the action, and the quantity it conserves.
+- [Hamilton's equations](05-hamiltons-equations.md): trade each speed for its momentum and get two first-order equations per coordinate.
+- Lagrangian and Hamiltonian mechanics: the same recipe for linkages and vibrating structures.
+- Noether: every continuous symmetry of the action, and the quantity it conserves.
 
 ---
 

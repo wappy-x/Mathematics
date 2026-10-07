@@ -1,36 +1,12 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Linear Systems and Transforms
-topic: The system's fingerprint
-item: Transfer functions
-kind: definition
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/01-linear-time-invariant-systems-and-convolution|linear-time-invariant-systems-and-convolution]]"
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/01-the-laplace-transform|the-laplace-transform]]"
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/02-transforms-of-derivatives|transforms-of-derivatives]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/07-inverse-laplace-by-residues|inverse-laplace-by-residues]]"
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/06-impulses-and-the-delta-function|impulses-and-the-delta-function]]"
-next:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/03-poles-zeros-and-stability|poles-zeros-and-stability]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/04-frequency-response-and-bode-plots|frequency-response-and-bode-plots]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/08-z-transform-and-discrete-time-systems|z-transform-and-discrete-time-systems]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/01-feedback-and-closed-loop-transfer-functions|feedback-and-closed-loop-transfer-functions]]"
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/01-state-space-models-and-the-matrix-exponential|state-space-models-and-the-matrix-exponential]]"
-tags: [mathematics, engineering mathematics, impulse-response-and-transfer-functions]
----
-
 # Transfer functions: the Laplace transform turns a differential equation into a ratio
 
-Engineering mathematics → Linear Systems and Transforms → The system's fingerprint → Transfer functions
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Linear Systems and Transforms](../../../SYLLABUS.md#w13-s02) → Transfer functions
 
 ---
 
 ## General Overview
 
-A 1000 kg car cruises at 25 m/s on a level road. It is lighter than the 1,500 kg car of [linear-time-invariant-systems-and-convolution](01-linear-time-invariant-systems-and-convolution.md), and only the air holds it back. The engine pushes with 312.5 N, exactly what the air drag takes away, so the speed holds. A cruise controller will soon adjust that push. Before anyone designs it, the engineer wants one thing: a compact description of how the car's speed answers any change in force. Push 100 N harder, how fast does the speed rise, and to what? Give it a sharp shove, how long does the gain last?
+A 1000 kg car cruises at 25 m/s on a level road. It is lighter than the 1,500 kg car of [Linear and time-invariant](01-linear-time-invariant-systems-and-convolution.md), and only the air holds it back. The engine pushes with 312.5 N, exactly what the air drag takes away, so the speed holds. A cruise controller will soon adjust that push. Before anyone designs it, the engineer wants one thing: a compact description of how the car's speed answers any change in force. Push 100 N harder, how fast does the speed rise, and to what? Give it a sharp shove, how long does the gain last?
 
 The car's law of motion answers each question, but only by solving a differential equation each time. A transfer function solves it once. Feed the car a force that grows or decays exponentially, and the speed comes back as the same exponential, scaled. That scale factor, one number for each rate, is the whole description: a ratio of two polynomials, here one over (mass times the rate plus drag). Every other response follows by algebra, and the response to an ideal shove, the **impulse response**, is the same object seen in time.
 
@@ -50,7 +26,7 @@ The top row is the car in time, where the block stands for a differential equati
 
 ## The formula
 
-Notation first, in words. The Laplace transform ([the-laplace-transform](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md)) turns a signal of time into a function of a rate $s$, measured in 1/s; a capital letter is the transform of the lower-case signal, so $U(s)$ is the transform of the force $u(t)$. New here: the **transfer function** $G(s)$, read "what the system does to each exponential e^(st)".
+Notation first, in words. The Laplace transform ([The Laplace transform](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md)) turns a signal of time into a function of a rate $s$, measured in 1/s; a capital letter is the transform of the lower-case signal, so $U(s)$ is the transform of the force $u(t)$. New here: the **transfer function** $G(s)$, read "what the system does to each exponential e^(st)".
 
 The car's law of motion, with $v$ the speed above the 25 m/s cruise and $u$ the force above the 312.5 N cruise push:
 
@@ -94,7 +70,7 @@ The time constant $\tau$ is the time for the impulse response to fall by the fac
 
 ### Step 0: an exponential goes through a linear, time-invariant system unchanged in shape
 
-Delay an exponential e^(st), running for all time, by any amount and it is the same curve times a constant. A system that is linear (scaling the input scales the output) and time-invariant (delaying the input delays the output) must therefore answer e^(st) with the same exponential times a constant ([linear-time-invariant-systems-and-convolution](01-linear-time-invariant-systems-and-convolution.md)). Here is why. Call the output y. The input delayed by σ is e^(s(t − σ)) = e^(−sσ) e^(st), the same input times the constant e^(−sσ). Time-invariance says its output is y(t − σ); linearity says it is e^(−sσ) y(t). So y(t − σ) = e^(−sσ) y(t) for every t and σ. Put t = σ: y(σ) = y(0) e^(sσ), the input's own exponential times the constant y(0). That constant depends on $s$ and on the system only. It is $G(s)$.
+Delay an exponential e^(st), running for all time, by any amount and it is the same curve times a constant. A system that is linear (scaling the input scales the output) and time-invariant (delaying the input delays the output) must therefore answer e^(st) with the same exponential times a constant ([Linear and time-invariant](01-linear-time-invariant-systems-and-convolution.md)). Here is why. Call the output y. The input delayed by σ is e^(s(t − σ)) = e^(−sσ) e^(st), the same input times the constant e^(−sσ). Time-invariance says its output is y(t − σ); linearity says it is e^(−sσ) y(t). So y(t − σ) = e^(−sσ) y(t) for every t and σ. Put t = σ: y(σ) = y(0) e^(sσ), the input's own exponential times the constant y(0). That constant depends on $s$ and on the system only. It is $G(s)$.
 
 ### Step 1: find the constant for the car
 
@@ -106,7 +82,7 @@ At s = 0.05 1/s this is 1/(1000 × 0.05 + 25) = 0.0133333 (m/s)/N. The code chec
 
 ### Step 2: the same ratio from the Laplace transform
 
-The transform of a derivative is $s$ times the transform minus the starting value ([transforms-of-derivatives](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/02-transforms-of-derivatives.md)). Applied to the car:
+The transform of a derivative is $s$ times the transform minus the starting value ([Transforming a derivative](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/02-transforms-of-derivatives.md)). Applied to the car:
 
 m (s V(s) − v(0)) + b V(s) = U(s).
 
@@ -114,13 +90,13 @@ With $v(0) = 0$ this is $V(s) = U(s)/(m s + b)$: the differential equation has b
 
 ### Step 3: the impulse response is the transfer function in time
 
-An ideal shove of area 1 N·s is the delta $\delta(t)$, whose transform is 1 ([impulses-and-the-delta-function](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/06-impulses-and-the-delta-function.md)). Put $U = 1$ into Step 2: $V = G$. The response to the delta, $h(t)$, has transform $G(s)$. One function holds the system twice: as a curve in time and as a ratio in $s$.
+An ideal shove of area 1 N·s is the delta $\delta(t)$, whose transform is 1 ([Impulses](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/06-impulses-and-the-delta-function.md)). Put $U = 1$ into Step 2: $V = G$. The response to the delta, $h(t)$, has transform $G(s)$. One function holds the system twice: as a curve in time and as a ratio in $s$.
 
 The physics agrees. A shove of $J$ N·s changes the car's momentum by $J$, so the speed jumps by $J/m$; afterwards no force acts but drag, and the jump decays at the rate $b/m$.
 
 ### Step 4: invert the ratio by its residue
 
-The inverse transform of $G$ is the sum of the residues of $G(s) e^{st}$ at its poles ([inverse-laplace-by-residues](../../07-Complex%20analysis/08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md)). The car's $G$ has one pole, at $s = -b/m$. Near it, $G(s) e^{st} = (1/m) e^{st}/(s + b/m)$, so the residue is $(1/m) e^{-bt/m}$:
+The inverse transform of $G$ is the sum of the residues of $G(s) e^{st}$ at its poles ([Inverting a Laplace transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md)). The car's $G$ has one pole, at $s = -b/m$. Near it, $G(s) e^{st} = (1/m) e^{st}/(s + b/m)$, so the residue is $(1/m) e^{-bt/m}$:
 
 h(t) = (1/1000) e^(−t/40) per N·s, so h(0+) = 0.001 (m/s) per N·s.
 
@@ -128,11 +104,11 @@ The code runs this backwards: it integrates $h(t) e^{-st}$ numerically from 0 to
 
 ### Step 5: any input, by multiplication
 
-Since $V = G U$, and a product of transforms is the transform of a convolution, the speed is $h$ convolved with the force ([convolution-and-the-impulse-response](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md)). For a 100 N step, $U(s) = 100/s$ and
+Since $V = G U$, and a product of transforms is the transform of a convolution, the speed is $h$ convolved with the force ([Convolution](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md)). For a 100 N step, $U(s) = 100/s$ and
 
 V(s) = 100 / (s (1000 s + 25)) = 4/s − 4/(s + 0.025),
 
-split by partial fractions ([inverting-by-partial-fractions](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/03-inverting-by-partial-fractions.md)). So $v(t) = 4(1 - e^{-t/40})$ m/s: 2.5285 m/s at 40 s, 3.9267 m/s at 160 s. The engineer reads two numbers off it: 100 N buys 4 m/s, and the car takes tens of seconds to get there, so a controller cannot correct speed faster than the car allows without big force swings.
+split by partial fractions ([Inverting](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/03-inverting-by-partial-fractions.md)). So $v(t) = 4(1 - e^{-t/40})$ m/s: 2.5285 m/s at 40 s, 3.9267 m/s at 160 s. The engineer reads two numbers off it: 100 N buys 4 m/s, and the car takes tens of seconds to get there, so a controller cannot correct speed faster than the car allows without big force swings.
 
 ### Step 6: blocks in series multiply
 
@@ -157,7 +133,7 @@ The jump is gone: force has to build through the engine first, so a shove on the
 
 </details>
 
-Another road to the same $G$ runs through the state-space form, $G(s) = C (sI - A)^{-1} B + D$, worked in state-space-models-and-the-matrix-exponential. There A, B, C and D are the matrices that card introduces to describe a system, and I is the identity matrix, the matrix version of 1. For the car each is a single number, unrelated to this card's drag b and c: A = −b/m, B = 1/m, C = 1, D = 0 gives the same ratio.
+Another road to the same $G$ runs through the state-space form, $G(s) = C (sI - A)^{-1} B + D$, worked in State space. There A, B, C and D are the matrices that card introduces to describe a system, and I is the identity matrix, the matrix version of 1. For the car each is a single number, unrelated to this card's drag b and c: A = −b/m, B = 1/m, C = 1, D = 0 gives the same ratio.
 
 ---
 
@@ -580,10 +556,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Cruise control and adaptive cruise.** The controller is designed against $1/(m s + b)$, with $m$ and $b$ re-estimated as load and speed change; the loop around it is [feedback-and-closed-loop-transfer-functions](../03-Feedback%20Control/01-feedback-and-closed-loop-transfer-functions.md).
+- **Cruise control and adaptive cruise.** The controller is designed against $1/(m s + b)$, with $m$ and $b$ re-estimated as load and speed change; the loop around it is [Feedback](../03-Feedback%20Control/01-feedback-and-closed-loop-transfer-functions.md).
 - **Hammer tests on structures.** Engineers strike a bridge or an engine mount with an instrumented hammer, record the response, and transform it: the measured impulse response is the structure's transfer function in time.
-- **Audio and electronics.** A loudspeaker, an amplifier stage or a filter is specified by its transfer function; evaluated along the imaginary axis it gives the gain and lag at each pitch, the subject of [frequency-response-and-bode-plots](04-frequency-response-and-bode-plots.md).
-- **Digital controllers.** A computer samples the speed every few milliseconds; its version of $G$ is a ratio in a one-step delay, in [z-transform-and-discrete-time-systems](08-z-transform-and-discrete-time-systems.md).
+- **Audio and electronics.** A loudspeaker, an amplifier stage or a filter is specified by its transfer function; evaluated along the imaginary axis it gives the gain and lag at each pitch, the subject of [Bode plots](04-frequency-response-and-bode-plots.md).
+- **Digital controllers.** A computer samples the speed every few milliseconds; its version of $G$ is a ratio in a one-step delay, in [The z-transform](08-z-transform-and-discrete-time-systems.md).
 
 > **Say it back**
 > A linear, time-invariant system answers each exponential e^(st) with the same exponential times one number, and that number, as a function of s, is the transfer function. Transforming the equation at rest turns derivatives into powers of s, so the transfer function is a ratio of polynomials: for the car, 1/(1000 s + 25). Since the delta transforms to 1, the transfer function is also the transform of the impulse response, here 0.001 e^(−t/40) per N·s, found from the residue at the pole. Any other input's response is the transfer function times the input's transform: 100 N gives 4 m/s with a 40 s time constant. Blocks in series multiply, and the ratio is only the transfer function when the system starts at rest.
@@ -592,21 +568,21 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [linear-time-invariant-systems-and-convolution](01-linear-time-invariant-systems-and-convolution.md): linearity, time-invariance, and the output as a convolution with the impulse response.
-- [the-laplace-transform](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md): the transform itself and where it converges.
-- [transforms-of-derivatives](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/02-transforms-of-derivatives.md): why a derivative becomes a factor s, and where the starting value enters.
-- [inverse-laplace-by-residues](../../07-Complex%20analysis/08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md): the residue sum that turns G back into h.
-- [impulses-and-the-delta-function](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/06-impulses-and-the-delta-function.md): the delta as the limit of ever-shorter pushes, with transform 1.
+- [Linear and time-invariant](01-linear-time-invariant-systems-and-convolution.md): linearity, time-invariance, and the output as a convolution with the impulse response.
+- [The Laplace transform](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/01-the-laplace-transform.md): the transform itself and where it converges.
+- [Transforming a derivative](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/02-transforms-of-derivatives.md): why a derivative becomes a factor s, and where the starting value enters.
+- [Inverting a Laplace transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md): the residue sum that turns G back into h.
+- [Impulses](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/06-impulses-and-the-delta-function.md): the delta as the limit of ever-shorter pushes, with transform 1.
 
 ## Where this goes next
 
-- [poles-zeros-and-stability](03-poles-zeros-and-stability.md): where the denominator and numerator of G vanish, and what their places say about settling.
-- [frequency-response-and-bode-plots](04-frequency-response-and-bode-plots.md): G along the imaginary axis, as gain and phase against frequency.
-- [z-transform-and-discrete-time-systems](08-z-transform-and-discrete-time-systems.md): the same ratio for a system that moves in steps.
-- [feedback-and-closed-loop-transfer-functions](../03-Feedback%20Control/01-feedback-and-closed-loop-transfer-functions.md): wrapping a controller round G, and the algebra of the closed loop.
-- state-space-models-and-the-matrix-exponential: the matrix form that gives G for many inputs and outputs at once.
+- [Poles and zeros](03-poles-zeros-and-stability.md): where the denominator and numerator of G vanish, and what their places say about settling.
+- [Bode plots](04-frequency-response-and-bode-plots.md): G along the imaginary axis, as gain and phase against frequency.
+- [The z-transform](08-z-transform-and-discrete-time-systems.md): the same ratio for a system that moves in steps.
+- [Feedback](../03-Feedback%20Control/01-feedback-and-closed-loop-transfer-functions.md): wrapping a controller round G, and the algebra of the closed loop.
+- State space: the matrix form that gives G for many inputs and outputs at once.
 
-The car's ratio has one pole, at −0.025 1/s, and its speed settles; why the sign of that pole decides between settling and running away is [poles-zeros-and-stability](03-poles-zeros-and-stability.md).
+The car's ratio has one pole, at −0.025 1/s, and its speed settles; why the sign of that pole decides between settling and running away is [Poles and zeros](03-poles-zeros-and-stability.md).
 
 ---
 

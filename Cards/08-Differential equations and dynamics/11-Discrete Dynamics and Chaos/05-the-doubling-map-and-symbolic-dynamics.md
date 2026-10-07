@@ -1,23 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Discrete Dynamics and Chaos
-topic: Chaos read off the digits
-item: The doubling map
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/11-Discrete Dynamics and Chaos/04-chaos-and-the-lyapunov-exponent|chaos-and-the-lyapunov-exponent]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/01-place-value|place-value]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/04-division-with-remainder|division-with-remainder]]"
-next: []
-tags: [mathematics, differential equations and dynamics, the-doubling-map-and-symbolic-dynamics]
----
-
 # The doubling map: doubling and dropping the whole part shifts the binary digits, which is why chaos can be proved
 
-Differential equations and dynamics → Discrete Dynamics and Chaos → Chaos read off the digits → The doubling map
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Discrete Dynamics and Chaos](../../../SYLLABUS.md#w08-s11) → The doubling map
 
 ---
 
@@ -37,13 +20,13 @@ That makes chaos provable, not just observed: two raisins 0.612 nm apart, sharin
 
 <p align="center"><img src="../figures/the-doubling-map-and-symbolic-dynamics.svg" alt="Graph of the doubling map on a 1 m strip: two parallel lines of slope 2, the dashed diagonal where the next place equals the current one, and the cobweb of the three-round cycle from 1/7 m to 2/7 m to 4/7 m and back" width="420"></p>
 
-Drawn to scale: 1 m on either axis is 180 units. Solid lines: the map, broken at the cut. Dashed: next place equals current place. The cobweb ([iteration-and-cobweb-plots](01-iteration-and-cobweb-plots.md)) runs 1/7 → 2/7 → 4/7 and drops back to 1/7 m.
+Drawn to scale: 1 m on either axis is 180 units. Solid lines: the map, broken at the cut. Dashed: next place equals current place. The cobweb ([Iteration](01-iteration-and-cobweb-plots.md)) runs 1/7 → 2/7 → 4/7 and drops back to 1/7 m.
 
 ---
 
 ## The formula
 
-Reminder: a map $x_{n+1} = g(x_n)$ gives the place after round n + 1 from the place after round n. "mod 1" means drop the whole part ([division-with-remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md)).
+Reminder: a map $x_{n+1} = g(x_n)$ gives the place after round n + 1 from the place after round n. "mod 1" means drop the whole part ([Division with a remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md)).
 
 $$x_{n+1} = 2x_n \bmod 1$$
 
@@ -83,7 +66,7 @@ $$x = \frac{k}{2^n - 1}, \qquad k = 0, 1, \ldots, 2^n - 2.$$
 
 ### Step 0: doubling is a shift in base two
 
-In base ten, multiplying by ten moves every digit one place left. In base two, doubling does the same ([place-value](../../01-Foundations/01-Everyday%20Arithmetic/01-place-value.md)). The digit that crosses the point is the whole part, and "mod 1" deletes it. One round is one shift.
+In base ten, multiplying by ten moves every digit one place left. In base two, doubling does the same ([Place value](../../01-Foundations/01-Everyday%20Arithmetic/01-place-value.md)). The digit that crosses the point is the whole part, and "mod 1" deletes it. One round is one shift.
 
 <details>
 <summary>Detailed proof</summary>
@@ -108,7 +91,7 @@ Write $x_0 = \sum_{k \ge 1} b_k 2^{-k}$, not ending in endless 1s. Then $2x_0 = 
 
 A second raisin shares 0.7's first 30 digits and then carries the digits of 1/7. The two start 0.612 nm apart, a few atoms. Doubling doubles differences, so the gap doubles each round. After 30 rounds 0.7 is at 0.8 m and the neighbour at 1/7 m, 0.657 m apart; digit 31 of each start (1 against 0) now decides which half each lies in.
 
-The Lyapunov exponent, the average separation rate per round in natural logarithms ([chaos-and-the-lyapunov-exponent](04-chaos-and-the-lyapunov-exponent.md)), is ln 2 = 0.693147 at every start. This is **sensitive dependence**: beside any start sits another that ends up far away. Flipping digit 31 alone gives 0.8 m and 0.3 m after 30 rounds, 0.5 m apart.
+The Lyapunov exponent, the average separation rate per round in natural logarithms ([The Lyapunov exponent](04-chaos-and-the-lyapunov-exponent.md)), is ln 2 = 0.693147 at every start. This is **sensitive dependence**: beside any start sits another that ends up far away. Flipping digit 31 alone gives 0.8 m and 0.3 m after 30 rounds, 0.5 m apart.
 
 ### Step 3: cycles are repeating blocks, and they are everywhere
 
@@ -135,7 +118,7 @@ Banks and co-authors showed in 1992 that for a continuous map on an infinite set
 
 Li and Yorke proved in 1975: if a continuous map of an interval to itself has a point that returns after exactly three rounds, it has cycles of every length, and uncountably many starts whose orbits keep drawing close and parting forever. Sharkovskii had proved the first half in 1964.
 
-The doubling map jumps at the cut, so the theorem is shown on the **tent map** $T$: stretch to 2 m and fold back instead of cutting. It has the cycle 2/7 → 4/7 → 6/7 → 2/7, so the conclusion applies. The logistic map of [the-logistic-map-and-period-doubling](03-the-logistic-map-and-period-doubling.md) has a window of three-round cycles, so every cycle length appears there.
+The doubling map jumps at the cut, so the theorem is shown on the **tent map** $T$: stretch to 2 m and fold back instead of cutting. It has the cycle 2/7 → 4/7 → 6/7 → 2/7, so the conclusion applies. The logistic map of [The logistic map](03-the-logistic-map-and-period-doubling.md) has a window of three-round cycles, so every cycle length appears there.
 
 ---
 
@@ -388,8 +371,8 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Kneading and mixing.** Stretch-and-fold is the tent map: each pass pulls neighbouring particles apart, which is why dough and mixers mix.
-- **Simulation and forecasting.** A chaotic orbit uses up the start's digits at a steady rate, so extra precision buys few rounds. [the-lorenz-system-and-strange-attractors](06-the-lorenz-system-and-strange-attractors.md) shows it in a weather model.
-- **Labelling orbits by symbols.** Recording "left or right half" each round turns an orbit into 0s and 1s, as for the logistic map's cycles in [the-logistic-map-and-period-doubling](03-the-logistic-map-and-period-doubling.md).
+- **Simulation and forecasting.** A chaotic orbit uses up the start's digits at a steady rate, so extra precision buys few rounds. [The Lorenz system](06-the-lorenz-system-and-strange-attractors.md) shows it in a weather model.
+- **Labelling orbits by symbols.** Recording "left or right half" each round turns an orbit into 0s and 1s, as for the logistic map's cycles in [The logistic map](03-the-logistic-map-and-period-doubling.md).
 
 > **Say it back**
 > Doubling a place on a 1 m strip and dropping the whole metre deletes its first binary digit. So the orbit reads the start's digits aloud, and starts sharing 30 digits part after 30 rounds. Cycles are repeating blocks, found in every stretch, and one orbit built from all binary words visits every stretch: Devaney's chaos. For continuous maps of an interval, one three-round cycle forces chaos.
@@ -398,13 +381,13 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [chaos-and-the-lyapunov-exponent](04-chaos-and-the-lyapunov-exponent.md): the separation rate, here ln 2 per round at every start.
-- [place-value](../../01-Foundations/01-Everyday%20Arithmetic/01-place-value.md): digits each worth a fixed fraction of the one before, here in base two.
-- [division-with-remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md): "mod 1" keeps the remainder.
+- [The Lyapunov exponent](04-chaos-and-the-lyapunov-exponent.md): the separation rate, here ln 2 per round at every start.
+- [Place value](../../01-Foundations/01-Everyday%20Arithmetic/01-place-value.md): digits each worth a fixed fraction of the one before, here in base two.
+- [Division with a remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md): "mod 1" keeps the remainder.
 
 ## Where this goes next
 
-- [the-lorenz-system-and-strange-attractors](06-the-lorenz-system-and-strange-attractors.md): stretching and folding inside three smooth rate equations.
+- [The Lorenz system](06-the-lorenz-system-and-strange-attractors.md): stretching and folding inside three smooth rate equations.
 
 ---
 

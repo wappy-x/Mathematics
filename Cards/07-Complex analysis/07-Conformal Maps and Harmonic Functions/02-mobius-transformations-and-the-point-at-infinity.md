@@ -1,25 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Conformal Maps and Harmonic Functions
-topic: Fraction maps of the sphere
-item: Mobius transformations
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/01-conformal-maps|conformal-maps]]"
-  - "[[Cards/03-Algebra/04-Matrices/03-matrix-multiplication|matrix-multiplication]]"
-next:
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/03-standard-maps-and-composing-them|standard-maps-and-composing-them]]"
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/06-poisson-integral-formula|poisson-integral-formula]]"
-  - "[[Cards/21-Algebraic and analytic number theory/07-Diophantine and Modular/07-modular-forms-in-outline|modular-forms-in-outline]]"
-tags: [mathematics, complex analysis, mobius-transformations-and-the-point-at-infinity]
----
-
 # Mobius transformations: (az + b)/(cz + d) sends circles and lines to circles and lines, once infinity counts as a point
 
-Complex analysis → Conformal Maps and Harmonic Functions → Fraction maps of the sphere → Mobius transformations
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Conformal Maps and Harmonic Functions](../../../SYLLABUS.md#w07-s07) → Mobius transformations
 
 ---
 
@@ -45,7 +26,7 @@ To scale: on the left 40 units per 1, origin at (90, 170); on the right 70 units
 
 ## The formula
 
-Reminder: z̄ (read "z-bar") is z mirrored in the real axis, |z| its distance from 0 ([conjugate-and-modulus](../01-Complex%20Numbers%20and%20the%20Plane/02-conjugate-and-modulus.md)). New: $\infty$ names one extra point, reached by going far out in any direction.
+Reminder: z̄ (read "z-bar") is z mirrored in the real axis, |z| its distance from 0 ([Conjugate and modulus](../01-Complex%20Numbers%20and%20the%20Plane/02-conjugate-and-modulus.md)). New: $\infty$ names one extra point, reached by going far out in any direction.
 
 $$T(z) = \frac{az + b}{cz + d}, \qquad ad - bc \neq 0, \qquad T\!\left(-\tfrac{d}{c}\right) = \infty, \quad T(\infty) = \frac{a}{c}$$
 
@@ -83,11 +64,11 @@ For the Cayley map a = 1, b = −i, c = 1, d = i, so ad − bc = i + i = 2i.
 
 ### Step 0: a map is its matrix, up to a scale
 
-Write z as the pair (z, 1) and infinity as (1, 0); a pair (s, t) stands for s/t. The matrix multiplies it ([matrix-times-vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md)): (s, t) goes to (as + bt, cs + dt). (z, 1) gives ratio T(z); (1, 0) gives (a, c), so infinity needs no special rule.
+Write z as the pair (z, 1) and infinity as (1, 0); a pair (s, t) stands for s/t. The matrix multiplies it ([Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md)): (s, t) goes to (as + bt, cs + dt). (z, 1) gives ratio T(z); (1, 0) gives (a, c), so infinity needs no special rule.
 
 ### Step 1: composing is multiplying
 
-One map then another multiplies by their matrices' product ([matrix-multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md)). Apply C twice to 2i: C(2i) = i/(3i) = 1/3, then C(1/3) = (1 − 3i)/(1 + 3i) = −0.8 − 0.6i. The squared matrix agrees. The cube is (2 − 2i) times the identity: C thrice moves nothing (Step 5).
+One map then another multiplies by their matrices' product ([Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md)). Apply C twice to 2i: C(2i) = i/(3i) = 1/3, then C(1/3) = (1 − 3i)/(1 + 3i) = −0.8 − 0.6i. The squared matrix agrees. The cube is (2 − 2i) times the identity: C thrice moves nothing (Step 5).
 
 ### Step 2: undoing is the swapped matrix
 
@@ -408,7 +389,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Radio engineering.** The Smith chart for matching antennas to cables maps impedances, a half plane, into the disc by (z − 1)/(z + 1), which is C(iz).
-- **Heat in a disc.** A half-plane problem moves to the disc by C; [poisson-integral-formula](06-poisson-integral-formula.md) solves it there.
+- **Heat in a disc.** A half-plane problem moves to the disc by C; [The Poisson formula](06-poisson-integral-formula.md) solves it there.
 - **Non-Euclidean geometry.** The maps keeping the disc are the rigid motions of the hyperbolic plane.
 
 > **Say it back**
@@ -418,16 +399,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [conformal-maps](01-conformal-maps.md): a map with non-zero derivative keeps angles; T has derivative (ad − bc)/(cz + d)^2, never zero.
-- [matrix-multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md): the product that composes two maps in Step 1.
+- [Conformal maps](01-conformal-maps.md): a map with non-zero derivative keeps angles; T has derivative (ad − bc)/(cz + d)^2, never zero.
+- [Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md): the product that composes two maps in Step 1.
 
 ## Where this goes next
 
-- [standard-maps-and-composing-them](03-standard-maps-and-composing-them.md): chains with powers and the exponential.
-- [poisson-integral-formula](06-poisson-integral-formula.md): disc temperatures from the rim, carried by C.
-- modular-forms-in-outline: functions that keep their shape under Mobius maps with whole-number entries and determinant 1.
+- [The standard maps](03-standard-maps-and-composing-them.md): chains with powers and the exponential.
+- [The Poisson formula](06-poisson-integral-formula.md): disc temperatures from the rim, carried by C.
+- Modular forms: functions that keep their shape under Mobius maps with whole-number entries and determinant 1.
 
-Mobius maps reach only regions bounded by circles and lines; reaching a wedge, a strip or a slit plane is the job of [standard-maps-and-composing-them](03-standard-maps-and-composing-them.md).
+Mobius maps reach only regions bounded by circles and lines; reaching a wedge, a strip or a slit plane is the job of [The standard maps](03-standard-maps-and-composing-them.md).
 
 ---
 

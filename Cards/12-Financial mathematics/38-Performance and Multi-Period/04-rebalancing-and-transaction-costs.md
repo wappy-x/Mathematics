@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Performance and Multi-Period
-topic: Trading back to target
-item: Rebalancing
-kind: approximation
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/38-Performance and Multi-Period/03-mertons-portfolio-problem|mertons-portfolio-problem]]"
-next:
-  - "[[Cards/12-Financial mathematics/38-Performance and Multi-Period/05-life-cycle-and-glide-paths|life-cycle-and-glide-paths]]"
-tags: [mathematics, financial mathematics, rebalancing-and-transaction-costs]
----
-
 # Rebalancing: how often, at what cost, and the no-trade band that answers both
 
-Financial mathematics → Performance and Multi-Period → Trading back to target → Rebalancing
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Performance and Multi-Period](../../../SYLLABUS.md#w12-s38) → Rebalancing
 
 ---
 
@@ -53,7 +37,7 @@ Orange: the no-trade band. Flat at 56.74% on the left, along the diagonal in the
 
 ## The formula
 
-Notation first, in words. The share weight is the fraction of the fund held in shares: $x$ before a trade, $z$ after it. The target is $\pi^*$, read "pi star": Merton's fraction, the weight that would be held at every instant if trading were free ([mertons-portfolio-problem](03-mertons-portfolio-problem.md)). Each dollar of shares bought or sold costs a fraction $c$ of that dollar. Risk aversion $\gamma$, read "gamma", measures how much the investor dislikes variance, as on Merton's card.
+Notation first, in words. The share weight is the fraction of the fund held in shares: $x$ before a trade, $z$ after it. The target is $\pi^*$, read "pi star": Merton's fraction, the weight that would be held at every instant if trading were free ([Merton's problem](03-mertons-portfolio-problem.md)). Each dollar of shares bought or sold costs a fraction $c$ of that dollar. Risk aversion $\gamma$, read "gamma", measures how much the investor dislikes variance, as on Merton's card.
 
 The band's half-width is
 
@@ -726,7 +710,7 @@ The two outputs match line for line. The random generator is the same integer re
 - **Target-date funds.** Vanguard argues for threshold over calendar rebalancing of its target-date funds and illustrates a 200 basis point trigger with a 175 basis point destination: trade when the gap passes 2 points, and stop short of the target.
 - **Pension and endowment policies.** Policy statements commonly give each asset class a target and a permitted range: a no-trade band, usually set by judgement.
 - **Option hedging.** A trader hedging an option faces the same trade-off between hedge error and fees. Janeček and Shreve point out that Whalley and Wilmott's hedging band has the same cube-root law.
-- **Performance reports.** Trading costs show up as a drag on measured return, the subject of [sharpe-information-and-drawdown](01-sharpe-information-and-drawdown.md), and a drifted mix shows up as an allocation effect in [performance-attribution](02-performance-attribution.md).
+- **Performance reports.** Trading costs show up as a drag on measured return, the subject of [Performance measures](01-sharpe-information-and-drawdown.md), and a drifted mix shows up as an allocation effect in [Attribution](02-performance-attribution.md).
 
 > **Say it back**
 > A fund's mix drifts because shares and bonds grow at different rates. Trading it back costs a fee; leaving it costs a little every day in extra risk, growing as the square of the gap. The best rule is a band: do nothing inside it, trade to its nearest edge outside it. The band is wider than a one-shot calculation suggests, because a gap left today may close by itself. Balancing the drift loss against the trading bill makes the half-width the cube root of three halves of the cost over the risk aversion, times the square of $\pi^*(1-\pi^*)$: ±3.26 points for a 60-40 fund paying 0.1%.
@@ -735,11 +719,11 @@ The two outputs match line for line. The random generator is the same integer re
 
 ## What this builds on
 
-- [mertons-portfolio-problem](03-mertons-portfolio-problem.md): the target weight $\pi^* = (\mu - r)/(\gamma\sigma^2)$, the certainty-equivalent return whose shortfall prices every gap, and the Itô calculus behind the wandering weight.
+- [Merton's problem](03-mertons-portfolio-problem.md): the target weight $\pi^* = (\mu - r)/(\gamma\sigma^2)$, the certainty-equivalent return whose shortfall prices every gap, and the Itô calculus behind the wandering weight.
 
 ## Where this goes next
 
-- [life-cycle-and-glide-paths](05-life-cycle-and-glide-paths.md): the target itself moves, year by year, as an investor ages and wages turn into savings.
+- [Investing over a lifetime](05-life-cycle-and-glide-paths.md): the target itself moves, year by year, as an investor ages and wages turn into savings.
 
 This card holds the target fixed at 60% for ever; when the target slides along a glide path, the band has to slide with it, and what the plan should aim for at each age is the question the life-cycle card answers.
 

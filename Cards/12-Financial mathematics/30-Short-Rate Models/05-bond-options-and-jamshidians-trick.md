@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Short-Rate Models
-topic: Options on bonds in Hull-White
-item: Bond options
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/04-hull-white-model|hull-white-model]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/06-black-76-and-forward-level-pricing|black-76-and-forward-level-pricing]]"
-next: []
-tags: [mathematics, financial mathematics, bond-options-and-jamshidians-trick]
----
-
 # Bond options: a call on a zero in closed form, and a coupon-bond option as a portfolio of them
 
-Financial mathematics → Short-Rate Models → Options on bonds in Hull-White → Bond options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Short-Rate Models](../../../SYLLABUS.md#w12-s30) → Bond options
 
 ---
 
@@ -88,10 +72,10 @@ $$\mathrm{CBC} = \sum_i c_i\,\mathrm{ZBC}(T, T_i, K_i), \qquad K_i = P(T, T_i;\,
 
 ### When it holds
 
-- **One random driver.** Every rate on the curve moves because the one short rate moved, so all zero prices rise and fall together. With two drivers, long and short rates can move apart, the zeros stop switching off at one shared rate, and Jamshidian's split becomes an approximation: [two-factor-and-lognormal-short-rate-models](07-two-factor-and-lognormal-short-rate-models.md).
-- **A normal short rate with fixed $a$ and $\sigma$.** That makes the log zero price normal, which is what makes Black-76 exact. The same normality lets the rate go below zero; here that chance is about 5 in 10 million. If the market's option prices imply a different volatility pattern, the fit is redone: [calibrating-a-short-rate-model](08-calibrating-a-short-rate-model.md).
+- **One random driver.** Every rate on the curve moves because the one short rate moved, so all zero prices rise and fall together. With two drivers, long and short rates can move apart, the zeros stop switching off at one shared rate, and Jamshidian's split becomes an approximation: [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md).
+- **A normal short rate with fixed $a$ and $\sigma$.** That makes the log zero price normal, which is what makes Black-76 exact. The same normality lets the rate go below zero; here that chance is about 5 in 10 million. If the market's option prices imply a different volatility pattern, the fit is redone: [Calibrating Hull-White](08-calibrating-a-short-rate-model.md).
 - **Every payment positive.** Positive payments are what make the bond's price fall steadily as the rate rises. A bond with a negative cash flow, a short position in one zero, can cross the strike twice, and the split fails.
-- **Exercise on one date.** An option exercisable on several dates, like most callable bonds, has no closed form; it needs [hull-white-trinomial-tree](06-hull-white-trinomial-tree.md).
+- **Exercise on one date.** An option exercisable on several dates, like most callable bonds, has no closed form; it needs [The Hull-White tree](06-hull-white-trinomial-tree.md).
 - **Strike in cash, on the bond's full price.** The formula compares the strike with the bond's full cash price, accrued interest included. Exchange and dealer quotes usually strike on the clean price, which leaves out the accrued interest; convert first or the strike is off by the accrued coupon. Here expiry falls on a coupon date, so the two coincide. Conventions verified 2026-09-28.
 - **Today's curve taken as given.** Hull-White reads $P(0,T)$ and $P(0,S)$ straight from the market. A wrong curve gives a wrong forward, and the price inherits the error one for one.
 
@@ -101,9 +85,9 @@ $$\mathrm{CBC} = \sum_i c_i\,\mathrm{ZBC}(T, T_i, K_i), \qquad K_i = P(T, T_i;\,
 
 ### Step 0: one number sets the whole curve
 
-In Hull-White, knowing the short rate on a future date fixes every bond price on that date. Each zero's price is an exponential of a straight line in the rate: $P(T,u) = A \, e^{-B(u-T)\,r}$, with a number $A$ that depends on the dates and today's curve but not on the rate ([hull-white-model](04-hull-white-model.md)). Two consequences carry the card. The log of a zero's price is a straight line in the rate, so if the rate is bell-shaped the zero's price is lognormal. And every zero's price falls as the rate rises, all at once.
+In Hull-White, knowing the short rate on a future date fixes every bond price on that date. Each zero's price is an exponential of a straight line in the rate: $P(T,u) = A \, e^{-B(u-T)\,r}$, with a number $A$ that depends on the dates and today's curve but not on the rate ([Hull-White](04-hull-white-model.md)). Two consequences carry the card. The log of a zero's price is a straight line in the rate, so if the rate is bell-shaped the zero's price is lognormal. And every zero's price falls as the rate rises, all at once.
 
-The check confirms the fitted model is the one this shelf has been using. Reading Hull-White's drift off today's curve gives 0.015000 at half a year and at three years, which is 0.3 times 5 percent: a Vasicek model ([vasicek-model](02-vasicek-model.md)). The fitted Hull-White price of the 5-year zero in a year, at a 5 percent rate, is 0.819121, and Vasicek's own formula gives 0.819121.
+The check confirms the fitted model is the one this shelf has been using. Reading Hull-White's drift off today's curve gives 0.015000 at half a year and at three years, which is 0.3 times 5 percent: a Vasicek model ([Vasicek](02-vasicek-model.md)). The fitted Hull-White price of the 5-year zero in a year, at a 5 percent rate, is 0.819121, and Vasicek's own formula gives 0.819121.
 
 ### Step 1: the zero's price on expiry day is lognormal, with a known spread
 
@@ -130,11 +114,11 @@ The one line is $\sigma_P$ for expiries from today to year 5. It rises at first,
 
 ### Step 2: price in units of the expiry-date zero, and Black-76 falls out
 
-Measure every price in units of the zero that matures on expiry day, $P(t,T)$, rather than in dollars. This change of yardstick ([change-of-numeraire-in-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/05-change-of-numeraire-in-pricing.md)) has two useful properties. The option's value becomes $P(0,T)$ times a plain average of its payoff, because the yardstick is worth exactly 1 on expiry day. And any traded price divided by the yardstick is a **forward price** that drifts nowhere on average.
+Measure every price in units of the zero that matures on expiry day, $P(t,T)$, rather than in dollars. This change of yardstick ([Changing the unit of account](../05-Black-Scholes%20from%20the%20Ground%20Up/05-change-of-numeraire-in-pricing.md)) has two useful properties. The option's value becomes $P(0,T)$ times a plain average of its payoff, because the yardstick is worth exactly 1 on expiry day. And any traded price divided by the yardstick is a **forward price** that drifts nowhere on average.
 
 The forward price of the 5-year zero for delivery at year 1 is $P(0,5)/P(0,1)$: 83.362067 per $100 face. On expiry day it equals the zero's price itself. So under the new yardstick, the zero's price on expiry day is lognormal, averages 83.362067, and has log spread $\sigma_P$. Changing yardstick shifts where the bell curve sits but not how wide it is, so the spread from Step 1 carries over.
 
-That is exactly Black-76's setting: a lognormal forward $F$ with no drift, a strike, a discount factor ([black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)). With $F = P(0,S)/P(0,T)$, discount $P(0,T)$ and total spread $\sigma_P$ in place of $\sigma\sqrt{T}$, Black-76 reads $P(0,T)\,[F\,N(d_1) - K\,N(d_2)]$ with $d_1 = h$. Multiply $P(0,T)$ through and it is the formula.
+That is exactly Black-76's setting: a lognormal forward $F$ with no drift, a strike, a discount factor ([Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)). With $F = P(0,S)/P(0,T)$, discount $P(0,T)$ and total spread $\sigma_P$ in place of $\sigma\sqrt{T}$, Black-76 reads $P(0,T)\,[F\,N(d_1) - K\,N(d_2)]$ with $d_1 = h$. Multiply $P(0,T)$ through and it is the formula.
 
 <details>
 <summary>Detailed proof: the spread of the rate, and why the yardstick keeps it</summary>
@@ -171,7 +155,7 @@ For any two numbers, $\max(x + y, 0) \le \max(x, 0) + \max(y, 0)$, with equality
 
 </details>
 
-The same answer can be reached without the formula: average the payoff over the bell-shaped rate on expiry day, discounting each outcome by the rate's path, or solve the term-structure equation backwards from expiry ([the-term-structure-equation](01-the-term-structure-equation.md)). The code takes both roads; the tree in [hull-white-trinomial-tree](06-hull-white-trinomial-tree.md) is a third.
+The same answer can be reached without the formula: average the payoff over the bell-shaped rate on expiry day, discounting each outcome by the rate's path, or solve the term-structure equation backwards from expiry ([A short-rate model](01-the-term-structure-equation.md)). The code takes both roads; the tree in [The Hull-White tree](06-hull-white-trinomial-tree.md) is a third.
 
 ---
 
@@ -681,10 +665,10 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Swaptions.** The right to enter a swap receiving a fixed rate is a call on a coupon bond, with the fixed rate as the coupon and par as the strike. Desks running Hull-White price European swaptions exactly this way, by Jamshidian's split: [swaptions-payer-and-receiver](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md).
-- **Caps and floors.** A caplet, insurance against one period's rate rising, is a put on a zero. The zero-option formula prices each caplet in closed form: [caplets-and-floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md).
-- **Calibration.** Because both formulas are fast, a desk fits $a$ and $\sigma$ by repricing dozens of quoted swaptions in a loop: [calibrating-a-short-rate-model](08-calibrating-a-short-rate-model.md).
-- **Callable bonds.** An issuer who may repay a bond early holds a call on its own debt. With one call date the call is this card's coupon-bond option; with many dates it is Bermudan and moves to a tree: [hull-white-trinomial-tree](06-hull-white-trinomial-tree.md).
+- **Swaptions.** The right to enter a swap receiving a fixed rate is a call on a coupon bond, with the fixed rate as the coupon and par as the strike. Desks running Hull-White price European swaptions exactly this way, by Jamshidian's split: [Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md).
+- **Caps and floors.** A caplet, insurance against one period's rate rising, is a put on a zero. The zero-option formula prices each caplet in closed form: [Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md).
+- **Calibration.** Because both formulas are fast, a desk fits $a$ and $\sigma$ by repricing dozens of quoted swaptions in a loop: [Calibrating Hull-White](08-calibrating-a-short-rate-model.md).
+- **Callable bonds.** An issuer who may repay a bond early holds a call on its own debt. With one call date the call is this card's coupon-bond option; with many dates it is Bermudan and moves to a tree: [The Hull-White tree](06-hull-white-trinomial-tree.md).
 
 > **Say it back**
 > In Hull-White one short rate sets every bond price, and each zero's log price is a straight line in that rate. The rate on expiry day is bell-shaped, so a zero's price is lognormal, with spread $\sigma_P$: the rate's damped spread times the zero's sensitivity. Priced in units of the expiry-date zero, a call on it is Black-76 with that spread. A coupon bond is a bundle of zeros that all fall together as the rate rises, so there is one rate where it is worth the strike. Strike each zero at its price at that rate, and the bundle of zero calls pays exactly what the coupon-bond call pays.
@@ -693,14 +677,14 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [hull-white-model](04-hull-white-model.md): the model itself, its fitted drift, and bond prices as exponentials of straight lines in the rate.
-- [black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md): the option on a lognormal forward, which Step 2 reuses with $\sigma_P$ as its total spread.
+- [Hull-White](04-hull-white-model.md): the model itself, its fitted drift, and bond prices as exponentials of straight lines in the rate.
+- [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md): the option on a lognormal forward, which Step 2 reuses with $\sigma_P$ as its total spread.
 
 ## Where this goes next
 
-- [hull-white-trinomial-tree](06-hull-white-trinomial-tree.md): options with several exercise dates, where no closed form exists, priced on a tree of the same model.
-- [two-factor-and-lognormal-short-rate-models](07-two-factor-and-lognormal-short-rate-models.md): models where the curve can twist, and Jamshidian's split stops being exact.
-- [calibrating-a-short-rate-model](08-calibrating-a-short-rate-model.md): running these formulas backwards, from quoted option prices to $a$ and $\sigma$.
+- [The Hull-White tree](06-hull-white-trinomial-tree.md): options with several exercise dates, where no closed form exists, priced on a tree of the same model.
+- [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md): models where the curve can twist, and Jamshidian's split stops being exact.
+- [Calibrating Hull-White](08-calibrating-a-short-rate-model.md): running these formulas backwards, from quoted option prices to $a$ and $\sigma$.
 
 The formulas here take $a$ and $\sigma$ as given; which values the market's own option prices imply is the question calibration answers.
 

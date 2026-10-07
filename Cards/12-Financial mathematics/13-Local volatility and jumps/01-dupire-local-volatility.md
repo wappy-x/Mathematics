@@ -1,37 +1,16 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Local volatility and jumps
-topic: The forward equation in strike
-item: Dupire local volatility
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/05-butterfly-and-the-implied-density|butterfly-and-the-implied-density]]"
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/03-volatility-surface-and-its-arbitrage-rules|volatility-surface-and-its-arbitrage-rules]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/03-fokker-planck-forward-equation|fokker-planck-forward-equation]]"
-next:
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/02-local-volatility-from-implied-volatility|local-volatility-from-implied-volatility]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/07-barriers-with-the-smile|barriers-with-the-smile]]"
-  - "[[Cards/19-Partial differential equations/03-The Heat Equation in Depth/10-dupire-and-forward-equations|dupire-and-forward-equations]]"
-tags: [mathematics, financial mathematics, dupire-local-volatility]
----
-
 # Dupire local volatility: one volatility per price and date, read straight off call prices
 
-Financial mathematics → Local volatility and jumps → The forward equation in strike → Dupire local volatility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Local volatility and jumps](../../../SYLLABUS.md#w12-s13) → Dupire local volatility
 
 ---
 
 ## General Overview
 
-Acme shares trade at $100. An options desk holds a call price for every strike and every expiry out to a year. The right to buy Acme at $110 in six months costs $2.59; the right to buy at $100 in a year costs $9.23. In the house market every one of those prices comes from the Black-Scholes formula at 20% volatility ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). On a real desk the volatility that reprices each option changes with strike and expiry: the volatility surface ([volatility-surface-and-its-arbitrage-rules](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md)).
+Acme shares trade at $100. An options desk holds a call price for every strike and every expiry out to a year. The right to buy Acme at $110 in six months costs $2.59; the right to buy at $100 in a year costs $9.23. In the house market every one of those prices comes from the Black-Scholes formula at 20% volatility ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). On a real desk the volatility that reprices each option changes with strike and expiry: the volatility surface ([The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md)).
 
 One stock cannot have a different constant volatility for each option on it. Bruno Dupire's answer, in 1994: let the stock's volatility depend on its price and the date. Say 25% if Acme has fallen to $70 a year from now, 18% if it has risen to $130. That is one number per price and date, called from here on the **local volatility**. Dupire showed that call prices already contain it, and that it can be read off them point by point.
 
-The reading takes three measurements of the price surface at one strike and expiry: how much dearer the call gets as its expiry moves later, how much cheaper as its strike moves higher, and how sharply its price bends in strike. The bend, with one expiry's discounting undone, is the market's probability density for Acme's price at expiry ([butterfly-and-the-implied-density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)). The first test of the reading: prices made at one volatility must hand it back everywhere. At $100 in one year, and at $110 in six months, the Acme prices hand back 0.2000.
+The reading takes three measurements of the price surface at one strike and expiry: how much dearer the call gets as its expiry moves later, how much cheaper as its strike moves higher, and how sharply its price bends in strike. The bend, with one expiry's discounting undone, is the market's probability density for Acme's price at expiry ([The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)). The first test of the reading: prices made at one volatility must hand it back everywhere. At $100 in one year, and at $110 in six months, the Acme prices hand back 0.2000.
 
 **The extra value a call gains from a later expiry, cleared of interest and dividends and divided by half the strike squared times the bend there, is the variance the stock must have at that price on that date.**
 
@@ -55,7 +34,7 @@ Orange: the house surface, every call priced at 20%, read back as 20.00% at ever
 
 ## The formula
 
-Notation first, in words. $C$ is today's price of a call with strike $K$ and expiry $T$ years away, a function of both. A letter written small beside $C$ names the one input being moved while the others are held still ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). $C_T$ is the slope in expiry: extra dollars per extra year of life. $C_K$ is the slope in strike. $C_{KK}$ is the slope of that slope: the bend of the price curve in strike.
+Notation first, in words. $C$ is today's price of a call with strike $K$ and expiry $T$ years away, a function of both. A letter written small beside $C$ names the one input being moved while the others are held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). $C_T$ is the slope in expiry: extra dollars per extra year of life. $C_K$ is the slope in strike. $C_{KK}$ is the slope of that slope: the bend of the price curve in strike.
 
 $$\sigma_{\text{loc}}^2(K, T) \;=\; \frac{C_T \;+\; (r - q)\,K\,C_K \;+\; q\,C}{\tfrac12\,K^2\,C_{KK}}$$
 
@@ -65,7 +44,7 @@ It inverts one model of the stock, the **local-volatility diffusion**:
 
 $$dS_t \;=\; (r - q)\,S_t\,dt \;+\; \sigma_{\text{loc}}(S_t, t)\,S_t\,dW_t$$
 
-In words: over a short time step $dt$, Acme's price $S_t$ drifts up at the rate $r - q$ and takes a random kick $dW$, scaled by the local volatility where it now stands. Fixed at 20%, this is geometric Brownian motion, the house model ([geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)).
+In words: over a short time step $dt$, Acme's price $S_t$ drifts up at the rate $r - q$ and takes a random kick $dW$, scaled by the local volatility where it now stands. Fixed at 20%, this is geometric Brownian motion, the house model ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)).
 
 Multiplied out, the formula is **Dupire's forward equation**. It starts from the payoff at expiry zero and builds every call price as expiry lengthens, all strikes at once:
 
@@ -90,7 +69,7 @@ The density: undo one expiry's worth of discounting on the bend and the chance p
 
 ### When it holds
 
-- **Continuous paths.** A jump carries probability between distant prices in one step and adds terms the formula lacks; jumps get their own model in [merton-jump-diffusion](04-merton-jump-diffusion.md).
+- **Continuous paths.** A jump carries probability between distant prices in one step and adds terms the formula lacks; jumps get their own model in [Merton jump-diffusion](04-merton-jump-diffusion.md).
 - **One source of randomness.** If volatility is itself random, the formula returns the average random variance over paths ending at $K$ on date $T$ (tip in Why it works). That fits every vanilla call and misprices path-dependent contracts such as barriers.
 - **Known rates and a proportional dividend.** Cash dividends on fixed dates, or random rates, add terms the formula lacks.
 - **A smooth, arbitrage-free surface.** Listed quotes must first be joined into a smooth surface that passes the butterfly and calendar tests. A negative bend gives a negative variance.
@@ -120,7 +99,7 @@ So once the straight-line pieces are removed, the calendar gain is the local var
 
 ### Step 1: the density of Acme's price spreads by the forward equation
 
-Let $p(x, t)$ be the risk-neutral density of Acme's price on date $t$: the density that today's prices imply. Under the local-volatility diffusion it obeys the forward (Fokker-Planck) equation ([fokker-planck-forward-equation](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/03-fokker-planck-forward-equation.md)):
+Let $p(x, t)$ be the risk-neutral density of Acme's price on date $t$: the density that today's prices imply. Under the local-volatility diffusion it obeys the forward (Fokker-Planck) equation ([Fokker-Planck](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/03-fokker-planck-forward-equation.md)):
 
 $$\frac{\partial p}{\partial t} \;=\; \frac12\,\frac{\partial^2}{\partial x^2}\Big(\sigma_{\text{loc}}^2(x, t)\,x^2\,p\Big) \;-\; \frac{\partial}{\partial x}\Big((r - q)\,x\,p\Big)$$
 
@@ -187,7 +166,7 @@ The identity: $\phi(d_1)/\phi(d_2) = e^{-(d_1 - d_2)(d_1 + d_2)/2}$, with $d_1 -
 
 </details>
 
-The same cancellation works on any surface whose volatility depends on expiry alone: the formula then returns the forward variance of [term-structure-and-forward-volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md) at every strike.
+The same cancellation works on any surface whose volatility depends on expiry alone: the formula then returns the forward variance of [Term structure and forward volatility](../12-The%20smile%20and%20the%20surface/02-term-structure-and-forward-volatility.md) at every strike.
 
 <details>
 <summary>Local volatility as a conditional expectation</summary>
@@ -196,7 +175,7 @@ If the true volatility is itself random, Gyöngy proved in 1986 that a diffusion
 
 </details>
 
-A second road to the forward equation applies Itô's lemma directly to the kinked payoff (Tanaka's formula) and meets the same strike term. The forward equation as a partial differential equation, solved properly, is dupire-and-forward-equations.
+A second road to the forward equation applies Itô's lemma directly to the kinked payoff (Tanaka's formula) and meets the same strike term. The forward equation as a partial differential equation, solved properly, is Dupire's equation.
 
 ---
 
@@ -683,21 +662,21 @@ The two outputs match line for line, including the rounding noise at the edge.
 ## The usual mistake
 
 > [!warning]
-> **Reading local volatility as implied volatility.** Implied volatility is one number per option: the single constant volatility that reprices that option. Local volatility is one number per price and date: the volatility the stock has when it stands there. On a flat surface they agree. On a sloping one, an option's implied volatility is roughly an average of local volatilities along the paths to its strike, so local volatility slopes more steeply; the conversion is [local-volatility-from-implied-volatility](02-local-volatility-from-implied-volatility.md).
+> **Reading local volatility as implied volatility.** Implied volatility is one number per option: the single constant volatility that reprices that option. Local volatility is one number per price and date: the volatility the stock has when it stands there. On a flat surface they agree. On a sloping one, an option's implied volatility is roughly an average of local volatilities along the paths to its strike, so local volatility slopes more steeply; the conversion is [Local volatility in implied-vol terms](02-local-volatility-from-implied-volatility.md).
 >
 > - **Dropping the carry terms.** The zero-rate formula holds only once interest and dividends are stripped out: prices undiscounted, each strike measured against its forward. On today's house prices it reads 0.231757.
 > - **Spot gamma for the strike bend.** They agree only at $S$ = $K$. At (110, 0.5) the swap reads 0.181818.
 > - **Differencing raw quotes.** Quotes sit at scattered strikes and expiries. A grid of strikes $5 apart and expiries three months apart reads 0.201317 even on perfect prices, and any quote error is divided by the step squared in the bend. Fit a smooth surface that passes both arbitrage tests first.
-> - **Taking a perfect fit for a forecast.** Local volatility reprices today's surface exactly; how it makes the smile move later is another question, usually answered wrongly: [pricing-under-local-volatility-and-the-forward-smile](03-pricing-under-local-volatility-and-the-forward-smile.md).
+> - **Taking a perfect fit for a forecast.** Local volatility reprices today's surface exactly; how it makes the smile move later is another question, usually answered wrongly: [Pricing with local volatility](03-pricing-under-local-volatility-and-the-forward-smile.md).
 
 ---
 
 ## Where you meet it in real life
 
-- **Equity exotics desks.** Barriers, cliquets and autocallables on indices are often priced in a local-volatility model, or one with a local-volatility part, fitted to the vanilla surface, so it reprices every vanilla in the hedge: [pricing-under-local-volatility-and-the-forward-smile](03-pricing-under-local-volatility-and-the-forward-smile.md).
-- **Currency barrier desks.** Touches and knock-outs carry a local-volatility component for the same reason: [barriers-with-the-smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md).
-- **Calibration engines.** One forward solve prices every strike and expiry together; the backward equation, solved from each payoff back to today, needs one solve per option: dupire-and-forward-equations.
-- **Jump risk.** A surface steepened by crash fear, read through Dupire, fits the vanillas but prices the crash as a slide: [merton-jump-diffusion](04-merton-jump-diffusion.md) and [merton-greeks-hedge-error-and-calibration](05-merton-greeks-hedge-error-and-calibration.md).
+- **Equity exotics desks.** Barriers, cliquets and autocallables on indices are often priced in a local-volatility model, or one with a local-volatility part, fitted to the vanilla surface, so it reprices every vanilla in the hedge: [Pricing with local volatility](03-pricing-under-local-volatility-and-the-forward-smile.md).
+- **Currency barrier desks.** Touches and knock-outs carry a local-volatility component for the same reason: [Barriers on a smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md).
+- **Calibration engines.** One forward solve prices every strike and expiry together; the backward equation, solved from each payoff back to today, needs one solve per option: Dupire's equation.
+- **Jump risk.** A surface steepened by crash fear, read through Dupire, fits the vanillas but prices the crash as a slide: [Merton jump-diffusion](04-merton-jump-diffusion.md) and [Greeks under jumps](05-merton-greeks-hedge-error-and-calibration.md).
 
 > **Say it back**
 > Local volatility lets a stock's volatility depend on its price and the date, one number per point. A later expiry adds value only through paths at the strike, at a rate set by the local variance there. So the calendar slope, cleared of interest and dividends and divided by half the strike squared times the bend, is that local variance. The reading exists where every butterfly and calendar spread costs something, and is unique where the density is positive. Prices made at a flat 20% hand back 0.2000 everywhere, and prices made from a sloping volatility hand back the slope.
@@ -706,16 +685,16 @@ The two outputs match line for line, including the rounding noise at the edge.
 
 ## What this builds on
 
-- [butterfly-and-the-implied-density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md): the bend in strike is the discounted density, the denominator here.
-- [volatility-surface-and-its-arbitrage-rules](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md): the butterfly and calendar tests, exactly the conditions for a real local volatility.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes of a price with two inputs, one moved at a time.
-- [fokker-planck-forward-equation](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/03-fokker-planck-forward-equation.md): how a diffusion's density spreads, where the derivation starts.
+- [The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md): the bend in strike is the discounted density, the denominator here.
+- [The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md): the butterfly and calendar tests, exactly the conditions for a real local volatility.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes of a price with two inputs, one moved at a time.
+- [Fokker-Planck](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/03-fokker-planck-forward-equation.md): how a diffusion's density spreads, where the derivation starts.
 
 ## Where this goes next
 
-- [local-volatility-from-implied-volatility](02-local-volatility-from-implied-volatility.md): the same formula written in implied volatilities, applied to a skewed surface.
-- [barriers-with-the-smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md): what a local-volatility model changes in the price of a barrier.
-- dupire-and-forward-equations: the forward equation as a partial differential equation, with its solvers.
+- [Local volatility in implied-vol terms](02-local-volatility-from-implied-volatility.md): the same formula written in implied volatilities, applied to a skewed surface.
+- [Barriers on a smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md): what a local-volatility model changes in the price of a barrier.
+- Dupire's equation: the forward equation as a partial differential equation, with its solvers.
 
 This card reads a volatility off call prices; desks quote implied volatilities instead, and the next card shows how a skew in those quotes becomes a steeper skew in local volatility.
 

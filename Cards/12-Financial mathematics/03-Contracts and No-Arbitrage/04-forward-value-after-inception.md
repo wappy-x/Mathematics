@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Contracts and No-Arbitrage
-topic: Mark to market
-item: An old forward
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/03-forward-price-by-cash-and-carry|forward-price-by-cash-and-carry]]"
-next:
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/05-futures-margining-and-the-forward-futures-difference|futures-margining-and-the-forward-futures-difference]]"
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/04-fx-forward-value-after-inception|fx-forward-value-after-inception]]"
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/01-commodity-swap-and-average-price-forward|commodity-swap-and-average-price-forward]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - forward-value-after-inception
----
-
 # An old forward: worth the discounted gap between today's forward price and the one you locked
 
-Financial mathematics → Contracts and No-Arbitrage → Mark to market → An old forward
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Contracts and No-Arbitrage](../../../SYLLABUS.md#w12-s03) → An old forward
 
 ---
 
@@ -29,7 +8,7 @@ Financial mathematics → Contracts and No-Arbitrage → Mark to market → An o
 
 A month ago two firms signed a **forward contract** on one Acme share: an agreement made that morning to trade the share on a fixed day a year later, at a cash figure fixed that same morning. The paperwork says 103.05. No fee, no deposit, nothing at all changed hands, which is the ordinary shape of a forward.
 
-That figure was not a forecast. It was the one number that made the agreement worth nothing to either side on the day ([forward-price-by-cash-and-carry](03-forward-price-by-cash-and-carry.md)).
+That figure was not a forecast. It was the one number that made the agreement worth nothing to either side on the day ([Forward price](03-forward-price-by-cash-and-carry.md)).
 
 A month has passed. Acme now trades at 103.12, and a brand-new contract for that same delivery day is being written at 106.00. The old paperwork still says 103.05, so the buying side holds a bargain: a duty to pay 103.05 for a share everyone else is contracting to pay 106.00 for. A dealer would buy that contract off them, and this card works out the price.
 
@@ -88,7 +67,7 @@ The second exponential is the **share fraction**, $e^{-q\tau} = 0.9818$: the pie
 
 - **The share can be bought, held and sold short, at one rate for borrowing and lending, with no fees.** The proof runs the same trade both ways, so it needs the same rate each way. Where borrowing costs more than lending pays, the mark is pinned only inside a band.
 - **The rate and the dividend yield are known for the rest of the contract's life.** A rise of 1 percent in the bank rate adds 0.90 to this mark — a trader calls that rho — and a rise of 1 percent in the yield takes 0.93 off it.
-- **Nothing is settled before delivery day.** A contract that pays over the day's gain each evening and resets is a future, knocked back to zero nightly, so this is not its mark: [futures-margining-and-the-forward-futures-difference](05-futures-margining-and-the-forward-futures-difference.md).
+- **Nothing is settled before delivery day.** A contract that pays over the day's gain each evening and resets is a future, knocked back to zero nightly, so this is not its mark: [Futures](05-futures-margining-and-the-forward-futures-difference.md).
 - **Both sides deliver.** Where the other side might fail, the 2.82 stops being a price and becomes an exposure: the amount at risk, and the reason collateral is lodged against it.
 
 ---
@@ -149,7 +128,7 @@ A forward's payoff is a straight line in the delivery-day price, and averaging a
 
 The code tests it bluntly, averaging Acme's delivery-day price over the whole bell curve at 20 percent a year and again at 60 percent. Both times the average is 106.000000, today's forward price on the nose, and the mark 2.822186.
 
-That average belongs to the pricing world where every asset earns the bank rate in total return, which has a card of its own: [state-prices-and-risk-neutral-pricing-in-one-period](07-state-prices-and-risk-neutral-pricing-in-one-period.md). Taking that as read, the whole derivation is one line: the average payoff is $F_t - K$, discounted.
+That average belongs to the pricing world where every asset earns the bank rate in total return, which has a card of its own: [State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md). Taking that as read, the whole derivation is one line: the average payoff is $F_t - K$, discounted.
 
 ---
 
@@ -684,7 +663,7 @@ The two outputs agree line for line.
 > **Reading the forward price as the contract's value.** The forward price, 106.00, is a figure for delivery day, quoted like a share price, and it exists whether or not anybody holds a contract. The mark, 2.82, is what an existing contract is worth today: zero on the day of signing, moving afterwards. Report the first where the second was asked for and a contract worth under three dollars is booked at a hundred and six.
 >
 > Three smaller traps sit in the What breaks table above: spot against delivery price, the wrong clock, the dividend yield dropped. One habit cures all three — never compare two prices standing on different dates. Carry the spot forward to 106.00, or discount the 103.05 back to 98.43. A fourth trap is not arithmetic at all:
-> - **Futures marked with this formula.** A future pays over the day's gain every evening and starts the next day at zero, so its mark is not this number: [futures-margining-and-the-forward-futures-difference](05-futures-margining-and-the-forward-futures-difference.md).
+> - **Futures marked with this formula.** A future pays over the day's gain every evening and starts the next day at zero, so its mark is not this number: [Futures](05-futures-margining-and-the-forward-futures-difference.md).
 
 ---
 
@@ -692,9 +671,9 @@ The two outputs agree line for line.
 
 - **A dealer's books, every evening.** Every open forward is carried at this number. Its change is the day's profit or loss; the number itself is the exposure to the other side, and sets the collateral one firm lodges with the other as security.
 - **Getting out early.** A firm that no longer wants the position rarely tears the contract up. It signs the offsetting forward of Step 0, or sells the contract for its mark.
-- **Corporate hedging.** An importer with a bill in euros locks the rate with a currency forward and marks it each quarter until the cash moves — the same formula, with the foreign interest rate in the dividend yield's job: [fx-forward-value-after-inception](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/04-fx-forward-value-after-inception.md).
-- **Swaps.** A commodity swap is a row of forwards at one shared delivery price, one per payment date, worth the sum of the marks: [commodity-swap-and-average-price-forward](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/01-commodity-swap-and-average-price-forward.md).
-- **Options, underneath.** A call minus a put at one strike and date is a long forward at that strike, so put-call parity is this formula in another hat: [put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md).
+- **Corporate hedging.** An importer with a bill in euros locks the rate with a currency forward and marks it each quarter until the cash moves — the same formula, with the foreign interest rate in the dividend yield's job: [Valuing an old currency forward](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/04-fx-forward-value-after-inception.md).
+- **Swaps.** A commodity swap is a row of forwards at one shared delivery price, one per payment date, worth the sum of the marks: [Commodity swap](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/01-commodity-swap-and-average-price-forward.md).
+- **Options, underneath.** A call minus a put at one strike and date is a long forward at that strike, so put-call parity is this formula in another hat: [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md).
 
 > **Say it back**
 > A forward signed today is worth nothing: the delivery price is chosen to make it so. Once the market moves, a fresh contract for the same day names a different price, and the old one is worth that difference, discounted because it is not collected until delivery day. The proof is a cancelling pair, leaving a fixed sum on a known date. No forecast and no volatility enter: the payoff is a straight line, and the copy that builds it is never touched.
@@ -703,14 +682,14 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [forward-price-by-cash-and-carry](03-forward-price-by-cash-and-carry.md): where today's 106.00 comes from, and why 103.05 made the contract free at signing. Every $F_t$ here is that card's result.
-- [compounding-and-discount-factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): the discount factor 0.9552, and what "continuously compounded" does to a rate.
+- [Forward price](03-forward-price-by-cash-and-carry.md): where today's 106.00 comes from, and why 103.05 made the contract free at signing. Every $F_t$ here is that card's result.
+- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): the discount factor 0.9552, and what "continuously compounded" does to a rate.
 
 ## Where this goes next
 
-- [futures-margining-and-the-forward-futures-difference](05-futures-margining-and-the-forward-futures-difference.md): the same trade on an exchange, where the mark is paid over in cash nightly and the contract is reborn at zero.
-- [fx-forward-value-after-inception](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/04-fx-forward-value-after-inception.md): the same two lines in a currency, with the foreign interest rate in the dividend yield's seat.
-- [commodity-swap-and-average-price-forward](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/01-commodity-swap-and-average-price-forward.md): a long row of these marks, summed, which is what a swap is.
+- [Futures](05-futures-margining-and-the-forward-futures-difference.md): the same trade on an exchange, where the mark is paid over in cash nightly and the contract is reborn at zero.
+- [Valuing an old currency forward](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/04-fx-forward-value-after-inception.md): the same two lines in a currency, with the foreign interest rate in the dividend yield's seat.
+- [Commodity swap](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/01-commodity-swap-and-average-price-forward.md): a long row of these marks, summed, which is what a swap is.
 
 This card assumed nothing changes hands until delivery day. The next asks what happens when the mark is settled in cash every evening instead, and whether the price agreed under that arrangement is still 103.05.
 

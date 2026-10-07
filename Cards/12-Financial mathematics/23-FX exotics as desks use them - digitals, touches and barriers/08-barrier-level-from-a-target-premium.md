@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX exotics as desks use them - digitals, touches and barriers
-topic: Reading a quote back into a level
-item: Solving for the barrier
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/06-barrier-and-touch-greeks|barrier-and-touch-greeks]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/01-fx-digitals|fx-digitals]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/06-intermediate-value-theorem|intermediate-value-theorem]]"
-next: []
-tags: [mathematics, financial mathematics, barrier-level-from-a-target-premium]
----
-
 # Solving for the barrier: the knock-out level that makes the option cost what the client will pay, and the touch level a price implies
 
-Financial mathematics → FX exotics as desks use them - digitals, touches and barriers → Reading a quote back into a level → Solving for the barrier
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX exotics as desks use them - digitals, touches and barriers](../../../SYLLABUS.md#w12-s23) → Solving for the barrier
 
 ---
 
@@ -25,9 +8,9 @@ Financial mathematics → FX exotics as desks use them - digitals, touches and b
 
 One euro buys 1.10 dollars today. A company that must pay euros in a year wants protection against the euro strengthening, and a salesperson shows it a one-year euro call struck at 1.10: the right to sell dollars and buy euros at that rate. In the shelf's house market (dollar rate 5 percent, euro rate 3 percent, volatility 10 percent a year) the call costs 0.053556 dollars per euro of notional. The treasurer says the budget is half that: 0.026778.
 
-The desk's answer is a **knock-out**: the same call with a clause that kills it, worthless, the first time the euro trades at or below a fixed level called the **barrier** ([barrier-options-by-reflection](02-barrier-options-by-reflection.md)). A barrier far below 1.10 is almost never hit and the option costs nearly the full call. A barrier just under 1.10 is hit almost at once and the option costs almost nothing. Somewhere in between sits the level that costs exactly half. It is 1.074463, found by halving an interval until it is small enough.
+The desk's answer is a **knock-out**: the same call with a clause that kills it, worthless, the first time the euro trades at or below a fixed level called the **barrier** ([Knock-out and knock-in](02-barrier-options-by-reflection.md)). A barrier far below 1.10 is almost never hit and the option costs nearly the full call. A barrier just under 1.10 is hit almost at once and the option costs almost nothing. Somewhere in between sits the level that costs exactly half. It is 1.074463, found by halving an interval until it is small enough.
 
-The same question runs the other way on a one-touch, a contract that pays one dollar at expiry if the euro ever trades at a level during the year ([fx-one-touch-and-no-touch](04-fx-one-touch-and-no-touch.md)). A broker quotes an upside one-touch at 30 percent of the payout. The house one-touch at 1.20 costs 0.4142, so a 30-percent touch sits further out: at 1.228604. Solving a price formula for one of its inputs, given its output, is called **inverting** it. That is the whole job of this card.
+The same question runs the other way on a one-touch, a contract that pays one dollar at expiry if the euro ever trades at a level during the year ([One-touch and no-touch](04-fx-one-touch-and-no-touch.md)). A broker quotes an upside one-touch at 30 percent of the payout. The house one-touch at 1.20 costs 0.4142, so a 30-percent touch sits further out: at 1.228604. Solving a price formula for one of its inputs, given its output, is called **inverting** it. That is the whole job of this card.
 
 **A knock-out's price moves one way as its barrier moves, and so does a one-touch's; a target premium strictly inside the possible range therefore names exactly one level, found safely by bisection; a digital's strike inverts the same way, but its volatility does not, because a digital's price can rise and then fall as volatility grows.**
 
@@ -51,13 +34,13 @@ Falling line: the down-and-out call's price. Flat line: the client's target, hal
 
 ## The formula
 
-Notation first, in words. The **spot** $S$ is today's exchange rate in dollars per euro. The dollar is the pricing currency, so its rate $r_d$ discounts, and the euro rate $r_f$ plays the part a dividend yield plays for a share. The vanilla EUR call at spot $x$ is written $C(x)$, priced by the Garman–Kohlhagen formula on [fx-digitals](01-fx-digitals.md). The inverse problem is one equation in one unknown, the barrier $H$:
+Notation first, in words. The **spot** $S$ is today's exchange rate in dollars per euro. The dollar is the pricing currency, so its rate $r_d$ discounts, and the euro rate $r_f$ plays the part a dividend yield plays for a share. The vanilla EUR call at spot $x$ is written $C(x)$, priced by the Garman–Kohlhagen formula on [Currency digitals](01-fx-digitals.md). The inverse problem is one equation in one unknown, the barrier $H$:
 
 $$C_{\text{do}}(H) \;=\; C(S) \;-\; \Big(\frac{H}{S}\Big)^{\alpha}\, C\!\Big(\frac{H^2}{S}\Big) \;=\; P^{*}, \qquad \alpha = \frac{2\,(r_d - r_f - \tfrac12\sigma^2)}{\sigma^2}$$
 
 **Read it aloud:** the knock-out is the vanilla call minus a scaled copy of the same call started from the mirror image of spot in the barrier; find the barrier that makes this equal the target price.
 
-The mirror term is the reflection result from [barrier-options-by-reflection](02-barrier-options-by-reflection.md), valid here because the barrier sits at or below the strike. For an upside one-touch paying one dollar at expiry, the same mirror gives
+The mirror term is the reflection result from [Knock-out and knock-in](02-barrier-options-by-reflection.md), valid here because the barrier sits at or below the strike. For an upside one-touch paying one dollar at expiry, the same mirror gives
 
 $$\text{OT}(H) \;=\; e^{-r_d T}\Big[\,N\big(d_2(S,H)\big) \;+\; \Big(\frac{H}{S}\Big)^{\alpha} N\big(-d_2(H^2/S,\,H)\big)\Big] \;=\; P^{*}$$
 
@@ -84,10 +67,10 @@ A cash digital, which pays one dollar if the euro finishes above a strike $k$, c
 
 ### When it holds
 
-- **Continuous monitoring.** The barrier watches every instant. A desk that checks only a daily fixing sees fewer touches, so its knock-out is worth more at each level and the fair level for the same premium sits nearer spot than the one solved here; the correction is on [discrete-monitoring-correction](../16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md).
-- **One flat volatility.** A real FX market has a smile (volatility that differs by strike), and barrier prices move with it. The level solved here is the flat-volatility level; [barriers-with-the-smile](07-barriers-with-the-smile.md) says how far it shifts.
+- **Continuous monitoring.** The barrier watches every instant. A desk that checks only a daily fixing sees fewer touches, so its knock-out is worth more at each level and the fair level for the same premium sits nearer spot than the one solved here; the correction is on [Daily monitoring](../16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md).
+- **One flat volatility.** A real FX market has a smile (volatility that differs by strike), and barrier prices move with it. The level solved here is the flat-volatility level; [Barriers on a smile](07-barriers-with-the-smile.md) says how far it shifts.
 - **A target strictly inside the price range.** Zero to the vanilla for the knock-out; zero to $e^{-r_d T}$ for the one-touch. Outside it there is no level, and a solver that does not check returns an edge of its bracket as if it were an answer.
-- **Barrier at or below the strike** for the formula above. A barrier between spot and a lower strike uses a different mirror term (all eight cases on [the-eight-barrier-types](03-the-eight-barrier-types.md)); the monotonicity argument below does not change.
+- **Barrier at or below the strike** for the formula above. A barrier between spot and a lower strike uses a different mirror term (all eight cases on [The eight single barriers in one table](03-the-eight-barrier-types.md)); the monotonicity argument below does not change.
 - **Payment at expiry.** A one-touch that pays at the moment of touching is worth more, so the same 30 percent quote implies a level further out.
 
 **Conventions verified 2026-09-27 (this shelf's house terms; a term sheet overrides them):** notional in euros, premium in dollars per euro, one-touch premium quoted as a fraction of the dollar payout, payout at expiry.
@@ -98,7 +81,7 @@ A cash digital, which pays one dollar if the euro finishes above a strike $k$, c
 
 ### Step 0: a price that only ever moves one way can be read backwards
 
-A pricing formula maps a level to a price. Reading it backwards needs two facts. The price must move **continuously** with the level, with no jumps, so every price between two achieved prices is achieved somewhere: that is the intermediate value theorem ([intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)). And it must move **strictly one way**, so no price is achieved twice. Continuous plus strictly one-way gives one level per price. The whole card is checking those two facts for each contract, finding the range of prices, and then solving.
+A pricing formula maps a level to a price. Reading it backwards needs two facts. The price must move **continuously** with the level, with no jumps, so every price between two achieved prices is achieved somewhere: that is the intermediate value theorem ([Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)). And it must move **strictly one way**, so no price is achieved twice. Continuous plus strictly one-way gives one level per price. The whole card is checking those two facts for each contract, finding the range of prices, and then solving.
 
 ### Step 1: the knock-out's price falls as the barrier rises
 
@@ -115,7 +98,7 @@ The same argument runs on the other side of spot. An up-and-out call dies when t
 <details>
 <summary>Detailed proof: existence, uniqueness and the boundary cases, for both contracts</summary>
 
-Let $m$ be the lowest value and $M$ the highest value of the rate over the year, $S_T$ the rate at expiry. All prices are $e^{-r_dT}$ times an average in the pricing world of [barrier-options-by-reflection](02-barrier-options-by-reflection.md).
+Let $m$ be the lowest value and $M$ the highest value of the rate over the year, $S_T$ the rate at expiry. All prices are $e^{-r_dT}$ times an average in the pricing world of [Knock-out and knock-in](02-barrier-options-by-reflection.md).
 
 **Knock-out.** Payoff $g_H = (S_T - K)^+\,\mathbf{1}\{m > H\}$. For $H_1 < H_2 < S$: $g_{H_1} - g_{H_2} = (S_T-K)^+\,\mathbf{1}\{H_1 < m \le H_2\} \ge 0$. The event $\{H_1 < m \le H_2,\ S_T > K\}$ has positive probability because the joint law of $(m, S_T)$ has a positive density on $\{m < S,\ S_T > m\}$. So $C_{\text{do}}(H_1) > C_{\text{do}}(H_2)$. Continuity: $m$ has a continuous distribution, so $H \mapsto \mathbf{1}\{m > H\}$ changes only on a set of probability tending to zero as the step shrinks; bounded convergence gives continuity (the closed form confirms it). Limits: $H \to 0$ gives $\mathbf{1}\{m > H\} \to 1$ almost surely, price $\to C(S)$; $H \to S$ gives $\mathbf{1}\{m > H\} \to 0$ almost surely (a Brownian path started at a level dips below it at once), price $\to 0$. By the intermediate value theorem each $P^*$ in $(0, C(S))$ has a root; strict decrease makes it unique. For $P^* \ge C(S)$ or $P^* \le 0$ there is none.
 
@@ -149,7 +132,7 @@ At 0.30 that gives 1.171606. Unique, by Step 0.
 
 Volatility is different. Write $u = \sigma\sqrt{T}$ for one year's swing and let the strike sit above the forward, the rate at which euros can be locked in today for delivery in a year, 1.122221. Then $d_2 = \ln(F/k)/u - u/2$, where $\ln(F/k)$ is negative because the strike is above the forward. As $u$ grows from zero, the first term climbs from minus infinity and the second pulls down. The digital's price climbs, peaks, then falls. For the 1.20 digital the peak is at 36.6 percent volatility, price 0.339730.
 
-So every price strictly between zero and the peak is hit twice. At 10 percent volatility the 1.20 digital costs 0.224231; setting $d_2 = z$ gives a quadratic in $u$ whose two positive roots are 10 percent and 134.0228 percent. Both are honest answers. A price above 0.339730 has none; exactly at it, one. The full case table, strike below, at and above the forward, is on [digital-inverses-vol-and-strike](../10-Digitals%20and%20the%20implied%20density/06-digital-inverses-vol-and-strike.md).
+So every price strictly between zero and the peak is hit twice. At 10 percent volatility the 1.20 digital costs 0.224231; setting $d_2 = z$ gives a quadratic in $u$ whose two positive roots are 10 percent and 134.0228 percent. Both are honest answers. A price above 0.339730 has none; exactly at it, one. The full case table, strike below, at and above the forward, is on [Digital inverses](../10-Digitals%20and%20the%20implied%20density/06-digital-inverses-vol-and-strike.md).
 
 <details>
 <summary>The algebra behind the two roots</summary>
@@ -160,7 +143,7 @@ Set $d_2 = z$ with $a = \ln(F/k)$: $a/u - u/2 = z$, so $u^2/2 + z\,u - a = 0$ an
 
 ### The other door
 
-The same levels come out of Monte Carlo: simulate the rate month by month, and between months use the Brownian-bridge chance of having touched (the chance a path pinned at both ends crossed the wall in between, $\exp(-2(b-x)(b-y)/(\sigma^2\Delta t))$ in log terms, from Glasserman in Sources). At the solved levels it prices the knock-out at 0.026750 and the touch at 0.300859, each within its sampling error of the target. The equity version of this card, on Acme shares with a volatility inverse for the knock-out, is [barrier-inverses-level-and-volatility](../16-Barriers%2C%20touches%20and%20lookbacks/07-barrier-inverses-level-and-volatility.md).
+The same levels come out of Monte Carlo: simulate the rate month by month, and between months use the Brownian-bridge chance of having touched (the chance a path pinned at both ends crossed the wall in between, $\exp(-2(b-x)(b-y)/(\sigma^2\Delta t))$ in log terms, from Glasserman in Sources). At the solved levels it prices the knock-out at 0.026750 and the touch at 0.300859, each within its sampling error of the target. The equity version of this card, on Acme shares with a volatility inverse for the knock-out, is [Barrier inverses](../16-Barriers%2C%20touches%20and%20lookbacks/07-barrier-inverses-level-and-volatility.md).
 
 ---
 
@@ -191,7 +174,7 @@ The treasurer's half-price call dies if the euro trades at or below 1.074463 at 
 
 The one-touch runs the same way on $\text{OT}(H)$, bracketed by 1.10 (worth 0.951229) and 3.0 (worth almost nothing): **1.228604** for a 30-percent quote. A cash digital at 30 percent sits at strike 1.171606, much closer, because finishing above a level is harder than touching it once.
 
-The steepness matters for hedging. At the solved level the knock-out's price falls 0.804506 dollars per unit of barrier, so moving the barrier one pip (0.0001) moves the premium by about 0.80 pips. Both roads agree on that slope; its meaning as a Greek is on [barrier-and-touch-greeks](06-barrier-and-touch-greeks.md).
+The steepness matters for hedging. At the solved level the knock-out's price falls 0.804506 dollars per unit of barrier, so moving the barrier one pip (0.0001) moves the premium by about 0.80 pips. Both roads agree on that slope; its meaning as a Greek is on [Greeks at the wall](06-barrier-and-touch-greeks.md).
 
 ### What breaks if you drop a piece
 
@@ -670,10 +653,10 @@ Hump: the digital's price as volatility grows. Flat line: the price at 10 percen
 ## Where you meet it in real life
 
 - **Structuring a zero-cost or budget hedge.** A corporate treasurer names a premium; the desk solves for the knock-out level that fits it, exactly as on this card. The same inversion places the barrier in a knock-in forward or a range accrual.
-- **Broker screens for one-touches.** Touches trade quoted in percent of payout. A trader seeing 1.228604 at 30 percent and 1.20 at 41.42 percent reads the implied levels and prices backwards and forwards between them ([fx-one-touch-and-no-touch](04-fx-one-touch-and-no-touch.md)).
-- **Double no-touch ranges.** A client asks for a range that pays at 20 percent; the desk solves for a symmetric pair of walls. Two walls, one unknown width, the same monotone argument: [double-barriers-and-double-no-touch](05-double-barriers-and-double-no-touch.md).
+- **Broker screens for one-touches.** Touches trade quoted in percent of payout. A trader seeing 1.228604 at 30 percent and 1.20 at 41.42 percent reads the implied levels and prices backwards and forwards between them ([One-touch and no-touch](04-fx-one-touch-and-no-touch.md)).
+- **Double no-touch ranges.** A client asks for a range that pays at 20 percent; the desk solves for a symmetric pair of walls. Two walls, one unknown width, the same monotone argument: [Two walls](05-double-barriers-and-double-no-touch.md).
 - **Digital strikes on a term sheet.** A digital coupon priced to a budget has its strike solved in one line; its volatility is never implied from the digital itself.
-- **Vanilla premiums solved for a strike.** The same move on a plain option, on Acme shares: [strike-or-spot-from-a-target-premium](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/04-strike-or-spot-from-a-target-premium.md).
+- **Vanilla premiums solved for a strike.** The same move on a plain option, on Acme shares: [Strike or spot from a target premium](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/04-strike-or-spot-from-a-target-premium.md).
 
 > **Say it back**
 > A knock-out's price falls continuously as its barrier climbs toward spot, from the vanilla's price down to zero, so any target in between names one barrier. A one-touch's price falls from a sure discounted dollar to zero as its level moves away, so any quote in between names one level. Bisection finds both and cannot miss once the target is checked to be in range. A digital's strike inverts in one line. A digital's volatility can give two answers or none, because its price rises and then falls as volatility grows.
@@ -682,15 +665,15 @@ Hump: the digital's price as volatility grows. Flat line: the price at 10 percen
 
 ## What this builds on
 
-- [barrier-and-touch-greeks](06-barrier-and-touch-greeks.md): the price's sensitivity to the barrier; its sign is the monotonicity this card inverts, and its size sets how far one pip of premium moves the level.
-- [fx-digitals](01-fx-digitals.md): the Garman–Kohlhagen pricing of vanillas and digitals in the house FX market, and the digital whose strike and volatility are inverted in Step 4.
-- [intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): a continuous price that starts above a target and ends below it crosses it; the existence half of every inverse here.
+- [Greeks at the wall](06-barrier-and-touch-greeks.md): the price's sensitivity to the barrier; its sign is the monotonicity this card inverts, and its size sets how far one pip of premium moves the level.
+- [Currency digitals](01-fx-digitals.md): the Garman–Kohlhagen pricing of vanillas and digitals in the house FX market, and the digital whose strike and volatility are inverted in Step 4.
+- [Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): a continuous price that starts above a target and ends below it crosses it; the existence half of every inverse here.
 
 ## Where this goes next
 
-- [barriers-with-the-smile](07-barriers-with-the-smile.md): the same inversion with a volatility that differs by level, where the solved barrier shifts with the smile's shape.
-- [double-barriers-and-double-no-touch](05-double-barriers-and-double-no-touch.md): two walls solved for one target, a range width instead of a level.
-- [barrier-inverses-level-and-volatility](../16-Barriers%2C%20touches%20and%20lookbacks/07-barrier-inverses-level-and-volatility.md): the equity version, which adds the knock-out's own volatility inverse and its two roots.
+- [Barriers on a smile](07-barriers-with-the-smile.md): the same inversion with a volatility that differs by level, where the solved barrier shifts with the smile's shape.
+- [Two walls](05-double-barriers-and-double-no-touch.md): two walls solved for one target, a range width instead of a level.
+- [Barrier inverses](../16-Barriers%2C%20touches%20and%20lookbacks/07-barrier-inverses-level-and-volatility.md): the equity version, which adds the knock-out's own volatility inverse and its two roots.
 
 The level inverse is safe because payoffs are ordered path by path; what this card leaves open is what happens to that safety once the volatility itself depends on where the rate is.
 

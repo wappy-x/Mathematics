@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Swaps
-topic: Fixed against floating
-item: Interest rate swaps
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/02-Curves/04-bootstrapping-the-discount-curve|bootstrapping-the-discount-curve]]"
-  - "[[Cards/12-Financial mathematics/02-Curves/02-forward-rate-agreements|forward-rate-agreements]]"
-next:
-  - "[[Cards/12-Financial mathematics/28-Swaps/02-par-swap-rate-and-annuity|par-swap-rate-and-annuity]]"
-  - "[[Cards/12-Financial mathematics/34-Inflation and Real Rates/04-zero-coupon-inflation-swaps|zero-coupon-inflation-swaps]]"
-tags: [mathematics, financial-mathematics, interest-rate-swaps]
----
-
 # Interest rate swaps: fixed for floating, valued as two bonds or as a strip of forwards
 
-Financial mathematics → Swaps → Fixed against floating → Interest rate swaps
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Swaps](../../../SYLLABUS.md#w12-s28) → Interest rate swaps
 
 ---
 
@@ -48,13 +30,13 @@ xychart-beta
     line [4.50, 4.50, 4.50, 4.50, 4.50]
 ```
 
-The bending line is the forward rate for each year: the rate today's curve already locks in for that year ([forward-rate-agreements](../02-Curves/02-forward-rate-agreements.md)). The flat line is Linden's fixed 4.50 percent. In year one the floating rate is below it and Linden pays the gap. From year two on the floating rate is above it and Linden collects. The swap's value is those gaps, each shrunk to today's money and added up.
+The bending line is the forward rate for each year: the rate today's curve already locks in for that year ([Forward rate agreements](../02-Curves/02-forward-rate-agreements.md)). The flat line is Linden's fixed 4.50 percent. In year one the floating rate is below it and Linden pays the gap. From year two on the floating rate is above it and Linden collects. The swap's value is those gaps, each shrunk to today's money and added up.
 
 ---
 
 ## The formula
 
-Notation first, in words. The payment years are counted by $i$, from 1 to $n$, and $n = 5$ here. Year $i$ ends on the date $T_i$; the start of the first year is today. Today's price of one dollar paid on $T_i$ is the **discount factor** $D_i$, short for $D(T_i)$, read off the bootstrapped curve ([bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md)). A dollar today costs a dollar, so $D_0 = 1$. The **year fraction** $\alpha_i$ is how much of a year period $i$ counts as; every period here is a full year, so each $\alpha_i$ is 1. The notional is $N$ and the fixed rate is $K$. The **forward rate** $F_i$ is the rate for year $i$ that the curve already contains. Every sign is for Linden's side, the side that pays fixed, called the **payer**.
+Notation first, in words. The payment years are counted by $i$, from 1 to $n$, and $n = 5$ here. Year $i$ ends on the date $T_i$; the start of the first year is today. Today's price of one dollar paid on $T_i$ is the **discount factor** $D_i$, short for $D(T_i)$, read off the bootstrapped curve ([Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md)). A dollar today costs a dollar, so $D_0 = 1$. The **year fraction** $\alpha_i$ is how much of a year period $i$ counts as; every period here is a full year, so each $\alpha_i$ is 1. The notional is $N$ and the fixed rate is $K$. The **forward rate** $F_i$ is the rate for year $i$ that the curve already contains. Every sign is for Linden's side, the side that pays fixed, called the **payer**.
 
 $$F_i \;=\; \frac{1}{\alpha_i}\left(\frac{D_{i-1}}{D_i} - 1\right)$$
 
@@ -91,11 +73,11 @@ $$\sum_{i=1}^{n} N\,\alpha_i\,F_i\,D_i \;=\; N\,\bigl(1 - D_n\bigr)$$
 | $B_{\text{flt}}$, $B_{\text{fix}}$ | the floating-rate note and the fixed-coupon bond, both repaying $N$ at the end | 10,000,000.00 and 9,934,263.64 dollars | — |
 | $A$ | the annuity: the sum of $\alpha_i D_i$, what one unit of coupon a year costs today | 4.382424 | — |
 
-**Conventions verified 27 Sep 2026.** This card fixes every year fraction at 1 and reads each floating rate at the start of its year, paid at the end. The dollar market's floating leg now references SOFR, an overnight rate published each business day by the Federal Reserve Bank of New York, compounded over each period and known only at the period's end ([money-market-instruments-and-sofr](../02-Curves/03-money-market-instruments-and-sofr.md)). The telescoping below survives that change: compounded overnight rates still grow a dollar from one payment date to the next by the ratio of the two discount factors.
+**Conventions verified 27 Sep 2026.** This card fixes every year fraction at 1 and reads each floating rate at the start of its year, paid at the end. The dollar market's floating leg now references SOFR, an overnight rate published each business day by the Federal Reserve Bank of New York, compounded over each period and known only at the period's end ([Money markets](../02-Curves/03-money-market-instruments-and-sofr.md)). The telescoping below survives that change: compounded overnight rates still grow a dollar from one payment date to the next by the ratio of the two discount factors.
 
 ### When it holds
 
-- **One curve projects and discounts.** The forward rates and the discount factors come from the same prices. Since 2008 desks project with one curve and discount with another; then the note is no longer worth exactly par and the two-bond road needs a correction, set out on [basis-swaps-and-the-multi-curve-framework](04-basis-swaps-and-the-multi-curve-framework.md).
+- **One curve projects and discounts.** The forward rates and the discount factors come from the same prices. Since 2008 desks project with one curve and discount with another; then the note is no longer worth exactly par and the two-bond road needs a correction, set out on [Multi-curve](04-basis-swaps-and-the-multi-curve-framework.md).
 - **Today is a reset date.** Par holds on the day the rate is read. Between resets the next floating payment is already fixed, so the note is worth that fixed payment plus the notional, discounted from the next payment date, which drifts away from par until the next reset.
 - **The floating rate matches its period.** A rate read at the start of a period, for exactly that period, paid at its end. Pay it late, or apply a rate for a different length of time, and the terms stop cancelling.
 - **No spread on the floating leg.** A floating leg paying the rate plus a margin is a par note plus a small fixed annuity; the margin must be valued as a fixed leg of its own.
@@ -161,13 +143,13 @@ The tree's step size, its **volatility**, changes how far rates spread. It canno
 
 </details>
 
-A shortcut runs through the **par swap rate**, the fixed rate that makes a new swap worth nothing: 4.65 percent on this curve. The swap is worth the gap between 4.65 and 4.50 percent, times the notional, times the annuity 4.382424, which gives 65,736.36 dollars once more. Why the par rate takes that form is [par-swap-rate-and-annuity](02-par-swap-rate-and-annuity.md).
+A shortcut runs through the **par swap rate**, the fixed rate that makes a new swap worth nothing: 4.65 percent on this curve. The swap is worth the gap between 4.65 and 4.50 percent, times the notional, times the annuity 4.382424, which gives 65,736.36 dollars once more. Why the par rate takes that form is [The par swap rate](02-par-swap-rate-and-annuity.md).
 
 ---
 
 ## Worked numbers, by hand
 
-The curve is the five annual discount factors bootstrapped on [bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md). The swap: $N$ = 10,000,000.00 dollars, $K$ = 4.50 percent, five annual payments, each $\alpha_i$ = 1.
+The curve is the five annual discount factors bootstrapped on [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md). The swap: $N$ = 10,000,000.00 dollars, $K$ = 4.50 percent, five annual payments, each $\alpha_i$ = 1.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -219,7 +201,7 @@ Every number in the table is printed by both checks.
 | Convexity (gamma) | the down move exceeds the up move by | 2.44, slightly against the payer |
 | Volatility (vega) | tree volatility from 1 to 2 percent | 0.00 |
 
-The payer gains as rates rise, almost linearly, and volatility is worth nothing. Why the DV01 differs from the quick estimate $N \times A \times 0.0001$ = 4,382.42, and how to hedge it, is [swap-dv01-and-hedging](03-swap-dv01-and-hedging.md).
+The payer gains as rates rise, almost linearly, and volatility is worth nothing. Why the DV01 differs from the quick estimate $N \times A \times 0.0001$ = 4,382.42, and how to hedge it, is [Swap DV01](03-swap-dv01-and-hedging.md).
 
 ---
 
@@ -612,11 +594,11 @@ The two bond roads and the forward strip agree to the cent, as the algebra says 
 
 - **Corporate borrowers.** A company with a floating-rate loan pays fixed on a swap to lock its interest bill, exactly Linden's trade.
 - **Banks with fixed-rate mortgages.** The bank earns fixed on the mortgages and pays floating on deposits; paying fixed on a swap closes the gap.
-- **The curve itself.** Swap rates are the quotes the discount curve is built from beyond one year ([bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md)), so this card's valuation runs in reverse every morning.
-- **Hedge sizing.** How much a swap's value moves for a one basis point shift in rates, and how to offset it with another swap, is [swap-dv01-and-hedging](03-swap-dv01-and-hedging.md).
-- **Collateralised trades.** Dealers post collateral against swaps and discount at the overnight rate that collateral earns: [ois-discounting-and-collateral](05-ois-discounting-and-collateral.md).
-- **Two currencies.** Swap a dollar loan into euros and the notionals are exchanged at both ends: [cross-currency-swaps-and-basis](06-cross-currency-swaps-and-basis.md).
-- **Reading a swap backwards.** Given a swap's value, recover the fixed rate that produced it: [swap-inverses-rate-and-curve-from-price](07-swap-inverses-rate-and-curve-from-price.md).
+- **The curve itself.** Swap rates are the quotes the discount curve is built from beyond one year ([Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md)), so this card's valuation runs in reverse every morning.
+- **Hedge sizing.** How much a swap's value moves for a one basis point shift in rates, and how to offset it with another swap, is [Swap DV01](03-swap-dv01-and-hedging.md).
+- **Collateralised trades.** Dealers post collateral against swaps and discount at the overnight rate that collateral earns: [Collateral discounting](05-ois-discounting-and-collateral.md).
+- **Two currencies.** Swap a dollar loan into euros and the notionals are exchanged at both ends: [Cross-currency swaps](06-cross-currency-swaps-and-basis.md).
+- **Reading a swap backwards.** Given a swap's value, recover the fixed rate that produced it: [Solving a swap backwards](07-swap-inverses-rate-and-curve-from-price.md).
 
 > **Say it back**
 > A swap exchanges fixed interest for floating interest on a notional that never changes hands. Each floating payment can be copied today with two deposits, so it is worth two discount factors apart, and the floating leg telescopes to the notional less its discounted repayment. Add the notional to both legs and the swap becomes a floating-rate note, worth exactly par on a reset date, less a fixed-coupon bond. Priced that way or payment by payment at forward rates, Linden's swap is worth 65,736.36 dollars, and a tree of random rates agrees because every payment is linear in the rate.
@@ -625,15 +607,15 @@ The two bond roads and the forward strip agree to the cent, as the algebra says 
 
 ## What this builds on
 
-- [bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md): the five discount factors every number here is priced from.
-- [forward-rate-agreements](../02-Curves/02-forward-rate-agreements.md): the forward rate, and the copy with two deposits that prices one floating payment; a swap is a strip of them.
+- [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md): the five discount factors every number here is priced from.
+- [Forward rate agreements](../02-Curves/02-forward-rate-agreements.md): the forward rate, and the copy with two deposits that prices one floating payment; a swap is a strip of them.
 
 ## Where this goes next
 
-- [par-swap-rate-and-annuity](02-par-swap-rate-and-annuity.md): the fixed rate that makes a new swap worth nothing, as a weighted average of the forwards.
-- [zero-coupon-inflation-swaps](../34-Inflation%20and%20Real%20Rates/04-zero-coupon-inflation-swaps.md): the same two-leg valuation with realised inflation in place of the floating rate.
+- [The par swap rate](02-par-swap-rate-and-annuity.md): the fixed rate that makes a new swap worth nothing, as a weighted average of the forwards.
+- [Inflation swaps](../34-Inflation%20and%20Real%20Rates/04-zero-coupon-inflation-swaps.md): the same two-leg valuation with realised inflation in place of the floating rate.
 
-Linden's swap is worth something only because 4.50 percent is no longer the market's rate; which single fixed rate would make a five-year swap worth nothing this morning, and why it is an average of the forwards weighted by the annuity, is [par-swap-rate-and-annuity](02-par-swap-rate-and-annuity.md).
+Linden's swap is worth something only because 4.50 percent is no longer the market's rate; which single fixed rate would make a five-year swap worth nothing this morning, and why it is an average of the forwards weighted by the annuity, is [The par swap rate](02-par-swap-rate-and-annuity.md).
 
 ---
 

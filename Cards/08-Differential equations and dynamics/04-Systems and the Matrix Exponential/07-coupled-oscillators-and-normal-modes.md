@@ -1,25 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Systems and the Matrix Exponential
-topic: Vibrations of linked masses
-item: Normal modes
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/02-the-eigenvalue-method|the-eigenvalue-method]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/04-spectral-theorem|spectral-theorem]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/05-quadratic-forms-and-positive-definite|quadratic-forms-and-positive-definite]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/07-symplectic-steps-for-oscillators|symplectic-steps-for-oscillators]]"
-  - "[[Cards/13-Engineering mathematics/07-Mechanics and Structures/06-vibration-modes-and-resonance|vibration-modes-and-resonance]]"
-tags: [mathematics, differential equations and dynamics, coupled-oscillators-and-normal-modes]
----
-
 # Normal modes: two connected springs vibrate in a few pure patterns, and every motion mixes them
 
-Differential equations and dynamics → Systems and the Matrix Exponential → Vibrations of linked masses → Normal modes
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Systems and the Matrix Exponential](../../../SYLLABUS.md#w08-s04) → Normal modes
 
 ---
 
@@ -53,7 +34,7 @@ Orange: the left cart. Teal: the right cart. Neither curve ever repeats exactly:
 
 ## The formula
 
-Notation first, in words. The carts' distances from rest, in cm, form one vector $x$ with entries $x_1$ (left) and $x_2$ (right). A prime is a rate, as for x' = Ax on [from-one-equation-to-a-system](01-from-one-equation-to-a-system.md), so x'' is the rate of the rate: acceleration. Newton's law, mass times acceleration equals force, for both carts at once:
+Notation first, in words. The carts' distances from rest, in cm, form one vector $x$ with entries $x_1$ (left) and $x_2$ (right). A prime is a rate, as for x' = Ax on [From one equation to a system](01-from-one-equation-to-a-system.md), so x'' is the rate of the rate: acceleration. Newton's law, mass times acceleration equals force, for both carts at once:
 
 $$M\,x'' = -K\,x$$
 
@@ -89,7 +70,7 @@ A start with speed adds a sine per mode: $A_i \cos \omega_i t + B_i \sin \omega_
 ### When it holds
 
 - **Springs obey Hooke's law** (force in proportion to stretch). Stretched near its limit a spring stiffens, frequencies drift with the amplitude, and modes trade energy.
-- **No friction.** With friction the modes decay, and in general they couple; the analysis moves to complex eigenvalues of the first-order system ([complex-eigenvalues-and-spirals](03-complex-eigenvalues-and-spirals.md)).
+- **No friction.** With friction the modes decay, and in general they couple; the analysis moves to complex eigenvalues of the first-order system ([Complex eigenvalues](03-complex-eigenvalues-and-spirals.md)).
 - **K symmetric and positive definite.** Symmetric: the middle spring pulls both carts equally. Positive definite: every displacement stores energy. A direction storing negative energy, like a pendulum balanced upside down, has a negative eigenvalue and grows exponentially instead of swinging.
 
 ---
@@ -104,7 +85,7 @@ Either way the force is a multiple of the displacement, so the pattern keeps its
 
 ### Step 1: find the modes
 
-Eigenvalues of $K$ solve det(K − λI) = 0 ([the-eigenvalue-method](02-the-eigenvalue-method.md)): λ^2 − 4λ + 3 = 0, so λ = 1 or 3. The first row of (K − λI)v = 0 then gives v = (1, 1) and v = (1, −1), which are perpendicular: 1 × 1 + 1 × (−1) = 0.
+Eigenvalues of $K$ solve det(K − λI) = 0 ([The eigenvalue method](02-the-eigenvalue-method.md)): λ^2 − 4λ + 3 = 0, so λ = 1 or 3. The first row of (K − λI)v = 0 then gives v = (1, 1) and v = (1, −1), which are perpendicular: 1 × 1 + 1 × (−1) = 0.
 
 ### Step 2: in mode coordinates the equations come apart
 
@@ -124,14 +105,14 @@ At t = 0 these give 10 and 0.
 
 ### Step 4: each mode keeps its own energy
 
-Energy is half of each mass times its squared speed, summed, plus $\tfrac12 x\cdot Kx$ ([quadratic-forms-and-positive-definite](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)). At release, in metres, that is ½ × 2 × 0.1^2 J = 10 mJ. Perpendicular modes leave no cross terms, so it splits into ½ × λ × 2 × 0.05^2 J per mode: 2.50 mJ slow, 7.50 mJ fast, each fixed forever.
+Energy is half of each mass times its squared speed, summed, plus $\tfrac12 x\cdot Kx$ ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)). At release, in metres, that is ½ × 2 × 0.1^2 J = 10 mJ. Perpendicular modes leave no cross terms, so it splits into ½ × λ × 2 × 0.05^2 J per mode: 2.50 mJ slow, 7.50 mJ fast, each fixed forever.
 
 <details>
 <summary>Detailed proof: n masses, any positive masses</summary>
 
 Let $M$ be diagonal with positive masses, $K$ symmetric positive definite, both n by n. With y = M^(1/2) x, y'' = −S y where S = M^(−1/2) K M^(−1/2) is symmetric positive definite.
 
-By the spectral theorem ([spectral-theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) S has n perpendicular unit eigenvectors uᵢ with real eigenvalues λᵢ, each positive since λ = u·Su > 0.
+By the spectral theorem ([The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md)) S has n perpendicular unit eigenvectors uᵢ with real eigenvalues λᵢ, each positive since λ = u·Su > 0.
 
 Write y = Σ qᵢ uᵢ. Dotting y'' = −Sy with uᵢ gives qᵢ'' = −λᵢ qᵢ, solved exactly by Aᵢ cos(ωᵢt) + Bᵢ sin(ωᵢt), ωᵢ = √λᵢ, with Aᵢ = y(0)·uᵢ and Bᵢ = y'(0)·uᵢ / ωᵢ. Solutions from a given start are unique, so every motion has this form.
 
@@ -139,7 +120,7 @@ Back in x, vᵢ = M^(−1/2) uᵢ satisfies K vᵢ = λᵢ M vᵢ and vᵢ · M 
 
 </details>
 
-A second road writes four first-order equations for positions and speeds and uses [the-matrix-exponential](04-the-matrix-exponential.md); its eigenvalues ±i and ±i√3 carry the same two frequencies.
+A second road writes four first-order equations for positions and speeds and uses [The matrix exponential](04-the-matrix-exponential.md); its eigenvalues ±i and ±i√3 carry the same two frequencies.
 
 ---
 
@@ -176,7 +157,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Road one finds the eigenvalues, checks the mode shapes against $K$, and sums the modes. Road two uses no eigenvalues: Euler's rule (new value = old value + step length × rate, [eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)) steps positions and speeds, its error halving with the step, and the periods are timed from zero crossings of x₁ + x₂ and x₁ − x₂. Euler also runs the weak-spring case against the envelope formula.
+Road one finds the eigenvalues, checks the mode shapes against $K$, and sums the modes. Road two uses no eigenvalues: Euler's rule (new value = old value + step length × rate, [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)) steps positions and speeds, its error halving with the step, and the periods are timed from zero crossings of x₁ + x₂ and x₁ − x₂. Euler also runs the weak-spring case against the envelope formula.
 
 ### Python
 
@@ -389,13 +370,13 @@ The two outputs match line for line.
 > **Reading the eigenvalue as the frequency.** The eigenvalues of $K$ are 1 and 3; the frequencies are their square roots, 1 and 1.732 rad/s. Differentiating cos(ωt) twice brings out ω^2, not ω. Taking 3 as the frequency gives a fast period of 2.094 s, not 3.628 s.
 >
 > - **One cart pulled, one mode.** A start of (10, 0) is 5 of each; only starts along (1, 1) or (1, −1) give one mode.
-> - **Plain Euler on a long run.** Each step multiplies a mode's energy by 1 + (step × ω)^2: 200 steps of 0.1 s turn 10 mJ into 2788 mJ. The fix is on [symplectic-steps-for-oscillators](../05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md).
+> - **Plain Euler on a long run.** Each step multiplies a mode's energy by 1 + (step × ω)^2: 200 steps of 0.1 s turn 10 mJ into 2788 mJ. The fix is on [Symplectic steps](../05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md).
 
 ---
 
 ## Where you meet it in real life
 
-- **Buildings and bridges.** Floors are masses, columns springs. Engineers keep the lowest modes' periods away from those of wind and earthquakes; driving a mode at its own frequency is the resonance of [forced-systems-and-variation-of-constants](06-forced-systems-and-variation-of-constants.md).
+- **Buildings and bridges.** Floors are masses, columns springs. Engineers keep the lowest modes' periods away from those of wind and earthquakes; driving a mode at its own frequency is the resonance of [Forced systems](06-forced-systems-and-variation-of-constants.md).
 - **Molecules.** Carbon dioxide is three masses joined by two bonds; its vibration patterns are normal modes, and infrared and Raman spectroscopy read their frequencies.
 
 > **Say it back**
@@ -405,14 +386,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [the-eigenvalue-method](02-the-eigenvalue-method.md): solving a linear system by its eigenvectors.
-- [spectral-theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): real eigenvalues and perpendicular eigenvectors, which let the equations come apart.
-- [quadratic-forms-and-positive-definite](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md): x·Kx as stored energy, positive for every displacement, so every frequency is real.
+- [The eigenvalue method](02-the-eigenvalue-method.md): solving a linear system by its eigenvectors.
+- [The spectral theorem](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/04-spectral-theorem.md): real eigenvalues and perpendicular eigenvectors, which let the equations come apart.
+- [Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md): x·Kx as stored energy, positive for every displacement, so every frequency is real.
 
 ## Where this goes next
 
-- [symplectic-steps-for-oscillators](../05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md): a step rule that keeps an oscillator's energy from creeping up, the fix for the 2788 mJ.
-- vibration-modes-and-resonance: modes of real structures, with damping and a driving force.
+- [Symplectic steps](../05-Numerical%20Evolution/07-symplectic-steps-for-oscillators.md): a step rule that keeps an oscillator's energy from creeping up, the fix for the 2788 mJ.
+- Vibration modes: modes of real structures, with damping and a driving force.
 
 ---
 

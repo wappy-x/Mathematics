@@ -1,36 +1,16 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Laplace Transforms for Initial-Value Problems
-topic: Reading a transform back as motion
-item: Inverting
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/02-transforms-of-derivatives|transforms-of-derivatives]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/05-partial-fractions|partial-fractions]]"
-  - "[[Cards/03-Algebra/02-Polynomials/02-factoring-quadratics|factoring-quadratics]]"
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/03-rational-functions-and-partial-fractions|rational-functions-and-partial-fractions]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/07-inverse-laplace-by-residues|inverse-laplace-by-residues]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/04-solving-an-initial-value-problem-by-transform|solving-an-initial-value-problem-by-transform]]"
-tags: [mathematics, differential equations and dynamics, inverting-by-partial-fractions]
----
-
 # Inverting: split the transformed answer into table entries and read the solution off
 
-Differential equations and dynamics → Laplace Transforms for Initial-Value Problems → Reading a transform back as motion → Inverting
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Laplace Transforms for Initial-Value Problems](../../../SYLLABUS.md#w08-s08) → Inverting
 
 ---
 
 ## General Overview
 
-A car's body is released 1 cm above its resting height, momentarily still. Spring and damper give the rate law y'' + 2y' + 5y = 0, with y the height in cm and t the time in seconds. Transforming that law turned it into algebra ([transforms-of-derivatives](02-transforms-of-derivatives.md)), which gave the motion in coded form: Y(s) = (s + 2)/(s^2 + 2s + 5), with s the transform variable, per second, and Y the height's transform.
+A car's body is released 1 cm above its resting height, momentarily still. Spring and damper give the rate law y'' + 2y' + 5y = 0, with y the height in cm and t the time in seconds. Transforming that law turned it into algebra ([Transforming a derivative](02-transforms-of-derivatives.md)), which gave the motion in coded form: Y(s) = (s + 2)/(s^2 + 2s + 5), with s the transform variable, per second, and Y the height's transform.
 
 No row of the transform table looks like that fraction. Inverting turns it back into a height against time: rewrite it as a sum of pieces the table knows, then read each off.
 
-Completing the square turns the bottom into (s + 1)^2 + 4. Splitting the top as (s + 1) + 1 leaves a fading cosine and a fading sine. Their sum, e^(−t)(cos 2t + 0.5 sin 2t), is the motion the characteristic equation found ([complex-roots-and-damped-oscillation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md)).
+Completing the square turns the bottom into (s + 1)^2 + 4. Splitting the top as (s + 1) + 1 leaves a fading cosine and a fading sine. Their sum, e^(−t)(cos 2t + 0.5 sin 2t), is the motion the characteristic equation found ([Complex roots](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md)).
 
 **To invert a rational transform, split it into partial fractions, complete the square on any quadratic with no real roots, write its top in powers of the shifted variable, and read each piece off the table as a decaying exponential, cosine or sine.**
 
@@ -57,7 +37,7 @@ Orange: e^(−t) cos 2t, from (s + 1)/((s + 1)^2 + 4). Teal: 0.5 e^(−t) sin 2t
 
 Notation first, in words. The inverse transform, written $\mathcal{L}^{-1}$ and read "the signal whose transform is", undoes the Laplace transform: y = $\mathcal{L}^{-1}$[Y].
 
-The rows read backwards, from [the-laplace-transform](01-the-laplace-transform.md) and Step 1 below:
+The rows read backwards, from [The Laplace transform](01-the-laplace-transform.md) and Step 1 below:
 
 $$\frac{A}{s-c}\ \text{ is the transform of }\ A\,e^{ct}$$
 
@@ -80,7 +60,7 @@ The job is to put a transform into these shapes. For the car, s + 2 = 1 · (s + 
 
 ### When it holds
 
-- **A proper rational function.** The top's degree is below the bottom's. Otherwise Y does not fade as s grows and no ordinary signal has it as a transform; [impulses-and-the-delta-function](06-impulses-and-the-delta-function.md) supplies what it needs.
+- **A proper rational function.** The top's degree is below the bottom's. Otherwise Y does not fade as s grows and no ordinary signal has it as a transform; [Impulses](06-impulses-and-the-delta-function.md) supplies what it needs.
 - **No real roots in the square.** For s^2 + Ps + Q the discriminant P^2 − 4Q must be negative: here −16. If it is positive, the quadratic factors into two real poles, each a plain exponential.
 - **Simple poles.** A repeated root leaves ω = 0 and the sine weight divides by zero; it needs the row t e^(ct).
 - **Uniqueness among continuous signals.** Signals differing at one instant share a transform.
@@ -91,7 +71,7 @@ The job is to put a transform into these shapes. For the car, s + 2 = 1 · (s + 
 
 ### Step 0: the transform is linear and one-to-one, so pieces invert separately
 
-The transform of a sum is the sum of the transforms, so the signals of the pieces add up to a signal with transform Y. Lerch's theorem, cited and not proved here, says two continuous signals with one transform are equal: the reading is the answer, not a guess. The inversion formula behind it is in [inverse-laplace-by-residues](../../07-Complex%20analysis/08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md).
+The transform of a sum is the sum of the transforms, so the signals of the pieces add up to a signal with transform Y. Lerch's theorem, cited and not proved here, says two continuous signals with one transform are equal: the reading is the answer, not a guess. The inversion formula behind it is in [Inverting a Laplace transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md).
 
 ### Step 1: a fading factor shifts s
 
@@ -119,7 +99,7 @@ reads back as y(t) = e^(−t)(cos 2t + 0.5 sin 2t). At t = 0 it gives 1 cm, the 
 
 ### Step 4: a real pole beside the pair, found by cover-up
 
-Now push the car from rest at level with a steady force worth 5 cm/s^2 of acceleration: y'' + 2y' + 5y = 5 with y(0) = y'(0) = 0. The constant 5 transforms to 5/s, so Y = 5/(s(s^2 + 2s + 5)). Partial fractions ([partial-fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md)) give one fraction per factor of the bottom:
+Now push the car from rest at level with a steady force worth 5 cm/s^2 of acceleration: y'' + 2y' + 5y = 5 with y(0) = y'(0) = 0. The constant 5 transforms to 5/s, so Y = 5/(s(s^2 + 2s + 5)). Partial fractions ([Partial fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md)) give one fraction per factor of the bottom:
 
 $$\frac{5}{s\,(s^2+2s+5)} = \frac{A}{s} + \frac{\text{linear top}}{s^2+2s+5}$$
 
@@ -132,17 +112,17 @@ The body settles 1 cm up, where the spring balances the push.
 <details>
 <summary>Detailed proof: the square and the complex split always agree</summary>
 
-Let the roots be p = −a + iω and its mirror image p̄ = −a − iω, ω > 0. Over the complex numbers ([rational-functions-and-partial-fractions](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/03-rational-functions-and-partial-fractions.md)) the pair splits as r/(s − p) + r̄/(s − p̄), with r the cover-up value at p; real coefficients make the second value the mirror image r̄.
+Let the roots be p = −a + iω and its mirror image p̄ = −a − iω, ω > 0. Over the complex numbers ([Rational functions](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/03-rational-functions-and-partial-fractions.md)) the pair splits as r/(s − p) + r̄/(s − p̄), with r the cover-up value at p; real coefficients make the second value the mirror image r̄.
 
 Write r = (C − iD)/2. Over (s + a)^2 + ω^2 the top is (r + r̄)s − (r p̄ + r̄ p). The first coefficient is C; the second is minus twice the real part of (C − iD)(−a − iω)/2, which is Ca + Dω. So the top is C(s + a) + Dω, the completed-square form with the same C and D.
 
 In time, r/(s − p) comes from r e^(pt), so the pair is twice the real part of r e^(pt). By Euler's formula that is the real part of (C − iD)(cos ωt + i sin ωt) times e^(−at): e^(−at)(C cos ωt + D sin ωt).
 
-For the car, r = (p + 2)/(p − p̄) = (1 + 2i)/(4i) = 0.5 − 0.25i: C = 1, D = 0.5. That the split exists for every proper rational function is proved on [partial-fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md).
+For the car, r = (p + 2)/(p − p̄) = (1 + 2i)/(4i) = 0.5 − 0.25i: C = 1, D = 0.5. That the split exists for every proper rational function is proved on [Partial fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md).
 
 </details>
 
-The residue route, adding r e^(pt) over the poles, comes from a contour integral in [inverse-laplace-by-residues](../../07-Complex%20analysis/08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md). Completing the square stays in real numbers.
+The residue route, adding r e^(pt) over the poles, comes from a contour integral in [Inverting a Laplace transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md). Completing the square stays in real numbers.
 
 ---
 
@@ -392,7 +372,7 @@ The two outputs match line for line.
 
 - **Circuits.** A resistor, coil and capacitor in series give a quadratic bottom; completing the square gives the current's ringing frequency and decay rate after a switch closes.
 - **Control engineering.** The poles of a transfer function decide whether a controlled system settles, rings or runs away.
-- **The rest of this shelf.** [step-functions-and-delays](05-step-functions-and-delays.md) puts a delay factor in front of the same pieces; [convolution-and-the-impulse-response](07-convolution-and-the-impulse-response.md) inverts a product without splitting it.
+- **The rest of this shelf.** [Step functions](05-step-functions-and-delays.md) puts a delay factor in front of the same pieces; [Convolution](07-convolution-and-the-impulse-response.md) inverts a product without splitting it.
 
 > **Say it back**
 > A transformed answer is a ratio of polynomials no table row matches. Split it into partial fractions, one per factor of the bottom. A real root gives an exponential; a quadratic with no real roots is completed to a square, its top rewritten in the shifted variable, and read as a fading cosine and sine. For the car that is e^(−t)(cos 2t + 0.5 sin 2t). Cover-up over the complex roots agrees.
@@ -401,15 +381,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [transforms-of-derivatives](02-transforms-of-derivatives.md): where the car's Y came from.
-- [partial-fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md): the split and the cover-up rule.
-- [factoring-quadratics](../../03-Algebra/02-Polynomials/02-factoring-quadratics.md): the discriminant and completing the square.
-- [rational-functions-and-partial-fractions](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/03-rational-functions-and-partial-fractions.md): the split over complex roots.
-- [inverse-laplace-by-residues](../../07-Complex%20analysis/08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md): the residue road's source.
+- [Transforming a derivative](02-transforms-of-derivatives.md): where the car's Y came from.
+- [Partial fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md): the split and the cover-up rule.
+- [Factoring](../../03-Algebra/02-Polynomials/02-factoring-quadratics.md): the discriminant and completing the square.
+- [Rational functions](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/03-rational-functions-and-partial-fractions.md): the split over complex roots.
+- [Inverting a Laplace transform](../../07-Complex%20analysis/08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md): the residue road's source.
 
 ## Where this goes next
 
-- [solving-an-initial-value-problem-by-transform](04-solving-an-initial-value-problem-by-transform.md): the full round trip, transform, solve and invert, on forced problems.
+- [The round trip](04-solving-an-initial-value-problem-by-transform.md): the full round trip, transform, solve and invert, on forced problems.
 
 ---
 

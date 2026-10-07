@@ -1,30 +1,14 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It
-topic: Quote-to-hazard shortcut
-item: The credit triangle
-kind: approximation
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/02-cds-legs-risky-annuity-and-par-spread|cds-legs-risky-annuity-and-par-spread]]"
-next:
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/04-implied-hazard-from-a-cds-quote|implied-hazard-from-a-cds-quote]]"
-tags: [mathematics, financial mathematics, the-credit-triangle]
----
-
 # The credit triangle: spread is about hazard times loss, the one-line bridge between a quote and a probability, and how far off it is
 
-Financial mathematics → Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It → Quote-to-hazard shortcut → The credit triangle
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../../../SYLLABUS.md#w12-s42) → The credit triangle
 
 ---
 
 ## General Overview
 
-Northwind Lines, a shipping company, has debt that lenders want to insure. A five-year credit default swap on $10 million of that debt is an insurance contract: the buyer pays a fixed yearly premium, and if Northwind defaults the seller pays the part of the $10 million that lenders fail to get back ([credit-default-swap-contract](01-credit-default-swap-contract.md)). The yearly premium, as a fraction of the $10 million, is the **spread**. It is quoted in **basis points** (bp): hundredths of a percent, so 120 bp is 1.2% a year.
+Northwind Lines, a shipping company, has debt that lenders want to insure. A five-year credit default swap on $10 million of that debt is an insurance contract: the buyer pays a fixed yearly premium, and if Northwind defaults the seller pays the part of the $10 million that lenders fail to get back ([The credit default swap](01-credit-default-swap-contract.md)). The yearly premium, as a fraction of the $10 million, is the **spread**. It is quoted in **basis points** (bp): hundredths of a percent, so 120 bp is 1.2% a year.
 
-Suppose the market treats Northwind as failing at a steady 2% a year, and expects lenders to recover 40 cents on the dollar after a default, losing 60. Multiply the two: 0.6 × 2% = 1.2% a year, or 120 bp. That is $120,000 a year on $10 million. The full pricing, with quarterly payment dates and discounting, gives 121.06 bp ([cds-legs-risky-annuity-and-par-spread](02-cds-legs-risky-annuity-and-par-spread.md)). The one-line product is off by about one basis point in 121.
+Suppose the market treats Northwind as failing at a steady 2% a year, and expects lenders to recover 40 cents on the dollar after a default, losing 60. Multiply the two: 0.6 × 2% = 1.2% a year, or 120 bp. That is $120,000 a year on $10 million. The full pricing, with quarterly payment dates and discounting, gives 121.06 bp ([Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md)). The one-line product is off by about one basis point in 121.
 
 The same line runs backwards. A dealer sees another name quoted at 300 bp with 40% recovery and divides: 3% ÷ 0.6 = 5% a year of default risk. A solver later says 4.94%. The shortcut has three corners (spread, default rate, loss), and any two give the third, so the market calls it the **credit triangle**.
 
@@ -55,7 +39,7 @@ $$s \;\approx\; (1-R)\,\lambda$$
 
 **Read it aloud:** the yearly premium rate is about the yearly default rate times the fraction of the debt lost when default comes.
 
-The rate λ is the **hazard rate**: the chance per year of default in the next short slice of time, given no default so far ([hazard-rate-and-survival-probability](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)). The **recovery** R is the fraction of the debt's face value lenders get back; 1 − R is the **loss given default**.
+The rate λ is the **hazard rate**: the chance per year of default in the next short slice of time, given no default so far ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)). The **recovery** R is the fraction of the debt's face value lenders get back; 1 − R is the **loss given default**.
 
 The triangle read in its three directions:
 
@@ -174,11 +158,11 @@ The quote-to-hazard direction is an inverse problem: find the λ whose dated spr
 
 For the 300 bp quote, the seed is 5%, and it prices at 303.78 bp. Correcting the seed by the timing factor, with x/2 = (0.05 + 0.05) × 0.25 ÷ 2 = 1.25%, gives 5% ÷ 1.0125 = 4.9383%. Bisection (halving a bracket until it is tiny) on the exact formula gives 4.9381%.
 
-A second solver uses the triangle as its engine. Start at the seed. Divide the quote by the loss and by the timing factor at the current guess. Repeat. Each pass shrinks the error by a factor of about λδ/2, far below one, so six passes reach the bisection's answer. Every root-find on this shelf can start this way: the flat implied hazard in [implied-hazard-from-a-cds-quote](04-implied-hazard-from-a-cds-quote.md), and each new piece of the curve in [bootstrapping-the-hazard-curve-from-cds-quotes](06-bootstrapping-the-hazard-curve-from-cds-quotes.md).
+A second solver uses the triangle as its engine. Start at the seed. Divide the quote by the loss and by the timing factor at the current guess. Repeat. Each pass shrinks the error by a factor of about λδ/2, far below one, so six passes reach the bisection's answer. Every root-find on this shelf can start this way: the flat implied hazard in [Implied hazard from one CDS quote](04-implied-hazard-from-a-cds-quote.md), and each new piece of the curve in [Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md).
 
 ### The other door: simulate the default dates
 
-The code takes a fourth road that never writes down a survival formula. It draws 4 million default dates from the 2% hazard, pays 0.6 at the default date when it falls inside five years, collects quarterly premiums up to it, and divides the average protection by the average annuity. It lands at 120.91 bp, within sampling noise of 121.06 bp. The card on the legs, [cds-legs-risky-annuity-and-par-spread](02-cds-legs-risky-annuity-and-par-spread.md), does the exact version.
+The code takes a fourth road that never writes down a survival formula. It draws 4 million default dates from the 2% hazard, pays 0.6 at the default date when it falls inside five years, collects quarterly premiums up to it, and divides the average protection by the average annuity. It lands at 120.91 bp, within sampling noise of 121.06 bp. The card on the legs, [Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md), does the exact version.
 
 ---
 
@@ -202,7 +186,7 @@ Northwind: flat hazard 2%, recovery 40%, r = 5%, five years, quarterly premiums,
 
 The triangle charges $120,000.00 a year where the contract's fair premium is $121,056.15: under 1% short. For a first reading of a quote, that is close enough; for a trade ticket, the dated legs are used.
 
-The recovery direction is the most fragile. Feed the true 121.06 bp into it with the true 2% hazard and it returns 39.47%, not 40%. Recovery is usually assumed, not solved for ([recovery-assumptions-and-what-they-change](05-recovery-assumptions-and-what-they-change.md)).
+The recovery direction is the most fragile. Feed the true 121.06 bp into it with the true 2% hazard and it returns 39.47%, not 40%. Recovery is usually assumed, not solved for ([Recovery assumptions](05-recovery-assumptions-and-what-they-change.md)).
 
 ### The triangle's error grows with the hazard and the period
 
@@ -686,7 +670,7 @@ The two outputs agree line for line, including the Monte Carlo row, because both
 ## The usual mistake
 
 > [!warning]
-> **Reading the implied hazard as a forecast.** The 4.94% from a 300 bp quote is the default rate that makes the contract fair under an assumed 40% recovery. It includes whatever extra the market charges for bearing default risk. Historical default rates for the same name are usually lower ([market-implied-versus-historical-default-probability](09-market-implied-versus-historical-default-probability.md)). Its five-year default chance, 21.88%, is a price, not a prediction.
+> **Reading the implied hazard as a forecast.** The 4.94% from a 300 bp quote is the default rate that makes the contract fair under an assumed 40% recovery. It includes whatever extra the market charges for bearing default risk. Historical default rates for the same name are usually lower ([Two default probabilities](09-market-implied-versus-historical-default-probability.md)). Its five-year default chance, 21.88%, is a price, not a prediction.
 >
 > Smaller traps:
 > - **Swapping R and 1 − R.** 80 bp instead of 121.06 bp forward; 7.5% instead of 4.94% backward.
@@ -699,10 +683,10 @@ The two outputs agree line for line, including the Monte Carlo row, because both
 ## Where you meet it in real life
 
 - **A trader's head.** A quote of 300 bp on a 40% recovery name is read at once as "about 5% a year", before any solver runs.
-- **The seed of every CDS solver.** Flat implied hazards, curve bootstraps and upfront conversions all start from s/(1 − R). The shelf's quotes of 120, 200 and 250 bp at one, three and five years seed at 2%, 3.33% and 4.17%; the flat solves land at 1.98%, 3.30% and 4.12%. The full curve is [bootstrapping-the-hazard-curve-from-cds-quotes](06-bootstrapping-the-hazard-curve-from-cds-quotes.md).
+- **The seed of every CDS solver.** Flat implied hazards, curve bootstraps and upfront conversions all start from s/(1 − R). The shelf's quotes of 120, 200 and 250 bp at one, three and five years seed at 2%, 3.33% and 4.17%; the flat solves land at 1.98%, 3.30% and 4.12%. The full curve is [Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md).
 - **Reading a spread curve.** A flat hazard gives the same dated spread at every tenor. So a quoted curve of 120, 200 and 250 bp says the market's hazard is rising with time.
-- **Risk numbers.** One basis point of hazard moves the spread by about 0.6 bp at 40% recovery; the sensitivities are on [cds-risk-numbers](08-cds-risk-numbers.md).
-- **Marking an old contract.** The value of a contract struck at an old spread is the gap between old and new spread times the risky annuity: [marking-a-cds-to-market-and-the-upfront](07-marking-a-cds-to-market-and-the-upfront.md).
+- **Risk numbers.** One basis point of hazard moves the spread by about 0.6 bp at 40% recovery; the sensitivities are on [CDS risk numbers](08-cds-risk-numbers.md).
+- **Marking an old contract.** The value of a contract struck at an old spread is the gap between old and new spread times the risky annuity: [Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md).
 - **Bond spreads.** The extra yield on a risky bond over a riskless one follows the same balance: about hazard times loss, the Duffie–Singleton result.
 
 > **Say it back**
@@ -712,12 +696,12 @@ The two outputs agree line for line, including the Monte Carlo row, because both
 
 ## What this builds on
 
-- [cds-legs-risky-annuity-and-par-spread](02-cds-legs-risky-annuity-and-par-spread.md): the two legs, the risky annuity 4.1819 and the exact 121.06 bp this card approximates.
-- [hazard-rate-and-survival-probability](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): the hazard rate and survival as e to the minus the area under it, used in every step here.
+- [Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md): the two legs, the risky annuity 4.1819 and the exact 121.06 bp this card approximates.
+- [The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): the hazard rate and survival as e to the minus the area under it, used in every step here.
 
 ## Where this goes next
 
-- [implied-hazard-from-a-cds-quote](04-implied-hazard-from-a-cds-quote.md): the backwards direction done properly, with a bracketed solver seeded by s/(1 − R) and the default probabilities it implies.
+- [Implied hazard from one CDS quote](04-implied-hazard-from-a-cds-quote.md): the backwards direction done properly, with a bracketed solver seeded by s/(1 − R) and the default probabilities it implies.
 
 The triangle says roughly what hazard a quote carries; the question it leaves open is how to get that hazard exactly, with its existence and its sensitivity to recovery pinned down, which is what the implied-hazard card answers.
 

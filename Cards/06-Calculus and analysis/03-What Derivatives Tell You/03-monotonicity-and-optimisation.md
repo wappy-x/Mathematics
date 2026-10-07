@@ -1,25 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: What Derivatives Tell You
-topic: Finding the best value
-item: Optimisation
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/02-mean-value-theorem|mean-value-theorem]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/08-higher-derivatives-and-concavity|higher-derivatives-and-concavity]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/01-functionals-and-the-euler-lagrange-equation|functionals-and-the-euler-lagrange-equation]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/04-maximum-likelihood|maximum-likelihood]]"
-  - "[[Cards/14-Applied and computational/05-Operations Research/06-inventory-models-eoq-and-newsvendor|inventory-models-eoq-and-newsvendor]]"
-tags: [mathematics, calculus and analysis, monotonicity-and-optimisation]
----
-
 # Optimisation: where a function rises, where it falls, and where it peaks
 
-Calculus and analysis → What Derivatives Tell You → Finding the best value → Optimisation
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [What Derivatives Tell You](../../../SYLLABUS.md#w06-s03) → Optimisation
 
 ---
 
@@ -98,7 +79,7 @@ For a continuous $f$ on a closed interval from $a$ to $b$, the lowest and highes
 
 ### Step 0: the mean value theorem turns a rate into a change
 
-The [mean-value-theorem](02-mean-value-theorem.md) says the average rate of change across a stretch equals the instant rate at some point inside. Facts about slopes become facts about values.
+The [Mean value theorem](02-mean-value-theorem.md) says the average rate of change across a stretch equals the instant rate at some point inside. Facts about slopes become facts about values.
 
 ### Step 1: positive slope means rising
 
@@ -137,7 +118,7 @@ The height is the diameter. The volume dropped out: any closed can of uniform me
 
 Suppose a filling line takes cans 5.0 to 6.6 cm across: radius $a$ = 2.5 to $b$ = 3.3 cm. Every radius there is below 3.7449, so the slope is negative throughout (-74.18 and -19.14 at the ends). The best allowed can is at the end $r$ = 3.3, with 268.42 square cm, where the slope is not zero: only checking the end finds it.
 
-A second road, golden-section search, needs no derivative: it keeps an interval holding the lowest point and trims it each round by comparing two inside values, landing on the same 3.7449 cm. When $A'(r) = 0$ resists algebra, [newtons-method](06-newtons-method.md) solves it numerically.
+A second road, golden-section search, needs no derivative: it keeps an interval holding the lowest point and trims it each round by comparing two inside values, landing on the same 3.7449 cm. When $A'(r) = 0$ resists algebra, [Newton's method](06-newtons-method.md) solves it numerically.
 
 ---
 
@@ -176,7 +157,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Two roads to the best radius share no step: road 1 solves $A'(r) = 0$ by algebra, with a cube root built from exp and log; road 2, golden-section search, compares metal values only. Slopes are checked by a difference quotient, as on [numerical-derivatives-and-sensitivity](08-numerical-derivatives-and-sensitivity.md); a scan of 801 radii finds the slot's answer. Four asserts: the roads agree, height equals diameter, the slope formula matches the quotient and flips upward, the slot's best is its end.
+Two roads to the best radius share no step: road 1 solves $A'(r) = 0$ by algebra, with a cube root built from exp and log; road 2, golden-section search, compares metal values only. Slopes are checked by a difference quotient, as on [Numerical derivatives](08-numerical-derivatives-and-sensitivity.md); a scan of 801 radii finds the slot's answer. Four asserts: the roads agree, height equals diameter, the slope formula matches the quotient and flips upward, the slot's best is its end.
 
 ### Python
 
@@ -352,8 +333,8 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Packaging.** Real cans are taller than wide: lids are commonly thicker metal, which pushes the best shape slim (Try changing), and hands cap the width.
-- **Ordering stock.** Ordering cost and holding cost trade off like the can: one term grows with order size, one shrinks like one over it (inventory-models-eoq-and-newsvendor).
-- **Fitting a model to data.** The best-fitting parameter sits where a derivative is zero; the second derivative says how sharply it is pinned ([maximum-likelihood](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/04-maximum-likelihood.md)).
+- **Ordering stock.** Ordering cost and holding cost trade off like the can: one term grows with order size, one shrinks like one over it (Stock).
+- **Fitting a model to data.** The best-fitting parameter sits where a derivative is zero; the second derivative says how sharply it is pinned ([Maximum likelihood](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/04-maximum-likelihood.md)).
 
 > **Say it back**
 > Positive slope across an interval means rising, negative means falling, by the mean value theorem. A minimum sits where the slope flips from negative to positive; a positive second derivative at zero slope guarantees the flip. Ends of a restricted range are candidates too. The 330 ml can uses least metal, 264.3568 square cm, when its height equals its diameter; held to 6.6 cm across, its best is the widest allowed.
@@ -362,14 +343,14 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [mean-value-theorem](02-mean-value-theorem.md): the one move behind every test here, average rate equals an instant rate.
-- [higher-derivatives-and-concavity](../02-Derivatives/08-higher-derivatives-and-concavity.md): the second derivative, and bending upward read as a rising slope.
+- [Mean value theorem](02-mean-value-theorem.md): the one move behind every test here, average rate equals an instant rate.
+- [Second derivatives](../02-Derivatives/08-higher-derivatives-and-concavity.md): the second derivative, and bending upward read as a rising slope.
 
 ## Where this goes next
 
-- [functionals-and-the-euler-lagrange-equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/01-functionals-and-the-euler-lagrange-equation.md): the best whole curve, not the best single number.
-- [maximum-likelihood](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/04-maximum-likelihood.md): the parameter making observed data most probable.
-- inventory-models-eoq-and-newsvendor: the can's trade-off in a warehouse.
+- [The Euler-Lagrange equation](../../08-Differential%20equations%20and%20dynamics/12-Calculus%20of%20Variations%20and%20Optimal%20Control/01-functionals-and-the-euler-lagrange-equation.md): the best whole curve, not the best single number.
+- [Maximum likelihood](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/04-maximum-likelihood.md): the parameter making observed data most probable.
+- Stock: the can's trade-off in a warehouse.
 
 ---
 

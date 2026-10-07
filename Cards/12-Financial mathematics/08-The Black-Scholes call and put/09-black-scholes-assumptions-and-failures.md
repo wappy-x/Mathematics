@@ -1,26 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Black-Scholes call and put
-topic: Where the model gives way
-item: The Black-Scholes assumptions
-kind: model
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/07-black-scholes-equation|black-scholes-equation]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/03-put-call-parity|put-call-parity]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/07-geometric-brownian-motion|geometric-brownian-motion]]"
-next: []
-tags:
-  - mathematics
-  - financial mathematics
-  - black-scholes-assumptions-and-failures
----
-
 # The Black-Scholes assumptions: six idealisations, which term each holds up, and what breaks when it fails
 
-Financial mathematics → The Black-Scholes call and put → Where the model gives way → The Black-Scholes assumptions
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Black-Scholes call and put](../../../SYLLABUS.md#w12-s08) → The Black-Scholes assumptions
 
 ---
 
@@ -55,7 +35,7 @@ All three lines run on the same record of daily moves, so they run together thro
 
 ## The formula
 
-Two formulas run this card. The first is the model premium, from [black-scholes-call](01-black-scholes-call.md):
+Two formulas run this card. The first is the model premium, from [Black–Scholes call](01-black-scholes-call.md):
 
 $$C = S\,e^{-qT}N(d_1) \;-\; K\,e^{-rT}N(d_2), \qquad d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
 
@@ -101,13 +81,13 @@ Conventions verified 19 Sep 2026: 252 trading days is the usual count for a US e
 
 ### Step 0: the price is the cost of a copy, so every assumption is a condition on the copy
 
-Nothing in the formula predicts Acme. The hedge argument says: hold the right number of shares against the option, the next small move cancels, the position is riskless, so it must earn the bank rate — and that alone fixes the price ([black-scholes-equation](07-black-scholes-equation.md)).
+Nothing in the formula predicts Acme. The hedge argument says: hold the right number of shares against the option, the next small move cancels, the position is riskless, so it must earn the bank rate — and that alone fixes the price ([The Black-Scholes equation](07-black-scholes-equation.md)).
 
 A price that is the cost of a recipe is right only if the kitchen behaves. So an idealisation is tested not by argument but by running the recipe in a world where it is false and counting the money left at the end.
 
 ### Step 1: each idealisation enters at one line of the derivation
 
-1. The share drifts and takes random kicks in log space, with $\sigma$ fixed ([geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)): lognormal moves and constant volatility, spent at once.
+1. The share drifts and takes random kicks in log space, with $\sigma$ fixed ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)): lognormal moves and constant volatility, spent at once.
 2. Itô's lemma turns that into the option's move, keeping terms as far as the bend. Dropping the rest is legitimate only because the moves are small: no gaps.
 3. Holding $\delta$ shares cancels the randomness — if shares can be traded at that instant for nothing.
 4. What is left must earn the bank rate, and there must be exactly one such rate.
@@ -168,7 +148,7 @@ A **tail** breaks the copy, and no price repairs it. A gap does this: the averag
 
 Volatility that moves sits between the two. With hindsight it is a slide, landing close to the distance between two computable prices. In advance it is not, because tomorrow's volatility cannot be looked up — which is why it is quoted and traded instead.
 
-The market takes a second route: rather than measure the failures, read them out of traded prices, where one volatility failing to fit every strike is the smile ([volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)).
+The market takes a second route: rather than measure the failures, read them out of traded prices, where one volatility failing to fit every strike is the smile ([The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)).
 
 ---
 
@@ -653,10 +633,10 @@ The two outputs match line for line: each language writes its own copy of the sa
 
 ## Where you meet it in real life
 
-- **Quoting in volatility.** Desks run the formula backwards, price in and $\sigma$ out, precisely because the assumptions fail in known ways: it survives as a common language, not a truth claim. See [implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md).
-- **The smile.** One volatility cannot fit every strike, and that refusal is the first idealisation failing in public, every day: [volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md).
+- **Quoting in volatility.** Desks run the formula backwards, price in and $\sigma$ out, precisely because the assumptions fail in known ways: it survives as a common language, not a truth claim. See [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md).
+- **The smile.** One volatility cannot fit every strike, and that refusal is the first idealisation failing in public, every day: [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md).
 - **Overnight risk limits.** A desk's cap on how short it may be in one name near an earnings date exists because of the bend's bill, not the average.
-- **Model risk review.** A validation team asks what this card measures: which assumption is this book short, and what does it cost when it fails. See [model-risk-and-parameter-stability](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md).
+- **Model risk review.** A validation team asks what this card measures: which assumption is this book short, and what does it cost when it fails. See [Model risk](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md).
 - **Funding spreads.** A dealer borrowing above the rate at which cash is lent quotes a bid and an offer, not a price; this card's band is the arithmetic behind that spread.
 
 > **Say it back**
@@ -666,19 +646,19 @@ The two outputs match line for line: each language writes its own copy of the sa
 
 ## What this builds on
 
-- [black-scholes-equation](07-black-scholes-equation.md): the derivation whose six lines each spend one of the idealisations measured here.
-- [put-call-parity](03-put-call-parity.md): how the put in the code comes from the call, which is what the tree is checked against.
-- [geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): the engine behind two of the idealisations, lognormal moves and one constant volatility.
+- [The Black-Scholes equation](07-black-scholes-equation.md): the derivation whose six lines each spend one of the idealisations measured here.
+- [Put-call parity](03-put-call-parity.md): how the put in the code comes from the call, which is what the tree is checked against.
+- [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): the engine behind two of the idealisations, lognormal moves and one constant volatility.
 
 ## Where this goes next
 
 Each failure measured here has its repair elsewhere in this wing.
 
-- [black-scholes-by-delta-hedging](../05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md): the continuous version of this ledger, where the leftover vanishes exactly.
-- [gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md): the bend every gap is billed for, on its own card.
-- [model-risk-and-parameter-stability](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md): what to do about a parameter that will not hold still.
-- [implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the formula run backwards, which is how the market states its disagreement with it.
-- [volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): one volatility per strike, the market's own correction to the first idealisation.
+- [Black-Scholes by hedging](../05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md): the continuous version of this ledger, where the leftover vanishes exactly.
+- [Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md): the bend every gap is billed for, on its own card.
+- [Model risk](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md): what to do about a parameter that will not hold still.
+- [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the formula run backwards, which is how the market states its disagreement with it.
+- [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): one volatility per strike, the market's own correction to the first idealisation.
 
 Every measurement here used one number, 20%, marked for a whole year; what the market quotes instead, and how a volatility is read out of each traded price, is where the next shelves start.
 

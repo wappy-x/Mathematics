@@ -1,27 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Random Variables
-topic: Curves and averages
-item: Jensen's inequality
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/02-expectation|expectation]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/09-convex-functions|convex-functions]]"
-next:
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/05-volatility-swap-and-jump-bias|volatility-swap-and-jump-bias]]"
-  - "[[Cards/12-Financial mathematics/36-Returns and Utility/02-expected-utility-and-risk-aversion|expected-utility-and-risk-aversion]]"
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/03-stochastic-hazard-cox-process|stochastic-hazard-cox-process]]"
-  - "[[Cards/14-Applied and computational/03-Information Theory/03-kl-divergence-and-cross-entropy|kl-divergence-and-cross-entropy]]"
-  - "[[Cards/15-Optimization/01-Convexity/05-jensen-and-supporting-lines|jensen-and-supporting-lines]]"
-tags: [mathematics, probability and statistics, jensens-inequality]
----
-
 # Jensen's inequality: the average of a curve is not the curve of the average
 
-Probability and statistics → Random Variables → Curves and averages → Jensen's inequality
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Variables](../../../SYLLABUS.md#w09-s02) → Jensen's inequality
 
 ---
 
@@ -60,7 +39,7 @@ Orange is the logarithm itself. Green is the chord, the straight line joining th
 
 ## The formula
 
-Notation first, in words. $E[X]$ is the expectation of $X$, read "the average value of X in the long run" ([expectation](02-expectation.md)). A Greek phi, $\varphi$, names a function. A function is **convex** when every chord between two points of its graph lies on or above the graph ([convex-functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)); **concave** when every chord lies on or below.
+Notation first, in words. $E[X]$ is the expectation of $X$, read "the average value of X in the long run" ([Expectation](02-expectation.md)). A Greek phi, $\varphi$, names a function. A function is **convex** when every chord between two points of its graph lies on or above the graph ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)); **concave** when every chord lies on or below.
 
 $$\varphi\big(E[X]\big) \;\le\; E\big[\varphi(X)\big] \qquad \text{for convex } \varphi$$
 
@@ -111,7 +90,7 @@ In words: the log average falls short of the log of the average by about half th
 
 ### Step 0: straight lines pass through averages unchanged
 
-For any straight line $\ell(x) = a + b\,x$, the average of $\ell(X)$ is $\ell$ of the average: $E[a + bX] = a + b\,E[X]$. That is linearity of expectation ([expectation](02-expectation.md)). Only bending breaks the swap. So squeeze the curve against a line that touches it at the mean, and let the line do the averaging.
+For any straight line $\ell(x) = a + b\,x$, the average of $\ell(X)$ is $\ell$ of the average: $E[a + bX] = a + b\,E[X]$. That is linearity of expectation ([Expectation](02-expectation.md)). Only bending breaks the swap. So squeeze the curve against a line that touches it at the mean, and let the line do the averaging.
 
 ### Step 1: a convex curve has a line beneath it touching at the mean
 
@@ -119,7 +98,7 @@ Take $m = E[X]$. A **supporting line** at $m$ is a straight line that meets the 
 
 $$\varphi(x) \;\ge\; \varphi(m) + \varphi'(m)\,(x - m) \quad \text{for every } x$$
 
-Here $\varphi'(m)$ is the slope of the curve at $m$. The inequality holds because a convex curve's slope never decreases as $x$ grows ([convex-functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)): to the right of $m$ the curve climbs at least as fast as the tangent, to the left it falls at least as fast.
+Here $\varphi'(m)$ is the slope of the curve at $m$. The inequality holds because a convex curve's slope never decreases as $x$ grows ([Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md)): to the right of $m$ the curve climbs at least as fast as the tangent, to the left it falls at least as fast.
 
 For the square at $m = 1.05$, the tangent is $\ell(x) = m^2 + 2m\,(x - m)$. The curve minus the line is $x^2 - m^2 - 2m(x - m) = (x - m)^2$, never negative. At both outcomes, 1.5 and 0.6, the gap is $0.45^2 = 0.2025$.
 
@@ -158,11 +137,11 @@ For the logarithm at $m = 1.05$ the tangent is $\ell(x) = \ln 1.05 + (x - 1.05)/
 
 Wealth multiplies: after $n$ years, $W_n = X_1 X_2 \cdots X_n$, one growth factor per year. Logarithms turn that product into a sum, $\ln W_n = \ln X_1 + \cdots + \ln X_n$, and averages of sums add. So the average log wealth after ten years is $10 \times (-0.052680) = -0.526803$.
 
-The years are independent (the coin has no memory), so the average of the product is the product of the averages ([joint-distributions-and-covariance](04-joint-distributions-and-covariance.md)): $E[W_{10}] = 1.05^{10} = 1.628895$.
+The years are independent (the coin has no memory), so the average of the product is the product of the averages ([Two variables at once](04-joint-distributions-and-covariance.md)): $E[W_{10}] = 1.05^{10} = 1.628895$.
 
 The mean is pulled up by rare runs of heads; ten heads in a row turns $100 into $5,766.50. A typical run has about as many heads as tails, and a head followed by a tail multiplies wealth by $1.5 \times 0.6 = 0.9$. Per year that is $\sqrt{0.9} = 0.948683$, which is exactly $e^{E[\ln X]}$: the typical path grows at the average *log* rate, not the log of the average. Jensen says that rate is always the lower one.
 
-A second road to the same inequality: for a finite list of outcomes, Jensen is the chord inequality stretched from two points to many, proved by induction on the number of points in [convex-functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md). The supporting line is the better tool here because it never counts outcomes, and it is the idea jensen-and-supporting-lines builds on.
+A second road to the same inequality: for a finite list of outcomes, Jensen is the chord inequality stretched from two points to many, proved by induction on the number of points in [Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md). The supporting line is the better tool here because it never counts outcomes, and it is the idea Jensen's inequality builds on.
 
 ---
 
@@ -592,10 +571,10 @@ The two outputs match line for line, simulation included, because both languages
 
 - **Investment growth.** Performance reports often quote the average (arithmetic) return; the investor's balance grows at the geometric rate, $e^{E[\ln X]} - 1$, which Jensen puts below it. The drag rule, average return minus half the variance, is how practitioners estimate the gap.
 - **Betting and position sizing.** Kelly's rule chooses the stake that maximises the average log of wealth, not the average wealth, because the average log is what one bettor's wealth grows at over many rounds.
-- **Variance is never negative.** $E[X^2] \ge (E[X])^2$ is the square case of Jensen; [variance-and-standard-deviation](03-variance-and-standard-deviation.md) builds everything on that gap.
-- **Options have value at the money.** A call payoff is convex in the final price, so its average payoff exceeds the payoff at the average price. The volatility swap, whose payoff is a square root of variance, sits on the concave side ([volatility-swap-and-jump-bias](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md)).
-- **Risk aversion.** A concave utility of money makes a sure $1.05 worth more than a coin toss between $1.50 and $0.60: [expected-utility-and-risk-aversion](../../12-Financial%20mathematics/36-Returns%20and%20Utility/02-expected-utility-and-risk-aversion.md).
-- **Information theory.** The logarithm's concavity makes the KL divergence, a measure of mismatch between two laws of chance, never negative: kl-divergence-and-cross-entropy.
+- **Variance is never negative.** $E[X^2] \ge (E[X])^2$ is the square case of Jensen; [Variance](03-variance-and-standard-deviation.md) builds everything on that gap.
+- **Options have value at the money.** A call payoff is convex in the final price, so its average payoff exceeds the payoff at the average price. The volatility swap, whose payoff is a square root of variance, sits on the concave side ([The volatility swap and the jump bias](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md)).
+- **Risk aversion.** A concave utility of money makes a sure $1.05 worth more than a coin toss between $1.50 and $0.60: [Expected utility](../../12-Financial%20mathematics/36-Returns%20and%20Utility/02-expected-utility-and-risk-aversion.md).
+- **Information theory.** The logarithm's concavity makes the KL divergence, a measure of mismatch between two laws of chance, never negative: KL divergence.
 
 > **Say it back**
 > Averaging passes through straight lines unchanged and through bent curves with a gap. For a curve that bends upward, the average of the curve's values is at least the curve at the average; a supporting line through the mean proves it in two steps. For the square the gap is exactly the variance. For the logarithm, which bends down, the average log is below the log of the average, so the typical path of a compounding investment grows more slowly than its average. The coin-toss fund averages 5% a year, and most runs still lose money.
@@ -604,18 +583,18 @@ The two outputs match line for line, simulation included, because both languages
 
 ## What this builds on
 
-- [expectation](02-expectation.md): the average of a random variable, and linearity, which lets a straight line pass through it.
-- [convex-functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md): the chord definition of convexity, nondecreasing slopes, and the finite-point Jensen.
+- [Expectation](02-expectation.md): the average of a random variable, and linearity, which lets a straight line pass through it.
+- [Convex functions](../../06-Calculus%20and%20analysis/07-Several%20Variables/09-convex-functions.md): the chord definition of convexity, nondecreasing slopes, and the finite-point Jensen.
 
 ## Where this goes next
 
-- [volatility-swap-and-jump-bias](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md): the square root is concave, so a volatility swap's fair strike sits below the square root of the variance swap's.
-- [expected-utility-and-risk-aversion](../../12-Financial%20mathematics/36-Returns%20and%20Utility/02-expected-utility-and-risk-aversion.md): concave utility turns Jensen's gap into a price for risk.
-- [stochastic-hazard-cox-process](../../12-Financial%20mathematics/44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md): a survival chance averaged over a random hazard exceeds the survival chance at the average hazard, because the exponential is convex.
-- kl-divergence-and-cross-entropy: Jensen on the logarithm proves the divergence is never negative.
-- jensen-and-supporting-lines: supporting lines in many dimensions, and the inequality as an optimisation tool.
+- [The volatility swap and the jump bias](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md): the square root is concave, so a volatility swap's fair strike sits below the square root of the variance swap's.
+- [Expected utility](../../12-Financial%20mathematics/36-Returns%20and%20Utility/02-expected-utility-and-risk-aversion.md): concave utility turns Jensen's gap into a price for risk.
+- [A random hazard](../../12-Financial%20mathematics/44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md): a survival chance averaged over a random hazard exceeds the survival chance at the average hazard, because the exponential is convex.
+- KL divergence: Jensen on the logarithm proves the divergence is never negative.
+- Jensen's inequality: supporting lines in many dimensions, and the inequality as an optimisation tool.
 
-Jensen says which side of the average a bent function lands on and, for the square, by exactly how much; how far a random quantity can stray from its average, with only the mean and variance known, is [markov-and-chebyshev-inequalities](08-markov-and-chebyshev-inequalities.md).
+Jensen says which side of the average a bent function lands on and, for the square, by exactly how much; how far a random quantity can stray from its average, with only the mean and variance known, is [Markov and Chebyshev](08-markov-and-chebyshev-inequalities.md).
 
 ---
 

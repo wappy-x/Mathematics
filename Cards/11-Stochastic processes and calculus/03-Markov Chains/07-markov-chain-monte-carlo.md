@@ -1,24 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Markov Chains
-topic: Chains built to order
-item: MCMC
-kind: method
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/04-stationary-distributions|stationary-distributions]]"
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/05-convergence-to-equilibrium|convergence-to-equilibrium]]"
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/06-markov-chain-monte-carlo-in-outline|markov-chain-monte-carlo-in-outline]]"
-next:
-  - "[[Cards/14-Applied and computational/02-Randomised and Approximate Algorithms/08-markov-chain-monte-carlo-for-computation|markov-chain-monte-carlo-for-computation]]"
-tags: [mathematics, stochastic processes and calculus, markov-chain-monte-carlo]
----
-
 # MCMC: building a chain whose equilibrium is the distribution you want
 
-Stochastic processes and calculus → Markov Chains → Chains built to order → MCMC
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Markov Chains](../../../SYLLABUS.md#w11-s03) → MCMC
 
 ---
 
@@ -28,11 +10,11 @@ A seedling is measured once a week for five weeks: 2.1, 2.9, 4.2, 4.8 and 6.0 cm
 
 Neither a nor b is known. Start with no preference between pairs (a flat prior). The **posterior**, the probability law of the unknowns given the data, then puts its weight on a long, thin, tilted cloud of pairs. The tilt is the story: a seedling that started taller must have grown more slowly to reach the same heights, so a and b have correlation −0.9045. The best single guess is a start of 1.0900 cm and a growth of 0.9700 cm a week, and the chance that it grows more than 1 cm a week is 0.4248, a little under a half.
 
-This posterior has an exact formula, so every simulated number here can be graded. Most posteriors have none. For those, a random walk through the pairs that spends its time in proportion to the posterior gives averages instead; that walk on one unknown is in [markov-chain-monte-carlo-in-outline](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/06-markov-chain-monte-carlo-in-outline.md). This card is about why it works. The earlier cards on this shelf start from a chain and ask where it settles. **Markov chain Monte Carlo** (MCMC) starts from the law it wants and designs a chain that settles there.
+This posterior has an exact formula, so every simulated number here can be graded. Most posteriors have none. For those, a random walk through the pairs that spends its time in proportion to the posterior gives averages instead; that walk on one unknown is in [MCMC in outline](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/06-markov-chain-monte-carlo-in-outline.md). This card is about why it works. The earlier cards on this shelf start from a chain and ask where it settles. **Markov chain Monte Carlo** (MCMC) starts from the law it wants and designs a chain that settles there.
 
 **Choose the moves so that, in equilibrium, as much probability flows from any state to any other as flows back, and let the chain reach every state without a fixed rhythm; then the wanted law is the chain's equilibrium, the chain converges to it from any start, and averages along one long run estimate its averages, at a cost measured by how slowly the chain forgets.**
 
-**What kind of fact this is:** a method. That the wanted law is the chain's equilibrium is a theorem proved on this card in Why it works; that the chain converges to it is the theorem of [convergence-to-equilibrium](05-convergence-to-equilibrium.md), whose hypotheses are checked here.
+**What kind of fact this is:** a method. That the wanted law is the chain's equilibrium is a theorem proved on this card in Why it works; that the chain converges to it is the theorem of [Convergence to equilibrium](05-convergence-to-equilibrium.md), whose hypotheses are checked here.
 
 ### The picture: the posterior cloud, and a sampler that can only move along the axes
 
@@ -44,7 +26,7 @@ Drawn to scale: 100 units per cm of a across, 200 units per cm a week of b up. T
 
 ## The formula
 
-Notation first, in words. A **state** $x$ is one candidate pair (a, b); $y$ is another. $\pi(x)$ (pi) is the wanted law, here the posterior density, as in [stationary-distributions](04-stationary-distributions.md). $f(x)$ is the same thing up to an unknown constant $Z$, so $\pi = f/Z$. $P(x, y)$ is the chain's transition rule: the chance, or density, of moving from $x$ to $y$ in one step. The chain's position after step $t$ is $x_t$; time on this card is counted in steps.
+Notation first, in words. A **state** $x$ is one candidate pair (a, b); $y$ is another. $\pi(x)$ (pi) is the wanted law, here the posterior density, as in [Stationary distributions](04-stationary-distributions.md). $f(x)$ is the same thing up to an unknown constant $Z$, so $\pi = f/Z$. $P(x, y)$ is the chain's transition rule: the chance, or density, of moving from $x$ to $y$ in one step. The chain's position after step $t$ is $x_t$; time on this card is counted in steps.
 
 The design rule is **detailed balance**:
 
@@ -89,7 +71,7 @@ Here $\rho_k$ is the correlation between steps k apart. For g = b under the Gibb
 
 - **The proposal ratio is in the acceptance.** Propose b on a multiplied scale without its factor and the chain settles on a different law: mean growth 0.9426, not 0.9700.
 - **Every plausible state is reachable (irreducible).** A sampler that moves a only, with b stuck at 0.5, averages a = 2.5027 against the truth 1.0900.
-- **No cycling (aperiodic).** A rejection leaves the chain where it is, and a Gibbs sweep can return to its start in one step, so no fixed rhythm exists. A chain with a period never settles, as [classifying-states](03-classifying-states.md) shows.
+- **No cycling (aperiodic).** A rejection leaves the chain where it is, and a Gibbs sweep can return to its start in one step, so no fixed rhythm exists. A chain with a period never settles, as [Classifying states](03-classifying-states.md) shows.
 - **A run long compared with τ, after a burn-in.** From b = 0, the Gibbs chain still has 0.3535 of its probability misplaced after 10 sweeps.
 - **The posterior has finite total area.** Otherwise there is no equilibrium to find, and the chain drifts off.
 
@@ -99,7 +81,7 @@ Here $\rho_k$ is the correlation between steps k apart. For g = b under the Gibb
 
 ### Step 0: turn the usual question round
 
-A **Markov chain** moves by a rule that looks only at the current state ([markov-chains](01-markov-chains.md)). The shelf so far takes a rule $P$ and finds its equilibrium $\pi$. MCMC takes $\pi$ and must invent $P$. Checking the equilibrium equation directly means a sum over every state. Detailed balance is a shortcut: a condition on one pair of states at a time, easy to arrange, that forces the equilibrium.
+A **Markov chain** moves by a rule that looks only at the current state ([Markov chains](01-markov-chains.md)). The shelf so far takes a rule $P$ and finds its equilibrium $\pi$. MCMC takes $\pi$ and must invent $P$. Checking the equilibrium equation directly means a sum over every state. Detailed balance is a shortcut: a condition on one pair of states at a time, easy to arrange, that forces the equilibrium.
 
 ### Step 1: balanced pairs mean the law stays put
 
@@ -133,7 +115,7 @@ For the seedling the conditionals come straight from the likelihood. With b held
 
 ### Step 4: the chain forgets its start, and how fast
 
-The chain must also reach its stationary law. [convergence-to-equilibrium](05-convergence-to-equilibrium.md) proves that a finite chain that is irreducible and aperiodic approaches its stationary law from any start, with the distance shrinking geometrically. The grid Gibbs chain qualifies: every conditional probability is positive, so any grid pair is reachable in one sweep, and a chain that can reach everything in one sweep cannot cycle.
+The chain must also reach its stationary law. [Convergence to equilibrium](05-convergence-to-equilibrium.md) proves that a finite chain that is irreducible and aperiodic approaches its stationary law from any start, with the distance shrinking geometrically. The grid Gibbs chain qualifies: every conditional probability is positive, so any grid pair is reachable in one sweep, and a chain that can reach everything in one sweep cannot cycle.
 
 Start the grid chain at b = 0 and push its law forward exactly, sweep by sweep, with no random numbers. The **total variation distance**, half the summed gaps between the chain's law and the posterior, is the probability still in the wrong place:
 
@@ -182,7 +164,7 @@ The noise term is independent of the past with variance $s^2 = (\sigma^2/S_{ww})
 
 ### Step 5: the error of a correlated average
 
-Along one run of an irreducible chain the average converges to the posterior average. For the grid chain this is the time-average theorem of [stationary-distributions](04-stationary-distributions.md), proved there for finite chains; it needs no aperiodicity. The 100,000-step runs are on the continuous posterior, where the same result also needs Harris recurrence (from any start, every region of positive probability is visited again and again). That version is stated here without proof, from Tierney (1994), whose conditions the Metropolis and Gibbs chains here meet. What changes is the error: neighbouring steps overlap in information, so the variance of the average exceeds $v/N$ by the factor $\tau$.
+Along one run of an irreducible chain the average converges to the posterior average. For the grid chain this is the time-average theorem of [Stationary distributions](04-stationary-distributions.md), proved there for finite chains; it needs no aperiodicity. The 100,000-step runs are on the continuous posterior, where the same result also needs Harris recurrence (from any start, every region of positive probability is visited again and again). That version is stated here without proof, from Tierney (1994), whose conditions the Metropolis and Gibbs chains here meet. What changes is the error: neighbouring steps overlap in information, so the variance of the average exceeds $v/N$ by the factor $\tau$.
 
 <details>
 <summary>Detailed proof: the variance of a correlated average</summary>
@@ -215,7 +197,7 @@ Both land within a few standard errors of the exact 0.9700 and 0.4248, and their
 - **Autocorrelation and ESS**: what the run is worth. Quote the batch standard error.
 - **Several chains from spread-out starts**: disagreement proves trouble; agreement is only evidence.
 
-One a-only chain passes the checks on a: a settled trace, a small standard error. But its b trace is frozen, and chains started at different b disagree, each averaging a near its own 4 − 3b. What can pass all four is a sampler trapped in one of two separated peaks and started in that peak every time: no check on the output sees a region the chain never visits. The cure here is to remove the tilt: count weeks from week 3, so a is the height at week 3; the correlation becomes 0, τ becomes 1, and each sweep is an independent draw. Tools for many correlated unknowns are in markov-chain-monte-carlo-for-computation.
+One a-only chain passes the checks on a: a settled trace, a small standard error. But its b trace is frozen, and chains started at different b disagree, each averaging a near its own 4 − 3b. What can pass all four is a sampler trapped in one of two separated peaks and started in that peak every time: no check on the output sees a region the chain never visits. The cure here is to remove the tilt: count weeks from week 3, so a is the height at week 3; the correlation becomes 0, τ becomes 1, and each sweep is an independent draw. Tools for many correlated unknowns are in MCMC as a tool.
 
 ---
 
@@ -710,7 +692,7 @@ The two outputs are identical line for line.
 - **Bayesian software.** BUGS and JAGS run Gibbs samplers; Stan and PyMC run descendants of Metropolis–Hastings. All report effective sample sizes.
 - **Regression.** Centring a predictor before sampling, as in Step 6, is routine advice.
 - **Image restoration and physics.** Geman and Geman named the Gibbs sampler in 1984 while cleaning noisy images one pixel at a time; the 1953 Metropolis paper averaged over positions of hard discs.
-- **Hidden states.** When the unknowns are a hidden chain's path, as in [hidden-markov-models](08-hidden-markov-models.md), a Gibbs sampler alternates between drawing the path and the model's settings.
+- **Hidden states.** When the unknowns are a hidden chain's path, as in [Hidden Markov models](08-hidden-markov-models.md), a Gibbs sampler alternates between drawing the path and the model's settings.
 
 > **Say it back**
 > MCMC starts from the law it wants and designs a Markov chain with that equilibrium. Detailed balance, equal flow between every pair of states, is enough. The Metropolis–Hastings chance min(1, r) is the most generous rule that achieves it, and Gibbs sampling is the case r = 1; the posterior's constant cancels. The chain converges from any start, here at rate 9/11 per sweep, the squared correlation. Correlated steps shrink 100,000 sweeps to 10,000 effective draws.
@@ -719,13 +701,13 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [stationary-distributions](04-stationary-distributions.md): what an equilibrium law is, and the equation detailed balance satisfies pair by pair.
-- [convergence-to-equilibrium](05-convergence-to-equilibrium.md): the theorem that an irreducible, aperiodic chain reaches its equilibrium from any start, used in Steps 4 and 5.
-- [markov-chain-monte-carlo-in-outline](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/06-markov-chain-monte-carlo-in-outline.md): the Metropolis walk on one unknown, the posterior it samples, and batch means.
+- [Stationary distributions](04-stationary-distributions.md): what an equilibrium law is, and the equation detailed balance satisfies pair by pair.
+- [Convergence to equilibrium](05-convergence-to-equilibrium.md): the theorem that an irreducible, aperiodic chain reaches its equilibrium from any start, used in Steps 4 and 5.
+- [MCMC in outline](../../09-Probability%20and%20statistics/10-Bayesian%20Inference/06-markov-chain-monte-carlo-in-outline.md): the Metropolis walk on one unknown, the posterior it samples, and batch means.
 
 ## Where this goes next
 
-- markov-chain-monte-carlo-for-computation: MCMC as a working algorithm on many unknowns at once, with gradient-guided proposals, tuning and diagnostics across several chains.
+- MCMC as a tool: MCMC as a working algorithm on many unknowns at once, with gradient-guided proposals, tuning and diagnostics across several chains.
 
 This card graded its samplers against a posterior with an exact answer and a two-line mixing rate; what it leaves open is how to design and tune a chain that mixes fast when the unknowns number in the hundreds and no exact answer exists.
 

@@ -1,30 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Swaps
-topic: Rate risk and its offset
-item: Swap DV01
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/28-Swaps/02-par-swap-rate-and-annuity|par-swap-rate-and-annuity]]"
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/06-duration-and-convexity|duration-and-convexity]]"
-next:
-  - "[[Cards/12-Financial mathematics/28-Swaps/04-basis-swaps-and-the-multi-curve-framework|basis-swaps-and-the-multi-curve-framework]]"
-  - "[[Cards/12-Financial mathematics/33-Curves in Depth/02-key-rate-durations-and-curve-hedging|key-rate-durations-and-curve-hedging]]"
-tags: [mathematics, financial mathematics, swap-dv01-and-hedging]
----
-
 # Swap DV01: the value change for one basis point, and hedging one swap with another
 
-Financial mathematics → Swaps → Rate risk and its offset → Swap DV01
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Swaps](../../../SYLLABUS.md#w12-s28) → Swap DV01
 
 ---
 
 ## General Overview
 
-A company has agreed to pay a fixed 4.5 percent a year on 10,000,000 dollars for five years. In return a bank pays it the floating rate: whatever one-year money costs at the start of each year. That contract is an interest rate swap ([interest-rate-swaps](01-interest-rate-swaps.md)). The 10,000,000 dollars never changes hands. It only sizes the payments, and it is called the **notional**.
+A company has agreed to pay a fixed 4.5 percent a year on 10,000,000 dollars for five years. In return a bank pays it the floating rate: whatever one-year money costs at the start of each year. That contract is an interest rate swap ([Interest rate swaps](01-interest-rate-swaps.md)). The 10,000,000 dollars never changes hands. It only sizes the payments, and it is called the **notional**.
 
 On this morning's **curve**, the market's quoted swap rates for each length from one to ten years, the five-year rate is 4.65 percent, so paying only 4.5 percent is a good deal. The swap is worth 65,736.36 dollars to the side paying fixed, called the **payer**. Tomorrow the curve moves and that value moves with it. The question every rates desk, a bank's interest-rate trading team, asks first is: by how much, per unit of move?
 
@@ -54,7 +36,7 @@ The steep line is the five-year payer on its own: about 4.4 thousand dollars per
 
 ## The formula
 
-Notation first, in words. A swap's fixed payments fall at the end of years 1 to $n$. $D(i)$ is the price today of one dollar paid at the end of year $i$, read off the discount curve. The **annuity** $A_n$ adds those prices up: it is what one dollar a year for $n$ years is worth today. The **par rate** $S$ is the fixed rate that makes a new $n$-year swap worth zero ([par-swap-rate-and-annuity](02-par-swap-rate-and-annuity.md)).
+Notation first, in words. A swap's fixed payments fall at the end of years 1 to $n$. $D(i)$ is the price today of one dollar paid at the end of year $i$, read off the discount curve. The **annuity** $A_n$ adds those prices up: it is what one dollar a year for $n$ years is worth today. The **par rate** $S$ is the fixed rate that makes a new $n$-year swap worth zero ([The par swap rate](02-par-swap-rate-and-annuity.md)).
 
 The payer's value:
 
@@ -96,11 +78,11 @@ $$h = \frac{\text{DV01 of the position}}{\text{DV01 of one dollar of the hedge}}
 
 ### When it holds
 
-- **One curve for forecasting and for discounting.** The floating payments and the discounting both come off the same curve. With two curves, as markets now use, the swap has a DV01 to each and the numbers split: [basis-swaps-and-the-multi-curve-framework](04-basis-swaps-and-the-multi-curve-framework.md).
+- **One curve for forecasting and for discounting.** The floating payments and the discounting both come off the same curve. With two curves, as markets now use, the swap has a DV01 to each and the numbers split: [Multi-curve](04-basis-swaps-and-the-multi-curve-framework.md).
 - **A parallel move in the quotes.** DV01 moves every quote by the same amount. A curve that twists is a different move, and a hedge sized on DV01 alone can lose on it: 43,535.84 dollars below, for a twist of at most ten basis points.
 - **Small moves.** DV01 is a slope. Across a full percentage point the slope itself changes, and the hedged book drifts by 9.76 thousand dollars. That leftover is convexity, the bend in the value line.
 - **What gets bumped is stated.** Bumping the par quotes and rebuilding is one DV01. Bumping continuously compounded zero rates is another, 4,554.26 here. Neither is wrong; mixing them is.
-- **Conventions on this card.** Annual payments on both legs, each year's accrual exactly 1.0, the floating rate set at the start of each year and paid at its end, as on [bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md). Conventions verified 28 Sep 2026: dollar swaps now float on SOFR, an overnight rate compounded over each period, with day counts and calendars that shift every number slightly ([money-market-instruments-and-sofr](../02-Curves/03-money-market-instruments-and-sofr.md)).
+- **Conventions on this card.** Annual payments on both legs, each year's accrual exactly 1.0, the floating rate set at the start of each year and paid at its end, as on [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md). Conventions verified 28 Sep 2026: dollar swaps now float on SOFR, an overnight rate compounded over each period, with day counts and calendars that shift every number slightly ([Money markets](../02-Curves/03-money-market-instruments-and-sofr.md)).
 
 ---
 
@@ -135,7 +117,7 @@ This swap is struck at 4.5 percent, off par, so the payer already holds a profit
 <details>
 <summary>Detailed proof: the exact slope, carried through the bootstrap</summary>
 
-The curve is built one year at a time from the quotes $S_1, \dots, S_{10}$ ([bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md)). With $B_n = D(1) + \dots + D(n-1)$, each rung reads
+The curve is built one year at a time from the quotes $S_1, \dots, S_{10}$ ([Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md)). With $B_n = D(1) + \dots + D(n-1)$, each rung reads
 $$D(n) = \frac{1 - S_n B_n}{1 + S_n}.$$
 Move every quote together by an amount $x$, so each $S_n$ grows at rate 1. Differentiate the rung with the quotient rule, writing $D'$ and $B'$ for the rates of change:
 $$D'(n) = \frac{-(B_n + S_n B_n')(1 + S_n) - (1 - S_n B_n)}{(1 + S_n)^2}, \qquad B_{n+1}' = B_n' + D'(n),$$
@@ -155,13 +137,13 @@ For small parallel moves the book's value now stands still: a 25 basis point mov
 
 ### The other road
 
-DV01 treats the curve as one lever. A real curve has ten levers, one per quote, and moving them one at a time gives ten partial DV01s that add up to this card's number. That finer view is what protects against twists: [key-rate-durations-and-curve-hedging](../33-Curves%20in%20Depth/02-key-rate-durations-and-curve-hedging.md).
+DV01 treats the curve as one lever. A real curve has ten levers, one per quote, and moving them one at a time gives ten partial DV01s that add up to this card's number. That finer view is what protects against twists: [Key-rate durations](../33-Curves%20in%20Depth/02-key-rate-durations-and-curve-hedging.md).
 
 ---
 
 ## Worked numbers, by hand
 
-The house curve: par quotes of 4.20, 4.40, 4.55, 4.62 and 4.65 percent for one to five years, from [bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md) (its six-month deposit plays no part, since nothing here pays at six months). The house curve stops at five years. For the ten-year hedge it is extended with quotes of 4.67, 4.68, 4.69, 4.70 and 4.71 percent: the par rates the curve's last forward rate implies if held flat, rounded to the basis point.
+The house curve: par quotes of 4.20, 4.40, 4.55, 4.62 and 4.65 percent for one to five years, from [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md) (its six-month deposit plays no part, since nothing here pays at six months). The house curve stops at five years. For the ten-year hedge it is extended with quotes of 4.67, 4.68, 4.69, 4.70 and 4.71 percent: the par rates the curve's last forward rate implies if held flat, rounded to the basis point.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -643,10 +625,10 @@ The two outputs are identical, byte for byte.
 
 - **A rates desk's risk report.** The first line is DV01, per currency and per curve. Traders hold limits in dollars per basis point, not in notional.
 - **A company hedging its loan.** A firm that borrows floating and pays fixed on a swap to lock its cost holds exactly the payer on this card. Its treasurer reads the swap's DV01 to know how much the hedge's market value will swing.
-- **Bond portfolios.** A manager who owns bonds and wants less rate risk receives floating on a swap, sized so the swap's DV01 matches the bonds' DV01 ([duration-and-convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md)).
-- **Collateral and margin.** A clearing house, the middleman that guarantees both sides, sizes margin from what a position could lose in a stressed market, and for a plain swap that is roughly DV01 times the stressed move. Which curve discounts the swap changes that DV01: [ois-discounting-and-collateral](05-ois-discounting-and-collateral.md).
-- **Quoting a swap backwards.** Turning a price into the rate that produces it divides by the same annuity, which is why a swap's price moves by PV01 per basis point of rate: [swap-inverses-rate-and-curve-from-price](07-swap-inverses-rate-and-curve-from-price.md).
-- **Two currencies.** A swap that exchanges dollars for euros carries a DV01 to each currency's curve, and each is hedged in its own market: [cross-currency-swaps-and-basis](06-cross-currency-swaps-and-basis.md).
+- **Bond portfolios.** A manager who owns bonds and wants less rate risk receives floating on a swap, sized so the swap's DV01 matches the bonds' DV01 ([Duration and convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md)).
+- **Collateral and margin.** A clearing house, the middleman that guarantees both sides, sizes margin from what a position could lose in a stressed market, and for a plain swap that is roughly DV01 times the stressed move. Which curve discounts the swap changes that DV01: [Collateral discounting](05-ois-discounting-and-collateral.md).
+- **Quoting a swap backwards.** Turning a price into the rate that produces it divides by the same annuity, which is why a swap's price moves by PV01 per basis point of rate: [Solving a swap backwards](07-swap-inverses-rate-and-curve-from-price.md).
+- **Two currencies.** A swap that exchanges dollars for euros carries a DV01 to each currency's curve, and each is hedged in its own market: [Cross-currency swaps](06-cross-currency-swaps-and-basis.md).
 
 > **Say it back**
 > DV01 is the cash a position gains or loses when every quoted rate rises one basis point. For a swap it is almost exactly the notional times the annuity times one basis point, the PV01, and exactly that when the swap is struck at the market rate. Off market, the existing profit is revalued on a smaller annuity and DV01 differs by a little: 18.31 dollars for this swap. Two swaps hedge each other when their DV01s are equal and opposite, so a five-year payer on 10 million is offset by a ten-year receiver on about 5.56 million. The hedge holds for parallel moves, not twists, and drifts as the swaps age.
@@ -655,13 +637,13 @@ The two outputs are identical, byte for byte.
 
 ## What this builds on
 
-- [par-swap-rate-and-annuity](02-par-swap-rate-and-annuity.md): the par rate and the annuity it divides by. This card's value formula, $V = N(S - K)A_n$, and its whole DV01 come from that annuity.
-- [duration-and-convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md): DV01 for a bond, the slope of price against yield, and convexity, the bend that shows up here as the hedged book's small gain.
+- [The par swap rate](02-par-swap-rate-and-annuity.md): the par rate and the annuity it divides by. This card's value formula, $V = N(S - K)A_n$, and its whole DV01 come from that annuity.
+- [Duration and convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md): DV01 for a bond, the slope of price against yield, and convexity, the bend that shows up here as the hedged book's small gain.
 
 ## Where this goes next
 
-- [basis-swaps-and-the-multi-curve-framework](04-basis-swaps-and-the-multi-curve-framework.md): the floating rate and the discounting on separate curves, so one DV01 becomes two and a hedge must match both.
-- [key-rate-durations-and-curve-hedging](../33-Curves%20in%20Depth/02-key-rate-durations-and-curve-hedging.md): DV01 split quote by quote, and hedges that survive twists.
+- [Multi-curve](04-basis-swaps-and-the-multi-curve-framework.md): the floating rate and the discounting on separate curves, so one DV01 becomes two and a hedge must match both.
+- [Key-rate durations](../33-Curves%20in%20Depth/02-key-rate-durations-and-curve-hedging.md): DV01 split quote by quote, and hedges that survive twists.
 
 A DV01 hedge leaves the book open to a twist that cost 43,535.84 dollars here; key rate durations measure that exposure one maturity at a time, so it can be hedged as well.
 

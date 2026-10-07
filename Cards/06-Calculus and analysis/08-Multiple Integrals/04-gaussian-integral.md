@@ -1,28 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Multiple Integrals
-topic: Squaring into the plane
-item: The Gaussian integral
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/03-change-of-variables-and-jacobians|change-of-variables-and-jacobians]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/07-improper-integrals|improper-integrals]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/10-the-heat-kernel|the-heat-kernel]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/04-normal-distribution|normal-distribution]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/04-black-scholes-by-risk-neutral-expectation|black-scholes-by-risk-neutral-expectation]]"
-  - "[[Cards/16-Numerical analysis/05-Quadrature/04-gauss-hermite-and-weighted-rules|gauss-hermite-and-weighted-rules]]"
-  - "[[Cards/19-Partial differential equations/03-The Heat Equation in Depth/02-similarity-solutions-and-the-error-function|similarity-solutions-and-the-error-function]]"
-  - "[[Cards/20-Harmonic analysis/02-The Fourier Transform/03-gaussian-and-sinc-transform-pairs|gaussian-and-sinc-transform-pairs]]"
-tags: [mathematics, calculus and analysis, gaussian-integral]
----
-
 # The Gaussian integral: the integral of e to the minus x squared is root pi
 
-Calculus and analysis → Multiple Integrals → Squaring into the plane → The Gaussian integral
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Multiple Integrals](../../../SYLLABUS.md#w06-s08) → The Gaussian integral
 
 ---
 
@@ -55,7 +33,7 @@ The one line is the bell's height, to two decimals, at half-unit steps. From thr
 
 ## The formula
 
-Reminders. An improper integral is the limit of integrals as a cutoff heads for infinity ([improper-integrals](../04-Integrals/07-improper-integrals.md)). In polar coordinates a small patch has area r dr dθ, the r being the Jacobian factor ([change-of-variables-and-jacobians](03-change-of-variables-and-jacobians.md)).
+Reminders. An improper integral is the limit of integrals as a cutoff heads for infinity ([Improper integrals](../04-Integrals/07-improper-integrals.md)). In polar coordinates a small patch has area r dr dθ, the r being the Jacobian factor ([Change of variables](03-change-of-variables-and-jacobians.md)).
 
 $$I \;=\; \int_{-\infty}^{\infty} e^{-x^2}\,dx \;=\; \sqrt{\pi} \;=\; 1.772453850906\ldots$$
 
@@ -105,7 +83,7 @@ The x buys the antiderivative −e^(−x^2)/2. Both tails together are at most e
 
 ### Step 2: square a finite piece
 
-On the square from −R to R both ways, I_R times itself is a double integral, because the integrand splits into an x part times a y part ([double-integrals](01-double-integrals.md)):
+On the square from −R to R both ways, I_R times itself is a double integral, because the integrand splits into an x part times a y part ([Double integrals](01-double-integrals.md)):
 
 $$I_R^{\,2} = \int_{-R}^{R} e^{-x^2}\,dx \int_{-R}^{R} e^{-y^2}\,dy = \iint_{\text{square}} e^{-(x^2+y^2)}\,dx\,dy.$$
 
@@ -152,7 +130,7 @@ Squeeze. $B_R \subset Q_R \subset B_{R\sqrt2}$ and the integrand is positive, so
 
 Substitute x = √2 u, so dx = √2 du, on each cutoff and let R head for infinity: the area under e^(−x^2/2) is √2 times √π, which is √(2π) = 2.506628. In general x = u/√a gives √(π/a). Divide the curve by √(2π) and its area is 1: the bell, peak height 0.398942.
 
-A second road avoids the plane: attach a parameter to the integrand and differentiate under the integral sign ([differentiating-under-the-integral](05-differentiating-under-the-integral.md)).
+A second road avoids the plane: attach a parameter to the integrand and differentiate under the integral sign ([Differentiating under the integral](05-differentiating-under-the-integral.md)).
 
 ---
 
@@ -391,9 +369,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Statistics.** The normal distribution's constant 1/√(2π) is this card's result; see [normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md).
-- **Heat spreading in a rod.** A point of heat spreads as a Gaussian whose total stays fixed, the subject of [the-heat-kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md).
-- **Option prices.** The Black-Scholes formula is a Gaussian integral over future prices, in [black-scholes-by-risk-neutral-expectation](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/04-black-scholes-by-risk-neutral-expectation.md).
+- **Statistics.** The normal distribution's constant 1/√(2π) is this card's result; see [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md).
+- **Heat spreading in a rod.** A point of heat spreads as a Gaussian whose total stays fixed, the subject of [The heat kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md).
+- **Option prices.** The Black-Scholes formula is a Gaussian integral over future prices, in [Black-Scholes by expectation](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/04-black-scholes-by-risk-neutral-expectation.md).
 
 > **Say it back**
 > No antiderivative finds the area under e to the minus x squared. Its square is a total over the plane that depends only on distance from the centre. Over a disk, polar coordinates bring a factor r and the total π(1 − e^(−s^2)). A square is trapped between two disks, so its total is squeezed to π, and the area is √π. Stretching by √2 gives √(2π); dividing by it gives the bell area 1.
@@ -402,17 +380,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [change-of-variables-and-jacobians](03-change-of-variables-and-jacobians.md): the polar patch r dr dθ, on bounded disks.
-- [improper-integrals](../04-Integrals/07-improper-integrals.md): the whole-line area as a limit of cutoffs, and comparison for the tails.
+- [Change of variables](03-change-of-variables-and-jacobians.md): the polar patch r dr dθ, on bounded disks.
+- [Improper integrals](../04-Integrals/07-improper-integrals.md): the whole-line area as a limit of cutoffs, and comparison for the tails.
 
 ## Where this goes next
 
-- [the-heat-kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md): a Gaussian that widens with time and keeps its area.
-- [normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell read as probabilities, with a centre and a width.
-- [black-scholes-by-risk-neutral-expectation](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/04-black-scholes-by-risk-neutral-expectation.md): an option price as a Gaussian integral.
-- gauss-hermite-and-weighted-rules: integrating against e^(−x^2) with a few well-placed points.
-- similarity-solutions-and-the-error-function: the area up to a point, not the whole line.
-- gaussian-and-sinc-transform-pairs: the Gaussian as its own frequency picture.
+- [The heat kernel](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/10-the-heat-kernel.md): a Gaussian that widens with time and keeps its area.
+- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell read as probabilities, with a centre and a width.
+- [Black-Scholes by expectation](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/04-black-scholes-by-risk-neutral-expectation.md): an option price as a Gaussian integral.
+- Weighted Gauss rules: integrating against e^(−x^2) with a few well-placed points.
+- Similarity solutions: the area up to a point, not the whole line.
+- Two pairs worth memorising: the Gaussian as its own frequency picture.
 
 ---
 

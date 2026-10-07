@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Averages, choosers, compounds and forward-starts
-topic: Averaging the path
-item: The geometric Asian call
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/06-lognormal-distribution|lognormal-distribution]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/01-brownian-motion|brownian-motion]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-next:
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/02-arithmetic-asian-options|arithmetic-asian-options]]"
-tags: [mathematics, financial mathematics, geometric-asian-kemna-vorst]
----
-
 # The geometric Asian call: an average that stays lognormal, so Black-Scholes prices it with a smaller vol and a slower drift
 
-Financial mathematics → Averages, choosers, compounds and forward-starts → Averaging the path → The geometric Asian call
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages, choosers, compounds and forward-starts](../../../SYLLABUS.md#w12-s17) → The geometric Asian call
 
 ---
 
@@ -155,7 +136,7 @@ That is the growth rate b of the average: half the stock's carry, less a varianc
 
 ### Step 4: price it as Black-Scholes
 
-The average now has exactly the law of that stand-in share at T. The call on it is the Black-Scholes integral done on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), term for term: split the payoff into "receive the average" and "hand over the strike" on the event that the average ends above K; the cash half is $K e^{-rT} N(d_2)$, and counting in units of the average slides the bell curve by one spread, giving $S e^{-\hat q T} N(d_1)$. Nothing is approximated. Given the model, the price is exact.
+The average now has exactly the law of that stand-in share at T. The call on it is the Black-Scholes integral done on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), term for term: split the payoff into "receive the average" and "hand over the strike" on the event that the average ends above K; the cash half is $K e^{-rT} N(d_2)$, and counting in units of the average slides the bell curve by one spread, giving $S e^{-\hat q T} N(d_1)$. Nothing is approximated. Given the model, the price is exact.
 
 ### Step 5: fixing dates move it toward the vanilla
 
@@ -173,7 +154,7 @@ xychart-beta
 
 First line: the n-fixing price, from the vanilla $9.23 at one fixing, through $5.33 monthly and $5.06 weekly, to $5.00 on daily fixings. Second line: the continuous Kemna-Vorst price, $4.99, the floor they approach.
 
-Two other routes reach the same price: the hedging argument with an extra state, the running integral of the log price, gives a pricing equation whose solution is this formula; and simulation, as on [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md), averages the payoff over simulated paths. The code below takes the simulation road.
+Two other routes reach the same price: the hedging argument with an extra state, the running integral of the log price, gives a pricing equation whose solution is this formula; and simulation, as on [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md), averages the payoff over simulated paths. The code below takes the simulation road.
 
 ---
 
@@ -210,7 +191,7 @@ Same contract, right answer $4.99. Every wrong number below is printed by both c
 
 ### The Greeks
 
-Sensitivities by bumping the formula, the house way of stating a product's risks. Their behaviour through the life of a contract, once some prices are fixed, is on [asian-greeks-and-implied-volatility](03-asian-greeks-and-implied-volatility.md).
+Sensitivities by bumping the formula, the house way of stating a product's risks. Their behaviour through the life of a contract, once some prices are fixed, is on [Asian Greeks and implied volatility](03-asian-greeks-and-implied-volatility.md).
 
 | Greek | Plain meaning | Value |
 | --- | --- | --- |
@@ -675,10 +656,10 @@ The two outputs agree line for line, simulation included: both languages run the
 
 ## Where you meet it in real life
 
-- **Control variates for arithmetic Asians.** Simulate the arithmetic and the geometric call on the same paths; the geometric one's simulation error is known exactly, because its true price is this formula, and subtracting it removes most of the arithmetic one's error. That was Kemna and Vorst's purpose, and it is the main use today: [arithmetic-asian-options](02-arithmetic-asian-options.md).
+- **Control variates for arithmetic Asians.** Simulate the arithmetic and the geometric call on the same paths; the geometric one's simulation error is known exactly, because its true price is this formula, and subtracting it removes most of the arithmetic one's error. That was Kemna and Vorst's purpose, and it is the main use today: [Arithmetic Asian options](02-arithmetic-asian-options.md).
 - **Commodity and currency hedges.** An airline buying fuel weekly hedges with an option on the average price. The contract is arithmetic, but the geometric price is the first sanity check on any quote.
 - **A lower bound in risk systems.** Because the geometric call never exceeds the arithmetic one with the same fixings, any model that prices the arithmetic call below it has an error.
-- **The rest of this shelf.** Other contracts that change what the payoff looks at, each priced with a Black-Scholes substitution of its own: [chooser-options](04-chooser-options.md), [compound-options](05-compound-options.md), [forward-start-options-and-forward-volatility](06-forward-start-options-and-forward-volatility.md) and [cliquets-and-ratchets](07-cliquets-and-ratchets.md).
+- **The rest of this shelf.** Other contracts that change what the payoff looks at, each priced with a Black-Scholes substitution of its own: [Chooser options](04-chooser-options.md), [Compound options](05-compound-options.md), [Forward-start options](06-forward-start-options-and-forward-volatility.md) and [Cliquets](07-cliquets-and-ratchets.md).
 
 > **Say it back**
 > An Asian call pays on the average price over its life, not the last price. The log of a geometric average is an average of log prices, and in Black-Scholes those are normal, so the geometric average is lognormal. Its log carries half the drift and a third of the variance, so it behaves like a share with volatility σ/√3 and a yield raised to (r + q)/2 + σ^2/12. Black-Scholes on that share gives $4.99 for Acme, against $9.23 for the vanilla. Real contracts fix on dates and average arithmetically; this price is the exact benchmark for both.
@@ -687,14 +668,14 @@ The two outputs agree line for line, simulation included: both languages run the
 
 ## What this builds on
 
-- [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the formula this card reuses, with its two halves and their two probabilities.
-- [lognormal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md): a quantity whose log is bell-curved; its mean is the exponential of the log's mean plus half the log's variance.
-- [brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): the random path whose shocks, weighted and added, give the third.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): pricing by averaging over simulated paths, the third road in the code.
+- [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): the formula this card reuses, with its two halves and their two probabilities.
+- [Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md): a quantity whose log is bell-curved; its mean is the exponential of the log's mean plus half the log's variance.
+- [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md): the random path whose shocks, weighted and added, give the third.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): pricing by averaging over simulated paths, the third road in the code.
 
 ## Where this goes next
 
-- [arithmetic-asian-options](02-arithmetic-asian-options.md): the contract that trades, with no exact formula, priced by moment matching and by simulation with this card's price as the control.
+- [Arithmetic Asian options](02-arithmetic-asian-options.md): the contract that trades, with no exact formula, priced by moment matching and by simulation with this card's price as the control.
 
 This card prices the average that stays lognormal; the average the market actually uses is a sum of lognormals, which is not lognormal, and how to price it anyway is the next card's question.
 

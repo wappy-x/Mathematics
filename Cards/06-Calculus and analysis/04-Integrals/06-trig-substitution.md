@@ -1,23 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Integrals
-topic: Clearing square roots
-item: Trig substitution
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/04-Integrals/03-substitution|substitution]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/04-derivatives-of-trig-functions|derivatives-of-trig-functions]]"
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/03-trig-identities|trig-identities]]"
-next: []
-tags: [mathematics, calculus and analysis, trig-substitution]
----
-
 # Trig substitution: square roots of quadratics through a triangle
 
-Calculus and analysis → Integrals → Clearing square roots → Trig substitution
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Integrals](../../../SYLLABUS.md#w06-s04) → Trig substitution
 
 ---
 
@@ -43,7 +26,7 @@ Scale: 1 m = 32 units. Centre O (180, 124), top of the bank (180, 28.00), P (228
 
 ## The formula
 
-Reminder: the substitution rule, with its moved limits, is [substitution](03-substitution.md). Here it runs right to left: the old variable x is written as a function of a new one, θ.
+Reminder: the substitution rule, with its moved limits, is [Substitution](03-substitution.md). Here it runs right to left: the old variable x is written as a function of a new one, θ.
 
 $$\int_{-a}^{a} \sqrt{a^2 - x^2}\,dx \;=\; \int_{-\pi/2}^{\pi/2} a\cos\theta \cdot a\cos\theta\,d\theta \;=\; \frac{\pi a^2}{2}$$
 
@@ -88,7 +71,7 @@ The other two shapes, each with its own identity:
 
 ### Step 0: a point on a circle is a sine and a cosine
 
-Wherever x = 3 sin θ, Pythagoras has done the work: 9 − x^2 = 9 − 9 sin^2 θ = 9 cos^2 θ ([trig-identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)). Taking the root of a square needs a choice.
+Wherever x = 3 sin θ, Pythagoras has done the work: 9 − x^2 = 9 − 9 sin^2 θ = 9 cos^2 θ ([Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)). Taking the root of a square needs a choice.
 
 ### Step 1: choose the branch, so the root has one sign
 
@@ -100,7 +83,7 @@ As θ runs from −π/2 to π/2, sine takes each value from −1 to 1 exactly on
 
 ### Step 2: change the strips and the limits together
 
-The rate of 3 sin θ is 3 cos θ ([derivatives-of-trig-functions](../02-Derivatives/04-derivatives-of-trig-functions.md)), so a strip of angle width dθ is a strip of width 3 cos θ dθ on the line. The ends move too: x = −3 is θ = −π/2, and x = 3 is θ = π/2. The half pond is
+The rate of 3 sin θ is 3 cos θ ([Derivatives of sine and cosine](../02-Derivatives/04-derivatives-of-trig-functions.md)), so a strip of angle width dθ is a strip of width 3 cos θ dθ on the line. The ends move too: x = −3 is θ = −π/2, and x = 3 is θ = π/2. The half pond is
 
 $$\int_{-3}^{3}\sqrt{9 - x^2}\,dx = \int_{-\pi/2}^{\pi/2} 9\cos^2\theta\,d\theta$$
 
@@ -110,7 +93,7 @@ One factor 3 cos θ is the root, the other the stretch between rulers.
 
 cos^2 θ = (1 + cos 2θ)/2, so 9 cos^2 θ has antiderivative (9/2)(θ + sin θ cos θ); its rate, by the product rule, is 9 cos^2 θ. At θ = ±π/2 the product sin θ cos θ is 0, so the half pond is (9/2)(π/2 − (−π/2)) = 9π/2, and the pond is 9π = 28.274334 m^2.
 
-The π arrived through the limits: sine first reaches 1 at a quarter turn, 1.570796326795, which the code finds as cosine's first zero. Polygons of 6291456 sides, measuring circumference over diameter ([circle-circumference-and-area](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/01-circle-circumference-and-area.md)), give the same 3.141592653590.
+The π arrived through the limits: sine first reaches 1 at a quarter turn, 1.570796326795, which the code finds as cosine's first zero. Polygons of 6291456 sides, measuring circumference over diameter ([Circles](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/01-circle-circumference-and-area.md)), give the same 3.141592653590.
 
 ### Step 4: honestly, what this proves and what it borrows
 
@@ -123,7 +106,7 @@ The rate of sin θ was proved by trapping a slice of circle between two triangle
 
 **The antiderivative in x.** For −3 < x < 3, θ(x) = arcsin(x/3) has rate 1/√(9 − x^2). Then F(x) = ½(x√(9 − x^2) + 9θ(x)) has rate ½(√(9 − x^2) − x^2/√(9 − x^2) + 9/√(9 − x^2)) = √(9 − x^2). By continuity at ±3, F(3) − F(−3) = 9π/2.
 
-**Removing the borrowed area.** Measure angle by arc length ([arc-length](../05-Curves%20and%20Solids/02-arc-length.md)): the unit circle's arc from its top to the point above s has length the integral of 1/√(1 − t^2) from 0 to s, which gives arcsin its rate, and sine its rate, with no slice of disc. The calculation then proves the area outright.
+**Removing the borrowed area.** Measure angle by arc length ([Arc length](../05-Curves%20and%20Solids/02-arc-length.md)): the unit circle's arc from its top to the point above s has length the integral of 1/√(1 − t^2) from 0 to s, which gives arcsin its rate, and sine its rate, with no slice of disc. The calculation then proves the area outright.
 
 </details>
 
@@ -378,15 +361,15 @@ The outputs match line for line. Road two closes slowly, 0.273556530 off at 10 s
 
 ## What this builds on
 
-- [substitution](03-substitution.md): the theorem that lets x be replaced by 3 sin θ, strips and limits together.
-- [derivatives-of-trig-functions](../02-Derivatives/04-derivatives-of-trig-functions.md): the rate 3 cos θ, and sec θ tan θ for the secant row.
-- [trig-identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md): the three Pythagorean identities and the double angle.
+- [Substitution](03-substitution.md): the theorem that lets x be replaced by 3 sin θ, strips and limits together.
+- [Derivatives of sine and cosine](../02-Derivatives/04-derivatives-of-trig-functions.md): the rate 3 cos θ, and sec θ tan θ for the secant row.
+- [Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md): the three Pythagorean identities and the double angle.
 
 ## Where this goes next
 
-- [improper-integrals](07-improper-integrals.md): integrands that run off to infinity at an end, such as 1/√(9 − x^2) at x = 3.
-- [numerical-integration](08-numerical-integration.md): error ceilings set by a curve's derivatives, which the bank's vertical ends break.
-- [average-value-mass-and-work](09-average-value-mass-and-work.md): averages as integrals; the pond's mean width is its area over 6 m.
+- [Improper integrals](07-improper-integrals.md): integrands that run off to infinity at an end, such as 1/√(9 − x^2) at x = 3.
+- [Numerical integration](08-numerical-integration.md): error ceilings set by a curve's derivatives, which the bank's vertical ends break.
+- [Averages, mass and work](09-average-value-mass-and-work.md): averages as integrals; the pond's mean width is its area over 6 m.
 
 ---
 

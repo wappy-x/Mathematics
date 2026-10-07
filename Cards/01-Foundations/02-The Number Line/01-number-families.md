@@ -1,28 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: The Number Line
-topic: Number families
-item: The number families
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/06-negative-numbers|negative-numbers]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/07-fractions|fractions]]"
-next:
-  - "[[Cards/01-Foundations/02-The Number Line/02-number-line-and-inequalities|number-line-and-inequalities]]"
-  - "[[Cards/01-Foundations/06-Proof/07-peano-and-one-plus-one|peano-and-one-plus-one]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/02-countable-sets|countable-sets]]"
-tags:
-  - mathematics
-  - foundations
-  - number-families
----
-
 # The number families: counting numbers, integers, fractions, reals, and what forced each one
 
-Foundations → The Number Line → Number families → The number families
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [The Number Line](../../../SYLLABUS.md#w01-s02) → The number families
 
 ---
 
@@ -80,17 +58,17 @@ Pick a list. Ask whether the sums you need have answers inside it. If not, widen
 
 The plank should be 240 cm. It is 225 cm. The shortfall is 225 − 240, which the counting numbers cannot answer. Add the negatives and they can: −15, and 240 + (−15) = 225 puts it back.
 
-Counting numbers plus negatives are the **integers**. Subtraction now always works: [negative-numbers](../01-Everyday%20Arithmetic/06-negative-numbers.md).
+Counting numbers plus negatives are the **integers**. Subtraction now always works: [Negative numbers](../01-Everyday%20Arithmetic/06-negative-numbers.md).
 
 ### Step 2: whole numbers run out at division
 
 The 100 cm off-cut, into three equal pieces. 100 ÷ 3 is three 33s with 1 cm over: no integer answer. Cut that centimetre in three and each piece is 33 + 1/3 cm, since 33 × 3 + 1 = 100.
 
-Integers plus that splitting are the **fractions**. Division now always works, except by zero: [fractions](../01-Everyday%20Arithmetic/07-fractions.md).
+Integers plus that splitting are the **fractions**. Division now always works, except by zero: [Fractions](../01-Everyday%20Arithmetic/07-fractions.md).
 
 ### Step 3: fractions run out at measuring
 
-The tile is 30 cm a side. The square on its diagonal holds four half-tiles — two whole tiles — so the diagonal times itself is 900 + 900 = 1800. That is Pythagoras' rule. Reach for the diagonal with the tape and multiply each reading by itself: 42.42 × 42.42 = 1799.4564, under; 42.43 × 42.43 = 1800.3049, over. The diagonal sits between the 42.4 and 42.5 millimetre marks; zoom in and it sits between 42.42 and 42.43; finer marks repeat the miss forever. No fraction lands on it either — that proof is [irrational-numbers](03-irrational-numbers.md). The number is 42.426406871…, or 30 × root 2, root 2 being the number that gives 2 when multiplied by itself.
+The tile is 30 cm a side. The square on its diagonal holds four half-tiles — two whole tiles — so the diagonal times itself is 900 + 900 = 1800. That is Pythagoras' rule. Reach for the diagonal with the tape and multiply each reading by itself: 42.42 × 42.42 = 1799.4564, under; 42.43 × 42.43 = 1800.3049, over. The diagonal sits between the 42.4 and 42.5 millimetre marks; zoom in and it sits between 42.42 and 42.43; finer marks repeat the miss forever. No fraction lands on it either — that proof is [Irrational numbers](03-irrational-numbers.md). The number is 42.426406871…, or 30 × root 2, root 2 being the number that gives 2 when multiplied by itself.
 
 Fractions plus every spot they miss are the **reals**.
 
@@ -98,7 +76,7 @@ Fractions plus every spot they miss are the **reals**.
 
 3 is still a counting number once you learn it is also an integer, a fraction (3 over 1) and a real. The families nest; going up only adds.
 
-A second route builds the same ladder without operations: refuse to leave any spot on the tape empty — [real-numbers-no-gaps](04-real-numbers-no-gaps.md).
+A second route builds the same ladder without operations: refuse to leave any spot on the tape empty — [The real numbers have no gaps](04-real-numbers-no-gaps.md).
 
 ---
 
@@ -258,14 +236,14 @@ The two outputs match line for line.
 > **Thinking each new family replaces the one before it.** They nest. Read "3 is a real number" as a correction rather than an addition and you end up with four bins and every number sorted into one.
 >
 > - Believing 3 is not a fraction. It is: 3 over 1. Every whole number is a fraction with 1 underneath.
-> - Believing a decimal that runs on forever must be outside the fractions. 1/3 is 0.3333… forever and is a fraction. What puts a number outside is never repeating: [irrational-numbers](03-irrational-numbers.md).
+> - Believing a decimal that runs on forever must be outside the fractions. 1/3 is 0.3333… forever and is a fraction. What puts a number outside is never repeating: [Irrational numbers](03-irrational-numbers.md).
 > - Reading N, Z, Q and R as ranks. They are names, not grades.
 
 ---
 
 ## Where you meet it in real life
 
-- **Any tape measure.** The printed marks are fractions; the thing measured is a real: [real-numbers-no-gaps](04-real-numbers-no-gaps.md).
+- **Any tape measure.** The printed marks are fractions; the thing measured is a real: [The real numbers have no gaps](04-real-numbers-no-gaps.md).
 - **Tills and spreadsheets.** A count of items is an integer; a price is not. A price in a whole-number cell loses the cents.
 - **Programming.** Integer types and floating-point types are machine stand-ins for Z and R. Integer division returning 33 rather than 33 + 1/3 has broken real invoices.
 
@@ -276,14 +254,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [negative-numbers](../01-Everyday%20Arithmetic/06-negative-numbers.md): how the minus sign behaves below zero — the second rung's arithmetic.
-- [fractions](../01-Everyday%20Arithmetic/07-fractions.md): how a top and a bottom number add, multiply and reduce — the third rung's.
+- [Negative numbers](../01-Everyday%20Arithmetic/06-negative-numbers.md): how the minus sign behaves below zero — the second rung's arithmetic.
+- [Fractions](../01-Everyday%20Arithmetic/07-fractions.md): how a top and a bottom number add, multiply and reduce — the third rung's.
 
 ## Where this goes next
 
-- [number-line-and-inequalities](02-number-line-and-inequalities.md): all four families on one line, left meaning smaller.
-- [peano-and-one-plus-one](../06-Proof/07-peano-and-one-plus-one.md): the bottom rung built from "start at zero and take one more step".
-- [countable-sets](../09-Sizes%20of%20Infinity/02-countable-sets.md): as many fractions as counting numbers, and strictly more reals.
+- [The number line and inequalities](02-number-line-and-inequalities.md): all four families on one line, left meaning smaller.
+- [Peano's three rules](../06-Proof/07-peano-and-one-plus-one.md): the bottom rung built from "start at zero and take one more step".
+- [Countable sets](../09-Sizes%20of%20Infinity/02-countable-sets.md): as many fractions as counting numbers, and strictly more reals.
 
 ---
 

@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Convexity and Exotics
-topic: Paying across currencies
-item: Quanto rates
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/32-Convexity and Exotics/03-timing-and-in-arrears-adjustments|timing-and-in-arrears-adjustments]]"
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/01-quanto-forward-and-adjustment|quanto-forward-and-adjustment]]"
-next: []
-tags: [mathematics, financial mathematics, quanto-adjustments-for-rates]
----
-
 # Quanto rates: a foreign rate paid in domestic currency
 
-Financial mathematics → Convexity and Exotics → Paying across currencies → Quanto rates
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Convexity and Exotics](../../../SYLLABUS.md#w12-s32) → Quanto rates
 
 ---
 
@@ -51,7 +35,7 @@ One line: the dollar payment for each yen fixing. It is straight, with slope $2,
 
 ## The formula
 
-Notation first, in words. $T$ is the fixing date and $U$ the payment date. $L$ is the yen rate fixed at $T$; $F$ is its yen forward today. $G_T$ is the forward exchange rate at $T$, in dollars per yen, for delivery at $U$. A subscript d marks dollars (domestic) and f marks yen (foreign). $D_d(t,U)$ is the price at a date t of one dollar paid at date $U$; $D_f(t,U)$ is the same for one yen. An average written $\mathbb{E}^{f,U}[\cdot]$ is taken with the probabilities that make every yen price, counted in yen bonds maturing at $U$, driftless: the **yen forward measure**, the device of [timing-and-in-arrears-adjustments](03-timing-and-in-arrears-adjustments.md) set in yen. $\mathbb{E}^{d,U}$ is the dollar forward measure, and $\mathbb{E}^{f,A}$ counts in a yen annuity: the **annuity measure** of [the-annuity-measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md).
+Notation first, in words. $T$ is the fixing date and $U$ the payment date. $L$ is the yen rate fixed at $T$; $F$ is its yen forward today. $G_T$ is the forward exchange rate at $T$, in dollars per yen, for delivery at $U$. A subscript d marks dollars (domestic) and f marks yen (foreign). $D_d(t,U)$ is the price at a date t of one dollar paid at date $U$; $D_f(t,U)$ is the same for one yen. An average written $\mathbb{E}^{f,U}[\cdot]$ is taken with the probabilities that make every yen price, counted in yen bonds maturing at $U$, driftless: the **yen forward measure**, the device of [Timing adjustments](03-timing-and-in-arrears-adjustments.md) set in yen. $\mathbb{E}^{d,U}$ is the dollar forward measure, and $\mathbb{E}^{f,A}$ counts in a yen annuity: the **annuity measure** of [The annuity measure](../29-Caps%2C%20Floors%20and%20Swaptions/05-the-annuity-measure.md).
 
 The exact statement, for any joint behaviour of rates and currency:
 
@@ -69,7 +53,7 @@ For a yen swap rate paid in dollars (a quanto CMS coupon; CMS is a constant-matu
 
 $$K_q^{\text{CMS}} = \frac{\mathbb{E}^{f,A}\!\left[S_T\, m(S_T) / G_T\right]}{\mathbb{E}^{f,A}\!\left[m(S_T) / G_T\right]}, \qquad m = \frac{D_f(T,U)}{A_T}$$
 
-In words: average the swap rate in annuity units, reweighted once by $m$ for the payment date (the CMS convexity of [cms-and-the-convexity-adjustment](02-cms-and-the-convexity-adjustment.md)) and once by $1/G_T$ for the currency.
+In words: average the swap rate in annuity units, reweighted once by $m$ for the payment date (the CMS convexity of [Constant-maturity swaps](02-cms-and-the-convexity-adjustment.md)) and once by $1/G_T$ for the currency.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -92,7 +76,7 @@ In words: average the swap rate in annuity units, reweighted once by $m$ for the
 - **The exact formula needs only no free money.** The weight $1/G_T$ follows from the definition of the forward exchange rate. What it does not supply is the joint law of $L$ and $G_T$: the covariance must come from a model or from quotes.
 - **Lognormal, constant volatilities and correlation.** The exponential needs both. If the correlation moves, its average over the life is what counts; every 0.01 of error in it moves the value by $2.18 here.
 - **Forward, not spot, exchange-rate volatility.** $\sigma_G$ belongs to $G_t$, which also moves with the two interest-rate curves. Using spot volatility is an approximation whose error grows with the time to payment.
-- **Payment at the natural date.** Paying at any other date adds the timing weight of [timing-and-in-arrears-adjustments](03-timing-and-in-arrears-adjustments.md) on top; the two multiply inside one weight.
+- **Payment at the natural date.** Paying at any other date adds the timing weight of [Timing adjustments](03-timing-and-in-arrears-adjustments.md) on top; the two multiply inside one weight.
 
 Conventions verified 2026-09-28: the market quotes the pair as yen per dollar (a USD/JPY quote is the number of yen one dollar buys). This card uses dollars per yen, the inverse, so a correlation measured on the market quote enters with the opposite sign.
 
@@ -102,7 +86,7 @@ Conventions verified 2026-09-28: the market quotes the pair as yen per dollar (a
 
 ### Step 0: price the coupon where it is natural, then change the unit
 
-A yen rate has one unit of account in which its average is known without any model: yen bonds maturing on the payment date. Counted that way, the yen forward rate $F$ is driftless, which is the content of a forward rate agreement being free to enter. The dollar coupon needs the average in a different unit, dollar bonds maturing on the payment date. Changing the unit reweights the futures ([quanto-forward-and-adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md) does this for a share). The whole card is the size of that reweighting.
+A yen rate has one unit of account in which its average is known without any model: yen bonds maturing on the payment date. Counted that way, the yen forward rate $F$ is driftless, which is the content of a forward rate agreement being free to enter. The dollar coupon needs the average in a different unit, dollar bonds maturing on the payment date. Changing the unit reweights the futures ([The quanto adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md) does this for a share). The whole card is the size of that reweighting.
 
 The same fact seen by a hedger. The bank that pays the quanto coupon hedges it by receiving the yen rate in yen. With $\rho > 0$, when yen rates rise the yen tends to rise too, so the hedge's yen gain converts into more dollars than the coupon costs. When rates fall the yen tends to fall, so the hedge's loss converts into fewer dollars than the coupon saves. The hedge beats the coupon both ways. Competition passes that edge to the fund as a lower fixed rate.
 
@@ -154,7 +138,7 @@ The weight splits into a currency factor and a payment-date factor $m$. Taking $
 <details>
 <summary>Why a flat curve for $m$?</summary>
 
-The ratio $m = D_f(T,U)/A_T$ depends on the whole yen curve at $T$. The code ties it to the swap rate alone by assuming the curve is flat at $S_T$, annually compounded: $m(S) = \dfrac{S/(1+S)}{1 - (1+S)^{-10}}$ for a coupon paid one year after fixing. This is the usual annuity mapping of [cms-and-the-convexity-adjustment](02-cms-and-the-convexity-adjustment.md); the quanto factor does not depend on it.
+The ratio $m = D_f(T,U)/A_T$ depends on the whole yen curve at $T$. The code ties it to the swap rate alone by assuming the curve is flat at $S_T$, annually compounded: $m(S) = \dfrac{S/(1+S)}{1 - (1+S)^{-10}}$ for a coupon paid one year after fixing. This is the usual annuity mapping of [Constant-maturity swaps](02-cms-and-the-convexity-adjustment.md); the quanto factor does not depend on it.
 
 </details>
 
@@ -656,8 +640,8 @@ The two outputs are identical line for line.
 ## Where you meet it in real life
 
 - **Differential swaps.** A "diff swap" pays the difference between a foreign and a domestic floating rate, all in the domestic currency, on a domestic notional. Its foreign leg is a strip of quanto rates like the one on this card; banks sold them heavily in the early 1990s when yen and mark rates stood far from dollar rates.
-- **Quanto CMS and spread notes.** A dollar note paying the 10-year yen or euro swap rate, or a spread between two swap rates, carries both corrections of Step 5 in one weight: [structured-notes-in-outline](06-structured-notes-in-outline.md).
-- **Its family on this shelf.** A futures rate is a forward reweighted by the bank account ([futures-forward-convexity](01-futures-forward-convexity.md)); a rate paid early is reweighted by a bond ratio ([timing-and-in-arrears-adjustments](03-timing-and-in-arrears-adjustments.md)); a rate paid abroad is reweighted by the forward exchange rate. Every convexity adjustment is one of these unit changes.
+- **Quanto CMS and spread notes.** A dollar note paying the 10-year yen or euro swap rate, or a spread between two swap rates, carries both corrections of Step 5 in one weight: [Structured rate notes](06-structured-notes-in-outline.md).
+- **Its family on this shelf.** A futures rate is a forward reweighted by the bank account ([Futures against forwards](01-futures-forward-convexity.md)); a rate paid early is reweighted by a bond ratio ([Timing adjustments](03-timing-and-in-arrears-adjustments.md)); a rate paid abroad is reweighted by the forward exchange rate. Every convexity adjustment is one of these unit changes.
 
 > **Say it back**
 > A yen rate paid in dollars at a frozen conversion is a quanto rate. Its yen forward is an average counted in yen bonds; the dollar payment needs the average counted in dollar bonds. The change of unit weights each future by one over the forward exchange rate, which pulls the average down when the rate and the yen rise together. With both lognormal, the dollar-measure drift is minus correlation times the two volatilities, so the fair strike is the forward times the exponential of minus that product and the time to fixing. For a swap rate, the annuity replaces the bond and the CMS weight joins the currency weight.
@@ -666,13 +650,13 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [timing-and-in-arrears-adjustments](03-timing-and-in-arrears-adjustments.md): paying a rate on a date other than its own reweights the futures by a bond ratio. This card reweights by the forward exchange rate instead, with the same algebra.
-- [quanto-forward-and-adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): the equity quanto, where the share's drift loses correlation times two volatilities. Here the share becomes a forward rate and the spot exchange rate becomes the forward one.
+- [Timing adjustments](03-timing-and-in-arrears-adjustments.md): paying a rate on a date other than its own reweights the futures by a bond ratio. This card reweights by the forward exchange rate instead, with the same algebra.
+- [The quanto adjustment](../24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): the equity quanto, where the share's drift loses correlation times two volatilities. Here the share becomes a forward rate and the spot exchange rate becomes the forward one.
 
 ## Where this goes next
 
-- [callable-and-cancellable-swaps](05-callable-and-cancellable-swaps.md): adds an exercise right to a strip of dated rate payments.
-- [structured-notes-in-outline](06-structured-notes-in-outline.md): quanto and CMS coupons assembled into the notes sold to investors.
+- [Callable and cancellable swaps](05-callable-and-cancellable-swaps.md): adds an exercise right to a strip of dated rate payments.
+- [Structured rate notes](06-structured-notes-in-outline.md): quanto and CMS coupons assembled into the notes sold to investors.
 
 This card fixes the strike of a coupon whose amount is known once the rate is set; what a strip of such coupons is worth when the payer may cancel it is the question the callable swap answers.
 

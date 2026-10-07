@@ -1,25 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Nonlinear Dynamics in the Plane
-topic: Energy-like certificates
-item: Lyapunov functions
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/02-linearisation-and-the-jacobian|linearisation-and-the-jacobian]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/03-chain-rule|chain-rule]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/05-lasalle-and-the-damped-pendulum|lasalle-and-the-damped-pendulum]]"
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/05-hurwitz-schur-and-lyapunov-stability|hurwitz-schur-and-lyapunov-stability]]"
-  - "[[Cards/13-Engineering mathematics/10-Robustness and Adaptation/05-passivity-and-absolute-stability|passivity-and-absolute-stability]]"
-tags: [mathematics, differential equations and dynamics, lyapunov-functions]
----
-
 # Lyapunov functions: find something that only ever decreases and you have proved the system settles, without solving it
 
-Differential equations and dynamics → Nonlinear Dynamics in the Plane → Energy-like certificates → Lyapunov functions
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → Lyapunov functions
 
 ---
 
@@ -121,7 +102,7 @@ Since x^4 = 4V^2, the rate is V' = −4V^2. That separates: 1/V = 1/V0 + 4t, wit
 
 For x' = +x^3, V' = +x^4 > 0 away from 0. V rises, so no motion off the rest can approach it: unstable. From 1 cm, 1/x^2 = 1 − 2t hits zero at 0.5 s; at 0.49 s the ball is at 7.0711 cm.
 
-On a line, separating variables ([separable-equations](../01-Rate%20Equations/03-separable-equations.md)) also answers the question. The method earns its keep in the plane, where a solution formula is rarely available.
+On a line, separating variables ([Separable equations](../01-Rate%20Equations/03-separable-equations.md)) also answers the question. The method earns its keep in the plane, where a solution formula is rarely available.
 
 ---
 
@@ -362,7 +343,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Mechanical systems.** Total energy is the first candidate V; friction makes it fall. The swing on [the-nonlinear-pendulum](03-the-nonlinear-pendulum.md) is the standard case.
+- **Mechanical systems.** Total energy is the first candidate V; friction makes it fall. The swing on [The pendulum](03-the-nonlinear-pendulum.md) is the standard case.
 - **Control engineering.** A designer picks V first, then a feedback law that makes V' negative, so the controller carries its own proof of stability.
 - **Power grids.** An energy-like V for linked generators estimates how large a fault they survive: the "only where checked" limit, measured.
 
@@ -373,14 +354,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [linearisation-and-the-jacobian](02-linearisation-and-the-jacobian.md): the eigenvalue test, and the zero-slope case where it goes silent.
-- [chain-rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): the rate of V(x(t)) as slope times velocity, the whole of Step 0.
+- [Linearisation](02-linearisation-and-the-jacobian.md): the eigenvalue test, and the zero-slope case where it goes silent.
+- [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): the rate of V(x(t)) as slope times velocity, the whole of Step 0.
 
 ## Where this goes next
 
-- [lasalle-and-the-damped-pendulum](05-lasalle-and-the-damped-pendulum.md): settling proved from V' ≤ 0 alone, on the damped swing.
-- hurwitz-schur-and-lyapunov-stability: for stable linear systems a quadratic V always exists, found from a matrix equation.
-- passivity-and-absolute-stability: stored energy as V for whole families of feedback loops.
+- [LaSalle's principle](05-lasalle-and-the-damped-pendulum.md): settling proved from V' ≤ 0 alone, on the damped swing.
+- Stability of a state-space model: for stable linear systems a quadratic V always exists, found from a matrix equation.
+- Passivity: stored energy as V for whole families of feedback loops.
 
 ---
 

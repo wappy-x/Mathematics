@@ -1,23 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Real Integrals and Counting Zeros
-topic: Integrals with a branch cut
-item: The keyhole contour
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/05-branch-cuts-and-complex-powers|branch-cuts-and-complex-powers]]"
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/05-the-residue-theorem|the-residue-theorem]]"
-next:
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/02-gamma-function|gamma-function]]"
-tags: [mathematics, complex analysis, keyhole-contours]
----
-
 # The keyhole contour: wrap a branch cut, and the two banks disagree by exactly the factor that solves the integral
 
-Complex analysis → Real Integrals and Counting Zeros → Integrals with a branch cut → The keyhole contour
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Real Integrals and Counting Zeros](../../../SYLLABUS.md#w07-s06) → The keyhole contour
 
 ---
 
@@ -27,7 +10,7 @@ An old door lock has a keyhole: a round hole with a narrow slot running out of i
 
 Lay that shape on the plane: small curve round 0, slot along the positive real axis, big curve a circle of radius R. That closed path is a **keyhole contour**. Its two straight sides are the **banks**, just above and just below the positive real axis.
 
-The target: the area under 1/(√x (1 + x)) from 0 to infinity. It is exactly π = 3.141593, found with no antiderivative. A square root has two values, so in the plane it needs a **branch cut**, a line where the chosen value jumps ([branch-cuts-and-complex-powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md)). Put the cut along the positive axis. Just above it the root reads √x; just below, −√x. Opposite signs, walked in opposite directions, so the banks add: two copies of the area. The residue at −1 prices the loop, the circles fade, and an equation for the area is left, for any power between 0 and 1.
+The target: the area under 1/(√x (1 + x)) from 0 to infinity. It is exactly π = 3.141593, found with no antiderivative. A square root has two values, so in the plane it needs a **branch cut**, a line where the chosen value jumps ([Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md)). Put the cut along the positive axis. Just above it the root reads √x; just below, −√x. Opposite signs, walked in opposite directions, so the banks add: two copies of the area. The residue at −1 prices the loop, the circles fade, and an equation for the area is left, for any power between 0 and 1.
 
 **For 0 < a < 1, the area under x^(a−1)/(1 + x) from 0 to infinity is π/sin(πa), because the keyhole's two banks carry the same integral multiplied by 1 and by e^(2πia), and the residue at −1 fixes their difference.**
 
@@ -47,7 +30,7 @@ A branch of the power $z^{a-1}$ is fixed by choosing the angle $\theta$ of z; he
 
 $$z^{a-1} = |z|^{a-1}\, e^{i(a-1)\theta}, \qquad 0 < \theta < 2\pi.$$
 
-Reminder: Res, the residue at a pole p, is the coefficient of 1/(z − p) there; a loop integral is 2πi times the residues inside ([the-residue-theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)).
+Reminder: Res, the residue at a pole p, is the coefficient of 1/(z − p) there; a loop integral is 2πi times the residues inside ([The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)).
 
 $$I(a) = \int_0^\infty \frac{x^{a-1}}{1+x}\,dx = \frac{\pi}{\sin(\pi a)}, \qquad 0 < a < 1.$$
 
@@ -144,7 +127,7 @@ For 0 < a < 1, sin(πa) > 0, so the answer is positive and real, as an area must
 
 </details>
 
-A second road avoids the plane: x = e^u turns the area into that of e^(au)/(1 + e^u) over the whole line, a smooth hill the code sums directly. At a = 1/2, x = t^2 gives 2 dt/(1 + t^2) from 0 to infinity, π again, as in [semicircle-contours](01-semicircle-contours.md).
+A second road avoids the plane: x = e^u turns the area into that of e^(au)/(1 + e^u) over the whole line, a smooth hill the code sums directly. At a = 1/2, x = t^2 gives 2 dt/(1 + t^2) from 0 to infinity, π again, as in [The semicircle contour](01-semicircle-contours.md).
 
 ---
 
@@ -384,7 +367,7 @@ The outputs match line for line.
 
 ## Where you meet it in real life
 
-- **The gamma function.** The integral here equals Γ(a)Γ(1 − a), two values of the gamma function multiplied, so this card proves the reflection formula Γ(a)Γ(1 − a) = π/sin(πa), taken up in [gamma-function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md).
+- **The gamma function.** The integral here equals Γ(a)Γ(1 − a), two values of the gamma function multiplied, so this card proves the reflection formula Γ(a)Γ(1 − a) = π/sin(πa), taken up in [The gamma function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md).
 - **Mellin transforms.** Integrating x^(a−1) times a function over the positive axis gives its Mellin transform, a tool for estimating sums in number theory.
 
 > **Say it back**
@@ -394,12 +377,12 @@ The outputs match line for line.
 
 ## What this builds on
 
-- [branch-cuts-and-complex-powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md): the branch of a power, and the factor e^(2πia) across its cut.
-- [the-residue-theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md): a loop integral is 2πi times the residues inside.
+- [Branch cuts and complex powers](../02-Holomorphic%20Functions/05-branch-cuts-and-complex-powers.md): the branch of a power, and the factor e^(2πia) across its cut.
+- [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md): a loop integral is 2πi times the residues inside.
 
 ## Where this goes next
 
-- [gamma-function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): this integral as Γ(a)Γ(1 − a), the reflection formula.
+- [The gamma function](../09-Special%20Functions%20and%20the%20Zeta%20Function/02-gamma-function.md): this integral as Γ(a)Γ(1 − a), the reflection formula.
 
 ---
 

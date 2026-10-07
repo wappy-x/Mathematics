@@ -1,23 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Calculus of Variations and Optimal Control
-topic: Fastest descent
-item: The brachistochrone
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/01-functionals-and-the-euler-lagrange-equation|functionals-and-the-euler-lagrange-equation]]"
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/06-parametric-curves|parametric-curves]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/03-constrained-paths-and-the-hanging-chain|constrained-paths-and-the-hanging-chain]]"
-tags: [mathematics, differential equations and dynamics, the-brachistochrone-and-the-beltrami-identity]
----
-
 # The brachistochrone: the fastest slide is a cycloid, found with a shortcut that works when the cost ignores the horizontal
 
-Differential equations and dynamics → Calculus of Variations and Optimal Control → Fastest descent → The brachistochrone
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Calculus of Variations and Optimal Control](../../../SYLLABUS.md#w08-s12) → The brachistochrone
 
 ---
 
@@ -43,7 +26,7 @@ To scale: 150 px per m both ways, depth drawn downward from the platform at top 
 
 ## The formula
 
-A reminder from [functionals-and-the-euler-lagrange-equation](01-functionals-and-the-euler-lagrange-equation.md): a functional takes a whole curve and returns one number; the square brackets in T[y] mark that its input is the curve y. Depth y is measured **downward**.
+A reminder from [The Euler-Lagrange equation](01-functionals-and-the-euler-lagrange-equation.md): a functional takes a whole curve and returns one number; the square brackets in T[y] mark that its input is the curve y. Depth y is measured **downward**.
 
 $$T[y] = \int_0^{2} \sqrt{\frac{1 + y'^2}{2 g\, y}}\; dx$$
 
@@ -55,7 +38,7 @@ $$F - y'\,\frac{\partial F}{\partial y'} = \text{constant} \quad\Longrightarrow\
 
 **Read it aloud:** depth times one-plus-slope-squared stays the same all the way down the fastest slide.
 
-Its solutions, with wheel angle θ as the parameter (as in [parametric-curves](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/06-parametric-curves.md)), are cycloids from the platform:
+Its solutions, with wheel angle θ as the parameter (as in [Parametric curves](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/06-parametric-curves.md)), are cycloids from the platform:
 
 $$x = R(\theta - \sin\theta), \qquad y = R(1 - \cos\theta), \qquad T = \theta_1\sqrt{R/g}$$
 
@@ -125,7 +108,7 @@ Euler-Lagrange and Beltrami find stationary shapes: small changes leave T unchan
 
 </details>
 
-Bernoulli's own route was optics. Light crossing layers of changing speed keeps the sine of its angle from the vertical over its speed constant (Snell's law). With speed sqrt(2 g y) and that sine 1/sqrt(1 + y'^2), Snell's rule says 1/sqrt(2 g y(1 + y'^2)) is constant: the Beltrami identity again. With time in place of x, the same shortcut is energy conservation in [lagrangian-mechanics](04-lagrangian-mechanics.md).
+Bernoulli's own route was optics. Light crossing layers of changing speed keeps the sine of its angle from the vertical over its speed constant (Snell's law). With speed sqrt(2 g y) and that sine 1/sqrt(1 + y'^2), Snell's rule says 1/sqrt(2 g y(1 + y'^2)) is constant: the Beltrami identity again. With time in place of x, the same shortcut is energy conservation in [Lagrangian mechanics](04-lagrangian-mechanics.md).
 
 ---
 
@@ -375,8 +358,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Pendulum clocks.** Christiaan Huygens found that a bead on this cycloid reaches the bottom in the same time from any starting height, and hung a clock pendulum between cycloid-shaped guides so its period ignores the swing's size.
-- **Conservation laws.** When a system's rules do not change with time, the Beltrami combination is its energy; see [lagrangian-mechanics](04-lagrangian-mechanics.md) and [hamiltons-equations](05-hamiltons-equations.md).
-- **Hanging cables.** A chain's energy per unit across also ignores x, so the same shortcut finds its shape, in [constrained-paths-and-the-hanging-chain](03-constrained-paths-and-the-hanging-chain.md).
+- **Conservation laws.** When a system's rules do not change with time, the Beltrami combination is its energy; see [Lagrangian mechanics](04-lagrangian-mechanics.md) and [Hamilton's equations](05-hamiltons-equations.md).
+- **Hanging cables.** A chain's energy per unit across also ignores x, so the same shortcut finds its shape, in [Paths with a budget](03-constrained-paths-and-the-hanging-chain.md).
 
 > **Say it back**
 > A slide's descent time is a functional: whole shape in, seconds out. Its cost per sliver ignores position across, so depth times one-plus-slope-squared stays constant along the fastest slide. Solving that first-order rule gives a cycloid, the path of a point on a rolling wheel. For an exit 2 m across and 1 m down, the wheel turns 3.5084 rad, dips to 1.0344 m, and the ride takes 0.8056 s against 1.0096 s on the straight ramp.
@@ -385,12 +368,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [functionals-and-the-euler-lagrange-equation](01-functionals-and-the-euler-lagrange-equation.md): the functional and the Euler-Lagrange equation that Beltrami integrates once.
-- [parametric-curves](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/06-parametric-curves.md): a curve traced by a parameter, here the wheel angle θ.
+- [The Euler-Lagrange equation](01-functionals-and-the-euler-lagrange-equation.md): the functional and the Euler-Lagrange equation that Beltrami integrates once.
+- [Parametric curves](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/06-parametric-curves.md): a curve traced by a parameter, here the wheel angle θ.
 
 ## Where this goes next
 
-- [constrained-paths-and-the-hanging-chain](03-constrained-paths-and-the-hanging-chain.md): a fixed length of chain, where a budget joins the functional and Beltrami finds the catenary.
+- [Paths with a budget](03-constrained-paths-and-the-hanging-chain.md): a fixed length of chain, where a budget joins the functional and Beltrami finds the catenary.
 
 ---
 

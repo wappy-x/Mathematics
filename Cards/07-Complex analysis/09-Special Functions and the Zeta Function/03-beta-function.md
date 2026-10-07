@@ -1,22 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Special Functions and the Zeta Function
-topic: Areas of bumps on the unit interval
-item: The beta function
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/02-gamma-function|gamma-function]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/01-double-integrals|double-integrals]]"
-next: []
-tags: [mathematics, complex analysis, beta-function]
----
-
 # The beta function: an integral over 0 to 1 built from two gammas, the shape behind every bump between 0 and 1
 
-Complex analysis → Special Functions and the Zeta Function → Areas of bumps on the unit interval → The beta function
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Special Functions and the Zeta Function](../../../SYLLABUS.md#w07-s09) → The beta function
 
 ---
 
@@ -26,7 +10,7 @@ A skate ramp is one metre long. At x metres from its left end, its height is x(1
 
 A second profile, an arch over the same one-metre base, has height √(x(1 − x)). It peaks at 0.5 in the middle. It is the top half of a circle of radius 1/2, so its area is π/8 = 0.392699082.
 
-Both heights are a power of x times a power of 1 − x: a bump on the stretch from 0 to 1. Its area is the **beta function**. Every such area is a ratio of three values of the gamma function, the continuous factorial ([gamma-function](02-gamma-function.md)). The ramp's is 1!·2!/4! = 2/24.
+Both heights are a power of x times a power of 1 − x: a bump on the stretch from 0 to 1. Its area is the **beta function**. Every such area is a ratio of three values of the gamma function, the continuous factorial ([The gamma function](02-gamma-function.md)). The ramp's is 1!·2!/4! = 2/24.
 
 **The area under x^(a−1)(1 − x)^(b−1) from 0 to 1 is Γ(a)Γ(b)/Γ(a + b), because the product of two gamma integrals splits into a total, which gives Γ(a + b), and a share, which gives this area.**
 
@@ -50,7 +34,7 @@ The low, lopsided line is the ramp x(1 − x)^2; the tall, even line is the arch
 
 ## The formula
 
-Reminder from [gamma-function](02-gamma-function.md): the gamma function is $\Gamma(a) = \int_0^\infty t^{a-1} e^{-t}\,dt$, and at whole numbers it is a shifted factorial, Γ(n) = (n − 1)!. So Γ(5) = 4! = 24.
+Reminder from [The gamma function](02-gamma-function.md): the gamma function is $\Gamma(a) = \int_0^\infty t^{a-1} e^{-t}\,dt$, and at whole numbers it is a shifted factorial, Γ(n) = (n − 1)!. So Γ(5) = 4! = 24.
 
 $$B(a,b) = \int_0^1 x^{a-1}(1-x)^{b-1}\,dx = \frac{\Gamma(a)\,\Gamma(b)}{\Gamma(a+b)}, \qquad a > 0,\; b > 0.$$
 
@@ -82,7 +66,7 @@ The product Γ(a)Γ(b) is a volume over the quarter-plane of pairs (s, t), both 
 
 ### Step 1: the product is a double integral
 
-Two separate integrals multiply into one integral over pairs ([double-integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md)):
+Two separate integrals multiply into one integral over pairs ([Double integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md)):
 
 $$\Gamma(a)\,\Gamma(b) = \int_0^\infty\!\!\int_0^\infty s^{a-1}\, t^{b-1}\, e^{-(s+t)}\,ds\,dt.$$
 
@@ -90,7 +74,7 @@ $$\Gamma(a)\,\Gamma(b) = \int_0^\infty\!\!\int_0^\infty s^{a-1}\, t^{b-1}\, e^{-
 
 Put u = s + t, the total, and v = s/(s + t), the share. Going back: s = uv and t = u(1 − v). As (s, t) covers the open quarter-plane, u covers 0 to infinity and v covers 0 to 1, each point once.
 
-A small box du by dv lands on a parallelogram with sides (v, 1 − v) du and (u, −u) dv. Its area is the size of the determinant v·(−u) − u·(1 − v) = −u, times du dv ([change-of-variables-and-jacobians](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)). So ds dt becomes u du dv. That u is the **stretch factor**: far from the corner, a step in share covers more ground.
+A small box du by dv lands on a parallelogram with sides (v, 1 − v) du and (u, −u) dv. Its area is the size of the determinant v·(−u) − u·(1 − v) = −u, times du dv ([Change of variables](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)). So ds dt becomes u du dv. That u is the **stretch factor**: far from the corner, a step in share covers more ground.
 
 ### Step 3: the integrand splits
 
@@ -107,7 +91,7 @@ On the ramp: Γ(2)Γ(3)/Γ(5) = 1!·2!/4! = 2/24 = 1/12, matching the area from 
 
 **The limits.** For real a, b > 0 the integrand in Step 1 is never negative. For such a function the integral over an unbounded region is the limit over growing boxes, and it has the same value in any order of integration and after any one-to-one change of coordinates with its stretch factor. Both gamma integrals are finite, so the (u, v) integral is finite and equal to their product.
 
-**Complex a and b.** Fix a real b > 0. Both sides of B(a, b) = Γ(a)Γ(b)/Γ(a + b) are holomorphic in a on the half-plane of positive real part, and they agree for every real a > 0. A holomorphic function that vanishes on a segment vanishes on its whole connected region ([zeros-and-the-identity-theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/03-zeros-and-the-identity-theorem.md)). Apply it to the difference in a; then fix that complex a and repeat in b.
+**Complex a and b.** Fix a real b > 0. Both sides of B(a, b) = Γ(a)Γ(b)/Γ(a + b) are holomorphic in a on the half-plane of positive real part, and they agree for every real a > 0. A holomorphic function that vanishes on a segment vanishes on its whole connected region ([Zeros and the identity theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/03-zeros-and-the-identity-theorem.md)). Apply it to the difference in a; then fix that complex a and repeat in b.
 
 </details>
 
@@ -121,7 +105,7 @@ At a = b = 1/2 both powers are 0, the integrand is 1, and B(1/2, 1/2) = 2 · π/
 
 The arch follows. Γ(3/2) = (1/2)Γ(1/2) = √π/2, so B(3/2, 3/2) = (π/4)/Γ(3) = (π/4)/2 = π/8. A second road agrees: squaring y = √(x(1 − x)) gives (x − 1/2)^2 + y^2 = 1/4, a circle of radius 1/2 centred at x = 1/2. The arch is its top half, area π(1/2)^2/2 = π/8.
 
-A route through the plane: for 0 < a < 1 the swap x = t/(1 + t) turns B(a, 1 − a) into the area under t^(a−1)/(1 + t) from 0 to infinity. A keyhole contour evaluates that area at π/sin(πa) ([keyhole-contours](../06-Real%20Integrals%20and%20Counting%20Zeros/05-keyhole-contours.md)). So Γ(a)Γ(1 − a) = π/sin(πa), and at a = 1/2 both sides are π.
+A route through the plane: for 0 < a < 1 the swap x = t/(1 + t) turns B(a, 1 − a) into the area under t^(a−1)/(1 + t) from 0 to infinity. A keyhole contour evaluates that area at π/sin(πa) ([The keyhole contour](../06-Real%20Integrals%20and%20Counting%20Zeros/05-keyhole-contours.md)). So Γ(a)Γ(1 − a) = π/sin(πa), and at a = 1/2 both sides are π.
 
 ---
 
@@ -345,8 +329,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Binomial coefficients.** At whole numbers, 1/B(k + 1, n − k + 1) = (n + 1) times the number of ways to choose k of n. The ramp has k = 1, n = 3: 4 × 3 = 12, and 1/12 is its area.
-- **The square root of π.** Γ(1/2) = √π comes from B(1/2, 1/2) = π, and so does every half-integer gamma; [stirlings-formula](04-stirlings-formula.md) needs them.
-- **Transforms.** B(a, 1 − a) is the area under t^(a−1)/(1 + t), a single value of the transform on [mellin-transform](07-mellin-transform.md).
+- **The square root of π.** Γ(1/2) = √π comes from B(1/2, 1/2) = π, and so does every half-integer gamma; [Stirling's formula](04-stirlings-formula.md) needs them.
+- **Transforms.** B(a, 1 − a) is the area under t^(a−1)/(1 + t), a single value of the transform on [The Mellin transform](07-mellin-transform.md).
 - **Probability (wing 09).** The bump divided by its area is the beta distribution, the standard curve for an unknown fraction.
 - **History.** Euler introduced both integrals in 1729; Binet named this one beta.
 
@@ -357,13 +341,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [gamma-function](02-gamma-function.md): the integral for Γ, the rule Γ(a + 1) = aΓ(a), and Γ(n) = (n − 1)!.
-- [double-integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md): a product of two integrals as one integral over pairs; the area factor in a change of coordinates is on [change-of-variables-and-jacobians](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md).
+- [The gamma function](02-gamma-function.md): the integral for Γ, the rule Γ(a + 1) = aΓ(a), and Γ(n) = (n − 1)!.
+- [Double integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/01-double-integrals.md): a product of two integrals as one integral over pairs; the area factor in a change of coordinates is on [Change of variables](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md).
 
 ## Where this goes next
 
-- [stirlings-formula](04-stirlings-formula.md): how large Γ is for a large argument, and so how small B(a, b) is when both a and b are large.
-- [mellin-transform](07-mellin-transform.md): the area under t^(a−1) times a function, of which B(a, 1 − a) is one case.
+- [Stirling's formula](04-stirlings-formula.md): how large Γ is for a large argument, and so how small B(a, b) is when both a and b are large.
+- [The Mellin transform](07-mellin-transform.md): the area under t^(a−1) times a function, of which B(a, 1 − a) is one case.
 - The beta distribution, in wing 09, divides the bump by B(a, b) and gives it a model.
 
 ---

@@ -1,28 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Trees and Cheapest Routes
-topic: Settling the nearest first
-item: Dijkstra's algorithm
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/04-connectivity-and-breadth-first-search|connectivity-and-breadth-first-search]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/10-Trees and Cheapest Routes/06-bellman-ford-and-arbitrage|bellman-ford-and-arbitrage]]"
-  - "[[Cards/04-Combinatorics and graphs/11-Tours - Euler and Hamilton/02-chinese-postman|chinese-postman]]"
-  - "[[Cards/14-Applied and computational/01-Algorithms and Growth/09-graph-algorithms-in-practice|graph-algorithms-in-practice]]"
-  - "[[Cards/23-Differential geometry and Lie groups/07-Geometric Analysis and Physics/10-manifold-learning-and-the-manifold-hypothesis|manifold-learning-and-the-manifold-hypothesis]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - dijkstra
----
-
 # Dijkstra's algorithm: settle the cheapest unsettled point, relax its neighbours, and the cheapest routes appear when no cost is negative
 
-Combinatorics and graphs → Trees and Cheapest Routes → Settling the nearest first → Dijkstra's algorithm
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Trees and Cheapest Routes](../../../SYLLABUS.md#w04-s10) → Dijkstra's algorithm
 
 ---
 
@@ -124,7 +102,7 @@ Step 1's claim and "every settled point's guess is its true cheapest cost" are p
 
 The predecessors read p[S] = E, p[E] = C, p[C] = A, p[A] = B, p[B] = D. Walk back from the stadium and reverse: D-B-A-C-E-S, whose own roads add to 2 + 1 + 5 + 2 + 3 = 13.
 
-Each point but the depot has one predecessor and every chain ends there, so the arrows form a tree rooted at the depot ([rooted-and-binary-trees](02-rooted-and-binary-trees.md)), spanning all it reaches ([spanning-trees-and-cayleys-formula](03-spanning-trees-and-cayleys-formula.md)), here a single chain.
+Each point but the depot has one predecessor and every chain ends there, so the arrows form a tree rooted at the depot ([Rooted trees](02-rooted-and-binary-trees.md)), spanning all it reaches ([Spanning trees](03-spanning-trees-and-cayleys-formula.md)), here a single chain.
 
 ```mermaid
 flowchart LR
@@ -139,7 +117,7 @@ Each box holds a point and its settled cost, each label a road's minutes. D-A, B
 
 ### Step 4: one negative cost and the argument collapses
 
-Drop the line about zero or more and Step 2 has nothing left. Money makes that concrete: three points, roads one-way only, since a rebate drivable both ways would pay for ever. The depot to A costs 4, the depot to B costs 2, and a stretch from A to B pays the driver back 3, a cost of −3. Settling takes B first, at 2, and locks it. A settles later at 4, and its road offers B 4 − 3 = 1. Too late: B will not reopen. Listing says 1; Dijkstra says 2 and is wrong. Relaxing every road repeatedly instead of settling anything is [bellman-ford-and-arbitrage](06-bellman-ford-and-arbitrage.md).
+Drop the line about zero or more and Step 2 has nothing left. Money makes that concrete: three points, roads one-way only, since a rebate drivable both ways would pay for ever. The depot to A costs 4, the depot to B costs 2, and a stretch from A to B pays the driver back 3, a cost of −3. Settling takes B first, at 2, and locks it. A settles later at 4, and its road offers B 4 − 3 = 1. Too late: B will not reopen. Listing says 1; Dijkstra says 2 and is wrong. Relaxing every road repeatedly instead of settling anything is [Bellman-Ford](06-bellman-ford-and-arbitrage.md).
 
 <details>
 <summary>Finding the smallest guess faster</summary>
@@ -389,9 +367,9 @@ The two outputs match line for line.
 > [!warning]
 > **Reading a tentative cost as an answer before its point is settled.** The stadium's first number is 14 minutes, written the moment C settles. It is a guess, not a cost: settling E lowers it to 13. Quoting an unfinished table is the commonest way to run the procedure right and still report the wrong route.
 >
-> - **"Shortest means fewest roads."** Three roads reach the stadium in 15 minutes, five in 13. Counting steps is the flood of [connectivity-and-breadth-first-search](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md), right only when steps cost the same.
+> - **"Shortest means fewest roads."** Three roads reach the stadium in 15 minutes, five in 13. Counting steps is the flood of [Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md), right only when steps cost the same.
 > - **Settling whatever was discovered first.** C is discovered at 10, through B, and settles at 8. Discovery order is not cost order.
-> - **Taking this tree for the cheapest skeleton.** [minimum-spanning-trees](04-minimum-spanning-trees.md) makes the whole map's road minutes least; this makes each point's cost from one start least. The same roads can serve both, as here.
+> - **Taking this tree for the cheapest skeleton.** [The cheapest skeleton](04-minimum-spanning-trees.md) makes the whole map's road minutes least; this makes each point's cost from one start least. The same roads can serve both, as here.
 
 ---
 
@@ -409,14 +387,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [connectivity-and-breadth-first-search](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md): the flood that counts fewest steps when every step costs the same, and the queue this card replaces with "cheapest guess first".
+- [Connected or not](../09-Graphs%20-%20Dots%20and%20Lines/04-connectivity-and-breadth-first-search.md): the flood that counts fewest steps when every step costs the same, and the queue this card replaces with "cheapest guess first".
 
 ## Where this goes next
 
-- [bellman-ford-and-arbitrage](06-bellman-ford-and-arbitrage.md): relaxes every road repeatedly, settling nothing, so negative costs are allowed — and a loop that pays is an arbitrage.
-- [chinese-postman](../11-Tours%20-%20Euler%20and%20Hamilton/02-chinese-postman.md): the cheapest round trip covering every road, built on cheapest point-to-point costs.
-- graph-algorithms-in-practice: what a heap and a target-directed search do on a country-sized map.
-- manifold-learning-and-the-manifold-hypothesis: cheapest routes through data standing in for distance on a curved surface.
+- [Bellman-Ford](06-bellman-ford-and-arbitrage.md): relaxes every road repeatedly, settling nothing, so negative costs are allowed — and a loop that pays is an arbitrage.
+- [The Chinese postman](../11-Tours%20-%20Euler%20and%20Hamilton/02-chinese-postman.md): the cheapest round trip covering every road, built on cheapest point-to-point costs.
+- Graph algorithms as code: what a heap and a target-directed search do on a country-sized map.
+- Manifold learning: cheapest routes through data standing in for distance on a curved surface.
 
 Minutes never run backwards, and that one fact is everything the safety argument used; where a cost can genuinely fall below zero, no point may be settled at all.
 

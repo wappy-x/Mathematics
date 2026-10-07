@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Relations and Functions
-topic: Orders
-item: Partial and total orders
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/08-Relations and Functions/06-equivalence-relations-and-partitions|equivalence-relations-and-partitions]]"
-  - "[[Cards/01-Foundations/02-The Number Line/02-number-line-and-inequalities|number-line-and-inequalities]]"
-next:
-  - "[[Cards/03-Algebra/10-For the Curious/05-boolean-algebra-and-lattices|boolean-algebra-and-lattices]]"
-tags:
-  - mathematics
-  - foundations
-  - partial-and-total-orders
----
-
 # Orders: rankings where some pairs may be incomparable, drawn as a Hasse diagram
 
-Foundations → Relations and Functions → Orders → Partial and total orders
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Relations and Functions](../../../SYLLABUS.md#w01-s08) → Partial and total orders
 
 ---
 
@@ -252,7 +232,7 @@ ALL CHECKS PASS
 
 - **Build tools.** In `make`, some tasks must come before others; the rest run in any order. Flattening that partial order into one list is a topological sort.
 - **Version history.** In git, "is an ancestor of" passes the three tests. Two branch tips are incomparable; that is when a merge is needed.
-- **Sorting.** A sort needs a total order: a comparison must answer for every pair. Reflexive, antisymmetric and transitive are three of the four tests in [relations](01-relations.md); an order swaps out symmetric.
+- **Sorting.** A sort needs a total order: a comparison must answer for every pair. Reflexive, antisymmetric and transitive are three of the four tests in [Relations](01-relations.md); an order swaps out symmetric.
 
 > **Say it back**
 > An order is a rule passing three tests: everything is below or equal to itself, two things below each other are the same thing, below-then-below means below. The six divisors of 12 under "divides" pass all three, 18 pairs — but 3 of the 15 pairs never compare, so it is partial and not total. The same six under "less than or equal to" make one queue, 21 pairs. Draw only the covers and you have a Hasse diagram: 7 arrows that, with the six self-pairs, rebuild all 18.
@@ -261,12 +241,12 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [equivalence-relations-and-partitions](06-equivalence-relations-and-partitions.md): reflexive, symmetric and transitive is a sameness rule cutting a set into blocks. Swap symmetric for antisymmetric and it ranks instead.
-- [number-line-and-inequalities](../02-The%20Number%20Line/02-number-line-and-inequalities.md): "less than or equal to" on the number line, the total order everything else is judged against.
+- [Equivalence relations and partitions](06-equivalence-relations-and-partitions.md): reflexive, symmetric and transitive is a sameness rule cutting a set into blocks. Swap symmetric for antisymmetric and it ranks instead.
+- [The number line and inequalities](../02-The%20Number%20Line/02-number-line-and-inequalities.md): "less than or equal to" on the number line, the total order everything else is judged against.
 
 ## Where this goes next
 
-- [boolean-algebra-and-lattices](../../03-Algebra/10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): given two incomparable things, is there a nearest thing above both, and a nearest below? Lattices answer that.
+- [Boolean algebra](../../03-Algebra/10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): given two incomparable things, is there a nearest thing above both, and a nearest below? Lattices answer that.
 
 ---
 

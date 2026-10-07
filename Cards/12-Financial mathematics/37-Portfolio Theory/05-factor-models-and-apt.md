@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Portfolio Theory
-topic: Common drivers of return
-item: Factor models
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/04-capm-and-beta|capm-and-beta]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/03-multiple-regression-and-gauss-markov|multiple-regression-and-gauss-markov]]"
-next:
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/06-black-litterman|black-litterman]]"
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/03-momentum-and-factor-signals|momentum-and-factor-signals]]"
-tags: [mathematics, financial mathematics, factor-models-and-apt]
----
-
 # Factor models: returns explained by a few common factors, and the pricing they imply
 
-Financial mathematics → Portfolio Theory → Common drivers of return → Factor models
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Theory](../../../SYLLABUS.md#w12-s37) → Factor models
 
 ---
 
@@ -110,7 +92,7 @@ That is a large saving. For 500 funds, every pair's covariance is 125250 numbers
 
 ### Step 1: fit the loadings by least squares
 
-The loadings are the regression coefficients of the fund's returns on the three factor returns. Least squares picks the intercept and loadings that make the sum of squared leftovers smallest; the conditions for that minimum are the **normal equations**, $X^{\mathsf T} X \theta = X^{\mathsf T} y$, where $X$ holds a column of ones and the three factor columns and $\theta$ lists the four unknowns ([multiple-regression-and-gauss-markov](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md)).
+The loadings are the regression coefficients of the fund's returns on the three factor returns. Least squares picks the intercept and loadings that make the sum of squared leftovers smallest; the conditions for that minimum are the **normal equations**, $X^{\mathsf T} X \theta = X^{\mathsf T} y$, where $X$ holds a column of ones and the three factor columns and $\theta$ lists the four unknowns ([Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md)).
 
 In this record each factor sits a fixed step above or below its average: market 4 points, size and value 2 points each. Every combination appears once, so the three factor columns are uncorrelated. Then each loading can be read off alone: the fund's average in that factor's up months, minus its average in the down months, divided by the factor's own up-minus-down gap. For the market that is 5.59 minus −4.01, over a gap of 8 points: 1.2. The intercept is what the fund averaged beyond the factor averages times the loadings.
 
@@ -175,7 +157,7 @@ With specific risk left in, a factor-neutral portfolio still carries $w^{\mathsf
 
 </details>
 
-The **capital asset pricing model**, CAPM, is the one-factor special case: one loading, beta, and one premium, the market's ([capm-and-beta](04-capm-and-beta.md)). CAPM gets its line from investors' preferences and market equilibrium; APT gets its line from no arbitrage and says nothing about which factors, or how big their premia.
+The **capital asset pricing model**, CAPM, is the one-factor special case: one loading, beta, and one premium, the market's ([CAPM](04-capm-and-beta.md)). CAPM gets its line from investors' preferences and market equilibrium; APT gets its line from no arbitrage and says nothing about which factors, or how big their premia.
 
 ---
 
@@ -212,7 +194,7 @@ Of Fund A's 0.79 percent a month over the bank, 0.59 is the going rate for its m
 
 ## Code, from first principles, and it actually runs
 
-The script builds the eight-month record, fits both funds by two roads that share no arithmetic: solving the normal equations by Gaussian elimination, and the up-minus-down averages from the hand table. The covariance is computed twice: through $B\Omega B^{\mathsf T} + D$, and straight from the funds' monthly returns. A third road checks the arbitrage month by month. A random-number generator written in the script checks the $1/\sqrt{N}$ law by simulation and runs a second case: 600 random months with the same true loadings, where the fit lands near 1.2, 0.4, −0.3 but not on them (the intercept comes out 0.274, not 0.20). That gap is estimation error, the subject of [estimation-error-and-shrinkage](07-estimation-error-and-shrinkage.md).
+The script builds the eight-month record, fits both funds by two roads that share no arithmetic: solving the normal equations by Gaussian elimination, and the up-minus-down averages from the hand table. The covariance is computed twice: through $B\Omega B^{\mathsf T} + D$, and straight from the funds' monthly returns. A third road checks the arbitrage month by month. A random-number generator written in the script checks the $1/\sqrt{N}$ law by simulation and runs a second case: 600 random months with the same true loadings, where the fit lands near 1.2, 0.4, −0.3 but not on them (the intercept comes out 0.274, not 0.20). That gap is estimation error, the subject of [Estimation error](07-estimation-error-and-shrinkage.md).
 
 ### Python
 
@@ -653,7 +635,7 @@ The two outputs agree line for line, including the simulated rows: both scripts 
 - **Risk systems at asset managers.** Commercial equity risk models are factor models with dozens of factors (industries, countries, styles). A portfolio's risk report is $B\Omega B^{\mathsf T} + D$ evaluated at its exposures.
 - **Factor funds.** "Value" and "small-cap" index funds sell the factor exposures themselves, so an investor can buy the premium without paying for a stock picker.
 - **Hedging.** A manager who wants stock-specific bets only sells the market, size and value exposures, leaving specific risk: a factor-neutral book, the portfolio Q argument in reverse.
-- **Covariance estimation.** A factor structure is a standard target for shrinking a noisy sample covariance ([estimation-error-and-shrinkage](07-estimation-error-and-shrinkage.md)), and the same exposures feed the risk budgets of [risk-parity-and-alternative-weightings](08-risk-parity-and-alternative-weightings.md).
+- **Covariance estimation.** A factor structure is a standard target for shrinking a noisy sample covariance ([Estimation error](07-estimation-error-and-shrinkage.md)), and the same exposures feed the risk budgets of [Risk parity](08-risk-parity-and-alternative-weightings.md).
 
 > **Say it back**
 > A factor model writes each month's fund return as an intercept, plus loadings times a few shared factor returns, plus a specific part. The loadings come from a least-squares regression. Because the specific part is uncorrelated with the factors, covariance splits into the factors' covariance seen through the loadings plus the specific covariance. Specific risk shrinks like one over the square root of the number of holdings; factor risk does not. So no one is paid for specific risk, and in a market without arbitrage expected excess returns are loadings times factor premia: the APT line.
@@ -662,15 +644,15 @@ The two outputs agree line for line, including the simulated rows: both scripts 
 
 ## What this builds on
 
-- [capm-and-beta](04-capm-and-beta.md): one factor, one beta, one premium; this card adds factors and swaps equilibrium for no arbitrage.
-- [multiple-regression-and-gauss-markov](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md): least squares with several regressors, the normal equations, and why the leftover is uncorrelated with the regressors.
+- [CAPM](04-capm-and-beta.md): one factor, one beta, one premium; this card adds factors and swaps equilibrium for no arbitrage.
+- [Multiple regression](../../09-Probability%20and%20statistics/09-Regression/03-multiple-regression-and-gauss-markov.md): least squares with several regressors, the normal equations, and why the leftover is uncorrelated with the regressors.
 
 ---
 
 ## Where this goes next
 
-- [black-litterman](06-black-litterman.md): blends market-implied expected returns with an investor's views, using a covariance matrix like the one built here.
-- [momentum-and-factor-signals](../50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/03-momentum-and-factor-signals.md): builds factors like SMB and HML from data, adds momentum, and tests whether their premia survive a backtest.
+- [Black-Litterman](06-black-litterman.md): blends market-implied expected returns with an investor's views, using a covariance matrix like the one built here.
+- [Momentum and factor signals](../50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/03-momentum-and-factor-signals.md): builds factors like SMB and HML from data, adds momentum, and tests whether their premia survive a backtest.
 
 APT says expected returns are loadings times premia but not what the premia are; the next question is how to form expected returns an optimiser can trust.
 

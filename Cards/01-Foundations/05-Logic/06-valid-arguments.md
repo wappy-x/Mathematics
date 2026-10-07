@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Logic
-topic: Arguments
-item: Valid arguments
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/05-Logic/02-if-then|if-then]]"
-  - "[[Cards/01-Foundations/05-Logic/05-negating-quantifiers-and-counterexamples|negating-quantifiers-and-counterexamples]]"
-next:
-  - "[[Cards/01-Foundations/06-Proof/01-direct-proof|direct-proof]]"
-tags:
-  - mathematics
-  - foundations
-  - valid-arguments
----
-
 # Valid arguments: modus ponens, modus tollens, and the two look-alikes that fail
 
-Foundations → Logic → Arguments → Valid arguments
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Logic](../../../SYLLABUS.md#w01-s05) → Valid arguments
 
 ---
 
@@ -79,19 +59,19 @@ Rosa's argument **is** the formula.
 
 The rent was late or it was not. The fee was charged or it was not: 4 situations. Write 1 for yes, 0 for no, in the order (late, fee).
 
-The rule is false in exactly one, (1, 0): late rent, no fee. The other three leave it standing ([if-then](02-if-then.md)). Which one is real does not matter. Validity asks only whether any of the four has the premises holding and the conclusion failing.
+The rule is false in exactly one, (1, 0): late rent, no fee. The other three leave it standing ([If-then](02-if-then.md)). Which one is real does not matter. Validity asks only whether any of the four has the premises holding and the conclusion failing.
 
 ### Rosa forward through the rule, Sam backwards
 
 Rosa's premises are the rule and late = 1. Only (1, 1) satisfies both: (1, 0) makes the rule false. Her conclusion, fee = 1, is true in (1, 1). No counterexample. Valid.
 
-Sam's premises are the rule and fee = 0. Of the two with no fee, (1, 0) breaks the rule, leaving (0, 0), where his conclusion holds. Valid. He walks the contrapositive: both halves flipped and swapped, no fee so not late ([if-then](02-if-then.md)).
+Sam's premises are the rule and fee = 0. Of the two with no fee, (1, 0) breaks the rule, leaving (0, 0), where his conclusion holds. Valid. He walks the contrapositive: both halves flipped and swapped, no fee so not late ([If-then](02-if-then.md)).
 
 ### Tess and Vic, the look-alikes
 
 Tess's premises are the rule and fee = 1. Two fit, (0, 1) and (1, 1). In (0, 1) both premises hold and her conclusion is false: the on-time tenant charged for the key. Invalid. The name is **affirming the consequent** (the then part), read as proof of the if part.
 
-Vic's premises are the rule and late = 0. Two fit, (0, 0) and (0, 1). In (0, 1) his conclusion is false. Tess's situation again; the name is **denying the antecedent** (the if part). That hunt is the counterexample move from [negating-quantifiers-and-counterexamples](05-negating-quantifiers-and-counterexamples.md), aimed at an argument.
+Vic's premises are the rule and late = 0. Two fit, (0, 0) and (0, 1). In (0, 1) his conclusion is false. Tess's situation again; the name is **denying the antecedent** (the if part). That hunt is the counterexample move from [Negating a quantifier](05-negating-quantifiers-and-counterexamples.md), aimed at an argument.
 
 ### Valid is not true
 
@@ -262,7 +242,7 @@ ALL CHECKS PASS
 
 - **Test results.** "If you have the illness, the test reads positive." If that held exactly, a negative rules it out: modus tollens. A positive does not prove it — that is Tess, which is why it gets a second test.
 - **Fixing things.** "If the fuse blew, the lamp is dead." Lamp working, so the fuse held. A dead lamp proves nothing; the bulb could be gone.
-- **Small print.** Leases, warranties and tickets are if-then promises ([if-then](02-if-then.md)); most arguments about them are Tess in disguise.
+- **Small print.** Leases, warranties and tickets are if-then promises ([If-then](02-if-then.md)); most arguments about them are Tess in disguise.
 
 > **Say it back**
 > An argument is valid when no situation makes every premise true and the conclusion false. To test one, list the situations the premises allow and hunt for the bad one. The rule plus a late rent forces the fee: modus ponens. The rule plus no fee forces a rent that was not late: modus tollens. Both look-alikes read the rule backwards and die on the tenant charged for a key.
@@ -271,12 +251,12 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [if-then](02-if-then.md): the rule, the one situation that breaks it, and the contrapositive Sam walks.
-- [negating-quantifiers-and-counterexamples](05-negating-quantifiers-and-counterexamples.md): one case kills a claim about all of them — the same hunt.
+- [If-then](02-if-then.md): the rule, the one situation that breaks it, and the contrapositive Sam walks.
+- [Negating a quantifier](05-negating-quantifiers-and-counterexamples.md): one case kills a claim about all of them — the same hunt.
 
 ## Where this goes next
 
-- [direct-proof](../06-Proof/01-direct-proof.md): stringing these forced steps together until the last is what you set out to show.
+- [Direct proof](../06-Proof/01-direct-proof.md): stringing these forced steps together until the last is what you set out to show.
 
 ---
 

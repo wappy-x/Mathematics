@@ -1,30 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Caps, Floors and Swaptions
-topic: Pricing in annuity units
-item: The annuity measure
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/04-swaptions-payer-and-receiver|swaptions-payer-and-receiver]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/05-change-of-numeraire|change-of-numeraire]]"
-next:
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/08-swaption-greeks-and-hedging|swaption-greeks-and-hedging]]"
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/05-cds-option-and-implied-spread-volatility|cds-option-and-implied-spread-volatility]]"
-tags: [mathematics, financial mathematics, the-annuity-measure]
----
-
 # The annuity measure: why the forward swap rate is a martingale when the annuity is the unit
 
-Financial mathematics → Caps, Floors and Swaptions → Pricing in annuity units → The annuity measure
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Caps, Floors and Swaptions](../../../SYLLABUS.md#w12-s29) → The annuity measure
 
 ---
 
 ## General Overview
 
-A company plans to borrow 10 million dollars in one year, for five years, at a floating rate. It buys a **payer swaption**: the right, in one year, to enter a five-year swap in which it pays a fixed rate of 4.1937 percent and receives the floating rate ([swaptions-payer-and-receiver](04-swaptions-payer-and-receiver.md)). Today's curve says the fair fixed rate for that future swap is 4.1937 percent. That rate is the **forward swap rate**.
+A company plans to borrow 10 million dollars in one year, for five years, at a floating rate. It buys a **payer swaption**: the right, in one year, to enter a five-year swap in which it pays a fixed rate of 4.1937 percent and receives the floating rate ([Swaptions](04-swaptions-payer-and-receiver.md)). Today's curve says the fair fixed rate for that future swap is 4.1937 percent. That rate is the **forward swap rate**.
 
 Black's formula prices the swaption as if the forward swap rate were a stock with no drift: its average future value is today's value, and it wanders around that value. At 30 percent volatility the premium comes out at **$210,237.41**, about 2.10 percent of the notional.
 
@@ -108,7 +90,7 @@ In words: how many standard deviations of the log-rate separate the forward from
 
 ### Step 0: a price divided by the unit's price has no drift
 
-Pick any traded asset with a positive price as the unit of account, and count every other price in it. There are then weights on the futures under which every such ratio is a fair game: its average future value is its value today. A process with that property is a **martingale**. Such weights exist exactly when the market offers no free money, meaning no strategy that costs nothing, can never lose and sometimes wins; this is the fundamental theorem of asset pricing, restated for a new unit. This is the change-of-numeraire theorem ([change-of-numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md)), where **numeraire** is the technical word for the unit. Counting in bank-account dollars gives the risk-neutral measure. Counting in the annuity gives the annuity measure.
+Pick any traded asset with a positive price as the unit of account, and count every other price in it. There are then weights on the futures under which every such ratio is a fair game: its average future value is its value today. A process with that property is a **martingale**. Such weights exist exactly when the market offers no free money, meaning no strategy that costs nothing, can never lose and sometimes wins; this is the fundamental theorem of asset pricing, restated for a new unit. This is the change-of-numeraire theorem ([Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md)), where **numeraire** is the technical word for the unit. Counting in bank-account dollars gives the risk-neutral measure. Counting in the annuity gives the annuity measure.
 
 ### Step 1: the annuity qualifies as a unit
 
@@ -116,7 +98,7 @@ $A_t = \sum_i \tau_i D(t, T_i)$ is the value of a strip of zero-coupon bonds (bo
 
 ### Step 2: the forward swap rate is a traded price over the annuity
 
-A forward-starting swap has two legs. The floating leg is worth $D(t, T_0) - D(t, T_n)$ per dollar of notional at any date $t$ before it starts: a dollar placed at $T_0$ and rolled at the floating rate until $T_n$ grows into exactly what the floating leg pays, plus the returned dollar ([par-swap-rate-and-annuity](../28-Swaps/02-par-swap-rate-and-annuity.md)). The fixed leg at rate $K$ is worth $K A_t$. The swap rate is the $K$ that makes them equal:
+A forward-starting swap has two legs. The floating leg is worth $D(t, T_0) - D(t, T_n)$ per dollar of notional at any date $t$ before it starts: a dollar placed at $T_0$ and rolled at the floating rate until $T_n$ grows into exactly what the floating leg pays, plus the returned dollar ([The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)). The fixed leg at rate $K$ is worth $K A_t$. The swap rate is the $K$ that makes them equal:
 
 $$S_t = \frac{D(t, T_0) - D(t, T_n)}{A_t}.$$
 
@@ -145,7 +127,7 @@ The random annuity at expiry, which depends on the whole future curve, has gone.
 
 ### Step 4: add a lognormal shape and Black's formula drops out
 
-Now assume $S_T$ is lognormal under the annuity measure with volatility $\sigma$. Its average must be $F$ by Step 2, which fixes the centre: $S_T = F e^{-\frac12\sigma^2 T + \sigma\sqrt{T}Z}$, with $Z$ a standard bell-curve draw. The call average is then the same integral as on the Black–Scholes call card ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)) with the stock replaced by a driftless forward:
+Now assume $S_T$ is lognormal under the annuity measure with volatility $\sigma$. Its average must be $F$ by Step 2, which fixes the centre: $S_T = F e^{-\frac12\sigma^2 T + \sigma\sqrt{T}Z}$, with $Z$ a standard bell-curve draw. The call average is then the same integral as on the Black–Scholes call card ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)) with the stock replaced by a driftless forward:
 
 $$\mathbb{E}^{A}\!\left[(S_T - K)^+\right] = F\,N(d_1) - K\,N(d_2).$$
 
@@ -166,13 +148,13 @@ $$\mathbb{E}^{T}[S_T] = F - \frac{\text{Cov}^{T}(S_T, A_T)}{A_0 / D(T_0)}.$$
 
 When rates rise the annuity falls, so the covariance is negative and the dollar average sits above $F$. In the model it sits 4.40 basis points above. That gap is a **convexity adjustment**: the correction needed whenever a rate is averaged under a measure that is not its own.
 
-The other road to the same formula is a hedge: hold the swaption, offset its sensitivity to the swap rate with forward swaps, and demand the hedged book earn nothing extra. That argument lives on [swaption-greeks-and-hedging](08-swaption-greeks-and-hedging.md).
+The other road to the same formula is a hedge: hold the swaption, offset its sensitivity to the swap rate with forward swaps, and demand the hedged book earn nothing extra. That argument lives on [Swaption Greeks](08-swaption-greeks-and-hedging.md).
 
 ---
 
 ## Worked numbers, by hand
 
-Today's one-year forward rates for years 1 to 6 are 5.00, 4.60, 4.30, 4.10, 4.00 and 3.90 percent, annual compounding: the curve of [swaptions-payer-and-receiver](04-swaptions-payer-and-receiver.md). Notional $10,000,000; expiry one year; fixed paid yearly in years 2 to 6; strike at the forward; volatility 30 percent.
+Today's one-year forward rates for years 1 to 6 are 5.00, 4.60, 4.30, 4.10, 4.00 and 3.90 percent, annual compounding: the curve of [Swaptions](04-swaptions-payer-and-receiver.md). Notional $10,000,000; expiry one year; fixed paid yearly in years 2 to 6; strike at the forward; volatility 30 percent.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -603,7 +585,7 @@ The two outputs agree line for line.
 > Guess first, then run.
 > - **Switch the randomness off.** Set `sr = 0.0`. Guess the dollar-unit drift. It is **0.00** basis points: with one certain future, every unit gives the same average.
 > - **Double the shift size.** Set `sr = 0.024`. The drift goes from 4.40 to **17.57** basis points, four times as much. The covariance behind it grows with the variance of rates, and doubling a standard deviation quadruples a variance.
-> - **Move the strike.** Price the model's swaption 1 percent below and above the forward and read Black's volatility back out: **34.17** and **27.03** percent, against 30.02 at the money. The model's rates are closer to normal than lognormal, so one Black volatility cannot fit every strike ([normal-and-shifted-volatilities-for-rates](06-normal-and-shifted-volatilities-for-rates.md)).
+> - **Move the strike.** Price the model's swaption 1 percent below and above the forward and read Black's volatility back out: **34.17** and **27.03** percent, against 30.02 at the money. The model's rates are closer to normal than lognormal, so one Black volatility cannot fit every strike ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)).
 
 ---
 
@@ -615,7 +597,7 @@ The two outputs agree line for line.
 > Smaller traps:
 > - **Discounting a swaption with one discount factor.** It pays a stream, not a lump. $D(1)$ in place of $A_0$ gives $47,622.73 instead of $210,237.41.
 > - **Dropping the tilt in a simulation.** Averaging the model's rates in dollars and then multiplying by $A_0$ mixes two units: $219,762.96 instead of $210,379.75.
-> - **Using the annuity measure for a caplet.** One forward rate paid once has its own unit, the bond maturing on its payment date ([caplets-and-floorlets](01-caplets-and-floorlets.md)). A cap and a swaption live under different measures, which is why a single model must be chosen to price both consistently.
+> - **Using the annuity measure for a caplet.** One forward rate paid once has its own unit, the bond maturing on its payment date ([Caplets and floorlets](01-caplets-and-floorlets.md)). A cap and a swaption live under different measures, which is why a single model must be chosen to price both consistently.
 > - **Reading "driftless" as "lognormal".** The martingale property is exact. The lognormal shape is Black's assumption, and the model on this card already shows Black volatility falling from 34.17 to 27.03 percent across strikes 1 percent either side of the forward.
 
 ---
@@ -625,8 +607,8 @@ The two outputs agree line for line.
 - **Swaption screens.** Every European swaption volatility quoted in Black terms is the $\sigma$ that makes $L\,A_0[F N(d_1) - K N(d_2)]$ match a traded price. The annuity measure is what makes that quote mean something.
 - **Premium in basis points.** Dividing the premium by dollars-per-basis-point, $4,204.42 here, turns $210,237.41 into 50.00 basis points of rate: the swaption's price in annuity units, the natural currency of this measure.
 - **The swap market model.** Jamshidian's framework models each forward swap rate as lognormal under its own annuity measure, giving Black's formula for a whole family of swaptions at once, such as all those ending on the same date; the price is that caplets are no longer exactly Black.
-- **Constant-maturity swaps.** Coupons fixed on a swap rate but paid once need the Step 5 adjustment; desks compute it from a swaption smile across strikes ([sabr-for-rates-and-the-volatility-cube](07-sabr-for-rates-and-the-volatility-cube.md)).
-- **Options on credit default swaps.** The same trick with a risky annuity, one that stops paying on default, as the unit: [cds-option-and-implied-spread-volatility](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/05-cds-option-and-implied-spread-volatility.md).
+- **Constant-maturity swaps.** Coupons fixed on a swap rate but paid once need the Step 5 adjustment; desks compute it from a swaption smile across strikes ([SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md)).
+- **Options on credit default swaps.** The same trick with a risky annuity, one that stops paying on default, as the unit: [Options on a CDS](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/05-cds-option-and-implied-spread-volatility.md).
 
 > **Say it back**
 > A swaption pays the annuity at expiry times the call payoff on the swap rate. The swap rate is a traded price, the floating leg, divided by the annuity, so counted in annuities it has no drift and averages to today's forward swap rate. Pricing in annuities divides the payoff by the annuity, which cancels the random one at expiry and leaves today's annuity times a plain call average. Add a lognormal shape and that average is Black's formula. Counted in dollars the same rate drifts, and that drift is the convexity adjustment.
@@ -635,13 +617,13 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [swaptions-payer-and-receiver](04-swaptions-payer-and-receiver.md): the contract, its payoff, the forward swap rate and Black's formula as a statement. This card supplies the reason the formula is legitimate.
-- [change-of-numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md): the general theorem that any positive traded price can serve as the unit, with its own weights under which price ratios are martingales.
+- [Swaptions](04-swaptions-payer-and-receiver.md): the contract, its payoff, the forward swap rate and Black's formula as a statement. This card supplies the reason the formula is legitimate.
+- [Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md): the general theorem that any positive traded price can serve as the unit, with its own weights under which price ratios are martingales.
 
 ## Where this goes next
 
-- [swaption-greeks-and-hedging](08-swaption-greeks-and-hedging.md): the hedge road to the same price, and what happens to the hedge when the annuity itself moves with rates.
-- [cds-option-and-implied-spread-volatility](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/05-cds-option-and-implied-spread-volatility.md): the annuity measure rebuilt on a risky annuity, which prices options on credit spreads with the same Black shape.
+- [Swaption Greeks](08-swaption-greeks-and-hedging.md): the hedge road to the same price, and what happens to the hedge when the annuity itself moves with rates.
+- [Options on a CDS](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/05-cds-option-and-implied-spread-volatility.md): the annuity measure rebuilt on a risky annuity, which prices options on credit spreads with the same Black shape.
 
 This card proves the forward swap rate is fair in annuity units but says nothing about how to hedge a swaption whose unit itself shifts with every rate move; the Greeks card answers that.
 

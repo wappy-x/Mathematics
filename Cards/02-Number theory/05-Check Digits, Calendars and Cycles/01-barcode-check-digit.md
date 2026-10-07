@@ -1,28 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Check Digits, Calendars and Cycles
-topic: Check digits
-item: Barcode check digits
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/02-modular-addition-and-multiplication|modular-addition-and-multiplication]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/03-divisibility-rules|divisibility-rules]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/05-coprime-numbers|coprime-numbers]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/01-place-value|place-value]]"
-next:
-  - "[[Cards/02-Number theory/05-Check Digits, Calendars and Cycles/02-isbn-check-digit|isbn-check-digit]]"
-tags:
-  - mathematics
-  - number theory
-  - barcode-check-digit
----
-
 # Barcode check digits: the last digit of an EAN-13 makes a weighted sum land on a multiple of 10
 
-Number theory → Check Digits, Calendars and Cycles → Check digits → Barcode check digits
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Check Digits, Calendars and Cycles](../../../SYLLABUS.md#w02-s05) → Barcode check digits
 
 ---
 
@@ -75,13 +53,13 @@ The next multiple of 10 above 83 is 90, so:
 
 ### Step 0: zero is the only leftover the scanner accepts
 
-Thirteen is odd, so the check digit sits in an odd position and carries weight 1. Whatever the twelve leave over, it pays off — 10 minus that leftover. A good code therefore leaves nothing over on a 10-hour clock ([modular-addition-and-multiplication](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)): the remainder after dividing by 10 is 0. One number to look at, one value allowed.
+Thirteen is odd, so the check digit sits in an odd position and carries weight 1. Whatever the twelve leave over, it pays off — 10 minus that leftover. A good code therefore leaves nothing over on a 10-hour clock ([Adding and multiplying on the clock](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)): the remainder after dividing by 10 is 0. One number to look at, one value allowed.
 
 The same in remainders: 83 leaves 3, and 10 − 3 is the 7.
 
 ### Step 1: one wrong digit can never hide
 
-At weight 1 the total moves by the size of the change, 1 to 9 — never a multiple of 10, so it steps off. At weight 3 the move is 3 times the change. And 3 and 10 share no factor ([coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)). So the total lands on a multiple of 10 only when the change does — and the change is 1 to 9.
+At weight 1 the total moves by the size of the change, 1 to 9 — never a multiple of 10, so it steps off. At weight 3 the move is 3 times the change. And 3 and 10 share no factor ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)). So the total lands on a multiple of 10 only when the change does — and the change is 1 to 9.
 
 Mistype our fifth digit, the 2, as an 8: 5901834123457, total 96. Rejected.
 
@@ -263,7 +241,7 @@ The two outputs match line for line.
 
 - **Every till.** Scanners misread smudged stripes all day. The check digit is why the wrong tin almost never rings up at the wrong price; you just pass the pack again.
 - **Bank cards and phone IMEI numbers.** Luhn's rule: why a site rejects a mistyped card before it reaches the bank.
-- **Older books.** An ISBN-10 checks on an 11-hour clock, catching every swap this card misses: [isbn-check-digit](02-isbn-check-digit.md). Today's 13-digit ISBN is an EAN-13 and shares the hole.
+- **Older books.** An ISBN-10 checks on an 11-hour clock, catching every swap this card misses: [ISBN-10 and the prime modulus 11](02-isbn-check-digit.md). Today's 13-digit ISBN is an EAN-13 and shares the hole.
 
 > **Say it back**
 > A barcode's last digit is not information, it is a test. Weight the digits 1, 3, 1, 3 and add them up; the last digit is picked to push the total onto a multiple of 10. Ours comes to 83, 7 short of 90, so the check digit is 7. Any single wrong digit shifts the total off the multiple and is caught. A swap of neighbours shifts it by twice their gap, so neighbours 5 apart slip through — the hole in the rule for swapped neighbours.
@@ -272,14 +250,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [place-value](../../01-Foundations/01-Everyday%20Arithmetic/01-place-value.md): a numeral is digits in columns, which is what lets a barcode be read a digit at a time.
-- [divisibility-rules](../01-Divisibility%20and%20Primes/03-divisibility-rules.md): testing a number by weighting its digits, the move made here.
-- [modular-addition-and-multiplication](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md): only what a total leaves on a clock matters.
-- [coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md): two numbers sharing no factor, which is why weight 3 hides nothing.
+- [Place value](../../01-Foundations/01-Everyday%20Arithmetic/01-place-value.md): a numeral is digits in columns, which is what lets a barcode be read a digit at a time.
+- [Divisibility rules](../01-Divisibility%20and%20Primes/03-divisibility-rules.md): testing a number by weighting its digits, the move made here.
+- [Adding and multiplying on the clock](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md): only what a total leaves on a clock matters.
+- [Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md): two numbers sharing no factor, which is why weight 3 hides nothing.
 
 ## Where this goes next
 
-- [isbn-check-digit](02-isbn-check-digit.md): the same trick on an 11-hour clock, where a prime modulus closes the swap hole this card leaves open.
+- [ISBN-10 and the prime modulus 11](02-isbn-check-digit.md): the same trick on an 11-hour clock, where a prime modulus closes the swap hole this card leaves open.
 
 ---
 

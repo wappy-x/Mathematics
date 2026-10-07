@@ -1,32 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Matrices
-topic: Matrices as maps
-item: Linear maps
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/03-Algebra/04-Matrices/03-matrix-multiplication|matrix-multiplication]]"
-  - "[[Cards/03-Algebra/03-Vectors/05-basis-and-dimension|basis-and-dimension]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/02-functions|functions]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/03-composition|composition]]"
-next:
-  - "[[Cards/03-Algebra/05-Solving Systems/04-determinants|determinants]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/05-rank-nullity|rank-nullity]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/01-change-of-basis|change-of-basis]]"
-  - "[[Cards/05-Geometry and trig/05-Vectors in Space/04-transformations-with-matrices|transformations-with-matrices]]"
-  - "[[Cards/18-Functional analysis/03-Bounded Operators/01-bounded-operators-and-the-operator-norm|bounded-operators-and-the-operator-norm]]"
-tags:
-  - mathematics
-  - algebra
-  - linear-maps-as-matrices
----
-
 # Linear maps: a rule that keeps lines straight and the origin fixed is secretly a matrix, whose columns say where the axes go
 
-Algebra → Matrices → Matrices as maps → Linear maps
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Matrices](../../../SYLLABUS.md#w03-s04) → Linear maps
 
 ---
 
@@ -38,7 +12,7 @@ The first leans it: the bottom edge stays put, the top edge slides one step righ
 
 Both buttons are rules: feed in a point, get a point back. Neither bends a straight edge, and neither budges the corner at (0, 0). Those habits mark a **linear map**; two exact tests pin it down below.
 
-Such a map needs no rule written out: four numbers hold it. Watch where it sends (1, 0), one step along the bottom, and (0, 1), one step up the side. Those two answers, down the columns of a table, reproduce the map everywhere. The shear's table is `[[1, 1], [0, 1]]`, the turn's `[[0, -1], [1, 0]]` — matrices ([matrices-and-the-matrix-zoo](01-matrices-and-the-matrix-zoo.md)), 2 × 2, rows × columns. Press both buttons in a row and the trip is one matrix, the product of theirs.
+Such a map needs no rule written out: four numbers hold it. Watch where it sends (1, 0), one step along the bottom, and (0, 1), one step up the side. Those two answers, down the columns of a table, reproduce the map everywhere. The shear's table is `[[1, 1], [0, 1]]`, the turn's `[[0, -1], [1, 0]]` — matrices ([Matrices](01-matrices-and-the-matrix-zoo.md)), 2 × 2, rows × columns. Press both buttons in a row and the trip is one matrix, the product of theirs.
 
 **A rule that respects adding and stretching is pinned down by where it sends the two axis arrows — which is why it is a matrix, and why one rule after another is those matrices multiplied, first move on the right.**
 
@@ -54,7 +28,7 @@ flowchart LR
     D -->|"then the quarter turn"| E["ends at (-1, 2)"]
 ```
 
-Same corner, same two moves, different finish: the "order matters" of [matrix-multiplication](03-matrix-multiplication.md), with a reason attached.
+Same corner, same two moves, different finish: the "order matters" of [Matrix multiplication](03-matrix-multiplication.md), with a reason attached.
 
 ---
 
@@ -95,7 +69,7 @@ $$\text{turn, then shear} = A B \qquad\text{and}\qquad \text{shear, then turn} =
 - **Both tests, at every input.** Agreeing with a matrix on the four corners settles nothing; a rule can pass there and fail elsewhere.
 - **A fixed origin is not enough.** Squaring the first number of the pair keeps (0, 0) in place and still fails: it sends (1, 1) to (1, 1) but (2, 2) to (4, 2), where doubling the input should have doubled the answer.
 - **One column per axis arrow.** The plane has two, so the matrix is 2 × 2; between spaces of different sizes it is rectangular.
-- **The same axes throughout.** The columns are answers read against (1, 0) and (0, 1); measure against other arrows and the matrix changes ([change-of-basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md)).
+- **The same axes throughout.** The columns are answers read against (1, 0) and (0, 1); measure against other arrows and the matrix changes ([Change of basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md)).
 
 ---
 
@@ -103,7 +77,7 @@ $$\text{turn, then shear} = A B \qquad\text{and}\qquad \text{shear, then turn} =
 
 ### Step 0: every point is a mix of the two axis arrows
 
-The corner (1, 1) is one step right plus one step up: (1, 1) = 1 × (1, 0) + 1 × (0, 1). Any point (x, y) is x of the first arrow plus y of the second — [basis-and-dimension](../03-Vectors/05-basis-and-dimension.md) calling (1, 0) and (0, 1) a **basis**: every vector is their mix, in exactly one way.
+The corner (1, 1) is one step right plus one step up: (1, 1) = 1 × (1, 0) + 1 × (0, 1). Any point (x, y) is x of the first arrow plus y of the second — [Basis and dimension](../03-Vectors/05-basis-and-dimension.md) calling (1, 0) and (0, 1) a **basis**: every vector is their mix, in exactly one way.
 
 ### Step 1: the tests move the pieces instead of the point
 
@@ -123,13 +97,13 @@ Two questions each; nothing else.
 
 ### Step 3: mixing the columns is exactly matrix times vector
 
-[matrix-times-vector](02-matrix-times-vector.md) said a matrix times a vector mixes the columns: x copies of the first, y of the second. Step 1 said the map of (x, y) is x copies of the first answer, y of the second. The columns hold those answers: the same sentence twice.
+[Matrix times vector](02-matrix-times-vector.md) said a matrix times a vector mixes the columns: x copies of the first, y of the second. Step 1 said the map of (x, y) is x copies of the first answer, y of the second. The columns hold those answers: the same sentence twice.
 
 On (1, 1) under the shear: one copy of each column, (1, 0) + (1, 1) = (2, 1), the lean itself.
 
 ### Step 4: one map after another is one product
 
-Now turn, then shear. The trip is still linear, because each half is, so by Step 2 it is a matrix, its columns wherever the trip sends the two arrows. To find them, push each column of the turn's matrix through the shear: the row-by-column recipe of [matrix-multiplication](03-matrix-multiplication.md), which gives `[[1, -1], [1, 0]]`. Shear first instead and it gives `[[0, -1], [1, 1]]`.
+Now turn, then shear. The trip is still linear, because each half is, so by Step 2 it is a matrix, its columns wherever the trip sends the two arrows. To find them, push each column of the turn's matrix through the shear: the row-by-column recipe of [Matrix multiplication](03-matrix-multiplication.md), which gives `[[1, -1], [1, 0]]`. Shear first instead and it gives `[[0, -1], [1, 1]]`.
 
 So matrix multiplication is no arbitrary recipe: it is whatever it must be for "do this, then that" to be one matrix.
 
@@ -395,7 +369,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Every screen.** Rotating, scaling, flipping and skewing a sprite is one matrix per move, and a chain collapses into one matrix before a pixel is drawn — [matrix-multiplication](03-matrix-multiplication.md) earning its keep.
+- **Every screen.** Rotating, scaling, flipping and skewing a sprite is one matrix per move, and a chain collapses into one matrix before a pixel is drawn — [Matrix multiplication](03-matrix-multiplication.md) earning its keep.
 - **Photo filters.** Converting an image between colour systems multiplies each pixel's three numbers by a fixed 3 × 3 matrix: three axis arrows instead of two.
 - **Fixed weighted sums.** Ingredients per product, nutrients per serving, sensor readings per source: if doubling every input doubles every output, a matrix is hiding there.
 
@@ -406,20 +380,20 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [matrix-multiplication](03-matrix-multiplication.md): the row-by-column recipe, and that AB and BA differ; this card says why the recipe has that shape.
-- [basis-and-dimension](../03-Vectors/05-basis-and-dimension.md): why (1, 0) and (0, 1) describe every point, in exactly one way; without it, two answers would not be enough.
-- [functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md): a rule with an input and an output, which is all a map is.
-- [composition](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md): doing one function after another — what a matrix product turns out to be.
+- [Matrix multiplication](03-matrix-multiplication.md): the row-by-column recipe, and that AB and BA differ; this card says why the recipe has that shape.
+- [Basis and dimension](../03-Vectors/05-basis-and-dimension.md): why (1, 0) and (0, 1) describe every point, in exactly one way; without it, two answers would not be enough.
+- [Functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md): a rule with an input and an output, which is all a map is.
+- [Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md): doing one function after another — what a matrix product turns out to be.
 
 ## Where this goes next
 
-- [determinants](../05-Solving%20Systems/04-determinants.md): one number off the matrix: how much the map stretches area, and whether it flattened the sprite.
-- [rank-nullity](../05-Solving%20Systems/05-rank-nullity.md): what a map keeps and what it destroys, and why the counts add up.
-- [change-of-basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md): the same map against different axis arrows, and how its matrix changes.
-- [transformations-with-matrices](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/04-transformations-with-matrices.md): the same recipe in space, three axis arrows and a 3 × 3 matrix.
-- bounded-operators-and-the-operator-norm: linear maps whose input lists never end, sized by the most they stretch a vector.
+- [Determinants](../05-Solving%20Systems/04-determinants.md): one number off the matrix: how much the map stretches area, and whether it flattened the sprite.
+- [Rank and nullity](../05-Solving%20Systems/05-rank-nullity.md): what a map keeps and what it destroys, and why the counts add up.
+- [Change of basis](../07-Eigenvalues%20and%20Symmetric%20Matrices/01-change-of-basis.md): the same map against different axis arrows, and how its matrix changes.
+- [Moving shapes with matrices](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/04-transformations-with-matrices.md): the same recipe in space, three axis arrows and a 3 × 3 matrix.
+- Bounded operators: linear maps whose input lists never end, sized by the most they stretch a vector.
 
-The matrix says where every point goes, but not how much room it leaves: whether the sprite is leaned or flattened onto a line is the one number [determinants](../05-Solving%20Systems/04-determinants.md) reads off.
+The matrix says where every point goes, but not how much room it leaves: whether the sprite is leaned or flattened onto a line is the one number [Determinants](../05-Solving%20Systems/04-determinants.md) reads off.
 
 ---
 

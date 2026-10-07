@@ -1,34 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Limits and Continuity
-topic: Least upper bounds
-item: No gaps
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/01-limits|limits]]"
-  - "[[Cards/01-Foundations/02-The Number Line/04-real-numbers-no-gaps|real-numbers-no-gaps]]"
-next:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/03-sequences-and-limits|sequences-and-limits]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/06-intermediate-value-theorem|intermediate-value-theorem]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/01-riemann-integral|riemann-integral]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/01-lebesgue-outer-measure|lebesgue-outer-measure]]"
-  - "[[Cards/10-Measure and integration/03-Measurable Functions/02-limits-of-measurable-functions|limits-of-measurable-functions]]"
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/01-functions-of-bounded-variation|functions-of-bounded-variation]]"
-  - "[[Cards/17-Topology/01-Metric Spaces/05-completeness-and-completion|completeness-and-completion]]"
-  - "[[Cards/18-Functional analysis/01-Normed and Banach Spaces/01-normed-spaces-and-banach-spaces|normed-spaces-and-banach-spaces]]"
-  - "[[Cards/18-Functional analysis/01-Normed and Banach Spaces/10-reflexive-spaces-and-the-second-dual|reflexive-spaces-and-the-second-dual]]"
-tags:
-  - mathematics
-  - calculus and analysis
-  - supremum-and-completeness
----
-
 # No gaps: least upper bounds and why the reals have them
 
-Calculus and analysis → Limits and Continuity → Least upper bounds → No gaps
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Limits and Continuity](../../../SYLLABUS.md#w06-s01) → No gaps
 
 ---
 
@@ -105,7 +77,7 @@ Take any member $m$. Halfway to 1 is (m + 1)/2, above $m$ and below 1 because $m
 
 Every member is below 1, so 1 is a ceiling. Any lower challenger $t$ loses. If $t$ is above 0, the member (t + 1)/2 passes it: 0.999 is passed by 0.9995, and 0.5 by 0.75. If $t$ is 0 or below, 0.5 passes it; the challenger -3 is one such. No number below 1 is a ceiling, so the supremum is 1.
 
-This is the tolerance game of [limits](01-limits.md): name any gap below 1, and a member lands in it. On a grid of step 1/2^n (fractions with 2^n on the bottom), the largest member is 1 minus one step.
+This is the tolerance game of [Limits](01-limits.md): name any gap below 1, and a member lands in it. On a grid of step 1/2^n (fractions with 2^n on the bottom), the largest member is 1 minus one step.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -123,13 +95,13 @@ Rising line: the largest grid member. Flat line: the supremum, 1. At n = 20 the 
 
 Keep only fractions whose square is under 2. The fraction 3/2 is a ceiling, since its square is over 2. The rule sending q to (2q + 2)/(q + 2) turns any fraction ceiling into a lower one (algebra in the folded proof): 3/2, 10/7, 17/12, 58/41, 99/70, forever.
 
-The lowest ceiling would square to exactly 2, and no fraction does ([real-numbers-no-gaps](../../01-Foundations/02-The%20Number%20Line/04-real-numbers-no-gaps.md)). Halving an interval around it twenty times pins it between 1.4142132 and 1.4142141. The reals put root 2 there; the fractions leave a hole. Completeness rules such holes out.
+The lowest ceiling would square to exactly 2, and no fraction does ([The real numbers have no gaps](../../01-Foundations/02-The%20Number%20Line/04-real-numbers-no-gaps.md)). Halving an interval around it twenty times pins it between 1.4142132 and 1.4142141. The reals put root 2 there; the fractions leave a hole. Completeness rules such holes out.
 
 ### Step 4: completeness at work, the counting numbers have no ceiling
 
 This is the wing's existence-proof pattern on a small case. Claim: no real number is a ceiling over 1, 2, 3, ... .
 
-Suppose one were. Completeness gives a lowest ceiling s. Then s − 1 is not a ceiling, so some counting number n is above s − 1. So n + 1, also a counting number, is above s, and s was no ceiling. The supposition fails. This is the **Archimedean property**. Hence 1/n shrinks below any positive size, which [sequences-and-limits](03-sequences-and-limits.md) uses at once.
+Suppose one were. Completeness gives a lowest ceiling s. Then s − 1 is not a ceiling, so some counting number n is above s − 1. So n + 1, also a counting number, is above s, and s was no ceiling. The supposition fails. This is the **Archimedean property**. Hence 1/n shrinks below any positive size, which [Sequences](03-sequences-and-limits.md) uses at once.
 
 <details>
 <summary>Detailed proof</summary>
@@ -144,7 +116,7 @@ By construction some member reaches s(k), and none reaches $s(k) + 10^{-k}$, or 
 
 </details>
 
-Other constructions of the reals, Dedekind's cuts or limits of bunching fraction sequences, make completeness a theorem; the second generalises in completeness-and-completion.
+Other constructions of the reals, Dedekind's cuts or limits of bunching fraction sequences, make completeness a theorem; the second generalises in Complete space.
 
 ---
 
@@ -390,8 +362,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Strict limits.** A rule such as "under 1 tonne" allows loads as close to it as anyone likes, with no heaviest allowed load. The limit is the supremum.
-- **Root finding.** Halving a bracket, as Step 3 does for root 2, relies on a number where the brackets close in; [intermediate-value-theorem](06-intermediate-value-theorem.md) proves it is a root.
-- **Best-possible bounds.** "The error never exceeds this" names a supremum of errors that may never be reached; [extreme-value-theorem](07-extreme-value-theorem.md) says when it is.
+- **Root finding.** Halving a bracket, as Step 3 does for root 2, relies on a number where the brackets close in; [Intermediate value theorem](06-intermediate-value-theorem.md) proves it is a root.
+- **Best-possible bounds.** "The error never exceeds this" names a supremum of errors that may never be reached; [Extreme value theorem](07-extreme-value-theorem.md) says when it is.
 
 > **Say it back**
 > A ceiling is a number no member passes. The supremum is the lowest ceiling and need not be a member; the maximum must be. (0, 1) has supremum 1 and no maximum, since every member is beaten by the one halfway to 1. Completeness promises a supremum to every collection of reals with a member and a ceiling. The fractions break it at root 2; calculus's existence proofs lean on it.
@@ -400,20 +372,20 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [limits](01-limits.md): the tolerance game, played here against ceilings.
-- [real-numbers-no-gaps](../../01-Foundations/02-The%20Number%20Line/04-real-numbers-no-gaps.md): the no-gaps promise in words, and root 2 as the hole in the fractions.
+- [Limits](01-limits.md): the tolerance game, played here against ceilings.
+- [The real numbers have no gaps](../../01-Foundations/02-The%20Number%20Line/04-real-numbers-no-gaps.md): the no-gaps promise in words, and root 2 as the hole in the fractions.
 
 ## Where this goes next
 
-- [sequences-and-limits](03-sequences-and-limits.md): a rising sequence with a ceiling heads for its supremum.
-- [intermediate-value-theorem](06-intermediate-value-theorem.md): a root pinned down as a supremum.
-- [riemann-integral](../04-Integrals/01-riemann-integral.md): area from suprema of rectangle sums.
-- [lebesgue-outer-measure](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/01-lebesgue-outer-measure.md): length as an infimum of covering lengths.
-- [limits-of-measurable-functions](../../10-Measure%20and%20integration/03-Measurable%20Functions/02-limits-of-measurable-functions.md): suprema of functions, point by point.
-- [functions-of-bounded-variation](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/01-functions-of-bounded-variation.md): total wiggle as a supremum over cuttings.
-- completeness-and-completion: no gaps in any space with a distance.
-- normed-spaces-and-banach-spaces: sizes of functions as suprema, in spaces with no gaps.
-- reflexive-spaces-and-the-second-dual: suprema that are, or are not, reached.
+- [Sequences](03-sequences-and-limits.md): a rising sequence with a ceiling heads for its supremum.
+- [Intermediate value theorem](06-intermediate-value-theorem.md): a root pinned down as a supremum.
+- [The integral](../04-Integrals/01-riemann-integral.md): area from suprema of rectangle sums.
+- [Outer measure](../../10-Measure%20and%20integration/02-Length%20Done%20Properly/01-lebesgue-outer-measure.md): length as an infimum of covering lengths.
+- [Sums, products, sups and limits](../../10-Measure%20and%20integration/03-Measurable%20Functions/02-limits-of-measurable-functions.md): suprema of functions, point by point.
+- [Bounded variation](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/01-functions-of-bounded-variation.md): total wiggle as a supremum over cuttings.
+- Complete space: no gaps in any space with a distance.
+- Normed and Banach spaces: sizes of functions as suprema, in spaces with no gaps.
+- Reflexive spaces: suprema that are, or are not, reached.
 
 ---
 

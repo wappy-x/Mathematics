@@ -1,22 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Discrete Distributions
-topic: Counting several outcomes together
-item: Multinomial
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/01-bernoulli-and-binomial|bernoulli-and-binomial]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/03-splitting-into-groups|splitting-into-groups]]"
-next: []
-tags: [mathematics, probability and statistics, multinomial]
----
-
 # Multinomial: several categories at once
 
-Probability and statistics → Discrete Distributions → Counting several outcomes together → Multinomial
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Discrete Distributions](../../../SYLLABUS.md#w09-s03) → Multinomial
 
 ---
 
@@ -52,7 +36,7 @@ The upper line is the average number of small cups, the lower line the average n
 
 ## The formula
 
-Notation first, in words. A **tally** is the list of counts, one per category, and its entries add to the number of customers. The counts are random variables written with capital letters, $N_1$ for small, $N_2$ for medium, $N_3$ for large; on this card they are also called S, M and L. Lower-case $k_1$, $k_2$, $k_3$ are particular values they might take. The multinomial coefficient $C(n; k_1, \ldots, k_r)$ counts the ways to split $n$ distinct things into named piles of sizes $k_1$ to $k_r$ ([splitting-into-groups](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/03-splitting-into-groups.md)). Writing $(N_1, N_2, N_3) \sim \text{Multinomial}(20;\ 0.3, 0.5, 0.2)$ is read "the three counts follow the multinomial law with 20 trials and chances 0.3, 0.5 and 0.2".
+Notation first, in words. A **tally** is the list of counts, one per category, and its entries add to the number of customers. The counts are random variables written with capital letters, $N_1$ for small, $N_2$ for medium, $N_3$ for large; on this card they are also called S, M and L. Lower-case $k_1$, $k_2$, $k_3$ are particular values they might take. The multinomial coefficient $C(n; k_1, \ldots, k_r)$ counts the ways to split $n$ distinct things into named piles of sizes $k_1$ to $k_r$ ([Splitting into groups](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/03-splitting-into-groups.md)). Writing $(N_1, N_2, N_3) \sim \text{Multinomial}(20;\ 0.3, 0.5, 0.2)$ is read "the three counts follow the multinomial law with 20 trials and chances 0.3, 0.5 and 0.2".
 
 The joint mass, the chance of one whole tally:
 
@@ -89,11 +73,11 @@ From the covariance and the two variances comes the correlation (the covariance 
 
 ### When it holds
 
-- **A fixed number of trials.** Twenty customers, known in advance. If the number who turn up is itself random, the tug changes. When that number follows the law of rare arrivals in [poisson](04-poisson.md), it disappears: the three counts become independent.
+- **A fixed number of trials.** Twenty customers, known in advance. If the number who turn up is itself random, the tug changes. When that number follows the law of rare arrivals in [Poisson](04-poisson.md), it disappears: the three counts become independent.
 - **Every trial lands in exactly one category.** Small, medium or large, no customer taking two. A customer who buys two cups is two trials, or the chances stop adding to 1.
 - **The same chances for every trial.** If the morning rush takes more larges than the afternoon, each count is a mixture of binomials, more spread out than the formula says.
 - **Independent trials.** Break this and the formula is simply wrong. If the customers come in 10 pairs and each pair orders alike, the tally 6, 10, 4 has chance 0.085050, not 0.044194, and the variance of the medium count doubles from 5 to 10.
-- **Draws with replacement, or from a population so large it makes no difference.** Twenty cups taken from a box of 30 mixed cups is the job of [hypergeometric](03-hypergeometric.md) and its many-colour version.
+- **Draws with replacement, or from a population so large it makes no difference.** Twenty cups taken from a box of 30 mixed cups is the job of [Hypergeometric](03-hypergeometric.md) and its many-colour version.
 
 ---
 
@@ -117,7 +101,7 @@ Multiply out $(p_1 + p_2 + p_3)^{20}$ by picking one term from each of the 20 br
 
 ### Step 3: each count alone is binomial
 
-Look only at mediums. Each customer either takes a medium, with chance 0.5, or does not, with chance 0.5, independently of the rest. That is the setting of [bernoulli-and-binomial](01-bernoulli-and-binomial.md) with "small or large" lumped into one "no". So $M \sim \text{Binomial}(20, 0.5)$, with mean 10 and variance 5. The same lumping gives $S \sim \text{Binomial}(20, 0.3)$ and $L \sim \text{Binomial}(20, 0.2)$.
+Look only at mediums. Each customer either takes a medium, with chance 0.5, or does not, with chance 0.5, independently of the rest. That is the setting of [Binomial](01-bernoulli-and-binomial.md) with "small or large" lumped into one "no". So $M \sim \text{Binomial}(20, 0.5)$, with mean 10 and variance 5. The same lumping gives $S \sim \text{Binomial}(20, 0.3)$ and $L \sim \text{Binomial}(20, 0.2)$.
 
 The code checks this the long way, summing the joint table over the other two counts, and the result matches the binomial law at every value to within 1e-12.
 
@@ -620,14 +604,14 @@ The two outputs match line for line, the simulation included, because both draw 
 
 ## What this builds on
 
-- [bernoulli-and-binomial](01-bernoulli-and-binomial.md): the two-category case, and the law each count follows alone.
-- [splitting-into-groups](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/03-splitting-into-groups.md): the multinomial coefficient, counting ways to fill named piles.
+- [Binomial](01-bernoulli-and-binomial.md): the two-category case, and the law each count follows alone.
+- [Splitting into groups](../../04-Combinatorics%20and%20graphs/02-Repeats%2C%20Groups%20and%20Double%20Counting/03-splitting-into-groups.md): the multinomial coefficient, counting ways to fill named piles.
 
 ## Where this goes next
 
-- [sums-of-discrete-variables](06-sums-of-discrete-variables.md): adding counts in general, where the lumping of Step 3 becomes a rule.
-- [birthday-and-coupon-collector](07-birthday-and-coupon-collector.md): many categories and many trials, asking when every category has been seen at least once.
-- [poisson](04-poisson.md): let the number of customers itself follow the Poisson law, and the three counts become independent.
+- [Adding counts](06-sums-of-discrete-variables.md): adding counts in general, where the lumping of Step 3 becomes a rule.
+- [Two classics](07-birthday-and-coupon-collector.md): many categories and many trials, asking when every category has been seen at least once.
+- [Poisson](04-poisson.md): let the number of customers itself follow the Poisson law, and the three counts become independent.
 
 The multinomial says how counts behave when the chances are known; turning an observed tally back into estimates of the chances, with honest error bars that respect the covariance, is the work of the estimation shelf.
 

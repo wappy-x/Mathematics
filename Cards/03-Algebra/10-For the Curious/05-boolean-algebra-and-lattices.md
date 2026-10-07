@@ -1,29 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: For the Curious
-topic: Meet and join
-item: Boolean algebra
-kind: definition
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/09-Rings and Fields/01-rings|rings]]"
-  - "[[Cards/01-Foundations/05-Logic/03-logical-equivalence-and-de-morgan|logical-equivalence-and-de-morgan]]"
-  - "[[Cards/01-Foundations/07-Sets/03-set-operations|set-operations]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/07-partial-and-total-orders|partial-and-total-orders]]"
-next:
-  - "[[Cards/24-Computability and complexity/03-Time Complexity/04-cook-levin-theorem|cook-levin-theorem]]"
-  - "[[Cards/24-Computability and complexity/05-Algebraic, Interactive and Quantum/01-boolean-circuits-and-formulas|boolean-circuits-and-formulas]]"
-tags:
-  - mathematics
-  - algebra
-  - boolean-algebra-and-lattices
----
-
 # Boolean algebra: true/false, sets and switches obey the same rules, and the power set drawn as a cube is a lattice
 
-Algebra → For the Curious → Meet and join → Boolean algebra
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [For the Curious](../../../SYLLABUS.md#w03-s10) → Boolean algebra
 
 ---
 
@@ -146,7 +123,7 @@ A **lattice** is a partial order where every pair has a meet and a join. A **Boo
 <details>
 <summary>The same algebra written as a ring</summary>
 
-Let multiplication be the meet and addition be "in exactly one of the two" — exclusive or for statements, symmetric difference for sets. Those two make a ring ([rings](../09-Rings%20and%20Fields/01-rings.md)): addition has a zero, every element is its own negative, multiplication spreads across addition. One identity marks it out: a thing met with itself is unchanged, so x^2 = x. Every Boolean algebra is such a Boolean ring in disguise.
+Let multiplication be the meet and addition be "in exactly one of the two" — exclusive or for statements, symmetric difference for sets. Those two make a ring ([Rings](../09-Rings%20and%20Fields/01-rings.md)): addition has a zero, every element is its own negative, multiplication spreads across addition. One identity marks it out: a thing met with itself is unchanged, so x^2 = x. Every Boolean algebra is such a Boolean ring in disguise.
 
 </details>
 
@@ -408,7 +385,7 @@ The two outputs match line for line.
 
 - **Home automation.** A rule engine takes this condition as written; the distributed form shows the override in every branch.
 - **Digital circuits.** Series and parallel switches were Shannon's point in 1938: a network is an expression, so shortening it removes gates.
-- **The rest of this shelf**: [fundamental-theorem-of-algebra](01-fundamental-theorem-of-algebra.md), [why-no-quintic-formula](02-why-no-quintic-formula.md), [gaussian-integers-and-sums-of-two-squares](03-gaussian-integers-and-sums-of-two-squares.md), [pell-equation-and-root-two](04-pell-equation-and-root-two.md).
+- **The rest of this shelf**: [The fundamental theorem of algebra](01-fundamental-theorem-of-algebra.md), [Why there is no quintic formula](02-why-no-quintic-formula.md), [Gaussian integers](03-gaussian-integers-and-sums-of-two-squares.md), [Pell's equation](04-pell-equation-and-root-two.md).
 
 > **Say it back**
 > A light rule, a list filter and a switch network obey one list of laws: a meet (and, intersection, series), a join (or, union, parallel), and a complement that swaps them. The light is off when the override is off and motion or darkness is missing. The eight subsets of {a, b, c} draw a cube where meet is intersection and join is union; nine of the twenty-eight pairs have no order between them. A lattice needs meets and joins; Boolean adds a bottom, a top, distributivity and complements.
@@ -417,15 +394,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [logical-equivalence-and-de-morgan](../../01-Foundations/05-Logic/03-logical-equivalence-and-de-morgan.md): the two-value laws and the swap.
-- [set-operations](../../01-Foundations/07-Sets/03-set-operations.md): intersection, union and complement — meet, join and reversal in set clothes.
-- [partial-and-total-orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md): partial orders, and incomparable pairs.
-- [rings](../09-Rings%20and%20Fields/01-rings.md): plus and times as a list of laws, the pattern followed here.
+- [Logical equivalence and De Morgan](../../01-Foundations/05-Logic/03-logical-equivalence-and-de-morgan.md): the two-value laws and the swap.
+- [Set operations](../../01-Foundations/07-Sets/03-set-operations.md): intersection, union and complement — meet, join and reversal in set clothes.
+- [Orders](../../01-Foundations/08-Relations%20and%20Functions/07-partial-and-total-orders.md): partial orders, and incomparable pairs.
+- [Rings](../09-Rings%20and%20Fields/01-rings.md): plus and times as a list of laws, the pattern followed here.
 
 ## Where this goes next
 
-- cook-levin-theorem: whether some row of a formula comes out true — one question standing in for every problem with quickly checked answers.
-- boolean-circuits-and-formulas: the gates a network needs, a formula as cost rather than truth.
+- Cook-Levin: whether some row of a formula comes out true — one question standing in for every problem with quickly checked answers.
+- Boolean circuits: the gates a network needs, a formula as cost rather than truth.
 
 Eight rows can be read by hand. The laws say nothing about the cost of finding whether some row of a large rule comes out true — a later card's question.
 

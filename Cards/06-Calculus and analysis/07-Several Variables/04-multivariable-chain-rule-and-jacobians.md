@@ -1,35 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Several Variables
-topic: Rates through a chain of maps
-item: Chain rule in several variables
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/03-gradient-and-directional-derivatives|gradient-and-directional-derivatives]]"
-  - "[[Cards/03-Algebra/04-Matrices/03-matrix-multiplication|matrix-multiplication]]"
-next:
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/05-hessian-and-second-order-approximation|hessian-and-second-order-approximation]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/07-inverse-and-implicit-function-theorems|inverse-and-implicit-function-theorems]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/03-change-of-variables-and-jacobians|change-of-variables-and-jacobians]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/03-adjoint-differentiation-in-outline|adjoint-differentiation-in-outline]]"
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/07-error-propagation-and-sensitivity|error-propagation-and-sensitivity]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/02-gradient-descent-and-stochastic-gradient|gradient-descent-and-stochastic-gradient]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/04-backpropagation|backpropagation]]"
-  - "[[Cards/15-Optimization/02-Unconstrained Methods/10-automatic-differentiation-and-backpropagation|automatic-differentiation-and-backpropagation]]"
-  - "[[Cards/16-Numerical analysis/02-Root Finding and Fixed Points/07-newton-for-systems-and-broyden|newton-for-systems-and-broyden]]"
-  - "[[Cards/16-Numerical analysis/08-Derivatives by Machine/07-reverse-mode-automatic-differentiation|reverse-mode-automatic-differentiation]]"
-  - "[[Cards/19-Partial differential equations/01-Classification and Well-Posedness/05-reduction-to-canonical-form|reduction-to-canonical-form]]"
-  - "[[Cards/23-Differential geometry and Lie groups/01-Curves/06-curvature-and-torsion-from-any-parametrisation|curvature-and-torsion-from-any-parametrisation]]"
-  - "[[Cards/23-Differential geometry and Lie groups/03-Manifolds/03-tangent-spaces-and-differentials|tangent-spaces-and-differentials]]"
-tags: [mathematics, calculus and analysis, multivariable-chain-rule-and-jacobians]
----
-
 # Chain rule in several variables: derivative matrices multiply
 
-Calculus and analysis → Several Variables → Rates through a chain of maps → Chain rule in several variables
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Several Variables](../../../SYLLABUS.md#w06-s07) → Chain rule in several variables
 
 ---
 
@@ -41,7 +12,7 @@ How fast is that felt temperature falling at that moment?
 
 Three maps sit in a line. Time sets position. Position sets air temperature and wind speed. Those two set the felt temperature. Each map has a table of rates, one per input and output pair. Multiply the three tables in order, as matrices: the felt temperature is falling at 12 °C per hour.
 
-The one-variable chain rule multiplied single rates ([chain-rule](../02-Derivatives/03-chain-rule.md)). Here each link passes on several numbers, so each rate becomes a table.
+The one-variable chain rule multiplied single rates ([Chain rule](../02-Derivatives/03-chain-rule.md)). Here each link passes on several numbers, so each rate becomes a table.
 
 **When maps are chained, the table of rates of the whole chain is the product of the links' tables, outer link on the left, each table read where the chain actually is.**
 
@@ -62,7 +33,7 @@ Each arrow carries its link's table. Their product, outer first, is −12 °C pe
 
 ## The formula
 
-A reminder: a partial derivative, written with a curly d, is an output's rate when one input moves alone ([partial-derivatives](01-partial-derivatives.md)).
+A reminder: a partial derivative, written with a curly d, is an output's rate when one input moves alone ([Partial derivatives](01-partial-derivatives.md)).
 
 One new notation, in words first: the **Jacobian matrix** of a map g, written $J_g$, is the table of its partial derivatives, one row per output and one column per input, in a declared order. Row i, column j holds the rate of output i per unit of input j, in output units per input unit. A one-output map's Jacobian is its gradient as a row; a path's is its velocity as a column.
 
@@ -93,7 +64,7 @@ Shapes 1 × 2, 2 × 2 and 2 × 1 multiply to 1 × 1: one rate, in °C per hour.
 
 ### When it holds
 
-- **Each map is differentiable where it is read, not merely equipped with partials.** Differentiable means one flat table predicts small moves in every direction ([differentiability-and-tangent-planes](02-differentiability-and-tangent-planes.md)). The field `q(x, y) = x^2 y / (x^2 + y^2)`, 0 at the origin, has both partials 0 there, so the rule predicts rate 0 along the walk (t, t); the real rate is 0.5.
+- **Each map is differentiable where it is read, not merely equipped with partials.** Differentiable means one flat table predicts small moves in every direction ([Tangent planes](02-differentiability-and-tangent-planes.md)). The field `q(x, y) = x^2 y / (x^2 + y^2)`, 0 at the origin, has both partials 0 there, so the rule predicts rate 0 along the walk (t, t); the real rate is 0.5.
 - **Each table is read at the point its map receives.** The weather table belongs at (2, 1); read at (1, 1) it gives −11.20 °C per hour.
 - **One declared order of inputs and outputs.** Swap the weather table's rows and columns: −2.40.
 - **Units agree along the chain.** Time in minutes divides the answer by 60.
@@ -104,7 +75,7 @@ Shapes 1 × 2, 2 × 2 and 2 × 1 multiply to 1 × 1: one rate, in °C per hour.
 
 ### Step 0: near a point, every map acts like its table
 
-Nudge the clock by a small step h. The hiker moves about $J_p$ times h; the weather changes by about $J_G$ times that move; the felt temperature by about $J_F$ times that change. One table after another is a matrix product ([matrix-multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md)). The work is making "about" exact.
+Nudge the clock by a small step h. The hiker moves about $J_p$ times h; the weather changes by about $J_G$ times that move; the felt temperature by about $J_F$ times that change. One table after another is a matrix product ([Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md)). The work is making "about" exact.
 
 ### Step 1: build each table one column at a time
 
@@ -142,9 +113,9 @@ Put v = Mh + E(h). Then g(f(a + h)) − g(b) = NMh + N E(h) + R(v). Given 0 < ε
 
 ### Step 4: order is fixed, grouping is free
 
-The outer table sits on the left because it acts last; the shapes fit no other way. Grouping is free, since matrix multiplication is associative. Right pair first: the weather changes at (−6, 12), air in °C per hour and wind in km/h per hour; the felt row turns that into −12. Left pair first: (−1.60, −4.40) °C per km, the felt temperature's gradient on the map; its dot product with the velocity (2, 2) is again −12, the directional rate of [gradient-and-directional-derivatives](03-gradient-and-directional-derivatives.md).
+The outer table sits on the left because it acts last; the shapes fit no other way. Grouping is free, since matrix multiplication is associative. Right pair first: the weather changes at (−6, 12), air in °C per hour and wind in km/h per hour; the felt row turns that into −12. Left pair first: (−1.60, −4.40) °C per km, the felt temperature's gradient on the map; its dot product with the velocity (2, 2) is again −12, the directional rate of [Gradient](03-gradient-and-directional-derivatives.md).
 
-Left-first grouping over thousands of links is reverse-mode-automatic-differentiation.
+Left-first grouping over thousands of links is Reverse mode.
 
 ---
 
@@ -404,9 +375,9 @@ The curve is the felt temperature along the walk; the straight line is its tange
 
 ## Where you meet it in real life
 
-- **Training neural networks.** A network is a long chain of maps; backpropagation is this product grouped from the left.
-- **Error budgets.** Input errors spread through a formula by its Jacobian ([error-propagation-and-sensitivity](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md)).
-- **Risk from market quotes.** A price depends on model settings, which depend on quotes: a chain of tables ([adjoint-differentiation-in-outline](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/03-adjoint-differentiation-in-outline.md)).
+- **Training neural networks.** A network is a long chain of maps; Backpropagation is this product grouped from the left.
+- **Error budgets.** Input errors spread through a formula by its Jacobian ([Error propagation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md)).
+- **Risk from market quotes.** A price depends on model settings, which depend on quotes: a chain of tables ([Adjoint differentiation](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/03-adjoint-differentiation-in-outline.md)).
 
 > **Say it back**
 > A map's Jacobian is its table of rates: one row per output, one column per input. Chain maps and the tables multiply, outer on the left, each read where its map is fed. Each entry of the product adds every route, each a product of rates. For the hiker: −12 °C per hour. The maps must be differentiable, not merely have partials.
@@ -415,26 +386,26 @@ The curve is the felt temperature along the walk; the straight line is its tange
 
 ## What this builds on
 
-- [gradient-and-directional-derivatives](03-gradient-and-directional-derivatives.md): the gradient that forms the felt map's row, and the directional rate that the left grouping reproduces.
-- [matrix-multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md): row against column, and why the product is associative but not commutative.
+- [Gradient](03-gradient-and-directional-derivatives.md): the gradient that forms the felt map's row, and the directional rate that the left grouping reproduces.
+- [Matrix multiplication](../../03-Algebra/04-Matrices/03-matrix-multiplication.md): row against column, and why the product is associative but not commutative.
 
 ## Where this goes next
 
-- [hessian-and-second-order-approximation](05-hessian-and-second-order-approximation.md): the table of second rates.
-- [inverse-and-implicit-function-theorems](07-inverse-and-implicit-function-theorems.md): an undoable Jacobian means a locally undoable map.
-- [change-of-variables-and-jacobians](../08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md): the determinant as an area scale.
-- [adjoint-differentiation-in-outline](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/03-adjoint-differentiation-in-outline.md): all price sensitivities in one backward pass.
-- [error-propagation-and-sensitivity](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md): errors pushed through a formula.
-- gradient-descent-and-stochastic-gradient: steps downhill on chained gradients.
-- backpropagation: the product grouped from the output end.
-- automatic-differentiation-and-backpropagation: derivatives of whole programs.
-- newton-for-systems-and-broyden: the Jacobian as Newton's slope.
-- reverse-mode-automatic-differentiation: left-first grouping, mechanised.
-- reduction-to-canonical-form: coordinates chosen to simplify an equation.
-- curvature-and-torsion-from-any-parametrisation: bending, whatever clock traces the curve.
-- tangent-spaces-and-differentials: the Jacobian without coordinates.
+- [Hessian](05-hessian-and-second-order-approximation.md): the table of second rates.
+- [Inverse and implicit function theorems](07-inverse-and-implicit-function-theorems.md): an undoable Jacobian means a locally undoable map.
+- [Change of variables](../08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md): the determinant as an area scale.
+- [Adjoint differentiation](../../12-Financial%20mathematics/07-Greeks%20by%20Numbers%20and%20Calibration/03-adjoint-differentiation-in-outline.md): all price sensitivities in one backward pass.
+- [Error propagation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/07-error-propagation-and-sensitivity.md): errors pushed through a formula.
+- Gradient descent: steps downhill on chained gradients.
+- Backpropagation: the product grouped from the output end.
+- Automatic differentiation: derivatives of whole programs.
+- Newton in several unknowns, and Broyden when a Jacobian is too expensive: the Jacobian as Newton's slope.
+- Reverse mode: left-first grouping, mechanised.
+- Canonical form: coordinates chosen to simplify an equation.
+- Curvature and torsion at any speed: bending, whatever clock traces the curve.
+- Tangent space and differential: the Jacobian without coordinates.
 
-Each table here is read at one point; how the tables change from point to point, bending the flat prediction, is [hessian-and-second-order-approximation](05-hessian-and-second-order-approximation.md).
+Each table here is read at one point; how the tables change from point to point, bending the flat prediction, is [Hessian](05-hessian-and-second-order-approximation.md).
 
 ---
 

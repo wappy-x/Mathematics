@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Black-Scholes call and put
-topic: Prices without a model
-item: Option price bounds
-kind: theorem
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/03-put-call-parity|put-call-parity]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price|no-arbitrage-and-the-law-of-one-price]]"
-next:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/05-strike-and-calendar-shape|strike-and-calendar-shape]]"
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/02-mertons-no-early-exercise-theorem|mertons-no-early-exercise-theorem]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - option-price-bounds
----
-
 # Option price bounds: the floor and ceiling every call and put must respect before any model
 
-Financial mathematics → The Black-Scholes call and put → Prices without a model → Option price bounds
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Black-Scholes call and put](../../../SYLLABUS.md#w12-s08) → Option price bounds
 
 ---
 
@@ -39,7 +18,7 @@ Those three take in **0.396925** today. On expiry day they cancel down to one pa
 
 So the call has a floor, **2.896925**, found by adding up cash flows rather than by modelling Acme. Three more edges turn up the same way: the call can cost no more than **98.019867**, the matching put — the right to sell one share for 100 on the same day — no more than **95.122942**, and neither can cost less than nothing. A floor and a ceiling around one price read as a fence; the real name for the four edges is **bounds**, and that is the word from here on.
 
-What lives inside the room is time value: the worth of being allowed to wait and see. Choosing one number in there is exactly what a model is for, and the shelf's model call at 20% volatility comes out at 9.227006, comfortably inside ([black-scholes-call](01-black-scholes-call.md)).
+What lives inside the room is time value: the worth of being allowed to wait and see. Choosing one number in there is exactly what a model is for, and the shelf's model call at 20% volatility comes out at 9.227006, comfortably inside ([Black–Scholes call](01-black-scholes-call.md)).
 
 **A call costs no more than the share it may deliver and no less than a firm deal to buy that share at the strike; a put is the same with the share and the strike money swapped; each of the four edges is enforced by a trade that pays cash today and can never lose at expiry.**
 
@@ -100,7 +79,7 @@ A firm deal to buy one Acme share for $K$ on expiry day, with no right to walk a
 
 ### When it holds
 
-- **European exercise only.** Every cash-flow table below looks at expiry day and nowhere else. A holder who may exercise early has more, so an American put is worth at least the larger of this card's floor and the undiscounted $\max(K - S, 0)$, and its ceiling is $K$ rather than the cash side ([mertons-no-early-exercise-theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md)).
+- **European exercise only.** Every cash-flow table below looks at expiry day and nowhere else. A holder who may exercise early has more, so an American put is worth at least the larger of this card's floor and the undiscounted $\max(K - S, 0)$, and its ceiling is $K$ rather than the cash side ([Merton's theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md)).
 - **One rate for lending and borrowing, and shares that can be sold short.** Every trade below lends or borrows at $r$ and buys or borrows shares. If borrowing costs more than lending pays, the bounds widen by that gap and quotes inside the wider band cannot be traded against.
 - **A known dividend yield.** Get $q$ wrong and the share side is wrong. Reading 3% where the truth is 2% moves the call floor from 2.896925 to 1.921611, so a quote between the two looks broken when it is sound.
 - **Costs small enough to leave something.** The four trades below pay 0.396925, 0.980133, 0.877058 and 0.639958 today. Commission, the fee for borrowing shares and the gap between bid and offer come out of exactly those amounts, which is why real quotes hug the bounds without touching them.
@@ -111,7 +90,7 @@ A firm deal to buy one Acme share for $K$ on expiry day, with no right to walk a
 
 ### Step 0: one idea, used four times
 
-If one bundle of holdings pays at least as much as another in every outcome, it cannot cost less today. Suppose it did. Buy the cheap bundle, sell the dear one, keep the difference now; at expiry what is held pays at least what is owed, so nothing comes out of pocket. That is money for nothing, and prices move until it is gone ([no-arbitrage-and-the-law-of-one-price](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)).
+If one bundle of holdings pays at least as much as another in every outcome, it cannot cost less today. Suppose it did. Buy the cheap bundle, sell the dear one, keep the difference now; at expiry what is held pays at least what is owed, so nothing comes out of pocket. That is money for nothing, and prices move until it is gone ([No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)).
 
 Nothing else is assumed below: no distribution for Acme, no volatility, no opinion.
 
@@ -202,7 +181,7 @@ Two conditions were used and are easy to miss. The option is European, so the ta
 
 The bounds look loose: with Acme at 100 the call's room is more than 95 wide. They cannot be narrowed without a model, because a model can be pushed as close to either edge as anyone likes. Run the shelf's formula at a volatility of 0.01% and the call comes out at 2.896925, the floor to six decimals, with the put at 0.000000, its floor. Run it at 5000% and the call is 98.019867 and the put 95.122942, both ceilings. Any tighter bound would rule out prices a legitimate model produces.
 
-Two other roads reach the same edges. The short one runs through parity: $C - P$ equals the share side minus the cash side, always ([put-call-parity](03-put-call-parity.md)). Add "a put is worth at least nothing" and the call floor falls out; "a call is worth at least nothing" gives the put floor; "a put costs at most the cash side" gives the call ceiling. The four bounds are two facts in a coat: parity, and options never cost less than nothing. The checks price the call by formula and the put by numerical averaging, subtract, and land on 2.896925.
+Two other roads reach the same edges. The short one runs through parity: $C - P$ equals the share side minus the cash side, always ([Put-call parity](03-put-call-parity.md)). Add "a put is worth at least nothing" and the call floor falls out; "a call is worth at least nothing" gives the put floor; "a put costs at most the cash side" gives the call ceiling. The four bounds are two facts in a coat: parity, and options never cost less than nothing. The checks price the call by formula and the put by numerical averaging, subtract, and land on 2.896925.
 
 The other road drops models altogether. Any rule of the form "average the payoff, then discount" lands inside, provided the share averages to its forward, 103.045453. At every expiry price the call payoff sits between $S_T - K$ and $S_T$, and above zero; averaging keeps an ordering that holds outcome by outcome, and discounting turns the averages into the bounds. The checks try three spreads that look nothing like a bell curve — a coin toss, a lopsided three-point spread, and one that includes Acme going to zero — and all three land inside.
 
@@ -710,9 +689,9 @@ The two outputs match line for line, from different code taking different routes
 
 - **The first test run on any quote.** A price outside the bounds has no implied volatility at all, since a model sweeps only the open room between them. A solver fed such a quote spins or lies, so the bound check runs first.
 - **Data feeds and risk screens.** Quotes are filtered against these edges, and a crossed bound is usually a stale or mistyped number rather than an opportunity.
-- **American calls.** The call floor, with its discounted strike, is why exercising an American call early is a mistake on a share paying no dividends: selling fetches at least the floor, which beats the intrinsic value on offer ([mertons-no-early-exercise-theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md)).
-- **Splitting a price in two.** The usual cut is intrinsic value plus time value — cashing in now against waiting — and it falls in a different place from this card's floor ([intrinsic-and-time-value](06-intrinsic-and-time-value.md)).
-- **Judging a model.** A model pricing outside these bounds would be selling free money — a harder objection than any usual complaint about its assumptions ([black-scholes-assumptions-and-failures](09-black-scholes-assumptions-and-failures.md)).
+- **American calls.** The call floor, with its discounted strike, is why exercising an American call early is a mistake on a share paying no dividends: selling fetches at least the floor, which beats the intrinsic value on offer ([Merton's theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md)).
+- **Splitting a price in two.** The usual cut is intrinsic value plus time value — cashing in now against waiting — and it falls in a different place from this card's floor ([Intrinsic and time value](06-intrinsic-and-time-value.md)).
+- **Judging a model.** A model pricing outside these bounds would be selling free money — a harder objection than any usual complaint about its assumptions ([The Black-Scholes assumptions](09-black-scholes-assumptions-and-failures.md)).
 - **Convertible bonds.** A convertible bond is a bond plus a call, so its floor is the bond's worth plus the call's floor. Desks quote the gap above that floor rather than the price.
 
 > **Say it back**
@@ -722,13 +701,13 @@ The two outputs match line for line, from different code taking different routes
 
 ## What this builds on
 
-- [put-call-parity](03-put-call-parity.md): the identity between a call, a put and a forward, which turns all four bounds into two short sentences.
-- [no-arbitrage-and-the-law-of-one-price](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md): the one assumption behind every table here, that a bundle paying at least as much as another cannot cost less.
+- [Put-call parity](03-put-call-parity.md): the identity between a call, a put and a forward, which turns all four bounds into two short sentences.
+- [No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md): the one assumption behind every table here, that a bundle paying at least as much as another cannot cost less.
 
 ## Where this goes next
 
-- [strike-and-calendar-shape](05-strike-and-calendar-shape.md): more model-free rules, across several strikes and dates at once — prices falling as the strike rises, bending one way, growing with time.
-- [mertons-no-early-exercise-theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md): this card's call floor turned into a rule about when to exercise, and why an American call on a share paying no dividends is never cashed in early.
+- [Shape across strikes and expiries](05-strike-and-calendar-shape.md): more model-free rules, across several strikes and dates at once — prices falling as the strike rises, bending one way, growing with time.
+- [Merton's theorem](../15-American%20and%20Bermudan%20exercise/02-mertons-no-early-exercise-theorem.md): this card's call floor turned into a rule about when to exercise, and why an American call on a share paying no dividends is never cashed in early.
 
 One call and one put leave a room nearly as wide as the share. What narrows it is a second quote to compare against, and the next card sets strikes and dates side by side to squeeze the room from outside.
 

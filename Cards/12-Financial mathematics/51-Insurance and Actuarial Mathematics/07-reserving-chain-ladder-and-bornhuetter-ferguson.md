@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Insurance and Actuarial Mathematics
-topic: Claims still to come
-item: Reserving
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/05-panjer-recursion-and-aggregate-claims|panjer-recursion-and-aggregate-claims]]"
-next:
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/08-credibility-and-reinsurance|credibility-and-reinsurance]]"
-tags: [mathematics, financial mathematics, reserving-chain-ladder-and-bornhuetter-ferguson]
----
-
 # Reserving: estimating claims not yet reported from a run-off triangle
 
-Financial mathematics → Insurance and Actuarial Mathematics → Claims still to come → Reserving
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Insurance and Actuarial Mathematics](../../../SYLLABUS.md#w12-s51) → Reserving
 
 ---
 
@@ -708,8 +692,8 @@ The outputs agree line for line, the simulated rows included: both draw the same
 - **US annual statements.** Property and casualty insurers publish ten-year loss triangles in Schedule P, so anyone can run the chain ladder on a company's figures.
 - **Solvency capital.** Reserve risk, the chance the reserve proves too small, is part of an insurer's capital requirement; Mack's se is a common starting point.
 - **Health insurance.** Doctors bill weeks after treatment. The same method, called **completion factors**, estimates the share of a month's claims still to arrive.
-- **Reinsurance.** A reinsurer reruns the cedant's triangles before quoting. Weighting a record against a prior is the subject of [credibility-and-reinsurance](08-credibility-and-reinsurance.md).
-- **Other reserves.** A year's total claims as a distribution is [collective-risk-and-compound-poisson](04-collective-risk-and-compound-poisson.md). A life policy's reserve, held against future payments on a running contract, is a different thing: [premiums-and-reserves](03-premiums-and-reserves.md).
+- **Reinsurance.** A reinsurer reruns the cedant's triangles before quoting. Weighting a record against a prior is the subject of [Credibility and reinsurance](08-credibility-and-reinsurance.md).
+- **Other reserves.** A year's total claims as a distribution is [Aggregate claims](04-collective-risk-and-compound-poisson.md). A life policy's reserve, held against future payments on a running contract, is a different thing: [Premiums and reserves](03-premiums-and-reserves.md).
 
 > **Say it back**
 > Claims arrive late, so on any closing date the books show only part of what each accident year will cost. A run-off triangle lines the years up by age, and the old rows show how a year's total grows. The chain ladder multiplies each young year's latest figure by the growth still to come, measured as a ratio of totals; BF instead takes the unreported share of an expected total set in advance, which makes it steadier where data is thin. Mack's model adds a standard error with two parts, the future's randomness and the factors' estimation error, and the second is shared by all years. Here: $14.0 million by chain ladder, $14.3 million by BF, give or take $1.3 million.
@@ -718,11 +702,11 @@ The outputs agree line for line, the simulated rows included: both draw the same
 
 ## What this builds on
 
-- [panjer-recursion-and-aggregate-claims](05-panjer-recursion-and-aggregate-claims.md): the distribution of a year's total claims, computed before the year starts. This card asks the next question: after the year, how much of that total has shown up yet?
+- [Panjer's recursion](05-panjer-recursion-and-aggregate-claims.md): the distribution of a year's total claims, computed before the year starts. This card asks the next question: after the year, how much of that total has shown up yet?
 
 ## Where this goes next
 
-- [credibility-and-reinsurance](08-credibility-and-reinsurance.md): how much weight a policy's or a year's own experience deserves against an outside expectation, and how to price the layer of a loss passed on to a reinsurer.
+- [Credibility and reinsurance](08-credibility-and-reinsurance.md): how much weight a policy's or a year's own experience deserves against an outside expectation, and how to price the layer of a loss passed on to a reinsurer.
 
 BF weights a year's own data by the share reported, a weight set by the development pattern alone; the open question is what weight the scatter of the data itself justifies, and the credibility card answers it.
 

@@ -1,23 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Units and Modelling
-topic: Inner and outer solutions
-item: Boundary layers
-kind: method
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/05-regular-perturbation|regular-perturbation]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/05-two-point-boundary-value-problems|two-point-boundary-value-problems]]"
-next:
-  - "[[Cards/13-Engineering mathematics/08-Fluids and Heat/04-lift-drag-and-boundary-layers|lift-drag-and-boundary-layers]]"
-tags: [mathematics, engineering mathematics, boundary-layers-and-singular-perturbation]
----
-
 # Boundary layers: when the small term cannot be dropped near a wall
 
-Engineering mathematics → Units and Modelling → Inner and outer solutions → Boundary layers
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Units and Modelling](../../../SYLLABUS.md#w13-s01) → Boundary layers
 
 ---
 
@@ -25,7 +8,7 @@ Engineering mathematics → Units and Modelling → Inner and outer solutions �
 
 A small survey drone flies at 15 m/s. Its wing is 0.20 m from front edge to back edge; that distance is the **chord**. The air is at 20 °C and sea-level pressure. The engineer wants two numbers: how thick the slow-moving air on the wing's skin is, and how much drag that skin friction costs per metre of wing.
 
-Air is barely sticky. Its stickiness, set against its momentum, is measured by the Reynolds number, the dimensionless ratio of inertia to viscous force from [dimensional-analysis-and-buckingham-pi](02-dimensional-analysis-and-buckingham-pi.md). Here it is 198,476, so the viscous term in the flow equations carries a coefficient of 1/Re, 5.038 in a million. Dropping it looks safe. The flow that remains is smooth and easy to compute, and it slides past the skin at full speed.
+Air is barely sticky. Its stickiness, set against its momentum, is measured by the Reynolds number, the dimensionless ratio of inertia to viscous force from [Buckingham Pi](02-dimensional-analysis-and-buckingham-pi.md). Here it is 198,476, so the viscous term in the flow equations carries a coefficient of 1/Re, 5.038 in a million. Dropping it looks safe. The flow that remains is smooth and easy to compute, and it slides past the skin at full speed.
 
 Real air does not slide. A hot-wire probe held at the skin reads almost no speed: the air sticks. Between the skin and the **free stream**, the undisturbed oncoming air, sits a sheet of air 2.204 mm thick at the back edge, where the speed climbs from zero to full. That sheet is the **boundary layer**. Inside it the "negligible" viscous term is as large as any other, because speed changes so fast across so short a distance. All of the skin-friction drag comes from there: 0.1615 N per metre of span, both sides.
 
@@ -54,9 +37,9 @@ Orange: the outer solution, right far from the wall, wrong at it (2.72 where the
 
 ## The formula
 
-Notation already met: ε (epsilon) is a small dimensionless number, and O(ε), "order of ε", means "no bigger than a fixed multiple of ε" ([regular-perturbation](05-regular-perturbation.md)). A prime is a derivative in the function's own variable: in x on y, in X on Y, and in η on Blasius's f below.
+Notation already met: ε (epsilon) is a small dimensionless number, and O(ε), "order of ε", means "no bigger than a fixed multiple of ε" ([Regular perturbation](05-regular-perturbation.md)). A prime is a derivative in the function's own variable: in x on y, in X on Y, and in η on Blasius's f below.
 
-The model problem is a two-point boundary value problem: one condition at each end ([two-point-boundary-value-problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md)).
+The model problem is a two-point boundary value problem: one condition at each end ([Boundary value problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md)).
 
 $$\varepsilon\, y'' + y' + y = 0, \qquad y(0) = 0,\quad y(1) = 1$$
 
@@ -100,7 +83,7 @@ $$C_f = \frac{4 f''(0)}{\sqrt{\mathrm{Re}}} = \frac{1.328}{\sqrt{\mathrm{Re}}}, 
 | $C_f$ | average skin-friction coefficient: drag over ½ρU^2 times area | 0.002981 | — |
 | $D$ | skin-friction drag, one side, per metre of span | 0.08077 N/m | — |
 
-The viscosity is Lemmon and Jacobsen's value for air at 20 °C and 1 atm. [similarity-and-model-testing](04-similarity-and-model-testing.md) computes the same air's viscosity from Sutherland's older law and gets a value 0.4 % lower; that would move Re by about the same 0.4 % and change no step of the method.
+The viscosity is Lemmon and Jacobsen's value for air at 20 °C and 1 atm. [Similarity](04-similarity-and-model-testing.md) computes the same air's viscosity from Sutherland's older law and gets a value 0.4 % lower; that would move Re by about the same 0.4 % and change no step of the method.
 
 ### When it holds
 
@@ -116,7 +99,7 @@ The viscosity is Lemmon and Jacobsen's value for air at 20 °C and 1 atm. [simil
 
 ### Step 0: the small term is small only where the solution is gentle
 
-Setting ε to 0 turns a second-order equation into a first-order one. A first-order equation takes one condition, but the problem has two. One must be dropped, and the solution that results cannot satisfy it. Near that end the true solution must change so fast that ε y″ is no longer small. That region is the boundary layer. A regular perturbation series, which assumes every term keeps its size, misses it entirely ([regular-perturbation](05-regular-perturbation.md)).
+Setting ε to 0 turns a second-order equation into a first-order one. A first-order equation takes one condition, but the problem has two. One must be dropped, and the solution that results cannot satisfy it. Near that end the true solution must change so fast that ε y″ is no longer small. That region is the boundary layer. A regular perturbation series, which assumes every term keeps its size, misses it entirely ([Regular perturbation](05-regular-perturbation.md)).
 
 ### Step 1: the outer solution keeps the far condition
 
@@ -157,13 +140,13 @@ Subtract the composite: y − y_c = ε(1 − x) e^(1−x) − (ε + x) e^(1 − 
 
 ### Step 6: the wing's inner problem, solved by shooting
 
-Prandtl's equations in the layer have no length of their own along the skin, so the speed profile has the same shape at every distance $x_w$ back from the front edge, stretched by √(ν x_w/U). That collapses them to Blasius's ordinary differential equation. It is a boundary value problem with conditions at η = 0 and at infinity. The shooting method ([the-shooting-method](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md)) guesses the unknown f″(0), integrates out to η = 10, and adjusts until f′ there is 1. The answer is f″(0) = 0.332057, Howarth's 1938 value. Here the outer flow is uniform, so the composite is U + U f′ − U = U f′: the inner solution is already uniformly valid.
+Prandtl's equations in the layer have no length of their own along the skin, so the speed profile has the same shape at every distance $x_w$ back from the front edge, stretched by √(ν x_w/U). That collapses them to Blasius's ordinary differential equation. It is a boundary value problem with conditions at η = 0 and at infinity. The shooting method ([Shooting](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/06-the-shooting-method.md)) guesses the unknown f″(0), integrates out to η = 10, and adjusts until f′ there is 1. The answer is f″(0) = 0.332057, Howarth's 1938 value. Here the outer flow is uniform, so the composite is U + U f′ − U = U f′: the inner solution is already uniformly valid.
 
 ### Step 7: drag, two ways
 
-The skin's shear stress is μ times the speed gradient at the skin, μ U f″(0) √(U/(ν x_w)). Integrated along the chord it gives D = ½ρU^2c × 4f″(0)/√Re. Separately, a force on the air removes momentum from it: the layer carries less momentum than free-stream air would, by ρU^2 times the momentum thickness, which is ∫ f′(1 − f′) dη = 0.664112 layer scales. Both roads give 0.08077 N/m on one side. They agree because momentum is conserved, and that identity is the momentum-integral method the lift-drag-and-boundary-layers card uses on real aerofoils.
+The skin's shear stress is μ times the speed gradient at the skin, μ U f″(0) √(U/(ν x_w)). Integrated along the chord it gives D = ½ρU^2c × 4f″(0)/√Re. Separately, a force on the air removes momentum from it: the layer carries less momentum than free-stream air would, by ρU^2 times the momentum thickness, which is ∫ f′(1 − f′) dη = 0.664112 layer scales. Both roads give 0.08077 N/m on one side. They agree because momentum is conserved, and that identity is the momentum-integral method the Lift and drag card uses on real aerofoils.
 
-A second route to the model's answer is a finite-difference solve ([finite-differences-for-boundary-problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/07-finite-differences-for-boundary-problems.md)): it needs no asymptotics, but it must put several grid points inside the layer, so its cost grows as ε shrinks, while the composite only gets better.
+A second route to the model's answer is a finite-difference solve ([Finite differences](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/07-finite-differences-for-boundary-problems.md)): it needs no asymptotics, but it must put several grid points inside the layer, so its cost grows as ε shrinks, while the composite only gets better.
 
 ---
 
@@ -612,8 +595,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Aircraft and drone drag estimates.** Skin friction is a large part of a clean wing's drag at cruise; the layer's thickness also sets how the wing behaves at stall. lift-drag-and-boundary-layers takes this further.
-- **Wind-tunnel testing.** A model's layer is a different fraction of its size unless the Reynolds number matches, which is why tunnel results need care when scaled ([similarity-and-model-testing](04-similarity-and-model-testing.md)).
+- **Aircraft and drone drag estimates.** Skin friction is a large part of a clean wing's drag at cruise; the layer's thickness also sets how the wing behaves at stall. Lift and drag takes this further.
+- **Wind-tunnel testing.** A model's layer is a different fraction of its size unless the Reynolds number matches, which is why tunnel results need care when scaled ([Similarity](04-similarity-and-model-testing.md)).
 - **Heat exchangers and cooling fins.** Heat crosses a thin thermal layer by conduction alone; its thickness, found by the same balance, sets the heat-transfer rate.
 - **Electrodes and catalysts.** Near a reacting surface a dissolved species changes over a thin diffusion layer, and the current or reaction rate is read off its thickness.
 - **Stiff control and circuit models.** A fast mode with a tiny time constant, such as a parasitic capacitance, is a layer in time: the response jumps over it, then follows the slow equation.
@@ -625,12 +608,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [regular-perturbation](05-regular-perturbation.md): the small parameter ε, O(ε), and the series that works when no term changes size, which is what fails here.
-- [two-point-boundary-value-problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md): one condition at each end, and fitting the general solution's constants to them.
+- [Regular perturbation](05-regular-perturbation.md): the small parameter ε, O(ε), and the series that works when no term changes size, which is what fails here.
+- [Boundary value problems](../../08-Differential%20equations%20and%20dynamics/07-Series%20Solutions%20and%20Boundary%20Problems/05-two-point-boundary-value-problems.md): one condition at each end, and fitting the general solution's constants to them.
 
 ## Where this goes next
 
-- lift-drag-and-boundary-layers: real aerofoils, where the outer speed varies along the chord, the layer can separate, and turbulent friction takes over.
+- Lift and drag: real aerofoils, where the outer speed varies along the chord, the layer can separate, and turbulent friction takes over.
 
 This card's wing is a flat skin in a uniform stream; what the layer does when the aerofoil's shape speeds the air up and then slows it, and when that costs lift, is the question the lift-and-drag card answers.
 

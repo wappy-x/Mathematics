@@ -1,29 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Continuous Distributions
-topic: Prices that multiply
-item: Lognormal
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/04-normal-distribution|normal-distribution]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/05-logarithms|logarithms]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/07-geometric-brownian-motion|geometric-brownian-motion]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/01-geometric-brownian-motion-for-prices|geometric-brownian-motion-for-prices]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/02-black-scholes-put|black-scholes-put]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/01-geometric-asian-kemna-vorst|geometric-asian-kemna-vorst]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/01-garman-kohlhagen|garman-kohlhagen]]"
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/02-kemna-vorst-geometric-asian|kemna-vorst-geometric-asian]]"
-tags: [mathematics, probability and statistics, lognormal-distribution]
----
-
 # Lognormal: a quantity whose logarithm is normal, and why prices use it
 
-Probability and statistics → Continuous Distributions → Prices that multiply → Lognormal
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Continuous Distributions](../../../SYLLABUS.md#w09-s04) → Lognormal
 
 ---
 
@@ -59,7 +36,7 @@ Orange: the lognormal price, climbing steeply from zero, peaking near $50 at 2.5
 
 ## The formula
 
-Notation first, in words. $S_0$ is today's price; $S$ is the price in a year, and $s$ one value of it; $X$ is the year's log return, ln(S/S_0). As on [normal-distribution](04-normal-distribution.md), X ~ N(μ, σ^2) means "X follows the normal law with centre μ and variance σ^2", $Z$ is the standard normal, $\varphi$ its height and $\Phi$ its area to the left. Saying S is **lognormal with parameters μ and σ** means ln(S/S_0) ~ N(μ, σ^2): the two parameters are the centre and spread of the logarithm, not of the price.
+Notation first, in words. $S_0$ is today's price; $S$ is the price in a year, and $s$ one value of it; $X$ is the year's log return, ln(S/S_0). As on [Normal](04-normal-distribution.md), X ~ N(μ, σ^2) means "X follows the normal law with centre μ and variance σ^2", $Z$ is the standard normal, $\varphi$ its height and $\Phi$ its area to the left. Saying S is **lognormal with parameters μ and σ** means ln(S/S_0) ~ N(μ, σ^2): the two parameters are the centre and spread of the logarithm, not of the price.
 
 $$S = S_0\, e^{X} = S_0\, e^{\mu + \sigma Z}$$
 
@@ -101,7 +78,7 @@ $$E[S^k] = S_0^{\,k}\; e^{k\mu + k^2\sigma^2/2}$$
 
 The lognormal law itself is a definition: any μ and any σ above 0 give one. Using it for a share price rests on assumptions.
 
-- **Log returns are normal.** Real daily returns have fatter tails than the bell. The lognormal then understates both crashes and spikes; the card [heavy-tails-pareto-and-cauchy](08-heavy-tails-pareto-and-cauchy.md) shows how badly.
+- **Log returns are normal.** Real daily returns have fatter tails than the bell. The lognormal then understates both crashes and spikes; the card [Heavy tails](08-heavy-tails-pareto-and-cauchy.md) shows how badly.
 - **A positive spread.** At σ = 0 the price is a fixed $54.16 with no density at all; the formula divides by zero.
 - **Fixed centre and spread.** If the spread drifts, the year's log return is a blend of normals, not a normal, and the three centres move.
 - **No default.** The model never reaches zero; a bankrupt company does, so default must be added separately.
@@ -112,7 +89,7 @@ The lognormal law itself is a definition: any μ and any σ above 0 give one. Us
 
 ### Step 0: multiplying becomes adding
 
-A price is a product of daily factors: S = S_0 × (1 + r_1) × (1 + r_2) × … for 252 days, where each r is a day's simple return. Take logarithms and the product becomes a sum: ln(S/S_0) is the sum of the 252 daily log returns ln(1 + r) ([logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)). A sum of many small independent pieces is close to normal: the [central-limit-theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md). So the natural model puts the bell on the logarithm, and the price is e raised to a bell.
+A price is a product of daily factors: S = S_0 × (1 + r_1) × (1 + r_2) × … for 252 days, where each r is a day's simple return. Take logarithms and the product becomes a sum: ln(S/S_0) is the sum of the 252 daily log returns ln(1 + r) ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)). A sum of many small independent pieces is close to normal: the [Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md). So the natural model puts the bell on the logarithm, and the price is e raised to a bell.
 
 The code tests this with a year of coin flips. Each day the log price moves 0.08/252 plus or minus 0.0189, with chance one half each. That is nowhere near normal on any single day. After 252 days the average price is $56.6573 against the lognormal formula's $56.6574.
 
@@ -126,7 +103,7 @@ The median is the price with F equal to one half. Φ is one half at zero, so ln(
 
 ### Step 2: the density, and where the 1/s comes from
 
-A density is the slope of the cumulative chance ([densities-and-cdfs](01-densities-and-cdfs.md)). Differentiate F(s) by the chain rule. The outer slope is the bell's height φ; the inner slope of (ln(s/S_0) − μ)/σ is 1/(sσ). Their product is the density in The formula.
+A density is the slope of the cumulative chance ([Densities](01-densities-and-cdfs.md)). Differentiate F(s) by the chain rule. The outer slope is the bell's height φ; the inner slope of (ln(s/S_0) − μ)/σ is 1/(sσ). Their product is the density in The formula.
 
 The 1/s has a plain meaning. A small log step is the same percentage move at every price, so it covers twice as many dollars at $100 as at $50. The same chance is spread over twice the width, so the height per dollar halves. That stretching is what tilts the curve: it pushes weight into the right tail and lowers the peak's position.
 
@@ -621,10 +598,10 @@ The two outputs agree line for line. The simulated mean, $56.6612 with standard 
 
 ## Where you meet it in real life
 
-- **Option pricing.** The Black-Scholes formula is an average of the call's payoff over a lognormal share price; its two terms are lognormal tail areas. See [black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
-- **Price quantiles.** The 5th percentile of the price is S_0 e^{μ + σ z} at the normal quantile z, because exponentiating keeps order: [normal-quantile](05-normal-quantile.md).
+- **Option pricing.** The Black-Scholes formula is an average of the call's payoff over a lognormal share price; its two terms are lognormal tail areas. See [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+- **Price quantiles.** The 5th percentile of the price is S_0 e^{μ + σ z} at the normal quantile z, because exponentiating keeps order: [Normal quantiles](05-normal-quantile.md).
 - **Incomes, particle sizes, pollutant levels.** Quantities built by repeated percentage shocks are often near lognormal; the far right tail of incomes is heavier still.
-- **Averaging a product, not a sum.** A geometric average of lognormal prices is again lognormal, which is why one kind of Asian option has an exact price: [geometric-asian-kemna-vorst](../../12-Financial%20mathematics/17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/01-geometric-asian-kemna-vorst.md).
+- **Averaging a product, not a sum.** A geometric average of lognormal prices is again lognormal, which is why one kind of Asian option has an exact price: [The geometric Asian call](../../12-Financial%20mathematics/17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/01-geometric-asian-kemna-vorst.md).
 
 > **Say it back**
 > A lognormal quantity is e raised to a normal one: always positive, leaning right. Prices fit because they multiply, and logs turn the product into a near-normal sum. For a $50 share with log return centre 0.08 and spread 0.30, the peak is $49.50, the median $54.16, the mean $56.66. The median is S_0 e^μ; the mean adds half the variance to the exponent, because a rise stretches more than a fall shrinks. The density carries a 1/s, because a log step covers more dollars at higher prices.
@@ -633,18 +610,18 @@ The two outputs agree line for line. The simulated mean, $56.6612 with standard 
 
 ## What this builds on
 
-- [normal-distribution](04-normal-distribution.md): the bell, its area Φ and standardising, which every step here reuses.
-- [logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): why the log of a product is a sum, and why taking logs keeps order.
+- [Normal](04-normal-distribution.md): the bell, its area Φ and standardising, which every step here reuses.
+- [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md): why the log of a product is a sum, and why taking logs keeps order.
 
 ## Where this goes next
 
-- [geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): a price wandering in continuous time, lognormal at every horizon.
-- [geometric-brownian-motion-for-prices](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md): the same model for a share; its −σ^2/2 drift is this card's gap between mean and median.
-- [black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): a call's average payoff over a lognormal price, in closed form.
-- [black-scholes-put](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the same average for the right to sell.
-- [geometric-asian-kemna-vorst](../../12-Financial%20mathematics/17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/01-geometric-asian-kemna-vorst.md): a product of lognormals is lognormal, so a geometric-average option prices exactly.
-- [garman-kohlhagen](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): an exchange rate taken as lognormal.
-- [kemna-vorst-geometric-asian](../../12-Financial%20mathematics/27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/02-kemna-vorst-geometric-asian.md): the geometric Asian again, on commodity averages.
+- [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): a price wandering in continuous time, lognormal at every horizon.
+- [Prices as geometric Brownian motion](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md): the same model for a share; its −σ^2/2 drift is this card's gap between mean and median.
+- [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): a call's average payoff over a lognormal price, in closed form.
+- [Black-Scholes put](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the same average for the right to sell.
+- [The geometric Asian call](../../12-Financial%20mathematics/17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/01-geometric-asian-kemna-vorst.md): a product of lognormals is lognormal, so a geometric-average option prices exactly.
+- [Garman-Kohlhagen](../../12-Financial%20mathematics/21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): an exchange rate taken as lognormal.
+- [Kemna-Vorst](../../12-Financial%20mathematics/27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/02-kemna-vorst-geometric-asian.md): the geometric Asian again, on commodity averages.
 
 This card fixes the law of the price at one date; what it leaves open is how the price gets there, one instant at a time, which the geometric Brownian motion card answers.
 

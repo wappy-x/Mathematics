@@ -1,39 +1,12 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Transforms in Outline
-topic: Spectra of single pulses
-item: The Fourier transform
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/06-Real Integrals and Counting Zeros/03-oscillatory-integrals-and-jordans-lemma|oscillatory-integrals-and-jordans-lemma]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/01-fourier-series-in-complex-form|fourier-series-in-complex-form]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/07-improper-integrals|improper-integrals]]"
-next:
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/04-convolution-theorem|convolution-theorem]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/06-strips-of-convergence-and-shifting-the-line|strips-of-convergence-and-shifting-the-line]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/04-characteristic-functions-and-inversion|characteristic-functions-and-inversion]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/09-carr-madan-fft-and-cos-methods|carr-madan-fft-and-cos-methods]]"
-  - "[[Cards/13-Engineering mathematics/05-Signals/01-sampling-and-the-nyquist-theorem|sampling-and-the-nyquist-theorem]]"
-  - "[[Cards/13-Engineering mathematics/09-Quantum Mechanics in Outline/05-uncertainty-principle|uncertainty-principle]]"
-  - "[[Cards/18-Functional analysis/03-Bounded Operators/04-the-fourier-transform-as-a-unitary-operator|the-fourier-transform-as-a-unitary-operator]]"
-  - "[[Cards/18-Functional analysis/04-Distributions and Sobolev Spaces/05-tempered-distributions-and-the-fourier-transform|tempered-distributions-and-the-fourier-transform]]"
-  - "[[Cards/18-Functional analysis/04-Distributions and Sobolev Spaces/06-sampling-the-dirac-comb-and-nyquist|sampling-the-dirac-comb-and-nyquist]]"
-  - "[[Cards/20-Harmonic analysis/02-The Fourier Transform/01-fourier-transform-on-l1-and-riemann-lebesgue|fourier-transform-on-l1-and-riemann-lebesgue]]"
-tags: [mathematics, complex analysis, fourier-transform]
----
-
 # The Fourier transform: a continuous dial of frequencies, and the Gaussian is its own transform
 
-Complex analysis → Transforms in Outline → Spectra of single pulses → The Fourier transform
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Transforms in Outline](../../../SYLLABUS.md#w07-s08) → The Fourier transform
 
 ---
 
 ## General Overview
 
-A camera flash fires once: fully on for one second, centred on noon, off at every other time. It never repeats, so no Fourier series fits it ([fourier-series-in-complex-form](01-fourier-series-in-complex-form.md)).
+A camera flash fires once: fully on for one second, centred on noon, off at every other time. It never repeats, so no Fourier series fits it ([Fourier series](01-fourier-series-in-complex-form.md)).
 
 Still, how much of each steady tone is in it? Pick a frequency ω (omega), in radians per second: ω = 2π is one turn a second. Multiply the flash by a probe wave spinning at that rate and add up over all time. The flash holds 0.958851 at ω = 1, 0.636620 at ω = π, and nothing at ω = 2π, where the probe turns once during the flash and cancels itself.
 
@@ -62,7 +35,7 @@ First line: the flash, 2 sin(ω/2)/ω, below zero past 2π, its ripples shrinkin
 
 ## The formula
 
-Notation first. A hat, $\hat f$, read "f-hat", names the transform of f. The probe $e^{-i\omega t}$ is a point going clockwise round the unit circle, ω radians a second ([eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)).
+Notation first. A hat, $\hat f$, read "f-hat", names the transform of f. The probe $e^{-i\omega t}$ is a point going clockwise round the unit circle, ω radians a second ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)).
 
 $$\hat f(\omega) = \int_{-\infty}^{\infty} f(t)\, e^{-i\omega t}\, dt$$
 
@@ -126,9 +99,9 @@ $$-\tfrac{t^2}{2} - i\omega t = -\tfrac{(t + i\omega)^2}{2} - \tfrac{\omega^2}{2
 
 So f-hat(ω) is e^(−ω^2/2) times the integral of e^(−z^2/2) along the line z = t + iω, one unit up at ω = 1.
 
-The function e^(−z^2/2) is holomorphic (it has a complex derivative everywhere), so its integral round any closed loop is 0 ([cauchys-theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md)). Take the rectangle with corners −R, R, R + i, −R + i. At R = 3 the real edge gives 2.499861, the top 2.517307, the right side 0.008723 − 0.000733i, and the loop sums to 0.
+The function e^(−z^2/2) is holomorphic (it has a complex derivative everywhere), so its integral round any closed loop is 0 ([Cauchy's theorem](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/03-cauchys-theorem.md)). Take the rectangle with corners −R, R, R + i, −R + i. At R = 3 the real edge gives 2.499861, the top 2.517307, the right side 0.008723 − 0.000733i, and the loop sums to 0.
 
-On a side the integrand's size is e^(−(R^2 − y^2)/2), which dies fast. At R = 8 both long edges read 2.506628, which is √(2π), the bell's area ([gaussian-integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)). So
+On a side the integrand's size is e^(−(R^2 − y^2)/2), which dies fast. At R = 8 both long edges read 2.506628, which is √(2π), the bell's area ([The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)). So
 
 $$\int_{-\infty}^{\infty} e^{-t^2/2}\, e^{-i\omega t}\, dt = \sqrt{2\pi}\; e^{-\omega^2/2}.$$
 
@@ -165,7 +138,7 @@ Near t, within δ where |f(s) − f(t)| is below a chosen tolerance, the integra
 
 </details>
 
-The Laplace transform of the flash shifted to start at 0 is (1 − e^(−s))/s ([laplace-transform](05-laplace-transform.md)). At s = i it is 0.841471 − 0.459698i, of size 0.958851: a delay turns the phase and keeps the size.
+The Laplace transform of the flash shifted to start at 0 is (1 − e^(−s))/s ([The Laplace transform](05-laplace-transform.md)). At s = i it is 0.841471 − 0.459698i, of size 0.958851: a delay turns the phase and keeps the size.
 
 ---
 
@@ -420,10 +393,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Photography and radar.** Halve a pulse and its band of frequencies doubles: the uncertainty-principle in engineering form.
+- **Photography and radar.** Halve a pulse and its band of frequencies doubles: the Uncertainty in engineering form.
 - **Spectroscopy.** A vibration dying like e^(−|t|) has the Cauchy bell as spectrum: the Lorentzian line shape.
-- **Filtering.** A filter multiplies a spectrum; [convolution-theorem](04-convolution-theorem.md) says what that does in time, and [discrete-fourier-transform](02-discrete-fourier-transform.md) computes spectra from samples.
-- **Option pricing.** Some models give only a transform; inversion gives prices ([carr-madan-fft-and-cos-methods](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md)).
+- **Filtering.** A filter multiplies a spectrum; [Convolution](04-convolution-theorem.md) says what that does in time, and [The discrete Fourier transform](02-discrete-fourier-transform.md) computes spectra from samples.
+- **Option pricing.** Some models give only a transform; inversion gives prices ([Transform pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md)).
 
 > **Say it back**
 > The Fourier transform integrates a signal against a probe spinning at rate ω, for every ω. The one-second flash gives 2 sin(ω/2)/ω. Completing the square and sliding the line shows the Gaussian comes back as a bell. The Cauchy bell gives π e^(−|ω|), from one residue, closing where the probe decays. The inverse, with 1/(2π) in front, rebuilds the signal; a jump rebuilds as its midpoint.
@@ -432,24 +405,24 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [oscillatory-integrals-and-jordans-lemma](../06-Real%20Integrals%20and%20Counting%20Zeros/03-oscillatory-integrals-and-jordans-lemma.md): the vanishing arc and the value π e^(−1) for the Cauchy bell.
-- [fourier-series-in-complex-form](01-fourier-series-in-complex-form.md): harmonics and coefficients for a repeating signal, the case this card lets the period outgrow.
-- [improper-integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md): what an integral over all time means, and when it converges.
+- [Jordan's lemma](../06-Real%20Integrals%20and%20Counting%20Zeros/03-oscillatory-integrals-and-jordans-lemma.md): the vanishing arc and the value π e^(−1) for the Cauchy bell.
+- [Fourier series](01-fourier-series-in-complex-form.md): harmonics and coefficients for a repeating signal, the case this card lets the period outgrow.
+- [Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md): what an integral over all time means, and when it converges.
 
 ## Where this goes next
 
-- [convolution-theorem](04-convolution-theorem.md): smoothing in time becomes multiplying spectra.
-- [strips-of-convergence-and-shifting-the-line](06-strips-of-convergence-and-shifting-the-line.md): ω made complex, and where the integral converges.
-- [characteristic-functions-and-inversion](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): transforms of probability densities, inverted.
-- [carr-madan-fft-and-cos-methods](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md): option prices from the inversion integral.
-- sampling-and-the-nyquist-theorem: how often to sample a signal whose spectrum stops.
-- uncertainty-principle: narrow in time forces wide in frequency.
-- the-fourier-transform-as-a-unitary-operator: the transform keeps energy, up to 2π.
-- tempered-distributions-and-the-fourier-transform: a transform for f = 1 and other signals without finite area.
-- sampling-the-dirac-comb-and-nyquist: sampling as multiplying by a train of spikes.
-- fourier-transform-on-l1-and-riemann-lebesgue: why every finite-area signal's spectrum fades at high frequency.
+- [Convolution](04-convolution-theorem.md): smoothing in time becomes multiplying spectra.
+- [Where a transform lives](06-strips-of-convergence-and-shifting-the-line.md): ω made complex, and where the integral converges.
+- [Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): transforms of probability densities, inverted.
+- [Transform pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md): option prices from the inversion integral.
+- Sampling: how often to sample a signal whose spectrum stops.
+- Uncertainty: narrow in time forces wide in frequency.
+- Plancherel: the transform keeps energy, up to 2π.
+- Tempered distributions: a transform for f = 1 and other signals without finite area.
+- Sampling: sampling as multiplying by a train of spikes.
+- The Fourier transform of an absolutely integrable signal, and why it fades at infinity: why every finite-area signal's spectrum fades at high frequency.
 
-The flash's spectrum is known; what multiplying it by a filter's spectrum does back in time is [convolution-theorem](04-convolution-theorem.md).
+The flash's spectrum is known; what multiplying it by a filter's spectrum does back in time is [Convolution](04-convolution-theorem.md).
 
 ---
 

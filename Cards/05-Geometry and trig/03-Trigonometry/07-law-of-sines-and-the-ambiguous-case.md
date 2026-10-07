@@ -1,24 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Trigonometry
-topic: Solving a triangle from its angles
-item: Law of sines
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/06-law-of-cosines|law-of-cosines]]"
-next: []
-tags:
-  - mathematics
-  - geometry and trig
-  - law-of-sines-and-the-ambiguous-case
----
-
 # Law of sines: sides opposite angles in fixed proportion, and the case with two answers
 
-Geometry and trig → Trigonometry → Solving a triangle from its angles → Law of sines
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Trigonometry](../../../SYLLABUS.md#w05-s03) → Law of sines
 
 ---
 
@@ -26,7 +8,7 @@ Geometry and trig → Trigonometry → Solving a triangle from its angles → La
 
 Two lighthouses, A and B, stand 10 km apart on a straight coast. On a clear night both keepers sight one ship. At A the sightline makes 30° with the coast towards B; at B, 105° with the coast towards A. How far off is it?
 
-Two angles and the side between them fix a triangle: the ASA rule, angle-side-angle, of [congruent-triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md). So the ship has one position; the law of sines finds it: 13.66 km from A, 7.07 km from B, 6.83 km off the coast.
+Two angles and the side between them fix a triangle: the ASA rule, angle-side-angle, of [Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md). So the ship has one position; the law of sines finds it: 13.66 km from A, 7.07 km from B, 6.83 km off the coast.
 
 Then fog hides the ship from B, whose radar still reads its range: 7.07 km. A still sights it at 30°. An angle, the side beside it and the side facing it (SSA, side-side-angle) need not fix a triangle. A circle of 7.07 km about B crosses A's 30° sightline twice: at the ship, and at a phantom 3.66 km from A. Both fit every reading.
 
@@ -44,7 +26,7 @@ Drawn at 1 km = 22 units; C is the ship. The angle at B is past 90°, so the das
 
 ## The formula
 
-Each side takes the small letter of the corner it faces; the capital also names the corner's angle. So $c$ is the baseline, $a$ the ship's distance from B, $b$ from A. In a right triangle an angle's sine is the side facing it over the longest side; its cosine, the side beside it over the longest ([right-triangle-trigonometry](01-right-triangle-trigonometry.md)). [radians-and-the-unit-circle](02-radians-and-the-unit-circle.md) carries both past 90°, where an angle and 180° minus it share a sine. $R$ is the radius of the circle through the corners.
+Each side takes the small letter of the corner it faces; the capital also names the corner's angle. So $c$ is the baseline, $a$ the ship's distance from B, $b$ from A. In a right triangle an angle's sine is the side facing it over the longest side; its cosine, the side beside it over the longest ([Sine, cosine and tangent](01-right-triangle-trigonometry.md)). [The unit circle](02-radians-and-the-unit-circle.md) carries both past 90°, where an angle and 180° minus it share a sine. $R$ is the radius of the circle through the corners.
 
 $$\frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C} = 2R$$
 
@@ -56,7 +38,7 @@ $$\sin C = \frac{c \sin A}{a}$$
 
 **Read it aloud:** the sine of the ship's angle is the baseline times the sine of A, over the range.
 
-A sine between 0 and 1 belongs to two angles under 180°: the one from 0° to 90° that the inverse sine, $\arcsin$, returns ([inverse-trig-and-solving-equations](05-inverse-trig-and-solving-equations.md)), and its mirror, 180° minus that. Each stands only if it leaves a positive angle at B. With $d = c \sin A$, B's square-on distance to A's sightline, and A below 90°:
+A sine between 0 and 1 belongs to two angles under 180°: the one from 0° to 90° that the inverse sine, $\arcsin$, returns ([Inverse trig](05-inverse-trig-and-solving-equations.md)), and its mirror, 180° minus that. Each stands only if it leaves a positive angle at B. With $d = c \sin A$, B's square-on distance to A's sightline, and A below 90°:
 
 | Range from B | Triangles | In the fog, d = 5.00 km |
 | --- | --- | --- |
@@ -80,7 +62,7 @@ With A at 90° or more, one triangle if the range exceeds c, none otherwise.
 
 ### When it holds
 
-- **Flat ground.** Across an ocean the sides are arcs, with a law of their own ([triangles-on-a-sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md)).
+- **Flat ground.** Across an ocean the sides are arcs, with a law of their own ([Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md)).
 - **Each side over the sine of the angle it faces.** B's range faces A, so it goes over sin A; a wrong pairing fails silently.
 - **A range clear of d.** Near 5 km the circle grazes the sightline; a small error flips the count between none and two.
 
@@ -102,11 +84,11 @@ The height from B onto A's sightline is $c \sin A$ from A and $a \sin C$ from th
 
 ### Step 2: the common ratio is a diameter
 
-Three corners not in a line lie on one circle: the square-on lines through the midpoints of two sides cross at a point equally far from all three. Draw the diameter from A to E. A diameter is seen at a right angle from its circle ([angles-in-a-circle](../02-Circles%20and%20Solids/03-angles-in-a-circle.md)), so triangle A, B, E is right-angled at B and its angle at E has sine $c / 2R$. E and the ship see the baseline at equal angles from the same arc, or at angles adding to 180° from opposite arcs; the sines match, so $c / \sin C = 2R$. (If the baseline is a diameter, the ship's angle is 90° and $c = 2R$ at once.) With A at (0, 0) and B at (10, 0) in km, the centre is (5.00, 5.00): diameter 14.1421 km.
+Three corners not in a line lie on one circle: the square-on lines through the midpoints of two sides cross at a point equally far from all three. Draw the diameter from A to E. A diameter is seen at a right angle from its circle ([Angles at a circle](../02-Circles%20and%20Solids/03-angles-in-a-circle.md)), so triangle A, B, E is right-angled at B and its angle at E has sine $c / 2R$. E and the ship see the baseline at equal angles from the same arc, or at angles adding to 180° from opposite arcs; the sines match, so $c / \sin C = 2R$. (If the baseline is a diameter, the ship's angle is 90° and $c = 2R$ at once.) With A at (0, 0) and B at (10, 0) in km, the centre is (5.00, 5.00): diameter 14.1421 km.
 
 ### Step 3: two angles and a side give one triangle
 
-The angle sum gives 45° at the ship ([triangle-angle-sum-and-inequality](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). The known side sets the ratio, 14.1421 km; each side is that ratio times its angle's sine. AAS data, two angles and a side not between them, reduce to this the same way. One answer, because ASA is a congruence test.
+The angle sum gives 45° at the ship ([Triangles](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). The known side sets the ratio, 14.1421 km; each side is that ratio times its angle's sine. AAS data, two angles and a side not between them, reduce to this the same way. One answer, because ASA is a congruence test.
 
 ### The picture: the fog, to scale
 
@@ -116,7 +98,7 @@ Drawn at 1 km = 19 units. B's dotted square-on line lands midway between the two
 
 ### Step 4: SSA, a circle crossing a line
 
-In the fog the sines give 45° or 135° at the ship, leaving 105° or 15° at B. The grid shows both are real. The point $t$ km out along A's sightline sits at ($t \cos A$, $t \sin A$). By Pythagoras and $\cos^2 A + \sin^2 A = 1$ ([trig-identities](03-trig-identities.md)), its distance from B equals the range when
+In the fog the sines give 45° or 135° at the ship, leaving 105° or 15° at B. The grid shows both are real. The point $t$ km out along A's sightline sits at ($t \cos A$, $t \sin A$). By Pythagoras and $\cos^2 A + \sin^2 A = 1$ ([Trig identities](03-trig-identities.md)), its distance from B equals the range when
 
 $$t^2 - 2ct\cos A + c^2 - a^2 = 0$$
 
@@ -135,7 +117,7 @@ Call the crossings $t_1$ and $t_2$. The quadratic is $(t - t_1)(t - t_2)$; multi
 
 </details>
 
-At corner A, with $b$ unknown, the law of cosines ([law-of-cosines](06-law-of-cosines.md)) is this quadratic, with $b$ for $t$.
+At corner A, with $b$ unknown, the law of cosines ([Law of cosines](06-law-of-cosines.md)) is this quadratic, with $b$ for $t$.
 
 ---
 
@@ -395,7 +377,7 @@ The two outputs match line for line.
 
 - **Triangulation.** Surveys before satellites measured one baseline and fixed every further point by angles: a chain of ASA triangles.
 - **A sightline and a range.** Taken from two stations, they cross twice, as in the fog; a third reading picks one.
-- **Star distances.** Sightings from opposite sides of the Earth's orbit make a thin ASA triangle, tiny-angled at the star ([small-angles-and-the-sine-bound](08-small-angles-and-the-sine-bound.md)).
+- **Star distances.** Sightings from opposite sides of the Earth's orbit make a thin ASA triangle, tiny-angled at the star ([Small angles](08-small-angles-and-the-sine-bound.md)).
 
 > **Say it back**
 > Each side over the sine of the angle it faces gives the same length, the diameter of the circle through the corners. One height, measured from both ends, proves the ratios equal. Two angles and a side fix the ship, 13.66 km from A. With SSA the facing side swings like a radius and meets the other line twice, once or never; in the fog, twice.
@@ -404,12 +386,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [law-of-cosines](06-law-of-cosines.md): SAS and SSS triangles; written at corner A, the quadratic this card's grid road solves.
+- [Law of cosines](06-law-of-cosines.md): SAS and SSS triangles; written at corner A, the quadratic this card's grid road solves.
 
 ## Where this goes next
 
-- [small-angles-and-the-sine-bound](08-small-angles-and-the-sine-bound.md): a thin triangle's tiny angle.
-- [triangles-on-a-sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md): the law of sines on a globe, where sides are arcs.
+- [Small angles](08-small-angles-and-the-sine-bound.md): a thin triangle's tiny angle.
+- [Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md): the law of sines on a globe, where sides are arcs.
 
 Dividing by the tiny sine of a far ship's angle magnifies every error; how nearly that sine equals its angle, in radians, is the next card's question.
 

@@ -1,26 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Binomial Coefficients and Identities
-topic: Splitting a choice in two
-item: Vandermonde's identity
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/01-pascals-rule-and-the-triangle|pascals-rule-and-the-triangle]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/07-central-binomial-and-bounds|central-binomial-and-bounds]]"
-  - "[[Cards/04-Combinatorics and graphs/06-Lattice Paths and Catalan Numbers/01-lattice-paths|lattice-paths]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - vandermonde-identity
----
-
 # Vandermonde's identity: choosing from two merged groups splits by how many come from each
 
-Combinatorics and graphs → Binomial Coefficients and Identities → Splitting a choice in two → Vandermonde's identity
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Binomial Coefficients and Identities](../../../SYLLABUS.md#w04-s03) → Vandermonde's identity
 
 ---
 
@@ -56,7 +36,7 @@ There is no branch for a band with no guitarist: five seats cannot be filled fro
 
 ## The formula
 
-C(n, k) counts the ways to choose k items from n when order is ignored, read "n choose k"; it is 0 whenever k is below 0 or above n, a count of something impossible ([pascals-rule-and-the-triangle](01-pascals-rule-and-the-triangle.md)). The tall Σ is the instruction to add, with the letter that changes and its first value below, its last value above ([binomial-theorem](02-binomial-theorem.md)).
+C(n, k) counts the ways to choose k items from n when order is ignored, read "n choose k"; it is 0 whenever k is below 0 or above n, a count of something impossible ([Pascal's rule](01-pascals-rule-and-the-triangle.md)). The tall Σ is the instruction to add, with the letter that changes and its first value below, its last value above ([The binomial theorem](02-binomial-theorem.md)).
 
 $$C(m+n,\ r) \;=\; \sum_{k=0}^{r} C(m,\ k)\; C(n,\ r-k)$$
 
@@ -125,7 +105,7 @@ $$C(2n,\ n) \;=\; \sum_{k=0}^{n} C(n,\ k)^2$$
 
 **Read it aloud:** the middle entry of an even-numbered row of Pascal's triangle is every entry of the half-sized row squared and added. Row 5 is 1 5 10 10 5 1, and its squares add to 252.
 
-A second road reaches the identity through powers rather than piles. Multiply out a bracket raised to $m$ against one raised to $n$ and collect the terms carrying the same number of one letter: drawing $k$ copies from the first bracket and $r-k$ from the second is a band again. The two brackets multiply to one raised to $m+n$, so the collected counts must agree. [binomial-theorem](02-binomial-theorem.md) sets up that expansion properly.
+A second road reaches the identity through powers rather than piles. Multiply out a bracket raised to $m$ against one raised to $n$ and collect the terms carrying the same number of one letter: drawing $k$ copies from the first bracket and $r-k$ from the second is a band again. The two brackets multiply to one raised to $m+n$, so the collected counts must agree. [The binomial theorem](02-binomial-theorem.md) sets up that expansion properly.
 
 ---
 
@@ -393,8 +373,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Sampling a batch with two kinds in it.** Take 5 units from a crate of 6 good and 4 faulty: exactly 3 good ones happens in 120 of the 252 draws, favourable over possible — one term of this sum over the total.
-- **Routes across a grid.** Cut a route to a far corner at a line partway across: the pieces on each side multiply, and the cuts add. This identity, drawn on paper: [lattice-paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md).
-- **The middle of a row.** The sum-of-squares form is where the central entry 252 comes from, and that entry governs how big a row gets: [central-binomial-and-bounds](07-central-binomial-and-bounds.md).
+- **Routes across a grid.** Cut a route to a far corner at a line partway across: the pieces on each side multiply, and the cuts add. This identity, drawn on paper: [Lattice paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md).
+- **The middle of a row.** The sum-of-squares form is where the central entry 252 comes from, and that entry governs how big a row gets: [The middle of the row](07-central-binomial-and-bounds.md).
 
 > **Say it back**
 > Ten players, six on guitar and four on drums, make 252 five-piece bands. Count them again by how many guitars are on stage: 6, then 60, then 120, then 60, then 6, adding to the same 252. The piles cannot overlap and none is missed, so the pooled count equals the sum of the split counts. That is Vandermonde's identity. When the groups are the same size and the band takes half the pool, every term becomes a square: the middle entry of a row of Pascal's triangle is the squares of the row half its size, added.
@@ -403,14 +383,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [pascals-rule-and-the-triangle](01-pascals-rule-and-the-triangle.md): what C(n, k) counts, the zero convention, and the triangle the code builds by addition alone.
+- [Pascal's rule](01-pascals-rule-and-the-triangle.md): what C(n, k) counts, the zero convention, and the triangle the code builds by addition alone.
 
 ## Where this goes next
 
-- [central-binomial-and-bounds](07-central-binomial-and-bounds.md): how fast the middle entry grows.
-- [lattice-paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md): the same split made by cutting a route across a grid.
+- [The middle of the row](07-central-binomial-and-bounds.md): how fast the middle entry grows.
+- [Lattice paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md): the same split made by cutting a route across a grid.
 
-Nothing here says how large that middle entry grows as rows lengthen — [central-binomial-and-bounds](07-central-binomial-and-bounds.md) puts bounds on it.
+Nothing here says how large that middle entry grows as rows lengthen — [The middle of the row](07-central-binomial-and-bounds.md) puts bounds on it.
 
 ---
 

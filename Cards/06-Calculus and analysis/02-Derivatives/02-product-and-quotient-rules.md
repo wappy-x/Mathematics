@@ -1,24 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Derivatives
-topic: Rates of combined quantities
-item: Product and quotient rules
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/01-the-derivative|the-derivative]]"
-next:
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/03-chain-rule|chain-rule]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/04-integration-by-parts|integration-by-parts]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/05-integrating-factor|integrating-factor]]"
-tags: [mathematics, calculus and analysis, product-and-quotient-rules]
----
-
 # Product and quotient rules: derivatives of things multiplied and divided
 
-Calculus and analysis → Derivatives → Rates of combined quantities → Product and quotient rules
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Derivatives](../../../SYLLABUS.md#w06-s02) → Product and quotient rules
 
 ---
 
@@ -52,7 +34,7 @@ The orange curve is revenue. The green line touches it at week 4 with slope 36. 
 
 ## The formula
 
-A reminder of notation from [the-derivative](01-the-derivative.md): a prime marks a derivative, so $p'$ is the rate of $p$ per unit of the input. For two functions $f$ and $g$ of the same input, each with a derivative there:
+A reminder of notation from [The derivative](01-the-derivative.md): a prime marks a derivative, so $p'$ is the rate of $p$ per unit of the input. For two functions $f$ and $g$ of the same input, each with a derivative there:
 
 $$(f g)' = f' g + f g'$$
 
@@ -85,7 +67,7 @@ Units: $R'$ is dollars a week, per week, the output's unit per input unit.
 
 - **Both factors have a derivative at the point.** A price held at $14 until week 4, rising after, gives revenue a left rate of −56 and a right rate of 36 there: a corner, no single rate.
 - **A bottom that is not zero.** Bags reach 0 in week 50, and revenue ÷ bags has no value there.
-- **Whole-number powers.** Other powers need logarithms, in [derivatives-of-exp-and-log](05-derivatives-of-exp-and-log.md).
+- **Whole-number powers.** Other powers need logarithms, in [Derivatives of exp and log](05-derivatives-of-exp-and-log.md).
 
 ---
 
@@ -145,7 +127,7 @@ A power is a product: x^3 = x × x^2. The rate of x is 1. If the rate of x^n is 
 
 For a negative power, x^(−m) = 1 / x^m with m positive. The reciprocal rule gives −m x^(m−1) / x^(2m) = −m x^(−m−1): the same pattern, n x^(n−1) with n = −m. It needs x ≠ 0, since 1/x^m has no value there. At x = 2, the rate of 1/x^2 is −2 / 8 = −0.25.
 
-A second road, by logarithms, turns a product into a sum: [derivatives-of-exp-and-log](05-derivatives-of-exp-and-log.md).
+A second road, by logarithms, turns a product into a sum: [Derivatives of exp and log](05-derivatives-of-exp-and-log.md).
 
 ---
 
@@ -389,7 +371,7 @@ ALL CHECKS PASS
 - **Pricing.** Revenue is price times volume. Raising price pays while price's contribution beats the lost volume's; the peak sits where they cancel, here week 13.
 - **Rates of ratios.** Profit margin and cost per unit are quotients; a growing bottom pulls the ratio down, the quotient rule's minus sign.
 - **Electrical power.** Power is voltage times current. When both drift, the rate of power needs both contributions.
-- **Trigonometry.** tan x is sin x ÷ cos x, so its derivative comes from the quotient rule once [derivatives-of-trig-functions](04-derivatives-of-trig-functions.md) supplies the rates of sine and cosine.
+- **Trigonometry.** tan x is sin x ÷ cos x, so its derivative comes from the quotient rule once [Derivatives of sine and cosine](04-derivatives-of-trig-functions.md) supplies the rates of sine and cosine.
 
 > **Say it back**
 > Multiply two moving quantities and the product changes by two strips and a corner. Divided by the step, the corner vanishes and the strips give first's rate times second plus first times second's rate. A ratio is a product with a reciprocal, whose rate is minus the bottom's rate over the bottom squared. Repeated products give n x^(n−1) for every whole-number power, away from 0 for negative ones. The roaster's revenue climbs $36 a week in week 4, not −2.
@@ -398,13 +380,13 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [the-derivative](01-the-derivative.md): the difference quotient and the limit every step here takes.
+- [The derivative](01-the-derivative.md): the difference quotient and the limit every step here takes.
 
 ## Where this goes next
 
-- [chain-rule](03-chain-rule.md): the rate of one function fed into another.
-- [integration-by-parts](../04-Integrals/04-integration-by-parts.md): the product rule run backwards to undo a derivative.
-- [integrating-factor](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/05-integrating-factor.md): a multiplier chosen so that one side becomes the product rule's output.
+- [Chain rule](03-chain-rule.md): the rate of one function fed into another.
+- [Integration by parts](../04-Integrals/04-integration-by-parts.md): the product rule run backwards to undo a derivative.
+- [The integrating factor](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/05-integrating-factor.md): a multiplier chosen so that one side becomes the product rule's output.
 ---
 
 ## Sources

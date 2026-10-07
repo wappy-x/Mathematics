@@ -1,25 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Chance and Events
-topic: What can happen
-item: Sample spaces and events
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/01-what-probability-means|what-probability-means]]"
-  - "[[Cards/01-Foundations/07-Sets/01-sets-and-membership|sets-and-membership]]"
-  - "[[Cards/01-Foundations/07-Sets/03-set-operations|set-operations]]"
-next:
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/03-probability-rules-and-complements|probability-rules-and-complements]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/01-random-variables-and-distributions|random-variables-and-distributions]]"
-tags: [mathematics, probability and statistics, sample-spaces-and-events]
----
-
 # Sample spaces and events: listing what can happen
 
-Probability and statistics → Chance and Events → What can happen → Sample spaces and events
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Chance and Events](../../../SYLLABUS.md#w09-s01) → Sample spaces and events
 
 ---
 
@@ -57,17 +38,17 @@ $$A = \{\,(i, j) \text{ in } \Omega \text{ with } i + j = 7\,\} = \{(1,6), (2,5)
 
 **Read it aloud:** the sample space is every red-white pair; the event "total is 7" is the pairs whose faces add to 7, and there are six.
 
-Events combine by the set operations of [set-operations](../../01-Foundations/07-Sets/03-set-operations.md). With $S$ the event "a six shows":
+Events combine by the set operations of [Set operations](../../01-Foundations/07-Sets/03-set-operations.md). With $S$ the event "a six shows":
 
 $$A \cap S = \{(1,6), (6,1)\}, \qquad A \cup S \text{ has } 15, \qquad \text{not } A \text{ has } 36 - 6 = 30$$
 
 **Read it aloud:** "A and S" is the overlap, "A or S" is everything in either, "not A" is the rest of the sample space.
 
-For a count of "or", the overlap must come off once, since it was counted in both ([inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md)):
+For a count of "or", the overlap must come off once, since it was counted in both ([Inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md)):
 
 $$\lvert A \cup S\rvert = \lvert A\rvert + \lvert S\rvert - \lvert A \cap S\rvert = 6 + 11 - 2 = 15$$
 
-Chances attach to events: $P(A)$, read "the chance of A" ([what-probability-means](01-what-probability-means.md)). With fair dice the 36 outcomes are equally likely, so $P(A)$ is 6 out of 36, 0.166667: about 1 throw in 6 totals 7. Why that division is licensed is [equally-likely-outcomes-and-counting](04-equally-likely-outcomes-and-counting.md).
+Chances attach to events: $P(A)$, read "the chance of A" ([Probability](01-what-probability-means.md)). With fair dice the 36 outcomes are equally likely, so $P(A)$ is 6 out of 36, 0.166667: about 1 throw in 6 totals 7. Why that division is licensed is [Counting chances](04-equally-likely-outcomes-and-counting.md).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -119,7 +100,7 @@ For "and", count the overlap directly: two outcomes, (1,6) and (6,1). For "or", 
 
 $$\text{not } (A \cup S) = (\text{not } A) \cap (\text{not } S)$$
 
-which here is 21 outcomes both ways. That is De Morgan's law ([logical-equivalence-and-de-morgan](../../01-Foundations/05-Logic/03-logical-equivalence-and-de-morgan.md)), in dice.
+which here is 21 outcomes both ways. That is De Morgan's law ([Logical equivalence and De Morgan](../../01-Foundations/05-Logic/03-logical-equivalence-and-de-morgan.md)), in dice.
 
 ### Step 4: every subset is an event, including two odd ones
 
@@ -146,7 +127,7 @@ That is why the totals fail as a sample space: "a six shows" cuts through the bl
 
 </details>
 
-A second road to the same list: throw red first, then white, and draw each throw as a branch. Six branches, each splitting six ways, give 36 leaves, one per ordered pair. That is the set of ordered pairs from [ordered-pairs-and-cartesian-product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md), and the tree carries chances on its branches in [conditional-probability](05-conditional-probability.md).
+A second road to the same list: throw red first, then white, and draw each throw as a branch. Six branches, each splitting six ways, give 36 leaves, one per ordered pair. That is the set of ordered pairs from [Ordered pairs and the Cartesian product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md), and the tree carries chances on its branches in [Conditional probability](05-conditional-probability.md).
 
 ### The picture: the partition by totals
 
@@ -521,7 +502,7 @@ The two outputs match line for line.
 >
 > - **Totals as outcomes.** The list 2 to 12 is exhaustive and exclusive, but its entries are events of 1 to 6 outcomes each. Treating them as equal gives 1/11 = 0.090909 for a 7.
 > - **"Or" as adding.** "Total 7 or a six" is 15 outcomes, not 17: the two shared outcomes come off once.
-> - **Disjoint read as unrelated.** "Total 7" and "a double" share no outcome, so one happening rules the other out: the opposite of unrelated. [independence](07-independence.md) draws the line.
+> - **Disjoint read as unrelated.** "Total 7" and "a double" share no outcome, so one happening rules the other out: the opposite of unrelated. [Independence](07-independence.md) draws the line.
 
 ---
 
@@ -529,7 +510,7 @@ The two outputs match line for line.
 
 - **Board games.** Games that punish a total of 7 rely on its being the largest event among the totals: 6 outcomes of 36, against 1 each for 2 and 12.
 - **Search filters and databases.** A query "in stock AND on sale AND NOT refurbished" is an intersection and a complement taken over the rows of a table. The table is the sample space.
-- **Medical screening.** A test result and a patient's condition give the outcomes ill and positive, ill and negative, well and positive, well and negative. "Positive" is the event made of the first and third, and [bayes-rule](06-bayes-rule.md) turns it round.
+- **Medical screening.** A test result and a patient's condition give the outcomes ill and positive, ill and negative, well and positive, well and negative. "Positive" is the event made of the first and third, and [Bayes' rule](06-bayes-rule.md) turns it round.
 
 > **Say it back**
 > A sample space lists every complete result once, like the 36 red-white pairs of two dice. An event is a yes-or-no question written as the set of outcomes that answer yes; "total is 7" is six pairs. "And" is the overlap, "or" is everything in either, "not" is the rest of the sample space. Counting "or" takes the overlap off once: 6 + 11 − 2 = 15. The list must be fine enough that every question is a subset, and equally likely outcomes are what let a count become a chance.
@@ -538,14 +519,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [what-probability-means](01-what-probability-means.md): what a chance is, and the notation $P(A)$ this card attaches to events.
-- [sets-and-membership](../../01-Foundations/07-Sets/01-sets-and-membership.md): a set as the answer to one membership question.
-- [set-operations](../../01-Foundations/07-Sets/03-set-operations.md): union, intersection and complement, here renamed or, and, not.
+- [Probability](01-what-probability-means.md): what a chance is, and the notation $P(A)$ this card attaches to events.
+- [Sets](../../01-Foundations/07-Sets/01-sets-and-membership.md): a set as the answer to one membership question.
+- [Set operations](../../01-Foundations/07-Sets/03-set-operations.md): union, intersection and complement, here renamed or, and, not.
 
 ## Where this goes next
 
-- [probability-rules-and-complements](03-probability-rules-and-complements.md): the counts on this card become chances, and "not A" gets its symbol and its rule.
-- [random-variables-and-distributions](../02-Random%20Variables/01-random-variables-and-distributions.md): the total is a number read off each outcome, and the bar chart above is its distribution.
+- [The rules](03-probability-rules-and-complements.md): the counts on this card become chances, and "not A" gets its symbol and its rule.
+- [Random variables](../02-Random%20Variables/01-random-variables-and-distributions.md): the total is a number read off each outcome, and the bar chart above is its distribution.
 
 The events are now sets that can be counted and combined; what rules any assignment of chances to them must obey, fair dice or not, is the question the rules card answers.
 

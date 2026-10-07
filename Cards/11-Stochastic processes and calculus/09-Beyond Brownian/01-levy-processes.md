@@ -1,25 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Beyond Brownian
-topic: Processes built from independent pieces
-item: Levy processes
-kind: definition
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/01-brownian-motion|brownian-motion]]"
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/01-poisson-process|poisson-process]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/04-characteristic-functions-and-inversion|characteristic-functions-and-inversion]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/09-Beyond Brownian/02-jump-diffusions|jump-diffusions]]"
-  - "[[Cards/20-Harmonic analysis/04-Characteristic Functions and Probability/07-infinitely-divisible-laws-and-levy-khintchine|infinitely-divisible-laws-and-levy-khintchine]]"
-tags: [mathematics, stochastic processes and calculus, levy-processes]
----
-
 # Levy processes: stationary independent increments, with jumps allowed
 
-Stochastic processes and calculus → Beyond Brownian → Processes built from independent pieces → Levy processes
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Beyond Brownian](../../../SYLLABUS.md#w11-s09) → Levy processes
 
 ---
 
@@ -33,7 +14,7 @@ One structural fact makes the model tractable. The change over any week has the 
 
 **A Lévy process is a running total of independent, identically distributed pieces over every split of time; its characteristic function at time t is e raised to t times one fixed exponent, and that exponent is always a drift, plus a Brownian part, plus an integral over the sizes and rates of the jumps.**
 
-**What kind of fact this is:** a definition, with a theorem attached. The exponential form in t is proved on this card in Why it works, in full in the folded Detailed proof. The Lévy–Khintchine shape of the exponent is stated with its key steps; its complete proof is in Applebaum, chapters 1 and 2, and in infinitely-divisible-laws-and-levy-khintchine.
+**What kind of fact this is:** a definition, with a theorem attached. The exponential form in t is proved on this card in Why it works, in full in the folded Detailed proof. The Lévy–Khintchine shape of the exponent is stated with its key steps; its complete proof is in Applebaum, chapters 1 and 2, and in Infinitely divisible laws.
 
 ### The picture: one year of the share
 
@@ -52,7 +33,7 @@ One line: the price along one sample path (one run of the process drawn against 
 
 ## The formula
 
-Notation first, in words. Time $t$ is in years. The process $X_t$, read "the value at time t", is the change in the log price, $X_t = \ln(S_t / 100)$, where $S_t$ is the price. An **increment** is a change over a window, $X_{t+h} - X_t$. The letter $i$ is the imaginary unit and $u$ a frequency dial, per unit of log price. The characteristic function $\varphi_t(u) = E[e^{iuX_t}]$ is the average point on the unit circle turned by $u$ times $X_t$ ([characteristic-functions-and-inversion](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md); that card calls the dial $t$, here $t$ is time). It identifies the law of $X_t$ completely.
+Notation first, in words. Time $t$ is in years. The process $X_t$, read "the value at time t", is the change in the log price, $X_t = \ln(S_t / 100)$, where $S_t$ is the price. An **increment** is a change over a window, $X_{t+h} - X_t$. The letter $i$ is the imaginary unit and $u$ a frequency dial, per unit of log price. The characteristic function $\varphi_t(u) = E[e^{iuX_t}]$ is the average point on the unit circle turned by $u$ times $X_t$ ([Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md); that card calls the dial $t$, here $t$ is time). It identifies the law of $X_t$ completely.
 
 **The definition.** A process $X_t$ is a Lévy process when:
 
@@ -88,7 +69,7 @@ The ingredients $(b, \sigma^2, \nu)$ are the **Lévy triplet**. The integral is 
 | $\varphi_t$, $\psi$ | characteristic function of $X_t$; the Lévy exponent | $\varphi_1(3)$ = 0.578911 + 0.108552 i; $\psi(3)$ = −0.529329 + 0.185358 i | — |
 | $n$, $\varepsilon$, $\alpha$ | a number of equal pieces; a size cut-off; a tail power | $n$ = 10 to 10000; $\varepsilon$ down to 1e-08; $\alpha$ = 1.5 | — |
 
-**The two extremes.** Brownian motion with volatility $\sigma$ has triplet $(0, \sigma^2, 0)$ and exponent $\psi(u) = -\tfrac12\sigma^2u^2$: no jumps at all ([brownian-motion](../05-Brownian%20Motion/01-brownian-motion.md)). The Poisson process at rate $\lambda$ has $\nu$ = $\lambda$ at size 1, nothing else, and exponent $\psi(u) = \lambda(e^{iu} - 1)$: jumps only ([poisson-process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md)). At $u$ = 3 these are −0.180000 for $\sigma$ = 0.20, and −3.979985 + 0.282240 i for rate 2.
+**The two extremes.** Brownian motion with volatility $\sigma$ has triplet $(0, \sigma^2, 0)$ and exponent $\psi(u) = -\tfrac12\sigma^2u^2$: no jumps at all ([Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md)). The Poisson process at rate $\lambda$ has $\nu$ = $\lambda$ at size 1, nothing else, and exponent $\psi(u) = \lambda(e^{iu} - 1)$: jumps only ([Poisson process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md)). At $u$ = 3 these are −0.180000 for $\sigma$ = 0.20, and −3.979985 + 0.282240 i for rate 2.
 
 **The share's process.** With $N(t)$ the jump count and $J_k$ the jumps,
 
@@ -148,7 +129,7 @@ $\sigma W_t$ is normal with mean 0 and variance $\sigma^2 t$, whose characterist
 
 A Poisson count $N(t)$ at rate $\lambda$ has $E[e^{iuN(t)}] = \sum_n e^{-\lambda t}(\lambda t)^n e^{iun}/n! = e^{\lambda t(e^{iu} - 1)}$, the exponential series again. So $\psi(u) = \lambda(e^{iu} - 1)$.
 
-Give each jump a random size $J$ drawn independently from one law. Conditioning on the count, exactly as on the compound Poisson card ([compound-poisson](../04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md)) with the real dial s replaced by $i u$, gives
+Give each jump a random size $J$ drawn independently from one law. Conditioning on the count, exactly as on the compound Poisson card ([Compound Poisson](../04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md)) with the real dial s replaced by $i u$, gives
 
 $$\psi(u) = \lambda\big(E[e^{iuJ}] - 1\big) = \int \big(e^{iux} - 1\big)\,\nu(dx), \qquad \nu = \lambda \times (\text{the law of } J).$$
 
@@ -202,7 +183,7 @@ The **Lévy–Khintchine theorem** says the shape built in Steps 1 to 5 is unive
 - every Lévy process has an exponent of the form in The formula, with exactly one triplet $(b, \sigma^2, \nu)$;
 - every triplet with $\sigma^2 \ge 0$ and $\int \min(1, x^2)\,\nu(dx) < \infty$ comes from a Lévy process.
 
-The key steps, not carried out in full here. By Step 0, $\varphi_1 = (\varphi_{1/n})^n$, so $\psi(u) = \lim_n n\big(\varphi_{1/n}(u) - 1\big) = \lim_n \int (e^{iux} - 1)\, n\,P(X_{1/n} \in dx)$. Away from 0, the measures $n\,P(X_{1/n} \in dx)$ converge to $\nu$: in a window of length $1/n$ a jump of size near $x$ has chance about $\nu(dx)/n$. Near 0, weighted by $x^2$, they leave a remainder that becomes $\sigma^2$. The converse builds the process from its triplet: a Brownian motion, a compound Poisson process for jumps of size at least 1, and a limit of compensated compound Poisson processes for the small ones, the **Lévy–Itô decomposition**. Both directions are proved in Applebaum, chapters 1 and 2, and Kyprianou, chapter 2; the analytic side is on infinitely-divisible-laws-and-levy-khintchine. The share is the finite-jump case, with every piece visible.
+The key steps, not carried out in full here. By Step 0, $\varphi_1 = (\varphi_{1/n})^n$, so $\psi(u) = \lim_n n\big(\varphi_{1/n}(u) - 1\big) = \lim_n \int (e^{iux} - 1)\, n\,P(X_{1/n} \in dx)$. Away from 0, the measures $n\,P(X_{1/n} \in dx)$ converge to $\nu$: in a window of length $1/n$ a jump of size near $x$ has chance about $\nu(dx)/n$. Near 0, weighted by $x^2$, they leave a remainder that becomes $\sigma^2$. The converse builds the process from its triplet: a Brownian motion, a compound Poisson process for jumps of size at least 1, and a limit of compensated compound Poisson processes for the small ones, the **Lévy–Itô decomposition**. Both directions are proved in Applebaum, chapters 1 and 2, and Kyprianou, chapter 2; the analytic side is on Infinitely divisible laws. The share is the finite-jump case, with every piece visible.
 
 ---
 
@@ -661,11 +642,11 @@ The two outputs agree line for line.
 
 ## Where you meet it in real life
 
-- **Share prices with crashes.** Merton's 1976 model is this process with normal jump sizes: [merton-jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md). Option prices follow from $\psi$ by Fourier inversion: [carr-madan-fft-and-cos-methods](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md).
-- **Electricity prices.** Power prices spike when demand outruns supply, then fall back. The falling back needs a drift that depends on the current price, past Lévy processes. A stochastic differential equation with a jump term allows that ([jump-diffusions](02-jump-diffusions.md)), and the pull back to a level is the mean reversion of [ornstein-uhlenbeck-and-cir-processes](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md).
-- **Insurance.** An insurer's claims total is a compound Poisson process, the pure-jump Lévy process with finite $\nu$ ([compound-poisson](../04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md)).
+- **Share prices with crashes.** Merton's 1976 model is this process with normal jump sizes: [Merton jump-diffusion](../../12-Financial%20mathematics/13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md). Option prices follow from $\psi$ by Fourier inversion: [Transform pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/09-carr-madan-fft-and-cos-methods.md).
+- **Electricity prices.** Power prices spike when demand outruns supply, then fall back. The falling back needs a drift that depends on the current price, past Lévy processes. A stochastic differential equation with a jump term allows that ([Jump diffusions](02-jump-diffusions.md)), and the pull back to a level is the mean reversion of [Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md).
+- **Insurance.** An insurer's claims total is a compound Poisson process, the pure-jump Lévy process with finite $\nu$ ([Compound Poisson](../04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md)).
 - **Infinitely many small jumps.** The variance-gamma and CGMY return models use Lévy measures like Step 6's and no Brownian part; the small jumps do the wobbling.
-- **Stochastic calculus beyond Brownian motion.** Lévy processes are the simplest semimartingales with jumps: [semimartingales-in-outline](05-semimartingales-in-outline.md).
+- **Stochastic calculus beyond Brownian motion.** Lévy processes are the simplest semimartingales with jumps: [Semimartingales](05-semimartingales-in-outline.md).
 
 > **Say it back**
 > A Lévy process starts at zero and adds up independent increments whose law depends only on the window's length, with no jumps at fixed times. Chopping time into equal pieces makes its characteristic function e raised to t times one exponent. Lévy–Khintchine says that exponent is a drift, a Brownian part and a jump integral against the Lévy measure, the rate of jumps of each size. Brownian motion has no jumps; the Poisson process has nothing else. The share has both, and its jumps carry two thirds of its variance.
@@ -674,14 +655,14 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [brownian-motion](../05-Brownian%20Motion/01-brownian-motion.md): the continuous extreme, and the wobble part of the share.
-- [poisson-process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md): the jump extreme, and the jump times of the share.
-- [characteristic-functions-and-inversion](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): the characteristic function, which multiplies over independent pieces and identifies the law.
+- [Brownian motion](../05-Brownian%20Motion/01-brownian-motion.md): the continuous extreme, and the wobble part of the share.
+- [Poisson process](../04-Poisson%20and%20Jump%20Processes/01-poisson-process.md): the jump extreme, and the jump times of the share.
+- [Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): the characteristic function, which multiplies over independent pieces and identifies the law.
 
 ## Where this goes next
 
-- [jump-diffusions](02-jump-diffusions.md): a stochastic differential equation with a jump term.
-- infinitely-divisible-laws-and-levy-khintchine: the complete proof that every infinitely divisible law has a Lévy–Khintchine exponent.
+- [Jump diffusions](02-jump-diffusions.md): a stochastic differential equation with a jump term.
+- Infinitely divisible laws: the complete proof that every infinitely divisible law has a Lévy–Khintchine exponent.
 
 ---
 

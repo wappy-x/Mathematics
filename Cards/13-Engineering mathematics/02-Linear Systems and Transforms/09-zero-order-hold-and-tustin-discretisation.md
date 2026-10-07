@@ -1,23 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Linear Systems and Transforms
-topic: Sampled models of a continuous plant
-item: Discretising a design
-kind: method
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/08-z-transform-and-discrete-time-systems|z-transform-and-discrete-time-systems]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/04-the-matrix-exponential|the-matrix-exponential]]"
-next:
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/10-model-predictive-control|model-predictive-control]]"
-tags: [mathematics, engineering mathematics, zero-order-hold-and-tustin-discretisation]
----
-
 # Discretising a design: hold the input flat, or bend the frequency axis
 
-Engineering mathematics → Linear Systems and Transforms → Sampled models of a continuous plant → Discretising a design
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Linear Systems and Transforms](../../../SYLLABUS.md#w13-s02) → Discretising a design
 
 ---
 
@@ -52,7 +35,7 @@ The first line is the exact continuous response; the second is the zero-order-ho
 
 ## The formula
 
-Reminders. The transfer function G(s) says what the system does to each exponential e^(st) ([impulse-response-and-transfer-functions](02-impulse-response-and-transfer-functions.md)). In a sampled system $z$ plays the same role for sequences, and multiplying by z^(−1) delays a sequence by one step ([z-transform-and-discrete-time-systems](08-z-transform-and-discrete-time-systems.md)).
+Reminders. The transfer function G(s) says what the system does to each exponential e^(st) ([Transfer functions](02-impulse-response-and-transfer-functions.md)). In a sampled system $z$ plays the same role for sequences, and multiplying by z^(−1) delays a sequence by one step ([The z-transform](08-z-transform-and-discrete-time-systems.md)).
 
 The cup and the sensor, each a lump with one temperature. Write $x_1$ for the cup's temperature above room, $x_2$ for the sensor's, $u$ for the heater power and $y$ for the reading:
 
@@ -107,7 +90,7 @@ A digital controller does not output a curve; it outputs a number and holds it. 
 
 ### Step 1: solve one tick exactly with the matrix exponential
 
-The solution of dx/dt = A x + B u from time 0, with state x(0), is the variation-of-constants formula ([the-matrix-exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md)):
+The solution of dx/dt = A x + B u from time 0, with state x(0), is the variation-of-constants formula ([The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md)):
 
 $$x(T) = e^{AT}x(0) + \int_0^T e^{A(T-\tau)}\,B\,u(\tau)\,d\tau.$$
 
@@ -119,7 +102,7 @@ $$e^{At} = \begin{pmatrix} e^{-t} & 0 \\ \tfrac{4}{3}\left(e^{-t} - e^{-4t}\righ
 
 At t = 0.1 s this is `[[0.904837418, 0], [0.312689829, 0.670320046]]`, and integrating it against B gives B_d = `[0.047581291, 0.008495062]` K/W.
 
-For the soldering tip of [z-transform-and-discrete-time-systems](08-z-transform-and-discrete-time-systems.md), one lump with a 50 s time constant, the same method gives a = e^(−0.002) = 0.998002 and b = 0.039960 °C per W per tick: the exact factors behind that card's Euler update.
+For the soldering tip of [The z-transform](08-z-transform-and-discrete-time-systems.md), one lump with a 50 s time constant, the same method gives a = e^(−0.002) = 0.998002 and b = 0.039960 °C per W per tick: the exact factors behind that card's Euler update.
 
 <details>
 <summary>One exponential gives both matrices (Van Loan's trick)</summary>
@@ -223,7 +206,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-The script builds the cup's continuous model and samples it at 10 Hz. It reaches the ZOH matrices by three independent roads: Van Loan's matrix exponential by Taylor series with scaling and squaring; the closed-form exponential for this triangular A; and an RK4 integration ([runge-kutta-four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) over one tick in 2000 sub-steps with the power held. It checks ZOH's step samples against the exact step response, and its transfer function against the step-response z-transform. It reaches Tustin by two roads: the difference equation from substituting for s, and the trapezoid rule run on the ODE. It checks Tustin on the unit circle against G at the bent frequency, and checks prewarping at 2 Hz. It also samples card 08's one-lump tip by Van Loan. Then it prints the four failures. Complex numbers are a small struct in Rust.
+The script builds the cup's continuous model and samples it at 10 Hz. It reaches the ZOH matrices by three independent roads: Van Loan's matrix exponential by Taylor series with scaling and squaring; the closed-form exponential for this triangular A; and an RK4 integration ([Runge-Kutta four](../../08-Differential%20equations%20and%20dynamics/05-Numerical%20Evolution/04-runge-kutta-four.md)) over one tick in 2000 sub-steps with the power held. It checks ZOH's step samples against the exact step response, and its transfer function against the step-response z-transform. It reaches Tustin by two roads: the difference equation from substituting for s, and the trapezoid rule run on the ODE. It checks Tustin on the unit circle against G at the bent frequency, and checks prewarping at 2 Hz. It also samples card 08's one-lump tip by Van Loan. Then it prints the four failures. Complex numbers are a small struct in Rust.
 
 ### Python
 
@@ -661,8 +644,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Every embedded control loop.** A microcontroller writing a heater, motor or valve command through a latch is a zero-order hold, and the plant model inside its controller or observer is the ZOH model. Model predictive control steps exactly this model forward to plan (model-predictive-control).
-- **Converting a controller designed on paper.** A controller designed with Bode plots ([frequency-response-and-bode-plots](04-frequency-response-and-bode-plots.md)) is usually turned into a difference equation by Tustin, prewarped at the crossover frequency.
+- **Every embedded control loop.** A microcontroller writing a heater, motor or valve command through a latch is a zero-order hold, and the plant model inside its controller or observer is the ZOH model. Model predictive control steps exactly this model forward to plan (Predictive control).
+- **Converting a controller designed on paper.** A controller designed with Bode plots ([Bode plots](04-frequency-response-and-bode-plots.md)) is usually turned into a difference equation by Tustin, prewarped at the crossover frequency.
 - **Digital audio filters.** Equalisers and crossover filters are designed as analogue prototypes and converted by the bilinear transform with prewarping, so the corner frequency lands where the designer put it.
 - **Control software.** Tools that convert continuous models to discrete ones offer both methods by name, typically "zoh" and "tustin"; choosing between them is the decision this card describes.
 
@@ -673,12 +656,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [z-transform-and-discrete-time-systems](08-z-transform-and-discrete-time-systems.md): z, the one-step delay z^(−1), sampled poles and the unit-circle stability test.
-- [the-matrix-exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md): e^(AT) and the variation-of-constants formula that solve one tick exactly.
+- [The z-transform](08-z-transform-and-discrete-time-systems.md): z, the one-step delay z^(−1), sampled poles and the unit-circle stability test.
+- [The matrix exponential](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/04-the-matrix-exponential.md): e^(AT) and the variation-of-constants formula that solve one tick exactly.
 
 ## Where this goes next
 
-- model-predictive-control: steps the ZOH model forward over a horizon and chooses the next few heater powers by solving a small optimisation each tick.
+- Predictive control: steps the ZOH model forward over a horizon and chooses the next few heater powers by solving a small optimisation each tick.
 
 The thermostat now has an exact model of what one tick of heater power does; what it lacks is a rule for choosing that power when the heater can only heat and the sensor must not overshoot, which model-predictive-control supplies.
 

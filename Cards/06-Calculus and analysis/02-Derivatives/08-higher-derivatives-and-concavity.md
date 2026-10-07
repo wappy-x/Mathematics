@@ -1,25 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Derivatives
-topic: The rate of the rate
-item: Second derivatives
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/01-the-derivative|the-derivative]]"
-next:
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/03-monotonicity-and-optimisation|monotonicity-and-optimisation]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/05-taylors-theorem|taylors-theorem]]"
-  - "[[Cards/13-Engineering mathematics/07-Mechanics and Structures/07-stress-strain-and-beam-bending|stress-strain-and-beam-bending]]"
-  - "[[Cards/16-Numerical analysis/04-Interpolation and Approximation/05-splines|splines]]"
-tags: [mathematics, calculus and analysis, higher-derivatives-and-concavity]
----
-
 # Second derivatives: acceleration, and whether a curve bends up or down
 
-Calculus and analysis → Derivatives → The rate of the rate → Second derivatives
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Derivatives](../../../SYLLABUS.md#w06-s02) → Second derivatives
 
 ---
 
@@ -52,7 +33,7 @@ The line is the odometer reading each second: bending up to 5 s while the car sp
 
 ## The formula
 
-Notation first, in words. Reminder from [the-derivative](01-the-derivative.md): $s'(t)$ is the rate of s per unit of t. Two primes, $s''(t)$, read "s double prime of t", is the derivative of $s'$; the other notation, $\frac{d^2 s}{dt^2}$, has its 2s count derivatives, not a square. Past three primes the count goes in brackets: $f^{(4)}$.
+Notation first, in words. Reminder from [The derivative](01-the-derivative.md): $s'(t)$ is the rate of s per unit of t. Two primes, $s''(t)$, read "s double prime of t", is the derivative of $s'$; the other notation, $\frac{d^2 s}{dt^2}$, has its 2s count derivatives, not a square. Past three primes the count goes in brackets: $f^{(4)}$.
 
 $$s''(t) = \lim_{h \to 0} \frac{s'(t+h) - s'(t)}{h}$$
 
@@ -125,20 +106,20 @@ An **inflection point** is where the second derivative changes sign. Here $3 - 0
 
 ### Step 5: why curvature divides by the steepness
 
-Slope is the tan of the graph's angle. By [implicit-and-inverse-differentiation](06-implicit-and-inverse-differentiation.md) and the [chain-rule](03-chain-rule.md), the angle turns $\frac{f''}{1 + (f')^2}$ per unit of t, while by Pythagoras one unit of t covers $\sqrt{1 + (f')^2}$ of graph. Their ratio is the curvature formula. At 7 s the steep graph spreads the bend thin: 0.004623 per metre. At 10 s the graph is flat and curvature equals the second derivative's size, 3 per metre. The check confirms both with circles through three nearby points, whose radius heads for 1 / curvature.
+Slope is the tan of the graph's angle. By [Implicit and inverse differentiation](06-implicit-and-inverse-differentiation.md) and the [Chain rule](03-chain-rule.md), the angle turns $\frac{f''}{1 + (f')^2}$ per unit of t, while by Pythagoras one unit of t covers $\sqrt{1 + (f')^2}$ of graph. Their ratio is the curvature formula. At 7 s the steep graph spreads the bend thin: 0.004623 per metre. At 10 s the graph is flat and curvature equals the second derivative's size, 3 per metre. The check confirms both with circles through three nearby points, whose radius heads for 1 / curvature.
 
 <details>
 <summary>Detailed proof</summary>
 
 **Claim.** If f'' < 0 throughout an open interval, then f(t) < f(a) + f'(a)(t − a) for any a ≠ t in it: the graph lies below each tangent.
 
-**Proof.** Let g(t) = f(t) − f(a) − f'(a)(t − a), the gap to the tangent, so g(a) = 0 and g'(t) = f'(t) − f'(a). The [mean-value-theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md) on f' gives g'(u) = f''(c)(u − a) for some c between a and u: negative for u right of a, positive left of it. The same theorem on g gives g(t) = g'(d)(t − a) for some d between a and t. Right of a: negative times positive. Left of a: positive times negative. Either way g(t) < 0.
+**Proof.** Let g(t) = f(t) − f(a) − f'(a)(t − a), the gap to the tangent, so g(a) = 0 and g'(t) = f'(t) − f'(a). The [Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md) on f' gives g'(u) = f''(c)(u − a) for some c between a and u: negative for u right of a, positive left of it. The same theorem on g gives g(t) = g'(d)(t − a) for some d between a and t. Right of a: negative times positive. Left of a: positive times negative. Either way g(t) < 0.
 
 **Tolerance form.** f''(a) = L means: for every tolerance ε (epsilon) above 0 there is a window δ (delta) above 0 with (f'(a + h) − f'(a)) / h within ε of L whenever 0 < |h| < δ. At 7 s the velocity quotient is −1.2 − 0.3h, so δ = ε / 0.3 works.
 
 </details>
 
-The bracket in Step 3, extended to any number of derivatives, is [taylors-theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md).
+The bracket in Step 3, extended to any number of derivatives, is [Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md).
 
 ---
 
@@ -376,9 +357,9 @@ The two outputs agree line for line. The circle at 10 s starts further off, 2% a
 
 - **Braking.** Brakes are rated by deceleration, the second derivative of position; Step 3's tangent gap is why a braking car stops short of where its speed points.
 - **Ride comfort.** Lift and railway engineers limit jerk, the third derivative, which passengers feel as a lurch.
-- **Beams.** A loaded beam's bending is the second derivative of its sag: stress-strain-and-beam-bending.
-- **Track design.** Railway and road curves are joined so second derivatives match at each seam, or passengers feel a jolt: splines.
-- **Hanging chains.** The curve on [hyperbolic-functions](07-hyperbolic-functions.md) is concave up everywhere: cosh is its own second derivative.
+- **Beams.** A loaded beam's bending is the second derivative of its sag: Stress, strain and bending.
+- **Track design.** Railway and road curves are joined so second derivatives match at each seam, or passengers feel a jolt: Cubic splines.
+- **Hanging chains.** The curve on [Hyperbolic functions](07-hyperbolic-functions.md) is concave up everywhere: cosh is its own second derivative.
 
 > **Say it back**
 > The second derivative is the derivative of the derivative; for position, acceleration. Raw positions give it as a difference of differences over the window squared. Negative means the graph lies below its tangents: concave down. Where the sign changes is an inflection point, here 5 s into the trip. Curvature is the second derivative shrunk by the graph's steepness.
@@ -387,14 +368,14 @@ The two outputs agree line for line. The circle at 10 s starts further off, 2% a
 
 ## What this builds on
 
-- [the-derivative](01-the-derivative.md): the limit of average rates, applied here twice.
+- [The derivative](01-the-derivative.md): the limit of average rates, applied here twice.
 
 ## Where this goes next
 
-- [monotonicity-and-optimisation](../03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md): the sign of the second derivative telling a peak from a trough.
-- [taylors-theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): Step 3's bracket extended to every derivative, with its error stated.
-- stress-strain-and-beam-bending: a beam's bending as the second derivative of its sag.
-- splines: curves stitched so their second derivatives agree at the joins.
+- [Optimisation](../03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md): the sign of the second derivative telling a peak from a trough.
+- [Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): Step 3's bracket extended to every derivative, with its error stated.
+- Stress, strain and bending: a beam's bending as the second derivative of its sag.
+- Cubic splines: curves stitched so their second derivatives agree at the joins.
 
 ---
 

@@ -1,25 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: The Classical PDEs
-topic: Vibrating strings
-item: Standing waves
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/05-the-wave-equation-and-dalemberts-formula|the-wave-equation-and-dalemberts-formula]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/04-separation-of-variables-for-the-heat-equation|separation-of-variables-for-the-heat-equation]]"
-next:
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/08-electromagnetic-waves|electromagnetic-waves]]"
-  - "[[Cards/13-Engineering mathematics/09-Quantum Mechanics in Outline/01-wave-equation-for-strings-and-membranes|wave-equation-for-strings-and-membranes]]"
-  - "[[Cards/19-Partial differential equations/05-Waves/08-membranes-and-bessel-modes|membranes-and-bessel-modes]]"
-tags: [mathematics, differential equations and dynamics, standing-waves-on-a-string]
----
-
 # Standing waves: a fixed string vibrates in harmonics, and the pluck shape decides how loud each one is
 
-Differential equations and dynamics → The Classical PDEs → Vibrating strings → Standing waves
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → Standing waves
 
 ---
 
@@ -27,7 +8,7 @@ Differential equations and dynamics → The Classical PDEs → Vibrating strings
 
 A string 1 m long is tied down at both ends. A ripple runs along it at 1 m/s, this shelf's scaled speed; a real guitar string is faster, which raises every pitch and changes no shape. Pull the middle 1 cm aside, so the string makes a triangle, and let go.
 
-The triangle splits into two half-height copies running opposite ways, flipping over at the ends ([the-wave-equation-and-dalemberts-formula](05-the-wave-equation-and-dalemberts-formula.md)). At 0.25 s the string is a flat-topped trapezoid 0.5 cm high. At 0.5 s it is straight but moving. At 2 s it is back where it began.
+The triangle splits into two half-height copies running opposite ways, flipping over at the ends ([The wave equation](05-the-wave-equation-and-dalemberts-formula.md)). At 0.25 s the string is a flat-topped trapezoid 0.5 cm high. At 0.5 s it is straight but moving. At 2 s it is back where it began.
 
 The same motion is also a sum of pure patterns, each a sine-shaped arch repeated n times along the string that keeps its shape while it swells and shrinks: a **standing wave**. From here on they are **harmonics**: harmonic n has n arches and swings n times as fast as harmonic 1. By energy the triangle is 81.06% harmonic 1, 9.01% harmonic 3, 3.24% harmonic 5, and holds none of harmonics 2, 4 and 6. Each of those has a still point, a **node**, where the string was pulled. That missing half is why a middle pluck sounds hollow.
 
@@ -45,7 +26,7 @@ To scale: 280 units per metre across, 130 per centimetre up. Solid: the pluck. D
 
 ## The formula
 
-Notation first. The height is $u(x,t)$ in cm, at place $x$ metres from the left end and time $t$ seconds. A subscript is a rate with the other variable held still ([what-a-pde-says](01-what-a-pde-says.md)): $u_t$ is a point's speed, $u_{tt}$ its acceleration, $u_x$ the slope, $u_{xx}$ the bending. The string obeys $u_{tt} = c^2 u_{xx}$, with wave speed $c$; u = 0 at both ends, x = 0 and x = $L$; it starts at rest in the pluck shape $f(x)$. A large sigma, Σ, adds the terms for n = 1, 2, 3 and on.
+Notation first. The height is $u(x,t)$ in cm, at place $x$ metres from the left end and time $t$ seconds. A subscript is a rate with the other variable held still ([A partial differential equation](01-what-a-pde-says.md)): $u_t$ is a point's speed, $u_{tt}$ its acceleration, $u_x$ the slope, $u_{xx}$ the bending. The string obeys $u_{tt} = c^2 u_{xx}$, with wave speed $c$; u = 0 at both ends, x = 0 and x = $L$; it starts at rest in the pluck shape $f(x)$. A large sigma, Σ, adds the terms for n = 1, 2, 3 and on.
 
 $$u(x,t) = \sum_{n=1}^{\infty} b_n \sin\frac{n\pi x}{L}\,\cos(\omega_n t), \qquad \omega_n = \frac{n\pi c}{L}, \qquad b_n = \frac{2}{L}\int_0^L f(x)\sin\frac{n\pi x}{L}\,dx$$
 
@@ -85,11 +66,11 @@ $$E = \frac{1}{2}\int_0^L \left(u_t^2 + c^2 u_x^2\right)dx = \sum_{n=1}^{\infty}
 
 ### Step 0: find shapes that keep their form, then add them
 
-The wave equation is linear: a sum of solutions is a solution ([superposition-and-the-shape-of-linear-solutions](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/01-superposition-and-the-shape-of-linear-solutions.md)). So find motions that keep one shape, build the pluck from them, then show no other motion fits.
+The wave equation is linear: a sum of solutions is a solution ([Superposition](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/01-superposition-and-the-shape-of-linear-solutions.md)). So find motions that keep one shape, build the pluck from them, then show no other motion fits.
 
 ### Step 1: separate place from time
 
-Guess u = X(x) q(t): a fixed shape $X$ scaled by a time factor $q$, as on [separation-of-variables-for-the-heat-equation](04-separation-of-variables-for-the-heat-equation.md). The equation becomes q''/q = c^2 X''/X. The left side depends only on time, the right only on place, so both equal one constant, written −ω^2. Then q'' = −ω^2 q, an oscillator, and X'' = −(ω/c)^2 X. Heat has one time derivative, so its time factor decayed; here there are two, so it swings.
+Guess u = X(x) q(t): a fixed shape $X$ scaled by a time factor $q$, as on [Separation of variables](04-separation-of-variables-for-the-heat-equation.md). The equation becomes q''/q = c^2 X''/X. The left side depends only on time, the right only on place, so both equal one constant, written −ω^2. Then q'' = −ω^2 q, an oscillator, and X'' = −(ω/c)^2 X. Heat has one time derivative, so its time factor decayed; here there are two, so it swings.
 
 ### Step 2: the fixed ends choose the frequencies
 
@@ -137,7 +118,7 @@ If u and v solve the problem with the same data, w = u − v has w(x,0) = 0, hen
 
 </details>
 
-The other road is d'Alembert's two half-height copies ([the-wave-equation-and-dalemberts-formula](05-the-wave-equation-and-dalemberts-formula.md)); the code checks the series against it.
+The other road is d'Alembert's two half-height copies ([The wave equation](05-the-wave-equation-and-dalemberts-formula.md)); the code checks the series against it.
 
 ---
 
@@ -403,14 +384,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [the-wave-equation-and-dalemberts-formula](05-the-wave-equation-and-dalemberts-formula.md): the equation, and the travelling-halves road that checks the series.
-- [separation-of-variables-for-the-heat-equation](04-separation-of-variables-for-the-heat-equation.md): the product guess and the sine series, here with two time derivatives.
+- [The wave equation](05-the-wave-equation-and-dalemberts-formula.md): the equation, and the travelling-halves road that checks the series.
+- [Separation of variables](04-separation-of-variables-for-the-heat-equation.md): the product guess and the sine series, here with two time derivatives.
 
 ## Where this goes next
 
-- electromagnetic-waves: the same equation for light, standing in a cavity.
-- wave-equation-for-strings-and-membranes: harmonics as the model for quantised states.
-- membranes-and-bessel-modes: a drum's harmonics, no longer whole multiples.
+- Electromagnetic waves: the same equation for light, standing in a cavity.
+- Waves on strings and drums: harmonics as the model for quantised states.
+- Drumheads: a drum's harmonics, no longer whole multiples.
 
 ---
 

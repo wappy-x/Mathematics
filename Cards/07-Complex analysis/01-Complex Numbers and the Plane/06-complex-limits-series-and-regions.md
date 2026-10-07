@@ -1,27 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Complex Numbers and the Plane
-topic: Settling down in the plane
-item: Limits and regions in the plane
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/04-eulers-formula|eulers-formula]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/01-series-convergence|series-convergence]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/02-comparison-ratio-and-root-tests|comparison-ratio-and-root-tests]]"
-next:
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/01-complex-derivative-and-cauchy-riemann|complex-derivative-and-cauchy-riemann]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/02-complex-power-series|complex-power-series]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/01-fourier-series-in-complex-form|fourier-series-in-complex-form]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/05-laplace-transform|laplace-transform]]"
-tags: [mathematics, complex analysis, complex-limits-series-and-regions]
----
-
 # Limits and regions in the plane: a complex limit is two real limits, plus the words disc, boundary and domain
 
-Complex analysis → Complex Numbers and the Plane → Settling down in the plane → Limits and regions in the plane
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Complex Numbers and the Plane](../../../SYLLABUS.md#w07-s01) → Limits and regions in the plane
 
 ---
 
@@ -47,7 +26,7 @@ To scale: 100 units per metre, with the start at (70, 220). The sixteen stops ru
 
 ## The formula
 
-Notation first, in words. A **sequence** $z_n$ is an endless list of complex numbers, read "z-sub-n". The arrow $z_n \to L$ reads "z-sub-n tends to L": the distance $|z_n - L|$, the modulus from [conjugate-and-modulus](02-conjugate-and-modulus.md), shrinks towards 0.
+Notation first, in words. A **sequence** $z_n$ is an endless list of complex numbers, read "z-sub-n". The arrow $z_n \to L$ reads "z-sub-n tends to L": the distance $|z_n - L|$, the modulus from [Conjugate and modulus](02-conjugate-and-modulus.md), shrinks towards 0.
 
 $$z_n \to L \iff \operatorname{Re} z_n \to \operatorname{Re} L \text{ and } \operatorname{Im} z_n \to \operatorname{Im} L$$
 
@@ -59,7 +38,7 @@ $$\max(|\operatorname{Re} w|, |\operatorname{Im} w|) \le |w| \le |\operatorname{
 
 **Read it aloud:** an arrow is at least as long as either shadow on the axes, and no longer than both laid end to end.
 
-The staircase's n-th tread is $q^n$, where $q = 0.8\,e^{i\pi/6}$ shrinks to 0.8 and turns by π/6 radians, 30 degrees ([eulers-formula](04-eulers-formula.md)). The stop after $N$ treads is the partial sum $S_N$:
+The staircase's n-th tread is $q^n$, where $q = 0.8\,e^{i\pi/6}$ shrinks to 0.8 and turns by π/6 radians, 30 degrees ([Euler's formula](04-eulers-formula.md)). The stop after $N$ treads is the partial sum $S_N$:
 
 $$S_N = 1 + q + \cdots + q^{N-1} = \frac{1 - q^N}{1 - q}, \qquad S = \sum_{n=0}^{\infty} q^n = \frac{1}{1 - q} \text{ if } |q| < 1$$
 
@@ -119,11 +98,11 @@ Multiply $S_N$ by $q$ and every tread moves up one place; subtracting cancels al
 
 The gap $S - S_N$ is $q^N/(1 - q)$, and lengths multiply, so its length is $|q|^N/|1 - q|$: 0.8 to the N over 0.504341, which shrinks to 0.
 
-When $|q| = 1$ the leftover $q^N$ keeps length 1 and walks round the circle. With $q = e^{i\pi/6}$ the stops return to 0 after 12 treads, since that q is a twelfth root of 1 ([powers-roots-and-roots-of-unity](05-powers-roots-and-roots-of-unity.md)). When $|q| > 1$ it grows without bound.
+When $|q| = 1$ the leftover $q^N$ keeps length 1 and walks round the circle. With $q = e^{i\pi/6}$ the stops return to 0 after 12 treads, since that q is a twelfth root of 1 ([Powers and roots](05-powers-roots-and-roots-of-unity.md)). When $|q| > 1$ it grows without bound.
 
 ### Step 4: absolute convergence, and why the disc is open
 
-The tread lengths 1, 0.8, 0.8^2, … add to 1/(1 − 0.8) = 5 metres. Each tread's east and north parts are no longer than the tread, so the real comparison test ([comparison-ratio-and-root-tests](../../06-Calculus%20and%20analysis/06-Series/02-comparison-ratio-and-root-tests.md)) makes both coordinate series converge, and Step 1 finishes. No stop lies beyond 2.566107 metres: the stops form a bounded set.
+The tread lengths 1, 0.8, 0.8^2, … add to 1/(1 − 0.8) = 5 metres. Each tread's east and north parts are no longer than the tread, so the real comparison test ([Convergence tests](../../06-Calculus%20and%20analysis/06-Series/02-comparison-ratio-and-root-tests.md)) makes both coordinate series converge, and Step 1 finishes. No stop lies beyond 2.566107 metres: the stops form a bounded set.
 
 The working ratios form the open disc $D(0, 1)$. It is open: this q sits 0.2 inside the rim, so every ratio within 0.2 of it works too. It is connected, since a straight segment joins any two of its points inside it, so it is a domain. Its boundary, the unit circle, holds no working ratio.
 
@@ -392,7 +371,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Echoes and digital filters.** A filter feeding back a turned fraction q of its output sums a geometric series of echoes; it is stable exactly when q lies inside the unit disc.
-- **Power series.** Each converges on an open disc, the geometric series being the model: [complex-power-series](../02-Holomorphic%20Functions/02-complex-power-series.md).
+- **Power series.** Each converges on an open disc, the geometric series being the model: [Power series in the plane](../02-Holomorphic%20Functions/02-complex-power-series.md).
 
 > **Say it back**
 > A complex sequence converges exactly when its real and imaginary parts both converge. The geometric series with ratio q sums to 1/(1 − q) when q is shorter than 1. A series whose term lengths have a finite total converges, no farther out than that total. The working ratios form the open unit disc, a bounded domain; on its boundary circle the sum fails. A sequence growing without bound tends to the one point at infinity.
@@ -401,16 +380,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [eulers-formula](04-eulers-formula.md): the ratio 0.8 e^(iπ/6) as shrink-and-turn.
-- [series-convergence](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md): sums as limits of partial sums.
-- [comparison-ratio-and-root-tests](../../06-Calculus%20and%20analysis/06-Series/02-comparison-ratio-and-root-tests.md): the comparison test behind absolute convergence.
+- [Euler's formula](04-eulers-formula.md): the ratio 0.8 e^(iπ/6) as shrink-and-turn.
+- [Infinite series](../../06-Calculus%20and%20analysis/06-Series/01-series-convergence.md): sums as limits of partial sums.
+- [Convergence tests](../../06-Calculus%20and%20analysis/06-Series/02-comparison-ratio-and-root-tests.md): the comparison test behind absolute convergence.
 
 ## Where this goes next
 
-- [complex-derivative-and-cauchy-riemann](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md): limits from every direction, on a domain.
-- [complex-power-series](../02-Holomorphic%20Functions/02-complex-power-series.md): discs of convergence.
-- [fourier-series-in-complex-form](../08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): series of spinning arrows.
-- [laplace-transform](../08-Transforms%20in%20Outline/05-laplace-transform.md): convergence on a half-plane.
+- [The complex derivative](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md): limits from every direction, on a domain.
+- [Power series in the plane](../02-Holomorphic%20Functions/02-complex-power-series.md): discs of convergence.
+- [Fourier series](../08-Transforms%20in%20Outline/01-fourier-series-in-complex-form.md): series of spinning arrows.
+- [The Laplace transform](../08-Transforms%20in%20Outline/05-laplace-transform.md): convergence on a half-plane.
 
 ---
 

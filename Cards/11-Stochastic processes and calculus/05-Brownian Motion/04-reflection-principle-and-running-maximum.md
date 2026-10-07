@@ -1,37 +1,12 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Brownian Motion
-topic: Touching a level
-item: Reflection principle
-kind: theorem
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/01-brownian-motion|brownian-motion]]"
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/05-reflection-principle-for-walks|reflection-principle-for-walks]]"
-next:
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/01-knock-out-and-knock-in-options|knock-out-and-knock-in-options]]"
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/05-one-touch-and-no-touch|one-touch-and-no-touch]]"
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/06-lookback-options|lookback-options]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/02-barrier-options-by-reflection|barrier-options-by-reflection]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/03-the-eight-barrier-types|the-eight-barrier-types]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/04-fx-one-touch-and-no-touch|fx-one-touch-and-no-touch]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/05-double-barriers-and-double-no-touch|double-barriers-and-double-no-touch]]"
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/05-black-cox-first-passage-default|black-cox-first-passage-default]]"
-  - "[[Cards/19-Partial differential equations/04-Laplace, Poisson and Potentials/05-method-of-images|method-of-images]]"
-tags: [mathematics, stochastic processes and calculus, reflection-principle-and-running-maximum]
----
-
 # Reflection principle: the maximum of Brownian motion and the chance of touching a level
 
-Stochastic processes and calculus → Brownian Motion → Touching a level → Reflection principle
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Brownian Motion](../../../SYLLABUS.md#w11-s05) → Reflection principle
 
 ---
 
 ## General Overview
 
-A pollen grain floats in a drop of water under a microscope. Water molecules knock it about, and along one axis it drifts left and right with no preference. Measure its position in micrometres (μm, millionths of a metre) to the right of where it was first seen, in a liquid where that position spreads by 1 square micrometre of variance each second, as on [brownian-motion](01-brownian-motion.md). After 10 seconds its position has a standard deviation of $\sqrt{10}$ = 3.16 μm. A line is drawn on the slide 3 μm to the right of the start. What is the chance the grain touches that line at some moment in the next 10 seconds?
+A pollen grain floats in a drop of water under a microscope. Water molecules knock it about, and along one axis it drifts left and right with no preference. Measure its position in micrometres (μm, millionths of a metre) to the right of where it was first seen, in a liquid where that position spreads by 1 square micrometre of variance each second, as on [Brownian motion](01-brownian-motion.md). After 10 seconds its position has a standard deviation of $\sqrt{10}$ = 3.16 μm. A line is drawn on the slide 3 μm to the right of the start. What is the chance the grain touches that line at some moment in the next 10 seconds?
 
 Where the grain sits at second 10 does not answer it. A grain can cross the line at second 4 and drift back to 1 μm by second 10. The chance of ending at 3 μm or beyond is 0.1714. The chance of touching the line on the way is exactly twice that, 0.3428: about 1 in 3, against about 1 in 6. This card reads "wanders 3 μm away" one-sidedly, as a line on one side; wandering 3 μm away on either side has chance 0.6767, worked in What breaks.
 
@@ -51,7 +26,7 @@ One path, drawn by hand on a half-second grid with straight lines between the po
 
 ## The formula
 
-Notation first. The grain's position is $W_t$, a Brownian motion: the random walk seen from far away, with independent steps whose variance grows like the elapsed time ([brownian-motion](01-brownian-motion.md)). Time $t$ is in seconds and $W_0 = 0$. The **running maximum** $M_t$ is the largest position the grain has reached by time $t$, read "the best so far". The **first-passage time** $\tau_a$ is the first moment the grain stands at level $a$, a stopping time: a time recognised when it arrives, without seeing the future. Touching $a$ by time $t$, $\tau_a \le t$, and having a best-so-far of at least $a$, $M_t \ge a$, are the same event, because the path is continuous and cannot reach past $a$ without standing on it. $\Phi$ is the standard normal cumulative distribution: $\Phi(x)$ is the chance a bell-curve draw with mean 0 and variance 1 lands at or below $x$.
+Notation first. The grain's position is $W_t$, a Brownian motion: the random walk seen from far away, with independent steps whose variance grows like the elapsed time ([Brownian motion](01-brownian-motion.md)). Time $t$ is in seconds and $W_0 = 0$. The **running maximum** $M_t$ is the largest position the grain has reached by time $t$, read "the best so far". The **first-passage time** $\tau_a$ is the first moment the grain stands at level $a$, a stopping time: a time recognised when it arrives, without seeing the future. Touching $a$ by time $t$, $\tau_a \le t$, and having a best-so-far of at least $a$, $M_t \ge a$, are the same event, because the path is continuous and cannot reach past $a$ without standing on it. $\Phi$ is the standard normal cumulative distribution: $\Phi(x)$ is the chance a bell-curve draw with mean 0 and variance 1 lands at or below $x$.
 
 $$P(M_t \ge a) \;=\; P(\tau_a \le t) \;=\; 2\,P(W_t \ge a) \;=\; 2\left(1 - \Phi\!\left(\frac{a}{\sqrt{t}}\right)\right), \qquad a > 0$$
 
@@ -100,11 +75,11 @@ The number inside $\Phi$ is $a/\sqrt{t}$: the level measured in the motion's own
 
 ### Step 0: after the first touch, the grain starts afresh from the line
 
-From its first touch, the grain moves as a new Brownian motion started at 3 μm, independent of how it got there, and a Brownian motion and its mirror image have the same law. So ending 2 below the line and ending 2 above are equally likely. For coin tosses this was a count of paths ([reflection-principle-for-walks](../01-Random%20Walks%20and%20Filtrations/05-reflection-principle-for-walks.md)); here the count is replaced by the strong Markov property and one symmetry.
+From its first touch, the grain moves as a new Brownian motion started at 3 μm, independent of how it got there, and a Brownian motion and its mirror image have the same law. So ending 2 below the line and ending 2 above are equally likely. For coin tosses this was a count of paths ([Reflection principle](../01-Random%20Walks%20and%20Filtrations/05-reflection-principle-for-walks.md)); here the count is replaced by the strong Markov property and one symmetry.
 
 ### Step 1: the strong Markov property, at a stopping time
 
-The ordinary Markov property says: at a fixed time s, the future $W_{s+u} - W_s$, the move over the u seconds after s, is a fresh Brownian motion, independent of $\mathcal{F}_s$, the path up to s. That is the independence of increments from [brownian-motion](01-brownian-motion.md), restated.
+The ordinary Markov property says: at a fixed time s, the future $W_{s+u} - W_s$, the move over the u seconds after s, is a fresh Brownian motion, independent of $\mathcal{F}_s$, the path up to s. That is the independence of increments from [Brownian motion](01-brownian-motion.md), restated.
 
 The **strong Markov property** says the same at a stopping time such as $\tau_a$: on the event that the grain touches, $W_{\tau_a + u} - W_{\tau_a}$ is a fresh Brownian motion, independent of the path up to $\tau_a$. A stopping time is needed. "The last time before 10 seconds that the grain was at 3" is not one, and after it the grain cannot return to 3, so its future is not fresh.
 
@@ -157,7 +132,7 @@ Orange: $P(M_{10} \ge m)$, the chance the best so far reaches m. Green: $P(W_{10
 
 ### Step 5: first passage, and why the wait has no average
 
-Read the formula as a function of time and it is the law of the first-passage time: $P(\tau_3 \le t) = 2(1 - \Phi(3/\sqrt t))$. At 40 seconds it is 0.6353, at 1000 seconds 0.9244, and as t grows it tends to 1, because $3/\sqrt t$ tends to 0 and $\Phi(0)$ is one half. The grain touches the line for certain, eventually. Yet the average wait is infinite. The average is the area under the chance of still waiting, and that chance falls only like $1/\sqrt t$, whose area never stops growing. The coin-toss version of this fact is on [first-passage-and-hitting-times](../01-Random%20Walks%20and%20Filtrations/06-first-passage-and-hitting-times.md).
+Read the formula as a function of time and it is the law of the first-passage time: $P(\tau_3 \le t) = 2(1 - \Phi(3/\sqrt t))$. At 40 seconds it is 0.6353, at 1000 seconds 0.9244, and as t grows it tends to 1, because $3/\sqrt t$ tends to 0 and $\Phi(0)$ is one half. The grain touches the line for certain, eventually. Yet the average wait is infinite. The average is the area under the chance of still waiting, and that chance falls only like $1/\sqrt t$, whose area never stops growing. The coin-toss version of this fact is on [Hitting times](../01-Random%20Walks%20and%20Filtrations/06-first-passage-and-hitting-times.md).
 
 A second road to the formula runs through the walk. A fair coin walk with steps of $h$ every $h^2$ seconds obeys its own reflection principle, proved by counting; as the steps shrink, the walk becomes Brownian motion and its touching chance becomes this one. The code does not use the walk's mirror. It computes the walk's chance of touching directly, step by step, and watches it close in.
 
@@ -178,7 +153,7 @@ The grain, the line 3 μm to the right, 10 seconds.
 | touches 3 and ends at or below 1 | $P(W_{10} \ge 5)$ | 0.0569 |
 | average best so far | $\sqrt{20/\pi}$ | 2.5231 |
 
-About one grain in three touches the line within 10 seconds. Half of those are back on the start side of the line when the 10 seconds end, and a sixth of those touching grains, 0.0569 out of 0.3428, end no more than 1 μm to the right of the start. That 0.0569 is also the chance of ending beyond 5 μm computed on [brownian-motion](01-brownian-motion.md): the mirror turns one into the other.
+About one grain in three touches the line within 10 seconds. Half of those are back on the start side of the line when the 10 seconds end, and a sixth of those touching grains, 0.0569 out of 0.3428, end no more than 1 μm to the right of the start. That 0.0569 is also the chance of ending beyond 5 μm computed on [Brownian motion](01-brownian-motion.md): the mirror turns one into the other.
 
 ### The chance builds up over the 10 seconds
 
@@ -204,7 +179,7 @@ Orange: the formula, for the path watched continuously. Green: 10000 simulated p
 | Either side: double the one-sided answer | 0.6856 (right: 0.6767) | Paths touching both +3 and −3 are counted twice |
 | Mirror with a current of 0.2 μm/s | 0.7518 (right: 0.5649) | The motion is not symmetric, so a path and its mirror differ in chance |
 
-The either-side truth comes from mirrors in both walls, an alternating sum of normal chances: subtract the paths that touch one wall, add back those that touch both, and so on. The chance of staying strictly between −a and a is $\sum_k (-1)^k\big[\Phi\big((2k+1)a/\sqrt t\big) - \Phi\big((2k-1)a/\sqrt t\big)\big]$, summed over every whole number k, and one minus it is 0.6767 ([double-barriers-and-double-no-touch](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/05-double-barriers-and-double-no-touch.md); method-of-images). The drift truth is $1 - \Phi\big((a - \mu t)/\sqrt t\big) + e^{2\mu a}\,\Phi\big((-a - \mu t)/\sqrt t\big)$, which follows from this card's joint law by weighting each path with an exponential martingale: [brownian-martingales-and-exponential-martingale](06-brownian-martingales-and-exponential-martingale.md) proves that martingale fair, and [girsanov-theorem](../07-Changing%20Measure/02-girsanov-theorem.md) does the weighting. The coin walk with 10240 steps confirms both: 0.6768 and 0.5649.
+The either-side truth comes from mirrors in both walls, an alternating sum of normal chances: subtract the paths that touch one wall, add back those that touch both, and so on. The chance of staying strictly between −a and a is $\sum_k (-1)^k\big[\Phi\big((2k+1)a/\sqrt t\big) - \Phi\big((2k-1)a/\sqrt t\big)\big]$, summed over every whole number k, and one minus it is 0.6767 ([Two walls](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/05-double-barriers-and-double-no-touch.md); Method of images). The drift truth is $1 - \Phi\big((a - \mu t)/\sqrt t\big) + e^{2\mu a}\,\Phi\big((-a - \mu t)/\sqrt t\big)$, which follows from this card's joint law by weighting each path with an exponential martingale: [Brownian martingales](06-brownian-martingales-and-exponential-martingale.md) proves that martingale fair, and [Girsanov](../07-Changing%20Measure/02-girsanov-theorem.md) does the weighting. The coin walk with 10240 steps confirms both: 0.6768 and 0.5649.
 
 ---
 
@@ -652,11 +627,11 @@ The two outputs agree line for line, the simulation included: both languages run
 
 ## Where you meet it in real life
 
-- **Barrier contracts.** A payment due only if a share price touches a level before a date is priced by this mirror, applied to the price's logarithm: [one-touch-and-no-touch](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/05-one-touch-and-no-touch.md).
-- **A firm's default.** In first-passage credit models a firm defaults when its assets first touch a floor; the default chance is this formula with drift: [black-cox-first-passage-default](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/05-black-cox-first-passage-default.md).
+- **Barrier contracts.** A payment due only if a share price touches a level before a date is priced by this mirror, applied to the price's logarithm: [One-touch and no-touch](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/05-one-touch-and-no-touch.md).
+- **A firm's default.** In first-passage credit models a firm defaults when its assets first touch a floor; the default chance is this formula with drift: [Black-Cox](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/05-black-cox-first-passage-default.md).
 - **Peeking at an experiment.** A running total of pure noise, watched continuously, crosses a fixed threshold about twice as often as when read once at the end, so peeking doubles one-sided false alarms.
-- **Heat and electric potential.** The mirror is the image charge of electrostatics, solving the heat equation with a wall: method-of-images.
-- **Paths pinned at both ends.** Given where the grain ends, the chance it crossed the line follows from this card's joint law: [brownian-bridge](05-brownian-bridge.md).
+- **Heat and electric potential.** The mirror is the image charge of electrostatics, solving the heat equation with a wall: Method of images.
+- **Paths pinned at both ends.** Given where the grain ends, the chance it crossed the line follows from this card's joint law: [Brownian bridge](05-brownian-bridge.md).
 
 > **Say it back**
 > A grain doing Brownian motion that touches a level is, from that moment, a fresh Brownian motion started on the level: the strong Markov property. Reflect its future in the level and you get another Brownian path, so touching and falling back is as likely as ending beyond. Hence the chance of touching 3 μm in 10 seconds is twice the chance of ending beyond 3, 0.3428 against 0.1714. The best position so far is spread exactly like the distance from the start, average 2.5231 μm. It needs a symmetric motion, a single level and a path watched all the time.
@@ -665,20 +640,20 @@ The two outputs agree line for line, the simulation included: both languages run
 
 ## What this builds on
 
-- [brownian-motion](01-brownian-motion.md): the grain's motion itself, its normal increments with variance equal to the elapsed time, their independence, and continuous paths.
-- [reflection-principle-for-walks](../01-Random%20Walks%20and%20Filtrations/05-reflection-principle-for-walks.md): the same mirror for coin tosses, proved by counting paths, with its law of the best pile. This card replaces the count by the strong Markov property and gets "twice the tail" exactly, since the grain can never end exactly on the line.
+- [Brownian motion](01-brownian-motion.md): the grain's motion itself, its normal increments with variance equal to the elapsed time, their independence, and continuous paths.
+- [Reflection principle](../01-Random%20Walks%20and%20Filtrations/05-reflection-principle-for-walks.md): the same mirror for coin tosses, proved by counting paths, with its law of the best pile. This card replaces the count by the strong Markov property and gets "twice the tail" exactly, since the grain can never end exactly on the line.
 
 ## Where this goes next
 
-- [knock-out-and-knock-in-options](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md): options that die or come alive at a touch, priced from the joint law of the maximum and the end.
-- [one-touch-and-no-touch](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/05-one-touch-and-no-touch.md): a payment if the level is touched, or if not: this card's formula, discounted, with drift.
-- [lookback-options](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/06-lookback-options.md): a payoff on the running maximum itself, priced from its law.
-- [barrier-options-by-reflection](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md): the mirror applied to currency barriers.
-- [the-eight-barrier-types](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/03-the-eight-barrier-types.md): up or down, in or out, call or put, each a mirror of another.
-- [fx-one-touch-and-no-touch](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/04-fx-one-touch-and-no-touch.md): the touch contracts as currency desks quote them.
-- [double-barriers-and-double-no-touch](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/05-double-barriers-and-double-no-touch.md): two walls, mirrors of mirrors: the either-side row of What breaks.
-- [black-cox-first-passage-default](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/05-black-cox-first-passage-default.md): default as the first touch of a floor by the firm's assets.
-- method-of-images: the mirror as a way to solve heat and Laplace equations with a wall.
+- [Knock-out and knock-in options](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md): options that die or come alive at a touch, priced from the joint law of the maximum and the end.
+- [One-touch and no-touch](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/05-one-touch-and-no-touch.md): a payment if the level is touched, or if not: this card's formula, discounted, with drift.
+- [Lookback options](../../12-Financial%20mathematics/16-Barriers%2C%20touches%20and%20lookbacks/06-lookback-options.md): a payoff on the running maximum itself, priced from its law.
+- [Knock-out and knock-in](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md): the mirror applied to currency barriers.
+- [The eight single barriers in one table](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/03-the-eight-barrier-types.md): up or down, in or out, call or put, each a mirror of another.
+- [One-touch and no-touch](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/04-fx-one-touch-and-no-touch.md): the touch contracts as currency desks quote them.
+- [Two walls](../../12-Financial%20mathematics/23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/05-double-barriers-and-double-no-touch.md): two walls, mirrors of mirrors: the either-side row of What breaks.
+- [Black-Cox](../../12-Financial%20mathematics/43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/05-black-cox-first-passage-default.md): default as the first touch of a floor by the firm's assets.
+- Method of images: the mirror as a way to solve heat and Laplace equations with a wall.
 
 The mirror needs a symmetric motion; what happens when the grain drifts, or when the price grows in proportion to itself, is the question the barrier cards answer by changing the measure first and reflecting second.
 

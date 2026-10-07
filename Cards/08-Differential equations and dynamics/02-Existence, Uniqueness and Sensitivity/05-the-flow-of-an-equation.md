@@ -1,26 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Existence, Uniqueness and Sensitivity
-topic: Moving every start at once
-item: The flow
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/02-Existence, Uniqueness and Sensitivity/04-gronwall-and-continuous-dependence|gronwall-and-continuous-dependence]]"
-  - "[[Cards/08-Differential equations and dynamics/02-Existence, Uniqueness and Sensitivity/03-blow-up-and-the-life-span-of-a-solution|blow-up-and-the-life-span-of-a-solution]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/03-composition|composition]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/02-the-transport-equation-and-characteristics|the-transport-equation-and-characteristics]]"
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/04-strongly-continuous-semigroups|strongly-continuous-semigroups]]"
-  - "[[Cards/23-Differential geometry and Lie groups/03-Manifolds/07-vector-fields-and-flows|vector-fields-and-flows]]"
-tags: [mathematics, differential equations and dynamics, the-flow-of-an-equation]
----
-
 # The flow: a rule that moves every starting point forward by t, and running it twice is running it longer
 
-Differential equations and dynamics → Existence, Uniqueness and Sensitivity → Moving every start at once → The flow
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Existence, Uniqueness and Sensitivity](../../../SYLLABUS.md#w08-s02) → The flow
 
 ---
 
@@ -55,7 +35,7 @@ From the bottom: colonies of 50 (orange), 100 (green) and 133 (dark blue). Dark 
 
 ## The formula
 
-Notation first, in words. A rule $y' = f(y)$, whose rate depends on the state alone and not on the time, is called **autonomous**. The flow is written $\varphi_t$, read "phi t": $\varphi_t(x)$ is where the solution that starts at $x$ stands after time $t$. A small circle means "after", as on the [composition](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md) card: $\varphi_s \circ \varphi_t$ applies $\varphi_t$ first, then $\varphi_s$.
+Notation first, in words. A rule $y' = f(y)$, whose rate depends on the state alone and not on the time, is called **autonomous**. The flow is written $\varphi_t$, read "phi t": $\varphi_t(x)$ is where the solution that starts at $x$ stands after time $t$. A small circle means "after", as on the [Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md) card: $\varphi_s \circ \varphi_t$ applies $\varphi_t$ first, then $\varphi_s$.
 
 For the colony, $y' = y^2$, the flow is
 
@@ -94,8 +74,8 @@ Both routes end at 2, as the composition law promises for every start and every 
 ### When it holds
 
 - **The rule reads only the state.** If it reads the clock, as in $y' = 2ty$, a wait depends on when it begins: the map from year 0, used twice, gives 1.1331 against 1.2840 for one move. Such an equation needs a map from a start time to an end time.
-- **One start gives one history, both ways in time.** Otherwise the flow is no function. The [lipschitz-and-the-picard-lindelof-theorem](02-lipschitz-and-the-picard-lindelof-theorem.md) card guarantees it when $f$ is Lipschitz: its slope stays bounded. The leaking bucket, $h' = -0.2\sqrt{h}$, fails that at empty. Forward it is fine, but starts of 25 cm and 1 cm both read 0.00 at 60 s, so running back from empty has no single answer.
-- **The time stays inside the life span** ([blow-up-and-the-life-span-of-a-solution](03-blow-up-and-the-life-span-of-a-solution.md)). From 100 animals that is under 1 year; at 1.5 years the formula prints −2.00, which is no colony.
+- **One start gives one history, both ways in time.** Otherwise the flow is no function. The [The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md) card guarantees it when $f$ is Lipschitz: its slope stays bounded. The leaking bucket, $h' = -0.2\sqrt{h}$, fails that at empty. Forward it is fine, but starts of 25 cm and 1 cm both read 0.00 at 60 s, so running back from empty has no single answer.
+- **The time stays inside the life span** ([Blow-up](03-blow-up-and-the-life-span-of-a-solution.md)). From 100 animals that is under 1 year; at 1.5 years the formula prints −2.00, which is no colony.
 - **The colony model fits only while it is sparse.** Crowding stops real growth long before infinity.
 
 ---
@@ -135,7 +115,7 @@ A **system** has several quantities with linked rates; its **orbit** is the path
 <details>
 <summary>Detailed proof: the composition law, with its domain</summary>
 
-Let $f$ be locally Lipschitz ([lipschitz-and-the-picard-lindelof-theorem](02-lipschitz-and-the-picard-lindelof-theorem.md)). For each start $x$ let $t \mapsto \varphi_t(x)$ be the unique solution of $y' = f(y)$, $y(0) = x$, on its largest open time interval $J(x)$ containing 0.
+Let $f$ be locally Lipschitz ([The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md)). For each start $x$ let $t \mapsto \varphi_t(x)$ be the unique solution of $y' = f(y)$, $y(0) = x$, on its largest open time interval $J(x)$ containing 0.
 
 Fix $t$ in $J(x)$, put $z = \varphi_t(x)$ and $u(s) = \varphi_{s+t}(x)$ for $s + t$ in $J(x)$. Then $u'(s) = f(u(s))$ and $u(0) = z$, so by uniqueness $u(s) = \varphi_s(z)$, and $J(x) - t \subseteq J(z)$ by maximality. If $J(z)$ reached beyond $J(x) - t$, the curve $s \mapsto \varphi_{s-t}(z)$ would extend the solution from $x$ past its largest interval; so equality holds: $J(z) = J(x) - t$.
 
@@ -143,7 +123,7 @@ Non-crossing: if $\varphi_{t_1}(p) = \varphi_{t_2}(q)$, the law gives $\varphi_{
 
 </details>
 
-A second road needs no flow formula. The time to grow from one head count to a larger one is the area under `1/u^2` between them, 1/start − 1/end. Times add: a quarter-year from 1 to 4/3, a quarter-year from 4/3 to 2, half a year from 1 to 2. That additivity is the composition law. A third road steps along the slope, Euler's rule ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)).
+A second road needs no flow formula. The time to grow from one head count to a larger one is the area under `1/u^2` between them, 1/start − 1/end. Times add: a quarter-year from 1 to 4/3, a quarter-year from 4/3 to 2, half a year from 1 to 2. That additivity is the composition law. A third road steps along the slope, Euler's rule ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)).
 
 ---
 
@@ -374,7 +354,7 @@ ALL CHECKS PASS
 
 - **Restarting a long simulation.** Climate and orbit programs save the state and resume from it; for laws that ignore the clock, the composition law makes two halves equal the whole run.
 - **Mechanics.** A planet's state is position and speed together; Newton's laws ignore the clock, so its orbit in that state space never crosses itself except by repeating.
-- **A pollutant in a river.** Each drop rides the river's flow, and the concentration is found by following those paths backwards ([the-transport-equation-and-characteristics](../10-The%20Classical%20PDEs/02-the-transport-equation-and-characteristics.md)).
+- **A pollutant in a river.** Each drop rides the river's flow, and the concentration is found by following those paths backwards ([The transport equation](../10-The%20Classical%20PDEs/02-the-transport-equation-and-characteristics.md)).
 
 > **Say it back**
 > The flow takes every starting value to where its solution stands after a given time. When the rule reads only the state, a later start is the same solution delayed, and uniqueness makes waiting t then s equal to waiting s plus t. The colony of 100 holds 200 after six months by either route. A negative wait runs the flow backwards. One start gives one history, so solution curves never cross.
@@ -383,15 +363,15 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [gronwall-and-continuous-dependence](04-gronwall-and-continuous-dependence.md): nearby starts stay nearby under the flow.
-- [blow-up-and-the-life-span-of-a-solution](03-blow-up-and-the-life-span-of-a-solution.md): the life span that limits how far the flow reaches.
-- [composition](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md): one map after another.
+- [Gronwall's inequality](04-gronwall-and-continuous-dependence.md): nearby starts stay nearby under the flow.
+- [Blow-up](03-blow-up-and-the-life-span-of-a-solution.md): the life span that limits how far the flow reaches.
+- [Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md): one map after another.
 
 ## Where this goes next
 
-- [the-transport-equation-and-characteristics](../10-The%20Classical%20PDEs/02-the-transport-equation-and-characteristics.md): a partial differential equation solved by riding a flow.
-- strongly-continuous-semigroups: the composition law as a definition, for heat spreading in a rod.
-- vector-fields-and-flows: flows on curved spaces.
+- [The transport equation](../10-The%20Classical%20PDEs/02-the-transport-equation-and-characteristics.md): a partial differential equation solved by riding a flow.
+- Semigroups: the composition law as a definition, for heat spreading in a rod.
+- Vector field and its flow: flows on curved spaces.
 
 ---
 

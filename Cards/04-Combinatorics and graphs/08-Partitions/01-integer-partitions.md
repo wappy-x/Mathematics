@@ -1,26 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Partitions
-topic: Splitting a whole number
-item: Integer partitions
-kind: definition
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/02-stars-and-bars|stars-and-bars]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/08-Partitions/02-partitions-generating-function|partitions-generating-function]]"
-  - "[[Cards/04-Combinatorics and graphs/08-Partitions/06-twelvefold-way|twelvefold-way]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - integer-partitions
----
-
 # Integer partitions: a number as a sum of whole parts with order ignored, drawn as rows of dots
 
-Combinatorics and graphs → Partitions → Splitting a whole number → Integer partitions
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Partitions](../../../SYLLABUS.md#w04-s08) → Integer partitions
 
 ---
 
@@ -115,7 +95,7 @@ Turn 3+1+1+1+1+1 and its columns read six dots, then one, then one: 6+1+1 again.
 
 A turned shape's top row is the original's first column, which holds one dot per row, since every row reaches column one. So the row count before the turn is the biggest part after it.
 
-Read that as a restriction: at most three rows turns into biggest part at most three, and back. Collections matched one for one are the same size ([bijection-and-double-counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)): the theorem $R_k(n) = C_k(n)$. Both are 10 here, and the code prints the ten pairs.
+Read that as a restriction: at most three rows turns into biggest part at most three, and back. Collections matched one for one are the same size ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)): the theorem $R_k(n) = C_k(n)$. Both are 10 here, and the code prints the ten pairs.
 
 <details>
 <summary>Detailed proof: the turn, written out</summary>
@@ -132,7 +112,7 @@ The recurrence fills capped counts from smaller ones: at most three notes in eig
 
 For $p(n)$, build up by note length. Start with the one way to fill zero beats and let one-beat notes in: every bar length now has one way. Let two-beat notes in and each bar gains the ways to fill it two beats shorter, every such split being a shorter one with a two-beat note added. Carry on to eight-beat notes and the counts read 1, 1, 2, 3, 5, 7, 11, 15, 22, nothing listed.
 
-That loop written as one line of algebra is Euler's product, the next card ([partitions-generating-function](02-partitions-generating-function.md)).
+That loop written as one line of algebra is Euler's product, the next card ([Euler's product](02-partitions-generating-function.md)).
 
 ---
 
@@ -393,17 +373,17 @@ The two outputs match line for line.
 > **Counting the rhythms.** Three-three-two and two-three-three are two rhythms and one split. Rhythms give 128 for eight beats, splits 22. Whether order matters is the whole question.
 >
 > - **Reaching for a formula.** No formula as simple as a binomial coefficient gives $p(n)$; the exact ones are deep and long. The build-up above, or the next card's product, is how the number is got.
-> - **Using stars and bars.** Three named notes filling eight beats is 21 ways ([stars-and-bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md)). Take the names off and 5 remain.
+> - **Using stars and bars.** Three named notes filling eight beats is 21 ways ([Stars and bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md)). Take the names off and 5 remain.
 > - **Confusing "at most" with "exactly".** At most three notes is 10, exactly three is 5. The capped counts here are all "at most".
-> - **Naming the items.** Eight named jobs on identical machines is a different, much larger count ([set-partitions-and-bell-numbers](03-set-partitions-and-bell-numbers.md)). Here the beats are interchangeable.
+> - **Naming the items.** Eight named jobs on identical machines is a different, much larger count ([Set partitions and Bell numbers](03-set-partitions-and-bell-numbers.md)). Here the beats are interchangeable.
 
 ---
 
 ## Where you meet it in real life
 
-- **Rhythm and metre.** The 22 splits of an eight-beat bar are the ingredient lists a composer chooses from, each unfolding into its orderings ([multiset-permutations](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md)).
+- **Rhythm and metre.** The 22 splits of an eight-beat bar are the ingredient lists a composer chooses from, each unfolding into its orderings ([Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md)).
 - **Cutting stock.** An eight-metre pipe cut into whole-metre pieces: the yard cares which lengths come out, not the order of the cuts. 22 plans, 10 under a three-metre limit.
-- **Shuffles by their loops.** Follow each card through a shuffle and the cards fall into closed loops whose lengths partition the pack, so eight cards have 22 shuffle shapes ([permutations-by-cycles](05-permutations-by-cycles.md)).
+- **Shuffles by their loops.** Follow each card through a shuffle and the cards fall into closed loops whose lengths partition the pack, so eight cards have 22 shuffle shapes ([Counting shuffles by their loops](05-permutations-by-cycles.md)).
 
 > **Say it back**
 > A partition is a number written as a sum of whole parts, biggest first, order thrown away; eight beats have 22. Drawn as rows of dots, longest on top, it becomes a shape, and reading that shape down its columns gives another partition of the same number. Turning twice returns the original, so the turn pairs the 22 off one for one. Since it swaps the row count with the longest row, at most three notes and no note over three beats must match: 10 each.
@@ -412,12 +392,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [stars-and-bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md): splitting a total among named bowls, where empty bowls count and a binomial coefficient answers. Take the names off and the formula goes too.
+- [Stars and bars](../02-Repeats%2C%20Groups%20and%20Double%20Counting/02-stars-and-bars.md): splitting a total among named bowls, where empty bowls count and a binomial coefficient answers. Take the names off and the formula goes too.
 
 ## Where this goes next
 
-- [partitions-generating-function](02-partitions-generating-function.md): the build-up by note length written as one product, Euler's way into the later facts.
-- [twelvefold-way](06-twelvefold-way.md): the grid of named-or-unnamed items and boxes, with this card in one of its twelve cells.
+- [Euler's product](02-partitions-generating-function.md): the build-up by note length written as one product, Euler's way into the later facts.
+- [The twelvefold way](06-twelvefold-way.md): the grid of named-or-unnamed items and boxes, with this card in one of its twelve cells.
 
 The build-up fills a row of counts without saying why they grow as they do; turning the loop into a product makes the pattern visible.
 

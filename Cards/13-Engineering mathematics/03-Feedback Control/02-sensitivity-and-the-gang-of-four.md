@@ -1,22 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Feedback Control
-topic: Four closed-loop paths
-item: Sensitivity functions
-kind: definition
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/01-feedback-and-closed-loop-transfer-functions|feedback-and-closed-loop-transfer-functions]]"
-next:
-  - "[[Cards/13-Engineering mathematics/10-Robustness and Adaptation/01-model-uncertainty-and-the-small-gain-theorem|model-uncertainty-and-the-small-gain-theorem]]"
-tags: [mathematics, engineering mathematics, sensitivity-and-the-gang-of-four]
----
-
 # Sensitivity functions: one loop has four paths and all four matter
 
-Engineering mathematics → Feedback Control → Four closed-loop paths → Sensitivity functions
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Feedback Control](../../../SYLLABUS.md#w13-s03) → Sensitivity functions
 
 ---
 
@@ -42,13 +26,13 @@ Schematic, not to scale. The setpoint $r$ enters at the left. The controller tur
 
 ## The formula
 
-Notation first, in words. The **loop gain** $L(s)$ is the transfer function once round the loop, controller then room: $L = PC$. A transfer function says what a system does to each exponential $e^{st}$ ([impulse-response-and-transfer-functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md)). The **sensitivity** $S(s)$ is $1/(1+L)$: how much of a disturbance at the output survives the loop. The **complementary sensitivity** $T(s)$ is $L/(1+L)$: how much of the setpoint, and of the sensor's noise, reaches the room. Engineers write $j$ for the square root of −1; the rest of the library writes i.
+Notation first, in words. The **loop gain** $L(s)$ is the transfer function once round the loop, controller then room: $L = PC$. A transfer function says what a system does to each exponential $e^{st}$ ([Transfer functions](../02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md)). The **sensitivity** $S(s)$ is $1/(1+L)$: how much of a disturbance at the output survives the loop. The **complementary sensitivity** $T(s)$ is $L/(1+L)$: how much of the setpoint, and of the sensor's noise, reaches the room. Engineers write $j$ for the square root of −1; the rest of the library writes i.
 
 The room and the thermostat, with time in minutes, temperature in °C and power in kW:
 
 $$P(s) = \frac{K}{\tau s + 1}, \qquad C(s) = K_p + \frac{K_i}{s}$$
 
-$K$ is the room's settled warming per kilowatt and $\tau$ its time constant, the minutes it takes to cover about two-thirds of a change. The controller is proportional-plus-integral (PI): $K_p$ kilowatts for each degree of error now, plus $K_i$ kilowatts for each degree-minute of error built up. Tuning those two numbers is the job of [pid-control-and-tuning](07-pid-control-and-tuning.md); here only the controller's transfer function matters.
+$K$ is the room's settled warming per kilowatt and $\tau$ its time constant, the minutes it takes to cover about two-thirds of a change. The controller is proportional-plus-integral (PI): $K_p$ kilowatts for each degree of error now, plus $K_i$ kilowatts for each degree-minute of error built up. Tuning those two numbers is the job of [PID control](07-pid-control-and-tuning.md); here only the controller's transfer function matters.
 
 Every output, the room $y$, the heater $u$ and the error $e = r - y$, is a sum of three paths, one per input:
 
@@ -77,10 +61,10 @@ $$S = \frac{1}{1+PC}, \qquad T = \frac{PC}{1+PC}, \qquad PS = \frac{P}{1+PC}, \q
 
 ### When it holds
 
-- **Linear and unsaturated.** The paths add only while the heater stays between off and full power. A 5 °C setpoint step asks this 3 kW heater for 10.0 kW at the first instant; the real heater clips and the formulas no longer describe it ([pid-on-real-hardware](08-pid-on-real-hardware.md)).
+- **Linear and unsaturated.** The paths add only while the heater stays between off and full power. A 5 °C setpoint step asks this 3 kW heater for 10.0 kW at the first instant; the real heater clips and the formulas no longer describe it ([PID in practice](08-pid-on-real-hardware.md)).
 - **The model is the room.** One time constant leaves out the radiator pipe's own lag. Adding a 4 min pipe lag lifts the peak of $\lvert S\rvert$ from 1 to 1.6580: a disturbance wobbling at 0.2301 rad/min then comes out 1.6580 times bigger with the thermostat on than with it off.
 - **Time-invariant.** The same room, the same heater. A wide-open door changes $K$ and $\tau$, and every function on this card with them.
-- **The loop is stable.** All four functions are computed from $P$ and $C$ whatever they are, but they describe the settled loop only when every closed-loop pole lies in the left half-plane ([routh-hurwitz-criterion](04-routh-hurwitz-criterion.md)). The loop is **internally stable** when $S$, $T$, $PS$ and $CS$ are all stable; $T$ alone is not enough. A room pole cancelled by a controller zero drops out of $T$ but stays in $PS$, as the pole-cancelling row of What breaks shows. Had that pole been unstable, the room would run away after a draught while $T$ looked fine.
+- **The loop is stable.** All four functions are computed from $P$ and $C$ whatever they are, but they describe the settled loop only when every closed-loop pole lies in the left half-plane ([Routh-Hurwitz](04-routh-hurwitz-criterion.md)). The loop is **internally stable** when $S$, $T$, $PS$ and $CS$ are all stable; $T$ alone is not enough. A room pole cancelled by a controller zero drops out of $T$ but stays in $PS$, as the pole-cancelling row of What breaks shows. Had that pole been unstable, the room would run away after a draught while $T$ looked fine.
 
 ---
 
@@ -118,7 +102,7 @@ xychart-beta
     line [0.00, 0.01, 0.02, 0.06, 0.17, 0.39, 0.43, -1.03, -4.59, -9.16, -14.03, -19.00, -23.98]
 ```
 
-Orange: $\lvert S\rvert$ in decibels (20 log10 of the gain, [frequency-response-and-bode-plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md)). Green: $\lvert T\rvert$. Slow disturbances are crushed, by −42.03 dB at 0.0032 rad/min; fast ones pass through untouched. The curves cross between 0.18 and 0.32 rad/min, where neither is small. Labels are rounded; the points are equally spaced on the log scale, a quarter-decade apart.
+Orange: $\lvert S\rvert$ in decibels (20 log10 of the gain, [Bode plots](../02-Linear%20Systems%20and%20Transforms/04-frequency-response-and-bode-plots.md)). Green: $\lvert T\rvert$. Slow disturbances are crushed, by −42.03 dB at 0.0032 rad/min; fast ones pass through untouched. The curves cross between 0.18 and 0.32 rad/min, where neither is small. Labels are rounded; the points are equally spaced on the log scale, a quarter-decade apart.
 
 ### Step 4: integral action zeroes the draught's lasting effect
 
@@ -130,7 +114,7 @@ The room gain $K$ cancels. The degree-minutes the room loses to a draught are se
 
 ### Step 5: the dip itself, in closed form
 
-Multiply out $PS$ for this room: $PS = K s/\big(\tau s^2 + (1 + KK_p)s + KK_i\big)$. For a step draught the transform of the dip is $PS\,d_0/s$, which is $(K d_0/\tau)/(s^2 + 2\alpha s + \omega_n^2)$ with $2\alpha = (1 + KK_p)/\tau$ and $\omega_n^2 = KK_i/\tau$. For our numbers that is $20s^2 + 5s + 0.4$ underneath, a damping ratio $\zeta = \alpha/\omega_n$ of 0.8839, below 1, so the dip barely rings ([second-order-systems-damping-and-natural-frequency](../02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md)). The inverse transform is
+Multiply out $PS$ for this room: $PS = K s/\big(\tau s^2 + (1 + KK_p)s + KK_i\big)$. For a step draught the transform of the dip is $PS\,d_0/s$, which is $(K d_0/\tau)/(s^2 + 2\alpha s + \omega_n^2)$ with $2\alpha = (1 + KK_p)/\tau$ and $\omega_n^2 = KK_i/\tau$. For our numbers that is $20s^2 + 5s + 0.4$ underneath, a damping ratio $\zeta = \alpha/\omega_n$ of 0.8839, below 1, so the dip barely rings ([Damping ratio and natural frequency](../02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md)). The inverse transform is
 
 $$y(t) = \frac{K d_0}{\tau}\,e^{-\alpha t}\,\frac{\sin\omega_d t}{\omega_d}, \qquad \omega_d = \sqrt{\omega_n^2 - \alpha^2}.$$
 
@@ -203,7 +187,7 @@ Orange: no thermostat, heading for −1.00 °C, drawn from its closed form $K d_
 | Judge the loop by its setpoint step alone: choose $K_i = K_p/\tau$ = 0.1, which cancels the room's pole | Setpoint: no overshoot (PI: 0.0719 °C). Draught: still −0.0736 °C at 30 min (PI: −0.0163), area −5.0 °C·min (PI: −2.5) | Cancelling the room's slow pole removes it from $T$, not from $PS$; the draught still sees the 20 min room |
 | Raise $K_p$ to 8 and $K_i$ to 0.8 to beat the draught | Dip −0.0485 °C (was −0.1409), but heater jitter 0.7947 kW (was 0.2007); with a 4 min pipe lag, peak $\lvert S\rvert$ 2.5638 (was 1.6580) | $CS$ grows with $K_p$: noise goes straight to the heater; the model error makes the peak of $S$ worse |
 | Ask for small $S$ and small $T$ at the same frequency | At 0.2 rad/min, $\lvert S\rvert$ = 0.7656 and $\lvert T\rvert$ = 0.8305 | $S + T = 1$ as complex numbers; where the loop gain is near 1, both are near 1 |
-| Use the linear model for a 5 °C setpoint step | The first instant asks for 10.0 kW from a 3 kW heater | The model has no ceiling; the real heater saturates ([pid-on-real-hardware](08-pid-on-real-hardware.md)) |
+| Use the linear model for a 5 °C setpoint step | The first instant asks for 10.0 kW from a 3 kW heater | The model has no ceiling; the real heater saturates ([PID in practice](08-pid-on-real-hardware.md)) |
 
 ---
 
@@ -633,9 +617,9 @@ The two outputs agree line for line, including the noise figures, since both lan
 
 - **Building heating.** Thermostat loops are tuned against draughts, and sensor filtering is added to calm $CS$, the path that cycles valves and wears relays.
 - **Process control.** Plant engineers judge a loop by load disturbances, not setpoint steps, because in a chemical plant the setpoint rarely moves and the feed changes all the time. Pole-cancelling tunings of slow processes are a known trap for exactly the reason in What breaks.
-- **Motion control and disk drives.** The peak of $\lvert S\rvert$, $M_s$, is the usual robustness number, and tuning rules typically cap it between 1.2 and 2; its reciprocal is the closest the loop gain comes to the critical point −1 ([nyquist-criterion-and-stability-margins](06-nyquist-criterion-and-stability-margins.md)).
-- **Loop shaping.** Designers draw $\lvert S\rvert$ and $\lvert T\rvert$ and push each down where it matters ([lead-lag-compensation-and-loop-shaping](09-lead-lag-compensation-and-loop-shaping.md)).
-- **Steady error.** The low-frequency end of $S$ decides how a loop tracks ramps and holds steps ([steady-state-error-and-system-type](03-steady-state-error-and-system-type.md)).
+- **Motion control and disk drives.** The peak of $\lvert S\rvert$, $M_s$, is the usual robustness number, and tuning rules typically cap it between 1.2 and 2; its reciprocal is the closest the loop gain comes to the critical point −1 ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)).
+- **Loop shaping.** Designers draw $\lvert S\rvert$ and $\lvert T\rvert$ and push each down where it matters ([Loop shaping](09-lead-lag-compensation-and-loop-shaping.md)).
+- **Steady error.** The low-frequency end of $S$ decides how a loop tracks ramps and holds steps ([Steady-state error](03-steady-state-error-and-system-type.md)).
 
 > **Say it back**
 > A feedback loop has three inputs, setpoint, disturbance and sensor noise, and every output is the sum of their separate effects. Those effects travel through four transfer functions: S, T, PS and CS. S plus T is exactly one, so a loop that crushes disturbances at some frequency passes noise there. The thermostat holds a 0.5 kW draught to a 0.1409 °C dip and pays for it with 0.2007 kW of heater jitter from a 0.1 °C sensor. A design is checked on all four paths, never on the setpoint step alone.
@@ -644,11 +628,11 @@ The two outputs agree line for line, including the noise figures, since both lan
 
 ## What this builds on
 
-- [feedback-and-closed-loop-transfer-functions](01-feedback-and-closed-loop-transfer-functions.md): closing a loop around a plant and the single closed-loop transfer function from setpoint to output; this card adds the other inputs and outputs.
+- [Feedback](01-feedback-and-closed-loop-transfer-functions.md): closing a loop around a plant and the single closed-loop transfer function from setpoint to output; this card adds the other inputs and outputs.
 
 ## Where this goes next
 
-- model-uncertainty-and-the-small-gain-theorem: $T$ measures how a model error in the room is fed back on itself, and the small-gain theorem turns that into a guarantee of stability.
+- Writing down model error: $T$ measures how a model error in the room is fed back on itself, and the small-gain theorem turns that into a guarantee of stability.
 
 This card shows that a 4 min pipe lag left out of the model raised the peak of $\lvert S\rvert$ from 1 to 1.6580; how large a model error a loop can survive without going unstable is the question the small-gain theorem answers.
 

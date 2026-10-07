@@ -1,28 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Simulation
-topic: Rare events by reweighting
-item: Importance sampling
-kind: method
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/11-Simulation/05-variance-reduction|variance-reduction]]"
-  - "[[Cards/09-Probability and statistics/11-Simulation/04-monte-carlo-estimates-and-error|monte-carlo-estimates-and-error]]"
-  - "[[Cards/09-Probability and statistics/11-Simulation/02-inverse-transform-sampling|inverse-transform-sampling]]"
-  - "[[Cards/09-Probability and statistics/11-Simulation/03-rejection-sampling-and-box-muller|rejection-sampling-and-box-muller]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/04-normal-distribution|normal-distribution]]"
-next:
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/04-radon-nikodym-derivative|radon-nikodym-derivative]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/02-girsanov-theorem|girsanov-theorem]]"
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/03-historical-and-monte-carlo-var|historical-and-monte-carlo-var]]"
-tags: [mathematics, probability and statistics, importance-sampling]
----
-
 # Importance sampling: drawing from where it matters and reweighting
 
-Probability and statistics → Simulation → Rare events by reweighting → Importance sampling
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Simulation](../../../SYLLABUS.md#w09-s11) → Importance sampling
 
 ---
 
@@ -56,7 +34,7 @@ Orange: the real machine, a bell curve centred on target. Green: the mis-set mac
 
 ## The formula
 
-Notation first. The real diameter, measured in standard deviations above target, is a random variable $X$ (a number settled by chance) with density $f$, the bell curve ([normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md)). The proposal is a second density $g$, and its draws are called $Y_1, Y_2, \dots$ to keep them apart from the real ones. $E_f[\cdot]$ reads "the long-run average when the draw comes from $f$", the expectation of shelf 02 with the drawing law written underneath. A hat marks an estimate.
+Notation first. The real diameter, measured in standard deviations above target, is a random variable $X$ (a number settled by chance) with density $f$, the bell curve ([Normal](../04-Continuous%20Distributions/04-normal-distribution.md)). The proposal is a second density $g$, and its draws are called $Y_1, Y_2, \dots$ to keep them apart from the real ones. $E_f[\cdot]$ reads "the long-run average when the draw comes from $f$", the expectation of shelf 02 with the drawing law written underneath. A hat marks an estimate.
 
 The quantity averaged is $h$: here $h(x) = 1$ if $x$ is past the line $c$ and 0 if not, so its average is the chance of a jam. The answer is
 
@@ -96,7 +74,7 @@ The second proposal starts at the line and falls away like an exponential with r
 - **The proposal covers the answer.** $g$ must be positive wherever $h\,f$ is not zero. A proposal that never draws past 5.75 misses 0.44 percent of the answer, and more draws never find it.
 - **Both densities are known exactly, constants included.** Drop the $e^{\theta^2/2}$ from the weight and the estimate comes out 79,320 times too small. When $f$ is known only up to a constant factor, the self-normalised version divides by the total weight instead; it is then slightly biased, but the bias shrinks as $n$ grows.
 - **The second moment is finite.** The error formula needs $M_2 < \infty$. A bell-curve proposal on the line with spread 0.5 has an infinite second moment, and the error bar it prints means nothing.
-- **Independent draws.** The $1/\sqrt n$ comes from independence ([monte-carlo-estimates-and-error](04-monte-carlo-estimates-and-error.md)). Reused or correlated random numbers make the printed error bar too narrow.
+- **Independent draws.** The $1/\sqrt n$ comes from independence ([Monte Carlo](04-monte-carlo-estimates-and-error.md)). Reused or correlated random numbers make the printed error bar too narrow.
 
 ---
 
@@ -116,7 +94,7 @@ The right side is an average under $g$: the integral of something times $g$. So 
 
 ### Step 2: the estimate is unbiased, and its error has a formula
 
-Each term $h(Y_i)\,w(Y_i)$ has average $I$ by Step 1, so the average of $n$ of them has average $I$ as well: the estimate is **unbiased** (it aims at the right number). The terms are independent, so the variance of their average is the variance of one term divided by $n$, as on [monte-carlo-estimates-and-error](04-monte-carlo-estimates-and-error.md). The variance of one term is its average square minus its squared average, $M_2 - I^2$. So the standard error is $\sqrt{(M_2 - I^2)/n}$.
+Each term $h(Y_i)\,w(Y_i)$ has average $I$ by Step 1, so the average of $n$ of them has average $I$ as well: the estimate is **unbiased** (it aims at the right number). The terms are independent, so the variance of their average is the variance of one term divided by $n$, as on [Monte Carlo](04-monte-carlo-estimates-and-error.md). The variance of one term is its average square minus its squared average, $M_2 - I^2$. So the standard error is $\sqrt{(M_2 - I^2)/n}$.
 
 Unbiasedness holds for any proposal that covers the answer. The error bar depends entirely on $M_2$, and $M_2$ depends on the choice of $g$. That choice is the whole craft.
 
@@ -141,7 +119,7 @@ So $f(x)^2/g(x) = e^{\theta^2} f(x + \theta)$, and integrating from $c$ to infin
 
 </details>
 
-This moving of a bell curve is called **exponential tilting**: $g(y) = f(y)\,e^{\theta y - \theta^2/2}$, the real density multiplied by an exponential and rescaled to area 1. The same exponential factor $e^{\theta y}$ drives the Chernoff bound on [concentration-inequalities-hoeffding-and-chernoff](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md).
+This moving of a bell curve is called **exponential tilting**: $g(y) = f(y)\,e^{\theta y - \theta^2/2}$, the real density multiplied by an exponential and rescaled to area 1. The same exponential factor $e^{\theta y}$ drives the Chernoff bound on [Concentration](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md).
 
 ### Step 4: choosing the proposal
 
@@ -233,7 +211,7 @@ The moved bell curve's run is 1.91 standard errors below the true 1.017 per mill
 
 ## Code, from first principles, and it actually runs
 
-Five roads to one number. The exact tail by Laplace's continued fraction, $P(X > x) = f(x) / (x + 1/(x + 2/(x + 3/(x + \dots))))$, evaluated from the bottom up. The same tail by Simpson's rule, an integrator written into the script. Plain simulation with 10,000 draws. Importance sampling from the moved bell curve and from the exponential tail, 10,000 draws each. Random numbers come from a SplitMix64 generator with seed 2026 ([pseudo-random-numbers](01-pseudo-random-numbers.md)), bell-curve draws from Box-Muller ([rejection-sampling-and-box-muller](03-rejection-sampling-and-box-muller.md)), exponential draws from the inverse transform $y = c - \ln(U)/\lambda$, with $U$ a uniform draw between 0 and 1 ([inverse-transform-sampling](02-inverse-transform-sampling.md)). The second moment is reached three ways: the completed square, Simpson's rule on $f^2/g$, and the run's own squares. Simulated numbers are asserted within four standard errors of the exact answer, never to an exact match.
+Five roads to one number. The exact tail by Laplace's continued fraction, $P(X > x) = f(x) / (x + 1/(x + 2/(x + 3/(x + \dots))))$, evaluated from the bottom up. The same tail by Simpson's rule, an integrator written into the script. Plain simulation with 10,000 draws. Importance sampling from the moved bell curve and from the exponential tail, 10,000 draws each. Random numbers come from a SplitMix64 generator with seed 2026 ([Random numbers from a computer](01-pseudo-random-numbers.md)), bell-curve draws from Box-Muller ([Rejection sampling and Box-Muller](03-rejection-sampling-and-box-muller.md)), exponential draws from the inverse transform $y = c - \ln(U)/\lambda$, with $U$ a uniform draw between 0 and 1 ([Inverse transform](02-inverse-transform-sampling.md)). The second moment is reached three ways: the completed square, Simpson's rule on $f^2/g$, and the run's own squares. Simulated numbers are asserted within four standard errors of the exact answer, never to an exact match.
 
 ### Python
 
@@ -607,7 +585,7 @@ The two outputs agree line for line.
 
 - **Reliability and safety.** Failure chances of one in a million or less, for a bridge, a turbine blade or a flood wall, are estimated by simulating stress from a law tilted towards failure and reweighting.
 - **Communication links.** Bit error rates far too small to see in plain simulation are measured by boosting the noise and weighting each error back down.
-- **Bank risk.** Losses deep in the tail of a portfolio, and the prices of options that pay only after a large move, are simulated with the same tilt; the finance wing's other variance-reduction tools are on [variance-reduction-for-pricing](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md).
+- **Bank risk.** Losses deep in the tail of a portfolio, and the prices of options that pay only after a large move, are simulated with the same tilt; the finance wing's other variance-reduction tools are on [Cheaper Monte Carlo](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md).
 - **Computer graphics.** A renderer traces light paths towards bright lamps and shiny directions more often, then divides each path's light by the chance it was chosen. The noise in a rendered image is this card's standard error.
 - **Bayesian statistics.** A posterior (the law of an unknown after seeing data) is often known only up to a constant, so draws from a simpler law are weighted and the self-normalised version is used.
 - **Where it began.** Herman Kahn and Andrew Marshall set out the method in 1953, for simulating the rare particles that get through radiation shielding.
@@ -619,16 +597,16 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [variance-reduction](05-variance-reduction.md): the idea that the same number of draws can give a narrower error bar if the draws are arranged well. Importance sampling is the variance reduction that changes the law itself.
-- [monte-carlo-estimates-and-error](04-monte-carlo-estimates-and-error.md): the average of independent draws and its error bar, variance over $n$ under a square root, used in Step 2.
-- [inverse-transform-sampling](02-inverse-transform-sampling.md) and [rejection-sampling-and-box-muller](03-rejection-sampling-and-box-muller.md): how the code draws from the two proposals.
-- [normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md): the bell curve and its tail areas.
+- [Variance reduction](05-variance-reduction.md): the idea that the same number of draws can give a narrower error bar if the draws are arranged well. Importance sampling is the variance reduction that changes the law itself.
+- [Monte Carlo](04-monte-carlo-estimates-and-error.md): the average of independent draws and its error bar, variance over $n$ under a square root, used in Step 2.
+- [Inverse transform](02-inverse-transform-sampling.md) and [Rejection sampling and Box-Muller](03-rejection-sampling-and-box-muller.md): how the code draws from the two proposals.
+- [Normal](../04-Continuous%20Distributions/04-normal-distribution.md): the bell curve and its tail areas.
 
 ## Where this goes next
 
-- [radon-nikodym-derivative](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md): the weight $f/g$ in general, for laws with or without densities, and exactly when it exists.
-- [girsanov-theorem](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md): the same reweighting for whole random paths, where moving the centre becomes changing the drift.
-- [historical-and-monte-carlo-var](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md): simulated tail losses, where plain simulation is short of draws in exactly the way the bolts were.
+- [The Radon-Nikodym derivative](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/04-radon-nikodym-derivative.md): the weight $f/g$ in general, for laws with or without densities, and exactly when it exists.
+- [Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md): the same reweighting for whole random paths, where moving the centre becomes changing the drift.
+- [Historical and Monte Carlo VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md): simulated tail losses, where plain simulation is short of draws in exactly the way the bolts were.
 
 The weight here was a ratio of two densities on a line; what that ratio means when the thing drawn is a whole path through time, with no density to divide, is the question the Radon-Nikodym and Girsanov cards answer.
 

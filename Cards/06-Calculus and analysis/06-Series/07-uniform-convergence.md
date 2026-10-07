@@ -1,33 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Series
-topic: One cutoff for every input
-item: Uniform convergence
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/03-sequences-and-limits|sequences-and-limits]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/08-uniform-continuity-and-lipschitz|uniform-continuity-and-lipschitz]]"
-next:
-  - "[[Cards/06-Calculus and analysis/06-Series/08-swapping-limits-with-integrals-and-derivatives|swapping-limits-with-integrals-and-derivatives]]"
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/02-uniform-limits-of-holomorphic-functions|uniform-limits-of-holomorphic-functions]]"
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/04-modes-of-convergence|modes-of-convergence]]"
-  - "[[Cards/16-Numerical analysis/04-Interpolation and Approximation/08-weierstrass-and-best-approximation|weierstrass-and-best-approximation]]"
-  - "[[Cards/17-Topology/01-Metric Spaces/09-arzela-ascoli|arzela-ascoli]]"
-  - "[[Cards/18-Functional analysis/01-Normed and Banach Spaces/03-function-spaces-c-and-lp|function-spaces-c-and-lp]]"
-  - "[[Cards/18-Functional analysis/02-Hilbert Spaces/09-weak-convergence-and-banach-alaoglu|weak-convergence-and-banach-alaoglu]]"
-  - "[[Cards/18-Functional analysis/04-Distributions and Sobolev Spaces/03-convolution-and-mollifiers|convolution-and-mollifiers]]"
-  - "[[Cards/20-Harmonic analysis/01-Fourier Series in Depth/04-pointwise-and-uniform-convergence|pointwise-and-uniform-convergence]]"
-  - "[[Cards/21-Algebraic and analytic number theory/08-Additive Combinatorics and Probabilistic Number Theory/03-equidistribution-and-weyls-criterion|equidistribution-and-weyls-criterion]]"
-  - "[[Cards/23-Differential geometry and Lie groups/03-Manifolds/09-partitions-of-unity-and-whitney-embedding|partitions-of-unity-and-whitney-embedding]]"
-tags: [mathematics, calculus-and-analysis, uniform-convergence]
----
-
 # Uniform convergence: one tolerance for every x, and why it keeps continuity
 
-Calculus and analysis → Series → One cutoff for every input → Uniform convergence
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Series](../../../SYLLABUS.md#w06-s06) → Uniform convergence
 
 ---
 
@@ -37,7 +10,7 @@ A sheet of tinted glass passes a fraction x of the light that hits it. Stack n s
 
 Every tinted stack goes dark eventually; the clear one never does. So the limit jumps: 0 below x = 1, and 1 at x = 1. Each stack's curve against x is unbroken; their limit is broken.
 
-From here the glass is set aside. The objects are $f_n$, with $f_n(x) = x^n$ on the interval from 0 to 1, and n is the stage, the sequence's clock ([sequences-and-limits](../01-Limits%20and%20Continuity/03-sequences-and-limits.md)). Every input settles, so the sequence **converges pointwise**. But the stage needed depends on x and has no ceiling. **Uniform convergence** demands one stage that serves every x at once. With it, a limit of unbroken functions stays unbroken; the Weierstrass M-test earns it for a series.
+From here the glass is set aside. The objects are $f_n$, with $f_n(x) = x^n$ on the interval from 0 to 1, and n is the stage, the sequence's clock ([Sequences](../01-Limits%20and%20Continuity/03-sequences-and-limits.md)). Every input settles, so the sequence **converges pointwise**. But the stage needed depends on x and has no ceiling. **Uniform convergence** demands one stage that serves every x at once. With it, a limit of unbroken functions stays unbroken; the Weierstrass M-test earns it for a series.
 
 **Pointwise convergence lets each input choose its own waiting time; uniform convergence fixes one waiting time for all inputs, and only the second guarantees that a limit of continuous functions is continuous.**
 
@@ -84,7 +57,7 @@ $$\sup_x \lvert S(x) - S_N(x)\rvert \le \sum_{k=N+1}^{\infty} M_k$$
 
 **Read it aloud:** if number caps on the terms add up, the caps' leftover bounds the series' leftover at every x.
 
-The card's series is $g_k(x) = (x/2)^k$ on the interval from −1 to 1, capped by $M_k = 1/2^k$: the shelf's house series 1/2 + 1/4 + 1/8 + ⋯, whose sum is 1 ([series-convergence](01-series-convergence.md)).
+The card's series is $g_k(x) = (x/2)^k$ on the interval from −1 to 1, capped by $M_k = 1/2^k$: the shelf's house series 1/2 + 1/4 + 1/8 + ⋯, whose sum is 1 ([Infinite series](01-series-convergence.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -112,7 +85,7 @@ The card's series is $g_k(x) = (x/2)^k$ on the interval from −1 to 1, capped b
 
 In the tolerance game a challenger names a tolerance, here 0.001; the reply is a stage after which every gap is within it. Pointwise: an input is named first, then a stage for it. Uniform: the stage is named first and must survive every input. $E_n$ packs that second game into one number.
 
-Uniform continuity ([uniform-continuity-and-lipschitz](../01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)) asks the same of one function's input distances; this card asks it of a sequence's stages.
+Uniform continuity ([Uniform continuity](../01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)) asks the same of one function's input distances; this card asks it of a sequence's stages.
 
 ### Step 1: find the pointwise limit of x to the n
 
@@ -149,7 +122,7 @@ The first and third terms are each at most $E_j$.
 
 ### Step 5: the M-test turns a series of numbers into a uniform cap
 
-At any input the leftover after N terms is $g_{N+1}(x) + g_{N+2}(x) + \cdots$. Each term is at most its cap in size, so the leftover is at most $M_{N+1} + M_{N+2} + \cdots$, a number with no x in it. That heads for 0, so one stage serves every input. The same comparison makes the series converge at each x ([comparison-ratio-and-root-tests](02-comparison-ratio-and-root-tests.md)).
+At any input the leftover after N terms is $g_{N+1}(x) + g_{N+2}(x) + \cdots$. Each term is at most its cap in size, so the leftover is at most $M_{N+1} + M_{N+2} + \cdots$, a number with no x in it. That heads for 0, so one stage serves every input. The same comparison makes the series converge at each x ([Convergence tests](02-comparison-ratio-and-root-tests.md)).
 
 For $(x/2)^k$ on [−1, 1] the caps leave $1/2^N$: 0.000977 at N = 10, under 0.001. With q = x/2 the geometric sum is exact: $S(x) = q/(1-q) = x/(2-x)$. The true gap after 10 terms is 0.000977 at x = 1, meeting the cap exactly, and 0.000326 at x = −1.
 
@@ -394,7 +367,7 @@ The two outputs are identical.
 > **Believing that convergence at every input means convergence everywhere at once.** Each input of $x^n$ settles, yet the worst gap on [0, 1] stays 1 forever.
 >
 > - **Trusting a grid.** At n = 1024 the grid 0, 0.01, …, 0.99 shows a worst gap of 0.000034; an input between grid points has gap 0.500000.
-> - **Reading it as a licence to differentiate.** sin(nx)/n converges uniformly to 0, yet the slopes cos(nx) do not settle; see [swapping-limits-with-integrals-and-derivatives](08-swapping-limits-with-integrals-and-derivatives.md).
+> - **Reading it as a licence to differentiate.** sin(nx)/n converges uniformly to 0, yet the slopes cos(nx) do not settle; see [Swapping limits](08-swapping-limits-with-integrals-and-derivatives.md).
 
 ---
 
@@ -402,7 +375,7 @@ The two outputs are identical.
 
 - **Maths libraries.** A polynomial routine for sin or exp states one maximum error over its whole input range.
 - **Bond pricing across rates.** A perpetual bond's price is a geometric series in the discount factor. Above a floor rate that factor has one cap, so one truncation length serves every rate.
-- **Fourier series.** Smooth waves cannot converge uniformly to a square wave, since Theorem 1 forbids the jump: pointwise-and-uniform-convergence.
+- **Fourier series.** Smooth waves cannot converge uniformly to a square wave, since Theorem 1 forbids the jump: Dirichlet's theorem.
 
 > **Say it back**
 > Pointwise convergence lets each input choose its own stage; uniform convergence demands one stage for all. For $x^n$ the worst gap stays 1 on [0, 1] and shrinks like $0.9^n$ on [0, 0.9]. A uniform limit of continuous functions is continuous, by three thirds with the stage chosen first. If number caps on a series' terms add up, the series converges uniformly.
@@ -411,22 +384,22 @@ The two outputs are identical.
 
 ## What this builds on
 
-- [sequences-and-limits](../01-Limits%20and%20Continuity/03-sequences-and-limits.md): the tolerance game for a sequence, and geometric decay to 0.
-- [uniform-continuity-and-lipschitz](../01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md): one choice serving every input, for a single function.
+- [Sequences](../01-Limits%20and%20Continuity/03-sequences-and-limits.md): the tolerance game for a sequence, and geometric decay to 0.
+- [Uniform continuity](../01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md): one choice serving every input, for a single function.
 
 ## Where this goes next
 
-- [swapping-limits-with-integrals-and-derivatives](08-swapping-limits-with-integrals-and-derivatives.md): limits through integrals and derivatives.
-- [uniform-limits-of-holomorphic-functions](../../07-Complex%20analysis/04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md): uniform limits keeping far more than continuity.
-- [modes-of-convergence](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md): uniform beside other kinds of convergence.
-- weierstrass-and-best-approximation: polynomials approximating uniformly.
-- arzela-ascoli: when uniformly convergent subsequences must exist.
-- function-spaces-c-and-lp: the worst gap as a distance between functions.
-- weak-convergence-and-banach-alaoglu: a far looser convergence.
-- convolution-and-mollifiers: smoothing that converges uniformly.
-- pointwise-and-uniform-convergence: both modes for Fourier series.
-- equidistribution-and-weyls-criterion: step functions approximated by smooth ones.
-- partitions-of-unity-and-whitney-embedding: uniform approximation on curved spaces.
+- [Swapping limits](08-swapping-limits-with-integrals-and-derivatives.md): limits through integrals and derivatives.
+- [Limits of holomorphic functions](../../07-Complex%20analysis/04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/02-uniform-limits-of-holomorphic-functions.md): uniform limits keeping far more than continuity.
+- [Modes of convergence](../../10-Measure%20and%20integration/05-Swapping%20Limits%20and%20Integrals/04-modes-of-convergence.md): uniform beside other kinds of convergence.
+- Weierstrass and the minimax fit: polynomials approximating uniformly.
+- Arzela-Ascoli: when uniformly convergent subsequences must exist.
+- Function spaces C and Lp: the worst gap as a distance between functions.
+- Weak convergence: a far looser convergence.
+- Convolution and mollifiers: smoothing that converges uniformly.
+- Dirichlet's theorem: both modes for Fourier series.
+- Equidistribution: step functions approximated by smooth ones.
+- Partition of unity: uniform approximation on curved spaces.
 
 ---
 

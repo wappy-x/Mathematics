@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Value at Risk and Expected Shortfall
-topic: Tails past the data
-item: Extreme value theory
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/05-expected-shortfall-and-coherence|expected-shortfall-and-coherence]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/08-heavy-tails-pareto-and-cauchy|heavy-tails-pareto-and-cauchy]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/08-order-statistics-and-extremes|order-statistics-and-extremes]]"
-next: []
-tags: [mathematics, financial mathematics, extreme-value-theory-and-tails]
----
-
 # Extreme value theory: modelling the tail beyond the data
 
-Financial mathematics → Value at Risk and Expected Shortfall → Tails past the data → Extreme value theory
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Value at Risk and Expected Shortfall](../../../SYLLABUS.md#w12-s39) → Extreme value theory
 
 ---
 
@@ -25,7 +8,7 @@ Financial mathematics → Value at Risk and Expected Shortfall → Tails past th
 
 A desk holds $10 million of Acme shares. Acme moves about 20 percent a year, which is about $125,988.16 of profit or loss on a typical day. The risk team keeps ten years of daily results: 2,520 trading days. The risk committee asks one question. How much could the desk lose on its worst day in a thousand?
 
-That number is the 99.9 percent **value at risk** (VaR): the one-day loss that is exceeded on only one day in a thousand ([profit-and-loss-distribution-and-var](01-profit-and-loss-distribution-and-var.md)). Ten years should see it passed about 2.52 times. So the answer sits among the three worst days on record, and the three worst days are mostly luck. Read off the third-worst day and the typical miss, from one decade to the next, is $112,769.79. Assume a bell curve instead and the answer is $382,390.74 against a true $639,037.86.
+That number is the 99.9 percent **value at risk** (VaR): the one-day loss that is exceeded on only one day in a thousand ([Value at risk](01-profit-and-loss-distribution-and-var.md)). Ten years should see it passed about 2.52 times. So the answer sits among the three worst days on record, and the three worst days are mostly luck. Read off the third-worst day and the typical miss, from one decade to the next, is $112,769.79. Assume a bell curve instead and the answer is $382,390.74 against a true $639,037.86.
 
 Extreme value theory, EVT for short, is the way out. It sets a high line, here the 127th-worst day, and keeps the 126 days that crossed it. A deep result says those crossings, measured past the line, follow one family of laws whatever the market's everyday behaviour: the **generalised Pareto distribution**. Fit that family to the 126 crossings, and the one-in-a-thousand loss follows from a formula, not from the three luckiest data points.
 
@@ -70,7 +53,7 @@ $$\mathrm{VaR}_p = u + \frac{\beta}{\xi}\left[\left(\frac{1-p}{k/n}\right)^{-\xi
 
 **Read it aloud:** the value at risk is the threshold, plus the scale over the shape times the amount by which a power of the rarity ratio exceeds one.
 
-The expected shortfall, the average loss on the days worse than VaR ([expected-shortfall-and-coherence](05-expected-shortfall-and-coherence.md)), follows for $\xi$ below 1:
+The expected shortfall, the average loss on the days worse than VaR ([Expected shortfall](05-expected-shortfall-and-coherence.md)), follows for $\xi$ below 1:
 
 $$\mathrm{ES}_p = \frac{\mathrm{VaR}_p + \beta - \xi u}{1 - \xi}$$
 
@@ -114,7 +97,7 @@ Take a tail that is a pure power law: the chance of a loss above $x$ is $C x^{-\
 
 $$P(L > u + y \mid L > u) = \frac{C (u+y)^{-\alpha}}{C u^{-\alpha}} = \left(1 + \frac{y}{u}\right)^{-\alpha}$$
 
-The constant cancels. Write $\xi = 1/\alpha$ and $\beta = \xi u$. Then $y/u = \xi y / \beta$ and the power $-\alpha$ is $-1/\xi$. The result is the generalised Pareto law with shape $1/\alpha$ and scale $u/\alpha$. The scale grows with the threshold: the further out, the bigger the typical excess. That is what "heavy tail" means in numbers ([heavy-tails-pareto-and-cauchy](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)).
+The constant cancels. Write $\xi = 1/\alpha$ and $\beta = \xi u$. Then $y/u = \xi y / \beta$ and the power $-\alpha$ is $-1/\xi$. The result is the generalised Pareto law with shape $1/\alpha$ and scale $u/\alpha$. The scale grows with the threshold: the further out, the bigger the typical excess. That is what "heavy tail" means in numbers ([Heavy tails](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)).
 
 ### Step 2: a tail that is a power law only roughly gives it in the limit
 
@@ -139,7 +122,7 @@ The theorem of Balkema and de Haan (1974) and Pickands (1975) says more. For any
 - **$\xi$ equal to 0: exponential tails.** The formula becomes $e^{-y/\beta}$. The normal law is in this class, though its excesses reach the limit slowly.
 - **$\xi$ below 0: a hard ceiling.** The excess cannot pass $-\beta/\xi$. A loss capped by the book's size is of this kind.
 
-The card uses the theorem and proves only the power-tail case above. The same three shapes appear for the largest of $n$ losses, where the matching result is the Fisher–Tippett theorem ([order-statistics-and-extremes](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md)).
+The card uses the theorem and proves only the power-tail case above. The same three shapes appear for the largest of $n$ losses, where the matching result is the Fisher–Tippett theorem ([Order statistics](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md)).
 
 ### Step 4: stitch the counted part to the fitted part
 
@@ -183,7 +166,7 @@ Two fits, each a separate road.
 
 </details>
 
-A second route to the whole method takes each year's single worst day and fits the generalised extreme value law to those maxima ([order-statistics-and-extremes](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md)). Ten years give ten maxima. The threshold route keeps 126 points from the same data, which is why risk desks prefer it.
+A second route to the whole method takes each year's single worst day and fits the generalised extreme value law to those maxima ([Order statistics](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md)). Ten years give ten maxima. The threshold route keeps 126 points from the same data, which is why risk desks prefer it.
 
 ---
 
@@ -686,7 +669,7 @@ Four deliberate breaks were tried: flipping the sign of the power in the VaR for
 - **Insurance and reinsurance.** Large claims, from storms to industrial fires, are priced from a generalised Pareto fitted past a claim-size threshold; layers of cover far above the largest claim ever paid are priced this way.
 - **Flood defences.** Dutch dikes are built to a water level expected once in thousands of years, from a century or so of records. That problem is where the theory grew.
 - **Operational risk.** Losses from fraud, errors and outages are rare and very uneven in size; a tail fit is the standard way to put a number on the rare large ones.
-- **Checking the answer.** A 99.9 percent VaR is passed about 2.52 times a decade, too few to test directly; [backtesting-var](08-backtesting-var.md) shows what can be tested.
+- **Checking the answer.** A 99.9 percent VaR is passed about 2.52 times a decade, too few to test directly; [Backtesting VaR](08-backtesting-var.md) shows what can be tested.
 
 > **Say it back**
 > The worst day in a thousand sits among the three worst days of a decade, so reading it off the record is mostly luck. Past a high threshold, every regularly thinning tail looks like a generalised Pareto law, with one shape number for how slowly it thins. Fit that law to the many days past the threshold, multiply by the share of days that cross it, and solve for the one-in-a-thousand loss. For $10 million of Acme that gives $613,066.11 against a true $639,037.86, where the normal law says $382,390.74. The fit narrows the error but still assumes the tail keeps its shape beyond the data.
@@ -695,16 +678,16 @@ Four deliberate breaks were tried: flipping the sign of the power in the VaR for
 
 ## What this builds on
 
-- [expected-shortfall-and-coherence](05-expected-shortfall-and-coherence.md): what VaR and expected shortfall measure, and why the second is the better risk measure.
-- [heavy-tails-pareto-and-cauchy](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md): power-law tails, the Pareto law, and why some averages do not exist.
-- [order-statistics-and-extremes](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md): the law of the largest of many draws, and the three shapes that limits of maxima can take.
+- [Expected shortfall](05-expected-shortfall-and-coherence.md): what VaR and expected shortfall measure, and why the second is the better risk measure.
+- [Heavy tails](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md): power-law tails, the Pareto law, and why some averages do not exist.
+- [Order statistics](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/08-order-statistics-and-extremes.md): the law of the largest of many draws, and the three shapes that limits of maxima can take.
 
 ---
 
 ## Where this goes next
 
-- [backtesting-var](08-backtesting-var.md): counting the days a VaR was passed and asking whether the count is too many.
-- [historical-and-monte-carlo-var](03-historical-and-monte-carlo-var.md): the plain historical method this card improves on, where the data are plentiful enough to use directly.
+- [Backtesting VaR](08-backtesting-var.md): counting the days a VaR was passed and asking whether the count is too many.
+- [Historical and Monte Carlo VaR](03-historical-and-monte-carlo-var.md): the plain historical method this card improves on, where the data are plentiful enough to use directly.
 
 A tail fitted past the data gives a number, but a number that is passed 2.52 times a decade cannot be checked by eye: how many passes are too many is the question backtesting answers.
 

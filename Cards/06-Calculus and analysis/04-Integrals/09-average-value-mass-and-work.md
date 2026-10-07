@@ -1,22 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Integrals
-topic: Totals from densities
-item: Averages, mass and work
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/04-Integrals/02-fundamental-theorem-of-calculus|fundamental-theorem-of-calculus]]"
-next:
-  - "[[Cards/06-Calculus and analysis/05-Curves and Solids/05-centre-of-mass-and-pappus|centre-of-mass-and-pappus]]"
-tags: [mathematics, calculus and analysis, average-value-mass-and-work]
----
-
 # Averages, mass and work: turning a rate or density into a total
 
-Calculus and analysis → Integrals → Totals from densities → Averages, mass and work
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Integrals](../../../SYLLABUS.md#w06-s04) → Averages, mass and work
 
 ---
 
@@ -26,7 +10,7 @@ A spring day starts at 10 °C at midnight, warms to 24.4 °C at noon and falls b
 
 A cone-shaped tank, point down, stands 4 m deep with a rim 2 m in radius. It is full of water. How heavy is the water, and how much work does a pump do lifting all of it out over the rim? The water near the rim is wide and barely needs lifting. The water near the tip is narrow and must be lifted almost 4 m.
 
-Both questions have one shape. A quantity is known piece by piece: a temperature at each moment, a mass per metre of height, a lift for each layer. Multiply each piece by its width, add, and let the pieces shrink: an integral ([riemann-integral](01-riemann-integral.md)), evaluated by an antiderivative ([fundamental-theorem-of-calculus](02-fundamental-theorem-of-calculus.md)). The answers: 16,755.2 kg of water, 164,368.1 joules of work.
+Both questions have one shape. A quantity is known piece by piece: a temperature at each moment, a mass per metre of height, a lift for each layer. Multiply each piece by its width, add, and let the pieces shrink: an integral ([The integral](01-riemann-integral.md)), evaluated by an antiderivative ([Fundamental theorem of calculus](02-fundamental-theorem-of-calculus.md)). The answers: 16,755.2 kg of water, 164,368.1 joules of work.
 
 **A total is the integral of an amount-per-unit over the units; an average is that total divided by how many units there were.**
 
@@ -104,12 +88,12 @@ Averaging readings is the same idea, coarser. The 24 readings on the hour averag
 
 The day runs from 10 °C to 24.4 °C. A larger function has a larger integral, so the total lies between 10 × 24 and 24.4 × 24 degree-hours, and the average between 10 and 24.4 °C.
 
-A continuous quantity passes through every value between its minimum and maximum ([intermediate-value-theorem](../01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)). So at some time c the temperature equals the average: here twice, at t = 5.0718 h on the rise and t = 18.9282 h on the fall. This is the **mean value theorem for integrals**.
+A continuous quantity passes through every value between its minimum and maximum ([Intermediate value theorem](../01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)). So at some time c the temperature equals the average: here twice, at t = 5.0718 h on the rise and t = 18.9282 h on the fall. This is the **mean value theorem for integrals**.
 
 <details>
 <summary>Detailed proof</summary>
 
-Let f be continuous on the closed interval from a to b, with a < b. By the [extreme-value-theorem](../01-Limits%20and%20Continuity/07-extreme-value-theorem.md), f has a least value, lo, taken at some point p, and a greatest value, hi, taken at some point q. Since lo ≤ f(t) ≤ hi for every t, comparing integrals gives
+Let f be continuous on the closed interval from a to b, with a < b. By the [Extreme value theorem](../01-Limits%20and%20Continuity/07-extreme-value-theorem.md), f has a least value, lo, taken at some point p, and a greatest value, hi, taken at some point q. Since lo ≤ f(t) ≤ hi for every t, comparing integrals gives
 
 $$\text{lo}\,(b-a) \le \int_a^b f(t)\,dt \le \text{hi}\,(b-a),$$
 
@@ -141,7 +125,7 @@ $$W = \int_0^4 9.81 \cdot 250\pi y^2 (4 - y)\,dy = 9.81 \cdot 250\pi\left[\frac{
 
 Four 1 m layers, each lifted from its middle, give 169,504.6 J; 40 layers give 164,419.5 J; 400 give 164,368.6 J. The rule $W = \int_a^b F(x)\,dx$ also covers one object pushed along a line by a changing force. Stretching a spring that resists with 200 N per metre of stretch takes F(x) = 200x newtons at stretch x metres. Over the first 0.3 m, W = 100 × 0.3^2 = 9 J. The spring's own pull, −200x, points against the stretch, so over the same trip it does −9 J: a force opposing the motion does negative work.
 
-A third road waits one shelf on. Lifting the whole 16,755.2 kg through 1 m gives the same 164,368.1 J, because the water's balance point sits 1 m below the rim. Finding that point is [centre-of-mass-and-pappus](../05-Curves%20and%20Solids/05-centre-of-mass-and-pappus.md).
+A third road waits one shelf on. Lifting the whole 16,755.2 kg through 1 m gives the same 164,368.1 J, because the water's balance point sits 1 m below the rim. Finding that point is [Centre of mass](../05-Curves%20and%20Solids/05-centre-of-mass-and-pappus.md).
 
 ---
 
@@ -368,7 +352,7 @@ The two outputs match line for line.
 
 - **Heating degree-days.** Energy suppliers total how far the temperature sits below a baseline over time: an integral, in degree-days.
 - **Pumps and tanks.** Sizing a pump for a well or a cistern starts from weight times lift, added layer by layer.
-- **Cables.** A cable whose mass per metre varies weighs the integral of that density, found by [numerical-integration](08-numerical-integration.md) when no antiderivative is at hand.
+- **Cables.** A cable whose mass per metre varies weighs the integral of that density, found by [Numerical integration](08-numerical-integration.md) when no antiderivative is at hand.
 
 > **Say it back**
 > Over a thin piece, amount is rate times width; adding and shrinking the pieces gives an integral. The average is that total divided by the interval's length, and a continuous quantity passes through it somewhere. Mass is linear density integrated over length. Work is weight times lift, added layer by layer.
@@ -377,11 +361,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [fundamental-theorem-of-calculus](02-fundamental-theorem-of-calculus.md): every exact total here is an antiderivative read at the two ends.
+- [Fundamental theorem of calculus](02-fundamental-theorem-of-calculus.md): every exact total here is an antiderivative read at the two ends.
 
 ## Where this goes next
 
-- [centre-of-mass-and-pappus](../05-Curves%20and%20Solids/05-centre-of-mass-and-pappus.md): the balance point, an average of position weighted by mass.
+- [Centre of mass](../05-Curves%20and%20Solids/05-centre-of-mass-and-pappus.md): the balance point, an average of position weighted by mass.
 
 ---
 

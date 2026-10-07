@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Microstructure and Execution
-topic: Information and impact
-item: Kyle's model
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/49-Microstructure and Execution/02-bid-ask-spread-and-adverse-selection|bid-ask-spread-and-adverse-selection]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/05-bivariate-normal-and-conditioning|bivariate-normal-and-conditioning]]"
-next:
-  - "[[Cards/12-Financial mathematics/49-Microstructure and Execution/04-optimal-execution-almgren-chriss|optimal-execution-almgren-chriss]]"
-tags: [mathematics, financial mathematics, kyle-model-and-price-impact]
----
-
 # Kyle's model: how much a trade moves the price, and the square-root law seen in data
 
-Financial mathematics → Microstructure and Execution → Information and impact → Kyle's model
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Microstructure and Execution](../../../SYLLABUS.md#w12-s49) → Kyle's model
 
 ---
 
@@ -55,7 +38,7 @@ The orange line is the square-root law with 1 percent daily volatility: 0.100 pe
 
 ## The formula
 
-Notation first, in words. A random quantity's **standard deviation**, written with the Greek letter sigma, σ, is the typical size of its move either way. Orders are **signed**: a buy is a positive number of shares, a sale a negative one. The dealer's price is a **conditional expectation**: the average value of the stock given what the dealer has seen ([bivariate-normal-and-conditioning](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)).
+Notation first, in words. A random quantity's **standard deviation**, written with the Greek letter sigma, σ, is the typical size of its move either way. Orders are **signed**: a buy is a positive number of shares, a sale a negative one. The dealer's price is a **conditional expectation**: the average value of the stock given what the dealer has seen ([Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)).
 
 Kyle's market has one auction. The insider sees the value $v$ and sends an order $x$. Unrelated traders send $u$. The dealer sees only the total $y = x + u$ and sets the price $P$. In the only straight-line equilibrium:
 
@@ -165,7 +148,7 @@ Three consequences fall out, each checked in the code.
 
 ### Step 5: from a straight line to a square root
 
-Kyle's dealer stands ready to absorb $1/\lambda$ shares for each dollar the price moves, the same at every price. Picture that as an order book: a list of resting orders at each price level ([the-limit-order-book](01-the-limit-order-book.md)). A flat book, the same depth at every cent, makes a sale of $Q$ shares move the price by $\lambda Q$. A straight line.
+Kyle's dealer stands ready to absorb $1/\lambda$ shares for each dollar the price moves, the same at every price. Picture that as an order book: a list of resting orders at each price level ([The order book](01-the-limit-order-book.md)). A flat book, the same depth at every cent, makes a sale of $Q$ shares move the price by $\lambda Q$. A straight line.
 
 Now let the depth grow with distance from the price: at $d$ dollars away, $L\,d$ shares per dollar. Selling $Q$ shares eats the book down to a fall $\Delta$ where the shares consumed add up to $Q$. That total is the area of a triangle with base $\Delta$ and height $L\Delta$:
 
@@ -181,7 +164,7 @@ The exponent is measured the same way the code measures it. Collect many large o
 
 The code does this on the two model books. Walking the V-shaped book at six sizes and fitting the log-log slope gives 0.5022; the flat book gives 1.0000. The fit recovers the shape of the book from its impact curve, which is exactly what empirical studies claim to do for real markets.
 
-An alternative road to Kyle's lambda is the **many-auction** version of the same paper, where the insider trades gradually and lambda becomes constant through time; [optimal-execution-almgren-chriss](04-optimal-execution-almgren-chriss.md) takes the execution side of that problem.
+An alternative road to Kyle's lambda is the **many-auction** version of the same paper, where the insider trades gradually and lambda becomes constant through time; [Almgren-Chriss](04-optimal-execution-almgren-chriss.md) takes the execution side of that problem.
 
 ---
 
@@ -623,10 +606,10 @@ The two outputs agree line for line: the same generator gives the same random nu
 ## Where you meet it in real life
 
 - **Pre-trade cost estimates.** Before a fund sends a large order, its broker quotes an expected cost, usually a square-root formula with $Y$ and the exponent fitted to the broker's own history. The fund decides whether to trade and how fast.
-- **Measuring execution afterwards.** The price moves recorded against the square-root prediction are the raw material of [transaction-cost-analysis](06-transaction-cost-analysis.md).
-- **Splitting an order over time.** Impact that grows with speed is one half of the trade-off in [optimal-execution-almgren-chriss](04-optimal-execution-almgren-chriss.md); the risk of waiting is the other.
-- **Market makers.** A dealer who quotes both sides must shade prices after one-sided flow, the same learning as in Kyle, alongside managing inventory: [market-making-avellaneda-stoikov](05-market-making-avellaneda-stoikov.md).
-- **Liquidity rankings.** Regressing price changes on signed order flow estimates lambda stock by stock; a small lambda means a deep market. See [liquidity-measures](07-liquidity-measures.md).
+- **Measuring execution afterwards.** The price moves recorded against the square-root prediction are the raw material of [Measuring execution](06-transaction-cost-analysis.md).
+- **Splitting an order over time.** Impact that grows with speed is one half of the trade-off in [Almgren-Chriss](04-optimal-execution-almgren-chriss.md); the risk of waiting is the other.
+- **Market makers.** A dealer who quotes both sides must shade prices after one-sided flow, the same learning as in Kyle, alongside managing inventory: [Market making](05-market-making-avellaneda-stoikov.md).
+- **Liquidity rankings.** Regressing price changes on signed order flow estimates lambda stock by stock; a small lambda means a deep market. See [Liquidity](07-liquidity-measures.md).
 - **Insider-trading policy.** Kyle's result that the insider's gain is exactly the crowd's loss makes precise one argument for banning trading on private information: it is a cost to everyone else in the market.
 
 > **Say it back**
@@ -636,12 +619,12 @@ The two outputs agree line for line: the same generator gives the same random nu
 
 ## What this builds on
 
-- [bid-ask-spread-and-adverse-selection](02-bid-ask-spread-and-adverse-selection.md): the same fear of informed traders, charged as a spread on each trade. Kyle turns it into a price response to order size.
-- [bivariate-normal-and-conditioning](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): the average of one normal quantity given another is a straight line with slope covariance over variance. That rule is the dealer's price.
+- [The spread](02-bid-ask-spread-and-adverse-selection.md): the same fear of informed traders, charged as a spread on each trade. Kyle turns it into a price response to order size.
+- [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): the average of one normal quantity given another is a straight line with slope covariance over variance. That rule is the dealer's price.
 
 ## Where this goes next
 
-- [optimal-execution-almgren-chriss](04-optimal-execution-almgren-chriss.md): takes impact as given and asks how to split the 100,000 shares over the day, trading the cost of moving fast against the risk of the price drifting while waiting.
+- [Almgren-Chriss](04-optimal-execution-almgren-chriss.md): takes impact as given and asks how to split the 100,000 shares over the day, trading the cost of moving fast against the risk of the price drifting while waiting.
 
 This card says what a trade costs; it leaves open how fast to trade when going slowly cuts impact but leaves the seller exposed to the market for longer.
 

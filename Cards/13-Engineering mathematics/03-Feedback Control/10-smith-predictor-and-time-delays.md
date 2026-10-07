@@ -1,24 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Feedback Control
-topic: Dead time in a loop
-item: Time delays
-kind: method
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/06-nyquist-criterion-and-stability-margins|nyquist-criterion-and-stability-margins]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/09-lead-lag-compensation-and-loop-shaping|lead-lag-compensation-and-loop-shaping]]"
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/05-step-functions-and-delays|step-functions-and-delays]]"
-next:
-  - "[[Cards/16-Numerical analysis/04-Interpolation and Approximation/09-pade-and-rational-approximation|pade-and-rational-approximation]]"
-tags: [mathematics, engineering mathematics, smith-predictor-and-time-delays]
----
-
 # Time delays: they eat phase margin, and a predictor can hide a known one
 
-Engineering mathematics → Feedback Control → Dead time in a loop → Time delays
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Feedback Control](../../../SYLLABUS.md#w13-s03) → Time delays
 
 ---
 
@@ -52,9 +34,9 @@ The setpoint moves from 30 °C to 38 °C at time zero. The first line (orange) i
 
 ## The formula
 
-Reminders from earlier cards. A transfer function G(s) says what a system does to each exponential e^(st); s is the Laplace variable. On the frequency axis s = jω, where ω is angular frequency in rad/s and engineers write j for the square root of −1 (the rest of the library writes i). The loop gain L(s) is the transfer function once round the loop. The phase margin is how far the loop's phase sits above −180° at the crossover frequency, where |L| = 1 ([nyquist-criterion-and-stability-margins](06-nyquist-criterion-and-stability-margins.md)).
+Reminders from earlier cards. A transfer function G(s) says what a system does to each exponential e^(st); s is the Laplace variable. On the frequency axis s = jω, where ω is angular frequency in rad/s and engineers write j for the square root of −1 (the rest of the library writes i). The loop gain L(s) is the transfer function once round the loop. The phase margin is how far the loop's phase sits above −180° at the crossover frequency, where |L| = 1 ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)).
 
-A delay of $\theta$ seconds turns an input u(t) into u(t − θ). Its transfer function, by the shift theorem of [step-functions-and-delays](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/05-step-functions-and-delays.md), and its effect on a loop are:
+A delay of $\theta$ seconds turns an input u(t) into u(t − θ). Its transfer function, by the shift theorem of [Step functions](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/05-step-functions-and-delays.md), and its effect on a loop are:
 
 $$e^{-\theta s}\Big|_{s=j\omega} = e^{-j\omega\theta}: \quad |e^{-j\omega\theta}| = 1, \qquad \arg e^{-j\omega\theta} = -\omega\theta; \qquad \phi_m^{\text{delay}} = \phi_m^{\text{no delay}} - \omega_c\theta.$$
 
@@ -145,7 +127,7 @@ The trade is stark. Without the pipe, Kp = 2 gives a closed loop with a 1 s lag.
 
 ### Step 4: Padé swaps the delay for a ratio of polynomials
 
-The delay makes the closed-loop equation 1 + L(s) = 0 transcendental: it has infinitely many roots, and the Routh test of [routh-hurwitz-criterion](04-routh-hurwitz-criterion.md) cannot be applied. The fix is to write e^(−x) = e^(−x/2)/e^(x/2) and keep two terms of each: (1 − x/2)/(1 + x/2). Expanding the ratio gives 1 − x + x^2/2 − x^3/4 + …, while e^(−x) is 1 − x + x^2/2 − x^3/6 + …. They agree through x^2; the error starts at x^3/12.
+The delay makes the closed-loop equation 1 + L(s) = 0 transcendental: it has infinitely many roots, and the Routh test of [Routh-Hurwitz](04-routh-hurwitz-criterion.md) cannot be applied. The fix is to write e^(−x) = e^(−x/2)/e^(x/2) and keep two terms of each: (1 − x/2)/(1 + x/2). Expanding the ratio gives 1 − x + x^2/2 − x^3/4 + …, while e^(−x) is 1 − x + x^2/2 − x^3/6 + …. They agree through x^2; the error starts at x^3/12.
 
 On the frequency axis the stand-in keeps one property of the true delay exactly: top and bottom are complex conjugates, so its size is 1 at every frequency. A system whose size is 1 at every frequency is called **all-pass**. What it gets wrong is the phase: −2 arctan(ωθ/2), which never passes −180°, where the true phase falls without limit.
 
@@ -180,11 +162,11 @@ The delay has left the loop's characteristic equation 1 + C G0 = 0, so any gain 
 
 Y/D = e^(−θs) (1 − T0(s) e^(−θs)).
 
-The first factor: the flush reaches the skin θ = 4 s after it happens. The second: the correction, launched when the skin first feels it, needs another θ to arrive. So the skin feels nothing for 4 s, then the full +3 K from 4 s to 8 s after the flush (the simulation agrees to 1 mK), then the error decays as 3e^(−(t − 8)), t in seconds after the flush. It is back within 0.2 K when that equals 0.2, at 8 + ln 15 = 10.708 s after the flush; the simulation gives 10.705 s. No feedback controller can do better than 2θ: the flush takes θ to be seen, and the correction takes θ to arrive. Only a measurement before the pipe could: the mixer's outlet temperature, closed in a fast inner loop (cascade), or the cold supply itself, acted on at once (feedforward), both on [pid-on-real-hardware](08-pid-on-real-hardware.md).
+The first factor: the flush reaches the skin θ = 4 s after it happens. The second: the correction, launched when the skin first feels it, needs another θ to arrive. So the skin feels nothing for 4 s, then the full +3 K from 4 s to 8 s after the flush (the simulation agrees to 1 mK), then the error decays as 3e^(−(t − 8)), t in seconds after the flush. It is back within 0.2 K when that equals 0.2, at 8 + ln 15 = 10.708 s after the flush; the simulation gives 10.705 s. No feedback controller can do better than 2θ: the flush takes θ to be seen, and the correction takes θ to arrive. Only a measurement before the pipe could: the mixer's outlet temperature, closed in a fast inner loop (cascade), or the cold supply itself, acted on at once (feedforward), both on [PID in practice](08-pid-on-real-hardware.md).
 
 **Model error.** If the true delay is θ = θ_m + Δ, the characteristic equation becomes 1 + C G0 (1 − e^(−θ_m s) + e^(−θ s)) = 0, which is 1 + T(s)(e^(−Δ s) − 1) = 0, where T(s) = T0(s) e^(−θ_m s) is the nominal closed loop. On the frequency axis e^(−jωΔ) has size 1, so the loop can only cross into instability at a frequency where |1 − 1/T(jω)| = 1; there Δ is read off the angle. For the fast design that gives a stable range of true delays from 2.50 s to 5.49 s. A time-domain bisection on the simulated delay finds 2.505 s and 5.480 s. The detuned PI, with no model to be wrong about, stays stable up to a 12.0 s delay.
 
-A second route to the ultimate gain is the Nyquist curve of [nyquist-criterion-and-stability-margins](06-nyquist-criterion-and-stability-margins.md): Kp e^(−jωθ)/(jωτ) is a spiral round the origin, and its first crossing of the negative real axis gives 0.785398 in the code.
+A second route to the ultimate gain is the Nyquist curve of [Nyquist and margins](06-nyquist-criterion-and-stability-margins.md): Kp e^(−jωθ)/(jωτ) is a spiral round the origin, and its first crossing of the negative real axis gives 0.785398 in the code.
 
 ### The picture: the delay's phase against its Padé stand-ins
 
@@ -701,9 +683,9 @@ The two outputs are identical to the printed precision.
 
 - **Showers and taps.** A person at the mixer is the controller; scalding then freezing is a loop gain above the edge the pipe sets. A thermostatic mixer senses the water inside the valve, so its own loop has almost no delay.
 - **Paper machines and rolling mills.** Sheet thickness is measured metres downstream of the actuator. Smith predictors and their descendants are standard here (Normey-Rico and Camacho, in Sources).
-- **Chemical plants.** Composition analysers take minutes per sample, and process streams spend minutes in pipes. Common PID tuning rules start from a plant model of a gain, a lag and a delay for this reason ([pid-control-and-tuning](07-pid-control-and-tuning.md)).
+- **Chemical plants.** Composition analysers take minutes per sample, and process streams spend minutes in pipes. Common PID tuning rules start from a plant model of a gain, a lag and a delay for this reason ([PID control](07-pid-control-and-tuning.md)).
 - **Remote control over a network.** Each command arrives a round trip late; showing the operator a modelled present instead of delayed video is the same idea.
-- **Digital controllers everywhere.** Sampling and computation add about half a sample period of delay, and like any delay it costs phase in proportion to frequency. That is why the simulated edge here, 0.784978, sits slightly below the formula's 0.785398; [pid-control-and-tuning](07-pid-control-and-tuning.md) meets the same half-step gap in its own simulation (its Step 4).
+- **Digital controllers everywhere.** Sampling and computation add about half a sample period of delay, and like any delay it costs phase in proportion to frequency. That is why the simulated edge here, 0.784978, sits slightly below the formula's 0.785398; [PID control](07-pid-control-and-tuning.md) meets the same half-step gap in its own simulation (its Step 4).
 
 > **Say it back**
 > A delay copies its input later, so it keeps every frequency at full size and turns it back by ωθ radians. That lowers the phase margin by the crossover frequency times the delay, and caps how fast a loop can be: the 4 s shower pipe forces a gain of 0.262 where the mixer alone would allow 2. A Padé ratio of polynomials stands in for the delay when a test needs polynomials, accurately only at low frequency. A Smith predictor feeds back a model of the mixer's present output, so the loop is designed as if there were no pipe. It cannot see disturbances, cannot shorten the pipe, and fails if its delay is wrong by much.
@@ -712,15 +694,15 @@ The two outputs are identical to the printed precision.
 
 ## What this builds on
 
-- [nyquist-criterion-and-stability-margins](06-nyquist-criterion-and-stability-margins.md): the phase margin and the Nyquist crossing that the delay erodes.
-- [lead-lag-compensation-and-loop-shaping](09-lead-lag-compensation-and-loop-shaping.md): shaping the loop around crossover; a delay is the one element no lead network can fully undo, because its phase keeps falling.
-- [step-functions-and-delays](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/05-step-functions-and-delays.md): the shift theorem, which makes a delay of θ a factor e^(−θs).
+- [Nyquist and margins](06-nyquist-criterion-and-stability-margins.md): the phase margin and the Nyquist crossing that the delay erodes.
+- [Loop shaping](09-lead-lag-compensation-and-loop-shaping.md): shaping the loop around crossover; a delay is the one element no lead network can fully undo, because its phase keeps falling.
+- [Step functions](../../08-Differential%20equations%20and%20dynamics/08-Laplace%20Transforms%20for%20Initial-Value%20Problems/05-step-functions-and-delays.md): the shift theorem, which makes a delay of θ a factor e^(−θs).
 
 ---
 
 ## Where this goes next
 
-- pade-and-rational-approximation: Padé approximants of any order for any function, how their coefficients come from a series, and how their error behaves.
+- Pade approximants: Padé approximants of any order for any function, how their coefficients come from a series, and how their error behaves.
 
 On the shower the second-order stand-in put the edge at 0.791288 against the true 0.785398, where the first-order one said 1.000; why a ratio of polynomials beats a plain series of the same length, and how far up in frequency each order can be trusted, is what pade-and-rational-approximation answers.
 

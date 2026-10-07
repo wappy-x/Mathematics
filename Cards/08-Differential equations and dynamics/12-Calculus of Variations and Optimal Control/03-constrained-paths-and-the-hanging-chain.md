@@ -1,23 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Calculus of Variations and Optimal Control
-topic: Budgets on whole paths
-item: Paths with a budget
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/02-the-brachistochrone-and-the-beltrami-identity|the-brachistochrone-and-the-beltrami-identity]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/08-lagrange-multipliers|lagrange-multipliers]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/07-hyperbolic-functions|hyperbolic-functions]]"
-next: []
-tags: [mathematics, differential equations and dynamics, constrained-paths-and-the-hanging-chain]
----
-
 # Paths with a budget: a Lagrange multiplier joins the constraint to the cost, and a chain hangs as a cosh
 
-Differential equations and dynamics → Calculus of Variations and Optimal Control → Budgets on whole paths → Paths with a budget
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Calculus of Variations and Optimal Control](../../../SYLLABUS.md#w08-s12) → Paths with a budget
 
 ---
 
@@ -43,7 +26,7 @@ Drawn to scale at 60 px to the metre on both axes. The nine points on the curve 
 
 ## The formula
 
-Reminder: a functional takes a whole path y(x) and returns one number ([functionals-and-the-euler-lagrange-equation](01-functionals-and-the-euler-lagrange-equation.md)). Here there are two: the cost $J$, the integral of $F$, and the budget $K$, the integral of $G$, which must equal a fixed amount $L$. Both integrands depend on the height y and the slope y'. The multiplier rule: a path that makes $J$ stationary among all paths with $K = L$ satisfies the Euler-Lagrange equation for $F - \lambda G$, for some constant $\lambda$.
+Reminder: a functional takes a whole path y(x) and returns one number ([The Euler-Lagrange equation](01-functionals-and-the-euler-lagrange-equation.md)). Here there are two: the cost $J$, the integral of $F$, and the budget $K$, the integral of $G$, which must equal a fixed amount $L$. Both integrands depend on the height y and the slope y'. The multiplier rule: a path that makes $J$ stationary among all paths with $K = L$ satisfies the Euler-Lagrange equation for $F - \lambda G$, for some constant $\lambda$.
 
 $$\frac{\partial (F - \lambda G)}{\partial y} - \frac{d}{dx}\,\frac{\partial (F - \lambda G)}{\partial y'} = 0, \qquad K[y] = L$$
 
@@ -84,11 +67,11 @@ For the fence the cost is the enclosed area $A$; the answer is a circle of radiu
 
 ### Step 0: the idea
 
-With a few numbers and one constraint, the best point has the cost's gradient a multiple of the constraint's ([lagrange-multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md)). A path is infinitely many numbers, but each wiggle is one direction, so the rule applies wiggle by wiggle.
+With a few numbers and one constraint, the best point has the cost's gradient a multiple of the constraint's ([Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md)). A path is infinitely many numbers, but each wiggle is one direction, so the rule applies wiggle by wiggle.
 
 ### Step 1: two wiggles reduce it to two numbers
 
-Add to the best path two small bumps that vanish at the hooks, scaled by two small numbers. Cost and budget become functions of two numbers, and the two-variable rule gives one constant $\lambda$, the same for every bump, with the cost's first change $\lambda$ times the budget's. So $J - \lambda K$ has zero first change, and the argument of [functionals-and-the-euler-lagrange-equation](01-functionals-and-the-euler-lagrange-equation.md) turns that into the Euler-Lagrange equation for $F - \lambda G$.
+Add to the best path two small bumps that vanish at the hooks, scaled by two small numbers. Cost and budget become functions of two numbers, and the two-variable rule gives one constant $\lambda$, the same for every bump, with the cost's first change $\lambda$ times the budget's. So $J - \lambda K$ has zero first change, and the argument of [The Euler-Lagrange equation](01-functionals-and-the-euler-lagrange-equation.md) turns that into the Euler-Lagrange equation for $F - \lambda G$.
 
 <details>
 <summary>Detailed proof</summary>
@@ -105,13 +88,13 @@ So δ(J − λK)[η₁] = 0 for every bump. Integrating the η₁' term by parts
 
 ### Step 2: no x in the integrand, so Beltrami applies
 
-The chain's combined integrand is (y − λ)√(1+y'^2), with no x on its own. The Beltrami identity ([the-brachistochrone-and-the-beltrami-identity](02-the-brachistochrone-and-the-beltrami-identity.md)) says the integrand minus y' times its slope-derivative is constant. Working it out:
+The chain's combined integrand is (y − λ)√(1+y'^2), with no x on its own. The Beltrami identity ([The brachistochrone](02-the-brachistochrone-and-the-beltrami-identity.md)) says the integrand minus y' times its slope-derivative is constant. Working it out:
 
 $$\frac{y - \lambda}{\sqrt{1+y'^2}} = a$$
 
 ### Step 3: solve it, and a cosh appears
 
-Put u = y − λ, so u = a√(1+u'^2). The function a cosh(x/a) satisfies it, since 1 + sinh^2 = cosh^2 ([hyperbolic-functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)). Level hooks put the lowest point at x = 0, so y = a cosh(x/a) + λ. The shift $c$ is the multiplier. Hooks at height 0 fix c = −a cosh(2/a). The length, the integral of cosh(x/a) from −2 to 2, gives 2a sinh(2/a) = 6, which fixes $a$.
+Put u = y − λ, so u = a√(1+u'^2). The function a cosh(x/a) satisfies it, since 1 + sinh^2 = cosh^2 ([Hyperbolic functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md)). Level hooks put the lowest point at x = 0, so y = a cosh(x/a) + λ. The shift $c$ is the multiplier. Hooks at height 0 fix c = −a cosh(2/a). The length, the integral of cosh(x/a) from −2 to 2, gives 2a sinh(2/a) = 6, which fixes $a$.
 
 ### Step 4: what the multiplier means
 
@@ -381,7 +364,7 @@ ALL CHECKS PASS
 
 - **Power lines and cables.** A cable carrying only its own weight hangs as a catenary, its tension at a tower equal to the weight of the cable that would reach down to the level λ.
 - **Dido's problem.** Carthage's founding legend, a boundary of fixed length around the most land, is the fence problem.
-- **Budgets over time.** A rocket with a fixed fuel load is a path with an integral budget; [pontryagins-principle-and-bang-bang-control](06-pontryagins-principle-and-bang-bang-control.md) lets the multiplier change along the path.
+- **Budgets over time.** A rocket with a fixed fuel load is a path with an integral budget; [Pontryagin's principle](06-pontryagins-principle-and-bang-bang-control.md) lets the multiplier change along the path.
 
 > **Say it back**
 > Some best-path problems carry a budget spent along the whole path, such as a fixed length. Subtract a constant times the budget from the cost and solve the Euler-Lagrange equation for the combination. The multiplier is fixed by spending the budget exactly, and measures what one more unit is worth. A 6 m chain between hooks 4 m apart sags 2.0105 m as a catenary; a 100 m fence is a circle holding 795.7747 m^2.
@@ -390,14 +373,14 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [the-brachistochrone-and-the-beltrami-identity](02-the-brachistochrone-and-the-beltrami-identity.md): the first integral used for the chain and the fence.
-- [lagrange-multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md): the two-variable rule the proof reduces to, and the multiplier as a price.
-- [hyperbolic-functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md): cosh, sinh and cosh^2 − sinh^2 = 1.
+- [The brachistochrone](02-the-brachistochrone-and-the-beltrami-identity.md): the first integral used for the chain and the fence.
+- [Lagrange multipliers](../../06-Calculus%20and%20analysis/07-Several%20Variables/08-lagrange-multipliers.md): the two-variable rule the proof reduces to, and the multiplier as a price.
+- [Hyperbolic functions](../../06-Calculus%20and%20analysis/02-Derivatives/07-hyperbolic-functions.md): cosh, sinh and cosh^2 − sinh^2 = 1.
 
 ## Where this goes next
 
-- [lagrangian-mechanics](04-lagrangian-mechanics.md): the same equation run in time, the path a motion and the cost the action.
-- [pontryagins-principle-and-bang-bang-control](06-pontryagins-principle-and-bang-bang-control.md): a multiplier for a constraint that holds at every instant.
+- [Lagrangian mechanics](04-lagrangian-mechanics.md): the same equation run in time, the path a motion and the cost the action.
+- [Pontryagin's principle](06-pontryagins-principle-and-bang-bang-control.md): a multiplier for a constraint that holds at every instant.
 
 ---
 

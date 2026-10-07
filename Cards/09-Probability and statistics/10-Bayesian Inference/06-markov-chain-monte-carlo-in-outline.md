@@ -1,32 +1,12 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Bayesian Inference
-topic: Posterior by simulation
-item: MCMC in outline
-kind: method
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/05-credible-intervals-and-decisions|credible-intervals-and-decisions]]"
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/02-beta-binomial|beta-binomial]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/01-law-of-large-numbers|law-of-large-numbers]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/02-sample-mean-and-standard-error|sample-mean-and-standard-error]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/03-Markov Chains/07-markov-chain-monte-carlo|markov-chain-monte-carlo]]"
-  - "[[Cards/14-Applied and computational/02-Randomised and Approximate Algorithms/08-markov-chain-monte-carlo-for-computation|markov-chain-monte-carlo-for-computation]]"
-tags: [mathematics, probability and statistics, markov-chain-monte-carlo-in-outline]
----
-
 # MCMC in outline: sampling a posterior you cannot write down
 
-Probability and statistics → Bayesian Inference → Posterior by simulation → MCMC in outline
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Bayesian Inference](../../../SYLLABUS.md#w09-s10) → MCMC in outline
 
 ---
 
 ## General Overview
 
-A new coin is flipped 10 times and shows 7 heads. Its chance of heads, call it p, is unknown. Start from a flat prior, every value of p from 0 to 1 equally plausible, and update on the 7 heads and 3 tails. The posterior is the Beta(8, 4) law of [beta-binomial](02-beta-binomial.md): its average is 0.666667, and the chance the coin favours heads, P(p > 0.5), is 0.886719, about 9 in 10.
+A new coin is flipped 10 times and shows 7 heads. Its chance of heads, call it p, is unknown. Start from a flat prior, every value of p from 0 to 1 equally plausible, and update on the 7 heads and 3 tails. The posterior is the Beta(8, 4) law of [Beta-binomial](02-beta-binomial.md): its average is 0.666667, and the chance the coin favours heads, P(p > 0.5), is 0.886719, about 9 in 10.
 
 That answer came from a table of named laws. Change the prior to a triangle peaked at a fair coin, height min(p, 1 − p), and the table has no entry. The posterior's shape is still easy to state: prior times likelihood, one multiplication per value of p. What goes missing is the constant that makes the total area 1. Every question about the posterior (its average, its tails, its credible interval) needs that constant, and with several unknowns it is an integral nobody can do.
 
@@ -34,7 +14,7 @@ That answer came from a table of named laws. Change the prior to a triangle peak
 
 **A random walk that always accepts uphill moves and accepts downhill moves with chance equal to the ratio of posterior heights spends its time in proportion to the posterior, so averages along the walk estimate posterior averages, with no normalising constant ever computed.**
 
-**What kind of fact this is:** a method. That the walk leaves the posterior unchanged is proved on this card in Why it works; that the walk forgets its start and that its averages converge are theorems stated here, checked by computation, and proved for finite chains, such as the grid walk below, in [convergence-to-equilibrium](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/05-convergence-to-equilibrium.md) and [stationary-distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md).
+**What kind of fact this is:** a method. That the walk leaves the posterior unchanged is proved on this card in Why it works; that the walk forgets its start and that its averages converge are theorems stated here, checked by computation, and proved for finite chains, such as the grid walk below, in [Convergence to equilibrium](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/05-convergence-to-equilibrium.md) and [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md).
 
 ### The picture: where the walker spent its time
 
@@ -138,17 +118,17 @@ xychart-beta
     line [1.000, 0.980, 0.890, 0.577, 0.063, 0.001, 0.000]
 ```
 
-The one line is the distance after each number of steps; the steps are not evenly spaced. After 10 steps, 0.890 of the probability is still in the wrong place. By 100 steps the gap is 0.001, and by 200 it is below the printed precision. The theorem behind the picture: a chain that can reach every state from every other, and does not cycle with a fixed period, approaches its resting state from any start. It is proved for finite chains, the grid walk among them, in [convergence-to-equilibrium](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/05-convergence-to-equilibrium.md). The burn-in exists because of this picture: the first positions still remember the start.
+The one line is the distance after each number of steps; the steps are not evenly spaced. After 10 steps, 0.890 of the probability is still in the wrong place. By 100 steps the gap is 0.001, and by 200 it is below the printed precision. The theorem behind the picture: a chain that can reach every state from every other, and does not cycle with a fixed period, approaches its resting state from any start. It is proved for finite chains, the grid walk among them, in [Convergence to equilibrium](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/05-convergence-to-equilibrium.md). The burn-in exists because of this picture: the first positions still remember the start.
 
 ### Step 5: averages settle, at a price
 
-A companion theorem, proved in [stationary-distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md), gives a law of large numbers for chains: the average along one long walk converges to the posterior average, as the average of independent draws does in [law-of-large-numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md). The price is correlation. Each position is at most 0.25 from the last, and about a third of the time it is the last. Neighbouring positions carry overlapping information, so the standard error is larger than the formula for independent draws says.
+A companion theorem, proved in [Stationary distributions](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/04-stationary-distributions.md), gives a law of large numbers for chains: the average along one long walk converges to the posterior average, as the average of independent draws does in [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md). The price is correlation. Each position is at most 0.25 from the last, and about a third of the time it is the last. Neighbouring positions carry overlapping information, so the standard error is larger than the formula for independent draws says.
 
 The **batch-means** method measures it without theory. Cut the 100,000 positions into 100 consecutive batches of 1,000 and average each batch. Batches this long are nearly independent of each other, so the spread of the 100 batch averages, divided by the square root of 100, is an honest standard error: 0.0011. The formula for independent draws, spread divided by the square root of N, gives 0.0004, about two and a half times too small. The effective sample size is the N that would make the independent-draws formula honest: the walk's variance over the squared batch standard error, 15,276.
 
 Road 4 in the code supplies the comparison. Beta(8, 4) happens to have an exact sampler: the 8th smallest of 11 uniform numbers. Twenty thousand such independent draws average 0.6642, standard error 0.0009, which is already sharper than the 100,000-step walk.
 
-Another way round the constant, importance sampling (drawing from an easy law and reweighting the draws), fails when the easy law misses where the posterior lives; MCMC trades that risk for correlation. More than one unknown at once, with a two-unknown Gibbs sampler worked through, is on [markov-chain-monte-carlo](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md); the computational side is markov-chain-monte-carlo-for-computation.
+Another way round the constant, importance sampling (drawing from an easy law and reweighting the draws), fails when the easy law misses where the posterior lives; MCMC trades that risk for correlation. More than one unknown at once, with a two-unknown Gibbs sampler worked through, is on [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md); the computational side is MCMC as a tool.
 
 ---
 
@@ -171,7 +151,7 @@ The walk starts at 0.5 with $h = 0.25$. Each row uses two uniform numbers from t
 | P(p > 0.5), exact | 1 − 232/2048, counting 11 fair flips with 8 or more heads | **0.886719** |
 | 95% credible interval | walk's 2.5% and 97.5% points; exact by bisection | 0.3915 to 0.8920; exact **0.3903 to 0.8907** |
 
-Step 4 is the one that makes this sampling rather than climbing: a downhill move, taken because the draw 0.0453 fell under 0.3518. The exact tail comes from a counting identity: the chance that a Beta(8, 4) value is below x equals the chance that at least 8 of 11 uniform numbers fall below x, so at x = 0.5 the chance is the share of 11 fair flips with 8 or more heads, 232 of 2048. Read back in the world: after 7 heads in 10, the coin favours heads with posterior chance about 0.89, and its chance of heads is between 0.39 and 0.89 with posterior probability 0.95, as [credible-intervals-and-decisions](05-credible-intervals-and-decisions.md) reads such an interval.
+Step 4 is the one that makes this sampling rather than climbing: a downhill move, taken because the draw 0.0453 fell under 0.3518. The exact tail comes from a counting identity: the chance that a Beta(8, 4) value is below x equals the chance that at least 8 of 11 uniform numbers fall below x, so at x = 0.5 the chance is the share of 11 fair flips with 8 or more heads, 232 of 2048. Read back in the world: after 7 heads in 10, the coin favours heads with posterior chance about 0.89, and its chance of heads is between 0.39 and 0.89 with posterior probability 0.95, as [Credible intervals and decisions](05-credible-intervals-and-decisions.md) reads such an interval.
 
 The triangle prior peaked at a fair coin, height min(p, 1 − p), has no named partner law. The same walk with $f(p) = \min(p, 1-p)\,p^7(1-p)^3$ averages 0.6272 (SE 0.0008); Simpson's rule on the unnormalised height, an independent road, gives 0.6272. The sceptical prior pulls the estimate toward 0.5.
 
@@ -608,7 +588,7 @@ The two outputs agree line for line: the same generator drives the same walk, an
 - **Statistical software.** Stan, PyMC and their relatives take a model written as code, prior times likelihood, and run a descendant of this walk on it; the reported means and intervals are walk averages like 0.6677 here.
 - **The 1953 original.** Metropolis and colleagues at Los Alamos used the walk to average over positions of hard spheres in a fluid, where the constant (the partition function) was out of reach. Physicists still call it the Metropolis algorithm.
 - **Evolutionary trees.** Programs that infer how species are related walk over possible trees, a space far too large to list, and report how often each branch appears.
-- **Clinical trials and hierarchical models.** A trial pooling many hospitals has one unknown per hospital plus shared ones; conjugate pairs such as [normal-normal](03-normal-normal.md) and [gamma-poisson](04-gamma-poisson.md) handle one unknown at a time, and MCMC takes over when the unknowns are tied together.
+- **Clinical trials and hierarchical models.** A trial pooling many hospitals has one unknown per hospital plus shared ones; conjugate pairs such as [Normal-normal](03-normal-normal.md) and [Gamma-Poisson](04-gamma-poisson.md) handle one unknown at a time, and MCMC takes over when the unknowns are tied together.
 
 > **Say it back**
 > A posterior's shape is prior times likelihood, but the constant that makes its area 1 is often out of reach. The Metropolis walk proposes a random step, always accepts it uphill, accepts it downhill with chance equal to the height ratio, and records its position either way. The constant cancels in the ratio, and balanced flows make the posterior the walk's resting state. For the coin with 7 heads in 10, 100,000 steps average 0.6677 against the exact 0.666667. The steps are correlated, so the honest standard error comes from batch means, not from the square root of N.
@@ -617,15 +597,15 @@ The two outputs agree line for line: the same generator drives the same walk, an
 
 ## What this builds on
 
-- [credible-intervals-and-decisions](05-credible-intervals-and-decisions.md): the posterior summaries the walk estimates, and how to read an interval like 0.3903 to 0.8907.
-- [beta-binomial](02-beta-binomial.md): the exact Beta(8, 4) posterior that the walk is checked against.
-- [law-of-large-numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): why averages of draws settle, here extended to correlated draws.
-- [sample-mean-and-standard-error](../07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md): the standard error that correlation inflates.
+- [Credible intervals and decisions](05-credible-intervals-and-decisions.md): the posterior summaries the walk estimates, and how to read an interval like 0.3903 to 0.8907.
+- [Beta-binomial](02-beta-binomial.md): the exact Beta(8, 4) posterior that the walk is checked against.
+- [Law of large numbers](../06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): why averages of draws settle, here extended to correlated draws.
+- [Standard error](../07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md): the standard error that correlation inflates.
 
 ## Where this goes next
 
-- [markov-chain-monte-carlo](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md): the general method on two unknowns: Metropolis–Hastings and Gibbs sampling, why the wanted law is the chain's resting state, the convergence hypotheses checked, and the exact price of correlation.
-- markov-chain-monte-carlo-for-computation: the walk on many unknowns at once: Gibbs sampling, gradient-guided proposals, and diagnostics across several chains.
+- [MCMC](../../11-Stochastic%20processes%20and%20calculus/03-Markov%20Chains/07-markov-chain-monte-carlo.md): the general method on two unknowns: Metropolis–Hastings and Gibbs sampling, why the wanted law is the chain's resting state, the convergence hypotheses checked, and the exact price of correlation.
+- MCMC as a tool: the walk on many unknowns at once: Gibbs sampling, gradient-guided proposals, and diagnostics across several chains.
 
 This card checked the walk against a posterior it could compute exactly; what it leaves open is how to know a walk has converged when no exact answer exists, which is what the theory of mixing times (how many steps a chain needs to forget its start) answers.
 

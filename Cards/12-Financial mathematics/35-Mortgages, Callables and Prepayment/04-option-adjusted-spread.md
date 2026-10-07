@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Mortgages, Callables and Prepayment
-topic: Pricing out the prepayment option
-item: Option-adjusted spread
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/35-Mortgages, Callables and Prepayment/03-negative-convexity|negative-convexity]]"
-  - "[[Cards/12-Financial mathematics/02-Curves/06-z-spread-and-asset-swap-spread|z-spread-and-asset-swap-spread]]"
-next:
-  - "[[Cards/12-Financial mathematics/35-Mortgages, Callables and Prepayment/05-mortgage-backed-securities-in-outline|mortgage-backed-securities-in-outline]]"
-tags: [mathematics, financial mathematics, option-adjusted-spread]
----
-
 # Option-adjusted spread: the spread over the curve after the embedded option is priced out
 
-Financial mathematics → Mortgages, Callables and Prepayment → Pricing out the prepayment option → Option-adjusted spread
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Mortgages, Callables and Prepayment](../../../SYLLABUS.md#w12-s35) → Option-adjusted spread
 
 ---
 
@@ -25,7 +8,7 @@ Financial mathematics → Mortgages, Callables and Prepayment → Pricing out th
 
 A pool of 30-year home loans pays its holder 6% a year on the balance still owed. It starts at $100 of balance. Every year the homeowners repay part of it on schedule, and some of them repay the whole loan early. In a quiet year 8% of the remaining balance leaves early. When rates fall, many more leave, because a homeowner paying 6% can refinance at less.
 
-The pool trades at **$103.06** per $100 of balance. Project its payments along today's forward rates, discount them on today's curve with a constant extra rate added, the way [z-spread-and-asset-swap-spread](../02-Curves/06-z-spread-and-asset-swap-spread.md) does for a plain bond, and the extra rate that hits $103.06 is **110 basis points** (one basis point is 0.01%, so 110 of them are 1.10% a year). That looks generous.
+The pool trades at **$103.06** per $100 of balance. Project its payments along today's forward rates, discount them on today's curve with a constant extra rate added, the way [Spreads over the curve](../02-Curves/06-z-spread-and-asset-swap-spread.md) does for a plain bond, and the extra rate that hits $103.06 is **110 basis points** (one basis point is 0.01%, so 110 of them are 1.10% a year). That looks generous.
 
 It is not all reward. Part of the 110 pays for something the investor has sold: every homeowner's right to hand the money back at par when rates fall, exactly when a 6% loan is worth most to keep. Price that right with a model of how rates can move, take its cost out, and the spread left over is about **60 basis points**. That leftover is the **option-adjusted spread**, OAS for short. The 50 basis points between the two numbers is the price of the homeowners' option, charged to the investor as a rate.
 
@@ -94,7 +77,7 @@ In words: 8% of the balance leaves every year whatever happens, and each percent
 ### When it holds
 
 - **The rate model is right about volatility.** The OAS depends on $\sigma$: at 22% it is 59.94 basis points, at 30% it is 37.47. Two desks with different volatilities quote different OAS for the same pool at the same price. An OAS is a statement about the pool *and* the model.
-- **The prepayment rule is right.** Homeowners are not option traders. The rule is a fitted description of how they behave, and when behaviour shifts (tighter lending, a housing boom) the cash flows shift and the OAS with them. A callable bond, where the issuer calls when it pays to, avoids this problem: its rule comes from the tree itself ([callable-bonds-and-yield-to-worst](01-callable-bonds-and-yield-to-worst.md)).
+- **The prepayment rule is right.** Homeowners are not option traders. The rule is a fitted description of how they behave, and when behaviour shifts (tighter lending, a housing boom) the cash flows shift and the OAS with them. A callable bond, where the issuer calls when it pays to, avoids this problem: its rule comes from the tree itself ([Callable bonds](01-callable-bonds-and-yield-to-worst.md)).
 - **The tree reprices today's curve.** If the model's rates do not reprice plain zero-coupon bonds exactly, curve error leaks into the spread. Here an unfitted tree moves the OAS from 59.94 to 73.07 basis points.
 - **The spread is only a discount.** $s$ shifts the discounting, never the rates homeowners react to. Let it move prepayment too and the answer drifts to 74.59 basis points: a different, unintended definition.
 - **One constant spread.** The OAS is flat across years and paths. Whatever the market charges for liquidity, credit or model doubt gets squeezed into that one number.
@@ -113,7 +96,7 @@ The fix is to let rates move, let the cash flows respond, average, and only then
 
 Look at year 16. Today's curve says the one-year rate then will be 5.05%. At that rate the rule gives 8.00% prepayment, the quiet-year level. But rates in year 16 will not sit at 5.05%. On the fitted tree they spread far below it and far above it. Where they land low, prepayment surges; where they land high, it cannot fall below 8%. Averaged over the tree, year-16 prepayment is 24.92%, three times the one-path figure.
 
-That lopsidedness is an option. The homeowner repays at par — exactly $1 for every $1 owed — when the pool is worth more than par to the investor, and keeps paying 6% when the pool is worth less. The investor holds the loans and has sold that right. [negative-convexity](03-negative-convexity.md) shows the price side of the same fact: the pool's price stops rising when rates fall.
+That lopsidedness is an option. The homeowner repays at par — exactly $1 for every $1 owed — when the pool is worth more than par to the investor, and keeps paying 6% when the pool is worth less. The investor holds the loans and has sold that right. [Negative convexity](03-negative-convexity.md) shows the price side of the same fact: the pool's price stops rising when rates fall.
 
 ### Step 2: build rate paths that reprice today's curve
 
@@ -660,10 +643,10 @@ The two outputs agree line for line.
 
 ## Where you meet it in real life
 
-- **Mortgage-backed securities desks.** Every pool of home loans is quoted with an OAS next to its price, from a prepayment model and a rate model the desk has fitted. [mortgage-cash-flows-and-prepayment](02-mortgage-cash-flows-and-prepayment.md) builds the cash flows the spread is fitted to.
-- **Callable bonds.** A company that may repay its bond early has the same option as a homeowner, used on purpose. Its OAS comes from the same tree with the call decision made at each node. See [callable-bonds-and-yield-to-worst](01-callable-bonds-and-yield-to-worst.md).
+- **Mortgage-backed securities desks.** Every pool of home loans is quoted with an OAS next to its price, from a prepayment model and a rate model the desk has fitted. [Mortgage pools](02-mortgage-cash-flows-and-prepayment.md) builds the cash flows the spread is fitted to.
+- **Callable bonds.** A company that may repay its bond early has the same option as a homeowner, used on purpose. Its OAS comes from the same tree with the call decision made at each node. See [Callable bonds](01-callable-bonds-and-yield-to-worst.md).
 - **Relative value.** A portfolio manager choosing between a corporate bond, a callable agency bond and a mortgage pool lines them up by OAS, not z-spread, so that option cost does not pass for reward.
-- **Risk.** Hold the OAS fixed, move the curve up and down a little, reprice on the tree: the change in price is the pool's rate sensitivity with prepayment included, called effective duration. Its bend is [negative-convexity](03-negative-convexity.md).
+- **Risk.** Hold the OAS fixed, move the curve up and down a little, reprice on the tree: the change in price is the pool's rate sensitivity with prepayment included, called effective duration. Its bend is [Negative convexity](03-negative-convexity.md).
 
 > **Say it back**
 > The z-spread discounts one path of cash flows and so cannot see an option. The OAS lets rates move on a tree fitted to today's curve, lets homeowners prepay on each path, averages, and then finds the one constant spread that reprices the pool. Because the spread only discounts, the price falls strictly as it rises, so exactly one spread fits. At zero volatility the OAS is the z-spread; with volatility it falls, and the gap is the option's cost. Here the pool's 110 basis points split into 60 of reward and 50 of option.
@@ -672,12 +655,12 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [negative-convexity](03-negative-convexity.md): why a pool whose borrowers can prepay gains less when rates fall than it loses when they rise. The OAS turns that shape into a rate.
-- [z-spread-and-asset-swap-spread](../02-Curves/06-z-spread-and-asset-swap-spread.md): the one-path spread, its search and its uniqueness proof. The OAS is the same search run over many paths.
+- [Negative convexity](03-negative-convexity.md): why a pool whose borrowers can prepay gains less when rates fall than it loses when they rise. The OAS turns that shape into a rate.
+- [Spreads over the curve](../02-Curves/06-z-spread-and-asset-swap-spread.md): the one-path spread, its search and its uniqueness proof. The OAS is the same search run over many paths.
 
 ## Where this goes next
 
-- [mortgage-backed-securities-in-outline](05-mortgage-backed-securities-in-outline.md): how pools like this one are packaged, split into slices and traded, with the OAS as the common yardstick.
+- [Mortgage-backed securities in outline](05-mortgage-backed-securities-in-outline.md): how pools like this one are packaged, split into slices and traded, with the OAS as the common yardstick.
 
 This card leaves open how a pool's cash is divided among investors who bear the prepayment option unequally, and the outline of mortgage-backed securities answers it.
 

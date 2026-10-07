@@ -1,23 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Random Graphs and the Probabilistic Method
-topic: Thresholds by averaging
-item: First and second moments
-kind: method
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/14-Random Graphs and the Probabilistic Method/03-probabilistic-method|probabilistic-method]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/08-markov-and-chebyshev-inequalities|markov-and-chebyshev-inequalities]]"
-next:
-  - "[[Cards/09-Probability and statistics/14-Random Graphs and the Probabilistic Method/05-random-walks-on-graphs-and-mixing|random-walks-on-graphs-and-mixing]]"
-tags: [mathematics, probability and statistics, first-and-second-moment-methods]
----
-
 # First and second moments: showing a random count is zero, or is not
 
-Probability and statistics → Random Graphs and the Probabilistic Method → Thresholds by averaging → First and second moments
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Graphs and the Probabilistic Method](../../../SYLLABUS.md#w09-s14) → First and second moments
 
 ---
 
@@ -31,7 +14,7 @@ Two tools answer it, both built on the number of triangles a club holds. The **f
 
 **If a count's average is small, the count is usually zero; if its average is large and its standard deviation is small beside that average, the count is usually positive.**
 
-**What kind of fact this is:** a method: Markov's and Chebyshev's inequalities, proved on [markov-and-chebyshev-inequalities](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md), applied to a count; the triangle threshold it yields is a theorem, proved on this card in Why it works.
+**What kind of fact this is:** a method: Markov's and Chebyshev's inequalities, proved on [Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md), applied to a count; the triangle threshold it yields is a theorem, proved on this card in Why it works.
 
 ### The picture: the two methods squeeze the truth
 
@@ -54,7 +37,7 @@ Orange, top: the first moment method's ceiling. Green, middle: the share of 10,0
 
 A reminder of the notation. $P(A)$ is the chance of an event A. $X$ is a random variable, here the number of triangles in one club. $E[X]$ is its expectation, the long-run average count over many clubs. $\mathrm{Var}(X)$ is its variance, the average squared distance from $E[X]$. $\binom{n}{3}$, also written C(n, 3), counts the ways to pick 3 members from $n$.
 
-The club is the random graph of [random-graphs-erdos-renyi](01-random-graphs-erdos-renyi.md): $n$ members, and each of the $\binom{n}{2}$ pairs linked with chance $p$, independently.
+The club is the random graph of [Random graphs](01-random-graphs-erdos-renyi.md): $n$ members, and each of the $\binom{n}{2}$ pairs linked with chance $p$, independently.
 
 **The first moment method.** For any count $X$, a random whole number that is never negative:
 
@@ -121,7 +104,7 @@ Directly: $E[X] = 1 \cdot P(X = 1) + 2 \cdot P(X = 2) + \dots$, and every term i
 
 Give each trio $T$ an indicator $I_T$: a number that reads 1 if the trio is a triangle and 0 if not. The triangle count is the sum of all 161,700 indicators. A trio is a triangle when its three pairs are all friends: chance $p \cdot p \cdot p = p^3$. So each $I_T$ averages $p^3$.
 
-Averages add, even when the pieces depend on each other ([expectation](../02-Random%20Variables/02-expectation.md)). So $E[X] = \binom{n}{3} p^3$. At p = 0.005 that is 161,700 × 0.000000125 = 0.0202. The first method: at most 2.02% of clubs contain a triangle.
+Averages add, even when the pieces depend on each other ([Expectation](../02-Random%20Variables/02-expectation.md)). So $E[X] = \binom{n}{3} p^3$. At p = 0.005 that is 161,700 × 0.000000125 = 0.0202. The first method: at most 2.02% of clubs contain a triangle.
 
 ### Step 3: the variance, pair of trios by pair of trios
 
@@ -155,7 +138,7 @@ Write $p = c/n$, so $c$ is roughly each member's average number of friends. Then
 
 - **$c$ shrinking to 0** (p much smaller than $1/n$): $E[X]$ shrinks to 0, and the first method sends the chance of a triangle to 0.
 - **$c$ growing without limit** (p much larger than $1/n$): $E[X]$ grows without limit, and the second term of the ratio is about $18/(n c)$, which shrinks too. The second method sends the chance of no triangle to 0.
-- **$c$ fixed**: neither method decides. The count settles near a Poisson law ([poisson](../03-Discrete%20Distributions/04-poisson.md)) with mean $c^3/6$, the law of rare events, so $P(X = 0)$ nears $e^{-c^3/6}$.
+- **$c$ fixed**: neither method decides. The count settles near a Poisson law ([Poisson](../03-Discrete%20Distributions/04-poisson.md)) with mean $c^3/6$, the law of rare events, so $P(X = 0)$ nears $e^{-c^3/6}$.
 
 So $1/n$ is the **threshold** for triangles: well below it they are absent, well above it present. For 100 members the threshold sits near p = 0.01, where the average count is 0.1617 and about 15% of clubs have a triangle (a simulated 0.1484, standard error 0.0036).
 
@@ -185,9 +168,9 @@ Chebyshev spends its allowance on both sides of the mean, but only the fall to 0
 
 </details>
 
-The second method is not special to triangles. Any count built from indicators, one per trio, per person or per pair, has as its variance the sum of the covariances between its pieces, and Step 4 applies unchanged. The number of people with exactly k friends is one such count. Two people's indicators share only the single pair between them, so each covariance is at most $p$. With $p$ near $c/n$ the variance then grows at most like $n$ while the squared mean grows like $n^2$, so the share of a large town with k friends stays close to its average. The size of the giant component of [the-giant-component](02-the-giant-component.md) is pinned the same way: Chebyshev applied to the number of small tree-shaped pieces of each size fixes how many people sit outside the giant, as Frieze and Karoński work through in their chapter on evolution (Sources).
+The second method is not special to triangles. Any count built from indicators, one per trio, per person or per pair, has as its variance the sum of the covariances between its pieces, and Step 4 applies unchanged. The number of people with exactly k friends is one such count. Two people's indicators share only the single pair between them, so each covariance is at most $p$. With $p$ near $c/n$ the variance then grows at most like $n$ while the squared mean grows like $n^2$, so the share of a large town with k friends stays close to its average. The size of the giant component of [The giant component](02-the-giant-component.md) is pinned the same way: Chebyshev applied to the number of small tree-shaped pieces of each size fixes how many people sit outside the giant, as Frieze and Karoński work through in their chapter on evolution (Sources).
 
-The first moment method has a second use, and it is the one on [probabilistic-method](03-probabilistic-method.md): if the average count of a bad structure is below 1, some outcome has none of it, so a good object exists.
+The first moment method has a second use, and it is the one on [The probabilistic method](03-probabilistic-method.md): if the average count of a bad structure is below 1, some outcome has none of it, so a good object exists.
 
 ---
 
@@ -676,8 +659,8 @@ The two outputs match line for line. The `exact` column `1-exp(-E)` is the Poiss
 
 ## Where you meet it in real life
 
-- **Random graphs.** Every small pattern, a triangle, a square, four members all linked, has its threshold found by exactly these two steps: the first moment for below, the second for above. [random-graphs-erdos-renyi](01-random-graphs-erdos-renyi.md) sets up the model; [the-giant-component](02-the-giant-component.md) follows it past $p = 1/n$, where a large connected mass appears.
-- **Existence proofs.** If the average number of flaws in a random design is below 1, a flawless design exists. That is the first moment method on [probabilistic-method](03-probabilistic-method.md).
+- **Random graphs.** Every small pattern, a triangle, a square, four members all linked, has its threshold found by exactly these two steps: the first moment for below, the second for above. [Random graphs](01-random-graphs-erdos-renyi.md) sets up the model; [The giant component](02-the-giant-component.md) follows it past $p = 1/n$, where a large connected mass appears.
+- **Existence proofs.** If the average number of flaws in a random design is below 1, a flawless design exists. That is the first moment method on [The probabilistic method](03-probabilistic-method.md).
 - **Hashing and collisions.** With k items stored in m slots at random, the average number of colliding pairs is C(k, 2)/m. Below 1, collisions are rare by the first method; the second method shows they become near certain once it is large.
 - **Social networks.** Real friendship networks hold far more triangles than a random graph with the same number of friendships. The random graph's average count is the baseline the excess is measured against.
 
@@ -688,15 +671,15 @@ The two outputs match line for line. The `exact` column `1-exp(-E)` is the Poiss
 
 ## What this builds on
 
-- [probabilistic-method](03-probabilistic-method.md): counting with random objects, and the first moment used for existence.
-- [markov-and-chebyshev-inequalities](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md): the two inequalities, Steps 1 and 4 in disguise.
-- For comparison, [concentration-inequalities-hoeffding-and-chernoff](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md): Markov applied to an exponential, for tails far thinner than Chebyshev's; this card does not need it.
+- [The probabilistic method](03-probabilistic-method.md): counting with random objects, and the first moment used for existence.
+- [Markov and Chebyshev](../02-Random%20Variables/08-markov-and-chebyshev-inequalities.md): the two inequalities, Steps 1 and 4 in disguise.
+- For comparison, [Concentration](../06-Limit%20Theorems%20in%20Practice/06-concentration-inequalities-hoeffding-and-chernoff.md): Markov applied to an exponential, for tails far thinner than Chebyshev's; this card does not need it.
 
 ## Where this goes next
 
-- [random-walks-on-graphs-and-mixing](05-random-walks-on-graphs-and-mixing.md): once the graph exists, how fast a walker moving along friendships forgets where it started.
+- [Random walks on a graph](05-random-walks-on-graphs-and-mixing.md): once the graph exists, how fast a walker moving along friendships forgets where it started.
 
-The two moments settle whether a count is zero; how the finished graph behaves as a whole, measured by a walk that wanders across it, is the question [random-walks-on-graphs-and-mixing](05-random-walks-on-graphs-and-mixing.md) answers.
+The two moments settle whether a count is zero; how the finished graph behaves as a whole, measured by a walk that wanders across it, is the question [Random walks on a graph](05-random-walks-on-graphs-and-mixing.md) answers.
 
 ---
 

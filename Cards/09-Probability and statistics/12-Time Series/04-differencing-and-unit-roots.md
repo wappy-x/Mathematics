@@ -1,25 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Time Series
-topic: Wandering and settling
-item: Unit roots
-kind: method
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/12-Time Series/02-ar-models|ar-models]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/02-regression-inference|regression-inference]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/03-hypothesis-tests-and-p-values|hypothesis-tests-and-p-values]]"
-next:
-  - "[[Cards/09-Probability and statistics/12-Time Series/07-cointegration-in-outline|cointegration-in-outline]]"
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/02-pairs-trading-and-cointegration|pairs-trading-and-cointegration]]"
-tags: [mathematics, probability and statistics, time-series, differencing-and-unit-roots]
----
-
 # Unit roots: series that wander, and the differencing that tames them
 
-Probability and statistics → Time Series → Wandering and settling → Unit roots
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Time Series](../../../SYLLABUS.md#w09-s12) → Unit roots
 
 ---
 
@@ -54,9 +35,9 @@ One line: the closing price, sampled every tenth trading day. It drops through t
 
 ## The formula
 
-Notation first, in words. A subscript names the day: $y_t$ is the value on day $t$, and $y_{t-1}$ is the value the day before. Here $y_t$ is the logarithm of the closing price, so the change from one day to the next is the log return, within a hair of the percentage change for 1% moves. The Greek capital delta, $\Delta$, read "the change in", marks differencing: $\Delta y_t = y_t - y_{t-1}$. A hat marks an estimate, as in [regression-inference](../09-Regression/02-regression-inference.md).
+Notation first, in words. A subscript names the day: $y_t$ is the value on day $t$, and $y_{t-1}$ is the value the day before. Here $y_t$ is the logarithm of the closing price, so the change from one day to the next is the log return, within a hair of the percentage change for 1% moves. The Greek capital delta, $\Delta$, read "the change in", marks differencing: $\Delta y_t = y_t - y_{t-1}$. A hat marks an estimate, as in [Regression error bars](../09-Regression/02-regression-inference.md).
 
-The autoregression from [ar-models](02-ar-models.md) says tomorrow is a fraction of today plus a fresh shock:
+The autoregression from [Autoregression](02-ar-models.md) says tomorrow is a fraction of today plus a fresh shock:
 
 $$y_t = \rho\, y_{t-1} + \varepsilon_t$$
 
@@ -111,7 +92,7 @@ Solve the random walk backwards: $y_t = y_0 + \varepsilon_1 + \varepsilon_2 + \d
 
 ### Step 1: the spread grows without limit
 
-The shocks are independent, so the variance of their sum is the sum of their variances ([variance-and-standard-deviation](../02-Random%20Variables/03-variance-and-standard-deviation.md)):
+The shocks are independent, so the variance of their sum is the sum of their variances ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)):
 
 $$\operatorname{Var}(y_t - y_0) = t\,\sigma^2.$$
 
@@ -133,7 +114,7 @@ Orange, rising: the random walk, standard deviation 1% times the square root of 
 
 ### Step 2: one difference returns the shocks
 
-Subtract yesterday from today: $\Delta y_t = y_t - y_{t-1} = \varepsilon_t$. The whole accumulated sum cancels except the newest shock. The differenced series has constant average and constant spread, and no memory: it is stationary. For the share, differencing the log price gives the daily return. A series that needs one difference to become stationary is called **integrated of order one**. That is the "I" in ARIMA, short for autoregressive integrated moving average: an ARMA model, as on [ma-and-arma](03-ma-and-arma.md), fitted to the differenced series.
+Subtract yesterday from today: $\Delta y_t = y_t - y_{t-1} = \varepsilon_t$. The whole accumulated sum cancels except the newest shock. The differenced series has constant average and constant spread, and no memory: it is stationary. For the share, differencing the log price gives the daily return. A series that needs one difference to become stationary is called **integrated of order one**. That is the "I" in ARIMA, short for autoregressive integrated moving average: an ARMA model, as on [Moving average and ARMA](03-ma-and-arma.md), fitted to the differenced series.
 
 Differencing once too often does harm. The change in the return, $\varepsilon_t - \varepsilon_{t-1}$, shares the shock $\varepsilon_{t-1}$ with its neighbour, with opposite signs. Its lag-one autocorrelation, the correlation between consecutive values, is exactly −0.5. The share's twice-differenced series shows −0.5063, with a standard error of 0.0448.
 
@@ -150,7 +131,7 @@ Differencing once too often does harm. The change in the return, $\varepsilon_t 
 
 ### Step 3: turn "is the factor 1?" into a slope
 
-Subtracting $y_{t-1}$ from both sides of $y_t = \rho y_{t-1} + \varepsilon_t$ gives $\Delta y_t = (\rho - 1) y_{t-1} + \varepsilon_t$. The carry-over factor becomes the slope $\gamma$ of today's change on yesterday's level. Under a unit root that slope is 0: yesterday's level tells nothing about today's change. Under stationarity it is negative: high levels are followed by falls. The constant $\alpha$ lets the moored series settle around any level, not only zero. Least squares estimates the slope, and $\tau$ divides it by its standard error, the same ratio that [regression-inference](../09-Regression/02-regression-inference.md) calls a t statistic.
+Subtracting $y_{t-1}$ from both sides of $y_t = \rho y_{t-1} + \varepsilon_t$ gives $\Delta y_t = (\rho - 1) y_{t-1} + \varepsilon_t$. The carry-over factor becomes the slope $\gamma$ of today's change on yesterday's level. Under a unit root that slope is 0: yesterday's level tells nothing about today's change. Under stationarity it is negative: high levels are followed by falls. The constant $\alpha$ lets the moored series settle around any level, not only zero. Least squares estimates the slope, and $\tau$ divides it by its standard error, the same ratio that [Regression error bars](../09-Regression/02-regression-inference.md) calls a t statistic.
 
 ### Step 4: why the usual cutoff is wrong
 
@@ -172,7 +153,7 @@ xychart-beta
 
 Orange: the Dickey-Fuller law, a histogram of $\tau$ from 10,000 simulated random walks in bins half a unit wide. Green: the standard bell curve that ordinary regression would use. The orange hump sits well to the left, so a cutoff taken from the green curve rejects a true unit root 45.92% of the time (standard error 0.50%) instead of 5%.
 
-Dickey and Fuller derived and tabulated the limit of this law, as the series grows long, in 1979; it is written today as a ratio of integrals of a Brownian path. Its proof needs [brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md) and is not given here; this card states it, simulates it, and checks the simulation against MacKinnon's published cutoffs.
+Dickey and Fuller derived and tabulated the limit of this law, as the series grows long, in 1979; it is written today as a ratio of integrals of a Brownian path. Its proof needs [Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/01-brownian-motion.md) and is not given here; this card states it, simulates it, and checks the simulation against MacKinnon's published cutoffs.
 
 ### Step 5: augment the regression when the changes have memory
 
@@ -181,7 +162,7 @@ A share's returns carry almost no memory, but many series do: this month's chang
 <details>
 <summary>The algebra behind the augmented slope</summary>
 
-The slope on the level in a regression with several regressors equals the slope obtained in two stages. First regress today's change on the constant and the lagged changes, and keep the leftovers. Then regress yesterday's level on the same constant and lagged changes, and keep those leftovers. The slope of the first leftovers on the second is $\hat\gamma$, and its standard error follows from the full regression's residuals, which are the same. This is the Frisch-Waugh-Lovell theorem of [multiple-regression-and-gauss-markov](../09-Regression/03-multiple-regression-and-gauss-markov.md). The code uses it as a third, independent road to $\tau$: it never forms or inverts a matrix, and it lands on −2.1145 like the full solve.
+The slope on the level in a regression with several regressors equals the slope obtained in two stages. First regress today's change on the constant and the lagged changes, and keep the leftovers. Then regress yesterday's level on the same constant and lagged changes, and keep those leftovers. The slope of the first leftovers on the second is $\hat\gamma$, and its standard error follows from the full regression's residuals, which are the same. This is the Frisch-Waugh-Lovell theorem of [Multiple regression](../09-Regression/03-multiple-regression-and-gauss-markov.md). The code uses it as a third, independent road to $\tau$: it never forms or inverts a matrix, and it lands on −2.1145 like the full solve.
 
 </details>
 
@@ -672,7 +653,7 @@ The two outputs agree line for line.
 >
 > Smaller traps:
 > - **The bell-curve cutoff.** −1.645 rejects a true random walk 45.92% of the time. Use the Dickey-Fuller cutoff: −2.8732 for 250 observations with a constant.
-> - **Correlating prices instead of returns.** Two unrelated wandering prices look significantly related in 84.70% of pairs. Correlate returns, or test the gap for a unit root, which is the idea of [cointegration-in-outline](07-cointegration-in-outline.md).
+> - **Correlating prices instead of returns.** Two unrelated wandering prices look significantly related in 84.70% of pairs. Correlate returns, or test the gap for a unit root, which is the idea of [Cointegration](07-cointegration-in-outline.md).
 > - **Differencing a stationary series.** It manufactures a negative lag-one autocorrelation: −0.5 for a series with no memory, like these returns, and $-(1-\rho)/2$ for an autoregression with carry-over factor $\rho$. It also makes forecasts worse. Test before differencing, and difference only as many times as the test demands.
 > - **Trusting the half-life of a wandering series.** A fitted factor of 0.975259 implies a 27.7-day half-life that does not exist.
 
@@ -680,11 +661,11 @@ The two outputs agree line for line.
 
 ## Where you meet it in real life
 
-- **Prices and returns.** Share prices, exchange rates and commodity prices in logs rarely reject a unit root; their returns reject it overwhelmingly. That is why risk models, from volatility estimates to [garch-and-volatility-clustering](06-garch-and-volatility-clustering.md), are fitted to returns, not prices.
+- **Prices and returns.** Share prices, exchange rates and commodity prices in logs rarely reject a unit root; their returns reject it overwhelmingly. That is why risk models, from volatility estimates to [GARCH](06-garch-and-volatility-clustering.md), are fitted to returns, not prices.
 - **Economic statistics.** Output, employment and price indices are tested for unit roots before modelling. Whether a recession's damage is permanent, a unit root, or temporary, a stationary dip, is a live policy question these tests address.
-- **ARIMA forecasting.** The "I" is the number of differences the unit-root test demands. A random walk's best forecast is today's value, and its forecast band widens with the square root of the horizon, the variance growth of Step 1: see [forecasting-and-exponential-smoothing](05-forecasting-and-exponential-smoothing.md).
-- **Reading a correlogram.** For a unit-root series the correlogram of [stationarity-and-autocorrelation](01-stationarity-and-autocorrelation.md) decays slowly, almost in a straight line; the test puts a cutoff on that impression.
-- **Pairs trading.** Two wandering prices whose gap does not wander are cointegrated; traders test the gap with a Dickey-Fuller regression and special cutoffs: [pairs-trading-and-cointegration](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/02-pairs-trading-and-cointegration.md).
+- **ARIMA forecasting.** The "I" is the number of differences the unit-root test demands. A random walk's best forecast is today's value, and its forecast band widens with the square root of the horizon, the variance growth of Step 1: see [Forecasting](05-forecasting-and-exponential-smoothing.md).
+- **Reading a correlogram.** For a unit-root series the correlogram of [Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md) decays slowly, almost in a straight line; the test puts a cutoff on that impression.
+- **Pairs trading.** Two wandering prices whose gap does not wander are cointegrated; traders test the gap with a Dickey-Fuller regression and special cutoffs: [Pairs trading](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/02-pairs-trading-and-cointegration.md).
 
 > **Say it back**
 > A series has a unit root when its carry-over factor is 1, so every shock stays in it and its variance grows in step with time. Its difference is the shock itself, which is stationary: a price wanders, its returns do not. The augmented Dickey-Fuller test regresses today's change on yesterday's level and a few past changes, and rejects the unit root only when the slope's t ratio falls below about −2.87, not −1.645, because a wandering regressor shifts the law of that ratio to the left. Failing to reject is weak evidence, and differencing a series that did not need it adds a false negative correlation, −0.5 when the series had no memory.
@@ -693,14 +674,14 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [ar-models](02-ar-models.md): the autoregression and its stationarity condition. This card asks what happens at the edge of that condition, where the factor is exactly 1.
-- [regression-inference](../09-Regression/02-regression-inference.md): slopes, standard errors and t ratios. The test statistic here is one of them, read against a different law.
-- [hypothesis-tests-and-p-values](../08-Confidence%20Intervals%20and%20Tests/03-hypothesis-tests-and-p-values.md): what a cutoff and a rejection mean, and why failing to reject proves nothing.
+- [Autoregression](02-ar-models.md): the autoregression and its stationarity condition. This card asks what happens at the edge of that condition, where the factor is exactly 1.
+- [Regression error bars](../09-Regression/02-regression-inference.md): slopes, standard errors and t ratios. The test statistic here is one of them, read against a different law.
+- [Hypothesis tests](../08-Confidence%20Intervals%20and%20Tests/03-hypothesis-tests-and-p-values.md): what a cutoff and a rejection mean, and why failing to reject proves nothing.
 
 ## Where this goes next
 
-- [cointegration-in-outline](07-cointegration-in-outline.md): two series that each wander, joined by a gap that does not. The unit-root test, applied to that gap, becomes a cointegration test with its own cutoffs.
-- [pairs-trading-and-cointegration](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/02-pairs-trading-and-cointegration.md): the same idea as a trading strategy, with the costs of being wrong about the gap.
+- [Cointegration](07-cointegration-in-outline.md): two series that each wander, joined by a gap that does not. The unit-root test, applied to that gap, becomes a cointegration test with its own cutoffs.
+- [Pairs trading](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/02-pairs-trading-and-cointegration.md): the same idea as a trading strategy, with the costs of being wrong about the gap.
 
 Differencing tames one wandering series by throwing its level away; the open question is whether two wandering series can share a level worth keeping, and cointegration is the answer.
 

@@ -1,26 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Chance and Events
-topic: Reading a chance
-item: Probability
-kind: definition
-status: verified
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/07-fractions|fractions]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/10-percentages|percentages]]"
-next:
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/02-sample-spaces-and-events|sample-spaces-and-events]]"
-tags:
-  - mathematics
-  - probability and statistics
-  - what-probability-means
----
-
 # Probability: a number between 0 and 1, and the three readings people give it
 
-Probability and statistics → Chance and Events → Reading a chance → Probability
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Chance and Events](../../../SYLLABUS.md#w09-s01) → Probability
 
 ---
 
@@ -201,7 +181,7 @@ Charging the plain gap between the forecast and the outcome, counted as 1 for ra
 
 </details>
 
-The alternative route to all of this is the axiomatic one: take the rules as the starting point and never ask what the number means. Andrey Kolmogorov did that in 1933, and the rest of this shelf takes that road, starting from [sample-spaces-and-events](02-sample-spaces-and-events.md).
+The alternative route to all of this is the axiomatic one: take the rules as the starting point and never ask what the number means. Andrey Kolmogorov did that in 1933, and the rest of this shelf takes that road, starting from [Sample spaces and events](02-sample-spaces-and-events.md).
 
 ---
 
@@ -633,7 +613,7 @@ The two outputs match line for line.
 - **Weather forecasts.** Chances of precipitation are graded with the Brier score and calibration checks of exactly this kind; Allan Murphy and Robert Winkler ran one on US precipitation forecasts in 1977.
 - **Betting and prediction markets.** A price of 30 cents on a contract paying $1 is a 30 percent chance. A bookmaker's prices on all outcomes sum to more than 1; the excess, called the overround, is the bookmaker's margin.
 - **Medicine.** "A 30 percent chance the treatment works" is a frequency from trials read as a belief about one patient, the same move this card makes from many days to tomorrow.
-- **Updating a belief.** How a coherent belief should change when evidence arrives is [bayes-rule](06-bayes-rule.md), built on [conditional-probability](05-conditional-probability.md).
+- **Updating a belief.** How a coherent belief should change when evidence arrives is [Bayes' rule](06-bayes-rule.md), built on [Conditional probability](05-conditional-probability.md).
 
 > **Say it back**
 > A probability is a number from 0 to 1 attached to something that may or may not happen. It can be read as how often, among many comparable cases, the thing happens; as the fair price of a ticket paying $1 if it does; or as how strongly someone believes it. Prices that break the rules, such as chances of rain and no rain summing to 0.90, lose money whatever happens. A forecaster graded by the Brier score does best by announcing a true belief, and any gap between what it announces and how often it then rains adds to its score. So a 30 percent forecast promises rain on about 3 in 10 such days, and a 30 cent price on a $1 rain ticket.
@@ -642,17 +622,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): a chance as a part of a whole, 3 out of 10.
-- [percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): 30 percent as the decimal 0.30.
+- [Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): a chance as a part of a whole, 3 out of 10.
+- [Percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): 30 percent as the decimal 0.30.
 
 ## Where this goes next
 
-- [sample-spaces-and-events](02-sample-spaces-and-events.md): the list of everything that can happen, and events as pieces of it.
-- [probability-rules-and-complements](03-probability-rules-and-complements.md): the rules that coherent prices obey, written for any events.
-- [equally-likely-outcomes-and-counting](04-equally-likely-outcomes-and-counting.md): chances found by counting when every outcome is equally likely.
-- [independence](07-independence.md): when one day's rain says nothing about the next, which the simulation here assumes.
+- [Sample spaces and events](02-sample-spaces-and-events.md): the list of everything that can happen, and events as pieces of it.
+- [The rules](03-probability-rules-and-complements.md): the rules that coherent prices obey, written for any events.
+- [Counting chances](04-equally-likely-outcomes-and-counting.md): chances found by counting when every outcome is equally likely.
+- [Independence](07-independence.md): when one day's rain says nothing about the next, which the simulation here assumes.
 
-This card treats "rain tomorrow" as one thing that happens or not; what exactly counts as an outcome, and how to build events from outcomes, is the question [sample-spaces-and-events](02-sample-spaces-and-events.md) answers.
+This card treats "rain tomorrow" as one thing that happens or not; what exactly counts as an outcome, and how to build events from outcomes, is the question [Sample spaces and events](02-sample-spaces-and-events.md) answers.
 
 ---
 

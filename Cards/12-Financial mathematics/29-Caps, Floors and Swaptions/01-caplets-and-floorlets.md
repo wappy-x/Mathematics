@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Caps, Floors and Swaptions
-topic: Options on one forward rate
-item: Caplets and floorlets
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/06-black-76-and-forward-level-pricing|black-76-and-forward-level-pricing]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/05-change-of-numeraire-in-pricing|change-of-numeraire-in-pricing]]"
-next:
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/02-caps-floors-and-parity|caps-floors-and-parity]]"
-tags: [mathematics, financial mathematics, caplets-and-floorlets]
----
-
 # Caplets and floorlets: a call or put on one forward rate, priced with Black-76 under the forward measure
 
-Financial mathematics → Caps, Floors and Swaptions → Options on one forward rate → Caplets and floorlets
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Caps, Floors and Swaptions](../../../SYLLABUS.md#w12-s29) → Caplets and floorlets
 
 ---
 
@@ -79,7 +62,7 @@ $d_1$ and $d_2$ are the distance from the forward to the strike, in standard dev
 ### When it holds
 
 - **The rate is lognormal around its forward, with one volatility.** The market quotes each strike with its own volatility (a smile). With a single $\sigma$ the price is right at the quoted strike and off elsewhere, by roughly vega (the price change per point of volatility, in The Greeks below) times the volatility gap.
-- **The rate is positive.** $\ln(F/K)$ needs a positive forward and strike. With rates near or below zero the market prices caplets with a shifted or a normal model instead ([normal-and-shifted-volatilities-for-rates](06-normal-and-shifted-volatilities-for-rates.md)).
+- **The rate is positive.** $\ln(F/K)$ needs a positive forward and strike. With rates near or below zero the market prices caplets with a shifted or a normal model instead ([Rate volatilities](06-normal-and-shifted-volatilities-for-rates.md)).
 - **The rate is fixed at the start of the period and paid at the end.** That is the term-rate convention of LIBOR, the London interbank rate retired in 2023. Rates compounded from overnight fixings (SOFR, SONIA) are only known at the period's end, so the uncertainty runs past $T_1$ into the period; Lyashenko and Mercurio extend the formula for that case.
 - **One curve gives both the forward and the discount.** Since 2008 the forward comes from a projection curve for the index and the discount factor from the overnight curve. The formula survives with each input read from its own curve; reading both from one curve misprices by the spread between them.
 - **The seller pays.** No allowance is made for the insurer defaulting.
@@ -92,7 +75,7 @@ $d_1$ and $d_2$ are the distance from the forward to the strike, in standard dev
 
 ### Step 0: price the caplet in units of the bond that pays when the caplet pays
 
-A caplet's payoff lands on the payment date. Count its value not in dollars but in units of the bond that pays \$1 on that same date. In those units the payment needs no discounting at all: a dollar on the payment date *is* one unit. What is left is an average of the payoff, and the one fact that makes Black's formula usable is that, under the weights these units impose, the forward rate averages to itself. That is the **forward measure**: the set of odds the payment-date bond defines ([change-of-numeraire-in-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/05-change-of-numeraire-in-pricing.md)).
+A caplet's payoff lands on the payment date. Count its value not in dollars but in units of the bond that pays \$1 on that same date. In those units the payment needs no discounting at all: a dollar on the payment date *is* one unit. What is left is an average of the payoff, and the one fact that makes Black's formula usable is that, under the weights these units impose, the forward rate averages to itself. That is the **forward measure**: the set of odds the payment-date bond defines ([Changing the unit of account](../05-Black-Scholes%20from%20the%20Ground%20Up/05-change-of-numeraire-in-pricing.md)).
 
 ### Step 1: the forward rate is a ratio of two bond prices
 
@@ -138,7 +121,7 @@ so the average rate under these odds is $\bigl(D(T_1)/D(T_2) - 1\bigr)/\tau = F$
 
 ### Step 4: add Black's assumption and integrate
 
-The model's one assumption: under the payment-date odds, $L$ is lognormal, centred on $F$, with log standard deviation $\sigma\sqrt{T_1}$. That is exactly the setting of Black-76 with $F$ as the forward and no carry. The average of $(L - K)^+$ is $F\,N(d_1) - K\,N(d_2)$, derived on [black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md). Multiply by $M\,\tau\,D(T_2)$. That is the caplet formula. The floorlet is the same average of $(K - L)^+$.
+The model's one assumption: under the payment-date odds, $L$ is lognormal, centred on $F$, with log standard deviation $\sigma\sqrt{T_1}$. That is exactly the setting of Black-76 with $F$ as the forward and no carry. The average of $(L - K)^+$ is $F\,N(d_1) - K\,N(d_2)$, derived on [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md). Multiply by $M\,\tau\,D(T_2)$. That is the caplet formula. The floorlet is the same average of $(K - L)^+$.
 
 <details>
 <summary>The integral, in three lines</summary>
@@ -149,11 +132,11 @@ Write $L = F\,e^{-\sigma^2 T_1/2 + \sigma\sqrt{T_1}\,z}$ with $z$ a standard nor
 
 ### Step 5: caplet minus floorlet is a forward rate agreement
 
-For any fixing, $(L - K)^+ - (K - L)^+ = L - K$. So a caplet bought and a floorlet sold pay $M\tau(L - K)$ at the payment date whatever happens. By Step 3 that is worth $M\,\tau\,D(T_2)(F - K)$ = \$683.73, with no volatility in it. The caplet (\$20,831.65) exceeds the floorlet (\$20,147.92) by exactly that. The whole-cap version, cap minus floor equals a swap, is on [caps-floors-and-parity](02-caps-floors-and-parity.md).
+For any fixing, $(L - K)^+ - (K - L)^+ = L - K$. So a caplet bought and a floorlet sold pay $M\tau(L - K)$ at the payment date whatever happens. By Step 3 that is worth $M\,\tau\,D(T_2)(F - K)$ = \$683.73, with no volatility in it. The caplet (\$20,831.65) exceeds the floorlet (\$20,147.92) by exactly that. The whole-cap version, cap minus floor equals a swap, is on [Caps and floors](02-caps-floors-and-parity.md).
 
 ### The other door: a caplet is a put on a bond
 
-On the reset date the payment is worth $X\tau(L-K)^+$, and a line of algebra turns that into $(1 + \tau K)\,(1/(1+\tau K) - X)^+$: puts on the payment-date bond, struck at 0.98765432. High rates and low bond prices are the same event. Priced in units of the *reset-date* bond, with the odds reweighted accordingly, this route gives \$20,831.65 again (road 4 in the code). Short-rate models price caplets this way ([bond-options-and-jamshidians-trick](../30-Short-Rate%20Models/05-bond-options-and-jamshidians-trick.md)).
+On the reset date the payment is worth $X\tau(L-K)^+$, and a line of algebra turns that into $(1 + \tau K)\,(1/(1+\tau K) - X)^+$: puts on the payment-date bond, struck at 0.98765432. High rates and low bond prices are the same event. Priced in units of the *reset-date* bond, with the odds reweighted accordingly, this route gives \$20,831.65 again (road 4 in the code). Short-rate models price caplets this way ([Bond options](../30-Short-Rate%20Models/05-bond-options-and-jamshidians-trick.md)).
 
 ---
 
@@ -395,7 +378,7 @@ chart, profit    -23902 -23902 -23902 -23902 -23902 -11402 1098 13598 26098
 ALL CHECKS PASS
 ```
 
-Four roads, one price. Simpson and the bond-put route land on the formula to the cent. The Monte Carlo is \$20,709.30 with a standard error of \$91.06, inside the three-standard-error band the assert demands. The average fixing under the payment-date odds comes out at the forward, 0.05031381, and the reweighting to reset-date odds averages to 1, as any change of units must; asserts hold both, and the vega bump, to tight tolerances. The last line checks the shelf: caplet 7 of the two-year cap on [caps-floors-and-parity](02-caps-floors-and-parity.md) reproduces its \$14,793.71.
+Four roads, one price. Simpson and the bond-put route land on the formula to the cent. The Monte Carlo is \$20,709.30 with a standard error of \$91.06, inside the three-standard-error band the assert demands. The average fixing under the payment-date odds comes out at the forward, 0.05031381, and the reweighting to reset-date odds averages to 1, as any change of units must; asserts hold both, and the vega bump, to tight tolerances. The last line checks the shelf: caplet 7 of the two-year cap on [Caps and floors](02-caps-floors-and-parity.md) reproduces its \$14,793.71.
 
 ### Rust
 
@@ -625,8 +608,8 @@ The two outputs agree line for line, although the bell-curve area was built two 
 - **Floating-rate borrowers.** Property loans and leveraged loans often oblige the borrower to buy a cap. Each quarter of it is a caplet like this one.
 - **Loans with a rate floor.** A loan that never charges less than a minimum benchmark rate hands the lender a strip of floorlets, sold by the borrower, usually paid for through the loan's spread.
 - **Adjustable-rate mortgages.** A periodic cap on the rate is a caplet the borrower owns, priced into the mortgage rather than paid separately.
-- **The volatility market.** Dealers quote caps by a single flat volatility; turning those quotes into one volatility per caplet is [caplet-stripping](03-caplet-stripping.md), and fitting the smile across strikes is [sabr-for-rates-and-the-volatility-cube](07-sabr-for-rates-and-the-volatility-cube.md).
-- **Swaptions.** An option on a whole swap uses the annuity instead of one bond as its unit: [swaptions-payer-and-receiver](04-swaptions-payer-and-receiver.md) and [the-annuity-measure](05-the-annuity-measure.md).
+- **The volatility market.** Dealers quote caps by a single flat volatility; turning those quotes into one volatility per caplet is [Caplet stripping](03-caplet-stripping.md), and fitting the smile across strikes is [SABR for rates](07-sabr-for-rates-and-the-volatility-cube.md).
+- **Swaptions.** An option on a whole swap uses the annuity instead of one bond as its unit: [Swaptions](04-swaptions-payer-and-receiver.md) and [The annuity measure](05-the-annuity-measure.md).
 
 > **Say it back**
 > A caplet pays the notional times the period's length times the excess of the fixed rate over the strike, at the end of the period; a floorlet pays the shortfall. The forward rate comes from two discount factors, and in units of the bond that pays on the payment date it averages to itself. Black's formula then prices the caplet as the forward times one chance minus the strike times another, with volatility clocked to the fixing date and discounting to the payment date. Caplet minus floorlet is a forward rate agreement, whatever the volatility. The one-quarter caplet here costs \$20,831.65, 0.21 percent of \$10 million.
@@ -635,12 +618,12 @@ The two outputs agree line for line, although the bell-curve area was built two 
 
 ## What this builds on
 
-- [black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md): the call on a forward, with no carry inside and one discount at the end. This card applies it with a forward rate as the forward.
-- [change-of-numeraire-in-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/05-change-of-numeraire-in-pricing.md): pricing in units of any traded asset, with the odds reweighted. Here the unit is the payment-date bond.
+- [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md): the call on a forward, with no carry inside and one discount at the end. This card applies it with a forward rate as the forward.
+- [Changing the unit of account](../05-Black-Scholes%20from%20the%20Ground%20Up/05-change-of-numeraire-in-pricing.md): pricing in units of any traded asset, with the odds reweighted. Here the unit is the payment-date bond.
 
 ## Where this goes next
 
-- [caps-floors-and-parity](02-caps-floors-and-parity.md): a cap is a strip of caplets priced one by one and added, and cap minus floor is a swap.
+- [Caps and floors](02-caps-floors-and-parity.md): a cap is a strip of caplets priced one by one and added, and cap minus floor is a swap.
 
 One caplet covers one quarter; a borrower needs every quarter covered, and the question left open is what a whole strip costs and how it ties to a swap.
 

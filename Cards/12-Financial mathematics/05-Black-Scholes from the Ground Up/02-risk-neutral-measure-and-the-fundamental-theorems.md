@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Black-Scholes from the Ground Up
-topic: The pricing measure
-item: The fundamental theorems
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/01-geometric-brownian-motion-for-prices|geometric-brownian-motion-for-prices]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period|state-prices-and-risk-neutral-pricing-in-one-period]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/02-girsanov-theorem|girsanov-theorem]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/04-martingale-representation-theorem|martingale-representation-theorem]]"
-next:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/03-black-scholes-by-delta-hedging|black-scholes-by-delta-hedging]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - risk-neutral-measure-and-the-fundamental-theorems
----
-
 # The fundamental theorems: no arbitrage means a pricing measure exists, and completeness means it is unique
 
-Financial mathematics → Black-Scholes from the Ground Up → The pricing measure → The fundamental theorems
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Black-Scholes from the Ground Up](../../../SYLLABUS.md#w12-s05) → The fundamental theorems
 
 ---
 
@@ -78,7 +56,7 @@ $$\text{every payoff can be copied by trading}\quad\Longleftrightarrow\quad\text
 
 A market where every payoff can be copied is called **complete**. There the copy's cost and the discounted average agree, and that shared number is the price.
 
-In continuous time Acme follows geometric Brownian motion ([geometric-brownian-motion-for-prices](01-geometric-brownian-motion-for-prices.md)): a steady drift plus random kicks, with $W$ the running total of the kicks. That card calls the drift $\mu$; here it is $m$, the desk's forecast. Infinitely many futures means no finite list of weights, so Girsanov's theorem ([girsanov-theorem](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md)) builds $Q$ by shifting the kicks instead:
+In continuous time Acme follows geometric Brownian motion ([Prices as geometric Brownian motion](01-geometric-brownian-motion-for-prices.md)): a steady drift plus random kicks, with $W$ the running total of the kicks. That card calls the drift $\mu$; here it is $m$, the desk's forecast. Infinitely many futures means no finite list of weights, so Girsanov's theorem ([Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md)) builds $Q$ by shifting the kicks instead:
 
 $$\frac{dS}{S} = m\,dt + \sigma\,dW \;\;\text{under } P \qquad\longrightarrow\qquad \frac{dS}{S} = (r-q)\,dt + \sigma\,dW^Q \;\;\text{under } Q$$
 
@@ -131,7 +109,7 @@ Now take a candidate arbitrage. It pays nothing negative in any future and somet
 
 ### Step 2: no free money forces the weights into existence
 
-For a single period this direction is done by hand on [state-prices-and-risk-neutral-pricing-in-one-period](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): the weights are the prices of tickets paying $1.00 in one future and nothing elsewhere, rescaled to add to one.
+For a single period this direction is done by hand on [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): the weights are the prices of tickets paying $1.00 in one future and nothing elsewhere, rescaled to add to one.
 
 The general finite argument is geometric. Put each future on its own axis, so a payoff is a point in as many dimensions as there are futures, and the payoffs reachable for zero cost form a flat sheet through the origin. Free money is a payoff with nothing negative and something positive: a point in the positive corner of that space. No free money says the sheet misses that corner, touching it only at the origin — and such a sheet has a direction at right angles to it pointing into the corner, every entry positive. At right angles to the sheet means valuing every zero-cost trade at nothing, which is the pricing rule rearranged. Rescale that direction to add to one and it is the pricing measure.
 
@@ -181,7 +159,7 @@ The shift is chosen to cancel $m$, so whatever the research desk believes goes i
 
 The reweighting factor is 0.7548 one wiggle up and 1.2445 one wiggle down: good endings marked down by a quarter, bad ones up. Averaging the call's payoff under the forecast odds with that factor gives $9.23 — the same as averaging under the pricing odds with no factor at all.
 
-Why this prices a claim rather than merely averaging it is the martingale representation theorem ([martingale-representation-theorem](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/04-martingale-representation-theorem.md)): where one source of kicks drives everything, any martingale under the pricing measure — any quantity whose average next value is its value now — is the running gain on some holding of shares. That is completeness in continuous form, and what makes this measure the only one.
+Why this prices a claim rather than merely averaging it is the martingale representation theorem ([Martingale representation](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/04-martingale-representation-theorem.md)): where one source of kicks drives everything, any martingale under the pricing measure — any quantity whose average next value is its value now — is the running gain on some holding of shares. That is completeness in continuous form, and what makes this measure the only one.
 
 ### Step 5: what an unbuildable claim costs
 
@@ -201,7 +179,7 @@ Both ends are real portfolios. The cheapest holding of shares and cash that pays
 
 Incompleteness is not only a paper curiosity. Acme's volatility is not itself traded: if it could be 15 percent or 25 percent the one-year call is worth $7.34 or $11.12 — a band from one unhedgeable quantity, in an otherwise ordinary market.
 
-A second road to the same measure never mentions weights: hold enough shares against the contract that the combined position cannot move, then demand that such a position earns the bank rate. The drift cancels itself. That road is [black-scholes-by-delta-hedging](03-black-scholes-by-delta-hedging.md), and it lands on the same $9.23.
+A second road to the same measure never mentions weights: hold enough shares against the contract that the combined position cannot move, then demand that such a position earns the bank rate. The drift cancels itself. That road is [Black-Scholes by hedging](03-black-scholes-by-delta-hedging.md), and it lands on the same $9.23.
 
 ---
 
@@ -681,7 +659,7 @@ The two outputs agree line for line at six decimals, from code sharing no arithm
 - **Monte Carlo.** Paths are drawn with the pricing drift, $r - q$, never the forecast drift; drawing them with the forecast gives the $12.47 above.
 - **Implied volatility and the smile.** Quoted volatility differing by strike is the market saying the weights it really uses are not the model's.
 - **Insurance, credit and anything that jumps.** Incomplete markets in the sense of Step 5: prices live inside a band, and choosing a point in it is judgement, charged as a margin.
-- **Counting in something other than dollars.** Swap the bank account for the shares as the unit of account and a different, equally valid measure appears: [change-of-numeraire-in-pricing](05-change-of-numeraire-in-pricing.md).
+- **Counting in something other than dollars.** Swap the bank account for the shares as the unit of account and a different, equally valid measure appears: [Changing the unit of account](05-change-of-numeraire-in-pricing.md).
 
 > **Say it back**
 > A pricing measure is a list of positive weights on the possible futures, adding to one, under which every traded price is its own discounted average payoff. Such weights exist exactly when no trade is guaranteed free money, and they are unique exactly when every payoff can be copied out of what already trades. They are prices, not beliefs: Acme is forecast to rise 8 percent and priced as though it rises 3 percent, the bank rate less the dividend. Girsanov's theorem performs the switch by shifting the random kicks, moving every drift and leaving every volatility alone. Where a payoff cannot be copied, the single price becomes a band.
@@ -690,14 +668,14 @@ The two outputs agree line for line at six decimals, from code sharing no arithm
 
 ## What this builds on
 
-- [geometric-brownian-motion-for-prices](01-geometric-brownian-motion-for-prices.md): the model of Acme this card reweights, a drift plus random kicks in logs.
-- [state-prices-and-risk-neutral-pricing-in-one-period](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): the weights built by hand for one period, as ticket prices rescaled to add to one.
-- [girsanov-theorem](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md): the shift itself, and the proof that the reweighting factor averages one.
-- [martingale-representation-theorem](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/04-martingale-representation-theorem.md): why one source of kicks makes every claim copyable.
+- [Prices as geometric Brownian motion](01-geometric-brownian-motion-for-prices.md): the model of Acme this card reweights, a drift plus random kicks in logs.
+- [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): the weights built by hand for one period, as ticket prices rescaled to add to one.
+- [Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md): the shift itself, and the proof that the reweighting factor averages one.
+- [Martingale representation](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/04-martingale-representation-theorem.md): why one source of kicks makes every claim copyable.
 
 ## Where this goes next
 
-- [black-scholes-by-delta-hedging](03-black-scholes-by-delta-hedging.md): the same price reached with no measure at all, by holding shares against the contract until the position cannot move.
+- [Black-Scholes by hedging](03-black-scholes-by-delta-hedging.md): the same price reached with no measure at all, by holding shares against the contract until the position cannot move.
 
 This card says the call is worth a discounted average under $Q$ and never says how many shares to hold to make that true; the next card builds the copy, day after day, and reaches $9.23 from the other side.
 

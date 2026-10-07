@@ -1,23 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Rate Equations
-topic: Balancing what flows in and out
-item: Mixing tanks
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/05-integrating-factor|integrating-factor]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/09-ratios-and-rates|ratios-and-rates]]"
-next:
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/03-the-abstract-cauchy-problem-and-the-operator-exponential|the-abstract-cauchy-problem-and-the-operator-exponential]]"
-tags: [mathematics, differential equations and dynamics, mixing-tanks-and-compartments]
----
-
 # Mixing tanks: rate in minus rate out is a differential equation, and units keep you honest
 
-Differential equations and dynamics → Rate Equations → Balancing what flows in and out → Mixing tanks
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Rate Equations](../../../SYLLABUS.md#w08-s01) → Mixing tanks
 
 ---
 
@@ -51,7 +34,7 @@ Orange: sugar in the tank, from the solved equation. Teal: 10 kg, where the tank
 
 ## The formula
 
-Reminder: y' = f(t, y) says "the rate of y at time t is f(t, y)" ([what-a-differential-equation-says](01-what-a-differential-equation-says.md)). For a tank of fixed volume $V$, fed and drained at flow $q$:
+Reminder: y' = f(t, y) says "the rate of y at time t is f(t, y)" ([A differential equation](01-what-a-differential-equation-says.md)). For a tank of fixed volume $V$, fed and drained at flow $q$:
 
 $$S' \;=\; \underbrace{q\,c_{in}}_{\text{rate in}} \;-\; \underbrace{q\,\frac{S}{V}}_{\text{rate out}}$$
 
@@ -98,15 +81,15 @@ flowchart LR
 
 ### Step 1: check every term's units
 
-Rate in: (L/min) × (kg/L) = kg/min. Rate out: (L/min) × kg ÷ L = kg/min. S' is kg per minute. All agree, so the equation can be right ([ratios-and-rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md)). The common wrong equation S' = 0.25 − 5S fails: 5 L/min times S kg is kg·L/min, not kg/min. The division by 200 went missing.
+Rate in: (L/min) × (kg/L) = kg/min. Rate out: (L/min) × kg ÷ L = kg/min. S' is kg per minute. All agree, so the equation can be right ([Ratios and rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md)). The common wrong equation S' = 0.25 − 5S fails: 5 L/min times S kg is kg·L/min, not kg/min. The division by 200 went missing.
 
 ### Step 2: solve with the integrating factor
 
-Rearranged, S' + S/40 = 0.25: linear, since the unknown appears only to the first power. Multiply by the integrating factor e^(t/40) ([integrating-factor](05-integrating-factor.md)); by the product rule the left side becomes the rate of e^(t/40) S:
+Rearranged, S' + S/40 = 0.25: linear, since the unknown appears only to the first power. Multiply by the integrating factor e^(t/40) ([The integrating factor](05-integrating-factor.md)); by the product rule the left side becomes the rate of e^(t/40) S:
 
 $$\big(e^{t/40} S\big)' = 0.25\,e^{t/40} \quad\Longrightarrow\quad e^{t/40} S = 10\,e^{t/40} + C$$
 
-The start fixes the constant C: at t = 0, 4 = 10 + C, so C = −6, and S = 10 − 6e^(−t/40) kg. With equal flows the equation also separates ([separable-equations](03-separable-equations.md)); the integrating factor is the road that survives unequal flows.
+The start fixes the constant C: at t = 0, 4 = 10 + C, so C = −6, and S = 10 − 6e^(−t/40) kg. With equal flows the equation also separates ([Separable equations](03-separable-equations.md)); the integrating factor is the road that survives unequal flows.
 
 ### Step 3: check the answer back in the tank
 
@@ -139,7 +122,7 @@ At 60 minutes: 260 L and 10.90 kg. A model that keeps 200 L has S' = 0.25 − S/
 
 </details>
 
-A second road needs no formula: Euler's rule steps along the rate, new value = old value + step length × rate. The code runs it; its own card is [eulers-method](../05-Numerical%20Evolution/01-eulers-method.md).
+A second road needs no formula: Euler's rule steps along the rate, new value = old value + step length × rate. The code runs it; its own card is [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md).
 
 ---
 
@@ -375,7 +358,7 @@ The two outputs match line for line.
 
 - **Brewing and food processing.** Blending toward a target strength, or flushing between batches, with time constant volume over flow.
 - **Drug dosing.** An infusion's steady level is rate in over clearance, reached in four to five half-lives.
-- **Cooling.** A cup losing heat to a room is the same shape with the room as the feed ([exponential-growth-decay-and-cooling](04-exponential-growth-decay-and-cooling.md)).
+- **Cooling.** A cup losing heat to a room is the same shape with the room as the feed ([Growth, decay and cooling](04-exponential-growth-decay-and-cooling.md)).
 
 > **Say it back**
 > In a stirred volume, the amount's rate of change is rate in minus rate out. The rate out is the outflow times the volume's own concentration. Every term must be in amount per time; one that is not is wrong. With equal flows the amount heads to the feed's strength, closing the gap by a factor of e every volume-over-flow. The tank holds 8.66 kg after an hour; a drug drip settles at rate in over clearance.
@@ -384,12 +367,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [integrating-factor](05-integrating-factor.md): the multiplier that makes a linear equation's left side a single rate, used in Step 2 and the unequal-flow proof.
-- [ratios-and-rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md): kg per litre times litres per minute, and cancelling units.
+- [The integrating factor](05-integrating-factor.md): the multiplier that makes a linear equation's left side a single rate, used in Step 2 and the unequal-flow proof.
+- [Ratios and rates](../../01-Foundations/01-Everyday%20Arithmetic/09-ratios-and-rates.md): kg per litre times litres per minute, and cancelling units.
 
 ## Where this goes next
 
-- the-abstract-cauchy-problem-and-the-operator-exponential: a chain of tanks, or a drug moving between blood and tissue, is a system of balances; with the state a whole function, this card settles when the answer is still an exponential.
+- Evolution as an equation: a chain of tanks, or a drug moving between blood and tissue, is a system of balances; with the state a whole function, this card settles when the answer is still an exponential.
 
 ---
 

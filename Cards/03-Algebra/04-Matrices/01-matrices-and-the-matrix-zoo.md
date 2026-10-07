@@ -1,31 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Matrices
-topic: Matrices as tables
-item: Matrices
-kind: definition
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/03-Algebra/03-Vectors/01-vectors|vectors]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/01-place-value|place-value]]"
-next:
-  - "[[Cards/03-Algebra/04-Matrices/02-matrix-times-vector|matrix-times-vector]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/07-adjacency-matrix-and-walk-counting|adjacency-matrix-and-walk-counting]]"
-  - "[[Cards/14-Applied and computational/04-Cryptography/02-symmetric-ciphers-and-aes|symmetric-ciphers-and-aes]]"
-  - "[[Cards/17-Topology/05-Homology/01-simplicial-complexes-and-chains|simplicial-complexes-and-chains]]"
-  - "[[Cards/23-Differential geometry and Lie groups/06-Lie Groups/01-lie-groups-and-matrix-groups|lie-groups-and-matrix-groups]]"
-  - "[[Cards/24-Computability and complexity/05-Algebraic, Interactive and Quantum/06-quantum-computation-and-bqp|quantum-computation-and-bqp]]"
-tags:
-  - mathematics
-  - algebra
-  - matrices-and-the-matrix-zoo
----
-
 # Matrices: a table of numbers with a size, plus the named shapes you will keep meeting
 
-Algebra → Matrices → Matrices as tables → Matrices
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Matrices](../../../SYLLABUS.md#w03-s04) → Matrices
 
 ---
 
@@ -37,7 +12,7 @@ A cafe writes down what it sold. Monday: 2 coffees and 1 pastry. Tuesday: 1 coff
 
 That is a **matrix**: a rectangular table of numbers, written row by row in square brackets, with its size stated as rows by columns. This one is 2 by 2.
 
-The position does the work. Wednesday's row is `[3, 2]`: 3 coffees, 2 pastries. That 3 counts coffees only because of where it sits — the trick of the 5 in 523 meaning five hundreds ([place-value](../../01-Foundations/01-Everyday%20Arithmetic/01-place-value.md)).
+The position does the work. Wednesday's row is `[3, 2]`: 3 coffees, 2 pastries. That 3 counts coffees only because of where it sits — the trick of the 5 in 523 meaning five hundreds ([Place value](../../01-Foundations/01-Everyday%20Arithmetic/01-place-value.md)).
 
 A few shapes recur often enough to have names. They fill the back half of this card.
 
@@ -106,7 +81,7 @@ a_21 means row 2, column 1: in the two-day table, Tuesday's coffees, 1. Read bac
 
 Week two sells `[[3, 2], [2, 1]]`. The two-week total goes slot by slot: Monday coffee 2 + 3 = 5, Monday pastry 1 + 2 = 3, Tuesday coffee 1 + 2 = 3, Tuesday pastry 1 + 1 = 2. The sum is `[[5, 3], [3, 2]]`, still 2 by 2.
 
-Scaling is the same with one multiplier: a pair of days that sold exactly double is 2A = `[[4, 2], [2, 2]]`. Nothing moves; every number is multiplied where it stands. Both leave each slot's meaning alone; multiplication does not ([matrix-multiplication](03-matrix-multiplication.md)).
+Scaling is the same with one multiplier: a pair of days that sold exactly double is 2A = `[[4, 2], [2, 2]]`. Nothing moves; every number is multiplied where it stands. Both leave each slot's meaning alone; multiplication does not ([Matrix multiplication](03-matrix-multiplication.md)).
 
 ### Step 3: the transpose asks the same question the other way
 
@@ -136,7 +111,7 @@ The **trace** adds the main diagonal into one number: 3 for the two-day table (2
 
 The trace of a sales table means nothing: it adds Monday's coffees to Tuesday's pastries. It earns its keep where rows and columns list the *same* items, and later, where it equals the sum of a square table's stretch factors, its eigenvalues.
 
-A matrix is also a rule turning one list of numbers into another, the rest of this shelf: [matrix-times-vector](02-matrix-times-vector.md) applies one, [matrix-multiplication](03-matrix-multiplication.md) chains two, [linear-maps-as-matrices](04-linear-maps-as-matrices.md) says which rules can be written this way.
+A matrix is also a rule turning one list of numbers into another, the rest of this shelf: [Matrix times vector](02-matrix-times-vector.md) applies one, [Matrix multiplication](03-matrix-multiplication.md) chains two, [Linear maps](04-linear-maps-as-matrices.md) says which rules can be written this way.
 
 ---
 
@@ -395,7 +370,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Spreadsheets.** Any sheet with labelled rows and columns is a matrix with its labels attached; "switch rows and columns" is the transpose.
-- **Price lists.** A diagonal matrix holds one price per product with nothing crossing over: `[[4, 0], [0, 3]]` for the cafe. Putting those prices to work is [matrix-times-vector](02-matrix-times-vector.md).
+- **Price lists.** A diagonal matrix holds one price per product with nothing crossing over: `[[4, 0], [0, 3]]` for the cafe. Putting those prices to work is [Matrix times vector](02-matrix-times-vector.md).
 
 > **Say it back**
 > A matrix is a table of numbers, written row by row in square brackets, sized rows by columns. Each number means what it means because of where it sits: row number first, column number second. Same-size tables add slot by slot, scaling multiplies every slot, and transposing tips the table over: the cafe's 5 by 2 days-by-products becomes a 2 by 5 products-by-days with the same 12 coffees and 8 pastries. Square tables get the named shapes — diagonal, identity, triangular, symmetric — and the trace, the main diagonal added up.
@@ -404,19 +379,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [vectors](../03-Vectors/01-vectors.md): a single list of numbers where position carries meaning; each row and each column of a matrix is one.
-- [place-value](../../01-Foundations/01-Everyday%20Arithmetic/01-place-value.md): the first idea in the library where *where* a number sits changes what it means.
+- [Vectors](../03-Vectors/01-vectors.md): a single list of numbers where position carries meaning; each row and each column of a matrix is one.
+- [Place value](../../01-Foundations/01-Everyday%20Arithmetic/01-place-value.md): the first idea in the library where *where* a number sits changes what it means.
 
 ## Where this goes next
 
-- [matrix-times-vector](02-matrix-times-vector.md): the sales table meets a price list, and the answer reads two ways.
-- [adjacency-matrix-and-walk-counting](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/07-adjacency-matrix-and-walk-counting.md): a square table of which dots are joined.
-- symmetric-ciphers-and-aes: AES holds its state as a 4 by 4 table of bytes.
-- simplicial-complexes-and-chains: tables recording which piece borders which, signs included.
-- lie-groups-and-matrix-groups: square matrices that form groups in their own right.
-- quantum-computation-and-bqp: a quantum gate is a square table acting on a list of numbers.
+- [Matrix times vector](02-matrix-times-vector.md): the sales table meets a price list, and the answer reads two ways.
+- [The adjacency matrix](../../04-Combinatorics%20and%20graphs/09-Graphs%20-%20Dots%20and%20Lines/07-adjacency-matrix-and-walk-counting.md): a square table of which dots are joined.
+- AES: AES holds its state as a 4 by 4 table of bytes.
+- Simplicial complexes and chains: tables recording which piece borders which, signs included.
+- Lie group: square matrices that form groups in their own right.
+- BQP: a quantum gate is a square table acting on a list of numbers.
 
-A table on its own only stores. What turns it into a rule sending one list of numbers to another is [matrix-times-vector](02-matrix-times-vector.md).
+A table on its own only stores. What turns it into a rule sending one list of numbers to another is [Matrix times vector](02-matrix-times-vector.md).
 
 ---
 

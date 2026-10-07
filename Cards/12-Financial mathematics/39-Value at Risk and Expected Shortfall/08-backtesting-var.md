@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Value at Risk and Expected Shortfall
-topic: Judging a risk model
-item: Backtesting VaR
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/03-historical-and-monte-carlo-var|historical-and-monte-carlo-var]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/03-hypothesis-tests-and-p-values|hypothesis-tests-and-p-values]]"
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/01-bernoulli-and-binomial|bernoulli-and-binomial]]"
-next: []
-tags: [mathematics, financial-mathematics, backtesting-var]
----
-
 # Backtesting VaR: counting exceptions, and the tests that judge them
 
-Financial mathematics → Value at Risk and Expected Shortfall → Judging a risk model → Backtesting VaR
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Value at Risk and Expected Shortfall](../../../SYLLABUS.md#w12-s39) → Backtesting VaR
 
 ---
 
@@ -175,7 +158,7 @@ The chi-square cut-offs rest on a large-sample argument that four exceptions do 
 
 ### The other route
 
-The exact binomial answers Kupiec's question without chi-square: the chance of 4 or more exceptions from a correct model is 0.241883, far above 5%. Neither route says how large the losses were beyond the VaR. Testing that needs a measure of the tail itself, the business of [expected-shortfall-and-coherence](05-expected-shortfall-and-coherence.md).
+The exact binomial answers Kupiec's question without chi-square: the chance of 4 or more exceptions from a correct model is 0.241883, far above 5%. Neither route says how large the losses were beyond the VaR. Testing that needs a measure of the tail itself, the business of [Expected shortfall](05-expected-shortfall-and-coherence.md).
 
 ---
 
@@ -689,7 +672,7 @@ The outputs agree line for line; both use the same seed and generator, so even t
 
 - **Bank supervision.** Supervisors count a bank's exceptions over the last 250 days and set its market-risk capital multiplier from the traffic light: 3 in green, 3 plus a plus factor of 0.40 to 0.85 in yellow, 3 plus 1.00 in red.
 - **Model validation.** Risk teams log every morning's VaR and every evening's loss, and report the count, the dates and a timing test for each desk. A cluster sends them looking for what changed: volatility, a new position, a pricing error.
-- **The shelf's book.** The VaR figures being tested come from the methods on this shelf, most often [historical-and-monte-carlo-var](03-historical-and-monte-carlo-var.md). Options make the book's losses lopsided, which [delta-gamma-var-and-cornish-fisher](04-delta-gamma-var-and-cornish-fisher.md) handles; a model that ignores this shows up in the backtest.
+- **The shelf's book.** The VaR figures being tested come from the methods on this shelf, most often [Historical and Monte Carlo VaR](03-historical-and-monte-carlo-var.md). Options make the book's losses lopsided, which [Options in the book](04-delta-gamma-var-and-cornish-fisher.md) handles; a model that ignores this shows up in the backtest.
 - **Any forecast band.** Christoffersen framed his test for interval forecasts in general: a band should hold the outcome at the promised rate, with misses that do not bunch.
 
 > **Say it back**
@@ -699,15 +682,15 @@ The outputs agree line for line; both use the same seed and generator, so even t
 
 ## What this builds on
 
-- [historical-and-monte-carlo-var](03-historical-and-monte-carlo-var.md): where the morning's VaR figure comes from. This card tests those figures against what happened.
-- [hypothesis-tests-and-p-values](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/03-hypothesis-tests-and-p-values.md): the language of a test, a cut-off, a p-value and the two kinds of error.
-- [bernoulli-and-binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the yes-or-no trial and the binomial count that Step 1 proves for exceptions.
+- [Historical and Monte Carlo VaR](03-historical-and-monte-carlo-var.md): where the morning's VaR figure comes from. This card tests those figures against what happened.
+- [Hypothesis tests](../../09-Probability%20and%20statistics/08-Confidence%20Intervals%20and%20Tests/03-hypothesis-tests-and-p-values.md): the language of a test, a cut-off, a p-value and the two kinds of error.
+- [Binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the yes-or-no trial and the binomial count that Step 1 proves for exceptions.
 
 ## Where this goes next
 
-- [expected-shortfall-and-coherence](05-expected-shortfall-and-coherence.md): the average loss beyond the VaR, which counts of exceptions cannot see.
-- [extreme-value-theory-and-tails](07-extreme-value-theory-and-tails.md): modelling the far tail directly when a year holds only a handful of exceptions.
-- [parametric-var-and-delta-normal](02-parametric-var-and-delta-normal.md): the simplest model to put on trial, and the one whose normal tails most often produce too many exceptions.
+- [Expected shortfall](05-expected-shortfall-and-coherence.md): the average loss beyond the VaR, which counts of exceptions cannot see.
+- [Extreme value theory](07-extreme-value-theory-and-tails.md): modelling the far tail directly when a year holds only a handful of exceptions.
+- [Parametric VaR](02-parametric-var-and-delta-normal.md): the simplest model to put on trial, and the one whose normal tails most often produce too many exceptions.
 
 A backtest counts how often the VaR was beaten but not by how much; the open question is how to measure, and test, the size of the losses past the line.
 

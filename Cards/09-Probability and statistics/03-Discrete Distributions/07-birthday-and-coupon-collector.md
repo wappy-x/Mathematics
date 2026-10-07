@@ -1,27 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Discrete Distributions
-topic: Coincidences and full sets
-item: Two classics
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/02-geometric-and-negative-binomial|geometric-and-negative-binomial]]"
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/06-complementary-counting|complementary-counting]]"
-next:
-  - "[[Cards/14-Applied and computational/02-Randomised and Approximate Algorithms/04-hashing-bloom-filters-and-sketches|hashing-bloom-filters-and-sketches]]"
-  - "[[Cards/14-Applied and computational/04-Cryptography/03-hash-functions-and-macs|hash-functions-and-macs]]"
-tags:
-  - mathematics
-  - probability and statistics
-  - birthday-and-coupon-collector
----
-
 # Two classics: shared birthdays and collecting a full set
 
-Probability and statistics → Discrete Distributions → Coincidences and full sets → Two classics
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Discrete Distributions](../../../SYLLABUS.md#w09-s03) → Two classics
 
 ---
 
@@ -96,7 +75,7 @@ In words: the birthday chance is set by the number of pairs, $n(n-1)/2$, measure
 - **Every day equally likely.** Real births bunch in some months. Any unevenness raises the match chance: a calendar where half the year is 1.5 times as likely as the other half gives 0.520852 at 23 people, not 0.507297. The formula is then a floor, not the answer.
 - **People independent.** A room with twins breaks it: one pair is a match by construction.
 - **A fixed, known number of days.** Counting 29 February as a full day makes $d = 366$ and moves the numbers a little. A hash with $2^{b}$ values is the same problem with $d = 2^{b}$.
-- **Draws with replacement.** Each person's day is drawn fresh; a day already taken is still available to the next person. Dealing from a deck without replacement is a different problem ([hypergeometric](03-hypergeometric.md)).
+- **Draws with replacement.** Each person's day is drawn fresh; a day already taken is still available to the next person. Dealing from a deck without replacement is a different problem ([Hypergeometric](03-hypergeometric.md)).
 
 ---
 
@@ -104,7 +83,7 @@ In words: the birthday chance is set by the number of pairs, $n(n-1)/2$, measure
 
 ### Step 0: count the easy side, and cut the long wait into stages
 
-"At least one shared birthday" can happen in a huge number of ways: one pair, two pairs, three people on one day. "Nobody shares" happens in one way only: every person on a different day. So count that, and subtract from 1 ([complementary-counting](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/06-complementary-counting.md)).
+"At least one shared birthday" can happen in a huge number of ways: one pair, two pairs, three people on one day. "Nobody shares" happens in one way only: every person on a different day. So count that, and subtract from 1 ([Counting the complement](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/06-complementary-counting.md)).
 
 For the full set, the long wait $T$ is a string of short waits: the wait for the first day, then for a second, different day, and so on. Each short wait is simple. Averages add. That is the whole proof.
 
@@ -135,7 +114,7 @@ For $0 \le x < 1$, $\ln(1-x) = -x - x^2/2 - x^3/3 - \cdots$, so $1 - x \le e^{-x
 
 ### Step 3: one stage of the collection is a geometric wait
 
-Suppose $i$ days are already taken. Each new person brings a new day with chance $p_i = (d-i)/d$, independently of everyone before. The number of people until the first success is a geometric wait, and its average is $1/p_i$ ([geometric-and-negative-binomial](02-geometric-and-negative-binomial.md)). So
+Suppose $i$ days are already taken. Each new person brings a new day with chance $p_i = (d-i)/d$, independently of everyone before. The number of people until the first success is a geometric wait, and its average is $1/p_i$ ([Waiting for a success](02-geometric-and-negative-binomial.md)). So
 
 $$E[W_i] = \frac{d}{d-i}.$$
 
@@ -166,7 +145,7 @@ The harmonic sum $1 + 1/2 + \cdots + 1/d$ is a staircase under and over the curv
 
 </details>
 
-The code takes a third road to the collector's average that uses neither stages nor harmonic numbers. It tracks the chance of having seen each possible number of distinct days after each arrival, steps it forward one person at a time, and adds up the chance of not yet being finished, since the average of a count equals the sum of its tail chances. That also gives the median, which a formula does not. For the number of matching pairs in a room, the [poisson](04-poisson.md) law with mean 253/365 gives the same "about one half" by another route.
+The code takes a third road to the collector's average that uses neither stages nor harmonic numbers. It tracks the chance of having seen each possible number of distinct days after each arrival, steps it forward one person at a time, and adds up the chance of not yet being finished, since the average of a count equals the sum of its tail chances. That also gives the median, which a formula does not. For the number of matching pairs in a room, the [Poisson](04-poisson.md) law with mean 253/365 gives the same "about one half" by another route.
 
 ---
 
@@ -595,11 +574,11 @@ The simulated rooms give 0.5042 with standard error 0.0035, against the exact 0.
 
 ## Where you meet it in real life
 
-- **Hash tables and checksums.** A hash assigns each item one of $d$ labels; two items with the same label collide. Collisions start near $\sqrt{d}$ items, not $d$, which is why hash tables resize early and why hashing-bloom-filters-and-sketches budgets for them.
-- **Cryptographic hashes.** A "birthday attack" finds two messages with the same fingerprint of $b$ bits after about $2^{b/2}$ tries, not $2^{b}$. That halving of the exponent sets fingerprint lengths in hash-functions-and-macs.
+- **Hash tables and checksums.** A hash assigns each item one of $d$ labels; two items with the same label collide. Collisions start near $\sqrt{d}$ items, not $d$, which is why hash tables resize early and why Hashing for size budgets for them.
+- **Cryptographic hashes.** A "birthday attack" finds two messages with the same fingerprint of $b$ bits after about $2^{b/2}$ tries, not $2^{b}$. That halving of the exponent sets fingerprint lengths in Hashes and MACs.
 - **Sticker albums and collectible toys.** Completing a set of $d$ random stickers costs about $d \ln d$ packets; the last few are the expensive ones, which is why swaps and direct orders exist.
 - **Testing by random inputs.** Random tests hit each of $d$ equally likely cases after about $d H_d$ tries; the last cases take most of the budget.
-- **Counts per day.** How many birthdays land on each day of the year is a [multinomial](05-multinomial.md) count; the birthday problem asks whether any count reaches 2, the collector whether none stays at 0.
+- **Counts per day.** How many birthdays land on each day of the year is a [Multinomial](05-multinomial.md) count; the birthday problem asks whether any count reaches 2, the collector whether none stays at 0.
 
 > **Say it back**
 > A shared birthday needs a pair, and 23 people make 253 pairs, so a match is more likely than not. The exact chance of no match multiplies the chances that each person misses every day already taken. The number of people needed grows like the square root of the number of days. Collecting every day is the opposite end: each stage is a geometric wait, the averages add to 365 × (1 + 1/2 + ⋯ + 1/365), about 2365, and the last day costs as much as the whole calendar has days.
@@ -608,13 +587,13 @@ The simulated rooms give 0.5042 with standard error 0.0035, against the exact 0.
 
 ## What this builds on
 
-- [geometric-and-negative-binomial](02-geometric-and-negative-binomial.md): the average wait $1/p$ and variance $(1-p)/p^2$ of each collection stage.
-- [complementary-counting](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/06-complementary-counting.md): count "nobody shares" and subtract from the total.
+- [Waiting for a success](02-geometric-and-negative-binomial.md): the average wait $1/p$ and variance $(1-p)/p^2$ of each collection stage.
+- [Counting the complement](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/06-complementary-counting.md): count "nobody shares" and subtract from the total.
 
 ## Where this goes next
 
-- hashing-bloom-filters-and-sketches: collisions as the cost of hashing, and structures sized around them.
-- hash-functions-and-macs: the birthday bound setting how long a secure fingerprint must be.
+- Hashing for size: collisions as the cost of hashing, and structures sized around them.
+- Hashes and MACs: the birthday bound setting how long a secure fingerprint must be.
 
 This card counts collisions when labels are drawn at random; what a hash function must do to behave like that random draw, and what an attacker gains when it does not, is the question those cards take up.
 

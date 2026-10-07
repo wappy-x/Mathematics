@@ -1,27 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: The Classical PDEs
-topic: Spreading on an endless line
-item: The heat kernel
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/03-the-heat-equation|the-heat-equation]]"
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/07-convolution-and-the-impulse-response|convolution-and-the-impulse-response]]"
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/04-gaussian-integral|gaussian-integral]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/03-fokker-planck-forward-equation|fokker-planck-forward-equation]]"
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/09-the-heat-and-schrodinger-semigroups|the-heat-and-schrodinger-semigroups]]"
-  - "[[Cards/19-Partial differential equations/03-The Heat Equation in Depth/01-heat-kernel-and-fundamental-solution|heat-kernel-and-fundamental-solution]]"
-  - "[[Cards/20-Harmonic analysis/03-Convolution and Approximate Identities/04-gaussian-and-poisson-kernels|gaussian-and-poisson-kernels]]"
-tags: [mathematics, differential equations and dynamics, the-heat-kernel]
----
-
 # The heat kernel: on an endless line a point of heat becomes a bell curve, and any start is a blend of bells
 
-Differential equations and dynamics → The Classical PDEs → Spreading on an endless line → The heat kernel
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → The heat kernel
 
 ---
 
@@ -55,7 +34,7 @@ Orange: after 100 s, peak 0.282 µg per cm. Teal: after 400 s, peak 0.141. Both 
 
 ## The formula
 
-Notation first, in words. $u(x, t)$ is the dye per cm at $x$ cm from the drop, $t$ seconds after it. Subscripts are rates ([what-a-pde-says](01-what-a-pde-says.md)): $u_t$ the change per second, $u_{xx}$ the curvature along the tube. The heat equation ([the-heat-equation](03-the-heat-equation.md)) is $u_t = \kappa u_{xx}$, with a start $u(x, 0) = f(x)$.
+Notation first, in words. $u(x, t)$ is the dye per cm at $x$ cm from the drop, $t$ seconds after it. Subscripts are rates ([A partial differential equation](01-what-a-pde-says.md)): $u_t$ the change per second, $u_{xx}$ the curvature along the tube. The heat equation ([The heat equation](03-the-heat-equation.md)) is $u_t = \kappa u_{xx}$, with a start $u(x, 0) = f(x)$.
 
 $$G(x, t) = \frac{1}{\sqrt{4\pi\kappa t}}\; e^{-x^2/(4\kappa t)}$$
 
@@ -65,7 +44,7 @@ $$u(x, t) = \int_{-\infty}^{\infty} G(x - y, t)\, f(y)\, dy$$
 
 **Read it aloud:** each starting point y sends out a bell sized by its dye; the dye at x sums those bells.
 
-That integral is a convolution ([convolution-and-the-impulse-response](../08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md)), with G as the impulse response. The width, the root of the average squared distance from the centre, is
+That integral is a convolution ([Convolution](../08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md)), with G as the impulse response. The width, the root of the average squared distance from the centre, is
 
 $$\sigma = \sqrt{2\kappa t}, \qquad G = \frac{1}{\sigma\sqrt{2\pi}}\, e^{-x^2/(2\sigma^2)}.$$
 
@@ -88,7 +67,7 @@ where s is only the integral's running variable.
 
 ### When it holds
 
-- **An endless line.** Once the bell reaches the tube's ends, they change the answer and the finite-rod method ([separation-of-variables-for-the-heat-equation](04-separation-of-variables-for-the-heat-equation.md)) takes over.
+- **An endless line.** Once the bell reaches the tube's ends, they change the answer and the finite-rod method ([Separation of variables](04-separation-of-variables-for-the-heat-equation.md)) takes over.
 - **Constant κ, still water.** Flowing water makes the bell drift; κ varying with place bends the shape.
 - **Forward in time.** Run backwards, a ripple with 1 cm between crests grows by e^39.48 in 100 s.
 - **A tame solution.** Uniqueness needs growth no faster than e^(cx^2) far out, c a constant.
@@ -113,7 +92,7 @@ Put that form into the equation with the chain rule. A common factor 1/t cancels
 
 F'' + (z/2) F' + F/2 = 0, which is (F' + zF/2)' = 0.
 
-So F' + zF/2 is constant, and 0, since F and F' vanish far out. Then F' = −zF/2, so F = C e^(−z^2/4), C a constant, which is e^(−x^2/(4κt)) times C. The Gaussian integral ([gaussian-integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)) puts the area under e^(−x^2/(4κt)) at √(4πκt); dividing by it makes the total 1.
+So F' + zF/2 is constant, and 0, since F and F' vanish far out. Then F' = −zF/2, so F = C e^(−z^2/4), C a constant, which is e^(−x^2/(4κt)) times C. The Gaussian integral ([The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md)) puts the area under e^(−x^2/(4κt)) at √(4πκt); dividing by it makes the total 1.
 
 ### Step 3: the width is √(2κt)
 
@@ -125,7 +104,7 @@ Slice the start into thin strips. The strip at y holds f(y) dy of dye and spread
 
 ### Step 5: the halving walk reaches the same bell by counting
 
-Cut the tube into cells a = 0.1 cm wide. Each tick, every cell sends half its dye one cell left and half one cell right: the grid rule of [finite-differences-for-the-heat-equation](09-finite-differences-for-the-heat-equation.md) at its largest stable step. Each tick adds exactly a^2 to the average squared distance. With a tick τ = a^2/(2κ) = 0.5 s, 200 ticks make 100 s and add 2 cm^2: width 1.4142 cm, by counting alone. The heaps follow Pascal's triangle. Einstein read the same count as molecules taking random steps; wing 11 follows that road.
+Cut the tube into cells a = 0.1 cm wide. Each tick, every cell sends half its dye one cell left and half one cell right: the grid rule of [Stepping the heat equation on a grid](09-finite-differences-for-the-heat-equation.md) at its largest stable step. Each tick adds exactly a^2 to the average squared distance. With a tick τ = a^2/(2κ) = 0.5 s, 200 ticks make 100 s and add 2 cm^2: width 1.4142 cm, by counting alone. The heaps follow Pascal's triangle. Einstein read the same count as molecules taking random steps; wing 11 follows that road.
 
 ### Step 6: infinite speed, instant smoothness
 
@@ -142,7 +121,7 @@ Uniqueness among bounded solutions follows from the maximum principle; Tychonoff
 
 </details>
 
-A second road: a Fourier transform in x fades each frequency k like e^(−κk^2 t), and transforming back gives the bell (heat-kernel-and-fundamental-solution). With t negative the same factor explodes.
+A second road: a Fourier transform in x fades each frequency k like e^(−κk^2 t), and transforming back gives the bell (The heat kernel). With t negative the same factor explodes.
 
 ---
 
@@ -397,7 +376,7 @@ The outputs match line for line.
 
 - **Two bars touching.** A long hot bar pressed to a long cold one: the joint sits at the average temperature from the first instant, the 0.500000 in the output.
 - **Blurring a photograph.** A Gaussian blur of width σ is brightness diffusing until 2κt = σ^2.
-- **Pricing an option.** In log price and time to expiry the Black-Scholes equation is the heat equation, with κ half the squared volatility, plus a drift and discounting; the call is the payoff blended with one bell: 9.227005508 for the house example of [black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+- **Pricing an option.** In log price and time to expiry the Black-Scholes equation is the heat equation, with κ half the squared volatility, plus a drift and discounting; the call is the payoff blended with one bell: 9.227005508 for the house example of [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
 
 > **Say it back**
 > On an endless line the heat equation turns a point of dye into a bell curve of width √(2κt): four times the wait, twice the width. Because the equation adds, any start evolves into the blend of its points' bells, a convolution. A step start becomes an error-function profile, half strength at the old edge. Splitting dye in half left and right every tick grows the same bell, and in log price the bell prices a call.
@@ -406,18 +385,18 @@ The outputs match line for line.
 
 ## What this builds on
 
-- [the-heat-equation](03-the-heat-equation.md): u_t = κu_xx, curvature driving the spread.
-- [convolution-and-the-impulse-response](../08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md): any input's answer as the impulse response blended with it.
-- [gaussian-integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md): the area √π that fixes the height factor.
+- [The heat equation](03-the-heat-equation.md): u_t = κu_xx, curvature driving the spread.
+- [Convolution](../08-Laplace%20Transforms%20for%20Initial-Value%20Problems/07-convolution-and-the-impulse-response.md): any input's answer as the impulse response blended with it.
+- [The Gaussian integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/04-gaussian-integral.md): the area √π that fixes the height factor.
 
 ## Where this goes next
 
-- [fokker-planck-forward-equation](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/03-fokker-planck-forward-equation.md): the spread of a random walker, with drift.
-- the-heat-and-schrodinger-semigroups: convolving with G as one operator.
-- heat-kernel-and-fundamental-solution: the kernel in n dimensions, uniqueness in full.
-- gaussian-and-poisson-kernels: shrinking bells as smoothing tools.
+- [Fokker-Planck](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/03-fokker-planck-forward-equation.md): the spread of a random walker, with drift.
+- Two evolutions: convolving with G as one operator.
+- The heat kernel: the kernel in n dimensions, uniqueness in full.
+- The Gaussian and Poisson kernels: shrinking bells as smoothing tools.
 
-What the bell means for one molecule moving at random, and how drift reshapes it, is the question [fokker-planck-forward-equation](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/03-fokker-planck-forward-equation.md) answers.
+What the bell means for one molecule moving at random, and how drift reshapes it, is the question [Fokker-Planck](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/03-fokker-planck-forward-equation.md) answers.
 
 ---
 

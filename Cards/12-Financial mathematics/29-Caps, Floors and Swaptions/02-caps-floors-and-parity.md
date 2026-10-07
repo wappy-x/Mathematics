@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Caps, Floors and Swaptions
-topic: Strips of rate options
-item: Caps and floors
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/01-caplets-and-floorlets|caplets-and-floorlets]]"
-next:
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/03-caplet-stripping|caplet-stripping]]"
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/04-swaptions-payer-and-receiver|swaptions-payer-and-receiver]]"
-tags: [mathematics, financial mathematics, caps-floors-and-parity]
----
-
 # Caps and floors: strips of caplets, and the parity that ties a cap, a floor and a swap
 
-Financial mathematics → Caps, Floors and Swaptions → Strips of rate options → Caps and floors
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Caps, Floors and Swaptions](../../../SYLLABUS.md#w12-s29) → Caps and floors
 
 ---
 
@@ -27,7 +10,7 @@ A company borrows \$10 million for two years. The interest rate is not fixed. Ev
 
 The company's board says: whatever happens, we will not pay more than 5 percent. So the company buys insurance. Each quarter, if the rate fixes above 5 percent, the insurer pays the excess on \$10 million for that quarter. If the rate fixes below 5 percent, nothing happens. The policy covers the seven quarters whose rate is still unknown. From here on the policy is called by its market name: an **interest-rate cap**, strike 5 percent (the strike is the ceiling rate).
 
-Each quarter's promise is one small option on one future rate, a **caplet** ([caplets-and-floorlets](01-caplets-and-floorlets.md)). The cap is the seven caplets held together. Its price is their prices added: **\$62,648.73, or 0.63 percent of the notional** (the notional is the loan size the payments are measured on, never itself exchanged). The mirror contract, a **floor**, pays when the rate falls below its strike; a lender buys it. Hold a cap and sell a floor at the same strike, and every quarter the two net to one fixed rule: receive the floating rate, pay 5 percent. That is an interest-rate swap, and its value comes from today's discount factors alone, with no model of how rates move.
+Each quarter's promise is one small option on one future rate, a **caplet** ([Caplets and floorlets](01-caplets-and-floorlets.md)). The cap is the seven caplets held together. Its price is their prices added: **\$62,648.73, or 0.63 percent of the notional** (the notional is the loan size the payments are measured on, never itself exchanged). The mirror contract, a **floor**, pays when the rate falls below its strike; a lender buys it. Hold a cap and sell a floor at the same strike, and every quarter the two net to one fixed rule: receive the floating rate, pay 5 percent. That is an interest-rate swap, and its value comes from today's discount factors alone, with no model of how rates move.
 
 **A cap is a strip of caplets priced one by one and added, a floor is a strip of floorlets, and cap minus floor at the same strike equals a swap that pays that strike and receives the floating rate, in every model.**
 
@@ -61,7 +44,7 @@ $$\text{Cap} = \sum_{i=1}^{7} \tau\, D_{i+1}\,\Big[F_i\,N(d_{1,i}) - K\,N(d_{2,i
 
 $$d_{1,i} = \frac{\ln(F_i/K) + \tfrac12\sigma^2 T_i}{\sigma\sqrt{T_i}}, \qquad d_{2,i} = d_{1,i} - \sigma\sqrt{T_i}$$
 
-These are the two standardised distances of the forward from the strike, exactly as on the Black caplet ([caplets-and-floorlets](01-caplets-and-floorlets.md)); $d_{2,i}$ is one standard deviation of the log rate below $d_{1,i}$.
+These are the two standardised distances of the forward from the strike, exactly as on the Black caplet ([Caplets and floorlets](01-caplets-and-floorlets.md)); $d_{2,i}$ is one standard deviation of the log rate below $d_{1,i}$.
 
 The parity needs two more quantities, both read from discount factors alone:
 
@@ -107,7 +90,7 @@ A cap is seven payments on seven dates, each settled by its own fixing. Suppose 
 
 ### Step 2: price each caplet with Black's formula
 
-Each caplet is a call option on one forward rate, fixed at $T_i$, paid at $T_{i+1}$. Its Black price is $\tau D_{i+1}[F_i N(d_{1,i}) - K N(d_{2,i})]$, derived on [caplets-and-floorlets](01-caplets-and-floorlets.md). Two dates, two jobs: volatility runs to the reset date $T_i$, discounting to the payment date $T_{i+1}$. Seven prices, one sum: the cap formula above.
+Each caplet is a call option on one forward rate, fixed at $T_i$, paid at $T_{i+1}$. Its Black price is $\tau D_{i+1}[F_i N(d_{1,i}) - K N(d_{2,i})]$, derived on [Caplets and floorlets](01-caplets-and-floorlets.md). Two dates, two jobs: volatility runs to the reset date $T_i$, discounting to the payment date $T_{i+1}$. Seven prices, one sum: the cap formula above.
 
 ### Step 3: the floating payments are worth a difference of discount factors
 
@@ -146,7 +129,7 @@ No step used a distribution for $L_i$. The only assumptions are that bonds for e
 
 The company pays $L_i$ on its loan and receives max($L_i$ − 5%, 0) from the cap. The net is the smaller of $L_i$ and 5 percent: the rate is capped. The premium, \$62,648.73 paid today, can be turned into a running cost by dividing by the annuity, the value of 1 a year paid quarterly: 0.378582 percent a year. So the company's worst all-in borrowing rate over quarters 1 to 7 is 5.378582 percent, and when rates stay low it pays the market rate plus that running cost.
 
-A second road reaches a lower number and shows why a cap is a strip. A **payer swaption** (sibling [swaptions-payer-and-receiver](04-swaptions-payer-and-receiver.md)) is one option, exercised once, to enter the whole swap. A cap is seven options, exercised quarter by quarter. In every quarter a caplet pays at least what the exercised swap would pay that quarter, and never less than zero, so the strip is worth at least the single option. At 30 percent volatility the swaption exercising at the first reset is worth \$21,407.39, about a third of the cap.
+A second road reaches a lower number and shows why a cap is a strip. A **payer swaption** (sibling [Swaptions](04-swaptions-payer-and-receiver.md)) is one option, exercised once, to enter the whole swap. A cap is seven options, exercised quarter by quarter. In every quarter a caplet pays at least what the exercised swap would pay that quarter, and never less than zero, so the strip is worth at least the single option. At 30 percent volatility the swaption exercising at the first reset is worth \$21,407.39, about a third of the cap.
 
 ---
 
@@ -658,7 +641,7 @@ The two outputs agree line for line.
 - **Floating-rate borrowers.** Property developers and companies with bank loans buy caps to put a ceiling on interest cost; lenders on floating-rate property loans often require one. The premium is paid once, and the borrower keeps the benefit when rates fall, unlike a swap.
 - **Collars.** A borrower buys a cap at one strike and sells a floor at a lower strike to pay for it. At 30 percent volatility the 4 percent floor sells for 0.41 percent of notional, most of the 0.63 percent cap. The borrower's rate is then held between the two strikes.
 - **Floating-rate notes with a minimum coupon.** A note that promises never to pay below some rate has a floor inside it; the investor has bought a floor from the issuer without a separate trade.
-- **Rates desks.** Dealers quote caps by a single flat volatility across all caplets and then turn those quotes into one volatility per caplet: [caplet-stripping](03-caplet-stripping.md). Cap-floor parity is the first check on any new pricing model, since no model is allowed to break it.
+- **Rates desks.** Dealers quote caps by a single flat volatility across all caplets and then turn those quotes into one volatility per caplet: [Caplet stripping](03-caplet-stripping.md). Cap-floor parity is the first check on any new pricing model, since no model is allowed to break it.
 
 **Conventions (dated 2026-09-28):** the card uses a quarter of exactly 0.25 years. Real contracts count the actual days in each period over 360 or 365, as the contract names, and each caplet's payment scales with that fraction. The parity holds under any day count, provided cap, floor and swap use the same one.
 
@@ -669,14 +652,14 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [caplets-and-floorlets](01-caplets-and-floorlets.md): one caplet's payoff, its Black price with volatility to the reset date and discounting to the payment date, and the forward rate read from discount factors. This card adds them up and ties the sum to a swap.
+- [Caplets and floorlets](01-caplets-and-floorlets.md): one caplet's payoff, its Black price with volatility to the reset date and discounting to the payment date, and the forward rate read from discount factors. This card adds them up and ties the sum to a swap.
 
 ---
 
 ## Where this goes next
 
-- [caplet-stripping](03-caplet-stripping.md): the market quotes one flat volatility for the whole cap; that card turns a set of cap quotes into one volatility per caplet and shows when the answer is unique.
-- [swaptions-payer-and-receiver](04-swaptions-payer-and-receiver.md): the single option on the whole swap, priced with the annuity as its unit, and its own parity with a forward swap.
+- [Caplet stripping](03-caplet-stripping.md): the market quotes one flat volatility for the whole cap; that card turns a set of cap quotes into one volatility per caplet and shows when the answer is unique.
+- [Swaptions](04-swaptions-payer-and-receiver.md): the single option on the whole swap, priced with the annuity as its unit, and its own parity with a forward swap.
 
 ---
 

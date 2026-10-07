@@ -1,23 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Circles and Solids
-topic: Slices of a circle
-item: Radians
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/02-Circles and Solids/01-circle-circumference-and-area|circle-circumference-and-area]]"
-next:
-  - "[[Cards/05-Geometry and trig/02-Circles and Solids/03-angles-in-a-circle|angles-in-a-circle]]"
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/02-radians-and-the-unit-circle|radians-and-the-unit-circle]]"
-tags: [mathematics, geometry and trig, radians-arcs-and-sectors]
----
-
 # Radians: measuring an angle by the arc it cuts, and why that makes formulas simple
 
-Geometry and trig → Circles and Solids → Slices of a circle → Radians
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Circles and Solids](../../../SYLLABUS.md#w05-s02) → Radians
 
 ---
 
@@ -25,7 +8,7 @@ Geometry and trig → Circles and Solids → Slices of a circle → Radians
 
 A pizza 30 cm across is cut into six equal slices of 60 degrees. Each slice has two straight cut edges running 15 cm from centre to rim: the radius. Between their ends runs a curved strip of crust.
 
-The slice carries 15.71 cm of crust and 117.81 cm^2 (square centimetres) of pizza: a sixth of the pizza's 94.25 cm of rim and 706.86 cm^2 of area ([circle-circumference-and-area](01-circle-circumference-and-area.md)).
+The slice carries 15.71 cm of crust and 117.81 cm^2 (square centimetres) of pizza: a sixth of the pizza's 94.25 cm of rim and 706.86 cm^2 of area ([Circles](01-circle-circumference-and-area.md)).
 
 Lay the crust along a cut edge: 15.71 cm against 15 cm, so the crust is 1.047 radii long. Cut the same slice from a bigger pizza and that ratio does not move. It depends only on how wide the slice opens, so it can measure the angle. Measured as crust over radius, an angle is in **radians**: the slice is 1.047 radians wide.
 
@@ -84,7 +67,7 @@ Landmarks: 30° is $\pi$/6 = 0.524 rad, 45° is $\pi$/4 = 0.785, 90° is $\pi$/2
 
 Cut the same 60° slice from a 40 cm pizza, radius 20 cm. Its crust is 20.94 cm, and 20.94 ÷ 20 = 1.047 again.
 
-A curve's length is what the total of ever shorter straight chords along it settles to. Enlarge the pizza from its centre and every chord grows by the enlargement factor, since the triangle it makes with its two radii is enlarged whole ([similar-triangles-and-scale](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)). Crust and radius grow alike, so their ratio holds.
+A curve's length is what the total of ever shorter straight chords along it settles to. Enlarge the pizza from its centre and every chord grows by the enlargement factor, since the triangle it makes with its two radii is enlarged whole ([Similar triangles](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)). Crust and radius grow alike, so their ratio holds.
 
 **One radian is the angle whose arc is exactly one radius long.**
 
@@ -135,7 +118,7 @@ $$A = \tfrac12\, r\, s,$$
 
 which is $\tfrac12 r^2 \theta$ once $s = r\theta$ is put in: a sector has the area of a triangle with the arc for base and the radius for height. The code's 4096 slivers give 117.81 cm^2.
 
-A second road starts from the circle of radius 1, where an angle in radians is its own arc, and enlarges it by $r$: [radians-and-the-unit-circle](../03-Trigonometry/02-radians-and-the-unit-circle.md).
+A second road starts from the circle of radius 1, where an angle in radians is its own arc, and enlarges it by $r$: [The unit circle](../03-Trigonometry/02-radians-and-the-unit-circle.md).
 
 ---
 
@@ -386,7 +369,7 @@ The outputs match line for line. The chord totals climb to the formula from belo
 
 - **Pie charts.** Each share is a sector: one sixth of the total gets 60° and one sixth of the disc.
 - **Wheels.** A wheel of radius $r$ turning $\theta$ radians rolls $r\theta$ along the ground: the rim unrolled onto the road.
-- **Cones.** A paper cone is a rolled-up sector whose arc becomes the base's rim ([pyramids-cones-and-spheres](05-pyramids-cones-and-spheres.md)).
+- **Cones.** A paper cone is a rolled-up sector whose arc becomes the base's rim ([Pyramids, cones and spheres](05-pyramids-cones-and-spheres.md)).
 
 > **Say it back**
 > A radian measures an angle by its arc over its radius, a ratio fixed however big the circle. A full turn is 2π radians, so 180° is π radians and 60° is 1.047 radians. In radians the arc is radius times angle and the sector half the radius squared times angle, because the π in a full turn cancels the π in the circle. A 60° slice of a 30 cm pizza has 15.71 cm of crust and 117.81 cm^2 of pizza. Degrees fed to these formulas give answers 57.30 times too big.
@@ -395,14 +378,14 @@ The outputs match line for line. The chord totals climb to the formula from belo
 
 ## What this builds on
 
-- [circle-circumference-and-area](01-circle-circumference-and-area.md): the circumference $2\pi r$ and area $\pi r^2$ that every slice takes a share of, and $\pi$ itself.
+- [Circles](01-circle-circumference-and-area.md): the circumference $2\pi r$ and area $\pi r^2$ that every slice takes a share of, and $\pi$ itself.
 
 ## Where this goes next
 
-- [angles-in-a-circle](03-angles-in-a-circle.md): angles with their corner on the rim.
-- [radians-and-the-unit-circle](../03-Trigonometry/02-radians-and-the-unit-circle.md): the circle of radius 1, whose rim points give sine and cosine.
+- [Angles at a circle](03-angles-in-a-circle.md): angles with their corner on the rim.
+- [The unit circle](../03-Trigonometry/02-radians-and-the-unit-circle.md): the circle of radius 1, whose rim points give sine and cosine.
 
-Every angle here had its corner at the centre. Move the corner onto the crust, keep the arc, and the angle halves: [angles-in-a-circle](03-angles-in-a-circle.md) proves why.
+Every angle here had its corner at the centre. Move the corner onto the crust, keep the arc, and the angle halves: [Angles at a circle](03-angles-in-a-circle.md) proves why.
 
 ---
 

@@ -1,33 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Groups
-topic: Shuffles and swaps
-item: Permutations
-kind: definition
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/08-Groups/01-groups|groups]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/04-injective-surjective-bijective|injective-surjective-bijective]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/03-composition|composition]]"
-next:
-  - "[[Cards/03-Algebra/08-Groups/05-homomorphisms-and-isomorphisms|homomorphisms-and-isomorphisms]]"
-  - "[[Cards/03-Algebra/08-Groups/08-group-actions-and-counting|group-actions-and-counting]]"
-  - "[[Cards/03-Algebra/10-For the Curious/02-why-no-quintic-formula|why-no-quintic-formula]]"
-  - "[[Cards/04-Combinatorics and graphs/04-Inclusion-Exclusion and Pigeonhole/02-derangements|derangements]]"
-  - "[[Cards/04-Combinatorics and graphs/08-Partitions/05-permutations-by-cycles|permutations-by-cycles]]"
-  - "[[Cards/21-Algebraic and analytic number theory/05-Fields and Galois Theory/06-computing-a-galois-group|computing-a-galois-group]]"
-  - "[[Cards/21-Algebraic and analytic number theory/05-Fields and Galois Theory/07-solvability-by-radicals-and-the-quintic|solvability-by-radicals-and-the-quintic]]"
-tags:
-  - mathematics
-  - algebra
-  - permutations-and-the-symmetric-group
----
-
 # Permutations: shuffles compose, every shuffle can be undone, and the n! shuffles of n cards form the symmetric group
 
-Algebra → Groups → Shuffles and swaps → Permutations
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Groups](../../../SYLLABUS.md#w03-s08) → Permutations
 
 ---
 
@@ -37,7 +10,7 @@ Three cards lie face up in places 1, 2 and 3: a seven, an eight, a nine. Two mov
 
 Do t, then r, and the seven ends in place 3. Do r, then t, and it ends in place 1.
 
-Such a move is a **permutation**: every place sends its card to one place and receives one card. Nothing is lost or doubled, so it can be run backwards. Three places allow six, and those six, under "do one, then the next", obey every rule of a group ([groups](01-groups.md)): the symmetric group on three places, written $S_3$.
+Such a move is a **permutation**: every place sends its card to one place and receives one card. Nothing is lost or doubled, so it can be run backwards. Three places allow six, and those six, under "do one, then the next", obey every rule of a group ([Groups](01-groups.md)): the symmetric group on three places, written $S_3$.
 
 **Reversible rearrangements of labelled places compose into further rearrangements, each has an undo, and together they form a group: the symmetric group.**
 
@@ -93,11 +66,11 @@ $$n! = n \times (n - 1) \times \cdots \times 2 \times 1, \qquad \text{fewest swa
 
 ### Step 0: a shuffle is a matching that runs backwards
 
-A shuffle sends each place's card to one place and fills every place: one-to-one and onto, a **bijection** ([injective-surjective-bijective](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md)). Without onto a place gets nothing; without one-to-one two cards want one place. With both, the arrows read backwards are a shuffle — the undo.
+A shuffle sends each place's card to one place and fills every place: one-to-one and onto, a **bijection** ([One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md)). Without onto a place gets nothing; without one-to-one two cards want one place. With both, the arrows read backwards are a shuffle — the undo.
 
 ### Step 1: the shuffles of n places form a group
 
-Shuffling has the four things a group needs ([groups](01-groups.md)). One shuffle after another is a shuffle, since a bijection after a bijection is a bijection ([composition](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md)). Bracketing either way sends each place along the same arrows. The do-nothing shuffle e is the identity, Step 0 the undo. So $S_n$ is a group under composition.
+Shuffling has the four things a group needs ([Groups](01-groups.md)). One shuffle after another is a shuffle, since a bijection after a bijection is a bijection ([Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md)). Bracketing either way sends each place along the same arrows. The do-nothing shuffle e is the identity, Step 0 the undo. So $S_n$ is a group under composition.
 
 ### Step 2: counting the shuffles
 
@@ -139,7 +112,7 @@ The do-nothing list starts at zero, even, so the count is even exactly when the 
 
 </details>
 
-Out-of-order pairs are a second road to the label: r has two, so it is even; the code checks both roads across all 24 shuffles of four places. Lengths add when chains join, so even with even is even, and the even shuffles close under the operation and hold each other's undos — a group inside $S_n$, the **alternating group**, exactly half of it from two places up: in $S_3$, e with (1 2 3) and (1 3 2). Written as +1 for even and −1 for odd, the label multiplies when shuffles compose; the map it becomes belongs to [homomorphisms-and-isomorphisms](05-homomorphisms-and-isomorphisms.md).
+Out-of-order pairs are a second road to the label: r has two, so it is even; the code checks both roads across all 24 shuffles of four places. Lengths add when chains join, so even with even is even, and the even shuffles close under the operation and hold each other's undos — a group inside $S_n$, the **alternating group**, exactly half of it from two places up: in $S_3$, e with (1 2 3) and (1 3 2). Written as +1 for even and −1 for odd, the label multiplies when shuffles compose; the map it becomes belongs to [Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md).
 
 <details>
 <summary>Every finite group is a group of shuffles</summary>
@@ -403,7 +376,7 @@ The two outputs match line for line.
 
 - **Sorting.** A routine that swaps neighbours pays one swap per out-of-order pair: the proof's count is the sort's workload.
 - **Puzzles.** Each slide of a sliding-tile puzzle swaps a tile with the blank, and returning the blank home takes an even number of slides, so the numbered tiles are shuffled evenly. Prise two tiles out and swap them: that target is odd, so no slides reach it.
-- **Symmetry and determinants.** Label a shape's corners and each rigid motion becomes a shuffle — the tile's 8 turns and flips among 24 corner shuffles; counting with symmetry is [group-actions-and-counting](08-group-actions-and-counting.md). A determinant's signs are this same label.
+- **Symmetry and determinants.** Label a shape's corners and each rigid motion becomes a shuffle — the tile's 8 turns and flips among 24 corner shuffles; counting with symmetry is [Group actions](08-group-actions-and-counting.md). A determinant's signs are this same label.
 
 > **Say it back**
 > A permutation rearranges labelled places, each sending its card to one place and receiving one, so it can be undone. One after another gives another permutation, so the collection is a group: the symmetric group, with n × (n − 1) × … × 1 members, six for three cards. Order matters: swap then shift is (1 3), the other order (2 3). Following one place round cuts a shuffle into cycles, a cycle of k places being k − 1 swaps — the fewest, though only even-or-odd is fixed.
@@ -412,19 +385,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [groups](01-groups.md): the four rules checked here, closure to undo.
-- [injective-surjective-bijective](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md): one-to-one and onto, the undo's conditions.
-- [composition](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md): one function after another, right to left.
+- [Groups](01-groups.md): the four rules checked here, closure to undo.
+- [One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md): one-to-one and onto, the undo's conditions.
+- [Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md): one function after another, right to left.
 
 ## Where this goes next
 
-- [homomorphisms-and-isomorphisms](05-homomorphisms-and-isomorphisms.md): maps that respect the operation.
-- [group-actions-and-counting](08-group-actions-and-counting.md): counting what symmetry repeats.
-- [why-no-quintic-formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): why five roots refuse to break up.
-- [derangements](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md): shuffles leaving nothing in its own place.
-- [permutations-by-cycles](../../04-Combinatorics%20and%20graphs/08-Partitions/05-permutations-by-cycles.md): counting shuffles by their cycle shape.
-- computing-a-galois-group: the shuffles of a polynomial's roots.
-- solvability-by-radicals-and-the-quintic: which equations have a formula in radicals.
+- [Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md): maps that respect the operation.
+- [Group actions](08-group-actions-and-counting.md): counting what symmetry repeats.
+- [Why there is no quintic formula](../10-For%20the%20Curious/02-why-no-quintic-formula.md): why five roots refuse to break up.
+- [Derangements](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md): shuffles leaving nothing in its own place.
+- [Counting shuffles by their loops](../../04-Combinatorics%20and%20graphs/08-Partitions/05-permutations-by-cycles.md): counting shuffles by their cycle shape.
+- Computing a Galois group: the shuffles of a polynomial's roots.
+- Solvable by radicals: which equations have a formula in radicals.
 
 Even and odd is a label this card computes but cannot use: a later card makes it a map from $S_n$ onto a two-member group, and such maps are how groups are compared.
 

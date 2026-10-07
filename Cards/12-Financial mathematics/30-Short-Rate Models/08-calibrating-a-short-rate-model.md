@@ -1,36 +1,20 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Short-Rate Models
-topic: Fitting rate volatility to swaptions
-item: Calibrating Hull-White
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/06-hull-white-trinomial-tree|hull-white-trinomial-tree]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/06-calibration-as-least-squares|calibration-as-least-squares]]"
-next: []
-tags: [mathematics, financial mathematics, calibrating-a-short-rate-model]
----
-
 # Calibrating Hull-White: reversion and volatility from swaptions
 
-Financial mathematics → Short-Rate Models → Fitting rate volatility to swaptions → Calibrating Hull-White
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Short-Rate Models](../../../SYLLABUS.md#w12-s30) → Calibrating Hull-White
 
 ---
 
 ## General Overview
 
-A rates desk opens its screen to six option prices. Each is a **receiver swaption**: the right, on a fixed future date, to enter a swap that receives a fixed interest rate and pays a floating one ([swaptions-payer-and-receiver](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md)). The rights expire in half a year, one year and two years. Each expiry comes in two lengths of swap, 2 years and 5 years. On $1 million of notional (the amount the interest is computed on), the six premiums run from $4,617.79 for the shortest to $18,275.06 for the longest.
+A rates desk opens its screen to six option prices. Each is a **receiver swaption**: the right, on a fixed future date, to enter a swap that receives a fixed interest rate and pays a floating one ([Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md)). The rights expire in half a year, one year and two years. Each expiry comes in two lengths of swap, 2 years and 5 years. On $1 million of notional (the amount the interest is computed on), the six premiums run from $4,617.79 for the shortest to $18,275.06 for the longest.
 
-The desk prices everything else with the Hull-White model ([hull-white-model](04-hull-white-model.md)). There the short rate, the interest earned on cash lent for an instant, is pulled toward a moving target chosen so today's bond prices come out exactly right, and knocked about by normal shocks. Two numbers are left free: the **reversion speed**, how hard the pull is, and the **volatility**, how big the shocks are. Today's bond prices say nothing about either. Option prices do, because an option is worth more when rates move more.
+The desk prices everything else with the Hull-White model ([Hull-White](04-hull-white-model.md)). There the short rate, the interest earned on cash lent for an instant, is pulled toward a moving target chosen so today's bond prices come out exactly right, and knocked about by normal shocks. Two numbers are left free: the **reversion speed**, how hard the pull is, and the **volatility**, how big the shocks are. Today's bond prices say nothing about either. Option prices do, because an option is worth more when rates move more.
 
 Calibrating means choosing those two numbers so the model's six premiums land as close to the six quotes as possible. Here the quotes were generated from a reversion speed of 0.05 a year and a volatility of 0.9 percent a year, then rounded, so the right answer is known and each road to it can be checked. Three roads find it. The more useful result is *how*: the six quotes do not share the work evenly. The overall level of the premiums fixes the volatility. The way premiums grow from short swaps to long ones, and from near expiries to far ones, fixes the reversion speed, and fixes it far less firmly.
 
 **Calibrating Hull-White chooses reversion and volatility by least squares on swaption premiums: volatility scales every premium alike, reversion shrinks long and late ones more than short and early ones, so the level of the quotes pins volatility and their tilt pins reversion.**
 
-**What kind of fact this is:** a method: an objective, a solver and a stopping rule, applied to a model. The pricing formula it uses is a theorem inside Hull-White, proved on [bond-options-and-jamshidians-trick](05-bond-options-and-jamshidians-trick.md); which quote pins which parameter is derived on this card in Why it works; that the fitted pair is the market's "true" one is not proved, and is usually false.
+**What kind of fact this is:** a method: an objective, a solver and a stopping rule, applied to a model. The pricing formula it uses is a theorem inside Hull-White, proved on [Bond options](05-bond-options-and-jamshidians-trick.md); which quote pins which parameter is derived on this card in Why it works; that the fitted pair is the market's "true" one is not proved, and is usually false.
 
 ### The picture: six premiums on $1 million
 
@@ -79,7 +63,7 @@ $$w_j=\sigma\,b_\kappa(T_j-E)\,\sqrt{v_\kappa(E)},\qquad b_\kappa(u)=\frac{1-e^{
 | $q_i$ | quoted premium for quote i | 46.178 bp to 182.751 bp | the fitted pair moves; see Why it works |
 | $L$ | the **loss**: half the sum of squared misses in bp squared | 14807.2462 at the start, 0 at the fit | — |
 
-The **strike** of each swaption is the par forward swap rate, the fixed rate that makes the swap worth nothing today ([par-swap-rate-and-annuity](../28-Swaps/02-par-swap-rate-and-annuity.md)):
+The **strike** of each swaption is the par forward swap rate, the fixed rate that makes the swap worth nothing today ([The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)):
 
 $$K=\frac{D_0(E)-D_0(E+n)}{\sum_{j=1}^{n}D_0(E+j)}.$$
 
@@ -87,9 +71,9 @@ In words: the value of the floating leg divided by the value of one unit of fixe
 
 ### When it holds
 
-- **One factor.** Every rate moves with the short rate. If long and short rates move partly apart, no pair fits a wide strip, and the leftover misses are a second factor showing through ([two-factor-and-lognormal-short-rate-models](07-two-factor-and-lognormal-short-rate-models.md)).
+- **One factor.** Every rate moves with the short rate. If long and short rates move partly apart, no pair fits a wide strip, and the leftover misses are a second factor showing through ([Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md)).
 - **Constant parameters.** If the market's volatility changes with expiry, a constant σ spreads the error over all six quotes; a σ per date absorbs it, at the cost of more knobs.
-- **Premiums, not volatilities.** Markets quote swaptions as normal or shifted volatilities ([normal-and-shifted-volatilities-for-rates](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)); turn them into premiums on the same curve first.
+- **Premiums, not volatilities.** Markets quote swaptions as normal or shifted volatilities ([Rate volatilities](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)); turn them into premiums on the same curve first.
 - **European exercise, positive coupons.** The split into bond options needs one exercise date and a fixed leg of positive cash flows. A Bermudan needs the tree.
 - **Quotes inside their bounds.** An at-the-money receiver premium must lie strictly between 0 and $D_0(E)$, the cost today of $1 paid at expiry; outside that range no volatility reprices it.
 
@@ -109,7 +93,7 @@ An option does: its value depends on how widely the underlying can spread by exp
 
 At expiry, receiving fixed K and paying floating on $1 is worth the same as holding a bond that pays K each year and $1 at the end, minus the $1 that the floating leg is worth on its reset date. So the receiver swaption is a call on that coupon bond, struck at $1.
 
-In Hull-White every zero-coupon bond at expiry falls as the short rate then rises. So one threshold rate makes the coupon bond worth exactly $1, and the call is exercised when the rate lands below it. Jamshidian's trick splits the coupon-bond call into one call per payment, each struck at that payment's bond price at the threshold, and adds them; each piece is a Black-Scholes-like call with width $w_j$ ([bond-options-and-jamshidians-trick](05-bond-options-and-jamshidians-trick.md) proves the split).
+In Hull-White every zero-coupon bond at expiry falls as the short rate then rises. So one threshold rate makes the coupon bond worth exactly $1, and the call is exercised when the rate lands below it. Jamshidian's trick splits the coupon-bond call into one call per payment, each struck at that payment's bond price at the threshold, and adds them; each piece is a Black-Scholes-like call with width $w_j$ ([Bond options](05-bond-options-and-jamshidians-trick.md) proves the split).
 
 ### Step 2: volatility scales every width, and so every premium, alike
 
@@ -163,7 +147,7 @@ That is the whole answer to "which quote pins which". **The height of the line p
 
 ### Step 5: least squares, and how firmly each parameter is pinned
 
-With real quotes no κ makes the line perfectly flat, so the fit minimises L instead. The solver is Levenberg-Marquardt, the damped Gauss-Newton step from [calibration-as-least-squares](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md), run on the logs of κ and σ so both stay positive.
+With real quotes no κ makes the line perfectly flat, so the fit minimises L instead. The solver is Levenberg-Marquardt, the damped Gauss-Newton step from [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md), run on the logs of κ and σ so both stay positive.
 
 Near the answer, L is a bowl whose steepness in each direction comes from the sensitivity table. Measured in 1% moves of each parameter, its two principal curvatures, the **eigenvalues** of that bowl, differ by a factor of 1235.4. One direction, mostly σ, is steep. The other, mostly κ, is a long flat valley. Fixing κ and fitting σ alone traces that valley. At κ = 0.03 the best σ is 0.851% and the six quotes miss by 1.31 bp on average, measured as a **root mean square**, the square root of the average squared miss.
 
@@ -187,9 +171,9 @@ The single line is the smallest average miss for each fixed reversion speed, wit
 <details>
 <summary>Detailed proof: the rate's law at expiry, and the second road</summary>
 
-Write the short rate as $r_t=x_t+\alpha(t)$, where $x$ starts at 0 and follows $dx=-\kappa x\,dt+\sigma\,dW$, and $\alpha(t)=f_0(t)+\tfrac12\sigma^2 b_\kappa(t)^2$ is the part that fits today's curve ([hull-white-model](04-hull-white-model.md)).
+Write the short rate as $r_t=x_t+\alpha(t)$, where $x$ starts at 0 and follows $dx=-\kappa x\,dt+\sigma\,dW$, and $\alpha(t)=f_0(t)+\tfrac12\sigma^2 b_\kappa(t)^2$ is the part that fits today's curve ([Hull-White](04-hull-white-model.md)).
 
-Price in units of the zero-coupon bond maturing at E, the **E-forward measure** ([forward-measures-for-rates](../31-Forward-Rate%20Models/02-forward-measures-for-rates.md)). The change of unit adds a drift $-\sigma^2 b_\kappa(E-t)$ to $x$. Solving the linear equation, $x$ at time E is normal with variance $\sigma^2\int_0^E e^{-2\kappa(E-s)}ds=\sigma^2 v_\kappa(E)$ and mean
+Price in units of the zero-coupon bond maturing at E, the **E-forward measure** ([Forward measures](../31-Forward-Rate%20Models/02-forward-measures-for-rates.md)). The change of unit adds a drift $-\sigma^2 b_\kappa(E-t)$ to $x$. Solving the linear equation, $x$ at time E is normal with variance $\sigma^2\int_0^E e^{-2\kappa(E-s)}ds=\sigma^2 v_\kappa(E)$ and mean
 $$-\sigma^2\int_0^E e^{-\kappa(E-s)}\,b_\kappa(E-s)\,ds=-\frac{\sigma^2}{\kappa^2}\Big[(1-e^{-\kappa E})-\tfrac12(1-e^{-2\kappa E})\Big]=-\tfrac12\sigma^2 b_\kappa(E)^2.$$
 That cancels the $\tfrac12\sigma^2 b_\kappa(E)^2$ inside $\alpha(E)$. So under the E-forward measure $r_E$ is normal, centred on $f_0(E)$, with variance $\sigma^2 v_\kappa(E)$.
 
@@ -199,7 +183,7 @@ The receiver's value at expiry is $\big(\sum_j c_j P(E,T_j;r_E)-1\big)^+$, where
 
 </details>
 
-A second route prices the six on [hull-white-trinomial-tree](06-hull-white-trinomial-tree.md) for each trial pair. It is slower and noisier than the closed form, so desks calibrate Europeans in closed form and keep the tree for Bermudans.
+A second route prices the six on [The Hull-White tree](06-hull-white-trinomial-tree.md) for each trial pair. It is slower and noisier than the closed form, so desks calibrate Europeans in closed form and keep the tree for Bermudans.
 
 ---
 
@@ -690,7 +674,7 @@ The two outputs agree line for line. Levenberg-Marquardt settles σ first and κ
 ## Where you meet it in real life
 
 - **The morning rates run.** Banks recalibrate short-rate models to a swaption strip each day, choosing the expiries and swap lengths that the trade being priced will exercise into.
-- **Callable bonds and Bermudan swaptions.** A bond the issuer can call back on several dates is a Bermudan receiver on the issuer's side. It is priced on the tree ([hull-white-trinomial-tree](06-hull-white-trinomial-tree.md)) with the calibrated pair, and κ decides how much each later call right is worth.
+- **Callable bonds and Bermudan swaptions.** A bond the issuer can call back on several dates is a Bermudan receiver on the issuer's side. It is priced on the tree ([The Hull-White tree](06-hull-white-trinomial-tree.md)) with the calibrated pair, and κ decides how much each later call right is worth.
 - **Co-terminal strips.** For a long Bermudan, desks often fit the swaptions that all end on its final date, one per exercise date. Each expiry gets its own σ, and κ is chosen by hand or from history, because the strip's own tilt pins it weakly.
 - **Counterparty-risk models.** Simulating future exposures on a whole book of swaps needs a model fast enough to run a great many paths. Hull-White calibrated to swaptions is a common choice; its σ sets how wide future exposures fan out.
 
@@ -701,15 +685,15 @@ The two outputs agree line for line. Levenberg-Marquardt settles σ first and κ
 
 ## What this builds on
 
-- [hull-white-trinomial-tree](06-hull-white-trinomial-tree.md): the lattice that prices any payoff in the model once the pair is fixed; calibration supplies that pair, and the tree is the second route to each premium.
-- [calibration-as-least-squares](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): the loss, the weights and the Levenberg-Marquardt step used here without change.
+- [The Hull-White tree](06-hull-white-trinomial-tree.md): the lattice that prices any payoff in the model once the pair is fixed; calibration supplies that pair, and the tree is the second route to each premium.
+- [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): the loss, the weights and the Levenberg-Marquardt step used here without change.
 
 ## Where this goes next
 
-- [model-risk-and-parameter-stability](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md): what the soft direction costs: how a loosely pinned κ moves prices of products the strip did not contain.
-- [two-factor-and-lognormal-short-rate-models](07-two-factor-and-lognormal-short-rate-models.md): when one factor leaves a pattern in the misses, a second factor gives the curve a second way to move.
-- [calibrating-a-market-model](../31-Forward-Rate%20Models/04-calibrating-a-market-model.md): the same job for a model of forward rates, with a volatility and a correlation for every forward instead of two numbers for all.
-- nonlinear-least-squares-gauss-newton-and-levenberg-marquardt: the solver in general, with its convergence proof.
+- [Model risk](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md): what the soft direction costs: how a loosely pinned κ moves prices of products the strip did not contain.
+- [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md): when one factor leaves a pattern in the misses, a second factor gives the curve a second way to move.
+- [Calibrating a market model](../31-Forward-Rate%20Models/04-calibrating-a-market-model.md): the same job for a model of forward rates, with a volatility and a correlation for every forward instead of two numbers for all.
+- Nonlinear least squares: the solver in general, with its convergence proof.
 
 Two numbers can match six prices today and still disagree with tomorrow's; how much a loosely pinned reversion speed is worth in dollars is the question model-risk-and-parameter-stability answers.
 

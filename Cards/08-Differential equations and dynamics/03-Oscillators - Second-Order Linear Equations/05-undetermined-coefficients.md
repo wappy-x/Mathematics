@@ -1,26 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Oscillators - Second-Order Linear Equations
-topic: Forced response by trial shape
-item: Undetermined coefficients
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/03-complex-roots-and-damped-oscillation|complex-roots-and-damped-oscillation]]"
-  - "[[Cards/03-Algebra/01-Letters and Equations/04-two-equations-two-unknowns|two-equations-two-unknowns]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/06-resonance-and-beats|resonance-and-beats]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/07-variation-of-parameters|variation-of-parameters]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/08-the-rlc-circuit-and-the-spring|the-rlc-circuit-and-the-spring]]"
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/04-solving-an-initial-value-problem-by-transform|solving-an-initial-value-problem-by-transform]]"
-tags: [mathematics, differential equations and dynamics, undetermined-coefficients]
----
-
 # Undetermined coefficients: for simple forcing, guess a solution of the same shape and solve for the constants
 
-Differential equations and dynamics → Oscillators - Second-Order Linear Equations → Forced response by trial shape → Undetermined coefficients
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Oscillators - Second-Order Linear Equations](../../../SYLLABUS.md#w08-s03) → Undetermined coefficients
 
 ---
 
@@ -30,7 +10,7 @@ A child sits still on a swing; a parent starts pushing, one push cycle every 6.2
 
 Gravity pulls the seat back, 5 dm/s^2 per decimetre out. Air and the chains slow it, 2 dm/s^2 per dm/s of speed. The push adds 10 cos t dm/s^2, strongest forward at t = 0. With y' the velocity and y'' the acceleration, the rate law is y'' + 2y' + 5y = 10 cos t.
 
-Unpushed, this is the shelf's shock absorber at damping 2, ringing and dying away ([complex-roots-and-damped-oscillation](03-complex-roots-and-damped-oscillation.md)). Pushed, something survives. Guess it has the push's shape, a cosine and a sine at the push's rhythm, with unknown sizes A and B. Substituting gives two plain equations in A and B, and A = 2, B = 1: a steady swing reaching 2.24 dm either side of the middle, 0.46 s behind the push. The unknown sizes are the **undetermined coefficients**; the guess is the **trial solution**.
+Unpushed, this is the shelf's shock absorber at damping 2, ringing and dying away ([Complex roots](03-complex-roots-and-damped-oscillation.md)). Pushed, something survives. Guess it has the push's shape, a cosine and a sine at the push's rhythm, with unknown sizes A and B. Substituting gives two plain equations in A and B, and A = 2, B = 1: a steady swing reaching 2.24 dm either side of the middle, 0.46 s behind the push. The unknown sizes are the **undetermined coefficients**; the guess is the **trial solution**.
 
 **A push built from polynomials, exponentials, sines and cosines has a response of the same shape: substitute that shape with unknown coefficients, match terms, and multiply by t if the guess already solves the unpushed equation.**
 
@@ -58,11 +38,11 @@ A **second-order linear equation with constant coefficients** has the shape
 
 $$y'' + c\,y' + k\,y = g(t)$$
 
-with c and k fixed numbers and g(t), the **forcing**, what is pushed in. Every solution is one particular solution plus the unpushed family ([superposition-and-the-shape-of-linear-solutions](01-superposition-and-the-shape-of-linear-solutions.md)):
+with c and k fixed numbers and g(t), the **forcing**, what is pushed in. Every solution is one particular solution plus the unpushed family ([Superposition](01-superposition-and-the-shape-of-linear-solutions.md)):
 
 $$y = y_h + y_p$$
 
-The **characteristic roots** r solve r^2 + cr + k = 0 ([the-characteristic-equation](02-the-characteristic-equation.md)). The trial for y_p follows the forcing; M is the push's size, a its growth rate per s, ω its rate in radians per s:
+The **characteristic roots** r solve r^2 + cr + k = 0 ([The characteristic equation](02-the-characteristic-equation.md)). The trial for y_p follows the forcing; M is the push's size, a its growth rate per s, ω its rate in radians per s:
 
 | Forcing g(t) | Trial y_p | On the swing |
 | --- | --- | --- |
@@ -92,8 +72,8 @@ $$(k-\omega^2)A + c\omega B = F, \qquad -c\omega A + (k-\omega^2)B = 0$$
 
 ### When it holds
 
-- **Constant coefficients.** If c or k varies in time, new shapes appear; [the-cauchy-euler-equation](09-the-cauchy-euler-equation.md) handles one such family.
-- **Forcing from the short list.** For a push like 1/t no finite trial closes; [variation-of-parameters](07-variation-of-parameters.md) takes any continuous push.
+- **Constant coefficients.** If c or k varies in time, new shapes appear; [The Cauchy-Euler equation](09-the-cauchy-euler-equation.md) handles one such family.
+- **Forcing from the short list.** For a push like 1/t no finite trial closes; [Variation of parameters](07-variation-of-parameters.md) takes any continuous push.
 - **A linear law.** A y^2 term mixes shapes: cos^2 t is no cosine at rate 1.
 - **The collision rule applied.** Otherwise the trial gives 0 on the left.
 
@@ -109,11 +89,11 @@ Cos t differentiates to −sin t, sin t to cos t, e^(at) to a e^(at), and a poly
 
 Take y = A cos t + B sin t. Then y' = −A sin t + B cos t and y'' = −A cos t − B sin t. The left side collects into (−A + 2B + 5A) cos t and (−B − 2A + 5B) sin t.
 
-The push has no sine, so 4A + 2B = 10 and −2A + 4B = 0. The second gives A = 2B, then 10B = 10: B = 1, A = 2 ([two-equations-two-unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)). The sine is needed because the damping term 2y' turns cosines into sines.
+The push has no sine, so 4A + 2B = 10 and −2A + 4B = 0. The second gives A = 2B, then 10B = 10: B = 1, A = 2 ([Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)). The sine is needed because the damping term 2y' turns cosines into sines.
 
 ### Step 2: the two equations always have one answer, with damping
 
-The equations' determinant (nonzero exactly when there is one solution) is (k − ω^2)^2 + c^2ω^2, here 16 + 4 = 20, and positive whenever c > 0. It is zero only when c = 0 and ω^2 = k: an undamped swing pushed at its own rate, where the answer grows without bound ([resonance-and-beats](06-resonance-and-beats.md)).
+The equations' determinant (nonzero exactly when there is one solution) is (k − ω^2)^2 + c^2ω^2, here 16 + 4 = 20, and positive whenever c > 0. It is zero only when c = 0 and ω^2 = k: an undamped swing pushed at its own rate, where the answer grows without bound ([Resonance](06-resonance-and-beats.md)).
 
 A cos t + B sin t is one cosine of height √(A^2 + B^2), shifted in time: √5 = 2.24 dm, peaking 0.46 s after the push, the angle whose tangent is B/A.
 
@@ -174,7 +154,7 @@ At 10 seconds the seat is 2.22 dm back from the middle. The shelf's shock absorb
 
 ## Code, from first principles, and it actually runs
 
-Three roads to A and B. One: Cramer's rule (each unknown a ratio of determinants) on the coefficient equations. Two: the left side applied to cos t and sin t by finite differences (slopes from nearby values), no hand algebra. Three: Euler's rule ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)), new value = old value + step × rate, from rest, guessing nothing; it matches the fitted start at 1 s, its error halves with the step, and a late cycle gives the height.
+Three roads to A and B. One: Cramer's rule (each unknown a ratio of determinants) on the coefficient equations. Two: the left side applied to cos t and sin t by finite differences (slopes from nearby values), no hand algebra. Three: Euler's rule ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)), new value = old value + step × rate, from rest, guessing nothing; it matches the fitted start at 1 s, its error halves with the step, and a late cycle gives the height.
 
 ### Python
 
@@ -399,8 +379,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Car suspension on a washboard road.** Evenly spaced ridges push the wheel at a steady rate; the bounce is F/√((k − ω^2)^2 + c^2ω^2) high.
-- **Alternating-current circuits.** A resistor, coil and capacitor on a sine voltage take the same trial ([the-rlc-circuit-and-the-spring](08-the-rlc-circuit-and-the-spring.md)).
-- **Footbridges.** Footsteps push near-sinusoidally; designers compute the sway and avoid the collision ([resonance-and-beats](06-resonance-and-beats.md)).
+- **Alternating-current circuits.** A resistor, coil and capacitor on a sine voltage take the same trial ([The RLC circuit](08-the-rlc-circuit-and-the-spring.md)).
+- **Footbridges.** Footsteps push near-sinusoidally; designers compute the sway and avoid the collision ([Resonance](06-resonance-and-beats.md)).
 
 > **Say it back**
 > Differentiation keeps polynomials, exponentials, sines and cosines in their families, so such a push has a response of its own shape. Ordinary equations fix the coefficients. A cosine push needs a cosine and a sine in the trial. A trial that solves the unpushed law is multiplied by t. The swing settles to 2 cos t + sin t, 2.24 dm high, 0.46 s behind the push.
@@ -409,15 +389,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [complex-roots-and-damped-oscillation](03-complex-roots-and-damped-oscillation.md): the unpushed family e^(−t)(C1 cos 2t + C2 sin 2t) that the transient comes from.
-- [two-equations-two-unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): solving 4A + 2B = 10 and −2A + 4B = 0.
+- [Complex roots](03-complex-roots-and-damped-oscillation.md): the unpushed family e^(−t)(C1 cos 2t + C2 sin 2t) that the transient comes from.
+- [Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): solving 4A + 2B = 10 and −2A + 4B = 0.
 
 ## Where this goes next
 
-- [resonance-and-beats](06-resonance-and-beats.md): the undamped collision, where the swing grows without bound.
-- [variation-of-parameters](07-variation-of-parameters.md): any continuous push, no guess.
-- [the-rlc-circuit-and-the-spring](08-the-rlc-circuit-and-the-spring.md): the same equations for a driven spring and circuit.
-- [solving-an-initial-value-problem-by-transform](../08-Laplace%20Transforms%20for%20Initial-Value%20Problems/04-solving-an-initial-value-problem-by-transform.md): particular solution and start in one pass.
+- [Resonance](06-resonance-and-beats.md): the undamped collision, where the swing grows without bound.
+- [Variation of parameters](07-variation-of-parameters.md): any continuous push, no guess.
+- [The RLC circuit](08-the-rlc-circuit-and-the-spring.md): the same equations for a driven spring and circuit.
+- [The round trip](../08-Laplace%20Transforms%20for%20Initial-Value%20Problems/04-solving-an-initial-value-problem-by-transform.md): particular solution and start in one pass.
 
 ---
 

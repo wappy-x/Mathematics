@@ -1,32 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Counting Principles
-topic: Stages and cases
-item: The rules of sum and product
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/03-multiplying-and-dividing|multiplying-and-dividing]]"
-  - "[[Cards/01-Foundations/07-Sets/03-set-operations|set-operations]]"
-  - "[[Cards/01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product|ordered-pairs-and-cartesian-product]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/02-strings-and-powers|strings-and-powers]]"
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/03-factorial|factorial]]"
-  - "[[Cards/04-Combinatorics and graphs/04-Inclusion-Exclusion and Pigeonhole/05-pigeonhole-extended|pigeonhole-extended]]"
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/01-recurrences-and-fibonacci|recurrences-and-fibonacci]]"
-  - "[[Cards/24-Computability and complexity/02-Computability and Logic/06-incompressibility-and-randomness|incompressibility-and-randomness]]"
-  - "[[Cards/24-Computability and complexity/04-Beyond Worst Case/07-circuit-complexity-and-lower-bounds|circuit-complexity-and-lower-bounds]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - rules-of-sum-and-product
----
-
 # The rules of sum and product: add the options when they cannot overlap, multiply when they come in stages
 
-Combinatorics and graphs → Counting Principles → Stages and cases → The rules of sum and product
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Counting Principles](../../../SYLLABUS.md#w04-s01) → The rules of sum and product
 
 ---
 
@@ -65,7 +39,7 @@ Arrows in a row are stages and multiply; arrows forking from one box are cases a
 
 ## The formula
 
-The notation first, in words. A **set** is a collection of distinct things, written in braces: the breads are {rye, white, sourdough, flat}. Bars count it: $\lvert A\rvert$ is how many members the set $A$ has, read "the size of A". Two sets combine in two ways, both met earlier ([set-operations](../../01-Foundations/07-Sets/03-set-operations.md)): the **union** $A \cup B$ holds everything in either, the **intersection** $A \cap B$ only what is in both. The empty set, $\varnothing$, has no members. And $A \times B$ is the set of **ordered pairs**: a member of $A$, then a member of $B$ ([ordered-pairs-and-cartesian-product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md)).
+The notation first, in words. A **set** is a collection of distinct things, written in braces: the breads are {rye, white, sourdough, flat}. Bars count it: $\lvert A\rvert$ is how many members the set $A$ has, read "the size of A". Two sets combine in two ways, both met earlier ([Set operations](../../01-Foundations/07-Sets/03-set-operations.md)): the **union** $A \cup B$ holds everything in either, the **intersection** $A \cap B$ only what is in both. The empty set, $\varnothing$, has no members. And $A \times B$ is the set of **ordered pairs**: a member of $A$, then a member of $B$ ([Ordered pairs and the Cartesian product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md)).
 
 The rule of product:
 
@@ -96,7 +70,7 @@ Three stages of sizes $n_1$, $n_2$ and $n_3$ give $n_1 \times n_2 \times n_3$ ou
 
 - **Every stage offers the same number of options, whatever came before.** Each of the 4 breads opens the same 5 fillings. Where that number varies with the earlier pick, count the branches one at a time and add.
 - **A stage that shrinks equally on every branch still multiplies.** Each of 20 captains leaves the same 19 vice-captains: 20 × 19 = 380.
-- **Cases must share nothing.** Rye sandwiches number 15 and chilli 20, but 5 are both, so adding gives 35 where the truth is 30; overlaps need a correction ([inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md)).
+- **Cases must share nothing.** Rye sandwiches number 15 and chilli 20, but 5 are both, so adding gives 35 where the truth is 30; overlaps need a correction ([Inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md)).
 - **Cases must cover everything, and name each outcome once.** Drop the soups and the count is 60, not 63; print "no sauce" on two lines and every sauceless sandwich is counted twice.
 
 ---
@@ -118,7 +92,7 @@ Breads down the side, fillings across the top. Each cell is one pair. Count a ro
 | and sourdough | 5 more | 15 |
 | and flat | 5 more | 20 |
 
-Four rows of five, no cell reached twice. Adding five four times is what 4 × 5 means ([multiplying-and-dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md)), so the pairs number 20: the rule of product with two stages, and the rectangle is $A \times B$ drawn out.
+Four rows of five, no cell reached twice. Adding five four times is what 4 × 5 means ([Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md)), so the pairs number 20: the rule of product with two stages, and the rectangle is $A \times B$ drawn out.
 
 ### Step 2: each further stage repeats the whole count
 
@@ -149,7 +123,7 @@ The condition does real work. The 15 rye sandwiches and 20 chilli sandwiches ove
 
 Naming a captain and then a vice-captain from a 20-player squad is not the lunch deal: the second stage cannot re-use the first pick. Take it a branch at a time. Shirt 1 as captain leaves 19 candidates, and so does every other shirt: twenty branches of 19, which add to 20 × 19 = 380.
 
-So the product rule is branch-counting with equal branches, which is why it survives a stage that shrinks equally. Picks that keep shrinking make a formula of their own ([ordered-picks](04-ordered-picks.md)). A third route runs backwards, counting everything and taking away what does not qualify ([complementary-counting](06-complementary-counting.md)).
+So the product rule is branch-counting with equal branches, which is why it survives a stage that shrinks equally. Picks that keep shrinking make a formula of their own ([Ordered picks](04-ordered-picks.md)). A third route runs backwards, counting everything and taking away what does not qualify ([Counting the complement](06-complementary-counting.md)).
 
 ---
 
@@ -393,7 +367,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Passwords and keys.** Each character is a stage and the stage size is the alphabet, so length multiplies the count rather than adding to it — which is why one more character beats one more rule ([strings-and-powers](02-strings-and-powers.md)).
+- **Passwords and keys.** Each character is a stage and the stage size is the alphabet, so length multiplies the count rather than adding to it — which is why one more character beats one more rule ([Strings with repetition](02-strings-and-powers.md)).
 - **Number plates, postcodes, bar codes.** A format is a list of stages: so many letters, so many digits. The stage sizes multiplied say how many it can issue before it runs out.
 - **Configurators and test plans.** Colours, trims and engines are stages, and so are a program's settings: multiply the list lengths for the orderable cars, or the tests to run.
 
@@ -404,20 +378,20 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [multiplying-and-dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): multiplication as equal groups added — Step 1's rectangle.
-- [set-operations](../../01-Foundations/07-Sets/03-set-operations.md): union, intersection, and two sets sharing nothing.
-- [ordered-pairs-and-cartesian-product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md): the ordered pairs whose size the product rule computes.
+- [Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): multiplication as equal groups added — Step 1's rectangle.
+- [Set operations](../../01-Foundations/07-Sets/03-set-operations.md): union, intersection, and two sets sharing nothing.
+- [Ordered pairs and the Cartesian product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md): the ordered pairs whose size the product rule computes.
 
 ## Where this goes next
 
-- [strings-and-powers](02-strings-and-powers.md): every stage the same size, turning the product into a power.
-- [factorial](03-factorial.md): a stage shrinking by one each time, all the way down.
-- [pigeonhole-extended](../04-Inclusion-Exclusion%20and%20Pigeonhole/05-pigeonhole-extended.md): what these counts force once outcomes outnumber options.
-- [recurrences-and-fibonacci](../05-Recurrences/01-recurrences-and-fibonacci.md): counts built from smaller counts, the cases being one decision's branches.
-- incompressibility-and-randomness: counting descriptions against things described, to show most have no short one.
-- circuit-complexity-and-lower-bounds: counting circuits against the functions they must compute.
+- [Strings with repetition](02-strings-and-powers.md): every stage the same size, turning the product into a power.
+- [Factorials](03-factorial.md): a stage shrinking by one each time, all the way down.
+- [Pigeonhole, extended](../04-Inclusion-Exclusion%20and%20Pigeonhole/05-pigeonhole-extended.md): what these counts force once outcomes outnumber options.
+- [Recurrences](../05-Recurrences/01-recurrences-and-fibonacci.md): counts built from smaller counts, the cases being one decision's branches.
+- Incompressibility: counting descriptions against things described, to show most have no short one.
+- Circuit lower bounds: counting circuits against the functions they must compute.
 
-Here the stages differ in size; when every stage offers the same options, the product becomes a power — [strings-and-powers](02-strings-and-powers.md).
+Here the stages differ in size; when every stage offers the same options, the product becomes a power — [Strings with repetition](02-strings-and-powers.md).
 
 ---
 

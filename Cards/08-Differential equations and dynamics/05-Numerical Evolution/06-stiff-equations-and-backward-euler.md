@@ -1,24 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Numerical Evolution
-topic: Implicit steps
-item: Stiff equations
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/01-eulers-method|eulers-method]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/05-integrating-factor|integrating-factor]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/09-finite-differences-for-the-heat-equation|finite-differences-for-the-heat-equation]]"
-  - "[[Cards/16-Numerical analysis/06-ODE Solvers/05-stiffness-a-stability-and-the-dahlquist-barriers|stiffness-a-stability-and-the-dahlquist-barriers]]"
-tags: [mathematics, differential equations and dynamics, stiff-equations-and-backward-euler]
----
-
 # Stiff equations: when fast and slow parts coexist, step from the destination's slope instead
 
-Differential equations and dynamics → Numerical Evolution → Implicit steps → Stiff equations
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Numerical Evolution](../../../SYLLABUS.md#w08-s05) → Stiff equations
 
 ---
 
@@ -53,7 +35,7 @@ Orange: the trapezoidal rule, ringing. Green: backward Euler. Dark blue: the exa
 
 ## The formula
 
-Reminder: $y' = f(t, y)$ says the rate of $y$ at time $t$ is the rule $f$; a step of size $h$ moves from time $t_n$ to $t_{n+1} = t_n + h$, and $y_n$ is the estimate after $n$ steps ([eulers-method](01-eulers-method.md)). The three steps differ only in where they read the slope:
+Reminder: $y' = f(t, y)$ says the rate of $y$ at time $t$ is the rule $f$; a step of size $h$ moves from time $t_n$ to $t_{n+1} = t_n + h$, and $y_n$ is the estimate after $n$ steps ([Euler's method](01-eulers-method.md)). The three steps differ only in where they read the slope:
 
 $$\text{forward: } y_{n+1} = y_n + h\,f(t_n, y_n)$$
 
@@ -94,7 +76,7 @@ $$R_{\text{forward}} = 1 + z, \qquad R_{\text{backward}} = \frac{1}{1 - z}, \qqu
 
 ### Step 0: split the level into a slow curve and a fast gap
 
-Put $d = y - \cos t$. Then $d' = y' + \sin t = -1000\,d$, so $d = d(0)\,e^{-1000t}$ ([integrating-factor](../01-Rate%20Equations/05-integrating-factor.md)). The start gives $d(0) = -1$, so the exact level is $y = \cos t - e^{-1000t}$.
+Put $d = y - \cos t$. Then $d' = y' + \sin t = -1000\,d$, so $d = d(0)\,e^{-1000t}$ ([The integrating factor](../01-Rate%20Equations/05-integrating-factor.md)). The start gives $d(0) = -1$, so the exact level is $y = \cos t - e^{-1000t}$.
 
 Since $f$ is straight in $y$, each step moves the gap by its own factor, plus a small leftover $\ell_n$ from the curve's bend.
 
@@ -112,7 +94,7 @@ The leftovers now pile up as a shrinking geometric series: once the start gap ha
 
 ### Step 3: the trapezoid is second order, but rings
 
-Averaging the slopes gives $(1 - z/2)\,d_{n+1} = (1 + z/2)\,d_n$ plus a leftover of order $h^3$. Its errors at 1 s are 7.008e-9, 1.752e-9 and 4.380e-10: ratios 4.00, second order ([local-and-global-error-and-order](02-local-and-global-error-and-order.md)).
+Averaging the slopes gives $(1 - z/2)\,d_{n+1} = (1 + z/2)\,d_n$ plus a leftover of order $h^3$. Its errors at 1 s are 7.008e-9, 1.752e-9 and 4.380e-10: ratios 4.00, second order ([Order of a method](02-local-and-global-error-and-order.md)).
 
 Its factor tends to −1 as the step grows. At h = 0.1 it is −49/51, about −0.9608: the start gap swings through 0.9608, −0.9231, 0.8869 and is still −0.6703 at 1 s. Backward Euler with the same step is off by −2.843e-5.
 
@@ -129,7 +111,7 @@ Error bound: Taylor's theorem at $t_{n+1}$, with the cosine's second derivative 
 
 </details>
 
-A method whose factor stays below 1 in size for every decaying rate and every step is **A-stable**. Backward Euler and the trapezoid are; no forward-slope method is; and no A-stable multistep method (one that reuses several past values) beats second order. That is Dahlquist's barrier, proved in stiffness-a-stability-and-the-dahlquist-barriers.
+A method whose factor stays below 1 in size for every decaying rate and every step is **A-stable**. Backward Euler and the trapezoid are; no forward-slope method is; and no A-stable multistep method (one that reuses several past values) beats second order. That is Dahlquist's barrier, proved in Stiffness.
 
 ---
 
@@ -369,8 +351,8 @@ The two outputs match line for line.
 
 - **Chemical kinetics.** Curtiss and Hirschfelder named stiffness in 1952, for reactions whose rates differ by many powers of ten.
 - **Circuit simulators.** SPICE steps circuits with backward Euler and the trapezoid; after a switch, trapezoid ringing shows as spurious oscillation.
-- **Heat flow on a grid.** A bar cut into cells gives equations whose fastest rate grows with the square of the cell count: [finite-differences-for-the-heat-equation](../10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md).
-- **Adaptive solvers.** On a stiff equation, [adaptive-step-size](05-adaptive-step-size.md) keeps rejecting steps for stability, not accuracy.
+- **Heat flow on a grid.** A bar cut into cells gives equations whose fastest rate grows with the square of the cell count: [Stepping the heat equation on a grid](../10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md).
+- **Adaptive solvers.** On a stiff equation, [Adaptive steps](05-adaptive-step-size.md) keeps rejecting steps for stability, not accuracy.
 
 > **Say it back**
 > A stiff equation has a fast part that dies almost at once beside a slow part that carries the answer. A step built on the slope at its start multiplies the fast gap by 1 + z, which shrinks it here only when h is under 0.002. A step built on the slope at its destination multiplies it by 1/(1 − z), below 1 at every step size, at the price of solving an equation each step. The trapezoid is more accurate but rings on long steps.
@@ -379,13 +361,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [eulers-method](01-eulers-method.md): the forward step and its step size, which this card turns round.
-- [integrating-factor](../01-Rate%20Equations/05-integrating-factor.md): the exact solution $y = \cos t - e^{-1000t}$ that every step is measured against.
+- [Euler's method](01-eulers-method.md): the forward step and its step size, which this card turns round.
+- [The integrating factor](../01-Rate%20Equations/05-integrating-factor.md): the exact solution $y = \cos t - e^{-1000t}$ that every step is measured against.
 
 ## Where this goes next
 
-- [finite-differences-for-the-heat-equation](../10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md): the same step limit on a heat grid, and the Crank-Nicolson step, which is this trapezoid.
-- stiffness-a-stability-and-the-dahlquist-barriers: stability regions in the complex plane, and the order barrier.
+- [Stepping the heat equation on a grid](../10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md): the same step limit on a heat grid, and the Crank-Nicolson step, which is this trapezoid.
+- Stiffness: stability regions in the complex plane, and the order barrier.
 
 Backward Euler pays for stability with first-order accuracy, the trapezoid for accuracy with ringing; whether one method can have high order, full damping and stability together is what the Dahlquist barriers settle.
 

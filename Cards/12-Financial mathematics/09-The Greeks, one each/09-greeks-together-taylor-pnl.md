@@ -1,30 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Greeks, one each
-topic: Profit and loss from stored slopes
-item: The Greeks together
-kind: approximation
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/08-charm|charm]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/07-volga|volga]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/06-vanna|vanna]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/05-rho-and-dividend-rho|rho-and-dividend-rho]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/05-taylors-theorem|taylors-theorem]]"
-next:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/10-theta-pays-for-gamma-hedged-pnl|theta-pays-for-gamma-hedged-pnl]]"
-  - "[[Cards/12-Financial mathematics/40-Hedging, Volatility Forecasts and Stress/01-portfolio-greeks-and-taylor-pnl|portfolio-greeks-and-taylor-pnl]]"
-tags:
-  - mathematics
-  - financial-mathematics
-  - greeks-together-taylor-pnl
----
-
 # The Greeks together: a day's profit and loss as a Taylor expansion
 
-Financial mathematics → The Greeks, one each → Profit and loss from stored slopes → The Greeks together
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Greeks, one each](../../../SYLLABUS.md#w12-s09) → The Greeks together
 
 ---
 
@@ -42,7 +18,7 @@ Each sibling card isolates one Greek with the others held still. This card puts 
 
 **A day's change in an option's value is, to within an error that grows with the cube of the move (plus time cross terms worth a fraction of a cent a day), the sum of each Greek times its own input's move, plus half of each bend times its move squared, plus the cross terms where two inputs move at once.**
 
-**What kind of fact this is:** an approximation, with its error stated: a second-order Taylor expansion of the price, proved on [taylors-theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md) for one input and extended here to several; its leftover error is measured on this card.
+**What kind of fact this is:** an approximation, with its error stated: a second-order Taylor expansion of the price, proved on [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md) for one input and extended here to several; its leftover error is measured on this card.
 
 ### The picture: estimate against truth across a range of moves
 
@@ -88,7 +64,7 @@ The first five terms are straight-line pieces and one bend. The last two exist b
 | $g$, $h$, $h_i$ | the proof's shorthand: the price along the straight path from tonight to next evening; the whole move as one list; one input's move | h = (5, 0.01, 1/365, 0) | — |
 | $R_3$, $k$, $\xi$ | the leftover error; $k$ scales the whole move (k = 2 doubles it); $\xi$ is an in-between point in the error's exact form | −$0.02 at k = 1 | $R_3$ grows like $k^3$ |
 
-Every Greek above is the house market's, taken on the evening before the move. The sibling cards derive each one: [delta](01-delta.md), [gamma](02-gamma.md), [vega](03-vega.md), [theta](04-theta.md), [rho-and-dividend-rho](05-rho-and-dividend-rho.md), [vanna](06-vanna.md), [volga](07-volga.md). This card uses them; it does not re-derive them.
+Every Greek above is the house market's, taken on the evening before the move. The sibling cards derive each one: [Delta](01-delta.md), [Gamma](02-gamma.md), [Vega](03-vega.md), [Theta](04-theta.md), [Rho and dividend rho](05-rho-and-dividend-rho.md), [Vanna](06-vanna.md), [Volga](07-volga.md). This card uses them; it does not re-derive them.
 
 ### When it holds
 
@@ -110,7 +86,7 @@ The option's price is a smooth surface over four inputs: share price, volatility
 
 ### Step 1: one input at a time, the Taylor expansion
 
-Hold volatility, time and the rate still. The price is now a curve in the share price alone. Taylor's theorem ([taylors-theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)) says
+Hold volatility, time and the rate still. The price is now a curve in the share price alone. Taylor's theorem ([Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)) says
 
 $$V(S + dS) = V(S) + \Delta\,dS + \tfrac12\,\Gamma\,dS^2 + \tfrac16\,V'''(\xi)\,dS^3$$
 
@@ -649,8 +625,8 @@ The two outputs agree line for line, although they reach the bell-curve area by 
 
 - **Daily profit-and-loss explain.** Each evening a desk splits the day's gain into delta, gamma, vega, theta and rho pieces from the morning's Greeks, and reports what is left as "unexplained." A large unexplained piece flags a bad price, a missed trade or a model problem.
 - **Risk limits.** Desks are given limits in Greeks, not in dollars: so many dollars of delta, so much vega per point. The formula turns those limits into a dollar loss for a given move.
-- **Scenario grids.** A risk report shows the book's gain across a grid of share and volatility moves. Near the centre the grid can be filled from the Greeks; at the corners it is filled by full repricing, for the reason the cube law gives. Adding positions together is [portfolio-greeks-and-taylor-pnl](../40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/01-portfolio-greeks-and-taylor-pnl.md).
-- **Spot and volatility moving together.** For shares, volatility tends to rise when prices fall. That is when the cross term vanna, [vanna](06-vanna.md), and the time cross term charm, [charm](08-charm.md), stop being rounding.
+- **Scenario grids.** A risk report shows the book's gain across a grid of share and volatility moves. Near the centre the grid can be filled from the Greeks; at the corners it is filled by full repricing, for the reason the cube law gives. Adding positions together is [Portfolio Greeks](../40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/01-portfolio-greeks-and-taylor-pnl.md).
+- **Spot and volatility moving together.** For shares, volatility tends to rise when prices fall. That is when the cross term vanna, [Vanna](06-vanna.md), and the time cross term charm, [Charm](08-charm.md), stop being rounding.
 
 > **Say it back**
 > An option's price is a smooth surface over the share price, volatility, time and the rate. The Greeks are its slopes and bends at today's point. A day's gain is each slope times its move, plus half of each pure bend times its move squared, plus each cross bend times its two moves. For the house call after +$5 and +1 vol point over one day the sum says $3.53 and the full reprice says $3.51. The leftover grows with the cube of the move, so the sum is trusted for ordinary days and replaced by a full reprice for large ones.
@@ -659,16 +635,16 @@ The two outputs agree line for line, although they reach the bell-curve area by 
 
 ## What this builds on
 
-- [charm](08-charm.md): the change of delta with time, the largest term this card drops over a day.
-- [volga](07-volga.md): the bend in volatility, the formula's last term.
-- [vanna](06-vanna.md): the cross bend between share price and volatility.
-- [rho-and-dividend-rho](05-rho-and-dividend-rho.md): the rate slope, and its dividend twin.
-- [taylors-theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): the one-variable expansion with its remainder, which Step 2 runs along a straight path.
+- [Charm](08-charm.md): the change of delta with time, the largest term this card drops over a day.
+- [Volga](07-volga.md): the bend in volatility, the formula's last term.
+- [Vanna](06-vanna.md): the cross bend between share price and volatility.
+- [Rho and dividend rho](05-rho-and-dividend-rho.md): the rate slope, and its dividend twin.
+- [Taylor's theorem](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): the one-variable expansion with its remainder, which Step 2 runs along a straight path.
 
 ## Where this goes next
 
-- [theta-pays-for-gamma-hedged-pnl](10-theta-pays-for-gamma-hedged-pnl.md): remove the delta term by hedging, and the gamma term and the theta term are left facing each other.
-- [portfolio-greeks-and-taylor-pnl](../40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/01-portfolio-greeks-and-taylor-pnl.md): the same sum across a whole book, and the loss it predicts on a bad day.
+- [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md): remove the delta term by hedging, and the gamma term and the theta term are left facing each other.
+- [Portfolio Greeks](../40-Hedging%2C%20Volatility%20Forecasts%20and%20Stress/01-portfolio-greeks-and-taylor-pnl.md): the same sum across a whole book, and the loss it predicts on a bad day.
 
 Step 3 found the gamma term and the theta term the same size over a day; why, for a hedged option, they cancel exactly when the share moves by its expected amount is what the next card proves.
 

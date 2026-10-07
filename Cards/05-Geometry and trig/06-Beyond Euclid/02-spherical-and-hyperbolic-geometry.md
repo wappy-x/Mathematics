@@ -1,23 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Beyond Euclid
-topic: Curved worlds
-item: Three geometries
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/06-Beyond Euclid/01-triangles-on-a-sphere|triangles-on-a-sphere]]"
-next:
-  - "[[Cards/23-Differential geometry and Lie groups/05-Riemannian Geometry/01-riemannian-metrics|riemannian-metrics]]"
-  - "[[Cards/23-Differential geometry and Lie groups/05-Riemannian Geometry/05-model-spaces-of-constant-curvature|model-spaces-of-constant-curvature]]"
-tags: [mathematics, geometry and trig, spherical-and-hyperbolic-geometry]
----
-
 # Three geometries: what changes when the parallel postulate is dropped
 
-Geometry and trig → Beyond Euclid → Curved worlds → Three geometries
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Beyond Euclid](../../../SYLLABUS.md#w05-s06) → Three geometries
 
 ---
 
@@ -31,7 +14,7 @@ That world is the **hyperbolic plane**, and the circle is its standard map, the 
 
 **Change the parallel rule and triangles, parallels and circles change together: on a sphere, angles add to more than 180°, circles grow slower than flat ones and no lines are parallel; in the hyperbolic plane, angles add to less than 180°, circles grow faster and parallels are endless.**
 
-**What kind of fact this is:** theorems, proved on this card for its examples; the disc's ruler is a definition, its distance formula is checked by slices, not proved, and the general angle-sum rules are proved on [triangles-on-a-sphere](01-triangles-on-a-sphere.md) and model-spaces-of-constant-curvature.
+**What kind of fact this is:** theorems, proved on this card for its examples; the disc's ruler is a definition, its distance formula is checked by slices, not proved, and the general angle-sum rules are proved on [Triangles on a sphere](01-triangles-on-a-sphere.md) and Sphere, plane and hyperbolic space.
 
 ### The picture: ten equal fish on one line through the disc
 
@@ -43,7 +26,7 @@ To scale: rim radius 1 = 110 units, centre (180, 120), fish ends at x = 230.8, 2
 
 ## The formula
 
-A half-turn is $\pi$ radians, about 3.14159 ([radians-arcs-and-sectors](../02-Circles%20and%20Solids/02-radians-arcs-and-sectors.md)). $e$, about 2.718, is the base of the natural log $\ln$ ([logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
+A half-turn is $\pi$ radians, about 3.14159 ([Radians](../02-Circles%20and%20Solids/02-radians-arcs-and-sectors.md)). $e$, about 2.718, is the base of the natural log $\ln$ ([Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md)).
 
 New here: (e^ρ − e^(−ρ))/2 is written $\sinh$, the **hyperbolic sine**.
 
@@ -87,15 +70,15 @@ $$S = 180^\circ \ \text{(flat)}, \qquad S > 180^\circ \ \text{(sphere)}, \qquad 
 
 ### Step 0: only the parallel rule changes
 
-Euclid's fifth rule gives one parallel through a point ([angles-and-parallel-lines](../01-Angles%2C%20Triangles%20and%20Congruence/01-angles-and-parallel-lines.md)); the flat 180° proof copies two angles onto it ([triangle-angle-sum-and-inequality](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). Around 1830 Bolyai and Lobachevsky built a geometry that keeps every other rule and breaks this one. In 1868 Beltrami showed it is as free of contradiction as Euclid's.
+Euclid's fifth rule gives one parallel through a point ([Angles](../01-Angles%2C%20Triangles%20and%20Congruence/01-angles-and-parallel-lines.md)); the flat 180° proof copies two angles onto it ([Triangles](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). Around 1830 Bolyai and Lobachevsky built a geometry that keeps every other rule and breaks this one. In 1868 Beltrami showed it is as free of contradiction as Euclid's.
 
 ### Step 1: on a sphere, no parallels and fat triangles
 
 A great circle is where a plane through the ball's centre cuts the surface. Two such planes meet in a line through the centre, so any two great circles cross: no parallels.
 
-The north pole and two equator points a quarter-turn apart make a triangle of three right angles: 270°. The excess over 180°, in radians, is its area on a ball of radius 1 ([triangles-on-a-sphere](01-triangles-on-a-sphere.md)).
+The north pole and two equator points a quarter-turn apart make a triangle of three right angles: 270°. The excess over 180°, in radians, is its area on a ball of radius 1 ([Triangles on a sphere](01-triangles-on-a-sphere.md)).
 
-A circle of true radius $\rho$ round the pole lies sin ρ from the pole-to-pole axis, the unit-circle sine, valid past a quarter-turn too ([radians-and-the-unit-circle](../03-Trigonometry/02-radians-and-the-unit-circle.md)). So its rim is 2π sin ρ: 0.89 at ρ = 3, past the equator.
+A circle of true radius $\rho$ round the pole lies sin ρ from the pole-to-pole axis, the unit-circle sine, valid past a quarter-turn too ([The unit circle](../03-Trigonometry/02-radians-and-the-unit-circle.md)). So its rim is 2π sin ρ: 0.89 at ρ = 3, past the equator.
 
 ### Step 2: the disc keeps angles and rescales lengths
 
@@ -134,7 +117,7 @@ Put A and B at drawn distance a along the two diameters, a between 0 and 1. The 
 
 That ratio is strictly between 0 and 1, so the angles at A and B are each under 45° and the sum under 180°. As a shrinks the ratio nears 1: at a = 0.05 the sum is 179.713522°, nearly flat.
 
-That every hyperbolic triangle falls short by its area needs curvature; model-spaces-of-constant-curvature proves it.
+That every hyperbolic triangle falls short by its area needs curvature; Sphere, plane and hyperbolic space proves it.
 
 </details>
 
@@ -144,7 +127,7 @@ Take the diameter OA as the given line and B as the point. For any u between −
 
 Its radius is under 1.25, so its lowest point stays above the diameter: 0.5 at u = 0, 0.348612 at u = 0.5. Each u gives a different line through B: infinitely many parallels.
 
-The disc's factor 2/(1 − r^2) is one example of a metric, a length rule set point by point, the subject of riemannian-metrics.
+The disc's factor 2/(1 − r^2) is one example of a metric, a length rule set point by point, the subject of Riemannian metric.
 
 ---
 
@@ -392,8 +375,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Flights and shipping.** Routes follow great circles, and no two are parallel ([triangles-on-a-sphere](01-triangles-on-a-sphere.md)).
-- **Escher's Circle Limit prints.** Equal copies tiling the disc, the hyperbolic cousins of wallpaper ([symmetry-and-tilings](04-symmetry-and-tilings.md)).
+- **Flights and shipping.** Routes follow great circles, and no two are parallel ([Triangles on a sphere](01-triangles-on-a-sphere.md)).
+- **Escher's Circle Limit prints.** Equal copies tiling the disc, the hyperbolic cousins of wallpaper ([Symmetry](04-symmetry-and-tilings.md)).
 - **Networks.** Trees gain members exponentially with distance, as hyperbolic rims do, so they fit the hyperbolic plane uncrowded.
 
 > **Say it back**
@@ -403,12 +386,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [triangles-on-a-sphere](01-triangles-on-a-sphere.md): great circles and the sphere's angle excess.
+- [Triangles on a sphere](01-triangles-on-a-sphere.md): great circles and the sphere's angle excess.
 
 ## Where this goes next
 
-- riemannian-metrics: the disc's factor 2/(1 − r^2) as one length rule set point by point.
-- model-spaces-of-constant-curvature: the three worlds of constant curvature, with the angle-sum rules proved in general.
+- Riemannian metric: the disc's factor 2/(1 − r^2) as one length rule set point by point.
+- Sphere, plane and hyperbolic space: the three worlds of constant curvature, with the angle-sum rules proved in general.
 
 This card never said what curvature is; later cards define it and show that one number fixes angle sums, parallels and circle growth together.
 

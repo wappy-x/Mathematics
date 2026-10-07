@@ -1,30 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Numerical Methods for Pricing
-topic: Mixing the shocks
-item: Correlated paths
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/06-multivariate-normal|multivariate-normal]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/05-quadratic-forms-and-positive-definite|quadratic-forms-and-positive-definite]]"
-next:
-  - "[[Cards/12-Financial mathematics/18-Many underlyings - exchange, spread, basket and rainbow/01-exchange-option-margrabe|exchange-option-margrabe]]"
-  - "[[Cards/12-Financial mathematics/18-Many underlyings - exchange, spread, basket and rainbow/02-spread-options-and-kirk|spread-options-and-kirk]]"
-  - "[[Cards/12-Financial mathematics/18-Many underlyings - exchange, spread, basket and rainbow/03-basket-options|basket-options]]"
-  - "[[Cards/16-Numerical analysis/03-Numerical Linear Algebra/04-cholesky-decomposition|cholesky-decomposition]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - correlated-paths-and-cholesky
----
-
 # Correlated paths: several assets from one Cholesky factor
 
-Financial mathematics → Numerical Methods for Pricing → Mixing the shocks → Correlated paths
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Numerical Methods for Pricing](../../../SYLLABUS.md#w12-s06) → Correlated paths
 
 ---
 
@@ -99,7 +75,7 @@ Paths need more than one shock apiece. Fix the dates, scale each step's mix by t
 
 $$\Delta W_k = \sqrt{\Delta t_k}\;L\,Z_k, \qquad W(t_j) = \sum_{k \le j} \Delta W_k$$
 
-Fresh independent draws for every step. The shocks then turn into prices by the usual lognormal rule, one exponential per date ([geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)):
+Fresh independent draws for every step. The shocks then turn into prices by the usual lognormal rule, one exponential per date ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)):
 
 $$S_i(t_k) = s_i\exp\!\left[\left(r - q_i - \tfrac{1}{2}\sigma_i^{2}\right)t_k + \sigma_i W_i(t_k)\right]$$
 
@@ -107,7 +83,7 @@ $$S_i(t_k) = s_i\exp\!\left[\left(r - q_i - \tfrac{1}{2}\sigma_i^{2}\right)t_k +
 
 - **The dial has to be a possible one.** Symmetric, ones down the diagonal, no holding of the shares left with zero or negative variance. Asking 0.9 between shares one and two, 0.9 between one and three and −0.9 between two and three sounds like an opinion and is arithmetic nonsense: the holding long one against the other two has variance −2.400000, and the factoring dies on a third pivot of −15.200000. A pivot of exactly zero is the boundary: at a dial of one each share copies the first, the private draws vanish, and the mixer is one shared draw for all three, not a triangle with a positive diagonal.
 - **Rows of length one, or the volatilities move with the dial.** A row dotted with itself is that share's variance in wiggle units. Hand the correlation table in as the mixer and every row has length 1.224745: each volatility is 22% too big and the pairs agree 0.833333 instead of 0.500000.
-- **Independent standard draws going in.** The factor fixes the mixing, not the sampling: reused or badly scaled draws give wrong shocks from a perfect factor ([monte-carlo-pricing](01-monte-carlo-pricing.md)).
+- **Independent standard draws going in.** The factor fixes the mixing, not the sampling: reused or badly scaled draws give wrong shocks from a perfect factor ([Monte Carlo pricing](01-monte-carlo-pricing.md)).
 - **One number per pair, fixed for the whole horizon.** Real correlations drift, and in a crash they run toward one. A basket simulated at calm-market correlations is priced as though the shares could still rescue each other on the worst day.
 - **The dial sits on the shocks, not on the percent moves.** Step 4 measures the gap: 0.500000 asked for shows up between percent returns as 0.495000.
 
@@ -134,7 +110,7 @@ Each share leans on the draws already used plus exactly one new one. That is why
 <details>
 <summary>Detailed proof: exactly one such table exists, and its pivots are positive</summary>
 
-The claim: for every symmetric R giving strictly positive variance to every non-zero holding ([quadratic-forms-and-positive-definite](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)), there is one and only one lower-triangular L with a positive diagonal and $R = L\,L^{T}$.
+The claim: for every symmetric R giving strictly positive variance to every non-zero holding ([Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md)), there is one and only one lower-triangular L with a positive diagonal and $R = L\,L^{T}$.
 
 **Existence, by induction: settle one share, then let each new share ride on the case below it.** One share: R is a single positive number, whose only positive factor is its square root. Split a larger R into its first entry a, the rest of the first column b, and the block C of everything else. Share one held alone has positive variance, so a is positive. Form the smaller table $G = C - b\,b^{T}/a$. It is symmetric, and positive for every non-zero holding y: the holding with first entry $-b^{T}y/a$ and rest y has variance exactly $y^{T}Gy$. By induction $G = M\,M^{T}$ for a lower-triangular M with positive diagonal, and the table with first column $\sqrt{a}$ over $b/\sqrt{a}$, M filling the rest, multiplies out to R. Comparing its entries with R gives back the column recurrence, so every pivot is positive.
 
@@ -146,7 +122,7 @@ The claim: for every symmetric R giving strictly positive variance to every non-
 
 ### Step 2: the shocks are properly normal, not merely correlated
 
-A fixed table applied to a column of independent normal draws gives a vector that is itself normal, with covariance the table times its sideways copy ([multivariate-normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)). Matching the covariance therefore matches the entire joint law, not two summary numbers out of many — a construction, not a fudge.
+A fixed table applied to a column of independent normal draws gives a vector that is itself normal, with covariance the table times its sideways copy ([Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md)). Matching the covariance therefore matches the entire joint law, not two summary numbers out of many — a construction, not a fudge.
 
 ### Step 3: the clock, and why the square root of the step
 
@@ -188,7 +164,7 @@ At a dial of one half the top exponent is half the bottom one, so the bottom fac
 
 </details>
 
-**Another route to the same shocks.** Nothing above needed the table to be triangular; it needed row lengths of one and the right dot products. When every pair shares one non-negative correlation there is a shorter recipe: give each share the same slice of one market-wide draw, $\sqrt{\rho}$, plus a private draw of its own, $\sqrt{1-\rho}$. At a dial of 0.500000 both weights are 0.707107, and this four-column mixer rebuilds R exactly, worst entry off by 0.000000000000, while sitting 0.866025 away from the triangular factor in one entry. Two tables, one correlation matrix: the triangular one with a positive diagonal is the only one of its kind, and it is what a general dial and a fast program want. Mending a table no factor will accept belongs to numerical linear algebra (cholesky-decomposition).
+**Another route to the same shocks.** Nothing above needed the table to be triangular; it needed row lengths of one and the right dot products. When every pair shares one non-negative correlation there is a shorter recipe: give each share the same slice of one market-wide draw, $\sqrt{\rho}$, plus a private draw of its own, $\sqrt{1-\rho}$. At a dial of 0.500000 both weights are 0.707107, and this four-column mixer rebuilds R exactly, worst entry off by 0.000000000000, while sitting 0.866025 away from the triangular factor in one entry. Two tables, one correlation matrix: the triangular one with a positive diagonal is the only one of its kind, and it is what a general dial and a fast program want. Mending a table no factor will accept belongs to numerical linear algebra (Cholesky).
 
 ---
 
@@ -680,7 +656,7 @@ The two outputs match line for line: the counter-based draws and the mixing are 
 
 ## Where you meet it in real life
 
-- **Multi-asset option desks.** Anything paying on two or more underlyings is priced on paths built this way: baskets ([basket-options](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/03-basket-options.md)), spreads ([spread-options-and-kirk](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/02-spread-options-and-kirk.md)), best-of and worst-of.
+- **Multi-asset option desks.** Anything paying on two or more underlyings is priced on paths built this way: baskets ([Basket options](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/03-basket-options.md)), spreads ([Spread options](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/02-spread-options-and-kirk.md)), best-of and worst-of.
 - **Risk engines.** A bank's daily value-at-risk run shocks thousands of positions together, and the factor of their correlation table is what the run is built on.
 - **Interest-rate and commodity curves.** Neighbouring maturities agree almost perfectly, distant ones much less. A whole curve is this card with dozens of rows, which is where a near-impossible dial stops being a curiosity.
 - **Credit portfolios.** The one-factor mixer above is the shape of the models that priced mortgage tranches before 2008: one common shock plus a private one per borrower, the correlation assumed rather than measured.
@@ -692,16 +668,16 @@ The two outputs match line for line: the counter-based draws and the mixing are 
 
 ## What this builds on
 
-- [monte-carlo-pricing](01-monte-carlo-pricing.md): the sampler this card mixes, and why an average over paths prices anything at all.
-- [multivariate-normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md): why a fixed table applied to normal draws gives normal shocks, so matching the covariance matches the whole law.
-- [quadratic-forms-and-positive-definite](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md): the test the dial has to pass, and the reason a pivot can come out negative.
+- [Monte Carlo pricing](01-monte-carlo-pricing.md): the sampler this card mixes, and why an average over paths prices anything at all.
+- [Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md): why a fixed table applied to normal draws gives normal shocks, so matching the covariance matches the whole law.
+- [Quadratic forms](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/05-quadratic-forms-and-positive-definite.md): the test the dial has to pass, and the reason a pivot can come out negative.
 
 ## Where this goes next
 
-- [exchange-option-margrabe](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/01-exchange-option-margrabe.md): two correlated shares where a formula replaces the simulation, the correlation entering as one combined volatility.
-- [spread-options-and-kirk](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/02-spread-options-and-kirk.md): the difference of two shares, where no exact formula exists and these paths are one honest answer.
-- [basket-options](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/03-basket-options.md): the weighted sum, with the chart above as its price sensitivity.
-- cholesky-decomposition: the same factoring as numerical linear algebra, with its cost, its stability, and tables only almost possible.
+- [The exchange option](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/01-exchange-option-margrabe.md): two correlated shares where a formula replaces the simulation, the correlation entering as one combined volatility.
+- [Spread options](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/02-spread-options-and-kirk.md): the difference of two shares, where no exact formula exists and these paths are one honest answer.
+- [Basket options](../18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/03-basket-options.md): the weighted sum, with the chart above as its price sensitivity.
+- Cholesky: the same factoring as numerical linear algebra, with its cost, its stability, and tables only almost possible.
 
 This card takes the dial as given, the one input no market quotes outright: where its numbers come from, and how to mend a table no factor will accept, is what later cards pick up.
 

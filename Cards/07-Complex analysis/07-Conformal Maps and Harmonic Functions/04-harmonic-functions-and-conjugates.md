@@ -1,26 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Conformal Maps and Harmonic Functions
-topic: Steady heat and its partner
-item: Harmonic functions
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/06-derivatives-from-the-boundary|derivatives-from-the-boundary]]"
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/02-antiderivatives-and-path-independence|antiderivatives-and-path-independence]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-next:
-  - "[[Cards/07-Complex analysis/07-Conformal Maps and Harmonic Functions/05-mean-value-and-maximum-principle-for-harmonic-functions|mean-value-and-maximum-principle-for-harmonic-functions]]"
-  - "[[Cards/19-Partial differential equations/04-Laplace, Poisson and Potentials/01-harmonic-functions-and-mean-values|harmonic-functions-and-mean-values]]"
-  - "[[Cards/20-Harmonic analysis/02-The Fourier Transform/09-hilbert-transform-and-analytic-signals|hilbert-transform-and-analytic-signals]]"
-tags: [mathematics, complex analysis, harmonic-functions-and-conjugates]
----
-
 # Harmonic functions: the real and imaginary parts of a holomorphic function both solve Laplace's equation, and their level curves cross at right angles
 
-Complex analysis → Conformal Maps and Harmonic Functions → Steady heat and its partner → Harmonic functions
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Conformal Maps and Harmonic Functions](../../../SYLLABUS.md#w07-s07) → Harmonic functions
 
 ---
 
@@ -52,7 +32,7 @@ $$\Delta u = u_{xx} + u_{yy} = 0$$
 
 **Read it aloud:** the bending of u eastward and its bending northward cancel at every point.
 
-A real function with continuous second partials satisfying this on an open region is **harmonic**. A **harmonic conjugate** of $u$ is a real $v$ making $f = u + iv$ holomorphic; by the Cauchy-Riemann equations ([complex-derivative-and-cauchy-riemann](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md)) that means
+A real function with continuous second partials satisfying this on an open region is **harmonic**. A **harmonic conjugate** of $u$ is a real $v$ making $f = u + iv$ holomorphic; by the Cauchy-Riemann equations ([The complex derivative](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md)) that means
 
 $$v_x = -u_y, \qquad v_y = u_x$$
 
@@ -96,7 +76,7 @@ The Cauchy-Riemann equations tie the slopes of u and v. Differentiated again, th
 
 ### Step 1: both parts are harmonic
 
-A holomorphic f has holomorphic derivatives of every order ([derivatives-from-the-boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md)), so u and v have continuous second partials and the mixed ones agree. Differentiate $u_x = v_y$ in x and $u_y = -v_x$ in y:
+A holomorphic f has holomorphic derivatives of every order ([Derivatives from the boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md)), so u and v have continuous second partials and the mixed ones agree. Differentiate $u_x = v_y$ in x and $u_y = -v_x$ in y:
 
 $$u_{xx} = v_{yx}, \qquad u_{yy} = -v_{xy}$$
 
@@ -121,7 +101,7 @@ For $v_x$, differentiate under the integral sign, allowed by the continuous seco
 $v_x = -u_y(x, 0) + \int_0^y u_{xx}(x, s)\,ds$.
 Replace $u_{xx}$ by $-u_{yy}$, which is Laplace's equation, and integrate: $\int_0^y -u_{yy}(x, s)\,ds = -u_y(x, y) + u_y(x, 0)$. So $v_x = -u_y(x, y)$.
 
-So u + iv satisfies Cauchy-Riemann with continuous partials: holomorphic on the rectangle. Without holes the rectangles glue: $u_x - iu_y$ is holomorphic there, has an antiderivative F by [antiderivatives-and-path-independence](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md). Re F has u's gradient, so on a connected region it is u plus a constant, and Im F is one global v. Two partners differ by a constant, since their gradients agree.
+So u + iv satisfies Cauchy-Riemann with continuous partials: holomorphic on the rectangle. Without holes the rectangles glue: $u_x - iu_y$ is holomorphic there, has an antiderivative F by [Antiderivatives](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md). Re F has u's gradient, so on a connected region it is u plus a constant, and Im F is one global v. Two partners differ by a constant, since their gradients agree.
 
 </details>
 
@@ -141,9 +121,9 @@ A hot wire through the centre gives a steady temperature c − m log|z|, |z| the
 
 On the east half, building v from the anchor (1, 0) gives v(2, 1) = 0.463648, the angle of 2 + i: the partner is arg z. Walk once round the wire adding the partner's slopes. A single-valued v would give 0. The sum is 6.283185 on circles of radius 1 and 0.5, and 0 on a circle missing the wire.
 
-Residues give it another way ([residues](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/04-residues.md)): $u_x - iu_y = 1/z$ has residue 1 and loop integral $2\pi i$, whose imaginary part is the loop sum, 6.283185. For the temperature c − log|z| it is also the wire's heat output per unit conductivity. That jump is the branch cut of [complex-logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md), seen from the real side.
+Residues give it another way ([Residues](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/04-residues.md)): $u_x - iu_y = 1/z$ has residue 1 and loop integral $2\pi i$, whose imaginary part is the loop sum, 6.283185. For the temperature c − log|z| it is also the wire's heat output per unit conductivity. That jump is the branch cut of [The complex logarithm](../02-Holomorphic%20Functions/04-complex-logarithm.md), seen from the real side.
 
-A second route to the right angles: f sends isotherms to vertical lines and flow lines to horizontal ones, and where $f'$ is not 0 it keeps angles ([conformal-maps](01-conformal-maps.md)).
+A second route to the right angles: f sends isotherms to vertical lines and flow lines to horizontal ones, and where $f'$ is not 0 it keeps angles ([Conformal maps](01-conformal-maps.md)).
 
 ---
 
@@ -391,7 +371,7 @@ The two outputs match line for line.
 
 - **Heat in plates and walls.** Isotherms and flow lines of a steady slab are one holomorphic function's two families.
 - **Electrostatics.** Voltage in a charge-free region is harmonic; field lines are the partner's level curves.
-- **Signal processing.** The partner of a signal's real part on the boundary is its Hilbert transform: hilbert-transform-and-analytic-signals.
+- **Signal processing.** The partner of a signal's real part on the boundary is its Hilbert transform: The Hilbert transform.
 
 > **Say it back**
 > A harmonic function's two second rates cancel: u_xx + u_yy = 0. Both parts of a holomorphic function are harmonic, because Cauchy-Riemann differentiated again cancels. From a harmonic u, the partner v is built by adding the prescribed slopes, and without holes every walk agrees. The gradients are perpendicular, so isotherms and flow lines cross at right angles. Round a hot wire, log|z| has no single partner: the angle gains 2π per lap.
@@ -400,17 +380,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [derivatives-from-the-boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md): derivatives of every order, so second partials exist.
-- [antiderivatives-and-path-independence](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md): why every walk agrees without holes.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): the rates u_x and u_xx, and the gradient.
+- [Derivatives from the boundary](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/06-derivatives-from-the-boundary.md): derivatives of every order, so second partials exist.
+- [Antiderivatives](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/02-antiderivatives-and-path-independence.md): why every walk agrees without holes.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): the rates u_x and u_xx, and the gradient.
 
 ## Where this goes next
 
-- [mean-value-and-maximum-principle-for-harmonic-functions](05-mean-value-and-maximum-principle-for-harmonic-functions.md): circle averages, and no hot spot inside a steady plate.
-- harmonic-functions-and-mean-values: Laplace in any dimension, with no complex partner.
-- hilbert-transform-and-analytic-signals: the conjugate taken on a line, as a transform of signals.
+- [Mean value and maximum principle](05-mean-value-and-maximum-principle-for-harmonic-functions.md): circle averages, and no hot spot inside a steady plate.
+- Harmonic functions: Laplace in any dimension, with no complex partner.
+- The Hilbert transform: the conjugate taken on a line, as a transform of signals.
 
-Here the holomorphic function came first; how the plate's edges alone fix the temperature inside begins with the circle averages of [mean-value-and-maximum-principle-for-harmonic-functions](05-mean-value-and-maximum-principle-for-harmonic-functions.md).
+Here the holomorphic function came first; how the plate's edges alone fix the temperature inside begins with the circle averages of [Mean value and maximum principle](05-mean-value-and-maximum-principle-for-harmonic-functions.md).
 
 ---
 

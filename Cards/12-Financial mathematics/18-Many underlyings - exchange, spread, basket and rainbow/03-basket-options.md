@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Many underlyings - exchange, spread, basket and rainbow
-topic: Correlated sums
-item: Basket options
-kind: approximation
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/18-Many underlyings - exchange, spread, basket and rainbow/02-spread-options-and-kirk|spread-options-and-kirk]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/04-joint-distributions-and-covariance|joint-distributions-and-covariance]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/04-correlated-paths-and-cholesky|correlated-paths-and-cholesky]]"
-next:
-  - "[[Cards/12-Financial mathematics/18-Many underlyings - exchange, spread, basket and rainbow/04-rainbow-best-of-and-worst-of|rainbow-best-of-and-worst-of]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - basket-options
----
-
 # Basket options: one option on a weighted group of shares, where correlation is the input that matters
 
-Financial mathematics → Many underlyings - exchange, spread, basket and rainbow → Correlated sums → Basket options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Many underlyings - exchange, spread, basket and rainbow](../../../SYLLABUS.md#w12-s18) → Basket options
 
 ---
 
@@ -56,7 +35,7 @@ The one line is the payoff: flat at zero while the basket is at or below $100, t
 
 ## The formula
 
-Notation first, in words. The subscript 1 means Acme and 2 means Birch. $\mathbb{E}[\,\cdot\,]$ is the average over every possible future in the pretend world where every asset grows at the bank rate less its dividends ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), Step 0).
+Notation first, in words. The subscript 1 means Acme and 2 means Birch. $\mathbb{E}[\,\cdot\,]$ is the average over every possible future in the pretend world where every asset grows at the bank rate less its dividends ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), Step 0).
 
 The contract, exact and on its own unusable:
 
@@ -127,7 +106,7 @@ The average square multiplies the basket by itself, giving four products. The pr
 <details>
 <summary>The algebra behind this, if you want it</summary>
 
-Write $S_i(T) = F_i\,e^{-\frac12\sigma_i^2T + \sigma_i\sqrt{T}X_i}$ with $X_1 = Z_1$ and $X_2 = \rho Z_1 + \sqrt{1-\rho^2}\,Z_2$. The sum $Y = \sigma_1\sqrt{T}X_1 + \sigma_2\sqrt{T}X_2$ is a bell curve with mean zero and variance $\sigma_1^2T + \sigma_2^2T + 2\rho\sigma_1\sigma_2T$ ([joint-distributions-and-covariance](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). A bell curve with variance $s^2$ has $\mathbb{E}[e^{Y}] = e^{s^2/2}$. So
+Write $S_i(T) = F_i\,e^{-\frac12\sigma_i^2T + \sigma_i\sqrt{T}X_i}$ with $X_1 = Z_1$ and $X_2 = \rho Z_1 + \sqrt{1-\rho^2}\,Z_2$. The sum $Y = \sigma_1\sqrt{T}X_1 + \sigma_2\sqrt{T}X_2$ is a bell curve with mean zero and variance $\sigma_1^2T + \sigma_2^2T + 2\rho\sigma_1\sigma_2T$ ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). A bell curve with variance $s^2$ has $\mathbb{E}[e^{Y}] = e^{s^2/2}$. So
 $$\mathbb{E}[S_1(T)S_2(T)] = F_1F_2\,e^{-\frac12\sigma_1^2T - \frac12\sigma_2^2T}\,e^{\frac12(\sigma_1^2 + \sigma_2^2 + 2\rho\sigma_1\sigma_2)T} = F_1F_2\,e^{\rho\sigma_1\sigma_2T}.$$
 Set the two shares equal and $\rho = 1$ to get $F^2e^{\sigma^2T}$. The average cube is the same step on three factors: one correction for each of the three pairs.
 
@@ -143,7 +122,7 @@ A call on a lognormal quantity whose average at expiry is $M_1$ is the pilot's f
 
 ### Step 4: simulate the two shares together
 
-The average can also be sampled. Draw two independent bell-curve numbers $Z_1$ and $Z_2$. Give Acme $Z_1$. Give Birch $\rho Z_1 + \sqrt{1-\rho^2}\,Z_2$: a share $\rho$ of Acme's draw plus a fresh piece. Independent variances add, so Birch's draw has variance $\rho^2 + (1 - \rho^2) = 1$ and correlation $\rho$ with Acme's. That mixing recipe is the two-share case of the Cholesky factor ([correlated-paths-and-cholesky](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md)).
+The average can also be sampled. Draw two independent bell-curve numbers $Z_1$ and $Z_2$. Give Acme $Z_1$. Give Birch $\rho Z_1 + \sqrt{1-\rho^2}\,Z_2$: a share $\rho$ of Acme's draw plus a fresh piece. Independent variances add, so Birch's draw has variance $\rho^2 + (1 - \rho^2) = 1$ and correlation $\rho$ with Acme's. That mixing recipe is the two-share case of the Cholesky factor ([Correlated paths](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md)).
 
 Build both shares, add them with the weights, record the payoff, repeat, average, discount. Nothing is assumed about the basket's shape. The cost is noise: 400,000 draws give 8.228716 with a standard error (the typical size of the sampling wobble) of 0.018879, which shrinks like one over the square root of the number of draws.
 
@@ -189,7 +168,7 @@ Now the claim. Each share's volatility can be read from that share's own traded 
 
 One share's volatility is diluted by its weight. The correlation acts on the cross part, which here is about half of the basket's average square.
 
-Alternative routes: Levy's 1992 paper introduced moment matching for averages of prices, the same problem in time instead of across shares. Two shares of opposite sign give a spread, where Kirk's approximation replaces the lognormal fit ([spread-options-and-kirk](02-spread-options-and-kirk.md)). The one exact case with two shares is the exchange option, where a ratio of lognormals is lognormal ([exchange-option-margrabe](01-exchange-option-margrabe.md)).
+Alternative routes: Levy's 1992 paper introduced moment matching for averages of prices, the same problem in time instead of across shares. Two shares of opposite sign give a spread, where Kirk's approximation replaces the lognormal fit ([Spread options](02-spread-options-and-kirk.md)). The one exact case with two shares is the exchange option, where a ratio of lognormals is lognormal ([The exchange option](01-exchange-option-margrabe.md)).
 
 ---
 
@@ -694,7 +673,7 @@ The two outputs match line for line.
 - **Index options.** A stock index is a basket with hundreds of weights. Options on it are quoted with the index's own volatility, which already has correlation inside it.
 - **Currency baskets.** A company paid in several currencies buys one basket put instead of one put per currency; it is cheaper by exactly the cancelling this card measures.
 - **Structured notes.** Retail notes often pay a share of a basket's rise above a strike. The bank prices the embedded basket call, and the correlation it assumes moves that price more than any one volatility.
-- **Implied correlation.** Comparing an index option's price with its members' options gives the market's correlation, the one input with no screen of its own: [correlation-greeks-and-implied-correlation](05-correlation-greeks-and-implied-correlation.md).
+- **Implied correlation.** Comparing an index option's price with its members' options gives the market's correlation, the one input with no screen of its own: [Correlation Greeks and implied correlation](05-correlation-greeks-and-implied-correlation.md).
 
 > **Say it back**
 > A basket call is one option on a weighted total of shares. The total of lognormal shares is not lognormal, so there is no exact formula, but its average and average square are exact. Matching those two to one lognormal share and pricing that share gives $8.22 here, within a hundredth of a cent of the exact integral, with simulation agreeing. Correlation enters through the cross part of the average square, and over the ranges it is really uncertain, it moves the price more than any one share's volatility does.
@@ -703,13 +682,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [spread-options-and-kirk](02-spread-options-and-kirk.md): two shares in one payoff, and the first approximation that fits a lognormal where none is exact.
-- [joint-distributions-and-covariance](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md): correlation, and the variance of a weighted sum.
-- [correlated-paths-and-cholesky](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md): the mixing recipe that makes the simulation's draws move together.
+- [Spread options](02-spread-options-and-kirk.md): two shares in one payoff, and the first approximation that fits a lognormal where none is exact.
+- [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md): correlation, and the variance of a weighted sum.
+- [Correlated paths](../06-Numerical%20Methods%20for%20Pricing/04-correlated-paths-and-cholesky.md): the mixing recipe that makes the simulation's draws move together.
 
 ## Where this goes next
 
-- [rainbow-best-of-and-worst-of](04-rainbow-best-of-and-worst-of.md): options on the best or worst of the shares, not their total.
+- [Rainbow options](04-rainbow-best-of-and-worst-of.md): options on the best or worst of the shares, not their total.
 
 A basket blends the shares; the next question is what an option is worth when it picks the winner or the loser instead, where correlation works in the opposite direction for one of them.
 

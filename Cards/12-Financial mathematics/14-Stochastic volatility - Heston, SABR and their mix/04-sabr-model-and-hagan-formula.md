@@ -1,40 +1,18 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Stochastic volatility - Heston, SABR and their mix
-topic: A smile in closed form
-item: SABR and Hagan's formula
-kind: approximation
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/01-heston-model|heston-model]]"
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/04-euler-maruyama-scheme|euler-maruyama-scheme]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/06-black-76-and-forward-level-pricing|black-76-and-forward-level-pricing]]"
-next:
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/05-sabr-calibration-from-three-quotes|sabr-calibration-from-three-quotes]]"
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/07-sabr-for-rates-and-the-volatility-cube|sabr-for-rates-and-the-volatility-cube]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - sabr-model-and-hagan-formula
----
-
 # SABR and Hagan's formula: a stochastic-vol model whose implied volatility you can write down
 
-Financial mathematics → Stochastic volatility - Heston, SABR and their mix → A smile in closed form → SABR and Hagan's formula
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Stochastic volatility - Heston, SABR and their mix](../../../SYLLABUS.md#w12-s14) → SABR and Hagan's formula
 
 ---
 
 ## General Overview
 
-Acme shares trade at $100. The one-year forward on them is $103.05: the price agreed today for a share delivered in a year, carrying a year of 5 percent interest less a year of 2 percent dividends. A dealer quotes three one-year options on that forward: a put struck at $92.15, a call at $100 and a call at $119.93. The outer two are the house market's 25-delta put and call: at those strikes a one-dollar move in the share moves the option by about 25 cents ([strike-from-delta](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md)).
+Acme shares trade at $100. The one-year forward on them is $103.05: the price agreed today for a share delivered in a year, carrying a year of 5 percent interest less a year of 2 percent dividends. A dealer quotes three one-year options on that forward: a put struck at $92.15, a call at $100 and a call at $119.93. The outer two are the house market's 25-delta put and call: at those strikes a one-dollar move in the share moves the option by about 25 cents ([Strike from delta](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md)).
 
-Black-76 prices all three from one volatility ([black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)). Markets do not. Each strike gets its own implied volatility, the single volatility at which Black-76 returns that strike's price, and on shares the low strikes carry the higher numbers: the skew ([volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)). One constant volatility cannot draw that curve. A volatility that moves can.
+Black-76 prices all three from one volatility ([Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)). Markets do not. Each strike gets its own implied volatility, the single volatility at which Black-76 returns that strike's price, and on shares the low strikes carry the higher numbers: the skew ([The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)). One constant volatility cannot draw that curve. A volatility that moves can.
 
 SABR moves it. The forward takes random steps sized by a volatility, and the volatility takes random steps of its own, correlated with the forward's. Patrick Hagan, Deep Kumar, Andrew Lesniewski and Diana Woodward published it in 2002. They had shown that the local-volatility models then in use (volatility a fixed function of price and time) moved the smile the wrong way when the forward moved. The name, stochastic alpha beta rho, lists three of its four dials. Alpha is today's volatility level. Beta, the backbone exponent, sets how a step's size scales with the forward's level. Rho is the correlation between the two walks. Nu, the vol of vol, sets how hard the volatility is kicked.
 
-Set beta to 1, rho to −0.3 and nu to 0.4, and pick alpha so the at-the-money volatility (strike at the forward, 103.05) is 20 percent. Simulating the model gives 20.76% at the 92.15 strike, 20.17% at 100 and 19.39% at 119.93. Heston prices by one numerical integral ([heston-pricing-by-characteristic-function](02-heston-pricing-by-characteristic-function.md)); SABR has no general price formula. It has something a desk wants more: Hagan's formula, which writes each implied volatility down in one line: 20.81%, 20.19% and 19.38%. That is within 0.05 vol points of the model (a vol point is one percentage point of volatility). Toward low strikes the two drift apart, to 0.17 points at 60.
+Set beta to 1, rho to −0.3 and nu to 0.4, and pick alpha so the at-the-money volatility (strike at the forward, 103.05) is 20 percent. Simulating the model gives 20.76% at the 92.15 strike, 20.17% at 100 and 19.39% at 119.93. Heston prices by one numerical integral ([Pricing Heston exactly](02-heston-pricing-by-characteristic-function.md)); SABR has no general price formula. It has something a desk wants more: Hagan's formula, which writes each implied volatility down in one line: 20.81%, 20.19% and 19.38%. That is within 0.05 vol points of the model (a vol point is one percentage point of volatility). Toward low strikes the two drift apart, to 0.17 points at 60.
 
 **SABR gives a forward's volatility its own correlated random walk, and Hagan's formula turns that model into one implied volatility per strike, accurate near the money for short expiries and drifting away far from the money and at long ones.**
 
@@ -59,7 +37,7 @@ Orange: Hagan's formula. Green: the model, simulated (road 2 of the checks). Dar
 
 ## The formula
 
-Notation first. $W_1$ and $W_2$ are Brownian motions, the random drivers of Itô calculus: over a tiny time step dt each delivers a kick with average zero and variance dt. An equation such as dF = … says how much a quantity moves over one such step, the reading [euler-maruyama-scheme](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md) simulates.
+Notation first. $W_1$ and $W_2$ are Brownian motions, the random drivers of Itô calculus: over a tiny time step dt each delivers a kick with average zero and variance dt. An equation such as dF = … says how much a quantity moves over one such step, the reading [Euler-Maruyama](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md) simulates.
 
 The model, written on the forward:
 
@@ -110,8 +88,8 @@ For other beta, divide the level by the forward to the power 1 − beta and put 
 
 - **Short expiries, or a calm volatility.** The formula expands in the vol of vol squared times the years. At one year it sits within 0.05 vol points of the model at the three quoted strikes. At ten years it says 20.00% at the money against the model's 18.39%, so every option priced from it comes out too dear.
 - **Strikes near the forward.** The error grows with distance from the forward, fastest on the low side, where the negative correlation raises volatility: 0.04 points at 92.15, 0.17 at 60. Far enough out, the formula's wing climbs faster than any arbitrage-free smile can. With beta below 1 and low forwards that happens at ordinary strikes, which is why the same authors published an arbitrage-free repair in 2014.
-- **Constant dials.** Beta, rho and nu stay fixed over the option's life. A market fits one set per expiry, and nothing ties one expiry's set to the next; tying a surface together is the business of [stochastic-local-volatility](06-stochastic-local-volatility.md).
-- **A positive forward.** With beta 1 it never reaches zero, but a negative forward, as European rates were from 2014, cannot be fed in at all. Rates desks shift the forward up first ([shifted-lognormal-and-volatility-conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md)).
+- **Constant dials.** Beta, rho and nu stay fixed over the option's life. A market fits one set per expiry, and nothing ties one expiry's set to the next; tying a surface together is the business of [Stochastic-local volatility](06-stochastic-local-volatility.md).
+- **A positive forward.** With beta 1 it never reaches zero, but a negative forward, as European rates were from 2014, cannot be fed in at all. Rates desks shift the forward up first ([Shifted lognormal and volatility conversion](../05-Black-Scholes%20from%20the%20Ground%20Up/08-shifted-lognormal-and-volatility-conversion.md)).
 
 **Conventions verified 24 Sep 2026** against Hagan et al. (2002), equation 2.17: the formula returns a Black volatility, annualised, with time in years, to be fed to Black's formula on the forward, not to a normal-volatility formula.
 
@@ -174,7 +152,7 @@ Near the money, leaving out the time factor, the $\beta = 1$ formula expands in 
 
 $$\sigma_B(K) \;\approx\; \alpha + \frac{\rho\nu}{2}\ln\frac{K}{F} + \frac{(2-3\rho^2)\,\nu^2}{12\,\alpha}\ln^2\frac{K}{F}.$$
 
-Each term has one job. $\alpha$ sets the level. $\rho\nu/2$ is the slope, −0.06 here: each 1 percent drop in strike adds 0.06 vol points. $(2-3\rho^2)\nu^2/(12\alpha)$, 0.115975 here, curves both wings up. $\beta$ sets the backbone, the path the at-the-money volatility traces as the forward moves, roughly $\alpha/F^{1-\beta}$. At $\beta = 1$ the backbone is flat and the smile rides along with the forward: sticky moneyness, in the terms of [smile-adjusted-delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md).
+Each term has one job. $\alpha$ sets the level. $\rho\nu/2$ is the slope, −0.06 here: each 1 percent drop in strike adds 0.06 vol points. $(2-3\rho^2)\nu^2/(12\alpha)$, 0.115975 here, curves both wings up. $\beta$ sets the backbone, the path the at-the-money volatility traces as the forward moves, roughly $\alpha/F^{1-\beta}$. At $\beta = 1$ the backbone is flat and the smile rides along with the forward: sticky moneyness, in the terms of [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md).
 
 Markets quote the at-the-money volatility, not $\alpha$. At $\beta = 1$ the at-the-money formula is a quadratic in $\alpha$:
 
@@ -188,7 +166,7 @@ $$\alpha = \frac{2\,\sigma_B(F)}{\Bigl(1 + \frac{2-3\rho^2}{24}\nu^2T\Bigr) + \s
 
 ### The other door: price the model, not the formula
 
-Given one path of the volatility, the forward at expiry is lognormal, so Black-76 prices the option exactly along that path. Averaging over simulated paths gives the model's own price, up to sampling noise: road 2 of the checks. John Hull and Alan White did this without correlation in 1987; Marc Romano and Nizar Touzi added it in 1997. It needs simulation, too slow to quote from, but it is the yardstick Hagan is measured against ([monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)).
+Given one path of the volatility, the forward at expiry is lognormal, so Black-76 prices the option exactly along that path. Averaging over simulated paths gives the model's own price, up to sampling noise: road 2 of the checks. John Hull and Alan White did this without correlation in 1987; Marc Romano and Nizar Touzi added it in 1997. It needs simulation, too slow to quote from, but it is the yardstick Hagan is measured against ([Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md)).
 
 <details>
 <summary>Why one volatility path makes the forward lognormal</summary>
@@ -266,7 +244,7 @@ Orange: Hagan's formula, alpha reset to quote 20% at the money at ten years. Gre
 
 ## Code, from first principles, and it actually runs
 
-Three roads to the one-year smile, none borrowing from another. Road 1 is Hagan's formula. Road 2 simulates only the volatility, 200,000 pairs of mirror-image paths of 20 steps, and prices each path exactly with Black-76 (the other door). Road 3 simulates both equations, 40,000 pairs of 50 steps, with Euler steps on the log-forward and the volatility held fixed within each step, and averages the payoffs. Both simulations use the forward as a control variate, since its average is known, and report standard errors ([variance-reduction-for-pricing](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)). Implied volatilities come back by bisection ([implied-volatility-by-newton-and-bisection](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md)). Beside the roads, alpha is found two ways and chi three. The bell-curve area is Marsaglia's power series; the random numbers are splitmix64 integers (a standard 64-bit scrambler) turned into bell-curve draws by the Box-Muller transform.
+Three roads to the one-year smile, none borrowing from another. Road 1 is Hagan's formula. Road 2 simulates only the volatility, 200,000 pairs of mirror-image paths of 20 steps, and prices each path exactly with Black-76 (the other door). Road 3 simulates both equations, 40,000 pairs of 50 steps, with Euler steps on the log-forward and the volatility held fixed within each step, and averages the payoffs. Both simulations use the forward as a control variate, since its average is known, and report standard errors ([Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)). Implied volatilities come back by bisection ([Solving for implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/02-implied-volatility-by-newton-and-bisection.md)). Beside the roads, alpha is found two ways and chi three. The bell-curve area is Marsaglia's power series; the random numbers are splitmix64 integers (a standard 64-bit scrambler) turned into bell-curve draws by the Box-Muller transform.
 
 ### Python
 
@@ -732,9 +710,9 @@ The two outputs match line for line: both generators produce the same integers, 
 
 ## Where you meet it in real life
 
-- **Interest-rate options.** Swaptions and caps are quoted and hedged with one SABR fit per expiry and swap length, usually with beta fixed; the grid of fits is the volatility cube ([sabr-for-rates-and-the-volatility-cube](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md)).
-- **Three quotes, three dials.** A market quoting the at-the-money volatility and the 25-delta put and call, as at 92.15 and 119.93 here, hands over three numbers for alpha, rho and nu ([sabr-calibration-from-three-quotes](05-sabr-calibration-from-three-quotes.md)).
-- **Hedging with the smile.** Hagan's paper exists because a hedge depends on how the smile moves with the forward. At beta 1 the SABR smile rides along, and the hedge that follows is on [smile-adjusted-delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md).
+- **Interest-rate options.** Swaptions and caps are quoted and hedged with one SABR fit per expiry and swap length, usually with beta fixed; the grid of fits is the volatility cube ([SABR for rates](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md)).
+- **Three quotes, three dials.** A market quoting the at-the-money volatility and the 25-delta put and call, as at 92.15 and 119.93 here, hands over three numbers for alpha, rho and nu ([SABR from three quotes](05-sabr-calibration-from-three-quotes.md)).
+- **Hedging with the smile.** Hagan's paper exists because a hedge depends on how the smile moves with the forward. At beta 1 the SABR smile rides along, and the hedge that follows is on [Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md).
 
 > **Say it back**
 > SABR lets a forward's volatility follow its own random walk, correlated with the forward's. Hagan's formula turns the four dials into one Black volatility per strike: the level, bent by z/chi(z) for the distance to the strike, lifted by a time factor. The bend is a shortest route: a forward reaches a low strike most cheaply by letting its volatility rise on the way, and negative correlation makes that cheaper still, which is the skew. At one year the formula sits within 0.05 vol points of the simulated model at the quoted strikes, and drifts away toward low strikes and long expiries. It is a fast approximation of the model, not the model.
@@ -743,16 +721,16 @@ The two outputs match line for line: both generators produce the same integers, 
 
 ## What this builds on
 
-- [heston-model](01-heston-model.md): volatility with a random walk of its own, correlated with the price. SABR keeps the idea, drops the pull toward a long-run level, and writes it on a forward.
-- [euler-maruyama-scheme](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): stepping a random equation through small time steps; road 3 is this scheme on the log-forward.
-- [black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md): the forward that drifts nowhere, and the formula every SABR volatility is fed into.
+- [The Heston model](01-heston-model.md): volatility with a random walk of its own, correlated with the price. SABR keeps the idea, drops the pull toward a long-run level, and writes it on a forward.
+- [Euler-Maruyama](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): stepping a random equation through small time steps; road 3 is this scheme on the log-forward.
+- [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md): the forward that drifts nowhere, and the formula every SABR volatility is fed into.
 
 ## Where this goes next
 
-- [sabr-calibration-from-three-quotes](05-sabr-calibration-from-three-quotes.md): the inverse, three market volatilities in and alpha, rho and nu out.
-- [sabr-for-rates-and-the-volatility-cube](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md): the same formula across expiries and swap lengths, with beta fixed and the forward shifted.
+- [SABR from three quotes](05-sabr-calibration-from-three-quotes.md): the inverse, three market volatilities in and alpha, rho and nu out.
+- [SABR for rates](../29-Caps%2C%20Floors%20and%20Swaptions/07-sabr-for-rates-and-the-volatility-cube.md): the same formula across expiries and swap lengths, with beta fixed and the forward shifted.
 
-This card turned four dials into a smile; a desk is handed the smile and needs the dials, and whether three quotes pin down three dials is the question [sabr-calibration-from-three-quotes](05-sabr-calibration-from-three-quotes.md) answers.
+This card turned four dials into a smile; a desk is handed the smile and needs the dials, and whether three quotes pin down three dials is the question [SABR from three quotes](05-sabr-calibration-from-three-quotes.md) answers.
 
 ---
 

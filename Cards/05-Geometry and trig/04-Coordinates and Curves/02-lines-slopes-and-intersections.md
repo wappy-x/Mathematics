@@ -1,31 +1,12 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Coordinates and Curves
-topic: Straight roads on a grid
-item: Lines
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/01-distance-and-midpoint|distance-and-midpoint]]"
-  - "[[Cards/03-Algebra/01-Letters and Equations/04-two-equations-two-unknowns|two-equations-two-unknowns]]"
-next:
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/08-triangle-centres|triangle-centres]]"
-  - "[[Cards/05-Geometry and trig/06-Beyond Euclid/05-elliptic-curves-and-point-addition|elliptic-curves-and-point-addition]]"
-  - "[[Cards/16-Numerical analysis/04-Interpolation and Approximation/01-linear-interpolation-and-extrapolation|linear-interpolation-and-extrapolation]]"
-tags: [mathematics, geometry and trig, lines-slopes-and-intersections]
----
-
 # Lines: slope, intercept, and three ways to write the same line
 
-Geometry and trig → Coordinates and Curves → Straight roads on a grid → Lines
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Coordinates and Curves](../../../SYLLABUS.md#w05-s04) → Lines
 
 ---
 
 ## General Overview
 
-A delivery firm maps its town on a kilometre grid, depot D at (0, 0). A position is written (east, north): (6, 3) is 6 km east and 3 km north ([distance-and-midpoint](01-distance-and-midpoint.md)).
+A delivery firm maps its town on a kilometre grid, depot D at (0, 0). A position is written (east, north): (6, 3) is 6 km east and 3 km north ([Distance and midpoint](01-distance-and-midpoint.md)).
 
 Route A runs straight from the depot to E at (10, 5). Route B runs from Q at (3, 9) to R at (7, 1). A ring road C runs 5 km north of route A the whole way. How steep is each road? Where do two roads meet? Do they cross square?
 
@@ -93,7 +74,7 @@ $$x = \frac{pd - bq}{ad - bc} \qquad y = \frac{aq - cp}{ad - bc}$$
 
 ### Step 0: a straight road has one slope
 
-Under any two points of route A draw the right triangle: one side east, one north, the road as the long side. All such triangles have the same angles, so they are similar and keep one ratio of sides ([similar-triangles-and-scale](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)). Rise over run is that ratio, so the slope is the same whichever two points are used.
+Under any two points of route A draw the right triangle: one side east, one north, the road as the long side. All such triangles have the same angles, so they are similar and keep one ratio of sides ([Similar triangles](../01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md)). Rise over run is that ratio, so the slope is the same whichever two points are used.
 
 ### Step 1: the three forms say the same thing
 
@@ -128,11 +109,11 @@ Routes A and B pass: 0.5 × (−2) = −1. The points agree: in triangle D, J, Q
 
 ### Step 4: meeting means solving both at once
 
-A point on both roads satisfies x − 2y = 0 and 2x + y = 15, two equations in two unknowns ([two-equations-two-unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)). Eliminating one letter gives the formula above: crossing number 5, so x = 30/5 = 6 and y = 15/5 = 3.
+A point on both roads satisfies x − 2y = 0 and 2x + y = 15, two equations in two unknowns ([Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md)). Eliminating one letter gives the formula above: crossing number 5, so x = 30/5 = 6 and y = 15/5 = 3.
 
 The parametric form is shorter. Every point of route A is (10t, 5t). Put it into route B: 2(10t) + 5t = 15, so 25t = 15 and t = 0.6, giving (6, 3) again. On route B the same point has s = 0.75. Both dials lie between 0 and 1, so the junction is on both roads, not their extensions.
 
-A second test of the right angle skips slopes: the steps (10, 5) and (4, −8) have dot product 0, which means perpendicular ([dot-product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)). It never divides, so it handles vertical streets too.
+A second test of the right angle skips slopes: the steps (10, 5) and (4, −8) have dot product 0, which means perpendicular ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)). It never divides, so it handles vertical streets too.
 
 ---
 
@@ -370,7 +351,7 @@ The two outputs match line for line.
 - **Routing and maps.** Road segments are stored as a start and a step; a junction is Step 4, with both dials checked.
 - **Computer graphics.** Rays and shadows use the parametric form, a dial kept inside the segment.
 - **Surveying.** A plot corner is where two boundary lines meet, checked square by the slope product.
-- **Reading between data points.** The line through two readings, read in the middle, is linear-interpolation-and-extrapolation.
+- **Reading between data points.** The line through two readings, read in the middle, is Linear interpolation.
 
 > **Say it back**
 > A straight line climbs the same amount per step east: its slope. It can be written as slope and crossing height, as ax + by = p, or as a start plus multiples of a step. Equal slopes never meet unless they are one line. Slopes multiplying to −1 cross square. Two lines meet where both equations hold.
@@ -379,16 +360,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [distance-and-midpoint](01-distance-and-midpoint.md): the grid of (x, y) positions, and the distance formula behind the perpendicular proof.
-- [two-equations-two-unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): elimination and the crossing number that finds the junction.
+- [Distance and midpoint](01-distance-and-midpoint.md): the grid of (x, y) positions, and the distance formula behind the perpendicular proof.
+- [Two equations, two unknowns](../../03-Algebra/01-Letters%20and%20Equations/04-two-equations-two-unknowns.md): elimination and the crossing number that finds the junction.
 
 ## Where this goes next
 
-- [triangle-centres](08-triangle-centres.md): special lines of a triangle, intersected, locate its centres.
-- [elliptic-curves-and-point-addition](../06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): a line through two points of a curve meets it in a third, which defines an addition.
-- linear-interpolation-and-extrapolation: the line through two readings, used to estimate between them.
+- [Triangle centres](08-triangle-centres.md): special lines of a triangle, intersected, locate its centres.
+- [Elliptic curves](../06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): a line through two points of a curve meets it in a third, which defines an addition.
+- Linear interpolation: the line through two readings, used to estimate between them.
 
-Two distinct lines meet once or never; a line meeting a curve, possibly twice, is where [circles-and-parabolas](04-circles-and-parabolas.md) begins.
+Two distinct lines meet once or never; a line meeting a curve, possibly twice, is where [Circles and parabolas](04-circles-and-parabolas.md) begins.
 
 ---
 

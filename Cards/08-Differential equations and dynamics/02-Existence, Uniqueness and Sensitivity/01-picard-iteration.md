@@ -1,26 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Existence, Uniqueness and Sensitivity
-topic: Successive approximation
-item: Picard iteration
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/01-what-a-differential-equation-says|what-a-differential-equation-says]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/02-fundamental-theorem-of-calculus|fundamental-theorem-of-calculus]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/05-taylor-series|taylor-series]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/02-Existence, Uniqueness and Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem|lipschitz-and-the-picard-lindelof-theorem]]"
-  - "[[Cards/17-Topology/01-Metric Spaces/08-banach-fixed-point-in-metric-spaces|banach-fixed-point-in-metric-spaces]]"
-  - "[[Cards/18-Functional analysis/06-Banach Algebras and Fixed Points/05-schauder-fixed-point-theorem|schauder-fixed-point-theorem]]"
-tags: [mathematics, differential equations and dynamics, picard-iteration]
----
-
 # Picard iteration: turn the equation into an integral, then keep feeding the guess back in
 
-Differential equations and dynamics → Existence, Uniqueness and Sensitivity → Successive approximation → Picard iteration
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Existence, Uniqueness and Sensitivity](../../../SYLLABUS.md#w08-s02) → Picard iteration
 
 ---
 
@@ -34,7 +14,7 @@ This loop is **Picard iteration**, after Émile Picard, who used it late in the 
 
 **Rewrite the equation as "the solution is its starting value plus its accumulated rate", start from a constant guess and keep substituting; when the rate cannot change faster than a fixed multiple of the unknown, the guesses converge to the solution.**
 
-**What kind of fact this is:** a method; that its guesses converge is a theorem, proved in Why it works, and completed into existence and uniqueness on [lipschitz-and-the-picard-lindelof-theorem](02-lipschitz-and-the-picard-lindelof-theorem.md).
+**What kind of fact this is:** a method; that its guesses converge is a theorem, proved in Why it works, and completed into existence and uniqueness on [The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md).
 
 ### The picture: each guess hugs the true curve a little longer
 
@@ -89,7 +69,7 @@ $$\phi_n(t) = 1 + t + \frac{t^2}{2!} + \dots + \frac{t^n}{n!}$$
 
 - **The rule is continuous.** Then every integral exists. If the rule jumps, the limit need not have a slope everywhere.
 - **The rule has a Lipschitz constant $L$:** the rate changes by at most L times any change in the unknown. Without it the guesses may find one solution among several: y' = √y from 0 gives the zero curve and misses t^2/4.
-- **The guesses stay where the constant holds.** For y' = y, everywhere. For y' = y^2 the constant grows with y, and convergence stops at the blow-up time: [blow-up-and-the-life-span-of-a-solution](03-blow-up-and-the-life-span-of-a-solution.md).
+- **The guesses stay where the constant holds.** For y' = y, everywhere. For y' = y^2 the constant grows with y, and convergence stops at the blow-up time: [Blow-up](03-blow-up-and-the-life-span-of-a-solution.md).
 - **The integrals are exact.** On a computer each carries a quadrature error, and the guesses converge to the discretised problem's solution.
 
 ---
@@ -106,7 +86,7 @@ If $y$ solves the equation, integrate both sides from 0 to t: by the fundamental
 
 ### Step 2: for the yeast, each pass adds one term
 
-The rule returns the guess itself, so $\phi_1(t) = 1 + \int_0^t 1\,ds = 1 + t$. Integrating $s^k/k!$ from 0 to t gives $t^{k+1}/(k+1)!$, so each pass lifts every term one power and puts a fresh 1 in front. By induction $\phi_n$ is the degree-n Taylor polynomial of $e^t$ ([taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). The method rebuilt the exponential without using it.
+The rule returns the guess itself, so $\phi_1(t) = 1 + \int_0^t 1\,ds = 1 + t$. Integrating $s^k/k!$ from 0 to t gives $t^{k+1}/(k+1)!$, so each pass lifts every term one power and puts a fresh 1 in front. By induction $\phi_n$ is the degree-n Taylor polynomial of $e^t$ ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)). The method rebuilt the exponential without using it.
 
 ### Step 3: the gaps between guesses shrink like a factorial
 
@@ -135,7 +115,7 @@ These bounds sum to $(M/L)(e^{LT} - 1)$, so for every ε > 0 there is an N with 
 
 The method does not need polynomials. A bucket holds water h = 25 cm deep and drains as h' = −0.2 √h cm per minute. The first pass uses the starting rate, 1 cm per minute: 15 cm at 10 minutes. The second integrates −0.2 √(25 − s) and reads 16.0793 cm. Four more, by trapezoids on a grid, settle at 16.0000 cm, which the exact solution (5 − 0.1t)^2 confirms; the bucket empties at 50 minutes.
 
-A second road to the yeast is Euler's rule: from each point, step a short time along the slope the rule gives. It has its own card, [eulers-method](../05-Numerical%20Evolution/01-eulers-method.md). Steps of 0.01 h reach 2.704814 g; steps of 0.001 h reach 2.716924 g. Stepping marches through time; Picard improves the whole curve at once.
+A second road to the yeast is Euler's rule: from each point, step a short time along the slope the rule gives. It has its own card, [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md). Steps of 0.01 h reach 2.704814 g; steps of 0.001 h reach 2.716924 g. Stepping marches through time; Picard improves the whole curve at once.
 
 ---
 
@@ -382,7 +362,7 @@ The two outputs match line for line. A tenfold smaller Euler step cuts its gap t
 
 - **Existence proofs.** Most textbook proofs that an initial value problem has a solution build it this way.
 - **Series solutions.** For a polynomial rule, a few passes by hand give a solution's first power-series terms.
-- **Sensitivity to the start.** The same gap estimate, applied to two solutions from different starts, bounds how far they drift apart: [gronwall-and-continuous-dependence](04-gronwall-and-continuous-dependence.md).
+- **Sensitivity to the start.** The same gap estimate, applied to two solutions from different starts, bounds how far they drift apart: [Gronwall's inequality](04-gronwall-and-continuous-dependence.md).
 
 > **Say it back**
 > A differential equation with a starting value is one integral equation: the value is the start plus the accumulated rate. Picard iteration starts from the constant curve and keeps putting the latest guess into the rule and integrating. With a Lipschitz constant the gaps between guesses shrink like a factorial, and the limit solves the equation. For y' = y from 1 the guesses are the partial sums of e^t; the fifth reads 2.7167 at t = 1 against 2.7183.
@@ -391,15 +371,15 @@ The two outputs match line for line. A tenfold smaller Euler step cuts its gap t
 
 ## What this builds on
 
-- [what-a-differential-equation-says](../01-Rate%20Equations/01-what-a-differential-equation-says.md): rate rule, starting value, solution.
-- [fundamental-theorem-of-calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md): the bridge between the equation and its integral form.
-- [taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the polynomials the yeast's guesses become.
+- [A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md): rate rule, starting value, solution.
+- [Fundamental theorem of calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md): the bridge between the equation and its integral form.
+- [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): the polynomials the yeast's guesses become.
 
 ## Where this goes next
 
-- [lipschitz-and-the-picard-lindelof-theorem](02-lipschitz-and-the-picard-lindelof-theorem.md): the limit exists, and it is the only solution.
-- banach-fixed-point-in-metric-spaces: any map that shrinks distances has one fixed point, Picard's recipe being one.
-- schauder-fixed-point-theorem: a fixed point without shrinking, giving solutions when the rule has no Lipschitz constant.
+- [The Picard-Lindelof theorem](02-lipschitz-and-the-picard-lindelof-theorem.md): the limit exists, and it is the only solution.
+- Banach's fixed point theorem: any map that shrinks distances has one fixed point, Picard's recipe being one.
+- Schauder: a fixed point without shrinking, giving solutions when the rule has no Lipschitz constant.
 
 ---
 

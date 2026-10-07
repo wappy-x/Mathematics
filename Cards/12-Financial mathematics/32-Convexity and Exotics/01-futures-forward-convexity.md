@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Convexity and Exotics
-topic: Settlement timing
-item: Futures against forwards
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/05-futures-margining-and-the-forward-futures-difference|futures-margining-and-the-forward-futures-difference]]"
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/04-hull-white-model|hull-white-model]]"
-next:
-  - "[[Cards/12-Financial mathematics/32-Convexity and Exotics/02-cms-and-the-convexity-adjustment|cms-and-the-convexity-adjustment]]"
-tags: [mathematics, financial mathematics, futures-forward-convexity]
----
-
 # Futures against forwards: the convexity that makes a rate future differ from an FRA
 
-Financial mathematics → Convexity and Exotics → Settlement timing → Futures against forwards
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Convexity and Exotics](../../../SYLLABUS.md#w12-s32) → Futures against forwards
 
 ---
 
@@ -89,7 +72,7 @@ $q_T$ is how spread out the random part of the short rate is on the fixing date.
 
 - **Rates follow the Hull-White model**: one random driver, normal kicks, pull-back, fitted to today's curve. Fatter tails or several drivers change the size; the sign argument of Step 3 survives in any model where high rates and a fast-growing bank account go together.
 - **Settlement is continuous and gains earn the bank rate.** Daily settlement moves the answer by a sliver; margin paid at a rate far from the bank rate needs its own model.
-- **The FRA pays at the end of the period, $U$.** An FRA that pays at $T$ with a discount factor has the same rate $K$. A plain payment at $T$ without that discount is a different contract; see [timing-and-in-arrears-adjustments](03-timing-and-in-arrears-adjustments.md).
+- **The FRA pays at the end of the period, $U$.** An FRA that pays at $T$ with a discount factor has the same rate $K$. A plain payment at $T$ without that discount is a different contract; see [Timing adjustments](03-timing-and-in-arrears-adjustments.md).
 - **One curve, no default.** A separate projection curve, or a rate compounded day by day over the period, changes the payoff and needs its own derivation.
 - **The volatility is known.** The adjustment moves with $\sigma^2$, so a 10% error in $\sigma$ is roughly a 20% error in the adjustment.
 
@@ -111,7 +94,7 @@ A quantity whose expected next change is always zero is a **martingale**: its be
 
 $$R_0 = \text{average of } L_T.$$
 
-No discounting anywhere: the one-night discount was known at each step, so the bank account dropped out. This is the result of [futures-margining-and-the-forward-futures-difference](../03-Contracts%20and%20No-Arbitrage/05-futures-margining-and-the-forward-futures-difference.md), carried from shares to rates.
+No discounting anywhere: the one-night discount was known at each step, so the bank account dropped out. This is the result of [Futures](../03-Contracts%20and%20No-Arbitrage/05-futures-margining-and-the-forward-futures-difference.md), carried from shares to rates.
 
 ### Step 2: the FRA rate needs no model
 
@@ -149,7 +132,7 @@ The bank-account piece is most of it: the bank account absorbs three years of ra
 
 The Hull-White model writes the short rate as $r_t = \varphi(t) + X_t$. The deterministic part $\varphi$ is fitted so the model reprices today's curve exactly. The random part $X_t$ starts at zero, is pulled back towards zero at speed $\kappa$, and is kicked by normal (bell-curve) shocks of size $\sigma$. Its value $X_T$ at the fixing date is normal, centred on zero, with variance $q_T$.
 
-The [hull-white-model](../30-Short-Rate%20Models/04-hull-white-model.md) card gives the bond price at $T$:
+The [Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md) card gives the bond price at $T$:
 
 $$P(T,U) = \frac{D(U)}{D(T)}\,\exp\!\left(-\tfrac12 b(h)^2 q_T - b(h)\,c_T - b(h)\,X_T\right).$$
 
@@ -174,7 +157,7 @@ The $c_T$ term comes from $\varphi$: to reprice today's curve while rates wander
 
 **(d) The two moments.** Solving the equation for $X_t$: $X_T = \sigma\int_0^T e^{-\kappa(T-s)}\,dW_s$. By the Itô isometry (the variance of a stochastic integral is the integral of the squared integrand), $\text{var}(X_T) = \sigma^2\int_0^T e^{-2\kappa v}\,dv = q_T$. Swapping the order of integration, $\int_0^T X_s\,ds = \sigma\int_0^T b(T-s)\,dW_s$, so $\text{cov}\!\left(X_T, \int_0^T X_s\,ds\right) = \sigma^2\int_0^T e^{-\kappa v}\,b(v)\,dv$. The integrand is the derivative of $\tfrac12 b(v)^2$, since $b'(v) = e^{-\kappa v}$; so the covariance is $\tfrac12\sigma^2 b(T)^2 = c_T$.
 
-**(e) The bond price.** Given $X_T$, $\int_T^U X_s\,ds = b(h)X_T + (\text{a normal variable independent of } X_T)$. Averaging $\exp\left(-\int_T^U r_s ds\right)$ over the independent part gives a constant times $e^{-b(h)X_T}$. The fitting condition on $\varphi$ fixes the constant; the calculation, done on the [hull-white-model](../30-Short-Rate%20Models/04-hull-white-model.md) card, yields the bond formula of Step 4. Road 3 of the code checks it numerically: the simulated average of $P(T,U)/B_T$ reprices $D(U)$ to five decimal places.
+**(e) The bond price.** Given $X_T$, $\int_T^U X_s\,ds = b(h)X_T + (\text{a normal variable independent of } X_T)$. Averaging $\exp\left(-\int_T^U r_s ds\right)$ over the independent part gives a constant times $e^{-b(h)X_T}$. The fitting condition on $\varphi$ fixes the constant; the calculation, done on the [Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md) card, yields the bond formula of Step 4. Road 3 of the code checks it numerically: the simulated average of $P(T,U)/B_T$ reprices $D(U)$ to five decimal places.
 
 **(f) The average.** $b(h)X_T$ is normal with centre 0 and variance $b(h)^2 q_T$, so $\text{avg}\,e^{b(h)X_T} = e^{\frac12 b(h)^2 q_T}$ (complete the square in the bell-curve integral). With (e), $\text{avg}\,Z_T = G_0 e^{C}$ with $C = b(h)^2 q_T + b(h) c_T$. By (a), $R_0 = (G_0 e^C - 1)/\alpha$; by (b), $R_0 - K = G_0(e^C - 1)/\alpha$.
 
@@ -188,7 +171,7 @@ Many books quote the adjustment for a **continuously compounded** rate, $\ln Z_T
 
 $$\text{cc adjustment} = \frac{C - \tfrac12 b(h)^2 q_T}{h} = \frac{b(h)}{h}\left[b(h)\left(1 - e^{-2\kappa T}\right) + 2\kappa\,b(T)^2\right]\frac{\sigma^2}{4\kappa}.$$
 
-The right-hand form is the one in Hull's textbook; the code types it separately and the two agree to within $10^{-12}$: 5.50 basis points. Let the pull-back vanish, $\kappa \to 0$: then $b(v) \to v$ and the formula becomes the **Ho-Lee rule**, $\tfrac12\sigma^2 T U$, 9.97 basis points. That rule is quick and common, and it is the dark-blue line in the chart. The trinomial tree that gives road 2 of the code is the Hull-White tree, built as in [hull-white-model](../30-Short-Rate%20Models/04-hull-white-model.md).
+The right-hand form is the one in Hull's textbook; the code types it separately and the two agree to within $10^{-12}$: 5.50 basis points. Let the pull-back vanish, $\kappa \to 0$: then $b(v) \to v$ and the formula becomes the **Ho-Lee rule**, $\tfrac12\sigma^2 T U$, 9.97 basis points. That rule is quick and common, and it is the dark-blue line in the chart. The trinomial tree that gives road 2 of the code is the Hull-White tree, built as in [Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md).
 
 ---
 
@@ -612,9 +595,9 @@ The two outputs agree line for line, including the simulation, because both lang
 - **Building a curve from futures.** Rate desks read short- and medium-dated rates off a strip of futures, subtract a convexity adjustment for each, and then build forward rates and swap rates from the result. The adjustment is usually model-based, as here, with $\sigma$ and $\kappa$ fitted to option prices.
 - **Hedging swaps with futures.** The hedge gains slightly whichever way rates move; the adjustment is the price of that gain, and getting it wrong shows up as a slow bleed.
 - **After LIBOR.** Dollar LIBOR ended in June 2023; the dollar market's three-month rate futures now reference SOFR, an overnight rate compounded over the period, still quoted as 100 minus the rate at $25 per basis point. The payoff differs, but the evening-settlement argument of Step 3 is unchanged. *Conventions verified 2026-09-28.*
-- **Constant-maturity swaps.** A swap that pays a 10-year swap rate every year has its own convexity, from a different nonlinear payoff: [cms-and-the-convexity-adjustment](02-cms-and-the-convexity-adjustment.md).
-- **Paying at the wrong date.** A rate paid at its fixing date instead of its natural end date needs the payment-date piece alone: [timing-and-in-arrears-adjustments](03-timing-and-in-arrears-adjustments.md).
-- **Paying in another currency.** A rate paid in a currency other than its own picks up a covariance with the exchange rate: [quanto-adjustments-for-rates](04-quanto-adjustments-for-rates.md).
+- **Constant-maturity swaps.** A swap that pays a 10-year swap rate every year has its own convexity, from a different nonlinear payoff: [Constant-maturity swaps](02-cms-and-the-convexity-adjustment.md).
+- **Paying at the wrong date.** A rate paid at its fixing date instead of its natural end date needs the payment-date piece alone: [Timing adjustments](03-timing-and-in-arrears-adjustments.md).
+- **Paying in another currency.** A rate paid in a currency other than its own picks up a covariance with the exchange rate: [Quanto rates](04-quanto-adjustments-for-rates.md).
 
 > **Say it back**
 > An FRA and a rate future fix the same rate but pay at different times: once at the end, or every evening. The FRA rate comes from today's curve alone. The futures rate is the plain average of the final rate, while the FRA rate is an average weighted by discount factors that are small exactly when rates are high. So the futures rate is higher. In the Hull-White model the gap is $G_0(e^C - 1)/\alpha$, with a payment-date piece and a larger bank-account piece: 5.99 basis points at three years in this card's market.
@@ -623,12 +606,12 @@ The two outputs agree line for line, including the simulation, because both lang
 
 ## What this builds on
 
-- [futures-margining-and-the-forward-futures-difference](../03-Contracts%20and%20No-Arbitrage/05-futures-margining-and-the-forward-futures-difference.md): evening settlement, and the proof that futures and forwards agree when rates are known. This card is the case where they are not.
-- [hull-white-model](../30-Short-Rate%20Models/04-hull-white-model.md): the short-rate model, its fit to today's curve, its bond-price formula and its trinomial tree. All four are used here.
+- [Futures](../03-Contracts%20and%20No-Arbitrage/05-futures-margining-and-the-forward-futures-difference.md): evening settlement, and the proof that futures and forwards agree when rates are known. This card is the case where they are not.
+- [Hull-White](../30-Short-Rate%20Models/04-hull-white-model.md): the short-rate model, its fit to today's curve, its bond-price formula and its trinomial tree. All four are used here.
 
 ## Where this goes next
 
-- [cms-and-the-convexity-adjustment](02-cms-and-the-convexity-adjustment.md): the same weighted-against-plain average, when the payoff is a swap rate rather than a three-month rate and the nonlinearity sits in the payoff itself.
+- [Constant-maturity swaps](02-cms-and-the-convexity-adjustment.md): the same weighted-against-plain average, when the payoff is a swap rate rather than a three-month rate and the nonlinearity sits in the payoff itself.
 
 This card's weight lived in the settlement; the open question is how big the gap gets when a contract pays a long swap rate on a date that rate was never built for.
 

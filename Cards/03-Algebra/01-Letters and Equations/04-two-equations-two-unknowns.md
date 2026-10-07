@@ -1,27 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Letters and Equations
-topic: Two unknowns
-item: Two equations, two unknowns
-kind: method
-status: verified
-updated: 2026-09-07
-needs_first:
-  - "[[Cards/03-Algebra/01-Letters and Equations/02-linear-equations|linear-equations]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/05-arithmetic-laws|arithmetic-laws]]"
-next:
-  - "[[Cards/03-Algebra/03-Vectors/03-linear-combinations-and-span|linear-combinations-and-span]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/01-matrix-equation-ax-b|matrix-equation-ax-b]]"
-tags:
-  - mathematics
-  - algebra
-  - two-equations-two-unknowns
----
-
 # Two equations, two unknowns: substitute or eliminate, and the two ways a crossing fails
 
-Algebra → Letters and Equations → Two unknowns → Two equations, two unknowns
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Letters and Equations](../../../SYLLABUS.md#w03-s01) → Two equations, two unknowns
 
 ---
 
@@ -55,7 +34,7 @@ The lower line at the left edge is Friday's receipt: every pair of prices that c
 
 ## The formula
 
-Call the adult price $x$ and the child price $y$. Both are numbers you have not been told yet ([letters-for-numbers](01-letters-for-numbers.md)). Each receipt is then one equation:
+Call the adult price $x$ and the child price $y$. Both are numbers you have not been told yet ([Letters for numbers](01-letters-for-numbers.md)). Each receipt is then one equation:
 
 $$2x + 3y = 41 \qquad x + 2y = 24$$
 
@@ -94,7 +73,7 @@ A pair that obeys both rules must sit on both lines. That is the crossing point,
 
 ### Step 1: substitution, trade one letter away
 
-Take Saturday's receipt, x + 2y = 24, and make the adult price the subject ([rearranging-formulas](03-rearranging-formulas.md)):
+Take Saturday's receipt, x + 2y = 24, and make the adult price the subject ([Rearranging a formula](03-rearranging-formulas.md)):
 
 $$x = 24 - 2y$$
 
@@ -102,7 +81,7 @@ That is what Saturday allows: pick a child price and the adult price follows. No
 
 $$2(24 - 2y) + 3y = 41$$
 
-Multiply out the bracket ([arithmetic-laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)): 48 − 4y + 3y = 41, so 48 − y = 41, so y = 7. One equation, one unknown, undone step by step — that is the card before this one ([linear-equations](02-linear-equations.md)). Feed 7.00 back into x = 24 − 2y and the adult price is 10.00.
+Multiply out the bracket ([The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)): 48 − 4y + 3y = 41, so 48 − y = 41, so y = 7. One equation, one unknown, undone step by step — that is the card before this one ([Linear equations](02-linear-equations.md)). Feed 7.00 back into x = 24 − 2y and the adult price is 10.00.
 
 ### Step 2: elimination, make one letter cancel
 
@@ -151,7 +130,7 @@ Now suppose the slip had read 82.00 instead. The crossing number is still 0, but
 
 So the crossing number sorts the three outcomes. Not zero: one answer. Zero, with the totals disagreeing: no answer, parallel lines. Zero, with the totals agreeing too: a whole line of answers, one line drawn twice.
 
-A fourth route: draw both lines and read the crossing off the paper — honest, fast, and only as accurate as your pencil. [matrix-equation-ax-b](../05-Solving%20Systems/01-matrix-equation-ax-b.md) runs this same elimination with the counts stacked in a grid, which is what you want with ten unknowns rather than two.
+A fourth route: draw both lines and read the crossing off the paper — honest, fast, and only as accurate as your pencil. [Solving A x = b](../05-Solving%20Systems/01-matrix-equation-ax-b.md) runs this same elimination with the counts stacked in a grid, which is what you want with ten unknowns rather than two.
 
 ---
 
@@ -398,7 +377,7 @@ The two outputs match line for line.
 - **Two bills over the same two items.** Any two receipts or invoices covering the same two unknown unit prices are this card, unchanged.
 - **Choosing between two plans.** Two phone tariffs, each a starting charge plus a rate, meet at one number of minutes — the crossing of two lines.
 - **Mixing to a target.** Two ingredients, one target weight and one target strength: two facts, two unknown amounts.
-- **Every later system.** Ten unknowns and ten equations yield to exactly this doubling and subtracting, done in an orderly sweep — what [matrix-equation-ax-b](../05-Solving%20Systems/01-matrix-equation-ax-b.md) sets up.
+- **Every later system.** Ten unknowns and ten equations yield to exactly this doubling and subtracting, done in an orderly sweep — what [Solving A x = b](../05-Solving%20Systems/01-matrix-equation-ax-b.md) sets up.
 
 > **Say it back**
 > One equation with two unknowns is a line of possible pairs, not an answer. Two of them cross at one pair, and that pair is the answer. You find it by substitution — make one letter the subject and push it into the other equation — or by elimination — scale one equation until a letter matches, then subtract it away. Both give an adult ticket at 10.00 dollars and a child ticket at 7.00. If the crossing number is zero the lines are parallel and nothing fits, or identical and everything on them fits, which means the second receipt never told you anything new.
@@ -407,13 +386,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [linear-equations](02-linear-equations.md): undoing one equation with one unknown, which is what both routes reduce the problem to.
-- [arithmetic-laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): multiplying out 2(24 − 2y), and why doubling a whole equation keeps it true.
+- [Linear equations](02-linear-equations.md): undoing one equation with one unknown, which is what both routes reduce the problem to.
+- [The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): multiplying out 2(24 − 2y), and why doubling a whole equation keeps it true.
 
 ## Where this goes next
 
-- [linear-combinations-and-span](../03-Vectors/03-linear-combinations-and-span.md): the same two equations read as a question about mixing two lists of numbers to hit a target.
-- [matrix-equation-ax-b](../05-Solving%20Systems/01-matrix-equation-ax-b.md): the counts stacked in a grid, the crossing number given its real name, and the same three outcomes for any number of unknowns.
+- [Linear combinations and span](../03-Vectors/03-linear-combinations-and-span.md): the same two equations read as a question about mixing two lists of numbers to hit a target.
+- [Solving A x = b](../05-Solving%20Systems/01-matrix-equation-ax-b.md): the counts stacked in a grid, the crossing number given its real name, and the same three outcomes for any number of unknowns.
 
 ---
 

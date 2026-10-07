@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Inflation and Real Rates
-topic: Locking in inflation
-item: Inflation swaps
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/34-Inflation and Real Rates/03-breakeven-inflation|breakeven-inflation]]"
-  - "[[Cards/12-Financial mathematics/28-Swaps/01-interest-rate-swaps|interest-rate-swaps]]"
-next:
-  - "[[Cards/12-Financial mathematics/34-Inflation and Real Rates/05-inflation-options-in-outline|inflation-options-in-outline]]"
-tags: [mathematics, financial-mathematics, zero-coupon-inflation-swaps]
----
-
 # Inflation swaps: a fixed rate against realised inflation
 
-Financial mathematics → Inflation and Real Rates → Locking in inflation → Inflation swaps
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Inflation and Real Rates](../../../SYLLABUS.md#w12-s34) → Inflation swaps
 
 ---
 
@@ -59,7 +42,7 @@ The rising line is the fund's net payment; the flat line is zero. They cross at 
 
 Notation first, in words. The **reference index** $I$ is the price index the contract names; $I_0$ is its value at the start and $I_T$ its value at maturity, $T$ years later. Their ratio $J_T$ is the **index ratio**: 1.15 means prices rose 15 percent in total. The notional is $N$ and the fixed rate in the contract is $K$, quoted per year and compounded once a year.
 
-Two bond prices carry the whole card. $D(T)$ is today's price of one dollar paid at $T$: a **nominal zero**, a bond with no coupons paying a fixed number of dollars. $R(T)$ is today's price, in dollars, of a payment at $T$ of $J_T$ dollars: a **real zero**, a bond paying the index's rise. Its price is set by a **real yield**: the yearly return above inflation ([real-rates-and-the-fisher-equation](01-real-rates-and-the-fisher-equation.md)).
+Two bond prices carry the whole card. $D(T)$ is today's price of one dollar paid at $T$: a **nominal zero**, a bond with no coupons paying a fixed number of dollars. $R(T)$ is today's price, in dollars, of a payment at $T$ of $J_T$ dollars: a **real zero**, a bond paying the index's rise. Its price is set by a **real yield**: the yearly return above inflation ([Real rates](01-real-rates-and-the-fisher-equation.md)).
 
 The swap pays the inflation receiver, at $T$:
 
@@ -108,10 +91,10 @@ $$V = N\,\bigl[\,J_t\,R(T) - (1+K)^M D(T)\,\bigr]$$
 
 ### When it holds
 
-- **Both bonds trade, on the same index, lag and date.** Real linkers carry coupons, a principal floor and their own index rules ([inflation-linked-bonds](02-inflation-linked-bonds.md)), and trade less often than swaps, so the swap rate and the bond breakeven differ by a **basis**: a spread to explain, not free money.
+- **Both bonds trade, on the same index, lag and date.** Real linkers carry coupons, a principal floor and their own index rules ([Inflation-linked bonds](02-inflation-linked-bonds.md)), and trade less often than swaps, so the swap rate and the bond breakeven differ by a **basis**: a spread to explain, not free money.
 - **Nobody defaults.** Without collateral, a swap with a weaker counterparty is worth less to the side owed money.
 - **The fixed leg compounds for the whole term.** The swap pays $(1+K)^T$, not $1 + KT$. Treating it as simple interest turns the 13,061.94 dollar payout into 20,000.00.
-- **The payment is a straight line in the index.** A floor or cap on inflation is an option and needs a model of how inflation moves ([inflation-options-in-outline](05-inflation-options-in-outline.md)).
+- **The payment is a straight line in the index.** A floor or cap on inflation is an option and needs a model of how inflation moves ([Inflation caps and floors in outline](05-inflation-options-in-outline.md)).
 
 ---
 
@@ -119,7 +102,7 @@ $$V = N\,\bigl[\,J_t\,R(T) - (1+K)^M D(T)\,\bigr]$$
 
 ### Step 0: the unknown leg can be bought today
 
-Nobody knows $J_T$. But a real zero pays exactly $J_T$ dollars at $T$, and it has a price today, $R(T)$. Holding $N$ of them delivers the inflation leg in every outcome. Two things that pay the same in every outcome cost the same, or one could be sold against the other for a riskless profit ([no-arbitrage-and-the-law-of-one-price](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)). So the inflation leg is worth $N\,R(T)$, whatever anyone expects inflation to be.
+Nobody knows $J_T$. But a real zero pays exactly $J_T$ dollars at $T$, and it has a price today, $R(T)$. Holding $N$ of them delivers the inflation leg in every outcome. Two things that pay the same in every outcome cost the same, or one could be sold against the other for a riskless profit ([No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)). So the inflation leg is worth $N\,R(T)$, whatever anyone expects inflation to be.
 
 ### Step 1: the fixed leg is a known number of dollars
 
@@ -139,11 +122,11 @@ Write each bond price through its yield: $D(T) = (1+n_T)^{-T}$ and $R(T) = (1+y_
 
 $$1 + k_T = \frac{1+n_T}{1+y_T}.$$
 
-That is the exact Fisher relation ([real-rates-and-the-fisher-equation](01-real-rates-and-the-fisher-equation.md)): $1.03626 / 1.01 = 1.026$. So where both bonds trade, the swap rate equals the bond **breakeven**, the inflation at which the two bonds pay the same ([breakeven-inflation](03-breakeven-inflation.md)).
+That is the exact Fisher relation ([Real rates](01-real-rates-and-the-fisher-equation.md)): $1.03626 / 1.01 = 1.026$. So where both bonds trade, the swap rate equals the bond **breakeven**, the inflation at which the two bonds pay the same ([Breakeven inflation](03-breakeven-inflation.md)).
 
 ### Step 4: why no forecast enters
 
-List the possible states of the world at year 5, each with a **state price**: today's cost of one dollar paid only in that state ([state-prices-and-risk-neutral-pricing-in-one-period](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)). A payment is worth its amount in each state times that state's price, added up. The swap's payment is $N$ times the index ratio, less a fixed amount, so its sum needs only two totals: the state prices, which add to $D(T)$, and the state prices times the index ratio, which add to $R(T)$. How likely each state is and how investors feel about inflation risk enter only through those two bond prices.
+List the possible states of the world at year 5, each with a **state price**: today's cost of one dollar paid only in that state ([State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)). A payment is worth its amount in each state times that state's price, added up. The swap's payment is $N$ times the index ratio, less a fixed amount, so its sum needs only two totals: the state prices, which add to $D(T)$, and the state prices times the index ratio, which add to $R(T)$. How likely each state is and how investors feel about inflation risk enter only through those two bond prices.
 
 The code builds four made-up economies of 4,000 states, each with its own random index ratios and state prices, rescaled so both bonds are priced right. Their plain averages of inflation, each state counted equally, are 2.60, 3.50, 1.21 and 1.68 percent a year. All four price the swap at 2.600000 percent and the older swap at 27,289.86 dollars.
 
@@ -162,7 +145,7 @@ With a continuum of states, integrals replace sums. The argument fails once the 
 
 Two years ago someone entered a 7-year swap at 2.30 percent, receiving inflation. A swap already running is called **seasoned**. Since then the index has risen 6.00 percent: $J_t = 1.06$. Five years remain.
 
-Split the ratio at today: $I_T/I_0 = (I_t/I_0)(I_T/I_t)$. The first factor is known, 1.06. The second is what a 5-year real zero bought today pays. So the inflation leg is worth $1.06\,N\,R(5)$. The fixed leg is still $N(1.023)^7$, worth $N(1.023)^7 D(5)$. The difference is 27,289.86 dollars to the receiver: inflation so far has outrun 2.30 percent, and the market prices 2.60 percent ahead. It is the swap's version of a forward valued after inception ([forward-value-after-inception](../03-Contracts%20and%20No-Arbitrage/04-forward-value-after-inception.md)).
+Split the ratio at today: $I_T/I_0 = (I_t/I_0)(I_T/I_t)$. The first factor is known, 1.06. The second is what a 5-year real zero bought today pays. So the inflation leg is worth $1.06\,N\,R(5)$. The fixed leg is still $N(1.023)^7$, worth $N(1.023)^7 D(5)$. The difference is 27,289.86 dollars to the receiver: inflation so far has outrun 2.30 percent, and the market prices 2.60 percent ahead. It is the swap's version of a forward valued after inception ([An old forward](../03-Contracts%20and%20No-Arbitrage/04-forward-value-after-inception.md)).
 
 ### Step 6: many maturities make a curve
 
@@ -180,7 +163,7 @@ xychart-beta
 
 The smoother line is the swap curve, average inflation from today to each maturity. The jagged line is forward inflation for the gap ending at each maturity. A swap rate averages the forwards before it, so forwards run above a rising curve and below a falling one. The 10-year point, 2.50 percent, is the shelf's house breakeven.
 
-Between pillars the curve needs a rule. **Flat forward** holds forward inflation constant across each gap; it prices a 6-year swap at 2.57 percent. Other rules give other numbers ([curve-interpolation-and-shape](../02-Curves/05-curve-interpolation-and-shape.md)). The index also has seasons, rising faster in some months than others, so desks add a seasonal adjustment on top. The code rebuilds the 10-year point from ten one-year forward factors and lands on 2.500000 percent.
+Between pillars the curve needs a rule. **Flat forward** holds forward inflation constant across each gap; it prices a 6-year swap at 2.57 percent. Other rules give other numbers ([Between the pillars](../02-Curves/05-curve-interpolation-and-shape.md)). The index also has seasons, rising faster in some months than others, so desks add a seasonal adjustment on top. The code rebuilds the 10-year point from ten one-year forward factors and lands on 2.500000 percent.
 
 ### Step 7: the hedge cancels the index state by state
 
@@ -195,7 +178,7 @@ A US Treasury linker (TIPS) repays at maturity the larger of the inflated princi
 <details>
 <summary>Another way to see it: the index as an exchange rate</summary>
 
-Treat real dollars as a foreign currency and the index ratio as the exchange rate. A real zero is a foreign bond, the swap is a currency forward, and $1 + k_T = (1+n_T)/(1+y_T)$ is covered interest parity with the real yield as the foreign rate ([covered-interest-parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md)). Jarrow and Yildirim built their inflation model on exactly this analogy.
+Treat real dollars as a foreign currency and the index ratio as the exchange rate. A real zero is a foreign bond, the swap is a currency forward, and $1 + k_T = (1+n_T)/(1+y_T)$ is covered interest parity with the real yield as the foreign rate ([Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md)). Jarrow and Yildirim built their inflation model on exactly this analogy.
 
 </details>
 
@@ -675,10 +658,10 @@ The two outputs agree line for line.
 ## Where you meet it in real life
 
 - **Pension funds and insurers.** Liabilities that rise with prices are hedged by receiving inflation in swaps, often long ones, because linkers alone are too few.
-- **Market-implied inflation.** Central banks and analysts read the swap curve as inflation compensation over each horizon. The [breakeven-inflation](03-breakeven-inflation.md) card reads the same number from bonds.
+- **Market-implied inflation.** Central banks and analysts read the swap curve as inflation compensation over each horizon. The [Breakeven inflation](03-breakeven-inflation.md) card reads the same number from bonds.
 - **Linker desks.** A dealer holding TIPS pays inflation in swaps, keeping only nominal-rate risk and the floor.
 - **Inflation-linked revenue.** Utilities and infrastructure owners whose tariffs rise with prices pay inflation to fix their income in dollars.
-- **Models of inflation.** A model for inflation options is first fitted to the zero-coupon swap curve, because that curve is model-free ([inflation-options-in-outline](05-inflation-options-in-outline.md)).
+- **Models of inflation.** A model for inflation options is first fitted to the zero-coupon swap curve, because that curve is model-free ([Inflation caps and floors in outline](05-inflation-options-in-outline.md)).
 
 > **Say it back**
 > A zero-coupon inflation swap exchanges, once at maturity, the index's total rise on a notional against a fixed rate compounded over the term. The inflation leg is worth as many real zero-coupon bonds as the notional, and the fixed leg is a known dollar amount, so the par rate is the ratio of the two bond prices turned into a yearly rate: Fisher's nominal over real. No forecast enters, because the value depends on the state prices only through those two bonds. Swap rates at several maturities form a breakeven curve, whose ratios give forward inflation. A strip of swaps, one per linker payment, turns the linker into a nominal bond, except for the floor.
@@ -687,14 +670,14 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [breakeven-inflation](03-breakeven-inflation.md): the inflation rate at which a nominal bond and a linker pay the same; this card shows the swap rate is that number when both bonds trade.
-- [interest-rate-swaps](../28-Swaps/01-interest-rate-swaps.md): legs, notional and valuing each leg as a bond; the inflation swap is the same idea with one payment.
-- [inflation-linked-bonds](02-inflation-linked-bonds.md): the index ratio, the coupons and the principal floor used in the hedge.
-- [state-prices-and-risk-neutral-pricing-in-one-period](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): state prices, the tool of Step 4.
+- [Breakeven inflation](03-breakeven-inflation.md): the inflation rate at which a nominal bond and a linker pay the same; this card shows the swap rate is that number when both bonds trade.
+- [Interest rate swaps](../28-Swaps/01-interest-rate-swaps.md): legs, notional and valuing each leg as a bond; the inflation swap is the same idea with one payment.
+- [Inflation-linked bonds](02-inflation-linked-bonds.md): the index ratio, the coupons and the principal floor used in the hedge.
+- [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): state prices, the tool of Step 4.
 
 ## Where this goes next
 
-- [inflation-options-in-outline](05-inflation-options-in-outline.md): payments that are not straight lines in the index, such as the TIPS floor and caps on inflation, and the model they need.
+- [Inflation caps and floors in outline](05-inflation-options-in-outline.md): payments that are not straight lines in the index, such as the TIPS floor and caps on inflation, and the model they need.
 
 The swap prices every straight-line bet on the index without a model; the floor left over in Step 7 is not a straight line, and pricing it needs to know how widely inflation can spread, which inflation-options-in-outline supplies.
 

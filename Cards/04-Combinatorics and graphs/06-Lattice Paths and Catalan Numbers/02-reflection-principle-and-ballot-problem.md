@@ -1,27 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Lattice Paths and Catalan Numbers
-topic: Mirror arguments
-item: The reflection principle
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/06-Lattice Paths and Catalan Numbers/01-lattice-paths|lattice-paths]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/05-bijection-and-double-counting|bijection-and-double-counting]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/06-Lattice Paths and Catalan Numbers/03-catalan-numbers|catalan-numbers]]"
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/05-reflection-principle-for-walks|reflection-principle-for-walks]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - reflection-principle-and-ballot-problem
----
-
 # The reflection principle: mirror the bad paths onto ones that are easy to count, and the ballot problem falls out
 
-Combinatorics and graphs → Lattice Paths and Catalan Numbers → Mirror arguments → The reflection principle
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Lattice Paths and Catalan Numbers](../../../SYLLABUS.md#w04-s06) → The reflection principle
 
 ---
 
@@ -57,7 +36,7 @@ The upper line is A A B A B A B A, above zero from the first vote on. The lower 
 
 ## The formula
 
-Draw a count as a path: start at zero, a vote for A steps up one, a vote for B down one. The height after each vote is A's lead, A's votes so far minus B's ([lattice-paths](01-lattice-paths.md)). Ahead throughout means the line never touches zero again.
+Draw a count as a path: start at zero, a vote for A steps up one, a vote for B down one. The height after each vote is A's lead, A's votes so far minus B's ([Lattice paths](01-lattice-paths.md)). Ahead throughout means the line never touches zero again.
 
 Write $a$ for the votes for A, $b$ for B, and $n$ for the total. The number of ways to choose which of the $n$ slots hold the A's is the binomial coefficient $C(n, a)$, read "n choose a".
 
@@ -113,7 +92,7 @@ Before the tie the leads are equal and opposite: that piece is reflected in the 
 
 ### Step 3: the mirror can be undone, so it counts
 
-An order opening with B sits at −1 after one vote and 2 at the finish, and steps of one cannot cross zero without landing on it, so it has a first level score too; mirroring that piece returns a spoiled A-opener. Each map undoes the other, so the two piles are the same size ([bijection-and-double-counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)): 21 B-openers, 21 spoiled A-openers. Nothing used 5 and 3: the argument runs on any $a$ larger than $b$.
+An order opening with B sits at −1 after one vote and 2 at the finish, and steps of one cannot cross zero without landing on it, so it has a first level score too; mirroring that piece returns a spoiled A-opener. Each map undoes the other, so the two piles are the same size ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)): 21 B-openers, 21 spoiled A-openers. Nothing used 5 and 3: the argument runs on any $a$ larger than $b$.
 
 ### Step 4: subtract, then put letters where the numbers are
 
@@ -376,9 +355,9 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Election night.** Joseph Bertrand asked exactly this in 1887: given the result, in how many counting orders was the winner ahead all the way. A lead reported mid-count is a counting order, not a result.
-- **A queue at a ticket window.** Exact-fare customers and customers needing change: the orders in which the till never runs short are this mirror dropped one level ([catalan-numbers](03-catalan-numbers.md)).
-- **Any tally that moves by one.** A season of wins and losses, a stock level, a gambler's purse: the same first-touch questions, the same mirror ([reflection-principle-for-walks](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/05-reflection-principle-for-walks.md)).
-- **Brackets and stacks.** An opening bracket is an A, a closer a B, and a string is correct when the closers never get ahead ([catalan-bijections](04-catalan-bijections.md)).
+- **A queue at a ticket window.** Exact-fare customers and customers needing change: the orders in which the till never runs short are this mirror dropped one level ([Catalan numbers](03-catalan-numbers.md)).
+- **Any tally that moves by one.** A season of wins and losses, a stock level, a gambler's purse: the same first-touch questions, the same mirror ([Reflection principle](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/05-reflection-principle-for-walks.md)).
+- **Brackets and stacks.** An opening bracket is an A, a closer a B, and a string is correct when the closers never get ahead ([Catalan everywhere](04-catalan-bijections.md)).
 
 > **Say it back**
 > Draw a count as a path: up one for a vote for A, down one for a vote for B. An order is spoiled when the path touches zero. Swapping every vote up to the first level score turns a spoiled A-opener into a B-opener, and swapping back returns it, so the two piles match in size — and B-openers are easy to count. Of the 56 orders of a 5–3 result, 21 open with B and 21 go level later, leaving 14.
@@ -387,13 +366,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [lattice-paths](01-lattice-paths.md): paths as step sequences, and the binomial coefficient that counts them.
-- [bijection-and-double-counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md): why a one-for-one matching lets one collection be counted in place of another.
+- [Lattice paths](01-lattice-paths.md): paths as step sequences, and the binomial coefficient that counts them.
+- [Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md): why a one-for-one matching lets one collection be counted in place of another.
 
 ## Where this goes next
 
-- [catalan-numbers](03-catalan-numbers.md): the same subtraction with the mirror one step lower, and the sequence it throws off.
-- [reflection-principle-for-walks](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/05-reflection-principle-for-walks.md): the mirror moved to walks that run on, where it gives first-passage and maximum results.
+- [Catalan numbers](03-catalan-numbers.md): the same subtraction with the mirror one step lower, and the sequence it throws off.
+- [Reflection principle](../../11-Stochastic%20processes%20and%20calculus/01-Random%20Walks%20and%20Filtrations/05-reflection-principle-for-walks.md): the mirror moved to walks that run on, where it gives first-passage and maximum results.
 
 The mirror here stands on the line the count must not touch. Drop it one step lower and 42 of the 252 ten-step paths survive — the sequence the next card names and counts.
 

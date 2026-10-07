@@ -1,38 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Several Variables
-topic: Bowls and chords
-item: Convex functions
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/05-hessian-and-second-order-approximation|hessian-and-second-order-approximation]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/06-multivariable-extrema|multivariable-extrema]]"
-next:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/06-jensens-inequality|jensens-inequality]]"
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/02-holders-inequality|holders-inequality]]"
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/04-jensens-inequality|jensens-inequality]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/05-strike-and-calendar-shape|strike-and-calendar-shape]]"
-  - "[[Cards/14-Applied and computational/03-Information Theory/03-kl-divergence-and-cross-entropy|kl-divergence-and-cross-entropy]]"
-  - "[[Cards/14-Applied and computational/05-Operations Research/01-modelling-with-linear-programs|modelling-with-linear-programs]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/02-gradient-descent-and-stochastic-gradient|gradient-descent-and-stochastic-gradient]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/09-kernels-and-support-vector-machines|kernels-and-support-vector-machines]]"
-  - "[[Cards/15-Optimization/01-Convexity/03-convex-functions-and-their-tests|convex-functions-and-their-tests]]"
-  - "[[Cards/18-Functional analysis/01-Normed and Banach Spaces/06-hahn-banach-theorem|hahn-banach-theorem]]"
-  - "[[Cards/18-Functional analysis/01-Normed and Banach Spaces/07-hahn-banach-separation-and-supporting-walls|hahn-banach-separation-and-supporting-walls]]"
-  - "[[Cards/18-Functional analysis/02-Hilbert Spaces/07-lax-milgram-theorem|lax-milgram-theorem]]"
-  - "[[Cards/18-Functional analysis/06-Banach Algebras and Fixed Points/06-krein-milman-and-extreme-points|krein-milman-and-extreme-points]]"
-  - "[[Cards/18-Functional analysis/06-Banach Algebras and Fixed Points/07-legendre-fenchel-and-subgradients|legendre-fenchel-and-subgradients]]"
-  - "[[Cards/23-Differential geometry and Lie groups/07-Geometric Analysis and Physics/06-riemannian-hessian-and-trust-regions|riemannian-hessian-and-trust-regions]]"
-  - "[[Cards/24-Computability and complexity/04-Beyond Worst Case/02-relaxation-and-rounding|relaxation-and-rounding]]"
-tags: [mathematics, calculus and analysis, convex-functions]
----
-
 # Convex functions: bowls, chords above the graph, and why a local minimum is the global one
 
-Calculus and analysis → Several Variables → Bowls and chords → Convex functions
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Several Variables](../../../SYLLABUS.md#w06-s07) → Convex functions
 
 ---
 
@@ -78,7 +46,7 @@ $$S(a,b)=\sum_{i=1}^{n}\big(y_i-a-bx_i\big)^2$$
 
 **Read it aloud:** each measured height minus the line's prediction, squared, then added.
 
-The test uses the Hessian H, the table of second partial derivatives ([hessian-and-second-order-approximation](05-hessian-and-second-order-approximation.md)). Its quadratic form $v^{\top} H v$, read "v transposed H v", is f's second derivative along direction v.
+The test uses the Hessian H, the table of second partial derivatives ([Hessian](05-hessian-and-second-order-approximation.md)). Its quadratic form $v^{\top} H v$, read "v transposed H v", is f's second derivative along direction v.
 
 $$v^{\top}Hv\ge 0\quad\text{for every } v \text{, at every point}$$
 
@@ -120,11 +88,11 @@ Convexity only compares points on a segment, and along a line the height is a fu
 
 ### Step 1: nonnegative second derivative puts the chord above
 
-[higher-derivatives-and-concavity](../02-Derivatives/08-higher-derivatives-and-concavity.md) called this shape *concave up*. Subtract the chord from the graph: the gap is 0 at both ends, and its slope never decreases, since its second derivative is the graph's. A slope that never decreases cannot climb then fall, so the gap stays at or below 0.
+[Second derivatives](../02-Derivatives/08-higher-derivatives-and-concavity.md) called this shape *concave up*. Subtract the chord from the graph: the gap is 0 at both ends, and its slope never decreases, since its second derivative is the graph's. A slope that never decreases cannot climb then fall, so the gap stays at or below 0.
 
 ### Step 2: the Hessian gives every slice's second derivative
 
-Along the line from p in direction v the height is g(t) = f(p + t v). By [multivariable-chain-rule-and-jacobians](04-multivariable-chain-rule-and-jacobians.md), its second derivative is $v^{\top} H v$ at the point reached, nonnegative by the test; Step 1 finishes.
+Along the line from p in direction v the height is g(t) = f(p + t v). By [Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md), its second derivative is $v^{\top} H v$ at the point reached, nonnegative by the test; Step 1 finishes.
 
 For the seedling, H has entries 2n = 8, twice the week sum = 12, twice the squared-week sum = 28, everywhere. Direction v = (c, d) scores 8c^2 + 24cd + 28d^2, which is
 
@@ -156,7 +124,7 @@ For k = 1 both sides are f(p_1). Assume k − 1 points work. If θ_k = 1 both si
 
 </details>
 
-For S, with constant Hessian, the Jensen gap is exactly half the weighted average of $v^{\top} H v$ over the steps from the average point to each point. Two points at weight ½ give the chord gap: steps ±d/2 from the midpoint, d = p − q, so the gap is $d^{\top} H d / 8$. Random averages are [jensens-inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md).
+For S, with constant Hessian, the Jensen gap is exactly half the weighted average of $v^{\top} H v$ over the steps from the average point to each point. Two points at weight ½ give the chord gap: steps ±d/2 from the midpoint, d = p − q, so the gap is $d^{\top} H d / 8$. Random averages are [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md).
 
 ---
 
@@ -174,7 +142,7 @@ For S, with constant Hessian, the Jensen gap is exactly half the weighted averag
 | Jensen | weights 0.5, 0.3, 0.2 on (0, 2), (2, 1), (3, 0): S = 2, 2, 14 | average 4.4 |
 | Jensen's left side | S at the average point (1.2, 1.3) | 1.14, gap 3.26 |
 
-Rows two and three solve the normal equations of [multivariable-extrema](06-multivariable-extrema.md); convexity makes that flat point the answer.
+Rows two and three solve the normal equations of [Extrema in several variables](06-multivariable-extrema.md); convexity makes that flat point the answer.
 
 ### What breaks if you drop a piece
 
@@ -408,9 +376,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Machine learning.** Downhill walks are safe on convex error measures and can be trapped on others, like w: gradient-descent-and-stochastic-gradient.
-- **Option prices.** A call is convex in its strike, so a butterfly (one call at each outer strike, minus two at the middle) never costs below zero: [strike-and-calendar-shape](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md).
-- **Planning.** A linear program's cost and allowed region are convex, so a local best plan is best: modelling-with-linear-programs.
+- **Machine learning.** Downhill walks are safe on convex error measures and can be trapped on others, like w: Gradient descent.
+- **Option prices.** A call is convex in its strike, so a butterfly (one call at each outer strike, minus two at the middle) never costs below zero: [Shape across strikes and expiries](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md).
+- **Planning.** A linear program's cost and allowed region are convex, so a local best plan is best: Linear programs.
 
 > **Say it back**
 > A convex function has every chord on or above its graph. A Hessian test in every direction, everywhere, proves it. Any dip is then the lowest point; strict convexity makes it unique. Squared error's Hessian is twice a sum of squares, so least squares has one answer: 1.1 cm and 1.6 cm per week. Jensen extends the chord to weighted averages.
@@ -419,29 +387,29 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [hessian-and-second-order-approximation](05-hessian-and-second-order-approximation.md): the Hessian and its quadratic form.
-- [multivariable-extrema](06-multivariable-extrema.md): flat points as candidates, which convexity makes the answer.
+- [Hessian](05-hessian-and-second-order-approximation.md): the Hessian and its quadratic form.
+- [Extrema in several variables](06-multivariable-extrema.md): flat points as candidates, which convexity makes the answer.
 
 ## Where this goes next
 
-- [jensens-inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md): Jensen for expectations.
-- [holders-inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/02-holders-inequality.md): sizes of functions, bounded by convexity.
-- [jensens-inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/04-jensens-inequality.md): Jensen for integrals.
-- [strike-and-calendar-shape](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md): option prices convex in strike.
-- kl-divergence-and-cross-entropy: Jensen makes it never negative.
-- modelling-with-linear-programs: linear cost, convex region.
-- gradient-descent-and-stochastic-gradient: how fast the downhill walk closes.
-- kernels-and-support-vector-machines: a classifier from a convex problem.
-- convex-functions-and-their-tests: more tests, and operations that keep convexity.
-- hahn-banach-theorem: a linear rule kept under a convex bound.
-- hahn-banach-separation-and-supporting-walls: flat walls touching convex sets.
-- lax-milgram-theorem: one answer in infinitely many variables.
-- krein-milman-and-extreme-points: convex sets rebuilt from corners.
-- legendre-fenchel-and-subgradients: slopes at corners.
-- riemannian-hessian-and-trust-regions: the Hessian test on curved spaces.
-- relaxation-and-rounding: a convex stand-in, then rounding back.
+- [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md): Jensen for expectations.
+- [Holder's inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/02-holders-inequality.md): sizes of functions, bounded by convexity.
+- [Jensen's inequality](../../10-Measure%20and%20integration/07-Sizes%20of%20Functions/04-jensens-inequality.md): Jensen for integrals.
+- [Shape across strikes and expiries](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/05-strike-and-calendar-shape.md): option prices convex in strike.
+- KL divergence: Jensen makes it never negative.
+- Linear programs: linear cost, convex region.
+- Gradient descent: how fast the downhill walk closes.
+- Support vector machines: a classifier from a convex problem.
+- Convex functions: more tests, and operations that keep convexity.
+- Hahn-Banach: a linear rule kept under a convex bound.
+- Separation: flat walls touching convex sets.
+- Lax-Milgram: one answer in infinitely many variables.
+- Krein-Milman: convex sets rebuilt from corners.
+- The slope transform: slopes at corners.
+- Riemannian Hessian: the Hessian test on curved spaces.
+- Relaxation and rounding: a convex stand-in, then rounding back.
 
-One answer exists and downhill finds it; testing convexity when the Hessian varies from point to point is convex-functions-and-their-tests.
+One answer exists and downhill finds it; testing convexity when the Hessian varies from point to point is Convex functions.
 
 ---
 

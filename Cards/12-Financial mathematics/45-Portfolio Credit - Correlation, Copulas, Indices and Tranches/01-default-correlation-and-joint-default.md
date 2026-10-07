@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Portfolio Credit - Correlation, Copulas, Indices and Tranches
-topic: Failing together
-item: Default correlation
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/01-default-probability-recovery-and-expected-loss|default-probability-recovery-and-expected-loss]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/04-joint-distributions-and-covariance|joint-distributions-and-covariance]]"
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/01-bernoulli-and-binomial|bernoulli-and-binomial]]"
-next:
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/02-one-factor-gaussian-copula|one-factor-gaussian-copula]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/04-credit-indices|credit-indices]]"
-tags: [mathematics, financial mathematics, default-correlation-and-joint-default]
----
-
 # Default correlation: why a pool's losses cluster, measured by the chance two borrowers fail together
 
-Financial mathematics → Portfolio Credit - Correlation, Copulas, Indices and Tranches → Failing together → Default correlation
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Credit - Correlation, Copulas, Indices and Tranches](../../../SYLLABUS.md#w12-s45) → Default correlation
 
 ---
 
@@ -84,7 +65,7 @@ $$\operatorname{Var}(S) = n\,p\,(1-p)\,\bigl[1 + (n-1)\,\rho_D\bigr]$$
 | $\operatorname{Var}(S)$ | variance of that count: average squared distance from 5 | 4.75 independent, 31.975 clustered | — |
 | $\rho_A$ | asset correlation: the correlation of two borrowers' underlying health scores, a different number | 20% | raises $\rho_D$, but far less than one for one |
 | $c$ | the failure threshold on a standard health score | −1.645 | — |
-| $N(x)$ | bell-curve area to the left of x ([normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)) | N(−1.645) = 0.05 | — |
+| $N(x)$ | bell-curve area to the left of x ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)) | N(−1.645) = 0.05 | — |
 
 ### When it holds
 
@@ -100,7 +81,7 @@ $$\operatorname{Var}(S) = n\,p\,(1-p)\,\bigl[1 + (n-1)\,\rho_D\bigr]$$
 
 ### Step 0: a failure is a number, so it can be correlated
 
-Code each bakery's fate as a number: 1 if it fails within five years, 0 if it survives. Call these $B_1$ and $B_2$, the failure indicators. Correlation measures how two numbers move together ([joint-distributions-and-covariance](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). Apply it to these two 0-or-1 numbers and the result is the default correlation. No model of the economy, no bell curve.
+Code each bakery's fate as a number: 1 if it fails within five years, 0 if it survives. Call these $B_1$ and $B_2$, the failure indicators. Correlation measures how two numbers move together ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). Apply it to these two 0-or-1 numbers and the result is the default correlation. No model of the economy, no bell curve.
 
 ### Step 1: averages of indicators are probabilities
 
@@ -152,7 +133,7 @@ The pool formula uses only pairs. The chance of ten or more failures depends on 
 
 One loan's failure chance is 11/51 × 15% + 40/51 × 2.25% = 5%. Two loans fail together with chance 11/51 × 0.15^2 + 40/51 × 0.0225^2 = 0.525%, since in either kind of spell the two fail independently. So the town model has exactly the bakeries' 5% and 0.525%, and hence default correlation 11/190.
 
-Its count of failures is a blend of two binomials, the counts of independent failures ([bernoulli-and-binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md)): 100 draws at 15%, weighted 11/51, plus 100 draws at 2.25%, weighted 40/51. The chance of ten or more failures:
+Its count of failures is a blend of two binomials, the counts of independent failures ([Binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md)): 100 draws at 15%, weighted 11/51, plus 100 draws at 2.25%, weighted 40/51. The chance of ten or more failures:
 
 $$P(S \ge 10) = \tfrac{11}{51}\sum_{k=10}^{100}\binom{100}{k}0.15^k\,0.85^{100-k} + \tfrac{40}{51}\sum_{k=10}^{100}\binom{100}{k}0.0225^k\,0.9775^{100-k} = 20.39\%$$
 
@@ -166,7 +147,7 @@ Here the sum sign adds the terms for k = 10 up to 100, and the binomial coeffici
 
 Banks rarely measure default correlation directly: 5% events are too rare. They model each borrower's underlying health as a score on a bell curve, fail it when the score falls below a threshold $c$, and correlate the scores. That correlation of scores is the **asset correlation**, $\rho_A$. The threshold is the point with 5% of the bell curve below it: $c$ = −1.645, the value where N(c) = 0.05.
 
-With $\rho_A$ = 20%, the chance both scores fall below −1.645 is 0.5245%, so the default correlation is 0.0578. Asset correlation 0.20 becomes default correlation 0.058: cutting a smooth score at a far-out threshold throws away most of the co-movement. The machinery is the one-factor model of [one-factor-gaussian-copula](02-one-factor-gaussian-copula.md); this card only uses its answer, reached two ways in the code.
+With $\rho_A$ = 20%, the chance both scores fall below −1.645 is 0.5245%, so the default correlation is 0.0578. Asset correlation 0.20 becomes default correlation 0.058: cutting a smooth score at a far-out threshold throws away most of the co-movement. The machinery is the one-factor model of [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md); this card only uses its answer, reached two ways in the code.
 
 <details>
 <summary>Two roads to the same 0.5245%</summary>
@@ -679,11 +660,11 @@ The two outputs agree line for line; the simulation matches because both run the
 
 ## Where you meet it in real life
 
-- **Bank capital.** Regulators set bank capital against loan books by assigning each loan an asset correlation, then turning it into a loss curve for bad years. A later card on this shelf builds that curve: [vasicek-loss-distribution-and-basel-capital](03-vasicek-loss-distribution-and-basel-capital.md).
+- **Bank capital.** Regulators set bank capital against loan books by assigning each loan an asset correlation, then turning it into a loss curve for bad years. A later card on this shelf builds that curve: [Vasicek's large-pool loss curve](03-vasicek-loss-distribution-and-basel-capital.md).
 - **Rating agencies.** Lucas (1995), at Moody's, estimated default correlations from historical default counts by rating grade, using the indicator correlation defined here.
-- **Credit indices.** A credit index bundles 100 or 125 companies' default protection into one traded contract. Its average loss ignores correlation; how that loss is split does not: [credit-indices](04-credit-indices.md).
-- **Tranches.** Slice a pool's losses into first-loss, middle and senior layers and correlation decides who is hurt: [cdo-tranches-in-outline](05-cdo-tranches-in-outline.md). Markets quote the correlation back out of tranche prices: [implied-and-base-correlation](06-implied-and-base-correlation.md).
-- **2007 and 2008.** Mortgage pools were priced with modest correlations and bell-curve models. Defaults arrived together, as the town model's fat tail says they can. Models with fatter joint tails followed: [tail-dependence-and-the-t-copula](07-tail-dependence-and-the-t-copula.md).
+- **Credit indices.** A credit index bundles 100 or 125 companies' default protection into one traded contract. Its average loss ignores correlation; how that loss is split does not: [Credit indices (CDX and iTraxx in outline)](04-credit-indices.md).
+- **Tranches.** Slice a pool's losses into first-loss, middle and senior layers and correlation decides who is hurt: [Tranches](05-cdo-tranches-in-outline.md). Markets quote the correlation back out of tranche prices: [Implied correlation](06-implied-and-base-correlation.md).
+- **2007 and 2008.** Mortgage pools were priced with modest correlations and bell-curve models. Defaults arrived together, as the town model's fat tail says they can. Models with fatter joint tails followed: [Tail dependence](07-tail-dependence-and-the-t-copula.md).
 
 > **Say it back**
 > Code each borrower's failure as 1 or 0; default correlation is the ordinary correlation of those numbers. It turns two single chances into the joint chance: independence plus the correlation times the product of the two standard deviations, so 5% and 5% at 0.058 give 0.525% instead of 0.25%. In a pool it leaves the average loss alone and widens the spread, since every pair adds a covariance. It does not fix the chance of a disaster, which needs a model of all the loans at once. And it is not asset correlation: 20% on health scores is only 0.058 on failures.
@@ -692,14 +673,14 @@ The two outputs agree line for line; the simulation matches because both run the
 
 ## What this builds on
 
-- [default-probability-recovery-and-expected-loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md): one borrower's failure chance, recovery and expected loss, the 5%, 40% and 3% this card starts from.
-- [joint-distributions-and-covariance](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md): covariance, correlation and the variance of a sum, applied here to 0-or-1 outcomes.
-- [bernoulli-and-binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the yes-or-no indicator and the count of independent failures, the 2.82% baseline.
+- [Default probability, recovery and expected loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md): one borrower's failure chance, recovery and expected loss, the 5%, 40% and 3% this card starts from.
+- [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md): covariance, correlation and the variance of a sum, applied here to 0-or-1 outcomes.
+- [Binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the yes-or-no indicator and the count of independent failures, the 2.82% baseline.
 
 ## Where this goes next
 
-- [one-factor-gaussian-copula](02-one-factor-gaussian-copula.md): the shared-economy model behind Step 6, which turns an asset correlation into a full joint model of every loan in the pool.
-- [credit-indices](04-credit-indices.md): a traded pool of names, where the average loss sets the price and correlation sets how the loss is shared.
+- [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md): the shared-economy model behind Step 6, which turns an asset correlation into a full joint model of every loan in the pool.
+- [Credit indices (CDX and iTraxx in outline)](04-credit-indices.md): a traded pool of names, where the average loss sets the price and correlation sets how the loss is shared.
 
 Pairs fix the spread but not the tail, so the open question is which full model of 100 loans to trust; the one-factor Gaussian copula is the market's first answer.
 

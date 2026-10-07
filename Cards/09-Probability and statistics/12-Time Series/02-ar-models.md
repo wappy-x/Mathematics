@@ -1,27 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Time Series
-topic: Memory of the last value
-item: Autoregression
-kind: model
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/09-Probability and statistics/12-Time Series/01-stationarity-and-autocorrelation|stationarity-and-autocorrelation]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/01-least-squares-regression|least-squares-regression]]"
-next:
-  - "[[Cards/09-Probability and statistics/12-Time Series/03-ma-and-arma|ma-and-arma]]"
-  - "[[Cards/09-Probability and statistics/12-Time Series/04-differencing-and-unit-roots|differencing-and-unit-roots]]"
-  - "[[Cards/09-Probability and statistics/12-Time Series/06-garch-and-volatility-clustering|garch-and-volatility-clustering]]"
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/01-ornstein-uhlenbeck-mean-reversion-trading|ornstein-uhlenbeck-mean-reversion-trading]]"
-  - "[[Cards/13-Engineering mathematics/05-Signals/06-spectral-estimation-and-periodograms|spectral-estimation-and-periodograms]]"
-tags: [mathematics, probability-and-statistics, ar-models]
----
-
 # Autoregression: tomorrow as a fraction of today plus noise
 
-Probability and statistics → Time Series → Memory of the last value → Autoregression
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Time Series](../../../SYLLABUS.md#w09-s12) → Autoregression
 
 ---
 
@@ -71,7 +50,7 @@ Standing on day $T$ with reading $x_T$, the forecast $h$ days ahead and the spre
 
 $$\hat X_{T+h} = \mu + \phi^{h}\,(x_T - \mu), \qquad \sigma_h^2 = \sigma^2\,\frac{1-\phi^{2h}}{1-\phi^2}$$
 
-**Read it aloud:** the forecast is the mean plus today's gap from it, shrunk by phi once per day ahead; the error's variance adds one shrunk shock per day. The 95% band is $\hat X_{T+h} \pm 1.96\,\sigma_h$, where 1.96 is the normal quantile $\Phi^{-1}(0.975)$ of [normal-quantile](../04-Continuous%20Distributions/05-normal-quantile.md).
+**Read it aloud:** the forecast is the mean plus today's gap from it, shrunk by phi once per day ahead; the error's variance adds one shrunk shock per day. The 95% band is $\hat X_{T+h} \pm 1.96\,\sigma_h$, where 1.96 is the normal quantile $\Phi^{-1}(0.975)$ of [Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md).
 
 With $p$ days of memory the model is AR($p$):
 
@@ -79,7 +58,7 @@ $$X_t = c + \phi_1 X_{t-1} + \phi_2 X_{t-2} + \dots + \phi_p X_{t-p} + \varepsil
 
 It is stationary exactly when every solution $\lambda$ of $\lambda^p = \phi_1\lambda^{p-1} + \phi_2\lambda^{p-2} + \dots + \phi_p$ has size below 1, complex solutions measured by their modulus. For $p$ = 1 the one solution is $\phi$ itself, which gives back $-1 < \phi < 1$. For $p$ = 2 the condition is a triangle: $\phi_1 + \phi_2 < 1$, $\phi_2 - \phi_1 < 1$ and $-1 < \phi_2 < 1$.
 
-Fitting has two standard roads, given here for AR(1) and in Why it works, Step 6, for AR($p$). Least squares fits the line through the points (yesterday, today), exactly as in [least-squares-regression](../09-Regression/01-least-squares-regression.md), and its slope is the estimate $\hat\phi$. Yule–Walker sets $\hat\phi = r(1)$, the record's own autocorrelation at lag 1. Either way, for a record of $n$ days,
+Fitting has two standard roads, given here for AR(1) and in Why it works, Step 6, for AR($p$). Least squares fits the line through the points (yesterday, today), exactly as in [Least squares](../09-Regression/01-least-squares-regression.md), and its slope is the estimate $\hat\phi$. Yule–Walker sets $\hat\phi = r(1)$, the record's own autocorrelation at lag 1. Either way, for a record of $n$ days,
 
 $$\operatorname{se}(\hat\phi) \approx \sqrt{\frac{1-\phi^2}{n}}$$
 
@@ -105,7 +84,7 @@ $$\operatorname{se}(\hat\phi) \approx \sqrt{\frac{1-\phi^2}{n}}$$
 ### When it holds
 
 - **The carry-over strictly between −1 and 1** (for AR($p$), every root size below 1). At $\phi$ = 1 the model is a random walk: fed the same shocks, its spread after a year is 23.26 °C, against the station's 2.00.
-- **Shocks independent of the past, with the same spread every day.** If calm and stormy spells alternate, the band is right on average and wrong on the day; [garch-and-volatility-clustering](06-garch-and-volatility-clustering.md) models that.
+- **Shocks independent of the past, with the same spread every day.** If calm and stormy spells alternate, the band is right on average and wrong on the day; [GARCH](06-garch-and-volatility-clustering.md) models that.
 - **Normal shocks, for the 1.96.** The forecast itself needs only mean-zero shocks. With fat-tailed shocks the share outside the band is no longer 5%, and the misses that do happen are larger.
 - **Known parameters.** The formulas use the true 0.8. A band built from the fitted 0.823 ignores that estimate's own error and comes out slightly too narrow; with a year of data the effect is small.
 - **Memory that fades geometrically.** A seasonal cycle left in the data gives autocorrelations that rise again at a year's lag, which no AR(1) can produce. That is why the station records anomalies, not raw temperatures.
@@ -145,7 +124,7 @@ For the memory, unroll from day $t$ to day $t+h$: $Y_{t+h} = \phi^h Y_t + (\text
 
 ### Step 3: the memory fades geometrically
 
-The autocorrelation from [stationarity-and-autocorrelation](01-stationarity-and-autocorrelation.md) is, for this model, $\phi^h$: 0.800, 0.640, 0.512, 0.410, 0.328 at lags 1 to 5. The simulated year gives 0.823, 0.703, 0.538, 0.434, 0.374. Each lag keeps a fixed fraction of the one before. A negative $\phi$ makes the signs alternate: a warm day predicts a cool one. That geometric fade is the fingerprint an analyst looks for before choosing AR(1).
+The autocorrelation from [Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md) is, for this model, $\phi^h$: 0.800, 0.640, 0.512, 0.410, 0.328 at lags 1 to 5. The simulated year gives 0.823, 0.703, 0.538, 0.434, 0.374. Each lag keeps a fixed fraction of the one before. A negative $\phi$ makes the signs alternate: a warm day predicts a cool one. That geometric fade is the fingerprint an analyst looks for before choosing AR(1).
 
 ### Step 4: fitting, by two roads
 
@@ -157,11 +136,11 @@ How far off is the fit likely to be? The regression card's standard error of a s
 
 Simulating 2,000 more years of the station tests those claims. The fitted carry-over averages 0.7911, with standard deviation 0.0321 across years. The spread matches the formula's 0.0314. The average sits low: least squares on a series with memory underestimates $\phi$ by about $(1+3\phi)/n$, which predicts 0.7907 (Marriott and Pope, 1954).
 
-The record's mean is 0.6375 against a true 0.5, with standard error $\sigma/((1-\phi)\sqrt n)$ = 0.31. Independent readings would give $2/\sqrt{365}$ = 0.10: with memory, 365 days carry far less information about the mean; [stationarity-and-autocorrelation](01-stationarity-and-autocorrelation.md) shows the same effect for a shared offset.
+The record's mean is 0.6375 against a true 0.5, with standard error $\sigma/((1-\phi)\sqrt n)$ = 0.31. Independent readings would give $2/\sqrt{365}$ = 0.10: with memory, 365 days carry far less information about the mean; [Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md) shows the same effect for a shared offset.
 
 ### Step 5: the forecast is the mean plus the shrunk gap, and its error is the shocks still to come
 
-The forecast with the smallest average squared error is the average of the future value given everything known today, the conditional expectation of [conditional-expectation-in-tables](../02-Random%20Variables/05-conditional-expectation-in-tables.md). Unroll from today, day $T$:
+The forecast with the smallest average squared error is the average of the future value given everything known today, the conditional expectation of [Conditional expectation](../02-Random%20Variables/05-conditional-expectation-in-tables.md). Unroll from today, day $T$:
 
 $$X_{T+h} - \mu = \phi^h (x_T - \mu) + \varepsilon_{T+h} + \phi\,\varepsilon_{T+h-1} + \dots + \phi^{h-1}\varepsilon_{T+1}$$
 
@@ -173,13 +152,13 @@ The code runs 20,000 futures from +4.5 °C. At 1, 2, 3, 5 and 10 days ahead the 
 
 Follow one shock of size 1 through an AR(2). Its echo obeys the model's own rule with no new shocks: each day's echo is $\phi_1$ times the echo the day before, plus $\phi_2$ times the echo two days before. Try an echo that is a power of one number, $\lambda^j$ on day j: the rule holds exactly when $\lambda^2 = \phi_1\lambda + \phi_2$. Every echo is a mix of the two solutions' powers (with a repeated solution, $j\lambda^j$ joins $\lambda^j$), so it dies away exactly when both have size below 1, and the variance, $\sigma^2$ times the sum of squared echoes, is finite exactly then. The same holds for any $p$. Stacking the last $p$ days into a vector turns AR($p$) into a one-step matrix rule, and the $\lambda$ are that matrix's eigenvalues.
 
-Both fitting roads carry over to $p$ lags. Least squares regresses today on the last $p$ days together, the multiple regression of [multiple-regression-and-gauss-markov](../09-Regression/03-multiple-regression-and-gauss-markov.md). Yule–Walker multiplies the rule by each of the last $p$ days' gaps in turn and averages, as in Step 4. That gives $p$ equations, one for each lag $k = 1, \dots, p$: $r(k) = \phi_1 r(k-1) + \phi_2 r(k-2) + \dots + \phi_p r(k-p)$, where $r(0) = 1$ and a negative lag reads as the positive one, solved for the $p$ fractions. For $p$ = 2 the solution is
+Both fitting roads carry over to $p$ lags. Least squares regresses today on the last $p$ days together, the multiple regression of [Multiple regression](../09-Regression/03-multiple-regression-and-gauss-markov.md). Yule–Walker multiplies the rule by each of the last $p$ days' gaps in turn and averages, as in Step 4. That gives $p$ equations, one for each lag $k = 1, \dots, p$: $r(k) = \phi_1 r(k-1) + \phi_2 r(k-2) + \dots + \phi_p r(k-p)$, where $r(0) = 1$ and a negative lag reads as the positive one, solved for the $p$ fractions. For $p$ = 2 the solution is
 
 $$\hat\phi_1 = \frac{r(1)\,(1 - r(2))}{1 - r(1)^2}, \qquad \hat\phi_2 = \frac{r(2) - r(1)^2}{1 - r(1)^2}.$$
 
-The code fits an AR(2) to the same year. Least squares gives 0.7562 and 0.0808, with standard error 0.0527 on the second; Yule–Walker gives 0.7572 and 0.0800. By hand, Step 3's three-place values 0.823 and 0.703 give 0.7575 and 0.0796: the denominator $1 - r(1)^2$ is only about 0.32, so rounding the inputs moves the fourth decimal. The largest root size is 0.8512, inside the triangle. The second coefficient sits under two standard errors from zero, so the extra lag earns nothing and AR(1) stays. Choosing the order properly uses the partial correlogram of [ma-and-arma](03-ma-and-arma.md) or an information criterion, treated in the sources below.
+The code fits an AR(2) to the same year. Least squares gives 0.7562 and 0.0808, with standard error 0.0527 on the second; Yule–Walker gives 0.7572 and 0.0800. By hand, Step 3's three-place values 0.823 and 0.703 give 0.7575 and 0.0796: the denominator $1 - r(1)^2$ is only about 0.32, so rounding the inputs moves the fourth decimal. The largest root size is 0.8512, inside the triangle. The second coefficient sits under two standard errors from zero, so the extra lag earns nothing and AR(1) stays. Choosing the order properly uses the partial correlogram of [Moving average and ARMA](03-ma-and-arma.md) or an information criterion, treated in the sources below.
 
-Shrink the day to an instant and AR(1) becomes the Ornstein–Uhlenbeck process of [ornstein-uhlenbeck-mean-reversion-trading](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/01-ornstein-uhlenbeck-mean-reversion-trading.md).
+Shrink the day to an instant and AR(1) becomes the Ornstein–Uhlenbeck process of [Mean reversion](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/01-ornstein-uhlenbeck-mean-reversion-trading.md).
 
 ---
 
@@ -654,7 +633,7 @@ The two outputs match line for line, simulations included, since both languages 
 ## The usual mistake
 
 > [!warning]
-> **Fitting AR(1) to a series with no fixed mean.** On a random walk, least squares returns a carry-over close to 1, and the formulas then promise a mean to return to and a band that stops widening. Neither exists. Fed the same shocks as the station, a random walk's spread after a year is 23.26 °C, against the station's 2.00. Test for a unit root first: [differencing-and-unit-roots](04-differencing-and-unit-roots.md).
+> **Fitting AR(1) to a series with no fixed mean.** On a random walk, least squares returns a carry-over close to 1, and the formulas then promise a mean to return to and a band that stops widening. Neither exists. Fed the same shocks as the station, a random walk's spread after a year is 23.26 °C, against the station's 2.00. Test for a unit root first: [Unit roots](04-differencing-and-unit-roots.md).
 >
 > - **The constant read as the mean.** Forecasts far ahead go to 0.5 °C, not 0.1; the 30-day forecast is 0.505.
 > - **Each coefficient below 1.** An AR(2) with 0.5 and 0.6 explodes: its largest root size is 1.0639, and a shock's echo after 50 days is 14.49 times the shock.
@@ -665,10 +644,10 @@ The two outputs match line for line, simulations included, since both languages 
 
 ## Where you meet it in real life
 
-- **Climate science.** AR(1) is the standard "red noise" benchmark: before a cycle in a temperature record is called real, it must stand out from what an AR(1) with the same lag-1 correlation produces by chance. The comparison is done in frequency, as in spectral-estimation-and-periodograms.
+- **Climate science.** AR(1) is the standard "red noise" benchmark: before a cycle in a temperature record is called real, it must stand out from what an AR(1) with the same lag-1 correlation produces by chance. The comparison is done in frequency, as in Spectral estimation.
 - **Weather forecasting.** Persistence shrunk towards normal, exactly the AR(1) forecast, is a baseline forecasters compare against.
-- **Economics.** AR models are the benchmark forecasts for series such as inflation; smoothing methods are compared with them in [forecasting-and-exponential-smoothing](05-forecasting-and-exponential-smoothing.md).
-- **Trading.** A spread between two related prices that reverts to its mean is modelled as AR(1) in discrete time and as Ornstein–Uhlenbeck in continuous time: [ornstein-uhlenbeck-mean-reversion-trading](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/01-ornstein-uhlenbeck-mean-reversion-trading.md).
+- **Economics.** AR models are the benchmark forecasts for series such as inflation; smoothing methods are compared with them in [Forecasting](05-forecasting-and-exponential-smoothing.md).
+- **Trading.** A spread between two related prices that reverts to its mean is modelled as AR(1) in discrete time and as Ornstein–Uhlenbeck in continuous time: [Mean reversion](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/01-ornstein-uhlenbeck-mean-reversion-trading.md).
 - **Speech coding.** Linear prediction fits an AR model of order 10 or so to each short slice of speech and transmits the coefficients instead of the sound itself.
 
 > **Say it back**
@@ -678,18 +657,18 @@ The two outputs match line for line, simulations included, since both languages 
 
 ## What this builds on
 
-- [stationarity-and-autocorrelation](01-stationarity-and-autocorrelation.md): what a fixed mean and spread mean for a series, and the autocorrelation this card predicts and measures.
-- [least-squares-regression](../09-Regression/01-least-squares-regression.md): the slope formula and its standard error, applied here to today against yesterday.
+- [Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md): what a fixed mean and spread mean for a series, and the autocorrelation this card predicts and measures.
+- [Least squares](../09-Regression/01-least-squares-regression.md): the slope formula and its standard error, applied here to today against yesterday.
 
 ## Where this goes next
 
-- [ma-and-arma](03-ma-and-arma.md): the next card; shocks that count for a fixed number of days, and models that mix both kinds of memory.
-- [differencing-and-unit-roots](04-differencing-and-unit-roots.md): what to do when the carry-over is 1, and how to test for it.
-- [garch-and-volatility-clustering](06-garch-and-volatility-clustering.md): autoregression applied to the size of the shocks, not their direction.
-- [ornstein-uhlenbeck-mean-reversion-trading](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/01-ornstein-uhlenbeck-mean-reversion-trading.md): AR(1) in continuous time, traded.
-- spectral-estimation-and-periodograms: the same memory seen as a spectrum, and AR fits as a spectral estimate.
+- [Moving average and ARMA](03-ma-and-arma.md): the next card; shocks that count for a fixed number of days, and models that mix both kinds of memory.
+- [Unit roots](04-differencing-and-unit-roots.md): what to do when the carry-over is 1, and how to test for it.
+- [GARCH](06-garch-and-volatility-clustering.md): autoregression applied to the size of the shocks, not their direction.
+- [Mean reversion](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/01-ornstein-uhlenbeck-mean-reversion-trading.md): AR(1) in continuous time, traded.
+- Spectral estimation: the same memory seen as a spectrum, and AR fits as a spectral estimate.
 
-An AR model keeps memory in past values, so every shock echoes forever; the open question is how to model a shock that matters for exactly one or two days and then vanishes, which [ma-and-arma](03-ma-and-arma.md) answers.
+An AR model keeps memory in past values, so every shock echoes forever; the open question is how to model a shock that matters for exactly one or two days and then vanishes, which [Moving average and ARMA](03-ma-and-arma.md) answers.
 
 ---
 

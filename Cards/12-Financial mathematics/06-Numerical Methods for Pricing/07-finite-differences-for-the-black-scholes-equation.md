@@ -1,38 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Numerical Methods for Pricing
-topic: Stepping the equation backwards
-item: Pricing on a grid
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/03-black-scholes-by-delta-hedging|black-scholes-by-delta-hedging]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/09-finite-differences-for-the-heat-equation|finite-differences-for-the-heat-equation]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/02-gaussian-elimination|gaussian-elimination]]"
-next:
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/08-american-options-by-psor-and-lcp|american-options-by-psor-and-lcp]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/04-greeks-from-a-tree-or-grid|greeks-from-a-tree-or-grid]]"
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/03-pricing-under-local-volatility-and-the-forward-smile|pricing-under-local-volatility-and-the-forward-smile]]"
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/04-exercise-boundary-and-smooth-pasting|exercise-boundary-and-smooth-pasting]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/05-double-barriers-and-double-no-touch|double-barriers-and-double-no-touch]]"
-  - "[[Cards/16-Numerical analysis/07-PDE Solvers/04-crank-nicolson-and-theta-methods|crank-nicolson-and-theta-methods]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - finite-differences-for-the-black-scholes-equation
----
-
 # Pricing on a grid: explicit, implicit and Crank-Nicolson schemes
 
-Financial mathematics → Numerical Methods for Pricing → Stepping the equation backwards → Pricing on a grid
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Numerical Methods for Pricing](../../../SYLLABUS.md#w12-s06) → Pricing on a grid
 
 ---
 
 ## General Overview
 
-Acme shares trade at $100.00. A call option on one share, struck at $100.00, runs for one year: the right to buy a share for $100.00 on that one day. Cash earns 5% a year, compounded continuously, Acme pays a 2% dividend yield, and the market prices its jumpiness — its **volatility** — at 20% a year. That contract has a formula, and the formula says 9.227006 ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
+Acme shares trade at $100.00. A call option on one share, struck at $100.00, runs for one year: the right to buy a share for $100.00 on that one day. Cash earns 5% a year, compounded continuously, Acme pays a 2% dividend yield, and the market prices its jumpiness — its **volatility** — at 20% a year. That contract has a formula, and the formula says 9.227006 ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
 
 Most of what a desk holds has no formula: not an American put, exercisable on any day, not an option that dies if the price touches a barrier, not one whose volatility changes with price and date. Each shares one thing with the plain call: a law of motion. Its value, a number attached to every price and every date, must change in one particular way from instant to instant, or somebody can hedge it and take free money.
 
@@ -66,7 +40,7 @@ In those coordinates the Black-Scholes equation reads
 
 $$\frac{\partial V}{\partial \tau} \;=\; a\,\frac{\partial^2 V}{\partial x^2} \;+\; b\,\frac{\partial V}{\partial x} \;-\; r\,V, \qquad a = \tfrac12\sigma^2, \quad b = r - q - \tfrac12\sigma^2 .$$
 
-The curly-d symbols are partial derivatives: $\partial V/\partial \tau$ is how fast the value changes as the time to go grows, holding the price still, and $\partial^2 V/\partial x^2$ is its curvature across prices ([finite-differences-for-the-heat-equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md)).
+The curly-d symbols are partial derivatives: $\partial V/\partial \tau$ is how fast the value changes as the time to go grows, holding the price still, and $\partial^2 V/\partial x^2$ is its curvature across prices ([Stepping the heat equation on a grid](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md)).
 
 **Read it aloud:** give the option one more instant of life and its value gains three things — curvature spread by volatility, a sideways slide from the drift, a steady drain at the bank rate.
 
@@ -103,7 +77,7 @@ $$V(x_{\min}, \tau) = 0, \qquad V(x_{\max}, \tau) = K e^{x_{\max}} e^{-q\tau} - 
 
 ### When it holds
 
-- **The equation is Black-Scholes.** Constant bank rate, dividend yield and volatility, no jumps in the price, hedging at every instant. Let jumpiness vary and the grid still runs, but the two ratios change from node to node ([pricing-under-local-volatility-and-the-forward-smile](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md)).
+- **The equation is Black-Scholes.** Constant bank rate, dividend yield and volatility, no jumps in the price, hedging at every instant. Let jumpiness vary and the grid still runs, but the two ratios change from node to node ([Pricing with local volatility](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md)).
 - **The grid is wide enough for its edges to be true.** Five times $\sigma\sqrt{T}$ either side is the −1 to +1 used here; squeezed to −0.2 and +0.2 the same scheme comes out at 8.901907.
 - **Explicit steps keep the spreading ratio at or under one half.** Break that and the price does not drift off, it detonates: −1.17e+93 on this grid.
 - **The cells resolve the payoff.** The kink at the strike falls inside one cell, which needs the payoff averaged across it; left as the payoff at the node, the same grid misses by thirty times as much. Second-order accuracy assumes smooth curvature, and the kink is where that assumption is thinnest.
@@ -114,7 +88,7 @@ $$V(x_{\min}, \tau) = 0, \qquad V(x_{\max}, \tau) = K e^{x_{\max}} e^{-q\tau} - 
 
 ### Step 0: the value has a law of motion, and a law of motion can be stepped
 
-A seller who holds the option and shorts the right number of shares has, for the next instant, a position that does not care which way Acme moves. A riskless position must earn the bank rate, or the gap is free money. Writing that down gives an equation the value satisfies everywhere ([black-scholes-by-delta-hedging](../05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md)).
+A seller who holds the option and shorts the right number of shares has, for the next instant, a position that does not care which way Acme moves. A riskless position must earn the bank rate, or the gap is free money. Writing that down gives an equation the value satisfies everywhere ([Black-Scholes by hedging](../05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md)).
 
 That equation is **local**: it ties the value at a point to the value beside it and just after it, and says nothing about where Acme will end up. A known row determines the next row by arithmetic, and the payoff supplies one row for free.
 
@@ -172,7 +146,7 @@ Far above the strike exercise is near certain: the holder effectively owns a sha
 
 ### Step 5: solving a row, cheaply
 
-For any dial setting above 0, each row is 199 equations in 199 unknowns. Every equation mentions a node and its two neighbours only, so the matrix has three non-zero bands and nothing else: it is **tridiagonal**. That needs no general elimination ([gaussian-elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md)). One sweep down removes each equation's lower neighbour, one sweep back up reads the answers off: the **Thomas algorithm**, a fixed few operations per node instead of the cube of the node count. The diagonal entry $1 + \theta(2\nu + r k)$ always beats the two off-diagonal ones in size, so the sweep never divides by anything near zero.
+For any dial setting above 0, each row is 199 equations in 199 unknowns. Every equation mentions a node and its two neighbours only, so the matrix has three non-zero bands and nothing else: it is **tridiagonal**. That needs no general elimination ([Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md)). One sweep down removes each equation's lower neighbour, one sweep back up reads the answers off: the **Thomas algorithm**, a fixed few operations per node instead of the cube of the node count. The diagonal entry $1 + \theta(2\nu + r k)$ always beats the two off-diagonal ones in size, so the sweep never divides by anything near zero.
 
 ### Step 6: why one of the three explodes
 
@@ -189,7 +163,7 @@ Take any wiggle across the grid: its value at node `j` is `w^j`, where `w = exp(
 
 Collect the right-hand side times the time step into `p = nu*s + r*k - 2i*eta*sin(phi)`, with `s = 4 sin(phi/2)^2`. The two sides read `1 + theta*p` on the new row and `1 - (1-theta)*p` on the old, so one step multiplies the wiggle by their ratio. The real part of `p` runs from `r*k` up to `4*nu + r*k`, largest at the checkerboard, where the sideways part vanishes.
 
-For a dial at one half or above that ratio carries the whole right half of the complex plane into the unit disc, so no wiggle grows, at any step size. For a dial at 0 the ratio is `1 - p`, whose size passes 1 once the real part of `p` passes 2 — the spreading-ratio condition, up to the interest term. An explicit scheme also wants the sliding ratio no bigger than the spreading one, so its three weights stay positive: here 0.002500 against 1.000000. The same analysis without the finance is [finite-differences-for-the-heat-equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md).
+For a dial at one half or above that ratio carries the whole right half of the complex plane into the unit disc, so no wiggle grows, at any step size. For a dial at 0 the ratio is `1 - p`, whose size passes 1 once the real part of `p` passes 2 — the spreading-ratio condition, up to the interest term. An explicit scheme also wants the sliding ratio no bigger than the spreading one, so its three weights stay positive: here 0.002500 against 1.000000. The same analysis without the finance is [Stepping the heat equation on a grid](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md).
 
 </details>
 
@@ -205,7 +179,7 @@ Giving that one node 0.125209 instead of 0 leaves every other node alone and mov
 
 ### The other doors into the same room
 
-A tree is this method on a coarser mesh with a probability story attached ([trinomial-trees-and-the-grid-connection](../04-Binomial%20Trees/06-trinomial-trees-and-the-grid-connection.md)). Monte Carlo goes the other way, sampling whole futures instead of using the local law ([monte-carlo-pricing](01-monte-carlo-pricing.md)).
+A tree is this method on a coarser mesh with a probability story attached ([Trinomial trees](../04-Binomial%20Trees/06-trinomial-trees-and-the-grid-connection.md)). Monte Carlo goes the other way, sampling whole futures instead of using the local law ([Monte Carlo pricing](01-monte-carlo-pricing.md)).
 
 ---
 
@@ -733,11 +707,11 @@ The two outputs agree line for line, including the 94-digit nonsense the unstabl
 
 ## Where you meet it in real life
 
-- **American options.** One line after each solve — take the larger of the solved value and what exercising now pays — makes this code an American pricer, and the exercise boundary appears on its own ([american-options-by-psor-and-lcp](08-american-options-by-psor-and-lcp.md), [exercise-boundary-and-smooth-pasting](../15-American%20and%20Bermudan%20exercise/04-exercise-boundary-and-smooth-pasting.md)).
-- **Barriers and touches.** A knock-out is this grid with an edge at the barrier, pinned to zero. Two barriers, two edges ([double-barriers-and-double-no-touch](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/05-double-barriers-and-double-no-touch.md)).
-- **Volatility that varies with price and date.** Local volatility makes the two ratios node-by-node numbers, leaving the sweep unchanged ([pricing-under-local-volatility-and-the-forward-smile](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md)).
-- **Hedge ratios for free.** The top row already holds the price at neighbouring prices, so the option's slope and curvature come out by subtraction ([greeks-from-a-tree-or-grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md)).
-- **Anything else that steps a partial differential equation.** Heat in a bar, pollution in a river: the same three schemes and stability rule, other names on the axes (crank-nicolson-and-theta-methods).
+- **American options.** One line after each solve — take the larger of the solved value and what exercising now pays — makes this code an American pricer, and the exercise boundary appears on its own ([American options on a grid](08-american-options-by-psor-and-lcp.md), [The exercise boundary and smooth pasting](../15-American%20and%20Bermudan%20exercise/04-exercise-boundary-and-smooth-pasting.md)).
+- **Barriers and touches.** A knock-out is this grid with an edge at the barrier, pinned to zero. Two barriers, two edges ([Two walls](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/05-double-barriers-and-double-no-touch.md)).
+- **Volatility that varies with price and date.** Local volatility makes the two ratios node-by-node numbers, leaving the sweep unchanged ([Pricing with local volatility](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md)).
+- **Hedge ratios for free.** The top row already holds the price at neighbouring prices, so the option's slope and curvature come out by subtraction ([Greeks from a tree or grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md)).
+- **Anything else that steps a partial differential equation.** Heat in a bar, pollution in a river: the same three schemes and stability rule, other names on the axes (Crank-Nicolson and the theta family).
 
 > **Say it back**
 > The option's value obeys a local law of motion, so it can be found on a grid instead of from a formula. Measure prices in logs and time in years still to go, put the payoff on the bottom row, replace the derivatives by differences. A dial decides whether a step is charged to the old row, the new row, or half each: the old row alone needs no solving but explodes unless the spreading ratio stays at or under one half; the other two need one tridiagonal solve per step, a sweep down and a sweep back. Average the payoff across the strike's own cell, or the kink spoils the answer. On a 200-by-200 grid the Acme call comes out at 9.227084 against the formula's 9.227006, and the same run hands back the price on every date and at every price along the way.
@@ -746,20 +720,20 @@ The two outputs agree line for line, including the 94-digit nonsense the unstabl
 
 ## What this builds on
 
-- [black-scholes-by-delta-hedging](../05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md): where the equation comes from. The hedge that cancels the price's direction is what makes the value obey a local law at all.
-- [finite-differences-for-the-heat-equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md): the three schemes and the stability rule on the plain equation, without the finance.
-- [gaussian-elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md): elimination and back-substitution, of which the Thomas sweep is the three-band special case.
+- [Black-Scholes by hedging](../05-Black-Scholes%20from%20the%20Ground%20Up/03-black-scholes-by-delta-hedging.md): where the equation comes from. The hedge that cancels the price's direction is what makes the value obey a local law at all.
+- [Stepping the heat equation on a grid](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/09-finite-differences-for-the-heat-equation.md): the three schemes and the stability rule on the plain equation, without the finance.
+- [Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md): elimination and back-substitution, of which the Thomas sweep is the three-band special case.
 
 ## Where this goes next
 
-- [american-options-by-psor-and-lcp](08-american-options-by-psor-and-lcp.md): the early-exercise floor, and what it does to the solve.
-- [greeks-from-a-tree-or-grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md): hedge ratios read straight off a finished grid.
-- [pricing-under-local-volatility-and-the-forward-smile](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md): the same sweep with jumpiness that changes from node to node.
-- [exercise-boundary-and-smooth-pasting](../15-American%20and%20Bermudan%20exercise/04-exercise-boundary-and-smooth-pasting.md): the curve the grid finds by itself, and the condition it satisfies.
-- [double-barriers-and-double-no-touch](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/05-double-barriers-and-double-no-touch.md): contracts whose edges are the whole point.
-- crank-nicolson-and-theta-methods: the dial as numerical analysis treats it, with the error orders proved.
+- [American options on a grid](08-american-options-by-psor-and-lcp.md): the early-exercise floor, and what it does to the solve.
+- [Greeks from a tree or grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md): hedge ratios read straight off a finished grid.
+- [Pricing with local volatility](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md): the same sweep with jumpiness that changes from node to node.
+- [The exercise boundary and smooth pasting](../15-American%20and%20Bermudan%20exercise/04-exercise-boundary-and-smooth-pasting.md): the curve the grid finds by itself, and the condition it satisfies.
+- [Two walls](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/05-double-barriers-and-double-no-touch.md): contracts whose edges are the whole point.
+- Crank-Nicolson and the theta family: the dial as numerical analysis treats it, with the error orders proved.
 
-This grid priced a contract with one fixed exercise date. Let the holder exercise on any day and every row needs a floor under it before the next sweep, which is a different animal: [american-options-by-psor-and-lcp](08-american-options-by-psor-and-lcp.md).
+This grid priced a contract with one fixed exercise date. Let the holder exercise on any day and every row needs a floor under it before the next sweep, which is a different animal: [American options on a grid](08-american-options-by-psor-and-lcp.md).
 
 ---
 

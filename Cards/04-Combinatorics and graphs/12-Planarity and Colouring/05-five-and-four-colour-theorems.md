@@ -1,26 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Planarity and Colouring
-topic: How few colours a map needs
-item: Colouring maps
-kind: theorem
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/02-edge-bound-and-kuratowski|edge-bound-and-kuratowski]]"
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/03-vertex-colouring-and-chromatic-number|vertex-colouring-and-chromatic-number]]"
-  - "[[Cards/01-Foundations/06-Proof/04-proof-by-induction|proof-by-induction]]"
-next: []
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - five-and-four-colour-theorems
----
-
 # Colouring maps: five colours always suffice by a short argument, four by a famous long one
 
-Combinatorics and graphs → Planarity and Colouring → How few colours a map needs → Colouring maps
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Planarity and Colouring](../../../SYLLABUS.md#w04-s12) → Colouring maps
 
 ---
 
@@ -58,7 +38,7 @@ A and its ring, all ten borders between them. Outside, G H I J K L close a ring 
 
 ## The formula
 
-The map becomes a network, written $G$: a dot per ward, a line per shared stretch of border ([vertex-colouring-and-chromatic-number](03-vertex-colouring-and-chromatic-number.md)). $V$ counts its dots, $E$ its lines, and a dot's **degree** is how many lines meet it. The **chromatic number** of $G$ is the fewest colours its dots can take with no line's two ends alike, written with the Greek letter chi.
+The map becomes a network, written $G$: a dot per ward, a line per shared stretch of border ([Colouring](03-vertex-colouring-and-chromatic-number.md)). $V$ counts its dots, $E$ its lines, and a dot's **degree** is how many lines meet it. The **chromatic number** of $G$ is the fewest colours its dots can take with no line's two ends alike, written with the Greek letter chi.
 
 $$\chi(G) \le 5 \qquad\text{and}\qquad \chi(G) \le 4 \qquad\text{for every planar } G$$
 
@@ -77,7 +57,7 @@ $$\chi(G) \le 5 \qquad\text{and}\qquad \chi(G) \le 4 \qquad\text{for every plana
 
 - **Drawn flat, no crossings.** The count belongs to the sheet and the sphere; on a doughnut it rises to seven.
 - **Each region in one piece, borders that are stretches, not points.** A ward printed as two patches sharing one ink can force a fifth; wards meeting at a corner are not neighbours.
-- **At least three regions.** Below three dots the bound $E \le 3V - 6$ does not start ([edge-bound-and-kuratowski](02-edge-bound-and-kuratowski.md)).
+- **At least three regions.** Below three dots the bound $E \le 3V - 6$ does not start ([Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md)).
 
 ---
 
@@ -85,7 +65,7 @@ $$\chi(G) \le 5 \qquad\text{and}\qquad \chi(G) \le 4 \qquad\text{for every plana
 
 ### Step 0: shading the dots puts flat drawings behind the question
 
-Colouring the map is colouring the dots of its network, so every fact about flat drawings bears on inks ([planar-graphs-and-eulers-formula](01-planar-graphs-and-eulers-formula.md)). The first: a flat drawing cannot be crowded, $E \le 3V - 6$.
+Colouring the map is colouring the dots of its network, so every fact about flat drawings bears on inks ([Planar graphs](01-planar-graphs-and-eulers-formula.md)). The first: a flat drawing cannot be crowded, $E \le 3V - 6$.
 
 ### Step 1: some ward has at most five neighbours
 
@@ -97,7 +77,7 @@ That averages under six lines a dot, and whole numbers cannot all sit above thei
 
 ### Step 2: six colours, by lifting one ward out
 
-Lift out a ward with at most five neighbours — Step 1 promises one. What remains is still flat, so assume six inks shade it. Put the ward back: its neighbours wear five inks at most, so a sixth is free. Six wards or fewer get an ink apiece, where the induction stops ([proof-by-induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
+Lift out a ward with at most five neighbours — Step 1 promises one. What remains is still flat, so assume six inks shade it. Put the ward back: its neighbours wear five inks at most, so a sixth is free. Six wards or fewer get an ink apiece, where the induction stops ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
 
 The code runs that proof: lift the least busy ward over and over, never finding one with more than 3 borders left at its lift, then shade back in reverse to A4 B1 C2 D1 E3 F2 G4 H1 I3 J2 K1 L3 — four inks, well under six.
 
@@ -373,7 +353,7 @@ The two outputs match line for line.
 
 - **Printed maps and atlases.** The question began there: Francis Guthrie noticed in 1852, colouring the counties of England, that four inks always sufficed.
 - **Shaded data maps.** Four tints keep neighbouring districts distinct, leaving the rest of the palette to carry the data.
-- **Timetables and register allocation.** The same machinery runs on clash networks nowhere near flat, where four is no help ([vertex-colouring-and-chromatic-number](03-vertex-colouring-and-chromatic-number.md), [edge-colouring-and-round-robin](06-edge-colouring-and-round-robin.md)).
+- **Timetables and register allocation.** The same machinery runs on clash networks nowhere near flat, where four is no help ([Colouring](03-vertex-colouring-and-chromatic-number.md), [Edge colouring](06-edge-colouring-and-round-robin.md)).
 
 > **Say it back**
 > Turn a map into a network: a dot per region, a line per shared border. A flat drawing cannot be crowded, so some dot has five lines or fewer. Lift it out, shade the rest, put it back: five neighbours block five colours, so six always work. Five work too, by trading two colours along a chain of regions wearing them, freeing a colour for the dot that had none. Four work as well, but only by a machine check of hundreds of patterns.
@@ -382,13 +362,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [edge-bound-and-kuratowski](02-edge-bound-and-kuratowski.md): the ceiling $E \le 3V - 6$, and why five mutually bordering regions are not flat.
-- [vertex-colouring-and-chromatic-number](03-vertex-colouring-and-chromatic-number.md): the map-to-network step, and the count this card bounds.
-- [proof-by-induction](../../01-Foundations/06-Proof/04-proof-by-induction.md): why settling small maps and one lifted region settles all.
+- [Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md): the ceiling $E \le 3V - 6$, and why five mutually bordering regions are not flat.
+- [Colouring](03-vertex-colouring-and-chromatic-number.md): the map-to-network step, and the count this card bounds.
+- [Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md): why settling small maps and one lifted region settles all.
 
 ## Where this goes next
 
-- [edge-colouring-and-round-robin](06-edge-colouring-and-round-robin.md): colouring the borders instead of the regions, where the busiest ward, not flatness, sets the count.
+- [Edge colouring](06-edge-colouring-and-round-robin.md): colouring the borders instead of the regions, where the busiest ward, not flatness, sets the count.
 
 The question left open is about proofs, not maps: nobody knows whether four colours can be settled in a way one person could read.
 

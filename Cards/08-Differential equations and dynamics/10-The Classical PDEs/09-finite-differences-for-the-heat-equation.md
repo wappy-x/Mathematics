@@ -1,31 +1,12 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: The Classical PDEs
-topic: Explicit time stepping
-item: Stepping the heat equation on a grid
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/03-the-heat-equation|the-heat-equation]]"
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/06-stiff-equations-and-backward-euler|stiff-equations-and-backward-euler]]"
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/07-finite-differences-for-boundary-problems|finite-differences-for-boundary-problems]]"
-next:
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/07-finite-differences-for-the-black-scholes-equation|finite-differences-for-the-black-scholes-equation]]"
-  - "[[Cards/16-Numerical analysis/07-PDE Solvers/02-finite-differences-consistency-stability-and-convergence|finite-differences-consistency-stability-and-convergence]]"
-tags: [mathematics, differential equations and dynamics, finite-differences-for-the-heat-equation]
----
-
 # Stepping the heat equation on a grid: the explicit scheme works only when the time step is small enough
 
-Differential equations and dynamics → The Classical PDEs → Explicit time stepping → Stepping the heat equation on a grid
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → Stepping the heat equation on a grid
 
 ---
 
 ## General Overview
 
-A metal rod 1 m long has both ends in iced water at 0 C. It starts as one sine hump: 0 C at the ends, 1 C in the middle. Heat spreads at 1 m^2/s, a scaling that keeps the clock short. The exact answer is known ([separation-of-variables-for-the-heat-equation](04-separation-of-variables-for-the-heat-equation.md)): the hump fades but keeps its shape; after 0.1 s the middle reads 0.372708 C.
+A metal rod 1 m long has both ends in iced water at 0 C. It starts as one sine hump: 0 C at the ends, 1 C in the middle. Heat spreads at 1 m^2/s, a scaling that keeps the clock short. The exact answer is known ([Separation of variables](04-separation-of-variables-for-the-heat-equation.md)): the hump fades but keeps its shape; after 0.1 s the middle reads 0.372708 C.
 
 A computer holds eleven readings, one every 0.1 m, and jumps them forward in time, each inside reading replaced by a mix of itself and its two neighbours. With jumps of 0.004 s the readings stay within 0.004294 C of the rod throughout a 0.8 s run. With jumps of 0.006 s they look fine, then turn into a zigzag, up, down, up, down, that flips sign and grows 1.341268-fold each jump. At the 130th jump, 0.78 s, the middle reads 1.200 C with −1.140 C beside it; the true rod is at 0.0005 C.
 
@@ -52,7 +33,7 @@ Orange: steps of 0.006 s. Teal: steps of 0.004 s. Dark blue: the exact rod, on t
 
 ## The formula
 
-Notation first, in words. $u(x, t)$ is the temperature in C at $x$ metres from the left end at $t$ seconds. A subscript is a rate ([what-a-pde-says](01-what-a-pde-says.md)): $u_t$ is the change in time, $u_{xx}$ the bend along the rod. The heat equation ([the-heat-equation](03-the-heat-equation.md)) says $u_t = \kappa\, u_{xx}$.
+Notation first, in words. $u(x, t)$ is the temperature in C at $x$ metres from the left end at $t$ seconds. A subscript is a rate ([A partial differential equation](01-what-a-pde-says.md)): $u_t$ is the change in time, $u_{xx}$ the bend along the rod. The heat equation ([The heat equation](03-the-heat-equation.md)) says $u_t = \kappa\, u_{xx}$.
 
 The grid has nodes every $\Delta x$ metres, and time moves in steps of $\Delta t$ seconds. Write $U_j^n$ for the reading at node number $j$ after $n$ steps; the raised $n$ is a label, not a power. Here $j$ runs from 0 to 10; the ends stay at 0 C.
 
@@ -96,7 +77,7 @@ A rate is a change over a gap, as the gap shrinks. Keep the gap finite and the h
 
 ### Step 1: replace each rate by a difference
 
-In time, take one plain step along the slope (Euler's rule, [eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)): $u_t$ is about $(U_j^{n+1} - U_j^n)/\Delta t$. In space, use the centred second difference ([finite-differences-for-boundary-problems](../07-Series%20Solutions%20and%20Boundary%20Problems/07-finite-differences-for-boundary-problems.md)): $u_{xx}$ is about $(U_{j+1}^n - 2U_j^n + U_{j-1}^n)/\Delta x^2$. Set the first equal to κ times the second, multiply by Δt, collect terms: the formula.
+In time, take one plain step along the slope (Euler's rule, [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)): $u_t$ is about $(U_j^{n+1} - U_j^n)/\Delta t$. In space, use the centred second difference ([Finite differences](../07-Series%20Solutions%20and%20Boundary%20Problems/07-finite-differences-for-boundary-problems.md)): $u_{xx}$ is about $(U_{j+1}^n - 2U_j^n + U_{j-1}^n)/\Delta x^2$. Set the first equal to κ times the second, multiply by Δt, collect terms: the formula.
 
 ### Step 2: r ≤ 1/2 makes the step an average
 
@@ -129,7 +110,7 @@ One step multiplies the hump by 0.960845; the rod multiplies it by 0.961291. The
 
 ### Another road: implicit steps
 
-Take the space difference at the new time, and each step becomes a system of equations: backward Euler on the whole grid ([stiff-equations-and-backward-euler](../05-Numerical%20Evolution/06-stiff-equations-and-backward-euler.md)), stable for any r. The grid is stiff: its zigzag modes die fast, yet an explicit step must stay small enough for them. Average old and new differences equally and the scheme is **Crank-Nicolson**, stable for any r and accurate to Δt^2 in time.
+Take the space difference at the new time, and each step becomes a system of equations: backward Euler on the whole grid ([Stiff equations](../05-Numerical%20Evolution/06-stiff-equations-and-backward-euler.md)), stable for any r. The grid is stiff: its zigzag modes die fast, yet an explicit step must stay small enough for them. Average old and new differences equally and the scheme is **Crank-Nicolson**, stable for any r and accurate to Δt^2 in time.
 
 ---
 
@@ -367,7 +348,7 @@ The outputs match line for line: both languages do the same operations in the sa
 
 ## Where you meet it in real life
 
-- **Option pricing.** The Black-Scholes equation is the heat equation in disguise, stepped on a price grid by this same scheme ([finite-differences-for-the-black-scholes-equation](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md)), under the same limit.
+- **Option pricing.** The Black-Scholes equation is the heat equation in disguise, stepped on a price grid by this same scheme ([Pricing on a grid](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md)), under the same limit.
 - **Engineering heat codes.** A chip's temperature is stepped on a grid; the limit sets the cost of a fine mesh.
 
 > **Say it back**
@@ -377,17 +358,17 @@ The outputs match line for line: both languages do the same operations in the sa
 
 ## What this builds on
 
-- [the-heat-equation](03-the-heat-equation.md): the equation being stepped, and the fading hump.
-- [stiff-equations-and-backward-euler](../05-Numerical%20Evolution/06-stiff-equations-and-backward-euler.md): why a fast-dying mode limits an explicit step, and the implicit cure.
-- [finite-differences-for-boundary-problems](../07-Series%20Solutions%20and%20Boundary%20Problems/07-finite-differences-for-boundary-problems.md): the centred second difference and its sine eigenvectors.
+- [The heat equation](03-the-heat-equation.md): the equation being stepped, and the fading hump.
+- [Stiff equations](../05-Numerical%20Evolution/06-stiff-equations-and-backward-euler.md): why a fast-dying mode limits an explicit step, and the implicit cure.
+- [Finite differences](../07-Series%20Solutions%20and%20Boundary%20Problems/07-finite-differences-for-boundary-problems.md): the centred second difference and its sine eigenvectors.
 
 ## Where this goes next
 
-- [finite-differences-for-the-black-scholes-equation](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): explicit, implicit and Crank-Nicolson steps pricing an option.
-- finite-differences-consistency-stability-and-convergence: why a consistent, stable scheme converges, for any linear equation.
-- [the-heat-kernel](10-the-heat-kernel.md): the exact solution for any start on an endless rod.
+- [Pricing on a grid](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md): explicit, implicit and Crank-Nicolson steps pricing an option.
+- Finite differences on a grid: why a consistent, stable scheme converges, for any linear equation.
+- [The heat kernel](10-the-heat-kernel.md): the exact solution for any start on an endless rod.
 
-One stable scheme converged on one rod here; whether stability guarantees convergence for every scheme is answered in finite-differences-consistency-stability-and-convergence.
+One stable scheme converged on one rod here; whether stability guarantees convergence for every scheme is answered in Finite differences on a grid.
 
 ---
 

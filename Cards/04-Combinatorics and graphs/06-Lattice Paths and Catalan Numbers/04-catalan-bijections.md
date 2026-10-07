@@ -1,24 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Lattice Paths and Catalan Numbers
-topic: Structures in disguise
-item: Catalan everywhere
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/06-Lattice Paths and Catalan Numbers/03-catalan-numbers|catalan-numbers]]"
-next: []
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - catalan-bijections
----
-
 # Catalan everywhere: brackets, mountain ranges, binary trees, polygon triangulations and non-crossing handshakes are the same count
 
-Combinatorics and graphs → Lattice Paths and Catalan Numbers → Structures in disguise → Catalan everywhere
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Lattice Paths and Catalan Numbers](../../../SYLLABUS.md#w04-s06) → Catalan everywhere
 
 ---
 
@@ -28,7 +10,7 @@ A hexagonal tabletop rests on six corners, numbered 0 to 5 round the rim. To sti
 
 Eight people sit at that table. On a signal each takes one other person's hand, all at once, no two arms crossing. Again 14 ways.
 
-Nothing about a tabletop resembles a handshake, and the shared 14 is not luck. Both are Cat(4), the Catalan number for four bracket pairs ([catalan-numbers](03-catalan-numbers.md)). This card writes the recipes that carry a bracing to a handshake pattern and back, and on to three more collections: those bracket words, the never-dipping paths of the last card, and branching shapes called plane binary trees.
+Nothing about a tabletop resembles a handshake, and the shared 14 is not luck. Both are Cat(4), the Catalan number for four bracket pairs ([Catalan numbers](03-catalan-numbers.md)). This card writes the recipes that carry a bracing to a handshake pattern and back, and on to three more collections: those bracket words, the never-dipping paths of the last card, and branching shapes called plane binary trees.
 
 **Five collections of unlike things carry one count because explicit recipes match them up one for one, so any structure that splits the way a bracket word splits is counted by Cat(n).**
 
@@ -95,7 +77,7 @@ The third recipe needs no formula: a seat opens when its partner sits further ro
 
 ### Step 0: to prove two counts equal, match the things
 
-Comparing two counts says nothing about why they agree. A recipe that turns each member of one into one member of the other and can be undone settles it: the members come in pairs. That is a bijection ([bijection-and-double-counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)).
+Comparing two counts says nothing about why they agree. A recipe that turns each member of one into one member of the other and can be undone settles it: the members come in pairs. That is a bijection ([Bijections and double counting](../02-Repeats%2C%20Groups%20and%20Double%20Counting/05-bijection-and-double-counting.md)).
 
 ### Step 1: the first return cuts a word into a fork
 
@@ -372,7 +354,7 @@ The two outputs match line for line.
 
 - **Compilers and calculators.** An expression parses into a tree by the first-return cut of Step 1, so one with n operations has Cat(n) shapes.
 - **Molecular biology.** RNA folds by pairing bases; when every base pairs, the patterns with no two arcs crossing are the handshakes of Step 3.
-- **The rest of this shelf.** A word is also a legal run of pushes and pops on a stack, its height the walk of [lattice-paths](01-lattice-paths.md). The mirror argument behind the count is [reflection-principle-and-ballot-problem](02-reflection-principle-and-ballot-problem.md); the same paths as coin flips, [random-walk-path-counts](05-random-walk-path-counts.md).
+- **The rest of this shelf.** A word is also a legal run of pushes and pops on a stack, its height the walk of [Lattice paths](01-lattice-paths.md). The mirror argument behind the count is [The reflection principle](02-reflection-principle-and-ballot-problem.md); the same paths as coin flips, [Counting coin-flip paths](05-random-walk-path-counts.md).
 
 > **Say it back**
 > A hexagon braced into triangles 14 ways, eight people shaking hands without crossing arms 14 ways, and 14 bracket words of four pairs are one fact, not three. A word splits at its first return, a tree into two branches, a cut polygon at its base triangle, a handshake at seat 0's chord. Each split is the same sentence, so a recipe carries any object to any other and back. The shared count is Cat(n): 14 at size 4, 42 at size 5.
@@ -381,11 +363,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [catalan-numbers](03-catalan-numbers.md): the count, its closed form, and the splitting recurrence every recipe here reproduces.
+- [Catalan numbers](03-catalan-numbers.md): the count, its closed form, and the splitting recurrence every recipe here reproduces.
 
 ## Where this goes next
 
-The recipes leave size open: five collections are proved equal without saying how fast the shared count grows, which packing the sequence into one expression settles ([catalan-generating-function](../07-Generating%20Functions/05-catalan-generating-function.md)).
+The recipes leave size open: five collections are proved equal without saying how fast the shared count grows, which packing the sequence into one expression settles ([The Catalan generating function](../07-Generating%20Functions/05-catalan-generating-function.md)).
 
 ---
 

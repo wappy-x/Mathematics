@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Performance and Multi-Period
-topic: Spending from a pot
-item: Investing over a lifetime
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/38-Performance and Multi-Period/04-rebalancing-and-transaction-costs|rebalancing-and-transaction-costs]]"
-  - "[[Cards/09-Probability and statistics/11-Simulation/04-monte-carlo-estimates-and-error|monte-carlo-estimates-and-error]]"
-next: []
-tags:
-  - mathematics
-  - financial mathematics
-  - life-cycle-and-glide-paths
----
-
 # Investing over a lifetime: sequence risk, safe withdrawal rates and glide paths
 
-Financial mathematics → Performance and Multi-Period → Spending from a pot → Investing over a lifetime
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Performance and Multi-Period](../../../SYLLABUS.md#w12-s38) → Investing over a lifetime
 
 ---
 
@@ -162,7 +143,7 @@ $V_2(x)$ is the chance that $(x - 1)G \ge 1$, that is $\ln G \ge -\ln(x - 1)$. W
 
 ### The other door: choosing the rule instead of testing it
 
-This card tests given rules: a fixed withdrawal and a chosen stock share. Merton asked the reverse question, which stock share is best for an investor with a stated dislike of risk, and solved it in continuous time: [mertons-portfolio-problem](03-mertons-portfolio-problem.md). His answer is a constant share, a flat glide path. It judges plans by expected satisfaction, not by a failure chance, which is why the two approaches can rank glide paths differently.
+This card tests given rules: a fixed withdrawal and a chosen stock share. Merton asked the reverse question, which stock share is best for an investor with a stated dislike of risk, and solved it in continuous time: [Merton's problem](03-mertons-portfolio-problem.md). His answer is a constant share, a flat glide path. It judges plans by expected satisfaction, not by a failure chance, which is why the two approaches can rank glide paths differently.
 
 ---
 
@@ -671,7 +652,7 @@ The two outputs agree line for line: both languages use the same generator, seed
 - **Retirement planning software.** The "probability of success" these tools report is one minus the failure chance, estimated by the simulation of road 1.
 - **Target-date funds.** A fund labelled with a retirement year moves from stocks to bonds as the year nears. Step 3 explains the timing: the returns around the retirement date are the ones that weigh on the most withdrawals.
 - **Annuities.** A lifetime annuity (a contract paying income until death) hands sequence risk and the unknown horizon to an insurer. The ruin probability in Milevsky and Robinson's paper is the yardstick for what that transfer is worth.
-- **Drawdown and rebalancing.** A pot's worst fall from its peak is measured on [sharpe-information-and-drawdown](01-sharpe-information-and-drawdown.md); holding the shares fixed, as this card assumes, is costed on [rebalancing-and-transaction-costs](04-rebalancing-and-transaction-costs.md).
+- **Drawdown and rebalancing.** A pot's worst fall from its peak is measured on [Performance measures](01-sharpe-information-and-drawdown.md); holding the shares fixed, as this card assumes, is costed on [Rebalancing](04-rebalancing-and-transaction-costs.md).
 
 > **Say it back**
 > A pot that pays a fixed withdrawal lasts exactly when it covers every withdrawal discounted at the growth it really earned before that withdrawal. Early years' returns sit inside almost every term of that sum, late years' in almost none, so the order of returns matters as much as their size. Under this card's model a 4 percent withdrawal from a 60/40 pot fails 8.36 percent of the time over 30 years, and the rate with a 5 percent failure chance is 3.64 percent. A glide path that holds fewer stocks early and more later cuts the failure chance for the same average stock share.
@@ -680,13 +661,13 @@ The two outputs agree line for line: both languages use the same generator, seed
 
 ## What this builds on
 
-- [rebalancing-and-transaction-costs](04-rebalancing-and-transaction-costs.md): how a pot is held at fixed shares and what that costs in trading; this card assumes the shares are held exactly and for free.
-- [monte-carlo-estimates-and-error](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md): how a simulated fraction carries a standard error, the 0.13 points that decide whether roads 1 and 3 agree.
+- [Rebalancing](04-rebalancing-and-transaction-costs.md): how a pot is held at fixed shares and what that costs in trading; this card assumes the shares are held exactly and for free.
+- [Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md): how a simulated fraction carries a standard error, the 0.13 points that decide whether roads 1 and 3 agree.
 
 ## Where this goes next
 
-- [mertons-portfolio-problem](03-mertons-portfolio-problem.md): the stock share chosen as the best one for a stated dislike of risk, rather than fixed and tested; it comes out constant.
-- [sharpe-information-and-drawdown](01-sharpe-information-and-drawdown.md): the measures that judge a pot's path, including its deepest fall.
+- [Merton's problem](03-mertons-portfolio-problem.md): the stock share chosen as the best one for a stated dislike of risk, rather than fixed and tested; it comes out constant.
+- [Performance measures](01-sharpe-information-and-drawdown.md): the measures that judge a pot's path, including its deepest fall.
 
 A failure chance ranks glide paths by one number; whether a changing stock share beats a constant one by a fuller measure of what a retiree wants is the question Merton's problem answers.
 

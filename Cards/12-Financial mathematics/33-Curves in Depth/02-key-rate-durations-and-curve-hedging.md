@@ -1,29 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Curves in Depth
-topic: Risk by maturity
-item: Key-rate durations
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/33-Curves in Depth/01-principal-components-of-the-curve|principal-components-of-the-curve]]"
-  - "[[Cards/12-Financial mathematics/28-Swaps/03-swap-dv01-and-hedging|swap-dv01-and-hedging]]"
-next:
-  - "[[Cards/12-Financial mathematics/33-Curves in Depth/03-nelson-siegel-and-svensson-fitting|nelson-siegel-and-svensson-fitting]]"
-tags: [mathematics, financial mathematics, key-rate-durations-and-curve-hedging]
----
-
 # Key-rate durations: sensitivity to each pillar, and hedging a bond book against the whole curve
 
-Financial mathematics → Curves in Depth → Risk by maturity → Key-rate durations
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves in Depth](../../../SYLLABUS.md#w12-s33) → Key-rate durations
 
 ---
 
 ## General Overview
 
-A fund holds a 7-year bond: 10,000,000 dollars of face value, paying 5 percent of face once a year and the face itself at the end. On this morning's curve it is worth 10,187,765.52 dollars. If every interest rate rises by one **basis point**, one hundredth of a percentage point, the bond loses 6,196.46 dollars. That number is its **DV01**, the dollar value of one basis point ([swap-dv01-and-hedging](../28-Swaps/03-swap-dv01-and-hedging.md)).
+A fund holds a 7-year bond: 10,000,000 dollars of face value, paying 5 percent of face once a year and the face itself at the end. On this morning's curve it is worth 10,187,765.52 dollars. If every interest rate rises by one **basis point**, one hundredth of a percentage point, the bond loses 6,196.46 dollars. That number is its **DV01**, the dollar value of one basis point ([Swap DV01](../28-Swaps/03-swap-dv01-and-hedging.md)).
 
 The quick hedge is one interest rate swap, a contract trading fixed payments for floating ones, on which the fund pays the fixed rate: it gains when rates rise. A 10-year swap sized to the same DV01 needs 7,562,358.99 dollars of notional, the amount its payments are sized on. Against a move where every rate goes up together, the pair is flat. But curves rarely move together. Let the curve **steepen**: the 2-year rate falls 20 basis points, the 5-year stays put, the 10-year rises 20. The bond alone loses 37,778.50 dollars. The "hedged" pair gains 64,814.68: the hedge is now a larger bet than the bond it was meant to cancel.
 
@@ -78,7 +61,7 @@ $$KR_2 + KR_5 + KR_{10} = \text{DV01}, \qquad \sum_{j} m_{kj}\,h_j = KR_k \ \tex
 
 **Read it aloud:** the pillar risks add up to the whole risk; choose the swap notionals so that at every pillar the swaps gain what the bond loses.
 
-Divide a key-rate DV01 by the price and by $\delta$ and dollars become years: the **key-rate duration**. The bond's are 0.2776, 3.6665 and 2.1381, adding up to its duration of 6.0823 ([duration-and-convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md)). Hedges are sized in dollars, so the card works in dollars.
+Divide a key-rate DV01 by the price and by $\delta$ and dollars become years: the **key-rate duration**. The bond's are 0.2776, 3.6665 and 2.1381, adding up to its duration of 6.0823 ([Duration and convexity](../01-Money%2C%20Dates%20and%20Discounting/06-duration-and-convexity.md)). Hedges are sized in dollars, so the card works in dollars.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -106,7 +89,7 @@ In words: each tent climbs from the pillar before, peaks at its own, and falls t
 - **The curve moves in straight lines between pillars.** Key-rate DV01s see only moves built from the three tents. A kink at 7 years alone, the 7-year zero rate up 10 basis points and nothing else, costs the bond 53,130.21 dollars and the fully hedged book 52,400.91: the hedge does almost nothing. More pillars catch more shapes, at the price of more hedges.
 - **Small moves.** Key-rate DV01s are slopes. Over the 20 basis point steepener the fully hedged book still drifts by 297.20 dollars: the bend in the value line, called convexity, which slopes do not see.
 - **The same lever everywhere.** Bond and swaps are bumped on the same zero curve with the same tents. Key rates on par quotes, rebuilding the curve each time, are a different and equally valid set of numbers; mixing the two sizes the hedge wrong.
-- **One curve, annual payments.** The swaps' floating payments are forecast off the curve that discounts them, as on [bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md). Conventions verified 28 Sep 2026: dollar swaps float on SOFR, an overnight rate compounded over each period, and desks keep separate forecasting and discounting curves ([basis-swaps-and-the-multi-curve-framework](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md)); the numbers shift slightly, the method does not.
+- **One curve, annual payments.** The swaps' floating payments are forecast off the curve that discounts them, as on [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md). Conventions verified 28 Sep 2026: dollar swaps float on SOFR, an overnight rate compounded over each period, and desks keep separate forecasting and discounting curves ([Multi-curve](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md)); the numbers shift slightly, the method does not.
 - **As many swaps as pillars.** Three pillars need three swaps whose risks are not copies of each other. Two swaps generally cannot zero three numbers; four leave a choice.
 
 ---
@@ -153,7 +136,7 @@ Write the value as a function of the ten zero rates, $V(z_1, \dots, z_{10})$. Fo
 
 ### Step 4: the hedges have key-rate DV01s too
 
-Paying fixed on a par swap means receiving the floating leg, worth $1 - D(n)$ per dollar of notional, and paying $S_n$ each year up to $n$ ([par-swap-rate-and-annuity](../28-Swaps/02-par-swap-rate-and-annuity.md)). That is short a bond with coupon $S_n$: it gains when rates rise, and Step 2 applies unchanged.
+Paying fixed on a par swap means receiving the floating leg, worth $1 - D(n)$ per dollar of notional, and paying $S_n$ each year up to $n$ ([The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)). That is short a bond with coupon $S_n$: it gains when rates rise, and Step 2 applies unchanged.
 
 The results, per million of notional, gained per basis point of each tent:
 
@@ -167,13 +150,13 @@ A 5-year swap pays nothing after 5 years, so the 10-year tent cannot touch it; i
 
 ### Step 5: solve for the notionals, starting at the long end
 
-The three hedge equations are the rows of that table times the notionals, set equal to the bond's key-rate DV01s. A triangular system solves from the bottom up, called back substitution ([gaussian-elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md)).
+The three hedge equations are the rows of that table times the notionals, set equal to the bond's key-rate DV01s. A triangular system solves from the bottom up, called back substitution ([Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md)).
 
 - **10-year pillar.** Only the 10-year swap is there: 2,178.25 / 711.82 per million = 3,060,087.83 dollars.
 - **5-year pillar.** That 10-year swap already covers 247.61 dollars of it, leaving 3,487.78 for the 5-year swap: 3,487.78 / 431.03 per million = 8,091,656.15 dollars.
 - **2-year pillar.** The 5- and 10-year swaps between them cover 11.53 dollars more 2-year risk than the bond has. The 2-year swap must take that back: receive fixed on 11.53 / 195.78 per million = 58,918.14 dollars.
 
-**Existence and uniqueness.** A triangular system with no zero on its diagonal has exactly one solution. Here the diagonal is 195.78, 431.03 and 711.82: each swap is the only one whose final payment sits at its own pillar. If one swap's column of risks were a combination of the others', the determinant ([determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)) would be zero: some bond risks could not be matched, and those that could would have many hedges. A determinant near zero, two swaps with almost the same risks, gives huge notionals of opposite sign.
+**Existence and uniqueness.** A triangular system with no zero on its diagonal has exactly one solution. Here the diagonal is 195.78, 431.03 and 711.82: each swap is the only one whose final payment sits at its own pillar. If one swap's column of risks were a combination of the others', the determinant ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)) would be zero: some bond risks could not be matched, and those that could would have many hedges. A determinant near zero, two swaps with almost the same risks, gives huge notionals of opposite sign.
 
 ### Step 6: why three zeros protect against every tent-shaped move
 
@@ -194,13 +177,13 @@ Orange: the bond alone, losing as the curve steepens. Green: the bond with one 1
 
 ### The other road
 
-Key rates can also be taken on the par quotes: bump the quoted swap rates in tents and rebuild the curve, as Tuckman's textbook does. A par swap's risk then sits entirely on its own quote, since the rebuilt curve must reprice that quote at par, so the swap table is diagonal. The numbers differ; the method is the same. A different road again hedges the curve's statistical moves, level, slope and curvature, instead of pillars: [principal-components-of-the-curve](01-principal-components-of-the-curve.md).
+Key rates can also be taken on the par quotes: bump the quoted swap rates in tents and rebuild the curve, as Tuckman's textbook does. A par swap's risk then sits entirely on its own quote, since the rebuilt curve must reprice that quote at par, so the swap table is diagonal. The numbers differ; the method is the same. A different road again hedges the curve's statistical moves, level, slope and curvature, instead of pillars: [Level, slope and curvature](01-principal-components-of-the-curve.md).
 
 ---
 
 ## Worked numbers, by hand
 
-The curve: the par swap quotes of [swap-dv01-and-hedging](../28-Swaps/03-swap-dv01-and-hedging.md), 4.20 percent at one year rising to 4.71 percent at ten, bootstrapped to discount factors ($D(5) = 0.79621728$, the same on both cards) and turned into zero rates by $z(t) = -\ln D(t)/t$.
+The curve: the par swap quotes of [Swap DV01](../28-Swaps/03-swap-dv01-and-hedging.md), 4.20 percent at one year rising to 4.71 percent at ten, bootstrapped to discount factors ($D(5) = 0.79621728$, the same on both cards) and turned into zero rates by $z(t) = -\ln D(t)/t$.
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
@@ -690,10 +673,10 @@ The two outputs agree line for line.
 ## Where you meet it in real life
 
 - **Bond fund risk reports.** A row of key-rate durations sits beside the fund's total duration and the same row for its benchmark index. The differences are the fund's curve bets.
-- **Swap desks.** A desk's risk is shown as a ladder of DV01s by maturity bucket, and hedges are traded bucket by bucket, usually in the most liquid swaps, which play the role of this card's pillars ([swap-dv01-and-hedging](../28-Swaps/03-swap-dv01-and-hedging.md)).
+- **Swap desks.** A desk's risk is shown as a ladder of DV01s by maturity bucket, and hedges are traded bucket by bucket, usually in the most liquid swaps, which play the role of this card's pillars ([Swap DV01](../28-Swaps/03-swap-dv01-and-hedging.md)).
 - **Pension funds.** Promised pensions stretch decades out; their key-rate DV01s are hedged with long swaps and bonds, so a move at 30 years does not open a gap a 10-year hedge would miss.
 - **Bank capital rules.** Regulators measure a trading book's interest rate risk as sensitivities at a fixed list of maturities, each weighted and combined: key-rate DV01s with prescribed pillars.
-- **The curve's own story.** Level, slope and curvature are three moves that explain most of a curve's history; key-rate DV01s tell how a book responds to each: [principal-components-of-the-curve](01-principal-components-of-the-curve.md). Holding a book as the curve ages is [carry-and-roll-down](05-carry-and-roll-down.md).
+- **The curve's own story.** Level, slope and curvature are three moves that explain most of a curve's history; key-rate DV01s tell how a book responds to each: [Level, slope and curvature](01-principal-components-of-the-curve.md). Holding a book as the curve ages is [Carry and roll-down](05-carry-and-roll-down.md).
 
 > **Say it back**
 > DV01 measures a book against one move, every rate together, and curves move in other ways. Key-rate DV01s measure it against a few tent-shaped moves, one per pillar, and because the tents add up to a parallel move, the pillar numbers add up to the DV01. A hedge is a set of swaps, one per pillar, whose pillar risks cancel the book's; the swaps' risks overlap, so the notionals come from solving a small triangular system. The 7-year bond needs 8.1 million of 5-year swaps, 3.1 million of 10-year and a small 2-year trim in the other direction. The result is flat to first order against every move that is a straight line between pillars, and blind to anything between them.
@@ -702,12 +685,12 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [principal-components-of-the-curve](01-principal-components-of-the-curve.md): how real curves move, and why moves other than parallel ones matter enough to hedge.
-- [swap-dv01-and-hedging](../28-Swaps/03-swap-dv01-and-hedging.md): DV01, the house curve used here, and hedging one number with one swap. This card splits that one number into three.
+- [Level, slope and curvature](01-principal-components-of-the-curve.md): how real curves move, and why moves other than parallel ones matter enough to hedge.
+- [Swap DV01](../28-Swaps/03-swap-dv01-and-hedging.md): DV01, the house curve used here, and hedging one number with one swap. This card splits that one number into three.
 
 ## Where this goes next
 
-- [nelson-siegel-and-svensson-fitting](03-nelson-siegel-and-svensson-fitting.md): a curve described by four or six smooth parameters instead of ten quotes, whose sensitivities are a different way to cut the same risk.
+- [Fitting a curve with four or six parameters](03-nelson-siegel-and-svensson-fitting.md): a curve described by four or six smooth parameters instead of ten quotes, whose sensitivities are a different way to cut the same risk.
 
 Key rates assume the curve bends only at a few chosen pillars; the open question is what shape a real curve takes between them, and a fitted curve is one answer.
 

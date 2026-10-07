@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Short-Rate Models
-topic: Pricing on a rate lattice
-item: The Hull-White tree
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/04-hull-white-model|hull-white-model]]"
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/06-trinomial-trees-and-the-grid-connection|trinomial-trees-and-the-grid-connection]]"
-next:
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/08-calibrating-a-short-rate-model|calibrating-a-short-rate-model]]"
-  - "[[Cards/12-Financial mathematics/31-Forward-Rate Models/06-bermudan-swaptions-by-regression|bermudan-swaptions-by-regression]]"
-  - "[[Cards/12-Financial mathematics/35-Mortgages, Callables and Prepayment/01-callable-bonds-and-yield-to-worst|callable-bonds-and-yield-to-worst]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - hull-white-trinomial-tree
----
-
 # The Hull-White tree: a trinomial lattice for the short rate that handles any payoff
 
-Financial mathematics → Short-Rate Models → Pricing on a rate lattice → The Hull-White tree
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Short-Rate Models](../../../SYLLABUS.md#w12-s30) → The Hull-White tree
 
 ---
 
@@ -30,9 +8,9 @@ Financial mathematics → Short-Rate Models → Pricing on a rate lattice → Th
 
 Acme has borrowed $1,000,000 at a floating rate for six years; each year the rate resets to what one-year money costs then. Fearing rising rates, Acme buys a right: on any anniversary from year 1 to year 5, it may switch the remaining payments to a fixed 4.7 percent until year 6. Switching at year 1 fixes five years of payments; switching at year 4 fixes two.
 
-That right is a **payer Bermudan swaption**: an option to enter a swap paying fixed, exercisable on a fixed list of dates ([swaptions-payer-and-receiver](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md), [bermudan-options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md)). The market calls it a "1-into-5": first exercise in one year, into a five-year swap, every later swap ending at year 6 too.
+That right is a **payer Bermudan swaption**: an option to enter a swap paying fixed, exercisable on a fixed list of dates ([Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md), [Bermudan options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md)). The market calls it a "1-into-5": first exercise in one year, into a five-year swap, every later swap ending at year 6 too.
 
-One exercise date has a closed-form price ([bond-options-and-jamshidians-trick](05-bond-options-and-jamshidians-trick.md)). Five dates do not: each year the holder compares switching now with keeping the right, and keeping it has no formula. The answer is a **lattice**, a grid of possible interest rates at each date, built so the rates wander as the Hull-White model says ([hull-white-model](04-hull-white-model.md)) and so every bond on today's curve comes out at its market price. John Hull and Alan White published the construction in 1994; from here on it is the Hull-White tree.
+One exercise date has a closed-form price ([Bond options](05-bond-options-and-jamshidians-trick.md)). Five dates do not: each year the holder compares switching now with keeping the right, and keeping it has no formula. The answer is a **lattice**, a grid of possible interest rates at each date, built so the rates wander as the Hull-White model says ([Hull-White](04-hull-white-model.md)) and so every bond on today's curve comes out at its market price. John Hull and Alan White published the construction in 1994; from here on it is the Hull-White tree.
 
 On a 60-step tree the right is worth **$14,432.09**; with the tree's step error removed, and on an independent grid, it is about $14,238. The best single date alone, year 2, is worth $9,741.96 by a closed formula. The extra, about $4,500, is what the choice of date buys.
 
@@ -106,11 +84,11 @@ at exercise year e. One minus the six-year bond is the floating side: a loan tha
 
 ### When it holds
 
-- **One Gaussian factor, constant $a$ and $\sigma$.** Every rate on the curve moves together. A Bermudan's value depends on how short and long swap rates move against each other; where they do not move in lockstep, the price is off, and [two-factor-and-lognormal-short-rate-models](07-two-factor-and-lognormal-short-rate-models.md) adds a factor.
+- **One Gaussian factor, constant $a$ and $\sigma$.** Every rate on the curve moves together. A Bermudan's value depends on how short and long swap rates move against each other; where they do not move in lockstep, the price is off, and [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md) adds a factor.
 - **Rates may go below zero.** Here the lowest rung stays above zero, at 0.49 percent by year 1; on a low curve the tree has negative rungs, which a market floored at zero would reject.
 - **Short steps.** The error is first order: $139.60 short on the one-date contract at 60 steps, $67.30 at 120. On the Bermudan the 60-step tree is $194.46 above the grid.
 - **Exercise dates on tree layers.** A date between layers needs an extra step or interpolation.
-- **One curve for discounting and for the floating rate.** Otherwise the "one minus the last bond" shortcut fails; see [basis-swaps-and-the-multi-curve-framework](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md).
+- **One curve for discounting and for the floating rate.** Otherwise the "one minus the last bond" shortcut fails; see [Multi-curve](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md).
 
 ---
 
@@ -124,7 +102,7 @@ That split is the whole trick. Build the ladder for x once: same spacing, same w
 
 ### Step 1: what one step of x has to match
 
-Over one step x behaves like the Vasicek rate centred at zero ([vasicek-model](02-vasicek-model.md)). From a value x its average move is M times x, and the move's variance is $\sigma^2(1 - e^{-2a\Delta t})/(2a)$. Both are exact, not small-step approximations.
+Over one step x behaves like the Vasicek rate centred at zero ([Vasicek](02-vasicek-model.md)). From a value x its average move is M times x, and the move's variance is $\sigma^2(1 - e^{-2a\Delta t})/(2a)$. Both are exact, not small-step approximations.
 
 On rung j, x equals $j\,\Delta x$. Measured in rungs, the average move is $jM$ and the variance is one third, because $\Delta x^2$ was set to three times the step variance.
 
@@ -169,7 +147,7 @@ Start with $Q_{0,0} = 1$, solve for $\alpha_0$, push the state prices forward, s
 
 ### Step 5: roll back, deciding at each exercise date
 
-At year 6 the contract is worth nothing. Step back one layer at a time. At an ordinary node the value is the discounted average of the three children, the rule of every tree ([trinomial-trees-and-the-grid-connection](../04-Binomial%20Trees/06-trinomial-trees-and-the-grid-connection.md)). At an exercise date the holder takes the larger of the swap's worth now and the value of keeping the right; backward induction makes that choice optimal ([bermudan-options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md)).
+At year 6 the contract is worth nothing. Step back one layer at a time. At an ordinary node the value is the discounted average of the three children, the rule of every tree ([Trinomial trees](../04-Binomial%20Trees/06-trinomial-trees-and-the-grid-connection.md)). At an exercise date the holder takes the larger of the swap's worth now and the value of keeping the right; backward induction makes that choice optimal ([Bermudan options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md)).
 
 The swap's worth at a node needs bond prices at that node. They come from the same tree: put $1 on every node of year y's layer and roll it back to the exercise layer. Exercise and waiting then use one set of rates, and the comparison is fair.
 
@@ -190,7 +168,7 @@ The swap's worth at a node needs bond prices at that node. They come from the sa
 
 ### The other doors
 
-For one exercise date, Jamshidian's formula is exact, because Hull-White fitted to this Vasicek curve with the same $a$ and $\sigma$ is Vasicek itself. The value also solves the term-structure equation ([the-term-structure-equation](01-the-term-structure-equation.md)), which a fine grid in the short rate solves directly. With too many factors for any lattice, simulation with a regression for the waiting value takes over: [bermudan-swaptions-by-regression](../31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md).
+For one exercise date, Jamshidian's formula is exact, because Hull-White fitted to this Vasicek curve with the same $a$ and $\sigma$ is Vasicek itself. The value also solves the term-structure equation ([A short-rate model](01-the-term-structure-equation.md)), which a fine grid in the short rate solves directly. With too many factors for any lattice, simulation with a regression for the waiting value takes over: [Bermudan swaptions](../31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md).
 
 ---
 
@@ -724,9 +702,9 @@ The two outputs are identical line for line.
 ## Where you meet it in real life
 
 - **Bermudan swaption desks.** Banks sell Acme's right to borrowers and to issuers of callable debt; a one-factor tree fitted to the day's curve is a standard first model for pricing and hedging it.
-- **Callable bonds.** An issuer that may repay early on coupon dates holds a Bermudan option; the same rollback, with "call" for "switch", prices it: [callable-bonds-and-yield-to-worst](../35-Mortgages%2C%20Callables%20and%20Prepayment/01-callable-bonds-and-yield-to-worst.md).
+- **Callable bonds.** An issuer that may repay early on coupon dates holds a Bermudan option; the same rollback, with "call" for "switch", prices it: [Callable bonds](../35-Mortgages%2C%20Callables%20and%20Prepayment/01-callable-bonds-and-yield-to-worst.md).
 - **Cancellable swaps.** A swap one side may end on reset dates is a plain swap plus a Bermudan swaption the other way.
-- **Calibration.** $a$ and $\sigma$ are first chosen so the model reproduces quoted swaptions; the tree then prices what the quotes do not cover: [calibrating-a-short-rate-model](08-calibrating-a-short-rate-model.md).
+- **Calibration.** $a$ and $\sigma$ are first chosen so the model reproduces quoted swaptions; the tree then prices what the quotes do not cover: [Calibrating Hull-White](08-calibrating-a-short-rate-model.md).
 - **Any payoff written from rates at a node.** Caps, range accruals, sinking-fund bonds: the same lattice prices them. That is the "any payoff" in the title.
 
 > **Say it back**
@@ -736,14 +714,14 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [hull-white-model](04-hull-white-model.md): the model, a mean-reverting Gaussian short rate whose time-dependent level fits today's curve. The tree is its discrete version.
-- [trinomial-trees-and-the-grid-connection](../04-Binomial%20Trees/06-trinomial-trees-and-the-grid-connection.md): three branches, weights from matched moments, the root-3 spacing, and the link between a tree and a finite-difference grid.
+- [Hull-White](04-hull-white-model.md): the model, a mean-reverting Gaussian short rate whose time-dependent level fits today's curve. The tree is its discrete version.
+- [Trinomial trees](../04-Binomial%20Trees/06-trinomial-trees-and-the-grid-connection.md): three branches, weights from matched moments, the root-3 spacing, and the link between a tree and a finite-difference grid.
 
 ## Where this goes next
 
-- [calibrating-a-short-rate-model](08-calibrating-a-short-rate-model.md): choosing $a$ and $\sigma$ from market swaption prices, so the tree's answers are the market's.
-- [bermudan-swaptions-by-regression](../31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md): the same contract by simulation, with a regression estimating the value of waiting; it works where a lattice cannot, in models with many factors.
-- [callable-bonds-and-yield-to-worst](../35-Mortgages%2C%20Callables%20and%20Prepayment/01-callable-bonds-and-yield-to-worst.md): the issuer's version of the decision, on a bond instead of a swap.
+- [Calibrating Hull-White](08-calibrating-a-short-rate-model.md): choosing $a$ and $\sigma$ from market swaption prices, so the tree's answers are the market's.
+- [Bermudan swaptions](../31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md): the same contract by simulation, with a regression estimating the value of waiting; it works where a lattice cannot, in models with many factors.
+- [Callable bonds](../35-Mortgages%2C%20Callables%20and%20Prepayment/01-callable-bonds-and-yield-to-worst.md): the issuer's version of the decision, on a bond instead of a swap.
 
 This card took $a$ and $\sigma$ as given; which values the market implies, and whether one pair can match every swaption quote at once, is the question the calibration card answers.
 

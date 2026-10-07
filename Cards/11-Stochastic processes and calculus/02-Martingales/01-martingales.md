@@ -1,27 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Martingales
-topic: Fair games in time
-item: Martingales
-kind: definition
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/01-Random Walks and Filtrations/03-filtrations-and-information|filtrations-and-information]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/05-conditional-expectation-in-tables|conditional-expectation-in-tables]]"
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/06-filtrations-and-martingales|filtrations-and-martingales]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/02-predictable-bets-and-the-martingale-transform|predictable-bets-and-the-martingale-transform]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/06-brownian-martingales-and-exponential-martingale|brownian-martingales-and-exponential-martingale]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/06-feynman-kac-formula|feynman-kac-formula]]"
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/06-ruin-theory-and-lundberg|ruin-theory-and-lundberg]]"
-tags: [mathematics, stochastic processes and calculus, martingales]
----
-
 # Martingales: a process whose best forecast is its current value
 
-Stochastic processes and calculus → Martingales → Fair games in time → Martingales
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Martingales](../../../SYLLABUS.md#w11-s02) → Martingales
 
 ---
 
@@ -31,7 +10,7 @@ A gambler sits down with $10. Each round a fair coin is tossed. Heads, the house
 
 Over 40 rounds the fortune wanders. It climbs to $14, falls to $8, and at round 40 stands at $16. Yet at every moment one thing stays fixed. Whatever has happened so far, the best forecast of the fortune one round later is the fortune now. At $12, the next round ends at $13 or $11, equally likely, and the two average to $12. The history of wins and losses sets where the gambler is, never where the gambler is heading.
 
-A process with that property is a **martingale**: a fair game, in which the best forecast of tomorrow is today. The measure wing already defines it ([filtrations-and-martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md)). This card takes it into time. It shows that the fortune is a martingale, that its square is not until one round's worth of spread is subtracted each round, and what happens to the fortune at roulette odds, where the game tilts against the player.
+A process with that property is a **martingale**: a fair game, in which the best forecast of tomorrow is today. The measure wing already defines it ([Filtrations and martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md)). This card takes it into time. It shows that the fortune is a martingale, that its square is not until one round's worth of spread is subtracted each round, and what happens to the fortune at roulette odds, where the game tilts against the player.
 
 **A martingale is a process whose forecast of any later value, given everything seen so far, is its present value; a fair gambler's fortune is one, and so is its square minus the number of rounds played.**
 
@@ -56,7 +35,7 @@ The first line is one simulated gambler, a single sample drawn from a seeded gen
 
 ## The formula
 
-Notation first, in words. A process written $(X_n)$ is a list of random quantities, one per round, read "the value after round $n$". Here $X_n$ is the fortune after $n$ rounds, with $X_0 = 10$. The filtration $\mathcal F_n$ is what is known after $n$ rounds: the full record of the first $n$ tosses ([filtrations-and-information](../01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md)). $E[\,\cdot \mid \mathcal F_n]$ is the best forecast given that record: an average over every future still possible, each weighted by its chance ([conditional-expectation-in-tables](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md)).
+Notation first, in words. A process written $(X_n)$ is a list of random quantities, one per round, read "the value after round $n$". Here $X_n$ is the fortune after $n$ rounds, with $X_0 = 10$. The filtration $\mathcal F_n$ is what is known after $n$ rounds: the full record of the first $n$ tosses ([Filtrations](../01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md)). $E[\,\cdot \mid \mathcal F_n]$ is the best forecast given that record: an average over every future still possible, each weighted by its chance ([Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md)).
 
 A process $(X_n)$ is a **martingale** with respect to $(\mathcal F_n)$ when three things hold: each $X_n$ can be read off the record at round $n$ (it is **adapted**); each has a finite average size, $E\lvert X_n\rvert < \infty$; and
 
@@ -98,7 +77,7 @@ A definition has no hypotheses: it names a property, relative to a stated filtra
 - **Rounds independent of the past.** The next toss must not depend on the record. A coin that tends to repeat its last face breaks the argument: after a win, the forecast of the next fortune would sit above the present one.
 - **Fair odds.** Win chance exactly 0.5. At roulette, with 18 winning pockets of 37, the forecast drops by $1/37 a round and the fortune is a supermartingale.
 - **The gambler's own record as the filtration.** Relative to a record that includes the next toss, nothing random is left to average, and the forecast is the next fortune itself, never the present one.
-- **Fixed rounds.** Both theorems speak of fixed rounds $n$ and $m$. Stopping at a round chosen by watching the path, "quit when ahead", needs the extra conditions of [stopping-times-and-optional-stopping](03-stopping-times-and-optional-stopping.md).
+- **Fixed rounds.** Both theorems speak of fixed rounds $n$ and $m$. Stopping at a round chosen by watching the path, "quit when ahead", needs the extra conditions of [Stopping times](03-stopping-times-and-optional-stopping.md).
 
 Integrability is automatic here: after $n$ rounds the fortune lies between $10 - n$ and $10 + n$.
 
@@ -112,7 +91,7 @@ The next toss is independent of the record, and it averages zero: $0.5 \times (+
 
 ### Step 1: the fortune is a martingale
 
-Write the next fortune as the present fortune plus the next toss: $X_{n+1} = X_n + \xi_{n+1}$. Two rules of conditional expectation, from [rules-of-conditional-expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md), do the rest. The present fortune is known at round $n$, so it comes out of the forecast unchanged: "taking out what is known". The next toss is independent of the record, so its forecast is its plain average: "independence drops the condition". Hence
+Write the next fortune as the present fortune plus the next toss: $X_{n+1} = X_n + \xi_{n+1}$. Two rules of conditional expectation, from [The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md), do the rest. The present fortune is known at round $n$, so it comes out of the forecast unchanged: "taking out what is known". The next toss is independent of the record, so its forecast is its plain average: "independence drops the condition". Hence
 
 $$E[X_{n+1} \mid \mathcal F_n] = X_n + E[\xi_{n+1}] = X_n + 0 = X_n .$$
 
@@ -134,7 +113,7 @@ The curve is the square of net winnings, $s$ times itself, to scale. From $s = 0
 
 ### Step 3: sub and super, from the same computation
 
-Step 2 already shows that $X_n^2$ on its own is a submartingale: its forecast rises by 1. That is no accident of squares. Any function that bends upwards, applied to a martingale, gives a submartingale, by the conditional form of Jensen's inequality ([rules-of-conditional-expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md); the plain form is [jensens-inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)): the average of the bent values sits above the bent average, exactly the chord in the picture.
+Step 2 already shows that $X_n^2$ on its own is a submartingale: its forecast rises by 1. That is no accident of squares. Any function that bends upwards, applied to a martingale, gives a submartingale, by the conditional form of Jensen's inequality ([The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md); the plain form is [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)): the average of the bent values sits above the bent average, exactly the chord in the picture.
 
 Now tilt the game. On red at European roulette, with one green zero, the gambler wins with chance $p = 18/37$ and loses with chance $19/37$. The average gain per round is $\mu = 2p - 1 = -1/37$. Step 1 goes through word for word, with that average in place of zero:
 
@@ -142,7 +121,7 @@ $$E[X_{n+1} \mid \mathcal F_n] = X_n - \tfrac{1}{37} .$$
 
 From $12 the forecast is $11.9730. The fortune is a supermartingale. Add back what the house takes and the martingale returns: $X_n + n/37$ is one.
 
-A bent function can also straighten a tilted game. Raise $19/18$ to the power of the roulette fortune. Its forecast one round ahead multiplies it by $\tfrac{18}{37} \cdot \tfrac{19}{18} + \tfrac{19}{37} \cdot \tfrac{18}{19} = \tfrac{19}{37} + \tfrac{18}{37} = 1$, so it is a martingale, although the fortune itself is not. That trick is the engine of ruin probabilities ([ruin-theory-and-lundberg](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/06-ruin-theory-and-lundberg.md)).
+A bent function can also straighten a tilted game. Raise $19/18$ to the power of the roulette fortune. Its forecast one round ahead multiplies it by $\tfrac{18}{37} \cdot \tfrac{19}{18} + \tfrac{19}{37} \cdot \tfrac{18}{19} = \tfrac{19}{37} + \tfrac{18}{37} = 1$, so it is a martingale, although the fortune itself is not. That trick is the engine of ruin probabilities ([Ruin](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/06-ruin-theory-and-lundberg.md)).
 
 ### Step 4: forecasts reach every later round
 
@@ -173,7 +152,7 @@ So $X_n^2 = (X_n^2 - n) + n$: a martingale plus a part that rises by an amount k
 
 </details>
 
-A second road, for a fixed horizon: the fortune after round $n$ is the forecast of the fortune at any fixed final round, $X_n = E[X_{100} \mid \mathcal F_n]$ for $n \le 100$, and a forecast of a fixed result, updated as information arrives, is always a martingale. That theorem is proved on [filtrations-and-martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md).
+A second road, for a fixed horizon: the fortune after round $n$ is the forecast of the fortune at any fixed final round, $X_n = E[X_{100} \mid \mathcal F_n]$ for $n \le 100$, and a forecast of a fixed result, updated as information arrives, is always a martingale. That theorem is proved on [Filtrations and martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md).
 
 ---
 
@@ -590,16 +569,16 @@ The two outputs match line for line. Each simulated average sits within about on
 > - **Dropping the condition.** $E[X_{n+1}] = X_n$ compares a number with a random quantity. The definition conditions on the record; a constant average alone is weaker and does not make a martingale.
 > - **Swapping sub and super.** At roulette the fortune is a *super*martingale, forecast $9.9730 from $10. "Super": the present sits above the forecast of the future; "sub": below it.
 > - **Forgetting whose information.** Martingale is relative to a filtration. Against a record that includes the next toss the fortune is no martingale: its forecast is off on every one of the 1024 records.
-> - **Stopping at a chosen moment.** "Quit when ahead by $1" is not a fixed round, and the theorems here say nothing about it; the doubling strategy of [uniform-integrability-and-unbounded-stopping](06-uniform-integrability-and-unbounded-stopping.md) shows what can go wrong.
+> - **Stopping at a chosen moment.** "Quit when ahead by $1" is not a fixed round, and the theorems here say nothing about it; the doubling strategy of [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md) shows what can go wrong.
 
 ---
 
 ## Where you meet it in real life
 
 - **Casinos.** Roulette, craps and slot machines are supermartingales for the player and submartingales for the house, which needs only the tilt per round: $1/37 per dollar on red.
-- **Betting systems.** No rule for choosing stakes from past results gives fair bets a positive forecast at a fixed round; the stake just multiplies a toss that averages zero. The proof is [predictable-bets-and-the-martingale-transform](02-predictable-bets-and-the-martingale-transform.md).
-- **Measuring spread.** $X_n^2 - n$ is the discrete ancestor of $W_t^2 - t$ for Brownian motion, $W_t$ the random walk seen from far away: [brownian-martingales-and-exponential-martingale](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md).
-- **Insurance ruin.** An insurer's surplus, a tilted game in its favour, is turned into a martingale by exponentiating, as Step 3 did with 19/18: [ruin-theory-and-lundberg](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/06-ruin-theory-and-lundberg.md).
+- **Betting systems.** No rule for choosing stakes from past results gives fair bets a positive forecast at a fixed round; the stake just multiplies a toss that averages zero. The proof is [Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md).
+- **Measuring spread.** $X_n^2 - n$ is the discrete ancestor of $W_t^2 - t$ for Brownian motion, $W_t$ the random walk seen from far away: [Brownian martingales](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md).
+- **Insurance ruin.** An insurer's surplus, a tilted game in its favour, is turned into a martingale by exponentiating, as Step 3 did with 19/18: [Ruin](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/06-ruin-theory-and-lundberg.md).
 
 > **Say it back**
 > A martingale is a process whose best forecast of the next value, given everything seen so far, is the present value. A fair gambler's fortune is one, because the next toss averages zero whatever has happened. The squared fortune gains exactly 1 in forecast each round, so the square minus the rounds played is a martingale, and the spread after $n$ rounds is $n$. Tilt the odds against the gambler and the fortune becomes a supermartingale, falling $1/37 a round at roulette. All of this holds at fixed rounds and relative to the gambler's own record.
@@ -608,18 +587,18 @@ The two outputs match line for line. Each simulated average sits within about on
 
 ## What this builds on
 
-- [filtrations-and-information](../01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md): the filtration of a random walk, the record of tosses that every forecast here conditions on.
-- [conditional-expectation-in-tables](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md): a forecast as an average over the rows still possible.
-- [filtrations-and-martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md): the definition on a measure space, the tower rule, and forecasts of a fixed result as martingales.
+- [Filtrations](../01-Random%20Walks%20and%20Filtrations/03-filtrations-and-information.md): the filtration of a random walk, the record of tosses that every forecast here conditions on.
+- [Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md): a forecast as an average over the rows still possible.
+- [Filtrations and martingales](../../10-Measure%20and%20integration/09-Conditional%20Expectation/06-filtrations-and-martingales.md): the definition on a measure space, the tower rule, and forecasts of a fixed result as martingales.
 
 ## Where this goes next
 
-- [predictable-bets-and-the-martingale-transform](02-predictable-bets-and-the-martingale-transform.md): stakes chosen from the record, and why they cannot tilt a fair game.
-- [brownian-martingales-and-exponential-martingale](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md): $W_t$, $W_t^2 - t$ and the exponential martingale, the continuous-time versions of this card's three.
-- [feynman-kac-formula](../07-Changing%20Measure/06-feynman-kac-formula.md): a martingale built from a function of a diffusion, turning an expectation into a differential equation.
-- [ruin-theory-and-lundberg](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/06-ruin-theory-and-lundberg.md): the exponential martingale of a tilted game, bounding the chance of ruin.
+- [Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md): stakes chosen from the record, and why they cannot tilt a fair game.
+- [Brownian martingales](../05-Brownian%20Motion/06-brownian-martingales-and-exponential-martingale.md): $W_t$, $W_t^2 - t$ and the exponential martingale, the continuous-time versions of this card's three.
+- [Feynman-Kac](../07-Changing%20Measure/06-feynman-kac-formula.md): a martingale built from a function of a diffusion, turning an expectation into a differential equation.
+- [Ruin](../../12-Financial%20mathematics/51-Insurance%20and%20Actuarial%20Mathematics/06-ruin-theory-and-lundberg.md): the exponential martingale of a tilted game, bounding the chance of ruin.
 
-Every result here holds at fixed rounds; whether a gambler who picks the moment to stop, by watching the path, can beat a fair game is the question [stopping-times-and-optional-stopping](03-stopping-times-and-optional-stopping.md) answers.
+Every result here holds at fixed rounds; whether a gambler who picks the moment to stop, by watching the path, can beat a fair game is the question [Stopping times](03-stopping-times-and-optional-stopping.md) answers.
 
 ---
 

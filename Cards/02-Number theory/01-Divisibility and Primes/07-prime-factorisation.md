@@ -1,30 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Divisibility and Primes
-topic: Primes
-item: Prime factorisation
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/03-multiplying-and-dividing|multiplying-and-dividing]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/05-primes-and-composites|primes-and-composites]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/01-divides|divides]]"
-next:
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/08-counting-divisors|counting-divisors]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/01-gcd|gcd]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/07-unique-factorisation|unique-factorisation]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/08-infinitude-of-primes|infinitude-of-primes]]"
-tags:
-  - mathematics
-  - number theory
-  - prime-factorisation
----
-
 # Prime factorisation: a factor tree breaks any number into prime atoms, and every route reaches the same atoms
 
-Number theory → Divisibility and Primes → Primes → Prime factorisation
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Divisibility and Primes](../../../SYLLABUS.md#w02-s01) → Prime factorisation
 
 ---
 
@@ -36,7 +12,7 @@ Pull it apart and you see why. Halve it: 180, 90, 45. Then thirds: 15, 5. Nothin
 
 Now start differently. 360 = 6 × 60, then 60 = 6 × 10, then 6 = 2 × 3 and 10 = 2 × 5. The same six.
 
-A number bigger than 1 that will not split is prime ([primes-and-composites](05-primes-and-composites.md)). Splitting until every piece is prime is a **factor tree**; the primes at the ends are the **prime factorisation**.
+A number bigger than 1 that will not split is prime ([Primes and composites](05-primes-and-composites.md)). Splitting until every piece is prime is a **factor tree**; the primes at the ends are the **prime factorisation**.
 
 **Split a number, split the pieces, keep going until every piece is prime. That always finishes, and whichever splits you choose you end with the same primes, each the same number of times.**
 
@@ -86,7 +62,7 @@ A prime is already finished: 7 is just 7, a tree with no branches.
 
 | Piece | Plain meaning | In 360 |
 | --- | --- | --- |
-| a factor | goes in with nothing left over ([divides](01-divides.md)) | 6, 60, 10 |
+| a factor | goes in with nothing left over ([Divides](01-divides.md)) | 6, 60, 10 |
 | a prime | bigger than 1, nothing goes in but 1 and itself | 2, 3, 5 |
 | a factor tree | split, split the pieces, until you cannot | 360 = 6 × 60 |
 | the prime factorisation | the primes at the ends, repeats and all | 2 × 2 × 2 × 3 × 3 × 5 |
@@ -108,7 +84,7 @@ The two trees disagree all the way down and agree at the ends.
 
 Take the 5 that road one found. Road two's list also multiplies to 360, so 5 goes into that product — and a prime that goes into a product must go into one of the pieces. Those pieces are all prime, and a prime that 5 goes into can only be 5 itself. Cross a 5 off each list and start again; neither list runs out first.
 
-That middle step needs a real proof — 6 goes into 4 × 3 but into neither 4 nor 3, so only primes pass it: [unique-factorisation](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md), next shelf. Until then, the code runs two roads over every number to 1,000 and checks the ends match.
+That middle step needs a real proof — 6 goes into 4 × 3 but into neither 4 nor 3, so only primes pass it: [Why the factorisation is unique](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md), next shelf. Until then, the code runs two roads over every number to 1,000 and checks the ends match.
 
 ---
 
@@ -121,7 +97,7 @@ That middle step needs a real proof — 6 goes into 4 × 3 but into neither 4 no
 | road two, split anywhere | 360 = 6 × 60, then 60 = 6 × 10 | 6, 6, 10 |
 | split the rest, then put it in order | 6 = 2 × 3, 10 = 2 × 5 | 2, 3, 2, 3, 2, 5, so **2 × 2 × 2 × 3 × 3 × 5** |
 
-Three 2s, two 3s and a 5 are the whole of 360. Every number that divides it is built from those pieces — where the 24 cuts come from ([counting-divisors](08-counting-divisors.md)).
+Three 2s, two 3s and a 5 are the whole of 360. Every number that divides it is built from those pieces — where the 24 cuts come from ([Counting divisors](08-counting-divisors.md)).
 
 ### What breaks if you drop a piece
 
@@ -270,9 +246,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **The circle itself.** Degrees survive three halvings and two cuts in thirds, because 360 is 2 × 2 × 2 × 3 × 3 × 5. [counting-divisors](08-counting-divisors.md) turns the list into the count, 24.
+- **The circle itself.** Degrees survive three halvings and two cuts in thirds, because 360 is 2 × 2 × 2 × 3 × 3 × 5. [Counting divisors](08-counting-divisors.md) turns the list into the count, 24.
 - **Packing a run.** A batch of 360 fills boxes of 6, 10 or 60, sizes built from its 2s, 3s and 5.
-- **Splitting a rota.** Anything halved and also cut in thirds wants a 2 and a 3 in it. Shared pieces between two numbers: [gcd](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/01-gcd.md).
+- **Splitting a rota.** Anything halved and also cut in thirds wants a 2 and a 3 in it. Shared pieces between two numbers: [Greatest common divisor](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/01-gcd.md).
 
 > **Say it back**
 > Split a number into two factors, split those, until every piece is prime. That is a factor tree; its ends are the prime factorisation. It always finishes: the pieces shrink and cannot go below 2. The ends do not depend on the route: 360 is 2 × 2 × 2 × 3 × 3 × 5. Repeats count: three 2s, not one.
@@ -281,16 +257,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [multiplying-and-dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): a split is a multiplication read backwards.
-- [primes-and-composites](05-primes-and-composites.md): which numbers refuse to split, and how to tell.
-- [divides](01-divides.md): goes in with nothing left over, the test at every node.
+- [Multiplying and dividing](../../01-Foundations/01-Everyday%20Arithmetic/03-multiplying-and-dividing.md): a split is a multiplication read backwards.
+- [Primes and composites](05-primes-and-composites.md): which numbers refuse to split, and how to tell.
+- [Divides](01-divides.md): goes in with nothing left over, the test at every node.
 
 ## Where this goes next
 
-- [counting-divisors](08-counting-divisors.md): how many divisors a number has, read off this list.
-- [gcd](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/01-gcd.md): two numbers side by side, and the pieces they share.
-- [unique-factorisation](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md): the proof that the route cannot change the ends.
-- [infinitude-of-primes](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md): the atoms never run out.
+- [Counting divisors](08-counting-divisors.md): how many divisors a number has, read off this list.
+- [Greatest common divisor](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/01-gcd.md): two numbers side by side, and the pieces they share.
+- [Why the factorisation is unique](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/07-unique-factorisation.md): the proof that the route cannot change the ends.
+- [There are infinitely many primes](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/08-infinitude-of-primes.md): the atoms never run out.
 
 ---
 

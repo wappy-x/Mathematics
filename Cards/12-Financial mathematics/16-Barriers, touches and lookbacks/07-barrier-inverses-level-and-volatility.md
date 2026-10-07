@@ -1,29 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Barriers, touches and lookbacks
-topic: Running a barrier price backwards
-item: Barrier inverses
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/04-barrier-greeks-at-the-wall|barrier-greeks-at-the-wall]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/01-implied-volatility|implied-volatility]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/06-intermediate-value-theorem|intermediate-value-theorem]]"
-next: []
-tags: [mathematics, financial mathematics, barrier-inverses-level-and-volatility]
----
-
 # Barrier inverses: the barrier level from a premium is unique, the volatility from a knock-out price is not
 
-Financial mathematics → Barriers, touches and lookbacks → Running a barrier price backwards → Barrier inverses
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Barriers, touches and lookbacks](../../../SYLLABUS.md#w12-s16) → Barrier inverses
 
 ---
 
 ## General Overview
 
-Acme shares trade at $100. A plain one-year call on them, struck at $100, costs $9.23 in the house market. A **down-and-out call** is the same call with one extra clause: it dies, worthless, the first time Acme trades at or below a fixed price called the **barrier** ([knock-out-and-knock-in-options](01-knock-out-and-knock-in-options.md)). With the barrier at $80 it costs $9.13.
+Acme shares trade at $100. A plain one-year call on them, struck at $100, costs $9.23 in the house market. A **down-and-out call** is the same call with one extra clause: it dies, worthless, the first time Acme trades at or below a fixed price called the **barrier** ([Knock-out and knock-in options](01-knock-out-and-knock-in-options.md)). With the barrier at $80 it costs $9.13.
 
 A buyer wants to pay exactly $8.00. Where should the barrier go? Raising it kills the option in more futures, so the price falls, and it falls at every step. One level does it: $88.73. Asking a pricing formula for its input, given its output, is called **inverting** it, and this inversion always has one answer when the target sits between zero and the plain call's price.
 
@@ -51,7 +34,7 @@ Falling curve: the down-and-out call's price. Flat line: the $8.00 target. Far b
 
 ## The formula
 
-Five inputs are the house market: Acme's price $S$, the strike $K$, the bank rate $r$, the dividend yield $q$ and the years to expiry $T$. The sixth is the volatility $\sigma$. Barrier formulas for all eight cases are on [reiner-rubinstein-barrier-formulas](02-reiner-rubinstein-barrier-formulas.md); this card needs the down-and-out call with its barrier $H$ at or below the strike:
+Five inputs are the house market: Acme's price $S$, the strike $K$, the bank rate $r$, the dividend yield $q$ and the years to expiry $T$. The sixth is the volatility $\sigma$. Barrier formulas for all eight cases are on [The eight barrier formulas](02-reiner-rubinstein-barrier-formulas.md); this card needs the down-and-out call with its barrier $H$ at or below the strike:
 
 $$C_{do}(H) = C \;-\; \Big[\, S e^{-qT}\,(H/S)^{2\lambda}\, N(y) \;-\; K e^{-rT}\,(H/S)^{2\lambda-2}\, N(y - \sigma\sqrt{T}) \,\Big]$$
 
@@ -80,7 +63,7 @@ $$U(\sigma) = P \;\text{ has }\; \begin{cases} \text{two roots } \sigma_{lo} < \
 | $m$ | the lowest price Acme reaches before expiry | depends on the path | — |
 | $P$ | the premium or quote being inverted | $8.00; $3.50 | level falls; vol roots close in |
 | $\lambda$, $y$, $d_1$ | helpers: $\lambda = (r - q + \tfrac12\sigma^2)/\sigma^2$; $y$ the mirrored call's distance to the strike in units of $\sigma\sqrt{T}$; $d_1$ the plain call's distance, as on the black-scholes-call card | 1.25; −1.981 at 80 | — |
-| $N$, $e^{-rT}$ | the normal CDF, area under the bell curve left of a point ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)); the discount factor $D(T)$ | $e^{-0.05}$ | — |
+| $N$, $e^{-rT}$ | the normal CDF, area under the bell curve left of a point ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)); the discount factor $D(T)$ | $e^{-0.05}$ | — |
 
 The helper $y$ in full, in words the log-distance from the mirrored start $H^2/S$ to the strike, in swing units, plus $\lambda$ swing units:
 
@@ -88,9 +71,9 @@ $$y = \frac{\ln\!\big(H^2/(SK)\big)}{\sigma\sqrt{T}} + \lambda\,\sigma\sqrt{T}$$
 
 ### When it holds
 
-- **Continuous monitoring.** The formula watches every instant. A contract that checks only daily closes is touched less often; a daily down barrier at $H$ behaves like a continuous one at $H e^{-0.5826\,\sigma\sqrt{1/252}}$, slightly lower ([discrete-monitoring-correction](03-discrete-monitoring-correction.md)). Solve in one convention and trade in the other, and the level is wrong: $88.73 against $89.38 here.
+- **Continuous monitoring.** The formula watches every instant. A contract that checks only daily closes is touched less often; a daily down barrier at $H$ behaves like a continuous one at $H e^{-0.5826\,\sigma\sqrt{1/252}}$, slightly lower ([Daily monitoring](03-discrete-monitoring-correction.md)). Solve in one convention and trade in the other, and the level is wrong: $88.73 against $89.38 here.
 - **No rebate.** A rebate is cash paid when the barrier is touched. It is worth more as the barrier rises, which can offset the falling option value, and the level can stop being unique.
-- **One volatility for the whole path.** A barrier's price depends on how Acme moves near the barrier, not just at the strike. With a smile ([volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)) no single number is the barrier's volatility, which is one more reason not to invert for one.
+- **One volatility for the whole path.** A barrier's price depends on how Acme moves near the barrier, not just at the strike. With a smile ([The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)) no single number is the barrier's volatility, which is one more reason not to invert for one.
 - **Barrier on the right side of Acme.** A down barrier sits under $100, an up barrier over it. On the wrong side the option is dead at birth and both inverses are meaningless.
 
 ---
@@ -120,7 +103,7 @@ Continuity: $C_{do}$ is built from powers, logs and $N$, all continuous in $H$ o
 
 ### Step 2: the intermediate value theorem finishes the level
 
-A continuous function that runs from $9.23 down to zero takes every value in between: that is the intermediate value theorem ([intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)). So any target strictly between zero and $9.23 has a level. Strict decrease means it cannot be hit twice. Existence and uniqueness, together.
+A continuous function that runs from $9.23 down to zero takes every value in between: that is the intermediate value theorem ([Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)). So any target strictly between zero and $9.23 has a level. Strict decrease means it cannot be hit twice. Existence and uniqueness, together.
 
 The boundary cases follow. A target of $9.30, above the plain call, has no level: no clause that only removes payoffs can make an option dearer. A target of zero is reached only in the limit of a barrier on Acme's price. The checks confirm the first: bisection on $9.30 finds no sign change and reports none.
 
@@ -166,7 +149,7 @@ The up-and-out payoff is at most $H - K = 20$, and it is paid only if Acme ends 
 
 The roots are not a curiosity. At 4.35 percent the vega is +28.18 (dollars per 1.00 of volatility, so $0.28 per percentage point): a holder gains as volatility rises. At 9.50 percent it is −26.22: it loses. A hedge built at one root is the wrong way round at the other. A system that reports "implied vol 4.35 percent" has made a choice the quote never contained.
 
-So the safe practice keeps the barrier out of the inversion. Read the volatility off the plain call, where it is unique ([implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md)): $9.227006 returns 20 percent. Price the barrier at that volatility: $1.132492. Quote the market price as a dollar **spread** over that model price: a dealer's $1.20 is the model price plus $0.067508. The spread is one number, always exists, and moves smoothly as the quote moves.
+So the safe practice keeps the barrier out of the inversion. Read the volatility off the plain call, where it is unique ([Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md)): $9.227006 returns 20 percent. Price the barrier at that volatility: $1.132492. Quote the market price as a dollar **spread** over that model price: a dealer's $1.20 is the model price plus $0.067508. The spread is one number, always exists, and moves smoothly as the quote moves.
 
 The down-and-out call from Step 2 shows the contrast. At the $88.73 level its price rises with volatility at every point the checks tried: $5.44 at 10 percent, $8.00 at 20, $9.21 at 30, $9.83 at 40. Its barrier sits under the strike, where the option is worth little, so the kill effect never wins. The level inverse is safe for any knock-out without a rebate; the volatility inverse is safe only when the contract's vega keeps one sign.
 
@@ -661,8 +644,8 @@ The two outputs agree byte for byte.
 - **Structured notes.** A bank building a note with a fixed budget for the option solves for the barrier that makes the option cost exactly that budget. Step 2 guarantees the answer is one number.
 - **Currency desks.** Barrier options are common in currency markets, and dealers commonly quote them against their theoretical value at the plain options' volatility, with the difference negotiated in money, the practice of Step 5.
 - **Risk systems.** A system that backs out one volatility per trade must choose a root for reverse knock-outs, or fail. The safer design stores the vanilla volatility and the dollar spread.
-- **The barrier's own Greeks.** Vega changing sign across the hump is the same wall effect that makes delta and gamma jump near the barrier ([barrier-greeks-at-the-wall](04-barrier-greeks-at-the-wall.md)).
-- **Touch bets.** A no-touch pays when the barrier is never hit; its price also falls as volatility rises, but without the call part it never rises first ([one-touch-and-no-touch](05-one-touch-and-no-touch.md)).
+- **The barrier's own Greeks.** Vega changing sign across the hump is the same wall effect that makes delta and gamma jump near the barrier ([Barrier Greeks](04-barrier-greeks-at-the-wall.md)).
+- **Touch bets.** A no-touch pays when the barrier is never hit; its price also falls as volatility rises, but without the call part it never rises first ([One-touch and no-touch](05-one-touch-and-no-touch.md)).
 
 > **Say it back**
 > Raising a down barrier only ever kills more paths, so a knock-out's price falls strictly as its barrier rises, from the plain call's price to zero. By the intermediate value theorem, any premium strictly between those has exactly one barrier level; for Acme, $8.00 needs $88.73. An up-and-out call's price rises with volatility and then falls, because volatility both widens the payoff and drives Acme into the wall. So a quote between the zero-volatility floor and the peak has two volatilities, with opposite vegas, and a quote above the peak has none. Price barriers at the plain option's volatility and quote the difference in dollars.
@@ -671,13 +654,13 @@ The two outputs agree byte for byte.
 
 ## What this builds on
 
-- [barrier-greeks-at-the-wall](04-barrier-greeks-at-the-wall.md): how a barrier price responds to its inputs near the wall; vega's sign change here is one of those responses.
-- [implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the plain call's inverse, which is unique; this card shows where that uniqueness stops.
-- [intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): the existence half of both inverses.
+- [Barrier Greeks](04-barrier-greeks-at-the-wall.md): how a barrier price responds to its inputs near the wall; vega's sign change here is one of those responses.
+- [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): the plain call's inverse, which is unique; this card shows where that uniqueness stops.
+- [Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): the existence half of both inverses.
 
 ## Where this goes next
 
-Its siblings price the contracts it inverts: [reiner-rubinstein-barrier-formulas](02-reiner-rubinstein-barrier-formulas.md) for all eight cases, [discrete-monitoring-correction](03-discrete-monitoring-correction.md) for daily watching, and [lookback-options](06-lookback-options.md) for the payoff that remembers the extreme instead of dying at it.
+Its siblings price the contracts it inverts: [The eight barrier formulas](02-reiner-rubinstein-barrier-formulas.md) for all eight cases, [Daily monitoring](03-discrete-monitoring-correction.md) for daily watching, and [Lookback options](06-lookback-options.md) for the payoff that remembers the extreme instead of dying at it.
 
 The question left open is which single volatility a barrier should carry when the smile says each price level has its own; that is the smile's and local volatility's job.
 

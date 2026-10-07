@@ -1,30 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Stochastic volatility - Heston, SABR and their mix
-topic: Variance on a leash
-item: The Heston model
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/01-volatility-smile-and-skew|volatility-smile-and-skew]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/01-implied-volatility|implied-volatility]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/05-ornstein-uhlenbeck-and-cir-processes|ornstein-uhlenbeck-and-cir-processes]]"
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/04-euler-maruyama-scheme|euler-maruyama-scheme]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-next:
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/02-heston-pricing-by-characteristic-function|heston-pricing-by-characteristic-function]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/04-sabr-model-and-hagan-formula|sabr-model-and-hagan-formula]]"
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/05-volatility-swap-and-jump-bias|volatility-swap-and-jump-bias]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/07-barriers-with-the-smile|barriers-with-the-smile]]"
-  - "[[Cards/25-Frontier/07-Physics, Finance and Machines/03-rough-volatility-and-open-finance-questions|rough-volatility-and-open-finance-questions]]"
-tags: [mathematics, financial mathematics, heston-model]
----
-
 # The Heston model: variance that wanders and is pulled home, and which dial does what to the smile
 
-Financial mathematics → Stochastic volatility - Heston, SABR and their mix → Variance on a leash → The Heston model
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Stochastic volatility - Heston, SABR and their mix](../../../SYLLABUS.md#w12-s14) → The Heston model
 
 ---
 
@@ -61,7 +37,7 @@ The orange curve is correlation 0: a shallow smile, both ends above the middle. 
 
 ## The formula
 
-Notation first. Over a short step of length dt, a d in front of a quantity is its change over the step. $W^1_t$ and $W^2_t$ are Brownian motions: each step adds an independent normal shove with mean zero and variance dt. Two shoves have correlation ρ when their product averages ρ dt. The first line is the geometric Brownian motion of Black-Scholes ([geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)) with its fixed variance replaced by a moving one. Both lines describe the pricing world, where Acme grows on average at the riskless rate less its dividend yield.
+Notation first. Over a short step of length dt, a d in front of a quantity is its change over the step. $W^1_t$ and $W^2_t$ are Brownian motions: each step adds an independent normal shove with mean zero and variance dt. Two shoves have correlation ρ when their product averages ρ dt. The first line is the geometric Brownian motion of Black-Scholes ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)) with its fixed variance replaced by a moving one. Both lines describe the pricing world, where Acme grows on average at the riskless rate less its dividend yield.
 
 $$dS_t = (r - q)\,S_t\,dt + \sqrt{v_t}\,S_t\,dW^1_t$$
 
@@ -69,7 +45,7 @@ $$dv_t = \kappa\,(\theta - v_t)\,dt + \xi\sqrt{v_t}\;dW^2_t, \qquad dW^1_t\,dW^2
 
 **Read it aloud:** Acme's price grows at the riskless rate less the dividend and shakes by the square root of its variance; the variance is pulled toward its long-run level and shakes in proportion to its own square root; the two shakes are correlated.
 
-The second line is the square-root process that Cox, Ingersoll and Ross wrote for interest rates ([ornstein-uhlenbeck-and-cir-processes](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)). The whole model is these two lines and five numbers: today's variance $v_0$, the long-run variance $\theta$ (theta), the pull speed $\kappa$ (kappa), the vol of vol $\xi$ (xi) and the correlation $\rho$ (rho).
+The second line is the square-root process that Cox, Ingersoll and Ross wrote for interest rates ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)). The whole model is these two lines and five numbers: today's variance $v_0$, the long-run variance $\theta$ (theta), the pull speed $\kappa$ (kappa), the vol of vol $\xi$ (xi) and the correlation $\rho$ (rho).
 
 When the shakes are independent, ρ = 0, the price has a second form, the **mixing formula**:
 
@@ -101,8 +77,8 @@ $$2\kappa\theta \;\ge\; \xi^2$$
 
 ### When it holds
 
-- **Price and variance move continuously, with no jumps.** One-week equity options carry a steeper tilt than Heston's continuous paths can produce, which is why jump models ([merton-jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md)) and rough volatility exist.
-- **Five constant numbers.** Refitted daily, κ, θ, ξ and ρ drift, and a hedge built on today's fit carries tomorrow's refit unhedged ([heston-greeks-and-calibration](03-heston-greeks-and-calibration.md)).
+- **Price and variance move continuously, with no jumps.** One-week equity options carry a steeper tilt than Heston's continuous paths can produce, which is why jump models ([Merton jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md)) and rough volatility exist.
+- **Five constant numbers.** Refitted daily, κ, θ, ξ and ρ drift, and a hedge built on today's fit carries tomorrow's refit unhedged ([Heston Greeks and calibration](03-heston-greeks-and-calibration.md)).
 - **The Feller condition, for a variance that never touches zero.** When it fails the variance touches zero and bounces off, and a simulation needs its clamp far more often: 5.4012% of steps at vol of vol 0.5, against 0.1707% here.
 - **The plain mixing formula needs ρ = 0.** At ρ = −0.7 it returns the ρ = 0 smile (see What breaks); Step 5's shifted spot repairs it.
 - **Pricing-world numbers.** The κ, θ, ξ and ρ that price options come from option prices, not the share's history; the two differ by the market's charge for variance risk.
@@ -182,7 +158,7 @@ The plain road simulates Acme's price too and averages discounted payoffs. Both 
 
 ### Step 4: the vol of vol bends the smile
 
-Why is $9.05 below $9.23? The Black-Scholes price curves as total variance grows. With φ the bell curve's height, and d1 and d2 as on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), its slope and bend in w are
+Why is $9.05 below $9.23? The Black-Scholes price curves as total variance grows. With φ the bell curve's height, and d1 and d2 as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), its slope and bend in w are
 
 $$\frac{\partial C_{\text{BS}}}{\partial w} = \frac{S e^{-qT}\,\phi(d_1)}{2\sqrt{w}}, \qquad \frac{\partial^2 C_{\text{BS}}}{\partial w^2} = \frac{\partial C_{\text{BS}}}{\partial w}\cdot\frac{d_1 d_2 - 1}{2w}.$$
 
@@ -228,7 +204,7 @@ Given the variance path, the last term is normal with variance $(1-\rho^2)\,I$. 
 
 </details>
 
-Heston's own road prices every strike exactly, with one integral and no simulation, through the characteristic function, a transform of the log price's distribution: [heston-pricing-by-characteristic-function](02-heston-pricing-by-characteristic-function.md).
+Heston's own road prices every strike exactly, with one integral and no simulation, through the characteristic function, a transform of the log price's distribution: [Pricing Heston exactly](02-heston-pricing-by-characteristic-function.md).
 
 ---
 
@@ -718,11 +694,11 @@ The two outputs match line for line: both programs draw the same random numbers 
 
 ## Where you meet it in real life
 
-- **Equity index options.** Fits to index options typically give a strongly negative correlation (the leverage effect: falling prices, rising volatility), the mechanism behind the downward-sloping index smile of [volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md).
+- **Equity index options.** Fits to index options typically give a strongly negative correlation (the leverage effect: falling prices, rising volatility), the mechanism behind the downward-sloping index smile of [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md).
 - **Currency options.** Either currency in a pair can be the one that falls; fits give a correlation nearer zero and a smile like the orange curve.
-- **Calibration and hedging.** Desks fit the five numbers to a surface of quotes, then hedge with the model's sensitivities: [heston-greeks-and-calibration](03-heston-greeks-and-calibration.md).
-- **Volatility swaps.** A variance swap pays the average variance, a volatility swap its square root; the gap is Step 4's curvature again: [volatility-swap-and-jump-bias](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md).
-- **The rest of the shelf.** SABR, the counterpart most rates desks use, trades the simulation for a formula: [sabr-model-and-hagan-formula](04-sabr-model-and-hagan-formula.md). Stochastic-local volatility bends Heston until it fits today's whole surface: [stochastic-local-volatility](06-stochastic-local-volatility.md).
+- **Calibration and hedging.** Desks fit the five numbers to a surface of quotes, then hedge with the model's sensitivities: [Heston Greeks and calibration](03-heston-greeks-and-calibration.md).
+- **Volatility swaps.** A variance swap pays the average variance, a volatility swap its square root; the gap is Step 4's curvature again: [The volatility swap and the jump bias](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md).
+- **The rest of the shelf.** SABR, the counterpart most rates desks use, trades the simulation for a formula: [SABR and Hagan's formula](04-sabr-model-and-hagan-formula.md). Stochastic-local volatility bends Heston until it fits today's whole surface: [Stochastic-local volatility](06-stochastic-local-volatility.md).
 
 > **Say it back**
 > Heston lets the variance wander, pulls it back toward a long-run level, and sizes its shake by its own square root. If the variance's path were known, the share would be Black-Scholes, so with independent shakes the option is worth the average of Black-Scholes prices over the year's total variance. That average sits below the price at the average variance near the money and above it in the wings: the vol of vol bends the smile. A correlation ties high variance to low prices and tilts it. The pull speed and long-run level set how volatility changes with expiry, and the Feller condition says whether the variance can reach zero.
@@ -731,19 +707,19 @@ The two outputs match line for line: both programs draw the same random numbers 
 
 ## What this builds on
 
-- [volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): a strip of prices read as implied volatilities, and what a tilt and a bend mean.
-- [implied-volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): running Black-Scholes backwards, done here at every strike.
-- [ornstein-uhlenbeck-and-cir-processes](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): the mean-reverting square-root process the variance follows.
-- [euler-maruyama-scheme](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): stepping a random equation forward in small steps, as both simulations do.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): a price as an average of simulated discounted payoffs, with its standard error.
+- [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): a strip of prices read as implied volatilities, and what a tilt and a bend mean.
+- [Implied volatility](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/01-implied-volatility.md): running Black-Scholes backwards, done here at every strike.
+- [Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): the mean-reverting square-root process the variance follows.
+- [Euler-Maruyama](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): stepping a random equation forward in small steps, as both simulations do.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): a price as an average of simulated discounted payoffs, with its standard error.
 
 ## Where this goes next
 
-- [heston-pricing-by-characteristic-function](02-heston-pricing-by-characteristic-function.md): the exact price at every strike, one integral each, for any correlation.
-- [sabr-model-and-hagan-formula](04-sabr-model-and-hagan-formula.md): a tilt dial and a bend dial on a forward, with a formula for the smile itself.
-- [volatility-swap-and-jump-bias](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md): paying the square root of average variance, and the same curvature that took 20 cents off the call here.
-- [barriers-with-the-smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md): pricing a barrier when the smile moves with the spot.
-- rough-volatility-and-open-finance-questions: why short-dated skews need a rougher variance than this model's.
+- [Pricing Heston exactly](02-heston-pricing-by-characteristic-function.md): the exact price at every strike, one integral each, for any correlation.
+- [SABR and Hagan's formula](04-sabr-model-and-hagan-formula.md): a tilt dial and a bend dial on a forward, with a formula for the smile itself.
+- [The volatility swap and the jump bias](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/05-volatility-swap-and-jump-bias.md): paying the square root of average variance, and the same curvature that took 20 cents off the call here.
+- [Barriers on a smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md): pricing a barrier when the smile moves with the spot.
+- Open questions in finance mathematics: why short-dated skews need a rougher variance than this model's.
 
 Every price on this card carries a standard error from simulation; the next card removes it, pricing each strike exactly from the model's characteristic function.
 

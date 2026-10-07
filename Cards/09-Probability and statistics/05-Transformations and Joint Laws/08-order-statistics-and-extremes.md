@@ -1,24 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Transformations and Joint Laws
-topic: Ranking a sample
-item: Order statistics
-kind: theorem
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/02-joint-densities-and-marginals|joint-densities-and-marginals]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/02-arrival-times-and-order-statistics|arrival-times-and-order-statistics]]"
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/07-extreme-value-theory-and-tails|extreme-value-theory-and-tails]]"
-  - "[[Cards/14-Applied and computational/05-Operations Research/10-auctions-and-mechanism-design|auctions-and-mechanism-design]]"
-tags: [mathematics, probability and statistics, order-statistics-and-extremes]
----
-
 # Order statistics: the largest, the smallest and the median of a sample
 
-Probability and statistics → Transformations and Joint Laws → Ranking a sample → Order statistics
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Transformations and Joint Laws](../../../SYLLABUS.md#w09-s05) → Order statistics
 
 ---
 
@@ -53,7 +35,7 @@ Orange: a single day, the bell curve centred on zero. Green: the second-worst da
 
 ## The formula
 
-Notation first, in words. Write the 20 daily losses as $L_1, L_2, \ldots, L_n$, with $n = 20$ days; a gain is a negative loss. Sort them from smallest to largest. The k-th value in that sorted list is written $L_{(k)}$, read "the k-th order statistic"; the round brackets in the subscript mark a rank, not a day. So $L_{(1)}$ is the smallest loss, the best day, and $L_{(n)}$ is the largest, the worst day. $F(x)$ is one day's cumulative chance of a loss at most x dollars, and $f(x)$ its density ([densities-and-cdfs](../04-Continuous%20Distributions/01-densities-and-cdfs.md)).
+Notation first, in words. Write the 20 daily losses as $L_1, L_2, \ldots, L_n$, with $n = 20$ days; a gain is a negative loss. Sort them from smallest to largest. The k-th value in that sorted list is written $L_{(k)}$, read "the k-th order statistic"; the round brackets in the subscript mark a rank, not a day. So $L_{(1)}$ is the smallest loss, the best day, and $L_{(n)}$ is the largest, the worst day. $F(x)$ is one day's cumulative chance of a loss at most x dollars, and $f(x)$ its density ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)).
 
 $$P\bigl(L_{(n)} \le x\bigr) = F(x)^n, \qquad P\bigl(L_{(1)} \le x\bigr) = 1 - \bigl(1 - F(x)\bigr)^n$$
 
@@ -86,7 +68,7 @@ $$g_k(x) = \frac{n!}{(k-1)!\,(n-k)!}\; f(x)\, F(x)^{k-1} \bigl(1 - F(x)\bigr)^{n
 | $\sigma$ | the standard deviation of one day's loss | \$10,000 | every dollar figure scales with it |
 | $\Phi$ | the standard normal's cumulative area | Φ(x / σ) is F(x) here | — |
 
-In this example one day's loss follows the normal law N(0, σ^2), so $F(x) = \Phi(x/\sigma)$; the normal card writes the area as Φ ([normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md)). The counting formulas do not need the bell: they hold for any one-day law.
+In this example one day's loss follows the normal law N(0, σ^2), so $F(x) = \Phi(x/\sigma)$; the normal card writes the area as Φ ([Normal](../04-Continuous%20Distributions/04-normal-distribution.md)). The counting formulas do not need the bell: they hold for any one-day law.
 
 ### When it holds
 
@@ -102,7 +84,7 @@ In this example one day's loss follows the normal law N(0, σ^2), so $F(x) = \Ph
 
 ### Step 0: a rank question is a counting question
 
-Draw a line at x dollars. The k-th smallest loss is at most x exactly when at least k of the 20 days fall at or below the line. That swaps a question about sorting, which is awkward, for a question about counting, which is binomial. Each day is a trial that lands below the line with chance F(x), and independent days make independent trials ([bernoulli-and-binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)).
+Draw a line at x dollars. The k-th smallest loss is at most x exactly when at least k of the 20 days fall at or below the line. That swaps a question about sorting, which is awkward, for a question about counting, which is binomial. Each day is a trial that lands below the line with chance F(x), and independent days make independent trials ([Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)).
 
 ### Step 1: the worst day, by "every day"
 
@@ -166,7 +148,7 @@ Integrating the density from far left to x recovers the binomial tail, which the
 
 ### Step 5: the median and the average of the worst day
 
-The worst day's median is the x where F(x)^20 = 0.5, so F(x) = 0.5^(1/20) = 0.96594. The loss one day stays under with chance 0.96594 is $18,242, from the normal quantile ([normal-quantile](../04-Continuous%20Distributions/05-normal-quantile.md)). Half of all months have a worst day below that.
+The worst day's median is the x where F(x)^20 = 0.5, so F(x) = 0.5^(1/20) = 0.96594. The loss one day stays under with chance 0.96594 is $18,242, from the normal quantile ([Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md)). Half of all months have a worst day below that.
 
 The average is the area under x times $g_{20}(x)$, which has no closed form for the bell. Simpson's rule gives \$18,675, a little above the median because the right tail is long. Over a year of 250 days the worst day averages \$28,192: the maximum of bell-shaped draws keeps growing with n, but slowly.
 
@@ -178,11 +160,11 @@ Left alone, the worst of n days drifts ever further out as n grows, or piles up 
 - **Fréchet**, for power tails, where the chance of a loss beyond x falls like a power of x, as for the Pareto law.
 - **Weibull**, for a law with a hard ceiling that no day can pass.
 
-The three are one family with a single shape dial, the **generalised extreme value law**. This card states the theorem without proof; it is set out in Embrechts, Klüppelberg and Mikosch, chapter 3. Fitting the family to real maxima, and the matching law for losses past a high line, the generalised Pareto, is [extreme-value-theory-and-tails](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md).
+The three are one family with a single shape dial, the **generalised extreme value law**. This card states the theorem without proof; it is set out in Embrechts, Klüppelberg and Mikosch, chapter 3. Fitting the family to real maxima, and the matching law for losses past a high line, the generalised Pareto, is [Extreme value theory](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md).
 
 </details>
 
-A second road to every rank: feed each loss through its own cumulative chance. F(L) is uniform between 0 and 1 ([transforming-a-random-variable](01-transforming-a-random-variable.md)), and F keeps the order, so the k-th smallest loss maps to the k-th smallest of 20 uniforms. Put F = u in the density formula and it becomes the beta law with parameters k and n − k + 1 ([gamma-and-beta-distributions](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)). That is why the ranks' chances, such as 0.7358, never depend on the shape of the daily law. The beta law's average formula gives the k-th smallest of n uniforms an average of k/(n + 1): on average, n uniform draws cut the range into n + 1 equal pieces. The code checks it by Simpson's rule for k = 1, 10, 19 and 20. So for n draws spread evenly between 0 and an unknown top, the largest averages n/(n + 1) of the top, and (n + 1)/n times the largest draw is **unbiased** for the top: right on average.
+A second road to every rank: feed each loss through its own cumulative chance. F(L) is uniform between 0 and 1 ([Transforming a variable](01-transforming-a-random-variable.md)), and F keeps the order, so the k-th smallest loss maps to the k-th smallest of 20 uniforms. Put F = u in the density formula and it becomes the beta law with parameters k and n − k + 1 ([Gamma and beta](../04-Continuous%20Distributions/07-gamma-and-beta-distributions.md)). That is why the ranks' chances, such as 0.7358, never depend on the shape of the daily law. The beta law's average formula gives the k-th smallest of n uniforms an average of k/(n + 1): on average, n uniform draws cut the range into n + 1 equal pieces. The code checks it by Simpson's rule for k = 1, 10, 19 and 20. So for n draws spread evenly between 0 and an unknown top, the largest averages n/(n + 1) of the top, and (n + 1)/n times the largest draw is **unbiased** for the top: right on average.
 
 ---
 
@@ -640,9 +622,9 @@ The two outputs match line for line, simulated figures included, because both pr
 
 ## Where you meet it in real life
 
-- **Historical value at risk.** A desk sorts the last few hundred days of profit and loss and reads off one rank; that number is an order statistic, with all the scatter this card computes ([historical-and-monte-carlo-var](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md)).
+- **Historical value at risk.** A desk sorts the last few hundred days of profit and loss and reads off one rank; that number is an order statistic, with all the scatter this card computes ([Historical and Monte Carlo VaR](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/03-historical-and-monte-carlo-var.md)).
 - **Floods and wind loads.** Engineers design a dam for the largest flood in a century of years; the law of that maximum is F^n for n years, before any long-run limit is taken.
-- **Auctions.** In a sealed-bid auction where the highest bidder pays the second-highest bid, the price is the second-largest order statistic of the bids (auctions-and-mechanism-design).
+- **Auctions.** In a sealed-bid auction where the highest bidder pays the second-highest bid, the price is the second-largest order statistic of the bids (Auctions).
 - **The median and its interval.** The sample median is the middle order statistic. The pair of 6th and 15th values brackets the true median of any continuous law 0.9586 of the time for 20 draws, with no bell assumed.
 - **Weakest links.** A chain, a series circuit or a team deadline fails at its weakest member: the minimum, whose law is 1 − (1 − F)^n.
 
@@ -653,17 +635,17 @@ The two outputs match line for line, simulated figures included, because both pr
 
 ## What this builds on
 
-- [joint-densities-and-marginals](02-joint-densities-and-marginals.md): the joint law of n independent days as a product of one-day laws, which is what lets the chances in Steps 1 to 4 multiply.
-- [bernoulli-and-binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the count of days below the line, and its tail sum.
-- [normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md): Φ, the one-day law behind every dollar figure.
+- [Joint densities](02-joint-densities-and-marginals.md): the joint law of n independent days as a product of one-day laws, which is what lets the chances in Steps 1 to 4 multiply.
+- [Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the count of days below the line, and its tail sum.
+- [Normal](../04-Continuous%20Distributions/04-normal-distribution.md): Φ, the one-day law behind every dollar figure.
 
 ## Where this goes next
 
-- [arrival-times-and-order-statistics](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/02-arrival-times-and-order-statistics.md): given how many events a Poisson stream delivered, their arrival times are sorted uniform draws.
-- [extreme-value-theory-and-tails](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md): the losses past a high line, whose law settles to the generalised Pareto, fitted to real data to estimate losses beyond the sample.
-- auctions-and-mechanism-design: the expected second-highest bid, and why different auction rules raise the same revenue.
+- [Given n arrivals, when did they happen](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/02-arrival-times-and-order-statistics.md): given how many events a Poisson stream delivered, their arrival times are sorted uniform draws.
+- [Extreme value theory](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md): the losses past a high line, whose law settles to the generalised Pareto, fitted to real data to estimate losses beyond the sample.
+- Auctions: the expected second-highest bid, and why different auction rules raise the same revenue.
 
-The worst of 20 days averages $18,675 and of 250 days $28,192, growing ever more slowly; how to put a number on losses the sample has never seen, by fitting the many days that cross a high line, is [extreme-value-theory-and-tails](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md).
+The worst of 20 days averages $18,675 and of 250 days $28,192, growing ever more slowly; how to put a number on losses the sample has never seen, by fitting the many days that cross a high line, is [Extreme value theory](../../12-Financial%20mathematics/39-Value%20at%20Risk%20and%20Expected%20Shortfall/07-extreme-value-theory-and-tails.md).
 
 ---
 

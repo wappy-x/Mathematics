@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Convexity and Exotics
-topic: Coupon decomposition
-item: Structured rate notes
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/32-Convexity and Exotics/05-callable-and-cancellable-swaps|callable-and-cancellable-swaps]]"
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/01-cash-or-nothing-digital|cash-or-nothing-digital]]"
-next: []
-tags: [mathematics, financial mathematics, structured-notes-in-outline]
----
-
 # Structured rate notes: range accruals, inverse floaters and target redemption, in outline
 
-Financial mathematics → Convexity and Exotics → Coupon decomposition → Structured rate notes
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Convexity and Exotics](../../../SYLLABUS.md#w12-s32) → Structured rate notes
 
 ---
 
@@ -89,8 +73,8 @@ The cut-off $d(K,t)$ in words: the numerator is how far the forward sits above t
 
 ### When it holds
 
-- **Each fixing is lognormal around the forward, under the payment date's pricing law** (the probability weights that, averaged and discounted, give prices for money paid on that date). Real rate smiles make out-of-band digitals dearer or cheaper than a flat 20% says; the error per digital is the skew term on [digital-from-a-call-spread-and-the-skew-term](../10-Digitals%20and%20the%20implied%20density/04-digital-from-a-call-spread-and-the-skew-term.md). A lognormal rate also cannot go negative, which some markets have.
-- **Every fixing is paid on one date with one discount.** A range accrual observed monthly but paid at year end is priced here as though each fixing were a fair forward for that payment date. The small correction is a timing adjustment, the subject of [timing-and-in-arrears-adjustments](03-timing-and-in-arrears-adjustments.md).
+- **Each fixing is lognormal around the forward, under the payment date's pricing law** (the probability weights that, averaged and discounted, give prices for money paid on that date). Real rate smiles make out-of-band digitals dearer or cheaper than a flat 20% says; the error per digital is the skew term on [A digital from a call spread](../10-Digitals%20and%20the%20implied%20density/04-digital-from-a-call-spread-and-the-skew-term.md). A lognormal rate also cannot go negative, which some markets have.
+- **Every fixing is paid on one date with one discount.** A range accrual observed monthly but paid at year end is priced here as though each fixing were a fair forward for that payment date. The small correction is a timing adjustment, the subject of [Timing adjustments](03-timing-and-in-arrears-adjustments.md).
 - **The issuer does not default.** A structured note is the issuer's debt. A credit spread lowers every price on this card.
 - **The target note's coin is a teaching model.** Each half-year the rate is in band with chance one half, independently. A real target note needs a model of the whole rate path, and its value moves with correlation between fixings.
 - **Contract terms as written.** Band endpoints, which days count and whether the last target coupon is clipped are fixed by each note's term sheet, not by market convention.
@@ -105,7 +89,7 @@ The value today of a payment due on a date is its average under the pricing law 
 
 ### Step 1: a band is two digitals
 
-A **digital** (a contract paying a fixed sum if a level is reached, nothing otherwise) is priced on [cash-or-nothing-digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md). For any rate $L$:
+A **digital** (a contract paying a fixed sum if a level is reached, nothing otherwise) is priced on [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md). For any rate $L$:
 
 $$[\,a \le L < b\,] = [\,L \ge a\,] - [\,L \ge b\,].$$
 
@@ -131,7 +115,7 @@ Take the coupon rate $g(L) = \min(8\%, \max(0, 10\% - 2L))$ and check it region 
 - $1\% < L < 5\%$: only the first term is live, giving $2(5\% - L) = 10\% - 2L$, which lies between 0 and 8%.
 - $L \le 1\%$: both live, and the difference is $2(5\% - 1\%) = 8\%$, the ceiling.
 
-Each $(K - L)^+$ is a **floorlet** (a single-date option paying when the rate is below $K$). So the inverse floater is two floorlets struck at 5%, less two struck at 1%. Replace each $(K - L)^+$ by $(K - L) + (L - K)^+$ and the constants collect into $2(5\% - 1\%) = 8\%$: the same coupon is a fixed 8% plus two **caplets** at 5%, less two caplets at 1% (a caplet pays when the rate is above its strike). The two readings are one cash flow described twice, not two things to add. Caps and floors, and the parity that links them, are on [caps-floors-and-parity](../29-Caps%2C%20Floors%20and%20Swaptions/02-caps-floors-and-parity.md).
+Each $(K - L)^+$ is a **floorlet** (a single-date option paying when the rate is below $K$). So the inverse floater is two floorlets struck at 5%, less two struck at 1%. Replace each $(K - L)^+$ by $(K - L) + (L - K)^+$ and the constants collect into $2(5\% - 1\%) = 8\%$: the same coupon is a fixed 8% plus two **caplets** at 5%, less two caplets at 1% (a caplet pays when the rate is above its strike). The two readings are one cash flow described twice, not two things to add. Caps and floors, and the parity that links them, are on [Caps and floors](../29-Caps%2C%20Floors%20and%20Swaptions/02-caps-floors-and-parity.md).
 
 The caplet and floorlet prices come from the same lognormal fixing: $E[(L-K)^+] = F N(d+\sigma) - K N(d)$ and $E[(K-L)^+] = K N(-d) - F N(-d-\sigma)$ with $d = d(K,1)$, a fixing at year 1 paid at year 2.
 
@@ -143,7 +127,7 @@ The fix is to carry the history. Build a tree whose nodes record both the rate s
 
 ### Step 5: an issuer call is a Bermudan right, priced backwards
 
-Many notes let the issuer repay early at a set price $R_i$ on listed dates. The issuer holds the right, so the issuer uses it when repaying is cheaper than carrying on. Just after each coupon, the holder's note is worth $\min(R_i, \text{value of staying alive})$. This is the same backward comparison as on [callable-and-cancellable-swaps](05-callable-and-cancellable-swaps.md), with one addition: the call pays a redemption amount and ends both future coupons and principal.
+Many notes let the issuer repay early at a set price $R_i$ on listed dates. The issuer holds the right, so the issuer uses it when repaying is cheaper than carrying on. Just after each coupon, the holder's note is worth $\min(R_i, \text{value of staying alive})$. This is the same backward comparison as on [Callable and cancellable swaps](05-callable-and-cancellable-swaps.md), with one addition: the call pays a redemption amount and ends both future coupons and principal.
 
 With calls at $980 after date 1 and $985 after date 2, the tree says: at date 2, staying alive is worth $989.80 (with $30 earned) or $994.70 (with nothing earned); both exceed $985, so the issuer calls. At date 1 after a hit, staying alive is worth $982.45, above $980: call. After a miss it is worth exactly $980.00: a tie, and either choice gives the same value. The callable note is worth **$975.10**. The call right cost the holder $5.83.
 
@@ -160,7 +144,7 @@ On the coin there are five places to call: after a hit or a miss at date 1, and 
 
 ### The other doors
 
-The code adds two more roads for the range accrual: the density integrated over the band, and a month-by-month simulation. For a callable note in a real rate model the tree grows too large; banks simulate paths and estimate the value of staying alive by regression, as on [longstaff-schwartz-least-squares-monte-carlo](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md). The exercise logic is the one of [bermudan-options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md).
+The code adds two more roads for the range accrual: the density integrated over the band, and a month-by-month simulation. For a callable note in a real rate model the tree grows too large; banks simulate paths and estimate the value of staying alive by regression, as on [Longstaff-Schwartz](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md). The exercise logic is the one of [Bermudan options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md).
 
 ---
 
@@ -663,7 +647,7 @@ The two outputs agree line for line.
 - **Callable range accruals.** Many range accruals are also callable. The issuer calls when rates sit deep in the band and the note is expensive to carry, exactly when the holder would most like to keep it.
 - **Inverse floaters in municipal and agency markets.** Inverse floaters were a large part of the Orange County portfolio that collapsed in 1994 when rates rose: a leveraged inverse coupon loses twice as fast as rates climb.
 - **Target redemption notes and forwards.** Target notes are common in rates and in foreign exchange, where the same "stop once enough has been paid" rule caps what the issuing bank pays out.
-- **Coupons on longer rates.** When the reference is a ten-year swap rate rather than a short rate, each digital needs the convexity correction of [cms-and-the-convexity-adjustment](02-cms-and-the-convexity-adjustment.md) before it is priced.
+- **Coupons on longer rates.** When the reference is a ten-year swap rate rather than a short rate, each digital needs the convexity correction of [Constant-maturity swaps](02-cms-and-the-convexity-adjustment.md) before it is priced.
 
 > **Say it back**
 > A structured note's coupon is a formula in a rate. A range accrual's coupon is, fixing by fixing, a long digital at the bottom of the band and a short digital at the top. An inverse floater's coupon is a spread of floorlets, or equally a fixed coupon plus a spread of caplets. A target note's coupon depends on what has been paid before, so it needs a tree that remembers the history, and an issuer call is priced backwards by taking the cheaper of calling and carrying on. Valued at the forward, all three come out wrong.
@@ -672,16 +656,16 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [callable-and-cancellable-swaps](05-callable-and-cancellable-swaps.md): the backward "exercise or continue" comparison for an issuer's right, used here for the called note.
-- [cash-or-nothing-digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md): the price of a fixed payment made if a level is crossed, the building block of the range accrual.
+- [Callable and cancellable swaps](05-callable-and-cancellable-swaps.md): the backward "exercise or continue" comparison for an issuer's right, used here for the called note.
+- [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md): the price of a fixed payment made if a level is crossed, the building block of the range accrual.
 
 ---
 
 ## Where this goes next
 
-- [longstaff-schwartz-least-squares-monte-carlo](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md): the value of staying alive estimated by regression on simulated paths, the tool for callable notes in a real rate model.
-- [digital-from-a-call-spread-and-the-skew-term](../10-Digitals%20and%20the%20implied%20density/04-digital-from-a-call-spread-and-the-skew-term.md): how the smile moves each digital in the band.
-- [timing-and-in-arrears-adjustments](03-timing-and-in-arrears-adjustments.md): the correction for fixings paid at a later date than their natural one.
+- [Longstaff-Schwartz](../06-Numerical%20Methods%20for%20Pricing/06-longstaff-schwartz-least-squares-monte-carlo.md): the value of staying alive estimated by regression on simulated paths, the tool for callable notes in a real rate model.
+- [A digital from a call spread](../10-Digitals%20and%20the%20implied%20density/04-digital-from-a-call-spread-and-the-skew-term.md): how the smile moves each digital in the band.
+- [Timing adjustments](03-timing-and-in-arrears-adjustments.md): the correction for fixings paid at a later date than their natural one.
 
 What the decomposition leaves open is how the joint movement of many fixings, and the smile at each, change the value of path-dependent and callable notes: the work of calibrated rate models and regression on simulated paths.
 

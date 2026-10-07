@@ -1,29 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Collateral, Funding and the Rest of the XVAs
-topic: Margined exposure
-item: Collateral
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/02-expected-exposure-profiles|expected-exposure-profiles]]"
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/03-cva|cva]]"
-next:
-  - "[[Cards/12-Financial mathematics/47-Collateral, Funding and the Rest of the XVAs/02-fva|fva]]"
-tags: [mathematics, financial mathematics, collateral-and-the-residual-exposure]
----
-
 # Collateral: variation margin tracks the mark-to-market, thresholds and the margin period of risk leave a residual, and the CVA that remains
 
-Financial mathematics → Collateral, Funding and the Rest of the XVAs → Margined exposure → Collateral
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Collateral, Funding and the Rest of the XVAs](../../../SYLLABUS.md#w12-s47) → Collateral
 
 ---
 
 ## General Overview
 
-A bank buys the one-year Acme call from Northwind. Acme trades at \$100, the strike is \$100, and in the house market the call is worth **\$9.23**. Northwind fails at 2% a year and would return 40 cents on the dollar. Unprotected, the bank's expected loss from that failure, the credit valuation adjustment or CVA, is **10.96 cents** ([cva](../46-Counterparty%20Risk%20and%20CVA/03-cva.md)).
+A bank buys the one-year Acme call from Northwind. Acme trades at \$100, the strike is \$100, and in the house market the call is worth **\$9.23**. Northwind fails at 2% a year and would return 40 cents on the dollar. Unprotected, the bank's expected loss from that failure, the credit valuation adjustment or CVA, is **10.96 cents** ([CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md)).
 
 Now the two sides sign a collateral agreement. Every business day the bank values the call, and Northwind hands over cash to match, less a \$2 allowance. The cash works like a landlord's deposit: it sits with the bank, it goes back when the debt shrinks, and it is kept if the debtor walks away. The daily top-up that tracks the trade's value is called **variation margin**, the term used from here on. The \$2 allowance is the **threshold**. A small change below a set size is not sent at all: the **minimum transfer amount**. The contract that sets all three is the **credit support annex**, CSA for short.
 
@@ -55,7 +38,7 @@ $$C(t) = \bigl(V(t-\delta) - H\bigr)^+, \qquad X(t) = \bigl(V(t) - C(t)\bigr)^+$
 
 **Read it aloud:** the collateral held is the trade's value ten days before the failure, less the threshold; the bank is exposed to whatever the trade is worth now above that.
 
-The CVA is the formula of [cva](../46-Counterparty%20Risk%20and%20CVA/03-cva.md) with the residual in place of the full value. $\mathbb{E}$ is the average in the pricing world, where every asset grows at the riskless rate:
+The CVA is the formula of [CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md) with the residual in place of the full value. $\mathbb{E}$ is the average in the pricing world, where every asset grows at the riskless rate:
 
 $$\mathrm{CVA} = (1-R)\int_0^T D(t)\,\mathbb{E}\bigl[X(t)\bigr]\,\lambda\,Q(t)\,dt$$
 
@@ -86,10 +69,10 @@ $$0 \le X(t) \le H + M + \bigl(V(t) - V(t-\delta)\bigr)^+$$
 
 ### When it holds
 
-- **Default is independent of Acme.** The average residual multiplies the default chance only if Northwind's failure says nothing about Acme's move in the frozen stretch. If Acme tends to jump exactly when Northwind fails, the residual at default is larger: [wrong-way-risk](../46-Counterparty%20Risk%20and%20CVA/05-wrong-way-risk.md).
+- **Default is independent of Acme.** The average residual multiplies the default chance only if Northwind's failure says nothing about Acme's move in the frozen stretch. If Acme tends to jump exactly when Northwind fails, the residual at default is larger: [Wrong-way risk](../46-Counterparty%20Risk%20and%20CVA/05-wrong-way-risk.md).
 - **The collateral is really there.** Cash held by the bank, or bonds it can sell for at least $(1-h)B$. Collateral lent on, frozen by a court or paid in Northwind's own bonds covers less than its face value.
 - **One frozen gap of fixed length.** The last good margin call comes $\delta$ before the failure, and nothing moves in either direction after it. A dispute that stretches the gap to 20 days raises the CVA to 2.76 cents, as Try changing shows.
-- **Margin is called daily and the bank cannot fail.** A weekly call adds a week to the gap. If the bank can fail too, the mirror adjustment appears: [dva-and-bilateral-cva](../46-Counterparty%20Risk%20and%20CVA/04-dva-and-bilateral-cva.md).
+- **Margin is called daily and the bank cannot fail.** A weekly call adds a week to the gap. If the bank can fail too, the mirror adjustment appears: [DVA](../46-Counterparty%20Risk%20and%20CVA/04-dva-and-bilateral-cva.md).
 
 ---
 
@@ -174,7 +157,7 @@ $$\mathrm{CVA} \approx (1-R)\,\bigl(1 - e^{-\lambda T}\bigr)\,\frac{\Delta\,S\,\
 
 against the exact 0.011252. The estimate ignores the call's curvature and its drift, which is why it comes out slightly low.
 
-This is the floor under any daily agreement. It is zero only if Northwind cannot fail ($\lambda = 0$), recovers everything ($R = 1$), the gap has no length ($\delta = 0$), or Acme cannot move ($\sigma = 0$). In any real market none of these holds, so collateral cuts CVA but never removes it. The next cut needs collateral posted in advance of the move: initial margin, sized on the ten-day tail. That is [mva](03-mva.md).
+This is the floor under any daily agreement. It is zero only if Northwind cannot fail ($\lambda = 0$), recovers everything ($R = 1$), the gap has no length ($\delta = 0$), or Acme cannot move ($\sigma = 0$). In any real market none of these holds, so collateral cuts CVA but never removes it. The next cut needs collateral posted in advance of the move: initial margin, sized on the ten-day tail. That is [MVA](03-mva.md).
 
 ### Step 6: the 99% ten-day move, and the tail of the residual
 
@@ -712,7 +695,7 @@ Orange, rising: CVA under the agreement, by threshold. Green, flat: CVA with no 
 - **The credit support annex.** Most bilateral derivatives between banks and large firms sit under a CSA that fixes the threshold, the minimum transfer amount, the eligible collateral and its haircuts. The numbers on this card are what those clauses are worth.
 - **The uncleared margin rules.** Since 2016 the BCBS-IOSCO rules require large dealers to exchange variation margin on uncleared derivatives with, in effect, no threshold. That is the \$0 point on the threshold chart: the risk that remains is the margin period.
 - **Capital.** Basel's counterparty rules floor the margin period of risk at ten business days for daily-margined uncleared trades, and at 20 for very large or illiquid netting sets.
-- **Initial margin and its cost.** Collateral posted in advance, sized on the 99% ten-day move, is what removes most of the remaining residual. Funding it has a price: [mva](03-mva.md). The capital held against what is still left is priced in [kva](04-kva.md), and the adjustments meet on one desk in [the-xva-desk-view](05-the-xva-desk-view.md).
+- **Initial margin and its cost.** Collateral posted in advance, sized on the 99% ten-day move, is what removes most of the remaining residual. Funding it has a price: [MVA](03-mva.md). The capital held against what is still left is priced in [KVA](04-kva.md), and the adjustments meet on one desk in [Putting the adjustments together](05-the-xva-desk-view.md).
 
 > **Say it back**
 > Collateral is cash or bonds handed over to match a trade's value, less a threshold. If the counterparty fails, the bank keeps it and claims only the rest, so CVA is recomputed on that residual. With instant seizure the residual would be capped at the threshold. In fact margin is frozen for about ten days before closeout, and whatever the trade gains in those days is unsecured too. So collateral cuts the Acme call's CVA from 10.96 cents to 2.41, and even with no threshold 1.13 cents remain.
@@ -721,14 +704,14 @@ Orange, rising: CVA under the agreement, by threshold. Green, flat: CVA with no 
 
 ## What this builds on
 
-- [expected-exposure-profiles](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md): the average amount owed at each future date, and the tail above it; here the same measures are taken of the residual instead of the full value.
-- [cva](../46-Counterparty%20Risk%20and%20CVA/03-cva.md): the loss-times-chance-times-exposure integral and the uncollateralised 10.96 cents that this card cuts down.
+- [Expected exposure over time](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md): the average amount owed at each future date, and the tail above it; here the same measures are taken of the residual instead of the full value.
+- [CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md): the loss-times-chance-times-exposure integral and the uncollateralised 10.96 cents that this card cuts down.
 
 ---
 
 ## Where this goes next
 
-- [fva](02-fva.md): what it costs the bank to fund the part of a trade that collateral does not cover, and the hedges around it.
+- [FVA](02-fva.md): what it costs the bank to fund the part of a trade that collateral does not cover, and the hedges around it.
 
 Collateral answers who bears the loss if Northwind fails, but not who pays for the cash in the meantime: the bank carries value it has not been paid for, above the threshold and on its hedges, and the FVA card prices that funding.
 

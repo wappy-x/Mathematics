@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Inflation and Real Rates
-topic: Indexed cashflows
-item: Inflation-linked bonds
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/34-Inflation and Real Rates/01-real-rates-and-the-fisher-equation|real-rates-and-the-fisher-equation]]"
-next:
-  - "[[Cards/12-Financial mathematics/34-Inflation and Real Rates/03-breakeven-inflation|breakeven-inflation]]"
-tags: [mathematics, financial mathematics, inflation-linked-bonds]
----
-
 # Inflation-linked bonds: coupons and principal scaled by an index ratio
 
-Financial mathematics → Inflation and Real Rates → Indexed cashflows → Inflation-linked bonds
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Inflation and Real Rates](../../../SYLLABUS.md#w12-s34) → Inflation-linked bonds
 
 ---
 
@@ -92,7 +76,7 @@ In words: on the first of the month, use the CPI of three months earlier; each l
 
 ### When it holds
 
-- **Payments are fixed in real terms.** The formula prices a stream of known real amounts. The deflation floor breaks that: if $I_T$ ends below 1 the principal is not $F I_T$. At today's ratio of 1.00150 the floor is far out of reach, and its value needs a model of inflation ([inflation-options-in-outline](05-inflation-options-in-outline.md)).
+- **Payments are fixed in real terms.** The formula prices a stream of known real amounts. The deflation floor breaks that: if $I_T$ ends below 1 the principal is not $F I_T$. At today's ratio of 1.00150 the floor is far out of reach, and its value needs a model of inflation ([Inflation caps and floors in outline](05-inflation-options-in-outline.md)).
 - **One real yield for every date.** A single $y$ is a quote, not a model. With a real yield curve each payment has its own rate; the single $y$ is the one rate that gives the same price, a kind of average of the curve.
 - **The index is the contract's index.** Protection is against lagged CPI-U, not a household's own prices, and not the last three months of inflation, which the lag leaves unpaid until later.
 - **Quoted with the Treasury's stub rule.** The part-period to the next coupon is discounted with simple interest, the factor $1 + \frac{r}{s}\cdot\frac{y}{2}$. A compound stub gives $1,000.0426 instead of $1,000.0416: a tenth of a cent here, more on large trades.
@@ -125,7 +109,7 @@ The principal follows the same rule, with one exception: at maturity it is at le
 
 ### Step 3: price in real terms, convert at today's ratio
 
-A buyer today pays today's dollars. Each future payment is its real amount times a ratio not yet known. Suppose inflation runs at a steady rate $\pi$. Each future ratio is today's ratio grown by inflation, and an ordinary dollar discount rate is, by Fisher ([real-rates-and-the-fisher-equation](01-real-rates-and-the-fisher-equation.md)), the real rate grown by the same inflation. The inflation on top and the inflation underneath cancel, payment by payment, and what is left is $I_s$ times the real price.
+A buyer today pays today's dollars. Each future payment is its real amount times a ratio not yet known. Suppose inflation runs at a steady rate $\pi$. Each future ratio is today's ratio grown by inflation, and an ordinary dollar discount rate is, by Fisher ([Real rates](01-real-rates-and-the-fisher-equation.md)), the real rate grown by the same inflation. The inflation on top and the inflation underneath cancel, payment by payment, and what is left is $I_s$ times the real price.
 
 When inflation is uncertain, the nominal road needs a model of how rates and the index move together; the real-yield quote does not. So the market needs no inflation forecast to quote a linker. It quotes the real yield, and the invoice follows. At 2.5% inflation and at 3.5% inflation the invoice is the same $1,000.0416: raising expected inflation raises the nominal yield by as much as it raises the future payments.
 
@@ -164,7 +148,7 @@ The floor protects the sum lent. Coupons are interest, and a fall in prices lowe
 
 </details>
 
-The same price comes from a nominal road: project each payment in dollars at the breakeven rate and discount at the nominal yield. That road is the one the next card on this shelf walks along ([breakeven-inflation](03-breakeven-inflation.md)).
+The same price comes from a nominal road: project each payment in dollars at the breakeven rate and discount at the nominal yield. That road is the one the next card on this shelf walks along ([Breakeven inflation](03-breakeven-inflation.md)).
 
 ---
 
@@ -664,9 +648,9 @@ The two outputs agree line for line.
 
 - **US TIPS.** The rules on this card are the Treasury's. Ten-year TIPS are first issued in January and July and reopened in March, May, September and November; the coupon is set at auction and is never below 0.125%.
 - **Other governments' linkers.** The UK indexes to its retail price index, and France issues bonds tied to French and to euro-area consumer prices. Lags and floors differ by issuer, so the index ratio rule is read from each prospectus.
-- **Breakeven inflation.** The gap between an ordinary bond's yield and a linker's real yield of the same maturity is the market's breakeven, the 2.5% on this card ([breakeven-inflation](03-breakeven-inflation.md)).
-- **Inflation swaps.** A swap that pays the change in the index for a fixed rate prices the same index ratio without a bond ([zero-coupon-inflation-swaps](04-zero-coupon-inflation-swaps.md)).
-- **The deflation floor as an option.** A floor on principal is a put on the index; valuing it takes the models of [inflation-options-in-outline](05-inflation-options-in-outline.md).
+- **Breakeven inflation.** The gap between an ordinary bond's yield and a linker's real yield of the same maturity is the market's breakeven, the 2.5% on this card ([Breakeven inflation](03-breakeven-inflation.md)).
+- **Inflation swaps.** A swap that pays the change in the index for a fixed rate prices the same index ratio without a bond ([Inflation swaps](04-zero-coupon-inflation-swaps.md)).
+- **The deflation floor as an option.** A floor on principal is a put on the index; valuing it takes the models of [Inflation caps and floors in outline](05-inflation-options-in-outline.md).
 - **Pension funds.** A fund that owes pensions rising with prices holds linkers because their payments rise the same way.
 
 > **Say it back**
@@ -676,13 +660,13 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [real-rates-and-the-fisher-equation](01-real-rates-and-the-fisher-equation.md): real against nominal, and the Fisher link between them that makes inflation cancel in Step 3.
+- [Real rates](01-real-rates-and-the-fisher-equation.md): real against nominal, and the Fisher link between them that makes inflation cancel in Step 3.
 
 ## Where this goes next
 
-- [breakeven-inflation](03-breakeven-inflation.md): set a linker's real yield beside an ordinary bond's yield and read off the inflation the market is pricing.
-- [zero-coupon-inflation-swaps](04-zero-coupon-inflation-swaps.md): the same index ratio traded as a swap.
-- [inflation-options-in-outline](05-inflation-options-in-outline.md): the deflation floor priced as an option.
+- [Breakeven inflation](03-breakeven-inflation.md): set a linker's real yield beside an ordinary bond's yield and read off the inflation the market is pricing.
+- [Inflation swaps](04-zero-coupon-inflation-swaps.md): the same index ratio traded as a swap.
+- [Inflation caps and floors in outline](05-inflation-options-in-outline.md): the deflation floor priced as an option.
 
 This card prices a linker without saying what inflation the market expects; breakeven-inflation reads that expectation off the gap between the two yields.
 

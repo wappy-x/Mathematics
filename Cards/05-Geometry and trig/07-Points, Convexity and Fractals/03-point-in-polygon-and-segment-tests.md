@@ -1,25 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Points, Convexity and Fractals
-topic: Counting fence crossings
-item: Inside or outside
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/07-Points, Convexity and Fractals/01-polygon-area-and-orientation|polygon-area-and-orientation]]"
-next:
-  - "[[Cards/17-Topology/03-Surfaces and Manifolds/05-jordan-curve-theorem|jordan-curve-theorem]]"
-tags:
-  - mathematics
-  - geometry and trig
-  - point-in-polygon-and-segment-tests
----
-
 # Inside or outside: ray casting, and whether two segments cross
 
-Geometry and trig → Points, Convexity and Fractals → Counting fence crossings → Inside or outside
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Points, Convexity and Fractals](../../../SYLLABUS.md#w05-s07) → Inside or outside
 
 ---
 
@@ -33,7 +14,7 @@ One small calculation answers both: which side of a line a point lies on. Send a
 
 **A point is inside a fence that does not cross itself exactly when a ray from it meets the fence an odd number of times; and two straight segments cross exactly when each one's ends lie on opposite sides of the other.**
 
-**What kind of fact this is:** a method; the facts it rests on are theorems, proved on this card in Why it works for straight-sided fences, with the general curve in jordan-curve-theorem.
+**What kind of fact this is:** a method; the facts it rests on are theorems, proved on this card in Why it works for straight-sided fences, with the general curve in Jordan curve theorem.
 
 ### The picture: the paddock, the drone and the pilot
 
@@ -45,9 +26,9 @@ Drawn at 1 m = 1.8 units, corner A at the bottom left. The drone's dashed ray me
 
 ## The formula
 
-Positions are grid coordinates in metres, east then north ([distance-and-midpoint](../04-Coordinates%20and%20Curves/01-distance-and-midpoint.md)). For a point $a$, $a_x$ is its east coordinate and $a_y$ its north coordinate; the small letter below, a subscript, names the part.
+Positions are grid coordinates in metres, east then north ([Distance and midpoint](../04-Coordinates%20and%20Curves/01-distance-and-midpoint.md)). For a point $a$, $a_x$ is its east coordinate and $a_y$ its north coordinate; the small letter below, a subscript, names the part.
 
-The one tool is the orientation of three points, from [polygon-area-and-orientation](01-polygon-area-and-orientation.md):
+The one tool is the orientation of three points, from [Shoelace formula](01-polygon-area-and-orientation.md):
 
 $$\operatorname{orient}(a, b, c) = (b_x - a_x)(c_y - a_y) - (b_y - a_y)(c_x - a_x)$$
 
@@ -123,7 +104,7 @@ Far away the count is 0. So points joined to far away without touching the fence
 
 </details>
 
-A second road needs no counting. Watch a runner go once round the fence: from inside, the sight line turns a full 360°; from outside it swings and returns, 0° in all. That total is the winding angle $w$, computed in the code from the inverse tangent ([inverse-trig-and-solving-equations](../03-Trigonometry/05-inverse-trig-and-solving-equations.md)). The segment test is checked by solving the two lines' equations for $t$ and $u$.
+A second road needs no counting. Watch a runner go once round the fence: from inside, the sight line turns a full 360°; from outside it swings and returns, 0° in all. That total is the winding angle $w$, computed in the code from the inverse tangent ([Inverse trig](../03-Trigonometry/05-inverse-trig-and-solving-equations.md)). The segment test is checked by solving the two lines' equations for $t$ and $u$.
 
 
 ---
@@ -361,7 +342,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Reading "between the extremes" as "inside".** The drone lies within the paddock's spans of 0 to 170 m east and 0 to 100 m north, yet it is over the dam. A box holds empty ground even round the convex shapes of [convex-sets-and-convex-hulls](02-convex-sets-and-convex-hulls.md); reflex corner E puts it in the middle.
+> **Reading "between the extremes" as "inside".** The drone lies within the paddock's spans of 0 to 170 m east and 0 to 100 m north, yet it is over the dam. A box holds empty ground even round the convex shapes of [Convex sets](02-convex-sets-and-convex-hulls.md); reflex corner E puts it in the middle.
 >
 > - **Counting a corner twice.** Corner C counted on both its edges gives the pilot 2: outside.
 > - **Testing one side only.** Fence B–C's ends straddle the flight line (2880 and −880), but pilot and drone sit on one side of B–C's line (2640 and 6400); the lines meet behind the pilot, t = −0.7021.
@@ -383,11 +364,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [polygon-area-and-orientation](01-polygon-area-and-orientation.md): the triangle's signed area, whose sign is the orientation test, and the shoelace area.
+- [Shoelace formula](01-polygon-area-and-orientation.md): the triangle's signed area, whose sign is the orientation test, and the shoelace area.
 
 ## Where this goes next
 
-- jordan-curve-theorem: every closed curve that does not cross itself has exactly one inside and one outside.
+- Jordan curve theorem: every closed curve that does not cross itself has exactly one inside and one outside.
 
 This card proved the two-sided split for straight-run fences; whether a curve with no straight pieces, even one too crinkled to have a length, still has a clean inside and outside is what the Jordan curve theorem answers.
 

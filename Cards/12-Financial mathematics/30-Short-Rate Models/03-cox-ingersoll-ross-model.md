@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Short-Rate Models
-topic: Square-root rate noise
-item: Cox-Ingersoll-Ross
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/02-vasicek-model|vasicek-model]]"
-next:
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/03-stochastic-hazard-cox-process|stochastic-hazard-cox-process]]"
-tags: [mathematics, financial mathematics, cox-ingersoll-ross-model]
----
-
 # Cox-Ingersoll-Ross: square-root noise that keeps the rate positive
 
-Financial mathematics → Short-Rate Models → Square-root rate noise → Cox-Ingersoll-Ross
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Short-Rate Models](../../../SYLLABUS.md#w12-s30) → Cox-Ingersoll-Ross
 
 ---
 
@@ -24,7 +8,7 @@ Financial mathematics → Short-Rate Models → Square-root rate noise → Cox-I
 
 A government bond pays $100 in five years and nothing before. That is a **zero**: a zero-coupon bond, one payment at the end. What it costs today depends on the interest rates of the next five years, and nobody knows those.
 
-The shelf's house market starts the overnight rate at 4 percent. The rate is pulled toward 5 percent at speed 0.3 a year and jostled by random shocks of about 1 percentage point a year. The [vasicek-model](02-vasicek-model.md) card prices this five-year zero with shocks of a fixed size. Fixed shocks have a flaw: at a rate of 0.5 percent, a 1-point shock still arrives at full strength and can push the rate below zero.
+The shelf's house market starts the overnight rate at 4 percent. The rate is pulled toward 5 percent at speed 0.3 a year and jostled by random shocks of about 1 percentage point a year. The [Vasicek](02-vasicek-model.md) card prices this five-year zero with shocks of a fixed size. Fixed shocks have a flaw: at a rate of 0.5 percent, a 1-point shock still arrives at full strength and can push the rate below zero.
 
 In 1985 John Cox, Jonathan Ingersoll and Stephen Ross changed one thing. The shock is scaled by the square root of the rate itself. At 4 percent the shock is the same 1 point as before. At 1 percent it is half a point. At zero it vanishes, and the pull toward 5 percent lifts the rate away. The model is called CIR after them.
 
@@ -91,8 +75,8 @@ The **Feller condition**, $2\kappa\theta \ge \sigma^2$, which is $\nu \ge 1$, is
 
 ### When it holds
 
-- **One random driver.** Every maturity's yield moves with the single number $r$. Real curves also twist, with short and long yields moving opposite ways; a single factor cannot produce that, and [two-factor-and-lognormal-short-rate-models](07-two-factor-and-lognormal-short-rate-models.md) adds a second.
-- **Constant settings.** Three numbers cannot match every bond price on today's screen. Off-model bonds are mispriced by the fitting error; [hull-white-model](04-hull-white-model.md) lets the target move with time to fit the curve exactly.
+- **One random driver.** Every maturity's yield moves with the single number $r$. Real curves also twist, with short and long yields moving opposite ways; a single factor cannot produce that, and [Beyond one factor](07-two-factor-and-lognormal-short-rate-models.md) adds a second.
+- **Constant settings.** Three numbers cannot match every bond price on today's screen. Off-model bonds are mispriced by the fitting error; [Hull-White](04-hull-white-model.md) lets the target move with time to fit the curve exactly.
 - **Pricing settings, not history.** Pull speed and target are fitted to prices, in the pricing world where every asset earns the short rate on average. Taking them from a history of rates prices bonds with a risk premium left in.
 - **Rates that stay at or above zero.** Euro rates sat below zero from 2014 to 2022. CIR cannot put the rate there at all; a desk that needs it adds a fixed shift to the rate.
 - **Feller for strict positivity only.** The bond formula holds whether or not Feller holds. If Feller fails, paths touch zero and bounce off: at noise 0.2 in this market, 804 of 2,000 simulated paths touch zero within five years.
@@ -109,7 +93,7 @@ $$P = \mathrm{E}\!\left[e^{-\int_0^T r(s)\,ds}\right].$$
 
 $\mathrm{E}$ is the expectation (probability-weighted average) and $\int_0^T r(s)\,ds$ is the rate added up continuously from now to maturity.
 
-That average obeys a partial differential equation, the [the-term-structure-equation](01-the-term-structure-equation.md) card's result. With $P$ as a function of the time left and today's rate, and subscripts marking a derivative (rate of change) in that variable:
+That average obeys a partial differential equation, the [A short-rate model](01-the-term-structure-equation.md) card's result. With $P$ as a function of the time left and today's rate, and subscripts marking a derivative (rate of change) in that variable:
 
 $$P_\tau = \kappa(\theta - r)\,P_r + \tfrac12\sigma^2 r\,P_{rr} - r\,P, \qquad P(0, r) = 1.$$
 
@@ -176,7 +160,7 @@ Start at $r_0$ and pick a low level a and a high level b around it. On the new r
 
 ### Step 5: what changes from Vasicek, and what does not
 
-The pull term is identical (the Vasicek card writes its speed as a), so the expected rate path is identical: from 4 percent, 4.776870 percent expected after five years in both models. The noise differs. Vasicek's squared shock is a constant, so in Step 1 it lands in the constant part and adds a $B^2$ term to $A$; its $B$ is the plain $(1 - e^{-\kappa\tau})/\kappa$. CIR's squared shock is proportional to $r$, so it lands in the $r$ part and bends $B$ itself, through the $\tfrac12\sigma^2 B^2$ in the Riccati equation. Both are affine: [vasicek-model](02-vasicek-model.md) and CIR are the two classic members of the family whose bond prices are e to an affine function of the rate.
+The pull term is identical (the Vasicek card writes its speed as a), so the expected rate path is identical: from 4 percent, 4.776870 percent expected after five years in both models. The noise differs. Vasicek's squared shock is a constant, so in Step 1 it lands in the constant part and adds a $B^2$ term to $A$; its $B$ is the plain $(1 - e^{-\kappa\tau})/\kappa$. CIR's squared shock is proportional to $r$, so it lands in the $r$ part and bends $B$ itself, through the $\tfrac12\sigma^2 B^2$ in the Riccati equation. Both are affine: [Vasicek](02-vasicek-model.md) and CIR are the two classic members of the family whose bond prices are e to an affine function of the rate.
 
 Matched at today's shock size, the two price the five-year zero almost identically, 0.799904 against 0.799856. They part company in the tails. After five years the CIR rate has spread 1.354680 points against Vasicek's 1.258447, because it spends more time above 4 percent where its shocks are larger. And on the same random draws, 6 Vasicek paths went below zero; no CIR path did.
 
@@ -202,7 +186,7 @@ CIR: pull speed $\kappa = 0.3$, target $\theta = 5\%$, noise $\sigma = 0.05$, to
 | rate factor | e to the minus 2.576655 × 0.04 | 0.902067 |
 | **price per 1 of face** | 0.886745 × 0.902067 | **0.799904** |
 | yield | minus the log of 0.799904, over 5 | 4.465281% |
-| Vasicek, same market | the [vasicek-model](02-vasicek-model.md) formula | 0.799856 |
+| Vasicek, same market | the [Vasicek](02-vasicek-model.md) formula | 0.799856 |
 
 The $100 zero costs **$79.99** under CIR, and $79.99 under Vasicek: the gap is 0.000048 per dollar of face value. The five-year yield, 4.47 percent, sits above today's 4 percent because the rate is expected to climb toward 5.
 
@@ -677,11 +661,11 @@ The two outputs match line for line: both programs use the same generator, the s
 
 ## Where you meet it in real life
 
-- **Credit risk.** A company's default hazard (its instantaneous chance of default per year) must stay positive, and it is often modelled as a CIR process: [stochastic-hazard-cox-process](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md).
+- **Credit risk.** A company's default hazard (its instantaneous chance of default per year) must stay positive, and it is often modelled as a CIR process: [A random hazard](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md).
 - **Stochastic volatility.** The Heston model lets a stock's variance wander as a CIR process, for the same reason: a variance below zero is meaningless.
-- **Bond options.** CIR bond options have closed forms, and a coupon bond option splits into zero options by [bond-options-and-jamshidians-trick](05-bond-options-and-jamshidians-trick.md).
+- **Bond options.** CIR bond options have closed forms, and a coupon bond option splits into zero options by [Bond options](05-bond-options-and-jamshidians-trick.md).
 - **Insurers and pension funds.** Long-horizon scenario generators use CIR-style rates so that no scenario runs a negative rate for decades.
-- **Negative-rate years.** When euro and yen rates went below zero, plain CIR could not fit them; desks moved to shifted versions or to [hull-white-model](04-hull-white-model.md), fitted as in [calibrating-a-short-rate-model](08-calibrating-a-short-rate-model.md) and built on a lattice as in [hull-white-trinomial-tree](06-hull-white-trinomial-tree.md).
+- **Negative-rate years.** When euro and yen rates went below zero, plain CIR could not fit them; desks moved to shifted versions or to [Hull-White](04-hull-white-model.md), fitted as in [Calibrating Hull-White](08-calibrating-a-short-rate-model.md) and built on a lattice as in [The Hull-White tree](06-hull-white-trinomial-tree.md).
 
 > **Say it back**
 > CIR moves the short rate toward a target, with shocks sized by the square root of the rate. Because the drift and the squared shock are both a constant plus a constant times the rate, the bond price is a level factor times e to the minus a sensitivity times today's rate, and the two factors solve ordinary equations with closed forms. The rate never touches zero when twice the pull times the target is at least the squared noise. Matched to Vasicek at today's shock size, the five-year zero costs $79.99 in both. The models differ in the tails: CIR's rate cannot go negative, Vasicek's can.
@@ -690,18 +674,18 @@ The two outputs match line for line: both programs use the same generator, the s
 
 ## What this builds on
 
-- [vasicek-model](02-vasicek-model.md): the same pull toward a target, with shocks of fixed size, and the house example this card prices again.
-- [the-term-structure-equation](01-the-term-structure-equation.md): the equation every short-rate bond price obeys, used in Step 0.
+- [Vasicek](02-vasicek-model.md): the same pull toward a target, with shocks of fixed size, and the house example this card prices again.
+- [A short-rate model](01-the-term-structure-equation.md): the equation every short-rate bond price obeys, used in Step 0.
 - Ito's lemma and Brownian motion, from wing 11: the rules for random shocks that turn the average of Step 0 into that equation.
 
 ---
 
 ## Where this goes next
 
-- [stochastic-hazard-cox-process](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md): the same square-root process, driving a company's chance of default instead of the interest rate.
-- [hull-white-model](04-hull-white-model.md): Vasicek's shape with a target that moves with time, so the model matches today's curve exactly.
+- [A random hazard](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md): the same square-root process, driving a company's chance of default instead of the interest rate.
+- [Hull-White](04-hull-white-model.md): Vasicek's shape with a target that moves with time, so the model matches today's curve exactly.
 
-CIR fits positivity but not today's curve with three fixed numbers; what a default-risky bond is worth when the hazard itself follows this process is the question [stochastic-hazard-cox-process](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md) answers.
+CIR fits positivity but not today's curve with three fixed numbers; what a default-risky bond is worth when the hazard itself follows this process is the question [A random hazard](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md) answers.
 
 ---
 

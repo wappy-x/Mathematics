@@ -1,27 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Clock Arithmetic
-topic: Congruence
-item: What congruence means
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/04-division-with-remainder|division-with-remainder]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/01-divides|divides]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/06-negative-numbers|negative-numbers]]"
-next:
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/02-modular-addition-and-multiplication|modular-addition-and-multiplication]]"
-tags:
-  - mathematics
-  - number theory
-  - congruence-mod-n
----
-
 # Congruence: two numbers count as the same when they leave the same remainder, written a ≡ b (mod n)
 
-Number theory → Clock Arithmetic → Congruence → What congruence means
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Clock Arithmetic](../../../SYLLABUS.md#w02-s03) → What congruence means
 
 ---
 
@@ -31,7 +10,7 @@ It is 9 am. A job takes 100 hours. When does it finish?
 
 Nobody counts out 100 hours. You cut it into whole days and a bit: 100 = 4 × 24 + 4. Four days, four hours over. The days put the clock back where it started, so only the 4 works: 9 am plus 4 hours is 1 pm.
 
-The same cut works on the face, which turns over every 12 hours: 100 = 8 × 12 + 4. Different turns, same 4 over. The turns are throwaway; the leftover is the answer, and its name is the remainder ([division-with-remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)). Two numbers leaving the same remainder land on the same spot, so on the clock they count as the same.
+The same cut works on the face, which turns over every 12 hours: 100 = 8 × 12 + 4. Different turns, same 4 over. The turns are throwaway; the leftover is the answer, and its name is the remainder ([Division with a remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)). Two numbers leaving the same remainder land on the same spot, so on the clock they count as the same.
 
 **Two whole numbers are congruent when they leave the same remainder on division by the modulus, the size of one turn — the same thing as saying their difference is a whole number of turns.**
 
@@ -66,7 +45,7 @@ Gauss's shorthand for that:
 
 The three-bar ≡ reads "is congruent to", not "equals". The bracket names the clock: "mod" is short for modulus, what you divide by — one whole turn. Said the other way, which tests quicker:
 
-**109 − 1 = 108, and 108 = 9 × 12, so 12 divides the difference ([divides](../01-Divisibility%20and%20Primes/01-divides.md)).**
+**109 − 1 = 108, and 108 = 9 × 12, so 12 divides the difference ([Divides](../01-Divisibility%20and%20Primes/01-divides.md)).**
 
 | Piece | Plain meaning | In our example |
 | --- | --- | --- |
@@ -86,7 +65,7 @@ Add 12 hours to any time and the hand is back where it was. Put in or take out a
 
 ### Step 1: every number has exactly one remainder
 
-Any whole number is some number of turns times 12, plus a remainder from 0 to 11, one way only ([division-with-remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)). That remainder is its spot on the face.
+Any whole number is some number of turns times 12, plus a remainder from 0 to 11, one way only ([Division with a remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md)). That remainder is its spot on the face.
 
 ### Step 2: the two tests are one
 
@@ -96,7 +75,7 @@ The other way round: if 12 divides the difference, one number is the other plus 
 
 ### Step 3: counting backwards works too
 
-Nothing said the turns had to be forwards. Three hours before midnight, count back: −3 = (−1) × 12 + 9 ([negative-numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md)). The difference test agrees: 9 − (−3) = 12, one turn exactly. So −3 ≡ 9 (mod 12), and the face does read 9.
+Nothing said the turns had to be forwards. Three hours before midnight, count back: −3 = (−1) × 12 + 9 ([Negative numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md)). The difference test agrees: 9 − (−3) = 12, one turn exactly. So −3 ≡ 9 (mod 12), and the face does read 9.
 
 Some machines cut towards zero and hand back −3. Ours does not: the face has no −3 on it.
 
@@ -269,7 +248,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Clocks and calendars.** "What time will it be" and "what day will it fall on" are remainders: the week runs on 7, the face on 12.
-- **Last digits.** A number's last digit is its remainder on 10 — why the tests for 2, 5 and 10 look only at the end ([divisibility-rules](../01-Divisibility%20and%20Primes/03-divisibility-rules.md)).
+- **Last digits.** A number's last digit is its remainder on 10 — why the tests for 2, 5 and 10 look only at the end ([Divisibility rules](../01-Divisibility%20and%20Primes/03-divisibility-rules.md)).
 - **Check digits.** A barcode's last digit is picked so a running total lands on a fixed spot; mistype one and the till refuses it.
 
 > **Say it back**
@@ -279,16 +258,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [division-with-remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md): every whole number splits, one way only, into whole turns plus a remainder — its spot on the face.
-- [divides](../01-Divisibility%20and%20Primes/01-divides.md): "12 divides 108" means 108 is a whole number of 12s, nothing over. That is the difference test in one word.
-- [negative-numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md): counting back past 0, which is how −3 reaches 9.
+- [Division with a remainder](../01-Divisibility%20and%20Primes/04-division-with-remainder.md): every whole number splits, one way only, into whole turns plus a remainder — its spot on the face.
+- [Divides](../01-Divisibility%20and%20Primes/01-divides.md): "12 divides 108" means 108 is a whole number of 12s, nothing over. That is the difference test in one word.
+- [Negative numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md): counting back past 0, which is how −3 reaches 9.
 
 ## Where this goes next
 
-- [modular-addition-and-multiplication](02-modular-addition-and-multiplication.md): reduce before adding or multiplying, or after, and the answers agree.
-- [residue-classes](03-residue-classes.md): the numbers sharing a leftover, in buckets with their own small tables.
-- [modular-inverse](04-modular-inverse.md): dividing on a clock, which needs a number sharing no factor with the modulus ([coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)).
-- [linear-congruences](05-linear-congruences.md): unknown hours, solved on a clock.
+- [Adding and multiplying on the clock](02-modular-addition-and-multiplication.md): reduce before adding or multiplying, or after, and the answers agree.
+- [Residue classes](03-residue-classes.md): the numbers sharing a leftover, in buckets with their own small tables.
+- [The modular inverse](04-modular-inverse.md): dividing on a clock, which needs a number sharing no factor with the modulus ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)).
+- [Solving a x ≡ b (mod n)](05-linear-congruences.md): unknown hours, solved on a clock.
 
 ---
 

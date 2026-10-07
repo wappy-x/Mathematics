@@ -1,23 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Brownian Motion
-topic: Filling in a recorded path
-item: Brownian bridge
-kind: theorem
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/01-brownian-motion|brownian-motion]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/05-bivariate-normal-and-conditioning|bivariate-normal-and-conditioning]]"
-next:
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/03-quasi-monte-carlo-and-brownian-bridge|quasi-monte-carlo-and-brownian-bridge]]"
-tags: [mathematics, stochastic processes and calculus, brownian-bridge]
----
-
 # Brownian bridge: Brownian motion pinned at both ends
 
-Stochastic processes and calculus → Brownian Motion → Filling in a recorded path → Brownian bridge
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Brownian Motion](../../../SYLLABUS.md#w11-s05) → Brownian bridge
 
 ---
 
@@ -51,7 +34,7 @@ Orange: one simulated path, recorded at whole seconds and joined by straight lin
 
 ## The formula
 
-Notation, as [brownian-motion](01-brownian-motion.md) set it up. $W_t$ is the grain's position at time $t$ seconds, in micrometres (μm), starting from $W_0 = 0$. Its steps over separate stretches of time are independent, and the step over a stretch of length $t$ is normal with mean 0 and variance $t$. A vertical bar reads "given": the law of $W_t \mid W_T = b$ is the law of the position at time t among paths that are at $b$ at time $T$.
+Notation, as [Brownian motion](01-brownian-motion.md) set it up. $W_t$ is the grain's position at time $t$ seconds, in micrometres (μm), starting from $W_0 = 0$. Its steps over separate stretches of time are independent, and the step over a stretch of length $t$ is normal with mean 0 and variance $t$. A vertical bar reads "given": the law of $W_t \mid W_T = b$ is the law of the position at time t among paths that are at $b$ at time $T$.
 
 Pin the path at the start and at time $T$: $W_0 = 0$ and $W_T = b$. For times $s \le t$ between 0 and T:
 
@@ -106,7 +89,7 @@ $$B_t = W_t - \frac{t}{T}\, W_T + \frac{t}{T}\, b$$
 
 Take a free path over 10 seconds. Draw the straight line from its start to its own end. What is left, the path minus that line, is a wiggle that starts and ends at 0. The claim that makes everything work: the wiggle is independent of where the path ended. So pinning the end changes only the straight line. The wiggle keeps its law, and the bridge is the new straight line plus the old wiggle.
 
-For jointly normal quantities, zero covariance already means independent ([bivariate-normal-and-conditioning](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)).
+For jointly normal quantities, zero covariance already means independent ([Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)).
 
 ### Step 1: the position at 4 seconds and at 10 seconds are a bivariate normal pair
 
@@ -177,7 +160,7 @@ $$\operatorname{Cov}(X_u, X_v) = (u - t_i) - q(u - t_i) - p(v - t_i) + p\,q\,\De
 
 ### Step 5: the continuous claim, checked on coin-flip walks
 
-A Brownian path is the limit of a coin-flip walk with small steps ([scaling-and-path-roughness](02-scaling-and-path-roughness.md) shows the scaling). So the bridge should be the limit of a walk pinned at both ends. Road 3 tests that by exact counting, with no simulation. Take n steps of size $h = \sqrt{10/n}$ over 10 seconds, keep only the walks that end at 2, and count every one of them to get the law at 4 seconds.
+A Brownian path is the limit of a coin-flip walk with small steps ([Brownian paths](02-scaling-and-path-roughness.md) shows the scaling). So the bridge should be the limit of a walk pinned at both ends. Road 3 tests that by exact counting, with no simulation. Take n steps of size $h = \sqrt{10/n}$ over 10 seconds, keep only the walks that end at 2, and count every one of them to get the law at 4 seconds.
 
 | Steps n | Step size h | Mean at 4 s | Variance at 4 s | Error against 2.4 |
 | --- | --- | --- | --- | --- |
@@ -191,7 +174,7 @@ The mean is exactly on the straight line at every n: every order of the up and d
 
 The recipe for the half-second picture: for each recorded gap of 1 second, draw the midpoint as the average of its two ends plus 0.5 times a standard normal. Then repeat on the half-second gaps, with spread $\sqrt{0.5/4} = \sqrt{0.125}$, to reach quarter-seconds. By Step 4 each draw has exactly the law of the path given the coarser points, so the refined path is a Brownian path on the finer grid, not an approximation.
 
-Road 4c checks the result on 20000 coarse paths. A Brownian path's steps on a grid of size dt are independent with variance dt, so the squared steps summed over 10 seconds average 10 whatever the grid ([quadratic-variation](03-quadratic-variation.md)). The refined paths give 9.993230 at the half-second level, standard error 0.022371, and 9.999583 at the quarter-second level, standard error 0.015763. Neighbouring quarter-second steps have correlation −0.000945, standard error 0.001132: no trace of the construction remains. Halving forever is Lévy's construction of Brownian motion itself; the proof that it converges to a continuous path is in Mörters and Peres, chapter 1, and is not repeated here.
+Road 4c checks the result on 20000 coarse paths. A Brownian path's steps on a grid of size dt are independent with variance dt, so the squared steps summed over 10 seconds average 10 whatever the grid ([Quadratic variation](03-quadratic-variation.md)). The refined paths give 9.993230 at the half-second level, standard error 0.022371, and 9.999583 at the quarter-second level, standard error 0.015763. Neighbouring quarter-second steps have correlation −0.000945, standard error 0.001132: no trace of the construction remains. Halving forever is Lévy's construction of Brownian motion itself; the proof that it converges to a continuous path is in Mörters and Peres, chapter 1, and is not repeated here.
 
 <details>
 <summary>Another road: keep only the paths that happen to end at 2</summary>
@@ -228,7 +211,7 @@ The fill-in at the half-second, between 1.3 μm at 4 seconds and 0.5 μm at 5 se
 | variance | (4.5 − 4)(5 − 4.5) / 1 | 0.25 |
 | **spread** | √0.25 | **0.5** |
 
-So the simulation draws the 4.5-second position as 0.9 plus 0.5 times a standard normal. The same pair of ends also gives the chance that the path touched 2 μm somewhere inside that second, a consequence of the joint law of the maximum and the end on [reflection-principle-and-running-maximum](04-reflection-principle-and-running-maximum.md): exp(−2 × 0.7 × 1.5 / 1) = 0.122456, about 1 in 8, although neither recorded point is above 1.3. The reason in one line: that card's joint density, added up over every maximum at or above a level L and divided by the density of the end b, is exp(−2L(L − b)/t) for a path started at 0; here reflecting at the first touch of 2 sends an end at 0.5 to an end at 3.5, and the ratio of the two normal densities for those ends is exactly this exponential.
+So the simulation draws the 4.5-second position as 0.9 plus 0.5 times a standard normal. The same pair of ends also gives the chance that the path touched 2 μm somewhere inside that second, a consequence of the joint law of the maximum and the end on [Reflection principle](04-reflection-principle-and-running-maximum.md): exp(−2 × 0.7 × 1.5 / 1) = 0.122456, about 1 in 8, although neither recorded point is above 1.3. The reason in one line: that card's joint density, added up over every maximum at or above a level L and divided by the density of the end b, is exp(−2L(L − b)/t) for a path started at 0; here reflecting at the first touch of 2 sends an end at 0.5 to an end at 3.5, and the ratio of the two normal densities for those ends is exactly this exponential.
 
 ### What breaks if you drop a piece
 
@@ -660,8 +643,8 @@ The two outputs agree line for line, simulations included: both run the same gen
 ## Where you meet it in real life
 
 - **Refining a simulation.** Draw a coarse path first, then fill in finer times on demand without disturbing what was drawn: the Brownian bridge construction in Glasserman's book.
-- **Pricing by quasi-random numbers.** Spending the best random numbers on the far end first, and the bridge on the middle, concentrates the important variation in few coordinates: [quasi-monte-carlo-and-brownian-bridge](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md).
-- **Did the path cross a level between samples?** Given the two ends of a step, the chance of crossing a level in between is a bridge fact, exp(−2(level − x)(level − y)/Δ) for both ends x and y below the level and a step of Δ seconds. Simulations use it so as not to miss crossings between grid points; the hitting law itself is [reflection-principle-and-running-maximum](04-reflection-principle-and-running-maximum.md).
+- **Pricing by quasi-random numbers.** Spending the best random numbers on the far end first, and the bridge on the middle, concentrates the important variation in few coordinates: [Quasi-Monte Carlo](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md).
+- **Did the path cross a level between samples?** Given the two ends of a step, the chance of crossing a level in between is a bridge fact, exp(−2(level − x)(level − y)/Δ) for both ends x and y below the level and a step of Δ seconds. Simulations use it so as not to miss crossings between grid points; the hitting law itself is [Reflection principle](04-reflection-principle-and-running-maximum.md).
 - **Testing whether data fit a distribution.** The gap between the share of a sample below each value and the share a model predicts, scaled by the square root of the sample size, behaves like a Brownian bridge: both shares start at 0 and end at 1, so the gap is pinned at both ends. The Kolmogorov-Smirnov test reads its largest gap off that bridge.
 
 > **Say it back**
@@ -671,13 +654,13 @@ The two outputs agree line for line, simulations included: both run the same gen
 
 ## What this builds on
 
-- [brownian-motion](01-brownian-motion.md): the process $W_t$, its independent normal steps, and the covariance min(s, t) that every road here starts from.
-- [bivariate-normal-and-conditioning](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): the rule for one normal given another, and the fact that uncorrelated jointly normal variables are independent.
+- [Brownian motion](01-brownian-motion.md): the process $W_t$, its independent normal steps, and the covariance min(s, t) that every road here starts from.
+- [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): the rule for one normal given another, and the fact that uncorrelated jointly normal variables are independent.
 
 ## Where this goes next
 
-- [quasi-monte-carlo-and-brownian-bridge](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md): the bridge used to order the random inputs of a pricing simulation, so that quasi-random points do their best work.
-- On this shelf, [brownian-martingales-and-exponential-martingale](06-brownian-martingales-and-exponential-martingale.md) turns from the law of a pinned path to the fair games built from a free one.
+- [Quasi-Monte Carlo](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/03-quasi-monte-carlo-and-brownian-bridge.md): the bridge used to order the random inputs of a pricing simulation, so that quasi-random points do their best work.
+- On this shelf, [Brownian martingales](06-brownian-martingales-and-exponential-martingale.md) turns from the law of a pinned path to the fair games built from a free one.
 
 The bridge says where a path goes between two known points; which quantities of a free path stay fair as time runs, and what they say about when and where the grain leaves an interval, is the question the next card answers.
 

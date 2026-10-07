@@ -1,26 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Stochastic volatility - Heston, SABR and their mix
-topic: Transform pricing
-item: Pricing Heston exactly
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/01-heston-model|heston-model]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/04-eulers-formula|eulers-formula]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/04-characteristic-functions-and-inversion|characteristic-functions-and-inversion]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/08-numerical-integration|numerical-integration]]"
-next:
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/03-heston-greeks-and-calibration|heston-greeks-and-calibration]]"
-  - "[[Cards/20-Harmonic analysis/04-Characteristic Functions and Probability/09-carr-madan-and-fourier-pricing|carr-madan-and-fourier-pricing]]"
-tags: [mathematics, financial mathematics, heston-pricing-by-characteristic-function]
----
-
 # Pricing Heston exactly: the closed-form fingerprint and the one integral that turns it into a price
 
-Financial mathematics → Stochastic volatility - Heston, SABR and their mix → Transform pricing → Pricing Heston exactly
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Stochastic volatility - Heston, SABR and their mix](../../../SYLLABUS.md#w12-s14) → Pricing Heston exactly
 
 ---
 
@@ -28,7 +8,7 @@ Financial mathematics → Stochastic volatility - Heston, SABR and their mix →
 
 Acme shares trade at $100. A one-year call struck at $100 gives the right to buy one share for $100 a year from now. Cash earns 5 percent a year, continuously compounded, and Acme pays a 2 percent dividend yield. With volatility fixed at 20 percent, Black-Scholes prices the call at $9.23.
 
-The Heston model lets volatility move ([heston-model](01-heston-model.md)). Acme's variance, volatility squared, starts at 0.04, which is 20 percent volatility. It is pulled toward a long-run 0.04 at speed 2 per year and shaken by noise of its own, of size 0.3, the vol-of-vol. Its shocks run against the share's with correlation −0.7. What is the call worth now?
+The Heston model lets volatility move ([The Heston model](01-heston-model.md)). Acme's variance, volatility squared, starts at 0.04, which is 20 percent volatility. It is pulled toward a long-run 0.04 at speed 2 per year and shaken by noise of its own, of size 0.3, the vol-of-vol. Its shocks run against the share's with correlation −0.7. What is the call worth now?
 
 The spread of Acme's possible prices at expiry no longer has a formula. Simulating 200,000 possible years and averaging the discounted payoffs gives $9.04, give or take $0.03. But the distribution's **fingerprint** has a formula: one complex number per "frequency", together fixing the distribution completely. Its proper name, used from here on, is the **characteristic function**. One integral turns it into the price: **$9.06**, or 9.059507, from 200 slices of a smooth curve.
 
@@ -54,13 +34,13 @@ The top road is exact except for slicing one smooth integral. The bottom road is
 
 ## The formula
 
-Notation first. The imaginary unit $i$ squares to −1. A complex number is a point in the plane: its ordinary part runs across, its multiple of $i$ runs up, and Re takes the across part. Euler's formula, $e^{i\alpha} = \cos\alpha + i\sin\alpha$, puts e raised to an imaginary power on the circle of radius 1, at angle α ([eulers-formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)).
+Notation first. The imaginary unit $i$ squares to −1. A complex number is a point in the plane: its ordinary part runs across, its multiple of $i$ runs up, and Re takes the across part. Euler's formula, $e^{i\alpha} = \cos\alpha + i\sin\alpha$, puts e raised to an imaginary power on the circle of radius 1, at angle α ([Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)).
 
 The **characteristic function** of Acme's log price at expiry is
 
 $$\varphi(u) = \mathbb{E}\!\left[e^{iu\ln S_T}\right].$$
 
-Each possible ending price $S_T$ turns an arrow of length 1 through the angle u times ln S_T, and the characteristic function is the average arrow. The average, $\mathbb{E}$, is taken in the pricing world, where the share is expected to grow at the riskless rate less its dividend yield. The **frequency** $u$ sets how fast the arrow turns as the price changes ([characteristic-functions-and-inversion](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md)).
+Each possible ending price $S_T$ turns an arrow of length 1 through the angle u times ln S_T, and the characteristic function is the average arrow. The average, $\mathbb{E}$, is taken in the pricing world, where the share is expected to grow at the riskless rate less its dividend yield. The **frequency** $u$ sets how fast the arrow turns as the price changes ([Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md)).
 
 The price of the call:
 
@@ -107,7 +87,7 @@ In words: $\beta$ is the pull speed, bent by the correlation. $d$ is a square ro
 
 ### Step 0: trade the distribution for its fingerprint
 
-A price is a discounted average of the payoff over the ending prices, and Heston's ending distribution has no formula to average over. Two facts open another door. A characteristic function fixes its distribution completely: two different distributions never share one ([characteristic-functions-and-inversion](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md)). And when a model's coefficients are straight-line functions of the variance, its characteristic function reduces to two equations in time, which for Heston solve exactly. So: write it exactly (Steps 1 and 2), turn it into probabilities (Steps 3 and 4), keep its logarithm honest (Step 5), and slice one integral (Step 6), the only numerical step.
+A price is a discounted average of the payoff over the ending prices, and Heston's ending distribution has no formula to average over. Two facts open another door. A characteristic function fixes its distribution completely: two different distributions never share one ([Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md)). And when a model's coefficients are straight-line functions of the variance, its characteristic function reduces to two equations in time, which for Heston solve exactly. So: write it exactly (Steps 1 and 2), turn it into probabilities (Steps 3 and 4), keep its logarithm honest (Step 5), and slice one integral (Step 6), the only numerical step.
 
 ### Step 1: the characteristic function, in numbers
 
@@ -169,7 +149,7 @@ Swapping average and integral gives the formula; the swap needs care, as the sin
 
 ### Step 4: two probabilities, merged into one integral
 
-A call pays $S_T - K$ above the strike. As on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), split it into a share received minus cash handed over.
+A call pays $S_T - K$ above the strike. As on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), split it into a share received minus cash handed over.
 
 - **The cash side** is $K e^{-rT} P_2$, with $P_2$ from Step 3: 0.580379. The fraction of simulated paths ending above \$100 is 0.579835.
 - **The share side** counts the same event in shares: each ending price weighted by the share's value there. Weighting by $S_T$ over its average gives a new probability with characteristic function $\varphi(u - i)/\varphi(-i)$, because $S_T = e^{i(-i)\ln S_T}$ merges with $e^{iu\ln S_T}$ into $e^{i(u - i)\ln S_T}$. Step 3 then gives $P_1$ = 0.655651; the simulation, weighting paths by their ending price, gives 0.654944.
@@ -206,7 +186,7 @@ The orange line is the stable layout, the true price. The green line is the 1993
 
 ### Step 6: slicing the integral
 
-Simpson's rule fits a parabola through each three neighbouring points and adds the areas ([numerical-integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md)). The card uses 200 slices from 0 to 100, each half a unit wide, starting one hundred-millionth above 0, where the formula divides by zero though the curve itself is finite.
+Simpson's rule fits a parabola through each three neighbouring points and adds the areas ([Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md)). The card uses 200 slices from 0 to 100, each half a unit wide, starting one hundred-millionth above 0, where the formula divides by zero though the curve itself is finite.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -221,7 +201,7 @@ The line is the integrand, the quantity inside the integral sign, at every secon
 
 ### The other door: Lewis's integral
 
-Alan Lewis (2001) moves the integral onto the line where the frequency has imaginary part −½. One value of the characteristic function then serves both sides, the integrand is divided by $u^2 + \tfrac14$ instead of by $i\,u$, and the price is the discounted share minus one integral: 9.059507 again with 2,000 slices. But that divisor doubles between 0 and ½, so the integrand peaks sharply at 0, and slices half a unit wide miss the peak: \$11.49. Pricing a whole strip of strikes at once, by the fast Fourier transform, is carr-madan-and-fourier-pricing.
+Alan Lewis (2001) moves the integral onto the line where the frequency has imaginary part −½. One value of the characteristic function then serves both sides, the integrand is divided by $u^2 + \tfrac14$ instead of by $i\,u$, and the price is the discounted share minus one integral: 9.059507 again with 2,000 slices. But that divisor doubles between 0 and ½, so the integrand peaks sharply at 0, and slices half a unit wide miss the peak: \$11.49. Pricing a whole strip of strikes at once, by the fast Fourier transform, is Pricing by transform.
 
 ---
 
@@ -250,7 +230,7 @@ Then the price, with the integral done by the check:
 | **the call** | $1.448462 + 7.611044$ | **9.059507** |
 | as a Black-Scholes volatility | bisection: the one flat volatility giving the same price | 19.5580% |
 
-The call is worth $9.06, below the flat-20% Black-Scholes $9.23: a Black-Scholes volatility of 19.56%. The vol-of-vol makes this at-the-money call (strike at today's price) cheaper: its price grows roughly with the square root of the variance, which loses more on a fall than it gains on an equal rise. The correlation is not the cause: at 0 the call is lower still, $9.04. The whole smile belongs to [heston-model](01-heston-model.md).
+The call is worth $9.06, below the flat-20% Black-Scholes $9.23: a Black-Scholes volatility of 19.56%. The vol-of-vol makes this at-the-money call (strike at today's price) cheaper: its price grows roughly with the square root of the variance, which loses more on a fall than it gains on an equal rise. The correlation is not the cause: at 0 the call is lower still, $9.04. The whole smile belongs to [The Heston model](01-heston-model.md).
 
 ### What breaks if you drop a piece
 
@@ -704,7 +684,7 @@ The outputs are identical line for line, simulation included: both scripts draw 
 > **Try changing**
 > Guess the direction first, then run it.
 > - **Double the vol-of-vol.** Set xi to 0.6. Dearer or cheaper? Cheaper: $8.57. Bigger swings in variance strengthen the square-root effect of Worked numbers.
-> - **Remove the correlation.** Set rho to 0: $9.04, the exact price of the uncorrelated case simulated on [heston-model](01-heston-model.md). The correlation mostly tilts the smile across strikes; this strike barely moves.
+> - **Remove the correlation.** Set rho to 0: $9.04, the exact price of the uncorrelated case simulated on [The Heston model](01-heston-model.md). The correlation mostly tilts the smile across strikes; this strike barely moves.
 > - **Starve the slicing.** Use 20 slices: $8.92. Slices five units wide cannot follow a curve that falls from 4.04 to 0.68 within ten units.
 > - **Cut the paths tenfold.** Simulate 20,000 paths: $8.98, standard error $0.08 instead of $0.03, about the square root of ten wider.
 
@@ -724,9 +704,9 @@ The outputs are identical line for line, simulation included: both scripts draw 
 
 ## Where you meet it in real life
 
-- **Calibration.** Fitting the five inputs to a screen of prices means pricing hundreds of options per trial, practical only with a formula this fast: [heston-greeks-and-calibration](03-heston-greeks-and-calibration.md).
+- **Calibration.** Fitting the five inputs to a screen of prices means pricing hundreds of options per trial, practical only with a formula this fast: [Heston Greeks and calibration](03-heston-greeks-and-calibration.md).
 - **Currency options.** Heston's paper was titled for bond and currency options; with the foreign interest rate in place of the dividend yield, the same integral prices options on exchange rates.
-- **Where the recipe stops.** SABR is priced by Hagan's approximate formula instead ([sabr-model-and-hagan-formula](04-sabr-model-and-hagan-formula.md)); stochastic-local volatility fits the smile by construction but gives up the closed form ([stochastic-local-volatility](06-stochastic-local-volatility.md)).
+- **Where the recipe stops.** SABR is priced by Hagan's approximate formula instead ([SABR and Hagan's formula](04-sabr-model-and-hagan-formula.md)); stochastic-local volatility fits the smile by construction but gives up the closed form ([Stochastic-local volatility](06-stochastic-local-volatility.md)).
 
 > **Say it back**
 > Under Heston the spread of prices at expiry has no formula, but its characteristic function, the average of an arrow turned by the log price, does, because the model is linear in the variance. Gil-Pelaez's theorem turns a characteristic function into a probability with one integral. A call needs two probabilities, counted in dollars and in shares, and they merge into one integral: $9.06 from 200 Simpson slices, against a simulation's $9.04 give or take $0.03. The square root inside must have a real part that is not negative, or long-dated prices go quietly wrong.
@@ -735,15 +715,15 @@ The outputs are identical line for line, simulation included: both scripts draw 
 
 ## What this builds on
 
-- [heston-model](01-heston-model.md): the model, with variance pulled home, shaken, and tied to the share.
-- [eulers-formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e to an imaginary power is a point on the circle of radius 1, the arrow being averaged.
-- [characteristic-functions-and-inversion](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): why a characteristic function fixes its distribution, and the inversion idea Step 3 specialises.
-- [numerical-integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md): Simpson's rule, and why slices must be narrower than the curve's features.
+- [The Heston model](01-heston-model.md): the model, with variance pulled home, shaken, and tied to the share.
+- [Euler's formula](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e to an imaginary power is a point on the circle of radius 1, the arrow being averaged.
+- [Characteristic functions](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/04-characteristic-functions-and-inversion.md): why a characteristic function fixes its distribution, and the inversion idea Step 3 specialises.
+- [Numerical integration](../../06-Calculus%20and%20analysis/04-Integrals/08-numerical-integration.md): Simpson's rule, and why slices must be narrower than the curve's features.
 
 ## Where this goes next
 
-- [heston-greeks-and-calibration](03-heston-greeks-and-calibration.md): the same integral differentiated for hedge ratios, and repeated inside a fit to market prices.
-- carr-madan-and-fourier-pricing: one fast Fourier transform prices a whole strip of strikes from the same characteristic function.
+- [Heston Greeks and calibration](03-heston-greeks-and-calibration.md): the same integral differentiated for hedge ratios, and repeated inside a fit to market prices.
+- Pricing by transform: one fast Fourier transform prices a whole strip of strikes from the same characteristic function.
 
 One strike now costs one integral; a fit to a market needs hundreds at every trial, and which of the five inputs those prices actually pin down is the question the calibration card answers.
 

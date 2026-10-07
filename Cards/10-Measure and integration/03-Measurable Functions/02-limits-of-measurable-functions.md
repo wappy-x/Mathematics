@@ -1,25 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Measurable Functions
-topic: Building new measurable functions
-item: Sums, products, sups and limits
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/03-Measurable Functions/01-measurable-functions|measurable-functions]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/03-sequences-and-limits|sequences-and-limits]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/02-supremum-and-completeness|supremum-and-completeness]]"
-next:
-  - "[[Cards/10-Measure and integration/03-Measurable Functions/03-simple-functions-and-approximation|simple-functions-and-approximation]]"
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/03-monotone-convergence-theorem|monotone-convergence-theorem]]"
-tags: [mathematics, measure and integration, limits-of-measurable-functions]
----
-
 # Sums, products, sups and limits: everything you do to measurable functions gives back a measurable function
 
-Measure and integration → Measurable Functions → Building new measurable functions → Sums, products, sups and limits
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Measurable Functions](../../../SYLLABUS.md#w10-s03) → Sums, products, sups and limits
 
 ---
 
@@ -27,7 +8,7 @@ Measure and integration → Measurable Functions → Building new measurable fun
 
 A gauge under a river bridge records the water level every hour, for years. People ask new questions of the readings. What is the highest level so far? Did the river ever pass the 4-metre flood mark? Does the level settle down in the long run, and in which years?
 
-Each question builds a new quantity from the readings. The running maximum is the largest of the first few. "Ever above 4 m" looks at infinitely many readings at once. The long-run level is a limit. Before any of these gets a probability or an average, it must be a **measurable function**: a quantity whose threshold questions ("is it below 4 m?") are sets we are allowed to measure ([measurable-functions](01-measurable-functions.md)).
+Each question builds a new quantity from the readings. The running maximum is the largest of the first few. "Ever above 4 m" looks at infinitely many readings at once. The long-run level is a limit. Before any of these gets a probability or an average, it must be a **measurable function**: a quantity whose threshold questions ("is it below 4 m?") are sets we are allowed to measure ([Measurable functions](01-measurable-functions.md)).
 
 This card proves that nothing escapes, including the set of years where the long-run level exists. The Riemann integral has no such guarantee: a limit of functions it can integrate may be one it cannot.
 
@@ -56,7 +37,7 @@ Orange: wetness 0.45, which settles at 2.90 m. Green: wetness 0.95, which swings
 
 ## The formula
 
-Notation first, in words. A **measurable space** $(\Omega, \mathcal{F})$ is a set of outcomes with a sigma-algebra, the collection of its subsets we allow ourselves to measure ([sigma-algebras](../01-Sets%20You%20Can%20Measure/02-sigma-algebras.md)). Here an outcome is a year's wetness and the allowed sets are the Borel sets. Lebesgue measure $\lambda$, length, gives each set of wetness values its probability.
+Notation first, in words. A **measurable space** $(\Omega, \mathcal{F})$ is a set of outcomes with a sigma-algebra, the collection of its subsets we allow ourselves to measure ([Sigma-algebras](../01-Sets%20You%20Can%20Measure/02-sigma-algebras.md)). Here an outcome is a year's wetness and the allowed sets are the Borel sets. Lebesgue measure $\lambda$, length, gives each set of wetness values its probability.
 
 A function is measurable when every threshold set $\{f < c\}$, "the outcomes where f is below c", is allowed; the first card of this shelf proves that this test is enough. The gauge model, with the sluice swing written $s(\omega) = \max(0,\ \omega - 0.75)$, is
 
@@ -74,7 +55,7 @@ $$L = \{\omega : \liminf_n f_n(\omega) = \limsup_n f_n(\omega) \text{ and both a
 
 **Read it aloud:** everything built from measurable functions by arithmetic, by taking the largest or smallest, or by passing to a limit, is measurable, and "the sequence settles here" is a question with an answer we can measure.
 
-The sup is the least number no reading exceeds, possibly $+\infty$ ([supremum-and-completeness](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). The lim sup is the eventual ceiling, the sup of the readings from hour k on as k grows; the lim inf is the eventual floor. This card introduces both, and Claim 4 of the Detailed proof shows that a sequence converges exactly when the two meet at a finite value. Three identities carry the proof:
+The sup is the least number no reading exceeds, possibly $+\infty$ ([No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md)). The lim sup is the eventual ceiling, the sup of the readings from hour k on as k grows; the lim inf is the eventual floor. This card introduces both, and Claim 4 of the Detailed proof shows that a sequence converges exactly when the two meet at a finite value. Three identities carry the proof:
 
 $$\{\sup_n f_n > c\} = \bigcup_{n=1}^{\infty} \{f_n > c\}, \qquad \limsup_n f_n = \inf_{k} \sup_{n \ge k} f_n,$$
 
@@ -100,10 +81,10 @@ In words: the record passes c exactly when some hour does; the eventual ceiling 
 
 ### When it holds
 
-- **Countably many functions.** Sups, infs and limits run over a list. Over an uncountable family the sup can fail: the indicators of the single points of a non-measurable set have that set's indicator as their sup ([translation-invariance-and-the-vitali-set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)).
+- **Countably many functions.** Sups, infs and limits run over a list. Over an uncountable family the sup can fail: the indicators of the single points of a non-measurable set have that set's indicator as their sup ([Translation invariance and the Vitali set](../02-Length%20Done%20Properly/04-translation-invariance-and-the-vitali-set.md)).
 - **One sigma-algebra for all.** A function measurable for one collection plus a function measurable for another can be measurable for neither; the code prints a four-point case.
 - **Finite values for sums and products.** Sups and upper and lower limits may be infinite and remain measurable, but $+\infty$ plus $-\infty$ has no value; restrict sums to finite functions, or fix a convention first.
-- **Convergence everywhere, or a complete measure.** If the sequence converges only almost everywhere, the limit is measurable once it is set to 0 on the null set where convergence fails, or once the measure is completed ([null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)).
+- **Convergence everywhere, or a complete measure.** If the sequence converges only almost everywhere, the limit is measurable once it is set to 0 on the null set where convergence fails, or once the measure is completed ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)).
 
 ---
 
@@ -121,7 +102,7 @@ $$\{M_N > 4\} = \{f_1 > 4\} \cup \{f_2 > 4\} \cup \cdots \cup \{f_N > 4\}.$$
 
 A finite union of allowed sets is allowed. "Ever above 4 m" is the union over every hour, a countable union, so it is allowed too.
 
-On the gauge each set is a band of wet years. Only even hours can pass 4 m, and hour n does so when the wetness exceeds 2.75 divided by (3 minus 2 to the power 1 − n). Within 4 hours the band is wetness above 22/23, length 1/23; within 6, above 88/95, length 7/95; within 8, above 352/383. The bands grow, and their union is wetness above 11/12, length 1/12, about 0.083333. Continuity of measure from below, along rising sets, says the lengths climb to that value ([continuity-of-measure](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)), and the printed stages do.
+On the gauge each set is a band of wet years. Only even hours can pass 4 m, and hour n does so when the wetness exceeds 2.75 divided by (3 minus 2 to the power 1 − n). Within 4 hours the band is wetness above 22/23, length 1/23; within 6, above 88/95, length 7/95; within 8, above 352/383. The bands grow, and their union is wetness above 11/12, length 1/12, about 0.083333. Continuity of measure from below, along rising sets, says the lengths climb to that value ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)), and the printed stages do.
 
 ### Step 2: floors, and the larger or smaller of two
 
@@ -161,12 +142,12 @@ a combination of sums, squares and a fixed multiple, each measurable.
 
 List the rationals between 0 and 1 by denominator: 0, 1, 1/2, 1/3, 2/3, 1/4, 3/4, 1/5, 2/5, 3/5, and on. Let the n-th function be 1 on the first n of them and 0 elsewhere. Each is Riemann integrable with integral 0. For the first ten, the upper sum (the total width of the equal pieces of [0, 1] that hold one of the ten points) is 0.9000 with 10 pieces, 0.1600 with 100 and 0.0160 with 1000; the lower sum is 0.
 
-These functions converge at every point to the function that is 1 on every rational and 0 elsewhere. Every piece of every cut holds a rational and an irrational, so its upper sum is always 1 and its lower sum 0: no Riemann integral. The limit is still measurable, as the indicator of a countable union of points, a set of length 0. The Lebesgue integral gives it the 0 the approximations were heading for ([monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)).
+These functions converge at every point to the function that is 1 on every rational and 0 elsewhere. Every piece of every cut holds a rational and an irrational, so its upper sum is always 1 and its lower sum 0: no Riemann integral. The limit is still measurable, as the indicator of a countable union of points, a set of length 0. The Lebesgue integral gives it the 0 the approximations were heading for ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)).
 
 <details>
 <summary>Detailed proof</summary>
 
-**Setting.** $(\Omega, \mathcal{F})$ is a measurable space. Functions take values in the extended line, the reals with $+\infty$ and $-\infty$ added. A function h is measurable when $\{h < c\} \in \mathcal{F}$ for every real c, the threshold test of [measurable-functions](01-measurable-functions.md), taken as the definition for extended values too.
+**Setting.** $(\Omega, \mathcal{F})$ is a measurable space. Functions take values in the extended line, the reals with $+\infty$ and $-\infty$ added. A function h is measurable when $\{h < c\} \in \mathcal{F}$ for every real c, the threshold test of [Measurable functions](01-measurable-functions.md), taken as the definition for extended values too.
 
 **Lemma 0 (other thresholds).** If h is measurable, so are the sets $\{h \le c\} = \bigcap_{m \ge 1} \{h < c + 1/m\}$ and its complement $\{h > c\}$. Conversely, if every $\{h > c\}$ is allowed, then $\{h < c\} = \bigcup_{m \ge 1} \{h \le c - 1/m\}$ is allowed, each $\{h \le c - 1/m\}$ being a complement. So either threshold form may be tested.
 
@@ -176,7 +157,7 @@ These functions converge at every point to the function that is 1 on every ratio
 
 **Claim 3 (lim sup and lim inf).** Each tail sup $h_k = \sup_{n \ge k} f_n$ is measurable by Claim 1. They fall as k grows, so their limit, the lim sup, is their inf: measurable by Claim 1. Likewise $\liminf_n f_n = \sup_k \inf_{n \ge k} f_n$.
 
-**Claim 4 (the limit set).** Write $\ell = \liminf_n f_n$ and $u = \limsup_n f_n$, so $\ell \le u$. Then $\{\ell < u\} = \bigcup_{q \in \mathbb{Q}} (\{\ell < q\} \cap \{u > q\})$, because a rational lies strictly between any two different reals ([generated-and-borel-sigma-algebras](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md), Claim 5), or between a real and an infinite value. That union is countable, so $\{\ell = u\}$, its complement, is allowed. Also $\{u < \infty\} = \bigcup_m \{u < m\}$ and $\{\ell > -\infty\} = \bigcup_m \{\ell > -m\}$. A sequence of numbers converges exactly when its lim inf and lim sup are equal and finite. If $\ell(\omega) = u(\omega)$ is finite, take any tolerance ε > 0: that common value is the inf of the falling tail sups and the sup of the rising tail infs, so some tail sup is below it plus ε and some tail inf is above it minus ε, and from the later of those two hours on every $f_n(\omega)$ lies within ε of it, which is convergence ([sequences-and-limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md)). Conversely, if $f_n(\omega)$ converges to a number $f_\infty(\omega)$, then for each ε > 0 every reading past some cutoff lies within ε of it, so every later tail sup and tail inf does too, and $\ell(\omega)$ and $u(\omega)$ lie within ε of $f_\infty(\omega)$ for every ε: both equal it. So $L = \{\ell = u\} \cap \{u < \infty\} \cap \{\ell > -\infty\} \in \mathcal{F}$.
+**Claim 4 (the limit set).** Write $\ell = \liminf_n f_n$ and $u = \limsup_n f_n$, so $\ell \le u$. Then $\{\ell < u\} = \bigcup_{q \in \mathbb{Q}} (\{\ell < q\} \cap \{u > q\})$, because a rational lies strictly between any two different reals ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md), Claim 5), or between a real and an infinite value. That union is countable, so $\{\ell = u\}$, its complement, is allowed. Also $\{u < \infty\} = \bigcup_m \{u < m\}$ and $\{\ell > -\infty\} = \bigcup_m \{\ell > -m\}$. A sequence of numbers converges exactly when its lim inf and lim sup are equal and finite. If $\ell(\omega) = u(\omega)$ is finite, take any tolerance ε > 0: that common value is the inf of the falling tail sups and the sup of the rising tail infs, so some tail sup is below it plus ε and some tail inf is above it minus ε, and from the later of those two hours on every $f_n(\omega)$ lies within ε of it, which is convergence ([Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md)). Conversely, if $f_n(\omega)$ converges to a number $f_\infty(\omega)$, then for each ε > 0 every reading past some cutoff lies within ε of it, so every later tail sup and tail inf does too, and $\ell(\omega)$ and $u(\omega)$ lie within ε of $f_\infty(\omega)$ for every ε: both equal it. So $L = \{\ell = u\} \cap \{u < \infty\} \cap \{\ell > -\infty\} \in \mathcal{F}$.
 
 **Claim 5 (the limit function).** Set $f_\infty = u$ on L and 0 off L. Then $\{f_\infty > c\}$ is $L \cap \{u > c\}$, joined with the complement of L when $c < 0$. Both pieces are allowed. If the sequence converges at every ω, the limit is u itself.
 
@@ -188,7 +169,7 @@ These functions converge at every point to the function that is 1 on every ratio
 
 </details>
 
-A second route to the same closure goes through continuous maps: a continuous function of two readings, applied to f and g, is measurable, which gives sums, products, max and min in one stroke. It needs the Borel sets of the plane and product sigma-algebras, which [product-sigma-algebras](../06-Product%20Measures%20and%20Fubini/01-product-sigma-algebras.md) takes up.
+A second route to the same closure goes through continuous maps: a continuous function of two readings, applied to f and g, is measurable, which gives sums, products, max and min in one stroke. It needs the Borel sets of the plane and product sigma-algebras, which [Product sigma-algebras](../06-Product%20Measures%20and%20Fubini/01-product-sigma-algebras.md) takes up.
 
 ---
 
@@ -615,7 +596,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Hydrology and flood insurance.** Annual maxima, the hour of the first flood and "did the level ever pass the mark" are sups, infs or countable unions of hourly readings, so each has a probability.
-- **Probability.** A random variable is a measurable function ([random-variables-and-their-information](04-random-variables-and-their-information.md)). Running maxima and long-run averages are built by these operations, and the strong law of large numbers is a statement about the probability of a limit set like L.
+- **Probability.** A random variable is a measurable function ([Random variables as measurable maps](04-random-variables-and-their-information.md)). Running maxima and long-run averages are built by these operations, and the strong law of large numbers is a statement about the probability of a limit set like L.
 - **Integration theory.** Monotone and dominated convergence integrate limits of sequences; they need the limit to be measurable first, which is Step 3.
 
 > **Say it back**
@@ -625,15 +606,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [measurable-functions](01-measurable-functions.md): the definition, and the threshold test used in every step.
-- [sequences-and-limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md): convergence, every tolerance with a cutoff past which every term is that close, the definition Claim 4 uses.
-- [supremum-and-completeness](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md): the sup and inf of a list.
+- [Measurable functions](01-measurable-functions.md): the definition, and the threshold test used in every step.
+- [Sequences](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/03-sequences-and-limits.md): convergence, every tolerance with a cutoff past which every term is that close, the definition Claim 4 uses.
+- [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md): the sup and inf of a list.
 - lim sup and lim inf of a sequence of numbers: no card in the library defines them yet, a gap; this card introduces them in The formula and proves the convergence test it needs in Claim 4.
 
 ## Where this goes next
 
-- [simple-functions-and-approximation](03-simple-functions-and-approximation.md): every measurable function that is not negative is the rising limit of staircases, and this card makes that limit measurable.
-- [monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md): the integral of a rising limit is the limit of the integrals.
+- [Simple functions](03-simple-functions-and-approximation.md): every measurable function that is not negative is the rising limit of staircases, and this card makes that limit measurable.
+- [The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md): the integral of a rising limit is the limit of the integrals.
 
 ---
 

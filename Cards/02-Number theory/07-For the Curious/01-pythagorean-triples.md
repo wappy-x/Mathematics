@@ -1,27 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: For the Curious
-topic: Triples
-item: Pythagorean triples
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/05-coprime-numbers|coprime-numbers]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/02-even-and-odd|even-and-odd]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/06-euclids-lemma|euclids-lemma]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/01-exponents-and-powers|exponents-and-powers]]"
-next: []
-tags:
-  - mathematics
-  - number theory
-  - pythagorean-triples
----
-
 # Pythagorean triples: every whole-number right triangle comes from two smaller numbers
 
-Number theory → For the Curious → Triples → Pythagorean triples
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [For the Curious](../../../SYLLABUS.md#w02-s07) → Pythagorean triples
 
 ---
 
@@ -64,10 +43,10 @@ Those three pass the test: **5 × 5 + 12 × 12 = 25 + 144 = 169 = 13 × 13**
 | Piece | Plain meaning | With seeds 3 and 2 |
 | --- | --- | --- |
 | the seeds | the two numbers you start from, bigger first; called m and n in textbooks and in the other cards | 3 and 2 |
-| the odd leg | the seeds multiplied by themselves, subtracted ([exponents-and-powers](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)); odd whenever one seed is odd and one even | 9 − 4 = 5 |
+| the odd leg | the seeds multiplied by themselves, subtracted ([Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)); odd whenever one seed is odd and one even | 9 − 4 = 5 |
 | the even leg | twice the seeds multiplied | 2 × 3 × 2 = 12 |
 | the long side | the same two, added | 9 + 4 = 13 |
-| primitive | sides sharing no factor but 1, called coprime ([coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)); needs coprime seeds, one odd and one even | 5, 12, 13 |
+| primitive | sides sharing no factor but 1, called coprime ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)); needs coprime seeds, one odd and one even | 5, 12, 13 |
 
 ---
 
@@ -89,11 +68,11 @@ Now read the brackets in seeds: the long side is 9 + 4 and the odd leg 9 − 4, 
 
 ### Step 3: one leg is always even
 
-The recipe's even leg is 2 × bigger × smaller, so it is even by construction. Stronger: no triple has two odd legs. An odd number multiplied by itself sits one above a multiple of 4 — 9 and 25 do — so two of them add to an even number sitting 2 above a multiple of 4. The long side would then be even, and even numbers multiplied by themselves are multiples of 4 ([even-and-odd](../01-Divisibility%20and%20Primes/02-even-and-odd.md)). But a multiple of 4 is not 2 above a multiple of 4. So two odd legs is impossible.
+The recipe's even leg is 2 × bigger × smaller, so it is even by construction. Stronger: no triple has two odd legs. An odd number multiplied by itself sits one above a multiple of 4 — 9 and 25 do — so two of them add to an even number sitting 2 above a multiple of 4. The long side would then be even, and even numbers multiplied by themselves are multiples of 4 ([Even and odd](../01-Divisibility%20and%20Primes/02-even-and-odd.md)). But a multiple of 4 is not 2 above a multiple of 4. So two odd legs is impossible.
 
 ### Step 4: nothing is missing from the list
 
-A sketch. Copies first: 6, 8, 10 is the rope doubled, so keep to primitive triples ([coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)). Run Step 2 backwards: 12 × 12 = 18 × 8. A primitive triple has one even leg, so the odd leg and the long side are both odd and both brackets halve cleanly: 9 and 4. Those share no factor but 1, and multiply to 6 × 6, half the even leg multiplied by itself. Two coprime numbers whose product is a square are squares themselves ([euclids-lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)): 9 is 3 × 3 and 4 is 2 × 2 — the seeds, recovered.
+A sketch. Copies first: 6, 8, 10 is the rope doubled, so keep to primitive triples ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)). Run Step 2 backwards: 12 × 12 = 18 × 8. A primitive triple has one even leg, so the odd leg and the long side are both odd and both brackets halve cleanly: 9 and 4. Those share no factor but 1, and multiply to 6 × 6, half the even leg multiplied by itself. Two coprime numbers whose product is a square are squares themselves ([Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md)): 9 is 3 × 3 and 4 is 2 × 2 — the seeds, recovered.
 
 ---
 
@@ -266,14 +245,14 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [exponents-and-powers](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): multiplying a number by itself, under every line.
-- [even-and-odd](../01-Divisibility%20and%20Primes/02-even-and-odd.md): what odds do under multiplication, hence the even leg.
-- [coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md): sharing no factor but 1, which makes a triple primitive.
-- [euclids-lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): why coprime numbers multiplying to a square are squares.
+- [Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): multiplying a number by itself, under every line.
+- [Even and odd](../01-Divisibility%20and%20Primes/02-even-and-odd.md): what odds do under multiplication, hence the even leg.
+- [Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md): sharing no factor but 1, which makes a triple primitive.
+- [Euclid's lemma](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/06-euclids-lemma.md): why coprime numbers multiplying to a square are squares.
 
 ## Where this goes next
 
-Nothing depends on this card, a detour. The rest of the shelf: [perfect-numbers-and-mersenne](02-perfect-numbers-and-mersenne.md), [how-primes-thin-out](03-how-primes-thin-out.md), [goldbach-and-open-problems](04-goldbach-and-open-problems.md), [continued-fractions-and-leap-years](05-continued-fractions-and-leap-years.md).
+Nothing depends on this card, a detour. The rest of the shelf: [Perfect numbers and Mersenne primes](02-perfect-numbers-and-mersenne.md), [How primes thin out](03-how-primes-thin-out.md), [Goldbach, twin primes and friends](04-goldbach-and-open-problems.md), [Continued fractions](05-continued-fractions-and-leap-years.md).
 
 ---
 

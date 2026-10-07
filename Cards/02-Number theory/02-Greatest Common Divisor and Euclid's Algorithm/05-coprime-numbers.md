@@ -1,31 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Greatest Common Divisor and Euclid's Algorithm
-topic: Common factors
-item: Coprime numbers
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/07-fractions|fractions]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/01-gcd|gcd]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/04-bezouts-identity|bezouts-identity]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/02-lcm|lcm]]"
-next:
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/06-euclids-lemma|euclids-lemma]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/04-modular-inverse|modular-inverse]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/05-linear-congruences|linear-congruences]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/06-chinese-remainder-theorem|chinese-remainder-theorem]]"
-tags:
-  - mathematics
-  - number theory
-  - coprime-numbers
----
-
 # Coprime numbers: sharing no factor but 1, and why that one condition unlocks so much
 
-Number theory → Greatest Common Divisor and Euclid's Algorithm → Common factors → Coprime numbers
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Greatest Common Divisor and Euclid's Algorithm](../../../SYLLABUS.md#w02-s02) → Coprime numbers
 
 ---
 
@@ -59,7 +34,7 @@ The whole test is one number:
 
 **the greatest common divisor of 15 and 28 = 1**
 
-The greatest common divisor, gcd for short, is the biggest whole number going into both with nothing left over ([gcd](01-gcd.md)). When it is 1 the pair is **coprime**.
+The greatest common divisor, gcd for short, is the biggest whole number going into both with nothing left over ([Greatest common divisor](01-gcd.md)). When it is 1 the pair is **coprime**.
 
 The same fact in the form that does the work:
 
@@ -70,9 +45,9 @@ The same fact in the form that does the work:
 | Piece | Plain meaning | In our gears |
 | --- | --- | --- |
 | a common factor | goes into both, nothing over | 1 for 15 and 28; 1 and 3 for 15 and 27 |
-| greatest common divisor | the biggest common factor ([gcd](01-gcd.md)) | 1 here, 3 for 15 and 27 |
+| greatest common divisor | the biggest common factor ([Greatest common divisor](01-gcd.md)) | 1 here, 3 for 15 and 27 |
 | coprime | that divisor is 1 | 15 and 28 |
-| a whole-number mix | so many of one, less so many of the other ([bezouts-identity](04-bezouts-identity.md)) | 28 × 7 − 15 × 13 |
+| a whole-number mix | so many of one, less so many of the other ([Bezout's identity](04-bezouts-identity.md)) | 28 × 7 − 15 × 13 |
 
 ---
 
@@ -84,9 +59,9 @@ The same fact in the form that does the work:
 
 ### Step 1: coprime is exactly "some mix of them equals 1"
 
-Forward: Bezout's identity ([bezouts-identity](04-bezouts-identity.md)) says the greatest common divisor is always a mix of the two. For 15 and 28 it is 1, so some mix is 1: 28 × 7 − 15 × 13.
+Forward: Bezout's identity ([Bezout's identity](04-bezouts-identity.md)) says the greatest common divisor is always a mix of the two. For 15 and 28 it is 1, so some mix is 1: 28 × 7 − 15 × 13.
 
-Back: suppose a mix equals 1. Anything dividing both numbers divides everything built from them, so it divides that mix, so it divides 1 — so it is 1. A direct proof ([direct-proof](../../01-Foundations/06-Proof/01-direct-proof.md)), three lines. **Coprime is a licence to build 1**, not merely a shortage of shared factors.
+Back: suppose a mix equals 1. Anything dividing both numbers divides everything built from them, so it divides that mix, so it divides 1 — so it is 1. A direct proof ([Direct proof](../../01-Foundations/06-Proof/01-direct-proof.md)), three lines. **Coprime is a licence to build 1**, not merely a shortage of shared factors.
 
 ### Step 2: neighbours are always coprime
 
@@ -94,11 +69,11 @@ Back: suppose a mix equals 1. Anything dividing both numbers divides everything 
 
 ### Step 3: lowest terms means coprime
 
-15/27 cancels: divide both by 3 to get 5/9. 15/28 does not cancel at all. A fraction is in lowest terms exactly when top and bottom are coprime ([fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md)).
+15/27 cancels: divide both by 3 to get 5/9. 15/28 does not cancel at all. A fraction is in lowest terms exactly when top and bottom are coprime ([Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md)).
 
 ### Step 4: back to the gears
 
-Tooth 0 comes home after a run of teeth that is a whole number of both counts: their least common multiple ([lcm](02-lcm.md)), the counts multiplied then divided by the shared factor. Factor 1 gives the full 420; factor 3 gives 135 of the 405, and tooth 0 sees 9 slots.
+Tooth 0 comes home after a run of teeth that is a whole number of both counts: their least common multiple ([Least common multiple](02-lcm.md)), the counts multiplied then divided by the shared factor. Factor 1 gives the full 420; factor 3 gives 135 of the 405, and tooth 0 sees 9 slots.
 
 ---
 
@@ -106,7 +81,7 @@ Tooth 0 comes home after a run of teeth that is a whole number of both counts: t
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| shared factor of 15 and 28 | Euclid ([euclidean-algorithm](03-euclidean-algorithm.md)) | **1** |
+| shared factor of 15 and 28 | Euclid ([Euclid's algorithm](03-euclidean-algorithm.md)) | **1** |
 | the same, by a mix | 28 × 7 − 15 × 13 | **1** |
 | pairings used, of 420 | 15 × 28 | **420** |
 | shared factor of 15 and 27 | Euclid | **3** |
@@ -267,7 +242,7 @@ Both outputs match line for line.
 ## Where you meet it in real life
 
 - **Gear and chain design.** A "hunting tooth" is added to make the counts coprime, so wear spreads over 420 pairings instead of 135.
-- **Fractions in lowest terms.** Reducing hunts the shared factor; stop when top and bottom are coprime: [fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md).
+- **Fractions in lowest terms.** Reducing hunts the shared factor; stop when top and bottom are coprime: [Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md).
 - **Cicadas.** Some broods surface on a prime number of years, coprime with the cycles of what eats them, so the two seldom peak together.
 
 > **Say it back**
@@ -277,16 +252,16 @@ Both outputs match line for line.
 
 ## What this builds on
 
-- [fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): cancelling until nothing goes into both. That end state is coprimality.
-- [gcd](01-gcd.md): the greatest common divisor, the number this card sets to 1.
-- [bezouts-identity](04-bezouts-identity.md): the divisor is always a mix of the two, turning coprime into "some mix equals 1".
+- [Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): cancelling until nothing goes into both. That end state is coprimality.
+- [Greatest common divisor](01-gcd.md): the greatest common divisor, the number this card sets to 1.
+- [Bezout's identity](04-bezouts-identity.md): the divisor is always a mix of the two, turning coprime into "some mix equals 1".
 
 ## Where this goes next
 
-- [euclids-lemma](06-euclids-lemma.md): a prime dividing a product divides one of the factors, proved by mixing to 1.
-- [modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md): undoing a multiplication on a clock face needs a coprime multiplier.
-- [linear-congruences](../03-Clock%20Arithmetic/05-linear-congruences.md): which remainder puzzles have answers, decided by the shared factor.
-- [chinese-remainder-theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): two remainders pin down one number when the counts are coprime.
+- [Euclid's lemma](06-euclids-lemma.md): a prime dividing a product divides one of the factors, proved by mixing to 1.
+- [The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md): undoing a multiplication on a clock face needs a coprime multiplier.
+- [Solving a x ≡ b (mod n)](../03-Clock%20Arithmetic/05-linear-congruences.md): which remainder puzzles have answers, decided by the shared factor.
+- [The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): two remainders pin down one number when the counts are coprime.
 
 ---
 

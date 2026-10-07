@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Curves
-topic: The short end
-item: Money markets
-kind: convention
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/02-day-counts-and-dates|day-counts-and-dates]]"
-next:
-  - "[[Cards/12-Financial mathematics/28-Swaps/04-basis-swaps-and-the-multi-curve-framework|basis-swaps-and-the-multi-curve-framework]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - money-market-instruments-and-sofr
----
-
 # Money markets: bills, repos and overnight rates, and the compounded-in-arrears convention
 
-Financial mathematics → Curves → The short end → Money markets
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves](../../../SYLLABUS.md#w12-s02) → Money markets
 
 ---
 
@@ -173,7 +154,7 @@ That is why the convention is compounded in arrears, and why floating coupons ne
 
 The four give different coupons from the same daily rates. A contract that fixes the period's weights before shifting the observations is not the same trade as one that shifts both, which is the small print that makes two "SOFR + 50" loans pay different amounts.
 
-There is another route to a term rate: infer it from what the futures and swaps market expects, rather than from what has happened. That is the forward-looking family, quoted in advance like LIBOR but derived from traded prices. Its machinery is the forward rate, built in [spot-forward-and-par-rates](01-spot-forward-and-par-rates.md) and traded in [forward-rate-agreements](02-forward-rate-agreements.md).
+There is another route to a term rate: infer it from what the futures and swaps market expects, rather than from what has happened. That is the forward-looking family, quoted in advance like LIBOR but derived from traded prices. Its machinery is the forward rate, built in [Spot, forward and par rates](01-spot-forward-and-par-rates.md) and traded in [Forward rate agreements](02-forward-rate-agreements.md).
 
 ---
 
@@ -728,7 +709,7 @@ The two outputs match line for line, including the tenth decimal place of the gr
 - **Treasury bill auctions.** Bids are made on the discount rate; the price follows from the rule on this card, and the Treasury publishes the resulting investment rate beside it.
 - **Repo desks.** Overnight secured lending funds most of the bond market. The cash leg and the collateral leg are two halves of one loan, and the rate on it is the raw material SOFR is measured from.
 - **Floating-rate loans and notes.** A "SOFR + 150" coupon means the compounded-in-arrears rate for the period plus 1.50%, set by the arithmetic above under whichever lookback or payment-delay convention the contract names.
-- **The front of the curve.** The short end is built from exactly these instruments — deposits and bills at a week to a year, then futures — before longer swap quotes take over: [bootstrapping-the-discount-curve](04-bootstrapping-the-discount-curve.md).
+- **The front of the curve.** The short end is built from exactly these instruments — deposits and bills at a week to a year, then futures — before longer swap quotes take over: [Bootstrapping](04-bootstrapping-the-discount-curve.md).
 - **Collateral and discounting.** Because cash posted as collateral earns the overnight rate, the overnight curve is the one that discounts collateralised trades, which is where the multi-curve world starts.
 
 > **Say it back**
@@ -738,11 +719,11 @@ The two outputs match line for line, including the tenth decimal place of the gr
 
 ## What this builds on
 
-- [day-counts-and-dates](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md): what actual/360 counts, how a business-day calendar rolls a date, and why every quote on this card carries its day count with it.
+- [Day counts](../01-Money%2C%20Dates%20and%20Discounting/02-day-counts-and-dates.md): what actual/360 counts, how a business-day calendar rolls a date, and why every quote on this card carries its day count with it.
 
 ## Where this goes next
 
-- [basis-swaps-and-the-multi-curve-framework](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md): what happens when one trade's coupon is set from compounded overnight rates while its cash is discounted on another curve, and how the market prices the gap between two floating rates.
+- [Multi-curve](../28-Swaps/04-basis-swaps-and-the-multi-curve-framework.md): what happens when one trade's coupon is set from compounded overnight rates while its cash is discounted on another curve, and how the market prices the gap between two floating rates.
 
 Every rate here was read off cash that is repaid in full at the end, on one curve; the open question is which curve does the discounting when the rate that sets a coupon and the rate that funds it are no longer the same one.
 

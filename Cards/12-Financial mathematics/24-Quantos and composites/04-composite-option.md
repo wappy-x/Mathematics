@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Quantos and composites
-topic: Converted at the market rate
-item: Composite option
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/02-quanto-option|quanto-option]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/04-joint-distributions-and-covariance|joint-distributions-and-covariance]]"
-next: []
-tags: [mathematics, financial mathematics, composite-option]
----
-
 # Composite option: the foreign share priced in your currency at the market rate, so the vol is the vol of a product
 
-Financial mathematics → Quantos and composites → Converted at the market rate → Composite option
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Quantos and composites](../../../SYLLABUS.md#w12-s24) → Composite option
 
 ---
 
@@ -28,7 +12,7 @@ The fund wants a one-year call on that dollar value. The contract takes the shar
 
 The fund now carries two risks in one number: the share can move, and the euro can move. They multiply. A share that climbs from 100 to 120 euros while the euro climbs to 1.30 dollars is worth 156.00 dollars. The option's price depends on how much that product wobbles. With the share's volatility (yearly spread of its percentage moves) at 20%, the euro's at 10%, and a correlation (a measure from −1 to +1 of how the two move together) of 0.30, the product wobbles at 24.9% a year. The call costs **12.85 dollars**.
 
-The same share has two cousins on this shelf. A **quanto** pays the euro gain at a rate fixed on day one, 1.10, and costs 9.15 dollars ([quanto-option](02-quanto-option.md)). A **plain euro call**, with its euro payoff converted when it arrives, costs 9.71 dollars. Three contracts, one share, three prices, three different bets.
+The same share has two cousins on this shelf. A **quanto** pays the euro gain at a rate fixed on day one, 1.10, and costs 9.15 dollars ([Quanto option](02-quanto-option.md)). A **plain euro call**, with its euro payoff converted when it arrives, costs 9.71 dollars. Three contracts, one share, three prices, three different bets.
 
 **A composite call is the Black-Scholes call on the share's dollar value, with the dollar rate as the growth rate and the volatility of a product: the two volatilities combined, with correlation adding to the spread instead of bending the drift.**
 
@@ -110,7 +94,7 @@ That is the whole difference from the quanto, whose underlying, "the euro price 
 
 ### Step 1: its growth rate is the dollar rate less the dividend
 
-In the dollar pricing world (the risk-neutral world of [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), where every dollar asset earns the dollar rate), a holding worth $V$ that pays dividends at 1% must grow in price at $r_d - q$ = 4%. Dividends are paid in euros at a yield of 1% on the share's euro value, which is also 1% of its dollar value. No correlation term appears in the growth. The euro rate $r_f$ does not appear either: it governs a euro deposit, and the fund holds a share.
+In the dollar pricing world (the risk-neutral world of [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), where every dollar asset earns the dollar rate), a holding worth $V$ that pays dividends at 1% must grow in price at $r_d - q$ = 4%. Dividends are paid in euros at a yield of 1% on the share's euro value, which is also 1% of its dollar value. No correlation term appears in the growth. The euro rate $r_f$ does not appear either: it governs a euro deposit, and the fund holds a share.
 
 ### Step 2: its volatility is the volatility of a product
 
@@ -118,7 +102,7 @@ Take logarithms. The log of a product is the sum of the logs:
 
 $$\ln V_T = \ln S_T + \ln X_T$$
 
-So over the year, the dollar value's log return is the share's log return plus the currency's log return. The variance (the square of the spread) of a sum of two linked random quantities is the variance of each plus twice their covariance, the average product of their deviations ([joint-distributions-and-covariance](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). The covariance of the two log returns is $\rho\,\sigma_S\,\sigma_X$ per year. So
+So over the year, the dollar value's log return is the share's log return plus the currency's log return. The variance (the square of the spread) of a sum of two linked random quantities is the variance of each plus twice their covariance, the average product of their deviations ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). The covariance of the two log returns is $\rho\,\sigma_S\,\sigma_X$ per year. So
 
 $$\sigma_V^2 = \sigma_S^2 + \sigma_X^2 + 2\rho\,\sigma_S\,\sigma_X = 0.04 + 0.01 + 0.012 = 0.062$$
 
@@ -133,7 +117,7 @@ The two log returns are jointly bell-shaped (normally distributed), and any sum 
 <details>
 <summary>Detailed proof</summary>
 
-In the dollar pricing world let $dS_t/S_t = \mu\,dt + \sigma_S\,dW^S_t$ and $dX_t/X_t = (r_d - r_f)\,dt + \sigma_X\,dW^X_t$, where $W^S$ and $W^X$ are standard Brownian motions with correlated increments, $d\langle W^S, W^X\rangle_t = \rho\,dt$, and $\mu = r_f - q - \rho\sigma_S\sigma_X$ is the quanto drift of [quanto-forward-and-adjustment](01-quanto-forward-and-adjustment.md).
+In the dollar pricing world let $dS_t/S_t = \mu\,dt + \sigma_S\,dW^S_t$ and $dX_t/X_t = (r_d - r_f)\,dt + \sigma_X\,dW^X_t$, where $W^S$ and $W^X$ are standard Brownian motions with correlated increments, $d\langle W^S, W^X\rangle_t = \rho\,dt$, and $\mu = r_f - q - \rho\sigma_S\sigma_X$ is the quanto drift of [The quanto adjustment](01-quanto-forward-and-adjustment.md).
 
 **Logs.** Ito's lemma gives $d\ln S_t = (\mu - \tfrac12\sigma_S^2)\,dt + \sigma_S\,dW^S_t$ and $d\ln X_t = (r_d - r_f - \tfrac12\sigma_X^2)\,dt + \sigma_X\,dW^X_t$.
 
@@ -158,7 +142,7 @@ The quanto pays $\bar{X}(S_T - K)$: the currency enters only through the pricing
 
 ### The other door: a relabelled Black-Scholes call
 
-The formula is the pilot's call with three substitutions: the share's dollar value $V$ for the share price, the dollar rate $r_d$ for the rate, the composite volatility $\sigma_V$ for the volatility. Any Black-Scholes routine prices a composite if fed those three numbers, and the pilot's proof of the call, [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), is the proof of this one.
+The formula is the pilot's call with three substitutions: the share's dollar value $V$ for the share price, the dollar rate $r_d$ for the rate, the composite volatility $\sigma_V$ for the volatility. Any Black-Scholes routine prices a composite if fed those three numbers, and the pilot's proof of the call, [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), is the proof of this one.
 
 ---
 
@@ -246,7 +230,7 @@ The Greeks (sensitivities of the price to each input) at the house point:
 | Sensitivity to $\sigma_S$ | 38.53 USD per unit | vega times $(\sigma_S + \rho\sigma_X)/\sigma_V$ |
 | Sensitivity to $\rho$ | 3.35 USD per unit | vega times $\sigma_S\sigma_X/\sigma_V$ |
 
-The first three rows carry the hedging story. A seller who holds 0.606141 shares, bought with dollars converted to euros, has a position worth 0.606141 times $S X$ dollars. It moves 0.666755 dollars per euro of share price and 60.61 dollars per unit of exchange rate, the call's own two deltas. One trade covers both risks. No separate currency hedge is needed, because the shares are held in euros and the euros carry the currency. The quanto's seller is not so lucky: [quanto-greeks-and-hedging](03-quanto-greeks-and-hedging.md).
+The first three rows carry the hedging story. A seller who holds 0.606141 shares, bought with dollars converted to euros, has a position worth 0.606141 times $S X$ dollars. It moves 0.666755 dollars per euro of share price and 60.61 dollars per unit of exchange rate, the call's own two deltas. One trade covers both risks. No separate currency hedge is needed, because the shares are held in euros and the euros carry the currency. The quanto's seller is not so lucky: [Hedging a quanto](03-quanto-greeks-and-hedging.md).
 
 ---
 
@@ -664,7 +648,7 @@ The two outputs agree line for line.
 - **Protecting a foreign holding.** A dollar fund that owns European shares cares about their dollar value. A composite put on that value floors the fund's dollar loss, whatever mix of share and currency caused it.
 - **Options on depositary receipts.** A depositary receipt is a foreign share repackaged to trade in dollars, and options listed on it are composites: the underlying price already moves with the share times the exchange rate.
 - **Employee options in a foreign parent.** A staff member paid in dollars whose options are on a euro-listed parent, settled in dollars at the day's rate, holds a composite.
-- **Against the quanto.** Retail notes that promise "the index return, in dollars, with no currency risk" are quantos; a note that pays the index's dollar value instead carries the composite's exposure. The quanto's level is set on [quanto-forward-and-adjustment](01-quanto-forward-and-adjustment.md).
+- **Against the quanto.** Retail notes that promise "the index return, in dollars, with no currency risk" are quantos; a note that pays the index's dollar value instead carries the composite's exposure. The quanto's level is set on [The quanto adjustment](01-quanto-forward-and-adjustment.md).
 
 > **Say it back**
 > A composite call pays the foreign share's value in home money, converted at the rate on the day, above a home-currency strike. That dollar value is something a dollar investor can hold, so it grows at the dollar rate less the dividend, with no correlation in the drift. Its log is the sum of the share's log and the currency's log, so its variance is the two variances plus twice their covariance. Black-Scholes on the dollar value with that volatility gives the price: 12.85 dollars here, against 9.15 for the quanto and 9.71 for the plain euro call. Correlation raises the composite and lowers the quanto.
@@ -673,13 +657,13 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [quanto-option](02-quanto-option.md): the fixed-rate contract on the same share, the price this card is measured against, and the dollar pricing world with two linked walks.
-- [joint-distributions-and-covariance](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md): the variance of a sum is each variance plus twice the covariance, the whole of Step 2.
+- [Quanto option](02-quanto-option.md): the fixed-rate contract on the same share, the price this card is measured against, and the dollar pricing world with two linked walks.
+- [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md): the variance of a sum is each variance plus twice the covariance, the whole of Step 2.
 
 ## Where this goes next
 
-- [implied-correlation-from-a-quanto](05-implied-correlation-from-a-quanto.md): every input here is quoted in a market except $\rho$. A quoted quanto price pins it, and that implied correlation then prices the composite.
-- [quanto-greeks-and-hedging](03-quanto-greeks-and-hedging.md): the hedge that the composite gets for free, one euro share position, is two positions for the quanto.
+- [Correlation from a quanto price](05-implied-correlation-from-a-quanto.md): every input here is quoted in a market except $\rho$. A quoted quanto price pins it, and that implied correlation then prices the composite.
+- [Hedging a quanto](03-quanto-greeks-and-hedging.md): the hedge that the composite gets for free, one euro share position, is two positions for the quanto.
 
 ---
 

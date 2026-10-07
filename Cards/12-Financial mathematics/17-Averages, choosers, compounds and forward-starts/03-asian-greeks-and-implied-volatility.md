@@ -1,29 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Averages, choosers, compounds and forward-starts
-topic: Hedging the average
-item: Asian Greeks and implied volatility
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/02-arithmetic-asian-options|arithmetic-asian-options]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/03-vega|vega]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/02-pathwise-and-likelihood-ratio-greeks|pathwise-and-likelihood-ratio-greeks]]"
-next: []
-tags: [mathematics, financial mathematics, asian-greeks-and-implied-volatility]
----
-
 # Asian Greeks and implied volatility: averaging is a sedative, and the fixings already in are a fixed amount
 
-Financial mathematics → Averages, choosers, compounds and forward-starts → Hedging the average → Asian Greeks and implied volatility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages, choosers, compounds and forward-starts](../../../SYLLABUS.md#w12-s17) → Asian Greeks and implied volatility
 
 ---
 
 ## General Overview
 
-A bank sells an airline a one-year call on Acme shares that settles on the average of 52 weekly closing prices. Acme trades at $100, the strike is $100, and the house market holds: 5 percent interest, 2 percent dividends, 20 percent volatility. This **arithmetic Asian call** is priced on [arithmetic-asian-options](02-arithmetic-asian-options.md): $5.26 simulated here, against $9.23 for the ordinary call that looks only at the last day.
+A bank sells an airline a one-year call on Acme shares that settles on the average of 52 weekly closing prices. Acme trades at $100, the strike is $100, and the house market holds: 5 percent interest, 2 percent dividends, 20 percent volatility. This **arithmetic Asian call** is priced on [Arithmetic Asian options](02-arithmetic-asian-options.md): $5.26 simulated here, against $9.23 for the ordinary call that looks only at the last day.
 
 The bank now has to hedge it. Hedging runs on the **Greeks**: the rates at which the price moves when one input moves. **Delta** is the dollars gained per dollar on Acme's price. **Gamma** is how fast delta itself changes. **Vega** is the dollars gained per unit of volatility, where one unit means volatility rising by 1.00 (from 20 percent to 120 percent). The ordinary call has delta 0.59 and vega $37.90. The Asian has delta 0.55 and vega $22.19. Averaging acts as a sedative: one wild week barely moves an average of 52.
 
@@ -33,7 +16,7 @@ The third job runs the other way: a broker quotes $5.26 and asks what volatility
 
 **The Asian's Greeks are the vanilla's Greeks seen through an average: delta and vega shrink because an average moves less than a last price, the fixings already in drop out of the risk as fixed money, and the price rises strictly with volatility, so each quote between two stated bounds has exactly one implied volatility.**
 
-**What kind of fact this is:** a theorem inside the Black-Scholes model: the price rises strictly with volatility, proved on this card in Why it works, so the implied volatility is unique. The Greeks themselves are computed by a method, pathwise differentiation, whose correctness is proved on [pathwise-and-likelihood-ratio-greeks](../07-Greeks%20by%20Numbers%20and%20Calibration/02-pathwise-and-likelihood-ratio-greeks.md).
+**What kind of fact this is:** a theorem inside the Black-Scholes model: the price rises strictly with volatility, proved on this card in Why it works, so the implied volatility is unique. The Greeks themselves are computed by a method, pathwise differentiation, whose correctness is proved on [Greeks inside the simulation](../07-Greeks%20by%20Numbers%20and%20Calibration/02-pathwise-and-likelihood-ratio-greeks.md).
 
 ### The picture: vega as the fixings come in
 
@@ -53,7 +36,7 @@ Top line: the ordinary call with the same time left, its vega shrinking roughly 
 
 ## The formula
 
-Notation first. A **fixing** is one of the dates whose closing price enters the average. There are $n$ fixings in all, one per week; $k$ are already in and $m = n - k$ are still to come. The fixings already in averaged $\bar a$. The fixings still to come will average $A_{\text{rest}}$, a random quantity today. The weight of the open part is $w = m/n$. $\mathbb{E}$ averages over Acme's paths in the risk-neutral world, where every asset earns the bank rate; Acme's price itself grows at $r - q$, since dividends leave it ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The bold $\mathbf{1}\{\cdot\}$ is a switch: 1 when the statement inside is true, 0 when not.
+Notation first. A **fixing** is one of the dates whose closing price enters the average. There are $n$ fixings in all, one per week; $k$ are already in and $m = n - k$ are still to come. The fixings already in averaged $\bar a$. The fixings still to come will average $A_{\text{rest}}$, a random quantity today. The weight of the open part is $w = m/n$. $\mathbb{E}$ averages over Acme's paths in the risk-neutral world, where every asset earns the bank rate; Acme's price itself grows at $r - q$, since dividends leave it ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The bold $\mathbf{1}\{\cdot\}$ is a switch: 1 when the statement inside is true, 0 when not.
 
 The whole average splits into a fixed part and an open part:
 
@@ -116,7 +99,7 @@ In words: price the open average as a share with the right mean and spread. This
 
 ### Step 0: differentiate inside the average
 
-A price is an average of payoffs over paths. Fix the random draws; each path's payoff is then an ordinary function of today's price and the volatility, with a slope by the chain rule. Averaging those slopes gives the price's slope: **pathwise differentiation**, one simulation for the price and every first-order Greek. Swapping slope and average is legitimate when each payoff is continuous with bounded slope, as the call's is ([pathwise-and-likelihood-ratio-greeks](../07-Greeks%20by%20Numbers%20and%20Calibration/02-pathwise-and-likelihood-ratio-greeks.md)).
+A price is an average of payoffs over paths. Fix the random draws; each path's payoff is then an ordinary function of today's price and the volatility, with a slope by the chain rule. Averaging those slopes gives the price's slope: **pathwise differentiation**, one simulation for the price and every first-order Greek. Swapping slope and average is legitimate when each payoff is continuous with bounded slope, as the call's is ([Greeks inside the simulation](../07-Greeks%20by%20Numbers%20and%20Calibration/02-pathwise-and-likelihood-ratio-greeks.md)).
 
 ### Step 1: delta, because every fixing is a multiple of today's price
 
@@ -136,7 +119,7 @@ $$\frac{\partial S_j}{\partial\sigma} = S_j\,\big(W_j - \sigma t_j\big).$$
 
 $W_j$ is the direct push: volatility stretches every random move. $-\sigma t_j$ is the drag from the drift's $-\tfrac12\sigma^2$, which keeps the expected price fixed. Average over the open fixings, switch on paying paths: the vega formula.
 
-Why is it smaller than 37.90? The log of a weekly geometric average carries only a share $c = (n+1)(2n+1)/(6n^2) = 0.343$ of the last price's log-variance, as [geometric-asian-kemna-vorst](01-geometric-asian-kemna-vorst.md) proves; the arithmetic average behaves almost the same. An at-the-money price is close to proportional to the spread, so vega scales with $\sqrt{c}$ = 0.586. The vanilla's $37.90 times 0.586 is $22.20. The simulation gives $22.19.
+Why is it smaller than 37.90? The log of a weekly geometric average carries only a share $c = (n+1)(2n+1)/(6n^2) = 0.343$ of the last price's log-variance, as [The geometric Asian call](01-geometric-asian-kemna-vorst.md) proves; the arithmetic average behaves almost the same. An at-the-money price is close to proportional to the spread, so vega scales with $\sqrt{c}$ = 0.586. The vanilla's $37.90 times 0.586 is $22.20. The simulation gives $22.19.
 
 ### Step 3: gamma is where pathwise fails
 
@@ -190,7 +173,7 @@ A call payoff is **convex** (its graph bends upward), so averaging it over a spr
 
 **Bisection** starts with 1 to 100 percent, prices the midpoint, keeps the half that straddles the quote, and repeats; 24 rounds shrink the interval below one ten-millionth. Because the price is increasing, it cannot fail.
 
-**Newton's method** steps by the price error over the slope, $\sigma \leftarrow \sigma - (V(\sigma) - Q)/\mathcal{V}(\sigma)$, with the slope being the pathwise vega the same simulation delivers free. From 30 percent it lands on 20 percent in three price evaluations; [root-finding-for-inverses](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md) covers both solvers properly.
+**Newton's method** steps by the price error over the slope, $\sigma \leftarrow \sigma - (V(\sigma) - Q)/\mathcal{V}(\sigma)$, with the slope being the pathwise vega the same simulation delivers free. From 30 percent it lands on 20 percent in three price evaluations; [Solving backwards](../07-Greeks%20by%20Numbers%20and%20Calibration/05-root-finding-for-inverses.md) covers both solvers properly.
 
 Both solvers reuse the same draws at every trial volatility, so the simulated price is continuous in $\sigma$ and, with this many paths, increasing (the chart row in the output shows it). The quote made at 20 percent returns 20 percent exactly.
 
@@ -680,7 +663,7 @@ The two outputs are identical line for line.
 - **Fuel hedges.** Average-price options on jet fuel and diesel are the core of airline and freight hedging; the seller hedges with this card's delta and vega and watches vega drain as each month fixes.
 - **Commodity volatility books.** Average-price options are quoted by implied volatility and converted with an Asian pricer. Their vega is hedged with fewer vanillas than face value suggests, and fewer each week.
 - **Exporters' currency hedges.** A company converting sales weekly cares about the average rate; Lévy's average-rate options match that exposure.
-- **Other contracts on this shelf.** A chooser lets the holder pick call or put at a set date: [chooser-options](04-chooser-options.md). An option on an option: [compound-options](05-compound-options.md). A strike set later, at the money: [forward-start-options-and-forward-volatility](06-forward-start-options-and-forward-volatility.md), and a chain of those: [cliquets-and-ratchets](07-cliquets-and-ratchets.md).
+- **Other contracts on this shelf.** A chooser lets the holder pick call or put at a set date: [Chooser options](04-chooser-options.md). An option on an option: [Compound options](05-compound-options.md). A strike set later, at the money: [Forward-start options](06-forward-start-options-and-forward-volatility.md), and a chain of those: [Cliquets](07-cliquets-and-ratchets.md).
 
 > **Say it back**
 > An Asian's delta and vega are the vanilla's seen through an average: 0.55 and $22.19 against 0.59 and $37.90, because an average moves less than a last price. Pathwise differentiation computes them from one simulation by holding the draws fixed; gamma needs a bump, because every path's second slope is zero. Fixings already in are money, not risk, so the seasoned contract is a smaller Asian with a shifted strike, and its vega falls to $6.21. Price rises strictly with volatility, by Jensen's inequality, so a quote between the floor and the ceiling has exactly one implied volatility. That volatility belongs to the pricer that produced it, and bisection on the simulation returns 20 percent.
@@ -689,13 +672,13 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [arithmetic-asian-options](02-arithmetic-asian-options.md): the contract itself, its $5.26 price, and the moment-matched lognormal used here as the third road.
-- [vega](../09-The%20Greeks%2C%20one%20each/03-vega.md): the vanilla's $37.90 yardstick, and vega's role in steering an implied-volatility search.
-- [pathwise-and-likelihood-ratio-greeks](../07-Greeks%20by%20Numbers%20and%20Calibration/02-pathwise-and-likelihood-ratio-greeks.md): why differentiating inside the average is legitimate for a kink and fails for a jump.
+- [Arithmetic Asian options](02-arithmetic-asian-options.md): the contract itself, its $5.26 price, and the moment-matched lognormal used here as the third road.
+- [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md): the vanilla's $37.90 yardstick, and vega's role in steering an implied-volatility search.
+- [Greeks inside the simulation](../07-Greeks%20by%20Numbers%20and%20Calibration/02-pathwise-and-likelihood-ratio-greeks.md): why differentiating inside the average is legitimate for a kink and fails for a jump.
 
 ## Where this goes next
 
-The shelf moves on to other path-dependent contracts: [chooser-options](04-chooser-options.md) next, where the holder's choice at a set date plays the role the fixings play here.
+The shelf moves on to other path-dependent contracts: [Chooser options](04-chooser-options.md) next, where the holder's choice at a set date plays the role the fixings play here.
 
 This card leaves one question open: when volatility itself varies by strike and date, which single number should an Asian's vega be measured against? That belongs to smile models, beyond this shelf.
 

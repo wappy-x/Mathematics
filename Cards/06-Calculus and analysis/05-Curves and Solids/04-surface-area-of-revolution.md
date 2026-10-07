@@ -1,22 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Curves and Solids
-topic: Coating a turned shape
-item: Surface area
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/05-Curves and Solids/02-arc-length|arc-length]]"
-next:
-  - "[[Cards/23-Differential geometry and Lie groups/02-Surfaces/03-surface-area-from-the-first-fundamental-form|surface-area-from-the-first-fundamental-form]]"
-tags: [mathematics, calculus and analysis, surface-area-of-revolution]
----
-
 # Surface area: why a slanted strip needs the slant length
 
-Calculus and analysis → Curves and Solids → Coating a turned shape → Surface area
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Curves and Solids](../../../SYLLABUS.md#w06-s05) → Surface area
 
 ---
 
@@ -42,7 +26,7 @@ Drawn to scale, 1 cm = 25 units. Dotted: the axis. Dashed arc: the ball above th
 
 ## The formula
 
-Let $x$ be the height above the bowl's bottom, in cm, and $f(x)$ the profile's radius there. The slope $f'(x)$ is the rate of radius per unit of height, as on [arc-length](02-arc-length.md). Spin the profile from height $a$ to height $b$ once round the axis. The area swept is
+Let $x$ be the height above the bowl's bottom, in cm, and $f(x)$ the profile's radius there. The slope $f'(x)$ is the rate of radius per unit of height, as on [Arc length](02-arc-length.md). Spin the profile from height $a$ to height $b$ once round the axis. The area swept is
 
 $$S = \int_a^b 2\pi f(x)\sqrt{1 + f'(x)^2}\,dx$$
 
@@ -134,7 +118,7 @@ For any radius $R$ the product is $R$. A slice of height $h$ has area $2\pi R h$
 
 At $x = 0$ the slope is infinite, so the hypothesis fails at that end. Start a little way up and slide the start down. Starting 0.01 cm up loses 0.251327 cm^2. To lose less than 0.01 cm^2, start below 0.000398 cm. Any tolerance can be met this way, so the limit is 150.796447 cm^2.
 
-A second road measures tiny patches of the surface, located by height and angle round the axis: surface-area-from-the-first-fundamental-form.
+A second road measures tiny patches of the surface, located by height and angle round the axis: Surface area.
 
 ---
 
@@ -389,8 +373,8 @@ The two outputs are identical.
 ## Where you meet it in real life
 
 - **Plating and paint.** A turned object's coating is its spun area times a thickness: 3.1637 g of silver for this bowl.
-- **Heat loss.** A flask loses heat through its skin, so its area sets the rate; its capacity is [volumes-by-slices-and-shells](03-volumes-by-slices-and-shells.md).
-- **Pappus's rule.** A spun area equals the profile's length times the distance its centre of mass travels: [centre-of-mass-and-pappus](05-centre-of-mass-and-pappus.md).
+- **Heat loss.** A flask loses heat through its skin, so its area sets the rate; its capacity is [Volumes](03-volumes-by-slices-and-shells.md).
+- **Pappus's rule.** A spun area equals the profile's length times the distance its centre of mass travels: [Centre of mass](05-centre-of-mass-and-pappus.md).
 
 > **Say it back**
 > A spun curve's area is a stack of thin rings, each circumference times width along the wall, and that width is the height step times the arc-length factor. On a ball, radius times slant factor is the ball's radius, so a slice has area 2 pi R h.
@@ -399,11 +383,11 @@ The two outputs are identical.
 
 ## What this builds on
 
-- [arc-length](02-arc-length.md): the slant factor $\sqrt{1 + f'(x)^2}$ and the chord-to-limit argument used here for the wall's width.
+- [Arc length](02-arc-length.md): the slant factor $\sqrt{1 + f'(x)^2}$ and the chord-to-limit argument used here for the wall's width.
 
 ## Where this goes next
 
-- surface-area-from-the-first-fundamental-form: area for any curved surface, not only one spun round an axis.
+- Surface area: area for any curved surface, not only one spun round an axis.
 
 ---
 

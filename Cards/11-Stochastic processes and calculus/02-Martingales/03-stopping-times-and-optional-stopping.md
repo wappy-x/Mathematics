@@ -1,27 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Martingales
-topic: Quitting a fair game
-item: Stopping times
-kind: theorem
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/02-predictable-bets-and-the-martingale-transform|predictable-bets-and-the-martingale-transform]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/04-martingale-convergence|martingale-convergence]]"
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/06-uniform-integrability-and-unbounded-stopping|uniform-integrability-and-unbounded-stopping]]"
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/07-optimal-stopping-and-snell-envelope|optimal-stopping-and-snell-envelope]]"
-tags:
-  - mathematics
-  - stochastic processes and calculus
-  - stopping-times-and-optional-stopping
----
-
 # Stopping times: rules that use only the past, and the theorem that quitting does not help
 
-Stochastic processes and calculus → Martingales → Quitting a fair game → Stopping times
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Martingales](../../../SYLLABUS.md#w11-s02) → Stopping times
 
 ---
 
@@ -57,7 +36,7 @@ One sample path from the code's seeded simulation (seed 20260929), on a grid of 
 
 ## The formula
 
-Notation first, in words. The fortune after n rounds is $S_n$, in dollars, with $S_0 = 0$: the process notation from the first shelf of this wing, read "the value at round n". The symbol $\mathcal{F}_n$ is what is known after round n, here the first n tosses: the filtration, from the same shelf. A **martingale** $M_n$ is a fair game ([martingales](01-martingales.md)): given $\mathcal{F}_n$, the best forecast of the next value is the current one. The fortune $S_n$ is one.
+Notation first, in words. The fortune after n rounds is $S_n$, in dollars, with $S_0 = 0$: the process notation from the first shelf of this wing, read "the value at round n". The symbol $\mathcal{F}_n$ is what is known after round n, here the first n tosses: the filtration, from the same shelf. A **martingale** $M_n$ is a fair game ([Martingales](01-martingales.md)): given $\mathcal{F}_n$, the best forecast of the next value is the current one. The fortune $S_n$ is one.
 
 A stopping time is a random round $\tau$ (Greek "tau"). It must meet one condition:
 
@@ -99,7 +78,7 @@ In the example, $M_n = S_n$, the deadline is $N = 100$, and $\tau$ is the first 
 
 - **A fair game.** Each round must average zero given the past. With a coin that favours the house, no stopped fortune averages above zero; no stopping time rescues it.
 - **A rule that uses only the past.** "Stop just before the first loss" needs the next toss. It averages about 1 dollar of profit, not 0.
-- **A fixed deadline.** With no round 100, the quit-at-5 rule ends with probability 1, always at 5 dollars, so it averages 5. Weaker conditions can stand in for the deadline; they are the subject of [uniform-integrability-and-unbounded-stopping](06-uniform-integrability-and-unbounded-stopping.md).
+- **A fixed deadline.** With no round 100, the quit-at-5 rule ends with probability 1, always at 5 dollars, so it averages 5. Weaker conditions can stand in for the deadline; they are the subject of [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md).
 - **A finite average at each round.** Each $M_n$ needs a finite average; here the fortune after n rounds is within n dollars of the start.
 
 ---
@@ -108,7 +87,7 @@ In the example, $M_n = S_n$, the deadline is $N = 100$, and $\tau$ is the first 
 
 ### Step 0: quitting is a bet of zero
 
-Playing round k is a stake of 1 dollar on its toss; quitting is a stake of 0 on every later round. A stopping time fixes each stake before its toss. [predictable-bets-and-the-martingale-transform](02-predictable-bets-and-the-martingale-transform.md) proved that bounded stakes chosen from the past cannot change a fair game's average. The theorem is that result, applied to stakes of 1 and then 0.
+Playing round k is a stake of 1 dollar on its toss; quitting is a stake of 0 on every later round. A stopping time fixes each stake before its toss. [Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md) proved that bounded stakes chosen from the past cannot change a fair game's average. The theorem is that result, applied to stakes of 1 and then 0.
 
 ### Step 1: write the frozen fortune as a sum of bets
 
@@ -168,7 +147,7 @@ The square of the fortune minus the round number, $S_n^2 - n$, is also a fair ga
 
 ### A second road: the mirror count
 
-Counting paths reaches the answer with no martingale in sight. Flip every toss after a path's first touch of 5, and a path ending at s becomes one ending at 10 − s: the reflection principle from the path-counting wing ([reflection-principle-and-ballot-problem](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md)). It gives the chance of reaching 5 by round 100 as twice the chance that $S_{100}$ is 6 or more: 0.617299. Subtracting mirrored paths from all paths gives the losers' final fortunes, and the total again comes to exactly 0. The mirror shows the cancellation for this one rule. The theorem says why it must happen for every stopping time with a deadline.
+Counting paths reaches the answer with no martingale in sight. Flip every toss after a path's first touch of 5, and a path ending at s becomes one ending at 10 − s: the reflection principle from the path-counting wing ([The reflection principle](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/02-reflection-principle-and-ballot-problem.md)). It gives the chance of reaching 5 by round 100 as twice the chance that $S_{100}$ is 6 or more: 0.617299. Subtracting mirrored paths from all paths gives the losers' final fortunes, and the total again comes to exactly 0. The mirror shows the cancellation for this one rule. The theorem says why it must happen for every stopping time with a deadline.
 
 ---
 
@@ -195,7 +174,7 @@ A player using the rule usually walks away 5 dollars up, and still breaks even o
 | Doubling with no cap: stake 1, 2, 4, … until a win | +1 dollar with probability 1 | stakes and waiting both unbounded; capped at 10 rounds it wins 1 with chance 0.999023 and loses 1023 with chance 0.000977 (1 in 1024), average 0 |
 | Averaging only the quitters | +5 dollars | drops the 38.3% still playing, 8.07 dollars down on average |
 
-The doubling strategy is this shelf's house example, taken apart as a betting system in [predictable-bets-and-the-martingale-transform](02-predictable-bets-and-the-martingale-transform.md).
+The doubling strategy is this shelf's house example, taken apart as a betting system in [Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md).
 
 ### Dropping the deadline, in numbers
 
@@ -208,7 +187,7 @@ Keep the rule and move the deadline out. Mirror count throughout; at 1000 rounds
 | 10000 | 0.960123 | −120.38 dollars | 0 |
 | 100000 | 0.987385 | −391.35 dollars | 0 |
 
-The quitters' share climbs toward 1. Those still playing shrink toward none, but their average loss grows without bound, and share times loss stays exactly −5 times the quitters' share. With no deadline at all, the losers have probability zero and the average is 5. The average at every deadline is 0; the average at the limit is 5. Swapping "take the limit" and "take the average" is the step that fails, and [uniform-integrability-and-unbounded-stopping](06-uniform-integrability-and-unbounded-stopping.md) gives the condition that makes it safe.
+The quitters' share climbs toward 1. Those still playing shrink toward none, but their average loss grows without bound, and share times loss stays exactly −5 times the quitters' share. With no deadline at all, the losers have probability zero and the average is 5. The average at every deadline is 0; the average at the limit is 5. Swapping "take the limit" and "take the average" is the step that fails, and [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md) gives the condition that makes it safe.
 
 ---
 
@@ -589,16 +568,16 @@ The two outputs are identical line for line.
 > - **Leaving out the players still at the table.** Averaging only those who quit gives +5 dollars instead of 0.
 > - **Treating "sure to happen eventually" as a deadline.** Without round 100 the fortune reaches 5 with probability 1, yet the average wait is infinite and the theorem does not apply: the average becomes 5.
 > - **Rules that peek.** "Sell at the top" and "stop just before the first loss" are not stopping times; the second averages 1 dollar, and no real player can follow it.
-> - **Taking a finite average wait as enough by itself.** It is enough when every step is bounded, as here, but not for every fair game; the exact conditions are on [uniform-integrability-and-unbounded-stopping](06-uniform-integrability-and-unbounded-stopping.md).
+> - **Taking a finite average wait as enough by itself.** It is enough when every step is bounded, as here, but not for every fair game; the exact conditions are on [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md).
 
 ---
 
 ## Where you meet it in real life
 
 - **Casino systems.** "Quit while ahead" on a game with a house edge still averages a loss; the rule reshapes the losses without removing them.
-- **Two walls.** Stop at the first touch of +b or −c dollars. The fortune stays between the walls, which lets the deadline go ([uniform-integrability-and-unbounded-stopping](06-uniform-integrability-and-unbounded-stopping.md)), so the average at the stop is 0. That forces the chance of reaching +b first to be c divided by b + c: gambler's ruin in one line.
-- **Peeking at experiments.** Stopping a trial or an A/B test the moment results look good is a stopping time on a noisy running total. Tests designed for repeated looks bound the error with martingale inequalities, as in [doob-inequalities](05-doob-inequalities.md).
-- **When to act.** Exercising an American option or selling a house at a good offer is a choice of stopping time. Choosing the best one is [optimal-stopping-and-snell-envelope](../08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md).
+- **Two walls.** Stop at the first touch of +b or −c dollars. The fortune stays between the walls, which lets the deadline go ([Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md)), so the average at the stop is 0. That forces the chance of reaching +b first to be c divided by b + c: gambler's ruin in one line.
+- **Peeking at experiments.** Stopping a trial or an A/B test the moment results look good is a stopping time on a noisy running total. Tests designed for repeated looks bound the error with martingale inequalities, as in [Doob's inequalities](05-doob-inequalities.md).
+- **When to act.** Exercising an American option or selling a house at a good offer is a choice of stopping time. Choosing the best one is [Optimal stopping](../08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md).
 
 > **Say it back**
 > A stopping time is a rule for when to stop that can be checked from what has already happened. Stopping is a bet of 1 until the stop and 0 after, decided before each toss, so the frozen game is still fair. With a fixed deadline, the frozen value at the deadline is the value at the stop, so its average is the starting value. Quitting a fair coin game at 5 dollars ahead by round 100 wins 61.7% of the time and averages exactly 0. Without the deadline it averages 5, because the losses retreat into rarer, deeper losers.
@@ -607,14 +586,14 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [predictable-bets-and-the-martingale-transform](02-predictable-bets-and-the-martingale-transform.md): stakes fixed from the past cannot change a fair game's average; a quitting rule is the stake 1, then 0.
-- [rules-of-conditional-expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md): taking out what is known and the tower property, both used in the detailed proof.
+- [Betting on a martingale](02-predictable-bets-and-the-martingale-transform.md): stakes fixed from the past cannot change a fair game's average; a quitting rule is the stake 1, then 0.
+- [The rules of conditional expectation](../../10-Measure%20and%20integration/09-Conditional%20Expectation/04-rules-of-conditional-expectation.md): taking out what is known and the tower property, both used in the detailed proof.
 
 ## Where this goes next
 
-- [martingale-convergence](04-martingale-convergence.md): the stopped game at ever later rounds, and when a fair game settles to a limit.
-- [uniform-integrability-and-unbounded-stopping](06-uniform-integrability-and-unbounded-stopping.md): the conditions that let the deadline go.
-- [optimal-stopping-and-snell-envelope](../08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md): when the game is not fair, the best stopping time and its value.
+- [Martingale convergence](04-martingale-convergence.md): the stopped game at ever later rounds, and when a fair game settles to a limit.
+- [Stopping without a bound](06-uniform-integrability-and-unbounded-stopping.md): the conditions that let the deadline go.
+- [Optimal stopping](../08-Generators%2C%20Densities%20and%20Simulation/07-optimal-stopping-and-snell-envelope.md): when the game is not fair, the best stopping time and its value.
 
 This card leaves one question open: the quit-at-5 average jumps from 0 to 5 when the deadline goes, so which unbounded stopping times keep the game fair, and why?
 

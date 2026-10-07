@@ -1,28 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Structural Models - Default from the Balance Sheet
-topic: The short end of the credit curve
-item: Where structural models break
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/02-structural-model-sensitivities|structural-model-sensitivities]]"
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/05-black-cox-first-passage-default|black-cox-first-passage-default]]"
-next: []
-tags: [mathematics, financial mathematics, where-structural-models-fail]
----
-
 # Where structural models break: the vanishing short-term spread, jumps, and the patches that fix it
 
-Financial mathematics → Structural Models - Default from the Balance Sheet → The short end of the credit curve → Where structural models break
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Structural Models - Default from the Balance Sheet](../../../SYLLABUS.md#w12-s43) → Where structural models break
 
 ---
 
 ## General Overview
 
-Take the shelf's house firm. Its assets are worth $100m today. It owes one zero-coupon debt, a single repayment of $80m and nothing before it. The assets wander with a volatility of 20% a year, and cash earns 5%. Merton's model ([merton-model-equity-as-a-call](01-merton-model-equity-as-a-call.md)) prices that debt and reads off a **credit spread**: the extra yield, per year, that lenders earn over a riskless loan. Spreads are quoted in **basis points** (bp), hundredths of a percent.
+Take the shelf's house firm. Its assets are worth $100m today. It owes one zero-coupon debt, a single repayment of $80m and nothing before it. The assets wander with a volatility of 20% a year, and cash earns 5%. Merton's model ([Merton's model](01-merton-model-equity-as-a-call.md)) prices that debt and reads off a **credit spread**: the extra yield, per year, that lenders earn over a riskless loan. Spreads are quoted in **basis points** (bp), hundredths of a percent.
 
 Now ask for the spread at different repayment dates. At one year it is 90.71 bp. At two years 105.21 bp. At ten years 56.87 bp. At one month it is 0.07 bp: seven thousandths of a percent, a rounding error. Real bonds of a firm this levered pay tens of basis points even at one month, because a firm can fail between one quarter's report and the next.
 
@@ -53,7 +37,7 @@ Orange: debt $65m. Green: the house firm, debt $80m. Dark blue: debt $90m. Every
 
 ## The formula
 
-The spread comes from the price of the **default put**: what lenders give up, in today's money, because the firm may not repay in full. The put's own formula is on [merton-model-equity-as-a-call](01-merton-model-equity-as-a-call.md); here it is a building block.
+The spread comes from the price of the **default put**: what lenders give up, in today's money, because the firm may not repay in full. The put's own formula is on [Merton's model](01-merton-model-equity-as-a-call.md); here it is a building block.
 
 $$s(T) = -\frac{1}{T}\ln\!\left(1 - \frac{P(T)}{D e^{-rT}}\right), \qquad P(T) = D e^{-rT} N(-d_2) - V N(-d_1)$$
 
@@ -97,7 +81,7 @@ $d_2$ counts how many standard deviations of asset movement separate today's ass
 - **Assets move without jumps.** The ceiling above needs a continuous path. Allow jumps and the short spread stays positive: 95.75 bp at one month in this card's jump example.
 - **Assets are seen exactly.** If lenders only estimate $V$ from noisy accounts, the firm may already be closer to trouble than it looks, and the short spread is positive (Duffie and Lando's result, below).
 - **Assets above the debt today, $V > D$.** A firm already under water has $d_2$ running to minus infinity and a spread that explodes at the short end instead.
-- **Default only at maturity, or at a fixed barrier.** Moving default to the first touch of a barrier, as on [black-cox-first-passage-default](05-black-cox-first-passage-default.md), changes the constant but not the limit: the path still has to travel.
+- **Default only at maturity, or at a fixed barrier.** Moving default to the first touch of a barrier, as on [Black-Cox](05-black-cox-first-passage-default.md), changes the constant but not the limit: the path still has to travel.
 
 ---
 
@@ -140,15 +124,15 @@ A firm with debt above its assets, $D > V$, starts at the top instead: its short
 
 ### Step 4: a flat hazard keeps the short end alive
 
-The flat-hazard model ([hazard-rate-and-survival-probability](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)) drops the balance sheet. Default arrives like a random alarm: the chance it rings in a short spell is $\lambda$ times the spell's length, however short the spell. With survival $q = e^{-\lambda T}$ and recovery $R$ of face paid at maturity, the zero bond is worth $e^{-rT}(q + R(1-q))$, and
+The flat-hazard model ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)) drops the balance sheet. Default arrives like a random alarm: the chance it rings in a short spell is $\lambda$ times the spell's length, however short the spell. With survival $q = e^{-\lambda T}$ and recovery $R$ of face paid at maturity, the zero bond is worth $e^{-rT}(q + R(1-q))$, and
 
 $$s(T) = -\frac{1}{T}\ln\bigl(1 - (1-R)(1 - e^{-\lambda T})\bigr) \to \lambda(1-R).$$
 
-The limit holds because $1 - e^{-\lambda T} \approx \lambda T$ and minus the log of one minus a small number is about that small number. With a 2% hazard and 40% recovery that is 120.0000 bp. At one day the bond spread is 119.9987 bp; at ten years it has sagged to 115.14 bp, because a bond can default only once, so its total loss is capped. The same rate times loss, read from a credit default swap (CDS, insurance against the firm's default, paid for by a yearly premium), is [the-credit-triangle](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/03-the-credit-triangle.md).
+The limit holds because $1 - e^{-\lambda T} \approx \lambda T$ and minus the log of one minus a small number is about that small number. With a 2% hazard and 40% recovery that is 120.0000 bp. At one day the bond spread is 119.9987 bp; at ten years it has sagged to 115.14 bp, because a bond can default only once, so its total loss is capped. The same rate times loss, read from a credit default swap (CDS, insurance against the firm's default, paid for by a yearly premium), is [The credit triangle](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/03-the-credit-triangle.md).
 
 ### Step 5: jumps give the structural model a sudden-failure rate
 
-Keep the balance sheet, and add to the smooth motion rare jumps: on average one every ten years, rate $\lambda_J$ = 0.10, each moving $\ln V$ by a normal amount $Y$ with mean −0.30 and spread 0.15, roughly a quarter of the assets wiped off at a stroke. This is Merton's jump model, taught on [merton-jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md). Its price is a weighted sum of smooth puts, one for each possible number of jumps.
+Keep the balance sheet, and add to the smooth motion rare jumps: on average one every ten years, rate $\lambda_J$ = 0.10, each moving $\ln V$ by a normal amount $Y$ with mean −0.30 and spread 0.15, roughly a quarter of the assets wiped off at a stroke. This is Merton's jump model, taught on [Merton jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md). Its price is a weighted sum of smooth puts, one for each possible number of jumps.
 
 Over a short spell $T$, the smooth part still cannot reach the debt. But one jump arrives with chance about $\lambda_J T$, and one jump can carry the assets straight past $80m. The loss per unit of time is then the jump rate times the average shortfall one jump causes:
 
@@ -661,10 +645,10 @@ The two outputs agree line for line, including the simulations: both run the sam
 
 ## Where you meet it in real life
 
-- **Credit desks marking short bonds.** Short-dated corporate paper trades at positive spreads that no smooth structural model produces; desks mark it off hazard curves built from CDS quotes instead ([bootstrapping-the-hazard-curve-from-cds-quotes](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md)).
-- **Default scoring from share prices.** Distance-to-default ([distance-to-default-and-expected-default-frequency](03-distance-to-default-and-expected-default-frequency.md)) keeps the structural model for ranking firms and maps the distance to observed default rates, sidestepping the model's own short-end probabilities.
+- **Credit desks marking short bonds.** Short-dated corporate paper trades at positive spreads that no smooth structural model produces; desks mark it off hazard curves built from CDS quotes instead ([Bootstrapping a hazard curve](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md)).
+- **Default scoring from share prices.** Distance-to-default ([Distance to default](03-distance-to-default-and-expected-default-frequency.md)) keeps the structural model for ranking firms and maps the distance to observed default rates, sidestepping the model's own short-end probabilities.
 - **CreditGrades.** A structural model built for traders who start from the share price, with an uncertain default barrier so that short spreads stay positive.
-- **The credit spread puzzle.** Market spreads, above all on safe and short bonds, are wider than default losses alone explain. Eom, Helwege and Huang tested five structural models on corporate bonds: Merton's underpredicts spreads on average, while several extensions overshoot on the riskiest bonds. See also [market-implied-versus-historical-default-probability](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md).
+- **The credit spread puzzle.** Market spreads, above all on safe and short bonds, are wider than default losses alone explain. Eom, Helwege and Huang tested five structural models on corporate bonds: Merton's underpredicts spreads on average, while several extensions overshoot on the riskiest bonds. See also [Two default probabilities](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md).
 - **Capital structure research.** Leland's chosen-default model is used to study how much a firm should borrow, where taxes favour debt and default costs oppose it.
 
 > **Say it back**
@@ -674,15 +658,15 @@ The two outputs agree line for line, including the simulations: both run the sam
 
 ## What this builds on
 
-- [structural-model-sensitivities](02-structural-model-sensitivities.md): how the debt's value and spread move with assets, volatility, leverage and time, which this card follows to the short-maturity limit.
-- [black-cox-first-passage-default](05-black-cox-first-passage-default.md): default at the first touch of a barrier, the first attempted repair, which this card shows still vanishes at the short end.
+- [How the balance-sheet claims move](02-structural-model-sensitivities.md): how the debt's value and spread move with assets, volatility, leverage and time, which this card follows to the short-maturity limit.
+- [Black-Cox](05-black-cox-first-passage-default.md): default at the first touch of a barrier, the first attempted repair, which this card shows still vanishes at the short end.
 
 ---
 
 ## Where this goes next
 
-- [merton-jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): the jump model used here as a fix, priced in full for options on shares.
-- [bootstrapping-the-hazard-curve-from-cds-quotes](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md): the hazard-based curve that desks use where structural models fail.
+- [Merton jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): the jump model used here as a fix, priced in full for options on shares.
+- [Bootstrapping a hazard curve](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/06-bootstrapping-the-hazard-curve-from-cds-quotes.md): the hazard-based curve that desks use where structural models fail.
 
 The question left open is how to price credit when the balance sheet is no longer the engine: reduced-form models take the hazard rate itself as the thing to model and fit it to market quotes.
 

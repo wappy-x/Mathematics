@@ -1,32 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Black-Scholes from the Ground Up
-topic: Numeraires
-item: Changing the unit of account
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/04-black-scholes-by-risk-neutral-expectation|black-scholes-by-risk-neutral-expectation]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/05-change-of-numeraire|change-of-numeraire]]"
-next:
-  - "[[Cards/12-Financial mathematics/29-Caps, Floors and Swaptions/01-caplets-and-floorlets|caplets-and-floorlets]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - change-of-numeraire-in-pricing
----
-
 # Changing the unit of account: pricing in shares, bonds or annuities
 
-Financial mathematics → Black-Scholes from the Ground Up → Numeraires → Changing the unit of account
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Black-Scholes from the Ground Up](../../../SYLLABUS.md#w12-s05) → Changing the unit of account
 
 ---
 
 ## General Overview
 
-Acme trades at $100. A one-year call on Acme, struck at $100, is worth $9.23. The shelf reaches that number by averaging the payoff over every way the year can end and pulling the average back to today's money ([black-scholes-by-risk-neutral-expectation](04-black-scholes-by-risk-neutral-expectation.md)).
+Acme trades at $100. A one-year call on Acme, struck at $100, is worth $9.23. The shelf reaches that number by averaging the payoff over every way the year can end and pulling the average back to today's money ([Black-Scholes by expectation](04-black-scholes-by-risk-neutral-expectation.md)).
 
 That price is quoted in dollars. Dollars feel like the natural thing to quote it in. They are a choice. The same option costs 0.0923 of an Acme share, or 9.70 of the bonds that pay a dollar in a year. One contract, three price tags, three **units of account**.
 
@@ -89,7 +69,7 @@ $$U_t = e^{qt}S_t, \qquad U_t = P(t,T), \qquad U_t = P(t,T_1) + \dots + P(t,T_n)
 
 The first is one Acme share with its dividends reinvested: hold $e^{qt}$ shares and the payout exactly funds the extra shares, so nothing leaks out. The second is the bond that pays one dollar at the date $T$, written $P(t,T)$; on that date it is worth exactly 1, which makes the division at the end disappear. The third is a **swap annuity**: one bond per coupon date of a swap's fixed leg, here one coupon a year, so the bundle is worth $A(t)$ and pays a dollar on each of those dates.
 
-The two distances, unchanged from [black-scholes-by-risk-neutral-expectation](04-black-scholes-by-risk-neutral-expectation.md):
+The two distances, unchanged from [Black-Scholes by expectation](04-black-scholes-by-risk-neutral-expectation.md):
 
 $$d_2 = \frac{\ln(S/K) + (r - q - \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_1 = d_2 + \sigma\sqrt{T}$$
 
@@ -100,8 +80,8 @@ One **wiggle unit** is $\sigma\sqrt{T}$, how far Acme's price typically travels 
 - **The unit's price stays strictly positive on every ending, up to the payment date.** The formula divides by $U_T$. A bond is worth nothing the day after it redeems, so it can only be the unit for money paid on or before its own maturity.
 - **The unit is traded and funded: nothing leaks out of it.** A share paying a 2% dividend leaks. Reinvest the dividends and it stops leaking; skip that and the weights add to 0.980199 instead of 1.000000, so they are not odds at all.
 - **The unit's price divided by the bank account is a genuine fair bet under the bank's odds**, not merely free of drift. The tilt has to average exactly one. Positive quantities exist that drift nowhere and still average less than they started at, and those cannot be units.
-- **There are bank odds to begin with**, which is what the no-arbitrage argument buys ([risk-neutral-measure-and-the-fundamental-theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)). Changing units rearranges an average; it cannot conjure a price where none exists.
-- **No hedge falls out of this.** The identity moves arithmetic between the payoff and the weights. What to hold, and when, is a separate claim ([black-scholes-by-delta-hedging](03-black-scholes-by-delta-hedging.md)).
+- **There are bank odds to begin with**, which is what the no-arbitrage argument buys ([The fundamental theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)). Changing units rearranges an average; it cannot conjure a price where none exists.
+- **No hedge falls out of this.** The identity moves arithmetic between the payoff and the weights. What to hold, and when, is a separate claim ([Black-Scholes by hedging](03-black-scholes-by-delta-hedging.md)).
 
 **Conventions verified 19 Sep 2026:** $r$ and $q$ are continuously compounded, $T$ counts calendar years, and the swap in Step 6 pays one fixed coupon a year. Real quotes carry day-count and compounding conventions that differ by market and do get changed; convert before substituting.
 
@@ -127,7 +107,7 @@ Any asset whose price is strictly positive, which can actually be bought, and ou
 
 ### Step 2: the tilt, and why it averages one
 
-Under the bank's odds, every traded asset divided by the bank account is a fair bet: that is what those odds were built to do ([risk-neutral-measure-and-the-fundamental-theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)). Apply it to the unit itself. The average of $U_T/B_T$ is $U_0/B_0$, so the average of the tilt
+Under the bank's odds, every traded asset divided by the bank account is a fair bet: that is what those odds were built to do ([The fundamental theorems](02-risk-neutral-measure-and-the-fundamental-theorems.md)). Apply it to the unit itself. The average of $U_T/B_T$ is $U_0/B_0$, so the average of the tilt
 
 $$L = \frac{U_T/U_0}{B_T/B_0}$$
 
@@ -189,7 +169,7 @@ xychart-beta
 
 Upper line: share odds, which is $N(d_1)$. Lower line: bank odds, which is $N(d_2)$. The gap is widest near the strike and closes at both ends, because a call that is nearly certain to pay, or nearly certain not to, leaves the tilt nothing to move.
 
-So the Black–Scholes call is one price written half in one unit and half in another. The cash half is the strike, 100 dollars, times the bank-odds chance, discounted by 0.951229. The share half is one share delivered at the end — which costs 0.980199 of a share today, the year's dividends being given up — times the share-odds chance. The picture of the bell curve sliding one wiggle unit to the right is this same tilt, seen as a shift of the curve instead of a reweighting of its endings ([geometric-brownian-motion-for-prices](01-geometric-brownian-motion-for-prices.md) carries the curve itself).
+So the Black–Scholes call is one price written half in one unit and half in another. The cash half is the strike, 100 dollars, times the bank-odds chance, discounted by 0.951229. The share half is one share delivered at the end — which costs 0.980199 of a share today, the year's dividends being given up — times the share-odds chance. The picture of the bell curve sliding one wiggle unit to the right is this same tilt, seen as a shift of the curve instead of a reweighting of its endings ([Prices as geometric Brownian motion](01-geometric-brownian-motion-for-prices.md) carries the curve itself).
 
 The whole option can also be priced in share units in one go: 0.092270 of a share, which at 100 dollars a share is 9.227006. The code does it by brute force, with no $d_1$ and no $d_2$ anywhere in that road.
 
@@ -203,7 +183,7 @@ Under the bond's own odds, written $E^{T}$ and called the **forward odds**, Acme
 
 $$V_0 = P(0,T)\bigl[F\,N(d_1) - K\,N(d_2)\bigr],$$
 
-and it comes out at 9.227006 again. That is the shape the market actually quotes in, and the sibling card takes it up ([black-76-and-forward-level-pricing](06-black-76-and-forward-level-pricing.md)).
+and it comes out at 9.227006 again. That is the shape the market actually quotes in, and the sibling card takes it up ([Black-76](06-black-76-and-forward-level-pricing.md)).
 
 Why bother? In this market the bond's odds *are* the bank's odds. The tilt compares the bond's growth, from 0.951229 to 1, against the bank's growth over the same year, and with a fixed 5% rate those are the same number, so the tilt is 1 and nothing was gained.
 
@@ -213,7 +193,7 @@ Rates move, and then everything changes. Put a second date in: bonds today at a 
 
 A swap swaps a floating stream for a fixed one. With a flat 5% curve, a two-year swap starting in a year on a notional of 100 has a floating leg worth 9.052145, reached two ways in the code: as the difference of two bonds, and coupon by coupon from the forward rates. The fixed leg is the rate times the annuity times the notional, and the annuity here is 1.765545. The rate that makes the two legs match is the **forward swap rate**, 0.051271, which for a flat curve is exactly one year's growth at 5% minus one.
 
-Use the annuity as the unit. The fixed leg becomes just the rate, with no discounting attached, and the swap is worth the annuity times the gap between the forward swap rate and the rate in the contract. Under the annuity's odds the forward swap rate is a fair bet: on the two-date curve above, weighting next year's two possible rates by 0.483837 and its partner returns 0.051271, the rate today. A swaption pays the annuity times a call on that rate, so in annuity units it is a plain call on something that drifts nowhere, and the Black formula prices it. The details, and the caplet that is the same trick on one date, belong to [caplets-and-floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md).
+Use the annuity as the unit. The fixed leg becomes just the rate, with no discounting attached, and the swap is worth the annuity times the gap between the forward swap rate and the rate in the contract. Under the annuity's odds the forward swap rate is a fair bet: on the two-date curve above, weighting next year's two possible rates by 0.483837 and its partner returns 0.051271, the rate today. A swaption pays the annuity times a call on that rate, so in annuity units it is a plain call on something that drifts nowhere, and the Black formula prices it. The details, and the caplet that is the same trick on one date, belong to [Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md).
 
 ---
 
@@ -716,18 +696,18 @@ The two outputs match line for line, although one reaches the bell-curve area th
 > - **Discounting twice.** In bond units the price is the bond's price today times an undiscounted average. Multiply by a discount factor as well and the Acme call drops to 8.776999.
 > - **Calling the new odds a forecast.** Neither set describes what Acme will do. They are weights that make traded prices come out right, one set per unit.
 > - **Using a unit that pays money out.** The ex-dividend share fails quietly, by the 0.980199 that looks too small to matter. A bond past its maturity, or an annuity past its last coupon, is worth nothing at all, and nothing cannot be a unit.
-> - **Thinking it buys a hedge.** It buys an easier average. The replicating portfolio is a different argument ([black-scholes-by-delta-hedging](03-black-scholes-by-delta-hedging.md)).
+> - **Thinking it buys a hedge.** It buys an easier average. The replicating portfolio is a different argument ([Black-Scholes by hedging](03-black-scholes-by-delta-hedging.md)).
 
 ---
 
 ## Where you meet it in real life
 
-- **Every screen quoting an option by its forward.** Options on futures, on swaps, on bond yields: the market convention is the forward-odds form, because the spot's financing then never appears. Its own card is [black-76-and-forward-level-pricing](06-black-76-and-forward-level-pricing.md).
-- **Caps and swaptions.** A caplet is priced under the odds belonging to the bond that pays on the caplet's date; a swaption under the annuity's. Both make the underlying rate a fair bet, which is what lets one plain formula cover them: [caplets-and-floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md).
+- **Every screen quoting an option by its forward.** Options on futures, on swaps, on bond yields: the market convention is the forward-odds form, because the spot's financing then never appears. Its own card is [Black-76](06-black-76-and-forward-level-pricing.md).
+- **Caps and swaptions.** A caplet is priced under the odds belonging to the bond that pays on the caplet's date; a swaption under the annuity's. Both make the underlying rate a fair bet, which is what lets one plain formula cover them: [Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md).
 - **The two halves of Black–Scholes.** The cash half and the share half of the call are the same contract counted in two units. The share half is sold on its own as an asset-or-nothing digital: 0.980199 of a share today, times 0.598706.
 - **Currency options.** A dollar investor and a euro investor use different units and get different odds for the same exchange-rate event. Every quanto — a payoff settled in one currency on an asset priced in another — is this card.
 - **Exchange options.** To value the right to swap one share for another, use one of the two shares as the unit: a two-asset option becomes a one-asset option on the ratio.
-- **Model families.** Whether the fair-bet quantity is then modelled as lognormal, normal or shifted is a later choice ([bachelier-model](07-bachelier-model.md), [shifted-lognormal-and-volatility-conversion](08-shifted-lognormal-and-volatility-conversion.md)).
+- **Model families.** Whether the fair-bet quantity is then modelled as lognormal, normal or shifted is a later choice ([Bachelier](07-bachelier-model.md), [Shifted lognormal and volatility conversion](08-shifted-lognormal-and-volatility-conversion.md)).
 
 > **Say it back**
 > A price is a ratio, so the dollar is only one possible unit of account: any strictly positive traded asset that leaks nothing can be the unit. Divide the payoff by the unit's price at the end, average, multiply by the unit's price today — but the average must use that unit's own weights, which are the bank's weights times how much the unit outgrew the bank. They add to one precisely because the unit, measured against the bank, is a fair bet. With one share as the unit the exercise chance is 0.598706, not 0.519939, and that is $N(d_1)$; with the one-year bond Acme's average final price becomes the forward, 103.045453; with an annuity a swap rate becomes a fair bet. The contract never changed; only the ruler did.
@@ -736,12 +716,12 @@ The two outputs match line for line, although one reaches the bell-curve area th
 
 ## What this builds on
 
-- [black-scholes-by-risk-neutral-expectation](04-black-scholes-by-risk-neutral-expectation.md): the bank-account version of pricing, which Step 3 rearranges. Every road on this card starts from its rule.
-- [change-of-numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md): the machinery of reweighting outcomes, and the condition that the weights average one. This card is that theorem with prices in it.
+- [Black-Scholes by expectation](04-black-scholes-by-risk-neutral-expectation.md): the bank-account version of pricing, which Step 3 rearranges. Every road on this card starts from its rule.
+- [Change of numeraire](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/05-change-of-numeraire.md): the machinery of reweighting outcomes, and the condition that the weights average one. This card is that theorem with prices in it.
 
 ## Where this goes next
 
-- [caplets-and-floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md): the annuity and bond units used in earnest, where rates move and the choice of unit is no longer optional.
+- [Caplets and floorlets](../29-Caps%2C%20Floors%20and%20Swaptions/01-caplets-and-floorlets.md): the annuity and bond units used in earnest, where rates move and the choice of unit is no longer optional.
 
 Each formula here priced a call on something that is a fair bet under the matching odds — but nothing said how that quantity is allowed to wander, and lognormal is only one answer. That is the next question on the shelf.
 

@@ -1,29 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Collateral, Funding and the Rest of the XVAs
-topic: Pricing the capital a trade uses
-item: KVA
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/47-Collateral, Funding and the Rest of the XVAs/03-mva|mva]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/03-vasicek-loss-distribution-and-basel-capital|vasicek-loss-distribution-and-basel-capital]]"
-next:
-  - "[[Cards/12-Financial mathematics/47-Collateral, Funding and the Rest of the XVAs/05-the-xva-desk-view|the-xva-desk-view]]"
-tags: [mathematics, financial mathematics, kva]
----
-
 # KVA: the capital a trade ties up over its life, charged at the bank's hurdle rate
 
-Financial mathematics → Collateral, Funding and the Rest of the XVAs → Pricing the capital a trade uses → KVA
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Collateral, Funding and the Rest of the XVAs](../../../SYLLABUS.md#w12-s47) → KVA
 
 ---
 
 ## General Overview
 
-A bank buys a one-year call option on Acme shares from Northwind. Acme trades at \$100, the strike is \$100, and in the house market the call is worth **\$9.23** ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). Northwind can fail, and the price of that risk, the credit valuation adjustment, is 10.96 cents ([cva](../46-Counterparty%20Risk%20and%20CVA/03-cva.md)).
+A bank buys a one-year call option on Acme shares from Northwind. Acme trades at \$100, the strike is \$100, and in the house market the call is worth **\$9.23** ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). Northwind can fail, and the price of that risk, the credit valuation adjustment, is 10.96 cents ([CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md)).
 
 The regulator adds a second cost. Because Northwind might fail, the bank must hold some of its shareholders' money, its **capital**, against the trade for as long as the trade is open. Under a simple rule the bank's claim on Northwind counts as \$12.92, which is 1.4 times the \$9.23, and the bank must hold 8% of that: **\$1.03** of capital. It is a cushion: losses fall on it before they reach depositors.
 
@@ -51,7 +34,7 @@ Orange, low and flat: the simple rule, 8% of 1.4 times the call's value. It cree
 
 ## The formula
 
-Notation first, in words. $T$ is the expiry, 1 year, and $t$ a date before it. $h$ is the hurdle rate. $D(t) = e^{-rt}$ is the discount factor at the riskless rate $r$. $\lambda$ ("lambda") is Northwind's hazard, its yearly default rate, and $Q(t) = e^{-\lambda t}$ the chance it is still alive at $t$. $C_0$ is today's call price. $V(t)$ is the call's value to the bank at date $t$ if nobody could fail. $\mathrm{EE}(t)$ is its average over the pricing world, the **expected exposure** ([expected-exposure-profiles](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md)). $\mathrm{EAD}(t)$, **exposure at default**, is the amount the regulator says the bank is owed for capital purposes. $K(t)$ is the capital held at date $t$: a random amount, since it depends on where Acme is by then. $\mathbb{E}[K(t)]$ is its average.
+Notation first, in words. $T$ is the expiry, 1 year, and $t$ a date before it. $h$ is the hurdle rate. $D(t) = e^{-rt}$ is the discount factor at the riskless rate $r$. $\lambda$ ("lambda") is Northwind's hazard, its yearly default rate, and $Q(t) = e^{-\lambda t}$ the chance it is still alive at $t$. $C_0$ is today's call price. $V(t)$ is the call's value to the bank at date $t$ if nobody could fail. $\mathrm{EE}(t)$ is its average over the pricing world, the **expected exposure** ([Expected exposure over time](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md)). $\mathrm{EAD}(t)$, **exposure at default**, is the amount the regulator says the bank is owed for capital purposes. $K(t)$ is the capital held at date $t$: a random amount, since it depends on where Acme is by then. $\mathbb{E}[K(t)]$ is its average.
 
 $$\mathrm{KVA} = h\int_0^T D(t)\,\mathbb{E}[K(t)]\,Q(t)\,dt$$
 
@@ -89,7 +72,7 @@ $$\mathrm{KVA} = h\,c\,C_0\,\frac{1 - e^{-\lambda T}}{\lambda}$$
 - **Capital is proportional to exposure.** The simple rule and the IRB rule are both a fixed number times $\mathrm{EAD}$. Under SA-CCR the add-on bends with Acme's price, the integral no longer collapses, and only the bucketed sum and the simulation remain (Step 5).
 - **The trade stands alone.** Real capital is set on the bank's whole book with Northwind (the **netting set**, all trades that offset at default) and against the bank's total capital. A trade that offsets another needs less capital, sometimes negative. Pricing it alone overstates KVA for a hedge and understates it for a concentration.
 - **Today's rules hold for the life of the trade.** The integral projects capital under the current rulebook. Basel has rewritten its counterparty rules several times since 2010; a ten-year swap's KVA depends on rules nobody has written yet.
-- **Default is independent of Acme.** As for CVA, the survival chance multiplies the expected capital only if Northwind's failure says nothing about Acme's price ([wrong-way-risk](../46-Counterparty%20Risk%20and%20CVA/05-wrong-way-risk.md)).
+- **Default is independent of Acme.** As for CVA, the survival chance multiplies the expected capital only if Northwind's failure says nothing about Acme's price ([Wrong-way risk](../46-Counterparty%20Risk%20and%20CVA/05-wrong-way-risk.md)).
 - **The hurdle is a given number.** It is set by the board, not traded in a market. No hedge locks it in, so KVA cannot be replicated the way CVA can.
 
 ---
@@ -116,7 +99,7 @@ The two regulatory numbers do different jobs. The multiplier $\alpha = 1.4$ scal
 
 ### Step 3: in today's money, the capital is flat
 
-The CVA card showed that for a bought option $D(t)\,\mathrm{EE}(t) = C_0$ at every date ([cva](../46-Counterparty%20Risk%20and%20CVA/03-cva.md), Step 3): today's price of a traded claim is the discounted average of its later price. So $D(t)\,\mathbb{E}[K(t)] = c\,C_0$ at every date, and the integral keeps only the survival:
+The CVA card showed that for a bought option $D(t)\,\mathrm{EE}(t) = C_0$ at every date ([CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md), Step 3): today's price of a traded claim is the discounted average of its later price. So $D(t)\,\mathbb{E}[K(t)] = c\,C_0$ at every date, and the integral keeps only the survival:
 
 $$\mathrm{KVA} = h\,c\,C_0\int_0^T e^{-\lambda t}\,dt = h\,c\,C_0\,\frac{1 - e^{-\lambda T}}{\lambda}.$$
 
@@ -139,7 +122,7 @@ Put the two closed forms side by side. CVA is $(1-R)\,C_0\,(1 - e^{-\lambda T})$
 
 ### Step 5: the refined routes, IRB and SA-CCR
 
-**IRB.** Banks with the regulator's approval replace the flat 100% risk weight with the **internal ratings-based** formula, the Vasicek one-in-a-thousand-year loss ([vasicek-loss-distribution-and-basel-capital](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md)). Capital per dollar of exposure is
+**IRB.** Banks with the regulator's approval replace the flat 100% risk weight with the **internal ratings-based** formula, the Vasicek one-in-a-thousand-year loss ([Vasicek's large-pool loss curve](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md)). Capital per dollar of exposure is
 
 $$\mathrm{LGD}\times\Bigl[N\Bigl(\tfrac{N^{-1}(\mathrm{PD}) + \sqrt{\rho}\,N^{-1}(0.999)}{\sqrt{1-\rho}}\Bigr) - \mathrm{PD}\Bigr],$$
 
@@ -632,13 +615,13 @@ ALL CHECKS PASS
 > - **Charging the hurdle on the exposure.** Capital is 8% of risk-weighted EAD, not EAD. Charging 10% on \$12.92 gives 1.278949, twelve and a half times too much.
 > - **Forgetting the call ages.** Under SA-CCR the add-on fades as expiry nears. Holding today's \$3.63 of capital for the whole year overstates the cost; the expected capital falls to \$1.53 by expiry.
 > - **Stacking CVA capital on top without saying so.** Basel also charges capital against moves in CVA itself. That capital belongs in KVA too; leaving it out understates KVA.
-> - **Ignoring collateral.** A margin agreement cuts EAD and with it the capital ([collateral-and-the-residual-exposure](01-collateral-and-the-residual-exposure.md)). KVA on a collateralised trade computed from the uncollateralised exposure is too high.
+> - **Ignoring collateral.** A margin agreement cuts EAD and with it the capital ([Collateral](01-collateral-and-the-residual-exposure.md)). KVA on a collateralised trade computed from the uncollateralised exposure is too high.
 
 ---
 
 ## Where you meet it in real life
 
-- **Trade pricing at dealer banks.** Many large dealers quote a client price that includes KVA alongside CVA, FVA and MVA ([fva](02-fva.md), [mva](03-mva.md)). Long-dated uncollateralised swaps with companies carry the largest charges.
+- **Trade pricing at dealer banks.** Many large dealers quote a client price that includes KVA alongside CVA, FVA and MVA ([FVA](02-fva.md), [MVA](03-mva.md)). Long-dated uncollateralised swaps with companies carry the largest charges.
 - **Clearing and collateral choices.** A trade cleared through a central counterparty draws a far lower risk weight. Part of the case for clearing, and for signing a margin agreement, is the KVA it saves.
 - **Return on capital targets.** When a bank's board raises its return target, KVA rises across the book at once, with no change in any market.
 - **Regulatory change.** The switch from the older current exposure method to SA-CCR moved capital on option trades, and with it KVA, before a single price changed.
@@ -650,12 +633,12 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [mva](03-mva.md): the same shape, a resource the trade uses at each date, charged at a rate and integrated over the life with survival; there the resource is initial margin, here capital.
-- [vasicek-loss-distribution-and-basel-capital](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md): the Basel IRB capital formula of Step 5, with its correlation and 12.5 risk-weight factor.
+- [MVA](03-mva.md): the same shape, a resource the trade uses at each date, charged at a rate and integrated over the life with survival; there the resource is initial margin, here capital.
+- [Vasicek's large-pool loss curve](../45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/03-vasicek-loss-distribution-and-basel-capital.md): the Basel IRB capital formula of Step 5, with its correlation and 12.5 risk-weight factor.
 
 ## Where this goes next
 
-- [the-xva-desk-view](05-the-xva-desk-view.md): CVA, FVA, MVA and KVA added on one trade, and where they overlap.
+- [Putting the adjustments together](05-the-xva-desk-view.md): CVA, FVA, MVA and KVA added on one trade, and where they overlap.
 
 This card prices capital alone; what it leaves open is whether the capital itself can fund the trade, and so how much of KVA and FVA is the same cost counted twice.
 

@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Averages, choosers, compounds and forward-starts
-topic: Deferring the call-or-put decision
-item: Chooser options
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/03-put-call-parity|put-call-parity]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/02-black-scholes-put|black-scholes-put]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-next:
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/05-compound-options|compound-options]]"
-tags: [mathematics, financial mathematics, chooser-options]
----
-
 # Chooser options: decide later whether it is a call or a put, and parity prices it today
 
-Financial mathematics → Averages, choosers, compounds and forward-starts → Deferring the call-or-put decision → Chooser options
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Averages, choosers, compounds and forward-starts](../../../SYLLABUS.md#w12-s17) → Chooser options
 
 ---
 
@@ -110,7 +92,7 @@ Picking the dearer is the only rational choice: picking the cheaper one is the s
 
 ### Step 2: parity on the choice date
 
-Put-call parity, on [put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md), holds on every date, not only today. On the choice date it reads
+Put-call parity, on [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md), holds on every date, not only today. On the choice date it reads
 
 $$C_\tau - P_\tau = S_\tau\,e^{-q(T-\tau)} - K\,e^{-r(T-\tau)}.$$
 
@@ -132,7 +114,7 @@ The same algebra says where the two legs cross. The put is picked when $S_\tau <
 
 ### Step 4: price the two pieces today
 
-The call piece is the call held from today to expiry, whatever happens on the choice date: its price today is $C(S, K, T)$. The put piece is a put on Acme expiring on the choice date: its price today is $P(S, K', \tau)$, times the quantity $e^{-q(T-\tau)}$. Adding them gives the formula. Both prices come straight from [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) and [black-scholes-put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md).
+The call piece is the call held from today to expiry, whatever happens on the choice date: its price today is $C(S, K, T)$. The put piece is a put on Acme expiring on the choice date: its price today is $P(S, K', \tau)$, times the quantity $e^{-q(T-\tau)}$. Adding them gives the formula. Both prices come straight from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) and [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md).
 
 <details>
 <summary>Detailed proof</summary>
@@ -168,7 +150,7 @@ One line: the chooser's price today for each choice date, from the $9.23 call at
 
 A **complex chooser** lets the two legs differ. Take a call struck at $105 and a put struck at $95, both expiring in one year, with the choice at six months. On the choice date it is still worth $\max(C_\tau, P_\tau)$, but parity no longer applies: parity links a call and a put on the *same* strike, so there is no call-plus-put split. The critical price must be found by solving $C_\tau = P_\tau$ numerically. A root exists and is unique: as the choice-date price rises the call leg rises and the put leg falls, and the gap runs from negative near zero to positive for large prices. For this contract it is $98.15. Pricing then means averaging the dearer leg over every choice-date price, which the code does two ways: $10.03 by integration over the bell curve, $10.08 by simulation with a standard error of $0.04. The price sits between the better of the two plain options, $6.99, and both together, $11.27. Rubinstein gave a closed form for it; it needs the bell curve in two variables (the bivariate normal), because the answer depends jointly on the price at the choice date and at expiry.
 
-A second road to the simple chooser needs no parity at all: simulate Acme to the choice date, let each path pick the dearer leg by pricing both, simulate on to expiry, and pay the chosen option's payoff. That is [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md) applied to a payoff with a decision in it. A coin-flip tree does the same by working backward from expiry and taking the larger leg at the choice-date step. The code takes both roads.
+A second road to the simple chooser needs no parity at all: simulate Acme to the choice date, let each path pick the dearer leg by pricing both, simulate on to expiry, and pay the chosen option's payoff. That is [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md) applied to a payoff with a decision in it. A coin-flip tree does the same by working backward from expiry and taking the larger leg at the choice-date step. The code takes both roads.
 
 ---
 
@@ -178,7 +160,7 @@ Acme: $S = K = 100$, $r = 5\%$, $q = 2\%$, $\sigma = 20\%$, $T = 1$ year, choice
 
 | Step | Arithmetic | Value |
 | --- | --- | --- |
-| the one-year call $C(S, K, T)$ | from [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) | $9.2270 |
+| the one-year call $C(S, K, T)$ | from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) | $9.2270 |
 | put leg strike $K'$ | 100 × e^(−0.03 × 0.5) = 100 × e^(−0.015) | $98.5112 |
 | $d_2$ of the put leg | (ln(S/K′) + (r − q − σ^2/2)τ) / (σ√τ) = (0.015 + 0.01 × 0.5) / (0.20 × √0.5) | 0.1414 |
 | $d_1$ of the put leg | d2 + σ√τ = 0.1414 + 0.1414 | 0.2828 |
@@ -678,7 +660,7 @@ ALL CHECKS PASS
 - **Event trades.** Before a ruling, an election or a trial result, a chooser buys exposure to a big move without a view on its direction, and more cheaply than a straddle.
 - **Rubinstein's "Options for the Undecided".** A 1991 article in *Risk* magazine, the reference usually cited for the parity split and for the complex chooser's closed form. Standard textbooks now repeat both.
 - **Textbooks and desks.** Hull lists the chooser among the standard exotic options and prices it by this same split.
-- **Neighbours on this shelf.** A compound option, [compound-options](05-compound-options.md), also makes a decision on a middle date, whether to pay a fee for an option. A forward-start option, [forward-start-options-and-forward-volatility](06-forward-start-options-and-forward-volatility.md), fixes its strike on a middle date instead of its type.
+- **Neighbours on this shelf.** A compound option, [Compound options](05-compound-options.md), also makes a decision on a middle date, whether to pay a fee for an option. A forward-start option, [Forward-start options](06-forward-start-options-and-forward-volatility.md), fixes its strike on a middle date instead of its type.
 
 > **Say it back**
 > A chooser is bought today and declared a call or a put on a later choice date. On that date it is worth the dearer leg. Parity on the choice date writes the dearer leg as the call plus a put that pays exactly when the put would win. So the simple chooser is the full-life call plus a put that expires on the choice date, struck at the strike pulled back by six months of carry, in slightly less than one unit. For Acme: $9.23 plus $4.12, or $13.34, between the call alone and the call and put together.
@@ -687,13 +669,13 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): the equation that fixes the gap between a call and a put. Applied on the choice date it does all the work.
-- [black-scholes-put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the price of the put leg, with strike $K'$ and life $\tau$.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): the simulation road, here with a decision taken halfway along each path.
+- [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): the equation that fixes the gap between a call and a put. Applied on the choice date it does all the work.
+- [Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md): the price of the put leg, with strike $K'$ and life $\tau$.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): the simulation road, here with a decision taken halfway along each path.
 
 ## Where this goes next
 
-- [compound-options](05-compound-options.md): an option whose underlying is itself an option. The decision on the middle date is whether to pay a second premium, and the critical price must be found by a root finder, as for the complex chooser.
+- [Compound options](05-compound-options.md): an option whose underlying is itself an option. The decision on the middle date is whether to pay a second premium, and the critical price must be found by a root finder, as for the complex chooser.
 
 The chooser's decision on the middle date cost nothing but a choice; the next card asks what an option is worth when the decision on the middle date means paying for another option.
 

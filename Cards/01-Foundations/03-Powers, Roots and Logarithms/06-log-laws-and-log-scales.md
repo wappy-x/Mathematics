@@ -1,25 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Powers, Roots and Logarithms
-topic: Logarithms
-item: Log laws and log scales
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/05-logarithms|logarithms]]"
-next:
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/05-natural-log-and-doubling-time|natural-log-and-doubling-time]]"
-tags:
-  - mathematics
-  - foundations
-  - log-laws-and-log-scales
----
-
 # Log laws and log scales: multiplication becomes addition, and how a 1-10-100 axis reads
 
-Foundations → Powers, Roots and Logarithms → Logarithms → Log laws and log scales
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Powers, Roots and Logarithms](../../../SYLLABUS.md#w01-s03) → Log laws and log scales
 
 ---
 
@@ -29,7 +10,7 @@ Three places on one chart. A village of 100 people, a town of 10,000, a city of 
 
 On an ordinary axis — every centimetre worth the same number of people — the city eats the page and the other two flatten onto the floor, reading as zero.
 
-So mark it differently: 1 at the bottom, then 10, 100, 1,000, each mark ten times the one below. That is a **log scale** — an axis where a fixed distance means a fixed multiply, not a fixed amount. Steps up from the 1: village two, town four, city seven — the logarithms from [logarithms](05-logarithms.md), turned into distances.
+So mark it differently: 1 at the bottom, then 10, 100, 1,000, each mark ten times the one below. That is a **log scale** — an axis where a fixed distance means a fixed multiply, not a fixed amount. Steps up from the 1: village two, town four, city seven — the logarithms from [Logarithms](05-logarithms.md), turned into distances.
 
 **On a log scale, distance is a count of tens — so multiplying two numbers only adds their distances.**
 
@@ -276,7 +257,7 @@ The two outputs match line for line; the fraction 3.5 is exact.
 
 - **Any chart with 1, 10, 100, 1,000 up the side.** Case counts, incomes, file sizes: the data spans several multiplies.
 - **Slide rules and log tables.** Two lengths added is two numbers multiplied; they built bridges until the 1970s.
-- **Scales you already read this way.** Earthquake magnitude, decibels and pH, met in [logarithms](05-logarithms.md) — each a count of multiplies in plain clothes.
+- **Scales you already read this way.** Earthquake magnitude, decibels and pH, met in [Logarithms](05-logarithms.md) — each a count of multiplies in plain clothes.
 
 > **Say it back**
 > A village of 100, a town of 10,000 and a city of 10,000,000 have counts of 2, 4 and 7 tens. Multiply two populations and the counts add: 2 + 4 = 6, and 100 × 10,000 really is 1,000,000. Divide and they subtract: 7 − 2 = 5. Square and the count doubles: 4 + 4 = 8. To count in bigger steps, divide by how many tens one step is worth: 1,000,000 is three village-steps, 100 × 100 × 100. Equal distances on the axis are equal multiplies, so halfway from 100 to 10,000 is 1,000, not 5,050.
@@ -285,11 +266,11 @@ The two outputs match line for line; the fraction 3.5 is exact.
 
 ## What this builds on
 
-- [logarithms](05-logarithms.md): the count itself — how many of the base, multiplied together, reach a number. Here two of them are multiplied and their counts add.
+- [Logarithms](05-logarithms.md): the count itself — how many of the base, multiplied together, reach a number. Here two of them are multiplied and their counts add.
 
 ## Where this goes next
 
-- [natural-log-and-doubling-time](../04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md): the base growth picks for itself, and the log law turned into a time.
+- [Natural log and doubling time](../04-Compound%20Growth%20and%20Discounting/05-natural-log-and-doubling-time.md): the base growth picks for itself, and the log law turned into a time.
 
 ---
 

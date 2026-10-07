@@ -1,25 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Fourier Series
-topic: Energy in the harmonics
-item: Parseval's identity
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/09-Fourier Series/02-convergence-jumps-and-gibbs|convergence-jumps-and-gibbs]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/01-dot-product|dot-product]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/09-Fourier Series/05-complex-fourier-series-and-the-transform-in-outline|complex-fourier-series-and-the-transform-in-outline]]"
-  - "[[Cards/18-Functional analysis/03-Bounded Operators/04-the-fourier-transform-as-a-unitary-operator|the-fourier-transform-as-a-unitary-operator]]"
-  - "[[Cards/20-Harmonic analysis/01-Fourier Series in Depth/05-l2-convergence-and-riesz-fischer|l2-convergence-and-riesz-fischer]]"
-tags: [mathematics, differential equations and dynamics, parsevals-identity]
----
-
 # Parseval's identity: the energy of a signal equals the energy of its coefficients, so nothing is lost
 
-Differential equations and dynamics → Fourier Series → Energy in the harmonics → Parseval's identity
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Fourier Series](../../../SYLLABUS.md#w08-s09) → Parseval's identity
 
 ---
 
@@ -27,7 +8,7 @@ Differential equations and dynamics → Fourier Series → Energy in the harmoni
 
 A synthesiser's oscillator puts out a sawtooth voltage: over one cycle it climbs steadily from −3.14 V to +3.14 V, then snaps back. Measure the cycle by its phase, an angle from −π to π radians, and the voltage equals the phase. Into a 1-ohm resistor it delivers an average 3.2899 W, which is π^2/3, the average of the voltage squared.
 
-The same sawtooth is a stack of pure sine tones ([fourier-series-and-orthogonality](01-fourier-series-and-orthogonality.md)). The first, of amplitude 2 V, delivers 2 W on its own; the second 0.5 W; the third 0.2222 W; and so on without end. Parseval's identity says the list adds up to exactly 3.2899 W. No power leaks between tones, and none goes missing.
+The same sawtooth is a stack of pure sine tones ([Fourier series](01-fourier-series-and-orthogonality.md)). The first, of amplitude 2 V, delivers 2 W on its own; the second 0.5 W; the third 0.2222 W; and so on without end. Parseval's identity says the list adds up to exactly 3.2899 W. No power leaks between tones, and none goes missing.
 
 Run backwards, the balance sums a series: the sawtooth forces 1 + 1/4 + 1/9 + … to equal π^2/6 = 1.6449. Run forwards, it says how fast tones must fade and what a cut series leaves out.
 
@@ -76,7 +57,7 @@ Halve both sides and the left is the mean power into 1 ohm, 3.2899 W for the saw
 - **Finite energy.** The square must have a finite integral over a cycle; for 1/√|x| it is infinite and there is nothing to balance.
 - **The whole family of tones.** Constant, cosines and sines all in. Drop the cosines and the triangle wave |x| shows a ledger of 0.0000 against 6.5797.
 - **One recipe throughout.** The 1/π and the halved $a_0^2$ belong together; mixing scalings gives 5.1677 for π^2/6.
-- **Balance in energy, not point by point.** Near a jump the series still overshoots ([convergence-jumps-and-gibbs](02-convergence-jumps-and-gibbs.md)); the spike narrows, so its energy goes to zero.
+- **Balance in energy, not point by point.** Near a jump the series still overshoots ([Convergence](02-convergence-jumps-and-gibbs.md)); the spike narrows, so its energy goes to zero.
 
 ---
 
@@ -84,7 +65,7 @@ Halve both sides and the left is the mean power into 1 ohm, 3.2899 W for the saw
 
 ### Step 0: harmonics are perpendicular, so energies add like squared sides
 
-The integral of two signals' product over a cycle acts as a dot product ([dot-product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)), and a signal's squared length is its energy. Two different harmonics have product integrating to zero: they are orthogonal, meaning perpendicular. For perpendicular arrows, Pythagoras adds squared lengths. Parseval is Pythagoras with infinitely many sides.
+The integral of two signals' product over a cycle acts as a dot product ([The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md)), and a signal's squared length is its energy. Two different harmonics have product integrating to zero: they are orthogonal, meaning perpendicular. For perpendicular arrows, Pythagoras adds squared lengths. Parseval is Pythagoras with infinitely many sides.
 
 ### Step 1: a finite stack of harmonics has exactly the ledger's energy
 
@@ -113,7 +94,7 @@ Equality needs the leftover's energy to fade. Step 2 makes $S_N$ the best fit am
 
 **Continuous signals (Fejér).** For a continuous repeating $g$, the average $\sigma_N$ of its first $N$ partial sums is $\sigma_N(x) = \frac{1}{2\pi}\int_{-\pi}^{\pi} g(x-t)F_N(t)\,dt$ with the kernel $F_N(t) = \frac{1}{N}\big(\sin(Nt/2)/\sin(t/2)\big)^2$. The kernel is never negative, integrates to 2π, and for $\delta \le |t| \le \pi$ is at most $1/(N\sin^2(\delta/2))$. Given ε > 0, pick δ with $|g(x-t)-g(x)| < \varepsilon$ whenever $|t| < \delta$. Then $|\sigma_N(x) - g(x)| \le \varepsilon + 2\max|g| / (N\sin^2(\delta/2))$ for every $x$, which falls below 2ε once $N$ is large. So $\frac{1}{\pi}\int(g-\sigma_N)^2 \le 8\varepsilon^2$.
 
-**A jump.** Let $g$ equal $f$ except on a window of width 2δ around the jump, where it runs in a straight line across. For the sawtooth $|f - g| \le 2\pi$, so $\frac1\pi\int(f-g)^2 \le 8\pi\delta$. Since $\sigma_N$ of $g$ is a mix of harmonics below $N$, best fit and $(u+v)^2 \le 2u^2 + 2v^2$ give $\frac1\pi\int(f-S_N)^2 \le \frac2\pi\int(f-g)^2 + \frac2\pi\int(g-\sigma_N)^2 \le 16\pi\delta + 16\varepsilon^2$. Both terms are as small as wished, so Step 2's equation becomes Parseval's identity in the limit. Finitely many jumps are handled alike; every finite-energy signal is covered in l2-convergence-and-riesz-fischer.
+**A jump.** Let $g$ equal $f$ except on a window of width 2δ around the jump, where it runs in a straight line across. For the sawtooth $|f - g| \le 2\pi$, so $\frac1\pi\int(f-g)^2 \le 8\pi\delta$. Since $\sigma_N$ of $g$ is a mix of harmonics below $N$, best fit and $(u+v)^2 \le 2u^2 + 2v^2$ give $\frac1\pi\int(f-S_N)^2 \le \frac2\pi\int(f-g)^2 + \frac2\pi\int(g-\sigma_N)^2 \le 16\pi\delta + 16\varepsilon^2$. Both terms are as small as wished, so Step 2's equation becomes Parseval's identity in the limit. Finitely many jumps are handled alike; every finite-energy signal is covered in Convergence in energy.
 
 </details>
 
@@ -133,7 +114,7 @@ The sawtooth jumps, and $n\,|b_n| = 2$ for every $n$: its coefficients fall only
 
 The triangle's energy is also 2π^2/3, with $a_0 = \pi$ and $a_n = -4/(\pi n^2)$ on odd $n$, so Parseval gives $\sum_{n\ \mathrm{odd}} 1/n^4 = \pi^4/96$. Odd terms are 15/16 of the full sum, so $\sum 1/n^4 = \pi^4/90 = 1.082323$.
 
-The same ledger in complex exponentials is one sum of squared sizes: [complex-fourier-series-and-the-transform-in-outline](05-complex-fourier-series-and-the-transform-in-outline.md).
+The same ledger in complex exponentials is one sum of squared sizes: [The complex form](05-complex-fourier-series-and-the-transform-in-outline.md).
 
 ---
 
@@ -373,7 +354,7 @@ The two outputs match line for line. The ninth-decimal gap, 1.644934066 against 
 - **Mains power with harmonics.** The rms current of a distorted waveform (the root of its average square) is the root of the summed squares of its harmonics' rms currents. Cables and transformers are sized with this ledger.
 - **Audio distortion.** Total harmonic distortion compares the energy in harmonics 2 and up with the fundamental's. The sawtooth scores badly: 1.2899 W against 2 W.
 - **Compression.** Dropping small coefficients costs exactly their energy, the tail sum above, so keeping the largest is the best cut.
-- **Plucked strings.** Split into modes ([half-range-sine-and-cosine-series](04-half-range-sine-and-cosine-series.md)), a string's energy is the sum of its modes' energies.
+- **Plucked strings.** Split into modes ([Half-range series](04-half-range-sine-and-cosine-series.md)), a string's energy is the sum of its modes' energies.
 
 > **Say it back**
 > A signal's energy is the integral of its square over a cycle, divided by π. Harmonics are perpendicular, so a stack of them has the sum of their squared amounts as energy, and what a cut series leaves out is perpendicular to what it keeps. The leftover's energy fades to zero, so the squared coefficients balance the energy exactly. For the sawtooth, 4 times the sum of 1/n^2 equals 2π^2/3, so the sum is π^2/6. The squares must add up, so coefficients shrink, faster for smoother signals.
@@ -382,14 +363,14 @@ The two outputs match line for line. The ninth-decimal gap, 1.644934066 against 
 
 ## What this builds on
 
-- [convergence-jumps-and-gibbs](02-convergence-jumps-and-gibbs.md): where the series meets the signal point by point, and the overshoot at a jump.
-- [dot-product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): length, perpendicularity and Pythagoras, here for signals.
+- [Convergence](02-convergence-jumps-and-gibbs.md): where the series meets the signal point by point, and the overshoot at a jump.
+- [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md): length, perpendicularity and Pythagoras, here for signals.
 
 ## Where this goes next
 
-- [complex-fourier-series-and-the-transform-in-outline](05-complex-fourier-series-and-the-transform-in-outline.md): the same ledger with complex exponentials, one squared size per frequency.
-- the-fourier-transform-as-a-unitary-operator: Parseval for signals that never repeat, as a transform that keeps every length.
-- l2-convergence-and-riesz-fischer: every finite-energy signal, and the converse: every square-summable list of coefficients is some signal.
+- [The complex form](05-complex-fourier-series-and-the-transform-in-outline.md): the same ledger with complex exponentials, one squared size per frequency.
+- Plancherel: Parseval for signals that never repeat, as a transform that keeps every length.
+- Convergence in energy: every finite-energy signal, and the converse: every square-summable list of coefficients is some signal.
 
 Parseval balances the books for a repeating signal; what balances for a pulse that never repeats is the transform's question.
 

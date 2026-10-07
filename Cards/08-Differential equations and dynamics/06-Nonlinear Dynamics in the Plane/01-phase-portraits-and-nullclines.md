@@ -1,25 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Nonlinear Dynamics in the Plane
-topic: Drawing the flow by hand
-item: Phase portraits and nullclines
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/01-from-one-equation-to-a-system|from-one-equation-to-a-system]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/02-slope-fields-and-the-phase-line|slope-fields-and-the-phase-line]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/02-linearisation-and-the-jacobian|linearisation-and-the-jacobian]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/06-predator-prey|predator-prey]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/07-the-sir-epidemic-model|the-sir-epidemic-model]]"
-tags: [mathematics, differential equations and dynamics, phase-portraits-and-nullclines]
----
-
 # Phase portraits and nullclines: draw where each variable stops changing and the arrows fill themselves in
 
-Differential equations and dynamics → Nonlinear Dynamics in the Plane → Drawing the flow by hand → Phase portraits and nullclines
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Nonlinear Dynamics in the Plane](../../../SYLLABUS.md#w08-s06) → Phase portraits and nullclines
 
 ---
 
@@ -27,7 +8,7 @@ Differential equations and dynamics → Nonlinear Dynamics in the Plane → Draw
 
 A reserve holds gazelles and the cheetahs that hunt them. With fewer than 10 cheetahs about, the herd grows; with more, it shrinks. With more than 100 gazelles to catch, the cheetahs multiply; with fewer, they starve. The reserve starts with 200 gazelles and 10 cheetahs.
 
-Call the gazelles x, in hundreds, and the cheetahs y, in tens; time runs in years. As on [from-one-equation-to-a-system](../04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md), a prime marks a rate: x' is how fast x changes per year. The model is x' = x(1 − y) and y' = y(x − 1), each rate constant 1 per year.
+Call the gazelles x, in hundreds, and the cheetahs y, in tens; time runs in years. As on [From one equation to a system](../04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md), a prime marks a rate: x' is how fast x changes per year. The model is x' = x(1 − y) and y' = y(x − 1), each rate constant 1 per year.
 
 The pair (x, y) is a point in a plane, the **state**; over time it traces a **trajectory**. The plane drawn with arrows and a few trajectories is a **phase portrait**. Draw one by first finding where each rate is zero: the **nullclines**. Here: x = 0 and y = 1 for the gazelle rate, y = 0 and x = 1 for the cheetah rate. They cut the quarter-plane into four boxes the reserve circles through.
 
@@ -114,7 +95,7 @@ With no gazelles, none appear, and cheetahs die away at y' = −y; with no cheet
 
 ### Step 6: what the signs cannot tell
 
-The signs say the path turns, not whether it closes or spirals. One more fact settles it: $V = x - \ln x + y - \ln y$ has rate (1 − 1/x)x' + (1 − 1/y)y' = (x − 1)(1 − y) + (y − 1)(x − 1) = 0 along a path. Curves of constant $V$ round (1, 1) are closed, so the path is a loop. The model's full story is on [predator-prey](06-predator-prey.md).
+The signs say the path turns, not whether it closes or spirals. One more fact settles it: $V = x - \ln x + y - \ln y$ has rate (1 − 1/x)x' + (1 − 1/y)y' = (x − 1)(1 − y) + (y − 1)(x − 1) = 0 along a path. Curves of constant $V$ round (1, 1) are closed, so the path is a loop. The model's full story is on [Predator and prey](06-predator-prey.md).
 
 <details>
 <summary>Detailed proof: fences hold, and level curves of V close</summary>
@@ -125,7 +106,7 @@ The signs say the path turns, not whether it closes or spirals. One more fact se
 
 </details>
 
-A second road zooms in on (1, 1) and replaces the rates by their best straight-line fit: [linearisation-and-the-jacobian](02-linearisation-and-the-jacobian.md).
+A second road zooms in on (1, 1) and replaces the rates by their best straight-line fit: [Linearisation](02-linearisation-and-the-jacobian.md).
 
 ---
 
@@ -395,8 +376,8 @@ The two outputs agree line for line.
 
 ## Where you meet it in real life
 
-- **Wildlife management.** Hare and lynx records swing like this loop; [predator-prey](06-predator-prey.md) fits the model and its conserved quantity.
-- **Epidemics.** Susceptible against infected, the peak of infection on a nullcline: [the-sir-epidemic-model](07-the-sir-epidemic-model.md).
+- **Wildlife management.** Hare and lynx records swing like this loop; [Predator and prey](06-predator-prey.md) fits the model and its conserved quantity.
+- **Epidemics.** Susceptible against infected, the peak of infection on a nullcline: [The SIR model](07-the-sir-epidemic-model.md).
 - **Nerve cells.** Two-variable neuron models have a cubic nullcline and a straight one; a spike is a path round the cubic's bend.
 
 > **Say it back**
@@ -406,16 +387,16 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [from-one-equation-to-a-system](../04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md): two unknowns tied together by two rate laws, and the prime notation.
-- [slope-fields-and-the-phase-line](../01-Rate%20Equations/02-slope-fields-and-the-phase-line.md): the one-variable version, rests and arrows on a line.
+- [From one equation to a system](../04-Systems%20and%20the%20Matrix%20Exponential/01-from-one-equation-to-a-system.md): two unknowns tied together by two rate laws, and the prime notation.
+- [Slope fields and the phase line](../01-Rate%20Equations/02-slope-fields-and-the-phase-line.md): the one-variable version, rests and arrows on a line.
 
 ## Where this goes next
 
-- [linearisation-and-the-jacobian](02-linearisation-and-the-jacobian.md): the type of each rest, read from the rates' slopes there.
-- [predator-prey](06-predator-prey.md): the reserve's model in full, with its conserved quantity.
-- [the-sir-epidemic-model](07-the-sir-epidemic-model.md): the drawing for an outbreak.
+- [Linearisation](02-linearisation-and-the-jacobian.md): the type of each rest, read from the rates' slopes there.
+- [Predator and prey](06-predator-prey.md): the reserve's model in full, with its conserved quantity.
+- [The SIR model](07-the-sir-epidemic-model.md): the drawing for an outbreak.
 
-The sketch says the reserve turns round (1, 1) but not whether nearby paths spiral in, spiral out or circle; [linearisation-and-the-jacobian](02-linearisation-and-the-jacobian.md) settles that for paths close to a rest.
+The sketch says the reserve turns round (1, 1) but not whether nearby paths spiral in, spiral out or circle; [Linearisation](02-linearisation-and-the-jacobian.md) settles that for paths close to a rest.
 
 ---
 

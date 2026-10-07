@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Relations and Functions
-topic: Relations
-item: Relations and their four tests
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product|ordered-pairs-and-cartesian-product]]"
-next:
-  - "[[Cards/01-Foundations/08-Relations and Functions/02-functions|functions]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/06-equivalence-relations-and-partitions|equivalence-relations-and-partitions]]"
-tags:
-  - mathematics
-  - foundations
-  - relations
----
-
 # Relations: a list of which pairs are linked, and four tests on it
 
-Foundations → Relations and Functions → Relations → Relations and their four tests
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Relations and Functions](../../../SYLLABUS.md#w01-s08) → Relations and their four tests
 
 ---
 
@@ -54,7 +34,7 @@ The list is the object. Write "a emailed b" as the ordered pair (a, b), sender f
 
 **has emailed = {(Maya, Jon), (Jon, Maya), (Jon, Priya), (Priya, Jon), (Priya, Luis), (Luis, Priya), (Luis, Kai), (Kai, Luis)}**
 
-Call the list R; a R b means (a, b) is in R. With A the five people, R is a subset of the grid A × A from [ordered-pairs-and-cartesian-product](../07-Sets/05-ordered-pairs-and-cartesian-product.md).
+Call the list R; a R b means (a, b) is in R. With A the five people, R is a subset of the grid A × A from [Ordered pairs and the Cartesian product](../07-Sets/05-ordered-pairs-and-cartesian-product.md).
 
 Four tests get asked of a list like that. Let a, b, c be people from the five; any two of them may be the same person.
 
@@ -80,7 +60,7 @@ Four tests get asked of a list like that. Let a, b, c be people from the five; a
 
 ### Each test is a scan of the list
 
-Each test is a claim about the whole list — the shape [quantifiers](../05-Logic/04-quantifiers.md) sets out — so one missing or one unwanted pair settles it.
+Each test is a claim about the whole list — the shape [Quantifiers](../05-Logic/04-quantifiers.md) sets out — so one missing or one unwanted pair settles it.
 
 | Test | has emailed | is at least as tall as |
 | --- | --- | --- |
@@ -256,8 +236,8 @@ The two outputs match line for line: this is all counting.
 ## Where you meet it in real life
 
 - **Relational databases.** A two-column table is a list of ordered pairs — that is where "relational" comes from, more columns allowed too. A join is the two-step composition.
-- **Rankings.** Is at least as tall as is reflexive, antisymmetric and transitive — the three tests that make an order: [partial-and-total-orders](07-partial-and-total-orders.md).
-- **Sameness rules.** "Born in the same year as" is reflexive, symmetric and transitive, and rules like that cut a group into blocks: [equivalence-relations-and-partitions](06-equivalence-relations-and-partitions.md).
+- **Rankings.** Is at least as tall as is reflexive, antisymmetric and transitive — the three tests that make an order: [Orders](07-partial-and-total-orders.md).
+- **Sameness rules.** "Born in the same year as" is reflexive, symmetric and transitive, and rules like that cut a group into blocks: [Equivalence relations and partitions](06-equivalence-relations-and-partitions.md).
 
 > **Say it back**
 > A relation R is a set of ordered pairs: the ones where a link holds, order kept. The email log is 8 pairs out of 25; is at least as tall as, on the same five, is 15. Reflexive wants every loop. Symmetric wants every link both ways. Antisymmetric wants no two-way link except loops. Transitive wants every chain to have a shortcut. Email passes one of the four; height passes the other three.
@@ -266,14 +246,14 @@ The two outputs match line for line: this is all counting.
 
 ## What this builds on
 
-- [ordered-pairs-and-cartesian-product](../07-Sets/05-ordered-pairs-and-cartesian-product.md): the ordered pair (a, b), which remembers which name came first, and the grid of 25 a relation is picked out of.
+- [Ordered pairs and the Cartesian product](../07-Sets/05-ordered-pairs-and-cartesian-product.md): the ordered pair (a, b), which remembers which name came first, and the grid of 25 a relation is picked out of.
 
-A relation is a set — [sets-and-membership](../07-Sets/01-sets-and-membership.md), [subsets-and-power-set](../07-Sets/02-subsets-and-power-set.md) — and a subset of that grid.
+A relation is a set — [Sets](../07-Sets/01-sets-and-membership.md), [Subsets and the power set](../07-Sets/02-subsets-and-power-set.md) — and a subset of that grid.
 
 ## Where this goes next
 
-- [functions](02-functions.md): the relations answering every input with exactly one output.
-- [equivalence-relations-and-partitions](06-equivalence-relations-and-partitions.md): what happens when a relation passes reflexive, symmetric and transitive at once.
+- [Functions](02-functions.md): the relations answering every input with exactly one output.
+- [Equivalence relations and partitions](06-equivalence-relations-and-partitions.md): what happens when a relation passes reflexive, symmetric and transitive at once.
 
 ---
 

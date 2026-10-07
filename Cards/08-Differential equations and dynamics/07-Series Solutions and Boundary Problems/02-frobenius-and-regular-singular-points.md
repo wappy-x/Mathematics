@@ -1,23 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Series Solutions and Boundary Problems
-topic: Series at a singular point
-item: Frobenius
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/01-power-series-at-an-ordinary-point|power-series-at-an-ordinary-point]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/09-the-cauchy-euler-equation|the-cauchy-euler-equation]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/03-bessels-equation-and-the-drum|bessels-equation-and-the-drum]]"
-tags: [mathematics, differential equations and dynamics, frobenius-and-regular-singular-points]
----
-
 # Frobenius: at a mild singular point, let the series start at a fractional or negative power
 
-Differential equations and dynamics → Series Solutions and Boundary Problems → Series at a singular point → Frobenius
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Series Solutions and Boundary Problems](../../../SYLLABUS.md#w08-s07) → Frobenius
 
 ---
 
@@ -25,9 +8,9 @@ Differential equations and dynamics → Series Solutions and Boundary Problems �
 
 A current heats a metal wire that tapers to a sharp tip, its cross-section growing like the square root of the distance from the tip. Conduction scales with the cross-section; heating per centimetre scales with temperature and falls as the wire thickens. In scaled units, with x the distance and y the temperature on a shifted scale, the steady heat balance reads 2x y'' + y' + y = 0.
 
-At the tip, x = 0, the factor in front of the bend y'' vanishes: no cross-section is left to conduct through. The plain power series of [power-series-at-an-ordinary-point](01-power-series-at-an-ordinary-point.md) then finds only one of the two solutions.
+At the tip, x = 0, the factor in front of the bend y'' vanishes: no cross-section is left to conduct through. The plain power series of [Series solutions](01-power-series-at-an-ordinary-point.md) then finds only one of the two solutions.
 
-The repair: let the series start at a power the equation chooses, here 0 and 1/2. The x^(1/2) series leaves the tip with a vertical tangent, which no whole-number power series can copy. Near the tip the equation behaves like a Cauchy-Euler equation, solved by powers ([the-cauchy-euler-equation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/09-the-cauchy-euler-equation.md)); a Frobenius series is that power times a correcting power series.
+The repair: let the series start at a power the equation chooses, here 0 and 1/2. The x^(1/2) series leaves the tip with a vertical tangent, which no whole-number power series can copy. Near the tip the equation behaves like a Cauchy-Euler equation, solved by powers ([The Cauchy-Euler equation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/09-the-cauchy-euler-equation.md)); a Frobenius series is that power times a correcting power series.
 
 **At a singular point where the blow-up is mild, try a power x^r times a power series: the lowest power fixes r through a quadratic, the rest is a recurrence, and a logarithm is needed only when the two allowed powers collide.**
 
@@ -147,7 +130,7 @@ Build the series with r left free: only $I(r)\,a_0\,x^r$ survives substitution. 
 
 </details>
 
-Abel's formula ([wronskian-and-reduction-of-order](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/04-wronskian-and-reduction-of-order.md)) makes $W$ a constant times $x^{-1/2}$, and the leading terms fix it at 1/2: the two series are independent. Reduction of order from $y_1$ is the other road to $y_2$.
+Abel's formula ([The Wronskian](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/04-wronskian-and-reduction-of-order.md)) makes $W$ a constant times $x^{-1/2}$, and the leading terms fix it at 1/2: the two series are independent. Reduction of order from $y_1$ is the other road to $y_2$.
 
 ---
 
@@ -176,7 +159,7 @@ Abel's formula ([wronskian-and-reduction-of-order](../03-Oscillators%20-%20Secon
 
 ## Code, from first principles, and it actually runs
 
-Three roads: the series from the recurrence; the closed forms from s = √(2x); and Runge-Kutta 4 ([runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) stepping the equation from x = 1 to x = 2. Its error falls from 0.000000057179 at step h = 0.1 to 0.000000003625 at h = 0.05, a ratio of 15.8, near the 16 of a fourth-order method.
+Three roads: the series from the recurrence; the closed forms from s = √(2x); and Runge-Kutta 4 ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) stepping the equation from x = 1 to x = 2. Its error falls from 0.000000057179 at step h = 0.1 to 0.000000003625 at h = 0.05, a ratio of 15.8, near the 16 of a fourth-order method.
 
 ### Python
 
@@ -395,9 +378,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Drums.** The centre of a drumhead is a regular singular point; it vibrates in the Frobenius series of [bessels-equation-and-the-drum](03-bessels-equation-and-the-drum.md).
-- **Spheres.** Heat on a sphere leads to regular singular points at the poles; finite values there pick out [legendre-polynomials](04-legendre-polynomials.md).
-- **Singular ends.** Where a tapered beam's or this wire's leading coefficient vanishes, the mode kept is the boundary condition, as in [sturm-liouville-and-orthogonality](09-sturm-liouville-and-orthogonality.md).
+- **Drums.** The centre of a drumhead is a regular singular point; it vibrates in the Frobenius series of [Bessel's equation](03-bessels-equation-and-the-drum.md).
+- **Spheres.** Heat on a sphere leads to regular singular points at the poles; finite values there pick out [Legendre's equation](04-legendre-polynomials.md).
+- **Singular ends.** Where a tapered beam's or this wire's leading coefficient vanishes, the mode kept is the boundary condition, as in [Sturm-Liouville](09-sturm-liouville-and-orthogonality.md).
 
 > **Say it back**
 > Where the leading coefficient vanishes, a plain power series can miss a solution. If x p and x^2 q are power series, try x^r times a power series. The lowest power gives a quadratic for r, each later power one coefficient. The wire's roots, 0 and 1/2, give cos √(2x) and sin √(2x)/√2. Repeated roots force a logarithm; a whole-number gap only may.
@@ -406,12 +389,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [power-series-at-an-ordinary-point](01-power-series-at-an-ordinary-point.md): matching coefficients power by power, and term-by-term differentiation inside the radius.
-- [the-cauchy-euler-equation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/09-the-cauchy-euler-equation.md): the trial x^r, its quadratic, and the ln x of a repeated root.
+- [Series solutions](01-power-series-at-an-ordinary-point.md): matching coefficients power by power, and term-by-term differentiation inside the radius.
+- [The Cauchy-Euler equation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/09-the-cauchy-euler-equation.md): the trial x^r, its quadratic, and the ln x of a repeated root.
 
 ## Where this goes next
 
-- [bessels-equation-and-the-drum](03-bessels-equation-and-the-drum.md): the most used Frobenius series, roots repeating or a whole number apart.
+- [Bessel's equation](03-bessels-equation-and-the-drum.md): the most used Frobenius series, roots repeating or a whole number apart.
 
 ---
 

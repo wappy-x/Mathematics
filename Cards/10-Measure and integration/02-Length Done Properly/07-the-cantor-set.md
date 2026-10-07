@@ -1,26 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Length Done Properly
-topic: Null but uncountable
-item: The Cantor set
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/03-lebesgue-measure|lebesgue-measure]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/06-lebesgue-stieltjes-measures|lebesgue-stieltjes-measures]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/03-cantors-diagonal-argument|cantors-diagonal-argument]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/01-same-size-by-pairing|same-size-by-pairing]]"
-next:
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/05-lebesgue-decomposition|lebesgue-decomposition]]"
-  - "[[Cards/17-Topology/02-Topological Spaces/09-standard-examples-and-counterexamples|standard-examples-and-counterexamples]]"
-tags: [mathematics, measure and integration, the-cantor-set]
----
-
 # The Cantor set: an uncountable set of length zero, and the staircase that climbs from 0 to 1 with slope zero almost everywhere
 
-Measure and integration → Length Done Properly → Null but uncountable → The Cantor set
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Length Done Properly](../../../SYLLABUS.md#w10-s02) → The Cantor set
 
 ---
 
@@ -48,7 +28,7 @@ Drawn to scale, 324 units to the kilometre. Shaded bars are the stretches still 
 
 ## The formula
 
-Notation first, in words. $C_n$ is what still waits after night $n$: $2^n$ closed stretches, each $3^{-n}$ km long. The big cap, $\bigcap$, means "the points lying in every one of". Lebesgue measure $\lambda$ is length done properly ([lebesgue-measure](03-lebesgue-measure.md)).
+Notation first, in words. $C_n$ is what still waits after night $n$: $2^n$ closed stretches, each $3^{-n}$ km long. The big cap, $\bigcap$, means "the points lying in every one of". Lebesgue measure $\lambda$ is length done properly ([Lebesgue measure](03-lebesgue-measure.md)).
 
 $$C = \bigcap_{n=0}^{\infty} C_n \qquad\qquad \lambda(C_n) = 2^n \times 3^{-n} = \left(\tfrac{2}{3}\right)^n \longrightarrow 0$$
 
@@ -143,9 +123,9 @@ so the gaps take the whole kilometre. The code's night-12 build has 4095 gaps to
 
 Addresses using only 0 and 2 are endless runs of two symbols, like coin tosses. Two different ones give different points: if they first differ at digit $k$, the points are at least $3^{-k}$ km apart.
 
-Such runs cannot be listed: given any list, build a run whose $k$-th digit differs from that of the $k$-th listed run ([cantors-diagonal-argument](../../01-Foundations/09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md)). The code lists six addresses from its tosses, builds the diagonal $0.002000$, and finds it 10.97 m from the nearest.
+Such runs cannot be listed: given any list, build a run whose $k$-th digit differs from that of the $k$-th listed run ([Cantor's diagonal](../../01-Foundations/09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md)). The code lists six addresses from its tosses, builds the diagonal $0.002000$, and finds it 10.97 m from the nearest.
 
-A second road: the staircase maps $C$ onto all of $[0, 1]$, since every binary fraction is $F$ of the point whose digits are its digits doubled. So $C$ has at least as many points as the road ([same-size-by-pairing](../../01-Foundations/09-Sizes%20of%20Infinity/01-same-size-by-pairing.md)).
+A second road: the staircase maps $C$ onto all of $[0, 1]$, since every binary fraction is $F$ of the point whose digits are its digits doubled. So $C$ has at least as many points as the road ([Same size means pairable](../../01-Foundations/09-Sizes%20of%20Infinity/01-same-size-by-pairing.md)).
 
 <details>
 <summary>Detailed proof: different 0-and-2 addresses are different points, and there are uncountably many</summary>
@@ -164,7 +144,7 @@ $F$ never falls: a larger 0-and-2 address gives a binary fraction no smaller. Ea
 
 Continuity follows. Every gap cut on night $n$ or earlier is at least $3^{-n}$ km long, so two points less than $3^{-n}$ km apart cannot have a whole such gap between them. Between them $F$ crosses at most one stretch of $C_n$ and changes by at most $2^{-n}$, which shrinks to 0.
 
-On every gap $F$ is constant, so its slope $F'$ is 0 there. The gaps total 1 km, so $F' = 0$ except on the null set $C$: **the slope is zero almost everywhere** ([null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). Yet $F$ climbs from 0 to 1, steeply, on $C$: from 0 to $3^{-n}$ km its average slope is $(3/2)^n$, which is 1.50, 7.59, 57.67 and 3325.26 for $n$ = 1, 5, 10, 20.
+On every gap $F$ is constant, so its slope $F'$ is 0 there. The gaps total 1 km, so $F' = 0$ except on the null set $C$: **the slope is zero almost everywhere** ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). Yet $F$ climbs from 0 to 1, steeply, on $C$: from 0 to $3^{-n}$ km its average slope is $(3/2)^n$, which is 1.50, 7.59, 57.67 and 3325.26 for $n$ = 1, 5, 10, 20.
 
 <details>
 <summary>Detailed proof: F is continuous</summary>
@@ -196,9 +176,9 @@ Whatever the tosses, they write an address of 0s and 2s, so by Step 1 $X$ lies i
 
 Its distribution function is $F$: for $x$ in $C$, $X \le x$ exactly when the tosses' address comes at or before $x$'s in dictionary order, and that chance is the binary fraction $F(x)$. Across a gap the chance stays level, since $X$ never lands there. At 250 m it is $0.010101\ldots$ in base 2, one third. The simulated shares are 0.3287, 0.5021 and 0.7517 at 250, 500 and 800 m, against 0.3333, 0.5000 and 0.7500.
 
-No single point carries probability: $P(X = x) \le 2^{-n}$ for every $n$, so it is 0, and $F$ has no jumps. Nor has $X$ a density $f$, with $P(a < X \le b)$ the area under $f$ from $a$ to $b$. If $f$ stayed below a ceiling $M$, then $P(X \in C_n) \le M \times (2/3)^n$, below 1 for large $n$. For any density at all, the area over a set of length zero is zero (the integral that makes this exact is built on [integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), so $P(X \in C)$ would be 0, not 1.
+No single point carries probability: $P(X = x) \le 2^{-n}$ for every $n$, so it is 0, and $F$ has no jumps. Nor has $X$ a density $f$, with $P(a < X \le b)$ the area under $f$ from $a$ to $b$. If $f$ stayed below a ceiling $M$, then $P(X \in C_n) \le M \times (2/3)^n$, below 1 for large $n$. For any density at all, the area over a set of length zero is zero (the integral that makes this exact is built on [The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)), so $P(X \in C)$ would be 0, not 1.
 
-In the language of [lebesgue-stieltjes-measures](06-lebesgue-stieltjes-measures.md): the measure $\mu_F$ giving each $(a, b]$ the rise $F(b) - F(a)$ is the law of $X$. It gives $C$ mass 1 and every single point 0, while $\lambda$ gives $C$ length 0. A measure with no point masses that lives on a null set is **singular continuous**.
+In the language of [Distribution functions and Lebesgue-Stieltjes measures](06-lebesgue-stieltjes-measures.md): the measure $\mu_F$ giving each $(a, b]$ the rise $F(b) - F(a)$ is the law of $X$. It gives $C$ mass 1 and every single point 0, while $\lambda$ gives $C$ length 0. A measure with no point masses that lives on a null set is **singular continuous**.
 
 The code checks instances: stretches up to night 12, the staircase at marks with short addresses, 20000 simulated points. That $C$ is uncountable and null, that $F$ is continuous and that $P(X \in C) = 1$ concern infinitely many nights and uncountably many points; only the proof reaches them.
 
@@ -668,10 +648,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Probability without densities or point masses.** Laws like that of $X$ are the third kind of distribution, beside discrete ones and ones with a density; splitting any law into the three is [lebesgue-decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md).
-- **The fundamental theorem of calculus.** $F$ is continuous and never falls, its slope is 0 almost everywhere, and it rises by 1: recovering a function from its slope needs more than continuity, and [absolutely-continuous-functions-and-the-fundamental-theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem.md) names what it needs.
-- **Topology.** A closed, nowhere dense, uncountable set with no isolated point: standard-examples-and-counterexamples.
-- **Fractals.** Two copies at a third of the size is the simplest self-similar set; its dimension, between 0 and 1, comes from the cheapest-cover idea of [lebesgue-outer-measure](01-lebesgue-outer-measure.md).
+- **Probability without densities or point masses.** Laws like that of $X$ are the third kind of distribution, beside discrete ones and ones with a density; splitting any law into the three is [Lebesgue decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md).
+- **The fundamental theorem of calculus.** $F$ is continuous and never falls, its slope is 0 almost everywhere, and it rises by 1: recovering a function from its slope needs more than continuity, and [Absolutely continuous functions and the fundamental theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem.md) names what it needs.
+- **Topology.** A closed, nowhere dense, uncountable set with no isolated point: The test spaces.
+- **Fractals.** Two copies at a third of the size is the simplest self-similar set; its dimension, between 0 and 1, comes from the cheapest-cover idea of [Outer measure](01-lebesgue-outer-measure.md).
 
 > **Say it back**
 > Cut the open middle third out of every remaining stretch, night after night, and the points never cut form the Cantor set. They are the points whose base-3 address avoids the digit 1. The set is closed, contains no stretch, and has length zero, because each night keeps two thirds. Yet its addresses are endless strings of 0s and 2s, which the diagonal argument shows cannot be listed. The staircase that halves those digits is a continuous distribution function, flat on every gap, and the coin-flip point it describes lands in a set of length zero with certainty.
@@ -680,15 +660,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [lebesgue-measure](03-lebesgue-measure.md): length that adds over separate pieces, never shrinks for a bigger set, and applies to closed sets.
-- [lebesgue-stieltjes-measures](06-lebesgue-stieltjes-measures.md): a distribution function turned into a measure, here $\mu_F$.
-- [cantors-diagonal-argument](../../01-Foundations/09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md): why endless strings of two symbols cannot be listed.
-- [same-size-by-pairing](../../01-Foundations/09-Sizes%20of%20Infinity/01-same-size-by-pairing.md): comparing sizes of infinite sets by matching their members.
+- [Lebesgue measure](03-lebesgue-measure.md): length that adds over separate pieces, never shrinks for a bigger set, and applies to closed sets.
+- [Distribution functions and Lebesgue-Stieltjes measures](06-lebesgue-stieltjes-measures.md): a distribution function turned into a measure, here $\mu_F$.
+- [Cantor's diagonal](../../01-Foundations/09-Sizes%20of%20Infinity/03-cantors-diagonal-argument.md): why endless strings of two symbols cannot be listed.
+- [Same size means pairable](../../01-Foundations/09-Sizes%20of%20Infinity/01-same-size-by-pairing.md): comparing sizes of infinite sets by matching their members.
 
 ## Where this goes next
 
-- [lebesgue-decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md): every law on the line splits into a part with a density, a part of point masses, and a singular continuous part like $\mu_F$.
-- standard-examples-and-counterexamples: the Cantor set among the spaces that test topological definitions.
+- [Lebesgue decomposition](../08-Densities%20and%20Changing%20Measure/05-lebesgue-decomposition.md): every law on the line splits into a part with a density, a part of point masses, and a singular continuous part like $\mu_F$.
+- The test spaces: the Cantor set among the spaces that test topological definitions.
 
 ---
 

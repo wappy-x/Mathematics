@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Commodity forwards - carry, storage, convenience yield and the curve
-topic: The cash-and-carry bound
-item: Storage and the carry ceiling
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/01-gold-forward-and-the-lease-rate|gold-forward-and-the-lease-rate]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price|no-arbitrage-and-the-law-of-one-price]]"
-next:
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/03-convenience-yield-implied-by-the-forward|convenience-yield-implied-by-the-forward]]"
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/05-seasonality-and-the-gas-curve|seasonality-and-the-gas-curve]]"
-tags: [mathematics, financial mathematics, storage-cost-and-the-carry-ceiling]
----
-
 # Storage and the carry ceiling: for grain and oil the forward can sit below spot plus carry, never above it
 
-Financial mathematics → Commodity forwards - carry, storage, convenience yield and the curve → The cash-and-carry bound → Storage and the carry ceiling
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Commodity forwards - carry, storage, convenience yield and the curve](../../../SYLLABUS.md#w12-s25) → Storage and the carry ceiling
 
 ---
 
@@ -70,7 +52,7 @@ $$F \;\le\; S\,e^{(r+u)T}$$
 
 **Read it aloud:** the grain's price grows at the interest rate plus the storage rate, and the forward can be at most that.
 
-Here $e^{rT}$ is the continuous-compounding growth factor: what one dollar borrowed today is owed at time $T$ when interest is added in ever smaller slices ([compound-interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)). The two forms agree when the rate matches the bill: $u = \ln\big((S+U)/S\big)$, which makes $S e^{uT} = S + U$ at $T = 1$.
+Here $e^{rT}$ is the continuous-compounding growth factor: what one dollar borrowed today is owed at time $T$ when interest is added in ever smaller slices ([Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)). The two forms agree when the rate matches the bill: $u = \ln\big((S+U)/S\big)$, which makes $S e^{uT} = S + U$ at $T = 1$.
 
 | Symbol | Plain meaning | In our example | Push it up and the ceiling… |
 | --- | --- | --- | --- |
@@ -99,7 +81,7 @@ Here $e^{rT}$ is the continuous-compounding growth factor: what one dollar borro
 
 ### Step 0: a trade that delivers the goods using only today's prices
 
-A forward promises grain later. Grain later can be manufactured from grain now plus a warehouse plus a loan. No-arbitrage, the rule that two ways of getting the same thing must cost the same or someone profits from the gap ([no-arbitrage-and-the-law-of-one-price](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)), then caps what the promise can sell for. The whole card is whether the cap works in both directions. It does not.
+A forward promises grain later. Grain later can be manufactured from grain now plus a warehouse plus a loan. No-arbitrage, the rule that two ways of getting the same thing must cost the same or someone profits from the gap ([No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md)), then caps what the promise can sell for. The whole card is whether the cap works in both directions. It does not.
 
 ### Step 1: cash-and-carry sets the ceiling
 
@@ -128,11 +110,11 @@ Now take a forward below the ceiling, at $F = 6.00$. The mirror trade would be:
 
 On delivery day the bank pays $6.307627$, the forward delivers a bushel for $6.00$, and that bushel repays the grain loan. The gain is $0.307627$, before any fee for the loan of grain.
 
-Step 2 is the catch. Selling a bushel one does not own is a **short sale**: borrowing the thing, selling it, and returning it later. Shares can be borrowed for a small fee. Gold can be borrowed at a quoted lease rate, which is why the gold forward sits on its line rather than under it ([gold-forward-and-the-lease-rate](01-gold-forward-and-the-lease-rate.md)). Wheat has no such market. A mill holding wheat will not lend it for a year, because it needs the grain to keep the mill running. An outsider who buys the $6.00 forward without grain is just betting on the price: the simulation shows the result ranging from a loss of $3.48 to a gain of $9.84.
+Step 2 is the catch. Selling a bushel one does not own is a **short sale**: borrowing the thing, selling it, and returning it later. Shares can be borrowed for a small fee. Gold can be borrowed at a quoted lease rate, which is why the gold forward sits on its line rather than under it ([Gold forward](01-gold-forward-and-the-lease-rate.md)). Wheat has no such market. A mill holding wheat will not lend it for a year, because it needs the grain to keep the mill running. An outsider who buys the $6.00 forward without grain is just betting on the price: the simulation shows the result ranging from a loss of $3.48 to a gain of $9.84.
 
 ### Step 3: holders could do it, and choose not to
 
-The only people who can run the reverse trade are those already holding grain. A holder who sells today also skips the $0.30 warehouse bill, so banks $6.30. Buying the forward, that holder ends the year with the same bushel plus $6.623008 - 6.00 = 0.623008$. Holders who do not do this are telling the market that having grain in the bin this year is worth at least $0.62 to them: it keeps a mill running, meets an order, avoids a shutdown. That benefit of holding the physical good has a name and its own card ([convenience-yield-implied-by-the-forward](03-convenience-yield-implied-by-the-forward.md)). It is not a payment anyone receives; it is how much a holder values not selling. So nothing forces the forward up to the ceiling.
+The only people who can run the reverse trade are those already holding grain. A holder who sells today also skips the $0.30 warehouse bill, so banks $6.30. Buying the forward, that holder ends the year with the same bushel plus $6.623008 - 6.00 = 0.623008$. Holders who do not do this are telling the market that having grain in the bin this year is worth at least $0.62 to them: it keeps a mill running, meets an order, avoids a shutdown. That benefit of holding the physical good has a name and its own card ([Convenience yield](03-convenience-yield-implied-by-the-forward.md)). It is not a payment anyone receives; it is how much a holder values not selling. So nothing forces the forward up to the ceiling.
 
 ### Step 4: storage as a rate gives the same ceiling
 
@@ -155,7 +137,7 @@ With one bill paid today this is $(S + U)e^{rT}$.
 
 </details>
 
-A second route reaches the same ceiling from the gold card: its lease argument, with the lease income set to zero and the storage bill added to the cost of holding, gives $(S + U)e^{rT}$ as the upper half. Gold keeps the lower half because a lender exists; wheat loses it because none does ([gold-forward-and-the-lease-rate](01-gold-forward-and-the-lease-rate.md)).
+A second route reaches the same ceiling from the gold card: its lease argument, with the lease income set to zero and the storage bill added to the cost of holding, gives $(S + U)e^{rT}$ as the upper half. Gold keeps the lower half because a lender exists; wheat loses it because none does ([Gold forward](01-gold-forward-and-the-lease-rate.md)).
 
 ---
 
@@ -507,8 +489,8 @@ The two outputs match line for line.
 - **Grain elevators and calendar spreads.** Grain merchants quote the gap between two delivery months as a fraction of **full carry**, the ceiling's gap: storage plus interest. A spread near full carry says grain is plentiful and the bins are paid to hold it; a spread well under says grain is wanted now.
 - **Exchange storage rules.** Grain futures exchanges set the maximum fee warehouses may charge for delivered grain, and so set $U$ for the ceiling. The Chicago wheat contract adjusts that fee according to how close spreads trade to full carry (its variable storage rate, in force since 2010). Conventions dated 2026-09-27; the CME rulebook was not reachable that day to re-verify.
 - **Oil in tankers.** When crude for later delivery trades far above crude today, traders charter tankers and hold oil at sea: the cash-and-carry trade, run with ships. It stops when the forward falls back to the cost of the tanker plus interest.
-- **Gold, the contrast.** Gold is lent out at a lease rate, so the reverse trade is possible and the forward sits on its line: [gold-forward-and-the-lease-rate](01-gold-forward-and-the-lease-rate.md).
-- **Curve shapes.** Forwards sitting near the ceiling make an upward curve; forwards well under it can fall below spot. The names and the returns from rolling along each shape are on [contango-backwardation-and-roll-yield](04-contango-backwardation-and-roll-yield.md).
+- **Gold, the contrast.** Gold is lent out at a lease rate, so the reverse trade is possible and the forward sits on its line: [Gold forward](01-gold-forward-and-the-lease-rate.md).
+- **Curve shapes.** Forwards sitting near the ceiling make an upward curve; forwards well under it can fall below spot. The names and the returns from rolling along each shape are on [Contango and backwardation](04-contango-backwardation-and-roll-yield.md).
 
 > **Say it back**
 > A forward on grain can be copied by borrowing, buying the grain now and paying a warehouse until delivery. That copy costs $(S + U)e^{rT}$, $6.62 for wheat at $6.00 with a $0.30 bill at 5%. A forward above that is sold against the copy for a sure profit, 18 cents at $6.80. A forward below it cannot be attacked, because the reverse trade needs borrowed grain and holders keep theirs. So storage sets a ceiling and no floor.
@@ -517,15 +499,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [gold-forward-and-the-lease-rate](01-gold-forward-and-the-lease-rate.md): the carry argument with a commodity that can be borrowed, where both bounds hold and the forward is a single number.
-- [no-arbitrage-and-the-law-of-one-price](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md): two routes to the same thing cannot differ in price, which is the argument of Step 1.
+- [Gold forward](01-gold-forward-and-the-lease-rate.md): the carry argument with a commodity that can be borrowed, where both bounds hold and the forward is a single number.
+- [No arbitrage](../03-Contracts%20and%20No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price.md): two routes to the same thing cannot differ in price, which is the argument of Step 1.
 
 ## Where this goes next
 
-- [convenience-yield-implied-by-the-forward](03-convenience-yield-implied-by-the-forward.md): the gap under the ceiling measured as a rate, read backwards from a market forward.
-- [seasonality-and-the-gas-curve](05-seasonality-and-the-gas-curve.md): storage with limited space and a calendar, where the ceiling binds in some months and not others.
+- [Convenience yield](03-convenience-yield-implied-by-the-forward.md): the gap under the ceiling measured as a rate, read backwards from a market forward.
+- [Seasonal curves](05-seasonality-and-the-gas-curve.md): storage with limited space and a calendar, where the ceiling binds in some months and not others.
 
-The ceiling says how high a forward may go; how far below it the market actually sits, and what that distance is worth to holders, is the question [convenience-yield-implied-by-the-forward](03-convenience-yield-implied-by-the-forward.md) answers.
+The ceiling says how high a forward may go; how far below it the market actually sits, and what that distance is worth to holders, is the question [Convenience yield](03-convenience-yield-implied-by-the-forward.md) answers.
 
 ---
 

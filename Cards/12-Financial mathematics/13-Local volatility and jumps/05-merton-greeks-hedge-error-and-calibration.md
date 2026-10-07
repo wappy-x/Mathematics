@@ -1,33 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Local volatility and jumps
-topic: Hedging and fitting a jump model
-item: Greeks under jumps
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/04-merton-jump-diffusion|merton-jump-diffusion]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/10-theta-pays-for-gamma-hedged-pnl|theta-pays-for-gamma-hedged-pnl]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/06-calibration-as-least-squares|calibration-as-least-squares]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/01-bump-and-revalue-and-common-random-numbers|bump-and-revalue-and-common-random-numbers]]"
-next: []
-tags:
-  - mathematics
-  - financial mathematics
-  - merton-greeks-hedge-error-and-calibration
----
-
 # Greeks under jumps: the delta hedge that cannot be perfect, and fitting the three jump numbers to the smile
 
-Financial mathematics → Local volatility and jumps → Hedging and fitting a jump model → Greeks under jumps
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Local volatility and jumps](../../../SYLLABUS.md#w12-s13) → Greeks under jumps
 
 ---
 
 ## General Overview
 
-A dealer sells one Acme call in the house market: Acme at $100, strike $100, one year, bank rate 5 percent, dividend yield 2 percent. This time Acme can gap. Gaps arrive at random, 0.5 a year on average. A typical gap multiplies the price by 0.904837, and gap sizes spread 15 percent either side on the log scale. Between gaps the price wiggles with volatility 20 percent. The jump model of [merton-jump-diffusion](04-merton-jump-diffusion.md) prices this call at $10.42, against $9.23 with no gaps.
+A dealer sells one Acme call in the house market: Acme at $100, strike $100, one year, bank rate 5 percent, dividend yield 2 percent. This time Acme can gap. Gaps arrive at random, 0.5 a year on average. A typical gap multiplies the price by 0.904837, and gap sizes spread 15 percent either side on the log scale. Between gaps the price wiggles with volatility 20 percent. The jump model of [Merton jump-diffusion](04-merton-jump-diffusion.md) prices this call at $10.42, against $9.23 with no gaps.
 
 The dealer needs three more things. How many shares to hold against the call: its delta, 0.599892 of a share. Whether hedging more often makes the book safe: it does not. And where the three jump numbers came from: three quoted prices, which pin them down only loosely.
 
@@ -57,7 +36,7 @@ Orange: no gaps, hedged with the Black-Scholes delta. Green: with gaps, hedged w
 
 Notation first, in words. Gaps arrive at $\lambda$ (lambda) a year. A gap's log-size has mean $\mu_J$ and spread $\delta$, and $k$ is the average gap as a fraction of the price. $\tau$ (tau) is the years left to expiry. The jump model's price is a sum over $n$, the number of gaps before expiry. Term $n$ is a Black-Scholes price $C_{\mathrm{BS}}$ with its own volatility $\sigma_n$ and yield $q_n$, weighted by $p_n$, the chance of exactly $n$ gaps. $N$ is the bell-curve area to the left of a point and $\varphi$ the curve's height there. $\Delta$ (delta) is the price's slope in the share price, $\Gamma$ (gamma) the change in that slope, $\nu$ (vega) the slope in the diffusion volatility $\sigma$.
 
-The price, as [merton-jump-diffusion](04-merton-jump-diffusion.md) left it:
+The price, as [Merton jump-diffusion](04-merton-jump-diffusion.md) left it:
 
 $$C = \sum_{n=0}^{\infty} p_n\, C_{\mathrm{BS}}(S, K, r, q_n, \sigma_n, \tau), \qquad p_n = e^{-\lambda\tau}\frac{(\lambda\tau)^n}{n!}, \qquad \sigma_n^2 = \sigma^2 + \frac{n\delta^2}{\tau}, \qquad q_n = q + \lambda k - \frac{n(\mu_J + \delta^2/2)}{\tau}$$
 
@@ -115,7 +94,7 @@ In words: branch $n$'s distance to the strike in units of its own wiggle, as in 
 
 ### Step 0: a share count matches a slope, and a gap is not small
 
-A delta hedge holds as many shares as the call's slope. Over a small move, call and shares move together, and the leftover is half the gamma times the squared move. That leftover shrinks as the moves between trades shrink, and theta pays for it on average ([theta-pays-for-gamma-hedged-pnl](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md)).
+A delta hedge holds as many shares as the call's slope. Over a small move, call and shares move together, and the leftover is half the gamma times the squared move. That leftover shrinks as the moves between trades shrink, and theta pays for it on average ([Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md)).
 
 A gap does not shrink when trades get closer together; its size comes from the gap law, not the clock. So the leftover at a gap is set by the price's curvature across the whole gap. Two kinds of risk, the wiggle and a gap of random size, face one hedging tool, the share, and no single share count offsets both. A market in which some payoffs cannot be copied from the traded assets is called **incomplete**.
 
@@ -125,7 +104,7 @@ The share price $S$ enters each Black-Scholes term only as its spot: $p_n$, $q_n
 
 The diffusion volatility reaches term $n$ only through $\sigma_n$, and from $\sigma_n^2 = \sigma^2 + n\delta^2/\tau$ a small rise in $\sigma$ moves $\sigma_n$ by the fraction $\sigma/\sigma_n$ of it. Term $n$'s Black-Scholes vega, $S e^{-q_n\tau}\varphi(d_{1,n})\sqrt{\tau}$, times $\sigma/\sigma_n$, summed, gives $\nu$. Term by term that equals $S^2\sigma\tau$ times the term's gamma, so the sums agree too.
 
-For Acme the series gives $\Delta$ = 0.599892, $\Gamma$ = 0.016630, $\nu$ = 33.259434. Bumping and repricing ([bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)) gives the same to six decimals.
+For Acme the series gives $\Delta$ = 0.599892, $\Gamma$ = 0.016630, $\nu$ = 33.259434. Bumping and repricing ([Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md)) gives the same to six decimals.
 
 <details>
 <summary>Detailed proof: why the sum may be differentiated term by term</summary>
@@ -138,7 +117,7 @@ A by-product: $\Delta = e^{-q\tau}\sum_n \tilde p_n N(d_{1,n})$ is a weighted av
 
 </details>
 
-Black-Scholes at 20 percent says 0.586851 shares; at the implied volatility that reprices this call, 23.1362 percent, it says 0.585087. Both are too few. The jump model's implied volatility depends on the strike measured against the share price and is higher at lower strikes. When Acme rises, the $100 strike becomes relatively lower, its implied volatility rises, and the call gains more than a flat-volatility slope predicts ([smile-adjusted-delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md)).
+Black-Scholes at 20 percent says 0.586851 shares; at the implied volatility that reprices this call, 23.1362 percent, it says 0.585087. Both are too few. The jump model's implied volatility depends on the strike measured against the share price and is higher at lower strikes. When Acme rises, the $100 strike becomes relatively lower, its implied volatility rises, and the call gains more than a flat-volatility slope predicts ([Smile-adjusted delta](../12-The%20smile%20and%20the%20surface/05-smile-adjusted-delta.md)).
 
 ### Step 2: the loss at a gap is curvature across the gap
 
@@ -187,7 +166,7 @@ Split the book's change over one rebalancing step into a wiggle part and a gap p
 
 ### Step 5: fitting the three jump numbers, and why the fit is loose
 
-Three one-year quotes, generated by the house jump model so the right answer is known: $14.82 at the $92.15 strike, $10.42 at $100 and $3.57 at $119.93. The outer strikes are the house 25-delta put and call strikes ([strike-from-delta](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md)). The diffusion volatility stays at 20 percent; the unknowns are $\lambda$, $\mu_J$ and $\delta$.
+Three one-year quotes, generated by the house jump model so the right answer is known: $14.82 at the $92.15 strike, $10.42 at $100 and $3.57 at $119.93. The outer strikes are the house 25-delta put and call strikes ([Strike from delta](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md)). The diffusion volatility stays at 20 percent; the unknowns are $\lambda$, $\mu_J$ and $\delta$.
 
 **Existence.** The gaps and their compensating drift spread the final price out without moving its average, and a call gains from spread. So at every strike a jump-model call costs at least the Black-Scholes call at the same diffusion volatility: a $100 quote below $9.23 has no solution. Even above that bar, quotes that allow a riskless profit fit no model, and least squares returns only the nearest fit. These quotes came from the model, so an exact fit exists.
 
@@ -195,7 +174,7 @@ Three one-year quotes, generated by the house jump model so the right answer is 
 
 **Uniqueness.** Locally there is one answer wherever the three-by-three table of sensitivities, each quote's change per unit change in each parameter, can be inverted. Here it can, barely.
 
-**Solving.** Damped Gauss-Newton steps minimise the sum of squared misses: a Newton step from the sensitivity table, halved until the misses fall ([calibration-as-least-squares](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)), with columns from bumping each parameter. From two very different starts it lands on rate 0.500000, mean −0.100000, spread 0.150000: the numbers that made the quotes.
+**Solving.** Damped Gauss-Newton steps minimise the sum of squared misses: a Newton step from the sensitivity table, halved until the misses fall ([Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)), with columns from bumping each parameter. From two very different starts it lands on rate 0.500000, mean −0.100000, spread 0.150000: the numbers that made the quotes.
 
 **The ridge.** Hold the rate at other values and fit only the mean and spread.
 
@@ -223,7 +202,7 @@ xychart-beta
 
 Orange: the house fit, 0.5 gaps a year, spread 0.15. Green: rate held at 0.75, spread 0.100203. At the quoted strikes they agree within 0.02 volatility points. At $60 they part, 26.31 against 25.56, so one quote far below the money would separate them.
 
-A second road to the Greeks differentiates a simulation path by path; [pathwise-and-likelihood-ratio-greeks](../07-Greeks%20by%20Numbers%20and%20Calibration/02-pathwise-and-likelihood-ratio-greeks.md) does that properly.
+A second road to the Greeks differentiates a simulation path by path; [Greeks inside the simulation](../07-Greeks%20by%20Numbers%20and%20Calibration/02-pathwise-and-likelihood-ratio-greeks.md) does that properly.
 
 ---
 
@@ -728,8 +707,8 @@ The two outputs match line for line, including the simulated books, since both p
 
 - **Option desks.** Weekend news, earnings and drug-trial results gap prices. Desks hedge gaps with other options, usually puts well below the money, because shares cannot follow a gap.
 - **Selling options for income.** A delta-hedged short-option strategy collects the jump rent most years and gives back years of it in one gap; the table of years by gap count is its track record in miniature.
-- **Model-risk reserves.** Parameter sets that reprice today's quotes can disagree on everything else, and desks hold back profit against that; see [model-risk-and-parameter-stability](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md).
-- **The shelf's other model.** Local volatility fits the same quotes with a model whose delta hedge is perfect in principle: [dupire-local-volatility](01-dupire-local-volatility.md) builds it, [pricing-under-local-volatility-and-the-forward-smile](03-pricing-under-local-volatility-and-the-forward-smile.md) prices with it. Two models can match a smile and disagree about how it moves.
+- **Model-risk reserves.** Parameter sets that reprice today's quotes can disagree on everything else, and desks hold back profit against that; see [Model risk](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md).
+- **The shelf's other model.** Local volatility fits the same quotes with a model whose delta hedge is perfect in principle: [Dupire local volatility](01-dupire-local-volatility.md) builds it, [Pricing with local volatility](03-pricing-under-local-volatility-and-the-forward-smile.md) prices with it. Two models can match a smile and disagree about how it moves.
 
 > **Say it back**
 > The jump model's price is a weighted sum of Black-Scholes prices, so its Greeks are the same weighted sums of Black-Scholes Greeks. A delta hedge matches the slope, and a gap is too big for a slope: each gap costs the seller the curvature across the move, $0.89 for a 10 percent fall. Between gaps the seller collects the expected gap loss as a steady drift, so the average result is zero but its spread has a floor that faster hedging cannot lower. Three quotes recover the rate, mean and spread that made them, yet a higher rate of smaller gaps fits almost as well, and one cent moves the answer a long way.
@@ -738,14 +717,14 @@ The two outputs match line for line, including the simulated books, since both p
 
 ## What this builds on
 
-- [merton-jump-diffusion](04-merton-jump-diffusion.md): the model, its compensator and the price as a weighted sum of Black-Scholes prices, which this card differentiates.
-- [theta-pays-for-gamma-hedged-pnl](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md): the gap-free hedging error and its halving with each fourfold step; this card adds the gap term.
-- [calibration-as-least-squares](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): the Gauss-Newton fit and the warning that fitted parameters need not be the true ones.
-- [bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): repricing with a nudged input, used here to check the series Greeks and to build the fit's sensitivity table.
+- [Merton jump-diffusion](04-merton-jump-diffusion.md): the model, its compensator and the price as a weighted sum of Black-Scholes prices, which this card differentiates.
+- [Theta pays for gamma](../09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md): the gap-free hedging error and its halving with each fourfold step; this card adds the gap term.
+- [Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md): the Gauss-Newton fit and the warning that fitted parameters need not be the true ones.
+- [Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): repricing with a nudged input, used here to check the series Greeks and to build the fit's sensitivity table.
 
 ## Where this goes next
 
-Independent gaps average out over long horizons, so this model's smile flattens with maturity; a model in which volatility itself wanders holds the skew up at longer dates, and the next shelf starts there: [heston-model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md).
+Independent gaps average out over long horizons, so this model's smile flattens with maturity; a model in which volatility itself wanders holds the skew up at longer dates, and the next shelf starts there: [The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md).
 
 ---
 

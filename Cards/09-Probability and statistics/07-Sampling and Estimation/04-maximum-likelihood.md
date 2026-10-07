@@ -1,32 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Sampling and Estimation
-topic: Fitting by likelihood
-item: Maximum likelihood
-kind: method
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/01-populations-samples-and-estimators|populations-samples-and-estimators]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/03-monotonicity-and-optimisation|monotonicity-and-optimisation]]"
-next:
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/05-method-of-moments|method-of-moments]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/07-fisher-information-and-cramer-rao|fisher-information-and-cramer-rao]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/07-likelihood-ratio-tests|likelihood-ratio-tests]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/05-logistic-regression|logistic-regression]]"
-  - "[[Cards/09-Probability and statistics/12-Time Series/06-garch-and-volatility-clustering|garch-and-volatility-clustering]]"
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/06-densities-and-likelihood-ratios|densities-and-likelihood-ratios]]"
-  - "[[Cards/14-Applied and computational/03-Information Theory/03-kl-divergence-and-cross-entropy|kl-divergence-and-cross-entropy]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/08-em-algorithm|em-algorithm]]"
-  - "[[Cards/22-Algebraic geometry/06-Schemes and Modern Language/08-algebraic-statistics-and-identifiability|algebraic-statistics-and-identifiability]]"
-  - "[[Cards/23-Differential geometry and Lie groups/07-Geometric Analysis and Physics/09-information-geometry-and-the-fisher-metric|information-geometry-and-the-fisher-metric]]"
-tags: [mathematics, probability and statistics, maximum-likelihood]
----
-
 # Maximum likelihood: pick the parameter that makes the data least surprising
 
-Probability and statistics → Sampling and Estimation → Fitting by likelihood → Maximum likelihood
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Sampling and Estimation](../../../SYLLABUS.md#w09-s07) → Maximum likelihood
 
 ---
 
@@ -62,7 +36,7 @@ First line (orange): the real poll, 520 yeses in 1,000 calls. Second line (green
 
 ## The formula
 
-Notation first, in words. The unknown number the model needs is written $\theta$ (theta); for the poll it is the share $p$. The data are $x_1, x_2, \ldots, x_n$: for the poll, $x_i$ is 1 if voter number i said yes and 0 if not. The model supplies $f(x;\theta)$, the chance of one observation $x$ when the unknown is $\theta$; for a measurement on a continuous scale it is the density height ([densities-and-cdfs](../04-Continuous%20Distributions/01-densities-and-cdfs.md)). A capital pi, ∏, means multiply the terms together, as a capital sigma, Σ, means add them. A hat marks a guess, as on [populations-samples-and-estimators](01-populations-samples-and-estimators.md): $\hat\theta$ is read "theta-hat".
+Notation first, in words. The unknown number the model needs is written $\theta$ (theta); for the poll it is the share $p$. The data are $x_1, x_2, \ldots, x_n$: for the poll, $x_i$ is 1 if voter number i said yes and 0 if not. The model supplies $f(x;\theta)$, the chance of one observation $x$ when the unknown is $\theta$; for a measurement on a continuous scale it is the density height ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)). A capital pi, ∏, means multiply the terms together, as a capital sigma, Σ, means add them. A hat marks a guess, as on [Samples and estimators](01-populations-samples-and-estimators.md): $\hat\theta$ is read "theta-hat".
 
 $$L(\theta) = \prod_{i=1}^{n} f(x_i;\theta), \qquad \ell(\theta) = \ln L(\theta) = \sum_{i=1}^{n} \ln f(x_i;\theta), \qquad \hat\theta = \text{the allowed } \theta \text{ with the largest } L(\theta)$$
 
@@ -105,7 +79,7 @@ $$\hat\mu = \bar x, \qquad \hat v = \frac{Q}{n}$$
 - **The model family must be right.** The method finds the best member of the family it is handed. The poll's family assumes independent calls. If the firm reached households of two who always vote alike, the true standard error is 0.0223, not the 0.0158 the model reports.
 - **The allowed range must contain the peak.** With 0 yeses out of 20 the peak is at p = 0. If the model allows only shares strictly between 0 and 1, the likelihood keeps rising as p moves toward 0, and no allowed share is the top: no estimate exists.
 - **The likelihood must stay bounded.** Five polls that all read exactly 0.52 give a normal likelihood that grows without limit as the variance shrinks to 0. Zero variance is outside the model, so there is no maximum.
-- **The estimate need not be unbiased.** With five polls, Q/n averages 4/5 of the true variance. Whether a choice is centred on the truth is checked separately ([bias-variance-and-mean-squared-error](06-bias-variance-and-mean-squared-error.md)).
+- **The estimate need not be unbiased.** With five polls, Q/n averages 4/5 of the true variance. Whether a choice is centred on the truth is checked separately ([Bias and variance](06-bias-variance-and-mean-squared-error.md)).
 
 ---
 
@@ -117,7 +91,7 @@ The chance formula for the poll has two inputs: the data and the unknown share. 
 
 ### Step 1: write the likelihood of the poll
 
-Each call is a yes with chance p and a no with chance 1 − p, and the calls are independent, so chances multiply ([bernoulli-and-binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). The recorded list of 520 yeses and 480 nos, in the order they came, has chance
+Each call is a yes with chance p and a no with chance 1 − p, and the calls are independent, so chances multiply ([Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md)). The recorded list of 520 yeses and 480 nos, in the order they came, has chance
 
 $$L(p) = p^{520}(1-p)^{480}.$$
 
@@ -139,7 +113,7 @@ The slope of ℓ in p is
 
 $$\frac{d\ell}{dp} = \frac{k}{p} - \frac{n-k}{1-p} = \frac{k - np}{p(1-p)}.$$
 
-The bottom, p(1 − p), is positive for every p strictly between 0 and 1. So the sign of the slope is the sign of k − np. Below p = k/n the slope is positive and ℓ climbs; above it the slope is negative and ℓ falls. A function that rises up to a point and falls after it has its highest value there ([monotonicity-and-optimisation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md)). This sign argument proves a global maximum, which "slope equals zero" alone does not: a flat point can be a valley or a ledge. For the poll, $\hat p$ = 520/1000 = 0.52.
+The bottom, p(1 − p), is positive for every p strictly between 0 and 1. So the sign of the slope is the sign of k − np. Below p = k/n the slope is positive and ℓ climbs; above it the slope is negative and ℓ falls. A function that rises up to a point and falls after it has its highest value there ([Optimisation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md)). This sign argument proves a global maximum, which "slope equals zero" alone does not: a flat point can be a valley or a ledge. For the poll, $\hat p$ = 520/1000 = 0.52.
 
 ### Step 4: when the peak sits at an edge
 
@@ -164,7 +138,7 @@ The allowed range matters: if p = 0 is excluded, every candidate is beaten by a 
 
 ### Step 5: the normal model, two unknowns at once
 
-Before this poll, five earlier polls of the same race reported shares 0.49, 0.51, 0.52, 0.54 and 0.54. Treat them as five draws from a normal law with unknown centre μ and unknown variance v, the bell curve of [normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md). Its density height at x is $(2\pi v)^{-1/2}\exp(-(x-\mu)^2/(2v))$. Multiply five of them and take logarithms:
+Before this poll, five earlier polls of the same race reported shares 0.49, 0.51, 0.52, 0.54 and 0.54. Treat them as five draws from a normal law with unknown centre μ and unknown variance v, the bell curve of [Normal](../04-Continuous%20Distributions/04-normal-distribution.md). Its density height at x is $(2\pi v)^{-1/2}\exp(-(x-\mu)^2/(2v))$. Multiply five of them and take logarithms:
 
 $$\ell(\mu, v) = -\frac{n}{2}\ln(2\pi v) - \frac{1}{2v}\sum_{i}(x_i - \mu)^2.$$
 
@@ -193,11 +167,11 @@ Density heights are not chances, so ℓ here can be positive. If all five polls 
 
 ### Step 6: the curvature of the peak gives the standard error
 
-A narrow peak means the data rule out nearby values firmly. The narrowness is the curvature: minus the second derivative of ℓ at the peak, the rate at which its slope falls. For the poll it is $k/\hat p^2 + (n-k)/(1-\hat p)^2$, about 4,006. One over its square root is 0.015799, the same standard error that $\sqrt{p(1-p)/n}$ gives on [sample-mean-and-standard-error](02-sample-mean-and-standard-error.md). That this match is no accident, and that no unbiased rule can do better, is proved on [fisher-information-and-cramer-rao](07-fisher-information-and-cramer-rao.md). The same recipe gave the variance's standard error above, $\hat v\sqrt{2/n}$.
+A narrow peak means the data rule out nearby values firmly. The narrowness is the curvature: minus the second derivative of ℓ at the peak, the rate at which its slope falls. For the poll it is $k/\hat p^2 + (n-k)/(1-\hat p)^2$, about 4,006. One over its square root is 0.015799, the same standard error that $\sqrt{p(1-p)/n}$ gives on [Standard error](02-sample-mean-and-standard-error.md). That this match is no accident, and that no unbiased rule can do better, is proved on [Fisher information](07-fisher-information-and-cramer-rao.md). The same recipe gave the variance's standard error above, $\hat v\sqrt{2/n}$.
 
 ### The other door
 
-A different rule sets the model's long-run averages equal to the data's and solves. For the poll and for both normal estimates it agrees; for other models it is quicker but usually noisier. That rule is [method-of-moments](05-method-of-moments.md).
+A different rule sets the model's long-run averages equal to the data's and solves. For the poll and for both normal estimates it agrees; for other models it is quicker but usually noisier. That rule is [Method of moments](05-method-of-moments.md).
 
 ---
 
@@ -663,7 +637,7 @@ The two outputs agree line for line. The simulated average, 0.520532, sits withi
 ## The usual mistake
 
 > [!warning]
-> **Reading the likelihood as the chance that the parameter is true.** L(p) is the chance of the data if the share were p. It is not the chance that the share is p. Candidate shares have no chances in this method at all: across candidates the likelihood need not even add up to 1. Turning it into a chance for p needs a prior and Bayes' rule, which is where prior and posterior take over ([bayes-rule](../01-Chance%20and%20Events/06-bayes-rule.md)).
+> **Reading the likelihood as the chance that the parameter is true.** L(p) is the chance of the data if the share were p. It is not the chance that the share is p. Candidate shares have no chances in this method at all: across candidates the likelihood need not even add up to 1. Turning it into a chance for p needs a prior and Bayes' rule, which is where prior and posterior take over ([Bayes' rule](../01-Chance%20and%20Events/06-bayes-rule.md)).
 >
 > - **Trusting "slope equals zero".** A zero slope can be a valley or a ledge, and at an edge the peak has no zero slope at all: 0 yeses out of 20 gives slope −20 at the true maximum.
 > - **Calling a density height a chance.** The normal log-likelihood of the five polls is positive, and the collapsed one reaches 35.70. Density heights can exceed 1; only areas under a density are chances.
@@ -674,12 +648,12 @@ The two outputs agree line for line. The simulated average, 0.520532, sits withi
 
 ## Where you meet it in real life
 
-- **Polls and surveys.** The raw share is a maximum likelihood estimate under simple random sampling, and its textbook margin of error comes from the curvature of that likelihood, or from the model behind [sample-mean-and-standard-error](02-sample-mean-and-standard-error.md). Published polls then weight the sample to match the population, which adjusts the share and widens the margin.
-- **Medical and credit risk scores.** The chance of a yes that depends on a patient's or borrower's characteristics is fitted by maximum likelihood; there is no closed form, so the peak is found by Newton's method: [logistic-regression](../09-Regression/05-logistic-regression.md).
-- **Machine learning.** The standard training loss for a classifier, cross-entropy, is minus the average log-likelihood; minimising one maximises the other (kl-divergence-and-cross-entropy).
-- **Market volatility.** Banks fit the day-to-day swings of prices with models whose dials are chosen by maximum likelihood ([garch-and-volatility-clustering](../12-Time%20Series/06-garch-and-volatility-clustering.md)).
+- **Polls and surveys.** The raw share is a maximum likelihood estimate under simple random sampling, and its textbook margin of error comes from the curvature of that likelihood, or from the model behind [Standard error](02-sample-mean-and-standard-error.md). Published polls then weight the sample to match the population, which adjusts the share and widens the margin.
+- **Medical and credit risk scores.** The chance of a yes that depends on a patient's or borrower's characteristics is fitted by maximum likelihood; there is no closed form, so the peak is found by Newton's method: [Logistic regression](../09-Regression/05-logistic-regression.md).
+- **Machine learning.** The standard training loss for a classifier, cross-entropy, is minus the average log-likelihood; minimising one maximises the other (KL divergence).
+- **Market volatility.** Banks fit the day-to-day swings of prices with models whose dials are chosen by maximum likelihood ([GARCH](../12-Time%20Series/06-garch-and-volatility-clustering.md)).
 - **Least squares.** For normal errors, maximising the likelihood is minimising the sum of squared gaps, as Step 5 showed for the centre.
-- **Checking an estimate's precision without a formula.** When no curvature formula is at hand, resampling the data gives a standard error by brute force ([bootstrap](08-bootstrap.md)).
+- **Checking an estimate's precision without a formula.** When no curvature formula is at hand, resampling the data gives a standard error by brute force ([Bootstrap](08-bootstrap.md)).
 
 > **Say it back**
 > The chance of the observed data, read as a function of the unknown, is the likelihood. The estimate is the allowed value that makes it largest, found through its logarithm, which peaks in the same place. For 520 yeses out of 1,000 calls the peak is at 0.52, and the curvature of the peak gives the standard error, 0.0158. For normal data the estimates are the average and the average squared gap, dividing by n. The peak can sit at an edge, can fail to exist, and says nothing about the chance that the value is true.
@@ -688,23 +662,23 @@ The two outputs agree line for line. The simulated average, 0.520532, sits withi
 
 ## What this builds on
 
-- [populations-samples-and-estimators](01-populations-samples-and-estimators.md): the poll, the hat notation, and the idea that an estimate is the output of a rule that can be judged.
-- [monotonicity-and-optimisation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md): the sign of the slope decides where a function is highest, including at an edge.
+- [Samples and estimators](01-populations-samples-and-estimators.md): the poll, the hat notation, and the idea that an estimate is the output of a rule that can be judged.
+- [Optimisation](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/03-monotonicity-and-optimisation.md): the sign of the slope decides where a function is highest, including at an edge.
 
 ## Where this goes next
 
-- [method-of-moments](05-method-of-moments.md): the other standard way to choose an estimate, by matching averages.
-- [fisher-information-and-cramer-rao](07-fisher-information-and-cramer-rao.md): the curvature of the peak as information, and the floor on any unbiased estimator's variance.
-- [likelihood-ratio-tests](../08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md): how far below its peak the likelihood of a claimed value sits, turned into a test.
-- [logistic-regression](../09-Regression/05-logistic-regression.md): a likelihood with many dials and no closed-form peak.
-- [garch-and-volatility-clustering](../12-Time%20Series/06-garch-and-volatility-clustering.md): fitting a volatility model day by day.
-- [densities-and-likelihood-ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): what a density height is, made exact, and why its version matters at an edge.
-- kl-divergence-and-cross-entropy: maximising likelihood as minimising a distance between the data and the model.
-- em-algorithm: climbing the likelihood when part of the data is hidden.
-- algebraic-statistics-and-identifiability: when two different parameter values give the same likelihood everywhere.
-- information-geometry-and-the-fisher-metric: the curvature of the log-likelihood as a way to measure distance between models.
+- [Method of moments](05-method-of-moments.md): the other standard way to choose an estimate, by matching averages.
+- [Fisher information](07-fisher-information-and-cramer-rao.md): the curvature of the peak as information, and the floor on any unbiased estimator's variance.
+- [Likelihood ratio tests](../08-Confidence%20Intervals%20and%20Tests/07-likelihood-ratio-tests.md): how far below its peak the likelihood of a claimed value sits, turned into a test.
+- [Logistic regression](../09-Regression/05-logistic-regression.md): a likelihood with many dials and no closed-form peak.
+- [GARCH](../12-Time%20Series/06-garch-and-volatility-clustering.md): fitting a volatility model day by day.
+- [Densities and likelihood ratios](../../10-Measure%20and%20integration/08-Densities%20and%20Changing%20Measure/06-densities-and-likelihood-ratios.md): what a density height is, made exact, and why its version matters at an edge.
+- KL divergence: maximising likelihood as minimising a distance between the data and the model.
+- EM: climbing the likelihood when part of the data is hidden.
+- Algebraic statistics: when two different parameter values give the same likelihood everywhere.
+- Fisher metric: the curvature of the log-likelihood as a way to measure distance between models.
 
-The poll's estimate came with a standard error read off the curvature of one peak; whether any other rule could squeeze a smaller error out of the same 1,000 calls is the question [fisher-information-and-cramer-rao](07-fisher-information-and-cramer-rao.md) answers.
+The poll's estimate came with a standard error read off the curvature of one peak; whether any other rule could squeeze a smaller error out of the same 1,000 calls is the question [Fisher information](07-fisher-information-and-cramer-rao.md) answers.
 
 ---
 

@@ -1,26 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Series
-topic: Moving a limit inside
-item: Swapping limits
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/06-Series/07-uniform-convergence|uniform-convergence]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/01-riemann-integral|riemann-integral]]"
-next:
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/05-differentiating-under-the-integral|differentiating-under-the-integral]]"
-  - "[[Cards/18-Functional analysis/04-Distributions and Sobolev Spaces/01-test-functions-and-distributions|test-functions-and-distributions]]"
-  - "[[Cards/20-Harmonic analysis/01-Fourier Series in Depth/07-term-by-term-differentiation-and-integration|term-by-term-differentiation-and-integration]]"
-  - "[[Cards/20-Harmonic analysis/02-The Fourier Transform/04-fourier-inversion-theorem|fourier-inversion-theorem]]"
-tags: [mathematics, calculus-and-analysis, swapping-limits-with-integrals-and-derivatives]
----
-
 # Swapping limits: when the integral of the limit is the limit of the integrals
 
-Calculus and analysis → Series → Moving a limit inside → Swapping limits
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Series](../../../SYLLABUS.md#w06-s06) → Swapping limits
 
 ---
 
@@ -55,7 +35,7 @@ Orange: stage 1, peak 2 at x = 0.5. Teal: stage 2, peak 4 at x = 0.25. Dark blue
 
 ## The formula
 
-Reminders: the stage-n function is $f_n$, its limit $f$, and sup is the least upper bound ([uniform-convergence](07-uniform-convergence.md)); the integral sign with ends a and b adds up area, and dx names the variable along the base ([riemann-integral](../04-Integrals/01-riemann-integral.md)).
+Reminders: the stage-n function is $f_n$, its limit $f$, and sup is the least upper bound ([Uniform convergence](07-uniform-convergence.md)); the integral sign with ends a and b adds up area, and dx names the variable along the base ([The integral](../04-Integrals/01-riemann-integral.md)).
 
 **The integration theorem.** If each $f_n$ is integrable on the closed interval from a to b and
 
@@ -381,7 +361,7 @@ The two outputs are identical.
 
 ## Where you meet it in real life
 
-- **Series integrated term by term.** A power series converges uniformly on closed intervals inside its radius, so it integrates one term at a time ([power-series](04-power-series.md)); 1/4 + 1/12 + 1/32 + ⋯ = 2 ln 2 − 1 is one case.
+- **Series integrated term by term.** A power series converges uniformly on closed intervals inside its radius, so it integrates one term at a time ([Power series](04-power-series.md)); 1/4 + 1/12 + 1/32 + ⋯ = 2 ln 2 − 1 is one case.
 - **Impulses.** A hammer blow is modelled as a spike of fixed total push over a shrinking time. Its limit as a function is 0, so an impulse is treated as a distribution instead.
 
 > **Say it back**
@@ -391,17 +371,17 @@ The two outputs are identical.
 
 ## What this builds on
 
-- [uniform-convergence](07-uniform-convergence.md): the worst gap, continuity of a uniform limit, and the M-test used on the slopes.
-- [riemann-integral](../04-Integrals/01-riemann-integral.md): upper and lower sums, and the integral's respect for differences and sizes.
+- [Uniform convergence](07-uniform-convergence.md): the worst gap, continuity of a uniform limit, and the M-test used on the slopes.
+- [The integral](../04-Integrals/01-riemann-integral.md): upper and lower sums, and the integral's respect for differences and sizes.
 
 ## Where this goes next
 
-- [differentiating-under-the-integral](../08-Multiple%20Integrals/05-differentiating-under-the-integral.md): the same swap, with a difference quotient as the limit.
-- test-functions-and-distributions: the spikes' limit made into an object, the delta.
-- term-by-term-differentiation-and-integration: both theorems applied to sums of waves.
-- fourier-inversion-theorem: a swap over an unbounded line, beyond this card's bounded interval.
+- [Differentiating under the integral](../08-Multiple%20Integrals/05-differentiating-under-the-integral.md): the same swap, with a difference quotient as the limit.
+- Distributions: the spikes' limit made into an object, the delta.
+- Differentiating a series term by term: both theorems applied to sums of waves.
+- Fourier inversion: a swap over an unbounded line, beyond this card's bounded interval.
 
-The spikes' limit loses their area, yet an area of 1 packed at one point is a real thing; what kind of object holds it is the question test-functions-and-distributions answers.
+The spikes' limit loses their area, yet an area of 1 packed at one point is a real thing; what kind of object holds it is the question Distributions answers.
 
 ---
 

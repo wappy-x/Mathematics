@@ -1,32 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Groups
-topic: Maps between groups
-item: Homomorphisms and isomorphisms
-kind: definition
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/08-Groups/04-cosets-and-lagranges-theorem|cosets-and-lagranges-theorem]]"
-  - "[[Cards/03-Algebra/08-Groups/03-permutations-and-the-symmetric-group|permutations-and-the-symmetric-group]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/02-functions|functions]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/04-injective-surjective-bijective|injective-surjective-bijective]]"
-next:
-  - "[[Cards/03-Algebra/08-Groups/06-normal-subgroups-and-quotient-groups|normal-subgroups-and-quotient-groups]]"
-  - "[[Cards/03-Algebra/08-Groups/07-direct-products|direct-products]]"
-  - "[[Cards/17-Topology/04-Homotopy/03-the-fundamental-group|the-fundamental-group]]"
-  - "[[Cards/21-Algebraic and analytic number theory/03-Characters and L-functions/01-dirichlet-characters|dirichlet-characters]]"
-  - "[[Cards/23-Differential geometry and Lie groups/06-Lie Groups/05-representations-in-outline|representations-in-outline]]"
-tags:
-  - mathematics
-  - algebra
-  - homomorphisms-and-isomorphisms
----
-
 # Homomorphisms and isomorphisms: maps that respect the operation, and when two groups are the same group in different clothes
 
-Algebra → Groups → Maps between groups → Homomorphisms and isomorphisms
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Groups](../../../SYLLABUS.md#w03-s08) → Homomorphisms and isomorphisms
 
 ---
 
@@ -80,7 +54,7 @@ Both clocks add, one wrapping at 24 and one at 12, and the map takes the remaind
 | $a^{-1}$ | the member that undoes $a$ | 13 undoes 11 | no inverse, no group |
 | $\ker f$, $f(G)$ | the kernel and the image, below | {0, 12}, all 12 readings | a bigger kernel, a smaller image |
 
-The **kernel**, $\ker f$, holds the members of $G$ sent to the identity of $H$: the readings with remainder zero, 0 and 12. The **image**, $f(G)$, holds what $f$ reaches: all twelve readings. An **isomorphism** is a homomorphism that is one-to-one and onto — a bijection, from [injective-surjective-bijective](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md).
+The **kernel**, $\ker f$, holds the members of $G$ sent to the identity of $H$: the readings with remainder zero, 0 and 12. The **image**, $f(G)$, holds what $f$ reaches: all twelve readings. An **isomorphism** is a homomorphism that is one-to-one and onto — a bijection, from [One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md).
 
 ### When it holds
 
@@ -106,7 +80,7 @@ That is already a test: shifting every reading up by one sends 0 to 1, so it is 
 
 Combine one member with the inverse of another. Their translations cancel exactly when the two landed in the same place, so the combination lies in the kernel exactly when the two collide. Hence a homomorphism is one-to-one exactly when its kernel holds nothing but the identity.
 
-Here the kernel is {0, 12}, so each reading has two sources: 11 comes from 11 and from 23. Twelve pairs, and 24 divided by 2 is 12, the size of the image. The pairs are cosets of the kernel from [cosets-and-lagranges-theorem](04-cosets-and-lagranges-theorem.md), which is why they match in size. The kernel is itself a subgroup.
+Here the kernel is {0, 12}, so each reading has two sources: 11 comes from 11 and from 23. Twelve pairs, and 24 divided by 2 is 12, the size of the image. The pairs are cosets of the kernel from [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md), which is why they match in size. The kernel is itself a subgroup.
 
 ### Step 3: an isomorphism is a translation with nothing lost
 
@@ -129,7 +103,7 @@ Here $f$ is a homomorphism from $G$ to $H$, and $e$ is the identity of either gr
 
 </details>
 
-A second route runs the other way: glue the two readings that must count as one and see what group is left. That is [normal-subgroups-and-quotient-groups](06-normal-subgroups-and-quotient-groups.md).
+A second route runs the other way: glue the two readings that must count as one and see what group is left. That is [Normal subgroups and quotient groups](06-normal-subgroups-and-quotient-groups.md).
 
 ---
 
@@ -388,7 +362,7 @@ ALL CHECKS PASS
 
 - **Coarser readings of the same quantity.** A 12-hour display, a date cut to its weekday, a price rounded to the dollar: arithmetic kept, detail dropped, the kernel naming the loss.
 - **Remainders and check digits.** Sending whole numbers to their remainder is the homomorphism behind barcode and account-number checks.
-- **Symmetry written as arithmetic.** The tile's turns become addition on a four-hour clock, the trade that lets [permutations-and-the-symmetric-group](03-permutations-and-the-symmetric-group.md) compute shuffles rather than draw them.
+- **Symmetry written as arithmetic.** The tile's turns become addition on a four-hour clock, the trade that lets [Permutations](03-permutations-and-the-symmetric-group.md) compute shuffles rather than draw them.
 
 > **Say it back**
 > A homomorphism is a map between two groups that survives the operation: combine then translate, or translate then combine, for the same answer. The 24-hour clock onto the 12-hour clock is one, on all 576 pairs. Its kernel is {0, 12}, so each wall reading has two sources and the map cannot be undone. One-to-one comes exactly when the kernel holds only the identity; add onto as well and it is an isomorphism, two sets of labels on one group — as the tile's turns and the four-hour clock are.
@@ -397,18 +371,18 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [cosets-and-lagranges-theorem](04-cosets-and-lagranges-theorem.md): the equal-sized pieces a subgroup cuts a group into.
-- [permutations-and-the-symmetric-group](03-permutations-and-the-symmetric-group.md): turns recorded as where corners land, and composed.
-- [functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md): what a map is, and when it has an inverse.
-- [injective-surjective-bijective](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md): one-to-one and onto.
+- [Cosets and Lagrange's theorem](04-cosets-and-lagranges-theorem.md): the equal-sized pieces a subgroup cuts a group into.
+- [Permutations](03-permutations-and-the-symmetric-group.md): turns recorded as where corners land, and composed.
+- [Functions](../../01-Foundations/08-Relations%20and%20Functions/02-functions.md): what a map is, and when it has an inverse.
+- [One-to-one and onto](../../01-Foundations/08-Relations%20and%20Functions/04-injective-surjective-bijective.md): one-to-one and onto.
 
 ## Where this goes next
 
-- [normal-subgroups-and-quotient-groups](06-normal-subgroups-and-quotient-groups.md): glue each kernel pair into one member and the wall clock appears with no map.
-- [direct-products](07-direct-products.md): a bigger group built from two smaller ones, and how to spot one.
-- the-fundamental-group: loops followed one after another, where a map of shapes becomes a homomorphism.
-- dirichlet-characters: homomorphisms from clock arithmetic to numbers on a circle.
-- representations-in-outline: homomorphisms into groups of matrices.
+- [Normal subgroups and quotient groups](06-normal-subgroups-and-quotient-groups.md): glue each kernel pair into one member and the wall clock appears with no map.
+- [Direct products](07-direct-products.md): a bigger group built from two smaller ones, and how to spot one.
+- The fundamental group: loops followed one after another, where a map of shapes becomes a homomorphism.
+- Dirichlet characters: homomorphisms from clock arithmetic to numbers on a circle.
+- Representation: homomorphisms into groups of matrices.
 
 Collapsing this kernel would turn a lossy map into an exact match — but not every subgroup can be collapsed, and the next card says which.
 

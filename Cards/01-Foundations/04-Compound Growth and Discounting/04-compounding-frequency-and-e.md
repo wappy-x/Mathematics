@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Compound Growth and Discounting
-topic: Continuous growth
-item: Compounding more often, and the number e
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/03-compound-interest|compound-interest]]"
-next:
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/05-natural-log-and-doubling-time|natural-log-and-doubling-time]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/06-discounting-and-present-value|discounting-and-present-value]]"
-tags:
-  - mathematics
-  - foundations
-  - compounding-frequency-and-e
----
-
 # Compounding more often, and the number e: the ceiling on how fast 5% can grow
 
-Foundations → Compound Growth and Discounting → Continuous growth → Compounding more often, and the number e
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Compound Growth and Discounting](../../../SYLLABUS.md#w01-s04) → Compounding more often, and the number e
 
 ---
 
@@ -108,7 +88,7 @@ Each term is the one before divided by the next counting number: halved, then a 
 
 To nine decimals it is 2.718281828, and it is called **e**: a fixed number, like pi, that does not shift with the rate or the money. "Compounded continuously" means the ceiling was reached.
 
-Put 0.05 in the list instead of 1 and the total comes out smaller: $100 ends at 105.127110, or $105.13 to the cent. Going backwards, from a balance to the time it took, needs the tool that undoes e: [natural-log-and-doubling-time](05-natural-log-and-doubling-time.md).
+Put 0.05 in the list instead of 1 and the total comes out smaller: $100 ends at 105.127110, or $105.13 to the cent. Going backwards, from a balance to the time it took, needs the tool that undoes e: [Natural log and doubling time](05-natural-log-and-doubling-time.md).
 
 ---
 
@@ -275,7 +255,7 @@ The two outputs match line for line.
 
 - **The two rates on a credit card offer.** APR is the advertised one, APY the one you pay. They differ because the charge lands monthly or daily.
 - **Anything that grows or decays on its own.** Populations, bacteria, a cooling room, a drug clearing your blood: nothing waits for a payment date, so e is how they are written.
-- **Moving money between dates.** Option and rate models compound continuously: one convention instead of many schedules. [discounting-and-present-value](06-discounting-and-present-value.md).
+- **Moving money between dates.** Option and rate models compound continuously: one convention instead of many schedules. [Discounting](06-discounting-and-present-value.md).
 
 > **Say it back**
 > Interest paid more often earns a little more, because the early payments earn too. One dollar at 100% goes 2.000000 paid once, 2.250000 twice, 2.613035 monthly, 2.714567 daily. The gains shrink and stop at a ceiling: 2.718281828, called e. Reaching it is what "compounded continuously" means. On $100 at 5% that is $105.13 against $105.00.
@@ -284,12 +264,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [compound-interest](03-compound-interest.md): interest that earns interest, and why the balance bends upward. This card pays it in smaller instalments.
+- [Compound interest](03-compound-interest.md): interest that earns interest, and why the balance bends upward. This card pays it in smaller instalments.
 
 ## Where this goes next
 
-- [natural-log-and-doubling-time](05-natural-log-and-doubling-time.md): the tool that undoes e, and how long money takes to double.
-- [discounting-and-present-value](06-discounting-and-present-value.md): the ladder backwards, money next year turned into money today.
+- [Natural log and doubling time](05-natural-log-and-doubling-time.md): the tool that undoes e, and how long money takes to double.
+- [Discounting](06-discounting-and-present-value.md): the ladder backwards, money next year turned into money today.
 
 ---
 

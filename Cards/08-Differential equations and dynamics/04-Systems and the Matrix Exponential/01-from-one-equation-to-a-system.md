@@ -1,27 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Systems and the Matrix Exponential
-topic: State vectors
-item: From one equation to a system
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/02-the-characteristic-equation|the-characteristic-equation]]"
-  - "[[Cards/03-Algebra/04-Matrices/02-matrix-times-vector|matrix-times-vector]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/02-the-eigenvalue-method|the-eigenvalue-method]]"
-  - "[[Cards/08-Differential equations and dynamics/06-Nonlinear Dynamics in the Plane/01-phase-portraits-and-nullclines|phase-portraits-and-nullclines]]"
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/05-continuous-time-markov-chains-and-queues|continuous-time-markov-chains-and-queues]]"
-  - "[[Cards/23-Differential geometry and Lie groups/01-Curves/07-fundamental-theorem-of-curves|fundamental-theorem-of-curves]]"
-  - "[[Cards/23-Differential geometry and Lie groups/03-Manifolds/08-lie-brackets-and-frobenius-theorem|lie-brackets-and-frobenius-theorem]]"
-tags: [mathematics, differential equations and dynamics, from-one-equation-to-a-system]
----
-
 # From one equation to a system: any higher-order equation is several first-order ones in a vector
 
-Differential equations and dynamics → Systems and the Matrix Exponential → State vectors → From one equation to a system
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Systems and the Matrix Exponential](../../../SYLLABUS.md#w08-s04) → From one equation to a system
 
 ---
 
@@ -29,7 +8,7 @@ Differential equations and dynamics → Systems and the Matrix Exponential → S
 
 A car corner on a test rig: 400 kg on a spring of 2000 N/m, with a shock absorber (a damper) pushing back 800 N per metre per second of speed. The rig pushes the corner 10 cm below rest and lets go. Force equals mass times acceleration; divided by 400 kg, that gives y'' + 2y' + 5y = 0. Here y is the distance below rest in cm, y' its velocity, y'' its acceleration, time in seconds.
 
-The equation involves a second rate, the acceleration. Every solver and slope field in this wing steps a first rate: "the rate of y at time t is f(t, y)" ([what-a-differential-equation-says](../01-Rate%20Equations/01-what-a-differential-equation-says.md)). The fix is bookkeeping: carry position and velocity together. Position changes at the velocity. Velocity changes at the acceleration, which the equation supplies.
+The equation involves a second rate, the acceleration. Every solver and slope field in this wing steps a first rate: "the rate of y at time t is f(t, y)" ([A differential equation](../01-Rate%20Equations/01-what-a-differential-equation-says.md)). The fix is bookkeeping: carry position and velocity together. Position changes at the velocity. Velocity changes at the acceleration, which the equation supplies.
 
 The pair is the **state**, written x: everything about the corner now that fixes its future. Its rate is a matrix times the state, x' = `[[0, 1], [-5, -2]]` x.
 
@@ -60,7 +39,7 @@ $$y'' = f(t, y, y') \quad\Longleftrightarrow\quad \begin{cases} y' = v \\ v' = f
 
 **Read it aloud:** position changes at the velocity; velocity changes at the acceleration the equation gives.
 
-When f is linear (a sum of the unknowns, each times a fixed number), the right-hand sides are a matrix times the state ([matrix-times-vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md)):
+When f is linear (a sum of the unknowns, each times a fixed number), the right-hand sides are a matrix times the state ([Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md)):
 
 $$\mathbf{x}' = A\,\mathbf{x}, \qquad \mathbf{x} = \begin{pmatrix} y \\ v \end{pmatrix}, \qquad A = \begin{pmatrix} 0 & 1 \\ -5 & -2 \end{pmatrix}$$
 
@@ -83,7 +62,7 @@ Row one reads y' = 0 × y + 1 × v: the definition of velocity. Row two reads v'
 
 - **Solvable for the top rate.** t y'' + y = 0 cannot be solved for y'' at t = 0; the system's rate blows up there.
 - **Two starting numbers.** Without y'(0) the state is incomplete: Step 0 shows two futures from one position.
-- **Linearity, for x' = Ax.** A pendulum, v' = −sin y, is still a first-order system but not a matrix times the state: [phase-portraits-and-nullclines](../06-Nonlinear%20Dynamics%20in%20the%20Plane/01-phase-portraits-and-nullclines.md).
+- **Linearity, for x' = Ax.** A pendulum, v' = −sin y, is still a first-order system but not a matrix times the state: [Phase portraits and nullclines](../06-Nonlinear%20Dynamics%20in%20the%20Plane/01-phase-portraits-and-nullclines.md).
 - **Fixed numbers in A.** Time-varying coefficients give x' = A(t)x, where the shelf's exponential solution fails as it stands.
 
 ---
@@ -106,7 +85,7 @@ Solve for the top rate, y'' = −5y − 2y', and rename: v' = −5y − 2v. The 
 
 If y solves the equation, (y, y') solves the system, by Steps 1 and 2. Back: if (y, v) solves the system, row one says v is y', so row two says y'' = −5y − 2y'. Same solutions, matched one to one, with the same starting numbers.
 
-The characteristic equation survives too ([the-characteristic-equation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md)). An eigenvalue of A (a number λ with A times some nonzero vector equal to λ times it) is exactly a root of r^2 + 2r + 5 = 0, with eigenvector (1, λ). For λ = −1 + 2i, A (1, λ) is (−1 + 2i, −3 − 4i), which is λ (1, λ). Those eigenvalues solve the system in [the-eigenvalue-method](02-the-eigenvalue-method.md); complex ones make the state turn as it shrinks, in [complex-eigenvalues-and-spirals](03-complex-eigenvalues-and-spirals.md).
+The characteristic equation survives too ([The characteristic equation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md)). An eigenvalue of A (a number λ with A times some nonzero vector equal to λ times it) is exactly a root of r^2 + 2r + 5 = 0, with eigenvector (1, λ). For λ = −1 + 2i, A (1, λ) is (−1 + 2i, −3 − 4i), which is λ (1, λ). Those eigenvalues solve the system in [The eigenvalue method](02-the-eigenvalue-method.md); complex ones make the state turn as it shrinks, in [Complex eigenvalues](03-complex-eigenvalues-and-spirals.md).
 
 ### Step 4: any order, the same way
 
@@ -129,7 +108,7 @@ Eigenvalues, linear case $y^{(n)} + a_{n-1} y^{(n-1)} + \dots + a_0 y = 0$. If $
 
 ### Step 5: why every solver and every phase picture wants this form
 
-**Solvers.** Euler's rule, new state = old state + step length × rate ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)), is one line for a state of any length. One loop steps both the shock absorber and the third-order equation.
+**Solvers.** Euler's rule, new state = old state + step length × rate ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)), is one line for a state of any length. One loop steps both the shock absorber and the third-order equation.
 
 **Pictures.** The rate law never mentions t, so each point of the plane of states (position across, velocity up) carries one fixed arrow, Ax. Solutions follow the arrows, and exactly one solution passes through each state, so paths never cross. The time chart passes y = 0 repeatedly; the state never revisits a point.
 
@@ -139,7 +118,7 @@ Eigenvalues, linear case $y^{(n)} + a_{n-1} y^{(n-1)} + \dots + a_0 y = 0$. If $
 
 To scale: 1 cm of position is 24 units across, 1 cm/s of velocity 12 units up; the axes cross at rest, (0, 0). The dot is the release (10, 0); points are 0.1 s apart, 0 to 3 s. The curve crosses the velocity axis at Step 0's two passes.
 
-Another road writes x(t) = e^(At) x(0), a matrix in the exponent: [the-matrix-exponential](04-the-matrix-exponential.md).
+Another road writes x(t) = e^(At) x(0), a matrix in the exponent: [The matrix exponential](04-the-matrix-exponential.md).
 
 ---
 
@@ -375,9 +354,9 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Numerical solvers.** Library routines accept only first-order systems. Flight, orbit and circuit simulators rewrite their second-order laws this way first.
-- **Control engineering.** Suspension controllers and autopilots are designed on x' = Ax + Bu, with u the controller's input; forcing is [forced-systems-and-variation-of-constants](06-forced-systems-and-variation-of-constants.md).
-- **Coupled masses.** Two masses on springs give a four-entry state: [coupled-oscillators-and-normal-modes](07-coupled-oscillators-and-normal-modes.md).
-- **Stability at a glance.** Whether rest attracts, repels or spirals is read from two numbers of A: [classifying-equilibria-by-trace-and-determinant](05-classifying-equilibria-by-trace-and-determinant.md).
+- **Control engineering.** Suspension controllers and autopilots are designed on x' = Ax + Bu, with u the controller's input; forcing is [Forced systems](06-forced-systems-and-variation-of-constants.md).
+- **Coupled masses.** Two masses on springs give a four-entry state: [Normal modes](07-coupled-oscillators-and-normal-modes.md).
+- **Stability at a glance.** Whether rest attracts, repels or spirals is read from two numbers of A: [Trace and determinant](05-classifying-equilibria-by-trace-and-determinant.md).
 
 > **Say it back**
 > A second-order equation needs position and velocity now to fix its future. Make them one vector, the state. Row one is the definition of velocity; row two is the equation solved for the acceleration. A linear equation becomes x' = Ax, whose eigenvalues are the characteristic roots. The same move works at any order, and every solver and phase picture uses it.
@@ -386,16 +365,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [the-characteristic-equation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md): the roots −1 ± 2i and the closed-form solution, road one here.
-- [matrix-times-vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md): the row-times-column rule that turns the two rate laws into Ax.
+- [The characteristic equation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md): the roots −1 ± 2i and the closed-form solution, road one here.
+- [Matrix times vector](../../03-Algebra/04-Matrices/02-matrix-times-vector.md): the row-times-column rule that turns the two rate laws into Ax.
 
 ## Where this goes next
 
-- [the-eigenvalue-method](02-the-eigenvalue-method.md): solving x' = Ax along eigenvectors.
-- [phase-portraits-and-nullclines](../06-Nonlinear%20Dynamics%20in%20the%20Plane/01-phase-portraits-and-nullclines.md): the plane of states for nonlinear laws.
-- [continuous-time-markov-chains-and-queues](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md): a vector of chances with a rate matrix, the same shape.
-- fundamental-theorem-of-curves: a curve's moving frame obeys a linear system.
-- lie-brackets-and-frobenius-theorem: a first-order system as a vector field.
+- [The eigenvalue method](02-the-eigenvalue-method.md): solving x' = Ax along eigenvectors.
+- [Phase portraits and nullclines](../06-Nonlinear%20Dynamics%20in%20the%20Plane/01-phase-portraits-and-nullclines.md): the plane of states for nonlinear laws.
+- [Continuous-time chains](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/05-continuous-time-markov-chains-and-queues.md): a vector of chances with a rate matrix, the same shape.
+- Fundamental theorem of curves: a curve's moving frame obeys a linear system.
+- Lie bracket: a first-order system as a vector field.
 
 ---
 

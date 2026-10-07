@@ -1,24 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Chance and Events
-topic: Classical probability
-item: Counting chances
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/03-probability-rules-and-complements|probability-rules-and-complements]]"
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/05-n-choose-k|n-choose-k]]"
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/04-ordered-picks|ordered-picks]]"
-next:
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/01-bernoulli-and-binomial|bernoulli-and-binomial]]"
-tags: [mathematics, probability and statistics, equally-likely-outcomes-and-counting]
----
-
 # Counting chances: favourable over possible, with the counting done in wing 04
 
-Probability and statistics → Chance and Events → Classical probability → Counting chances
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Chance and Events](../../../SYLLABUS.md#w09-s01) → Counting chances
 
 ---
 
@@ -53,7 +35,7 @@ Each bar is the share of all hands with that suit shape, counted by formula and 
 
 ## The formula
 
-Notation first, in words. $P(A)$ is the chance of the event $A$, read "the chance of A" ([what-probability-means](01-what-probability-means.md)). $S$ is the sample space: the list of every outcome that can happen ([sample-spaces-and-events](02-sample-spaces-and-events.md)). Vertical bars count members: $\lvert A\rvert$ is how many outcomes $A$ holds. $C(n, k)$, read "n choose k", is the number of ways to take $k$ things from $n$ with order ignored ([n-choose-k](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/05-n-choose-k.md)).
+Notation first, in words. $P(A)$ is the chance of the event $A$, read "the chance of A" ([Probability](01-what-probability-means.md)). $S$ is the sample space: the list of every outcome that can happen ([Sample spaces and events](02-sample-spaces-and-events.md)). Vertical bars count members: $\lvert A\rvert$ is how many outcomes $A$ holds. $C(n, k)$, read "n choose k", is the number of ways to take $k$ things from $n$ with order ignored ([Combinations, n choose k](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/05-n-choose-k.md)).
 
 $$P(A) = \frac{\lvert A\rvert}{\lvert S\rvert}\qquad\text{when every outcome in } S \text{ is equally likely}$$
 
@@ -76,7 +58,7 @@ The 4 picks the suit. $C(13, 5)$ picks five of that suit's 13 ranks. $C(52, 5)$ 
 | $k$ | how many are taken | 5 cards | — |
 | $n!$ | the orders of $n$ different things: n × (n−1) × … × 1 | 5! = 120 | — |
 
-One clash of letters: the [ordered-picks](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/04-ordered-picks.md) card writes its count of ordered picks with a P too. That count is not a chance, so this card writes ordered products out in full, 52 × 51 × 50 × 49 × 48.
+One clash of letters: the [Ordered picks](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/04-ordered-picks.md) card writes its count of ordered picks with a P too. That count is not a chance, so this card writes ordered products out in full, 52 × 51 × 50 × 49 × 48.
 
 ### When it holds
 
@@ -95,7 +77,7 @@ A fair shuffle does not prefer one card to another. Swap the names of any two ca
 
 ### Step 1: equal chances that fill the space are each one over the count
 
-Say the sample space holds $\lvert S\rvert$ outcomes, each with the same chance, call it q. Different outcomes cannot happen together, so by the addition rule ([probability-rules-and-complements](03-probability-rules-and-complements.md)) their chances add. Something must happen, so they add to 1. That gives $\lvert S\rvert \times q = 1$, so q = 1 over $\lvert S\rvert$: one over 2,598,960 for each hand.
+Say the sample space holds $\lvert S\rvert$ outcomes, each with the same chance, call it q. Different outcomes cannot happen together, so by the addition rule ([The rules](03-probability-rules-and-complements.md)) their chances add. Something must happen, so they add to 1. That gives $\lvert S\rvert \times q = 1$, so q = 1 over $\lvert S\rvert$: one over 2,598,960 for each hand.
 
 ### Step 2: an event's chance is its count times that share
 
@@ -122,7 +104,7 @@ Build a flush in two moves. Choose its suit: 4 ways. Choose its five ranks from 
 
 Counting ordered deals gives the same answer. The first card can be any of 52. For a flush the second must share its suit, 12 of the 51 left, then 11 of 50, 10 of 49, 9 of 48: 617,760 ordered flushes out of 311,875,200 ordered deals. Each unordered hand appears in 5! = 120 orders, top and bottom alike, so dividing both by 120 returns 5,148 over 2,598,960. The ratio does not move.
 
-The same ordered road can be read as a chain of chances, 12/51 × 11/50 × 10/49 × 9/48, each factor a chance given the cards already dealt. That reading is [conditional-probability](05-conditional-probability.md), which does it properly.
+The same ordered road can be read as a chain of chances, 12/51 × 11/50 × 10/49 × 9/48, each factor a chance given the cards already dealt. That reading is [Conditional probability](05-conditional-probability.md), which does it properly.
 
 ---
 
@@ -472,8 +454,8 @@ The two outputs match line for line. The simulation matches too, because both la
 ## Where you meet it in real life
 
 - **Card rooms and poker odds tables.** Every printed table of hand chances is this card's division, with a different top count per hand.
-- **Lotteries.** A six-from-49 ticket wins the jackpot with chance 1 over C(49, 6): one outcome on top, every ticket below ([n-choose-k](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/05-n-choose-k.md)).
-- **Quality checks by sampling.** Draw 5 items from a batch of 52 with some faulty, and the chance of finding none is a count of faultless handfuls over all handfuls: the [hypergeometric](../03-Discrete%20Distributions/03-hypergeometric.md) law.
+- **Lotteries.** A six-from-49 ticket wins the jackpot with chance 1 over C(49, 6): one outcome on top, every ticket below ([Combinations, n choose k](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/05-n-choose-k.md)).
+- **Quality checks by sampling.** Draw 5 items from a batch of 52 with some faulty, and the chance of finding none is a count of faultless handfuls over all handfuls: the [Hypergeometric](../03-Discrete%20Distributions/03-hypergeometric.md) law.
 - **Random assignment in trials.** Shuffling patients into treatment and control makes every split equally likely, which is what later lets a statistician compute how surprising a result is by counting splits.
 - **Shuffling software.** A card-game app that shuffles badly makes some hands likelier than others; comparing its dealt frequencies with the chart above exposes it, as road 4 does in reverse.
 
@@ -484,14 +466,14 @@ The two outputs match line for line. The simulation matches too, because both la
 
 ## What this builds on
 
-- [probability-rules-and-complements](03-probability-rules-and-complements.md): the addition rule and the total of 1, which force equal chances to be one over the count.
-- [n-choose-k](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/05-n-choose-k.md): C(n, k), the count of unordered hands and of ranks within a suit.
-- [ordered-picks](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/04-ordered-picks.md): the ordered count 52 × 51 × 50 × 49 × 48, the second road.
+- [The rules](03-probability-rules-and-complements.md): the addition rule and the total of 1, which force equal chances to be one over the count.
+- [Combinations, n choose k](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/05-n-choose-k.md): C(n, k), the count of unordered hands and of ranks within a suit.
+- [Ordered picks](../../04-Combinatorics%20and%20graphs/01-Counting%20Principles/04-ordered-picks.md): the ordered count 52 × 51 × 50 × 49 × 48, the second road.
 
 ## Where this goes next
 
-- [bernoulli-and-binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md): repeat a yes-or-no trial and count the ways to get k successes; C(n, k) returns, now weighting outcomes that are not equally likely.
-- [conditional-probability](05-conditional-probability.md), next on this shelf: the chain 12/51 × 11/50 × 10/49 × 9/48 read as chances that update as cards are seen.
+- [Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md): repeat a yes-or-no trial and count the ways to get k successes; C(n, k) returns, now weighting outcomes that are not equally likely.
+- [Conditional probability](05-conditional-probability.md), next on this shelf: the chain 12/51 × 11/50 × 10/49 × 9/48 read as chances that update as cards are seen.
 
 Counting works only when every outcome carries the same weight; the question left open is how to compute chances when they do not, and how a chance changes once part of the outcome is known.
 

@@ -1,27 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Changing Measure
-topic: Prices as averages and as equations
-item: Feynman-Kac
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-  - "[[Cards/11-Stochastic processes and calculus/02-Martingales/01-martingales|martingales]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/03-the-heat-equation|the-heat-equation]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/02-kolmogorov-backward-equation|kolmogorov-backward-equation]]"
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/01-the-term-structure-equation|the-term-structure-equation]]"
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/08-feller-semigroups-and-markov-processes|feller-semigroups-and-markov-processes]]"
-  - "[[Cards/19-Partial differential equations/03-The Heat Equation in Depth/08-feynman-kac-and-the-kolmogorov-equations|feynman-kac-and-the-kolmogorov-equations]]"
-tags: [mathematics, stochastic processes and calculus, feynman-kac-formula]
----
-
 # Feynman-Kac: an expectation of a diffusion solves a PDE
 
-Stochastic processes and calculus → Changing Measure → Prices as averages and as equations → Feynman-Kac
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Changing Measure](../../../SYLLABUS.md#w11-s07) → Feynman-Kac
 
 ---
 
@@ -59,7 +38,7 @@ The flat line is the 5 percent world: the discounted price neither rises nor fal
 
 ## The formula
 
-Reminders first. $W_t$ is Brownian motion, "the random walk seen from far away". A process $X_t$ follows the rule $dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t$: in each short slice of time it drifts by $\mu$ times the slice and takes a kick of $\sigma$ times the Brownian step; $dW_t$ is shorthand for an Ito integral, never a derivative, since the path has no slope. A subscript on a function means a slope: $u_t$ in time, $u_x$ in space, $u_{xx}$ the curvature, the slope of the slope ([itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md)). On a process the subscript is a time instead: $S_t$, $W_t$, $X_t$ and $M_t$ are values at time t, while $u_t$ and $V_t$ are slopes.
+Reminders first. $W_t$ is Brownian motion, "the random walk seen from far away". A process $X_t$ follows the rule $dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t$: in each short slice of time it drifts by $\mu$ times the slice and takes a kick of $\sigma$ times the Brownian step; $dW_t$ is shorthand for an Ito integral, never a derivative, since the path has no slope. A subscript on a function means a slope: $u_t$ in time, $u_x$ in space, $u_{xx}$ the curvature, the slope of the slope ([Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md)). On a process the subscript is a time instead: $S_t$, $W_t$, $X_t$ and $M_t$ are values at time t, while $u_t$ and $V_t$ are slopes.
 
 The equation, for a function $u$ of time and place, with a payoff at the end:
 
@@ -71,7 +50,7 @@ $$u(t, x) = E\Big[\,e^{-r(T-t)}\, g(X_T) \;\Big|\; X_t = x\,\Big]$$
 
 **Read it aloud:** the value now, at place x, is the average over all paths from x of the payoff where the path ends, discounted by the rate r over the time left.
 
-For the share, $X_t$ is the price $S_t$, and the average is taken under the pricing measure $Q$, the reweighting of paths under which the share drifts at the bank rate ($Q$ and its averages $E^Q$ are taught on [change-of-measure-and-density-processes](01-change-of-measure-and-density-processes.md); the switch of drift is [girsanov-theorem](02-girsanov-theorem.md)). Under $Q$ the share's rule is $dS_t = r S_t\,dt + \sigma S_t\,dW_t$, with $W_t$ now a Brownian motion under $Q$. So the drift function is $r\,s$, the kick function is $\sigma\,s$ with $\sigma$ now the constant volatility 0.20, and the equation becomes the Black-Scholes equation:
+For the share, $X_t$ is the price $S_t$, and the average is taken under the pricing measure $Q$, the reweighting of paths under which the share drifts at the bank rate ($Q$ and its averages $E^Q$ are taught on [Changing the measure](01-change-of-measure-and-density-processes.md); the switch of drift is [Girsanov](02-girsanov-theorem.md)). Under $Q$ the share's rule is $dS_t = r S_t\,dt + \sigma S_t\,dW_t$, with $W_t$ now a Brownian motion under $Q$. So the drift function is $r\,s$, the kick function is $\sigma\,s$ with $\sigma$ now the constant volatility 0.20, and the equation becomes the Black-Scholes equation:
 
 $$V_t + r\,s\,V_s + \tfrac12\,\sigma^2 s^2\, V_{ss} - r\,V = 0, \qquad V(T, s) = (s - K)^+$$
 
@@ -94,11 +73,11 @@ Here $(s - K)^+$ means s − K when that is positive and 0 otherwise. Done as an
 | $V_t$, $V_s$, $V_{ss}$, $u_t$, $u_x$, $u_{xx}$ | slopes of the price in time and in the share price, and its curvature | the curvature term carries the whole option value above the zero-volatility price | — |
 | $P$, $Q$, $E^Q$ | the real-world measure (drift 0.08); the pricing measure (drift 0.05); averages under Q | the two lines of the picture | — |
 
-With a rate that changes with place or time, the discount becomes $\exp(-\int_t^T r(X_v, v)\,dv)$ inside the average; the proof is the same, and [the-term-structure-equation](../../12-Financial%20mathematics/30-Short-Rate%20Models/01-the-term-structure-equation.md) uses that form.
+With a rate that changes with place or time, the discount becomes $\exp(-\int_t^T r(X_v, v)\,dv)$ inside the average; the proof is the same, and [A short-rate model](../../12-Financial%20mathematics/30-Short-Rate%20Models/01-the-term-structure-equation.md) uses that form.
 
 ### When it holds
 
-- **The process has the Markov property: its future depends on the past only through where it is now.** Solutions of a stochastic differential equation whose coefficients change at most in proportion to a change in x (Lipschitz) and grow at most linearly have it ([stochastic-differential-equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md)). Without it, an average from x is not a function of x and t alone, and there is no equation to solve.
+- **The process has the Markov property: its future depends on the past only through where it is now.** Solutions of a stochastic differential equation whose coefficients change at most in proportion to a change in x (Lipschitz) and grow at most linearly have it ([Stochastic differential equations](../06-Ito%20Calculus/04-stochastic-differential-equations.md)). Without it, an average from x is not a function of x and t alone, and there is no equation to solve.
 - **The solution is smooth enough for Ito's lemma: one slope in time, two in space, all continuous before T.** The payoff may have a kink, as $(s - K)^+$ does at 100; the price is smooth for any time before T. If the average itself is not smooth, it still exists but solves the equation only in a weaker sense.
 - **The random part of the discounted price is a true martingale, not merely a local one.** This is the condition usually left unstated. A finite $E\int_t^T (\sigma u_x)^2\,dv$ is enough. Drop it and the equation can have two solutions with the same payoff: for the rule $dX_t = X_t^2\,dW_t$, whose kick grows faster than linearly, started at 1, both u = x and the expectation, 0.682689, solve the same equation. The check prints both.
 - **No walls, or paths stopped at them.** On a rod with fixed end temperatures, the average runs over paths stopped at the first hit of an end.
@@ -113,7 +92,7 @@ Take the discounted price $M_t = e^{-rt}V(t, S_t)$. Ito's lemma writes its chang
 
 ### Step 1: compute the drift of the discounted price
 
-Ito's product rule ([ito-product-rule](../06-Ito%20Calculus/03-ito-product-rule.md)) with the ordinary factor $e^{-rt}$, and Ito's lemma for $u(t, X_t)$, give
+Ito's product rule ([Ito's product rule](../06-Ito%20Calculus/03-ito-product-rule.md)) with the ordinary factor $e^{-rt}$, and Ito's lemma for $u(t, X_t)$, give
 
 $$d\big(e^{-rt}u(t, X_t)\big) = e^{-rt}\Big(u_t + \mu u_x + \tfrac12\sigma^2 u_{xx} - r u\Big)dt \;+\; e^{-rt}\,\sigma\,u_x\,dW_t$$
 
@@ -125,7 +104,7 @@ Suppose $u$ solves the equation. Then the bracket is zero at every (t, x), so al
 
 $$e^{-rT}u(T, X_T) - e^{-rt}u(t, X_t) = \int_t^T e^{-rv}\,\sigma\,u_x\,dW_v$$
 
-The right side is an Ito integral. When it is a true martingale its average is zero ([martingales](../02-Martingales/01-martingales.md)). Average both sides given $X_t = x$, use $u(T, \cdot) = g$, and multiply by $e^{rt}$:
+The right side is an Ito integral. When it is a true martingale its average is zero ([Martingales](../02-Martingales/01-martingales.md)). Average both sides given $X_t = x$, use $u(T, \cdot) = g$, and multiply by $e^{rt}$:
 
 $$u(t, x) = E\big[e^{-r(T-t)}g(X_T) \,\big|\, X_t = x\big]$$
 
@@ -135,7 +114,7 @@ This direction also proves uniqueness: any two solutions in the class equal the 
 
 Now define $u(t, x)$ as the average. By the Markov property, the forecast at time v of the discounted payoff is $e^{-rv}u(v, X_v)$, the same average restarted from where the path is. Forecasts of one fixed quantity form a martingale, by the tower property (the forecast of a later forecast is today's forecast).
 
-If $u$ is smooth, Step 1 applies. Subtract the Ito integral from this martingale and what remains is the dt part: still a (local) martingale, but an ordinary integral, with no roughness. A continuous martingale with zero quadratic variation (the sum of squared small steps, [quadratic-variation](../05-Brownian%20Motion/03-quadratic-variation.md)) is constant. So the dt part is zero. Shrink the time window to the start and the bracket is zero at (t, x). The start was arbitrary: the average solves the equation.
+If $u$ is smooth, Step 1 applies. Subtract the Ito integral from this martingale and what remains is the dt part: still a (local) martingale, but an ordinary integral, with no roughness. A continuous martingale with zero quadratic variation (the sum of squared small steps, [Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)) is constant. So the dt part is zero. Shrink the time window to the start and the bracket is zero at (t, x). The start was arbitrary: the average solves the equation.
 
 <details>
 <summary>Detailed proof</summary>
@@ -152,7 +131,7 @@ If $u$ is smooth, Step 1 applies. Subtract the Ito integral from this martingale
 
 ### Step 4: the heat equation is the simplest case
 
-Take no drift, kick size 1 and no discount: $\mu = 0$, $\sigma = 1$, $r = 0$, so $X_T = x + (W_T - W_t)$. The equation is $u_t + \tfrac12 u_{xx} = 0$. In the time left, $\tau = T - t$, it reads $u_\tau = \tfrac12 u_{xx}$: the heat equation of [the-heat-equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md), with diffusivity one half, run forward in the time left. Feynman-Kac solves it in one line:
+Take no drift, kick size 1 and no discount: $\mu = 0$, $\sigma = 1$, $r = 0$, so $X_T = x + (W_T - W_t)$. The equation is $u_t + \tfrac12 u_{xx} = 0$. In the time left, $\tau = T - t$, it reads $u_\tau = \tfrac12 u_{xx}$: the heat equation of [The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md), with diffusivity one half, run forward in the time left. Feynman-Kac solves it in one line:
 
 $$u(\tau, x) = E\big[g(x + W_\tau)\big] = \int g(y)\,\frac{1}{\sqrt{2\pi\tau}}\,e^{-(y - x)^2/(2\tau)}\,dy$$
 
@@ -164,13 +143,13 @@ Write the share price through its logarithm, $x = \ln s$. Under $Q$, Ito's lemma
 
 $$V(t, s) = e^{-r\tau}\int \Big(e^{\,\ln s + (r - \frac12\sigma^2)\tau + \sigma\sqrt{\tau}\,z} - K\Big)^+ \frac{e^{-z^2/2}}{\sqrt{2\pi}}\,dz$$
 
-That is the heat kernel with diffusivity $\tfrac12\sigma^2$, a centre that moves at $r - \tfrac12\sigma^2$, and a discount in front. Black and Scholes made the same change of variables and solved the heat equation; Feynman-Kac reads their answer as an average. Splitting the payoff where the share passes the strike gives the two terms of the closed form, as [black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) does in full.
+That is the heat kernel with diffusivity $\tfrac12\sigma^2$, a centre that moves at $r - \tfrac12\sigma^2$, and a discount in front. Black and Scholes made the same change of variables and solved the heat equation; Feynman-Kac reads their answer as an average. Splitting the payoff where the share passes the strike gives the two terms of the closed form, as [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) does in full.
 
 ### Step 6: and back, one small step at a time
 
 Solve the Black-Scholes equation on a grid in $x = \ln s$, stepping backwards from the payoff. The explicit step replaces each value by a weighted sum of its three neighbours one step later, minus interest. At spacing 0.02 the weights are 0.2525, 0.5025 and 0.2450: positive, adding to one. Each grid step is a discounted average over a three-way random step of the log price, so the grid solution is Feynman-Kac on a lattice. When the time step is too long the middle weight turns negative, the step stops being an average, and the grid blows up.
 
-Another route goes through the generator, the diffusion's average rate of change $\mu u_x + \tfrac12\sigma^2 u_{xx}$: [kolmogorov-backward-equation](../08-Generators%2C%20Densities%20and%20Simulation/02-kolmogorov-backward-equation.md) derives the equation from it.
+Another route goes through the generator, the diffusion's average rate of change $\mu u_x + \tfrac12\sigma^2 u_{xx}$: [Kolmogorov backward equation](../08-Generators%2C%20Densities%20and%20Simulation/02-kolmogorov-backward-equation.md) derives the equation from it.
 
 ---
 
@@ -651,11 +630,11 @@ The two outputs agree line for line.
 
 ## Where you meet it in real life
 
-- **Option desks.** Prices come either from simulated paths or from the equation on a grid; Feynman-Kac is why the two agree. The finance card [black-scholes-equation](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md) uses it.
+- **Option desks.** Prices come either from simulated paths or from the equation on a grid; Feynman-Kac is why the two agree. The finance card [The Black-Scholes equation](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md) uses it.
 - **Bond prices.** With a wandering interest rate the discount is the rate integrated along the path, and a bond's price solves the term-structure equation.
 - **Heat in many dimensions.** A temperature is the average starting temperature where random walkers from that point arrive. Simulation solvers use this where grids grow too large.
 - **Quantum mechanics.** Kac's version, with a potential energy as the discount rate, finds ground-state energies by averaging over Brownian paths.
-- **Changing numeraire.** Pricing in units of another asset changes the drift in the equation and the measure in the average together: [change-of-numeraire](05-change-of-numeraire.md).
+- **Changing numeraire.** Pricing in units of another asset changes the drift in the equation and the measure in the average together: [Change of numeraire](05-change-of-numeraire.md).
 
 > **Say it back**
 > An expected discounted payoff, read as a function of where and when a diffusion starts, solves a backward equation: time slope, plus drift times slope, plus half the squared kick times curvature, minus rate times value, equals zero. Ito's lemma on the discounted value proves it: the equation says its drift is zero, the average says it is a fair game. With no drift and no discount the equation is the heat equation and the average is the heat kernel. The share's call is 10.450584 dollars under the pricing measure, not under the real drift. A solution whose random part is only a local martingale can differ from the average.
@@ -664,16 +643,16 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [itos-lemma](../06-Ito%20Calculus/02-itos-lemma.md): the chain rule with the curvature term, which turns the discounted price's change into a drift plus a kick.
-- [martingales](../02-Martingales/01-martingales.md): the fair game whose forecast is today's value, and the tower property that makes forecasts of one quantity a martingale.
-- [the-heat-equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md): the equation Feynman-Kac solves by averaging Brownian paths, and the grid step that becomes an average.
+- [Ito's lemma](../06-Ito%20Calculus/02-itos-lemma.md): the chain rule with the curvature term, which turns the discounted price's change into a drift plus a kick.
+- [Martingales](../02-Martingales/01-martingales.md): the fair game whose forecast is today's value, and the tower property that makes forecasts of one quantity a martingale.
+- [The heat equation](../../08-Differential%20equations%20and%20dynamics/10-The%20Classical%20PDEs/03-the-heat-equation.md): the equation Feynman-Kac solves by averaging Brownian paths, and the grid step that becomes an average.
 
 ## Where this goes next
 
-- [kolmogorov-backward-equation](../08-Generators%2C%20Densities%20and%20Simulation/02-kolmogorov-backward-equation.md): the same backward equation without discount or payoff, written with the generator, for the transition probabilities themselves.
-- [the-term-structure-equation](../../12-Financial%20mathematics/30-Short-Rate%20Models/01-the-term-structure-equation.md): Feynman-Kac with a rate that wanders, pricing bonds.
-- feller-semigroups-and-markov-processes: the averages as a family of operators, one for each length of time, and the equation as their rate of change.
-- feynman-kac-and-the-kolmogorov-equations: the theorem from the equation's side, with boundaries, potentials and the weaker solutions that hold when the average is not smooth.
+- [Kolmogorov backward equation](../08-Generators%2C%20Densities%20and%20Simulation/02-kolmogorov-backward-equation.md): the same backward equation without discount or payoff, written with the generator, for the transition probabilities themselves.
+- [A short-rate model](../../12-Financial%20mathematics/30-Short-Rate%20Models/01-the-term-structure-equation.md): Feynman-Kac with a rate that wanders, pricing bonds.
+- Feller semigroups: the averages as a family of operators, one for each length of time, and the equation as their rate of change.
+- Feynman-Kac: the theorem from the equation's side, with boundaries, potentials and the weaker solutions that hold when the average is not smooth.
 
 This card assumed the average was smooth or the solution was given; when an average fails to be smooth, which equation does it still solve, and in what sense?
 

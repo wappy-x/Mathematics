@@ -1,23 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Curves and Solids
-topic: Balance points and swept solids
-item: Centre of mass
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/05-Curves and Solids/03-volumes-by-slices-and-shells|volumes-by-slices-and-shells]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/09-average-value-mass-and-work|average-value-mass-and-work]]"
-next:
-  - "[[Cards/13-Engineering mathematics/07-Mechanics and Structures/02-rigid-body-rotation-and-moment-of-inertia|rigid-body-rotation-and-moment-of-inertia]]"
-tags: [mathematics, calculus and analysis, centre-of-mass-and-pappus]
----
-
 # Centre of mass: where a shape balances, and the trick that gives volumes from a balance point
 
-Calculus and analysis → Curves and Solids → Balance points and swept solids → Centre of mass
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Curves and Solids](../../../SYLLABUS.md#w06-s05) → Centre of mass
 
 ---
 
@@ -69,7 +52,7 @@ $$V = \pi r^2 \times 2\pi R = 2\pi^2 R r^2$$
 | $V$ | the volume swept out in one full turn | 59.2176 litres | — |
 | $n$, $x_k$, $A_k$, $M_k$, $V_k$, $\varepsilon$ | proof only: strip count; a strip's edge, area, moment, swept volume; allowed error | — | — |
 
-A **centre of mass** weights each piece by mass instead of area ([average-value-mass-and-work](../04-Integrals/09-average-value-mass-and-work.md)); for a sheet of even thickness the two coincide.
+A **centre of mass** weights each piece by mass instead of area ([Averages, mass and work](../04-Integrals/09-average-value-mass-and-work.md)); for a sheet of even thickness the two coincide.
 
 ### When it holds
 
@@ -88,7 +71,7 @@ Take one thin rectangle of height $h$, standing between distance $x$ and $x + \D
 
 ### Step 1: add the strips
 
-Add the shells of many thin strips. As they thin, the sum becomes the shell-method integral ([volumes-by-slices-and-shells](03-volumes-by-slices-and-shells.md)):
+Add the shells of many thin strips. As they thin, the sum becomes the shell-method integral ([Volumes](03-volumes-by-slices-and-shells.md)):
 
 $$V = \int_a^b 2\pi x\,h(x)\,dx$$
 
@@ -129,7 +112,7 @@ Scale 1 m = 1000 units. The strip 0.08 m up reaches 0.06 m each side of the midd
 
 Spun round its flat edge, the half-disc sweeps a ball of radius 0.1 m. Pappus gives 0.0157080 m^2 × 2π × 0.042441 m = 4.1888 litres, which is the ball formula $\tfrac{4}{3}\pi r^3$. Run backwards, the same line finds the centroid from the ball's known volume.
 
-The other road stacks washers (flat rings) along the axis and never mentions a centroid ([volumes-by-slices-and-shells](03-volumes-by-slices-and-shells.md)); the code takes it. Spinning a curve gives surface area the same way, length times path ([surface-area-of-revolution](04-surface-area-of-revolution.md)).
+The other road stacks washers (flat rings) along the axis and never mentions a centroid ([Volumes](03-volumes-by-slices-and-shells.md)); the code takes it. Spinning a curve gives surface area the same way, length times path ([Surface area](04-surface-area-of-revolution.md)).
 
 ---
 
@@ -375,12 +358,12 @@ The two outputs match line for line. The washer error closes more slowly than Si
 
 ## What this builds on
 
-- [volumes-by-slices-and-shells](03-volumes-by-slices-and-shells.md): the shell integral that Pappus rewrites, and the washer road the code takes.
-- [average-value-mass-and-work](../04-Integrals/09-average-value-mass-and-work.md): an integral as a weighted average, and mass as density added up.
+- [Volumes](03-volumes-by-slices-and-shells.md): the shell integral that Pappus rewrites, and the washer road the code takes.
+- [Averages, mass and work](../04-Integrals/09-average-value-mass-and-work.md): an integral as a weighted average, and mass as density added up.
 
 ## Where this goes next
 
-- rigid-body-rotation-and-moment-of-inertia: weighting each piece by its distance squared instead of its distance, which sets how hard a body is to spin.
+- Rotation: weighting each piece by its distance squared instead of its distance, which sets how hard a body is to spin.
 
 ---
 

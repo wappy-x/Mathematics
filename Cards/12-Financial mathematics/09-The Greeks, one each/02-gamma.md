@@ -1,34 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Greeks, one each
-topic: Curvature of the option price
-item: Gamma
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/01-delta|delta]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-next:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/04-theta|theta]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/10-theta-pays-for-gamma-hedged-pnl|theta-pays-for-gamma-hedged-pnl]]"
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/03-digital-greeks-and-pin-risk|digital-greeks-and-pin-risk]]"
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/04-barrier-greeks-at-the-wall|barrier-greeks-at-the-wall]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/03-garman-kohlhagen-greeks|garman-kohlhagen-greeks]]"
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/04-delta-gamma-var-and-cornish-fisher|delta-gamma-var-and-cornish-fisher]]"
-tags: [mathematics, financial mathematics, gamma]
----
-
 # Gamma: how fast the hedge ratio changes, so how often you must rebuild it
 
-Financial mathematics → The Greeks, one each → Curvature of the option price → Gamma
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Greeks, one each](../../../SYLLABUS.md#w12-s09) → Gamma
 
 ---
 
 ## General Overview
 
-A desk has sold 10,000 one-year call options on Acme. Acme trades at $100, the strike is $100, and each option is worth $9.23. To stop a move in Acme from costing it money, the desk holds Acme shares: 0.586851 of a share per option, which is 5,869 shares in all. That share count per option is the option's **delta**, the hedge ratio ([delta](01-delta.md)).
+A desk has sold 10,000 one-year call options on Acme. Acme trades at $100, the strike is $100, and each option is worth $9.23. To stop a move in Acme from costing it money, the desk holds Acme shares: 0.586851 of a share per option, which is 5,869 shares in all. That share count per option is the option's **delta**, the hedge ratio ([Delta](01-delta.md)).
 
 The hedge is right for one price only. Acme rises to $105, and each option now behaves like 0.675680 of a share. The desk's 5,869 shares are 888 short of the new hedge. It must buy them, at $105, for $93,270.20. Had Acme fallen, it would have had to sell, at the lower price. The option price is a curve, and the hedge is a straight line touching it at one point.
 
@@ -60,7 +38,7 @@ Orange: the option's price. Green: the hedge line, the tangent (the straight lin
 
 $$\Gamma \;=\; \frac{\partial \Delta}{\partial S} \;=\; \frac{\partial^2 C}{\partial S^2} \;=\; \frac{e^{-qT}\,\varphi(d_1)}{S\,\sigma\sqrt{T}}$$
 
-The curly ∂ marks a partial derivative: the rate of change in one input while every other input is held still ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). $\partial^2 C/\partial S^2$ is that rate taken twice: the slope of the slope.
+The curly ∂ marks a partial derivative: the rate of change in one input while every other input is held still ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). $\partial^2 C/\partial S^2$ is that rate taken twice: the slope of the slope.
 
 **Read it aloud:** gamma is the height of the bell curve at the share-side cut-off, shrunk by the dividend drag, divided by how many dollars Acme typically moves over the option's life.
 
@@ -79,7 +57,7 @@ The curly ∂ marks a partial derivative: the rate of change in one input while 
 | $e^{-qT}$, $e^{-rT}$ | dividend drag, and the discount on a dollar due at expiry | 0.980199 and 0.951229 | — |
 | $m$ | a move in Acme's price, in dollars | \$5 | — |
 
-The helpers are the ones from [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), unchanged:
+The helpers are the ones from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), unchanged:
 
 $$d_1 = \frac{\ln(S/K) + (r - q + \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}, \qquad \varphi(x) = \frac{e^{-x^2/2}}{\sqrt{2\pi}}$$
 
@@ -102,7 +80,7 @@ Delta is the slope of the price curve: how many dollars the option moves per dol
 
 ### Step 1: delta is an area under the bell curve
 
-Delta for a call is $\Delta = e^{-qT}N(d_1)$ ([delta](01-delta.md)). $N(d_1)$ is an area: the part of the bell curve to the left of the cut-off $d_1$. Acme rises, so $d_1$ slides right, and the area grows by a thin strip at its right edge.
+Delta for a call is $\Delta = e^{-qT}N(d_1)$ ([Delta](01-delta.md)). $N(d_1)$ is an area: the part of the bell curve to the left of the cut-off $d_1$. Acme rises, so $d_1$ slides right, and the area grows by a thin strip at its right edge.
 
 ### Step 2: the strip's height is the bell curve's height
 
@@ -151,7 +129,7 @@ $$S^{*} = K e^{-(r - q + \frac32\sigma^2)T}.$$
 
 For Acme, $S^{*}$ = \$91.39, and gamma there is 0.020970. "Gamma peaks at the money" is true only for short-dated options; with a year left the peak sits nearly \$9 below the strike.
 
-A second road to the same number: the Black-Scholes equation ties gamma to theta, delta and the price. Solve it for gamma, feed it a bumped theta, and gamma comes out without a bell-curve height in sight. That trade-off, gamma paid for by time decay, is [theta-pays-for-gamma-hedged-pnl](10-theta-pays-for-gamma-hedged-pnl.md).
+A second road to the same number: the Black-Scholes equation ties gamma to theta, delta and the price. Solve it for gamma, feed it a bumped theta, and gamma comes out without a bell-curve height in sight. That trade-off, gamma paid for by time decay, is [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md).
 
 ---
 
@@ -618,7 +596,7 @@ The two outputs are identical at every printed digit. The tree lands at 0.018958
 ## The usual mistake
 
 > [!warning]
-> **Treating the hedge as set and forget.** Delta is correct at one price. After a $5 move the desk's 5,869 shares are 888 short, and the book has already lost $2,272.31. Gamma is the rate at which the hedge goes wrong, so a large gamma means rebuilding often, at a cost in spreads and in buying high and selling low. The rebuilding cost is what theta pays for: [theta-pays-for-gamma-hedged-pnl](10-theta-pays-for-gamma-hedged-pnl.md).
+> **Treating the hedge as set and forget.** Delta is correct at one price. After a $5 move the desk's 5,869 shares are 888 short, and the book has already lost $2,272.31. Gamma is the rate at which the hedge goes wrong, so a large gamma means rebuilding often, at a cost in spreads and in buying high and selling low. The rebuilding cost is what theta pays for: [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md).
 >
 > Four smaller traps:
 > - **Area for height.** $N(d_1)$ in place of $\varphi(d_1)$ gives 0.029343, half as big again as the right answer. Delta is the area; gamma is the height.
@@ -631,11 +609,11 @@ The two outputs are identical at every printed digit. The tree lands at 0.018958
 ## Where you meet it in real life
 
 - **Market-maker rebalancing.** A desk short options is short gamma: every move costs it, and it trades shares after each one. The table above says how many, 239 on a typical day with a year left, thousands near expiry.
-- **Pin risk at expiry.** When a large open position sits near its strike on the last day, gamma at the strike is 0.3810 and the hedge flips between none and all. The same effect, sharper still, is on [digital-greeks-and-pin-risk](../10-Digitals%20and%20the%20implied%20density/03-digital-greeks-and-pin-risk.md).
-- **Gamma scalping.** A trader long options and delta-hedged buys after falls and sells after rises, pocketing about $\tfrac12\Gamma m^2$ per move, and pays for it in time decay ([theta](04-theta.md)).
-- **Risk reports.** Value at Risk for an options book adds the gamma term to the delta term, because a hedged book's loss is curved in the move: [delta-gamma-var-and-cornish-fisher](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/04-delta-gamma-var-and-cornish-fisher.md).
-- **Currency options.** The same formula with the foreign interest rate in place of $q$: [garman-kohlhagen-greeks](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md).
-- **The whole shelf.** Gamma's companions measure the price's response to volatility ([vega](03-vega.md)) and the drift of delta with time ([charm](08-charm.md)); [greeks-together-taylor-pnl](09-greeks-together-taylor-pnl.md) adds them into one profit-and-loss line.
+- **Pin risk at expiry.** When a large open position sits near its strike on the last day, gamma at the strike is 0.3810 and the hedge flips between none and all. The same effect, sharper still, is on [Digital Greeks and pin risk](../10-Digitals%20and%20the%20implied%20density/03-digital-greeks-and-pin-risk.md).
+- **Gamma scalping.** A trader long options and delta-hedged buys after falls and sells after rises, pocketing about $\tfrac12\Gamma m^2$ per move, and pays for it in time decay ([Theta](04-theta.md)).
+- **Risk reports.** Value at Risk for an options book adds the gamma term to the delta term, because a hedged book's loss is curved in the move: [Options in the book](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/04-delta-gamma-var-and-cornish-fisher.md).
+- **Currency options.** The same formula with the foreign interest rate in place of $q$: [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md).
+- **The whole shelf.** Gamma's companions measure the price's response to volatility ([Vega](03-vega.md)) and the drift of delta with time ([Charm](08-charm.md)); [The Greeks together](09-greeks-together-taylor-pnl.md) adds them into one profit-and-loss line.
 
 > **Say it back**
 > Gamma is the change in delta for each dollar the share moves: the bend in the option's price curve. In Black-Scholes it is the bell curve's height at $d_1$, times the dividend drag, over the dollar wiggle $S\sigma\sqrt{T}$. Call and put share it, because parity is a straight line. It peaks a little below the strike, shrinks with more volatility or more time, and explodes at the strike as expiry nears. A hedge must be rebuilt after every move by gamma times the move, and the hedged gain or loss is about half gamma times the move squared.
@@ -644,17 +622,17 @@ The two outputs are identical at every printed digit. The tree lands at 0.018958
 
 ## What this builds on
 
-- [delta](01-delta.md): the hedge ratio $e^{-qT}N(d_1)$ and why its density terms cancel. Gamma is its slope.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): differentiating in one input with the others held still, taken twice.
+- [Delta](01-delta.md): the hedge ratio $e^{-qT}N(d_1)$ and why its density terms cancel. Gamma is its slope.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): differentiating in one input with the others held still, taken twice.
 
 ## Where this goes next
 
-- [theta](04-theta.md): what the option loses each day the share stays still.
-- [theta-pays-for-gamma-hedged-pnl](10-theta-pays-for-gamma-hedged-pnl.md): why the $\tfrac12\Gamma m^2$ gain is exactly paid for by theta, on average.
-- [digital-greeks-and-pin-risk](../10-Digitals%20and%20the%20implied%20density/03-digital-greeks-and-pin-risk.md): a payoff with a jump, where gamma changes sign at the strike.
-- [barrier-greeks-at-the-wall](../16-Barriers%2C%20touches%20and%20lookbacks/04-barrier-greeks-at-the-wall.md): gamma that blows up at a price level other than the strike.
-- [garman-kohlhagen-greeks](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the same gamma in currency markets, with desk quoting conventions.
-- [delta-gamma-var-and-cornish-fisher](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/04-delta-gamma-var-and-cornish-fisher.md): the curved loss of a hedged book turned into a risk number.
+- [Theta](04-theta.md): what the option loses each day the share stays still.
+- [Theta pays for gamma](10-theta-pays-for-gamma-hedged-pnl.md): why the $\tfrac12\Gamma m^2$ gain is exactly paid for by theta, on average.
+- [Digital Greeks and pin risk](../10-Digitals%20and%20the%20implied%20density/03-digital-greeks-and-pin-risk.md): a payoff with a jump, where gamma changes sign at the strike.
+- [Barrier Greeks](../16-Barriers%2C%20touches%20and%20lookbacks/04-barrier-greeks-at-the-wall.md): gamma that blows up at a price level other than the strike.
+- [The Greeks of a currency option](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/03-garman-kohlhagen-greeks.md): the same gamma in currency markets, with desk quoting conventions.
+- [Options in the book](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/04-delta-gamma-var-and-cornish-fisher.md): the curved loss of a hedged book turned into a risk number.
 
 Gamma says a hedged option gains about half gamma times the move squared from every move; the open question is who pays for that gain, and theta answers it.
 

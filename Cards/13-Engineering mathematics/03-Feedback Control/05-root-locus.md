@@ -1,27 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Feedback Control
-topic: Poles against gain
-item: Root locus
-kind: method
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/04-routh-hurwitz-criterion|routh-hurwitz-criterion]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/06-second-order-systems-damping-and-natural-frequency|second-order-systems-damping-and-natural-frequency]]"
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/03-rational-functions-and-partial-fractions|rational-functions-and-partial-fractions]]"
-next:
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/06-nyquist-criterion-and-stability-margins|nyquist-criterion-and-stability-margins]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/07-pid-control-and-tuning|pid-control-and-tuning]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/09-lead-lag-compensation-and-loop-shaping|lead-lag-compensation-and-loop-shaping]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/10-smith-predictor-and-time-delays|smith-predictor-and-time-delays]]"
-tags: [mathematics, engineering mathematics, root-locus]
----
-
 # Root locus: watch the closed-loop poles travel as you turn the gain up
 
-Engineering mathematics → Feedback Control → Poles against gain → Root locus
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Feedback Control](../../../SYLLABUS.md#w13-s03) → Root locus
 
 ---
 
@@ -49,7 +28,7 @@ The poles at −0.25 and −0.1 1/min run together along the axis, meet at −0.
 
 ## The formula
 
-Reminders. A **pole** is a value of s where a transfer function's denominator vanishes; each is the rate of one mode of the response, and a **zero** is where the numerator vanishes ([poles-zeros-and-stability](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md)). The **loop gain** $L(s)$ is everything met once round the loop ([feedback-and-closed-loop-transfer-functions](01-feedback-and-closed-loop-transfer-functions.md)). Engineers write j for the square root of −1; the rest of the library writes i.
+Reminders. A **pole** is a value of s where a transfer function's denominator vanishes; each is the rate of one mode of the response, and a **zero** is where the numerator vanishes ([Poles and zeros](../02-Linear%20Systems%20and%20Transforms/03-poles-zeros-and-stability.md)). The **loop gain** $L(s)$ is everything met once round the loop ([Feedback](01-feedback-and-closed-loop-transfer-functions.md)). Engineers write j for the square root of −1; the rest of the library writes i.
 
 Write the loop gain as one dial $K$ times a fixed shape:
 
@@ -99,7 +78,7 @@ A seventh rule, the angle at which a branch leaves a complex open-loop pole, is 
 ### When it holds
 
 - **One gain moves, all else fixed.** Change a lag as well and the whole picture shifts.
-- **A rational loop.** A pure delay is not a ratio of polynomials and gives infinitely many branches. Treat the 2-minute pipe as a delay and the crossing falls from 12.6 to 7.8106; at gain 10 swings then grow by a factor of 1.5743 per cycle ([smith-predictor-and-time-delays](10-smith-predictor-and-time-delays.md)).
+- **A rational loop.** A pure delay is not a ratio of polynomials and gives infinitely many branches. Treat the 2-minute pipe as a delay and the crossing falls from 12.6 to 7.8106; at gain 10 swings then grow by a factor of 1.5743 per cycle ([Time delays](10-smith-predictor-and-time-delays.md)).
 - **A linear room.** A boiler cannot give negative heat or exceed its rating; swings the model calls growing are clipped into a steady cycle.
 - **Positive gain.** For negative K the angle condition becomes an even number of half turns and the locus fills the other axis segments; −0.4000 belongs there, at gain −0.3600.
 - **A dominant pair.** Reading damping off one pair ignores the third pole; here it moves the overshoot from 16.30% to 14.90%.
@@ -169,7 +148,7 @@ Put $s = j\omega$ in $D(s) + K = 0$. With $s^2 = -\omega^2$ and $s^3 = -j\omega^
 
 $$(1 + K - 68\,\omega^2) + j\,(16\,\omega - 80\,\omega^3) = 0.$$
 
-The imaginary part gives $\omega^2 = 16/80$, so $\omega = 0.4472$ rad/min, a swing period of 14.05 min. The real part gives $K = 68 \times 0.2 - 1 = 12.6$. The Routh table applied to this cubic finds the same 12.6 ([routh-hurwitz-criterion](04-routh-hurwitz-criterion.md); that card's workshop is a slower room, whose thermostat gain crosses at 12 kW per °C); the substitution also says where the crossing is.
+The imaginary part gives $\omega^2 = 16/80$, so $\omega = 0.4472$ rad/min, a swing period of 14.05 min. The real part gives $K = 68 \times 0.2 - 1 = 12.6$. The Routh table applied to this cubic finds the same 12.6 ([Routh-Hurwitz](04-routh-hurwitz-criterion.md); that card's workshop is a slower room, whose thermostat gain crosses at 12 kW per °C); the substitution also says where the crossing is.
 
 Evans's check: the angles from the three poles to 0.4472j are 41.81°, 60.79° and 77.40°, adding to 180.00°, and $\lvert D(j\omega)\rvert = 12.6$.
 
@@ -190,7 +169,7 @@ The line is the swing ratio from the root finder. It passes 1 at the crossing ga
 
 ### Step 6: pick the gain for a chosen damping
 
-A pair $-\sigma \pm j\omega_d$ has damping ratio $\sigma/\sqrt{\sigma^2 + \omega_d^2}$, the cosine of its angle from the negative real axis ([second-order-systems-damping-and-natural-frequency](../02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md)). For ζ = 0.5 the angle is 60°, the pair is $-\sigma \pm j\sigma\sqrt{3}$, and its factor is $s^2 + 2\sigma s + 4\sigma^2$. Write the cubic over 80 as that factor times $(s - p_3)$ and match:
+A pair $-\sigma \pm j\omega_d$ has damping ratio $\sigma/\sqrt{\sigma^2 + \omega_d^2}$, the cosine of its angle from the negative real axis ([Damping ratio and natural frequency](../02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md)). For ζ = 0.5 the angle is 60°, the pair is $-\sigma \pm j\sigma\sqrt{3}$, and its factor is $s^2 + 2\sigma s + 4\sigma^2$. Write the cubic over 80 as that factor times $(s - p_3)$ and match:
 
 - $s^2$: $2\sigma - p_3 = 0.85$.
 - $s^1$: $4\sigma^2 - 2\sigma p_3 = 0.2$; with $p_3 = 2\sigma - 0.85$ the $\sigma^2$ terms cancel, leaving $1.7\,\sigma = 0.2$.
@@ -211,9 +190,9 @@ xychart-beta
 
 Orange: the room at the ζ = 0.5 gain, 1.7226, peaking at 20.7270 °C after 17.33 min and settling at 20.63 °C. Green: the room at the crossing gain, 12.6, swinging for good, its samples running between 20.13 and 21.74 °C. Both sampled every 10 min from the simulation.
 
-The ζ = 0.5 room overshoots its final value by 14.90%; a lone pair with ζ = 0.5 would overshoot by $e^{-\pi\zeta/\sqrt{1-\zeta^2}} = 16.30\%$. The third pole, about five times farther left, trims the peak. The room settles at 0.6327 of the requested degree, $K/(1 + K)$, because a proportional thermostat needs a standing shortfall to keep the heat on ([steady-state-error-and-system-type](03-steady-state-error-and-system-type.md)). On this locus more accuracy means more gain, and more gain means less damping.
+The ζ = 0.5 room overshoots its final value by 14.90%; a lone pair with ζ = 0.5 would overshoot by $e^{-\pi\zeta/\sqrt{1-\zeta^2}} = 16.30\%$. The third pole, about five times farther left, trims the peak. The room settles at 0.6327 of the requested degree, $K/(1 + K)$, because a proportional thermostat needs a standing shortfall to keep the heat on ([Steady-state error](03-steady-state-error-and-system-type.md)). On this locus more accuracy means more gain, and more gain means less damping.
 
-**Another route.** The Nyquist plot reads the same crossing off $L(j\omega)$: at 0.4472 rad/min and gain 12.6 the loop gain is exactly −1, and that frequency road also handles the delay the rules cannot ([nyquist-criterion-and-stability-margins](06-nyquist-criterion-and-stability-margins.md)).
+**Another route.** The Nyquist plot reads the same crossing off $L(j\omega)$: at 0.4472 rad/min and gain 12.6 the loop gain is exactly −1, and that frequency road also handles the delay the rules cannot ([Nyquist and margins](06-nyquist-criterion-and-stability-margins.md)).
 
 ---
 
@@ -677,11 +656,11 @@ The two outputs are identical line for line.
 
 ## Where you meet it in real life
 
-- **Heating and process loops.** The crossing gain and its period, 12.6 and 14.05 min here, are what the Ziegler–Nichols tuning recipe calls the ultimate gain and ultimate period, and it sets PID gains as fractions of them ([pid-control-and-tuning](07-pid-control-and-tuning.md)).
-- **Compensator design.** A lead compensator adds a zero that pulls branches left, away from the crossing ([lead-lag-compensation-and-loop-shaping](09-lead-lag-compensation-and-loop-shaping.md)).
+- **Heating and process loops.** The crossing gain and its period, 12.6 and 14.05 min here, are what the Ziegler–Nichols tuning recipe calls the ultimate gain and ultimate period, and it sets PID gains as fractions of them ([PID control](07-pid-control-and-tuning.md)).
+- **Compensator design.** A lead compensator adds a zero that pulls branches left, away from the crossing ([Loop shaping](09-lead-lag-compensation-and-loop-shaping.md)).
 - **Flight control.** Evans built the method for aircraft guidance loops; engineers still read a pitch loop's damping off the locus as one gain is scheduled with airspeed.
 - **Servo drives.** A position loop with an integrator and two lags has the room's three-pole shape and crosses the same way.
-- **Thermostats on site.** A room that cycles a few degrees every quarter hour after a radiator upgrade is often a loop pushed past its crossing ([pid-on-real-hardware](08-pid-on-real-hardware.md)).
+- **Thermostats on site.** A room that cycles a few degrees every quarter hour after a radiator upgrade is often a loop pushed past its crossing ([PID in practice](08-pid-on-real-hardware.md)).
 
 > **Say it back**
 > A closed-loop pole is a point where the loop gain equals −1. The angle half of that equation fixes the curves poles can travel; the size half says which gain puts a pole at each point. From the open-loop poles alone the rules give the axis segments, the asymptotes, the breakaway and the crossing. For the heated room the pair breaks away at gain 0.148148, has damping 0.5 at 1.7226, and crosses into growing swings at 12.6 with a 14.05-minute period. A pipe that is really a delay lowers that limit to 7.8106.
@@ -690,16 +669,16 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [routh-hurwitz-criterion](04-routh-hurwitz-criterion.md): the sign test that, applied to 80s^3 + 68s^2 + 16s + (1 + K), says a crossing happens at 12.6 (that card's own workshop is a slower room, crossing at 12 kW per °C); the locus adds where, and how the poles get there.
-- [second-order-systems-damping-and-natural-frequency](../02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md): ζ and ω_n, and why constant damping is a ray from the origin.
-- [rational-functions-and-partial-fractions](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/03-rational-functions-and-partial-fractions.md): poles and zeros of a rational function, and the residues that turn moved poles into the room's curve.
+- [Routh-Hurwitz](04-routh-hurwitz-criterion.md): the sign test that, applied to 80s^3 + 68s^2 + 16s + (1 + K), says a crossing happens at 12.6 (that card's own workshop is a slower room, crossing at 12 kW per °C); the locus adds where, and how the poles get there.
+- [Damping ratio and natural frequency](../02-Linear%20Systems%20and%20Transforms/06-second-order-systems-damping-and-natural-frequency.md): ζ and ω_n, and why constant damping is a ray from the origin.
+- [Rational functions](../../07-Complex%20analysis/05-Laurent%20Series%2C%20Singularities%20and%20Residues/03-rational-functions-and-partial-fractions.md): poles and zeros of a rational function, and the residues that turn moved poles into the room's curve.
 
 ## Where this goes next
 
-- [nyquist-criterion-and-stability-margins](06-nyquist-criterion-and-stability-margins.md): the same crossing read off the frequency response, with margins and delays.
-- [pid-control-and-tuning](07-pid-control-and-tuning.md): an integrator and a derivative reshape the locus.
-- [lead-lag-compensation-and-loop-shaping](09-lead-lag-compensation-and-loop-shaping.md): poles and zeros added on purpose to bend the branches.
-- [smith-predictor-and-time-delays](10-smith-predictor-and-time-delays.md): what to do when the pipe is a delay and the rational rules stop applying.
+- [Nyquist and margins](06-nyquist-criterion-and-stability-margins.md): the same crossing read off the frequency response, with margins and delays.
+- [PID control](07-pid-control-and-tuning.md): an integrator and a derivative reshape the locus.
+- [Loop shaping](09-lead-lag-compensation-and-loop-shaping.md): poles and zeros added on purpose to bend the branches.
+- [Time delays](10-smith-predictor-and-time-delays.md): what to do when the pipe is a delay and the rational rules stop applying.
 
 A proportional thermostat must trade damping against a standing error; how far an integrator and a derivative escape that trade, and at what risk, is what the PID card answers.
 

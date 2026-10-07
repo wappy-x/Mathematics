@@ -1,34 +1,12 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Derivatives Meet the Lebesgue Integral
-topic: Integrating against a running total
-item: The Lebesgue-Stieltjes integral
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem|absolutely-continuous-functions-and-the-fundamental-theorem]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/06-lebesgue-stieltjes-measures|lebesgue-stieltjes-measures]]"
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/06-layer-cake-and-tail-integrals|layer-cake-and-tail-integrals]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/04-integration-by-parts|integration-by-parts]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/04-compound-poisson|compound-poisson]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/03-quadratic-variation|quadratic-variation]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/01-ito-integral|ito-integral]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-tags: [mathematics, measure and integration, lebesgue-stieltjes-integral]
----
-
 # The Lebesgue-Stieltjes integral: integrate against any increasing or bounded-variation function, so E[g(X)] is the integral of g against F, with integration by parts
 
-Measure and integration → Derivatives Meet the Lebesgue Integral → Integrating against a running total → The Lebesgue-Stieltjes integral
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Derivatives Meet the Lebesgue Integral](../../../SYLLABUS.md#w10-s11) → The Lebesgue-Stieltjes integral
 
 ---
 
 ## General Overview
 
-A household insurer prices one policy for next year. With probability 0.3 there is no claim, and the payout is \$0. Otherwise the payout is spread evenly over \$0 to \$1,000. This is the claim of [lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md), and its running total, the chance the payout is at most x dollars, is already known: 0 below zero, a jump to 0.3 at zero, then a straight climb to 1 at \$1,000.
+A household insurer prices one policy for next year. With probability 0.3 there is no claim, and the payout is \$0. Otherwise the payout is spread evenly over \$0 to \$1,000. This is the claim of [Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md), and its running total, the chance the payout is at most x dollars, is already known: 0 below zero, a jump to 0.3 at zero, then a straight climb to 1 at \$1,000.
 
 The pricing team wants two averages: the expected payout, and the expected cost when every policy also carries a \$50 handling fee, claim or no claim. A density (a curve whose area gives probability) sees the even spread but misses the 0.3 on \$0, and prices the fee case at \$385. A list of point probabilities misses the spread. The answers are \$350 and \$400.
 
@@ -55,17 +33,17 @@ One line: the tail, the chance the claim is larger than x. It starts at 0.70, no
 
 ## The formula
 
-Notation first, in words. F is a **right-continuous** function: approaching any point from the right lands on the value there. Its **left limit** $F(x-)$ is the value approached from the left, and the **jump** at x is $\Delta F(x) = F(x) - F(x-)$. When F is increasing, $\mu_F$ is its Lebesgue-Stieltjes measure, the measure giving each stretch (a, b] the mass F(b) − F(a) ([lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). The integral $\int g\,dF$ is read "the integral of g against F".
+Notation first, in words. F is a **right-continuous** function: approaching any point from the right lands on the value there. Its **left limit** $F(x-)$ is the value approached from the left, and the **jump** at x is $\Delta F(x) = F(x) - F(x-)$. When F is increasing, $\mu_F$ is its Lebesgue-Stieltjes measure, the measure giving each stretch (a, b] the mass F(b) − F(a) ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). The integral $\int g\,dF$ is read "the integral of g against F".
 
 **The definition.** For F increasing and right-continuous, and g a Borel function (measurable with respect to the Borel sets):
 
 $$\int g\,dF \;=\; \int g\,d\mu_F.$$
 
-For F of **bounded variation** (finite total up-and-down movement on every bounded interval), write $F = F_1 - F_2$ with $F_1$ and $F_2$ increasing and right-continuous, the Jordan decomposition of [functions-of-bounded-variation](01-functions-of-bounded-variation.md) (its climb and descent inherit right-continuity from F, because the running variation of a right-continuous function is right-continuous: Folland, Section 3.5), and set $\int g\,dF = \int g\,d\mu_{F_1} - \int g\,d\mu_{F_2}$.
+For F of **bounded variation** (finite total up-and-down movement on every bounded interval), write $F = F_1 - F_2$ with $F_1$ and $F_2$ increasing and right-continuous, the Jordan decomposition of [Bounded variation](01-functions-of-bounded-variation.md) (its climb and descent inherit right-continuity from F, because the running variation of a right-continuous function is right-continuous: Folland, Section 3.5), and set $\int g\,dF = \int g\,d\mu_{F_1} - \int g\,d\mu_{F_2}$.
 
 **Read it aloud:** integrating against F is integrating against the measure F builds; a function that also falls is split into what it gains minus what it loses.
 
-**Jumps plus a density.** Split F into its **jump part** $F_d$, the sum of the jumps at or below x, and its **continuous part** $F_c = F - F_d$. When $F_c$ is absolutely continuous (it is the running integral of its own slope, [absolutely-continuous-functions-and-the-fundamental-theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md)), with slope $F_c'$:
+**Jumps plus a density.** Split F into its **jump part** $F_d$, the sum of the jumps at or below x, and its **continuous part** $F_c = F - F_d$. When $F_c$ is absolutely continuous (it is the running integral of its own slope, [Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md)), with slope $F_c'$:
 
 $$\int g\,dF \;=\; \sum_{x} g(x)\,\Delta F(x) \;+\; \int g(x)\,F_c'(x)\,dx.$$
 
@@ -118,7 +96,7 @@ On the claim: E[X] = 0.3 × \$0 + ∫ x × 0.0007 dx over (0, 1,000] = \$350, an
 
 ### Step 0: a new integrator, not a new integral
 
-The integral against a measure already exists ([integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). Only the measure is new, so every claim here is proved one way. Check it on half-open intervals (a, b], where μ_F is F(b) − F(a). Two measures that agree there, finite on bounded sets, agree on every Borel set ([lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md), part 2). Then climb from indicators (1 on a set, 0 off it) to simple functions, monotone limits and differences.
+The integral against a measure already exists ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). Only the measure is new, so every claim here is proved one way. Check it on half-open intervals (a, b], where μ_F is F(b) − F(a). Two measures that agree there, finite on bounded sets, agree on every Borel set ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md), part 2). Then climb from indicators (1 on a set, 0 off it) to simple functions, monotone limits and differences.
 
 ### Step 1: the definition does not depend on how F is split
 
@@ -126,9 +104,9 @@ Adding one increasing function to both parts gives another splitting. Suppose F_
 
 ### Step 2: a jump is a point mass, and a smooth climb is a density
 
-**Jumps.** μ_F puts mass ΔF(x) on the single point x ([lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). An increasing F has at most countably many jumps, since those inside (a, b] add to at most F(b) − F(a). Integrating g against one point mass returns g at that point, and monotone convergence allows the sum over countably many.
+**Jumps.** μ_F puts mass ΔF(x) on the single point x ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). An increasing F has at most countably many jumps, since those inside (a, b] add to at most F(b) − F(a). Integrating g against one point mass returns g at that point, and monotone convergence allows the sum over countably many.
 
-**The smooth part.** Let $F_c$ be absolutely continuous. The fundamental theorem for such functions ([absolutely-continuous-functions-and-the-fundamental-theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md)) says $F_c(b) - F_c(a) = \int_a^b F_c'\,dx$. The right side is the mass the measure "slope times length" gives to (a, b]. So the measure $F_c$ builds and that measure agree on intervals, and by Step 0 everywhere: $F_c'$ is its density against λ ([radon-nikodym-theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md)).
+**The smooth part.** Let $F_c$ be absolutely continuous. The fundamental theorem for such functions ([Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md)) says $F_c(b) - F_c(a) = \int_a^b F_c'\,dx$. The right side is the mass the measure "slope times length" gives to (a, b]. So the measure $F_c$ builds and that measure agree on intervals, and by Step 0 everywhere: $F_c'$ is its density against λ ([The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md)).
 
 **Together.** $F_d$ and $F_c$ add to F, so their measures add to μ_F, and the integral is linear in the measure.
 
@@ -139,19 +117,19 @@ On the claim, the jump is 0.3 at \$0 and the slope 0.0007 on (0, 1,000]. The pay
 
 Take F increasing first. Let ν(A) be the integral of $F_c'$ over A against λ. Step 2 showed that ν and the measure $F_c$ builds agree on every Borel A. That is the claim for g = 1_A.
 
-Both sides are linear in g, so the claim holds for simple functions, finite sums of multiples of indicators. A Borel g that is never negative is the increasing limit of simple functions ([simple-functions-and-approximation](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)), and monotone convergence ([monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) applies on both sides, since $F_c' \ge 0$. For integrable g, subtract the equalities for its positive and negative parts.
+Both sides are linear in g, so the claim holds for simple functions, finite sums of multiples of indicators. A Borel g that is never negative is the increasing limit of simple functions ([Simple functions](../03-Measurable%20Functions/03-simple-functions-and-approximation.md)), and monotone convergence ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) applies on both sides, since $F_c' \ge 0$. For integrable g, subtract the equalities for its positive and negative parts.
 
 For the jump part: $F_d$ builds the measure giving A the sum of the jumps at points of A, since both give (a, b] the sum of the jumps inside it. For g = 1_A the integral is that sum; linearity, monotone convergence over the list of jumps, and the positive-negative split carry it to every integrable g.
 
-For F of bounded variation, Step 1 lets the split be chosen, and an arbitrary one will not do: adding the Cantor function to both parts leaves F unchanged but gives each part a continuous part that is not absolutely continuous. So split the two parts of F separately. $F_d$ is its rising jumps minus its falling jumps, two increasing jump functions. $F_c = V - (V - F_c)$ with $V$ the running variation of $F_c$; both pieces rise and are absolutely continuous by Lemma 3 of [absolutely-continuous-functions-and-the-fundamental-theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md). Take $F_1$ = rising jumps + $V$ and $F_2$ = falling jumps + $(V - F_c)$. Each is increasing and right-continuous with an absolutely continuous continuous part, so the increasing case applies to each. Subtracting, the jumps give ΔF and the slopes give $F_c'$.
+For F of bounded variation, Step 1 lets the split be chosen, and an arbitrary one will not do: adding the Cantor function to both parts leaves F unchanged but gives each part a continuous part that is not absolutely continuous. So split the two parts of F separately. $F_d$ is its rising jumps minus its falling jumps, two increasing jump functions. $F_c = V - (V - F_c)$ with $V$ the running variation of $F_c$; both pieces rise and are absolutely continuous by Lemma 3 of [Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md). Take $F_1$ = rising jumps + $V$ and $F_2$ = falling jumps + $(V - F_c)$. Each is increasing and right-continuous with an absolutely continuous continuous part, so the increasing case applies to each. Subtracting, the jumps give ΔF and the slopes give $F_c'$.
 
 </details>
 
 ### Step 3: the average of g(X) is the integral against F
 
-Let X be a random quantity on a probability space with probability P. Its law P∘X^(−1), the chance that X lands in each set, is a measure on the line, and E[g(X)] is the integral of g against it ([pushforward-and-the-law](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). The law gives (a, b] the mass F(b) − F(a), so it is μ_F, and E[g(X)] = ∫ g dF.
+Let X be a random quantity on a probability space with probability P. Its law P∘X^(−1), the chance that X lands in each set, is a measure on the line, and E[g(X)] is the integral of g against it ([The law of a random variable](../03-Measurable%20Functions/05-pushforward-and-the-law.md)). The law gives (a, b] the mass F(b) − F(a), so it is μ_F, and E[g(X)] = ∫ g dF.
 
-Wing 09 averages by a sum for a discrete law and by a density for a continuous one ([densities-and-cdfs](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)); Step 2 makes them two halves of one integral.
+Wing 09 averages by a sum for a discrete law and by a density for a continuous one ([Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)); Step 2 makes them two halves of one integral.
 
 ### Step 4: integration by parts is the area of a square, cut along its diagonal
 
@@ -163,7 +141,7 @@ The integrands differ only at the jump, by ΔF(0) = 0.3, which carries mass 0.3.
 
 <p align="center"><img src="../figures/lebesgue-stieltjes-integral.svg" alt="Two independent claims drawn as a unit square in probability units; the shaded region where the first claim is at most the second has area 0.545, including the dashed block of area 0.09 where both claims are zero dollars; the unshaded region where the first claim is larger has area 0.455" width="420"></p>
 
-To scale: 180 drawing units per unit of F, corner (0, 0) at (50, 200) and (1, 1) at (230, 20). Each axis is a claim's probability position, the uniform draw the code turns into a claim: above 0.3 it is F at the claim, and the \$0 claims, all with F(0) = 0.3, fill 0 to 0.3 on each axis. The dashed block, both claims \$0, has area 0.09 and lies on the diagonal s = t, so it is shaded. The strip above it has 0.21, the triangle above the diagonal 0.245: 0.545 in all. The general formula is the same cut with two functions, each half measured by Tonelli's theorem ([tonelli-and-fubini](../06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md)).
+To scale: 180 drawing units per unit of F, corner (0, 0) at (50, 200) and (1, 1) at (230, 20). Each axis is a claim's probability position, the uniform draw the code turns into a claim: above 0.3 it is F at the claim, and the \$0 claims, all with F(0) = 0.3, fill 0 to 0.3 on each axis. The dashed block, both claims \$0, has area 0.09 and lies on the diagonal s = t, so it is shaded. The strip above it has 0.21, the triangle above the diagonal 0.245: 0.545 in all. The general formula is the same cut with two functions, each half measured by Tonelli's theorem ([Tonelli and Fubini](../06-Product%20Measures%20and%20Fubini/03-tonelli-and-fubini.md)).
 
 <details>
 <summary>Detailed proof: integration by parts with the jump term</summary>
@@ -190,11 +168,11 @@ $$\int_{(0,b]} x\,dF(x) \;=\; \int_0^b \big(1 - F(x)\big)\,dx \;-\; b\,\big(1 - 
 
 The last term is the **boundary term**. On the claim at b = \$500: \$87.500 on the left, tail area \$262.500, boundary term 500 × 0.35 = \$175.000. At b = \$1,000 the boundary term is 0 and both sides are \$350.000, which is E[X], since the atom at \$0 adds nothing.
 
-For general X, never negative with finite average, let b grow. The left side rises to E[X] by monotone convergence. The boundary term b P(X > b) is at most the average of X over the event X > b, which shrinks to 0 by dominated convergence. [layer-cake-and-tail-integrals](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md) reaches the same formula by Tonelli, infinite case included.
+For general X, never negative with finite average, let b grow. The left side rises to E[X] by monotone convergence. The boundary term b P(X > b) is at most the average of X over the event X > b, which shrinks to 0 by dominated convergence. [The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md) reaches the same formula by Tonelli, infinite case included.
 
 ### Step 6: Riemann-Stieltjes sums converge to this integral when g is continuous
 
-A **Riemann-Stieltjes sum** cuts (a, b] into n pieces, picks a tag point $t_i$ in each, and adds g at the tag times the rise of F across the piece ([riemann-stieltjes-integral](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/06-riemann-stieltjes-integral.md)). That sum is the integral against μ_F of a step function, g at the tag on each piece. A continuous g on [a, b] is uniformly continuous ([uniform-continuity-and-lipschitz](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)), so on narrow pieces the step function stays within any chosen distance of g, and the integrals differ by at most that distance times F(b) − F(a) (for increasing F; the total variation otherwise).
+A **Riemann-Stieltjes sum** cuts (a, b] into n pieces, picks a tag point $t_i$ in each, and adds g at the tag times the rise of F across the piece ([Stieltjes integrals](../../06-Calculus%20and%20analysis/08-Multiple%20Integrals/06-riemann-stieltjes-integral.md)). That sum is the integral against μ_F of a step function, g at the tag on each piece. A continuous g on [a, b] is uniformly continuous ([Uniform continuity](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/08-uniform-continuity-and-lipschitz.md)), so on narrow pieces the step function stays within any chosen distance of g, and the integrals differ by at most that distance times F(b) − F(a) (for increasing F; the total variation otherwise).
 
 On the claim, with g(x) = x on (−100, 1,000], so the jump at 0 is inside: left tags give 285, 343.5, 349.35 at 11, 110 and 1,100 pieces; right tags give 385, 353.5, 350.35. Both close in on 350; F's jump does no harm where g is continuous.
 
@@ -617,7 +595,7 @@ The two outputs match line for line. The simulated mean, \$351.13, sits about on
 
 - **Insurance and reinsurance.** A stop-loss layer pays the part of a claim above a retention d. Its price is the tail area beyond d, by the integration by parts of Step 5, atoms or not.
 - **Mass on a rod.** A rod with a smooth density and a few bolted-on weights has a running mass total; its balance point is the integral of x against it.
-- **Option prices.** A call pays max(x − K, 0); its price is a discounted average against the pricing law of the stock, and by parts it is the discounted area under that law's tail beyond K ([black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
+- **Option prices.** A call pays max(x − K, 0); its price is a discounted average against the pricing law of the stock, and by parts it is the discounted area under that law's tail beyond K ([Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)).
 - **Paths with jumps.** For two right-continuous paths of bounded variation, the change in their product is F(s−) dG + G(s−) dF, plus ΔF ΔG at shared jumps. Stochastic calculus keeps this shape and adds a correction for paths too rough to have bounded variation.
 
 > **Say it back**
@@ -627,19 +605,19 @@ The two outputs match line for line. The simulated mean, \$351.13, sits about on
 
 ## What this builds on
 
-- [absolutely-continuous-functions-and-the-fundamental-theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md): F(b) − F(a) is the integral of F′ for an absolutely continuous F, which turns the smooth part into a density.
-- [lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md): the measure μ_F, jumps as point masses, and uniqueness from half-open intervals.
-- [layer-cake-and-tail-integrals](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md): the tail formula by Tonelli, the second road to Step 5.
-- [integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): the classical rule for smooth functions, the case with no jumps.
+- [Absolutely continuous functions and the fundamental theorem](04-absolutely-continuous-functions-and-the-fundamental-theorem.md): F(b) − F(a) is the integral of F′ for an absolutely continuous F, which turns the smooth part into a density.
+- [Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md): the measure μ_F, jumps as point masses, and uniqueness from half-open intervals.
+- [The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md): the tail formula by Tonelli, the second road to Step 5.
+- [Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): the classical rule for smooth functions, the case with no jumps.
 
 ## Where this goes next
 
-- [compound-poisson](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md): a path that only jumps, whose integrals are sums over its jumps.
-- [quadratic-variation](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/03-quadratic-variation.md): why a Brownian path has unbounded variation, so no Lebesgue-Stieltjes integral against it exists.
-- [ito-integral](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/01-ito-integral.md): an integral against such a path, built from left-tagged sums.
-- [itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): the product rule again, with a correction term that plays the part ΔF ΔG plays here.
+- [Compound Poisson](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/04-compound-poisson.md): a path that only jumps, whose integrals are sums over its jumps.
+- [Quadratic variation](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/03-quadratic-variation.md): why a Brownian path has unbounded variation, so no Lebesgue-Stieltjes integral against it exists.
+- [The Ito integral](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/01-ito-integral.md): an integral against such a path, built from left-tagged sums.
+- [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): the product rule again, with a correction term that plays the part ΔF ΔG plays here.
 
-The jump term is finite because a function of bounded variation has summable jumps; what replaces it when a path moves by countless small steps with infinite total variation is the question [quadratic-variation](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/03-quadratic-variation.md) answers.
+The jump term is finite because a function of bounded variation has summable jumps; what replaces it when a path moves by countless small steps with infinite total variation is the question [Quadratic variation](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/03-quadratic-variation.md) answers.
 
 ---
 

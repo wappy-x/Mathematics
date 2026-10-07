@@ -1,33 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: The Classical PDEs
-topic: Diffusion along a rod
-item: The heat equation
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/01-what-a-pde-says|what-a-pde-says]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/04-separation-of-variables-for-the-heat-equation|separation-of-variables-for-the-heat-equation]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/07-laplaces-equation-and-harmonic-functions|laplaces-equation-and-harmonic-functions]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/09-finite-differences-for-the-heat-equation|finite-differences-for-the-heat-equation]]"
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/10-the-heat-kernel|the-heat-kernel]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/06-feynman-kac-formula|feynman-kac-formula]]"
-  - "[[Cards/13-Engineering mathematics/08-Fluids and Heat/05-heat-conduction-and-fouriers-law|heat-conduction-and-fouriers-law]]"
-  - "[[Cards/16-Numerical analysis/07-PDE Solvers/01-pde-families-elliptic-parabolic-hyperbolic|pde-families-elliptic-parabolic-hyperbolic]]"
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/05-hille-yosida-and-generators|hille-yosida-and-generators]]"
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/09-the-heat-and-schrodinger-semigroups|the-heat-and-schrodinger-semigroups]]"
-  - "[[Cards/20-Harmonic analysis/03-Convolution and Approximate Identities/09-fourier-methods-for-differential-equations|fourier-methods-for-differential-equations]]"
-  - "[[Cards/23-Differential geometry and Lie groups/05-Riemannian Geometry/08-volume-form-and-the-laplace-beltrami-operator|volume-form-and-the-laplace-beltrami-operator]]"
-  - "[[Cards/23-Differential geometry and Lie groups/07-Geometric Analysis and Physics/01-ricci-flow-and-the-poincare-proof-in-outline|ricci-flow-and-the-poincare-proof-in-outline]]"
-tags: [mathematics, differential equations and dynamics, the-heat-equation]
----
-
 # The heat equation: each point drifts toward the average of its neighbours, so bumps flatten and never grow
 
-Differential equations and dynamics → The Classical PDEs → Diffusion along a rod → The heat equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → The heat equation
 
 ---
 
@@ -61,7 +34,7 @@ Orange: the arch, $n = 1$, halving every 0.070. Green: the double bump, $n = 2$,
 
 ## The formula
 
-Notation from [what-a-pde-says](01-what-a-pde-says.md): $u(x, t)$ is the temperature at place $x$ and time $t$; a subscript means a rate with the other variable held still, so $u_t$ is how fast one spot warms and $u_{xx}$ is the bend of the profile along the rod.
+Notation from [A partial differential equation](01-what-a-pde-says.md): $u(x, t)$ is the temperature at place $x$ and time $t$; a subscript means a rate with the other variable held still, so $u_t$ is how fast one spot warms and $u_{xx}$ is the bend of the profile along the rod.
 
 $$u_t = \kappa\, u_{xx}, \qquad u(0, t) = u(1, t) = 0, \qquad u(x, 0) = \sin(\pi x)$$
 
@@ -124,7 +97,7 @@ $$u_{xx} \approx \frac{u(x-h) - 2u(x) + u(x+h)}{h^2} = \frac{2}{h^2}\left(\frac{
 
 The bracket is the neighbours' average minus the point. So: **each point moves toward its neighbours' average, at a rate proportional to the gap.** A peak sinks, a dip fills, a straight profile stays.
 
-Stepping this rule forward with time steps of $h^2/4$ is the code's second road. Each new value is half the old one plus a quarter of each neighbour: an average, never above the largest of the three. That is the grid's own maximum principle; the method has its own card, [finite-differences-for-the-heat-equation](09-finite-differences-for-the-heat-equation.md).
+Stepping this rule forward with time steps of $h^2/4$ is the code's second road. Each new value is half the old one plus a quarter of each neighbour: an average, never above the largest of the three. That is the grid's own maximum principle; the method has its own card, [Stepping the heat equation on a grid](09-finite-differences-for-the-heat-equation.md).
 
 ### Step 4: the sine keeps its shape and decays at rate $\kappa n^2\pi^2$
 
@@ -151,7 +124,7 @@ Hence $u \le v \le M + \varepsilon$ everywhere, for every ε > 0, so $u \le M$. 
 
 </details>
 
-Any start as a sum of sines is [separation-of-variables-for-the-heat-equation](04-separation-of-variables-for-the-heat-equation.md); a start concentrated at one point is [the-heat-kernel](10-the-heat-kernel.md).
+Any start as a sum of sines is [Separation of variables](04-separation-of-variables-for-the-heat-equation.md); a start concentrated at one point is [The heat kernel](10-the-heat-kernel.md).
 
 ### The picture: the rod's profile at the start and after one half-life
 
@@ -401,7 +374,7 @@ ALL CHECKS PASS
 
 - **Cooking.** A roast's centre lags its surface; doubling the thickness roughly quadruples the time, the square of Step 4.
 - **Diffusion of anything.** Dye in still water obeys the same equation.
-- **Option pricing.** The Black–Scholes equation becomes this one after a change of variables; see [feynman-kac-formula](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md).
+- **Option pricing.** The Black–Scholes equation becomes this one after a change of variables; see [Feynman-Kac](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md).
 - **Image smoothing.** The neighbour-average rule on a photograph's pixels blurs it, fine detail first.
 
 > **Say it back**
@@ -411,22 +384,22 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [what-a-pde-says](01-what-a-pde-says.md): the notation $u(x, t)$, $u_t$ and $u_{xx}$, and what it means for an equation to hold at every place and time.
+- [A partial differential equation](01-what-a-pde-says.md): the notation $u(x, t)$, $u_t$ and $u_{xx}$, and what it means for an equation to hold at every place and time.
 
 ## Where this goes next
 
-- [separation-of-variables-for-the-heat-equation](04-separation-of-variables-for-the-heat-equation.md): any start as a sum of decaying sines.
-- [laplaces-equation-and-harmonic-functions](07-laplaces-equation-and-harmonic-functions.md): where the heat settles.
-- [finite-differences-for-the-heat-equation](09-finite-differences-for-the-heat-equation.md): the grid of Step 3 and its step limit.
-- [the-heat-kernel](10-the-heat-kernel.md): the solution from one hot point.
-- [feynman-kac-formula](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md): the equation as an average over random paths.
-- heat-conduction-and-fouriers-law: real materials and walls.
-- pde-families-elliptic-parabolic-hyperbolic: the model parabolic equation.
-- hille-yosida-and-generators: when such a law defines an evolution.
-- the-heat-and-schrodinger-semigroups: the solution as an exponential of the bend.
-- fourier-methods-for-differential-equations: the $n^2$ decay as a multiplier.
-- volume-form-and-the-laplace-beltrami-operator: the bend on a curved surface.
-- ricci-flow-and-the-poincare-proof-in-outline: a heat equation smoothing a space's shape.
+- [Separation of variables](04-separation-of-variables-for-the-heat-equation.md): any start as a sum of decaying sines.
+- [Laplace's equation](07-laplaces-equation-and-harmonic-functions.md): where the heat settles.
+- [Stepping the heat equation on a grid](09-finite-differences-for-the-heat-equation.md): the grid of Step 3 and its step limit.
+- [The heat kernel](10-the-heat-kernel.md): the solution from one hot point.
+- [Feynman-Kac](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/06-feynman-kac-formula.md): the equation as an average over random paths.
+- Fourier's law: real materials and walls.
+- Three families: the model parabolic equation.
+- Hille-Yosida: when such a law defines an evolution.
+- Two evolutions: the solution as an exponential of the bend.
+- Solving differential equations by transform: the $n^2$ decay as a multiplier.
+- Volume form and Laplace-Beltrami: the bend on a curved surface.
+- Ricci flow: a heat equation smoothing a space's shape.
 
 ---
 

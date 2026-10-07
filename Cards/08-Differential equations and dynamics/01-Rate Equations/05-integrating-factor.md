@@ -1,28 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Rate Equations
-topic: Linear first-order equations
-item: The integrating factor
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/04-exponential-growth-decay-and-cooling|exponential-growth-decay-and-cooling]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/02-product-and-quotient-rules|product-and-quotient-rules]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/04-integration-by-parts|integration-by-parts]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/06-mixing-tanks-and-compartments|mixing-tanks-and-compartments]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/09-bernoulli-and-riccati-substitutions|bernoulli-and-riccati-substitutions]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/06-forced-systems-and-variation-of-constants|forced-systems-and-variation-of-constants]]"
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/06-stiff-equations-and-backward-euler|stiff-equations-and-backward-euler]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/05-ornstein-uhlenbeck-and-cir-processes|ornstein-uhlenbeck-and-cir-processes]]"
-tags: [mathematics, differential equations and dynamics, integrating-factor]
----
-
 # The integrating factor: multiply by the right function and the left side becomes one derivative
 
-Differential equations and dynamics → Rate Equations → Linear first-order equations → The integrating factor
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Rate Equations](../../../SYLLABUS.md#w08-s01) → The integrating factor
 
 ---
 
@@ -30,9 +8,9 @@ Differential equations and dynamics → Rate Equations → Linear first-order eq
 
 A room sits at 10 C when its heating fails. Heat leaks through the walls toward the air outside, which swings between 15 C and 25 C, one full swing every 6.28 hours (faster than a real day, to keep the numbers small).
 
-By Newton's law of cooling the room gains 0.5 C per hour per degree the outside is warmer. With T the room's temperature in C, t the time in hours and T' the rate of T in C per hour, the law is T' = −0.5(T − (20 + 5 sin t)), with T(0) = 10 ([what-a-differential-equation-says](01-what-a-differential-equation-says.md)).
+By Newton's law of cooling the room gains 0.5 C per hour per degree the outside is warmer. With T the room's temperature in C, t the time in hours and T' the rate of T in C per hour, the law is T' = −0.5(T − (20 + 5 sin t)), with T(0) = 10 ([A differential equation](01-what-a-differential-equation-says.md)).
 
-The rate is a sum, not a product, so [separable-equations](03-separable-equations.md) cannot split it. Instead, multiply both sides by e^(0.5t): the left side becomes the rate of one product, e^(0.5t) times T, and one integration finishes the job. The multiplier is the **integrating factor**.
+The rate is a sum, not a product, so [Separable equations](03-separable-equations.md) cannot split it. Instead, multiply both sides by e^(0.5t): the left side becomes the rate of one product, e^(0.5t) times T, and one integration finishes the job. The multiplier is the **integrating factor**.
 
 The answer has two parts. A **transient**, −8e^(−0.5t), is the start's disagreement with the long run, and it dies. A **forced part**, 20 + sin t − 2 cos t, stays: a sine wave of height 2.24 C around 20 C, peaking 1.11 hours after the outdoor peak.
 
@@ -90,7 +68,7 @@ $$T(t) = 20 + \sin t - 2\cos t - 8e^{-0.5t}$$
 
 ### When it holds
 
-- **Linear in the unknown.** A law with y^2 or sin y fails; some become linear after a substitution ([bernoulli-and-riccati-substitutions](09-bernoulli-and-riccati-substitutions.md)).
+- **Linear in the unknown.** A law with y^2 or sin y fails; some become linear after a substitution ([Bernoulli and Riccati equations](09-bernoulli-and-riccati-substitutions.md)).
 - **The rate carries coefficient 1.** Divide a(t)y' + b(t)y = c(t) by a(t) first. Where a(t) is zero the method stops: t y' + y = 0 gives y = 1/t, which cannot cross t = 0.
 - **p and q continuous on an interval.** Then exactly one solution exists on the whole interval, and it never blows up partway, as y' = y^2 does.
 - **The transient fades when μ grows without bound,** as it does for a constant p > 0. With a constant p < 0 the start's disagreement grows instead.
@@ -101,7 +79,7 @@ $$T(t) = 20 + \sin t - 2\cos t - 8e^{-0.5t}$$
 
 ### Step 0: the left side is almost a product rule
 
-The product rule says (μy)' = μy' + μ'y ([product-and-quotient-rules](../../06-Calculus%20and%20analysis/02-Derivatives/02-product-and-quotient-rules.md)). Multiply the equation's left side by some μ and it reads μy' + μpy. The two match when μ' = pμ: a function whose rate is p times itself, which is an exponential ([exponential-growth-decay-and-cooling](04-exponential-growth-decay-and-cooling.md)). The product rule, run backwards.
+The product rule says (μy)' = μy' + μ'y ([Product and quotient rules](../../06-Calculus%20and%20analysis/02-Derivatives/02-product-and-quotient-rules.md)). Multiply the equation's left side by some μ and it reads μy' + μpy. The two match when μ' = pμ: a function whose rate is p times itself, which is an exponential ([Growth, decay and cooling](04-exponential-growth-decay-and-cooling.md)). The product rule, run backwards.
 
 ### Step 1: build the weight
 
@@ -115,7 +93,7 @@ Multiply y' + py = q by μ. The left side is μy' + μ'y, which is (μy)', so (�
 
 Integrate both sides from 0 to t. The left gives μ(t)y(t) − y0, since μ(0) = 1. Divide by μ(t): the formula. Any solution must satisfy it, so there is only one.
 
-For the room, two integrals. The steady input's, of 10e^(0.5s) from 0 to t, is 20e^(0.5t) − 20. The swinging input needs integration by parts twice ([integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)) and gives e^(0.5t)(sin t − 2 cos t) + 2. Add the start, 10, and divide by e^(0.5t): T = 20 + sin t − 2 cos t + (10 − 20 + 2)e^(−0.5t).
+For the room, two integrals. The steady input's, of 10e^(0.5s) from 0 to t, is 20e^(0.5t) − 20. The swinging input needs integration by parts twice ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)) and gives e^(0.5t)(sin t − 2 cos t) + 2. Add the start, 10, and divide by e^(0.5t): T = 20 + sin t − 2 cos t + (10 − 20 + 2)e^(−0.5t).
 
 <details>
 <summary>The algebra behind this</summary>
@@ -145,7 +123,7 @@ Nothing limits the length of I: the solution lasts while p and q stay continuous
 
 </details>
 
-A second road steps along the slope in small pieces; the code does it, and [eulers-method](../05-Numerical%20Evolution/01-eulers-method.md) is its card.
+A second road steps along the slope in small pieces; the code does it, and [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md) is its card.
 
 ---
 
@@ -165,7 +143,7 @@ A second road steps along the slope in small pieces; the code does it, and [eule
 
 At 10 hours the room reads 21.08 C, and only 0.05 C of that is the start's doing.
 
-The shelf's coffee is the steady-input case: T' + 0.1T = 2, μ = e^(0.1t), and integrating from 80 C gives T = 20 + 60e^(−0.1t). It reaches 50 C at 10 ln 2 = 6.9315 minutes, as in [exponential-growth-decay-and-cooling](04-exponential-growth-decay-and-cooling.md).
+The shelf's coffee is the steady-input case: T' + 0.1T = 2, μ = e^(0.1t), and integrating from 80 C gives T = 20 + 60e^(−0.1t). It reaches 50 C at 10 ln 2 = 6.9315 minutes, as in [Growth, decay and cooling](04-exponential-growth-decay-and-cooling.md).
 
 ### What breaks if you drop a piece
 
@@ -397,8 +375,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Circuits.** A capacitor charged through a resistor from an alternating supply obeys this law, its voltage shrunk and delayed.
-- **Drug infusion.** A drip adds a dose while the body clears a fixed fraction per hour ([mixing-tanks-and-compartments](06-mixing-tanks-and-compartments.md)).
-- **Mean-reverting rates.** An interest rate pulled toward a long-run level is this law with random kicks; wing 11 adds the noise ([ornstein-uhlenbeck-and-cir-processes](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)).
+- **Drug infusion.** A drip adds a dose while the body clears a fixed fraction per hour ([Mixing tanks](06-mixing-tanks-and-compartments.md)).
+- **Mean-reverting rates.** An interest rate pulled toward a long-run level is this law with random kicks; wing 11 adds the noise ([Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)).
 
 > **Say it back**
 > A linear first-order law is y' + p(t)y = q(t). Multiplying by μ = e^(integral of p) makes the left side the derivative of μy. One integration and a division by μ give the only solution. Any two solutions differ by a multiple of 1/μ, so every answer is a fading transient plus a forced part. The room settles into a 2.24 C swing, 1.11 hours behind the weather.
@@ -407,17 +385,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [exponential-growth-decay-and-cooling](04-exponential-growth-decay-and-cooling.md): the exponential whose rate is a multiple of itself, which the weight is.
-- [product-and-quotient-rules](../../06-Calculus%20and%20analysis/02-Derivatives/02-product-and-quotient-rules.md): the rule that Step 0 runs backwards.
-- [integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): the weighted sine's integral.
+- [Growth, decay and cooling](04-exponential-growth-decay-and-cooling.md): the exponential whose rate is a multiple of itself, which the weight is.
+- [Product and quotient rules](../../06-Calculus%20and%20analysis/02-Derivatives/02-product-and-quotient-rules.md): the rule that Step 0 runs backwards.
+- [Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): the weighted sine's integral.
 
 ## Where this goes next
 
-- [mixing-tanks-and-compartments](06-mixing-tanks-and-compartments.md): the method on tanks with inflow and outflow.
-- [bernoulli-and-riccati-substitutions](09-bernoulli-and-riccati-substitutions.md): nonlinear laws that a substitution makes linear.
-- [forced-systems-and-variation-of-constants](../04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md): the same weighted integral with a matrix in place of p.
-- [stiff-equations-and-backward-euler](../05-Numerical%20Evolution/06-stiff-equations-and-backward-euler.md): what goes wrong for plain steps when p is large.
-- [ornstein-uhlenbeck-and-cir-processes](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): this equation with noise, solved by the same weight.
+- [Mixing tanks](06-mixing-tanks-and-compartments.md): the method on tanks with inflow and outflow.
+- [Bernoulli and Riccati equations](09-bernoulli-and-riccati-substitutions.md): nonlinear laws that a substitution makes linear.
+- [Forced systems](../04-Systems%20and%20the%20Matrix%20Exponential/06-forced-systems-and-variation-of-constants.md): the same weighted integral with a matrix in place of p.
+- [Stiff equations](../05-Numerical%20Evolution/06-stiff-equations-and-backward-euler.md): what goes wrong for plain steps when p is large.
+- [Mean reversion](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md): this equation with noise, solved by the same weight.
 
 ---
 

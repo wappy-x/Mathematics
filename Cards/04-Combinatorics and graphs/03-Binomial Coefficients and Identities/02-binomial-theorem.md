@@ -1,37 +1,12 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Binomial Coefficients and Identities
-topic: Powers of a sum
-item: The binomial theorem
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/01-pascals-rule-and-the-triangle|pascals-rule-and-the-triangle]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/03-splitting-into-groups|splitting-into-groups]]"
-  - "[[Cards/03-Algebra/02-Polynomials/01-polynomials|polynomials]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/03-compound-interest|compound-interest]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/06-alternating-sums-and-binomial-inversion|alternating-sums-and-binomial-inversion]]"
-  - "[[Cards/04-Combinatorics and graphs/07-Generating Functions/01-ordinary-generating-functions|ordinary-generating-functions]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/06-binomial-series-and-e|binomial-series-and-e]]"
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/01-bernoulli-and-binomial|bernoulli-and-binomial]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - binomial-theorem
----
-
 # The binomial theorem: (a + b)^n expands with choice counts as coefficients, and so does (a + b + c)^n
 
-Combinatorics and graphs → Binomial Coefficients and Identities → Powers of a sum → The binomial theorem
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Binomial Coefficients and Identities](../../../SYLLABUS.md#w04-s03) → The binomial theorem
 
 ---
 
 ## General Overview
 
-Raise 11 to the fourth power: 14,641. The digits are 1, 4, 6, 4, 1 — row 4 of Pascal's triangle, the array in which each entry is the sum of the two above it ([pascals-rule-and-the-triangle](01-pascals-rule-and-the-triangle.md)).
+Raise 11 to the fourth power: 14,641. The digits are 1, 4, 6, 4, 1 — row 4 of Pascal's triangle, the array in which each entry is the sum of the two above it ([Pascal's rule](01-pascals-rule-and-the-triangle.md)).
 
 No coincidence. 11 is 10 + 1, so 11^4 is four brackets of (10 + 1) multiplied together. Multiplying them out means taking the 10 or the 1 from each and multiplying the four things taken. There are 16 walks: one takes no 1 and gives 10,000, four take it once and give 1,000 apiece, six take it twice and give 100, four give 10, one gives 1. The piles add: 10,000 + 4,000 + 600 + 40 + 1 = 14,641.
 
@@ -61,13 +36,13 @@ The five piles add to 14,641.
 
 Shorthand first, in words. A capital sigma, $\sum$, says add. Below it goes the letter that changes and where it starts, above it where it stops: k = 0 below and n above means work out what follows for k = 0, then k = 1, on up to n, and add.
 
-Here $n$ is the power, the number of brackets; $a$ and $b$ the two things inside each; $k$ how many brackets hand over $b$. C(n, k) counts the ways of choosing which, read "n choose k" ([pascals-rule-and-the-triangle](01-pascals-rule-and-the-triangle.md)).
+Here $n$ is the power, the number of brackets; $a$ and $b$ the two things inside each; $k$ how many brackets hand over $b$. C(n, k) counts the ways of choosing which, read "n choose k" ([Pascal's rule](01-pascals-rule-and-the-triangle.md)).
 
 $$(a + b)^n = \sum_{k=0}^{n} C(n, k)\; a^{\,n-k} b^{\,k}$$
 
 **Read it aloud:** take b from k brackets and a from the rest, count the ways, and add one piece for every k from none to all. A piece is a **term**.
 
-With a third thing, $c$, in the bracket, naming the brackets that gave $b$ no longer fixes a walk: each bracket has three doors. What fixes it is the split into the groups that gave $a$, $b$ and $c$ — sizes i, j and l, adding to n. Such splits number n! divided by i!, j! and l! ([splitting-into-groups](../02-Repeats%2C%20Groups%20and%20Double%20Counting/03-splitting-into-groups.md)). Write it C(n; i, j, l), read "n split into i, j and l".
+With a third thing, $c$, in the bracket, naming the brackets that gave $b$ no longer fixes a walk: each bracket has three doors. What fixes it is the split into the groups that gave $a$, $b$ and $c$ — sizes i, j and l, adding to n. Such splits number n! divided by i!, j! and l! ([Splitting into groups](../02-Repeats%2C%20Groups%20and%20Double%20Counting/03-splitting-into-groups.md)). Write it C(n; i, j, l), read "n split into i, j and l".
 
 $$(a + b + c)^n = \sum C(n; i, j, l)\; a^{\,i} b^{\,j} c^{\,l}, \qquad C(n; i, j, l) = \frac{n!}{i!\; j!\; l!}$$
 
@@ -84,7 +59,7 @@ $$(a + b + c)^n = \sum C(n; i, j, l)\; a^{\,i} b^{\,j} c^{\,l}, \qquad C(n; i, j
 
 ### When it holds
 
-- **A whole power, zero or more.** At n = 4 the sum stops after five pieces; a half or a minus never stops — Newton's series ([binomial-series-and-e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md)).
+- **A whole power, zero or more.** At n = 4 the sum stops after five pieces; a half or a minus never stops — Newton's series ([The binomial series and the number e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md)).
 - **Order of multiplication must not matter.** Numbers are safe, square matrices are not: (A + B)^2 is A×A + A×B + B×A + B×B, and A×B + B×A need not be 2A×B.
 - **A negative b is fine; the sign rides in b^k.** Odd k subtracts: (10 − 1)^4 is 6,561, or 9^4.
 - **Empty powers count as 1, and 0! = 1.** That is what makes the ends of the row a^n and b^n.
@@ -118,13 +93,13 @@ The claim: for every whole n ≥ 0, (a + b)^n is the sum over k from 0 to n of C
 
 **Step.** Assume it at n and multiply by (a + b). Each piece times a gives C(n, k) a^(n+1−k) b^k; times b it gives C(n, k) a^(n−k) b^(k+1). Rename k + 1 as k in the second sum and its pieces read C(n, k − 1) a^(n+1−k) b^k. Both sums now cover the same pieces, so the coefficient of a^(n+1−k) b^k is C(n, k) + C(n, k − 1) — which Pascal's rule turns into C(n + 1, k). Off the ends, a count of something impossible is zero.
 
-The claim at n forces it at n + 1 ([proof-by-induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
+The claim at n forces it at n + 1 ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
 
 </details>
 
 ### Step 4: two settings collapse the whole sum
 
-Set a and b both to 1: every piece becomes its own coefficient, so the row adds to 2^n, and row 10 adds to 1,024. Set a = 1 and b = −1: the pieces are the coefficients with alternating signs, the left side is 0 to a positive power, and row 10 alternates to 0 — as many even-sized choices as odd ([alternating-sums-and-binomial-inversion](06-alternating-sums-and-binomial-inversion.md)).
+Set a and b both to 1: every piece becomes its own coefficient, so the row adds to 2^n, and row 10 adds to 1,024. Set a = 1 and b = −1: the pieces are the coefficients with alternating signs, the left side is 0 to a positive power, and row 10 alternates to 0 — as many even-sized choices as odd ([Alternating sums](06-alternating-sums-and-binomial-inversion.md)).
 
 ### Step 5: three doors per bracket
 
@@ -147,7 +122,7 @@ The digits match the triangle because the piles line up with the columns of a wr
 
 ### A second case: what compounding is made of
 
-$100 at 5% for ten years is 100 × (1 + 0.05)^10 ([compound-interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)). Expanding with a = 1 and b = 0.05 takes it apart.
+$100 at 5% for ten years is 100 × (1 + 0.05)^10 ([Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)). Expanding with a = 1 and b = 0.05 takes it apart.
 
 | Terms kept | What they are | Balance |
 | --- | --- | --- |
@@ -409,7 +384,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Arithmetic in the head.** 11^4 is row 4 as digits, 14,641; 9^4 is the same row with alternating signs, 6,561.
-- **Savings and debt.** The $162.89 balance is the $150.00 that simple interest would reach, plus $12.89 of interest earning interest ([compound-interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)).
+- **Savings and debt.** The $162.89 balance is the $150.00 that simple interest would reach, plus $12.89 of interest earning interest ([Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md)).
 - **Counting collections.** Both letters set to 1 makes this a subset count: row 10 adds to 1,024, one per way to answer ten yes-or-no questions.
 
 > **Say it back**
@@ -419,17 +394,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [pascals-rule-and-the-triangle](01-pascals-rule-and-the-triangle.md): the counts, the rule that builds them, and the row sum 2^n.
-- [splitting-into-groups](../02-Repeats%2C%20Groups%20and%20Double%20Counting/03-splitting-into-groups.md): n! over the group sizes' factorials, the three-term coefficient.
-- [polynomials](../../03-Algebra/02-Polynomials/01-polynomials.md): what multiplying brackets out means, and why like pieces are collected.
-- [compound-interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md): the $162.89 this card takes apart.
+- [Pascal's rule](01-pascals-rule-and-the-triangle.md): the counts, the rule that builds them, and the row sum 2^n.
+- [Splitting into groups](../02-Repeats%2C%20Groups%20and%20Double%20Counting/03-splitting-into-groups.md): n! over the group sizes' factorials, the three-term coefficient.
+- [Polynomials](../../03-Algebra/02-Polynomials/01-polynomials.md): what multiplying brackets out means, and why like pieces are collected.
+- [Compound interest](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/03-compound-interest.md): the $162.89 this card takes apart.
 
 ## Where this goes next
 
-- [alternating-sums-and-binomial-inversion](06-alternating-sums-and-binomial-inversion.md): what the a = 1, b = −1 setting is good for.
-- [ordinary-generating-functions](../07-Generating%20Functions/01-ordinary-generating-functions.md): (1 + b)^n as a machine carrying a whole row.
-- [binomial-series-and-e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md): the same sum when the power is a half or a minus.
-- [bernoulli-and-binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md): these pieces, with a and b as the chances of a miss and a hit.
+- [Alternating sums](06-alternating-sums-and-binomial-inversion.md): what the a = 1, b = −1 setting is good for.
+- [Generating functions](../07-Generating%20Functions/01-ordinary-generating-functions.md): (1 + b)^n as a machine carrying a whole row.
+- [The binomial series and the number e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md): the same sum when the power is a half or a minus.
+- [Binomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/01-bernoulli-and-binomial.md): these pieces, with a and b as the chances of a miss and a hit.
 
 Every term here is weighed by a plain count, which leaves a later shelf's question: what a whole row is worth once the powers mark places in a sequence.
 

@@ -1,28 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Numerical Methods for Pricing
-topic: Learning the exercise rule
-item: Longstaff-Schwartz
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/05-discretisation-schemes-for-sdes|discretisation-schemes-for-sdes]]"
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/05-american-exercise-on-a-tree|american-exercise-on-a-tree]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/01-least-squares-regression|least-squares-regression]]"
-next:
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/03-bermudan-options|bermudan-options]]"
-  - "[[Cards/12-Financial mathematics/31-Forward-Rate Models/06-bermudan-swaptions-by-regression|bermudan-swaptions-by-regression]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - longstaff-schwartz-least-squares-monte-carlo
----
-
 # Longstaff-Schwartz: early exercise by regression on simulated paths
 
-Financial mathematics → Numerical Methods for Pricing → Learning the exercise rule → Longstaff-Schwartz
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Numerical Methods for Pricing](../../../SYLLABUS.md#w12-s06) → Longstaff-Schwartz
 
 ---
 
@@ -32,9 +10,9 @@ Acme shares trade at $100.00. An **American put** on Acme is the right to sell o
 
 Half of that comparison is in plain sight. With Acme at $88.00, selling at $100.00 pays $12.00 today. The other half is invisible: what is the right worth if kept? That is an average over every way the rest of the year could go, and none of it has happened yet.
 
-Simulation used to be helpless here. Drawing a hundred thousand futures for Acme is easy ([monte-carlo-pricing](01-monte-carlo-pricing.md)), but on any one of them the only thing to consult — what that future went on to do — is tomorrow's newspaper. That is not a strategy, and it prices this put at $11.97 instead of $6.66.
+Simulation used to be helpless here. Drawing a hundred thousand futures for Acme is easy ([Monte Carlo pricing](01-monte-carlo-pricing.md)), but on any one of them the only thing to consult — what that future went on to do — is tomorrow's newspaper. That is not a strategy, and it prices this put at $11.97 instead of $6.66.
 
-Longstaff and Schwartz published the way round it in 2001. Nobody owns one future; the machine holds a hundred thousand. Gather every future that stood near $88.00 on that date, see what those went on to collect, and average. Fitting a curve through the cloud of points does the gathering and the averaging at once — that is **regression**, the curve with the smallest total squared miss ([least-squares-regression](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)). That curve is the **hold value**: what keeping the option is worth at a given price. On Acme it returns **$6.62**, against **$6.66** from a binomial tree, which knows nothing of simulation or curves ([american-exercise-on-a-tree](../04-Binomial%20Trees/05-american-exercise-on-a-tree.md)).
+Longstaff and Schwartz published the way round it in 2001. Nobody owns one future; the machine holds a hundred thousand. Gather every future that stood near $88.00 on that date, see what those went on to collect, and average. Fitting a curve through the cloud of points does the gathering and the averaging at once — that is **regression**, the curve with the smallest total squared miss ([Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)). That curve is the **hold value**: what keeping the option is worth at a given price. On Acme it returns **$6.62**, against **$6.66** from a binomial tree, which knows nothing of simulation or curves ([Early exercise](../04-Binomial%20Trees/05-american-exercise-on-a-tree.md)).
 
 **The value of waiting cannot be read off one simulated future, but it can be fitted across many — so a regression run backwards from expiry turns a simulation into a machine that knows when to quit.**
 
@@ -62,7 +40,7 @@ Every arrow back into the loop is one exercise date, and the fit is rebuilt at e
 
 ## The formula
 
-Notation first, in words. Write $S$ for Acme's price, $K$ for the strike, $r$ for the riskless rate, $g$ for the cash the option pays if used right now — the **intrinsic value** — and $C$ for the hold value, the average worth of keeping it. The last two live in the pretend world where every asset drifts at $r$, which is what makes discounted averaging a price ([discretisation-schemes-for-sdes](05-discretisation-schemes-for-sdes.md)).
+Notation first, in words. Write $S$ for Acme's price, $K$ for the strike, $r$ for the riskless rate, $g$ for the cash the option pays if used right now — the **intrinsic value** — and $C$ for the hold value, the average worth of keeping it. The last two live in the pretend world where every asset drifts at $r$, which is what makes discounted averaging a price ([Stepping an SDE](05-discretisation-schemes-for-sdes.md)).
 
 On any exercise date the option is worth the better of two choices:
 
@@ -714,10 +692,10 @@ The two outputs are byte-identical: both languages run the same integer generato
 
 ## Where you meet it in real life
 
-- **Bermudan swaptions and callable bonds.** The largest use by volume: the right to cancel an interest-rate contract on a schedule of dates, in a model with several driving factors where no tree fits. See [bermudan-swaptions-by-regression](../31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md).
+- **Bermudan swaptions and callable bonds.** The largest use by volume: the right to cancel an interest-rate contract on a schedule of dates, in a model with several driving factors where no tree fits. See [Bermudan swaptions](../31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md).
 - **Anything American with more than one underlying.** A put on the worst of five shares needs a five-dimensional tree; simulation needs the same 100,000 futures it always did. A payoff depending on the average price so far cannot sit on a recombining tree at all, since two paths meeting at a node have different histories.
 - **Real options.** Whether to open a mine, expand a plant or run gas into storage: each is a right exercisable over a window, priced by the same backwards pass with a different payoff. In mortgage prepayment and employee share options the holder is a person with habits, and the curve is fitted from observed behaviour rather than from optimality.
-- **The grid, for comparison.** In one dimension the same boundary is found by marching a price grid backwards: [american-options-by-psor-and-lcp](08-american-options-by-psor-and-lcp.md) and [finite-differences-for-the-black-scholes-equation](07-finite-differences-for-the-black-scholes-equation.md).
+- **The grid, for comparison.** In one dimension the same boundary is found by marching a price grid backwards: [American options on a grid](08-american-options-by-psor-and-lcp.md) and [Pricing on a grid](07-finite-differences-for-the-black-scholes-equation.md).
 - **Approximate dynamic programming.** Fitting a value function on simulated trajectories is standard machine-learning practice; finance arrived at it independently, in 2001.
 
 > **Say it back**
@@ -727,16 +705,16 @@ The two outputs are byte-identical: both languages run the same integer generato
 
 ## What this builds on
 
-- [discretisation-schemes-for-sdes](05-discretisation-schemes-for-sdes.md): how one future is built, step by step, with the drift that makes discounted averaging a price.
-- [american-exercise-on-a-tree](../04-Binomial%20Trees/05-american-exercise-on-a-tree.md): the same comparison at every node of a tree, and the 6.660226 measured against here.
-- [least-squares-regression](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md): the normal equations, and why the fitted curve is the best in its family.
+- [Stepping an SDE](05-discretisation-schemes-for-sdes.md): how one future is built, step by step, with the drift that makes discounted averaging a price.
+- [Early exercise](../04-Binomial%20Trees/05-american-exercise-on-a-tree.md): the same comparison at every node of a tree, and the 6.660226 measured against here.
+- [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md): the normal equations, and why the fitted curve is the best in its family.
 
 ## Where this goes next
 
-- [bermudan-options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md): the contract this method actually prices — exercise on a fixed list of dates — and what the schedule is worth.
-- [bermudan-swaptions-by-regression](../31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md): the same backwards fit where the underlying is a whole yield curve and no tree will fit.
+- [Bermudan options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md): the contract this method actually prices — exercise on a fixed list of dates — and what the schedule is worth.
+- [Bermudan swaptions](../31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md): the same backwards fit where the underlying is a whole yield curve and no tree will fit.
 
-This card returns a floor, and a floor alone cannot say how far from the truth it sits. Closing the gap needs an upper bound built from the dual form of the stopping problem, which is where [bermudan-options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md) goes next.
+This card returns a floor, and a floor alone cannot say how far from the truth it sits. Closing the gap needs an upper bound built from the dual form of the stopping problem, which is where [Bermudan options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md) goes next.
 
 ---
 

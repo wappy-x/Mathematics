@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Mortgages, Callables and Prepayment
-topic: Debt the borrower may repay early
-item: Callable bonds
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/06-hull-white-trinomial-tree|hull-white-trinomial-tree]]"
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/05-bonds-price-and-yield|bonds-price-and-yield]]"
-next:
-  - "[[Cards/12-Financial mathematics/35-Mortgages, Callables and Prepayment/02-mortgage-cash-flows-and-prepayment|mortgage-cash-flows-and-prepayment]]"
-tags: [mathematics, financial mathematics, callable-bonds-and-yield-to-worst]
----
-
 # Callable bonds: a bond minus a call option, and the yields quoted on them
 
-Financial mathematics → Mortgages, Callables and Prepayment → Debt the borrower may repay early → Callable bonds
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Mortgages, Callables and Prepayment](../../../SYLLABUS.md#w12-s35) → Callable bonds
 
 ---
 
@@ -55,7 +38,7 @@ Upper line: the plain bond, climbing as rates fall. Lower line: the callable bon
 
 ## The formula
 
-Notation first, in words. The tree of [hull-white-trinomial-tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md) is reused unchanged. A node (i, j) is rung j at step i; a double subscript such as $C_{i,j}$ means "at step i, rung j". $\Delta t$ is the step length, $r_{i,j}$ the node's short rate, and $p_u$, $p_m$, $p_d$ the branch weights to the rung above, the same rung and the rung below. $D(t)$ is today's price of $1 paid at year t. The contract: face $F$ = $100, coupon $c$ = $6 a year, call price $K$ = $100. The **keep value** of a contract V at a node is what its future payments are worth there if nothing happens now.
+Notation first, in words. The tree of [The Hull-White tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md) is reused unchanged. A node (i, j) is rung j at step i; a double subscript such as $C_{i,j}$ means "at step i, rung j". $\Delta t$ is the step length, $r_{i,j}$ the node's short rate, and $p_u$, $p_m$, $p_d$ the branch weights to the rung above, the same rung and the rung below. $D(t)$ is today's price of $1 paid at year t. The contract: face $F$ = $100, coupon $c$ = $6 a year, call price $K$ = $100. The **keep value** of a contract V at a node is what its future payments are worth there if nothing happens now.
 
 $$R_{i,j}[V] = e^{-r_{i,j}\Delta t}\big(p_u V_{i+1,\,j+1} + p_m V_{i+1,\,j} + p_d V_{i+1,\,j-1}\big)$$
 
@@ -108,7 +91,7 @@ The tree has 400 steps of 0.025 year, rung spacing 0.273178 percent and edge run
 
 - **Rates follow one-factor Hull-White with fixed $a$ and $\sigma$.** The option's value is volatility, so a wrong $\sigma$ misprices the bond: $107.76 at 0.5 percent, $105.28 at 2 percent.
 - **The utility calls optimally, on the same model.** Real issuers call late, because refinancing costs fees and calls need notice. An issuer calling whenever rates are below the coupon leaves the holder $107.61.
-- **No default, one curve.** A riskier issuer's bond is discounted at a higher rate; the spread that reconciles model and market is [option-adjusted-spread](04-option-adjusted-spread.md).
+- **No default, one curve.** A riskier issuer's bond is discounted at a higher rate; the spread that reconciles model and market is [Option-adjusted spread](04-option-adjusted-spread.md).
 - **The contract as stated.** Whole bond, at par, on the anniversary, after the coupon. A call premium, make-whole or partial call changes the recursion.
 - **Enough steps.** The tree gives $106.95 at 100 steps, $106.96 at 200 and 400: settled to about a cent.
 
@@ -124,7 +107,7 @@ The yields are definitions and hold for any price above zero.
 
 Every call date offers the utility two actions: pay $100 now, or keep paying coupons. Each is a cost to the utility and a receipt to the holder, who has no say. The contract lets the utility pick the cheaper action every time, so the price assumes it does.
 
-The holder owns the straight bond; the utility owns the right to buy the rest of it back at $100 on five dates. That right is a **Bermudan call**, an option exercisable on a fixed list of dates ([bermudan-options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md)).
+The holder owns the straight bond; the utility owns the right to buy the rest of it back at $100 on five dates. That right is a **Bermudan call**, an option exercisable on a fixed list of dates ([Bermudan options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md)).
 
 ### Step 1: coupon first, then the choice
 
@@ -184,11 +167,11 @@ The code rolls the option back on its own, $1.320816, and subtracts it from the 
 
 Set $\sigma$ to zero. Rates are then known today, and the utility can compare fixed schedules: call at year 5, 6, 7, 8, 9 or never. On this curve those cost $108.74, $109.26, $109.43, $109.31, $108.91 and $108.28. Never calling is cheapest. The forward rates this curve implies for years 5 to 10 average about 6.2 percent a year, so on that path the rest of a 6 percent loan is worth less than $100 and never worth refinancing. The zero-volatility tree agrees: $108.28, the straight price.
 
-All $1.32 of the option comes from the chance that rates fall. The first call date alone is worth $1.16 (the tree says 1.163134, Jamshidian's closed form 1.163324; see [bond-options-and-jamshidians-trick](../30-Short-Rate%20Models/05-bond-options-and-jamshidians-trick.md)). The four later dates add $0.16. For the year-5-only call, the continuous model's remaining plain bond is worth exactly $100 at a short rate of 4.77 percent; below that rate, calling pays.
+All $1.32 of the option comes from the chance that rates fall. The first call date alone is worth $1.16 (the tree says 1.163134, Jamshidian's closed form 1.163324; see [Bond options](../30-Short-Rate%20Models/05-bond-options-and-jamshidians-trick.md)). The four later dates add $0.16. For the year-5-only call, the continuous model's remaining plain bond is worth exactly $100 at a short rate of 4.77 percent; below that rate, calling pays.
 
 ### Step 5: each yield exists, is unique, and they line up
 
-**Existence and uniqueness.** For a fixed end year e, the schedule's value at yield y is a sum of positive payments, each divided by a power of 1 + y. As y rises from −1 to infinity, the value falls strictly from infinity to zero. So every price above zero has exactly one yield above −1, and a price of zero or less has none: the inverse argument of [yield-from-price](../01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md), applied to six schedules.
+**Existence and uniqueness.** For a fixed end year e, the schedule's value at yield y is a sum of positive payments, each divided by a power of 1 + y. As y rises from −1 to infinity, the value falls strictly from infinity to zero. So every price above zero has exactly one yield above −1, and a price of zero or less has none: the inverse argument of [Yield from price](../01-Money%2C%20Dates%20and%20Discounting/07-yield-from-price.md), applied to six schedules.
 
 **The boundary.** At a price of $100 every yield is the coupon rate, 6 percent: $6 a year on $100 is 6 percent however long it lasts.
 
@@ -201,7 +184,7 @@ Hence the traders' rule: a premium callable is quoted to the first call, a disco
 
 ### The other doors
 
-The tree is one road. The same Bermudan call can be priced on a grid for the term-structure equation, or by simulation with a regression for the keep value ([bermudan-swaptions-by-regression](../31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md)), which takes over when one rate factor is not enough.
+The tree is one road. The same Bermudan call can be priced on a grid for the term-structure equation, or by simulation with a regression for the keep value ([Bermudan swaptions](../31-Forward-Rate%20Models/06-bermudan-swaptions-by-regression.md)), which takes over when one rate factor is not enough.
 
 ---
 
@@ -680,7 +663,7 @@ A bond's Greeks are its price moves when the curve or the volatility moves. The 
 | volatility 0.5 percent | $108.28 | $107.76 |
 | volatility 2 percent | $108.28 | $105.28 |
 
-The callable gains less when rates fall, because the utility is more likely to call it away at $100, and it loses value as volatility rises, because the holder is short an option. The curvature this produces is [negative-convexity](03-negative-convexity.md).
+The callable gains less when rates fall, because the utility is more likely to call it away at $100, and it loses value as volatility rises, because the holder is short an option. The curvature this produces is [Negative convexity](03-negative-convexity.md).
 
 > [!TIP]
 > **Try changing**
@@ -709,8 +692,8 @@ The callable gains less when rates fall, because the utility is more likely to c
 
 - **Municipal bonds.** Long municipal bonds are often callable, and dealers must print the yield to the lower of call or maturity on every confirmation (MSRB Rule G-15).
 - **Corporate bonds.** Many carry calls; quote screens show yield to maturity and yield to worst side by side.
-- **Mortgages.** A homeowner who refinances is calling a loan, for reasons beyond rates: [mortgage-cash-flows-and-prepayment](02-mortgage-cash-flows-and-prepayment.md).
-- **Pools of mortgages.** Thousands of such calls bundled into one security: [mortgage-backed-securities-in-outline](05-mortgage-backed-securities-in-outline.md).
+- **Mortgages.** A homeowner who refinances is calling a loan, for reasons beyond rates: [Mortgage pools](02-mortgage-cash-flows-and-prepayment.md).
+- **Pools of mortgages.** Thousands of such calls bundled into one security: [Mortgage-backed securities in outline](05-mortgage-backed-securities-in-outline.md).
 
 > **Say it back**
 > A callable bond lets its issuer repay early at a set price, so the holder owns a plain bond and has sold the issuer a call on it. On a rate tree, the issuer pays each coupon and then takes the cheaper of repaying and carrying on; walking back from maturity gives the price, $106.96 against $108.28 for the plain bond. The $1.32 difference is all volatility: with rates known, this issuer would never call. Yields to each possible end date turn the price into rates, and the lowest, the yield to worst, is what the market quotes. On a premium bond it is the first call, on a discount bond maturity.
@@ -719,14 +702,14 @@ The callable gains less when rates fall, because the utility is more likely to c
 
 ## What this builds on
 
-- [hull-white-trinomial-tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md): the lattice itself, its weights, its fit to the curve, and the rollback with a decision at each exercise date. This card changes only the contract.
-- [bonds-price-and-yield](../01-Money%2C%20Dates%20and%20Discounting/05-bonds-price-and-yield.md): price and yield of a fixed stream, the annuity factor, and why price and yield move opposite ways. Each yield on this card is that calculation for one schedule.
+- [The Hull-White tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md): the lattice itself, its weights, its fit to the curve, and the rollback with a decision at each exercise date. This card changes only the contract.
+- [Bond price and yield](../01-Money%2C%20Dates%20and%20Discounting/05-bonds-price-and-yield.md): price and yield of a fixed stream, the annuity factor, and why price and yield move opposite ways. Each yield on this card is that calculation for one schedule.
 
 ## Where this goes next
 
-- [mortgage-cash-flows-and-prepayment](02-mortgage-cash-flows-and-prepayment.md): a loan that amortises and a borrower who repays early for reasons of their own, not only when it saves money.
-- [negative-convexity](03-negative-convexity.md): the flattening in the year-5 chart, turned into a price-yield curve that bends the wrong way.
-- [option-adjusted-spread](04-option-adjusted-spread.md): the spread added to the tree's rates so the model price meets a market price.
+- [Mortgage pools](02-mortgage-cash-flows-and-prepayment.md): a loan that amortises and a borrower who repays early for reasons of their own, not only when it saves money.
+- [Negative convexity](03-negative-convexity.md): the flattening in the year-5 chart, turned into a price-yield curve that bends the wrong way.
+- [Option-adjusted spread](04-option-adjusted-spread.md): the spread added to the tree's rates so the model price meets a market price.
 
 This card's issuer calls by a clean rule; the question it leaves open is how to price a loan whose borrowers repay early for reasons a rate tree cannot see, which the mortgage card answers.
 

@@ -1,31 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Planarity and Colouring
-topic: Counting faces
-item: Planar graphs
-kind: theorem
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/10-Trees and Cheapest Routes/01-trees|trees]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/03-walks-paths-and-cycles|walks-paths-and-cycles]]"
-  - "[[Cards/01-Foundations/06-Proof/04-proof-by-induction|proof-by-induction]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/02-edge-bound-and-kuratowski|edge-bound-and-kuratowski]]"
-  - "[[Cards/05-Geometry and trig/02-Circles and Solids/06-polyhedra-and-eulers-formula|polyhedra-and-eulers-formula]]"
-  - "[[Cards/14-Applied and computational/07-Network Science and Spectral Graphs/03-graph-laplacian-and-spectral-clustering|graph-laplacian-and-spectral-clustering]]"
-  - "[[Cards/17-Topology/03-Surfaces and Manifolds/04-euler-characteristic-and-triangulations|euler-characteristic-and-triangulations]]"
-  - "[[Cards/25-Frontier/04-Geometry and Combinatorics/04-cycle-double-cover-conjecture|cycle-double-cover-conjecture]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - planar-graphs-and-eulers-formula
----
-
 # Planar graphs: drawn flat with no crossings, and vertices minus edges plus faces is always 2
 
-Combinatorics and graphs → Planarity and Colouring → Counting faces → Planar graphs
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Planarity and Colouring](../../../SYLLABUS.md#w04-s12) → Planar graphs
 
 ---
 
@@ -89,11 +64,11 @@ Here 12 − 8 + 2 = 6: the patch count, without the picture.
 
 ### Step 0: a track on a cycle has a different patch on each side
 
-A **cycle** is a closed run of tracks back to its start, no pad repeated ([walks-paths-and-cycles](../09-Graphs%20-%20Dots%20and%20Lines/03-walks-paths-and-cycles.md)). Drawn without crossings it is a closed curve, with an inside and an outside and no way between them except across it — the Jordan curve theorem, taken as given here. So a track on a cycle has one patch on its left and a different one on its right.
+A **cycle** is a closed run of tracks back to its start, no pad repeated ([Walks, paths and cycles](../09-Graphs%20-%20Dots%20and%20Lines/03-walks-paths-and-cycles.md)). Drawn without crossings it is a closed curve, with an inside and an outside and no way between them except across it — the Jordan curve theorem, taken as given here. So a track on a cycle has one patch on its left and a different one on its right.
 
 ### Step 1: a drawing with no cycle is a tree, and cuts nothing out
 
-Connected with no cycle is the definition of a tree, and a tree has one fewer line than dots ([trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md)). Drawn flat it encloses nothing, so $F = 1$ and
+Connected with no cycle is the definition of a tree, and a tree has one fewer line than dots ([Trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md)). Drawn flat it encloses nothing, so $F = 1$ and
 
 $$V - E + F = V - (V - 1) + 1 = 2.$$
 
@@ -105,7 +80,7 @@ Rub out a track lying on a cycle. The pads are untouched, so $V$ holds. One trac
 
 ### Step 3: keep rubbing out until the tree shows
 
-Each rub-out costs a track, so the rubbing stops, and it stops with no cycle left — a tree, where Step 1 gives 2. No rub-out moved the total, so the drawing at the start was 2: induction on the number of tracks, run downward ([proof-by-induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)). The board takes five rub-outs; the patch count falls 6, 5, 4, 3, 2, 1 and the total holds at 2. The code prints the ladder.
+Each rub-out costs a track, so the rubbing stops, and it stops with no cycle left — a tree, where Step 1 gives 2. No rub-out moved the total, so the drawing at the start was 2: induction on the number of tracks, run downward ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)). The board takes five rub-outs; the patch count falls 6, 5, 4, 3, 2, 1 and the total holds at 2. The code prints the ladder.
 
 <details>
 <summary>What the proof takes on trust</summary>
@@ -120,9 +95,9 @@ Read the copper as borders: the large square a coastline, the rest internal fron
 
 Put a dot inside each face, six in all, and join two whenever their faces share a border; each of the 12 borders gives one join. The result is again a plane drawing: the **dual**.
 
-Its counts are the board's, shuffled: 6 dots for its faces, 12 lines for its lines, 8 faces for its dots. So 6 − 12 + 8 = 2, and a second dual brings the board back. This dual is the octahedron's skeleton, the cube's partner among the solids ([polyhedra-and-eulers-formula](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/06-polyhedra-and-eulers-formula.md)).
+Its counts are the board's, shuffled: 6 dots for its faces, 12 lines for its lines, 8 faces for its dots. So 6 − 12 + 8 = 2, and a second dual brings the board back. This dual is the octahedron's skeleton, the cube's partner among the solids ([Polyhedra](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/06-polyhedra-and-eulers-formula.md)).
 
-Drop the sea's dot and the four joins reaching it: five dots, eight joins, five faces, 5 − 8 + 5 = 2 — the region graph colouring works on ([vertex-colouring-and-chromatic-number](03-vertex-colouring-and-chromatic-number.md)).
+Drop the sea's dot and the four joins reaching it: five dots, eight joins, five faces, 5 − 8 + 5 = 2 — the region graph colouring works on ([Colouring](03-vertex-colouring-and-chromatic-number.md)).
 
 ### The picture: five regions, eight shared borders
 
@@ -388,16 +363,16 @@ The two outputs match line for line.
 > - **Mixing "planar" with "plane".** Planar says a crossing-free drawing exists; plane says the drawing in hand is one. A crossing layout is a bad drawing, not a counterexample.
 > - **Reading a ring of patches as one patch.** The corridors run all the way round, but the spokes wall them apart: count one and the total reads −1.
 > - **Using it on a drawing in two pieces.** Two boards side by side come to 16 − 24 + 11 = 3.
-> - **Expecting 2 on any surface.** The 2 belongs to the flat sheet and the sphere; on a doughnut the count is 0 (euler-characteristic-and-triangulations).
+> - **Expecting 2 on any surface.** The 2 belongs to the flat sheet and the sphere; on a doughnut the count is 0 (Euler characteristic).
 
 ---
 
 ## Where you meet it in real life
 
-- **Single-layer board layout.** A one-layer board is a plane drawing. A wiring list that cannot be drawn flat needs a second layer, and the case for "cannot" starts here ([edge-bound-and-kuratowski](02-edge-bound-and-kuratowski.md)).
-- **Map colouring.** Turning a map into its region graph, as Step 4 does, starts every colouring result ([vertex-colouring-and-chromatic-number](03-vertex-colouring-and-chromatic-number.md), [five-and-four-colour-theorems](05-five-and-four-colour-theorems.md)).
+- **Single-layer board layout.** A one-layer board is a plane drawing. A wiring list that cannot be drawn flat needs a second layer, and the case for "cannot" starts here ([Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md)).
+- **Map colouring.** Turning a map into its region graph, as Step 4 does, starts every colouring result ([Colouring](03-vertex-colouring-and-chromatic-number.md), [Colouring maps](05-five-and-four-colour-theorems.md)).
 - **Meshes.** Graphics software checks a surface mesh by this count; any other number means a hole or a tear.
-- **Solids.** Flatten a convex solid's skeleton from a point above one face: a plane drawing, so this is the polyhedron count ([polyhedra-and-eulers-formula](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/06-polyhedra-and-eulers-formula.md)).
+- **Solids.** Flatten a convex solid's skeleton from a point above one face: a plane drawing, so this is the polyhedron count ([Polyhedra](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/06-polyhedra-and-eulers-formula.md)).
 
 > **Say it back**
 > A plane drawing is a network drawn so lines meet only at dots; it cuts the sheet into faces, the outside one counted. For such a drawing in one piece, dots minus lines plus faces is 2. The proof rubs out one line of a cycle at a time: each rub-out loses a line and merges two faces, leaving the total alone, down to a tree with one face. The board's 8, 12 and 6 give 2; so do its dual's 6, 12 and 8.
@@ -406,19 +381,19 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md): one fewer line than dots, the base case and where the rubbing out ends.
-- [walks-paths-and-cycles](../09-Graphs%20-%20Dots%20and%20Lines/03-walks-paths-and-cycles.md): the cycle, drawn as the closed curve with a different face on each side.
-- [proof-by-induction](../../01-Foundations/06-Proof/04-proof-by-induction.md): why settling the tree and one rub-out settles every drawing.
+- [Trees](../10-Trees%20and%20Cheapest%20Routes/01-trees.md): one fewer line than dots, the base case and where the rubbing out ends.
+- [Walks, paths and cycles](../09-Graphs%20-%20Dots%20and%20Lines/03-walks-paths-and-cycles.md): the cycle, drawn as the closed curve with a different face on each side.
+- [Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md): why settling the tree and one rub-out settles every drawing.
 
 ## Where this goes next
 
-- [edge-bound-and-kuratowski](02-edge-bound-and-kuratowski.md): the count as a ceiling on a flat drawing's lines, and the two networks that break it.
-- [polyhedra-and-eulers-formula](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/06-polyhedra-and-eulers-formula.md): the same count on solids, where Euler found it.
-- graph-laplacian-and-spectral-clustering: dots and lines as a matrix, for large drawings.
-- euler-characteristic-and-triangulations: the same count elsewhere, where the 2 names the surface.
-- cycle-double-cover-conjecture: the six faces here cover each of the 12 tracks twice; whether cycles can do that without a flat drawing is open.
+- [Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md): the count as a ceiling on a flat drawing's lines, and the two networks that break it.
+- [Polyhedra](../../05-Geometry%20and%20trig/02-Circles%20and%20Solids/06-polyhedra-and-eulers-formula.md): the same count on solids, where Euler found it.
+- The graph Laplacian: dots and lines as a matrix, for large drawings.
+- Euler characteristic: the same count elsewhere, where the 2 names the surface.
+- Cycle double cover: the six faces here cover each of the 12 tracks twice; whether cycles can do that without a flat drawing is open.
 
-This card assumes a crossing-free drawing is in hand and never asks whether one exists; deciding that is [edge-bound-and-kuratowski](02-edge-bound-and-kuratowski.md).
+This card assumes a crossing-free drawing is in hand and never asks whether one exists; deciding that is [Why some graphs cannot be drawn flat](02-edge-bound-and-kuratowski.md).
 
 ---
 

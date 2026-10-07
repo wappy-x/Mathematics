@@ -1,24 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Ito Calculus
-topic: Which equations pin down one path
-item: When an SDE has one solution
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/04-stochastic-differential-equations|stochastic-differential-equations]]"
-  - "[[Cards/08-Differential equations and dynamics/02-Existence, Uniqueness and Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem|lipschitz-and-the-picard-lindelof-theorem]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/05-ornstein-uhlenbeck-and-cir-processes|ornstein-uhlenbeck-and-cir-processes]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/04-euler-maruyama-scheme|euler-maruyama-scheme]]"
-tags: [mathematics, stochastic processes and calculus, existence-and-uniqueness-for-sdes]
----
-
 # When an SDE has one solution: Lipschitz and growth conditions
 
-Stochastic processes and calculus → Ito Calculus → Which equations pin down one path → When an SDE has one solution
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Ito Calculus](../../../SYLLABUS.md#w11-s06) → When an SDE has one solution
 
 ---
 
@@ -52,7 +34,7 @@ Orange: the CIR noise size $0.25\sqrt{r}$, in percentage points. Green: the line
 
 ## The formula
 
-Time $t$ is in years. $W_t$ is Brownian motion, the random walk seen from far away. An SDE for a quantity $X_t$, its value at time $t$, is written $dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t$, where $\mu(x, t)$ is the drift function and $\sigma(x, t)$ the noise-size function ([stochastic-differential-equations](04-stochastic-differential-equations.md)). The $dW_t$ is shorthand for an Ito integral, never a derivative, because the path has no slope. So the equation means the integral equation
+Time $t$ is in years. $W_t$ is Brownian motion, the random walk seen from far away. An SDE for a quantity $X_t$, its value at time $t$, is written $dX_t = \mu(X_t, t)\,dt + \sigma(X_t, t)\,dW_t$, where $\mu(x, t)$ is the drift function and $\sigma(x, t)$ the noise-size function ([Stochastic differential equations](04-stochastic-differential-equations.md)). The $dW_t$ is shorthand for an Ito integral, never a derivative, because the path has no slope. So the equation means the integral equation
 
 $$X_t = X_0 + \int_0^t \mu(X_s, s)\,ds + \int_0^t \sigma(X_s, s)\,dW_s .$$
 
@@ -105,14 +87,14 @@ $$dr_t = \kappa\,(\theta - r_t)\,dt + \sigma\sqrt{r_t}\;dW_t .$$
 
 ### Step 0: a solution is a fixed point of the Picard map, measured in mean square
 
-For an ODE, Picard's map takes a guessed curve to the start plus the integral of the rate along it ([lipschitz-and-the-picard-lindelof-theorem](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md)). A Lipschitz rate makes the map shrink distances, so the guesses converge to the one curve it leaves unchanged. The SDE proof runs the same loop with one change: the distance between two guesses is the average, over all runs of the noise, of the square of the largest gap along a path. A single Brownian path can make a stochastic integral large; only averages are under control.
+For an ODE, Picard's map takes a guessed curve to the start plus the integral of the rate along it ([The Picard-Lindelof theorem](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md)). A Lipschitz rate makes the map shrink distances, so the guesses converge to the one curve it leaves unchanged. The SDE proof runs the same loop with one change: the distance between two guesses is the average, over all runs of the noise, of the square of the largest gap along a path. A single Brownian path can make a stochastic integral large; only averages are under control.
 
 ### Step 1: one Picard round shrinks the mean-square gap
 
 Write $\Delta\mu$ and $\Delta\sigma$ for the change in each coefficient between two guesses at the same moment; the Lipschitz condition bounds each by $K$ times their gap. The next guesses differ by a time integral of $\Delta\mu$ plus an Ito integral of $\Delta\sigma$. Square, using $(a + b)^2 \le 2a^2 + 2b^2$, and take the average of the largest value up to time $t$.
 
 - **The drift part.** An ordinary integral over $[0, t]$, squared, is at most $t$ times the integral of the square: the Cauchy–Schwarz inequality, which says the square of an average is at most the average of the square. With $t \le T$ that gives at most $T K^2$ times the time integral of the squared gap.
-- **The noise part.** The largest value of an Ito integral is controlled by Doob's maximal inequality, a martingale's largest square averages at most 4 times its final square ([doob-inequalities](../02-Martingales/05-doob-inequalities.md)). The final square averages exactly the time integral of $\Delta\sigma^2$, by the Ito isometry ([ito-integral](01-ito-integral.md)). That gives at most $4K^2$ times the same integral.
+- **The noise part.** The largest value of an Ito integral is controlled by Doob's maximal inequality, a martingale's largest square averages at most 4 times its final square ([Doob's inequalities](../02-Martingales/05-doob-inequalities.md)). The final square averages exactly the time integral of $\Delta\sigma^2$, by the Ito isometry ([The Ito integral](01-ito-integral.md)). That gives at most $4K^2$ times the same integral.
 
 Together, with $D_k(t)$ the mean square of the largest gap between guesses $k$ and $k+1$ up to time $t$:
 
@@ -150,7 +132,7 @@ Near zero, two guesses a gap $\delta$ apart get noise sizes up to $0.25\sqrt{\de
 
 ### Step 4: uniqueness by Gronwall
 
-For two solutions driven by the same noise, let $e(t)$ be the mean square of their largest gap up to time $t$. Step 1's estimate gives $e(t) \le M \int_0^t e(s)\,ds$, and Gronwall's lemma ([gronwall-and-continuous-dependence](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/04-gronwall-and-continuous-dependence.md)) says such a nonnegative function is 0. The two solutions agree.
+For two solutions driven by the same noise, let $e(t)$ be the mean square of their largest gap up to time $t$. Step 1's estimate gives $e(t) \le M \int_0^t e(s)\,ds$, and Gronwall's lemma ([Gronwall's inequality](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/04-gronwall-and-continuous-dependence.md)) says such a nonnegative function is 0. The two solutions agree.
 
 <details>
 <summary>Detailed proof</summary>
@@ -188,9 +170,9 @@ Drop the growth condition and existence can fail for all time. Take
 
 $$dX_t = X_t^3\,dt + X_t^2\,dW_t, \qquad X_0 = 1 .$$
 
-The coefficients are smooth, so Lipschitz on every bounded range of states, and the solution is unique while it stays finite. But $x^3$ is not below $K(1 + \lvert x\rvert)$ for any $K$. The candidate $X_t = f(W_t)$ with $f(w) = 1/(1-w)$ solves it: by Ito's lemma ([itos-lemma](02-itos-lemma.md)), $f'(w) = f^2$ gives the noise $X^2$, and $\tfrac12 f''(w) = f^3$ gives the drift $X^3$. By finite differences at $w$ = 0.3, where $X$ = 1.428571, the code finds a drift of 2.915452 and a noise of 2.040816, equal to $X^3$ and $X^2$.
+The coefficients are smooth, so Lipschitz on every bounded range of states, and the solution is unique while it stays finite. But $x^3$ is not below $K(1 + \lvert x\rvert)$ for any $K$. The candidate $X_t = f(W_t)$ with $f(w) = 1/(1-w)$ solves it: by Ito's lemma ([Ito's lemma](02-itos-lemma.md)), $f'(w) = f^2$ gives the noise $X^2$, and $\tfrac12 f''(w) = f^3$ gives the drift $X^3$. By finite differences at $w$ = 0.3, where $X$ = 1.428571, the code finds a drift of 2.915452 and a noise of 2.040816, equal to $X^3$ and $X^2$.
 
-The solution reaches infinity at $\tau$, the first time the Brownian path reaches 1. The chance that happens within a year is, by the reflection principle (the walk version is [reflection-principle-for-walks](../01-Random%20Walks%20and%20Filtrations/05-reflection-principle-for-walks.md)), twice the chance that $W_1$ ends above 1:
+The solution reaches infinity at $\tau$, the first time the Brownian path reaches 1. The chance that happens within a year is, by the reflection principle (the walk version is [Reflection principle](../01-Random%20Walks%20and%20Filtrations/05-reflection-principle-for-walks.md)), twice the chance that $W_1$ ends above 1:
 
 $$P(\tau \le 1) = 2\,\big(1 - \Phi(1)\big) = 0.3173 .$$
 
@@ -206,9 +188,9 @@ xychart-beta
 
 Orange: the share of 2000 simulated years in which the Brownian path, watched on 16 to 1024 grid steps, reached 1. Green: the exact 31.73 percent. A grid misses crossings between its points, so every count is low and finer grids miss less: 0.2510 ± 0.0097 at 16 steps, 0.3005 ± 0.0103 at 1024.
 
-Without the noise, the ODE $x' = x^3$ from 1 explodes at $t$ = 0.5 on every path ([blow-up-and-the-life-span-of-a-solution](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/03-blow-up-and-the-life-span-of-a-solution.md)). The SDE explodes within a year on about 1 path in 3, and, since a Brownian path reaches 1 eventually, every path explodes at some finite time.
+Without the noise, the ODE $x' = x^3$ from 1 explodes at $t$ = 0.5 on every path ([Blow-up](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/03-blow-up-and-the-life-span-of-a-solution.md)). The SDE explodes within a year on about 1 path in 3, and, since a Brownian path reaches 1 eventually, every path explodes at some finite time.
 
-**Another road.** In several dimensions the theorem and proof are unchanged, with absolute values read as lengths ([multidimensional-ito-and-correlation](06-multidimensional-ito-and-correlation.md)). The Yamada–Watanabe theorem is one-dimensional only.
+**Another road.** In several dimensions the theorem and proof are unchanged, with absolute values read as lengths ([Several Brownian motions](06-multidimensional-ito-and-correlation.md)). The Yamada–Watanabe theorem is one-dimensional only.
 
 ---
 
@@ -680,8 +662,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Interest-rate and volatility models.** CIR for short rates, and the same square-root noise for the variance in stochastic-volatility models, rely on Yamada–Watanabe for a unique solution and on the Feller test for how they behave at zero ([ornstein-uhlenbeck-and-cir-processes](05-ornstein-uhlenbeck-and-cir-processes.md)).
-- **Simulation software.** A scheme that converges needs a unique solution to converge to, and the square root forces a repair such as full truncation ([euler-maruyama-scheme](../08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md)).
+- **Interest-rate and volatility models.** CIR for short rates, and the same square-root noise for the variance in stochastic-volatility models, rely on Yamada–Watanabe for a unique solution and on the Feller test for how they behave at zero ([Mean reversion](05-ornstein-uhlenbeck-and-cir-processes.md)).
+- **Simulation software.** A scheme that converges needs a unique solution to converge to, and the square root forces a repair such as full truncation ([Euler-Maruyama](../08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md)).
 - **Population models.** A branching population's noise grows like the square root of its size, with the same boundary at extinction.
 - **Self-accelerating reactions.** A rate law that grows faster than a straight line is where explosion becomes possible; the growth condition is the first check.
 
@@ -692,15 +674,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [stochastic-differential-equations](04-stochastic-differential-equations.md): what an SDE is and what a solution is, the integral equation this card solves.
-- [lipschitz-and-the-picard-lindelof-theorem](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md): the same theorem for ODEs, proved by the same Picard iteration; this card changes the distance to a mean square and adds Doob's inequality and the Ito isometry.
-- [ornstein-uhlenbeck-and-cir-processes](05-ornstein-uhlenbeck-and-cir-processes.md): the CIR rate, with the mean and variance Step 5 checks.
+- [Stochastic differential equations](04-stochastic-differential-equations.md): what an SDE is and what a solution is, the integral equation this card solves.
+- [The Picard-Lindelof theorem](../../08-Differential%20equations%20and%20dynamics/02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md): the same theorem for ODEs, proved by the same Picard iteration; this card changes the distance to a mean square and adds Doob's inequality and the Ito isometry.
+- [Mean reversion](05-ornstein-uhlenbeck-and-cir-processes.md): the CIR rate, with the mean and variance Step 5 checks.
 
 ## Where this goes next
 
-- [euler-maruyama-scheme](../08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): the step-by-step simulation used here, with its order of convergence proved under the same Lipschitz conditions.
+- [Euler-Maruyama](../08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): the step-by-step simulation used here, with its order of convergence proved under the same Lipschitz conditions.
 
-This card shows one path exists; [euler-maruyama-scheme](../08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md) answers how fast a scheme closes in on it.
+This card shows one path exists; [Euler-Maruyama](../08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md) answers how fast a scheme closes in on it.
 
 ---
 

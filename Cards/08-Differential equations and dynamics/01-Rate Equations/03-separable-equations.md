@@ -1,28 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Rate Equations
-topic: Splitting the variables
-item: Separable equations
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/01-what-a-differential-equation-says|what-a-differential-equation-says]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/03-chain-rule|chain-rule]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/02-fundamental-theorem-of-calculus|fundamental-theorem-of-calculus]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/03-substitution|substitution]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/04-exponential-growth-decay-and-cooling|exponential-growth-decay-and-cooling]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/07-logistic-growth|logistic-growth]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/08-exact-equations|exact-equations]]"
-  - "[[Cards/08-Differential equations and dynamics/02-Existence, Uniqueness and Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem|lipschitz-and-the-picard-lindelof-theorem]]"
-tags: [mathematics, differential equations and dynamics, separable-equations]
----
-
 # Separable equations: put each variable on its own side and integrate both
 
-Differential equations and dynamics → Rate Equations → Splitting the variables → Separable equations
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Rate Equations](../../../SYLLABUS.md#w08-s01) → Separable equations
 
 ---
 
@@ -56,7 +34,7 @@ Orange: the true volume, on the separated formula until 100 minutes, then on the
 
 ## The formula
 
-Reminder: y' = f(t, y) says "the rate of y at time t is f(t, y)"; y(0) = y0 is the starting value ([what-a-differential-equation-says](01-what-a-differential-equation-says.md)). An equation is **separable** when the rate splits into a time part times an unknown part:
+Reminder: y' = f(t, y) says "the rate of y at time t is f(t, y)"; y(0) = y0 is the starting value ([A differential equation](01-what-a-differential-equation-says.md)). An equation is **separable** when the rate splits into a time part times an unknown part:
 
 $$y' = g(t)\,h(y)$$
 
@@ -66,7 +44,7 @@ $$\int \frac{dy}{h(y)} \;=\; \int g(t)\,dt \qquad\text{that is}\qquad H(y) = G(t
 
 **Read it aloud:** an antiderivative of one over the unknown's part equals an antiderivative of the time part, plus a constant; and each value where h is zero gives one more solution, y held constant there.
 
-The dy and dt are bookkeeping, as in [substitution](../../06-Calculus%20and%20analysis/04-Integrals/03-substitution.md), not a fraction being split.
+The dy and dt are bookkeeping, as in [Substitution](../../06-Calculus%20and%20analysis/04-Integrals/03-substitution.md), not a fraction being split.
 
 On the snowball, $V$ is the volume, g(t) = −k with k = 0.3, and h(V) = V^(2/3):
 
@@ -87,11 +65,11 @@ k is in cm/min, not one over minutes: V^(2/3) is an area, and k times an area mu
 
 ### When it holds
 
-- **The rate is a product g(t) × h(y).** A sum such as y' = t + y does not split; it needs [integrating-factor](05-integrating-factor.md).
+- **The rate is a product g(t) × h(y).** A sum such as y' = t + y does not split; it needs [The integrating factor](05-integrating-factor.md).
 - **Divide only where h(y) is not zero.** Each zero of h is a constant solution of its own. Forget it and the snowball formula runs on to −8 cm^3.
 - **H may have no formula for its inverse.** Then the answer stays implicit, H(y) = G(t) + C, and is still correct.
 - **The answer holds on an interval.** It lasts until y reaches a zero of h or runs off to infinity; the snowball's ends at 100 min.
-- **One start, one solution, needs a well-behaved h.** V^(2/3) is steep at 0, so a puddle at 120 minutes fits a snowball that melted at 100 minutes and no snowball at all ([lipschitz-and-the-picard-lindelof-theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md)).
+- **One start, one solution, needs a well-behaved h.** V^(2/3) is steep at 0, so a puddle at 120 minutes fits a snowball that melted at 100 minutes and no snowball at all ([The Picard-Lindelof theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md)).
 
 ---
 
@@ -99,11 +77,11 @@ k is in cm/min, not one over minutes: V^(2/3) is an area, and k times an area mu
 
 ### Step 0: dividing by h turns the left side into the rate of something
 
-The chain rule says the rate of H(y(t)) is H'(y) times y' ([chain-rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md)). Choose H with H' = 1/h. Then y'/h(y), the left side after dividing, is the rate of H(y(t)), and the equation says it equals g(t), the rate of G(t). Two functions with equal rates differ by a constant. The method is the chain rule run backwards.
+The chain rule says the rate of H(y(t)) is H'(y) times y' ([Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md)). Choose H with H' = 1/h. Then y'/h(y), the left side after dividing, is the rate of H(y(t)), and the equation says it equals g(t), the rate of G(t). Two functions with equal rates differ by a constant. The method is the chain rule run backwards.
 
 ### Step 1: separate and integrate
 
-Where h(y) is not zero, y'/h(y) = g(t). By Step 0, H(y(t)) − G(t) has rate zero, so by the [fundamental-theorem-of-calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md) it is a constant, C.
+Where h(y) is not zero, y'/h(y) = g(t). By Step 0, H(y(t)) − G(t) has rate zero, so by the [Fundamental theorem of calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md) it is a constant, C.
 
 For the snowball, 1/h(V) = V^(−2/3), whose antiderivative is V^(1/3)/(1/3) = 3V^(1/3). The time part integrates to −0.3t. So 3V^(1/3) = −0.3t + C.
 
@@ -134,11 +112,11 @@ A solution may switch from one kind of piece to the other where they meet, as th
 
 Conversely, differentiating H(y(t)) = G(t) + C and multiplying by h(y) returns the equation, and a constant at a zero of h makes both sides 0.
 
-A solution reaches a zero of h only if the integral of 1/h up to it is finite. The snowball's is 3 × 10 / 0.3 = 100 minutes: it arrives. The coffee's, 1/(0.1(T − 20)) down to 20, is infinite: it never quite arrives. When h has bounded slope near its zeros the integral is always infinite, which keeps solutions apart ([lipschitz-and-the-picard-lindelof-theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md)).
+A solution reaches a zero of h only if the integral of 1/h up to it is finite. The snowball's is 3 × 10 / 0.3 = 100 minutes: it arrives. The coffee's, 1/(0.1(T − 20)) down to 20, is infinite: it never quite arrives. When h has bounded slope near its zeros the integral is always infinite, which keeps solutions apart ([The Picard-Lindelof theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md)).
 
 </details>
 
-A second road follows the slope in small steps without any formula; the code does it, and its card is [eulers-method](../05-Numerical%20Evolution/01-eulers-method.md).
+A second road follows the slope in small steps without any formula; the code does it, and its card is [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md).
 
 ---
 
@@ -383,9 +361,9 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Cooling and decay.** Newton's cooling, radioactive decay and drug clearance have h(y) linear in y ([exponential-growth-decay-and-cooling](04-exponential-growth-decay-and-cooling.md)).
+- **Cooling and decay.** Newton's cooling, radioactive decay and drug clearance have h(y) linear in y ([Growth, decay and cooling](04-exponential-growth-decay-and-cooling.md)).
 - **Draining tanks.** Water leaves a hole at a rate set by the square root of the depth; like the snowball, the tank empties in finite time.
-- **Populations with a ceiling.** The logistic law separates with partial fractions; its constant solutions are extinction and the ceiling ([logistic-growth](07-logistic-growth.md)).
+- **Populations with a ceiling.** The logistic law separates with partial fractions; its constant solutions are extinction and the ceiling ([Logistic growth](07-logistic-growth.md)).
 
 > **Say it back**
 > A separable equation's rate is a time part times an unknown part. Divide by the unknown part and integrate each side against its own variable; the chain rule makes the two antiderivatives differ by a constant, fixed from the start. Solve for the unknown if possible, or leave the answer implicit. Then put back the constant solutions at the zeros of the unknown part, which the division removed. The snowball follows (10 − 0.1t)^3 to 100 minutes, then sits on V = 0.
@@ -394,17 +372,17 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [what-a-differential-equation-says](01-what-a-differential-equation-says.md): the notation y' = f(t, y) and the starting value.
-- [chain-rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): the rate of H(y(t)), which Step 0 runs backwards.
-- [fundamental-theorem-of-calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md): a function with rate zero is a constant.
-- [substitution](../../06-Calculus%20and%20analysis/04-Integrals/03-substitution.md): the same bookkeeping, dy = y' dt, used there for integrals.
+- [A differential equation](01-what-a-differential-equation-says.md): the notation y' = f(t, y) and the starting value.
+- [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): the rate of H(y(t)), which Step 0 runs backwards.
+- [Fundamental theorem of calculus](../../06-Calculus%20and%20analysis/04-Integrals/02-fundamental-theorem-of-calculus.md): a function with rate zero is a constant.
+- [Substitution](../../06-Calculus%20and%20analysis/04-Integrals/03-substitution.md): the same bookkeeping, dy = y' dt, used there for integrals.
 
 ## Where this goes next
 
-- [exponential-growth-decay-and-cooling](04-exponential-growth-decay-and-cooling.md): h(y) = y, solved once and used everywhere.
-- [logistic-growth](07-logistic-growth.md): an integral that needs partial fractions.
-- [exact-equations](08-exact-equations.md): implicit answers for laws that do not split.
-- [lipschitz-and-the-picard-lindelof-theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md): when a start fixes one solution, and why a puddle does not.
+- [Growth, decay and cooling](04-exponential-growth-decay-and-cooling.md): h(y) = y, solved once and used everywhere.
+- [Logistic growth](07-logistic-growth.md): an integral that needs partial fractions.
+- [Exact equations](08-exact-equations.md): implicit answers for laws that do not split.
+- [The Picard-Lindelof theorem](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/02-lipschitz-and-the-picard-lindelof-theorem.md): when a start fixes one solution, and why a puddle does not.
 
 ---
 

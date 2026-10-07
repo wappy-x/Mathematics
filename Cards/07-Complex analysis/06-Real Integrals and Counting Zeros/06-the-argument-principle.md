@@ -1,28 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Real Integrals and Counting Zeros
-topic: Turns of the image curve
-item: The argument principle
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/05-the-residue-theorem|the-residue-theorem]]"
-  - "[[Cards/07-Complex analysis/04-Taylor Series, Zeros and Rigidity/03-zeros-and-the-identity-theorem|zeros-and-the-identity-theorem]]"
-next:
-  - "[[Cards/07-Complex analysis/06-Real Integrals and Counting Zeros/07-rouches-theorem|rouches-theorem]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/09-zeros-of-zeta-and-the-primes|zeros-of-zeta-and-the-primes]]"
-  - "[[Cards/13-Engineering mathematics/03-Feedback Control/06-nyquist-criterion-and-stability-margins|nyquist-criterion-and-stability-margins]]"
-  - "[[Cards/17-Topology/05-Homology/07-homology-of-spheres-and-degree|homology-of-spheres-and-degree]]"
-  - "[[Cards/21-Algebraic and analytic number theory/02-The Zeta Function and the Prime Number Theorem/05-prime-number-theorem-proved|prime-number-theorem-proved]]"
-  - "[[Cards/21-Algebraic and analytic number theory/02-The Zeta Function and the Prime Number Theorem/08-counting-the-zeros-riemann-von-mangoldt|counting-the-zeros-riemann-von-mangoldt]]"
-tags: [mathematics, complex analysis, the-argument-principle]
----
-
 # The argument principle: walk the boundary and watch the output spin; the turns count zeros minus poles inside
 
-Complex analysis → Real Integrals and Counting Zeros → Turns of the image curve → The argument principle
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Real Integrals and Counting Zeros](../../../SYLLABUS.md#w07-s06) → The argument principle
 
 ---
 
@@ -34,7 +12,7 @@ When the walk returns to its start, the needle has turned exactly twice round. T
 
 Poles push the other way. A **pole** is a point where the function blows up, like 1/(z − 2)^3 at 2; the power 3 is the pole's **order**. For g(z) = (z − 0.5)/(z − 2)^3 the needle turns once on the unit circle: one zero inside, no pole. On the circle of radius 3 the pole is inside too, counted three times, and the needle turns 1 − 3 = −2 times.
 
-From here on the needle's net number of turns is the **winding number** of the output curve round 0 ([deforming-contours-and-winding-numbers](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md)). The count never locates a zero.
+From here on the needle's net number of turns is the **winding number** of the output curve round 0 ([Deforming a loop](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md)). The count never locates a zero.
 
 **Walk a loop and follow the value of f: the number of times it winds round 0 equals the number of zeros inside minus the number of poles inside, each counted as often as its multiplicity or order.**
 
@@ -50,7 +28,7 @@ To scale. Left: 55 units per 1, 0 at (75, 120), the zeros at (75, 120) and (97, 
 
 ## The formula
 
-Reminder: a loop integral adds f(z) times each small step dz round a closed path ([contour-integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md)); arg w is the angle of the arrow w, measured anticlockwise from the positive real axis. The quotient f′/f, the derivative divided by the function, is the **logarithmic derivative**: the rate of change of ln f.
+Reminder: a loop integral adds f(z) times each small step dz round a closed path ([Contour integrals](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md)); arg w is the angle of the arrow w, measured anticlockwise from the positive real axis. The quotient f′/f, the derivative divided by the function, is the **logarithmic derivative**: the rate of change of ln f.
 
 $$N - P = \frac{1}{2\pi i}\oint_C \frac{f'(z)}{f(z)}\,dz = \frac{\Delta_C \arg f}{2\pi} = n\big(f(C),\,0\big)$$
 
@@ -67,7 +45,7 @@ $$N - P = \frac{1}{2\pi i}\oint_C \frac{f'(z)}{f(z)}\,dz = \frac{\Delta_C \arg f
 | $\Delta_C \arg f$ | total change in the angle of f round C, kept continuous | 4π, two full turns | — |
 | $n(f(C), 0)$ | winding number of the output curve round 0 | 2 | — |
 
-A zero of **multiplicity** m at a: f is (z − a)^m times a function nonzero at a ([zeros-and-the-identity-theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/03-zeros-and-the-identity-theorem.md)).
+A zero of **multiplicity** m at a: f is (z − a)^m times a function nonzero at a ([Zeros and the identity theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/03-zeros-and-the-identity-theorem.md)).
 
 ### When it holds
 
@@ -89,7 +67,7 @@ Near a zero a of multiplicity m, f(z) = (z − a)^m h(z), with h nonzero at a. T
 
 f′/f = m/(z − a) + h′/h.
 
-The second term has no pole at a, so the **residue** of f′/f at a, its coefficient of 1/(z − a) ([residues](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/04-residues.md)), is m. For z(z − 0.4), f′/f = (2z − 0.4)/(z(z − 0.4)) = 1/z + 1/(z − 0.4): residue 1 at each zero.
+The second term has no pole at a, so the **residue** of f′/f at a, its coefficient of 1/(z − a) ([Residues](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/04-residues.md)), is m. For z(z − 0.4), f′/f = (2z − 0.4)/(z(z − 0.4)) = 1/z + 1/(z − 0.4): residue 1 at each zero.
 
 ### Step 2: each pole of order p contributes a residue −p
 
@@ -97,7 +75,7 @@ Near a pole a of order p, f(z) = (z − a)^(−p) h(z), and the same product rul
 
 ### Step 3: add the residues
 
-f′/f is holomorphic everywhere else inside C, so by [the-residue-theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md) its loop integral is 2πi times the sum of the residues inside: 2πi(N − P). For g round |z| = 3 that is 2πi(1 − 3), and the needle turns −2 times.
+f′/f is holomorphic everywhere else inside C, so by [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md) its loop integral is 2πi times the sum of the residues inside: 2πi(N − P). For g round |z| = 3 that is 2πi(1 − 3), and the needle turns −2 times.
 
 The needle turns unevenly. For z(z − 0.4) on the unit circle, it has turned 0.31 of a turn after the first eighth of the walk, 1.00 halfway, and 2.00 at the end:
 
@@ -115,7 +93,7 @@ The line is the needle's accumulated turn. It climbs fastest at the start and en
 <details>
 <summary>Detailed proof</summary>
 
-Let f be holomorphic on an open set containing C and its inside, except at poles, with no zero or pole on C and f not identically zero. Its zeros are isolated ([zeros-and-the-identity-theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/03-zeros-and-the-identity-theorem.md)) poles are isolated by definition, and the closed inside of C is closed and bounded, so it holds finitely many of each.
+Let f be holomorphic on an open set containing C and its inside, except at poles, with no zero or pole on C and f not identically zero. Its zeros are isolated ([Zeros and the identity theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/03-zeros-and-the-identity-theorem.md)) poles are isolated by definition, and the closed inside of C is closed and bounded, so it holds finitely many of each.
 
 **Residues.** In Step 1, h is holomorphic and nonzero on a small disc round a, so h′/h is holomorphic there and the residue of f′/f at a is exactly m; likewise −p at a pole. Away from zeros and poles, f′/f is holomorphic. The residue theorem gives the loop integral of f′/f as 2πi(N − P).
 
@@ -367,10 +345,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Counting a polynomial's roots in a region.** Walk the circle and count turns; no root is located. [rouches-theorem](07-rouches-theorem.md) makes it easier still.
-- **Stability of feedback control.** A feedback loop is stable when 1 + L(s) has no zeros in the right half-plane; L, the loop's transfer function, is a function of a complex variable s. The **Nyquist criterion** walks up the imaginary axis and round a large half circle, and counts how often the plot of L circles −1: [nyquist-criterion-and-stability-margins](../../13-Engineering%20mathematics/03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md).
-- **Zeros of the zeta function.** Their count up to a given height is the argument principle round a rectangle: counting-the-zeros-riemann-von-mangoldt.
-- **Topology.** The winding number is the degree of a circle-to-circle map, generalised to spheres: homology-of-spheres-and-degree.
+- **Counting a polynomial's roots in a region.** Walk the circle and count turns; no root is located. [Rouche's theorem](07-rouches-theorem.md) makes it easier still.
+- **Stability of feedback control.** A feedback loop is stable when 1 + L(s) has no zeros in the right half-plane; L, the loop's transfer function, is a function of a complex variable s. The **Nyquist criterion** walks up the imaginary axis and round a large half circle, and counts how often the plot of L circles −1: [Nyquist and margins](../../13-Engineering%20mathematics/03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md).
+- **Zeros of the zeta function.** Their count up to a given height is the argument principle round a rectangle: Counting the zeros.
+- **Topology.** The winding number is the degree of a circle-to-circle map, generalised to spheres: Homology of spheres, and degree.
 
 > **Say it back**
 > Walk a loop and watch f as a needle from 0. Each zero inside adds turns, one per unit of multiplicity; each pole takes turns away, one per unit of order. The reason: f′/f has residue m at a zero of multiplicity m and −p at a pole of order p, and its loop integral is i times the needle's total turn. For z(z − 0.4) on the unit circle the needle turns twice; for (z − 0.5)/(z − 2)^3 once, and −2 times on the circle of radius 3.
@@ -379,17 +357,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [the-residue-theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md): the loop integral as 2πi times the residues inside.
-- [zeros-and-the-identity-theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/03-zeros-and-the-identity-theorem.md): zeros are isolated and each has a multiplicity.
+- [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md): the loop integral as 2πi times the residues inside.
+- [Zeros and the identity theorem](../04-Taylor%20Series%2C%20Zeros%20and%20Rigidity/03-zeros-and-the-identity-theorem.md): zeros are isolated and each has a multiplicity.
 
 ## Where this goes next
 
-- [rouches-theorem](07-rouches-theorem.md): two functions close on the loop have the same count.
-- [zeros-of-zeta-and-the-primes](../09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md): where zeta's zeros sit, and why primes care.
-- [nyquist-criterion-and-stability-margins](../../13-Engineering%20mathematics/03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): the count as a stability test.
-- homology-of-spheres-and-degree: winding number as degree.
-- prime-number-theorem-proved: no zeta zeros on the line Re s = 1.
-- counting-the-zeros-riemann-von-mangoldt: the zero count up to height T.
+- [Rouche's theorem](07-rouches-theorem.md): two functions close on the loop have the same count.
+- [Zeta's zeros and the primes](../09-Special%20Functions%20and%20the%20Zeta%20Function/09-zeros-of-zeta-and-the-primes.md): where zeta's zeros sit, and why primes care.
+- [Nyquist and margins](../../13-Engineering%20mathematics/03-Feedback%20Control/06-nyquist-criterion-and-stability-margins.md): the count as a stability test.
+- Homology of spheres, and degree: winding number as degree.
+- The prime number theorem: no zeta zeros on the line Re s = 1.
+- Counting the zeros: the zero count up to height T.
 
 ---
 

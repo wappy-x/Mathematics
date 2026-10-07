@@ -1,28 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Sets
-topic: Subsets
-item: Subsets and the power set
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/07-Sets/01-sets-and-membership|sets-and-membership]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/01-exponents-and-powers|exponents-and-powers]]"
-  - "[[Cards/01-Foundations/06-Proof/01-direct-proof|direct-proof]]"
-next:
-  - "[[Cards/01-Foundations/07-Sets/03-set-operations|set-operations]]"
-  - "[[Cards/01-Foundations/09-Sizes of Infinity/04-comparing-infinities|comparing-infinities]]"
-tags:
-  - mathematics
-  - foundations
-  - subsets-and-power-set
----
-
 # Subsets and the power set: everything inside a set, and the 2^n ways to pick some of it
 
-Foundations → Sets → Subsets → Subsets and the power set
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Sets](../../../SYLLABUS.md#w01-s07) → Subsets and the power set
 
 ---
 
@@ -101,7 +79,7 @@ The tool is **double inclusion**: show each collection sits inside the other. Se
 - **Every chilli-free pizza is a subset of {mushroom, olive}.** Take a pizza with no chilli. Each topping on it came off the board, so it is mushroom or olive: every member lands in {mushroom, olive}, which is what subset means.
 - **Every subset of {mushroom, olive} is a chilli-free pizza.** Its members are mushroom or olive, so all of them are on the board and none of them is chilli.
 
-Both hold, so neither has anything the other misses. Same set, four pizzas. The style is [direct-proof](../06-Proof/01-direct-proof.md).
+Both hold, so neither has anything the other misses. Same set, four pizzas. The style is [Direct proof](../06-Proof/01-direct-proof.md).
 
 ---
 
@@ -263,7 +241,7 @@ The two outputs match line for line: whole counts, no rounding.
 ## Where you meet it in real life
 
 - **Tick-all-that-apply forms.** Every checkbox doubles the ways the form can come back, so a short option list becomes a long one.
-- **Probability.** An event is a subset of the outcomes: "an even roll" is a subset of the six faces of a die. How events combine: [set-operations](03-set-operations.md).
+- **Probability.** An event is a subset of the outcomes: "an even roll" is a subset of the six faces of a die. How events combine: [Set operations](03-set-operations.md).
 - **Testing software.** Each on-or-off setting doubles the states the thing can be in, so trying every one becomes impossible.
 
 > **Say it back**
@@ -273,14 +251,14 @@ The two outputs match line for line: whole counts, no rounding.
 
 ## What this builds on
 
-- [sets-and-membership](01-sets-and-membership.md): what a set is, what belonging means, and the empty set counted here.
-- [exponents-and-powers](../03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): multiplying a number by itself over and over, written short.
-- [direct-proof](../06-Proof/01-direct-proof.md): assume a thing is in one set, show it is in the other. Both halves of the double inclusion are that move.
+- [Sets](01-sets-and-membership.md): what a set is, what belonging means, and the empty set counted here.
+- [Exponents](../03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): multiplying a number by itself over and over, written short.
+- [Direct proof](../06-Proof/01-direct-proof.md): assume a thing is in one set, show it is in the other. Both halves of the double inclusion are that move.
 
 ## Where this goes next
 
-- [set-operations](03-set-operations.md): union, intersection, difference and complement — how two subsets of one set combine.
-- [comparing-infinities](../09-Sizes%20of%20Infinity/04-comparing-infinities.md): the power set is always bigger than the set it came from, infinite sets included — how one infinity beats another.
+- [Set operations](03-set-operations.md): union, intersection, difference and complement — how two subsets of one set combine.
+- [Comparing infinities](../09-Sizes%20of%20Infinity/04-comparing-infinities.md): the power set is always bigger than the set it came from, infinite sets included — how one infinity beats another.
 
 ---
 

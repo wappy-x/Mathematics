@@ -1,24 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: The Number Line
-topic: Completeness
-item: The real numbers have no gaps
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/02-The Number Line/03-irrational-numbers|irrational-numbers]]"
-next: []
-tags:
-  - mathematics
-  - foundations
-  - real-numbers-no-gaps
----
-
 # The real numbers have no gaps: every point on the tape is a number
 
-Foundations → The Number Line → Completeness → The real numbers have no gaps
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [The Number Line](../../../SYLLABUS.md#w01-s02) → The real numbers have no gaps
 
 ---
 
@@ -30,7 +12,7 @@ Buy a finer tape, marked every tenth of a millimetre. Same hole, still between m
 
 So is the landing place a number?
 
-Every mark on every tape is a fraction: so many pieces out of so many. Fractions are packed absurdly tight — between any two sits another, halfway. They still miss things. [irrational-numbers](03-irrational-numbers.md) showed one: root 2, the number that gives 2 when multiplied by itself — about 1.414 metres, the diagonal of a one-metre square tile. No fraction lands there. A dart can.
+Every mark on every tape is a fraction: so many pieces out of so many. Fractions are packed absurdly tight — between any two sits another, halfway. They still miss things. [Irrational numbers](03-irrational-numbers.md) showed one: root 2, the number that gives 2 when multiplied by itself — about 1.414 metres, the diagonal of a one-metre square tile. No fraction lands there. A dart can.
 
 The **real numbers** are the fractions plus every landing place they miss.
 
@@ -261,7 +243,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Any measurement.** A length, a temperature, a time. The reading is a real number whether or not the marks reach it: [number-line-and-inequalities](02-number-line-and-inequalities.md).
+- **Any measurement.** A length, a temperature, a time. The reading is a real number whether or not the marks reach it: [The number line and inequalities](02-number-line-and-inequalities.md).
 - **Solvers that close in.** A calculator's root key, a spreadsheet goal seek — each halves a bracket. They work because the squeeze lands somewhere.
 - **A graph crossing a line.** A cost curve meets a revenue line at a point: the line has no gap to jump.
 
@@ -272,12 +254,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [irrational-numbers](03-irrational-numbers.md): that root 2 is not a fraction — the missing place this card points at.
-- [number-families](01-number-families.md): which numbers are fractions and which are not.
+- [Irrational numbers](03-irrational-numbers.md): that root 2 is not a fraction — the missing place this card points at.
+- [The number families](01-number-families.md): which numbers are fractions and which are not.
 
 ## Where this goes next
 
-Nothing on this shelf needs this card. It finishes with [absolute-value-and-distance](05-absolute-value-and-distance.md), which does not need completeness.
+Nothing on this shelf needs this card. It finishes with [Absolute value](05-absolute-value-and-distance.md), which does not need completeness.
 
 ---
 

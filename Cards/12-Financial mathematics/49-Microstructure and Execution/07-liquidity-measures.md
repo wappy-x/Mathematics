@@ -1,21 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Microstructure and Execution
-topic: Trading friction
-item: Liquidity
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/49-Microstructure and Execution/06-transaction-cost-analysis|transaction-cost-analysis]]"
-next: []
-tags: [mathematics, financial-mathematics, liquidity-measures]
----
-
 # Liquidity: effective spread, Amihud illiquidity and the depth-resilience picture
 
-Financial mathematics → Microstructure and Execution → Trading friction → Liquidity
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Microstructure and Execution](../../../SYLLABUS.md#w12-s49) → Liquidity
 
 ---
 
@@ -123,7 +108,7 @@ In words: the missing depth shrinks by the same fraction every minute, and the h
 
 ### Step 0: liquidity is the cost of trading now instead of waiting
 
-A seller who can wait gets roughly the fair price. A seller who must sell now pays for it, and the payment has three parts: the gap between bid and ask (**tightness**), the price levels a large order eats through (**depth**), and the time before the book recovers (**resiliency**). Albert Kyle named these three in 1985 ([kyle-model-and-price-impact](03-kyle-model-and-price-impact.md)). Each measure below reads one of them from data.
+A seller who can wait gets roughly the fair price. A seller who must sell now pays for it, and the payment has three parts: the gap between bid and ask (**tightness**), the price levels a large order eats through (**depth**), and the time before the book recovers (**resiliency**). Albert Kyle named these three in 1985 ([Kyle's model](03-kyle-model-and-price-impact.md)). Each measure below reads one of them from data.
 
 ### Step 1: why twice the distance, and why the sign
 
@@ -186,7 +171,7 @@ After a sale empties some levels, new orders arrive to refill them. The simplest
 
 The second road looks at single orders. If each missing order returns after its own random waiting time, with a constant chance per minute of $\kappa$, then the fraction not yet back after $t$ minutes is again $e^{-\kappa t}$. The half-life is the median waiting time. The code draws 20,001 waiting times per stock and takes their median: 0.98 minutes for Acme against 0.99 from the formula, 9.87 for Cobble against 9.90.
 
-A different road to the spread runs through adverse selection, the loss a market maker suffers to better-informed traders: [bid-ask-spread-and-adverse-selection](02-bid-ask-spread-and-adverse-selection.md) explains why the spread exists at all; this card measures how big it is.
+A different road to the spread runs through adverse selection, the loss a market maker suffers to better-informed traders: [The spread](02-bid-ask-spread-and-adverse-selection.md) explains why the spread exists at all; this card measures how big it is.
 
 ---
 
@@ -213,7 +198,7 @@ Beacon lands between on every row: 8 bp effective spread, Amihud 4.0, 16.25 bp f
 
 Cobble is ten times less liquid than Acme on the spread, on Amihud's ratio and on the half-life. It is 35 times costlier for a $1 million sale, and Acme shows 40.02 times the dollars within 20 bp of its midpoint: $3,995,800 against $99,850.
 
-The shelf's house order is a sale of 100,000 Acme shares, about a tenth of its 1.04 million shares a day. Sold at once into this book, it walks 50 levels and receives 25.5 bp below the midpoint on average: $25,500 less than 100,000 shares at the midpoint. Slicing it, and letting the book refill between slices, is the job of [optimal-execution-almgren-chriss](04-optimal-execution-almgren-chriss.md).
+The shelf's house order is a sale of 100,000 Acme shares, about a tenth of its 1.04 million shares a day. Sold at once into this book, it walks 50 levels and receives 25.5 bp below the midpoint on average: $25,500 less than 100,000 shares at the midpoint. Slicing it, and letting the book refill between slices, is the job of [Almgren-Chriss](04-optimal-execution-almgren-chriss.md).
 
 ### What breaks if you drop a piece
 
@@ -720,9 +705,9 @@ The two outputs agree line for line. The simulated rows agree too, because both 
 - **Execution-quality reports.** In the United States, market centres and larger brokers publish monthly execution statistics under the SEC's Rule 605. The average effective spread is among them: share-weighted, double the distance to the midpoint at order receipt. Brokers use them to choose where to send orders. Conventions verified 2026-09-28 against 17 CFR 242.600 and 242.605.
 - **Asset pricing research.** Amihud's ratio needs only daily closes and volume, so it reaches back decades. His 2002 paper found that less liquid stocks earn higher average returns, as payment for the cost of trading them.
 - **Fund liquidity rules.** Funds sort their holdings by how quickly each could be sold without moving the price much. Depth and daily dollar volume carry that sorting; the spread alone does not.
-- **Execution algorithms.** A trading desk caps its share of each minute's volume so the book can refill between slices. The half-life sets how long to wait: [optimal-execution-almgren-chriss](04-optimal-execution-almgren-chriss.md).
-- **Market makers.** The effective spread is their gross pay for standing in the book: [market-making-avellaneda-stoikov](05-market-making-avellaneda-stoikov.md).
-- **The order book itself.** Depth is read straight off the price levels described in [the-limit-order-book](01-the-limit-order-book.md).
+- **Execution algorithms.** A trading desk caps its share of each minute's volume so the book can refill between slices. The half-life sets how long to wait: [Almgren-Chriss](04-optimal-execution-almgren-chriss.md).
+- **Market makers.** The effective spread is their gross pay for standing in the book: [Market making](05-market-making-avellaneda-stoikov.md).
+- **The order book itself.** Depth is read straight off the price levels described in [The order book](01-the-limit-order-book.md).
 
 > **Say it back**
 > Liquidity is the cost of trading now, and it has three faces: tightness, depth and resilience. The effective spread reads tightness: twice the signed distance from trade price to midpoint, share-weighted. Amihud's ratio reads price movement per dollar traded, as an average of daily absolute returns over daily dollar volume. The order book, walked level by level and watched as it refills, gives depth and a half-life. Cobble is ten times less liquid than Acme on the spread, on Amihud and on the half-life, and 35 times costlier for a $1 million sale sold at once.
@@ -731,13 +716,13 @@ The two outputs agree line for line. The simulated rows agree too, because both 
 
 ## What this builds on
 
-- [transaction-cost-analysis](06-transaction-cost-analysis.md): signed costs against a midpoint, basis points, and the gap between what a trade paid and what it caused. This card turns those per-order costs into per-stock measures.
+- [Measuring execution](06-transaction-cost-analysis.md): signed costs against a midpoint, basis points, and the gap between what a trade paid and what it caused. This card turns those per-order costs into per-stock measures.
 
 ## Where this goes next
 
-- [kyle-model-and-price-impact](03-kyle-model-and-price-impact.md): the model counterpart of Amihud's ratio. Kyle's lambda is the price move per unit of order flow, derived from informed trading rather than measured.
-- [optimal-execution-almgren-chriss](04-optimal-execution-almgren-chriss.md): how to slice the 100,000-share Acme sale when each slice pays depth and the book refills in between.
-- [market-making-avellaneda-stoikov](05-market-making-avellaneda-stoikov.md): the other side of the spread, where the quotes come from.
+- [Kyle's model](03-kyle-model-and-price-impact.md): the model counterpart of Amihud's ratio. Kyle's lambda is the price move per unit of order flow, derived from informed trading rather than measured.
+- [Almgren-Chriss](04-optimal-execution-almgren-chriss.md): how to slice the 100,000-share Acme sale when each slice pays depth and the book refills in between.
+- [Market making](05-market-making-avellaneda-stoikov.md): the other side of the spread, where the quotes come from.
 
 ---
 

@@ -1,24 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Survival, Design and Causality
-topic: Planning a field trial
-item: Blocking and factorial designs
-kind: method
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/04-randomised-experiments-and-ab-tests|randomised-experiments-and-ab-tests]]"
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/06-edge-colouring-and-round-robin|edge-colouring-and-round-robin]]"
-next:
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/06-permutation-tests|permutation-tests]]"
-  - "[[Cards/09-Probability and statistics/13-Survival, Design and Causality/07-confounding-and-simpsons-paradox|confounding-and-simpsons-paradox]]"
-tags: [mathematics, probability and statistics, blocking-and-factorial-designs]
----
-
 # Blocking and factorial designs: getting more from fewer trials
 
-Probability and statistics → Survival, Design and Causality → Planning a field trial → Blocking and factorial designs
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Survival, Design and Causality](../../../SYLLABUS.md#w09-s13) → Blocking and factorial designs
 
 ---
 
@@ -119,7 +101,7 @@ The cancelling needs balance, not luck: each combination once per strip. It is e
 
 ### Step 2: every plot counts for every effect
 
-Each $\bar\varepsilon_{fw}$ averages three independent noises, so its variance is $\sigma^2/r$ ([sample-mean-and-standard-error](../07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)). The four averages use different plots, so they are independent, and variances of independent terms add. Four terms, each with weight squared $\tfrac14$:
+Each $\bar\varepsilon_{fw}$ averages three independent noises, so its variance is $\sigma^2/r$ ([Standard error](../07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)). The four averages use different plots, so they are independent, and variances of independent terms add. Four terms, each with weight squared $\tfrac14$:
 
 $$\operatorname{Var}(\hat F) = 4 \times \tfrac14 \times \frac{\sigma^2}{r} = \frac{\sigma^2}{r} = \frac{4\sigma^2}{N}.$$
 
@@ -135,7 +117,7 @@ That is a standard error of 1.06 kg against 0.87 kg on the same twelve plots. To
 
 ### Step 4: ignore the strips, and they become noise
 
-Suppose the grower skips the blocks and draws lots over the whole field: any three of the twelve plots may get "both", any three of the rest "fertiliser only", and so on. This is **complete randomisation**, the design of [randomised-experiments-and-ab-tests](04-randomised-experiments-and-ab-tests.md). Now a combination can land mostly downhill. The strip effects no longer cancel on each draw; they cancel only on average over the lottery.
+Suppose the grower skips the blocks and draws lots over the whole field: any three of the twelve plots may get "both", any three of the rest "fertiliser only", and so on. This is **complete randomisation**, the design of [Randomised experiments](04-randomised-experiments-and-ab-tests.md). Now a combination can land mostly downhill. The strip effects no longer cancel on each draw; they cancel only on average over the lottery.
 
 The lottery keeps $\hat F$ unbiased. But each draw carries a leftover strip imbalance, and its variance over all draws is exactly $S_b^2/r$. Adding the noise, which is independent of the draw:
 
@@ -168,7 +150,7 @@ $$s^2 = \frac{18.17}{(r-1)(4-1)} = \frac{18.17}{6} = 3.03, \qquad \text{standard
 
 The divisor 6 makes $s^2$ unbiased for $\sigma^2$. Over 20,000 simulated seasons the average $s^2$ is 2.2472, give or take 0.0092, against the true 2.25.
 
-The alternative route is least squares ([multiple-regression-and-gauss-markov](../09-Regression/03-multiple-regression-and-gauss-markov.md)): regress the twelve yields on an intercept, two strip indicators and three columns of plus and minus ones. Twice each fitted slope is the matching contrast, and the leftover sum of squares is the same 18.17. When a block is too small to hold every combination, balanced arrangements like the league fixture lists of [edge-colouring-and-round-robin](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/06-edge-colouring-and-round-robin.md) take over. That card's fixture grid, with one more symbol on its diagonal, is a **Latin square**: every symbol once in each row and once in each column. It blocks two ways at once. On a field that also changed from west to east, four strips of four plots could be laid out as the grid for a four-team league, with rounds 1, 2 and 3 standing for fertiliser, water and both, and neither on the diagonal:
+The alternative route is least squares ([Multiple regression](../09-Regression/03-multiple-regression-and-gauss-markov.md)): regress the twelve yields on an intercept, two strip indicators and three columns of plus and minus ones. Twice each fitted slope is the matching contrast, and the leftover sum of squares is the same 18.17. When a block is too small to hold every combination, balanced arrangements like the league fixture lists of [Edge colouring](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/06-edge-colouring-and-round-robin.md) take over. That card's fixture grid, with one more symbol on its diagonal, is a **Latin square**: every symbol once in each row and once in each column. It blocks two ways at once. On a field that also changed from west to east, four strips of four plots could be laid out as the grid for a four-team league, with rounds 1, 2 and 3 standing for fertiliser, water and both, and neither on the diagonal:
 
 | Strip | Column 1, west | Column 2 | Column 3 | Column 4, east |
 | --- | --- | --- | --- | --- |
@@ -635,8 +617,8 @@ The two outputs agree line for line.
 
 - **Field trials.** Randomised blocks and factorial designs grew up in crop experiments at Rothamsted in England in the 1920s and 1930s, for exactly this problem: fields are never uniform.
 - **Clinical trials.** Randomising separately within each hospital, or within age bands, is blocking; it is called stratified randomisation. The ISIS-2 heart-attack trial gave streptokinase, aspirin, both or neither: a two-by-two factorial.
-- **Website tests.** Two changes to a page, a new headline and a new button, run as four variants at once reveal whether they clash. Days of the week or device types serve as blocks ([randomised-experiments-and-ab-tests](04-randomised-experiments-and-ab-tests.md)).
-- **Paired comparisons.** A before-and-after measurement on the same person is a block of two; the paired t-test in [t-tests-and-comparing-means](../08-Confidence%20Intervals%20and%20Tests/05-t-tests-and-comparing-means.md) is its analysis.
+- **Website tests.** Two changes to a page, a new headline and a new button, run as four variants at once reveal whether they clash. Days of the week or device types serve as blocks ([Randomised experiments](04-randomised-experiments-and-ab-tests.md)).
+- **Paired comparisons.** A before-and-after measurement on the same person is a block of two; the paired t-test in [t-tests](../08-Confidence%20Intervals%20and%20Tests/05-t-tests-and-comparing-means.md) is its analysis.
 - **Industrial screening.** Engineers test seven or more factors at two levels each in one factorial run, often a planned fraction of all combinations, to find the few settings that matter.
 
 > **Say it back**
@@ -646,15 +628,15 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [randomised-experiments-and-ab-tests](04-randomised-experiments-and-ab-tests.md): the lottery that makes a difference of averages unbiased; this card restricts that lottery to within blocks.
-- [edge-colouring-and-round-robin](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/06-edge-colouring-and-round-robin.md): a fixture list in which every pair meets once is the balanced arrangement used when a block is too small to hold every treatment, and its fixture grid is the Latin square that blocks two ways at once.
+- [Randomised experiments](04-randomised-experiments-and-ab-tests.md): the lottery that makes a difference of averages unbiased; this card restricts that lottery to within blocks.
+- [Edge colouring](../../04-Combinatorics%20and%20graphs/12-Planarity%20and%20Colouring/06-edge-colouring-and-round-robin.md): a fixture list in which every pair meets once is the balanced arrangement used when a block is too small to hold every treatment, and its fixture grid is the Latin square that blocks two ways at once.
 
 ## Where this goes next
 
-- [permutation-tests](06-permutation-tests.md): judges a difference by re-running the lottery on the observed data, without assuming normal noise; a blocked design like this one is shuffled within its blocks only.
-- [confounding-and-simpsons-paradox](07-confounding-and-simpsons-paradox.md): what happens when no lottery assigned the treatment, and a hidden strip decides who gets what.
+- [Permutation tests](06-permutation-tests.md): judges a difference by re-running the lottery on the observed data, without assuming normal noise; a blocked design like this one is shuffled within its blocks only.
+- [Confounding](07-confounding-and-simpsons-paradox.md): what happens when no lottery assigned the treatment, and a hidden strip decides who gets what.
 
-The standard errors here are read against a bell curve; how to judge a difference between two treatments by the lottery alone, with no bell curve, is the question [permutation-tests](06-permutation-tests.md) answers.
+The standard errors here are read against a bell curve; how to judge a difference between two treatments by the lottery alone, with no bell curve, is the question [Permutation tests](06-permutation-tests.md) answers.
 
 ---
 

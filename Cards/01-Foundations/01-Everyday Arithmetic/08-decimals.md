@@ -1,29 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Everyday Arithmetic
-topic: Fractions, decimals and percentages
-item: Decimals
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/07-fractions|fractions]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/01-place-value|place-value]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/03-multiplying-and-dividing|multiplying-and-dividing]]"
-next:
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/09-ratios-and-rates|ratios-and-rates]]"
-  - "[[Cards/01-Foundations/02-The Number Line/03-irrational-numbers|irrational-numbers]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/04-scientific-notation|scientific-notation]]"
-tags:
-  - mathematics
-  - foundations
-  - decimals
----
-
 # Decimals: fractions whose bottom is a power of ten
 
-Foundations → Everyday Arithmetic → Fractions, decimals and percentages → Decimals
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Everyday Arithmetic](../../../SYLLABUS.md#w01-s01) → Decimals
 
 ---
 
@@ -33,7 +10,7 @@ Petrol is $1.85 a litre. You fill a 42.5-litre tank. The receipt says **$78.63**
 
 The petrol was worth 78 dollars, 62 cents and half a cent. The pump picked a side and rounded up.
 
-That dot is not a new kind of number. It is the columns from [place-value](01-place-value.md), carried right: after ones come tenths, hundredths, thousandths. Those columns make a fraction — 1.85 is 185 over 100 — so decimals obey the rules from [fractions](07-fractions.md).
+That dot is not a new kind of number. It is the columns from [Place value](01-place-value.md), carried right: after ones come tenths, hundredths, thousandths. Those columns make a fraction — 1.85 is 185 over 100 — so decimals obey the rules from [Fractions](07-fractions.md).
 
 **A decimal is a fraction whose bottom is a power of ten — ten, a hundred, a thousand, and so on — so you can strip the point out, work in whole numbers, and put the point back at the end.**
 
@@ -74,7 +51,7 @@ Nothing says the columns stop at the ones. Keep dividing by ten: tenths, hundred
 
 ### Step 1: clearing the point scales the problem
 
-Shifting the point one column right multiplies a number by ten. Two shifts turn 1.85 into 185, a hundred times too big. One shift turns 42.5 into 425, ten times too big. Multiply the whole numbers, as [multiplying-and-dividing](03-multiplying-and-dividing.md) does: 185 × 425 = 78625, a thousand times too big.
+Shifting the point one column right multiplies a number by ten. Two shifts turn 1.85 into 185, a hundred times too big. One shift turns 42.5 into 425, ten times too big. Multiply the whole numbers, as [Multiplying and dividing](03-multiplying-and-dividing.md) does: 185 × 425 = 78625, a thousand times too big.
 
 ### Step 2: putting the point back undoes that
 
@@ -260,7 +237,7 @@ The two outputs match line for line. Neither language holds a decimal: thousandt
 
 - **Every pump and till.** In the US, petrol is priced to a tenth of a cent, so nearly every fill lands between two cents and is rounded.
 - **Payroll and invoices.** A rate like $1.85 an hour meets hours like 42.5, and the rounded cent must be accounted for.
-- **Anything measured.** Litres and kilograms are read to a decimal place, and counting places carries into [ratios-and-rates](09-ratios-and-rates.md).
+- **Anything measured.** Litres and kilograms are read to a decimal place, and counting places carries into [Ratios and rates](09-ratios-and-rates.md).
 
 > **Say it back**
 > A decimal is place value carried right of the dot: tenths, hundredths, thousandths — a fraction whose bottom is a power of ten. To multiply, strip the points out, multiply whole numbers, then walk the point back by as many places as you removed: 185 × 425 is 78625, so 1.85 × 42.5 is 78.625. To add, stack the points. Money keeps two places, so the receipt says $78.63.
@@ -269,14 +246,14 @@ The two outputs match line for line. Neither language holds a decimal: thousandt
 
 ## What this builds on
 
-- [fractions](07-fractions.md): multiplying tops and bottoms, and reducing 3145/40 to 629/8.
-- [place-value](01-place-value.md): each column is ten times its right neighbour; decimals continue past the ones.
+- [Fractions](07-fractions.md): multiplying tops and bottoms, and reducing 3145/40 to 629/8.
+- [Place value](01-place-value.md): each column is ten times its right neighbour; decimals continue past the ones.
 
 ## Where this goes next
 
-- [ratios-and-rates](09-ratios-and-rates.md): dollars per litre is a rate, built on the arithmetic here.
-- [irrational-numbers](../02-The%20Number%20Line/03-irrational-numbers.md): decimals that never stop and never repeat, which no fraction can write.
-- [scientific-notation](../03-Powers%2C%20Roots%20and%20Logarithms/04-scientific-notation.md): shifting the point, to write very large and very small numbers short.
+- [Ratios and rates](09-ratios-and-rates.md): dollars per litre is a rate, built on the arithmetic here.
+- [Irrational numbers](../02-The%20Number%20Line/03-irrational-numbers.md): decimals that never stop and never repeat, which no fraction can write.
+- [Scientific notation](../03-Powers%2C%20Roots%20and%20Logarithms/04-scientific-notation.md): shifting the point, to write very large and very small numbers short.
 
 ---
 

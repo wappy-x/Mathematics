@@ -1,26 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: American and Bermudan exercise
-topic: Quadratic approximation
-item: Barone-Adesi-Whaley
-kind: approximation
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/05-perpetual-american-put|perpetual-american-put]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/06-newtons-method|newtons-method]]"
-next:
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/07-american-greeks-and-implied-volatility|american-greeks-and-implied-volatility]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - barone-adesi-whaley-approximation
----
-
 # Barone-Adesi-Whaley: an American price in a microsecond by bolting one lump onto the European price
 
-Financial mathematics → American and Bermudan exercise → Quadratic approximation → Barone-Adesi-Whaley
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [American and Bermudan exercise](../../../SYLLABUS.md#w12-s15) → Barone-Adesi-Whaley
 
 ---
 
@@ -28,7 +8,7 @@ Financial mathematics → American and Bermudan exercise → Quadratic approxima
 
 Acme shares trade at $100. A one-year put lets its holder sell one share for $100. The riskless rate is 5 percent, Acme pays a 2 percent dividend yield, and its volatility is 20 percent. If the put can be used only on the last day (a European put), it is worth $6.33.
 
-If it can be used on any day (an American put), it is worth more. A 2,000-step tree, which checks "use it now or keep it?" at each of its 2,001,000 nodes before expiry, says $6.66. The extra 33 cents is the **early-exercise premium**: the value of being allowed to stop waiting ([american-options-and-early-exercise](01-american-options-and-early-exercise.md)).
+If it can be used on any day (an American put), it is worth more. A 2,000-step tree, which checks "use it now or keep it?" at each of its 2,001,000 nodes before expiry, says $6.66. The extra 33 cents is the **early-exercise premium**: the value of being allowed to stop waiting ([American options](01-american-options-and-early-exercise.md)).
 
 The tree is honest and slow. A desk repricing thousands of American options on every tick needs something faster. In 1987 Giovanni Barone-Adesi and Robert Whaley found it. Keep the European price, which has a formula. Add one lump for the premium, which also has a formula once one small term is thrown away. For Acme the lump is 34 cents and the American price comes out at $6.67, a little over one cent from the tree. The whole calculation is a quadratic equation, a handful of Newton steps and one power.
 
@@ -75,7 +55,7 @@ The critical price, the one share price where holding and exercising are worth t
 
 $$K - S^* \;=\; p(S^*) - \Big(1 - e^{-qT}N\big(-d_1(S^*)\big)\Big)\frac{S^*}{\beta_1}$$
 
-That last line has $S^*$ on both sides and inside $N$. It has no closed-form solution. Newton's method solves it in five steps ([newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)).
+That last line has $S^*$ on both sides and inside $N$. It has no closed-form solution. Newton's method solves it in five steps ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -92,15 +72,15 @@ That last line has $S^*$ on both sides and inside $N$. It has no closed-form sol
 | $A$, $G$ | the lump's height at $S^*$; the matching gap $G(X)$ that Newton drives to zero | 2.008478 | — |
 | $N$, $\varphi$, $d_1$, $d_2$ | the bell-curve area and height; the Black-Scholes distances, here evaluated at any share price | $d_1(S^*) = -0.943639$ | — |
 
-The helpers, as on the pilot card: $d_1(X) = \big(\ln(X/K) + (r - q + \tfrac12\sigma^2)T\big)/(\sigma\sqrt{T})$ and $d_2 = d_1 - \sigma\sqrt{T}$. In words: the log distance from the strike to $X$, plus a drift term, counted in units of $\sigma\sqrt{T}$. The European put is $p(X) = K e^{-rT} N(-d_2) - X e^{-qT} N(-d_1)$ ([black-scholes-put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md)).
+The helpers, as on the pilot card: $d_1(X) = \big(\ln(X/K) + (r - q + \tfrac12\sigma^2)T\big)/(\sigma\sqrt{T})$ and $d_2 = d_1 - \sigma\sqrt{T}$. In words: the log distance from the strike to $X$, plus a drift term, counted in units of $\sigma\sqrt{T}$. The European put is $p(X) = K e^{-rT} N(-d_2) - X e^{-qT} N(-d_1)$ ([Black-Scholes put](../08-The%20Black-Scholes%20call%20and%20put/02-black-scholes-put.md)).
 
-A call has the same shape mirrored: the positive root $\beta_2$, a critical price above the strike, and every sign flipped. With no dividend the call's critical price runs off to infinity and the formula returns the European call, as [mertons-no-early-exercise-theorem](02-mertons-no-early-exercise-theorem.md) says it must.
+A call has the same shape mirrored: the positive root $\beta_2$, a critical price above the strike, and every sign flipped. With no dividend the call's critical price runs off to infinity and the formula returns the European call, as [Merton's theorem](02-mertons-no-early-exercise-theorem.md) says it must.
 
 ### When it holds
 
 - **Black-Scholes dynamics: constant rate, yield and volatility.** The European leg and the equation the lump solves both assume them. If volatility moves with the share, the lump is built on the wrong equation.
 - **A smooth dividend yield, not dated cash dividends.** A lumpy dividend makes exercise cluster on the day before it is paid, which a smooth yield cannot represent. Use a tree with the actual dates.
-- **Continuous exercise.** The formula prices an American put. A put exercisable only on set dates is Bermudan and worth less ([bermudan-options](03-bermudan-options.md)).
+- **Continuous exercise.** The formula prices an American put. A put exercisable only on set dates is Bermudan and worth less ([Bermudan options](03-bermudan-options.md)).
 - **Short to medium lives.** The dropped term is zero at both ends of the life, with no known bound in between. Here the error stays under about five cents to one year and reaches 16 cents at three years.
 
 ---
@@ -109,7 +89,7 @@ A call has the same shape mirrored: the positive root $\beta_2$, a critical pric
 
 ### Step 0: the premium obeys the same equation as the option, almost without a clock
 
-While the put is held, the American put and the European put both satisfy the Black-Scholes equation: a hedged position must earn the riskless rate ([black-scholes-equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)). The equation is linear, so their difference, the premium, satisfies it too.
+While the put is held, the American put and the European put both satisfy the Black-Scholes equation: a hedged position must earn the riskless rate ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)). The equation is linear, so their difference, the premium, satisfies it too.
 
 The premium is simpler than the price: zero at expiry, almost zero far above the strike, all its structure near the critical price. Barone-Adesi and Whaley rewrote the equation so that the clock appears mostly as a parameter, then dropped the one small piece where it still appears as a rate of change. What remains is an equation in the share price alone, with no scale in it. Its solutions are powers.
 
@@ -145,7 +125,7 @@ Write the premium as $A (S/S^*)^{\beta_1}$, so $A$ is its height at $S^*$. Two u
 
 **Value matching.** At $S^*$ holding and exercising are worth the same: $p(S^*) + A = K - S^*$.
 
-**Smooth pasting.** At $S^*$ the price curve runs tangent to the exercise line, slope −1, not at a corner ([exercise-boundary-and-smooth-pasting](04-exercise-boundary-and-smooth-pasting.md)). The European put's slope is $-e^{-qT}N(-d_1)$; the lump's slope at $S^*$ is $A\beta_1/S^*$. Setting their sum to −1 gives $A$. Putting that $A$ into value matching gives the equation for $S^*$ in The formula.
+**Smooth pasting.** At $S^*$ the price curve runs tangent to the exercise line, slope −1, not at a corner ([The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md)). The European put's slope is $-e^{-qT}N(-d_1)$; the lump's slope at $S^*$ is $A\beta_1/S^*$. Setting their sum to −1 gives $A$. Putting that $A$ into value matching gives the equation for $S^*$ in The formula.
 
 The check measures the slope of the finished curve just above $S^*$: −0.999999.
 
@@ -183,7 +163,7 @@ Newton converges fast only near the root. The seed puts the first guess between 
 
 ### Step 6: the ends of the life are exact
 
-At the far end, $h \to 1$ and the dropped term vanishes, so the formula must reproduce the exact perpetual put of [perpetual-american-put](05-perpetual-american-put.md): boundary $K\beta/(\beta-1)$ = $64.92, value $15.77 at $S = 100$. At a 200-year life the formula gives 15.769407 against the exact 15.769332. At the near end the premium is zero. The method is pinned at both ends and approximate in between.
+At the far end, $h \to 1$ and the dropped term vanishes, so the formula must reproduce the exact perpetual put of [The perpetual American put](05-perpetual-american-put.md): boundary $K\beta/(\beta-1)$ = $64.92, value $15.77 at $S = 100$. At a 200-year life the formula gives 15.769407 against the exact 15.769332. At the near end the premium is zero. The method is pinned at both ends and approximate in between.
 
 The other fast route is Bjerksund and Stensland's (1993). They replace the moving boundary with a flat one, a single trigger price for the whole life, and price the put as the European value plus the value of exercising when that trigger is first hit. It needs no Newton search at all. It is named here and not worked; the checks do not compute it.
 
@@ -678,10 +658,10 @@ The two outputs match line for line, although the bell-curve areas come from dif
 ## Where you meet it in real life
 
 - **Listed single-stock options.** Exchange-traded single-stock options in the US are American. A desk quoting thousands of them, and requoting on every tick, needs a price in microseconds; this formula, or a descendant, often supplies it.
-- **Implied volatility for American options.** Running a pricer backwards for $\sigma$ needs many prices per option. A fast formula makes that affordable, and the volatility it returns inherits its error ([american-greeks-and-implied-volatility](07-american-greeks-and-implied-volatility.md)).
+- **Implied volatility for American options.** Running a pricer backwards for $\sigma$ needs many prices per option. A fast formula makes that affordable, and the volatility it returns inherits its error ([American Greeks and implied volatility](07-american-greeks-and-implied-volatility.md)).
 - **Risk runs.** A bank revalues its book overnight and again under every stress scenario. The tree's 2,001,000 node visits per price, against five Newton steps, decide whether the report arrives on time.
 - **Seeding better methods.** A finite-difference solver or a refined approximation can start from this critical price.
-- **The tree it approximates.** The honest reference throughout is the tree of [american-exercise-on-a-tree](../04-Binomial%20Trees/05-american-exercise-on-a-tree.md).
+- **The tree it approximates.** The honest reference throughout is the tree of [Early exercise](../04-Binomial%20Trees/05-american-exercise-on-a-tree.md).
 
 > **Say it back**
 > An American put is the European put plus a premium for the right to stop waiting. The premium satisfies the same Black-Scholes equation; drop the one small term that still carries the clock, and what is left has powers of the share price as solutions, with the power from a quadratic. Two conditions at the critical price, equal value and a smooth meeting with the exercise line, fix the lump's size and the critical price, which Newton finds in five steps. For Acme's one-year put it gives $6.67 against the tree's $6.66. The dropped term vanishes at both ends of the life, so the error is a few cents for short puts and grows to about 16 cents at three years.
@@ -690,12 +670,12 @@ The two outputs match line for line, although the bell-curve areas come from dif
 
 ## What this builds on
 
-- [perpetual-american-put](05-perpetual-american-put.md): the endless-life put, where the power law is exact. This card bends it to a finite life, and its boundary seeds the Newton search.
-- [newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): tangent-line steps to a root, the only loop in the method.
+- [The perpetual American put](05-perpetual-american-put.md): the endless-life put, where the power law is exact. This card bends it to a finite life, and its boundary seeds the Newton search.
+- [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): tangent-line steps to a root, the only loop in the method.
 
 ## Where this goes next
 
-- [american-greeks-and-implied-volatility](07-american-greeks-and-implied-volatility.md): the sensitivities of the American price, and the volatility that reproduces a quoted American price.
+- [American Greeks and implied volatility](07-american-greeks-and-implied-volatility.md): the sensitivities of the American price, and the volatility that reproduces a quoted American price.
 
 This card gives one fast American price; how that price moves when Acme, time and volatility move, and how to run it backwards from a market quote, is the next card's question.
 

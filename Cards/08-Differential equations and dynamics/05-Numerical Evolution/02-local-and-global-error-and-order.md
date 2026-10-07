@@ -1,24 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Numerical Evolution
-topic: Error bookkeeping
-item: Order of a method
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/01-eulers-method|eulers-method]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/05-taylor-series|taylor-series]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/03-midpoint-and-heun-methods|midpoint-and-heun-methods]]"
-  - "[[Cards/16-Numerical analysis/06-ODE Solvers/02-convergence-of-one-step-methods|convergence-of-one-step-methods]]"
-tags: [mathematics, differential equations and dynamics, local-and-global-error-and-order]
----
-
 # Order of a method: the error of one step, how the errors pile up, and the number that says how fast they shrink
 
-Differential equations and dynamics → Numerical Evolution → Error bookkeeping → Order of a method
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Numerical Evolution](../../../SYLLABUS.md#w08-s05) → Order of a method
 
 ---
 
@@ -26,7 +8,7 @@ Differential equations and dynamics → Numerical Evolution → Error bookkeepin
 
 A skydiver jumps from rest. Gravity adds 9.8 m/s of speed each second; drag removes speed at 0.2 per second times the current speed. The speed climbs towards 49.0 m/s, where drag cancels gravity. At 10 s it is exactly 42.3686 m/s.
 
-Euler's rule ([eulers-method](01-eulers-method.md)) holds the current rate for one step, then repeats. With 2 s steps it lands on 45.1898 m/s, off by 2.8212. With 1 s steps it is off by 1.3701; with 0.5 s steps, by 0.6742. Halve the step, halve the error.
+Euler's rule ([Euler's method](01-eulers-method.md)) holds the current rate for one step, then repeats. With 2 s steps it lands on 45.1898 m/s, off by 2.8212. With 1 s steps it is off by 1.3701; with 0.5 s steps, by 0.6742. Halve the step, halve the error.
 
 Runge-Kutta four (RK4) reads the rate four times per step. With 2 s steps it is off by 0.0039558 m/s, and each halving divides that by about 17 to 19. The power that says how fast the error shrinks, 1 for Euler and 4 for RK4, is the method's **order**.
 
@@ -54,7 +36,7 @@ Orange: Euler's error at 10 s divided by the step. Green: Step 2's prediction, 1
 
 Notation first, in words. The step size is $h$, in seconds. The run ends at $T$ = 10 s after $N = T/h$ steps. The rate law is $v' = f(t, v)$, read "the rate of the speed at time t is f"; here $f(t, v) = 9.8 - 0.2v$. Euler's value after $n$ steps is $v_n$, at time $t_n$, which is n times h. Two primes, $v''$, mean the rate of the rate: how fast the acceleration changes.
 
-The **local error** $\ell$ is what one step misses when it starts from the exact value. Taylor's theorem with its remainder ([taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)) sizes it:
+The **local error** $\ell$ is what one step misses when it starts from the exact value. Taylor's theorem with its remainder ([Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md)) sizes it:
 
 $$\ell = \frac{h^2}{2}\,\lvert v''(\xi)\rvert \quad\text{for some time } \xi \text{ inside the step.}$$
 
@@ -139,13 +121,13 @@ Let $e_n = \lvert v_n - v(t_n)\rvert$, with $e_0 = 0$. The exact step is Euler's
 
 $$e_{n+1} \le (1 + Lh)\,e_n + \tfrac{h^2}{2}M.$$
 
-Unrolling from $e_0 = 0$ gives $e_n \le \tfrac{h^2}{2}M\,\sum_{j=0}^{n-1}(1+Lh)^j = \tfrac{hM}{2L}\big((1+Lh)^n - 1\big)$, a geometric sum. Since $1 + x \le e^x$, $(1+Lh)^n \le e^{LT}$, so every $e_n \le \tfrac{M}{2L}(e^{LT} - 1)\,h$. The general version is on convergence-of-one-step-methods.
+Unrolling from $e_0 = 0$ gives $e_n \le \tfrac{h^2}{2}M\,\sum_{j=0}^{n-1}(1+Lh)^j = \tfrac{hM}{2L}\big((1+Lh)^n - 1\big)$, a geometric sum. Since $1 + x \le e^x$, $(1+Lh)^n \le e^{LT}$, so every $e_n \le \tfrac{M}{2L}(e^{LT} - 1)\,h$. The general version is on From local error to global error.
 
 </details>
 
 ### Step 4: the rule of one power
 
-Steps 2 and 3 give the rule for any one-step method: a local miss of a constant times $h^{p+1}$, with gaps growing by at most $1 + Lh$ per step, makes a global miss of a constant times $h^p$. RK4's four readings cancel the Taylor terms through $h^4$, so it misses by about $h^5$ per step and $h^4$ per run ([runge-kutta-four](04-runge-kutta-four.md)).
+Steps 2 and 3 give the rule for any one-step method: a local miss of a constant times $h^{p+1}$, with gaps growing by at most $1 + Lh$ per step, makes a global miss of a constant times $h^p$. RK4's four readings cancel the Taylor terms through $h^4$, so it misses by about $h^5$ per step and $h^4$ per run ([Runge-Kutta four](04-runge-kutta-four.md)).
 
 ### Step 5: reading the order off two runs
 
@@ -374,7 +356,7 @@ ALL CHECKS PASS
 > [!TIP]
 > **Try changing**
 > - **Guess first:** use step sizes 1, 0.5 and 0.25. Do Euler's estimates move towards 1? Yes: the second lands closer to 1 than 1.02.
-> - **Guess first:** make Euler's step the midpoint step, `v + h * f(t + h / 2, v + h / 2 * f(t, v))`. Euler's estimates read 2.25 and 2.12, and the two-roads assert fails, since road two still multiplies by $1 - 0.2h$ ([midpoint-and-heun-methods](03-midpoint-and-heun-methods.md)).
+> - **Guess first:** make Euler's step the midpoint step, `v + h * f(t + h / 2, v + h / 2 * f(t, v))`. Euler's estimates read 2.25 and 2.12, and the two-roads assert fails, since road two still multiplies by $1 - 0.2h$ ([Midpoint and Heun](03-midpoint-and-heun-methods.md)).
 > - **Guess first:** set `K2 = 0.2`, so the parachute changes nothing. The jump vanishes and RK4's estimates return to 4.24 and 4.12.
 
 ---
@@ -392,7 +374,7 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Checking simulation codes.** Running one problem at several step sizes and confirming the estimated order is how solvers are verified; a mismatch points at a bug.
-- **Choosing a step.** Halving the step cuts an order-4 error sixteenfold and an order-1 error twofold, which is why [runge-kutta-four](04-runge-kutta-four.md) is the everyday default.
+- **Choosing a step.** Halving the step cuts an order-4 error sixteenfold and an order-1 error twofold, which is why [Runge-Kutta four](04-runge-kutta-four.md) is the everyday default.
 - **Events and switches.** A switch mid-run breaks smoothness, so solvers stop at the switch and restart.
 
 > **Say it back**
@@ -402,13 +384,13 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [eulers-method](01-eulers-method.md): the straight-step rule whose error this card measures.
-- [taylor-series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): Taylor's theorem with its remainder, which sizes one step's miss.
+- [Euler's method](01-eulers-method.md): the straight-step rule whose error this card measures.
+- [Taylor series](../../06-Calculus%20and%20analysis/06-Series/05-taylor-series.md): Taylor's theorem with its remainder, which sizes one step's miss.
 
 ## Where this goes next
 
-- [midpoint-and-heun-methods](03-midpoint-and-heun-methods.md): two slope samples per step, cancelling the $h^2$ term to reach order 2.
-- convergence-of-one-step-methods: small local error plus controlled growth gives convergence, for every one-step method.
+- [Midpoint and Heun](03-midpoint-and-heun-methods.md): two slope samples per step, cancelling the $h^2$ term to reach order 2.
+- From local error to global error: small local error plus controlled growth gives convergence, for every one-step method.
 
 ---
 

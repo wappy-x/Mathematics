@@ -1,27 +1,6 @@
----
-type: card
-wing: 13-Engineering mathematics
-shelf: Units and Modelling
-topic: Wind-tunnel scaling
-item: Similarity
-kind: method
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/03-scaling-and-nondimensionalisation|scaling-and-nondimensionalisation]]"
-  - "[[Cards/05-Geometry and trig/01-Angles, Triangles and Congruence/04-similar-triangles-and-scale|similar-triangles-and-scale]]"
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/02-dimensional-analysis-and-buckingham-pi|dimensional-analysis-and-buckingham-pi]]"
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/01-si-units-and-dimensional-homogeneity|si-units-and-dimensional-homogeneity]]"
-next:
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/05-regular-perturbation|regular-perturbation]]"
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/06-boundary-layers-and-singular-perturbation|boundary-layers-and-singular-perturbation]]"
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/07-error-propagation-and-sensitivity|error-propagation-and-sensitivity]]"
-tags: [mathematics, engineering mathematics, similarity-and-model-testing]
----
-
 # Similarity: when a small model in a tunnel really predicts the full size thing
 
-Engineering mathematics → Units and Modelling → Wind-tunnel scaling → Similarity
+[Syllabus](../../../SYLLABUS.md) → [Engineering mathematics](../../../SYLLABUS.md#w13) → [Units and Modelling](../../../SYLLABUS.md#w13-s01) → Similarity
 
 ---
 
@@ -31,13 +10,13 @@ A helmet maker wants the drag on a new road helmet at 12.5 m/s, which is 45 km/h
 
 The balance reads a force in newtons. The question is what that number says about the full helmet. Run the fan at the rider's own 12.5 m/s and the model feels 0.0958 N. Scale it up by area, sixteen times, and the full helmet comes out 3.46 % too high. Run the fan at 50 m/s instead and the model feels 1.4810 N, which on the card's stand-in drag curve is exactly the full helmet's drag, with no scaling at all.
 
-The tunnel speed that works is not a guess. Air flow round a body is governed by a few **dimensionless groups**: ratios with no units, written Π in general, such as the Reynolds number Re from [dimensional-analysis-and-buckingham-pi](02-dimensional-analysis-and-buckingham-pi.md). Make every group on the model equal to its value at full size and the model's flow is the full flow shrunk, the way similar triangles are one triangle drawn at two sizes. The model's drag, divided by the right combination of density, speed and size, then equals the full helmet's. This match is called **similarity**, and the model is then **similar** to the full-size helmet in the physical sense.
+The tunnel speed that works is not a guess. Air flow round a body is governed by a few **dimensionless groups**: ratios with no units, written Π in general, such as the Reynolds number Re from [Buckingham Pi](02-dimensional-analysis-and-buckingham-pi.md). Make every group on the model equal to its value at full size and the model's flow is the full flow shrunk, the way similar triangles are one triangle drawn at two sizes. The model's drag, divided by the right combination of density, speed and size, then equals the full helmet's. This match is called **similarity**, and the model is then **similar** to the full-size helmet in the physical sense.
 
 The catch is that the groups fight. In the same air, matching Re needs a model four times faster, while matching the second group, the Mach number, needs the same speed. Both cannot hold at once unless the air itself is changed, for example by pressurising the tunnel to 4 atm. Most real tests match the group that matters and argue that the other one does not.
 
 **A scale model predicts the full-size object when every dimensionless group that governs the flow takes the same value on both; when the groups cannot all be matched together, the test matches the ones that matter and shows the rest are negligible.**
 
-**What kind of fact this is:** a method, resting on a theorem: that any law relating physical quantities can be written among dimensionless groups, proved on [dimensional-analysis-and-buckingham-pi](02-dimensional-analysis-and-buckingham-pi.md) and sketched here in a folded proof.
+**What kind of fact this is:** a method, resting on a theorem: that any law relating physical quantities can be written among dimensionless groups, proved on [Buckingham Pi](02-dimensional-analysis-and-buckingham-pi.md) and sketched here in a folded proof.
 
 ### The picture: what the model predicts at each tunnel speed
 
@@ -94,7 +73,7 @@ In one fixed air the left side is 1 and the right side is $\lambda$, so a quarte
 | $C_D$, $\varphi$, $\Pi$ | drag coefficient; the unknown law $C_D = \varphi(\mathrm{Re}, \mathrm{Ma})$; any dimensionless group | $C_D$ = 0.4141 | drag rises in proportion |
 | $p$, $T$, $R$, $\gamma$, $\beta$, $S$ | air pressure, temperature, gas constant 287.05 J/(kg K), heat-capacity ratio 1.4, Sutherland's two constants | 1 atm, 293.15 K | raising $p$ raises $\rho$ and Re; leaves $\mu$ and $c$ alone |
 
-The air's properties come from the constants of the U.S. Standard Atmosphere 1976: density from the ideal-gas law $\rho = p/(RT)$, viscosity from Sutherland's law $\mu = \beta T^{3/2}/(T + S)$ with $\beta$ = 1.458e-6 kg/(m s K^0.5) and $S$ = 110.4 K, and $c = \sqrt{\gamma R T}$. [boundary-layers-and-singular-perturbation](06-boundary-layers-and-singular-perturbation.md) takes 1.82 × 10^-5 Pa s for the same air, from a newer correlation; the two values differ by 0.4 %, which moves Re by the same 0.4 % and leaves the method untouched. To have a curve to test against, the card lets a smooth sphere of the helmet's width stand in for $\varphi$, using White's curve fit $C_D \approx 24/\mathrm{Re} + 6/(1 + \sqrt{\mathrm{Re}}) + 0.4$, stated for Re up to 200,000. It has no Mach dependence, so on it a Re-matched test is exact. A real helmet's curve differs, which is why it goes in a tunnel; the method needs only that some curve exists.
+The air's properties come from the constants of the U.S. Standard Atmosphere 1976: density from the ideal-gas law $\rho = p/(RT)$, viscosity from Sutherland's law $\mu = \beta T^{3/2}/(T + S)$ with $\beta$ = 1.458e-6 kg/(m s K^0.5) and $S$ = 110.4 K, and $c = \sqrt{\gamma R T}$. [Boundary layers](06-boundary-layers-and-singular-perturbation.md) takes 1.82 × 10^-5 Pa s for the same air, from a newer correlation; the two values differ by 0.4 %, which moves Re by the same 0.4 % and leaves the method untouched. To have a curve to test against, the card lets a smooth sphere of the helmet's width stand in for $\varphi$, using White's curve fit $C_D \approx 24/\mathrm{Re} + 6/(1 + \sqrt{\mathrm{Re}}) + 0.4$, stated for Re up to 200,000. It has no Mach dependence, so on it a Re-matched test is exact. A real helmet's curve differs, which is why it goes in a tunnel; the method needs only that some curve exists.
 
 ### When it holds
 
@@ -113,7 +92,7 @@ The drag on the helmet is the same whether it is measured in newtons or in pound
 
 ### Step 1: count the groups
 
-The list is $F$, $\rho$, $U$, $D$, $\mu$, $c$: six quantities in three dimensions. The Buckingham Pi theorem ([dimensional-analysis-and-buckingham-pi](02-dimensional-analysis-and-buckingham-pi.md)) says six minus three, so three independent groups. One choice is $C_D$, Re and Ma. Check Re: $\rho U D/\mu$ has dimensions [M][L]^-3 times [L][T]^-1 times [L], divided by [M][L]^-1[T]^-1, and every exponent cancels.
+The list is $F$, $\rho$, $U$, $D$, $\mu$, $c$: six quantities in three dimensions. The Buckingham Pi theorem ([Buckingham Pi](02-dimensional-analysis-and-buckingham-pi.md)) says six minus three, so three independent groups. One choice is $C_D$, Re and Ma. Check Re: $\rho U D/\mu$ has dimensions [M][L]^-3 times [L][T]^-1 times [L], divided by [M][L]^-1[T]^-1, and every exponent cancels.
 
 ### Step 2: the law is one function of two groups
 
@@ -534,7 +513,7 @@ The two outputs match line for line.
 - **Pressurised and cryogenic tunnels.** Aircraft models are tested in compressed or cooled gas to match Re and Ma together, the route of Step 5.
 - **Ship towing tanks.** A hull has a free surface, so the Froude number joins Re; in water both cannot be matched together, and naval architects match Froude and correct friction by a separate rule.
 - **River and harbour models.** Gravity-driven flows are scaled by Froude number, with roughness adjusted so the model's friction comes out right.
-- **Numbers that carry over.** The tunnel's force balance has its own error, and the rule that carries it through a product of powers, such as the scaling formula, is [error-propagation-and-sensitivity](07-error-propagation-and-sensitivity.md), worked there on a full-size tunnel test.
+- **Numbers that carry over.** The tunnel's force balance has its own error, and the rule that carries it through a product of powers, such as the scaling formula, is [Error propagation](07-error-propagation-and-sensitivity.md), worked there on a full-size tunnel test.
 
 > **Say it back**
 > A model predicts the full-size object when every dimensionless group governing the flow is the same on both. Then the drag coefficient is the same, and the force scales by density times speed squared times size squared. For a quarter-scale helmet in open air, Reynolds matching needs 50 m/s, and the model then feels the full 1.4810 N. Re and Ma cannot both be matched in one air at a smaller scale; a 4 atm tunnel at the rider's own speed matches both. When a group cannot be matched, the test must show it does not matter, as Ma 0.1457 does here.
@@ -543,18 +522,18 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [scaling-and-nondimensionalisation](03-scaling-and-nondimensionalisation.md): rewriting an equation in scaled variables, where groups such as Re appear as coefficients.
-- [similar-triangles-and-scale](../../05-Geometry%20and%20trig/01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md): one shape at two sizes, with lengths in a fixed ratio and areas in its square.
-- [dimensional-analysis-and-buckingham-pi](02-dimensional-analysis-and-buckingham-pi.md): why six quantities in three dimensions leave three groups.
-- [si-units-and-dimensional-homogeneity](01-si-units-and-dimensional-homogeneity.md): the bracket notation and the rule that both sides of a law carry the same dimensions.
+- [Nondimensionalisation](03-scaling-and-nondimensionalisation.md): rewriting an equation in scaled variables, where groups such as Re appear as coefficients.
+- [Similar triangles](../../05-Geometry%20and%20trig/01-Angles%2C%20Triangles%20and%20Congruence/04-similar-triangles-and-scale.md): one shape at two sizes, with lengths in a fixed ratio and areas in its square.
+- [Buckingham Pi](02-dimensional-analysis-and-buckingham-pi.md): why six quantities in three dimensions leave three groups.
+- [Units and dimensions](01-si-units-and-dimensional-homogeneity.md): the bracket notation and the rule that both sides of a law carry the same dimensions.
 
 ## Where this goes next
 
-- [regular-perturbation](05-regular-perturbation.md): the method that corrects for a small number term by term instead of ignoring it, shown there on a pendulum; the same expansion in Ma^2 would size the compressibility correction.
-- [boundary-layers-and-singular-perturbation](06-boundary-layers-and-singular-perturbation.md): why a large Re makes a thin layer next to the surface, which is where the helmet's drag coefficient depends on Re.
-- [error-propagation-and-sensitivity](07-error-propagation-and-sensitivity.md): the power rule that carries balance and speed errors through the scaling formula.
+- [Regular perturbation](05-regular-perturbation.md): the method that corrects for a small number term by term instead of ignoring it, shown there on a pendulum; the same expansion in Ma^2 would size the compressibility correction.
+- [Boundary layers](06-boundary-layers-and-singular-perturbation.md): why a large Re makes a thin layer next to the surface, which is where the helmet's drag coefficient depends on Re.
+- [Error propagation](07-error-propagation-and-sensitivity.md): the power rule that carries balance and speed errors through the scaling formula.
 
-Similarity said Ma 0.1457 was small enough to ignore; how to correct for a small number term by term, instead of ignoring it, is the method of [regular-perturbation](05-regular-perturbation.md).
+Similarity said Ma 0.1457 was small enough to ignore; how to correct for a small number term by term, instead of ignoring it, is the method of [Regular perturbation](05-regular-perturbation.md).
 
 ---
 

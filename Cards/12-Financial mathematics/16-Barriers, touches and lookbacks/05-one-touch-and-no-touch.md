@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Barriers, touches and lookbacks
-topic: Paid on a touch
-item: One-touch and no-touch
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/01-knock-out-and-knock-in-options|knock-out-and-knock-in-options]]"
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/01-cash-or-nothing-digital|cash-or-nothing-digital]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/04-reflection-principle-and-running-maximum|reflection-principle-and-running-maximum]]"
-next:
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/06-lookback-options|lookback-options]]"
-tags: [mathematics, financial mathematics, one-touch-and-no-touch]
----
-
 # One-touch and no-touch: a fixed sum if the line is ever reached, priced from the chance of touching
 
-Financial mathematics → Barriers, touches and lookbacks → Paid on a touch → One-touch and no-touch
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Barriers, touches and lookbacks](../../../SYLLABUS.md#w12-s16) → One-touch and no-touch
 
 ---
 
@@ -104,7 +86,7 @@ Delta, gamma and vega are equal and opposite because the two contracts sum to a 
 
 ### When it holds
 
-- **The barrier is watched every instant.** The formula counts a touch that lasts a millisecond. A contract that checks only the daily close misses touches between closes, so its one-touch is worth less; the correction is on [discrete-monitoring-correction](03-discrete-monitoring-correction.md).
+- **The barrier is watched every instant.** The formula counts a touch that lasts a millisecond. A contract that checks only the daily close misses touches between closes, so its one-touch is worth less; the correction is on [Daily monitoring](03-discrete-monitoring-correction.md).
 - **Acme moves without jumps.** A share that gaps overnight from $118 to $125 still counts as touching, but the formula's paths are continuous. With jumps the touch chance changes and the at-hit version pays at a price past the line.
 - **One fixed volatility.** Touch contracts depend on how jumpy Acme is near the barrier, not at the money. In a market that quotes different volatilities at different strikes, one number for the whole path misprices them; the market's adjustments are beyond this card.
 - **A single riskless rate and a steady dividend yield.** The at-hit formula also needs $r \ge 0$ (Step 5). With a curve of rates, $e^{-rT}$ becomes the discount factor $D(T)$ for the payment date, and the at-hit version needs the curve at every possible hit date.
@@ -115,13 +97,13 @@ Delta, gamma and vega are equal and opposite because the two contracts sum to a 
 
 ### Step 0: a touch contract is a digital on the path
 
-The pilot card [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) gives the recipe for any payoff. Pretend every asset grows at the bank rate. Average the payoff over what Acme could do in that pretend world, called the **risk-neutral** world. Discount the average to today.
+The pilot card [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) gives the recipe for any payoff. Pretend every asset grows at the bank rate. Average the payoff over what Acme could do in that pretend world, called the **risk-neutral** world. Discount the average to today.
 
-A payoff of $1 on an event and $0 otherwise averages to the chance of the event. That is how [cash-or-nothing-digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md) is priced, with the event "Acme finishes above the strike". Here the event is "Acme's running maximum reaches $120". So a one-touch paid at expiry is worth $e^{-rT} Q$. Everything hard is in $Q$, which is a question about whole paths, not end points.
+A payoff of $1 on an event and $0 otherwise averages to the chance of the event. That is how [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md) is priced, with the event "Acme finishes above the strike". Here the event is "Acme's running maximum reaches $120". So a one-touch paid at expiry is worth $e^{-rT} Q$. Everything hard is in $Q$, which is a question about whole paths, not end points.
 
 ### Step 1: move to log prices, where the barrier is a flat wall
 
-Write Acme's price as $S$ times $e^{X_t}$. In the pretend world $X_t$, the log of the price ratio, is a Brownian motion with drift (the reminder is on [geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). It starts at 0, drifts at $\nu$ per year and spreads with $\sigma$ per root year.
+Write Acme's price as $S$ times $e^{X_t}$. In the pretend world $X_t$, the log of the price ratio, is a Brownian motion with drift (the reminder is on [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). It starts at 0, drifts at $\nu$ per year and spreads with $\sigma$ per root year.
 
 $$\nu = r - q - \tfrac12\sigma^2 = 0.05 - 0.02 - 0.02 = 0.010000$$
 
@@ -137,7 +119,7 @@ Stopping here prices a one-touch as a plain digital at $120. That misses every p
 
 ### Step 3: paths that touched and came back, counted by a mirror
 
-Take a path that touches the wall and then ends at some point $x$ below it. Flip everything after the first touch, up for down, about the wall. The flipped path ends at $2b - x$, above the wall. Flipping twice gives back the original, so touched paths ending at $x$ pair off one for one with paths ending at $2b - x$. This is the **reflection principle**, proved for driftless Brownian motion on [reflection-principle-and-running-maximum](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md).
+Take a path that touches the wall and then ends at some point $x$ below it. Flip everything after the first touch, up for down, about the wall. The flipped path ends at $2b - x$, above the wall. Flipping twice gives back the original, so touched paths ending at $x$ pair off one for one with paths ending at $2b - x$. This is the **reflection principle**, proved for driftless Brownian motion on [Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md).
 
 Without drift, both members of each pair are equally likely. So the touched-and-returned paths have the same total chance as the paths ending above the wall: $Q$ is exactly twice the chance of finishing past the line.
 
@@ -168,7 +150,7 @@ The mirror term is almost as big as the direct term: the log drift is small agai
 
 Paid at expiry, the one-touch is $e^{-rT}Q = 0.951229 \times 0.378622 = 0.360156$.
 
-The no-touch pays on the complementary event. Every path either touches or does not, so the one-touch plus the no-touch pays $1 at expiry in every future. Two things that always pay the same must cost the same. So the no-touch is $e^{-rT}(1 - Q) = 0.591073$, and the pair costs 0.951229. That step used no model at all: it is the same argument as in-out parity on [knock-out-and-knock-in-options](01-knock-out-and-knock-in-options.md), with $1 in place of a call.
+The no-touch pays on the complementary event. Every path either touches or does not, so the one-touch plus the no-touch pays $1 at expiry in every future. Two things that always pay the same must cost the same. So the no-touch is $e^{-rT}(1 - Q) = 0.591073$, and the pair costs 0.951229. That step used no model at all: it is the same argument as in-out parity on [Knock-out and knock-in options](01-knock-out-and-knock-in-options.md), with $1 in place of a call.
 
 ### Step 5: paid at the hit, the discount rides along the path
 
@@ -195,7 +177,7 @@ and the second factor is the first-passage density with drift $\tilde\nu$. Addin
 
 </details>
 
-A different road reaches the same prices: write the price as a function of Acme's price and time, demand that a hedged position earn the bank rate, and solve that equation with value 1 on the barrier. That is the Black–Scholes equation with a boundary, the approach of [reiner-rubinstein-barrier-formulas](02-reiner-rubinstein-barrier-formulas.md); there the at-hit one-touch appears as the rebate paid when a knock-out dies.
+A different road reaches the same prices: write the price as a function of Acme's price and time, demand that a hedged position earn the bank rate, and solve that equation with value 1 on the barrier. That is the Black–Scholes equation with a boundary, the approach of [The eight barrier formulas](02-reiner-rubinstein-barrier-formulas.md); there the at-hit one-touch appears as the rebate paid when a knock-out dies.
 
 ---
 
@@ -261,7 +243,7 @@ xychart-beta
     line [0.00, 0.00, 0.00, 0.00, 0.00, 0.02, 0.13, 0.46, 1.00]
 ```
 
-Orange: 12 months left, a gentle curve. Green: 6 months left. Dark blue: 1 month left, almost a step at $120. As expiry nears, the curve squeezes onto the step, just as a digital's does, but the step sits at the barrier and is reached by touching, not by finishing. The no-touch is the discounted dollar minus each of these curves. The steep slope just below the barrier near expiry is the seller's hedging problem, taken up on [barrier-greeks-at-the-wall](04-barrier-greeks-at-the-wall.md).
+Orange: 12 months left, a gentle curve. Green: 6 months left. Dark blue: 1 month left, almost a step at $120. As expiry nears, the curve squeezes onto the step, just as a digital's does, but the step sits at the barrier and is reached by touching, not by finishing. The no-touch is the discounted dollar minus each of these curves. The steep slope just below the barrier near expiry is the seller's hedging problem, taken up on [Barrier Greeks](04-barrier-greeks-at-the-wall.md).
 
 ---
 
@@ -654,9 +636,9 @@ The two outputs agree line for line, the simulation included, because both progr
 
 - **Currency markets.** One-touch and no-touch contracts trade most heavily on exchange rates: a payout if the euro ever reaches a stated dollar level within three months. Their prices are quoted as a percentage of the payout, which is the touch chance with its discount.
 - **Structured notes.** Many retail notes pay a fixed coupon unless the underlying ever falls through a barrier. That coupon is a no-touch in the note's wrapper, priced with this card's formula turned upside down.
-- **Rebates on barrier options.** A knock-out that pays a consolation sum when it dies is a knock-out plus an at-hit one-touch. See [reiner-rubinstein-barrier-formulas](02-reiner-rubinstein-barrier-formulas.md).
-- **Hedging.** A seller of a one-touch near expiry, with the share just below the line, faces a delta that changes very fast: [barrier-greeks-at-the-wall](04-barrier-greeks-at-the-wall.md).
-- **Setting a barrier to hit a price.** Choosing the line that makes a one-touch cost a given amount runs this card's formula backwards: [barrier-inverses-level-and-volatility](07-barrier-inverses-level-and-volatility.md).
+- **Rebates on barrier options.** A knock-out that pays a consolation sum when it dies is a knock-out plus an at-hit one-touch. See [The eight barrier formulas](02-reiner-rubinstein-barrier-formulas.md).
+- **Hedging.** A seller of a one-touch near expiry, with the share just below the line, faces a delta that changes very fast: [Barrier Greeks](04-barrier-greeks-at-the-wall.md).
+- **Setting a barrier to hit a price.** Choosing the line that makes a one-touch cost a given amount runs this card's formula backwards: [Barrier inverses](07-barrier-inverses-level-and-volatility.md).
 
 > **Say it back**
 > A one-touch pays a fixed sum if the share ever reaches a line before expiry; a no-touch pays it if the share never does. Together they are a sure payment, so their prices add to a discounted dollar. The one-touch is priced from the pretend-world chance of touching, which is the chance of finishing past the line plus a weighted mirror term for paths that touched and came back. Paid at the moment of touching, the same formula runs with a steeper drift and a weight, and the price is a little higher. Pricing a touch as a finish roughly halves the answer.
@@ -665,13 +647,13 @@ The two outputs agree line for line, the simulation included, because both progr
 
 ## What this builds on
 
-- [knock-out-and-knock-in-options](01-knock-out-and-knock-in-options.md): what a barrier is, and the in-out argument that the one-touch and no-touch parity copies.
-- [cash-or-nothing-digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md): a fixed sum on an event is worth the discounted pretend-world chance of the event; its bell-curve area, with the strike at $120, is this card's direct term.
-- [reflection-principle-and-running-maximum](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the mirror pairing and the law of the running maximum, which Step 3 extends to a drift.
+- [Knock-out and knock-in options](01-knock-out-and-knock-in-options.md): what a barrier is, and the in-out argument that the one-touch and no-touch parity copies.
+- [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md): a fixed sum on an event is worth the discounted pretend-world chance of the event; its bell-curve area, with the strike at $120, is this card's direct term.
+- [Reflection principle](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/04-reflection-principle-and-running-maximum.md): the mirror pairing and the law of the running maximum, which Step 3 extends to a drift.
 
 ## Where this goes next
 
-- [lookback-options](06-lookback-options.md): pays on the year's extreme price itself, not on whether it passed one line. Adding up this card's no-touch chance for every line below today's price gives the average low, and so the floating lookback's price.
+- [Lookback options](06-lookback-options.md): pays on the year's extreme price itself, not on whether it passed one line. Adding up this card's no-touch chance for every line below today's price gives the average low, and so the floating lookback's price.
 
 This card prices a bet on whether the path reached one level; the open question is what the extreme itself is worth, which the lookback answers.
 

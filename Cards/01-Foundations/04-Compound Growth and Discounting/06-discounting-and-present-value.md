@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Compound Growth and Discounting
-topic: Present value
-item: Discounting
-kind: model
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/03-compound-interest|compound-interest]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/04-compounding-frequency-and-e|compounding-frequency-and-e]]"
-next:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-tags:
-  - mathematics
-  - foundations
-  - discounting-and-present-value
----
-
 # Discounting: why $100 next year is worth about $95.24 today
 
-Foundations → Compound Growth and Discounting → Present value → Discounting
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Compound Growth and Discounting](../../../SYLLABUS.md#w01-s04) → Discounting
 
 ---
 
@@ -62,17 +42,17 @@ Ten years is ten divides:
 
 **$100.00 ÷ 1.05 ÷ 1.05 … ten divides in all … = $61.39**
 
-1.05 is the growth factor for 5% ([growth-factors](01-growth-factors.md)); multiplying by it is a year forward ([compound-interest](03-compound-interest.md)).
+1.05 is the growth factor for 5% ([Growth factors](01-growth-factors.md)); multiplying by it is a year forward ([Compound interest](03-compound-interest.md)).
 
 **Read it aloud:** a payment due later is worth what you would have to bank today to hold that amount on the day.
 
 Run the divides on one dollar instead and you get the **discount factor**: today's price of $1.00 due then. One year, 1.00 ÷ 1.05 = 0.952381; ten years, 0.613913. Multiply the payment by it and the divides are done: 100.00 × 0.952381 = 95.24. Read it as cents on the dollar.
 
-If the rate compounds continuously ([compounding-frequency-and-e](04-compounding-frequency-and-e.md)), a year's growth factor is 1.051271 rather than 1.05, and nothing else moves:
+If the rate compounds continuously ([Compounding more often, and the number e](04-compounding-frequency-and-e.md)), a year's growth factor is 1.051271 rather than 1.05, and nothing else moves:
 
 **$100.00 ÷ 1.051271 = $95.12, a discount factor of 0.951229**
 
-Finance writes that factor as e^-rT, said aloud as "e to the minus r T": r the rate, T the years waited. It is the 0.951229 on [black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
+Finance writes that factor as e^-rT, said aloud as "e to the minus r T": r the rate, T the years waited. It is the 0.951229 on [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md).
 
 | Piece | Plain meaning | In our example | Push it up… |
 | --- | --- | --- | --- |
@@ -274,7 +254,7 @@ The two outputs match line for line.
 
 - **Cash now for money later.** A lottery lump sum, a settlement, an invoice sold early: the buyer quotes a present value, and their rate is the negotiation.
 - **Bond prices.** A bond is a set of dated payments, each discounted back and added up. Bigger rate, smaller factors — so bond prices fall as rates rise.
-- **Option prices.** A strike price is cash due at expiry, so it enters discounted: [black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), same 5% and year, 0.951229 unchanged.
+- **Option prices.** A strike price is cash due at expiry, so it enters discounted: [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), same 5% and year, 0.951229 unchanged.
 
 > **Say it back**
 > Money later is worth less than money now, because money now could be in the bank earning. To price a promise, ask what deposit would grow into it: divide the payment by the growth factor once per year of waiting. At 5%, $100 due in a year is worth $95.24; in ten years, $61.39. The one-step multiplier is the discount factor: 0.952381, 0.613913, or 0.951229 continuously.
@@ -283,12 +263,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [compound-interest](03-compound-interest.md): multiplying by 1.05 once a year to carry money forward. This card divides to come back.
-- [compounding-frequency-and-e](04-compounding-frequency-and-e.md): where 1.051271 comes from, and what "compounded continuously" means.
+- [Compound interest](03-compound-interest.md): multiplying by 1.05 once a year to carry money forward. This card divides to come back.
+- [Compounding more often, and the number e](04-compounding-frequency-and-e.md): where 1.051271 comes from, and what "compounded continuously" means.
 
 ## Where this goes next
 
-- [black-scholes-call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): an option price, where cash due at expiry is discounted by this same 0.951229.
+- [Black–Scholes call](../../12-Financial%20mathematics/08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md): an option price, where cash due at expiry is discounted by this same 0.951229.
 
 ---
 

@@ -1,30 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Derivatives
-topic: Speed at an instant
-item: The derivative
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/01-limits|limits]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/05-continuity|continuity]]"
-next:
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/02-product-and-quotient-rules|product-and-quotient-rules]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/08-higher-derivatives-and-concavity|higher-derivatives-and-concavity]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/01-linear-approximation-and-related-rates|linear-approximation-and-related-rates]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/02-mean-value-theorem|mean-value-theorem]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/01-complex-derivative-and-cauchy-riemann|complex-derivative-and-cauchy-riemann]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/01-what-a-differential-equation-says|what-a-differential-equation-says]]"
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/01-unbounded-operators-and-domains|unbounded-operators-and-domains]]"
-tags: [mathematics, calculus and analysis, the-derivative]
----
-
 # The derivative: instantaneous rate as a limit of average rates
 
-Calculus and analysis → Derivatives → Speed at an instant → The derivative
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Derivatives](../../../SYLLABUS.md#w06-s02) → The derivative
 
 ---
 
@@ -50,7 +26,7 @@ Drawn to scale: 1 s is 140 units across, 1 m is 4 units up, the axis at 30 m. P 
 
 ## The formula
 
-Notation first, in words. The derivative of a function f at a point $a$ is written $f'(a)$, read "f prime of a", or $\frac{dy}{dx}$ when output is y and input x, read "the rate of y per unit of x". Reminder from [limits](../01-Limits%20and%20Continuity/01-limits.md): $\lim_{h \to 0}$ reads "what this heads for as h heads for 0".
+Notation first, in words. The derivative of a function f at a point $a$ is written $f'(a)$, read "f prime of a", or $\frac{dy}{dx}$ when output is y and input x, read "the rate of y per unit of x". Reminder from [Limits](../01-Limits%20and%20Continuity/01-limits.md): $\lim_{h \to 0}$ reads "what this heads for as h heads for 0".
 
 $$f'(a) = \lim_{h \to 0} \frac{f(a+h) - f(a)}{h}$$
 
@@ -107,7 +83,7 @@ On the graph, the average over a window is the slope of the straight line throug
 
 ### Step 4: a derivative forces continuity
 
-Continuity at a means the output's gap from f(a) heads for 0 as the input closes in ([continuity](../01-Limits%20and%20Continuity/05-continuity.md)). Write the gap as window times average:
+Continuity at a means the output's gap from f(a) heads for 0 as the input closes in ([Continuity](../01-Limits%20and%20Continuity/05-continuity.md)). Write the gap as window times average:
 
 $$f(a+h) - f(a) = h \times \frac{f(a+h) - f(a)}{h}$$
 
@@ -345,8 +321,8 @@ The two outputs agree line for line.
 
 - **Speedometers.** The needle estimates the odometer's derivative from wheel turns over a short window.
 - **Marginal cost.** The derivative of total cost with respect to quantity, in dollars per item.
-- **Option hedging.** An option's delta is its price's rate per dollar of the stock price ([delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md)).
-- **Every derivative rule.** All come from this one limit: [product-and-quotient-rules](02-product-and-quotient-rules.md), [chain-rule](03-chain-rule.md), [derivatives-of-trig-functions](04-derivatives-of-trig-functions.md), [derivatives-of-exp-and-log](05-derivatives-of-exp-and-log.md).
+- **Option hedging.** An option's delta is its price's rate per dollar of the stock price ([Delta](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/01-delta.md)).
+- **Every derivative rule.** All come from this one limit: [Product and quotient rules](02-product-and-quotient-rules.md), [Chain rule](03-chain-rule.md), [Derivatives of sine and cosine](04-derivatives-of-trig-functions.md), [Derivatives of exp and log](05-derivatives-of-exp-and-log.md).
 
 > **Say it back**
 > An average rate is output change over input change across a window. Shrink the window and the averages head for one number, the derivative. The car's average from 5 s is 20 + 2h, so its speed at 5 s is 20 m/s. On a graph it is the tangent's slope. A derivative forces continuity; a corner shows the reverse fails.
@@ -355,19 +331,19 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [limits](../01-Limits%20and%20Continuity/01-limits.md): the limit and its tolerance game, which the definition is built from.
-- [continuity](../01-Limits%20and%20Continuity/05-continuity.md): the property Step 4 proves a derivative forces.
+- [Limits](../01-Limits%20and%20Continuity/01-limits.md): the limit and its tolerance game, which the definition is built from.
+- [Continuity](../01-Limits%20and%20Continuity/05-continuity.md): the property Step 4 proves a derivative forces.
 
 ## Where this goes next
 
-- [product-and-quotient-rules](02-product-and-quotient-rules.md): derivatives of products and quotients.
-- [higher-derivatives-and-concavity](08-higher-derivatives-and-concavity.md): the rate of the rate; the car's acceleration.
-- [linear-approximation-and-related-rates](../03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md): the tangent used to predict nearby values.
-- [mean-value-theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md): some instant in every window matches its average.
-- [partial-derivatives](../07-Several%20Variables/01-partial-derivatives.md): several inputs, one moved at a time.
-- [complex-derivative-and-cauchy-riemann](../../07-Complex%20analysis/02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md): the window may point any direction in a plane.
-- [what-a-differential-equation-says](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md): equations that state a rate and ask for the function.
-- unbounded-operators-and-domains: differentiation as an operation on whole functions.
+- [Product and quotient rules](02-product-and-quotient-rules.md): derivatives of products and quotients.
+- [Second derivatives](08-higher-derivatives-and-concavity.md): the rate of the rate; the car's acceleration.
+- [Linear approximation](../03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md): the tangent used to predict nearby values.
+- [Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md): some instant in every window matches its average.
+- [Partial derivatives](../07-Several%20Variables/01-partial-derivatives.md): several inputs, one moved at a time.
+- [The complex derivative](../../07-Complex%20analysis/02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md): the window may point any direction in a plane.
+- [A differential equation](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/01-what-a-differential-equation-says.md): equations that state a rate and ask for the function.
+- Unbounded operators: differentiation as an operation on whole functions.
 
 ---
 

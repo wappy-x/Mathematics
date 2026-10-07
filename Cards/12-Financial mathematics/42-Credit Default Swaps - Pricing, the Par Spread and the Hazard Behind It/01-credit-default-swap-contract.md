@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It
-topic: Buying protection on a borrower
-item: The credit default swap
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/01-default-probability-recovery-and-expected-loss|default-probability-recovery-and-expected-loss]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/10-percentages|percentages]]"
-next:
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/02-cds-legs-risky-annuity-and-par-spread|cds-legs-risky-annuity-and-par-spread]]"
-tags: [mathematics, financial-mathematics, credit-default-swap-contract]
----
-
 # The credit default swap: insurance on a borrower, quoted as a spread, and who pays what when
 
-Financial mathematics → Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It → Buying protection on a borrower → The credit default swap
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../../../SYLLABUS.md#w12-s42) → The credit default swap
 
 ---
 
@@ -93,7 +76,7 @@ A definition holds by agreement. The sums above describe the real contract when 
 
 - **The event is a credit event.** For a company that means bankruptcy, failure to pay, or restructuring where the contract includes it. A committee of dealers and investors, ISDA's Determinations Committee, rules whether one happened. A late coupon still inside its grace period is not one, and pays nothing.
 - **Recovery means the auction price.** The payout uses the price set at the auction a few weeks after the event, not what creditors finally collect years later in bankruptcy. The two can differ by a lot.
-- **The seller can pay.** The payout is a promise. If the seller fails in the same crisis, the buyer holds a claim, not cash; that risk has its own card, [counterparty-exposure-and-netting](../46-Counterparty%20Risk%20and%20CVA/01-counterparty-exposure-and-netting.md).
+- **The seller can pay.** The payout is a promise. If the seller fails in the same crisis, the buyer holds a claim, not cash; that risk has its own card, [Counterparty exposure](../46-Counterparty%20Risk%20and%20CVA/01-counterparty-exposure-and-netting.md).
 - **The day count is ACT/360.** Quarters are counted in actual days over 360. Taking each quarter as exactly a quarter of a year is a close but inexact shortcut. The standard contract also counts the maturity date in the final quarter, one extra day, which this card leaves out.
 - **The upfront formula is approximate.** The market converts spread to upfront with a published standard model; $(s - c)AN$ is the first-order version of it.
 
@@ -167,11 +150,11 @@ $$U \approx (0.012 - 0.010) \times 4.1819 \times 10{,}000{,}000 = \$83{,}638.71.
 
 The buyer pays it, because it pays less running fee than the market asks. If the quote were below the coupon, the seller would pay the buyer.
 
-The market does not use this line directly. It uses a published calculator, the ISDA CDS Standard Model, with fixed inputs, so both sides get the same cash to the cent. The conversion is the business of [marking-a-cds-to-market-and-the-upfront](07-marking-a-cds-to-market-and-the-upfront.md).
+The market does not use this line directly. It uses a published calculator, the ISDA CDS Standard Model, with fixed inputs, so both sides get the same cash to the cent. The conversion is the business of [Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md).
 
 ### Another way in
 
-The contract can also be seen as two streams: one fed by premiums while the borrower lives, one fed by the payout if it dies. Valuing each stream, weighted by the chance of survival, is how the spread gets priced. At Northwind's 2% hazard, 40% recovery and 5% rates, the premium stream is worth $A$ per unit of spread and the payout stream 0.050625 per dollar insured; the spread that equates them is 121.06 bp with quarterly payments. That work belongs to [cds-legs-risky-annuity-and-par-spread](02-cds-legs-risky-annuity-and-par-spread.md); this card uses the two numbers only as a cross-check.
+The contract can also be seen as two streams: one fed by premiums while the borrower lives, one fed by the payout if it dies. Valuing each stream, weighted by the chance of survival, is how the spread gets priced. At Northwind's 2% hazard, 40% recovery and 5% rates, the premium stream is worth $A$ per unit of spread and the payout stream 0.050625 per dollar insured; the spread that equates them is 121.06 bp with quarterly payments. That work belongs to [Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md); this card uses the two numbers only as a cross-check.
 
 ---
 
@@ -217,7 +200,7 @@ The one line is the payoff diagram: a straight fall from the full $10 million at
 | quoted spread up 1 bp, coupon fixed | upfront paid by the buyer | +$4,181.94 |
 | recovery up 1 point | payout after a credit event | −$100,000 |
 
-The second row is the risky annuity times $10 million times one basis point. These are the contract's own sensitivities; how its market value moves with spreads, rates and recovery is [cds-risk-numbers](08-cds-risk-numbers.md).
+The second row is the risky annuity times $10 million times one basis point. These are the contract's own sensitivities; how its market value moves with spreads, rates and recovery is [CDS risk numbers](08-cds-risk-numbers.md).
 
 ### What breaks if you drop a piece
 
@@ -604,11 +587,11 @@ The two outputs agree line for line. They share the random-number recipe, so the
 ## Where you meet it in real life
 
 - **Hedging a loan book.** A bank that has lent heavily to one company buys protection on it, cutting its exposure without selling the loan or telling the borrower.
-- **A price for credit risk.** A CDS spread is a daily market reading of how risky a borrower is. Splitting that reading into a default rate and a recovery is the work of [the-credit-triangle](03-the-credit-triangle.md) and [implied-hazard-from-a-cds-quote](04-implied-hazard-from-a-cds-quote.md).
+- **A price for credit risk.** A CDS spread is a daily market reading of how risky a borrower is. Splitting that reading into a default rate and a recovery is the work of [The credit triangle](03-the-credit-triangle.md) and [Implied hazard from one CDS quote](04-implied-hazard-from-a-cds-quote.md).
 - **Lehman Brothers, October 2008.** Far more protection had been written than there were bonds to deliver. The auction set one price, 8.625 cents, and sellers paid 91.375 cents on the dollar in cash.
 - **Greece, March 2012.** A debt swap forced on bondholders was ruled a credit event, and CDS on Greece paid out. How restructurings count depends on the contract's restructuring clause: North American companies trade with none, European companies with a modified version.
-- **Recovery as a modelling choice.** Pricing needs a recovery before any auction exists. How the assumed 40% changes the answers is [recovery-assumptions-and-what-they-change](05-recovery-assumptions-and-what-they-change.md).
-- **A term structure of risk.** Quotes at one, three and five years together give a default rate that changes with time: [bootstrapping-the-hazard-curve-from-cds-quotes](06-bootstrapping-the-hazard-curve-from-cds-quotes.md). Whether those market-implied chances match how often firms actually fail is [market-implied-versus-historical-default-probability](09-market-implied-versus-historical-default-probability.md).
+- **Recovery as a modelling choice.** Pricing needs a recovery before any auction exists. How the assumed 40% changes the answers is [Recovery assumptions](05-recovery-assumptions-and-what-they-change.md).
+- **A term structure of risk.** Quotes at one, three and five years together give a default rate that changes with time: [Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md). Whether those market-implied chances match how often firms actually fail is [Two default probabilities](09-market-implied-versus-historical-default-probability.md).
 
 > **Say it back**
 > A credit default swap insures a named borrower's debt. The buyer pays a yearly spread on the notional, in quarterly instalments counted as actual days over 360, until the borrower has a credit event or the contract ends. After a credit event the seller pays the notional times one minus the recovery, with the recovery set once for all contracts by an auction. Bond plus protection is worth par at default, which is why the payout is the loss. Standard contracts pay a fixed coupon and settle the difference from the quoted spread as cash upfront.
@@ -617,13 +600,13 @@ The two outputs agree line for line. They share the random-number recipe, so the
 
 ## What this builds on
 
-- [default-probability-recovery-and-expected-loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md): recovery rate, loss given default $1 - R$, and why a lender's loss is the notional times the fraction lost. The CDS payout is that loss, sold as a contract.
-- [percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): basis points are hundredths of a percent, and every cash flow here is a percentage of the notional.
+- [Default probability, recovery and expected loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md): recovery rate, loss given default $1 - R$, and why a lender's loss is the notional times the fraction lost. The CDS payout is that loss, sold as a contract.
+- [Percentages](../../01-Foundations/01-Everyday%20Arithmetic/10-percentages.md): basis points are hundredths of a percent, and every cash flow here is a percentage of the notional.
 
 ## Where this goes next
 
-- [cds-legs-risky-annuity-and-par-spread](02-cds-legs-risky-annuity-and-par-spread.md): the premium stream and the payout stream valued with survival chances, the risky annuity derived, and the spread that makes them equal.
-- [marking-a-cds-to-market-and-the-upfront](07-marking-a-cds-to-market-and-the-upfront.md): the upfront done exactly, and what an old contract is worth when spreads move.
+- [Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md): the premium stream and the payout stream valued with survival chances, the risky annuity derived, and the spread that makes them equal.
+- [Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md): the upfront done exactly, and what an old contract is worth when spreads move.
 
 This card fixes what 120 bp buys and who pays what when; it leaves open whether 120 bp is a fair price for Northwind's risk, which the pricing card settles by valuing both legs.
 

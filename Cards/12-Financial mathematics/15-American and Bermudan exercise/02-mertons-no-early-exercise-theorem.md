@@ -1,26 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: American and Bermudan exercise
-topic: When waiting beats exercising
-item: Merton's theorem
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/01-american-options-and-early-exercise|american-options-and-early-exercise]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/08-known-cash-dividends|known-cash-dividends]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/04-option-price-bounds|option-price-bounds]]"
-next: []
-tags:
-  - mathematics
-  - financial mathematics
-  - mertons-no-early-exercise-theorem
----
-
 # Merton's theorem: never exercise a call early on a share that pays nothing, and the two places the rule stops
 
-Financial mathematics → American and Bermudan exercise → When waiting beats exercising → Merton's theorem
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [American and Bermudan exercise](../../../SYLLABUS.md#w12-s15) → Merton's theorem
 
 ---
 
@@ -120,7 +100,7 @@ At expiry, if Acme is above $K$, parcel A exercises, pays $K$ from the bank and 
 
 $$C_{\text{Eu}} + K e^{-r\tau} \;\ge\; S, \qquad C_{\text{Eu}} \;\ge\; S - K e^{-r\tau}.$$
 
-This is the lower bound from [option-price-bounds](../08-The%20Black-Scholes%20call%20and%20put/04-option-price-bounds.md). It needed no model of how Acme moves. It did need "no dividend": parcel B is one share with nothing paid out along the way.
+This is the lower bound from [Option price bounds](../08-The%20Black-Scholes%20call%20and%20put/04-option-price-bounds.md). It needed no model of how Acme moves. It did need "no dividend": parcel B is one share with nothing paid out along the way.
 
 ### Step 2: the floor beats the exercise value
 
@@ -149,7 +129,7 @@ In continuous time, any exercise policy is a random time, written θ (theta), ch
 
 ### Step 4: where a dividend breaks it, and why only just before the payment
 
-Let Acme pay one cash dividend $D$ at $t_1$. Treat it as the [known-cash-dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md) card does: the dividend's value today is set aside, and what is left, the escrowed spot $S^{*}$, is the part of the share that wanders.
+Let Acme pay one cash dividend $D$ at $t_1$. Treat it as the [Known cash dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md) card does: the dividend's value today is set aside, and what is left, the escrowed spot $S^{*}$, is the part of the share that wanders.
 
 **Most dates are still ruled out.** After the payment, no more dividends are due, so Steps 1 to 3 apply as they stand: no exercise between $t_1$ and expiry. Before the payment, the share pays nothing until $t_1$. Replace "expiry" with "just before $t_1$" and the same two-parcel argument says the call is worth more alive than dead at any earlier date. The only moment left is the instant before the share goes ex-dividend.
 
@@ -198,9 +178,9 @@ Textbooks often write plan 2 as $C_{\text{Eu}}(S, K, t_1)$, a call on today's fu
 
 Mirror Step 1 for a put. Parcel A is a put plus one share; parcel B is $K e^{-r\tau}$ in the bank. The same reasoning gives $P_{\text{Eu}} \ge K e^{-r\tau} - S$. But that floor sits *below* the put's exercise value $K - S$, by the interest on the strike. The chain that protected the call runs the wrong way.
 
-The reason is plain. A put holder who exercises receives $K$. Cash received now earns interest; cash received at expiry does not. Deep in the money, where the chance of a recovery is small, the lost interest outweighs the right to wait. At $S = 80$ the European put's floor is $15.122942$, below the $20.00 exercise value, and the American put tree exercises at once: it is worth exactly $20.000000. At $S = 100$ the American put is worth $6.089990 against $5.573526 for the European, and the tree exercises at 964,807 nodes. The put's exercise boundary belongs to [exercise-boundary-and-smooth-pasting](04-exercise-boundary-and-smooth-pasting.md).
+The reason is plain. A put holder who exercises receives $K$. Cash received now earns interest; cash received at expiry does not. Deep in the money, where the chance of a recovery is small, the lost interest outweighs the right to wait. At $S = 80$ the European put's floor is $15.122942$, below the $20.00 exercise value, and the American put tree exercises at once: it is worth exactly $20.000000. At $S = 100$ the American put is worth $6.089990 against $5.573526 for the European, and the tree exercises at 964,807 nodes. The put's exercise boundary belongs to [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md).
 
-The exact price for one known dividend, by compound options, is the Roll-Geske-Whaley formula; the integral in Step 4 is its numerical twin. A continuous yield $q > 0$ can also make early exercise pay at any date, not only one; that is the house market's American call, though at $q = 2\%$ its premium is under a millionth of a dollar, and [barone-adesi-whaley-approximation](06-barone-adesi-whaley-approximation.md) prices it.
+The exact price for one known dividend, by compound options, is the Roll-Geske-Whaley formula; the integral in Step 4 is its numerical twin. A continuous yield $q > 0$ can also make early exercise pay at any date, not only one; that is the house market's American call, though at $q = 2\%$ its premium is under a millionth of a dollar, and [Barone-Adesi-Whaley](06-barone-adesi-whaley-approximation.md) prices it.
 
 ---
 
@@ -672,7 +652,7 @@ ALL CHECKS PASS
 - **Dividend-capture exercise.** The evening before a large dividend goes ex, deep in-the-money calls get exercised in bulk. A holder who misses that evening keeps a call on a share about to drop, and loses the difference.
 - **Employee stock options.** They cannot be sold, so Step 0's "sell rather than exercise" is closed. Employees exercise early to diversify or to meet a tax date. The price has not changed; the holder's exit has.
 - **Negative rates.** Several central banks set deposit rates below zero in the 2010s. The chain in The formula breaks at $K e^{-r\tau} \le K$, and early exercise of calls could pay without any dividend.
-- **Puts.** At a positive rate every American put carries an early-exercise premium. Where the exercise line sits is mapped by [perpetual-american-put](05-perpetual-american-put.md) for a put with no expiry and [exercise-boundary-and-smooth-pasting](04-exercise-boundary-and-smooth-pasting.md) for the general case.
+- **Puts.** At a positive rate every American put carries an early-exercise premium. Where the exercise line sits is mapped by [The perpetual American put](05-perpetual-american-put.md) for a put with no expiry and [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md) for the general case.
 
 > **Say it back**
 > A live call is worth at least the share minus the discounted strike, which is more than exercise pays. So on a share that pays nothing, an American call is never exercised early and costs the same as the European one. A cash dividend opens one window, the instant before the share goes ex, and only if the dividend beats the interest on the strike until expiry. Black's approximation prices that case as the better of two European calls and gives a lower bound. Puts are different because exercising a put collects cash early, and early cash earns interest.
@@ -681,16 +661,16 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [american-options-and-early-exercise](01-american-options-and-early-exercise.md): the American contract, the tree with a choice at every node, and the early-exercise premium this card shows is zero for calls.
-- [known-cash-dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md): the escrowed spot $S^{*}$ and the European call on it, $9.244684 for the $2.00 dividend.
-- [option-price-bounds](../08-The%20Black-Scholes%20call%20and%20put/04-option-price-bounds.md): the floor $S - K e^{-r\tau}$ that carries Steps 1 and 2.
+- [American options](01-american-options-and-early-exercise.md): the American contract, the tree with a choice at every node, and the early-exercise premium this card shows is zero for calls.
+- [Known cash dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md): the escrowed spot $S^{*}$ and the European call on it, $9.244684 for the $2.00 dividend.
+- [Option price bounds](../08-The%20Black-Scholes%20call%20and%20put/04-option-price-bounds.md): the floor $S - K e^{-r\tau}$ that carries Steps 1 and 2.
 
 ## Where this goes next
 
-- [bermudan-options](03-bermudan-options.md): exercise allowed on a few fixed dates. The dividend case here is already Bermudan in disguise: only two dates matter.
-- [exercise-boundary-and-smooth-pasting](04-exercise-boundary-and-smooth-pasting.md): the $110.75 crossing generalised to a whole curve of share prices through time.
-- [barone-adesi-whaley-approximation](06-barone-adesi-whaley-approximation.md): a fast price for American options under a continuous yield, where exercise can pay on any day.
-- [american-greeks-and-implied-volatility](07-american-greeks-and-implied-volatility.md): sensitivities and implied volatility once the premium is not zero.
+- [Bermudan options](03-bermudan-options.md): exercise allowed on a few fixed dates. The dividend case here is already Bermudan in disguise: only two dates matter.
+- [The exercise boundary and smooth pasting](04-exercise-boundary-and-smooth-pasting.md): the $110.75 crossing generalised to a whole curve of share prices through time.
+- [Barone-Adesi-Whaley](06-barone-adesi-whaley-approximation.md): a fast price for American options under a continuous yield, where exercise can pay on any day.
+- [American Greeks and implied volatility](07-american-greeks-and-implied-volatility.md): sensitivities and implied volatility once the premium is not zero.
 
 This card finds the one date a call might be exercised; what it leaves open is where the line between exercising and holding runs when every date is a candidate, as it is for a put.
 

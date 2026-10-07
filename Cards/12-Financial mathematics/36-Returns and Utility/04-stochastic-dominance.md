@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Returns and Utility
-topic: Ranking gambles without choosing a utility
-item: Stochastic dominance
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/36-Returns and Utility/02-expected-utility-and-risk-aversion|expected-utility-and-risk-aversion]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/01-densities-and-cdfs|densities-and-cdfs]]"
-next: []
-tags: [mathematics, financial mathematics, stochastic-dominance]
----
-
 # Stochastic dominance: when one gamble beats another for every sensible investor
 
-Financial mathematics → Returns and Utility → Ranking gambles without choosing a utility → Stochastic dominance
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Returns and Utility](../../../SYLLABUS.md#w12-s36) → Stochastic dominance
 
 ---
 
@@ -24,7 +8,7 @@ Financial mathematics → Returns and Utility → Ranking gambles without choosi
 
 Three funds each take $100 for one year. Steady pays back $102 for certain. Swing pays back $98 or $106, each with probability one half. Upside pays back $98 or $108, each with probability one half. On $100, a return of 2 percent is exactly $2, so returns and dollars read the same on this card.
 
-Which fund is better? Expected utility answers that question one investor at a time: pick a utility (a score for each outcome, higher for outcomes the investor likes more), average the scores, take the higher average ([expected-utility-and-risk-aversion](02-expected-utility-and-risk-aversion.md)). But nobody knows anyone's utility exactly. Stochastic dominance asks a stronger question: does one fund win for every investor in a whole class at once?
+Which fund is better? Expected utility answers that question one investor at a time: pick a utility (a score for each outcome, higher for outcomes the investor likes more), average the scores, take the higher average ([Expected utility](02-expected-utility-and-risk-aversion.md)). But nobody knows anyone's utility exactly. Stochastic dominance asks a stronger question: does one fund win for every investor in a whole class at once?
 
 Two classes matter. The first is every investor who prefers more money to less. The second is every investor who prefers more money to less and also dislikes risk. A fund that wins for the whole first class **first-order dominates**; one that wins for the whole second class **second-order dominates**. The surprise is that neither needs a utility at all. Each reduces to a test on the funds' probabilities alone, and the three funds give all three possible verdicts:
 
@@ -58,7 +42,7 @@ Upside's bar is never longer than Swing's. At 6 percent it is shorter: Swing has
 
 ## The formula
 
-Notation first, in words. $A$ and $B$ are the one-year returns of two funds, in percent, before they are known. $F_A(t)$ is the **cumulative distribution function** (CDF) of $A$: the chance that $A$ ends at or below the threshold $t$ ([densities-and-cdfs](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)). $E[\cdot]$ is the average, weighted by probability. $u$ is a utility. $A \succeq_1 B$ reads "A first-order dominates B"; $A \succeq_2 B$ reads "A second-order dominates B".
+Notation first, in words. $A$ and $B$ are the one-year returns of two funds, in percent, before they are known. $F_A(t)$ is the **cumulative distribution function** (CDF) of $A$: the chance that $A$ ends at or below the threshold $t$ ([Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)). $E[\cdot]$ is the average, weighted by probability. $u$ is a utility. $A \succeq_1 B$ reads "A first-order dominates B"; $A \succeq_2 B$ reads "A second-order dominates B".
 
 **First order.** For every increasing utility $u$, meaning more return never scores less:
 
@@ -95,7 +79,7 @@ $$A \succeq_2 B \iff E[u(A)] \ge E[u(B)] \text{ for every increasing concave } u
 
 - **Same horizon, same money, fees included.** A one-year return against a two-year return, or a gross return against a net one, compares different things; convert first.
 - **Known probabilities.** The tests are theorems about the stated distributions. Estimated from a short history, a cutoff where two shortfalls nearly touch can flip with a few more years of data.
-- **Investors judge only the final outcome, by expected utility.** Someone who scores gains and losses from a reference point, or bends probabilities, as in [prospect-theory-in-outline](06-prospect-theory-in-outline.md), sits outside both classes and can choose a dominated fund.
+- **Investors judge only the final outcome, by expected utility.** Someone who scores gains and losses from a reference point, or bends probabilities, as in [Prospect theory in outline](06-prospect-theory-in-outline.md), sits outside both classes and can choose a dominated fund.
 - **Risk aversion, for second order only.** A lottery buyer has a utility that bends upward somewhere and sits outside the class; Steady $\succeq_2$ Swing says nothing about that buyer.
 - **Finite averages.** The utility side compares averages, so it covers only utilities whose averages exist. With returns heavy enough that some are infinite, the tests rank the funds for the utilities that remain.
 
@@ -651,8 +635,8 @@ The two outputs agree line for line.
 - **Choosing among funds.** A fund that is first-order dominated by another with the same fees is a choice no money-lover should make; academic tests of whether a market index is second-order efficient ask the same question of a whole portfolio.
 - **Insurance.** Insuring at a fair premium swaps a gamble for its average: the insured position second-order dominates the uninsured one, as Steady dominates Swing. Every risk-averse buyer gains; the insurer's loading is what makes the choice depend on the utility.
 - **Income distributions.** At equal average income, one distribution second-order dominates another exactly when its Lorenz curve (the share of income held by the poorest fraction) is never below the other's. Welfare economists rank countries this way without choosing a welfare function.
-- **Risk aversion measured in cash.** When dominance leaves two funds unranked, a single investor's ranking comes from comparing sure amounts: [certainty-equivalent-and-risk-premium](03-certainty-equivalent-and-risk-premium.md).
-- **Returns measured properly.** The tests need both funds' returns on one horizon and one convention: [returns-simple-log-and-annualised](01-returns-simple-log-and-annualised.md).
+- **Risk aversion measured in cash.** When dominance leaves two funds unranked, a single investor's ranking comes from comparing sure amounts: [Risk premium](03-certainty-equivalent-and-risk-premium.md).
+- **Returns measured properly.** The tests need both funds' returns on one horizon and one convention: [Returns](01-returns-simple-log-and-annualised.md).
 
 > **Say it back**
 > First-order dominance means a fund wins for every investor who prefers more money to less. It holds exactly when the fund's chance of ending at or below every threshold is never higher. Second-order dominance means a fund wins for every such investor who is also risk-averse, and it holds exactly when the fund's average shortfall below every cutoff is never higher. Each test works because every utility in the class is a sum of simple bets whose averages are the CDF or the shortfall. Many pairs of funds, such as a sure deposit and a normal fund, are ranked by neither test.
@@ -661,13 +645,13 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [expected-utility-and-risk-aversion](02-expected-utility-and-risk-aversion.md): the utility, its average as the investor's score, and concavity as risk aversion. This card ranks funds for all such investors at once.
-- [densities-and-cdfs](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md): the CDF, the whole content of the first-order test, and the area under it, which is the shortfall.
+- [Expected utility](02-expected-utility-and-risk-aversion.md): the utility, its average as the investor's score, and concavity as risk aversion. This card ranks funds for all such investors at once.
+- [Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md): the CDF, the whole content of the first-order test, and the area under it, which is the shortfall.
 
 ## Where this goes next
 
-- [kelly-criterion-and-growth](05-kelly-criterion-and-growth.md): one utility, the logarithm of wealth, chosen for a reason: it maximises long-run growth. It ranks the unranked pair Steady and Upside, in Upside's favour: 4.6335 against 4.6250.
-- [prospect-theory-in-outline](06-prospect-theory-in-outline.md): how real people rank gambles, including the ways they violate first-order dominance.
+- [Kelly](05-kelly-criterion-and-growth.md): one utility, the logarithm of wealth, chosen for a reason: it maximises long-run growth. It ranks the unranked pair Steady and Upside, in Upside's favour: 4.6335 against 4.6250.
+- [Prospect theory in outline](06-prospect-theory-in-outline.md): how real people rank gambles, including the ways they violate first-order dominance.
 
 When dominance leaves two funds unranked, a decision needs one utility, and the question becomes which one to choose.
 

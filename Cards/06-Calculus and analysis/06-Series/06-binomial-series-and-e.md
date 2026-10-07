@@ -1,23 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Series
-topic: Powers without an end
-item: The binomial series and the number e
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/06-Series/05-taylor-series|taylor-series]]"
-  - "[[Cards/04-Combinatorics and graphs/04-Inclusion-Exclusion and Pigeonhole/02-derangements|derangements]]"
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/02-binomial-theorem|binomial-theorem]]"
-next: []
-tags: [mathematics, calculus and analysis, binomial-series-and-e]
----
-
 # The binomial series and the number e: Newton's expansion of (1 plus x) to any power, and the series for e
 
-Calculus and analysis → Series → Powers without an end → The binomial series and the number e
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Series](../../../SYLLABUS.md#w06-s06) → The binomial series and the number e
 
 ---
 
@@ -51,11 +34,11 @@ The upper line is the series 1 + 1 + 1/2! + … + 1/n!. The lower line is one do
 
 ## The formula
 
-Reminder: a sigma sum running to infinity means the limit of its partial sums ([series-convergence](01-series-convergence.md)). One new shorthand, for any number $a$ and whole $k$ from 0 up:
+Reminder: a sigma sum running to infinity means the limit of its partial sums ([Infinite series](01-series-convergence.md)). One new shorthand, for any number $a$ and whole $k$ from 0 up:
 
 $$C(a,k) = \frac{a(a-1)(a-2)\cdots(a-k+1)}{k!}, \qquad C(a,0) = 1.$$
 
-That is $k$ factors counting down from $a$, divided by $k!$. For a whole $a$ it is "a choose k" ([binomial-theorem](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)). For $a$ = 1/2 it gives 1, 0.5, −0.125, 0.0625.
+That is $k$ factors counting down from $a$, divided by $k!$. For a whole $a$ it is "a choose k" ([The binomial theorem](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md)). For $a$ = 1/2 it gives 1, 0.5, −0.125, 0.0625.
 
 $$(1+x)^a = \sum_{k=0}^{\infty} C(a,k)\,x^k \qquad \text{whenever } -1 < x < 1$$
 
@@ -82,7 +65,7 @@ $$e = \lim_{n\to\infty}\Bigl(1+\frac1n\Bigr)^n = \sum_{k=0}^{\infty}\frac{1}{k!}
 
 - **The added bit $x$ strictly between −1 and 1.** Drop it and the pieces grow: for the root of 4, $x$ = 3, the partial sums run −0.10, 155.68, 2966803.56.
 - **Or a whole power $a$ of 0 or more.** Then the sum stops, any $x$ works, and this is the binomial theorem.
-- **At $x$ = 1 or −1** the answer depends on $a$: an endpoint question ([power-series](04-power-series.md)).
+- **At $x$ = 1 or −1** the answer depends on $a$: an endpoint question ([Power series](04-power-series.md)).
 - **The rounding rule for $D(n)$ from $n$ = 1 on.** At $n$ = 0 the empty draw is clean, but 0!/e rounds to 0.
 
 ---
@@ -91,7 +74,7 @@ $$e = \lim_{n\to\infty}\Bigl(1+\frac1n\Bigr)^n = \sum_{k=0}^{\infty}\frac{1}{k!}
 
 ### Step 0: a power as a function, expanded by its rates
 
-Treat $(1+x)^a$ as a function of $x$ and take its Taylor series: the endless polynomial whose value and every rate match the function at $x$ = 0 ([taylor-series](05-taylor-series.md)). Then ask: does it add up, and to the power itself?
+Treat $(1+x)^a$ as a function of $x$ and take its Taylor series: the endless polynomial whose value and every rate match the function at $x$ = 0 ([Taylor series](05-taylor-series.md)). Then ask: does it add up, and to the power itself?
 
 ### Step 1: the coefficients are extended choice counts
 
@@ -103,7 +86,7 @@ For a whole $a$ the countdown reaches $a - a$ = 0 and every later coefficient va
 
 Going from piece $k$ to piece $k+1$ multiplies by $x$ and by $(a-k)/(k+1)$. As $k$ grows that fraction closes on −1, whatever $a$ is. So far out, each piece is about $x$ times the one before, give or take its sign.
 
-The ratio test compares the series with a geometric one of that ratio ([comparison-ratio-and-root-tests](02-comparison-ratio-and-root-tests.md)): ratio 0.1 converges fast; ratio 3 is the root-of-4 failure.
+The ratio test compares the series with a geometric one of that ratio ([Convergence tests](02-comparison-ratio-and-root-tests.md)): ratio 0.1 converges fast; ratio 3 is the root-of-4 failure.
 
 ### Step 3: the total is the power
 
@@ -112,7 +95,7 @@ Call the total $g(x)$. At $x$ = 0 it is 1. And $(1+x)$ times its rate equals $a$
 <details>
 <summary>Detailed proof: the series equals the power for every x between −1 and 1</summary>
 
-Inside $-1 < x < 1$ a power series may be differentiated piece by piece ([power-series](04-power-series.md)).
+Inside $-1 < x < 1$ a power series may be differentiated piece by piece ([Power series](04-power-series.md)).
 
 The coefficient of $x^k$ in $(1+x)\,g'(x)$ is $(k+1)\,C(a,k+1) + k\,C(a,k)$. Since $C(a,k+1) = C(a,k)\,(a-k)/(k+1)$, that is $(a-k)\,C(a,k) + k\,C(a,k) = a\,C(a,k)$, the coefficient of $x^k$ in $a\,g(x)$. So $(1+x)\,g'(x) = a\,g(x)$.
 
@@ -122,7 +105,7 @@ Let $h(x) = g(x)\,(1+x)^{-a}$. By the product rule, $h'(x) = (1+x)^{-a-1}\bigl[(
 
 ### Step 4: the error is smaller than the first piece left out
 
-After the first, the pieces for the root of 1.1 alternate in sign and shrink, so stopping leaves an error smaller than the first piece dropped ([alternating-and-conditional-convergence](03-alternating-and-conditional-convergence.md)). Four pieces miss by 0.0000036518; the dropped piece is 0.0000039063 in size. To land within 0.00001 of the root, four pieces suffice.
+After the first, the pieces for the root of 1.1 alternate in sign and shrink, so stopping leaves an error smaller than the first piece dropped ([Alternating series](03-alternating-and-conditional-convergence.md)). Four pieces miss by 0.0000036518; the dropped piece is 0.0000039063 in size. To land within 0.00001 of the root, four pieces suffice.
 
 ### Step 5: the compounding ceiling is the series
 
@@ -130,7 +113,7 @@ Expand one dollar at 100% paid in $n$ instalments by the binomial theorem:
 
 $$\Bigl(1+\frac1n\Bigr)^n = \sum_{k=0}^{n} C(n,k)\,\frac{1}{n^k} = \sum_{k=0}^{n}\frac{1}{k!}\Bigl(1-\frac1n\Bigr)\Bigl(1-\frac2n\Bigr)\cdots\Bigl(1-\frac{k-1}{n}\Bigr).$$
 
-Every bracket is below 1, so each piece is at most $1/k!$: the lower line stays under the upper. As $n$ grows each bracket heads for 1. So the limit, the e of [compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md), is the whole series: 2.718281828459.
+Every bracket is below 1, so each piece is at most $1/k!$: the lower line stays under the upper. As $n$ grows each bracket heads for 1. So the limit, the e of [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md), is the whole series: 2.718281828459.
 
 <details>
 <summary>Detailed proof: the limit of the ladder equals the sum</summary>
@@ -151,11 +134,11 @@ by the binomial theorem. For $m \ge 1$ that is zero; $m$ = 0 gives 1. So the pro
 
 ### Step 7: the derangement share settles on 1/e, fast
 
-The sieve of [derangements](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md) gave the clean share $D(n)/n!$ as $1 - 1/1! + 1/2! - \cdots \pm 1/n!$: Step 6's series, stopped at $n$. By Step 4's rule it misses 1/e by less than $1/(n+1)!$. For six people: share 0.368056, gap +0.000176, bound 0.000198.
+The sieve of [Derangements](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md) gave the clean share $D(n)/n!$ as $1 - 1/1! + 1/2! - \cdots \pm 1/n!$: Step 6's series, stopped at $n$. By Step 4's rule it misses 1/e by less than $1/(n+1)!$. For six people: share 0.368056, gap +0.000176, bound 0.000198.
 
 Times $n!$: $D(n)$ misses $n!/e$ by less than $1/(n+1)$, at most one half. A whole number that close to 264.873 must be 265: $D(n)$ is $n!/e$ rounded.
 
-A second road to 1/e is the Taylor series of the function that is its own rate, read at $x$ = −1 ([taylor-series](05-taylor-series.md)).
+A second road to 1/e is the Taylor series of the function that is its own rate, read at $x$ = −1 ([Taylor series](05-taylor-series.md)).
 
 ---
 
@@ -415,8 +398,8 @@ The two outputs agree line for line.
 
 - **Quick estimates.** The first two pieces, 1 + a x: a 10% rise under a square root is about 5%.
 - **Relativity.** The speed factor, one over the root of one minus a small ratio, is expanded this way.
-- **Compounding.** Continuous compounding at 100% for a year is the series for e; every account paying in instalments sits on the lower line ([compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)).
-- **Secret Santa and hat checks.** In a large group, about 36.8% of all possible draws leave nobody matched ([derangements](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md)).
+- **Compounding.** Continuous compounding at 100% for a year is the series for e; every account paying in instalments sits on the lower line ([Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)).
+- **Secret Santa and hat checks.** In a large group, about 36.8% of all possible draws leave nobody matched ([Derangements](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md)).
 
 > **Say it back**
 > The Taylor coefficients of one plus x to any power are choice counts with any top number. For a whole power they stop; otherwise they add up to the power for x between −1 and 1. Expanding compound interest the same way shows e is the sum of one over every factorial. The alternating sum is 1/e, where the share of clean draws settles.
@@ -425,15 +408,15 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [taylor-series](05-taylor-series.md): rates at one point turned into coefficients.
-- [derangements](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md): the sieve count sent here to 1/e.
-- [binomial-theorem](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md): the whole-power expansion, and the tool in Steps 5 and 6.
+- [Taylor series](05-taylor-series.md): rates at one point turned into coefficients.
+- [Derangements](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/02-derangements.md): the sieve count sent here to 1/e.
+- [The binomial theorem](../../04-Combinatorics%20and%20graphs/03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md): the whole-power expansion, and the tool in Steps 5 and 6.
 
 ## Where this goes next
 
-- [uniform-convergence](07-uniform-convergence.md): when a whole curve of partial sums settles at once.
-- [swapping-limits-with-integrals-and-derivatives](08-swapping-limits-with-integrals-and-derivatives.md): why Step 3 may differentiate piece by piece.
-- [stirlings-approximation](09-stirlings-approximation.md): e inside the size of $n!$.
+- [Uniform convergence](07-uniform-convergence.md): when a whole curve of partial sums settles at once.
+- [Swapping limits](08-swapping-limits-with-integrals-and-derivatives.md): why Step 3 may differentiate piece by piece.
+- [Stirling's approximation](09-stirlings-approximation.md): e inside the size of $n!$.
 
 The derangement count is now $n!/e$ rounded, but $n!$ is still a product of $n$ numbers; how large it is without multiplying them out is what stirlings-approximation answers.
 

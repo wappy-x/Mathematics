@@ -1,28 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Relations and Functions
-topic: Functions
-item: What a function is
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/08-Relations and Functions/01-relations|relations]]"
-  - "[[Cards/01-Foundations/07-Sets/01-sets-and-membership|sets-and-membership]]"
-  - "[[Cards/01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product|ordered-pairs-and-cartesian-product]]"
-next:
-  - "[[Cards/01-Foundations/08-Relations and Functions/03-composition|composition]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/04-injective-surjective-bijective|injective-surjective-bijective]]"
-tags:
-  - mathematics
-  - foundations
-  - functions
----
-
 # Functions: one output for every input, with domain, codomain and range
 
-Foundations → Relations and Functions → Functions → What a function is
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Relations and Functions](../../../SYLLABUS.md#w01-s08) → What a function is
 
 ---
 
@@ -55,7 +33,7 @@ Six arrows out, one per button. Two land on crisps, two on gum. Nothing arrives 
 
 ## The formula
 
-The wiring is the function. Write each press as an ordered pair (button, snack), as in [relations](01-relations.md):
+The wiring is the function. Write each press as an ordered pair (button, snack), as in [Relations](01-relations.md):
 
 **f = {(A1, crisps), (A2, crisps), (A3, chocolate), (B1, flapjack), (B2, gum), (B3, gum)}**
 
@@ -83,7 +61,7 @@ Count the pairs starting with each button; every count must be 1. B3 jamming pus
 
 ### The codomain is a promise, the range is the receipt
 
-The codomain is declared before anyone checks: snacks stocked here, all 5. The range is what turns up, 4, since the mints are never reached, and it always sits inside the codomain. Whether it fills the codomain is the question [injective-surjective-bijective](04-injective-surjective-bijective.md) asks.
+The codomain is declared before anyone checks: snacks stocked here, all 5. The range is what turns up, 4, since the mints are never reached, and it always sits inside the codomain. Whether it fills the codomain is the question [One-to-one and onto](04-injective-surjective-bijective.md) asks.
 
 ### Forwards: the image of a set
 
@@ -91,7 +69,7 @@ Take a handful of buttons and collect what they give. A1 and A3 give crisps and 
 
 ### Backwards: the preimage of a set
 
-Go the other way: name a snack, ask which buttons deliver it. Crisps come from A1 and A2: 2 buttons — the **preimage** of crisps. The preimage of mints holds 0 buttons — the empty set from [sets-and-membership](../07-Sets/01-sets-and-membership.md). It hands back a set, not a single input: running the machine backwards needs [inverse-functions](05-inverse-functions.md).
+Go the other way: name a snack, ask which buttons deliver it. Crisps come from A1 and A2: 2 buttons — the **preimage** of crisps. The preimage of mints holds 0 buttons — the empty set from [Sets](../07-Sets/01-sets-and-membership.md). It hands back a set, not a single input: running the machine backwards needs [Inverse functions](05-inverse-functions.md).
 
 Counting backwards tests forwards. Buttons behind each snack: crisps 2, chocolate 1, flapjack 1, gum 2, mints 0. Add them: 6, the number of buttons. Miss 6 and something is wrong forwards; hitting 6 is not proof, so the per-button count stays the real test. The code runs both.
 
@@ -267,7 +245,7 @@ The two outputs match line for line: all counting.
 
 - **Spreadsheet lookups.** A lookup column is a function from key to value; a missing or duplicate key is these two failures.
 - **Prices, doses, tax bands.** One answer per input, by law or by design. Two answers is a dispute; none is a bug.
-- **Chaining rules.** Button to snack, snack to price: two functions back to back — [composition](03-composition.md).
+- **Chaining rules.** Button to snack, snack to price: two functions back to back — [Composing functions](03-composition.md).
 
 > **Say it back**
 > A function hands every input exactly one output. Six buttons, six pairs, one snack each. The domain is the six buttons; the codomain the five snacks stocked, declared up front; the range the four that turn up, never the mints. The preimage of crisps is the two buttons giving it; of mints, empty. The indicator of sold out reads 0 1 0 0 1, and adding it counts them: 2.
@@ -276,13 +254,13 @@ The two outputs match line for line: all counting.
 
 ## What this builds on
 
-- [relations](01-relations.md): a relation is any set of ordered pairs; a function is the tidy kind, every first name appearing exactly once.
-- [ordered-pairs-and-cartesian-product](../07-Sets/05-ordered-pairs-and-cartesian-product.md): the ordered pair (button, snack), input first.
+- [Relations](01-relations.md): a relation is any set of ordered pairs; a function is the tidy kind, every first name appearing exactly once.
+- [Ordered pairs and the Cartesian product](../07-Sets/05-ordered-pairs-and-cartesian-product.md): the ordered pair (button, snack), input first.
 
 ## Where this goes next
 
-- [composition](03-composition.md): running one function into another, and what the domain and range do.
-- [injective-surjective-bijective](04-injective-surjective-bijective.md): what this card left open — repeats like crisps, gaps like the mints.
+- [Composing functions](03-composition.md): running one function into another, and what the domain and range do.
+- [One-to-one and onto](04-injective-surjective-bijective.md): what this card left open — repeats like crisps, gaps like the mints.
 
 ---
 

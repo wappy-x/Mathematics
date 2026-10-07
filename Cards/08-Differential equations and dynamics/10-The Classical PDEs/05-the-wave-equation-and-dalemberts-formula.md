@@ -1,25 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: The Classical PDEs
-topic: Travelling waves on a line
-item: The wave equation
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/02-the-transport-equation-and-characteristics|the-transport-equation-and-characteristics]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/03-chain-rule|chain-rule]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/10-The Classical PDEs/06-standing-waves-on-a-string|standing-waves-on-a-string]]"
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/08-electromagnetic-waves|electromagnetic-waves]]"
-  - "[[Cards/19-Partial differential equations/05-Waves/01-dalembert-and-characteristics-for-waves|dalembert-and-characteristics-for-waves]]"
-tags: [mathematics, differential equations and dynamics, the-wave-equation-and-dalemberts-formula]
----
-
 # The wave equation: a shape splits into two half-copies travelling opposite ways at speed c
 
-Differential equations and dynamics → The Classical PDEs → Travelling waves on a line → The wave equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [The Classical PDEs](../../../SYLLABUS.md#w08-s10) → The wave equation
 
 ---
 
@@ -47,7 +28,7 @@ Dashed: at release. Solid: 0.2 s later. To scale: 300 px per metre across, 150 p
 
 ## The formula
 
-Notation, as in [what-a-pde-says](01-what-a-pde-says.md): a subscript names the rate. $u_t$ is the rate of change of height with time at a fixed place, $u_x$ the slope at a fixed time; a doubled letter takes the rate twice.
+Notation, as in [A partial differential equation](01-what-a-pde-says.md): a subscript names the rate. $u_t$ is the rate of change of height with time at a fixed place, $u_x$ the slope at a fixed time; a doubled letter takes the rate twice.
 
 $$u_{tt} = c^2\, u_{xx}, \qquad c = \sqrt{T/\rho}$$
 
@@ -88,7 +69,7 @@ Behind it sits the general solution $u=F(x-ct)+G(x+ct)$: a profile $F$ sliding r
 
 ### Step 0: coordinates that ride with the waves
 
-A shape sliding right at speed c looks frozen to someone walking with it; [the-transport-equation-and-characteristics](02-the-transport-equation-and-characteristics.md) used this for one direction. A string carries waves both ways, so the proof uses two walkers, one each way.
+A shape sliding right at speed c looks frozen to someone walking with it; [The transport equation](02-the-transport-equation-and-characteristics.md) used this for one direction. A string carries waves both ways, so the proof uses two walkers, one each way.
 
 ### Step 1: Newton on one short piece of string gives the equation
 
@@ -100,7 +81,7 @@ Call $T/\rho$ by the name $c^2$. For the rope, $c=\sqrt{0.05/0.2}$ = 0.50 m/s.
 
 ### Step 2: any sliding shape solves it
 
-Take $u=F(x-ct)$. By the [chain-rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md), each rate in $x$ brings out a factor 1 and each rate in $t$ a factor $-c$. So $u_{xx}=F''$ and $u_{tt}=c^2 F''$: the equation holds for any twice-differentiable $F$, and likewise for $G(x+ct)$. A sum of solutions is a solution, so $F(x-ct)+G(x+ct)$ solves it.
+Take $u=F(x-ct)$. By the [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md), each rate in $x$ brings out a factor 1 and each rate in $t$ a factor $-c$. So $u_{xx}=F''$ and $u_{tt}=c^2 F''$: the equation holds for any twice-differentiable $F$, and likewise for $G(x+ct)$. A sum of solutions is a solution, so $F(x-ct)+G(x+ct)$ solves it.
 
 ### Step 3: every solution is of that form
 
@@ -141,7 +122,7 @@ The whole line matters: Step 3 needs, for each $\eta$, every $\xi \le \eta$ (the
 
 </details>
 
-Another route factors the equation into two transport equations, one per direction; dalembert-and-characteristics-for-waves takes it.
+Another route factors the equation into two transport equations, one per direction; d'Alembert takes it.
 
 ---
 
@@ -382,7 +363,7 @@ The line is the rope's height at 1 m, from the formula with its velocity term: f
 ## Where you meet it in real life
 
 - **Musical strings.** A plucked string splits into two copies that reflect off the nut and bridge. Tuning pegs change $T$, so $c$ and the pitch.
-- **Sound and light.** Pressure in a pipe, voltage on a cable and light obey the same equation (electromagnetic-waves).
+- **Sound and light.** Pressure in a pipe, voltage on a cable and light obey the same equation (Electromagnetic waves).
 - **Earthquake timing.** A distant seismometer feels nothing until the fastest wave arrives: distance over speed.
 - **Simulation.** A grid solver's time step must keep its domain of dependence covering the true one: the `r=1.1` lesson.
 
@@ -393,14 +374,14 @@ The line is the rope's height at 1 m, from the formula with its velocity term: f
 
 ## What this builds on
 
-- [the-transport-equation-and-characteristics](02-the-transport-equation-and-characteristics.md): one shape sliding one way, carried along a line.
-- [chain-rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): the factors $-c$ and $+c$ in Steps 2 and 3.
+- [The transport equation](02-the-transport-equation-and-characteristics.md): one shape sliding one way, carried along a line.
+- [Chain rule](../../06-Calculus%20and%20analysis/02-Derivatives/03-chain-rule.md): the factors $-c$ and $+c$ in Steps 2 and 3.
 
 ## Where this goes next
 
-- [standing-waves-on-a-string](06-standing-waves-on-a-string.md): the finite string, where reflected copies add into standing patterns.
-- electromagnetic-waves: the same equation for light.
-- dalembert-and-characteristics-for-waves: characteristics, energy and uniqueness in full.
+- [Standing waves](06-standing-waves-on-a-string.md): the finite string, where reflected copies add into standing patterns.
+- Electromagnetic waves: the same equation for light.
+- d'Alembert: characteristics, energy and uniqueness in full.
 
 The formula leaves open what the string does once the copies hit the held ends at 0.50 s; the standing-waves card answers it.
 

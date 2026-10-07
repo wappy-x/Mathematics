@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Counterparty Risk and CVA
-topic: What is at stake today
-item: Counterparty exposure
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/01-default-probability-recovery-and-expected-loss|default-probability-recovery-and-expected-loss]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/06-negative-numbers|negative-numbers]]"
-next:
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/02-expected-exposure-profiles|expected-exposure-profiles]]"
-tags: [mathematics, financial-mathematics, counterparty-exposure-and-netting]
----
-
 # Counterparty exposure: what you would lose if the other side failed today, why only positive value counts, and how netting shrinks it
 
-Financial mathematics → Counterparty Risk and CVA → What is at stake today → Counterparty exposure
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Counterparty Risk and CVA](../../../SYLLABUS.md#w12-s46) → Counterparty exposure
 
 ---
 
@@ -57,7 +40,7 @@ Orange, the top line: gross exposure, every trade floored on its own. Green, the
 
 ## The formula
 
-Notation first, in words. $V_i$ is the value to the bank of trade number $i$, for $i$ from 1 to $n$. A capital sigma, $\sum$, means "add up" ([negative-numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md) covers adding signed amounts). A small plus sign raised after a number means "that number, or zero if it is negative": $x^+ = \max(x, 0)$. Writing $i \in A$ means "trade $i$ belongs to netting set $A$".
+Notation first, in words. $V_i$ is the value to the bank of trade number $i$, for $i$ from 1 to $n$. A capital sigma, $\sum$, means "add up" ([Negative numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md) covers adding signed amounts). A small plus sign raised after a number means "that number, or zero if it is negative": $x^+ = \max(x, 0)$. Writing $i \in A$ means "trade $i$ belongs to netting set $A$".
 
 $$E \;=\; \sum_{\text{netting sets } A}\;\Big(\sum_{i \in A} V_i\Big)^{+}$$
 
@@ -95,7 +78,7 @@ Conventions verified 28 Sep 2026: the Basel Committee's counterparty definitions
 - **The agreement is enforceable where Northwind goes bankrupt.** If a court refuses to net, each trade becomes its own set and exposure jumps from $4 million to $7 million. Banks obtain legal opinions country by country for this reason.
 - **The values are replacement values today.** $V_i$ is what another dealer would charge or pay to take the trade over. If the close-out valuation is disputed, every $V_i$ moves and so does $E$.
 - **No collateral is held.** Collateral the bank holds from Northwind would be subtracted inside the floor; this card sets it to zero.
-- **Default and close-out happen today, at today's values.** In practice close-out takes days, and values move in between. How large exposure may become later is [expected-exposure-profiles](02-expected-exposure-profiles.md).
+- **Default and close-out happen today, at today's values.** In practice close-out takes days, and values move in between. How large exposure may become later is [Expected exposure over time](02-expected-exposure-profiles.md).
 - **One currency.** Values in different currencies must be converted at today's rates before they can be added.
 
 ---
@@ -177,7 +160,7 @@ Northwind: trades +5, −3, +2 ($ million), recovery 40%.
 
 One master agreement cuts the money at risk from $7 million to $4 million and the loss on a default today from $4.20 million to $2.40 million, without changing a single trade.
 
-The shelf's house trade gives a cross-check. A bank that **bought** the one-year Acme call from Northwind (strike $100, worth $9.23; see [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)) has exposure $9.23: a bought option is always owed to its holder. A bank that **sold** Northwind the matching put, worth $6.33, has exposure zero on it. Hold both under one agreement and exposure is 9.23 − 6.33 = $2.90, which is exactly the value of a forward on Acme by put–call parity ([put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)). Held apart, exposure is back to $9.23.
+The shelf's house trade gives a cross-check. A bank that **bought** the one-year Acme call from Northwind (strike $100, worth $9.23; see [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)) has exposure $9.23: a bought option is always owed to its holder. A bank that **sold** Northwind the matching put, worth $6.33, has exposure zero on it. Hold both under one agreement and exposure is 9.23 − 6.33 = $2.90, which is exactly the value of a forward on Acme by put–call parity ([Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md)). Held apart, exposure is back to $9.23.
 
 ### What breaks if you drop a piece
 
@@ -600,7 +583,7 @@ The two outputs agree line for line.
 - **Capital rules.** The Basel standardised approach for counterparty risk (SA-CCR, CRE52) starts from a replacement cost per netting set: the set's net value, less collateral held, floored at zero. That is this card's formula with collateral added.
 - **Bankruptcies.** When Lehman Brothers failed in September 2008, its derivative counterparties ended their trades under master agreements and filed claims for net close-out amounts, not trade by trade.
 - **Central clearing.** A clearing house stands between the two sides of many trades and nets across all of them. Duffie and Zhu show that moving one asset class to a clearing house can raise total exposure, because it breaks the bilateral netting that asset class had with everything else.
-- **The rest of this shelf.** Exposure is one of the three numbers in credit loss ([default-probability-recovery-and-expected-loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md)). Priced over time against Northwind's default risk it becomes [cva](03-cva.md). Seen from Northwind's side, the bank's negative values floored at zero, it is the bank's own default risk in [dva-and-bilateral-cva](04-dva-and-bilateral-cva.md): $0 net, $3 million with trade 2 apart. When exposure tends to rise as the counterparty weakens, it is [wrong-way-risk](05-wrong-way-risk.md); how the resulting numbers are hedged is [cva-risk-numbers-and-hedging](06-cva-risk-numbers-and-hedging.md).
+- **The rest of this shelf.** Exposure is one of the three numbers in credit loss ([Default probability, recovery and expected loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md)). Priced over time against Northwind's default risk it becomes [CVA](03-cva.md). Seen from Northwind's side, the bank's negative values floored at zero, it is the bank's own default risk in [DVA](04-dva-and-bilateral-cva.md): $0 net, $3 million with trade 2 apart. When exposure tends to rise as the counterparty weakens, it is [Wrong-way risk](05-wrong-way-risk.md); how the resulting numbers are hedged is [CVA risk numbers](06-cva-risk-numbers-and-hedging.md).
 
 > **Say it back**
 > Counterparty exposure is what a bank would be owed if the other side failed today. A trade the bank owes on counts as zero, because a failed firm's estate still collects its debts in full. Under a master agreement all trades close into one amount, so values are added first and the zero floor applied to the total. Netting never raises exposure, and inside one set it saves exactly the smaller of what is owed each way. Northwind's three trades carry $7 million of exposure one by one and $4 million netted.
@@ -609,14 +592,14 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [default-probability-recovery-and-expected-loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md): exposure at default, recovery and loss given default. This card says what the exposure is when the loan is a book of trades.
-- [negative-numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md): signed amounts, and adding a debt to a credit.
+- [Default probability, recovery and expected loss](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md): exposure at default, recovery and loss given default. This card says what the exposure is when the loan is a book of trades.
+- [Negative numbers](../../01-Foundations/01-Everyday%20Arithmetic/06-negative-numbers.md): signed amounts, and adding a debt to a credit.
 
 ## Where this goes next
 
-- [expected-exposure-profiles](02-expected-exposure-profiles.md): the same floor applied to the trades' values on future dates, averaged over how markets might move.
+- [Expected exposure over time](02-expected-exposure-profiles.md): the same floor applied to the trades' values on future dates, averaged over how markets might move.
 
-Today's exposure is one number, but Northwind can fail next year, when the trades are worth something else; how large the exposure is expected to be at each future date is the question [expected-exposure-profiles](02-expected-exposure-profiles.md) answers.
+Today's exposure is one number, but Northwind can fail next year, when the trades are worth something else; how large the exposure is expected to be at each future date is the question [Expected exposure over time](02-expected-exposure-profiles.md) answers.
 
 ---
 

@@ -1,21 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Series
-topic: Sign-flipping sums
-item: Alternating series
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/06-Series/02-comparison-ratio-and-root-tests|comparison-ratio-and-root-tests]]"
-next: []
-tags: [mathematics, calculus and analysis, alternating-and-conditional-convergence]
----
-
 # Alternating series: the sign-flipping sums, their error bound, and the danger of reordering
 
-Calculus and analysis → Series → Sign-flipping sums → Alternating series
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Series](../../../SYLLABUS.md#w06-s06) → Alternating series
 
 ---
 
@@ -49,7 +34,7 @@ Orange: 1 − 1/2 + 1/3 − … in its first order, closing in on ln 2. Teal: th
 
 ## The formula
 
-A reminder from [series-convergence](01-series-convergence.md): a sigma sign running to infinity means the limit of the running totals, the **partial sums**. The factor $(-1)^{n-1}$ is a sign switch: +1 when $n$ is odd, −1 when $n$ is even.
+A reminder from [Infinite series](01-series-convergence.md): a sigma sign running to infinity means the limit of the running totals, the **partial sums**. The factor $(-1)^{n-1}$ is a sign switch: +1 when $n$ is odd, −1 when $n$ is even.
 
 Take sizes $b_n$, never negative. The alternating series built from them is
 
@@ -124,13 +109,13 @@ Integrate from 0 to 1. The left side's antiderivative is ln(1 + t), so its area 
 
 $$\ln 2 = S_N + (-1)^N \int_0^1 \frac{t^N}{1+t}\,dt.$$
 
-The leftover integral is positive and below the integral of $t^N$, 1/(N + 1), which shrinks to zero; so $S$ = ln 2. No infinite sum was swapped with an integral; that licence is in [swapping-limits-with-integrals-and-derivatives](08-swapping-limits-with-integrals-and-derivatives.md).
+The leftover integral is positive and below the integral of $t^N$, 1/(N + 1), which shrinks to zero; so $S$ = ln 2. No infinite sum was swapped with an integral; that licence is in [Swapping limits](08-swapping-limits-with-integrals-and-derivatives.md).
 
 ### Step 4: absolute convergence is the stronger kind
 
 Over any finite stretch, the terms total no more than their sizes. If the sizes add to a finite amount, far stretches are tiny, so the partial sums stop moving and, as the real numbers have no gaps, settle: absolute convergence implies convergence.
 
-The converse fails. The sizes 1, 1/2, 1/3, … form the harmonic series, whose partial sums $H_m$ grow without limit ([series-convergence](01-series-convergence.md)), so 1 − 1/2 + 1/3 − … converges only conditionally. The sizes of 1 − 1/2 + 1/4 − 1/8 + … are geometric with ratio one half and pass the tests in [comparison-ratio-and-root-tests](02-comparison-ratio-and-root-tests.md). It converges absolutely, to 0.666666667, in either order.
+The converse fails. The sizes 1, 1/2, 1/3, … form the harmonic series, whose partial sums $H_m$ grow without limit ([Infinite series](01-series-convergence.md)), so 1 − 1/2 + 1/3 − … converges only conditionally. The sizes of 1 − 1/2 + 1/4 − 1/8 + … are geometric with ratio one half and pass the tests in [Convergence tests](02-comparison-ratio-and-root-tests.md). It converges absolutely, to 0.666666667, in either order.
 
 <details>
 <summary>Detailed proof: reordering cannot move an absolutely convergent sum</summary>
@@ -154,7 +139,7 @@ The positive terms alone add to infinity, and so do the negative ones. To hit 2:
 
 </details>
 
-A second road to ln 2 is the series of ln(1 + x) at x = 1, in [taylor-series](05-taylor-series.md).
+A second road to ln 2 is the series of ln(1 + x) at x = 1, in [Taylor series](05-taylor-series.md).
 
 ---
 
@@ -402,13 +387,13 @@ all checks passed
 
 ## What this builds on
 
-- [comparison-ratio-and-root-tests](02-comparison-ratio-and-root-tests.md): the tests that decide whether the sizes alone add to a finite amount.
-- [series-convergence](01-series-convergence.md): partial sums, the geometric sum, and the harmonic series running to infinity.
+- [Convergence tests](02-comparison-ratio-and-root-tests.md): the tests that decide whether the sizes alone add to a finite amount.
+- [Infinite series](01-series-convergence.md): partial sums, the geometric sum, and the harmonic series running to infinity.
 
 ## Where this goes next
 
-- [power-series](04-power-series.md): at the edge of its range a power series often alternates, and this test settles it.
-- [uniform-convergence](07-uniform-convergence.md): one tail bound for every input at once.
+- [Power series](04-power-series.md): at the edge of its range a power series often alternates, and this test settles it.
+- [Uniform convergence](07-uniform-convergence.md): one tail bound for every input at once.
 
 ---
 

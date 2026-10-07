@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Proof
-topic: Indirect proofs
-item: Proof by contrapositive
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/06-Proof/01-direct-proof|direct-proof]]"
-  - "[[Cards/01-Foundations/05-Logic/02-if-then|if-then]]"
-next:
-  - "[[Cards/01-Foundations/06-Proof/03-proof-by-contradiction|proof-by-contradiction]]"
-tags:
-  - mathematics
-  - foundations
-  - proof-by-contrapositive
----
-
 # Proof by contrapositive: prove the flipped version
 
-Foundations → Proof → Indirect proofs → Proof by contrapositive
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Proof](../../../SYLLABUS.md#w01-s06) → Proof by contrapositive
 
 ---
 
@@ -72,7 +52,7 @@ flowchart TD
 
 An if-then is false in one situation only: the if part happened, the then part did not.
 
-The sign is false for a driver validated and charged anyway. The contrapositive is false for a driver who paid and *was* validated. Same driver. Nothing tells them apart: one claim, two spellings ([logical-equivalence-and-de-morgan](../05-Logic/03-logical-equivalence-and-de-morgan.md) tables it).
+The sign is false for a driver validated and charged anyway. The contrapositive is false for a driver who paid and *was* validated. Same driver. Nothing tells them apart: one claim, two spellings ([Logical equivalence and De Morgan](../05-Logic/03-logical-equivalence-and-de-morgan.md) tables it).
 
 Then why flip? A proof needs somewhere to stand. "Validated" gives you a stamp and nothing to compute. "You paid $6" gives you a number.
 
@@ -90,9 +70,9 @@ Proof. n is even, so n = 2 × k for a whole number k. Then
 
 k × n is a whole number, so n × n is two times a whole number. Even. Done.
 
-Only the claim was flipped. The proving was an ordinary straight-line proof, the kind on [direct-proof](01-direct-proof.md). The flipped claim is the original, so the original is proved.
+Only the claim was flipped. The proving was an ordinary straight-line proof, the kind on [Direct proof](01-direct-proof.md). The flipped claim is the original, so the original is proved.
 
-Proving it straight, from "n × n is odd", means prying n back out — which needs a fact about factors nobody gave you. Direct, flipped, and a third move: [proof-by-contradiction](03-proof-by-contradiction.md).
+Proving it straight, from "n × n is odd", means prying n back out — which needs a fact about factors nobody gave you. Direct, flipped, and a third move: [Proof by contradiction](03-proof-by-contradiction.md).
 
 ---
 
@@ -254,7 +234,7 @@ The two outputs match line for line.
 > [!warning]
 > **Flipping without swapping, or swapping without flipping.** Only both give the contrapositive. Swapping alone gives the **converse** — "if you pay nothing, your ticket was validated" — which Yaz breaks while the sign stands: 2 rows disagree. Flipping alone gives the **inverse** — "if you were not validated, you paid something" — the converse in other words, and Yaz breaks it too.
 >
-> - **Nothing here is assumed false.** You prove a plain if-then, the ordinary way. The move that assumes the opposite is [proof-by-contradiction](03-proof-by-contradiction.md).
+> - **Nothing here is assumed false.** You prove a plain if-then, the ordinary way. The move that assumes the opposite is [Proof by contradiction](03-proof-by-contradiction.md).
 > - **Assumed the if part too, and never used it?** Then you did this card, not contradiction. Drop it.
 > - The flipped proof must land on *not the if part*. Land elsewhere and you proved something else.
 > - Only if-then sentences flip; a claim with no if part has nothing to flip.
@@ -264,9 +244,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Car parks, cloakrooms, doors.** "No ticket, no entry" and "if you are inside, you have a ticket" are one rule, read from either end. Chaining rules: [valid-arguments](../05-Logic/06-valid-arguments.md).
+- **Car parks, cloakrooms, doors.** "No ticket, no entry" and "if you are inside, you have a ticket" are one rule, read from either end. Chaining rules: [Valid arguments](../05-Logic/06-valid-arguments.md).
 - **Anything you diagnose backwards.** "If the deploy worked, the new version is live." The old version is live, so the deploy did not work. Contrapositive, without thinking.
-- **Proof itself.** Claims about even, odd and factors flip well: "not even" is a fact you can write down. Which move fits which claim: [choosing-a-proof-strategy](06-choosing-a-proof-strategy.md).
+- **Proof itself.** Claims about even, odd and factors flip well: "not even" is a fact you can write down. Which move fits which claim: [Choosing a proof strategy](06-choosing-a-proof-strategy.md).
 
 > **Say it back**
 > An if-then and its contrapositive — both halves flipped, then swapped — are one claim in two spellings, breaking in the same case. Prove whichever gives the better place to stand; the other comes free. "If n × n is odd, n is odd" becomes "if n is even, so is n × n": 6 × 6 = 2 × 18 = 36. Swapping without flipping is the converse, a different claim.
@@ -275,12 +255,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [direct-proof](01-direct-proof.md): what a proof is, and the straight-line kind used here.
-- [if-then](../05-Logic/02-if-then.md): the one case that breaks an if-then, and where both names came from.
+- [Direct proof](01-direct-proof.md): what a proof is, and the straight-line kind used here.
+- [If-then](../05-Logic/02-if-then.md): the one case that breaks an if-then, and where both names came from.
 
 ## Where this goes next
 
-- [proof-by-contradiction](03-proof-by-contradiction.md): assume the claim is false and wait for it to break — the move confused with this one.
+- [Proof by contradiction](03-proof-by-contradiction.md): assume the claim is false and wait for it to break — the move confused with this one.
 
 ---
 

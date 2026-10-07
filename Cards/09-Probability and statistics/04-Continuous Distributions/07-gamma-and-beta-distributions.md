@@ -1,30 +1,12 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Continuous Distributions
-topic: Sums of waits and uncertain chances
-item: Gamma and beta
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/03-exponential-distribution|exponential-distribution]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/04-integration-by-parts|integration-by-parts]]"
-next:
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/03-chi-square-t-and-f-distributions|chi-square-t-and-f-distributions]]"
-  - "[[Cards/09-Probability and statistics/10-Bayesian Inference/02-beta-binomial|beta-binomial]]"
-tags: [mathematics, probability and statistics, gamma-and-beta-distributions]
----
-
 # Gamma and beta: waiting for several events, and a chance that is itself uncertain
 
-Probability and statistics → Continuous Distributions → Sums of waits and uncertain chances → Gamma and beta
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Continuous Distributions](../../../SYLLABUS.md#w09-s04) → Gamma and beta
 
 ---
 
 ## General Overview
 
-A help desk receives emails at a steady 12 per hour, independently, as on [exponential-distribution](03-exponential-distribution.md). The wait for the next email averages 5 minutes. The desk answers in batches: it opens the queue once three emails have piled up. How long does that take?
+A help desk receives emails at a steady 12 per hour, independently, as on [Exponential](03-exponential-distribution.md). The wait for the next email averages 5 minutes. The desk answers in batches: it opens the queue once three emails have piled up. How long does that take?
 
 On average 15 minutes, three average gaps. The spread matters more. The wait runs past 20 minutes about 1 time in 4 (a chance of 0.2381) and past 30 minutes about 1 time in 16 (0.0620). The law of this wait is the **gamma distribution**.
 
@@ -67,7 +49,7 @@ $$f_T(t) = \frac{\lambda^{\alpha}\,t^{\alpha-1}\,e^{-\lambda t}}{\Gamma(\alpha)}
 
 **Read it aloud:** the chance per minute that the wait ends at t is a power of t that pulls the hump away from zero, times an exponential that pulls the tail down, divided by the constant that makes the area 1.
 
-For a whole shape the chance of still waiting is a Poisson sum ([poisson](../03-Discrete%20Distributions/04-poisson.md)), the chance that fewer than α emails have come by time t; $j$ counts the emails that have come:
+For a whole shape the chance of still waiting is a Poisson sum ([Poisson](../03-Discrete%20Distributions/04-poisson.md)), the chance that fewer than α emails have come by time t; $j$ counts the emails that have come:
 
 $$P(T > t) = e^{-\lambda t} \sum_{j=0}^{\alpha - 1} \frac{(\lambda t)^j}{j!}$$
 
@@ -107,7 +89,7 @@ xychart-beta
     line [0.00, 0.90, 3.19, 4.57, 4.36, 3.24, 1.99, 1.04, 0.47, 0.18, 0.06, 0.02, 0.00]
 ```
 
-Orange: Beta(1, 1), flat, every rate equally believable; it is the uniform law of [uniform-distribution](02-uniform-distribution.md). Green: Beta(2, 8), the prior used on this card, averaging 0.2. Dark blue: Beta(4, 16), the same average held twice as firmly. The chart stops at 0.6; beyond it the flat line stays at 1 and the other two fade towards 0.
+Orange: Beta(1, 1), flat, every rate equally believable; it is the uniform law of [Uniform](02-uniform-distribution.md). Green: Beta(2, 8), the prior used on this card, averaging 0.2. Dark blue: Beta(4, 16), the same average held twice as firmly. The chart stops at 0.6; beyond it the flat line stays at 1 and the other two fade towards 0.
 
 ### When it holds
 
@@ -123,11 +105,11 @@ Orange: Beta(1, 1), flat, every rate equally believable; it is the uniform law o
 
 ### Step 0: a density is a shape divided by its area
 
-The situation fixes the shape of a curve. Dividing by its total area makes the area 1, and a curve with area 1 is a density ([densities-and-cdfs](01-densities-and-cdfs.md)). The gamma and beta laws are two shapes whose areas have names, Γ and B, and whose areas are linked.
+The situation fixes the shape of a curve. Dividing by its total area makes the area 1, and a curve with area 1 is a density ([Densities](01-densities-and-cdfs.md)). The gamma and beta laws are two shapes whose areas have names, Γ and B, and whose areas are linked.
 
 ### Step 1: the wait for three emails, from the Poisson count
 
-The wait for the third email is longer than t exactly when fewer than three emails arrive in the first t minutes. The count in a window of t minutes is Poisson with average λt ([poisson](../03-Discrete%20Distributions/04-poisson.md)). So the chance of still waiting is the Poisson chance of 0, 1 or 2:
+The wait for the third email is longer than t exactly when fewer than three emails arrive in the first t minutes. The count in a window of t minutes is Poisson with average λt ([Poisson](../03-Discrete%20Distributions/04-poisson.md)). So the chance of still waiting is the Poisson chance of 0, 1 or 2:
 
 $$P(T > t) = e^{-\lambda t}\left(1 + \lambda t + \frac{(\lambda t)^2}{2}\right)$$
 
@@ -154,7 +136,7 @@ Put x = λt in the area of λ^α t^(α−1) e^(−λt). The rate cancels and wha
 
 $$\int_0^\infty \lambda^\alpha t^{\alpha-1} e^{-\lambda t}\,dt = \int_0^\infty x^{\alpha-1} e^{-x}\,dx = \Gamma(\alpha).$$
 
-So dividing by Γ(α) makes the area 1, and for whole α this is (α − 1)!, the constant Step 1 found. Integration by parts ([integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)) gives the step rule: differentiate the power x^α, integrate e^(−x), and the boundary term vanishes at both ends:
+So dividing by Γ(α) makes the area 1, and for whole α this is (α − 1)!, the constant Step 1 found. Integration by parts ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)) gives the step rule: differentiate the power x^α, integrate e^(−x), and the boundary term vanishes at both ends:
 
 $$\Gamma(\alpha + 1) = \alpha \int_0^\infty x^{\alpha-1} e^{-x}\,dx = \alpha\,\Gamma(\alpha).$$
 
@@ -201,7 +183,7 @@ This is why the conversion rate and the desk share a law. Of the time spent wait
 
 Multiplying by v raises a by one: E[V] = B(a + 1, b)/B(a, b) = a/(a + b) = 0.2000. Raising a again gives E[V^2] = a(a + 1)/((a + b)(a + b + 1)) = 0.054545, and the variance is 0.054545 − 0.04 = 0.014545, a standard deviation of 0.1206.
 
-Read the parameters as a split and a total. The split a : b sets the average. The total a + b, the **concentration**, sets how firmly it is held. Beta(4, 16) has the same average, standard deviation 0.0873, and 0.1332 above 30 percent instead of 0.1960. Beta(1, 1) is flat: 0.7000 above 30 percent, the width from 0.3 to 1. On [beta-binomial](../10-Bayesian%20Inference/02-beta-binomial.md), data add buyers to a and non-buyers to b, so a + b behaves like a number of visitors already seen. The mode of Beta(2, 8) is (a − 1)/(a + b − 2) = 0.1250, below the average.
+Read the parameters as a split and a total. The split a : b sets the average. The total a + b, the **concentration**, sets how firmly it is held. Beta(4, 16) has the same average, standard deviation 0.0873, and 0.1332 above 30 percent instead of 0.1960. Beta(1, 1) is flat: 0.7000 above 30 percent, the width from 0.3 to 1. On [Beta-binomial](../10-Bayesian%20Inference/02-beta-binomial.md), data add buyers to a and non-buyers to b, so a + b behaves like a number of visitors already seen. The mode of Beta(2, 8) is (a − 1)/(a + b − 2) = 0.1250, below the average.
 
 ### Step 6: whole parameters turn beta tails into binomial sums
 
@@ -681,9 +663,9 @@ The two outputs are identical, simulation included, because both programs draw t
 
 - **Call centres and help desks.** The wait for the k-th call at a steady rate is the Erlang law, the gamma law with whole shape, named after A. K. Erlang's telephone-traffic work; queueing models use it for a service made of several equal stages.
 - **Insurance and rainfall.** Claim sizes and rainfall totals are positive and skewed right; a gamma law is a standard first fit.
-- **A/B tests on web pages.** A beta prior on each page's conversion rate, updated visitor by visitor on [beta-binomial](../10-Bayesian%20Inference/02-beta-binomial.md), gives the chance that one page beats the other.
-- **Test statistics.** The chi-square law with k degrees of freedom is the gamma law with shape k/2 and rate 1/2, the reason Γ(1/2) matters: [chi-square-t-and-f-distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md).
-- **Lifetimes.** When the chance of failure per hour rises or falls with age, gamma and Weibull laws compete as models: [weibull-and-hazard-rates](09-weibull-and-hazard-rates.md).
+- **A/B tests on web pages.** A beta prior on each page's conversion rate, updated visitor by visitor on [Beta-binomial](../10-Bayesian%20Inference/02-beta-binomial.md), gives the chance that one page beats the other.
+- **Test statistics.** The chi-square law with k degrees of freedom is the gamma law with shape k/2 and rate 1/2, the reason Γ(1/2) matters: [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md).
+- **Lifetimes.** When the chance of failure per hour rises or falls with age, gamma and Weibull laws compete as models: [Weibull and hazards](09-weibull-and-hazard-rates.md).
 
 > **Say it back**
 > The wait for the third email outlasts 20 minutes exactly when fewer than three emails come in 20 minutes, a Poisson chance of 0.2381. Differentiating that chance gives the gamma density; its constant is the gamma integral, a shifted factorial for whole shapes. The share of a total wait taken by its first part has the beta law, which makes the beta integral a ratio of gamma integrals. A beta law on a conversion rate reads as a split and a total: 2 and 8 put the average at 0.2 and hold it loosely.
@@ -692,13 +674,13 @@ The two outputs are identical, simulation included, because both programs draw t
 
 ## What this builds on
 
-- [exponential-distribution](03-exponential-distribution.md): the single gap, its rate λ, and its tie to the Poisson count; the gamma wait is several such gaps added.
-- [integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): the step rule Γ(α + 1) = αΓ(α), which gives the factorials and the moments.
+- [Exponential](03-exponential-distribution.md): the single gap, its rate λ, and its tie to the Poisson count; the gamma wait is several such gaps added.
+- [Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): the step rule Γ(α + 1) = αΓ(α), which gives the factorials and the moments.
 
 ## Where this goes next
 
-- [chi-square-t-and-f-distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md): a sum of squared standard normals is a gamma law with half-whole shape, and ratios of such sums give the t and F laws used in testing.
-- [beta-binomial](../10-Bayesian%20Inference/02-beta-binomial.md): visitors who buy or leave update Beta(a, b) to a new beta law by adding counts to a and b.
+- [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md): a sum of squared standard normals is a gamma law with half-whole shape, and ratios of such sums give the t and F laws used in testing.
+- [Beta-binomial](../10-Bayesian%20Inference/02-beta-binomial.md): visitors who buy or leave update Beta(a, b) to a new beta law by adding counts to a and b.
 
 This card sets up a belief about the conversion rate before any visitor arrives; the question it leaves open is how that belief should move once visitors start buying, and the beta-binomial card answers it.
 

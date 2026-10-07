@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It
-topic: Pricing odds against counting odds
-item: Two default probabilities
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/06-bootstrapping-the-hazard-curve-from-cds-quotes|bootstrapping-the-hazard-curve-from-cds-quotes]]"
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/04-rating-transition-matrix-and-cumulative-default-rates|rating-transition-matrix-and-cumulative-default-rates]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period|state-prices-and-risk-neutral-pricing-in-one-period]]"
-next: []
-tags: [mathematics, financial mathematics, market-implied-versus-historical-default-probability]
----
-
 # Two default probabilities: what history shows and what the market charges, and why both are right
 
-Financial mathematics → Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It → Pricing odds against counting odds → Two default probabilities
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../../../SYLLABUS.md#w12-s42) → Two default probabilities
 
 ---
 
@@ -119,11 +102,11 @@ The bootstrap finds, one tenor at a time, the flat hazard that makes the premium
 
 $$H_{\mathbb{Q}}(5) = \lambda_1 \times 1 + \lambda_2 \times 2 + \lambda_3 \times 2 = 0.214381, \qquad S_{\mathbb{Q}}(5) = e^{-0.214381} = 0.807041.$$
 
-Nothing in that calculation looked at how often ferry companies actually fail. It used prices, a recovery assumption and a discount rate. That is why the output is a $\mathbb{Q}$ number. How the bootstrap is done belongs to [bootstrapping-the-hazard-curve-from-cds-quotes](06-bootstrapping-the-hazard-curve-from-cds-quotes.md); this card only uses its output.
+Nothing in that calculation looked at how often ferry companies actually fail. It used prices, a recovery assumption and a discount rate. That is why the output is a $\mathbb{Q}$ number. How the bootstrap is done belongs to [Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md); this card only uses its output.
 
 ### Step 2: the historical number comes from counting
 
-The rating table records one year of grade moves for a population of borrowers: Solid borrowers stay Solid 90% of the time, slip to Shaky 9% and default 1%; Shaky ones climb back 10%, stay 80% and default 10%. Multiplying that table by itself five times, as [rating-transition-matrix-and-cumulative-default-rates](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md) shows, gives the five-year default chance from Solid: 10.81%. Nothing in that calculation used a price. It counted. That is why it is a $\mathbb{P}$ number.
+The rating table records one year of grade moves for a population of borrowers: Solid borrowers stay Solid 90% of the time, slip to Shaky 9% and default 1%; Shaky ones climb back 10%, stay 80% and default 10%. Multiplying that table by itself five times, as [Rating transition matrices](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md) shows, gives the five-year default chance from Solid: 10.81%. Nothing in that calculation used a price. It counted. That is why it is a $\mathbb{P}$ number.
 
 ### Step 3: put them on one scale
 
@@ -137,7 +120,7 @@ Taking logs gives the formula, and the ratio of two average hazards over the sam
 
 ### Step 4: why the market number is the bigger one
 
-The state-prices card ([state-prices-and-risk-neutral-pricing-in-one-period](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)) shows that, without arbitrage, every future state $\omega$ has a positive price $\pi(\omega)$: the cost today of $1 paid in that state and nowhere else. Divide by the state's real-world chance and the result is the pricing weight $M$. Normalise the state prices so they add to 1 and the result is $\mathbb{Q}$. That gives the identity in The formula, and one line of algebra turns it into
+The state-prices card ([State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)) shows that, without arbitrage, every future state $\omega$ has a positive price $\pi(\omega)$: the cost today of $1 paid in that state and nowhere else. Divide by the state's real-world chance and the result is the pricing weight $M$. Normalise the state prices so they add to 1 and the result is $\mathbb{Q}$. That gives the identity in The formula, and one line of algebra turns it into
 
 $$\mathbb{Q}(A) - \mathbb{P}(A) = \frac{\operatorname{Cov}_{\mathbb{P}}(M, \mathbf{1}_A)}{\mathbb{E}_{\mathbb{P}}[M]},$$
 
@@ -172,7 +155,7 @@ Why is $M$ high in default states? Three reasons, in order of what the evidence 
 
 Price the same five-year contract with the historical survival curve in place of the market one: year-by-year historical hazards of 1.01%, 1.83%, 2.45%, 2.90% and 3.25%. The par spread comes out at 133.56 bp. That is the **actuarial spread**: the fee that would exactly pay for expected losses if history were the truth. The market charges 250 bp. The difference, 116.44 bp a year, is the risk premium in the CDS market's own units. Almost half of the fee is payment for bearing the risk, not for expected losses.
 
-The quick version uses the credit triangle (spread ≈ hazard × loss fraction, from [the-credit-triangle](03-the-credit-triangle.md)): $(1 - R)(\bar h_{\mathbb{Q}} - \bar h_{\mathbb{P}}) = 0.6 \times (4.29\% - 2.29\%)$, which gives 120.04 bp. The triangle ignores discounting and the shape of the curve, so it lands a few basis points off the full repricing.
+The quick version uses the credit triangle (spread ≈ hazard × loss fraction, from [The credit triangle](03-the-credit-triangle.md)): $(1 - R)(\bar h_{\mathbb{Q}} - \bar h_{\mathbb{P}}) = 0.6 \times (4.29\% - 2.29\%)$, which gives 120.04 bp. The triangle ignores discounting and the shape of the curve, so it lands a few basis points off the full repricing.
 
 ### The other door: the credit spread puzzle
 
@@ -679,14 +662,14 @@ The two outputs agree line for line. The random numbers match because both progr
 
 ## What this builds on
 
-- [bootstrapping-the-hazard-curve-from-cds-quotes](06-bootstrapping-the-hazard-curve-from-cds-quotes.md): turns the three quotes into the market hazard curve and its 19.30%.
-- [rating-transition-matrix-and-cumulative-default-rates](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md): turns one year of grade moves into the historical 10.81%.
-- [state-prices-and-risk-neutral-pricing-in-one-period](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): state prices, and why normalising them gives a pricing law: the engine of Step 4.
+- [Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md): turns the three quotes into the market hazard curve and its 19.30%.
+- [Rating transition matrices](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md): turns one year of grade moves into the historical 10.81%.
+- [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): state prices, and why normalising them gives a pricing law: the engine of Step 4.
 
 ## Where this goes next
 
-- [marking-a-cds-to-market-and-the-upfront](07-marking-a-cds-to-market-and-the-upfront.md) and [cds-risk-numbers](08-cds-risk-numbers.md) run on the market curve, never the historical one; this card is why.
-- [recovery-assumptions-and-what-they-change](05-recovery-assumptions-and-what-they-change.md) measures how much of the market number is the recovery assumption, the first thing to check before quoting a hazard ratio.
+- [Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md) and [CDS risk numbers](08-cds-risk-numbers.md) run on the market curve, never the historical one; this card is why.
+- [Recovery assumptions](05-recovery-assumptions-and-what-they-change.md) measures how much of the market number is the recovery assumption, the first thing to check before quoting a hazard ratio.
 
 The question this card leaves open is how large the pricing weight on bad states should be, and why it moves over time: that is where credit meets asset pricing, and where the credit spread puzzle is still argued.
 

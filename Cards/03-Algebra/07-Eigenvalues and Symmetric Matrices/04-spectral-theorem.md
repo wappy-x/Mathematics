@@ -1,40 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Eigenvalues and Symmetric Matrices
-topic: Perpendicular axes
-item: The spectral theorem
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/03-diagonalisation-and-matrix-powers|diagonalisation-and-matrix-powers]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/03-gram-schmidt-and-orthonormal-bases|gram-schmidt-and-orthonormal-bases]]"
-next:
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/05-quadratic-forms-and-positive-definite|quadratic-forms-and-positive-definite]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/06-singular-value-decomposition|singular-value-decomposition]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/06-multivariable-extrema|multivariable-extrema]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/07-complex-vectors-and-matrices|complex-vectors-and-matrices]]"
-  - "[[Cards/08-Differential equations and dynamics/04-Systems and the Matrix Exponential/07-coupled-oscillators-and-normal-modes|coupled-oscillators-and-normal-modes]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/06-multivariate-normal|multivariate-normal]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/07-principal-components|principal-components]]"
-  - "[[Cards/13-Engineering mathematics/09-Quantum Mechanics in Outline/02-state-vectors-operators-and-measurement|state-vectors-operators-and-measurement]]"
-  - "[[Cards/14-Applied and computational/06-Machine Learning Mathematics/07-principal-components-and-dimension-reduction|principal-components-and-dimension-reduction]]"
-  - "[[Cards/14-Applied and computational/07-Network Science and Spectral Graphs/03-graph-laplacian-and-spectral-clustering|graph-laplacian-and-spectral-clustering]]"
-  - "[[Cards/15-Optimization/06-Conic, Quadratic and Stochastic Programs/05-semidefinite-programs-and-relaxations|semidefinite-programs-and-relaxations]]"
-  - "[[Cards/16-Numerical analysis/03-Numerical Linear Algebra/09-iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient|iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient]]"
-  - "[[Cards/18-Functional analysis/03-Bounded Operators/03-adjoints-self-adjoint-and-unitary-operators|adjoints-self-adjoint-and-unitary-operators]]"
-  - "[[Cards/18-Functional analysis/03-Bounded Operators/08-spectral-theorem-for-compact-self-adjoint-operators|spectral-theorem-for-compact-self-adjoint-operators]]"
-  - "[[Cards/23-Differential geometry and Lie groups/02-Surfaces/05-principal-mean-and-gaussian-curvature|principal-mean-and-gaussian-curvature]]"
-tags:
-  - mathematics
-  - algebra
-  - spectral-theorem
----
-
 # The spectral theorem: a symmetric matrix has real stretch factors along perpendicular axes, A = Q D Q^T
 
-Algebra → Eigenvalues and Symmetric Matrices → Perpendicular axes → The spectral theorem
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Eigenvalues and Symmetric Matrices](../../../SYLLABUS.md#w03-s07) → The spectral theorem
 
 ---
 
@@ -85,13 +51,13 @@ $$A = Q D Q^{\mathsf T}, \qquad Q^{\mathsf T} Q = I$$
 | $\lambda$, $\mu$ | two stretch factors in the argument below | 3 and 1 | — |
 | $v$, $w$ | two directions kept on their own lines | (1, 1), (1, -1) | — |
 
-A direction kept on its own line is an **eigenvector**, its multiplier the **eigenvalue** ([eigenvalues-and-eigenvectors](02-eigenvalues-and-eigenvectors.md)); a matrix with perpendicular unit columns is **orthogonal** ([gram-schmidt-and-orthonormal-bases](../06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md)).
+A direction kept on its own line is an **eigenvector**, its multiplier the **eigenvalue** ([Eigenvalues and eigenvectors](02-eigenvalues-and-eigenvectors.md)); a matrix with perpendicular unit columns is **orthogonal** ([Gram-Schmidt](../06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md)).
 
 ### When it holds
 
 - **It must equal its own transpose.** A rental fleet's month-to-month table, rows (0.800000, 0.300000) and (0.200000, 0.700000), has real factors 1.000000 and 0.500000, but its directions (3, 2) and (1, -1) dot to 1.000000, not 0.
-- **The entries must be real**, or the flip must change the sign of the imaginary part too ([complex-vectors-and-matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md)).
-- **The matrix must be finite** (spectral-theorem-for-compact-self-adjoint-operators has the infinite conditions).
+- **The entries must be real**, or the flip must change the sign of the imaginary part too ([Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md)).
+- **The matrix must be finite** (Compact and symmetric has the infinite conditions).
 
 ---
 
@@ -135,18 +101,18 @@ flowchart LR
   B --> Y["the answer (10, 8)"]
 ```
 
-Coordinates in the new axes, stretch each, pieces back. Ordinary diagonalisation does the same but must compute $Q^{-1}$ ([diagonalisation-and-matrix-powers](03-diagonalisation-and-matrix-powers.md)); here it is a transpose.
+Coordinates in the new axes, stretch each, pieces back. Ordinary diagonalisation does the same but must compute $Q^{-1}$ ([Diagonalisation](03-diagonalisation-and-matrix-powers.md)); here it is a transpose.
 
 <details>
 <summary>Detailed proof: every size, not just 2 by 2</summary>
 
 **One axis exists.** The directions of length one form a closed, bounded set and stretch varies smoothly over it, so stretch has a largest value somewhere. Tilting that best direction u cannot raise it, and setting the rate of change to zero rearranges to A u being a multiple of u. So u is an eigenvector, its factor real because a stretch is.
 
-**Drop into what is left.** If v is perpendicular to u then (A v) · u = v · (A u) by Step 0, a multiple of v · u, so 0. The matrix carries that perpendicular space into itself, still symmetric there. Repeat once per dimension and the axes fill the space. Both analysis steps belong to [multivariable-extrema](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md).
+**Drop into what is left.** If v is perpendicular to u then (A v) · u = v · (A u) by Step 0, a multiple of v · u, so 0. The matrix carries that perpendicular space into itself, still symmetric there. Repeat once per dimension and the axes fill the space. Both analysis steps belong to [Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md).
 
 </details>
 
-The same line reads as 3 times a projection onto $q_1$ plus 1 times one onto $q_2$ ([orthogonal-projection](../06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)).
+The same line reads as 3 times a projection onto $q_1$ plus 1 times one onto $q_2$ ([Projection](../06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md)).
 
 ---
 
@@ -402,9 +368,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Portfolio risk.** The axes are the holdings' combinations whose risks do not overlap ([principal-components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md)).
-- **Bowls, domes and saddles.** A surface's second-rate-of-change table is symmetric, and its factors' signs tell a low point from a high one from a saddle ([multivariable-extrema](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md)).
-- **Things that vibrate.** A stiffness table's axes are the shapes a structure moves in, none feeding another ([coupled-oscillators-and-normal-modes](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md)).
+- **Portfolio risk.** The axes are the holdings' combinations whose risks do not overlap ([Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md)).
+- **Bowls, domes and saddles.** A surface's second-rate-of-change table is symmetric, and its factors' signs tell a low point from a high one from a saddle ([Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md)).
+- **Things that vibrate.** A stiffness table's axes are the shapes a structure moves in, none feeding another ([Normal modes](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md)).
 
 > **Say it back**
 > A symmetric matrix equals its own transpose, which lets it step across a dot product. Two directions with different stretch factors then have to meet at a right angle. Stand them up at length one as Q's columns, put the factors down D's diagonal, and the matrix is Q D Q transpose — the transpose doing the inverse's job for free. This table's axes are "both up together" and "one up, one down", stretched by 3.000000 and 1.000000.
@@ -413,26 +379,26 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [diagonalisation-and-matrix-powers](03-diagonalisation-and-matrix-powers.md): change axes, stretch, change back.
-- [gram-schmidt-and-orthonormal-bases](../06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md): perpendicular unit columns, and why their transpose inverts.
+- [Diagonalisation](03-diagonalisation-and-matrix-powers.md): change axes, stretch, change back.
+- [Gram-Schmidt](../06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md): perpendicular unit columns, and why their transpose inverts.
 
 ## Where this goes next
 
-- [quadratic-forms-and-positive-definite](05-quadratic-forms-and-positive-definite.md): stretch, studied directly.
-- [singular-value-decomposition](06-singular-value-decomposition.md): any matrix, two axis sets.
-- [multivariable-extrema](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md): the folded proof's analysis.
-- [complex-vectors-and-matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): the complex condition.
-- [coupled-oscillators-and-normal-modes](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md): axes as motions.
-- [multivariate-normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md): a bell curve's axes.
-- [principal-components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): biggest factors summarise data.
-- state-vectors-operators-and-measurement: real measured factors.
-- principal-components-and-dimension-reduction: that summary, applied.
-- graph-laplacian-and-spectral-clustering: where to cut a network.
-- semidefinite-programs-and-relaxations: non-negative factors, optimised.
-- iterative-methods-jacobi-gauss-seidel-and-conjugate-gradient: factors set solver speed.
-- adjoints-self-adjoint-and-unitary-operators: Step 0 as a definition.
-- spectral-theorem-for-compact-self-adjoint-operators: the infinite version.
-- principal-mean-and-gaussian-curvature: how a surface bends.
+- [Quadratic forms](05-quadratic-forms-and-positive-definite.md): stretch, studied directly.
+- [The singular value decomposition](06-singular-value-decomposition.md): any matrix, two axis sets.
+- [Extrema in several variables](../../06-Calculus%20and%20analysis/07-Several%20Variables/06-multivariable-extrema.md): the folded proof's analysis.
+- [Complex vectors and matrices](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/07-complex-vectors-and-matrices.md): the complex condition.
+- [Normal modes](../../08-Differential%20equations%20and%20dynamics/04-Systems%20and%20the%20Matrix%20Exponential/07-coupled-oscillators-and-normal-modes.md): axes as motions.
+- [Multivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/06-multivariate-normal.md): a bell curve's axes.
+- [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): biggest factors summarise data.
+- States as vectors: real measured factors.
+- Principal components: that summary, applied.
+- The graph Laplacian: where to cut a network.
+- Semidefinite programs: non-negative factors, optimised.
+- Iterating instead of factoring: factors set solver speed.
+- Adjoints: Step 0 as a definition.
+- Compact and symmetric: the infinite version.
+- Principal, mean and Gaussian curvature: how a surface bends.
 
 The quadratic runs out past 2 by 2, so finding the axes at any size is a numerical problem. What the factors' signs say about a table's shape is the next card's question.
 

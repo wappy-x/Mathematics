@@ -1,23 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Length Done Properly
-topic: From premeasure to measure
-item: Caratheodory's extension theorem
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/02-caratheodory-measurable-sets|caratheodory-measurable-sets]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/06-pi-systems-and-uniqueness|pi-systems-and-uniqueness]]"
-next:
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/06-lebesgue-stieltjes-measures|lebesgue-stieltjes-measures]]"
-tags: [mathematics, measure and integration, caratheodory-extension-theorem]
----
-
 # Caratheodory's extension theorem: size the simple sets consistently and a measure on the generated sigma-algebra follows, unique when sigma-finite
 
-Measure and integration → Length Done Properly → From premeasure to measure → Caratheodory's extension theorem
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Length Done Properly](../../../SYLLABUS.md#w10-s02) → Caratheodory's extension theorem
 
 ---
 
@@ -97,11 +80,11 @@ The code can check each step on shifts and finite stages. Only the proof covers 
 
 ### Step 0: build from outside, then keep the sets that split cleanly
 
-Any set of instants can be covered by countably many shifts, and the cheapest total is its outer measure. That sizes everything, but can fail to add. Caratheodory's criterion from [caratheodory-measurable-sets](02-caratheodory-measurable-sets.md) picks out the sets on which it does add. The theorem's whole job is to show that every simple set passes that criterion and keeps its original size.
+Any set of instants can be covered by countably many shifts, and the cheapest total is its outer measure. That sizes everything, but can fail to add. Caratheodory's criterion from [Caratheodory's criterion](02-caratheodory-measurable-sets.md) picks out the sets on which it does add. The theorem's whole job is to show that every simple set passes that criterion and keeps its original size.
 
 ### Step 1: outer measure is an outer measure
 
-It gives the empty set 0, grows with the set, and sizes a countable union at most by the sum of the sizes. The proof is the one in [lebesgue-outer-measure](01-lebesgue-outer-measure.md), word for word, with shifts in place of intervals: cover the $i$-th set to within $\varepsilon / 2^i$ and pool the covers.
+It gives the empty set 0, grows with the set, and sizes a countable union at most by the sum of the sizes. The proof is the one in [Outer measure](01-lebesgue-outer-measure.md), word for word, with shifts in place of intervals: cover the $i$-th set to within $\varepsilon / 2^i$ and pool the covers.
 
 On the rota, the instant 14:00 sits inside $[14, 14 + 1/n)$, of size $1/n$: 1, then 1/10, then 1/1000. No positive number survives every cover, so its outer measure is 0. The closed stretch [6, 14] sits inside $[6, 14 + 1/n)$, sizes 9, 81/10, 8001/1000; it contains early, whose outer measure is 8 by Step 2, so it is at least 8. Its outer measure is 8.
 
@@ -119,18 +102,18 @@ The small algebra in the code shows both sides. Cut the day at 6, 14 and 22 and 
 
 ### Step 4: Caratheodory's theorem finishes the existence
 
-[caratheodory-measurable-sets](02-caratheodory-measurable-sets.md) proves that the sets passing the criterion form a sigma-algebra and that outer measure adds over countably many disjoint ones there. Step 3 put every simple set in that sigma-algebra. A sigma-algebra that contains $\mathcal{A}$ contains the smallest one that does, $\sigma(\mathcal{A})$. Restricted there, outer measure is a measure, and Step 2 says it matches $\mu_0$.
+[Caratheodory's criterion](02-caratheodory-measurable-sets.md) proves that the sets passing the criterion form a sigma-algebra and that outer measure adds over countably many disjoint ones there. Step 3 put every simple set in that sigma-algebra. A sigma-algebra that contains $\mathcal{A}$ contains the smallest one that does, $\sigma(\mathcal{A})$. Restricted there, outer measure is a measure, and Step 2 says it matches $\mu_0$.
 
 ### Step 5: sigma-finite makes it the only one
 
-The simple sets are closed under overlaps: the overlap of two finite unions of shifts is a finite union of shifts. A family with that property is a pi-system, and [pi-systems-and-uniqueness](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md) proves that two finite measures with the same total that agree on a pi-system agree on everything it generates. Durations are not finite on the whole timeline, so apply that result one window at a time: inside the window from hour $-n$ to hour $n$, both measures are finite and agree on shifts. Let the window grow. A measure of a growing union is the limit of the measures, so the two agree everywhere.
+The simple sets are closed under overlaps: the overlap of two finite unions of shifts is a finite union of shifts. A family with that property is a pi-system, and [Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md) proves that two finite measures with the same total that agree on a pi-system agree on everything it generates. Durations are not finite on the whole timeline, so apply that result one window at a time: inside the window from hour $-n$ to hour $n$, both measures are finite and agree on shifts. Let the window grow. A measure of a growing union is the limit of the measures, so the two agree everywhere.
 
 <details>
 <summary>Detailed proof</summary>
 
 **Setting.** $\mathcal{A}$ is an algebra on $\Omega$ and $\mu_0$ a premeasure on it. Define $\mu^*$ by the formula above.
 
-**(a) $\mu^*$ is an outer measure.** The proof in [lebesgue-outer-measure](01-lebesgue-outer-measure.md) applies word for word, with members of $\mathcal{A}$ in place of intervals and $\mu_0$ in place of length.
+**(a) $\mu^*$ is an outer measure.** The proof in [Outer measure](01-lebesgue-outer-measure.md) applies word for word, with members of $\mathcal{A}$ in place of intervals and $\mu_0$ in place of length.
 
 **(b) $\mu_0$ is monotone on $\mathcal{A}$.** If $B \subseteq A$, both in $\mathcal{A}$, then $A \setminus B = A \cap B^c \in \mathcal{A}$ and $\mu_0(A) = \mu_0(B) + \mu_0(A \setminus B) \ge \mu_0(B)$, by finite additivity (countable additivity with all but two pieces empty).
 
@@ -140,15 +123,15 @@ The simple sets are closed under overlaps: the overlap of two finite unions of s
 $$\mu^*(T \cap A) + \mu^*(T \setminus A) \le \sum_i \mu_0(A_i \cap A) + \sum_i \mu_0(A_i \setminus A) = \sum_i \mu_0(A_i) \le \mu^*(T) + \varepsilon.$$
 Let $\varepsilon \to 0$.
 
-**(e) Existence.** By Caratheodory's theorem ([caratheodory-measurable-sets](02-caratheodory-measurable-sets.md)) the sets satisfying the criterion form a sigma-algebra $\mathcal{M}$, and $\mu^*$ restricted to $\mathcal{M}$ is a measure. By (d), $\mathcal{A} \subseteq \mathcal{M}$, so $\sigma(\mathcal{A}) \subseteq \mathcal{M}$. A measure restricted to a smaller sigma-algebra is still a measure, so $\mu$ is one, and by (c) it extends $\mu_0$.
+**(e) Existence.** By Caratheodory's theorem ([Caratheodory's criterion](02-caratheodory-measurable-sets.md)) the sets satisfying the criterion form a sigma-algebra $\mathcal{M}$, and $\mu^*$ restricted to $\mathcal{M}$ is a measure. By (d), $\mathcal{A} \subseteq \mathcal{M}$, so $\sigma(\mathcal{A}) \subseteq \mathcal{M}$. A measure restricted to a smaller sigma-algebra is still a measure, so $\mu$ is one, and by (c) it extends $\mu_0$.
 
-**(f) Uniqueness.** Let $\nu$ be a measure on $\sigma(\mathcal{A})$ with $\nu = \mu_0$ on $\mathcal{A}$, and let $\Omega = \bigcup_n \Omega_n$ with $\Omega_n \in \mathcal{A}$, $\mu_0(\Omega_n) < \infty$. Replace $\Omega_n$ by $\Omega_1 \cup \cdots \cup \Omega_n$: still in $\mathcal{A}$, still of finite size by finite subadditivity, and now increasing. Fix $n$ and define $\mu_n(E) = \mu(E \cap \Omega_n)$ and $\nu_n(E) = \nu(E \cap \Omega_n)$ on $\sigma(\mathcal{A})$. Both are finite measures. For $A \in \mathcal{A}$, $A \cap \Omega_n \in \mathcal{A}$, so $\mu_n(A) = \mu_0(A \cap \Omega_n) = \nu_n(A)$; in particular the totals $\mu_n(\Omega) = \nu_n(\Omega)$ agree. $\mathcal{A}$ is closed under finite intersections, so it is a pi-system, and by [pi-systems-and-uniqueness](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md) $\mu_n = \nu_n$ on $\sigma(\mathcal{A})$. For any $E \in \sigma(\mathcal{A})$ the sets $E \cap \Omega_n$ increase to $E$, so continuity from below gives $\mu(E) = \lim_n \mu_n(E) = \lim_n \nu_n(E) = \nu(E)$. ∎
+**(f) Uniqueness.** Let $\nu$ be a measure on $\sigma(\mathcal{A})$ with $\nu = \mu_0$ on $\mathcal{A}$, and let $\Omega = \bigcup_n \Omega_n$ with $\Omega_n \in \mathcal{A}$, $\mu_0(\Omega_n) < \infty$. Replace $\Omega_n$ by $\Omega_1 \cup \cdots \cup \Omega_n$: still in $\mathcal{A}$, still of finite size by finite subadditivity, and now increasing. Fix $n$ and define $\mu_n(E) = \mu(E \cap \Omega_n)$ and $\nu_n(E) = \nu(E \cap \Omega_n)$ on $\sigma(\mathcal{A})$. Both are finite measures. For $A \in \mathcal{A}$, $A \cap \Omega_n \in \mathcal{A}$, so $\mu_n(A) = \mu_0(A \cap \Omega_n) = \nu_n(A)$; in particular the totals $\mu_n(\Omega) = \nu_n(\Omega)$ agree. $\mathcal{A}$ is closed under finite intersections, so it is a pi-system, and by [Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md) $\mu_n = \nu_n$ on $\sigma(\mathcal{A})$. For any $E \in \sigma(\mathcal{A})$ the sets $E \cap \Omega_n$ increase to $E$, so continuity from below gives $\mu(E) = \lim_n \mu_n(E) = \lim_n \nu_n(E) = \nu(E)$. ∎
 
 </details>
 
 ### Step 6: duration on shifts is a premeasure, so Lebesgue measure follows
 
-Every step above assumed the premeasure. For durations it has to be earned, and the hard half is countable additivity. The picture to keep: if a shift is chopped into countably many shifts, their durations cannot add to less than the whole, because a closed stretch covered by open stretches is covered by finitely many of them (the finite-subcover property, often called the Heine-Borel theorem, proved on [lebesgue-outer-measure](01-lebesgue-outer-measure.md)), and for finitely many the durations visibly add up.
+Every step above assumed the premeasure. For durations it has to be earned, and the hard half is countable additivity. The picture to keep: if a shift is chopped into countably many shifts, their durations cannot add to less than the whole, because a closed stretch covered by open stretches is covered by finitely many of them (the finite-subcover property, often called the Heine-Borel theorem, proved on [Outer measure](01-lebesgue-outer-measure.md)), and for finitely many the durations visibly add up.
 
 <details>
 <summary>Detailed proof: duration is a premeasure on finite unions of shifts</summary>
@@ -163,7 +146,7 @@ Every step above assumed the premeasure. For durations it has to be earned, and 
 
 </details>
 
-The same measure was reached another way in [lebesgue-measure](03-lebesgue-measure.md), covering by open intervals instead of shifts. Step 5 is why the two routes cannot disagree on a Borel set: both give every shift its duration, and duration is sigma-finite.
+The same measure was reached another way in [Lebesgue measure](03-lebesgue-measure.md), covering by open intervals instead of shifts. Step 5 is why the two routes cannot disagree on a Borel set: both give every shift its duration, and duration is sigma-finite.
 
 ---
 
@@ -588,7 +571,7 @@ The two outputs match line for line, including the random sample: both generator
 > [!warning]
 > **Treating finite additivity as enough.** A sizing can add over any two disjoint pieces and still fail over countably many, and then no measure extends it. The end flag adds over finitely many shifts, yet the day's countably many halving pieces each score 0 against the day's 1. The theorem needs countable additivity on the algebra; for durations, Step 6 earns it by Heine-Borel.
 >
-> - **Assuming the extension reaches every set.** It reaches $\sigma(\mathcal{A})$ and the sets passing Caratheodory's criterion, no more. From the 16-set algebra, [0, 3) gets outer measure 6 and splitting [0, 6) along it costs 12, not 6. On the whole line, the Vitali set in [translation-invariance-and-the-vitali-set](04-translation-invariance-and-the-vitali-set.md) has no duration at all.
+> - **Assuming the extension reaches every set.** It reaches $\sigma(\mathcal{A})$ and the sets passing Caratheodory's criterion, no more. From the 16-set algebra, [0, 3) gets outer measure 6 and splitting [0, 6) along it costs 12, not 6. On the whole line, the Vitali set in [Translation invariance and the Vitali set](04-translation-invariance-and-the-vitali-set.md) has no duration at all.
 > - **Closed or open ends changing the answer.** Shifts are half-open for bookkeeping, so that early and late share no instant. The closed stretch [6, 14] still has duration 8: a single instant costs 0.
 
 ---
@@ -596,10 +579,10 @@ The two outputs match line for line, including the random sample: both generator
 ## Where you meet it in real life
 
 - **Lebesgue measure.** Length on the Borel sets is Step 6: durations on shifts, extended once and for all.
-- **Distribution functions.** Give each half-open stretch (a, b] the size F(b) − F(a) for a rising, right-continuous function F instead of $b - a$, and the same theorem gives a measure; on shifts $[a, b)$ the matching rule needs a left-continuous F. [lebesgue-stieltjes-measures](06-lebesgue-stieltjes-measures.md) works it through.
+- **Distribution functions.** Give each half-open stretch (a, b] the size F(b) − F(a) for a rising, right-continuous function F instead of $b - a$, and the same theorem gives a measure; on shifts $[a, b)$ the matching rule needs a left-continuous F. [Distribution functions and Lebesgue-Stieltjes measures](06-lebesgue-stieltjes-measures.md) works it through.
 - **A coin tossed forever.** Events fixed by the first few tosses form an algebra with obvious probabilities. The extension theorem turns them into a probability on every event in the sigma-algebra those events generate, such as "heads appears infinitely often".
 - **Area.** Finite unions of rectangles made of shifts, sized by width times height, form an algebra on the plane; area is their extension.
-- **Fractal sets.** The Cantor set of [the-cantor-set](07-the-cantor-set.md) is a Borel set, so the extension gives it a size, 0, although no finite union of shifts matches it.
+- **Fractal sets.** The Cantor set of [The Cantor set](07-the-cantor-set.md) is a Borel set, so the extension gives it a size, 0, although no finite union of shifts matches it.
 
 > **Say it back**
 > A premeasure sizes the simple sets of an algebra and adds even over countably many pieces. Outer measure sizes any set by its cheapest countable cover of simple sets. Every simple set splits every set cleanly and keeps its size, so Caratheodory's theorem gives a measure on the generated sigma-algebra that extends the premeasure. When the space is a countable union of finite-size simple sets, agreement on the algebra forces agreement everywhere, so the extension is unique. Durations of shifts give Lebesgue measure this way: the pager's infinitely many bursts total 30 minutes and the instant 14:00 costs nothing.
@@ -608,12 +591,12 @@ The two outputs match line for line, including the random sample: both generator
 
 ## What this builds on
 
-- [caratheodory-measurable-sets](02-caratheodory-measurable-sets.md): the splitting criterion, and the theorem that the sets passing it carry a measure.
-- [pi-systems-and-uniqueness](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md): two finite measures agreeing on a family closed under overlaps agree on what it generates.
+- [Caratheodory's criterion](02-caratheodory-measurable-sets.md): the splitting criterion, and the theorem that the sets passing it carry a measure.
+- [Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md): two finite measures agreeing on a family closed under overlaps agree on what it generates.
 
 ## Where this goes next
 
-- [lebesgue-stieltjes-measures](06-lebesgue-stieltjes-measures.md): swaps duration b − a for F(b) − F(a) on stretches (a, b] and gets one measure for every rising, right-continuous function F; this is which sizings of shifts are consistent, and so which measures on the line exist.
+- [Distribution functions and Lebesgue-Stieltjes measures](06-lebesgue-stieltjes-measures.md): swaps duration b − a for F(b) − F(a) on stretches (a, b] and gets one measure for every rising, right-continuous function F; this is which sizings of shifts are consistent, and so which measures on the line exist.
 
 ---
 

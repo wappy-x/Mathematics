@@ -1,35 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Random Variables
-topic: Moving together
-item: Two variables at once
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/03-variance-and-standard-deviation|variance-and-standard-deviation]]"
-next:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/05-conditional-expectation-in-tables|conditional-expectation-in-tables]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/02-joint-densities-and-marginals|joint-densities-and-marginals]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/01-least-squares-regression|least-squares-regression]]"
-  - "[[Cards/09-Probability and statistics/12-Time Series/01-stationarity-and-autocorrelation|stationarity-and-autocorrelation]]"
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/05-conditioning-on-a-random-variable|conditioning-on-a-random-variable]]"
-  - "[[Cards/12-Financial mathematics/18-Many underlyings - exchange, spread, basket and rainbow/03-basket-options|basket-options]]"
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/01-quanto-forward-and-adjustment|quanto-forward-and-adjustment]]"
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/04-composite-option|composite-option]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/04-margrabe-and-kirk-spread-options|margrabe-and-kirk-spread-options]]"
-  - "[[Cards/12-Financial mathematics/37-Portfolio Theory/01-two-asset-portfolio-risk-and-return|two-asset-portfolio-risk-and-return]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/01-default-correlation-and-joint-default|default-correlation-and-joint-default]]"
-  - "[[Cards/12-Financial mathematics/50-Signals, Mean Reversion and Backtesting/04-information-coefficient-and-the-fundamental-law|information-coefficient-and-the-fundamental-law]]"
-  - "[[Cards/13-Engineering mathematics/05-Signals/07-adaptive-and-optimal-filters|adaptive-and-optimal-filters]]"
-  - "[[Cards/14-Applied and computational/03-Information Theory/02-conditional-entropy-and-mutual-information|conditional-entropy-and-mutual-information]]"
-tags: [mathematics, probability-and-statistics, joint-distributions-and-covariance]
----
-
 # Two variables at once: joint tables, marginals, covariance and correlation
 
-Probability and statistics → Random Variables → Moving together → Two variables at once
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Variables](../../../SYLLABUS.md#w09-s02) → Two variables at once
 
 ---
 
@@ -173,7 +144,7 @@ Write p for the chance of a wet day, w for the wet-day average sales and d for t
 
 </details>
 
-The gap between the two averages is what the next card on this shelf, [conditional-expectation-in-tables](05-conditional-expectation-in-tables.md), studies in its own right.
+The gap between the two averages is what the next card on this shelf, [Conditional expectation](05-conditional-expectation-in-tables.md), studies in its own right.
 
 ---
 
@@ -572,8 +543,8 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Shop stock planning.** A shop that stocks umbrellas by the forecast is reading a joint table of weather and sales, not the sales column alone.
-- **Two-asset portfolios.** The spread of a portfolio's return is exactly this theorem with the weights as a and b: [two-asset-portfolio-risk-and-return](../../12-Financial%20mathematics/37-Portfolio%20Theory/01-two-asset-portfolio-risk-and-return.md). A negative cross term is what diversification buys.
-- **Insurance and credit.** Claims or defaults that arrive together (a storm hits many houses at once) have positive covariance, so the total loss swings far more than independent pieces would: [default-correlation-and-joint-default](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/01-default-correlation-and-joint-default.md).
+- **Two-asset portfolios.** The spread of a portfolio's return is exactly this theorem with the weights as a and b: [Two assets](../../12-Financial%20mathematics/37-Portfolio%20Theory/01-two-asset-portfolio-risk-and-return.md). A negative cross term is what diversification buys.
+- **Insurance and credit.** Claims or defaults that arrive together (a storm hits many houses at once) have positive covariance, so the total loss swings far more than independent pieces would: [Default correlation](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/01-default-correlation-and-joint-default.md).
 - **Measurement.** Two instruments reading the same quantity with errors that share a cause (the same room temperature) do not average their errors away as fast as independent errors would.
 
 > **Say it back**
@@ -583,24 +554,24 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [variance-and-standard-deviation](03-variance-and-standard-deviation.md): variance as an average squared distance, and the shortcut E[X^2] − E[X]^2, which covariance generalises to two readings.
+- [Variance](03-variance-and-standard-deviation.md): variance as an average squared distance, and the shortcut E[X^2] − E[X]^2, which covariance generalises to two readings.
 
 ## Where this goes next
 
-- [conditional-expectation-in-tables](05-conditional-expectation-in-tables.md): the wet-day and dry-day averages, 2.0 and 0.7, as a reading in their own right.
-- [joint-densities-and-marginals](../05-Transformations%20and%20Joint%20Laws/02-joint-densities-and-marginals.md): the joint table for readings that vary smoothly, with sums turned into integrals.
-- [least-squares-regression](../09-Regression/01-least-squares-regression.md): the best straight line through the pairs, whose slope is covariance over variance.
-- [stationarity-and-autocorrelation](../12-Time%20Series/01-stationarity-and-autocorrelation.md): the covariance of a reading with its own past.
-- [conditioning-on-a-random-variable](../../10-Measure%20and%20integration/09-Conditional%20Expectation/05-conditioning-on-a-random-variable.md): conditioning without a table.
-- [basket-options](../../12-Financial%20mathematics/18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/03-basket-options.md): a basket's variance is this theorem with many weights.
-- [quanto-forward-and-adjustment](../../12-Financial%20mathematics/24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): a price correction set by the covariance of a stock and an exchange rate.
-- [composite-option](../../12-Financial%20mathematics/24-Quantos%20and%20composites/04-composite-option.md): the spread of a product of two prices, cross term included.
-- [margrabe-and-kirk-spread-options](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md): the variance of a difference, with a minus sign on the cross term.
-- [two-asset-portfolio-risk-and-return](../../12-Financial%20mathematics/37-Portfolio%20Theory/01-two-asset-portfolio-risk-and-return.md): choosing a and b to make the spread smallest.
-- [default-correlation-and-joint-default](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/01-default-correlation-and-joint-default.md): correlation between two yes-or-no readings, defaulted or not.
-- [information-coefficient-and-the-fundamental-law](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/04-information-coefficient-and-the-fundamental-law.md): the correlation of a forecast with what happened, as a measure of skill.
-- adaptive-and-optimal-filters: filters tuned from the covariance of a signal and its noise.
-- conditional-entropy-and-mutual-information: a measure of dependence that the wind example cannot fool.
+- [Conditional expectation](05-conditional-expectation-in-tables.md): the wet-day and dry-day averages, 2.0 and 0.7, as a reading in their own right.
+- [Joint densities](../05-Transformations%20and%20Joint%20Laws/02-joint-densities-and-marginals.md): the joint table for readings that vary smoothly, with sums turned into integrals.
+- [Least squares](../09-Regression/01-least-squares-regression.md): the best straight line through the pairs, whose slope is covariance over variance.
+- [Stationarity and autocorrelation](../12-Time%20Series/01-stationarity-and-autocorrelation.md): the covariance of a reading with its own past.
+- [Conditioning on a random variable](../../10-Measure%20and%20integration/09-Conditional%20Expectation/05-conditioning-on-a-random-variable.md): conditioning without a table.
+- [Basket options](../../12-Financial%20mathematics/18-Many%20underlyings%20-%20exchange%2C%20spread%2C%20basket%20and%20rainbow/03-basket-options.md): a basket's variance is this theorem with many weights.
+- [The quanto adjustment](../../12-Financial%20mathematics/24-Quantos%20and%20composites/01-quanto-forward-and-adjustment.md): a price correction set by the covariance of a stock and an exchange rate.
+- [Composite option](../../12-Financial%20mathematics/24-Quantos%20and%20composites/04-composite-option.md): the spread of a product of two prices, cross term included.
+- [Spread options](../../12-Financial%20mathematics/26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md): the variance of a difference, with a minus sign on the cross term.
+- [Two assets](../../12-Financial%20mathematics/37-Portfolio%20Theory/01-two-asset-portfolio-risk-and-return.md): choosing a and b to make the spread smallest.
+- [Default correlation](../../12-Financial%20mathematics/45-Portfolio%20Credit%20-%20Correlation%2C%20Copulas%2C%20Indices%20and%20Tranches/01-default-correlation-and-joint-default.md): correlation between two yes-or-no readings, defaulted or not.
+- [The fundamental law](../../12-Financial%20mathematics/50-Signals%2C%20Mean%20Reversion%20and%20Backtesting/04-information-coefficient-and-the-fundamental-law.md): the correlation of a forecast with what happened, as a measure of skill.
+- Wiener and LMS: filters tuned from the covariance of a signal and its noise.
+- Conditional entropy and mutual information: a measure of dependence that the wind example cannot fool.
 
 ---
 

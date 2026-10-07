@@ -1,26 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Powers, Roots and Logarithms
-topic: Roots
-item: Square and cube roots
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/01-exponents-and-powers|exponents-and-powers]]"
-  - "[[Cards/01-Foundations/02-The Number Line/03-irrational-numbers|irrational-numbers]]"
-next:
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/05-logarithms|logarithms]]"
-tags:
-  - mathematics
-  - foundations
-  - roots-and-fractional-exponents
----
-
 # Roots: the fractional exponents that undo powers
 
-Foundations → Powers, Roots and Logarithms → Roots → Square and cube roots
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Powers, Roots and Logarithms](../../../SYLLABUS.md#w01-s03) → Square and cube roots
 
 ---
 
@@ -30,7 +10,7 @@ You are building a square raised bed for vegetables that must cover 50 square me
 
 Multiplying is the easy direction: 7 metres a side covers 49 square metres, nearly enough. Here you are handed the 50 and asked for the 7-and-a-bit — the backwards move, a **root**.
 
-The bed's side is the **square root** of 50: the number that, times itself, gives 50. The tank's side is the **cube root** of 8, since 8,000 litres is 8 cubic metres: the number that, in three copies, gives 8. As powers, in the notation from [exponents-and-powers](01-exponents-and-powers.md), they are 50^(1/2) and 8^(1/3); the old sign for the first is √50. The bottom of the fraction says how many copies: 2 for the bed, 3 for the tank.
+The bed's side is the **square root** of 50: the number that, times itself, gives 50. The tank's side is the **cube root** of 8, since 8,000 litres is 8 cubic metres: the number that, in three copies, gives 8. As powers, in the notation from [Exponents](01-exponents-and-powers.md), they are 50^(1/2) and 8^(1/3); the old sign for the first is √50. The bottom of the fraction says how many copies: 2 for the bed, 3 for the tank.
 
 **A root is a power run backwards, and written as the exponent 1/2 or 1/3 it obeys every law powers already obey.**
 
@@ -76,7 +56,7 @@ The same multiplication read from the other end. "Seven times seven is forty-nin
 
 ### Step 1: why the exponent is one half
 
-[exponents-and-powers](01-exponents-and-powers.md) gives the law: multiplying two powers of one base adds their exponents. Multiply 50^(1/2) by 50^(1/2) and the exponents add to 1 — and 50 to the power 1 is 50. So 50^(1/2) is a number that, times itself, gives 50: the square root, word for word. Which of the two, Step 3 settles.
+[Exponents](01-exponents-and-powers.md) gives the law: multiplying two powers of one base adds their exponents. Multiply 50^(1/2) by 50^(1/2) and the exponents add to 1 — and 50 to the power 1 is 50. So 50^(1/2) is a number that, times itself, gives 50: the square root, word for word. Which of the two, Step 3 settles.
 
 Thirds work the same: one third, three times, adds to 1, so three copies of 8^(1/3) multiply to 8. And 8^(2/3) means cube root, then times itself: 2 times 2 is 4, a tank face.
 
@@ -252,14 +232,14 @@ The two outputs match line for line.
 >
 > - **Losing the minus twin.** Both 7.071067811865 and −7.071067811865 square to 50. The situation picks the length.
 > - **Rooting the number, not the unit.** The cube root of 8,000 litres is 20 decimetres — 2 metres, not 20.
-> - **Expecting a tidy answer.** The tank's side is exactly 2; the bed's never finishes: [irrational-numbers](../02-The%20Number%20Line/03-irrational-numbers.md).
+> - **Expecting a tidy answer.** The tank's side is exactly 2; the bed's never finishes: [Irrational numbers](../02-The%20Number%20Line/03-irrational-numbers.md).
 
 ---
 
 ## Where you meet it in real life
 
 - **Sizing anything square or cubic.** Tanks, floors, crates, beds: you have the capacity and need the edge.
-- **A sheet of A4 paper.** Long side divided by short side is the square root of 2 — which is why folding it in half keeps the shape: [irrational-numbers](../02-The%20Number%20Line/03-irrational-numbers.md).
+- **A sheet of A4 paper.** Long side divided by short side is the square root of 2 — which is why folding it in half keeps the shape: [Irrational numbers](../02-The%20Number%20Line/03-irrational-numbers.md).
 - **The square-root key.** No calculator looks the answer up. It runs a few rounds of divide-and-average and stops when the digits settle.
 
 > **Say it back**
@@ -269,12 +249,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [exponents-and-powers](01-exponents-and-powers.md): exponent notation, and the law that multiplying powers of one base adds their exponents — what forces 1/2 to mean a square root.
-- [irrational-numbers](../02-The%20Number%20Line/03-irrational-numbers.md): why the bed's side never stops in digits, and the tank's is exactly 2.
+- [Exponents](01-exponents-and-powers.md): exponent notation, and the law that multiplying powers of one base adds their exponents — what forces 1/2 to mean a square root.
+- [Irrational numbers](../02-The%20Number%20Line/03-irrational-numbers.md): why the bed's side never stops in digits, and the tank's is exactly 2.
 
 ## Where this goes next
 
-- [logarithms](05-logarithms.md): a root runs a power backwards for the base; a logarithm runs it backwards for the exponent — "what power got me here?"
+- [Logarithms](05-logarithms.md): a root runs a power backwards for the base; a logarithm runs it backwards for the exponent — "what power got me here?"
 
 ---
 

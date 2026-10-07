@@ -1,32 +1,12 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Complex Numbers and the Plane
-topic: Length and direction
-item: Polar form
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/02-conjugate-and-modulus|conjugate-and-modulus]]"
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/02-radians-and-the-unit-circle|radians-and-the-unit-circle]]"
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/03-trig-identities|trig-identities]]"
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/03-polar-coordinates|polar-coordinates]]"
-next:
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/04-eulers-formula|eulers-formula]]"
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/02-phasors-and-impedance|phasors-and-impedance]]"
-tags: [mathematics, complex analysis, polar-form-and-argument]
----
-
 # Polar form: a length and an angle, so multiplying means turn and stretch
 
-Complex analysis → Complex Numbers and the Plane → Length and direction → Polar form
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Complex Numbers and the Plane](../../../SYLLABUS.md#w07-s01) → Polar form
 
 ---
 
 ## General Overview
 
-A wind of 10 km/h blows toward the north-east. With east along the real axis and north up the imaginary axis, it is the arrow from 0 to 7.071068 + 7.071068i ([complex-numbers](01-complex-numbers.md)). A forecaster says "10 km/h at 45 degrees" instead: a length and a direction.
+A wind of 10 km/h blows toward the north-east. With east along the real axis and north up the imaginary axis, it is the arrow from 0 to 7.071068 + 7.071068i ([Complex numbers](01-complex-numbers.md)). A forecaster says "10 km/h at 45 degrees" instead: a length and a direction.
 
 Both name the same point; the second is the **polar form**. It earns its place in multiplication. The wind times 2i, the number of length 2 pointing straight up, is −14.142136 + 14.142136i: 20 at 135 degrees. The length doubled and the angle grew by 90. Every complex product works so: lengths multiply, angles add.
 
@@ -46,7 +26,7 @@ To scale, 9 units per km/h, 0 where the axes cross. The arc with the triangle is
 
 ## The formula
 
-Notation first, in words. The **argument** of $z$, written $\arg z$ and read "arg z", is the angle of the arrow from 0 to $z$, anticlockwise from the positive real axis, in radians. Here it means the **principal argument**: the angle above −π and at most π, the range written (−π, π]. Below, $r$ and $s$ are lengths, and $\theta$ (theta) and $\varphi$ (phi) are angles. 45 degrees is π/4 = 0.785398 radians ([radians-and-the-unit-circle](../../05-Geometry%20and%20trig/03-Trigonometry/02-radians-and-the-unit-circle.md)).
+Notation first, in words. The **argument** of $z$, written $\arg z$ and read "arg z", is the angle of the arrow from 0 to $z$, anticlockwise from the positive real axis, in radians. Here it means the **principal argument**: the angle above −π and at most π, the range written (−π, π]. Below, $r$ and $s$ are lengths, and $\theta$ (theta) and $\varphi$ (phi) are angles. 45 degrees is π/4 = 0.785398 radians ([The unit circle](../../05-Geometry%20and%20trig/03-Trigonometry/02-radians-and-the-unit-circle.md)).
 
 $$z = a + bi = r(\cos\theta + i\sin\theta), \qquad a = r\cos\theta,\quad b = r\sin\theta,\quad r = \sqrt{a^2 + b^2}$$
 
@@ -71,7 +51,7 @@ Any angle $\theta + 2\pi k$, with $k$ a whole number, names the same point. The 
 
 ### When it holds
 
-- **Polar form is a definition:** every nonzero $z$ has one, with $r$ the modulus ([conjugate-and-modulus](02-conjugate-and-modulus.md)).
+- **Polar form is a definition:** every nonzero $z$ has one, with $r$ the modulus ([Conjugate and modulus](02-conjugate-and-modulus.md)).
 - **Zero has no angle:** with $r = 0$ every $\theta$ gives 0, so $\arg 0$ is undefined; code returning 0 for it is making a choice.
 - **Arguments add only up to whole turns:** two angles in range can sum past π.
 
@@ -81,13 +61,13 @@ Any angle $\theta + 2\pi k$, with $k$ a whole number, names the same point. The 
 
 ### Step 1: from length and angle to a + bi
 
-East-and-north is one address for a point; distance-and-direction is another ([polar-coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/03-polar-coordinates.md)). To pass between them, drop a line from the arrow's tip to the real axis. The right triangle has hypotenuse $r$ and angle $\theta$ at 0, so the east side is $r\cos\theta$ and the north side $r\sin\theta$. At π/4 cosine and sine are equal, so both parts of the wind are 7.071068 km/h.
+East-and-north is one address for a point; distance-and-direction is another ([Polar coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/03-polar-coordinates.md)). To pass between them, drop a line from the arrow's tip to the real axis. The right triangle has hypotenuse $r$ and angle $\theta$ at 0, so the east side is $r\cos\theta$ and the north side $r\sin\theta$. At π/4 cosine and sine are equal, so both parts of the wind are 7.071068 km/h.
 
 ### Step 2: from a + bi back to length and angle
 
 The length is Pythagoras: for the wind, 10. The angle needs care. The slope $b/a$ fixes a line through 0, but a line points two ways. The south-west wind, −7.071068 − 7.071068i, has slope 1, like the north-east wind. The signs settle it: both negative puts the arrow lower left, at −135°, or −2.356194 radians.
 
-In code, the rule that reads both signs is atan2, short for "arctangent of two inputs"; it returns the principal argument. One trap: computers store a signed zero, and atan2 gives −π for −1 − 0.0i, so the checks return π on the negative real axis. The drone at 3 + 4i ([conjugate-and-modulus](02-conjugate-and-modulus.md)) sits at 0.927295 radians, 53.130102°.
+In code, the rule that reads both signs is atan2, short for "arctangent of two inputs"; it returns the principal argument. One trap: computers store a signed zero, and atan2 gives −π for −1 − 0.0i, so the checks return π on the negative real axis. The drone at 3 + 4i ([Conjugate and modulus](02-conjugate-and-modulus.md)) sits at 0.927295 radians, 53.130102°.
 
 ### Step 3: lengths multiply, angles add
 
@@ -95,7 +75,7 @@ Multiply the two polar forms out, using $i^2 = -1$:
 
 $$(\cos\theta + i\sin\theta)(\cos\varphi + i\sin\varphi) = (\cos\theta\cos\varphi - \sin\theta\sin\varphi) + i(\sin\theta\cos\varphi + \cos\theta\sin\varphi)$$
 
-The brackets are the angle-addition identities ([trig-identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)): $\cos(\theta + \varphi)$ and $\sin(\theta + \varphi)$. The real lengths $r$ and $s$ multiply out front. That proves the rule.
+The brackets are the angle-addition identities ([Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md)): $\cos(\theta + \varphi)$ and $\sin(\theta + \varphi)$. The real lengths $r$ and $s$ multiply out front. That proves the rule.
 
 On the wind: 10 times 2 is 20, and 45° plus 90° is 135°. The pair rule of the complex-numbers card, which uses no angle, reaches the same −14.142136 + 14.142136i.
 
@@ -350,10 +330,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Alternating current.** A voltage is an amplitude and a phase, a length and an angle; an impedance scales and shifts it: phasors-and-impedance.
+- **Alternating current.** A voltage is an amplitude and a phase, a length and an angle; an impedance scales and shifts it: Phasors.
 - **Programming.** Mainstream languages ship atan2, the principal argument up to that signed zero; robot and game headings wrap at its jump.
 - **Rotating images.** Turning a picture multiplies every pixel's position by a number of length 1 at the turning angle.
-- **Powers and roots.** Each repeated multiplication adds the angle again, which locates every root of a number: [powers-roots-and-roots-of-unity](05-powers-roots-and-roots-of-unity.md).
+- **Powers and roots.** Each repeated multiplication adds the angle again, which locates every root of a number: [Powers and roots](05-powers-roots-and-roots-of-unity.md).
 
 > **Say it back**
 > A nonzero complex number is a length and an angle: a = r cos θ, b = r sin θ. Multiplying multiplies lengths and adds angles, by the angle-addition identities. The angle is fixed only up to whole turns, so the principal argument takes the one in (−π, π], chosen by the signs of both parts: −1 − i is at −135°. It jumps a full turn on the negative real axis, and every single-valued choice jumps somewhere.
@@ -362,15 +342,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [conjugate-and-modulus](02-conjugate-and-modulus.md): the modulus, which becomes the length r.
-- [radians-and-the-unit-circle](../../05-Geometry%20and%20trig/03-Trigonometry/02-radians-and-the-unit-circle.md): cos and sin as the coordinates of a point on the circle of radius 1, with angles in radians.
-- [trig-identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md): the angle-addition formulas that prove Step 3.
-- [polar-coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/03-polar-coordinates.md): distance and direction as an address for a point.
+- [Conjugate and modulus](02-conjugate-and-modulus.md): the modulus, which becomes the length r.
+- [The unit circle](../../05-Geometry%20and%20trig/03-Trigonometry/02-radians-and-the-unit-circle.md): cos and sin as the coordinates of a point on the circle of radius 1, with angles in radians.
+- [Trig identities](../../05-Geometry%20and%20trig/03-Trigonometry/03-trig-identities.md): the angle-addition formulas that prove Step 3.
+- [Polar coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/03-polar-coordinates.md): distance and direction as an address for a point.
 
 ## Where this goes next
 
-- [eulers-formula](04-eulers-formula.md): writes cos θ + i sin θ as an exponential, so adding angles becomes adding exponents.
-- phasors-and-impedance: amplitude and phase of a current, multiplied by impedances.
+- [Euler's formula](04-eulers-formula.md): writes cos θ + i sin θ as an exponential, so adding angles becomes adding exponents.
+- Phasors: amplitude and phase of a current, multiplied by impedances.
 
 ---
 

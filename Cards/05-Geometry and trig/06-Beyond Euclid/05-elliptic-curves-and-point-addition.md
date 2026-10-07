@@ -1,26 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Beyond Euclid
-topic: Arithmetic on a cubic
-item: Elliptic curves
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/04-circles-and-parabolas|circles-and-parabolas]]"
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/02-lines-slopes-and-intersections|lines-slopes-and-intersections]]"
-  - "[[Cards/03-Algebra/08-Groups/01-groups|groups]]"
-next:
-  - "[[Cards/14-Applied and computational/04-Cryptography/06-elliptic-curve-cryptography|elliptic-curve-cryptography]]"
-  - "[[Cards/21-Algebraic and analytic number theory/07-Diophantine and Modular/05-elliptic-curves-over-q-and-mordell-weil|elliptic-curves-over-q-and-mordell-weil]]"
-  - "[[Cards/22-Algebraic geometry/04-Elliptic Curves/01-elliptic-curves-and-the-group-law|elliptic-curves-and-the-group-law]]"
-tags: [mathematics, geometry and trig, elliptic-curves-and-point-addition]
----
-
 # Elliptic curves: a cubic curve whose points can be added like numbers
 
-Geometry and trig → Beyond Euclid → Arithmetic on a cubic → Elliptic curves
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Beyond Euclid](../../../SYLLABUS.md#w05-s06) → Elliptic curves
 
 ---
 
@@ -34,7 +14,7 @@ Adding Q again and again gives (0, −1), (3, −5), (5, 11), then (1/4, 7/8), a
 
 **Chord, third crossing, reflection: that rule adds any two points of an elliptic curve and lands on the curve, and with one extra point as zero it obeys the laws of ordinary addition.**
 
-**What kind of fact this is:** a theorem. The rule is a definition; that it obeys the group laws is proved in Why it works, except associativity: checked in code, proved in Step 4 for points in general position, in full in elliptic-curves-and-the-group-law.
+**What kind of fact this is:** a theorem. The rule is a definition; that it obeys the group laws is proved in Why it works, except associativity: checked in code, proved in Step 4 for points in general position, in full in The group law.
 
 ### The picture: adding P and Q
 
@@ -112,7 +92,7 @@ A vertical line meets the curve in only two ordinary points, a point and its mir
 
 ### Step 4: the group laws
 
-A group ([groups](../../03-Algebra/08-Groups/01-groups.md)) needs closure (Step 1), a zero and an undo (Step 3), and associativity. Order does not matter either: the line through $P$ and $Q$ is the line through $Q$ and $P$. Associativity says
+A group ([Groups](../../03-Algebra/08-Groups/01-groups.md)) needs closure (Step 1), a zero and an undo (Step 3), and associativity. Order does not matter either: the line through $P$ and $Q$ is the line through $Q$ and $P$. Associativity says
 
 $$(P + Q) + W = P + (Q + W)$$
 
@@ -131,7 +111,7 @@ Each set of three lines is one cubic curve (multiply their equations). Both pass
 
 The rule uses only the four operations, so it runs on remainders mod 7, where dividing by a number means multiplying by its partner: the number whose product with it leaves remainder 1. There $4a^3 + 27b^2$ is 23, remainder 2, not zero, so no cusp. The same equation mod 7 has 12 points, $O$ included: (0,1), (0,6), (1,1), (1,6), (2,0), (3,2), (3,5), (5,3), (5,4), (6,1), (6,6). Here 6 stands for −1, so (0,6) mirrors (0,1), and (2,0) mirrors itself. The code tries all 1728 triples. With finitely many points, that exhaustive check proves associativity for this one curve.
 
-The other road is algebra: expand both sides with the formulas, as elliptic-curves-and-the-group-law does.
+The other road is algebra: expand both sides with the formulas, as The group law does.
 
 ---
 
@@ -378,7 +358,7 @@ The two outputs match line for line.
 
 - **Secure websites.** The rule mod a huge prime makes public keys: adding a point to itself many times is fast; undoing it is believed infeasible.
 - **Fermat's Last Theorem.** Andrew Wiles's proof runs through elliptic curves.
-- **Symmetry.** The shelf's other group combines moves of a pattern: [symmetry-and-tilings](04-symmetry-and-tilings.md).
+- **Symmetry.** The shelf's other group combines moves of a pattern: [Symmetry](04-symmetry-and-tilings.md).
 
 > **Say it back**
 > An elliptic curve is y squared equals a cubic in x, with no cusp or crossing. To add two points, take their line, or the tangent for a doubled point, find its third crossing, and reflect it. An extra point O, on every vertical line, is the zero; a mirror image is a negative. Grouping never matters, and that is the deep part.
@@ -387,15 +367,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [circles-and-parabolas](../04-Coordinates%20and%20Curves/04-circles-and-parabolas.md): a curve as the points passing an equation.
-- [lines-slopes-and-intersections](../04-Coordinates%20and%20Curves/02-lines-slopes-and-intersections.md): slope, and substituting a line into a curve.
-- [groups](../../03-Algebra/08-Groups/01-groups.md): the laws the rule is tested against.
+- [Circles and parabolas](../04-Coordinates%20and%20Curves/04-circles-and-parabolas.md): a curve as the points passing an equation.
+- [Lines](../04-Coordinates%20and%20Curves/02-lines-slopes-and-intersections.md): slope, and substituting a line into a curve.
+- [Groups](../../03-Algebra/08-Groups/01-groups.md): the laws the rule is tested against.
 
 ## Where this goes next
 
-- elliptic-curve-cryptography: the mod-a-prime version at full size, and why undoing is hard.
-- elliptic-curves-over-q-and-mordell-weil: finitely many rational points generate all the others.
-- elliptic-curves-and-the-group-law: O made precise, and associativity proved.
+- Elliptic curves: the mod-a-prime version at full size, and why undoing is hard.
+- Rational points on a cubic: finitely many rational points generate all the others.
+- The group law: O made precise, and associativity proved.
 
 Every rational point here came from Q; whether a finite handful always generates the rest, the Mordell–Weil card answers.
 

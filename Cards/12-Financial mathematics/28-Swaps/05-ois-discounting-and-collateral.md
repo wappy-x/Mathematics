@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Swaps
-topic: Pricing with collateral
-item: Collateral discounting
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/28-Swaps/04-basis-swaps-and-the-multi-curve-framework|basis-swaps-and-the-multi-curve-framework]]"
-next:
-  - "[[Cards/12-Financial mathematics/28-Swaps/06-cross-currency-swaps-and-basis|cross-currency-swaps-and-basis]]"
-  - "[[Cards/12-Financial mathematics/47-Collateral, Funding and the Rest of the XVAs/02-fva|fva]]"
-tags: [mathematics, financial-mathematics, ois-discounting-and-collateral]
----
-
 # Collateral discounting: why a collateralised swap discounts at the overnight rate
 
-Financial mathematics → Swaps → Pricing with collateral → Collateral discounting
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Swaps](../../../SYLLABUS.md#w12-s28) → Collateral discounting
 
 ---
 
@@ -54,7 +37,7 @@ Nothing is borrowed from the bank's own funding desk at any point. That is why t
 
 ## The formula
 
-Notation first, in words. A **growth factor** is what one dollar grows to over one period: at 4.2 percent simple interest for a year it is 1.042. The pricing average $E_Q[X]$ is the average payoff under the market's **pricing probabilities** $Q$ (the weights that price every traded payoff, set out on [state-prices-and-risk-neutral-pricing-in-one-period](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)). The summation sign in the formulas below, a capital sigma, means "add up over the listed years".
+Notation first, in words. A **growth factor** is what one dollar grows to over one period: at 4.2 percent simple interest for a year it is 1.042. The pricing average $E_Q[X]$ is the average payoff under the market's **pricing probabilities** $Q$ (the weights that price every traded payoff, set out on [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)). The summation sign in the formulas below, a capital sigma, means "add up over the listed years".
 
 One period, any collateral amount $C$:
 
@@ -87,12 +70,12 @@ $$V \;=\; N\sum_{j=1}^{5} D_j\,(F_j - K) \;=\; N\,(S_5 - K)\,A, \qquad A = \sum_
 
 In this card the overnight curve is built from the term curve: $D_j = L_j\,e^{s j}$, the overnight zero rate sitting 0.25 percent below the term zero rate at every date. The shortcut $N(S_5 - K)A$ holds because a new five-year swap at the par rate $S_5$ is worth zero; Step 5 shows why.
 
-**Conventions verified 28 Sep 2026.** Every accrual is set to exactly one year and the floating rate is a stylised one-year term rate, known at the start of its year and paid at the end, so the arithmetic stays visible. In the dollar market the overnight rate is now SOFR, new swaps reference it compounded, and collateral agreements and clearing houses pay interest on dollar cash at a rate tied to it ([money-market-instruments-and-sofr](../02-Curves/03-money-market-instruments-and-sofr.md)).
+**Conventions verified 28 Sep 2026.** Every accrual is set to exactly one year and the floating rate is a stylised one-year term rate, known at the start of its year and paid at the end, so the arithmetic stays visible. In the dollar market the overnight rate is now SOFR, new swaps reference it compounded, and collateral agreements and clearing houses pay interest on dollar cash at a rate tied to it ([Money markets](../02-Curves/03-money-market-instruments-and-sofr.md)).
 
 ### When it holds
 
 - **Cash collateral, reusable, returned with interest at a known rate each period.** If the collateral is a bond, or sits segregated with a custodian, the holder cannot spend it and the ledger in Why it works gains entries the formula does not have.
-- **Full collateral, reset on every date the value is measured.** A threshold (a first slice of exposure left uncovered) or a margin lag leaves part of the value funded at $g_f$; the partial formula $V = E_Q[X]/((1-\theta)g_f + \theta g_c)$ then applies, and the uncovered part belongs to [fva](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md).
+- **Full collateral, reset on every date the value is measured.** A threshold (a first slice of exposure left uncovered) or a margin lag leaves part of the value funded at $g_f$; the partial formula $V = E_Q[X]/((1-\theta)g_f + \theta g_c)$ then applies, and the uncovered part belongs to [FVA](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md).
 - **One funding rate for borrowing and lending.** If a desk borrows dearer than it lends, the funding rate stops cancelling on the uncollateralised side.
 - **No default.** The loss if the other side fails is a separate adjustment.
 - **Each collateral factor known at the start of its period.** The tree proof needs this; the continuous limit covers a rate that moves daily. With random rates each $F_j$ is an average weighted by the overnight curve, and the rebuild in Step 5 finds exactly that average.
@@ -129,11 +112,11 @@ Let $V_i$ be the swap's value just after year $i$'s coupon. Across year $i+1$ th
 
 $$V_i = \frac{E_Q[X_{i+1}] + V_{i+1}}{g_{c,i+1}} .$$
 
-Start from $V_5 = 0$ and roll back. Each coupon ends up divided by the product of the collateral factors up to its date. That product's reciprocal is the discount factor of the overnight curve, $D_j$. So each coupon is discounted on the overnight curve. This is where the name comes from: an **overnight index swap** (OIS) is a swap whose floating side pays the overnight rate compounded, and its quotes give the curve $D_j$ ([money-market-instruments-and-sofr](../02-Curves/03-money-market-instruments-and-sofr.md)).
+Start from $V_5 = 0$ and roll back. Each coupon ends up divided by the product of the collateral factors up to its date. That product's reciprocal is the discount factor of the overnight curve, $D_j$. So each coupon is discounted on the overnight curve. This is where the name comes from: an **overnight index swap** (OIS) is a swap whose floating side pays the overnight rate compounded, and its quotes give the curve $D_j$ ([Money markets](../02-Curves/03-money-market-instruments-and-sofr.md)).
 
 ### Step 5: rebuild the forecasts, then the annuity does the rest
 
-The quotes on the screen are for collateralised swaps, and each is worth zero on the day it is struck. Once discounting moves to $D_j$, the forecasts $F_j$ must be solved again, shortest quote first, so that every quote still prices at zero. This is the same climb as [bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md), with the unknown now the forecast instead of the discount factor. Here the forecasts move by about a tenth of a basis point at most (a basis point is 0.01 percent): 4.8719 percent becomes 4.8707 percent in year 3.
+The quotes on the screen are for collateralised swaps, and each is worth zero on the day it is struck. Once discounting moves to $D_j$, the forecasts $F_j$ must be solved again, shortest quote first, so that every quote still prices at zero. This is the same climb as [Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md), with the unknown now the forecast instead of the discount factor. Here the forecasts move by about a tenth of a basis point at most (a basis point is 0.01 percent): 4.8719 percent becomes 4.8707 percent in year 3.
 
 A shortcut then gives the value without the forecasts at all. The new five-year par swap receives the same floating coupons and pays $S_5$; it is worth zero. Subtract it from the old swap. The floating sides cancel coupon by coupon, and what is left is $N(S_5 - K)$ each year, discounted: $N(S_5 - K)A$. Switching curves changes one thing, the annuity, from 4.38242404 to 4.41441058.
 
@@ -156,7 +139,7 @@ A shortcut then gives the value without the forecasts at all. The new five-year 
 
 ### The other door
 
-Piterbarg worked in continuous time: the value is a stochastic process, collateral enters as a cash account that drifts at the collateral rate, and Itô's lemma turns the hedge into a pricing equation whose discount rate is the collateral rate. The finite ledger above reaches the same place with growth factors and one line of algebra per year. The case where collateral is missing or partial, and the funding rate stays in, is taken up properly on [fva](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md).
+Piterbarg worked in continuous time: the value is a stochastic process, collateral enters as a cash account that drifts at the collateral rate, and Itô's lemma turns the hedge into a pricing equation whose discount rate is the collateral rate. The finite ledger above reaches the same place with growth factors and one line of algebra per year. The case where collateral is missing or partial, and the funding rate stays in, is taken up properly on [FVA](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md).
 
 ---
 
@@ -571,10 +554,10 @@ The one line is the move, new value minus old, for the same five-year swap at di
 - **Cleared swaps.** A clearing house (the central counterparty that stands between both sides of a trade) holds cash margin and pays interest on it at an overnight rate. Cleared swaps are therefore valued on the matching overnight curve.
 - **Bilateral collateral agreements.** Between two banks the collateral terms sit in a signed annex to the master agreement, the contract that governs all their trades. Its collateral rate, its currency and its threshold decide which curve the trade is discounted on.
 - **The move to OIS discounting.** After 2008 the gap between term lending rates and overnight rates widened sharply, and banks moved collateralised trades from the term curve to the overnight curve. Books of old swaps far from par, like the one on this card, were revalued by the move.
-- **The multi-curve desk.** One curve forecasts each floating index; the overnight curve discounts. Keeping the two apart is the framework of [basis-swaps-and-the-multi-curve-framework](04-basis-swaps-and-the-multi-curve-framework.md); this card says which curve discounts, and why.
-- **Collateral in another currency.** A dollar swap collateralised in euros discounts at the euro overnight rate, carried over to dollars: [cross-currency-swaps-and-basis](06-cross-currency-swaps-and-basis.md).
-- **Uncollateralised trades.** A swap with a company that posts nothing is financed at the bank's funding rate, and the difference from the collateralised price is the funding adjustment: [fva](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md).
-- **Risk figures.** A swap's sensitivity to rates, [swap-dv01-and-hedging](03-swap-dv01-and-hedging.md), is computed on the collateral curve too, since that curve sets the annuity.
+- **The multi-curve desk.** One curve forecasts each floating index; the overnight curve discounts. Keeping the two apart is the framework of [Multi-curve](04-basis-swaps-and-the-multi-curve-framework.md); this card says which curve discounts, and why.
+- **Collateral in another currency.** A dollar swap collateralised in euros discounts at the euro overnight rate, carried over to dollars: [Cross-currency swaps](06-cross-currency-swaps-and-basis.md).
+- **Uncollateralised trades.** A swap with a company that posts nothing is financed at the bank's funding rate, and the difference from the collateralised price is the funding adjustment: [FVA](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md).
+- **Risk figures.** A swap's sensitivity to rates, [Swap DV01](03-swap-dv01-and-hedging.md), is computed on the collateral curve too, since that curve sets the annuity.
 
 > **Say it back**
 > Cash collateral is a loan from the other side, repaid with interest at the collateral rate. Buying a fully collateralised trade costs nothing up front, so the bank's own funding rate never enters, and the payoff is discounted at the collateral rate. Over many years the collateral factors multiply into the overnight discount curve. The forecasts are rebuilt so every quote still prices at zero, and then the swap is par minus fixed times the new annuity. For this old 1.00 percent swap the switch adds 11,675.09 dollars.
@@ -583,12 +566,12 @@ The one line is the move, new value minus old, for the same five-year swap at di
 
 ## What this builds on
 
-- [basis-swaps-and-the-multi-curve-framework](04-basis-swaps-and-the-multi-curve-framework.md): one curve to forecast, another to discount. This card supplies the reason the discount curve is the overnight one.
+- [Multi-curve](04-basis-swaps-and-the-multi-curve-framework.md): one curve to forecast, another to discount. This card supplies the reason the discount curve is the overnight one.
 
 ## Where this goes next
 
-- [cross-currency-swaps-and-basis](06-cross-currency-swaps-and-basis.md): two currencies, two overnight rates, and collateral that can be posted in either.
-- [fva](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md): the uncovered part of a trade, where the funding rate stays in the price.
+- [Cross-currency swaps](06-cross-currency-swaps-and-basis.md): two currencies, two overnight rates, and collateral that can be posted in either.
+- [FVA](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/02-fva.md): the uncovered part of a trade, where the funding rate stays in the price.
 
 This card assumed collateral in the swap's own currency; when the collateral can be posted in a second currency, the discount rate becomes that currency's overnight rate converted back, which is the question cross-currency swaps answer.
 

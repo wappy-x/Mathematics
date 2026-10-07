@@ -1,41 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Groups
-topic: The four rules
-item: Groups
-kind: definition
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/03-residue-classes|residue-classes]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/03-composition|composition]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/05-inverse-functions|inverse-functions]]"
-next:
-  - "[[Cards/03-Algebra/08-Groups/02-subgroups-and-cyclic-groups|subgroups-and-cyclic-groups]]"
-  - "[[Cards/03-Algebra/08-Groups/03-permutations-and-the-symmetric-group|permutations-and-the-symmetric-group]]"
-  - "[[Cards/03-Algebra/09-Rings and Fields/01-rings|rings]]"
-  - "[[Cards/05-Geometry and trig/06-Beyond Euclid/04-symmetry-and-tilings|symmetry-and-tilings]]"
-  - "[[Cards/05-Geometry and trig/06-Beyond Euclid/05-elliptic-curves-and-point-addition|elliptic-curves-and-point-addition]]"
-  - "[[Cards/13-Engineering mathematics/09-Quantum Mechanics in Outline/08-symmetry-and-conserved-quantities|symmetry-and-conserved-quantities]]"
-  - "[[Cards/14-Applied and computational/04-Cryptography/05-diffie-hellman-and-elgamal|diffie-hellman-and-elgamal]]"
-  - "[[Cards/17-Topology/04-Homotopy/03-the-fundamental-group|the-fundamental-group]]"
-  - "[[Cards/21-Algebraic and analytic number theory/07-Diophantine and Modular/05-elliptic-curves-over-q-and-mordell-weil|elliptic-curves-over-q-and-mordell-weil]]"
-  - "[[Cards/22-Algebraic geometry/04-Elliptic Curves/01-elliptic-curves-and-the-group-law|elliptic-curves-and-the-group-law]]"
-  - "[[Cards/23-Differential geometry and Lie groups/06-Lie Groups/01-lie-groups-and-matrix-groups|lie-groups-and-matrix-groups]]"
-  - "[[Cards/24-Computability and complexity/07-Category Theory in Outline/01-categories-and-functors|categories-and-functors]]"
-  - "[[Cards/24-Computability and complexity/07-Category Theory in Outline/06-adjunctions|adjunctions]]"
-  - "[[Cards/24-Computability and complexity/07-Category Theory in Outline/07-monoids-and-monads-for-programmers|monoids-and-monads-for-programmers]]"
-  - "[[Cards/25-Frontier/05-Analysis and Dynamics/05-sofic-groups-and-kothe|sofic-groups-and-kothe]]"
-tags:
-  - mathematics
-  - algebra
-  - groups
----
-
 # Groups: one operation, four rules, and the same rules behind clocks, shuffles and symmetries
 
-Algebra → Groups → The four rules → Groups
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Groups](../../../SYLLABUS.md#w03-s08) → Groups
 
 ---
 
@@ -69,7 +34,7 @@ Turn then flip leaves corner 0 at 3; flip then turn leaves it at 1. Both are amo
 
 ## The formula
 
-Notation first, in words. The collection takes a capital letter, $G$, its members small letters, $a$, $b$, $c$, so a rule is written once and means every member. The operation is a dot: $a \cdot b$ means combine the two, and for moves it means do $b$ first, then $a$ ([composition](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md)). The do-nothing member is $e$, and the undo of $a$ is $a^{-1}$, where the raised −1 is a label meaning undo, not divide.
+Notation first, in words. The collection takes a capital letter, $G$, its members small letters, $a$, $b$, $c$, so a rule is written once and means every member. The operation is a dot: $a \cdot b$ means combine the two, and for moves it means do $b$ first, then $a$ ([Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md)). The do-nothing member is $e$, and the undo of $a$ is $a^{-1}$, where the raised −1 is a label meaning undo, not divide.
 
 Four rules make such a collection a group, each holding for all its members:
 
@@ -103,7 +68,7 @@ If $a \cdot b = b \cdot a$ for every pair — order does not matter — the grou
 
 ### Step 0: forget what the things are, keep how they combine
 
-A move is not a position but an instruction: this corner goes there. Each is a reversible function on the four corner positions ([inverse-functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md)), and the operation is doing one after another.
+A move is not a position but an instruction: this corner goes there. Each is a reversible function on the four corner positions ([Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md)), and the operation is doing one after another.
 
 ### Step 1: eight moves, each one a small piece of arithmetic
 
@@ -113,7 +78,7 @@ Closure falls out: a sign times a sign is a sign, and two shifts add to one, so 
 
 ### Step 2: the other three rules, almost for free
 
-Three moves in a row bracket two ways, and both mean: rightmost, then middle, then leftmost. Composition is associative for all functions ([composition](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md)), so rule two comes free; the code's 512 triples only demonstrate it.
+Three moves in a row bracket two ways, and both mean: rightmost, then middle, then leftmost. Composition is associative for all functions ([Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md)), so rule two comes free; the code's 512 triples only demonstrate it.
 
 Setting the tile down unmoved is r0, which leaves every move alone: rule three. One quarter turn is undone by three more, r1 then r3 giving r0, and each flipped move undoes itself. Every undo is among the eight, so rule four holds and the tile's moves are a group. Not an abelian one: turn then flip is r3f, flip then turn is r1f.
 
@@ -132,13 +97,13 @@ Corner 0 lands four ways and corner 1 must stay beside it, two ways, so eight mo
 
 Whole numbers under addition, negatives and 0 included: two added give a whole number, addition is associative, 0 is the identity, the undo is the negative, so 3 + (−3) = 0. Infinite, and abelian.
 
-A clock face wraps. The hours of a 12-hour clock are the residue classes modulo 12, the twelve piles the numbers fall into by remainder, on which adding is well defined ([residue-classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md)). The undo of 7 is 5, and 9 + 5 reads as 2.
+A clock face wraps. The hours of a 12-hour clock are the residue classes modulo 12, the twelve piles the numbers fall into by remainder, on which adding is well defined ([Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md)). The undo of 7 is 5, and 9 + 5 reads as 2.
 
 Now seven hours, 0 to 6, multiplied rather than added. Products wrap back inside, multiplication is associative, 1 leaves everything alone — but 0 times any residue is 0, never 1, so 0 has no undo. Not a group.
 
 Remove 0 and the six that remain pass: 7 is prime, so no product of two of them is a multiple of 7, and the undos of 1, 2, 3, 4, 5, 6 are 1, 4, 5, 2, 3, 6.
 
-That cut is no general repair: a six-hour clock without 0 loses closure, since 2 times 3 is 0. For any size the hours sharing no factor above 1 with it are the ones that work (diffie-hellman-and-elgamal). Clock arithmetic reaches this definition from the other end, starting with wrapping sums rather than reversible moves.
+That cut is no general repair: a six-hour clock without 0 loses closure, since 2 times 3 is 0. For any size the hours sharing no factor above 1 with it are the ones that work (Diffie-Hellman and ElGamal). Clock arithmetic reaches this definition from the other end, starting with wrapping sums rather than reversible moves.
 
 ---
 
@@ -391,9 +356,9 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **A Rubik's cube.** Every sequence of face turns is a move, two in a row make a third, and running one backwards undoes it. Solving is undoing the scramble.
-- **Crystals and tiled floors.** Which moves leave a pattern untouched is a group, and that group tells crystals apart ([symmetry-and-tilings](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/04-symmetry-and-tilings.md)).
+- **Crystals and tiled floors.** Which moves leave a pattern untouched is a group, and that group tells crystals apart ([Symmetry](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/04-symmetry-and-tilings.md)).
 - **Invertible matrices.** The 2 × 2 matrices with an inverse form a group under matrix multiplication, identity `[[1, 0], [0, 1]]` written row by row. Order matters here too.
-- **Public-key cryptography.** A key exchange runs in the nonzero hours of a prime clock, built in Step 3 (diffie-hellman-and-elgamal).
+- **Public-key cryptography.** A key exchange runs in the nonzero hours of a prime clock, built in Step 3 (Diffie-Hellman and ElGamal).
 
 > **Say it back**
 > A group is a collection plus one way of combining two of its members. Four rules: combining stays inside, brackets move, one member changes nothing, every member has an undo inside. The tile's eight positions pass, and turn then flip still differs from flip then turn. Addition on the numbers and on a clock passes; a seven-hour clock under multiplication fails until 0 is thrown out.
@@ -402,27 +367,27 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [residue-classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md): the piles behind a clock face, and why adding them is well defined.
-- [composition](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md): one function then another, rightmost first — the tile's operation, and rule two.
-- [inverse-functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md): an undo for a function, which is what rule four demands.
+- [Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md): the piles behind a clock face, and why adding them is well defined.
+- [Composing functions](../../01-Foundations/08-Relations%20and%20Functions/03-composition.md): one function then another, rightmost first — the tile's operation, and rule two.
+- [Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md): an undo for a function, which is what rule four demands.
 
 ## Where this goes next
 
-- [subgroups-and-cyclic-groups](02-subgroups-and-cyclic-groups.md): the parts that are groups.
-- [permutations-and-the-symmetric-group](03-permutations-and-the-symmetric-group.md): rearranging a list.
-- [rings](../09-Rings%20and%20Fields/01-rings.md): two operations at once.
-- [symmetry-and-tilings](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/04-symmetry-and-tilings.md): repeating patterns.
-- [elliptic-curves-and-point-addition](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): an operation built to fit.
-- symmetry-and-conserved-quantities: symmetry paying out.
-- diffie-hellman-and-elgamal: key exchange.
-- the-fundamental-group: loops end to end.
-- elliptic-curves-over-q-and-mordell-weil: generating a curve's points.
-- elliptic-curves-and-the-group-law: its hard rule proved.
-- lie-groups-and-matrix-groups: every angle, not four.
-- categories-and-functors: undos dropped.
-- adjunctions: loose undos.
-- monoids-and-monads-for-programmers: three rules only.
-- sofic-groups-and-kothe: infinite from finite.
+- [Subgroups and cyclic groups](02-subgroups-and-cyclic-groups.md): the parts that are groups.
+- [Permutations](03-permutations-and-the-symmetric-group.md): rearranging a list.
+- [Rings](../09-Rings%20and%20Fields/01-rings.md): two operations at once.
+- [Symmetry](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/04-symmetry-and-tilings.md): repeating patterns.
+- [Elliptic curves](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/05-elliptic-curves-and-point-addition.md): an operation built to fit.
+- Symmetry and conservation: symmetry paying out.
+- Diffie-Hellman and ElGamal: key exchange.
+- The fundamental group: loops end to end.
+- Rational points on a cubic: generating a curve's points.
+- The group law: its hard rule proved.
+- Lie group: every angle, not four.
+- Categories and functors: undos dropped.
+- Adjunctions: loose undos.
+- Monoids and monads: three rules only.
+- Two algebra questions: infinite from finite.
 
 The four turns alone pass all four rules, which is the next card's question: which parts of a group are groups, and what one member generates alone.
 

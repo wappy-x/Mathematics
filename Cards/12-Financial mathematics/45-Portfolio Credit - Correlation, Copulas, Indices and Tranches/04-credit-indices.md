@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Portfolio Credit - Correlation, Copulas, Indices and Tranches
-topic: Many names in one contract
-item: Credit indices (CDX and iTraxx in outline)
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/08-cds-risk-numbers|cds-risk-numbers]]"
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/01-default-correlation-and-joint-default|default-correlation-and-joint-default]]"
-next:
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/05-cdo-tranches-in-outline|cdo-tranches-in-outline]]"
-tags: [mathematics, financial mathematics, credit-indices]
----
-
 # Credit indices (CDX and iTraxx in outline): one contract on 125 names, priced off their survival curves, and the index skew
 
-Financial mathematics → Portfolio Credit - Correlation, Copulas, Indices and Tranches → Many names in one contract → Credit indices (CDX and iTraxx in outline)
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Credit - Correlation, Copulas, Indices and Tranches](../../../SYLLABUS.md#w12-s45) → Credit indices (CDX and iTraxx in outline)
 
 ---
 
@@ -53,7 +36,7 @@ Orange: the intrinsic spread, total protection over total annuity. Green: the pl
 
 ## The formula
 
-Notation first, in words. The index has $n$ names, numbered by $i$ from 1 to $n$. Each name has its own quoted spread $s_i$. From that quote, exactly as on [marking-a-cds-to-market-and-the-upfront](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/07-marking-a-cds-to-market-and-the-upfront.md), come two numbers per \$1 of notional: the protection leg $P_i$ (what the payout on default is worth today) and the risky annuity $A_i$ (what 1 a year of fee, paid only while the name survives, is worth today). The sign $\sum$ means "add up over all the names".
+Notation first, in words. The index has $n$ names, numbered by $i$ from 1 to $n$. Each name has its own quoted spread $s_i$. From that quote, exactly as on [Valuing an existing CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/07-marking-a-cds-to-market-and-the-upfront.md), come two numbers per \$1 of notional: the protection leg $P_i$ (what the payout on default is worth today) and the risky annuity $A_i$ (what 1 a year of fee, paid only while the name survives, is worth today). The sign $\sum$ means "add up over all the names".
 
 $$s_I = \frac{\sum_{i=1}^{n} P_i}{\sum_{i=1}^{n} A_i} = \sum_{i=1}^{n} w_i\, s_i, \qquad w_i = \frac{A_i}{\sum_{\ell=1}^{n} A_\ell}$$
 
@@ -80,7 +63,7 @@ When name $j$ defaults with recovery $R$, the protection buyer receives $(1-R)/n
 | $\sum$, $s$, $m$ | add up over the list; any spread, in the proof; the fee-date counter, 1 to 20 | used throughout; used in the proof; 1 to 20 | |
 | $T$, $\Delta$, $\tau$, $\rho$ | years to maturity; quarter length; a name's default time; correlation between names in the check's simulation | 5; 0.25; random; 0 or 20% | $\rho$ changes nothing on this card |
 
-The single-name legs are the ones from [cds-legs-risky-annuity-and-par-spread](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md): with a flat hazard $\lambda_i$,
+The single-name legs are the ones from [Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md): with a flat hazard $\lambda_i$,
 
 $$P_i = (1-R)\,\frac{\lambda_i}{r+\lambda_i}\left(1 - e^{-(r+\lambda_i)T}\right), \qquad A_i = \sum_{m=1}^{20} \Delta\, e^{-(r+\lambda_i)\,m\Delta}$$
 
@@ -92,7 +75,7 @@ where $m$ counts the twenty quarterly fee dates, and each quote satisfies $s_i =
 - **Single-name curves that match the index's terms.** $P_i$ and $A_i$ must be for the index maturity and the index's own recovery convention. Using the names' most liquid five-year quotes for a different index maturity mixes two curves and puts a false gap into the skew.
 - **One recovery for every name.** A different recovery changes the hazards behind the same quotes: at 25 percent the intrinsic spread is 121.54 bp instead of 120.96. Names with different recoveries can even reverse the ordering in Step 3.
 - **A seller who pays.** Nothing here prices the protection seller defaulting too.
-- **Correlation does not enter.** The sum rule needs no assumption about how names default together. The check simulates with independent names and with names tied by a 20 percent correlation and gets the same price. Correlation matters only when a contract pays on some losses and not others: [cdo-tranches-in-outline](05-cdo-tranches-in-outline.md).
+- **Correlation does not enter.** The sum rule needs no assumption about how names default together. The check simulates with independent names and with names tied by a 20 percent correlation and gets the same price. Correlation matters only when a contract pays on some losses and not others: [Tranches](05-cdo-tranches-in-outline.md).
 
 ---
 
@@ -131,7 +114,7 @@ With one recovery for all names, the result is a strict inequality: $s_I < \bar 
 <details>
 <summary>Detailed proof: the intrinsic spread never exceeds the plain average</summary>
 
-All names share recovery $R$. Write $A(s)$ for the annuity of a name whose flat hazard reprices spread $s$. [marking-a-cds-to-market-and-the-upfront](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/07-marking-a-cds-to-market-and-the-upfront.md) shows the par spread is strictly increasing in the hazard, and the annuity is strictly decreasing in it, so $A(s)$ is strictly decreasing in $s$.
+All names share recovery $R$. Write $A(s)$ for the annuity of a name whose flat hazard reprices spread $s$. [Valuing an existing CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/07-marking-a-cds-to-market-and-the-upfront.md) shows the par spread is strictly increasing in the hazard, and the annuity is strictly decreasing in it, so $A(s)$ is strictly decreasing in $s$.
 
 Let $A^* = A(\bar s)$, a fixed number. Because $\sum_i (s_i - \bar s) = 0$, subtracting $A^*$ from every weight leaves a sum unchanged:
 
@@ -165,7 +148,7 @@ The buyer does not gain the full \$48,000 in value. Before the default, that nam
 
 The legs are expected values: $P_i$ is the average discounted payout over all the ways name i can default, and the same for $A_i$. The expected value of a sum is the sum of expected values, whether or not the parts move together. So the index legs depend only on each name's own survival curve.
 
-The check tests this. It draws default times for all 125 names on 100,000 paths, first with names independent, then with names tied through one common market factor at 20 percent correlation, the one-factor model of [one-factor-gaussian-copula](02-one-factor-gaussian-copula.md). It values the index at a 120.96 bp coupon on each path. Both averages are zero within their noise: the simulated spreads are 121.01 and 121.13 bp. Correlation makes the losses lumpier, which widens the noise (standard error 0.0001469 against 0.0000455), but it does not move the average. Joint defaults change who gets hurt in a crisis; [default-correlation-and-joint-default](01-default-correlation-and-joint-default.md) measures them.
+The check tests this. It draws default times for all 125 names on 100,000 paths, first with names independent, then with names tied through one common market factor at 20 percent correlation, the one-factor model of [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md). It values the index at a 120.96 bp coupon on each path. Both averages are zero within their noise: the simulated spreads are 121.01 and 121.13 bp. Correlation makes the losses lumpier, which widens the noise (standard error 0.0001469 against 0.0000455), but it does not move the average. Joint defaults change who gets hurt in a crisis; [Default correlation](01-default-correlation-and-joint-default.md) measures them.
 
 ### Step 7: the skew is the market's price against the names' price
 
@@ -677,8 +660,8 @@ The two outputs agree line for line, the simulations included, because both prog
 - **Macro credit hedging.** A fund that owns a spread of investment-grade bonds buys CDX or iTraxx protection to hedge the credit market as a whole in one trade.
 - **The credit market's price.** Screens quote the five-year CDX investment-grade and iTraxx Europe spreads as the market's reading of corporate risk.
 - **Skew trades.** Desks compare the index with the sum of its names every day. When the skew exceeds the cost of trading 125 names, they buy the cheap side and sell the dear one.
-- **Risk numbers per name.** The index's sensitivity to one name's spread is that name's weight times the single-name sensitivity from [cds-risk-numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md), on one 125th of the notional.
-- **Tranches.** The same 125 names, cut into slices that each absorb losses in a fixed range, are the tranche market: [cdo-tranches-in-outline](05-cdo-tranches-in-outline.md) and [implied-and-base-correlation](06-implied-and-base-correlation.md).
+- **Risk numbers per name.** The index's sensitivity to one name's spread is that name's weight times the single-name sensitivity from [CDS risk numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md), on one 125th of the notional.
+- **Tranches.** The same 125 names, cut into slices that each absorb losses in a fixed range, are the tranche market: [Tranches](05-cdo-tranches-in-outline.md) and [Implied correlation](06-implied-and-base-correlation.md).
 - **Conventions verified 28 Sep 2026** against the ICE product pages for Markit CDX.NA.IG and Markit iTraxx Europe Main: each index holds 125 of the most liquid investment-grade entities of its region, new series roll on 20 March and 20 September, and index spreads are quoted in basis points. The fixed-coupon-plus-upfront settlement is the one the ISDA CDS Standard Model page describes for single names. The index calculators also pay accrued fees on default and count days actual/360, which this card leaves out. Markets can change these rules; the sum rule does not change with them.
 
 > **Say it back**
@@ -688,12 +671,12 @@ The two outputs agree line for line, the simulations included, because both prog
 
 ## What this builds on
 
-- [cds-risk-numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md): the single-name legs, the fixed coupon with its upfront, and the jump-to-default idea that this card applies to one name out of 125.
-- [default-correlation-and-joint-default](01-default-correlation-and-joint-default.md): what it means for names to default together, the thing this card shows the index price does not depend on.
+- [CDS risk numbers](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/08-cds-risk-numbers.md): the single-name legs, the fixed coupon with its upfront, and the jump-to-default idea that this card applies to one name out of 125.
+- [Default correlation](01-default-correlation-and-joint-default.md): what it means for names to default together, the thing this card shows the index price does not depend on.
 
 ## Where this goes next
 
-- [cdo-tranches-in-outline](05-cdo-tranches-in-outline.md): the same 125 names, with losses split into slices, where correlation stops cancelling and starts deciding the price.
+- [Tranches](05-cdo-tranches-in-outline.md): the same 125 names, with losses split into slices, where correlation stops cancelling and starts deciding the price.
 
 The index averages its names away; the open question is what a contract that pays only on the first 3 percent of losses, or only beyond 7 percent, is worth, and that is where joint defaults take over.
 

@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Returns and Utility
-topic: Bet sizing
-item: Kelly
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/36-Returns and Utility/01-returns-simple-log-and-annualised|returns-simple-log-and-annualised]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/01-law-of-large-numbers|law-of-large-numbers]]"
-next: []
-tags: [mathematics, financial mathematics, kelly-criterion-and-growth]
----
-
 # Kelly: the bet size that grows wealth fastest, and why half of it is safer
 
-Financial mathematics → Returns and Utility → Bet sizing → Kelly
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Returns and Utility](../../../SYLLABUS.md#w12-s36) → Kelly
 
 ---
 
@@ -52,7 +36,7 @@ The curve is the growth per toss; the flat line is zero growth. The curve is a h
 
 ## The formula
 
-Notation first, in words. The letter $f$ stands for the share of the current bankroll staked on each bet, a number between 0 and 1. The natural log, written $\ln$, turns multiplying into adding ([returns-simple-log-and-annualised](01-returns-simple-log-and-annualised.md)). A star marks the best value: $f^\star$ is the best stake.
+Notation first, in words. The letter $f$ stands for the share of the current bankroll staked on each bet, a number between 0 and 1. The natural log, written $\ln$, turns multiplying into adding ([Returns](01-returns-simple-log-and-annualised.md)). A star marks the best value: $f^\star$ is the best stake.
 
 $$g(f) = p\,\ln(1 + b f) + q\,\ln(1 - f)$$
 
@@ -103,7 +87,7 @@ $$f^\star = \frac{\mu - r}{\sigma^2}, \qquad g(f) = r + f(\mu - r) - \tfrac12 f^
 
 ### Step 0: wealth multiplies, so the log is the score that adds up
 
-Every bet multiplies the bankroll: by 1.1 on a win and 0.9 on a loss at a 10 percent stake. After many bets the bankroll is a product of such numbers. The logarithm turns the product into a sum, and the law of large numbers ([law-of-large-numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)) says an average of many independent draws settles on its expected value. So the average log multiplier per bet decides where almost every long run ends. Maximise that, and the bankroll grows fastest.
+Every bet multiplies the bankroll: by 1.1 on a win and 0.9 on a loss at a 10 percent stake. After many bets the bankroll is a product of such numbers. The logarithm turns the product into a sum, and the law of large numbers ([Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)) says an average of many independent draws settles on its expected value. So the average log multiplier per bet decides where almost every long run ends. Maximise that, and the bankroll grows fastest.
 
 ### Step 1: one bet's multiplier
 
@@ -176,7 +160,7 @@ For a fall to half, $x = 0.5$. Full Kelly gives 0.500. Half Kelly gives 0.125. S
 
 ### The other door: continuous time
 
-Replace the coin by a fund whose price follows geometric Brownian motion, a steady drift plus random kicks in log space ([geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). Hold the share $f$ in the fund and the rest on deposit, rebalanced continuously. Wealth then drifts at $r + f(\mu - r)$ and wiggles with spread $f\sigma$. Itô's lemma on the log subtracts half the squared spread, and the growth rate is $g(f) = r + f(\mu - r) - \tfrac12 f^2\sigma^2$: the Step 5 parabola, now exact. Its peak is at $f^\star = (\mu - r)/\sigma^2$. The check finds the same peak by searching one day's growth, averaged over the bell curve.
+Replace the coin by a fund whose price follows geometric Brownian motion, a steady drift plus random kicks in log space ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)). Hold the share $f$ in the fund and the rest on deposit, rebalanced continuously. Wealth then drifts at $r + f(\mu - r)$ and wiggles with spread $f\sigma$. Itô's lemma on the log subtracts half the squared spread, and the growth rate is $g(f) = r + f(\mu - r) - \tfrac12 f^2\sigma^2$: the Step 5 parabola, now exact. Its peak is at $f^\star = (\mu - r)/\sigma^2$. The check finds the same peak by searching one day's growth, averaged over the bell curve.
 
 ---
 
@@ -643,7 +627,7 @@ The two outputs agree line for line; the same splitmix generator feeds both simu
 - **Card counting.** Edward Thorp used Kelly to size blackjack bets in the early 1960s, betting more when the count gave an edge and nothing when it did not.
 - **Betting and prediction markets.** Bettors who size by Kelly often stake a half or a quarter of it, because their win chances are estimates.
 - **Leverage in a portfolio.** The saver choosing between a 4 percent deposit and a fund with mean 8 percent and spread 15 percent has $f^\star = 0.04/0.0225 = 1.78$: Kelly says borrow 78 cents at the deposit rate for every dollar owned and put it all in the fund, for growth of 7.56 percent a year. Half Kelly, 0.89 in the fund, grows at 6.67 percent: three quarters of the growth above the deposit rate. Twice Kelly, 3.56 times leveraged, grows at exactly the 4 percent deposit rate: the most risk, for the riskless return.
-- **Log utility.** Maximising expected log wealth is the same as having log utility ([expected-utility-and-risk-aversion](02-expected-utility-and-risk-aversion.md)). Kelly gives a reason for that score that needs no taste: it is what the typical long run rewards. Fractional Kelly behaves like a more risk-averse utility.
+- **Log utility.** Maximising expected log wealth is the same as having log utility ([Expected utility](02-expected-utility-and-risk-aversion.md)). Kelly gives a reason for that score that needs no taste: it is what the typical long run rewards. Fractional Kelly behaves like a more risk-averse utility.
 - **Information theory.** In Kelly's paper the gambler has a noisy private tip; the best growth rate equals the rate at which the tip carries information.
 
 > **Say it back**
@@ -653,14 +637,14 @@ The two outputs agree line for line; the same splitmix generator feeds both simu
 
 ## What this builds on
 
-- [returns-simple-log-and-annualised](01-returns-simple-log-and-annualised.md): log returns, which add where growth factors multiply. Step 0 rests on them.
-- [law-of-large-numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): why the share of wins settles on 0.55, which turns the average log into a growth rate.
+- [Returns](01-returns-simple-log-and-annualised.md): log returns, which add where growth factors multiply. Step 0 rests on them.
+- [Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md): why the share of wins settles on 0.55, which turns the average log into a growth rate.
 
 ## Where this goes next
 
-- [stochastic-dominance](04-stochastic-dominance.md): when one bet beats another on every ranking, and why Kelly does not beat half Kelly path by path (the $99.00 against $99.75).
+- [Stochastic dominance](04-stochastic-dominance.md): when one bet beats another on every ranking, and why Kelly does not beat half Kelly path by path (the $99.00 against $99.75).
 
-Kelly says what a bettor who scores by log wealth should do; what real people do when losses feel worse than equal gains feel good is the subject of [prospect-theory-in-outline](06-prospect-theory-in-outline.md).
+Kelly says what a bettor who scores by log wealth should do; what real people do when losses feel worse than equal gains feel good is the subject of [Prospect theory in outline](06-prospect-theory-in-outline.md).
 
 ---
 

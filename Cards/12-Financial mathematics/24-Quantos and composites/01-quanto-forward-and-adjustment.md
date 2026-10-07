@@ -1,33 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Quantos and composites
-topic: Changing the currency of account
-item: The quanto adjustment
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/02-covered-interest-parity|covered-interest-parity]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/01-garman-kohlhagen|garman-kohlhagen]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/02-itos-lemma|itos-lemma]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/06-multidimensional-ito-and-correlation|multidimensional-ito-and-correlation]]"
-  - "[[Cards/11-Stochastic processes and calculus/07-Changing Measure/02-girsanov-theorem|girsanov-theorem]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/04-joint-distributions-and-covariance|joint-distributions-and-covariance]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/05-bivariate-normal-and-conditioning|bivariate-normal-and-conditioning]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period|state-prices-and-risk-neutral-pricing-in-one-period]]"
-next:
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/02-quanto-option|quanto-option]]"
-  - "[[Cards/12-Financial mathematics/32-Convexity and Exotics/04-quanto-adjustments-for-rates|quanto-adjustments-for-rates]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - quanto-forward-and-adjustment
----
-
 # The quanto adjustment: a foreign price paid in home money at a fixed rate drifts slower by correlation times two vols
 
-Financial mathematics → Quantos and composites → Changing the currency of account → The quanto adjustment
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Quantos and composites](../../../SYLLABUS.md#w12-s24) → The quanto adjustment
 
 ---
 
@@ -92,8 +65,8 @@ It is how fast the share's euro price is expected to grow, averaged the way a do
 
 - **Volatilities and correlation stay fixed.** If the correlation drifts over the year, the adjustment uses its average over the contract's life; an error in that average moves the log of the forward by the error times $\sigma_S\sigma_X T$.
 - **Prices move without jumps.** The product rule below needs smooth wobbles. A devaluation that knocks 20 percent off the euro overnight while the share falls too adds a jump term the formula does not have.
-- **Interest rates are fixed.** Random rates add their own co-movement terms: [quanto-adjustments-for-rates](../32-Convexity%20and%20Exotics/04-quanto-adjustments-for-rates.md).
-- **The seller can rebalance continuously and cheaply.** The fair level assumes the bank hedges its currency exposure as the share moves. Coarse rebalancing leaves a residual profit or loss: [quanto-greeks-and-hedging](03-quanto-greeks-and-hedging.md).
+- **Interest rates are fixed.** Random rates add their own co-movement terms: [Quanto rates](../32-Convexity%20and%20Exotics/04-quanto-adjustments-for-rates.md).
+- **The seller can rebalance continuously and cheaply.** The fair level assumes the bank hedges its currency exposure as the share moves. Coarse rebalancing leaves a residual profit or loss: [Hedging a quanto](03-quanto-greeks-and-hedging.md).
 
 ---
 
@@ -109,13 +82,13 @@ One euro in a euro bank account grows to $e^{r_f t}$ euros, worth $X_t\,e^{r_f t
 
 $$\text{drift of } X = r_d - r_f = 0.05 - 0.03 = 2\% \text{ a year.}$$
 
-This is covered interest parity ([covered-interest-parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md)), the same fact that powers the currency option on [garman-kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md).
+This is covered interest parity ([Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md)), the same fact that powers the currency option on [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md).
 
 ### Step 2: a product of co-movers grows faster than the sum
 
 One day, one move each. If the share rises 1 percent and the euro rises 1 percent, the dollar value rises by the factor 1.01 × 1.01 = 1.0201: 2.01 percent, not 2. If they move opposite ways, 1.01 × 0.99 = 0.9999, a touch below flat. The cross term, the product of the two moves, is small on one day. Over a year it adds up to a steady rate, because the two moves are correlated.
 
-In continuous time this is the product rule of Itô calculus ([multidimensional-ito-and-correlation](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/06-multidimensional-ito-and-correlation.md)). Write each price as a drift plus a random kick:
+In continuous time this is the product rule of Itô calculus ([Several Brownian motions](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/06-multidimensional-ito-and-correlation.md)). Write each price as a drift plus a random kick:
 
 $$\frac{dS_t}{S_t} = \mu\,dt + \sigma_S\,dW^S_t, \qquad \frac{dX_t}{X_t} = (r_d - r_f)\,dt + \sigma_X\,dW^X_t,$$
 
@@ -123,7 +96,7 @@ where $dW^S_t$ and $dW^X_t$ are the kicks over a short time $dt$, each with spre
 
 $$d(S_t X_t) = X_t\,dS_t + S_t\,dX_t + dS_t\,dX_t .$$
 
-The last term is the one ordinary calculus drops. It is the kick times the kick: $\sigma_S\sigma_X\,S_t X_t\,dW^S_t\,dW^X_t$, and correlated kicks multiply to $\rho\,dt$ on average ([joint-distributions-and-covariance](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). Divide through by $S_t X_t$:
+The last term is the one ordinary calculus drops. It is the kick times the kick: $\sigma_S\sigma_X\,S_t X_t\,dW^S_t\,dW^X_t$, and correlated kicks multiply to $\rho\,dt$ on average ([Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md)). Divide through by $S_t X_t$:
 
 $$\frac{d(S_t X_t)}{S_t X_t} = \big(\mu + r_d - r_f + \rho\,\sigma_S\sigma_X\big)\,dt + \sigma_S\,dW^S_t + \sigma_X\,dW^X_t .$$
 
@@ -147,7 +120,7 @@ The contract pays $\bar X\,(S_T - F_Q)$ dollars at time $T$. Its value today is 
 
 $$\bar X\,e^{-r_d T}\big(\mathbb{E}^d[S_T] - F_Q\big),$$
 
-where $\mathbb{E}^d$ means the average in the dollar world. The contract costs nothing, so $F_Q = \mathbb{E}^d[S_T]$. A price growing at drift $\mu$ with lognormal wobble has average $S\,e^{\mu T}$ ([itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)). Hence
+where $\mathbb{E}^d$ means the average in the dollar world. The contract costs nothing, so $F_Q = \mathbb{E}^d[S_T]$. A price growing at drift $\mu$ with lognormal wobble has average $S\,e^{\mu T}$ ([Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md)). Hence
 
 $$F_Q = S\,e^{(r_f - q - \rho\sigma_S\sigma_X)T} = 100\,e^{0.014} = 101.41 .$$
 
@@ -157,7 +130,7 @@ Two numbers dropped out. The fixed rate $\bar X$ multiplies the whole payout, so
 
 Why lower when the share and the euro rise together? A one-period toy makes it visible. In the euro world, two equally likely states: the share ends at 120 or at 84, an average of 102. The euro ends strong at 1.21 dollars or weak at 0.99.
 
-A state price is today's cost of one unit of money paid only in that state ([state-prices-and-risk-neutral-pricing-in-one-period](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)). One dollar paid in a state is worth $1/X_T$ euros there. So the dollar world's odds are the euro world's odds times $1/X_T$, rescaled to add to one. The strong-euro state gets weight 0.5/1.21 against 0.5/0.99 for the weak one: 0.45 and 0.55.
+A state price is today's cost of one unit of money paid only in that state ([State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)). One dollar paid in a state is worth $1/X_T$ euros there. So the dollar world's odds are the euro world's odds times $1/X_T$, rescaled to add to one. The strong-euro state gets weight 0.5/1.21 against 0.5/0.99 for the weak one: 0.45 and 0.55.
 
 - **Share high when the euro is strong.** Dollar-world average: 0.45 × 120 + 0.55 × 84 = **100.20**, below 102.
 - **Share high when the euro is weak.** 0.55 × 120 + 0.45 × 84 = **103.80**, above 102.
@@ -171,7 +144,7 @@ Work in the euro world, where the euro bank account is the yardstick. There the 
 
 The dollar world uses the dollar bank account as yardstick. Its odds are the euro world's odds reweighted by the dollar account's euro value, $Y_T e^{r_d T}$, divided by its euro-world average $Y_0 e^{r_f T}$. That ratio is
 $$\exp\!\big(-\sigma_X W^X_T - \tfrac12\sigma_X^2 T\big).$$
-Girsanov's theorem ([girsanov-theorem](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md)) says a reweighting of this form, $\exp(\theta W_T - \tfrac12\theta^2 T)$ with $\theta = -\sigma_X$, turns $W^X$ into a driver with an extra drift $\theta = -\sigma_X$ per year. Any driver correlated with $W^X$ at $\rho$ picks up $\rho\theta$: its conditional average moves by $\rho$ times the shift, as for a bivariate normal ([bivariate-normal-and-conditioning](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)). So $W^S$ gains drift $-\rho\sigma_X$.
+Girsanov's theorem ([Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md)) says a reweighting of this form, $\exp(\theta W_T - \tfrac12\theta^2 T)$ with $\theta = -\sigma_X$, turns $W^X$ into a driver with an extra drift $\theta = -\sigma_X$ per year. Any driver correlated with $W^X$ at $\rho$ picks up $\rho\theta$: its conditional average moves by $\rho$ times the shift, as for a bivariate normal ([Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md)). So $W^S$ gains drift $-\rho\sigma_X$.
 
 Put that into the share: $dS_t/S_t = (r_f - q)\,dt + \sigma_S\,dW^S_t$ becomes $(r_f - q - \rho\sigma_S\sigma_X)\,dt$ plus a fresh dollar-world kick. The exchange rate, which in the euro world drifts at $r_d - r_f + \sigma_X^2$ (the upside-down of a price gains its variance), loses $\sigma_X \cdot \sigma_X$ and drifts at $r_d - r_f$, matching Step 1. Both drifts agree with the product-rule route.
 
@@ -594,11 +567,11 @@ The two outputs agree byte for byte, the Monte Carlo lines included, because bot
 ## Where you meet it in real life
 
 - **Dollar-settled futures on a foreign index.** An exchange can list a futures contract on a Japanese index that settles in dollars, one dollar per index point. Its fair level differs from the yen-settled contract's by exactly this adjustment.
-- **Quanto notes.** Retail structured notes that pay a foreign index's return in home currency. The note's level is set with the quanto drift, and the options inside it are priced on [quanto-option](02-quanto-option.md).
-- **The hedging desk.** The bank that sells the contract holds euro shares and must keep adjusting its euro position as the share moves; that is where the correlation cost is paid: [quanto-greeks-and-hedging](03-quanto-greeks-and-hedging.md).
-- **Paying in the floating rate instead.** A contract that pays the share's value converted at the rate on the day keeps the currency risk and uses no adjustment: [composite-option](04-composite-option.md).
-- **Reading the correlation back.** A quoted quanto level pins $\rho$, since everything else is observable: [implied-correlation-from-a-quanto](05-implied-correlation-from-a-quanto.md).
-- **Interest rates paid in another currency.** A euro rate paid in dollars needs the same correction on the rate's drift: [quanto-adjustments-for-rates](../32-Convexity%20and%20Exotics/04-quanto-adjustments-for-rates.md).
+- **Quanto notes.** Retail structured notes that pay a foreign index's return in home currency. The note's level is set with the quanto drift, and the options inside it are priced on [Quanto option](02-quanto-option.md).
+- **The hedging desk.** The bank that sells the contract holds euro shares and must keep adjusting its euro position as the share moves; that is where the correlation cost is paid: [Hedging a quanto](03-quanto-greeks-and-hedging.md).
+- **Paying in the floating rate instead.** A contract that pays the share's value converted at the rate on the day keeps the currency risk and uses no adjustment: [Composite option](04-composite-option.md).
+- **Reading the correlation back.** A quoted quanto level pins $\rho$, since everything else is observable: [Correlation from a quanto price](05-implied-correlation-from-a-quanto.md).
+- **Interest rates paid in another currency.** A euro rate paid in dollars needs the same correction on the rate's drift: [Quanto rates](../32-Convexity%20and%20Exotics/04-quanto-adjustments-for-rates.md).
 
 > **Say it back**
 > A quanto pays a foreign price in home money at a rate fixed today. The dollar value of the foreign share is share times exchange rate; its growth is pinned at the dollar rate less the dividend, and the rate's growth is pinned by interest parity. A product of co-moving prices grows by an extra correlation times the two volatilities, so the share's own drift must give that amount back. The quanto forward is today's price grown at the euro rate, less the dividend, less that product: 101.41 against 102.02 here. Positive correlation lowers it, negative raises it, and neither the fixed rate nor today's spot enters.
@@ -607,19 +580,19 @@ The two outputs agree byte for byte, the Monte Carlo lines included, because bot
 
 ## What this builds on
 
-- [covered-interest-parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md): why the exchange rate drifts at the dollar rate less the euro rate, Step 1.
-- [garman-kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): the currency as a lognormal asset with a foreign carry, the model used for the exchange rate here.
-- [itos-lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): the kick-times-kick term, and the lognormal average $S\,e^{\mu T}$ used in Step 4.
-- [multidimensional-ito-and-correlation](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/06-multidimensional-ito-and-correlation.md): the product rule for two correlated processes, the heart of Step 2.
-- [girsanov-theorem](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md): the change of yardstick in the folded proof.
-- [joint-distributions-and-covariance](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md): correlation as the average product of two standardised moves.
-- [bivariate-normal-and-conditioning](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): building correlated draws from independent ones, as the code does, and why a shift in one driver moves the other by $\rho$ times as much.
-- [state-prices-and-risk-neutral-pricing-in-one-period](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): state prices, and why changing the currency of account reweights the odds, Step 5.
+- [Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md): why the exchange rate drifts at the dollar rate less the euro rate, Step 1.
+- [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): the currency as a lognormal asset with a foreign carry, the model used for the exchange rate here.
+- [Ito's lemma](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/02-itos-lemma.md): the kick-times-kick term, and the lognormal average $S\,e^{\mu T}$ used in Step 4.
+- [Several Brownian motions](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/06-multidimensional-ito-and-correlation.md): the product rule for two correlated processes, the heart of Step 2.
+- [Girsanov](../../11-Stochastic%20processes%20and%20calculus/07-Changing%20Measure/02-girsanov-theorem.md): the change of yardstick in the folded proof.
+- [Two variables at once](../../09-Probability%20and%20statistics/02-Random%20Variables/04-joint-distributions-and-covariance.md): correlation as the average product of two standardised moves.
+- [Bivariate normal](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/05-bivariate-normal-and-conditioning.md): building correlated draws from independent ones, as the code does, and why a shift in one driver moves the other by $\rho$ times as much.
+- [State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): state prices, and why changing the currency of account reweights the odds, Step 5.
 
 ## Where this goes next
 
-- [quanto-option](02-quanto-option.md): an option on the same share paid at the fixed rate is the Black-Scholes call run on the quanto drift.
-- [quanto-adjustments-for-rates](../32-Convexity%20and%20Exotics/04-quanto-adjustments-for-rates.md): the same correction applied to an interest rate paid in another currency.
+- [Quanto option](02-quanto-option.md): an option on the same share paid at the fixed rate is the Black-Scholes call run on the quanto drift.
+- [Quanto rates](../32-Convexity%20and%20Exotics/04-quanto-adjustments-for-rates.md): the same correction applied to an interest rate paid in another currency.
 
 This card fixes the level at which a quanto costs nothing; what it leaves open is the price of the right, but not the duty, to trade at a level, which the quanto option prices from this drift.
 

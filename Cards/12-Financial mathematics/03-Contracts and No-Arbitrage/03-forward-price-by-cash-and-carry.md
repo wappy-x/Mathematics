@@ -1,31 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Contracts and No-Arbitrage
-topic: Cash and carry
-item: Forward price
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/02-no-arbitrage-and-the-law-of-one-price|no-arbitrage-and-the-law-of-one-price]]"
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/01-compounding-and-discount-factors|compounding-and-discount-factors]]"
-next:
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/04-forward-value-after-inception|forward-value-after-inception]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/06-black-76-and-forward-level-pricing|black-76-and-forward-level-pricing]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/03-put-call-parity|put-call-parity]]"
-  - "[[Cards/12-Financial mathematics/11-Implied volatility and the vanilla inverses/05-implied-forward-and-dividend-from-parity|implied-forward-and-dividend-from-parity]]"
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/02-covered-interest-parity|covered-interest-parity]]"
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/01-gold-forward-and-the-lease-rate|gold-forward-and-the-lease-rate]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - forward-price-by-cash-and-carry
----
-
 # Forward price: what you must agree to pay later so the contract costs nothing now
 
-Financial mathematics → Contracts and No-Arbitrage → Cash and carry → Forward price
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Contracts and No-Arbitrage](../../../SYLLABUS.md#w12-s03) → Forward price
 
 ---
 
@@ -37,7 +12,7 @@ That agreement is a **forward contract**, and the number is its **forward price*
 
 It is not a forecast. It comes from what it costs the seller to be certain of delivering: borrow money this morning, buy Acme, hold it a year, hand it over. The loan costs interest; the share pays dividends. Interest out, dividends in: 100.00 carried for a year at 5 percent less 2 percent is 103.05.
 
-Two words need separating. The forward **price** is paid on delivery day; the **value** of the contract is what it is worth today, which at signing is zero — and that is the condition picking the price out. [forward-value-after-inception](04-forward-value-after-inception.md) takes up what the value becomes later.
+Two words need separating. The forward **price** is paid on delivery day; the **value** of the contract is what it is worth today, which at signing is zero — and that is the condition picking the price out. [An old forward](04-forward-value-after-inception.md) takes up what the value becomes later.
 
 **The forward price is today's price of the asset, grown at the interest rate and shrunk by whatever income the asset pays before delivery, because that is what it costs to buy the asset now and carry it to the delivery date.**
 
@@ -61,7 +36,7 @@ The upper line is a share paying nothing; the lower line is Acme, paying 2 perce
 
 ## The formula
 
-Four letters carry the card, named in words first. $S$ is the **spot price**: what one share costs right now, for delivery right now. $r$ is the **bank rate**: the interest a safe loan costs and a safe deposit earns, quoted continuously compounded — added at every instant ([compounding-and-discount-factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)). $q$ is the **dividend yield**: the income the share pays its holder each year as a fraction of its price, also continuous. $T$ is the wait until delivery, in years. The answer is $F$, the forward price.
+Four letters carry the card, named in words first. $S$ is the **spot price**: what one share costs right now, for delivery right now. $r$ is the **bank rate**: the interest a safe loan costs and a safe deposit earns, quoted continuously compounded — added at every instant ([Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md)). $q$ is the **dividend yield**: the income the share pays its holder each year as a fraction of its price, also continuous. $T$ is the wait until delivery, in years. The answer is $F$, the forward price.
 
 $$F = S\,e^{(r-q)T}$$
 
@@ -101,9 +76,9 @@ Take the known payment off the spot price at what it is worth today, and grow on
 ### When it holds
 
 - **One rate for borrowing and for lending, no fees or spreads.** The proof runs the same trade both ways. Where borrowing costs more than lending pays, the two directions stop at different numbers and the price is pinned only inside a band.
-- **The asset can be bought, held and sold short.** Selling short means borrowing the asset, selling it, and buying one back later to return. Without it only one trade is possible, so the forward has an upper bound and no lower one — the ordinary case for a commodity somebody needs in the warehouse ([gold-forward-and-the-lease-rate](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/01-gold-forward-and-the-lease-rate.md)).
-- **The income is known in advance.** A dividend that might be cut is a different problem, and the formula run backwards on a quote then reports a belief, not a fact ([implied-forward-and-dividend-from-parity](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/05-implied-forward-and-dividend-from-parity.md)).
-- **The bank rate is known for the whole wait.** Then a daily-settled exchange contract prices the same as this private one; once rates move unpredictably the two part company ([futures-margining-and-the-forward-futures-difference](05-futures-margining-and-the-forward-futures-difference.md)).
+- **The asset can be bought, held and sold short.** Selling short means borrowing the asset, selling it, and buying one back later to return. Without it only one trade is possible, so the forward has an upper bound and no lower one — the ordinary case for a commodity somebody needs in the warehouse ([Gold forward](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/01-gold-forward-and-the-lease-rate.md)).
+- **The income is known in advance.** A dividend that might be cut is a different problem, and the formula run backwards on a quote then reports a belief, not a fact ([Implied forward and dividend from parity](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/05-implied-forward-and-dividend-from-parity.md)).
+- **The bank rate is known for the whole wait.** Then a daily-settled exchange contract prices the same as this private one; once rates move unpredictably the two part company ([Futures](05-futures-margining-and-the-forward-futures-difference.md)).
 - **Both sides actually deliver.** A counterparty that might fail turns a delivery price into a credit question, and the quote then carries a charge for it.
 
 ---
@@ -112,7 +87,7 @@ Take the known payment off the spot price at what it is worth today, and grow on
 
 ### Step 0: two packages that end the same must cost the same today
 
-Everything rests on one sentence from the previous card: if two bundles are certain to be worth the same on delivery day, whatever happens in between, they must cost the same today ([no-arbitrage-and-the-law-of-one-price](02-no-arbitrage-and-the-law-of-one-price.md)). Otherwise anyone could buy the cheap bundle, sell the dear one, take the gap in cash this morning and owe nothing later.
+Everything rests on one sentence from the previous card: if two bundles are certain to be worth the same on delivery day, whatever happens in between, they must cost the same today ([No arbitrage](02-no-arbitrage-and-the-law-of-one-price.md)). Otherwise anyone could buy the cheap bundle, sell the dear one, take the gap in cash this morning and owe nothing later.
 
 So the job is to build a bundle that ends holding exactly one Acme share, out of things priced today.
 
@@ -179,7 +154,7 @@ Neither ledger holds a number describing how wildly Acme swings: the trade holds
 
 ### Another road: the average share price in a world priced at the bank rate
 
-A second route reaches the same number, and it runs the rest of this wing. Price every contract as though each asset were valued so that it grows on average at the bank rate, a device set out in [state-prices-and-risk-neutral-pricing-in-one-period](07-state-prices-and-risk-neutral-pricing-in-one-period.md). A share's whole return there is $r$, but part is paid out as dividends at $q$ a year, so only $r - q$ shows as the price climbing. The average Acme price on delivery day is $S\,e^{(r-q)T}$, which is $F$ again.
+A second route reaches the same number, and it runs the rest of this wing. Price every contract as though each asset were valued so that it grows on average at the bank rate, a device set out in [State prices](07-state-prices-and-risk-neutral-pricing-in-one-period.md). A share's whole return there is $r$, but part is paid out as dividends at $q$ a year, so only $r - q$ shows as the price climbing. The average Acme price on delivery day is $S\,e^{(r-q)T}$, which is $F$ again.
 
 The check works that average out the long way, at 10, 20 and 50 percent a year of jumpiness. All three land on 103.045453: volatility cancels out, the ledgers' fact from the other side.
 
@@ -690,10 +665,10 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Equity index futures.** A stock index future's screen price is the index carried at the money-market rate less its dividend yield; the gap between future and index is the carry moving.
-- **Currency forwards.** Holding a foreign currency earns that currency's interest, income in the asset itself, so the yield becomes the foreign rate: [covered-interest-parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md), the same formula under a new name.
-- **Commodity curves.** Storage is a negative dividend and having the physical thing to hand is a positive one, so the carry can point either way: [gold-forward-and-the-lease-rate](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/01-gold-forward-and-the-lease-rate.md).
-- **Option pricing.** Quote options on the forward and the carry drops out of the formula: [black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md). The forward is also the strike at which a call and a put cost the same: [put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md).
-- **Building the hedge.** Step 1's holding is rebalanced by its own dividends and needs no outside cash: [replication-and-self-financing](06-replication-and-self-financing.md). The forward's payoff picture is on [payoffs-and-positions](01-payoffs-and-positions.md).
+- **Currency forwards.** Holding a foreign currency earns that currency's interest, income in the asset itself, so the yield becomes the foreign rate: [Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md), the same formula under a new name.
+- **Commodity curves.** Storage is a negative dividend and having the physical thing to hand is a positive one, so the carry can point either way: [Gold forward](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/01-gold-forward-and-the-lease-rate.md).
+- **Option pricing.** Quote options on the forward and the carry drops out of the formula: [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md). The forward is also the strike at which a call and a put cost the same: [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md).
+- **Building the hedge.** Step 1's holding is rebalanced by its own dividends and needs no outside cash: [Replication](06-replication-and-self-financing.md). The forward's payoff picture is on [Payoffs](01-payoffs-and-positions.md).
 
 > **Say it back**
 > A forward contract fixes today the cash to be paid for an asset on a later date, with nothing paid now. The number is pinned by what it costs to deliver: borrow, buy the asset, hold it, hand it over. Interest pushes that cost up and any income the asset pays pulls it down, so the forward price is the spot grown at the rate less the yield — 103.05 for Acme. Quote more and a seller mints money with a borrowed purchase; quote less and a buyer mints it with a short sale.
@@ -702,17 +677,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [no-arbitrage-and-the-law-of-one-price](02-no-arbitrage-and-the-law-of-one-price.md): the rule in Step 0, that two bundles ending the same must cost the same today.
-- [compounding-and-discount-factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): why a dollar due on delivery day costs $e^{-rT}$ today, and what continuous compounding means.
+- [No arbitrage](02-no-arbitrage-and-the-law-of-one-price.md): the rule in Step 0, that two bundles ending the same must cost the same today.
+- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): why a dollar due on delivery day costs $e^{-rT}$ today, and what continuous compounding means.
 
 ## Where this goes next
 
-- [forward-value-after-inception](04-forward-value-after-inception.md): what the contract is worth once the delivery price is no longer today's.
-- [futures-margining-and-the-forward-futures-difference](05-futures-margining-and-the-forward-futures-difference.md): the exchange-traded cousin, settled every evening, and when that changes the price.
-- [black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md): options written on the forward price, with the carry already absorbed.
-- [put-call-parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): the forward rebuilt from a call and a put, how a market's forward is read off option screens.
-- [implied-forward-and-dividend-from-parity](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/05-implied-forward-and-dividend-from-parity.md): this card run backwards, recovering the income the market assumes.
-- [covered-interest-parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md) and [gold-forward-and-the-lease-rate](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/01-gold-forward-and-the-lease-rate.md): the same carry with the yield replaced by a foreign rate, and by storage against usefulness.
+- [An old forward](04-forward-value-after-inception.md): what the contract is worth once the delivery price is no longer today's.
+- [Futures](05-futures-margining-and-the-forward-futures-difference.md): the exchange-traded cousin, settled every evening, and when that changes the price.
+- [Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md): options written on the forward price, with the carry already absorbed.
+- [Put-call parity](../08-The%20Black-Scholes%20call%20and%20put/03-put-call-parity.md): the forward rebuilt from a call and a put, how a market's forward is read off option screens.
+- [Implied forward and dividend from parity](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/05-implied-forward-and-dividend-from-parity.md): this card run backwards, recovering the income the market assumes.
+- [Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md) and [Gold forward](../25-Commodity%20forwards%20-%20carry%2C%20storage%2C%20convenience%20yield%20and%20the%20curve/01-gold-forward-and-the-lease-rate.md): the same carry with the yield replaced by a foreign rate, and by storage against usefulness.
 
 This card priced a contract on the day it is signed, the one day it is worth nothing; what it is worth on every day after that is the next card's question.
 

@@ -1,27 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Calculus of Variations and Optimal Control
-topic: Planning backwards from the finish
-item: Dynamic programming
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/11-Discrete Dynamics and Chaos/01-iteration-and-cobweb-plots|iteration-and-cobweb-plots]]"
-  - "[[Cards/01-Foundations/06-Proof/04-proof-by-induction|proof-by-induction]]"
-  - "[[Cards/04-Combinatorics and graphs/10-Trees and Cheapest Routes/06-bellman-ford-and-arbitrage|bellman-ford-and-arbitrage]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/12-Calculus of Variations and Optimal Control/08-the-hjb-equation-and-the-linear-quadratic-regulator|the-hjb-equation-and-the-linear-quadratic-regulator]]"
-  - "[[Cards/13-Engineering mathematics/04-State Space and Optimal Control/10-model-predictive-control|model-predictive-control]]"
-  - "[[Cards/14-Applied and computational/01-Algorithms and Growth/07-dynamic-programming|dynamic-programming]]"
-  - "[[Cards/15-Optimization/07-Dynamic Programming and Learning/01-finite-horizon-dynamic-programming-and-backward-induction|finite-horizon-dynamic-programming-and-backward-induction]]"
-tags: [mathematics, differential equations and dynamics, dynamic-programming-and-the-bellman-equation]
----
-
 # Dynamic programming: any tail of a best plan is itself a best plan, so solve from the finish backwards
 
-Differential equations and dynamics → Calculus of Variations and Optimal Control → Planning backwards from the finish → Dynamic programming
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Calculus of Variations and Optimal Control](../../../SYLLABUS.md#w08-s12) → Dynamic programming
 
 ---
 
@@ -105,7 +84,7 @@ Suppose another tail from the south bank cost less than 31. Paste it after the f
 
 Any plan from $x$ at stage $k$ is a first choice $u$ followed by a tail from $f(x, u)$. Fix $u$: the cheapest such plan pays $c_k(x, u)$ plus the cheapest tail, $V_{k+1}(f(x, u))$. Minimising over $u$ covers every plan.
 
-The equation is a rule that turns one column of the table into the previous one. Backward induction applies it three times from $V_3$ = 0, iterating a map as on [iteration-and-cobweb-plots](../11-Discrete%20Dynamics%20and%20Chaos/01-iteration-and-cobweb-plots.md), but run from the finish.
+The equation is a rule that turns one column of the table into the previous one. Backward induction applies it three times from $V_3$ = 0, iterating a map as on [Iteration](../11-Discrete%20Dynamics%20and%20Chaos/01-iteration-and-cobweb-plots.md), but run from the finish.
 
 <details>
 <summary>Detailed proof</summary>
@@ -114,7 +93,7 @@ Let $J_k(x; u_k, \dots, u_{n-1})$ be the total toll paid from state $x$ at stage
 
 Base, $k = n$: no legs are left, the only sequence is empty, $J_n = 0 = V_n$.
 
-Step: assume the claim at $k + 1$. Any sequence from $(x, k)$ is $u_k$ followed by a sequence from $(f(x, u_k), k+1)$, and $J_k(x; u_k, \dots) = c_k(x, u_k) + J_{k+1}(f(x, u_k); u_{k+1}, \dots)$ because costs add. For fixed $u_k$ the minimum over the rest is $c_k(x, u_k) + V_{k+1}(f(x, u_k))$ by the assumption. The minimum over everything is the minimum over $u_k$ of that, which is the recursion's $V_k(x)$. By induction ([proof-by-induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)), run downward, the claim holds at $k = 0$.
+Step: assume the claim at $k + 1$. Any sequence from $(x, k)$ is $u_k$ followed by a sequence from $(f(x, u_k), k+1)$, and $J_k(x; u_k, \dots) = c_k(x, u_k) + J_{k+1}(f(x, u_k); u_{k+1}, \dots)$ because costs add. For fixed $u_k$ the minimum over the rest is $c_k(x, u_k) + V_{k+1}(f(x, u_k))$ by the assumption. The minimum over everything is the minimum over $u_k$ of that, which is the recursion's $V_k(x)$. By induction ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)), run downward, the claim holds at $k = 0$.
 
 The plan: choosing at each stage a $u$ that attains the minimum gives a sequence costing exactly $V_0(x)$, so it is cheapest.
 
@@ -130,7 +109,7 @@ For 10 legs: 20 comparisons against 1,024 routes; for 30, 60 against 1,073,741,8
 
 The catch is $s$, the number of states. A bank is one of two. A delivery van tracking fuel, load and hour, each in 10 levels, has 1,000 states per stage; six such gauges give 1,000,000. Bellman called this the **curse of dimensionality**: dynamic programming tames the number of stages, not the size of the state.
 
-On a network without stages the same principle is the Bellman-Ford algorithm ([bellman-ford-and-arbitrage](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/06-bellman-ford-and-arbitrage.md)). Pontryagin's route ([pontryagins-principle-and-bang-bang-control](06-pontryagins-principle-and-bang-bang-control.md)) reaches continuous-time plans without a table, by conditions along one path.
+On a network without stages the same principle is the Bellman-Ford algorithm ([Bellman-Ford](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/06-bellman-ford-and-arbitrage.md)). Pontryagin's route ([Pontryagin's principle](06-pontryagins-principle-and-bang-bang-control.md)) reaches continuous-time plans without a table, by conditions along one path.
 
 ---
 
@@ -388,10 +367,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Route planning.** Cheapest-route software uses the same principle on road networks: [bellman-ford-and-arbitrage](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/06-bellman-ford-and-arbitrage.md).
+- **Route planning.** Cheapest-route software uses the same principle on road networks: [Bellman-Ford](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/06-bellman-ford-and-arbitrage.md).
 - **Game endings.** Chess endgame tables are built backwards from checkmate, each position valued by its best move.
-- **Text and DNA comparison.** Spell checkers and gene aligners fill tables of best partial matches: dynamic-programming.
-- **Control engineering.** A controller re-solving a short plan at every step and keeping its first move is model-predictive-control.
+- **Text and DNA comparison.** Spell checkers and gene aligners fill tables of best partial matches: Dynamic programming.
+- **Control engineering.** A controller re-solving a short plan at every step and keeping its first move is Predictive control.
 
 > **Say it back**
 > A best plan cut anywhere leaves a best plan, or a cheaper tail could be pasted in. So the cheapest cost from each state is the smallest, over the next choice, of its cost plus the cheapest cost from where it lands: the Bellman equation. Solved from the finish, it fills the river's table in 6 comparisons where brute force prices 8 routes. The work grows with stages times states, and the states multiply with every quantity the state must track.
@@ -400,16 +379,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [iteration-and-cobweb-plots](../11-Discrete%20Dynamics%20and%20Chaos/01-iteration-and-cobweb-plots.md): a rule applied stage after stage, here column to column.
-- [proof-by-induction](../../01-Foundations/06-Proof/04-proof-by-induction.md): the proof of the Bellman equation is an induction, run from the last stage down.
-- [bellman-ford-and-arbitrage](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/06-bellman-ford-and-arbitrage.md): the same principle of optimality on a network without stages.
+- [Iteration](../11-Discrete%20Dynamics%20and%20Chaos/01-iteration-and-cobweb-plots.md): a rule applied stage after stage, here column to column.
+- [Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md): the proof of the Bellman equation is an induction, run from the last stage down.
+- [Bellman-Ford](../../04-Combinatorics%20and%20graphs/10-Trees%20and%20Cheapest%20Routes/06-bellman-ford-and-arbitrage.md): the same principle of optimality on a network without stages.
 
 ## Where this goes next
 
-- [the-hjb-equation-and-the-linear-quadratic-regulator](08-the-hjb-equation-and-the-linear-quadratic-regulator.md): legs shrunk to zero length turn the Bellman equation into a partial differential equation.
-- model-predictive-control: a finite plan re-solved at every step.
-- dynamic-programming: the method as algorithm design.
-- finite-horizon-dynamic-programming-and-backward-induction: the recursion with chance and averaged tails.
+- [The HJB equation](08-the-hjb-equation-and-the-linear-quadratic-regulator.md): legs shrunk to zero length turn the Bellman equation into a partial differential equation.
+- Predictive control: a finite plan re-solved at every step.
+- Dynamic programming: the method as algorithm design.
+- Backward induction: the recursion with chance and averaged tails.
 
 ---
 

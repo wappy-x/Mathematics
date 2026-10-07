@@ -1,34 +1,14 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Integrals
-topic: Areas without an antiderivative
-item: Numerical integration
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/05-taylors-theorem|taylors-theorem]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/01-riemann-integral|riemann-integral]]"
-next:
-  - "[[Cards/06-Calculus and analysis/06-Series/09-stirlings-approximation|stirlings-approximation]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/02-heston-pricing-by-characteristic-function|heston-pricing-by-characteristic-function]]"
-  - "[[Cards/13-Engineering mathematics/05-Signals/04-digital-filters-fir-and-iir|digital-filters-fir-and-iir]]"
-  - "[[Cards/16-Numerical analysis/05-Quadrature/01-newton-cotes-and-composite-rules|newton-cotes-and-composite-rules]]"
-tags: [mathematics, calculus and analysis, numerical-integration]
----
-
 # Numerical integration: midpoint, trapezoid and Simpson, with error bounds
 
-Calculus and analysis → Integrals → Areas without an antiderivative → Numerical integration
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Integrals](../../../SYLLABUS.md#w06-s04) → Numerical integration
 
 ---
 
 ## General Overview
 
-The bell curve that statistics runs on has height e^(−x^2/2)/√(2π) at position x. Its area from 0 to 1 is 0.341345 to six decimals. No formula of powers, roots, exponentials, logs and trig functions has this curve as its rate, so the antiderivative route ([fundamental-theorem-of-calculus](02-fundamental-theorem-of-calculus.md)) is closed. The area must come from heights.
+The bell curve that statistics runs on has height e^(−x^2/2)/√(2π) at position x. Its area from 0 to 1 is 0.341345 to six decimals. No formula of powers, roots, exponentials, logs and trig functions has this curve as its rate, so the antiderivative route ([Fundamental theorem of calculus](02-fundamental-theorem-of-calculus.md)) is closed. The area must come from heights.
 
-The integral is a limit of slice sums ([riemann-integral](01-riemann-integral.md)), but plain sums need many slices. Three better rules weight sampled heights. The **midpoint rule** reads each slice's centre height. The **trapezoid rule** joins a slice's two end heights by a straight line. **Simpson's rule** fits a parabola through three heights. With four slices, Simpson is already within 0.000010742 of the truth.
+The integral is a limit of slice sums ([The integral](01-riemann-integral.md)), but plain sums need many slices. Three better rules weight sampled heights. The **midpoint rule** reads each slice's centre height. The **trapezoid rule** joins a slice's two end heights by a straight line. **Simpson's rule** fits a parabola through three heights. With four slices, Simpson is already within 0.000010742 of the truth.
 
 Each rule's error has a ceiling set by how sharply the curve bends, known before the truth is. Inverted, it gives the slices a target needs: 12 for Simpson at six decimals.
 
@@ -46,7 +26,7 @@ To scale: 280 px per unit across, 400 up. The curve sits above each rectangle on
 
 ## The formula
 
-Notation first. The interval from a to b is cut into n equal slices of width h = (b − a)/n, at the points $x_i = a + ih$. f″ is the second derivative, how fast the slope changes; $f^{(4)}$ is the fourth ([taylors-theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)).
+Notation first. The interval from a to b is cut into n equal slices of width h = (b − a)/n, at the points $x_i = a + ih$. f″ is the second derivative, how fast the slope changes; $f^{(4)}$ is the fourth ([Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)).
 
 $$M_n = h\sum_{i=1}^{n} f\bigl(a + (i - \tfrac12)h\bigr)$$
 
@@ -77,7 +57,7 @@ For a target error $E$, set a bound equal to it and solve for n, rounding up (to
 
 ### When it holds
 
-- **The named derivative exists and is bounded.** At a corner or spike the ceiling fails; split there, or see [improper-integrals](07-improper-integrals.md) when the curve runs off to infinity.
+- **The named derivative exists and is bounded.** At a corner or spike the ceiling fails; split there, or see [Improper integrals](07-improper-integrals.md) when the curve runs off to infinity.
 - **The ceiling covers every point.** Read at x = 1, where f″ is 0, it claims zero error; one midpoint slice is off by 0.010721.
 - **Simpson needs an even count.** Its weights forced onto 5 slices give 0.323594.
 - **Exact arithmetic.** The bounds ignore computer rounding, far smaller here.
@@ -88,7 +68,7 @@ For a target error $E$, set a bound equal to it and solve for n, rounding up (to
 
 ### Step 0: swap the curve for a shape with a known area
 
-Each rule swaps the curve on a slice for a flat line, a chord or a parabola, with exact areas. The error is the area between curve and stand-in. Taylor's theorem ([taylors-theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)) sizes that gap through a derivative read somewhere in between.
+Each rule swaps the curve on a slice for a flat line, a chord or a parabola, with exact areas. The error is the area between curve and stand-in. Taylor's theorem ([Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md)) sizes that gap through a derivative read somewhere in between.
 
 ### Step 1: the midpoint rule's slope term cancels
 
@@ -98,7 +78,7 @@ Integrate over the slice. The first term gives h·f(m), the rectangle. The slope
 
 ### Step 2: the trapezoid rule's chord misses by a parabola's worth
 
-The chord meets the curve at both slice ends. Between them the gap at x is exactly ½f″(ζ)·(x − left end)(x − right end), for some point ζ (zeta) in the slice: Rolle's theorem used twice ([mean-value-theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)), in the folded proof. That product integrates to h^3/6, so one slice errs by at most K₂h^3/12 and the interval by K₂(b − a)h^2/12, twice the midpoint's ceiling.
+The chord meets the curve at both slice ends. Between them the gap at x is exactly ½f″(ζ)·(x − left end)(x − right end), for some point ζ (zeta) in the slice: Rolle's theorem used twice ([Mean value theorem](../03-What%20Derivatives%20Tell%20You/02-mean-value-theorem.md)), in the folded proof. That product integrates to h^3/6, so one slice errs by at most K₂h^3/12 and the interval by K₂(b − a)h^2/12, twice the midpoint's ceiling.
 
 Signs matter too. On [0, 1], f″ = (x^2 − 1)·f is never positive, so the curve bends down: chords lie under it, and midpoint rectangles, the areas under centre tangents, over it. The rules bracket the truth: 0.340081845 ≤ I ≤ 0.341977187.
 
@@ -387,8 +367,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Statistics tables.** Printed bell-curve areas such as 0.341345 come from rules like these or the series.
-- **Option pricing.** Heston's model prices an option as an integral with no antiderivative, computed by such a rule: [heston-pricing-by-characteristic-function](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md).
-- **Digital audio.** The trapezoid rule turns an analogue filter into a digital one: digital-filters-fir-and-iir.
+- **Option pricing.** Heston's model prices an option as an integral with no antiderivative, computed by such a rule: [Pricing Heston exactly](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md).
+- **Digital audio.** The trapezoid rule turns an analogue filter into a digital one: Digital filters.
 
 > **Say it back**
 > With no antiderivative, weight sampled heights: centres, ends, or a parabola per pair of slices. The errors are at most a derivative ceiling over the whole interval times h^2 or h^4, over 24, 12 or 180. Solving for n guarantees a target. For the bell curve from 0 to 1, twelve Simpson slices give 0.341345.
@@ -397,17 +377,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [taylors-theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): the remainder that sizes each gap and the series tail.
-- [riemann-integral](01-riemann-integral.md): the integral as a limit of slice sums.
+- [Taylor's theorem](../03-What%20Derivatives%20Tell%20You/05-taylors-theorem.md): the remainder that sizes each gap and the series tail.
+- [The integral](01-riemann-integral.md): the integral as a limit of slice sums.
 
 ## Where this goes next
 
-- [stirlings-approximation](../06-Series/09-stirlings-approximation.md): n! sized by comparing a sum with an integral.
-- [heston-pricing-by-characteristic-function](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md): an option price computed by quadrature.
-- digital-filters-fir-and-iir: the trapezoid rule as a filter design.
-- newton-cotes-and-composite-rules: the whole family of weighted rules.
+- [Stirling's approximation](../06-Series/09-stirlings-approximation.md): n! sized by comparing a sum with an integral.
+- [Pricing Heston exactly](../../12-Financial%20mathematics/14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/02-heston-pricing-by-characteristic-function.md): an option price computed by quadrature.
+- Digital filters: the trapezoid rule as a filter design.
+- Trapezoid, midpoint and Simpson: the whole family of weighted rules.
 
-Equal slices and fixed weights are one choice; which points and weights buy the most accuracy per height is the question newton-cotes-and-composite-rules takes up.
+Equal slices and fixed weights are one choice; which points and weights buy the most accuracy per height is the question Trapezoid, midpoint and Simpson takes up.
 
 ---
 

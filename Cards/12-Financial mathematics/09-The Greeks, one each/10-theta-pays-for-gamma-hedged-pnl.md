@@ -1,31 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Greeks, one each
-topic: Rent on curvature
-item: Theta pays for gamma
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/09-greeks-together-taylor-pnl|greeks-together-taylor-pnl]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/04-theta|theta]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/02-gamma|gamma]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/07-black-scholes-equation|black-scholes-equation]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/03-quadratic-variation|quadratic-variation]]"
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/04-euler-maruyama-scheme|euler-maruyama-scheme]]"
-next:
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/05-merton-greeks-hedge-error-and-calibration|merton-greeks-hedge-error-and-calibration]]"
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/01-realised-variance-from-daily-prices|realised-variance-from-daily-prices]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - theta-pays-for-gamma-hedged-pnl
----
-
 # Theta pays for gamma: the delta-hedged profit and loss, and the break-even daily move
 
-Financial mathematics → The Greeks, one each → Rent on curvature → Theta pays for gamma
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Greeks, one each](../../../SYLLABUS.md#w12-s09) → Theta pays for gamma
 
 ---
 
@@ -33,7 +8,7 @@ Financial mathematics → The Greeks, one each → Rent on curvature → Theta p
 
 A dealer sells one Acme call in the house market. Acme trades at $100. The call gives its owner the right to buy one share for $100 a year from now. Rates are 5 percent, dividends 2 percent, volatility (how jumpy Acme is) 20 percent. The dealer collects $9.23.
 
-The dealer does not want to bet on Acme. So the dealer buys 0.586851 of a share, the call's [delta](01-delta.md), borrowing the difference from the bank. A small move in Acme now leaves the book (the dealer's combined position) unchanged. Adjusting the share count every trading day as delta drifts is **delta hedging**.
+The dealer does not want to bet on Acme. So the dealer buys 0.586851 of a share, the call's [Delta](01-delta.md), borrowing the difference from the bank. A small move in Acme now leaves the book (the dealer's combined position) unchanged. Adjusting the share count every trading day as delta drifts is **delta hedging**.
 
 Two things still move the book. The clock runs and the call loses value: that loss is **theta**, and the seller pockets it. And the call's price curves upward, so its slope shifts as Acme moves and the hedge is always slightly stale. That curvature is **gamma**, and the seller pays for it on every sizeable move, up or down.
 
@@ -125,7 +100,7 @@ Hedged continuously, the squared moves add up to a known total (quadratic variat
 
 ### Step 1: expand the call's price over one step
 
-Over one step the call's price changes by, to second order (the Taylor expansion done on the [greeks-together-taylor-pnl](09-greeks-together-taylor-pnl.md) card):
+Over one step the call's price changes by, to second order (the Taylor expansion done on the [The Greeks together](09-greeks-together-taylor-pnl.md) card):
 
 $$\delta V \;\approx\; \Theta\,\delta t \;+\; \Delta\,\delta S \;+\; \tfrac12\,\Gamma\,(\delta S)^2$$
 
@@ -147,7 +122,7 @@ Theta is income, the bend a cost on every move, and the last bracket the net fin
 
 ### Step 3: the Black-Scholes equation turns the bill into rent
 
-The [black-scholes-equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md) is Step 0's no-free-money demand as an equation:
+The [The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md) is Step 0's no-free-money demand as an equation:
 
 $$\Theta + \tfrac12\sigma^2 S^2\Gamma + (r-q)S\Delta - rV = 0.$$
 
@@ -172,7 +147,7 @@ Randomness adds up in variance, not in size: five independent days have five tim
 
 ### Step 5: add up the days
 
-Over a year the squared daily moves add up to the realised variance (the [quadratic-variation](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/03-quadratic-variation.md) card): in the limit, $(\delta S)^2$ adds up to $\sigma_{\text{real}}^2 S^2\,\delta t$ per step. Each day's result earns the bank rate until expiry, so it gets the factor $e^{r(T-t)}$. At exactly 20 percent the bracket averages zero, and so does the book. At 30 percent the continuous-time bracket is negative at every instant and gamma is positive, so the continuously hedged seller loses on every path.
+Over a year the squared daily moves add up to the realised variance (the [Quadratic variation](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/03-quadratic-variation.md) card): in the limit, $(\delta S)^2$ adds up to $\sigma_{\text{real}}^2 S^2\,\delta t$ per step. Each day's result earns the bank rate until expiry, so it gets the factor $e^{r(T-t)}$. At exactly 20 percent the bracket averages zero, and so does the book. At 30 percent the continuous-time bracket is negative at every instant and gamma is positive, so the continuously hedged seller loses on every path.
 
 <details>
 <summary>Detailed proof: the continuously hedged book, exactly</summary>
@@ -195,9 +170,9 @@ The same lines go through with $\sigma_{\text{real}}$ varying over time. This is
 
 With matched volatility the bracket averages zero but is not zero on any one day. The move is $\sigma S\sqrt{\delta t}$ times a bell-curve draw, so the day's result is $\tfrac12\Gamma\sigma^2S^2\delta t$ times one minus that draw squared: noise of size proportional to $\delta t = T/n$. Adding $n$ independent days gives variance proportional to $n \times (T/n)^2 = T^2/n$, so the spread goes like $1/\sqrt{n}$. Four times the rebalancing halves it.
 
-With mismatched volatility, a shorter argument gives the average loss. When Acme drifts at $r - q$, any self-financing book of shares and cash (one that adds and withdraws no money after the start) grows on average at the bank rate. The seller's book starts at the $9.23 collected and ends on average at that amount carried at 5 percent. The call's payoff, averaged over a 30 percent world and discounted, is the 30 percent Black-Scholes price. So the average loss at expiry is $C(30\%) - C(20\%)$ carried forward a year: $3.7933 grows to $3.9878. Today's value of that loss, $3.7933, is to first order [vega](03-vega.md) times the ten-point gap, $3.7901: the vega gap.
+With mismatched volatility, a shorter argument gives the average loss. When Acme drifts at $r - q$, any self-financing book of shares and cash (one that adds and withdraws no money after the start) grows on average at the bank rate. The seller's book starts at the $9.23 collected and ends on average at that amount carried at 5 percent. The call's payoff, averaged over a 30 percent world and discounted, is the 30 percent Black-Scholes price. So the average loss at expiry is $C(30\%) - C(20\%)$ carried forward a year: $3.7933 grows to $3.9878. Today's value of that loss, $3.7933, is to first order [Vega](03-vega.md) times the ten-point gap, $3.7901: the vega gap.
 
-The same identity can be reached from the other end: solve the Black-Scholes equation first and read it at one point, which is how the [theta](04-theta.md) card uses it to check its closed form.
+The same identity can be reached from the other end: solve the Black-Scholes equation first and read it at one point, which is how the [Theta](04-theta.md) card uses it to check its closed form.
 
 ---
 
@@ -216,7 +191,7 @@ Acme at $S = 100$ with the strike at the same level, $r = 5\%$, $q = 2\%$, $\sig
 | net carry per trading day | $(1.760553 - 0.461350)/252$ | $0.005156 |
 | **break-even daily move** | $0.20 \times 100 \times \sqrt{1/252}$ | **$1.259882** |
 
-The identity's theta matches the closed-form theta of the [theta](04-theta.md) card, −$5.089319 a year. That card quotes −$0.013943 per calendar day, dividing by 365; this card counts the 252 trading days, when the hedge can be rebalanced.
+The identity's theta matches the closed-form theta of the [Theta](04-theta.md) card, −$5.089319 a year. That card quotes −$0.013943 per calendar day, dividing by 365; this card counts the 252 trading days, when the hedge can be rebalanced.
 
 A dealer short this call keeps one and a half cents on a trading day when Acme moves less than $1.26, and loses on a day it moves more.
 
@@ -284,7 +259,7 @@ Orange: Acme at 20 percent, as priced. A narrow spike at zero; 90 percent of yea
 
 ## Code, from first principles, and it actually runs
 
-Three independent roads. Road 1 bumps the call's price for delta and gamma, and checks the identity against the closed-form theta and a bumped-clock theta. Road 2 reprices the seller's book one trading day later and finds the break-even moves by bisection, never using $\sigma S\sqrt{\delta t}$. Road 3 hedges 2,000 simulated years step by step ([euler-maruyama-scheme](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md), exact here because the log-price step is a bell-curve draw), tracking cash, interest, dividends and trades. The bell-curve area is a power series and the random numbers a hand-written generator, the same in both languages, so the outputs agree digit for digit.
+Three independent roads. Road 1 bumps the call's price for delta and gamma, and checks the identity against the closed-form theta and a bumped-clock theta. Road 2 reprices the seller's book one trading day later and finds the break-even moves by bisection, never using $\sigma S\sqrt{\delta t}$. Road 3 hedges 2,000 simulated years step by step ([Euler-Maruyama](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md), exact here because the log-price step is a bell-curve draw), tracking cash, interest, dividends and trades. The bell-curve area is a power series and the random numbers a hand-written generator, the same in both languages, so the outputs agree digit for digit.
 
 ### Python
 
@@ -711,9 +686,9 @@ The outputs are identical. Road 1 gives the house theta, −5.089319, three ways
 
 - **Market makers.** A dealer short options and hedged daily watches the day's break-even move, $1.26 on the Acme call. A quieter day pays; a busier one costs.
 - **Volatility trading.** A desk that buys options and delta hedges them bets that realised volatility beats implied: this card's formula with the sign flipped, "long gamma, short theta" on the desk.
-- **Variance swaps.** A contract paying realised variance minus a fixed strike, with the gamma weighting stripped out by holding a spread of strikes; see [realised-variance-from-daily-prices](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md).
+- **Variance swaps.** A contract paying realised variance minus a fixed strike, with the gamma weighting stripped out by holding a spread of strikes; see [Realised variance](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md).
 - **Risk reports.** One common desk measure, "dollar gamma" (definitions vary by desk), is $\tfrac12\Gamma S^2$ times one percent squared, for the profit from a one-percent move. It is the rent formula read per unit of variance.
-- **Jumps and earnings days.** A share that gaps overnight breaks the continuous-hedge assumption. The seller pays the whole bend at once; see [merton-greeks-hedge-error-and-calibration](../13-Local%20volatility%20and%20jumps/05-merton-greeks-hedge-error-and-calibration.md).
+- **Jumps and earnings days.** A share that gaps overnight breaks the continuous-hedge assumption. The seller pays the whole bend at once; see [Greeks under jumps](../13-Local%20volatility%20and%20jumps/05-merton-greeks-hedge-error-and-calibration.md).
 
 > **Say it back**
 > A delta-hedged option has no view on direction; what is left is the bend and the clock. The Black-Scholes equation sets the clock's charge, after interest and dividends, equal to half gamma times the squared share price times variance: theta pays for gamma. Each step the hedged seller keeps half gamma times the squared move promised minus the squared move delivered, so the break-even day is $1.26 on Acme. Over a year the result is centred on zero when the world moves as priced, with spread falling like one over root n. When the world moves more, the seller loses the gamma-weighted variance gap, about the vega gap.
@@ -722,17 +697,17 @@ The outputs are identical. Road 1 gives the house theta, −5.089319, three ways
 
 ## What this builds on
 
-- [greeks-together-taylor-pnl](09-greeks-together-taylor-pnl.md): the expansion in Step 1.
-- [theta](04-theta.md): the closed form the identity reproduces.
-- [gamma](02-gamma.md): the curvature the rent is charged on.
-- [black-scholes-equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md): the equation rearranged in Step 3.
-- [quadratic-variation](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/03-quadratic-variation.md): why squared moves add up to variance times time.
-- [euler-maruyama-scheme](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): how Road 3 steps its simulated years.
+- [The Greeks together](09-greeks-together-taylor-pnl.md): the expansion in Step 1.
+- [Theta](04-theta.md): the closed form the identity reproduces.
+- [Gamma](02-gamma.md): the curvature the rent is charged on.
+- [The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md): the equation rearranged in Step 3.
+- [Quadratic variation](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/03-quadratic-variation.md): why squared moves add up to variance times time.
+- [Euler-Maruyama](../../11-Stochastic%20processes%20and%20calculus/08-Generators%2C%20Densities%20and%20Simulation/04-euler-maruyama-scheme.md): how Road 3 steps its simulated years.
 
 ## Where this goes next
 
-- [merton-greeks-hedge-error-and-calibration](../13-Local%20volatility%20and%20jumps/05-merton-greeks-hedge-error-and-calibration.md): what happens to this book when the share can jump, and no rebalancing frequency removes the loss.
-- [realised-variance-from-daily-prices](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md): how the realised variance that settles this bet is measured from daily closing prices.
+- [Greeks under jumps](../13-Local%20volatility%20and%20jumps/05-merton-greeks-hedge-error-and-calibration.md): what happens to this book when the share can jump, and no rebalancing frequency removes the loss.
+- [Realised variance](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md): how the realised variance that settles this bet is measured from daily closing prices.
 
 A hedged option is a bet on variance with an awkward weight, gamma along the path; how to strip that weight off and trade variance cleanly is what the variance-swap shelf answers.
 

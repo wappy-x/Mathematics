@@ -1,29 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Matchings and Flows
-topic: Growing a pairing
-item: Matchings
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/05-bipartite-graphs-and-odd-cycles|bipartite-graphs-and-odd-cycles]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/13-Matchings and Flows/02-halls-marriage-theorem|halls-marriage-theorem]]"
-  - "[[Cards/04-Combinatorics and graphs/13-Matchings and Flows/04-stable-matching-gale-shapley|stable-matching-gale-shapley]]"
-  - "[[Cards/14-Applied and computational/05-Operations Research/05-assignment-and-the-hungarian-algorithm|assignment-and-the-hungarian-algorithm]]"
-  - "[[Cards/15-Optimization/05-Integer and Combinatorial Optimisation/05-total-unimodularity|total-unimodularity]]"
-  - "[[Cards/24-Computability and complexity/05-Algebraic, Interactive and Quantum/03-algebraic-complexity-permanent-versus-determinant|algebraic-complexity-permanent-versus-determinant]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - matchings-and-augmenting-paths
----
-
 # Matchings: pair up vertices with no one used twice, and a matching is largest exactly when no alternating route can improve it
 
-Combinatorics and graphs → Matchings and Flows → Growing a pairing → Matchings
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Matchings and Flows](../../../SYLLABUS.md#w04-s13) → Matchings
 
 ---
 
@@ -68,7 +45,7 @@ One line per tick, 9 in all; thick lines are greedy's four pairs. Tomas and timi
 
 ## The formula
 
-The sign-up sheet is a **bipartite graph** $G$: dots in two groups, volunteers and jobs, every line running from one group to the other ([bipartite-graphs-and-odd-cycles](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)). A **matching** $M$ is a set of lines no two sharing a dot: nobody works two jobs. Bars count lines, so $\lvert M\rvert$ is the matching's size. A dot on a line of $M$ is **matched**; any other dot is **free**.
+The sign-up sheet is a **bipartite graph** $G$: dots in two groups, volunteers and jobs, every line running from one group to the other ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)). A **matching** $M$ is a set of lines no two sharing a dot: nobody works two jobs. Bars count lines, so $\lvert M\rvert$ is the matching's size. A dot on a line of $M$ is **matched**; any other dot is **free**.
 
 **Maximal**: no line can be added as it stands. **Maximum**: no matching of $G$ is larger; that size is $\nu(G)$, read "nu of G". **Perfect**: every dot is matched. Greedy's four pairs are maximal, not maximum.
 
@@ -99,7 +76,7 @@ $$\lvert M \triangle P\rvert = \lvert M\rvert + 1$$
 
 - **Any finite graph, not only two-sided ones.** The proof never uses the two groups; the code's simple search does, since an odd loop can fool it, and general graphs need Edmonds' blossom method, a later wing.
 - **Both ends free.** A route ending at a matched dot only moves the gap: stopping the swap at Lena leaves 4 pairs.
-- **Size, not preference or cost.** Who would rather do what, and what a pairing costs, are [stable-matching-gale-shapley](04-stable-matching-gale-shapley.md) and assignment-and-the-hungarian-algorithm.
+- **Size, not preference or cost.** Who would rather do what, and what a pairing costs, are [Stable matching](04-stable-matching-gale-shapley.md) and The assignment problem.
 
 ---
 
@@ -138,7 +115,7 @@ Start from any matching, even the empty one. Search for an augmenting path, flip
 
 The code's search starts at a free volunteer: a free job ends the route, a taken one hands the search to its holder.
 
-A second road: treat each tick as a pipe carrying one unit from volunteers to jobs. An augmenting path is then a route carrying one more unit, taken properly in [flow-networks-and-ford-fulkerson](05-flow-networks-and-ford-fulkerson.md).
+A second road: treat each tick as a pipe carrying one unit from volunteers to jobs. An augmenting path is then a route carrying one more unit, taken properly in [Flows](05-flow-networks-and-ford-fulkerson.md).
 
 ---
 
@@ -402,8 +379,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Rostering and dispatch.** Nurses to shifts, drivers to waiting riders, reviewers to papers: one each, and a stuck draft is repaired by a chain of reassignments.
-- **Hiring.** Whether every applicant can be placed at all is decided by [halls-marriage-theorem](02-halls-marriage-theorem.md).
-- **Network flow.** Pairing is the smallest case of pushing traffic through pipes, leading to [max-flow-min-cut](06-max-flow-min-cut.md).
+- **Hiring.** Whether every applicant can be placed at all is decided by [Hall's theorem](02-halls-marriage-theorem.md).
+- **Network flow.** Pairing is the smallest case of pushing traffic through pipes, leading to [Max-flow min-cut](06-max-flow-min-cut.md).
 
 > **Say it back**
 > A matching pairs dots along lines, no dot used twice. A matching that takes no extra line may still not be the largest. An augmenting path runs between two free dots, alternating out and in, with one spare outside line; flipping it adds a pair. If no such path exists, the matching is the largest, because any larger one would leave such a path in the difference.
@@ -412,17 +389,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [bipartite-graphs-and-odd-cycles](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md): the two-sided graph, and the odd loops that complicate the search outside it.
+- [Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md): the two-sided graph, and the odd loops that complicate the search outside it.
 
 ## Where this goes next
 
-- [halls-marriage-theorem](02-halls-marriage-theorem.md): when a matching can cover one whole side.
-- [stable-matching-gale-shapley](04-stable-matching-gale-shapley.md): pairings that respect preferences, not only size.
-- assignment-and-the-hungarian-algorithm: the cheapest perfect matching when every pair has a cost.
-- total-unimodularity: why matching problems solved with fractions still land on whole pairs.
-- algebraic-complexity-permanent-versus-determinant: counting perfect matchings, the 2 here, is easy to state and hard to compute.
+- [Hall's theorem](02-halls-marriage-theorem.md): when a matching can cover one whole side.
+- [Stable matching](04-stable-matching-gale-shapley.md): pairings that respect preferences, not only size.
+- The assignment problem: the cheapest perfect matching when every pair has a cost.
+- Total unimodularity: why matching problems solved with fractions still land on whole pairs.
+- Permanent against determinant: counting perfect matchings, the 2 here, is easy to state and hard to compute.
 
-Berge says when a matching is stuck but not why; which crowded group of volunteers blocks a full pairing is the question [halls-marriage-theorem](02-halls-marriage-theorem.md) answers.
+Berge says when a matching is stuck but not why; which crowded group of volunteers blocks a full pairing is the question [Hall's theorem](02-halls-marriage-theorem.md) answers.
 
 ---
 

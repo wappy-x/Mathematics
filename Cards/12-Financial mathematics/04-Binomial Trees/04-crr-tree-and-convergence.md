@@ -1,32 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Binomial Trees
-topic: Step size from volatility
-item: Cox-Ross-Rubinstein
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/03-multi-step-trees-and-backward-induction|multi-step-trees-and-backward-induction]]"
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/03-normal-approximation-to-binomial|normal-approximation-to-binomial]]"
-next:
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/05-american-exercise-on-a-tree|american-exercise-on-a-tree]]"
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/06-trinomial-trees-and-the-grid-connection|trinomial-trees-and-the-grid-connection]]"
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/01-geometric-brownian-motion-for-prices|geometric-brownian-motion-for-prices]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/08-known-cash-dividends|known-cash-dividends]]"
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/01-american-options-and-early-exercise|american-options-and-early-exercise]]"
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/03-bermudan-options|bermudan-options]]"
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/03-discrete-monitoring-correction|discrete-monitoring-correction]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - crr-tree-and-convergence
----
-
 # Cox-Ross-Rubinstein: choosing u and d from volatility, and watching the tree price converge
 
-Financial mathematics → Binomial Trees → Step size from volatility → Cox-Ross-Rubinstein
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Binomial Trees](../../../SYLLABUS.md#w12-s04) → Cox-Ross-Rubinstein
 
 ---
 
@@ -34,9 +8,9 @@ Financial mathematics → Binomial Trees → Step size from volatility → Cox-R
 
 Acme shares trade at $100.00. A one-year call on them has to be priced: the right, and not the duty, to buy one share for $100.00 a year from today.
 
-A tree prices that call by letting the share step up or down one step at a time, writing down what the option pays at each far end, and walking those values back to today ([multi-step-trees-and-backward-induction](03-multi-step-trees-and-backward-induction.md)). That card walked the tree without saying where the up and down sizes come from, and everything hangs on them: too narrow and the tree describes a calmer company than Acme, too wide and it describes a wilder one, and either way the option is mispriced.
+A tree prices that call by letting the share step up or down one step at a time, writing down what the option pays at each far end, and walking those values back to today ([Many steps](03-multi-step-trees-and-backward-induction.md)). That card walked the tree without saying where the up and down sizes come from, and everything hangs on them: too narrow and the tree describes a calmer company than Acme, too wide and it describes a wilder one, and either way the option is mispriced.
 
-The market offers one number for how far Acme wanders: its volatility, 20 percent a year, the typical size of one year's move measured in [logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md), the scale on which multiplying turns into adding. John Cox, Stephen Ross and Mark Rubinstein published the standard way to turn that one number into branch sizes in 1979.
+The market offers one number for how far Acme wanders: its volatility, 20 percent a year, the typical size of one year's move measured in [Logarithms](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/05-logarithms.md), the scale on which multiplying turns into adding. John Cox, Stephen Ross and Mark Rubinstein published the standard way to turn that one number into branch sizes in 1979.
 
 Their recipe on the crudest tree there is, one step of a whole year: Acme goes up to $122.14 or down to $81.87, and the call comes out at $11.07. Two steps: $8.34. Ten steps: $9.04. Eleven: $9.40. The answer is not creeping towards anything — it is hopping over it. Two thousand steps: **$9.2260**, against the $9.2270 it is chasing.
 
@@ -84,13 +58,13 @@ $$p = \frac{e^{(r-q)\Delta t} - d}{u - d}$$
 | $p$ | the weight on the up branch, a pricing weight and not a forecast | 0.525797 on a year-long step | — |
 | $C_n$ | the price the $n$-step tree returns | 9.226034 at 2,000 steps | — |
 
-Because $d$ is one divided by $u$, an up followed by a down lands back where it started: the tree *recombines*, and $n$ steps end in $n + 1$ prices rather than two raised to the $n$. The down branch carries the weight left over, one minus $p$ ([risk-neutral-probability](02-risk-neutral-probability.md)).
+Because $d$ is one divided by $u$, an up followed by a down lands back where it started: the tree *recombines*, and $n$ steps end in $n + 1$ prices rather than two raised to the $n$. The down branch carries the weight left over, one minus $p$ ([The risk-neutral probability](02-risk-neutral-probability.md)).
 
 ### When it holds
 
 - **One fixed volatility for the whole life.** Every branch is sized by the same 20 percent. If Acme's volatility moves, the tree prices a share that does not exist, and no number of steps repairs it.
 - **The weight has to be a weight.** It lands between 0 and 1 only when the bank's one-step growth sits between the two branches, which needs the size of $r - q$ times the square root of $\Delta t$ to stay under $\sigma$. A share with 2 percent volatility on a year-long step fails that: the formula returns 1.256313, and the tree still hands back a number.
-- **Nothing happens between the nodes.** The payoff is read off the end price, and the holder cannot act early — letting them act is one extra comparison per node, on [american-exercise-on-a-tree](05-american-exercise-on-a-tree.md). A dividend paid on a date rather than as a yield knocks the recombination out: [known-cash-dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md).
+- **Nothing happens between the nodes.** The payoff is read off the end price, and the holder cannot act early — letting them act is one extra comparison per node, on [Early exercise](05-american-exercise-on-a-tree.md). A dividend paid on a date rather than as a yield knocks the recombination out: [Known cash dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md).
 - **Convergence is about the limit, not any one tree.** It certifies no step count, and the section on how the price moves shows why eyeballing a few is dangerous.
 
 ---
@@ -101,7 +75,7 @@ Because $d$ is one divided by $u$, an up followed by a down lands back where it 
 
 Prices multiply rather than add, so the quantity to track is the logarithm of the price, where multiplying becomes adding. The continuous model says the log of Acme's price in a year is spread like a bell curve, with a particular centre and a particular spread.
 
-A tree cannot be a bell curve; it has finitely many ends. But it can match that centre and that spread, and the *shape* arrives on its own, because many small two-way moves pile up into a bell curve ([normal-approximation-to-binomial](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md)). Two dials, two targets: the branch size carries the spread, the weight the centre.
+A tree cannot be a bell curve; it has finitely many ends. But it can match that centre and that spread, and the *shape* arrives on its own, because many small two-way moves pile up into a bell curve ([Normal approximation](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md)). Two dials, two targets: the branch size carries the spread, the weight the centre.
 
 ### Step 1: the branch size carries the volatility
 
@@ -115,7 +89,7 @@ Now the centre. Demand that the share's average growth over one step equals the 
 
 $$p\,u + (1-p)\,d = e^{(r-q)\Delta t}$$
 
-One equation, one unknown, and rearranged it is the $p$ from The formula. On a year-long step the bank's growth after dividends is 1.030455, the branches are 1.221403 and 0.818731, and the weight is 0.525797: a hair over a coin flip, and a pricing weight rather than a forecast ([risk-neutral-probability](02-risk-neutral-probability.md)).
+One equation, one unknown, and rearranged it is the $p$ from The formula. On a year-long step the bank's growth after dividends is 1.030455, the branches are 1.221403 and 0.818731, and the weight is 0.525797: a hair over a coin flip, and a pricing weight rather than a forecast ([The risk-neutral probability](02-risk-neutral-probability.md)).
 
 The demand holds at the far end too, not only step by step: averaging the 2,001 end prices of the 2,000-step tree with their weights gives 103.045453, to the last printed digit the forward price — what the share is worth for delivery in a year, $S e^{(r-q)T}$.
 
@@ -140,7 +114,7 @@ Twice the weight minus one is then $(r - q - \tfrac12\sigma^2)\sqrt{\Delta t}/\s
 
 The log of the end price is a sum of $n$ moves, each up or down by the same amount, each weighted by $p$. Step 3 pinned one move's average and spread, and both add over the $n$ steps: the sum has centre $(r - q - \tfrac12\sigma^2)T$ and spread $\sigma^2 T$, each missed by a remainder that shrinks with the step. At 10 steps the centre is out by 0.000032, a third of a percent of the drift it aims at; at 2,000 steps by nothing the six printed decimals can show.
 
-What changes most with $n$ is the shape, and a sum of many two-way moves fills in towards a bell curve ([normal-approximation-to-binomial](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md)). So the end price stops being 2,001 spikes and becomes the distribution the Black-Scholes formula averages the payoff over: same centre, same spread, same shape, same price.
+What changes most with $n$ is the shape, and a sum of many two-way moves fills in towards a bell curve ([Normal approximation](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md)). So the end price stops being 2,001 spikes and becomes the distribution the Black-Scholes formula averages the payoff over: same centre, same spread, same shape, same price.
 
 <details>
 <summary>Detailed proof: matching the distribution is not quite enough</summary>
@@ -159,7 +133,7 @@ Nothing here proves a *rate*, and nothing says a tree's hedge holdings or exerci
 
 </details>
 
-**The other route.** Two dials and two targets can be set other ways: give both branches weight one half, let the up and down moves differ in size, and the same targets are met by a tree that wobbles to a different tune. A third branch, letting the share stay put, adds a spare dial — [trinomial-trees-and-the-grid-connection](06-trinomial-trees-and-the-grid-connection.md).
+**The other route.** Two dials and two targets can be set other ways: give both branches weight one half, let the up and down moves differ in size, and the same targets are met by a tree that wobbles to a different tune. A third branch, letting the share stay put, adds a spare dial — [Trinomial trees](06-trinomial-trees-and-the-grid-connection.md).
 
 ---
 
@@ -698,7 +672,7 @@ The two outputs match line for line, to the last printed digit.
 > **Reading a price off a tree that has not arrived.** At 20 steps it is 9.130450, at 21 steps 9.315376: nearly 19 cents apart, both wrong, one on each side. Use a step count in the hundreds at least, or average consecutive counts, and never trust a tree whose answer has not been watched move.
 >
 > - **Treating $u$ and $d$ as forecasts.** They are not where Acme is expected to go, but the pair whose spread matches a 20 percent volatility. A bull and a bear who agree on volatility build the same tree.
-> - **Treating $p$ as the chance of a rise.** It is a pricing weight ([risk-neutral-probability](02-risk-neutral-probability.md)); swap in a fair coin and the same tree returns 8.651564.
+> - **Treating $p$ as the chance of a rise.** It is a pricing weight ([The risk-neutral probability](02-risk-neutral-probability.md)); swap in a fair coin and the same tree returns 8.651564.
 > - **Dropping the dividend yield from the weight.** The growth there is $e^{(r-q)\Delta t}$, not $e^{r\Delta t}$: drop the 2 percent and the answer is 10.449584, a 13 percent overprice with no visible bug.
 > - **Writing the move as $\sigma\Delta t$.** Volatility scales with the square root of time; at 2,000 steps that slip returns 2.896925, the discounted gain on the forward rather than an option price.
 
@@ -706,10 +680,10 @@ The two outputs match line for line, to the last printed digit.
 
 ## Where you meet it in real life
 
-- **Listed American options.** A single-stock option on a US exchange can be exercised early, and no formula prices that. Desks use exactly this tree with one extra comparison per node: [american-exercise-on-a-tree](05-american-exercise-on-a-tree.md), [american-options-and-early-exercise](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md).
-- **Employee share options and convertible bonds.** Vesting, forfeiture, a call feature or an exercise calendar bolt onto nodes easily and resist being written as a formula. The calendar case is [bermudan-options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md).
+- **Listed American options.** A single-stock option on a US exchange can be exercised early, and no formula prices that. Desks use exactly this tree with one extra comparison per node: [Early exercise](05-american-exercise-on-a-tree.md), [American options](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md).
+- **Employee share options and convertible bonds.** Vesting, forfeiture, a call feature or an exercise calendar bolt onto nodes easily and resist being written as a formula. The calendar case is [Bermudan options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md).
 - **Testing a pricing library.** A tree and a formula are independent enough that each tests the other, as the checks here do.
-- **Contracts watched on dates rather than continuously.** A barrier checked daily behaves like a coarse grid: [discrete-monitoring-correction](../16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md).
+- **Contracts watched on dates rather than continuously.** A barrier checked daily behaves like a coarse grid: [Daily monitoring](../16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md).
 
 > **Say it back**
 > A tree needs an up size, a down size and a weight. Cox, Ross and Rubinstein set the up size to e raised to the volatility times the square root of the step, the down size to its reciprocal so the tree recombines, and the weight to whatever makes the share's average growth match the bank's after dividends. That fixes the centre and spread of the log price at every step, and many two-way steps pile up into the bell curve Black-Scholes uses, so the prices close on the Black-Scholes price. They close by hopping: even step counts land below, odd ones above. Doubling the steps halves the gap; averaging two consecutive counts cancels most of it.
@@ -718,18 +692,18 @@ The two outputs match line for line, to the last printed digit.
 
 ## What this builds on
 
-- [multi-step-trees-and-backward-induction](03-multi-step-trees-and-backward-induction.md): the backward walk this card feeds sizes into, and why a recombining tree is cheap to price.
-- [normal-approximation-to-binomial](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md): why many two-way moves fill in towards a bell curve rather than a fence of spikes.
+- [Many steps](03-multi-step-trees-and-backward-induction.md): the backward walk this card feeds sizes into, and why a recombining tree is cheap to price.
+- [Normal approximation](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/03-normal-approximation-to-binomial.md): why many two-way moves fill in towards a bell curve rather than a fence of spikes.
 
 ## Where this goes next
 
-- [american-exercise-on-a-tree](05-american-exercise-on-a-tree.md): one comparison per node, and the tree does what no formula can.
-- [trinomial-trees-and-the-grid-connection](06-trinomial-trees-and-the-grid-connection.md): a third branch, a spare dial, and a smoother approach to the same limit.
-- [geometric-brownian-motion-for-prices](../05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md): the continuous share this tree is a chopped-up copy of.
-- [known-cash-dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md): what happens to the neat recombining grid when the payout lands on a date.
-- [american-options-and-early-exercise](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md): when acting early is worth money, and how much.
-- [bermudan-options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md): exercise on a list of dates, a tree with the comparison switched on at some layers only.
-- [discrete-monitoring-correction](../16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md): the same grid-against-continuum gap, for contracts watched on a schedule.
+- [Early exercise](05-american-exercise-on-a-tree.md): one comparison per node, and the tree does what no formula can.
+- [Trinomial trees](06-trinomial-trees-and-the-grid-connection.md): a third branch, a spare dial, and a smoother approach to the same limit.
+- [Prices as geometric Brownian motion](../05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md): the continuous share this tree is a chopped-up copy of.
+- [Known cash dividends](../08-The%20Black-Scholes%20call%20and%20put/08-known-cash-dividends.md): what happens to the neat recombining grid when the payout lands on a date.
+- [American options](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md): when acting early is worth money, and how much.
+- [Bermudan options](../15-American%20and%20Bermudan%20exercise/03-bermudan-options.md): exercise on a list of dates, a tree with the comparison switched on at some layers only.
+- [Daily monitoring](../16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md): the same grid-against-continuum gap, for contracts watched on a schedule.
 
 Every number here came from a European call, whose holder can do nothing until the last day. The next card hands that holder the right to act at every node, and asks what the freedom is worth.
 

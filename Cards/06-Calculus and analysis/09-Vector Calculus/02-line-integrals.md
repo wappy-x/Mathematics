@@ -1,29 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Vector Calculus
-topic: Work along a route
-item: Line integrals of a field
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/01-scalar-line-integrals|scalar-line-integrals]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/03-gradient-and-directional-derivatives|gradient-and-directional-derivatives]]"
-next:
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/04-conservative-fields-and-potentials|conservative-fields-and-potentials]]"
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/06-greens-theorem|greens-theorem]]"
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/01-contour-integrals|contour-integrals]]"
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/05-magnetism-and-faradays-law|magnetism-and-faradays-law]]"
-  - "[[Cards/13-Engineering mathematics/07-Mechanics and Structures/01-newtons-laws-work-and-energy|newtons-laws-work-and-energy]]"
-  - "[[Cards/13-Engineering mathematics/08-Fluids and Heat/01-continuity-and-bernoulli|continuity-and-bernoulli]]"
-  - "[[Cards/13-Engineering mathematics/08-Fluids and Heat/07-thermodynamic-laws-and-entropy|thermodynamic-laws-and-entropy]]"
-tags: [mathematics, calculus and analysis, line-integrals]
----
-
 # Line integrals of a field: work done along a path
 
-Calculus and analysis → Vector Calculus → Work along a route → Line integrals of a field
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Vector Calculus](../../../SYLLABUS.md#w06-s09) → Line integrals of a field
 
 ---
 
@@ -91,7 +68,7 @@ Cut the route into short pieces. Dot the wind at each piece's middle with its ch
 
 On the curve, 4 pieces give 9.375000 J, short by 0.625000 J; 16 pieces, short by 0.039062 J. To land within 0.01 J, 32 pieces suffice: short by 0.009766 J. With 64, 0.002441 J.
 
-Over a short clock step the chord is almost $r'(t)$ times the step, so the sum is almost a sum of $F(r(t)) \cdot r'(t)$ times clock steps: a Riemann sum ([riemann-integral](../04-Integrals/01-riemann-integral.md)), and it closes in on the integral.
+Over a short clock step the chord is almost $r'(t)$ times the step, so the sum is almost a sum of $F(r(t)) \cdot r'(t)$ times clock steps: a Riemann sum ([The integral](../04-Integrals/01-riemann-integral.md)), and it closes in on the integral.
 
 <details>
 <summary>Detailed proof: every fine force-times-chord sum tends to the integral</summary>
@@ -108,9 +85,9 @@ with L the route's length. As ε shrinks, S tends to W, whatever readings are pi
 
 ### Step 2: the pace does not matter, the direction does
 
-Push straight from A to B, starting slowly: position $(40s^2, 30s^2)$ as a new clock s runs from 0 to 1. The chain rule multiplies the velocity by $2s$, the rate of $t = s^2$; the substitution rule ([substitution](../04-Integrals/03-substitution.md)) removes exactly that factor, so the work is 30 J again.
+Push straight from A to B, starting slowly: position $(40s^2, 30s^2)$ as a new clock s runs from 0 to 1. The chain rule multiplies the velocity by $2s$, the rate of $t = s^2$; the substitution rule ([Substitution](../04-Integrals/03-substitution.md)) removes exactly that factor, so the work is 30 J again.
 
-In general, a forward clock change $t = \varphi(s)$ leaves the integral unchanged. A backward one, B to A, swaps the limits, which flips the sign: −30 J. Reversing the route reverses every chord, so the Step 1 sums flip sign too. On [scalar-line-integrals](01-scalar-line-integrals.md) each small length counts positive either way; here each step carries a direction.
+In general, a forward clock change $t = \varphi(s)$ leaves the integral unchanged. A backward one, B to A, swaps the limits, which flips the sign: −30 J. Reversing the route reverses every chord, so the Step 1 sums flip sign too. On [Line integrals of a function](01-scalar-line-integrals.md) each small length counts positive either way; here each step carries a direction.
 
 ### Step 3: the curve, by hand
 
@@ -122,9 +99,9 @@ In general, a forward clock change $t = \varphi(s)$ leaves the integral unchange
 
 Every route covers 40 m east and 30 m north, but one doing its eastward travel further north collects more help. The 1 N drift costs every route the same −30 J.
 
-Go out north-then-east (90 J) and back along the hedge route reversed (+30 J). The cart ends where it began, yet the wind did 120 J: 0.1 N per metre times the area, 40 m × 30 m. No accident: the wind's shear, how fast its eastward push changes going north, sets its **curl** ([divergence-and-curl](03-divergence-and-curl.md)), here −0.1 N per metre. [greens-theorem](06-greens-theorem.md) proves that the work round an anticlockwise loop is the curl added over the enclosed area. This loop runs clockwise, so its work is the negative: +120 J.
+Go out north-then-east (90 J) and back along the hedge route reversed (+30 J). The cart ends where it began, yet the wind did 120 J: 0.1 N per metre times the area, 40 m × 30 m. No accident: the wind's shear, how fast its eastward push changes going north, sets its **curl** ([Divergence and curl](03-divergence-and-curl.md)), here −0.1 N per metre. [Green's theorem](06-greens-theorem.md) proves that the work round an anticlockwise loop is the curl added over the enclosed area. This loop runs clockwise, so its work is the negative: +120 J.
 
-If the field is the gradient of a function, each step's dot product is that function's rate along the step ([gradient-and-directional-derivatives](../07-Several%20Variables/03-gradient-and-directional-derivatives.md)), so the work is its change from A to B and every loop gets 0 J. This wind is no gradient; [conservative-fields-and-potentials](04-conservative-fields-and-potentials.md) takes that road.
+If the field is the gradient of a function, each step's dot product is that function's rate along the step ([Gradient](../07-Several%20Variables/03-gradient-and-directional-derivatives.md)), so the work is its change from A to B and every loop gets 0 J. This wind is no gradient; [Conservative fields](04-conservative-fields-and-potentials.md) takes that road.
 
 ---
 
@@ -377,9 +354,9 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Mechanics.** Work by a force along a path is this integral: newtons-laws-work-and-energy.
-- **Electricity.** The voltage driven round a wire loop is the electric field's line integral round it: magnetism-and-faradays-law.
-- **Heat engines.** A gas's work depends on its route through pressure and volume, so an engine cycle can deliver net work: thermodynamic-laws-and-entropy.
+- **Mechanics.** Work by a force along a path is this integral: Newton's laws.
+- **Electricity.** The voltage driven round a wire loop is the electric field's line integral round it: Magnetic fields.
+- **Heat engines.** A gas's work depends on its route through pressure and volume, so an engine cycle can deliver net work: The thermodynamic laws.
 
 > **Say it back**
 > A line integral of a field adds the field's part along the motion times each small step. With a clock, it is the field dotted with the velocity, added over the clock. Pace does not change it; reversal flips its sign. Across the windy field, routes from A to B get 30, 10, −30 and 90 J, and a loop gets 120 J, because the wind shears.
@@ -388,20 +365,20 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [scalar-line-integrals](01-scalar-line-integrals.md): adding along a route by small lengths, unsigned.
-- [gradient-and-directional-derivatives](../07-Several%20Variables/03-gradient-and-directional-derivatives.md): the dot product with a direction, and gradient fields.
+- [Line integrals of a function](01-scalar-line-integrals.md): adding along a route by small lengths, unsigned.
+- [Gradient](../07-Several%20Variables/03-gradient-and-directional-derivatives.md): the dot product with a direction, and gradient fields.
 
 ## Where this goes next
 
-- [conservative-fields-and-potentials](04-conservative-fields-and-potentials.md): fields whose work depends only on the ends.
-- [greens-theorem](06-greens-theorem.md): work round a loop as the curl over the area inside.
-- [contour-integrals](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md): the same sum in the complex plane.
-- magnetism-and-faradays-law: the voltage round a loop.
-- newtons-laws-work-and-energy: work and the energy it changes.
-- continuity-and-bernoulli: a flow added along a streamline.
-- thermodynamic-laws-and-entropy: work and heat that depend on the route.
+- [Conservative fields](04-conservative-fields-and-potentials.md): fields whose work depends only on the ends.
+- [Green's theorem](06-greens-theorem.md): work round a loop as the curl over the area inside.
+- [Contour integrals](../../07-Complex%20analysis/03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/01-contour-integrals.md): the same sum in the complex plane.
+- Magnetic fields: the voltage round a loop.
+- Newton's laws: work and the energy it changes.
+- Continuity and Bernoulli: a flow added along a streamline.
+- The thermodynamic laws: work and heat that depend on the route.
 
-Four routes gave four answers; which fields give one answer on every route, and how to tell without trying routes, is [conservative-fields-and-potentials](04-conservative-fields-and-potentials.md).
+Four routes gave four answers; which fields give one answer on every route, and how to tell without trying routes, is [Conservative fields](04-conservative-fields-and-potentials.md).
 
 ---
 

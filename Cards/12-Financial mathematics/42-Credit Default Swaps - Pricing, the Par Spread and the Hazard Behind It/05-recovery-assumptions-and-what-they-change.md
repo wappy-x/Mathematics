@@ -1,27 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It
-topic: Loss given default
-item: Recovery assumptions
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/04-implied-hazard-from-a-cds-quote|implied-hazard-from-a-cds-quote]]"
-next: []
-tags: [mathematics, financial mathematics, recovery-assumptions-and-what-they-change]
----
-
 # Recovery assumptions: one spread, many default probabilities, depending on what you assume you get back
 
-Financial mathematics → Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It → Loss given default → Recovery assumptions
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../../../SYLLABUS.md#w12-s42) → Recovery assumptions
 
 ---
 
 ## General Overview
 
-Northwind Lines, a shipping company, is in trouble. Five years of default insurance on $10 million of its bonds, a credit default swap ([credit-default-swap-contract](01-credit-default-swap-contract.md)), costs 300 basis points a year. A basis point (bp) is a hundredth of a percent, so the buyer pays 3% of $10 million: $300,000 a year, in quarterly slices, while Northwind survives.
+Northwind Lines, a shipping company, is in trouble. Five years of default insurance on $10 million of its bonds, a credit default swap ([The credit default swap](01-credit-default-swap-contract.md)), costs 300 basis points a year. A basis point (bp) is a hundredth of a percent, so the buyer pays 3% of $10 million: $300,000 a year, in quarterly slices, while Northwind survives.
 
 If Northwind defaults, the seller pays what the bonds lost. That is $10 million minus whatever the bondholders **recover** from the wreck: the sale of ships, a restructured claim, a court's settlement. Nobody knows that number in advance.
 
@@ -53,7 +38,7 @@ Upper line (orange): the credit-triangle shortcut, spread divided by the fractio
 
 ## The formula
 
-Notation first, in words. The **hazard** $\lambda$ ("lambda") is the default rate: the chance per year, for a company still alive, of defaulting in the next instant ([implied-hazard-from-a-cds-quote](04-implied-hazard-from-a-cds-quote.md)). The **recovery** $R$ is the fraction of face value bondholders get back at default; $1 - R$ is the fraction lost, which desks call loss given default. With premiums paid at each quarter's end, the fair spread is
+Notation first, in words. The **hazard** $\lambda$ ("lambda") is the default rate: the chance per year, for a company still alive, of defaulting in the next instant ([Implied hazard from one CDS quote](04-implied-hazard-from-a-cds-quote.md)). The **recovery** $R$ is the fraction of face value bondholders get back at default; $1 - R$ is the fraction lost, which desks call loss given default. With premiums paid at each quarter's end, the fair spread is
 
 $$s = (1 - R)\,\lambda\,F, \qquad F = \frac{e^{x} - 1}{x}, \quad x = (r + \lambda)\,\delta.$$
 
@@ -82,14 +67,14 @@ Two consequences carry the card. Fix $R$ and solve for $\lambda$: one answer. Fi
 | $k$ | combined shrink rate $r + \lambda$ used on bond prices | 0.10 in the bond example | — |
 | $V_{face}$, $V_{tsy}$, $V_{mv}$ | a zero-coupon bond's price under recovery of face, of treasury, of market value | $68.52, $67.54, $67.03 per $100 | — |
 
-With continuous premiums $F$ becomes 1, and the formula shrinks to the credit triangle, $s = (1 - R)\lambda$ ([the-credit-triangle](03-the-credit-triangle.md)). That is the upper line in the picture.
+With continuous premiums $F$ becomes 1, and the formula shrinks to the credit triangle, $s = (1 - R)\lambda$ ([The credit triangle](03-the-credit-triangle.md)). That is the upper line in the picture.
 
 ### When it holds
 
 - **One flat hazard for five years.** A term structure of quotes needs a hazard curve instead; with one quote the flat hazard is the only shape the data can fix.
 - **Recovery fixed and known to the model, not random.** If recovery tends to be low exactly when defaults cluster, a fixed $R$ misprices protection; the card's formula has no term for that link.
 - **Recovery paid on face value, at the moment of default.** Delayed settlement or a different recovery base changes the protection leg and so every number here.
-- **A running spread with no upfront, premiums at quarter end, no accrued premium on default.** Accrued premium lowers the fair spread a few basis points ([cds-legs-risky-annuity-and-par-spread](02-cds-legs-risky-annuity-and-par-spread.md)), which shifts every implied hazard a little.
+- **A running spread with no upfront, premiums at quarter end, no accrued premium on default.** Accrued premium lowers the fair spread a few basis points ([Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md)), which shifts every implied hazard a little.
 - **The bond section switches to continuous premiums**, so the triangle holds exactly there; it says so again where it starts.
 
 ---
@@ -102,7 +87,7 @@ Insurance priced fairly charges what it expects to pay out. Per year, protection
 
 ### Step 1: the par equation has only the product in it
 
-The two sides of the contract are valued on the pricing card ([cds-legs-risky-annuity-and-par-spread](02-cds-legs-risky-annuity-and-par-spread.md)). The premium leg is the spread times the risky annuity: a quarter's premium for each of twenty dates, discounted and weighted by the chance Northwind is alive to pay. The protection leg is the loss $1 - R$, paid at the default time $\tau$, discounted and averaged.
+The two sides of the contract are valued on the pricing card ([Pricing a CDS](02-cds-legs-risky-annuity-and-par-spread.md)). The premium leg is the spread times the risky annuity: a quarter's premium for each of twenty dates, discounted and weighted by the chance Northwind is alive to pay. The protection leg is the loss $1 - R$, paid at the default time $\tau$, discounted and averaged.
 
 Recovery appears in exactly one place: as the factor $1 - R$ in front of the protection leg. Hazard appears everywhere, since it sets both the survival weights and the timing of default. Setting the legs equal and dividing gives the par equation, $s = (1 - R)\lambda F$. The contract's length cancels.
 
@@ -149,7 +134,7 @@ recovery 70%   █████████████████████�
 
 The default chance nearly triples between the first and last rows. Anything built on that chance moves with it: a loan-loss reserve, a capital charge, a digital default contract that pays $1 whatever the recovery.
 
-Some things barely move. Another CDS on the same name, valued with the same recovery on both sides, depends on recovery only through the hazard's effect on the risky annuity. A standard contract with a 100 bp coupon, marked at 300 bp, needs an upfront payment ([marking-a-cds-to-market-and-the-upfront](07-marking-a-cds-to-market-and-the-upfront.md)) of $816,583 at 0% recovery, $778,306 at 40% and $693,355 at 70%. The recovery assumption matters most when the loss and the default rate enter a price in different proportions from the CDS itself.
+Some things barely move. Another CDS on the same name, valued with the same recovery on both sides, depends on recovery only through the hazard's effect on the risky annuity. A standard contract with a 100 bp coupon, marked at 300 bp, needs an upfront payment ([Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md)) of $816,583 at 0% recovery, $778,306 at 40% and $693,355 at 70%. The recovery assumption matters most when the loss and the default rate enter a price in different proportions from the CDS itself.
 
 ### Step 4: recovery when the hazard is known
 
@@ -667,10 +652,10 @@ The two outputs match line for line, simulation included: both languages run the
 
 ## Where you meet it in real life
 
-- **Converting a spread to a default probability.** Credit desks, rating analysts and central banks back default chances out of CDS quotes; each figure carries a recovery assumption, stated or not. The implied chance is a pricing number, not a forecast of frequency ([market-implied-versus-historical-default-probability](09-market-implied-versus-historical-default-probability.md)).
-- **Quoting CDS with an upfront.** Standard contracts convert a spread into an upfront payment using a fixed recovery assumption. Because that recovery sits on both legs, the upfront moves far less than the default chance does. Conventions verified 2026-09-28: North American single-name contracts trade a fixed coupon of 100 or 500 bp plus an upfront, converted by the ISDA CDS Standard Model with a fixed recovery, usually 40% for senior unsecured debt ([marking-a-cds-to-market-and-the-upfront](07-marking-a-cds-to-market-and-the-upfront.md)).
-- **Building a hazard curve.** Every hazard in a bootstrapped curve is conditional on one recovery chosen up front ([bootstrapping-the-hazard-curve-from-cds-quotes](06-bootstrapping-the-hazard-curve-from-cds-quotes.md)).
-- **Risk numbers.** Sensitivity to the recovery assumption is reported beside sensitivity to the spread ([cds-risk-numbers](08-cds-risk-numbers.md)).
+- **Converting a spread to a default probability.** Credit desks, rating analysts and central banks back default chances out of CDS quotes; each figure carries a recovery assumption, stated or not. The implied chance is a pricing number, not a forecast of frequency ([Two default probabilities](09-market-implied-versus-historical-default-probability.md)).
+- **Quoting CDS with an upfront.** Standard contracts convert a spread into an upfront payment using a fixed recovery assumption. Because that recovery sits on both legs, the upfront moves far less than the default chance does. Conventions verified 2026-09-28: North American single-name contracts trade a fixed coupon of 100 or 500 bp plus an upfront, converted by the ISDA CDS Standard Model with a fixed recovery, usually 40% for senior unsecured debt ([Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md)).
+- **Building a hazard curve.** Every hazard in a bootstrapped curve is conditional on one recovery chosen up front ([Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md)).
+- **Risk numbers.** Sensitivity to the recovery assumption is reported beside sensitivity to the spread ([CDS risk numbers](08-cds-risk-numbers.md)).
 - **Default auctions.** When a name defaults, an auction sets the recovery that settles its contracts. Until then, recovery is an input, not an observation.
 
 > **Say it back**
@@ -680,13 +665,13 @@ The two outputs match line for line, simulation included: both languages run the
 
 ## What this builds on
 
-- [implied-hazard-from-a-cds-quote](04-implied-hazard-from-a-cds-quote.md): the one-quote inverse, with recovery fixed; this card lets recovery move.
+- [Implied hazard from one CDS quote](04-implied-hazard-from-a-cds-quote.md): the one-quote inverse, with recovery fixed; this card lets recovery move.
 
 ## Where this goes next
 
-- [bootstrapping-the-hazard-curve-from-cds-quotes](06-bootstrapping-the-hazard-curve-from-cds-quotes.md): several quotes, one fixed recovery, a hazard for each stretch of time.
-- [marking-a-cds-to-market-and-the-upfront](07-marking-a-cds-to-market-and-the-upfront.md): why recovery largely cancels when valuing a contract already on the books.
-- [market-implied-versus-historical-default-probability](09-market-implied-versus-historical-default-probability.md): the implied chances here set against default frequencies actually observed.
+- [Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md): several quotes, one fixed recovery, a hazard for each stretch of time.
+- [Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md): why recovery largely cancels when valuing a contract already on the books.
+- [Two default probabilities](09-market-implied-versus-historical-default-probability.md): the implied chances here set against default frequencies actually observed.
 
 With recovery pinned by assumption, a single quote gives a single hazard; the open question is what shape the hazard takes when the market quotes one, three and five years at once.
 

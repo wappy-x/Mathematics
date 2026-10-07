@@ -1,26 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Multiple Integrals
-topic: Mass in solids
-item: Triple integrals
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/01-double-integrals|double-integrals]]"
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/07-cylindrical-and-spherical-coordinates|cylindrical-and-spherical-coordinates]]"
-next:
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/03-change-of-variables-and-jacobians|change-of-variables-and-jacobians]]"
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/07-divergence-theorem|divergence-theorem]]"
-  - "[[Cards/13-Engineering mathematics/07-Mechanics and Structures/02-rigid-body-rotation-and-moment-of-inertia|rigid-body-rotation-and-moment-of-inertia]]"
-  - "[[Cards/23-Differential geometry and Lie groups/05-Riemannian Geometry/07-ricci-and-scalar-curvature|ricci-and-scalar-curvature]]"
-tags: [mathematics, calculus and analysis, triple-integrals]
----
-
 # Triple integrals: mass, moments and centres in three dimensions
 
-Calculus and analysis → Multiple Integrals → Mass in solids → Triple integrals
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Multiple Integrals](../../../SYLLABUS.md#w06-s08) → Triple integrals
 
 ---
 
@@ -44,13 +24,13 @@ Scale 1 cm = 10 units; the 10 cm height points out of the page. Density is 1.25 
 
 ## The formula
 
-Notation first, in words. Two integral signs add over a flat region ([double-integrals](01-double-integrals.md)). Three in a row, with the solid's name at the foot, add over a solid: $\iiint_E \rho\,dV$ is read "the integral over E of rho dV", where $dV$ is one tiny piece's volume and $\rho$ (rho) is density.
+Notation first, in words. Two integral signs add over a flat region ([Double integrals](01-double-integrals.md)). Three in a row, with the solid's name at the foot, add over a solid: $\iiint_E \rho\,dV$ is read "the integral over E of rho dV", where $dV$ is one tiny piece's volume and $\rho$ (rho) is density.
 
 $$M = \iiint_E \rho\,dV \qquad Q_x = \iiint_E x\,\rho\,dV \qquad \bar{x} = \frac{Q_x}{M}$$
 
 **Read it aloud:** mass $M$ is density times volume added over the solid; the moment $Q_x$ is the same sum with each piece also times its $x$, its distance from the tip along the wedge's middle line; the balance point $\bar{x}$ (x bar) is moment over mass. With $\rho = 1$ the first sum is plain volume.
 
-In cylindrical coordinates ([cylindrical-and-spherical-coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/07-cylindrical-and-spherical-coordinates.md)) $r$ is distance from the wheel's axis, $\theta$ (theta) the angle from the middle line in radians, and $z$ the height. The wedge, of radius $R$, height $H$ and angle $\alpha$ (alpha), is every point with $r$ from 0 to $R$, $\theta$ from $-\alpha/2$ to $\alpha/2$, and $z$ from 0 to $H$. Density is $1 + r/40$ g/cm^3. A tiny piece has volume $dV = r\,dr\,d\theta\,dz$, so
+In cylindrical coordinates ([Cylindrical and spherical coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/07-cylindrical-and-spherical-coordinates.md)) $r$ is distance from the wheel's axis, $\theta$ (theta) the angle from the middle line in radians, and $z$ the height. The wedge, of radius $R$, height $H$ and angle $\alpha$ (alpha), is every point with $r$ from 0 to $R$, $\theta$ from $-\alpha/2$ to $\alpha/2$, and $z$ from 0 to $H$. Density is $1 + r/40$ g/cm^3. A tiny piece has volume $dV = r\,dr\,d\theta\,dz$, so
 
 $$M = \int_{-\alpha/2}^{\alpha/2} \int_0^R \int_0^H \left(1 + \frac{r}{40}\right) r \, dz\, dr\, d\theta$$
 
@@ -107,7 +87,7 @@ A cell between radii $r$ and $r + dr$, across angle $d\theta$, is a slice of a r
 
 ### Step 4: the centre of mass is where the moments cancel
 
-Pieces of mass $m$ at positions $x$ on a rod balance where the sum of $(x - \bar{x})$ times $m$ is zero ([centre-of-mass-and-pappus](../05-Curves%20and%20Solids/05-centre-of-mass-and-pappus.md)). Solving, $\bar{x}$ is the sum of $x$ times $m$ over the sum of $m$. With shrinking cubes as pieces, the top becomes $Q_x$ and the bottom $M$.
+Pieces of mass $m$ at positions $x$ on a rod balance where the sum of $(x - \bar{x})$ times $m$ is zero ([Centre of mass](../05-Curves%20and%20Solids/05-centre-of-mass-and-pappus.md)). Solving, $\bar{x}$ is the sum of $x$ times $m$ over the sum of $m$. With shrinking cubes as pieces, the top becomes $Q_x$ and the bottom $M$.
 
 Every piece at $y$ has a mirror at $-y$ of equal density, so $\bar{y}$ is 0. Density ignores height, so $\bar{z}$ is half of $H$: 5.0000 cm.
 
@@ -368,7 +348,7 @@ ALL CHECKS PASS
 - **Medical scanners.** A CT scan reports density in small cubes (voxels); summing density times voxel volume, as road two does, weighs an organ.
 - **Loading ships and aircraft.** Fuel in a curved tank shifts the centre of mass, which sets whether the craft trims level.
 - **The Earth's interior.** Density rises toward the core; a triple integral in spherical coordinates turns a density model into a mass that must match what orbits reveal.
-- **Spinning things.** Weight each piece by squared distance from an axis and the same integral says how hard a body is to spin up: rigid-body-rotation-and-moment-of-inertia.
+- **Spinning things.** Weight each piece by squared distance from an axis and the same integral says how hard a body is to spin up: Rotation.
 
 > **Say it back**
 > A triple integral cuts a solid into tiny pieces, multiplies each volume by the density there, and adds, in the limit. It is computed one direction at a time, once the solid is described as ranges of coordinates. In cylindrical coordinates a piece's volume is r dr dθ dz, since an angle step is longer far out. Weighting by position and dividing by mass gives the centre of mass. The wedge weighs 2792.53 g and balances 13.1303 cm from its tip, beyond a uniform wedge's 12.7324 cm.
@@ -377,15 +357,15 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [double-integrals](01-double-integrals.md): adding over a region one direction at a time, here with a third layer.
-- [cylindrical-and-spherical-coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/07-cylindrical-and-spherical-coordinates.md): the coordinates that make the wedge a box.
+- [Double integrals](01-double-integrals.md): adding over a region one direction at a time, here with a third layer.
+- [Cylindrical and spherical coordinates](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/07-cylindrical-and-spherical-coordinates.md): the coordinates that make the wedge a box.
 
 ## Where this goes next
 
-- [change-of-variables-and-jacobians](03-change-of-variables-and-jacobians.md): the stretch factor for any coordinates, of which r is one case.
-- [divergence-theorem](../09-Vector%20Calculus/07-divergence-theorem.md): outflow from each piece, added over a solid, equals the flow through its surface.
-- rigid-body-rotation-and-moment-of-inertia: squared distance times mass, for spinning bodies.
-- ricci-and-scalar-curvature: volumes of small balls in curved space, integrated the same way.
+- [Change of variables](03-change-of-variables-and-jacobians.md): the stretch factor for any coordinates, of which r is one case.
+- [Divergence theorem](../09-Vector%20Calculus/07-divergence-theorem.md): outflow from each piece, added over a solid, equals the flow through its surface.
+- Rotation: squared distance times mass, for spinning bodies.
+- Ricci and scalar curvature: volumes of small balls in curved space, integrated the same way.
 
 ---
 

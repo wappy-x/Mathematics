@@ -1,31 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Digitals and the implied density
-topic: Hedging a jump at the strike
-item: Digital Greeks and pin risk
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/02-asset-or-nothing-digital|asset-or-nothing-digital]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/03-vega|vega]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/02-gamma|gamma]]"
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/01-partial-derivatives|partial-derivatives]]"
-next:
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/04-digital-from-a-call-spread-and-the-skew-term|digital-from-a-call-spread-and-the-skew-term]]"
-tags: [mathematics, financial mathematics, digital-greeks-and-pin-risk]
----
-
 # Digital Greeks and pin risk: a hedge that goes wild in the last days
 
-Financial mathematics → Digitals and the implied density → Hedging a jump at the strike → Digital Greeks and pin risk
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Digitals and the implied density](../../../SYLLABUS.md#w12-s10) → Digital Greeks and pin risk
 
 ---
 
 ## General Overview
 
-Acme shares trade at \$100. A bank sells a one-year bet on them: it pays \$1 if Acme closes above \$100 on expiry day, and nothing otherwise. That bet is a **cash digital** ([cash-or-nothing-digital](01-cash-or-nothing-digital.md)). With cash earning 5 percent, a 2 percent dividend yield and 20 percent volatility, it costs \$0.494581, just under half a dollar.
+Acme shares trade at \$100. A bank sells a one-year bet on them: it pays \$1 if Acme closes above \$100 on expiry day, and nothing otherwise. That bet is a **cash digital** ([Cash-or-nothing digital](01-cash-or-nothing-digital.md)). With cash earning 5 percent, a 2 percent dividend yield and 20 percent volatility, it costs \$0.494581, just under half a dollar.
 
 The bank does not want the bet's risk, so it hedges: it holds Acme shares whose gains offset the bet's changes in value. The number of shares is the bet's **delta**, the slope of its price against Acme's price. A year out, the bank holds 0.018951 shares per dollar of payout, \$1.90 of stock. Calm.
 
@@ -56,17 +37,17 @@ Delta is scaled by 100 to read as shares per \$100 of payout. Flat line: one yea
 
 ## The formula
 
-Notation first, in words. The cash digital's price is $c$ and the asset digital's price is $a$; the asset digital pays one Acme share, instead of \$1, if Acme closes above the strike ([asset-or-nothing-digital](02-asset-or-nothing-digital.md)). Their prices are
+Notation first, in words. The cash digital's price is $c$ and the asset digital's price is $a$; the asset digital pays one Acme share, instead of \$1, if Acme closes above the strike ([Asset-or-nothing digital](02-asset-or-nothing-digital.md)). Their prices are
 
 $$c = e^{-rT}N(d_2), \qquad a = S\,e^{-qT}N(d_1),$$
 
-with the two distances as on the [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card:
+with the two distances as on the [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) card:
 
 $$d_2 = \frac{\ln(S/K) + (r - q - \tfrac12\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_1 = d_2 + \sigma\sqrt{T}.$$
 
 In words: $d_2$ is how many spreads Acme's median finishing price sits above the strike; $d_1$ is one spread further.
 
-The Greeks are slopes of these prices, one input moved at a time with the rest frozen: partial derivatives ([partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). A subscript names the product: $\Delta_c$ is the cash digital's delta, $\Delta_a$ the asset digital's. The bell curve's height at $x$ is $\varphi(x) = e^{-x^2/2}/\sqrt{2\pi}$; its area to the left of $x$ is $N(x)$.
+The Greeks are slopes of these prices, one input moved at a time with the rest frozen: partial derivatives ([Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md)). A subscript names the product: $\Delta_c$ is the cash digital's delta, $\Delta_a$ the asset digital's. The bell curve's height at $x$ is $\varphi(x) = e^{-x^2/2}/\sqrt{2\pi}$; its area to the left of $x$ is $N(x)$.
 
 The cash digital:
 
@@ -143,7 +124,7 @@ The volatility row is the one that matters. Raising $\sigma$ divides $m$ by more
 
 Multiply the height by the first row: $\Delta_c = e^{-rT}\varphi(d_2)/(S\sigma\sqrt{T})$. For Acme that is 0.379012 / 20 = 0.018951.
 
-The ordinary call's gamma is $e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})$ ([gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md)). The two numerators are tied by the **density identity** $S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)$, so the call's gamma is $K/S$ times the cash delta. At $S = K$ they coincide: 0.018951 both. The call's delta climbs from 0 to about 1 as Acme rises through the strike, and the cash digital pays exactly when the call is in the money, so the slope of one tracks the steepness of the other.
+The ordinary call's gamma is $e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})$ ([Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md)). The two numerators are tied by the **density identity** $S e^{-qT}\varphi(d_1) = K e^{-rT}\varphi(d_2)$, so the call's gamma is $K/S$ times the cash delta. At $S = K$ they coincide: 0.018951 both. The call's delta climbs from 0 to about 1 as Acme rises through the strike, and the cash digital pays exactly when the call is in the money, so the slope of one tracks the steepness of the other.
 
 <details>
 <summary>The algebra behind the density identity</summary>
@@ -172,7 +153,7 @@ xychart-beta
     line [0, 0, 0, 0, 0, 0, 0, 0, 0]
 ```
 
-Falling line: the cash digital's vega. Flat line: zero. Vega crosses zero at the \$95.12 crossover and stays negative above it. An ordinary option's vega never goes below zero ([vega](../09-The%20Greeks%2C%20one%20each/03-vega.md)); a digital's does, because it is a bet on which side of a line the share ends, not on how far it travels.
+Falling line: the cash digital's vega. Flat line: zero. Vega crosses zero at the \$95.12 crossover and stays negative above it. An ordinary option's vega never goes below zero ([Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md)); a digital's does, because it is a bet on which side of a line the share ends, not on how far it travels.
 
 ### Step 4: theta and rho carry a discount term
 
@@ -180,11 +161,11 @@ Time and the bank rate enter twice: through the distance and through the discoun
 
 Rho has the same two parts with opposite signs. A higher bank rate shrinks the discount, costing $T\,c$, and lifts the forward, raising the odds, worth $e^{-rT}\varphi(d_2)\sqrt{T}/\sigma$. Net: 1.400477 per unit of rate.
 
-The checks test theta a second way. Every price in this model obeys the pricing equation $\Theta + (r-q)S\Delta + \tfrac12\sigma^2S^2\Gamma - rV = 0$, where $V$ is the product's price ([black-scholes-equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)). Feeding in the formulas' delta, gamma and theta, the balance is zero for both digitals to six places.
+The checks test theta a second way. Every price in this model obeys the pricing equation $\Theta + (r-q)S\Delta + \tfrac12\sigma^2S^2\Gamma - rV = 0$, where $V$ is the product's price ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)). Feeding in the formulas' delta, gamma and theta, the balance is zero for both digitals to six places.
 
 ### Step 5: the asset digital is a call plus cash digitals
 
-An asset digital pays the share when Acme ends above $K$. That payout is the call's payout plus $K$ dollars in the same event ([asset-or-nothing-digital](02-asset-or-nothing-digital.md)). Slopes add, so every asset Greek is the call's Greek plus $K$ times the cash Greek. Delta: 0.586851 plus 100 × 0.018951 gives 2.481909. Gamma: 0.018951 plus 100 × (−0.000237) gives −0.004738. Vega: the call's plus 100 cash vegas lands on −9.475289.
+An asset digital pays the share when Acme ends above $K$. That payout is the call's payout plus $K$ dollars in the same event ([Asset-or-nothing digital](02-asset-or-nothing-digital.md)). Slopes add, so every asset Greek is the call's Greek plus $K$ times the cash Greek. Delta: 0.586851 plus 100 × 0.018951 gives 2.481909. Gamma: 0.018951 plus 100 × (−0.000237) gives −0.004738. Vega: the call's plus 100 cash vegas lands on −9.475289.
 
 Differentiating $S e^{-qT}N(d_1)$ directly gives the formulas in the table. Delta gains a second term by the product rule, because $S$ appears twice. Gamma and vega carry $-d_2$ where the cash versions carry $-d_1$. So the asset digital's crossover is $d_2 = 0$, at $S = K e^{-(r-q-\sigma^2/2)T}$, which is 99.004983: closer to the strike than the cash digital's, since counting in shares puts the odds one spread higher.
 
@@ -211,7 +192,7 @@ The cash price is a smoothed step in Acme's price: near 0 well below the strike,
 
 Away from the strike the bell-curve height $\varphi(d_2)$ collapses instead. With one day left, delta is 0.381036 at \$100 and 0.060701 at \$98. The turning point $K e^{-(r-q+\sigma^2/2)T}$ has closed in to 99.986302, so gamma flips sign almost exactly at the strike, where it is −0.004763. In the limit the price is a cliff, flat on both sides and vertical at $K$, and a hedge built from its slope holds no shares, then very many, then none. That is **pin risk**: when Acme is pinned near the strike into expiry, the correct hedge is too large and changes too fast to trade.
 
-Another route prices and hedges a digital without this cliff: approximate it by a spread of two ordinary calls struck either side of $K$, whose delta is capped. The next card builds it: [digital-from-a-call-spread-and-the-skew-term](04-digital-from-a-call-spread-and-the-skew-term.md).
+Another route prices and hedges a digital without this cliff: approximate it by a spread of two ordinary calls struck either side of $K$, whose delta is capped. The next card builds it: [A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md).
 
 ---
 
@@ -764,7 +745,7 @@ The two outputs agree line for line at the printed precision. The bumped Greeks 
 - **Structured notes.** A coupon paid only if an index closes above a barrier on a set date is a digital. The issuing bank carries its vega and its pin risk on every observation date.
 - **Expiry-day pinning.** Closing prices of stocks with heavy option trading cluster at strikes on expiry dates. Dealers' hedge trades near a strike, like the churn traced above, are one proposed cause.
 - **Currency markets.** Digitals are standard currency-option products, priced and hedged with the Greeks on this card.
-- **Siblings on this shelf.** The prices differentiated here are built on [cash-or-nothing-digital](01-cash-or-nothing-digital.md) and [asset-or-nothing-digital](02-asset-or-nothing-digital.md). Differentiating the call twice in strike gives the market's density: [butterfly-and-the-implied-density](05-butterfly-and-the-implied-density.md). A vega that changes sign means some digital prices match two volatilities: [digital-inverses-vol-and-strike](06-digital-inverses-vol-and-strike.md).
+- **Siblings on this shelf.** The prices differentiated here are built on [Cash-or-nothing digital](01-cash-or-nothing-digital.md) and [Asset-or-nothing digital](02-asset-or-nothing-digital.md). Differentiating the call twice in strike gives the market's density: [The butterfly and the implied density](05-butterfly-and-the-implied-density.md). A vega that changes sign means some digital prices match two volatilities: [Digital inverses](06-digital-inverses-vol-and-strike.md).
 
 > **Say it back**
 > A digital's price is a discounted bell-curve area, so each Greek is the bell curve's height times how fast the strike's distance moves with one input. The cash digital's delta equals the ordinary call's gamma at the strike. Its vega and gamma carry a factor of minus $d_1$, so they turn negative above a crossover just below the strike: more volatility makes the Acme bet cheaper. As expiry nears, the smoothed step becomes a cliff and the delta at the strike grows like one over the square root of time. A share hedge that tracks that slope is too large and too fast to run: that is pin risk.
@@ -773,14 +754,14 @@ The two outputs agree line for line at the printed precision. The bumped Greeks 
 
 ## What this builds on
 
-- [asset-or-nothing-digital](02-asset-or-nothing-digital.md): both pricing formulas this card differentiates, and the building block, asset digital equals call plus $K$ cash digitals.
-- [vega](../09-The%20Greeks%2C%20one%20each/03-vega.md): vega's definition, units and the per-point quote, for an option whose vega is always positive.
-- [gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md): the call's gamma, which equals the cash digital's delta at the strike.
-- [partial-derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes with every other input frozen, and the chain rule that carries the whole card.
+- [Asset-or-nothing digital](02-asset-or-nothing-digital.md): both pricing formulas this card differentiates, and the building block, asset digital equals call plus $K$ cash digitals.
+- [Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md): vega's definition, units and the per-point quote, for an option whose vega is always positive.
+- [Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md): the call's gamma, which equals the cash digital's delta at the strike.
+- [Partial derivatives](../../06-Calculus%20and%20analysis/07-Several%20Variables/01-partial-derivatives.md): slopes with every other input frozen, and the chain rule that carries the whole card.
 
 ## Where this goes next
 
-- [digital-from-a-call-spread-and-the-skew-term](04-digital-from-a-call-spread-and-the-skew-term.md): the call spread that replaces the cliff with a ramp a desk can hedge, and the extra term a sloping volatility curve adds to the digital's price.
+- [A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md): the call spread that replaces the cliff with a ramp a desk can hedge, and the extra term a sloping volatility curve adds to the digital's price.
 
 This card shows the share hedge failing at the strike; the open question is what a desk holds instead, and what that substitute reveals about the digital's true price.
 

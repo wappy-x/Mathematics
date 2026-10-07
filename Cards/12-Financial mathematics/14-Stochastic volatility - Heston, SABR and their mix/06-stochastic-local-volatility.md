@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Stochastic volatility - Heston, SABR and their mix
-topic: The leverage function
-item: Stochastic-local volatility
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/03-heston-greeks-and-calibration|heston-greeks-and-calibration]]"
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/03-pricing-under-local-volatility-and-the-forward-smile|pricing-under-local-volatility-and-the-forward-smile]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/05-conditional-expectation-in-tables|conditional-expectation-in-tables]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-next:
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/07-cliquets-and-ratchets|cliquets-and-ratchets]]"
-tags: [mathematics, financial mathematics, stochastic-local-volatility]
----
-
 # Stochastic-local volatility: a leverage function that makes a stochastic-vol model reprice every vanilla
 
-Financial mathematics → Stochastic volatility - Heston, SABR and their mix → The leverage function → Stochastic-local volatility
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Stochastic volatility - Heston, SABR and their mix](../../../SYLLABUS.md#w12-s14) → Stochastic-local volatility
 
 ---
 
@@ -27,9 +8,9 @@ Financial mathematics → Stochastic volatility - Heston, SABR and their mix →
 
 Acme shares trade at $100. In the house market every Acme option is priced at 20% volatility: the one-year call struck at $100 costs $9.23, the matching put $6.33, and the call struck at $120, $2.71. That flat grid of volatilities, across every strike and expiry, is the house surface.
 
-A desk that wants volatility itself to move reaches for the Heston model, set to the shelf's house values ([heston-model](01-heston-model.md)). Acme's variance, the square of its volatility, starts at 0.04, is pulled back toward 0.04, and takes shocks of its own. Those shocks lean against Acme's, with correlation −0.7: a fall in Acme tends to come with a rise in variance. Priced by Heston alone, the one-year $120 call costs $1.79, an implied volatility of 16.92%, and the $80 put carries 22.75%. Heston brings its own skew: implied volatility that falls as the strike rises. The surface has none.
+A desk that wants volatility itself to move reaches for the Heston model, set to the shelf's house values ([The Heston model](01-heston-model.md)). Acme's variance, the square of its volatility, starts at 0.04, is pulled back toward 0.04, and takes shocks of its own. Those shocks lean against Acme's, with correlation −0.7: a fall in Acme tends to come with a rise in variance. Priced by Heston alone, the one-year $120 call costs $1.79, an implied volatility of 16.92%, and the $80 put carries 22.75%. Heston brings its own skew: implied volatility that falls as the strike rises. The surface has none.
 
-Local volatility sets one volatility in advance for each price and date, and fits the surface exactly: here, 20% everywhere ([dupire-local-volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md)). Because that table is fixed, so are its future smiles, the implied volatilities by strike it predicts for later dates: flat at 20%.
+Local volatility sets one volatility in advance for each price and date, and fits the surface exactly: here, 20% everywhere ([Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md)). Because that table is fixed, so are its future smiles, the implied volatilities by strike it predicts for later dates: flat at 20%.
 
 The mix keeps Heston's wandering variance and multiplies Acme's volatility by a correction that depends only on price and date. Picture a dimmer at every price and date, turned down where Heston runs hot and up where it runs cold; its proper name, used from here on, is the **leverage function**. With it, 50,000 fresh simulated paths price the one-year $100 call at $9.25 ± 0.06 and the $120 call at $2.73 ± 0.04: the surface, within simulation error. Yet the model still expects a Heston-like skew six months ahead. A call that starts in six months, struck 10% above Acme's price on that day, costs $2.37 in the mix, between local volatility's $2.56 and Heston's $1.90.
 
@@ -56,7 +37,7 @@ Orange: the house surface, 20.00% at every strike. Green: Heston alone, from 22.
 
 ## The formula
 
-Notation first, in words. $S_t$ is Acme's price $t$ years from today. $v_t$ is the Heston variance on that date. $W^1_t$ and $W^2_t$ are two random drivers, one for the price and one for the variance, as on the Heston card; over a short step $dt$ each moves by a bell-curve amount with spread $\sqrt{dt}$, and the two moves are correlated by $\rho$. $\mathbb{E}[\,\cdot \mid S_t = S\,]$ is an average over only the paths standing at price $S$ on date $t$: an average given what is known ([conditional-expectation-in-tables](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md)).
+Notation first, in words. $S_t$ is Acme's price $t$ years from today. $v_t$ is the Heston variance on that date. $W^1_t$ and $W^2_t$ are two random drivers, one for the price and one for the variance, as on the Heston card; over a short step $dt$ each moves by a bell-curve amount with spread $\sqrt{dt}$, and the two moves are correlated by $\rho$. $\mathbb{E}[\,\cdot \mid S_t = S\,]$ is an average over only the paths standing at price $S$ on date $t$: an average given what is known ([Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md)).
 
 $$dS_t = (r - q)\,S_t\,dt + L(S_t, t)\,\sqrt{v_t}\,S_t\,dW^1_t, \qquad dv_t = \kappa\,(\theta - v_t)\,dt + \xi\,\sqrt{v_t}\,dW^2_t$$
 
@@ -89,12 +70,12 @@ $$\mathbb{E}\big[\,L(S_t, t)^2\,v_t \mid S_t = S\,\big] = \sigma_{\text{loc}}^2(
 
 At every price and date, the mix's squared volatility, averaged over the paths standing there, equals the surface's local variance. At one exact price $L$ is one number, comes out of the average, and gives the formula. On a coarse grid $L$ changes inside each node's neighbourhood, so the code solves this averaged form.
 
-The test of future smiles is the forward start: it fixes its strike on the reset date $t_1$ at a fraction $k$ of Acme's price that day, and pays $\max(S_T - k\,S_{t_1},\ 0)$ at $T$. At one flat volatility $\sigma$ it is worth $S_0\,e^{-q t_1}\,C_{\text{BS}}(1,\ k,\ T - t_1,\ \sigma)$ ([pricing-under-local-volatility-and-the-forward-smile](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md)).
+The test of future smiles is the forward start: it fixes its strike on the reset date $t_1$ at a fraction $k$ of Acme's price that day, and pays $\max(S_T - k\,S_{t_1},\ 0)$ at $T$. At one flat volatility $\sigma$ it is worth $S_0\,e^{-q t_1}\,C_{\text{BS}}(1,\ k,\ T - t_1,\ \sigma)$ ([Pricing with local volatility](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md)).
 
 ### When it holds
 
-- **Continuous paths.** The proof applies Itô's lemma to paths without jumps; a jump adds terms the formula lacks ([merton-jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md)).
-- **A finite leverage.** The formula divides by the average variance at each price. If Heston's variance can reach zero, as when the Feller condition $2\kappa\theta \ge \xi^2$ fails ([heston-model](01-heston-model.md)), that average can sink toward zero and the leverage runs away. The house values pass the test.
+- **Continuous paths.** The proof applies Itô's lemma to paths without jumps; a jump adds terms the formula lacks ([Merton jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md)).
+- **A finite leverage.** The formula divides by the average variance at each price. If Heston's variance can reach zero, as when the Feller condition $2\kappa\theta \ge \xi^2$ fails ([The Heston model](01-heston-model.md)), that average can sink toward zero and the leverage runs away. The house values pass the test.
 - **Enough paths wherever it matters.** Where few paths arrive, the average is noise. The code trusts a node only when it carries the weight of 100 paths, and holds the leverage flat beyond.
 - **A smooth, arbitrage-free surface.** The local volatility on top comes from Dupire's formula. A kink or an arbitrage in the surface makes that local variance negative or infinite, and the leverage with it.
 - **A chosen variance model.** The surface fixes the leverage once $\kappa$, $\theta$, $\xi$ and $\rho$ are chosen, but not those four. Each choice reprices the same surface and predicts different future smiles.
@@ -134,9 +115,9 @@ Itô's lemma extended to the kink of $(S - K)^+$, Tanaka's formula, gives over a
 $$d(S_t - K)^+ = \mathbf{1}\{S_t > K\}\,dS_t + \tfrac12\,\sigma_t^2\,S_t^2\,\delta(S_t - K)\,dt,$$
 where $\mathbf{1}\{S_t > K\}$ is 1 above the strike and 0 below, and $\delta(S_t - K)$ is the spike that counts the paths standing at the strike.
 
-Average both sides. The random part of the price step averages to zero. The drift part gives $(r - q)\,\mathbb{E}\big[S_T\,\mathbf{1}\{S_T > K\}\big] = (r - q)\,e^{rT}\,(C - K\,C_K)$, as in Step 2 of [dupire-local-volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md). Averaging against the spike reads the density at $K$, weighted by the average of $\sigma_T^2$ over the paths there: $\tfrac12\,K^2\,\mathbb{E}\big[\sigma_T^2 \mid S_T = K\big]\,p(K, T)$.
+Average both sides. The random part of the price step averages to zero. The drift part gives $(r - q)\,\mathbb{E}\big[S_T\,\mathbf{1}\{S_T > K\}\big] = (r - q)\,e^{rT}\,(C - K\,C_K)$, as in Step 2 of [Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md). Averaging against the spike reads the density at $K$, weighted by the average of $\sigma_T^2$ over the paths there: $\tfrac12\,K^2\,\mathbb{E}\big[\sigma_T^2 \mid S_T = K\big]\,p(K, T)$.
 
-Differentiating $C$ in $T$, discounting adds $-rC$. Replace $e^{-rT}\,p(K, T)$ by $C_{KK}$, as on [butterfly-and-the-implied-density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md), and collect:
+Differentiating $C$ in $T$, discounting adds $-rC$. Replace $e^{-rT}\,p(K, T)$ by $C_{KK}$, as on [The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md), and collect:
 $$C_T = \tfrac12\,\mathbb{E}\big[\sigma_T^2 \mid S_T = K\big]\,K^2\,C_{KK} - (r - q)\,K\,C_K - q\,C.$$
 This is Dupire's forward equation with the local variance replaced by the conditional average. So Dupire's formula, applied to this model's prices, returns $\mathbb{E}[\sigma_T^2 \mid S_T = K]$ wherever $C_{KK} > 0$.
 
@@ -195,7 +176,7 @@ xychart-beta
 
 Orange: local volatility, flat at 20.00%. Green: the mix, from 21.70% at 80% to 19.04% at 120%. Dark blue: Heston alone, from 23.32% to 16.74%. All three are priced on the same 50,000 paths and turned into volatilities with the forward-start formula.
 
-The calibration can also be done without particles: solve the forward equation for the joint density of price and variance, and read the average variance at each price off it. That is a two-dimensional version of dupire-and-forward-equations.
+The calibration can also be done without particles: solve the forward equation for the joint density of price and variance, and read the average variance at each price off it. That is a two-dimensional version of Dupire's equation.
 
 ---
 
@@ -243,7 +224,7 @@ The mix reprices the one-year $100 call, 9.227006, and the $120 call, 2.7118, wi
 
 ## Code, from first principles, and it actually runs
 
-The check calibrates the leverage on 50,000 particles from one seed, then prices with 50,000 fresh paths from another, so the repricing is out of sample. Five independent comparisons back the card: the mix against the Black-Scholes formula at 20%; the mix against local volatility on the same random numbers, which cuts the noise in the gap ([variance-reduction-for-pricing](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)); the average of $L^2 v$ at each price on the fresh paths against 0.04; Heston by plain paths against the mixing formula of Romano and Touzi, which prices each variance path with Black-Scholes; and the local-volatility forward start by paths against its closed form. The random numbers, the bell-curve area and the implied volatilities are all built in the code itself.
+The check calibrates the leverage on 50,000 particles from one seed, then prices with 50,000 fresh paths from another, so the repricing is out of sample. Five independent comparisons back the card: the mix against the Black-Scholes formula at 20%; the mix against local volatility on the same random numbers, which cuts the noise in the gap ([Cheaper Monte Carlo](../06-Numerical%20Methods%20for%20Pricing/02-variance-reduction-for-pricing.md)); the average of $L^2 v$ at each price on the fresh paths against 0.04; Heston by plain paths against the mixing formula of Romano and Touzi, which prices each variance path with Black-Scholes; and the local-volatility forward start by paths against its closed form. The random numbers, the bell-curve area and the implied volatilities are all built in the code itself.
 
 ### Python
 
@@ -659,7 +640,7 @@ The two outputs are identical, byte for byte: both languages draw the same rando
 > **Believing that a model fitting every plain option prices everything.** Local volatility and the mix give the same price to every plain call and put on the house surface, yet price the 110% forward start at 2.5602 and 2.3683. The surface fixes how Acme's price is spread on each date, not how two dates hang together. That is a modelling choice, made through $\kappa$, $\theta$, $\xi$ and $\rho$, and the desk owns it.
 >
 > - **Averaging under the wrong model.** Taking the average variance from pure-Heston paths ignores that the leverage moves the paths: the $100 call comes out at 9.0897.
-> - **Averaging volatility instead of variance.** Dividing by the average of $\sqrt{v}$ instead of the root of the average of $v$ makes the leverage too large, since the average of a root is below the root of the average ([jensens-inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)). Every plain option comes out too dear.
+> - **Averaging volatility instead of variance.** Dividing by the average of $\sqrt{v}$ instead of the root of the average of $v$ makes the leverage too large, since the average of a root is below the root of the average ([Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)). Every plain option comes out too dear.
 > - **Reading the leverage as a volatility.** $L$ is a multiplier near 1. At 0.8676 it scales each path's Heston volatility at $90; it does not say Acme's volatility is 87%.
 > - **Trusting the far wings.** Beyond the last busy node the leverage is held flat: a barrier deep out of the money sits where the calibration saw fewest paths.
 
@@ -667,8 +648,8 @@ The two outputs are identical, byte for byte: both languages draw the same rando
 
 ## Where you meet it in real life
 
-- **Currency barriers and touches.** Foreign-exchange desks price barrier and one-touch options (a fixed sum paid if a level is touched) with stochastic-local volatility, often scaling the volatility of variance down until liquid touch prices come out right ([barriers-with-the-smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md)).
-- **Model reserves.** Banks hold back part of an exotic trade's profit against model error. The gap between two models fitting the same surface, 2.5602 against 2.3683 for the 110% forward start, is one measure of that risk ([model-risk-and-parameter-stability](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md)).
+- **Currency barriers and touches.** Foreign-exchange desks price barrier and one-touch options (a fixed sum paid if a level is touched) with stochastic-local volatility, often scaling the volatility of variance down until liquid touch prices come out right ([Barriers on a smile](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/07-barriers-with-the-smile.md)).
+- **Model reserves.** Banks hold back part of an exotic trade's profit against model error. The gap between two models fitting the same surface, 2.5602 against 2.3683 for the 110% forward start, is one measure of that risk ([Model risk](../07-Greeks%20by%20Numbers%20and%20Calibration/07-model-risk-and-parameter-stability.md)).
 - **The calibration pipeline.** Heston is fitted to the surface first, then the leverage takes up what Heston misses. The better Heston fits, the closer the leverage stays to 1.
 
 > **Say it back**
@@ -678,14 +659,14 @@ The two outputs are identical, byte for byte: both languages draw the same rando
 
 ## What this builds on
 
-- [heston-greeks-and-calibration](03-heston-greeks-and-calibration.md): the Heston parameters the mix starts from, fitted before the leverage takes up the rest.
-- [pricing-under-local-volatility-and-the-forward-smile](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md): Gyöngy's twin, and the flat future smile the mix is built to avoid.
-- [conditional-expectation-in-tables](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md): the average given what is known, and a known factor coming out of it, in Step 2.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): simulated paths, averages and standard errors, the engine of the particle method.
+- [Heston Greeks and calibration](03-heston-greeks-and-calibration.md): the Heston parameters the mix starts from, fitted before the leverage takes up the rest.
+- [Pricing with local volatility](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md): Gyöngy's twin, and the flat future smile the mix is built to avoid.
+- [Conditional expectation](../../09-Probability%20and%20statistics/02-Random%20Variables/05-conditional-expectation-in-tables.md): the average given what is known, and a known factor coming out of it, in Step 2.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): simulated paths, averages and standard errors, the engine of the particle method.
 
 ## Where this goes next
 
-- [cliquets-and-ratchets](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/07-cliquets-and-ratchets.md): a chain of forward starts with capped and floored returns, priced on future smiles.
+- [Cliquets](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/07-cliquets-and-ratchets.md): a chain of forward starts with capped and floored returns, priced on future smiles.
 
 The surface cannot say which future smile is right; cliquets are where that choice costs money.
 

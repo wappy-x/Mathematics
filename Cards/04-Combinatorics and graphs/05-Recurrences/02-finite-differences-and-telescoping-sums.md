@@ -1,27 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Recurrences
-topic: Differencing and telescoping
-item: Finite differences
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/01-recurrences-and-fibonacci|recurrences-and-fibonacci]]"
-  - "[[Cards/03-Algebra/02-Polynomials/01-polynomials|polynomials]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/07-fractions|fractions]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/05-Recurrences/07-divide-and-conquer-recurrences|divide-and-conquer-recurrences]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - finite-differences-and-telescoping-sums
----
-
 # Finite differences: the jump from one term to the next, and sums that collapse because consecutive terms cancel
 
-Combinatorics and graphs → Recurrences → Differencing and telescoping → Finite differences
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Recurrences](../../../SYLLABUS.md#w04-s05) → Finite differences
 
 ---
 
@@ -54,7 +33,7 @@ Each arrow is one pass of subtraction: down the triangle to find a rule, back up
 
 ## The formula
 
-A list is written a(1), a(2), a(3), … and a(n) is its n-th term, the way a recurrence names the terms it steps through ([recurrences-and-fibonacci](01-recurrences-and-fibonacci.md)). The Greek capital D, written Δ and read "delta", marks the subtraction that turns one list into a new one: its name is the **difference**.
+A list is written a(1), a(2), a(3), … and a(n) is its n-th term, the way a recurrence names the terms it steps through ([Recurrences](01-recurrences-and-fibonacci.md)). The Greek capital D, written Δ and read "delta", marks the subtraction that turns one list into a new one: its name is the **difference**.
 
 $$\Delta a(n) = a(n+1) - a(n)$$
 
@@ -118,7 +97,7 @@ At n = 10 that is 55, the total the slow way reaches row by row.
 
 ### Step 3: split a fraction until it is a difference
 
-Now 1/(k(k+1)) for k from 1 to 99. Splitting the fraction into simpler pieces ([fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md)) turns each term into a jump:
+Now 1/(k(k+1)) for k from 1 to 99. Splitting the fraction into simpler pieces ([Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md)) turns each term into a jump:
 
 $$\frac{1}{k} - \frac{1}{k+1} = \frac{(k+1) - k}{k(k+1)} = \frac{1}{k(k+1)}$$
 
@@ -146,7 +125,7 @@ A flat k-th row makes the next row zero, so the edge stops at c(k). Since C(n−
 
 </details>
 
-Induction reaches n(n+1)/2 too, but only once the answer is guessed; telescoping produces it. Multiplying a step rule by a chosen factor until it telescopes solves a loan in [first-order-recurrences-and-loans](03-first-order-recurrences-and-loans.md).
+Induction reaches n(n+1)/2 too, but only once the answer is guessed; telescoping produces it. Multiplying a step rule by a chosen factor until it telescopes solves a loan in [First-order recurrences](03-first-order-recurrences-and-loans.md).
 
 ---
 
@@ -162,7 +141,7 @@ Induction reaches n(n+1)/2 too, but only once the answer is guessed; telescoping
 | the fractions to k = 99 | 1/1 − 1/100 | **0.99** |
 | the shelf's hallway | F(1) + … + F(9), against 89 − 1 | **88** |
 
-Fifty-five tins fill a ten-row display; the fractions land a hundredth short of 1. The last row checks the shelf's house example: a 2 × 10 hallway takes 1 × 2 tiles in F(11) = 89 ways ([recurrences-and-fibonacci](01-recurrences-and-fibonacci.md)), and each Fibonacci number is the difference of the next two, so the first nine telescope to 88.
+Fifty-five tins fill a ten-row display; the fractions land a hundredth short of 1. The last row checks the shelf's house example: a 2 × 10 hallway takes 1 × 2 tiles in F(11) = 89 ways ([Recurrences](01-recurrences-and-fibonacci.md)), and each Fibonacci number is the difference of the next two, so the first nine telescope to 88.
 
 ### What breaks if you drop a piece
 
@@ -408,13 +387,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [recurrences-and-fibonacci](01-recurrences-and-fibonacci.md): the a(n) naming, and the Fibonacci numbers used here.
-- [polynomials](../../03-Algebra/02-Polynomials/01-polynomials.md): degree and leading coefficient, what a flat row pins down.
-- [fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): splitting 1/(k(k+1)) into 1/k − 1/(k+1).
+- [Recurrences](01-recurrences-and-fibonacci.md): the a(n) naming, and the Fibonacci numbers used here.
+- [Polynomials](../../03-Algebra/02-Polynomials/01-polynomials.md): degree and leading coefficient, what a flat row pins down.
+- [Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): splitting 1/(k(k+1)) into 1/k − 1/(k+1).
 
 ## Where this goes next
 
-- [divide-and-conquer-recurrences](07-divide-and-conquer-recurrences.md): the same collapse, run down the levels of a rule that halves its input.
+- [Divide-and-conquer recurrences](07-divide-and-conquer-recurrences.md): the same collapse, run down the levels of a rule that halves its input.
 
 Telescoping needs terms that are jumps of a list one can name, easy enough when a rule steps one place at a time; what to do when it halves the problem starts a later card.
 

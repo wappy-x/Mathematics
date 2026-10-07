@@ -1,33 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Trigonometry
-topic: Combining angles
-item: Trig identities
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/02-radians-and-the-unit-circle|radians-and-the-unit-circle]]"
-next:
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/06-law-of-cosines|law-of-cosines]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/04-derivatives-of-trig-functions|derivatives-of-trig-functions]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/06-trig-substitution|trig-substitution]]"
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/03-polar-form-and-argument|polar-form-and-argument]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/06-resonance-and-beats|resonance-and-beats]]"
-  - "[[Cards/08-Differential equations and dynamics/09-Fourier Series/01-fourier-series-and-orthogonality|fourier-series-and-orthogonality]]"
-  - "[[Cards/08-Differential equations and dynamics/11-Discrete Dynamics and Chaos/04-chaos-and-the-lyapunov-exponent|chaos-and-the-lyapunov-exponent]]"
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/09-power-and-three-phase|power-and-three-phase]]"
-  - "[[Cards/20-Harmonic analysis/01-Fourier Series in Depth/03-dirichlet-and-fejer-kernels|dirichlet-and-fejer-kernels]]"
-tags:
-  - mathematics
-  - geometry and trig
-  - trig-identities
----
-
 # Trig identities: the Pythagorean and addition formulas, and where the double angles come from
 
-Geometry and trig → Trigonometry → Combining angles → Trig identities
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Trigonometry](../../../SYLLABUS.md#w05-s03) → Trig identities
 
 ---
 
@@ -53,7 +26,7 @@ Drawn at 1 m = 7 units. A position is a pair in brackets, metres across from the
 
 ## The formula
 
-θ (theta), β (beta) and φ (phi) name angles. $\sin^2\theta$ means $(\sin\theta)^2$, the sine's value squared. As on [radians-and-the-unit-circle](02-radians-and-the-unit-circle.md), turning θ counterclockwise from due east on a circle of radius 1 reaches a point cos θ across and sin θ up; either can be negative.
+θ (theta), β (beta) and φ (phi) name angles. $\sin^2\theta$ means $(\sin\theta)^2$, the sine's value squared. As on [The unit circle](02-radians-and-the-unit-circle.md), turning θ counterclockwise from due east on a circle of radius 1 reaches a point cos θ across and sin θ up; either can be negative.
 
 $$\sin^2\theta+\cos^2\theta=1$$
 
@@ -100,7 +73,7 @@ Split the jib into a piece along the main boom's line, $L_2\cos\beta$ long, and 
 
 ### Step 1: the Pythagorean identity, because every point of the circle is one unit out
 
-Drop a line from the point at angle θ to the east–west line through the centre: a right triangle with legs cos θ and sin θ, signs dropped, and the radius 1 as its longest side. Pythagoras ([pythagoras-and-its-converse](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)) gives $\cos^2\theta+\sin^2\theta=1$. Squares erase signs, so every quarter of the circle obeys it; on an axis, 0 and ±1 do too. At 40°, 0.642788 squared plus 0.766044 squared gives 1.000000.
+Drop a line from the point at angle θ to the east–west line through the centre: a right triangle with legs cos θ and sin θ, signs dropped, and the radius 1 as its longest side. Pythagoras ([Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)) gives $\cos^2\theta+\sin^2\theta=1$. Squares erase signs, so every quarter of the circle obeys it; on an axis, 0 and ±1 do too. At 40°, 0.642788 squared plus 0.766044 squared gives 1.000000.
 
 ### Step 2: the addition formulas, read off the jib
 
@@ -137,7 +110,7 @@ $$h=L_1\sin\theta+L_2(\sin\theta\cos\beta+\cos\theta\sin\beta)=(L_1+L_2\cos\beta
 
 That is $P\sin\theta+Q\cos\theta$. Divide $P$ and $Q$ by $R=\sqrt{P^2+Q^2}$: the quotients' squares add to 1, so they are the across and up of a point on the circle of radius 1, at some angle φ: Step 1 backwards. Then $P\sin\theta+Q\cos\theta=R(\sin\theta\cos\varphi+\cos\theta\sin\varphi)=R\sin(\theta+\varphi)$, Step 2 backwards. Expanding $P^2+Q^2$ leaves $L_2^2(\cos^2\beta+\sin^2\beta)$, which Step 1 turns into $L_2^2$: hence the second form of $R$. For the crane, $R$ = 38.9822 m and $\varphi$ = 7.3693°.
 
-A sine never exceeds 1, so the tip peaks at $R$ when θ + φ is 90°. Finding φ from its sine is [inverse-trig-and-solving-equations](05-inverse-trig-and-solving-equations.md); what $R$ and $\varphi$ do to a graph is [trig-graphs-amplitude-period-and-phase](04-trig-graphs-amplitude-period-and-phase.md). Another road, where multiplying certain numbers adds their angles, is [polar-form-and-argument](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md).
+A sine never exceeds 1, so the tip peaks at $R$ when θ + φ is 90°. Finding φ from its sine is [Inverse trig](05-inverse-trig-and-solving-equations.md); what $R$ and $\varphi$ do to a graph is [Trig graphs](04-trig-graphs-amplitude-period-and-phase.md). Another road, where multiplying certain numbers adds their angles, is [Polar form](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md).
 
 ---
 
@@ -173,7 +146,7 @@ With the knuckle locked, the tip never rises above 38.98 m, reached with the mai
 
 ## Code, from first principles, and it actually runs
 
-Two roads. Road 1 is a calculator's: the built-in sine gives sin 40° and cos 40°, and later finds φ from its sine; sin 30° = 1/2 and cos 30° = √3/2 come exact from half an equilateral triangle ([right-triangle-trigonometry](01-right-triangle-trigonometry.md)); the identities do the rest. Road 2 uses no sine: adding two unit arrows and rescaling to length 1 halves the angle between them, since a rhombus's diagonal splits its angle ([congruent-triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)). Sixty halvings pin each angle; the booms add as arrows. Four asserts compare the roads.
+Two roads. Road 1 is a calculator's: the built-in sine gives sin 40° and cos 40°, and later finds φ from its sine; sin 30° = 1/2 and cos 30° = √3/2 come exact from half an equilateral triangle ([Sine, cosine and tangent](01-right-triangle-trigonometry.md)); the identities do the rest. Road 2 uses no sine: adding two unit arrows and rescaling to length 1 halves the angle between them, since a rhombus's diagonal splits its angle ([Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md)). Sixty halvings pin each angle; the booms add as arrows. Four asserts compare the roads.
 
 ### Python
 
@@ -387,8 +360,8 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Mains electricity.** Two voltages of one frequency, a quarter cycle apart, add to one wave, as in Step 5; three waves make power-and-three-phase.
-- **Sound.** Two nearly equal notes swell and fade: the sum and difference formulas turn their sum into a product, and the slow factor is the beat ([resonance-and-beats](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/06-resonance-and-beats.md)).
+- **Mains electricity.** Two voltages of one frequency, a quarter cycle apart, add to one wave, as in Step 5; three waves make AC power.
+- **Sound.** Two nearly equal notes swell and fade: the sum and difference formulas turn their sum into a product, and the slow factor is the beat ([Resonance](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/06-resonance-and-beats.md)).
 - **Tables before calculators.** Ptolemy's second-century chord table grew from a few exact angles by a half-arc rule; he knew the sum rule in chord form. Abu'l-Wafa had the double angle by 980.
 
 > **Say it back**
@@ -398,21 +371,21 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [radians-and-the-unit-circle](02-radians-and-the-unit-circle.md): sine and cosine as up and across on a circle of radius 1, for every angle.
+- [The unit circle](02-radians-and-the-unit-circle.md): sine and cosine as up and across on a circle of radius 1, for every angle.
 
 ## Where this goes next
 
-- [law-of-cosines](06-law-of-cosines.md): $R$'s formula, in any triangle.
-- [derivatives-of-trig-functions](../../06-Calculus%20and%20analysis/02-Derivatives/04-derivatives-of-trig-functions.md): the sum formula splits a sine's small step.
-- [trig-substitution](../../06-Calculus%20and%20analysis/04-Integrals/06-trig-substitution.md): the Pythagorean identity clears square roots.
-- [polar-form-and-argument](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md): multiplying adds angles.
-- [resonance-and-beats](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/06-resonance-and-beats.md): sums of sines heard as beats.
-- [fourier-series-and-orthogonality](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/01-fourier-series-and-orthogonality.md): products of sines turned into sums.
-- [chaos-and-the-lyapunov-exponent](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/04-chaos-and-the-lyapunov-exponent.md): the logistic map's wildest case as angle doubling.
-- power-and-three-phase: waves folded into one.
-- dirichlet-and-fejer-kernels: long sums of cosines collapsed.
+- [Law of cosines](06-law-of-cosines.md): $R$'s formula, in any triangle.
+- [Derivatives of sine and cosine](../../06-Calculus%20and%20analysis/02-Derivatives/04-derivatives-of-trig-functions.md): the sum formula splits a sine's small step.
+- [Trig substitution](../../06-Calculus%20and%20analysis/04-Integrals/06-trig-substitution.md): the Pythagorean identity clears square roots.
+- [Polar form](../../07-Complex%20analysis/01-Complex%20Numbers%20and%20the%20Plane/03-polar-form-and-argument.md): multiplying adds angles.
+- [Resonance](../../08-Differential%20equations%20and%20dynamics/03-Oscillators%20-%20Second-Order%20Linear%20Equations/06-resonance-and-beats.md): sums of sines heard as beats.
+- [Fourier series](../../08-Differential%20equations%20and%20dynamics/09-Fourier%20Series/01-fourier-series-and-orthogonality.md): products of sines turned into sums.
+- [The Lyapunov exponent](../../08-Differential%20equations%20and%20dynamics/11-Discrete%20Dynamics%20and%20Chaos/04-chaos-and-the-lyapunov-exponent.md): the logistic map's wildest case as angle doubling.
+- AC power: waves folded into one.
+- Dirichlet and Fejer kernels: long sums of cosines collapsed.
 
-This card found $R$ from two lengths and a bend, unmeasured; why that expression gives the third side of every triangle is [law-of-cosines](06-law-of-cosines.md).
+This card found $R$ from two lengths and a bend, unmeasured; why that expression gives the third side of every triangle is [Law of cosines](06-law-of-cosines.md).
 
 ---
 

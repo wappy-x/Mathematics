@@ -1,25 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Confidence Intervals and Tests
-topic: Comparing averages
-item: t-tests
-kind: method
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/03-hypothesis-tests-and-p-values|hypothesis-tests-and-p-values]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/03-chi-square-t-and-f-distributions|chi-square-t-and-f-distributions]]"
-next:
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/06-chi-square-tests|chi-square-tests]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/07-likelihood-ratio-tests|likelihood-ratio-tests]]"
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/08-multiple-testing|multiple-testing]]"
-tags: [mathematics, probability and statistics, t-tests-and-comparing-means]
----
-
 # t-tests: one sample, two samples, and paired
 
-Probability and statistics → Confidence Intervals and Tests → Comparing averages → t-tests
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Confidence Intervals and Tests](../../../SYLLABUS.md#w09-s08) → t-tests
 
 ---
 
@@ -29,11 +10,11 @@ Thirty patients with high blood pressure start a new drug. A nurse measures each
 
 Is that drop real? Blood pressure wobbles from day to day, and patients differ from each other by far more than 6. The question is whether 6 is large compared with how much an average of thirty drops would wobble if the true average change were zero.
 
-The tool is the **t-test**, the term used from here on: divide the gap between what was seen and what was claimed by the estimate's standard error (its typical wobble from sample to sample), and look the ratio up in the t law (Student's t distribution, from [chi-square-t-and-f-distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)). It has three shapes. The **one-sample** test compares one list with a fixed claim. The **paired** test subtracts each patient's two readings and runs the one-sample test on the differences. The **two-sample** test compares two separate groups, here the 15 women's drops against the 15 men's. On these data the paired test finds the drop at a ratio of 4.0263, a p-value of 0.000372; treating the before and after readings as two unrelated groups, the classic mistake, finds only 1.4983 and 0.139621.
+The tool is the **t-test**, the term used from here on: divide the gap between what was seen and what was claimed by the estimate's standard error (its typical wobble from sample to sample), and look the ratio up in the t law (Student's t distribution, from [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md)). It has three shapes. The **one-sample** test compares one list with a fixed claim. The **paired** test subtracts each patient's two readings and runs the one-sample test on the differences. The **two-sample** test compares two separate groups, here the 15 women's drops against the 15 men's. On these data the paired test finds the drop at a ratio of 4.0263, a p-value of 0.000372; treating the before and after readings as two unrelated groups, the classic mistake, finds only 1.4983 and 0.139621.
 
 **Every t-test is one ratio: the estimate minus the claimed value, divided by the estimate's own standard error; under the claim that ratio follows the t law whatever the unknown spread, so its tail area is an honest p-value, and the three tests differ only in what the estimate is and how its standard error is built.**
 
-**What kind of fact this is:** a method. Its promise, that the test raises a false alarm exactly 5 times in 100 at the 5 percent level when readings are independent and normal, is a theorem proved on this card in Why it works, from the t law of [chi-square-t-and-f-distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md). Welch's version for unequal spreads is an approximation, and the card says how good.
+**What kind of fact this is:** a method. Its promise, that the test raises a false alarm exactly 5 times in 100 at the 5 percent level when readings are independent and normal, is a theorem proved on this card in Why it works, from the t law of [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md). Welch's version for unequal spreads is an approximation, and the card says how good.
 
 ### The picture: thirty patients, before against after
 
@@ -45,7 +26,7 @@ Each circle is one patient: pressure before across, after up, both to the same s
 
 ## The formula
 
-Notation first, in words. Write $n$ for the number of patients and $d_i$ for patient i's drop, before minus after. A bar means an average: $\bar d$ is the average drop. The spread of the drops, their standard deviation estimated from the sample with n − 1 in the divisor as on [confidence-intervals](01-confidence-intervals.md), is $s_d$. The true mean drop of every patient who could take the drug is $\mu_d$ (mu), fixed and unknown. The claim under test, the **null hypothesis** of [hypothesis-tests-and-p-values](03-hypothesis-tests-and-p-values.md), says $\mu_d$ equals a stated number $\mu_0$ (mu-nought): 0 for "no average change".
+Notation first, in words. Write $n$ for the number of patients and $d_i$ for patient i's drop, before minus after. A bar means an average: $\bar d$ is the average drop. The spread of the drops, their standard deviation estimated from the sample with n − 1 in the divisor as on [Confidence intervals](01-confidence-intervals.md), is $s_d$. The true mean drop of every patient who could take the drug is $\mu_d$ (mu), fixed and unknown. The claim under test, the **null hypothesis** of [Hypothesis tests](03-hypothesis-tests-and-p-values.md), says $\mu_d$ equals a stated number $\mu_0$ (mu-nought): 0 for "no average change".
 
 **One sample and paired.** The paired test is the one-sample test run on the differences:
 
@@ -104,11 +85,11 @@ where $F_\nu$ is the t law's cumulative area with $\nu$ degrees of freedom and $
 
 ### Step 0: a ratio whose law does not depend on the unknown spread
 
-Whether a 6 mmHg drop is large depends on the unknown spread of drops: ordinary if they spread by 20, extraordinary if by 2. Measured in units of its own estimated standard error, the average has one law, Student's t, whatever the spread. Its tail area is then computable, and is the p-value. A quantity whose law is free of the unknowns is a **pivot**, the device behind [confidence-intervals](01-confidence-intervals.md).
+Whether a 6 mmHg drop is large depends on the unknown spread of drops: ordinary if they spread by 20, extraordinary if by 2. Measured in units of its own estimated standard error, the average has one law, Student's t, whatever the spread. Its tail area is then computable, and is the p-value. A quantity whose law is free of the unknowns is a **pivot**, the device behind [Confidence intervals](01-confidence-intervals.md).
 
 ### Step 1: the one-sample ratio follows the t law
 
-Suppose the drops are independent draws from one normal law with mean $\mu_d$ and spread σ (sigma). Three facts are proved on [chi-square-t-and-f-distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md). The average $\bar d$ is normal, centred at $\mu_d$, with spread $\sigma/\sqrt n$. The scaled spread $(n-1)s_d^2/\sigma^2$ follows the chi-square law with n − 1 degrees of freedom. The two are independent. A standard normal divided by the root of an independent chi-square over its degrees of freedom is t. Here σ cancels:
+Suppose the drops are independent draws from one normal law with mean $\mu_d$ and spread σ (sigma). Three facts are proved on [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md). The average $\bar d$ is normal, centred at $\mu_d$, with spread $\sigma/\sqrt n$. The scaled spread $(n-1)s_d^2/\sigma^2$ follows the chi-square law with n − 1 degrees of freedom. The two are independent. A standard normal divided by the root of an independent chi-square over its degrees of freedom is t. Here σ cancels:
 
 $$T = \frac{(\bar d - \mu_d)/(\sigma/\sqrt n)}{\sqrt{s_d^2/\sigma^2}} = \frac{\bar d - \mu_d}{s_d/\sqrt n}$$
 
@@ -153,7 +134,7 @@ The p-value is the t law's area beyond the observed ratio on both sides: the cha
 
 The test at the 5 percent level rejects a claimed $\mu_0$ exactly when $|T|$ exceeds the cutoff 2.045230, which is exactly when $\mu_0$ lies outside the 95 percent t interval for the mean drop, 6.0 ± 2.045230 × 1.4902, or 2.9522 to 9.0478 mmHg. Zero and ten are outside: both rejected. Any claim from 3 to 9 mmHg survives. The interval says more than the p-value: it gives the size of the drop.
 
-The same ratio says how many patients a repeat trial needs. **Power** is the chance the test catches a real effect of a stated size; [power-and-sample-size](04-power-and-sample-size.md) builds the rule for rates, and the same argument works for averages. To catch a true 6 mmHg drop 80 times in 100 at the 5 percent level, taking the drops' spread to be 8.1621 as in this trial, the true average drop must sit 1.959964 + 0.841621 = 2.8016 standard errors from 0: the bell's cutoff for a two-sided 5 percent test plus its cutoff for 80 percent. The standard error is 8.1621 over the root of the number of patients, so n = (2.8016 × 8.1621 / 6)^2 = 14.5. That rule uses the bell, but a t-test on so few patients has wider tails. Averaging the bell's chance over every spread the sample could show, by the chi-square law of Step 1, gives the exact power of the paired t-test: 0.7847 with 16 patients and 0.8119 with 17. Simulated paired trials of that size agree: 0.7805 ± 0.0065 and 0.8123 ± 0.0062. So 17 patients, not 15, give 80 percent power for a 6 mmHg drop.
+The same ratio says how many patients a repeat trial needs. **Power** is the chance the test catches a real effect of a stated size; [Power](04-power-and-sample-size.md) builds the rule for rates, and the same argument works for averages. To catch a true 6 mmHg drop 80 times in 100 at the 5 percent level, taking the drops' spread to be 8.1621 as in this trial, the true average drop must sit 1.959964 + 0.841621 = 2.8016 standard errors from 0: the bell's cutoff for a two-sided 5 percent test plus its cutoff for 80 percent. The standard error is 8.1621 over the root of the number of patients, so n = (2.8016 × 8.1621 / 6)^2 = 14.5. That rule uses the bell, but a t-test on so few patients has wider tails. Averaging the bell's chance over every spread the sample could show, by the chi-square law of Step 1, gives the exact power of the paired t-test: 0.7847 with 16 patients and 0.8119 with 17. Simulated paired trials of that size agree: 0.7805 ± 0.0065 and 0.8123 ± 0.0062. So 17 patients, not 15, give 80 percent power for a 6 mmHg drop.
 
 A second road needs no t law. If there is no change on average and drops are symmetric about 0, each drop was as likely to be an equal rise, so every pattern of signs on the thirty drops is an equally likely no-change world. There are 1,073,741,824 such patterns, and a share of 0.000543 of them give an average as far from 0 as 6.0; against the claim of 10, 0.010861, beside the t test's 0.011890. Of all 155,117,520 ways to split the 30 drops into a men's and a women's group of 15, a share of 0.530955 give a gap as large as 2.0 mmHg, beside Welch's 0.512545. These are exact counts, not samples, so they carry no standard error. The verdicts agree. The far tail differs: flipping keeps each drop's size, so the real 6 mmHg shift itself widens the spread of the flipped averages, and areas below 0.001 are sensitive to such details. The counting road, the **sign test**, uses only that 25 of 30 patients dropped: if drops and rises were equally likely, 25 or more of either would occur with chance 0.000325.
 
@@ -611,8 +592,8 @@ The two outputs match line for line, simulations included: both languages draw t
 > [!warning]
 > **Running a two-sample test on paired data.** The before and after readings come from the same thirty patients. Treated as two unrelated groups, the standard error is 4.0046 mmHg instead of 1.4902, because it includes the large differences between patients that subtracting would cancel. The same 6.0 mmHg drop gives p = 0.139621 instead of 0.000372, and a real effect goes unreported. The shape of the test must follow the shape of the data: one person measured twice is paired; two different sets of people are two samples.
 >
-> - **"p = 0.000372 means a 0.0372 percent chance the drug does nothing."** It is the chance of a ratio this extreme if the true average change were zero. The chance that the drug works needs a prior: [hypothesis-tests-and-p-values](03-hypothesis-tests-and-p-values.md).
-> - **"p = 0.512545, so men and women respond the same."** A large p-value means the data cannot tell, not that the gap is zero. Step 4 of Why it works sizes a paired trial; two separate groups use the same rule per group with the squared spread doubled, since their gap carries both groups' wobble. [power-and-sample-size](04-power-and-sample-size.md) builds the rule for rates.
+> - **"p = 0.000372 means a 0.0372 percent chance the drug does nothing."** It is the chance of a ratio this extreme if the true average change were zero. The chance that the drug works needs a prior: [Hypothesis tests](03-hypothesis-tests-and-p-values.md).
+> - **"p = 0.512545, so men and women respond the same."** A large p-value means the data cannot tell, not that the gap is zero. Step 4 of Why it works sizes a paired trial; two separate groups use the same rule per group with the squared spread doubled, since their gap carries both groups' wobble. [Power](04-power-and-sample-size.md) builds the rule for rates.
 > - **The pooled test by habit.** With unequal spreads and group sizes it raised false alarms about 29 times in 100 at a nominal 5 (simulated, ± 0.7). Welch costs almost nothing when spreads are equal.
 > - **Crediting the drug with the whole drop.** Readings often fall on a second visit anyway. The t-test measures a change; only a placebo group turns it into an effect of the drug.
 
@@ -621,10 +602,10 @@ The two outputs match line for line, simulations included: both languages draw t
 ## Where you meet it in real life
 
 - **Clinical trials.** Before-and-after measurements on the same patients use the paired test; drug against placebo in two randomised arms uses the two-sample test, with Welch as the default in most software.
-- **A/B tests on a website.** Average basket size under two page designs is a two-sample comparison; many runs at once need [multiple-testing](08-multiple-testing.md).
+- **A/B tests on a website.** Average basket size under two page designs is a two-sample comparison; many runs at once need [Many tests](08-multiple-testing.md).
 - **Laboratories.** Two instruments measuring the same samples give paired readings; the paired test asks whether one reads higher.
 - **Manufacturing.** A batch's mean fill weight against its label is a one-sample test; NIST's engineering handbook uses exactly these recipes.
-- **Yes-or-no outcomes.** When each patient only recovers or does not, the comparison of rates uses [intervals-for-proportions](02-intervals-for-proportions.md) and [chi-square-tests](06-chi-square-tests.md).
+- **Yes-or-no outcomes.** When each patient only recovers or does not, the comparison of rates uses [Intervals for a proportion](02-intervals-for-proportions.md) and [Chi-square tests](06-chi-square-tests.md).
 
 > **Say it back**
 > A t-test divides an estimate's distance from a claimed value by its standard error and reads the ratio against the t law, whose shape does not depend on the unknown spread. The one-sample test compares one average with a claim; the paired test is the one-sample test on each patient's difference; the two-sample test compares separate groups, Welch's version by default. On thirty patients the paired test finds a 6.0 mmHg drop, 95 percent interval 2.9522 to 9.0478, p = 0.000372. Treating the same readings as two unrelated groups hides the drop behind the spread between patients. The test needs independent patients, near-normal data or enough of them, and a shape that matches how the data were collected.
@@ -633,14 +614,14 @@ The two outputs match line for line, simulations included: both languages draw t
 
 ## What this builds on
 
-- [hypothesis-tests-and-p-values](03-hypothesis-tests-and-p-values.md): the null hypothesis, the p-value, and the 5 percent false-alarm budget.
-- [chi-square-t-and-f-distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md): the t law of a mean over its estimated standard error, and the chi-square facts behind it.
+- [Hypothesis tests](03-hypothesis-tests-and-p-values.md): the null hypothesis, the p-value, and the 5 percent false-alarm budget.
+- [The reference distributions](../07-Sampling%20and%20Estimation/03-chi-square-t-and-f-distributions.md): the t law of a mean over its estimated standard error, and the chi-square facts behind it.
 
 ## Where this goes next
 
-- [chi-square-tests](06-chi-square-tests.md): the same logic for counts and categories instead of measurements.
-- [likelihood-ratio-tests](07-likelihood-ratio-tests.md): the general recipe behind tests built from fitted models.
-- [multiple-testing](08-multiple-testing.md): what happens to the 5 percent when many t-tests are run at once.
+- [Chi-square tests](06-chi-square-tests.md): the same logic for counts and categories instead of measurements.
+- [Likelihood ratio tests](07-likelihood-ratio-tests.md): the general recipe behind tests built from fitted models.
+- [Many tests](08-multiple-testing.md): what happens to the 5 percent when many t-tests are run at once.
 
 The t-test compares averages of measurements; the question it leaves open is how to test counts, such as how many patients in each group recovered, and the chi-square tests answer it.
 

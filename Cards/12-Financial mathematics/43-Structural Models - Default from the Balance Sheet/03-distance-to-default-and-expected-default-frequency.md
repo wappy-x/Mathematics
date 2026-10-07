@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Structural Models - Default from the Balance Sheet
-topic: Real-world default odds
-item: Distance to default
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/01-merton-model-equity-as-a-call|merton-model-equity-as-a-call]]"
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/07-geometric-brownian-motion|geometric-brownian-motion]]"
-next: []
-tags: [mathematics, financial mathematics, distance-to-default-and-expected-default-frequency]
----
-
 # Distance to default: how many standard deviations of bad luck the firm can absorb, and the KMV default frequency built on it
 
-Financial mathematics → Structural Models - Default from the Balance Sheet → Real-world default odds → Distance to default
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Structural Models - Default from the Balance Sheet](../../../SYLLABUS.md#w12-s43) → Distance to default
 
 ---
 
@@ -26,11 +10,11 @@ Kestrel Freight owns trucks, depots and contracts worth $100 million today. It o
 
 The firm has a cushion of $20 million. Whether that is a lot depends on how far the assets usually move. A $20 million cushion on assets that barely move is safe. The same cushion on assets that jump 50% a year is thin. So the natural yardstick is the cushion divided by the typical move: how many **standard deviations** (typical one-year swings) of bad luck the firm can take before its assets fall through the debt. That count is the **distance to default**. For Kestrel it is **1.416**.
 
-A bank lending to Kestrel wants the chance of default over the year: an honest forecast, not a price. Turning the distance into that chance with the bell curve gives **7.84%**, the model's **expected default frequency**, or EDF. The KMV company (named for its founders Kealhofer, McQuown and Vasicek, and bought by Moody's in 2002) sold EDFs to banks, with the bell curve replaced by counted history. The option pricing of [merton-model-equity-as-a-call](01-merton-model-equity-as-a-call.md) gives a different default chance for the same firm, **10.28%**. The gap is not an error. The two numbers answer different questions, and they meet exactly when the assets are expected to grow at the riskless rate of 5%.
+A bank lending to Kestrel wants the chance of default over the year: an honest forecast, not a price. Turning the distance into that chance with the bell curve gives **7.84%**, the model's **expected default frequency**, or EDF. The KMV company (named for its founders Kealhofer, McQuown and Vasicek, and bought by Moody's in 2002) sold EDFs to banks, with the bell curve replaced by counted history. The option pricing of [Merton's model](01-merton-model-equity-as-a-call.md) gives a different default chance for the same firm, **10.28%**. The gap is not an error. The two numbers answer different questions, and they meet exactly when the assets are expected to grow at the riskless rate of 5%.
 
 **Distance to default counts how many standard deviations the firm's assets can fall, under their real expected growth, before they drop below the debt; the bell-curve area beyond that count is the default forecast, and replacing real growth by the riskless rate turns it into the pricing probability.**
 
-**What kind of fact this is:** a model. The asset value is assumed to wander like a stock in [geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md); inside that assumption the formulas below are theorems, proved on this card in Why it works. KMV keeps the distance and replaces the bell curve by a table fitted to history, which is a statistical choice, not a law.
+**What kind of fact this is:** a model. The asset value is assumed to wander like a stock in [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md); inside that assumption the formulas below are theorems, proved on this card in Why it works. KMV keeps the distance and replaces the bell curve by a table fitted to history, which is a statistical choice, not a law.
 
 ### The picture: two default chances as the expected growth changes
 
@@ -50,7 +34,7 @@ Orange: the expected default frequency, which falls as the assets are expected t
 
 ## The formula
 
-Notation first, in words. $V$ is the asset value today and $V_T$ its value on the due date. $D$ is the debt due, $T$ the years until it is due, $\sigma$ ("sigma") the asset volatility, $\mu$ ("mu") the assets' real expected growth rate and $r$ the riskless rate. $N(x)$ is the bell-curve area to the left of $x$ ([normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). $DD$ is one symbol: the distance to default.
+Notation first, in words. $V$ is the asset value today and $V_T$ its value on the due date. $D$ is the debt due, $T$ the years until it is due, $\sigma$ ("sigma") the asset volatility, $\mu$ ("mu") the assets' real expected growth rate and $r$ the riskless rate. $N(x)$ is the bell-curve area to the left of $x$ ([Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md)). $DD$ is one symbol: the distance to default.
 
 $$DD = \frac{\ln(V/D) + \left(\mu - \tfrac12\sigma^2\right)T}{\sigma\sqrt{T}}, \qquad EDF = N(-DD)$$
 
@@ -87,8 +71,8 @@ Three pieces of the top line, in words. $\ln(V/D)$ is the cushion measured in lo
 
 - **Asset value wanders like a stock, with a fixed swing size.** If volatility rises in bad times, as it does, the bell curve understates the chance of a large fall, and EDF comes out too low for weak firms.
 - **One debt, due on one date.** Real firms owe many debts at many dates. KMV-style practice sets a **default point** (the debt level that triggers default) at short-term debt plus half of long-term debt, as Bharath and Shumway describe (convention verified 2026-09-28); the result depends on that choice.
-- **Default is checked only on the due date.** A firm whose assets dip below its debt in March and recover by December survives here. [black-cox-first-passage-default](05-black-cox-first-passage-default.md) counts those dips.
-- **The asset value, its swing and its growth are known.** None is observed. $V$ and $\sigma$ are backed out of the share price in [asset-value-and-volatility-from-the-share-price](04-asset-value-and-volatility-from-the-share-price.md); $\mu$ is an estimate, and a two-point error in it moves Kestrel's EDF by more than a point.
+- **Default is checked only on the due date.** A firm whose assets dip below its debt in March and recover by December survives here. [Black-Cox](05-black-cox-first-passage-default.md) counts those dips.
+- **The asset value, its swing and its growth are known.** None is observed. $V$ and $\sigma$ are backed out of the share price in [Backing out the unobservable](04-asset-value-and-volatility-from-the-share-price.md); $\mu$ is an estimate, and a two-point error in it moves Kestrel's EDF by more than a point.
 - **The bell curve's tail is right.** It is not, far from default. Step 5 shows by how much, and why KMV fits the tail to history.
 
 ---
@@ -101,7 +85,7 @@ A $20 million cushion means nothing alone. What matters is how many typical swin
 
 ### Step 1: the log of asset value at the due date is a bell curve
 
-Under the asset model of [geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md), asset value grows at expected rate $\mu$ with swings of size $\sigma$. Its logarithm then moves as a straight drift plus bell-curve noise:
+Under the asset model of [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md), asset value grows at expected rate $\mu$ with swings of size $\sigma$. Its logarithm then moves as a straight drift plus bell-curve noise:
 
 $$\ln V_T = \ln V + \left(\mu - \tfrac12\sigma^2\right)T + \sigma\sqrt{T}\,Z.$$
 
@@ -121,7 +105,7 @@ $Z$ is a standard bell-curve draw, so the chance it lands below $-DD$ is $N(-DD)
 
 ### Step 4: the pricing chance is the same event with a different drift
 
-A price averages payoffs in the pricing world, where every asset is expected to grow at the riskless rate $r$ ([merton-model-equity-as-a-call](01-merton-model-equity-as-a-call.md)). Repeat Steps 1 to 3 with $r$ in place of $\mu$ and the top line becomes 0.2531 and the distance $d_2 = 0.2531/0.20 = 1.266$, the chance $N(-1.266) = 10.28\%$.
+A price averages payoffs in the pricing world, where every asset is expected to grow at the riskless rate $r$ ([Merton's model](01-merton-model-equity-as-a-call.md)). Repeat Steps 1 to 3 with $r$ in place of $\mu$ and the top line becomes 0.2531 and the distance $d_2 = 0.2531/0.20 = 1.266$, the chance $N(-1.266) = 10.28\%$.
 
 Subtract the two distances. Everything cancels except the drifts:
 
@@ -625,7 +609,7 @@ The two outputs match line for line.
 ## The usual mistake
 
 > [!warning]
-> **Treating the EDF and the pricing default chance as rival estimates of one number.** They answer different questions. The EDF (7.84%) is a forecast: how often firms like Kestrel fail. The pricing chance (10.28%) is the weight a price puts on default, and it includes pay for bearing the risk. Pricing a loan with 7.84% leaves it too dear; setting capital against 10.28% overstates how often losses arrive. [market-implied-versus-historical-default-probability](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md) measures the same gap from market quotes.
+> **Treating the EDF and the pricing default chance as rival estimates of one number.** They answer different questions. The EDF (7.84%) is a forecast: how often firms like Kestrel fail. The pricing chance (10.28%) is the weight a price puts on default, and it includes pay for bearing the risk. Pricing a loan with 7.84% leaves it too dear; setting capital against 10.28% overstates how often losses arrive. [Two default probabilities](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md) measures the same gap from market quotes.
 >
 > - **Dropping the swinging cost.** Using $\mu$ as the log-drift gives a distance of 1.516 and an EDF of 6.48%, as if the firm grew two points faster.
 > - **Scaling the swing with $T$.** For three-year debt, $\sigma T$ gives 25.08% where $\sigma\sqrt{T}$ gives 12.23%.
@@ -639,8 +623,8 @@ The two outputs match line for line.
 - **Moody's EDF.** The KMV product, now sold by Moody's, publishes a daily default frequency for listed firms: a distance to default from the share price, mapped through a history-fitted table.
 - **Bank loan monitoring.** Credit officers watch a borrower's distance to default between annual reviews. A fall from 1.4 to 0.9 standard deviations, as a ten percent asset fall does for Kestrel, flags the loan long before a missed payment.
 - **Default forecasting research.** Bharath and Shumway tested the distance as a predictor of real defaults. Vassalou and Xing computed a Merton default measure for each firm each month to study how default risk shows up in share returns.
-- **Rating tables.** The counted frequencies KMV fits are the same kind of evidence as a rating agency's default table: [rating-transition-matrix-and-cumulative-default-rates](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md).
-- **Sensitivities.** How equity, debt and the default put move as asset value and volatility change: [structural-model-sensitivities](02-structural-model-sensitivities.md).
+- **Rating tables.** The counted frequencies KMV fits are the same kind of evidence as a rating agency's default table: [Rating transition matrices](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/04-rating-transition-matrix-and-cumulative-default-rates.md).
+- **Sensitivities.** How equity, debt and the default put move as asset value and volatility change: [How the balance-sheet claims move](02-structural-model-sensitivities.md).
 
 > **Say it back**
 > Distance to default is the firm's log-cushion plus its expected log-growth, divided by one standard deviation of the asset move. For a firm with $100m of assets, $80m of debt, 20% volatility and 8% growth it is 1.416, and the bell-curve area beyond it is a 7.84% default forecast. Replacing the real growth by the riskless rate gives Merton's pricing chance, 10.28%, one shift of $\lambda\sqrt{T}$ away; at growth equal to the riskless rate the two coincide. The distance ranks firms well, but the bell curve's tail is too thin far from default, so KMV turns distance into probability with counted history.
@@ -649,14 +633,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [merton-model-equity-as-a-call](01-merton-model-equity-as-a-call.md): the firm as assets against one debt, and the pricing default chance $N(-d_2)$ this card compares against.
-- [geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): why the log of asset value at the due date is a bell curve, and where the $-\tfrac12\sigma^2$ comes from.
+- [Merton's model](01-merton-model-equity-as-a-call.md): the firm as assets against one debt, and the pricing default chance $N(-d_2)$ this card compares against.
+- [Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md): why the log of asset value at the due date is a bell curve, and where the $-\tfrac12\sigma^2$ comes from.
 
 ## Where this goes next
 
-- [asset-value-and-volatility-from-the-share-price](04-asset-value-and-volatility-from-the-share-price.md): finding $V$ and $\sigma$, which this card took as given, from the share price and its volatility.
-- [black-cox-first-passage-default](05-black-cox-first-passage-default.md): default the first time the assets touch a barrier, not only on the due date.
-- [where-structural-models-fail](06-where-structural-models-fail.md): short-dated spreads the model cannot produce, and the other gaps between structural models and markets.
+- [Backing out the unobservable](04-asset-value-and-volatility-from-the-share-price.md): finding $V$ and $\sigma$, which this card took as given, from the share price and its volatility.
+- [Black-Cox](05-black-cox-first-passage-default.md): default the first time the assets touch a barrier, not only on the due date.
+- [Where structural models break](06-where-structural-models-fail.md): short-dated spreads the model cannot produce, and the other gaps between structural models and markets.
 
 The distance needs an asset value and an asset volatility that no one observes; the question left open is how to read both from the share price.
 

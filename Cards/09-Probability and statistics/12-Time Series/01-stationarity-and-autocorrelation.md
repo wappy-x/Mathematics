@@ -1,27 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Time Series
-topic: Memory and steadiness
-item: Stationarity and autocorrelation
-kind: definition
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/04-joint-distributions-and-covariance|joint-distributions-and-covariance]]"
-next:
-  - "[[Cards/09-Probability and statistics/12-Time Series/02-ar-models|ar-models]]"
-  - "[[Cards/13-Engineering mathematics/05-Signals/06-spectral-estimation-and-periodograms|spectral-estimation-and-periodograms]]"
-  - "[[Cards/17-Topology/06-Topological Data Analysis/01-filtrations-and-persistent-homology|filtrations-and-persistent-homology]]"
-  - "[[Cards/17-Topology/06-Topological Data Analysis/07-persistence-in-practice|persistence-in-practice]]"
-  - "[[Cards/20-Harmonic analysis/03-Convolution and Approximate Identities/06-correlation-and-the-matched-filter|correlation-and-the-matched-filter]]"
-  - "[[Cards/20-Harmonic analysis/03-Convolution and Approximate Identities/07-wiener-khinchin-and-the-power-spectrum|wiener-khinchin-and-the-power-spectrum]]"
-tags: [mathematics, probability-and-statistics, stationarity-and-autocorrelation]
----
-
 # Stationarity and autocorrelation: does the series keep its character, and does today remember yesterday
 
-Probability and statistics → Time Series → Memory and steadiness → Stationarity and autocorrelation
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Time Series](../../../SYLLABUS.md#w09-s12) → Stationarity and autocorrelation
 
 ---
 
@@ -124,17 +103,17 @@ Put $h = 0$: $\operatorname{Cov}(X_t, X_t)$ is the variance of $X_t$, so every m
 
 Three small models, each built from fair ±1 coin flips, show the definition working and failing. Listing all 64 equally likely outcomes gives every covariance exactly:
 
-- **A shock that lingers one month.** $X_t$ is this month's flip plus half of last month's. The covariance is 1.25 at gap 0, 0.50 at gap 1 and 0.00 at gap 2, at every starting month. Stationary, with memory one month long ([ma-and-arma](03-ma-and-arma.md)).
+- **A shock that lingers one month.** $X_t$ is this month's flip plus half of last month's. The covariance is 1.25 at gap 0, 0.50 at gap 1 and 0.00 at gap 2, at every starting month. Stationary, with memory one month long ([Moving average and ARMA](03-ma-and-arma.md)).
 - **A shared offset.** One flip is drawn once and added to every month, plus a fresh flip each month. The covariance is 2.00 at gap 0 and 1.00 at every other gap. Stationary, and the memory never fades: $\rho(h) = 0.5$ at every lag. Yet one simulated record of 1,440 months gives $r(1) = -0.0156$ and $r(12) = 0.0213$, inside that record's band of ±0.0517. A record holds only one offset, and subtracting the record's average removes it.
 
 So averaging over time recovers $\gamma(h)$ only when the memory also fades, letting distant stretches of the record act as fresh repetitions. That extra condition is called **ergodicity**. The models on the later cards of this shelf have it; the shared offset does not.
-- **A running total.** $X_t$ is the sum of all flips so far. Its variance is 1.00, 2.00, 3.00, 4.00 in months 1 to 4. The variance depends on the time, so this is not stationary ([differencing-and-unit-roots](04-differencing-and-unit-roots.md)).
+- **A running total.** $X_t$ is the sum of all flips so far. Its variance is 1.00, 2.00, 3.00, 4.00 in months 1 to 4. The variance depends on the time, so this is not stationary ([Unit roots](04-differencing-and-unit-roots.md)).
 
 The word **weak** is there because only means and covariances are required to stay put. **Strict** stationarity asks that the whole joint law of any stretch of the series be unchanged by a shift in time; it implies the weak kind when variances are finite, and not the other way round.
 
 ### Step 2: autocorrelation lies between −1 and 1
 
-This is the theorem on the card, and it needs only the variance of a sum. From [joint-distributions-and-covariance](../02-Random%20Variables/04-joint-distributions-and-covariance.md), $\operatorname{Var}(X + Y) = \operatorname{Var}X + \operatorname{Var}Y + 2\operatorname{Cov}(X, Y)$. Apply it to $X_t + X_{t+h}$ and to $X_t - X_{t+h}$ in a stationary series:
+This is the theorem on the card, and it needs only the variance of a sum. From [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md), $\operatorname{Var}(X + Y) = \operatorname{Var}X + \operatorname{Var}Y + 2\operatorname{Cov}(X, Y)$. Apply it to $X_t + X_{t+h}$ and to $X_t - X_{t+h}$ in a stationary series:
 
 $$0 \le \operatorname{Var}(X_t \pm X_{t+h}) = 2\gamma(0) \pm 2\gamma(h).$$
 
@@ -205,9 +184,9 @@ The standard errors above allow for that memory. Each estimate's error is a weig
 
 ### Step 6: the band for pure noise
 
-Suppose the series is pure noise: independent values with mean 0 and variance $\sigma^2$, where σ (sigma) is the standard deviation of one value; it cancels from $r(h)$ and never needs to be known. Then $r(h)$ for any fixed lag is close to normal with mean about $-1/n$ and standard deviation about $1/\sqrt n$. So 95 percent of lags should fall within $\pm 1.96/\sqrt n$, using the normal quantile 1.96 ([normal-quantile](../04-Continuous%20Distributions/05-normal-quantile.md)).
+Suppose the series is pure noise: independent values with mean 0 and variance $\sigma^2$, where σ (sigma) is the standard deviation of one value; it cancels from $r(h)$ and never needs to be known. Then $r(h)$ for any fixed lag is close to normal with mean about $-1/n$ and standard deviation about $1/\sqrt n$. So 95 percent of lags should fall within $\pm 1.96/\sqrt n$, using the normal quantile 1.96 ([Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md)).
 
-The standard deviation comes from counting which products are correlated; the full argument is folded below. The normal shape comes from a central limit theorem for sums whose terms depend only on near neighbours; it is stated here and checked by simulation, with the general theorem on [central-limit-theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md). Across 2,000 simulated noise series of 144 months, the standard deviation of $r(1)$ is 0.0833 against $1/\sqrt{144} = 0.0833$, its mean is −0.0073 (standard error 0.0019) against $-1/144 = -0.0069$, and 5.10 percent of series put $r(1)$ outside the band (standard error 0.49 points).
+The standard deviation comes from counting which products are correlated; the full argument is folded below. The normal shape comes from a central limit theorem for sums whose terms depend only on near neighbours; it is stated here and checked by simulation, with the general theorem on [Central limit theorem](../06-Limit%20Theorems%20in%20Practice/02-central-limit-theorem.md). Across 2,000 simulated noise series of 144 months, the standard deviation of $r(1)$ is 0.0833 against $1/\sqrt{144} = 0.0833$, its mean is −0.0073 (standard error 0.0019) against $-1/144 = -0.0069$, and 5.10 percent of series put $r(1)$ outside the band (standard error 0.49 points).
 
 <details>
 <summary>Detailed proof: why the scatter of r(h) is about 1/√n</summary>
@@ -220,7 +199,7 @@ The denominator $\sum x_t^2$ is $n\sigma^2$ plus a relative error that shrinks l
 
 </details>
 
-The same numbers come by a second road. The sample autocovariances are the inverse Fourier transform of the **periodogram**, the squared size of each frequency in the record; this is the Wiener–Khinchin relation, with the record padded by 144 zeros so the transform does not wrap round. The code computes the correlogram both ways and they agree to nine decimals. The frequency side is developed on wiener-khinchin-and-the-power-spectrum.
+The same numbers come by a second road. The sample autocovariances are the inverse Fourier transform of the **periodogram**, the squared size of each frequency in the record; this is the Wiener–Khinchin relation, with the record padded by 144 zeros so the transform does not wrap round. The code computes the correlogram both ways and they agree to nine decimals. The frequency side is developed on Wiener-Khinchin.
 
 ---
 
@@ -666,7 +645,7 @@ The two outputs match line for line.
 > **Reading a high autocorrelation in a trending series as memory.** The raw airline series has $r(1) = 0.9480$. Most of that is the trend: any two nearby months of a climbing series sit on the same side of the overall average. The definition of $\gamma(h)$ assumes one mean for the whole series, and a trending series has none. Take out trend and season first; only then does the correlogram measure how a month remembers the last one, here $r(1) = 0.7788$.
 >
 > - **Counting band crossings as discoveries.** Each lag has about a 5 percent chance of crossing for pure noise. Across 24 lags, 61.40 percent of pure-noise series cross somewhere. Look for a pattern, not one spike.
-> - **Taking stationary to mean the memory fades.** The shared-offset model is stationary with $\rho(h) = 0.5$ at every lag. The average of 4 of its values has variance 1.25, not the 0.50 that independent values would give, and no length of record removes the shared part ([sample-mean-and-standard-error](../07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)).
+> - **Taking stationary to mean the memory fades.** The shared-offset model is stationary with $\rho(h) = 0.5$ at every lag. The average of 4 of its values has variance 1.25, not the 0.50 that independent values would give, and no length of record removes the shared part ([Standard error](../07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)).
 > - **Reading autocorrelation as cause.** $r(12) = 0.7604$ does not mean last July's passengers produced this July's. Both follow the same calendar and the same growth.
 > - **Dividing by the number of pairs.** It looks more honest and gives impossible values: −1.1741 at lag 100.
 
@@ -674,10 +653,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **A share's daily returns.** Daily returns of a large share usually show $r(1)$ close to zero, inside the band; their squares do not, because calm and stormy days cluster. That second correlogram is the starting point of [garch-and-volatility-clustering](06-garch-and-volatility-clustering.md).
-- **Checking a fitted model.** After any regression or forecasting model on time-ordered data, the correlogram of the leftover errors should sit inside the band; a pattern there means the model missed some memory ([diagnostics-and-residuals](../09-Regression/04-diagnostics-and-residuals.md)).
+- **A share's daily returns.** Daily returns of a large share usually show $r(1)$ close to zero, inside the band; their squares do not, because calm and stormy days cluster. That second correlogram is the starting point of [GARCH](06-garch-and-volatility-clustering.md).
+- **Checking a fitted model.** After any regression or forecasting model on time-ordered data, the correlogram of the leftover errors should sit inside the band; a pattern there means the model missed some memory ([Diagnostics](../09-Regression/04-diagnostics-and-residuals.md)).
 - **Error bars on averages over time.** Positive autocorrelation makes an average of a series vary more than the independent formula says, as the shared-offset model shows.
-- **Signals and radar.** Sliding a signal against itself is autocorrelation by another name; sliding it against a template is cross-correlation (correlation-and-the-matched-filter).
+- **Signals and radar.** Sliding a signal against itself is autocorrelation by another name; sliding it against a template is cross-correlation (Correlation).
 
 > **Say it back**
 > A series is weakly stationary when its mean and variance never change and the covariance of two values depends only on the gap between them. That condition, with memory that fades, turns a single history into many repetitions, so averages over time estimate the autocovariance $\gamma(h)$ and the autocorrelation $\rho(h)$, which lies between −1 and 1. The sample correlogram divides by $n$ to keep that bound. A trend shows as a slow decay, a season as a wave, and short memory as a quick fade, judged against a pure-noise band of ±1.96/√n. The raw airline series is not stationary; its noise, with trend and season removed, remembers about a year.
@@ -686,18 +665,18 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [joint-distributions-and-covariance](../02-Random%20Variables/04-joint-distributions-and-covariance.md): covariance, correlation and the variance of a sum, which give the definitions and the bound.
+- [Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md): covariance, correlation and the variance of a sum, which give the definitions and the bound.
 
 ## Where this goes next
 
-- [ar-models](02-ar-models.md): a model in which today is a fraction of yesterday plus a fresh shock, and the correlogram it produces.
-- spectral-estimation-and-periodograms: the periodogram used as road 2, turned into an estimate of how much each frequency contributes.
-- filtrations-and-persistent-homology: shapes in data built from distances, including sliding windows of a time series.
-- persistence-in-practice: detecting periodic behaviour in a series by its loops rather than by its correlogram.
-- correlation-and-the-matched-filter: sliding correlation used to find a known pattern in noise.
-- wiener-khinchin-and-the-power-spectrum: why the autocovariance and the power spectrum are one object seen two ways.
+- [Autoregression](02-ar-models.md): a model in which today is a fraction of yesterday plus a fresh shock, and the correlogram it produces.
+- Spectral estimation: the periodogram used as road 2, turned into an estimate of how much each frequency contributes.
+- Filtration and persistent homology: shapes in data built from distances, including sliding windows of a time series.
+- Persistence in practice: detecting periodic behaviour in a series by its loops rather than by its correlogram.
+- Correlation: sliding correlation used to find a known pattern in noise.
+- Wiener-Khinchin: why the autocovariance and the power spectrum are one object seen two ways.
 
-The noise of the airline series starts at $r(1) = 0.7788$: a month remembers the last. The simplest rule that builds memory in, today as a fraction of yesterday plus a fresh shock, the correlogram that rule must produce, and how to fit it, are on [ar-models](02-ar-models.md).
+The noise of the airline series starts at $r(1) = 0.7788$: a month remembers the last. The simplest rule that builds memory in, today as a fraction of yesterday plus a fresh shock, the correlogram that rule must produce, and how to fit it, are on [Autoregression](02-ar-models.md).
 
 ---
 

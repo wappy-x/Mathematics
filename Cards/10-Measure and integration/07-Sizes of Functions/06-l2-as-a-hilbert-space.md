@@ -1,32 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Sizes of Functions
-topic: Best fits for a week of wind
-item: L2 as a Hilbert space
-kind: theorem
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/05-completeness-of-lp|completeness-of-lp]]"
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/02-holders-inequality|holders-inequality]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/02-orthogonal-projection|orthogonal-projection]]"
-  - "[[Cards/03-Algebra/06-Dot Products and Best Fits/04-least-squares|least-squares]]"
-next:
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/03-radon-nikodym-theorem|radon-nikodym-theorem]]"
-  - "[[Cards/10-Measure and integration/09-Conditional Expectation/03-conditional-expectation-as-projection|conditional-expectation-as-projection]]"
-  - "[[Cards/16-Numerical analysis/07-PDE Solvers/07-finite-elements-galerkin-and-hat-functions|finite-elements-galerkin-and-hat-functions]]"
-  - "[[Cards/18-Functional analysis/02-Hilbert Spaces/01-inner-products-and-hilbert-spaces|inner-products-and-hilbert-spaces]]"
-  - "[[Cards/18-Functional analysis/02-Hilbert Spaces/06-riesz-representation-theorem|riesz-representation-theorem]]"
-  - "[[Cards/19-Partial differential equations/07-Nonlinear PDE and Fluids/08-fredholm-alternative-and-compact-operators|fredholm-alternative-and-compact-operators]]"
-  - "[[Cards/20-Harmonic analysis/01-Fourier Series in Depth/01-fourier-coefficients-and-orthogonality|fourier-coefficients-and-orthogonality]]"
-  - "[[Cards/20-Harmonic analysis/01-Fourier Series in Depth/02-best-approximation-and-bessels-inequality|best-approximation-and-bessels-inequality]]"
-tags: [mathematics, measure and integration, l2-as-a-hilbert-space]
----
-
 # L2 as a Hilbert space: functions have lengths and angles, the closest point in a closed subspace is a perpendicular drop, and every continuous linear rule is an inner product
 
-Measure and integration → Sizes of Functions → Best fits for a week of wind → L2 as a Hilbert space
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Sizes of Functions](../../../SYLLABUS.md#w10-s07) → L2 as a Hilbert space
 
 ---
 
@@ -36,7 +10,7 @@ A turbine logs one daily mean wind speed for a week, Monday to Sunday: 3, 5, 8, 
 
 Now let the planner use two numbers: one speed for weekdays, one for the weekend. The best pair is 4.80 and 5.50, the two separate means, and the total of squared misses falls to 273/10.
 
-Both answers are drops. Treat the week as an arrow with one direction per day. The constant weeks form a line through the origin, the two-level weeks a plane, and the best fit is the foot of the perpendicular from the arrow's tip, as in [orthogonal-projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md). The same geometry works for functions on any measure space when size is the square-root-of-squares size. That space of functions is **L2**, and its geometry makes it a **Hilbert space**: a space with lengths and angles in which every sequence that settles down has a limit inside it.
+Both answers are drops. Treat the week as an arrow with one direction per day. The constant weeks form a line through the origin, the two-level weeks a plane, and the best fit is the foot of the perpendicular from the arrow's tip, as in [Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md). The same geometry works for functions on any measure space when size is the square-root-of-squares size. That space of functions is **L2**, and its geometry makes it a **Hilbert space**: a space with lengths and angles in which every sequence that settles down has a limit inside it.
 
 Two theorems follow. The **projection theorem**: for every closed family of functions that is closed under adding and scaling, there is exactly one closest member, and the miss is perpendicular to the whole family. The **Riesz representation theorem**: every linear rule that turns a function into a number, and does not jump when the function moves slightly, is an inner product with one fixed function.
 
@@ -63,7 +37,7 @@ Caption: the bars are the seven readings. The first line is the best constant, 5
 
 ## The formula
 
-Notation first, in words. A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([lp-spaces](01-lp-spaces.md) has the reminder). Here $\Omega$ is the seven days and $\mu$ is **counting measure**, weight 1 per day; a second run uses the uniform probability $P$, weight 1/7 per day. **L2** is the space of measurable functions whose square has a finite integral, with two functions counted as one when they agree almost everywhere, that is, except on a set of measure zero.
+Notation first, in words. A measure space $(\Omega,\mathcal F,\mu)$ is a set of points $\Omega$, the collection $\mathcal F$ of sets we allow ourselves to measure, and a measure $\mu$ giving each such set a size ([Lp spaces](01-lp-spaces.md) has the reminder). Here $\Omega$ is the seven days and $\mu$ is **counting measure**, weight 1 per day; a second run uses the uniform probability $P$, weight 1/7 per day. **L2** is the space of measurable functions whose square has a finite integral, with two functions counted as one when they agree almost everywhere, that is, except on a set of measure zero.
 
 The **inner product** of two functions in L2 multiplies them point by point and integrates:
 
@@ -71,7 +45,7 @@ $$\langle f, g\rangle = \int_\Omega f\,g \; d\mu, \qquad \|f\|_2 = \sqrt{\langle
 
 **Read it aloud:** the inner product of f and g is the integral of their product; the length of f is the square root of its inner product with itself.
 
-On the seven days under counting measure the integral is a plain sum: the dot product of two lists. Hölder's inequality at p = 2 ([holders-inequality](02-holders-inequality.md)), here called the **Cauchy–Schwarz inequality**, keeps it finite: $|\langle f,g\rangle| \le \|f\|_2\,\|g\|_2$. Two functions are **orthogonal**, or perpendicular, when their inner product is 0.
+On the seven days under counting measure the integral is a plain sum: the dot product of two lists. Hölder's inequality at p = 2 ([Holder's inequality](02-holders-inequality.md)), here called the **Cauchy–Schwarz inequality**, keeps it finite: $|\langle f,g\rangle| \le \|f\|_2\,\|g\|_2$. Two functions are **orthogonal**, or perpendicular, when their inner product is 0.
 
 A **subspace** $M$ is a family of functions closed under adding and scaling. It is **closed** when the limit, in L2 length, of any sequence of members is again a member. The **projection theorem**:
 
@@ -106,7 +80,7 @@ $$\varphi(f) = \langle f, g\rangle \ \text{ for every } f \text{ in L2}, \qquad 
 
 - **The exponent is 2.** Only the p = 2 size comes from an inner product. For finite p above 1 a closest point in a closed subspace still exists and is unique, but away from p = 2 it is not a perpendicular drop. At p = 1 even uniqueness fails: 4, 5, 5.5, 6 and 7 all sit at distance 3 from the weekend readings 4 and 7. At p = 2 the closest is 5.5 alone, at 2.1213.
 - **The subspace is closed.** On [0, 1] with Lebesgue measure, the continuous functions form a subspace that is not closed. Continuous ramps get within 0.0183 of a calm-to-wind step, and closer still, but no continuous function reaches it: the best fit does not exist.
-- **The space is complete.** The proof builds the best fit as a limit, and L2 contains all its limits by [completeness-of-lp](05-completeness-of-lp.md). A space of functions with holes, such as the continuous ones under this length, loses the theorem.
+- **The space is complete.** The proof builds the best fit as a limit, and L2 contains all its limits by [Riesz-Fischer](05-completeness-of-lp.md). A space of functions with holes, such as the continuous ones under this length, loses the theorem.
 - **The rule is continuous.** On continuous functions on [0, 1], "the value at t = 1/2" is linear but not continuous in L2 length: ever narrower tents of height 1 at t = 1/2 have lengths shrinking to 0 while the value stays 1, so no g reproduces it. On L2 it is not even defined: two functions equal almost everywhere may differ at one point, and L2 counts them as one.
 
 ---
@@ -131,7 +105,7 @@ Let d be the shortest distance from f to M, the value the misses approach from a
 
 ### Step 3: completeness supplies the limit, closedness keeps it in M
 
-By Riesz–Fischer ([completeness-of-lp](05-completeness-of-lp.md)) the sequence has a limit $\hat f$ in L2. Because M is closed, the limit is in M, and its miss is exactly d.
+By Riesz–Fischer ([Riesz-Fischer](05-completeness-of-lp.md)) the sequence has a limit $\hat f$ in L2. Because M is closed, the limit is in M, and its miss is exactly d.
 
 ### Step 4: the miss is perpendicular to M
 
@@ -163,18 +137,18 @@ The proof's road does generalise. The **kernel** N of the rule, the functions it
 
 $$\varphi(f) = \Big\langle f,\ \tfrac{\varphi(z)}{\|z\|_2^2}\, z\Big\rangle .$$
 
-That bracketed multiple of z is g. The code does this in exact fractions, with u the Monday indicator and the kernel's basis made perpendicular by Gram–Schmidt ([gram-schmidt-and-orthonormal-bases](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md)), and lands on the same g: −1/5 on weekdays, 1/2 at the weekend.
+That bracketed multiple of z is g. The code does this in exact fractions, with u the Monday indicator and the kernel's basis made perpendicular by Gram–Schmidt ([Gram-Schmidt](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/03-gram-schmidt-and-orthonormal-bases.md)), and lands on the same g: −1/5 on weekdays, 1/2 at the weekend.
 
 The size of the rule is the length of g. Cauchy–Schwarz bounds |φ(h)| by the length of g times the length of h, and h = g attains it. The length of g is the square root of 7/10, 0.8367. Among 2000 random weeks the largest ratio of |φ(h)| to the length of h is 0.7762, under the bound; at h = g it is 0.8367.
 
-The representer depends on the measure. Under the uniform probability, each day's product is weighted by 1/7, so the representer must be seven times larger: −7/5 on weekdays and 7/2 at the weekend. It reproduces 7/10. The representer is the rule's density against the measure, which is how [radon-nikodym-theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md) will use it.
+The representer depends on the measure. Under the uniform probability, each day's product is weighted by 1/7, so the representer must be seven times larger: −7/5 on weekdays and 7/2 at the weekend. It reproduces 7/10. The representer is the rule's density against the measure, which is how [The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md) will use it.
 
 <details>
 <summary>Detailed proof</summary>
 
 **Setting.** $(\Omega,\mathcal F,\mu)$ is a measure space and L2 is the space of real measurable functions with $\int f^2\,d\mu < \infty$, functions equal almost everywhere counted as one.
 
-**L2 is an inner product space.** For f, g in L2, $|fg| \le \tfrac12(f^2 + g^2)$ at each point, so the inner product is finite. It is symmetric, linear in each slot, and $\langle f,f\rangle = 0$ exactly when $f = 0$ almost everywhere, since a function of zero or more with integral zero vanishes almost everywhere. Cauchy–Schwarz is Hölder at p = q = 2 ([holders-inequality](02-holders-inequality.md)). The length $\|f\|_2$ is the p = 2 norm, which obeys the triangle inequality by [minkowskis-inequality](03-minkowskis-inequality.md). By [completeness-of-lp](05-completeness-of-lp.md), every Cauchy sequence in L2 converges in L2. An inner product space complete in its length is a **Hilbert space**, so L2 is one.
+**L2 is an inner product space.** For f, g in L2, $|fg| \le \tfrac12(f^2 + g^2)$ at each point, so the inner product is finite. It is symmetric, linear in each slot, and $\langle f,f\rangle = 0$ exactly when $f = 0$ almost everywhere, since a function of zero or more with integral zero vanishes almost everywhere. Cauchy–Schwarz is Hölder at p = q = 2 ([Holder's inequality](02-holders-inequality.md)). The length $\|f\|_2$ is the p = 2 norm, which obeys the triangle inequality by [Minkowski's inequality](03-minkowskis-inequality.md). By [Riesz-Fischer](05-completeness-of-lp.md), every Cauchy sequence in L2 converges in L2. An inner product space complete in its length is a **Hilbert space**, so L2 is one.
 
 **Expansion and parallelogram law.** By linearity and symmetry, $\|u \pm v\|_2^2 = \|u\|_2^2 \pm 2\langle u,v\rangle + \|v\|_2^2$. Adding the two signs gives the parallelogram law.
 
@@ -195,7 +169,7 @@ The representer depends on the measure. Under the uniform probability, each day'
 
 </details>
 
-The finite-dimensional version, where every subspace is closed and completeness is automatic, is [least-squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md); the general Hilbert-space treatment is inner-products-and-hilbert-spaces.
+The finite-dimensional version, where every subspace is closed and completeness is automatic, is [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md); the general Hilbert-space treatment is Inner products.
 
 ---
 
@@ -663,10 +637,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Regression and forecasting.** Every least-squares fit, from a trend line to a weather model's calibration, is a projection onto the span of its predictors ([least-squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md)).
-- **Best prediction from partial information.** The best guess of a random quantity from what is known, under squared error, is its projection onto the functions of what is known: [conditional-expectation-as-projection](../09-Conditional%20Expectation/03-conditional-expectation-as-projection.md). The two-level fit here is that projection for the information "weekday or weekend".
-- **Fourier series and signal compression.** Keeping the first few sine and cosine terms of a signal is projecting onto their span; the coefficients are inner products (fourier-coefficients-and-orthogonality).
-- **Engineering simulation.** The finite-element method finds the member of a space of piecewise-linear functions whose error is perpendicular to that space in the energy inner product, the integral of the product of slopes, not this card's (finite-elements-galerkin-and-hat-functions).
+- **Regression and forecasting.** Every least-squares fit, from a trend line to a weather model's calibration, is a projection onto the span of its predictors ([Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md)).
+- **Best prediction from partial information.** The best guess of a random quantity from what is known, under squared error, is its projection onto the functions of what is known: [Conditional expectation as a projection](../09-Conditional%20Expectation/03-conditional-expectation-as-projection.md). The two-level fit here is that projection for the information "weekday or weekend".
+- **Fourier series and signal compression.** Keeping the first few sine and cosine terms of a signal is projecting onto their span; the coefficients are inner products (Fourier coefficients).
+- **Engineering simulation.** The finite-element method finds the member of a space of piecewise-linear functions whose error is perpendicular to that space in the energy inner product, the integral of the product of slopes, not this card's (Finite elements).
 
 > **Say it back**
 > On L2 the length of a function comes from an inner product, the integral of a product. The parallelogram law forces fits approaching the best distance to settle down, and completeness supplies their limit. On a closed subspace the best fit exists, is unique, and leaves a miss perpendicular to the subspace. A continuous linear rule is the inner product with the direction perpendicular to its kernel. For the wind week the best constant is 5 with miss 5.2915, and the rule "weekend mean minus weekday mean" is the inner product with −1/5 on weekdays and 1/2 at the weekend.
@@ -675,21 +649,21 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [completeness-of-lp](05-completeness-of-lp.md): every Cauchy sequence in L2 has a limit, which Step 3 needs.
-- [holders-inequality](02-holders-inequality.md): at p = 2 it is Cauchy–Schwarz, which makes the inner product finite and bounds each rule.
-- [orthogonal-projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md): the perpendicular drop for arrows, which this card extends to functions.
-- [least-squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the normal equations, used here as the first road to the fit.
+- [Riesz-Fischer](05-completeness-of-lp.md): every Cauchy sequence in L2 has a limit, which Step 3 needs.
+- [Holder's inequality](02-holders-inequality.md): at p = 2 it is Cauchy–Schwarz, which makes the inner product finite and bounds each rule.
+- [Projection](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/02-orthogonal-projection.md): the perpendicular drop for arrows, which this card extends to functions.
+- [Least squares](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/04-least-squares.md): the normal equations, used here as the first road to the fit.
 
 ## Where this goes next
 
-- [radon-nikodym-theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md): von Neumann's proof applies Riesz representation on an L2 space to produce a density.
-- [conditional-expectation-as-projection](../09-Conditional%20Expectation/03-conditional-expectation-as-projection.md): conditional expectation defined as the projection onto the functions of the known information.
-- finite-elements-galerkin-and-hat-functions: projection onto hat functions to solve differential equations.
-- inner-products-and-hilbert-spaces: the same geometry on any complete inner product space.
-- riesz-representation-theorem: the representation theorem for every Hilbert space and its consequences.
-- fredholm-alternative-and-compact-operators: solvability of equations read off from perpendicular complements.
-- fourier-coefficients-and-orthogonality: sines and cosines as a perpendicular family in L2.
-- best-approximation-and-bessels-inequality: the projection theorem applied to trigonometric polynomials.
+- [The Radon-Nikodym theorem](../08-Densities%20and%20Changing%20Measure/03-radon-nikodym-theorem.md): von Neumann's proof applies Riesz representation on an L2 space to produce a density.
+- [Conditional expectation as a projection](../09-Conditional%20Expectation/03-conditional-expectation-as-projection.md): conditional expectation defined as the projection onto the functions of the known information.
+- Finite elements: projection onto hat functions to solve differential equations.
+- Inner products: the same geometry on any complete inner product space.
+- Riesz representation: the representation theorem for every Hilbert space and its consequences.
+- The Fredholm alternative: solvability of equations read off from perpendicular complements.
+- Fourier coefficients: sines and cosines as a perpendicular family in L2.
+- Partial sums are the best fit: the projection theorem applied to trigonometric polynomials.
 
 ---
 

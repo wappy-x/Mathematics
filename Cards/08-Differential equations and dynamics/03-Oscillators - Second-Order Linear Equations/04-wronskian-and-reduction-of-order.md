@@ -1,24 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Oscillators - Second-Order Linear Equations
-topic: A full set of solutions
-item: The Wronskian
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/02-the-characteristic-equation|the-characteristic-equation]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/04-determinants|determinants]]"
-  - "[[Cards/03-Algebra/03-Vectors/04-linear-independence|linear-independence]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/07-variation-of-parameters|variation-of-parameters]]"
-tags: [mathematics, differential equations and dynamics, wronskian-and-reduction-of-order]
----
-
 # The Wronskian: a determinant that says two solutions are genuinely different, and how to find the second from the first
 
-Differential equations and dynamics → Oscillators - Second-Order Linear Equations → A full set of solutions → The Wronskian
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Oscillators - Second-Order Linear Equations](../../../SYLLABUS.md#w08-s03) → The Wronskian
 
 ---
 
@@ -26,7 +8,7 @@ Differential equations and dynamics → Oscillators - Second-Order Linear Equati
 
 A 1 kg weight sits on a spring of stiffness 1 newton per metre. Its damper is wired backwards: instead of resisting motion it pushes along it, at 2 newtons per metre per second. With y the displacement from rest in cm and t the time in seconds, the rule is y'' = 2y' − y: acceleration is twice the velocity, minus the displacement. Rearranged, y'' − 2y' + y = 0.
 
-A second-order equation takes two starting facts, a position and a velocity, so it needs two genuinely different solutions to fit every start. The [the-characteristic-equation](02-the-characteristic-equation.md) method offers only one here. Trying y = e^(rt) gives r^2 − 2r + 1 = 0, which is (r − 1)^2 = 0: a double root, and the single solution e^t.
+A second-order equation takes two starting facts, a position and a velocity, so it needs two genuinely different solutions to fit every start. The [The characteristic equation](02-the-characteristic-equation.md) method offers only one here. Trying y = e^(rt) gives r^2 − 2r + 1 = 0, which is (r − 1)^2 = 0: a double root, and the single solution e^t.
 
 Two questions follow. How can one tell that two solutions are really different, not one in disguise like e^t and 2e^t? And where is the missing second one? A determinant, the **Wronskian**, answers the first. Writing the unknown as a changing multiple of the known solution, **reduction of order**, answers the second: t e^t.
 
@@ -99,7 +81,7 @@ $$y_2 = v\,y_1, \qquad v' = \frac{W}{y_1^{\,2}} = \frac{e^{-\int p\,dt}}{y_1^{\,
 
 ### Step 0: independence is a question about the starting state
 
-A solution is fixed by its value and slope at one moment (the uniqueness behind [superposition-and-the-shape-of-linear-solutions](01-superposition-and-the-shape-of-linear-solutions.md)). So two solutions are genuinely different exactly when their starting states, each a pair (value, slope), point in different directions. Two arrows point in different directions exactly when the determinant of the two-by-two table they form is non-zero ([determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). That determinant is W.
+A solution is fixed by its value and slope at one moment (the uniqueness behind [Superposition](01-superposition-and-the-shape-of-linear-solutions.md)). So two solutions are genuinely different exactly when their starting states, each a pair (value, slope), point in different directions. Two arrows point in different directions exactly when the determinant of the two-by-two table they form is non-zero ([Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md)). That determinant is W.
 
 ### The picture: starting states as arrows
 
@@ -113,7 +95,7 @@ Differentiate W = y1 y2' − y1' y2 by the product rule. The two y1' y2' terms c
 
 $$W' = y_1\,y_2'' - y_1''\,y_2$$
 
-Substitute y'' = −p y' − q y for both. The q terms cancel, because both solve the same equation, leaving W' = −p W. That is a first-order linear rule, solved by [integrating-factor](../01-Rate%20Equations/05-integrating-factor.md): Abel's identity. For the spring, W' = 2W and W(0) = 1, so W = e^(2t).
+Substitute y'' = −p y' − q y for both. The q terms cancel, because both solve the same equation, leaving W' = −p W. That is a first-order linear rule, solved by [The integrating factor](../01-Rate%20Equations/05-integrating-factor.md): Abel's identity. For the spring, W' = 2W and W(0) = 1, so W = e^(2t).
 
 ### Step 2: always zero or never zero
 
@@ -121,7 +103,7 @@ An exponential is never zero. So if W(t0) = 0, then W is zero at every time, and
 
 ### Step 3: W = 0 at one moment means one solution in disguise
 
-If W(t0) = 0, the starting arrows are parallel, so constants c1 and c2, not both zero, make c1 y1 + c2 y2 start at value 0 with slope 0. That combination is a solution, and a solution starting at rest at the rest position stays there. So c1 y1 + c2 y2 = 0 everywhere: the pair is dependent, in the sense of [linear-independence](../../03-Algebra/03-Vectors/04-linear-independence.md). If W(t0) is not zero, the arrows reach any starting state, so c1 y1 + c2 y2 covers every solution.
+If W(t0) = 0, the starting arrows are parallel, so constants c1 and c2, not both zero, make c1 y1 + c2 y2 start at value 0 with slope 0. That combination is a solution, and a solution starting at rest at the rest position stays there. So c1 y1 + c2 y2 = 0 everywhere: the pair is dependent, in the sense of [Linear independence](../../03-Algebra/03-Vectors/04-linear-independence.md). If W(t0) is not zero, the arrows reach any starting state, so c1 y1 + c2 y2 covers every solution.
 
 <details>
 <summary>Detailed proof: a non-zero Wronskian gives every solution</summary>
@@ -175,7 +157,7 @@ Last row: a t^2 + b t|t| = 0 at t = 1 and −1 is a system with determinant −2
 
 ## Code, from first principles, and it actually runs
 
-Two roads. One: the closed forms t e^t and e^(2t), with W recomputed from slopes measured by finite differences (rise over a tiny step either side). Two: Euler steps on y'' = 2y' − y from t e^t's start, value 0 and slope 1 (new value = old value + step × rate, [eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)); the error halves with the step, and the stepped W closes on e^2. A second case, y'' + y = 0 from sin t, integrates by the midpoint rule (a sum of rectangle areas).
+Two roads. One: the closed forms t e^t and e^(2t), with W recomputed from slopes measured by finite differences (rise over a tiny step either side). Two: Euler steps on y'' = 2y' − y from t e^t's start, value 0 and slope 1 (new value = old value + step × rate, [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)); the error halves with the step, and the stepped W closes on e^2. A second case, y'' + y = 0 from sin t, integrates by the midpoint rule (a sum of rectangle areas).
 
 ### Python
 
@@ -388,8 +370,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Critically damped machinery.** The shelf's shock absorber at b = 4.472136 per s has a double root; reduction gives t e^(−2.236068 t), the start 1 cm at rest gives (1 + 2.236068 t) e^(−2.236068 t), and W(1) = 0.011423. See [the-rlc-circuit-and-the-spring](08-the-rlc-circuit-and-the-spring.md).
-- **Equations whose coefficients change with time.** On [the-cauchy-euler-equation](09-the-cauchy-euler-equation.md) one solution is often easy to guess; reduction of order finds the other.
+- **Critically damped machinery.** The shelf's shock absorber at b = 4.472136 per s has a double root; reduction gives t e^(−2.236068 t), the start 1 cm at rest gives (1 + 2.236068 t) e^(−2.236068 t), and W(1) = 0.011423. See [The RLC circuit](08-the-rlc-circuit-and-the-spring.md).
+- **Equations whose coefficients change with time.** On [The Cauchy-Euler equation](09-the-cauchy-euler-equation.md) one solution is often easy to guess; reduction of order finds the other.
 
 > **Say it back**
 > A second-order linear equation needs two genuinely different solutions to fit every start. The determinant of their values over their slopes, the Wronskian, is non-zero exactly when the starting arrows point different ways. Abel's identity, W' = −p W, makes it always zero or never zero. Writing the second solution as v times the first gives W = y1^2 v', so e^t yields t e^t.
@@ -398,13 +380,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [the-characteristic-equation](02-the-characteristic-equation.md): the exponential guess and the double root that leaves one solution short.
-- [determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): the two-by-two determinant as signed area, zero for parallel columns.
-- [linear-independence](../../03-Algebra/03-Vectors/04-linear-independence.md): what "genuinely different" means for functions as well as arrows.
+- [The characteristic equation](02-the-characteristic-equation.md): the exponential guess and the double root that leaves one solution short.
+- [Determinants](../../03-Algebra/05-Solving%20Systems/04-determinants.md): the two-by-two determinant as signed area, zero for parallel columns.
+- [Linear independence](../../03-Algebra/03-Vectors/04-linear-independence.md): what "genuinely different" means for functions as well as arrows.
 
 ## Where this goes next
 
-- [variation-of-parameters](07-variation-of-parameters.md): lets c1 and c2 vary with time, dividing by W, to solve the equation with a push on the right-hand side.
+- [Variation of parameters](07-variation-of-parameters.md): lets c1 and c2 vary with time, dividing by W, to solve the equation with a push on the right-hand side.
 
 Two solutions finish the unforced equation; what the weight does when an outside force keeps pushing is what variation of parameters answers.
 

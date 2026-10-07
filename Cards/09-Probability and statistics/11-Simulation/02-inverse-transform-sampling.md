@@ -1,33 +1,14 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Simulation
-topic: Drawing from a chosen law
-item: Inverse transform
-kind: method
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/09-Probability and statistics/11-Simulation/01-pseudo-random-numbers|pseudo-random-numbers]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/01-densities-and-cdfs|densities-and-cdfs]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/01-random-variables-and-distributions|random-variables-and-distributions]]"
-next:
-  - "[[Cards/09-Probability and statistics/11-Simulation/03-rejection-sampling-and-box-muller|rejection-sampling-and-box-muller]]"
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/05-simulating-a-default-time|simulating-a-default-time]]"
-tags: [mathematics, probability and statistics, inverse-transform-sampling]
----
-
 # Inverse transform: turning uniforms into any distribution with a CDF you can invert
 
-Probability and statistics → Simulation → Drawing from a chosen law → Inverse transform
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Simulation](../../../SYLLABUS.md#w09-s11) → Inverse transform
 
 ---
 
 ## General Overview
 
-A toll booth on a quiet road at night sees one car every 4 minutes on average. The cars do not coordinate, so the gap between two cars follows the exponential law ([exponential-distribution](../04-Continuous%20Distributions/03-exponential-distribution.md)): short gaps are common, long ones rare, and a gap over 10 minutes comes about 1 time in 12. A planner wants to simulate a night at the booth, to see how often the single attendant is swamped.
+A toll booth on a quiet road at night sees one car every 4 minutes on average. The cars do not coordinate, so the gap between two cars follows the exponential law ([Exponential](../04-Continuous%20Distributions/03-exponential-distribution.md)): short gaps are common, long ones rare, and a gap over 10 minutes comes about 1 time in 12. A planner wants to simulate a night at the booth, to see how often the single attendant is swamped.
 
-The computer offers one kind of randomness: numbers spread evenly between 0 and 1, called **uniform draws** ([pseudo-random-numbers](01-pseudo-random-numbers.md)). The first one from the generator used on this card is 0.827679. That is not a gap in minutes. Something has to turn an evenly spread number into a wait that is usually short and occasionally long.
+The computer offers one kind of randomness: numbers spread evenly between 0 and 1, called **uniform draws** ([Random numbers from a computer](01-pseudo-random-numbers.md)). The first one from the generator used on this card is 0.827679. That is not a gap in minutes. Something has to turn an evenly spread number into a wait that is usually short and occasionally long.
 
 The turning is done by the cumulative distribution function run backwards. The cumulative distribution function, CDF for short, takes a wait and returns the chance of a gap that short or shorter. Read the other way, it takes a chance and returns the wait with that much chance below it. Feed it 0.827679 and out comes 7.0336 minutes. Feed it 0.5 and out comes the middle gap, 2.7726 minutes. Uniform draws in, exponential waits out, with no rejected draws and no approximation. The same trick draws a whole-number count, such as passengers in the next car, by walking a staircase instead of a curve.
 
@@ -47,7 +28,7 @@ xychart-beta
     line [0.00, 39.35, 62.97, 77.43, 86.39, 91.78, 95.00, 96.96, 98.14, 98.86, 99.32]
 ```
 
-Orange: the exponential CDF, from its formula. Green: the share of 100,000 simulated gaps at or below each value, each gap made from one uniform draw. The two lines sit on top of each other. The largest gap between them is 1.97 standard errors, where a standard error is the typical size of a simulation's chance wobble ([monte-carlo-estimates-and-error](04-monte-carlo-estimates-and-error.md)). To read the method off the picture, start on the vertical axis at a chance, go across to the orange curve, and drop down to the gap.
+Orange: the exponential CDF, from its formula. Green: the share of 100,000 simulated gaps at or below each value, each gap made from one uniform draw. The two lines sit on top of each other. The largest gap between them is 1.97 standard errors, where a standard error is the typical size of a simulation's chance wobble ([Monte Carlo](04-monte-carlo-estimates-and-error.md)). To read the method off the picture, start on the vertical axis at a chance, go across to the orange curve, and drop down to the gap.
 
 ---
 
@@ -97,7 +78,7 @@ For a count $X$ taking values $k = 1, 2, 3, 4$ with chances $p_k$, the CDF is a 
 
 ### Step 0: a uniform draw is a chance picked at random
 
-For a uniform draw, the chance of landing at or below any number $u$ between 0 and 1 is $u$ itself: $P(U \le u) = u$. The draw lands at or below 0.50 half the time. So a uniform draw is a chance picked at random, and the CDF translates between chances and values. Going from chance to value, through the quantile, turns "chance at or below $u$ is $u$" into "chance at or below $x$ is $F(x)$". That is the whole idea; the steps below make it exact. [uniform-distribution](../04-Continuous%20Distributions/02-uniform-distribution.md) met the rule with a short proof; this card is its home, proving it for any CDF and putting it to work on waits and counts.
+For a uniform draw, the chance of landing at or below any number $u$ between 0 and 1 is $u$ itself: $P(U \le u) = u$. The draw lands at or below 0.50 half the time. So a uniform draw is a chance picked at random, and the CDF translates between chances and values. Going from chance to value, through the quantile, turns "chance at or below $u$ is $u$" into "chance at or below $x$ is $F(x)$". That is the whole idea; the steps below make it exact. [Uniform](../04-Continuous%20Distributions/02-uniform-distribution.md) met the rule with a short proof; this card is its home, proving it for any CDF and putting it to work on waits and counts.
 
 ### Step 1: invert the exponential CDF
 
@@ -157,7 +138,7 @@ which is all Step 2 used. So the proof in Step 2 goes through word for word, for
 <details>
 <summary>Detailed proof: the smallest value exists, and the equivalence holds</summary>
 
-Fix $u$ strictly between 0 and 1, and call the values $x$ with $F(x) \ge u$ the qualifying values. Every CDF climbs (never falls), tends to 0 far to the left and to 1 far to the right ([densities-and-cdfs](../04-Continuous%20Distributions/01-densities-and-cdfs.md)), and is right-continuous: at each point it equals its limit from the right ([random-variables-and-distributions](../02-Random%20Variables/01-random-variables-and-distributions.md)).
+Fix $u$ strictly between 0 and 1, and call the values $x$ with $F(x) \ge u$ the qualifying values. Every CDF climbs (never falls), tends to 0 far to the left and to 1 far to the right ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)), and is right-continuous: at each point it equals its limit from the right ([Random variables](../02-Random%20Variables/01-random-variables-and-distributions.md)).
 
 **Some value qualifies.** $F$ tends to 1 and $u < 1$, so far enough right $F(x) \ge u$.
 
@@ -167,7 +148,7 @@ Fix $u$ strictly between 0 and 1, and call the values $x$ with $F(x) \ge u$ the 
 
 **The equivalence.** If $u \le F(x)$ then $x$ qualifies, so $Q(u) \le x$. If $Q(u) \le x$ then $F(x) \ge F(Q(u)) \ge u$, since $F$ never falls. So $Q(u) \le x$ exactly when $u \le F(x)$.
 
-**The law.** A uniform $U$ lands strictly between 0 and 1 with chance 1, and for those draws the events $Q(U) \le x$ and $U \le F(x)$ coincide. Hence $P(Q(U) \le x) = P(U \le F(x)) = F(x)$ for every $x$. Two laws with the same CDF are the same law ([densities-and-cdfs](../04-Continuous%20Distributions/01-densities-and-cdfs.md)), so $Q(U)$ has the chosen law.
+**The law.** A uniform $U$ lands strictly between 0 and 1 with chance 1, and for those draws the events $Q(U) \le x$ and $U \le F(x)$ coincide. Hence $P(Q(U) \le x) = P(U \le F(x)) = F(x)$ for every $x$. Two laws with the same CDF are the same law ([Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md)), so $Q(U)$ has the chosen law.
 
 </details>
 
@@ -178,7 +159,7 @@ If a quantity $X$ has a CDF with no jumps, then $F(X)$ is uniform on 0 to 1: the
 
 </details>
 
-A second route is needed when the quantile has no formula. The standard normal law's CDF, written $\Phi$ on [normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md), has no closed-form inverse, so $\Phi^{-1}(u)$ must be found by solving $\Phi(x) = u$ numerically ([normal-quantile](../04-Continuous%20Distributions/05-normal-quantile.md)), one root-find per draw. Methods that avoid the inverse altogether are on [rejection-sampling-and-box-muller](03-rejection-sampling-and-box-muller.md).
+A second route is needed when the quantile has no formula. The standard normal law's CDF, written $\Phi$ on [Normal](../04-Continuous%20Distributions/04-normal-distribution.md), has no closed-form inverse, so $\Phi^{-1}(u)$ must be found by solving $\Phi(x) = u$ numerically ([Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md)), one root-find per draw. Methods that avoid the inverse altogether are on [Rejection sampling and Box-Muller](03-rejection-sampling-and-box-muller.md).
 
 ---
 
@@ -597,10 +578,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Queues and traffic.** Arrival gaps at booths, call centres and server farms are drawn as $-\ln(1-U)/\lambda$, one line per customer; the gap law itself is on [exponential-distribution](../04-Continuous%20Distributions/03-exponential-distribution.md).
+- **Queues and traffic.** Arrival gaps at booths, call centres and server farms are drawn as $-\ln(1-U)/\lambda$, one line per customer; the gap law itself is on [Exponential](../04-Continuous%20Distributions/03-exponential-distribution.md).
 - **Discrete events in games and surveys.** A loot table, a weighted menu of outcomes, or a survey's category mix is sampled by walking the running totals, as the passenger staircase does.
-- **Reliability and credit.** A failure time or a default time with a known survival curve is drawn by inverting it; the finance version is [simulating-a-default-time](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md).
-- **Normal draws in bulk.** Many numerical libraries draw normals as $\Phi^{-1}(U)$ with a fast approximate inverse ([normal-quantile](../04-Continuous%20Distributions/05-normal-quantile.md)); evenly spread inputs then stay evenly spread, which [variance-reduction](05-variance-reduction.md) exploits.
+- **Reliability and credit.** A failure time or a default time with a known survival curve is drawn by inverting it; the finance version is [Simulating a default time](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md).
+- **Normal draws in bulk.** Many numerical libraries draw normals as $\Phi^{-1}(U)$ with a fast approximate inverse ([Normal quantiles](../04-Continuous%20Distributions/05-normal-quantile.md)); evenly spread inputs then stay evenly spread, which [Variance reduction](05-variance-reduction.md) exploits.
 
 > **Say it back**
 > A uniform draw is a chance picked at random: it lands at or below any number $u$ between 0 and 1 with chance $u$. Running the CDF backwards turns that chance into a value, and the value at or below $x$ comes out exactly when the draw is at or below $F(x)$, which has chance $F(x)$. So the values follow the chosen law. For exponential gaps the backwards CDF is $-\ln(1-u)/\lambda$; for a count it is "the first value whose running total reaches $u$". The method needs a uniform input and a quantile that can be computed.
@@ -609,16 +590,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [pseudo-random-numbers](01-pseudo-random-numbers.md): the uniform draws, and the SplitMix64 generator that makes them.
-- [densities-and-cdfs](../04-Continuous%20Distributions/01-densities-and-cdfs.md): the CDF, and the fact that it climbs from 0 to 1.
-- [random-variables-and-distributions](../02-Random%20Variables/01-random-variables-and-distributions.md): the running total F of any random variable, and the proof that it is right-continuous, which the general case needs.
+- [Random numbers from a computer](01-pseudo-random-numbers.md): the uniform draws, and the SplitMix64 generator that makes them.
+- [Densities](../04-Continuous%20Distributions/01-densities-and-cdfs.md): the CDF, and the fact that it climbs from 0 to 1.
+- [Random variables](../02-Random%20Variables/01-random-variables-and-distributions.md): the running total F of any random variable, and the proof that it is right-continuous, which the general case needs.
 
 ## Where this goes next
 
-- [rejection-sampling-and-box-muller](03-rejection-sampling-and-box-muller.md): sampling when the quantile has no formula, by keeping some proposals and by a change of variables for the normal.
-- [simulating-a-default-time](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md): this card's exponential step, applied to a company's survival curve.
+- [Rejection sampling and Box-Muller](03-rejection-sampling-and-box-muller.md): sampling when the quantile has no formula, by keeping some proposals and by a change of variables for the normal.
+- [Simulating a default time](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md): this card's exponential step, applied to a company's survival curve.
 
-The exponential and the staircase invert by hand, but the normal law, the one simulations need most, has no quantile formula; how to draw it without one is [rejection-sampling-and-box-muller](03-rejection-sampling-and-box-muller.md).
+The exponential and the staircase invert by hand, but the normal law, the one simulations need most, has no quantile formula; how to draw it without one is [Rejection sampling and Box-Muller](03-rejection-sampling-and-box-muller.md).
 
 ---
 

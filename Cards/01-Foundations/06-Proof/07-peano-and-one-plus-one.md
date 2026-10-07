@@ -1,28 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Proof
-topic: Foundations of counting
-item: Peano's three rules
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/06-Proof/04-proof-by-induction|proof-by-induction]]"
-  - "[[Cards/01-Foundations/02-The Number Line/01-number-families|number-families]]"
-  - "[[Cards/01-Foundations/06-Proof/01-direct-proof|direct-proof]]"
-next:
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/04-division-with-remainder|division-with-remainder]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/02-supremum-and-completeness|supremum-and-completeness]]"
-tags:
-  - mathematics
-  - foundations
-  - peano-and-one-plus-one
----
-
 # Peano's three rules: building the counting numbers, and why 1 + 1 = 2 is a conclusion
 
-Foundations → Proof → Foundations of counting → Peano's three rules
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Proof](../../../SYLLABUS.md#w01-s06) → Peano's three rules
 
 ---
 
@@ -34,7 +12,7 @@ At dusk a knot comes off for each sheep back. Bare rope, whole flock. Knots left
 
 Cut it at any knot and you have a rope of your own: a counting number. Three rules pin them down. There is a **starting point**: the rope before any knot. Every rope has **exactly one next** — one more knot. That next **never lands on the start, and no two ropes share one**. And **nothing else counts as a rope**: every one comes from tying knots up from the start.
 
-That third rule is induction, the method [proof-by-induction](04-proof-by-induction.md) runs on — here not a technique but a rule saying what the counting numbers *are*.
+That third rule is induction, the method [Induction](04-proof-by-induction.md) runs on — here not a technique but a rule saying what the counting numbers *are*.
 
 **Fix a start, fix a next, rule out everything else — then addition is a definition, and 1 + 1 = 2 unfolds from it.**
 
@@ -101,7 +79,7 @@ The first two rules let a stray rope sit off to the side, never reached from the
 
 Rule one handles zero. Rule two peels a knot off the right-hand rope and hangs it outside: each use leaves that side shorter, so it bottoms out at rule one.
 
-So 1 + 1 = 2 is a conclusion, not a fact. Read 1 + 1 as 1 + next(zero), move the next outside, clear the inside by rule one, land on next(1): the name 2. Each step is a rule, a direct proof ([direct-proof](01-direct-proof.md)).
+So 1 + 1 = 2 is a conclusion, not a fact. Read 1 + 1 as 1 + next(zero), move the next outside, clear the inside by rule one, land on next(1): the name 2. Each step is a rule, a direct proof ([Direct proof](01-direct-proof.md)).
 
 ---
 
@@ -265,8 +243,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Tally marks.** The knots in another coat: a five-bar gate on a clipboard, no number named until the end.
-- **Counters in code.** A counter starts somewhere and takes one next per pass — which is why counting passes proves anything: [proof-by-induction](04-proof-by-induction.md).
-- **The rest of arithmetic.** Multiplying is defined from adding the same way, and the number families sit on this rope: [number-families](../02-The%20Number%20Line/01-number-families.md).
+- **Counters in code.** A counter starts somewhere and takes one next per pass — which is why counting passes proves anything: [Induction](04-proof-by-induction.md).
+- **The rest of arithmetic.** Multiplying is defined from adding the same way, and the number families sit on this rope: [The number families](../02-The%20Number%20Line/01-number-families.md).
 
 > **Say it back**
 > A shepherd's rope counts with no numbers in it. Three rules pin down the counting numbers: a start, one next that is never the start and never shared, and nothing in there but what tying knots reaches. That third rule is induction. Addition is two lines: anything plus zero is itself, anything plus next(n) is next of the sum with n. Point them at 1 + 1: it unfolds to next(1), the name 2.
@@ -275,14 +253,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [proof-by-induction](04-proof-by-induction.md): the domino argument, here Peano's third rule.
-- [number-families](../02-The%20Number%20Line/01-number-families.md): the counting numbers as a named family; this card is where it comes from.
-- [direct-proof](01-direct-proof.md): the shape of the 1 + 1 unfolding.
+- [Induction](04-proof-by-induction.md): the domino argument, here Peano's third rule.
+- [The number families](../02-The%20Number%20Line/01-number-families.md): the counting numbers as a named family; this card is where it comes from.
+- [Direct proof](01-direct-proof.md): the shape of the 1 + 1 unfolding.
 
 ## Where this goes next
 
-- [division-with-remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md): the least-element property at work.
-- [supremum-and-completeness](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md): the reals, the last step.
+- [Division with a remainder](../../02-Number%20theory/01-Divisibility%20and%20Primes/04-division-with-remainder.md): the least-element property at work.
+- [No gaps](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/02-supremum-and-completeness.md): the reals, the last step.
 
 
 ---

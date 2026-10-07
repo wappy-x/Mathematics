@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Performance and Multi-Period
-topic: Scoring a track record
-item: Performance measures
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/36-Returns and Utility/01-returns-simple-log-and-annualised|returns-simple-log-and-annualised]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/02-sample-mean-and-standard-error|sample-mean-and-standard-error]]"
-next:
-  - "[[Cards/12-Financial mathematics/38-Performance and Multi-Period/02-performance-attribution|performance-attribution]]"
-tags: [mathematics, financial mathematics, sharpe-information-and-drawdown]
----
-
 # Performance measures: Sharpe, information ratio, maximum drawdown, and their error bars
 
-Financial mathematics → Performance and Multi-Period → Scoring a track record → Performance measures
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Performance and Multi-Period](../../../SYLLABUS.md#w12-s38) → Performance measures
 
 ---
 
@@ -112,7 +95,7 @@ Forgetting to subtract cash does not merely shift the answer: it counts the bank
 
 ### Step 2: from a month to a year
 
-Returns over twelve independent months add up, to a first approximation, in log terms ([returns-simple-log-and-annualised](../36-Returns%20and%20Utility/01-returns-simple-log-and-annualised.md)). A sum of twelve independent months has twelve times the average and twelve times the **variance** (the square of the spread). So the spread grows only by the square root of twelve, 3.4641.
+Returns over twelve independent months add up, to a first approximation, in log terms ([Returns](../36-Returns%20and%20Utility/01-returns-simple-log-and-annualised.md)). A sum of twelve independent months has twelve times the average and twelve times the **variance** (the square of the spread). So the spread grows only by the square root of twelve, 3.4641.
 
 A year's ratio is then twelve times the monthly average over 3.4641 times the monthly spread: the monthly ratio times 3.4641. For this fund, 0.2596 × 3.4641 = 0.8991.
 
@@ -134,7 +117,7 @@ Drawdown answers what the ratios cannot: how bad did it get along the way? The s
 
 The idea is that the Sharpe ratio is built from two estimates, and each one wobbles.
 
-The average $\bar{x}$ is uncertain by $s_x/\sqrt{n}$: the standard error of a mean ([sample-mean-and-standard-error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)). Divided by the spread, that alone contributes one over $n$ to the ratio's variance. That is the "1" in the formula.
+The average $\bar{x}$ is uncertain by $s_x/\sqrt{n}$: the standard error of a mean ([Standard error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md)). Divided by the spread, that alone contributes one over $n$ to the ratio's variance. That is the "1" in the formula.
 
 The spread $s_x$ is also estimated, and it wobbles too. When returns follow a bell curve, the sample variance has variance twice the true variance squared over $n$. A small change in the spread moves the ratio in proportion to the ratio itself, so this wobble contributes $S^2/2$ over $n$. That is the second term.
 
@@ -699,8 +682,8 @@ The two outputs match line for line.
 - **Active managers and their benchmarks.** Pension funds hire managers to beat an index and judge them by information ratio and tracking error. A tracking-error budget is a limit on $s_a$.
 - **Hedge fund fees.** Performance fees are usually paid only on gains above the previous high: the drawdown chart's high-water mark.
 - **Risk limits.** Trading desks and lenders to leveraged funds set drawdown limits; breaching one can force the fund to sell.
-- **Performance attribution.** Once the information ratio says the manager added value, [performance-attribution](02-performance-attribution.md) splits the active return into where it came from.
-- **Sizing the bet.** The Sharpe ratio measures a bet's quality regardless of size; how much to hold over time is [mertons-portfolio-problem](03-mertons-portfolio-problem.md).
+- **Performance attribution.** Once the information ratio says the manager added value, [Attribution](02-performance-attribution.md) splits the active return into where it came from.
+- **Sizing the bet.** The Sharpe ratio measures a bet's quality regardless of size; how much to hold over time is [Merton's problem](03-mertons-portfolio-problem.md).
 
 > **Say it back**
 > The Sharpe ratio is the average return above cash divided by the spread of that return; it does not change with leverage, so it scores the quality of a bet. The information ratio is the same with a benchmark in place of cash. The maximum drawdown is the deepest fall from a previous high, and it depends on the order of the months. The Sharpe ratio's standard error is the square root of one plus half its square over the number of months, which on an annual scale is close to one over the square root of the years. Ten years of a 0.9 Sharpe ratio means 0.9 ± 0.3.
@@ -709,12 +692,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [returns-simple-log-and-annualised](../36-Returns%20and%20Utility/01-returns-simple-log-and-annualised.md): monthly returns, compounding them into wealth, and why averages scale with time and spreads with its square root.
-- [sample-mean-and-standard-error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md): the sample spread with $n - 1$, and the standard error of a mean, the first term of the Sharpe error bar.
+- [Returns](../36-Returns%20and%20Utility/01-returns-simple-log-and-annualised.md): monthly returns, compounding them into wealth, and why averages scale with time and spreads with its square root.
+- [Standard error](../../09-Probability%20and%20statistics/07-Sampling%20and%20Estimation/02-sample-mean-and-standard-error.md): the sample spread with $n - 1$, and the standard error of a mean, the first term of the Sharpe error bar.
 
 ## Where this goes next
 
-- [performance-attribution](02-performance-attribution.md): takes the active return that the information ratio scores and splits it into choosing the right sectors and choosing the right holdings within them.
+- [Attribution](02-performance-attribution.md): takes the active return that the information ratio scores and splits it into choosing the right sectors and choosing the right holdings within them.
 
 The information ratio says whether a manager beat the benchmark and how reliably; it does not say how, and that question is what attribution answers.
 

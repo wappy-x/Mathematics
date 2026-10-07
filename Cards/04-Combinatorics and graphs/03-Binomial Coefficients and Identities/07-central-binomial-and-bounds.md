@@ -1,29 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Binomial Coefficients and Identities
-topic: Sizing a count
-item: The middle of the row
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/01-pascals-rule-and-the-triangle|pascals-rule-and-the-triangle]]"
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/03-vandermonde-identity|vandermonde-identity]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/06-log-laws-and-log-scales|log-laws-and-log-scales]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/06-Lattice Paths and Catalan Numbers/05-random-walk-path-counts|random-walk-path-counts]]"
-  - "[[Cards/04-Combinatorics and graphs/14-Ramsey and Extremal, in Outline/03-probabilistic-method-by-counting|probabilistic-method-by-counting]]"
-  - "[[Cards/21-Algebraic and analytic number theory/01-Arithmetic Functions Again/08-chebyshev-bounds|chebyshev-bounds]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - central-binomial-and-bounds
----
-
 # The middle of the row: C(2n,n) is the biggest entry, and cheap bounds size any choice count without computing it
 
-Combinatorics and graphs → Binomial Coefficients and Identities → Sizing a count → The middle of the row
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Binomial Coefficients and Identities](../../../SYLLABUS.md#w04-s03) → The middle of the row
 
 ---
 
@@ -31,7 +8,7 @@ Combinatorics and graphs → Binomial Coefficients and Identities → Sizing a c
 
 A cheese counter holds 20 varieties. A tasting board takes 10, and only which ten matters, not the order on the plate. There are 184,756 different boards.
 
-That count is the middle entry of row 20 of Pascal's triangle ([pascals-rule-and-the-triangle](01-pascals-rule-and-the-triangle.md)), and the row's largest, though not by much: boards of 9 cheeses and of 11 come to 167,960 each.
+That count is the middle entry of row 20 of Pascal's triangle ([Pascal's rule](01-pascals-rule-and-the-triangle.md)), and the row's largest, though not by much: boards of 9 cheeses and of 11 come to 167,960 each.
 
 Two questions follow. Is the middle always the biggest? And how large is it, without doing the work? Row 20 adds to 1,048,576 — every selection of any size, one yes-or-no per cheese. Its 21 entries, one per board size, average 49,932.19. No entry beats the row's total, and the biggest cannot fall below that average. That pins the count from both sides:
 
@@ -112,7 +89,7 @@ The ratio (n−k+1)/k beats 1 exactly when n + 1 is more than twice k. At n = 20
 
 ### Step 2: the whole row adds to 4^n
 
-Row 20 adds to 1,048,576 ([pascals-rule-and-the-triangle](01-pascals-rule-and-the-triangle.md)): a selection is one yes-or-no per cheese, and sorting the selections by size and adding back returns all of them. Two 2s make a 4, so 2 multiplied in 20 times is 4 multiplied in 10 times: row 2n adds to 4^n. The run reaches it a second way, by listing.
+Row 20 adds to 1,048,576 ([Pascal's rule](01-pascals-rule-and-the-triangle.md)): a selection is one yes-or-no per cheese, and sorting the selections by size and adding back returns all of them. Two 2s make a 4, so 2 multiplied in 20 times is 4 multiplied in 10 times: row 2n adds to 4^n. The run reaches it a second way, by listing.
 
 ### Step 3: one total, two bounds
 
@@ -146,9 +123,9 @@ The pair bracket the board at 1,024 ≤ 184,756 ≤ 2,821,869.49. Away from the 
 
 ### Step 5: how much the bounds miss by
 
-The sandwich is wide on purpose. The middle entry is 0.1762 of its row, beats the average by 3.70 and misses the whole row by 5.68 — factors multiplying to 21, the entry count, which never shrinks. A factor of 21 sits between 10 and 100, so the sandwich is one to two digits wide on a base-10 scale ([log-laws-and-log-scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md)): 5 digits at the bottom, 6 for the count, 7 at the top. A cheap bound buys the digit count, not the digits. Replacing k! by an estimate of its own size sharpens the upper bound to (en/k)^k, with e the growth constant — a step that needs the series for e^x, in wing 06.
+The sandwich is wide on purpose. The middle entry is 0.1762 of its row, beats the average by 3.70 and misses the whole row by 5.68 — factors multiplying to 21, the entry count, which never shrinks. A factor of 21 sits between 10 and 100, so the sandwich is one to two digits wide on a base-10 scale ([Log laws and log scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md)): 5 digits at the bottom, 6 for the count, 7 at the top. A cheap bound buys the digit count, not the digits. Replacing k! by an estimate of its own size sharpens the upper bound to (en/k)^k, with e the growth constant — a step that needs the series for e^x, in wing 06.
 
-Another road: Vandermonde's identity ([vandermonde-identity](03-vandermonde-identity.md)) makes C(20, 10) the entries of row 10 squared and added, which the run confirms at 184,756.
+Another road: Vandermonde's identity ([Vandermonde's identity](03-vandermonde-identity.md)) makes C(20, 10) the entries of row 10 squared and added, which the run confirms at 184,756.
 
 ---
 
@@ -406,8 +383,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Sizing a search.** A program inspecting every pick of k from n does at most n^k/k! work: 83,333,333.33 for 5 of 100, 2,821,869.49 for 10 of 20. That says which job finishes over lunch.
-- **Coin flips.** Twenty tosses make 1,048,576 equally likely head-and-tail records; 184,756 show exactly ten heads — favourable over possible, 0.1762. The same count returns as the 20-step walks ending where they began: [random-walk-path-counts](../06-Lattice%20Paths%20and%20Catalan%20Numbers/05-random-walk-path-counts.md).
-- **Comparing counts nobody can compute.** An argument that something must exist can weigh bad cases against all cases with bounds alone: [probabilistic-method-by-counting](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md).
+- **Coin flips.** Twenty tosses make 1,048,576 equally likely head-and-tail records; 184,756 show exactly ten heads — favourable over possible, 0.1762. The same count returns as the 20-step walks ending where they began: [Counting coin-flip paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/05-random-walk-path-counts.md).
+- **Comparing counts nobody can compute.** An argument that something must exist can weigh bad cases against all cases with bounds alone: [Erdos's counting trick](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md).
 
 > **Say it back**
 > Twenty cheeses and a board of ten give 184,756 boards, the middle entry of row 20. Neighbours sit in the ratio (n − k + 1)/k, above 1 up to the middle and below after, so the middle entry is the largest. The row adds to 1,048,576, so no entry beats that and the biggest of 21 beats their average of 49,932.19. Away from the middle the count lies between (n/k)^k and n^k/k!.
@@ -416,17 +393,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [pascals-rule-and-the-triangle](01-pascals-rule-and-the-triangle.md): the row total 1,048,576 both bounds hang on.
-- [vandermonde-identity](03-vandermonde-identity.md): the middle entry as row 10 squared and added, a fourth road to 184,756.
-- [log-laws-and-log-scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md): why a factor of 21 counts as about one digit, which makes a loose bound useful.
+- [Pascal's rule](01-pascals-rule-and-the-triangle.md): the row total 1,048,576 both bounds hang on.
+- [Vandermonde's identity](03-vandermonde-identity.md): the middle entry as row 10 squared and added, a fourth road to 184,756.
+- [Log laws and log scales](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/06-log-laws-and-log-scales.md): why a factor of 21 counts as about one digit, which makes a loose bound useful.
 
 ## Where this goes next
 
-- [random-walk-path-counts](../06-Lattice%20Paths%20and%20Catalan%20Numbers/05-random-walk-path-counts.md): 184,756 as the 20-step walks that end where they began.
-- [probabilistic-method-by-counting](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md): existence proved by bounding counts nobody can compute.
-- chebyshev-bounds: this sandwich turned into how many primes lie below a number.
+- [Counting coin-flip paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/05-random-walk-path-counts.md): 184,756 as the 20-step walks that end where they began.
+- [Erdos's counting trick](../14-Ramsey%20and%20Extremal%2C%20in%20Outline/03-probabilistic-method-by-counting.md): existence proved by bounding counts nobody can compute.
+- Chebyshev's bounds: this sandwich turned into how many primes lie below a number.
 
-The sandwich never tightens: a factor of 21 for row 20, as wide as the row is long for any other. What it cannot say is that the middle entry's share of its row, 0.1762 here, keeps shrinking as rows grow — the fact that decides how far a 20-step walk strays, in [random-walk-path-counts](../06-Lattice%20Paths%20and%20Catalan%20Numbers/05-random-walk-path-counts.md).
+The sandwich never tightens: a factor of 21 for row 20, as wide as the row is long for any other. What it cannot say is that the middle entry's share of its row, 0.1762 here, keeps shrinking as rows grow — the fact that decides how far a 20-step walk strays, in [Counting coin-flip paths](../06-Lattice%20Paths%20and%20Catalan%20Numbers/05-random-walk-path-counts.md).
 
 ---
 

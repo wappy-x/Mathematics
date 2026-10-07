@@ -1,33 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The Black-Scholes call and put
-topic: The lower tail
-item: Black-Scholes put
-kind: model
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/01-black-scholes-call|black-scholes-call]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/04-normal-distribution|normal-distribution]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/06-lognormal-distribution|lognormal-distribution]]"
-next:
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/03-put-call-parity|put-call-parity]]"
-  - "[[Cards/12-Financial mathematics/08-The Black-Scholes call and put/07-black-scholes-equation|black-scholes-equation]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/01-delta|delta]]"
-  - "[[Cards/12-Financial mathematics/15-American and Bermudan exercise/01-american-options-and-early-exercise|american-options-and-early-exercise]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/04-chooser-options|chooser-options]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/01-garman-kohlhagen|garman-kohlhagen]]"
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/01-merton-model-equity-as-a-call|merton-model-equity-as-a-call]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - black-scholes-put
----
-
 # Black-Scholes put: the right to sell, priced from the same six numbers
 
-Financial mathematics → The Black-Scholes call and put → The lower tail → Black-Scholes put
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The Black-Scholes call and put](../../../SYLLABUS.md#w12-s08) → Black-Scholes put
 
 ---
 
@@ -40,7 +13,7 @@ Two ways the year can end:
 - **Acme is at $80.** Buy a share on the market for $80, hand it over, collect $100. You are **$20** better off, minus what the ticket cost.
 - **Acme is at $120.** Throw the ticket away. Nobody sells a $120 share for $100. You lose only what the ticket cost, not a cent more.
 
-So this ticket pays when Acme falls: insurance on a share you own, or a bet on a fall with the loss capped. The ticket is an **option**, the $100 is the **strike**, what you pay is the **premium** — the same three words as on the buying side ([black-scholes-call](01-black-scholes-call.md)). From here on the selling ticket is a **put**.
+So this ticket pays when Acme falls: insurance on a share you own, or a bet on a fall with the loss capped. The ticket is an **option**, the $100 is the **strike**, what you pay is the **premium** — the same three words as on the buying side ([Black–Scholes call](01-black-scholes-call.md)). From here on the selling ticket is a **put**.
 
 Here the put costs **$6.33**, against $9.23 for the call at the same strike and date. It is cheaper, and not because falls are rarer than rises in real life. In the pricing world built below, Acme is expected to finish at $103.05, so a strike of $100 sits below centre.
 
@@ -64,7 +37,7 @@ xychart-beta
 
 Read it right to left, the way a put pays. **Above $100:** flat at −$6.33, whether Acme ends at $101 or $140. That floor under the loss is why a put beats selling the share short. **The kink at $100** is the strike. **At $93.67** the trade breaks even, or at $93.35 once the $6.33 is carried forward a year at the bank rate. **Below that:** profit, dollar for dollar, until Acme reaches zero. A put's gain stops there; a call's has no stop.
 
-("European" means the put can be used on the one day only. A put usable any day up to then is a different and dearer contract: [american-options-and-early-exercise](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md).)
+("European" means the put can be used on the one day only. A put usable any day up to then is a different and dearer contract: [American options](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md).)
 
 ---
 
@@ -105,9 +78,9 @@ The bottom, $\sigma\sqrt{T}$, is how far Acme wiggles over the life. Only the si
 ### When it holds
 
 - **Acme wanders with one fixed jumpiness.** If volatility moves, the price is out by roughly its volatility sensitivity times the move: 37.901157 per 1.00 of volatility, about 38 cents a point here.
-- **Rate and dividend yield constant, the dividend a steady trickle.** Real dividends come in lumps on known dates: [known-cash-dividends](08-known-cash-dividends.md).
-- **Exercise on the one day only.** Allow it early and the put is worth strictly more whenever collecting the cash now beats waiting — the case this card's bar chart sets up: [american-options-and-early-exercise](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md).
-- **No fees or spread, and borrowing and short selling in any size.** Drop that and the single price becomes a band: [black-scholes-assumptions-and-failures](09-black-scholes-assumptions-and-failures.md).
+- **Rate and dividend yield constant, the dividend a steady trickle.** Real dividends come in lumps on known dates: [Known cash dividends](08-known-cash-dividends.md).
+- **Exercise on the one day only.** Allow it early and the put is worth strictly more whenever collecting the cash now beats waiting — the case this card's bar chart sets up: [American options](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md).
+- **No fees or spread, and borrowing and short selling in any size.** Drop that and the single price becomes a band: [The Black-Scholes assumptions](09-black-scholes-assumptions-and-failures.md).
 - **Price, strike, volatility and time all strictly positive**, since $d_2$ needs a logarithm and a division. At the edges the contract answers instead: with no time left the put is $\max(K - S, 0)$, with no jumpiness $\max(K e^{-rT} - S e^{-qT}, 0)$. Which day-count rule turns two dates into a fraction of a year is a market convention, and belongs to the assumptions card.
 
 ---
@@ -137,7 +110,7 @@ Each payment is easy to price alone. And — this is what trips people — each 
 
 You collect $100, but only in the endings below $100, so the cash half is worth $100 times the chance of that, discounted back to today.
 
-In the pretend world the *logarithm* of Acme's price is a bell curve ([lognormal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)), centred at $\ln S + (r - q - \tfrac12\sigma^2)T$ with spread $\sigma\sqrt{T}$. Acme finishes below the strike exactly when a standard draw lands below $-d_2$, and that chance is $N(-d_2) = 0.480061$, a shade under a coin flip. So the cash half is $K\,e^{-rT}\,N(-d_2) = 45.664833$. **$N(-d_2)$ is the chance of exercise, counted in dollars.**
+In the pretend world the *logarithm* of Acme's price is a bell curve ([Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md)), centred at $\ln S + (r - q - \tfrac12\sigma^2)T$ with spread $\sigma\sqrt{T}$. Acme finishes below the strike exactly when a standard draw lands below $-d_2$, and that chance is $N(-d_2) = 0.480061$, a shade under a coin flip. So the cash half is $K\,e^{-rT}\,N(-d_2) = 45.664833$. **$N(-d_2)$ is the chance of exercise, counted in dollars.**
 
 It is one minus the call's: 0.480061 and the call's $N(d_2) = 0.519939$ add to 1. Acme ends above the strike or below it, so the two contracts split every ending between them — the seed of Step 4.
 
@@ -184,7 +157,7 @@ Check it on each side of $K$. In words: own a put, sell a call at the same strik
 
 $$P = C - S\,e^{-qT} + K\,e^{-rT} = 9.227006 - 98.019867 + 95.122942 = 6.330081.$$
 
-The same $6.33$, bell curve never mentioned. This is put-call parity: [put-call-parity](03-put-call-parity.md). As algebra it turns one formula into the other, by substituting $N(d_1) = 1 - N(-d_1)$ and $N(d_2) = 1 - N(-d_2)$ into the call.
+The same $6.33$, bell curve never mentioned. This is put-call parity: [Put-call parity](03-put-call-parity.md). As algebra it turns one formula into the other, by substituting $N(d_1) = 1 - N(-d_1)$ and $N(d_2) = 1 - N(-d_2)$ into the call.
 
 <details>
 <summary>Two reasons the minus goes inside $N$, not in front of it</summary>
@@ -195,7 +168,7 @@ By size: $N$ never leaves the range 0 to 1, so $-N(d_2)$ sits between $-1$ and 0
 
 </details>
 
-A third road exists and this card does not take it: the hedge of Step 0 written as an equation gives one differential equation every option on Acme obeys, with only the payoff fed in at expiry saying which option it is: [black-scholes-equation](07-black-scholes-equation.md).
+A third road exists and this card does not take it: the hedge of Step 0 written as an equation gives one differential equation every option on Acme obeys, with only the payoff fed in at expiry saying which option it is: [The Black-Scholes equation](07-black-scholes-equation.md).
 
 ---
 
@@ -276,11 +249,11 @@ xychart-beta
     line [40.00, 30.00, 20.00, 10.00, 0.00, 0.00, 0.00, 0.00, 0.00]
 ```
 
-Three lines. The straight edge, flat on the right and highest of all at the far left, is expiry day, where the put is simply what it pays. At $60 the 3-months-left curve sits under it at $39.06 and the 12-months-left curve under that at $36.35. Near the strike the order reverses: at $90 both curves sit **above** the edge, $10.02 and $11.26 against $10.00, because a further fall may still come and that chance is worth paying for. Deep down it is the waiting that decides, since the strike cash arrives only on expiry day, and both curves cross under the edge between $90 and $80. The shelf takes those two forces apart on [intrinsic-and-time-value](06-intrinsic-and-time-value.md) and [strike-and-calendar-shape](05-strike-and-calendar-shape.md).
+Three lines. The straight edge, flat on the right and highest of all at the far left, is expiry day, where the put is simply what it pays. At $60 the 3-months-left curve sits under it at $39.06 and the 12-months-left curve under that at $36.35. Near the strike the order reverses: at $90 both curves sit **above** the edge, $10.02 and $11.26 against $10.00, because a further fall may still come and that chance is worth paying for. Deep down it is the waiting that decides, since the strike cash arrives only on expiry day, and both curves cross under the edge between $90 and $80. The shelf takes those two forces apart on [Intrinsic and time value](06-intrinsic-and-time-value.md) and [Shape across strikes and expiries](05-strike-and-calendar-shape.md).
 
 ### The five sensitivities, as this shelf reports them
 
-Each is the change in the premium per one unit of the input nudged. What they mean and how they are used is the next shelf's business, from [delta](../09-The%20Greeks%2C%20one%20each/01-delta.md) on.
+Each is the change in the premium per one unit of the input nudged. What they mean and how they are used is the next shelf's business, from [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md) on.
 
 | Nudge | Trade name | This put | Reading |
 | --- | --- | --- | --- |
@@ -752,10 +725,10 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Portfolio insurance.** Own the share, buy the put, and the loss is capped whatever happens. Here that cover costs $6.33 a year on a $100 share.
-- **Index puts.** Puts struck well below an index trade at higher volatility than calls struck well above: the world pays up for crash cover. The formula still turns price into volatility; the skew lives in the number fed to it: [strike-and-calendar-shape](05-strike-and-calendar-shape.md).
-- **Listed equity puts.** Almost all allow early exercise, so this price is their floor and the gap is the early-exercise premium: [american-options-and-early-exercise](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md).
-- **The dealing room.** Desks quote the pair rather than the two options, because parity fixes the difference: [put-call-parity](03-put-call-parity.md). Where a put's price can sit at all, before any model: [option-price-bounds](04-option-price-bounds.md).
-- **Corporate debt.** Merton's reading: a company's lenders own riskless debt *minus* a put on its assets, struck at what they are owed, and the credit spread is that put's cost as a yield: [merton-model-equity-as-a-call](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md).
+- **Index puts.** Puts struck well below an index trade at higher volatility than calls struck well above: the world pays up for crash cover. The formula still turns price into volatility; the skew lives in the number fed to it: [Shape across strikes and expiries](05-strike-and-calendar-shape.md).
+- **Listed equity puts.** Almost all allow early exercise, so this price is their floor and the gap is the early-exercise premium: [American options](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md).
+- **The dealing room.** Desks quote the pair rather than the two options, because parity fixes the difference: [Put-call parity](03-put-call-parity.md). Where a put's price can sit at all, before any model: [Option price bounds](04-option-price-bounds.md).
+- **Corporate debt.** Merton's reading: a company's lenders own riskless debt *minus* a put on its assets, struck at what they are owed, and the credit spread is that put's cost as a yield: [Merton's model](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md).
 
 > **Say it back**
 > A put is the right to sell one share at a fixed strike on a fixed date. Its price is the strike cash you might collect, pulled back to today and weighted by the chance you collect it, minus the share you might hand over, shrunk for its dividends and weighted by its own chance. Both chances sit on the lower tail, and both come from the call's $d_1$ and $d_2$ with the signs inside $N$ turned round: $N(-d_2)$ counts the chance in dollars, $N(-d_1)$ in shares, and the second is smaller because the share is cheap where you give it away. Parity reaches the same answer with no bell curve. Because the cash arrives only at expiry, a deep put can be worth less than exercising would fetch, with $K e^{-rT}$ as its ceiling.
@@ -764,19 +737,19 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [black-scholes-call](01-black-scholes-call.md): the hedge, the pretend world, and the two distances. This card reuses all three and turns the signs round.
-- [normal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, the area $N(x)$ to its left, and the symmetry $N(-x) = 1 - N(x)$ that makes the mirror exact rather than approximate.
-- [lognormal-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md): why the *logarithm* of Acme's price is the bell-shaped thing, which turns "Acme below the strike" into "a draw below $-d_2$".
+- [Black–Scholes call](01-black-scholes-call.md): the hedge, the pretend world, and the two distances. This card reuses all three and turns the signs round.
+- [Normal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/04-normal-distribution.md): the bell curve, the area $N(x)$ to its left, and the symmetry $N(-x) = 1 - N(x)$ that makes the mirror exact rather than approximate.
+- [Lognormal](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/06-lognormal-distribution.md): why the *logarithm* of Acme's price is the bell-shaped thing, which turns "Acme below the strike" into "a draw below $-d_2$".
 
 ## Where this goes next
 
-- [put-call-parity](03-put-call-parity.md): Step 4's shortcut proved properly, with no model behind it.
-- [black-scholes-equation](07-black-scholes-equation.md): the third road, the hedge as one equation both options obey.
-- [delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): the sensitivities above, taken one at a time and put to work.
-- [american-options-and-early-exercise](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md): what the deep put is worth once the cash can be collected early.
-- [chooser-options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/04-chooser-options.md): one contract holding both this payoff and the call's, decided later.
-- [garman-kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): the same two halves when the "share" is a foreign currency, whose own interest rate takes the dividend's seat.
-- [merton-model-equity-as-a-call](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md): a company's debt priced as riskless lending minus one of these puts.
+- [Put-call parity](03-put-call-parity.md): Step 4's shortcut proved properly, with no model behind it.
+- [The Black-Scholes equation](07-black-scholes-equation.md): the third road, the hedge as one equation both options obey.
+- [Delta](../09-The%20Greeks%2C%20one%20each/01-delta.md): the sensitivities above, taken one at a time and put to work.
+- [American options](../15-American%20and%20Bermudan%20exercise/01-american-options-and-early-exercise.md): what the deep put is worth once the cash can be collected early.
+- [Chooser options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/04-chooser-options.md): one contract holding both this payoff and the call's, decided later.
+- [Garman-Kohlhagen](../21-FX%20vanilla%20options%20-%20Garman-Kohlhagen%20and%20the%20desk%20conventions/01-garman-kohlhagen.md): the same two halves when the "share" is a foreign currency, whose own interest rate takes the dividend's seat.
+- [Merton's model](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/01-merton-model-equity-as-a-call.md): a company's debt priced as riskless lending minus one of these puts.
 
 This card priced one put, at one strike, on one day. What ties that price to the call beside it, so two quotes on one share cannot contradict each other, is what put-call parity settles.
 

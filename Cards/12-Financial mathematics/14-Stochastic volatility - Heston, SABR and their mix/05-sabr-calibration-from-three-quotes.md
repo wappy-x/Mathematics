@@ -1,32 +1,14 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Stochastic volatility - Heston, SABR and their mix
-topic: Fitting the smile
-item: SABR from three quotes
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/04-sabr-model-and-hagan-formula|sabr-model-and-hagan-formula]]"
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/05-butterfly-and-the-implied-density|butterfly-and-the-implied-density]]"
-  - "[[Cards/03-Algebra/02-Polynomials/03-quadratic-formula|quadratic-formula]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/06-newtons-method|newtons-method]]"
-next: []
-tags: [mathematics, financial mathematics, sabr-calibration-from-three-quotes]
----
-
 # SABR from three quotes: alpha from the ATM vol, rho and nu from the wings, and where the formula breaks
 
-Financial mathematics → Stochastic volatility - Heston, SABR and their mix → Fitting the smile → SABR from three quotes
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Stochastic volatility - Heston, SABR and their mix](../../../SYLLABUS.md#w12-s14) → SABR from three quotes
 
 ---
 
 ## General Overview
 
-A desk holds three prices for one-year options on Acme shares, each quoted as an implied volatility: the volatility that makes the Black-76 formula reproduce that option's price ([black-76-and-forward-level-pricing](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)). The $92.15 strike trades at 24%. The strike at the forward price, $103.05, the price agreed today for delivery in a year, trades at 20%. The $119.93 strike trades at 18%. The outer two are the house market's 25-delta put and call strikes ([strike-from-delta](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md)). The middle one is **at the money**, which here means struck at the forward.
+A desk holds three prices for one-year options on Acme shares, each quoted as an implied volatility: the volatility that makes the Black-76 formula reproduce that option's price ([Black-76](../05-Black-Scholes%20from%20the%20Ground%20Up/06-black-76-and-forward-level-pricing.md)). The $92.15 strike trades at 24%. The strike at the forward price, $103.05, the price agreed today for delivery in a year, trades at 20%. The $119.93 strike trades at 18%. The outer two are the house market's 25-delta put and call strikes ([Strike from delta](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md)). The middle one is **at the money**, which here means struck at the forward.
 
-The desk runs SABR ([sabr-model-and-hagan-formula](04-sabr-model-and-hagan-formula.md)): a model in which the forward price and its volatility both move at random. Its exponent sets how the forward's swings scale with its price. With the exponent fixed at 1, SABR has three free dials: a volatility level, a correlation and a volatility of volatility. Three quotes, three dials: a square system, as many equations as unknowns. The middle quote gives the level through a quadratic equation. The outer quotes, the **wings**, fix the other two dials. The fitted curve passes through all three quotes and fills in every strike between.
+The desk runs SABR ([SABR and Hagan's formula](04-sabr-model-and-hagan-formula.md)): a model in which the forward price and its volatility both move at random. Its exponent sets how the forward's swings scale with its price. With the exponent fixed at 1, SABR has three free dials: a volatility level, a correlation and a volatility of volatility. Three quotes, three dials: a square system, as many equations as unknowns. The middle quote gives the level through a quadratic equation. The outer quotes, the **wings**, fix the other two dials. The fitted curve passes through all three quotes and fills in every strike between.
 
 The fit is a one-year statement. Hagan's formula, the closed-form approximation that turns SABR's dials into a smile, is accurate while the expiry is short. Keep the dials, ask about ten years, and the formula prices a butterfly around the $40 strike, a position that never pays less than zero, at minus 54 cents. That implies a negative probability. The formula has failed there; the model has not.
 
@@ -76,7 +58,7 @@ $$\alpha \;=\; \frac{-c_1 + \sqrt{c_1^2 + 4\,c_2\,\sigma_{\text{ATM}}}}{2\,c_2} 
 
 The second form is the first multiplied top and bottom by $c_1 + \sqrt{c_1^2 + 4c_2\sigma_{\text{ATM}}}$; it never divides by $c_2$, so it also works at $\rho = 0$. With $\alpha$ tied to $\rho$ and $\nu$ this way, the wing equations are two equations in two unknowns, with no closed form.
 
-The fitted smile then has to pass one more test ([butterfly-and-the-implied-density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)):
+The fitted smile then has to pass one more test ([The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md)):
 
 $$f(K) \;=\; \frac{1}{D(T)}\,\frac{\partial^2 C}{\partial K^2}(K) \;\ge\; 0.$$
 
@@ -117,7 +99,7 @@ $$\frac{\sigma_B(K)}{\sigma_B(F)} = \frac{z}{\chi(z)}.$$
 
 So the wings see only $\rho$ and the ratio $\nu/\alpha$. At $92.15 the volatility ratio must be 24 over 20, and the worked table finds $z/\chi$ = 1.200000. The middle quote then sets the level.
 
-Three quotes, three pieces of information. The **level** is the 20% at the forward. The **tilt**, called the risk reversal, is the high wing minus the low wing: 18% − 24% = −6.0000 volatility points. The **curvature**, called the butterfly, is the wings' average minus the middle: (24% + 18%)/2 − 20% = 1.0000 point. Currency desks quote the same three kinds of number at fixed deltas rather than fixed strikes, under conventions of their own ([risk-reversal-and-butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md)). Level goes with $\alpha$, tilt with $\rho$, curvature with $\nu$: that pairing is why three quotes are enough.
+Three quotes, three pieces of information. The **level** is the 20% at the forward. The **tilt**, called the risk reversal, is the high wing minus the low wing: 18% − 24% = −6.0000 volatility points. The **curvature**, called the butterfly, is the wings' average minus the middle: (24% + 18%)/2 − 20% = 1.0000 point. Currency desks quote the same three kinds of number at fixed deltas rather than fixed strikes, under conventions of their own ([Risk reversal and butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md)). Level goes with $\alpha$, tilt with $\rho$, curvature with $\nu$: that pairing is why three quotes are enough.
 
 ### Step 1: alpha from the middle quote, existence and uniqueness first
 
@@ -154,7 +136,7 @@ Inside those edges, lowering $\rho$ steepens the tilt at fixed $\nu$, and raisin
 
 ### Step 3: solve, twice each
 
-**The level.** The quadratic formula gives 0.192250. Newton's method, which follows a curve's tangent line to where it meets the target ([newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)), run on Hagan's own at-the-money volatility from 0.20, gives 0.192250 too. Started at 10, past the peak, it finds 7.059381.
+**The level.** The quadratic formula gives 0.192250. Newton's method, which follows a curve's tangent line to where it meets the target ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)), run on Hagan's own at-the-money volatility from 0.20, gives 0.192250 too. Started at 10, past the peak, it finds 7.059381.
 
 **The shape.** Road one is Newton's method in two dimensions on the two wing misses, slopes found by nudging each dial, one linear solve per step; from $\rho = 0$, $\nu = 0.5$ it settles in 7 steps. Road two shares no solving step with it. For each trial $\nu$, bisection (halving an interval that brackets the answer) finds the $\rho$ that makes the tilt −6 points; an outer bisection on $\nu$ makes the curvature +1 point; its level comes from Newton. Both land on
 
@@ -166,7 +148,7 @@ $$\alpha = 0.192250, \qquad \rho = -0.508283, \qquad \nu = 1.159719.$$
 
 ### Step 4: check the density, and find where the formula breaks
 
-The fitted smile gives a Black-76 call price at every strike, and the bend of those prices in strike is the density. Two roads compute it: a butterfly of closely spaced strikes divided by the tent's area, and Durrleman's formula, which builds the density from the smile and its first two slopes in log-strike without pricing anything ([volatility-surface-and-its-arbitrage-rules](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md)). At one year both give +0.088614% per dollar at $40. Positive, as a probability must be.
+The fitted smile gives a Black-76 call price at every strike, and the bend of those prices in strike is the density. Two roads compute it: a butterfly of closely spaced strikes divided by the tent's area, and Durrleman's formula, which builds the density from the smile and its first two slopes in log-strike without pricing anything ([The volatility surface](../12-The%20smile%20and%20the%20surface/03-volatility-surface-and-its-arbitrage-rules.md)). At one year both give +0.088614% per dollar at $40. Positive, as a probability must be.
 
 Keep the dials and ask about ten years, on the ten-year forward, $134.99. The formula puts the $40 strike at 84.3977%, and both roads give a density of −0.890784% per dollar there.
 
@@ -189,7 +171,7 @@ The break builds gradually. At $40 the density is +0.0886, +0.0655, −0.0292, �
 
 The cause is the approximation. Hagan's formula comes from an expansion that keeps the first correction in $T$, and the dropped terms grow with $\nu^2 T$: 1.3449 at one year, 13.4495 at ten. The SABR model itself is a genuine random process, so its own density cannot be negative. The named repair is **arbitrage-free SABR** (Hagan et al., 2014), which solves a one-dimensional equation for the density itself, keeping it non-negative, and agrees with the explicit formula where that formula is sound.
 
-With more than three quotes per expiry the square system becomes a best fit by least squares ([calibration-as-least-squares](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)). A model that fits many expiries at once needs different machinery: Heston's is on [heston-greeks-and-calibration](03-heston-greeks-and-calibration.md).
+With more than three quotes per expiry the square system becomes a best fit by least squares ([Calibration](../07-Greeks%20by%20Numbers%20and%20Calibration/06-calibration-as-least-squares.md)). A model that fits many expiries at once needs different machinery: Heston's is on [Heston Greeks and calibration](03-heston-greeks-and-calibration.md).
 
 ---
 
@@ -679,8 +661,8 @@ The two outputs match line for line.
 
 - **Interest-rate options.** Hagan et al. (2002) built SABR for rate options, fitted one expiry at a time with the exponent fixed in advance, often at one half on US rate desks.
 - **Frequent re-marking.** The same paper quotes SABR by its at-the-money volatility with $\beta$, $\rho$ and $\nu$: the level is re-solved whenever the at-the-money quote moves, the shape dials refitted far less often. Step 1 is that re-solve.
-- **Currency options.** Each expiry is quoted as an at-the-money volatility, a risk reversal and a butterfly: the same square system in delta terms ([risk-reversal-and-butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md)).
-- **Long-dated and low-strike options.** Where the explicit formula's density goes negative, the arbitrage-free version takes over, or a model that fits the smile by construction ([stochastic-local-volatility](06-stochastic-local-volatility.md)).
+- **Currency options.** Each expiry is quoted as an at-the-money volatility, a risk reversal and a butterfly: the same square system in delta terms ([Risk reversal and butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md)).
+- **Long-dated and low-strike options.** Where the explicit formula's density goes negative, the arbitrage-free version takes over, or a model that fits the smile by construction ([Stochastic-local volatility](06-stochastic-local-volatility.md)).
 
 > **Say it back**
 > With the exponent fixed at 1, SABR has three dials, and three quotes pin them. The at-the-money quote gives the level through a quadratic; the right root is the small one, where more level means more volatility. The wings then give the correlation, which tilts the smile, and the volatility of volatility, which curls it. For Acme's quotes the dials are 0.192250, −0.508283 and 1.159719, found alike by two unrelated solvers. The fit is only as good as Hagan's formula: positive density at one year, a butterfly priced at minus 54 cents at ten.
@@ -689,15 +671,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [sabr-model-and-hagan-formula](04-sabr-model-and-hagan-formula.md): the model and the formula this card runs backwards.
-- [butterfly-and-the-implied-density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md): why the bend of call prices in strike is a probability density, and why a negative one is free money.
-- [quadratic-formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the level's closed form at $\beta = 1$.
-- [newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the second road to the level, and the first road to the wings.
+- [SABR and Hagan's formula](04-sabr-model-and-hagan-formula.md): the model and the formula this card runs backwards.
+- [The butterfly and the implied density](../10-Digitals%20and%20the%20implied%20density/05-butterfly-and-the-implied-density.md): why the bend of call prices in strike is a probability density, and why a negative one is free money.
+- [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the level's closed form at $\beta = 1$.
+- [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the second road to the level, and the first road to the wings.
 
 ## Where this goes next
 
-- [stochastic-local-volatility](06-stochastic-local-volatility.md): a model that keeps stochastic volatility's dynamics and is built to fit every strike and expiry.
-- [heston-greeks-and-calibration](03-heston-greeks-and-calibration.md): fitting a stochastic volatility model that prices exactly, at the cost of a slower fit.
+- [Stochastic-local volatility](06-stochastic-local-volatility.md): a model that keeps stochastic volatility's dynamics and is built to fit every strike and expiry.
+- [Heston Greeks and calibration](03-heston-greeks-and-calibration.md): fitting a stochastic volatility model that prices exactly, at the cost of a slower fit.
 
 A three-quote fit pins one expiry and says nothing safe about the others; the question it leaves open is how to fit a whole surface of strikes and expiries without a negative density anywhere.
 

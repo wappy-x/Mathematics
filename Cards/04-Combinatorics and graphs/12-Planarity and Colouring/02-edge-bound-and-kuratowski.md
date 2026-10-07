@@ -1,27 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Planarity and Colouring
-topic: The edge ceiling
-item: Why some graphs cannot be drawn flat
-kind: theorem
-status: verified
-updated: 2026-09-23
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/01-planar-graphs-and-eulers-formula|planar-graphs-and-eulers-formula]]"
-  - "[[Cards/04-Combinatorics and graphs/09-Graphs - Dots and Lines/05-bipartite-graphs-and-odd-cycles|bipartite-graphs-and-odd-cycles]]"
-  - "[[Cards/01-Foundations/06-Proof/03-proof-by-contradiction|proof-by-contradiction]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/12-Planarity and Colouring/05-five-and-four-colour-theorems|five-and-four-colour-theorems]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - edge-bound-and-kuratowski
----
-
 # Why some graphs cannot be drawn flat: at most 3V - 6 edges, so K(5) and the three-utilities graph fail, and Kuratowski says those two are the only obstacles
 
-Combinatorics and graphs → Planarity and Colouring → The edge ceiling → Why some graphs cannot be drawn flat
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Planarity and Colouring](../../../SYLLABUS.md#w04-s12) → Why some graphs cannot be drawn flat
 
 ---
 
@@ -58,7 +37,7 @@ Nine lines on six dots, none joining two houses or two mains: the ceiling is 8.
 
 ## The formula
 
-A reminder from the sibling card: $V$ counts a drawing's dots, $E$ its lines and $F$ its regions, the patch outside counted as one ([planar-graphs-and-eulers-formula](01-planar-graphs-and-eulers-formula.md)). The graphs shelf calls them vertices and edges, and a dot's **degree** is the lines meeting it. Two names are new: **K(5)** is five dots with every pair joined, 10 lines; **K(3,3)** is two groups of three, every cross pair joined and none inside a group, 9 lines — the houses and the mains.
+A reminder from the sibling card: $V$ counts a drawing's dots, $E$ its lines and $F$ its regions, the patch outside counted as one ([Planar graphs](01-planar-graphs-and-eulers-formula.md)). The graphs shelf calls them vertices and edges, and a dot's **degree** is the lines meeting it. Two names are new: **K(5)** is five dots with every pair joined, 10 lines; **K(3,3)** is two groups of three, every cross pair joined and none inside a group, 9 lines — the houses and the mains.
 
 $$E \le 3V - 6$$
 
@@ -80,7 +59,7 @@ $$E \le 2V - 4$$
 
 - **Simple: one line per pair, none from a dot to itself.** A doubled line walls a two-sided region, and the count needs three.
 - **Three dots or more.** Two dots and one line read 1 > 0, a false verdict of impossible.
-- **For the second ceiling, no ring of three.** Lines drawn only between two groups close no ring ([bipartite-graphs-and-odd-cycles](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)).
+- **For the second ceiling, no ring of three.** Lines drawn only between two groups close no ring ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)).
 - **One direction only.** Over the ceiling proves no flat drawing; under it proves nothing, as Petersen below shows.
 
 ---
@@ -103,7 +82,7 @@ $$2E \ge 3F$$
 
 ### Step 2: trade regions for lines
 
-Euler's identity fixes the regions of a crossing-free drawing in one piece: $F = E - V + 2$ ([planar-graphs-and-eulers-formula](01-planar-graphs-and-eulers-formula.md)). Substitute and take $2E$ from both sides:
+Euler's identity fixes the regions of a crossing-free drawing in one piece: $F = E - V + 2$ ([Planar graphs](01-planar-graphs-and-eulers-formula.md)). Substitute and take $2E$ from both sides:
 
 $$2E \ge 3(E - V + 2), \qquad E \le 3V - 6$$
 
@@ -124,7 +103,7 @@ $$2E \ge 4(E - V + 2), \qquad E \le 2V - 4.$$
 
 ### Step 3: the three houses cannot be done, and neither can K(5)
 
-Suppose the nine pipes could be laid without a crossing. The sheet would hold 9 − 6 + 2 = 5 regions. No house joins a house and no main joins a main, so no ring of three closes: those 5 regions demand 4 × 5 = 20 sides and nine pipes supply 18. Demand above supply is a contradiction ([proof-by-contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)), and the ceiling reads 2 × 6 − 4 = 8 against the builder's 9.
+Suppose the nine pipes could be laid without a crossing. The sheet would hold 9 − 6 + 2 = 5 regions. No house joins a house and no main joins a main, so no ring of three closes: those 5 regions demand 4 × 5 = 20 sides and nine pipes supply 18. Demand above supply is a contradiction ([Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md)), and the ceiling reads 2 × 6 − 4 = 8 against the builder's 9.
 
 The first ceiling catches K(5), 10 lines against 3 × 5 − 6 = 9. It misses the houses — 3 × 6 − 6 = 12, which 9 fits — so only the four-sided floor exposes them.
 
@@ -393,7 +372,7 @@ The two outputs match line for line.
 > **Reading the ceiling as permission to draw.** The test runs one way: over the ceiling no flat drawing exists, under it nothing is settled. Petersen obeys 24 and 16 and still cannot be drawn flat.
 >
 > - **Using 3V − 6 where 2V − 4 is live.** Nine pipes fit under 12 and fail against 8.
-> - **Reading crossings as proof.** A drawing with crossings may be a poor drawing of a network that can be drawn flat ([planar-graphs-and-eulers-formula](01-planar-graphs-and-eulers-formula.md)).
+> - **Reading crossings as proof.** A drawing with crossings may be a poor drawing of a network that can be drawn flat ([Planar graphs](01-planar-graphs-and-eulers-formula.md)).
 > - **Treating a subdivision as a different network.** A junction box changes no crossing question, so a K(5) with dots along its lines is forbidden too.
 
 ---
@@ -403,7 +382,7 @@ The two outputs match line for line.
 - **One-layer wiring and single-trench utilities.** The count settles whether a wiring list fits one layer; over the ceiling, buy the second.
 - **Junctions and flyovers.** Five junctions each linked straight to the other four ask for 10 roads where 9 is the ceiling, so some pair takes a bridge.
 - **Graph drawing software.** Planarity is tested first, the flat drawing being the readable one; after that, how few crossings will do.
-- **Map colouring.** Step 4's dot of degree 5 or less is the foothold for five colours and for the machine proof of four ([five-and-four-colour-theorems](05-five-and-four-colour-theorems.md), [vertex-colouring-and-chromatic-number](03-vertex-colouring-and-chromatic-number.md)).
+- **Map colouring.** Step 4's dot of degree 5 or less is the foothold for five colours and for the machine proof of four ([Colouring maps](05-five-and-four-colour-theorems.md), [Colouring](03-vertex-colouring-and-chromatic-number.md)).
 
 > **Say it back**
 > Lines have two sides, so they supply twice their number in region walls, while every region demands three sides — four with no rings of three. Euler's count of the regions turns that into a ceiling, 3V − 6 lines or 2V − 4, which also leaves some dot with 5 lines or fewer. The three houses ask for 9 lines on 6 dots where 8 is the ceiling; five dots all joined ask for 10 where 9 is. Under the ceiling nothing is settled, and Kuratowski finishes it: those two networks, dots along their lines allowed, are the only obstructions.
@@ -412,13 +391,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [planar-graphs-and-eulers-formula](01-planar-graphs-and-eulers-formula.md): the region count $F = E - V + 2$ behind both ceilings.
-- [bipartite-graphs-and-odd-cycles](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md): why lines drawn only between two groups close no ring of three.
-- [proof-by-contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): Step 3's shape, a layout assumed and refuted by its own count.
+- [Planar graphs](01-planar-graphs-and-eulers-formula.md): the region count $F = E - V + 2$ behind both ceilings.
+- [Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md): why lines drawn only between two groups close no ring of three.
+- [Proof by contradiction](../../01-Foundations/06-Proof/03-proof-by-contradiction.md): Step 3's shape, a layout assumed and refuted by its own count.
 
 ## Where this goes next
 
-- [five-and-four-colour-theorems](05-five-and-four-colour-theorems.md): that dot of degree 5 or less, used until a map is coloured.
+- [Colouring maps](05-five-and-four-colour-theorems.md): that dot of degree 5 or less, used until a map is coloured.
 
 This card finds the leftover dot and stops; what to do with it is a later card's work.
 

@@ -1,38 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Rings and Fields
-topic: Two operations at once
-item: Rings
-kind: definition
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/08-Groups/01-groups|groups]]"
-  - "[[Cards/03-Algebra/02-Polynomials/01-polynomials|polynomials]]"
-  - "[[Cards/03-Algebra/04-Matrices/03-matrix-multiplication|matrix-multiplication]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/03-residue-classes|residue-classes]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/04-modular-inverse|modular-inverse]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/05-arithmetic-laws|arithmetic-laws]]"
-next:
-  - "[[Cards/03-Algebra/09-Rings and Fields/02-fields|fields]]"
-  - "[[Cards/03-Algebra/09-Rings and Fields/04-ideals-and-quotient-rings|ideals-and-quotient-rings]]"
-  - "[[Cards/03-Algebra/10-For the Curious/04-pell-equation-and-root-two|pell-equation-and-root-two]]"
-  - "[[Cards/03-Algebra/10-For the Curious/05-boolean-algebra-and-lattices|boolean-algebra-and-lattices]]"
-  - "[[Cards/18-Functional analysis/06-Banach Algebras and Fixed Points/01-banach-algebras-and-the-gelfand-transform|banach-algebras-and-the-gelfand-transform]]"
-  - "[[Cards/18-Functional analysis/06-Banach Algebras and Fixed Points/03-c-star-algebras-in-outline|c-star-algebras-in-outline]]"
-  - "[[Cards/21-Algebraic and analytic number theory/06-Algebraic Numbers/01-algebraic-integers-and-number-fields|algebraic-integers-and-number-fields]]"
-  - "[[Cards/21-Algebraic and analytic number theory/06-Algebraic Numbers/03-rings-of-integers-and-integral-bases|rings-of-integers-and-integral-bases]]"
-  - "[[Cards/22-Algebraic geometry/06-Schemes and Modern Language/01-integral-domains-pids-and-unique-factorisation|integral-domains-pids-and-unique-factorisation]]"
-tags:
-  - mathematics
-  - algebra
-  - rings
----
-
 # Rings: add, subtract and multiply, but not always divide, and the clock where 3 times 4 is zero
 
-Algebra → Rings and Fields → Two operations at once → Rings
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Rings and Fields](../../../SYLLABUS.md#w03-s09) → Rings
 
 ---
 
@@ -79,7 +47,7 @@ $$a(b+c) = ab+ac, \qquad (a+b)c = ac+bc$$
 
 **Read it aloud:** adding regroups, reorders and undoes; multiplying regroups and has a do-nothing member; a multiplier reaches every term in a bracket.
 
-Sums and products must also stay inside. The top line makes adding alone a group whose order does not matter ([groups](../08-Groups/01-groups.md)), which gives subtracting: $a-b$ is $a+(-b)$. The last line is the distributive law ([arithmetic-laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)).
+Sums and products must also stay inside. The top line makes adding alone a group whose order does not matter ([Groups](../08-Groups/01-groups.md)), which gives subtracting: $a-b$ is $a+(-b)$. The last line is the distributive law ([The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md)).
 
 | Symbol | Plain meaning | In our example | Change it and… |
 | --- | --- | --- | --- |
@@ -90,7 +58,7 @@ Sums and products must also stay inside. The top line makes adding alone a group
 | $-a$ | the additive undo of $a$ | the hours back round the dial | every member has one |
 | $a^{-1}$ | the multiplicative undo, if any | 5 is its own | most have none |
 
-Three more words. A ring is **commutative** when $ab = ba$ always: the dial is, the matrices below are not. A **unit** has a multiplicative undo; the units are what is safe to divide by, and form a group under multiplying ([cosets-and-lagranges-theorem](../08-Groups/04-cosets-and-lagranges-theorem.md)). A **zero divisor** is a nonzero $a$ with $ab = 0$ for a nonzero $b$, as 3 and 4 are; a commutative ring with none is an **integral domain**.
+Three more words. A ring is **commutative** when $ab = ba$ always: the dial is, the matrices below are not. A **unit** has a multiplicative undo; the units are what is safe to divide by, and form a group under multiplying ([Cosets and Lagrange's theorem](../08-Groups/04-cosets-and-lagranges-theorem.md)). A **zero divisor** is a nonzero $a$ with $ab = 0$ for a nonzero $b$, as 3 and 4 are; a commutative ring with none is an **integral domain**.
 
 ### When it holds
 
@@ -106,7 +74,7 @@ Three more words. A ring is **commutative** when $ab = ba$ always: the dial is, 
 
 A rule claimed for a collection must hold for every choice of members — for an infinite one, by argument, not examples. The payment: what follows from the rules holds in every ring.
 
-The dial's own argument is short. A reading stands for every whole number with the same remainder after division by 12 ([residue-classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md)). Swapping stand-ins shifts a sum or product by a multiple of 12 and leaves the reading alone, so the rules drop down from the whole numbers; the code walks the distributive rule over all 1728 triples.
+The dial's own argument is short. A reading stands for every whole number with the same remainder after division by 12 ([Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md)). Swapping stand-ins shifts a sum or product by a multiple of 12 and leaves the reading alone, so the rules drop down from the whole numbers; the code walks the distributive rule over all 1728 triples.
 
 ### Step 1: zero swallows every product
 
@@ -128,7 +96,7 @@ That splits the dial: its units 1, 5, 7 and 11 are no zero divisors, and no zero
 
 ### Step 3: on a dial, every nonzero reading is a unit or a zero divisor
 
-A reading has an undo exactly when it shares no factor above 1 with the dial size ([modular-inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md)) — when their greatest common divisor, the largest whole number dividing both, is 1. At 12 that leaves 1, 5, 7 and 11.
+A reading has an undo exactly when it shares no factor above 1 with the dial size ([The modular inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md)) — when their greatest common divisor, the largest whole number dividing both, is 1. At 12 that leaves 1, 5, 7 and 11.
 
 Any other nonzero reading shares a factor $d$ above 1 with 12. Multiply it by 12 divided by $d$, a reading and not 0: the product is a whole number of turns, so it reads 0. So every nonzero reading is a unit or a zero divisor, never both (Step 2), its partner being 12 divided by the shared factor; the table below lists all seven pairs. The whole numbers have no such fork, where 2 is neither.
 
@@ -139,13 +107,13 @@ Write $d$ for the greatest common divisor of a reading $a$ with the dial size. M
 
 </details>
 
-**Another route.** The full 12 by 12 multiplication table settles this dial by inspection; one divisor argument settles every size, and behind the dial is [ideals-and-quotient-rings](04-ideals-and-quotient-rings.md).
+**Another route.** The full 12 by 12 multiplication table settles this dial by inspection; one divisor argument settles every size, and behind the dial is [Ideals and quotient rings](04-ideals-and-quotient-rings.md).
 
 ### Step 4: two more rings
 
-**Polynomials with whole-number coefficients** ([polynomials](../02-Polynomials/01-polynomials.md)). Adding adds matching coefficients, multiplying gathers multiplied-out terms, and both inherit every rule from the coefficients. No zero divisors: a product's leading coefficient is the product of the two leading ones. So an integral domain whose only units are 1 and −1 — the shortage that makes polynomials divide with a remainder instead ([polynomials-behave-like-integers](03-polynomials-behave-like-integers.md)).
+**Polynomials with whole-number coefficients** ([Polynomials](../02-Polynomials/01-polynomials.md)). Adding adds matching coefficients, multiplying gathers multiplied-out terms, and both inherit every rule from the coefficients. No zero divisors: a product's leading coefficient is the product of the two leading ones. So an integral domain whose only units are 1 and −1 — the shortage that makes polynomials divide with a remainder instead ([Polynomials behave like integers](03-polynomials-behave-like-integers.md)).
 
-**The 2 by 2 matrices of whole numbers** ([matrix-multiplication](../04-Matrices/03-matrix-multiplication.md)). Adding is entry by entry, multiplying row into column. Two comforts go at once. With A = `[[1, 1], [0, 1]]` and B = `[[1, 0], [1, 1]]`, AB is `[[2, 1], [1, 1]]` while BA is `[[1, 1], [1, 2]]`; and `[[1, 0], [0, 0]]` times `[[0, 0], [0, 1]]` is all zeros.
+**The 2 by 2 matrices of whole numbers** ([Matrix multiplication](../04-Matrices/03-matrix-multiplication.md)). Adding is entry by entry, multiplying row into column. Two comforts go at once. With A = `[[1, 1], [0, 1]]` and B = `[[1, 0], [1, 1]]`, AB is `[[2, 1], [1, 1]]` while BA is `[[1, 1], [1, 2]]`; and `[[1, 0], [0, 0]]` times `[[0, 0], [0, 1]]` is all zeros.
 
 ```mermaid
 flowchart TB
@@ -407,7 +375,7 @@ The two outputs match line for line.
 
 - **Anything that wraps.** A clock, a weekday, hash buckets, a check digit: wrapping arithmetic is this ring, and its zero divisors decide which multipliers reach every slot.
 - **Machine arithmetic.** Fixed-width integers wrap at a power of two: a ring whose units are the odd values.
-- **Exact algebra, and codes.** Software that expands expressions without rounding works in a polynomial ring ([polynomials](../02-Polynomials/01-polynomials.md)), and the codes on a disc or a QR symbol use polynomial rings over a small dial ([finite-fields](05-finite-fields.md)).
+- **Exact algebra, and codes.** Software that expands expressions without rounding works in a polynomial ring ([Polynomials](../02-Polynomials/01-polynomials.md)), and the codes on a disc or a QR symbol use polynomial rings over a small dial ([Finite fields](05-finite-fields.md)).
 
 > **Say it back**
 > A ring is one collection with two operations: adding, which every member can undo, and multiplying, which not every member can, linked by the rule that a multiplier reaches every term in a bracket. On a 12-hour dial 3 × 4 = 0 with neither factor 0, and only 1, 5, 7 and 11 have a partner reaching 1. The whole numbers have no zero products, and only two units. Order may matter, and nonzero is not safe to divide by.
@@ -416,24 +384,24 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [groups](../08-Groups/01-groups.md): one operation, four rules.
-- [polynomials](../02-Polynomials/01-polynomials.md): coefficients added, terms multiplied out.
-- [matrix-multiplication](../04-Matrices/03-matrix-multiplication.md): row into column.
-- [residue-classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md): a reading is a pile.
-- [modular-inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md): which readings undo.
-- [arithmetic-laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): regrouping and brackets.
+- [Groups](../08-Groups/01-groups.md): one operation, four rules.
+- [Polynomials](../02-Polynomials/01-polynomials.md): coefficients added, terms multiplied out.
+- [Matrix multiplication](../04-Matrices/03-matrix-multiplication.md): row into column.
+- [Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md): a reading is a pile.
+- [The modular inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md): which readings undo.
+- [The three rearranging laws](../../01-Foundations/01-Everyday%20Arithmetic/05-arithmetic-laws.md): regrouping and brackets.
 
 ## Where this goes next
 
-- [fields](02-fields.md): every nonzero member a unit.
-- [ideals-and-quotient-rings](04-ideals-and-quotient-rings.md): rings from declared zeros.
-- [pell-equation-and-root-two](../10-For%20the%20Curious/04-pell-equation-and-root-two.md): endless units.
-- [boolean-algebra-and-lattices](../10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): and and or.
-- banach-algebras-and-the-gelfand-transform: members with size.
-- c-star-algebras-in-outline: those, conjugated.
-- algebraic-integers-and-number-fields: whole, further out.
-- rings-of-integers-and-integral-bases: that ring listed.
-- integral-domains-pids-and-unique-factorisation: factoring into primes.
+- [Fields](02-fields.md): every nonzero member a unit.
+- [Ideals and quotient rings](04-ideals-and-quotient-rings.md): rings from declared zeros.
+- [Pell's equation](../10-For%20the%20Curious/04-pell-equation-and-root-two.md): endless units.
+- [Boolean algebra](../10-For%20the%20Curious/05-boolean-algebra-and-lattices.md): and and or.
+- Banach algebras: members with size.
+- C-star algebras: those, conjugated.
+- Algebraic integers: whole, further out.
+- Rings of integers: that ring listed.
+- Domains, principal ideals and unique factorisation: factoring into primes.
 
 Dividing stays a privilege of the few here, which is the next card's question: what changes when every nonzero member has an undo.
 

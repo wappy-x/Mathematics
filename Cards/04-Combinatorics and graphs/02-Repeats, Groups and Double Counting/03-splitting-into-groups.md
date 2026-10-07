@@ -1,26 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Repeats, Groups and Double Counting
-topic: Named and unnamed piles
-item: Splitting into groups
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/01-multiset-permutations|multiset-permutations]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/03-Binomial Coefficients and Identities/02-binomial-theorem|binomial-theorem]]"
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/05-multinomial|multinomial]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - splitting-into-groups
----
-
 # Splitting into groups: the multinomial coefficient for named piles, and divide by k! when the piles are not named
 
-Combinatorics and graphs → Repeats, Groups and Double Counting → Named and unnamed piles → Splitting into groups
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Repeats, Groups and Double Counting](../../../SYLLABUS.md#w04-s02) → Splitting into groups
 
 ---
 
@@ -82,8 +62,8 @@ All three piles are trios, so $m$ is 3 and the count is 1,680 / 6 = 280. With ev
 
 ### When it holds
 
-- **The things being split are distinct.** Nine named players. Where items repeat, the job is [multiset-permutations](01-multiset-permutations.md).
-- **The sizes are fixed in advance and add up to $n$.** Let them vary and the question becomes how many size lists exist, which is [stars-and-bars](02-stars-and-bars.md).
+- **The things being split are distinct.** Nine named players. Where items repeat, the job is [Arranging with repeats](01-multiset-permutations.md).
+- **The sizes are fixed in advance and add up to $n$.** Let them vary and the question becomes how many size lists exist, which is [Stars and bars](02-stars-and-bars.md).
 - **Order inside a pile does not count.** Rank each table first, second and third board and the divisions are wrong: the count is 362,880.
 - **Only equal-sized unnamed piles get the extra division.** Piles of 4, 3 and 2 cannot be mistaken for each other, so named and unnamed agree at 1,260; dividing anyway gives 210.
 
@@ -93,7 +73,7 @@ All three piles are trios, so $m$ is 3 and the count is 1,680 / 6 = 280. With ev
 
 ### Step 0: count something easy, then divide by how often each answer turned up
 
-Counting splits head-on is awkward; counting line-ups is not. So count line-ups, notice every split was reached the same number of times, and divide by that number. The method rests on that overcount being identical for every split — [bijection-and-double-counting](05-bijection-and-double-counting.md) makes the point properly.
+Counting splits head-on is awkward; counting line-ups is not. So count line-ups, notice every split was reached the same number of times, and divide by that number. The method rests on that overcount being identical for every split — [Bijections and double counting](05-bijection-and-double-counting.md) makes the point properly.
 
 ### Step 1: line the nine up and cut
 
@@ -137,7 +117,7 @@ Do that for each repeated size and every unnamed split holds the product of thos
 
 Change the session: tables of four, three and two. The named count is 9! / (4! 3! 2!) = 1,260. Take the numbers off and the pile of four is still the pile of four; no relabelling turns it into the pile of three. Nothing is left to divide by, so the unnamed count is 1,260 too. Divide by 6 from habit and 210 appears, an answer to no question.
 
-A third road reaches the same 1,680. Hand each player their table number: that writes a nine-character word with three 1s, three 2s and three 3s, and counting those words is arranging with repeats ([multiset-permutations](01-multiset-permutations.md)). The check takes that road literally, writing out all 19,683 ways to hand three numbers to nine players and keeping the 1,680 that fill every table.
+A third road reaches the same 1,680. Hand each player their table number: that writes a nine-character word with three 1s, three 2s and three 3s, and counting those words is arranging with repeats ([Arranging with repeats](01-multiset-permutations.md)). The check takes that road literally, writing out all 19,683 ways to hand three numbers to nine players and keeping the 1,680 that fill every table.
 
 ---
 
@@ -384,8 +364,8 @@ The two outputs match line for line.
 
 - **Card games.** Dealing a pack into hands, one per seat, splits into named piles: the seats have names, so nothing is divided out.
 - **Tournament draws.** Teams into lettered groups is a named split; the same teams into unlettered pools is the smaller count, and the letters are what the division removes.
-- **Anagrams.** The same number counts the rearrangements of a word with repeated letters, reached from the other side by [multiset-permutations](01-multiset-permutations.md).
-- **Seating what was split.** Sitting one trio round a table is its own count: [circular-arrangements](04-circular-arrangements.md).
+- **Anagrams.** The same number counts the rearrangements of a word with repeated letters, reached from the other side by [Arranging with repeats](01-multiset-permutations.md).
+- **Seating what was split.** Sitting one trio round a table is its own count: [Round tables and bracelets](04-circular-arrangements.md).
 
 > **Say it back**
 > Splitting nine distinct players into piles of stated sizes starts from all 362,880 line-ups and divides out the ordering inside each pile. Three numbered tables give 1,680 splits. Take the numbers off and the trios trade places in 6 ways, all counted separately, so the count drops to 280. The extra division fits only equal-sized unnamed piles: tables of 4, 3 and 2 give 1,260 either way.
@@ -394,14 +374,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [multiset-permutations](01-multiset-permutations.md): dividing a line-up count by the shuffles that change nothing, the move this card makes pile by pile.
+- [Arranging with repeats](01-multiset-permutations.md): dividing a line-up count by the shuffles that change nothing, the move this card makes pile by pile.
 
 ## Where this goes next
 
-- [binomial-theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md): the same coefficients appear when a sum is raised to a power, the two-term case first and the many-term case citing this card.
-- [multinomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/05-multinomial.md): a chance attached to each pile, so this count becomes one factor in the chance of a tally.
+- [The binomial theorem](../03-Binomial%20Coefficients%20and%20Identities/02-binomial-theorem.md): the same coefficients appear when a sum is raised to a power, the two-term case first and the many-term case citing this card.
+- [Multinomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/05-multinomial.md): a chance attached to each pile, so this count becomes one factor in the chance of a tally.
 
-Every split counted here stands equal with every other, which the world rarely allows; what changes when each pile carries its own weight is where [multinomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/05-multinomial.md) begins.
+Every split counted here stands equal with every other, which the world rarely allows; what changes when each pile carries its own weight is where [Multinomial](../../09-Probability%20and%20statistics/03-Discrete%20Distributions/05-multinomial.md) begins.
 
 ---
 

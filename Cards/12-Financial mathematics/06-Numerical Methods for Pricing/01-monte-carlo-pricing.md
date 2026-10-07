@@ -1,48 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Numerical Methods for Pricing
-topic: Pricing by sampling
-item: Monte Carlo pricing
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/05-Black-Scholes from the Ground Up/01-geometric-brownian-motion-for-prices|geometric-brownian-motion-for-prices]]"
-  - "[[Cards/09-Probability and statistics/11-Simulation/04-monte-carlo-estimates-and-error|monte-carlo-estimates-and-error]]"
-next:
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/02-variance-reduction-for-pricing|variance-reduction-for-pricing]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/04-correlated-paths-and-cholesky|correlated-paths-and-cholesky]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/05-discretisation-schemes-for-sdes|discretisation-schemes-for-sdes]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/01-bump-and-revalue-and-common-random-numbers|bump-and-revalue-and-common-random-numbers]]"
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/01-cash-or-nothing-digital|cash-or-nothing-digital]]"
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/03-pricing-under-local-volatility-and-the-forward-smile|pricing-under-local-volatility-and-the-forward-smile]]"
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/04-merton-jump-diffusion|merton-jump-diffusion]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/01-heston-model|heston-model]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/06-stochastic-local-volatility|stochastic-local-volatility]]"
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/01-knock-out-and-knock-in-options|knock-out-and-knock-in-options]]"
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/03-discrete-monitoring-correction|discrete-monitoring-correction]]"
-  - "[[Cards/12-Financial mathematics/16-Barriers, touches and lookbacks/06-lookback-options|lookback-options]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/01-geometric-asian-kemna-vorst|geometric-asian-kemna-vorst]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/04-chooser-options|chooser-options]]"
-  - "[[Cards/12-Financial mathematics/17-Averages, choosers, compounds and forward-starts/07-cliquets-and-ratchets|cliquets-and-ratchets]]"
-  - "[[Cards/12-Financial mathematics/23-FX exotics as desks use them - digitals, touches and barriers/02-barrier-options-by-reflection|barrier-options-by-reflection]]"
-  - "[[Cards/12-Financial mathematics/26-Options on commodity futures and spreads/04-margrabe-and-kirk-spread-options|margrabe-and-kirk-spread-options]]"
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/03-arithmetic-asian-option|arithmetic-asian-option]]"
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/05-simulating-a-default-time|simulating-a-default-time]]"
-  - "[[Cards/12-Financial mathematics/43-Structural Models - Default from the Balance Sheet/05-black-cox-first-passage-default|black-cox-first-passage-default]]"
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/02-expected-exposure-profiles|expected-exposure-profiles]]"
-  - "[[Cards/14-Applied and computational/02-Randomised and Approximate Algorithms/05-monte-carlo-integration-in-many-dimensions|monte-carlo-integration-in-many-dimensions]]"
-  - "[[Cards/14-Applied and computational/08-Scientific Computing Practice/03-reproducible-simulation-and-seeds|reproducible-simulation-and-seeds]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - monte-carlo-pricing
----
-
 # Monte Carlo pricing: simulate the end, average the payoff, discount
 
-Financial mathematics → Numerical Methods for Pricing → Pricing by sampling → Monte Carlo pricing
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Numerical Methods for Pricing](../../../SYLLABUS.md#w12-s06) → Monte Carlo pricing
 
 ---
 
@@ -84,7 +42,7 @@ $$\widehat{C}_n \;=\; \frac{1}{n}\sum_{i=1}^{n} e^{-rT}\max\!\left(S_T^{(i)} - K
 
 **Read it aloud:** in each of $n$ invented futures, pay the option what it owes at expiry, shrink that payment back to today's money, and average the payments.
 
-The invented ending price in one future is the geometric Brownian motion model evaluated once, at expiry, with one bell-curve draw ([geometric-brownian-motion-for-prices](../05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md)):
+The invented ending price in one future is the geometric Brownian motion model evaluated once, at expiry, with one bell-curve draw ([Prices as geometric Brownian motion](../05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md)):
 
 $$S_T^{(i)} \;=\; S\,\exp\!\left(\left(r - q - \tfrac12\sigma^2\right)T + \sigma\sqrt{T}\,Z_i\right)$$
 
@@ -162,7 +120,7 @@ One pass handles two futures, which is why the code counts in pairs.
 
 ### Step 3: the average is right on average, and its error shrinks like the square root
 
-Two facts do all the work, and both belong to averages in general rather than to finance ([monte-carlo-estimates-and-error](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md)).
+Two facts do all the work, and both belong to averages in general rather than to finance ([Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md)).
 
 The first: each payment is a fair draw from the very quantity being averaged, so the average of $n$ of them leans neither high nor low. Extra paths do not correct a bias, because there is none to correct.
 
@@ -195,7 +153,7 @@ That self-measuring habit is why a simulated price is quoted as a band. A formul
 
 The same average can be reached without sampling. Slicing the bell curve finely and adding up payment times height — Simpson's rule, road 3 in the code — gives 9.227006, matching the formula to six decimals. That trick dies as soon as the payoff depends on more than one or two random inputs, which is where simulation takes over.
 
-Two further doors get their own cards on this shelf: stepping the pricing equation across a grid of prices and dates ([finite-differences-for-the-black-scholes-equation](07-finite-differences-for-the-black-scholes-equation.md)) and inverting a transform ([carr-madan-fft-and-cos-methods](09-carr-madan-fft-and-cos-methods.md)). The grid and the transform reach 9.227 too, as the slices do; simulation only brackets it, inside its band. Four roads to one price is how the shelf keeps itself honest.
+Two further doors get their own cards on this shelf: stepping the pricing equation across a grid of prices and dates ([Pricing on a grid](07-finite-differences-for-the-black-scholes-equation.md)) and inverting a transform ([Transform pricing](09-carr-madan-fft-and-cos-methods.md)). The grid and the transform reach 9.227 too, as the slices do; simulation only brackets it, inside its band. Four roads to one price is how the shelf keeps itself honest.
 
 ---
 
@@ -673,10 +631,10 @@ The two outputs agree line for line, to every printed digit. They have to: the d
 
 ## Where you meet it in real life
 
-- **Exotic desks.** Any payoff that watches a path, or several shares at once, is priced this way: averages ([arithmetic-asian-option](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/03-arithmetic-asian-option.md)), barriers ([knock-out-and-knock-in-options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md)), baskets.
-- **Risk reporting.** The same machinery under real-world growth gives value-at-risk numbers; kept in the pricing world it gives the exposure profiles a bank owes its regulator ([expected-exposure-profiles](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md)).
+- **Exotic desks.** Any payoff that watches a path, or several shares at once, is priced this way: averages ([The Asian option desks trade](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/03-arithmetic-asian-option.md)), barriers ([Knock-out and knock-in options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md)), baskets.
+- **Risk reporting.** The same machinery under real-world growth gives value-at-risk numbers; kept in the pricing world it gives the exposure profiles a bank owes its regulator ([Expected exposure over time](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md)).
 - **Model validation.** A new closed-form price is checked by simulating the same contract and seeing whether the formula lands inside the band. When it does not, one of the two is wrong.
-- **Anything with many dimensions.** The square-root law ignores whether a problem has one random input or five hundred, which is why simulation wins where slicing and grids collapse (monte-carlo-integration-in-many-dimensions).
+- **Anything with many dimensions.** The square-root law ignores whether a problem has one random input or five hundred, which is why simulation wins where slicing and grids collapse (Monte Carlo integration).
 - **Overnight batches.** A desk's whole book of exotics is repriced while nobody watches, because this method's cost is processor hours, and those are cheapest at 3am.
 
 > **Say it back**
@@ -686,36 +644,36 @@ The two outputs agree line for line, to every printed digit. They have to: the d
 
 ## What this builds on
 
-- [geometric-brownian-motion-for-prices](../05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md): the model of a wiggling share price, and the one-step formula for its ending value that every future on this card is drawn from.
-- [monte-carlo-estimates-and-error](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md): why a sample average leans neither way, and where the standard error and the square-root law come from.
+- [Prices as geometric Brownian motion](../05-Black-Scholes%20from%20the%20Ground%20Up/01-geometric-brownian-motion-for-prices.md): the model of a wiggling share price, and the one-step formula for its ending value that every future on this card is drawn from.
+- [Monte Carlo](../../09-Probability%20and%20statistics/11-Simulation/04-monte-carlo-estimates-and-error.md): why a sample average leans neither way, and where the standard error and the square-root law come from.
 
 ## Where this goes next
 
-- [variance-reduction-for-pricing](02-variance-reduction-for-pricing.md): the same accuracy from far fewer paths.
-- [correlated-paths-and-cholesky](04-correlated-paths-and-cholesky.md): several shares drawn at once, correlated as the model demands.
-- [discretisation-schemes-for-sdes](05-discretisation-schemes-for-sdes.md): when the whole path is needed and the single jump is unavailable.
-- [bump-and-revalue-and-common-random-numbers](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): sensitivities by simulation, where reusing draws makes small differences readable.
-- [cash-or-nothing-digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md): an all-or-nothing payoff, and what it does to the spread.
-- [pricing-under-local-volatility-and-the-forward-smile](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md): jumpiness that depends on the price and the date.
-- [merton-jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): endings that jump as well as wiggle.
-- [heston-model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): volatility with a life of its own, two draws a step.
-- [stochastic-local-volatility](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/06-stochastic-local-volatility.md): both at once, priced by paths because nothing else copes.
-- [knock-out-and-knock-in-options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md): payoffs that watch for a level, so the path must be walked.
-- [discrete-monitoring-correction](../16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md): what changes when the level is checked only at the close.
-- [lookback-options](../16-Barriers%2C%20touches%20and%20lookbacks/06-lookback-options.md): payoffs on the best price a path reached.
-- [geometric-asian-kemna-vorst](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/01-geometric-asian-kemna-vorst.md): the average-price option that does have a formula, so a ruler.
-- [chooser-options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/04-chooser-options.md): one decision taken partway through, on the same draws.
-- [cliquets-and-ratchets](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/07-cliquets-and-ratchets.md): payoffs stacked period by period along one path.
-- [barrier-options-by-reflection](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md): closed forms to measure a simulated barrier price against.
-- [margrabe-and-kirk-spread-options](../26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md): two assets and the difference between them.
-- [arithmetic-asian-option](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/03-arithmetic-asian-option.md): the average with no formula at all, simulation's own case.
-- [simulating-a-default-time](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md): the same machinery pointed at when a borrower fails.
-- [black-cox-first-passage-default](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/05-black-cox-first-passage-default.md): default as a barrier touched by a simulated path.
-- [expected-exposure-profiles](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md): what a counterparty might owe, path by path and date by date.
-- monte-carlo-integration-in-many-dimensions: why the square-root law ignores the count of dimensions.
-- reproducible-simulation-and-seeds: keeping a run repeatable, and what a seed does not prove.
+- [Cheaper Monte Carlo](02-variance-reduction-for-pricing.md): the same accuracy from far fewer paths.
+- [Correlated paths](04-correlated-paths-and-cholesky.md): several shares drawn at once, correlated as the model demands.
+- [Stepping an SDE](05-discretisation-schemes-for-sdes.md): when the whole path is needed and the single jump is unavailable.
+- [Bump and revalue](../07-Greeks%20by%20Numbers%20and%20Calibration/01-bump-and-revalue-and-common-random-numbers.md): sensitivities by simulation, where reusing draws makes small differences readable.
+- [Cash-or-nothing digital](../10-Digitals%20and%20the%20implied%20density/01-cash-or-nothing-digital.md): an all-or-nothing payoff, and what it does to the spread.
+- [Pricing with local volatility](../13-Local%20volatility%20and%20jumps/03-pricing-under-local-volatility-and-the-forward-smile.md): jumpiness that depends on the price and the date.
+- [Merton jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): endings that jump as well as wiggle.
+- [The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): volatility with a life of its own, two draws a step.
+- [Stochastic-local volatility](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/06-stochastic-local-volatility.md): both at once, priced by paths because nothing else copes.
+- [Knock-out and knock-in options](../16-Barriers%2C%20touches%20and%20lookbacks/01-knock-out-and-knock-in-options.md): payoffs that watch for a level, so the path must be walked.
+- [Daily monitoring](../16-Barriers%2C%20touches%20and%20lookbacks/03-discrete-monitoring-correction.md): what changes when the level is checked only at the close.
+- [Lookback options](../16-Barriers%2C%20touches%20and%20lookbacks/06-lookback-options.md): payoffs on the best price a path reached.
+- [The geometric Asian call](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/01-geometric-asian-kemna-vorst.md): the average-price option that does have a formula, so a ruler.
+- [Chooser options](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/04-chooser-options.md): one decision taken partway through, on the same draws.
+- [Cliquets](../17-Averages%2C%20choosers%2C%20compounds%20and%20forward-starts/07-cliquets-and-ratchets.md): payoffs stacked period by period along one path.
+- [Knock-out and knock-in](../23-FX%20exotics%20as%20desks%20use%20them%20-%20digitals%2C%20touches%20and%20barriers/02-barrier-options-by-reflection.md): closed forms to measure a simulated barrier price against.
+- [Spread options](../26-Options%20on%20commodity%20futures%20and%20spreads/04-margrabe-and-kirk-spread-options.md): two assets and the difference between them.
+- [The Asian option desks trade](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/03-arithmetic-asian-option.md): the average with no formula at all, simulation's own case.
+- [Simulating a default time](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md): the same machinery pointed at when a borrower fails.
+- [Black-Cox](../43-Structural%20Models%20-%20Default%20from%20the%20Balance%20Sheet/05-black-cox-first-passage-default.md): default as a barrier touched by a simulated path.
+- [Expected exposure over time](../46-Counterparty%20Risk%20and%20CVA/02-expected-exposure-profiles.md): what a counterparty might owe, path by path and date by date.
+- Monte Carlo integration: why the square-root law ignores the count of dimensions.
+- Seeds: keeping a run repeatable, and what a seed does not prove.
 
-A four-cent error bar cost a hundred thousand futures, and the square-root law prices a one-cent bar at sixteen times as many; the next card shrinks the bar without paying that bill, by making each draw carry more information ([variance-reduction-for-pricing](02-variance-reduction-for-pricing.md)).
+A four-cent error bar cost a hundred thousand futures, and the square-root law prices a one-cent bar at sixteen times as many; the next card shrinks the bar without paying that bill, by making each draw carry more information ([Cheaper Monte Carlo](02-variance-reduction-for-pricing.md)).
 
 ---
 

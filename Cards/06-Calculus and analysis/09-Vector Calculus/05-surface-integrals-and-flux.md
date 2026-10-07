@@ -1,27 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Vector Calculus
-topic: Measuring and crossing a sheet
-item: Surface integrals
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/08-Multiple Integrals/03-change-of-variables-and-jacobians|change-of-variables-and-jacobians]]"
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/03-divergence-and-curl|divergence-and-curl]]"
-  - "[[Cards/05-Geometry and trig/05-Vectors in Space/01-cross-product-and-oriented-area|cross-product-and-oriented-area]]"
-next:
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/07-divergence-theorem|divergence-theorem]]"
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/08-stokes-theorem|stokes-theorem]]"
-  - "[[Cards/13-Engineering mathematics/06-Circuits and Electromagnetism/04-electrostatics-gauss-and-potential|electrostatics-gauss-and-potential]]"
-  - "[[Cards/23-Differential geometry and Lie groups/04-Differential Forms/05-integration-on-manifolds|integration-on-manifolds]]"
-tags: [mathematics, calculus and analysis, surface-integrals-and-flux]
----
-
 # Surface integrals: area of a curved sheet and flow through it
 
-Calculus and analysis → Vector Calculus → Measuring and crossing a sheet → Surface integrals
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Vector Calculus](../../../SYLLABUS.md#w06-s09) → Surface integrals
 
 ---
 
@@ -87,7 +66,7 @@ A ground cell $\Delta u$ by $\Delta v$ lifts to a patch whose edges are about $r
 
 ### Step 1: its area is the length of a cross product
 
-The parallelogram on two arrows has area equal to the length of their cross product ([cross-product-and-oriented-area](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md)), so the patch has area about $\lVert r_u \times r_v \rVert\, \Delta u\, \Delta v$.
+The parallelogram on two arrows has area equal to the length of their cross product ([Cross product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md)), so the patch has area about $\lVert r_u \times r_v \rVert\, \Delta u\, \Delta v$.
 
 For the tarp, $(1, 0, 0) \times (0, 1, 0.75) = (0, -0.75, 1)$, of length $\sqrt{0.75^2 + 1} = 1.25$. So 12 m^2 of ground lifts to 15 m^2 of tarp. Pythagoras agrees: the slope is $\sqrt{3^2 + 2.25^2} = 3.75$ m, times 4 m.
 
@@ -95,7 +74,7 @@ On a curved sheet the parallelogram is only nearly right, and the error fades as
 
 ### Step 2: flow through a flat piece fills a slanted box
 
-In one hour, the water crossing a flat piece of area A fills a slanted box: base the piece, slanted edge $F$. Its volume is base times height, and the height is the part of $F$ square to the piece, $F \cdot n$ ([triple-product-and-volume](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/03-triple-product-and-volume.md)). Rain sliding along the fabric crosses nothing.
+In one hour, the water crossing a flat piece of area A fills a slanted box: base the piece, slanted edge $F$. Its volume is base times height, and the height is the part of $F$ square to the piece, $F \cdot n$ ([Triple product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/03-triple-product-and-volume.md)). Rain sliding along the fabric crosses nothing.
 
 On a lifted cell the area is $\lVert N \rVert \Delta u \Delta v$ and $n = N / \lVert N \rVert$. The lengths cancel, leaving $F \cdot N\, \Delta u \Delta v$. Summed, that is the flux formula.
 
@@ -118,7 +97,7 @@ Let a second grid be $u = u(s, t)$, $v = v(s, t)$, a smooth one-to-one map from 
 
 By the chain rule, $\rho_s = r_u u_s + r_v v_s$ and $\rho_t = r_u u_t + r_v v_t$. The cross product is linear in each slot, with $r_u \times r_u = 0$ and $r_v \times r_u = -\,r_u \times r_v$, so $\rho_s \times \rho_t = J\,N$, where J, the bracket $u_s v_t - u_t v_s$, is the Jacobian determinant.
 
-Area: the integrand becomes $\lVert N \rVert$ times the size of J; the change-of-variables theorem ([change-of-variables-and-jacobians](../08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)) turns its integral over E into $\iint_D \lVert N \rVert\, du\, dv$.
+Area: the integrand becomes $\lVert N \rVert$ times the size of J; the change-of-variables theorem ([Change of variables](../08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md)) turns its integral over E into $\iint_D \lVert N \rVert\, du\, dv$.
 
 Flux: the new integrand is $F \cdot N$ times J. On a connected region J, continuous and never zero, keeps one sign. Positive, the theorem returns the old flux; negative, the normal has switched sides and the flux flips.
 
@@ -126,7 +105,7 @@ In the slant grid $v = 0.8s$, so J = 0.8 and the new length is 0.8 × 1.25 = 1.
 
 </details>
 
-The curve versions are [scalar-line-integrals](01-scalar-line-integrals.md) and [line-integrals](02-line-integrals.md); [surface-area-of-revolution](../05-Curves%20and%20Solids/04-surface-area-of-revolution.md) is this formula with a spin angle as a grid number.
+The curve versions are [Line integrals of a function](01-scalar-line-integrals.md) and [Line integrals of a field](02-line-integrals.md); [Surface area](../05-Curves%20and%20Solids/04-surface-area-of-revolution.md) is this formula with a spin angle as a grid number.
 
 ---
 
@@ -380,16 +359,16 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [change-of-variables-and-jacobians](../08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md): the determinant that frees the answer from the grid.
-- [divergence-and-curl](03-divergence-and-curl.md): flow fields, and flux through a tiny box.
-- [cross-product-and-oriented-area](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md): a parallelogram's area and facing in one arrow.
+- [Change of variables](../08-Multiple%20Integrals/03-change-of-variables-and-jacobians.md): the determinant that frees the answer from the grid.
+- [Divergence and curl](03-divergence-and-curl.md): flow fields, and flux through a tiny box.
+- [Cross product](../../05-Geometry%20and%20trig/05-Vectors%20in%20Space/01-cross-product-and-oriented-area.md): a parallelogram's area and facing in one arrow.
 
 ## Where this goes next
 
-- [divergence-theorem](07-divergence-theorem.md): flux out of a closed surface from the divergence inside.
-- [stokes-theorem](08-stokes-theorem.md): curl flux through a sheet from circulation round its edge.
-- electrostatics-gauss-and-potential: electric flux and enclosed charge.
-- integration-on-manifolds: the area vector as a form, in any dimension.
+- [Divergence theorem](07-divergence-theorem.md): flux out of a closed surface from the divergence inside.
+- [Stokes' theorem](08-stokes-theorem.md): curl flux through a sheet from circulation round its edge.
+- Electric fields: electric flux and enclosed charge.
+- Integration on an oriented manifold: the area vector as a form, in any dimension.
 
 The taut and sagging tarps differ in area yet match in flux, because they share an edge; when flux depends only on the edge is what the divergence theorem and Stokes' theorem decide.
 

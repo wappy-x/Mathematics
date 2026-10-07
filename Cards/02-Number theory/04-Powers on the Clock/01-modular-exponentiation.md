@@ -1,29 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Powers on the Clock
-topic: Fast powers
-item: Powers on the clock
-kind: method
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/01-congruence-mod-n|congruence-mod-n]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/02-modular-addition-and-multiplication|modular-addition-and-multiplication]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/01-exponents-and-powers|exponents-and-powers]]"
-next:
-  - "[[Cards/02-Number theory/04-Powers on the Clock/02-fermats-little-theorem|fermats-little-theorem]]"
-  - "[[Cards/02-Number theory/06-Codes and Secrets/01-one-way-streets|one-way-streets]]"
-  - "[[Cards/02-Number theory/06-Codes and Secrets/05-miller-rabin|miller-rabin]]"
-tags:
-  - mathematics
-  - number theory
-  - modular-exponentiation
----
-
 # Powers on the clock: repeated squaring finds 7 to the 123 mod 1000 without ever writing a huge number
 
-Number theory → Powers on the Clock → Fast powers → Powers on the clock
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Powers on the Clock](../../../SYLLABUS.md#w02-s04) → Powers on the clock
 
 ---
 
@@ -54,7 +31,7 @@ The question in symbols:
 
 **7^123 ≡ 343 (mod 1000)**
 
-7^123 is 7 multiplied by itself 123 times: 7 the base, 123 the exponent. The three-bar ≡ means "leaves the same remainder as", not "equals" ([congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md)). (mod 1000) names the clock: divide by 1000, keep what is left.
+7^123 is 7 multiplied by itself 123 times: 7 the base, 123 the exponent. The three-bar ≡ means "leaves the same remainder as", not "equals" ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)). (mod 1000) names the clock: divide by 1000, keep what is left.
 
 Two lines are the whole method, with b the base and e the exponent:
 
@@ -77,13 +54,13 @@ Two lines are the whole method, with b the base and e the exponent:
 
 ### Step 0: what falls off never comes back
 
-Remainders multiply on their own ([modular-addition-and-multiplication](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)): reduce first or reduce at the end, same remainder. On day 7 the true number is 823543 and the counter reads 543. Dropping the thousands costs nothing.
+Remainders multiply on their own ([Adding and multiplying on the clock](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)): reduce first or reduce at the end, same remainder. On day 7 the true number is 823543 and the counter reads 543. Dropping the thousands costs nothing.
 
 It also caps the work. Both readings entering a multiplication are under 1000, so every product is under 1000 × 1000 = 1,000,000 — the same ceiling on the last night as the first.
 
 ### Step 1: squaring doubles the days
 
-The day 15 reading is 7 used 15 times, thousands thrown away. Square it and 7 has been used 30 times ([exponents-and-powers](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)): 943 × 943 = 889249, keep 249. Day 30, one multiplication.
+The day 15 reading is 7 used 15 times, thousands thrown away. Square it and 7 has been used 30 times ([Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md)): 943 × 943 = 889249, keep 249. Day 30, one multiplication.
 
 ### Step 2: every day count halves to 1
 
@@ -93,7 +70,7 @@ Halve, dropping the spare when the count is odd: 123, 61, 30, 15, 7, 3, 1. Seven
 
 Day 1: the counter reads 7. Read the list bottom to top. Each rung is double the one below, plus a spare when odd: square for the doubling, one more 7 for the spare.
 
-Nothing drifts: if a rung's reading is right, its square is right for double that rung, and one more 7 is right for double-plus-one. The bottom rung is plainly right, so all are ([proof-by-induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
+Nothing drifts: if a rung's reading is right, its square is right for double that rung, and one more 7 is right for double-plus-one. The bottom rung is plainly right, so all are ([Induction](../../01-Foundations/06-Proof/04-proof-by-induction.md)).
 
 Six rungs sit above the first: six squarings. Five of those are odd: five more 7s. Eleven multiplications, with the day-1 reading of 7 free; the slow road starts at 1 and pays 123.
 
@@ -111,7 +88,7 @@ Six rungs sit above the first: six squarings. Five of those are odd: five more 7
 | day 61 | square 249, one more 7 | 7 |
 | day 123 | square 7, one more 7 | **343** |
 
-On day 123 the wheels read 343, nothing longer than six digits written. Day 3 reads 343 too, which is not luck: [order-and-primitive-roots](05-order-and-primitive-roots.md).
+On day 123 the wheels read 343, nothing longer than six digits written. Day 3 reads 343 too, which is not luck: [The order of a number and primitive roots](05-order-and-primitive-roots.md).
 
 ### What breaks if you drop a piece
 
@@ -253,15 +230,15 @@ The two outputs match line for line.
 >
 > - Skipping the spare 7 on an odd rung: 401, not 343.
 > - Rounding a halving up instead of dropping the spare day: every odd rung lands a day too far.
-> - The reading wraps at 1000; the exponent does not. Shrinking the exponent has its own rule: [fermats-little-theorem](02-fermats-little-theorem.md).
+> - The reading wraps at 1000; the exponent does not. Shrinking the exponent has its own rule: [Fermat's little theorem](02-fermats-little-theorem.md).
 
 ---
 
 ## Where you meet it in real life
 
-- **Keys and secrets.** Encryption is this ladder on a clock hundreds of digits wide: [one-way-streets](../06-Codes%20and%20Secrets/01-one-way-streets.md).
-- **Testing for primeness.** The standard test is a huge power on a clock: [miller-rabin](../06-Codes%20and%20Secrets/05-miller-rabin.md).
-- **Last digits of huge powers.** Every "what does it end in" is a counter with few wheels: [fermats-little-theorem](02-fermats-little-theorem.md).
+- **Keys and secrets.** Encryption is this ladder on a clock hundreds of digits wide: [One-way streets](../06-Codes%20and%20Secrets/01-one-way-streets.md).
+- **Testing for primeness.** The standard test is a huge power on a clock: [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md).
+- **Last digits of huge powers.** Every "what does it end in" is a counter with few wheels: [Fermat's little theorem](02-fermats-little-theorem.md).
 
 > **Say it back**
 > A three-wheel counter multiplies by 7 nightly and keeps the last three digits: base 7, modulus 1000. To reach exponent 123, halve the day count over and over — 123, 61, 30, 15, 7, 3, 1 — then climb the list backwards from a reading of 7. Square at each rung, since squaring doubles the exponent, and slip in a 7 where the rung is odd. Drop the thousands as you go: no product passes 1,000,000. That is modular exponentiation by square-and-multiply: eleven multiplications, and the counter reads 343.
@@ -270,15 +247,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md): what ≡ and (mod 1000) mean — same remainder, same spot on the clock.
-- [modular-addition-and-multiplication](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md): why reducing at every step lands where reducing at the end lands.
-- [exponents-and-powers](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): why squaring a power doubles how many times the base was used.
+- [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md): what ≡ and (mod 1000) mean — same remainder, same spot on the clock.
+- [Adding and multiplying on the clock](../03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md): why reducing at every step lands where reducing at the end lands.
+- [Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): why squaring a power doubles how many times the base was used.
 
 ## Where this goes next
 
-- [fermats-little-theorem](02-fermats-little-theorem.md): on a prime clock the readings return to 1 on a schedule, shrinking the exponent before you climb.
-- [one-way-streets](../06-Codes%20and%20Secrets/01-one-way-streets.md): easy forwards, and nobody knows how to run it backwards.
-- [miller-rabin](../06-Codes%20and%20Secrets/05-miller-rabin.md): a primality test, one ladder per round.
+- [Fermat's little theorem](02-fermats-little-theorem.md): on a prime clock the readings return to 1 on a schedule, shrinking the exponent before you climb.
+- [One-way streets](../06-Codes%20and%20Secrets/01-one-way-streets.md): easy forwards, and nobody knows how to run it backwards.
+- [The Miller-Rabin test](../06-Codes%20and%20Secrets/05-miller-rabin.md): a primality test, one ladder per round.
 
 ---
 

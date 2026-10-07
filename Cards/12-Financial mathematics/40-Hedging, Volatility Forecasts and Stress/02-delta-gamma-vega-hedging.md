@@ -1,24 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Hedging, Volatility Forecasts and Stress
-topic: Solving for the hedge
-item: Hedging three Greeks at once
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/40-Hedging, Volatility Forecasts and Stress/01-portfolio-greeks-and-taylor-pnl|portfolio-greeks-and-taylor-pnl]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/01-matrix-equation-ax-b|matrix-equation-ax-b]]"
-next:
-  - "[[Cards/12-Financial mathematics/40-Hedging, Volatility Forecasts and Stress/03-hedge-ratios-basis-risk-and-cross-hedging|hedge-ratios-basis-risk-and-cross-hedging]]"
-  - "[[Cards/12-Financial mathematics/40-Hedging, Volatility Forecasts and Stress/05-scenario-grids-and-stress-tests|scenario-grids-and-stress-tests]]"
-tags: [mathematics, financial mathematics, delta-gamma-vega-hedging]
----
-
 # Hedging three Greeks at once: solving for the option positions that flatten delta, gamma and vega
 
-Financial mathematics → Hedging, Volatility Forecasts and Stress → Solving for the hedge → Hedging three Greeks at once
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Hedging, Volatility Forecasts and Stress](../../../SYLLABUS.md#w12-s40) → Hedging three Greeks at once
 
 ---
 
@@ -52,7 +34,7 @@ Orange: the book hedged with shares alone. It loses in both directions, and the 
 
 ## The formula
 
-Notation first. The **Greeks** are the sensitivities of a price, each named after a Greek letter ([portfolio-greeks-and-taylor-pnl](01-portfolio-greeks-and-taylor-pnl.md)). **Delta**, $\Delta$, is dollars gained per $1 rise in Acme. **Gamma**, $\Gamma$, is how much delta itself changes per $1 rise. **Vega**, $\mathcal{V}$, is dollars gained per one percentage point rise in volatility. A subscript names whose Greek it is: P for the dealer's book (portfolio) as it stands, A and B for one of each listed option. The unknowns are $n_A$ and $n_B$, how many of each option to buy, and $n_S$, how many shares.
+Notation first. The **Greeks** are the sensitivities of a price, each named after a Greek letter ([Portfolio Greeks](01-portfolio-greeks-and-taylor-pnl.md)). **Delta**, $\Delta$, is dollars gained per $1 rise in Acme. **Gamma**, $\Gamma$, is how much delta itself changes per $1 rise. **Vega**, $\mathcal{V}$, is dollars gained per one percentage point rise in volatility. A subscript names whose Greek it is: P for the dealer's book (portfolio) as it stands, A and B for one of each listed option. The unknowns are $n_A$ and $n_B$, how many of each option to buy, and $n_S$, how many shares.
 
 A book's Greek is the sum of each position's Greek times its size. Set each total to zero:
 
@@ -98,7 +80,7 @@ $$n_S = -\left(\Delta_P + n_A\,\Delta_A + n_B\,\Delta_B\right)$$
 - **Small moves.** The Greeks describe the book near today's price. Past about $5 the leftovers of the Taylor expansion (the next terms in the book's price change) show again: −$489.41 at $90.
 - **Joint moves.** Gamma and vega are hedged one at a time. A drop in Acme together with a rise in volatility has a cross term (vanna, the change in delta per point of volatility) that nothing here cancels: −$222.50 when Acme drops to $95 and volatility rises to 21%, against −$40.91 for the drop alone.
 - **Time.** Theta, the value lost as a day passes, is not one of the three equations; the stale-hedge table shows its effect.
-- **Model Greeks.** The inputs come from Black-Scholes at one volatility for every option. Real markets quote a different volatility per strike and expiry ([volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)), which moves every Greek in the table.
+- **Model Greeks.** The inputs come from Black-Scholes at one volatility for every option. Real markets quote a different volatility per strike and expiry ([The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)), which moves every Greek in the table.
 
 ---
 
@@ -114,7 +96,7 @@ For a small move $\delta S$ in Acme and $\delta\sigma$ in volatility (in points)
 
 $$\text{change} \approx \Delta_P\,\delta S + \tfrac12\,\Gamma_P\,(\delta S)^2 + \mathcal{V}_P\,\delta\sigma.$$
 
-This is the Taylor expansion from [portfolio-greeks-and-taylor-pnl](01-portfolio-greeks-and-taylor-pnl.md). Here $\delta S$ is dollars and $\delta\sigma$ is volatility points. Zero all three coefficients and the change is zero to that order. For the dealer at $90, the gamma term alone is $-\tfrac12 \times 189.51 \times 10^2$, a loss of $9,475.29, against the $10,013.64 the shares-only book actually loses. The rest comes from the higher terms.
+This is the Taylor expansion from [Portfolio Greeks](01-portfolio-greeks-and-taylor-pnl.md). Here $\delta S$ is dollars and $\delta\sigma$ is volatility points. Zero all three coefficients and the change is zero to that order. For the dealer at $90, the gamma term alone is $-\tfrac12 \times 189.51 \times 10^2$, a loss of $9,475.29, against the $10,013.64 the shares-only book actually loses. The rest comes from the higher terms.
 
 ### Step 2: shares only touch delta
 
@@ -133,7 +115,7 @@ The strike cancels. So the ratio depends only on the expiry, which is why two op
 <details>
 <summary>The algebra behind the ratio, if you want it</summary>
 
-Take the first distance d1 as on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), and $\varphi(d_1)$ the bell-curve height there. Here q is the 2% dividend yield. Gamma per share is $e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})$ ([gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md)); vega per unit of volatility is $S e^{-qT}\varphi(d_1)\sqrt{T}$ ([vega](../09-The%20Greeks%2C%20one%20each/03-vega.md)), and per point it is that over 100. Divide: the factor $e^{-qT}\varphi(d_1)$ cancels, and so does everything that knew the strike. What is left is $S\sqrt{T}\cdot S\sigma\sqrt{T}/100 = S^2\sigma T/100$. A put and a call with the same strike and expiry share d1, so they share gamma and vega; they differ only in delta.
+Take the first distance d1 as on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md), and $\varphi(d_1)$ the bell-curve height there. Here q is the 2% dividend yield. Gamma per share is $e^{-qT}\varphi(d_1)/(S\sigma\sqrt{T})$ ([Gamma](../09-The%20Greeks%2C%20one%20each/02-gamma.md)); vega per unit of volatility is $S e^{-qT}\varphi(d_1)\sqrt{T}$ ([Vega](../09-The%20Greeks%2C%20one%20each/03-vega.md)), and per point it is that over 100. Divide: the factor $e^{-qT}\varphi(d_1)$ cancels, and so does everything that knew the strike. What is left is $S\sqrt{T}\cdot S\sigma\sqrt{T}/100 = S^2\sigma T/100$. A put and a call with the same strike and expiry share d1, so they share gamma and vega; they differ only in delta.
 
 </details>
 
@@ -148,11 +130,11 @@ Both weights are positive exactly when the book's ratio lies between the two hed
 <details>
 <summary>Detailed proof: Cramer's rule gives the unique answer when $D$ is not zero</summary>
 
-Multiply the gamma equation by $\mathcal{V}_B$ and the vega equation by $\Gamma_B$, then subtract. The $n_B$ terms cancel, leaving $n_A(\Gamma_A\mathcal{V}_B - \Gamma_B\mathcal{V}_A) = -\Gamma_P\mathcal{V}_B + \Gamma_B\mathcal{V}_P$, which is $n_A D = \Gamma_B\mathcal{V}_P - \Gamma_P\mathcal{V}_B$. The same move with A and B swapped gives $n_B D = \Gamma_P\mathcal{V}_A - \Gamma_A\mathcal{V}_P$. When $D \ne 0$, divide: each unknown has exactly one value, and substituting back satisfies both equations. When $D = 0$, the left sides vanish; both equations then demand $\Gamma_B\mathcal{V}_P = \Gamma_P\mathcal{V}_B$ and $\Gamma_A\mathcal{V}_P = \Gamma_P\mathcal{V}_A$. If those fail there is no answer; if they hold, one equation is a multiple of the other and a whole line of answers works. The share line always has exactly one solution for $n_S$, because its coefficient is 1. The general statement for any square system is on [matrix-equation-ax-b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md).
+Multiply the gamma equation by $\mathcal{V}_B$ and the vega equation by $\Gamma_B$, then subtract. The $n_B$ terms cancel, leaving $n_A(\Gamma_A\mathcal{V}_B - \Gamma_B\mathcal{V}_A) = -\Gamma_P\mathcal{V}_B + \Gamma_B\mathcal{V}_P$, which is $n_A D = \Gamma_B\mathcal{V}_P - \Gamma_P\mathcal{V}_B$. The same move with A and B swapped gives $n_B D = \Gamma_P\mathcal{V}_A - \Gamma_A\mathcal{V}_P$. When $D \ne 0$, divide: each unknown has exactly one value, and substituting back satisfies both equations. When $D = 0$, the left sides vanish; both equations then demand $\Gamma_B\mathcal{V}_P = \Gamma_P\mathcal{V}_B$ and $\Gamma_A\mathcal{V}_P = \Gamma_P\mathcal{V}_A$. If those fail there is no answer; if they hold, one equation is a multiple of the other and a whole line of answers works. The share line always has exactly one solution for $n_S$, because its coefficient is 1. The general statement for any square system is on [Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md).
 
 </details>
 
-A book with more risks, such as vega at several expiries or the cross term vanna, adds rows. Each new row needs a new instrument, and the same elimination solves the bigger square system ([gaussian-elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md)). With more instruments than risks, the extra freedom goes to the cheapest hedge, which is the least-squares and cost-minimising setting of [hedge-ratios-basis-risk-and-cross-hedging](03-hedge-ratios-basis-risk-and-cross-hedging.md).
+A book with more risks, such as vega at several expiries or the cross term vanna, adds rows. Each new row needs a new instrument, and the same elimination solves the bigger square system ([Gaussian elimination](../../03-Algebra/05-Solving%20Systems/02-gaussian-elimination.md)). With more instruments than risks, the extra freedom goes to the cheapest hedge, which is the least-squares and cost-minimising setting of [Imperfect hedges](03-hedge-ratios-basis-risk-and-cross-hedging.md).
 
 ---
 
@@ -200,7 +182,7 @@ The hedge is solved at one price, one volatility and one date. None of those sta
 | one month passes, Acme still $100 | −25.24 | +17.53 | −14.30 |
 | rounding to 2,700 puts, 6,000 calls, 4,183 shares | 25.34 | −1.86 | −6.44 |
 
-The jump to $110 matters most. The three-month put is now out of the money (it pays only below $100) and its gamma and vega have collapsed, while the two-year call barely noticed. The book is left long 389.57 of vega. The fix is the same system, solved again at the new Greeks. Desks re-solve daily, or whenever a Greek drifts past a limit ([risk-limits-and-risk-appetite](06-risk-limits-and-risk-appetite.md)).
+The jump to $110 matters most. The three-month put is now out of the money (it pays only below $100) and its gamma and vega have collapsed, while the two-year call barely noticed. The book is left long 389.57 of vega. The fix is the same system, solved again at the new Greeks. Desks re-solve daily, or whenever a Greek drifts past a limit ([Limits](06-risk-limits-and-risk-appetite.md)).
 
 The vega shock, one force at a time. Volatility rises from 20% to 25%, Acme unchanged, dollars lost:
 
@@ -646,8 +628,8 @@ The two outputs agree line for line. Road 2 and road 3 use nudged prices, which 
 - **Options market makers.** A desk that sells a client a one-off option lays off gamma and vega with listed options at nearby strikes and expiries, then trims delta with futures or shares. The solve on this card runs again whenever the book changes.
 - **Structured products.** A bank that issues a five-year note paying on an index owns long-dated vega it cannot buy back. It hedges the gamma with short-dated listed options and accepts residual vega at long expiries.
 - **Variance and volatility trading.** A trader who wants vega without gamma solves the same system with the target Greeks set to (0, 0, desired vega) instead of zero.
-- **Risk reports.** The residual Greeks after hedging feed [scenario-grids-and-stress-tests](05-scenario-grids-and-stress-tests.md), which asks what the leftovers cost under large moves, and the limits on [risk-limits-and-risk-appetite](06-risk-limits-and-risk-appetite.md).
-- **Volatility forecasts.** How often to re-solve depends on how fast volatility moves: [volatility-forecasting-ewma-garch-and-realised](04-volatility-forecasting-ewma-garch-and-realised.md).
+- **Risk reports.** The residual Greeks after hedging feed [Stress tests](05-scenario-grids-and-stress-tests.md), which asks what the leftovers cost under large moves, and the limits on [Limits](06-risk-limits-and-risk-appetite.md).
+- **Volatility forecasts.** How often to re-solve depends on how fast volatility moves: [Tomorrow's volatility](04-volatility-forecasting-ewma-garch-and-realised.md).
 
 > **Say it back**
 > A book's Greeks are sums of its positions' Greeks, so zeroing delta, gamma and vega is a system of three linear equations. Shares carry delta only, so two options solve the gamma and vega pair first, and shares fix delta last. The pair must carry vega and gamma in different proportions, which under Black-Scholes means different expiries. When the book's ratio lies between the two options' ratios, both trade in the same direction. The hedge holds for small, separate moves at one moment and must be re-solved as prices, volatility and time move.
@@ -656,13 +638,13 @@ The two outputs agree line for line. Road 2 and road 3 use nudged prices, which 
 
 ## What this builds on
 
-- [portfolio-greeks-and-taylor-pnl](01-portfolio-greeks-and-taylor-pnl.md): a book's Greeks as position-weighted sums, and the Taylor expansion that says which Greeks carry the profit or loss.
-- [matrix-equation-ax-b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md): when a square linear system has one answer, none or a line of them, which is the existence-and-uniqueness statement used here.
+- [Portfolio Greeks](01-portfolio-greeks-and-taylor-pnl.md): a book's Greeks as position-weighted sums, and the Taylor expansion that says which Greeks carry the profit or loss.
+- [Solving A x = b](../../03-Algebra/05-Solving%20Systems/01-matrix-equation-ax-b.md): when a square linear system has one answer, none or a line of them, which is the existence-and-uniqueness statement used here.
 
 ## Where this goes next
 
-- [hedge-ratios-basis-risk-and-cross-hedging](03-hedge-ratios-basis-risk-and-cross-hedging.md): when no instrument matches the risk exactly, the best hedge ratio and the basis risk left over.
-- [scenario-grids-and-stress-tests](05-scenario-grids-and-stress-tests.md): the full-revaluation grid that shows what a hedged book loses in large, joint moves.
+- [Imperfect hedges](03-hedge-ratios-basis-risk-and-cross-hedging.md): when no instrument matches the risk exactly, the best hedge ratio and the basis risk left over.
+- [Stress tests](05-scenario-grids-and-stress-tests.md): the full-revaluation grid that shows what a hedged book loses in large, joint moves.
 
 This card makes the book flat to small moves in a model with one volatility; the open question is what the hedge is worth when the instruments do not track the risk exactly, which is where hedge ratios and basis risk take over.
 

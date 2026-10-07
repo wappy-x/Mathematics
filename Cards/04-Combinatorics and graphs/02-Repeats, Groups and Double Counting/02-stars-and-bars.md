@@ -1,28 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Repeats, Groups and Double Counting
-topic: Dividers
-item: Stars and bars
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/01-Counting Principles/05-n-choose-k|n-choose-k]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/01-multiset-permutations|multiset-permutations]]"
-next:
-  - "[[Cards/04-Combinatorics and graphs/07-Generating Functions/02-counting-with-generating-functions|counting-with-generating-functions]]"
-  - "[[Cards/04-Combinatorics and graphs/08-Partitions/01-integer-partitions|integer-partitions]]"
-  - "[[Cards/04-Combinatorics and graphs/08-Partitions/06-twelvefold-way|twelvefold-way]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - stars-and-bars
----
-
 # Stars and bars: identical items into labelled boxes, counted by placing dividers
 
-Combinatorics and graphs → Repeats, Groups and Double Counting → Dividers → Stars and bars
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Repeats, Groups and Double Counting](../../../SYLLABUS.md#w04-s02) → Stars and bars
 
 ---
 
@@ -70,7 +48,7 @@ Deciding which branch is asked is half the work.
 
 ## The formula
 
-One reminder first. $C(m, r)$, read "m choose r", counts the ways to pick r things out of m when the order of the pick does not matter ([n-choose-k](../01-Counting%20Principles/05-n-choose-k.md)).
+One reminder first. $C(m, r)$, read "m choose r", counts the ways to pick r things out of m when the order of the pick does not matter ([Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md)).
 
 Write $n$ for the identical items and $k$ for the labelled boxes. With empty boxes allowed:
 
@@ -100,7 +78,7 @@ Twelve tins on three shelves: C(12 − 1, 3 − 1) = C(11, 2) = 55.
 ### When it holds
 
 - **The items are identical.** Only the count in each box matters; tell the scoops apart and each picks its own flavour, a far larger count.
-- **The boxes are labelled.** (2, 0, 3) and (3, 0, 2) are two tubs. Strip the labels and 21 tubs collapse to 5 shapes: [integer-partitions](../08-Partitions/01-integer-partitions.md), not this count.
+- **The boxes are labelled.** (2, 0, 3) and (3, 0, 2) are two tubs. Strip the labels and 21 tubs collapse to 5 shapes: [Integer partitions](../08-Partitions/01-integer-partitions.md), not this count.
 - **No box has a ceiling.** One flavour may take all five scoops; cap a box at 3 and the formula counts too many.
 - **Empty or not, decided before counting.** Empties allowed gives 21, every flavour used gives 6, and neither substitutes for the other. No-empty also needs items enough to go round: with fewer items than boxes there is no way at all.
 
@@ -118,7 +96,7 @@ Going out: write a tub's vanilla scoops as stars, a bar, its pistachio scoops, a
 
 Coming back: read the stars before the first bar, between the bars, and after the last. `*|**|**` is 1 vanilla, 2 pistachio, 2 chocolate.
 
-Neither direction loses or invents anything, and the two undo each other, so the collections are the same size. Matching to count is this shelf's standard move, set out on [bijection-and-double-counting](05-bijection-and-double-counting.md).
+Neither direction loses or invents anything, and the two undo each other, so the collections are the same size. Matching to count is this shelf's standard move, set out on [Bijections and double counting](05-bijection-and-double-counting.md).
 
 ### Step 2: counting the rows is a choose
 
@@ -408,14 +386,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [n-choose-k](../01-Counting%20Principles/05-n-choose-k.md): the count of ways to pick places out of a row, this card's whole right-hand side.
-- [multiset-permutations](01-multiset-permutations.md): arranging items when some are identical, and thinking in counts rather than individuals.
+- [Combinations, n choose k](../01-Counting%20Principles/05-n-choose-k.md): the count of ways to pick places out of a row, this card's whole right-hand side.
+- [Arranging with repeats](01-multiset-permutations.md): arranging items when some are identical, and thinking in counts rather than individuals.
 
 ## Where this goes next
 
-- [counting-with-generating-functions](../07-Generating%20Functions/02-counting-with-generating-functions.md): the same count read off a product, one factor per box, which is what makes capped boxes tractable.
-- [integer-partitions](../08-Partitions/01-integer-partitions.md): the labels torn off the boxes, where 21 tubs become 5 shapes.
-- [twelvefold-way](../08-Partitions/06-twelvefold-way.md): the grid of twelve counting problems, of which this card is two.
+- [Counting by multiplying series](../07-Generating%20Functions/02-counting-with-generating-functions.md): the same count read off a product, one factor per box, which is what makes capped boxes tractable.
+- [Integer partitions](../08-Partitions/01-integer-partitions.md): the labels torn off the boxes, where 21 tubs become 5 shapes.
+- [The twelvefold way](../08-Partitions/06-twelvefold-way.md): the grid of twelve counting problems, of which this card is two.
 
 This card counts items into boxes of unlimited size; cap a flavour at three scoops and the row picture counts too many, which is what later cards repair.
 

@@ -1,28 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: The FX smile - risk reversals, butterflies and vanna-volga
-topic: Reading the broker's strangle
-item: The broker butterfly
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/01-risk-reversal-and-butterfly|risk-reversal-and-butterfly]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/06-intermediate-value-theorem|intermediate-value-theorem]]"
-next: []
-tags: [mathematics, financial mathematics, market-strangle-and-smile-strangle]
----
-
 # The broker butterfly: a strangle quoted at one vol, and the one-unknown solve that turns it into smile vols
 
-Financial mathematics → The FX smile - risk reversals, butterflies and vanna-volga → Reading the broker's strangle → The broker butterfly
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [The FX smile - risk reversals, butterflies and vanna-volga](../../../SYLLABUS.md#w12-s22) → The broker butterfly
 
 ---
 
 ## General Overview
 
-The broker's screen for one-year EURUSD options (dollars per euro, spot 1.1000) reads **ATM 10.00, 25-delta risk reversal −1.00, 25-delta butterfly +0.25**, all in vol points (a vol point is one percentage point of volatility). The previous card on this shelf, [risk-reversal-and-butterfly](01-risk-reversal-and-butterfly.md), read the 0.25 as the smile's own bow: the two wing vols average a quarter point above the middle. That reading is tidy. It is not what the broker means.
+The broker's screen for one-year EURUSD options (dollars per euro, spot 1.1000) reads **ATM 10.00, 25-delta risk reversal −1.00, 25-delta butterfly +0.25**, all in vol points (a vol point is one percentage point of volatility). The previous card on this shelf, [Risk reversal and butterfly](01-risk-reversal-and-butterfly.md), read the 0.25 as the smile's own bow: the two wing vols average a quarter point above the middle. That reading is tidy. It is not what the broker means.
 
 The broker means a price. The butterfly quote describes one trade, the **market strangle**: buy a 25-delta euro call and a 25-delta euro put, find both strikes at one single vol, 10.00 + 0.25 = 10.25 percent, and price both legs at that same vol. The answer is 0.034040 dollars per euro, 340.40 pips (a pip is 0.0001 dollars per euro). No smile appears anywhere in that calculation.
 
@@ -80,7 +64,7 @@ Its root is the smile strangle, $\text{BF}_{\text{ss}}$.
 | $g(b)$ | the gap: smile price of the strangle minus the broker's price | −1.07 pips at $b$ = 0.25% | rises with $b$ |
 | $C(K;\sigma)$, $P(K;\sigma)$, $\sigma$, $N(z)$ | a euro call or put priced by Garman-Kohlhagen (Black-Scholes with the euro rate as the dividend yield) at a vol $\sigma$; the bell-curve area left of $z$ | 0.016140, 0.017900 at 10.25% | — |
 
-The 25-delta strikes at a vol $\sigma$, with the upper sign for the call ([risk-reversal-and-butterfly](01-risk-reversal-and-butterfly.md) uses the same step):
+The 25-delta strikes at a vol $\sigma$, with the upper sign for the call ([Risk reversal and butterfly](01-risk-reversal-and-butterfly.md) uses the same step):
 
 $$K_{25} = F\exp\!\big(\mp d\,\sigma\sqrt{T} + \tfrac12\sigma^2 T\big), \qquad e^{-r_f T}N(d) = 0.25 .$$
 
@@ -96,7 +80,7 @@ with the pillars $(x_p, \sigma_{25p}(b))$, $(x_a, \sigma_{\text{ATM}})$, $(x_c, 
 
 - **The broker means a market strangle.** EURUSD brokers quote the butterfly this way. Some screens quote the smile strangle directly; reading one as the other costs 1.59 basis points of vol here, and more when the tilt is large.
 - **The delta convention is the one the strikes assume.** Spot delta without premium adjustment for EURUSD up to one year. A pair quoted with premium-adjusted delta places all four strikes differently, and the whole solve shifts.
-- **The smile rule is named.** The answer depends on how the smile is drawn between pillars. A parabola in log-strike gives 0.265924; a vanna-volga smile ([vanna-volga-smile-curve](05-vanna-volga-smile-curve.md)) gives a slightly different bow. A smile strangle quoted without its rule is half a number.
+- **The smile rule is named.** The answer depends on how the smile is drawn between pillars. A parabola in log-strike gives 0.265924; a vanna-volga smile ([The vanna-volga smile](05-vanna-volga-smile-curve.md)) gives a slightly different bow. A smile strangle quoted without its rule is half a number.
 - **The tilt is modest.** At a risk reversal of −12.00 no bow from −3 to +9 percent works: every positive smile among them prices the strangle too dear. Step 4 shows it.
 
 Conventions verified 27 Sep 2026, as set out in Reiswich and Wystup (2010, 2012) and Clark (2011): EURUSD butterflies quoted as a market strangle priced at ATM plus BF, the delta-neutral straddle as at the money, spot delta without premium adjustment up to one year.
@@ -134,7 +118,7 @@ One line: the strangle's payoff. It pays below the put strike 1.055342 and above
 
 ### Step 2: why the naive wings misprice it
 
-The naive reading sets the bow equal to the quote: $b$ = 0.25 percent. The smile's wings are then 9.75 and 10.75 percent, at their own 25-delta strikes 1.201425 and 1.052466. Those are the pillar strikes of [risk-reversal-and-butterfly](01-risk-reversal-and-butterfly.md).
+The naive reading sets the bow equal to the quote: $b$ = 0.25 percent. The smile's wings are then 9.75 and 10.75 percent, at their own 25-delta strikes 1.201425 and 1.052466. Those are the pillar strikes of [Risk reversal and butterfly](01-risk-reversal-and-butterfly.md).
 
 The market strangle's strikes are elsewhere. Its put was placed at 10.25 percent, a lower vol than the smile's 10.75, so it sits closer to the middle: 1.055342, not 1.052466. Its call was placed at 10.25, a higher vol than the smile's 9.75, so it sits further out: 1.205943, not 1.201425. Now read the smile at those two strikes. The put moved inward, toward where the smile is lower: 10.710984 percent. The call moved outward, where the tilted smile keeps falling: 9.748225 percent. Both legs land on vols below the pillars. Their average is 10.229605 percent, not 10.25.
 
@@ -150,7 +134,7 @@ Write the gap as $g(b)$. Three facts make a root exist.
 2. **A negative end.** At the naive bow, $g$(0.25%) = −1.07 pips.
 3. **A positive end.** At a bow of 0.375 percent, $g$ = +7.15 pips.
 
-A continuous function that is negative at one end of an interval and positive at the other crosses zero in between: the intermediate value theorem ([intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)). Bisection (halving the interval, keeping the half whose ends still differ in sign) finds it: **0.265924 percent**.
+A continuous function that is negative at one end of an interval and positive at the other crosses zero in between: the intermediate value theorem ([Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)). Bisection (halving the interval, keeping the half whose ends still differ in sign) finds it: **0.265924 percent**.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -188,7 +172,7 @@ At the root the smile's wings are 9.765924 and 10.765924 percent at their pillar
 
 ### The other door
 
-One step of Newton's method (a straight-line jump from the naive bow, using the slope of $g$ there) gives 0.265879 percent, within 0.1 percent of the root. That is the vega view: the missing 1.07 pips, divided by 0.671815 pips per basis point of bow, is about 1.59 basis points. A desk with a vanna-volga smile solves the same one-unknown equation with that smile in place of the parabola: [vanna-volga-pricing](04-vanna-volga-pricing.md) builds the price for any strike from the three pillars.
+One step of Newton's method (a straight-line jump from the naive bow, using the slope of $g$ there) gives 0.265879 percent, within 0.1 percent of the root. That is the vega view: the missing 1.07 pips, divided by 0.671815 pips per basis point of bow, is about 1.59 basis points. A desk with a vanna-volga smile solves the same one-unknown equation with that smile in place of the parabola: [Vanna-volga pricing](04-vanna-volga-pricing.md) builds the price for any strike from the three pillars.
 
 ---
 
@@ -695,8 +679,8 @@ The two outputs agree line for line.
 - **The broker's vol run.** EURUSD and most major pairs quote the 25-delta and 10-delta butterflies as market strangles. Every smile a desk marks from those screens starts with this solve, once per delta and expiry.
 - **Pricing a strangle for a client.** A client asking for "the 25-delta strangle" is quoted the market strangle: one vol, two strikes. Pricing it off a naively built smile costs 1.07 pips per euro on the house market, more in markets with steep risk reversals.
 - **Currencies with steep risk reversals.** Pairs where one direction of move is feared far more than the other carry large risk reversals, and the gap between market and smile strangle grows with the tilt squared. There the naive reading is not a rounding error.
-- **Smile models.** The smile strangle's wings and strikes are the pillars vanna-volga works from: [vanna-and-volga-on-the-smile](03-vanna-and-volga-on-the-smile.md), [vanna-volga-pricing](04-vanna-volga-pricing.md) and [vanna-volga-smile-curve](05-vanna-volga-smile-curve.md).
-- **Hedging a book.** When spot moves, the market strangle's strikes move with it, and the solve is redone: [smile-adjusted-delta-and-sticky-delta](06-smile-adjusted-delta-and-sticky-delta.md).
+- **Smile models.** The smile strangle's wings and strikes are the pillars vanna-volga works from: [Vanna and volga](03-vanna-and-volga-on-the-smile.md), [Vanna-volga pricing](04-vanna-volga-pricing.md) and [The vanna-volga smile](05-vanna-volga-smile-curve.md).
+- **Hedging a book.** When spot moves, the market strangle's strikes move with it, and the solve is redone: [Hedging with the smile](06-smile-adjusted-delta-and-sticky-delta.md).
 
 > **Say it back**
 > The broker's butterfly is not the smile's bow. It is the price of a market strangle: 25-delta call and put, both strikes found and both legs priced at ATM plus the quote. A smile with ATM and risk reversal fixed has one free number, its bow, and the smile strangle is the bow that makes the smile reprice that strangle. The gap is zero with no tilt and grows with the tilt squared: 1.59 basis points on the house market. The root exists by the intermediate value theorem when the naive bow underprices and a larger one overprices, and can vanish when the tilt is large.
@@ -705,15 +689,15 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [risk-reversal-and-butterfly](01-risk-reversal-and-butterfly.md): the three quotes, the wings as ATM plus bow plus or minus half the tilt, and the 25-delta strikes at each wing's vol.
-- [intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): a continuous function that changes sign has a root, which is why the solve has an answer.
+- [Risk reversal and butterfly](01-risk-reversal-and-butterfly.md): the three quotes, the wings as ATM plus bow plus or minus half the tilt, and the 25-delta strikes at each wing's vol.
+- [Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): a continuous function that changes sign has a root, which is why the solve has an answer.
 
 ## Where this goes next
 
-- [vanna-and-volga-on-the-smile](03-vanna-and-volga-on-the-smile.md): the risk reversal and the butterfly as the trades that carry sensitivity to spot-and-vol together and to vol-of-vol.
-- [vanna-volga-smile-curve](05-vanna-volga-smile-curve.md): a smile drawn through the three pillars by hedging cost rather than by a parabola, the other rule this solve can run on.
+- [Vanna and volga](03-vanna-and-volga-on-the-smile.md): the risk reversal and the butterfly as the trades that carry sensitivity to spot-and-vol together and to vol-of-vol.
+- [The vanna-volga smile](05-vanna-volga-smile-curve.md): a smile drawn through the three pillars by hedging cost rather than by a parabola, the other rule this solve can run on.
 
-The solve gives three pillar vols and strikes that the market agrees with; what vol belongs at every other strike, and why, is what [vanna-and-volga-on-the-smile](03-vanna-and-volga-on-the-smile.md) begins to answer.
+The solve gives three pillar vols and strikes that the market agrees with; what vol belongs at every other strike, and why, is what [Vanna and volga](03-vanna-and-volga-on-the-smile.md) begins to answer.
 
 ---
 

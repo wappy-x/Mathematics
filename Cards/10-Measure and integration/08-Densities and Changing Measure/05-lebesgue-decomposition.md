@@ -1,24 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Densities and Changing Measure
-topic: Three kinds of mass
-item: Lebesgue decomposition
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/03-radon-nikodym-theorem|radon-nikodym-theorem]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/07-the-cantor-set|the-cantor-set]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/06-lebesgue-stieltjes-measures|lebesgue-stieltjes-measures]]"
-next:
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/03-monotone-functions-differentiable-almost-everywhere|monotone-functions-differentiable-almost-everywhere]]"
-tags: [mathematics, measure and integration, lebesgue-decomposition]
----
-
 # Lebesgue decomposition: any measure splits into a part with a density and a part on a null set, and on the line that means density, jumps and staircase
 
-Measure and integration → Densities and Changing Measure → Three kinds of mass → Lebesgue decomposition
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Densities and Changing Measure](../../../SYLLABUS.md#w10-s08) → Lebesgue decomposition
 
 ---
 
@@ -32,7 +14,7 @@ For every probability law, that split exists and is unique. On the line the part
 
 **Every probability law, and more generally every σ-finite measure (defined below), splits in exactly one way into a part that respects a chosen reference measure's empty sets, with a density against it when the reference is σ-finite too, and a part living on a set the reference calls empty; on the line, against length, the second part splits again into point masses and a continuous singular part, so every distribution function is density plus jumps plus staircase.**
 
-**What kind of fact this is:** a theorem, proved on this card in Why it works, with the density supplied by [radon-nikodym-theorem](03-radon-nikodym-theorem.md).
+**What kind of fact this is:** a theorem, proved on this card in Why it works, with the density supplied by [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md).
 
 ### The picture: the bus wait and its two pieces
 
@@ -55,7 +37,7 @@ Three lines. Top (orange): the distribution function F, the chance of a wait of 
 
 Notation first, in words. The **reference measure** $\mu$ decides which sets count as empty; $\nu$ is the measure being split. Both size the sets of one sigma-algebra $\mathcal{F}$, the collection of sets we allow ourselves to measure, on a space $\Omega$. A $\mu$-**null set** is a set $A$ with $\mu(A) = 0$. On the line the reference is Lebesgue measure $\lambda$: length.
 
-Two reminders from [absolutely-continuous-and-singular-measures](01-absolutely-continuous-and-singular-measures.md). $\nu \ll \mu$, read "$\nu$ is absolutely continuous with respect to $\mu$", means every $\mu$-null set is $\nu$-null. $\nu \perp \mu$, read "$\nu$ is singular to $\mu$", means $\nu$ lives entirely on one $\mu$-null set. A measure is **σ-finite** when the space is a countable union of pieces of finite measure; every probability law is.
+Two reminders from [Absolutely continuous and singular measures](01-absolutely-continuous-and-singular-measures.md). $\nu \ll \mu$, read "$\nu$ is absolutely continuous with respect to $\mu$", means every $\mu$-null set is $\nu$-null. $\nu \perp \mu$, read "$\nu$ is singular to $\mu$", means $\nu$ lives entirely on one $\mu$-null set. A measure is **σ-finite** when the space is a countable union of pieces of finite measure; every probability law is.
 
 $$\nu = \nu_{ac} + \nu_s, \qquad \nu_{ac} \ll \mu, \qquad \nu_s \perp \mu, \qquad \nu_{ac}(A) = \int_A f \, d\mu$$
 
@@ -69,7 +51,7 @@ $$\nu = \nu_{ac} + \nu_d + \nu_{sc}, \qquad F = F_{ac} + F_d + F_{sc}$$
 
 **Read it aloud:** a law on the line is a density part, plus point masses, plus a part with no point masses that still lives on a length-zero set; its distribution function adds up the same way.
 
-The **discrete part** $\nu_d = \sum_k p_k \, \delta_{x_k}$ puts mass $p_k$ on each of countably many points $x_k$. The **singular continuous part** $\nu_{sc}$ gives every point mass 0 yet lives on a set of length zero. $F_{ac}$ has a slope and no jumps, $F_d$ only jumps, and $F_{sc}$ is a continuous staircase such as the Cantor function $C$ ([the-cantor-set](../02-Length%20Done%20Properly/07-the-cantor-set.md)).
+The **discrete part** $\nu_d = \sum_k p_k \, \delta_{x_k}$ puts mass $p_k$ on each of countably many points $x_k$. The **singular continuous part** $\nu_{sc}$ gives every point mass 0 yet lives on a set of length zero. $F_{ac}$ has a slope and no jumps, $F_d$ only jumps, and $F_{sc}$ is a continuous staircase such as the Cantor function $C$ ([The Cantor set](../02-Length%20Done%20Properly/07-the-cantor-set.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -90,8 +72,8 @@ The **discrete part** $\nu_d = \sum_k p_k \, \delta_{x_k}$ puts mass $p_k$ on ea
 
 - **Same sigma-algebra.** Otherwise "null for $\mu$" means nothing to $\nu$.
 - **$\nu$ σ-finite.** Counting measure on [0, 1], mass 1 on each point, has no split against length (What breaks, last row).
-- **$\mu$ σ-finite, for the density.** The split itself needs only $\nu$ σ-finite. Writing $\nu_{ac}$ as $\int f \, d\mu$ is Radon-Nikodym, which fails for length against counting measure ([radon-nikodym-theorem](03-radon-nikodym-theorem.md)).
-- **On the line, finite on bounded sets.** Then the distribution function exists ([lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)) and the point masses are countable. A law, with total mass 1, always qualifies.
+- **$\mu$ σ-finite, for the density.** The split itself needs only $\nu$ σ-finite. Writing $\nu_{ac}$ as $\int f \, d\mu$ is Radon-Nikodym, which fails for length against counting measure ([The Radon-Nikodym theorem](03-radon-nikodym-theorem.md)).
+- **On the line, finite on bounded sets.** Then the distribution function exists ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)) and the point masses are countable. A law, with total mass 1, always qualifies.
 
 ---
 
@@ -152,7 +134,7 @@ The points with mass above 1/m number fewer than m, or their masses would add pa
 
 Set $\nu_{sc} = \nu_s - \nu_d$. It is never negative: $\nu_s(E)$ is at least $\nu_s$ of the $x_k$ in E, which is $\nu_d(E)$. A nonnegative difference of finite measures is a measure. It has no point masses, since each $p_k$ was removed, and gives nothing outside N. So $\nu_{sc}$ is continuous and singular. The jumps fix $\nu_d$ and Step 4 fixes the rest, so the three-way split is unique.
 
-Adding the three measures of the half-line $(-\infty, x]$ gives $F = F_{ac} + F_d + F_{sc}$. A jump of a distribution function is a point mass ([lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)), so $F_{ac}$ and $F_{sc}$ are continuous and every jump of F sits in $F_d$.
+Adding the three measures of the half-line $(-\infty, x]$ gives $F = F_{ac} + F_d + F_{sc}$. A jump of a distribution function is a point mass ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)), so $F_{ac}$ and $F_{sc}$ are continuous and every jump of F sits in $F_d$.
 
 ### Step 7: read the three pieces off a distribution function
 
@@ -176,7 +158,7 @@ The code reads the pieces back from F alone. It cuts (−1, 2] into cells of wid
 
 ### What the code shows and what only the proof shows
 
-The code lists every set of a die and sorts cells for one law at five mesh sizes. That the biggest null set exists for every σ-finite measure, and that the split is unique, only the proof shows. That flat cells recover the density part for every law rests on slopes recovering the density almost everywhere, proved on [monotone-functions-differentiable-almost-everywhere](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/03-monotone-functions-differentiable-almost-everywhere.md).
+The code lists every set of a die and sorts cells for one law at five mesh sizes. That the biggest null set exists for every σ-finite measure, and that the split is unique, only the proof shows. That flat cells recover the density part for every law rests on slopes recovering the density almost everywhere, proved on [Lebesgue's theorem on monotone functions](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/03-monotone-functions-differentiable-almost-everywhere.md).
 
 A second route to the whole theorem, when $\mu$ is σ-finite too, applies Radon-Nikodym to $\nu$ against $\mu + \nu$, which always dominates $\nu$; the set where the resulting density equals 1 is where $\mu$ has no say, and it becomes N. The route in the steps above needs no density until the end.
 
@@ -196,7 +178,7 @@ A second route to the whole theorem, when $\mu$ is σ-finite too, applies Radon-
 | Three-piece F(1/3) | 0.3 + 0.5 × (1 − e^(−1/3)) + 0.2 × 0.5 | 0.541734 |
 | Three-piece mean | 0.3 × 0 + 0.5 × 1 + 0.2 × 0.5 | **0.6** |
 
-Out of 100 mornings, about 30 have no wait, about 44 more a wait of up to a minute, and the average wait is 0.7 minutes. The staircase piece is centred at 0.5 by symmetry. A separate road confirms the three-piece mean: a nonnegative wait's average is the area under the chance of waiting longer than x ([layer-cake-and-tail-integrals](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md)), 0.600000.
+Out of 100 mornings, about 30 have no wait, about 44 more a wait of up to a minute, and the average wait is 0.7 minutes. The staircase piece is centred at 0.5 by symmetry. A separate road confirms the three-piece mean: a nonnegative wait's average is the area under the chance of waiting longer than x ([The layer-cake formula](../06-Product%20Measures%20and%20Fubini/06-layer-cake-and-tail-integrals.md)), 0.600000.
 
 ### What breaks if you drop a piece
 
@@ -587,8 +569,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Insurance claims and rainfall.** A day's rainfall, like a policy's claim, is exactly 0 with positive probability and spread out otherwise ([lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)); models fit the jump and the density separately.
-- **Likelihood ratios.** Comparing two laws uses the density of one against the other. The singular part is where one law puts mass the other calls impossible: an observation there settles the question outright ([densities-and-likelihood-ratios](06-densities-and-likelihood-ratios.md)).
+- **Insurance claims and rainfall.** A day's rainfall, like a policy's claim, is exactly 0 with positive probability and spread out otherwise ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)); models fit the jump and the density separately.
+- **Likelihood ratios.** Comparing two laws uses the density of one against the other. The singular part is where one law puts mass the other calls impossible: an observation there settles the question outright ([Densities and likelihood ratios](06-densities-and-likelihood-ratios.md)).
 - **Changing measure in pricing.** Risk-neutral pricing reweights one law by a density against another, which needs no singular part in either direction: both laws must agree on which events are impossible.
 - **Spectra of signals.** A signal's frequency content is a measure: pure tones are point masses, broadband noise has a density, and a singular continuous kind exists too.
 
@@ -599,14 +581,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [radon-nikodym-theorem](03-radon-nikodym-theorem.md): turns the absolutely continuous part into an integral of a density.
-- [the-cantor-set](../02-Length%20Done%20Properly/07-the-cantor-set.md): the staircase that is the model third piece, continuous and singular.
-- [lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md): the match between laws and distribution functions, with jumps as point masses.
+- [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md): turns the absolutely continuous part into an integral of a density.
+- [The Cantor set](../02-Length%20Done%20Properly/07-the-cantor-set.md): the staircase that is the model third piece, continuous and singular.
+- [Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md): the match between laws and distribution functions, with jumps as point masses.
 
 ## Where this goes next
 
-- [monotone-functions-differentiable-almost-everywhere](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/03-monotone-functions-differentiable-almost-everywhere.md): F has a slope almost everywhere; it equals the density there, and the jump and staircase pieces have slope 0 almost everywhere.
-- [densities-and-likelihood-ratios](06-densities-and-likelihood-ratios.md): the density of one law against another put to work.
+- [Lebesgue's theorem on monotone functions](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/03-monotone-functions-differentiable-almost-everywhere.md): F has a slope almost everywhere; it equals the density there, and the jump and staircase pieces have slope 0 almost everywhere.
+- [Densities and likelihood ratios](06-densities-and-likelihood-ratios.md): the density of one law against another put to work.
 
 The census found the density part through slopes, justified here only by a bound for one law; that slopes recover the density of every distribution function is what the first card above proves.
 

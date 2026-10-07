@@ -1,31 +1,12 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Contour Integrals and Cauchy's Theorem
-topic: Summing along a path
-item: Contour integrals
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/01-Complex Numbers and the Plane/04-eulers-formula|eulers-formula]]"
-  - "[[Cards/07-Complex analysis/02-Holomorphic Functions/01-complex-derivative-and-cauchy-riemann|complex-derivative-and-cauchy-riemann]]"
-  - "[[Cards/06-Calculus and analysis/09-Vector Calculus/02-line-integrals|line-integrals]]"
-next:
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/02-antiderivatives-and-path-independence|antiderivatives-and-path-independence]]"
-  - "[[Cards/21-Algebraic and analytic number theory/02-The Zeta Function and the Prime Number Theorem/04-perrons-formula|perrons-formula]]"
-tags: [mathematics, complex analysis, contour-integrals]
----
-
 # Contour integrals: add up f(z) dz along a path, and the loop round the origin that gives 2 pi i
 
-Complex analysis → Contour Integrals and Cauchy's Theorem → Summing along a path → Contour integrals
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Contour Integrals and Cauchy's Theorem](../../../SYLLABUS.md#w07-s03) → Contour integrals
 
 ---
 
 ## General Overview
 
-A circular running track, 400 metres a lap, has radius 63.661977 metres. Centre it at 0 in the plane and measure in units of that radius: the track is the circle of radius 1, the start line at 1. A runner who has turned through t radians stands at e^(it) ([eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)).
+A circular running track, 400 metres a lap, has radius 63.661977 metres. Centre it at 0 in the plane and measure in units of that radius: the track is the circle of radius 1, the start line at 1. A runner who has turned through t radians stands at e^(it) ([Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md)).
 
 Each stride is a small arrow from one footfall to the next, itself a complex number. Pick a function f, a rule giving a complex number at each point. At each footfall multiply the stride by f there, which turns and stretches it, and add the turned strides round the lap. The total is the **contour integral** of f along the track, the term used from here on; the path is the **contour**.
 
@@ -88,7 +69,7 @@ $$\oint_{|z|=1} z^n\,dz = \begin{cases} 2\pi i & n=-1\\ 0 & \text{every other wh
 
 ### Step 0: a stride is velocity times a small time
 
-From t to t + Δt the runner moves z(t + Δt) − z(t), close to $z'(t)\,\Delta t$ for small Δt. So each term f(footfall) × stride is close to f(z(t)) z'(t) Δt, and the sum of strides is a Riemann sum for an ordinary integral over t. Writing f = u + iv and dz = dx + i dy, its real and imaginary parts are (u dx − v dy) and (v dx + u dy): two real line integrals ([line-integrals](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md)). By the chain rule, a change of speed changes z'(t) and dt in opposite ways, so the integral belongs to the path, not the stopwatch.
+From t to t + Δt the runner moves z(t + Δt) − z(t), close to $z'(t)\,\Delta t$ for small Δt. So each term f(footfall) × stride is close to f(z(t)) z'(t) Δt, and the sum of strides is a Riemann sum for an ordinary integral over t. Writing f = u + iv and dz = dx + i dy, its real and imaginary parts are (u dx − v dy) and (v dx + u dy): two real line integrals ([Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md)). By the chain rule, a change of speed changes z'(t) and dt in opposite ways, so the integral belongs to the path, not the stopwatch.
 
 ### Step 1: the track's velocity is a quarter turn of its position
 
@@ -134,7 +115,7 @@ On the track, e^z/z^2 has size e^(cos t), largest at z = 1, where it is e. The b
 
 </details>
 
-When f has an antiderivative, a function F whose complex derivative is f, the integral along any path is F(end) − F(start) and every loop gives 0: [antiderivatives-and-path-independence](02-antiderivatives-and-path-independence.md). The nonzero laps show z̄ and 1/z have no such F round the track.
+When f has an antiderivative, a function F whose complex derivative is f, the integral along any path is F(end) − F(start) and every loop gives 0: [Antiderivatives](02-antiderivatives-and-path-independence.md). The nonzero laps show z̄ and 1/z have no such F round the track.
 
 ---
 
@@ -372,15 +353,15 @@ The two outputs match line for line.
 > [!warning]
 > **Treating dz as a length.** A stride has a direction as well as a size, and f multiplies both. Summing f times dt, or times the stride's length, throws the direction away: the conjugate's lap then gives 0, not 2πi.
 >
-> - **Expecting every loop to give 0.** z̄ and 1/z give 2πi. Which functions always give 0 is [cauchys-theorem](03-cauchys-theorem.md).
+> - **Expecting every loop to give 0.** z̄ and 1/z give 2πi. Which functions always give 0 is [Cauchy's theorem](03-cauchys-theorem.md).
 
 ---
 
 ## Where you meet it in real life
 
 - **Lift on a wing.** For a flat flow with velocity u + iv, the real part of the loop integral of (u − iv) dz round a wing is the circulation, which sets lift.
-- **Feedback stability.** Engineers count how often a curve winds round a point, the loop integral of dz/(z − p) over 2πi: [deforming-contours-and-winding-numbers](04-deforming-contours-and-winding-numbers.md).
-- **Counting primes.** A contour integral of a function built from the primes counts them: perrons-formula.
+- **Feedback stability.** Engineers count how often a curve winds round a point, the loop integral of dz/(z − p) over 2πi: [Deforming a loop](04-deforming-contours-and-winding-numbers.md).
+- **Counting primes.** A contour integral of a function built from the primes counts them: Perron's formula.
 
 > **Say it back**
 > A contour integral adds f times each directed stride along a path. Parametrising turns it into an ordinary integral of f(z(t)) z'(t). Round the unit circle 1/z turns every stride straight up, so the lap gives 2πi; so does the conjugate, equal to 1/z there; z gives 0. Reversing flips the sign, and joined paths add. The size is at most f's largest size on the path times the length.
@@ -389,14 +370,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [eulers-formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e^(it), the track's parametrisation.
-- [complex-derivative-and-cauchy-riemann](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md): holomorphic, having a complex derivative throughout a region; z is, z̄ is not.
-- [line-integrals](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md): the real integrals inside, and Green's theorem.
+- [Euler's formula](../01-Complex%20Numbers%20and%20the%20Plane/04-eulers-formula.md): e^(it), the track's parametrisation.
+- [The complex derivative](../02-Holomorphic%20Functions/01-complex-derivative-and-cauchy-riemann.md): holomorphic, having a complex derivative throughout a region; z is, z̄ is not.
+- [Line integrals of a field](../../06-Calculus%20and%20analysis/09-Vector%20Calculus/02-line-integrals.md): the real integrals inside, and Green's theorem.
 
 ## Where this goes next
 
-- [antiderivatives-and-path-independence](02-antiderivatives-and-path-independence.md): when an integral depends only on the path's two ends.
-- perrons-formula: a contour integral that counts primes.
+- [Antiderivatives](02-antiderivatives-and-path-independence.md): when an integral depends only on the path's two ends.
+- Perron's formula: a contour integral that counts primes.
 
 Round the track z gave 0 while z̄ and 1/z gave 2πi; why some functions give 0 on every loop is where the shelf goes from here.
 

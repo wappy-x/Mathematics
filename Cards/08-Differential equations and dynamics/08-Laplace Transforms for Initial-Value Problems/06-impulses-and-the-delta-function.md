@@ -1,25 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Laplace Transforms for Initial-Value Problems
-topic: A blow as a limit
-item: Impulses
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/05-step-functions-and-delays|step-functions-and-delays]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/07-convolution-and-the-impulse-response|convolution-and-the-impulse-response]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/01-linear-time-invariant-systems-and-convolution|linear-time-invariant-systems-and-convolution]]"
-  - "[[Cards/18-Functional analysis/04-Distributions and Sobolev Spaces/02-the-dirac-delta-and-derivatives-of-jumps|the-dirac-delta-and-derivatives-of-jumps]]"
-  - "[[Cards/20-Harmonic analysis/02-The Fourier Transform/06-schwartz-space-and-tempered-distributions|schwartz-space-and-tempered-distributions]]"
-tags: [mathematics, differential equations and dynamics, impulses-and-the-delta-function]
----
-
 # Impulses: a hammer blow is a narrow tall pulse, its limit is the delta, and its transform is e^(-as)
 
-Differential equations and dynamics → Laplace Transforms for Initial-Value Problems → A blow as a limit → Impulses
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Laplace Transforms for Initial-Value Problems](../../../SYLLABUS.md#w08-s08) → Impulses
 
 ---
 
@@ -29,7 +10,7 @@ A car's body rides level and still. At t = 1 s the wheel slams into a pothole's 
 
 The force during the blow does not matter. Force times duration is the **impulse**; divided by the car's mass it is the change of velocity the blow leaves behind, here 1 cm/s. A blow twice as strong and half as long leaves the same kick. So the model keeps only the area under the force curve and lets the duration shrink to zero. The limit is written δ(t − 1) and read "delta at t = 1": the **delta**, the name used from here on.
 
-The shock absorber's rate law ([transforms-of-derivatives](02-transforms-of-derivatives.md)) becomes y'' + 2y' + 5y = δ(t − 1), with y the height above level in cm, at rest before the blow. Solved by transform: y = 0 up to t = 1 s, then 0.5 e^(−(t−1)) sin 2(t − 1).
+The shock absorber's rate law ([Transforming a derivative](02-transforms-of-derivatives.md)) becomes y'' + 2y' + 5y = δ(t − 1), with y the height above level in cm, at rest before the blow. Solved by transform: y = 0 up to t = 1 s, then 0.5 e^(−(t−1)) sin 2(t − 1).
 
 **The delta is the limit of pulses keeping area 1 as their width shrinks to zero; it reads off a signal's value at the blow, so its transform is e^(−as), and in a rate law it makes the velocity jump by 1.**
 
@@ -67,7 +48,7 @@ In a rate law it forces a velocity jump and no position jump, with $a^-$ and $a^
 
 $$y'(a^+) - y'(a^-) = 1, \qquad y(a^+) = y(a^-)$$
 
-For the struck car, at rest before the blow, with $Y$ the transform of the height and the switch $u$ of [step-functions-and-delays](05-step-functions-and-delays.md):
+For the struck car, at rest before the blow, with $Y$ the transform of the height and the switch $u$ of [Step functions](05-step-functions-and-delays.md):
 
 $$Y(s) = \frac{e^{-s}}{s^2+2s+5}, \qquad y(t) = u(t-1)\,\tfrac12\,e^{-(t-1)}\sin 2(t-1)$$
 
@@ -118,9 +99,9 @@ Add up both sides of $y'' + 2y' + 5y = \delta_\varepsilon(t-1)$ from 1 to $1+\va
 
 ### Step 4: after the blow, a free ring-down
 
-From t = 1 s on, the forcing is zero and the car starts from height 0 with velocity 1 cm/s. The characteristic roots of $s^2 + 2s + 5$ are $-1 \pm 2i$ ([complex-roots-and-damped-oscillation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md)), so the motion is $e^{-(t-1)}$ times a mix of $\cos 2(t-1)$ and $\sin 2(t-1)$. Height 0 kills the cosine; velocity 1 fixes the sine's coefficient at 1/2.
+From t = 1 s on, the forcing is zero and the car starts from height 0 with velocity 1 cm/s. The characteristic roots of $s^2 + 2s + 5$ are $-1 \pm 2i$ ([Complex roots](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md)), so the motion is $e^{-(t-1)}$ times a mix of $\cos 2(t-1)$ and $\sin 2(t-1)$. Height 0 kills the cosine; velocity 1 fixes the sine's coefficient at 1/2.
 
-The transform gets there in one pass, with every starting value zero: $(s^2+2s+5)\,Y = e^{-s}$, inverted in Worked numbers by completing the square ([inverting-by-partial-fractions](03-inverting-by-partial-fractions.md)) and delaying by 1 s.
+The transform gets there in one pass, with every starting value zero: $(s^2+2s+5)\,Y = e^{-s}$, inverted in Worked numbers by completing the square ([Inverting](03-inverting-by-partial-fractions.md)) and delaying by 1 s.
 
 The routes agree for a reason: a velocity jump of 1 at t = 1 s adds an end term $e^{-s}$ to the integration by parts behind the derivative rule, exactly the delta's transform.
 
@@ -135,7 +116,7 @@ The routes agree for a reason: a velocity jump of 1 at t = 1 s adds an end term 
 
 </details>
 
-Another route treats any forcing as a sum of small blows and the response as a sum of ring-downs: [convolution-and-the-impulse-response](07-convolution-and-the-impulse-response.md).
+Another route treats any forcing as a sum of small blows and the response as a sum of ring-downs: [Convolution](07-convolution-and-the-impulse-response.md).
 
 ---
 
@@ -167,7 +148,7 @@ The code prints all three.
 
 ## Code, from first principles, and it actually runs
 
-Road one is the transform's answer. Road two never uses a delta: it pushes with pulses of area 1, widths 0.2, 0.1 and 0.05 s, stepped by Runge-Kutta 4 (four slope samples per step, averaged; [runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) with pulse edges on step boundaries. Midpoint sums check both transforms.
+Road one is the transform's answer. Road two never uses a delta: it pushes with pulses of area 1, widths 0.2, 0.1 and 0.05 s, stepped by Runge-Kutta 4 (four slope samples per step, averaged; [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)) with pulse edges on step boundaries. Midpoint sums check both transforms.
 
 ### Python
 
@@ -371,7 +352,7 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Suspension design.** Potholes and kerbs are modelled as impulses; the ring-down judges the damper.
-- **Hammer testing.** Engineers strike a bridge or machine frame with an instrumented hammer; the ring-down characterises the structure ([linear-time-invariant-systems-and-convolution](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/01-linear-time-invariant-systems-and-convolution.md)).
+- **Hammer testing.** Engineers strike a bridge or machine frame with an instrumented hammer; the ring-down characterises the structure ([Linear and time-invariant](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/01-linear-time-invariant-systems-and-convolution.md)).
 - **Drug doses.** A quick injection enters a compartment model as a delta in the dose rate: the amount in the blood jumps, then decays.
 
 > **Say it back**
@@ -381,14 +362,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [step-functions-and-delays](05-step-functions-and-delays.md): the switch $u(t-a)$ and the delay rule that turns a factor $e^{-as}$ into a shift in time.
+- [Step functions](05-step-functions-and-delays.md): the switch $u(t-a)$ and the delay rule that turns a factor $e^{-as}$ into a shift in time.
 
 ## Where this goes next
 
-- [convolution-and-the-impulse-response](07-convolution-and-the-impulse-response.md): any forcing as a sum of blows, and the response as a sum of ring-downs.
-- [linear-time-invariant-systems-and-convolution](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/01-linear-time-invariant-systems-and-convolution.md): the impulse response as the full description of a linear system.
-- the-dirac-delta-and-derivatives-of-jumps: the delta as a rule on smooth test signals, and the derivative of a step.
-- schwartz-space-and-tempered-distributions: the delta under the Fourier transform.
+- [Convolution](07-convolution-and-the-impulse-response.md): any forcing as a sum of blows, and the response as a sum of ring-downs.
+- [Linear and time-invariant](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/01-linear-time-invariant-systems-and-convolution.md): the impulse response as the full description of a linear system.
+- The delta: the delta as a rule on smooth test signals, and the derivative of a step.
+- Schwartz space and tempered distributions: the delta under the Fourier transform.
 
 ---
 

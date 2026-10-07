@@ -1,32 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Random Variables
-topic: Long-run averages
-item: Expectation
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/01-random-variables-and-distributions|random-variables-and-distributions]]"
-next:
-  - "[[Cards/09-Probability and statistics/02-Random Variables/03-variance-and-standard-deviation|variance-and-standard-deviation]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/06-jensens-inequality|jensens-inequality]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/07-moment-generating-functions|moment-generating-functions]]"
-  - "[[Cards/09-Probability and statistics/14-Random Graphs and the Probabilistic Method/03-probabilistic-method|probabilistic-method]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period|state-prices-and-risk-neutral-pricing-in-one-period]]"
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/01-default-probability-recovery-and-expected-loss|default-probability-recovery-and-expected-loss]]"
-  - "[[Cards/14-Applied and computational/02-Randomised and Approximate Algorithms/01-randomised-algorithms-and-expectation|randomised-algorithms-and-expectation]]"
-  - "[[Cards/14-Applied and computational/03-Information Theory/01-entropy|entropy]]"
-  - "[[Cards/14-Applied and computational/05-Operations Research/09-game-theory-and-nash-equilibrium|game-theory-and-nash-equilibrium]]"
-  - "[[Cards/18-Functional analysis/06-Banach Algebras and Fixed Points/04-states-representations-and-the-gns-construction|states-representations-and-the-gns-construction]]"
-  - "[[Cards/24-Computability and complexity/06-Data, Learning and Fine-Grained Complexity/05-online-learning-and-regret|online-learning-and-regret]]"
-tags: [mathematics, probability and statistics, expectation]
----
-
 # Expectation: the long-run average, as a weighted sum
 
-Probability and statistics → Random Variables → Long-run averages → Expectation
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Random Variables](../../../SYLLABUS.md#w09-s02) → Expectation
 
 ---
 
@@ -62,7 +36,7 @@ The wandering line is a seeded simulation: one ticket bought in each of N separa
 
 ## The formula
 
-Notation first, in words. A capital letter such as X is a random variable: a number fixed by chance, here the payout of one ticket ([random-variables-and-distributions](01-random-variables-and-distributions.md)). A lower-case x is one value it can take, and P(X = x) is the chance it takes that value. The new symbol is E[X], read "the average value of X in the long run", or "the expectation of X". The Greek capital sigma, ∑, means "add up over every value listed underneath it".
+Notation first, in words. A capital letter such as X is a random variable: a number fixed by chance, here the payout of one ticket ([Random variables](01-random-variables-and-distributions.md)). A lower-case x is one value it can take, and P(X = x) is the chance it takes that value. The new symbol is E[X], read "the average value of X in the long run", or "the expectation of X". The Greek capital sigma, ∑, means "add up over every value listed underneath it".
 
 $$E[X] = \sum_{x} x \cdot P(X = x)$$
 
@@ -95,8 +69,8 @@ $$E[aX + bY] = a\,E[X] + b\,E[Y].$$
 
 - **The sum must converge absolutely.** With finitely many values it always does. With infinitely many, the weighted sum of the sizes |x| must be finite; if not, there is no expectation. The St Petersburg ticket below pays $2, $4, $8, … with chances 1/2, 1/4, 1/8, …, and its sum grows without end.
 - **Linearity needs the pieces on one experiment, each with a finite expectation, and nothing else.** No independence is assumed. Five tickets in one draw, where at most one can win, still add.
-- **Products are different.** E[XY] = E[X] E[Y] needs independence ([joint-distributions-and-covariance](04-joint-distributions-and-covariance.md)); two tickets in one draw break it.
-- **A bent function is different too.** E[X^2] is not E[X]^2, and E[√X] is not √E[X]. Only straight-line combinations pass through; how far a bent one misses is [jensens-inequality](06-jensens-inequality.md).
+- **Products are different.** E[XY] = E[X] E[Y] needs independence ([Two variables at once](04-joint-distributions-and-covariance.md)); two tickets in one draw break it.
+- **A bent function is different too.** E[X^2] is not E[X]^2, and E[√X] is not √E[X]. Only straight-line combinations pass through; how far a bent one misses is [Jensen's inequality](06-jensens-inequality.md).
 
 ---
 
@@ -155,7 +129,7 @@ The balance point sits at $1, just right of the heavy weight. The peak, the most
 
 The horizontal axis runs from $0 to $100 at 3 units per dollar. Bar heights are proportional to the chances: 148.5 units and 1.5 units. The pivot sits at $1, three units right of the tall bar.
 
-Another road reaches the same $1 for a payout that is never negative: add up, over the whole-dollar levels t = 0, 1, 2, …, the chance the payout exceeds t. The ticket exceeds each level from $0 to $99 with chance 0.01, and 100 × 0.01 = 1. The code runs this road too. That tail-sum view is the engine of [markov-and-chebyshev-inequalities](08-markov-and-chebyshev-inequalities.md).
+Another road reaches the same $1 for a payout that is never negative: add up, over the whole-dollar levels t = 0, 1, 2, …, the chance the payout exceeds t. The ticket exceeds each level from $0 to $99 with chance 0.01, and 100 × 0.01 = 1. The code runs this road too. That tail-sum view is the engine of [Markov and Chebyshev](08-markov-and-chebyshev-inequalities.md).
 
 ---
 
@@ -542,7 +516,7 @@ The two outputs match line for line, including the simulated rows, because both 
 > **Reading "expected value" as "the value to expect".** The raffle ticket's expected payout is $1, and no ticket ever pays $1: the chance is 0.00. The expectation is a long-run average and a balance point. The most likely single result is $0, with chance 0.99. A player who "expects $1" from one ticket has misread the word.
 >
 > - **Multiplying expectations of tied quantities.** Two tickets in one draw have E[X1 X2] = 0.00, not E[X1] E[X2] = 1.00. Linearity covers sums; products need independence.
-> - **Pushing a curve through the mean.** E[X^2] = 100.00 against E[X]^2 = 1.00; E[√X] = 0.10 against √E[X] = 1.00. The gap is what [jensens-inequality](06-jensens-inequality.md) measures.
+> - **Pushing a curve through the mean.** E[X^2] = 100.00 against E[X]^2 = 1.00; E[√X] = 0.10 against √E[X] = 1.00. The gap is what [Jensen's inequality](06-jensens-inequality.md) measures.
 > - **Thinking dependence breaks addition.** Five tickets in one draw, where at most one wins, still have E[T] = 5.00, exactly as five independent raffles do.
 > - **Assuming every random quantity has a mean.** The St Petersburg ticket has none: its truncated means climb by $1 per level, and its simulated average reached 53.57 after a million tickets without settling.
 
@@ -551,10 +525,10 @@ The two outputs match line for line, including the simulated rows, because both 
 ## Where you meet it in real life
 
 - **Raffles, lotteries and casinos.** Nearly every game on sale is set so that the player's expected net gain is negative; the organiser's margin is that negative number times the tickets sold.
-- **Insurance.** A premium starts from the expected claim: the claim size times its chance, summed over what can go wrong, plus a margin. A lender's version is [default-probability-recovery-and-expected-loss](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md).
+- **Insurance.** A premium starts from the expected claim: the claim size times its chance, summed over what can go wrong, plus a margin. A lender's version is [Default probability, recovery and expected loss](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md).
 - **Counting with indicators.** The expected number of anything (winning tickets, matched socks, collisions in a hash table) is a sum of chances, by linearity, however tangled the events are.
-- **Algorithms.** A randomised algorithm is judged by its expected running time (randomised-algorithms-and-expectation).
-- **Pricing.** A one-period asset price is an expectation under specially chosen weights, then discounted ([state-prices-and-risk-neutral-pricing-in-one-period](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)).
+- **Algorithms.** A randomised algorithm is judged by its expected running time (Randomised algorithms).
+- **Pricing.** A one-period asset price is an expectation under specially chosen weights, then discounted ([State prices](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)).
 
 > **Say it back**
 > The expectation of a random quantity is each value times its chance, added up. It equals the sum over every outcome of the value times the outcome's chance, and it is the long-run average of many independent copies. It is linear: the expectation of a sum is the sum of the expectations, with no independence needed. It is a balance point, not a forecast: a raffle ticket worth $1 in expectation pays $0 or $100 and never $1. It exists only when the weighted sum of sizes is finite.
@@ -563,23 +537,23 @@ The two outputs match line for line, including the simulated rows, because both 
 
 ## What this builds on
 
-- [random-variables-and-distributions](01-random-variables-and-distributions.md): a random variable as a number fixed by chance, and its table of values and chances, which this card weights and adds.
+- [Random variables](01-random-variables-and-distributions.md): a random variable as a number fixed by chance, and its table of values and chances, which this card weights and adds.
 
 ## Where this goes next
 
-- [variance-and-standard-deviation](03-variance-and-standard-deviation.md): the expectation of the squared distance from the mean, measuring the swing around $1.
-- [jensens-inequality](06-jensens-inequality.md): which way E[g(X)] and g(E[X]) differ when g bends.
-- [moment-generating-functions](07-moment-generating-functions.md): one expectation, E[e^(tX)], that holds every moment.
-- [probabilistic-method](../14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md): if the average count is below 1, some case has count 0.
-- [state-prices-and-risk-neutral-pricing-in-one-period](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): prices as discounted expectations.
-- [default-probability-recovery-and-expected-loss](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md): expected loss as chance times loss.
-- randomised-algorithms-and-expectation: linearity counting comparisons and collisions.
-- entropy: the expectation of surprise.
-- game-theory-and-nash-equilibrium: players choosing mixed moves by expected payoff.
-- states-representations-and-the-gns-construction: expectation taken as a linear rule in its own right.
-- online-learning-and-regret: expected loss against the best fixed choice.
+- [Variance](03-variance-and-standard-deviation.md): the expectation of the squared distance from the mean, measuring the swing around $1.
+- [Jensen's inequality](06-jensens-inequality.md): which way E[g(X)] and g(E[X]) differ when g bends.
+- [Moment generating functions](07-moment-generating-functions.md): one expectation, E[e^(tX)], that holds every moment.
+- [The probabilistic method](../14-Random%20Graphs%20and%20the%20Probabilistic%20Method/03-probabilistic-method.md): if the average count is below 1, some case has count 0.
+- [State prices](../../12-Financial%20mathematics/03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md): prices as discounted expectations.
+- [Default probability, recovery and expected loss](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/01-default-probability-recovery-and-expected-loss.md): expected loss as chance times loss.
+- Randomised algorithms: linearity counting comparisons and collisions.
+- Entropy: the expectation of surprise.
+- Nash equilibrium: players choosing mixed moves by expected payoff.
+- States: expectation taken as a linear rule in its own right.
+- Regret: expected loss against the best fixed choice.
 
-The ticket averages $1 yet pays $0 or $100, so the mean alone says nothing about how far one result lands from it; measuring that swing is [variance-and-standard-deviation](03-variance-and-standard-deviation.md).
+The ticket averages $1 yet pays $0 or $100, so the mean alone says nothing about how far one result lands from it; measuring that swing is [Variance](03-variance-and-standard-deviation.md).
 
 ---
 

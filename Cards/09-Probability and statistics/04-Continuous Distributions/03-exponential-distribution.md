@@ -1,26 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Continuous Distributions
-topic: Waiting at a constant rate
-item: Exponential
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/01-densities-and-cdfs|densities-and-cdfs]]"
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/04-poisson|poisson]]"
-next:
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/07-gamma-and-beta-distributions|gamma-and-beta-distributions]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/09-weibull-and-hazard-rates|weibull-and-hazard-rates]]"
-  - "[[Cards/11-Stochastic processes and calculus/04-Poisson and Jump Processes/01-poisson-process|poisson-process]]"
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/02-hazard-rate-and-survival-probability|hazard-rate-and-survival-probability]]"
-tags: [mathematics, probability and statistics, exponential-distribution]
----
-
 # Exponential: waiting times with no memory
 
-Probability and statistics → Continuous Distributions → Waiting at a constant rate → Exponential
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Continuous Distributions](../../../SYLLABUS.md#w09-s04) → Exponential
 
 ---
 
@@ -106,7 +86,7 @@ $$E[T] = \frac{1}{\lambda}, \qquad \mathrm{Var}(T) = \frac{1}{\lambda^2}, \qquad
 
 ### Step 0: the same chance in every slice of time
 
-Cut time into short slices. Constant hazard means each slice has the same chance of holding the next email, whatever came before. Staying quiet for $t$ minutes is then a run of quiet slices, and chances of independent events multiply. Everything below is that product, taken to the limit; [densities-and-cdfs](01-densities-and-cdfs.md) then turns it into a density.
+Cut time into short slices. Constant hazard means each slice has the same chance of holding the next email, whatever came before. Staying quiet for $t$ minutes is then a run of quiet slices, and chances of independent events multiply. Everything below is that product, taken to the limit; [Densities](01-densities-and-cdfs.md) then turns it into a density.
 
 ### Step 1: a quiet spell is a run of quiet slices
 
@@ -114,7 +94,7 @@ Take slices of $\delta$ minutes. The chance of an email in one slice is $\lambda
 
 $$S(t) \approx (1 - \lambda\delta)^{n} = \left(1 - \frac{\lambda t}{n}\right)^{n}.$$
 
-With one-minute slices, $0.8^{10} = 0.107374$. With slices of 0.1, 0.01 and 0.001 minutes: 0.132620, 0.135065, 0.135308. They climb toward 0.135335, which is $e^{-2}$. The limit of $(1 - x/n)^n$ as $n$ grows is $e^{-x}$, the same limit that turns ever-more-frequent compounding into e ([compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)), here run downhill. So $S(t) = e^{-\lambda t}$.
+With one-minute slices, $0.8^{10} = 0.107374$. With slices of 0.1, 0.01 and 0.001 minutes: 0.132620, 0.135065, 0.135308. They climb toward 0.135335, which is $e^{-2}$. The limit of $(1 - x/n)^n$ as $n$ grows is $e^{-x}$, the same limit that turns ever-more-frequent compounding into e ([Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md)), here run downhill. So $S(t) = e^{-\lambda t}$.
 
 ### Step 2: the same limit as a rate equation
 
@@ -122,7 +102,7 @@ Quiet up to $t + \delta$ means quiet up to $t$, then quiet in one more slice: $S
 
 $$\frac{S(t+\delta) - S(t)}{\delta} = -\lambda S(t) \quad\longrightarrow\quad S'(t) = -\lambda S(t), \qquad S(0) = 1.$$
 
-The survival chance falls at a rate proportional to itself. That is the equation of radioactive decay ([exponential-growth-decay-and-cooling](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/04-exponential-growth-decay-and-cooling.md)), and its only solution is $S(t) = e^{-\lambda t}$. Then $F(t) = 1 - e^{-\lambda t}$, and the density is its slope, $f(t) = \lambda e^{-\lambda t}$. Divide $f$ by $S$ and the hazard comes back as 0.2 at 0, 5 and 20 minutes: the assumption in, the assumption out.
+The survival chance falls at a rate proportional to itself. That is the equation of radioactive decay ([Growth, decay and cooling](../../08-Differential%20equations%20and%20dynamics/01-Rate%20Equations/04-exponential-growth-decay-and-cooling.md)), and its only solution is $S(t) = e^{-\lambda t}$. Then $F(t) = 1 - e^{-\lambda t}$, and the density is its slope, $f(t) = \lambda e^{-\lambda t}$. Divide $f$ by $S$ and the hazard comes back as 0.2 at 0, 5 and 20 minutes: the assumption in, the assumption out.
 
 ### Step 3: memorylessness
 
@@ -149,12 +129,12 @@ $G$ never rises: a longer wait is never more likely. Any $t$ sits between fracti
 
 ### Step 4: the mean, the spread and the median
 
-The average wait weights each wait by its density and adds, which here is an integral running to infinity ([improper-integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)). Integration by parts gives $E[T] = 1/\lambda = 5$ minutes and $E[T^2] = 2/\lambda^2 = 50$, so $\mathrm{Var}(T) = 50 - 25 = 25$ square minutes and the standard deviation is 5 minutes, equal to the mean.
+The average wait weights each wait by its density and adds, which here is an integral running to infinity ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)). Integration by parts gives $E[T] = 1/\lambda = 5$ minutes and $E[T^2] = 2/\lambda^2 = 50$, so $\mathrm{Var}(T) = 50 - 25 = 25$ square minutes and the standard deviation is 5 minutes, equal to the mean.
 
 <details>
 <summary>Detailed proof: the mean and variance by parts</summary>
 
-By parts ([integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)), with the boundary term $t e^{-\lambda t}$ vanishing at both ends:
+By parts ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)), with the boundary term $t e^{-\lambda t}$ vanishing at both ends:
 $$E[T] = \int_0^\infty t\,\lambda e^{-\lambda t}\,dt = \Big[-t e^{-\lambda t}\Big]_0^\infty + \int_0^\infty e^{-\lambda t}\,dt = \frac{1}{\lambda}.$$
 Once more, with $t^2$: $E[T^2] = 0 + \int_0^\infty 2t\,e^{-\lambda t}\,dt = \frac{2}{\lambda} E[T] = \frac{2}{\lambda^2}$. Then $\mathrm{Var}(T) = E[T^2] - E[T]^2 = \frac{1}{\lambda^2}$.
 
@@ -164,9 +144,9 @@ The median solves $e^{-\lambda t} = 1/2$, so it is $\ln 2 / \lambda = 3.4657$ mi
 
 ### Step 5: the Poisson count is the same event
 
-The inbox is quiet for 10 minutes exactly when no email lands in those 10 minutes: $T > t$ is the event $N(t) = 0$. At 0.2 per minute the 10-minute count is Poisson with mean 2 ([poisson](../03-Discrete%20Distributions/04-poisson.md)), whose chance of zero is $e^{-2} = 0.1353$, the survival chance again. One mechanism, read two ways: count the emails in a window, or time the gap.
+The inbox is quiet for 10 minutes exactly when no email lands in those 10 minutes: $T > t$ is the event $N(t) = 0$. At 0.2 per minute the 10-minute count is Poisson with mean 2 ([Poisson](../03-Discrete%20Distributions/04-poisson.md)), whose chance of zero is $e^{-2} = 0.1353$, the survival chance again. One mechanism, read two ways: count the emails in a window, or time the gap.
 
-The full statement, independent Poisson counts in separate windows exactly when gaps are independent exponentials, needs a process and is proved on [poisson-process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md).
+The full statement, independent Poisson counts in separate windows exactly when gaps are independent exponentials, needs a process and is proved on [Poisson process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md).
 
 ---
 
@@ -194,7 +174,7 @@ After 10 silent minutes, the chance of 5 more is 0.3679, the same as from a fres
 | Mean read as the middle | 0.6321 of waits under 5 minutes, not half | The median is 3.4657; long gaps drag the mean right |
 | A sender certain to write within 10 minutes, at a random moment | P(T > 7 given T > 5) = 0.6, fresh P(T > 2) = 0.8 | The hazard rises toward the deadline, so waiting does bring the email closer |
 
-The last row is the hypothesis dropped: a uniform wait (equally likely anywhere in 10 minutes, see [uniform-distribution](02-uniform-distribution.md)) has a climbing hazard, and memorylessness fails. The code prints all four.
+The last row is the hypothesis dropped: a uniform wait (equally likely anywhere in 10 minutes, see [Uniform](02-uniform-distribution.md)) has a climbing hazard, and memorylessness fails. The code prints all four.
 
 ---
 
@@ -552,8 +532,8 @@ Bars: the 12,000 simulated windows. Line: the Poisson law with mean 2. The first
 
 - **Queues and call centres.** Staffing formulas take gaps between calls as exponential, with the rate re-estimated hour by hour.
 - **Radioactive decay.** An atom has a constant chance per second of decaying, so its lifetime is exponential and its half-life is the median, $\ln 2 / \lambda$.
-- **Reliability.** Electronic parts past their early failures and before wear-out fail at a roughly constant rate; a rising rate needs [weibull-and-hazard-rates](09-weibull-and-hazard-rates.md).
-- **Credit risk.** A firm's time to default is modelled with a hazard rate, and at a constant hazard the survival chance is $e^{-\lambda t}$; finance builds on it in [hazard-rate-and-survival-probability](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md).
+- **Reliability.** Electronic parts past their early failures and before wear-out fail at a roughly constant rate; a rising rate needs [Weibull and hazards](09-weibull-and-hazard-rates.md).
+- **Credit risk.** A firm's time to default is modelled with a hazard rate, and at a constant hazard the survival chance is $e^{-\lambda t}$; finance builds on it in [The hazard rate](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md).
 
 > **Say it back**
 > If the chance of an email in the next moment never changes, the chance of still waiting shrinks by the same factor every minute, which is $e^{-\lambda t}$. At 12 emails per hour the mean wait is 5 minutes, the median 3.4657, and 10 quiet minutes happen about 1 time in 7. After any quiet spell the wait still to come has the same law as a fresh one, and no other waiting law does that. Timing the gap and counting emails in a window are the same mechanism: no email in 10 minutes has the Poisson chance of zero, 0.1353.
@@ -562,15 +542,15 @@ Bars: the 12,000 simulated windows. Line: the Poisson law with mean 2. The first
 
 ## What this builds on
 
-- [densities-and-cdfs](01-densities-and-cdfs.md): the density $f$, the cumulative distribution $F$, and why the density is the slope of $F$.
-- [poisson](../03-Discrete%20Distributions/04-poisson.md): the count of rare independent events, whose chance of zero is the survival chance here.
+- [Densities](01-densities-and-cdfs.md): the density $f$, the cumulative distribution $F$, and why the density is the slope of $F$.
+- [Poisson](../03-Discrete%20Distributions/04-poisson.md): the count of rare independent events, whose chance of zero is the survival chance here.
 
 ## Where this goes next
 
-- [gamma-and-beta-distributions](07-gamma-and-beta-distributions.md): the wait for the third email, not the first, is a sum of three exponential gaps, and has the gamma law.
-- [weibull-and-hazard-rates](09-weibull-and-hazard-rates.md): hazards that rise or fall with time, for parts that wear out or settle in.
-- [poisson-process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md): a whole stream of independent exponential gaps, and the proof that its window counts are independent Poisson.
-- [hazard-rate-and-survival-probability](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): the same survival curve priced into bonds, with the hazard read from market spreads.
+- [Gamma and beta](07-gamma-and-beta-distributions.md): the wait for the third email, not the first, is a sum of three exponential gaps, and has the gamma law.
+- [Weibull and hazards](09-weibull-and-hazard-rates.md): hazards that rise or fall with time, for parts that wear out or settle in.
+- [Poisson process](../../11-Stochastic%20processes%20and%20calculus/04-Poisson%20and%20Jump%20Processes/01-poisson-process.md): a whole stream of independent exponential gaps, and the proof that its window counts are independent Poisson.
+- [The hazard rate](../../12-Financial%20mathematics/41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): the same survival curve priced into bonds, with the hazard read from market spreads.
 
 This card fixes the hazard; the question it leaves is what the wait looks like when the hazard moves with time, and the Weibull card answers it.
 

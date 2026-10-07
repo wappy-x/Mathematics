@@ -1,24 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Logic
-topic: Statements
-item: Statements and connectives
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first: []
-next:
-  - "[[Cards/01-Foundations/05-Logic/02-if-then|if-then]]"
-tags:
-  - mathematics
-  - foundations
-  - statements-and-connectives
----
-
 # Statements and connectives: and, or, not, and the truth table that settles them
 
-Foundations → Logic → Statements → Statements and connectives
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Logic](../../../SYLLABUS.md#w01-s05) → Statements and connectives
 
 ---
 
@@ -255,8 +237,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Any door, form or filter.** Search filters, discount rules and entry conditions are and, or and not wired together.
-- **Rules with a condition in front.** "After 9 pm" is an if-then, which behaves oddly and gets its own card: [if-then](02-if-then.md).
-- **Rewriting a rule without changing it.** Moving a **not** through an and or an or has a rule of its own: [logical-equivalence-and-de-morgan](03-logical-equivalence-and-de-morgan.md).
+- **Rules with a condition in front.** "After 9 pm" is an if-then, which behaves oddly and gets its own card: [If-then](02-if-then.md).
+- **Rewriting a rule without changing it.** Moving a **not** through an and or an or has a rule of its own: [Logical equivalence and De Morgan](03-logical-equivalence-and-de-morgan.md).
 
 > **Say it back**
 > A statement is a sentence settled true or false; orders, questions and pure opinions are not. Two statements can land only four ways, so each joining word's rule fits a small table. **And** (∧) is true only when both halves are: 1 of our 4 people. **Or** (∨) is true when at least one is, both included: 3 of 4. **Not** (¬) flips one statement.
@@ -269,8 +251,8 @@ Nothing before it on this shelf. You need only read a sentence and say whether i
 
 ## Where this goes next
 
-- [if-then](02-if-then.md): the connective on the front of the sign — after 9 pm, *then* this rule applies — and the one row where it breaks.
-- Then the shelf: [logical-equivalence-and-de-morgan](03-logical-equivalence-and-de-morgan.md), [quantifiers](04-quantifiers.md) on the sign's "everyone", [negating-quantifiers-and-counterexamples](05-negating-quantifiers-and-counterexamples.md), and [valid-arguments](06-valid-arguments.md).
+- [If-then](02-if-then.md): the connective on the front of the sign — after 9 pm, *then* this rule applies — and the one row where it breaks.
+- Then the shelf: [Logical equivalence and De Morgan](03-logical-equivalence-and-de-morgan.md), [Quantifiers](04-quantifiers.md) on the sign's "everyone", [Negating a quantifier](05-negating-quantifiers-and-counterexamples.md), and [Valid arguments](06-valid-arguments.md).
 
 ---
 

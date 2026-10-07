@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Digitals and the implied density
-topic: Reading probabilities off prices
-item: The butterfly and the implied density
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/12-Financial mathematics/10-Digitals and the implied density/04-digital-from-a-call-spread-and-the-skew-term|digital-from-a-call-spread-and-the-skew-term]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/01-densities-and-cdfs|densities-and-cdfs]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/04-integration-by-parts|integration-by-parts]]"
-next:
-  - "[[Cards/12-Financial mathematics/12-The smile and the surface/01-volatility-smile-and-skew|volatility-smile-and-skew]]"
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/01-dupire-local-volatility|dupire-local-volatility]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/05-sabr-calibration-from-three-quotes|sabr-calibration-from-three-quotes]]"
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/02-carr-madan-spanning-and-the-log-contract|carr-madan-spanning-and-the-log-contract]]"
-tags: [mathematics, financial mathematics, butterfly-and-the-implied-density]
----
-
 # The butterfly and the implied density: differentiate call prices twice in strike and the market's probabilities fall out
 
-Financial mathematics → Digitals and the implied density → Reading probabilities off prices → The butterfly and the implied density
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Digitals and the implied density](../../../SYLLABUS.md#w12-s10) → The butterfly and the implied density
 
 ---
 
@@ -69,7 +48,7 @@ $$\frac{\partial^2 C}{\partial K^2} \;\approx\; \frac{C(K-h) - 2\,C(K) + C(K+h)}
 
 **Read it aloud:** the bend is the butterfly's price divided by the tent's area.
 
-On the way there, one derivative gives the cash digital, the discounted chance of finishing above K ([cash-or-nothing-digital](01-cash-or-nothing-digital.md)):
+On the way there, one derivative gives the cash digital, the discounted chance of finishing above K ([Cash-or-nothing digital](01-cash-or-nothing-digital.md)):
 
 $$-\frac{\partial C}{\partial K} \;=\; D(T)\times(\text{chance that } S_T > K)$$
 
@@ -122,7 +101,7 @@ A call pays $S_T - K$ when positive. Its price is the discounted average:
 
 $$C(K) = D(T)\int_K^\infty (x - K)\, f(x)\, dx.$$
 
-Let $G(x)$ be the chance that $S_T$ finishes above $x$; its slope is $-f(x)$ ([densities-and-cdfs](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)). Integrate by parts, with $x - K$ as the part to differentiate and $f$ as the part to integrate, whose integral is $-G$ ([integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)):
+Let $G(x)$ be the chance that $S_T$ finishes above $x$; its slope is $-f(x)$ ([Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)). Integrate by parts, with $x - K$ as the part to differentiate and $f$ as the part to integrate, whose integral is $-G$ ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)):
 
 $$C(K) = D(T)\Big(\big[-(x-K)\,G(x)\big]_K^\infty + \int_K^\infty G(x)\,dx\Big) = D(T)\int_K^\infty G(x)\,dx.$$
 
@@ -134,7 +113,7 @@ Move the strike up by a small step. The area loses a thin strip of width one ste
 
 $$\frac{\partial C}{\partial K} = -D(T)\,G(K).$$
 
-Minus the slope of the call curve is the discounted chance of finishing above $K$: the cash digital. In the house market that is 0.494581, the shelf's cash digital to six places. A call spread is this slope measured with two strikes ([digital-from-a-call-spread-and-the-skew-term](04-digital-from-a-call-spread-and-the-skew-term.md)).
+Minus the slope of the call curve is the discounted chance of finishing above $K$: the cash digital. In the house market that is 0.494581, the shelf's cash digital to six places. A call spread is this slope measured with two strikes ([A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md)).
 
 ### Step 3: a second derivative gives the density
 
@@ -154,7 +133,7 @@ The error is proportional to $h^2$. Halve $h$ and the error falls by four. The c
 
 ### Step 5: the house market's closed form, and why it equals gamma
 
-In the house market $\ln S_T$ follows a bell curve with centre $\ln S + (r - q - \tfrac12\sigma^2)T$ and spread $\sigma\sqrt{T}$ ([black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The strike $K$ sits $d_2$ spreads below that centre. A bell-curve height per unit of log price becomes a height per dollar by dividing by $K\sigma\sqrt{T}$, since a small step in log price at $K$ is a step $K$ times as large in dollars. So $f(K) = \phi(d_2)/(K\sigma\sqrt{T})$, and Step 3 multiplies by $e^{-rT}$.
+In the house market $\ln S_T$ follows a bell curve with centre $\ln S + (r - q - \tfrac12\sigma^2)T$ and spread $\sigma\sqrt{T}$ ([Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md)). The strike $K$ sits $d_2$ spreads below that centre. A bell-curve height per unit of log price becomes a height per dollar by dividing by $K\sigma\sqrt{T}$, since a small step in log price at $K$ is a step $K$ times as large in dollars. So $f(K) = \phi(d_2)/(K\sigma\sqrt{T})$, and Step 3 multiplies by $e^{-rT}$.
 
 At $S = K$ the result equals the call's spot gamma, the bend in today's price. The reason is scaling. Double both the share price and the strike and the call price doubles. That one fact ties the two bends together: $S^2\,\Gamma = K^2\,\partial^2 C/\partial K^2$. At $S = K$ the squares cancel.
 
@@ -171,7 +150,7 @@ The scaling holds whenever the finishing price is today's price times a random g
 
 ### Step 6: a smile is a fat-tailed density
 
-Real markets do not quote one volatility. Low strikes trade at higher implied volatility than the money, and far high strikes a little higher too: a smile ([volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)). The checks give Acme a smile with 26.7% at $60, 20.2% at $100 and 21.1% at $160, price every call at its own volatility, and difference the prices. The formula does not care that the prices came from a smile; it reads whatever density they imply.
+Real markets do not quote one volatility. Low strikes trade at higher implied volatility than the money, and far high strikes a little higher too: a smile ([The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md)). The checks give Acme a smile with 26.7% at $60, 20.2% at $100 and 21.1% at $160, price every call at its own volatility, and difference the prices. The formula does not care that the prices came from a smile; it reads whatever density they imply.
 
 ```mermaid
 %%{init: {"theme": "base", "themeVariables": {"xyChart": {"backgroundColor": "#fffaf0", "titleColor": "#1d1d1d", "xAxisLabelColor": "#1d1d1d", "xAxisTitleColor": "#1d1d1d", "xAxisTickColor": "#1d1d1d", "xAxisLineColor": "#1d1d1d", "yAxisLabelColor": "#1d1d1d", "yAxisTitleColor": "#1d1d1d", "yAxisTickColor": "#1d1d1d", "yAxisLineColor": "#1d1d1d", "plotColorPalette": "#e76f51, #2a9d8f, #264653"}}}}%%
@@ -185,7 +164,7 @@ xychart-beta
 
 Orange: flat 20% volatility, the lognormal density. Green: the smile. The green curve is taller at the peak, thinner from $70 to $90 and from $130 to $150, and much fatter far out on the left, from $60 down. The chance of finishing below $70 rises from 3.21% to 5.39%. The chance above $150 rises from 2.35% to 2.51%. Total probability stays 1 and the mean stays at the forward, $103.05: a smile reshapes the density but cannot move its mean. A tall middle with fat tails is what "fat-tailed" means.
 
-The same area argument, run on puts instead of calls, gives the same density: by put-call parity a put's price differs from the call's by a straight line in $K$, which has no bend. [carr-madan-spanning-and-the-log-contract](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md) runs the argument backwards: any payoff is a portfolio of butterflies, so any payoff can be priced from the call curve.
+The same area argument, run on puts instead of calls, gives the same density: by put-call parity a put's price differs from the call's by a straight line in $K$, which has no bend. [Any payoff from a strip of options](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md) runs the argument backwards: any payoff is a portfolio of butterflies, so any payoff can be priced from the call curve.
 
 ---
 
@@ -223,7 +202,7 @@ Bumping today's price and volatility on the 90/100/110 butterfly:
 | gamma | −0.004385 | short gamma: a big move either way hurts |
 | vega, per vol point | −0.087692 | more volatility spreads the density away from $100, so the butterfly loses about 9 cents a point |
 
-A long butterfly is a bet on a quiet market. [digital-greeks-and-pin-risk](03-digital-greeks-and-pin-risk.md) shows the same shapes at their sharpest.
+A long butterfly is a bet on a quiet market. [Digital Greeks and pin risk](03-digital-greeks-and-pin-risk.md) shows the same shapes at their sharpest.
 
 ### What breaks if you drop a piece
 
@@ -683,11 +662,11 @@ The two outputs agree line for line. Both use the same series for the bell-curve
 ## Where you meet it in real life
 
 - **Central banks and research desks.** Option-implied probability charts for interest rates, exchange rates and stock indices are this formula run on a smoothed volatility curve.
-- **Pricing a payoff nobody quotes.** Any European payoff is its discounted average over the density, so the call curve prices it: [carr-madan-spanning-and-the-log-contract](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md) builds the log contract behind the VIX index this way.
+- **Pricing a payoff nobody quotes.** Any European payoff is its discounted average over the density, so the call curve prices it: [Any payoff from a strip of options](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md) builds the log contract behind the VIX index this way.
 - **Arbitrage screens.** A risk system checks that every butterfly on the surface costs something. A negative one is a free trade or, far more often, a bad mark.
 - **Event risk.** Before an earnings date or a court ruling the implied density can show two humps, one per outcome. No single-volatility model can draw that; the butterflies can.
-- **Local volatility.** [dupire-local-volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md) divides a time derivative of the call surface by this strike bend.
-- **The rest of this shelf.** One derivative is the cash digital ([cash-or-nothing-digital](01-cash-or-nothing-digital.md)); the share-weighted version is [asset-or-nothing-digital](02-asset-or-nothing-digital.md); recovering a strike or volatility from a digital price is [digital-inverses-vol-and-strike](06-digital-inverses-vol-and-strike.md).
+- **Local volatility.** [Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md) divides a time derivative of the call surface by this strike bend.
+- **The rest of this shelf.** One derivative is the cash digital ([Cash-or-nothing digital](01-cash-or-nothing-digital.md)); the share-weighted version is [Asset-or-nothing digital](02-asset-or-nothing-digital.md); recovering a strike or volatility from a digital price is [Digital inverses](06-digital-inverses-vol-and-strike.md).
 
 > **Say it back**
 > A butterfly of calls at K − h, K and K + h pays a tent of area h squared around K, so its price is the discounted chance of finishing near K times that area. In the limit that is the second strike-derivative of the call price, and dividing by the discount factor gives the density of the finishing price. One derivative gives the cash digital on the way. In the house market the bend at $100 is 0.018951, the density 0.019922, and butterflies close in on it with error falling by four per halving. A smile in volatility is a density with a tall middle and fat tails, and it is a price, not a forecast.
@@ -696,16 +675,16 @@ The two outputs agree line for line. Both use the same series for the bell-curve
 
 ## What this builds on
 
-- [digital-from-a-call-spread-and-the-skew-term](04-digital-from-a-call-spread-and-the-skew-term.md): the first strike-derivative as a call spread. This card takes one more derivative.
-- [densities-and-cdfs](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md): a density is the slope of the cumulative chance, and a chance is the area under a density.
-- [integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): the move in Step 1 that turns a call price into an area under the survival curve.
+- [A digital from a call spread](04-digital-from-a-call-spread-and-the-skew-term.md): the first strike-derivative as a call spread. This card takes one more derivative.
+- [Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md): a density is the slope of the cumulative chance, and a chance is the area under a density.
+- [Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): the move in Step 1 that turns a call price into an area under the survival curve.
 
 ## Where this goes next
 
-- [volatility-smile-and-skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): where the smile used here comes from, and how markets quote it.
-- [dupire-local-volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): adds a derivative in expiry and turns the density at every date into a volatility at every price and time.
-- [sabr-calibration-from-three-quotes](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/05-sabr-calibration-from-three-quotes.md): a smooth smile fitted to three quotes, which keeps the implied density clean when differenced.
-- [carr-madan-spanning-and-the-log-contract](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md): the theorem run backwards, building any payoff out of calls, puts and butterflies.
+- [The volatility smile and skew](../12-The%20smile%20and%20the%20surface/01-volatility-smile-and-skew.md): where the smile used here comes from, and how markets quote it.
+- [Dupire local volatility](../13-Local%20volatility%20and%20jumps/01-dupire-local-volatility.md): adds a derivative in expiry and turns the density at every date into a volatility at every price and time.
+- [SABR from three quotes](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/05-sabr-calibration-from-three-quotes.md): a smooth smile fitted to three quotes, which keeps the implied density clean when differenced.
+- [Any payoff from a strip of options](../19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/02-carr-madan-spanning-and-the-log-contract.md): the theorem run backwards, building any payoff out of calls, puts and butterflies.
 
 The call curve at one expiry gives one density; how the densities at different expiries fit together, and which movement of the stock produces them, is the question the local-volatility card answers.
 

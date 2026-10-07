@@ -1,21 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Short-Rate Models
-topic: Curve twists and positive rates
-item: Beyond one factor
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/04-hull-white-model|hull-white-model]]"
-next: []
-tags: [mathematics, financial mathematics, two-factor-and-lognormal-short-rate-models]
----
-
 # Beyond one factor: G2++, Black-Karasinski and Black-Derman-Toy in outline
 
-Financial mathematics → Short-Rate Models → Curve twists and positive rates → Beyond one factor
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Short-Rate Models](../../../SYLLABUS.md#w12-s30) → Beyond one factor
 
 ---
 
@@ -23,7 +8,7 @@ Financial mathematics → Short-Rate Models → Curve twists and positive rates 
 
 A rates desk has sold a 10-year zero-coupon bond (a bond that pays one lump sum at maturity and nothing before) and hedges it by buying 2-year bonds. On most days the whole yield curve (the line of interest rates across maturities) moves up or down together, and the hedge holds. Then a day comes when the 2-year yield rises 10 basis points (a basis point is one hundredth of a percent) and the 10-year yield falls 5. Traders call that a twist. The 2-year bonds it owns fall in price, the 10-year bond it owes rises, and the desk loses on both legs.
 
-The Hull-White model ([hull-white-model](04-hull-white-model.md)) cannot produce that day. It drives every rate from one random number: the short rate, the interest rate on overnight money. On the shelf's house curve (Vasicek, pulled toward 5% at speed 0.3 a year, volatility 1%, starting at 4%), ask Hull-White for a 10 basis point rise at 2 years. It answers with a rise at every maturity: 11.49 at 1 year, 4.21 at 10 years. Every move points the same way, in the same fixed proportions, every day.
+The Hull-White model ([Hull-White](04-hull-white-model.md)) cannot produce that day. It drives every rate from one random number: the short rate, the interest rate on overnight money. On the shelf's house curve (Vasicek, pulled toward 5% at speed 0.3 a year, volatility 1%, starting at 4%), ask Hull-White for a 10 basis point rise at 2 years. It answers with a rise at every maturity: 11.49 at 1 year, 4.21 at 10 years. Every move points the same way, in the same fixed proportions, every day.
 
 The number of independent random shocks driving a model is its number of **factors**, the word used from here on. One factor bends the curve one way only.
 
@@ -33,7 +18,7 @@ Three models go further, and they fix different things.
 - **Black-Karasinski** keeps one factor but models the logarithm of the short rate, so the rate itself can never go below zero.
 - **Black-Derman-Toy** is the tree that came first: a one-factor lognormal lattice (a grid of possible future rates) fitted node by node to today's curve.
 
-A **swaption** is an option to enter a swap (an exchange of fixed for floating interest payments) on a future date ([swaptions-payer-and-receiver](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md)). Take two swaptions that both expire in one year: one on a 2-year swap, one on a 9-year swap. Anything that pays on both, or lets its holder choose between them, depends on how the two swap rates move together. Every one-factor model says: in perfect lockstep, correlation 1. G2++ with the parameters below says 0.979.
+A **swaption** is an option to enter a swap (an exchange of fixed for floating interest payments) on a future date ([Swaptions](../29-Caps%2C%20Floors%20and%20Swaptions/04-swaptions-payer-and-receiver.md)). Take two swaptions that both expire in one year: one on a 2-year swap, one on a 9-year swap. Anything that pays on both, or lets its holder choose between them, depends on how the two swap rates move together. Every one-factor model says: in perfect lockstep, correlation 1. G2++ with the parameters below says 0.979.
 
 **One random shock moves every rate on the curve the same way in fixed proportions, so a one-factor model makes all rates perfectly correlated; G2++ adds a second shock so the curve can twist, while Black-Karasinski and Black-Derman-Toy keep one shock and reshape it so the short rate stays positive.**
 
@@ -85,7 +70,7 @@ $$r_{i,j} = U_i\,e^{\sigma(2j - i)}$$
 
 **Read it aloud:** at year $i$, the rate after $j$ up-moves is the year's middle rate scaled up or down by a fixed log-step; each year's middle rate is chosen so the tree prices today's bond of the next maturity exactly.
 
-A swap starting in one year and paying annually for $n$ years has par rate (the fixed rate that makes it worth zero today, [par-swap-rate-and-annuity](../28-Swaps/02-par-swap-rate-and-annuity.md)):
+A swap starting in one year and paying annually for $n$ years has par rate (the fixed rate that makes it worth zero today, [The par swap rate](../28-Swaps/02-par-swap-rate-and-annuity.md)):
 
 $$S_n = \frac{P(1) - P(1+n)}{P(2) + P(3) + \dots + P(1+n)}$$
 
@@ -123,7 +108,7 @@ A bond price tomorrow is a function of the model's random state tomorrow. If tha
 
 ### Step 1: one factor makes every yield move in fixed proportion
 
-In Hull-White a u-year bond is priced $P = A(u)e^{-B(u)r}$, with $B(u) = (1 - e^{-au})/a$ ([hull-white-model](04-hull-white-model.md)). Its yield is $-\ln P/u$, so a short-rate move $\Delta r$ moves the u-year yield by $B(u)/u \times \Delta r$, plus a part that depends only on the calendar.
+In Hull-White a u-year bond is priced $P = A(u)e^{-B(u)r}$, with $B(u) = (1 - e^{-au})/a$ ([Hull-White](04-hull-white-model.md)). Its yield is $-\ln P/u$, so a short-rate move $\Delta r$ moves the u-year yield by $B(u)/u \times \Delta r$, plus a part that depends only on the calendar.
 
 At speed 0.3 the 2-year yield loading $B(u)/u$ is 0.751981 and the 10-year is 0.316738. A 10 basis point rise at 2 years needs $\Delta r$ = 13.2982 basis points, which lifts the 10-year by 4.21. Every loading is positive, so every yield moves the same way. The 10-year can never fall while the 2-year rises.
 
@@ -186,7 +171,7 @@ That is higher than the 2-year against 10-year yield correlation of 0.877. Both 
 
 A Gaussian short rate is Normal, so some of its paths go negative. Pull a Hull-White rate toward 1% at speed 0.3 with 1% volatility, starting at 1%: after 10 years it is Normal with mean 1%, and the chance it sits below zero is 21.90%. A simulation of 100,000 paths finds 21.77%.
 
-Black-Karasinski makes $\ln r_t$ the Gaussian process instead. The exponential of any finite number is positive, so $r_t > 0$ on every path. The price is paid elsewhere: the integral of a lognormal rate has no known distribution, so there is no closed-form bond price and every bond is priced on a tree ([hull-white-trinomial-tree](06-hull-white-trinomial-tree.md) builds the lattice for the Gaussian case; Black-Karasinski runs the same lattice in log-rate). And the volatility now scales with the level: a fixed log-volatility means large moves when rates are high and small ones when they are low.
+Black-Karasinski makes $\ln r_t$ the Gaussian process instead. The exponential of any finite number is positive, so $r_t > 0$ on every path. The price is paid elsewhere: the integral of a lognormal rate has no known distribution, so there is no closed-form bond price and every bond is priced on a tree ([The Hull-White tree](06-hull-white-trinomial-tree.md) builds the lattice for the Gaussian case; Black-Karasinski runs the same lattice in log-rate). And the volatility now scales with the level: a fixed log-volatility means large moves when rates are high and small ones when they are low.
 
 ### Step 6: Black-Derman-Toy, the tree that came first
 
@@ -202,7 +187,7 @@ $$d\ln r_t = \Big[\theta(t) + \frac{\sigma'(t)}{\sigma(t)}\ln r_t\Big]dt + \sigm
 
 where $\sigma'(t)$ is the rate of change of the volatility. The pull back to the middle is the ratio $\sigma'(t)/\sigma(t)$: the model reverts only if its volatility falls with time. Fit the volatility curve and the reversion comes with it. Black-Karasinski separates the two by giving reversion its own speed $a$.
 
-Another route to more than one factor is to stop modelling one short rate and model the whole forward curve: [hjm-framework-and-the-drift-condition](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md) does that, with as many factors as the data support.
+Another route to more than one factor is to stop modelling one short rate and model the whole forward curve: [Heath-Jarrow-Morton](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md) does that, with as many factors as the data support.
 
 ---
 
@@ -661,8 +646,8 @@ The two outputs agree line for line: both programs use the same generator, the s
 
 - **Bermudan swaption desks.** A Bermudan lets the holder enter a swap on any of several dates, so its value depends on how swap rates of different lengths move together. Banks price them in two-factor models for that reason.
 - **Curve-spread options.** Options on the difference between the 10-year and 2-year swap rate pay when the curve steepens or flattens; a one-factor model ties that spread to the level of rates, so it cannot let the spread move on its own.
-- **Positive-rate markets and old systems.** Black-Derman-Toy and Black-Karasinski trees still run in callable bond and mortgage systems written when negative rates were thought impossible. Since the 2010s many desks shifted to Gaussian or shifted-lognormal models ([normal-and-shifted-volatilities-for-rates](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)).
-- **Calibration.** Fitting G2++ to single swaptions pins its volatilities; fitting its correlation needs products that depend on two rates ([calibrating-a-short-rate-model](08-calibrating-a-short-rate-model.md)).
+- **Positive-rate markets and old systems.** Black-Derman-Toy and Black-Karasinski trees still run in callable bond and mortgage systems written when negative rates were thought impossible. Since the 2010s many desks shifted to Gaussian or shifted-lognormal models ([Rate volatilities](../29-Caps%2C%20Floors%20and%20Swaptions/06-normal-and-shifted-volatilities-for-rates.md)).
+- **Calibration.** Fitting G2++ to single swaptions pins its volatilities; fitting its correlation needs products that depend on two rates ([Calibrating Hull-White](08-calibrating-a-short-rate-model.md)).
 
 > **Say it back**
 > A one-factor model drives every rate from one random number, so every yield moves the same way in fixed proportions and every pair of rates has correlation one. G2++ adds a second factor that fades at a different speed, so each maturity gets its own mix and the curve can twist: correlations fall below one. Swap rates, which set swaption values, have their own correlation, higher than that of the yields at their ends. Black-Karasinski and Black-Derman-Toy keep one factor and model the logarithm of the rate, so rates stay positive. They fix negative rates, not correlation.
@@ -671,14 +656,14 @@ The two outputs agree line for line: both programs use the same generator, the s
 
 ## What this builds on
 
-- [hull-white-model](04-hull-white-model.md): the one-factor model with a fitted curve and the loading $B(u)$; G2++ is two of them added together.
+- [Hull-White](04-hull-white-model.md): the one-factor model with a fitted curve and the loading $B(u)$; G2++ is two of them added together.
 
 ---
 
 ## Where this goes next
 
-- [calibrating-a-short-rate-model](08-calibrating-a-short-rate-model.md): which market prices pin which parameters, starting with Hull-White.
-- [hjm-framework-and-the-drift-condition](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md): model the whole forward curve instead of one short rate, with as many factors as needed.
+- [Calibrating Hull-White](08-calibrating-a-short-rate-model.md): which market prices pin which parameters, starting with Hull-White.
+- [Heath-Jarrow-Morton](../31-Forward-Rate%20Models/01-hjm-framework-and-the-drift-condition.md): model the whole forward curve instead of one short rate, with as many factors as needed.
 
 This card shows that a model's factor count sets its correlations and its lognormality sets its sign; the open question is which market prices can tell a model's parameters apart, and that is what calibrating-a-short-rate-model answers.
 

@@ -1,29 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Rings and Fields
-topic: Dividing inside the set
-item: Fields
-kind: definition
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/09-Rings and Fields/01-rings|rings]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/04-modular-inverse|modular-inverse]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/05-coprime-numbers|coprime-numbers]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/07-fractions|fractions]]"
-next:
-  - "[[Cards/03-Algebra/09-Rings and Fields/03-polynomials-behave-like-integers|polynomials-behave-like-integers]]"
-  - "[[Cards/03-Algebra/09-Rings and Fields/05-finite-fields|finite-fields]]"
-  - "[[Cards/05-Geometry and trig/06-Beyond Euclid/03-ruler-and-compass-constructions|ruler-and-compass-constructions]]"
-  - "[[Cards/21-Algebraic and analytic number theory/05-Fields and Galois Theory/01-field-extensions-and-degree|field-extensions-and-degree]]"
-  - "[[Cards/22-Algebraic geometry/01-Polynomial Systems/09-nullstellensatz|nullstellensatz]]"
-tags: [mathematics, algebra, fields]
----
-
 # Fields: a ring where every nonzero thing has a reciprocal, so every linear equation has exactly one answer
 
-Algebra → Rings and Fields → Dividing inside the set → Fields
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Rings and Fields](../../../SYLLABUS.md#w03-s09) → Fields
 
 ---
 
@@ -35,7 +12,7 @@ Multiplying by 5 undoes multiplying by 3 here: 3 × 5 = 15, a fortnight and a da
 
 That 5 is the **reciprocal** of 3 on the week: the partner multiplying with it to give 1. Every nonzero day has one — 2 × 4 ≡ 1, 6 × 6 ≡ 1 — so "divide by 3" is legal here, meaning "multiply by 5".
 
-Add, subtract and multiply under the usual laws and a set is a ring ([rings](01-rings.md)). A ring where multiplication commutes, ab = ba, and every nonzero element also has a reciprocal inside the set is a **field**. Shorten the cycle to six days and that fails: 2 × 3 ≡ 0 (mod 6), and 2 has no reciprocal.
+Add, subtract and multiply under the usual laws and a set is a ring ([Rings](01-rings.md)). A ring where multiplication commutes, ab = ba, and every nonzero element also has a reciprocal inside the set is a **field**. Shorten the cycle to six days and that fails: 2 × 3 ≡ 0 (mod 6), and 2 has no reciprocal.
 
 **A field is a ring with two rules added — multiplication commutes, and every nonzero element has a reciprocal inside the set — which is what makes dividing legal, so ax = b with a nonzero has exactly one answer.**
 
@@ -88,7 +65,7 @@ A field is a definition; these conditions belong to the two theorems, which cove
 
 ### Step 0: the reciprocal has to be in the set
 
-Among whole numbers 2x = 1 has no answer: twice a whole number is even, 1 is odd. Among fractions it has one, and no nonzero fraction wants for a reciprocal — 3/4 and 4/3 multiply to 12/12, which is 1 ([fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md)). The integers are short of reciprocals, not arithmetic: that lack is the whole distance from a field.
+Among whole numbers 2x = 1 has no answer: twice a whole number is even, 1 is odd. Among fractions it has one, and no nonzero fraction wants for a reciprocal — 3/4 and 4/3 multiply to 12/12, which is 1 ([Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md)). The integers are short of reciprocals, not arithmetic: that lack is the whole distance from a field.
 
 ### Step 1: one reciprocal gives one answer, and never a second
 
@@ -96,7 +73,7 @@ Take ax = b with a nonzero. An answer exists: $a^{-1}b$. Multiply it by a and re
 
 ### Step 2: zero can never be handed a reciprocal
 
-In any ring 0 times anything is 0, never 1 ([rings](01-rings.md)), so "every nonzero element" is the most any set can promise — and why 0x ≡ 0 (mod 7) has all seven days as answers, 0x ≡ 1 (mod 7) none.
+In any ring 0 times anything is 0, never 1 ([Rings](01-rings.md)), so "every nonzero element" is the most any set can promise — and why 0x ≡ 0 (mod 7) has all seven days as answers, 0x ≡ 1 (mod 7) none.
 
 ### Step 3: no zero divisors, so a composite cycle is out
 
@@ -104,9 +81,9 @@ Suppose ab = 0 with a nonzero. Multiply by $a^{-1}$: the left collapses to b, th
 
 ### Step 4: a prime cycle supplies every reciprocal
 
-Let the size be prime. Every label from 1 to one below it is then coprime to the size ([coprime-numbers](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)). Euclid's algorithm writes a greatest common divisor as a whole-number combination: so many jumps of the label, plus so many whole cycles, adding to 1. Cycles read as 0, so that count of jumps is the reciprocal ([modular-inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md)). A construction, not an existence claim: the code runs it.
+Let the size be prime. Every label from 1 to one below it is then coprime to the size ([Coprime numbers](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)). Euclid's algorithm writes a greatest common divisor as a whole-number combination: so many jumps of the label, plus so many whole cycles, adding to 1. Cycles read as 0, so that count of jumps is the reciprocal ([The modular inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md)). A construction, not an existence claim: the code runs it.
 
-Steps 3 and 4 close on each other: **the n-day cycle, for n at least 2, is a field exactly when n is prime.** The cycle comes from the quotient machinery on [ideals-and-quotient-rings](04-ideals-and-quotient-rings.md).
+Steps 3 and 4 close on each other: **the n-day cycle, for n at least 2, is a field exactly when n is prime.** The cycle comes from the quotient machinery on [Ideals and quotient rings](04-ideals-and-quotient-rings.md).
 
 <details>
 <summary>Detailed proof</summary>
@@ -129,7 +106,7 @@ xychart-beta
 
 Upper line: the nonzero labels, one less than the size; lower line, those with a reciprocal. They meet at the primes 2, 3, 5, 7 and 11, and part at 4, 6, 8, 9, 10, 12.
 
-**Another route.** Build a field instead of testing one, manufacturing the reciprocals a ring lacks — over polynomials, what [polynomials-behave-like-integers](03-polynomials-behave-like-integers.md) prepares.
+**Another route.** Build a field instead of testing one, manufacturing the reciprocals a ring lacks — over polynomials, what [Polynomials behave like integers](03-polynomials-behave-like-integers.md) prepares.
 
 <details>
 <summary>Field of fractions</summary>
@@ -387,8 +364,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **School algebra.** Dividing both sides by the coefficient is legal because the rationals and the reals are fields; the muttered "provided it is not zero" is this rule. A later card's "vector space over a field" says the same of its scalars.
-- **Polynomial division.** It divides by a leading coefficient, so the coefficients need a field: [polynomials-behave-like-integers](03-polynomials-behave-like-integers.md).
-- **Cryptography and error correction.** Key exchange runs modulo a prime, disc and QR codes in finite fields, where division is exact ([finite-fields](05-finite-fields.md)).
+- **Polynomial division.** It divides by a leading coefficient, so the coefficients need a field: [Polynomials behave like integers](03-polynomials-behave-like-integers.md).
+- **Cryptography and error correction.** Key exchange runs modulo a prime, disc and QR codes in finite fields, where division is exact ([Finite fields](05-finite-fields.md)).
 
 > **Say it back**
 > A field is a ring where multiplication commutes and every nonzero element also has a reciprocal inside the set, so dividing is allowed. That forces ax = b with a nonzero to have exactly one answer, b times the reciprocal of a: on the week 3x ≡ 4 (mod 7) gives x = 6, because 3 × 5 ≡ 1. Zero never gets a reciprocal, so 0x ≡ 0 has every answer, 0x ≡ 1 none. The n-day cycle is a field exactly when n is prime.
@@ -397,18 +374,18 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [rings](01-rings.md): the arithmetic a field inherits, and that 0 times anything is 0.
-- [modular-inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md): Euclid's algorithm as a reciprocal on a cycle, Step 4's construction.
-- [coprime-numbers](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md): why a prime size shares no factor with its labels.
-- [fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): reciprocals in the first field anyone meets.
+- [Rings](01-rings.md): the arithmetic a field inherits, and that 0 times anything is 0.
+- [The modular inverse](../../02-Number%20theory/03-Clock%20Arithmetic/04-modular-inverse.md): Euclid's algorithm as a reciprocal on a cycle, Step 4's construction.
+- [Coprime numbers](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md): why a prime size shares no factor with its labels.
+- [Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): reciprocals in the first field anyone meets.
 
 ## Where this goes next
 
-- [polynomials-behave-like-integers](03-polynomials-behave-like-integers.md): polynomials dividing with a remainder, over a field.
-- [finite-fields](05-finite-fields.md): fields of size 4, 8 and 9, which no cycle gives.
-- [ruler-and-compass-constructions](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/03-ruler-and-compass-constructions.md): what a ruler and compass reach, settled by fields.
-- field-extensions-and-degree: one field inside another, and the step's size.
-- nullstellensatz: solution sets once the field holds every root.
+- [Polynomials behave like integers](03-polynomials-behave-like-integers.md): polynomials dividing with a remainder, over a field.
+- [Finite fields](05-finite-fields.md): fields of size 4, 8 and 9, which no cycle gives.
+- [Ruler and compass](../../05-Geometry%20and%20trig/06-Beyond%20Euclid/03-ruler-and-compass-constructions.md): what a ruler and compass reach, settled by fields.
+- Field extensions: one field inside another, and the step's size.
+- The Nullstellensatz: solution sets once the field holds every root.
 
 One equation in one unknown is settled over any field. Open still is higher degree, where roots may need a larger field than the coefficients.
 

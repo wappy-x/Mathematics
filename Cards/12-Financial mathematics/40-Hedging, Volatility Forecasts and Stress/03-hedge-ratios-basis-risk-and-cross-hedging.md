@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Hedging, Volatility Forecasts and Stress
-topic: Cross-hedging by regression
-item: Imperfect hedges
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/40-Hedging, Volatility Forecasts and Stress/02-delta-gamma-vega-hedging|delta-gamma-vega-hedging]]"
-  - "[[Cards/09-Probability and statistics/09-Regression/01-least-squares-regression|least-squares-regression]]"
-next: []
-tags: [mathematics, financial mathematics, hedge-ratios-basis-risk-and-cross-hedging]
----
-
 # Imperfect hedges: the minimum-variance hedge ratio and the basis risk that remains
 
-Financial mathematics → Hedging, Volatility Forecasts and Stress → Cross-hedging by regression → Imperfect hedges
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Hedging, Volatility Forecasts and Stress](../../../SYLLABUS.md#w12-s40) → Imperfect hedges
 
 ---
 
@@ -88,7 +72,7 @@ $$N^* = h^*\,\frac{Q}{L}$$
 | $N^*$ | contracts to buy | 40.41, so 40 | — |
 | $a$, $b$ | intercept and slope of a line fitted through past quarters | from the data; $b$ is the estimated $h^*$ | — |
 
-A **variance** is a spread squared, $\sigma^2$. Variances of independent pieces add, which spreads do not; that is why the algebra below works on variances and only takes a square root at the end. The fraction of variance removed, $\rho^2$, is written $R^2$ in regression output ([least-squares-regression](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)); here it is 0.889.
+A **variance** is a spread squared, $\sigma^2$. Variances of independent pieces add, which spreads do not; that is why the algebra below works on variances and only takes a square root at the end. The fraction of variance removed, $\rho^2$, is written $R^2$ in regression output ([Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md)); here it is 0.889.
 
 Conventions verified 2026-09-28: the exchange heating oil contract is NYMEX NY Harbor ULSD futures (code HO, the old heating oil contract, renamed 2013), 42,000 gallons a lot, quoted in dollars a gallon.
 
@@ -596,8 +580,8 @@ Road 3 lands at 0.8478 against the formula's 0.8487: 0.000859 below, the size of
 - **Hedge accounting.** Accounting standards ask a company to show that a hedge is effective before it can report hedge and hedged item together; a regression of the kind on this card is common evidence.
 - **Equity funds.** Beta hedging with index futures is the same regression on returns: 48 contracts for $10,000,000 at beta 1.2 in the folded tip above.
 - **Farmers and grain merchants.** A crop grown in one region is hedged with futures delivered in another. The local basis is quoted daily and watched as closely as the futures price.
-- **Option books.** The hedges of [delta-gamma-vega-hedging](02-delta-gamma-vega-hedging.md) assume the hedge is written on the exact thing hedged. When it is not, an index option hedging a single stock, the residual on this card appears there too.
-- **Sizing the residual.** The leftover spread feeds straight into the risk numbers of [scenario-grids-and-stress-tests](05-scenario-grids-and-stress-tests.md) and [risk-limits-and-risk-appetite](06-risk-limits-and-risk-appetite.md).
+- **Option books.** The hedges of [Hedging three Greeks at once](02-delta-gamma-vega-hedging.md) assume the hedge is written on the exact thing hedged. When it is not, an index option hedging a single stock, the residual on this card appears there too.
+- **Sizing the residual.** The leftover spread feeds straight into the risk numbers of [Stress tests](05-scenario-grids-and-stress-tests.md) and [Limits](06-risk-limits-and-risk-appetite.md).
 
 > **Say it back**
 > A cross-hedge uses futures on a related thing because the exact thing has no futures market. The hedged cost moves by the fuel's change minus the ratio times the futures' change, and its variance is a quadratic in the ratio. Completing the square shows the best ratio is the correlation times the ratio of spreads, which is the least-squares slope of fuel changes on futures changes. The risk that remains is the fuel's spread times the square root of one minus the correlation squared: basis risk, untouched by any ratio. For jet fuel on heating oil the ratio is 0.85 and two thirds of the spread goes.
@@ -606,13 +590,13 @@ Road 3 lands at 0.8478 against the formula's 0.8487: 0.000859 below, the size of
 
 ## What this builds on
 
-- [delta-gamma-vega-hedging](02-delta-gamma-vega-hedging.md): hedging when the hedge is written on the exact thing being hedged. This card relaxes that one assumption.
-- [least-squares-regression](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md): fitting a line by least squares, the slope as covariance over variance, and $R^2$. Step 3 shows this is the hedge.
+- [Hedging three Greeks at once](02-delta-gamma-vega-hedging.md): hedging when the hedge is written on the exact thing being hedged. This card relaxes that one assumption.
+- [Least squares](../../09-Probability%20and%20statistics/09-Regression/01-least-squares-regression.md): fitting a line by least squares, the slope as covariance over variance, and $R^2$. Step 3 shows this is the hedge.
 
 ## Where this goes next
 
-- [volatility-forecasting-ewma-garch-and-realised](04-volatility-forecasting-ewma-garch-and-realised.md): the spreads and the correlation on this card were taken as known. That card estimates them, and shows they change over time, which moves the hedge ratio with them.
-- [scenario-grids-and-stress-tests](05-scenario-grids-and-stress-tests.md): what the basis does in a bad quarter, rather than a typical one.
+- [Tomorrow's volatility](04-volatility-forecasting-ewma-garch-and-realised.md): the spreads and the correlation on this card were taken as known. That card estimates them, and shows they change over time, which moves the hedge ratio with them.
+- [Stress tests](05-scenario-grids-and-stress-tests.md): what the basis does in a bad quarter, rather than a typical one.
 
 This card treated $\sigma_S$, $\sigma_F$ and $\rho$ as fixed; the question it leaves open is how to estimate them when they drift, which is what the volatility-forecasting card answers.
 

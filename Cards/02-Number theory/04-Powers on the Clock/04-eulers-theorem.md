@@ -1,28 +1,6 @@
----
-type: card
-wing: 02-Number theory
-shelf: Powers on the Clock
-topic: Fermat and Euler
-item: Euler's theorem
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/04-Powers on the Clock/02-fermats-little-theorem|fermats-little-theorem]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/03-eulers-totient|eulers-totient]]"
-  - "[[Cards/01-Foundations/03-Powers, Roots and Logarithms/01-exponents-and-powers|exponents-and-powers]]"
-next:
-  - "[[Cards/02-Number theory/04-Powers on the Clock/05-order-and-primitive-roots|order-and-primitive-roots]]"
-  - "[[Cards/02-Number theory/06-Codes and Secrets/03-rsa-in-outline|rsa-in-outline]]"
-tags:
-  - mathematics
-  - number theory
-  - eulers-theorem
----
-
 # Euler's theorem: raise a coprime number to the clock's coprime count and get 1, Fermat set free of primes
 
-Number theory → Powers on the Clock → Fermat and Euler → Euler's theorem
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Powers on the Clock](../../../SYLLABUS.md#w02-s04) → Euler's theorem
 
 ---
 
@@ -32,9 +10,9 @@ A pocket calculator runs out of display around twenty threes. Ask for 2026 of th
 
 The useful question is smaller: **what are the last two digits of 3 to the 2026?**
 
-Last two digits means: divide by 100, keep the remainder. That is the 100-clock ([congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md)), where nothing gets big. Multiplying out one 3 at a time grinds through every power there; repeated squaring is far quicker but still walks the whole exponent ([modular-exponentiation](01-modular-exponentiation.md)). Euler cuts the exponent first.
+Last two digits means: divide by 100, keep the remainder. That is the 100-clock ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)), where nothing gets big. Multiplying out one 3 at a time grinds through every power there; repeated squaring is far quicker but still walks the whole exponent ([Powers on the clock](01-modular-exponentiation.md)). Euler cuts the exponent first.
 
-Count the numbers below 100 sharing no factor with 100. That count is Euler's totient, written phi(n) ([eulers-totient](03-eulers-totient.md)): phi(100) = 40. Since 3 shares no factor with 100, 3 to the 40 ≡ 1 (mod 100). Multiplying by 1 changes nothing, so whole 40s in the exponent can be thrown away. 2026 = 50 × 40 + 26, and 3 to the 26 ≡ 29 (mod 100).
+Count the numbers below 100 sharing no factor with 100. That count is Euler's totient, written phi(n) ([Euler's totient](03-eulers-totient.md)): phi(100) = 40. Since 3 shares no factor with 100, 3 to the 40 ≡ 1 (mod 100). Multiplying by 1 changes nothing, so whole 40s in the exponent can be thrown away. 2026 = 50 × 40 + 26, and 3 to the 26 ≡ 29 (mod 100).
 
 **Raise anything coprime to the clock to the count of that clock's coprimes and the clock reads 1 — so the exponent can be cut by that count.**
 
@@ -61,11 +39,11 @@ On our clock, this is the whole thing:
 | --- | --- | --- |
 | the clock size | what you divide by, keeping the remainder | 100, the last two digits |
 | the base | the number multiplied by itself | 3 |
-| coprime | sharing no factor above 1 ([coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)) | gcd(3, 100) — the largest number dividing both — is 1 |
-| phi(n), Euler's totient | how many numbers below the clock are coprime to it ([eulers-totient](03-eulers-totient.md)) | 40 |
+| coprime | sharing no factor above 1 ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)) | gcd(3, 100) — the largest number dividing both — is 1 |
+| phi(n), Euler's totient | how many numbers below the clock are coprime to it ([Euler's totient](03-eulers-totient.md)) | 40 |
 | the exponent | how many times the base is multiplied by itself | 2026, cut to 26 |
 
-Nothing about 3 or 100 is special: any clock, any coprime base. On a prime clock everything below is coprime, so the count is one less than the prime: Fermat's little theorem ([fermats-little-theorem](02-fermats-little-theorem.md)).
+Nothing about 3 or 100 is special: any clock, any coprime base. On a prime clock everything below is coprime, so the count is one less than the prime: Fermat's little theorem ([Fermat's little theorem](02-fermats-little-theorem.md)).
 
 ---
 
@@ -73,7 +51,7 @@ Nothing about 3 or 100 is special: any clock, any coprime base. On a prime clock
 
 ### Step 0: the coprime numbers are the ones you can undo
 
-Multiplying by 3 on the 100-clock can be undone, because 3 shares no factor with 100: something multiplies it back to 1 ([modular-inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)). Exactly the coprime numbers can be undone, and 40 sit below 100. Call them the list.
+Multiplying by 3 on the 100-clock can be undone, because 3 shares no factor with 100: something multiplies it back to 1 ([The modular inverse](../03-Clock%20Arithmetic/04-modular-inverse.md)). Exactly the coprime numbers can be undone, and 40 sit below 100. Call them the list.
 
 ### Step 1: multiplying the list by 3 only shuffles it
 
@@ -89,7 +67,7 @@ Multiply the 40 together on the clock: the list product. The shuffled list holds
 
 ### Step 3: cancel the list product
 
-It is a product of numbers each coprime to 100, so it is coprime to 100 too ([coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)) and cancels. Take it off both sides:
+It is a product of numbers each coprime to 100, so it is coprime to 100 too ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)) and cancels. Take it off both sides:
 
 **3 to the 40 ≡ 1 (mod 100).**
 
@@ -261,14 +239,14 @@ The two outputs match line for line.
 > - Skipping the coprime test. 2 to the 40 is 76, 10 to the 40 is 0; no exponent-cutting rescues either.
 > - Using one less than the clock size out of habit: on 100 that gives 67.
 > - Reducing the base instead of the exponent. The base stays put.
-> - Believing 40 is the smallest exponent returning 1. A smaller one already works: the order ([order-and-primitive-roots](05-order-and-primitive-roots.md)).
+> - Believing 40 is the smallest exponent returning 1. A smaller one already works: the order ([The order of a number and primitive roots](05-order-and-primitive-roots.md)).
 
 ---
 
 ## Where you meet it in real life
 
-- **RSA.** The two exponents multiply to one more than a multiple of the totient, so encrypt-then-decrypt is Euler's 1 times the message: [rsa-in-outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md).
-- **Last digits of huge numbers.** Any "what does it end in" puzzle is a clock of 10, 100 or 1000, exponent cut first: [modular-exponentiation](01-modular-exponentiation.md).
+- **RSA.** The two exponents multiply to one more than a multiple of the totient, so encrypt-then-decrypt is Euler's 1 times the message: [RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md).
+- **Last digits of huge numbers.** Any "what does it end in" puzzle is a clock of 10, 100 or 1000, exponent cut first: [Powers on the clock](01-modular-exponentiation.md).
 - **Repeating decimals.** A decimal repeats after a run dividing the denominator's totient.
 
 > **Say it back**
@@ -278,14 +256,14 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [fermats-little-theorem](02-fermats-little-theorem.md): the prime-clock version, widened here.
-- [eulers-totient](03-eulers-totient.md): where the 40 comes from.
-- [exponents-and-powers](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): what "3 to the 2026" means.
+- [Fermat's little theorem](02-fermats-little-theorem.md): the prime-clock version, widened here.
+- [Euler's totient](03-eulers-totient.md): where the 40 comes from.
+- [Exponents](../../01-Foundations/03-Powers%2C%20Roots%20and%20Logarithms/01-exponents-and-powers.md): what "3 to the 2026" means.
 
 ## Where this goes next
 
-- [order-and-primitive-roots](05-order-and-primitive-roots.md): the smallest exponent returning to 1, often below 40.
-- [rsa-in-outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md): the theorem doing paid work.
+- [The order of a number and primitive roots](05-order-and-primitive-roots.md): the smallest exponent returning to 1, often below 40.
+- [RSA in outline](../06-Codes%20and%20Secrets/03-rsa-in-outline.md): the theorem doing paid work.
 
 ---
 

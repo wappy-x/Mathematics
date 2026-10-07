@@ -1,27 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Generating Functions
-topic: An equation for a series
-item: The Catalan generating function
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/06-Lattice Paths and Catalan Numbers/03-catalan-numbers|catalan-numbers]]"
-  - "[[Cards/04-Combinatorics and graphs/07-Generating Functions/01-ordinary-generating-functions|ordinary-generating-functions]]"
-  - "[[Cards/03-Algebra/02-Polynomials/03-quadratic-formula|quadratic-formula]]"
-next:
-  - "[[Cards/06-Calculus and analysis/06-Series/06-binomial-series-and-e|binomial-series-and-e]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - catalan-generating-function
----
-
 # The Catalan generating function: the first-return recurrence becomes C = 1 + x C^2, solved by iteration
 
-Combinatorics and graphs → Generating Functions → An equation for a series → The Catalan generating function
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Generating Functions](../../../SYLLABUS.md#w04-s07) → The Catalan generating function
 
 ---
 
@@ -31,7 +10,7 @@ A mailroom bench holds six sorted stacks of envelopes in a row. A machine merges
 
 The finished stack is always the same; the work is not. What varies is the plan: which neighbours go in first. Brackets record it. Four stacks A, B, C and D allow five plans: (((AB)C)D), ((A(BC))D), ((AB)(CD)), (A((BC)D)) and (A(B(CD))). One stack allows one plan, the do-nothing plan.
 
-The counts from one stack to six are 1, 1, 2, 5, 14, 42 — the Catalan numbers ([catalan-numbers](../06-Lattice%20Paths%20and%20Catalan%20Numbers/03-catalan-numbers.md)), reached there one at a time. The list goes on one line here instead, as coefficients of a series in a marker x.
+The counts from one stack to six are 1, 1, 2, 5, 14, 42 — the Catalan numbers ([Catalan numbers](../06-Lattice%20Paths%20and%20Catalan%20Numbers/03-catalan-numbers.md)), reached there one at a time. The list goes on one line here instead, as coefficients of a series in a marker x.
 
 **Hang the counts on powers of x and the split "a last merge joins a left plan to a right plan" becomes C = 1 + x C^2: iterating that equation settles one coefficient a round, and the quadratic formula turns it into (1 - sqrt(1 - 4x))/(2x).**
 
@@ -53,13 +32,13 @@ The single stack is the 1, the last merge the x, the blocks the two copies of C.
 
 ## The formula
 
-Notation first, in words. This shelf holds a sequence of counts as one series: the count for size $n$ hangs on $x$ to the power $n$, and "the coefficient of x^n" names it ([ordinary-generating-functions](01-ordinary-generating-functions.md)). Here $C_n$ counts plans using $n$ merges, a row of $n$ + 1 stacks; $x$ is a place-marker, not a quantity, carrying one factor per merge.
+Notation first, in words. This shelf holds a sequence of counts as one series: the count for size $n$ hangs on $x$ to the power $n$, and "the coefficient of x^n" names it ([Generating functions](01-ordinary-generating-functions.md)). Here $C_n$ counts plans using $n$ merges, a row of $n$ + 1 stacks; $x$ is a place-marker, not a quantity, carrying one factor per merge.
 
 $$C(x) = 1 + x\,C(x)^2$$
 
 **Read it aloud:** a plan is either the do-nothing plan for one stack, or a last merge — one x — with a plan for the left block and a plan for the right.
 
-Coefficient by coefficient, that line is the convolution recurrence proved on [catalan-numbers](../06-Lattice%20Paths%20and%20Catalan%20Numbers/03-catalan-numbers.md): a sum of products of two earlier counts, one product per split of the merges. Treated instead as a quadratic in $C$ and solved, it names the list in one expression:
+Coefficient by coefficient, that line is the convolution recurrence proved on [Catalan numbers](../06-Lattice%20Paths%20and%20Catalan%20Numbers/03-catalan-numbers.md): a sum of products of two earlier counts, one product per split of the merges. Treated instead as a quadratic in $C$ and solved, it names the list in one expression:
 
 $$C(x) = \frac{1 - \sqrt{1 - 4x}}{2x}$$
 
@@ -91,7 +70,7 @@ Six counts are six separate facts. Hung on powers of x they become one object, $
 
 Take a row whose plan has at least one merge. One of those merges is last, and it joins two blocks: everything left of it, by then one stack, and everything right. Each block is a shorter row with its own plan, and the plan comes apart this way exactly once.
 
-Two rules make that algebra ([counting-with-generating-functions](02-counting-with-generating-functions.md)): cases add their series, and two independent pieces multiply theirs, the coefficient of x^n in a product summing over every split of n. So the single stack gives 1, the other case one x times $C(x)$ twice, once per block.
+Two rules make that algebra ([Counting by multiplying series](02-counting-with-generating-functions.md)): cases add their series, and two independent pieces multiply theirs, the coefficient of x^n in a product summing over every split of n. So the single stack gives 1, the other case one x times $C(x)$ twice, once per block.
 
 ### Step 2: iterate, and each round settles one more count
 
@@ -101,7 +80,7 @@ The x in front of the square is the reason: the coefficient of x^n on the right 
 
 ### Step 3: the quadratic formula names the whole series
 
-Rearranged, the equation is $x\,C(x)^2 - C(x) + 1 = 0$. Treat $C(x)$ as the unknown and x as a constant, and the quadratic formula applies ([quadratic-formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)):
+Rearranged, the equation is $x\,C(x)^2 - C(x) + 1 = 0$. Treat $C(x)$ as the unknown and x as a constant, and the quadratic formula applies ([The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md)):
 
 $$C(x) = \frac{1 \pm \sqrt{1 - 4x}}{2x}$$
 
@@ -379,7 +358,7 @@ The two outputs match line for line.
 
 - **Merging sorted runs.** A database engine merging sorted runs of records faces this row of stacks, and the plan sets how much data is copied.
 - **Expression trees.** Bracketing a chain of six values is the same nesting, so a compiler choosing an order of operations picks among these 42.
-- **One equation for a whole class.** Any class where an object is either a leaf or two smaller objects turns straight into an equation like this one; the shelf aims the same tool at products of series ([counting-with-generating-functions](02-counting-with-generating-functions.md)), at recurrences ([generating-functions-solve-recurrences](03-generating-functions-solve-recurrences.md)) and at labelled arrangements ([exponential-generating-functions](04-exponential-generating-functions.md)).
+- **One equation for a whole class.** Any class where an object is either a leaf or two smaller objects turns straight into an equation like this one; the shelf aims the same tool at products of series ([Counting by multiplying series](02-counting-with-generating-functions.md)), at recurrences ([Solving a recurrence with a generating function](03-generating-functions-solve-recurrences.md)) and at labelled arrangements ([Exponential generating functions](04-exponential-generating-functions.md)).
 
 > **Say it back**
 > Six sorted stacks in a row merge in 42 nestings; the counts from one stack to six are 1, 1, 2, 5, 14, 42. Hang them on powers of a marker x and the list is one series, C, satisfying C = 1 + x C^2: a plan is one stack, or a last merge joining a left plan to a right plan. Feeding the series back into that equation from C = 1 settles one more coefficient a round, so 42 arrives in round 5. Solving it as a quadratic gives (1 - sqrt(1 - 4x))/(2x), minus because the plus root runs away where the counts read 1.
@@ -388,13 +367,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [catalan-numbers](../06-Lattice%20Paths%20and%20Catalan%20Numbers/03-catalan-numbers.md): the counts, the split this equation encodes, and the closed count the code checks.
-- [ordinary-generating-functions](01-ordinary-generating-functions.md): hanging counts on powers of x, and the phrase "the coefficient of x^n".
-- [quadratic-formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the roots of aC^2 + bC + c = 0, used here with x as a constant.
+- [Catalan numbers](../06-Lattice%20Paths%20and%20Catalan%20Numbers/03-catalan-numbers.md): the counts, the split this equation encodes, and the closed count the code checks.
+- [Generating functions](01-ordinary-generating-functions.md): hanging counts on powers of x, and the phrase "the coefficient of x^n".
+- [The quadratic formula](../../03-Algebra/02-Polynomials/03-quadratic-formula.md): the roots of aC^2 + bC + c = 0, used here with x as a constant.
 
 ## Where this goes next
 
-- [binomial-series-and-e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md): Newton's series for a fractional power, the step that turns the closed form into C(2n, n)/(n + 1).
+- [The binomial series and the number e](../../06-Calculus%20and%20analysis/06-Series/06-binomial-series-and-e.md): Newton's series for a fractional power, the step that turns the closed form into C(2n, n)/(n + 1).
 - Expanding the square root in powers of x is Newton's binomial series for a fractional power, a wing 06 matter; that step turns this closed form into C(2n, n)/(n + 1).
 
 The equation holds every count, but the rounds give them up one at a time; whether a line of algebra can name the coefficient of x^n outright is what that expansion settles.

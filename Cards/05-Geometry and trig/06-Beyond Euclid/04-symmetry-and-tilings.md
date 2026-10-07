@@ -1,25 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Beyond Euclid
-topic: Moves that change nothing
-item: Symmetry
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/05-Vectors in Space/04-transformations-with-matrices|transformations-with-matrices]]"
-  - "[[Cards/03-Algebra/08-Groups/01-groups|groups]]"
-next:
-  - "[[Cards/17-Topology/03-Surfaces and Manifolds/03-orientability-mobius-strip-and-klein-bottle|orientability-mobius-strip-and-klein-bottle]]"
-  - "[[Cards/21-Algebraic and analytic number theory/07-Diophantine and Modular/07-modular-forms-in-outline|modular-forms-in-outline]]"
-  - "[[Cards/23-Differential geometry and Lie groups/03-Manifolds/02-example-manifolds-sphere-torus-and-projective-space|example-manifolds-sphere-torus-and-projective-space]]"
-tags: [mathematics, geometry and trig, symmetry-and-tilings]
----
-
 # Symmetry: the moves that leave a shape unchanged, and the seventeen ways to tile a wall
 
-Geometry and trig → Beyond Euclid → Moves that change nothing → Symmetry
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Beyond Euclid](../../../SYLLABUS.md#w05-s06) → Symmetry
 
 ---
 
@@ -27,7 +8,7 @@ Geometry and trig → Beyond Euclid → Moves that change nothing → Symmetry
 
 A snowflake under a microscope has six arms, each about 1 mm long, all branching alike. Turn it by 60° about its centre and it looks the same. So do turns by 120°, 180°, 240°, 300° and no turn: six turns. It can also be flipped over six mirror lines, three along arms and three between them. Twelve moves in all.
 
-A move that keeps every distance and lands a shape on itself is a **symmetry**. Symmetries combine and undo, so the twelve form a group ([groups](../../03-Algebra/08-Groups/01-groups.md)). The same idea sorts repeating patterns: a border along a strip has one of 7 kinds of symmetry, a wallpaper one of 17. The snowflake's 60° turn fits on a wall; a five-armed star's 72° turn does not.
+A move that keeps every distance and lands a shape on itself is a **symmetry**. Symmetries combine and undo, so the twelve form a group ([Groups](../../03-Algebra/08-Groups/01-groups.md)). The same idea sorts repeating patterns: a border along a strip has one of 7 kinds of symmetry, a wallpaper one of 17. The snowflake's 60° turn fits on a wall; a five-armed star's 72° turn does not.
 
 **A symmetry is a distance-keeping move that lands a shape on itself; symmetries form a group, and for repeating patterns the group's rules leave only 7 kinds of strip and 17 kinds of wall.**
 
@@ -43,7 +24,7 @@ To scale, 1 mm = 90 units, centre (130, 120); the tips are the `figure,` line of
 
 ## The formula
 
-Notation, in words first. $R_\theta$ is the anticlockwise turn by angle $\theta$ about the centre. $F_\varphi$ is the flip in the mirror line through the centre at angle $\varphi$ above the horizontal. Two moves side by side act right to left, the way matrices multiply ([transformations-with-matrices](../05-Vectors%20in%20Space/04-transformations-with-matrices.md)): in $F_\psi F_\varphi$, $F_\varphi$ acts first.
+Notation, in words first. $R_\theta$ is the anticlockwise turn by angle $\theta$ about the centre. $F_\varphi$ is the flip in the mirror line through the centre at angle $\varphi$ above the horizontal. Two moves side by side act right to left, the way matrices multiply ([Moving shapes with matrices](../05-Vectors%20in%20Space/04-transformations-with-matrices.md)): in $F_\psi F_\varphi$, $F_\varphi$ acts first.
 
 $$R_\theta = \begin{pmatrix}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{pmatrix}, \qquad F_\varphi = \begin{pmatrix}\cos 2\varphi & \sin 2\varphi\\ \sin 2\varphi & -\cos 2\varphi\end{pmatrix}$$
 
@@ -72,7 +53,7 @@ $$\operatorname{tr} R_{360°/n} = 2\cos(360°/n) \in \{-2, -1, 0, 1, 2\} \quad\L
 - **Rigid moves.** Allow bending and the moves are endless.
 - **A fixed centre, for the twelve.** A finite shape's symmetries fix one point; patterns also slide and glide.
 - **A shortest repeat, for 1, 2, 3, 4, 6.** A Penrose tiling never repeats, and five-fold turns return.
-- **A flat plane, for 7 and 17.** On a sphere or saddle the costs of Step 5 do not total 2 ([spherical-and-hyperbolic-geometry](02-spherical-and-hyperbolic-geometry.md)).
+- **A flat plane, for 7 and 17.** On a sphere or saddle the costs of Step 5 do not total 2 ([Three geometries](02-spherical-and-hyperbolic-geometry.md)).
 
 ---
 
@@ -90,7 +71,7 @@ A distance-keeping move that fixes the centre is pinned by where two neighbourin
 
 Give each point a direction, an angle from the horizontal. The flip $F_\varphi$ sends direction α to 2φ − α, since the mirror sits halfway between a point and its image. Flip again in $F_\psi$: 2ψ − (2φ − α) = α + 2(ψ − φ). Every direction moves by the same amount, so the pair is a turn by 2(ψ − φ).
 
-Mirrors at 0° and 30° give 60°; in the other order, −60°, that is 300°. Order matters. The turns are half the group; the flips are the other block ([cosets-and-lagranges-theorem](../../03-Algebra/08-Groups/04-cosets-and-lagranges-theorem.md)).
+Mirrors at 0° and 30° give 60°; in the other order, −60°, that is 300°. Order matters. The turns are half the group; the flips are the other block ([Cosets and Lagrange's theorem](../../03-Algebra/08-Groups/04-cosets-and-lagranges-theorem.md)).
 
 ### Step 3: a strip has seven kinds
 
@@ -134,7 +115,7 @@ Conway's **magic theorem**: a set of marks describes a flat wall exactly when th
 <details>
 <summary>Detailed proof: why 2, and the hand count</summary>
 
-Euler's count, corners minus edges plus faces ([polyhedra-and-eulers-formula](../02-Circles%20and%20Solids/06-polyhedra-and-eulers-formula.md)), is 2 for a sphere. Glue one repeat's opposite edges and a doughnut results, with count 1 − 2 + 1 = 0. The folded wall is that doughnut shared out evenly, so its count, in fractions, is 0 as well. Each mark lowers a sphere's 2 by its cost, so the costs total 2; Conway, Burgiel and Goodman-Strauss give the full proof.
+Euler's count, corners minus edges plus faces ([Polyhedra](../02-Circles%20and%20Solids/06-polyhedra-and-eulers-formula.md)), is 2 for a sphere. Glue one repeat's opposite edges and a doughnut results, with count 1 − 2 + 1 = 0. The folded wall is that doughnut shared out evenly, so its count, in fractions, is 0 as well. Each mark lowers a sphere's 2 by its cost, so the costs total 2; Conway, Burgiel and Goodman-Strauss give the full proof.
 
 The count: `∘`; `××`, `*×`, `**`; turn centres alone, `2222`, `333`, `442`, `632`; a glide with turns, `22×`; one mirror, `*2222`, `*333`, `*442`, `*632`, `2*22`, `3*3`, `4*2`, `22*`.
 
@@ -379,7 +360,7 @@ ALL CHECKS PASS
 
 - **Snow and crystals.** Ice builds on a six-fold lattice, so flakes grow six arms. In three dimensions the count is 230 space groups, the language of X-ray crystallography.
 - **Quasicrystals.** In 1982 Dan Shechtman saw five-fold symmetry in an alloy: ordered atoms that never repeat, so Step 4 does not apply. It won the 2011 Nobel Prize in Chemistry.
-- **Tilework.** The Alhambra shows many of the 17. Costs below 2 give polyhedra, above 2 Escher's *Circle Limit* prints ([spherical-and-hyperbolic-geometry](02-spherical-and-hyperbolic-geometry.md)). Drawing the snowflake's hexagon without a protractor is [ruler-and-compass-constructions](03-ruler-and-compass-constructions.md).
+- **Tilework.** The Alhambra shows many of the 17. Costs below 2 give polyhedra, above 2 Escher's *Circle Limit* prints ([Three geometries](02-spherical-and-hyperbolic-geometry.md)). Drawing the snowflake's hexagon without a protractor is [Ruler and compass](03-ruler-and-compass-constructions.md).
 
 > **Say it back**
 > A symmetry keeps distances and lands a shape on itself; symmetries form a group. A snowflake has six turns and six flips; two flips make a turn. A strip mixes its moves in 7 ways, since two force a third. A wall turns only by a half, third, quarter or sixth, since its turns have whole traces. Conway's costs, totalling 2, leave 17 walls.
@@ -388,14 +369,14 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [transformations-with-matrices](../05-Vectors%20in%20Space/04-transformations-with-matrices.md): turns and flips as 2 × 2 matrices, multiplied right to left.
-- [groups](../../03-Algebra/08-Groups/01-groups.md): the four rules the twelve moves obey.
+- [Moving shapes with matrices](../05-Vectors%20in%20Space/04-transformations-with-matrices.md): turns and flips as 2 × 2 matrices, multiplied right to left.
+- [Groups](../../03-Algebra/08-Groups/01-groups.md): the four rules the twelve moves obey.
 
 ## Where this goes next
 
-- orientability-mobius-strip-and-klein-bottle: the folded wall `××` is a one-sided Klein bottle.
-- modular-forms-in-outline: functions unchanged by symmetries of the saddle-shaped plane.
-- example-manifolds-sphere-torus-and-projective-space: the torus a plain repeating wall, `∘`, folds into.
+- Orientability: the folded wall `××` is a one-sided Klein bottle.
+- Modular forms: functions unchanged by symmetries of the saddle-shaped plane.
+- Sphere, torus and projective plane: the torus a plain repeating wall, `∘`, folds into.
 
 A wall folded by its symmetries is a surface, a torus or a Klein bottle; which surfaces exist, and which have one side, the orientability card answers.
 

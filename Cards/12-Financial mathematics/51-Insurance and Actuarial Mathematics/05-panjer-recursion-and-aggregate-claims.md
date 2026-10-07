@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Insurance and Actuarial Mathematics
-topic: The year's claim total
-item: Panjer's recursion
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/04-collective-risk-and-compound-poisson|collective-risk-and-compound-poisson]]"
-next:
-  - "[[Cards/12-Financial mathematics/51-Insurance and Actuarial Mathematics/07-reserving-chain-ladder-and-bornhuetter-ferguson|reserving-chain-ladder-and-bornhuetter-ferguson]]"
-tags: [mathematics, financial mathematics, panjer-recursion-and-aggregate-claims]
----
-
 # Panjer's recursion: the aggregate claim distribution computed exactly
 
-Financial mathematics → Insurance and Actuarial Mathematics → The year's claim total → Panjer's recursion
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Insurance and Actuarial Mathematics](../../../SYLLABUS.md#w12-s51) → Panjer's recursion
 
 ---
 
@@ -30,7 +14,7 @@ The average cannot answer it. The year's total is a random number of random amou
 
 **The chance that the year's total is exactly k grid units is a short weighted sum of the chances already found for smaller totals, so the whole distribution, and any tail of it, is built in one pass from zero upwards.**
 
-**What kind of fact this is:** a method, exact under the compound Poisson model (a random Poisson count of independent claims, from [collective-risk-and-compound-poisson](04-collective-risk-and-compound-poisson.md)); the recursion itself is a theorem, proved on this card in Why it works.
+**What kind of fact this is:** a method, exact under the compound Poisson model (a random Poisson count of independent claims, from [Aggregate claims](04-collective-risk-and-compound-poisson.md)); the recursion itself is a theorem, proved on this card in Why it works.
 
 ### The picture: the whole distribution of the year's large claims
 
@@ -150,7 +134,7 @@ The $j = 0$ term is $a\,q_0\,p_k$; moving it to the left gives the factor $1/(1 
 
 </details>
 
-A second road reaches the same numbers with no recursion. Split the 20 expected claims by size: a Poisson count of claims, sorted into bins independently, gives independent Poisson counts in each bin. So the year holds a Poisson(10) number of $10,000 claims, an independent Poisson(6) number of $20,000 claims and an independent Poisson(4) number of $50,000 claims, and the total is $n_1 + 2n_2 + 5n_5$ units. Adding the chances of every triple with a given total gives the distribution directly. The third road, summing over the claim count, is the definition of the compound distribution in [collective-risk-and-compound-poisson](04-collective-risk-and-compound-poisson.md).
+A second road reaches the same numbers with no recursion. Split the 20 expected claims by size: a Poisson count of claims, sorted into bins independently, gives independent Poisson counts in each bin. So the year holds a Poisson(10) number of $10,000 claims, an independent Poisson(6) number of $20,000 claims and an independent Poisson(4) number of $50,000 claims, and the total is $n_1 + 2n_2 + 5n_5$ units. Adding the chances of every triple with a given total gives the distribution directly. The third road, summing over the claim count, is the definition of the compound distribution in [Aggregate claims](04-collective-risk-and-compound-poisson.md).
 
 ---
 
@@ -646,10 +630,10 @@ The two outputs match line for line, the simulated years included: both language
 ## Where you meet it in real life
 
 - **Setting capital for an insurer.** Solvency rules ask how much money covers a bad year at a stated confidence; for a line of business with a count and a size model, the recursion gives the tail exactly instead of by simulation.
-- **Pricing stop-loss and excess-of-loss reinsurance.** A cover that pays the part of the year's total above a line is priced from the same $p_k$; see [credibility-and-reinsurance](08-credibility-and-reinsurance.md).
+- **Pricing stop-loss and excess-of-loss reinsurance.** A cover that pays the part of the year's total above a line is priced from the same $p_k$; see [Credibility and reinsurance](08-credibility-and-reinsurance.md).
 - **Operational risk at banks.** Loss-distribution models for fraud and system failures pair a count with a size, and the aggregate is computed the same way.
 - **Credit portfolio models.** CreditRisk+, a published portfolio credit model, uses a Panjer-type recursion to get the distribution of default losses on a grid of exposure bands.
-- **Ruin over many years.** A single year's total feeds the question of whether surplus survives a run of years, the subject of [ruin-theory-and-lundberg](06-ruin-theory-and-lundberg.md).
+- **Ruin over many years.** A single year's total feeds the question of whether surplus survives a run of years, the subject of [Ruin](06-ruin-theory-and-lundberg.md).
 
 > **Say it back**
 > The year's total is a random number of random claims, and its tail is what a budget or a capital figure needs. Put the claim sizes on a grid and the chance of each exact total is a short weighted sum of the chances for smaller totals. For a Poisson count the weight on a size-j claim is the rate times j over k, and the start is the chance of no claims. For the insurer's 20 large claims a year the chance of beating 120 percent of the mean is 22.34 percent, confirmed three other ways. A bell curve comes close in the middle and misses in the far tail.
@@ -658,11 +642,11 @@ The two outputs match line for line, the simulated years included: both language
 
 ## What this builds on
 
-- [collective-risk-and-compound-poisson](04-collective-risk-and-compound-poisson.md): the model of a Poisson count of independent claims, its mean and variance, and the sum over the count that the recursion replaces.
+- [Aggregate claims](04-collective-risk-and-compound-poisson.md): the model of a Poisson count of independent claims, its mean and variance, and the sum over the count that the recursion replaces.
 
 ## Where this goes next
 
-- [reserving-chain-ladder-and-bornhuetter-ferguson](07-reserving-chain-ladder-and-bornhuetter-ferguson.md): estimating how much of a year's claims is still to be paid, from the pattern of past payments.
+- [Reserving](07-reserving-chain-ladder-and-bornhuetter-ferguson.md): estimating how much of a year's claims is still to be paid, from the pattern of past payments.
 
 This card treats the year's claims as settled the moment they happen; in practice large claims are paid over several years, and how much of this year's total is still owed at any date is the question reserving answers.
 

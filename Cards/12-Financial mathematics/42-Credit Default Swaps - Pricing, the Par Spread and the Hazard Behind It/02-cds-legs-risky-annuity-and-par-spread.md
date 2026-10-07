@@ -1,35 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It
-topic: Valuing the two legs
-item: Pricing a CDS
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/01-credit-default-swap-contract|credit-default-swap-contract]]"
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/02-hazard-rate-and-survival-probability|hazard-rate-and-survival-probability]]"
-  - "[[Cards/01-Foundations/04-Compound Growth and Discounting/06-discounting-and-present-value|discounting-and-present-value]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/01-riemann-integral|riemann-integral]]"
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/01-compounding-and-discount-factors|compounding-and-discount-factors]]"
-next:
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/03-the-credit-triangle|the-credit-triangle]]"
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve|pricing-a-defaultable-bond-from-the-survival-curve]]"
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/03-stochastic-hazard-cox-process|stochastic-hazard-cox-process]]"
-  - "[[Cards/12-Financial mathematics/46-Counterparty Risk and CVA/03-cva|cva]]"
-tags: [mathematics, financial mathematics, cds-legs-risky-annuity-and-par-spread]
----
-
 # Pricing a CDS: the premium leg, the protection leg, the risky annuity, and the spread that makes them equal
 
-Financial mathematics → Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It → Valuing the two legs → Pricing a CDS
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It](../../../SYLLABUS.md#w12-s42) → Pricing a CDS
 
 ---
 
 ## General Overview
 
-Northwind Lines, a shipping company, has bonds outstanding. A fund holding $10 million of them buys five years of insurance against Northwind defaulting. The insurance is a **credit default swap**, CDS for short ([credit-default-swap-contract](01-credit-default-swap-contract.md)). The fund pays a premium every quarter while Northwind survives. If Northwind defaults inside the five years, the seller pays the fund what the bonds lost: $10 million minus whatever is recovered from the wreck.
+Northwind Lines, a shipping company, has bonds outstanding. A fund holding $10 million of them buys five years of insurance against Northwind defaulting. The insurance is a **credit default swap**, CDS for short ([The credit default swap](01-credit-default-swap-contract.md)). The fund pays a premium every quarter while Northwind survives. If Northwind defaults inside the five years, the seller pays the fund what the bonds lost: $10 million minus whatever is recovered from the wreck.
 
 The premium is quoted as a yearly rate on the $10 million, in **basis points** (bp: hundredths of a percent, so 100 bp is 1%). The question on this card is which rate is fair. The market reads Northwind as failing at 2% a year, expects to recover 40 cents on the dollar, and discounts money at 5% a year. On those numbers the fair premium is **121.06 bp**: about $30,264 a quarter on the $10 million, until Northwind defaults or five years pass.
 
@@ -57,7 +34,7 @@ Orange, rising: the premium leg, what the fund's premiums are worth today at eac
 
 ## The formula
 
-Notation first, in words. The default date is $\tau$ (Greek "tau"), a random number of years from today. The premium dates are $t_j$, read "t sub j": the first, second, and so on, up to the last, $t_n$. A capital sigma, Σ, means "add up the terms for every date". The integral $\int_0^T$ means the area under a curve from today to year T, the contract's end ([riemann-integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md)). $D(t)$ is today's value of \$1 due at date t; $Q(t)$ is the chance the company survives to t; $\lambda(t)$ is the hazard, the yearly default rate among survivors; $R$ is the recovery; $\delta$ is the slice of a year each premium covers. The table below gives each one's Northwind value. All amounts are per \$1 of notional (the amount insured); multiply by \$10 million for Northwind.
+Notation first, in words. The default date is $\tau$ (Greek "tau"), a random number of years from today. The premium dates are $t_j$, read "t sub j": the first, second, and so on, up to the last, $t_n$. A capital sigma, Σ, means "add up the terms for every date". The integral $\int_0^T$ means the area under a curve from today to year T, the contract's end ([The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md)). $D(t)$ is today's value of \$1 due at date t; $Q(t)$ is the chance the company survives to t; $\lambda(t)$ is the hazard, the yearly default rate among survivors; $R$ is the recovery; $\delta$ is the slice of a year each premium covers. The table below gives each one's Northwind value. All amounts are per \$1 of notional (the amount insured); multiply by \$10 million for Northwind.
 
 $$A = \sum_{j=1}^{n} \delta\, D(t_j)\, Q(t_j), \qquad P = (1-R)\int_0^T D(t)\,\lambda(t)\,Q(t)\,dt, \qquad s^* = \frac{P}{A}.$$
 
@@ -85,15 +62,15 @@ $$A = \delta\,\frac{x\,(1 - x^{n})}{1 - x}, \qquad P = (1-R)\,\lambda\,\frac{1 -
 | $s$, $s^*$ | a premium rate per year; the par spread | 121.06 bp | — |
 | $c$, $x$ | the combined shrink rate $r + \lambda$; one quarter's shrink factor $e^{-c\delta}$ | 0.07; 0.982652 | — |
 
-The survival curve is written $S(t)$ on [hazard-rate-and-survival-probability](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md). This card writes $Q(t)$, because $s$ is taken by the spread.
+The survival curve is written $S(t)$ on [The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md). This card writes $Q(t)$, because $s$ is taken by the spread.
 
 ### When it holds
 
-- **Default arrives at a known hazard.** The formulas need a survival curve fixed today. If the hazard itself moves at random, survival becomes an average over paths; see [stochastic-hazard-cox-process](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md).
+- **Default arrives at a known hazard.** The formulas need a survival curve fixed today. If the hazard itself moves at random, survival becomes an average over paths; see [A random hazard](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md).
 - **Default and interest rates are unrelated.** The protection integrand multiplies $D(t)$ by $\lambda(t)Q(t)$ as if the two were independent. If defaults cluster when rates fall, the product of averages is not the average of the product, and both legs shift.
-- **Recovery is a fixed number.** A recovery that is random but unrelated to everything else can be replaced by its average. One that falls when defaults are many cannot; [recovery-assumptions-and-what-they-change](05-recovery-assumptions-and-what-they-change.md) measures what $R$ moves.
-- **The seller pays.** The card ignores the chance the protection seller fails first. That gap is priced on [cva](../46-Counterparty%20Risk%20and%20CVA/03-cva.md).
-- **Premiums fall on fixed dates, a quarter apart.** The card's quarter is exactly 0.25 years and the payout lands at the moment of default. Live contracts count days and settle a few weeks later. Conventions verified 2026-09-28 against the ISDA CDS Standard Model: premiums fall on 20 March, June, September and December, count actual days over 360, include accrued premium on default, and run at a fixed coupon (100 or 500 bp in North America) with an upfront payment. The contract's own rules are on [credit-default-swap-contract](01-credit-default-swap-contract.md).
+- **Recovery is a fixed number.** A recovery that is random but unrelated to everything else can be replaced by its average. One that falls when defaults are many cannot; [Recovery assumptions](05-recovery-assumptions-and-what-they-change.md) measures what $R$ moves.
+- **The seller pays.** The card ignores the chance the protection seller fails first. That gap is priced on [CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md).
+- **Premiums fall on fixed dates, a quarter apart.** The card's quarter is exactly 0.25 years and the payout lands at the moment of default. Live contracts count days and settle a few weeks later. Conventions verified 2026-09-28 against the ISDA CDS Standard Model: premiums fall on 20 March, June, September and December, count actual days over 360, include accrued premium on default, and run at a fixed coupon (100 or 500 bp in North America) with an upfront payment. The contract's own rules are on [The credit default swap](01-credit-default-swap-contract.md).
 
 ---
 
@@ -101,9 +78,9 @@ The survival curve is written $S(t)$ on [hazard-rate-and-survival-probability](.
 
 ### Step 0: price each payment by its chance and its date
 
-A promise of $1 in five years is worth $0.778801 today at 5% ([discounting-and-present-value](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md)). A promise of $1 in five years *if Northwind is still alive* is worth that times the chance Northwind is alive. Every cash flow in a CDS is of this kind: a fixed amount, due at a date, paid only if some event happens. Its value today is amount × chance × discount factor. The chances come from the hazard; the discount factors come from the interest rate. Add the values up and each leg has a price. That is the whole method; the steps below apply it to each leg.
+A promise of $1 in five years is worth $0.778801 today at 5% ([Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md)). A promise of $1 in five years *if Northwind is still alive* is worth that times the chance Northwind is alive. Every cash flow in a CDS is of this kind: a fixed amount, due at a date, paid only if some event happens. Its value today is amount × chance × discount factor. The chances come from the hazard; the discount factors come from the interest rate. Add the values up and each leg has a price. That is the whole method; the steps below apply it to each leg.
 
-These chances are the ones implied by market prices, not the historical default frequency. [market-implied-versus-historical-default-probability](09-market-implied-versus-historical-default-probability.md) explains why the two differ.
+These chances are the ones implied by market prices, not the historical default frequency. [Two default probabilities](09-market-implied-versus-historical-default-probability.md) explains why the two differ.
 
 ### Step 1: the premium leg is a spread times an annuity
 
@@ -147,7 +124,7 @@ The left side is a straight line through zero with slope $A$. The right side doe
 
 - **Existence.** There is always a solution while $A > 0$, since $P$ is finite.
 - **Uniqueness.** One solution, because a line with positive slope takes each value once.
-- **Boundaries.** A hazard of zero makes $P = 0$ and the par spread 0. A recovery of 100% does the same. A company certain to default before the first premium date has $A = 0$: no running premium can pay for its cover, and the contract has to be paid for up front ([marking-a-cds-to-market-and-the-upfront](07-marking-a-cds-to-market-and-the-upfront.md)).
+- **Boundaries.** A hazard of zero makes $P = 0$ and the par spread 0. A recovery of 100% does the same. A company certain to default before the first premium date has $A = 0$: no running premium can pay for its cover, and the contract has to be paid for up front ([Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md)).
 
 For Northwind, $s^* = 0.050625 / 4.181935$, which is 121.06 bp. The checks also find it by bisection (halving an interval that brackets the root until it is tiny) on the value $P - sA$, without dividing, and land on the same 121.056152.
 
@@ -168,7 +145,7 @@ Suppose the fund paid its premium continuously, a trickle every instant rather t
 
 $$s^*_{\text{continuous}} = (1-R)\,\lambda = 0.6 \times 0.02 = 120 \text{ bp exactly}.$$
 
-That clean result gets its own card: [the-credit-triangle](03-the-credit-triangle.md).
+That clean result gets its own card: [The credit triangle](03-the-credit-triangle.md).
 
 Quarterly premiums are worth less than a continuous trickle, for two reasons. Each one is paid at the end of its quarter, so it is discounted a little more. And if Northwind defaults mid-quarter, the premium for the part of the quarter it was covered is never paid, while the protection still pays out. A smaller annuity needs a larger spread to buy the same protection: 4.181935 against 4.218742, so 121.06 bp against 120. The gap is premium timing, nothing else. It shrinks as payments grow more frequent:
 
@@ -196,7 +173,7 @@ the covered fraction of the quarter, paid at default, weighted by the default de
 
 Nothing in Steps 1 to 3 needed the curves to be flat. The checks price a second contract where the interest rate rises from 3% by 0.6% a year of maturity, so $D(t) = e^{-(0.03 + 0.006t)t}$, and the hazard rises from 1% by 0.4% a year, so $\lambda(t) = 0.01 + 0.004t$. There is no closed form, so the annuity is the dated sum and the protection leg is Simpson's rule (an area found from parabolas fitted through equally spaced points). The par spread is 117.20 bp.
 
-The third road never writes an integral. It draws 400,000 random default dates from the hazard, runs each contract to its end, and counts the cash: premiums paid before default, the $1 - R$ payout if default comes before year five. The averages are the two legs. For Northwind the simulation gives 121.63 bp, with a standard error (the typical size of its random miss) of 0.63 bp, so it sits within one standard error of 121.06. For the rising curves it gives 116.31 bp against 117.20, with a standard error of 0.60 bp: inside two. How each road's error behaves is the subject of [pricing-a-defaultable-bond-from-the-survival-curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md), where the same survival-weighted sums price a bond.
+The third road never writes an integral. It draws 400,000 random default dates from the hazard, runs each contract to its end, and counts the cash: premiums paid before default, the $1 - R$ payout if default comes before year five. The averages are the two legs. For Northwind the simulation gives 121.63 bp, with a standard error (the typical size of its random miss) of 0.63 bp, so it sits within one standard error of 121.06. For the rising curves it gives 116.31 bp against 117.20, with a standard error of 0.60 bp: inside two. How each road's error behaves is the subject of [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md), where the same survival-weighted sums price a bond.
 
 ---
 
@@ -665,10 +642,10 @@ The two outputs match line for line, the simulation included, because both langu
 
 ## Where you meet it in real life
 
-- **Quoting a CDS.** Dealers quote single-name contracts by a spread; since 2009 the trade itself carries a fixed coupon plus an upfront payment, which that spread sets. A quote is this card run backwards, which is [implied-hazard-from-a-cds-quote](04-implied-hazard-from-a-cds-quote.md).
-- **Risk per basis point.** The risky annuity times the notional is the value of one basis point of spread: $4,181.94 on Northwind's $10 million. Traders size hedges with it; see [cds-risk-numbers](08-cds-risk-numbers.md).
-- **Marking old trades.** A contract signed at yesterday's spread is worth the gap to today's par spread times the risky annuity: [marking-a-cds-to-market-and-the-upfront](07-marking-a-cds-to-market-and-the-upfront.md).
-- **Building the hazard curve.** Quotes at several maturities are turned into a hazard that changes with time, one piece per quote: [bootstrapping-the-hazard-curve-from-cds-quotes](06-bootstrapping-the-hazard-curve-from-cds-quotes.md).
+- **Quoting a CDS.** Dealers quote single-name contracts by a spread; since 2009 the trade itself carries a fixed coupon plus an upfront payment, which that spread sets. A quote is this card run backwards, which is [Implied hazard from one CDS quote](04-implied-hazard-from-a-cds-quote.md).
+- **Risk per basis point.** The risky annuity times the notional is the value of one basis point of spread: $4,181.94 on Northwind's $10 million. Traders size hedges with it; see [CDS risk numbers](08-cds-risk-numbers.md).
+- **Marking old trades.** A contract signed at yesterday's spread is worth the gap to today's par spread times the risky annuity: [Valuing an existing CDS](07-marking-a-cds-to-market-and-the-upfront.md).
+- **Building the hazard curve.** Quotes at several maturities are turned into a hazard that changes with time, one piece per quote: [Bootstrapping a hazard curve](06-bootstrapping-the-hazard-curve-from-cds-quotes.md).
 
 > **Say it back**
 > A CDS has two legs. The premium leg is the spread times the risky annuity: each quarter's premium, discounted and weighted by the chance the company is alive to pay it. The protection leg is the loss on default, weighted by the chance default lands at each date and discounted. The par spread is protection divided by annuity, and it is unique because the premium leg is a rising straight line in the spread. For Northwind that is 121.06 bp; paying continuously would make it exactly loss times hazard, 120 bp.
@@ -677,18 +654,18 @@ The two outputs match line for line, the simulation included, because both langu
 
 ## What this builds on
 
-- [credit-default-swap-contract](01-credit-default-swap-contract.md): who pays whom, when, and what a credit event is.
-- [hazard-rate-and-survival-probability](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): the hazard, the survival curve, and the chance of default in a short stretch.
-- [discounting-and-present-value](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): why a dollar later is worth less today.
-- [riemann-integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md): the sum of thin slices that becomes the protection leg.
-- [compounding-and-discount-factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): the discount factor $e^{-rt}$ and continuous compounding.
+- [The credit default swap](01-credit-default-swap-contract.md): who pays whom, when, and what a credit event is.
+- [The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): the hazard, the survival curve, and the chance of default in a short stretch.
+- [Discounting](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/06-discounting-and-present-value.md): why a dollar later is worth less today.
+- [The integral](../../06-Calculus%20and%20analysis/04-Integrals/01-riemann-integral.md): the sum of thin slices that becomes the protection leg.
+- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): the discount factor $e^{-rt}$ and continuous compounding.
 
 ## Where this goes next
 
-- [the-credit-triangle](03-the-credit-triangle.md): spread, loss and hazard tied by one approximation, and how good it is.
-- [pricing-a-defaultable-bond-from-the-survival-curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md): the same survival-weighted sums pricing a bond.
-- [stochastic-hazard-cox-process](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md): the legs when the hazard itself moves at random.
-- [cva](../46-Counterparty%20Risk%20and%20CVA/03-cva.md): the protection leg turned round, to price the chance a trading partner defaults.
+- [The credit triangle](03-the-credit-triangle.md): spread, loss and hazard tied by one approximation, and how good it is.
+- [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md): the same survival-weighted sums pricing a bond.
+- [A random hazard](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md): the legs when the hazard itself moves at random.
+- [CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md): the protection leg turned round, to price the chance a trading partner defaults.
 
 This card prices a CDS from a known hazard; the market runs the other way, quoting the spread and leaving the hazard to be found, and the credit triangle is the first, quickest way to find it.
 

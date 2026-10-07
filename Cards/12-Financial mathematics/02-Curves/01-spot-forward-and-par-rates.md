@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Curves
-topic: Term structure
-item: Spot, forward and par rates
-kind: theorem
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/12-Financial mathematics/01-Money, Dates and Discounting/01-compounding-and-discount-factors|compounding-and-discount-factors]]"
-next:
-  - "[[Cards/12-Financial mathematics/02-Curves/02-forward-rate-agreements|forward-rate-agreements]]"
-  - "[[Cards/12-Financial mathematics/02-Curves/04-bootstrapping-the-discount-curve|bootstrapping-the-discount-curve]]"
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/01-commodity-swap-and-average-price-forward|commodity-swap-and-average-price-forward]]"
-tags:
-  - mathematics
-  - financial-mathematics
-  - spot-forward-and-par-rates
----
-
 # Spot, forward and par rates: three ways to read one curve
 
-Financial mathematics → Curves → Term structure → Spot, forward and par rates
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves](../../../SYLLABUS.md#w12-s02) → Spot, forward and par rates
 
 ---
 
@@ -60,7 +39,7 @@ Top line: the forward rates, each one the rate for a single later year. Middle l
 
 ## The formula
 
-Notation first, in plain words. A small numeral set low and to the right of a rate names the date it belongs to, so $z_1$ is the rate from today out to one year and $z_2$ the rate from today out to two years; $z_T$ is the general one, said "z sub T". The letter $f$ is a rate for a stretch that starts later, and the two dates naming the stretch go with it: $f_{1,2}$ is the rate for the year running from date 1 to date 2. As on [compounding-and-discount-factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md), $D(T)$ is the discount factor: today's price of one dollar paid at $T$.
+Notation first, in plain words. A small numeral set low and to the right of a rate names the date it belongs to, so $z_1$ is the rate from today out to one year and $z_2$ the rate from today out to two years; $z_T$ is the general one, said "z sub T". The letter $f$ is a rate for a stretch that starts later, and the two dates naming the stretch go with it: $f_{1,2}$ is the rate for the year running from date 1 to date 2. As on [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md), $D(T)$ is the discount factor: today's price of one dollar paid at $T$.
 
 $$(1 + z_2)^2 \;=\; (1 + z_1)\,(1 + f_{1,2})$$
 
@@ -89,7 +68,7 @@ The first says a spot rate and a price for a future dollar are the same fact wri
 
 ### When it holds
 
-- **Cash flows that are certain and dates that are fixed.** The identity prices promises that will be kept. A borrower that can default needs a survival term as well, and the gap that opens up is measured on [z-spread-and-asset-swap-spread](06-z-spread-and-asset-swap-spread.md).
+- **Cash flows that are certain and dates that are fixed.** The identity prices promises that will be kept. A borrower that can default needs a survival term as well, and the gap that opens up is measured on [Spreads over the curve](06-z-spread-and-asset-swap-spread.md).
 - **The same terms for lending and borrowing, in the size required.** If borrowing costs more than lending pays, the argument gives a band rather than a number, and the forward can sit anywhere inside it.
 - **One stated compounding convention throughout.** Under annual compounding the growth factors multiply, which is the identity above. Under continuous compounding the same fact reads as a straight-line rule on rate times time, and that rule gives 6.0000 percent here rather than 6.0096: a basis point, from the convention alone.
 - **Dates a whole year apart, as written here.** Real calendars count days under a day-count rule, and a stretch that is not a whole year carries a fraction in the exponent instead.
@@ -166,7 +145,7 @@ Continuous compounding replaces the multiplier $(1 + z_T)^T$ with $e$ raised to 
 
 </details>
 
-One more road reaches the same place from the other end. Nothing above needed rates at all: given the five prices $D(1)$ to $D(5)$, spot, forward and par rates are three ways of reading them out. Getting those prices from a morning's market quotes, one maturity at a time, is [bootstrapping-the-discount-curve](04-bootstrapping-the-discount-curve.md).
+One more road reaches the same place from the other end. Nothing above needed rates at all: given the five prices $D(1)$ to $D(5)$, spot, forward and par rates are three ways of reading them out. Getting those prices from a morning's market quotes, one maturity at a time, is [Bootstrapping](04-bootstrapping-the-discount-curve.md).
 
 ---
 
@@ -650,7 +629,7 @@ The two outputs match line for line, from different code taking the same three r
 > - **Discounting a single payment at a par yield.** The five-year par rate of 5.9252 percent prices a coupon bond at face value; it is the wrong rate for one lump sum on one date. Used that way it prices a five-year zero at 74.99 instead of 74.73.
 > - **Mixing compounding conventions.** The same curve quoted continuously gives a forward of 6.0000 percent rather than 6.0096. Neither is wrong; reading one as the other is.
 > - **Quoting a forward without both dates.** A forward rate needs a start and an end. "The one-year forward" is ambiguous until it says one year starting when.
-> - **Expecting the forward curve to look tame.** Spot rates are averages, forwards are the pieces being averaged, so mild bends in the spot curve turn into sharp swings in the forwards. That sensitivity is what curve fitting has to control: [curve-interpolation-and-shape](05-curve-interpolation-and-shape.md).
+> - **Expecting the forward curve to look tame.** Spot rates are averages, forwards are the pieces being averaged, so mild bends in the spot curve turn into sharp swings in the forwards. That sensitivity is what curve fitting has to control: [Between the pillars](05-curve-interpolation-and-shape.md).
 
 ---
 
@@ -658,9 +637,9 @@ The two outputs match line for line, from different code taking the same three r
 
 - **The headline Treasury yield.** The rate quoted for the 10-year Treasury is a par yield: the coupon a new 10-year note would need to sell at face value. It is not the rate for a single payment ten years out, which is the 10-year spot rate.
 - **Swap rates.** The fixed rate on a new interest rate swap is a par rate by construction: the rate that makes the contract worth nothing to either side at the start.
-- **Locking a rate before you need the money.** A borrower who knows the loan starts in six months can fix the rate now at the forward. The contract that does it is [forward-rate-agreements](02-forward-rate-agreements.md), and the short end of the curve where it lives is [money-market-instruments-and-sofr](03-money-market-instruments-and-sofr.md).
+- **Locking a rate before you need the money.** A borrower who knows the loan starts in six months can fix the rate now at the forward. The contract that does it is [Forward rate agreements](02-forward-rate-agreements.md), and the short end of the curve where it lives is [Money markets](03-money-market-instruments-and-sofr.md).
 - **Central bank statistics.** Central banks report estimated zero-coupon curves to the Bank for International Settlements, and publish forward curves derived from them; commentary about "what the market expects" is usually reading those forwards.
-- **Valuing anything with several payment dates.** A swap, a mortgage, a pension liability: each payment gets the discount factor for its own date. A stream of averaged prices works the same way, which is where [commodity-swap-and-average-price-forward](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/01-commodity-swap-and-average-price-forward.md) starts.
+- **Valuing anything with several payment dates.** A swap, a mortgage, a pension liability: each payment gets the discount factor for its own date. A stream of averaged prices works the same way, which is where [Commodity swap](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/01-commodity-swap-and-average-price-forward.md) starts.
 
 > **Say it back**
 > A spot rate runs from today to one date, a forward rate covers a stretch starting later, and a par rate is the coupon that prices a new bond at its face value. They are not independent. Two certain routes to the same date must end with the same money, so a one-year rate of 4 percent and a two-year rate of 5 percent leave only one possible rate for the second year: 6.0096 percent. In prices rather than rates, a forward is a ratio of two discount factors and a par rate is one dollar less the final factor, spread over the factors added up. Quote any one curve and the other two are arithmetic.
@@ -669,15 +648,15 @@ The two outputs match line for line, from different code taking the same three r
 
 ## What this builds on
 
-- [compounding-and-discount-factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): the discount factor $D(T)$, and why a rate is meaningless until its compounding convention is stated. Every conversion on this card is that one idea applied twice.
+- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): the discount factor $D(T)$, and why a rate is meaningless until its compounding convention is stated. Every conversion on this card is that one idea applied twice.
 
 ## Where this goes next
 
-- [forward-rate-agreements](02-forward-rate-agreements.md): the forward rate as a traded contract, with the cash settlement worked out.
-- [bootstrapping-the-discount-curve](04-bootstrapping-the-discount-curve.md): the ladder that extracts the discount factors from real quotes, one maturity at a time.
-- [commodity-swap-and-average-price-forward](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/01-commodity-swap-and-average-price-forward.md): the same discounting over a stream of averaged prices.
+- [Forward rate agreements](02-forward-rate-agreements.md): the forward rate as a traded contract, with the cash settlement worked out.
+- [Bootstrapping](04-bootstrapping-the-discount-curve.md): the ladder that extracts the discount factors from real quotes, one maturity at a time.
+- [Commodity swap](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/01-commodity-swap-and-average-price-forward.md): the same discounting over a stream of averaged prices.
 
-This card was handed five spot rates and asked what follows from them. Where those five numbers come from — a morning of deposits, futures and swaps quoted from one week to thirty years, stripped down to one price per date — is [bootstrapping-the-discount-curve](04-bootstrapping-the-discount-curve.md).
+This card was handed five spot rates and asked what follows from them. Where those five numbers come from — a morning of deposits, futures and swaps quoted from one week to thirty years, stripped down to one price per date — is [Bootstrapping](04-bootstrapping-the-discount-curve.md).
 
 ---
 

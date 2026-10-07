@@ -1,22 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Derivatives
-topic: Rates hidden in a relation
-item: Implicit and inverse differentiation
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/05-derivatives-of-exp-and-log|derivatives-of-exp-and-log]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/05-inverse-functions|inverse-functions]]"
-next: []
-tags: [mathematics, calculus and analysis, implicit-and-inverse-differentiation]
----
-
 # Implicit and inverse differentiation: rates for curves that are not graphs, and for functions run backwards
 
-Calculus and analysis → Derivatives → Rates hidden in a relation → Implicit and inverse differentiation
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Derivatives](../../../SYLLABUS.md#w06-s02) → Implicit and inverse differentiation
 
 ---
 
@@ -44,19 +28,19 @@ To scale, 20 pixels per metre. Dashed: north; θ: the post's bearing, 36.87°. T
 
 ## The formula
 
-Recall from [the-derivative](01-the-derivative.md): $y'$, or dy/dx, is the rate of y per unit of x. Treat y as a function of x along the northern shore and differentiate both sides:
+Recall from [The derivative](01-the-derivative.md): $y'$, or dy/dx, is the rate of y per unit of x. Treat y as a function of x along the northern shore and differentiate both sides:
 
 $$x^2 + y^2 = 25 \quad\Longrightarrow\quad 2x + 2y\,y' = 0 \quad\Longrightarrow\quad y' = -\frac{x}{y} \quad (y \neq 0)$$
 
 **Read it aloud:** the shore's slope is minus the eastward distance over the northward one: −0.75 m north per m east at the post.
 
-For the inverse rule, recall from [inverse-functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md) that $f^{-1}$ is the undo of f, not one over f. Call it g, with b = f(a).
+For the inverse rule, recall from [Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md) that $f^{-1}$ is the undo of f, not one over f. Call it g, with b = f(a).
 
 $$g'(b) = \frac{1}{f'(a)} = \frac{1}{f'(g(b))} \qquad (f'(a) \neq 0)$$
 
 **Read it aloud:** the undo's rate at an output is one over the original rate at the input that produced it.
 
-For arcsin, f is sine on the window from −π/2 to π/2, and sine's rate is cosine ([derivatives-of-trig-functions](04-derivatives-of-trig-functions.md)):
+For arcsin, f is sine on the window from −π/2 to π/2, and sine's rate is cosine ([Derivatives of sine and cosine](04-derivatives-of-trig-functions.md)):
 
 $$\frac{d}{du}\arcsin u = \frac{1}{\cos(\arcsin u)} = \frac{1}{\sqrt{1 - u^2}} \qquad (-1 < u < 1)$$
 
@@ -90,7 +74,7 @@ Along the shore, x^2 + y^2 stays exactly 25. A quantity that never changes has r
 
 ### Step 1: carry the hidden rate of y through the chain rule
 
-Along the northern shore, y is a function of x, so y^2 is one function fed into another. By the [chain-rule](03-chain-rule.md), its rate is 2y times y'. The rate of x^2 is 2x; the rate of 25 is 0. Hence 2x + 2y·y' = 0, and where y is not 0, y' = −x/y.
+Along the northern shore, y is a function of x, so y^2 is one function fed into another. By the [Chain rule](03-chain-rule.md), its rate is 2y times y'. The rate of x^2 is 2x; the rate of 25 is 0. Hence 2x + 2y·y' = 0, and where y is not 0, y' = −x/y.
 
 At the post: 6 + 8y' = 0, so y' = −0.75. At (3, −4), on the southern shore, the same formula gives +0.75.
 
@@ -367,7 +351,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Linked quantities.** A ladder sliding down a wall, a balloon filling: two quantities tied by one equation, each rate found from the other, in [linear-approximation-and-related-rates](../03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md).
+- **Linked quantities.** A ladder sliding down a wall, a balloon filling: two quantities tied by one equation, each rate found from the other, in [Linear approximation](../03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md).
 - **Tilt sensors.** A sensor reports the sine of its tilt; the angle is arcsin of the reading, and 1/√(1 − u^2) turns a reading error into an angle error, without bound near 90°.
 
 > **Say it back**
@@ -377,16 +361,16 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [derivatives-of-exp-and-log](05-derivatives-of-exp-and-log.md): the exponential and ln, the first function-and-undo pair with known rates.
-- [inverse-functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md): what an undo is, and why only a one-to-one rule has one.
+- [Derivatives of exp and log](05-derivatives-of-exp-and-log.md): the exponential and ln, the first function-and-undo pair with known rates.
+- [Inverse functions](../../01-Foundations/08-Relations%20and%20Functions/05-inverse-functions.md): what an undo is, and why only a one-to-one rule has one.
 
 ## Where this goes next
 
-- [hyperbolic-functions](07-hyperbolic-functions.md): sinh and cosh, whose undos take their rates by this card's rule.
-- [linear-approximation-and-related-rates](../03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md): implicit differentiation with time as the variable.
-- [trig-substitution](../04-Integrals/06-trig-substitution.md): the arcsin and arctan rates run in reverse.
+- [Hyperbolic functions](07-hyperbolic-functions.md): sinh and cosh, whose undos take their rates by this card's rule.
+- [Linear approximation](../03-What%20Derivatives%20Tell%20You/01-linear-approximation-and-related-rates.md): implicit differentiation with time as the variable.
+- [Trig substitution](../04-Integrals/06-trig-substitution.md): the arcsin and arctan rates run in reverse.
 
-How fast the shore's slope itself turns is the subject of [higher-derivatives-and-concavity](08-higher-derivatives-and-concavity.md).
+How fast the shore's slope itself turns is the subject of [Second derivatives](08-higher-derivatives-and-concavity.md).
 
 ---
 

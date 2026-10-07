@@ -1,23 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Real Integrals and Counting Zeros
-topic: Closing the line with an arc
-item: The semicircle contour
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/05-the-residue-theorem|the-residue-theorem]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/07-improper-integrals|improper-integrals]]"
-next:
-  - "[[Cards/07-Complex analysis/06-Real Integrals and Counting Zeros/03-oscillatory-integrals-and-jordans-lemma|oscillatory-integrals-and-jordans-lemma]]"
-tags: [mathematics, complex analysis, semicircle-contours]
----
-
 # The semicircle contour: close the real line with a big arc, let the arc vanish, and read the integral off the poles above
 
-Complex analysis → Real Integrals and Counting Zeros → Closing the line with an arc → The semicircle contour
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Real Integrals and Counting Zeros](../../../SYLLABUS.md#w07-s06) → The semicircle contour
 
 ---
 
@@ -43,7 +26,7 @@ To scale: 40 units per 1, 0 at (180, 150). Segment from (100.00, 150.00) to (260
 
 ## The formula
 
-A reminder: the residue of f at a pole a, written $\operatorname{Res}(f, a)$, is the coefficient of 1/(z − a) in f's expansion near a, and a loop integral equals 2πi times the residues inside ([the-residue-theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)).
+A reminder: the residue of f at a pole a, written $\operatorname{Res}(f, a)$, is the coefficient of 1/(z − a) in f's expansion near a, and a loop integral equals 2πi times the residues inside ([The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md)).
 
 Let $f = p/q$ be a ratio of polynomials, q never zero on the real line, and the degree of q at least that of p plus 2. Then
 
@@ -73,9 +56,9 @@ The **ML bound** kills the arc: a path integral's size is at most M, the functio
 ### When it holds
 
 - **Bottom degree at least top degree plus 2.** Then f shrinks like 1/R^2 on the arc and ML gives about π/R. With a gap of 1, as in z/(1 + z^2), the arc stays at πi for every R > 1.
-- **No pole on the real line.** Otherwise the real integral itself blows up; [indented-contours-and-principal-values](04-indented-contours-and-principal-values.md) handles it.
+- **No pole on the real line.** Otherwise the real integral itself blows up; [Poles on the path](04-indented-contours-and-principal-values.md) handles it.
 - **Both tails converge on their own.** The loop gives the symmetric limit, −R to R together; the degree gap makes each tail finite, so that limit is the improper integral. For x/(1 + x^2) the symmetric limit is 0 while each tail diverges.
-- **A ratio of polynomials.** For e^(ix) times a ratio with a gap of only 1, the arc needs a finer estimate: [oscillatory-integrals-and-jordans-lemma](03-oscillatory-integrals-and-jordans-lemma.md).
+- **A ratio of polynomials.** For e^(ix) times a ratio with a gap of only 1, the arc needs a finer estimate: [Jordan's lemma](03-oscillatory-integrals-and-jordans-lemma.md).
 
 ---
 
@@ -107,7 +90,7 @@ At R = 2 the bound is 2.094395 and the arc 0.927295; at R = 16, 0.197120 and 0.1
 
 ### Step 4: let R grow
 
-The loop's value stays fixed while the arc tends to 0, so the segment tends to the loop's value. The degree gap makes each tail finite ([improper-integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)), so the symmetric limit is the improper integral:
+The loop's value stays fixed while the arc tends to 0, so the segment tends to the loop's value. The degree gap makes each tail finite ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)), so the symmetric limit is the improper integral:
 
 $$\int_{-\infty}^{\infty} \frac{dx}{1 + x^2} = \pi, \qquad \int_{-\infty}^{\infty} \frac{dx}{(1 + x^2)^2} = \frac{\pi}{2}.$$
 
@@ -122,7 +105,7 @@ Arc: ML gives at most πR × C/R^2 = πC/R, which tends to 0. Tails: each is at 
 
 </details>
 
-The lighthouse gives a second route. With x = tan θ, dx = dθ/cos^2 θ and 1 + x^2 = 1/cos^2 θ, so the first integral is the integral of 1 over θ from −π/2 to π/2, which is π; the second is the integral of cos^2 θ, π/2. The code runs both routes. Poles on the path are [indented-contours-and-principal-values](04-indented-contours-and-principal-values.md); square roots and logarithms need [keyhole-contours](05-keyhole-contours.md).
+The lighthouse gives a second route. With x = tan θ, dx = dθ/cos^2 θ and 1 + x^2 = 1/cos^2 θ, so the first integral is the integral of 1 over θ from −π/2 to π/2, which is π; the second is the integral of cos^2 θ, π/2. The code runs both routes. Poles on the path are [Poles on the path](04-indented-contours-and-principal-values.md); square roots and logarithms need [The keyhole contour](05-keyhole-contours.md).
 
 ---
 
@@ -357,7 +340,7 @@ The two outputs match line for line.
 - **Rotating beams.** A lighthouse, or a spinning laser over a flat floor, lands with share 1/(π(1 + x^2)) per unit length; that this totals 1 is this card's integral.
 - **Resonance.** Near its peak, a driven oscillator's power against frequency has this bell shape after rescaling; its total area, found by this loop, links a resonance's peak to its width.
 - **Filters.** Total noise power through a filter is a ratio of polynomials integrated over all frequencies, read off the poles above the axis.
-- **The next contours.** Periodic integrals go round a full turn instead: [trigonometric-integrals-on-the-unit-circle](02-trigonometric-integrals-on-the-unit-circle.md).
+- **The next contours.** Periodic integrals go round a full turn instead: [Integrals round a full turn](02-trigonometric-integrals-on-the-unit-circle.md).
 
 > **Say it back**
 > The real line is not a loop, so close it with a half-circle above the axis. The residue theorem prices the loop from the poles inside: for 1/(1 + x^2), the pole at i with residue −i/2, so π. The arc is at most its length times the function's largest size on it, πR/(R^2 − 1), which tends to 0. So the integral is π, and the whole shore catches the whole sweep. A double pole needs a derivative, giving π/2 for the square.
@@ -366,12 +349,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [the-residue-theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md): a loop integral is 2πi times the residues inside.
-- [improper-integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md): an integral to infinity, and why each tail must converge on its own.
+- [The residue theorem](../05-Laurent%20Series%2C%20Singularities%20and%20Residues/05-the-residue-theorem.md): a loop integral is 2πi times the residues inside.
+- [Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md): an integral to infinity, and why each tail must converge on its own.
 
 ## Where this goes next
 
-- [oscillatory-integrals-and-jordans-lemma](03-oscillatory-integrals-and-jordans-lemma.md): the arc for integrals with a factor e^(ix).
+- [Jordan's lemma](03-oscillatory-integrals-and-jordans-lemma.md): the arc for integrals with a factor e^(ix).
 
 For x e^(ix)/(1 + x^2) the degree gap is only 1, so the ML bound no longer kills the arc; Jordan's lemma shows why the factor e^(iz) still makes it vanish.
 

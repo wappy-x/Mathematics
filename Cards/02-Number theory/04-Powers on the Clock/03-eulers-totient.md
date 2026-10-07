@@ -1,40 +1,16 @@
----
-type: card
-wing: 02-Number theory
-shelf: Powers on the Clock
-topic: Fermat and Euler
-item: Euler's totient
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/01-congruence-mod-n|congruence-mod-n]]"
-  - "[[Cards/02-Number theory/02-Greatest Common Divisor and Euclid's Algorithm/05-coprime-numbers|coprime-numbers]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/07-prime-factorisation|prime-factorisation]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/03-residue-classes|residue-classes]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/06-chinese-remainder-theorem|chinese-remainder-theorem]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/07-fractions|fractions]]"
-next:
-  - "[[Cards/02-Number theory/04-Powers on the Clock/04-eulers-theorem|eulers-theorem]]"
-tags:
-  - mathematics
-  - number theory
-  - eulers-totient
----
-
 # Euler's totient: counting how many numbers up to n share no factor with n, straight from the factorisation
 
-Number theory → Powers on the Clock → Fermat and Euler → Euler's totient
+[Syllabus](../../../SYLLABUS.md) → [Number theory](../../../SYLLABUS.md#w02) → [Powers on the Clock](../../../SYLLABUS.md#w02-s04) → Euler's totient
 
 ---
 
 ## General Overview
 
-An octave has 12 notes: C, C sharp, D, up to B, then it starts over. Number them 0 to 11 and a keyboard is a 12-hour clock ([congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md)).
+An octave has 12 notes: C, C sharp, D, up to B, then it starts over. Number them 0 to 11 and a keyboard is a 12-hour clock ([Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md)).
 
 Pick a jump size in semitones and keep jumping. Jump 3 from C: C, D sharp, F sharp, A, then C again — four notes, and the other eight never arrive. Jump 7 and all twelve turn up before you are home. Seven semitones is a fifth, so that walk is the circle of fifths.
 
-Four jump sizes tour the octave: 1, 5, 7 and 11 — the numbers from 1 to 12 sharing no factor with 12 ([coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)).
+Four jump sizes tour the octave: 1, 5, 7 and 11 — the numbers from 1 to 12 sharing no factor with 12 ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)).
 
 **Euler's totient, written phi(n), or φ in books, is how many of the numbers 1 to n share no factor with n, and the factorisation of n gives that count without any listing.**
 
@@ -57,7 +33,7 @@ Four bars reach 12: jumps 1, 5, 7 and 11.
 
 **phi(12) = how many of 1, 2, 3, up to 12 share no factor with 12 = 4**
 
-Now from the factorisation: 12 is 2 × 2 × 3 ([prime-factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)), so the primes inside are 2 and 3.
+Now from the factorisation: 12 is 2 × 2 × 3 ([Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md)), so the primes inside are 2 and 3.
 
 **phi(12) = 12 × (1 − 1/2) × (1 − 1/3) = 12 × 1/2 × 2/3 = 4**
 
@@ -80,7 +56,7 @@ Write p for a prime. A prime clock gets one bracket: phi(7) = 7 × (1 − 1/7) =
 
 ### Step 0: which jumps tour everything
 
-Take jump 7. Count the jumps with k: after k jumps you stand on 7 × k, wrapped round the clock ([residue-classes](../03-Clock%20Arithmetic/03-residue-classes.md)). You are home when 12 divides 7 × k. Since 7 and 12 share no factor, the 12 has to sit whole inside k ([coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)). So the first way home is k = 12, and the twelve stops before it are all different.
+Take jump 7. Count the jumps with k: after k jumps you stand on 7 × k, wrapped round the clock ([Residue classes](../03-Clock%20Arithmetic/03-residue-classes.md)). You are home when 12 divides 7 × k. Since 7 and 12 share no factor, the 12 has to sit whole inside k ([Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)). So the first way home is k = 12, and the twelve stops before it are all different.
 
 Now jump 3. It shares the factor 3 with 12, so every stop is a multiple of 3: 0, 3, 6, 9. Any jump sharing a factor above 1 misses notes the same way. So the tourists are exactly the jumps sharing no factor with 12, and their count is phi(12).
 
@@ -90,13 +66,13 @@ Write 1 to 12. Cross out what 2 divides: 2, 4, 6, 8, 10, 12. Then what 3 divides
 
 ### Step 2: split the clock into coprime parts
 
-12 is 4 × 3, sharing no factor. The Chinese remainder theorem ([chinese-remainder-theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md)) says a place on the 12-clock is just a pair: where you stand on a 4-clock and where you stand on a 3-clock, every pair once. Sharing no factor with 12 means sharing none with 4 and none with 3, so survivors pair with survivors and the counts multiply.
+12 is 4 × 3, sharing no factor. The Chinese remainder theorem ([The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md)) says a place on the 12-clock is just a pair: where you stand on a 4-clock and where you stand on a 3-clock, every pair once. Sharing no factor with 12 means sharing none with 4 and none with 3, so survivors pair with survivors and the counts multiply.
 
 **phi(12) = phi(4) × phi(3) = 2 × 2 = 4**
 
 ### Step 3: a part built from one prime is easy
 
-Of 1, 2, 3, 4 those sharing a factor with 4 are the multiples of 2, one in every two ([fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md)): phi(4) = 4 − 2 = 2, which is 4 × (1 − 1/2). Any part built from one prime loses one in every p and keeps the share (1 − 1/p). Likewise phi(3) = 3 − 1 = 2 = 3 × (1 − 1/3).
+Of 1, 2, 3, 4 those sharing a factor with 4 are the multiples of 2, one in every two ([Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md)): phi(4) = 4 − 2 = 2, which is 4 × (1 − 1/2). Any part built from one prime loses one in every p and keeps the share (1 − 1/p). Likewise phi(3) = 3 − 1 = 2 = 3 × (1 − 1/3).
 
 Multiply back: the 4 and the 3 rebuild the 12 out front, one bracket staying per prime. That is the formula.
 
@@ -255,7 +231,7 @@ Both outputs match line for line.
 >
 > - **Counting a repeated prime twice.** 12 is 2 × 2 × 3, but the formula takes two brackets. Use three brackets and you get 2.
 > - **Stopping at the first prime.** Dropping only the evens gives 6.
-> - **Reading phi(n) as a tour length.** It counts the jumps that tour, not the steps in one. Tour length is [order-and-primitive-roots](05-order-and-primitive-roots.md).
+> - **Reading phi(n) as a tour length.** It counts the jumps that tour, not the steps in one. Tour length is [The order of a number and primitive roots](05-order-and-primitive-roots.md).
 
 ---
 
@@ -263,7 +239,7 @@ Both outputs match line for line.
 
 - **Music.** Which interval generates every note: the circle of fifths works because 7 and 12 share no factor.
 - **Gears.** A 12-tooth gear advanced 7 teeth a turn touches every tooth; advanced 3 a turn it wears four flat.
-- **Keys and secrets.** The totient is the exponent clock behind public-key encryption: why a message put through two powers comes back unchanged ([eulers-theorem](04-eulers-theorem.md)).
+- **Keys and secrets.** The totient is the exponent clock behind public-key encryption: why a message put through two powers comes back unchanged ([Euler's theorem](04-eulers-theorem.md)).
 
 > **Say it back**
 > An octave has 12 notes. A jump visits all 12 only if it shares no factor with 12: jumps 1, 5, 7 and 11. That count is Euler's totient, phi(12) = 4. No listing needed: 12 is 2 × 2 × 3, one bracket per different prime, 12 × (1 − 1/2) × (1 − 1/3) = 4. On a prime clock nothing below shares a factor, so phi(p) = p − 1.
@@ -272,16 +248,16 @@ Both outputs match line for line.
 
 ## What this builds on
 
-- [congruence-mod-n](../03-Clock%20Arithmetic/01-congruence-mod-n.md): the clock that wraps at 12.
-- [coprime-numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md): sharing no factor above 1, the thing counted.
-- [prime-factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md): the primes inside n, all the formula needs.
-- [residue-classes](../03-Clock%20Arithmetic/03-residue-classes.md): the 12 places a jump walks through.
-- [chinese-remainder-theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): why a 12-clock is a 4-clock and a 3-clock at once.
-- [fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): a half, then a third of the rest.
+- [Congruence](../03-Clock%20Arithmetic/01-congruence-mod-n.md): the clock that wraps at 12.
+- [Coprime numbers](../02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md): sharing no factor above 1, the thing counted.
+- [Prime factorisation](../01-Divisibility%20and%20Primes/07-prime-factorisation.md): the primes inside n, all the formula needs.
+- [Residue classes](../03-Clock%20Arithmetic/03-residue-classes.md): the 12 places a jump walks through.
+- [The Chinese remainder theorem](../03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): why a 12-clock is a 4-clock and a 3-clock at once.
+- [Fractions](../../01-Foundations/01-Everyday%20Arithmetic/07-fractions.md): a half, then a third of the rest.
 
 ## Where this goes next
 
-- [eulers-theorem](04-eulers-theorem.md): raise anything coprime to n to the phi(n) and the clock shows 1 — Fermat with the primes taken out.
+- [Euler's theorem](04-eulers-theorem.md): raise anything coprime to n to the phi(n) and the clock shows 1 — Fermat with the primes taken out.
 
 ---
 

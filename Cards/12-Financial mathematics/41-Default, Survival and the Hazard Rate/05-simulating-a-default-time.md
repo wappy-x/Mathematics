@@ -1,31 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Default, Survival and the Hazard Rate
-topic: Monte Carlo for default
-item: Simulating a default time
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/03-piecewise-flat-hazard-curve|piecewise-flat-hazard-curve]]"
-  - "[[Cards/09-Probability and statistics/11-Simulation/02-inverse-transform-sampling|inverse-transform-sampling]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/02-uniform-distribution|uniform-distribution]]"
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/01-monte-carlo-pricing|monte-carlo-pricing]]"
-next:
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve|pricing-a-defaultable-bond-from-the-survival-curve]]"
-tags: [mathematics, financial mathematics, simulating-a-default-time]
----
-
 # Simulating a default time: draw a uniform number and read it off the survival curve
 
-Financial mathematics → Default, Survival and the Hazard Rate → Monte Carlo for default → Simulating a default time
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Default, Survival and the Hazard Rate](../../../SYLLABUS.md#w12-s41) → Simulating a default time
 
 ---
 
 ## General Overview
 
-A board game has 100,000 pieces. Each piece in play is knocked out at a steady rate of 2% a round, and a knock can land at any moment inside a round. The survival formula from [hazard-rate-and-survival-probability](02-hazard-rate-and-survival-probability.md) says the share still in play after five rounds is e to the minus 0.1, which is 0.9048. So 9.516% of the pieces are gone by round five.
+A board game has 100,000 pieces. Each piece in play is knocked out at a steady rate of 2% a round, and a knock can land at any moment inside a round. The survival formula from [The hazard rate](02-hazard-rate-and-survival-probability.md) says the share still in play after five rounds is e to the minus 0.1, which is 0.9048. So 9.516% of the pieces are gone by round five.
 
 A computer can play the game instead of solving it. It gives each piece a date on which it will be knocked out. The dates must be random, and random in exactly the right pattern: across many pieces they must rebuild the survival curve. The recipe is short. Draw a number spread evenly between 0 and 1; call it the piece's ticket. Find the moment the survival curve falls to the ticket's height. That moment is the piece's knock-out date. The 2% curve falls to 0.85 at round 8.13, so a piece with that ticket lasts eight rounds and a bit.
 
@@ -126,17 +107,17 @@ For the van at year three, $S(3) = 0.9048$. A ticket of 0.97 sits above it and d
 
 ### Step 2: count the high tickets
 
-A uniform draw lands in any stretch of the interval with chance equal to the stretch's length ([uniform-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/02-uniform-distribution.md)). The stretch from $S(t)$ up to 1 has length $1 - S(t)$. So the chance of default by t is $1 - S(t)$, at every date t at once. The simulated dates have the right chance of landing before year one, before year two, before any date: they follow the whole curve, not just one point on it.
+A uniform draw lands in any stretch of the interval with chance equal to the stretch's length ([Uniform](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/02-uniform-distribution.md)). The stretch from $S(t)$ up to 1 has length $1 - S(t)$. So the chance of default by t is $1 - S(t)$, at every date t at once. The simulated dates have the right chance of landing before year one, before year two, before any date: they follow the whole curve, not just one point on it.
 
 ### Step 3: the log turns the curve into a budget
 
-Taking logs of $S(\tau) = U$ gives $\Lambda(\tau) = -\ln U$. The right side, $E$, has its own simple law: the chance that $E$ exceeds a number x is the chance that $U$ falls below $e^{-x}$, which is $e^{-x}$. So $E$ is an exponential draw with average 1 ([exponential-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md)). Each piece carries one unit of hazard budget on average; the hazard spends it at its current rate; the piece defaults when the budget is gone.
+Taking logs of $S(\tau) = U$ gives $\Lambda(\tau) = -\ln U$. The right side, $E$, has its own simple law: the chance that $E$ exceeds a number x is the chance that $U$ falls below $e^{-x}$, which is $e^{-x}$. So $E$ is an exponential draw with average 1 ([Exponential](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/03-exponential-distribution.md)). Each piece carries one unit of hazard budget on average; the hazard spends it at its current rate; the piece defaults when the budget is gone.
 
 For a flat 2%, the budget drains at 0.02 a round, so $\tau = E / 0.02$. The average lifetime is then 1 / 0.02 = 50 rounds; the 100,000 draws average 49.88.
 
 ### Step 4: a stepped hazard is spent step by step
 
-For the van and a ticket of 0.85, the budget is $E = 0.162519$. Year one spends 0.02. Years one to three spend 0.04 a year, 0.08 more, reaching 0.10 by year three. The 6% step then needs 0.062519 more, which takes 0.062519 / 0.06 = 1.0420 years. Default at year 4.0420. No search is needed: each step is a straight line in the area, so the crossing point is one division ([piecewise-flat-hazard-curve](03-piecewise-flat-hazard-curve.md) builds that area).
+For the van and a ticket of 0.85, the budget is $E = 0.162519$. Year one spends 0.02. Years one to three spend 0.04 a year, 0.08 more, reaching 0.10 by year three. The 6% step then needs 0.062519 more, which takes 0.062519 / 0.06 = 1.0420 years. Default at year 4.0420. No search is needed: each step is a straight line in the area, so the crossing point is one division ([The piecewise-flat hazard curve](03-piecewise-flat-hazard-curve.md) builds that area).
 
 ### Step 5: how close the count should be
 
@@ -160,13 +141,13 @@ For the budget: $P(E > x) = P(U < e^{-x}) = e^{-x}$ for x ≥ 0, the survival cu
 <details>
 <summary>Why the survival curve and not the default curve?</summary>
 
-The general inverse-transform recipe ([inverse-transform-sampling](../../09-Probability%20and%20statistics/11-Simulation/02-inverse-transform-sampling.md)) inverts the default curve, $1 - S(t)$, at the draw. Inverting $S$ instead uses $1 - U$ in place of $U$. When $U$ is uniform, so is $1 - U$, so both give dates with the same law. Credit desks invert $S$ because the budget form, $\Lambda(\tau) = -\ln U$, then falls straight out.
+The general inverse-transform recipe ([Inverse transform](../../09-Probability%20and%20statistics/11-Simulation/02-inverse-transform-sampling.md)) inverts the default curve, $1 - S(t)$, at the draw. Inverting $S$ instead uses $1 - U$ in place of $U$. When $U$ is uniform, so is $1 - U$, so both give dates with the same law. Credit desks invert $S$ because the budget form, $\Lambda(\tau) = -\ln U$, then falls straight out.
 
 </details>
 
 ### The other road: play the game tick by tick
 
-The definition of the hazard gives a second way to simulate that never inverts anything. Cut each round into ten ticks. At each tick, a piece still in play is knocked out with chance rate times tick, 0.02 × 0.1 = 0.002. Play fifty ticks. This is the hazard's definition acted out, and it needs a fresh random number every tick instead of one per piece. With fresh numbers, 9.423% of 100,000 pieces are gone by round five, about one standard error from the formula. Ticks cost time and add a small error from their size; the inversion costs one draw and one division and has no such error. The general machinery of averaging simulated outcomes is on [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md).
+The definition of the hazard gives a second way to simulate that never inverts anything. Cut each round into ten ticks. At each tick, a piece still in play is knocked out with chance rate times tick, 0.02 × 0.1 = 0.002. Play fifty ticks. This is the hazard's definition acted out, and it needs a fresh random number every tick instead of one per piece. With fresh numbers, 9.423% of 100,000 pieces are gone by round five, about one standard error from the formula. Ticks cost time and add a small error from their size; the inversion costs one draw and one division and has no such error. The general machinery of averaging simulated outcomes is on [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md).
 
 ---
 
@@ -229,7 +210,7 @@ Orange: the running share gone by round five after the first n tickets. Green: t
 
 ### The same draws, as a pricing engine
 
-The game at 2% a round is the shelf's house company at 2% a year: Northwind Lines, flat hazard 2%, riskless rate $r$ = 5%, 40% recovery. The dates already drawn price Northwind promises. A $100 payment due in five years, paid only if Northwind is still alive, is worth $100 × e^{-0.25}$ × (share alive at five). The formula gives $70.47; the draws give $70.47 (70.4688 against 70.4651). Now add $40 paid on the default date itself if Northwind fails first. The draws discount each $40 from its own date and average: $73.85, with a standard error of 4 cents. The formula, derived on [pricing-a-defaultable-bond-from-the-survival-curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md), gives $73.84. The draws needed no formula at all; that is why they serve as the second road to every price on the later credit shelves.
+The game at 2% a round is the shelf's house company at 2% a year: Northwind Lines, flat hazard 2%, riskless rate $r$ = 5%, 40% recovery. The dates already drawn price Northwind promises. A $100 payment due in five years, paid only if Northwind is still alive, is worth $100 × e^{-0.25}$ × (share alive at five). The formula gives $70.47; the draws give $70.47 (70.4688 against 70.4651). Now add $40 paid on the default date itself if Northwind fails first. The draws discount each $40 from its own date and average: $73.85, with a standard error of 4 cents. The formula, derived on [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md), gives $73.84. The draws needed no formula at all; that is why they serve as the second road to every price on the later credit shelves.
 
 ### What breaks if you drop a piece
 
@@ -665,12 +646,12 @@ The two outputs agree line for line.
 
 ## Where you meet it in real life
 
-- **Credit desks.** Bonds and credit default swaps with closed-form prices are checked by simulating default dates and averaging payoffs, as the Northwind example does; the swap's legs are on [cds-legs-risky-annuity-and-par-spread](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md).
+- **Credit desks.** Bonds and credit default swaps with closed-form prices are checked by simulating default dates and averaging payoffs, as the Northwind example does; the swap's legs are on [Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md).
 - **Portfolios of loans.** David Li's 2000 copula model gives each company its own survival curve and its own ticket, then makes the tickets move together. Every default date is still read off its curve by this card's inversion.
 - **Counterparty risk.** A bank's exposure to a trading partner is simulated along market paths, and the partner's default date is drawn the same way, so the loss is counted on the date it happens.
-- **Random hazards.** When the hazard itself moves with the economy, the budget stays one exponential draw and the clock spends it along a random path: [stochastic-hazard-cox-process](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md).
+- **Random hazards.** When the hazard itself moves with the economy, the budget stays one exponential draw and the clock spends it along a random path: [A random hazard](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/03-stochastic-hazard-cox-process.md).
 - **Machines and lives.** Reliability engineers simulate failure dates of pumps and vans from failure-rate curves; actuaries simulate deaths from mortality tables. Same inversion, different curve.
-- **Rating paths.** Simulating a company's grade year by year uses the transition matrix of [rating-transition-matrix-and-cumulative-default-rates](04-rating-transition-matrix-and-cumulative-default-rates.md) with one uniform draw per year instead of one per company.
+- **Rating paths.** Simulating a company's grade year by year uses the transition matrix of [Rating transition matrices](04-rating-transition-matrix-and-cumulative-default-rates.md) with one uniform draw per year instead of one per company.
 
 > **Say it back**
 > A survival curve can be turned into random default dates by drawing a uniform number and finding the date at which the curve falls to it. The draw lands above the curve's height at t exactly when default has happened by t, so the dates follow the curve at every date at once. Taking logs, each piece carries an exponential budget of hazard and defaults when the piled-up hazard spends it; for a stepped hazard that is one division in the right step. The simulated counts match the formula to within a standard error that shrinks with the square root of the number of pieces. Because the dates are real dates, the same draws price anything that pays on default.
@@ -679,14 +660,14 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [piecewise-flat-hazard-curve](03-piecewise-flat-hazard-curve.md): the van's stepped hazard and its cumulative area, which this card inverts one step at a time.
-- [inverse-transform-sampling](../../09-Probability%20and%20statistics/11-Simulation/02-inverse-transform-sampling.md): the general recipe of feeding a uniform draw through an inverted curve, here applied to survival.
-- [uniform-distribution](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/02-uniform-distribution.md): why a draw lands above a height h with chance 1 − h.
-- [monte-carlo-pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): the hand-written random-number recurrence, and the standard error of a simulated average.
+- [The piecewise-flat hazard curve](03-piecewise-flat-hazard-curve.md): the van's stepped hazard and its cumulative area, which this card inverts one step at a time.
+- [Inverse transform](../../09-Probability%20and%20statistics/11-Simulation/02-inverse-transform-sampling.md): the general recipe of feeding a uniform draw through an inverted curve, here applied to survival.
+- [Uniform](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/02-uniform-distribution.md): why a draw lands above a height h with chance 1 − h.
+- [Monte Carlo pricing](../06-Numerical%20Methods%20for%20Pricing/01-monte-carlo-pricing.md): the hand-written random-number recurrence, and the standard error of a simulated average.
 
 ## Where this goes next
 
-- [pricing-a-defaultable-bond-from-the-survival-curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md): prices a risky bond from the survival curve in closed form; this card's draws are the second road to each of its prices.
+- [A risky bond from the hazard curve](../44-Reduced-Form%20Models%20-%20Risky%20Bonds%2C%20Spreads%20and%20Random%20Hazards/01-pricing-a-defaultable-bond-from-the-survival-curve.md): prices a risky bond from the survival curve in closed form; this card's draws are the second road to each of its prices.
 
 The draws price a promise, but they do not say what a bond's price reveals about the curve; the bond card runs that link in both directions.
 

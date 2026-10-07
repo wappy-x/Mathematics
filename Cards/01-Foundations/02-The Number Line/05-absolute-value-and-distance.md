@@ -1,27 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: The Number Line
-topic: Distance
-item: Absolute value
-kind: definition
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/02-The Number Line/02-number-line-and-inequalities|number-line-and-inequalities]]"
-  - "[[Cards/01-Foundations/01-Everyday Arithmetic/06-negative-numbers|negative-numbers]]"
-next:
-  - "[[Cards/05-Geometry and trig/04-Coordinates and Curves/01-distance-and-midpoint|distance-and-midpoint]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/01-limits|limits]]"
-tags:
-  - mathematics
-  - foundations
-  - absolute-value-and-distance
----
-
 # Absolute value: distance from zero, and the triangle rule
 
-Foundations → The Number Line → Distance → Absolute value
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [The Number Line](../../../SYLLABUS.md#w01-s02) → Absolute value
 
 ---
 
@@ -274,13 +253,13 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [number-line-and-inequalities](02-number-line-and-inequalities.md): the line itself, and "at most" — the triangle rule is an inequality, not an equation.
-- [negative-numbers](../01-Everyday%20Arithmetic/06-negative-numbers.md): the minus in front of a house number, and why subtracting one adds.
+- [The number line and inequalities](02-number-line-and-inequalities.md): the line itself, and "at most" — the triangle rule is an inequality, not an equation.
+- [Negative numbers](../01-Everyday%20Arithmetic/06-negative-numbers.md): the minus in front of a house number, and why subtracting one adds.
 
 ## Where this goes next
 
-- [distance-and-midpoint](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/01-distance-and-midpoint.md): the same size of a difference, measured between two points on a grid.
-- [limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/01-limits.md): 'within 0.001 of' is an absolute value, and every limit is built on it.
+- [Distance and midpoint](../../05-Geometry%20and%20trig/04-Coordinates%20and%20Curves/01-distance-and-midpoint.md): the same size of a difference, measured between two points on a grid.
+- [Limits](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/01-limits.md): 'within 0.001 of' is an absolute value, and every limit is built on it.
 Wherever something later measures how far apart two things sit, it is this size of a difference.
 
 ---

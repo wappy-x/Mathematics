@@ -1,36 +1,18 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Variance swaps, the log contract and VIX
-topic: Convexity and gaps in volatility trading
-item: The volatility swap and the jump bias
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/04-variance-swap-after-inception-and-forward-variance|variance-swap-after-inception-and-forward-variance]]"
-  - "[[Cards/12-Financial mathematics/14-Stochastic volatility - Heston, SABR and their mix/01-heston-model|heston-model]]"
-  - "[[Cards/12-Financial mathematics/13-Local volatility and jumps/04-merton-jump-diffusion|merton-jump-diffusion]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/06-jensens-inequality|jensens-inequality]]"
-next: []
-tags: [mathematics, financial mathematics, volatility-swap-and-jump-bias]
----
-
 # The volatility swap and the jump bias: why a swap on vol is worth less than the root of the variance strike, and why gaps break the strip
 
-Financial mathematics → Variance swaps, the log contract and VIX → Convexity and gaps in volatility trading → The volatility swap and the jump bias
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Variance swaps, the log contract and VIX](../../../SYLLABUS.md#w12-s19) → The volatility swap and the jump bias
 
 ---
 
 ## General Overview
 
-A one-year variance swap on Acme shares has a fair strike of 0.0400 in the house market. Variance is volatility squared, so 0.0400 is a volatility of 20.00%. At expiry the swap pays the gap between the variance Acme actually delivered over the year, its **realised variance**, and that strike ([variance-swap-fair-strike](03-variance-swap-fair-strike.md)).
+A one-year variance swap on Acme shares has a fair strike of 0.0400 in the house market. Variance is volatility squared, so 0.0400 is a volatility of 20.00%. At expiry the swap pays the gap between the variance Acme actually delivered over the year, its **realised variance**, and that strike ([The variance swap](03-variance-swap-fair-strike.md)).
 
 A **volatility swap** pays realised volatility minus a fixed level instead. The natural guess for its fair level is the root of the variance strike, 20.00%. In the house Heston market, where volatility itself moves at random, it is worth 19.50%, half a volatility point less.
 
-The reason is a curve. Suppose realised variance will be 0.02 or 0.06, each with even chance. The average variance is 0.04, whose root is 20.00%. The roots themselves are 14.14% and 24.49%, which average to 19.32%. Taking a square root before averaging gives less than taking it after. That is Jensen's inequality ([jensens-inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)), and the gap grows with how uncertain realised variance is: the **vol of vol**, the volatility of volatility itself.
+The reason is a curve. Suppose realised variance will be 0.02 or 0.06, each with even chance. The average variance is 0.04, whose root is 20.00%. The roots themselves are 14.14% and 24.49%, which average to 19.32%. Taking a square root before averaging gives less than taking it after. That is Jensen's inequality ([Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)), and the gap grows with how uncertain realised variance is: the **vol of vol**, the volatility of volatility itself.
 
-A second flaw sits inside the variance swap itself. Its strike comes from a strip of options ([carr-madan-spanning-and-the-log-contract](02-carr-madan-spanning-and-the-log-contract.md)), and the strip matches realised variance exactly only when the price moves without gaps. In a market where Acme can gap down, the strip prices variance at 0.055074 while the variance actually expected is 0.056250. The shortfall comes from the lopsidedness of the jumps: their third moment.
+A second flaw sits inside the variance swap itself. Its strike comes from a strip of options ([Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md)), and the strip matches realised variance exactly only when the price moves without gaps. In a market where Acme can gap down, the strip prices variance at 0.055074 while the variance actually expected is 0.056250. The shortfall comes from the lopsidedness of the jumps: their third moment.
 
 **A vol swap is worth less than the root of the variance strike, by roughly the spread of realised variance divided by eight times the strike to the power three halves; and when prices gap, the option strip misses the expected realised variance by a term led by the jumps' average cube.**
 
@@ -62,7 +44,7 @@ $$K_{\mathrm{vol}} = E\big[\sqrt{\bar v}\,\big] \;\le\; \sqrt{E[\bar v]} = \sqrt
 
 **Read it aloud:** the fair vol strike is the average realised volatility; it can never exceed the root of the fair variance strike, and it falls short by about the spread of realised variance over eight times the variance strike to the power one and a half.
 
-Under Heston, variance is pulled toward a long-run level $\theta$ at speed $\kappa$ and shaken with vol of vol $\xi$. With today's variance $v_0$ equal to $\theta$, the spread of realised variance is exact ([heston-model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md) derives it):
+Under Heston, variance is pulled toward a long-run level $\theta$ at speed $\kappa$ and shaken with vol of vol $\xi$. With today's variance $v_0$ equal to $\theta$, the spread of realised variance is exact ([The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md) derives it):
 
 $$\mathrm{Var}(\bar v) = \frac{\theta\xi^2}{\kappa^2T^2}\Big[T - \frac{1 - e^{-2\kappa T}}{2\kappa} - \frac{1 - e^{-\kappa T}}{\kappa} + \frac{e^{-\kappa T}(1 - e^{-\kappa T})}{\kappa}\Big]$$
 
@@ -95,7 +77,7 @@ $$K_{\mathrm{strip}} = \sigma^2 + 2\lambda\big(e^{\mu_J + \frac12\delta^2} - 1 -
 
 ### When it holds
 
-- **Realised variance measured continuously.** Real contracts sum squared daily log returns ([realised-variance-from-daily-prices](01-realised-variance-from-daily-prices.md)); the daily simulation in the code lands within its noise of the continuous formulas.
+- **Realised variance measured continuously.** Real contracts sum squared daily log returns ([Realised variance](01-realised-variance-from-daily-prices.md)); the daily simulation in the code lands within its noise of the continuous formulas.
 - **The inequality needs nothing; the size needs a model.** Jensen holds whenever realised variance is uncertain. The 0.50-point gap is Heston's, with vol of vol 0.3; a market whose variance shakes harder has a bigger gap.
 - **The eighth-rule needs a narrow spread.** It keeps the first two terms of a Taylor expansion. At vol of vol 0.7 it says 2.92 points where the exact gap is 2.07.
 - **The strip is exact only without gaps.** With jumps it is off by the formula above. Jumps that are not lognormal change the size; the sign still follows the lopsidedness.
@@ -111,11 +93,11 @@ Both contracts settle on the same random number, realised variance $\bar v$. The
 
 ### Step 1: Jensen turns the bend into an inequality
 
-For any downward-bending function $g$ and any random $X$, $E[g(X)] \le g(E[X])$, with equality only if $X$ is certain ([jensens-inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)). Take $g$ as the square root and $X = \bar v$:
+For any downward-bending function $g$ and any random $X$, $E[g(X)] \le g(E[X])$, with equality only if $X$ is certain ([Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md)). Take $g$ as the square root and $X = \bar v$:
 
 $$K_{\mathrm{vol}} = E[\sqrt{\bar v}] \le \sqrt{E[\bar v]} = \sqrt{K_{\mathrm{var}}}.$$
 
-The variance strike is the pricing-world average of $\bar v$, fixed by the option strip with no model at all ([variance-swap-fair-strike](03-variance-swap-fair-strike.md)). So the strip hands the vol swap a ceiling, not a price.
+The variance strike is the pricing-world average of $\bar v$, fixed by the option strip with no model at all ([The variance swap](03-variance-swap-fair-strike.md)). So the strip hands the vol swap a ceiling, not a price.
 
 ### Step 2: a Taylor expansion sizes the gap
 
@@ -129,7 +111,7 @@ The rule ignores the third-order term, which carries the lopsidedness of $\bar v
 
 ### Step 3: vol of vol sets the spread
 
-Heston's variance follows $dv_t = \kappa(\theta - v_t)\,dt + \xi\sqrt{v_t}\,dW_t$: a pull toward $\theta$ at speed $\kappa$ plus a shake of size $\xi$, with $W_t$ a Brownian motion ([heston-model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md)). The shake is what makes $\bar v$ uncertain. Its spread formula, in The formula above, is proportional to $\xi^2$. At the anchor, $v_0 = \theta = 0.04$, $\kappa = 2$, $\xi = 0.3$, $T = 1$, the spread is 0.000343, a standard deviation of 0.0185 around a mean of 0.04. The eighth-rule then gives 19.46%, a gap of 0.54 points.
+Heston's variance follows $dv_t = \kappa(\theta - v_t)\,dt + \xi\sqrt{v_t}\,dW_t$: a pull toward $\theta$ at speed $\kappa$ plus a shake of size $\xi$, with $W_t$ a Brownian motion ([The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md)). The shake is what makes $\bar v$ uncertain. Its spread formula, in The formula above, is proportional to $\xi^2$. At the anchor, $v_0 = \theta = 0.04$, $\kappa = 2$, $\xi = 0.3$, $T = 1$, the spread is 0.000343, a standard deviation of 0.0185 around a mean of 0.04. The eighth-rule then gives 19.46%, a gap of 0.54 points.
 
 The correlation between Acme's shake and the variance's shake plays no part: realised variance depends on the variance path alone.
 
@@ -174,7 +156,7 @@ The strip's variance strike rests on an identity for the forward $F_t$, the pric
 
 $$2\Big(\frac{S_T}{F} - 1\Big) - 2\ln\frac{S_T}{F} = \text{hedge gains} + T\,\bar v.$$
 
-The left side is what the option strip pays ([carr-madan-spanning-and-the-log-contract](02-carr-madan-spanning-and-the-log-contract.md)). The hedge gains average to zero. So the strip's price equals the expected realised variance.
+The left side is what the option strip pays ([Any payoff from a strip of options](02-carr-madan-spanning-and-the-log-contract.md)). The hedge gains average to zero. So the strip's price equals the expected realised variance.
 
 A gap breaks the chain rule. When the forward jumps by the factor $e^J$, realised variance picks up $J^2$, the squared log return. The strip-plus-hedge position picks up $2(e^J - 1 - J)$. These differ. Expanding the exponential, $2(e^J - 1 - J) = J^2 + \tfrac13J^3 + \tfrac1{12}J^4 + \dots$, so the leftover per gap is $\tfrac13J^3 + \tfrac1{12}J^4 + \dots$. Gaps arrive at rate $\lambda$, so over a year the average leftover is $2\lambda\,E[e^J - 1 - J - \tfrac12J^2]$, the formula. Its leading term is $\tfrac{\lambda}{3}E[J^3]$: downward gaps have negative cubes and pull the strip below the true variance; upward gaps push it above.
 
@@ -725,8 +707,8 @@ The outputs agree line for line: same random-number recipe, same order of arithm
 
 - **Volatility swap quotes.** Dealers quote vol swaps below the matching variance swap's root. The distance they charge is their view of vol of vol.
 - **Variance swap caps.** Single-stock variance swaps are often sold with a cap on realised variance. A cap limits exactly the tail that gaps create, where the strip hedge fails.
-- **Marking variance books.** A desk long variance swaps and short the strip holds the jump bias as open risk. Marking the swap day by day ([variance-swap-after-inception-and-forward-variance](04-variance-swap-after-inception-and-forward-variance.md)) uses the strip and inherits its bias.
-- **The VIX.** The VIX is a 30-day option strip, the same construction ([vix-index](06-vix-index.md)). In a market that gaps down it reads a little below the variance that is actually expected, and futures on it face the same Jensen gap, since the VIX is a volatility, not a variance.
+- **Marking variance books.** A desk long variance swaps and short the strip holds the jump bias as open risk. Marking the swap day by day ([Marking a variance swap](04-variance-swap-after-inception-and-forward-variance.md)) uses the strip and inherits its bias.
+- **The VIX.** The VIX is a 30-day option strip, the same construction ([The VIX](06-vix-index.md)). In a market that gaps down it reads a little below the variance that is actually expected, and futures on it face the same Jensen gap, since the VIX is a volatility, not a variance.
 - **Options on realised volatility.** Any payoff written on realised volatility rather than variance carries the same gap, and needs the same model of vol of vol.
 
 > **Say it back**
@@ -736,14 +718,14 @@ The outputs agree line for line: same random-number recipe, same order of arithm
 
 ## What this builds on
 
-- [variance-swap-after-inception-and-forward-variance](04-variance-swap-after-inception-and-forward-variance.md): the variance swap as a traded, marked position, and the strip that fixes its strike.
-- [heston-model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): the variance process, its pull and its shake, and the spread formula for realised variance used here.
-- [merton-jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): lognormal gaps at a steady rate, and the option prices the numerical strip integrates.
-- [jensens-inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md): the average of a bent function against the function of the average, the whole reason the vol strike sits low.
+- [Marking a variance swap](04-variance-swap-after-inception-and-forward-variance.md): the variance swap as a traded, marked position, and the strip that fixes its strike.
+- [The Heston model](../14-Stochastic%20volatility%20-%20Heston%2C%20SABR%20and%20their%20mix/01-heston-model.md): the variance process, its pull and its shake, and the spread formula for realised variance used here.
+- [Merton jump-diffusion](../13-Local%20volatility%20and%20jumps/04-merton-jump-diffusion.md): lognormal gaps at a steady rate, and the option prices the numerical strip integrates.
+- [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md): the average of a bent function against the function of the average, the whole reason the vol strike sits low.
 
 ## Where this goes next
 
-- [vix-index](06-vix-index.md): the same option strip, run on 30 days of S&P 500 options and published as an index.
+- [The VIX](06-vix-index.md): the same option strip, run on 30 days of S&P 500 options and published as an index.
 
 The strip turns option prices into a variance number with no model; the open question is how that number is computed from a finite list of real quotes, with gaps between strikes and a last strike where quotes stop.
 

@@ -1,26 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Trigonometry
-topic: Solving a triangle from its sides
-item: Law of cosines
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/03-trig-identities|trig-identities]]"
-next:
-  - "[[Cards/05-Geometry and trig/03-Trigonometry/07-law-of-sines-and-the-ambiguous-case|law-of-sines-and-the-ambiguous-case]]"
-  - "[[Cards/05-Geometry and trig/06-Beyond Euclid/01-triangles-on-a-sphere|triangles-on-a-sphere]]"
-tags:
-  - mathematics
-  - geometry and trig
-  - law-of-cosines
----
-
 # Law of cosines: Pythagoras with a correction term for any angle
 
-Geometry and trig → Trigonometry → Solving a triangle from its sides → Law of cosines
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Trigonometry](../../../SYLLABUS.md#w05-s03) → Law of cosines
 
 ---
 
@@ -28,9 +8,9 @@ Geometry and trig → Trigonometry → Solving a triangle from its sides → Law
 
 A surveyor sets a tripod at a point C. Two landmarks are in view: a marker post B and a pylon A. A laser rangefinder reads 300 m to the marker and 450 m to the pylon, and the tripod's dial reads 52° between the two sightings. A pond lies between marker and pylon, so no tape can cross it. How far apart are they?
 
-Two sides and the angle between them fix a triangle: that is the SAS rule, side-angle-side, of [congruent-triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md). The rule says the distance has one value, not what it is. The answer is 355.35 m.
+Two sides and the angle between them fix a triangle: that is the SAS rule, side-angle-side, of [Congruent triangles](../01-Angles%2C%20Triangles%20and%20Congruence/03-congruent-triangles.md). The rule says the distance has one value, not what it is. The answer is 355.35 m.
 
-At a right angle, Pythagoras would give 540.83 m ([pythagoras-and-its-converse](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)). A narrower angle draws the landmarks together; a wider one pushes them apart, to 677.30 m at 128°. The same measurements give the ground enclosed, 53190.73 square metres (5.32 hectares, a hectare being 10000 square metres), and three sides give back every angle.
+At a right angle, Pythagoras would give 540.83 m ([Pythagoras](../01-Angles%2C%20Triangles%20and%20Congruence/05-pythagoras-and-its-converse.md)). A narrower angle draws the landmarks together; a wider one pushes them apart, to 677.30 m at 128°. The same measurements give the ground enclosed, 53190.73 square metres (5.32 hectares, a hectare being 10000 square metres), and three sides give back every angle.
 
 **The square on the side facing an angle is the sum of the squares on the two sides that form the angle, minus twice their product times the angle's cosine; at a right angle the cosine is 0 and Pythagoras is left.**
 
@@ -46,7 +26,7 @@ Drawn at 1 m = 0.6 units. C is the surveyor, B the marker, A the pylon. The dash
 
 ## The formula
 
-Each side takes the small letter of the corner it faces: $c$, the distance across, faces the surveyor's corner $C$, where the sightings $a$ and $b$ meet. Cosine and sine are the ratios of [right-triangle-trigonometry](01-right-triangle-trigonometry.md), extended past 90° by [radians-and-the-unit-circle](02-radians-and-the-unit-circle.md), where the cosine turns negative.
+Each side takes the small letter of the corner it faces: $c$, the distance across, faces the surveyor's corner $C$, where the sightings $a$ and $b$ meet. Cosine and sine are the ratios of [Sine, cosine and tangent](01-right-triangle-trigonometry.md), extended past 90° by [The unit circle](02-radians-and-the-unit-circle.md), where the cosine turns negative.
 
 $$c^2 = a^2 + b^2 - 2ab\cos C$$
 
@@ -75,8 +55,8 @@ $$K = \tfrac12\,ab\sin C$$
 
 ### When it holds
 
-- **Flat ground.** The proof runs on Pythagoras, a fact about a flat plane. Over hundreds of kilometres the Earth's curve takes over ([triangles-on-a-sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md)).
-- **The angle between the known sides.** Given an angle facing a known side instead (SSA), the law becomes a quadratic in the unknown side, and there may be no triangle, one, or two: [law-of-sines-and-the-ambiguous-case](07-law-of-sines-and-the-ambiguous-case.md).
+- **Flat ground.** The proof runs on Pythagoras, a fact about a flat plane. Over hundreds of kilometres the Earth's curve takes over ([Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md)).
+- **The angle between the known sides.** Given an angle facing a known side instead (SSA), the law becomes a quadratic in the unknown side, and there may be no triangle, one, or two: [Law of sines](07-law-of-sines-and-the-ambiguous-case.md).
 - **Three sides that close.** For SSS (side-side-side), each side must be shorter than the other two together. Sides of 300, 450 and 800 m ask for a cosine of −1.2870; no angle has a cosine below −1, so no triangle exists.
 
 ---
@@ -99,7 +79,7 @@ $$c^2 = (b - a\cos C)^2 + (a\sin C)^2$$
 
 ### Step 3: expand, and the identity collapses it
 
-The first bracket expands to $b^2 - 2ab\cos C + a^2\cos^2 C$, where $\cos^2 C$ means the cosine squared; the second is $a^2\sin^2 C$. The terms carrying $a^2$ add to $a^2(\cos^2 C + \sin^2 C)$, and that bracket is 1 ([trig-identities](03-trig-identities.md)). What is left is the law. The correction is two rectangles, each the base $b$ by the near piece $a\cos C$, as Euclid drew it.
+The first bracket expands to $b^2 - 2ab\cos C + a^2\cos^2 C$, where $\cos^2 C$ means the cosine squared; the second is $a^2\sin^2 C$. The terms carrying $a^2$ add to $a^2(\cos^2 C + \sin^2 C)$, and that bracket is 1 ([Trig identities](03-trig-identities.md)). What is left is the law. The correction is two rectangles, each the base $b$ by the near piece $a\cos C$, as Euclid drew it.
 
 ### Step 4: a wide angle pushes the foot outside
 
@@ -126,17 +106,17 @@ Euclid (Book II, Propositions 12 and 13) used positive lengths only, so he split
 
 ### Step 5: the same height gives the area
 
-Half the base times the height ([area-of-triangles-and-polygons](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)) is $\tfrac12 \times b \times a\sin C$: 53190.73 square metres. At 128° the height and so the area are unchanged, because an angle and 180° minus it share a sine.
+Half the base times the height ([Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)) is $\tfrac12 \times b \times a\sin C$: 53190.73 square metres. At 128° the height and so the area are unchanged, because an angle and 180° minus it share a sine.
 
 ### Step 6: run it backwards
 
-From 0° to 180° the cosine falls steadily from 1 to −1, so each cosine names exactly one angle, which the inverse cosine returns ([inverse-trig-and-solving-equations](05-inverse-trig-and-solving-equations.md)). From 300, 450 and 355.35 m the rearranged law gives A = 41.70°, B = 86.30° and C = 52.00°, each found on its own. They add to 180.00°, as the angle sum requires ([triangle-angle-sum-and-inequality](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). A sine could not do this: 52° and 128° share one.
+From 0° to 180° the cosine falls steadily from 1 to −1, so each cosine names exactly one angle, which the inverse cosine returns ([Inverse trig](05-inverse-trig-and-solving-equations.md)). From 300, 450 and 355.35 m the rearranged law gives A = 41.70°, B = 86.30° and C = 52.00°, each found on its own. They add to 180.00°, as the angle sum requires ([Triangles](../01-Angles%2C%20Triangles%20and%20Congruence/02-triangle-angle-sum-and-inequality.md)). A sine could not do this: 52° and 128° share one.
 
 A second route uses arrows. With $u$ the arrow from C to A and $v$ from C to B, the arrow across, from B to A, is $u - v$, and the dot product expands its squared length, bars meaning length:
 
 $$\lvert u - v\rvert^2 = \lvert u\rvert^2 + \lvert v\rvert^2 - 2\,u \cdot v$$
 
-Since $\lvert u\rvert = b$ and $\lvert v\rvert = a$, comparing with the law gives $u \cdot v = ab\cos C$: the fact [dot-product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md) left for this wing.
+Since $\lvert u\rvert = b$ and $\lvert v\rvert = a$, comparing with the law gives $u \cdot v = ab\cos C$: the fact [The dot product](../../03-Algebra/06-Dot%20Products%20and%20Best%20Fits/01-dot-product.md) left for this wing.
 
 ---
 
@@ -170,7 +150,7 @@ The code prints all four.
 
 ## Code, from first principles, and it actually runs
 
-Python's math library supplies only cosine, sine and the square root. The distance takes two roads: the law, and a grid on which the landmarks sit at directions 20° and 72° from due east, their gap measured by Pythagoras, so the cosine of 52° is never taken. The area is half base times height, and again by Heron's rule from the three sides alone ([area-of-triangles-and-polygons](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)). The angles come back by halving an interval until the cosine matches.
+Python's math library supplies only cosine, sine and the square root. The distance takes two roads: the law, and a grid on which the landmarks sit at directions 20° and 72° from due east, their gap measured by Pythagoras, so the cosine of 52° is never taken. The area is half base times height, and again by Heron's rule from the three sides alone ([Area](../01-Angles%2C%20Triangles%20and%20Congruence/06-area-of-triangles-and-polygons.md)). The angles come back by halving an interval until the cosine matches.
 
 ### Python
 
@@ -395,12 +375,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [trig-identities](03-trig-identities.md): a sine squared plus a cosine squared makes 1, the step that collapses the algebra to the law.
+- [Trig identities](03-trig-identities.md): a sine squared plus a cosine squared makes 1, the step that collapses the algebra to the law.
 
 ## Where this goes next
 
-- [law-of-sines-and-the-ambiguous-case](07-law-of-sines-and-the-ambiguous-case.md): triangles known from two angles and a side, or from an angle facing a known side.
-- [triangles-on-a-sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md): the cosine rule on a globe, which shrinks to this card's law for small triangles.
+- [Law of sines](07-law-of-sines-and-the-ambiguous-case.md): triangles known from two angles and a side, or from an angle facing a known side.
+- [Triangles on a sphere](../06-Beyond%20Euclid/01-triangles-on-a-sphere.md): the cosine rule on a globe, which shrinks to this card's law for small triangles.
 
 An angle that faces a known side, rather than lying between two, can leave none, one or two triangles; the law of sines sorts them.
 

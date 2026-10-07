@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Curves in Depth
-topic: Reading the curve
-item: What a curve says
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/33-Curves in Depth/03-nelson-siegel-and-svensson-fitting|nelson-siegel-and-svensson-fitting]]"
-next:
-  - "[[Cards/12-Financial mathematics/33-Curves in Depth/05-carry-and-roll-down|carry-and-roll-down]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - term-premium-and-expectations
----
-
 # What a curve says: expectations, term premium, and why an inverted curve worries people
 
-Financial mathematics → Curves in Depth → Reading the curve → What a curve says
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves in Depth](../../../SYLLABUS.md#w12-s33) → What a curve says
 
 ---
 
@@ -52,7 +33,7 @@ The top bar is a fact about today's prices. The middle bar is a belief about the
 
 ## The formula
 
-Notation first, in words. $D(T)$ is the **discount factor**: today's price of one dollar paid in $T$ years. $y(T)$ is the **zero rate** for $T$ years, continuously compounded, so $D(T) = e^{-y(T)\,T}$. Two dates $a$ and $b$, with $a$ before $b$, mark the stretch a forward covers. $e^{x}$ and $\ln$ are the exponential and natural logarithm from [compounding-frequency-and-e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md).
+Notation first, in words. $D(T)$ is the **discount factor**: today's price of one dollar paid in $T$ years. $y(T)$ is the **zero rate** for $T$ years, continuously compounded, so $D(T) = e^{-y(T)\,T}$. Two dates $a$ and $b$, with $a$ before $b$, mark the stretch a forward covers. $e^{x}$ and $\ln$ are the exponential and natural logarithm from [Compounding more often, and the number e](../../01-Foundations/04-Compound%20Growth%20and%20Discounting/04-compounding-frequency-and-e.md).
 
 $$F(a,b) \;=\; \frac{\ln D(a) - \ln D(b)}{b - a} \;=\; \frac{b\,y(b) - a\,y(a)}{b-a}$$
 
@@ -155,9 +136,9 @@ So the premium is the extra a lender expects to earn, per year, for holding the 
 
 ### Step 4: even a lender with no premium does not quote the forecast
 
-Remove all appetite for a premium. The lender now prices the long bond at its expected value. The fair forward $F_0$ then solves $e^{-2F_0} = E[e^{-2R}]$. Because $e^{-2R}$ bends upward, its average is larger than $e^{-2E[R]}$, and $F_0$ comes out at 3.955 percent, not 4. The 0.045 pp gap is **convexity**: the price gain when rates fall beats the price loss when they rise by the same amount. It is small at two years and grows as the stretch lengthens and the scenarios spread. The full treatment of convexity in rate products lives on [futures-forward-convexity](../32-Convexity%20and%20Exotics/01-futures-forward-convexity.md).
+Remove all appetite for a premium. The lender now prices the long bond at its expected value. The fair forward $F_0$ then solves $e^{-2F_0} = E[e^{-2R}]$. Because $e^{-2R}$ bends upward, its average is larger than $e^{-2E[R]}$, and $F_0$ comes out at 3.955 percent, not 4. The 0.045 pp gap is **convexity**: the price gain when rates fall beats the price loss when they rise by the same amount. It is small at two years and grows as the stretch lengthens and the scenarios spread. The full treatment of convexity in rate products lives on [Futures against forwards](../32-Convexity%20and%20Exotics/01-futures-forward-convexity.md).
 
-The other door: a short-rate model such as [vasicek-model](../30-Short-Rate%20Models/02-vasicek-model.md) writes down how the rate moves in the real world and how much risk is priced. The expected rate, the premium and the convexity then come out of one set of parameters instead of three separate inputs.
+The other door: a short-rate model such as [Vasicek](../30-Short-Rate%20Models/02-vasicek-model.md) writes down how the rate moves in the real world and how much risk is priced. The expected rate, the premium and the convexity then come out of one set of parameters instead of three separate inputs.
 
 ---
 
@@ -616,8 +597,8 @@ The two outputs agree line for line, including the simulated premium, because bo
 - **Term premium series.** The New York Fed publishes daily estimates of the US 10-year term premium from the Adrian–Crump–Moench model. Each is a forward minus a model's expected path.
 - **Recession models.** Estrella and Mishkin (1998) found the slope of the curve, the 10-year minus 3-month Treasury spread, the best single financial predictor of US recessions two or more quarters ahead.
 - **Treasury desks deciding to fix or float.** A company borrowing floating can swap into fixed at rates built from forwards. Fixing costs the premium on top of the expected path: the price of certainty.
-- **Curve shape.** Level, slope and curvature, the three moves [principal-components-of-the-curve](01-principal-components-of-the-curve.md) extracts, each mix expectations and premium. A steepening can be expected hikes or a rising premium; the principal components do not say which.
-- **Hedging.** [key-rate-durations-and-curve-hedging](02-key-rate-durations-and-curve-hedging.md) protects a portfolio against moves in the curve, whatever mixture of expectation and premium drives them.
+- **Curve shape.** Level, slope and curvature, the three moves [Level, slope and curvature](01-principal-components-of-the-curve.md) extracts, each mix expectations and premium. A steepening can be expected hikes or a rising premium; the principal components do not say which.
+- **Hedging.** [Key-rate durations](02-key-rate-durations-and-curve-hedging.md) protects a portfolio against moves in the curve, whatever mixture of expectation and premium drives them.
 
 > **Say it back**
 > Two zero rates fix a forward rate by arithmetic alone: two trades lock it in today. That forward equals an expected future rate plus a term premium, and the curve fixes only the sum. The premium is the extra return a lender expects for holding the long bond through the stretch, paid because the long route can lose. An inverted curve means the forward sits below today's short rate, which with any normal premium means the market expects cuts. Cuts tend to come with weakness, which is why inversion worries people, and a low premium is why it sometimes misleads.
@@ -626,13 +607,13 @@ The two outputs agree line for line, including the simulated premium, because bo
 
 ## What this builds on
 
-- [nelson-siegel-and-svensson-fitting](03-nelson-siegel-and-svensson-fitting.md): a smooth curve of zero rates from a handful of bond prices, so a forward can be read at any pair of dates. Its parameters describe shape, not expectations; this card is where expectations enter.
-- [spot-forward-and-par-rates](../02-Curves/01-spot-forward-and-par-rates.md): the forward rate as a no-free-money consequence of spot rates, there with annual compounding.
-- [compounding-and-discount-factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): discount factors and continuous compounding, the $D(T) = e^{-y(T)T}$ used throughout.
+- [Fitting a curve with four or six parameters](03-nelson-siegel-and-svensson-fitting.md): a smooth curve of zero rates from a handful of bond prices, so a forward can be read at any pair of dates. Its parameters describe shape, not expectations; this card is where expectations enter.
+- [Spot, forward and par rates](../02-Curves/01-spot-forward-and-par-rates.md): the forward rate as a no-free-money consequence of spot rates, there with annual compounding.
+- [Discount factors](../01-Money%2C%20Dates%20and%20Discounting/01-compounding-and-discount-factors.md): discount factors and continuous compounding, the $D(T) = e^{-y(T)T}$ used throughout.
 
 ## Where this goes next
 
-- [carry-and-roll-down](05-carry-and-roll-down.md): the return from holding a bond while the curve stays put. Carry and roll-down are the premium's cousins, computed under a stated scenario instead of a forecast.
+- [Carry and roll-down](05-carry-and-roll-down.md): the return from holding a bond while the curve stays put. Carry and roll-down are the premium's cousins, computed under a stated scenario instead of a forecast.
 
 ---
 

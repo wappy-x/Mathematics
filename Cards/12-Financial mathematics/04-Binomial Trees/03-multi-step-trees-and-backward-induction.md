@@ -1,34 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Binomial Trees
-topic: Backward induction
-item: Many steps
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/02-risk-neutral-probability|risk-neutral-probability]]"
-  - "[[Cards/04-Combinatorics and graphs/06-Lattice Paths and Catalan Numbers/01-lattice-paths|lattice-paths]]"
-next:
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/04-crr-tree-and-convergence|crr-tree-and-convergence]]"
-  - "[[Cards/12-Financial mathematics/07-Greeks by Numbers and Calibration/04-greeks-from-a-tree-or-grid|greeks-from-a-tree-or-grid]]"
-  - "[[Cards/12-Financial mathematics/24-Quantos and composites/03-quanto-greeks-and-hedging|quanto-greeks-and-hedging]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - multi-step-trees-and-backward-induction
----
-
 # Many steps: price at the end, roll back one step at a time
 
-Financial mathematics → Binomial Trees → Backward induction → Many steps
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Binomial Trees](../../../SYLLABUS.md#w12-s04) → Many steps
 
 ---
 
 ## General Overview
 
-Acme trades at $100. A call option on it — the right, but not the duty, to buy one share for $100 in a year — was priced on [one-step-binomial-replication](01-one-step-binomial-replication.md) by letting the year be a single coin flip: Acme ends at $122.14 or at $81.87, nothing else. That tree says $11.07.
+Acme trades at $100. A call option on it — the right, but not the duty, to buy one share for $100 in a year — was priced on [One step](01-one-step-binomial-replication.md) by letting the year be a single coin flip: Acme ends at $122.14 or at $81.87, nothing else. That tree says $11.07.
 
 Two ending prices is a thin picture of a year. Cut the year into four quarters instead. Each quarter Acme multiplies by 1.105171 or by 0.904837, the up and down factors that carry its 20 percent yearly jumpiness over a three-month step. Now there are sixteen histories and five ending prices, from $67.03 to $149.18. The same option comes out at **$8.76**.
 
@@ -118,7 +96,7 @@ $$\Delta_n(j) = e^{-q\Delta t}\,\frac{V_{n+1}(j+1) - V_{n+1}(j)}{S_{n+1}(j+1) - 
 | $\Delta$ | shares of Acme held against one option. Say "delta". | 0.5812 today | more of the move comes through |
 | $B$ | cash in the bank at a node; negative means borrowed | −$49.36 today | — |
 
-Three helpers feed the formulas. The step length is $\Delta t = T/N$, a quarter-year here. The branch factors are $u = e^{\sigma\sqrt{\Delta t}}$ and $d = 1/u$, the Cox–Ross–Rubinstein choice; why that pair is [crr-tree-and-convergence](04-crr-tree-and-convergence.md). The weight is $p = (e^{(r-q)\Delta t} - d)/(u - d)$, built on [risk-neutral-probability](02-risk-neutral-probability.md): the number making Acme's average growth on the tree equal the bank's, once dividends are off.
+Three helpers feed the formulas. The step length is $\Delta t = T/N$, a quarter-year here. The branch factors are $u = e^{\sigma\sqrt{\Delta t}}$ and $d = 1/u$, the Cox–Ross–Rubinstein choice; why that pair is [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md). The weight is $p = (e^{(r-q)\Delta t} - d)/(u - d)$, built on [The risk-neutral probability](02-risk-neutral-probability.md): the number making Acme's average growth on the tree equal the bank's, once dividends are off.
 
 ### When it holds
 
@@ -171,7 +149,7 @@ The forward version is the one a trader lives: buy the root's holdings for $8.76
 
 Because $d = 1/u$, an up quarter then a down multiplies Acme by one: straight back to $100.00. Up-then-down and down-then-up are different histories arriving at the same price. A tree keeping them apart doubles its ending count every step; a tree merging them gains one. After four steps that is sixteen against five; after fifty, about a thousand trillion against fifty-one. **Recombining** is the name for the merge, and it is what makes trees usable rather than a curiosity.
 
-The merge costs some bookkeeping about how many histories reach each node. Two ups out of four can be arranged six ways; the counts across the five ending prices run 1, 4, 6, 4, 1. Those are counts of lattice paths to a corner, read off in [lattice-paths](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md). The backward walk never computes them: merging counts automatically, since each merged node serves both parents.
+The merge costs some bookkeeping about how many histories reach each node. Two ups out of four can be arranged six ways; the counts across the five ending prices run 1, 4, 6, 4, 1. Those are counts of lattice paths to a corner, read off in [Lattice paths](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md). The backward walk never computes them: merging counts automatically, since each merged node serves both parents.
 
 ### Step 4: the same number, written as one average
 
@@ -216,7 +194,7 @@ Acme at $S = 100$, strike $K = 100$, riskless rate $r = 5\%$, dividend yield $q 
 
 So the four-step tree charges $8.76 for a one-year call on Acme struck at today's price. Three readings confirm it is doing arithmetic and not wishful thinking: rolling back a payoff of "one Acme share" gives $98.019867, which is $S e^{-qT}$ to the last digit; the put on the same tree, $5.863402, sits exactly a forward apart from the call, $8.760327 - 5.863402 = 2.896925$; and the hedge carried forward hits the payoff on all sixteen histories.
 
-Four steps is still coarse. The continuous formula on [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) gives $9.227006 for the same option; one step gave $11.073541; five hundred steps give $9.223118. The tree overshoots and undershoots by turns as steps are added, and why that wobble happens is [crr-tree-and-convergence](04-crr-tree-and-convergence.md).
+Four steps is still coarse. The continuous formula on [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md) gives $9.227006 for the same option; one step gave $11.073541; five hundred steps give $9.223118. The tree overshoots and undershoots by turns as steps are added, and why that wobble happens is [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md).
 
 ### What breaks if you drop a piece
 
@@ -747,9 +725,9 @@ The two outputs match line for line, from two programs that share no code.
 
 ## Where you meet it in real life
 
-- **Every listed American option.** The right to exercise early is one extra comparison at each node: the rolled-back value against the payoff from cashing in there and then. Backward induction is what makes that question askable, and it is asked on [american-exercise-on-a-tree](05-american-exercise-on-a-tree.md).
-- **The hedge ratio on a trading screen.** The 0.5812 at the root is delta, quoted per option. Reading it off a tree rather than a formula is [greeks-from-a-tree-or-grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md).
-- **Grids that are not trees.** Finite-difference schemes solve the same backward problem on a rectangular mesh instead of a fan, with the three-branch step between them: [trinomial-trees-and-the-grid-connection](06-trinomial-trees-and-the-grid-connection.md).
+- **Every listed American option.** The right to exercise early is one extra comparison at each node: the rolled-back value against the payoff from cashing in there and then. Backward induction is what makes that question askable, and it is asked on [Early exercise](05-american-exercise-on-a-tree.md).
+- **The hedge ratio on a trading screen.** The 0.5812 at the root is delta, quoted per option. Reading it off a tree rather than a formula is [Greeks from a tree or grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md).
+- **Grids that are not trees.** Finite-difference schemes solve the same backward problem on a rectangular mesh instead of a fan, with the three-branch step between them: [Trinomial trees](06-trinomial-trees-and-the-grid-connection.md).
 - **Anything decided in stages.** Backward induction is older than option pricing: settle the last decision first, then the one before it knowing what the last will be. It values drilling rights, schedules reservoirs, solves chess endgames.
 - **Company accounts.** Employee share options and convertible bonds are valued on trees in filings, for the early-exercise and conversion features no closed formula reaches.
 
@@ -760,14 +738,14 @@ The two outputs match line for line, from two programs that share no code.
 
 ## What this builds on
 
-- [risk-neutral-probability](02-risk-neutral-probability.md): where the weight 0.512599 comes from, and why it is a price rather than a forecast. This card uses it once per node.
-- [lattice-paths](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md): the count of routes to a point on a grid, 1, 4, 6, 4, 1 across four steps, which is why five endings are not five equal futures.
+- [The risk-neutral probability](02-risk-neutral-probability.md): where the weight 0.512599 comes from, and why it is a price rather than a forecast. This card uses it once per node.
+- [Lattice paths](../../04-Combinatorics%20and%20graphs/06-Lattice%20Paths%20and%20Catalan%20Numbers/01-lattice-paths.md): the count of routes to a point on a grid, 1, 4, 6, 4, 1 across four steps, which is why five endings are not five equal futures.
 
 ## Where this goes next
 
-- [crr-tree-and-convergence](04-crr-tree-and-convergence.md): where $u$ and $d$ come from, and how the price walks from $8.76 toward the continuous answer as steps are added.
-- [greeks-from-a-tree-or-grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md): the sensitivities read off neighbouring nodes, delta from the first pair and the curvature from the next.
-- [quanto-greeks-and-hedging](../24-Quantos%20and%20composites/03-quanto-greeks-and-hedging.md): the same backward walk when the payoff is in one currency and the asset in another.
+- [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md): where $u$ and $d$ come from, and how the price walks from $8.76 toward the continuous answer as steps are added.
+- [Greeks from a tree or grid](../07-Greeks%20by%20Numbers%20and%20Calibration/04-greeks-from-a-tree-or-grid.md): the sensitivities read off neighbouring nodes, delta from the first pair and the curvature from the next.
+- [Hedging a quanto](../24-Quantos%20and%20composites/03-quanto-greeks-and-hedging.md): the same backward walk when the payoff is in one currency and the asset in another.
 
 Four steps gave $8.76 where the continuous formula gives $9.23, a gap of nearly half a dollar on a nine-dollar option. Whether adding steps closes it, how fast, and why the approach wobbles rather than glides, is the next card.
 

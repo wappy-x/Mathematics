@@ -1,23 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Commodity forwards - carry, storage, convenience yield and the curve
-topic: Gold as a currency
-item: Gold forward
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/02-covered-interest-parity|covered-interest-parity]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/03-forward-price-by-cash-and-carry|forward-price-by-cash-and-carry]]"
-next:
-  - "[[Cards/12-Financial mathematics/25-Commodity forwards - carry, storage, convenience yield and the curve/02-storage-cost-and-the-carry-ceiling|storage-cost-and-the-carry-ceiling]]"
-tags: [mathematics, financial mathematics, gold-forward-and-the-lease-rate]
----
-
 # Gold forward: spot grown at interest minus the lease rate, exact because gold can be borrowed like a currency
 
-Financial mathematics → Commodity forwards - carry, storage, convenience yield and the curve → Gold as a currency → Gold forward
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Commodity forwards - carry, storage, convenience yield and the curve](../../../SYLLABUS.md#w12-s25) → Gold forward
 
 ---
 
@@ -29,7 +12,7 @@ A jeweller and a bank agree this morning that in one year the bank will deliver 
 
 That number is not a forecast of next year's gold price. It is forced by the two deposit rates. A bank asked to quote 2,100 sells the forward, borrows dollars, buys gold and lends the gold out. On delivery day it is 18.38 dollars ahead, whatever gold does. At 2,060 the trade runs backwards and the buyer of the forward keeps 21.62.
 
-Every step of that trade exists because gold can be lent and borrowed at a known rate, paid in ounces. That makes gold a currency with its own interest rate. The international standard for currency codes lists it, as XAU, next to USD and EUR. The gold forward is then the currency forward of [covered-interest-parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md) with the lease rate in the place of the foreign interest rate.
+Every step of that trade exists because gold can be lent and borrowed at a known rate, paid in ounces. That makes gold a currency with its own interest rate. The international standard for currency codes lists it, as XAU, next to USD and EUR. The gold forward is then the currency forward of [Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md) with the lease rate in the place of the foreign interest rate.
 
 **A gold forward is today's gold price grown at the dollar rate minus the lease rate, and it is an equality, not a bound, because gold can be borrowed and lent like money in both directions.**
 
@@ -53,7 +36,7 @@ The upper line is gold's forward if nobody paid to borrow it: spot grown at the 
 
 ## The formula
 
-Notation first, in words. The letter $l$ stands for the lease rate, the interest gold earns in gold. Rates are continuously compounded ([forward-price-by-cash-and-carry](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md) uses the same convention): a deposit of 1 grows to $e^{rT}$ in $T$ years.
+Notation first, in words. The letter $l$ stands for the lease rate, the interest gold earns in gold. Rates are continuously compounded ([Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md) uses the same convention): a deposit of 1 grows to $e^{rT}$ in $T$ years.
 
 $$F = S\,e^{(r - l)\,T}$$
 
@@ -86,7 +69,7 @@ In words: the **forward premium**, the yearly rate at which the forward sits abo
 - **Gold can be lent and borrowed at one lease rate, repaid in ounces.** Real banks lend gold dearer than they borrow it. The single $F$ then widens into a band, and a quote inside the band gives no free profit. A lease whose interest is a fixed dollar fee is a different contract, with a different formula (the tip in Why it works).
 - **One dollar rate for borrowing and lending.** A trader who borrows dollars dearer than it lends them faces a second band, stacked on the first.
 - **The ounce returned is the ounce delivered.** The loan must repay metal of the fineness, bar size and vault location the forward names. In March 2020, with flights grounded, New York gold futures traded tens of dollars above London spot for days, because a London bar could not become a New York delivery in time.
-- **Holding gold costs nothing worth counting.** Vaulting and insurance are small next to 2,000 dollars an ounce, so this card ignores them. For a commodity where storage is heavy and the reverse trade is blocked, the equality breaks into a ceiling: [storage-cost-and-the-carry-ceiling](02-storage-cost-and-the-carry-ceiling.md).
+- **Holding gold costs nothing worth counting.** Vaulting and insurance are small next to 2,000 dollars an ounce, so this card ignores them. For a commodity where storage is heavy and the reverse trade is blocked, the equality breaks into a ceiling: [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md).
 - **Contracts are honoured.** A gold loan is a promise. If the borrower's credit is doubtful, the lease rate charged includes a premium for that risk, and the rate in the formula is not the rate the trader faces.
 
 ---
@@ -106,7 +89,7 @@ Both deliver the same ounce on the same day with no risk, so they must cost the 
 
 $$F\,e^{-rT} = S\,e^{-lT} \quad\Longrightarrow\quad F = S\,e^{(r - l)T}.$$
 
-At the house numbers both routes cost 1,980.10 dollars today. Two cards already hold this argument. In [forward-price-by-cash-and-carry](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md) the asset pays an income yield, like a dividend; here that yield is the lease rate. In [covered-interest-parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md) the foreign currency earns its own deposit rate; here gold is the foreign currency and the lease rate is that deposit rate.
+At the house numbers both routes cost 1,980.10 dollars today. Two cards already hold this argument. In [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md) the asset pays an income yield, like a dividend; here that yield is the lease rate. In [Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md) the foreign currency earns its own deposit rate; here gold is the foreign currency and the lease rate is that deposit rate.
 
 ### Step 1: the seller's ledger, when the quote is too high
 
@@ -153,7 +136,7 @@ Seller's strategy at time 0: borrow $S e^{-lT}$ dollars, buy $e^{-lT}$ ounces, l
 
 Buyer's strategy: borrow $e^{-lT}$ ounces, sell them for $S e^{-lT}$ dollars, deposit the dollars at $r$, and buy one ounce forward at $F_q$. Every position at 0 nets to zero. At $T$ the deposit pays $F$, the forward takes $F_q$ and delivers one ounce, and that ounce repays the gold loan. Net dollars at $T$: $F - F_q$.
 
-If $F_q > F$ the seller's strategy costs nothing and pays a positive amount for certain: an arbitrage, a sure profit from no outlay. If $F_q < F$ the buyer's does. In a market with no arbitrage, $F_q = F$. Both directions are needed. Without the gold loan in Step 2, only the upper half of the argument survives and $F$ becomes a ceiling, which is the situation on [storage-cost-and-the-carry-ceiling](02-storage-cost-and-the-carry-ceiling.md).
+If $F_q > F$ the seller's strategy costs nothing and pays a positive amount for certain: an arbitrage, a sure profit from no outlay. If $F_q < F$ the buyer's does. In a market with no arbitrage, $F_q = F$. Both directions are needed. Without the gold loan in Step 2, only the upper half of the argument survives and $F$ becomes a ceiling, which is the situation on [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md).
 
 </details>
 
@@ -178,7 +161,7 @@ xychart-beta
     line [3.02, 2.04, 1.08, 0.12, -0.83]
 ```
 
-The line falls as the quote rises: a dearer forward means gold earns less by being lent. It crosses zero at 2,102.54, the forward at full dollar carry. A quote above that, such as 2,120, implies a negative lease rate: lenders of gold paying borrowers to take it. With free storage that cannot last. Anyone could borrow gold, keep it in a drawer, hand it back, and pocket the fee. So 2,102.54 is a ceiling, and it is the first sign of the storage argument on [storage-cost-and-the-carry-ceiling](02-storage-cost-and-the-carry-ceiling.md): once holding the metal costs money, lenders will pay to be rid of that cost.
+The line falls as the quote rises: a dearer forward means gold earns less by being lent. It crosses zero at 2,102.54, the forward at full dollar carry. A quote above that, such as 2,120, implies a negative lease rate: lenders of gold paying borrowers to take it. With free storage that cannot last. Anyone could borrow gold, keep it in a drawer, hand it back, and pocket the fee. So 2,102.54 is a ceiling, and it is the first sign of the storage argument on [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md): once holding the metal costs money, lenders will pay to be rid of that cost.
 
 <details>
 <summary>What if the lease interest is paid in dollars?</summary>
@@ -189,7 +172,7 @@ Some gold loans pay the lender a fixed dollar fee, $H$ at $T$, and return exactl
 
 ### The other door: an average, and a daily ledger
 
-The code reaches the same 2,081.62 two more ways. First, as an average. Suppose gold's price drifts at $r - l$ a year and wobbles randomly around that path (the risk-neutral valuation of [forward-price-by-cash-and-carry](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md)). Then the average of 200,000 simulated delivery-day prices lands on the forward, within its sampling error. Let gold drift at 8 percent instead, a forecast, and the average is 2,166.59: a different number, because the forward is not a forecast. Second, as a ledger rolled a day at a time, with the gold loan and the dollar loan each compounding once a day. That lands less than a cent below the continuous answer.
+The code reaches the same 2,081.62 two more ways. First, as an average. Suppose gold's price drifts at $r - l$ a year and wobbles randomly around that path (the risk-neutral valuation of [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md)). Then the average of 200,000 simulated delivery-day prices lands on the forward, within its sampling error. Let gold drift at 8 percent instead, a forecast, and the average is 2,166.59: a different number, because the forward is not a forecast. Second, as a ledger rolled a day at a time, with the gold loan and the dollar loan each compounding once a day. That lands less than a cent below the continuous answer.
 
 ---
 
@@ -617,7 +600,7 @@ The two outputs match line for line, including the simulated average: both langu
 > - **Adding the lease rate.** The lease is income to the holder of gold, not a storage cost. Adding it gives 2,123.67.
 > - **Lending a whole ounce to deliver a whole ounce.** The lease pays in ounces, so the trade needs 0.990050 ounces, not 1. Lending 1 leaves 0.010050 ounces unhedged.
 > - **Treating an implied lease rate as a tradable one.** A 2,100 quote implies 0.121 percent. That is the rate that makes the quote fair, not a promise that any bank will lend gold at it.
-> - **Mixing compounding.** A lease quoted as simple interest over a day count is not the $l$ in $e^{-lT}$. Convert it first, as [covered-interest-parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md) does for deposit rates.
+> - **Mixing compounding.** A lease quoted as simple interest over a day count is not the $l$ in $e^{-lT}$. Convert it first, as [Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md) does for deposit rates.
 
 ---
 
@@ -625,9 +608,9 @@ The two outputs match line for line, including the simulated average: both langu
 
 - **Gold mines hedging.** A mine that sells its next year's output forward locks in a price. The bank that buys that forward is on the buyer's side of Step 2: it borrows gold, often from a central bank, sells it at spot, and deposits the dollars. Its ledger closes when the mine delivers.
 - **Central banks' reserves.** Gold held in reserve earns nothing in a vault. Lent to bullion banks, it earns the lease rate. Those loans are the supply of borrowable gold that makes Step 2 possible.
-- **Gold on the currency desk.** Because gold behaves like a currency, banks trade it the way they trade currencies: spot, forwards, and swaps that buy gold now and sell it forward. The forward points on such a swap are $F - S$, read exactly as in [forward-points-and-fx-swaps](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/03-forward-points-and-fx-swaps.md).
-- **Gold futures.** Exchange-traded futures settle gains and losses every day. With a fixed dollar rate their price equals the forward, and the gap otherwise is the subject of [futures-margining-and-the-forward-futures-difference](../03-Contracts%20and%20No-Arbitrage/05-futures-margining-and-the-forward-futures-difference.md).
-- **The rest of the shelf.** Wheat and crude oil cannot be lent the way gold can. Their forwards are bounds, not equalities: [storage-cost-and-the-carry-ceiling](02-storage-cost-and-the-carry-ceiling.md) and [convenience-yield-implied-by-the-forward](03-convenience-yield-implied-by-the-forward.md).
+- **Gold on the currency desk.** Because gold behaves like a currency, banks trade it the way they trade currencies: spot, forwards, and swaps that buy gold now and sell it forward. The forward points on such a swap are $F - S$, read exactly as in [Forward points and the FX swap](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/03-forward-points-and-fx-swaps.md).
+- **Gold futures.** Exchange-traded futures settle gains and losses every day. With a fixed dollar rate their price equals the forward, and the gap otherwise is the subject of [Futures](../03-Contracts%20and%20No-Arbitrage/05-futures-margining-and-the-forward-futures-difference.md).
+- **The rest of the shelf.** Wheat and crude oil cannot be lent the way gold can. Their forwards are bounds, not equalities: [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md) and [Convenience yield](03-convenience-yield-implied-by-the-forward.md).
 
 > **Say it back**
 > Gold can be lent at a lease rate paid in more gold, so it is a currency with its own interest rate. An ounce next year then costs less than an ounce today: lend 0.990050 ounces and one comes back. Buying that gold with borrowed dollars fixes the cost of delivering an ounce at spot grown at the dollar rate minus the lease rate, 2,081.62 here. Any other quote is sold or bought against that ledger for a sure profit, and it takes both directions, gold lent and gold borrowed, to make the price exact. The forward premium over spot is the rate gap, so a quoted forward reveals the lease rate.
@@ -636,12 +619,12 @@ The two outputs match line for line, including the simulated average: both langu
 
 ## What this builds on
 
-- [covered-interest-parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md): the forward of one currency against another, from the two deposit rates. Gold is the foreign currency and the lease rate its deposit rate.
-- [forward-price-by-cash-and-carry](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md): the forward of any asset with an income yield, and the two ledgers that pin it. The lease rate is gold's income yield.
+- [Covered interest parity](../20-FX%20spot%2C%20forwards%20and%20interest%20parity/02-covered-interest-parity.md): the forward of one currency against another, from the two deposit rates. Gold is the foreign currency and the lease rate its deposit rate.
+- [Forward price](../03-Contracts%20and%20No-Arbitrage/03-forward-price-by-cash-and-carry.md): the forward of any asset with an income yield, and the two ledgers that pin it. The lease rate is gold's income yield.
 
 ## Where this goes next
 
-- [storage-cost-and-the-carry-ceiling](02-storage-cost-and-the-carry-ceiling.md): wheat costs money to store and cannot be borrowed like gold. The seller's ledger survives and gives a ceiling; the buyer's ledger does not.
+- [Storage and the carry ceiling](02-storage-cost-and-the-carry-ceiling.md): wheat costs money to store and cannot be borrowed like gold. The seller's ledger survives and gives a ceiling; the buyer's ledger does not.
 
 The gold price was exact only because gold can be borrowed; storage-cost-and-the-carry-ceiling asks what is left of the formula when the reverse trade is blocked.
 

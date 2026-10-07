@@ -1,29 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX spot, forwards and interest parity
-topic: Marking a currency hedge
-item: Valuing an old currency forward
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/20-FX spot, forwards and interest parity/03-forward-points-and-fx-swaps|forward-points-and-fx-swaps]]"
-  - "[[Cards/12-Financial mathematics/03-Contracts and No-Arbitrage/04-forward-value-after-inception|forward-value-after-inception]]"
-next:
-  - "[[Cards/12-Financial mathematics/27-Averages - commodity swaps and Asian options/01-commodity-swap-and-average-price-forward|commodity-swap-and-average-price-forward]]"
-tags: [mathematics, financial mathematics, fx-forward-value-after-inception]
----
-
 # Valuing an old currency forward: the gap to today's forward, discounted, in whichever currency you count
 
-Financial mathematics → FX spot, forwards and interest parity → Marking a currency hedge → Valuing an old currency forward
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX spot, forwards and interest parity](../../../SYLLABUS.md#w12-s20) → Valuing an old currency forward
 
 ---
 
 ## General Overview
 
-A year ago a US importer agreed to buy 10 million euros from its bank, for delivery fifteen months later, at 1.1500 dollars per euro. That agreement is an **FX forward** ([covered-interest-parity](02-covered-interest-parity.md)). Nothing was paid on the day. The rate, 1.1500, was the fair forward rate that morning, so the contract was worth nothing to either side.
+A year ago a US importer agreed to buy 10 million euros from its bank, for delivery fifteen months later, at 1.1500 dollars per euro. That agreement is an **FX forward** ([Covered interest parity](02-covered-interest-parity.md)). Nothing was paid on the day. The rate, 1.1500, was the fair forward rate that morning, so the contract was worth nothing to either side.
 
 Today three months are left. The euro costs 1.1000 dollars for delivery now, the **spot rate**. A new three-month forward is quoted at 1.1055. The importer is locked into paying 1.1500 for euros that anyone else can contract for at 1.1055. The contract has become a liability.
 
@@ -81,13 +64,13 @@ $$V_f = \frac{V_d}{S_t} = A\left(1 - \frac{K}{F_t}\right)e^{-r_f \tau}$$
 | $V_f$ | the mark counted in euros | −399,520.11 | (the answer, restated) |
 | $A_i$, $K_i$, $F^*$ | a book's legs, each an amount and a contract rate; the forward rate at which the book is worth zero | +10m at 1.1500, −4m at 1.1300; 1.163333 | |
 
-Two helper facts from the shelf. Today's forward obeys parity, $F_t = S_t\,e^{(r_d - r_f)\tau}$ ([covered-interest-parity](02-covered-interest-parity.md)). Solved for the euro rate, it gives the rate the quote implies: $r_f = r_d - \ln(F_t/S_t)/\tau$, which is 3.0050% here. The shelf's house rates, 5% and 3%, give a three-month forward of 1.105514; the market quotes it to the pip as 1.1055, and 3.0050% is the euro rate that rounded quote carries. Reading the rate out of a quote is the job of [implied-yield-and-cross-currency-basis](05-implied-yield-and-cross-currency-basis.md).
+Two helper facts from the shelf. Today's forward obeys parity, $F_t = S_t\,e^{(r_d - r_f)\tau}$ ([Covered interest parity](02-covered-interest-parity.md)). Solved for the euro rate, it gives the rate the quote implies: $r_f = r_d - \ln(F_t/S_t)/\tau$, which is 3.0050% here. The shelf's house rates, 5% and 3%, give a three-month forward of 1.105514; the market quotes it to the pip as 1.1055, and 3.0050% is the euro rate that rounded quote carries. Reading the rate out of a quote is the job of [The interest rate a forward implies](05-implied-yield-and-cross-currency-basis.md).
 
-**Conventions verified 27 Sep 2026:** EURUSD is quoted in dollars per euro; a pip is 0.0001 dollars per euro; outright forwards are quoted to the pip, as spot plus forward points ([forward-points-and-fx-swaps](03-forward-points-and-fx-swaps.md)). Markets could change these; the formula does not care, provided the rate and its quoting unit travel together.
+**Conventions verified 27 Sep 2026:** EURUSD is quoted in dollars per euro; a pip is 0.0001 dollars per euro; outright forwards are quoted to the pip, as spot plus forward points ([Forward points and the FX swap](03-forward-points-and-fx-swaps.md)). Markets could change these; the formula does not care, provided the rate and its quoting unit travel together.
 
 ### When it holds
 
-- **The contract and the new forward settle on the same day, both sides deliver.** Then the close-out below leaves a sure sum. If the bank might default, the sum is not sure, and the mark needs a charge for that risk ([forward-value-after-inception](../03-Contracts%20and%20No-Arbitrage/04-forward-value-after-inception.md) marks the default-free case).
+- **The contract and the new forward settle on the same day, both sides deliver.** Then the close-out below leaves a sure sum. If the bank might default, the sum is not sure, and the mark needs a charge for that risk ([An old forward](../03-Contracts%20and%20No-Arbitrage/04-forward-value-after-inception.md) marks the default-free case).
 - **One dollar rate to discount with, for exactly the time left.** A three-month dollar rate discounts a three-month sum. Borrowing dearer than lending opens a narrow band around −439,472.12, not a different answer.
 - **Parity links spot, forward and the two rates.** The dollar formula needs only $F_t$ and $r_d$. The euro restatement at spot needs parity to hold between the quote and the euro rate used. Where banks' funding costs split the two (the cross-currency basis), take the euro discount from the forward, as Step 3 does, not from a euro deposit rate.
 - **A forward, not a future.** A future settles each day's gain in cash and restarts at zero, so its mark is not this number.
@@ -137,7 +120,7 @@ So a value today converts at today's exchange rate, spot. The forward rate conve
 
 ### Step 4: where the volatility went
 
-The euro's jumpiness does not appear. The contract pays $A(S_T - K)$ dollars on delivery day, a straight line in $S_T$. In the pricing world, the pretend world in which a euro deposit, counted in dollars, earns exactly the dollar rate ([state-prices-and-risk-neutral-pricing-in-one-period](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)), the average of $S_T$ is the forward rate. So the average payoff is $A(F_t - K)$, whatever the spread around it. The check averages the payoff over a bell curve on the log of $S_T$, by Simpson's rule (a weighted sum of samples that approximates an integral), at 8% and at 16% volatility. Both give −439,472.12.
+The euro's jumpiness does not appear. The contract pays $A(S_T - K)$ dollars on delivery day, a straight line in $S_T$. In the pricing world, the pretend world in which a euro deposit, counted in dollars, earns exactly the dollar rate ([State prices](../03-Contracts%20and%20No-Arbitrage/07-state-prices-and-risk-neutral-pricing-in-one-period.md)), the average of $S_T$ is the forward rate. So the average payoff is $A(F_t - K)$, whatever the spread around it. The check averages the payoff over a bell curve on the log of $S_T$, by Simpson's rule (a weighted sum of samples that approximates an integral), at 8% and at 16% volatility. Both give −439,472.12.
 
 ### Step 5: the rate at which a book is flat
 
@@ -155,7 +138,7 @@ Before solving for the flat rate, when does one exist?
 
 The check finds 1.163333 a second way, by bisection: halve an interval of forward rates eighty times, keeping the half where the book's value changes sign. For the single contract, the spot rate at which it is flat is $K e^{-(r_d - r_f)\tau}$ = 1.144279, the crossing in the overview chart.
 
-The general version of all this, for a share with a dividend yield, is [forward-value-after-inception](../03-Contracts%20and%20No-Arbitrage/04-forward-value-after-inception.md); the euro rate plays the dividend yield's part.
+The general version of all this, for a share with a dividend yield, is [An old forward](../03-Contracts%20and%20No-Arbitrage/04-forward-value-after-inception.md); the euro rate plays the dividend yield's part.
 
 ---
 
@@ -617,7 +600,7 @@ The two outputs agree line for line.
 - **Unwinding a hedge early.** If the underlying bill is cancelled, the bank quotes a close-out: the dollar mark today, or the undiscounted sum on delivery day. The importer here pays 439,472.12 now or 445,000.00 in three months.
 - **Collateral between banks.** Two dealers exchange collateral each day equal to the net mark of every forward between them, counted in the currency their agreement names.
 - **A dealer's position report.** A book of forwards on one date collapses to a net euro amount and a flat rate, $F^*$: long euros above it, short below. The whole book's risk is one number and one level.
-- **Swaps.** An FX swap is a spot trade and a forward reversing it; its forward leg is marked by this formula ([forward-points-and-fx-swaps](03-forward-points-and-fx-swaps.md)).
+- **Swaps.** An FX swap is a spot trade and a forward reversing it; its forward leg is marked by this formula ([Forward points and the FX swap](03-forward-points-and-fx-swaps.md)).
 
 > **Say it back**
 > An old currency forward is cancelled by signing the opposite forward today at no cost, which leaves a fixed dollar sum on delivery day. That sum, discounted at the dollar rate, is the contract's value today. Counted in euros, the value is the same sum turned into euros at the forward and discounted at the euro rate, which equals the dollar value divided by today's spot. The euro's volatility does not enter, because the payoff is a straight line. A book of same-day forwards is flat at the amount-weighted average of its contract rates, when its net euro amount is not zero.
@@ -626,14 +609,14 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [forward-points-and-fx-swaps](03-forward-points-and-fx-swaps.md): how the three-month forward rate is quoted, as spot plus points, and the offsetting trade that closes a forward.
-- [forward-value-after-inception](../03-Contracts%20and%20No-Arbitrage/04-forward-value-after-inception.md): the one-currency mark, the discounted gap, proved for a share; this card adds the second currency.
+- [Forward points and the FX swap](03-forward-points-and-fx-swaps.md): how the three-month forward rate is quoted, as spot plus points, and the offsetting trade that closes a forward.
+- [An old forward](../03-Contracts%20and%20No-Arbitrage/04-forward-value-after-inception.md): the one-currency mark, the discounted gap, proved for a share; this card adds the second currency.
 
 ---
 
 ## Where this goes next
 
-- [commodity-swap-and-average-price-forward](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/01-commodity-swap-and-average-price-forward.md): a row of forwards at one shared price, one per payment date, marked leg by leg with this card's discounted gap and summed.
+- [Commodity swap](../27-Averages%20-%20commodity%20swaps%20and%20Asian%20options/01-commodity-swap-and-average-price-forward.md): a row of forwards at one shared price, one per payment date, marked leg by leg with this card's discounted gap and summed.
 
 This card marks forwards that all settle on one day; the open question is how to value and find the flat price of a contract whose legs settle on many days, which is what the commodity swap answers.
 

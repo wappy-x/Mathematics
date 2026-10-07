@@ -1,24 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Rate Equations
-topic: Growth with a ceiling
-item: Logistic growth
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/02-slope-fields-and-the-phase-line|slope-fields-and-the-phase-line]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/03-separable-equations|separable-equations]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/05-partial-fractions|partial-fractions]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/09-bernoulli-and-riccati-substitutions|bernoulli-and-riccati-substitutions]]"
-tags: [mathematics, differential equations and dynamics, logistic-growth]
----
-
 # Logistic growth: a ceiling bends the exponential into an S-curve
 
-Differential equations and dynamics → Rate Equations → Growth with a ceiling → Logistic growth
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Rate Equations](../../../SYLLABUS.md#w08-s01) → Logistic growth
 
 ---
 
@@ -52,7 +34,7 @@ Orange: the rumour, from 10 pupils. Green: the same law from 1,500, impossible i
 
 ## The formula
 
-Notation from [what-a-differential-equation-says](01-what-a-differential-equation-says.md): $P'$ is the rate of $P$, read "the rate of P at time t is …". The logistic law and its starting value are
+Notation from [A differential equation](01-what-a-differential-equation-says.md): $P'$ is the rate of $P$, read "the rate of P at time t is …". The logistic law and its starting value are
 
 $$P' = rP\left(1 - \frac{P}{K}\right), \qquad P(0) = P_0 .$$
 
@@ -96,13 +78,13 @@ A new hearer is made when a knower meets a non-knower. Such meetings grow with t
 
 ### Step 1: separate the variables
 
-The law ignores the clock, so it separates, by the method of [separable-equations](03-separable-equations.md). Divide both sides by $P(1 - P/K)$, which is not zero while $P$ sits strictly between 0 and $K$:
+The law ignores the clock, so it separates, by the method of [Separable equations](03-separable-equations.md). Divide both sides by $P(1 - P/K)$, which is not zero while $P$ sits strictly between 0 and $K$:
 
 $$\frac{1}{P\,(1 - P/K)}\,\frac{dP}{dt} = r .$$
 
 ### Step 2: split the fraction by partial fractions
 
-Rewrite $1/(P(1 - P/K))$ as $K/(P(K - P))$ and split it, by [partial-fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md), into two easy ones:
+Rewrite $1/(P(1 - P/K))$ as $K/(P(K - P))$ and split it, by [Partial fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md), into two easy ones:
 
 $$\frac{K}{P\,(K - P)} = \frac{1}{P} + \frac{1}{K - P} .$$
 
@@ -129,7 +111,7 @@ Uniqueness: on any bounded range of counts the law's slope, r(1 − 2P/K), is bo
 
 ### Step 4: the phase line, without the formula
 
-Write $f(P)$ for $rP(1 - P/K)$. By [slope-fields-and-the-phase-line](02-slope-fields-and-the-phase-line.md), the rests are where $f$ is zero: $P = 0$ and $P = K$. Between them $f$ is positive and the count rises; above $K$ it is negative and the count falls.
+Write $f(P)$ for $rP(1 - P/K)$. By [Slope fields and the phase line](02-slope-fields-and-the-phase-line.md), the rests are where $f$ is zero: $P = 0$ and $P = K$. Between them $f$ is positive and the count rises; above $K$ it is negative and the count falls.
 
 The slope test agrees. Here $f'(P) = r(1 - 2P/K)$. At 0 it is $+r$ = +0.8 per day: arrows point away, so zero **repels**. At $K$ it is $-r$ = −0.8 per day: arrows point in, so the ceiling **attracts**.
 
@@ -392,13 +374,13 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [slope-fields-and-the-phase-line](02-slope-fields-and-the-phase-line.md): rests, arrows and the slope test that sort 0 and K.
-- [separable-equations](03-separable-equations.md): moving every $P$ to one side and every $t$ to the other.
-- [partial-fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md): splitting 1/(P(K − P)) into two logarithms.
+- [Slope fields and the phase line](02-slope-fields-and-the-phase-line.md): rests, arrows and the slope test that sort 0 and K.
+- [Separable equations](03-separable-equations.md): moving every $P$ to one side and every $t$ to the other.
+- [Partial fractions](../../06-Calculus%20and%20analysis/04-Integrals/05-partial-fractions.md): splitting 1/(P(K − P)) into two logarithms.
 
 ## Where this goes next
 
-- [bernoulli-and-riccati-substitutions](09-bernoulli-and-riccati-substitutions.md): the logistic law is a Bernoulli equation, and the substitution u = 1/P turns it into a linear one, a second road to the same S-curve.
+- [Bernoulli and Riccati equations](09-bernoulli-and-riccati-substitutions.md): the logistic law is a Bernoulli equation, and the substitution u = 1/P turns it into a linear one, a second road to the same S-curve.
 
 ---
 

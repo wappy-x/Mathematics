@@ -1,33 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Swapping Limits and Integrals
-topic: Ways a sequence settles
-item: Modes of convergence
-kind: theorem
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/02-dominated-convergence-theorem|dominated-convergence-theorem]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/07-null-sets-and-almost-everywhere|null-sets-and-almost-everywhere]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/05-continuity-of-measure|continuity-of-measure]]"
-  - "[[Cards/06-Calculus and analysis/06-Series/07-uniform-convergence|uniform-convergence]]"
-next:
-  - "[[Cards/10-Measure and integration/05-Swapping Limits and Integrals/05-uniform-integrability|uniform-integrability]]"
-  - "[[Cards/10-Measure and integration/07-Sizes of Functions/05-completeness-of-lp|completeness-of-lp]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/01-borel-cantelli-lemmas|borel-cantelli-lemmas]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/03-weak-law-of-large-numbers|weak-law-of-large-numbers]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/05-convergence-in-distribution|convergence-in-distribution]]"
-  - "[[Cards/18-Functional analysis/02-Hilbert Spaces/09-weak-convergence-and-banach-alaoglu|weak-convergence-and-banach-alaoglu]]"
-tags:
-  - mathematics
-  - measure and integration
-  - modes-of-convergence
----
-
 # Modes of convergence: almost everywhere, in measure, in mean, and the map of which implies which
 
-Measure and integration → Swapping Limits and Integrals → Ways a sequence settles → Modes of convergence
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Swapping Limits and Integrals](../../../SYLLABUS.md#w10-s05) → Modes of convergence
 
 ---
 
@@ -78,11 +51,11 @@ $$f_n = \mathbf{1}_{[k/M,\ (k+1)/M)}, \qquad g_n = n\,\mathbf{1}_{[0,\ 1/n)}$$
 
 **Read it aloud:** at step n the typewriter is one on the k-th strip of pass m and zero elsewhere; the spike is n high on the first 1/n of the stage.
 
-Four tests of whether a sequence $f_n$ approaches a limit $f$. **Uniformly:** the worst gap over all points shrinks to zero ([uniform-convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md)):
+Four tests of whether a sequence $f_n$ approaches a limit $f$. **Uniformly:** the worst gap over all points shrinks to zero ([Uniform convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md)):
 
 $$\sup_{x \in \Omega} |f_n(x) - f(x)| \to 0$$
 
-**Almost everywhere**, written a.e., read "except on a set of size zero" ([null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)):
+**Almost everywhere**, written a.e., read "except on a set of size zero" ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)):
 
 $$\mu\big(\{x : f_n(x) \not\to f(x)\}\big) = 0$$
 
@@ -96,7 +69,7 @@ $$\int |f_n - f|\, d\mu \to 0, \qquad \int |f_n - f|^p\, d\mu \to 0$$
 
 **Read it aloud:** uniformly means one worst gap for every point; almost everywhere means each point settles on its own, apart from a null set; in measure means the badly-off set gets small; in mean means the total gap gets small.
 
-When $\mu$ is a probability $P$, a.e. is called **almost surely** (a.s.) and in measure is called **in probability**. A fifth mode, **in distribution**, compares only laws, $P(f_n \le t) \to P(f \le t)$ where the limit's distribution function does not jump ([convergence-in-distribution](../10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md)).
+When $\mu$ is a probability $P$, a.e. is called **almost surely** (a.s.) and in measure is called **in probability**. A fifth mode, **in distribution**, compares only laws, $P(f_n \le t) \to P(f \le t)$ where the limit's distribution function does not jump ([Convergence in distribution](../10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md)).
 
 The three theorems. Write $B_n = \{x : |f_n(x) - f(x)| > \varepsilon\}$ for the **bad set** at step n.
 
@@ -129,7 +102,7 @@ $$\mu\big(\{|f_{n_j} - f| > 2^{-j}\}\big) \le 2^{-j} \text{ for each } j \;\Long
 - **Finite total size, for a.e. to force in measure, and uniform to force in mean.** The sliding bump $h_n = \mathbf{1}_{[n,\,n+1)}$ on the half-line settles to 0 at every point, yet its bad set always has length 1. The flat spread $w_n = \tfrac{1}{n}\mathbf{1}_{[0,\,n)}$ settles uniformly, yet its integral stays 1.
 - **Integrable gaps, for in mean.** The integral of $|f_n - f|$ must be finite for the test to say anything.
 - **A subsequence only, for in measure to give a.e.** The full typewriter settles at no point; only a chosen subsequence settles.
-- **A dominating function, for a.e. to give in mean.** The spike has no single integrable function above all its terms, and its average gap stays at 1 ([dominated-convergence-theorem](02-dominated-convergence-theorem.md)).
+- **A dominating function, for a.e. to give in mean.** The spike has no single integrable function above all its terms, and its average gap stays at 1 ([Dominated convergence](02-dominated-convergence-theorem.md)).
 
 ---
 
@@ -139,11 +112,11 @@ $$\mu\big(\{|f_{n_j} - f| > 2^{-j}\}\big) \le 2^{-j} \text{ for each } j \;\Long
 
 Fix a tolerance, say 1/2. At each step, the bad set $B_n$ is where the function is more than 1/2 away from its limit. The modes differ in what they ask of that set. In measure asks that its size shrink. Almost everywhere asks that each point leave the bad sets for good, apart from a null set. In mean weighs each bad point by how bad it is, and asks that the total shrink. Uniformly asks that the bad set be empty from some step on.
 
-Read the two stages this way. The typewriter's bad set is the lit strip: its size shrinks, and no seat leaves it for good. The spike's bad set is [0, 1/n): its size shrinks, every seat right of 0 leaves it for good, and the paint on it stays 1 unit. Fatou's spotlight ([fatous-lemma](01-fatous-lemma.md)) is this spike, mirrored.
+Read the two stages this way. The typewriter's bad set is the lit strip: its size shrinks, and no seat leaves it for good. The spike's bad set is [0, 1/n): its size shrinks, every seat right of 0 leaves it for good, and the paint on it stays 1 unit. Fatou's spotlight ([Fatou's lemma](01-fatous-lemma.md)) is this spike, mirrored.
 
 ### Step 1: in mean forces in measure
 
-On the bad set the gap is more than $\varepsilon$, so $\varepsilon \mathbf{1}_{B_n} \le |f_n - f|$ at every point. Integrate both sides: $\varepsilon\, \mu(B_n) \le \int |f_n - f|\, d\mu$. This is Markov's inequality ([markov-and-chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) in measure language. If the total gap goes to zero, so does the size of the bad set, for every fixed tolerance.
+On the bad set the gap is more than $\varepsilon$, so $\varepsilon \mathbf{1}_{B_n} \le |f_n - f|$ at every point. Integrate both sides: $\varepsilon\, \mu(B_n) \le \int |f_n - f|\, d\mu$. This is Markov's inequality ([Markov and Chebyshev](../04-The%20Lebesgue%20Integral/07-markov-and-chebyshev.md)) in measure language. If the total gap goes to zero, so does the size of the bad set, for every fixed tolerance.
 
 Typewriter at step 10, tolerance 1/2: the average gap is 1/8, so the lit length is at most 2 × 1/8 = 1/4. It is 1/8. For $L^p$ the same move gives $\varepsilon^p \mu(B_n) \le \int |f_n - f|^p\, d\mu$.
 
@@ -153,7 +126,7 @@ The inequality alone does not give the reverse. The spike's bad set has length 1
 
 Fix $\varepsilon$. Let $E_N$ be the union of the bad sets from step N on: the points that are still more than $\varepsilon$ off at some later step. These sets shrink as N grows. A point in all of them is off by more than $\varepsilon$ infinitely often, so it does not settle, and the points that do not settle form a null set.
 
-Continuity from above ([continuity-of-measure](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) says the sizes of shrinking sets fall to the size of their intersection, provided the first has finite size. Here the intersection is null, so $\mu(E_N) \to 0$. The bad set at step N sits inside $E_N$, so its size goes to 0 too.
+Continuity from above ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) says the sizes of shrinking sets fall to the size of their intersection, provided the first has finite size. Here the intersection is null, so $\mu(E_N) \to 0$. The bad set at step N sits inside $E_N$, so its size goes to 0 too.
 
 For the spike with tolerance 1/2, $E_N = [0, 1/N)$, of length 1, 1/2, 1/4, 1/8 at N = 1, 2, 4, 8. For the sliding bump on the half-line, $E_4 = [4, \infty)$ has infinite length, and continuity from above fails: inside [0, 64) it has length 60, inside [0, 128), 124.
 
@@ -165,7 +138,7 @@ Convergence in measure says the bad sets shrink, not how fast. Pick steps $n_1 <
 
 Let $F_J$ be the union of these bad sets from $j = J$ on. Its size is at most $2^{-J} + 2^{-J-1} + \dots = 2^{1-J}$. A point outside $F_J$ is within $2^{-j}$ of the limit at every step $n_j$ with $j \ge J$, so it settles along the subsequence. A point that does not settle lies in every $F_J$, a set of size at most $2^{1-J}$ for every J: a null set.
 
-The typewriter: the first step whose lit length is at most $2^{-j}$ is $n_j = 2^j$, the strip $[0, 2^{-j})$. The subsequence $f_2, f_4, f_8, f_{16}, \dots$ is one on ever shorter strips at the left edge, and every seat right of 0 is dark from some j on. The unions of bad sets from J on, taken to j = 4, have lengths 1/2, 1/4, 1/8, 1/16 against the bounds 1, 1/2, 1/4, 1/8. The same summing trick is the first Borel-Cantelli lemma ([borel-cantelli-lemmas](../10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md)).
+The typewriter: the first step whose lit length is at most $2^{-j}$ is $n_j = 2^j$, the strip $[0, 2^{-j})$. The subsequence $f_2, f_4, f_8, f_{16}, \dots$ is one on ever shorter strips at the left edge, and every seat right of 0 is dark from some j on. The unions of bad sets from J on, taken to j = 4, have lengths 1/2, 1/4, 1/8, 1/16 against the bounds 1, 1/2, 1/4, 1/8. The same summing trick is the first Borel-Cantelli lemma ([The Borel-Cantelli lemmas](../10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md)).
 
 <details>
 <summary>Detailed proof</summary>
@@ -214,7 +187,7 @@ flowchart LR
     M -->|"on a probability space"| D["in distribution"]
 ```
 
-Every arrow is proved here except two: the dominated one from a.e., on [dominated-convergence-theorem](02-dominated-convergence-theorem.md), and the last, on [convergence-in-distribution](../10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md). The one from in measure follows: given one integrable function above every $|f_n|$, every subsequence, still converging in measure, has by Step 3 a further one settling a.e., along which dominated convergence sends $\int |f_n - f|\, d\mu$ to 0, and numbers with this property tend to 0. On a space of finite size, the exact condition for in measure to give in mean is uniform integrability ([uniform-integrability](05-uniform-integrability.md)).
+Every arrow is proved here except two: the dominated one from a.e., on [Dominated convergence](02-dominated-convergence-theorem.md), and the last, on [Convergence in distribution](../10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md). The one from in measure follows: given one integrable function above every $|f_n|$, every subsequence, still converging in measure, has by Step 3 a further one settling a.e., along which dominated convergence sends $\int |f_n - f|\, d\mu$ to 0, and numbers with this property tend to 0. On a space of finite size, the exact condition for in measure to give in mean is uniform integrability ([Uniform integrability](05-uniform-integrability.md)).
 
 <details>
 <summary>Why a subsequence is the best possible</summary>
@@ -223,7 +196,7 @@ On a space of finite size, a sequence converges in measure exactly when every su
 
 </details>
 
-A second road to Step 1 runs through $L^2$: the Chebyshev form $\varepsilon^2 \mu(B_n) \le \int |f_n - f|^2 d\mu$ is the version wing 09 used for the law of large numbers, done there without measure ([law-of-large-numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)).
+A second road to Step 1 runs through $L^2$: the Chebyshev form $\varepsilon^2 \mu(B_n) \le \int |f_n - f|^2 d\mu$ is the version wing 09 used for the law of large numbers, done there without measure ([Law of large numbers](../../09-Probability%20and%20statistics/06-Limit%20Theorems%20in%20Practice/01-law-of-large-numbers.md)).
 
 ---
 
@@ -624,10 +597,10 @@ The two outputs are identical line for line.
 
 ## Where you meet it in real life
 
-- **Statistical estimation.** A consistent estimator converges in probability to the true value: the chance of a large error shrinks. The weak law of large numbers gives this for a running average ([weak-law-of-large-numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md)); the strong law promises more, almost sure convergence.
+- **Statistical estimation.** A consistent estimator converges in probability to the true value: the chance of a large error shrinks. The weak law of large numbers gives this for a running average ([The weak law of large numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md)); the strong law promises more, almost sure convergence.
 - **Simulation.** A Monte Carlo average is judged by its mean squared error, convergence in $L^2$; by Step 1 this bounds the chance of a large error, a crude but safe error bar.
 - **Signal processing.** A Fourier series of a square-integrable signal converges to it in mean square; a.e. convergence is a far deeper theorem.
-- **Approximation schemes.** Approximations that converge in mean have, by Steps 1 and 3, a subsequence converging at almost every point, which identifies the limit as a function ([completeness-of-lp](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)).
+- **Approximation schemes.** Approximations that converge in mean have, by Steps 1 and 3, a subsequence converging at almost every point, which identifies the limit as a function ([Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md)).
 
 > **Say it back**
 > A sequence of functions can settle at almost every point, have a bad set that shrinks in size, or have a total gap that shrinks. A shrinking total gap forces a shrinking bad set, by Markov's inequality. Settling almost everywhere forces it too when the space has finite size, by continuity from above, and then settling is even uniform off a small set, which is Egorov's theorem. A shrinking bad set gives settling almost everywhere only along a subsequence. The typewriter, the growing spike, the sliding bump and the flat spread show no other arrow holds.
@@ -636,21 +609,21 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [dominated-convergence-theorem](02-dominated-convergence-theorem.md): the condition that turns a.e. convergence into convergence in mean, and the spike as its failure.
-- [null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md): what "almost everywhere" means, and why countably many exceptions stay null.
-- [continuity-of-measure](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md): continuity from above, used in Step 2.
-- [uniform-convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md): the strongest mode, one tolerance for every point.
+- [Dominated convergence](02-dominated-convergence-theorem.md): the condition that turns a.e. convergence into convergence in mean, and the spike as its failure.
+- [Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md): what "almost everywhere" means, and why countably many exceptions stay null.
+- [Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md): continuity from above, used in Step 2.
+- [Uniform convergence](../../06-Calculus%20and%20analysis/06-Series/07-uniform-convergence.md): the strongest mode, one tolerance for every point.
 
 ## Where this goes next
 
-- [uniform-integrability](05-uniform-integrability.md): on a space of finite size, the exact extra condition under which in measure gives in mean.
-- [completeness-of-lp](../07-Sizes%20of%20Functions/05-completeness-of-lp.md): the subsequence trick of Step 3 building limits in $L^p$.
-- [borel-cantelli-lemmas](../10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md): the summing argument of Step 3 as a statement about events.
-- [weak-law-of-large-numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md): convergence in probability of averages, from Step 1's inequality.
-- [convergence-in-distribution](../10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md): the weakest mode, comparing laws only.
-- weak-convergence-and-banach-alaoglu: convergence tested against every fixed function, weaker than in mean.
+- [Uniform integrability](05-uniform-integrability.md): on a space of finite size, the exact extra condition under which in measure gives in mean.
+- [Riesz-Fischer](../07-Sizes%20of%20Functions/05-completeness-of-lp.md): the subsequence trick of Step 3 building limits in $L^p$.
+- [The Borel-Cantelli lemmas](../10-The%20Limit%20Theorems%2C%20Proved/01-borel-cantelli-lemmas.md): the summing argument of Step 3 as a statement about events.
+- [The weak law of large numbers](../10-The%20Limit%20Theorems%2C%20Proved/03-weak-law-of-large-numbers.md): convergence in probability of averages, from Step 1's inequality.
+- [Convergence in distribution](../10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md): the weakest mode, comparing laws only.
+- Weak convergence: convergence tested against every fixed function, weaker than in mean.
 
-The spike shows that settling at almost every point cannot carry the integral along without help; what the help must be, exactly, is the question [uniform-integrability](05-uniform-integrability.md) answers.
+The spike shows that settling at almost every point cannot carry the integral along without help; what the help must be, exactly, is the question [Uniform integrability](05-uniform-integrability.md) answers.
 
 ---
 

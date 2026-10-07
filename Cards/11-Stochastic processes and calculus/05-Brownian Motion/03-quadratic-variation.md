@@ -1,34 +1,12 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Brownian Motion
-topic: Squared steps of a rough path
-item: Quadratic variation
-kind: theorem
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/05-Brownian Motion/02-scaling-and-path-roughness|scaling-and-path-roughness]]"
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/01-functions-of-bounded-variation|functions-of-bounded-variation]]"
-next:
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/01-ito-integral|ito-integral]]"
-  - "[[Cards/12-Financial mathematics/09-The Greeks, one each/10-theta-pays-for-gamma-hedged-pnl|theta-pays-for-gamma-hedged-pnl]]"
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/01-realised-variance-from-daily-prices|realised-variance-from-daily-prices]]"
-tags:
-  - mathematics
-  - stochastic processes and calculus
-  - quadratic-variation
----
-
 # Quadratic variation: squared increments add up to t
 
-Stochastic processes and calculus → Brownian Motion → Squared steps of a rough path → Quadratic variation
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Brownian Motion](../../../SYLLABUS.md#w11-s05) → Quadratic variation
 
 ---
 
 ## General Overview
 
-A pollen grain sits in a drop of water under a microscope. A camera records its horizontal position, in micrometres, a thousand times in one second: once every millisecond. The grain is knocked about by water molecules, so its position is Brownian motion, the random walk seen from far away ([brownian-motion](01-brownian-motion.md)). The units are chosen so that the spread of its position, measured as variance, grows by one square micrometre per second.
+A pollen grain sits in a drop of water under a microscope. A camera records its horizontal position, in micrometres, a thousand times in one second: once every millisecond. The grain is knocked about by water molecules, so its position is Brownian motion, the random walk seen from far away ([Brownian motion](01-brownian-motion.md)). The units are chosen so that the spread of its position, measured as variance, grows by one square micrometre per second.
 
 Take the thousand small moves between frames. Add up their sizes, ignoring direction, and one simulated second gives 25.693172 micrometres. Film ten times faster and the same path gives 80.273: the finer the film, the longer the journey, without limit. Now square each move before adding. The thousand squares add to 1.040456. Film ten times faster and the sum is 1.0157. The squares settle on one number, and that number is the elapsed time, one second.
 
@@ -49,7 +27,7 @@ xychart-beta
     line [0.00, 0.07, -0.02, 0.19, 0.36, 0.72, 0.55, 0.76, 0.98, 0.96, 1.03, 0.87, 1.19, 1.14, 1.22, 1.29, 0.99, 1.12, 1.24, 1.15, 1.27]
 ```
 
-One sample path, simulated on a grid of 1,000 steps of one millisecond and drawn every 50th step. The jagged look survives any zoom: each 50-step stretch is as rough as the whole ([scaling-and-path-roughness](02-scaling-and-path-roughness.md)). The grain ends 1.27 micrometres from its start, yet the squares of its 1,000 moves add to 1.040456.
+One sample path, simulated on a grid of 1,000 steps of one millisecond and drawn every 50th step. The jagged look survives any zoom: each 50-step stretch is as rough as the whole ([Brownian paths](02-scaling-and-path-roughness.md)). The grain ends 1.27 micrometres from its start, yet the squares of its 1,000 moves add to 1.040456.
 
 ---
 
@@ -140,7 +118,7 @@ The sum of squares is at most the largest move times the sum of sizes, since eac
 
 $$Q_n \le \max_k |\Delta W_k| \cdot V_n.$$
 
-A Brownian path is continuous, so as the grid shrinks the largest move goes to 0: on path 1 it is 0.117547 already at 1,000 steps. But $Q_n$ goes to t, which is not 0. The only way the right side can stay above t is for $V_n$ to run off to infinity. So a Brownian path has infinite total variation: the total up-and-down movement of [functions-of-bounded-variation](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/01-functions-of-bounded-variation.md) is infinite on every stretch of time, almost surely.
+A Brownian path is continuous, so as the grid shrinks the largest move goes to 0: on path 1 it is 0.117547 already at 1,000 steps. But $Q_n$ goes to t, which is not 0. The only way the right side can stay above t is for $V_n$ to run off to infinity. So a Brownian path has infinite total variation: the total up-and-down movement of [Bounded variation](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/01-functions-of-bounded-variation.md) is infinite on every stretch of time, almost surely.
 
 The same inequality, read for a curve of finite length, says the opposite. If $V_n$ stays below a fixed length and the largest move goes to 0, then $Q_n$ goes to 0. Every smooth path, and every continuous path of bounded variation, has quadratic variation 0. For $f$ = sin(2πt) the code finds n times Q settling on 2π^2 = 19.7392, so Q itself falls like one over n, while the length stays at 4.
 
@@ -168,7 +146,7 @@ A smooth curve escapes because its Q goes to 0, so the chain rule's sum and the 
 
 $$W_1^2 = \lim_{n\to\infty} L_n + 1.$$
 
-That extra 1 is the dt term of the next shelf, and the start of Itô's calculus ([ito-integral](../06-Ito%20Calculus/01-ito-integral.md)).
+That extra 1 is the dt term of the next shelf, and the start of Itô's calculus ([The Ito integral](../06-Ito%20Calculus/01-ito-integral.md)).
 
 ### Step 5: the endpoint now matters
 
@@ -652,10 +630,10 @@ The two outputs are identical, digit for digit.
 ## Where you meet it in real life
 
 - **Particle tracking in a microscope.** How fast a particle diffuses is estimated by adding squared displacements between frames and dividing by the elapsed time: the quadratic variation of a measured path. A slow flow drops out, as in Step 6.
-- **Realised variance in markets.** The sum of squared daily log returns over a year estimates a share's variance, σ^2 times the time, whatever the share's trend. Variance swaps settle on exactly that sum ([realised-variance-from-daily-prices](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md)).
-- **Hedging an option.** A trader who hedges against small moves still earns or loses half the option's curvature times each squared move. Those squared price moves add up to about σ^2 times the squared share price times the time (σ^2 times the time for log moves), which is what the daily time decay pays for ([theta-pays-for-gamma-hedged-pnl](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md)).
-- **The minus-half-sigma-squared in share prices.** The average log return of a share modelled as geometric Brownian motion sits below its average return by half the variance, a direct trace of the squared-step term ([geometric-brownian-motion](07-geometric-brownian-motion.md)).
-- **A fair game built from the clock.** Because the squared moves add to t, the square of W minus t is a martingale, the fair game of [brownian-martingales-and-exponential-martingale](06-brownian-martingales-and-exponential-martingale.md).
+- **Realised variance in markets.** The sum of squared daily log returns over a year estimates a share's variance, σ^2 times the time, whatever the share's trend. Variance swaps settle on exactly that sum ([Realised variance](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md)).
+- **Hedging an option.** A trader who hedges against small moves still earns or loses half the option's curvature times each squared move. Those squared price moves add up to about σ^2 times the squared share price times the time (σ^2 times the time for log moves), which is what the daily time decay pays for ([Theta pays for gamma](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md)).
+- **The minus-half-sigma-squared in share prices.** The average log return of a share modelled as geometric Brownian motion sits below its average return by half the variance, a direct trace of the squared-step term ([Geometric Brownian motion](07-geometric-brownian-motion.md)).
+- **A fair game built from the clock.** Because the squared moves add to t, the square of W minus t is a martingale, the fair game of [Brownian martingales](06-brownian-martingales-and-exponential-martingale.md).
 
 > **Say it back**
 > Cut a stretch of time into small steps and square each Brownian move. Each square averages its step's length, and their randomness cancels, so the total converges to the elapsed time t. Because the squares add to something positive while the largest move shrinks to nothing, the moves' sizes add to infinity: a Brownian path has no length. A smooth path has quadratic variation zero, which is why ordinary calculus can ignore squared steps. Brownian motion cannot, and the change in the square of W is the left-point sum plus t.
@@ -664,17 +642,17 @@ The two outputs are identical, digit for digit.
 
 ## What this builds on
 
-- [scaling-and-path-roughness](02-scaling-and-path-roughness.md): moves over a step of length Δt have size about its square root, the fact that makes their squares first-order and lets one second's numbers rescale to a thousand seconds.
-- [functions-of-bounded-variation](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/01-functions-of-bounded-variation.md): total variation, the sum of every rise and fall, which Step 3 shows is infinite for a Brownian path.
+- [Brownian paths](02-scaling-and-path-roughness.md): moves over a step of length Δt have size about its square root, the fact that makes their squares first-order and lets one second's numbers rescale to a thousand seconds.
+- [Bounded variation](../../10-Measure%20and%20integration/11-Derivatives%20Meet%20the%20Lebesgue%20Integral/01-functions-of-bounded-variation.md): total variation, the sum of every rise and fall, which Step 3 shows is infinite for a Brownian path.
 - From wing 09 and wing 10, used by name: independence and the variance of a sum, Chebyshev's inequality, the first Borel–Cantelli lemma, modes of convergence, and the SplitMix64 generator with Box–Muller normals.
 
 ---
 
 ## Where this goes next
 
-- [ito-integral](../06-Ito%20Calculus/01-ito-integral.md): defines the integral against W as the limit of left-point sums, the choice Step 5 forced, and shows the integral of 2W against W is the square of W minus t.
-- [theta-pays-for-gamma-hedged-pnl](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md): a hedged option's daily profit is half its gamma times the squared move, less its theta, and quadratic variation is why the two balance on average.
-- [realised-variance-from-daily-prices](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md): the sum of squared daily returns, measured on real prices, as an estimate of variance and as a contract that pays it.
+- [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md): defines the integral against W as the limit of left-point sums, the choice Step 5 forced, and shows the integral of 2W against W is the square of W minus t.
+- [Theta pays for gamma](../../12-Financial%20mathematics/09-The%20Greeks%2C%20one%20each/10-theta-pays-for-gamma-hedged-pnl.md): a hedged option's daily profit is half its gamma times the squared move, less its theta, and quadratic variation is why the two balance on average.
+- [Realised variance](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md): the sum of squared daily returns, measured on real prices, as an estimate of variance and as a contract that pays it.
 
 The squared moves of a Brownian path add up to the clock and cannot be dropped; what an integral against such a path should mean, and what the chain rule becomes once that dt term is kept, is the question the Itô integral answers.
 

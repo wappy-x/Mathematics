@@ -1,28 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Special Functions and the Zeta Function
-topic: Series built on divisors
-item: Dirichlet series
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/05-zeta-function-and-euler-product|zeta-function-and-euler-product]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/07-prime-factorisation|prime-factorisation]]"
-  - "[[Cards/02-Number theory/01-Divisibility and Primes/08-counting-divisors|counting-divisors]]"
-  - "[[Cards/02-Number theory/04-Powers on the Clock/03-eulers-totient|eulers-totient]]"
-next:
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/09-zeros-of-zeta-and-the-primes|zeros-of-zeta-and-the-primes]]"
-  - "[[Cards/21-Algebraic and analytic number theory/01-Arithmetic Functions Again/03-mobius-inversion|mobius-inversion]]"
-  - "[[Cards/21-Algebraic and analytic number theory/03-Characters and L-functions/03-dirichlet-l-functions|dirichlet-l-functions]]"
-  - "[[Cards/21-Algebraic and analytic number theory/06-Algebraic Numbers/06-class-number-formula-and-the-dedekind-zeta-function|class-number-formula-and-the-dedekind-zeta-function]]"
-tags: [mathematics, complex analysis, dirichlet-series-and-mobius-inversion]
----
-
 # Dirichlet series: multiply two of them and the coefficients convolve over divisors, so 1 over zeta is a series with the Mobius signs
 
-Complex analysis → Special Functions and the Zeta Function → Series built on divisors → Dirichlet series
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Special Functions and the Zeta Function](../../../SYLLABUS.md#w07-s09) → Dirichlet series
 
 ---
 
@@ -132,7 +110,7 @@ $$\zeta(s)\,F_\mu(s)=F_{\mathbf 1*\mu}(s)=F_\varepsilon(s)=1.$$
 
 The series with weights ε is its first term, 1. So $F_\mu = 1/\zeta$, and zeta has no zero where Re s > 1.
 
-A second road: the Euler product ([zeta-function-and-euler-product](05-zeta-function-and-euler-product.md)) writes 1/ζ(s) as the product of $1 - p^{-s}$ over primes p. Expanding takes 1 or $-p^{-s}$ from each bracket: each prime at most once, sign −1 per prime, exactly μ. The brackets for 2, 3, 5 and 7 give the first ten weights.
+A second road: the Euler product ([The zeta function](05-zeta-function-and-euler-product.md)) writes 1/ζ(s) as the product of $1 - p^{-s}$ over primes p. Expanding takes 1 or $-p^{-s}$ from each bracket: each prime at most once, sign −1 per prime, exactly μ. The brackets for 2, 3, 5 and 7 give the first ten weights.
 
 ### Step 5: Möbius inversion is dividing by zeta
 
@@ -140,7 +118,7 @@ If $g = \mathbf 1 * f$ then $F_g = \zeta F_f$, and dividing by zeta gives $F_f =
 
 At n = 6 with $f(n) = n$, g is σ. The signs 1, −1, −1, 1 on the divisors 1, 2, 3, 6 meet σ(6), σ(3), σ(2), σ(1): 12 − 4 − 3 + 1 = 6.
 
-A signless road: f(n) is g(n) minus f at the smaller divisors, from f(1) = σ(1) = 1 upward. The general form is mobius-inversion.
+A signless road: f(n) is g(n) minus f at the smaller divisors, from f(1) = σ(1) = 1 upward. The general form is The Mobius function.
 
 ---
 
@@ -396,7 +374,7 @@ ALL CHECKS PASS
 ## Where you meet it in real life
 
 - **Coprime pairs.** The share of pairs of whole numbers up to a large bound with no common factor tends to 6/pi^2 = 0.607927; Möbius signs strip out shared primes.
-- **Euler's totient.** Hours on a clock sharing no factor with its size are counted by inverting "n itself" ([eulers-totient](../../02-Number%20theory/04-Powers%20on%20the%20Clock/03-eulers-totient.md)).
+- **Euler's totient.** Hours on a clock sharing no factor with its size are counted by inverting "n itself" ([Euler's totient](../../02-Number%20theory/04-Powers%20on%20the%20Clock/03-eulers-totient.md)).
 - **Strings with no repeat.** Necklaces that are not one block repeated, and irreducible polynomials in coding theory, are counted by inverting a divisor sum.
 
 > **Say it back**
@@ -406,19 +384,19 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [zeta-function-and-euler-product](05-zeta-function-and-euler-product.md): zeta's series and prime product.
-- [prime-factorisation](../../02-Number%20theory/01-Divisibility%20and%20Primes/07-prime-factorisation.md): one factorisation per number, so μ is well defined.
-- [counting-divisors](../../02-Number%20theory/01-Divisibility%20and%20Primes/08-counting-divisors.md): τ(12) = (2 + 1)(1 + 1).
-- [eulers-totient](../../02-Number%20theory/04-Powers%20on%20the%20Clock/03-eulers-totient.md): its divisor sum is n, so μ recovers it.
+- [The zeta function](05-zeta-function-and-euler-product.md): zeta's series and prime product.
+- [Prime factorisation](../../02-Number%20theory/01-Divisibility%20and%20Primes/07-prime-factorisation.md): one factorisation per number, so μ is well defined.
+- [Counting divisors](../../02-Number%20theory/01-Divisibility%20and%20Primes/08-counting-divisors.md): τ(12) = (2 + 1)(1 + 1).
+- [Euler's totient](../../02-Number%20theory/04-Powers%20on%20the%20Clock/03-eulers-totient.md): its divisor sum is n, so μ recovers it.
 
 ## Where this goes next
 
-- [zeros-of-zeta-and-the-primes](09-zeros-of-zeta-and-the-primes.md): where 1/ζ blows up.
-- mobius-inversion: the totient recovered from its divisor sum.
-- dirichlet-l-functions: weights repeating around a clock.
-- class-number-formula-and-the-dedekind-zeta-function: a zeta built on ideals.
+- [Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md): where 1/ζ blows up.
+- The Mobius function: the totient recovered from its divisor sum.
+- Dirichlet L-functions: weights repeating around a clock.
+- The class number formula: a zeta built on ideals.
 
-Everything here stops at Re s > 1, where zeta cannot vanish; whether 1/ζ stays finite further left, once [continuing-zeta-and-the-functional-equation](08-continuing-zeta-and-the-functional-equation.md) carries zeta there, and what that says about the primes, is [zeros-of-zeta-and-the-primes](09-zeros-of-zeta-and-the-primes.md).
+Everything here stops at Re s > 1, where zeta cannot vanish; whether 1/ζ stays finite further left, once [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md) carries zeta there, and what that says about the primes, is [Zeta's zeros and the primes](09-zeros-of-zeta-and-the-primes.md).
 
 ---
 

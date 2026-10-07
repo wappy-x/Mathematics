@@ -1,27 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Portfolio Credit - Correlation, Copulas, Indices and Tranches
-topic: One bad year for a whole loan book
-item: Vasicek's large-pool loss curve
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/02-one-factor-gaussian-copula|one-factor-gaussian-copula]]"
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/01-profit-and-loss-distribution-and-var|profit-and-loss-distribution-and-var]]"
-  - "[[Cards/12-Financial mathematics/39-Value at Risk and Expected Shortfall/05-expected-shortfall-and-coherence|expected-shortfall-and-coherence]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/05-normal-quantile|normal-quantile]]"
-next:
-  - "[[Cards/12-Financial mathematics/45-Portfolio Credit - Correlation, Copulas, Indices and Tranches/05-cdo-tranches-in-outline|cdo-tranches-in-outline]]"
-  - "[[Cards/12-Financial mathematics/47-Collateral, Funding and the Rest of the XVAs/04-kva|kva]]"
-  - "[[Cards/12-Financial mathematics/48-Regulatory Capital in Outline/03-vasicek-asrf-and-credit-capital|vasicek-asrf-and-credit-capital]]"
-tags: [mathematics, financial mathematics, vasicek-loss-distribution-and-basel-capital]
----
-
 # Vasicek's large-pool loss curve: a whole book's loss distribution from three numbers, and the regulator's capital formula built on it
 
-Financial mathematics → Portfolio Credit - Correlation, Copulas, Indices and Tranches → One bad year for a whole loan book → Vasicek's large-pool loss curve
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Portfolio Credit - Correlation, Copulas, Indices and Tranches](../../../SYLLABUS.md#w12-s45) → Vasicek's large-pool loss curve
 
 ---
 
@@ -59,7 +38,7 @@ Rising line: the default rate the bad year reaches. Flat line: the 2% average. T
 
 ## The formula
 
-Notation first, in words. $N(x)$ is the bell-curve area to the left of $x$: the chance that a standard normal draw (a draw from the bell curve with average 0 and spread 1) comes out below $x$. $N^{-1}(u)$ runs it backwards: the point with area $u$ to its left ([normal-quantile](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)). $L$ is the fraction of the pool that defaults in the year, a number between 0 and 1. $p$ is one loan's default chance (the PD, 2% here), $\rho$ the asset correlation (20%, defined in the table below) and $\alpha$ the confidence level (99.9%).
+Notation first, in words. $N(x)$ is the bell-curve area to the left of $x$: the chance that a standard normal draw (a draw from the bell curve with average 0 and spread 1) comes out below $x$. $N^{-1}(u)$ runs it backwards: the point with area $u$ to its left ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)). $L$ is the fraction of the pool that defaults in the year, a number between 0 and 1. $p$ is one loan's default chance (the PD, 2% here), $\rho$ the asset correlation (20%, defined in the table below) and $\alpha$ the confidence level (99.9%).
 
 The chance that the default fraction stays at or below a level $x$:
 
@@ -81,7 +60,7 @@ Basel's rule for company loans of one-year maturity uses exactly this $K$, with 
 
 $$\rho_{\text{Basel}}(p) = 0.12\,w + 0.24\,(1 - w), \qquad w = \frac{1 - e^{-50p}}{1 - e^{-50}}$$
 
-The **expected shortfall** (the average default fraction over the worst 0.1% of years, [expected-shortfall-and-coherence](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/05-expected-shortfall-and-coherence.md)) averages the same curve over the tail:
+The **expected shortfall** (the average default fraction over the worst 0.1% of years, [Expected shortfall](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/05-expected-shortfall-and-coherence.md)) averages the same curve over the tail:
 
 $$\mathrm{ES}_\alpha = \frac{1}{1-\alpha}\int_\alpha^1 x_u \, du$$
 
@@ -104,7 +83,7 @@ $$\mathrm{ES}_\alpha = \frac{1}{1-\alpha}\int_\alpha^1 x_u \, du$$
 
 - **One shared factor.** Every company feels the same economy. A book spread across industries or countries that suffer at different times needs several factors and a simulation.
 - **A very large pool of similar, small loans.** The private luck averages out only when no loan is big. A pool of 100 loans sees 24.0% in its one-in-a-thousand year, not 22.6%; a single large borrower adds risk the formula never sees.
-- **Bell-curve health.** The bell curve gives joint crashes thin tails. If companies fail together more often in extremes than the bell curve allows, the 99.9% point is too low; [tail-dependence-and-the-t-copula](07-tail-dependence-and-the-t-copula.md) measures by how much.
+- **Bell-curve health.** The bell curve gives joint crashes thin tails. If companies fail together more often in extremes than the bell curve allows, the 99.9% point is too low; [Tail dependence](07-tail-dependence-and-the-t-copula.md) measures by how much.
 - **Known PD, correlation and LGD.** All three are estimates. Correlation is the hardest to estimate and moves the answer most: from 20% to 30% lifts the bad-year rate from 22.6% to 33.3%.
 - **One period, loss counted only at default.** A loan that weakens without defaulting loses market value too; this model counts only defaults, which is why Basel adds a maturity adjustment for loans longer than a year.
 
@@ -118,7 +97,7 @@ Each company's fate mixes the shared economy with private luck. Fix the economy,
 
 ### Step 1: default is health falling below a line
 
-This is the one-factor model of [one-factor-gaussian-copula](02-one-factor-gaussian-copula.md). Company $i$ has a health score $A_i = \sqrt{\rho}\,M + \sqrt{1-\rho}\,Z_i$, where the economy $M$ and the private luck $Z_i$ are independent bell-curve draws. The weights are square roots so that the two variances, $\rho$ and $1-\rho$, add to 1, keeping $A_i$ itself a standard bell-curve draw. The company defaults when $A_i$ falls below the threshold $c$. Setting $c = N^{-1}(p)$ makes the chance of that exactly $p$: here $c = N^{-1}(0.02) = -2.0537$.
+This is the one-factor model of [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md). Company $i$ has a health score $A_i = \sqrt{\rho}\,M + \sqrt{1-\rho}\,Z_i$, where the economy $M$ and the private luck $Z_i$ are independent bell-curve draws. The weights are square roots so that the two variances, $\rho$ and $1-\rho$, add to 1, keeping $A_i$ itself a standard bell-curve draw. The company defaults when $A_i$ falls below the threshold $c$. Setting $c = N^{-1}(p)$ makes the chance of that exactly $p$: here $c = N^{-1}(0.02) = -2.0537$.
 
 ### Step 2: the default chance in a given economy
 
@@ -682,7 +661,7 @@ The two outputs agree line for line, including the simulation: both use the same
 > **Reading 22.6% as one loan's chance of default.** Every loan still has a 2% chance each year. The 22.6% is the share of the pool that defaults in the worst year out of a thousand. The formula is about how defaults bunch, not about any single company getting riskier.
 >
 > Smaller traps:
-> - **Mixing up the two correlations.** Asset correlation, 20% here, links companies' health. Default correlation, the correlation between default events, is only 3.6% for the same model ([default-correlation-and-joint-default](01-default-correlation-and-joint-default.md)). Put the second into the formula and capital drops from $12.38 to $2.83.
+> - **Mixing up the two correlations.** Asset correlation, 20% here, links companies' health. Default correlation, the correlation between default events, is only 3.6% for the same model ([Default correlation](01-default-correlation-and-joint-default.md)). Put the second into the formula and capital drops from $12.38 to $2.83.
 > - **Using the formula on a small book.** For 25 loans the one-in-a-thousand year sees 28.0% default, not 22.6%. The formula understates the risk of a lumpy book.
 > - **Holding capital for the whole bad-year loss.** $13.58 instead of $12.38. The expected $1.20 is covered by pricing and provisions.
 > - **Treating Basel's correlation as measured.** It is a fixed function of PD chosen by the regulator, sliding from 24% to 12%. It is a convention, with a multiplier of 1.25 for large financial institutions, not an estimate of any particular book.
@@ -691,10 +670,10 @@ The two outputs agree line for line, including the simulation: both use the same
 
 ## Where you meet it in real life
 
-- **Bank capital for company loans.** Every bank using the Basel internal-ratings-based approach runs this formula loan by loan: its own PD and LGD estimates in, the regulator's correlation, 12.5 times $K$ out as risk-weighted assets. The deeper regulatory story is [vasicek-asrf-and-credit-capital](../48-Regulatory%20Capital%20in%20Outline/03-vasicek-asrf-and-credit-capital.md).
+- **Bank capital for company loans.** Every bank using the Basel internal-ratings-based approach runs this formula loan by loan: its own PD and LGD estimates in, the regulator's correlation, 12.5 times $K$ out as risk-weighted assets. The deeper regulatory story is [The Basel credit formula](../48-Regulatory%20Capital%20in%20Outline/03-vasicek-asrf-and-credit-capital.md).
 - **Mortgages and credit cards.** The same formula with fixed correlations for retail books, set lower for credit cards than for mortgages.
 - **Economic capital.** Banks run their own version, with their own correlations and often more factors, to price loans.
-- **Tranches.** Slice the pool's losses into layers, the first few percent lost, the next few, and so on, and each layer's price is an average over this same loss curve: [cdo-tranches-in-outline](05-cdo-tranches-in-outline.md). The market's quoted correlation for index tranches, [implied-and-base-correlation](06-implied-and-base-correlation.md), is the $\rho$ that makes this curve match prices on pools such as [credit-indices](04-credit-indices.md).
+- **Tranches.** Slice the pool's losses into layers, the first few percent lost, the next few, and so on, and each layer's price is an average over this same loss curve: [Tranches](05-cdo-tranches-in-outline.md). The market's quoted correlation for index tranches, [Implied correlation](06-implied-and-base-correlation.md), is the $\rho$ that makes this curve match prices on pools such as [Credit indices (CDX and iTraxx in outline)](04-credit-indices.md).
 - **Stress testing.** Pick a bad economy $m$ instead of a probability, and $p(m)$ gives the default rate in that scenario.
 
 > **Say it back**
@@ -704,16 +683,16 @@ The two outputs agree line for line, including the simulation: both use the same
 
 ## What this builds on
 
-- [one-factor-gaussian-copula](02-one-factor-gaussian-copula.md): the health score, one shared factor plus private luck, and the default threshold. This card takes that model to a pool too large to count.
-- [profit-and-loss-distribution-and-var](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md): value at risk as a quantile of the loss distribution. The 99.9% default fraction is exactly that quantile.
-- [expected-shortfall-and-coherence](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/05-expected-shortfall-and-coherence.md): the average beyond the quantile, and the formula used as the second road to it here.
-- [normal-quantile](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): $N^{-1}$, the bell curve run backwards, used twice in every capital calculation.
+- [The one-factor Gaussian copula](02-one-factor-gaussian-copula.md): the health score, one shared factor plus private luck, and the default threshold. This card takes that model to a pool too large to count.
+- [Value at risk](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/01-profit-and-loss-distribution-and-var.md): value at risk as a quantile of the loss distribution. The 99.9% default fraction is exactly that quantile.
+- [Expected shortfall](../39-Value%20at%20Risk%20and%20Expected%20Shortfall/05-expected-shortfall-and-coherence.md): the average beyond the quantile, and the formula used as the second road to it here.
+- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): $N^{-1}$, the bell curve run backwards, used twice in every capital calculation.
 
 ## Where this goes next
 
-- [cdo-tranches-in-outline](05-cdo-tranches-in-outline.md): slices this loss curve into layers and prices each one.
-- [kva](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/04-kva.md): the cost of holding capital like the $12.38 here over a trade's life, charged back to the trade.
-- [vasicek-asrf-and-credit-capital](../48-Regulatory%20Capital%20in%20Outline/03-vasicek-asrf-and-credit-capital.md): the regulatory machinery around this formula, with maturity adjustments, retail curves and the path from capital to risk-weighted assets.
+- [Tranches](05-cdo-tranches-in-outline.md): slices this loss curve into layers and prices each one.
+- [KVA](../47-Collateral%2C%20Funding%20and%20the%20Rest%20of%20the%20XVAs/04-kva.md): the cost of holding capital like the $12.38 here over a trade's life, charged back to the trade.
+- [The Basel credit formula](../48-Regulatory%20Capital%20in%20Outline/03-vasicek-asrf-and-credit-capital.md): the regulatory machinery around this formula, with maturity adjustments, retail curves and the path from capital to risk-weighted assets.
 
 This card gives the whole loss curve of a pool but not what an investor should pay for a slice of it; pricing the slices, and reading the market's correlation back out of their prices, is where the tranche card picks up.
 

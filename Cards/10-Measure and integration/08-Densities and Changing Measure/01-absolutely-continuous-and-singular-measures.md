@@ -1,27 +1,6 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Densities and Changing Measure
-topic: Comparing measures by their null sets
-item: Absolutely continuous and singular measures
-kind: definition
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/02-integral-of-a-nonnegative-function|integral-of-a-nonnegative-function]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/07-null-sets-and-almost-everywhere|null-sets-and-almost-everywhere]]"
-next:
-  - "[[Cards/10-Measure and integration/08-Densities and Changing Measure/02-signed-measures-and-hahn-jordan|signed-measures-and-hahn-jordan]]"
-  - "[[Cards/10-Measure and integration/11-Derivatives Meet the Lebesgue Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem|absolutely-continuous-functions-and-the-fundamental-theorem]]"
-tags:
-  - mathematics
-  - measure and integration
-  - absolutely-continuous-and-singular-measures
----
-
 # Absolutely continuous and singular measures: one measure that ignores everything the other calls impossible, or two that live on separate sets
 
-Measure and integration → Densities and Changing Measure → Comparing measures by their null sets → Absolutely continuous and singular measures
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Densities and Changing Measure](../../../SYLLABUS.md#w10-s08) → Absolutely continuous and singular measures
 
 ---
 
@@ -51,7 +30,7 @@ Bar heights do not decide absolute continuity; missing bars do. The code prints 
 
 ## The formula
 
-Notation first, in words. A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of outcomes, the collection of its subsets we allow ourselves to measure, and a measure giving each a size ([null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). Two measures $\mu$ and $\nu$ on the same $\Omega$ and $\mathcal{F}$ are compared. The sign $\nu \ll \mu$ is read "nu is absolutely continuous with respect to mu". The sign $\mu \perp \nu$ is read "mu and nu are mutually singular". The sign $\mu \sim \nu$ is read "mu and nu are equivalent".
+Notation first, in words. A measure space $(\Omega, \mathcal{F}, \mu)$ is a set of outcomes, the collection of its subsets we allow ourselves to measure, and a measure giving each a size ([Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md)). Two measures $\mu$ and $\nu$ on the same $\Omega$ and $\mathcal{F}$ are compared. The sign $\nu \ll \mu$ is read "nu is absolutely continuous with respect to mu". The sign $\mu \perp \nu$ is read "mu and nu are mutually singular". The sign $\mu \sim \nu$ is read "mu and nu are equivalent".
 
 $$\nu \ll \mu \quad\text{means}\quad \mu(A) = 0 \;\Longrightarrow\; \nu(A) = 0 \quad\text{for every } A \in \mathcal{F}$$
 
@@ -98,7 +77,7 @@ The three relations are definitions, so they need no hypotheses; the theorems ab
 - **The same sets on both sides.** With different collections, "every set $\mu$ calls null" names different sets.
 - **The reference matters.** On the die $D \ll P$, since $P$ gives face 6 the chance 0.1667; on the line $D \perp \lambda$, since the point 6 has length zero.
 - **The epsilon-delta form needs $\nu$ finite.** Counting measure on 1, 2, 3, … is absolutely continuous with respect to the weights $2^{-n}$, yet the point 20 has weight 1/1048576 and count 1. No $\delta$ keeps the count below 1.
-- **The density theorem needs only $f \ge 0$ and measurable.** The converse, that an absolutely continuous $\nu$ always has a density, needs more: [radon-nikodym-theorem](03-radon-nikodym-theorem.md) proves it when both measures are sigma-finite.
+- **The density theorem needs only $f \ge 0$ and measurable.** The converse, that an absolutely continuous $\nu$ always has a density, needs more: [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md) proves it when both measures are sigma-finite.
 - **The finite-space shortcut needs every single point measurable.** With a coarser $\mathcal{F}$, compare the smallest measurable blocks instead of points.
 
 ---
@@ -129,7 +108,7 @@ $R$ and $T$ are neither: each charges a face the other misses, and they share fa
 
 The loaded die is the fair die reweighted. Multiply the fair chance 0.1667 by 0.6 on faces 1 to 4, by 1.2 on face 5 and by 2.4 on face 6, and the loaded chances appear. That multiplier is a density $f$ of $Q$ against $P$. The chance of "5 or 6" comes out as the integral of $f$ over those two faces against $P$: (1.2 + 2.4) × 0.1667 = 0.6.
 
-Why a density forces absolute continuity: if $\mu(A) = 0$, the function $f$ times $1_A$ is zero everywhere off $A$, a null set. A nonnegative function that is zero almost everywhere has integral zero ([integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). So $\nu(A) = 0$.
+Why a density forces absolute continuity: if $\mu(A) = 0$, the function $f$ times $1_A$ is zero everywhere off $A$, a null set. A nonnegative function that is zero almost everywhere has integral zero ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). So $\nu(A) = 0$.
 
 On the line, the bus waits $E_1$ and $E_2$ have densities $e^{-x}$ and $2e^{-2x}$ against length, so both are absolutely continuous with respect to $\lambda$. $E_2$ has the density $2e^{-x}$ against $E_1$, positive everywhere, and the reverse density is positive too: the two bus services are equivalent. A density that vanishes somewhere gives a one-way relation: $R$ is $P$ reweighted by 1.2 on faces 1 to 5 and by 0 on face 6. The code reweights $R$ by all 729 densities with values 0, 1 or 2 on each face; every result is absolutely continuous with respect to $R$.
 
@@ -159,7 +138,7 @@ A countable example: on 1, 2, 3, …, let $\mu$ give $n$ the weight $2^{-n}$ and
 
 **Theorem 1 (a density gives absolute continuity).** Let $f \ge 0$ be measurable with respect to $\mathcal{F}$ and set $\nu(A) = \int f 1_A \, d\mu$. Then $\nu$ is a measure and $\nu \ll \mu$.
 
-*Proof.* $\nu(\emptyset) = 0$, since $f 1_\emptyset$ is the zero function. For disjoint $A_1, A_2, \ldots$ with union $A$, the functions $f(1_{A_1} + \cdots + 1_{A_k})$ rise with $k$ to $f 1_A$, so the monotone convergence theorem ([monotone-convergence-theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) gives $\nu(A) = \sum_k \nu(A_k)$. If $\mu(A) = 0$, then $f 1_A$ is zero off $A$, so zero $\mu$-a.e., and a nonnegative function zero a.e. has integral 0 ([integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). So $\nu(A) = 0$.
+*Proof.* $\nu(\emptyset) = 0$, since $f 1_\emptyset$ is the zero function. For disjoint $A_1, A_2, \ldots$ with union $A$, the functions $f(1_{A_1} + \cdots + 1_{A_k})$ rise with $k$ to $f 1_A$, so the monotone convergence theorem ([The monotone convergence theorem](../04-The%20Lebesgue%20Integral/03-monotone-convergence-theorem.md)) gives $\nu(A) = \sum_k \nu(A_k)$. If $\mu(A) = 0$, then $f 1_A$ is zero off $A$, so zero $\mu$-a.e., and a nonnegative function zero a.e. has integral 0 ([The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md)). So $\nu(A) = 0$.
 
 **Theorem 2 (epsilon-delta).** Let $\nu$ be a finite measure on $\mathcal{F}$. Then $\nu \ll \mu$ exactly when for every $\varepsilon > 0$ there is $\delta > 0$ such that $\mu(A) < \delta$ implies $\nu(A) < \varepsilon$ for every $A \in \mathcal{F}$.
 
@@ -167,7 +146,7 @@ A countable example: on 1, 2, 3, …, let $\mu$ give $n$ the weight $2^{-n}$ and
 
 *Proof, $\nu \ll \mu$ implies the condition.* Suppose the condition fails for some $\varepsilon > 0$. Then no $\delta$ works, in particular not $\delta = 2^{-n}$, so for each $n = 1, 2, \ldots$ there is $A_n \in \mathcal{F}$ with $\mu(A_n) < 2^{-n}$ and $\nu(A_n) \ge \varepsilon$. Let $B_k = A_k \cup A_{k+1} \cup \cdots$ and let $B$ be the set of outcomes lying in every $B_k$: those in infinitely many $A_n$. Each $B_k$ is a countable union of sets in $\mathcal{F}$ and $B$ a countable intersection, so both are in $\mathcal{F}$.
 
-Size under $\mu$: $B \subseteq B_k$, so by monotonicity and countable subadditivity ([continuity-of-measure](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) $\mu(B) \le \sum_{n \ge k} 2^{-n} = 2^{1-k}$ for every $k$. So $\mu(B) = 0$.
+Size under $\mu$: $B \subseteq B_k$, so by monotonicity and countable subadditivity ([Continuity and subadditivity](../01-Sets%20You%20Can%20Measure/05-continuity-of-measure.md)) $\mu(B) \le \sum_{n \ge k} 2^{-n} = 2^{1-k}$ for every $k$. So $\mu(B) = 0$.
 
 Size under $\nu$: the $B_k$ shrink as $k$ grows and $\nu(B_1) \le \nu(\Omega) < \infty$, so continuity from above (same card) gives $\nu(B) = \lim_k \nu(B_k)$. Each $B_k$ contains $A_k$, so $\nu(B_k) \ge \varepsilon$, and $\nu(B) \ge \varepsilon$.
 
@@ -185,7 +164,7 @@ So $B$ is $\mu$-null and not $\nu$-null, contradicting $\nu \ll \mu$. The finite
 
 On the line, $D$ puts weight 1 on the point 6, which fits inside an interval of length 2h for every h: 0.2 for h = 0.1, 0.002 for h = 0.001. So $\lambda$({6}) = 0 and $S$ = {6} separates $D$ from $\lambda$. The stick $U$ is singular to $D$ too, separated by [0, 1].
 
-Singular does not require a point with weight, an **atom**. The Cantor set $C$ is what remains of [0, 1] after removing middle thirds for ever ([the-cantor-set](../02-Length%20Done%20Properly/07-the-cantor-set.md)). Stage $n$ keeps $2^n$ intervals of total length $(2/3)^n$: at stage 10, 1024 intervals of total length 0.0173. The Cantor measure $\kappa$ gives each kept interval half its parent's weight, so each stage-10 interval weighs 1/1024. It exists as the Lebesgue–Stieltjes measure of the Cantor function, the measure giving each interval the rise of that function across it ([lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)).
+Singular does not require a point with weight, an **atom**. The Cantor set $C$ is what remains of [0, 1] after removing middle thirds for ever ([The Cantor set](../02-Length%20Done%20Properly/07-the-cantor-set.md)). Stage $n$ keeps $2^n$ intervals of total length $(2/3)^n$: at stage 10, 1024 intervals of total length 0.0173. The Cantor measure $\kappa$ gives each kept interval half its parent's weight, so each stage-10 interval weighs 1/1024. It exists as the Lebesgue–Stieltjes measure of the Cantor function, the measure giving each interval the rise of that function across it ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)).
 
 Then $\kappa(C) = 1$ while $\lambda(C) \le (2/3)^n$ for every $n$, so $\lambda(C) = 0$ and $C$ separates $\kappa$ from $\lambda$. Yet each point of $C$ lies in one stage-$n$ interval, so its $\kappa$-weight is at most $2^{-n}$ for every $n$: zero. Points off $C$ weigh nothing. No atoms, and still singular.
 
@@ -193,9 +172,9 @@ Theorem 3 shows the two relations are opposite ends: only the zero measure is bo
 
 ### Step 5: most pairs are neither
 
-Mix the trick die with the dart: $M$ puts half its weight on the point 6 and spreads the other half as length over the stick, so $M$([0, 1]) = 0.5. Against $U$, the set {6} has length 0.0 and $M$-weight 0.5, so $M \ll U$ fails. A set carrying all of $U$ misses only length zero of the stick, so its $M$-weight is at least half of length 1, which is 0.5: $M \perp U$ fails too. $M$ is a piece absolutely continuous with respect to $U$ plus a piece singular to it; that every measure splits this way is [lebesgue-decomposition](05-lebesgue-decomposition.md).
+Mix the trick die with the dart: $M$ puts half its weight on the point 6 and spreads the other half as length over the stick, so $M$([0, 1]) = 0.5. Against $U$, the set {6} has length 0.0 and $M$-weight 0.5, so $M \ll U$ fails. A set carrying all of $U$ misses only length zero of the stick, so its $M$-weight is at least half of length 1, which is 0.5: $M \perp U$ fails too. $M$ is a piece absolutely continuous with respect to $U$ plus a piece singular to it; that every measure splits this way is [Lebesgue decomposition](05-lebesgue-decomposition.md).
 
-The road back from Step 2 (every absolutely continuous measure has a density when both measures are sigma-finite, each a countable union of pieces of finite size) is [radon-nikodym-theorem](03-radon-nikodym-theorem.md).
+The road back from Step 2 (every absolutely continuous measure has a density when both measures are sigma-finite, each a countable union of pieces of finite size) is [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md).
 
 ---
 
@@ -604,8 +583,8 @@ The two outputs are identical line for line.
 
 ## Where you meet it in real life
 
-- **Pricing with two sets of odds.** A derivatives desk prices under odds different from the real ones, and the two sets of odds must be equivalent: same impossible events, or a free bet appears ([risk-neutral-measure-and-the-fundamental-theorems](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)).
-- **Comparing statistical models.** The ratio of two models' chances needs absolute continuity ([densities-and-likelihood-ratios](06-densities-and-likelihood-ratios.md)). A model that calls a six impossible is ruled out by a single six.
+- **Pricing with two sets of odds.** A derivatives desk prices under odds different from the real ones, and the two sets of odds must be equivalent: same impossible events, or a free bet appears ([The fundamental theorems](../../12-Financial%20mathematics/05-Black-Scholes%20from%20the%20Ground%20Up/02-risk-neutral-measure-and-the-fundamental-theorems.md)).
+- **Comparing statistical models.** The ratio of two models' chances needs absolute continuity ([Densities and likelihood ratios](06-densities-and-likelihood-ratios.md)). A model that calls a six impossible is ruled out by a single six.
 - **Simulating with other odds.** Sampling from one measure to estimate chances under $P$ needs $P$ absolutely continuous with respect to the sampler: the no-six die never reports on sixes.
 - **Insurance claims.** A claim is zero with positive chance and otherwise spread over a range: like $M$, neither absolutely continuous nor singular with respect to length.
 - **"Has a density".** A distribution on the line has a density exactly when it is absolutely continuous with respect to length; the Cantor measure has a continuous distribution function and no density.
@@ -617,15 +596,15 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [integral-of-a-nonnegative-function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md): the integral that turns a density into a measure, and ignores null sets.
-- [null-sets-and-almost-everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md): null sets, the only thing absolute continuity compares.
+- [The integral of a non-negative function](../04-The%20Lebesgue%20Integral/02-integral-of-a-nonnegative-function.md): the integral that turns a density into a measure, and ignores null sets.
+- [Null sets and almost everywhere](../01-Sets%20You%20Can%20Measure/07-null-sets-and-almost-everywhere.md): null sets, the only thing absolute continuity compares.
 
 ## Where this goes next
 
-- [signed-measures-and-hahn-jordan](02-signed-measures-and-hahn-jordan.md): the difference of two measures, and the split of the space into where each one wins.
-- [absolutely-continuous-functions-and-the-fundamental-theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem.md): the epsilon-delta form moved from measures to functions, and the Cantor function as the singular case.
+- [Signed measures](02-signed-measures-and-hahn-jordan.md): the difference of two measures, and the split of the space into where each one wins.
+- [Absolutely continuous functions and the fundamental theorem](../11-Derivatives%20Meet%20the%20Lebesgue%20Integral/04-absolutely-continuous-functions-and-the-fundamental-theorem.md): the epsilon-delta form moved from measures to functions, and the Cantor function as the singular case.
 
-A density was shown to give absolute continuity; whether every absolutely continuous measure has a density is [radon-nikodym-theorem](03-radon-nikodym-theorem.md), whose proof runs through the Hahn decomposition of [signed-measures-and-hahn-jordan](02-signed-measures-and-hahn-jordan.md).
+A density was shown to give absolute continuity; whether every absolutely continuous measure has a density is [The Radon-Nikodym theorem](03-radon-nikodym-theorem.md), whose proof runs through the Hahn decomposition of [Signed measures](02-signed-measures-and-hahn-jordan.md).
 
 ---
 

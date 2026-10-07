@@ -1,25 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Special Functions and the Zeta Function
-topic: Stretching turned into powers
-item: The Mellin transform
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/02-gamma-function|gamma-function]]"
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/05-zeta-function-and-euler-product|zeta-function-and-euler-product]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/06-strips-of-convergence-and-shifting-the-line|strips-of-convergence-and-shifting-the-line]]"
-next:
-  - "[[Cards/07-Complex analysis/09-Special Functions and the Zeta Function/08-continuing-zeta-and-the-functional-equation|continuing-zeta-and-the-functional-equation]]"
-  - "[[Cards/21-Algebraic and analytic number theory/02-The Zeta Function and the Prime Number Theorem/02-functional-equation-proved|functional-equation-proved]]"
-tags: [mathematics, complex analysis, mellin-transform]
----
-
 # The Mellin transform: a Laplace transform on a log scale, whose first two examples are gamma and zeta
 
-Complex analysis → Special Functions and the Zeta Function → Stretching turned into powers → The Mellin transform
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Special Functions and the Zeta Function](../../../SYLLABUS.md#w07-s09) → The Mellin transform
 
 ---
 
@@ -27,7 +8,7 @@ Complex analysis → Special Functions and the Zeta Function → Stretching turn
 
 Zipf's law of city sizes says the k-th largest city in a country holds about 1/k of the largest's people. With a largest city of 8,000,000: rank 2 has 4,000,000, rank 3 has 2,666,667, rank 4 has 2,000,000. Double the rank, halve the size. A rule where stretching the input only rescales the output is a **power law**.
 
-Add up a Zipf list with exponent s, sizes 1/k^s times the largest, and the total is zeta, ζ(s) = 1 + 1/2^s + 1/3^s + … ([zeta-function-and-euler-product](05-zeta-function-and-euler-product.md)). At exponent 1 the total never settles: 1,000 cities hold 7.485471 times the largest, a million cities 14.392727 times. At exponent 2 it settles at 1.644934.
+Add up a Zipf list with exponent s, sizes 1/k^s times the largest, and the total is zeta, ζ(s) = 1 + 1/2^s + 1/3^s + … ([The zeta function](05-zeta-function-and-euler-product.md)). At exponent 1 the total never settles: 1,000 cities hold 7.485471 times the largest, a million cities 14.392727 times. At exponent 2 it settles at 1.644934.
 
 The **Mellin transform** turns "stretch the input by k" into "multiply by 1/k^s", the Zipf weight of rank k. So a sum of stretched copies of one shape comes out as ζ(s) times the transform of that shape. Copies of e^(−t) add up to 1/(e^t − 1), and out comes Γ(s)ζ(s): gamma times zeta.
 
@@ -99,13 +80,13 @@ The code checks it on e^(−2t) at s = 2: the transform is 0.250000, and Γ(2)/2
 
 ### Step 2: on a log scale it is a Laplace transform
 
-Reminder: the two-sided Laplace transform of g is the area under e^(−sx) g(x) over the whole line, converging in a vertical strip ([strips-of-convergence-and-shifting-the-line](../08-Transforms%20in%20Outline/06-strips-of-convergence-and-shifting-the-line.md)).
+Reminder: the two-sided Laplace transform of g is the area under e^(−sx) g(x) over the whole line, converging in a vertical strip ([Where a transform lives](../08-Transforms%20in%20Outline/06-strips-of-convergence-and-shifting-the-line.md)).
 
 Put t = e^(−x). Then t^(s−1) dt = −e^(−sx) dx. As t runs up from 0, x runs down from infinity; turning the limits round cancels the minus sign. That is the second formula. Stretching t by k shifts x by ln k, which is why Step 1's stretch comes out as a power. Strips and the vertical inversion line are the Laplace facts, moved by t = e^(−x).
 
 ### Step 3: the first example is gamma
 
-With f(t) = e^(−t) the transform is the gamma integral itself ([gamma-function](02-gamma-function.md)):
+With f(t) = e^(−t) the transform is the gamma integral itself ([The gamma function](02-gamma-function.md)):
 
 $$\mathcal{M}\big[e^{-t}\big](s) = \int_0^\infty t^{s-1} e^{-t}\,dt = \Gamma(s), \qquad \text{Re } s > 0.$$
 
@@ -369,7 +350,7 @@ The outputs match line for line.
 - **Heat radiation.** The energy a hot body radiates is the area under x^3/(e^x − 1): the s = 4 case, π^4/15 = 6.493939, a factor in the constant of the fourth-power law of radiated heat.
 - **City sizes and word counts.** Zipf's exponent is near 1, exactly the pole, so a Zipf total depends on where the list stops.
 - **The cost of algorithms.** Sums of stretched copies of one shape, **harmonic sums**, transform to a Dirichlet series times one transform; the poles give the sum's behaviour at small and large t.
-- **Dirichlet series.** Other weights in place of Zipf's give Γ(s) times a Dirichlet series, [dirichlet-series-and-mobius-inversion](06-dirichlet-series-and-mobius-inversion.md).
+- **Dirichlet series.** Other weights in place of Zipf's give Γ(s) times a Dirichlet series, [Dirichlet series](06-dirichlet-series-and-mobius-inversion.md).
 
 > **Say it back**
 > The Mellin transform weighs a function by t^(s−1) over the positive axis. With t = e^(−x) it is a two-sided Laplace transform: it lives in a vertical strip and inverts up a vertical line. Stretching by k multiplies it by k^(−s). The transform of e^(−t) is Γ(s); 1/(e^t − 1) is a sum of stretched copies of e^(−t), so its transform is Γ(s)ζ(s) for Re s > 1, 1.644934 at s = 2.
@@ -378,14 +359,14 @@ The outputs match line for line.
 
 ## What this builds on
 
-- [gamma-function](02-gamma-function.md): the gamma integral, here the first transform.
-- [zeta-function-and-euler-product](05-zeta-function-and-euler-product.md): zeta as a series for Re s > 1, and ζ(2) = π^2/6.
-- [strips-of-convergence-and-shifting-the-line](../08-Transforms%20in%20Outline/06-strips-of-convergence-and-shifting-the-line.md): the two-sided Laplace transform, its strip, and moving its line.
+- [The gamma function](02-gamma-function.md): the gamma integral, here the first transform.
+- [The zeta function](05-zeta-function-and-euler-product.md): zeta as a series for Re s > 1, and ζ(2) = π^2/6.
+- [Where a transform lives](../08-Transforms%20in%20Outline/06-strips-of-convergence-and-shifting-the-line.md): the two-sided Laplace transform, its strip, and moving its line.
 
 ## Where this goes next
 
-- [continuing-zeta-and-the-functional-equation](08-continuing-zeta-and-the-functional-equation.md): this integral pushed past its strip, so zeta gains values left of 1.
-- functional-equation-proved: the functional equation proved from a Mellin integral of this kind.
+- [Continuing zeta](08-continuing-zeta-and-the-functional-equation.md): this integral pushed past its strip, so zeta gains values left of 1.
+- The functional equation: the functional equation proved from a Mellin integral of this kind.
 
 The integral gives Γ(s)ζ(s) only right of Re s = 1; what zeta is to the left is the continuation card's question.
 

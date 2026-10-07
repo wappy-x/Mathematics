@@ -1,25 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Partitions
-topic: Products that count
-item: Euler's product
-kind: theorem
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/08-Partitions/01-integer-partitions|integer-partitions]]"
-  - "[[Cards/04-Combinatorics and graphs/07-Generating Functions/02-counting-with-generating-functions|counting-with-generating-functions]]"
-next: []
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - partitions-generating-function
----
-
 # Euler's product: one geometric factor per part size, and the coefficients count partitions
 
-Combinatorics and graphs → Partitions → Products that count → Euler's product
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Partitions](../../../SYLLABUS.md#w04-s08) → Euler's product
 
 ---
 
@@ -56,7 +37,7 @@ Cups larger than eight cannot help make eight, so their brackets leave that plac
 
 ## The formula
 
-Three pieces of notation, in words first. A power of x is a tally mark for a total, never a number to plug in: x^8 means "this filling uses eight marbles", and the **coefficient of x^n** is the number standing at the x^n place ([counting-with-generating-functions](../07-Generating%20Functions/02-counting-with-generating-functions.md)). The sign ∏ is sigma's twin for multiplying: where ∑ adds one term per whole number in a range, ∏ multiplies in one factor per whole number, here k = 1, then 2, and on without stopping. And 1/(1 − x^k) is shorthand for a list, not a division: the endless 1 + x^k + x^{2k} + … , whose product with 1 − x^k is 1 and nothing else. Each term of it is the one before times x^k, which is what **geometric** means.
+Three pieces of notation, in words first. A power of x is a tally mark for a total, never a number to plug in: x^8 means "this filling uses eight marbles", and the **coefficient of x^n** is the number standing at the x^n place ([Counting by multiplying series](../07-Generating%20Functions/02-counting-with-generating-functions.md)). The sign ∏ is sigma's twin for multiplying: where ∑ adds one term per whole number in a range, ∏ multiplies in one factor per whole number, here k = 1, then 2, and on without stopping. And 1/(1 − x^k) is shorthand for a list, not a division: the endless 1 + x^k + x^{2k} + … , whose product with 1 − x^k is 1 and nothing else. Each term of it is the one before times x^k, which is what **geometric** means.
 
 $$\sum_{n \ge 0} p(n)\,x^n \;=\; \prod_{k \ge 1} \frac{1}{1 - x^k}$$
 
@@ -96,7 +77,7 @@ Take 3 + 3 + 2. Nothing of it survives but a tally: no cups of one, one of two, 
 
 The bracket for size k is 1 + x^k + x^{2k} + … , one term per count of cups of that size: x^{km} says "use m of them, spending km marbles".
 
-Multiplying brackets takes one term from each and adds the exponents ([counting-with-generating-functions](../07-Generating%20Functions/02-counting-with-generating-functions.md)). One term from every bracket is a choice of every count, and the exponents add to the marbles spent. So each sharing of n puts 1 into the x^n place and nothing else does: the coefficient there is p(n). At eight marbles x^8 is reached 22 ways; one takes x^2 from the twos bracket, x^6 from the threes, the leading 1 from the rest — the sharing 3 + 3 + 2.
+Multiplying brackets takes one term from each and adds the exponents ([Counting by multiplying series](../07-Generating%20Functions/02-counting-with-generating-functions.md)). One term from every bracket is a choice of every count, and the exponents add to the marbles spent. So each sharing of n puts 1 into the x^n place and nothing else does: the coefficient there is p(n). At eight marbles x^8 is reached 22 ways; one takes x^2 from the twos bracket, x^6 from the threes, the leading 1 from the rest — the sharing 3 + 3 + 2.
 
 ### Step 2: why an endless product has a definite coefficient
 
@@ -378,7 +359,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Making change.** Coin denominations are the allowed sizes, one bracket per denomination, and the ways to pay a total are one coefficient — worked in pennies to quarters on [counting-with-generating-functions](../07-Generating%20Functions/02-counting-with-generating-functions.md).
+- **Making change.** Coin denominations are the allowed sizes, one bracket per denomination, and the ways to pay a total are one coefficient — worked in pennies to quarters on [Counting by multiplying series](../07-Generating%20Functions/02-counting-with-generating-functions.md).
 - **Statistical physics.** A system whose energy comes in whole steps, with any number of units at each step, has p(n) states of total energy n; this product counts them.
 - **Published tables.** Both counts here are catalogued: [A000041](https://oeis.org/A000041) and [A000009](https://oeis.org/A000009).
 
@@ -389,12 +370,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [integer-partitions](01-integer-partitions.md): what p(n) counts, and the listing road this product replaces.
-- [counting-with-generating-functions](../07-Generating%20Functions/02-counting-with-generating-functions.md): what "the coefficient of x^n" means, and why multiplying brackets adds exponents and so counts choices.
+- [Integer partitions](01-integer-partitions.md): what p(n) counts, and the listing road this product replaces.
+- [Counting by multiplying series](../07-Generating%20Functions/02-counting-with-generating-functions.md): what "the coefficient of x^n" means, and why multiplying brackets adds exponents and so counts choices.
 
 ## Where this goes next
 
-The shelf carries on where the things shared have names — [set-partitions-and-bell-numbers](03-set-partitions-and-bell-numbers.md) and [stirling-numbers-second-kind](04-stirling-numbers-second-kind.md) — and closes with [twelvefold-way](06-twelvefold-way.md).
+The shelf carries on where the things shared have names — [Set partitions and Bell numbers](03-set-partitions-and-bell-numbers.md) and [Stirling numbers of the second kind](04-stirling-numbers-second-kind.md) — and closes with [The twelvefold way](06-twelvefold-way.md).
 
 The product reaches p(50) = 204,226 only by grinding out every count below it, and says nothing about how fast p(n) grows; a formula aimed straight at one p(n) exists, and its tools sit above this wing.
 

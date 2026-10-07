@@ -1,22 +1,6 @@
----
-type: card
-wing: 11-Stochastic processes and calculus
-shelf: Generators, Densities and Simulation
-topic: Orders of convergence
-item: Milstein and the two kinds of error
-kind: method
-status: draft
-updated: 2026-09-30
-needs_first:
-  - "[[Cards/11-Stochastic processes and calculus/08-Generators, Densities and Simulation/04-euler-maruyama-scheme|euler-maruyama-scheme]]"
-next:
-  - "[[Cards/12-Financial mathematics/06-Numerical Methods for Pricing/05-discretisation-schemes-for-sdes|discretisation-schemes-for-sdes]]"
-tags: [mathematics, stochastic processes and calculus, milstein-and-strong-weak-convergence]
----
-
 # Milstein and the two kinds of error: path error and average error
 
-Stochastic processes and calculus → Generators, Densities and Simulation → Orders of convergence → Milstein and the two kinds of error
+[Syllabus](../../../SYLLABUS.md) → [Stochastic processes and calculus](../../../SYLLABUS.md#w11) → [Generators, Densities and Simulation](../../../SYLLABUS.md#w11-s08) → Milstein and the two kinds of error
 
 ---
 
@@ -53,7 +37,7 @@ Orange: Euler-Maruyama. Green: Milstein. Dark blue: the exact price on the same 
 
 ## The formula
 
-Reminder from [euler-maruyama-scheme](04-euler-maruyama-scheme.md): time $t$ is in years; $W_t$ is Brownian motion; an SDE $dX_t = \mu(X_t)\,dt + \sigma(X_t)\,dW_t$ is shorthand for an integral equation, never a derivative, because a Brownian path has no slope. The year is cut into $n$ steps of length $\Delta t$, and $\Delta W_k$ is the Brownian change over step $k$, a normal draw with mean 0 and variance $\Delta t$. Below, $\sigma'(x)$ is the slope of the noise-size function: how fast the jumpiness changes as the price moves.
+Reminder from [Euler-Maruyama](04-euler-maruyama-scheme.md): time $t$ is in years; $W_t$ is Brownian motion; an SDE $dX_t = \mu(X_t)\,dt + \sigma(X_t)\,dW_t$ is shorthand for an integral equation, never a derivative, because a Brownian path has no slope. The year is cut into $n$ steps of length $\Delta t$, and $\Delta W_k$ is the Brownian change over step $k$, a normal draw with mean 0 and variance $\Delta t$. Below, $\sigma'(x)$ is the slope of the noise-size function: how fast the jumpiness changes as the price moves.
 
 $$Y_{k+1} \;=\; Y_k + \mu(Y_k)\,\Delta t + \sigma(Y_k)\,\Delta W_k \;+\; \tfrac12\,\sigma(Y_k)\,\sigma'(Y_k)\,\big(\Delta W_k^2 - \Delta t\big)$$
 
@@ -63,7 +47,7 @@ For silver, $\mu(x) = 0.05x$ and $\sigma(x) = 0.30x$, so $\sigma'(x) = 0.30$ and
 
 $$Y_{k+1} = Y_k\Big(1 + \mu\,\Delta t + \sigma\,\Delta W_k + \tfrac12\sigma^2\big(\Delta W_k^2 - \Delta t\big)\Big), \qquad S_T = S_0\, e^{(\mu - \frac12\sigma^2)T + \sigma W_T}.$$
 
-The right-hand formula is the exact price on the same Brownian path ([geometric-brownian-motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md)). The two kinds of error, at the horizon $T$:
+The right-hand formula is the exact price on the same Brownian path ([Geometric Brownian motion](../05-Brownian%20Motion/07-geometric-brownian-motion.md)). The two kinds of error, at the horizon $T$:
 
 $$\varepsilon_{\mathrm{s}}(\Delta t) = \sqrt{E\big[(Y_n - S_T)^2\big]} \;\le\; C\,\Delta t^{\gamma}, \qquad \varepsilon_{\mathrm{w}}(\Delta t) = E\big[f(Y_n)\big] - E\big[f(S_T)\big], \quad |\varepsilon_{\mathrm{w}}| \le C\,\Delta t^{\beta}.$$
 
@@ -90,8 +74,8 @@ The average error here is in square dollars, because the test function squares t
 
 ### When it holds
 
-- **One source of noise.** With two Brownian motions, the correction needs the double integral of one against the other (the Lévy area), which the step's two increments do not determine. Unless the noise coefficients commute, dropping it puts Milstein back at strong order ½ (Kloeden and Platen, section 10.3, under Sources; stated here, not proved). Two Brownian motions at once are the subject of [multidimensional-ito-and-correlation](../06-Ito%20Calculus/06-multidimensional-ito-and-correlation.md).
-- **Smooth, tame coefficients.** The general orders need drift, noise size and the product σσ′ to change by at most a fixed multiple of any change in x (Lipschitz) and to grow at most like x. The square-root noise of the CIR rate, σ(x) = c√x, has a slope that blows up at zero, and the theorem does not apply there ([ornstein-uhlenbeck-and-cir-processes](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)).
+- **One source of noise.** With two Brownian motions, the correction needs the double integral of one against the other (the Lévy area), which the step's two increments do not determine. Unless the noise coefficients commute, dropping it puts Milstein back at strong order ½ (Kloeden and Platen, section 10.3, under Sources; stated here, not proved). Two Brownian motions at once are the subject of [Several Brownian motions](../06-Ito%20Calculus/06-multidimensional-ito-and-correlation.md).
+- **Smooth, tame coefficients.** The general orders need drift, noise size and the product σσ′ to change by at most a fixed multiple of any change in x (Lipschitz) and to grow at most like x. The square-root noise of the CIR rate, σ(x) = c√x, has a slope that blows up at zero, and the theorem does not apply there ([Mean reversion](../06-Ito%20Calculus/05-ornstein-uhlenbeck-and-cir-processes.md)).
 - **A shared path for the path error.** Strong error compares scheme and truth on the same Brownian path. Against an exact price driven by other noise, Milstein's "error" stays at $13.68 at 64 steps: that is the typical gap between two independent silver prices.
 - **A smooth test function for the average error.** Weak order 1 is proved for f with derivatives that grow at most like a power of x. A payoff with a jump, such as a digital, falls outside the theorem as stated here.
 - **Noise that depends on the state, or the correction is zero.** For the shelf's house example, the OU rate, the noise size is a constant, σ′ = 0, and the correction vanishes. Euler there already is Milstein, with strong order 1.
@@ -110,9 +94,9 @@ Write $X$ for the true solution. On step $k$,
 
 $$\int_{t_k}^{t_{k+1}} \sigma(X_s)\,dW_s \;\approx\; \sigma(X_{t_k})\,\Delta W_k \;+\; \sigma(X_{t_k})\,\sigma'(X_{t_k}) \int_{t_k}^{t_{k+1}} \big(W_s - W_{t_k}\big)\,dW_s .$$
 
-The last integral is Brownian motion integrated against itself, started afresh at $t_k$. The Ito integral gives $\int_0^{\tau} W\,dW = \tfrac12 W_{\tau}^2 - \tfrac12 \tau$, proved by left-end sums in [ito-integral](../06-Ito%20Calculus/01-ito-integral.md). Over one step, that is $\tfrac12(\Delta W_k^2 - \Delta t)$. Multiply in and the Milstein correction appears.
+The last integral is Brownian motion integrated against itself, started afresh at $t_k$. The Ito integral gives $\int_0^{\tau} W\,dW = \tfrac12 W_{\tau}^2 - \tfrac12 \tau$, proved by left-end sums in [The Ito integral](../06-Ito%20Calculus/01-ito-integral.md). Over one step, that is $\tfrac12(\Delta W_k^2 - \Delta t)$. Multiply in and the Milstein correction appears.
 
-The code checks this over one month cut into 100,000 pieces. The left-end sum is −0.041889. The Ito value $\tfrac12(\Delta W^2 - \Delta t)$ is −0.041666. Ordinary calculus would say $\tfrac12\Delta W^2$, here 0.000001, and miss by about Δt/2. The −Δt comes from the squared pieces, which add up to 0.083780 against Δt = 0.083333: the path's quadratic variation ([quadratic-variation](../05-Brownian%20Motion/03-quadratic-variation.md)).
+The code checks this over one month cut into 100,000 pieces. The left-end sum is −0.041889. The Ito value $\tfrac12(\Delta W^2 - \Delta t)$ is −0.041666. Ordinary calculus would say $\tfrac12\Delta W^2$, here 0.000001, and miss by about Δt/2. The −Δt comes from the squared pieces, which add up to 0.083780 against Δt = 0.083333: the path's quadratic variation ([Quadratic variation](../05-Brownian%20Motion/03-quadratic-variation.md)).
 
 For silver the same term falls out of the exact factor. Expand $e^u$ with $u = (\mu - \tfrac12\sigma^2)\Delta t + \sigma\Delta W$: the square $u^2$ is $\sigma^2\Delta W^2$ plus pieces of order $\Delta t^{3/2}$, so $e^u = 1 + \mu\Delta t + \sigma\Delta W + \tfrac12\sigma^2(\Delta W^2 - \Delta t)$ plus order $\Delta t^{3/2}$. The Euler card found the first three terms and named the fourth as the one dropped. Milstein keeps it.
 
@@ -127,7 +111,7 @@ Quartering the step divides Euler's local error by about 4: it is of order $\Del
 
 ### Step 3: from local error to path error
 
-The [euler-maruyama-scheme](04-euler-maruyama-scheme.md) card showed how local errors with zero average add up: like a random walk, as the square root of their number. There are $n = T/\Delta t$ steps.
+The [Euler-Maruyama](04-euler-maruyama-scheme.md) card showed how local errors with zero average add up: like a random walk, as the square root of their number. There are $n = T/\Delta t$ steps.
 
 - Euler's local error has near-zero average (of order $\Delta t^2$) and size $\Delta t$. Summed, $\sqrt{n}\,\Delta t = \sqrt{T\,\Delta t}$. Strong order ½.
 - Milstein's leftover has a zero-average part of size $\Delta t^{3/2}$, which sums to $\sqrt{n}\,\Delta t^{3/2} = \sqrt{T}\,\Delta t$, and a part with nonzero average of size $\Delta t^2$, which sums to $n\,\Delta t^2 = T\,\Delta t$. Strong order 1.
@@ -142,7 +126,7 @@ That predicts 2.0995 times $\sqrt{\Delta t}$. The exact formula at 1,024 steps g
 
 An average forgives errors that average to zero. Milstein's correction has average zero, because $E[\Delta W^2] = \Delta t$. So it cannot change the average price at all: both schemes give $S_0(1 + \mu\Delta t)^n$, which is $31.5284 at 4 steps against the exact $31.5381.
 
-For a general test function the argument runs through the backward equation ([kolmogorov-backward-equation](02-kolmogorov-backward-equation.md)). Let v(x, t) be the true average of f at the horizon, started from x at time t. The weak error is a sum over steps of the average change in v along one scheme step. For both schemes that change is of order $\Delta t^2$, because the step's low moments match the generator's prediction to that order ([infinitesimal-generator](01-infinitesimal-generator.md)). Summed over n steps, the average error is $n\,\Delta t^2 = T\,\Delta t$. Weak order 1, for both. The complete argument, for smooth coefficients and smooth f, is in Kloeden and Platen, chapter 14; this card states it and checks it numerically.
+For a general test function the argument runs through the backward equation ([Kolmogorov backward equation](02-kolmogorov-backward-equation.md)). Let v(x, t) be the true average of f at the horizon, started from x at time t. The weak error is a sum over steps of the average change in v along one scheme step. For both schemes that change is of order $\Delta t^2$, because the step's low moments match the generator's prediction to that order ([The generator](01-infinitesimal-generator.md)). Summed over n steps, the average error is $n\,\Delta t^2 = T\,\Delta t$. Weak order 1, for both. The complete argument, for smooth coefficients and smooth f, is in Kloeden and Platen, chapter 14; this card states it and checks it numerically.
 
 A loop can converge weakly and not strongly. Replace each Gaussian shove by a coin flip of ±√Δt. The coin matches the shove's average and variance, so on silver its average error equals Euler's exactly: −4.104 at 4 steps and −1.050 at 16, by enumerating every path. Its path error does not shrink at all: 6.2282 ± 0.0402 dollars at 4 steps, 6.2467 ± 0.0385 at 64.
 
@@ -682,9 +666,9 @@ The two outputs agree line for line, including every simulated digit: both langu
 ## Where you meet it in real life
 
 - **Multilevel Monte Carlo.** Giles's method prices with a ladder of step sizes and corrects coarse runs with fine ones on shared paths. How many paths each level needs is set by the path error, so Milstein's order 1 makes the fine levels cheap.
-- **Option pricing by simulation.** A price only needs the average error, and Euler is usually enough; the step size is chosen to make the bias small against the sampling noise ([discretisation-schemes-for-sdes](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/05-discretisation-schemes-for-sdes.md)).
+- **Option pricing by simulation.** A price only needs the average error, and Euler is usually enough; the step size is chosen to make the bias small against the sampling noise ([Stepping an SDE](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/05-discretisation-schemes-for-sdes.md)).
 - **Path-dependent questions.** Whether a price touched a barrier, or how a hedge fared along one path, depends on the path itself. There path error matters.
-- **Exact simulation instead.** For silver and the OU rate there is an exact one-step rule, and neither scheme is needed ([exact-simulation-of-gbm-and-ou](06-exact-simulation-of-gbm-and-ou.md)).
+- **Exact simulation instead.** For silver and the OU rate there is an exact one-step rule, and neither scheme is needed ([Exact simulation](06-exact-simulation-of-gbm-and-ou.md)).
 
 > **Say it back**
 > Euler freezes the noise size over a step, and the noise size moves. Integrating its move against the path gives the Milstein term, $\tfrac12\sigma\sigma'(\Delta W^2 - \Delta t)$. Path error asks whether the scheme follows the true path; average error asks whether averages come out right. Milstein raises the path order from ½ to 1, so each halving of the step halves the path error. For averages both schemes have order 1, and on the average price the correction changes nothing.
@@ -693,11 +677,11 @@ The two outputs agree line for line, including every simulated digit: both langu
 
 ## What this builds on
 
-- [euler-maruyama-scheme](04-euler-maruyama-scheme.md): the loop this card corrects, the term it drops, and the random-walk argument that gives its path order ½.
+- [Euler-Maruyama](04-euler-maruyama-scheme.md): the loop this card corrects, the term it drops, and the random-walk argument that gives its path order ½.
 
 ## Where this goes next
 
-- [discretisation-schemes-for-sdes](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/05-discretisation-schemes-for-sdes.md): Euler and Milstein inside a pricing engine, where only the average error counts, and Andersen's scheme for a variance that must stay positive.
+- [Stepping an SDE](../../12-Financial%20mathematics/06-Numerical%20Methods%20for%20Pricing/05-discretisation-schemes-for-sdes.md): Euler and Milstein inside a pricing engine, where only the average error counts, and Andersen's scheme for a variance that must stay positive.
 
 A better path does not buy a better price; how a pricing engine should then spend its steps and paths is the question the finance card answers.
 

@@ -1,28 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Limit Theorems in Practice
-topic: Counts read off a bell curve
-item: Normal approximation
-kind: approximation
-status: draft
-updated: 2026-10-06
-needs_first:
-  - "[[Cards/09-Probability and statistics/06-Limit Theorems in Practice/02-central-limit-theorem|central-limit-theorem]]"
-  - "[[Cards/09-Probability and statistics/03-Discrete Distributions/01-bernoulli-and-binomial|bernoulli-and-binomial]]"
-next:
-  - "[[Cards/09-Probability and statistics/08-Confidence Intervals and Tests/02-intervals-for-proportions|intervals-for-proportions]]"
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/04-crr-tree-and-convergence|crr-tree-and-convergence]]"
-  - "[[Cards/20-Harmonic analysis/04-Characteristic Functions and Probability/06-berry-esseen-and-the-rate|berry-esseen-and-the-rate]]"
-tags:
-  - mathematics
-  - probability and statistics
-  - normal-approximation-to-binomial
----
-
 # Normal approximation: a binomial as a bell, with the half-step correction
 
-Probability and statistics → Limit Theorems in Practice → Counts read off a bell curve → Normal approximation
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Limit Theorems in Practice](../../../SYLLABUS.md#w09-s06) → Normal approximation
 
 ---
 
@@ -58,7 +36,7 @@ Bars: the exact binomial chance of each head count from 40 to 64. Line: the bell
 
 ## The formula
 
-Notation first, in words. X ~ Binomial(n, p) is read "X follows the binomial law with n trials and chance p", as on [bernoulli-and-binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md). The standard bell's area to the left of z is written Φ(z), capital phi, as on [normal-distribution](../04-Continuous%20Distributions/04-normal-distribution.md). For a count X of n tries with success chance p, and a whole number j:
+Notation first, in words. X ~ Binomial(n, p) is read "X follows the binomial law with n trials and chance p", as on [Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md). The standard bell's area to the left of z is written Φ(z), capital phi, as on [Normal](../04-Continuous%20Distributions/04-normal-distribution.md). For a count X of n tries with success chance p, and a whole number j:
 
 $$P(X \ge j) \;\approx\; 1 - \Phi\!\left(\frac{j - \tfrac12 - np}{\sqrt{np(1-p)}}\right)$$
 
@@ -149,14 +127,14 @@ The error term is at most (s/(nq))^2 + ((s+1)/(np))^2, of size s^2/σ^4 times a 
 Sum from s = 0 to t − 1:
 $$\ln P(X = np + t) - \ln P(X = np) = -\frac{t(t-1)/2 + qt}{\sigma^2} + E_t = -\frac{t^2}{2\sigma^2} + \frac{(\tfrac12 - q)\,t}{\sigma^2} + E_t,$$
 where $|E_t|$ is at most a constant times $t^3/\sigma^4$. For t up to a few spreads (t of order σ), the middle term is of order 1/σ and $E_t$ is of order 1/σ: both vanish as n grows, which gives Step 3's shape. For a fair coin, ½ − q = 0 and the middle term is zero, which is why the fair coin's bell fits so well. The left side of the centre is the same argument with p and q swapped: count tails instead of heads.
-The peak height: the bars within a few spreads of the centre carry nearly all the chance (Chebyshev's inequality bounds the rest by 1/c^2 beyond c spreads), and their sum is a Riemann sum of $P(X=\mu)\,e^{-t^2/(2\sigma^2)}$ with step 1, which tends to $P(X=\mu)\,\sigma\sqrt{2\pi}$. Setting that equal to 1 gives $P(X=\mu) \approx 1/(\sigma\sqrt{2\pi})$. Stirling's formula ([stirlings-approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md)) gives the same peak directly from C(n, n/2), which is de Moivre's 1733 route.
+The peak height: the bars within a few spreads of the centre carry nearly all the chance (Chebyshev's inequality bounds the rest by 1/c^2 beyond c spreads), and their sum is a Riemann sum of $P(X=\mu)\,e^{-t^2/(2\sigma^2)}$ with step 1, which tends to $P(X=\mu)\,\sigma\sqrt{2\pi}$. Setting that equal to 1 gives $P(X=\mu) \approx 1/(\sigma\sqrt{2\pi})$. Stirling's formula ([Stirling's approximation](../../06-Calculus%20and%20analysis/06-Series/09-stirlings-approximation.md)) gives the same peak directly from C(n, n/2), which is de Moivre's 1733 route.
 Step 4 then follows: the sum of the bars from j upward is a Riemann sum of the bell's density over unit cells centred on the counts, and those cells start at j − ½.
 
 </details>
 
 ### The other door
 
-A binomial count is a sum of n independent zero-or-one tries, so the general [central-limit-theorem](02-central-limit-theorem.md) also gives the bell, for any shape of single try, and says the standardized count's chances approach Φ. The route here is narrower but closer to the ground: it works on one bar at a time, which is what explains the half step. How far the bell can be off at a given n is the subject of berry-esseen-and-the-rate.
+A binomial count is a sum of n independent zero-or-one tries, so the general [Central limit theorem](02-central-limit-theorem.md) also gives the bell, for any shape of single try, and says the standardized count's chances approach Φ. The route here is narrower but closer to the ground: it works on one bar at a time, which is what explains the half step. How far the bell can be off at a given n is the subject of How big must n be.
 
 ---
 
@@ -198,7 +176,7 @@ Same question, exact answer 0.028444.
 | Variance np instead of np(1-p) | 0.089555 | Spread √50 instead of 5; the bell is too wide, the tail three times too fat |
 | Bent coin, p = 0.02, P(X ≥ 5), np(1-p) = 1.96 | 0.037073 (exact 0.050830) | The bars are lopsided; the bell is not. 27% too small |
 
-For the bent coin, the right tool is the Poisson law of [poisson](../03-Discrete%20Distributions/04-poisson.md), or the exact sum.
+For the bent coin, the right tool is the Poisson law of [Poisson](../03-Discrete%20Distributions/04-poisson.md), or the exact sum.
 
 ---
 
@@ -578,10 +556,10 @@ The two outputs are identical line for line. Rust counts in u128 whole numbers, 
 
 ## Where you meet it in real life
 
-- **Polls.** A poll of 1,000 voters counts how many favour a candidate; the reported margin of error comes from this bell. Turned into an interval for the unknown chance, it is [intervals-for-proportions](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md).
+- **Polls.** A poll of 1,000 voters counts how many favour a candidate; the reported margin of error comes from this bell. Turned into an interval for the unknown chance, it is [Intervals for a proportion](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md).
 - **Quality control.** A sample of parts from a batch with a known defect rate: is the number of defects found surprising? A z-score against the bell answers in one line.
 - **Clinical trials.** Counts of patients who respond are binomial; tests of response rates read their tails off the bell, with the half step when samples are modest.
-- **Option pricing.** A binomial tree for a stock price is a binomial count of up-moves, and its bell limit is the Black–Scholes bell: [crr-tree-and-convergence](../../12-Financial%20mathematics/04-Binomial%20Trees/04-crr-tree-and-convergence.md).
+- **Option pricing.** A binomial tree for a stock price is a binomial count of up-moves, and its bell limit is the Black–Scholes bell: [Cox-Ross-Rubinstein](../../12-Financial%20mathematics/04-Binomial%20Trees/04-crr-tree-and-convergence.md).
 
 > **Say it back**
 > A binomial count of n tries has average np and spread √(np(1-p)), and its bars trace a bell curve with that centre and width. Each bar is one unit wide, from half a step below its count to half a step above, so a tail of counts is the bell's area from the half step. For 100 fair flips, 60 or more heads is the area above 59.5: 0.028717, against the exact 0.028444. The bell is safe when np(1-p) is at least about 10 and the cut is not deep in the tail.
@@ -590,16 +568,16 @@ The two outputs are identical line for line. Rust counts in u128 whole numbers, 
 
 ## What this builds on
 
-- [central-limit-theorem](02-central-limit-theorem.md): why a sum of many independent tries takes the bell's shape; this card is its oldest special case.
-- [bernoulli-and-binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the binomial law, its average np and its variance np(1-p).
+- [Central limit theorem](02-central-limit-theorem.md): why a sum of many independent tries takes the bell's shape; this card is its oldest special case.
+- [Binomial](../03-Discrete%20Distributions/01-bernoulli-and-binomial.md): the binomial law, its average np and its variance np(1-p).
 
 ## Where this goes next
 
-- [intervals-for-proportions](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md): the same bell turned round, to put an interval on an unknown chance p from an observed count.
-- [crr-tree-and-convergence](../../12-Financial%20mathematics/04-Binomial%20Trees/04-crr-tree-and-convergence.md): a binomial tree of stock prices converging to the lognormal bell.
-- berry-esseen-and-the-rate: a guaranteed bound on the bell's error at a given n.
+- [Intervals for a proportion](../08-Confidence%20Intervals%20and%20Tests/02-intervals-for-proportions.md): the same bell turned round, to put an interval on an unknown chance p from an observed count.
+- [Cox-Ross-Rubinstein](../../12-Financial%20mathematics/04-Binomial%20Trees/04-crr-tree-and-convergence.md): a binomial tree of stock prices converging to the lognormal bell.
+- How big must n be: a guaranteed bound on the bell's error at a given n.
 
-This card measured the bell's error case by case; how large that error can be for any n and p, with a bound that holds in advance, is what berry-esseen-and-the-rate answers.
+This card measured the bell's error case by case; how large that error can be for any n and p, with a bound that holds in advance, is what How big must n be answers.
 
 ---
 

@@ -1,26 +1,6 @@
----
-type: card
-wing: 06-Calculus and analysis
-shelf: Several Variables
-topic: Solving equations locally
-item: Inverse and implicit function theorems
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/07-Several Variables/04-multivariable-chain-rule-and-jacobians|multivariable-chain-rule-and-jacobians]]"
-  - "[[Cards/03-Algebra/05-Solving Systems/03-inverse-matrix|inverse-matrix]]"
-next:
-  - "[[Cards/15-Optimization/03-Constrained Optimisation/01-lagrange-multipliers-revisited|lagrange-multipliers-revisited]]"
-  - "[[Cards/23-Differential geometry and Lie groups/03-Manifolds/04-diffeomorphisms-immersions-and-embeddings|diffeomorphisms-immersions-and-embeddings]]"
-  - "[[Cards/23-Differential geometry and Lie groups/03-Manifolds/06-submanifolds-and-the-regular-value-theorem|submanifolds-and-the-regular-value-theorem]]"
-  - "[[Cards/25-Frontier/05-Analysis and Dynamics/04-jacobian-conjecture|jacobian-conjecture]]"
-tags: [mathematics, calculus and analysis, inverse-and-implicit-function-theorems]
----
-
 # Inverse and implicit function theorems: when an equation can be solved for one variable locally
 
-Calculus and analysis → Several Variables → Solving equations locally → Inverse and implicit function theorems
+[Syllabus](../../../SYLLABUS.md) → [Calculus and analysis](../../../SYLLABUS.md#w06) → [Several Variables](../../../SYLLABUS.md#w06-s07) → Inverse and implicit function theorems
 
 ---
 
@@ -54,7 +34,7 @@ The curve is the volume solved afresh at each pressure; the straight line is the
 
 ## The formula
 
-Reminders: ∂V/∂T, with the curly d, is litres gained per kelvin with pressure held still ([partial-derivatives](01-partial-derivatives.md)). A map's **Jacobian** is the grid of its partial derivatives, a row per output ([multivariable-chain-rule-and-jacobians](04-multivariable-chain-rule-and-jacobians.md)).
+Reminders: ∂V/∂T, with the curly d, is litres gained per kelvin with pressure held still ([Partial derivatives](01-partial-derivatives.md)). A map's **Jacobian** is the grid of its partial derivatives, a row per output ([Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md)).
 
 Write the gas law as one expression that must be zero:
 
@@ -100,19 +80,19 @@ $$\frac{\partial V}{\partial T} = -\frac{\partial F/\partial T}{\partial F/\part
 
 ### Step 0: close up, a smooth map is almost its linear part
 
-Close up, a map with continuous partials differs from its tangent-plane version by an error shrinking faster than the step ([differentiability-and-tangent-planes](02-differentiability-and-tangent-planes.md)). A linear map with an invertible matrix can be undone exactly. The theorem says the undoing survives the small error.
+Close up, a map with continuous partials differs from its tangent-plane version by an error shrinking faster than the step ([Tangent planes](02-differentiability-and-tangent-planes.md)). A linear map with an invertible matrix can be undone exactly. The theorem says the undoing survives the small error.
 
 ### Step 1: the inverse theorem on the gas
 
 Let $G$ send (V, T) to (p, T), with p = nRT/V. Its Jacobian has rows (∂p/∂V, ∂p/∂T) and (0, 1): ∂p/∂V = −nRT/V^2 = −4.009302 kPa per litre, ∂p/∂T = nR/V = 0.333333 kPa per kelvin.
 
-The determinant is −4.009302, not zero, so $G$ can be undone near the state. Call these s and c. The matrix `[[s, c], [0, 1]]` has inverse `[[1/s, -c/s], [0, 1]]` ([inverse-matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)), whose top row is −0.249420 and 0.083140: ∂V/∂p and ∂V/∂T, read off without solving for V.
+The determinant is −4.009302, not zero, so $G$ can be undone near the state. Call these s and c. The matrix `[[s, c], [0, 1]]` has inverse `[[1/s, -c/s], [0, 1]]` ([The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md)), whose top row is −0.249420 and 0.083140: ∂V/∂p and ∂V/∂T, read off without solving for V.
 
 Given the undo, the formula is the chain rule: undoing then doing returns the input, so the two Jacobians multiply to the identity.
 
 ### Step 2: why the undo exists
 
-To reach an output near $G(x_0)$, start at $x_0$ and correct repeatedly by the inverse Jacobian times what the output still misses. The Jacobian barely changes nearby, so each correction at least halves the gap, closing on exactly one input: the contraction principle of [fixed-point-iteration-and-the-contraction-principle](../03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md).
+To reach an output near $G(x_0)$, start at $x_0$ and correct repeatedly by the inverse Jacobian times what the output still misses. The Jacobian barely changes nearby, so each correction at least halves the gap, closing on exactly one input: the contraction principle of [Fixed points](../03-What%20Derivatives%20Tell%20You/07-fixed-point-iteration-and-the-contraction-principle.md).
 
 <details>
 <summary>Detailed proof</summary>
@@ -137,7 +117,7 @@ The second road solves the law for V by halving an interval, before and after a 
 
 Carbon dioxide follows the van der Waals law, (p + an^2/V^2)(V − nb) = nRT, a cubic in V. At 100 kPa and 300 K the halving search gives 24.838374 L. There ∂F/∂V = p − an^2/V^2 + 2abn^3/V^3 = 99.412023, so ∂V/∂T = nR/99.412023 = 0.083632 L per kelvin. The solver's quotient agrees to six places.
 
-The one-variable version, a curve in the plane, is [implicit-and-inverse-differentiation](../02-Derivatives/06-implicit-and-inverse-differentiation.md).
+The one-variable version, a curve in the plane, is [Implicit and inverse differentiation](../02-Derivatives/06-implicit-and-inverse-differentiation.md).
 
 ---
 
@@ -387,7 +367,7 @@ The two outputs match line for line.
 
 - **Chemical engineering.** Equations of state like van der Waals do not solve neatly for volume; expansion rates come from this card's formula.
 - **Robot arms.** Joint angles in, hand position out; working backwards is the inverse theorem, and a zero Jacobian determinant is a singular pose.
-- **Constrained optimisation.** The implicit theorem makes a surface given by one equation locally a graph, which is what [lagrange-multipliers](08-lagrange-multipliers.md) relies on.
+- **Constrained optimisation.** The implicit theorem makes a surface given by one equation locally a graph, which is what [Lagrange multipliers](08-lagrange-multipliers.md) relies on.
 
 > **Say it back**
 > An equation defines one quantity as a smooth function of the rest near a known state, if its rate in that unknown is not zero. The unknown's rates are minus the other rates divided by that one: for one mole at 100 kPa and 300 K, 0.083140 L per kelvin and −0.249420 L per kPa. The implicit theorem is the inverse theorem applied to a map that keeps the free variables and records the equation. Where the rate is zero, as at carbon dioxide's critical point, it fails.
@@ -396,15 +376,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [multivariable-chain-rule-and-jacobians](04-multivariable-chain-rule-and-jacobians.md): the Jacobian, and the chain rule that turns F = 0 into the rate formula.
-- [inverse-matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md): when a square matrix can be undone, and the 2 by 2 inverse of Step 1.
+- [Chain rule in several variables](04-multivariable-chain-rule-and-jacobians.md): the Jacobian, and the chain rule that turns F = 0 into the rate formula.
+- [The inverse matrix](../../03-Algebra/05-Solving%20Systems/03-inverse-matrix.md): when a square matrix can be undone, and the 2 by 2 inverse of Step 1.
 
 ## Where this goes next
 
-- lagrange-multipliers-revisited: constraints as local graphs, regularity made precise.
-- diffeomorphisms-immersions-and-embeddings: an invertible Jacobian as a local change of coordinates.
-- submanifolds-and-the-regular-value-theorem: the solutions of F = 0 forming a smooth surface.
-- jacobian-conjecture: whether a polynomial map with constant nonzero Jacobian determinant has a global polynomial inverse, still open.
+- Lagrange multipliers, proved: constraints as local graphs, regularity made precise.
+- Diffeomorphism, immersion, submersion: an invertible Jacobian as a local change of coordinates.
+- Regular value theorem: the solutions of F = 0 forming a smooth surface.
+- The Jacobian conjecture: whether a polynomial map with constant nonzero Jacobian determinant has a global polynomial inverse, still open.
 
 ---
 

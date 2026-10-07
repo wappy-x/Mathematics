@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX vanilla options - Garman-Kohlhagen and the desk conventions
-topic: Which strike an ATM quote names
-item: Three meanings of at-the-money
-kind: convention
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/04-fx-delta-conventions|fx-delta-conventions]]"
-next:
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/06-fx-strike-from-delta|fx-strike-from-delta]]"
-tags: [mathematics, financial mathematics, at-the-money-conventions]
----
-
 # Three meanings of at-the-money: spot, forward, and the delta-neutral straddle the FX market actually uses
 
-Financial mathematics → FX vanilla options - Garman-Kohlhagen and the desk conventions → Which strike an ATM quote names → Three meanings of at-the-money
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../../../SYLLABUS.md#w12-s21) → Three meanings of at-the-money
 
 ---
 
@@ -76,7 +60,7 @@ $$K_{\text{spot}} = S, \qquad K_{\text{fwd}} = F = S\,e^{(r_d - r_f)T}, \qquad K
 | $\Delta$ | spot delta: euros to hold against one euro of option, $e^{-r_f T}N(d_1)$ for a call | +0.4852 call, −0.4852 put | — |
 | $C$, $P$ | call and put premiums, dollars per euro | 0.040054 and 0.045404 at DNS | — |
 
-The helper formulas are the Garman-Kohlhagen ones from [garman-kohlhagen](01-garman-kohlhagen.md):
+The helper formulas are the Garman-Kohlhagen ones from [Garman-Kohlhagen](01-garman-kohlhagen.md):
 
 $$d_1 = \frac{\ln(F/K) + \tfrac12\sigma^2 T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
 
@@ -110,7 +94,7 @@ At $K = F$ the right side is zero, so the call and the put cost the same: 0.0425
 
 ### Step 2: the straddle's net delta, and where it vanishes
 
-From [fx-delta-conventions](04-fx-delta-conventions.md), the call's spot delta is $e^{-r_f T}N(d_1)$ and the put's is $-e^{-r_f T}N(-d_1)$. The bell curve is symmetric, so $N(-d_1) = 1 - N(d_1)$. Add them:
+From [Four deltas for one option](04-fx-delta-conventions.md), the call's spot delta is $e^{-r_f T}N(d_1)$ and the put's is $-e^{-r_f T}N(-d_1)$. The bell curve is symmetric, so $N(-d_1) = 1 - N(d_1)$. Add them:
 
 $$\Delta_{\text{straddle}} = e^{-r_f T}\,\big(2N(d_1) - 1\big).$$
 
@@ -166,7 +150,7 @@ The screen says "1Y EURUSD ATM 10.00". The convention turns that number into a s
 
 The code checks this on an invented smile whose vol at the forward is 10 percent. Solving by repeated substitution gives an ATM strike of 1.127739, where the smile's vol is 9.9043 percent; the one-line formula at 9.9043 percent returns 1.127739. Reading the vol at the forward instead, 10 percent, returns 1.127847: the right formula at the wrong vol, a different strike.
 
-A second road to every strike on this card is brute force: price the straddle by averaging its payoff over the bell curve, measure its delta by nudging spot, and search for the strike where the nudged delta vanishes. The code does exactly this. How a strike follows from any other delta, 25-delta calls and puts for instance, is the next card, [fx-strike-from-delta](06-fx-strike-from-delta.md).
+A second road to every strike on this card is brute force: price the straddle by averaging its payoff over the bell curve, measure its delta by nudging spot, and search for the strike where the nudged delta vanishes. The code does exactly this. How a strike follows from any other delta, 25-delta calls and puts for instance, is the next card, [Strike from delta](06-fx-strike-from-delta.md).
 
 ---
 
@@ -621,10 +605,10 @@ The two outputs are identical line for line.
 ## Where you meet it in real life
 
 - **The FX volatility screen.** Every tenor row shows ATM, 25-delta risk reversal and 25-delta butterfly. The ATM column is, for liquid pairs, the vol at the DNS strike of this card.
-- **Straddles as the vega trade.** Desks buy and sell ATM straddles to trade volatility itself. Struck at DNS, the straddle has no first-order exposure to the rate, so its profit and loss is mostly the vol: vega, the price's sensitivity to volatility, from [garman-kohlhagen-greeks](03-garman-kohlhagen-greeks.md).
-- **Premium currency by pair.** Which currency pays, and so which delta the desk uses, is the subject of [premium-currency-and-foreign-domestic-symmetry](02-premium-currency-and-foreign-domestic-symmetry.md).
+- **Straddles as the vega trade.** Desks buy and sell ATM straddles to trade volatility itself. Struck at DNS, the straddle has no first-order exposure to the rate, so its profit and loss is mostly the vol: vega, the price's sensitivity to volatility, from [The Greeks of a currency option](03-garman-kohlhagen-greeks.md).
+- **Premium currency by pair.** Which currency pays, and so which delta the desk uses, is the subject of [One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md).
 - **Building a smile from three quotes.** Vanna-volga and other smile builders take the ATM strike as their anchor point; getting it wrong shifts every interpolated vol.
-- **Backing out the vol.** A traded ATM straddle price is turned into a vol by running the pricing formula backwards at the DNS strike: [fx-implied-volatility](07-fx-implied-volatility.md).
+- **Backing out the vol.** A traded ATM straddle price is turned into a vol by running the pricing formula backwards at the DNS strike: [Implied vol for a currency option](07-fx-implied-volatility.md).
 
 > **Say it back**
 > At-the-money is a rule for choosing a strike, not a single number. Spot ATM strikes at today's rate, forward ATM at the forward, where call and put cost the same. The currency market's rule is the delta-neutral straddle: the strike where the call's and the put's deltas cancel, $F e^{\sigma^2 T/2}$, or $F e^{-\sigma^2 T/2}$ when the premium is paid in the foreign currency. For EURUSD at 1.1000 with a 10 percent vol, that is 1.127847, with deltas of +0.4852 and −0.4852. The quoted ATM vol is the vol at that strike, which the formula turns into the strike in one line.
@@ -633,11 +617,11 @@ The two outputs are identical line for line.
 
 ## What this builds on
 
-- [fx-delta-conventions](04-fx-delta-conventions.md): the four deltas of one currency option, spot, forward and their premium-adjusted versions. Each ATM rule on this card is a zero of one of them.
+- [Four deltas for one option](04-fx-delta-conventions.md): the four deltas of one currency option, spot, forward and their premium-adjusted versions. Each ATM rule on this card is a zero of one of them.
 
 ## Where this goes next
 
-- [fx-strike-from-delta](06-fx-strike-from-delta.md): the ATM strike is the zero of a straddle's delta; that card turns any quoted delta, such as 25, into a strike under each convention.
+- [Strike from delta](06-fx-strike-from-delta.md): the ATM strike is the zero of a straddle's delta; that card turns any quoted delta, such as 25, into a strike under each convention.
 
 This card fixes where the middle of the smile sits; which strikes the 25-delta wings name, and whether a premium-adjusted delta has one strike or two, is the question it leaves open.
 

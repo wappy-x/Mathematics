@@ -1,30 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Rate Equations
-topic: Rate laws and starting values
-item: A differential equation
-kind: definition
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/01-the-derivative|the-derivative]]"
-  - "[[Cards/06-Calculus and analysis/02-Derivatives/05-derivatives-of-exp-and-log|derivatives-of-exp-and-log]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/02-slope-fields-and-the-phase-line|slope-fields-and-the-phase-line]]"
-  - "[[Cards/08-Differential equations and dynamics/01-Rate Equations/03-separable-equations|separable-equations]]"
-  - "[[Cards/08-Differential equations and dynamics/02-Existence, Uniqueness and Sensitivity/01-picard-iteration|picard-iteration]]"
-  - "[[Cards/08-Differential equations and dynamics/03-Oscillators - Second-Order Linear Equations/01-superposition-and-the-shape-of-linear-solutions|superposition-and-the-shape-of-linear-solutions]]"
-  - "[[Cards/08-Differential equations and dynamics/05-Numerical Evolution/01-eulers-method|eulers-method]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/04-stochastic-differential-equations|stochastic-differential-equations]]"
-  - "[[Cards/13-Engineering mathematics/01-Units and Modelling/03-scaling-and-nondimensionalisation|scaling-and-nondimensionalisation]]"
-  - "[[Cards/13-Engineering mathematics/07-Mechanics and Structures/01-newtons-laws-work-and-energy|newtons-laws-work-and-energy]]"
-tags: [mathematics, differential equations and dynamics, what-a-differential-equation-says]
----
-
 # A differential equation: a rule for the rate, and the starting value that picks one curve
 
-Differential equations and dynamics → Rate Equations → Rate laws and starting values → A differential equation
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Rate Equations](../../../SYLLABUS.md#w08-s01) → A differential equation
 
 ---
 
@@ -94,7 +70,7 @@ The **order** is the highest rate that appears: the coffee's rule uses only the 
 The definition always applies. The two facts proved below for the coffee, a family holding every solution and one curve per starting value, hold for other rules only under conditions.
 
 - **The rule is solved for the rate.** A rule that only fixes the square of the rate allows two slopes, so two curves leave each point.
-- **The rule changes steadily with the unknown.** The cooling rule does. A leaking bucket with rate $h' = -\sqrt{h}$ does not near empty, and there an empty bucket at 4 s fits two histories. The condition that restores uniqueness is proved on [picard-iteration](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/01-picard-iteration.md).
+- **The rule changes steadily with the unknown.** The cooling rule does. A leaking bucket with rate $h' = -\sqrt{h}$ does not near empty, and there an empty bucket at 4 s fits two histories. The condition that restores uniqueness is proved on [Picard iteration](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/01-picard-iteration.md).
 - **The solution lives long enough.** A rule growing faster than the unknown can send it to infinity in finite time. $y' = y^2$ from $y(0) = 1$ gives $y = 1/(1 - t)$, which ends at $t = 1$.
 - **For the coffee, the model fits.** Newton's law assumes a steady room and a cup at one temperature throughout; a draught or a lid changes the constant.
 
@@ -131,7 +107,7 @@ At the pour, $e^{0} = 1$, so the family gives $T(0) = 20 + C$. The cup reads 80,
 
 A first-order rule fixes the slope once the value is known, so one starting number fixes the curve. The shock absorber's second-order rule fixes the acceleration once position and speed are known; its family carries two free constants, so it needs two starting values.
 
-A second road needs no formula: from 80 °C, take a small time step along the slope the rule gives, and repeat. This is Euler's rule, given its own card at [eulers-method](../05-Numerical%20Evolution/01-eulers-method.md). The code shows it closing in on the formula as the step shrinks.
+A second road needs no formula: from 80 °C, take a small time step along the slope the rule gives, and repeat. This is Euler's rule, given its own card at [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md). The code shows it closing in on the formula as the step shrinks.
 
 ---
 
@@ -369,9 +345,9 @@ ALL CHECKS PASS
 
 ## Where you meet it in real life
 
-- **Mechanics.** Newton's second law is a second-order differential equation: force sets the acceleration, and position and speed at the start pick the path (newtons-laws-work-and-energy).
-- **Medicine and chemistry.** A drug cleared from the blood at a rate proportional to the amount present obeys the same first-order rule; linked compartments are [mixing-tanks-and-compartments](06-mixing-tanks-and-compartments.md).
-- **Weather and engineering software.** Most rules have no formula for their family, so programs step them forward as road two does ([eulers-method](../05-Numerical%20Evolution/01-eulers-method.md)).
+- **Mechanics.** Newton's second law is a second-order differential equation: force sets the acceleration, and position and speed at the start pick the path (Newton's laws).
+- **Medicine and chemistry.** A drug cleared from the blood at a rate proportional to the amount present obeys the same first-order rule; linked compartments are [Mixing tanks](06-mixing-tanks-and-compartments.md).
+- **Weather and engineering software.** Most rules have no formula for their family, so programs step them forward as road two does ([Euler's method](../05-Numerical%20Evolution/01-eulers-method.md)).
 
 > **Say it back**
 > A differential equation gives an unknown's rate at every moment. A solution is a curve whose slope matches the rule everywhere, checked by substitution. The rule alone allows a family, such as 20 + Ce^(−0.1t) for the coffee. A starting value picks one member: 80 °C forces C = 60, and the cup reaches 50 °C after 6.93 minutes. The order, the highest rate present, says how many starting values that takes.
@@ -380,19 +356,19 @@ ALL CHECKS PASS
 
 ## What this builds on
 
-- [the-derivative](../../06-Calculus%20and%20analysis/02-Derivatives/01-the-derivative.md): the slope of a curve as an instantaneous rate, which the rule prescribes.
-- [derivatives-of-exp-and-log](../../06-Calculus%20and%20analysis/02-Derivatives/05-derivatives-of-exp-and-log.md): the slope of $e^{-0.1t}$, used in the substitution, and ln 2 for the crossing time.
+- [The derivative](../../06-Calculus%20and%20analysis/02-Derivatives/01-the-derivative.md): the slope of a curve as an instantaneous rate, which the rule prescribes.
+- [Derivatives of exp and log](../../06-Calculus%20and%20analysis/02-Derivatives/05-derivatives-of-exp-and-log.md): the slope of $e^{-0.1t}$, used in the substitution, and ln 2 for the crossing time.
 
 ## Where this goes next
 
-- [slope-fields-and-the-phase-line](02-slope-fields-and-the-phase-line.md): the rule drawn as a slope at every point, before any solving.
-- [separable-equations](03-separable-equations.md): finding the family instead of guessing it.
-- [picard-iteration](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/01-picard-iteration.md): when one starting value picks exactly one curve, and why the bucket fails.
-- [superposition-and-the-shape-of-linear-solutions](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/01-superposition-and-the-shape-of-linear-solutions.md): second-order families with two free constants.
-- [eulers-method](../05-Numerical%20Evolution/01-eulers-method.md): road two made precise, with its error.
-- [stochastic-differential-equations](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/04-stochastic-differential-equations.md): the same rules with random noise added.
-- [scaling-and-nondimensionalisation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/03-scaling-and-nondimensionalisation.md): rescaling time and temperature so the constant disappears.
-- newtons-laws-work-and-energy: the second-order equation of motion.
+- [Slope fields and the phase line](02-slope-fields-and-the-phase-line.md): the rule drawn as a slope at every point, before any solving.
+- [Separable equations](03-separable-equations.md): finding the family instead of guessing it.
+- [Picard iteration](../02-Existence%2C%20Uniqueness%20and%20Sensitivity/01-picard-iteration.md): when one starting value picks exactly one curve, and why the bucket fails.
+- [Superposition](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/01-superposition-and-the-shape-of-linear-solutions.md): second-order families with two free constants.
+- [Euler's method](../05-Numerical%20Evolution/01-eulers-method.md): road two made precise, with its error.
+- [Stochastic differential equations](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/04-stochastic-differential-equations.md): the same rules with random noise added.
+- [Nondimensionalisation](../../13-Engineering%20mathematics/01-Units%20and%20Modelling/03-scaling-and-nondimensionalisation.md): rescaling time and temperature so the constant disappears.
+- Newton's laws: the second-order equation of motion.
 
 ---
 

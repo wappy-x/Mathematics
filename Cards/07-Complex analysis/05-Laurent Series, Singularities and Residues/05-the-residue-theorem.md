@@ -1,28 +1,6 @@
----
-type: card
-wing: 07-Complex analysis
-shelf: Laurent Series, Singularities and Residues
-topic: Adding up the poles inside
-item: The residue theorem
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/07-Complex analysis/05-Laurent Series, Singularities and Residues/04-residues|residues]]"
-  - "[[Cards/07-Complex analysis/03-Contour Integrals and Cauchy's Theorem/04-deforming-contours-and-winding-numbers|deforming-contours-and-winding-numbers]]"
-next:
-  - "[[Cards/07-Complex analysis/06-Real Integrals and Counting Zeros/01-semicircle-contours|semicircle-contours]]"
-  - "[[Cards/07-Complex analysis/06-Real Integrals and Counting Zeros/02-trigonometric-integrals-on-the-unit-circle|trigonometric-integrals-on-the-unit-circle]]"
-  - "[[Cards/07-Complex analysis/06-Real Integrals and Counting Zeros/05-keyhole-contours|keyhole-contours]]"
-  - "[[Cards/07-Complex analysis/06-Real Integrals and Counting Zeros/06-the-argument-principle|the-argument-principle]]"
-  - "[[Cards/07-Complex analysis/08-Transforms in Outline/07-inverse-laplace-by-residues|inverse-laplace-by-residues]]"
-  - "[[Cards/21-Algebraic and analytic number theory/02-The Zeta Function and the Prime Number Theorem/07-the-explicit-formula|the-explicit-formula]]"
-tags: [mathematics, complex analysis, the-residue-theorem]
----
-
 # The residue theorem: a loop integral is 2 pi i times the sum of the residues inside
 
-Complex analysis → Laurent Series, Singularities and Residues → Adding up the poles inside → The residue theorem
+[Syllabus](../../../SYLLABUS.md) → [Complex analysis](../../../SYLLABUS.md#w07) → [Laurent Series, Singularities and Residues](../../../SYLLABUS.md#w07-s05) → The residue theorem
 
 ---
 
@@ -30,9 +8,9 @@ Complex analysis → Laurent Series, Singularities and Residues → Adding up th
 
 Take f(z) = 1/(z^2 + 1). It is finite everywhere in the plane except at i and −i, where z^2 + 1 is zero. Think of those two points as toll booths on a free road.
 
-Walk once anticlockwise round the circle of radius 1 centred at i, adding f(z) times each small step dz. That sum is the loop integral ([deforming-contours-and-winding-numbers](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md)). At 64 points it comes to 3.141593: π to six decimals. Round the circle of radius 3 centred at 0, enclosing both booths, the total is 0. Round radius 1/2, enclosing neither, it is 0 again.
+Walk once anticlockwise round the circle of radius 1 centred at i, adding f(z) times each small step dz. That sum is the loop integral ([Deforming a loop](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md)). At 64 points it comes to 3.141593: π to six decimals. Round the circle of radius 3 centred at 0, enclosing both booths, the total is 0. Round radius 1/2, enclosing neither, it is 0 again.
 
-Each booth inside charges a fixed toll; booths outside charge nothing. From here on the booths are **poles**: points where a function blows up like one over a power of the distance. The toll at a pole is 2πi times a single number, the pole's **residue** ([residues](04-residues.md)). The pole at i has residue −i/2, so its toll is 2πi × (−i/2) = π. The pole at −i has residue i/2 and toll −π. Round both, the tolls cancel.
+Each booth inside charges a fixed toll; booths outside charge nothing. From here on the booths are **poles**: points where a function blows up like one over a power of the distance. The toll at a pole is 2πi times a single number, the pole's **residue** ([Residues](04-residues.md)). The pole at i has residue −i/2, so its toll is 2πi × (−i/2) = π. The pole at −i has residue i/2 and toll −π. Round both, the tolls cancel.
 
 **A loop integral of a function that is smooth except at a few isolated points depends only on which of those points the loop encloses: it equals 2πi times the sum of their residues.**
 
@@ -48,7 +26,7 @@ To scale: 34 units per 1, with 0 at (180, 125), i at (180, 91) and −i at (180,
 
 ## The formula
 
-Reminder: a loop is written $\gamma$ (gamma), the integral round it with a ringed integral sign, and the residue at a point a, $\operatorname{Res}(f, a)$, is the coefficient of 1/(z − a) in the Laurent series of f round a ([laurent-series](01-laurent-series.md)).
+Reminder: a loop is written $\gamma$ (gamma), the integral round it with a ringed integral sign, and the residue at a point a, $\operatorname{Res}(f, a)$, is the coefficient of 1/(z − a) in the Laurent series of f round a ([Laurent series](01-laurent-series.md)).
 
 $$\oint_\gamma f(z)\,dz = 2\pi i \sum_{k=1}^{m} \operatorname{Res}(f, a_k)$$
 
@@ -83,7 +61,7 @@ $$\oint_\gamma f(z)\,dz = 2\pi i \sum_{k=1}^{m} n(\gamma, a_k)\,\operatorname{Re
 
 ### Step 0: away from the poles, a loop can be moved freely
 
-Sliding a loop across a region where f is holomorphic leaves its integral unchanged, as proved on [deforming-contours-and-winding-numbers](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md). So the loop can shrink until only tiny circles remain, one round each pole inside.
+Sliding a loop across a region where f is holomorphic leaves its integral unchanged, as proved on [Deforming a loop](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md). So the loop can shrink until only tiny circles remain, one round each pole inside.
 
 ### Step 1: shrink the loop onto small circles
 
@@ -116,7 +94,7 @@ Let f be holomorphic on an open set containing the loop $\gamma$ and its inside,
 
 </details>
 
-A second road, for rational functions: partial fractions ([rational-functions-and-partial-fractions](03-rational-functions-and-partial-fractions.md)). Here 1/(z^2 + 1) = (1/(2i)) × (1/(z − i) − 1/(z + i)), and each 1/(z − a) round a loop gives 2πi times the winding number round a.
+A second road, for rational functions: partial fractions ([Rational functions](03-rational-functions-and-partial-fractions.md)). Here 1/(z^2 + 1) = (1/(2i)) × (1/(z − i) − 1/(z + i)), and each 1/(z − a) round a loop gives 2πi times the winding number round a.
 
 ---
 
@@ -361,11 +339,11 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Integrals along the real line.** The integral of 1/(1 + x^2) over the whole real line is π, the toll at i, once a large half circle closes the line into a loop: [semicircle-contours](../06-Real%20Integrals%20and%20Counting%20Zeros/01-semicircle-contours.md).
-- **Integrals of sines and cosines over a full turn.** z = e^(iθ) makes them loops round |z| = 1: [trigonometric-integrals-on-the-unit-circle](../06-Real%20Integrals%20and%20Counting%20Zeros/02-trigonometric-integrals-on-the-unit-circle.md).
-- **Control and signal engineering.** A system's response over time is a residue sum over its poles: [inverse-laplace-by-residues](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md).
-- **Counting roots.** The residues of f′/f count the zeros of f inside a loop: [the-argument-principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md).
-- **The primes.** Riemann's prime-counting formula is a residue sum over the zeros of zeta: the-explicit-formula.
+- **Integrals along the real line.** The integral of 1/(1 + x^2) over the whole real line is π, the toll at i, once a large half circle closes the line into a loop: [The semicircle contour](../06-Real%20Integrals%20and%20Counting%20Zeros/01-semicircle-contours.md).
+- **Integrals of sines and cosines over a full turn.** z = e^(iθ) makes them loops round |z| = 1: [Integrals round a full turn](../06-Real%20Integrals%20and%20Counting%20Zeros/02-trigonometric-integrals-on-the-unit-circle.md).
+- **Control and signal engineering.** A system's response over time is a residue sum over its poles: [Inverting a Laplace transform](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md).
+- **Counting roots.** The residues of f′/f count the zeros of f inside a loop: [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md).
+- **The primes.** Riemann's prime-counting formula is a residue sum over the zeros of zeta: The explicit formula.
 
 > **Say it back**
 > A loop integral of a function holomorphic except at isolated points depends only on which points the loop surrounds. Shrink the loop onto small circles round them. On each, only the 1/(z − a) term survives, giving 2πi times the residue. Add them, weighted by winding number. For 1/(z^2 + 1), a loop round i pays π, round −i pays −π, round both or neither pays 0.
@@ -374,17 +352,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [residues](04-residues.md): what a residue is, and how to compute one at a simple pole.
-- [deforming-contours-and-winding-numbers](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md): moving a loop without changing its integral, and the winding number that weights each residue.
+- [Residues](04-residues.md): what a residue is, and how to compute one at a simple pole.
+- [Deforming a loop](../03-Contour%20Integrals%20and%20Cauchy%27s%20Theorem/04-deforming-contours-and-winding-numbers.md): moving a loop without changing its integral, and the winding number that weights each residue.
 
 ## Where this goes next
 
-- [semicircle-contours](../06-Real%20Integrals%20and%20Counting%20Zeros/01-semicircle-contours.md): real integrals closed by a half circle.
-- [trigonometric-integrals-on-the-unit-circle](../06-Real%20Integrals%20and%20Counting%20Zeros/02-trigonometric-integrals-on-the-unit-circle.md): trigonometric integrals as loops.
-- [keyhole-contours](../06-Real%20Integrals%20and%20Counting%20Zeros/05-keyhole-contours.md): loops dodging a branch cut.
-- [the-argument-principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): the residues of f′/f count zeros.
-- [inverse-laplace-by-residues](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md): signals as sums over poles.
-- the-explicit-formula: primes as a residue sum.
+- [The semicircle contour](../06-Real%20Integrals%20and%20Counting%20Zeros/01-semicircle-contours.md): real integrals closed by a half circle.
+- [Integrals round a full turn](../06-Real%20Integrals%20and%20Counting%20Zeros/02-trigonometric-integrals-on-the-unit-circle.md): trigonometric integrals as loops.
+- [The keyhole contour](../06-Real%20Integrals%20and%20Counting%20Zeros/05-keyhole-contours.md): loops dodging a branch cut.
+- [The argument principle](../06-Real%20Integrals%20and%20Counting%20Zeros/06-the-argument-principle.md): the residues of f′/f count zeros.
+- [Inverting a Laplace transform](../08-Transforms%20in%20Outline/07-inverse-laplace-by-residues.md): signals as sums over poles.
+- The explicit formula: primes as a residue sum.
 
 ---
 

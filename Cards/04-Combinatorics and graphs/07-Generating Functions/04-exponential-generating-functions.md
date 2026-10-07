@@ -1,25 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Generating Functions
-topic: Labelled counting
-item: Exponential generating functions
-kind: definition
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/07-Generating Functions/01-ordinary-generating-functions|ordinary-generating-functions]]"
-  - "[[Cards/04-Combinatorics and graphs/02-Repeats, Groups and Double Counting/01-multiset-permutations|multiset-permutations]]"
-next: []
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - exponential-generating-functions
----
-
 # Exponential generating functions: divide each count by n! and the series multiplies labelled objects correctly
 
-Combinatorics and graphs → Generating Functions → Labelled counting → Exponential generating functions
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Generating Functions](../../../SYLLABUS.md#w04-s07) → Exponential generating functions
 
 ---
 
@@ -29,9 +10,9 @@ A Scrabble rack holds five tiles: two A's, two B's and one C. Lay four of them i
 
 Five different letters would give 5 × 4 × 3 × 2 = 120 rows. These are not five different letters. Each word comes from four of those rows — two ways to supply its A's, two its B's — so 120 rows are 30 words.
 
-All five tiles down is the easy case: 5! / (2! × 2!) = 30, one division per pair ([multiset-permutations](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md)). Four out of five is not one division, because which four to lay down is itself a choice: AABB, AABC or ABBC, giving 6, 12 and 12 words. Three cases here, thousands on a real rack.
+All five tiles down is the easy case: 5! / (2! × 2!) = 30, one division per pair ([Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md)). Four out of five is not one division, because which four to lay down is itself a choice: AABB, AABC or ABBC, giving 6, 12 and 12 words. Three cases here, thousands on a real rack.
 
-The shelf's earlier cards hang a count on a power of a placeholder, so one polynomial holds every size at once ([ordinary-generating-functions](01-ordinary-generating-functions.md)). Here that machine answers 3 at the fourth power: it counts which letters to take, not their order. One change fixes that.
+The shelf's earlier cards hang a count on a power of a placeholder, so one polynomial holds every size at once ([Generating functions](01-ordinary-generating-functions.md)). Here that machine answers 3 at the fourth power: it counts which letters to take, not their order. One change fixes that.
 
 **Divide each count by the factorial of its size and hang it on that power; multiplying two such series shares the places out between the parts, so the factorial of the row length times the coefficient counts the arrangements.**
 
@@ -53,7 +34,7 @@ Each factor is one letter's count list, hung on the factorials.
 
 ## The formula
 
-Three reminders. The factorial $n!$ is $n$ × ($n$ − 1) × … × 1, the orderings of $n$ distinct things, with 0! = 1. The binomial coefficient $C(n, k)$, "n choose k", counts ways of picking k of n places. A coefficient is the number in front of a power once a product is multiplied out ([ordinary-generating-functions](01-ordinary-generating-functions.md)).
+Three reminders. The factorial $n!$ is $n$ × ($n$ − 1) × … × 1, the orderings of $n$ distinct things, with 0! = 1. The binomial coefficient $C(n, k)$, "n choose k", counts ways of picking k of n places. A coefficient is the number in front of a power once a product is multiplied out ([Generating functions](01-ordinary-generating-functions.md)).
 
 Count what one part of the row — one letter, say — can do on 0 places, 1 place, 2 places, and so on. Its **exponential generating function** $A(x)$ hangs each count on a power of $x$ over a factorial:
 
@@ -133,9 +114,9 @@ Nothing else contributes, and 24 + 6 = 30.
 
 ### Step 4: the whole rack in one product
 
-Three letters, three factors, one multiplication. The fourth power carries 5/4 and 4! × 5/4 = 30; the fifth carries 1/4 and 5! × 1/4 = 30, the whole rack down, where the division rule agrees. With m factors Step 2's algebra leaves a multinomial coefficient in front instead of a binomial ([multiset-permutations](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md)); every letter's count being 1, the product counts the words.
+Three letters, three factors, one multiplication. The fourth power carries 5/4 and 4! × 5/4 = 30; the fifth carries 1/4 and 5! × 1/4 = 30, the whole rack down, where the division rule agrees. With m factors Step 2's algebra leaves a multinomial coefficient in front instead of a binomial ([Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md)); every letter's count being 1, the product counts the words.
 
-A second road skips series: split by which letters are taken, count each case by the division rule of [multiset-permutations](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md), add — 6 + 12 + 12 = 30. Multiplying does that split for free, and cases grow fast while a polynomial multiply does not.
+A second road skips series: split by which letters are taken, count each case by the division rule of [Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md), add — 6 + 12 + 12 = 30. Multiplying does that split for free, and cases grow fast while a polynomial multiply does not.
 
 ---
 
@@ -398,12 +379,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [ordinary-generating-functions](01-ordinary-generating-functions.md): the same peg with no factorial under it, counting selections — the 3 this card turns into 30.
-- [multiset-permutations](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md): the division giving 30 with all five tiles down, and the 6, 12 and 12 in the selections.
+- [Generating functions](01-ordinary-generating-functions.md): the same peg with no factorial under it, counting selections — the 3 this card turns into 30.
+- [Arranging with repeats](../02-Repeats%2C%20Groups%20and%20Double%20Counting/01-multiset-permutations.md): the division giving 30 with all five tiles down, and the 6, 12 and 12 in the selections.
 
 ## Where this goes next
 
-- [catalan-generating-function](05-catalan-generating-function.md): a series that never stops, handled by a closed form instead of a finite multiplication.
+- [The Catalan generating function](05-catalan-generating-function.md): a series that never stops, handled by a closed form instead of a finite multiplication.
 
 Every factor here stops, because a tile runs out. A part with no limit gives a series that never stops, and reading a count off one needs a closed form — the shelf's last card makes that move.
 

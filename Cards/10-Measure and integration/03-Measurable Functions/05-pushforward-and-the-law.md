@@ -1,40 +1,14 @@
----
-type: card
-wing: 10-Measure and integration
-shelf: Measurable Functions
-topic: Distributions from maps
-item: The law of a random variable
-kind: definition
-status: draft
-updated: 2026-10-07
-needs_first:
-  - "[[Cards/10-Measure and integration/03-Measurable Functions/04-random-variables-and-their-information|random-variables-and-their-information]]"
-  - "[[Cards/10-Measure and integration/02-Length Done Properly/06-lebesgue-stieltjes-measures|lebesgue-stieltjes-measures]]"
-  - "[[Cards/10-Measure and integration/01-Sets You Can Measure/06-pi-systems-and-uniqueness|pi-systems-and-uniqueness]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/01-densities-and-cdfs|densities-and-cdfs]]"
-  - "[[Cards/09-Probability and statistics/05-Transformations and Joint Laws/01-transforming-a-random-variable|transforming-a-random-variable]]"
-next:
-  - "[[Cards/10-Measure and integration/04-The Lebesgue Integral/06-expectation-as-an-integral|expectation-as-an-integral]]"
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/04-independence-as-a-product-measure|independence-as-a-product-measure]]"
-  - "[[Cards/10-Measure and integration/06-Product Measures and Fubini/07-infinite-sequences-and-kolmogorov-extension|infinite-sequences-and-kolmogorov-extension]]"
-  - "[[Cards/10-Measure and integration/10-The Limit Theorems, Proved/05-convergence-in-distribution|convergence-in-distribution]]"
-tags:
-  - mathematics
-  - measure and integration
-  - pushforward-and-the-law
----
-
 # The law of a random variable: push the probability forward through it, and the distribution on the line is the whole story
 
-Measure and integration → Measurable Functions → Distributions from maps → The law of a random variable
+[Syllabus](../../../SYLLABUS.md) → [Measure and integration](../../../SYLLABUS.md#w10) → [Measurable Functions](../../../SYLLABUS.md#w10-s03) → The law of a random variable
 
 ---
 
 ## General Overview
 
-A small insurance policy pays at most one claim a year. In three years out of ten nothing is claimed. Otherwise the claim is anywhere from $0 to $1,000, every amount equally likely. The card [lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md) wrote this down as a measure on the dollar line: 0.3 sitting on $0 exactly, the other 0.7 spread evenly from $0 to $1,000. It gives a claim above $200 and at most $500 the probability 0.21.
+A small insurance policy pays at most one claim a year. In three years out of ten nothing is claimed. Otherwise the claim is anywhere from $0 to $1,000, every amount equally likely. The card [Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md) wrote this down as a measure on the dollar line: 0.3 sitting on $0 exactly, the other 0.7 spread evenly from $0 to $1,000. It gives a claim above $200 and at most $500 the probability 0.21.
 
-A simulator builds the same claim another way. It draws one number u between 0 and 1, every value equally likely, and sends it through a rule. A draw at or below 0.3 pays $0. A draw above 0.3 pays (u − 0.3)/0.7 × $1,000. A draw of 0.44 pays $200; 0.65 pays $500; 0.9 pays $857.14. The rule is a random variable: a measurable map from draws to dollars ([random-variables-and-their-information](04-random-variables-and-their-information.md)).
+A simulator builds the same claim another way. It draws one number u between 0 and 1, every value equally likely, and sends it through a rule. A draw at or below 0.3 pays $0. A draw above 0.3 pays (u − 0.3)/0.7 × $1,000. A draw of 0.44 pays $200; 0.65 pays $500; 0.9 pays $857.14. The rule is a random variable: a measurable map from draws to dollars ([Random variables as measurable maps](04-random-variables-and-their-information.md)).
 
 What chance does the rule give to "above $200, at most $500"? Go back through the rule and collect every draw that lands there. They fill the stretch of draws from 0.44 to 0.65, of length 0.21. The probability on the draws has been carried through the rule onto the dollar line, and what arrives is the shelf 2 measure, set by set. The carried-over measure is the **pushforward** of the probability through the map, called from here on the **law** of the random variable.
 
@@ -54,7 +28,7 @@ The flat piece carries 0.3 of the draws onto a single point, $0. That point gets
 
 ## The formula
 
-Notation first, in words. A probability space $(\Omega, \mathcal{F}, P)$ is a set of outcomes, a sigma-algebra (the collection of sets we allow ourselves to measure) and a probability measure on it ([measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). Here $\Omega$ is the draws from 0 to 1, and $P$ is length, Lebesgue measure $\lambda$. The Borel sets $\mathcal{B}(\mathbb{R})$ are the sets of real numbers built from intervals by complements and countable unions. For a set $B$ of dollar amounts, $X^{-1}(B)$ is read "the preimage of B": every draw that the map sends into B. It is a set of draws and exists whether or not the map can be undone; the claim rule sends 0.3 of the draws to one point, so it has no inverse. $\mu_X$ is read "the law of X", and is also written $P \circ X^{-1}$, "P after the preimage".
+Notation first, in words. A probability space $(\Omega, \mathcal{F}, P)$ is a set of outcomes, a sigma-algebra (the collection of sets we allow ourselves to measure) and a probability measure on it ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)). Here $\Omega$ is the draws from 0 to 1, and $P$ is length, Lebesgue measure $\lambda$. The Borel sets $\mathcal{B}(\mathbb{R})$ are the sets of real numbers built from intervals by complements and countable unions. For a set $B$ of dollar amounts, $X^{-1}(B)$ is read "the preimage of B": every draw that the map sends into B. It is a set of draws and exists whether or not the map can be undone; the claim rule sends 0.3 of the draws to one point, so it has no inverse. $\mu_X$ is read "the law of X", and is also written $P \circ X^{-1}$, "P after the preimage".
 
 $$\mu_X(B) \;=\; P\big(X^{-1}(B)\big) \;=\; P\big(\{\,u \in \Omega : X(u) \in B\,\}\big), \qquad B \in \mathcal{B}(\mathbb{R})$$
 
@@ -106,12 +80,12 @@ Take two disjoint bands of dollars. No draw can land in both, so their preimages
 
 ### Step 1: the law is a probability measure
 
-Plain version. The law of the whole line is the probability of all draws, 1. The law of disjoint bands adds up, because the draws behind them are disjoint and P adds up. That is the definition of a probability measure ([measures](../01-Sets%20You%20Can%20Measure/04-measures.md)).
+Plain version. The law of the whole line is the probability of all draws, 1. The law of disjoint bands adds up, because the draws behind them are disjoint and P adds up. That is the definition of a probability measure ([Measures](../01-Sets%20You%20Can%20Measure/04-measures.md)).
 
 <details>
 <summary>Detailed proof: the law is a probability measure on the Borel sets</summary>
 
-Let $X$ be measurable from $(\Omega, \mathcal{F})$ to the line with its Borel sets: $X^{-1}(B)$ is in $\mathcal{F}$ for every Borel $B$ ([measurable-functions](01-measurable-functions.md)). So $\mu_X(B) = P(X^{-1}(B))$ is defined for every Borel $B$, and lies between 0 and 1 because $P$ does.
+Let $X$ be measurable from $(\Omega, \mathcal{F})$ to the line with its Borel sets: $X^{-1}(B)$ is in $\mathcal{F}$ for every Borel $B$ ([Measurable functions](01-measurable-functions.md)). So $\mu_X(B) = P(X^{-1}(B))$ is defined for every Borel $B$, and lies between 0 and 1 because $P$ does.
 
 Totals. $X^{-1}(\mathbb{R}) = \Omega$, since every draw has a real value; so $\mu_X(\mathbb{R}) = P(\Omega) = 1$. $X^{-1}(\emptyset) = \emptyset$, so the empty set gets 0.
 
@@ -131,7 +105,7 @@ A non-example. Keep the ten tickets but let the sigma-algebra be only: nothing, 
 
 ### Step 3: the distribution function falls out of the law
 
-Set B to the half-line of amounts at most t. The law then gives $F_X(t)$, the chance the claim is at most t. Because the law is a probability measure, this function never falls, is continuous from the right, and runs from 0 to 1 ([lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). For an interval, split the half-line at a:
+Set B to the half-line of amounts at most t. The law then gives $F_X(t)$, the chance the claim is at most t. Because the law is a probability measure, this function never falls, is continuous from the right, and runs from 0 to 1 ([Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md)). For an interval, split the half-line at a:
 
 $$\mu_X\big((a, b]\big) = F_X(b) - F_X(a).$$
 
@@ -145,7 +119,7 @@ A jump is a single value with probability of its own. At $0, 0.3 − 0 = 0.3: th
 
 ### Step 4: equal distribution functions mean equal laws
 
-Plain version. The half-lines "at most t" overlap in another half-line, so they form a pi-system (a family closed under overlap), and they generate the Borel sets. Two probability measures that agree on such a family agree on every set it generates ([pi-systems-and-uniqueness](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)). Two laws with the same distribution function agree on every half-line, so they agree everywhere.
+Plain version. The half-lines "at most t" overlap in another half-line, so they form a pi-system (a family closed under overlap), and they generate the Borel sets. Two probability measures that agree on such a family agree on every set it generates ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)). Two laws with the same distribution function agree on every half-line, so they agree everywhere.
 
 <details>
 <summary>Detailed proof: equal distribution functions give equal laws</summary>
@@ -154,9 +128,9 @@ Let $X$ and $Y$ be real random variables, possibly on different probability spac
 
 The family $\mathcal{P}$ of half-lines $(-\infty, t]$ is a pi-system: $(-\infty, s] \cap (-\infty, t] = (-\infty, \min(s, t)]$.
 
-It generates the Borel sets. An interval $(a, b]$ is $(-\infty, b]$ with $(-\infty, a]$ removed; an open interval $(a, b)$ is the union of $(a, b - 1/n]$ over whole numbers n; every open set of the line is a countable union of open intervals with rational ends; and the Borel sets are generated by the open sets ([generated-and-borel-sigma-algebras](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)). So $\sigma(\mathcal{P}) = \mathcal{B}(\mathbb{R})$.
+It generates the Borel sets. An interval $(a, b]$ is $(-\infty, b]$ with $(-\infty, a]$ removed; an open interval $(a, b)$ is the union of $(a, b - 1/n]$ over whole numbers n; every open set of the line is a countable union of open intervals with rational ends; and the Borel sets are generated by the open sets ([Generated sigma-algebras and Borel sets](../01-Sets%20You%20Can%20Measure/03-generated-and-borel-sigma-algebras.md)). So $\sigma(\mathcal{P}) = \mathcal{B}(\mathbb{R})$.
 
-The two laws agree on $\mathcal{P}$, because $\mu_X((-\infty, t]) = F_X(t) = F_Y(t) = \mu_Y((-\infty, t])$, and have the same total, 1. Dynkin's uniqueness theorem ([pi-systems-and-uniqueness](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)) gives $\mu_X(B) = \mu_Y(B)$ for every Borel $B$.
+The two laws agree on $\mathcal{P}$, because $\mu_X((-\infty, t]) = F_X(t) = F_Y(t) = \mu_Y((-\infty, t])$, and have the same total, 1. Dynkin's uniqueness theorem ([Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md)) gives $\mu_X(B) = \mu_Y(B)$ for every Borel $B$.
 
 The same argument with $\mu_F$ in place of $\mu_Y$ gives $\mu_X = \mu_F$. The measure $\mu_F$ has mass $F(b) - F(a)$ on each $(a, b]$ by construction, and continuity from below along the growing intervals $(-n, t]$ gives $\mu_F((-\infty, t]) = F(t) - \lim_{n} F(-n) = F(t)$. Letting t grow, continuity from below again gives $\mu_F(\mathbb{R}) = \lim_t F(t) = 1$, so $\mu_F$ has the total 1 that the uniqueness step needs.
 
@@ -193,7 +167,7 @@ If $u \le F(t)$, then $t$ is in the set, so its infimum $Q(u)$ is at most $t$.
 
 If $Q(u) \le t$: for every whole number n some amount x in the set lies below Q(u) + 1/n, and $F$ never falls, so $F(Q(u) + 1/n) \ge F(x) \ge u$. Continuity from the right lets n grow: $F(Q(u)) \ge u$. Then $F(t) \ge F(Q(u)) \ge u$.
 
-So $\{u : Q(u) \le t\}$ is the stretch of draws from 0 up to $F(t)$, clipped to $(0, 1)$. It is an interval, so $Q$ is measurable by the half-line test ([measurable-functions](01-measurable-functions.md)), and its length is $F(t)$. Hence $F_Q = F$, and Step 4 gives $\mu_Q = \mu_F$.
+So $\{u : Q(u) \le t\}$ is the stretch of draws from 0 up to $F(t)$, clipped to $(0, 1)$. It is an interval, so $Q$ is measurable by the half-line test ([Measurable functions](01-measurable-functions.md)), and its length is $F(t)$. Hence $F_Q = F$, and Step 4 gives $\mu_Q = \mu_F$.
 
 </details>
 
@@ -202,12 +176,12 @@ So $\{u : Q(u) \le t\}$ is the stretch of draws from 0 up to $F(t)$, clipped to 
 Shelf 2 sorts distribution functions by shape; each shape is a law. Push the same uniform draw through three maps:
 
 - **Discrete.** A flat fee: $0 if u ≤ 0.3, else $500. The law is two point masses, 0.3 at $0 and 0.7 at $500. The distribution function is a staircase: 0.3 from $0, 1 from $500.
-- **Continuous.** $1,000 × u. No single amount has probability of its own; the distribution function climbs without jumps, 0.25 at $250 and 0.5 at $500. Its law has a density ([densities-and-cdfs](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)): the chance of an interval is the area under a flat curve over it.
+- **Continuous.** $1,000 × u. No single amount has probability of its own; the distribution function climbs without jumps, 0.25 at $250 and 0.5 at $500. Its law has a density ([Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md)): the chance of an interval is the area under a flat curve over it.
 - **Mixed.** The claim. A point mass of 0.3 at $0, read off the jump, plus 0.7 spread evenly over the dollars. The distribution function jumps to 0.3 at $0, then climbs to 0.475 at $250 and 0.65 at $500.
 
-No density gives a single point probability 0.3, and no list of point masses gives intervals probability in proportion to length; the measure holds both. Not every law is one of the three: the Cantor function's law has no jumps and no density ([the-cantor-set](../02-Length%20Done%20Properly/07-the-cantor-set.md)).
+No density gives a single point probability 0.3, and no list of point masses gives intervals probability in proportion to length; the measure holds both. Not every law is one of the three: the Cantor function's law has no jumps and no density ([The Cantor set](../02-Length%20Done%20Properly/07-the-cantor-set.md)).
 
-The probability wing computes the law of a transformed variable by change of variables ([transforming-a-random-variable](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/01-transforming-a-random-variable.md)); that is this pushforward done twice, since the law of g(X) is the law of X pushed through g.
+The probability wing computes the law of a transformed variable by change of variables ([Transforming a variable](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/01-transforming-a-random-variable.md)); that is this pushforward done twice, since the law of g(X) is the law of X pushed through g.
 
 ---
 
@@ -618,7 +592,7 @@ The two outputs match line for line.
 
 - **Insurance pricing.** A premium depends on the claim's law, not on the model that generated it. Two loss models with the same distribution function give the same premium for any policy that pays a function of the claim.
 - **Simulation by inverse transform.** Random-number libraries turn a uniform draw into a draw from almost any law by the quantile map of Step 5, exactly as the claim rule does.
-- **Copulas.** Sklar's theorem splits a joint law into its one-variable laws and a copula, the part that says how the variables move together, using the same quantile construction ([copulas-and-sklars-theorem](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/07-copulas-and-sklars-theorem.md)).
+- **Copulas.** Sklar's theorem splits a joint law into its one-variable laws and a copula, the part that says how the variables move together, using the same quantile construction ([Copulas](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/07-copulas-and-sklars-theorem.md)).
 
 > **Say it back**
 > The law of a random variable gives each Borel set of values the probability of the draws that land in it. Preimages keep unions, complements and disjointness, so the law is a probability measure on the line. Its distribution function is its value on half-lines, and since half-lines form a pi-system that generates the Borel sets, equal distribution functions mean equal laws. Every distribution function is the law of its quantile map, and the claim rule is the quantile map of the shelf 2 claim. Equal laws do not make equal variables.
@@ -627,20 +601,20 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [random-variables-and-their-information](04-random-variables-and-their-information.md): a random variable as a measurable map, the thing pushed through.
-- [lebesgue-stieltjes-measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md): the claim's measure, built from its distribution function, and that function's properties.
-- [pi-systems-and-uniqueness](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md): agreement on half-lines forces agreement on every Borel set.
-- [densities-and-cdfs](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md): distribution functions and densities, without measure.
-- [transforming-a-random-variable](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/01-transforming-a-random-variable.md): the change-of-variables recipe this card puts on a measure footing.
+- [Random variables as measurable maps](04-random-variables-and-their-information.md): a random variable as a measurable map, the thing pushed through.
+- [Distribution functions and Lebesgue-Stieltjes measures](../02-Length%20Done%20Properly/06-lebesgue-stieltjes-measures.md): the claim's measure, built from its distribution function, and that function's properties.
+- [Pi-systems and Dynkin's theorem](../01-Sets%20You%20Can%20Measure/06-pi-systems-and-uniqueness.md): agreement on half-lines forces agreement on every Borel set.
+- [Densities](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/01-densities-and-cdfs.md): distribution functions and densities, without measure.
+- [Transforming a variable](../../09-Probability%20and%20statistics/05-Transformations%20and%20Joint%20Laws/01-transforming-a-random-variable.md): the change-of-variables recipe this card puts on a measure footing.
 
 ## Where this goes next
 
-- [expectation-as-an-integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md): the average claim as an integral against the law, the same for every variable with that law.
-- [independence-as-a-product-measure](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md): two variables pushed forward together onto the plane, and independence as that joint law being a product.
-- [infinite-sequences-and-kolmogorov-extension](../06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md): laws of a whole sequence of claims, one year after another.
-- [convergence-in-distribution](../10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md): laws converging while the variables may live on different spaces.
+- [Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md): the average claim as an integral against the law, the same for every variable with that law.
+- [Independence as a product](../06-Product%20Measures%20and%20Fubini/04-independence-as-a-product-measure.md): two variables pushed forward together onto the plane, and independence as that joint law being a product.
+- [Infinitely many coin tosses](../06-Product%20Measures%20and%20Fubini/07-infinite-sequences-and-kolmogorov-extension.md): laws of a whole sequence of claims, one year after another.
+- [Convergence in distribution](../10-The%20Limit%20Theorems%2C%20Proved/05-convergence-in-distribution.md): laws converging while the variables may live on different spaces.
 
-The law says how likely each set of amounts is, but not what the policy costs on average; that needs an integral against the law, built in [expectation-as-an-integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md).
+The law says how likely each set of amounts is, but not what the policy costs on average; that needs an integral against the law, built in [Expectation as an integral](../04-The%20Lebesgue%20Integral/06-expectation-as-an-integral.md).
 
 ---
 

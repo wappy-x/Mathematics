@@ -1,29 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Series Solutions and Boundary Problems
-topic: Notes a pinned string can play
-item: Eigenvalue problems
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/05-two-point-boundary-value-problems|two-point-boundary-value-problems]]"
-  - "[[Cards/03-Algebra/07-Eigenvalues and Symmetric Matrices/02-eigenvalues-and-eigenvectors|eigenvalues-and-eigenvectors]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/07-Series Solutions and Boundary Problems/09-sturm-liouville-and-orthogonality|sturm-liouville-and-orthogonality]]"
-  - "[[Cards/08-Differential equations and dynamics/09-Fourier Series/04-half-range-sine-and-cosine-series|half-range-sine-and-cosine-series]]"
-  - "[[Cards/13-Engineering mathematics/07-Mechanics and Structures/08-buckling-and-stability|buckling-and-stability]]"
-  - "[[Cards/13-Engineering mathematics/09-Quantum Mechanics in Outline/03-schrodinger-equation-and-the-particle-in-a-box|schrodinger-equation-and-the-particle-in-a-box]]"
-  - "[[Cards/18-Functional analysis/05-Unbounded Operators and Semigroups/02-self-adjoint-extensions-and-the-spectral-theorem|self-adjoint-extensions-and-the-spectral-theorem]]"
-  - "[[Cards/19-Partial differential equations/04-Laplace, Poisson and Potentials/08-helmholtz-and-eigenfunctions|helmholtz-and-eigenfunctions]]"
-  - "[[Cards/23-Differential geometry and Lie groups/05-Riemannian Geometry/08-volume-form-and-the-laplace-beltrami-operator|volume-form-and-the-laplace-beltrami-operator]]"
-tags: [mathematics, differential equations and dynamics, eigenvalues-and-eigenfunctions]
----
-
 # Eigenvalue problems: only special parameter values allow a nonzero solution, and those are the natural modes
 
-Differential equations and dynamics → Series Solutions and Boundary Problems → Notes a pinned string can play → Eigenvalue problems
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Series Solutions and Boundary Problems](../../../SYLLABUS.md#w08-s07) → Eigenvalue problems
 
 ---
 
@@ -75,7 +52,7 @@ $$\lambda_n = n^2\pi^2, \qquad y_n(x) = \sin(n\pi x), \qquad f_n = \frac{c\sqrt{
 ### When it holds
 
 - **Both ends pinned.** A far end free to slide has y'(1) = 0 instead, and the list becomes ((n − 1/2)π)^2: 55, 165 and 275 Hz.
-- **A uniform string.** A string wound heavier in one half moves the eigenvalues off n^2π^2; they still form a rising list ([sturm-liouville-and-orthogonality](09-sturm-liouville-and-orthogonality.md)).
+- **A uniform string.** A string wound heavier in one half moves the eigenvalues off n^2π^2; they still form a rising list ([Sturm-Liouville](09-sturm-liouville-and-orthogonality.md)).
 - **Small slopes.** y'' is the bending only while the slope is well under 1; a very hard pluck raises the tension and the pitch.
 
 ---
@@ -84,7 +61,7 @@ $$\lambda_n = n^2\pi^2, \qquad y_n(x) = \sin(n\pi x), \qquad f_n = \frac{c\sqrt{
 
 ### Step 0: the second pin is a demand on λ
 
-Every solution carries two free constants ([two-point-boundary-value-problems](05-two-point-boundary-value-problems.md)). The first pin fixes one. The other only scales the shape up or down, and scaling a nonzero height never makes it zero. So the second pin is a demand on λ: either λ is right, or the shape collapses to flat.
+Every solution carries two free constants ([Boundary value problems](05-two-point-boundary-value-problems.md)). The first pin fixes one. The other only scales the shape up or down, and scaling a nonzero height never makes it zero. So the second pin is a demand on λ: either λ is right, or the shape collapses to flat.
 
 ### Step 1: where the equation comes from
 
@@ -104,7 +81,7 @@ Shooting from the nut with slope 0.1, the far end lands 10.00 cm up for λ = 0 a
 
 ### Step 3: positive λ works only at n^2π^2
 
-For λ > 0 the solutions are A cos(√λ x) + B sin(√λ x), the oscillation of [the-characteristic-equation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md) with position in place of time. The nut gives A = 0. The bridge demands
+For λ > 0 the solutions are A cos(√λ x) + B sin(√λ x), the oscillation of [The characteristic equation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md) with position in place of time. The nut gives A = 0. The bridge demands
 
 B sin(√λ) = 0.
 
@@ -168,7 +145,7 @@ The string sounds the low A, the A above, and the E above that.
 
 ## Code, from first principles, and it actually runs
 
-Road one is the closed form n^2π^2. Road two shoots from the nut with Runge-Kutta 4 ([runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md)), scans λ in steps of 0.5 until the landing height changes sign, bisects, and counts nodes, then repeats with a free far end ([the-shooting-method](06-the-shooting-method.md)). Road three replaces y'' by differences of neighbouring grid values ([finite-differences-for-boundary-problems](07-finite-differences-for-boundary-problems.md)), which turns the problem into a matrix eigenvalue problem on 9, 19 and 39 inner points, and finds its eigenvalues by bisection on a count: the number of eigenvalues below a trial value s equals the number of negative pivots (the diagonal entries left after elimination) of the matrix minus s times the identity. Its error falls fourfold per halving of the spacing: second order.
+Road one is the closed form n^2π^2. Road two shoots from the nut with Runge-Kutta 4 ([Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)), scans λ in steps of 0.5 until the landing height changes sign, bisects, and counts nodes, then repeats with a free far end ([Shooting](06-the-shooting-method.md)). Road three replaces y'' by differences of neighbouring grid values ([Finite differences](07-finite-differences-for-boundary-problems.md)), which turns the problem into a matrix eigenvalue problem on 9, 19 and 39 inner points, and finds its eigenvalues by bisection on a count: the number of eigenvalues below a trial value s equals the number of negative pivots (the diagonal entries left after elimination) of the matrix minus s times the identity. Its error falls fourfold per halving of the spacing: second order.
 
 ### Python
 
@@ -387,8 +364,8 @@ The two outputs match line for line.
 
 - **Guitar harmonics.** A resting finger lets through only modes with a node under it: 220 Hz at the midpoint, 330 Hz at a third.
 - **Clarinets.** Air in a pipe closed at one end obeys the free-end case: odd multiples only, 1 : 3 : 5.
-- **Columns under load.** A pinned column stays straight until the load reaches a critical value set by the lowest eigenvalue of the same problem, then bows: buckling-and-stability.
-- **A particle in a box.** The same equation gives an electron's allowed energies, in the ratio 1 : 4 : 9: schrodinger-equation-and-the-particle-in-a-box.
+- **Columns under load.** A pinned column stays straight until the load reaches a critical value set by the lowest eigenvalue of the same problem, then bows: Buckling.
+- **A particle in a box.** The same equation gives an electron's allowed energies, in the ratio 1 : 4 : 9: Schrodinger's equation.
 
 > **Say it back**
 > A clean note on a pinned string keeps one shape, which must solve −y'' = λy with zero at both pins. The first pin removes the cosine; the second leaves only the flat string unless sin(√λ) = 0. So the eigenvalues are n^2π^2 and the eigenfunctions sin(nπx), with n − 1 nodes. The pitch follows √λ: 110, 220 and 330 Hz on this string.
@@ -397,18 +374,18 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [two-point-boundary-value-problems](05-two-point-boundary-value-problems.md): conditions at two ends, and why a solution may fail to exist or fail to be unique.
-- [eigenvalues-and-eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): Av = λv for a matrix, the pattern this card repeats for a derivative.
+- [Boundary value problems](05-two-point-boundary-value-problems.md): conditions at two ends, and why a solution may fail to exist or fail to be unique.
+- [Eigenvalues and eigenvectors](../../03-Algebra/07-Eigenvalues%20and%20Symmetric%20Matrices/02-eigenvalues-and-eigenvectors.md): Av = λv for a matrix, the pattern this card repeats for a derivative.
 
 ## Where this goes next
 
-- [sturm-liouville-and-orthogonality](09-sturm-liouville-and-orthogonality.md): the whole family of such problems, and why their modes are perpendicular.
-- [half-range-sine-and-cosine-series](../09-Fourier%20Series/04-half-range-sine-and-cosine-series.md): any pluck shape written as a sum of these sines.
-- buckling-and-stability: the lowest eigenvalue as the load a column can bear.
-- schrodinger-equation-and-the-particle-in-a-box: eigenvalues as the energies an electron may have.
-- self-adjoint-extensions-and-the-spectral-theorem: end conditions as the choice that makes the operator symmetric.
-- helmholtz-and-eigenfunctions: the same question for a drum or a room.
-- volume-form-and-the-laplace-beltrami-operator: the bending operator on a curved surface.
+- [Sturm-Liouville](09-sturm-liouville-and-orthogonality.md): the whole family of such problems, and why their modes are perpendicular.
+- [Half-range series](../09-Fourier%20Series/04-half-range-sine-and-cosine-series.md): any pluck shape written as a sum of these sines.
+- Buckling: the lowest eigenvalue as the load a column can bear.
+- Schrodinger's equation: eigenvalues as the energies an electron may have.
+- Self-adjoint extensions: end conditions as the choice that makes the operator symmetric.
+- Helmholtz: the same question for a drum or a room.
+- Volume form and Laplace-Beltrami: the bending operator on a curved surface.
 
 ---
 

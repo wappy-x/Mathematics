@@ -1,24 +1,6 @@
----
-type: card
-wing: 08-Differential equations and dynamics
-shelf: Laplace Transforms for Initial-Value Problems
-topic: Rates turned into multiplication
-item: Transforming a derivative
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/01-the-laplace-transform|the-laplace-transform]]"
-  - "[[Cards/06-Calculus and analysis/04-Integrals/04-integration-by-parts|integration-by-parts]]"
-next:
-  - "[[Cards/08-Differential equations and dynamics/08-Laplace Transforms for Initial-Value Problems/03-inverting-by-partial-fractions|inverting-by-partial-fractions]]"
-  - "[[Cards/13-Engineering mathematics/02-Linear Systems and Transforms/02-impulse-response-and-transfer-functions|impulse-response-and-transfer-functions]]"
-tags: [mathematics, differential equations and dynamics, transforms-of-derivatives]
----
-
 # Transforming a derivative: multiply by s and the initial value walks in on its own
 
-Differential equations and dynamics → Laplace Transforms for Initial-Value Problems → Rates turned into multiplication → Transforming a derivative
+[Syllabus](../../../SYLLABUS.md) → [Differential equations and dynamics](../../../SYLLABUS.md#w08) → [Laplace Transforms for Initial-Value Problems](../../../SYLLABUS.md#w08-s08) → Transforming a derivative
 
 ---
 
@@ -26,9 +8,9 @@ Differential equations and dynamics → Laplace Transforms for Initial-Value Pro
 
 A car's body sits 1 cm above its resting height after a bump, momentarily still. The spring pulls it down; the shock absorber drags against the motion. Per unit of mass: acceleration equals minus 5 per s^2 times the height, minus 2 per s times the velocity. In symbols, y'' + 2y' + 5y = 0, with y the height in cm and t the time in seconds; y' is the velocity and y'' the acceleration.
 
-The Laplace transform weighs a signal from time zero on by a fading exponential e^(−st) and adds it up ([the-laplace-transform](01-the-laplace-transform.md)). The number s, per second, sets how fast the weight fades; Y names the height's transform. Apply it to every term of the rate law and one rule does the work: the transform of a rate is s times the transform, minus the starting value. The equation about rates becomes (s^2 + 2s + 5)Y = s + 2, with no derivative left in it. The s + 2 on the right is the release from 1 cm at rest, written in automatically.
+The Laplace transform weighs a signal from time zero on by a fading exponential e^(−st) and adds it up ([The Laplace transform](01-the-laplace-transform.md)). The number s, per second, sets how fast the weight fades; Y names the height's transform. Apply it to every term of the rate law and one rule does the work: the transform of a rate is s times the transform, minus the starting value. The equation about rates becomes (s^2 + 2s + 5)Y = s + 2, with no derivative left in it. The s + 2 on the right is the release from 1 cm at rest, written in automatically.
 
-The characteristic-equation route ([the-characteristic-equation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md)) finds every solution, then fits the starting values. Here they are inside the equation from the first line: they fall out of an integration by parts.
+The characteristic-equation route ([The characteristic equation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/02-the-characteristic-equation.md)) finds every solution, then fits the starting values. Here they are inside the equation from the first line: they fall out of an integration by parts.
 
 **Transforming a derivative multiplies by s and subtracts the starting value, so each initial condition enters the transformed equation as a known number and never has to be fitted later.**
 
@@ -52,7 +34,7 @@ Orange: the velocity, weighted by e^(−2t), added up from 0 to R. Teal: 2 times
 
 ## The formula
 
-Reminder from [the-laplace-transform](01-the-laplace-transform.md): the curly $\mathcal{L}$ reads "the Laplace transform of", and the capital letter names the result, $Y = \mathcal{L}[y]$.
+Reminder from [The Laplace transform](01-the-laplace-transform.md): the curly $\mathcal{L}$ reads "the Laplace transform of", and the capital letter names the result, $Y = \mathcal{L}[y]$.
 
 $$Y(s)=\int_0^\infty e^{-st}\,y(t)\,dt$$
 
@@ -79,7 +61,7 @@ $$\mathcal{L}[y''](s) = s^2Y(s) - s\,y(0) - y'(0)$$
 
 - **The signal has no jump.** A step f from 0 to 1 at t = 1 s has derivative 0 wherever it has one, so that transform is 0; the rule gives sF − f(0) = 0.135335 at s = 2.
 - **The signal and its rate grow no faster than an exponential.** If y stays below M e^(at) in size, the rule holds for s with real part above a. The signal e^(t^2) outgrows every exponential and has no transform.
-- **The second-derivative rule asks the same of y'.** The velocity must also be continuous and exponentially bounded. A hammer blow breaks this; [impulses-and-the-delta-function](06-impulses-and-the-delta-function.md) repairs it.
+- **The second-derivative rule asks the same of y'.** The velocity must also be continuous and exponentially bounded. A hammer blow breaks this; [Impulses](06-impulses-and-the-delta-function.md) repairs it.
 
 ---
 
@@ -87,7 +69,7 @@ $$\mathcal{L}[y''](s) = s^2Y(s) - s\,y(0) - y'(0)$$
 
 ### Step 0: the weight's own rate is minus s times itself
 
-Differentiate e^(−st) and it comes back multiplied by −s. Integration by parts moves a derivative from one factor to the other ([integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)). Moved onto the weight, "differentiate y" becomes "multiply by s". The price is a term at the two ends; the end at t = 0 supplies the starting value.
+Differentiate e^(−st) and it comes back multiplied by −s. Integration by parts moves a derivative from one factor to the other ([Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md)). Moved onto the weight, "differentiate y" becomes "multiply by s". The price is a term at the two ends; the end at t = 0 supplies the starting value.
 
 ### Step 1: integrate by parts up to a finite cutoff
 
@@ -106,7 +88,7 @@ The weight shrinks like e^(−sR) and the height is bounded by a fading exponent
 
 Assume y is continuous on t ≥ 0, y' is continuous there too, and both have size at most $M$ e^(at) for all t, with constants $M$ and $a$. Take s with real part σ greater than a.
 
-The integrals converge. The weighted height has size at most M e^(−(σ − a)t), whose integral from 0 to infinity is M/(σ − a); so $I_R$ tends to Y(s) by comparison ([improper-integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)). The same bound makes $J_R$ converge.
+The integrals converge. The weighted height has size at most M e^(−(σ − a)t), whose integral from 0 to infinity is M/(σ − a); so $I_R$ tends to Y(s) by comparison ([Improper integrals](../../06-Calculus%20and%20analysis/04-Integrals/07-improper-integrals.md)). The same bound makes $J_R$ converge.
 
 The end term vanishes. Its size is e^(−σR) times the size of y(R), at most M e^(−(σ − a)R), and σ − a > 0 sends that to 0 as R grows.
 
@@ -114,7 +96,7 @@ Pass to the limit in $J_R = e^{-sR}y(R) - y(0) + sI_R$. Every term has a limit, 
 
 For the second derivative, assume the same of y'' as well. The first rule applied to y' in place of y gives the transform of y'' as s times the transform of y', minus y'(0). Substitute the first rule for the transform of y': s(sY − y(0)) − y'(0), which is $s^2Y - s\,y(0) - y'(0)$.
 
-For the car, height, velocity and acceleration each fade inside an envelope proportional to e^(−t) ([complex-roots-and-damped-oscillation](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md)), so a = −1 and s = 0 is allowed.
+For the car, height, velocity and acceleration each fade inside an envelope proportional to e^(−t) ([Complex roots](../03-Oscillators%20-%20Second-Order%20Linear%20Equations/03-complex-roots-and-damped-oscillation.md)), so a = −1 and s = 0 is allowed.
 
 </details>
 
@@ -161,7 +143,7 @@ At s = 0 the numbers speak about the car directly: the velocity added up over al
 
 ## Code, from first principles, and it actually runs
 
-Two roads sharing no step. Road one never uses the rule: it steps the motion with Runge-Kutta 4 (four slope samples per step, averaged; [runge-kutta-four](../05-Numerical%20Evolution/04-runge-kutta-four.md)), carrying running totals of e^(−st) times height, velocity and acceleration. Road two is the rule and the algebra. The error at two step sizes falls by about 16 when the step halves: the method's order, 4.
+Two roads sharing no step. Road one never uses the rule: it steps the motion with Runge-Kutta 4 (four slope samples per step, averaged; [Runge-Kutta four](../05-Numerical%20Evolution/04-runge-kutta-four.md)), carrying running totals of e^(−st) times height, velocity and acceleration. Road two is the rule and the algebra. The error at two step sizes falls by about 16 when the step halves: the method's order, 4.
 
 ### Python
 
@@ -379,8 +361,8 @@ The outputs match line for line. At s = 0 the error does not shrink: there the t
 ## Where you meet it in real life
 
 - **Circuits.** A capacitor already charged when a switch closes enters the transformed equation as a known source.
-- **Control engineering.** With every starting value zero, the transformed equation is Y = F(s) divided by the characteristic polynomial, a ratio called the transfer function ([impulse-response-and-transfer-functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md)).
-- **Forced problems and switches.** [solving-an-initial-value-problem-by-transform](04-solving-an-initial-value-problem-by-transform.md) runs the round trip with forcing; [step-functions-and-delays](05-step-functions-and-delays.md) handles jumps.
+- **Control engineering.** With every starting value zero, the transformed equation is Y = F(s) divided by the characteristic polynomial, a ratio called the transfer function ([Transfer functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md)).
+- **Forced problems and switches.** [The round trip](04-solving-an-initial-value-problem-by-transform.md) runs the round trip with forcing; [Step functions](05-step-functions-and-delays.md) handles jumps.
 
 > **Say it back**
 > Integrating a weighted derivative by parts moves the derivative onto the weight, where it becomes a factor of s. The end term at t = 0 is minus the starting value; the one at infinity dies. Doing it twice gives s^2 Y − s y(0) − y'(0). So the car's equation becomes (s^2 + 2s + 5)Y = s + 2, with the release from 1 cm already inside it.
@@ -389,13 +371,13 @@ The outputs match line for line. At s = 0 the error does not shrink: there the t
 
 ## What this builds on
 
-- [the-laplace-transform](01-the-laplace-transform.md): the weighted integral, where it converges, and the notation $\mathcal{L}$.
-- [integration-by-parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): moving a derivative from one factor to the other for the price of an end term.
+- [The Laplace transform](01-the-laplace-transform.md): the weighted integral, where it converges, and the notation $\mathcal{L}$.
+- [Integration by parts](../../06-Calculus%20and%20analysis/04-Integrals/04-integration-by-parts.md): moving a derivative from one factor to the other for the price of an end term.
 
 ## Where this goes next
 
-- [inverting-by-partial-fractions](03-inverting-by-partial-fractions.md): turning (s + 2)/(s^2 + 2s + 5) back into a height against time.
-- [impulse-response-and-transfer-functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md): the same algebra with zero starting values, read as a property of the system.
+- [Inverting](03-inverting-by-partial-fractions.md): turning (s + 2)/(s^2 + 2s + 5) back into a height against time.
+- [Transfer functions](../../13-Engineering%20mathematics/02-Linear%20Systems%20and%20Transforms/02-impulse-response-and-transfer-functions.md): the same algebra with zero starting values, read as a property of the system.
 
 ---
 

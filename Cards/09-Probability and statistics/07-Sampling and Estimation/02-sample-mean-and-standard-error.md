@@ -1,26 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Sampling and Estimation
-topic: How far an average strays
-item: Standard error
-kind: theorem
-status: draft
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/01-populations-samples-and-estimators|populations-samples-and-estimators]]"
-next:
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/03-chi-square-t-and-f-distributions|chi-square-t-and-f-distributions]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/06-bias-variance-and-mean-squared-error|bias-variance-and-mean-squared-error]]"
-  - "[[Cards/09-Probability and statistics/07-Sampling and Estimation/08-bootstrap|bootstrap]]"
-  - "[[Cards/12-Financial mathematics/19-Variance swaps, the log contract and VIX/01-realised-variance-from-daily-prices|realised-variance-from-daily-prices]]"
-  - "[[Cards/12-Financial mathematics/38-Performance and Multi-Period/01-sharpe-information-and-drawdown|sharpe-information-and-drawdown]]"
-tags: [mathematics, probability and statistics, sample-mean-and-standard-error]
----
-
 # Standard error: the spread of an average, and the square root of n
 
-Probability and statistics → Sampling and Estimation → How far an average strays → Standard error
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Sampling and Estimation](../../../SYLLABUS.md#w09-s07) → Standard error
 
 ---
 
@@ -76,7 +56,7 @@ $$S^2 = \frac{1}{n-1}\sum_{i=1}^{n} (X_i - \bar X)^2, \qquad E[S^2] = \sigma^2, 
 
 **Read it aloud:** add the squared distances of the answers from their own average, divide by one less than the number of answers, and the result is right on average; its square root over root n is the estimated standard error.
 
-The sign $\sum$ adds the term after it for every $i$ from 1 to $n$. A capital $S$ is the rule before the data arrive; a small $s$ is its value on the actual poll. For answers of 1 and 0 the mean is the yes share, $\mu = p$, and $\sigma^2 = p(1-p)$, which [populations-samples-and-estimators](01-populations-samples-and-estimators.md) derived for the share alone.
+The sign $\sum$ adds the term after it for every $i$ from 1 to $n$. A capital $S$ is the rule before the data arrive; a small $s$ is its value on the actual poll. For answers of 1 and 0 the mean is the yes share, $\mu = p$, and $\sigma^2 = p(1-p)$, which [Samples and estimators](01-populations-samples-and-estimators.md) derived for the share alone.
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -97,8 +77,8 @@ The sign $\sum$ adds the term after it for every $i$ from 1 to $n$. A capital $S
 
 - **Independent answers.** Step 2 uses independence; Step 1 does not. Poll 100 households of 10 who always vote alike and the averages scatter by 0.0500, but $s/\sqrt{1000}$ still reports 0.0157: the estimate cannot see the dependence.
 - **One common mean.** Every answer must aim at the same $\mu$. Equal variances are a convenience: with different ones, $\mathrm{Var}(\bar X)$ is their average divided by $n$.
-- **A finite variance.** Yes/no answers always have one. A heavy-tailed law such as the Cauchy has none, and its average never settles ([heavy-tails-pareto-and-cauchy](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)).
-- **Draws with replacement, or a population far larger than the sample.** Drawing without replacement multiplies the variance by $(N - n)/(N - 1)$, with $N$ the population size; for millions of voters that factor is indistinguishable from 1 ([populations-samples-and-estimators](01-populations-samples-and-estimators.md)).
+- **A finite variance.** Yes/no answers always have one. A heavy-tailed law such as the Cauchy has none, and its average never settles ([Heavy tails](../04-Continuous%20Distributions/08-heavy-tails-pareto-and-cauchy.md)).
+- **Draws with replacement, or a population far larger than the sample.** Drawing without replacement multiplies the variance by $(N - n)/(N - 1)$, with $N$ the population size; for millions of voters that factor is indistinguishable from 1 ([Samples and estimators](01-populations-samples-and-estimators.md)).
 - **At least two answers for $S^2$.** With $n = 1$ there is no spread to measure, and $n - 1$ is zero.
 
 ---
@@ -111,7 +91,7 @@ A sum of $n$ independent answers is more spread out than one answer, but not $n$
 
 ### Step 1: the average aims at the mean
 
-Expectation adds up and passes through constants ([expectation](../02-Random%20Variables/02-expectation.md)):
+Expectation adds up and passes through constants ([Expectation](../02-Random%20Variables/02-expectation.md)):
 
 $$E[\bar X] = \frac{E[X_1] + \dots + E[X_n]}{n} = \frac{n\mu}{n} = \mu.$$
 
@@ -119,7 +99,7 @@ No independence was used. Any sample of answers with a common mean gives an aver
 
 ### Step 2: the variance of the average is σ^2/n
 
-The variance of a sum is the sum of all variances plus every covariance between two different terms ([joint-distributions-and-covariance](../02-Random%20Variables/04-joint-distributions-and-covariance.md)). Independent answers have zero covariance, so only the $n$ variances remain: $\mathrm{Var}(X_1 + \dots + X_n) = n\sigma^2$. Dividing a random variable by $n$ divides its variance by $n^2$ ([variance-and-standard-deviation](../02-Random%20Variables/03-variance-and-standard-deviation.md)):
+The variance of a sum is the sum of all variances plus every covariance between two different terms ([Two variables at once](../02-Random%20Variables/04-joint-distributions-and-covariance.md)). Independent answers have zero covariance, so only the $n$ variances remain: $\mathrm{Var}(X_1 + \dots + X_n) = n\sigma^2$. Dividing a random variable by $n$ divides its variance by $n^2$ ([Variance](../02-Random%20Variables/03-variance-and-standard-deviation.md)):
 
 $$\mathrm{Var}(\bar X) = \frac{n\sigma^2}{n^2} = \frac{\sigma^2}{n}.$$
 
@@ -183,7 +163,7 @@ Put the pieces together: $\widehat{\mathrm{SE}} = s/\sqrt n$. For answers of 1 a
 
 One caution. $S^2$ is right on average, but its square root is not: a square root pulls large values in more than small ones, so $s$ runs slightly low. In a two-voter poll, $S$ averages 0.3530 against $\sigma = 0.4996$. The shortfall fades fast: at 8 voters $S$ averages 0.4954, and across 1,000 simulated polls of 1,000 the estimated SE averages 0.015798 against the true 0.015799.
 
-The formula is not the only road. Resampling the 1,000 answers themselves and watching how their average moves estimates the same standard error with no formula for $\sigma$; that road, which works for statistics with no closed form, is [bootstrap](08-bootstrap.md).
+The formula is not the only road. Resampling the 1,000 answers themselves and watching how their average moves estimates the same standard error with no formula for $\sigma$; that road, which works for statistics with no closed form, is [Bootstrap](08-bootstrap.md).
 
 ---
 
@@ -200,7 +180,7 @@ The formula is not the only road. Resampling the 1,000 answers themselves and wa
 | **estimated SE** | 0.499850 / 31.6228 | **0.015807** |
 | plug-in check | square root of 0.52 × 0.48 / 1,000 | 0.015799 |
 
-The poll reads 52 percent with a standard error of 1.6 points. A second random poll of 1,000 would typically land within about 1.6 points of the true share. Quoted as a 95 percent interval, 1.96 standard errors either side, that is a margin of 0.030981, the "plus or minus 3 points" printed under poll headlines. That interval is a statement about the method, not about this poll; [confidence-intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md) builds it properly.
+The poll reads 52 percent with a standard error of 1.6 points. A second random poll of 1,000 would typically land within about 1.6 points of the true share. Quoted as a 95 percent interval, 1.96 standard errors either side, that is a margin of 0.030981, the "plus or minus 3 points" printed under poll headlines. That interval is a statement about the method, not about this poll; [Confidence intervals](../08-Confidence%20Intervals%20and%20Tests/01-confidence-intervals.md) builds it properly.
 
 A second check on a question with three answers: a follow-up asks how firm the vote is, 1, 2 or 3, with chances 0.25, 0.5 and 0.25, so $\sigma^2 = 0.5$. Over every possible list of 4 answers, $S^2$ averages 0.5000 and $V$ averages 0.3750. The $n - 1$ rule is not a property of yes/no data.
 
@@ -638,7 +618,7 @@ The two outputs match line for line.
 > - **Expecting error to fall in proportion to effort.** Ten times the voters divides the error by the square root of 10, not by 10: 5.00 points at 100 voters, 1.58 at 1,000.
 > - **Dividing by n to estimate σ^2.** Harmless at 1,000 voters, a factor of 2 at two: 0.1248 against 0.2496.
 > - **Counting calls rather than independent answers.** 1,000 calls to 100 like-minded households give an estimated SE of 0.0157 and a true one of 0.0500. The formula quietly assumes independence and cannot check it.
-> - **Reading the SE as covering bias.** It measures scatter from poll to poll. A poll that reaches the wrong people misses by its bias on top, at any size ([populations-samples-and-estimators](01-populations-samples-and-estimators.md)).
+> - **Reading the SE as covering bias.** It measures scatter from poll to poll. A poll that reaches the wrong people misses by its bias on top, at any size ([Samples and estimators](01-populations-samples-and-estimators.md)).
 
 ---
 
@@ -647,7 +627,7 @@ The two outputs match line for line.
 - **Opinion polls.** The margin of error printed under a poll is about 1.96 standard errors: plus or minus 3.1 points for 1,000 voters. It covers sampling scatter only.
 - **Clinical trials and lab measurements.** A mean effect is reported as mean ± SE; error bars on a chart are often SEs, which shrink with more subjects while the spread of individual patients does not.
 - **Monte Carlo prices.** A simulated option price is an average of payoffs and carries a standard error of payoff SD over root n; the square-root law is why halving it costs four times the runs.
-- **Finance risk numbers.** Realised variance from daily prices is a sample variance ([realised-variance-from-daily-prices](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md)), and a Sharpe ratio built from a few years of monthly returns carries a large standard error ([sharpe-information-and-drawdown](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/01-sharpe-information-and-drawdown.md)).
+- **Finance risk numbers.** Realised variance from daily prices is a sample variance ([Realised variance](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md)), and a Sharpe ratio built from a few years of monthly returns carries a large standard error ([Performance measures](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/01-sharpe-information-and-drawdown.md)).
 
 > **Say it back**
 > An average of n independent answers aims at the population mean, and its variance is one answer's variance divided by n. So its typical miss, the standard error, is σ/√n: four times the sample buys half the error. σ is unknown, so it is estimated from the sample's own spread, and because that spread is measured around the sample's average it runs small by exactly one variance on average, which dividing by n − 1 repairs. For the poll of 1,000 with 520 yeses, the estimated standard error is 0.0158, 1.6 points. None of this survives answers that move together.
@@ -656,17 +636,17 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [populations-samples-and-estimators](01-populations-samples-and-estimators.md): estimators, bias and noise, and the poll share's noise with the true $p$ in hand.
+- [Samples and estimators](01-populations-samples-and-estimators.md): estimators, bias and noise, and the poll share's noise with the true $p$ in hand.
 
 ## Where this goes next
 
-- [chi-square-t-and-f-distributions](03-chi-square-t-and-f-distributions.md): the exact laws of $S^2$ and of the average divided by its estimated SE when the data are normal.
-- [bias-variance-and-mean-squared-error](06-bias-variance-and-mean-squared-error.md): when a biased divisor, such as $n$ or $n + 1$, gives a smaller total error than $n - 1$.
-- [bootstrap](08-bootstrap.md): the standard error of any statistic, found by resampling the data.
-- [realised-variance-from-daily-prices](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md): a sample variance of daily returns, traded as a contract.
-- [sharpe-information-and-drawdown](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/01-sharpe-information-and-drawdown.md): a ratio of a sample mean to a sample SD, and how noisy it is.
+- [The reference distributions](03-chi-square-t-and-f-distributions.md): the exact laws of $S^2$ and of the average divided by its estimated SE when the data are normal.
+- [Bias and variance](06-bias-variance-and-mean-squared-error.md): when a biased divisor, such as $n$ or $n + 1$, gives a smaller total error than $n - 1$.
+- [Bootstrap](08-bootstrap.md): the standard error of any statistic, found by resampling the data.
+- [Realised variance](../../12-Financial%20mathematics/19-Variance%20swaps%2C%20the%20log%20contract%20and%20VIX/01-realised-variance-from-daily-prices.md): a sample variance of daily returns, traded as a contract.
+- [Performance measures](../../12-Financial%20mathematics/38-Performance%20and%20Multi-Period/01-sharpe-information-and-drawdown.md): a ratio of a sample mean to a sample SD, and how noisy it is.
 
-The standard error says how wide the scatter is, not its shape; dividing the average's miss by an estimated SE rather than the true one changes the odds in small samples, and the law that accounts for it is the t distribution in [chi-square-t-and-f-distributions](03-chi-square-t-and-f-distributions.md).
+The standard error says how wide the scatter is, not its shape; dividing the average's miss by an estimated SE rather than the true one changes the odds in small samples, and the law that accounts for it is the t distribution in [The reference distributions](03-chi-square-t-and-f-distributions.md).
 
 ---
 

@@ -1,27 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Chance and Events
-topic: Adding and subtracting chances
-item: The rules
-kind: theorem
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/02-sample-spaces-and-events|sample-spaces-and-events]]"
-  - "[[Cards/01-Foundations/07-Sets/04-inclusion-exclusion|inclusion-exclusion]]"
-next:
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/04-equally-likely-outcomes-and-counting|equally-likely-outcomes-and-counting]]"
-  - "[[Cards/09-Probability and statistics/01-Chance and Events/05-conditional-probability|conditional-probability]]"
-tags:
-  - mathematics
-  - probability and statistics
-  - probability-rules-and-complements
----
-
 # The rules: adding probabilities of separate events, and one minus for the complement
 
-Probability and statistics → Chance and Events → Adding and subtracting chances → The rules
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Chance and Events](../../../SYLLABUS.md#w09-s01) → The rules
 
 ---
 
@@ -56,7 +35,7 @@ The orange curve is the true chance, one minus five sixths to the power n. The g
 
 ## The formula
 
-Notation first, in words. From [sample-spaces-and-events](02-sample-spaces-and-events.md): $\Omega$ is the sample space, the list of every possible outcome; an event is a set of outcomes; $P(A)$ is read "the chance of A". Union and intersection come from the sets wing: $A \cup B$ is "A or B or both", $A \cap B$ is "A and B together". The one new piece: $A^c$, read "not A", is the **complement** of A, every outcome in $\Omega$ that is not in A. The small c stands for complement.
+Notation first, in words. From [Sample spaces and events](02-sample-spaces-and-events.md): $\Omega$ is the sample space, the list of every possible outcome; an event is a set of outcomes; $P(A)$ is read "the chance of A". Union and intersection come from the sets wing: $A \cup B$ is "A or B or both", $A \cap B$ is "A and B together". The one new piece: $A^c$, read "not A", is the **complement** of A, every outcome in $\Omega$ that is not in A. The small c stands for complement.
 
 Two events are **separate** (the textbook word is *disjoint*) when they share no outcome: $A \cap B = \varnothing$, the empty event.
 
@@ -101,7 +80,7 @@ $$P(\text{at least one six}) = 1 - P(\text{no six}) = 1 - \left(\tfrac{5}{6}\rig
 - **Separate events, for plain adding.** Additivity needs no shared outcome. Add "six on roll 1" and "six on roll 2" as if separate and the game with two sixes is counted twice: four such events give 0.6667, and seven give 1.1667.
 - **The complement of the right event, inside $\Omega$.** The complement of "at least one six" is "no six". "Not every roll a six" is a different event, with chance 0.9992.
 - **Chances that total 1.** The rules assume $P(\Omega) = 1$; a table of chances summing to anything else is no probability, and its complements mean nothing.
-- **No independence needed.** The rules hold whether or not events influence each other; independence enters only when a joint chance is found by multiplying ([independence](07-independence.md)).
+- **No independence needed.** The rules hold whether or not events influence each other; independence enters only when a joint chance is found by multiplying ([Independence](07-independence.md)).
 
 ---
 
@@ -111,7 +90,7 @@ $$P(\text{at least one six}) = 1 - P(\text{no six}) = 1 - \left(\tfrac{5}{6}\rig
 
 Picture the total chance, 1, as a heap of sand spread over the outcomes. An event's chance is the sand lying on its outcomes. From here on the sand is called **probability**, and the rules below are bookkeeping about where it lies.
 
-On a finite sample space, $P(A)$ is the sum of the weights of A's outcomes, and all weights sum to 1; [what-probability-means](01-what-probability-means.md) says where weights come from. Andrey Kolmogorov took three statements as the definition of probability in 1933: every chance is at least 0, $P(\Omega) = 1$, and separate events add, even along an endless list (that case matters from wing 10 on). Every rule on this card follows from those three.
+On a finite sample space, $P(A)$ is the sum of the weights of A's outcomes, and all weights sum to 1; [Probability](01-what-probability-means.md) says where weights come from. Andrey Kolmogorov took three statements as the definition of probability in 1933: every chance is at least 0, $P(\Omega) = 1$, and separate events add, even along an endless list (that case matters from wing 10 on). Every rule on this card follows from those three.
 
 ### Step 1: separate events add
 
@@ -135,7 +114,7 @@ $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
 
 On the shelf's house example, two dice with 36 equally likely outcomes: a six on the first die covers 6 outcomes, a six on the second covers 6, and both covers 1. At least one six: 6 + 6 − 1 = 11 of 36, a chance of 0.3056. The complement agrees: 25 outcomes show no six, and 36 − 25 = 11.
 
-A by-product: since the overlap's chance is at least 0, $P(A \cup B) \le P(A) + P(B)$. The plain sum is always an upper bound on the chance of "A or B", the union bound of [union-bound-and-bonferroni](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md). It is exact only when the events are separate.
+A by-product: since the overlap's chance is at least 0, $P(A \cup B) \le P(A) + P(B)$. The plain sum is always an upper bound on the chance of "A or B", the union bound of [Stopping the sieve early](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md). It is exact only when the events are separate.
 
 ### Step 4: three overlapping events
 
@@ -160,7 +139,7 @@ Take any outcome in the union, and say it lies in exactly k of the three events,
 
 The net count is k − C(k, 2) + C(k, 3). For k = 1: 1 − 0 + 0 = 1. For k = 2: 2 − 1 + 0 = 1. For k = 3: 3 − 3 + 1 = 1. An outcome outside the union is counted zero times. So the right side adds each outcome's weight in the union exactly once, which is the left side.
 
-The same count works for any number of events: k − C(k, 2) + C(k, 3) − … ends at 1 for every k of at least 1, because the binomial expansion of (1 − 1) to the power k is 0. That is the general rule of [inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md), carried from counts to chances.
+The same count works for any number of events: k − C(k, 2) + C(k, 3) − … ends at 1 for every k of at least 1, because the binomial expansion of (1 − 1) to the power k is 0. That is the general rule of [Inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md), carried from counts to chances.
 
 </details>
 
@@ -520,16 +499,16 @@ The two outputs match line for line. The simulated 0.5187 sits within one standa
 >
 > - **The wrong complement.** The opposite of "at least one six" is "no six at all", not "not all sixes" (0.9992).
 > - **Scaling by proportion.** De Méré reasoned that 24 rolls of two dice, hunting a double six, match four rolls of one die, since 24/36 = 4/6 = 0.6667. The true chance is 0.491404: the second bet loses.
-> - **Separate is not independent.** Separate events never happen together; "six on roll 1" and "six on roll 2" can, and are independent ([independence](07-independence.md)).
+> - **Separate is not independent.** Separate events never happen together; "six on roll 1" and "six on roll 2" can, and are independent ([Independence](07-independence.md)).
 
 ---
 
 ## Where you meet it in real life
 
 - **Dice and card games.** De Méré took his two bets to Blaise Pascal in 1654; Pascal's letters with Pierre de Fermat on such problems are usually taken as the start of probability theory.
-- **Matching birthdays.** "At least two people in a room share a birthday" is a union of hundreds of overlapping pair events. Its complement, "all birthdays different", is one count, done in [equally-likely-outcomes-and-counting](04-equally-likely-outcomes-and-counting.md).
-- **Many tests at once.** The chance of at least one false alarm among many tests is at most the plain sum of their chances, whatever the overlaps. So a study running 20 tests allows each a twentieth of the false-alarm chance it will tolerate overall ([union-bound-and-bonferroni](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md)).
-- **Safety and reliability.** "At least one of four pumps fails" is one minus "none fails"; whether failures are linked is a question for [independence](07-independence.md).
+- **Matching birthdays.** "At least two people in a room share a birthday" is a union of hundreds of overlapping pair events. Its complement, "all birthdays different", is one count, done in [Counting chances](04-equally-likely-outcomes-and-counting.md).
+- **Many tests at once.** The chance of at least one false alarm among many tests is at most the plain sum of their chances, whatever the overlaps. So a study running 20 tests allows each a twentieth of the false-alarm chance it will tolerate overall ([Stopping the sieve early](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md)).
+- **Safety and reliability.** "At least one of four pumps fails" is one minus "none fails"; whether failures are linked is a question for [Independence](07-independence.md).
 
 > **Say it back**
 > Chances of events that cannot happen together add. An event and its failure split the whole sample space, so the failure has one minus the event's chance. Adding overlapping events counts the overlap twice, so it is subtracted; with three events the triple overlap is added back. At least one six in four rolls: 1 − 625/1296 = 671/1296 = 0.517747.
@@ -538,16 +517,16 @@ The two outputs match line for line. The simulated 0.5187 sits within one standa
 
 ## What this builds on
 
-- [sample-spaces-and-events](02-sample-spaces-and-events.md): the sample space, events as sets of outcomes, and $P(A)$.
-- [inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md): the counting version of the overlap correction.
-- [union-bound-and-bonferroni](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md): the plain sum as an upper bound.
+- [Sample spaces and events](02-sample-spaces-and-events.md): the sample space, events as sets of outcomes, and $P(A)$.
+- [Inclusion-exclusion](../../01-Foundations/07-Sets/04-inclusion-exclusion.md): the counting version of the overlap correction.
+- [Stopping the sieve early](../../04-Combinatorics%20and%20graphs/04-Inclusion-Exclusion%20and%20Pigeonhole/04-union-bound-and-bonferroni.md): the plain sum as an upper bound.
 
 ## Where this goes next
 
-- [equally-likely-outcomes-and-counting](04-equally-likely-outcomes-and-counting.md): where counts such as 625 of 1296 come from, and when a count is a chance.
-- [conditional-probability](05-conditional-probability.md): how a chance changes once another event is known to have happened.
+- [Counting chances](04-equally-likely-outcomes-and-counting.md): where counts such as 625 of 1296 come from, and when a count is a chance.
+- [Conditional probability](05-conditional-probability.md): how a chance changes once another event is known to have happened.
 
-These rules say how the chances of events combine, but not how knowing one event changes the chance of another: after seeing a six on roll 1, what is the chance of a second six? That question is [conditional-probability](05-conditional-probability.md).
+These rules say how the chances of events combine, but not how knowing one event changes the chance of another: after seeing a six on roll 1, what is the chance of a second six? That question is [Conditional probability](05-conditional-probability.md).
 
 ---
 

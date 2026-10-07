@@ -1,32 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Reduced-Form Models - Risky Bonds, Spreads and Random Hazards
-topic: Hazards that wander
-item: A random hazard
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/41-Default, Survival and the Hazard Rate/02-hazard-rate-and-survival-probability|hazard-rate-and-survival-probability]]"
-  - "[[Cards/12-Financial mathematics/42-Credit Default Swaps - Pricing, the Par Spread and the Hazard Behind It/02-cds-legs-risky-annuity-and-par-spread|cds-legs-risky-annuity-and-par-spread]]"
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/03-cox-ingersoll-ross-model|cox-ingersoll-ross-model]]"
-  - "[[Cards/09-Probability and statistics/02-Random Variables/06-jensens-inequality|jensens-inequality]]"
-  - "[[Cards/11-Stochastic processes and calculus/06-Ito Calculus/04-stochastic-differential-equations|stochastic-differential-equations]]"
-next:
-  - "[[Cards/12-Financial mathematics/44-Reduced-Form Models - Risky Bonds, Spreads and Random Hazards/05-cds-option-and-implied-spread-volatility|cds-option-and-implied-spread-volatility]]"
-tags: [mathematics, financial mathematics, stochastic-hazard-cox-process]
----
-
 # A random hazard: the Cox process, a mean-reverting intensity, and survival as the average of an exponential
 
-Financial mathematics → Reduced-Form Models - Risky Bonds, Spreads and Random Hazards → Hazards that wander → A random hazard
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Reduced-Form Models - Risky Bonds, Spreads and Random Hazards](../../../SYLLABUS.md#w12-s44) → A random hazard
 
 ---
 
 ## General Overview
 
-Northwind Lines, a shipping company, has bonds outstanding and a five-year credit default swap (CDS: insurance against Northwind defaulting) trading on them. The market reads Northwind as failing at 2% a year. That rate among survivors is the **hazard**. Held flat at 2%, it gives Northwind a five-year survival chance of 0.9048 ([hazard-rate-and-survival-probability](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)).
+Northwind Lines, a shipping company, has bonds outstanding and a five-year credit default swap (CDS: insurance against Northwind defaulting) trading on them. The market reads Northwind as failing at 2% a year. That rate among survivors is the **hazard**. Held flat at 2%, it gives Northwind a five-year survival chance of 0.9048 ([The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md)).
 
 Nobody believes the 2% will sit still. A freight slump pushes it up; a good quarter pulls it down; Northwind's CDS premium moves every day. So let the hazard wander. Start it at 2%, let a pull drag it back toward 2% at speed 0.5 a year, and shake it with random shocks whose size is set by a **volatility** of 10%. A default clock driven by a random hazard is called a **Cox process**, after the statistician David Cox, who defined it in 1955; finance also calls it **doubly stochastic**, since both the hazard and the default date are random.
 
@@ -55,7 +35,7 @@ Orange, green and dark blue: three hazard paths drawn by the code below, read ev
 
 ## The formula
 
-Notation first, in words. The hazard at time $t$ (in years) is $\lambda_t$ (Greek "lambda"); today's value is $\lambda_0$. A small d in front of a quantity means its change over a tiny time step. $W$ is Brownian motion, a random walk whose change over a step is a bell-curve draw with spread the square root of the step ([stochastic-differential-equations](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/04-stochastic-differential-equations.md)). The hazard moves by
+Notation first, in words. The hazard at time $t$ (in years) is $\lambda_t$ (Greek "lambda"); today's value is $\lambda_0$. A small d in front of a quantity means its change over a tiny time step. $W$ is Brownian motion, a random walk whose change over a step is a bell-curve draw with spread the square root of the step ([Stochastic differential equations](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/04-stochastic-differential-equations.md)). The hazard moves by
 
 $$d\lambda_t = \kappa\,(\theta - \lambda_t)\,dt + \sigma\sqrt{\lambda_t}\,dW_t.$$
 
@@ -63,7 +43,7 @@ Here $\kappa$ ("kappa") is the pull speed, $\theta$ ("theta") the long-run level
 
 **Read it aloud:** each instant, the hazard closes a fraction $\kappa$ of its gap to the long-run level, plus a random shock whose size grows with the square root of the hazard.
 
-This is the Cox-Ingersoll-Ross (CIR) equation with the hazard in place of the interest rate ([cox-ingersoll-ross-model](../30-Short-Rate%20Models/03-cox-ingersoll-ross-model.md)). The square root keeps the hazard from going below zero, which a default rate must never do.
+This is the Cox-Ingersoll-Ross (CIR) equation with the hazard in place of the interest rate ([Cox-Ingersoll-Ross](../30-Short-Rate%20Models/03-cox-ingersoll-ross-model.md)). The square root keeps the hazard from going below zero, which a default rate must never do.
 
 Survival to year $T$ is the average, over hazard paths, of e to the minus the area under the path. Write $\Lambda_T$ (capital lambda) for that area, the hazard added up from today to $T$, and $\mathrm{E}$ for the average (expectation):
 
@@ -77,7 +57,7 @@ $$B(T) = \frac{2\,(e^{\gamma T} - 1)}{(\gamma+\kappa)(e^{\gamma T}-1) + 2\gamma}
 
 **Read it aloud:** survival is a level factor, set by the hazard's settings and the horizon, times e to the minus (a sensitivity times today's hazard).
 
-And the inequality that says which way randomness pushes ($\mathrm{Var}$ is the variance), from [jensens-inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md):
+And the inequality that says which way randomness pushes ($\mathrm{Var}$ is the variance), from [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md):
 
 $$Q(T) \;\ge\; e^{-\mathrm{E}[\Lambda_T]}, \qquad Q(T) - e^{-\mathrm{E}[\Lambda_T]} \approx \tfrac12\,\mathrm{Var}[\Lambda_T]\;e^{-\mathrm{E}[\Lambda_T]}.$$
 
@@ -103,8 +83,8 @@ The sensitivity $B$ is the key companion number. A flat hazard has sensitivity $
 ### When it holds
 
 - **Hazard independent of interest rates.** The discount factor and the survival chance multiply only when rates and hazard move separately. If Northwind weakens when rates rise, the average of the product is not the product of the averages, and every leg on this card is off by that covariance.
-- **Hazard independent of what is owed.** When default grows likelier exactly as the exposure grows (wrong-way risk), the same factoring fails; see [wrong-way-risk](../46-Counterparty%20Risk%20and%20CVA/05-wrong-way-risk.md).
-- **Constant settings fitted to prices.** Four constant settings cannot match every CDS curve. A market curve that bends is mispriced by the fitting error unless the long-run level is allowed to change with time. The settings are also pricing-world numbers, fitted to CDS quotes, not to a history of defaults ([market-implied-versus-historical-default-probability](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md)).
+- **Hazard independent of what is owed.** When default grows likelier exactly as the exposure grows (wrong-way risk), the same factoring fails; see [Wrong-way risk](../46-Counterparty%20Risk%20and%20CVA/05-wrong-way-risk.md).
+- **Constant settings fitted to prices.** Four constant settings cannot match every CDS curve. A market curve that bends is mispriced by the fitting error unless the long-run level is allowed to change with time. The settings are also pricing-world numbers, fitted to CDS quotes, not to a history of defaults ([Two default probabilities](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/09-market-implied-versus-historical-default-probability.md)).
 - **Feller for a strictly positive hazard.** When $2\kappa\theta \ge \sigma^2$ the hazard never touches zero. Below it, paths touch zero and bounce; the survival formula still holds, since it never needed the hazard to stay off zero.
 
 ---
@@ -113,13 +93,13 @@ The sensitivity $B$ is the key companion number. A flat hazard has sensitivity $
 
 ### Step 0: fix the path, and the flat-hazard card already has the answer
 
-Suppose Northwind's hazard path for the next five years were announced. Then survival is e to the minus the area under it, exactly as on [hazard-rate-and-survival-probability](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md). Nobody announces the path, so average over paths. Two layers of chance: the path, then the default given the path.
+Suppose Northwind's hazard path for the next five years were announced. Then survival is e to the minus the area under it, exactly as on [The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md). Nobody announces the path, so average over paths. Two layers of chance: the path, then the default given the path.
 
 ### Step 1: build the default date from the path and an exponential clock
 
 Draw a number $\xi$ from the exponential distribution with average 1, independent of the hazard: the chance that $\xi$ exceeds any level x is $e^{-x}$. Declare that Northwind defaults at the first moment the area under the hazard, $\Lambda_t$, climbs past $\xi$. That date is $\tau$.
 
-Given the path, Northwind is alive at $T$ exactly when the area so far has not yet reached the clock: $\Lambda_T < \xi$. The chance of that is $e^{-\Lambda_T}$. Averaging over paths gives $Q(T) = \mathrm{E}[e^{-\Lambda_T}]$. With a flat hazard the area is $0.02 \times T$ and this is the old answer; the same recipe simulates one default date on [simulating-a-default-time](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md).
+Given the path, Northwind is alive at $T$ exactly when the area so far has not yet reached the clock: $\Lambda_T < \xi$. The chance of that is $e^{-\Lambda_T}$. Averaging over paths gives $Q(T) = \mathrm{E}[e^{-\Lambda_T}]$. With a flat hazard the area is $0.02 \times T$ and this is the old answer; the same recipe simulates one default date on [Simulating a default time](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/05-simulating-a-default-time.md).
 
 <details>
 <summary>Detailed proof: the construction has the hazard it claims, and survival is the average</summary>
@@ -136,7 +116,7 @@ Given the path, Northwind is alive at $T$ exactly when the area so far has not y
 
 Now compare two averages. The CIR card prices a zero-coupon bond as $\mathrm{E}[e^{-\int_0^T r_t\,dt}]$: e to the minus the area under a square-root, mean-reverting interest rate. Survival here is $\mathrm{E}[e^{-\Lambda_T}]$: e to the minus the area under a square-root, mean-reverting hazard. Same equation for the process, same average. So the same formula answers both, with the hazard's settings in place of the rate's.
 
-The proof's shape, from [cox-ingersoll-ross-model](../30-Short-Rate%20Models/03-cox-ingersoll-ross-model.md): survival, as a function of today's hazard and the time left, obeys a partial differential equation whose coefficients are each a constant plus a constant times the hazard. Guessing $A e^{-B\lambda_0}$ splits it into two ordinary ones:
+The proof's shape, from [Cox-Ingersoll-Ross](../30-Short-Rate%20Models/03-cox-ingersoll-ross-model.md): survival, as a function of today's hazard and the time left, obeys a partial differential equation whose coefficients are each a constant plus a constant times the hazard. Guessing $A e^{-B\lambda_0}$ splits it into two ordinary ones:
 
 $$B' = 1 - \kappa B - \tfrac12\sigma^2 B^2, \qquad (\ln A)' = -\kappa\theta B, \qquad B(0) = 0,\; A(0) = 1,$$
 
@@ -167,7 +147,7 @@ The gap grows with the horizon, since the area has longer to spread out. In basi
 
 ### Step 4: the par spread barely moves
 
-The par spread is the premium that makes the two legs of a CDS equal ([cds-legs-risky-annuity-and-par-spread](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md)). Both legs are built from the survival curve and nothing else. The risky annuity adds up quarterly slices of a year, each discounted and weighted by survival to its date. The protection leg adds up the loss, one minus recovery, at every default date, discounted and weighted by the chance default lands there. That chance is the fall in the survival curve, which the random hazard supplies like any other.
+The par spread is the premium that makes the two legs of a CDS equal ([Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md)). Both legs are built from the survival curve and nothing else. The risky annuity adds up quarterly slices of a year, each discounted and weighted by survival to its date. The protection leg adds up the loss, one minus recovery, at every default date, discounted and weighted by the chance default lands there. That chance is the fall in the survival curve, which the random hazard supplies like any other.
 
 The survival curve has moved by at most 8.27 bp over five years. Protection falls a little and the annuity rises a little, so the par spread falls from 121.06 bp to 120.01 bp, a change of 1.04 bp. A five-year CDS quote cannot tell a flat 2% hazard from one that wanders with 10% volatility.
 
@@ -175,7 +155,7 @@ The survival curve has moved by at most 8.27 bp over five years. Protection fall
 
 It buys two things a flat hazard cannot give.
 
-- **A spread that moves.** In a year, Northwind's hazard has a standard deviation of 1.12 points, so its CDS premium a year from now is uncertain. An option to buy protection at today's premium in a year is then worth something, and the CIR hazard prices it. That is the job of [cds-option-and-implied-spread-volatility](05-cds-option-and-implied-spread-volatility.md).
+- **A spread that moves.** In a year, Northwind's hazard has a standard deviation of 1.12 points, so its CDS premium a year from now is uncertain. An option to buy protection at today's premium in a year is then worth something, and the CIR hazard prices it. That is the job of [Options on a CDS](05-cds-option-and-implied-spread-volatility.md).
 - **Links to other risks.** Let the hazard share a random driver with interest rates, or with the exposure a bank has to Northwind, and the model can say how much worse things get when both move at once. That is wrong-way risk, and the independence assumed in When it holds is exactly what has to be given up to see it.
 
 It costs two settings. The flat model needs one number, the hazard. The random one needs today's hazard and the long-run level, which the CDS curve pins down, plus a pull speed and a volatility, which it barely sees: Step 4 moved volatility from 0 to 10% and the spread moved 1.04 bp. The pull speed and the volatility have to be fitted to prices that depend on the spread moving, such as CDS options. Brigo and Alfonsi (2005) fit a shifted version of this model to CDS quotes and price CDS options with it.
@@ -679,10 +659,10 @@ The two outputs agree line for line, including the simulations, since both langu
 
 ## Where you meet it in real life
 
-- **CDS options.** A payer option (the right to buy protection at a fixed premium later) is worth nothing if the hazard cannot move. A random hazard gives it a value: [cds-option-and-implied-spread-volatility](05-cds-option-and-implied-spread-volatility.md).
-- **Forward protection.** Protection starting in a year and running four more depends on survival to year 1 and year 5: [forward-cds-and-the-forward-spread](04-forward-cds-and-the-forward-spread.md) builds it from any survival curve, this one included.
-- **Counterparty risk desks.** A bank's credit valuation adjustment (the price of a trading partner defaulting on it) needs a hazard that can move with the market, so that wrong-way risk can be measured: [cva](../46-Counterparty%20Risk%20and%20CVA/03-cva.md).
-- **Risky bond pricing.** The bond on [pricing-a-defaultable-bond-from-the-survival-curve](01-pricing-a-defaultable-bond-from-the-survival-curve.md) needs only a survival curve; feed it this one and the same coupons are priced with a wandering hazard.
+- **CDS options.** A payer option (the right to buy protection at a fixed premium later) is worth nothing if the hazard cannot move. A random hazard gives it a value: [Options on a CDS](05-cds-option-and-implied-spread-volatility.md).
+- **Forward protection.** Protection starting in a year and running four more depends on survival to year 1 and year 5: [The forward CDS](04-forward-cds-and-the-forward-spread.md) builds it from any survival curve, this one included.
+- **Counterparty risk desks.** A bank's credit valuation adjustment (the price of a trading partner defaulting on it) needs a hazard that can move with the market, so that wrong-way risk can be measured: [CVA](../46-Counterparty%20Risk%20and%20CVA/03-cva.md).
+- **Risky bond pricing.** The bond on [A risky bond from the hazard curve](01-pricing-a-defaultable-bond-from-the-survival-curve.md) needs only a survival curve; feed it this one and the same coupons are priced with a wandering hazard.
 
 > **Say it back**
 > A Cox process is a default clock whose hazard is itself random. Given the hazard's path, survival is e to the minus the area under it; the survival chance is the average of that over paths. With a square-root, mean-reverting hazard, the average is the CIR bond formula, $A(T)e^{-B(T)\lambda_0}$. Because e to the minus x curves upward, the average beats the flat answer: 0.9057 against 0.9048 for Northwind, by about half the area's variance. The par spread barely moves, so the pull speed and volatility must be fitted to prices that see the spread move, such as options.
@@ -691,16 +671,16 @@ The two outputs agree line for line, including the simulations, since both langu
 
 ## What this builds on
 
-- [hazard-rate-and-survival-probability](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): survival as e to the minus the area under a known hazard. This card averages that over unknown ones.
-- [cds-legs-risky-annuity-and-par-spread](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md): the two legs and the par spread, built from a survival curve, and the 121.06 bp flat answer.
-- [cox-ingersoll-ross-model](../30-Short-Rate%20Models/03-cox-ingersoll-ross-model.md): the square-root process and the closed form, solved there for interest rates.
-- [jensens-inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md): why the average of a curved function differs from the function of the average, and in which direction.
-- [stochastic-differential-equations](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/04-stochastic-differential-equations.md): what an equation driven by $W$ means, and how to simulate one step by step.
+- [The hazard rate](../41-Default%2C%20Survival%20and%20the%20Hazard%20Rate/02-hazard-rate-and-survival-probability.md): survival as e to the minus the area under a known hazard. This card averages that over unknown ones.
+- [Pricing a CDS](../42-Credit%20Default%20Swaps%20-%20Pricing%2C%20the%20Par%20Spread%20and%20the%20Hazard%20Behind%20It/02-cds-legs-risky-annuity-and-par-spread.md): the two legs and the par spread, built from a survival curve, and the 121.06 bp flat answer.
+- [Cox-Ingersoll-Ross](../30-Short-Rate%20Models/03-cox-ingersoll-ross-model.md): the square-root process and the closed form, solved there for interest rates.
+- [Jensen's inequality](../../09-Probability%20and%20statistics/02-Random%20Variables/06-jensens-inequality.md): why the average of a curved function differs from the function of the average, and in which direction.
+- [Stochastic differential equations](../../11-Stochastic%20processes%20and%20calculus/06-Ito%20Calculus/04-stochastic-differential-equations.md): what an equation driven by $W$ means, and how to simulate one step by step.
 
 ## Where this goes next
 
-- [cds-option-and-implied-spread-volatility](05-cds-option-and-implied-spread-volatility.md): prices the option on Northwind's premium that a flat hazard calls worthless, and reads a spread volatility back out of its price.
-- [forward-cds-and-the-forward-spread](04-forward-cds-and-the-forward-spread.md): the premium for protection that starts later, the underlying that option is written on.
+- [Options on a CDS](05-cds-option-and-implied-spread-volatility.md): prices the option on Northwind's premium that a flat hazard calls worthless, and reads a spread volatility back out of its price.
+- [The forward CDS](04-forward-cds-and-the-forward-spread.md): the premium for protection that starts later, the underlying that option is written on.
 
 This card shows a wandering hazard leaves today's CDS premium almost unchanged; what it leaves open is what the wandering is worth, which the price of an option on that premium answers.
 

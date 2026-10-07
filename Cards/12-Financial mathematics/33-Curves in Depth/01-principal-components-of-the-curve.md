@@ -1,31 +1,12 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Curves in Depth
-topic: Factor analysis of rate moves
-item: Level, slope and curvature
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/09-Probability and statistics/09-Regression/07-principal-components|principal-components]]"
-next:
-  - "[[Cards/12-Financial mathematics/33-Curves in Depth/02-key-rate-durations-and-curve-hedging|key-rate-durations-and-curve-hedging]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - principal-components-of-the-curve
----
-
 # Level, slope and curvature: the three moves that explain almost every curve change
 
-Financial mathematics → Curves in Depth → Factor analysis of rate moves → Level, slope and curvature
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Curves in Depth](../../../SYLLABUS.md#w12-s33) → Level, slope and curvature
 
 ---
 
 ## General Overview
 
-A rates desk prices its trades off the slice E curve: six zero rates, from 3.9605 percent at six months to 4.5577 percent at five years, bootstrapped from two deposits and four swaps ([bootstrapping-the-discount-curve](../02-Curves/04-bootstrapping-the-discount-curve.md)). Every evening each of the six rates has moved. That is six numbers a day, over a two-year record of 500 trading days.
+A rates desk prices its trades off the slice E curve: six zero rates, from 3.9605 percent at six months to 4.5577 percent at five years, bootstrapped from two deposits and four swaps ([Bootstrapping](../02-Curves/04-bootstrapping-the-discount-curve.md)). Every evening each of the six rates has moved. That is six numbers a day, over a two-year record of 500 trading days.
 
 Six numbers a day is too many to think with. Most days they move together: all six up about 5 basis points (a basis point, bp, is a hundredth of a percent). Some days the short end rises while the long end falls. Rarely, the middle rises against both ends. Those three patterns have names: **level**, **slope** and **curvature**.
 
@@ -76,7 +57,7 @@ $$\Sigma \;=\; \frac{1}{n}\sum_{t=1}^{n}\bigl(x_t-\bar x\bigr)\bigl(x_t-\bar x\b
 | $\operatorname{tr}\Sigma$; $P$, $w_k$, $w$ | trace: sum of the diagonal, the total variance; $P$ is a projection and $w_k$ a surviving squared length, both in the detailed proof; $w$ is any vector of six numbers | 175.6880 bp^2 | every share shrinks |
 | $R_3$ | share of the total carried by the top three factors | 97.23% | — |
 
-A **variance** is the average squared distance from the average; its square root is the **standard deviation**, the typical size of a move. "Centred" means the average has been subtracted. An **eigenvector** of a matrix is a direction the matrix only stretches; the stretch factor is its **eigenvalue**. The needs-first card on [principal-components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md) builds these words in full; this card uses them on a curve.
+A **variance** is the average squared distance from the average; its square root is the **standard deviation**, the typical size of a move. "Centred" means the average has been subtracted. An **eigenvector** of a matrix is a direction the matrix only stretches; the stretch factor is its **eigenvalue**. The needs-first card on [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md) builds these words in full; this card uses them on a curve.
 
 Each day then splits exactly into factors:
 
@@ -654,10 +635,10 @@ The two outputs agree line for line.
 ## Where you meet it in real life
 
 - **Risk reports on a rates desk.** Positions are reported as exposure to level, slope and curvature, in dollars per bp of each factor, alongside tenor-by-tenor numbers.
-- **Hedging with a few instruments.** Three factors need three hedges: a desk can offset level, slope and curvature with three bonds or swaps and leave a small residual. Tenor-by-tenor exposures come next: [key-rate-durations-and-curve-hedging](02-key-rate-durations-and-curve-hedging.md).
+- **Hedging with a few instruments.** Three factors need three hedges: a desk can offset level, slope and curvature with three bonds or swaps and leave a small residual. Tenor-by-tenor exposures come next: [Key-rate durations](02-key-rate-durations-and-curve-hedging.md).
 - **Scenario design.** Stress tests shock curves by multiples of factor standard deviations, as the house example does, instead of by arbitrary shapes.
-- **Curve fitting with few parameters.** The level, slope and curvature terms of a four-parameter curve play the same roles as the first three factors: [nelson-siegel-and-svensson-fitting](03-nelson-siegel-and-svensson-fitting.md).
-- **Reading the curve's message.** Level moves track the expected path of short rates and the term premium together; untangling them is the work of [term-premium-and-expectations](04-term-premium-and-expectations.md).
+- **Curve fitting with few parameters.** The level, slope and curvature terms of a four-parameter curve play the same roles as the first three factors: [Fitting a curve with four or six parameters](03-nelson-siegel-and-svensson-fitting.md).
+- **Reading the curve's message.** Level moves track the expected path of short rates and the term premium together; untangling them is the work of [What a curve says](04-term-premium-and-expectations.md).
 - **Relative-value trades.** Butterfly trades (long the belly, short both wings, or the reverse) are bets on the curvature factor with level and slope hedged away.
 
 > **Say it back**
@@ -667,11 +648,11 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [principal-components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): the general method, the covariance matrix, eigenvectors and the spectral theorem. This card applies them to a curve and reads the shapes.
+- [Principal components](../../09-Probability%20and%20statistics/09-Regression/07-principal-components.md): the general method, the covariance matrix, eigenvectors and the spectral theorem. This card applies them to a curve and reads the shapes.
 
 ## Where this goes next
 
-- [key-rate-durations-and-curve-hedging](02-key-rate-durations-and-curve-hedging.md): exposure measured tenor by tenor instead of factor by factor, and hedges built from it.
+- [Key-rate durations](02-key-rate-durations-and-curve-hedging.md): exposure measured tenor by tenor instead of factor by factor, and hedges built from it.
 
 Three factors say how curves tend to move; they do not say how much a particular portfolio loses when one tenor moves, and that is the question key-rate durations answer.
 

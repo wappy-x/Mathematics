@@ -1,25 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Binomial Trees
-topic: The third branch
-item: Trinomial trees
-kind: method
-status: verified
-updated: 2026-09-19
-needs_first:
-  - "[[Cards/12-Financial mathematics/04-Binomial Trees/04-crr-tree-and-convergence|crr-tree-and-convergence]]"
-next:
-  - "[[Cards/12-Financial mathematics/30-Short-Rate Models/06-hull-white-trinomial-tree|hull-white-trinomial-tree]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - trinomial-trees-and-the-grid-connection
----
-
 # Trinomial trees: three branches, a free parameter, and the finite-difference grid in disguise
 
-Financial mathematics → Binomial Trees → The third branch → Trinomial trees
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Binomial Trees](../../../SYLLABUS.md#w12-s04) → Trinomial trees
 
 ---
 
@@ -47,7 +28,7 @@ flowchart LR
     A -->|"weight 0.158472"| D["81.87<br/>multiplied by e^-0.2"]
 ```
 
-Those are the real weights for the three-step tree worked below, and they are not forecasts: they are the numbers that get Acme's average log-move and its spread right over one step, the shelf's risk-neutral weights ([risk-neutral-probability](02-risk-neutral-probability.md)). Every node branches alike, and an up followed by a down lands back on the middle node, so the branches rejoin and the tree stays a narrow ladder rather than a fan.
+Those are the real weights for the three-step tree worked below, and they are not forecasts: they are the numbers that get Acme's average log-move and its spread right over one step, the shelf's risk-neutral weights ([The risk-neutral probability](02-risk-neutral-probability.md)). Every node branches alike, and an up followed by a down lands back on the middle node, so the branches rejoin and the tree stays a narrow ladder rather than a fan.
 
 ---
 
@@ -90,7 +71,7 @@ $$V_{i,j} = e^{-r\Delta t}\left(p_u\,V_{i+1,\,j+1} + p_m\,V_{i+1,\,j} + p_d\,V_{
 
 - **Geometric Brownian motion, with $r$, $q$ and $\sigma$ steady across a step.** The weights match one step's average log-move and its spread, nothing more. A volatility one point wrong moves the price by the option's volatility sensitivity times that point.
 - **Spacing wide enough:** $\Delta x^2 \ge \sigma^2\Delta t + \nu^2\Delta t^2$, meaning $\lambda$ at or above 1.000417 at three steps, and closer to 1 as the steps shrink. Below that the middle weight is negative, and negative weight magnifies each step's error rather than smoothing it, as Step 5 traces. The other end binds only in quiet markets: the down weight stays positive while $\Delta x \le (\sigma^2 + \nu^2\Delta t)/\nu$, far above any spacing a share would use, but not above an interest rate's.
-- **European exercise.** The recursion takes the discounted average and nothing else; cashing in early needs a comparison at every node, which is [american-exercise-on-a-tree](05-american-exercise-on-a-tree.md).
+- **European exercise.** The recursion takes the discounted average and nothing else; cashing in early needs a comparison at every node, which is [Early exercise](05-american-exercise-on-a-tree.md).
 - **A grid of fixed width needs edges; a tree grows its own.** Chop the rungs to 20 either side, call the option worthless outside, and the 200-step grid price comes out at 8.239460 instead of 9.217514.
 
 ---
@@ -107,7 +88,7 @@ A three-branch step adds a dial, the third weight, and no new size to choose: th
 
 ### Step 1: what one step has to match
 
-Under the risk-neutral weights Acme's log-price drifts by $\nu\Delta t$ over a step and spreads by $\sigma^2\Delta t$ around that drift ([geometric-brownian-motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)); the $-\tfrac12\sigma^2$ inside $\nu$ is the usual charge for working in logs. Matching the average and the spread is the same as matching the average and the average square, which is tidier: the square of a move is $\Delta x^2$ whichever way it went.
+Under the risk-neutral weights Acme's log-price drifts by $\nu\Delta t$ over a step and spreads by $\sigma^2\Delta t$ around that drift ([Geometric Brownian motion](../../11-Stochastic%20processes%20and%20calculus/05-Brownian%20Motion/07-geometric-brownian-motion.md)); the $-\tfrac12\sigma^2$ inside $\nu$ is the usual charge for working in logs. Matching the average and the spread is the same as matching the average and the average square, which is tidier: the square of a move is $\Delta x^2$ whichever way it went.
 
 $$(p_u - p_d)\,\Delta x = \nu\,\Delta t, \qquad (p_u + p_d)\,\Delta x^2 = \sigma^2\Delta t + \nu^2\Delta t^2$$
 
@@ -128,13 +109,13 @@ Writing the spacing as $\lambda\sigma\sqrt{\Delta t}$ makes the spare choice vis
 
 ### Step 3: stacking the step
 
-One step is already priced on this shelf: a copy of the payoff built from shares and cash costs the discounted weighted average under the risk-neutral weights ([one-step-binomial-replication](01-one-step-binomial-replication.md)), and stacking steps backwards from expiry is [multi-step-trees-and-backward-induction](03-multi-step-trees-and-backward-induction.md). The backward stacking never counted branches. The copy does: shares and cash have two dials, so three outcomes cannot be hedged exactly, and the third weight is a choice. Matching the log-move's average and spread picks it, which leaves Acme's own average price a shade out, as the worked numbers show.
+One step is already priced on this shelf: a copy of the payoff built from shares and cash costs the discounted weighted average under the risk-neutral weights ([One step](01-one-step-binomial-replication.md)), and stacking steps backwards from expiry is [Many steps](03-multi-step-trees-and-backward-induction.md). The backward stacking never counted branches. The copy does: shares and cash have two dials, so three outcomes cannot be hedged exactly, and the third weight is a choice. Matching the log-move's average and spread picks it, which leaves Acme's own average price a shade out, as the worked numbers show.
 
 One consequence is the hinge of the rest of the card. **The rungs never move.** A two-branch tree's reachable prices alternate between two interleaved sets as the steps tick by; here every layer sits on the same ladder, and a tree whose nodes never move is a grid — rungs across, steps down.
 
 ### Step 4: the same three numbers fall out of the Black-Scholes equation
 
-Written in log-price, the Black-Scholes equation ([black-scholes-equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)) loses every trace of the price level and becomes an equation with constant coefficients:
+Written in log-price, the Black-Scholes equation ([The Black-Scholes equation](../08-The%20Black-Scholes%20call%20and%20put/07-black-scholes-equation.md)) loses every trace of the price level and becomes an equation with constant coefficients:
 
 $$\frac{\partial V}{\partial t} + \nu\,\frac{\partial V}{\partial x} + \tfrac12\sigma^2\,\frac{\partial^2 V}{\partial x^2} - r\,V = 0$$
 
@@ -219,7 +200,7 @@ where the three-step tree lands: weight on each ending price, one block = 0.008
 
 A bell curve, three steps in, leaning slightly right. Weight each ending price by its weight and add: 103.045431, against the 103.045453 that Acme's own growth demands. The remainder is what the tree pays for matching the average of the **logarithm** rather than of the price itself.
 
-Walking the same tree backwards node by node gives 8.510012 too, to twelve digits. So a three-step tree prices this call at **$8.51** against a true $9.23 — coarse, and honestly so, with only seven endings. Run 200 steps and the price is $9.217519; run 2000 and it is $9.226058, against the closed-form 9.227006 from [black-scholes-call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md). Ten times the steps, one tenth the error.
+Walking the same tree backwards node by node gives 8.510012 too, to twelve digits. So a three-step tree prices this call at **$8.51** against a true $9.23 — coarse, and honestly so, with only seven endings. Run 200 steps and the price is $9.217519; run 2000 and it is $9.226058, against the closed-form 9.227006 from [Black–Scholes call](../08-The%20Black-Scholes%20call%20and%20put/01-black-scholes-call.md). Ten times the steps, one tenth the error.
 
 ### What breaks if you drop a piece
 
@@ -715,10 +696,10 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Interest-rate models.** A short rate pulled back towards a long-run level cannot sit on a two-branch tree without the branches tilting; the trinomial's spare weight absorbs the pull, and at the extreme rungs the branching pattern is switched rather than the spacing. That is the construction on [hull-white-trinomial-tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md), and the main reason the method is on every rates desk.
+- **Interest-rate models.** A short rate pulled back towards a long-run level cannot sit on a two-branch tree without the branches tilting; the trinomial's spare weight absorbs the pull, and at the extreme rungs the branching pattern is switched rather than the spacing. That is the construction on [The Hull-White tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md), and the main reason the method is on every rates desk.
 - **Barrier options.** A contract that dies if the share touches a level needs nodes on that level, or the tree reports the crossing a step late. The stretch is chosen so the spacing divides the log-distance to the barrier a whole number of times.
-- **Finite-difference pricing.** Once the tree is recognised as the explicit scheme, the rest of the numerical shelf opens ([finite-differences-for-the-black-scholes-equation](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md)): the implicit and Crank-Nicolson schemes solve a small system at each step in exchange for dropping the stability condition.
-- **Early exercise.** The comparison at every node an American option needs is unchanged by the third branch, and the extra rung on the strike helps the exercise boundary settle: [american-exercise-on-a-tree](05-american-exercise-on-a-tree.md).
+- **Finite-difference pricing.** Once the tree is recognised as the explicit scheme, the rest of the numerical shelf opens ([Pricing on a grid](../06-Numerical%20Methods%20for%20Pricing/07-finite-differences-for-the-black-scholes-equation.md)): the implicit and Crank-Nicolson schemes solve a small system at each step in exchange for dropping the stability condition.
+- **Early exercise.** The comparison at every node an American option needs is unchanged by the third branch, and the extra rung on the strike helps the exercise boundary settle: [Early exercise](05-american-exercise-on-a-tree.md).
 
 > **Say it back**
 > A trinomial tree lets the share go up, stay put, or go down at each step. The three weights have three jobs: add to one, get the average log-move right, get the spread right. That leaves the rung spacing free, which a two-branch tree cannot offer, and the freedom is spent putting nodes where they are needed — a strike, a barrier, a rate level. The spacing must stay at or above one step-standard-deviation, or the middle weight goes negative and the answer runs away. Write the Black-Scholes equation in log-price, replace its derivatives by the crudest differences, and the three grid coefficients come out as the three branch weights, bar one term that shrinks with the step. The tree and the grid are the same arithmetic.
@@ -727,11 +708,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [crr-tree-and-convergence](04-crr-tree-and-convergence.md): the two-branch tree with its spacing pinned at one step-standard-deviation, and the error that flips sign as steps are added — the thing this card frees, and the thing it smooths.
+- [Cox-Ross-Rubinstein](04-crr-tree-and-convergence.md): the two-branch tree with its spacing pinned at one step-standard-deviation, and the error that flips sign as steps are added — the thing this card frees, and the thing it smooths.
 
 ## Where this goes next
 
-- [hull-white-trinomial-tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md): the same three branches carrying an interest rate pulled back towards a level, with the branching switched at the top and bottom rungs to keep every weight positive.
+- [The Hull-White tree](../30-Short-Rate%20Models/06-hull-white-trinomial-tree.md): the same three branches carrying an interest rate pulled back towards a level, with the branching switched at the top and bottom rungs to keep every weight positive.
 
 The spacing here is free but chosen once and held for the whole tree; what to do when the thing being modelled drags the nodes around is the question the short-rate shelf opens with.
 

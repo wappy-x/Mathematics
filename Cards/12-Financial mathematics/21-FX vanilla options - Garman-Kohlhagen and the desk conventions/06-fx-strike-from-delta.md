@@ -1,30 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: FX vanilla options - Garman-Kohlhagen and the desk conventions
-topic: Delta quotes back to strikes
-item: Strike from delta
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/04-fx-delta-conventions|fx-delta-conventions]]"
-  - "[[Cards/12-Financial mathematics/21-FX vanilla options - Garman-Kohlhagen and the desk conventions/05-at-the-money-conventions|at-the-money-conventions]]"
-  - "[[Cards/09-Probability and statistics/04-Continuous Distributions/05-normal-quantile|normal-quantile]]"
-  - "[[Cards/06-Calculus and analysis/03-What Derivatives Tell You/06-newtons-method|newtons-method]]"
-  - "[[Cards/06-Calculus and analysis/01-Limits and Continuity/06-intermediate-value-theorem|intermediate-value-theorem]]"
-next:
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/01-risk-reversal-and-butterfly|risk-reversal-and-butterfly]]"
-  - "[[Cards/12-Financial mathematics/22-The FX smile - risk reversals, butterflies and vanna-volga/04-vanna-volga-pricing|vanna-volga-pricing]]"
-tags:
-  - mathematics
-  - financial mathematics
-  - fx-strike-from-delta
----
-
 # Strike from delta: turning a delta-quoted option into a strike you can price
 
-Financial mathematics → FX vanilla options - Garman-Kohlhagen and the desk conventions → Delta quotes back to strikes → Strike from delta
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [FX vanilla options - Garman-Kohlhagen and the desk conventions](../../../SYLLABUS.md#w12-s21) → Strike from delta
 
 ---
 
@@ -34,7 +10,7 @@ The euro trades at 1.1000 dollars. A currency dealer's screen shows one-year vol
 
 A trade cannot be booked on a delta. The contract needs a strike: the exchange rate at which the holder may buy or sell euros at expiry. So the desk runs the delta formula backwards. Given the quoted delta, the volatility attached to it and the market (dollar rate 5 percent, euro rate 3 percent, one year), it finds the one strike with that delta. On spot delta the 25-delta put is struck at **1.052466** and the 25-delta call at **1.201425**. On forward delta the same labels name **1.049780** and **1.204213**.
 
-Currency desks use four deltas for one option ([fx-delta-conventions](04-fx-delta-conventions.md)). Two of them invert in one line. The other two include the premium, and there the call has a surprise: its delta rises and then falls as the strike rises, so one quote can name two strikes, or none. The desk rule is to take the higher one.
+Currency desks use four deltas for one option ([Four deltas for one option](04-fx-delta-conventions.md)). Two of them invert in one line. The other two include the premium, and there the call has a surprise: its delta rises and then falls as the strike rises, so one quote can name two strikes, or none. The desk rule is to take the higher one.
 
 **For spot and forward deltas the strike is one line: a bell-curve lookup turned into a distance from the forward; for premium-adjusted deltas it is a root-find, unique for a put, and for a call a choice between two roots, where the desk takes the higher.**
 
@@ -59,7 +35,7 @@ Orange: spot delta, falling all the way from its ceiling, 0.970446, to zero. It 
 
 ## The formula
 
-Notation first, in words. $S$ is the exchange rate today, dollars per euro. $F$ is the forward rate: the rate agreed today for delivery in one year, $F = S\,e^{(r_d - r_f)T}$ ([garman-kohlhagen](01-garman-kohlhagen.md)). $r_d$ is the dollar (domestic) interest rate, $r_f$ the euro (foreign) rate, both continuously compounded. $\sigma$ (sigma) is the volatility attached to the quote. $N(x)$ is the area under the standard bell curve left of $x$; $N^{-1}(p)$ runs it backwards, the normal quantile ([normal-quantile](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
+Notation first, in words. $S$ is the exchange rate today, dollars per euro. $F$ is the forward rate: the rate agreed today for delivery in one year, $F = S\,e^{(r_d - r_f)T}$ ([Garman-Kohlhagen](01-garman-kohlhagen.md)). $r_d$ is the dollar (domestic) interest rate, $r_f$ the euro (foreign) rate, both continuously compounded. $\sigma$ (sigma) is the volatility attached to the quote. $N(x)$ is the area under the standard bell curve left of $x$; $N^{-1}(p)$ runs it backwards, the normal quantile ([Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md)).
 
 The helpers, as on the Garman-Kohlhagen card:
 
@@ -129,7 +105,7 @@ Running a formula backwards is safe only where no two strikes share a delta. So 
 
 Raise $K$ and $\ln(F/K)$ falls, so $d_1$ falls, at rate $-1/(K\sigma\sqrt{T})$. The area $N$ rises with its argument, because the bell curve's height is positive everywhere. So $N(d_1)$ falls strictly, and so does any positive multiple of it. The put's delta is the call's minus a constant ($N(-x) = 1 - N(x)$), so it falls too.
 
-At the ends: $K \to 0$ sends $d_1$ to plus infinity and the spot call delta up toward $e^{-r_f T}$; $K \to \infty$ sends it to 0. The delta moves without jumps, so by the intermediate value theorem ([intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)) every value strictly between is hit, and because the delta only falls, exactly once.
+At the ends: $K \to 0$ sends $d_1$ to plus infinity and the spot call delta up toward $e^{-r_f T}$; $K \to \infty$ sends it to 0. The delta moves without jumps, so by the intermediate value theorem ([Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md)) every value strictly between is hit, and because the delta only falls, exactly once.
 
 ### Step 2: peel the formula
 
@@ -137,7 +113,7 @@ Undo the layers from the outside. Divide by the drag: $N(d_1) = \Delta e^{r_f T}
 
 ### Step 3: the premium changes the hedge
 
-Why subtract the premium at all? The Garman-Kohlhagen price $V$ is in dollars. If it is paid in euros instead, the seller receives $V/S$ euros up front. Those euros are already part of the hedge, so the extra euros still needed are the spot delta minus $V/S$. Written out, $e^{-r_f T}N(d_1) - V/S$ collapses to $e^{-r_f T}(K/F)N(d_2)$ ([premium-currency-and-foreign-domestic-symmetry](02-premium-currency-and-foreign-domestic-symmetry.md)).
+Why subtract the premium at all? The Garman-Kohlhagen price $V$ is in dollars. If it is paid in euros instead, the seller receives $V/S$ euros up front. Those euros are already part of the hedge, so the extra euros still needed are the spot delta minus $V/S$. Written out, $e^{-r_f T}N(d_1) - V/S$ collapses to $e^{-r_f T}(K/F)N(d_2)$ ([One option, two currencies](02-premium-currency-and-foreign-domestic-symmetry.md)).
 
 That factor $K/F$ breaks monotonicity for the call. At a tiny strike the call is almost certain to pay, $N(d_2)$ is near 1, but the premium is nearly the whole euro, so the leftover hedge $K/F$ is tiny. At a huge strike $N(d_2)$ is near 0. Zero at both ends and positive between: the delta must rise and then fall.
 
@@ -160,9 +136,9 @@ The put: $\lvert D_p(K)\rvert = c\,(K/F)N(-d_2)$. Both factors rise strictly wit
 
 ### Step 5: finding the right-hand root
 
-With no closed form, the root comes from Newton's method ([newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)): start at a guess, follow the tangent line of the delta curve down to the target, repeat. The derivative is the one in Step 4. A good start is the spot-delta strike, 1.201425: the premium only lowers a call's delta, so the premium-adjusted root lies below it, and above the peak. That gives the bracket from $K_{\text{peak}}$ to the unadjusted strike, which bisection (halving the bracket until it is tiny) also uses; the code runs both.
+With no closed form, the root comes from Newton's method ([Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md)): start at a guess, follow the tangent line of the delta curve down to the target, repeat. The derivative is the one in Step 4. A good start is the spot-delta strike, 1.201425: the premium only lowers a call's delta, so the premium-adjusted root lies below it, and above the peak. That gives the bracket from $K_{\text{peak}}$ to the unadjusted strike, which bisection (halving the bracket until it is tiny) also uses; the code runs both.
 
-The equity version of this inverse, with a dividend yield where $r_f$ sits, is [strike-from-delta](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md).
+The equity version of this inverse, with a dividend yield where $r_f$ sits, is [Strike from delta](../11-Implied%20volatility%20and%20the%20vanilla%20inverses/03-strike-from-delta.md).
 
 ---
 
@@ -195,7 +171,7 @@ All eight strikes, each at its own volatility:
 
 Forward delta drops the drag, so the call's delta is larger at every strike and the 25 is reached further out. Premium adjustment lowers a call's delta and makes a put's more negative, so both strikes move down.
 
-Cross-check against the shelf's house option (strike 1.1000, volatility 10 percent): the code's integral prices its call at 0.053556 and put at 0.032418 dollars per euro, and its spot delta is 0.581012, as on [garman-kohlhagen](01-garman-kohlhagen.md).
+Cross-check against the shelf's house option (strike 1.1000, volatility 10 percent): the code's integral prices its call at 0.053556 and put at 0.032418 dollars per euro, and its spot delta is 0.581012, as on [Garman-Kohlhagen](01-garman-kohlhagen.md).
 
 ### What breaks if you drop a piece
 
@@ -620,10 +596,10 @@ The two outputs agree line for line.
 
 ## Where you meet it in real life
 
-- **Currency option screens.** Brokers quote EURUSD, USDJPY and the rest as volatilities at 10 and 25 delta and at the money ([at-the-money-conventions](05-at-the-money-conventions.md)). Every one becomes a strike this way before it is priced.
+- **Currency option screens.** Brokers quote EURUSD, USDJPY and the rest as volatilities at 10 and 25 delta and at the money ([Three meanings of at-the-money](05-at-the-money-conventions.md)). Every one becomes a strike this way before it is priced.
 - **Booking a trade.** A client asks for "one-year 25-delta EUR call"; the ticket that settles has 1.201425 on it, computed at the moment of trading.
-- **Building the smile.** The three quoted points become three strikes, and the smile between them is fitted in strike space ([risk-reversal-and-butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md)).
-- **Implied volatility the other way round.** Given a strike and a price, the desk solves for the volatility instead ([fx-implied-volatility](07-fx-implied-volatility.md)); the Greeks at each strike come from [garman-kohlhagen-greeks](03-garman-kohlhagen-greeks.md).
+- **Building the smile.** The three quoted points become three strikes, and the smile between them is fitted in strike space ([Risk reversal and butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md)).
+- **Implied volatility the other way round.** Given a strike and a price, the desk solves for the volatility instead ([Implied vol for a currency option](07-fx-implied-volatility.md)); the Greeks at each strike come from [The Greeks of a currency option](03-garman-kohlhagen-greeks.md).
 
 > **Say it back**
 > Currency options are quoted by delta, but traded by strike, so the delta formula is run backwards. For spot and forward deltas, delta falls steadily as the strike rises, so the bell-curve quantile gives the one strike in a line. With the premium included, a put's delta still moves one way, but a call's rises, peaks and falls. A premium-adjusted call quote then names two strikes or none, and the market means the higher. The code finds every strike two ways and confirms each by pricing the option and nudging the rate.
@@ -632,18 +608,18 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [fx-delta-conventions](04-fx-delta-conventions.md): the four deltas this card inverts.
-- [at-the-money-conventions](05-at-the-money-conventions.md): the middle quote of the smile, whose strike is fixed by its own rule rather than by this inversion.
-- [normal-quantile](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): the backwards bell-curve lookup at the heart of the closed form.
-- [newtons-method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the root-finder for the premium-adjusted deltas.
-- [intermediate-value-theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): why a strike exists for every delta in range.
+- [Four deltas for one option](04-fx-delta-conventions.md): the four deltas this card inverts.
+- [Three meanings of at-the-money](05-at-the-money-conventions.md): the middle quote of the smile, whose strike is fixed by its own rule rather than by this inversion.
+- [Normal quantiles](../../09-Probability%20and%20statistics/04-Continuous%20Distributions/05-normal-quantile.md): the backwards bell-curve lookup at the heart of the closed form.
+- [Newton's method](../../06-Calculus%20and%20analysis/03-What%20Derivatives%20Tell%20You/06-newtons-method.md): the root-finder for the premium-adjusted deltas.
+- [Intermediate value theorem](../../06-Calculus%20and%20analysis/01-Limits%20and%20Continuity/06-intermediate-value-theorem.md): why a strike exists for every delta in range.
 
 ---
 
 ## Where this goes next
 
-- [risk-reversal-and-butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md): how the market packs the three quoted volatilities into a level, a tilt and a curvature, and unpacks them.
-- [vanna-volga-pricing](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): pricing any option off the three quoted strikes this card produces.
+- [Risk reversal and butterfly](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/01-risk-reversal-and-butterfly.md): how the market packs the three quoted volatilities into a level, a tilt and a curvature, and unpacks them.
+- [Vanna-volga pricing](../22-The%20FX%20smile%20-%20risk%20reversals%2C%20butterflies%20and%20vanna-volga/04-vanna-volga-pricing.md): pricing any option off the three quoted strikes this card produces.
 
 Three quotes now sit at three strikes; what the smile does between and beyond them is the question those cards answer.
 

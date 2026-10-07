@@ -1,29 +1,6 @@
----
-type: card
-wing: 03-Algebra
-shelf: Groups
-topic: Two groups at once
-item: Direct products
-kind: definition
-status: verified
-updated: 2026-09-14
-needs_first:
-  - "[[Cards/03-Algebra/08-Groups/05-homomorphisms-and-isomorphisms|homomorphisms-and-isomorphisms]]"
-  - "[[Cards/03-Algebra/08-Groups/02-subgroups-and-cyclic-groups|subgroups-and-cyclic-groups]]"
-  - "[[Cards/02-Number theory/03-Clock Arithmetic/06-chinese-remainder-theorem|chinese-remainder-theorem]]"
-  - "[[Cards/01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product|ordered-pairs-and-cartesian-product]]"
-next:
-  - "[[Cards/17-Topology/04-Homotopy/06-van-kampens-theorem|van-kampens-theorem]]"
-  - "[[Cards/22-Algebraic geometry/04-Elliptic Curves/06-mordell-weil-and-rank|mordell-weil-and-rank]]"
-tags:
-  - mathematics
-  - algebra
-  - direct-products
----
-
 # Direct products: run two groups side by side, and when two clocks make one bigger clock
 
-Algebra → Groups → Two groups at once → Direct products
+[Syllabus](../../../SYLLABUS.md) → [Algebra](../../../SYLLABUS.md#w03) → [Groups](../../../SYLLABUS.md#w03-s08) → Direct products
 
 ---
 
@@ -58,7 +35,7 @@ The first two bars match: the padlock's joint notch and a 15-dial's notch both t
 
 ## The formula
 
-Notation in words first. A pair goes in round brackets, the first group's member first: (2, 4). The group of all such pairs takes a cross, $G \times H$, said "G cross H" — the cross that counted 15 settings ([ordered-pairs-and-cartesian-product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md)). Bars count members, $\lvert G\rvert$; $*$ is whichever operation the group at hand uses; $e$, the identity, changes nothing; $\operatorname{ord}$ counts the repeats that bring a member home ([subgroups-and-cyclic-groups](02-subgroups-and-cyclic-groups.md)); $\cong$ means the same group relabelled ([homomorphisms-and-isomorphisms](05-homomorphisms-and-isomorphisms.md)).
+Notation in words first. A pair goes in round brackets, the first group's member first: (2, 4). The group of all such pairs takes a cross, $G \times H$, said "G cross H" — the cross that counted 15 settings ([Ordered pairs and the Cartesian product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md)). Bars count members, $\lvert G\rvert$; $*$ is whichever operation the group at hand uses; $e$, the identity, changes nothing; $\operatorname{ord}$ counts the repeats that bring a member home ([Subgroups and cyclic groups](02-subgroups-and-cyclic-groups.md)); $\cong$ means the same group relabelled ([Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md)).
 
 The rule that makes the pairs a group:
 
@@ -70,7 +47,7 @@ Two counts follow, for finite groups and members that come home:
 
 $$\lvert G \times H\rvert = \lvert G\rvert \times \lvert H\rvert, \qquad \operatorname{ord}(g, h) = \operatorname{lcm}(\operatorname{ord}(g), \operatorname{ord}(h))$$
 
-Settings multiply; return times do not. The pair is home only when both halves are home at once — the least common multiple ([lcm](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/02-lcm.md)).
+Settings multiply; return times do not. The pair is home only when both halves are home at once — the least common multiple ([Least common multiple](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/02-lcm.md)).
 
 | Symbol | Plain meaning | In our example | Push it up and the answer… |
 | --- | --- | --- | --- |
@@ -92,7 +69,7 @@ Settings multiply; return times do not. The pair is home only when both halves a
 
 ### Step 0: two calculations that never meet
 
-The four rules of a group ([groups](01-groups.md)) pass one half at a time: each half combines inside its own group, so the pair is closed; brackets move freely in each half; the pair of the two identities changes neither half; each half is undone on its own.
+The four rules of a group ([Groups](01-groups.md)) pass one half at a time: each half combines inside its own group, so the pair is closed; brackets move freely in each half; the pair of the two identities changes neither half; each half is undone on its own.
 
 Swapping the order of two pairs swaps the order inside each half, so the product is commutative — order does not matter — exactly when both halves are.
 
@@ -106,7 +83,7 @@ On the padlock the joint notch is the pair (1, 1): the 3-dial home every 3 notch
 
 Equal size is not the same group, so the claim needs a relabelling that carries the operation.
 
-Send reading k on a 15-dial to the pair (remainder of k on 3, remainder of k on 5); the code prints that grid. Remainders respect addition ([modular-addition-and-multiplication](../../02-Number%20theory/03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)), so adding then translating matches translating then adding. Two readings landing on one pair would differ by a multiple of 3 and of 5, hence of 15, since those share no factor ([coprime-numbers](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)) — on a 15-dial, by nothing. Fifteen readings, fifteen pairs, no collisions. Writing Z mod n for the n-position clock ([residue-classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md)):
+Send reading k on a 15-dial to the pair (remainder of k on 3, remainder of k on 5); the code prints that grid. Remainders respect addition ([Adding and multiplying on the clock](../../02-Number%20theory/03-Clock%20Arithmetic/02-modular-addition-and-multiplication.md)), so adding then translating matches translating then adding. Two readings landing on one pair would differ by a multiple of 3 and of 5, hence of 15, since those share no factor ([Coprime numbers](../../02-Number%20theory/02-Greatest%20Common%20Divisor%20and%20Euclid%27s%20Algorithm/05-coprime-numbers.md)) — on a 15-dial, by nothing. Fifteen readings, fifteen pairs, no collisions. Writing Z mod n for the n-position clock ([Residue classes](../../02-Number%20theory/03-Clock%20Arithmetic/03-residue-classes.md)):
 
 $$\text{Z mod 15} \;\cong\; \text{Z mod 3} \times \text{Z mod 5}$$
 
@@ -156,7 +133,7 @@ Every finite commutative group is a direct product of clocks: stated here, prove
 
 </details>
 
-The same relabelling, done in remainders instead of pairs, is the [chinese-remainder-theorem](../../02-Number%20theory/03-Clock%20Arithmetic/06-chinese-remainder-theorem.md).
+The same relabelling, done in remainders instead of pairs, is the [The Chinese remainder theorem](../../02-Number%20theory/03-Clock%20Arithmetic/06-chinese-remainder-theorem.md).
 
 ---
 
@@ -407,8 +384,8 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Counters that wrap separately.** Hours and minutes, a lock's wheels, fields packed in a machine word: each is a direct product, coming home only at the least common multiple of its parts ([cycles-that-realign](../../02-Number%20theory/05-Check%20Digits%2C%20Calendars%20and%20Cycles/04-cycles-that-realign.md)).
-- **Arithmetic done in pieces.** Work on a 15-clock splits into the 3-clock and the 5-clock, runs in smaller numbers, then rebuilds by the reverse formula — routine in cipher work ([rsa-in-outline](../../02-Number%20theory/06-Codes%20and%20Secrets/03-rsa-in-outline.md)).
+- **Counters that wrap separately.** Hours and minutes, a lock's wheels, fields packed in a machine word: each is a direct product, coming home only at the least common multiple of its parts ([When cycles meet again](../../02-Number%20theory/05-Check%20Digits%2C%20Calendars%20and%20Cycles/04-cycles-that-realign.md)).
+- **Arithmetic done in pieces.** Work on a 15-clock splits into the 3-clock and the 5-clock, runs in smaller numbers, then rebuilds by the reverse formula — routine in cipher work ([RSA in outline](../../02-Number%20theory/06-Codes%20and%20Secrets/03-rsa-in-outline.md)).
 
 > **Say it back**
 > A direct product stores one member of two groups as an ordered pair and combines each half by its own rule. Settings multiply: dials of 3 and 5 positions make 15. Return times take the least common multiple instead, so both dials turned one notch come home after 15 notches — one move reaching every setting, which makes the padlock a 15-dial in disguise. Two switches have four settings too, but every pattern comes home in two flips where a 4-dial needs four.
@@ -417,15 +394,15 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [homomorphisms-and-isomorphisms](05-homomorphisms-and-isomorphisms.md): a reversible relabelling, and why one must be built, not inferred from a count.
-- [subgroups-and-cyclic-groups](02-subgroups-and-cyclic-groups.md): a member's return time, and what it takes to reach a group.
-- [chinese-remainder-theorem](../../02-Number%20theory/03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): the same coprime-dial arithmetic, in remainders.
-- [ordered-pairs-and-cartesian-product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md): the pairs, and why their count multiplies.
+- [Homomorphisms and isomorphisms](05-homomorphisms-and-isomorphisms.md): a reversible relabelling, and why one must be built, not inferred from a count.
+- [Subgroups and cyclic groups](02-subgroups-and-cyclic-groups.md): a member's return time, and what it takes to reach a group.
+- [The Chinese remainder theorem](../../02-Number%20theory/03-Clock%20Arithmetic/06-chinese-remainder-theorem.md): the same coprime-dial arithmetic, in remainders.
+- [Ordered pairs and the Cartesian product](../../01-Foundations/07-Sets/05-ordered-pairs-and-cartesian-product.md): the pairs, and why their count multiplies.
 
 ## Where this goes next
 
-- van-kampens-theorem: the group of loops on a shape glued from two pieces, built from the pieces' groups — the same move where the parts interfere.
-- mordell-weil-and-rank: the points on a curve form a commutative group built from clocks and copies of the whole numbers, whose count is the rank.
+- Van Kampen's theorem: the group of loops on a shape glued from two pieces, built from the pieces' groups — the same move where the parts interfere.
+- Mordell-Weil: the points on a curve form a commutative group built from clocks and copies of the whole numbers, whose count is the rank.
 
 Pairing builds a group from parts. The reverse is harder: given a group, which parts is it made of, and what to do when the parts will not leave each other alone.
 

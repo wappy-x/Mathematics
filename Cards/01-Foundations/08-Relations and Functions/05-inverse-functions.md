@@ -1,25 +1,6 @@
----
-type: card
-wing: 01-Foundations
-shelf: Relations and Functions
-topic: Functions
-item: Inverse functions
-kind: theorem
-status: verified
-updated: 2026-09-06
-needs_first:
-  - "[[Cards/01-Foundations/08-Relations and Functions/03-composition|composition]]"
-  - "[[Cards/01-Foundations/08-Relations and Functions/04-injective-surjective-bijective|injective-surjective-bijective]]"
-next: []
-tags:
-  - mathematics
-  - foundations
-  - inverse-functions
----
-
 # Inverse functions: undoing a function, possible exactly when it is a bijection
 
-Foundations → Relations and Functions → Functions → Inverse functions
+[Syllabus](../../../SYLLABUS.md) → [Foundations](../../../SYLLABUS.md#w01) → [Relations and Functions](../../../SYLLABUS.md#w01-s08) → Inverse functions
 
 ---
 
@@ -31,7 +12,7 @@ She sends 68 °F back. Take off the 32, divide by 1.8: 20 °C. Home again — th
 
 Now the clock on her phone. It shows 13:00 as a dial reading of 1. Hand someone that dial and ask what the 24-hour clock said. They cannot. 01:00 reads 1. 13:00 reads 1. Two hours, one reading, morning and afternoon gone.
 
-**A rule can be undone exactly when it never crowds two inputs onto one output and never leaves an output unreached: the two halves of a bijection, from [injective-surjective-bijective](04-injective-surjective-bijective.md).**
+**A rule can be undone exactly when it never crowds two inputs onto one output and never leaves an output unreached: the two halves of a bijection, from [One-to-one and onto](04-injective-surjective-bijective.md).**
 
 ### The picture: one trip that comes home, one that cannot
 
@@ -79,13 +60,13 @@ Going out, the temperature is stretched by 1.8, then shifted up 32. Coming back,
 
 ### Home from both directions
 
-An inverse works both ways round. Out from 20 °C and back: 20 °C. Back from 68 °F and out again: 68 °F. Either round trip is the **identity**, the rule that hands back what it was given, unchanged — [composition](03-composition.md) doing the joining. Only one rule does this: pick an output and its input is already decided.
+An inverse works both ways round. Out from 20 °C and back: 20 °C. Back from 68 °F and out again: 68 °F. Either round trip is the **identity**, the rule that hands back what it was given, unchanged — [Composing functions](03-composition.md) doing the joining. Only one rule does this: pick an output and its input is already decided.
 
 The check sends four temperatures out and back, −40, 0, 20 and 100 °C, and all 4 come home. At −40 the scales agree: 1.8 × −40 + 32 is −40 again.
 
 ### Two inputs on one output, and nothing to hand back
 
-Ask the clock's inverse which hour gave dial reading 1. It must answer with one hour. The honest answer is two: 01:00 and 13:00. A rule answering an input twice is not a function ([functions](02-functions.md)), so the inverse does not exist. Not hidden — not there.
+Ask the clock's inverse which hour gave dial reading 1. It must answer with one hour. The honest answer is two: 01:00 and 13:00. A rule answering an input twice is not a function ([Functions](02-functions.md)), so the inverse does not exist. Not hidden — not there.
 
 The whole day is like this: 12 readings, 24 hours, 2 hours behind every one. Every reading is reached, so the clock is onto — and onto alone is not enough. The mirror failure is an output nothing produces: the inverse is handed it with no input to give back. Rule out both and you have ruled in a bijection. **Undoable and bijection are the same condition.**
 
@@ -271,12 +252,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [composition](03-composition.md): one rule then another. Undo means the two, either way round, leave everything where it was.
-- [injective-surjective-bijective](04-injective-surjective-bijective.md): one-to-one and onto, the two conditions this card turns into a yes or no.
+- [Composing functions](03-composition.md): one rule then another. Undo means the two, either way round, leave everything where it was.
+- [One-to-one and onto](04-injective-surjective-bijective.md): one-to-one and onto, the two conditions this card turns into a yes or no.
 
 ## Where this goes next
 
-Nothing later on this shelf leans on it; the shelf turns to [equivalence-relations-and-partitions](06-equivalence-relations-and-partitions.md). Undoing returns wherever a rule runs in reverse: solving for an input, a logarithm undoing a power, decrypting a message.
+Nothing later on this shelf leans on it; the shelf turns to [Equivalence relations and partitions](06-equivalence-relations-and-partitions.md). Undoing returns wherever a rule runs in reverse: solving for an input, a logarithm undoing a power, decrypting a message.
 
 ---
 

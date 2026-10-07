@@ -1,26 +1,6 @@
----
-type: card
-wing: 04-Combinatorics and graphs
-shelf: Matchings and Flows
-topic: Covers and matchings
-item: Konig's theorem
-kind: theorem
-status: verified
-updated: 2026-09-24
-needs_first:
-  - "[[Cards/04-Combinatorics and graphs/13-Matchings and Flows/02-halls-marriage-theorem|halls-marriage-theorem]]"
-next:
-  - "[[Cards/24-Computability and complexity/03-Time Complexity/05-karps-problems-and-hardness-recipes|karps-problems-and-hardness-recipes]]"
-  - "[[Cards/24-Computability and complexity/04-Beyond Worst Case/05-parameterised-complexity|parameterised-complexity]]"
-tags:
-  - mathematics
-  - combinatorics and graphs
-  - konigs-theorem-and-vertex-cover
----
-
 # Konig's theorem: in a two-sided graph the largest matching equals the smallest set of vertices touching every edge
 
-Combinatorics and graphs → Matchings and Flows → Covers and matchings → Konig's theorem
+[Syllabus](../../../SYLLABUS.md) → [Combinatorics and graphs](../../../SYLLABUS.md#w04) → [Matchings and Flows](../../../SYLLABUS.md#w04-s13) → Konig's theorem
 
 ---
 
@@ -34,7 +14,7 @@ Three, at W4, E1 and E2: every street meets one of them. Two never do. The stree
 
 The two arguments meet at three. A set of streets no two of which share a junction is a **matching**. A set of junctions meeting every street is a **vertex cover**, or **cover** for short.
 
-Dénes Kőnig proved in 1931 that they always meet in a **bipartite** graph: one whose dots split into two sides with every line crossing between them, as the river forces here ([bipartite-graphs-and-odd-cycles](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)).
+Dénes Kőnig proved in 1931 that they always meet in a **bipartite** graph: one whose dots split into two sides with every line crossing between them, as the river forces here ([Bipartite graphs](../09-Graphs%20-%20Dots%20and%20Lines/05-bipartite-graphs-and-odd-cycles.md)).
 
 **In a bipartite graph the largest matching and the smallest vertex cover have the same size, so a matching is a receipt proving no cover can be cheaper.**
 
@@ -60,7 +40,7 @@ West bank left, east bank right. W1, W2 and W3 crowd onto E1 and E2, which holds
 
 ## The formula
 
-A graph $G$ is a set of dots and a set of joined pairs ([graphs-vertices-and-edges](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)): here junctions and streets. $n$ counts the junctions: 8. Four counts matter:
+A graph $G$ is a set of dots and a set of joined pairs ([Graphs](../09-Graphs%20-%20Dots%20and%20Lines/01-graphs-vertices-and-edges.md)): here junctions and streets. $n$ counts the junctions: 8. Four counts matter:
 
 - $\nu$ ("nu"), the **matching number**: the most streets with no two sharing a junction.
 - $\tau$ ("tau"), the **cover number**: the fewest junctions meeting every street.
@@ -132,7 +112,7 @@ That is W4, E1 and E2, the opening's guards. A street they missed would let the 
 
 **Every street is met.** A missed street has its west end in $Z$ and its east end outside. If it is in $M$, the walk reached its west end by stepping back along it, from its east end, which is then in $Z$. If not, the walk can step out along it, putting the east end in $Z$. Either way, a contradiction.
 
-**Every guard is matched.** Unmatched west junctions are starting points, so they lie in $Z$ and get no guard. An unmatched east junction in $Z$ would end an alternating walk; swapping used and unused streets along it would give a bigger matching ([matchings-and-augmenting-paths](01-matchings-and-augmenting-paths.md)), contradicting $M$ being largest.
+**Every guard is matched.** Unmatched west junctions are starting points, so they lie in $Z$ and get no guard. An unmatched east junction in $Z$ would end an alternating walk; swapping used and unused streets along it would give a bigger matching ([Matchings](01-matchings-and-augmenting-paths.md)), contradicting $M$ being largest.
 
 **No street of $M$ is guarded at both ends.** That needs its east end in $Z$ and its west end outside, but the walk always steps from a matched east junction back to its partner. So the guards are one end of each street of $M$: exactly $\nu$.
 
@@ -140,7 +120,7 @@ That is W4, E1 and E2, the opening's guards. A street they missed would let the 
 
 ### Step 3: the same guards, from Hall's shortfall
 
-A second road starts from the obstruction. For a set $S$ of west junctions, $\lvert S\rvert - \lvert N(S)\rvert$ is its **shortfall** (Hall's defect). The worst shortfall is exactly how many west junctions go unmatched ([halls-marriage-theorem](02-halls-marriage-theorem.md)). Here the worst set is W1, W2, W3, reaching only E1 and E2: shortfall 1, so $\nu = 4 - 1 = 3$ for the 4 west junctions.
+A second road starts from the obstruction. For a set $S$ of west junctions, $\lvert S\rvert - \lvert N(S)\rvert$ is its **shortfall** (Hall's defect). The worst shortfall is exactly how many west junctions go unmatched ([Hall's theorem](02-halls-marriage-theorem.md)). Here the worst set is W1, W2, W3, reaching only E1 and E2: shortfall 1, so $\nu = 4 - 1 = 3$ for the 4 west junctions.
 
 Guard $N(S)$ and every west junction outside $S$:
 
@@ -168,7 +148,7 @@ flowchart LR
     R -->|"3 + 5"| N
 ```
 
-A third road treats the plan as a network carrying one unit per street, where the smallest cover is the cheapest cut ([max-flow-min-cut](06-max-flow-min-cut.md)).
+A third road treats the plan as a network carrying one unit per street, where the smallest cover is the cheapest cut ([Max-flow min-cut](06-max-flow-min-cut.md)).
 
 ---
 
@@ -409,8 +389,8 @@ The two outputs match line for line.
 ## Where you meet it in real life
 
 - **Sensor placement.** A sensor at a pipe junction watches every pipe meeting it. The cheapest sensor set is a smallest cover.
-- **Tables of zeros and ones.** Kőnig's own form: the fewest rows and columns crossing out every 1 equals the most 1s with no two in a row or column. The assignment methods of assignment-and-the-hungarian-algorithm run on that reading.
-- **Where the ease stops.** On a general graph no fast method for a smallest cover is known (karps-problems-and-hardness-recipes). Two sides make it easy.
+- **Tables of zeros and ones.** Kőnig's own form: the fewest rows and columns crossing out every 1 equals the most 1s with no two in a row or column. The assignment methods of The assignment problem run on that reading.
+- **Where the ease stops.** On a general graph no fast method for a smallest cover is known (Karp's list). Two sides make it easy.
 
 > **Say it back**
 > A matching is streets sharing no junction; a cover is junctions meeting every street. Each matched street needs its own guard, so covers are never smaller. On two sides, alternating walks from a largest matching give a cover of equal size: 3 here. A cover's leftovers are independent, so 5 + 3 = 8; a largest matching and a smallest edge cover also sum to 8.
@@ -419,12 +399,12 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [halls-marriage-theorem](02-halls-marriage-theorem.md): the shortfall that fixes the matching number and hands Step 3 its cover.
+- [Hall's theorem](02-halls-marriage-theorem.md): the shortfall that fixes the matching number and hands Step 3 its cover.
 
 ## Where this goes next
 
-- karps-problems-and-hardness-recipes: smallest vertex cover as one of Karp's original hard problems, once the two sides are gone.
-- parameterised-complexity: how fast a small cover can still be found on a general graph, with the cover's size as the dial.
+- Karp's list: smallest vertex cover as one of Karp's original hard problems, once the two sides are gone.
+- Parameterised complexity: how fast a small cover can still be found on a general graph, with the cover's size as the dial.
 
 The river makes a smallest cover easy to find; later cards ask how hard it is without one.
 

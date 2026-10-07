@@ -1,22 +1,6 @@
----
-type: card
-wing: 12-Financial mathematics
-shelf: Microstructure and Execution
-topic: Dealer inventory risk
-item: Market making
-kind: model
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/12-Financial mathematics/49-Microstructure and Execution/04-optimal-execution-almgren-chriss|optimal-execution-almgren-chriss]]"
-  - "[[Cards/11-Stochastic processes and calculus/09-Beyond Brownian/03-stochastic-control-and-the-hjb-equation|stochastic-control-and-the-hjb-equation]]"
-next: []
-tags: [mathematics, financial-mathematics, market-making-avellaneda-stoikov]
----
-
 # Market making: quoting both sides, skewing for inventory
 
-Financial mathematics → Microstructure and Execution → Dealer inventory risk → Market making
+[Syllabus](../../../SYLLABUS.md) → [Financial mathematics](../../../SYLLABUS.md#w12) → [Microstructure and Execution](../../../SYLLABUS.md#w12-s49) → Market making
 
 ---
 
@@ -80,7 +64,7 @@ The spread has two halves: $\gamma\sigma^2\tau$, the risk one extra lot adds, an
 ### When it holds
 
 - **The mid wanders with no drift and a fixed jumpiness.** Over time left $\tau$ it moves by a bell-curve amount of spread $\sigma\sqrt{\tau}$. If volatility doubles and the dealer keeps yesterday's $\sigma$, it skews a quarter as much as it should.
-- **Orders arrive at random, at a rate that falls exponentially with distance, and tell nothing about the price.** If customers who hit the bid know the price is about to fall, fills lose money on average: adverse selection, the subject of [bid-ask-spread-and-adverse-selection](02-bid-ask-spread-and-adverse-selection.md), and this model leaves it out.
+- **Orders arrive at random, at a rate that falls exponentially with distance, and tell nothing about the price.** If customers who hit the bid know the price is about to fall, fills lose money on average: adverse selection, the subject of [The spread](02-bid-ask-spread-and-adverse-selection.md), and this model leaves it out.
 - **Whatever is left at the close is valued at the mid, free.** With $\tau$ near zero the skew fades, so the dealer stops pushing its position to zero just when a real desk would push hardest. The simulated day below ends 3 lots long for that reason.
 - **The dealer's dislike of risk is exponential.** That makes cash drop out of the quotes; other preferences do not.
 - **The closed form is an approximation.** It prices the position as though it were frozen until the close. At 5 lots long it skews the centre 2.00 cents; the full solution skews it 0.93 cents.
@@ -122,7 +106,7 @@ Quoting exactly at $r^b$ and $r^a$ would leave the dealer indifferent to every f
 
 ### Step 3: how far out to quote, one side at a time
 
-Now let fills happen. A quote at distance $\delta$ from the mid is hit at rate $\lambda = A e^{-k\delta}$ fills a day. Each hit on the ask sells a lot for $S + \delta$ and moves the position to $q - 1$. Choosing both distances at every moment to make the close as good as possible is a stochastic control problem. Its value obeys a Hamilton–Jacobi–Bellman equation, the HJB of [stochastic-control-and-the-hjb-equation](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md): drift in time, plus the price's wiggle, plus the best expected gain from each side's fills, adds to zero.
+Now let fills happen. A quote at distance $\delta$ from the mid is hit at rate $\lambda = A e^{-k\delta}$ fills a day. Each hit on the ask sells a lot for $S + \delta$ and moves the position to $q - 1$. Choosing both distances at every moment to make the close as good as possible is a stochastic control problem. Its value obeys a Hamilton–Jacobi–Bellman equation, the HJB of [Stochastic control](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md): drift in time, plus the price's wiggle, plus the best expected gain from each side's fills, adds to zero.
 
 Write the dealer's value as marked wealth $X + qS$ plus an adjustment $h_q$ that depends on the position and the time left. Let $d$ be how much a fill on the side in question changes that adjustment. For the ask, $d = h_{q-1} - h_q$. The side's contribution to the equation is, per unit of time,
 
@@ -698,10 +682,10 @@ The two outputs match line for line. Golden-section search stops a millionth of 
 
 ## Where you meet it in real life
 
-- **Electronic market makers.** Firms quoting thousands of stocks centre their quotes on a fair value moved against the position and widen them with volatility. The book they post into is [the-limit-order-book](01-the-limit-order-book.md).
+- **Electronic market makers.** Firms quoting thousands of stocks centre their quotes on a fair value moved against the position and widen them with volatility. The book they post into is [The order book](01-the-limit-order-book.md).
 - **Currency and bond dealers.** A bank that has bought euros from a client shades its euro price down to attract a buyer, rather than paying a spread to sell.
-- **Why spreads widen in a storm.** The risk half of the spread grows with $\sigma^2$, so quoted spreads widen when volatility jumps, even with the same traders. Adverse selection widens them further: [bid-ask-spread-and-adverse-selection](02-bid-ask-spread-and-adverse-selection.md).
-- **The other side of an execution.** An institution selling a large block on the pattern of [optimal-execution-almgren-chriss](04-optimal-execution-almgren-chriss.md) is selling into dealers like this one, whose bids fall as they fill up. That falling bid is part of the price impact modelled in [kyle-model-and-price-impact](03-kyle-model-and-price-impact.md).
+- **Why spreads widen in a storm.** The risk half of the spread grows with $\sigma^2$, so quoted spreads widen when volatility jumps, even with the same traders. Adverse selection widens them further: [The spread](02-bid-ask-spread-and-adverse-selection.md).
+- **The other side of an execution.** An institution selling a large block on the pattern of [Almgren-Chriss](04-optimal-execution-almgren-chriss.md) is selling into dealers like this one, whose bids fall as they fill up. That falling bid is part of the price impact modelled in [Kyle's model](03-kyle-model-and-price-impact.md).
 
 > **Say it back**
 > A dealer quotes a bid and an ask and earns the spread, but fills leave it holding a position whose price can move. Carrying $q$ lots to the close costs, in certain money, half of $\gamma q^2\sigma^2\tau$, so each extra lot is worth less to a long dealer: its quotes centre on $S - q\gamma\sigma^2\tau$. Around that centre each side sits one concession $c$ out, the distance that best trades margin for fills. The closed form prices the position as if it could not be sold before the close, so it over-skews; the full solution skews about half as much here. Over many days, skewing keeps the income and halves the risk.
@@ -710,13 +694,13 @@ The two outputs match line for line. Golden-section search stops a millionth of 
 
 ## What this builds on
 
-- [optimal-execution-almgren-chriss](04-optimal-execution-almgren-chriss.md): the same trade-off between cost and the risk of holding a position through time, there for a seller who must finish, here for a dealer who must keep quoting.
-- [stochastic-control-and-the-hjb-equation](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md): the equation of Step 3, and why the best policy can be chosen moment by moment.
+- [Almgren-Chriss](04-optimal-execution-almgren-chriss.md): the same trade-off between cost and the risk of holding a position through time, there for a seller who must finish, here for a dealer who must keep quoting.
+- [Stochastic control](../../11-Stochastic%20processes%20and%20calculus/09-Beyond%20Brownian/03-stochastic-control-and-the-hjb-equation.md): the equation of Step 3, and why the best policy can be chosen moment by moment.
 
 ## Where this goes next
 
-- [transaction-cost-analysis](06-transaction-cost-analysis.md): measuring what fills actually cost against a benchmark, the ledger in which a dealer's spread shows up as someone else's cost.
-- [liquidity-measures](07-liquidity-measures.md): the numbers used to say how cheaply a stock trades, which the dealer's spread and its willingness to hold a position both feed.
+- [Measuring execution](06-transaction-cost-analysis.md): measuring what fills actually cost against a benchmark, the ledger in which a dealer's spread shows up as someone else's cost.
+- [Liquidity](07-liquidity-measures.md): the numbers used to say how cheaply a stock trades, which the dealer's spread and its willingness to hold a position both feed.
 
 ---
 

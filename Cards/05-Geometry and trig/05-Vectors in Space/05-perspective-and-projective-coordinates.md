@@ -1,25 +1,6 @@
----
-type: card
-wing: 05-Geometry and trig
-shelf: Vectors in Space
-topic: Vanishing points
-item: Perspective
-kind: method
-status: verified
-updated: 2026-09-28
-needs_first:
-  - "[[Cards/05-Geometry and trig/05-Vectors in Space/04-transformations-with-matrices|transformations-with-matrices]]"
-next:
-  - "[[Cards/22-Algebraic geometry/02-Affine and Projective Varieties/03-projective-space-and-homogeneous-coordinates|projective-space-and-homogeneous-coordinates]]"
-tags:
-  - mathematics
-  - geometry and trig
-  - perspective-and-projective-coordinates
----
-
 # Perspective: why parallel lines meet in a photograph, and the coordinates that make that legal
 
-Geometry and trig → Vectors in Space → Vanishing points → Perspective
+[Syllabus](../../../SYLLABUS.md) → [Geometry and trig](../../../SYLLABUS.md#w05) → [Vectors in Space](../../../SYLLABUS.md#w05-s05) → Perspective
 
 ---
 
@@ -43,7 +24,7 @@ Drawn at 1 mm = 10 units on a 36 mm by 24 mm sensor (the rectangle behind the le
 
 ## The formula
 
-Notation first. [transformations-with-matrices](04-transformations-with-matrices.md) gave each point an extra coordinate, 1 for a point and 0 for a direction. Now any nonzero multiple names the same point: $(s, t, w)$ and $(\lambda s, \lambda t, \lambda w)$ are one point, written $(s : t : w)$. These are **homogeneous coordinates**; all such points together make the **projective plane**.
+Notation first. [Moving shapes with matrices](04-transformations-with-matrices.md) gave each point an extra coordinate, 1 for a point and 0 for a direction. Now any nonzero multiple names the same point: $(s, t, w)$ and $(\lambda s, \lambda t, \lambda w)$ are one point, written $(s : t : w)$. These are **homogeneous coordinates**; all such points together make the **projective plane**.
 
 A camera with its lens at the origin, looking along the $Z$ axis, takes a scene point $(X, Y, Z)$ to the sensor:
 
@@ -51,7 +32,7 @@ $$\begin{pmatrix}s\\ t\\ w\end{pmatrix}=\begin{pmatrix}f&0&0&0\\ 0&f&0&0\\ 0&0&1
 
 **Read it aloud:** multiply by the camera matrix, then divide by the last entry; dividing by distance is the whole of perspective.
 
-A photo line $au + bv + c = 0$ is stored as the triple $\ell = (a, b, c)$; a point $p$ lies on it when the dot product $\ell \cdot p$ is zero. Joining and meeting are cross products ([cross-product-and-oriented-area](01-cross-product-and-oriented-area.md)):
+A photo line $au + bv + c = 0$ is stored as the triple $\ell = (a, b, c)$; a point $p$ lies on it when the dot product $\ell \cdot p$ is zero. Joining and meeting are cross products ([Cross product](01-cross-product-and-oriented-area.md)):
 
 $$\ell = p_1 \times p_2,\qquad p = \ell_1 \times \ell_2,\qquad \text{vanishing point of direction } d:\ P\begin{pmatrix}d_X\\ d_Y\\ d_Z\\ 0\end{pmatrix}=\begin{pmatrix}f d_X\\ f d_Y\\ d_Z\end{pmatrix}$$
 
@@ -105,7 +86,7 @@ Parallel photo lines u = 1 and u = 2, stored as (1, 0, −1) and (1, 0, −2), m
 
 Let $\ell_1$ and $\ell_2$ be triples, neither a multiple of the other. A point on both solves $\ell_1 \cdot p = 0$ and $\ell_2 \cdot p = 0$.
 
-**Existence.** Put $p = \ell_1 \times \ell_2$. Then $\ell_1 \cdot (\ell_1 \times \ell_2)$ is a determinant with two equal rows, so it is 0 ([triple-product-and-volume](03-triple-product-and-volume.md)); likewise for $\ell_2$. Its length is the area of the parallelogram on the two triples, zero only when one is a multiple of the other, so $p$ is not (0, 0, 0).
+**Existence.** Put $p = \ell_1 \times \ell_2$. Then $\ell_1 \cdot (\ell_1 \times \ell_2)$ is a determinant with two equal rows, so it is 0 ([Triple product](03-triple-product-and-volume.md)); likewise for $\ell_2$. Its length is the area of the parallelogram on the two triples, zero only when one is a multiple of the other, so $p$ is not (0, 0, 0).
 
 **Uniqueness.** Two independent equations in three unknowns leave one free choice: every solution is a multiple of one, and all multiples name one point.
 
@@ -361,7 +342,7 @@ The two outputs match line for line.
 
 ## Where you meet it in real life
 
-- **Graphics cards.** A 3D game multiplies each corner by a 4 by 4 matrix and divides by the last entry, the perspective divide, after the moves of [transformations-with-matrices](04-transformations-with-matrices.md).
+- **Graphics cards.** A 3D game multiplies each corner by a 4 by 4 matrix and divides by the last entry, the perspective divide, after the moves of [Moving shapes with matrices](04-transformations-with-matrices.md).
 - **Driver-assistance cameras.** Parallel lane markings vanish at one point, which tells the software how the camera tilts.
 
 > **Say it back**
@@ -371,11 +352,11 @@ The two outputs match line for line.
 
 ## What this builds on
 
-- [transformations-with-matrices](04-transformations-with-matrices.md): the extra coordinate, 1 for a point and 0 for a direction, and moves as matrix products.
+- [Moving shapes with matrices](04-transformations-with-matrices.md): the extra coordinate, 1 for a point and 0 for a direction, and moves as matrix products.
 
 ## Where this goes next
 
-- projective-space-and-homogeneous-coordinates: projective space in any dimension, and shapes cut out by its equations.
+- Projective space: projective space in any dimension, and shapes cut out by its equations.
 
 Here the points at infinity came from a camera; whether projective space stands as a geometry on its own, with no favoured slice, is what a later card settles.
 

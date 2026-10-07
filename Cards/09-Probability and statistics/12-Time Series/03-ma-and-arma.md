@@ -1,22 +1,6 @@
----
-type: card
-wing: 09-Probability and statistics
-shelf: Time Series
-topic: Echoes of past surprises
-item: Moving average and ARMA
-kind: model
-status: draft
-updated: 2026-09-29
-needs_first:
-  - "[[Cards/09-Probability and statistics/12-Time Series/02-ar-models|ar-models]]"
-next:
-  - "[[Cards/09-Probability and statistics/12-Time Series/05-forecasting-and-exponential-smoothing|forecasting-and-exponential-smoothing]]"
-tags: [mathematics, probability-and-statistics, ma-and-arma]
----
-
 # Moving average and ARMA: noise that lingers
 
-Probability and statistics → Time Series → Echoes of past surprises → Moving average and ARMA
+[Syllabus](../../../SYLLABUS.md) → [Probability and statistics](../../../SYLLABUS.md#w09) → [Time Series](../../../SYLLABUS.md#w09-s12) → Moving average and ARMA
 
 ---
 
@@ -66,9 +50,9 @@ $$X_t - \mu = \phi_1(X_{t-1} - \mu) + \dots + \phi_p(X_{t-p} - \mu) + \varepsilo
 
 **Read it aloud:** this month's distance from normal is a share of recent months' distances, plus this month's surprise, plus the echoes of recent surprises.
 
-With $q = 0$ it is the autoregression of [ar-models](02-ar-models.md); with $p = 0$ it is MA($q$). The card's second shop is ARMA(1, 1) with $\phi_1 = 0.5$ and $\theta_1 = 0.3$. Fitted to a series after taking month-on-month changes $d$ times, the same model is called ARIMA($p$, $d$, $q$), the I for integrated; [differencing-and-unit-roots](04-differencing-and-unit-roots.md) says when changes are needed.
+With $q = 0$ it is the autoregression of [Autoregression](02-ar-models.md); with $p = 0$ it is MA($q$). The card's second shop is ARMA(1, 1) with $\phi_1 = 0.5$ and $\theta_1 = 0.3$. Fitted to a series after taking month-on-month changes $d$ times, the same model is called ARIMA($p$, $d$, $q$), the I for integrated; [Unit roots](04-differencing-and-unit-roots.md) says when changes are needed.
 
-What the model predicts about data is its autocovariance, $\gamma(h)$: the covariance between sales in two months $h$ apart ([stationarity-and-autocorrelation](01-stationarity-and-autocorrelation.md)). Write $\theta_0 = 1$ for this month's own surprise. For MA($q$):
+What the model predicts about data is its autocovariance, $\gamma(h)$: the covariance between sales in two months $h$ apart ([Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md)). Write $\theta_0 = 1$ for this month's own surprise. For MA($q$):
 
 $$\gamma(h) = \sigma^2\sum_{j=0}^{q-h}\theta_j\,\theta_{j+h}\quad\text{for } h \le q, \qquad \gamma(h) = 0 \quad\text{for } h > q$$
 
@@ -95,10 +79,10 @@ The autocorrelation is $\rho(h) = \gamma(h)/\gamma(0)$, a number between −1 an
 ### When it holds
 
 - **Surprises are uncorrelated, with average 0 and one fixed variance.** If one month's surprise carries part of the last, the cut-off fails: the code gives $\rho(3) = 0.0579$ where the model says 0, and the record looks like MA(3).
-- **The normal level stays put.** A shop that is growing has no fixed $\mu$; the correlogram then decays slowly at every lag and the model misreads the trend as a long echo. Differencing first is [differencing-and-unit-roots](04-differencing-and-unit-roots.md).
+- **The normal level stays put.** A shop that is growing has no fixed $\mu$; the correlogram then decays slowly at every lag and the model misreads the trend as a long echo. Differencing first is [Unit roots](04-differencing-and-unit-roots.md).
 - **Echoes add up in straight lines.** A surprise twice as big leaves an echo twice as big. Saturation (a second advert in a month when the shop is sold out) breaks this.
 - **The echo weights can be undone.** For fitting, the surprises must be recoverable from past sales; Step 5 says when, and the second row of What breaks shows the failure.
-- **Surprise sizes are steady.** In a share's daily returns calm and wild weeks alternate; the variance itself then needs a model, [garch-and-volatility-clustering](06-garch-and-volatility-clustering.md).
+- **Surprise sizes are steady.** In a share's daily returns calm and wild weeks alternate; the variance itself then needs a model, [GARCH](06-garch-and-volatility-clustering.md).
 
 ---
 
@@ -205,13 +189,13 @@ They differ in one way that matters. To fit a model, the surprises must be recov
 
 $$\varepsilon_t = X_t - \mu - \theta_1\varepsilon_{t-1} - \theta_2\varepsilon_{t-2}.$$
 
-Any error in the starting guess is fed back through the weights. With 0.6 and 0.3 the error shrinks each month; with 2 and 3.3333 it grows each month. The test is the echo polynomial $1 + \theta_1 z + \theta_2 z^2$, the echo weights as coefficients of a number $z$. The model is **invertible** (its surprises can be recovered from past sales) when every root of that polynomial has size greater than 1. The roots here are complex numbers, and size means distance from 0. The shop's roots have size 1.8257; the twin's 0.5477, the reciprocal. Equivalently, the recursion's own roots, the solutions of $\lambda^2 + 0.6\lambda + 0.3 = 0$, have size 0.5477, below 1: the form [ar-models](02-ar-models.md) uses, and roughly the factor by which the starting error shrinks each month. Unless a root has size exactly 1, every MA correlogram has exactly one invertible version, and that is the one fitted and reported.
+Any error in the starting guess is fed back through the weights. With 0.6 and 0.3 the error shrinks each month; with 2 and 3.3333 it grows each month. The test is the echo polynomial $1 + \theta_1 z + \theta_2 z^2$, the echo weights as coefficients of a number $z$. The model is **invertible** (its surprises can be recovered from past sales) when every root of that polynomial has size greater than 1. The roots here are complex numbers, and size means distance from 0. The shop's roots have size 1.8257; the twin's 0.5477, the reciprocal. Equivalently, the recursion's own roots, the solutions of $\lambda^2 + 0.6\lambda + 0.3 = 0$, have size 0.5477, below 1: the form [Autoregression](02-ar-models.md) uses, and roughly the factor by which the starting error shrinks each month. Unless a root has size exactly 1, every MA correlogram has exactly one invertible version, and that is the one fitted and reported.
 
 Invertibility is also why an MA is an autoregression of infinite order. Substitute the recursion into itself: $\varepsilon_t$ becomes today's sales minus a weighted sum of all past sales, with weights shrinking roughly like $1.8257^{-j}$. That infinite tail is what keeps the MA's partial correlogram from cutting off.
 
 ### Step 6: fit the weights by least squares on recovered surprises
 
-For an autoregression the inputs are past sales, which are on record, and ordinary least squares fits it ([least-squares-regression](../09-Regression/01-least-squares-regression.md)). For an MA the inputs are past surprises, which nobody recorded. The way round: guess the weights, recover the surprises with the Step 5 recursion (starting from surprises of 0 before month 1), and score the guess by the sum of squared recovered surprises,
+For an autoregression the inputs are past sales, which are on record, and ordinary least squares fits it ([Least squares](../09-Regression/01-least-squares-regression.md)). For an MA the inputs are past surprises, which nobody recorded. The way round: guess the weights, recover the surprises with the Step 5 recursion (starting from surprises of 0 before month 1), and score the guess by the sum of squared recovered surprises,
 
 $$S(\theta_1, \theta_2) = \sum_{t=1}^{n}\varepsilon_t(\theta_1, \theta_2)^2.$$
 
@@ -247,7 +231,7 @@ The last three rows run the Step 5 recursion on the first months of a simulated 
 
 On that record the fit gives $\hat\theta_1 = 0.6228$ (standard error 0.0623) and $\hat\theta_2 = 0.3110$ (standard error 0.0623), normal level 496.1104 (standard error 5.1736) and surprise standard deviation 41.4467. Both weights sit within one standard error of the truth. Across 200 simulated records the fitted weights averaged 0.6002 and 0.3009 and spread with standard deviations 0.0594 and 0.0576, close to the textbook 0.0616.
 
-The record's correlogram reads 0.5263, 0.1805, −0.0078, 0.0582, 0.0416, −0.0459. The noise band for a lag with no true correlation is $\pm 2/\sqrt{240} = \pm 0.1291$ (the 1.96 of [stationarity-and-autocorrelation](01-stationarity-and-autocorrelation.md), rounded to 2): lags 1 and 2 stand clear, lags 3 to 6 sit inside. That points to MA(2). The partial correlogram, 0.5263, −0.1334, −0.0638, 0.1607, −0.0723, −0.0963, shrinks and changes sign, with one stray at lag 4; twelve values against a two-standard-error band often give one. After the fit, the recovered surprises correlate −0.0072, −0.0187, −0.0309 at lags 1 to 3: no echo left.
+The record's correlogram reads 0.5263, 0.1805, −0.0078, 0.0582, 0.0416, −0.0459. The noise band for a lag with no true correlation is $\pm 2/\sqrt{240} = \pm 0.1291$ (the 1.96 of [Stationarity and autocorrelation](01-stationarity-and-autocorrelation.md), rounded to 2): lags 1 and 2 stand clear, lags 3 to 6 sit inside. That points to MA(2). The partial correlogram, 0.5263, −0.1334, −0.0638, 0.1607, −0.0723, −0.0963, shrinks and changes sign, with one stray at lag 4; twelve values against a two-standard-error band often give one. After the fit, the recovered surprises correlate −0.0072, −0.0187, −0.0309 at lags 1 to 3: no echo left.
 
 ### What breaks if you drop a piece
 
@@ -704,8 +688,8 @@ The two outputs agree line for line.
 
 - **Advertising.** Carry-over of adverts into later months' sales is a standard ingredient of marketing models; a short echo that ends is MA, a slowly fading one is closer to ARMA.
 - **Overlapping returns.** A fund that reports its three-month return every month counts each month's news in three reports running. The reported series is an MA(2) even if the monthly news is pure noise.
-- **Differencing a line.** Taking month-on-month changes of a series that is a straight trend plus noise produces an MA(1) with weight −1: the change subtracts last month's noise. That boundary case, and when differencing is the right move, is [differencing-and-unit-roots](04-differencing-and-unit-roots.md).
-- **A share's daily returns.** Trades bounce between the buying and selling price, which gives daily returns a small negative correlation at lag 1: a textbook MA(1). Their changing size is the job of [garch-and-volatility-clustering](06-garch-and-volatility-clustering.md).
+- **Differencing a line.** Taking month-on-month changes of a series that is a straight trend plus noise produces an MA(1) with weight −1: the change subtracts last month's noise. That boundary case, and when differencing is the right move, is [Unit roots](04-differencing-and-unit-roots.md).
+- **A share's daily returns.** Trades bounce between the buying and selling price, which gives daily returns a small negative correlation at lag 1: a textbook MA(1). Their changing size is the job of [GARCH](06-garch-and-volatility-clustering.md).
 
 > **Say it back**
 > A moving-average model makes this month's value a normal level plus a fresh surprise plus fixed shares of the last few surprises. Months share surprises only while the echo lasts, so the correlogram is exactly zero beyond the echo's length. Adding a carried-forward share of past values gives ARMA, whose echo fades forever and whose correlogram only tails off. The partial correlogram cuts off for an autoregression and tails off for an MA, so the two plots together suggest the orders. The weights are fitted by recovering the surprises month by month and making their squares as small as possible, which needs the invertible version of the model.
@@ -714,13 +698,13 @@ The two outputs agree line for line.
 
 ## What this builds on
 
-- [ar-models](02-ar-models.md): the carried-forward share, the condition $|\phi| < 1$, and the geometric correlogram that ARMA inherits after lag $q$.
+- [Autoregression](02-ar-models.md): the carried-forward share, the condition $|\phi| < 1$, and the geometric correlogram that ARMA inherits after lag $q$.
 
 ## Where this goes next
 
-- [forecasting-and-exponential-smoothing](05-forecasting-and-exponential-smoothing.md): forecasts with honest ranges that widen with the horizon, and simple exponential smoothing as the best forecast when the month-on-month changes are an MA(1).
+- [Forecasting](05-forecasting-and-exponential-smoothing.md): forecasts with honest ranges that widen with the horizon, and simple exponential smoothing as the best forecast when the month-on-month changes are an MA(1).
 
-A model of how surprises spread says what the coming months should look like; how to turn a record into forecasts, and how wide the band around a forecast must be, is what [forecasting-and-exponential-smoothing](05-forecasting-and-exponential-smoothing.md) answers.
+A model of how surprises spread says what the coming months should look like; how to turn a record into forecasts, and how wide the band around a forecast must be, is what [Forecasting](05-forecasting-and-exponential-smoothing.md) answers.
 
 ---
 
